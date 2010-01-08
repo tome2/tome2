@@ -2315,6 +2315,15 @@ byte calc_mimic()
 	return blow;
 }
 
+/* Returns the number of extra blows based on abilities. */
+static int get_extra_blows_ability() {
+        /* Count bonus abilities */
+        int num = 0;
+        if (has_ability(AB_MAX_BLOW1)) num++;
+        if (has_ability(AB_MAX_BLOW2)) num++;
+        return num;
+}
+
 /* Returns the blow information based on class */
 void analyze_blow(int *num, int *wgt, int *mul)
 {
@@ -2323,8 +2332,7 @@ void analyze_blow(int *num, int *wgt, int *mul)
 	*mul = cp_ptr->blow_mul;
 
 	/* Count bonus abilities */
-	if (has_ability(AB_MAX_BLOW1)) (*num)++;
-	if (has_ability(AB_MAX_BLOW2)) (*num)++;
+        (*num) += get_extra_blows_ability();
 }
 
 /* Are all the weapons wielded of the right type ? */
@@ -3653,7 +3661,7 @@ void calc_bonuses(bool silent)
 	{
 		int plev = get_skill(SKILL_HAND);
 
-		p_ptr->num_blow = 0;
+                p_ptr->num_blow = get_extra_blows_ability();
 
 		if (plev > 9) p_ptr->num_blow++;
 		if (plev > 19) p_ptr->num_blow++;

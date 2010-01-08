@@ -12,6 +12,7 @@ T.o.M.E 2.3.6
 - Fix for module directory paths.
 - Fix miscellaneous problems on 64-bit platforms.
 - Princess room should now always be generated.
+- Extra Blows applies to barehand combat too.
 
 
 
