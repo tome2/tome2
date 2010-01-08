@@ -1977,7 +1977,7 @@ bool room_alloc(int width, int height, bool crowded, int by0, int bx0, int *cx, 
 
 	for (ebx = bx0 + temp; bx0 > 0 && ebx > dun->col_rooms; bx0--, ebx--);
 
-	if (ebx >= dun->col_rooms) return (FALSE);
+	if (ebx > dun->col_rooms) return (FALSE);
 
 	/* Total number along height */
 	temp = ((height - 1) / BLOCK_HGT) + 1;
