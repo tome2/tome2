@@ -1006,6 +1006,11 @@ bool player_activate_trap_type(s16b y, s16b x, object_type *i_ptr, s16b item)
 					{
 						object_type tmp_obj;
 
+						if (p_ptr->inventory[j].name1)
+							wield_set(p_ptr->inventory[j].name1, a_info[p_ptr->inventory[j].name1].set, FALSE);
+						if (p_ptr->inventory[i].name1)
+							takeoff_set(p_ptr->inventory[i].name1, a_info[p_ptr->inventory[i].name1].set);
+
 						tmp_obj = p_ptr->inventory[j];
 						p_ptr->inventory[j] = p_ptr->inventory[i];
 						p_ptr->inventory[i] = tmp_obj;

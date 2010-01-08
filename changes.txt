@@ -4,6 +4,7 @@ T.o.M.E 2.3.6
 - Mark *all* quest monsters properly.
 - Avoid generating up staircases in selected dungeons.
 - Mimicry cloaks of Abomination now aggravate properly.
+- Properly handle item set effects with certain traps.
 
 
 
