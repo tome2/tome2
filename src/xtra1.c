@@ -146,7 +146,7 @@ static void prt_piety(void)
 
 	c_put_str(TERM_L_WHITE, "Pt ", ROW_PIETY, COL_PIETY);
 
-	sprintf(tmp, "%9ld", p_ptr->grace);
+	sprintf(tmp, "%9ld", (long) p_ptr->grace);
 
 	c_put_str((p_ptr->praying) ? TERM_L_BLUE : TERM_GREEN, tmp, ROW_PIETY,
 		COL_PIETY + 3);

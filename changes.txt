@@ -10,6 +10,7 @@ T.o.M.E 2.3.6
 - Prevent immunities from Balrog Form persisting too long.
 - Fix for loading/saving on Linux distribution using Fortify.
 - Fix for module directory paths.
+- Fix miscellaneous problems on 64-bit platforms.
 
 
 

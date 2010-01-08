@@ -174,7 +174,7 @@
  * The only such platform that angband is ported to is currently
  * DEC Alpha AXP running OSF/1 (OpenVMS uses 32-bit longs).
  */
-#if defined(__alpha) && defined(__osf__) || defined(__x86_64) || defined(__x86_64__) || defined(__amd64) || defined(__ia64) || defined(__ia64__) || defined(__mips64) || defined(__ppc64__) | defined(__PPC64__) | defined(__powerpc64__) || defined(__64BIT__) || defined(__sparc64__) || defined(__LP64__)
+#if defined(__alpha) && defined(__osf__) || defined(__x86_64) || defined(__x86_64__) || defined(__amd64) || defined(__ia64) || defined(__ia64__) || defined(__mips64) || defined(__ppc64__) || defined(__PPC64__) || defined(__powerpc64__) || defined(__64BIT__) || defined(__sparc64__) || defined(__LP64__)
 # define L64
 #endif
 
