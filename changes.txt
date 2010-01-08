@@ -5,6 +5,7 @@ T.o.M.E 2.3.6
 - Avoid generating up staircases in selected dungeons.
 - Mimicry cloaks of Abomination now aggravate properly.
 - Properly handle item set effects with certain traps.
+- Fix crash bug during character dumps.
 
 
 

@@ -418,9 +418,9 @@ bool quest_random_dump_hook(char *fmt)
 			fprintf(hook_file, "\n You haven't completed a single princess quest.");
 
 		if (lscnt > 10)
-			fprintf(hook_file, "\n You have completed %d lost sword quests.", pcnt);
+			fprintf(hook_file, "\n You have completed %d lost sword quests.", lscnt);
 		else if (lscnt > 1)
-			fprintf(hook_file, "\n You have completed %s lost sword quests.", number[pcnt-2]);
+			fprintf(hook_file, "\n You have completed %s lost sword quests.", number[lscnt-2]);
 		else if (lscnt == 1)
 			fprintf(hook_file, "\n You have completed one lost sword quest.");
 		else
