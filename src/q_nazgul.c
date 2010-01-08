@@ -3,7 +3,7 @@
 
 bool quest_nazgul_gen_hook(char *fmt)
 {
-	int x = 1, y = 1, try = 10000;
+	int m_idx, x = 1, y = 1, try = 10000;
 	s32b small;
 
 	small = get_next_arg(fmt);
@@ -27,7 +27,8 @@ bool quest_nazgul_gen_hook(char *fmt)
 
 	/* Place the nazgul */
 	m_allow_special[test_monster_name("Uvatha the Horseman")] = TRUE;
-	place_monster_one(y, x, test_monster_name("Uvatha the Horseman"), 0, FALSE, MSTATUS_ENEMY);
+	m_idx = place_monster_one(y, x, test_monster_name("Uvatha the Horseman"), 0, FALSE, MSTATUS_ENEMY);
+	if (m_idx) m_list[m_idx].mflag |= MFLAG_QUEST;
 	m_allow_special[test_monster_name("Uvatha the Horseman")] = FALSE;
 
 	return FALSE;

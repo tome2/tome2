@@ -3,7 +3,7 @@
 
 bool quest_haunted_gen_hook(char *fmt)
 {
-	int x, y, i;
+	int x, y, i, m_idx;
 	int xstart = 2;
 	int ystart = 2;
 
@@ -43,7 +43,8 @@ bool quest_haunted_gen_hook(char *fmt)
 		flags = f_info[cave[y][x].feat].flags1;
 		if (!(flags & FF1_PERMANENT) && (flags & FF1_FLOOR))
 		{
-			place_monster_one(y, x, 477, 0, FALSE, MSTATUS_ENEMY);
+			m_idx = place_monster_one(y, x, 477, 0, FALSE, MSTATUS_ENEMY);
+			if (m_idx) m_list[m_idx].mflag |= MFLAG_QUEST;
 			--i;
 		}
 	}
@@ -60,7 +61,8 @@ bool quest_haunted_gen_hook(char *fmt)
 			int monsters[22] = { 65, 100, 124, 125, 133, 231, 273, 327, 365, 416, 418,
 			                     507, 508, 533, 534, 553, 554, 555, 577, 607, 622, 665};
 			int monster = monsters[rand_int(22)];
-			place_monster_one(y, x, monster, 0, FALSE, MSTATUS_ENEMY);
+			m_idx = place_monster_one(y, x, monster, 0, FALSE, MSTATUS_ENEMY);
+			m_list[m_idx].mflag |= MFLAG_QUEST;
 			--i;
 		}
 	}

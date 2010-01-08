@@ -338,7 +338,11 @@ bool quest_one_gen_hook(char *fmt)
 		try--;
 	}
 
-	if (try) place_monster_one(y, x, test_monster_name("Sauron, the Sorcerer"), 0, FALSE, MSTATUS_ENEMY);
+	if (try)
+	{
+		int m_idx = place_monster_one(y, x, test_monster_name("Sauron, the Sorcerer"), 0, FALSE, MSTATUS_ENEMY);
+		if (m_idx) m_list[m_idx].mflag |= MFLAG_QUEST;
+	}
 
 	return (FALSE);
 }

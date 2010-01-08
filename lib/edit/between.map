@@ -23,16 +23,16 @@ F:G:89:5:955
 F:L:89:5:956
 
 # Floor with grass with a brown thunderlord
-F:B:89:5:957
+F:B:89:5:957:0:0:0:0:0:0:2
 
 # Floor with grass with a bronze thunderlord
-F:z:89:5:958
+F:z:89:5:958:0:0:0:0:0:0:2
 
 # Floor with dirt with a bronze thunderlord
-F:Z:88:5:958
+F:Z:88:5:958:0:0:0:0:0:0:2
 
-# Floor with grass with a gold thunderlord
-F:D:88:5:959
+# Floor with dirt with a gold thunderlord
+F:D:88:5:959:0:0:0:0:0:0:2
 
 D:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 D:X..T.TT..T...T...T...T.....T....T......T...T.,,.....T......T....T...T.T..T..TT...T..T.TT.T.TT.TX

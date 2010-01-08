@@ -14,13 +14,13 @@ F:<:6:0
 F:.:88:0
 
 # Lesser Balrog
-F:b:88:0:996
+F:b:88:0:996:0:0:0:0:0:0:2
 
 # Greater Balrog
-F:B:88:0:807
+F:B:88:0:807:0:0:0:0:0:0:2
 
 # Pit Fiend
-F:P:88:0:812
+F:P:88:0:812:0:0:0:0:0:0:2
 
 # Dungeon layout
 D:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX

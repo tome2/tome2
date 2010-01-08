@@ -14,28 +14,28 @@ F:s:88:5
 F:V:84:5
 
 # Dirt with Olog
-F:a:88:5:538
+F:a:88:5:538:0:0:0:0:0:0:2
 
 # Dirt with Cave Troll
-F:b:88:5:496
+F:b:88:5:496:0:0:0:0:0:0:2
 
 # Dirt with with Eldrak
-F:c:88:1:620
+F:c:88:1:620:0:0:0:0:0:0:2
 
 # Dirt with with Ettin
-F:e:88:1:621
+F:e:88:1:621:0:0:0:0:0:0:2
 
 # Dirt with with War troll
-F:f:88:1:631
+F:f:88:1:631:0:0:0:0:0:0:2
 
 # Dirt with with Hru
-F:g:88:1:709
+F:g:88:1:709:0:0:0:0:0:0:2
 
 # Dirt with Ulik the Troll
-F:h:88:5:729
+F:h:88:5:729:0:0:0:0:0:0:2
 
 # Dirt with Ancient green dragon
-F:i:88:5:618
+F:i:88:5:618:0:0:0:0:0:0:2
 
 # Dungeon
 D:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX

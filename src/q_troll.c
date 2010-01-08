@@ -48,6 +48,8 @@ bool quest_troll_gen_hook(char *fmt)
 					/* Get local object */
 					object_type forge, *q_ptr = &forge;
 
+					m_list[m_idx].mflag |= MFLAG_QUEST;
+
 					a_allow_special[ART_GLAMDRING] = TRUE;
 
 					/* Mega-Hack -- Prepare to make "Glamdring" */

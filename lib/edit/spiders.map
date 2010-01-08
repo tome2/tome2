@@ -20,10 +20,10 @@ F:b:89:3:275
 F:c:89:3:277
 
 # Grass with Aranea
-F:d:89:3:963
+F:d:89:3:963:0:0:0:0:0:0:2
 
 # Grass with Elder aranea
-F:e:89:3:964
+F:e:89:3:964:0:0:0:0:0:0:2
 
 # Dungeon layout
 D:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX

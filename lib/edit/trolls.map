@@ -17,19 +17,19 @@ F:.:88:3
 F:;:89:3
 
 # Floor with forest troll
-F:f:89:3:297
+F:f:89:3:297:0:0:0:0:0:0:2
 
 # Floor with stone troll
-F:s:89:3:401
+F:s:89:3:401:0:0:0:0:0:0:2
 
 # Floor with algroth
-F:a:89:3:424
+F:a:89:3:424:0:0:0:0:0:0:2
 
 # Floor with Bert
-F:b:89:3:493
+F:b:89:3:493:0:0:0:0:0:0:2
 
 # Floor with Bill
-F:i:89:3:494
+F:i:89:3:494:0:0:0:0:0:0:2
 
 # Floor with a Dwarven skeleton
 F:k:89:8:0:396

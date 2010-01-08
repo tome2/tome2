@@ -48,6 +48,8 @@ bool quest_wight_gen_hook(char *fmt)
 					/* Get local object */
 					object_type forge, *q_ptr = &forge;
 
+					m_list[m_idx].mflag |= MFLAG_QUEST;
+
 					/* Prepare to make the  */
 					object_prep(q_ptr, lookup_kind(TV_SOFT_ARMOR, SV_FILTHY_RAG));
 

@@ -157,15 +157,8 @@ bool quest_thrain_gen_hook(char *fmt)
 
 				m_allow_special[test_monster_name("Thrain, the King Under the Mountain")] = TRUE;
 				i = place_monster_one(y, x, test_monster_name("Thrain, the King Under the Mountain"), 0, FALSE, MSTATUS_NEUTRAL);
+				if (i) m_list[i].mflag |= MFLAG_QUEST;
 				m_allow_special[test_monster_name("Thrain, the King Under the Mountain")] = FALSE;
-			}
-			if (cave[y][x].m_idx)
-			{
-				m_ptr = &m_list[cave[y][x].m_idx];
-				if ((m_ptr->r_idx == test_monster_name("Dwar, Dog Lord of Waw")) || (m_ptr->r_idx == test_monster_name("Hoarmurath of Dir")))
-				{
-					m_ptr->mflag |= MFLAG_QUEST;
-				}
 			}
 		}
 

@@ -64,6 +64,7 @@ bool quest_eol_gen_hook(char *fmt)
 				m_allow_special[test_monster_name("Eol, the Dark Elf")] = TRUE;
 				m_idx = place_monster_one(y, x, test_monster_name("Eol, the Dark Elf"), 0, FALSE, MSTATUS_ENEMY);
 				m_allow_special[test_monster_name("Eol, the Dark Elf")] = FALSE;
+				if (m_idx) m_list[m_idx].mflag |= MFLAG_QUEST;
 			}
 
 			if (magik(18))

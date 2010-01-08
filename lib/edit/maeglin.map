@@ -11,7 +11,7 @@ F:X:63:3
 F:<:172:3
 
 # up stairs with maeglin
-F:{:6:3:825
+F:{:6:3:825:0:0:0:0:0:0:2
 
 # Floor with dirt
 F:.:88:5
@@ -56,7 +56,7 @@ F:R:88:5:644
 F:O:88:5:645
 
 # Floor with dirt with a Lesser Balrog
-F:U:88:5:996
+F:U:88:5:996:0:0:0:0:0:0:2
 
 # Granite wall
 F:#:56:5

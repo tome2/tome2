@@ -5,7 +5,7 @@ bool quest_shroom_speak_hook(char *fmt);
 
 bool quest_shroom_town_gen_hook(char *fmt)
 {
-	int x = 1, y = 1, try = 10000;
+	int m_idx, x = 1, y = 1, try = 10000;
 	s32b small;
 
 	small = get_next_arg(fmt);
@@ -34,19 +34,22 @@ bool quest_shroom_town_gen_hook(char *fmt)
 		y = rand_range((cur_hgt / 2) - 5, (cur_hgt / 2) + 5);
 		x = rand_range((cur_wid / 2) - 7, (cur_wid / 2) + 7);
 		m_allow_special[test_monster_name("Grip, Farmer Maggot's dog")] = TRUE;
-		place_monster_one(y, x, test_monster_name("Grip, Farmer Maggot's dog"), 0, FALSE, MSTATUS_ENEMY);
+		m_idx = place_monster_one(y, x, test_monster_name("Grip, Farmer Maggot's dog"), 0, FALSE, MSTATUS_ENEMY);
+		if (m_idx) m_list[m_idx].mflag |= MFLAG_QUEST;
 		m_allow_special[test_monster_name("Grip, Farmer Maggot's dog")] = FALSE;
 
 		y = rand_range((cur_hgt / 2) - 5, (cur_hgt / 2) + 5);
 		x = rand_range((cur_wid / 2) - 7, (cur_wid / 2) + 7);
 		m_allow_special[test_monster_name("Wolf, Farmer Maggot's dog")] = TRUE;
-		place_monster_one(y, x, test_monster_name("Wolf, Farmer Maggot's dog"), 0, FALSE, MSTATUS_ENEMY);
+		m_idx = place_monster_one(y, x, test_monster_name("Wolf, Farmer Maggot's dog"), 0, FALSE, MSTATUS_ENEMY);
+		if (m_idx) m_list[m_idx].mflag |= MFLAG_QUEST;
 		m_allow_special[test_monster_name("Wolf, Farmer Maggot's dog")] = FALSE;
 
 		y = rand_range((cur_hgt / 2) - 5, (cur_hgt / 2) + 5);
 		x = rand_range((cur_wid / 2) - 7, (cur_wid / 2) + 7);
 		m_allow_special[test_monster_name("Fang, Farmer Maggot's dog")] = TRUE;
-		place_monster_one(y, x, test_monster_name("Fang, Farmer Maggot's dog"), 0, FALSE, MSTATUS_ENEMY);
+		m_idx = place_monster_one(y, x, test_monster_name("Fang, Farmer Maggot's dog"), 0, FALSE, MSTATUS_ENEMY);
+		if (m_idx) m_list[m_idx].mflag |= MFLAG_QUEST;
 		m_allow_special[test_monster_name("Fang, Farmer Maggot's dog")] = FALSE;
 
 		msg_print("You hear frenzied barking.");

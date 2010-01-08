@@ -23,19 +23,19 @@ F:d:4:6
 F:<:6:8
 
 # Floor with Novice rogue
-F:a:1:6:44
+F:a:1:6:44:0:0:0:0:0:0:2
 
 # Floor with Bandit
-F:b:1:6:150:43:*
+F:b:1:6:150:43:*:0:0:0:0:2
 
 # Floor with novice warrior
-F:c:1:6:43
+F:c:1:6:43:0:0:0:0:0:0:2
 
 # Floor with novice mage
-F:e:1:6:46
+F:e:1:6:46:0:0:0:0:0:0:2
 
 # Dark floor with novice warrior
-F:f:1:4:43
+F:f:1:4:43:0:0:0:0:0:0:2
 
 # Floor with human skeleton
 F:z:1:6:0:395

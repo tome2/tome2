@@ -10956,6 +10956,7 @@ struct dungeon_grid
 	int	random; 			/* Number of the random effect */
 	int bx, by;                  /* For between gates */
 	int mimic;                   /* Mimiced features */
+	s32b mflag;			/* monster's mflag */
 	bool ok;
 	bool defined;
 };
@@ -11007,12 +11008,12 @@ static errr process_dungeon_file_aux(char *buf, int *yval, int *xval, int xvalst
 		return (0);
 	}
 
-	/* Process "F:<letter>:<terrain>:<cave_info>:<monster>:<object>:<ego>:<artifact>:<trap>:<special>:<mimic>" -- info for dungeon grid */
+	/* Process "F:<letter>:<terrain>:<cave_info>:<monster>:<object>:<ego>:<artifact>:<trap>:<special>:<mimic>:<mflag>" -- info for dungeon grid */
 	if (buf[0] == 'F')
 	{
 		int num;
 
-		if ((num = tokenize(buf + 2, 10, zz, ':', '/')) > 1)
+		if ((num = tokenize(buf + 2, 11, zz, ':', '/')) > 1)
 		{
 			int index = zz[0][0];
 
@@ -11027,6 +11028,7 @@ static errr process_dungeon_file_aux(char *buf, int *yval, int *xval, int xvalst
 			letter[index].special = 0;
 			letter[index].random = 0;
 			letter[index].mimic = 0;
+			letter[index].mflag = 0;
 			letter[index].ok = TRUE;
 			letter[index].defined = TRUE;
 
@@ -11170,6 +11172,11 @@ static errr process_dungeon_file_aux(char *buf, int *yval, int *xval, int xvalst
 				letter[index].mimic = atoi(zz[9]);
 			}
 
+			if (num > 10)
+			{
+				letter[index].mflag = atoi(zz[10]);
+			}
+
 			return (0);
 		}
 	}
@@ -11205,7 +11212,7 @@ static errr process_dungeon_file_aux(char *buf, int *yval, int *xval, int xvalst
 	/* Process "D:<dungeon>" -- info for the cave grids */
 	else if (buf[0] == 'D')
 	{
-		int x;
+		int x, m_idx = 0;
 
 		object_type object_type_body;
 
@@ -11253,7 +11260,7 @@ static errr process_dungeon_file_aux(char *buf, int *yval, int *xval, int xvalst
 
 				monster_level = quest[p_ptr->inside_quest].level + monster_index;
 
-				place_monster(y, x, meta_sleep, FALSE);
+				m_idx = place_monster(y, x, meta_sleep, FALSE);
 
 				monster_level = level;
 			}
@@ -11261,9 +11268,12 @@ static errr process_dungeon_file_aux(char *buf, int *yval, int *xval, int xvalst
 			{
 				/* Place it */
 				m_allow_special[monster_index] = TRUE;
-				place_monster_aux(y, x, monster_index, meta_sleep, FALSE, MSTATUS_ENEMY);
+				m_idx = place_monster_aux(y, x, monster_index, meta_sleep, FALSE, MSTATUS_ENEMY);
 				m_allow_special[monster_index] = FALSE;
 			}
+
+			/* Set the mflag of the monster */
+			if (m_idx) m_list[m_idx].mflag |= letter[idx].mflag;
 
 			/* Object (and possible trap) */
 			if ((random & RANDOM_OBJECT) && (random & RANDOM_TRAP))

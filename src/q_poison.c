@@ -74,6 +74,7 @@ bool quest_poison_gen_hook(char *fmt)
 
 				r_idx = get_mon_num(30);
 				m_idx = place_monster_one(y, x, r_idx, 0, FALSE, MSTATUS_ENEMY);
+				if (m_idx) m_list[m_idx].mflag |= MFLAG_QUEST;
 
 				/* Sometimes make it up some levels */
 				if (magik(80) && m_idx)

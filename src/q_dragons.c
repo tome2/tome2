@@ -53,7 +53,7 @@ bool quest_dragons_gen_hook(char *fmt)
 	/* Place some random dragons */
 	for (i = 25; i > 0; )
 	{
-		int flags;
+		int m_idx, flags;
 		y = rand_int(21) + 3;
 		x = rand_int(31) + 3;
 		flags = f_info[cave[y][x].feat].flags1;
@@ -79,7 +79,8 @@ bool quest_dragons_gen_hook(char *fmt)
 				dragon = mature_dragons[color];
 
 			--i;
-			place_monster_one(y, x, dragon, 0, magik(33), MSTATUS_ENEMY);
+			m_idx = place_monster_one(y, x, dragon, 0, magik(33), MSTATUS_ENEMY);
+			if (m_idx) m_list[m_idx].mflag |= MFLAG_QUEST;
 		}
 	}
 
