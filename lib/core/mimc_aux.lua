@@ -90,6 +90,7 @@ add_mimic_shape
 	["rarity"] =    101,
 	["duration"] =  {20, 100},
 	["calc"] =      function ()
-			apply_flags(TR1_SPEED + TR1_STR + TR1_INT + TR1_WIS + TR1_DEX + TR1_CON + TR1_CHR, 0, TR3_AGGRAVATE, 0, 0, 0, -10)
+			apply_flags(TR1_SPEED + TR1_STR + TR1_INT + TR1_WIS + TR1_DEX + TR1_CON + TR1_CHR, 0, 0, 0, 0, 0, -10)
+			player.xtra_f3 = bor(player.xtra_f3, TR3_AGGRAVATE)
        	end,
 }
