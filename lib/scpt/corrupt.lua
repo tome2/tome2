@@ -91,13 +91,6 @@ CORRUPT_BALROG_FORM = add_corruption
 	},
 	["hooks"]       =
 	{
-		[HOOK_CALC_BONUS] = function()
-			player.xtra_f2 = bor(player.xtra_f2, TR2_IM_ACID)
-			player.xtra_f2 = bor(player.xtra_f2, TR2_IM_FIRE)
-			player.xtra_f2 = bor(player.xtra_f2, TR2_IM_ELEC)
-			player.xtra_f2 = bor(player.xtra_f2, TR2_RES_DARK)
-			player.xtra_f2 = bor(player.xtra_f2, TR2_RES_CHAOS)
-		end,
 		[HOOK_CALC_POWERS] = function()
 			player.add_power(PWR_BALROG)
 		end,

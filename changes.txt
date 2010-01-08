@@ -6,6 +6,8 @@ T.o.M.E 2.3.6
 - Mimicry cloaks of Abomination now aggravate properly.
 - Properly handle item set effects with certain traps.
 - Fix crash bug during character dumps.
+- Misc. Mimicry fixes.
+- Prevent immunities from Balrog Form persisting too long.
 
 
 

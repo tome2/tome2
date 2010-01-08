@@ -58,12 +58,19 @@ add_mimic_shape
 			player.modify_stat(A_WIS, 1)
 			player.modify_stat(A_CHR, -1)
 
-			if player.mimic_level >= 20 then player.fly = TRUE end
-			if player.mimic_level >= 20 then player.see_inv = TRUE end
-			if player.mimic_level >= 25 then player.free_act = TRUE end
-			if player.mimic_level >= 30 then player.resist_elec = TRUE end
-			if player.mimic_level >= 40 then player.sh_elec = TRUE end
-
+			if player.mimic_level >= 20 then
+                player.xtra_f4 = bor(player.xtra_f4, TR4_FLY)
+                player.xtra_f3 = bor(player.xtra_f3, TR3_SEE_INVIS)
+			end
+			if player.mimic_level >= 25 then
+                player.xtra_f2 = bor(player.xtra_f2, TR2_FREE_ACT)
+			end
+			if player.mimic_level >= 30 then
+                player.xtra_f2 = bor(player.xtra_f2, TR2_RES_ELEC)
+			end
+			if player.mimic_level >= 30 then
+                player.xtra_f3 = bor(player.xtra_f3, TR3_SH_ELEC)
+			end
 	end,
 }
 
@@ -84,14 +91,21 @@ add_mimic_shape
 
 			player.pspeed = player.pspeed + 10 + (player.mimic_level / 5)
 
-			player.free_act = TRUE
-			player.resist_fear = TRUE
+            player.xtra_f2 = bor(player.xtra_f2, TR2_FREE_ACT)
+            player.xtra_f2 = bor(player.xtra_f2, TR2_RES_FEAR)
 
-			if player.mimic_level >= 10 then player.resist_cold = TRUE end
-			if player.mimic_level >= 15 then player.see_inv = TRUE end
-			if player.mimic_level >= 30 then player.resist_dark = TRUE end
-			if player.mimic_level >= 35 then player.resist_conf = TRUE end
-
+			if player.mimic_level >= 10 then
+				player.xtra_f2 = bor(player.xtra_f2, TR2_RES_COLD)
+			end
+			if player.mimic_level >= 15 then
+                player.xtra_f3 = bor(player.xtra_f3, TR3_SEE_INVIS)
+			end
+			if player.mimic_level >= 30 then
+				player.xtra_f2 = bor(player.xtra_f2, TR2_RES_DARK)
+			end
+			if player.mimic_level >= 35 then
+				player.xtra_f2 = bor(player.xtra_f2, TR2_RES_CONF)
+			end
 	end,
 }
 
@@ -114,11 +128,13 @@ add_mimic_shape
 
 			player.pspeed = player.pspeed + 5
 
-			player.resist_pois = TRUE
-			player.resist_fear = TRUE
-			player.resist_dark = TRUE
+			player.xtra_f2 = bor(player.xtra_f2, TR2_RES_POIS)
+			player.xtra_f2 = bor(player.xtra_f2, TR2_RES_FEAR)
+			player.xtra_f2 = bor(player.xtra_f2, TR2_RES_DARK)
 
-			if player.mimic_level >= 40 then player.climb = TRUE end
+			if player.mimic_level >= 40 then
+                player.xtra_f4 = bor(player.xtra_f4, TR4_CLIMB)
+			end
 
 	end,
 	["power"] =     function()
@@ -144,13 +160,6 @@ add_mimic_shape
 			player.to_a = player.to_a + 10 + player.mimic_level
 			player.dis_to_a = player.dis_to_a + 10 + player.mimic_level
 
-			player.resist_pois = TRUE
-			player.resist_cold = TRUE
-			player.free_act = TRUE
-			player.regenerate = TRUE
-			player.see_inv = TRUE
-			player.sensible_fire = TRUE
-
 			player.modify_stat(A_STR, player.mimic_level / 5)
 			player.modify_stat(A_INT, - (player.mimic_level / 7))
 			player.modify_stat(A_WIS, - (player.mimic_level / 7))
@@ -158,6 +167,12 @@ add_mimic_shape
 			player.modify_stat(A_CON, player.mimic_level / 5)
 			player.modify_stat(A_CHR, -7)
 
+			player.xtra_f2 = bor(player.xtra_f2, TR2_RES_POIS)
+			player.xtra_f2 = bor(player.xtra_f2, TR2_RES_COLD)
+            player.xtra_f2 = bor(player.xtra_f2, TR2_FREE_ACT)
+            player.xtra_f3 = bor(player.xtra_f3, TR3_REGEN)
+            player.xtra_f3 = bor(player.xtra_f3, TR3_SEE_INVIS)
+            player.xtra_f2 = bor(player.xtra_f2, TR2_SENS_FIRE)
 	end,
 	["power"] =     function ()
 			player.add_power(PWR_GROW_TREE)
@@ -185,22 +200,22 @@ add_mimic_shape
 			player.to_h = player.to_h - 40
 			player.dis_to_h = player.dis_to_h -40
 
-			-- But they are stealthy
-			player.skill_stl = player.skill_stl + 10 + (player.mimic_level / 5)
-			player.resist_pois = TRUE
-			player.immune_cold = TRUE
-			player.resist_shard = TRUE
-			player.free_act = TRUE
-			player.regenerate = TRUE
-			player.see_inv = TRUE
-			player.sensible_fire = TRUE
-			player.levitate = TRUE
-
 			-- Stat mods
 			player.modify_stat(A_STR, -4)
 			player.modify_stat(A_DEX, 5)
 			player.modify_stat(A_CON, -4)
 			player.modify_stat(A_CHR, -10)
+
+			-- But they are stealthy
+			player.skill_stl = player.skill_stl + 10 + (player.mimic_level / 5)
+			player.xtra_f2 = bor(player.xtra_f2, TR2_RES_POIS)
+			player.xtra_f2 = bor(player.xtra_f2, TR2_RES_SHARDS)
+			player.xtra_f2 = bor(player.xtra_f2, TR2_IM_COLD)
+            player.xtra_f2 = bor(player.xtra_f2, TR2_FREE_ACT)
+            player.xtra_f3 = bor(player.xtra_f3, TR3_REGEN)
+            player.xtra_f3 = bor(player.xtra_f3, TR3_SEE_INVIS)
+            player.xtra_f2 = bor(player.xtra_f2, TR2_SENS_FIRE)
+            player.xtra_f3 = bor(player.xtra_f3, TR3_FEATHER)
 	end,
 }
 
@@ -225,8 +240,10 @@ add_mimic_shape
 			player.modify_stat(A_CON, player.mimic_level / 7)
 			player.modify_stat(A_CHR, -6)
 
-			player.resist_pois = TRUE
-			if player.mimic_level >= 25 then player.free_act = TRUE end
+			player.xtra_f2 = bor(player.xtra_f2, TR2_RES_POIS)
+			if player.mimic_level >= 25 then
+            	player.xtra_f2 = bor(player.xtra_f2, TR2_FREE_ACT)
+			end
 	end,
 }
 
@@ -253,10 +270,18 @@ add_mimic_shape
 			player.modify_stat(A_CON, player.mimic_level / 3)
 			player.modify_stat(A_CHR, -10)
 
-			if player.mimic_level >= 10 then player.resist_fear = TRUE end
-			if player.mimic_level >= 25 then player.resist_conf = TRUE end
-			if player.mimic_level >= 30 then player.free_act = TRUE end
-			if player.mimic_level >= 35 then player.resist_nexus = TRUE end
+			if player.mimic_level >= 10 then
+				player.xtra_f2 = bor(player.xtra_f2, TR2_RES_FEAR)
+			end
+			if player.mimic_level >= 25 then
+				player.xtra_f2 = bor(player.xtra_f2, TR2_RES_CONF)
+			end
+			if player.mimic_level >= 30 then
+            	player.xtra_f2 = bor(player.xtra_f2, TR2_FREE_ACT)
+			end
+			if player.mimic_level >= 35 then
+				player.xtra_f2 = bor(player.xtra_f2, TR2_RES_NEXUS)
+			end
 	end,
 }
 
@@ -285,10 +310,18 @@ add_mimic_shape
 			player.modify_stat(A_CON, player.mimic_level / 11)
 			player.modify_stat(A_CHR, -10)
 
-			if player.mimic_level >= 10 then player.free_act = TRUE end
-			if player.mimic_level >= 20 then player.regenerate = TRUE end
-			if player.mimic_level >= 30 then player.resist_conf = TRUE end
-			if player.mimic_level >= 35 then player.resist_nexus = TRUE end
+			if player.mimic_level >= 10 then
+            	player.xtra_f2 = bor(player.xtra_f2, TR2_FREE_ACT)
+			end
+			if player.mimic_level >= 20 then
+	            player.xtra_f3 = bor(player.xtra_f3, TR3_REGEN)
+			end
+			if player.mimic_level >= 30 then
+				player.xtra_f2 = bor(player.xtra_f2, TR2_RES_CONF)
+			end
+			if player.mimic_level >= 35 then
+				player.xtra_f2 = bor(player.xtra_f2, TR2_RES_NEXUS)
+			end
 
 			-- activate the skill
 			skill(SKILL_BEAR).hidden = FALSE
@@ -313,16 +346,17 @@ add_mimic_shape
 			player.modify_stat(A_CON, 5 + player.mimic_level / 5)
 			player.modify_stat(A_CHR, - ( 5 + player.mimic_level / 10))
 
-			player.immune_fire = TRUE
-			player.immune_elec = TRUE
-			player.immune_acid = TRUE
-			player.resist_pois = TRUE
-			player.resist_dark = TRUE
-			player.resist_chaos = TRUE
-			player.hold_life = TRUE
-			player.ffall =  TRUE
-			player.regenerate = TRUE
-			player.sh_fire = TRUE
+			player.xtra_f2 = bor(player.xtra_f2, TR2_IM_ACID)
+			player.xtra_f2 = bor(player.xtra_f2, TR2_IM_FIRE)
+			player.xtra_f2 = bor(player.xtra_f2, TR2_IM_ELEC)
+			player.xtra_f2 = bor(player.xtra_f2, TR2_RES_DARK)
+			player.xtra_f2 = bor(player.xtra_f2, TR2_RES_CHAOS)
+			player.xtra_f2 = bor(player.xtra_f2, TR2_RES_POIS)
+			player.xtra_f2 = bor(player.xtra_f2, TR2_HOLD_LIFE)
+			player.xtra_f3 = bor(player.xtra_f3, TR3_FEATHER)
+			player.xtra_f3 = bor(player.xtra_f3, TR3_REGEN)
+			player.xtra_f3 = bor(player.xtra_f3, TR3_SH_FIRE)
+			player.xtra_f3 = bor(player.xtra_f3, TR3_LITE1)
 			return 1
 	end,
 }
@@ -345,17 +379,17 @@ add_mimic_shape
 			player.modify_stat(A_CON, 5 + player.mimic_level / 5)
 			player.modify_stat(A_CHR, 5 + player.mimic_level / 5)
 
-			player.immune_fire = TRUE
-			player.immune_elec = TRUE
-			player.immune_acid = TRUE
-			player.immune_cold = TRUE
-			player.resist_pois = TRUE
-			player.resist_lite = TRUE
-			player.resist_dark = TRUE
-			player.resist_chaos = TRUE
-			player.hold_life = TRUE
-			player.ffall = TRUE
-			player.regenerate = TRUE
+			player.xtra_f2 = bor(player.xtra_f2, TR2_IM_FIRE)
+			player.xtra_f2 = bor(player.xtra_f2, TR2_IM_ELEC)
+			player.xtra_f2 = bor(player.xtra_f2, TR2_IM_ACID)
+			player.xtra_f2 = bor(player.xtra_f2, TR2_IM_COLD)
+			player.xtra_f2 = bor(player.xtra_f2, TR2_RES_POIS)
+			player.xtra_f2 = bor(player.xtra_f2, TR2_RES_LITE)
+			player.xtra_f2 = bor(player.xtra_f2, TR2_RES_DARK)
+			player.xtra_f2 = bor(player.xtra_f2, TR2_RES_CHAOS)
+			player.xtra_f2 = bor(player.xtra_f2, TR2_HOLD_LIFE)
+			player.xtra_f3 = bor(player.xtra_f3, TR3_FEATHER)
+			player.xtra_f3 = bor(player.xtra_f3, TR3_REGEN)
 			return 2
 	end,
 }
@@ -375,11 +409,11 @@ add_mimic_shape
 			player.modify_stat(A_DEX, 5 + (player.mimic_level / 5))
 			player.modify_stat(A_WIS, -5 - (player.mimic_level / 5))
 
-			player.immune_fire = TRUE
+			player.xtra_f2 = bor(player.xtra_f2, TR2_IM_FIRE)
 			-- was immune to poison in the 3.0.0 version
-			player.resist_pois = TRUE
-			player.sh_fire = TRUE
-			player.lite = TRUE
+			player.xtra_f2 = bor(player.xtra_f2, TR2_RES_POIS)
+			player.xtra_f3 = bor(player.xtra_f3, TR3_SH_FIRE)
+			player.xtra_f3 = bor(player.xtra_f3, TR3_LITE1)
 			return 0
 	end,
 }
