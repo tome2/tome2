@@ -2503,6 +2503,8 @@ static int extra_blows;
 static int extra_shots;
 void apply_flags(u32b f1, u32b f2, u32b f3, u32b f4, u32b f5, u32b esp, s16b pval, s16b tval, s16b to_h, s16b to_d, s16b to_a)
 {
+        s16b antimagic_mod;
+
 	/* Affect stats */
 	if (f1 & (TR1_STR)) p_ptr->stat_add[A_STR] += pval;
 	if (f1 & (TR1_INT)) p_ptr->stat_add[A_INT] += pval;
@@ -2618,16 +2620,16 @@ void apply_flags(u32b f1, u32b f2, u32b f3, u32b f4, u32b f5, u32b esp, s16b pva
 
 	if (f4 & (TR4_PRECOGNITION)) p_ptr->precognition = TRUE;
 
+        antimagic_mod = to_h + to_d + pval + to_a;
+
 	if (f4 & (TR4_ANTIMAGIC_50))
 	{
 		s32b tmp;
 
-		tmp = 10 + get_skill_scale(SKILL_ANTIMAGIC, 40)
-		      - to_h - to_d - pval - to_a;
+                tmp = 10 + get_skill_scale(SKILL_ANTIMAGIC, 40) - antimagic_mod;
 		if (tmp > 0) p_ptr->antimagic += tmp;
 
-		tmp = 1 + get_skill_scale(SKILL_ANTIMAGIC, 4)
-		      - (to_h + to_d + pval + to_a) / 15;
+                tmp = 1 + get_skill_scale(SKILL_ANTIMAGIC, 4) - antimagic_mod / 15;
 		if (tmp > 0) p_ptr->antimagic_dis += tmp;
 	}
 
@@ -2635,12 +2637,10 @@ void apply_flags(u32b f1, u32b f2, u32b f3, u32b f4, u32b f5, u32b esp, s16b pva
 	{
 		s32b tmp;
 
-		tmp = 7 + get_skill_scale(SKILL_ANTIMAGIC, 33)
-		      - to_h - to_d - pval - to_a;
+                tmp = 7 + get_skill_scale(SKILL_ANTIMAGIC, 33) - antimagic_mod;
 		if (tmp > 0) p_ptr->antimagic += tmp;
 
-		tmp = 1 + get_skill_scale(SKILL_ANTIMAGIC, 2)
-		      - (to_h + to_d + pval + to_a) / 15;
+                tmp = 1 + get_skill_scale(SKILL_ANTIMAGIC, 2) - antimagic_mod / 15;
 		if (tmp > 0) p_ptr->antimagic_dis += tmp;
 	}
 
@@ -2648,8 +2648,7 @@ void apply_flags(u32b f1, u32b f2, u32b f3, u32b f4, u32b f5, u32b esp, s16b pva
 	{
 		s32b tmp;
 
-		tmp = 5 + get_skill_scale(SKILL_ANTIMAGIC, 15)
-		      - to_h - to_d - pval - to_a;
+                tmp = 5 + get_skill_scale(SKILL_ANTIMAGIC, 15) - antimagic_mod;
 		if (tmp > 0) p_ptr->antimagic += tmp;
 
 		p_ptr->antimagic_dis += 2;
@@ -2659,8 +2658,7 @@ void apply_flags(u32b f1, u32b f2, u32b f3, u32b f4, u32b f5, u32b esp, s16b pva
 	{
 		s32b tmp;
 
-		tmp = 1 + get_skill_scale(SKILL_ANTIMAGIC, 9)
-		      - to_h - to_d - pval - to_a;
+                tmp = 1 + get_skill_scale(SKILL_ANTIMAGIC, 9) - antimagic_mod;
 		if (tmp > 0) p_ptr->antimagic += tmp;
 
 		p_ptr->antimagic_dis += 1;
