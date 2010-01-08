@@ -9,6 +9,7 @@ T.o.M.E 2.3.6
 - Misc. Mimicry fixes.
 - Prevent immunities from Balrog Form persisting too long.
 - Fix for loading/saving on Linux distribution using Fortify.
+- Fix for module directory paths.
 
 
 

@@ -19,7 +19,7 @@ static void module_reset_dir_aux(cptr *dir, cptr new_path)
 	char buf[1024];
 
 	/* Build the new path */
-	strnfmt(buf, sizeof (buf), "%s%s%s", dir, PATH_SEP, new_path);
+	strnfmt(buf, sizeof (buf), "%s%s%s", *dir, PATH_SEP, new_path);
 
 	string_free(*dir);
 	*dir = string_make(buf);
