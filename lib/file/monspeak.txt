@@ -1,0 +1,361 @@
+# This is the file for allowing uniques to speak their "own" lines.
+# Deleting this file will have no real effect on the game.  Modifying it may
+# cause STRANGE unique lines to come up if the format's wrong, but shouldn't
+# crash anything.  The format goes like so:
+# 
+# N:45:whoever this is
+# 3
+# says bravado line 1
+# says bravado line 2
+# says bravado line 3
+# 2
+# says fear line 1
+# says fear line 2
+#
+# The number after the N: is the "monster index number" obtained from
+# r_info.txt.  The text field after that number isn't actually used--it's
+# just there to help humans edit the file.  The numbers on lines by
+# themselves say the number of "bravado" and "fear" lines.  Getting these
+# numbers wrong won't crash anything, but will produce strange lines.
+#
+# Two or more monsters can share lines; just put their N: lines in a
+# contiguous block.
+#
+# To stop a certain monster from having unique lines, put a # in front of
+# its N: line.
+#
+# Have fun with this!     --Matt G
+
+N:8:Farmer Maggot
+3
+says, 'I'm carrying CASH!'
+smirks, 'You wouldn't kill me, would you?'
+gleefully shows off a nifty object he just bought.
+2
+screams, 'Don't hurt a poor helpless hobbit!'
+yells, 'Where are my vicious dogs when I need them?'
+
+N:63:Smeagol
+27
+sniggers.
+grovels.
+picks his nose.
+pines for his precious.
+searches his pockets.
+eats some slimy creatures.
+mutters, 'My precious, wheres my precious?'
+shouts, 'No Master Hobbitsisisisis!'
+cries, 'The ring was ours for agesisisisis!'
+says, 'Smeagol sneeking! ME! Shneekingsisis!'
+screams, 'Nasty Hobbitsisisisis...'
+says, 'Come on, quickly, follow Smeagol'
+says, 'Every way is guarded, silly foolsis!'
+says, 'Nasty Bagginis, stole my precious.'
+says, 'She will kill them oh yes she will precious.'
+whines, 'Weees wants some fishises.'
+says, 'Whats has its got in its pocketses, hmmm?'
+whimpers, 'We've lost itses we have.'
+says, 'He'll eastus all the world if he getsitses it.'
+says, 'No food, no rest; Smeagol a SNEAK!'
+says, 'What a dainty little dish you will be for her.'
+says, 'Hobbitses always SOOOO Polite.'
+screams, 'Stop, Thief!'
+says, 'Makeses him drop his weapon precious.'
+grovels, 'He has only four fingers on the black hand.'
+growls, 'Not nice Hobbits, not sensible!'
+says, 'If you findesis it, give it us back.'
+3
+says, 'Don't hurt us, mastersisis.'
+says, 'Poor Smeagol, poor Smeagol.'
+says, 'No AH! Don't hurtsis us.'
+
+N:135:Mughash the Kobold Lord
+4
+says, 'I may be a kobold, but I can beat you!'
+says, 'Feel my wrath, fool!'
+says, 'Death and destruction make me happy!'
+snickers evilly.
+2
+screams, 'Cowards! Why did you abandon me?'
+begs for mercy.
+
+N:137:Wormtongue, Agent of Saruman
+6
+whines and sniggers.
+leafs through 'Cowards Monthly.'
+whispers nasty things.
+says, 'I'll slaughter you slowly...'
+giggles as he fingers his knife.
+says, 'Now, you shall taste my wrath!'
+3
+begs you to spare his miserable life.
+whines, 'This is not my fault!'
+screams, 'Help! Help!'
+
+N:138:Robin Hood, the Outlaw
+6
+eyes your money pouch covetously.
+says, 'You look like Nottingham's man to me!'
+says, 'I bet I can shoot better than you...'
+says, 'Give 'til it hurts!'
+says, 'Don't force me to put an arrow in your skull...'
+says, 'Kevin Costner has soiled my name!'
+3
+begs you to spare his life.
+says, 'But I'm a GOOD guy, really!'
+says, 'Money? Sure, take it all back!'
+
+#N:169:Brodda, the Easterling
+#N:291:Ulfast, Son of Ulfang
+
+N:180:Orfax, Son of Boldor
+N:237:Boldor, King of the Yeeks
+5
+wonders aloud about the quality of your weapon.
+spouts torrents of taunts.
+shouts, 'YEEK! YEEK! YEEK!'
+says, 'I'll teach you to respect yeeks!'
+says, 'Feel lucky, punk?'
+2
+sobs, 'I didn't MEAN it...'
+whimpers and moans.
+
+N:200:Hobbes the Tiger
+4
+says, 'Why were people put here? TIGER FOOD!'
+says, 'Yum! Adventurer sandwiches!'
+says, 'I ate Calvin, now I'll eat YOU!'
+says, 'I'll make your short life nasty and brutish!'
+1
+yells, 'Ow! Get me back to the comics!'
+
+N:140:Lagduf, the Snaga
+N:186:Grishnakh, the Hill Orc
+N:215:Golfimbul, the Hill Orc Chief
+N:260:Ufthak of Cirith Ungol
+N:314:Shagrat, the Orc Captain
+N:315:Gorbag, the Orc Captain
+N:330:Bolg, Son of Azog
+N:350:Ugluk, the Uruk
+N:356:Lugdush, the Uruk
+N:373:Azog, King of the Uruk-Hai
+19
+fingers his blade and grins evilly.
+snickers, 'Now, I strike a blow for *our* side!'
+says, 'Orcs don't get no respect... I'm gonna change that!'
+calls your mother nasty names.
+says, 'I'll bet your innards would taste real sweet...'
+belches and spits.
+scratches his armpits.
+says, 'I love the smell of fresh blood.'
+says, 'Yeeha! Another idiot to slaughter!'
+hawks a loogie in your direction.
+farts thunderously.
+wonders aloud how many experience points you're worth.
+says, 'I love being psychotic!'
+says, 'My brain's on fire with the feeling to kill!'
+says, 'I shall torture you slowly.'
+calls you a scum-sucking pig-dog.
+says, 'I shall break you!'
+says, 'You're not so tough, loser!'
+says, 'Heh-heh, heh-heh, killing people is cool.'
+6
+screams, 'Hey, orcs have rights too!'
+says, 'You're just prejudiced against orc-kind, aren't you?'
+begs, 'Spare me and I'll get you Ringil! Really!'
+says, 'Next time, I'm bringing more Uruks with me!'
+says, 'Don't hate me because I'm ugly!'
+whimpers and grovels.
+
+N:382:Mime, the Nibelung
+4
+says, 'Wagner misrepresented us!'
+says, 'I'll mess up all your stuff!'
+says, 'Give me the Rheingold, or die!'
+hums 'Ride of the Valkyries.'
+1
+screams, 'Help! Murder! Murder!'
+
+#N:392:Sangahyando of Umbar
+#N:380:Angamaite of Umbar
+
+#This next may be unnecessarily evil... :-]
+
+N:393:It
+6
+says, 'Nyah, nyah, betcha can't find me!'
+says, 'Come get some!'
+magically summons mighty undead opponents!
+chuckles evilly.
+magically summons Cyberdemons!
+summons special opponents!
+2
+howls, 'I'll be back!'
+whimpers, 'They said this invisibility thing was better than it is!'
+
+N:441:Barney the Dinosaur
+7
+says, 'Cooperation! That's the magic word!'
+mutters, 'I *hate* those Teletubbies...'
+says, 'Won't you be my friend?'
+says, 'Let's all sing a HAPPY SONG!'
+mugs for the camera.
+simpers disgustingly.
+chews up a 'Tinky Winky' doll.
+3
+begs, 'Don't! Think of the children!'
+screams, 'But I'm a big TV star!'
+sobs, 'All right! I apologise! I really really do!'
+
+N:505:Groo the Wanderer
+4
+says: 'A fray! A fray!'
+says: 'Groo does what Groo does best!'
+says: 'All right, you savage, mindless creature. Prepare to meet your equal!'
+says: 'I will slay you, and hack you, and waste you, and destroy you!'
+3
+says: 'Did I err?'
+says: 'I did not think Groo could be frightened...'
+says: 'I need no aid! Groo is beyond help!'
+
+N:934:Fangorn the Treebeard
+6
+says: 'The night stretches out on the Isengard!'
+says: 'Trolls are strong, Ents are STRONGER!'
+says: 'Saruman will now stop using his axes on the trees...'
+says: 'have you seen some Ent women ?'
+says: 'I will crush all those burarum ... those orcs!'
+says: 'I am totally of the side of nobody since nobody is totally of my side...'
+0
+
+N:732:Bull Gates
+10
+says, '640K should be enough for ANYBODY!'
+says, 'Buy Windows 2000; the filesystem rocks!'
+says, 'Linux?  Never heard of it...'
+says, 'Resistance is futile--you will be assimilated.'
+says, 'NT is the solution for ALL your needs!'
+hacks out some code and calls it a Service Pack.
+says, 'We don't have a monopoly... Mac OS still exists!'
+wonders if he should buy a small country.
+says, 'Where will we let you go today?  The Recycle Bin!'
+cackles diabolically.
+3
+sobs, 'OK, Linux doesn't suck. Let me live?'
+screams, 'Is megalomania THAT bad?'
+apologises for MS-DOS.
+
+N:733:Santa Claus
+8
+says, 'Ho ho ho! You're gonna die!'
+says, 'You're gettin' COAL in your stocking!'
+says, 'On Smasher, on Crasher, now dash away all!'
+chortles sadistically.
+says, 'You're on the Naughty List!'
+says, 'No presents for you, ever!'
+says, 'I'll sic my man-eating reindeer on you!'
+says, 'I hate Christmas so much that I've gone psychotic!'
+3
+sobs, 'Think of the children you'll disappoint!'
+sobs, 'No, Virginia, there isn't... not any more...'
+attempts to buy you off with offers of goodies.
+
+N:764:Uriel, Angel of Fire
+N:765:Azriel, Angel of Death
+N:769:Gabriel, the Messenger
+7
+says, 'Repent, evildoer!'
+says, 'My righteousness shall cleanse you!'
+says, 'Don't EVER steal from the collection plate!'
+says, 'God may love you, but *I* don't!'
+says, 'I shall smite thee with extreme prejudice!'
+says, 'Hope you like eternal damnation!'
+says, 'Verily, it is too late for thee.'
+3
+screams, 'Help! I am undone!'
+says, 'The Most High hath ordained this; I must follow.'
+screams, 'My God, my God, why hast thou forsaken me?'
+
+
+N:850:Carcharoth, the Jaws of Thirst
+N:846:Fenris Wolf
+N:840:Draugluin, Sire of All Werewolves
+8
+barks and bellows frighteningly!
+says, 'Oh good, another chew toy!'
+says, 'Yummy! I was getting tired of chicken...'
+lets out an earsplitting howl.
+drools all over the dungeon.
+lifts his leg at the nearest wall.
+says, 'Bad adventurer! No more living for you!'
+snarls and howls.
+3
+cringes and whimpers.
+says, 'Look, I promise I won't bite the mailman anymore!'
+says, 'Hey, put that rolled-up newspaper down!'
+
+N:830:Cantoras, the Skeletal Lord
+N:831:Mephistopheles, Lord of Hell
+N:818:The Mouth of Sauron
+N:819:Klingsor, Evil Master of Magic
+N:804:Vecna, the Emperor Lich
+N:844:Feagwath the Undead Sorceror
+N:856:Gothmog, the High Captain of Balrogs
+N:860:Sauron, the Sorcerer
+12
+brags, 'My power is beyond compare!'
+snorts, 'A mere mortal dares challenge my might? HA!'
+says, 'Not another one! I just finished chewing on the last!'
+wonders aloud how many XP you're worth.
+leafs through 'Evil Geniuses For Dummies'.
+mutters, 'Another darn loser to kill...'
+says, 'Angband shall claim your remains!'
+says, 'Another 12 skulls and I get that reward from the Boss!'
+yawns at your pathetic efforts to kill him.
+says, 'Minions, slaughter this fool!'
+says, 'Set thine house in order, for thou shalt die...'
+says, 'I'm no god... God has MERCY!'
+2
+screams, 'This CAN'T be happening!'
+shouts, 'Kill me if you want, the Boss will getcha!'
+
+N:928:Mathilde, the Science Student
+3
+waves.
+wishes you luck.
+skips along happily.
+1
+is surrounded by the purple aura of the RNG. Touch at your peril.
+
+N:861:Dark God, the Mighty Coder of Hell
+6
+says 'Hullo'.
+emits a low 'hmmmm'.
+screams 'I came from the Hells for YOU!'
+laughs out loudly.
+mutters something about bugs.
+asks you about the new version.
+1
+screams 'ToME rules!'.
+
+N:969:Princess
+4
+cries.
+screams 'Help me !!!'.
+whines 'I need your help, great hero...'.
+implores you to help her.
+1
+screams 'I am too young to die!'.
+
+N:970:Merton Proudfoot, the lost hobbit
+1
+whines 'Please help me, noble hero! My leg is broken, and I cannot walk.'
+1
+whines 'No, please don't hurt me!'
+
+N:1039:Improv, the mighty MoLD
+2
+screams 'Your code is ugly!'
+mutters something about bugs.
+1
+screams 'ToME rules!'.

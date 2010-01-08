@@ -1,0 +1,110 @@
+~~~~~01|Runecrafter
+~~~~~02|Classes|Runecrafter
+#####R=== Runecrafters ===
+
+#####GDescription
+Instead of using spellbooks like the other spellcasters they instead 
+use mystic runes. To cast a spell they select a primary rune of the 
+elements (fire, cold, etc.) and they also choose a set of secondary runes,
+which shape the effect of the first one. The secondary runes include 
+Self, Arrow, Ray, ... and Armageddon. After that they chose the amount 
+of mana to use and the spell is cast! But the more secondary runes they
+chose the more mana is used to cast the spell. They also are bad 
+fighters, but if they concentrate all their mana in one spell 
+(especially with a mage staff of mana) they could kill nearly anything.
+
+#####GStarting Stat Modifiers
+Strength         -5
+Intelligence     +3
+Wisdom           +0
+Dexterity        +1
+Constitution     -2
+Charisma         +1
+Hit Die          +d0
+Spell Points    +50%
+Exp Penalty      30%
+
+#####GStarting Skills:
+#####BSkill                   Start Level     Skill Point Gains
+Combat                  1.000           [0.200]
+  Weaponmastery         0.700           [0.400]
+Sneakiness              1.000           [0.900]
+  Stealth               0.000           [0.400]
+Magic                   2.000           [0.950]
+  Magic-Device          1.000           [1.200]
+  Spell-power           0.000           [0.600]
+  Mana                  1.000           [0.600]
+  Geomancy
+    Fire                0.000           [0.700]
+    Water               0.000           [0.700]
+    Air                 0.000           [0.700]
+    Earth               0.000           [0.700]
+  Meta                  0.000           [0.700]
+  Conveyance            0.000           [0.700]
+  Divination            0.000           [0.700]
+  Temporal              0.000           [0.700]
+  Mind                  0.000           [0.700]
+  Nature                0.000           [0.700]
+  Necromancy            0.000           [0.700]
+  Runecraft             1.000           [1.000]
+  Thaumaturgy           0.000           [0.700]
+Spirituality            1.000           [0.550]
+  Prayer                0.000           [0.500]
+Monster-lore            0.000           [0.500]
+
+*A Runecrafter cannot learn the Geomancy skill, but it is shown in his skill 
+screen because the elemental schools are sub-skills of it.
+
+#####GInnate Abilities:
+#####BAbility              Character level
+Perfect casting             1
+
+~~~~~03|Runecrafter|Runecrafter powers
+~~~~~04|Skills|Runecrafting - Runecrafter powers
+#####GRune Magic
+Runecrafters combine runes using the 'm' command.  They first select a 
+rune that controls magic type, then apply one or more runes to fine-tune
+effects, (pressing ESC when done), and then input the amount of mana 
+they wish to expend on the spell.
+
+Runecrafters can cast the spells from their runes in several ways:
+1. On-the-fly by combining runes when they need them.
+2. Memorise rune combinations for quick use when needed (and they don't
+   need to be able to see then!), and then later cast from memory.
+3. Carving them into a Runestone, then using the Runestone later (takes
+   less mana, but they have to be able to see).
+
+[[[[[BSpell Types:] 
+(Some kinds are not listed, and are left for the reader to discover...)
+     Knowledge:  Identify all objects in affected grids, Self-knowledge 
+          if Self rune is used.
+     Life:  Heals monsters in affected grids, heals player if Self rune 
+          is used.
+     Fire, Cold, Lightning, Acid:  Casts magics of that element.
+     Elements:  Irresistible damage.
+     Mind:  A mind blast that badly effects intelligent monsters.  
+          Temporary ESP if Self rune is used.
+     Gravity:  A gravity spell that both does damage and whisks affected 
+          creatures around.
+
+[[[[[BSpell Effects] (all are listed):
+     Self:  Effects the caster.  This rune can be used with any other;
+          if used alone, only the caster's grid is affected.
+     Arrow:  Spell will include a bolt effect.  This allows aiming.
+     Ray:  Spell will include a beam effect.  This allows aiming.  
+          Increases difficulty slightly.
+     Sphere:  Spell will end with a circular explosion.  Increases 
+          difficulty a bit.  Can be used alone, or with Self, Arrow, or 
+          Ray.
+     Power Surge:  Not currently recommended for use.  Increases
+          difficulty a lot.
+     Armageddon:  Hurls down meteors of the magical type in the vicinity
+          of the caster.  Increases difficulty noticeably, but can do a
+          great deal of damage.
+
+#####GStarting Equipment
+A Runecrafter begins the game with:
+    a Rune [Fire]
+    a Rune [Arrow]
+    a Dagger
+

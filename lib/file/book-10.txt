@@ -1,0 +1,250 @@
+The Large yellow snake is a common monster, 
+occurring at surface depths. 
+It is laughably weak, not one little bit dangerous, 
+and has no magical powers. 
+
+The Cave spider is a common monster, 
+occurring at surface depths. 
+It is laughably weak, somewhat dangerous, 
+and has no magical powers. 
+
+The Wild cat is an uncommon monster, 
+occurring at surface depths. 
+It is laughably weak, not one little bit dangerous, 
+and has no magical powers. 
+
+Smeagol is a unique monster, 
+occurring at surface depths. 
+He is laughably weak, not at all dangerous, 
+and has no magical powers. 
+
+The Green ooze is an uncommon monster, 
+occurring at surface depths. 
+It is laughably weak, somewhat dangerous, 
+and has no magical powers. 
+
+The Poltergeist is a common undead monster, 
+occurring at surface depths. 
+It is laughably weak, somewhat dangerous, 
+and has no magical powers. 
+
+The Metallic blue centipede is a common monster, 
+occurring at surface depths. 
+It is laughably weak, not one little bit dangerous, 
+and has no magical powers. 
+
+The Giant white louse is a common monster, 
+occurring at surface depths. 
+It is laughably weak, not one little bit dangerous, 
+and has no magical powers. 
+
+The Black naga is a common monster, 
+occurring at surface depths. 
+She is laughably weak, not one little bit dangerous, 
+and has no magical powers. 
+
+The Spotted mushroom patch is a common monster, 
+occurring at surface depths. 
+It is laughably weak, somewhat dangerous, 
+and has no magical powers. 
+
+The Silver jelly is an uncommon monster, 
+occurring at surface depths. 
+It is laughably weak, just a small bit dangerous, 
+and has no magical powers. 
+
+The Yellow jelly is a common monster, 
+occurring at surface depths. 
+It is laughably weak, somewhat dangerous, 
+and has no magical powers. 
+
+The Scruffy looking hobbit is a common monster, 
+occurring at surface depths. 
+He is laughably weak, not one little bit dangerous, 
+and has no magical powers. 
+
+The Giant white ant is a common monster, 
+occurring at surface depths. 
+It is laughably weak, not at all dangerous, 
+and has no magical powers. 
+
+The Yellow mold is a common monster, 
+occurring at surface depths. 
+It is laughably weak, somewhat dangerous, 
+and has no magical powers. 
+
+The Metallic red centipede is a common monster, 
+occurring at surface depths. 
+It is laughably weak, not one little bit dangerous, 
+and has no magical powers. 
+
+The Yellow worm mass is an uncommon animal, 
+occurring at surface depths. 
+It is laughably weak, just a little bit dangerous, 
+and has no magical powers. 
+
+The Clear worm mass is an uncommon animal, 
+occurring at surface depths. 
+It is laughably weak, somewhat dangerous, 
+and has no magical powers. 
+
+The Radiation eye is a common monster, 
+occurring at surface depths. 
+It is laughably weak, not at all dangerous, 
+and has no magical powers. 
+
+The Cave lizard is a common animal, 
+occurring at surface depths. 
+It is laughably weak, not one little bit dangerous, 
+and has no magical powers. 
+
+The Novice ranger is a common monster, 
+occurring at surface depths. 
+He is laughably weak, not one little bit dangerous, 
+and has an inkling of magical powers. 
+
+The Novice paladin is a common monster, 
+occurring at surface depths. 
+He is laughably weak, not one little bit dangerous, 
+and has an inkling of magical powers. 
+
+The Blue jelly is a common monster, 
+occurring at surface depths. 
+It is laughably weak, somewhat dangerous, 
+and has no magical powers. 
+
+The Creeping copper coins is an uncommon animal, 
+occurring at surface depths. 
+It is laughably weak, somewhat dangerous, 
+and has no magical powers. 
+
+The Giant white rat is a common monster, 
+occurring at surface depths. 
+It is laughably weak, somewhat dangerous, 
+and has no magical powers. 
+
+The Blue worm mass is a common animal, 
+occurring at surface depths. 
+It is laughably weak, just a little bit dangerous, 
+and has no magical powers. 
+
+The Large grey snake is a common monster, 
+occurring at surface depths. 
+It is laughably weak, not one little bit dangerous, 
+and has no magical powers. 
+
+Bullroarer the Hobbit is a unique monster, 
+occurring at surface depths. 
+It is laughably weak, just a little bit dangerous, 
+and has no magical powers. 
+
+The Novice mage is an uncommon monster, 
+occurring at surface depths. 
+He is laughably weak, just a small bit dangerous, 
+and has rudimentary magical powers. 
+
+The Green naga is a common monster, 
+occurring at surface depths. 
+She is extremely weak, just a small bit dangerous, 
+and has no magical powers. 
+
+The Blue ooze is a common monster, 
+occurring at surface depths. 
+It is laughably weak, just a small bit dangerous, 
+and has no magical powers. 
+
+The Green glutton ghost is a common undead monster, 
+occurring at surface depths. 
+It is laughably weak, just a small bit dangerous, 
+and has no magical powers. 
+
+The Green jelly is a common monster, 
+occurring at surface depths. 
+It is extremely weak, somewhat dangerous, 
+and has no magical powers. 
+
+The Large kobold is a common monster, 
+occurring at surface depths. 
+It is extremely weak, just a little bit dangerous, 
+and has no magical powers. 
+
+The Skeleton kobold is a common undead monster, 
+occurring at surface depths. 
+It is laughably weak, somewhat dangerous, 
+and has no magical powers. 
+
+The Grey icky thing is a common monster, 
+occurring at surface depths. 
+It is laughably weak, not one little bit dangerous, 
+and has no magical powers. 
+
+The Disenchanter eye is an uncommon monster, 
+occurring at surface depths. 
+It is laughably weak, not one little bit dangerous, 
+and has no magical powers. 
+
+The Red worm mass is a common animal, 
+occurring at surface depths. 
+It is laughably weak, just a little bit dangerous, 
+and has no magical powers. 
+
+The Copperhead snake is a common animal, 
+occurring at surface depths. 
+It is laughably weak, just a small bit dangerous, 
+and has no magical powers. 
+
+The Purple mushroom patch is an uncommon monster, 
+occurring at surface depths. 
+It is laughably weak, moderately dangerous, 
+and has no magical powers. 
+
+The Novice priest is an uncommon monster, 
+occurring at surface depths. 
+He is laughably weak, just a little bit dangerous, 
+and has small magical powers. 
+
+The Novice warrior is an uncommon monster, 
+occurring at surface depths. 
+He is laughably weak, just a small bit dangerous, 
+and has no magical powers. 
+
+The Novice rogue is an uncommon monster, 
+occurring at surface depths. 
+He is laughably weak, just a small bit dangerous, 
+and has no magical powers. 
+
+The Brown mold is a common monster, 
+occurring at surface depths. 
+It is extremely weak, somewhat dangerous, 
+and has no magical powers. 
+
+The Giant brown bat is a common animal, 
+occurring at surface depths. 
+It is laughably weak, not one little bit dangerous, 
+and has no magical powers. 
+
+The Novice archer is an uncommon monster, 
+occurring at surface depths. 
+He is laughably weak, not one little bit dangerous, 
+and has an inkling of magical powers. 
+
+The Creeping silver coins is an uncommon animal, 
+occurring at surface depths. 
+It is extremely weak, somewhat dangerous, 
+and has no magical powers. 
+
+The Snaga is a common orc, 
+occurring at surface depths. 
+He is laughably weak, just a little bit dangerous, 
+and has no magical powers. 
+
+The Rattlesnake is a common animal, 
+occurring at surface depths. 
+It is laughably weak, just a small bit dangerous, 
+and has no magical powers. 
+
+The Cave orc is a common orc, 
+occurring at surface depths. 
+He is extremely weak, just a little bit dangerous, 
+and has no magical powers. 
+

@@ -1,0 +1,104 @@
+/* File: A-mac-h.pch */
+
+/*
+ * This file creates pre-compiled header files which are used to
+ * compile Macintosh Angband using the Code Warrior Pro compiler.
+ *
+ * It can also be used with the later versions of CodeWarrior.
+ * Both PPC and 68K binaries have been built successfully by
+ * CodeWarrior Version 6 for Macintosh:
+ */
+
+#if defined(__MWERKS__)
+# if defined(powerc) || defined(__powerc)
+#  pragma precompile_target "A-mac-h-PPC"
+# else
+#  pragma precompile_target "A-mac-h-68K"
+# endif
+#endif
+
+/*
+ * Activate the Macintosh-specific code
+ */
+#define MACINTOSH
+
+/*
+ * Activate Lua scripting
+ */
+#define USE_LUA
+
+/*
+ * PernAngband specific main-xxx.c features
+ */
+/* We have in-game savefile chooser */
+#define SAVEFILE_SCREEN
+/* We have Angband 2.8.1-style reset_visuals() */
+#define ANG281_RESET_VISUALS
+/* We now have big screen support */
+#define ALLOW_BIG_SCREEN
+/* We support transparency effect, but don't have use_transparency variable */
+#define NO_USE_TRANSPARENCY_VAR
+/* Creator code */
+#define ANGBAND_CREATOR 'PrnA'
+/* Preferences file name */
+#define ANGBAND_PREFERENCES "ToME Preferences"
+
+/*
+ * Activate transparency effect for 16x16 tileset.
+ */
+#define USE_TRANSPARENCY
+
+/*
+ * Activate support for graphics overlay.
+ */
+#define USE_EGO_GRAPHICS
+
+/*
+ * Active the code to support Mogami's double width tile patch
+ */
+#define USE_DOUBLE_TILES
+
+/*
+ * OPTION: Allow "Wizards" to yield "high scores"
+ */
+/* #define SCORE_WIZARDS */
+
+/*
+ * OPTION: Allow "Cheaters" to yield "high scores"
+ */
+/* #define SCORE_CHEATERS */
+
+/*
+ * OPTION: Allow player to know his / her starting life rate
+ */
+/* #define SHOW_LIFE_RATE */
+
+/*
+ * OPTION: Unallow the using of every race/class combination
+ */
+/* #define FORBID_BAD_COMBINAISON */
+
+/*
+ * OPTION: Enable the CTRL + L command to quit without saving
+ * as well as activate the Exit menu that serves for the same purpose
+ */
+/* #define ALLOW_QUITING */
+
+/*
+ * Precompile the header files
+ */
+#include "angband.h"
+
+/*
+ * These should go into h-system.h XXX XXX XXX
+ */
+# include <unistd.h>
+# include <fcntl.h>
+
+/*
+ * Include the standard ansi_prefix.mac.h file
+ */
+#define MSL_USE_PRECOMPILED_HEADERS 0
+#include "ansi_prefix.mac.h"
+
+

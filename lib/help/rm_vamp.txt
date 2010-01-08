@@ -1,0 +1,32 @@
+~~~~~01|Vampire
+~~~~~02|Race Modifiers|Vampire
+#####R=== Vampire ===
+
+#####GDescription
+One of the mightier undead creatures, the vampire is an awe-inspiring 
+sight. Yet this mighty creature has a serious weakness: the bright rays of
+sun are its bane, and it will need to flee the surface to the deep 
+recesses of the earth until the sun finally sets. Darkness, on the other 
+hand, only makes the vampire stronger. Being undead, the vampire has a firm 
+hold on its life force, and resists nether attacks. The vampire also 
+resists cold and poison based attacks. It is, however, susceptible to its 
+perpetual hunger for fresh blood, which can only be satiated by sucking 
+the blood from a nearby monster, which is the vampire's special power.
+
+It should be noted that the vampires are so sensitive to daylight that even
+certain artifact light items which are filled with daylight will hurt them
+if they try to wield the items. Fortunately, the vampires do not really
+need these items, since they radiate an aura of 'dark light' of their own.
+Light resistance will, in any case, protect the vampire from the adverse
+effects of sunlight.
+
+#####GStat Modifiers
+Strength       +3   
+Intelligence   +2   
+Wisdom         -3   
+Dexterity      -2   
+Constitution   +1   
+Charisma       -4      
+Hit Dice       +1 side
+Spell Points   +0%
+Exp penalty    +100%

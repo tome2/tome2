@@ -1,0 +1,5 @@
+3
+******** BUFFER LINE **************
+says: 'Don't hurt us, mastersisis.'
+says: 'Poor Smeagol, poor Smeagol.'
+says: 'No AH! Don't hurtsis us.'

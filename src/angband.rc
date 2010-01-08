@@ -1,0 +1,132 @@
+/* File: angband.rc */
+
+/*
+ * If the windows command to compile this file understands #ifdef's, please
+ * say #ifdef ALLOW_QUITTING to select from "A&bort" and "Sh&ow scores"
+ */
+
+ANGBAND MENU
+{
+ POPUP "&File"
+ {
+  MENUITEM "&Save", 110
+  MENUITEM SEPARATOR
+  MENUITEM "S&how score", 120
+  /*MENUITEM "A&bort", 120*/
+  MENUITEM "E&xit", 121
+ }
+
+ POPUP "&Window"
+ {
+  POPUP "&Visibility"
+  {
+   MENUITEM "ToME   window", 200
+   MENUITEM "Mirror window", 201
+   MENUITEM "Recall window", 202
+   MENUITEM "Choice window", 203
+   MENUITEM "Term-4 window", 204
+   MENUITEM "Term-5 window", 205
+   MENUITEM "Term-6 window", 206
+   MENUITEM "Term-7 window", 207
+  }
+
+  POPUP "&Font"
+  {
+   MENUITEM "ToME   window", 210
+   MENUITEM "Mirror window", 211
+   MENUITEM "Recall window", 212
+   MENUITEM "Choice window", 213
+   MENUITEM "Term-4 window", 214
+   MENUITEM "Term-5 window", 215
+   MENUITEM "Term-6 window", 216
+   MENUITEM "Term-7 window", 217
+  }
+
+  MENUITEM SEPARATOR
+
+  POPUP "Bizarre Display"
+  {
+   MENUITEM "ToME   window", 230
+   MENUITEM "Mirror window", 231
+   MENUITEM "Recall window", 232
+   MENUITEM "Choice window", 233
+   MENUITEM "Term-4 window", 234
+   MENUITEM "Term-5 window", 235
+   MENUITEM "Term-6 window", 236
+   MENUITEM "Term-7 window", 237
+  }
+
+  POPUP "Increase Tile Width"
+  {
+   MENUITEM "ToME   window", 240
+   MENUITEM "Mirror window", 241
+   MENUITEM "Recall window", 242
+   MENUITEM "Choice window", 243
+   MENUITEM "Term-4 window", 244
+   MENUITEM "Term-5 window", 245
+   MENUITEM "Term-6 window", 246
+   MENUITEM "Term-7 window", 247
+  }
+
+  POPUP "Decrease Tile Width"
+  {
+   MENUITEM "ToME   window", 250
+   MENUITEM "Mirror window", 251
+   MENUITEM "Recall window", 252
+   MENUITEM "Choice window", 253
+   MENUITEM "Term-4 window", 254
+   MENUITEM "Term-5 window", 255
+   MENUITEM "Term-6 window", 256
+   MENUITEM "Term-7 window", 257
+  }
+
+  POPUP "Increase Tile Height"
+  {
+   MENUITEM "ToME   window", 260
+   MENUITEM "Mirror window", 261
+   MENUITEM "Recall window", 262
+   MENUITEM "Choice window", 263
+   MENUITEM "Term-4 window", 264
+   MENUITEM "Term-5 window", 265
+   MENUITEM "Term-6 window", 266
+   MENUITEM "Term-7 window", 267
+  }
+
+  POPUP "Decrease Tile Height"
+  {
+   MENUITEM "ToME   window", 270
+   MENUITEM "Mirror window", 271
+   MENUITEM "Recall window", 272
+   MENUITEM "Choice window", 273
+   MENUITEM "Term-4 window", 274
+   MENUITEM "Term-5 window", 275
+   MENUITEM "Term-6 window", 276
+   MENUITEM "Term-7 window", 277
+  }
+ }
+
+ POPUP "&Options"
+ {
+  POPUP "&Graphics"
+  {
+   MENUITEM "&Old tiles", 400
+   MENUITEM "&New tiles", 401
+   MENUITEM "ASCII &Text", 403
+   MENUITEM "&Bigtile mode", 409
+   }
+
+  MENUITEM "&Sound", 402
+  MENUITEM SEPARATOR
+  MENUITEM "Unused menu option", 410
+  MENUITEM "Activate Screensaver", 411
+ }
+
+ POPUP "&Help"
+ {
+  MENUITEM "&General", 901
+  MENUITEM "&Spoilers", 902
+ }
+}
+
+ANGBAND ICON "angband.ico"
+

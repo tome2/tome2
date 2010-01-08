@@ -1,0 +1,59 @@
+|||||oy
+~~~~~01|Buildings
+#####R=== Historical Town View ===
+The town is composed of both stores and buildings. 
+
+#####RStores
+The stores are where you can pick up the supplies you need before entering the
+depths of the dungeon. These include:
+
+[[[[[GGeneral Store (1):] food, torches, shovels... the necessities.
+[[[[[GArmoury (2):] to protect from the ravages of the dungeon.
+[[[[[GWeaponsmith (3):] they carry anything sharp and to the point.
+[[[[[GTemple (4):] prayerbooks and those items holy.
+[[[[[GAlchemist (5):] for all sorts of bubbling potions and scrolls.
+[[[[[GMagic Shop (6):] get your wands and spellbooks here.
+[[[[[GBlack Market (7):] the prices are high, but the items unique.
+[[[[[GYour Home (8):] to store your precious treasures.
+[[[[[GBook Store (9):] for all sorts of basic spell book needs.
+
+#####ROther Buildings
+In addition to the basic stores, there are some special buildings that can be
+found in some towns. These buildings (represented by +'s) include:
+
+[[[[[GMayor's Office/Castle:] The administrative center of the town.
+Adventurers looking for work besides exploring the dungeon should hunt in here.
+[[[[[GPet Shop:] Great place to purchase eggs and get pets.
+[[[[[GThe Soothsayer:] To discover what *****/afatespoi.txt*0[fates ("a")] lie in store for you.
+[[[[[GThe Inn:] Wine, dine, rest and relax!
+[[[[[GThe Nest:] Thunderlords are masters of teleportation, and will consent to bear 
+you to your chosen dungeon destination for a fee.
+[[[[[GBeastmaster Shanty:] For those who enjoy trophy hunting, and to research the
+strange animals seen during their adventures. 
+[[[[[GFighters Hall:] The place to reforge weapons and armour.
+[[[[[GRangers Guild:] The place to reforge bows and arrows.
+[[[[[GLibrary:] For information of all kinds.
+[[[[[GGambling House:] Read the *****/bgambling.txt*0[rules ("b")] before paying. The games are not 
+rigged, just naturally difficult.
+[[[[[GTower of Magery/Wizards Spire:] The wizards will identify your items or recharge 
+your magical items for a fee.
+[[[[[GInner temple/Priests Circle:] A place of healing.
+[[[[[GPaladin guild:] Some healing and enchantments available.
+[[[[[GThe Mathom House:] Donate your unwanted items to this museum.
+... and several more!
+
+Some of the places have been known to give out quests to adventurers they 
+deem capable enough.  While the mayor's office is the obvious place to start, 
+the Sea Dome or Beastmaster Shanty may also want you to bring in various heads
+for reasons of their own.  Go into every building you can find.  Quests may
+pop up in unexpected places.
+
+There are misty rumours that there may be stores outside of Bree. The faintest
+speak of stores of powerful items deep in the dungeon.
+Rumours can be helpful or just plain silly.
+All buildings are made of stone and unlikely to move around.
+
+
+                                  File Updated for Pern 4.x.x by Dawnmist.
+                                  File Updated for ToME 2.1.x by Kat B.
+                                  File Updated for ToME 2.3.x by gwooledge

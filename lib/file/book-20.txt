@@ -1,0 +1,139 @@
+#####R             /----------------------------------------\
+#####R            <  Adventurer's guide to the Middle-earth  >
+#####R             \----------------------------------------/
+
+Summary:
+*****/abook-20.txt*1[(a) The Towns]
+*****/bbook-20.txt*2[(b) Other strange and frightening places]
+*****/cbook-20.txt*3[(c) Equipment issues]
+*****/dbook-20.txt*4[(d) Macros]
+
+Introduction:
+
+Middle-earth is vast and mysterious, full of dangers but also full of
+rewards for the brave.
+
+New adventurers should know that pressing < and > can switch
+the wilderness view between a normal scale and a larger map. This map
+makes travelling safer and faster, but you can't enter wilderness
+dungeons from it.
+
+
+~~~~~1
+#####G(a) The Towns
+
+You start in a small village named Bree in the western part of the Middle-earth.
+Here you will also find the entrance to the Barrow-Downs, a fairly safe and
+simple dungeon.
+
+When the Barrow-Downs become too easy for you, and Bree too small,
+you might consider going to Lothlorien, the land of Galadriel. [[[[[BNote that]
+[[[[[Byou should take a lot of food with you, for it is a long journey.] You'll have
+to head south-east following the Moria mountain's chain, then walk around
+the forest of Fangorn to head north to finally find your destination. The Forest
+of Mirkwood (another dungeon) can be found to the north east of Lothlorien.
+
+If you survive this dangerous dungeon, you should head south, following
+the Anduin river. There, near the dark land of Mordor, you will find the
+great town of Gondor, Minas Anor. From there you can want to pay a "visit" to 
+the land of Mordor, which is east of Minas Anor.
+
+After Mordor you should finally travel to Gondolin, the hidden town of the
+Noldor. First go back to Bree, and then from there walk northeast and you
+will find it. From this city, you will be able to attack Angband, the
+dungeon of Morgoth, which is north west west of Gondolin.
+
+
+~~~~~2
+#####G(b) Other strange and frightening places
+
+The Old Forest to the west is the last remains of the big forests of the first
+age, but it has been corrupted. It is said it is guarded by a living tree.
+
+You may also wish to investigate the Orc Caves north of Bree; they are
+another place suitable for those finished with the Barrow-Downs. They also
+are rumored to hold great
+mysteries.
+
+The Maze: To the south of Bree there is a magical Maze. Many adventurers
+that ventured there never came back... It is rumored that a Minotaur is
+lurking down there, guarding an ancient and powerful artifact.
+Bring along digging equipment and some means to recall.
+
+Durin's Bane, the Balrog of Moria, guards the Mines of Moria, to the south east
+of Bree.
+
+During the Second Age of the world there was a great island called
+Numenor. The people who dwelt there were wise and powerful, but as time
+passed their last kings fell under the power of Sauron. Under Sauron's
+orders, they tried to attack Valinor, the blessed land, and for this
+Numenor was destroyed, swallowed by the sea. The ruins are still
+accessible, far out to sea to the west of Bree.
+
+Many other strange places wait to be explored by the valiant adventurer,
+but their locations are secret. You will have to find them yourself!
+
+
+~~~~~3
+#####G(c) Equipment issues
+
+Beware adventurer! If you plan to go down into the dungeons be prepared. Some
+items you will need badly.
+
+First think of some light, maybe a lantern is better than the torches.
+
+Second things to mention are your combat equipment. Sometimes the weapon and
+armor you got from your mentor are not enough for the nasties inside the
+dungeons.
+
+And third and most important, [[[[[Balways carry a shovel or other digger with you],
+because there is much rubble in the dungeons, which you cannot clear with
+your hands.
+
+~~~~~4
+#####G(d) Macros
+
+Spellcasters might find that pressing 4 keys (at least) to cast a spell is a
+lot, they are right. That is why there are macros. You can access the macro
+screen by pressing @. You can find help on the *****macrofaq.txt*0[macros] in the docs.
+
+Now you either have the hard way or the easy way.
+
+**The Hard Way**
+
+What the fellow adventurer should know is how to create a basic spell macro.
+Press @ to enter the macro screen.
+Press 4 to create a new macro.
+Press the key to bind the macro to, usually one uses the F* keys(you can combine
+them with the ctrl, shift, ... keys too)
+Enter the key sequence to be done for the macro.
+Press 2 to save the macro.
+
+Now a problem that might arise, imagine your macro looks like: mcaa*t
+to cast manathrust spell('m' to use skill, 'c' for cast a spell skill,
+'a' for first book, 'a' for first spell, *t to… target the first monster).
+This macro will break if you gain a new skill so that "Cast a spell" is no more
+the skill 'c', or if you get a new book. There is a way around that.
+When the game asks for a skill or a spell it allows you to press @ to enter
+the skill/spell name directly, so your macro would become:
+m@Cast a spell\r@Manathrust\r*t
+Now this will always work as long as one of your books have the spell in it.
+
+
+**The Easy Way**
+
+This time you will only use the macro recorder. To do that:
+Press $ to start it
+Now each key you press will be recorded, so press all keys you want.
+It is recommended to start your macro by pressing Escape key a few time, so
+if there are messages when you use the macro it will first erase them instead
+of screwing your macro :)
+it is also recommended to take advantage of the @ key when selecting skills or
+objects whenever the possibility is offered to you. It will make sure you
+always use the good object/skill even if it moves in your inventory.
+Once all keys are pressed press $ again to stop it.
+It you are satisfied with your macro now you get to press the key to bind it
+to.
+
+As in the Hard Way you must use the macro screen if you want to permanently
+save your macros.

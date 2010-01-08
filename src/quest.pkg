@@ -1,0 +1,170 @@
+/* File: quest.pkg */
+
+/*
+ * Purpose: Lua interface definitions for quests.
+ * To be processed by tolua to generate C source code.
+ */
+
+$#include "angband.h"
+
+/** @typedef cptr
+ * @note String
+ */
+typedef char* cptr;
+
+/** @typedef errr
+ * @note Number
+ */
+typedef int errr;
+
+/** @typedef bool
+ * @note Boolean
+ */
+typedef unsigned char bool;
+
+/** @typedef byte
+ * @note Number
+ */
+typedef unsigned char byte;
+
+/** @typedef s16b
+ * @note Number
+ */
+typedef signed short s16b;
+
+/** @typedef u16b
+ * @note Number
+ */
+typedef unsigned short u16b;
+
+/** @typedef s32b
+ * @note Number
+ */
+typedef signed int s32b;
+
+/** @typedef u32b
+ * @note Number
+ */
+typedef unsigned int u32b;
+
+/** @name Quest Status Flags
+ * @brief Quest status
+ * @{ */
+
+/** @def QUEST_STATUS_IGNORED */
+#define QUEST_STATUS_IGNORED	 -1
+
+/** @def QUEST_STATUS_UNTAKEN */
+#define QUEST_STATUS_UNTAKEN	 0
+
+/** @def QUEST_STATUS_TAKEN */
+#define QUEST_STATUS_TAKEN	   1
+
+/** @def QUEST_STATUS_COMPLETED */
+#define QUEST_STATUS_COMPLETED       2
+
+/** @def QUEST_STATUS_REWARDED */
+#define QUEST_STATUS_REWARDED	3
+
+/** @def QUEST_STATUS_FAILED */
+#define QUEST_STATUS_FAILED	  4
+
+/** @def QUEST_STATUS_FINISHED */
+#define QUEST_STATUS_FINISHED	5
+
+/** @def QUEST_STATUS_FAILED_DONE */
+#define QUEST_STATUS_FAILED_DONE     6
+/** @} */
+
+/** @struct quest_type
+ * @brief Quest
+ */
+struct quest_type
+{
+	/** @structvar silent
+	 * @brief Boolean
+	 * @note Does quest appear on quest list?
+	 */
+	bool silent;
+
+	/** @structvar dynamic_desc
+	 * @brief Boolean
+	 * @note Do we need to ask a function to get the description ? 
+	 */
+	bool dynamic_desc;
+
+	/** @structvar status
+	 * @brief Number
+	 * @note Is the quest taken, completed, finished? 
+	 */
+	s16b status;
+
+	/** @structvar level
+	 * @brief Number
+	 * @note Dungeon level 
+	 */
+	s16b level;
+
+	/** @structvar type
+	 * @brief Number
+	 * @note Lua or C ? 
+	 */
+	byte type;
+};
+
+/** @var max_q_idx
+ * @brief Number
+ * @note Maximum number of quests in quest list
+ */
+extern s16b max_q_idx;
+
+/** @var  quest_aux;
+ * @brief quest_type
+ * @note Array of quests
+ */
+extern quest_type quest[max_q_idx] @ quest_aux;
+
+$static quest_type *lua_get_quest(int q_idx){return &quest[q_idx];}
+
+/** @fn quest(int q_idx);
+ * @brief Return quest with index "q_idx" from quest array.\n
+ * @param q_idx Number \n the index of a quest in the quest array.
+ * @brief Quest index
+ * @return quest_type \n The quest at index "q_idx".
+ * @note (see file w_quest.c)
+ */
+static quest_type *lua_get_quest @ quest(int q_idx);
+
+/** @fn new_quest(char *name);
+ * @dgonly
+ * @brief Add a new quest to the end of the quest array.\n
+ * @param *name String \n the name of the new quest.
+ * @brief Quest name
+ * @return Number \n The index of the new quest in the quest array.
+ * @note (see file lua_bind.c)
+ */
+extern s16b    add_new_quest @ new_quest(char *name);
+
+/** @fn quest_desc(int q_idx, int d, char *desc);
+ * @dgonly
+ * @brief Return the description of a quest.\n
+ * @param q_idx Number \n the index of a quest in the quest array.
+ * @brief Quest index
+ * @param d Number \n the index of a line in the quest description.
+ * @brief Description line
+ * @param *desc String
+ * @brief Description
+ * @return *desc String \n Line "d" of the description of quest with index
+ * "q_idx" in the quest array.
+ * @note (see file lua_bind.c)
+ */
+extern void    desc_quest @ quest_desc(int q_idx, int d, char *desc);
+
+/** @fn get_new_bounty_monster(int lev);
+ * @brief Find a good random bounty monster.\n
+ * @param lev Number \n the level of the bounty monster.
+ * @brief Monster level
+ * @return Number \n The index of the monster in the r_info array.
+ * @note (see file lua_bind.c)
+ */
+extern int lua_get_new_bounty_monster@get_new_bounty_monster(int lev);

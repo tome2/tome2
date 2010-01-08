@@ -1,0 +1,693 @@
+/* File: z_pack.pkg */
+
+/*
+ * Purpose: Lua interface defitions for z-*.c
+ * To be processed by tolua to generate C source code.
+ */
+
+$#include "angband.h"
+
+/** @typedef cptr
+ * @note String
+ */
+typedef char* cptr;
+/** @typedef errr
+ * @note Number
+ */
+typedef int errr;
+/** @typedef bool
+ * @note Boolean
+ */
+typedef unsigned char bool;
+/** @typedef byte
+ * @note Number
+ */
+typedef unsigned char byte;
+/** @typedef s16b
+ * @note Number
+ */
+typedef signed short s16b;
+/** @typedef u16b
+ * @note Number
+ */
+typedef unsigned short u16b;
+/** @typedef s32b
+ * @note Number
+ */
+typedef signed int s32b;
+/** @typedef u32b
+ * @note Number
+ */
+typedef unsigned int u32b;
+
+/** @name Terminal actions
+ * @{ */
+/** @def TERM_XTRA_EVENT
+ * @note Process some pending events 
+ */
+#define TERM_XTRA_EVENT	1	
+/** @def TERM_XTRA_FLUSH
+ * @note Flush all pending events 
+ */
+#define TERM_XTRA_FLUSH 2	
+/** @def TERM_XTRA_CLEAR
+ * @note Clear the entire window 
+ */
+#define TERM_XTRA_CLEAR 3	
+/** @def TERM_XTRA_SHAPE
+ * @note Set cursor shape (optional) 
+ */
+#define TERM_XTRA_SHAPE 4	
+/** @def TERM_XTRA_FROSH
+ * @note Flush one row (optional) 
+ */
+#define TERM_XTRA_FROSH 5	
+/** @def TERM_XTRA_FRESH
+ * @note Flush all rows (optional) 
+ */
+#define TERM_XTRA_FRESH 6	
+/** @def TERM_XTRA_NOISE
+ * @note Make a noise (optional) 
+ */
+#define TERM_XTRA_NOISE 7	
+/** @def TERM_XTRA_SOUND
+ * @note Make a sound (optional) 
+ */
+#define TERM_XTRA_SOUND 8	
+/** @def TERM_XTRA_BORED
+ * @note Handle stuff when bored (optional) 
+ */
+#define TERM_XTRA_BORED 9	
+/** @def TERM_XTRA_REACT
+ * @note React to global changes (optional) 
+ */
+#define TERM_XTRA_REACT 10	
+/** @def TERM_XTRA_ALIVE
+ * @note Change the "hard" level (optional) 
+ */
+#define TERM_XTRA_ALIVE 11	
+/** @def TERM_XTRA_LEVEL
+ * @note Change the "soft" level (optional) 
+ */
+#define TERM_XTRA_LEVEL 12	
+/** @def TERM_XTRA_DELAY
+ * @note Delay some milliseconds (optional) 
+ */
+#define TERM_XTRA_DELAY 13	
+/** @def TERM_XTRA_GET_DELAY
+ * @note Get the cuyrrent time in milliseconds (optional) 
+ */
+#define TERM_XTRA_GET_DELAY 14	
+/** @def TERM_XTRA_SCANSUBDIR
+ * @note Scan for subdir in a dir 
+ */
+#define TERM_XTRA_SCANSUBDIR 15 
+/** @} */
+
+/** @var Term_xtra_long
+ * @brief Number
+ */
+extern long Term_xtra_long;
+
+/** @var scansubdir_dir[1024]
+ * @brief String
+ * @note The directory which is scanned for sub-directories.
+ */
+char scansubdir_dir[1024];
+
+/** @var scansubdir_max
+ * @brief Number
+ * @note The number of entries in the scansubdir_result array.
+ */
+int scansubdir_max;
+
+/** @var scansubdir_result[scansubdir_max]
+ * @brief String
+ * @note The sub-directories of scansubdir_dir directory.
+ */
+cptr scansubdir_result[scansubdir_max];
+
+/** @fn Term_xtra(int n, int v)
+ * @brief Generic function to perform system dependant terminal actions.\n
+ * @param n Number \n a terminal action (see TERM_XTRA fields).
+ * @brief Terminal action
+ * @param v Number \n variable depending on the terminal action.
+ * @brief Variable
+ * @return Number \n Result of the terminal action.
+ * @note
+ * The "Term->xtra_hook" hook provides a variety of different functions,
+ * based on the first parameter (which should be taken from the various
+ * TERM_XTRA_* defines) and the second parameter (which may make sense
+ * only for some first parameters).  It is available to the program via
+ * the "Term_xtra()" function, though some first parameters are only
+ * "legal" when called from inside this package.
+ * @note (see file z-term.c)
+ */
+extern errr Term_xtra(int n, int v);
+
+/** @fn Term_set_cursor(int v)
+ * @brief Set the cursor visibility.\n
+ * @param v Number \n v is the visibility.
+ * @brief Visibility
+ * @return Number \n 1 if visibility was unchanged, otherwise 0.
+ * @note
+ * Cursor visibility (field "cv") is defined as a boolean, so take care what
+ * value is assigned to "v".
+ * @note (see file z-term.c)
+ */
+extern errr Term_set_cursor(int v);
+
+/** @fn Term_gotoxy(int x, int y)
+ * @brief Place the cursor at a given location.\n
+ * @param x Number \n x-coordinate of target location.
+ * @brief X-coordinate
+ * @param y Number \n y-coordinate of target location.
+ * @brief Y-coordinate
+ * @return Number \n -1 if cursor could not be placed at given location,
+ * otherwise 0.
+ * @note
+ * Note -- "illegal" requests do not move the cursor.\n\n
+ * The cursor is flagged as useful if it placed okay.
+ * @note (see file z-term.c)
+ */
+extern errr Term_gotoxy(int x, int y);
+
+/** @fn Term_putch(int x, int y, byte a, char c)
+ * @brief Move to a location and, using an attr, add a char.\n
+ * @param x Number \n x-coordinate of target location.
+ * @brief X-coordinate
+ * @param y Number \n y-coordinate of target location.
+ * @brief Y-coordinate
+ * @param a Number \n attribute of character.
+ * @brief Attribute
+ * @param c String \n the character.
+ * @brief Character
+ * @return Number \n <0 if error, 0 if success, 1 if success but cursor is
+ * useless.
+ * @note
+ * We return "-2" if the character is "illegal". XXX XXX\n\n
+ * We return "-1" if the cursor is currently unusable.\n\n
+ * We queue the given attr/char for display at the current
+ * cursor location, and advance the cursor to the right,
+ * marking it as unuable and returning "1" if it leaves
+ * the screen, and otherwise returning "0".\n\n
+ * So when this function returns a positive value, future calls to this
+ * function will return negative ones.
+ * @note (see file z-term.c)
+ */
+extern errr Term_putch(int x, int y, byte a, char c);
+
+/** @fn Term_putstr(int x, int y, int n, byte a, cptr s)
+ * @brief Move to a location and, using an attr, add a string.\n
+ * @param x Number \n x-coordinate of target location.
+ * @brief X-coordinate
+ * @param y Number \n y-coordinate of target location.
+ * @brief Y-coordinate
+ * @param n Number \n length of string.
+ * @brief Length
+ * @param a Number \n attribute of string.
+ * @brief Attribute
+ * @param s String \n the string.
+ * @brief String
+ * @return Number \n <0 if error, 0 if success, 1 if success but cursor is
+ * useless.
+ * @note
+ * For length "n", using negative values to imply the largest possible value,
+ * and then we use the minimum of this length and the "actual" length of the
+ * string as the actual number of characters to attempt to display, never
+ * displaying more characters than will actually fit, since we do NOT attempt
+ * to "wrap" the cursor at the screen edge.\n\n
+ * We return "-1" if the cursor is currently unusable.\n
+ * We return "N" if we were "only" able to write "N" chars, even if all of the
+ * given characters fit on the screen, and mark the cursor as unusable for
+ * future attempts.\n\n
+ * So when this function, returns a positive value, future calls to this
+ * function will return negative ones.
+ * @note (see file z-term.c)
+ */
+extern errr Term_putstr(int x, int y, int n, byte a, cptr s);
+
+/** @fn Term_clear(void)
+ * @brief Clear the entire window, and move to the top left corner.
+ * @return Number \n 0 (always).
+ * @note
+ * Note the use of the special "total_erase" code
+ * @note (see file z-term.c)
+ */
+extern errr Term_clear(void);
+
+/** @fn Term_redraw(void)
+ * @brief Redraw (and refresh) the whole window.
+ * @return Number \n 0 (always).
+ * @note (see file z-term.c)
+ */
+extern errr Term_redraw(void);
+
+/** @fn Term_redraw_section(int x1, int y1, int x2, int y2)
+ * @brief Redraw part of a window.\n
+ * @param x1 Number \n x-coordinate of top-left location.
+ * @brief X-coordinate (top left)
+ * @param y1 Number \n y-coordinate of top-left location.
+ * @brief Y-coordinate (top left)
+ * @param x2 Number \n x-coordinate of bottom-right location.
+ * @brief X-coordinate (bottom right)
+ * @param y2 Number \n y-coordinate of bottom-right location.
+ * @brief Y-coordinate (bottom right)
+ * @return Number \n 0 (always).
+ * @note (see file z-term.c)
+ */
+extern errr Term_redraw_section(int x1, int y1, int x2, int y2);
+
+/** @fn Term_get_size(int *w, int *h)
+ * @brief Extract the current window size.\n
+ * @param *w Number
+ * @brief Screen width
+ * @param *h Number
+ * @brief Screen height
+ * @return Number \n 0 (always).
+ * @return *w Number \n The width of the screen (in characters).
+ * @return *h Number \n The height of the screen (in characters).
+ * @note (see file z-term.c)
+ */
+extern errr Term_get_size(int *w, int *h);
+
+/*
+ * random numbers
+ */
+$static s32b lua_rand_int(s32b m) {return rand_int(m);}
+
+/** @fn rand_int(s32b m);
+ * @brief Generate a random integer between 0 and (m - 1).\n
+ * @param m Number \n maximum value of random integer. The random integer
+ * will be less than "m".
+ * @brief Maximum
+ * @return Number \n The random number.
+ * @note (see file w_z_pack.c)
+ */
+static s32b lua_rand_int @ rand_int(s32b m);
+
+/*
+ * Generates a random long integer X where A<=X<=B
+ * The integer X falls along a uniform distribution.
+ * Note: rand_range(0,N-1) == rand_int(N)
+ */
+$static s32b lua_rand_range(s32b A, s32b B) {return ((A) + (rand_int(1+(B)-(A))));}
+
+/** @fn  rand_range(s32b A, s32b B);
+ * @brief Generate a random integer between A and B inclusive.\n
+ * @param A Number \n minimum number.
+ * @brief Minimum
+ * @param B Number \n maximum number.
+ * @brief Maximum
+ * @return Number \n The random number.
+ * @note (see file w_z_pack.c)
+ */
+static s32b lua_rand_range @ rand_range(s32b A, s32b B);
+
+/*
+ * Generate a random long integer X where A-D<=X<=A+D
+ * The integer X falls along a uniform distribution.
+ * Note: rand_spread(A,D) == rand_range(A-D,A+D)
+ */
+$static s32b lua_rand_spread(s32b A, s32b D) {return ((A) + (rand_int(1+(D)+(D))) - (D));}
+
+/** @fn  rand_spread(s32b A, s32b D);
+ * @brief Generate a radom integer between A-D and A+D inclusive.\n
+ * @param A Number \n average number.
+ * @brief Average
+ * @param D Number \n deviation from average.
+ * @brief Deviation
+ * @return Number \n The random number.
+ * @note (see file w_z_pack.c)
+ */
+static s32b lua_rand_spread @ rand_spread(s32b A, s32b D);
+
+
+/*
+ * Generate a random long integer X where 1<=X<=M
+ * Also, "correctly" handle the case of M<=1
+ */
+$static s32b lua_randint(s32b m) {return rand_int(m) + 1;}
+
+/** @fn  randint(s32b m);
+ * @brief Generate a random integer between 1 and M inclusive.\n
+ * @param m Number \n maximum value of random integer.
+ * @brief Maximum
+ * @return Number \n The random number.
+ * @note (see file w_z_pack.c)
+ */
+static s32b lua_randint @ randint(s32b m);
+
+
+/*
+ * Evaluate to TRUE "P" percent of the time
+ */
+$static bool lua_magik(s32b P) {return (rand_int(100) < (P));}
+
+/** @fn  magik(s32b P);
+ * @brief Return TRUE "P" % of the time.
+ * @param P Number \n percent chance the function returns TRUE.
+ * @brief Percent true
+ * @return Boolean \n TRUE if a random number from 0 to 99 is less than P,
+ * otherwise FALSE.
+ * @note (see file w_z_pack.c)
+ */
+static bool lua_magik @ magik(s32b P);
+
+
+/**** Available Variables ****/
+/** @var Rand_quick
+ * @brief Boolean
+ * @note
+ * If this is TRUE, then use the "simple" Random Number Generator.\n
+ * If this is FALSE, then use the "complex" Random Number Generator.
+ */
+extern bool Rand_quick;
+
+/** @var Rand_value
+ * @brief Number
+ * @note
+ * The current value (seed) of the simple Random Number Generator.
+ */
+extern u32b Rand_value;
+
+/**** Available Functions ****/
+/** @fn damroll(int num, int sides)
+ * @brief Generates damage for "2d6" style dice rolls.\n
+ * @param num Number \n the number of "dice" used.
+ * @brief Number
+ * @param sides Number \n the number of sides on each "die".
+ * @brief Sides
+ * @return Number \n The random number.
+ * @note
+ * The function simulates the rolling of "num" "sides"-sided dice. Each die
+ * will result in a random number from 1 to "sides".
+ * @note (see file z-rand.c)
+ */
+extern s16b damroll(int num, int sides);
+
+/** @fn maxroll(int num, int sides)
+ * @brief Generate the maximum damage for "num" dice with "sides" sides each.
+ * @param num Number \n The number of "dice" used.
+ * @brief Number
+ * @param sides Number \n The number of sides on each "die".
+ * @brief Sides
+ * @return Number \n "num" * "sides".
+ * @note (see file z-rand.c)
+ */
+extern s16b maxroll(int num, int sides);
+
+
+
+
+
+/*
+ ****************** ZSOCKS ***************
+ */
+
+/** @struct ip_connection
+ * This represents an IP connection
+ */
+struct ip_connection
+{
+	/** @var setup
+	 * @brief Boolean
+	 * @note Has it been setted up yet? 
+	 */
+	bool setup;
+
+	/** @var conn_ip
+	 * @brief Number
+	 * @note The IP where to connect to 
+	 */
+	long conn_ip;
+
+	/** @var conn_port
+	 * @brief Number
+	 * @note The port where to connect to 
+	 */
+	int conn_port;
+	
+	/** @var conn_type
+	 * @brief Number
+	 * @note Type of connection 
+	 */
+	byte conn_type;
+
+	/** @var connected
+	 * @brief Boolean
+	 * @note The connection status 
+	 */
+	bool connected;
+	
+	/** @var *socket
+	 * @brief void
+	 * @note The socket for the connection 
+	 */
+	void *socket;
+
+	/** @var server
+	 * @brief Boolean
+	 * @note Is it a server socket ? 
+	 */
+	bool server;
+};
+
+/*
+ * Possible connection types
+ */
+/** @def ZSOCK_TYPE_TCP */
+#define ZSOCK_TYPE_TCP  	1
+
+/* #define ZSOCK_TYPE_UDP  	2 */
+
+
+/** @def ZSOCK_TIMER_DELAY
+ * @note The time in milliseconds when to call the sockets callbacks for the
+ * timer
+ */
+#define ZSOCK_TIMER_DELAY       100
+
+
+/** @struct zsock_hooks
+ * @note Hooks needed for a main-foo.c to be sock-able
+ */
+struct zsock_hooks
+{
+	/** @fn *new_connection()
+	 * @brief Creates an IP connection.
+	 * @return ip_connection \n An IP connection.
+	 * @note (see file z-sock.c)
+	 */
+	ip_connection *new_connection();
+
+	/** @fn free_connection(ip_connection *c)
+	 * @brief Free IP connection "c".\n
+	 * @param *c ip_connection \n an IP connection.
+	 * @brief Ip connection
+	 * @note (see file z-sock.c)
+	 */
+	void free_connection(ip_connection *c);
+	
+	/** @fn setup(ip_connection *conn, cptr conn_ip, int port, byte conn_type, bool server)
+	 * @brief Setup a connection, but do NOT connect.\n
+	 * @param *conn ip_connection \n an IP connection.
+	 * @brief Ip connection
+	 * @param conn_ip String \n IP address of host machine.
+	 * @brief Host ip address
+	 * @param port Number \n port of host machine.
+	 * @brief Host port
+	 * @param conn_type Number \n type of connection.
+	 * @brief Connection type
+	 * @param server Boolean \n TRUE if this is a server socket,
+     * otherwise FALSE.
+	 * @brief Server socket?
+	 * @return Boolean \n TRUE if socket setup successfully, otherwise FALSE.
+	 * @note
+     * You can not setup a connection if it is setup.
+	 * @note (see file z-sock.c)
+	 */
+	bool setup(ip_connection *conn, cptr conn_ip, int port, byte conn_type, bool server);
+
+	/** @fn unsetup(ip_connection *conn)
+	 * @brief Unsetup a connection, but and DO close before if needed.\n
+	 * @param *conn ip_connection \n an IP connection.
+	 * @brief Ip connection
+	 * @return Boolean \n TRUE if socket was setup, otherwise FALSE.
+	 * @note
+     * You can not unset a connection if it is not setup.
+     * @note (see file z-sock.c)
+	 */
+	bool unsetup(ip_connection *conn);
+
+	/** @fn open(ip_connection *conn)
+	 * @brief Open(connect) a well setup-ed connection.\n
+	 * @param *conn ip_connection \n an IP connection.
+	 * @brief Ip connection
+	 * @return Boolean \n TRUE if connection was opened, otherwise FALSE.
+	 * @note
+	 * You can not open a connection if it is open.
+	 * @note (see file z-sock.c)
+	 */
+	bool open(ip_connection *conn);
+
+	/** @fn close(ip_connection *conn)
+	 * @brief Close a connected connection.\n
+	 * @param *conn ip_connection \n an IP connection.
+	 * @brief Ip connection
+	 * @return Boolean \n TRUE if connection was closed, otherwise FALSE.
+	 * @note
+	 * You can not close a connection if it is closed.
+	 * @note (see file z-sock.c)
+	 */
+	bool close(ip_connection *conn);
+
+	/** @fn write(ip_connection *conn, cptr str, int *size)
+	 * @brief Send data on the connection.\n
+	 * @param *conn ip_connection \n an IP connection.
+	 * @brief Ip connection
+	 * @param str String \n the string to send along the connection.
+	 * @brief String
+	 * @param *size Number
+	 * @brief Bytes sent
+	 * @return Boolean \n TRUE if string was sent successfully,
+	 * otherwise FALSE.
+	 * @return *size \n the number of bytes sent.
+	 * @note
+	 * This function will return FALSE if you write to a connection which
+	 * is not connected, or if the connection has died.
+	 * @note (see file z-sock.c)
+	 */
+	bool write(ip_connection *conn, cptr str, int *size);
+
+	/* Read data on the connection */
+	 /** @fn read(ip_connection *conn, char *str, int *len, bool raw)
+	  * @brief Read data on connection.\n
+	  * @param *conn ip_connection \n an IP connection.
+	  * @brief Ip connection
+	  * @param *str String
+	  * @brief String
+	  * @param *len Number \n the number of bytes to read.
+	  * @brief Bytes to read
+	  * @param raw Boolean \n TRUE if all data is to be read at once,
+	  * otherwise FALSE.
+	  * @brief Read raw data?
+	  * @return Boolean \n TRUE if a string was returned, otherwise FALSE.
+	  * @return *str String \n The string read.
+	  * @return *len Number \n The number of bytes read.
+	  * @note
+	  * @note (see file z-sock.c)
+	  */
+	/* -- DG -- This is done in script.c since it needs a specific wrapper :(
+	 bool read(ip_connection *conn, char *str, int *len, bool raw);
+	*/
+
+	/** @fn write_simple(ip_connection *conn, cptr str)
+	 * @brief Send data on the connection.\n
+	 * @param *conn ip_connection \n an IP connection.
+	 * @brief Ip connection
+	 * @param str String \n the string to send along the connection.
+	 * @brief String
+	 * @return Boolean \n TRUE if string was sent successfully,
+	 * otherwise FALSE.
+	 * @note
+	 * This is easy to use.
+	 * @note (see file z-sock.c)
+	 */
+	bool write_simple(ip_connection *conn, cptr str);
+
+	/* Read data on the connection -- easy to use */
+	/** @fn read_simple(ip_connection *conn, char *str, int len)
+	 * @brief Read data on the connection.\n
+	 * @param *conn ip_connection \n an IP connection.
+	 * @brief Ip connection
+	 * @param *str String
+	 * @brief String
+	 * @param len Number \n the number of bytes to read.
+	 * @brief Bytes to read
+	 * @return Boolean \n TRUE if a string was returned, otherwise FALSE.
+	 * @return *str String \n The string read.
+	 * @note
+	 * This function will return FALSE if you read from a connection which
+	 * is not connected, or if the connection has died.
+	 * @note (see file z-sock.c)
+	 */
+	bool read_simple(ip_connection *conn, char *str, int len);
+
+	/* Accept a connection */
+	/** @fn accept(ip_connection *conn, ip_connection *child)
+	 * @brief Allow "conn" to accept a connection from "child".\n
+	 * @param *conn ip_connection \n an IP connection.
+	 * @brief Parent ip connection
+	 * @param *child ip_connection \n another IP connection.
+	 * @brief Child ip connection
+	 * @return Boolean \n TRUE if child socket was accepted, otherwise
+	 * FALSE.
+	 * @note
+	 * "conn" must be a server and must be connected.
+	 * @note (see file z-sock.c)
+	 */
+	bool accept(ip_connection *conn, ip_connection *child);
+
+	/** @fn can_read(ip_connection *conn)
+	 * @brief Check if there is any data to be read and return instantly
+	 * in any case.\n
+	 * @param *conn ip_connection \n an IP connection.
+	 * @brief Ip connection
+	 * @return Boolean \n TRUE if there is something to read, otherwise
+	 * FALSE.
+	 * @note
+	 * This function will return FALSE if you read from a connection which
+	 * is not connected.
+	 * @note (see file z-sock.c)
+	 */
+	bool can_read(ip_connection *conn);
+
+	/** @fn wait(ip_connection *conn, int seconds)
+	 * @brief Wait for up to "seconds" seconds for data to read from
+	 * "conn".\n
+	 * @param *conn ip_connection \n an IP connection.
+	 * @brief Ip connection
+	 * @param seconds Number \n number of seconds to wait for something to
+	 * read.
+	 * @brief Seconds to wait
+	 * @return Boolean TRUE if there is something to read, otherwise
+	 * FALSE.
+	 * @note
+	 * This function will return FALSE if you wait for a connection which
+	 * is not connected.
+	 * @note (see file z-sock.c)
+	 */
+	bool wait(ip_connection *conn, int seconds);
+
+
+	/*
+	 * Timer stuff, I hope I can make that look better
+	 */
+	/** @fn add_timer(timer_callback callback)
+	 * @brief Add "callback" to the list.\n
+	 * @param callback timer_callback \n a callback timer.
+	 * @brief Callback
+	 * @return Boolean \n TRUE (always).
+	 * @note
+	 * If this is the first callback, the timer will be created.
+	 * @note (see file z-sock.c)
+	 */
+	bool add_timer(timer_callback callback);
+
+	/** @fn remove_timer(timer_callback callback)
+	 * @brief Remove "callback" from the list.\n
+	 * @param callback timer_callback \n a callback timer.
+	 * @brief Callback
+	 * @return Boolean \n TRUE (always).
+	 * @note
+	 * If this is the last callback, the timer will be deleted.
+	 * @note (see file z-sock.c)
+	 */
+	bool remove_timer(timer_callback callback);
+};
+
+/** @var zsock
+ * @brief zsock_hooks
+ */
+extern zsock_hooks zsock;

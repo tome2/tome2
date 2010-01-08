@@ -1,0 +1,173 @@
+|||||oy
+~~~~~01|Dungeons|Spoilers
+~~~~~02|Spoilers|Dungeons
+#####R=== ToME's DUNGEONS ===
+
+There are numerous dungeons within Middle-earth, but not all
+of them are required to be ventured into. The original Angband
+dungeon has been split into 4 parts, each found near or at a
+different town. Travel between towns is usually easiest by
+using the wilderness overview map ("<" from the town level),
+but remember to take lots of food with you!
+
+#####GThe Basic Dungeons
+#####G------------------
+
+#####G1. Barrow-Downs
+Found near the outskirts of Bree (the starting town), this
+dungeon is where you should begin your adventure. It
+contains the main Dungeon levels 1 (50') to 10 (500'),
+after which it becomes necessary for the character to seek
+out a new dungeon in order to be able to descend further in
+their quest to kill Morgoth.
+
+#####G2. Mirkwood
+The Mirkwood forest contains levels 11 (550') to 33 (1650'),
+and can be found to the north-east of Lothlorien.
+
+#####G3. Mordor
+The Land of Mordor is a hot, cavernous region, containing
+levels 34 (1700') to 66 (3300') of the dungeon. Located to
+the East of Minas Anor, it is a place filled with danger,
+and only a wary adventurer will make it through to the other
+end of this dungeon.
+
+#####G4. Angband
+Only the most successful of adventurers usually make it this
+far. The Dungeon Angband contains both Sauron and Morgoth,
+who will gladly wipe out any who dare to oppose them! This
+dungeon covers levels 67 (3350') to 127 (6350'), but Sauron
+waits for you at level 99, and Morgoth at level 100. This
+dungeon can be found near Gondolin.
+
+
+#####GAdditional ToME Dungeons
+#####G------------------------
+
+In addition to the basic 4 dungeons, there are numerous other
+dungeons scattered around the world for an adventurer to explore
+while preparing for the final fight. Many of the dungeons have a
+guardian at the bottom of them, and a few have unique levels
+somewhere within them (like an orc town) with guaranteed artifacts
+and nasties within them. Other than the unique levels, all of the
+dungeons can be exited and re-entered at your leisure.
+
+Be warned though that some dungeons are partly toxic to the
+adventurer, and will damage you BY THEMSELVES just by you walking
+within them!
+
+#####GOrc Cave
+A dark tunnel leading to an Orc Cave, guarded at its base by Azog,
+King of the Uruk-Hai. Also somewhere within this dungeon is the
+hidden special level called Deathwatch.
+Equivalent to dungeon levels 10 to 22.
+
+#####GThe Old Forest
+A Forest is a haven for many animals, both of the good variety, and
+the bad. This forest is no exception. In the past, unsuccessful
+attempts have been made to cultivate this land, and it is possible
+that some of the towns may remain. It is also rumoured that Old Man
+Willow has made his home here, and is the source of the Forest's
+resistance to cultivation.
+Equivalent to dungeon levels 13 to 25.
+
+#####GHelcaraxe
+The Grinding Ice of Helcaraxe is a bitterly cold series of caverns,
+and guarded by the White Balrog.
+Equivalent to dungeon levels 20 to 40.
+
+#####GThe Sandworm lair
+A deep sandhole where most worms originated, it is guarded at its
+base by the Sandworm Queen.
+Equivalent to dungeon levels 22 to 30.
+
+#####GThe Heart of the Earth
+A dark passage leading into the heart of the world, the Heart of
+the Earth is the source of all the earth's changes. Some claim it
+to be the home of Golgarach, the Living Rock, who assists in the
+creation of new, ever-changing landforms.
+Equivalent to dungeon levels 25 to 36.
+
+#####GMaze
+A strange Maze where it becomes very difficult to remember where you
+have been, it is guarded at the bottom by The Minotaur of the Labyrinth.
+Equivalent to dungeon levels 25 to 37.
+
+#####GCirith Ungol
+The dungeon Cirith Ungol is full of poisonous fumes rising from the
+ground, and the land here looks diseased. Shelob is said to lurk
+within these depths.
+Equivalent to dungeon levels 25 to 50.
+
+#####GThe Land Of Rhun
+The Land Of Rhun is located on a large plain, and has been taken over
+by Ulfang the Black, Morgoth's first Easterling follower.
+Equivalent to dungeon levels 26 to 40.
+
+#####GThe Mines of Moria
+A stone door leads down to the depths of the Moria. Once the home of
+the dwarves, the mines have been taken over by creeping evil things, and
+unlucky adventurers may well stumble upon their training grounds. In
+the depths lurks Durin's Bane, the Balrog of Moria, and return from
+these depths can be difficult....
+Equivalent to dungeon levels 30 to 50.
+
+#####GThe Small Water Cave
+A small water cave filled with salt water, which rusts and damages an
+adventurer's equipment. This cave is not very deep, and is guarded by
+The Watcher in the Water.
+Equivalent to dungeon levels 32 to 34.
+
+#####GSubmerged Ruins
+The lost land of Numenor lies submerged here. The salt water causes
+everything to rust. These ruins are guarded by Ar-Pharazon the
+Golden.
+Equivalent to dungeon levels 35 to 50.
+
+#####GIllusory Castle
+The Illusory Castle is a very strange and confusing place for an
+adventurer to visit, and is rumoured to contain many strange
+monsters. Deep within the castle can be found The Glass Golem.
+Equivalent to dungeon levels 35 to 52.
+
+#####GPaths of the Dead
+A dark underground graveyard, this place looks extremely dangerous.
+It is claimed that the dead have all arisen in these depths, and are
+lead by Feagwath, the Undead Sorcerer.
+Equivalent to dungeon levels 40 to 70.
+
+#####GThe Sacred Land Of Mountains
+The Sacred Land Of Mountains is located in a large mountain range,
+with the remains of many old towns. Considered a perfect place to hide
+for one who could fly, it is rumoured that Trone the rebel Thunderlord
+fled into the ruins here.
+Equivalent to dungeon levels 45 to 70.
+
+#####GThe Tower of Dol Guldur
+The tower of of Dol Guldur is the last known residence of one known only
+as "the Necromancer". It is rumoured to be filled with his conjurations,
+although none have made it out of the Tower alive to confirm or deny this
+rumour.
+Equivalent to dungeon levels 57 to 70.
+
+#####GErebor, the Lonely Mountain
+A big, dark and frightening tunnel leading to the depth of the Lonely
+Mountain, this large cave is the ancestral home of the Dragons.
+Glaurung, Father of the Dragons has long made his home here.
+Equivalent to dungeon levels 60 to 72.
+
+#####GMount Doom
+A steaming cave in the centre of Mount Doom, this place is *hot*.
+It is said that Sauron forged the One Ring here and that it's the only place
+where it could be destroyed.
+Equivalent to dungeon levels 85 to 99.
+
+#####GNether Realm
+The Nether Realm is accessible only through a magic portal. Also
+known as Hell, this land is lethal to any who are unprepared for the
+ravages of Nether, and is guarded by Tik'srvzllat.
+#####BEquivalent to dungeon levels 666 to 696!!!!!
+
+
+                             Created by Dawnmist for PernAngband 5.x.x
+                                                Updated for ToME 2.1.x

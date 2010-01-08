@@ -1,0 +1,83 @@
+S:0000
+E:0000
+D:It is midnight.
+
+S:0001
+E:0200
+D:It is deep night.
+
+S:0300 
+E:0400
+D:It is early morning, but still dark.
+
+S:0500 
+E:0544
+D:It will be day soon.
+
+S:0545 
+E:0559
+D:The sun is rising.
+
+S:0600 
+E:0614
+D:The sun has risen.
+
+S:0615 
+E:0659
+D:Morning has broken.
+
+S:0700 
+E:0859
+D:It is early morning.
+
+S:0900 
+E:0959
+D:It is midmorning.
+
+S:1000 
+E:1154
+D:It is late morning.
+
+S:1155 
+E:1159
+D:It is almost noon.
+
+S:1200 
+E:1200
+D:It is noon.
+
+S:1201 
+E:1459
+D:It is early afternoon.
+
+S:1500 
+E:1559
+D:It is midafternoon.
+
+S:1600 
+E:1659
+D:It is late afternoon.
+
+S:1700 
+E:1729
+D:It will be night soon.
+
+S:1730 
+E:1759
+D:The sun is setting.
+
+S:1800 
+E:1859
+D:The night has begun.
+
+S:1900 
+E:2059
+D:It is early night.
+
+S:2100 
+E:2358
+D:It is late night.
+
+S:2359
+E:2358
+D:It is almost midnight.

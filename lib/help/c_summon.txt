@@ -1,0 +1,80 @@
+~~~~~01|Summoners
+~~~~~02|Classes|Summoners
+#####R=== Summoners ===
+
+#####GDescription
+A Summoner is, with one exception, a fairly weak class. While he starts 
+out a decent enough fighter, his fighting skill doesn't improve that much,
+he doesn't cast magic and has little in the way of survival skills. However,
+this weakness doesn't trouble him much, because he can summon creatures to
+do his bidding and still gain experience from their kills.
+
+#####GStarting Stat Modifiers
+Strength        +1
+Intelligence    -2
+Wisdom          +1
+Dexterity       +1
+Constitution     0
+Charisma        +1
+Hit Die         +d8
+Spell Points    +0%
+Exp Penalty     40%
+
+#####GStarting Skills
+#####BSkill                   Start Level     Skill Point Gains
+Combat                  1.000           [0.600]
+  Weaponmastery         1.000           [0.600]
+  Archery               1.000           [0.400]
+Sneakiness              1.000           [0.700]
+  Stealth               1.000           [0.700]
+  Disarming             1.000           [0.500]
+Magic                   1.000           [0.800]
+  Magic-Device          1.000           [1.000]
+Spirituality            1.000           [0.500]
+  Prayer                0.000           [0.500]
+  Music                 0.000           [0.300]
+Monster-lore           16.000           [1.200]
+  Summoning             1.000           [0.700]
+  Corpse-preservation   1.000           [1.000]
+
+#####GStarting Equipment
+A Summoner starts the game with:
+    A Potion of Healing
+    A Short Sword
+    A Suit of Hard Leather Armour
+~~~~~03|Summoners|Summoning
+~~~~~04|Skills|Summoning - Summoning powers
+#####GSummoning
+[[[[[BThe summoner's powers of invocation are accessed using the 'm' key.]
+In order to invoke a monster, a summoner must possess a related totem.
+
+There are two kinds of summoning, decided by the totem used:
+
+[[[[[BPartial Summoning]
+Partial summoning creates a simulacrum of the monster, with little will 
+of its own. The Summoner must maintain the simulacrum using mana; when 
+he runs out, or stops paying the mana, the simulacrum vanishes.
+
+[[[[[BTrue Summoning]
+True summoning is quite different in effect from Partial Summoning, but the 
+two are closely related in usage. A True Totem conjures a full copy of the 
+creature in question; the process tends to make the monster a loyal ally to 
+the summoner, but this loyalty is not guaranteed, nor is the survival of the 
+totem used in the summoning.
+
+[[[[[BTotem Creation]
+In order to summon any creature, the Summoner needs a totem. Totems cannot be 
+found; they must be created through a special process which involves taking 
+the corpse of a creature (the summoner need not have been involved in the 
+death of the creature in question), and extracting certain essences from it.
+
+The summoner can create a totem using the 'm' command, and unless one is 
+working on a unique's corpse, must choose whether the resulting totem is a 
+Partial or True Totem.
+
+[[[[[BImportant Note]
+Uniques are very willful creatures by definition, and thus have three special 
+rules about their summoning:
+1. No partial totem can be made from a unique's corpse.
+2. The totem in question is always destroyed.
+3. The unique is twice as likely to be disloyal.

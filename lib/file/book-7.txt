@@ -1,0 +1,141 @@
+
+			Artifact Lore, Vol. II
+			    Ancient Armor
+			----------------------
+
+
+  Adamantite Plate Mail 'Soulkeeper' [40,+20]
+       This amazing armour protects your soul from cold,  and  from
+       life level loss. It is also capable of fully healing you.
+
+  The Pair of Hard Leather Boots of Feanor [3,+20]
+       These amazing boots belonging to Feanor the High-Elf,  haste
+       the wearer permanently and temporarily in combat, making him
+       or her stealthy as well.
+
+  The Pair of Soft Leather Boots 'Dal-i-thalion' [3,+15]
+       These amazing  boots  of  agility,  ensure  free  action  in 
+       combat, greatly increasing your dexterity and ensuring  that
+       you will never become less agile. It is said that  they  can 
+       also make you more confident and brave.
+
+  Full Plate Armour of Isildur [25,+25]
+       This armour of the Dunedain Lord, Isildur, Resists.
+
+  The Large Metal Shield of Anarion [5,+20]
+       This shield Resists and sustains your stats.
+
+  The Set of Cesti of Fingolfin (+10,+10) [5,+20]
+       These amazing gauntlets increase the wearers dexterity, and
+       slay creatures at (+10,+10). They will never be stopped  by
+       paralyaztion and they also resist damage. They occasionally
+       grow magical spikes that can be fired causing great damage.
+
+  The Set of Leather Gloves 'Cambeleg' (+5,+5) [1,+15] 
+       These Gloves of Might, increase strength and  constitution.
+       They never allow their wearer to  be  paralyzed,  and  help 
+       his/her slaying abilities.
+
+  The Set of Leather Gloves 'Cammithrim' [1,+10]
+       These Gloves of Light, sustain dexterity and give off light
+       so brightly  that  they  can  cast  magic  missiles  almost 
+       endlessly.
+
+  The Set of Gauntlets 'Paurhach' [2,+15]
+       These Fists of Fire resist fire and can cast fire bolts.
+
+  The Set of Gauntlets 'Paurnimmen' [2,+15]
+       These Fists of Frost resist cold and can cast frost bolts.
+
+  The Set of Gauntlets 'Pauraegen' [2,+15]
+       These Fists of Lightning  resist  lightning  and  can  cast 
+       lightning bolts.
+
+  The Set of Gauntlets 'Paurnen' [2,+15]
+       These Fists of Water resist acid and can cast acid bolts.
+
+  The Set of Gauntlets 'Camlost' (-11,-12) [2,+0] (-5)
+       The Empty Hand aggravates  monsters,  and  greatly  reduces
+       fighting ability.  Named after the empty hand of Beren that
+       once clasped a Silmaril.
+
+  Mithril Chain Mail of Belegennon [28,+20]
+       This Chain Mail Resists and makes you stealthy.
+
+  The Iron Helm of Dor-Lomin [8,+20]
+       This is the Dragon Helm of  Turin Turambar.  It is  rumored
+       that its wearer will never die in combat.   It  resists all
+       and sees all, and increases all fighting stats.
+
+  The Iron Helm of Holhenneth [5,+10]
+       This helm of brilliance and vision, greatly increases  your
+       mental prowess. It allows you to see all  that  is  hidden,
+       casting detection spells at frequent intervals.
+
+  The Iron Helm of Gorlim [5,+10] (-125)
+       This unhappy helm of betrayal ruins thought and sight.
+
+  Soft Leather Armour 'Hithlomir' [4,+20] (+4)
+       This dark-misty leather resists the elements and melds  the
+       wearer into the background with incredible stealth.
+
+  Leather Scale Mail 'Thalkettoth' (+3) [11,+25]
+       This  light  leather  scale mail  is  suprisingly  good  at
+       dodging attacks, and is resistant to acid.  Often nicknamed
+       Blade-Turner.
+
+  Chain Mail of Arvedui [14,+15]
+       This wonderful chain mail belonged  to  the  last  king  of  
+       Arnor. It resists the elements and increases  strength  and
+       charisma.
+
+  The Hard Leather Cap of Thranduil [2,+10]
+       This acid resistant leather is a thinker's cap.  Increasing
+       wisdom and intelligence.
+
+  The Metal Cap of Thengel [3,+12]
+       This cap of the Rohan King Thengel, gives kingly wisdom and
+       charisma.
+
+  The Steel Helm 'Hammerhand' [6,+20]
+       This warriors' helm increases the fighting stats.
+
+  The Large Leather Shield of Celegorm [4,+20]
+       A quality shield of Resistance.
+
+  The Pair of Metal Shod Boots of Thror [6,+20]
+       These Dwarf-king boots are  ideal  for  combat,  increasing
+       strength and constitution.
+
+  The Cloak 'Colluin' [1,+15]
+       This cloak of resistance even casts extra resistance spells
+       that can defend against poison.
+
+  The Cloak 'Holcolleth' [1,+4]
+       This mage cloak increases intelligence and wisdom and casts
+       spells to make monsters lose their concentration  and  fall
+       to sleep.
+
+  The Cloak 'Colannon' [1,+15]
+       This Gate-cloak, teleports the player at  will,  and  gives 
+       stealth so as to avoid awkward situations.
+
+  The Iron Crown of Beruthiel [0,+20] (-125)
+       This crown once belonged to the  Cat-Queen  of  Gondor,  who
+       disdained armed combat. Giving  you  cat  like  vision,  and 
+       sight within sight, it allows  its  wearer  to  be  free  of 
+       combat, and infact finding armed combat beyond  his  or  her
+       means.
+
+  The Iron Crown of Morgoth
+       This awesome artifact is a plain iron  crown,  mounted  with
+       three jewels  that  capture the eternal light of  the  Trees
+       of the Valar, Teleperion and Laurelein.  These  Jewels  were 
+       made by the Noldorian High-Elf, Feanor who  named  them  the  
+       Silmarils.  Their  beauty,  unsurpassed, drove  Morgoth   to
+       steal these jewels (with the aid of Ungoliant the  Unlight).
+       The  crown  then, maximises all you stats, sustains all your  
+       stats, is a permanent light source and allows  the wearer to
+       see all.
+
+

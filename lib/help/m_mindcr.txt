@@ -1,0 +1,54 @@
+|||||oy
+~~~~~01|Magic|Mindcraft
+~~~~~02|Mindcrafter|Mindcraft powers
+~~~~~03|Skills|Mindcraft - Spell Info
+#####R === ToME Magic - Mindcraft ===
+Mindcrafting uses the power of the mind to cast its spells. Therefore neither
+books nor light are necessary, and as the mindcrafter's skill increases, so do
+the powers of his mind.
+
+The powers are accessed using the 'm' key and then selecting 'Use Mindcraft';
+they are cast with spell points, like normal spells, which can be increased
+as usual through the *****skills.txt*21[Magic] skill.
+
+1. [[[[[sPrecognition] (Level 1) Cost:1
+   Detects monster minds around you.
+   At level 5 it also detects traps.
+   At level 15 it also allows you to see invisible monsters for a time.
+   At level 20 it maps out the surrounding area.
+   At level 25 it gives you ESP for a time.
+   At level 30 it also detects objects and treasure.
+   At level 45 it fully shows the entire level.
+2. [[[[[sNeural blast] (Level 2) Cost:1
+   Fires a bolt or beam, to stun and damage monsters.
+3. [[[[[sMinor Displacement] (Level 3) Cost:2
+   Teleports you a short distance.
+   At level 25 it grants the ability to create void jumpgates.
+4. [[[[[sMajor Displacement] (Level 7) Cost:6
+   Teleports you a good distance. 
+   At level 30 it also banishes the monsters around you.
+5. [[[[[sDomination] (Level 9) Cost:7
+   Attempts to dominate the minds of your foes, scaring them.
+   At level 30 it attempts to charm monsters.
+6. [[[[[sPulverise] (Level 11) Cost:7
+   Fires pure sound at your opponents, crushing their bodies.
+7. [[[[[sCharacter Armour] (Level 13) Cost:12
+   Raises a physical shield around your body.
+   At level 15 it also grants resistance to acid.
+   At level 20 it also grants resistance to fire.
+   At level 25 it also grants resistance to cold.
+   At level 30 it also grants resistance to electricity.
+   At level 35 it also grants resistance to poison.
+8. [[[[[sPsychometry] (Level 15) Cost:12
+   Senses the quality of an item.
+   At level 40 it identifies an item.
+9. [[[[[sMindwave] (Level 18) Cost:10
+   Blasts the minds of monsters close to you.
+   At level 25 it affect all monsters in line of sight.
+10.[[[[[sAdrenaline Channeling] (Level 23) Cost:15
+   Heals you, hastes you and cures you.
+11.[[[[[sPsychic Drain] (Level 25) Cost:10
+   Drains the life of your foes into your mana reserves.
+12.[[[[[sTelekinesis] (Level 28) Cost:20
+   Projects a wave of pure telekinetic force from your body, damaging and maybe 
+   banishing monsters.

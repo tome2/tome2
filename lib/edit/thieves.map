@@ -1,0 +1,70 @@
+# Floor
+F:.:1:6
+
+# Dark floor
+F:,:1:4
+
+# Permanent wall
+F:X:61:4
+
+# Lit permanent wall
+F:x:61:6
+
+# Magically looked door
+F:M:38:22
+
+# Looked door
+F:D:38:6
+
+# Open door
+F:d:4:6
+
+# up staircase
+F:<:6:8
+
+# Floor with Novice rogue
+F:a:1:6:44
+
+# Floor with Bandit
+F:b:1:6:150:43:*
+
+# Floor with novice warrior
+F:c:1:6:43
+
+# Floor with novice mage
+F:e:1:6:46
+
+# Dark floor with novice warrior
+F:f:1:4:43
+
+# Floor with human skeleton
+F:z:1:6:0:395
+
+# Dungeon layout
+D:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+D:x.....x....zx.....x.............x
+D:x.....x.....x.....x.............x
+D:x.....x.....x.....x.............x
+D:xxxMxxxxxdxxxxxdxxxxxxxxxDxxxxxxx
+D:XXx..........................xXXX
+D:XXx.xxxxx.xxxxx.xxxxxxxxx.xx,xXXX
+D:XXxxxXXXxxxXXXxxxXXXXXXXxxx,,,XXX
+D:XXXXxxxxxxxxxxxxxxxxxXXXXX,,,,,XX
+D:XXXXxe..xb..x...x...xXXXX,,,,,,,X
+D:XXXXx...x...xa..x...xXXXX,,,,,,,X
+D:XXXXx...x...x...x.a.xXXXX,,,,,,,X
+D:xxxxxxDxxxDxxxDxxxDxxXXXXX,,,,,XX
+D:x,,,x...............xXXXXXX,,,XXX
+D:x,,,x..x.........x..xXXXXXXX,XXXX
+D:x,,,D.....x...x.....D,,,,,,,,XXXX
+D:x,,,x..x.........x..xXXXXXXXXXXXX
+D:x,,,x...............xXXXXXXXXXXXX
+D:x,,,xxDxxxDxxxDxxxDxxXXXXXXXXXXXX
+D:x,,,x...x...x.a.xa..xXXXXXXXXXXXX
+D:x,,,xc..x.a.x...x...xXXXXXXXXXXXX
+D:xf,fx...x...x...x...xXXXXXXXXXXXX
+D:xxxxxxxxxxxxxxxxxxxxxXXXXXXXXXXXX
+
+# Starting position
+P:4:4
+

@@ -1,0 +1,266 @@
+|||||oy
+#####R             /----------------------------------------\
+#####R            <         Adding new racial powers         >
+#####R             \----------------------------------------/
+
+#####R=== Introduction ===
+
+You *must* download and install my lua example files from 
+[[[[[Ghttp://www.moppy.co.uk/angband.htm]. And also you should read the 
+*****lua_intr.txt*0[scripting introduction] file if you haven't already done 
+so.
+
+The (commented) accompanying script file for this tutorial is 
+lib\scpt\pheonix.lua. Open it in your text editor!
+
+#####R=== The Racial Power ===
+
+Let's start with something simple. Let's say you wanted your new race (let's 
+call it "Pheonix") to be able to cast fire balls as their racial power. 
+
+#####R=== Starting off ===
+
+If you have a look at pheonix.lua you'll note the first lines are comments.
+I'll talk a bit more about comments later, but it's worth pointing out that any
+lines of text preceded by a double hyphen ([[[[[B--]) will be ignored by the 
+scripting engine, and are therefore comments. 
+After the comments, the first 10 lines of code are as follows:
+
+#####BPHEONIX_POWER = add_power
+#####B{
+#####B        ["name"] =      "Fire Breath",
+#####B        ["desc"] =      "You are able to cast fireballs",
+#####B        ["desc_get"] =  "Your beak glows red",
+#####B        ["desc_lose"] = "Your beak goes cold again",
+#####B        ["level"] =     10,
+#####B        ["cost"] =      11,
+#####B        ["stat"] =      A_INT,
+#####B        ["fail"] =      14,
+
+So, [[[[[BPHEONIX_POWER = add_power] is registering our power. We're giving it 
+a name (PHEONIX_POWER) and saying that it is defined by calling the special 
+function [[[[[Badd_power]. This special function is only used to define lua-
+scripted 
+powers, and has attributes which are identified by their inclusion in square 
+brackets.
+Note the following:
+- Lua is case sensitive. The name of our power is a constant, will never change 
+so that's been named with capitals. variables and functions are named all in 
+lower case. Technically speaking, Lua does not support constants, but we can 
+emulate them by variables in this way. They don't have to be capitalised, but 
+if you capitalise all your constants, it makes things easier to read, and 
+you'll be following normal programming protocol. 
+- There are no spaces in the name of the power. Use an underscore for spaces 
+if you need to improve legibility. 
+
+[[[[[B"name" =      "Fire Breath",] This is the name of the power as it is 
+displayed in the 
+U menu, and as you will define it in p_info.txt (more about that later). 
+
+[[[[[B"desc" =      "You are able to cast fireballs",] This is what would 
+appear in the 
+information display list if you drank  a potion of self knowledge or 
+similar. 
+
+[[[[[B"desc_get" =  "Your beak glows red",] This is the information displayed 
+when you 
+gain this power. 
+
+[[[[[B"desc_lose" = "Your beak goes cold again",] This is the information 
+displayed when 
+you lose this power. Eg After a mutation/corruption.
+
+[[[[[B"level" =     10,] Character level which must be gained in order to use 
+power,
+
+[[[[[B"cost" =      11,] Amount of mana to cast this power.
+
+[[[[[B"stat" =      A_INT,] stat which will define whether it works or not, 
+
+[[[[[B"fail" =      14,] how high that stat must be. 
+
+So our Pheonix will be able to cast PHEONIX_POWER  from clvl 10, at a cost of 
+11 mana, providing that the player's intelligence is 14 and upwards. 
+
+#####R=== The function ===
+
+The next section is a lot longer, so we'll look at it line by line. I'll 
+strip the comments for the purpose of this helpfile.
+
+#####B["power"] =     function()
+#####B		local ret, dir, damage
+#####B		ret, dir = get_aim_dir();
+#####B		if (ret == FALSE) then 
+#####B			return 
+#####B		end
+#####B		damage = player.lev*3
+#####B		msg_print("You breathe fire.")
+#####B		fire_ball(GF_FIRE, dir, damage, 3)
+#####Bend,
+
+The [[[[[B"power"] bit is what actually happens when the player accesses this 
+power 
+from their 'U' menu. Every function must start with the word [[[[[Bfunction]. 
+Normally, we'd also declare its name at this point, but as this is contained 
+within the [[[[[Badd_power] function, we just use the word [[[[[Bfunction] The 
+empty 
+brackets after this denote that no arguments are passed to the function. 
+Lets look at the next line.
+
+#####B		local ret, dir, damage
+
+The [[[[[Blocal] bit is saying that  we're going to declare some local 
+variables. That 
+is, that there will be three variables used in this function , that apply 
+exclusively to this function, and to no others. Global variables are 
+variables that apply to the whole script, in multiple functions. The three 
+variables will be called [[[[[Bret] (return), [[[[[Bdir] (direction), and
+[[[[[Bdamage]. They will be used to determine the direction the ball 
+will fire in, and how much damage it will do. We'll see them in use when we add
+the third line:
+
+#####B		ret, dir = get_aim_dir();
+
+here we're saying that the variables will take their value from the result 
+of a function. The program performs the function [[[[[Bget_aim_dir] which 
+essentially asks the player to choose a direction or pick a target. 
+[[[[[Bget_aim_dir] 
+assigns the value [[[[[Bret] to either TRUE (if the player correctly selected a 
+direction) or FALSE (if the player failed to do so (maybe they changed their 
+mind, or hit the wrong key!)). The value [[[[[Bdir] is the direction which was 
+selected (or the path to the target if a target was selected). OK so let's add 
+the next line:
+
+#####B		if (ret == FALSE) then return end
+
+This introduces another fundamental scripting concept - [[[[[Bif] statements.
+They work just as you would expect them too. You say "if a certain condition is
+met, then do the following things."
+So in this function we're saying, "if the value of [[[[[Bret] is FALSE then 
+[[[[[Breturn]."
+As I mentioned above, [[[[[Bret] is false if the player aborted (either 
+deliberately or accidentally) the spell casting whilst choosing a direction 
+for the spell. The double equals sign are used to mean "is equal to" as a 
+single equals sign is used for defining variables remember? A single equals 
+sign is more of a "let x be equal to y" thing.
+[[[[[Breturn] means stop the current function. And [[[[[Bend] signifies the 
+close of the [[[[[Bif]
+statement. Every [[[[[Bif] statement must begin with an [[[[[Bif] and finish 
+with an [[[[[Bend].
+So, what our [[[[[Bif] statement is saying is; "if the player failed to specify 
+a direction or target for the spell, stop the function here."
+If the player has correctly specified a direction/target, the function 
+continues to the next line:
+
+#####B		damage = player.lev*3
+
+Here we're saying that the variable [[[[[Bdamage] has a value equal to the 
+players current character level, multiplied by 3.
+
+#####B		msg_print("You breathe fire.")
+
+Fairly easy to see what this does - displays the message "You breathe fire."
+I could have put anything there obviously, like [[[[[Bmsg_print("You open]
+[[[[[Byour mouth and everyone falls over with the smell of hot curry")] or
+some other such rubbish. But note that the message is enclosed within double 
+quotes. The quotes aren't displayed in the message on screen, but signify the 
+start and end of the message. 
+
+#####B		fire_ball(GF_FIRE, dir, damage, 3)
+
+This is the line that casts the spell. it says execute the function 
+[[[[[Bfire_ball]. Now, this doesn't mean a fireball, it means fire a ball. 
+There's an important distinction there! All it knows it is doing is firing a 
+ball, it doesn't know what kind of ball, or where, or how big, or how much 
+damage.
+The [[[[[BGF_FIRE,] bit is what tell us it is a fire ball. If it was 
+[[[[[BGF_COLD,]
+ we'd have a cold ball, or [[[[[BGF_CHAOS,] it would be a chaos ball and 
+so on and so on. A full list of those types can be found in *****lua_gf.txt*0[lua_gf.txt].
+[[[[[B dir,] is the direction, from the [[[[[Bget_aim_dir()] bit.
+[[[[[B damage,] is the damage. As we've already said, this will be clvl*3.
+[[[[[B 3)] is the radius.
+and finally...
+
+#####B	end,
+#####B}
+
+[[[[[Bend,] tells it the function has ended. Every function must finish with 
+[[[[[Bend].
+You should have spotted that after the end of each attribute is a comma. Make 
+sure you include this, and don't forget the braces at the very very end to 
+close the [[[[[Badd_power] function.
+
+#####R=== Finishing the LUA file ===
+
+Save this as a text file 'pheonix.lua' Put it into the lib\scrpt directory 
+of ToME, and open the init.lua file which you'll find in the same 
+directory. 
+
+Add the following line and resave the init.lua file.
+
+#####Btome_dofile("pheonix.lua")
+
+This ensures that ToME loads your file on start-up. Because you've installed 
+the example scripts, this has all been done for you.
+
+#####R=== A quick word about comments ===
+
+One of the reasons Angband has so many variants is because the source code is 
+clearly commented. Almost every line of code has an accompanying comment, 
+explaining what that line does. It's good practice to add comments to any code 
+or script you write. It's helpful to others who are learning, anyone who takes 
+over your project, and also to yourself when you come back in a month's time 
+and can't remember what you did! So comment your code clearly, and well!
+
+You can also add multi line comments which should be enclosed by [[[[[B--[[] 
+and 
+#####B]]
+
+#####R=== Tying it all together ===
+
+You'll now need to link this 'U' power to the pheonix race via the 
+p_info.txt file. Simply add a line within the class definition file that has 
+the format [[[[[BR:Z:<name>]the name of the power as it appears in the 
+[[[[[B"name"] 
+section we did right at the beginning, remember? Seeing as there is no pheonix 
+race, I've gone ahead and made one up as a demonstration. If you've downloaded 
+and installed the example files from [[[[[Ghttp://www.moppy.co.uk/angband.htm/] 
+then 
+you'll notice you already have the pheonix race available. Printed below is 
+the p_info.txt entry for it.
+
+
+#####BR:N:23:Pheonix
+#####BR:D:Born from flame, these powerful bird like creatures gain fire related
+#####BR:D:abilities as they grow. 
+#####BR:S:1:0:2:1:-3:2:-5
+#####BR:K:-8:15:20:-10:5:-1:-5:-5
+#####BR:P:8:130:5:210
+#####BR:M:255:70:2:1:20:5:2:1:18:3
+#####BR:E:1:1:1:2:1:1
+#####BR:C:Warrior | Mage | Priest | Rogue | Ranger | Paladin | Blade | 
+#####BR:C:Warlock | Chaos-Warrior | Monk | Mindcrafter | High-Mage |
+#####BR:C:BeastMaster | Alchemist |  Power-Mage | Runecrafter | 
+#####BR:C:Sorceror | Archer | Illusionist | Druid | Necromancer | Black-Knight 
+| 
+#####BR:C:Daemonologist | Weaponmaster | Summoner | 
+#####BR:Z:Fire Ball
+#####BR:R:1:0
+#####BR:F:RES_FIRE | FEATHER |
+
+Note the [[[[[BR:Z:] line. 
+
+If all is well, you should be able to start ToME now and breathe fire! Once 
+you get to lvl 10 anyhow. Don't forget, this is the kind of thing wizard mode 
+was invented for! Ctrl-A and confirm at the prompt, and then 'e' will allow 
+you to alter stats, including experience. Approx 1000 exp should do to get you 
+to clvl 10.
+
+Ready for more? How about adding a new *****lua_skil.txt*0[skill] ?
+
+                             [[[[[gThis file by fearoffours (fearoffours@moppy.co.uk)]
+
+
+
+

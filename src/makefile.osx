@@ -1,0 +1,210 @@
+BUNDLENAME = ToME
+BUNDLEDIR = ../$(BUNDLENAME).app
+CONTENTSDIR = $(BUNDLEDIR)/Contents
+BINDIR = $(CONTENTSDIR)/MacOS
+RESOURCEDIR = $(CONTENTSDIR)/Resources
+LIBDIR = $(RESOURCEDIR)
+
+CC = MACOSX_DEPLOYMENT_TARGET="10.1" cc
+
+COPTS = -Wall -Os -g -pipe -fpascal-strings
+#-Wno-deprecated-declarations
+DEFINES = -DUSE_MACOSX -DMACH_O_CARBON \
+	-DUSE_PRECISE_CMOVIE -DUSE_UNIXSOCK \
+	-DUSE_EGO_GRAPHICS -DUSE_TRANSPARENCY -DSUPPORT_GAMMA
+LIBS = -framework CoreFoundation -framework QuickTime -framework Carbon
+
+# Universal binary support
+COPTS += -isysroot /Developer/SDKs/MacOSX10.4u.sdk -arch i386 -arch ppc
+LIBS += -arch i386 -arch ppc -Wl,-syslibroot,/Developer/SDKs/MacOSX10.4u.sdk
+
+BASESRCS = \
+  main-crb.c \
+  z-rand.c z-util.c z-form.c z-virt.c z-term.c z-sock.c \
+  variable.c tables.c plots.c util.c cave.c dungeon.c \
+  melee1.c melee2.c modules.c \
+  object1.c object2.c randart.c squeltch.c traps.c \
+  monster1.c monster2.c monster3.c ghost.c \
+  xtra1.c xtra2.c skills.c powers.c gods.c \
+  spells1.c spells2.c \
+  status.c files.c notes.c loadsave.c \
+  cmd1.c cmd2.c cmd3.c cmd4.c cmd5.c cmd6.c cmd7.c \
+  help.c \
+  generate.c gen_maze.c gen_evol.c wild.c levels.c store.c bldg.c \
+  cmovie.c irc.c \
+  wizard2.c init2.c birth.c wizard1.c init1.c
+
+BASEOBJS = \
+  main-crb.o \
+  z-rand.o z-util.o z-form.o z-virt.o z-term.o z-sock.o \
+  variable.o tables.o plots.o util.o cave.o dungeon.o \
+  melee1.o melee2.o modules.o \
+  object1.o object2.o randart.o squeltch.o traps.o \
+  monster1.o monster2.o monster3.o ghost.o \
+  xtra1.o xtra2.o skills.o powers.o gods.o \
+  spells1.o spells2.o \
+  status.o files.o notes.o loadsave.o \
+  cmd1.o cmd2.o cmd3.o cmd4.o cmd5.o cmd6.o cmd7.o \
+  help.o \
+  generate.o gen_maze.o gen_evol.o wild.o levels.o store.o bldg.o \
+  cmovie.o irc.o \
+  wizard2.o init2.o birth.o wizard1.o init1.o
+
+LUASRCS = \
+  script.c lua_bind.c \
+  w_util.c w_player.c w_z_pack.c w_obj.c w_mnster.c w_spells.c w_quest.c w_play_c.c w_dun.c
+
+TOLUASRCS = \
+  lua/lapi.c lua/lcode.c lua/ldebug.c lua/ldo.c lua/lfunc.c lua/lgc.c \
+  lua/llex.c lua/lmem.c lua/lobject.c lua/lparser.c lua/lstate.c lua/lstring.c \
+  lua/ltable.c lua/ltests.c lua/ltm.c lua/lundump.c lua/lvm.c lua/lzio.c \
+  lua/lauxlib.c lua/lbaselib.c lua/ldblib.c lua/liolib.c lua/lstrlib.c \
+  lua/tolua_lb.c lua/tolua_rg.c lua/tolua_tt.c lua/tolua_tm.c lua/tolua_gp.c \
+  lua/tolua_eh.c lua/tolua_bd.c
+
+LUAOBJS = \
+  script.o lua_bind.o \
+  w_util.o w_player.o w_z_pack.o w_obj.o w_mnster.o w_spells.o w_quest.o w_play_c.o w_dun.o
+
+TOLUAOBJS = \
+  lua/lapi.o lua/lcode.o lua/ldebug.o lua/ldo.o lua/lfunc.o lua/lgc.o \
+  lua/llex.o lua/lmem.o lua/lobject.o lua/lparser.o lua/lstate.o lua/lstring.o \
+  lua/ltable.o lua/ltests.o lua/ltm.o lua/lundump.o lua/lvm.o lua/lzio.o \
+  lua/lauxlib.o lua/lbaselib.o lua/ldblib.o lua/liolib.o lua/lstrlib.o \
+  lua/tolua_lb.o lua/tolua_rg.o lua/tolua_tt.o lua/tolua_tm.o lua/tolua_gp.o \
+  lua/tolua_eh.o lua/tolua_bd.o
+
+#
+# Base sources and objects
+#
+
+SRCS = $(BASESRCS)
+OBJS = $(BASEOBJS)
+
+
+#
+# Compiler options
+#
+
+CFLAGS = $(COPTS) $(INCLUDES) $(DEFINES)
+
+
+#
+# Lua support
+#
+
+INCLUDES += -Ilua -I.
+DEFINES += -DUSE_LUA
+SRCS = $(LUASRCS) $(TOLUASRCS) $(BASESRCS)
+OBJS = $(LUAOBJS) $(TOLUAOBJS) $(BASEOBJS)
+
+# Force recreation of stub files when lua source files are updated
+# To be included in dependency rules
+TOLUADEP = $(TOLUASRCS) lua/tolua.c lua/tolualua.c $(TOLUA)
+
+# Build the binary. The new base target.
+#
+
+TARGET = tome
+
+TOLUA = ./tolua
+
+default: $(TOLUA) $(TARGET)
+
+$(TARGET): $(OBJS)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBS)
+
+$(TOLUA): $(TOLUAOBJS) lua/tolua.c lua/tolualua.c
+	$(CC) $(LDFLAGS) -o $@ $(TOLUAOBJS) lua/tolua.c lua/tolualua.c $(LIBS)
+
+install: default
+	[ -d $(BUNDLEDIR) ] || mkdir $(BUNDLEDIR)
+	[ -d $(CONTENTSDIR) ] || mkdir $(CONTENTSDIR)
+	[ -d $(BINDIR) ]  || mkdir $(BINDIR)
+	[ -d $(RESOURCEDIR) ]  || mkdir $(RESOURCEDIR)
+	install -m 755 $(TARGET) $(BINDIR)
+	install -m 644 carbon/*.icns $(RESOURCEDIR)
+	/Developer/Tools/Rez -i /Developer/Headers/FlatCarbon -d MACH_O -o $(RESOURCEDIR)/tome.rsrc carbon/Carbon.r
+	install -m 644 carbon/Info.plist $(CONTENTSDIR)/Info.plist
+	/Developer/Tools/SetFile -a B $(BUNDLEDIR)
+	rsync -r --exclude="*CVS*" --exclude="*xtra/graf*" --exclude="*xtra/font*" ../lib/* $(RESOURCEDIR)
+	rsync ../lib/mods/*.lua $(RESOURCEDIR)/core
+	rsync ../lib/xtra/graf/*.png $(RESOURCEDIR)
+
+BUNDLEDIR := ../ToME.app
+APPVERSION := `carbon/getversion`
+IMAGENAME := ToME $(APPVERSION)
+IMAGEPATH := /Volumes/$(IMAGENAME)
+
+image: install
+	[ -d "$(IMAGEPATH)" ] && diskutil eject "$(IMAGEPATH)" || true
+
+	hdiutil create -fs HFS+ -volname "$(IMAGENAME)" -ov -type SPARSE -attach "$(IMAGENAME)"
+	cp -r "$(BUNDLEDIR)" ../changes.txt ../credits.txt ../changes.old "$(IMAGEPATH)"
+	cp carbon/Image-DS_Store "$(IMAGEPATH)/.DS_Store"
+	diskutil eject "$(IMAGEPATH)"
+
+	rm -f "$(IMAGENAME).dmg"
+	hdiutil convert "$(IMAGENAME).sparseimage" -format UDZO -o "$(IMAGENAME)"
+	rm "$(IMAGENAME).sparseimage"
+
+#
+# Clean up old junk
+#
+
+clean:
+	rm -f *.bak *.o lua/*.o w_*.c $(TOLUA) $(TARGET)
+
+#
+# Generate dependancies automatically
+#
+
+depend:
+	makedepend $(INCLUDES) $(DEFINES) -D__MAKEDEPEND__ $(SRCS)
+
+.c.o:
+	$(CC) $(CFLAGS) -c -o $*.o $*.c
+
+
+#
+# Quests
+#
+plots.o: q_rand.c q_main.c q_one.c q_ultrag.c q_ultrae.c \
+	q_thief.c q_hobbit.c q_nazgul.c q_troll.c q_wight.c \
+	q_spider.c q_poison.c \
+	q_eol.c q_nirna.c q_invas.c \
+	q_betwen.c \
+	q_narsil.c q_shroom.c q_thrain.c q_wolves.c q_dragons.c q_haunted.c q_evil.c
+
+#
+# Lua library compilation rules
+#
+
+w_mnster.c: monster.pkg $(TOLUADEP)
+	$(TOLUA) -n monster -o w_mnster.c monster.pkg
+
+w_player.c: player.pkg $(TOLUADEP)
+	$(TOLUA) -n player -o w_player.c player.pkg
+
+w_play_c.c: player_c.pkg $(TOLUADEP)
+	$(TOLUA) -n player_c -o w_play_c.c player_c.pkg
+
+w_z_pack.c: z_pack.pkg $(TOLUADEP)
+	$(TOLUA) -n z_pack -o w_z_pack.c z_pack.pkg
+
+w_obj.c: object.pkg $(TOLUADEP)
+	$(TOLUA) -n object -o w_obj.c object.pkg
+
+w_util.c: util.pkg $(TOLUADEP)
+	$(TOLUA) -n util -o w_util.c util.pkg
+
+w_spells.c: spells.pkg $(TOLUADEP)
+	$(TOLUA) -n spells -o w_spells.c spells.pkg
+
+w_quest.c: quest.pkg $(TOLUADEP)
+	$(TOLUA) -n quest -o w_quest.c quest.pkg
+
+w_dun.c: dungeon.pkg $(TOLUA)
+	$(TOLUA) -n dungeon -o w_dun.c dungeon.pkg
+
+# DO NOT DELETE THIS LINE - make depend depends on it.

@@ -1,0 +1,33 @@
+~~~~~01|DeathMolds
+~~~~~02|Races|DeathMolds
+#####R=== DeathMolds ===
+
+#####GDescription
+Death Molds are incredibly powerful creatures. However, they are also 
+molds. Lacking the ability to move as other creatures do, Death Molds have
+the powers of Phase Door, targeted teleportation, telekinesis, and 
+controlled Teleport Level. They also intrinsically resist Nexus and Nether,
+and are more skilled at Necromancy than other races.
+
+#####GStat Modifiers
+Strength        +10   
+Intelligence    0   
+Wisdom          +10   
+Dexterity       0   
+Constitution    +10   
+Charisma        -15       
+Hit Dice Sides  15         
+Exp Penalty     +150%
+
+#####GRacial Skill Modifiers:
+#####BSkill                Start Mod    Skill Point Gains Mod
+Combat                  
+  Weaponmastery         2.500           [0.000]
+  Archery		2.500           [0.000]
+Sneakiness
+  Stealth              25.000           [0.000]
+  Disarming             1.500           [0.000]
+Magic                   
+  Magic-Device         -0.500           [0.000]
+  Necromancy            0.000           [0.200]
+Spirituality            7.500           [0.000]

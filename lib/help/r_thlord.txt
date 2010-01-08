@@ -1,0 +1,32 @@
+~~~~~01|Thunderlord
+~~~~~02|Races|Thunderlord
+#####R=== Thunderlords ===
+
+#####GDescription
+The Thunderlords are supremely powerful spirits created by Manwe Sulimo,
+each riding a Great Eagle. They have the ability to conjure powerful 
+thunderbolts, they are telepathic, and they gain the ability to use the
+Straight Road, which can carry them to any location they have previously been.
+Due to their special clothing, they can resist elemental damage.  However,
+they take a very long time to gain levels as both rider and eagle must
+accumulate experience.
+
+#####GStat Modifiers
+Strength        +6   
+Intelligence    +2   
+Wisdom          +1   
+Dexterity       +1   
+Constitution    +3   
+Charisma        +8       
+Hit Dice Sides  12         
+Exp Penalty     +300%
+
+#####GRacial Skill Modifiers:
+#####BSkill                Start Mod    Skill Point Gains Mod
+Combat                  
+  Weaponmastery         1.500           [0.000]
+  Archery		0.500           [0.000]
+Sneakiness              3.000           [0.000]
+  Stealth             -16.000           [0.000]
+  Disarming             0.600           [0.000]
+Spirituality            5.000           [0.000]

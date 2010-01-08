@@ -1,0 +1,38 @@
+~~~~~01|Barbarian
+~~~~~02|Race Modifiers|Barbarian
+#####R=== Barbarian Race ===
+
+#####GDescription
+Barbarians are hardy members of their race. They are fierce in combat, and
+their wrath is feared throughout the world. Combat is their life: they learn
+to feel no fear. Barbarians are, however, suspicious of magic, which makes 
+magic devices fairly hard for them to use, and also makes it impossible for 
+them to play Mages.
+
+#####GStat Modifiers
+Strength       +2   
+Intelligence   -3   
+Wisdom         -2   
+Dexterity      +1   
+Constitution   +1   
+Charisma       -3      
+Hit Dice       +1 side
+Spell Points   -50%
+Exp Penalty    +25%
+
+#####GRacial Skill Modifiers:
+#####BSkill                Start Mod    Skill Point Gains Mod
+Combat                  
+  Weaponmastery         1.200           [0.000]
+  Archery		0.500           [0.000]
+Sneakiness
+  Stealth              -2.000           [0.000]
+  Disarming            -0.200           [0.000]
+Magic                   
+  Magic-Device         -1.000           [0.000]
+Spirituality            0.200           [0.000]
+
+#####GStarting Equipment
+A barbarian character begins the game with:
+    Some rations
+    Some torches

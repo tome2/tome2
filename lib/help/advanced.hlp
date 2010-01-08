@@ -1,0 +1,15 @@
+|||||oy
+#####RWelcome to the ToME Advanced Help System.
+#####R=============================================
+
+Please choose one of the following help files:
+
+     *****/aoption.txt*0[(a) Options] 
+     *****/bmacrofaq.txt*0[(b) Macros]
+     *****/cautomat.txt*0[(c) Automatizer help] 
+     (d) Lua scripting help - coming soon
+     *****/edebug.txt*0[(e) Debug commands] 
+     *****/fversion.txt*0[(f) Version information] A history of ToME's roots
+
+     *****/zhelp.hlp*0[(z) Main Help menu]
+

@@ -1,0 +1,47 @@
+
+		       Artifact Lore, Vol. III
+			Ancient Magical Tools
+		       -----------------------
+
+
+  The Amulet of Ingwe (+3)
+	This amulet belonged to the high king of  the  Vanyar,  the 
+	most powerful of the High Elves. It gives  resistance,  and
+	greatly increases your wisdom and charisma.  It  gives  you
+	good infravision, see invisible, and it casts a x5 strength
+	dispel evil.
+
+  The Amulet of Carlammas (+2)
+	This fiery amulet protects from  flame,    casts protection
+	from evil and increases your constitution.
+
+  The Phial of Galadriel (+4)
+	This wonderful object is an infinite light source, and once
+	identified it can light up rooms. 
+
+  The Three Elven Rings
+	Made by Celebrimbor,  Elf  of  the  Girth-I-Mirdain.  These
+	Rings of Power are of awesome power, and are very rare.
+
+  The Ring of Power 'Narya' (+1)
+	Celeborn gave this to Cirdan who gave it to Gandalf.
+	The least powerful of the Elven  rings  is  of  the element 
+	fire. And as such makes you completely immune to  fire.  It 
+	is also capable of casting very  powerful  fire  balls.  It 
+	increases all your stats by  one.  It  also  protects  from 
+	from life draining and helps you regenerate.
+
+  The Ring of Power 'Nenya' (+2)
+	This was kept by Galadriel.
+	As Narya is to fire, Nenya is to Frost... Plus two  to  all 
+	your stats.
+
+  The Ring of Power 'Vilya' (+3)
+	This was kept by Gil-galad who gave it to Elrond.
+	This gives immunity to lightning and resists poison.  Plus three
+	to all your stats.  Casts very powerful lightning balls.
+
+  Rumors exist of  a Ring of Power known as the One Ring, which was
+  made  to master  the other Rings of Power.   Its  powers are what
+  legends are made of....
+

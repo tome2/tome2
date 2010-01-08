@@ -1,0 +1,342 @@
+|||||oy
+#####R             /----------------------------------------\
+#####R            <       Adding new skill-based powers      >
+#####R             \----------------------------------------/
+
+#####R=== Introduction ===
+
+This is very much in the same vein as adding a racial/extra power, but has to 
+be tied into skills, and we're defining more than one spell at once. You should 
+have read the *****lua_intr.txt*0[scripting introduction] and 
+*****lua_pow.txt*0[racial power tutorial] before going much further. Both of the above files 
+contain some fairly fundamental information which you will find necessary for 
+full understanding of this file.
+
+#####R=== Getting started ===
+
+Open construc.lua (you have downloaded the example scripts from 
+[[[[[Ghttp://www.moppy.co.uk/angband.htm], haven't you?). The idea behind this 
+script is that it adds a skill which affects you ability to build/knock down 
+stuff. It treats the equivalent of stone-to-mud and trap-door destruction 
+spells as if they were "building skills". It also adds quite a few high-level 
+'spells' which do funky things like carving out corridors and chambers in a 
+single turn, and building doors and stuff. Just think of it as if the person 
+who has plenty of skills in this area would be a builder-type with lots of 
+strength and constitution... 
+
+In order to add these powers we're going to edit the s_info.txt file which 
+lives in the edit folder, and add a new skill, underneath the 'misc' tree, 
+called construction.  The powers will then be accessed through the 'm' menu, in 
+a similar way to mindcraft or alchemy skills or such. (That is, no books are 
+needed to cast them, as we're treating them as a craft that has been learnt, 
+rather than spells.) Our fist line of the script file reads:
+
+#####BSKILL_CONSTRUCT = 57
+
+This merely links the skill index that we'll be defining in s_info.txt to this 
+file. We'll come back to this at the end of the tutorial.
+
+#####Bconstructor_powers = add_magic
+
+In a similar way to the [[[[[Badd_power] function we called when we added the 
+Phoenix racial ability, this line calls a special function which we use to 
+define new skills. It follows a very specific, but easy to understand form. It 
+starts with a brace, which indicates the add_magic function will be storing 
+these values in a table. Don't worry about this too much, but understand that a 
+table starts and ends with braces [[[[[B{] and [[[[[B}] respectively. Each key 
+(or field name) takes the format [[[[[B"key" = value,] (the comma is 
+important!). 
+
+#####B	["fail"] = 	function()
+#####B			msg_print("You decide now is a good time for a cuppa")
+#####B	end,
+#####B	["stat"] = 	A_STR,
+#####B	["get_level"] = 	function()
+#####B			return get_skill_scale(SKILL_CONSTRUCT, 50)
+#####B	end,
+#####B	["spell_list"] = 
+
+[[[[[B"fail"] is a function that is called whenever you ##fail to cast the 
+spells##. Here it does nothing spectacular.
+[[[[[B"stat"] defines the stat used to cast the spells. Here it is strength. 
+Any other stat can be used, prefix it with [[[[[BA_].
+[[[[[B"get_level"] is used to determine the level of the spell. It's associated 
+with spells that increase in power the more points that are invested in the 
+associated skill. I know that's not terribly clear, I'll come back to it in a 
+moment.
+[[[[[B"spell_list"] is just that, a list of all the spells. 
+Each of these four properties within the table must end with a comma. If a 
+function is defined in the property itself then we add the comma after the 
+closing [[[[[Bend]. Again compare with construct.lua to see it. Any line NOT 
+ending with a comma will cause a lua error on startup, probably of the type 
+[[[[[V'}' expected to close '{' at line <whatever>.] 
+
+#####R=== The spell list ===
+
+Each spell, within the [[[[[B"spell_list"] key has its own set of properties 
+that we need to define from a sub-table so we open another set of braces to 
+start the spell list, and then a third set of braces to start the first spell. 
+So with all this, our first spell looks like:
+
+#####B	["spell_list"] = 
+#####B	{
+#####B		{
+#####B			["name"] = 
+#####B			["desc"] = 
+#####B			["mana"] = 
+#####B			["level"] = 
+#####B			["fail"] = 
+#####B			["spell"] = 
+#####B			["info"] = 
+#####B		},
+
+[[[[[B"name"] is, as you would expect, the name of the spell, as you want it to 
+appear in the spell list when choosing a spell. The maximum number of 
+characters for this is 29.
+[[[[[B"desc"] is the description received when you hit the capital letter of 
+that spell in the menu. (i.e., press 'a' to cast the first spell, but press 'A' 
+to receive info about the first spell. 
+[[[[[B"mana"] is the amount of mana required to cast the spell.
+[[[[[B"level"] is the level required to use that spell (that's level of the (in 
+this case construction) skill, not character level!).
+[[[[[B"fail"] is base fail rate.
+[[[[[B"spell"] is the function that is executed when the spell is cast. Note 
+that it MUST take the form [[[[[Bfunction() blah end] even if you're calling
+a C function directly. If you have a look at the end of the file, you'll see
+the "rebuild dungeon" spell which is identical to the "alter_reality" spell. 
+However, rather than reading [[[[[B"spell" = alter_reality()], it reads:
+
+#####B["spell"] = function()
+#####B		alter_reality()
+#####Bend,
+
+which appears to be a long way round to do the same thing, but this is how it 
+must be done.
+
+In a similar way, the [[[[[B"info"] key must begin with a [[[[[Bfunction()] 
+and return the value of what is to be displayed alongside the spell name, 
+level and mana in the spell list. The maximum number of characters that can be 
+displayed here is dependent on the width of the user's screen, but try to keep 
+it under 12 if you can, as this will fit in a standard 80x24 terminal screen. 
+The first character will need to be a space otherwise you'll have the info line 
+squashed right up against the fail rate and it will look odd. If you wish to 
+have this part blank in the spell list, you still need to return a value, so 
+just a single space will do : [[[[[Breturn " "]
+
+All of these keys are repeated for each spell, with each spell in its own 
+table (therefore, it's own set of braces). Again, check the lua file for 
+clarification.
+
+When entering the spells in the "spell_list", you must take care to specify 
+them in the order which they are gained, otherwise they display incorrectly in 
+the spell list.
+
+You should by now be experienced enough to understand most of what's going on 
+in the actual spell functions (especially if you dig around in the source a 
+bit, and check out Chris Hadgis' excellent *****lua_spel.txt*0[spell.pkg] helper 
+files. I'm not going to go through the whole file line by line, as this is 
+something you should do yourself, figuring out what's going on. I'm going to 
+examine a few of the things we haven't covered before though, so pay attention.
+
+#####R=== The get_level() function ===
+
+Probably one of the most important functions that you see reappearing in the 
+file is the [[[[[Bget_level()] function. All this does is return the numerical 
+value of the power that is given as the first argument. So [[[[[Bget_level]
+[[[[[B(constructor_power)] will return the current level of the constructor power. 
+Given that the level of this is taken directly from the construction skill, (we 
+defined that in the [[[[[B"get_level"] key, by saying [[[[[Bget_skill_scale]
+[[[[[B(SKILL_CONSTRUCT, 50)] ) it will return the value of your construction skill. 
+[[[[[Bconstructor_power] is the name of the whole power, we named it thus on 
+the second line of the script!
+
+[[[[[Bget_level] takes the following arguments: [[[[[Bget_level(power, max, ]
+[[[[[Bmin)]. The power is obviously which power we're taking the value from, and the 
+max and min allow you to define boundaries for the spell. For instance the 
+current maximum value that [[[[[Bget_level(constructor_power)] can return is 
+50, as that is the maximum number of skill points you can have in that skill. 
+If you were using this as the basis for the damage of a low-level bolt spell, 
+you might decide that having a damage of 50 would be too much (unlikely, but 
+still possible). You could therefore define a maximum value of 20 so that when 
+the value of the construction skill was over 50, the maximum value for 
+damage of that spell would be 20. To achieve this you'd have: 
+[[[[[Bget_level(constructor_power, 20)]. In a similar way, you can force the 
+minimum value of the spell to be higher than the actual construction skill 
+level, with a [[[[[Bget_level(constructor_power, 50, 15)]. This would be useful 
+say for spells that you wanted to be available when the construction skill 
+level reaches 10, but for whom you wanted a (for example) base damage of 15 
+right from the word go. These re-scale values rather than capping them!
+
+You can leave out the minimum value as I have done above. You can also leave 
+the maximum value out (it will default to 50). If you want to specify a minimum 
+value though, you MUST specify a maximum value as well.
+
+As you have hopefully been able to tell, the [[[[[Bget_level()] function 
+enables us to have spells that increase in usefulness as you gain levels. Let's 
+take the "Dismantle" spell. The function in the [[[[[B"spell"] key is as 
+follows:
+
+#####Bfunction()
+#####B	local ret, dir, dam
+
+#####B	if (get_level(constructor_powers, 50) >= 11) then
+#####B		ret, dir = get_aim_dir();
+#####B		if (ret == FALSE) then return end
+#####B		fire_beam(GF_KILL_TRAP, dir, 1)
+#####B	else
+#####B		fire_ball(GF_KILL_TRAP, 0, 1, 1)
+#####B	end
+#####Bend,
+
+The [[[[[Bif] statement is obviously what really interests us here. You'll 
+notice that this has the amendment of an [[[[[Belse] clause, which the [[[[[Bif] 
+statement we used in the previous tutorial did not. As you would expect, if the 
+condition on the first line of this statement is met, then the instructions 
+immediately below it are carried out. If the condition is not met, then the 
+statements that follow the [[[[[Belse] are executed.
+
+Coming back to the [[[[[Bget_level] function, we learnt from above, that the 
+[[[[[Bget_level] part of this function translates as, "if the value of the 
+construction_power level (which happens to be identical to the construction 
+skill level) is greater than or equal to 11, cast a beam of trap disarming in 
+the specified direction. (The first part of this is all straightforward, 
+getting a direction, and cancelling correctly if the player presses 'ESC'.) 
+Otherwise, cast a ball of trap disarming with a radius of one, centred on the 
+player."
+
+In the same way, as you look at the construc.lua file, you will see that 
+[[[[[Bget_level()] is used many times in this way, to increase the power of 
+detection spells, to change bolt spells to ball spells, to keep a constantly 
+increasing damage going, and so on.
+
+#####R=== Elseif's and things ===
+
+If you want to provide more than one alternative condition, in an 
+[[[[[Bif-then-else] statement, you can use [[[[[Belseif]s which do what you 
+might expect. Take a look at the first spell, "Survey area", for an example of 
+this: 
+
+#####Bif (get_level(constructor_powers, 50) >= 28) then
+#####B	wiz_lite()
+#####Belseif (get_level(constructor_powers, 50) >= 15) then
+#####B	map_area()
+#####B	detect_traps(DEFAULT_RADIUS)
+#####Belseif (get_level(constructor_powers, 50) >= 5) then
+#####B	detect_traps(DEFAULT_RADIUS)
+#####B	detect_stairs(DEFAULT_RADIUS)
+#####B	detect_doors(DEFAULT_RADIUS)
+#####Belse 
+#####B	detect_stairs(DEFAULT_RADIUS)
+#####B	detect_doors(DEFAULT_RADIUS)
+#####Bend
+
+If the level of constructor powers is greater or equal to 28, then the function 
+[[[[[Bwiz_lite()] is performed, and no other part of the if statement is 
+executed. [[[[[Bwiz_lite()] is just the enlightenment spell. If it is less than 
+28, the next condition is examined: that if the level of constructor powers is 
+greater than or equal to 15, then [[[[[Bmap_area()](Magic mapping) and detect 
+traps are called. If the level of constructor power is less than 15, it moves 
+onto the next condition, which says that if the level of constructor power is 
+greater than 5, then detect stairs, traps and doors. If none of these 
+conditions are met,(that is, if the level of construction skill is less than 5) 
+then we just detect doors and stairs.
+
+You'll note that each of the detection spells includes a DEFAULT_RADIUS 
+constant. You could change this to a numerical value, or a variable defined 
+somewhere else in your script. eg [[[[[Bdetect_traps(2)] would detect traps 
+with a radius of 2 centred on the player. 
+
+#####R=== Registering the skill type ===
+
+This is what we do at the end of the file, and is what ties the powers we've 
+defined to the action of pressing the 'm' key in game. Once more we're calling 
+a special function [[[[[Badd_mkey()] which takes its arguments for a table. 
+There are only two keys in this table though which keeps things simple.
+
+#####Badd_mkey
+#####B{
+#####B        ["mkey"] =      MKEY_CONSTRUCT_POWERS,
+#####B        ["fct"] =       function()
+#####B         		execute_magic(constructor_powers)
+#####B                	energy_use = energy_use + 100;
+#####B        end
+#####B}
+
+[[[[[B"mkey"] must be a UNIQUE value > 1000 . Here I've defined it as a 
+constant, [[[[[BMKEY_CONSTRUCT_POWERS], which has the value 1004. This value 
+we'll call again in the s_info.txt file.
+[[[[[B"fct"] is the function that's called when the user presses the key in the 
+'m' menu. So here, it calls the [[[[[Bexecute_magic] function which actually 
+displays a list of powers for the user to choose from. The argument it takes is 
+the powers it will use (alchemy, mindcraft, etc., or in this case constructor), 
+and then the [[[[[Benergy_use] line tells the game to take one game turn to do 
+the action.
+
+#####R=== Adding the skill in s_info.txt ===
+
+Take a look in the s_info.txt file, under the Misc section. You'll see,
+
+#####BN:57:Construction
+#####BD:Ability to use constructor powers
+#####BD:Construction powers use strength
+#####BA:1004:Build or knock down stuff
+#####BI:1000
+
+The first line is the index of the skill; again this must be unique. The second 
+property is the name of the skill. The [[[[[BD] lines are the lines displayed 
+when the skill is highlighted in the skill screen.
+The first entry on the [[[[[BA] line  is the value of the [[[[[B"mkey"] we 
+defined in the [[[[[Badd_mkey] function in our script. The second entry is the 
+display for selecting the construction power in the 'm' menu.
+The [[[[[BI] line is currently unused, but add a 1000 there anyway. That's what 
+all the others have so when it's introduced, at least it will affect your 
+powers identically to how it affects all the other powers.
+
+If you scroll to the very bottom of the file now, you'll see I've placed the 
+skill at the bottom of the Misc branch of the skills tree. I then made a new 
+class, constructor, which you can see in p_info.txt. 
+
+That is all that is NEEDED when writing a script to add a skill - defining an 
+mkey using add_mkey, and defining any powers that are called in the 
+[[[[[B"fct"] (generally using [[[[[Badd_magic] ).
+
+And I've added the line
+
+#####Btome_dofile("construc.lua")
+
+in init.lua so the script is loaded on start-up!
+
+Below I'm going to talk in depth about a few other functions that you may find 
+useful in your scripting.
+
+#####R=== fire_bolt() and fire_beam() ===
+
+In the last help file we looked at the routine for firing a ball - 
+[[[[[Bfire_ball()]. Here's a quick note about beams and bolts...  
+[[[[[Bfire_beam()] and [[[[[Bfire_bolt()] take 2 arguments: 
+[[[[[B(type, direction, damage)]. So in the dismantle spell we have the 
+direction passed from [[[[[Bget_aim_dir()] (the function that asks the player 
+for a direction), the type of damage is [[[[[BGF_KILL_TRAP], which as you might 
+expect disarms traps. And the damage is only 1 because it's not going to hurt 
+monsters, just dismantle traps.
+
+#####R=== set_oppose_elec() ===
+
+OK here's another thing. Wander on down to the sparky_skills spell.  After the 
+appropriate bolt/ball is fired, we have the line:
+
+#####Bif player.oppose_elec == 0 then 
+#####B	set_oppose_elec(randint(10) + 20 + get_level(constructor_powers, 20)*3)
+#####Bend
+
+This is the bit that grants temporary resist electricity. We've called the 
+function [[[[[Bset_oppose_elec(turns)], which sets the player's resist
+electricity to "on" for the time specified in the argument "turns". We're only 
+calling this if the player is not already granted temporary resist electricity, 
+and we've linked the number of turns it is active to the level of the 
+construction skill. I've limited the maximum value of get_level to 20 in this 
+instance. A similar idea can be used for temporarily granting levitation, 
+extended infravision, protection against evil, resist fire, stuns, cuts and so 
+on and so on. Have a look in player.pkg in the source for a full list....
+
+                             [[[[[gThis file by fearoffours (fearoffours@moppy.co.uk)]

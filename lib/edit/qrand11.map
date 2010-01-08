@@ -1,0 +1,36 @@
+# Floor
+F:.:1:6
+
+# Marker
+F:,:172:6
+
+# Princess
+F:p:1:6:969
+
+# Lit permanent wall
+F:x:61:6
+
+# Lit glass wall
+F:G:188:6
+
+# Door
+F:D:38:6
+
+# Floor with Trap
+F:t:1:8:0:0:0:0:*
+
+# Deep lava
+F:L:85:6
+
+# Shallow lava
+F:l:86:6
+
+# Dungeon layout
+D:  ,llllllll ,  
+D:, llLLLLLllll, 
+D:llLLLGGGLLLlll,
+D:llLLLGpGLLLLlll
+D:lllLLGGGLLLllll
+D:lllllLLLLlllll,
+D:,lllllllllll,  
+D: , ,llllll,    

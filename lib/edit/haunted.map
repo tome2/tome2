@@ -1,0 +1,49 @@
+# permanent wall
+F:X:61:0
+
+# granite
+F:#:57:0
+
+# up staircase
+F:<:6:0
+
+# Floor
+F:.:1:0
+
+# Locked Door
+F:D:38:0
+
+# Secret Door
+F:S:48:0
+
+# Great item
+F:g:1:0:0:*:*
+
+# Dungeon layout
+D:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+D:XXX...D.........................X
+D:XXX...XXXXXXXXXXXXXXXXXXXXXXXXX.X
+D:XXX...X....X....X....X....X...X.X
+D:XXX...X....X....X....X....X...X.X
+D:XXX...X....X....X....X....X...X.X
+D:XXXDXXXDXXXXDXXXXDXXXXDXXXXDXXX.X
+D:XXX.............................X
+D:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.X
+D:X.S.....X.....X.....X.....X...X.X
+D:X.X.....X.....X.....X.....X...X.X
+D:X.X.....X.....X.....X.....X...X.X
+D:X.X.....X.....X.....X.....X...X.X
+D:XgX.....X.....X.....X.....X...X.X
+D:XXXDXXXXXDXXXXXDXXXXXDXXXXXDXXX.X
+D:XXX.............................X
+D:XXXXXXXDXXXXXDXXXXXDXXXXXDXXXXXDX
+D:XgX<....X.....X.....X.....X.....X
+D:X.X.....X.....X.....X.....X.....X
+D:X.X.....X.....X.....X.....X.....X
+D:X.X.....X.....X.....X.....X.....X
+D:X.S.....X.....X.....X.....X.....X
+D:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+# Starting position
+P:3:5
+

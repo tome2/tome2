@@ -1,0 +1,30 @@
+~~~~~01|Petty Dwarf
+~~~~~02|Races|Petty Dwarf
+#####R=== Petty Dwarves ===
+
+#####GDescription
+A hated and persecuted race of nocturnal dwarves, these cave-dwellers are not
+bothered much by darkness. Their natural inclination to magically augmented
+items has made them immune to effects which could drain away magical
+enchantments, and, like ordinary dwarves, they can examine the dungeon to
+discover traps and secret doors.  They are quite proficient as priests,
+warriors or rogues.
+
+#####GStat Modifiers
+Strength        +1   
+Intelligence    -1   
+Wisdom          +2   
+Dexterity        0   
+Constitution    +2   
+Charisma        -4       
+Hit Dice Sides  11         
+Exp Penalty     +35%
+
+#####GRacial Skill Modifiers:
+#####BSkill                Start Mod    Skill Point Gains Mod
+Sneakiness              0.500           [0.000]
+  Stealth               1.000           [0.000]
+  Disarming             0.300           [0.000]
+Magic                   
+  Magic-Device          0.500           [0.000]
+Spirituality            5.000           [0.000]

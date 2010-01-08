@@ -1,0 +1,60 @@
+|||||oy
+~~~~~01|Warper
+~~~~~02|Classes|Warper
+#####R=== Warpers ===
+
+#####GDescription
+A Warper is a type of mage that prefers to deal in magic that alters the 
+fabric of space and time. They specialise in the schools of *****m_convey.txt*0[Conveyance], 
+*****m_divin.txt*0[Divination] and *****m_tempo.txt*0[Temporal] magic. 
+
+#####GStarting Stat Modifiers
+Strength         -5
+Intelligence     +3
+Wisdom           +0
+Dexterity        +1
+Constitution     -2
+Charisma         +1
+Hit Die          +d0
+Spell Points    +50%
+Exp Penalty      30%
+
+#####GStarting Skills:
+#####BSkill                   Start Level     Skill Point Gains
+Combat                  1.000           [0.200]
+  Weaponmastery         0.700           [0.400]
+Sneakiness              1.000           [0.900]
+  Stealth               0.000           [0.400]
+Magic                   1.000           [0.900]
+  Magic-Device          1.000           [1.050]
+  Spell-power           1.000           [0.700]
+  Mana                  1.000           [0.700]
+  Geomancy              
+    Fire                0.000           [0.800]
+    Water               0.000           [0.800]
+    Air                 0.000           [0.800]
+    Earth               0.000           [0.800]
+  Meta                  0.000           [0.800]
+  Conveyance            0.000           [1.200]
+  Divination            0.000           [1.200]
+  Temporal              0.000           [1.200]
+  Mind                  0.000           [0.700]
+  Nature                0.000           [0.800]
+  Necromancy            0.000           [0.700]
+  Runecraft             0.000           [0.700]
+  Thaumaturgy           0.000           [0.700]
+Spirituality            1.000           [0.550]
+  Prayer                0.000           [0.500]
+Monster-lore            0.000           [0.500]
+
+*A Warper cannot learn the Geomancy skill, but it is shown in his skill 
+screen because the elemental schools are sub-skills of it.
+
+#####GInnate Abilities:
+#####BAbility              Character level
+Perfect casting             1
+
+#####GStarting Equipment
+A Warper begins the game with:
+    a Book of Beginner Cantrips
+    a Dagger

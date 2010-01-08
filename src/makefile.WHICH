@@ -1,0 +1,64 @@
+This file documents which makefiles you should use for each system.
+
+ * makefile.ami:
+   	Amiga makefile.
+
+ * makefile.bcc:
+   	Borland C/C++ compiler version 5 makefile.
+
+ * makefile.cyg:
+   	A makefile for people using Cygwin for windows.
+
+ * makefile.emx:
+   	A makefile for OS/2. You need the EMX packages and ReXX installed for
+   	this to work.
+ 
+ * makefile.gdb:
+   	Another makefile for DOS, includes debugging symbols so if you're using
+   	a DOS-based debugger, things will work. Ideally would be combined into
+   	makefile.dos. You want DJGPP and related tools for this.
+
+ * makefile.ibm:
+   	Another makefile for people using DOS and DJGPP. Ideally will be rolled
+   	into makefile.dos eventually.
+
+ * makefile.lsl:
+   	If you want to try to use SVGAlib, this might provide a start.
+
+ * makefile.std:
+   	Most Unix users should use this. Currently the only makefile with a real
+   	install rule. More instructions are found in the file itself.
+
+ * makefile.wat:
+   	Watcom C/C++ for DOS makefile.
+
+ * makefile.win:
+   	A makefile for people using Borland C 4.5x for windows.
+
+ * ToME.proj.xml:
+   	This one isn't really a makefile, but serves the same purpose. It's a
+   	project file for people using CodeWarrior 6 or 7 for the Macintosh.
+   	Because the IDE doesn't make things easier, IMHO, here are instructions:
+   		- Launch CodeWarrior and choose File-Import Project, then select
+   		  ToME.proj.xml in the src folder;
+   		- Save your project as ToME.proj where you find readme files;
+   		- (Optional) Convert graphics tiles to resource from PICT and put them
+   		  in your top folder, i.e. where you find readmes:
+   		  	8x8.rsrc - 8x8.bmp, PICT ID 1001
+   		  	16x16.rsrc - 16x16.bmp, PICT ID 1002
+   		  	mask.rsrc - mask.bmp, PICT ID 1003
+   		  If you are using GraphicsConverter, make sure to scale the images to
+   		  72 pixel per inch while keeping horizontal and vertical scale factors
+   		  to 100%, and *never* add previews;
+   		- (Optional) Grab Sound resources from any Angband binaries and save it
+   		  as AngSound.rsrc, also in the top folder;
+   		- If you don't want graphics and sound effects, remove 8x8.rsrc,
+   		  16x16.rsrc, mask.rsrc and AngSound.rsrc from your project;
+   		- Please take a look at the comment in A-mac-h.pch for a couple of
+   		  source code modifications that may be necessary;
+   		- Click on the build button, or choose that from the project menu; and
+   		- Hope it works.
+   	Carbon compilation requires Carbon SDK 1.1(?) or greater, freely
+   	downloadable from Apple. The project file assumes that "Carbon Support"
+   	folder should be placed directly beneath your CodeWarrior compiler
+   	folder, i.e. where "MacOS Support", "MSL" etc are.

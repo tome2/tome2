@@ -1,0 +1,5 @@
+N:Machine
+U:s_factory.map
+D:The clatter of strange machinery surrounds you.
+F:DESC | NO_GENO | NO_NEW_MONSTER | SPECIAL | NO_STAIR
+F:ASK_LEAVE | NO_TELEPORT

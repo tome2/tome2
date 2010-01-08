@@ -1,0 +1,2735 @@
+/* File: util.pkg */
+
+/*
+ * Purpose: Lua interface defitions for miscellaneous routines.
+ * To be processed by tolua to generate C source code.
+ */
+
+$#include "angband.h"
+$#include "plots.h"
+
+/** @typedef cptr
+ * @note String
+ */
+typedef char* cptr;
+/** @typedef errr
+ * @note Number
+ */
+typedef int errr;
+/** @typedef bool
+ * @note Boolean
+ */
+typedef unsigned char bool;
+/** @typedef byte
+ * @note Number
+ */
+typedef unsigned char byte;
+/** @typedef s16b
+ * @note Number
+ */
+typedef signed short s16b;
+/** @typedef u16b
+ * @note Number
+ */
+typedef unsigned short u16b;
+/** @typedef s32b
+ * @note Number
+ */
+typedef signed int s32b;
+/** @typedef u32b
+ * @note Number
+ */
+typedef unsigned int u32b;
+
+/** @def TRUE */
+#define TRUE
+
+/** @def FALSE */
+#define FALSE
+
+
+/** @def ESCAPE */
+#define ESCAPE	'\033'
+
+/** @name Terminal Colours
+ * @{
+ */
+/** @def TERM_DARK
+ * @note 'd' (0,0,0)
+ */
+#define TERM_DARK		0  /* 'd' */
+/** @def TERM_WHITE
+ * @note 'w' (4,4,4)
+ */
+#define TERM_WHITE	       1  /* 'w' */
+/** @def TERM_SLATE
+ * @note 's' (2,2,2)
+ */
+#define TERM_SLATE	       2  /* 's' */
+/** @def TERM_ORANGE
+ * @note 'o' (4,2,0)
+ */
+#define TERM_ORANGE	      3  /* 'o' */
+/** @def TERM_RED
+ * @note 'r' (3,0,0)
+ */
+#define TERM_RED		 4  /* 'r' */
+/** @def TERM_GREEN
+ * @note 'g' (0,2,1)
+ */
+#define TERM_GREEN	       5  /* 'g' */
+/** @def TERM_BLUE
+ * @note 'b' (0,0,4)
+ */
+#define TERM_BLUE		6  /* 'b' */
+/** @def TERM_UMBER
+ * @note 'u' (2,1,0)
+ */
+#define TERM_UMBER	       7  /* 'u' */
+/** @def TERM_L_DARK
+ * @note 'D' (1,1,1)
+ */
+#define TERM_L_DARK	      8  /* 'D' */
+/** @def TERM_L_WHITE
+ * @note 'W' (3,3,3)
+ */
+#define TERM_L_WHITE	     9  /* 'W' */
+/** @def TERM_VIOLET
+ * @note 'v' (4,0,4)
+ */
+#define TERM_VIOLET	     10  /* 'v' */
+/** @def TERM_YELLOW
+ * @note 'y' (4,4,0)
+ */
+#define TERM_YELLOW	     11  /* 'y' */
+/** @def TERM_L_RED
+ * @note 'R' (4,0,0)
+ */
+#define TERM_L_RED	      12  /* 'R' */
+/** @def TERM_L_GREEN
+ * @note 'G' (0,4,0)
+ */
+#define TERM_L_GREEN	    13  /* 'G' */
+/** @def TERM_L_BLUE
+ * @note 'B' (0,4,4)
+ */
+#define TERM_L_BLUE	     14  /* 'B' */
+/** @def TERM_L_UMBER
+ * @note 'U' (3,2,1)
+ */
+#define TERM_L_UMBER	    15  /* 'U' */
+/** @} */
+
+/** @name Event Hooks
+ * @{
+ */
+/** @def HOOK_MONSTER_DEATH
+ * @brief Monster dies.\n
+ * @param Number m_idx \n index of monster in monster (m_list) array.
+ * @brief Monster index
+ * @note (see file xtra2.c)
+ */
+#define HOOK_MONSTER_DEATH      0
+
+/** @def HOOK_OPEN
+ * @brief Open door or chest.\n
+ * @param Number quest \n if 0, then player is not on a quest level,
+ * otherwise the player is on a quest.
+ * @brief On quest?
+ * @note (see file cmd2.c)
+ */
+#define HOOK_OPEN	       1
+
+/** @def HOOK_GEN_QUEST
+ * @brief Generate quest level.\n
+ * @param Number quest \n if 0, then player is not on a quest level,
+ * otherwise the player is on a quest.
+ * @brief On quest?
+ * @note (see file generate.c)
+ */
+#define HOOK_GEN_QUEST	  2
+
+/** @def HOOK_END_TURN
+ * @brief Turn ends.\n
+ * @param Number quest \n if 0, then player is not on a quest level,
+ * otherwise the player is on a quest.
+ * @brief On quest?
+ * @note (see file dungeon.c)
+ */
+#define HOOK_END_TURN	   3
+
+/** @def HOOK_FEELING
+ * @brief Display level feeling.\n
+ * @param Number quest \n if 0, then player is not on a quest level,
+ * otherwise the player is on a quest.
+ * @brief On quest?
+ * @return Boolean \n TRUE if a level feeling was displayed, otherwise FALSE.
+ * @note
+ * If the hook returns TRUE, then no other feelings are displayed and
+ * do_cmd_feeling() returns.
+ * @note (see file cmd4.c)
+ */
+#define HOOK_FEELING	    4
+
+/** @def HOOK_NEW_MONSTER
+ * @brief Generate monster.\n
+ * @param Number r_idx \n index of monster in monster race (r_info) array.
+ * @brief Monster index
+ * @return Boolean \n TRUE if monster is not allowed to be created,
+ * otherwise FALSE.
+ * @note
+ * If the hook returns TRUE, then the monster is "killed".
+ * @note (see file monster2.c)
+ */
+#define HOOK_NEW_MONSTER	5
+
+/** @def HOOK_GEN_LEVEL
+ * @brief Generate dungeon level.\n
+ * @param Number quest \n if 0, then player is not on a quest level,
+ * otherwise the player is on a quest.
+ * @brief On quest?
+ * @note (see file generate.c)
+ */
+#define HOOK_GEN_LEVEL	  6
+
+/** @def HOOK_BUILD_ROOM1
+ * @brief Generate room (type 1 - normal rectangular room).\n
+ * @param Number by0 \n y-coordinate of dungeon block where room is built.
+ * @brief Block y-coordinate
+ * @param Number bx0 \n x-coordinate of dungeon block where room is built.
+ * @brief Block x-coordinate
+ * @return Boolean \n TRUE if room was created, otherwise FALSE.
+ * @note
+ * If the hook returns TRUE, then the room has been built and build_type1()
+ * returns.
+ * @note (see file generate.c)
+ */
+#define HOOK_BUILD_ROOM1	7
+
+/** @def HOOK_NEW_LEVEL
+ * @brief Start dungeon level.\n
+ * @param Number quest \n if 0, then player is not on a quest level,
+ * otherwise the player is on a quest.
+ * @brief On quest?
+ * @note (see file dungeon.c)
+ */
+#define HOOK_NEW_LEVEL	  8
+
+/** @def HOOK_QUEST_FINISH
+ * @brief Quest finished.\n
+ * @param Number plot \n a plot from the plots array.
+ * @brief Plot
+ * @note (see file bldg.c)
+ */
+#define HOOK_QUEST_FINISH       9
+
+/** @def HOOK_QUEST_FAIL
+ * @brief Quest failed.\n
+ * @param Number plot \n a plot from the plots array.
+ * @brief Plot
+ * @note (see file bldg.c)
+ */
+#define HOOK_QUEST_FAIL	 10
+
+/** @def HOOK_GIVE
+ * @brief Give item to monster.\n
+ * @param Number m_idx \n index of monster in monster (m_list) array.
+ * @brief Monster index
+ * @param Number item \n the item to be given.
+ * @brief Item number
+ * @return Boolean \n TRUE if item was given to monster, otherwise FALSE.
+ * @note
+ * If the hook returns FALSE, then the message "The monster does not want
+ * your item." is displayed.
+ * @note (see file cmd2.c)
+ */
+#define HOOK_GIVE	       11
+
+/** @def HOOK_CHAR_DUMP
+ * @brief Add a line to the character sheet.
+ * @note (see files.c)
+ */
+#define HOOK_CHAR_DUMP	  12
+
+/** @def HOOK_INIT_QUEST
+ * @brief Quest initialised.\n
+ * @param Number plot \n a plot from the plots array.
+ * @brief Plot
+ * @return Boolean \n TRUE if quest was not initialised, otherwise FALSE.
+ * @note
+ * If the hook returns TRUE, castle_quest() returns FALSE.
+ * @note (see file bldg.c)
+ */
+#define HOOK_INIT_QUEST	 13
+
+/** @def HOOK_WILD_GEN
+ * @brief Generate wilderness.\n
+ * @param Number wilderness \n if TRUE, then this is overhead wilderness
+ * processing, otherwise it is regular wilderness processing.
+ * @brief Overhead?
+ * @note (see file wild.c)
+ */
+#define HOOK_WILD_GEN	   14
+
+/** @def HOOK_DROP
+ * @brief Drop an item.\n
+ * @param Number item \n the item to drop.
+ * @brief Item number
+ * @return Boolean \n TRUE if item was dropped, otherwise FALSE.
+ * @note
+ * If the hook returns TRUE, do_cmd_drop() returns, otherwise the function
+ * continues.
+ * @note (see file cmd3.c)
+ */
+#define HOOK_DROP	       15
+
+/** @def HOOK_IDENTIFY
+ * @brief Identfy an item.\n
+ * @param Number item \n the item to identify.
+ * @brief Item number
+ * @param String type \n "normal" to identify the item, or "full" to fully
+ * identify an item.
+ * @brief Type
+ * @note (see files spells1.c, spells2.c)
+ */
+#define HOOK_IDENTIFY	   16
+
+/** @def HOOK_MOVE
+ * @brief Player moves.\n
+ * @param Number y \n the y-coordinate of the new location.
+ * @brief Y-coordinate
+ * @param Number x \n the x-coordinate of the new location.
+ * @brief X-coordinate
+ * @return Boolean \n TRUE if player is not allowed to move, otherwise FALSE.
+ * @note
+ * If the hook returns TRUE, move_player_aux() returns, otherwise the function
+ * continues.
+ * @note (see file cmd1.c)
+ */
+#define HOOK_MOVE	       17
+
+/** @def HOOK_STAIR
+ * @brief Player uses stairs.\n
+ * @param String direction \n "up" if the player is going up stairs, or
+ * "down" if the player is going down stairs.
+ * @brief Direction
+ * @return Boolean \n TRUE if player is not allowed to use stairs, otherwise
+ * FALSE.
+ * @note
+ * If the hook returns TRUE, do_cmd_go_up() or do_cmd_go_down() returns,
+ * otherwise the function continues.
+ * @note (see file cmd2.c)
+ */
+#define HOOK_STAIR	      18
+
+/** @def HOOK_MONSTER_AI
+ * @brief Monster moves.\n
+ * @param Number m_idx \n index of monster in monster (m_list) array.
+ * @brief Monster index
+ * @return Boolean \n TRUE if monster AI was applied, otherwise FALSE.
+ * @return Number y2 \n New y-coordinate of monster target.
+ * @return Number x2 \n New x-coordinate of monster target.
+ * @note
+ * If the hook returns TRUE, the monster moves toward the hook position.
+ * @note (see file melee2.c)
+ */
+#define HOOK_MONSTER_AI	 19
+
+/** @def HOOK_PLAYER_LEVEL
+ * @brief Player gains (or loses) a level.\n
+ * @param Number gained \n the number of levels gained (or lost).
+ * @brief Levels gained
+ * @note (see file xtra2.c)
+ */
+#define HOOK_PLAYER_LEVEL       20
+
+/** @def HOOK_WIELD
+ * @brief Player wields an item.\n
+ * @param Number item \n the item to wield.
+ * @brief Item number
+ * @return Boolean \n TRUE if item was not wielded, otherwise FALSE.
+ * @note
+ * If the hook returns TRUE, do_cmd_wield() returns, otherwise the function
+ * continues.
+ * @note (see file cmd3.c)
+ */
+#define HOOK_WIELD	      21
+
+/** @def HOOK_INIT
+ * @brief Game initialised.
+ * @note (see file dungeon.c)
+ */
+#define HOOK_INIT	       22
+
+/** @def HOOK_QUAFF
+ * @brief Player quaffs a potion.\n
+ * @param Object o_ptr \n the potion to quaff.
+ * @brief Potion
+ * @return Boolean \n TRUE if potion was quaffed, otherwise FALSE.
+ * @return Number ident \n TRUE if the potion was identifed, otherwise FALSE.
+ * @note
+ * If the hook returns TRUE, the hook sets the "potion identified" flag.
+ * @note (see file cmd6.c)
+ */
+#define HOOK_QUAFF	      23
+
+/** @def HOOK_AIM */
+#define HOOK_AIM		24
+
+/** @def HOOK_USE */
+#define HOOK_USE		25
+
+/** @def HOOK_ACTIVATE
+ * @brief Player activates an item.\n
+ * @param Number item \n the item to activate.
+ * @brief Item number
+ * @return Boolean \n TRUE if item was activated, otherwise FALSE.
+ * @note
+ * If the hook returns TRUE, do_cmd_activate() returns, otherwise the function
+ * continues.
+ * @note (see file cmd6.c)
+ */
+#define HOOK_ACTIVATE	   26
+
+/** @def HOOK_ZAP
+ * @brief Player zaps a rod.\n
+ * @param Number tval \n type of rod to zap.
+ * @brief Type
+ * @param Number sval \n sub-type of rod to zap.
+ * @brief Sub-type
+ * @note (see file cmd6.c)
+ */
+#define HOOK_ZAP		27
+
+/** @def HOOK_READ
+ * @brief Player reads a scroll.\n
+ * @param Object o_ptr \n the scroll to read.
+ * @brief Scroll
+ * @return Boolean \n TRUE if scroll was read, otherwise FALSE.
+ * @return Number used_up \n TRUE if the scroll was used up, otherwise FALSE.
+ * @return Number ident \n TRUE if the scroll was identifed, otherwise FALSE.
+ * @note
+ * If the hook returns TRUE, the hook sets the "scroll used up" and
+ * "scroll identified" flags.
+ * @note (see file cmd6.c)
+ */
+#define HOOK_READ	       28
+
+/** @def HOOK_CALC_BONUS
+ * @brief Calculate player "state" bonuses.
+ * @note (see xtra1.c)
+ */
+#define HOOK_CALC_BONUS	 29
+
+/** @def HOOK_CALC_BONUS
+ * @brief Calculate player "state" bonuses, after all calcs are done.
+ * @note (see xtra1.c)
+ */
+#define HOOK_CALC_BONUS_END	 77
+
+/** @def HOOK_CALC_POWERS
+ * @brief Calculate player powers.
+ * @note (see xtra1.c)
+ */
+#define HOOK_CALC_POWERS	30
+
+/** @def HOOK_KEYPRESS
+ * @brief User enters a command.\n
+ * @param Number command \n the pressed key (command_cmd).
+ * @brief Command
+ * @return Boolean \n TRUE if special processing was done, otherwise FALSE.
+ * @note
+ * If the hook returns TRUE, process_command() returns, otherwise the function
+ * continues.
+ * @note (see file dungeon.c)
+ */
+#define HOOK_KEYPRESS	   31
+
+/** @def HOOK_CHAT
+ * @brief Player chats to monster.\n
+ * @param Number m_idx \n index of monster in monster (m_list) array.
+ * @brief Monster index
+ * @return Boolean \n TRUE if monster chats, otherwise FALSE.
+ * @note
+ * If the hook returns FALSE, the message "There is no monster there." is
+ * printed.
+ * @note (see file cmd2.c)
+ */
+#define HOOK_CHAT	       32
+
+/** @def HOOK_MON_SPEAK
+ * @brief Monster speaks.\n
+ * @param Number m_idx \n index of monster in monster (m_list) array.
+ * @brief Monster index
+ * @param String m_name \n name of the monster.
+ * @brief Monster name
+ * @return Boolean \n TRUE if monster speaks, otherwise FALSE.
+ * @note
+ * If the hook returns FALSE, the monster may say something else.
+ * @note (see file melee2.c)
+ */
+#define HOOK_MON_SPEAK	  33
+
+/** @def HOOK_MKEY
+ * @brief Player uses skill.\n
+ * @param Number x_idx \n the skill to execute.
+ * @brief Skill index
+ * @note (see file skills.c)
+ */
+#define HOOK_MKEY	       34
+
+/** @def HOOK_BIRTH_OBJECTS
+ * @brief Player receives objects at birth.
+ * @note (see file birth.c)
+ */
+#define HOOK_BIRTH_OBJECTS      35
+
+/** @def HOOK_ACTIVATE_DESC
+ * @brief Display activation description.\n
+ * @param Object o_ptr \n the item to activate.
+ * @brief Object
+ * @return Boolean \n TRUE if item has an activation, otherwise FALSE.
+ * @return String desc \n the activation description.
+ * @note
+ * If the hook returns TRUE, item_activation() returns the hook's activation
+ * description.
+ * @note (see file object1.c)
+ */
+#define HOOK_ACTIVATE_DESC      36
+
+/** @def HOOK_INIT_GAME
+ * @brief Game initialised.\n
+ * @param String when \n "begin" if done at the start of game initialisation,
+ * or "end" if done at end of game initialisation.
+ * @brief When?
+ * @note (see file init2.c)
+ */
+#define HOOK_INIT_GAME	  37
+
+/** @def HOOK_ACTIVATE_POWER
+ * @brief Player activates a power.\n
+ * @param Number power \n the power to activate.
+ * @brief Power
+ * @return Boolean \n TRUE if power was activated, otherwise FALSE.
+ * @note
+ * If the hook returns FALSE, power_activate() displays the message
+ * "Warning power_activate() called with invalid power(xx)." where
+ * xx = power.
+ * @note (see file powers.c)
+ */
+#define HOOK_ACTIVATE_POWER     38
+
+/** @def HOOK_ITEM_NAME
+ * @brief Get an item name.\n
+ * @param Object o_ptr \n the item whose name is required.
+ * @brief Object
+ * @return Boolean \n TRUE if name was found, otherwise FALSE.
+ * @return String basenm \n The item name.
+ * @return String modstr \n The item modifier string.
+ * @note (see file object1.c)
+ */
+#define HOOK_ITEM_NAME	  39
+
+/** @def HOOK_SAVE_GAME
+ * @brief Save the game.
+ * @note (see file loadsave.c)
+ */
+#define HOOK_SAVE_GAME	  40
+
+/** @def HOOK_LOAD_GAME
+ * @brief Load the game.
+ * @note (see file loadsave.c)
+ */
+#define HOOK_LOAD_GAME	  41
+
+/** @def HOOK_LEVEL_REGEN
+ * @brief Start generation of a special level.
+ * @note (see file generate.c)
+ */
+#define HOOK_LEVEL_REGEN	42
+
+/** @def HOOK_LEVEL_END_GEN
+ * @brief End generation of a special level.
+ * @note (see file generate.c)
+ */
+#define HOOK_LEVEL_END_GEN      43
+
+/** @def HOOK_BUILDING_ACTION
+ * @brief Player performs an action in a building.\n
+ * @param Number action \n the action performed in the building
+ * @brief Action flag
+ * @return Boolean \n TRUE if player performed the action, otherwise FALSE.
+ * @return Number paid \n TRUE if player paid to perform the action, otherwise
+ * FALSE.
+ * @return Number recreate \n TRUE if something is recreated, otherwise FALSE.
+ * @note
+ * If the hook returns TRUE, the hook sets the "paid" and "recreate" flags.
+ * @note (see file bldg.c)
+ */
+#define HOOK_BUILDING_ACTION    44
+
+/** @def HOOK_PROCESS_WORLD
+ * @brief Update world every ten turns.
+ * @note (see file dungeon.c)
+ */
+#define HOOK_PROCESS_WORLD      45
+
+/** @def HOOK_WIELD_SLOT
+ * @brief Find equipment slot for object.\n
+ * @param Object o_ptr \n the object to wield.
+ * @brief Object
+ * @param Number ideal \n TRUE if current body and stuff is ignore, otherwise
+ * FALSE.
+ * @return Boolean \n TRUE if hook processed the object, otherwise FALSE.
+ * @return Number slot \n The equipent slot where the object will go (-1 if
+ * there are no available slots).
+ * @note
+ * If the hook returns TRUE, wield_slot_ideal() returns the slot from the hook.
+ * @note (see file objects1.c)
+ */
+#define HOOK_WIELD_SLOT	 46
+
+/** @def HOOK_STORE_STOCK
+ * @brief Stock a store.\n
+ * @param Number st_idx \n the index of the store in st_info array.
+ * @brief Store index
+ * @param String name \n the name of the store.
+ * @brief Store name
+ * @param Number level \n the "dungeon level" of the store.
+ * @brief Store level
+ * @return Boolean \n TRUE if hook has selected an object, otherwise FALSE.
+ * @return Object q_ptr \n The item to be stocked in the store.
+ * @note
+ * If the hook returns TRUE, store_create() will create the hook's object and
+ * put it in the store.
+ * @note (see file store.c)
+ */
+#define HOOK_STORE_STOCK	47
+
+/** @def HOOK_STORE_BUY
+ * @brief Store buys an item.\n
+ * @param Number st_idx \n the index of the store in st_info array.
+ * @brief Store index
+ * @param String name \n the name of the store.
+ * @brief Store name
+ * @param Object o_ptr \n the object to buy.
+ * @brief Object
+ * @return Boolean \n TRUE if the hook has processed the object, otherwise
+ * FALSE.
+ * @return Number buy \n TRUE if the store will buy the object, otherwise
+ * FALSE.
+ * @note
+ * If the hook returns TRUE, store_will_buy() will return "buy".
+ * @note (see file store.c)
+ */
+#define HOOK_STORE_BUY	  48
+
+/** @def HOOK_GEN_LEVEL_BEGIN
+ * @brief Generate a random dungeon level.
+ * @note (see file generate.c)
+ */
+#define HOOK_GEN_LEVEL_BEGIN    49
+
+/** @def HOOK_GET
+ * @brief Player gets an object.\n
+ * @param Object o_ptr \n the object to get.
+ * @brief Object
+ * @param Number o_idx \n the index of the object in o_list array.
+ * @brief Object index
+ * @return Boolean \n TRUE if hooks processes the object, otherwise FALSE.
+ * @note
+ * If the hook returns TRUE, object_pickup() returns, otherwise the function
+ * continues.
+ * @note (see object1.c)
+ */
+#define HOOK_GET		50
+
+/** @def HOOK_REDRAW
+ * @brief Redraw the screen.
+ * @note (see file xtra1.c)
+ */
+#define HOOK_REDRAW	     51
+
+/** @def HOOK_RECALC_SKILLS
+ * @brief Recalculate player skills.
+ * @note (see skills.c)
+ */
+#define HOOK_RECALC_SKILLS      52
+
+/** @def HOOK_ENTER_DUNGEON
+ * @brief Player goes down one dungeon level.\n
+ * @param Number special \n special information for player's dungeon grid.
+ * @brief Special info
+ * @return Boolean \n TRUE if the hook prevents the player going down,
+ * otherwise FALSE.
+ * @note
+ * If the hook returns TRUE, the player remains on the current dungeon level
+ * and do_cmd_go_down() returns.
+ * @note (see file cmd2.c)
+ */
+#define HOOK_ENTER_DUNGEON      53
+
+/** @def HOOK_FIRE
+ * @brief Player fires an object (bow slot of inventory).\n
+ * @param Object \n the object to fire.
+ * @brief Object
+ * @return Boolean \n TRUE if the hook has fired the object, otherwise FALSE.
+ * @note
+ * If the hook returns TRUE, process_command() returns.
+ * @note (see file dungeon.c)
+ */
+#define HOOK_FIRE	       54
+
+/** @def HOOK_EAT
+ * @brief Player eats.\n
+ * @param Object o_ptr \n the object the player eats.
+ * @brief Object
+ * @return Boolean \n TRUE if hook processes the object, otherwise FALSE.
+ * @return Number ident \n TRUE if the object was identified, otherwise FALSE.
+ * @note
+ * If the hook returns TRUE, the hook sets the "food identified" flag.
+ * @note (see file cmd6.c)
+ */
+#define HOOK_EAT		55
+
+/** @def HOOK_DIE
+ * @brief Player dies.
+ * @return Boolean \n TRUE if player does not die, otherwise FALSE.
+ * @note
+ * If the hook returns TRUE, the player cheats death.
+ * @note (see file dungeon.c)
+ */
+#define HOOK_DIE		56
+
+/** @def HOOK_CALC_HP
+ * @brief Recalculate player HP (hit points).\n
+ * @param Number mhp \n the player's new maximum hit points.
+ * @brief Maximum hit points.
+ * @return Boolean \n TRUE if hook has processed player hit points, otherwise
+ * FALSE.
+ * @note
+ * If the hook returns TRUE, the player's maximum hit points are updated.
+ * @note (see file xtra1.c)
+ */
+#define HOOK_CALC_HP	    57
+
+/** @def HOOK_GF_COLOR
+ * @brief Set color for spell.
+ * @param Number type \n type of spell.
+ * @brief Type
+ * @param Number file \n if this is 0 use ANGBAND_GRAF, otherwise use "new".
+ * @brief File
+ * @return Boolean \n TRUE if hook sets a color, otherwise FALSE.
+ * @return Number color \n The color for the spell.
+ * @note
+ * If the hook returns TRUE, spell_color() returns the hook's color, otherwise
+ * the function continues.
+ * @note (see file spells1.c)
+ */
+#define HOOK_GF_COLOR	   58
+
+/** @def HOOK_GF_EXEC
+ * @brief A spell to damage terrain features.\n
+ * @param String target \n "grid" to indicate spell damages terrain.
+ * @brief Target
+ * @param Number who \n the source of the spell.
+ * @brief Source
+ * @param Number type \n the type of spell.
+ * @brief Type
+ * @param Number dam \n the number of hit points of damage.
+ * @brief Damage
+ * @param Number r \n the radius of the spell.
+ * @brief Radius
+ * @param Number y \n the y-coordinate of the target.
+ * @brief Y-coordinate
+ * @param Number x \n the x-coordinate of the target.
+ * @brief X-coordinate
+ * @return Boolean \n TRUE if spell was cast, otherwise FALSE.
+ * @return Number obvious \n TRUE if the player notices the spell, otherwise
+ * FALSE.
+ * @return Number flag \n TRUE if the player is affected, otherwise FALSE.
+ * @note
+ * If the hook returns TRUE, the hook sets the "obvious" and "flag" fields.
+ * @note (see file spells1.c)
+ */
+/** @def HOOK_GF_EXEC
+ * @brief A spell to damage objects.\n
+ * @param String target \n "object" to indicate spell damages objects.
+ * @brief Target
+ * @param Number who \n the source of the spell.
+ * @brief Source
+ * @param Number type \n the type of spell.
+ * @brief Type
+ * @param Number dam \n the number of hit points of damage.
+ * @brief Damage
+ * @param Number r \n the radius of the spell.
+ * @brief Radius
+ * @param Number y \n the y-coordinate of the target.
+ * @brief Y-coordinate
+ * @param Number x \n the x-coordinate of the target.
+ * @brief X-coordinate
+ * @param Object o_ptr \n the object which is the target of the spell.
+ * @brief Object
+ * @return Boolean \n TRUE if spell was cast, otherwise FALSE.
+ * @return Number obvious \n TRUE if the player notices the spell, otherwise
+ * FALSE.
+ * @return Number flag \n TRUE if the player is affected, otherwise FALSE.
+ * @note
+ * If the hook returns TRUE, the hook sets the "obvious" and "do_kill" fields.
+ * @note (see file spells1.c)
+ */
+/** @def HOOK_GF_EXEC
+ * @brief A spell to damage monsters.\n
+ * @param String target \n "angry" to indicate spell angers a friend.
+ * @brief Target
+ * @param Number who \n the source of the spell.
+ * @brief Source
+ * @param Number type \n the type of spell.
+ * @brief Type
+ * @param Number dam \n the number of hit points of damage.
+ * @brief Damage
+ * @param Number r \n the radius of the spell.
+ * @brief Radius
+ * @param Number y \n the y-coordinate of the target.
+ * @brief Y-coordinate
+ * @param Number x \n the x-coordinate of the target.
+ * @brief X-coordinate
+ * @param Monster m_ptr \n the monster which is the target of the spell.
+ * @brief Monster
+ * @return Boolean \n TRUE if spell was cast, otherwise FALSE.
+ * @return Number get_angry \n TRUE if the monster gets angry, otherwise FALSE.
+ * @note
+ * If the hook returns TRUE, the hook sets the "get_angry" field.
+ * @note (see file spells1.c)
+ */
+/** @def HOOK_GF_EXEC
+ * @brief A spell to damage monsters.\n
+ * @param String target \n "monster" to indicate spell damages monsters.
+ * @brief Target
+ * @param Number who \n the source of the spell.
+ * @brief Source
+ * @param Number type \n the type of spell.
+ * @brief Type
+ * @param Number dam \n the number of hit points of damage.
+ * @brief Damage
+ * @param Number r \n the radius of the spell.
+ * @brief Radius
+ * @param Number y \n the y-coordinate of the target.
+ * @brief Y-coordinate
+ * @param Number x \n the x-coordinate of the target.
+ * @brief X-coordinate
+ * @param Monster m_ptr \n the monster which is the target of the spell.
+ * @brief Monster
+ * @return Boolean \n TRUE if spell was cast, otherwise FALSE.
+ * @return Number obvious \n TRUE if the player notices the spell, otherwise
+ * FALSE.
+ * @return Number dam \n The damage the monster takes.
+ * @return Number do_stun \n TRUE if the monster is stunned, otherwise FALSE.
+ * @return Number do_fear \n TRUE if the monster is frightened, otherwise
+ * FALSE.
+ * @return Number do_conf \n TRUE if the monster is confused, otherwise FALSE.
+ * @return Number do_dist \n TRUE if the monster is disturbed, otherwise FALSE.
+ * @return Number do_pois \n TRUE if the monster is poisoned, otherwise FALSE.
+ * @return Number do_cut \n TRUE if the monster is wounded, otherwise FALSE.
+ * @return Number do_poly \n TRUE if the monster is polymorphed, otherwise
+ * FALSE.
+ * @return String note \n The message displayed if the monster if affected.
+ * @return String note_dies \n The message displayed if the monster dies.
+ * @note
+ * If the hook returns TRUE, the hook sets the "obvious", "dam", "do_stun",
+ * "do_fear", "do_conf", "do_dist", "do_pois", "do_cut", "do_poly", "note",
+ * and "note dies" fields, otherwise the spell has no effect and does no
+ * damage.
+ * @note (see file spells1.c)
+ */
+/** @def HOOK_GF_EXEC
+ * @brief A spell to damage the player.\n
+ * @param String target \n "player" to indicate spell damages the player.
+ * @brief Target
+ * @param Number who \n the source of the spell.
+ * @brief Source
+ * @param Number type \n the type of spell.
+ * @brief Type
+ * @param Number dam \n the number of hit points of damage.
+ * @brief Damage
+ * @param Number r \n the radius of the spell.
+ * @brief Radius
+ * @param Number y \n the y-coordinate of the target.
+ * @brief Y-coordinate
+ * @param Number x \n the x-coordinate of the target.
+ * @brief X-coordinate
+ * @return Boolean \n TRUE if spell was cast, otherwise FALSE.
+ * @return Number obvious \n TRUE if the player notices the spell, otherwise
+ * FALSE.
+ * @return Number dam \n The damage the player takes.
+ * @note
+ * If the hook returns TRUE, the hook sets the "obvious" and "dam" fields,
+ * otherwise there is no damage.
+ * @note (see file spells1.c)
+ */
+#define HOOK_GF_EXEC	    59
+
+/** @def HOOK_CALC_MANA
+ * @brief Recalculate player SP (spell points).\n
+ * @param Number msp \n the player's new maximum spell points.
+ * @brief Maximum spell points.
+ * @return Boolean \n TRUE if hook has processed player spell points, otherwise
+ * FALSE.
+ * @note
+ * If the hook returns TRUE, the player's maximum spell points are updated.
+ * @note (see file xtra1.c)
+ */
+#define HOOK_CALC_MANA	  60
+
+/** @def HOOK_LOAD_END
+ * @brief Load a savefile.\n
+ * @param Number death \n TRUE if the character is dead, otherwise FALSE.
+ * @brief Dead character?
+ * @return Boolean \n TRUE if hook has processed savefile, otherwise FALSE.
+ * @return Number death \n
+ * @note
+ * If the hook returns TRUE, then "character_loaded" (real living player) is
+ * set to TRUE. The player has been revived.
+ * @note (see file loadsave.c)
+ */
+#define HOOK_LOAD_END	   61
+
+/** @def HOOK_RECALL
+ * @brief Player recalls from/to dungeon/town.
+ * @return Boolean \n TRUE if player is not allowed to recall, otherwise
+ * FALSE.
+ * @note (see file dungeon.c)
+ */
+#define HOOK_RECALL	     62
+
+/** @def HOOK_FOLLOW_GOD
+ * @brief Player follows a god (gets religion).\n
+ * @param Number god \n the god to follow.
+ * @brief God
+ * @param String action \n "ask" to check if player can follow the god, or
+ * "done" to do something with the god.
+ * @brief Action
+ * @return Boolean \n For "ask": TRUE if player can not follow the god,
+ * otherwise FALSE.
+ * @note
+ * If the action is "ask" and the hook returns TRUE, follow_god() returns.
+ * If the action is "done" the return code is ignored.
+ * @note (see file gods.c)
+ */
+#define HOOK_FOLLOW_GOD	 63
+
+/** @def HOOK_SACRIFICE_GOD
+ * @brief Player sacrifices to a god.
+ * @note (see file cmd2.c)
+ */
+#define HOOK_SACRIFICE_GOD      64
+
+/** @def HOOK_BODY_PARTS
+ * @brief Calculate which body parts the player has.
+ * @note (see file xtra1.c)
+ */
+#define HOOK_BODY_PARTS	 65
+
+/** @def HOOK_APPLY_MAGIC
+ * @brief Apply magic to an item.\n
+ * @param Object o_ptr \n the item to which magic is applied
+ * @brief Object
+ * @param Number level \n the level of the object
+ * @brief Object level
+ * @param Number power \n the power of the object (0 = normal, 1 = good,
+ * 2 = great, -1 = cursed, -2 = broken)
+ * @brief Power
+ * @return Boolean \n TRUE if hook has applied magic, otherwise FALSE.
+ * @note
+ * If the hook returns TRUE, a_m_aux_n() (where n=1 to 4) returns.
+ * @note (see file object2.c)
+ */
+#define HOOK_APPLY_MAGIC	66
+
+/** @def HOOK_PLAYER_EXP
+ * @brief Player gains/loses experience points (XP).\n
+ * @param Number amount \n the number of experience points to gain/lose
+ * @brief Points
+ * @note (see file xtra2.c)
+ */
+#define HOOK_PLAYER_EXP	 67
+
+/** @def HOOK_BIRTH
+ * @brief Player is born.
+ * @note (see file birth.c)
+ */
+#define HOOK_BIRTH	      68
+
+/** @def HOOK_CALC_LITE
+ * @brief Calculate the lite radius.
+ * @note (see file xtra1.c)
+ */
+#define HOOK_CALC_LITE		    69
+
+/** @def HOOK_LEARN_ABILITY
+ * @brief Player learns an ability.\n
+ * @param Number ab \n index of ability in ability (ab_info) array.
+ * @brief Ability index
+ * @return Boolean \n TRUE if player is not to gain the ability, otherwise
+ * FALSE.
+ * @note If the hook returns TRUE, can_learn_ability() returns FALSE.
+ * @note (see file skills.c)
+ */
+#define HOOK_LEARN_ABILITY      70
+
+/** @def HOOK_MOVED
+ * @brief Player finishes moving.
+ * @note (see file cmd1.c)
+ */
+#define HOOK_MOVED	      71
+
+/** @def HOOK_GAME_START
+ * @brief Game begins.
+ * @note (see file dungeon.c)
+ */
+#define HOOK_GAME_START	 72
+
+/** @def HOOK_TAKEOFF
+ * @brief Player takes off an item.\n
+ * @param Number item \n the item to take off.
+ * @brief Item
+ * @return Booelan \n TRUE if item can not be taken off, otherwise FALSE.
+ * @note
+ * If the hook returns TRUE, do_cmd_takeoff() returns.
+ * @note (see file cmd3.c)
+ */
+#define HOOK_TAKEOFF	    73
+
+/** @def HOOK_CALC_WEIGHT
+ * @brief Calculate player weight limit.\n
+ * @param Number weight \n the current weight limit.
+ * @brief Weight
+ * @return Boolean \n TRUE if weight was processed, otherwise FALSE.
+ * @return Number weight \n The new maximum weight.
+ * @note
+ * If the hook returns TRUE, weight_limit() returns the hook's weight.
+ * @note (see file xtra1.c)
+ */
+#define HOOK_CALC_WEIGHT	74
+
+/** @def HOOK_FORBID_TRAVEL
+ * @brief Check if the player may press < and travel.\n
+ * @return Boolean \n TRUE if travel is forbidden, otherwise FALSE.
+ */
+#define HOOK_FORBID_TRAVEL      75
+
+/** @def HOOK_DEBUG_COMMAND
+ * @brief User enters a debug command.\n
+ * @param Number command \n the pressed key (cmd).
+ * @brief Command
+ * @return Boolean \n TRUE if special processing was done, otherwise FALSE.
+ */
+#define HOOK_DEBUG_COMMAND      76
+
+
+/** @} */
+
+
+/** @var turn
+ * @brief Number
+ * @note Current game turn
+ */
+extern s32b turn;
+/** @var old_turn
+ * @brief Number
+ * @note Turn when level began (feelings)
+ */
+extern s32b old_turn;
+/** @var cur_wid
+ * @brief Number
+ * @note Current dungeon width
+ */
+extern s16b cur_wid;
+/** @var cur_hgt
+ * @brief Number
+ * @note Current dungeon height
+ */
+extern s16b cur_hgt;
+
+/** @fn disturb(int stop_search, int flush_output)
+ * @brief Disturb the player.\n
+ * @param stop_search Number \n if 0, this will not disturb searching,
+ * otherwise searching is stopped.
+ * @brief Stop search?
+ * @param flush_output Number \n *unused*
+ * @brief *Unused*
+ * @note
+ * Something has happened to disturb the player.\n\n
+ * The first arg indicates a major disturbance, which affects search.\n
+ * The second arg is currently unused, but could induce output flush.\n\n
+ * All disturbance cancels repeated commands, resting, and running.
+ * @note (see file cave.c)
+ */
+extern void disturb(int stop_search, int flush_output);
+
+/** @fn bst(s32b what, s32b t)
+ * @brief Break scalar time.\n
+ * @param what Number \n the unit time "t" is to be broken into. The following
+ * values can be used: MINUTE, HOUR, DAY, YEAR
+ * @brief Unit of time
+ * @param t Number \n the time to be broken.
+ * @brief Time
+ * @return Number \n The number of unit in time "t".
+ * @note (see file util.c)
+ */
+extern s32b bst(s32b what, s32b t);
+
+$static char *path_build_lua(cptr path, cptr file){static char buf[1025]; path_build(buf, 1024, path, file); return buf;}
+
+/** @fn path_build(cptr path, cptr file);
+ * @brief Create a new path by appending a file (or directory) to a path.\n
+ * @param path String \n the original path.
+ * @brief Path
+ * @param file String \n the file or directory to append to the path.
+ * @brief File or directory
+ * @return String \n The new path.
+ * @note
+ * This requires no special processing on simple machines, except
+ * for verifying the size of the filename, but note the ability to
+ * bypass the given "path" with certain special file-names.\n\n
+ * Note that the "file" may actually be a "sub-path", including
+ * a path and a file.\n\n
+ * @note (see file util.c)
+ */
+static char *path_build_lua@path_build(cptr path, cptr file);
+
+/** @fn move_cursor(int row, int col)
+ * @brief Move the cursor of a terminal to row "row" and column "col".\n
+ * @param row Number \n the target row on the screen.
+ * @brief Row
+ * @param col Number \n the target column on the screen.
+ * @brief Column
+ * @note (see file util.c)
+ */
+extern void move_cursor(int row, int col);
+
+/** @fn flush(void)
+ * @brief Flush all input chars.
+ * @note
+ * Actually, remember the flush, and do a "special flush" before the next
+ * "inkey()".
+ * This is not only more efficient, but also necessary to make sure
+ * that various "inkey()" codes are not "lost" along the way.
+ * @note (see file util.c)
+ */
+extern void flush(void);
+
+/** @var inkey_scan
+ * @brief Boolean
+ * @note
+ * If "inkey_scan" is TRUE, then we will immediately return "zero" if no
+ * keypress is available, instead of waiting for a keypress.
+ */
+extern bool inkey_scan;
+
+/** @fn inkey(void)
+ * @brief Get a keypress from the user.
+ * @return String \n the key pressed by the user.
+ * @note
+ * This function recognizes a few "global parameters".  These are variables
+ * which, if set to TRUE before calling this function, will have an effect
+ * on this function, and which are always reset to FALSE by this function
+ * before this function returns.  Thus they function just like normal
+ * parameters, except that most calls to this function can ignore
+ * them.\n\n
+ * If "inkey_xtra" is TRUE, then all pending keypresses will be flushed,
+ * and any macro processing in progress will be aborted.  This flag is
+ * set by the "flush()" function, which does not actually flush anything
+ * itself, but rather, triggers delayed input flushing via
+ * "inkey_xtra".\n\n
+ * If "inkey_scan" is TRUE, then we will immediately return "zero" if no
+ * keypress is available, instead of waiting for a
+ * keypress.\n\n
+ * If "inkey_base" is TRUE, then all macro processing will be bypassed.
+ * If "inkey_base" and "inkey_scan" are both TRUE, then this function will
+ * not return immediately, but will wait for a keypress for as long as the
+ * normal macro matching code would, allowing the direct entry of macro
+ * triggers.  The "inkey_base" flag is extremely
+ * dangerous!\n\n
+ * If "inkey_flag" is TRUE, then we will assume that we are waiting for a
+ * normal command, and we will only show the cursor if "hilite_player" is
+ * TRUE (or if the player is in a store), instead of always showing the
+ * cursor.  The various "main-xxx.c" files should avoid saving the game
+ * in response to a "menu item" request unless "inkey_flag" is TRUE, to
+ * prevent savefile
+ * corruption.\n\n
+ * If we are waiting for a keypress, and no keypress is ready, then we will
+ * refresh (once) the window which was active when this function was
+ * called.\n\n
+ * Note that "back-quote" is automatically converted into "escape" for
+ * convenience on machines with no "escape" key.  This is done after the
+ * macro matching, so the user can still make a macro for
+ * "backquote".\n\n
+ * Note the special handling of "ascii 30" (ctrl-caret, aka ctrl-shift-six)
+ * and "ascii 31" (ctrl-underscore, aka ctrl-shift-minus), which are used to
+ * provide support for simple keyboard "macros".  These keys are so strange
+ * that their loss as normal keys will probably be noticed by nobody.  The
+ * "ascii 30" key is used to indicate the "end" of a macro action, which
+ * allows recursive macros to be avoided.  The "ascii 31" key is used by
+ * some of the "main-xxx.c" files to introduce macro trigger
+ * sequences.\n\n
+ * Hack -- we use "ascii 29" (ctrl-right-bracket) as a special "magic" key,
+ * which can be used to give a variety of "sub-commands" which can be used
+ * any time.  These sub-commands could include commands to take a picture of
+ * the current screen, to start/stop recording a macro action,
+ * etc.\n\n
+ * If "angband_term[0]" is not active, we will make it active during this
+ * function, so that the various "main-xxx.c" files can assume that input
+ * is only requested (via "Term_inkey()") when "angband_term[0]" is
+ * active.\n\n
+ * Mega-Hack -- This function is used as the entry point for clearing the
+ * "signal_count" variable, and of the "character_saved"
+ * variable.\n\n
+ * Hack -- Note the use of "inkey_next" to allow "keymaps" to be
+ * processed.\n\n
+ * Mega-Hack -- Note the use of "inkey_hack" to allow the "Borg" to steal
+ * control of the keyboard from the user.
+ * @note (see file util.c)
+ */
+extern char inkey(void);
+
+/** @fn cmsg_print(byte color, cptr msg)
+ * @brief Output message "msg" in colour "color" to the top line of the
+ * screen.\n
+ * @param color Number \n the colour of the message (see TERM_ fields).
+ * @brief Colour
+ * @param msg String \n the message.
+ * @brief Message
+ * @note
+ * Break long messages into multiple pieces (40-72 chars).\n\n
+ * Allow multiple short messages to "share" the top line.\n\n
+ * Prompt the user to make sure he has a chance to read them.\n\n
+ * These messages are memorized for later reference (see above).\n\n
+ * We could do "Term_fresh()" to provide "flicker" if needed.\n\n
+ * The global "msg_flag" variable can be cleared to tell us to
+ * "erase" any "pending" messages still on the
+ * screen.\n\n
+ * XXX XXX XXX Note that we must be very careful about using the
+ * "msg_print()" functions without explicitly calling the special
+ * "msg_print(NULL)" function, since this may result in the loss
+ * of information if the screen is cleared, or if anything is
+ * displayed on the top
+ * line.\n\n
+ * XXX XXX XXX Note that "msg_print(NULL)" will clear the top line
+ * even if no messages are pending.  This is probably a hack.
+ * @note (see file util.c)
+ */
+extern void cmsg_print(byte color, cptr msg);
+
+/** @fn msg_print(cptr msg)
+ * @brief Output message "msg" in white to the top line of the screen.\n
+ * @param msg String \n the message.
+ * @brief Message
+ * @note (see file util.c)
+ */
+extern void msg_print(cptr msg);
+
+/** @fn screen_save(void)
+ * @brief Save the screen.
+ * @note
+ * Increase the "icky" depth.\n\n
+ * This function must match exactly one call to "screen_load()".
+ * @note (see file util.c)
+ */
+extern void screen_save(void);
+
+/** @fn screen_load(void)
+ * @brief Load the screen.
+ * @note
+ * Decrease the "icky" depth.\n\n
+ * This function must match exactly one call to "screen_save()".
+ * @note (see file util.c)
+ */
+extern void screen_load(void);
+
+/** @fn Term_save(void)
+ * @brief Save the "requested" screen into the "memorized" screen.
+ * @return Number \n 0 (always).
+ * @note
+ * Every "Term_save()" should match exactly one "Term_load()"
+ * @note (see file z-term.c)
+ */
+extern errr Term_save(void);
+
+/** @fn Term_load(void)
+ * @brief Restore the "requested" contents from the "memorized" screen.
+ * @return Number \n 0 (always).
+ * @note
+ * Every "Term_save()" should match exactly one "Term_load()"
+ * @note (see file z-term.c)
+ */
+extern errr Term_load(void);
+
+/** @fn c_put_str(byte attr, cptr str, int row, int col)
+ * @brief Add string "str" with attributes "attr" to screen at row "row"
+ * and column "col".\n
+ * @param attr Number \n the attribute of the string
+ * @brief Attribute
+ * @param str String \n the string
+ * @brief String
+ * @param row Number \n the target row on the screen.
+ * @brief Row
+ * @param col Number \n the target column on the screen.
+ * @brief Column
+ * @note
+ * Display a string on the screen using an attribute.\n\n
+ * At the given location, using the given attribute, if allowed,
+ * add the given string.  Do not clear the line.
+ * @note (see file util.c)
+ */
+extern void c_put_str(byte attr, cptr str, int row, int col);
+
+/** @fn c_prt(byte attr, cptr str, int row, int col)
+ * @brief Add string "str" with attributes "attr" to screen at row "row"
+ * and column "col", clearing to the end of the row.\n
+ * @param attr Number \n the attribute of the string
+ * @brief Attribute
+ * @param str String \n the string
+ * @brief String
+ * @param row Number \n the target row on the screen.
+ * @brief Row
+ * @param col Number \n the target column on the screen.
+ * @brief Column
+ * @note (see file util.c)
+ */
+extern void c_prt(byte attr, cptr str, int row, int col);
+
+/** @fn prt(cptr str, int row, int col)
+ * @brief Add white string "str" to screen at row "row" and column "col",
+ * clearing to the end of the row.\n
+ * @param str String \n the string
+ * @brief String
+ * @param row Number \n the target row on the screen.
+ * @brief Row
+ * @param col Number \n the target column on the screen.
+ * @brief Column
+ * @note (see file util.c)
+ */
+extern void prt(cptr str, int row, int col);
+
+/** @fn message_add(byte type, cptr msg, byte color)
+ * @brief Add a message "msg" of type "type" and colour "color" to the
+ * message array.\n
+ * @param type Number \n the type of message. MESSAGE_MSG for regular
+ * messages, MESSAGE_IRC for IRC messages.
+ * @brief Type
+ * @param msg String \n the message.
+ * @brief Message
+ * @param color Number \n the colour of the message (see TERM_ fields).
+ * @brief Colour
+ * @note
+ * Use "msg_print() instead. If you insist on using this function, be
+ * careful.
+ * @note (see file util.c)
+ */
+extern void message_add(byte type, cptr msg, byte color);
+
+/** @fn display_message(int x, int y, int split, byte color, cptr t)
+ * @brief Display a message.\n
+ * @param x Number \n the x-coordinate of the screen where the message starts.
+ * @brief X-coordinate
+ * @param y Number \n the y-coordinate of the screen where the message starts.
+ * @brief Y-coordinate
+ * @param split Number \n the position in the message where it is split. The
+ * rest of the message will not appear.
+ * @brief Split position
+ * @param color Number \n the colour of the message (see TERM_ fields).
+ * @brief Colour
+ * @param t String \n the message.
+ * @brief Message
+ * @note
+ * @note (see file util.c)
+ */
+extern void display_message(int x, int y, int split, byte color, cptr t);
+
+/** @fn clear_from(int row)
+ * @brief Clear part of the screen.\n
+ * @param row Number \n the target row on the screen.
+ * @brief Row
+ * @note
+ * Clear all rows from the starting row to the end of the screen.
+ * @note (see file util.c)
+ */
+extern void clear_from(int row);
+
+/** @fn askfor_aux(char *buf, int len)
+ * @brief Get some input at the cursor location.\n
+ * @param *buf String \n Default string (optional).
+ * @brief String
+ * @param len Number \n the maximum length of the string.
+ * @brief Length of string
+ * @return Boolean \n TRUE if string was entered, otherwise FALSE.
+ * @return *buf \n The entered string.
+ * @note
+ * Assume the buffer is initialized to a default string.\n
+ * Note that this string is often "empty" (see below).\n
+ * The default buffer is displayed in yellow until cleared.\n
+ * Pressing RETURN right away accepts the default entry.\n
+ * Normal chars clear the default and append the char.\n
+ * Backspace clears the default or deletes the final char.\n
+ * ESCAPE clears the buffer and the window and returns FALSE.\n
+ * RETURN accepts the current buffer contents and returns TRUE.
+ * @note (see file util.c)
+ */
+extern bool askfor_aux(char *buf, int len);
+
+/** @fn get_string(cptr prompt, char *buf, int len)
+ * @brief Get a string from the user.\n
+ * @param prompt String \n the prompt, which should take the form "Prompt: "
+ * @brief Prompt
+ * @param *buf String
+ * @brief String
+ * @param len Number \n the maximum length of the string.
+ * @brief Length of string
+ * @return Boolean \n TRUE if string was entered, otherwise FALSE.
+ * @return *buf \n The entered string.
+ * @note
+ * Note that the initial contents of the string is used as
+ * the default response, so be sure to "clear" it if needed.\n\n
+ * We clear the input, and return FALSE, on "ESCAPE".
+ * @note (see file util.c)
+ */
+extern bool get_string(cptr prompt, char *buf, int len);
+
+/** @fn get_check(cptr prompt)
+ * @brief Verify something with the user.\n
+ * @param prompt String \n the prompt, which should take the form "Query? "
+ * @brief Prompt
+ * @return Boolean \n TRUE if  "y" or "Y" is entered, otherwise FALSE.
+ * @note
+ * Note that "[y/n]" is appended to the prompt.
+ * @note (see file util.c)
+ */
+extern bool get_check(cptr prompt);
+
+/** @fn  get_com(cptr promtp, int *com = 0);
+ * @brief Prompts for a keypress.\n
+ * @param promtp String \n the prompt, which should take the form "Command: "
+ * @brief Prompt
+ * @param *com Number
+ * @brief Command
+ * @return Boolean \n FALSE if "Escape" was pressed, otherwise TRUE.
+ * @return *com \n The entered command.
+ * @note (see file util.c)
+ */
+extern bool get_com_lua @ get_com(cptr promtp, int *com = 0);
+
+/** @fn get_quantity(cptr prompt, s32b max)
+ * @brief Request a "quantity" from the user.\n
+ * @param prompt String \n the prompt
+ * @brief Prompt
+ * @param max Number \n the maximum quantity
+ * @brief Maximum quantity
+ * @return Number \n the returned quantity.
+ * @note
+ * Hack -- allow "command_arg" to specify a quantity\n\n
+ * The quantity is in the range 0 to "max" inclusive. The default is 1. A
+ * letter means the maximum.
+ * @note (see file util.c)
+ */
+extern s32b get_quantity(cptr prompt, s32b max);
+
+/** @fn test_monster_name(cptr name)
+ * @brief Given monster name as string, return the index in r_info array.\n
+ * @param name String \n the monster name.
+ * @brief Monster name
+ * @return Number \n The index of the monster in r_info[], or 0 if the name
+ * does not match a monster.
+ * @note
+ * Name must exactly match (look out for commas and the like!), or else 0 is
+ * returned. Case doesn't matter.
+ * @note (see file util.c)
+ */
+extern int test_monster_name(cptr name);
+
+/** @fn test_item_name(cptr name)
+ * @brief Given item name as string, return the index in k_info array.\n
+ * @param name String \n the item name.
+ * @brief Item name
+ * @return Number \n The index of the item in k_info[], or 0 if the name
+ * does not match an item.
+ * @note
+ * Name must exactly match (look out for commas and the like!), or else 0 is
+ * returned. Case doesn't matter.
+ * @note (see file util.c)
+ */
+extern int test_item_name(cptr name);
+
+/** @fn luck(int min, int max)
+ * @brief Return a luck number between a certain range.\n
+ * @param min Number \n the minimum luck value returned.
+ * @brief Mimimum
+ * @param max Number \n the maximum luck value returned.
+ * @brief Maximum
+ * @return Number \n The scaled value of player's luck.
+ * @note
+ * Player lucked is cap at a minimum of -30 and maximum of +30 before it is
+ * scaled to the range defined by "min" and "max".
+ * @note (see file xtra1.c)
+ */
+extern int luck(int min, int max);
+
+/** @fn get_player_race_name(int pr, int ps)
+ * @brief Return the player's race (and sub-race) name.\n
+ * @param pr Number \n the player's race. It is an index to race_info[].
+ * @brief Player race
+ * @param ps Number \n the player's subrace, if any. It is an index to
+ * race_mod_info[].
+ * @brief Player subrace
+ * @return String \n The player's full race name.
+ * @note (see file util.c)
+ */
+extern cptr get_player_race_name(int pr, int ps);
+
+/** @fn quit(cptr str)
+ * @brief Quit the game.
+ * @param str String \n an error code or a message which is logged.
+ * @brief String
+ * @note
+ * Exit (ala "exit()").  If 'str' is NULL, do "exit(0)".\n
+ * If 'str' begins with "+" or "-", do "exit(atoi(str))".\n
+ * Otherwise, plog() 'str' and exit with an error code of -1.\n
+ * But always use 'quit_aux', if set, before anything else.
+ * @note (see file z-util.c)
+ */
+extern void quit(cptr str);
+
+/** @fn value_scale(int value, int vmax, int max, int min)
+ * @brief Rescale a value
+ * @param value Number \n the original value
+ * @brief Original value
+ * @param vmax Number \n the maximum the original value can be
+ * @brief Original maximum
+ * @param max Number \n the maximum new value
+ * @brief New maximum
+ * @param min Number \n the minimum new value
+ * @brief New minimum
+ * @return Number \n The rescaled value
+ * @note (see file util.c)
+ */
+extern s32b value_scale(int value, int vmax, int max, int min);
+
+/** @fn text_out_c(byte a, cptr str)
+ * @brief Output text to the screen (in color) or to a file depending on the
+ * selected hook.\n
+ * @param a Number \n the attribute of the string
+ * @brief Attribute
+ * @param str String \n the string
+ * @brief String
+ * @note (see file util.c)
+ */
+extern void text_out_c(byte a, cptr str);
+
+/** @fn text_out(cptr str)
+ * @brief Output text to the screen (in white) or to a file depending on the
+ * selected hook.\n
+ * @param str String \n the string
+ * @brief String
+ * @note (see file util.c)
+ */
+extern void text_out(cptr str);
+
+/** @fn change_option(cptr name, bool value)
+ * @brief Switch an option by only knowing its name.\n
+ * @param name String \n the name of the option.
+ * @brief Option name
+ * @param value Boolean \n the new value of the option.
+ * @brief Option value
+ * @return Boolean \n the old value of the option, or FALSE if "name" is not
+ * an option.
+ * @note (see file cmd4.c)
+ */
+extern bool change_option(cptr name, bool value);
+
+/** @var process_hooks_restart
+ * @brief Number
+ * @note
+ * Set this to TRUE after deleting a C-hook (from a quest) to clean up hook
+ * processing. This is not required for Lua hooks as they are not deleted.
+ */
+extern int process_hooks_restart;
+
+/** @fn dump_hooks(int h_idx)
+ * @brief Print the name and type (language) of all hooks in a hook chain.\n
+ * @param h_idx Number \n the index of the hook chain in the hook_chain array.
+ * If this is -1, then all hook chains will be printed.
+ * @brief Hook chain index
+ * @note (see file plots.c)
+ */
+extern void dump_hooks(int h_idx);
+
+/** @fn add_hook_script(int h_idx, char *script, cptr name)
+ * @brief Add Lua script "name" in file "script" to hook_chain.\n
+ * @param h_idx Number \n the index of the hook chain in the hook_chain array.
+ * @brief Hook chain index
+ * @param *script String \n the name of the Lua script file.
+ * @brief Script filename
+ * @param name String \n the name of the script.
+ * @brief Script name
+ * @note (see file plots.c)
+ */
+extern void add_hook_script(int h_idx, char *script, cptr name);
+
+/** @fn del_hook_name(int h_idx, cptr name)
+ * @brief Delete hook with name "name" from a hook chain.\n
+ * @param h_idx Number \n the index of the hook chain in the hook_chain array.
+ * @brief Hook chain index
+ * @param name String \n the name of the hook to delete
+ * @brief Hook name
+ * @note (see file plots.c)
+ */
+extern void del_hook_name(int h_idx, cptr name);
+
+/** @fn tome_dofile(char *file)
+ * @brief Load a Lua file from lib/scpts.\n
+ * @param *file String \n the name of a Lua file to load.
+ * @brief Filename
+ * @return Boolean \n TRUE if file was loaded, otherwise FALSE.
+ * @note (see file script.c)
+ */
+extern bool tome_dofile(char *file);
+
+/** @fn tome_dofile_anywhere(cptr dir, char *file, bool test_exist = TRUE)
+ * @brief Load a Lua file from any directory.\n
+ * @param dir String \n the name of a Lua file directory
+ * @brief Directory
+ * @param *file String \n the name of a Lua file to load.
+ * @brief Filename
+ * @param test_exist Boolean \n TRUE if a message is printed if the file does
+ * not exist, otherwise FALSE.
+ * @brief Message if file does not exist?
+ * @return Boolean \n TRUE if file was loaded, otherwise FALSE.
+ * @note (see file script.c)
+ */
+extern bool tome_dofile_anywhere(cptr dir, char *file, bool test_exist = TRUE);
+
+/** @fn exec_lua(char *file)
+ * @brief Execute Lua command "file" and return the integer result.\n
+ * @param *file String \n the Lua command to execute.
+ * @brief Command
+ * @return Number \n the result of the Lua command.
+ * @note (see file script.c)
+ */
+extern int exec_lua(char *file);
+
+/** @fn dump_lua_stack(int min, int max)
+ * @brief Display part of the Lua stack.\n
+ * @param min Number \n the starting item of the stack dump.
+ * @brief Start item
+ * @param max Number \n the ending item of the stack dump.
+ * @brief End item
+ * @note (see file script.c)
+ */
+extern void dump_lua_stack(int min, int max);
+
+/** @fn string_exec_lua(char *file)
+ * @brief Execute Lua command "file" and return the string result.\n
+ * @param *file String \n the Lua command to execute.
+ * @brief Command
+ * @return String \n the result of the Lua command.
+ * @note (see file script.c)
+ */
+extern cptr string_exec_lua(char *file);
+
+/** @fn print_hook(cptr str);
+ * @brief Print string "string" to the hook file.\n
+ * @param str String \ the string.
+ * @brief String
+ * @note (see file lua_bind.c)
+ */
+extern void lua_print_hook@print_hook(cptr str);
+
+/* Savefile stuff */
+/** @fn register_savefile(int num)
+ * @brief Add "num" slots to the savefile.\n
+ * @param num Number \n the number of slots to add.
+ * @brief Slots
+ * @note (see file loadsave.c)
+ */
+extern void register_savefile(int num);
+
+/** @fn save_number_key(char *key, s32b val)
+ * @brief Save a key-value combination in the save file.\n
+ * @param *key String \n the key to save.
+ * @brief Key
+ * @param val Number \n the value of the key.
+ * @brief Value
+ * @note
+ * The length of the key is stored first, then the key, then the value.
+ * @note (see file loadsave.c)
+ */
+extern void save_number_key(char *key, s32b val);
+
+
+/* Tables */
+/** @var adj_mag_study[100]
+ * @brief Number
+ * @note Stat Table (INT/WIS) -- Number of half-spells per level
+ */
+extern byte adj_mag_study[100];
+
+/** @var adj_mag_mana[100]
+ * @brief Number
+ * @note Stat Table (INT/WIS) -- extra half-mana-points per level
+ */
+extern byte adj_mag_mana[100];
+
+/** @var adj_mag_fail[100]
+ * @brief Number
+ * @note Stat Table (INT/WIS) -- Minimum failure rate (percentage)
+ */
+extern byte adj_mag_fail[100];
+
+/** @var adj_mag_stat[100]
+ * @brief Number
+ * @note Stat Table (INT/WIS) -- Various things
+ */
+extern byte adj_mag_stat[100];
+
+/** @var adj_chr_gold[100]
+ * @brief Number
+ * @note Stat Table (CHR) -- payment percentages
+ */
+extern byte adj_chr_gold[100];
+
+/** @var adj_int_dev[100]
+ * @brief Number
+ * @note Stat Table (INT) -- Magic devices
+ */
+extern byte adj_int_dev[100];
+
+/** @var adj_wis_sav[100]
+ * @brief Number
+ * @note Stat Table (WIS) -- Saving throw
+ */
+extern byte adj_wis_sav[100];
+
+/** @var adj_dex_dis[100]
+ * @brief Number
+ * @note Stat Table (DEX) -- disarming
+ */
+extern byte adj_dex_dis[100];
+
+/** @var adj_int_dis[100]
+ * @brief Number
+ * @note Stat Table (INT) -- disarming
+ */
+extern byte adj_int_dis[100];
+
+/** @var adj_dex_ta[100]
+ * @brief Number
+ * @note Stat Table (DEX) -- bonus to ac (plus 128)
+ */
+extern byte adj_dex_ta[100];
+
+/** @var adj_str_td[100]
+ * @brief Number
+ * @note Stat Table (STR) -- bonus to dam (plus 128)
+ */
+extern byte adj_str_td[100];
+
+/** @var adj_dex_th[100]
+ * @brief Number
+ * @note Stat Table (DEX) -- bonus to hit (plus 128)
+ */
+extern byte adj_dex_th[100];
+
+/** @var adj_str_th[100]
+ * @brief Number
+ * @note Stat Table (STR) -- bonus to hit (plus 128)
+ */
+extern byte adj_str_th[100];
+
+/** @var adj_str_wgt[100]
+ * @brief Number
+ * @note Stat Table (STR) -- weight limit in deca-pounds
+ */
+extern byte adj_str_wgt[100];
+
+/** @var adj_str_hold[100]
+ * @brief Number
+ * @note Stat Table (STR) -- weapon weight limit in pounds
+ */
+extern byte adj_str_hold[100];
+
+/** @var adj_str_dig[100]
+ * @brief Number
+ * @note Stat Table (STR) -- digging value
+ */
+extern byte adj_str_dig[100];
+
+/** @var adj_str_blow[100]
+ * @brief Number
+ * @note Stat Table (STR) -- help index into the "blow" table
+ */
+extern byte adj_str_blow[100];
+
+/** @var adj_dex_blow[100]
+ * @brief Number
+ * @note Stat Table (DEX) -- index into the "blow" table
+ */
+extern byte adj_dex_blow[100];
+
+/** @var adj_dex_safe[100]
+ * @brief Number
+ * @note Stat Table (DEX) -- chance of avoiding "theft" and "falling"
+ */
+extern byte adj_dex_safe[100];
+
+/** @var adj_con_fix[100]
+ * @brief Number
+ * @note Stat Table (CON) -- base regeneration rate
+ */
+extern byte adj_con_fix[100];
+
+/** @var adj_con_mhp[100]
+ * @brief Number
+ * @note Stat Table (CON) -- extra half-hitpoints per level (plus 128)
+ */
+extern byte adj_con_mhp[100];
+
+/* Repeat stuff */
+/** @fn repeat_push(int what)
+ * @brief Push key "what" onto the end of the repeat_key array.\n
+ * @param what Number \n the key to be repeated.
+ * @brief Key
+ * @note (see file util.c)
+ */
+extern void repeat_push(int what);
+
+/** @fn repeat_pull(int *what = 0)
+ * @brief Pull key from the repeat__key array.\n
+ * @param *what Number
+ * @brief Key
+ * @return Boolean \n TRUE if key was pulled, otherwise FALSE.
+ * @return *what Number \n the key pulled.
+ * @note
+ * This functions starts from an index, which may not be at the start of the
+ * array.
+ * @note (see file util.c)
+ */
+extern bool repeat_pull(int *what = 0);
+
+/** @fn repeat_check(void)
+ * @brief Check if the last command is repeated.
+ * @note
+ * Ignore certain commands: ESC, space, newline.\n
+ * 'n' repeats the last command (index is set to 0).\n
+ * Other commands reset the repeat array (index and count are set to 0).
+ * @note (see file util.c)
+ */
+extern void repeat_check(void);
+
+/** @fn get_count(int number, int max)
+ * @brief Allow the user to select multiple items without pressing '0'.\n
+ * @param number Number \n the default number.
+ * @brief Default
+ * @param max Number \n the maximum value allowed.
+ * @brief Maximum
+ * The user is prompted with "How many?"
+ * @note (see file util.c)
+ */
+extern void get_count(int number, int max);
+
+/** @name Feature Flags
+ * @{
+ */
+/** @def FF1_NO_WALK */
+#define FF1_NO_WALK	     0x00000001L
+
+/** @def FF1_NO_VISION */
+#define FF1_NO_VISION	   0x00000002L
+
+/** @def FF1_CAN_LEVITATE */
+#define FF1_CAN_LEVITATE	0x00000004L
+
+/** @def FF1_CAN_PASS */
+#define FF1_CAN_PASS	    0x00000008L
+
+/** @def FF1_FLOOR */
+#define FF1_FLOOR	       0x00000010L
+
+/** @def FF1_WALL */
+#define FF1_WALL		0x00000020L
+
+/** @def FF1_PERMANENT */
+#define FF1_PERMANENT	   0x00000040L
+
+/** @def FF1_CAN_FLY */
+#define FF1_CAN_FLY	     0x00000080L
+
+/** @def FF1_REMEMBER */
+#define FF1_REMEMBER	    0x00000100L
+
+/** @def FF1_NOTICE */
+#define FF1_NOTICE	      0x00000200L
+
+/** @def FF1_DONT_NOTICE_RUNNING */
+#define FF1_DONT_NOTICE_RUNNING 0x00000400L
+
+/** @def FF1_CAN_RUN */
+#define FF1_CAN_RUN	     0x00000800L
+
+/** @def FF1_DOOR */
+#define FF1_DOOR		0x00001000L
+
+/** @def FF1_SUPPORT_LIGHT */
+#define FF1_SUPPORT_LIGHT       0x00002000L
+
+/** @def FF1_CAN_CLIMB */
+#define FF1_CAN_CLIMB	   0x00004000L
+
+/** @def FF1_TUNNELABLE */
+#define FF1_TUNNELABLE	  0x00008000L
+
+/** @def FF1_WEB */
+#define FF1_WEB		 0x00010000L
+
+/** @def FF1_ATTR_MULTI */
+#define FF1_ATTR_MULTI	  0x00020000L
+
+/** @def FF1_SUPPORT_GROWTH */
+#define FF1_SUPPORT_GROWTH      0x00040000L
+/** @} */
+
+
+/* Cave stuff */
+/** @struct cave_type
+ */
+struct cave_type
+{
+	/** @structvar info
+	 * @brief Number
+	 * @note Hack -- cave flags
+	 */
+	u16b info;
+
+	/** @structvar feat
+	 * @brief Number
+	 * @note Hack -- feature type
+	 */
+	byte feat;
+
+	/** @structvar o_idx
+	 * @brief Number
+	 * @note Object in this grid
+	 */
+	s16b o_idx;
+
+	/** @structvar m_idx
+	 * @brief Number
+	 * @note Monster in this grid
+	 */
+	s16b m_idx;
+
+	/** @structvar t_idx
+	 * @brief Number
+	 * @note trap index (in t_list) or zero
+	 */
+	s16b t_idx;
+
+	/** @structvar special
+	 * @brief Number
+	 */
+	s16b special;
+	/** @structvar special2
+	 * @brief Number
+	 * @note Special cave info
+	 */
+	s16b special2;
+
+	/** @structvar inscription
+	 * @brief Number
+	 * @note Inscription of the grid
+	 */
+	s16b inscription;
+
+	/** @structvar mana
+	 * @brief Number
+	 * @note Magical energy of the grid
+	 */
+	byte mana;
+
+	/** @structvar mimic
+	 * @brief Number
+	 * @note Feature to mimic
+	 */
+	byte mimic;
+
+	/** @structvar effect
+	 * @brief Number
+	 * @note The lasting effects
+	 */
+	s16b effect;
+};
+
+/** @var ANGBAND_SYS
+ * @brief String
+ * @note
+ * Hack -- The special Angband "System Suffix"\n
+ * This variable is used to choose an appropriate "pref-xxx" file
+ */
+extern cptr ANGBAND_SYS;
+
+/** @var ANGBAND_KEYBOARD
+ * @brief String
+ * @note
+ * Hack -- The special Angband "Keyboard Suffix"\n
+ * This variable is used to choose an appropriate macro-trigger definition
+ */
+extern cptr ANGBAND_KEYBOARD;
+
+/** @var ANGBAND_GRAF
+ * @brief String
+ * @note
+ * Hack -- The special Angband "Graphics Suffix"\n
+ * This variable is used to choose an appropriate "graf-xxx" file
+ */
+extern cptr ANGBAND_GRAF;
+
+/** @var ANGBAND_DIR
+ * @brief String
+ * @note
+ * Path name: The main "lib" directory\n
+ * This variable is not actually used anywhere in the code
+ */
+extern cptr ANGBAND_DIR;
+
+/** @var ANGBAND_DIR_APEX
+ * @brief String
+ * @note
+ * High score files (binary)\n
+ * These files may be portable between platforms
+ */
+extern cptr ANGBAND_DIR_APEX;
+
+/** @var ANGBAND_DIR_BONE
+ * @brief String
+ * @note
+ * Bone files for player ghosts (ascii)\n
+ * These files are portable between platforms
+ */
+extern cptr ANGBAND_DIR_BONE;
+
+/** @var ANGBAND_DIR_CORE
+ * @brief String
+ * @note
+ * Core lua system\n
+ * These files are portable between platforms
+ */
+extern cptr ANGBAND_DIR_CORE;
+
+/** @var ANGBAND_DIR_DNGN
+ * @brief String
+ * @note
+ * Textual dungeon level definition files\n
+ * These files are portable between platforms
+ */
+extern cptr ANGBAND_DIR_DNGN;
+
+/** @var ANGBAND_DIR_DATA
+ * @brief String
+ * @note
+ * Binary image files for the "*_info" arrays (binary)\n
+ * These files are not portable between platforms
+ */
+extern cptr ANGBAND_DIR_DATA;
+
+/** @var ANGBAND_DIR_EDIT
+ * @brief String
+ * @note
+ * Textual template files for the "*_info" arrays (ascii)\n
+ * These files are portable between platforms
+ */
+extern cptr ANGBAND_DIR_EDIT;
+
+/** @var ANGBAND_DIR_FILE
+ * @brief String
+ * @note
+ * Various extra files (ascii)\n
+ * These files may be portable between platforms
+ */
+extern cptr ANGBAND_DIR_FILE;
+
+/** @var ANGBAND_DIR_HELP
+ * @brief String
+ * @note
+ * Help files (normal) for the online help (ascii)\n
+ * These files are portable between platforms
+ */
+extern cptr ANGBAND_DIR_HELP;
+
+/** @var ANGBAND_DIR_INFO
+ * @brief String
+ * @note
+ * Help files (spoilers) for the online help (ascii)\n
+ * These files are portable between platforms
+ */
+extern cptr ANGBAND_DIR_INFO;
+
+/** @var ANGBAND_DIR_MODULES
+ * @brief String
+ * @note
+ * Modules, those subdirectories are half-mirrors of lib/
+ */
+extern cptr ANGBAND_DIR_MODULES;
+
+/** @var ANGBAND_DIR_NOTE
+ * @brief String
+ * @note
+ * Textual template files for the plot files (ascii)\n
+ * These files are portable between platforms
+ */
+extern cptr ANGBAND_DIR_NOTE;
+
+/** @var ANGBAND_DIR_SAVE
+ * @brief String
+ * @note
+ * Savefiles for current characters (binary)\n
+ * These files are portable between platforms
+ */
+extern cptr ANGBAND_DIR_SAVE;
+
+/** @var ANGBAND_DIR_SCPT
+ * @brief String
+ * @note
+ * Scripts.\n
+ * These files are portable between platforms
+ */
+extern cptr ANGBAND_DIR_SCPT;
+
+/** @var ANGBAND_DIR_PREF
+ * @brief String
+ * @note
+ * Default "preference" files (ascii)\n
+ * These files are rarely portable between platforms
+ */
+extern cptr ANGBAND_DIR_PREF;
+
+/** @var ANGBAND_DIR_PATCH
+ * @brief String
+ * @note
+ * Patches, contains one subdir per patch with a patch.lua file
+ * in it and a patch_init() function in it
+ */
+extern cptr ANGBAND_DIR_PATCH;
+
+/** @var ANGBAND_DIR_USER
+ * @brief String
+ * @note
+ * User "preference" files (ascii)\n
+ * These files are rarely portable between platforms
+ */
+extern cptr ANGBAND_DIR_USER;
+
+/** @var ANGBAND_DIR_XTRA
+ * @brief String
+ * @note
+ * Various extra files (binary)\n
+ * These files are rarely portable between platforms
+ */
+extern cptr ANGBAND_DIR_XTRA;
+
+/** @var ANGBAND_DIR_CMOV
+ * @brief String
+ * @note
+ * Cmovie files of entire games (ascii)\n
+ * Apart from possible newline things, likely portable btw platforms
+ */
+extern cptr ANGBAND_DIR_CMOV;
+
+
+/** @fn los(int y1, int x1, int y2, int x2)
+ * @brief Determine if a line of sight can be traced from (x1,y1) to (x2,y2).\n
+ * @param y1 Number \n y-coordinate of the origin.
+ * @brief Origin y-coordinate
+ * @param x1 Number \n x-coordinate of the origin.
+ * @brief Origin x-coordinate
+ * @param y2 Number \n y-coordinate of the target.
+ * @brief Target y-coordinate
+ * @param x2 Number \n x-coordinate of the target.
+ * @brief Target x-coordinate
+ * @return Boolean \n TRUE if origin has line of sight to target, otherwise
+ * FALSE.
+ * @note
+ * A simple, fast, integer-based line-of-sight algorithm.  By Joseph Hall,
+ * 4116 Brewster Drive, Raleigh NC 27606.  Email to jnh@ecemwl.ncsu.edu.\n\n
+ * Returns TRUE if a line of sight can be traced from (x1,y1) to (x2,y2).\n\n
+ * The LOS begins at the center of the tile (x1,y1) and ends at the center of
+ * the tile (x2,y2).  If los() is to return TRUE, all of the tiles this line
+ * passes through must be floor tiles, except for (x1,y1) and (x2,y2).\n\n
+ * We assume that the "mathematical corner" of a non-floor tile does not
+ * block line of sight.\n\n
+ * Because this function uses (short) ints for all calculations, overflow may
+ * occur if dx and dy exceed 90.\n\n
+ * Once all the degenerate cases are eliminated, the values "qx", "qy", and
+ * "m" are multiplied by a scale factor "f1 = abs(dx * dy * 2)", so that
+ * we can use integer arithmetic.\n\n
+ * We travel from start to finish along the longer axis, starting at the border
+ * between the first and second tiles, where the y offset = .5 * slope, taking
+ * into account the scale factor.  See below.\n\n
+ * Also note that this function and the "move towards target" code do NOT
+ * share the same properties.  Thus, you can see someone, target them, and
+ * then fire a bolt at them, but the bolt may hit a wall, not them.  However,
+ * by clever choice of target locations, you can sometimes throw a "curve".\n\n
+ * Note that "line of sight" is not "reflexive" in all cases.\n\n
+ * Use the "projectable()" routine to test "spell/missile line of sight".\n\n*
+ * Use the "update_view()" function to determine player line-of-sight.\n\n
+ * @note (see file cave.c)
+ */
+extern bool los(int y1, int x1, int y2, int x2);
+$static bool lua_cave_is(cave_type *c_ptr, s32b flag) { return (f_info[c_ptr->feat].flags1 & flag) ? TRUE : FALSE; }
+
+/** @fn cave_is(cave_type *c_ptr, s32b flag);
+ * @brief Determine if cave "c_ptr" has feature "flag".\n
+ * @param *c_ptr cave_type \n the cave.
+ * @brief Cave
+ * @param flag Number \n the required feature flag.
+ * @brief Feature
+ * @return Boolean \n TRUE if the cave features include "flag", otherwise
+ * FALSE.
+ * @note (see file w_util.c)
+ */
+static bool lua_cave_is @ cave_is(cave_type *c_ptr, s32b flag);
+
+/** @fn cave(int y, int x);
+ * @brief Return the type of cave at grid coordinate (x,y).\n
+ * @param y Number \n y-coordinate of grid.
+ * @brief Y-coordinate
+ * @param x Number \n x-coordinate of grid.
+ * @brief X-coordinate
+ * @return cave_type \n The type of cave at grid coordinate (x,y).
+ * @note (see file lua_bind.c)
+ */
+extern cave_type *lua_get_cave @ cave(int y, int x);
+
+/** @fn set_target(int y, int x)
+ * @brief Set grid coordinate (x,y) as the target grid.\n
+ * @param y Number \n y-coordinate of grid.
+ * @brief Y-coordinate
+ * @param x Number \n x-coordinate of grid.
+ * @brief X-coordinate
+ * @note (see file lua_bind.c)
+ */
+extern void set_target(int y, int x);
+
+/** @fn get_target(int dir, int *y = 0, int *x = 0)
+ * @brief Get a target based on direction "dir" from the player.\n
+ * @param dir Number \n dir must be a value from 0 to 9.
+ * @brief Direction
+ * @param *y Number
+ * @brief Target y-coordinate
+ * @param *x Number
+ * @brief Target x-coordinate
+ * @return *y Number \n The y-coordinate of the target.
+ * @return *x Number \n The x-coordinate of the target.
+ * @note
+ * The target is actually 100 grids away in direction "dir". If "dir" is 5,
+ * the actual target, if one is set, is returned.
+ * @note (see file lua_bind.c)
+ */
+extern void get_target(int dir, int *y = 0, int *x = 0);
+
+/** @var m_allow_special[max_r_idx]
+ * @brief Boolean
+ * @note "Special gene" flags for monsters
+ */
+extern bool m_allow_special[max_r_idx];
+
+/** @var k_allow_special[max_k_idx]
+ * @brief Boolean
+ * @note "Special gene" flags for objects
+ */
+extern bool k_allow_special[max_k_idx];
+
+/** @var a_allow_special[max_a_idx]
+ * @brief Boolean
+ * @note "Special gene" flags for artifacts
+ */
+extern bool a_allow_special[max_a_idx];
+
+/** @fn cave_set_feat(int y, int x, int feat)
+ * @brief Change the "feat" flag for a grid, and notice/redraw the grid
+ * @param y Number \n y-coordinate of grid.
+ * @brief Y-coordinate
+ * @param x Number \n x-coordinate of grid.
+ * @brief X-coordinate
+ * @param feat Number \n new set of feature flags.
+ * @brief Features
+ * @note (see file cave.c)
+ */
+extern void cave_set_feat(int y, int x, int feat);
+
+/** @fn show_file(cptr name, cptr what, int line, int mode)
+ * @brief Show a help file.\n
+ * @param name String \n name of the help file.
+ * @brief Filename
+ * @param what String \n hyperlink caption.
+ * @brief Caption
+ * @param line Number \n the line number from where to start the display of
+ * the file.
+ * @brief Starting line
+ * @param mode Number \n *unused*
+ * @brief *Unused*
+ * @return Boolean \n TRUE if file was shown successfully, otherwise FALSE.\n
+ * @note
+ * If the file is not found, the function will search the help, info, and file
+ * directories for the file. If it is still not found, a message is displayed
+ * and the function returns FALSE.\n\n
+ * The file is parsed once to extract colour, tag, and hyperlink
+ * information.\n\n
+ * The file is parse again to show it on the screen.
+ * @note (see file files.c)
+ */
+extern bool show_file(cptr name, cptr what, int line, int mode);
+
+/** @var target_who
+ * @brief Number
+ * @note
+ * If this is -1, the target is the player.\n
+ * If this is 0, there is no target.\n
+ * If this is >0, the target is the monster m_idx[target_who].
+ */
+extern s16b target_who;
+
+/** @var target_col
+ * @brief Number
+ * @note The column of the target grid
+ */
+extern s16b target_col;
+
+/** @var target_row
+ * @brief Number
+ * @note The row of the target grid
+ */
+extern s16b target_row;
+
+/** @var max_bact
+ * @brief Number
+ * @note Maximum building actions
+ */
+extern int max_bact;
+
+/** @var ddd[9]
+ * @brief Number
+ * @note Global array for looping through the "keypad directions"
+ */
+extern s16b ddd[9];
+
+/** @var ddx[10]
+ * @brief Number
+ * @note Global array for converting "keypad direction" into x offsets
+ */
+extern s16b ddx[10];
+
+/** @var ddy[10]
+ * @brief Number
+ * @note Global array for converting "keypad direction" into y offsets
+ */
+extern s16b ddy[10];
+
+/** @var ddx_ddd[9]
+ * @brief Number
+ * @note Global array for optimizing "ddx[ddd[i]]"
+ */
+extern s16b ddx_ddd[9];
+
+/** @var ddy_ddd[9]
+ * @brief Number
+ * @note Global array for optimizing "ddy[ddd[i]]"
+ */
+extern s16b ddy_ddd[9];
+
+
+/* Gen stuff */
+/** @fn get_map_size(bool full_text, char *name, int *ysize = 0, int *xsize = 0)
+ * @brief Return the size of the map in file "name".\n
+ * @param full_text Boolean \n if TRUE, "name" contains the map itself,
+ * otherwise "name" is the name of the map file.
+ * @brief Name is a map?
+ * @param *name String \n the map itself, or the name of the map file.
+ * @brief Map
+ * @param *ysize Number
+ * @brief Maximum y-coordinate
+ * @param *xsize Number
+ * @brief Maximum x-coordinate
+ * @return *ysize Number \n The maximum y-coordinate of the map.
+ * @return *xsize Number \n The maximum x-coordinate of the map.
+ * @note (see file lua_bind.c, init1.c)
+ */
+extern void get_map_size(bool full_text, char *name, int *ysize = 0, int *xsize = 0);
+
+/** @fn load_map(bool full_text, char *name, int *y = 2, int *x = 2)
+ * @brief Load the map in file "name".\n
+ * @param full_text Boolean \n if TRUE, "name" contains the map itself,
+ * otherwise "name" is the name of the map file.
+ * @brief Name is a map?
+ * @param *name String \n the map itself, or the name of the map file.
+ * @brief Map
+ * @param *y Number
+ * @brief Maximum y-coordinate
+ * @param *x Number
+ * @brief Maximum x-coordinate
+ * @return *y Number \n The maximum y-coordinate of the map.
+ * @return *x Number \n The maximum x-coordinate of the map.
+ * @note
+ * The map is loaded and the player is placed at the starting position.
+ * @note (see file lua_bind.c)
+ */
+extern void load_map(bool full_text, char *name, int *y = 2, int *x = 2);
+
+/** @fn alloc_room(int by0, int bx0, int ysize, int xsize, int *y1 = 0, int *x1 = 0, int *y2 = 0, int *x2 = 0)
+ * @brief Allocate the space needed by a room in the room_map array.\n
+ * @param by0 Number \n the y-coordinate of the block to contain the room.
+ * @brief Block y-coordinate
+ * @param bx0 Number \n the x-coordinate of the block to contain the room.
+ * @brief Block x-coordinate
+ * @param ysize Number \n the vertical size (height) of the room.
+ * @brief Room height
+ * @param xsize Number \n the horizontal size (width) of the room.
+ * @brief Room width
+ * @param *y1 Number
+ * @brief Top-right y-coordinate
+ * @param *x1 Number
+ * @brief Top-right x-coordinate
+ * @param *y2 Number
+ * @brief Bottom-left y-coordinate
+ * @param *x2 Number
+ * @brief Bottom-right x-coordinate
+ * @return Boolean \n TRUE if the room was allocated successfully, otherwise
+ * FALSE.
+ * @return *y1 Number \n The y-coordinate of the top left corner.
+ * @return *x1 Number \n The x-coordinate of the top left corner.
+ * @return *y2 Number \n The y-coordinate of the bottom right corner.
+ * @return *x2 Number \n The x-coordinate of the bottom right corner.
+ * @note
+ * Dungeon generation is not something to be messed around with unless you
+ * really, really, really know what you are doing (or you are DarkGod).
+ * @note (see file lua_bind.c, generate.c)
+ */
+extern bool alloc_room(int by0, int bx0, int ysize, int xsize, int *y1 = 0, int *x1 = 0, int *y2 = 0, int *x2 = 0);
+
+/** @var option_ingame_help
+ * @brief Boolean
+ * @note Ingame contextual help flag
+ */
+extern bool option_ingame_help;
+
+/* Misc stuff */
+/** @fn input_box(cptr title, int max);
+ * @brief Create an input box and ask the user a question.\n
+ * @param title String \n the title of the box, which should take the form of
+ * a question. For example, "New name?".
+ * @brief Title
+ * @param max Number \n the maximum length of the response.
+ * @brief Maximum response length
+ * @return String \n The answer to the question.
+ * @note
+ * The input box is placed in the middle of the screen. The default reponse is
+ * blank, and can be up to 79 characters long.
+ * @note (see file lua_bind.c, util.c)
+ */
+extern char *lua_input_box@input_box(cptr title, int max);
+
+/** @fn msg_box(cptr title);
+ * @brief Create a msg box and ask a question.\n
+ * @param title String \n the question.
+ * @brief Question
+ * @return String \n The answer.
+ * @note
+ * The message box is placed in the middle of the screen. The answer is a
+ * single character / key press.
+ * @note (see file lua_bind.c, util.c)
+ */
+extern char lua_msg_box@msg_box(cptr title);
+
+/** @fn rescale(s32b x, s32b max, s32b new_max)
+ * @brief Rescale value "x".\n
+ * @param x Number \n the original value.
+ * @brief Value
+ * @param max Number \n the original maximum that value could have.
+ * @brief Original maximum
+ * @param new_max Number \n the new maximum that value can have.
+ * @brief New maximum
+ * @return Number \n The rescaled value of "x".
+ * @note
+ * There is no error checking here. Please don't set "max" to zero.
+ * @note (see file util.c)
+ */
+extern s32b rescale(s32b x, s32b max, s32b new_max);
+$static const char *player_name_lua(void){return (const char *)player_name;}
+
+/** @fn player_name()
+ * @brief Return the player's name.
+ * @return String \n The player's name.
+ * @note (see file w_util.c)
+ */
+const char *player_name_lua@player_name();
+
+/* Temp files */
+/** @fn make_temp_file();
+ * @brief Create a temporary file.
+ * @note
+ * If a temp file already exists, or one can't be generated, the function
+ * will fail. Otherwise a file is created and the temp_file flag is set to
+ * TRUE.
+ * @note (see file lua_bind.c, util.c)
+ */
+extern void lua_make_temp_file@make_temp_file();
+
+/** @fn close_temp_file();
+ * @brief Close a temporary file.
+ * @note
+ * The file is closed but not released.
+ * @note (see file lua_bind.c, util.c)
+ */
+extern void lua_close_temp_file@close_temp_file();
+
+/** @fn end_temp_file();
+ * @brief End a temporary file.
+ * @note
+ * The file is released and the temp_file flag is set to FALSE.
+ * @note (see file lua_bind.c, util.c)
+ */
+extern void lua_end_temp_file@end_temp_file();
+
+/** @fn get_temp_name();
+ * @brief Return the name of the temporary file.
+ * @return String \n The name of the temporary file.
+ * @note (see file lua_bind.c)
+ */
+extern cptr lua_get_temp_name@get_temp_name();
+
+/* Quarks */
+/** @fn quark_str(s16b num)
+ * @brief Return a quark (inscription) from the quark array.\n
+ * @param num Number \n the index to the quark string array. If this is less
+ * than zero or more than the maximum number of quarks, it is treated as zero.
+ * @brief Quark index
+ * @return String \n The quark.
+ * @note
+ * We use a global array for all inscriptions to reduce the memory
+ * spent maintaining inscriptions.  Of course, it is still possible
+ * to run out of inscription memory, especially if too many different
+ * inscriptions are used, but hopefully this will be rare.\n\n
+ * We use dynamic string allocation because otherwise it is necessary
+ * to pre-guess the amount of quark activity.  We limit the total
+ * number of quarks, but this is much easier to "expand" as needed.\n\n
+ * Any two items with the same inscription will have the same "quark"
+ * index, which should greatly reduce the need for inscription space.\n\n
+ * Note that "quark zero" is NULL and should not be "dereferenced".
+ * @note (see file util.c)
+ */
+extern cptr quark_str(s16b num);
+
+/** @fn quark_add(cptr str)
+ * @brief Add a quark (inscription) to the quark array.\n
+ * @param str String \n the quark to add to the array.
+ * @brief Quark
+ * @return Number \n The index to the quark array for this quark
+ * @note
+ * The array is searched to see if the quark already exists. If so, the index
+ * to the existing quark is returned.\n
+ * If there is no room, 0 (NULL reference) is returned.
+ * @note (see file util.c)
+ */
+extern s16b quark_add(cptr str);
+
+/* Modules */
+/** @fn module_reset_dir(cptr dir, cptr new_path)
+ * @brief Redirect one of the ToME directories.\n
+ * @param dir String \n the name of the directory (not the full path).
+ * @brief Directory
+ * @param new_path String \n the new path of "dir" under ANGBAND_DIR_MODULES.\n
+ * @brief New path
+ * @note (see file modules.c)
+ */
+extern void module_reset_dir(cptr dir, cptr new_path);
+
+/** @fn scansubdir(cptr dir)
+ * @brief Scan sub-directory "dir".\n
+ * @param dir String \n the sub-directory to scan.
+ * @brief Directory
+ * @note
+ * Nicer wrapper around TERM_XTRA_SCANSUBDIR\n\n
+ * This function sets scansubdir_dir and calls the SCANSUBDIR terminal hook.
+ * @note (see file util.c)
+ */
+extern void scansubdir(cptr dir);
+
+/** @fn file_exist(char *buf)
+ * @brief Check if file "buf" exists.\n
+ * @param *buf String \n the file to be tested.
+ * @brief Filename
+ * @return Boolean \n TRUE if the file exists, otherwise FALSE.
+ * @note (see file loadsave.c)
+ */
+extern bool file_exist(char *buf);
+
+/** @var game_module
+ * @brief String
+ * @note The name of the current game module
+ */
+extern cptr game_module;
+
+/* Input */
+/** @fn get_keymap_dir(char ch)
+ * @brief Get a direction from the keyboard according to the keymap.\n
+ * @param ch String \n the character representing a direction.
+ * @brief Direction
+ * @return Number \n The direction represented by "ch". It will be in the
+ * range 0 to 9.
+ * @note
+ * If "ch" is a number, the number is used. Otherwise the direction is
+ * chosen from the Original or Rogue keymaps.\n
+ * If the direction is 5, it is set to 0.
+ * @note (see file util.c)
+ */
+extern int get_keymap_dir(char ch);
+
+/*
+ * Timers
+ */
+/** @struct timer_type
+ */
+struct timer_type
+{
+	/** @structvar *next
+	 * @brief timer_type
+	 * @note The next timer in the list
+	 */
+	timer_type *next;
+
+	/** @structvar enabled
+	 * @brief Boolean
+	 * @note Is it currently counting?
+	 */
+	bool enabled;
+
+	/** @structvar delay
+	 * @brief Number
+	 * @note Delay between activations
+	 */
+	s32b delay;
+	/** @structvar countdown
+	 * @brief Number
+	 * @note The current number of turns passed, when it reaches delay it fires
+	 */
+	s32b countdown;
+
+	/** @structvar callback
+	 * @brief String
+	 * @note The lua function to call upon firing(no C callback yet .. maybe)
+	 */
+	cptr callback;
+};
+
+/** @fn *new_timer(cptr callback, s32b delay)
+ * @brief Create a timer with callback "callback" and delay "delay".\n
+ * @param callback String \n the callback associated with the timer.
+ * @brief Callback
+ * @param delay Number \n the delay associated with the timer.
+ * @brief Delay
+ * @return timer_type \n The new timer.
+ * @note
+ * The timer's countdown is also set to "delay". The timer is disabled.
+ * @note (see file util.c)
+ */
+extern timer_type *new_timer(cptr callback, s32b delay);
+
+/** @fn del_timer(timer_type *t_ptr)
+ * @brief Delete timer "t_ptr".\n
+ * @param *t_ptr timer_type \n the timer to be deleted.
+ * @brief Timer
+ * @note (see file util.c)
+ */
+extern void del_timer(timer_type *t_ptr);
+
+/*
+ * Lists
+ */
+/** @struct list_type
+ */
+struct list_type
+{
+};
+
+/** @fn create_list(int size);
+ * @dgonly
+ * @brief Create an empty list big enough to store "size" strings.\n
+ * @param size Number \n the number of strings the list will hold.
+ * @brief List size
+ * @return list_type \n The empty list.
+ * @note (see file lua_bind.c)
+ */
+extern list_type *lua_create_list@create_list(int size);
+
+/** @fn delete_list(list_type *, int size);
+ * @dgonly
+ * @brief Delete the list of strings.\n
+ * @param * list_type \n the list of strings.
+ * @brief List
+ * @param size Number \n the number of strings the list holds.
+ * @brief List size
+ * @note
+ * All the strings in the list are deleted first, then the list is deleted.
+ * @note (see file lua_bind.c)
+ */
+extern void lua_delete_list@delete_list(list_type *, int size);
+
+/** @fn add_to_list(list_type *, int idx, cptr str);
+ * @dgonly
+ * @brief Add string "str" to list in position "idx".\n
+ * @param * list_type \n the list of strings.
+ * @brief List
+ * @param idx Number \n the index of the list where the string will be added.
+ * @brief Index
+ * @param str String \n the string to be added.
+ * @brief String
+ * @note
+ * Too bad if there was something in that position already.
+ * You have been warned.
+ * @note (see file lua_bind.c)
+ */
+extern void lua_add_to_list@add_to_list(list_type *, int idx, cptr str);
+
+/** @fn display_list(int y, int x, int h, int w, cptr title, list_type *list, int max, int begin, int sel, byte sel_color);
+ * @dgonly
+ * @brief Display a scrollable boxed list with a selected item.\n
+ * @param y Number \n the y-coordinate of the top-left corner of the box.
+ * @brief Top-left y-coordinate
+ * @param x Number \n the x-coordinate of the top-left corner of the box.
+ * @brief Top-left x-coordinate
+ * @param h Number \n the height of the box.
+ * @brief Height
+ * @param w Number \n the width of the box.
+ * @brief Width
+ * @param title String \n the title for the list box.
+ * @brief Title
+ * @param *list list_type \n the list of strings to be displayed.
+ * @brief List
+ * @param max Number \n the maximum number of strings to display.
+ * @brief Maximum displayed strings
+ * @param begin Number \n the index of the first string to display.
+ * @brief Start index
+ * @param sel Number \n the index of the selected string.
+ * @brief Selected index
+ * @param sel_color Number \n the colour of the selected string.
+ * @brief Selected colour
+ * @note
+ * The title of the list is displayed in TERM_L_BLUE and the unselected strings
+ * are displayed in TERM_WHITE.
+ * @note (see file util.c)
+ */
+extern void lua_display_list@display_list(int y, int x, int h, int w, cptr title, list_type *list, int max, int begin, int sel, byte sel_color);
+
+extern errr file_character(cptr name, bool full);
+extern void calc_bonuses(bool silent);
+
+extern void note_spot(int y, int x);
+extern void lite_spot(int y, int x);

@@ -1,0 +1,33 @@
+|||||oy
+~~~~~01|Magic|Water School
+~~~~~02|Water Magic
+~~~~~03|Skills|Water - Spell Info
+#####R === ToME Magic - Water School ===
+
+The water school of magic contains spells where the element of water is
+used to create the final spell effect. There are rumours of a "Tome of the
+Everrunning Wave" which contains all the water school spells within its
+bindings.
+
+Worshipping the Goddess Yavanna Kementari also gives the ability to cast spells
+from the water school at a level of 1/2 of your prayer level. E.g. if the skill
+"Spirituality: Prayer" is at level 10, you can cast up to level 5 water school
+spells.
+
+#####bWater Spells
+There are four spells available for the water school. These Spells are:
+1. [[[[[bGeyser] (school level 1)
+   Shoots a geyser of water from your fingertips.
+   Sometimes it can blast through its first target.
+2. [[[[[bVapor] (school level 2)
+   Fills the air with toxic moisture to wash away annoying creatures.
+3. [[[[[bEnt's Potion] (school level 6)
+   Fills up your stomach (i.e. satisfy hunger).
+   At spell level 5 it emboldens your heart (boldness).
+   At level 12 it make you heroic.
+4. [[[[[bTidal Wave] (school level 16)
+   Summons a monstrous tidal wave that will expand and crush monsters under
+   its mighty waves.
+5. [[[[[bIce Storm] (school level 22)
+   Engulfs you in a storm of roaring cold that strikes your foes.
+   At spell level 10 it turns into shards of ice.

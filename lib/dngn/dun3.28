@@ -1,0 +1,5 @@
+N:Nameless
+U:s_name.map
+D:You sense a powerful artifact here.
+F:DESC | NO_GENO | NO_NEW_MONSTER | SPECIAL | NO_STAIR
+F:ASK_LEAVE | NO_TELEPORT

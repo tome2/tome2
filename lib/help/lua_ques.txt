@@ -1,0 +1,299 @@
+|||||oy
+#####R             /----------------------------------------\
+#####R            <            Adding a new quest            >
+#####R             \----------------------------------------/
+
+#####R=== Introduction ===
+
+Adding a quest involves a bit more work, and there is, in some ways, rather 
+more potential for things to go wrong! But it's a great way of showing just 
+WHAT can be done with lua scripting. It proves just how much a lua patch can 
+change the overall feel of the game. And it will give you a much better idea of 
+how lua interfaces with the game source. You should have read the 
+*****lua_intr.txt*0[scripting introduction], *****lua_pow.txt*0[racial power tutorial]
+and *****lua_skil.txt*0[adding new skills tutorial] before going much 
+further. All of the above files contain some fairly fundamental information 
+which you will find necessary for full understanding of this file.
+
+The script we're looking at is going to create a quest entrance in the middle 
+of Bree. Entering the quest you see a little girl who has had her necklace 
+stolen. Your job is to travel down a corridor, killing some monsters on the 
+way, pick up the amulet and return it to the girl. Once done, she'll reveal the 
+stairs back to Bree, and give you a (randomly generated) ring. If you feel the 
+monsters are too hard, the only thing to do is talk to the little girl who will 
+reveal the stairs again, failing the quest for you, and also block off the 
+entrance to the amulet so that you can't cheat and make off with the amulet!
+
+#####R=== Getting started ===
+
+Open amulet.lua (you have downloaded the example scripts from 
+[[[[[Ghttp://www.moppy.co.uk/angband.htm], haven't you?). The first thing you 
+should see is that yet again we're calling a function that takes its arguments 
+from a table, making it easy to read what's going on in the script.
+
+This time our function is add_quest and we have the following keys and values:
+
+#####B["global"] =    "AMULET_QUEST",
+#####B["name"] =      "Hannahs lost amulet",
+#####B["desc"] =      {
+#####B			"Retrieve an amulet for Hannah Cooke. It's guarded!"
+#####B 		     },
+#####B["level"] =     5,
+#####B["hooks"] =     {
+
+[[[[[B"global" = ]	is a constant that we set when we refer to this quest in 
+various places...
+[[[[[B"name" = ]	Obviously a long name for the quest. This will appear in the 
+quest screen (Ctrl-Q) and we may use in some map files too.
+[[[[[B"desc" = ]	This is a long description for the quest. Again this is what 
+will appear in the quest screen, and each line should be not more than 80 
+characters.
+[[[[[B"level" = ]	This is a rough indicator of how hard the quest is, and again, 
+appears in the quest screen
+[[[[[B"hooks" = ]	This is the real 'meat' of the quest. Like the [[[[[B"spell_list"] key 
+in the [[[[[Badd_magic] function, this is another sub-table.
+
+To understand fully the structure of the "hooks" key it's worth taking a bit of 
+a detour at this point and discussing how the scripting interface works in 
+general.
+
+#####R=== How the scripts work (ish) ===
+
+Essentially there's a list of events that happen in the game. As each of these 
+events happen they run a check to see if there's any functions that they need 
+to run at that event. When we ran the add_mkey part of adding a new skill 
+power, we essentially said "when the 'm' key is pressed in the game, perform 
+the [[[[[Bexecute_magic(constructor_powers)] function". Likewise we did a similar 
+thing with adding the racial power, only we hooked onto the pressing of the 
+'U' key.
+
+All of this was partly hidden because of the way that the [[[[[Badd_magic] and 
+[[[[[Badd_power] functions work. But here in the [[[[[Badd_quest] function it's a bit more 
+specific. We are going to specify what events we're going to hook onto, and 
+what functions we want to trigger at that event.
+
+A full list of hooks can be found in the source-file util.pkg.
+
+#####R=== The hooks ===
+
+#####B[HOOK_BIRTH_OBJECTS] = function()
+#####B	quest(AMULET_QUEST).status = QUEST_STATUS_TAKEN
+#####Bend,
+
+So here we are with our first hook. We've declared that we're adding it to the 
+birth of your character. That is, the function will be called when you create 
+your character. And what we're doing here is automatically declaring the quest 
+as being taken, like the Dol Guldur quest is. Each quest has 7 different 
+statuses:
+
+[[[[[BQUEST_STATUS_IGNORED         -1	]	This is unused, but the quest is 
+ignored (will not be taken and has not been taken).
+[[[[[BQUEST_STATUS_UNTAKEN         0	]	The quest has not been accepted yet
+[[[[[BQUEST_STATUS_TAKEN           1	]	You have accepted the quest
+[[[[[BQUEST_STATUS_COMPLETED       2	]	You have completed the quest 
+successfully but not been rewarded for it
+[[[[[BQUEST_STATUS_REWARDED        3	]	You've completed and rewarded the quest
+[[[[[BQUEST_STATUS_FAILED          4	]	You've failed the quest
+[[[[[BQUEST_STATUS_FINISHED        5	]	The quest is completely finished 
+successfully.
+[[[[[BQUEST_STATUS_FAILED_DONE     6	]	The quest is completely finished 
+unsuccessfully.
+
+You see that we've used the constant we defined in the "global" section is 
+passed as an argument to [[[[[Bquest.status].
+
+Next hook then:
+
+#####B[HOOK_GEN_QUEST] = function()
+#####B	if (player.inside_quest ~= AMULET_QUEST) then
+#####B		return FALSE
+#####B	else
+#####B		load_map("amulet.map", 2, 2)
+#####B		return TRUE
+#####B	end
+#####Bend,
+
+Ok, we're hooking onto the generation of the quest here. This is specifically 
+triggered in this instance by going down the quest entrance stairs in Bree.
+Once you've gone down the stairs, you are technically inside the quest, which 
+means we can say if the person is not inside the amulet quest, then ignore this 
+function, otherwise load the file 'amulet.map' at co-ordinates x=2 y=2. You'll 
+find the amulet.map file in the edit directory, make sure you check it out. The 
+syntax for map files is fairly simple, though I might get round to writing a 
+tutorial on them some day! In the mean time holler for me at the usual email 
+address if you're unsure.
+
+#####B[HOOK_FEELING] = function()
+#####B	if (player.inside_quest ~= AMULET_QUEST) then
+#####B		return FALSE
+#####B	else
+#####B		cmsg_print(TERM_L_BLUE, "Hannah speaks to you:")
+#####B		cmsg_print(TERM_YELLOW, "'Some nasty monsters stole my 
+#####B							favourite necklace.'")
+#####B		cmsg_print(TERM_YELLOW, "'It's hidden at the back of that 
+#####B						corridor! Please fetch it for me'")
+#####B		return TRUE
+#####B	end
+#####Bend,
+
+We're moving into some rather more obvious territory here, and getting into the 
+meat of the quest. The [[[[[BHOOK_FEELING] is triggered at the point when the level 
+feeling appears. It's important that this is run only if the player is inside 
+the amulet quest, as otherwise it will trigger EVERY time a level feeling 
+occurs, when you go down a level in the barrow-downs, whenever! Returning TRUE 
+will replace the level feeling with what's above, returning FALSE will still 
+perform the function but will amend the normal level feeling - so here if we'd 
+returned false we'd still get our custom messages, but they'd follow with 
+'looks like a typical quest level'. Of course returning false may cause you 
+other problems (see end of this file!) depending on what else you have in your 
+function.
+
+#####B[HOOK_GIVE] = function(m_idx, item)
+
+#####B	m_ptr = monster(m_idx)
+#####B	o_ptr = get_object(item)
+
+#####B	if (m_ptr.r_idx == test_monster_name("Hannah Cooke, a little girl")) 
+#####B			and (o_ptr.tval == TV_AMULET) and (o_ptr.sval == 2) then
+
+#####B		cmsg_print(TERM_YELLOW, "'Thank-you!'")
+
+#####B		inven_item_increase(item, -1)
+#####B		inven_item_optimize(item)
+
+#####B		quest(AMULET_QUEST).status = QUEST_STATUS_COMPLETED
+
+#####B		cave_set_feat(7, 6, 6)
+
+#####B		cmsg_print(TERM_YELLOW, "'Here, take this pretty ring I found 
+#####B							as a token of gratitude!'")
+#####B		random_type = randint(57)
+#####B		reward = create_object(TV_RING, random_type)
+#####B		drop_near(reward, -1, py, px)
+#####B		quest(AMULET_QUEST).status = QUEST_STATUS_REWARDED
+#####B		return TRUE
+#####B	else
+#####B		return FALSE
+#####B	end
+#####Bend,
+
+This is a fairly long function, but don't be intimidated. It's not really 
+difficult to understand. As you can see we're hooking into the giving of an 
+object to a monster (the 'y' key). Because of this, the function takes two 
+arguments - [[[[[Bm_idx] (the monster that you're giving to) and [[[[[Bitem] (the item that 
+you're giving).
+
+We then make it possible to work with the monster and item variables by 
+referencing them to two functions which identify them from the edit files: 
+[[[[[Bmonster()] and [[[[[Bget_object()]. This enables us to now say, 'if the name of the 
+monster is "Hannah Cooke, a little girl" and the type of item is an amulet and 
+that amulet is an amulet of adornment, then carry out the following commands'.
+
+We then say call the function [[[[[Binven_item_increase()] which places an object in 
+the inventory. It takes two arguments, the first being what object to put in 
+the inventory and the second being how many of that type of objects to put in 
+the inventory. You can see that by placing -1 as the second argument it fairly 
+obviously subtracts that item from the inventory. The [[[[[Binven_item_optimize()] 
+function checks that there are no empty inventory slots, and if there are, 
+erases them. 
+
+The quest is then completed, and the stairs are revealed using the 
+[[[[[Bcave_set_feat()] function. This function takes three arguments, the first is the 
+x co-ordinate of the cave square you wish to change (counted from top left) the 
+second is the y co-ordinate, and the third is the index number of the feature 
+you wish the square to become as defined in f_info.txt. 
+
+We then set about rewarding the player. As you can see we call [[[[[Bcreate_object()] 
+which takes two variables: the first is the type of object (these are all 
+listed in object.pkg) and the second is the sub-type of that object. I searched 
+k_info.txt to see how many different types of ring there were (57) and used a 
+randomly selected number with a maximum value of 57 as that specific sub-type.
+
+We then drop the object (although it's been created, it has only been created 
+in the game's memory, it's nowhere that the player can interact with it until 
+we drop it). The [[[[[Bdrop_near()] function takes 3 variables, the first being the 
+object that you wish to drop, the second being the chance that it disappears 
+(like an arrow, or mimicked creature) on drop. If you set it to -1, it won't
+ever disappear. The last two are the co-ordinates at which the object will be 
+dropped. py and px are the global variables defined by where the player is 
+standing, so in this case it will drop under the player. You could do 
+[[[[[Binven_item_increase(reward, 1)] if you wanted, but I wanted to show a variety of 
+ways of handling objects.
+
+OK, let's take a look at the next hook:
+
+#####B[HOOK_CHAT] = function(m_idx)
+#####B	m_ptr = monster(m_idx)
+#####B	if (m_ptr.r_idx == test_monster_name("Hannah Cooke, a little girl")) then 
+#####B		if (quest(AMULET_QUEST).status == QUEST_STATUS_REWARDED) then
+#####B			cmsg_print(TERM_YELLOW, "'Bye!'")
+#####B		else
+#####B			cmsg_print(TERM_YELLOW, "'Are the monsters too tough? 
+#####B							Do you want to leave?'")
+#####B			if (get_check("Really leave and fail the quest?") == 
+#####B									FALSE) 
+#####B				then 
+#####B					cmsg_print(TERM_YELLOW, "'Go and get my 
+#####B								amulet then!'")
+#####B				else
+#####B					cmsg_print(TERM_YELLOW, "'Awww. Never 
+#####B					mind. It was only a bit of rabbits foot'")
+#####B					quest(AMULET_QUEST).status = 
+#####B								QUEST_STATUS_FAILED
+#####B					cave_set_feat(7, 6, 6)
+#####B					cave_set_feat(12, 5, 60)
+#####B			end
+#####B		end
+#####B		return TRUE
+#####B	end
+#####B	return FALSE
+#####Bend,		
+
+This only looks complicated because of the nested 'if' statements. It's easy to 
+lose your way when doing this kind of thing, always make sure you close all the 
+statements and put the returns in the right place. [[[[[BHOOK_CHAT] functions have one 
+argument - the monster you are chatting to. As you can see, we perform a check 
+to make sure it's the right monster and then away we go.... If the player wants 
+to leave the quest without completion they talk to Hannah, who gives them a 
+chance to change their mind! If the player asks to leave the entrance to the 
+corridor is blocked off (the second cave_set_feat()) so that the user can't 
+then go and get the amulet. Gumband or Zangband players may at this point think 
+they've lost out on the rabbits foot of burglary! (they haven't though as it 
+doesn't exist in ToME).
+
+#####B[HOOK_CHAR_DUMP] = function()
+#####B	if (quest(AMULET_QUEST).status == QUEST_STATUS_FAILED) then
+#####B		print_hook("\n You chickened out of rescuing a necklace and 
+#####B							made a little girl sad. ")
+#####B	elseif (quest(AMULET_QUEST).status == QUEST_STATUS_COMPLETED) or 
+#####B		(quest(AMULET_QUEST).status == QUEST_STATUS_REWARDED) or 
+#####B		(quest(AMULET_QUEST).status == QUEST_STATUS_FINISHED) then
+#####B			print_hook("\n You rescued little Hannah Cooke's necklace from 
+#####B							the nasty monsters ")			
+#####B	end
+#####B	return FALSE
+#####Bend,
+
+This quite simply and obviously prints an appropriate line in the character 
+dump based on the status of the quest. The [[[[[B\n] bit ensures the text goes on a 
+new line, so make sure you include it! Also you should return FALSE as 
+returning TRUE will stop executing all the other character dump lines (and you 
+may get other quests not having their lines printed).
+
+=== A word about returning TRUE and FALSE ===
+
+As I mentioned above, you need to be careful what you return when dealing with 
+HOOKS as you can mess up the game a bit. Bear in mind that if you add a 
+function to [[[[[BHOOK_GEN_QUEST], every time a quest is generated, that function will 
+run. If you return TRUE, then no further functions attached to that hook will 
+run. If you return FALSE, it continues processing functions on that hook.
+
+That is pretty much it. Do take a look at the other included scripts that I 
+haven't gone into any detail about in the files, as you'll pick up some useful 
+techniques there too. Especially worthy of note is the hina.lua file which uses 
+hooks outside of the quest structure and also global variables and variables in 
+a table. If you have any questions, let me know at the email addy below.
+
+Back to the *****lua.hlp*0[lua help index] .
+
+                             [[[[[gThis file by fearoffours (fearoffours@moppy.co.uk)]

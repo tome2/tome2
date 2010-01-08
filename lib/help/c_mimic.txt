@@ -1,0 +1,53 @@
+~~~~~01|Mimic
+~~~~~02|Classes|Mimic
+#####R=== Mimics ===
+
+#####GDescription
+Mimics possess the ability to transform into various creatures using 
+special cloaks. While transformed, they lose their intrinsic abilities, 
+and gain those of the creature they have transformed into.
+
+At higher skill levels, Mimics gain additional Mimicry powers which help them 
+to further blend in with their surroundings or modify themselves.
+
+See more on *****m_mimic.txt*0[Mimicry powers].
+
+
+#####GStarting Stat Modifiers
+Strength         +1
+Intelligence     -2
+Wisdom           +1
+Dexterity        +1
+Constitution     +0
+Charisma         +1
+Hit Die          +d8
+Spell Points     +0%
+Exp Penalty      40%
+
+#####GStarting Skills:
+#####BSkill                   Start Level     Skill Point Gains
+Combat                  1.000           [0.800]
+  Weaponmastery         1.000           [0.800]
+  Archery               1.000           [0.700]
+  Barehand-combat       1.000           [0.600]
+Sneakiness              1.000           [0.800]
+  Stealth               1.000           [0.800]
+  Disarming             1.000           [0.700]
+Magic                   1.000           [0.700]
+  Magic-Device          1.000           [1.000]
+Spirituality            1.000           [0.500]
+  Prayer                0.000           [0.500]
+  Music                 0.000           [0.300]
+Monster-lore            1.000           [1.100]
+  Corpse-preservation   1.000           [0.900]
+  Possession            0.000           [0.100]
+  Mimicry               1.000           [0.800]
+
+#####GStarting Equipment
+A Mimic begins the game with:
+    a Mouse Fur
+    a Potion of Healing
+    a Dagger
+
+
+    

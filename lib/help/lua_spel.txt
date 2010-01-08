@@ -1,0 +1,2150 @@
+|||||oy
+
+#####R             /----------------------------------------\
+#####R            <      spell.pkg functions helper file     >
+#####R             \----------------------------------------/
+
+----------------------------------------------------------------------
+
+#####R=== teleport_player_directed ===
+
+#####GDeclaration
+    extern void teleport_player_directed(int rad, int dir);
+
+#####GFile
+    spells1.c
+
+#####GComment
+/*
+ * Teleport player, using a distance and a direction as a rough guide.
+ *
+ * This function is not at all obsessive about correctness.
+ * This function allows teleporting into vaults (!)
+ */
+
+#####GDescription
+Teleport a player up to "rad" grids away roughly in "dir" direction.
+
+#####GParameters
+> "rad" must not exceed 200. The distance teleported is a minimum of a
+  quarter of "rad".
+> "dir" must be from 0 to 9.
+  *****fields.txt*0[direction]
+
+----------------------------------------------------------------------
+
+#####R=== teleport_away ===
+
+#####GDeclaration
+    extern void teleport_away(int m_idx, int dis);
+
+#####GFile
+    spells1.c
+
+#####GComment
+/*
+ * Teleport a monster, normally up to "dis" grids away.
+ *
+ * Attempt to move the monster at least "dis/2" grids away.
+ *
+ * But allow variation to prevent infinite loops.
+ */
+
+#####GDescription
+Teleport monster indicated by "m_idx" up to "dis" grids away.
+
+#####GParameters
+> "m_idx" is the index of the monster in m_list[].
+> "dis" must not exceed 200. The distance teleported is a minimum of a
+  quarter of "dis".
+
+----------------------------------------------------------------------
+
+#####R=== teleport_player ===
+
+#####GDeclaration
+    extern void teleport_player(int dis);
+
+#####GFile
+    spells1.c
+
+#####GComment
+/*
+ * Teleport the player to a location up to "dis" grids away.
+ *
+ * If no such spaces are readily available, the distance may increase.
+ * Try very hard to move the player at least a quarter that distance.
+ */
+
+#####GDescription
+Teleport player up to "dis" grids away.
+
+#####GParameters
+> "dis" must not exceed 200. The distance teleported is a minimum of a
+  quarter of "dis".
+
+----------------------------------------------------------------------
+
+#####R=== teleport_player_to ===
+
+#####GDeclaration
+    extern void teleport_player_to(int ny, int nx);
+
+#####GFile
+    spells1.c
+
+#####GComment
+/*
+ * Teleport player to a grid near the given location
+ *
+ * This function is slightly obsessive about correctness.
+ * This function allows teleporting into vaults (!)
+ */
+
+#####GDescription
+Teleport player to a grid near the given location ("ny", "nx"). If
+the location is empty, the player goes there, otherwise they go to
+a grid as close as possible to the location.
+
+#####GParameters
+> "ny" is the y co-ordinate of the location.
+> "nx" is the x co-ordinate of the location.
+
+----------------------------------------------------------------------
+
+#####R=== teleport_monster_to ===
+
+#####GDeclaration
+    extern void teleport_monster_to(int m_idx, int ny,
+        int nx);
+
+#####GFile
+    spells1.c
+
+#####GComment
+/*
+ * Teleport a monster to a grid near the given location
+ *
+ * This function is slightly obsessive about correctness.
+ */
+
+#####GDescription
+Teleport monster indicated by "m_idx" to a grid near the given
+location ("ny", "nx"). If the location is empty, the monster goes
+there, otherwise they go to a grid as close as possible to the
+location.
+
+#####GParameters
+> "m_idx" is the index of the monster in m_list[].
+> "ny" is the y co-ordinate of the location.
+> "nx" is the x co-ordinate of the location.
+
+----------------------------------------------------------------------
+
+#####R=== teleport_player_level ===
+
+#####GDeclaration
+    extern void teleport_player_level(void);
+
+#####GFile
+    spells1.c
+
+#####GComment
+/*
+ * Teleport the player one level up or down (random when legal)
+ */
+
+#####GDescription
+Teleport the player one level up or down at random.
+
+----------------------------------------------------------------------
+
+#####R=== recall_player ===
+
+#####GDeclaration
+    extern void recall_player(void);
+
+#####GFile
+    spells1.c
+
+#####GComment
+/*
+ * Recall the player to town or dungeon
+ */
+
+#####GDescription
+Recall the player to town (if in dungeon) or dungeon (if in town).
+
+----------------------------------------------------------------------
+
+#####R=== take_hit ===
+
+#####GDeclaration
+    extern void take_hit(int damage, cptr kb_str);
+
+#####GFile
+    spells1.c
+
+#####GComment
+/*
+ * Decreases players hit points and sets death flag if necessary
+ *
+ * XXX XXX XXX Invulnerability needs to be changed into a "shield"
+ *
+ * XXX XXX XXX Hack -- this function allows the user to save (or quit)
+ * the game when he dies, since the "You die." message is shown before
+ * setting the player to "dead".
+ */
+
+#####GDescription
+Reduce the player's current hit points by "damage" points. If the
+player dies, "kb_str" is used to record what the player was killed by
+(see high-score table).
+
+#####GParameters
+> "damage" is the amount of damage.
+> "kb_str" is a string describing what killed the player.
+
+----------------------------------------------------------------------
+
+#####R=== take_sanity_hit ===
+
+#####GDeclaration
+    extern void take_sanity_hit(int damage, cptr hit_from);
+
+#####GFile
+    spells1.c
+
+#####GComment
+/* Decrease player's sanity. This is a copy of the function above. */
+
+#####GDescription
+Reduce the player's current sanity points by "damage" points. If the
+player dies, "hit_from" is used to record what the player was killed
+by (see high-score table).
+
+#####GParameters
+> "damage" is the amount of damage.
+> "hit_from" is a string describing what killed the player.
+
+----------------------------------------------------------------------
+
+#####R=== project ===
+
+#####GDeclaration
+    extern bool project(int who, int rad, int y, int x,
+        int dam, int typ, int flg);
+
+#####GFile
+    spells1.c
+
+#####GComment
+/*
+ * Generic "beam"/"bolt"/"ball" projection routine.
+ *
+ * Input:
+ *   who: Index of "source" monster (negative for "player")
+ *        jk -- -2 for traps, only used with project_jump
+ *   rad: Radius of explosion (0 = beam/bolt, 1 to 9 = ball)
+ *   y,x: Target location (or location to travel "towards")
+ *   dam: Base damage roll to apply to affected monsters (or player)
+ *   typ: Type of damage to apply to monsters (and objects)
+ *   flg: Extra bit flags (see PROJECT_xxxx in "defines.h")
+ *
+ * Return:
+ *   TRUE if any "effects" of the projection were observed, else FALSE
+ *
+ * Allows a monster (or player) to project a beam/bolt/ball of a given kind
+ * towards a given location (optionally passing over the heads of interposing
+ * monsters), and have it do a given amount of damage to the monsters (and
+ * optionally objects) within the given radius of the final location.
+ *
+ * A "bolt" travels from source to target and affects only the target grid.
+ * A "beam" travels from source to target, affecting all grids passed through.
+ * A "ball" travels from source to the target, exploding at the target, and
+ *   affecting everything within the given radius of the target location.
+ *
+ * Traditionally, a "bolt" does not affect anything on the ground, and does
+ * not pass over the heads of interposing monsters, much like a traditional
+ * missile, and will "stop" abruptly at the "target" even if no monster is
+ * positioned there, while a "ball", on the other hand, passes over the heads
+ * of monsters between the source and target, and affects everything except
+ * the source monster which lies within the final radius, while a "beam"
+ * affects every monster between the source and target, except for the casting
+ * monster (or player), and rarely affects things on the ground.
+ *
+ * Two special flags allow us to use this function in special ways, the
+ * "PROJECT_HIDE" flag allows us to perform "invisible" projections, while
+ * the "PROJECT_JUMP" flag allows us to affect a specific grid, without
+ * actually projecting from the source monster (or player).
+ *
+ * The player will only get "experience" for monsters killed by himself
+ * Unique monsters can only be destroyed by attacks from the player
+ *
+ * Only 256 grids can be affected per projection, limiting the effective
+ * "radius" of standard ball attacks to nine units (diameter nineteen).
+ *
+ * One can project in a given "direction" by combining PROJECT_THRU with small
+ * offsets to the initial location (see "line_spell()"), or by calculating
+ * "virtual targets" far away from the player.
+ *
+ * One can also use PROJECT_THRU to send a beam/bolt along an angled path,
+ * continuing until it actually hits something (useful for "stone to mud").
+ *
+ * Bolts and Beams explode INSIDE walls, so that they can destroy doors.
+ *
+ * Balls must explode BEFORE hitting walls, or they would affect monsters
+ * on both sides of a wall.  Some bug reports indicate that this is still
+ * happening in 2.7.8 for Windows, though it appears to be impossible.
+ *
+ * We "pre-calculate" the blast area only in part for efficiency.
+ * More importantly, this lets us do "explosions" from the "inside" out.
+ * This results in a more logical distribution of "blast" treasure.
+ * It also produces a better (in my opinion) animation of the explosion.
+ * It could be (but is not) used to have the treasure dropped by monsters
+ * in the middle of the explosion fall "outwards", and then be damaged by
+ * the blast as it spreads outwards towards the treasure drop location.
+ *
+ * Walls and doors are included in the blast area, so that they can be
+ * "burned" or "melted" in later versions.
+ *
+ * This algorithm is intended to maximise simplicity, not necessarily
+ * efficiency, since this function is not a bottleneck in the code.
+ *
+ * We apply the blast effect from ground zero outwards, in several passes,
+ * first affecting features, then objects, then monsters, then the player.
+ * This allows walls to be removed before checking the object or monster
+ * in the wall, and protects objects which are dropped by monsters killed
+ * in the blast, and allows the player to see all affects before he is
+ * killed or teleported away.  The semantics of this method are open to
+ * various interpretations, but they seem to work well in practice.
+ *
+ * We process the blast area from ground-zero outwards to allow for better
+ * distribution of treasure dropped by monsters, and because it provides a
+ * pleasing visual effect at low cost.
+ *
+ * Note that the damage done by "ball" explosions decreases with distance.
+ * This decrease is rapid, grids at radius "dist" take "1/dist" damage.
+ *
+ * Notice the "napalm" effect of "beam" weapons.  First they "project" to
+ * the target, and then the damage "flows" along this beam of destruction.
+ * The damage at every grid is the same as at the "centre" of a "ball"
+ * explosion, since the "beam" grids are treated as if they ARE at the
+ * centre of a "ball" explosion.
+ *
+ * Currently, specifying "beam" plus "ball" means that locations which are
+ * covered by the initial "beam", and also covered by the final "ball", except
+ * for the final grid (the epicentre of the ball), will be "hit twice", once
+ * by the initial beam, and once by the exploding ball.  For the grid right
+ * next to the epicentre, this results in 150% damage being done.  The centre
+ * does not have this problem, for the same reason the final grid in a "beam"
+ * plus "bolt" does not -- it is explicitly removed.  Simply removing "beam"
+ * grids which are covered by the "ball" will NOT work, as then they will
+ * receive LESS damage than they should.  Do not combine "beam" with "ball".
+ *
+ * The array "gy[],gx[]" with current size "grids" is used to hold the
+ * collected locations of all grids in the "blast area" plus "beam path".
+ *
+ * Note the rather complex usage of the "gm[]" array.  First, gm[0] is always
+ * zero.  Second, for N>1, gm[N] is always the index (in gy[],gx[]) of the
+ * first blast grid (see above) with radius "N" from the blast centre.  Note
+ * that only the first gm[1] grids in the blast area thus take full damage.
+ * Also, note that gm[rad+1] is always equal to "grids", which is the total
+ * number of blast grids.
+ *
+ * Note that once the projection is complete, (y2,x2) holds the final location
+ * of bolts/beams, and the "epicentre" of balls.
+ *
+ * Note also that "rad" specifies the "inclusive" radius of projection blast,
+ * so that a "rad" of "one" actually covers 5 or 9 grids, depending on the
+ * implementation of the "distance" function.  Also, a bolt can be properly
+ * viewed as a "ball" with a "rad" of "zero".
+ *
+ * Note that if no "target" is reached before the beam/bolt/ball travels the
+ * maximum distance allowed (MAX_RANGE), no "blast" will be induced.  This
+ * may be relevant even for bolts, since they have a "1x1" mini-blast.
+ *
+ * Note that for consistency, we "pretend" that the bolt actually takes "time"
+ * to move from point A to point B, even if the player cannot see part of the
+ * projection path.  Note that in general, the player will *always* see part
+ * of the path, since it either starts at the player or ends on the player.
+ *
+ * Hack -- we assume that every "projection" is "self-illuminating".
+ *
+ * Hack -- when only a single monster is affected, we automatically track
+ * (and recall) that monster, unless "PROJECT_JUMP" is used.
+ *
+ * Note that all projections now "explode" at their final destination, even
+ * if they were being projected at a more distant destination.  This means
+ * that "ball" spells will *always* explode.
+ *
+ * Note that we must call "handle_stuff()" after affecting terrain features
+ * in the blast radius, in case the "illumination" of the grid was changed,
+ * and "update_view()" and "update_monsters()" need to be called.
+ */
+
+#####GDescription
+Generate a beam/bolt/ball starting from "who" with a radius of "rad"
+at target grid "y,x" for "damage" points of "typ" damage. The beam/
+bolt/ball can have various properties as denoted by "flg".
+
+#####GParameters
+> "who" is > 0 (index of monster in m_list[]), < 0 and
+  not -100 or -101 (player), -100 or -101 (trap).
+> "rad" is 0 for a beam/bolt and 1-9 for a ball.
+> "y" is the y co-ordinate of the target grid.
+> "x" is the x co-ordinate of the target grid.
+> "dam" is the number of points of damage.
+> "typ" is the type of damage
+  *****fields.txt*0[GF_fields]
+> "flg" is the projection effect
+  *****fields.txt*0[PROJECT_fields]
+
+----------------------------------------------------------------------
+
+#####R=== corrupt_player ===
+
+#####GDeclaration
+    extern void corrupt_player(void);
+
+#####GFile
+    spells1.c
+
+#####GComment
+(none)
+
+#####GDescription
+Swap two of the players stats at random.
+
+----------------------------------------------------------------------
+
+#####R=== grow_trees ===
+
+#####GDeclaration
+    extern void grow_trees(int rad);
+
+#####GFile
+    spells2.c
+
+#####GComment
+/*
+ * Grow trees
+ */
+
+#####GDescription
+Grow up to (("rad" x "rad") + 11) trees around the player.
+
+#####GParameters
+> "rad" is the radius of the area where trees may grow.
+
+----------------------------------------------------------------------
+
+#####R=== hp_player ===
+
+#####GDeclaration
+    extern bool hp_player(int num);
+
+#####GFile
+    spells2.c
+
+#####GComment
+/*
+ * Increase players hit points, notice effects
+ */
+
+#####GDescription
+Add "num" points to the player's current hit points. The total can
+not exceed the maximum.
+
+#####GParameters
+> "num" is the number of points to add.
+
+----------------------------------------------------------------------
+
+#####R=== heal_insanity ===
+
+#####GDeclaration
+    extern bool heal_insanity(int val);
+
+#####GFile
+    spells2.c
+
+#####GComment
+/* Heal insanity. */
+
+#####GDescription
+Add "val" points to the player's current sanity points. The total can
+not exceed the maximum.
+
+#####GParameters
+> "val" is the number of points to add.
+
+----------------------------------------------------------------------
+
+#####R=== warding_glyph ===
+
+#####GDeclaration
+    extern void warding_glyph(void);
+
+#####GFile
+    spells2.c
+
+#####GComment
+/*
+ * Leave a "glyph of warding" which prevents monster movement
+ */
+
+#####GDescription
+Place a glyph at the player's location. The location must be bare.
+
+----------------------------------------------------------------------
+
+#####R=== explosive_rune ===
+
+#####GDeclaration
+    extern void explosive_rune(void);
+
+#####GFile
+    spells2.c
+
+#####GComment
+(none)
+
+#####GDescription
+Place a minor glyph (explosive rune) at the player's location. The
+location must be bare.
+
+----------------------------------------------------------------------
+
+#####R=== do_dec_stat ===
+
+#####GDeclaration
+    extern bool do_dec_stat(int stat, int mode);
+
+#####GFile
+    spells2.c
+
+#####GComment
+/*
+ * Lose a "point"
+ */
+
+#####GDescription
+Attempt to reduce the player's "stat" statistic by a point.
+
+#####GParameters
+> "stat" is the statistic
+  *****fields.txt*0[A_fields]
+> "mode" is the type of decrease: temporary, normal, or permanent
+  *****fields.txt*0[STAT_DEC_fields]
+
+----------------------------------------------------------------------
+
+#####R=== do_res_stat ===
+
+#####GDeclaration
+    extern bool do_res_stat(int stat);
+
+#####GFile
+    spells2.c
+
+#####GComment
+/*
+ * Restore lost "points" in a stat
+ */
+
+#####GDescription
+Restore the player's "stat" statistic.
+
+#####GParameters
+> "stat" is the statistic
+  *****fields.txt*0[A_fields]
+
+----------------------------------------------------------------------
+
+#####R=== do_inc_stat ===
+
+#####GDeclaration
+    extern bool do_inc_stat(int stat);
+
+#####GFile
+    spells2.c
+
+#####GComment
+/*
+ * Gain a "point" in a stat
+ */
+
+#####GDescription
+Increase the player's "stat" statistic by a point.
+
+#####GParameters
+> "stat" is the statistic
+  *****fields.txt*0[A_fields]
+
+----------------------------------------------------------------------
+
+#####R=== identify_pack ===
+
+#####GDeclaration
+    extern void identify_pack(void);
+
+#####GFile
+    spells2.c
+
+#####GComment
+/*
+ * Identify everything being carried.
+ * Done by a potion of "self knowledge".
+ */
+
+#####GDescription
+Identify all items in the inventory.
+
+----------------------------------------------------------------------
+
+#####R=== remove_curse ===
+
+#####GDeclaration
+    extern bool remove_curse(void);
+
+#####GFile
+    spells2.c
+
+#####GComment
+/*
+ * Remove most curses
+ */
+
+#####GDescription
+Remove all curses except for heavy curses.
+
+----------------------------------------------------------------------
+
+#####R=== remove_all_curse ===
+
+#####GDeclaration
+    extern bool remove_all_curse(void);
+
+#####GFile
+    spells2.c
+
+#####GComment
+/*
+ * Remove all curses
+ */
+
+#####GDescription
+Remove all curses including heavy curses.
+
+----------------------------------------------------------------------
+
+#####R=== restore_level ===
+
+#####GDeclaration
+    extern bool restore_level(void);
+
+#####GFile
+    spells2.c
+
+#####GComment
+/*
+ * Restores any drained experience
+ */
+
+#####GDescription
+Restore all drained experience points (if any).
+
+----------------------------------------------------------------------
+
+#####R=== self_knowledge ===
+
+#####GDeclaration
+    extern void self_knowledge(FILE *fff);
+
+#####GFile
+    spells2.c
+
+#####GComment
+/*
+ * self-knowledge... idea from nethack.  Useful for determining powers and
+ * resistances of items.  It saves the screen, clears it, then starts listing
+ * attributes, a screenful at a time.  (There are a LOT of attributes to
+ * list.  It will probably take 2 or 3 screens for a powerful character whose
+ * using several artifacts...) -CFT
+ *
+ * It is now a lot more efficient. -BEN-
+ *
+ * See also "identify_fully()".
+ *
+ * XXX XXX XXX Use the "show_file()" method, perhaps.
+ */
+
+#####GDescription
+Show all attributes including racial powers, mutations, and equipment
+effects.
+
+#####GParameters
+> "*ffff" points to a file (write info to file) or is NULL (write info
+  to screen).
+
+----------------------------------------------------------------------
+
+#####R=== lose_all_info ===
+
+#####GDeclaration
+    extern bool lose_all_info(void);
+
+#####GFile
+    spells2.c
+
+#####GComment
+/*
+ * Forget everything
+ */
+
+#####GDescription
+Forget about objects and the map.
+
+----------------------------------------------------------------------
+
+#####R=== detect_traps ===
+
+#####GDeclaration
+    extern bool detect_traps(void);
+
+#####GFile
+    spells2.c
+
+#####GComment
+/*
+ * Detect all traps on current panel
+ */
+
+#####GDescription
+Detect all traps on current panel.
+
+----------------------------------------------------------------------
+
+#####R=== detect_doors ===
+
+#####GDeclaration
+    extern bool detect_doors(void);
+
+#####GFile
+    spells2.c
+
+#####GComment
+/*
+ * Detect all doors on current panel
+ */
+
+#####GDescription
+Detect all doors on current panel.
+
+----------------------------------------------------------------------
+
+#####R=== detect_stairs ===
+
+#####GDeclaration
+    extern bool detect_stairs(void);
+
+#####GFile
+    spells2.c
+
+#####GComment
+/*
+ * Detect all stairs on current panel
+ */
+
+#####GDescription
+Detect all stairs on current panel.
+
+----------------------------------------------------------------------
+
+#####R=== detect_treasure ===
+
+#####GDeclaration
+    extern bool detect_treasure(void);
+
+#####GFile
+    spells2.c
+
+#####GComment
+/*
+ * Detect any treasure on the current panel
+ */
+
+#####GDescription
+Detect any treasure on the current panel.
+
+----------------------------------------------------------------------
+
+Field: hack_no_detect_message
+Value: FALSE
+
+----------------------------------------------------------------------
+
+#####R=== detect_objects_gold ===
+
+#####GDeclaration
+    extern bool detect_objects_gold(void);
+
+#####GFile
+    spells2.c
+
+#####GComment
+/*
+ * Detect all "gold" objects on the current panel
+ */
+
+#####GDescription
+Detect all objects with the TV_GOLD flag.
+
+----------------------------------------------------------------------
+
+#####R=== detect_objects_normal ===
+
+#####GDeclaration
+    extern bool detect_objects_normal(void);
+
+#####GFile
+    spells2.c
+
+#####GComment
+/*
+ * Detect all "normal" objects on the current panel
+ */
+
+#####GDescription
+Detect all objects without the TV_GOLD flag.
+
+----------------------------------------------------------------------
+
+#####R=== detect_objects_magic ===
+
+#####GDeclaration
+    extern bool detect_objects_magic(void);
+
+#####GFile
+    spells2.c
+
+#####GComment
+/*
+ * Detect all "magic" objects on the current panel.
+ *
+ * This will light up all spaces with "magic" items, including artifacts,
+ * ego-items, potions, scrolls, books, rods, wands, staves, amulets, rings,
+ * and "enchanted" items of the "good" variety.
+ *
+ * It can probably be argued that this function is now too powerful.
+ */
+
+#####GDescription
+Detect all "magic" objects which are artefacts, ego items, or have one
+of the following flags - TV_AMULET, TV_RING, TV_BATERIE, TV_STAFF,
+TV_WAND, TV_ROD, TV_ROD_MAIN, TV_SCROLL, TV_POTION, TV_POTION2,
+TV_VALARIN_BOOK, TV_MAGERY_BOOK, TV_SHADOW_BOOK, TV_CHAOS_BOOK,
+TV_SPIRIT_BOOK, TV_NETHER_BOOK, TV_DAEMON_BOOK, TV_CRUSADE_BOOK,
+TV_SIGALDRY_BOOK, TV_SYMBIOTIC_BOOK, TV_MUSIC_BOOK.
+
+----------------------------------------------------------------------
+
+#####R=== detect_monsters_normal ===
+
+#####GDeclaration
+    extern bool detect_monsters_normal(void);
+
+#####GFile
+    spells2.c
+
+#####GComment
+/*
+ * Detect all "normal" monsters on the current panel
+ */
+
+#####GDescription
+Detect all non-invisible monsters (without RF2_INVISIBLE).
+
+----------------------------------------------------------------------
+
+#####R=== detect_monsters_invis ===
+
+#####GDeclaration
+    extern bool detect_monsters_invis(void);
+
+#####GFile
+    spells2.c
+
+#####GComment
+/*
+ * Detect all "invisible" monsters on current panel
+ */
+
+#####GDescription
+Detect all invisible monsters (with RF2_INVISIBLE).
+
+----------------------------------------------------------------------
+
+#####R=== detect_monsters_evil ===
+
+#####GDeclaration
+    extern bool detect_monsters_evil(void);
+
+#####GFile
+    spells2.c
+
+#####GComment
+/*
+ * Detect all "evil" monsters on current panel
+ */
+
+#####GDescription
+Detect all evil monsters (with RF3_EVIL).
+
+----------------------------------------------------------------------
+
+#####R=== detect_monsters_good ===
+
+#####GDeclaration
+    extern bool detect_monsters_good(void);
+
+#####GFile
+    spells2.c
+
+#####GComment
+/* Detect good monsters */
+
+#####GDescription
+Detect all good monsters (with RF3_GOOD).
+
+----------------------------------------------------------------------
+
+#####R=== detect_monsters_xxx ===
+
+#####GDeclaration
+    extern bool detect_monsters_xxx(u32b match_flag);
+
+#####GFile
+    spells2.c
+
+#####GComment
+/*
+ * A "generic" detect monsters routine, tagged to flags3
+ */
+
+#####GDescription
+Detect all monsters with "match_flag" flag.
+
+#####GParameters
+> "match_flag" can be any RF3_ flag (see defines.h) but only
+  RF3_DEMON, RF3_UNDEAD, RF3_GOOD work.
+
+----------------------------------------------------------------------
+
+#####R=== detect_monsters_string ===
+
+#####GDeclaration
+    extern bool detect_monsters_string(cptr);
+
+#####GFile
+    spells2.c
+
+#####GComment
+/*
+ * Detect all (string) monsters on current panel
+ */
+
+#####GDescription
+Detect all monsters whose default monster character matches a
+character pointed to by "cptr".
+
+#####GParameters
+> "cptr" is a pointer to a single character, eg 'Z' for hounds. For
+  available characters, see the "symbol" field of the graphics (G)
+  line of r_info.txt.
+
+----------------------------------------------------------------------
+
+#####R=== detect_monsters_nonliving ===
+
+#####GDeclaration
+    extern bool detect_monsters_nonliving(void);
+
+#####GFile
+    spells2.c
+
+#####GComment
+/*
+ * Detect all "nonliving", "undead" or "demonic" monsters on current panel
+ */
+
+#####GDescription
+Detect all non-living monsters (with RF3_NONLIVING, RF3_UNDEAD, or
+RF3_DEMON).
+
+----------------------------------------------------------------------
+
+#####R=== detect_all ===
+
+#####GDeclaration
+    extern bool detect_all(void);
+
+#####GFile
+    spells2.c
+
+#####GComment
+/*
+ * Detect everything
+ */
+
+#####GDescription
+Detects traps, doors, stairs, treasure, gold objects, normal objects,
+invisible monsters, normal (visible) monsters.
+
+----------------------------------------------------------------------
+
+#####R=== stair_creation ===
+
+#####GDeclaration
+    extern void stair_creation(void);
+
+#####GFile
+    spells2.c
+
+#####GComment
+/*
+ * Create stairs at the player location
+ */
+
+#####GDescription
+Create stairs at the player location. This is not allowed if the grid
+is not empty, the player is not in a dungeon, the player is on a
+special level, the player is in an arena or quest. If the player is
+in the town or wilderness the stairs will go down. If the player is
+on a quest level or at the bottom of a dungeon, the stairs will go up.
+Otherwise there is an even chance the stairs will go up or down.
+
+----------------------------------------------------------------------
+
+#####R=== wall_stone ===
+
+#####GDeclaration
+    extern bool wall_stone(void);
+
+#####GFile
+    spells2.c
+
+#####GComment
+(none)
+
+#####GDescription
+Create a stone wall on the player's grid. This function uses the
+project() function to create the stone wall. Apparently zero can be
+used as the "who" parameter for the player. See details for the
+project() function elsewhere in this document.
+
+----------------------------------------------------------------------
+
+#####R=== create_artifact ===
+
+#####GDeclaration
+    extern bool create_artifact(object_type *o_ptr,
+        bool a_scroll, bool get_name);
+
+#####GFile
+    randart.c
+
+#####GComment
+(none)
+
+#####GDescription
+Create an artifact from object "*optr".
+
+#####GParameters
+> "*optr* is a pointer to an object
+> "a_scroll" is true if the artifact is created by reading a scroll
+> "get_name" is true if the artifact is to be named by the player (if
+  a_scroll is true) or created randomly (a_scroll is false), or false
+  if an inscription is used.
+
+----------------------------------------------------------------------
+
+#####R=== ident_spell ===
+
+#####GDeclaration
+    extern bool ident_spell(void);
+
+#####GFile
+    spells2.c
+
+#####GComment
+/*
+ * Identify an object in the inventory (or on the floor)
+ * This routine does *not* automatically combine objects.
+ * Returns TRUE if something was identified, else FALSE.
+ */
+
+#####GDescription
+Identify an object in the inventory (or on the floor).
+
+----------------------------------------------------------------------
+
+#####R=== identify_fully ===
+
+#####GDeclaration
+    extern bool identify_fully(void);
+
+#####GFile
+    spells2.c
+
+#####GComment
+/*
+ * Fully "identify" an object in the inventory  -BEN-
+ * This routine returns TRUE if an item was identified.
+ */
+
+#####GDescription
+Fully "identify" an object in the inventory (or on the floor).
+
+----------------------------------------------------------------------
+
+#####R=== recharge ===
+
+#####GDeclaration
+    extern bool recharge(int num);
+
+#####GFile
+    spells2.c
+
+#####GComment
+/*
+ * Recharge a wand/staff/rod from the pack or on the floor.
+ * This function has been rewritten in Oangband. -LM-
+ *
+ * Mage -- Recharge I --> recharge(90)
+ * Mage -- Recharge II --> recharge(150)
+ * Mage -- Recharge III --> recharge(220)
+ *
+ * Priest or Necromancer -- Recharge --> recharge(140)
+ *
+ * Scroll of recharging --> recharge(130)
+ * Scroll of *recharging* --> recharge(200)
+ *
+ * It is harder to recharge high level, and highly charged wands,
+ * staffs, and rods.  The more wands in a stack, the more easily and
+ * strongly they recharge.  Staffs, however, each get fewer charges if
+ * stacked.
+ *
+ * XXX XXX XXX Beware of "sliding index errors".
+ */
+
+#####GDescription
+Recharge an object in the inventory (or on the floor) with "num"
+power.
+
+#####GParameters
+> "num" is the power used in recharging. It is compared to the
+  object's level to determine whether the item is recharged
+  successfully or destroyed. If it is recharged, it also determines
+  how many charges are added, or how much recharge time is reduced.
+
+----------------------------------------------------------------------
+
+#####R=== aggravate_monsters ===
+
+#####GDeclaration
+    extern void aggravate_monsters(int who);
+
+#####GFile
+    spells2.c
+
+#####GComment
+/*
+ * Wake up all monsters, and speed up "los" monsters.
+ */
+
+#####GDescription
+Aggravate monsters, originating from "who".
+
+#####GParameters
+> "who" is the index of monster in m_list[] (1 if it is the player)
+  which triggers the aggravation;
+
+----------------------------------------------------------------------
+
+#####R=== genocide ===
+
+#####GDeclaration
+    extern bool genocide(bool player_cast);
+
+#####GFile
+    spells2.c
+
+#####GComment
+(none)
+
+#####GDescription
+Genocide a monster race.
+
+#####GParameters
+> "player_cast" is true if the player cast the spell so the player can
+  take damage.
+
+----------------------------------------------------------------------
+
+#####R=== mass_genocide ===
+
+#####GDeclaration
+    extern bool mass_genocide(bool player_cast);
+
+#####GFile
+    spells2.c
+
+#####GComment
+/*
+ * Delete all nearby (non-unique) monsters
+ */
+
+#####GDescription
+Delete all nearby (non-unique) monsters.
+
+#####GParameters
+> "player_cast" is true if the player cast the spell so the player can
+  take damage.
+
+----------------------------------------------------------------------
+
+#####R=== probing ===
+
+#####GDeclaration
+    extern bool probing(void);
+
+#####GFile
+    spells2.c
+
+#####GComment
+/*
+ * Probe nearby monsters
+ */
+
+#####GDescription
+Probe all nearby monsters.
+
+----------------------------------------------------------------------
+
+#####R=== banish_evil ===
+
+#####GDeclaration
+    extern bool banish_evil(int dist);
+
+#####GFile
+    spells2.c
+
+#####GComment
+/*
+ * Banish evil monsters
+ */
+
+#####GDescription
+Banish nearby evil monsters doing "dist" points of GF_AWAY_EVIL
+damage.
+
+#####GParameters
+> "dist" is the amount of damage done to each monster.
+
+----------------------------------------------------------------------
+
+#####R=== dispel_evil ===
+
+#####GDeclaration
+    extern bool dispel_evil(int dam);
+
+#####GFile
+    spells2.c
+
+#####GComment
+/*
+ * Dispel evil monsters
+ */
+
+#####GDescription
+Dispel nearby evil monsters doing "dam" points of GF_DISP_EVIL
+damage.
+
+#####GParameters
+> "dam" is the number of points of damage.
+
+----------------------------------------------------------------------
+
+#####R=== dispel_good ===
+
+#####GDeclaration
+    extern bool dispel_good(int dam);
+
+#####GFile
+    spells2.c
+
+#####GComment
+/*
+ * Dispel good monsters
+ */
+
+#####GDescription
+Dispel nearby good monsters doing "dam" points of GF_DISP_GOOD
+damage.
+
+#####GParameters
+> "dam" is the number of points of damage.
+
+----------------------------------------------------------------------
+
+#####R=== dispel_undead ===
+
+#####GDeclaration
+    extern bool dispel_undead(int dam);
+
+#####GFile
+    spells2.c
+
+#####GComment
+/*
+ * Dispel undead monsters
+ */
+
+#####GDescription
+Dispel nearby undead monsters doing "dam" points of GF_DISP_UNDEAD
+damage.
+
+#####GParameters
+> "dam" is the number of points of damage.
+
+----------------------------------------------------------------------
+
+#####R=== dispel_monsters ===
+
+#####GDeclaration
+    extern bool dispel_monsters(int dam);
+
+#####GFile
+    spells2.c
+
+#####GComment
+/*
+ * Dispel all monsters
+ */
+
+#####GDescription
+Dispel all nearby monsters doing "dam" points of GF_DISP_ALL
+damage.
+
+#####GParameters
+> "dam" is the number of points of damage.
+
+----------------------------------------------------------------------
+
+#####R=== dispel_living ===
+
+#####GDeclaration
+    extern bool dispel_living(int dam);
+
+#####GFile
+    spells2.c
+
+#####GComment
+/*
+ * Dispel 'living' monsters
+ */
+
+#####GDescription
+Dispel nearby living monsters doing "dam" points of GF_DISP_LIVING
+damage.
+
+#####GParameters
+> "dam" is the number of points of damage.
+
+----------------------------------------------------------------------
+
+#####R=== dispel_demons ===
+
+#####GDeclaration
+    extern bool dispel_demons(int dam);
+
+#####GFile
+    spells2.c
+
+#####GComment
+/*
+ * Dispel demons
+ */
+
+#####GDescription
+Dispel nearby demon monsters doing "dam" points of GF_DISP_DEMON
+damage.
+
+#####GParameters
+> "dam" is the number of points of damage.
+
+----------------------------------------------------------------------
+
+#####R=== turn_undead ===
+
+#####GDeclaration
+    extern bool turn_undead(void);
+
+#####GFile
+    spells2.c
+
+#####GComment
+/*
+ * Turn undead
+ */
+
+#####GDescription
+Turn nearby undead monsters doing a point of GF_TURN_UNDEAD damage for
+each player level.
+
+----------------------------------------------------------------------
+
+#####R=== wipe ===
+
+#####GDeclaration
+    extern void wipe(int y1, int x1, int r);
+
+#####GFile
+    spells2.c
+
+#####GComment
+/*
+ * Wipe -- Empties a part of the dungeon
+ */
+
+#####GDescription
+Delete monsters and objects from an area of the dungeon centred at
+grid "y1,x1" for a radius "r". This does not work on special levels or
+quests. The player may be blinded. The player forgets the affected
+area and it becomes dark. All grids become floor.
+
+#####GParameters
+> "y1" is the y-coordinate of the wipe's origin.
+> "x1" is the x-coordinate of the wipe's origin.
+> "r" is the radius of the wipe.
+
+----------------------------------------------------------------------
+
+#####R=== destroy_area ===
+
+#####GDeclaration
+    extern void destroy_area(int y1, int x1, int r,
+        bool full);
+
+#####GFile
+    spells2.c
+
+#####GComment
+/*
+ * The spell of destruction
+ *
+ * This spell "deletes" monsters (instead of "killing" them).
+ *
+ * Later we may use one function for both "destruction" and
+ * "earthquake" by using the "full" to select "destruction".
+ */
+
+#####GDescription
+Delete monsters and objects from an area of the dungeon centred at
+grid "y1,x1" for a radius "r". This does not work on special levels or
+quests. The epicentre is NOT affected. The player may be blinded. The
+player forgets the affected area and it becomes dark. The grids can
+become granite, quartz, magma, or floor.
+
+#####GParameters
+> "y1" is the y-coordinate of the destruction's origin.
+> "x1" is the x-coordinate of the destruction's origin.
+> "r" is the radius of the destruction.
+> "full" is currently unused.
+
+----------------------------------------------------------------------
+
+#####R=== earthquake ===
+
+#####GDeclaration
+    extern void earthquake(int cy, int cx, int r);
+
+#####GFile
+    spells2.c
+
+#####GComment
+/*
+ * Induce an "earthquake" of the given radius at the given location.
+ *
+ * This will turn some walls into floors and some floors into walls.
+ *
+ * The player will take damage and "jump" into a safe grid if possible,
+ * otherwise, he will "tunnel" through the rubble instantaneously.
+ *
+ * Monsters will take damage, and "jump" into a safe grid if possible,
+ * otherwise they will be "buried" in the rubble, disappearing from
+ * the level in the same way that they do when genocided.
+ *
+ * Note that thus the player and monsters (except eaters of walls and
+ * passers through walls) will never occupy the same grid as a wall.
+ * Note that as of now (2.7.8) no monster may occupy a "wall" grid, even
+ * for a single turn, unless that monster can pass_walls or kill_walls.
+ * This has allowed massive simplification of the "monster" code.
+ */
+
+#####GDescription
+Create an earthquake centred on grid "cy,cx" with a radius of "r".
+This does not work on quest levels. The epicentre is NOT affected.
+Only about 15% of the grids are affected. The player takes 300 points
+of damage if they can't be moved to a safe grid, otherwise damage is
+from 10 to 40 points. The player forgets the affected area and it
+becomes dark. The grids can become granite, quartz, magma, or floor.
+
+#####GParameters
+Parameters:
+> "cy" is the y-coordinate of the earthquake origin.
+> "cx" is the x-coordinate of the earthquake origin.
+> "r" is the radius of the earthquake.
+
+----------------------------------------------------------------------
+
+#####R=== map_area ===
+
+#####GDeclaration
+    extern void map_area(void);
+
+#####GFile
+    cave.c
+
+#####GComment
+/*
+ * Hack -- map the current panel (plus some) ala "magic mapping"
+ */
+
+#####GDescription
+Map the current panel plus up to 10 grids up and down, and up to 20
+grids left and right.
+
+----------------------------------------------------------------------
+
+#####R=== wiz_lite ===
+
+#####GDeclaration
+    extern void wiz_lite(void);
+
+#####GFile
+    cave.c
+
+#####GComment
+/*
+ * Light up the dungeon using "clairvoyance"
+ *
+ * This function "illuminates" every grid in the dungeon, memorises all
+ * "objects", memorises all grids as with magic mapping, and, under the
+ * standard option settings (view_perma_grids but not view_torch_grids)
+ * memorises all floor grids too.
+ *
+ * Note that if "view_perma_grids" is not set, we do not memorise floor
+ * grids, since this would defeat the purpose of "view_perma_grids", not
+ * that anyone seems to play without this option.
+ *
+ * Note that if "view_torch_grids" is set, we do not memorise floor grids,
+ * since this would prevent the use of "view_torch_grids" as a method to
+ * keep track of what grids have been observed directly.
+ */
+
+#####GDescription
+Light up the entire dungeon and show all monsters and objects.
+
+----------------------------------------------------------------------
+
+#####R=== wiz_lite_extra ===
+
+#####GDeclaration
+    extern void wiz_lite_extra(void);
+
+#####GFile
+    cave.c
+
+#####GComment
+(none)
+
+#####GDescription
+Light up the entire dungeon and show all monsters and objects. All
+squares are lit and remembered.
+
+----------------------------------------------------------------------
+
+#####R=== wiz_dark ===
+
+#####GDeclaration
+    extern void wiz_dark(void);
+
+#####GFile
+    cave.c
+
+#####GComment
+/*
+ * Forget the dungeon map (ala "Thinking of Maud...").
+ */
+
+#####GDescription
+Forget all grids and objects. All grids become dark.
+
+----------------------------------------------------------------------
+
+#####R=== lite_room ===
+
+#####GDeclaration
+    extern void lite_room(int y1, int x1);
+
+#####GFile
+    spells2.c
+
+#####GComment
+/*
+ * Illuminate any room containing the given location.
+ */
+
+#####GDescription
+Light up the room (if any) of grid "y1,x1".
+
+#####GParameters
+> "y1" is the y-coordinate of the grid.
+> "x1" is the x-coordinate of the grid.
+
+----------------------------------------------------------------------
+
+#####R=== unlite_room ===
+
+#####GDeclaration
+    extern void unlite_room(int y1, int x1);
+
+#####GFile
+    spells2.c
+
+#####GComment
+/*
+ * Darken all rooms containing the given location
+ */
+
+#####GDescription
+Darken all rooms (if any) of grid "y1,x1".
+
+#####GParameters
+> "y1" is the y-coordinate of the grid.
+> "x1" is the x-coordinate of the grid.
+
+----------------------------------------------------------------------
+
+#####R=== lite_area ===
+
+#####GDeclaration
+    extern bool lite_area(int dam, int rad);
+
+#####GFile
+    spells2.c
+
+#####GComment
+/*
+ * Hack -- call light around the player
+ * Affect all monsters in the projection radius
+ */
+
+#####GDescription
+Light up the room (if any) of the player's grid. Monsters take "dam"
+points of GF_LITE_WEAK damage if they are within "r" grids of the
+player.
+
+#####GParameters
+> "dam" is the number of points of damage.
+> "rad" is the radius of the effect of the damage.
+
+----------------------------------------------------------------------
+
+#####R=== unlite_area ===
+
+#####GDeclaration
+    extern bool unlite_area(int dam, int rad);
+
+#####GFile
+    spells2.c
+
+#####GComment
+/*
+ * Hack -- call darkness around the player
+ * Affect all monsters in the projection radius
+ */
+
+#####GDescription
+Darken the room (if any) of the player's grid. Monsters take "dam"
+points of GF_DARK_WEAK damage if they are within "r" grids of the
+player.
+
+#####GParameters
+> "dam" is the number of points of damage.
+> "rad" is the radius of the effect of the damage.
+
+----------------------------------------------------------------------
+
+#####R=== fire_ball_beam ===
+
+#####GDeclaration
+    extern bool fire_ball_beam(int typ, int dir, int dam,
+        int rad);
+
+#####GFile
+    spells2.c
+
+#####GComment
+/*
+ * Cast a ball-beamed spell
+ * Stop if we hit a monster, act as a "ball"
+ * Allow "target" mode to pass over monsters
+ * Affect grids, objects, and monsters
+ */
+
+#####GDescription
+Cast a ball-beamed spell of type "typ" in direction "dir" for damage
+"dam" points with a radius of "rad" grids.
+
+#####GParameters
+> "typ" is the type of damage
+  *****fields.txt*0[GF_fields]
+> "dir" must be from 0 to 9.
+  *****fields.txt*0[direction]
+> "dam" is the number of points of damage.
+> "rad" is the radius of the effect of the damage (must be <= 16).
+
+----------------------------------------------------------------------
+
+#####R=== fire_ball ===
+
+#####GDeclaration
+    extern bool fire_ball(int typ, int dir, int dam, int rad);
+
+#####GFile
+    spells2.c
+
+#####GComment
+/*
+ * Cast a ball spell
+ * Stop if we hit a monster, act as a "ball"
+ * Allow "target" mode to pass over monsters
+ * Affect grids, objects, and monsters
+ */
+
+#####GDescription
+Cast a ball spell of type "typ" in direction "dir" for "dam" points of
+damage. The ball has a radius of "rad" grids.
+
+#####GParameters
+> "typ" is the type of damage
+  *****fields.txt*0[GF_fields]
+> "dir" must be from 0 to 9.
+  *****fields.txt*0[direction]
+> "dam" is the number of points of damage.
+> "rad" is the radius of the effect of the damage (must be <= 16).
+
+----------------------------------------------------------------------
+
+#####R=== fire_bolt ===
+
+#####GDeclaration
+    extern bool fire_bolt(int typ, int dir, int dam);
+
+#####GFile
+    spells2.c
+
+#####GComment
+/*
+ * Cast a bolt spell
+ * Stop if we hit a monster, as a "bolt"
+ * Affect monsters (not grids or objects)
+ */
+
+#####GDescription
+Cast a bolt spell of type "typ" in direction "dir" for "dam" points of
+damage.
+
+#####GParameters
+> "typ" is the type of damage
+  *****fields.txt*0[GF_fields]
+> "dir" must be from 0 to 9
+  *****fields.txt*0[direction]
+> "dam" is the number of points of damage.
+
+----------------------------------------------------------------------
+
+#####R=== fire_beam ===
+
+#####GDeclaration
+    extern bool fire_beam(int typ, int dir, int dam);
+
+#####GFile
+    spells2.c
+
+#####GComment
+/*
+ * Cast a beam spell
+ * Pass through monsters, as a "beam"
+ * Affect monsters (not grids or objects)
+ */
+
+#####GDescription
+Cast a beam spell of type "typ" in direction "dir" for "dam" points of
+damage.
+
+#####GParameters
+> "typ" is the type of damage
+  *****fields.txt*0[GF_fields]
+> "dir" must be from 0 to 9.
+  *****fields.txt*0[direction]
+> "dam" is the number of points of damage.
+
+----------------------------------------------------------------------
+
+#####R=== fire_druid_ball ===
+
+#####GDeclaration
+    extern bool fire_druid_ball(int typ, int dir, int dam,
+        int rad);
+
+#####GFile
+    spells2.c
+
+#####GComment
+/*
+ * Cast a druidic ball spell
+ * Stop if we hit a monster, act as a "ball"
+ * Allow "target" mode to pass over monsters
+ * Affect grids, objects, and monsters
+ */
+
+#####GDescription
+Cast a ball spell of type "typ" in direction "dir" for "dam" points of
+damage. The ball has a radius of "rad" grids. The spell follows a mana
+path.
+
+#####GParameters
+> "typ" is the type of damage
+  *****fields.txt*0[GF_fields]
+> "dir" must be from 0 to 9.
+  *****fields.txt*0[direction]
+> "dam" is the number of points of damage.
+> "rad" is the radius of the effect of the damage (must be <= 16).
+
+----------------------------------------------------------------------
+
+#####R=== fire_druid_bolt ===
+
+#####GDeclaration
+    extern bool fire_druid_bolt(int typ, int dir, int dam);
+
+#####GFile
+    spells2.c
+
+#####GComment
+/*
+ * Cast a druidic bolt spell
+ * Stop if we hit a monster, as a "bolt"
+ * Affect monsters (not grids or objects)
+ */
+
+#####GDescription
+Cast a bolt spell of type "typ" in direction "dir" for "dam" points of
+damage. The spell follows a mana path.
+
+#####GParameters
+> "typ" is the type of damage
+  *****fields.txt*0[GF_fields]
+> "dir" must be from 0 to 9.
+  *****fields.txt*0[direction]
+> "dam" is the number of points of damage.
+
+----------------------------------------------------------------------
+
+#####R=== fire_druid_beam ===
+
+#####GDeclaration
+    extern bool fire_druid_beam(int typ, int dir, int dam);
+
+#####GFile
+    spells2.c
+
+#####GComment
+/*
+ * Cast a druidistic beam spell
+ * Pass through monsters, as a "beam"
+ * Affect monsters (not grids or objects)
+ */
+
+#####GDescription
+Cast a beam spell of type "typ" in direction "dir" for "dam" points of
+damage. The spell follows a mana path.
+
+#####GParameters
+> "typ" is the type of damage
+  *****fields.txt*0[GF_fields]
+> "dir" must be from 0 to 9.
+  *****fields.txt*0[direction]
+> "dam" is the number of points of damage.
+
+----------------------------------------------------------------------
+
+#####R=== fire_bolt_or_beam ===
+
+#####GDeclaration
+    extern bool fire_bolt_or_beam(int prob, int typ, int dir,
+        int dam);
+
+#####GFile
+    spells2.c
+
+#####GComment
+/*
+ * Cast a bolt spell, or rarely, a beam spell
+ */
+
+#####GDescription
+Cast a beam (chance of "prob" in 100) or bolt spell of type "typ" in
+direction "dir" for "dam" points of damage.
+
+#####GParameters
+> "prob" is the number of times out of 100 that the bolt will actually
+  be a beam. Obviously this value should range from 1 to 99 (0 will
+  always give a beam, 100 or higher will always give a beam. There are
+  separate functions for these cases).
+> "typ" is the type of damage
+  *****fields.txt*0[GF_fields]
+> "dir" must be from 0 to 9.
+  *****fields.txt*0[direction]
+> "dam" is the number of points of damage.
+
+----------------------------------------------------------------------
+
+#####R=== alchemy ===
+
+#####GDeclaration
+    extern bool alchemy(void);
+
+#####GFile
+    spells2.c
+
+#####GComment
+/* Turns an object into gold, gain some of its value in a shop */
+
+#####GDescription
+The player selects an object (and quantity if it applies) from the
+inventory or the floor and attempts to turn it into gold. If the
+price of the item is < 0 then the player gains nothing (fool's gold),
+otherwise the player gets a third of the price in gold. Artifacts are
+not affected.
+
+----------------------------------------------------------------------
+
+#####R=== alter_reality ===
+
+#####GDeclaration
+    extern void alter_reality(void);
+
+#####GFile
+    spells2.c
+
+#####GComment
+(none)
+
+#####GDescription
+The player leaves the level immediately.
+
+----------------------------------------------------------------------
+
+#####R=== teleport_swap ===
+
+#####GDeclaration
+    extern void teleport_swap(int dir);
+
+#####GFile
+    spells2.c
+
+#####GComment
+(none)
+
+#####GDescription
+Player swaps places with target in direction "dir". The target must be
+a monster. It will not work if the space-time continuum can not be
+disrupted or if the monster resists teleportation.
+
+----------------------------------------------------------------------
+
+#####R=== project_meteor ===
+
+#####GDeclaration
+    extern void project_meteor(int radius, int typ, int dam,
+        u32b flg);
+
+#####GFile
+    spells2.c
+
+#####GComment
+/*
+ * Apply a "project()" a la meteor shower
+ */
+
+#####GDescription
+Generate between "rad" and "rad" x 2 ball spells of type "typ" for
+"dam" points of damage. The ball can have various properties as
+denoted by "flg".
+
+#####GParameters
+> "rad" is the minimum number of balls created. "rad" + randint("rad")
+  balls are created. Each ball has a radius of 2 grids. Each target
+  grid is within 5 grids of the player.
+> "typ" is the type of damage
+  *****fields.txt*0[GF_fields]
+> "dam" is the number of points of damage.
+> "flg" is the projection effect
+  *****fields.txt*0[PROJECT_fields]
+
+----------------------------------------------------------------------
+
+#####R=== passwall ===
+
+#####GDeclaration
+    extern bool passwall(int dir, bool safe);
+
+#####GFile
+    spells2.c
+
+#####GComment
+/*
+ * Send the player shooting through walls in the given direction until
+ * they reach a non-wall space, or a monster, or a permanent wall.
+ */
+
+#####GDescription
+Move the player through walls in direction "dir". if "safe" then the
+player can not end up in a wall - if they do, the wall is replaced by
+a floor. This does not work in the wilderness, on quest levels, or if
+teleport is not allowed. Stopping on monsters or inside vaults is not
+allowed.
+
+#####GParameters
+> "dir" must be from 0 to 9. It can not be 5.
+  *****fields.txt*0[direction]
+> "safe" must be true if the player is not to be trapped in a wall
+  when the movement is finished.
+
+----------------------------------------------------------------------
+
+#####R=== project_hook ===
+
+#####GDeclaration
+    extern bool project_hook(int typ, int dir, int dam,
+        int flg);
+
+#####GFile
+    spells2.c
+
+#####GComment
+/*
+ * Hack -- apply a "projection()" in a direction (or at the target)
+ */
+
+#####GDescription
+Generate a beam/bolt of type "typ" in direction "dir" (or at a target)
+for "dam" points of damage. The beam/bolt can have various properties
+as denoted by "flg".
+
+#####GParameters
+> "typ" is the type of damage
+  *****fields.txt*0[GF_fields]
+> "dir" must be from 0 to 9. 5 means use the current target.
+  *****fields.txt*0[direction]
+> "dam" is the number of points of damage.
+> "flg" is the projection effect
+  *****fields.txt*0[PROJECT_fields]
+
+----------------------------------------------------------------------
+
+#####R=== reset_recall ===
+
+#####GDeclaration
+    extern bool reset_recall(void);
+
+#####GFile
+    spells2.c
+
+#####GComment
+(none)
+
+#####GDescription
+Ask the player for a dungeon and appropriate level within the dungeon.
+The player can not specify a dungeon they have not gone to yet. If the
+player chooses levels 99 or 100, the level is set to 98.
+
+----------------------------------------------------------------------
+
+#####R=== get_aim_dir ===
+
+#####GDeclaration
+    extern bool get_aim_dir(int *dp = 0);
+
+#####GFile
+    xtra2.c
+
+#####GComment
+/*
+ * Get an "aiming direction" from the user.
+ *
+ * The "dir" is loaded with 1,2,3,4,6,7,8,9 for "actual direction", and
+ * "0" for "current target", and "-1" for "entry aborted".
+ *
+ * Note that "Force Target", if set, will pre-empt user interaction,
+ * if there is a usable target already set.
+ *
+ * Note that confusion over-rides any (explicit?) user choice.
+ */
+
+#####GDescription
+Get an aiming direction from the user and store it in "dp". A target
+can be selected. If the player is confused, the direction will be
+random.
+
+#####GParameters
+> "dp" = player direction.
+
+----------------------------------------------------------------------
+
+#####R=== project_hack ===
+
+#####GDeclaration
+    extern bool project_hack(int typ, int dam);
+
+#####GFile
+    spells2.c
+
+#####GComment
+/*
+ * Apply a "project()" directly to all viewable monsters
+ *
+ * Note that affected monsters are NOT auto-tracked by this usage.
+ */
+
+#####GDescription
+Generate beam/bolt spells of type "typ" for "dam" points of damage to
+all viewable monsters in line of site.
+
+#####GParameters
+> "typ" is the type of damage
+  *****fields.txt*0[GF_fields]
+> "dam" is the number of points of damage.
+
+----------------------------------------------------------------------
+
+
+Back to the *****lua.hlp*0[lua help index] .
+
+                                                     [[[[[gThis file by Chris Hadgis]

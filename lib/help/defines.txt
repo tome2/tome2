@@ -1,0 +1,639 @@
+|||||oy
+~~~~~81|Defines
+~~~~~85|Defines|Tvals
+~~~~~82|Automatizer|Defines
+~~~~~83|Tvals
+#####R             /----------------------------------------\
+#####R            <             Tvals and svals              >
+#####R             \----------------------------------------/
+
+Some objects don't have svals as such. Spellbooks, wands, and staves for
+instance don't have svalues as they are defined in lua.
+
+TV_SKELETON      1      /* Skeletons ('s') */
+TV_BOTTLE        2      /* Empty bottles ('!') */
+*****defines.txt*04[TV_BATERIE]       4      /* For the Alchemists */
+TV_SPIKE         5      /* Spikes ('~') */
+TV_MSTAFF        6      /* Mage Staffs */
+TV_CHEST         7      /* Chests ('~') */
+TV_PARCHMENT     8      /* Parchments from Kamband */
+*****defines.txt*09[TV_CORPSE]        9      /* Monster corpses */
+TV_EGG          10      /* Monster Eggs */
+TV_JUNK         11      /* Sticks, Pottery, etc ('~') */
+*****defines.txt*12[TV_TOOL]         12      /* Tools */
+*****defines.txt*14[TV_INSTRUMENT]   14      /* Musical instruments */
+*****defines.txt*15[TV_BOOMERANG]    15      /* Boomerangs */
+*****defines.txt*16[TV_SHOT]         16      /* Ammo for slings */
+*****defines.txt*16[TV_ARROW]        17      /* Ammo for bows */
+*****defines.txt*16[TV_BOLT]         18      /* Ammo for x-bows */
+*****defines.txt*19[TV_BOW]          19      /* Slings/Bows/Xbows */
+*****defines.txt*20[TV_DIGGING]      20      /* Shovels/Picks */
+*****defines.txt*21[TV_HAFTED]       21      /* Priest Weapons */
+*****defines.txt*22[TV_POLEARM]      22      /* Pikes/Glaives/Spears/etc. */
+*****defines.txt*23[TV_SWORD]        23      /* Edged Weapons */
+*****defines.txt*24[TV_AXE]          24      /* Axes/Cleavers */
+*****defines.txt*30[TV_BOOTS]        30      /* Boots */
+*****defines.txt*31[TV_GLOVES]       31      /* Gloves */
+*****defines.txt*32[TV_HELM]         32      /* Helms */
+*****defines.txt*32[TV_CROWN]        33      /* Crowns */
+*****defines.txt*34[TV_SHIELD]       34      /* Shields */
+*****defines.txt*35[TV_CLOAK]        35      /* Cloaks */
+*****defines.txt*36[TV_SOFT_ARMOR]   36      /* Soft Armor */
+*****defines.txt*37[TV_HARD_ARMOR]   37      /* Hard Armor */
+*****defines.txt*38[TV_DRAG_ARMOR]   38      /* Dragon Scale Mail */
+*****defines.txt*39[TV_LITE]         39      /* Lites (including Specials) */
+*****defines.txt*40[TV_AMULET]       40      /* Amulets (including Specials) */
+*****defines.txt*45[TV_RING]         45      /* Rings (including Specials) */
+*****defines.txt*46[TV_TRAPKIT]      46      /* Trapkits */
+TV_TOTEM        54      /* Summoner totems */
+*****defines.txt*55[TV_STAFF]        55      /* Staffs */
+*****defines.txt*65[TV_WAND]         65      /* Wands */
+*****defines.txt*66[TV_ROD]          66      /* Rod tips */
+*****defines.txt*67[TV_ROD_MAIN]     67      /* Rod body's */
+*****defines.txt*70[TV_SCROLL]       70      /* Scrolls */
+*****defines.txt*71[TV_POTION]       71      /* potions */
+*****defines.txt*72[TV_POTION2]      72      /* Second set of potion */
+TV_FLASK        77      /* Flasks of oil */
+*****defines.txt*80[TV_FOOD]         80      /* Food, including mushrooms */
+TV_HYPNOS       99      /* To wield monsters !:) */
+TV_GOLD         100     /* Gold can only be picked up by players */
+TV_RANDART      102     /* Random Artifacts */
+TV_RUNE1        104     /* Base runes */
+TV_RUNE2        105     /* Modifier runes */
+TV_BOOK         111     /* spell books */
+*****defines.txt*115[TV_DAEMON_BOOK]  115     /* Demon blades, shields and horns */
+~~~~~84|Defines|Svals
+~~~~~12|Svals
+/* The "sval" codes for TV_TOOL */
+ SV_TOOL_CLIMB 0
+ SV_PORTABLE_HOLE 1
+~~~~~16
+/* The "sval" codes for TV_SHOT/TV_ARROW/TV_BOLT */
+ SV_AMMO_LIGHT                    0	/* pebbles */
+ SV_AMMO_NORMAL                   1	/* shots, arrows, bolts */
+ SV_AMMO_HEAVY                    2	/* seeker arrows and bolts, mithril shots */
+~~~~~14
+/* The "sval" codes for TV_INSTRUMENT */
+ SV_FLUTE                         1
+ SV_BANJO                         2
+ SV_LUTE                          3
+ SV_MANDOLIN                      4
+ SV_DRUM                          5
+ SV_HARP                          6
+ SV_HORN                          7
+~~~~~46
+/* The "sval" codes for TV_TRAPKIT */
+ SV_TRAPKIT_SLING                 1
+ SV_TRAPKIT_BOW                   2
+ SV_TRAPKIT_XBOW                  3
+ SV_TRAPKIT_POTION                4
+ SV_TRAPKIT_SCROLL                5
+ SV_TRAPKIT_DEVICE                6
+~~~~~15
+/* The "sval" codes for TV_BOOMERANG */
+ SV_BOOM_S_WOOD                   1      /* 1d4  */
+ SV_BOOM_WOOD                     2      /* 1d9  */
+ SV_BOOM_S_METAL                  3      /* 1d8  */
+ SV_BOOM_METAL                    4      /* 2d4  */
+~~~~~19
+/* The "sval" codes for TV_BOW (note information in "sval") */
+ SV_SLING                         2	/* (x2) */
+ SV_SHORT_BOW                    12	/* (x2) */
+ SV_LONG_BOW                     13	/* (x3) */
+ SV_LIGHT_XBOW                   23	/* (x3) */
+ SV_HEAVY_XBOW                   24	/* (x4) */
+~~~~~20
+/* The "sval" codes for TV_DIGGING */
+ SV_SHOVEL                        1
+ SV_GNOMISH_SHOVEL                2
+ SV_DWARVEN_SHOVEL                3
+ SV_PICK                          4
+ SV_ORCISH_PICK                   5
+ SV_DWARVEN_PICK                  6
+ SV_MATTOCK                       7
+~~~~~21
+/* The "sval" values for TV_HAFTED */
+ SV_CLUB                          1	/* 1d4  */
+ SV_WHIP                          2	/* 1d6  */
+ SV_QUARTERSTAFF                  3	/* 1d9  */
+ SV_NUNCHAKU                      4	/* 2d3  */
+ SV_MACE                          5	/* 2d4  */
+ SV_BALL_AND_CHAIN                6	/* 2d4  */
+ SV_WAR_HAMMER                    8	/* 3d3  */
+ SV_LUCERN_HAMMER                10	/* 2d5  */
+ SV_THREE_PIECE_ROD              11	/* 3d3  */
+ SV_MORNING_STAR                 12	/* 2d6  */
+ SV_FLAIL                        13	/* 2d6  */
+ SV_LEAD_FILLED_MACE             15	/* 3d4  */
+ SV_TWO_HANDED_FLAIL             18	/* 3d6  */
+ SV_GREAT_HAMMER                 19	/* 4d6  */
+ SV_MACE_OF_DISRUPTION           20	/* 5d8  */
+ SV_GROND                        50	/* 3d4  */
+~~~~~24
+/* The "sval" values for TV_AXE */
+ SV_HATCHET                       1	/* 1d5 */
+ SV_CLEAVER                       2      /* 2d4 */
+ SV_LIGHT_WAR_AXE                 8      /* 2d5 */
+ SV_BEAKED_AXE                   10	/* 2d6 */
+ SV_BROAD_AXE                    11	/* 2d6 */
+ SV_BATTLE_AXE                   22	/* 2d8 */
+ SV_GREAT_AXE                    25	/* 4d4 */
+ SV_LOCHABER_AXE                 28	/* 3d8 */
+ SV_SLAUGHTER_AXE                30      /* 5d7 */
+~~~~~22
+/* The "sval" values for TV_POLEARM */
+ SV_SPEAR                         2	/* 1d6 */
+ SV_SICKLE                        3	/* 2d3 */
+ SV_AWL_PIKE                      4	/* 1d8 */
+ SV_TRIDENT                       5	/* 1d9 */
+ SV_FAUCHARD                      6  /* 1d10 */
+ SV_BROAD_SPEAR                   7	/* 1d9 */
+ SV_PIKE                          8	/* 2d5 */
+ SV_GLAIVE                       13	/* 2d6 */
+ SV_HALBERD                      15	/* 3d4 */
+ SV_GUISARME                     16  /* 2d5 */
+ SV_SCYTHE                       17	/* 5d3 */
+ SV_LANCE                        20	/* 2d8 */
+ SV_TRIFURCATE_SPEAR             26	/* 2d9 */
+ SV_HEAVY_LANCE                  29  /* 4d8 */
+ SV_SCYTHE_OF_SLICING            30	/* 8d4 */
+~~~~~23
+/* The "sval" codes for TV_SWORD */
+ SV_BROKEN_DAGGER                 1  /* 1d1 */
+ SV_BROKEN_SWORD                  2  /* 1d2 */
+ SV_DAGGER                        4  /* 1d4 */
+ SV_MAIN_GAUCHE                   5  /* 1d5 */
+ SV_RAPIER                        7  /* 1d6 */
+ SV_SMALL_SWORD                   8  /* 1d6 */
+ SV_BASILLARD                     9  /* 1d8 */
+ SV_SHORT_SWORD                  10  /* 1d7 */
+ SV_SABRE                        11  /* 1d7 */
+ SV_CUTLASS                      12  /* 1d7 */
+ SV_KHOPESH                      14  /* 2d4 */
+ SV_TULWAR                       15  /* 2d4 */
+ SV_BROAD_SWORD                  16  /* 2d5 */
+ SV_LONG_SWORD                   17  /* 2d5 */
+ SV_SCIMITAR                     18  /* 2d5 */
+ SV_KATANA                       20  /* 3d4 */
+ SV_BASTARD_SWORD                21  /* 3d4 */
+ SV_GREAT_SCIMITAR               22  /* 4d5 */
+ SV_CLAYMORE                     23  /* 2d8 */
+ SV_ESPADON                      24  /* 2d9 */
+ SV_TWO_HANDED_SWORD             25  /* 3d6 */
+ SV_FLAMBERGE                    26  /* 3d7 */
+ SV_EXECUTIONERS_SWORD           28  /* 4d5 */
+ SV_ZWEIHANDER                   29  /* 4d6 */
+ SV_BLADE_OF_CHAOS               30  /* 6d5 */
+ SV_SHADOW_BLADE                 31  /* 4d4 */
+ SV_BLUESTEEL_BLADE              32  /* 3d9 */
+ SV_DARK_SWORD                   33  /* 3d7 */
+~~~~~34
+/* The "sval" codes for TV_SHIELD */
+ SV_SMALL_LEATHER_SHIELD          2
+ SV_SMALL_METAL_SHIELD            3
+ SV_LARGE_LEATHER_SHIELD          4
+ SV_LARGE_METAL_SHIELD            5
+ SV_DRAGON_SHIELD                 6
+ SV_SHIELD_OF_DEFLECTION         10
+~~~~~32
+/* The "sval" codes for TV_HELM */
+ SV_HARD_LEATHER_CAP              2
+ SV_METAL_CAP                     3
+ SV_IRON_HELM                     5
+ SV_STEEL_HELM                    6
+ SV_DRAGON_HELM                   7
+ SV_IRON_CROWN                   10
+ SV_GOLDEN_CROWN                 11
+ SV_JEWELED_CROWN                12
+ SV_MORGOTH                      50
+~~~~~30
+/* The "sval" codes for TV_BOOTS */
+ SV_PAIR_OF_SOFT_LEATHER_BOOTS    2
+ SV_PAIR_OF_HARD_LEATHER_BOOTS    3
+ SV_PAIR_OF_METAL_SHOD_BOOTS      6
+~~~~~35
+/* The "sval" codes for TV_CLOAK */
+ SV_CLOAK                         1
+ SV_ELVEN_CLOAK                   2
+ SV_FUR_CLOAK                     3
+ SV_SHADOW_CLOAK                  6
+~~~~~31
+/* The "sval" codes for TV_GLOVES */
+ SV_SET_OF_LEATHER_GLOVES         1
+ SV_SET_OF_GAUNTLETS              2
+ SV_SET_OF_CESTI                  5
+~~~~~36
+/* The "sval" codes for TV_SOFT_ARMOR */
+ SV_FILTHY_RAG                    1
+ SV_ROBE                          2
+ SV_PAPER_ARMOR                   3  /* 4 */
+ SV_SOFT_LEATHER_ARMOR            4
+ SV_SOFT_STUDDED_LEATHER          5
+ SV_HARD_LEATHER_ARMOR            6
+ SV_HARD_STUDDED_LEATHER          7
+ SV_RHINO_HIDE_ARMOR              8
+ SV_CORD_ARMOR                    9  /*  6 */
+ SV_PADDED_ARMOR                 10  /*  4 */
+ SV_LEATHER_SCALE_MAIL           11
+ SV_LEATHER_JACK                 12
+ SV_STONE_AND_HIDE_ARMOR         15  /* 15 */
+ SV_THUNDERLORD_SUIT             16
+~~~~~37
+/* The "sval" codes for TV_HARD_ARMOR */
+ SV_RUSTY_CHAIN_MAIL              1  /* 14- */
+ SV_RING_MAIL                     2  /* 12  */
+ SV_METAL_SCALE_MAIL              3  /* 13  */
+ SV_CHAIN_MAIL                    4  /* 14  */
+ SV_DOUBLE_RING_MAIL              5  /* 15  */
+ SV_AUGMENTED_CHAIN_MAIL          6  /* 16  */
+ SV_DOUBLE_CHAIN_MAIL             7  /* 16  */
+ SV_BAR_CHAIN_MAIL                8  /* 18  */
+ SV_METAL_BRIGANDINE_ARMOUR       9  /* 19  */
+ SV_SPLINT_MAIL                  10  /* 19  */
+ SV_PARTIAL_PLATE_ARMOUR         12  /* 22  */
+ SV_METAL_LAMELLAR_ARMOUR        13  /* 23  */
+ SV_FULL_PLATE_ARMOUR            15  /* 25  */
+ SV_RIBBED_PLATE_ARMOUR          18  /* 28  */
+ SV_MITHRIL_CHAIN_MAIL           20  /* 28+ */
+ SV_MITHRIL_PLATE_MAIL           25  /* 35+ */
+ SV_ADAMANTITE_PLATE_MAIL        30  /* 40+ */
+~~~~~38
+/* The "sval" codes for TV_DRAG_ARMOR */
+ SV_DRAGON_BLACK                  1
+ SV_DRAGON_BLUE                   2
+ SV_DRAGON_WHITE                  3
+ SV_DRAGON_RED                    4
+ SV_DRAGON_GREEN                  5
+ SV_DRAGON_MULTIHUED              6
+ SV_DRAGON_SHINING               10
+ SV_DRAGON_LAW                   12
+ SV_DRAGON_BRONZE                14
+ SV_DRAGON_GOLD                  16
+ SV_DRAGON_CHAOS                 18
+ SV_DRAGON_BALANCE               20
+ SV_DRAGON_POWER                 30
+~~~~~39
+/* The sval codes for TV_LITE */
+ SV_LITE_TORCH                    0
+ SV_LITE_LANTERN                  1
+ SV_LITE_TORCH_EVER               2
+ SV_LITE_DWARVEN                  3
+ SV_LITE_FEANORIAN                4
+ SV_LITE_GALADRIEL                100
+ SV_LITE_ELENDIL                  101
+ SV_LITE_THRAIN                   102
+ SV_LITE_UNDEATH                  103
+ SV_LITE_PALANTIR                 104
+ SV_ANCHOR_SPACETIME              105
+ SV_STONE_LORE                    106
+~~~~~40
+/* The "sval" codes for TV_AMULET */
+ SV_AMULET_DOOM                   0
+ SV_AMULET_TELEPORT               1
+ SV_AMULET_ADORNMENT              2
+ SV_AMULET_SLOW_DIGEST            3
+ SV_AMULET_RESIST_ACID            4
+ SV_AMULET_SEARCHING              5
+ SV_AMULET_BRILLANCE              6
+ SV_AMULET_CHARISMA               7
+ SV_AMULET_THE_MAGI               8
+ SV_AMULET_REFLECTION             9
+ SV_AMULET_CARLAMMAS             10
+ SV_AMULET_INGWE                 11
+ SV_AMULET_DWARVES               12
+ SV_AMULET_NO_MAGIC              13
+ SV_AMULET_NO_TELE               14
+ SV_AMULET_RESISTANCE            15
+ SV_AMULET_NOTHING               16
+ SV_AMULET_SERPENT               17
+ SV_AMULET_TORIS_MEJISTOS        18
+ SV_AMULET_ELESSAR               19
+ SV_AMULET_EVENSTAR              20
+ SV_AMULET_SUSTENANCE            21
+ SV_AMULET_TELEPATHY             22
+ SV_AMULET_TRICKERY              23
+ SV_AMULET_WEAPONMASTERY         24
+ SV_AMULET_DEVOTION              25
+ SV_AMULET_INFRA                 26
+ SV_AMULET_SPELL                 27
+ SV_AMULET_WISDOM                28
+ SV_AMULET_RESIST_ELEC           29
+ SV_AMULET_REGEN                 30
+~~~~~45
+/* The sval codes for TV_RING */
+ SV_RING_WOE                      0
+ SV_RING_AGGRAVATION              1
+ SV_RING_WEAKNESS                 2
+ SV_RING_STUPIDITY                3
+ SV_RING_TELEPORTATION            4
+ SV_RING_SPECIAL                  5
+ SV_RING_SLOW_DIGESTION           6
+ SV_RING_FEATHER_FALL             7
+ SV_RING_RESIST_FIRE              8
+ SV_RING_RESIST_COLD              9
+ SV_RING_SUSTAIN_STR             10
+ SV_RING_SUSTAIN_INT             11
+ SV_RING_SUSTAIN_WIS             12
+ SV_RING_SUSTAIN_CON             13
+ SV_RING_SUSTAIN_DEX             14
+ SV_RING_SUSTAIN_CHR             15
+ SV_RING_PROTECTION              16
+ SV_RING_ACID                    17
+ SV_RING_FLAMES                  18
+ SV_RING_ICE                     19
+ SV_RING_RESIST_POIS             20
+ SV_RING_FREE_ACTION             21
+ SV_RING_SEE_INVIS               22
+ SV_RING_SEARCHING               23
+ SV_RING_STR                     24
+ SV_RING_INT                     25
+ SV_RING_DEX                     26
+ SV_RING_CON                     27
+ SV_RING_ACCURACY                28
+ SV_RING_DAMAGE                  29
+ SV_RING_SLAYING                 30
+ SV_RING_SPEED                   31
+ SV_RING_BARAHIR                 32
+ SV_RING_TULKAS                  33
+ SV_RING_NARYA                   34
+ SV_RING_NENYA                   35
+ SV_RING_VILYA                   36
+ SV_RING_POWER                   37
+ SV_RING_RES_FEAR                38
+ SV_RING_RES_LD                  39
+ SV_RING_RES_NETHER              40
+ SV_RING_RES_NEXUS               41
+ SV_RING_RES_SOUND               42
+ SV_RING_RES_CONFUSION           43
+ SV_RING_RES_SHARDS              44
+ SV_RING_RES_DISENCHANT          45
+ SV_RING_RES_CHAOS               46
+ SV_RING_RES_BLINDNESS           47
+ SV_RING_LORDLY                  48
+ SV_RING_ATTACKS                 49
+ SV_RING_NOTHING                 50
+ SV_RING_PRECONITION             51
+ SV_RING_FLAR                    52
+ SV_RING_INVIS                   53
+ SV_RING_FLYING                  54
+ SV_RING_WRAITH                  55
+ SV_RING_ELEC                    56
+ SV_RING_DURIN                   57
+ SV_RING_SPELL                   58
+ SV_RING_CRIT                    59
+~~~~~55
+/* The "sval" codes for TV_STAFF */
+ SV_STAFF_SCHOOL                 1
+ SV_STAFF_NOTHING                2
+~~~~~65
+/* The "sval" codes for TV_WAND */
+ SV_WAND_SCHOOL                  1
+ SV_WAND_NOTHING                 2
+~~~~~66
+/* The "sval" codes for TV_ROD(Rod Tips) */
+ SV_ROD_NOTHING                   0
+ SV_ROD_DETECT_DOOR               1
+ SV_ROD_IDENTIFY                  2
+ SV_ROD_RECALL                    3
+ SV_ROD_ILLUMINATION              4
+ SV_ROD_MAPPING                   5
+ SV_ROD_DETECTION                 6
+ SV_ROD_PROBING                   7
+ SV_ROD_CURING                    8
+ SV_ROD_HEALING                   9
+ SV_ROD_RESTORATION              10
+ SV_ROD_SPEED                    11
+ SV_ROD_TELEPORT_AWAY            13
+ SV_ROD_DISARMING                14
+ SV_ROD_LITE                     15
+ SV_ROD_SLEEP_MONSTER            16
+ SV_ROD_SLOW_MONSTER             17
+ SV_ROD_DRAIN_LIFE               18
+ SV_ROD_POLYMORPH                19
+ SV_ROD_ACID_BOLT                20
+ SV_ROD_ELEC_BOLT                21
+ SV_ROD_FIRE_BOLT                22
+ SV_ROD_COLD_BOLT                23
+ SV_ROD_ACID_BALL                24
+ SV_ROD_ELEC_BALL                25
+ SV_ROD_FIRE_BALL                26
+ SV_ROD_COLD_BALL                27
+ SV_ROD_HAVOC                    28
+ SV_ROD_DETECT_TRAP              29
+ SV_ROD_HOME                     30
+~~~~~67
+/* The "sval" codes for TV_ROD_MAIN(Rods) */
+ SV_ROD_WOODEN                   10
+ SV_ROD_COPPER                   20
+ SV_ROD_IRON                     50
+ SV_ROD_ALUMINIUM                75
+ SV_ROD_SILVER                   100
+ SV_ROD_GOLDEN                   125
+ SV_ROD_MITHRIL                  160
+ SV_ROD_ADMANTITE                200
+~~~~~70
+/* The "sval" codes for TV_SCROLL */
+ SV_SCROLL_DARKNESS               0
+ SV_SCROLL_AGGRAVATE_MONSTER      1
+ SV_SCROLL_CURSE_ARMOR            2
+ SV_SCROLL_CURSE_WEAPON           3
+ SV_SCROLL_SUMMON_MONSTER         4
+ SV_SCROLL_SUMMON_UNDEAD          5
+ SV_SCROLL_SUMMON_MINE            6
+ SV_SCROLL_TRAP_CREATION          7
+ SV_SCROLL_PHASE_DOOR             8
+ SV_SCROLL_TELEPORT               9
+ SV_SCROLL_TELEPORT_LEVEL        10
+ SV_SCROLL_WORD_OF_RECALL        11
+ SV_SCROLL_IDENTIFY              12
+ SV_SCROLL_STAR_IDENTIFY         13
+ SV_SCROLL_REMOVE_CURSE          14
+ SV_SCROLL_STAR_REMOVE_CURSE     15
+ SV_SCROLL_ENCHANT_ARMOR         16
+ SV_SCROLL_ENCHANT_WEAPON_TO_HIT 17
+ SV_SCROLL_ENCHANT_WEAPON_TO_DAM 18
+ SV_SCROLL_ENCHANT_WEAPON_PVAL   19
+ SV_SCROLL_STAR_ENCHANT_ARMOR    20
+ SV_SCROLL_STAR_ENCHANT_WEAPON   21
+ SV_SCROLL_RECHARGING            22
+ SV_SCROLL_RESET_RECALL          23
+ SV_SCROLL_LIGHT                 24
+ SV_SCROLL_MAPPING               25
+ SV_SCROLL_DETECT_GOLD           26
+ SV_SCROLL_DETECT_ITEM           27
+ SV_SCROLL_DETECT_TRAP           28
+ SV_SCROLL_DETECT_DOOR           29
+ SV_SCROLL_DETECT_INVIS          30
+ SV_SCROLL_DIVINATION            31
+ SV_SCROLL_SATISFY_HUNGER        32
+ SV_SCROLL_BLESSING              33
+ SV_SCROLL_HOLY_CHANT            34
+ SV_SCROLL_HOLY_PRAYER           35
+ SV_SCROLL_MONSTER_CONFUSION     36
+ SV_SCROLL_PROTECTION_FROM_EVIL  37
+ SV_SCROLL_RUNE_OF_PROTECTION    38
+ SV_SCROLL_TRAP_DOOR_DESTRUCTION 39
+ SV_SCROLL_DEINCARNATION         40
+ SV_SCROLL_STAR_DESTRUCTION      41
+ SV_SCROLL_DISPEL_UNDEAD         42
+ SV_SCROLL_MASS_RESURECTION      43
+ SV_SCROLL_GENOCIDE              44
+ SV_SCROLL_MASS_GENOCIDE         45
+ SV_SCROLL_ACQUIREMENT           46
+ SV_SCROLL_STAR_ACQUIREMENT      47
+ SV_SCROLL_FIRE                  48
+ SV_SCROLL_ICE                   49
+ SV_SCROLL_CHAOS                 50
+ SV_SCROLL_RUMOR                 51
+ SV_SCROLL_ARTIFACT              52
+ SV_SCROLL_NOTHING               53
+ SV_SCROLL_SPELL                 54
+~~~~~71
+/* The "sval" codes for TV_POTION */
+ SV_POTION_WATER                  0
+ SV_POTION_APPLE_JUICE            1
+ SV_POTION_SLIME_MOLD             2
+ SV_POTION_BLOOD                  3
+ SV_POTION_SLOWNESS               4
+ SV_POTION_SALT_WATER             5
+ SV_POTION_POISON                 6
+ SV_POTION_BLINDNESS              7
+ SV_POTION_INVIS                  8
+ SV_POTION_CONFUSION              9
+ SV_POTION_MUTATION              10
+ SV_POTION_SLEEP                 11
+ SV_POTION_LEARNING              12
+ SV_POTION_LOSE_MEMORIES         13
+ SV_POTION_RUINATION             15
+ SV_POTION_DEC_STR               16
+ SV_POTION_DEC_INT               17
+ SV_POTION_DEC_WIS               18
+ SV_POTION_DEC_DEX               19
+ SV_POTION_DEC_CON               20
+ SV_POTION_DEC_CHR               21
+ SV_POTION_DETONATIONS           22
+ SV_POTION_DEATH                 23
+ SV_POTION_INFRAVISION           24
+ SV_POTION_DETECT_INVIS          25
+ SV_POTION_SLOW_POISON           26
+ SV_POTION_CURE_POISON           27
+ SV_POTION_BOLDNESS              28
+ SV_POTION_SPEED                 29
+ SV_POTION_RESIST_HEAT           30
+ SV_POTION_RESIST_COLD           31
+ SV_POTION_HEROISM               32
+ SV_POTION_BESERK_STRENGTH       33
+ SV_POTION_CURE_LIGHT            34
+ SV_POTION_CURE_SERIOUS          35
+ SV_POTION_CURE_CRITICAL         36
+ SV_POTION_HEALING               37
+ SV_POTION_STAR_HEALING          38
+ SV_POTION_LIFE                  39
+ SV_POTION_RESTORE_MANA          40
+ SV_POTION_RESTORE_EXP           41
+ SV_POTION_RES_STR               42
+ SV_POTION_RES_INT               43
+ SV_POTION_RES_WIS               44
+ SV_POTION_RES_DEX               45
+ SV_POTION_RES_CON               46
+ SV_POTION_RES_CHR               47
+ SV_POTION_INC_STR               48
+ SV_POTION_INC_INT               49
+ SV_POTION_INC_WIS               50
+ SV_POTION_INC_DEX               51
+ SV_POTION_INC_CON               52
+ SV_POTION_INC_CHR               53
+ SV_POTION_AUGMENTATION          55
+ SV_POTION_ENLIGHTENMENT         56
+ SV_POTION_STAR_ENLIGHTENMENT    57
+ SV_POTION_SELF_KNOWLEDGE        58
+ SV_POTION_EXPERIENCE            59
+ SV_POTION_RESISTANCE            60
+ SV_POTION_CURING                61
+ SV_POTION_INVULNERABILITY       62
+ SV_POTION_NEW_LIFE              63
+~~~~~72
+/* The "sval" codes for TV_POTION2 */
+ SV_POTION2_MIMIC_ABOMINATION     1
+ SV_POTION2_MIMIC_WOLF            2
+ SV_POTION2_MIMIC_APE             3
+ SV_POTION2_MIMIC_GOAT            4
+ SV_POTION2_MIMIC_INSECT          5
+ SV_POTION2_MIMIC_SPARROW         6
+ SV_POTION2_MIMIC_STATUE          7
+ SV_POTION2_MIMIC_VAMPIRE         8
+ SV_POTION2_MIMIC_SPIDER          9
+ SV_POTION2_MIMIC_MANA_BALL       10
+ SV_POTION2_MIMIC_FIRE_CLOUD      11
+ SV_POTION2_MIMIC_COLD_CLOUD      12
+ SV_POTION2_MIMIC_CHAOS_CLOUD     13
+ SV_POTION2_CURE_LIGHT_SANITY     14
+ SV_POTION2_CURE_SERIOUS_SANITY   15
+ SV_POTION2_CURE_CRITICAL_SANITY  16
+ SV_POTION2_CURE_SANITY           17
+ SV_POTION2_CURE_WATER            18
+~~~~~80
+/* The "sval" codes for TV_FOOD */
+ SV_FOOD_POISON                   0
+ SV_FOOD_BLINDNESS                1
+ SV_FOOD_PARANOIA                 2
+ SV_FOOD_CONFUSION                3
+ SV_FOOD_HALLUCINATION            4
+ SV_FOOD_PARALYSIS                5
+ SV_FOOD_WEAKNESS                 6
+ SV_FOOD_SICKNESS                 7
+ SV_FOOD_STUPIDITY                8
+ SV_FOOD_NAIVETY                  9
+ SV_FOOD_UNHEALTH                10
+ SV_FOOD_DISEASE                 11
+ SV_FOOD_CURE_POISON             12
+ SV_FOOD_CURE_BLINDNESS          13
+ SV_FOOD_CURE_PARANOIA           14
+ SV_FOOD_CURE_CONFUSION          15
+ SV_FOOD_CURE_SERIOUS            16
+ SV_FOOD_RESTORE_STR             17
+ SV_FOOD_RESTORE_CON             18
+ SV_FOOD_RESTORING               19
+ SV_FOOD_BISCUIT                 32
+ SV_FOOD_JERKY                   33
+ SV_FOOD_RATION                  35
+ SV_FOOD_SLIME_MOLD              36
+ SV_FOOD_WAYBREAD                37
+ SV_FOOD_PINT_OF_ALE             38
+ SV_FOOD_PINT_OF_WINE            39
+ SV_FOOD_ATHELAS                 40
+ SV_FOOD_GREAT_HEALTH            41
+ SV_FOOD_FORTUNE_COOKIE          42
+~~~~~04
+/* The "sval" codes for TV_BATERIE */
+ SV_BATERIE_POISON    1
+ SV_BATERIE_EXPLOSION 2
+ SV_BATERIE_TELEPORT  3
+ SV_BATERIE_COLD      4
+ SV_BATERIE_FIRE      5
+ SV_BATERIE_ACID      6
+ SV_BATERIE_LIFE      7
+ SV_BATERIE_CONFUSION 8
+ SV_BATERIE_LITE      9
+ SV_BATERIE_CHAOS     10
+ SV_BATERIE_TIME      11
+ SV_BATERIE_MAGIC     12
+ SV_BATERIE_XTRA_LIFE 13
+ SV_BATERIE_DARKNESS  14
+ SV_BATERIE_KNOWLEDGE 15
+ SV_BATERIE_FORCE     16
+ SV_BATERIE_LIGHTNING 17
+ SV_BATERIE_MANA      18
+ MAX_BATERIE_SVAL     18
+~~~~~09
+/* The "sval" codes for TV_CORPSE */
+ SV_CORPSE_CORPSE     1
+ SV_CORPSE_SKELETON   2
+ SV_CORPSE_HEAD       3
+ SV_CORPSE_SKULL      4
+ SV_CORPSE_MEAT       5
+~~~~~115
+/* The "sval" codes for TV_DAEMON_BOOK */
+ SV_DEMONBLADE  55
+ SV_DEMONSHIELD 56
+ SV_DEMONHORN   57

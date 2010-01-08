@@ -1,0 +1,62 @@
+|||||oy
+~~~~~01|Rogue
+~~~~~02|Classes|Rogue
+#####R== Rogues ===
+
+#####GDescription
+A rogue is a jack of all trades, but the master of none. With the notable 
+exception of Archery and Monster-related skills, Rogues are capable of adapting 
+to almost any situation. Their strong point lies in stealth and careful 
+planning: Where a Warrior would simply hack away (and risk being hacked up 
+himself) or a Mage would Manathrust, a Rogue would awaken a monster with a 
+dagger in the back, or would wait for the creature to be killed by the line of 
+traps she had previously laid between her and her opponent.
+
+Rogues have access to the schools of *****m_convey.txt*0[Conveyance], *****m_divin.txt*0[Divination] and *****m_tempo.txt*0[Temporal] magic.
+
+#####GStarting Stat Modifiers
+Strength         +2
+Intelligence     +1
+Wisdom           -2
+Dexterity        +3
+Constitution     +1
+Charisma         -1
+Hit Die          +d6
+Spell Points     +0%
+Exp Penalty      25%
+
+#####GStarting Skills
+#####BSkill                   Start Level     Skill Point Gains
+Combat                  1.000           [0.700]
+  Weaponmastery         1.000           [0.700]
+    Sword-mastery       1.000           [0.300]
+      Critical-hits     1.000           [0.500]
+Sneakiness              1.000           [2.000]
+  Stealth               1.000           [1.500]
+  Disarming             1.000           [2.000]
+  Backstab              1.000           [1.000]
+  Stealing              1.000           [2.000]
+  Dodging               1.000           [2.000]
+Magic                   1.000           [0.700]
+  Magic-Device          1.000           [1.550]
+  Conveyance            0.000           [0.500]
+  Divination            0.000           [0.500]
+  Temporal              0.000           [0.500]
+Spirituality            1.000           [0.700]
+  Prayer                0.000           [0.500]
+Monster-lore            0.000           [0.500]
+
+#####GInnate Abilities:
+#####BAbility              Character level
+Trapping                    1
+Extra Max Blow(1)           10
+
+#####GStarting Equipment
+A Rogue begins the game with:
+    a Dagger
+    a Catapult Trap Set
+    some Iron Shots
+
+
+
+

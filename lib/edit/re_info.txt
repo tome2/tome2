@@ -1,0 +1,183 @@
+# File: re_info.txt
+
+# This file is used to initialize the "lib/raw/re_info.raw" file, which is
+# used to initialize the "monster ego race" information for the Angband game.
+
+# Do not modify this file unless you know exactly what you are doing,
+# unless you wish to risk possible system crashes and broken savefiles.
+
+# Version stamp (required)
+
+# Most values can be used with the +, -, % and = operators, = will set the
+# monster value, + and - will modify it based on the normal monster
+# % will apply that percentage to the monster value
+# defaults : NO DEFAULT, MUST precise one
+
+# N:x:ego name
+# G:x:y (x=monster letter, y=colour, use * to use the same as the standard monster)
+# I:speed:(dice)d(side):aaf:ac:sleep
+# W:lev:rarity:weight:xp:place('B'efore or 'A'fter)
+# E:weapon:torso:arms:finger:head:legs
+# B:method:effect:(dice)d(side) (up to x4 lines)
+# F:flags that the standard monster MUST have - at least ONE of the R_CHAR_x 
+#    flags (if present, to determine which monster letters can have this ego 
+#    type), plus ALL of the rest
+# H:flags that the standard monster MUST NOT have
+# M:monster flags to add for the ego-type
+# O:monster flags to remove, use MF_ALL for all
+# S:monster spells to add for the ego-type
+# T:monster spells to remove, use MF_ALL for all
+
+V:2.0.0
+
+# A few undeads, to be created by the ANIM_DEAD spell
+
+N:1:Skeleton
+G:s:*
+I:%100:+1d+1:+0:+5:-5
+W:+5:13:%30:%95:B
+F:DROP_SKELETON
+H:UNDEAD | NONLIVING | R_CHAR_Z | R_CHAR_A | R_CHAR_E | R_CHAR_g
+M:DROP_SKELETON | UNDEAD | IM_COLD | IM_POIS | NO_FEAR | NO_CONF | 
+M:NO_SLEEP | EMPTY_MIND | COLD_BLOOD | STUPID | EVIL
+O:GOOD | DROP_CORPSE | FRIEND | FRIENDS | ESCORT | ESCORTS | SMART | 
+O:DROP_GREAT | DROP_GOOD | RAND_25 | RAND_50 | MORTAL
+T:MF_ALL
+
+N:2:Zombie
+G:z:*
+I:%95:%110d%100:%90:+10:-5
+W:+10:14:%70:%100:B
+F:DROP_CORPSE
+H:UNDEAD | NONLIVING | R_CHAR_Z | R_CHAR_A | R_CHAR_E | R_CHAR_g
+M:DROP_CORPSE | UNDEAD | IM_COLD | IM_POIS | NO_FEAR | NO_CONF
+M:NO_SLEEP | EVIL | EMPTY_MIND | COLD_BLOOD | STUPID | EVIL
+O:GOOD | DROP_SKELETON | FRIEND | FRIENDS | ESCORT | ESCORTS | SMART
+O:DROP_GREAT | DROP_GOOD | RAND_25 | RAND_50 | MORTAL
+T:MF_ALL
+
+N:3:Lich
+G:L:*
+I:%100:+0d+1:+10:+20:-10
+W:+30:22:+0:%200:B
+B:TOUCH:LOSE_DEX:+0d+0
+B:TOUCH:LOSE_DEX:+0d+0
+B:TOUCH:UN_POWER:+0d+0
+B:TOUCH:EXP_40:+0d+0
+F:DROP_SKELETON | SMART | R_CHAR_h | R_CHAR_p | R_CHAR_P | R_CHAR_O
+H:UNDEAD | NONLIVING | R_CHAR_Z | R_CHAR_A | R_CHAR_E | R_CHAR_g
+M:UNDEAD | IM_COLD | IM_POIS | NO_FEAR | NO_CONF
+M:NO_SLEEP | SMART | EVIL | COLD_BLOOD
+O:DROP_SKELETON | GOOD | DROP_CORPSE | FRIEND | FRIENDS | ESCORT | ESCORTS | 
+O:DROP_GREAT | RAND_25 | RAND_50 | MORTAL
+S:1_IN_4 | 
+S:BLINK | TELE_TO | TELE_AWAY | BRAIN_SMASH | DRAIN_MANA | CAUSE_3 | 
+S:BLIND | HOLD | SLOW | SCARE
+
+N:4:Spectral
+G:G:*
+I:+10:%80d%100:+10:+20:-5
+W:+20:20:%10:%110:B
+B:*:EXP_20:+0d+0
+B:*:EXP_20:+0d+0
+F:DROP_CORPSE
+H:UNDEAD | NONLIVING | R_CHAR_Z | R_CHAR_A | R_CHAR_E | R_CHAR_g
+M:UNDEAD | IM_COLD | IM_POIS | NO_FEAR | NO_CONF
+M:NO_SLEEP | PASS_WALL | EVIL | COLD_BLOOD
+O:GOOD | DROP_CORPSE | FRIEND | FRIENDS | ESCORT | ESCORTS | 
+O:DROP_GREAT | EMPTY_MIND | RAND_50 | MORTAL
+S:1_IN_5 | BLIND | HOLD | SCARE
+T:MF_ALL
+
+N:5:Captain
+G:*:v
+I:+5:%150d%100:+5:%120:-2
+W:+5:4:%120:%150:A
+B:*:*:+0d+1
+B:*:*:+0d+1
+B:*:*:+0d+1
+B:*:*:+0d+1
+F:R_CHAR_o | R_CHAR_y | R_CHAR_k | BASEANGBAND
+M:FORCE_MAXHP | FRIENDS | SMART | DROP_1D2
+
+N:6:Chieftain
+G:*:*
+I:+10:%200d%100:+10:%120:-3
+W:+5:4:%120:%200:A
+B:*:*:+1d+2
+B:*:*:+1d+2
+B:*:*:+1d+2
+B:*:*:+1d+2
+F:R_CHAR_T | R_CHAR_P | R_CHAR_O | BASEANGBAND
+M:FORCE_MAXHP | FRIENDS | SMART | DROP_1D2
+
+N:7:Shaman
+G:*:r
+I:+0:%90d%100:+10:%90:+0
+W:+2:1:%90:%120:A
+F:R_CHAR_o | R_CHAR_k | R_CHAR_n | BASEANGBAND
+M:SMART | FORCE_MAXHP | DROP_1D2
+O:FRIENDS
+S:1_IN_6 | MISSILE | CAUSE_1 | CONF | BLINK
+
+N:8:Priest
+G:*:G
+I:+0:%90d%100:+10:%90:+0
+W:+3:2:%90:%120:A
+F:R_CHAR_T | R_CHAR_P | R_CHAR_O | BASEANGBAND
+M:FRIENDS | SMART | FORCE_MAXHP | DROP_1D2
+S:1_IN_6 | CAUSE_2 | MISSILE | DARKNESS | CONF | SCARE | BLINK
+
+N:9:Mage
+G:*:r
+I:+0:%150d%100:+10:%120:+0
+W:+5:4:%120:%150:A
+B:*:*:+0d+0
+B:*:*:+0d+0
+B:HIT:HURT:=2d=8
+B:HIT:HURT:=2d=8
+F:R_CHAR_O | BASEANGBAND
+M:SMART | FORCE_MAXHP | DROP_1D2
+O:FRIENDS
+S:1_IN_6 | BA_COLD | BO_FIRE | TRAPS | HEAL | HOLD | S_MONSTER | TPORT
+
+N:10:Archer
+G:*:W
+I:+0:+0d+0:+0:+0:+0
+W:+1:1:%100:%110:A
+F:R_CHAR_y | R_CHAR_k | R_CHAR_O | R_CHAR_o | BASEANGBAND
+S:1_IN_4 | ARROW_2
+
+N:11:Rogue
+G:*:b
+I:+2:+0d+0:+0:+10:-30
+W:+1:2:%90:%100:A
+B:*:EAT_GOLD:+0d+0
+F:R_CHAR_y | R_CHAR_k | R_CHAR_o
+
+# For townpeople
+N:12:Elven
+G:*:*
+I:+2:+0d+0:+0:+0:+0
+W:+0:15:+0:+0:B
+F:WILD_TOWN
+H:ANIMAL
+
+# For townpeople
+N:13:Dwarven
+G:*:*
+I:+2:+0d+0:+0:+0:+0
+W:+0:15:+0:+0:B
+F:WILD_TOWN
+H:ANIMAL
+
+# N:x:ego name
+# G:x:y                 x is the char, y the attribute, * means the normal one
+# I:speed:(dice)d(side):aaf:ac:sleep
+# W:lev:rarity:weight:xp:place('B'efore or 'A'fter)
+# F:flags that the normal monster *must* have
+# H:flags that the normal monster *must not* have
+# M:monster flags that the ego-monster adds
+# O:monster flags to remove (use MF_ALL for all)
+# S:monster spells that the ego-monster adds
+# T:monster spells to remove (use MF_ALL for all)

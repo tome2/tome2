@@ -1,0 +1,13 @@
+|||||oy
+~~~~~01|Priests
+#####R=== Priests ===
+
+#####GDescription
+There are 6 separate classes of Priest:
+
+*****c_pr_eru.txt*0[Priest(Eru)]
+*****c_pr_man.txt*0[Priest(Manwe)]
+*****c_druid.txt*0[Druid]
+*****c_palad.txt*0[Paladin]
+*****c_pr_drk.txt*0[Dark-Priest]
+*****c_mindcr.txt*0[Mindcrafter]

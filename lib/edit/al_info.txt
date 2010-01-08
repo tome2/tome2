@@ -1,0 +1,2097 @@
+# File: al_info.txt
+
+
+# This file is used to initialize the "lib/raw/al_info.raw" file, which is
+# used as the alchemist recipes in ToME
+
+# Do not modify this file unless you know exactly what you are doing,
+# unless you wish to risk possible system crashes.
+
+# Version stamp (required)
+
+V:2.0.0
+
+
+#Note: when you add anything to this file, you also need to change the M:a
+#line of misc.txt. Unlike other files, there is no 'count' entry. The
+#easiest and fastest way to find out what to say in misc.txt is:
+#
+#	grep '^[Ia]:' <al.txt | wc -l
+#   you need to add one to the result of the above statement.
+#
+# Which only works on unix systems. But if you have the misfortune not to
+#be working on a unix system, you can use an editor and to a global search
+#and replace, searching for I: and then for a:, which will give you a count
+#that's a few high, but will still work.
+
+
+#Format: There's only one kind of line here, and that's the
+# Item line. Goes like this:
+
+
+# I:tval:sval:Qty:essence
+#
+# The problem here is that it doesn't matter what order things are in.
+# Since the tval and sval are specified on each line, the lines that
+# describe a particular recipe for a particular item don't have to be
+# anywhere even close to each other in the file. This could cause a problem:
+# if the same item has two different entries for the same essence, it will
+# find one, assume that the player has enough, and display that one in green.
+# But when the player goes to make it, they may not have enough. It would also
+# cause weird recipe displays, with one essence listed twice. Funny-looking
+
+
+
+# Some special tvals:
+# 0  Not a tval, used internally by the parser to store the artifact flag essences.
+#    We don't currently have any mechanism to control which tvals flags are used on.
+# 1  Not actually a tval, used for ego items, in which  case the 'sval' is the e_idx
+#    We don't need tvals or svals for ego items, because that information is
+#    contained in the e_info record, which the e_idx points us to.
+#
+# 40 Amulet
+# 45 ring
+# 55 staff
+# 65 wand
+# 66 rod tip
+# 70 scroll
+# 71 potion
+# 40 Amulet
+# 45 ring
+# 55 staff
+# 65 wand
+# 66 rod tip
+# 70 scroll
+# 71 potion
+# 72 potion2
+# 80 Food ('shrooms, etc)
+
+# I:tval:sval:Qty:essence
+
+#**********************Mushrooms***********************
+
+#SV_FOOD_POISON                   0
+I:80:0:1:LIFE
+I:80:0:8:POISON
+
+#SV_FOOD_BLINDNESS                1
+I:80:1:1:LIFE
+I:80:1:6:DARKNESS
+I:80:1:2:LITE
+
+#SV_FOOD_PARANOIA                 2
+I:80:2:1:LIFE
+I:80:2:4:KNOWLEDGE
+I:80:2:4:CONFUSION
+
+#SV_FOOD_CONFUSION                3
+I:80:3:1:LIFE
+I:80:3:8:CONFUSION
+
+#SV_FOOD_HALLUCINATION            4
+I:80:4:1:LIFE
+I:80:4:4:CONFUSION
+I:80:4:4:MANA
+I:80:4:4:TELEPORT
+
+#SV_FOOD_PARALYSIS                5
+I:80:5:1:LIFE
+I:80:5:8:FORCE
+
+#SV_FOOD_WEAKNESS                 6
+I:80:6:1:LIFE
+I:80:6:4:POISON
+I:80:6:4:FORCE
+
+#SV_FOOD_SICKNESS                 7
+I:80:7:8:LIFE
+I:80:7:1:POISON
+
+#SV_FOOD_STUPIDITY                8
+I:80:8:1:LIFE
+I:80:8:1:MANA
+I:80:8:8:KNOWLEDGE
+
+#SV_FOOD_NAIVETY                  9
+I:80:9:1:LIFE
+I:80:9:1:MANA
+I:80:9:4:CONFUSION
+I:80:9:4:KNOWLEDGE
+
+#SV_FOOD_UNHEALTH                10
+I:80:10:8:LIFE
+I:80:10:1:FORCE
+I:80:10:1:POISON
+
+#SV_FOOD_DISEASE                 11
+I:80:11:1:LIFE
+I:80:11:1:TIME
+I:80:11:8:POISON
+
+#SV_FOOD_CURE_POISON             12
+I:80:12:1:LIFE
+I:80:12:8:POISON
+
+#SV_FOOD_CURE_BLINDNESS          13
+I:80:13:1:LIFE
+I:80:13:6:LITE
+I:80:13:2:DARKNESS
+
+#SV_FOOD_CURE_PARANOIA           14
+I:80:14:1:LIFE
+I:80:14:1:TIME
+
+#SV_FOOD_CURE_CONFUSION          15
+I:80:15:1:LIFE
+I:80:15:12:KNOWLEDGE
+
+#SV_FOOD_CURE_SERIOUS            16
+I:80:16:8:LIFE
+
+#SV_FOOD_RESTORE_STR             17
+I:80:17:20:LIFE
+I:80:17:2:TIME
+
+#SV_FOOD_RESTORE_CON             18
+I:80:18:20:LIFE
+I:80:18:2:TIME
+
+#SV_FOOD_RESTORING               19
+I:80:19:40:LIFE
+I:80:19:4:TIME
+
+#/* many missing mushrooms */
+#Note - the comment below appears on the list in defines.h, but I can't find
+#any more mushrooms in k_info.txt
+
+#define SV_FOOD_BISCUIT                 32
+#define SV_FOOD_JERKY                   33
+#define SV_FOOD_RATION                  35
+#define SV_FOOD_SLIME_MOLD              36
+#define SV_FOOD_WAYBREAD                37
+#define SV_FOOD_PINT_OF_ALE             38
+#define SV_FOOD_PINT_OF_WINE            39
+#define SV_FOOD_ATHELAS                 40
+#define SV_FOOD_GREAT_HEALTH            41
+#define SV_FOOD_FORTUNE_COOKIE          42
+
+
+
+#***************************Artifact Flags************************************
+# 
+#A:Group:tval:sval:pval:pval?:level:xp
+#  The first three describe the required item, they can be left unspecified
+#  for no object, or specify starting with tval for increasingly specific
+#  objects. 
+#  Note: pval? is boolean (0 or 1) if true, then this flag has a
+#  variable effect, and we should require more experience and times for 
+#  increasing pvals.
+#  Note:for tval=TV_CORPSE, sval=corpse type, pval=monster idx,
+#  or use f:moster_race_flags, or leave all blank for any corpse at all.
+#F:object flag to be set
+#D:Description of flag
+#x:Description of activation (instead of description of flag, see below)
+#d:Description of required item
+#p:Description of required item (plural, optional. Illegal if pval != 1)
+#a:qty:object_flag_to_be_set Essence_name (not used)
+
+# Note that like I: lines, a: lines can be anywhere and in any order.
+# Note: 'flag' is the flag name from a_info.txt, 
+#       'monster_race_flag' is from r_info.txt
+
+#The group numbers are 1-5, and the descriptions of the groups
+#are hard coded. see cmd7.c
+
+
+A:1:45:24:1:1:40:5000
+F:STR
+D:Add to Strength
+d:Ring of Strength
+p:Rings of Strength
+
+A:1:45:25:1:1:43:5000
+F:INT
+D:Add to Intelligence
+d:Ring of Intelligence
+p:Rings of Intelligence
+
+A:1:40:28:1:1:46:5000
+F:WIS
+D:Add to Wisdom
+d:Amulet of Wisdom
+p:Amulets of Wisdom
+
+A:1:45:26:1:1:46:5000
+F:DEX
+D:Add to Dexterity
+d:Ring of Dexterity
+p:Rings of Dexterity
+
+A:1:45:27:1:1:42:5000
+F:CON
+D:Add to Constitution
+d:Ring of Constitution
+p:Rings of Constitution
+
+A:1:40:2:0:1:30:5000
+F:CHR
+D:Add to Charisma
+d:Amulet of Adornment
+p:Amulets of Adornment
+
+A:1:45:10:0:0:32:1000
+F:SUST_STR
+D:Sustain Strength
+d:Ring of Sustain Strength
+
+A:1:45:11:0:0:34:1000
+F:SUST_INT
+D:Sustain Intelligence
+d:Ring of Sustain Intelligence
+
+A:1:45:12:0:0:28:1000
+F:SUST_WIS
+D:Sustain Wisdom
+d:Ring of Sustain Wisdom
+
+A:1:45:14:0:0:36:1000
+F:SUST_DEX
+D:Sustain Dexterity
+d:Ring of Sustain Dexterity
+
+A:1:45:13:0:0:36:1000
+F:SUST_CON
+D:Sustain Constitution
+d:Ring of Sustain Constitution
+
+A:1:45:15:0:0:25:1000
+F:SUST_CHR
+D:Sustain Charisma
+d:Ring of Sustain Charisma
+
+A:1:45:31:1:1:40:50000
+F:SPEED
+D:Speed
+d:Ring of Speed
+p:Rings of Speed
+
+A:1:45:49:1:1:38:150000
+F:BLOWS
+D:Extra Attacks
+d:Ring of Extra Attacks
+p:Rings of Extra Attacks
+
+A:1:30:2:0:1:32:5000
+F:STEALTH
+D:Stealthy
+d:Left Insole from a Used Soft Boot
+p:Left Insoles from Used Soft Boots
+
+A:1:36:1:0:1:29:2000
+F:SEARCH
+D:Adds to Searching
+d:Filthy Rag
+p:Filthy Rags
+
+A:1:39:1:0:1:6:1000
+F:INFRA
+D:Helps Infravision
+d:Brass Lantern
+p:Brass Lanterns
+
+A:1:9:-1:5:1:30:1000
+F:LUCK
+D:Lucky
+d:Rabbit's Left Forefoot
+p:Rabbit's Left Forefeet
+
+A:1:20:4:0:1:25:30000
+F:TUNNEL
+D:Aids in digging
+d:Pick
+p:Picks
+
+A:1:9:1:0:1:40:50000
+F:LIFE
+f:TROLL
+D:Multiplies Life
+d:Troll's Heart
+p:Troll's Hearts
+
+A:2:71:8:0:0:20:15000
+F:INVIS
+D:Invisibility
+d:Potion of Invisibility
+
+A:2:71:8:0:0:20:4000
+F:SEE_INVIS
+D:See Invisible
+d:Potion of Invisibility
+
+A:2:5:0:0:0:20:30000
+F:FREE_ACT
+D:Free Action
+d:Iron Spike
+
+A:2:34:5:0:0:38:90000
+F:REFLECT
+D:Reflection
+d:Large Metal Shield
+
+A:2:9:1:644:0:20:30000
+F:SH_FIRE
+D:Aura of Fire
+d:Lungs from an Ancient Red Dragon
+
+A:2:9:1:601:0:25:30000
+F:SH_ELEC
+D:Aura of Lightning
+d:Lungs from an Ancient Blue Dragon
+
+A:2:39:2:0:0:8:1000
+F:LITE1
+D:Light
+d:Everburning Torch
+
+A:2:39:3:0:0:20:10000
+F:LITE2
+D:Bright Light
+d:Dwarven Lantern
+
+A:2:39:4:0:0:40:100000
+F:LITE3
+D:Sunlight
+d:Feanorian Lamp
+
+A:2:38:-1:0:0:40:200000
+F:FLY
+D:Flight
+d:Suit of Dragon Armour (any colour)
+
+A:2:9:-1:862:0:50:10000000
+F:AUTO_ID
+D:Automatically IDs
+d:Morgoth's Testicles
+
+A:2:40:14:0:0:29:2000
+F:NO_TELE
+D:Anti-Teleportation
+d:Teleport Inhibiting Amulet
+
+A:2:40:13:0:0:34:2000
+F:NO_MAGIC
+D:Anti-Magic
+d:Magic Inhibiting Amulet
+
+A:2:71:62:0:0:50:100000
+F:WRAITH
+D:Wraith Form
+d:Potion of Invulnerability
+
+A:2:71:33:0:0:15:1000
+F:FEATHER
+D:Levitation
+d:Potion of Berserk Strength
+
+A:2:80:37:0:0:20:10000
+F:SLOW_DIGEST
+D:Slow Digestion
+d:Lembas Wafer
+
+A:2:80:10:0:0:32:20000
+F:REGEN
+D:Regenerate
+d:Mushroom of Unhealth
+
+A:2:80:3:0:0:12:20000
+F:TELEPORT
+D:Teleport
+d:Mushroom of Confusion
+
+A:3:21:2:0:1:30:20000
+F:CRIT
+D:Extra Critical Hits
+d:Whip
+p:Whips
+
+A:3:23:30:0:0:30:30000
+F:WOUNDING
+D:Wounds Monsters
+d:Blade of Chaos
+
+A:3:66:18:0:1:26:6000
+F:VAMPIRIC
+D:Vampiric
+d:Rod Tip of Drain Life
+
+A:3:9:1:0:0:16:2000
+F:SLAY_ANIMAL
+f:ANIMAL
+D:Slay Animal
+d:Dead Animal's Body
+
+A:3:9:-1:0:0:25:2000
+F:SLAY_EVIL
+f:EVIL
+D:Slay Evil
+d:Evil Dead Thing's Remains
+
+A:3:9:-1:0:0:30:2000
+F:SLAY_UNDEAD
+f:UNDEAD
+D:Slay Undead
+d:Remains of Undead Monster
+
+A:3:9:1:0:0:40:1500
+F:SLAY_DEMON
+f:DEMON
+D:Slay Demon
+d:Demon's Corpse
+
+A:3:9:1:0:0:10:700
+F:SLAY_ORC
+f:ORC
+D:Slay Orc
+d:Dead Orc
+
+A:3:9:1:0:0:16:700
+F:SLAY_TROLL
+f:TROLL
+D:Slay Troll
+d:Dead Troll
+
+A:3:9:1:0:0:25:900
+F:SLAY_GIANT
+f:GIANT
+D:Slay Giant
+d:Dead Giant
+
+A:3:9:1:0:0:33:2000
+F:SLAY_DRAGON
+f:DRAGON
+D:Slay Dragon
+d:Dead Dragon (any size will do)
+
+A:3:9:-1:593:0:41:5000
+F:KILL_DRAGON
+D:*Slay* Dragon
+d:Mature Multi-Hued Dragon's Remains
+
+A:3:9:-1:0:0:41:90000
+F:KILL_UNDEAD
+f:S_HI_UNDEAD
+D:*Slay* Undead
+d:Dead Summoner of Greater Undead
+
+A:3:9:-1:996:0:41:90000
+F:KILL_DEMON
+D:*Slay* Demon
+d:Lesser Balrog's Corpse
+
+A:3:0:0:0:0:36:20000
+F:VORPAL
+D:Vorpal
+
+A:3:0:0:0:0:40:90000
+F:IMPACT
+D:Earthquakes
+
+A:3:0:0:0:0:3:2000
+F:BRAND_POIS
+D:Poison Brand
+
+A:3:0:0:0:0:12:2000
+F:BRAND_ACID
+D:Acid Brand
+
+A:3:0:0:0:0:10:2000
+F:BRAND_ELEC
+D:Lightning Brand
+
+A:3:0:0:0:0:6:2000
+F:BRAND_FIRE
+D:Fire Brand
+
+A:3:0:0:0:0:8:2000
+F:BRAND_COLD
+D:Frost Brand
+
+A:3:0:0:0:1:30:3000
+F:XTRA_MIGHT
+D:Extra Might (Bows Only)
+
+A:3:0:0:0:1:35:3000
+F:XTRA_SHOTS
+D:Extra Shots (Bows Only)
+
+A:4:9:1:624:0:49:500000
+F:IM_ACID
+D:Immune to Acid
+d:Ancient Black Dragon's Foreskin
+
+A:4:9:1:601:0:50:500000
+F:IM_ELEC
+D:Immune to Lightning
+d:Ancient Blue Dragon's Foreskin
+
+A:4:9:1:644:0:49:500000
+F:IM_FIRE
+D:Immune to Fire
+d:Ancient Red Dragon's Foreskin
+
+A:4:9:1:617:0:50:500000
+F:IM_COLD
+D:Immune to Cold
+d:Ancient White Dragon's Foreskin
+
+A:4:40:8:0:0:30:30000
+F:HOLD_LIFE
+D:Hold Life
+d:Amulet of the Magi
+
+A:4:45:17:0:0:12:10000
+F:RES_ACID
+D:Resist Acid
+d:Ring of Acid
+
+A:4:45:56:0:0:15:10000
+F:RES_ELEC
+D:Resist Lightning
+d:Ring of Lightning
+
+A:4:71:30:0:0:13:10000
+F:RES_FIRE
+D:Resist Fire
+d:Potion of Resist Heat
+
+A:4:71:31:0:0:14:10000
+F:RES_COLD
+D:Resist Cold
+d:Potion of Resist Cold
+
+A:4:71:27:0:0:25:30000
+F:RES_POIS
+D:Resist Poison
+d:Potion of Cure Poison
+
+A:4:45:38:0:0:26:10000
+F:RES_FEAR
+D:Resist Fear
+d:Ring of Fear Resistance
+
+A:4:45:39:0:0:31:60000
+F:RES_LITE
+D:Resist Light
+d:Ring of Light and Darkness Resistance
+
+A:4:45:39:0:0:31:60000
+F:RES_DARK
+D:Resist Darkness
+d:Ring of Light and Darkness Resistance
+
+A:4:45:47:0:0:30:30000
+F:RES_BLIND
+D:Resist Blindness
+d:Ring of Blindness Resistance
+
+A:4:45:43:0:0:30:30000
+F:RES_CONF
+D:Resist Confusion
+d:Ring of Confusion Resistance
+
+A:4:45:42:0:0:30:60000
+F:RES_SOUND
+D:Resist Sound
+d:Ring of Sound Resistance
+
+A:4:45:44:0:0:30:60000
+F:RES_SHARDS
+D:Resist Shards
+d:Ring of Shard Resistance
+
+A:4:45:40:0:0:30:60000
+F:RES_NETHER
+D:Resist Nether
+d:Ring of Nether Resistance
+
+A:4:45:41:0:0:30:60000
+F:RES_NEXUS
+D:Resist Nexus
+d:Ring of Nexus Resistance
+
+A:4:45:46:0:0:30:60000
+F:RES_CHAOS
+D:Resist Chaos
+d:Ring of Chaos Resistance
+
+A:4:45:45:0:0:30:60000
+F:RES_DISEN
+D:Resist Disenchantment
+d:Ring of Disenchantment Resistance
+
+A:5:9:1:0:0:50:-100000
+F:TEMPORARY
+D:Temporary Item
+d:Corpse, any corpse
+
+A:5:36:1:0:0:10:-2000
+F:AUTO_CURSE
+D:Self-Cursing
+d:Filthy Rag
+
+A:5:80:40:0:0:45:-10000
+F:BLACK_BREATH
+D:Causes the Black Breath
+d:Sprig of Athelas
+
+A:5:70:15:0:0:40:-5000
+F:TY_CURSE
+D:Ancient Curse
+d:Scroll of *Remove Curse*
+
+A:5:0:0:0:0:40:-5000
+F:DRAIN_EXP
+D:Drains your Experience
+
+A:5:0:0:0:0:30:-5000
+F:AGGRAVATE
+D:Aggravates Monsters
+
+A:5:70:14:0:0:30:-500
+F:CURSED
+D:Curse
+d:Scroll of Remove Curse
+
+#Removed for balance - allows you to trade two essences of extra life,
+# and 25+ magic essence for 10000xp on your artifact, which isn't
+# anything to sneeze at. Curse, above, has the same problem, but
+# for 1000xp, I figure it's a fair trade.
+#A:5:70:15:0:0:40:-10000
+#D:Heavy Curse
+#F:HEAVY_CURSE
+#d:Scroll of *Remove Curse*
+
+A:5:0:0:0:0:50:-5000
+F:PERMA_CURSE
+D:Permanently Cursed
+
+A:5:0:0:0:0:35:-2000
+F:CURSE_NO_DROP
+D:Can't be Dropped
+
+A:5:0:0:0:0:45:-5000
+F:DRAIN_HP
+D:Drains your Hit Points
+
+A:5:0:0:0:0:20:-50000
+F:IMMOVABLE
+D:Wielder Can't Move
+
+#/* Floating eye corpse for esp all :) other ESP's don't require anything at all...*/
+A:5:9:1:32:0:40:20000
+F:ESP_ALL
+D:Telepathy
+d:Formerly Floating Eye
+
+A:5:0:0:0:0:25:3000
+F:ESP_ORC
+D:Sense Orcs
+
+A:5:0:0:0:0:25:3000
+F:ESP_TROLL
+D:Sense Trolls
+
+A:5:0:0:0:0:25:5000
+F:ESP_DRAGON
+D:Sense Dragons
+
+A:5:0:0:0:0:25:5000
+F:ESP_GIANT
+D:Sense Giants
+
+A:5:0:0:0:0:25:5000
+F:ESP_DEMON
+D:Sense Demons
+
+A:5:0:0:0:0:25:5000
+F:ESP_UNDEAD
+D:Sense Undead
+
+A:5:0:0:0:0:25:5000
+F:ESP_EVIL
+D:Sense Evil
+
+A:5:0:0:0:0:25:5000
+F:ESP_ANIMAL
+D:Sense Animals
+
+A:5:0:0:0:0:25:5000
+F:ESP_THUNDERLORD
+D:Sense Thunderlords
+
+A:5:0:0:0:0:25:5000
+F:ESP_GOOD
+D:Sense Good
+
+A:5:0:0:0:0:25:5000
+F:ESP_NONLIVING
+D:Sense Nonliving
+
+A:5:0:0:0:0:25:5000
+F:ESP_UNIQUE
+D:Sense Unique Monsters
+
+A:5:0:0:0:0:25:2000
+F:ESP_SPIDER
+D:Sense Spiders
+
+
+#***************************Activations for artifacts***********************
+# Activations follow all of the rules for artifact flags.
+# except: group number and pval are IGNORED
+#         They MUST come after ALL artifact flags in this file!!!
+#         There is no way (currently) to require essences...
+# 
+# They use a LOWER CASE x: instead of the F: object flag
+# 
+# all ACT_ constants are supported, anything else must be coded into init1.c
+# Internally, they are assigned the magic group number of '88'
+#   and a NEGATIVE flag number (which is the activation number)
+# Note that although you can use the p: to give activations a plural 
+#   item description, it will never be used, because pval is forced to 0.
+#
+#A:<îgnored>:tval:sval:<ignored>:<ignored>:level:xp
+#  tval and sval describe the required item, they can be left unspecified
+#  for no object, or specify starting with tval for increasingly specific
+#  objects. 
+#F:object flag to be set
+#D:Description of flag
+#x:Description of activation (instead of description of flag)
+#d:Description of required item
+#p:Description of required item (plural, not used for activations)
+#a:qty:object_flag_to_be_set Essence_name
+
+#define ACT_PET_SUMMON          150
+#define ACT_CURE_PARA           151
+#define ACT_CURE_HALLU          152
+#define ACT_CURE_POIS           153
+#define ACT_CURE_HUNGER         154
+#define ACT_CURE_STUN           155
+#define ACT_CURE_CUTS           156
+#define ACT_CURE_FEAR           157
+#define ACT_CURE_CONF           158
+#define ACT_CURE_BLIND          159
+#define ACT_CURING              160
+#define ACT_ACQUIREMENT         163
+#define ACT_MUT                 166
+#define ACT_CURE_INSANITY       167
+#define ACT_CURE_MUT            168
+#define ACT_REST_LIFE            84
+#define ACT_REST_ALL             85
+#define ACT_CURE_LW              81
+#define ACT_CURE_MW              82
+#define ACT_CURE_POISON          83
+#define ACT_CURE_700             86
+#define ACT_CURE_1000            87  
+
+#define ACT_LIGHT               111
+
+#define ACT_SUNLIGHT              1
+A:0:70:15:0:0:40:40000
+x:SUNLIGHT
+D:Sunlight
+d:Brass Lantern
+
+#define ACT_MAP_LIGHT           112
+#define ACT_DETECT_ALL          113
+#define ACT_DETECT_XTRA         114
+#define ACT_ID_FULL             115
+#define ACT_ID_PLAIN            116
+
+#define ACT_GROW_MOLD           197
+
+
+#define ACT_BO_MISS_1             2
+A:0:0:0:0:0:20:4000
+x:BO_MISS_1
+D:Magic Missile (1)
+
+#define ACT_BO_MISS_2            15
+A:0:0:0:0:0:30:300000
+x:BO_MISS_2
+D:Magic Missile (2)
+
+#define ACT_BA_MISS_3            24
+A:0:0:0:0:0:40:400000
+x:BA_MISS_3
+D:Ball of Missiles
+
+#define ACT_BO_ELEC_1             4
+A:0:0:0:0:0:30:300000
+x:BO_ELEC_1
+D:Bolt of Lightning
+
+#define ACT_BA_ELEC_2            12
+A:0:0:0:0:0:30:300000
+x:BA_ELEC_2
+D:Ball of Lightning
+
+#define ACT_BA_ELEC_3            18
+A:0:0:0:0:0:35:350000
+x:BA_ELEC_3
+D:Ball of Lightning(2)
+
+#define ACT_BA_ELEC_H           172         
+A:0:0:0:0:0:40:400000
+x:BA_ELEC_H
+D:Ball of Lightning(3)
+
+#define ACT_BA_ELEC_4           183         
+A:0:0:0:0:0:40:400000
+x:BA_ELEC_4
+D:Ball of Lightning(4)
+
+#define ACT_BR_ELEC             184       
+A:0:0:0:0:0:45:450000
+x:BR_ELEC
+D:Breathe Lightning  
+
+#define ACT_BO_ACID_1           5
+#define ACT_BA_COLD_1           8
+#define ACT_BA_ACID_H           173         
+#define ACT_BA_ACID_4           182         
+#define ACT_BR_ACID             187       
+#define ACT_BO_COLD_1           6
+#define ACT_BA_COLD_2           11
+#define ACT_BA_COLD_3           17
+#define ACT_BA_COLD_H           171         
+#define ACT_BA_COLD_4           180          
+#define ACT_BR_COLD             185       
+#define ACT_BO_FIRE_1           7
+#define ACT_BA_FIRE_1           9
+#define ACT_BA_FIRE_2           16
+#define ACT_BA_FIRE_H           170
+#define ACT_BA_FIRE_4           181          
+#define ACT_BR_FIRE             186       
+#define ACT_BA_POIS_1           3
+#define ACT_BA_POIS_4           179          
+#define ACT_BR_POIS             188       
+#define ACT_BR_MANY             189       
+#define ACT_BR_CONF             190       
+#define ACT_BR_SOUND            191        
+#define ACT_BR_CHAOS            192        
+#define ACT_BR_SHARD            193        
+#define ACT_BR_BALANCE          194          
+#define ACT_BR_LIGHT            195        
+#define ACT_BR_POWER            196        
+#define ACT_ROCKET              22
+A:0:0:0:0:0:50:40000
+x:ROCKET
+D:Fire a Rocket
+
+#define ACT_JUMP                177    
+#define ACT_WHIRLWIND           19
+#define ACT_CALL_CHAOS          21
+#define ACT_DISP_EVIL           23
+#define ACT_DISP_GOOD           25
+#define ACT_DAWN                61          
+#define ACT_CHARM_ANIMAL        65
+#define ACT_CHARM_UNDEAD        66
+#define ACT_CHARM_OTHER         67
+#define ACT_CHARM_ANIMALS       68
+#define ACT_CHARM_OTHERS        69
+#define ACT_SUMMON_ANIMAL       70
+#define ACT_SUMMON_PHANTOM      71
+#define ACT_SUMMON_ELEMENTAL    72
+#define ACT_SUMMON_DEMON        73
+#define ACT_SUMMON_UNDEAD       74
+#define ACT_RUNE_EXPLO          117
+#define ACT_RUNE_PROT           118
+#define ACT_SATIATE             119
+#define ACT_DEST_DOOR          120
+#define ACT_STONE_MUD           121
+#define ACT_RECHARGE            122
+#define ACT_ALCHEMY             123
+#define ACT_DIM_DOOR            124
+#define ACT_TELEPORT            125
+#define ACT_RECALL              126
+
+#define ACT_SPIN                174    
+#define ACT_NOLDOR              175      
+#define ACT_SPECTRAL            176        
+#define ACT_DEST_TELE           178         
+#define ACT_DRAIN_1             10
+#define ACT_DRAIN_2             13
+#define ACT_VAMPIRE_1           14
+#define ACT_VAMPIRE_2           20
+#define ACT_GILGALAD            26
+#define ACT_CELEBRIMBOR         27
+#define ACT_SKULLCLEAVER        28
+#define ACT_HARADRIM            29
+#define ACT_FUNDIN              30              
+#define ACT_EOL                 31                       
+#define ACT_UMBAR               32                       
+#define ACT_NUMENOR             33                         
+#define ACT_KNOWLEDGE           34                        
+#define ACT_UNDEATH             35                        
+#define ACT_THRAIN              36                      
+#define ACT_BARAHIR             37             
+#define ACT_TULKAS              38            
+#define ACT_NARYA               39           
+#define ACT_NENYA               40           
+#define ACT_VILYA               41           
+#define ACT_POWER               42           
+#define ACT_STONE_LORE          43                
+#define ACT_RAZORBACK           44               
+#define ACT_BLADETURNER         45                 
+#define ACT_MEDIATOR            46              
+#define ACT_BELEGENNON          47                
+#define ACT_GORLIM              48            
+#define ACT_COLLUIN             49             
+#define ACT_BELANGIL            50              
+#define ACT_CONFUSE             51
+#define ACT_SLEEP               52
+#define ACT_QUAKE               53
+#define ACT_TERROR              54
+#define ACT_TELE_AWAY           55
+#define ACT_BANISH_EVIL         56
+#define ACT_GENOCIDE            57
+#define ACT_MASS_GENO           58
+#define ACT_ANGUIREL            59              
+#define ACT_ERU                 60         
+#define ACT_FIRESTAR            62              
+#define ACT_TURMIL              63            
+#define ACT_CUBRAGOL            64              
+#define ACT_ELESSAR             75             
+#define ACT_GANDALF             76             
+#define ACT_MARDA               77           
+#define ACT_PALANTIR            78              
+#define ACT_ROBINTON            79              
+#define ACT_PIEMUR              80            
+#define ACT_MENOLLY             88             
+#define ACT_EREBOR              89            
+#define ACT_DRUEDAIN            90              
+#define ACT_ESP                 91
+#define ACT_BERSERK             92
+#define ACT_PROT_EVIL           93
+#define ACT_RESIST_ALL          94
+#define ACT_SPEED               95
+#define ACT_XTRA_SPEED          96
+#define ACT_WRAITH              97
+#define ACT_INVULN              98
+#define ACT_ROHAN               99           
+#define ACT_HELM                100          
+#define ACT_BOROMIR             101            
+#define ACT_HURIN               102          
+#define ACT_AXE_GOTHMOG         103                
+#define ACT_MELKOR              104           
+#define ACT_GROND               105          
+#define ACT_NATUREBANE          106               
+#define ACT_NIGHT               107          
+#define ACT_ORCHAST             108            
+
+#define ACT_DEATH               127
+#define ACT_RUINATION           128
+#define ACT_DESTRUC             129
+#define ACT_UNINT               130
+#define ACT_UNSTR               131
+#define ACT_UNCON               132
+#define ACT_UNCHR               133
+#define ACT_UNDEX               134
+#define ACT_UNWIS               135
+#define ACT_STATLOSS            136
+#define ACT_HISTATLOSS          137
+#define ACT_EXPLOSS             138
+#define ACT_HIEXPLOSS           139
+#define ACT_SUMMON_MONST        140
+#define ACT_PARALYZE            141
+#define ACT_HALLU               142
+#define ACT_POISON              143
+#define ACT_HUNGER              144
+#define ACT_STUN                145
+#define ACT_CUTS                146
+#define ACT_PARANO              147
+#define ACT_CONFUSION           148
+#define ACT_BLIND               149
+#define ACT_DARKNESS            161
+#define ACT_LEV_TELE            162
+#define ACT_WEIRD               164
+#define ACT_AGGRAVATE           165
+#define ACT_LIGHT_ABSORBTION    169
+#define ACT_MUSIC               200  
+
+
+#***************************Amulets***********************
+
+#SV_AMULET_ADORNMENT
+I:40:2:4:DARKNESS
+
+#SV_AMULET_BRILLANCE
+I:40:6:1:KNOWLEDGE
+I:40:6:2:CONFUSION
+
+#SV_AMULET_CHARISMA
+I:40:7:4:DARKNESS
+
+#SV_AMULET_DEVOTION
+I:40:25:1:MAGIC
+I:40:25:2:CONFUSION
+I:40:25:8:KNOWLEDGE
+
+#SV_AMULET_ESP
+I:40:22:4:KNOWLEDGE
+
+#SV_AMULET_INFRA
+I:40:26:1:LITE
+
+#SV_AMULET_NO_MAGIC
+I:40:13:4:MAGIC
+
+#SV_AMULET_NO_TELE
+I:40:14:8:TELEPORT
+
+#SV_AMULET_REFLECTION
+I:40:9:10:FORCE
+I:40:9:10:MANA
+
+#SV_AMULET_REGENERATION
+I:40:30:4:LIFE
+
+#SV_AMULET_RESISTANCE
+I:40:15:4:ACID
+I:40:15:4:COLD
+I:40:15:4:FIRE
+I:40:15:4:LIGHTNING
+
+#SV_AMULET_RESIST_ACID
+I:40:4:4:ACID
+
+#SV_AMULET_RESIST_ELEC
+I:40:29:4:LIGHTNING
+
+#SV_AMULET_SEARCHING
+I:40:5:4:KNOWLEDGE
+I:40:5:4:LITE
+
+#SV_AMULET_SERPENT
+I:40:17:1:MANA
+I:40:17:4:ACID
+
+#SV_AMULET_SLOW_DIGEST
+I:40:3:4:LIFE
+
+#SV_AMULET_SUSTENANCE
+I:40:21:8:LIFE
+
+#SV_AMULET_TELEPORT
+I:40:1:8:TELEPORT
+
+#SV_AMULET_THE_MAGI
+I:40:8:1:MAGIC
+I:40:8:4:KNOWLEDGE
+
+#SV_AMULET_TRICKERY
+#I:40:23:1:MAGIC
+I:40:23:8:CONFUSION
+
+#SV_AMULET_WEAPONMASTERY
+I:40:24:12:EXPLOSION
+I:40:24:1:MAGIC
+
+#SV_AMULET_WISDOM
+I:40:28:1:KNOWLEDGE
+I:40:28:2:CONFUSION
+
+#*********Potions******************************
+#Note that these first few potions are the ones which
+#can be thrown for much damage, and are thus an integral part of
+#the alchemist's arsenal.
+
+#SV_POTION_DETONATIONS
+I:71:22:6:EXPLOSION
+
+#SV_POTION_DEATH
+I:71:23:10:LIFE
+
+#SV_POTION_RUINATION
+I:71:15:5:DARKNESS
+
+#SV_POTION_APPLE_JUICE
+I:71:1:1:LIFE
+
+#SV_POTION_AUGMENTATION
+I:71:55:16:POISON
+I:71:55:24:CONFUSION
+I:71:55:6:MAGIC
+I:71:55:8:EXPLOSION
+I:71:55:16:LIFE
+I:71:55:8:LIGHTNING
+I:71:55:16:DARKNESS
+
+#SV_POTION_BESERK_STRENGTH
+I:71:33:1:FIRE
+
+#SV_POTION_BLINDNESS
+I:71:7:1:DARKNESS
+
+#SV_POTION_BOLDNESS
+I:71:28:1:LITE
+
+#SV_POTION_CONFUSION
+I:71:9:1:CONFUSION
+
+#SV_POTION_CURE_CRITICAL
+I:71:36:4:LIFE
+
+#SV_POTION_CURE_LIGHT
+I:71:34:1:LIFE
+
+#SV_POTION_CURE_SERIOUS
+I:71:35:2:LIFE
+
+#SV_POTION_CURING
+I:71:61:1:LIFE
+
+#SV_POTION_DEC_CHR
+I:71:21:1:MANA
+I:71:21:8:DARKNESS
+I:71:21:8:CONFUSION
+
+#SV_POTION_DEC_CON
+I:71:20:1:MANA
+I:71:20:8:LIFE
+I:71:20:8:POISON
+
+#SV_POTION_DEC_DEX
+I:71:19:1:MANA
+I:71:19:8:LIGHTNING
+I:71:19:8:DARKNESS
+
+#SV_POTION_DEC_INT
+I:71:17:1:MANA
+I:71:17:8:CONFUSION
+I:71:17:8:KNOWLEDGE
+
+#SV_POTION_DEC_STR
+I:71:16:1:MANA
+I:71:16:8:EXPLOSION
+I:71:16:8:POISON
+
+#SV_POTION_DEC_WIS
+I:71:18:1:MANA
+I:71:18:8:CONFUSION
+I:71:18:8:LIFE
+
+#SV_POTION_DETECT_INVIS
+I:71:25:1:DARKNESS
+I:71:25:1:LITE
+
+#SV_POTION_ENLIGHTENMENT
+I:71:56:8:KNOWLEDGE
+
+#SV_POTION_EXPERIENCE
+I:71:59:30:EXTRALIFE
+
+#SV_POTION_HEALING
+I:71:37:1:EXTRALIFE
+
+#SV_POTION_HEROISM
+I:71:32:1:COLD
+
+#SV_POTION_INC_CHR
+I:71:53:1:MAGIC
+I:71:53:8:DARKNESS
+I:71:53:8:CONFUSION
+
+#SV_POTION_INC_CON
+I:71:52:1:MAGIC
+I:71:52:8:LIFE
+I:71:52:8:POISON
+
+#Potion of Slow Poison
+I:71:26:1:POISON
+
+#Potion of Cure Poison
+I:71:27:2:POISON
+
+#Potion of Poison
+I:71:6:1:POISON
+
+#SV_POTION_INC_DEX
+I:71:51:1:MAGIC
+I:71:51:8:LIGHTNING
+I:71:51:8:DARKNESS
+
+#SV_POTION_INC_INT
+I:71:49:1:MAGIC
+I:71:49:8:KNOWLEDGE
+I:71:49:8:CONFUSION
+
+#SV_POTION_INC_STR
+I:71:48:1:MAGIC
+I:71:48:8:EXPLOSION
+I:71:48:8:POISON
+
+#SV_POTION_INC_WIS
+I:71:50:1:MAGIC
+I:71:50:8:CONFUSION
+I:71:50:8:LIFE
+
+#SV_POTION_INFRAVISION
+I:71:24:1:LITE
+
+#SV_POTION_INVIS
+I:71:8:4:DARKNESS
+
+#SV_POTION_INVULNERABILITY
+I:71:62:10:FORCE
+I:71:62:4:MAGIC
+
+#SV_POTION_LIFE
+I:71:39:8:EXTRALIFE
+
+#SV_POTION_LOSE_MEMORIES
+I:71:13:20:DARKNESS
+
+#SV_POTION_MUTATION
+I:71:10:12:CHAOS
+
+#SV_POTION_NEW_LIFE
+I:71:63:16:EXTRALIFE
+
+#SV_POTION_RESISTANCE
+I:71:60:2:ACID
+I:71:60:2:COLD
+I:71:60:2:FIRE
+I:71:60:2:LIGHTNING
+
+#SV_POTION_RESIST_COLD
+I:71:31:1:COLD
+
+#SV_POTION_RESIST_HEAT
+I:71:30:1:FIRE
+
+#SV_POTION_RESTORE_EXP
+I:71:41:8:LIFE
+I:71:41:3:KNOWLEDGE
+
+#SV_POTION_RESTORE_MANA
+I:71:40:12:MANA
+
+#SV_POTION_RES_CHR
+I:71:47:12:LIFE
+
+#SV_POTION_RES_CON
+I:71:46:12:LIFE
+
+#SV_POTION_RES_DEX
+I:71:45:12:LIFE
+
+#SV_POTION_RES_INT
+I:71:43:12:LIFE
+
+#SV_POTION_RES_STR
+I:71:42:12:LIFE
+
+#SV_POTION_RES_WIS
+I:71:44:12:LIFE
+
+#SV_POTION_SALT_WATER
+I:71:5:1:LIGHTNING
+
+#SV_POTION_SELF_KNOWLEDGE
+I:71:58:2:KNOWLEDGE
+
+#SV_POTION_SLEEP
+I:71:11:1:MANA
+
+#SV_POTION_SLIME_MOLD
+I:71:2:1:LIFE
+
+#SV_POTION_SLOWNESS
+I:71:4:1:MANA
+
+#SV_POTION_SPEED
+I:71:29:1:TIME
+
+#SV_POTION_STAR_ENLIGHTENMENT
+I:71:57:12:KNOWLEDGE
+
+#SV_POTION_STAR_HEALING
+I:71:38:4:EXTRALIFE
+
+#SV_POTION_WATER
+I:71:0:1:LIFE
+
+#********************************Potion 2*********************************
+
+#SV_POTION2_MIMIC                 1
+I:72:1:2:LIFE
+#SV_POTION2_CURE_LIGHT_SANITY     14
+I:72:14:1:CONFUSION
+I:72:14:1:DARKNESS
+#SV_POTION2_CURE_SERIOUS_SANITY   15
+I:72:15:2:CONFUSION
+I:72:15:2:DARKNESS
+#SV_POTION2_CURE_CRITICAL_SANITY  16
+I:72:16:4:CONFUSION
+I:72:16:4:DARKNESS
+#SV_POTION2_CURE_SANITY           17
+I:72:17:8:CONFUSION
+I:72:17:8:DARKNESS
+#SV_POTION2_CURE_WATER            18
+#I:72:18:4:EXPLOSION
+#I:72:18:4:POISON
+#I:72:18:2:EXTRALIFE
+
+#************Rod Tips.****************************
+
+#SV_ROD_ACID_BALL
+I:66:24:1:MAGIC
+I:66:24:8:ACID
+
+#SV_ROD_ACID_BOLT
+I:66:20:4:ACID
+
+#SV_ROD_COLD_BALL
+I:66:27:1:MAGIC
+I:66:27:8:COLD
+
+#SV_ROD_COLD_BOLT
+I:66:23:4:COLD
+
+#SV_ROD_CURING
+I:66:8:3:LIFE
+
+#SV_ROD_DETECTION
+I:66:6:8:KNOWLEDGE
+
+#SV_ROD_DETECT_DOOR
+I:66:1:1:KNOWLEDGE
+
+#SV_ROD_DETECT_TRAP
+I:66:29:1:KNOWLEDGE
+
+#SV_ROD_DISARMING
+I:66:14:4:TELEPORT
+
+#SV_ROD_DRAIN_LIFE
+I:66:18:10:LIFE
+
+#SV_ROD_ELEC_BALL
+I:66:25:1:MAGIC
+I:66:25:8:LIGHTNING
+
+#SV_ROD_ELEC_BOLT
+I:66:21:4:LIGHTNING
+
+#SV_ROD_FIRE_BALL
+I:66:26:1:MAGIC
+I:66:26:8:FIRE
+
+#SV_ROD_FIRE_BOLT
+I:66:22:4:FIRE
+
+#SV_ROD_HAVOC
+I:66:28:5:CHAOS
+
+#SV_ROD_HEALING
+I:66:9:4:EXTRALIFE
+
+#SV_ROD_IDENTIFY
+I:66:2:4:MANA
+I:66:2:4:KNOWLEDGE
+
+#SV_ROD_ILLUMINATION
+I:66:4:4:LITE
+
+#SV_ROD_LITE
+I:66:15:1:LITE
+
+#SV_ROD_MAPPING
+I:66:5:1:KNOWLEDGE
+I:66:5:8:LITE
+
+#SV_ROD_POLYMORPH
+I:66:19:1:CHAOS
+
+#SV_ROD_PROBING
+I:66:7:20:KNOWLEDGE
+I:66:7:3:MANA
+
+#SV_ROD_RECALL
+I:66:3:3:FORCE
+I:66:3:9:TELEPORT
+
+#SV_ROD_RESTORATION
+I:66:10:30:LIFE
+
+#SV_ROD_SLEEP_MONSTER
+I:66:16:1:MANA
+
+#SV_ROD_SLOW_MONSTER
+I:66:17:1:TIME
+
+#SV_ROD_SPEED
+I:66:11:10:TIME
+
+#SV_ROD_TELEPORT_AWAY
+I:66:13:8:TELEPORT
+
+#**************************Scrolls ********************
+
+#SV_SCROLL_ACQUIREMENT
+I:70:46:10:MAGIC
+
+#SV_SCROLL_ARTIFACT
+I:70:52:99:MAGIC
+
+#SV_SCROLL_BLESSING
+I:70:33:1:LIFE
+
+#SV_SCROLL_CHAOS
+I:70:50:2:CHAOS
+
+#SV_SCROLL_DARKNESS
+I:70:0:1:DARKNESS
+
+#SV_SCROLL_DETECT_DOOR
+I:70:29:1:KNOWLEDGE
+
+#SV_SCROLL_DETECT_GOLD
+I:70:26:1:KNOWLEDGE
+
+#SV_SCROLL_DETECT_INVIS
+I:70:30:1:DARKNESS
+I:70:30:1:KNOWLEDGE
+
+#SV_SCROLL_DETECT_ITEM
+I:70:27:2:KNOWLEDGE
+
+#SV_SCROLL_DETECT_TRAP
+I:70:28:1:KNOWLEDGE
+
+#SV_SCROLL_DISPEL_UNDEAD
+I:70:42:1:EXTRALIFE
+
+#SV_SCROLL_ENCHANT_ARMOR
+I:70:16:3:EXPLOSION
+
+#SV_SCROLL_ENCHANT_WEAPON_PVAL
+I:70:19:10:MAGIC
+
+#SV_SCROLL_ENCHANT_WEAPON_TO_DAM
+I:70:18:3:EXPLOSION
+
+#SV_SCROLL_ENCHANT_WEAPON_TO_HIT
+I:70:17:3:LITE
+
+#SV_SCROLL_FIRE
+I:70:48:1:FIRE
+
+#SV_SCROLL_GENOCIDE
+I:70:44:1:FORCE
+I:70:44:5:DARKNESS
+
+#SV_SCROLL_HOLY_CHANT
+I:70:34:2:LIFE
+
+#SV_SCROLL_HOLY_PRAYER
+I:70:35:3:LIFE
+
+#SV_SCROLL_ICE
+I:70:49:1:COLD
+
+#SV_SCROLL_IDENTIFY
+I:70:12:1:KNOWLEDGE
+
+#SV_SCROLL_LIGHT
+I:70:24:1:LITE
+
+#SV_SCROLL_MAPPING
+I:70:25:2:KNOWLEDGE
+I:70:25:5:LITE
+
+#SV_SCROLL_MASS_GENOCIDE
+I:70:45:1:FORCE
+I:70:45:30:DARKNESS
+
+#SV_SCROLL_MONSTER_CONFUSION
+I:70:36:1:CONFUSION
+
+#SV_SCROLL_PHASE_DOOR
+I:70:8:1:TELEPORT
+
+#SV_SCROLL_PROTECTION_FROM_EVIL
+I:70:37:1:MANA
+I:70:37:9:LIFE
+
+#SV_SCROLL_RECHARGING
+I:70:22:4:LIGHTNING
+
+#SV_SCROLL_REMOVE_CURSE
+I:70:14:1:LIFE
+
+#SV_SCROLL_RESET_RECALL
+I:70:23:1:FORCE
+
+#SV_SCROLL_RUMOR
+I:70:51:1:LIGHTNING
+
+#SV_SCROLL_RUNE_OF_PROTECTION
+I:70:38:1:EXTRALIFE
+I:70:38:6:FORCE
+
+#SV_SCROLL_SATISFY_HUNGER
+I:70:32:1:LIFE
+
+#SV_SCROLL_STAR_ACQUIREMENT
+I:70:47:20:MAGIC
+
+#SV_SCROLL_STAR_DESTRUCTION
+I:70:41:12:FORCE
+
+#SV_SCROLL_STAR_ENCHANT_ARMOR
+I:70:20:9:EXPLOSION
+
+#SV_SCROLL_STAR_ENCHANT_WEAPON
+I:70:21:9:EXPLOSION
+I:70:21:9:LITE
+
+#SV_SCROLL_STAR_IDENTIFY
+I:70:13:1:MAGIC
+I:70:13:20:KNOWLEDGE
+
+#SV_SCROLL_STAR_REMOVE_CURSE
+I:70:15:1:EXTRALIFE
+
+#SV_SCROLL_TELEPORT
+I:70:9:1:TELEPORT
+
+#SV_SCROLL_TELEPORT_LEVEL
+I:70:10:5:TELEPORT
+
+#SV_SCROLL_TRAP_CREATION
+I:70:7:1:CONFUSION
+I:70:7:1:TELEPORT
+
+#SV_SCROLL_TRAP_DOOR_DESTRUCTION
+I:70:39:1:FORCE
+
+#SV_SCROLL_WORD_OF_RECALL
+I:70:11:1:FORCE
+I:70:11:3:TELEPORT
+
+#***************************Staves************************
+
+#Globe of Light
+I:55:3:1:LITE
+#Fiery Shield
+I:55:4:2:FIRE
+I:55:4:1:MANA
+#Remove Curse
+I:55:5:2:LIFE
+#Wings of Winds
+I:55:6:1:FORCE
+#Shake
+I:55:7:4:FORCE
+#Disarm
+I:55:8:1:FORCE
+I:55:8:1:KNOWLEDGE
+#Teleportation
+I:55:9:1:TELEPORT
+#Probability Travel
+I:55:10:1:MANA
+I:55:10:1:TELEPORT
+#11 Recovery
+I:55:11:1:LIFE
+#12 Healing
+I:55:12:1:EXTRALIFE
+#13 Vision
+I:55:13:1:LITE
+#Identify
+I:55:14:1:KNOWLEDGE
+I:55:14:1:MANA
+#Sense Hidden
+I:55:15:1:KNOWLEDGE
+#Reveal Ways
+I:55:16:1:KNOWLEDGE
+#Sense Monsters
+I:55:17:1:KNOWLEDGE
+#Genocide
+I:55:18:1:FORCE
+I:55:18:5:DARKNESS
+#19 Summon
+I:55:19:1:LIFE
+I:55:19:1:TELEPORT
+#Wish
+I:55:20:99:MAGIC
+#Mana
+I:55:21:1:MANA
+#Sterilize
+I:55:24:1:POISON
+I:55:24:1:MANA
+
+#********************Wands*****************
+
+#MannaThrust
+I:65:3:4:MANA
+
+#FireFlash
+I:65:4:1:FIRE
+
+#FireWall
+I:65:5:4:FIRE
+I:65:5:1:MANA
+
+#Tidal Wave
+I:65:6:1:POISON
+I:65:6:1:ACID
+I:65:6:1:COLD
+
+#Ice Storm
+I:65:7:4:COLD
+I:65:7:1:MANA
+
+#Wand of Noxious Cloud
+I:65:8:1:POISON
+
+#Poison Blood
+I:65:9:2:POISON
+I:65:9:1:LIFE
+
+#Thunderstorm
+I:65:10:4:LIGHTNING
+
+#DIG
+I:65:11:1:FORCE
+
+#Stone Prison
+I:65:12:3:FORCE
+I:65:12:1:MANA
+
+#Strike
+I:65:13:1:FORCE
+#Teleport Away
+I:65:14:1:TELEPORT
+#Summon Animal
+I:65:15:4:LIFE
+I:65:15:1:MANA
+#MageLock
+I:65:16:1:FORCE
+#Slow Monster
+I:65:17:1:MANA
+#Essence of Speed
+I:65:18:1:TIME
+#Banishment
+I:65:19:2:TELEPORT
+#20 Disperse Magic
+I:65:20:4:LIFE
+I:65:20:4:MANA
+#Charm
+I:65:21:1:MANA
+I:65:21:1:LIFE
+#Confuse
+I:65:22:1:CONFUSION
+#Deamon Blade
+I:65:23:1:FORCE
+I:65:23:1:FIRE
+#Heal Monster
+I:65:24:1:LIFE
+#25 Haste Monster
+I:65:25:1:MANA
+
+
+
+#RINGS*********************************************************
+
+#ring of poison resistance
+I:45:20:8:POISON
+
+#Ring of Critical Hits
+I:45:59:8:MANA
+
+#Damage
+I:45:29:1:EXPLOSION
+
+#Slaying
+I:45:30:8:EXPLOSION
+I:45:30:8:LITE
+
+#Sound Resistance
+I:45:42:4:EXPLOSION
+I:45:42:4:LITE
+
+#Shard Resistance
+I:45:44:4:EXPLOSION
+I:45:44:4:TELEPORT
+
+#Flying
+I:45:54:12:TELEPORT
+
+#Extra Attacks
+I:45:49:8:TELEPORT
+I:45:49:4:TIME
+
+#Teleportation
+I:45:4:8:TELEPORT
+
+#Lordly Protection
+I:45:48:4:TELEPORT
+I:45:48:12:LITE
+I:45:48:1:EXTRALIFE
+
+#Ring of Ice
+I:45:19:8:COLD
+
+#Ring of Cold Resistance
+I:45:9:4:COLD
+
+#Ring of Flames
+I:45:18:8:FIRE
+
+#Ring of Fire Resistance
+I:45:8:4:FIRE
+
+#Ring of Acid
+I:45:17:8:ACID
+
+#Ring of Disenchantment Resistance
+I:45:45:8:ACID
+I:45:45:2:CHAOS
+
+#Ring of slow digestion
+I:45:6:4:LIFE
+I:45:6:1:TIME
+
+#ring of confusion resistance
+I:45:43:8:CONFUSION
+
+#Ring of Stupidity
+I:45:3:1:CONFUSION
+
+#Ring of Blindness Resistance
+I:45:47:8:LITE
+
+#Ring of Accuracy
+I:45:28:1:LITE
+
+#Ring of Searching
+I:45:23:4:LITE
+I:45:23:3:KNOWLEDGE
+
+#Ring of Chaos
+I:45:46:8:LITE
+
+#Ring of Light and Darkness Resistance
+I:45:39:8:LITE
+I:45:39:8:DARKNESS
+
+#Ring of Speed
+I:45:31:12:TIME
+
+#ring of Weakness
+I:45:2:1:POISON
+
+#ring of Constitution
+I:45:27:2:POISON
+I:45:27:8:LIFE
+
+#ring of Strength
+I:45:24:1:POISON
+I:45:24:1:EXPLOSION
+
+#Ring of Dexterity
+I:45:26:1:KNOWLEDGE
+I:45:26:1:LIGHTNING
+
+#ring of Sustain Constitution
+I:45:13:1:POISON
+I:45:13:4:LIFE
+I:45:13:1:MANA
+
+#ring of Sustain Strength
+I:45:10:1:POISON
+I:45:10:1:EXPLOSION
+I:45:10:1:MANA
+
+#ring of Sustain Intelligence
+I:45:11:1:CONFUSION
+I:45:11:1:MANA
+
+#ring of Intelligence
+I:45:25:1:CONFUSION
+I:45:25:12:KNOWLEDGE
+
+#Ring of Sustain Wisdom
+I:45:12:1:MANA
+I:45:12:4:CONFUSION
+
+#Ring of Sustain Dexterity
+I:45:14:1:MANA
+I:45:14:1:LIGHTNING
+
+#Ring of Sustain Charisma
+I:45:15:1:MANA
+I:45:15:1:DARKNESS
+
+#Ring of See Invisible
+I:45:22:8:DARKNESS
+
+#Ring of Invisibility
+I:45:53:8:DARKNESS
+
+#Ring of Fear resistance
+I:45:38:1:MAGIC
+
+#Ring of Levitation
+I:45:7:1:MANA
+
+#Ring of Nether Resistance
+I:45:40:1:MANA
+I:45:40:12:LIFE
+
+#Ring of Nexus Resistance
+I:45:41:1:MANA
+
+#Ring of Free Action
+I:45:21:1:FORCE
+
+#Ring of Protection
+I:45:16:10:FORCE
+
+#Ring of Lightning
+I:45:56:12:LIGHTNING
+
+#EGO ITEMS, in order by e_idx
+I:1:1:1:MAGIC		},/*of Mana*/
+I:1:2:2:MAGIC		},/*of Power*/
+I:1:3:3:MAGIC		},/*of Wizardry*/
+I:1:4:2:MAGIC		},/*of Spell*/
+I:1:5:4:ACID		},/*of Resist Acid*/
+I:1:6:4:LIGHTNING		},/*of Resist Lightning*/
+I:1:7:4:FIRE		},/*of Resist Fire*/
+I:1:8:4:COLD		},/*of Resist Cold*/
+I:1:9:4:ACID		},/*of Resistance*/
+I:1:9:4:COLD		},/*of Resistance*/
+I:1:9:4:FIRE		},/*of Resistance*/
+I:1:9:4:LIGHTNING		},/*of Resistance*/
+I:1:10:5:ACID		},/*Elven*/
+I:1:10:5:COLD		},/*Elven*/
+I:1:10:5:FIRE		},/*Elven*/
+I:1:10:5:LIGHTNING		},/*Elven*/
+I:1:11:1:MAGIC		},/*of Permanence*/
+I:1:11:6:ACID		},/*of Permanence*/
+I:1:11:6:COLD		},/*of Permanence*/
+I:1:11:6:FIRE		},/*of Permanence*/
+I:1:11:6:LIGHTNING		},/*of Permanence*/
+I:1:12:1:POISON       },/*of Leprousness*/
+I:1:13:3:MAGIC		},/*of Immunity*/
+I:1:14:5:MAGIC		},/*of Defense*/
+I:1:15:4:TELEPORT		},/*of Jumping*/
+I:1:16:4:ACID		},/*of Resist Acid*/
+I:1:17:4:LIGHTNING		},/*of Resist Lightning*/
+I:1:18:4:FIRE		},/*of Resist Fire*/
+I:1:19:4:COLD		},/*of Resist Cold*/
+I:1:20:4:ACID		},/*of Resistance*/
+I:1:20:4:COLD		},/*of Resistance*/
+I:1:20:4:FIRE		},/*of Resistance*/
+I:1:20:4:LIGHTNING		},/*of Resistance*/
+I:1:21:12:FORCE		},/*of Reflection*/
+I:1:22:8:LIGHTNING		},/*of Electricity*/
+I:1:23:4:DARKNESS		},/*of the Noldor*/
+I:1:24:4:KNOWLEDGE		},/*of Intelligence*/
+I:1:25:4:KNOWLEDGE		},/*of Wisdom*/
+I:1:26:4:KNOWLEDGE		},/*of Beauty*/
+I:1:27:12:KNOWLEDGE		},/*of the Magi*/
+I:1:28:12:EXPLOSION		},/*of Might*/
+I:1:29:4:MANA		},/*of Lordliness*/
+I:1:30:8:KNOWLEDGE		},/*of Seeing*/
+I:1:31:1:LITE		},/*of Infravision*/
+I:1:32:1:LITE		},/*of Light*/
+I:1:33:8:KNOWLEDGE		},/*of Telepathy*/
+I:1:34:4:LIFE		},/*of Regeneration*/
+I:1:35:4:TELEPORT		},/*of Teleportation*/
+I:1:40:8:EXPLOSION		},/*Dwarven*/
+I:1:40:8:FIRE		},/*Dwarven*/
+I:1:40:8:LIFE		},/*Dwarven*/
+I:1:40:8:LITE		},/*Dwarven*/
+I:1:40:8:MANA		},/*Dwarven*/
+I:1:41:4:FORCE		},/*of Protection*/
+I:1:42:4:DARKNESS		},/*of Stealth*/
+I:1:43:4:ACID		},/*of Aman*/
+I:1:43:4:COLD		},/*of Aman*/
+I:1:43:4:DARKNESS		},/*of Aman*/
+I:1:43:4:FIRE		},/*of Aman*/
+I:1:43:4:LIGHTNING		},/*of Aman*/
+I:1:44:8:FIRE		},/*of Immolation*/
+I:1:48:8:LIGHTNING		},/*of Electricity*/
+I:1:49:1:FORCE		},/*of Free Action*/
+I:1:50:4:FORCE		},/*of Slaying*/
+I:1:50:4:LITE		},/*of Slaying*/
+I:1:51:4:LIGHTNING		},/*of Agility*/
+I:1:52:4:EXPLOSION		},/*of Power*/
+I:1:54:2:DARKNESS		},/*of Charming*/
+I:1:57:3:DARKNESS		},/*of Levitation*/
+I:1:58:3:DARKNESS		},/*of Stealth*/
+I:1:59:3:DARKNESS		},/*of Free Action*/
+I:1:60:5:TIME		},/*of Speed*/
+I:1:61:2:DARKNESS		},/*of Dwarvish Endurance*/
+I:1:61:2:EXPLOSION		},/*of Dwarvish Endurance*/
+I:1:65:4:ACID		},/*of Aman*/
+I:1:65:4:COLD		},/*of Aman*/
+I:1:65:4:DARKNESS		},/*of Aman*/
+I:1:65:4:FIRE		},/*of Aman*/
+I:1:65:4:LIGHTNING		},/*of Aman*/
+I:1:66:1:MAGIC		},/*(Defender)*/
+I:1:66:4:ACID		},/*(Defender)*/
+I:1:66:4:COLD		},/*(Defender)*/
+I:1:66:4:FIRE		},/*(Defender)*/
+I:1:66:4:LIGHTNING		},/*(Defender)*/
+I:1:67:8:KNOWLEDGE		},/*Blessed*/
+I:1:68:12:LIFE		},/*of Greater Life*/
+I:1:68:2:MAGIC		},/*of Greater Life*/
+I:1:69:4:DARKNESS		},/*of Westernesse*/
+I:1:69:4:EXPLOSION		},/*of Westernesse*/
+I:1:69:4:LIGHTNING		},/*of Westernesse*/
+I:1:69:4:LITE		},/*of Westernesse*/
+I:1:70:2:TIME		},/*of Extra Attacks*/
+I:1:71:4:FORCE		},/*of Slaying*/
+I:1:71:4:LITE		},/*of Slaying*/
+I:1:72:4:EXPLOSION		},/*of Spinning*/
+I:1:72:4:LIGHTNING		},/*of Spinning*/
+I:1:73:4:ACID		},/*Acidic*/
+I:1:74:4:LIGHTNING		},/*Shocking*/
+I:1:75:4:FIRE		},/*Fiery*/
+I:1:76:4:COLD		},/*Frozen*/
+I:1:77:4:POISON       },/*Venomous*/
+I:1:78:4:CHAOS		},/*Chaotic*/
+I:1:79:4:FORCE		},/*Sharp*/
+I:1:80:4:FORCE		},/*of Earthquakes*/
+I:1:81:8:CHAOS		},/*of Slay Animal*/
+I:1:82:8:CHAOS		},/*of Slay Evil*/
+I:1:83:8:CHAOS		},/*of Slay Undead*/
+I:1:84:8:CHAOS		},/*of Slay Demon*/
+I:1:85:8:CHAOS		},/*of Slay Orc*/
+I:1:86:8:CHAOS		},/*of Slay Troll*/
+I:1:87:8:CHAOS		},/*of Slay Giant*/
+I:1:88:8:CHAOS		},/*of Slay Dragon*/
+I:1:89:12:CHAOS		},/*of *Slay Animal**/
+I:1:90:12:CHAOS		},/*of *Slay Evil**/
+I:1:91:12:CHAOS		},/*of *Slay Undead**/
+I:1:92:12:CHAOS		},/*of *Slay Demon**/
+I:1:93:12:CHAOS		},/*of *Slay Orc**/
+I:1:94:12:CHAOS		},/*of *Slay Troll**/
+I:1:95:12:CHAOS		},/*of *Slay Giant**/
+I:1:96:12:CHAOS		},/*of *Slay Dragon**/
+I:1:97:8:LIFE		},/*Vampiric*/
+I:1:98:4:MAGIC		},/*(*Defender*)*/
+I:1:98:8:ACID		},/*(*Defender*)*/
+I:1:98:8:COLD		},/*(*Defender*)*/
+I:1:98:8:FIRE		},/*(*Defender*)*/
+I:1:98:8:LIGHTNING		},/*(*Defender*)*/
+I:1:98:8:POISON       },/*(*Defender*)*/
+I:1:99:12:TELEPORT		},/*of the Thunderlords*/
+I:1:100:12:KNOWLEDGE		},/*of Gondolin*/
+I:1:100:1:MAGIC		},/*of Gondolin*/
+I:1:101:1:FORCE		},/*of Digging*/
+I:1:102:12:LIFE		},/*Spectral*/
+I:1:102:4:MANA		},/*Spectral*/
+I:1:105:1:LITE		},/*of Accuracy*/
+I:1:106:2:FORCE		},/*of Power*/
+I:1:107:2:FORCE		},/*of Extra Might*/
+I:1:108:1:FORCE		},/*of Extra Shots*/
+I:1:108:1:LITE		},/*of Extra Shots*/
+I:1:108:1:TIME		},/*of Extra Shots*/
+I:1:109:2:FORCE		},/*of Lothlorien*/
+I:1:109:2:LITE		},/*of Lothlorien*/
+I:1:110:2:FORCE		},/*of the Haradrim*/
+I:1:110:2:LITE		},/*of the Haradrim*/
+I:1:111:2:FORCE		},/*of Buckland*/
+I:1:111:2:LITE		},/*of Buckland*/
+I:1:112:1:CHAOS		},/*of Slay Animal*/
+I:1:113:1:CHAOS		},/*of Slay Evil*/
+I:1:114:1:CHAOS		},/*of Slay Undead*/
+I:1:115:1:POISON      },/*of Venom*/
+I:1:116:1:ACID		},/*of Acid*/
+I:1:117:12:ACID		},/*Elemental*/
+I:1:117:12:COLD		},/*Elemental*/
+I:1:117:12:FIRE		},/*Elemental*/
+I:1:117:12:LIGHTNING		},/*Elemental*/
+I:1:117:12:POISON     },/*Elemental*/
+I:1:118:1:CHAOS		},/*of Slay Demon*/
+I:1:119:1:CHAOS		},/*of Slay Dragon*/
+I:1:120:1:FORCE		},/*of Slaying*/
+I:1:120:1:LITE		},/*of Slaying*/
+I:1:121:1:LIGHTNING		},/*of Lightning*/
+I:1:121:1:LITE		},/*of Lightning*/
+I:1:122:1:FIRE		},/*of Flame*/
+I:1:122:1:LITE		},/*of Flame*/
+I:1:123:1:COLD		},/*of Frost*/
+I:1:123:1:LITE		},/*of Frost*/
+I:1:124:1:LIFE		},/*of Wounding*/
+I:1:128:2:ACID		},/*of the Eldar*/
+I:1:128:2:DARKNESS		},/*of the Eldar*/
+I:1:129:2:ACID		},/*of Power*/
+I:1:129:2:COLD		},/*of Power*/
+I:1:129:2:DARKNESS		},/*of Power*/
+I:1:129:2:FIRE		},/*of Power*/
+I:1:129:2:LIGHTNING		},/*of Power*/
+I:1:130:1:MANA		},/*Dragon*/
+I:1:131:1:MANA		},/*Capacity of */
+I:1:132:1:LIFE		},/*Cheapness of */
+I:1:133:1:TIME		},/*Quickness of */
+I:1:134:1:TIME		},/*Charging of */
+I:1:135:3:LIFE		},/*the Istari of */
+I:1:135:3:MANA		},/*the Istari of */
+I:1:135:3:TIME		},/*the Istari of */
+I:1:136:1:LITE		},/*of Boldness*/
+I:1:137:1:LITE		},/*of Fearlessness*/
+I:1:138:2:LITE		},/*of Illumination*/
+I:1:139:2:LITE		},/*of Brightness*/
+I:1:140:4:LITE		},/*of *Brightness**/
+I:1:141:4:DARKNESS		},/*of the Shadows*/
+I:1:141:4:LITE		},/*of the Shadows*/
+I:1:142:4:DARKNESS		},/*of Infravision*/
+I:1:142:4:LITE		},/*of Infravision*/
+I:1:143:8:DARKNESS		},/*of the Eternal Eye*/
+I:1:144:4:MANA		},/*of the Ethereal Eye*/
+I:1:146:4:DARKNESS		},/*Dwarven*/
+I:1:146:4:EXPLOSION		},/*Dwarven*/
+I:1:146:4:LITE		},/*Dwarven*/
+I:1:147:1:MAGIC		},/*Indestructible*/
+I:1:147:4:ACID		},/*Indestructible*/
+I:1:147:4:COLD		},/*Indestructible*/
+I:1:147:4:FIRE		},/*Indestructible*/
+I:1:147:4:LIGHTNING		},/*Indestructible*/
+I:1:147:4:MANA		},/*Indestructible*/
+I:1:149:1:FIRE		},/*Fireproof*/
+I:1:163:3:DARKNESS		},/*of the Magi*/
+I:1:163:3:KNOWLEDGE		},/*of the Magi*/
+I:1:163:3:MANA		},/*of the Magi*/
+I:1:166:4:MAGIC		},/*of Preservation*/
+I:1:166:4:MANA		},/*of Preservation*/
+I:1:167:12:MANA		},/*of Serenity*/
+I:1:168:4:DARKNESS		},/*of Night and Day*/
+I:1:168:4:LITE		},/*of Night and Day*/
+I:1:169:1:TIME		},/*of the Magi*/
+I:1:169:8:KNOWLEDGE		},/*of the Magi*/
+I:1:170:4:DARKNESS		},/*of Invisibility*/
+I:1:171:8:DARKNESS		},/*of the Bat*/
+I:1:171:8:TELEPORT		},/*of the Bat*/
+I:1:172:4:LIGHTNING		},/*of Thievery*/
+I:1:173:4:FORCE		},/*of Combat*/
+I:1:174:4:TELEPORT		},/*of Stability*/
+I:1:175:4:ACID		},/*of Elvenkind*/
+I:1:175:4:COLD		},/*of Elvenkind*/
+I:1:175:4:FIRE		},/*of Elvenkind*/
+I:1:175:4:LIGHTNING		},/*of Elvenkind*/
+I:1:176:1:MAGIC		},/*of Fury*/
+I:1:176:4:CHAOS		},/*of Fury*/
+I:1:176:4:EXPLOSION		},/*of Fury*/
+I:1:176:4:MANA		},/*of Fury*/
+I:1:178:8:FORCE		},/*Magical*/
+I:1:179:4:KNOWLEDGE		},/*Simplicity of */
+I:1:180:1:FIRE		},/*of Warmth*/
+I:1:185:12:LIFE		},/*of Life*/
+I:1:185:2:MAGIC		},/*of Life*/

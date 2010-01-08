@@ -1,0 +1,9 @@
+7
+******** BUFFER LINE *********************************** DO NOT REMOVE *******
+You nearly decapitate %s!
+You impale %s on your weapon.
+Your weapon almost slices %s in half!
+%^s's head caves in!
+You broke %s's spine!
+Your weapon slices into %s's heart!
+You smashed %s's ribcage!

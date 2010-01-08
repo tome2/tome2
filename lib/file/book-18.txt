@@ -1,0 +1,250 @@
+Adunaphel the Quiet is a unique undead monster, 
+occurring at shallow-to-moderate depths. 
+She is hellishly strong, moderately dangerous, 
+and has hellishly powerful magical powers. 
+
+The Dark elven sorceror is an uncommon monster, 
+occurring at shallow-to-moderate depths. 
+He is extremely strong, just a small bit dangerous, 
+and has hellishly powerful magical powers. 
+
+The Master lich is an uncommon undead monster, 
+occurring at shallow-to-moderate depths. 
+It is hellishly strong, extremely dangerous, 
+and has hellishly powerful magical powers. 
+
+The Hezrou is a somewhat rare monster, 
+occurring at shallow-to-moderate depths. 
+It is somewhat strong, moderately dangerous, 
+and has rudimentary magical powers. 
+
+Akhorahil the Blind is a unique undead monster, 
+occurring at shallow-to-moderate depths. 
+He is hellishly strong, somewhat dangerous, 
+and has hellishly powerful magical powers. 
+
+Gorlim, Betrayer of Barahir is a unique monster, 
+occurring at shallow-to-moderate depths. 
+He is hellishly strong, hellishly dangerous, 
+and has remarkable magical powers. 
+
+The Solar is a legendary monster, 
+occurring at shallow-to-moderate depths. 
+It is hellishly strong, alarmingly dangerous, 
+and has advanced magical powers. 
+
+The Glabrezu is an uncommon monster, 
+occurring at shallow-to-moderate depths. 
+It is strong, somewhat dangerous, 
+and has rudimentary magical powers. 
+
+Ren the Unclean is a unique undead monster, 
+occurring at shallow-to-moderate depths. 
+He is hellishly strong, moderately dangerous, 
+and has hellishly powerful magical powers. 
+
+The Nalfeshnee is an uncommon monster, 
+occurring at shallow-to-moderate depths. 
+It is very strong, somewhat dangerous, 
+and has small magical powers. 
+
+The Undead beholder is a rare undead monster, 
+occurring at shallow-to-moderate depths. 
+It is hellishly strong, hellishly dangerous, 
+and has hellishly powerful magical powers. 
+
+The Dread is a common undead monster, 
+occurring at shallow-to-moderate depths. 
+It is somewhat strong, extremely dangerous, 
+and has simple magical powers. 
+
+The Mumak is an uncommon monster, 
+occurring at shallow-to-moderate depths. 
+It is alarmingly strong, just a small bit dangerous, 
+and has no magical powers. 
+
+The Ancient multi-hued dragon is a common dragon, 
+occurring at shallow-to-moderate depths. 
+It is hellishly strong, alarmingly dangerous, 
+and has extremely powerful magical powers. 
+
+The Ethereal dragon is an uncommon dragon, 
+occurring at shallow-to-moderate depths. 
+It is hellishly strong, moderately dangerous, 
+and has average magical powers. 
+
+Ji Indur Dawndeath is a unique undead monster, 
+occurring at shallow-to-moderate depths. 
+He is hellishly strong, moderately dangerous, 
+and has very powerful magical powers. 
+
+The Marilith is an uncommon monster, 
+occurring at shallow-to-moderate depths. 
+She is hellishly strong, somewhat dangerous, 
+and has an inkling of magical powers. 
+
+Quaker, Master of Earth is a unique monster, 
+occurring at shallow-to-moderate depths. 
+He is hellishly strong, hellishly dangerous, 
+and has rudimentary magical powers. 
+
+The Lesser Balrog is a somewhat rare monster, 
+occurring at shallow-to-moderate depths. 
+It is hellishly strong, moderately dangerous, 
+and has simple magical powers. 
+
+Ariel, Queen of Air is a unique monster, 
+occurring at shallow-to-moderate depths. 
+She is hellishly strong, hellishly dangerous, 
+and has average magical powers. 
+
+The 11-headed hydra is an uncommon animal, 
+occurring at shallow-to-moderate depths. 
+It is hellishly strong, just a small bit dangerous, 
+and has extremely powerful magical powers. 
+
+The Patriarch is an uncommon monster, 
+occurring at shallow-to-moderate depths. 
+He is extremely strong, somewhat dangerous, 
+and has extremely powerful magical powers. 
+
+The Dreadmaster is an uncommon undead monster, 
+occurring at shallow-to-moderate depths. 
+It is hellishly strong, unimaginably dangerous, 
+and has very powerful magical powers. 
+
+The Drolem is a somewhat rare dragon, 
+occurring at shallow-to-moderate depths. 
+It is hellishly strong, hellishly dangerous, 
+and has small magical powers. 
+
+Scatha the Worm is a unique dragon, 
+occurring at shallow-to-moderate depths. 
+He is hellishly strong, somewhat dangerous, 
+and has small magical powers. 
+
+Dwar, Dog Lord of Waw is a unique undead monster, 
+occurring at shallow-to-moderate depths. 
+He is hellishly strong, moderately dangerous, 
+and has hellishly powerful magical powers. 
+
+Smaug the Golden is a unique dragon, 
+occurring at shallow-to-moderate depths. 
+He is hellishly strong, somewhat dangerous, 
+and has small magical powers. 
+
+The Dracolich is an uncommon undead monster, 
+occurring at shallow-to-moderate depths. 
+It is hellishly strong, alarmingly dangerous, 
+and has simple magical powers. 
+
+The Greater titan is a somewhat rare monster, 
+occurring at shallow-to-moderate depths. 
+It is hellishly strong, moderately dangerous, 
+and has simple magical powers. 
+
+The Dracolisk is an uncommon dragon, 
+occurring at shallow-to-moderate depths. 
+It is hellishly strong, somewhat dangerous, 
+and has simple magical powers. 
+
+The Death mold is a common monster, 
+occurring at shallow-to-moderate depths. 
+It is hellishly strong, hellishly dangerous, 
+and has no magical powers. 
+
+Itangast the Fire Drake is a unique dragon, 
+occurring at shallow-to-moderate depths. 
+He is hellishly strong, somewhat dangerous, 
+and has small magical powers. 
+
+Glaurung, Father of the Dragons is a unique dragon, 
+occurring at shallow-to-moderate depths. 
+He is hellishly strong, somewhat dangerous, 
+and has unremarkable magical powers. 
+
+The Master mystic is a somewhat rare monster, 
+occurring at moderate depths. 
+He is hellishly strong, hellishly dangerous, 
+and has small magical powers. 
+
+Durin's Bane is a unique monster, 
+occurring at moderate depths. 
+He is hellishly strong, moderately dangerous, 
+and has remarkable magical powers. 
+
+The Nightwing is a rare undead monster, 
+occurring at moderate depths. 
+It is hellishly strong, hellishly dangerous, 
+and has hellishly powerful magical powers. 
+
+The Nether hound is an uncommon animal, 
+occurring at moderate depths. 
+It is very strong, just a small bit dangerous, 
+and has an inkling of magical powers. 
+
+The Time hound is a rare animal, 
+occurring at moderate depths. 
+It is very strong, just a small bit dangerous, 
+and has no magical powers. 
+
+The Plasma hound is an uncommon animal, 
+occurring at moderate depths. 
+It is very strong, somewhat dangerous, 
+and has an inkling of magical powers. 
+
+The Demonic quylthulg is a common animal, 
+occurring at moderate depths. 
+It is moderately strong, just a small bit dangerous, 
+and has unremarkable magical powers. 
+
+The Great storm wyrm is an uncommon dragon, 
+occurring at moderate depths. 
+It is hellishly strong, somewhat dangerous, 
+and has rudimentary magical powers. 
+
+Baphomet the Minotaur Lord is a unique monster, 
+occurring at moderate depths. 
+He is hellishly strong, somewhat dangerous, 
+and has hellishly powerful magical powers. 
+
+Harowen the Black Hand is a unique monster, 
+occurring at moderate depths. 
+He is hellishly strong, moderately dangerous, 
+and has no magical powers. 
+
+Hoarmurath of Dir is a unique undead monster, 
+occurring at moderate depths. 
+He is hellishly strong, somewhat dangerous, 
+and has hellishly powerful magical powers. 
+
+The Grand master mystic is a somewhat rare monster, 
+occurring at moderate depths. 
+He is hellishly strong, hellishly dangerous, 
+and has arcane magical powers. 
+
+Khamul the Easterling is a unique undead monster, 
+occurring at moderate depths. 
+He is hellishly strong, moderately dangerous, 
+and has hellishly powerful magical powers. 
+
+The Ethereal hound is a somewhat rare animal, 
+occurring at moderate depths. 
+It is unimaginably strong, somewhat dangerous, 
+and has an inkling of magical powers. 
+
+The Great ice wyrm is an uncommon dragon, 
+occurring at moderate depths. 
+It is hellishly strong, somewhat dangerous, 
+and has rudimentary magical powers. 
+
+The Phoenix is a unique animal, 
+occurring at moderate depths. 
+It is hellishly strong, alarmingly dangerous, 
+and has hellishly powerful magical powers. 
+
+The Nightcrawler is a rare undead monster, 
+occurring at moderate depths. 
+It is hellishly strong, unimaginably dangerous, 
+and has hellishly powerful magical powers. 
+

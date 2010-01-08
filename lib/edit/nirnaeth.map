@@ -1,0 +1,64 @@
+# Permanent wall
+F:X:63:3
+
+# up stairs
+F:<:6:3
+
+# Floor with dirt
+F:.:1:5
+
+# Dirt (no-tele)
+F:s:88:5
+
+# Shallow water
+F:V:84:5
+
+# Dirt with Olog
+F:a:88:5:538
+
+# Dirt with Cave Troll
+F:b:88:5:496
+
+# Dirt with with Eldrak
+F:c:88:1:620
+
+# Dirt with with Ettin
+F:e:88:1:621
+
+# Dirt with with War troll
+F:f:88:1:631
+
+# Dirt with with Hru
+F:g:88:1:709
+
+# Dirt with Ulik the Troll
+F:h:88:5:729
+
+# Dirt with Ancient green dragon
+F:i:88:5:618
+
+# Dungeon
+D:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+D:X...a.bab....f.....f.XXXXXXXXXXX
+D:X..ab...b..ff..aa..b..XXXXXXXXXX
+D:X.aa..b..fff...a..g.f.b.XXXXXXXX
+D:Xab.....b....f.......f..bf..XXXX
+D:X..b.f......ff.f..aa...f..b.XXXX
+D:X...ff..f..ff.c.a..f.g.a..fXXXXX
+D:Xb.f....fff.ff...aaa....f..XXXXX
+D:X...ff...ff...f......aa..a..XXXX
+D:Xb.ff.a...f...bbb..a..aa.....XXX
+D:X.f.a...a....bbebb......f.fa.XXX
+D:X.....a.....bbecebb..g.a.a....XX
+D:X.a.a....aa.beccceb....f.a..c.XX
+D:X......a..f.bbecebba.f....ea...X
+D:XX.b.aa.f..f.bbebb...a.aa...g.aX
+D:XX..bb...a..f.bbb..a..a..aae..iX
+D:XXX....aa.aa.f...aa...e..b..h..X
+D:XXXXXX........bb...g....aa...gcX
+D:XXXXXXXX.g..aa...a...a.e...ac.<X
+D:XXXXXXXX........bb....e.c.i.e.iX
+D:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+# Starting position
+P:3:3

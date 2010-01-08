@@ -1,0 +1,44 @@
+|||||oy
+~~~~~01|Magic|Demonology School
+~~~~~02|Demonology Magic
+~~~~~03|Skills|Demonology - Spell Info
+#####R === ToME Magic - Demonology ===
+
+Available only to Demonologists, or those sufficiently corrupted with
+demon-like powers, this school contains spells where demonic energies
+are used to create mainly devastating effects.
+
+#####oDemonic equipment
+Unlike other magic schools, the spells of a Demonologist are not written
+in spell books, but are contained within items of demonic origin known as
+Demonblades, Demonshields, and Demonhorns (helms), which when wielded allow
+the Demonologist to cast spells; each piece of equipment holds three spells.
+
+#####oDemonblade spells
+1. [[[[[oDemon Blade] (school level 1)
+   Imbues your blade with fire to deal more damage.
+   At level 30 it deals hell fire damage.
+   At level 45 it spreads over a 1 radius zone around your target.
+2. [[[[[oDemon Madness] (school level 10)
+   Fire 2 balls in opposite directions of randomly chaos, confusion or charm.
+3. [[[[[oDemon Field] (school level 20)
+   Fires a lingering cloud of deadly nexus over a radius of 7.
+
+#####oDemonshield spells
+1. [[[[[oDoom Shield] (school level 1)
+   Raises a mirror of pain around you, doing very high damage to your foes
+   that dare hit you, but greatly reduces your armour class.
+2. [[[[[oDemon Cloak] (school level 20)
+   Raises a mirror that can reflect bolts and arrows for a time.
+3. [[[[[oUnholy Word] (school level 25)
+   Kills a pet to heal you. There is a chance that the pet won't die but will
+   turn against you. This chance will decrease with higher spell levels.
+
+#####oDemonhorn spells
+1. [[[[[oSummon Demon] (school level 5)
+   Summons a leveled demon to your side.
+   At level 35 it summons a high demon.
+2. [[[[[oDischarge Minion] (school level 10)
+   The targeted pet will explode in a burst of gravity.
+3. [[[[[oControl Demon] (school level 25)
+   Attempts to control a demon.

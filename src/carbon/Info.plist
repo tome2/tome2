@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plist version="1.0">
+  <dict>
+    <key>CFBundleName</key><string>T.o.M.E.</string>
+    <key>CFBundleDisplayName</key><string>T.o.M.E. (OS X)</string>
+    <key>CFBundleExecutable</key><string>tome</string>
+    <key>CFBundlePackageType</key><string>APPL</string>
+    <key>CFBundleSignature</key><string>PrnA</string>
+    <key>CFBundleVersion</key><string>2.3.4</string>
+    <key>CFBundleShortVersionString</key><string>234</string>
+    <key>CFBundleIconFile</key><string>Angband</string>
+    <key>CFBundleIdentifier</key><string>net.t-o-m-e.tome</string>
+    <key>CFBundleInfoDictionaryVersion</key><string>6.0</string>
+    <key>CFBundleDocumentTypes</key>
+      <array>
+        <dict>
+          <key>CFBundleTypeExtentions</key><array><string>*</string></array>
+          <key>CFBundleTypeIconFile</key><string>Save</string>
+          <key>CFBundleTypeName</key><string>Angband game data</string>
+          <key>CFBundleTypeOSTypes</key><array><string>SAVE</string></array>
+          <key>CFBundleTypeRole</key><string>Editor</string>
+        </dict>
+        <dict>
+          <key>CFBundleTypeExtentions</key><array><string>*</string></array>
+          <key>CFBundleTypeIconFile</key><string>Edit</string>
+          <key>CFBundleTypeName</key><string>Angband game data</string>
+          <key>CFBundleTypeOSTypes</key><array><string>TEXT</string></array>
+          <key>CFBundleTypeRole</key><string>Editor</string>
+        </dict>
+        <dict>
+          <key>CFBundleTypeExtentions</key><array><string>*</string></array>
+          <key>CFBundleTypeIconFile</key><string>Data</string>
+          <key>CFBundleTypeName</key><string>Angband game data</string>
+          <key>CFBundleTypeOSTypes</key><array><string>DATA</string></array>
+          <key>CFBundleTypeRole</key><string>Editor</string>
+        </dict>
+     </array>
+  </dict>
+</plist>

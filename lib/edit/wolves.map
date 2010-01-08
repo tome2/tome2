@@ -1,0 +1,55 @@
+# permanent wall
+F:X:61:0
+
+# granite
+F:#:57:0
+
+# up staircase
+F:<:6:0
+
+# Grass
+F:-:89:0
+
+# Dirt
+F:.:88:0
+
+# Trees
+F:t:96:0
+
+# Open door
+F:D:4:0
+
+# Broken door
+F:d:5:0
+
+# Grass with elf skeleton
+F:z:89:0:0:397
+
+# Dungeon layout
+D:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+D:X...t.---.......-.-.....-...#.--X
+D:X-..#..-......-.....--......t...X
+D:X...t.--.tt#ddt##t#dd#t#....#...X
+D:Xz-.t....#.--...#...-..#.--.t...X
+D:X#d##....#.z.z..t---...t....#tD#X
+D:X....---.t......t..-.z.#..z.....X
+D:X...--.-.#...z..#.--...t........X
+D:X##t#-z-.#####dd#dd##tt#....#t#tX
+D:X..-t.--.t....-.t...--.#.---t...X
+D:X.--t---.t......#..--z-#----#-..X
+D:X...D....#.--z...---.--t--.-d--.X
+D:X...#....#........---..#--..#z-.X
+D:X#t#t....t..-...t-z-...t....#tt#X
+D:X..-.....#-..-..#......#.....--.X
+D:X...-.--.#dd#ttt##t##Dd#.....--.X
+D:X#Dt#....#-.....#......#....##t#X
+D:X...#...-t----..#......t...-tz--X
+D:X.z.t...-#--.-..t......#.---#-..X
+D:X.--t.---#-z.--.#.....zt--..d-..X
+D:X---#....###dd#tt##dd###--..t...X
+D:X.z-t..-...-....-..-.--.....#<zzX
+D:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+# Starting position
+P:3:4
+

@@ -1,0 +1,250 @@
+The Frost giant is a common giant, 
+occurring at very shallow depths. 
+It is very weak, not at all dangerous, 
+and has no magical powers. 
+
+The Griffon is a common animal, 
+occurring at very shallow depths. 
+It is very weak, not one little bit dangerous, 
+and has no magical powers. 
+
+The Homonculous is a somewhat rare monster, 
+occurring at very shallow depths. 
+It is laughably weak, somewhat dangerous, 
+and has no magical powers. 
+
+The Gnome mage is an uncommon monster, 
+occurring at very shallow depths. 
+He is laughably weak, just a little bit dangerous, 
+and has unremarkable magical powers. 
+
+The Clear hound is an uncommon monster, 
+occurring at very shallow depths. 
+It is laughably weak, somewhat dangerous, 
+and has no magical powers. 
+
+The Clay golem is an uncommon monster, 
+occurring at very shallow depths. 
+It is extremely weak, moderately dangerous, 
+and has no magical powers. 
+
+The Umber hulk is a common animal, 
+occurring at very shallow depths. 
+It is very weak, somewhat dangerous, 
+and has no magical powers. 
+
+The Orc captain is a somewhat rare orc, 
+occurring at very shallow depths. 
+He is very weak, not one little bit dangerous, 
+and has no magical powers. 
+
+The Gelatinous cube is a rare monster, 
+occurring at very shallow depths. 
+It is somewhat weak, hellishly dangerous, 
+and has no magical powers. 
+
+The Giant green dragon fly is an uncommon animal, 
+occurring at very shallow depths. 
+It is laughably weak, just a little bit dangerous, 
+and has no magical powers. 
+
+The Fire giant is an uncommon giant, 
+occurring at very shallow depths. 
+It is very weak, somewhat dangerous, 
+and has no magical powers. 
+
+The Hummerhorn is an extremely rare animal, 
+occurring at very shallow depths. 
+It is laughably weak, just a little bit dangerous, 
+and has no magical powers. 
+
+Ulfast, Son of Ulfang is a unique monster, 
+occurring at very shallow depths. 
+He is somewhat weak, just a little bit dangerous, 
+and has no magical powers. 
+
+The Quasit is an uncommon monster, 
+occurring at very shallow depths. 
+It is laughably weak, somewhat dangerous, 
+and has average magical powers. 
+
+The Imp is an uncommon monster, 
+occurring at very shallow depths. 
+It is laughably weak, moderately dangerous, 
+and has average magical powers. 
+
+The Forest troll is a common troll, 
+occurring at very shallow depths. 
+He is very weak, just a little bit dangerous, 
+and has no magical powers. 
+
+Nar, the Dwarf is a unique monster, 
+occurring at very shallow depths. 
+He is somewhat strong, moderately dangerous, 
+and has simple magical powers. 
+
+The 2-headed hydra is an uncommon monster, 
+occurring at very shallow depths. 
+It is somewhat weak, not one little bit dangerous, 
+and has no magical powers. 
+
+The Water spirit is a common monster, 
+occurring at very shallow depths. 
+It is extremely weak, somewhat dangerous, 
+and has no magical powers. 
+
+The Giant pink scorpion is a common monster, 
+occurring at very shallow depths. 
+It is extremely weak, somewhat dangerous, 
+and has no magical powers. 
+
+The Earth spirit is an uncommon monster, 
+occurring at very shallow depths. 
+It is extremely weak, moderately dangerous, 
+and has no magical powers. 
+
+The Fire spirit is an uncommon monster, 
+occurring at very shallow depths. 
+It is extremely weak, moderately dangerous, 
+and has no magical powers. 
+
+The Fire hound is a common animal, 
+occurring at very shallow depths. 
+It is laughably weak, somewhat dangerous, 
+and has no magical powers. 
+
+The Cold hound is a common animal, 
+occurring at very shallow depths. 
+It is laughably weak, just a small bit dangerous, 
+and has no magical powers. 
+
+The Energy hound is a common animal, 
+occurring at very shallow depths. 
+It is laughably weak, moderately dangerous, 
+and has no magical powers. 
+
+The Mimic (potion) is a somewhat rare monster, 
+occurring at very shallow depths. 
+It is extremely weak, somewhat dangerous, 
+and has small magical powers. 
+
+The Blink dog is an uncommon monster, 
+occurring at very shallow depths. 
+It is laughably weak, just a little bit dangerous, 
+and has rudimentary magical powers. 
+
+The Uruk is a common orc, 
+occurring at very shallow depths. 
+He is extremely weak, somewhat dangerous, 
+and has no magical powers. 
+
+Shagrat, the Orc Captain is a unique orc, 
+occurring at very shallow depths. 
+He is moderately strong, somewhat dangerous, 
+and has no magical powers. 
+
+Gorbag, the Orc Captain is a unique orc, 
+occurring at very shallow depths. 
+He is moderately strong, somewhat dangerous, 
+and has no magical powers. 
+
+The Shambling mound is an uncommon monster, 
+occurring at very shallow depths. 
+It is extremely weak, just a small bit dangerous, 
+and has an inkling of magical powers. 
+
+The Stone giant is a common monster, 
+occurring at very shallow depths. 
+It is very weak, not one little bit dangerous, 
+and has no magical powers. 
+
+The Giant black dragon fly is an uncommon animal, 
+occurring at very shallow depths. 
+It is laughably weak, not one little bit dangerous, 
+and has no magical powers. 
+
+The Stone golem is an uncommon monster, 
+occurring at very shallow depths. 
+It is very weak, moderately dangerous, 
+and has no magical powers. 
+
+The Red mold is a common monster, 
+occurring at very shallow depths. 
+It is extremely weak, somewhat dangerous, 
+and has no magical powers. 
+
+The Giant gold dragon fly is an uncommon animal, 
+occurring at very shallow depths. 
+It is laughably weak, not one little bit dangerous, 
+and has no magical powers. 
+
+Bolg, Son of Azog is a unique orc, 
+occurring at somewhat shallow depths. 
+He is somewhat strong, somewhat dangerous, 
+and has no magical powers. 
+
+The Phase spider is an uncommon animal, 
+occurring at somewhat shallow depths. 
+It is laughably weak, moderately dangerous, 
+and has rudimentary magical powers. 
+
+The 3-headed hydra is an uncommon monster, 
+occurring at somewhat shallow depths. 
+It is somewhat strong, not one little bit dangerous, 
+and has no magical powers. 
+
+The Earth hound is a common monster, 
+occurring at somewhat shallow depths. 
+It is extremely weak, just a little bit dangerous, 
+and has no magical powers. 
+
+The Air hound is a common animal, 
+occurring at somewhat shallow depths. 
+It is extremely weak, somewhat dangerous, 
+and has no magical powers. 
+
+The Sabre-tooth tiger is an uncommon monster, 
+occurring at somewhat shallow depths. 
+It is somewhat weak, not one little bit dangerous, 
+and has no magical powers. 
+
+The Water hound is an uncommon animal, 
+occurring at somewhat shallow depths. 
+It is extremely weak, moderately dangerous, 
+and has no magical powers. 
+
+The Chimera is a common monster, 
+occurring at somewhat shallow depths. 
+It is extremely weak, not at all dangerous, 
+and has no magical powers. 
+
+The Quylthulg is a common monster, 
+occurring at somewhat shallow depths. 
+It is laughably weak, just a small bit dangerous, 
+and has rudimentary magical powers. 
+
+The Sasquatch is a somewhat rare animal, 
+occurring at somewhat shallow depths. 
+It is moderately strong, not one little bit dangerous, 
+and has no magical powers. 
+
+The Werewolf is a common animal, 
+occurring at somewhat shallow depths. 
+It is moderately strong, not one little bit dangerous, 
+and has no magical powers. 
+
+The Dark elven lord is an uncommon monster, 
+occurring at somewhat shallow depths. 
+He is somewhat weak, not one little bit dangerous, 
+and has average magical powers. 
+
+The Cloud giant is a common giant, 
+occurring at somewhat shallow depths. 
+It is somewhat weak, somewhat dangerous, 
+and has no magical powers. 
+
+Ugluk, the Uruk is a unique orc, 
+occurring at somewhat shallow depths. 
+He is very strong, somewhat dangerous, 
+and has no magical powers. 
+

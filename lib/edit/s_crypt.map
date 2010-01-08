@@ -1,0 +1,109 @@
+# Special level "The Forgotten Crypt" in The Pits of Angband
+#
+# Created for PernAngband 5.0.1 on 18/8/01
+# Written by Mynstral (mynstral@thehelm.com)
+
+%:special.txt
+
+### Guaranteed Monsters
+# Vampire on normal floor
+F:a:1:0:432
+
+# Ghoul on normal floor
+F:b:1:0:418
+
+# Rotting Quylthulg on normal floor
+F:c:1:0:633
+
+# Master Vampire on normal floor
+F:d:1:0:520
+
+# Vampire Lord on normal floor
+F:e:1:0:623
+
+# Greater Rotting Quylthulg on normal floor
+F:f:1:0:802
+
+# Ghast on normal floor
+F:g:1:0:327
+
+# Undead Beholder on normal floor
+F:h:1:0:664
+
+# Thuringwethil, the Vampire Messenger on normal floor
+F:i:1:0:755
+
+# Black Reaver on normal floor
+F:j:1:0:798
+
+### Random Monsters and/or Items
+# Random monster (upto 5 levels ood) on normal floor
+F:&:1:0:*75
+
+# Random monster (upto 11 levels ood) on normal floor
+F:@:1:0:*81
+
+# Random monster (upto 9 levels ood) and
+# Random object (upto 7 levels ood) on normal floor
+F:8:1:0:*79:*77
+
+# Random monster (upto 40 levels ood) and
+# Random object (upto 20 levels ood
+F:9:1:0:*110:*90
+
+# Random monster (upto 3 levels ood)
+F:-:1:0:*73
+
+# Random object (upto 7 levels ood)
+F:=:1:0:0:*77
+
+### Guaranteed Items
+# The Shadow Cloak of Luthien on normal floor
+F:1:1:0:0:0:0:49
+
+D:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+D:XA.%@=-=-X8XX6...XX.XXLLL..c..LLLXX.XX...7XX8X=-=-...5X
+D:X.%%@=-=-X99X.....X..XLL..X%X..LLX..XhVV..X99X=-=-..GGX
+D:X%%@@...XXX9XX....XX.XX...X.X...XX.XXVVVVXX9XXX=-=.XGGX
+D:X@@@....X8X-=XgggggX..X..dX4Xd..X..XWWWWWX-=X8X-=-.XGGX
+D:X......XX%XX=XXgddgXX.XX8GXXXG8XX.XXWWWWXX-XX%XX...XGGX
+D:XIXIXXIX*X=X-=XgddggX..X8G^.^G8X..XWWWWWX-=X.X.X&&&XGGX
+D:XXXIXIXX*X-XX=XXggggXX.XXG^.^GXX.XXWWWWXX-XX.X.XX&&XGGX
+D:XXXXXIX**X=-X=-XIIXXXX..XG^.^GX..XVWWWVX=-XX.XddX@@XGGX
+D:X^^^^XX**X=-XX=XXIXIIXX.XX^.^XX.XXVVVVXX-XX%.XedXX@XGGX
+D:X^^f^Xe**X%%.X=-XXIXXIXbbX^.^XbbX.VV.XX=-XbX.XXXIX@IIGX
+D:X^^^XXe..X...XX=-XXXIXXXbXX.XXbXX...XX=-XXbX.XaaaXXXIGX
+D:X^^XXbbb.XGGG.XX=-XXIIXXbbXDXbbX...XX=-XXbbX.XaaaaXXIGX
+D:X^XXcbab.XVdG.cXX=-XXXIXXabXbaXX.XXX=-XXbbbX.XaaaaaXXfX
+D:X%XbbbbbbXVWG.%.XX.DbXDXXXbXbXXXDXbD.XX....G.XGGGGGGX%X
+D:XX.bababa%eWG.%.BXXXbcbbbbX.XbbbbcbXXXC...fX.%.......XX
+D:X%XbbbbbbXVWG.%.XX.DbXDXXXbXbXXXDXbD.XX....G.XGGGGGGX%X
+D:X8XXcbab.XVdG.cXX=-XXX.XXabXbaXXLXXX=-XXbbbX.XaaaaaXX.X
+D:X88XXbbb.XGGG.XX=-XX...XbbXDXbbXLLLXX=-XXbbX.XaaaaXXX.X
+D:XXXIXXe..X...XX=-XX.GGXXbXX.XXbXXILIXX=-XXbX.XaaaXXXX.X
+D:X9889Xe**X%%.X=-XXG.GdXbbX^.^XbbXILLIXX=-XbX.XXXIXhGG.X
+D:XXIXXXX**X=-XX=XXdG.GXX.XX^.^XX.XXILIIXX-XX%.XedXXXXX.X
+D:X99999X**X=-X=-XGGG..X..XI^a^IX..XILLIIX=-XX.XddX..eeeX
+D:XXXXIXXX*X=XX-XX....XX.XXI^a^IXX.XXILLIXX=XX.X.XX.GGGGX
+D:X^^^^^cX*X-X=-X.....X..X.I^a^I.X..XIILLIX=-X.X.Xdddd..X
+D:XllllX^XX%XX=XXG.GGXX.XX.IXXXI.XX.XXIILIXX-XX%XXXXXXX.X
+D:X^^^cl^=X8X-=XeG.GeX..X...X4X...X..XILLLIX-=X8X.aaaaaaX
+D:XLLX^l^-XXX9XXGG.GXX.XX...X.X...XX.XXLLLLXX9XXX.GGGGGGX
+D:X..L^l^=-X99X.....X..XWW..X%X..WWX..XLLLL.X99XXbbbbb..X
+D:X7.L^l^=-X8XX5...XX.XXWWW..c..WWWXX.XXLL.AXX8XXbbbbb.6X
+D:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+D:XXXXXXXIIIIXIIIIXXIIIXIIIIXXIIIXXXXggggXc..cXaaaaXbb.CX
+D:XIIIIIXIXXIIIXXIIXIXIXIXXIXXIXIXXXXgddg%....%aaaa%bb..X
+D:XIXXXIXIXXXXXXXXIIIXIXIIXIXXIXIXXXXggggXc..cXaaaaXbbbbX
+D:XIXXXIIIXIIIIIIXXXXXIXXIXIXIIXIXXXXXXXXXXIIXXXXXXXXXXXX
+D:X..XXXXXXIXXXXIXIIIXIXIIXIXIXXIXXXXVVVjXddddXe..eX....X
+D:XB.IIIIIXIIIXIIXIXIXIIIXXIXIXIIXIIIVVVEX....%.ee.%.hh.X
+D:X..XXXXIXXXIXIXXIXIXXXXXIIXIXIXXIXXVVVjXddddXe..eX....X
+D:XIXXXIXIIIXIXIIIIXIIIIXIIXXIXIXXIXXXXXXXXXXXXXXXXXXDDXX
+D:XIXXXIXXXIIIXXXXXXXXXIXIXXIIXIIIIXXGGGGXgggdddeIVX....X
+D:XIIXXIXXXXXXXIIIIXXIXXXIIIIXXXXXXXXE.heDgggaaaiG1X....X
+D:XXIIIIIIIIIIIIXXIIIIXIIIXXXXXXXXXXXGGGGXgggdddeIVX..j>X
+D:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+### Starting location
+P:17:29

@@ -1,0 +1,108 @@
+# File: font-mac.prf
+
+#
+# This file is used by Angband (when it was compiled using "main-mac.c")
+# to specify simple attr/char remappings using a standard font, allowing
+# the use of the Macintosh's special characters for some things.
+#
+
+
+##### Feature attr/char definitions #####
+
+# fountain
+F:2:0x01/0xBA
+
+# fountain
+F:15:0x08/0xBA
+
+# stream of shallow water
+F:84:0x0E/0xC5
+
+# pool of deep lava
+F:85:0x0C/0xC5
+
+# stream of shallow lava
+F:86:0x04/0xC5
+
+# dead tree
+F:92:0x08/0xB4
+
+# tree
+F:96:0x0D/0xB4
+
+# mountain chain
+F:97:0x0F/0xC6
+
+# high mountain chain
+F:101:0x09/0xC6
+
+# Void Jumpgate
+F:160:0x0A/0xBD
+
+# Altar of Being
+F:161:0x09/0xB9
+
+# Altar of Winds
+F:162:0x0E/0xB9
+
+# Altar of Force
+F:163:0x0C/0xB9
+
+# Altar of Darkness
+F:164:0x08/0xB9
+
+# stream of tainted water
+F:174:0x07/0xC5
+
+# Void Jumpgate
+F:176:0x0A/0xBD
+
+# Great Fire
+F:178:0x0A/0xC5
+
+# Ekkaia, the Encircling Sea
+F:182:0x06/0xC5
+
+# pool of deep water
+F:187:0x06/0xC5
+
+# small tree
+F:202:0x05/0xB4
+
+# a blazing fire
+F:205:0x0B/0xC5
+
+# condensing water
+F:209:0x0E/0xC5
+
+
+##### Monster attr/char definitions #####
+
+# Old Man Willow
+R:206:0x02/0xB4
+
+# Tangleweed
+R:248:0x05/0xB4
+
+# Poison ivy
+R:266:0x05/0xB4
+
+# Giant Venus Flytrap
+R:317:0x05/0xB4
+
+# Huorn
+R:329:0x05/0xB4
+
+# Xiclotlan
+R:396:0x08/0xB4
+
+# Ent
+R:708:0x0D/0xB4
+
+# Quickbeam, the Ent
+R:714:0x0D/0xB4
+
+# Fangorn the Treebeard, Lord of the Ents
+R:934:0x0D/0xB4
+
+

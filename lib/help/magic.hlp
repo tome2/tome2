@@ -1,0 +1,41 @@
+|||||oy
+~~~~~01|Magic|Index
+~~~~~02|Help|Magic
+#####RWelcome to the ToME Magic Help System.
+#####R=============================================
+
+Please choose one of the following help files:
+
+General Info 
+
+     *****/amagic.txt*0[(a) The ToME magic system]
+     *****/bmagic.txt*02[(b) Wands and Staves]
+
+Magic schools
+
+     *****/cm_air.txt*0[(c) The Air School]
+     *****/dm_convey.txt*0[(d) The Conveyance School]
+     *****/em_demono.txt*0[(e) The Demonology School]
+     *****/fm_divin.txt*0[(f) The Divination School]
+     *****/gm_earth.txt*0[(g) The Earth School]
+     *****/hm_fire.txt*0[(h) The Fire School]
+     *****/im_geoman.txt*0[(i) The Geomancy School]
+     *****/jm_mana.txt*0[(j) The Mana School]
+     *****/km_meta.txt*0[(k) The Meta School]
+     *****/lm_mind.txt*0[(l) The Mind School]
+     *****/mm_nature.txt*0[(m) The Nature School]
+     *****/nm_necrom.txt*0[(n) The Necromancy School]
+     *****/om_tempo.txt*0[(o) The Temporal School]
+     *****/pm_udun.txt*0[(p) The Udun School]
+     *****/qm_water.txt*0[(q) The Water School]
+     
+Other powers accessed by the 'm' menu
+
+     *****/rm_mimic.txt*0[(r) Mimicry Powers]
+     *****/sm_mindcr.txt*0[(s) Mindcrafting Powers]
+     *****/tm_music.txt*0[(t) Musical Songs]
+     *****/um_symbio.txt*0[(u) Symbiotic Powers]
+     *****/vm_thaum.txt*0[(v) Thaumaturgical Spells]     
+     
+     *****/zhelp.hlp*0[(z) Main Help menu]
+     

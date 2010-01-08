@@ -1,0 +1,134 @@
+|||||oy
+~~~~~01|Help|Newbie help
+#####R              The ToME Newbie Guide
+by Pat Gunn and others
+Based loosely off of Chris Weisieger's Angband Newbie Guide.
+
+        Welcome to ToME, a popular descendant of Moria/Angband.
+ToME has many unique features that set it apart from other
+Angband/Moria descendants, with a nice mix of races/classes available.
+This guide will walk you, a player of ToME, through your first
+game (or two), introducing you to basic features that will help your
+character survive.
+
+	After you start the game for the first time, you will be
+prompted to create a new character. For this guide, we will start
+out with simple, easy to play characters. Go through the prompts,
+and select one of the following class/race combinations that will
+make for a simple first character:
+
+	Wood Elf (Classical) Archer
+	Half-Troll (Zombie) Unbeliever
+	Half-Ogre (Barbarian) Warrior
+
+After class/race selection, you will roll your statistics. Roll a few times
+until you get decent strength, constitution, and dexterity scores (the higher
+the better). After naming your character, you will appear in the
+town.
+
+	The town is a (relatively) safe place for you to buy/sell equipment,
+start quests, drop off items for storage, and various other things. Each store
+is represented by a symbol (either a number or a '+') on the side of a
+*****bldg.txt*0[building]. To enter a store, move over that symbol. You can also 'l'ook
+around to see the identity of stores and other inhabitants of the town. At
+this level, be wary of merchants and mercenaries -- they can probably kill you
+with little difficulty.
+
+	You will want to 'w'ield the weapons/armour you have started with
+(if you chose the archer, wield the bow, and then wield the arrows). You
+can check to see what you're wearing/wielding at any time by pressing
+'e'. Ideally, throughout the game you'll always have some kind of missile
+weapon and a decent melee weapon. Initially, purchasing a short bow and
+some plain arrows might be wise (archers start with a bow and some arrows,
+but you'll probably want to buy more ammo). Choice of a melee weapon is
+much more complex, but for now, unless you start with a good melee weapon
+(unbelievers do), you might want to consider buying a whip from the
+weapon store '3' (or the temple '4'). If available, purchase a lantern
+and 2 or 3 flasks of oil from the general store '1'. If you have some
+money left, buy some of the cheaper armour pieces from the armoury '2',
+such as boots, gloves, cap, and the like.  You should now be ready to
+do some adventuring.
+
+        Just west of Bree are some steps into the first dungeon. Move on top
+of these stairs and hit '>' to go down. You will notice that when you arrive 
+in the dungeon, you will be on top of some stairs going back up, and in the 
+lower right, you will see how deep in the dungeon you are. When you need to 
+return to town, head upstairs from the top level of the dungeon (which you are 
+in now). Other stairs down will take you deeper in the dungeon. For now, stay
+on the first level of the dungeon, and fight some monsters to gain some
+experience. Be careful only to fight one monster at a time -- avoid fighting
+in open rooms when monsters can gang up on you. Also, avoid floating eyes
+'e', and 'l'ook at monsters before getting involved in combat with them.
+The 'C' button will bring up a screen telling you how many experience points
+you need to go to next level, and 'l'ooking at monsters will tell you how
+many experience points they are worth. 
+
+	Once you go up a level, you'll want to invest some skill points so 
+that your character improves. See the *****skills.txt*0[skills] help file for details.
+
+	Grab treasure, and when you are carrying close to as much as you can 
+carry, head back to Bree and sell your loot. Buy phase door scrolls, teleport
+scrolls, and potions that will cure your wounds. Use any remaining money to
+buy identify scrolls. After a few trips, and reaching experience level 3, try
+going deeper in the dungeon before coming up.
+
+	Before you start going past the 8th or 9th level down, you will
+want some means of detecting traps, as traps begin to be a problem around
+that depth. Eventually, you'll want a rod of trap location (unless you are
+an unbeliever), but scrolls or staves will do until you find a rod and a
+rod tip of the right kind. These items, when used, will display all traps
+in a radius around you. This means that you'll want to use them again
+every time you run to the edge of that radius and into an area where you
+haven't yet detected traps.
+
+	Some kinds of items grant useful resistances or powers. You can
+see your current resistances and other stats by hitting 'C' and scrolling
+through the screens that come up. If you come across a Thunderlord coat
+early in the game, they make a good choice, as they grant resistance to
+fire and cold. Resistances reduce the damage attacks of certain kinds do,
+and often reduce the effectiveness of side-effects they have.
+
+	As you progress deeper in the dungeon, you will want to start using
+scrolls of recall to move to and from the dungeon. These scrolls, when
+read, schedule your return either to the surface or to the dungeon level
+you were last exploring. They do, however, take several turns to take effect,
+so reading them in an emergency will do little good.
+
+	Eventually, once you are around level 13 or 14, you will be ready
+to make trips to some of the other towns. The easiest town to get to is
+northeast of Bree; the others are more difficult to find and reach. When
+planning a trip, be sure to carry lots of food and/or scrolls of
+satisfy hunger. Multiple light sources may also be wise, and a bow is
+almost essential. To make long trips easier, ToME has a map mode
+specifically designed for travel. To use it, hit '<' in the wilderness.
+This will change the scale of the map, and make time go by at a much
+faster rate per square of movement (each square being many normal grid
+squares). Be sure to de-equip any exhaustible light sources before
+the trip, and never allow yourself to get past hungry while in this mode --
+drop down to the normal mode (with '>') if you get a message that you are
+hungry. Eventually, you will also make surface trips to find new dungeons
+to visit.
+
+#####REquipment notation:
+#####GA Weapon (3d4) (+3,+7)
+	This weapon, when you attack an enemy, does base damage calculated
+	by rolling a 4-sided die 3 times (adding the results up). It gets a
+	+3 to hit, and +7 to damage. If the weapon is light enough and
+	you are strong/dextrous enough, you can attack with it multiple times,
+	getting the base and extra damage once for each attack.
+
+#####GA Shield [5,+4]
+	This is a piece of armour, with a base defence of 5 and a magical
+	bonus of +4. If you wear it, your armour rating will increase by 9. 
+
+#####GA Weapon (Defender) (1d6) (+12,+5) [+6] (+2 to stealth)
+	This is a special type of weapon, with special powers. The powers
+	depend on the type (there are more types than just Defender),
+	and some types can grant a variety of different powers. To get the
+	full info on this kind of weapon, you can either 'x'amine it if it's
+	being sold in a store, use certain kinds of magic (*Id*), or use
+	the (very expensive) services of certain stores.
+
+Many armours also have special powers.
+Some very powerful items are unique, and are called artifacts. They are
+normally indestructible, and will prove very useful in your quest.

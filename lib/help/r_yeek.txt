@@ -1,0 +1,30 @@
+~~~~~01|Yeek
+~~~~~02|Races|Yeek
+#####R=== Yeeks ===
+
+#####GDescription
+Yeeks are the least powerful of all the races. They suffer disadvantages 
+in nearly all skills and attributes but to compensate they learn (and thus
+gain levels) extremely quickly. "Live fast, die young!"
+
+#####GStat Modifiers
+Strength        -5   
+Intelligence    -5   
+Wisdom          -5   
+Dexterity       -5   
+Constitution    -5   
+Charisma        -5       
+Hit Dice Sides  6         
+Exp Penalty     -75%
+
+#####GRacial Skill Modifiers:
+#####BSkill                Start Mod    Skill Point Gains Mod
+Combat                  
+  Weaponmastery        -0.500           [0.000]
+  Archery	       -0.500           [0.000]
+Sneakiness             -0.500           [0.000]
+  Stealth              -5.000           [0.000]
+  Disarming            -0.500           [0.000]
+Magic                   
+  Magic-Device         -0.500           [0.000]
+Spirituality           -2.500           [0.000]

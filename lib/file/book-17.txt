@@ -1,0 +1,250 @@
+The Killer blue beetle is an uncommon animal, 
+occurring at shallow depths. 
+It is somewhat weak, somewhat dangerous, 
+and has no magical powers. 
+
+The Nexus vortex is a common monster, 
+occurring at shallow depths. 
+It is somewhat weak, not one little bit dangerous, 
+and has no magical powers. 
+
+The Plasma vortex is a common monster, 
+occurring at shallow depths. 
+It is somewhat weak, somewhat dangerous, 
+and has no magical powers. 
+
+The Mature red dragon is a common dragon, 
+occurring at shallow depths. 
+It is somewhat strong, somewhat dangerous, 
+and has rudimentary magical powers. 
+
+The Mature gold dragon is an uncommon dragon, 
+occurring at shallow depths. 
+It is strong, just a small bit dangerous, 
+and has rudimentary magical powers. 
+
+The Crystal drake is an uncommon dragon, 
+occurring at shallow depths. 
+It is strong, somewhat dangerous, 
+and has small magical powers. 
+
+The Mature black dragon is a common dragon, 
+occurring at shallow depths. 
+It is somewhat strong, somewhat dangerous, 
+and has an inkling of magical powers. 
+
+The Mature multi-hued dragon is an uncommon dragon, 
+occurring at shallow depths. 
+It is very strong, extremely dangerous, 
+and has extremely powerful magical powers. 
+
+The Death knight is a common monster, 
+occurring at shallow depths. 
+It is very strong, somewhat dangerous, 
+and has remarkable magical powers. 
+
+Castamir the Usurper is a unique monster, 
+occurring at shallow depths. 
+He is alarmingly strong, not at all dangerous, 
+and has extremely powerful magical powers. 
+
+The Time vortex is a rare monster, 
+occurring at shallow depths. 
+It is somewhat weak, not one little bit dangerous, 
+and has no magical powers. 
+
+The Shimmering vortex is a rare monster, 
+occurring at shallow depths. 
+It is extremely weak, not one little bit dangerous, 
+and has small magical powers. 
+
+The Ancient blue dragon is a common dragon, 
+occurring at shallow depths. 
+It is very strong, somewhat dangerous, 
+and has rudimentary magical powers. 
+
+The Ancient bronze dragon is an uncommon dragon, 
+occurring at shallow depths. 
+It is extremely strong, somewhat dangerous, 
+and has rudimentary magical powers. 
+
+The Beholder is a rare monster, 
+occurring at shallow depths. 
+It is hellishly strong, hellishly dangerous, 
+and has hellishly powerful magical powers. 
+
+The Emperor wight is an uncommon undead monster, 
+occurring at shallow depths. 
+It is moderately strong, somewhat dangerous, 
+and has small magical powers. 
+
+The Planetar is a legendary monster, 
+occurring at shallow depths. 
+It is somewhat strong, extremely dangerous, 
+and has hellishly powerful magical powers. 
+
+Vargo, Tyrant of Fire is a unique monster, 
+occurring at shallow depths. 
+It is hellishly strong, moderately dangerous, 
+and has unremarkable magical powers. 
+
+The Black wraith is an uncommon undead monster, 
+occurring at shallow depths. 
+It is somewhat strong, somewhat dangerous, 
+and has small magical powers. 
+
+The Erinyes is an uncommon monster, 
+occurring at shallow depths. 
+She is very weak, moderately dangerous, 
+and has an inkling of magical powers. 
+
+The Nether wraith is an uncommon undead monster, 
+occurring at shallow depths. 
+It is somewhat strong, moderately dangerous, 
+and has unremarkable magical powers. 
+
+The Eldrak is a somewhat rare troll, 
+occurring at shallow depths. 
+It is extremely strong, somewhat dangerous, 
+and has no magical powers. 
+
+The Ettin is a somewhat rare troll, 
+occurring at shallow depths. 
+It is hellishly strong, somewhat dangerous, 
+and has no magical powers. 
+
+Waldern, King of Water is a unique monster, 
+occurring at shallow depths. 
+It is hellishly strong, somewhat dangerous, 
+and has unimaginably powerful magical powers. 
+
+Kavlax the Many-Headed is a unique dragon, 
+occurring at shallow depths. 
+He is hellishly strong, moderately dangerous, 
+and has hellishly powerful magical powers. 
+
+The Ancient white dragon is a common dragon, 
+occurring at shallow depths. 
+It is very strong, somewhat dangerous, 
+and has rudimentary magical powers. 
+
+The Ancient green dragon is a common dragon, 
+occurring at shallow depths. 
+It is extremely strong, somewhat dangerous, 
+and has rudimentary magical powers. 
+
+The 7-headed hydra is an uncommon animal, 
+occurring at shallow depths. 
+It is unimaginably strong, moderately dangerous, 
+and has unremarkable magical powers. 
+
+The Night mare is a somewhat rare undead monster, 
+occurring at shallow depths. 
+It is hellishly strong, very dangerous, 
+and has no magical powers. 
+
+The Vampire lord is a somewhat rare undead monster, 
+occurring at shallow depths. 
+It is hellishly strong, unimaginably dangerous, 
+and has very powerful magical powers. 
+
+The Ancient black dragon is a common dragon, 
+occurring at shallow depths. 
+It is extremely strong, somewhat dangerous, 
+and has rudimentary magical powers. 
+
+The Disenchanter worm mass is a somewhat rare animal, 
+occurring at shallow-to-moderate depths. 
+It is laughably weak, somewhat dangerous, 
+and has no magical powers. 
+
+The Rotting quylthulg is a common animal, 
+occurring at shallow-to-moderate depths. 
+It is extremely weak, just a small bit dangerous, 
+and has unremarkable magical powers. 
+
+The Spirit troll is a somewhat rare troll, 
+occurring at shallow-to-moderate depths. 
+It is unimaginably strong, very dangerous, 
+and has no magical powers. 
+
+The Lesser titan is a somewhat rare monster, 
+occurring at shallow-to-moderate depths. 
+It is unimaginably strong, moderately dangerous, 
+and has unremarkable magical powers. 
+
+The 9-headed hydra is an uncommon animal, 
+occurring at shallow-to-moderate depths. 
+It is hellishly strong, just a small bit dangerous, 
+and has simple magical powers. 
+
+The Enchantress is a rare monster, 
+occurring at shallow-to-moderate depths. 
+She is somewhat strong, somewhat dangerous, 
+and has rudimentary magical powers. 
+
+The Archpriest is an uncommon monster, 
+occurring at shallow-to-moderate depths. 
+He is somewhat strong, somewhat dangerous, 
+and has arcane magical powers. 
+
+The Sorcerer is an uncommon monster, 
+occurring at shallow-to-moderate depths. 
+He is somewhat strong, somewhat dangerous, 
+and has hellishly powerful magical powers. 
+
+The Xaren is a common monster, 
+occurring at shallow-to-moderate depths. 
+It is moderately strong, very dangerous, 
+and has no magical powers. 
+
+The Giant roc is a somewhat rare animal, 
+occurring at shallow-to-moderate depths. 
+It is hellishly strong, somewhat dangerous, 
+and has no magical powers. 
+
+Uvatha the Horseman is a unique undead monster, 
+occurring at shallow-to-moderate depths. 
+He is hellishly strong, extremely dangerous, 
+and has no magical powers. 
+
+The Minotaur is an uncommon monster, 
+occurring at shallow-to-moderate depths. 
+It is unimaginably strong, not one little bit dangerous, 
+and has no magical powers. 
+
+Medusa, the Gorgon is a unique monster, 
+occurring at shallow-to-moderate depths. 
+She is hellishly strong, moderately dangerous, 
+and has hellishly powerful magical powers. 
+
+The Death drake is an uncommon dragon, 
+occurring at shallow-to-moderate depths. 
+It is hellishly strong, hellishly dangerous, 
+and has small magical powers. 
+
+The Ancient red dragon is a common dragon, 
+occurring at shallow-to-moderate depths. 
+It is hellishly strong, somewhat dangerous, 
+and has rudimentary magical powers. 
+
+The Ancient gold dragon is an uncommon dragon, 
+occurring at shallow-to-moderate depths. 
+It is hellishly strong, somewhat dangerous, 
+and has rudimentary magical powers. 
+
+The Great crystal drake is an uncommon dragon, 
+occurring at shallow-to-moderate depths. 
+It is hellishly strong, somewhat dangerous, 
+and has small magical powers. 
+
+The Vrock is an uncommon monster, 
+occurring at shallow-to-moderate depths. 
+It is moderately strong, moderately dangerous, 
+and has no magical powers. 
+
+The Death quasit is a somewhat rare monster, 
+occurring at shallow-to-moderate depths. 
+It is somewhat strong, alarmingly dangerous, 
+and has unremarkable magical powers. 
+

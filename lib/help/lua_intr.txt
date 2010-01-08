@@ -1,0 +1,133 @@
+|||||oy
+#####R             /----------------------------------------\
+#####R            <        Scripting for ToME with lua       >
+#####R             \----------------------------------------/
+
+So, you want to patch ToME eh? Maybe you've had a look at how the edit files 
+work, maybe even added your own race/class, but want to go further and add 
+new racial (U) or magic (m) powers. Well these help files will show a little 
+bit of how to do that.
+
+I am not a master at this kind of thing. I wrote a small script, with much 
+help from DarkGod, and he subsequently asked me to write these help files. I 
+was looking forward to when the lua help files came out so that I could look 
+at them myself. Little did I know I'd be asked to write them. Therefore I 
+apologise for any inaccuracies or errors that you find, and if you care to let 
+me know of any improvements which could be made (especially if you're an 
+experienced programmer/scripter), I'd love to know. Email me at
+[[[[[gfearoffours@moppy.co.uk].
+
+#####R=== The example scripts ===
+
+These help files take the form of a tutorial, adding a line at a time to a 
+script, and explaining important concepts along the way. To see it all in 
+action, I strongly suggest that you download my example script pack from
+[[[[[Ghttp://www.moppy.co.uk/angband.htm]. As well as including all the 
+scripts covered in these help files, they also include the addition of my
+"hina" race which has a Lua scripted racial power which you might like to look 
+at. There's also a quest which I will be including documentation for as a 
+tutorial soon. Plus there's all the other lua scripts in the lib\scpt 
+directory to look at. Most of what you see in these files has been learned from 
+those files anyway!
+
+The source code is invaluable as well. There's a searchable and browsable 
+version of the latest ToME source code available online at 
+[[[[[Ghttp://www.t-o-m-e.net/cvs.php]. Use it!
+
+If you don't want to download and install the example scripts, then just 
+follow the tutorials with a text editor open! But I'll say it again, it's a lot 
+easier if you download and install the example scripts.
+
+This file goes on to explain the concepts of scripting, programming, 
+variables and functions. If you're familiar with these concepts, you might 
+as well take a look at how to add a power to the U menu in the 
+*****lua_pow.txt*0[Scripting a racial power] file.
+
+
+#####R=== Defining some basic stuff ===
+
+Computers don't do anything that they're not told to do. When we script, or 
+program, we must assume they know nothing. We have to tell them each little 
+bit of information from the ground up.
+
+A program, or a script (we'll talk about exact differences later) is like a 
+set of instructions. Let's imagine that people responded to programs, and 
+that we had a program called "Housework". Its series of instructions might 
+look something like this:
+
+#####BDo the Washing up.
+#####BClean the kitchen.
+#####BDust the shelves.
+#####BHoover the lounge.
+
+Each step above could be called a function, as they are all actions that 
+need to be carried out. Now to you and me, we'd understand that program just 
+fine, but if someone didn't know HOW to wash, or what hoovering was, they'd 
+soon run into problems. For those people we'd need to define each function 
+clearly. Thus "do the washing up" might be - 
+
+#####BRun hot water into bowl.
+#####BAdd washing up liquid.
+#####BPut dirty plates into bowl
+#####BScrub plates till clean
+#####BPlace clean plates on rack to dry,
+
+There's still plenty of problems here though. We've not said to turn the tap
+off, or what the bowl is, or to wash any dirty cutlery, mugs, saucepans, etc.,
+etc. Whilst this might seem fairly obvious to a person, this is how we need
+to think when writing programs for computers.
+
+Lets look now at some of the terms we're going to be using, in the rest of 
+these help files, and what they mean...
+
+#####R=== Variables and Constants ===
+A variable is a way to store information in a computer.  Just as you store 
+things in your own memory, you can store things in the computer's memory. And 
+just as things change in your memory, so things can change in the computer's 
+memory. This factor of change is why they're called "variables" and not 
+"statics".
+
+For instance, you may have a friend's email address committed to memory, but 
+things change over time, they get a new ISP or domain, and so their email 
+address changes. You commit this new address to memory, and eventually 
+forget the old one. The thing you have stored in your memory is the same 
+(your friend's address) but the value (property) of what you have stored has 
+changed (from friend@old-address.com to friend@new-address.com). 
+
+Variables are the building blocks out of which you will create your patch.
+
+A variable which will *never* change its value is called a constant.
+
+#####R===Functions===
+
+A function is a series of steps or statements, grouped together and given 
+one name. When you want to carry out those steps, you simply ask the 
+computer to carry out that function. To go back to our original example, 
+rather than saying, "I'd like you to run some hot water into a bowl, add the 
+washing up liquid, put the dirty plates into it, and then scrub them till 
+they're clean", we just say "do the washing up".
+
+This is where we come to the difference between scripting and programming. 
+With scripting we can use the functions and variables that exist in the 
+ToME code. Maintainers like DarkGod have already made sure that the 
+computer knows how to "do the washing up", including turning the tap off and 
+what the bowl is. All we need to do in our script is say "do the washing 
+up". Or to look at it in a more relevant way, the game has been coded so 
+that when a magic missile is fired, a bolt or beam spell with a black line 
+of asterisks will be drawn in the direction indicated by the player, the 
+mana of that spell will be used up, the monster will take the appropriate 
+amount of damage, and so on. All we need to do in our script is say "fire a 
+magic missile".
+
+As you script, you will still be designing your own functions, and 
+variables, but the hardest parts have been done for you!
+
+Not every function and global variable in the source-code has been exported to 
+use in your scripting. But the ones that have are easily identifiable by 
+looking in any source files with the extension .pkg . Chris Hadgis has written 
+some excellent documentation which outline the use of the most important 
+functions in some of these files. They outline the functions from the 
+
+OK, the first tutorial proper is on *****lua_pow.txt*0[adding a racial power] .
+
+                             [[[[[gThis file by fearoffours (fearoffours@moppy.co.uk)]
