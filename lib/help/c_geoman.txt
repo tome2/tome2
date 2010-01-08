@@ -1,0 +1,59 @@
+|||||oy
+~~~~~01|Geomancer
+~~~~~02|Classes|Geomancer
+#####R=== Geomancers ===
+
+#####GDescription
+Geomancers harness the power of the elements earth, air, fire and water.
+The level of their *****skills.txt*60[Geomancy] skill gives them access to their own
+*****m_geoman.txt*0[school of Geomancy], but the levels of the Fire, Water, Air, and Earth
+skills will have an effect on the outcome of each spell.
+
+Geomancers need the aid of a Mage Staff in order to use their powers.
+
+#####GStarting Stat Modifiers
+Strength         -5
+Intelligence     +3
+Wisdom           +0
+Dexterity        +1
+Constitution     -2
+Charisma         +1
+Hit Die          +d0
+Spell Points    +50%
+Exp Penalty      30%
+
+#####GStarting Skills:
+#####BSkill                   Start Level     Skill Point Gains
+Combat                  1.000           [0.200]
+  Weaponmastery         0.700           [0.400]
+Sneakiness              1.000           [0.900]
+  Stealth               0.000           [0.400]
+Magic                   1.000           [0.900]
+  Magic-Device          1.000           [1.050]
+  Spell-power           1.000           [0.700]
+  Geomancy              1.000           [0.700]
+    Fire                1.000           [1.050]
+    Water               1.000           [1.050]
+    Air                 1.000           [1.050]
+    Earth               1.000           [1.050]
+  Meta                  0.000           [0.700]
+  Conveyance            0.000           [0.700]
+  Divination            0.000           [0.700]
+  Temporal              0.000           [0.700]
+  Mind                  0.000           [0.700]
+  Nature                0.000           [0.700]
+  Necromancy            0.000           [0.700]
+  Runecraft             0.000           [0.700]
+  Thaumaturgy           0.000           [0.700]
+Spirituality            1.000           [0.550]
+  Prayer                0.000           [0.500]
+Monster-lore            0.000           [0.500]
+
+#####GInnate Abilities:
+#####BAbility              Character level
+Perfect casting             1
+
+#####GStarting Equipment
+A Geomancer begins the game with:
+    a Spellbook of Geyser
+    a Mage Staff

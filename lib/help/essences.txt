@@ -1,0 +1,219 @@
+|||||oy
+~~~~~01|Spoilers|Essences
+~~~~~02|Alchemist|Essence Spoiler
+#####REssence Spoiler for ToME 2.2.0
+#####R------------------------------
+
+Essences are the tools of the trade for Alchemists, and unfortunately are
+useless for any other class. Alchemists use essences to create magical
+items for them to use.
+
+They can be either found on the floor while exploring the dungeon, or
+extracted from other magical items the alchemist finds during his
+adventures.
+
+To create an artifact, the alchemist will first have to have learnt the 
+Artifact Creation ability. This ability costs 70 skill points (yes, 70, 
+it's a very powerful ability!). And you need an alchemy skill of at least 
+40, plus INT and WIS at 35 (thats 18/170 in non-linear form).
+To create the artifact, the alchemist will have to sacrifice 10 hit points,
+and an amount of magic essence similar to his skill in alchemy. The
+alchemist then allows the artifact to gain experience, and when it has
+enough, uses that experience to add abilities to the artifact. The
+alchemist can allow the artifact to continue to gain experience, thus
+keeping open the option to add more abilities later. This requires a
+similar amount of magic essence, but does not require the sacrifice of
+more hit points.
+
+Note that the experience you gain is divided among the artifacts that you
+have as well as going to yourself, so you will gain levels more slowly when
+empowering artifacts. Also, the artifact only gets 60% of the experience.
+So killing a creature worth 20xp would gain 10 for you, and 6 for the
+artifact.
+
+You can also modify existing artifacts when you attain skill level 50. Also
+at skill level 50 you will gain the ability to make temporary artifacts,
+which don't require the complex empowerments that regular items require,
+but also vanish after awhile.
+
+You cannot give an artifact an ability unless you have *Identified* an
+artifact which has that ability.
+
+For every four levels gained in the alchemy skill, the alchemist learns
+about objects of level (skill level)/4, starting by learning about level 1
+objects at skill level 0. (actually 1, but who's counting?)
+
+At skill level 5 you gain the ability to make ego items - but watch it!
+Your base failure rate will be 90%, and won't be 0% until you reach skill
+level 50. Adding gold will increase the chances of success in direct
+proportion to the value of the item you are trying to create. Note that
+this results in automatic success when the item you are trying to create
+happens to pick up a curse in the process.
+
+At skill level 5 you also gain knowledge of some basic ego item recipes.
+These are: Acidic, Shocking, Fiery, Frozen, Venomous, and Chaotic weapons,
+Resist Fire armour, and light sources of Fearlessness.
+
+At skill level 10 you will gain knowledge of digging ego items, if you have
+selected the option "always generate very unusual rooms" (ironman_rooms).
+
+At skill level 15 you can create ego wands, staves, rings, etc.
+
+At skill level 25 you gain the ability to empower double ego items.
+
+At skill level 50 you gain the ability to create temporary artifacts, which
+don't require any exotic ingredients beyond a single corpse of any type.
+
+Between skill levels 25 and 50, you will steadily gain the ability to set
+more and more flags.
+
+To finalise an artifact, you "P"ower it, and select the powers you want.
+Powers are divided into the following six categories:
+*****essences.txt*03[Stats, Sustains, Luck, Speed, Vision, etc.]
+*****essences.txt*04[Misc. (Auras, Light, See Invisibility, etc.)]
+*****essences.txt*05[Weapon Brands]
+*****essences.txt*06[Resistances and Immunities]
+*****essences.txt*07[ESP and Curses]
+*****essences.txt*08[Artifact Activations]
+
+~~~~~03
+#####GStats, Sustains, Luck, Speed, Vision, etc.
+lvl     xp   Power
+40     5000  Add to Strength          Ring of Strength
+43     5000  Add to Intelligence      Ring of Intelligence
+46     5000  Add to Wisdom            Amulet of Wisdom
+46     5000  Add to Dexterity         Ring of Dexterity
+42     5000  Add to Constitution      Ring of Constitution
+30     5000  Add to Charisma          Amulet of Adornment
+32     1000  Sustain Strength         Ring of Sustain Strength
+34     1000  Sustain Intelligence     Ring of Sustain Intelligence
+28     1000  Sustain Wisdom           Ring of Sustain Wisdom
+36     1000  Sustain Dexterity        Ring of Sustain Dexterity
+36     1000  Sustain Constitution     Ring of Sustain Constitution
+25     1000  Sustain Charisma         Ring of Sustain Charisma
+40    50000  Speed                    Ring of Speed
+38   150000  Extra Attacks            Ring of Extra Attacks
+32     5000  Stealthy                 Left Insole from a Used Soft Boot
+29     2000  Adds to Searching        Filthy Rag
+ 6     1000  Helps Infravision        Brass Lantern
+30     1000  Lucky                    Rabbit's Left Forefoot
+25    30000  Aids in digging          Pick
+40    50000  Multiplies Life          Troll's Heart
+
+~~~~~04
+#####GMisc. (Auras, Light, See Invisibility, etc.)
+lvl     xp   Power
+20    15000  Invisibility             Potion of Invisibility
+20     4000  See Invisible            Potion of Invisibility
+20    30000  Free Action              Iron Spike
+38    90000  Reflection               Large Metal Shield
+20    30000  Aura of Fire             Lungs from an Ancient Red Dragon
+25    30000  Aura of Lightning        Lungs from an Ancient Blue Dragon
+ 8     1000  Light                    Everburning Torch
+20    10000  Bright Light             Dwarven Lantern
+40   100000  Sunlight                 Feanorian Lamp
+40   200000  Flight                   Suit of Dragon Armour (any colour)
+50 10000000  Automatically IDs        Morgoth's Testicles
+29     2000  Anti-Teleportation       Teleport Inhibiting Amulet
+34     2000  Anti-Magic               Magic Inhibiting Amulet
+50   100000  Wraith Form              Potion of Invulnerability
+15     1000  Levitation               Potion of Berserk Strength
+20    10000  Slow Digestion           Lembas Wafer
+32    20000  Regenerate               Mushroom of Unhealth
+12    20000  Teleport                 Mushroom of Confusion
+
+~~~~~05
+#####GWeapon Brands
+lvl     xp   Power
+30    20000  Extra Critical Hits      Whip
+30    30000  Wounds Monsters          Blade of Chaos
+26     6000  Vampiric                 Rod Tip of Drain Life
+16     2000  Slay Animal              Dead Animal's Body
+25     2000  Slay Evil                Evil Dead Thing's Remains
+30     2000  Slay Undead              Remains of Undead Monster
+40     1500  Slay Demon               Demon's Corpse
+10      700  Slay Orc                 Dead Orc
+16      700  Slay Troll               Dead Troll
+25      900  Slay Giant               Dead Giant
+33     2000  Slay Dragon              Dead Dragon (any size will do)
+41     5000  *Slay* Dragon            Mature Multi-Hued Dragon's Remains
+41    90000  *Slay* Undead            Dead Summoner of Greater Undead
+41    90000  *Slay* Demon             Lesser Balrog's Corpse
+36    20000  Vorpal                   
+40    90000  Earthquakes              
+ 3     2000  Poison Brand             
+12     2000  Acid Brand               
+10     2000  Lightning Brand          
+ 6     2000  Fire Brand               
+ 8     2000  Frost Brand              
+30     3000  Extra Might (Bows Only)  
+35     3000  Extra Shots (Bows Only)  
+
+~~~~~06
+#####GResistances and Immunities
+lvl     xp   Power
+49   500000  Immune to Acid           Ancient Black Dragon's Foreskin
+50   500000  Immune to Lightning      Ancient Blue Dragon's Foreskin
+49   500000  Immune to Fire           Ancient Red Dragon's Foreskin
+50   500000  Immune to Cold           Ancient White Dragon's Foreskin
+30    30000  Hold Life                Amulet of the Magi
+12    10000  Resist Acid              Ring of Acid
+15    10000  Resist Lightning         Ring of Lightning
+13    10000  Resist Fire              Potion of Resist Heat
+14    10000  Resist Cold              Potion of Resist Cold
+25    30000  Resist Poison            Potion of Cure Poison
+26    10000  Resist Fear              Ring of Fear Resistance
+31    60000  Resist Light             Ring of Light and Darkness Resistance
+31    60000  Resist Darkness          Ring of Light and Darkness Resistance
+30    30000  Resist Blindness         Ring of Blindness Resistance
+30    30000  Resist Confusion         Ring of Confusion Resistance
+30    60000  Resist Sound             Ring of Sound Resistance
+30    60000  Resist Shards            Ring of Shard Resistance
+30    60000  Resist Nether            Ring of Nether Resistance
+30    60000  Resist Nexus             Ring of Nexus Resistance
+30    60000  Resist Chaos             Ring of Chaos Resistance
+30    60000  Resist Disenchantment    Ring of Disenchantment Resistance
+
+~~~~~07
+#####GESP and Curses
+lvl     xp   Power
+50  -100000  Temporary Item           Corpse, any corpse
+10    -2000  Self-Cursing             Filthy Rag
+45   -10000  Causes the Black Breath  Sprig of Athelas
+40    -5000  Ancient Curse            Scroll of *Remove Curse*
+40    -5000  Drains your Experience   
+30    -5000  Aggravates Monsters      
+30     -500  Curse                    Scroll of Remove Curse
+50    -5000  Permanently Cursed       
+35    -2000  Can't be Dropped         
+45    -5000  Drains your Hit Points   
+20   -50000  Wielder Can't Move       
+40    20000  Telepathy                Formerly Floating Eye
+25     3000  Sense Orcs               
+25     3000  Sense Trolls             
+25     5000  Sense Dragons            
+25     5000  Sense Giants             
+25     5000  Sense Demons             
+25     5000  Sense Undead             
+25     5000  Sense Evil               
+25     5000  Sense Animals            
+25     5000  Sense Thunderlords       
+25     5000  Sense Good               
+25     5000  Sense Nonliving          
+25     5000  Sense Unique Monsters    
+25     2000  Sense Spiders            
+
+~~~~~08
+#####GArtifact Activations
+lvl     xp   Power
+40    40000  Sunlight                 Brass Lantern
+20     4000  Magic Missile (1)        
+30   300000  Magic Missile (2)        
+40   400000  Ball of Missiles         
+30   300000  Bolt of Lightning        
+30   300000  Ball of Lightning        
+35   350000  Ball of Lightning(2)     
+40   400000  Ball of Lightning(3)     
+40   400000  Ball of Lightning(4)     
+45   450000  Breath Lightning         
+50    40000  Fire a Rocket

@@ -1,0 +1,135 @@
+|||||oy
+~~~~~01|Alchemist
+~~~~~02|Classes|Alchemist
+#####R=== Alchemists ===
+
+#####GDescription
+Alchemists are the only class that can harness the abilities of the 
+essences found in the dungeon. They can add these essences to staves, 
+rings, wands, rods, and sometimes weapons and armour to create new items
+or recharge old ones. They can also extract essences from magical items
+they find. Using these abilities, Alchemists can get very good items at
+low levels. The trouble is getting them to survive later on.
+
+Alchemists are extremely proficient with all kinds of magical devices,
+and have made a fine art of extracting, storing, and using these 
+objects' magical energies.  Because they neither fight well nor cast 
+powerful spells, Alchemists rely on their craftsmanship to cope with 
+the dangers of the dungeons.  They will quickly learn to create damage-
+dealing wands, rods, and staffs, forge powerful weapons and armour, 
+make highly useful objects of other kinds, and eventually, at great cost 
+to other knowledge, they can learn the perilous art of artifact creation 
+itself.
+
+#####GStarting Stat Modifiers
+Strength         -5
+Intelligence     +3
+Wisdom           +0
+Dexterity        +1
+Constitution     -2
+Charisma         +1
+Hit Die          +d0
+Spell Points     +0%
+Exp Penalty      30%
+
+#####GStarting Skills:
+#####BSkill                   Start Level     Skill Point Gains
+Combat                  1.000           [0.700]
+  Weaponmastery         0.700           [0.700]
+Sneakiness              1.000           [0.900]
+  Stealth               0.000           [0.400]
+Magic                   3.000           [0.900]
+  Magic-Device          1.000           [1.250]
+  Geomancy
+    Fire                0.000           [0.100]
+    Water               0.000           [0.100]
+    Air                 0.000           [0.100]
+    Earth               0.000           [0.100]
+  Meta                  0.000           [0.500]
+  Conveyance            0.000           [0.100]
+  Divination            0.000           [0.500]
+  Temporal              0.000           [0.100]
+  Mind                  0.000           [0.100]
+  Nature                0.000           [0.100]
+  Necromancy            0.000           [0.100]
+  Runecraft             0.000           [0.700]
+  Thaumaturgy           0.000           [0.100]
+  Alchemy               1.000           [0.800]
+Spirituality            1.000           [0.800]
+  Prayer                0.000           [0.500]
+Monster-lore            0.000           [0.500]
+
+*An Alchemist cannot learn the Geomancy skill, but it is shown in his skill 
+screen because the elemental schools are sub-skills of it.
+
+#####GInnate Abilities:
+#####BAbility              Character level
+Perfect casting             1
+
+#####GStarting Equipment
+An Alchemist begins the game with:
+    a Dagger
+    six Essences of Explosion
+    an Empty Bottle
+    a Set of Leather Gloves
+~~~~~03|Alchemist|Alchemy powers explained
+~~~~~05|Skills|Alchemy - Alchemy powers
+#####GAlchemy
+[[[[[BThe alchemical techniques are accessed using the 'm' key.]  
+Alchemists may then 'E'xtract essences or add 'P'owers. The Alchemist [[[[[vmust]
+be wearing GLOVES to use their alchemy powers.
+
+An Alchemists is also capable of [[[[[Bcreating their own artifacts], but
+this is a time-consuming, and costly, activity. To do so, he must first 
+learn the ability *****ability.txt*09[Artifact Creation], which costs a whopping 70 skill points
+to learn, and requires some high pre-requisites. Once he has done so, 
+he needs to imbue an ego item with a number of essences of magic (equal
+to their skill level) and then wield the item. While using the item, 
+it will gain experience (which reduces the amount of exp the wearer 
+gains during this time). When the Alchemist feels that the item is 
+powerful enough, he can finalise the artifact by "buying" powers using
+the experience the artifact has collected. He will also require exotic
+ingredients to add the abilities.
+
+Most (but not all) potions, scrolls, wands, staffs, rods, rings, and 
+amulets contain usable magical energies.  An Alchemist taps that 
+energy, using the technique "'E'xtract essences" to create one or more
+essences of a type appropriate to the original object.
+
+The drained object itself is now called "of nothing".  Unlike any
+other kind of object, it can have new magics added to it.
+
+An Alchemist can add power to such items by using essences he made or
+found.  He does this with the technique "'P'ower".  He can then select
+the object he wishes to enchant, and the kind of object he wishes to
+create. Only object types for which he knows the recipe will be displayed,
+and ones for which essences are lacking will be displayed in red. Objects
+whose level exceeds his own are sometimes difficult to create, though
+he can always add gold to improve the chances of his success.
+
+[[[[[BA few pointers:]
+     -Recipes are (usually) logical. Acid essences don't make Dragon 
+      Weapons. And you can always look at the recipes you know with
+      the "recipe 'B'ook" command.
+     -Not all objects or ego-item types can be made using alchemy.
+     -Alchemy is mostly reversible.  Most items that you can 
+      'E'xtract from, you can later re-create, if you learn about
+      them when extracting from them. You won't always get enough
+      essences from destroying an item to recreate it, though the 
+      chance of doing so will get higher as you increase in skill.
+     -*Identifying* an object that you can destroy will always teach
+      you how to create it (if creating it is possible).
+     -Since you can't create abilities in artifacts that you aren't
+      aware of, make sure to *identify* all the artifacts you can.
+     -You can't *identify* things you buy in shops, so you'll have
+      to extract from them and take your chances.
+
+[[[[[BSome Recipes:]
+Any Alchemist worth his salt knows lots of recipes.  By extracting from
+items in the dungeon, he learns to create more and more items. You can
+see the recipes you know using the "recipe 'B'ook" command. The Alchemist
+starts off knowing some basic recipes, and gains more recipes as time 
+goes on.
+
+More details can be found in the *****essences.txt*0[Essences SPOILER]).
+

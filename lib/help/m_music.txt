@@ -1,0 +1,77 @@
+|||||oy
+~~~~~01|Magic|Music
+~~~~~02|Music
+~~~~~03|Skills|Music - Song Info
+#####R === ToME Spells - Music ===
+
+Musical songs can have powerful effects for those who have the ability to
+play instruments, chiefly *****c_bard.txt*0[Bards].
+
+In order to continue playing a song, mana is consumed each turn, until 
+either the 'Stop Singing' song is sung, or the player's mana runs out.
+
+Each song, as well as having a school level like any other magic spell, also
+has a roman numeral following its name. The higher this number, the greater the
+craftmanship of the instrument required to play it.
+
+Each musical instrument has a value assigned to it as well, between 1 and 4. The
+higher the number, the better the craftmanship; hence it will be possible
+for the bard to play higher level songs only with more powerful instruments.
+E.g. a Harp(+1) will allow you to cast "Stop Singing(I)" and "Song of the
+Sun(I)". A Harp(+2) would allow you to sing those songs, as well as "Flow of
+Life(II)".
+
+There are 3 different types of instruments: Harps, Drums and Horns. Each type 
+of instrument contains a different family of musical songs:
+
+
+#####vMusical Songs
+
+#####GAll Instruments
+1. [[[[[vStop Singing(I)] (school level 1)
+   Stops the current song, if any.
+   
+#####GDrums
+1. [[[[[vHolding Pattern(I)] (school level 1)
+   Slows down all monsters listening the song.
+   Consumes mana each turn.
+2. [[[[[vIllusion Pattern(II)] (school level 5)
+   Tries to confuse all monsters listening the song.
+   Consumes mana each turn.
+3. [[[[[vStun Pattern(IV)] (school level 10)
+   Stuns all monsters listening to the song.
+   Consumes mana each turn.
+
+#####GHarps
+1. [[[[[vSong of the Sun(I)] (School level 1)
+   Provides light as long as you sing.
+   Consumes mana each turn.
+2. [[[[[vFlow of Life(II)] (School level 5)
+   Heals you as long as you sing.
+   Consumes mana each turn.
+3. [[[[[vHeroic Ballad(II)] (School level 10)
+   Increases melee accuracy.
+   At level 10 it increases it even more and reduces armour a bit.
+   At level 20 it increases it still more.
+   At level 25 it grants protection against chaos and confusion.
+   Consumes mana each turn.
+4. [[[[[vHobbit Melodies(III)] (School level 20)
+   Greatly increases your reflexes allowing you to block more melee blows.
+   At level 15 it also makes you faster.
+   Consumes mana each turn.
+5. [[[[[vClairaudience(IV)] (School level 25)
+   Allows you to sense monster minds as long as you sing.
+   At level 10 it identifies all objects in a radius on the floor,
+   as well as probing monsters in that radius.
+   Consumes mana each turn.
+
+#####GHorns
+1. [[[[[vBlow(I)] (School level 4)
+   Produces a powerful, blowing sound all around you.
+2. [[[[[vGush of Wind (II)] (School level 14)
+   Produces a outgoing gush of wind that sends monsters away.
+3. [[[[[vHorns of Ylmir(III)] (School level 20)
+   Produces an earth-shaking sound.
+4. [[[[[vAmbarkanta(IV)] (School level 25)
+   Produces a reality-shaking sound that transports you to a nearly
+   identical reality.

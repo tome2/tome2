@@ -1,0 +1,496 @@
+# File: Makefile
+
+# This is not a very "nice" Makefile, but it usually works.
+
+#
+# Note that you may have to make modifications below according
+# to your machine, available libraries, compilation options,
+# and your "visual module" of choice.  This Makefile is intended
+# for use with Unix machines running X11, Curses, Ncurses, or Vt100,
+# or possibly for "Atari" or "Amiga" computers with "Curses" ports,
+# see below for more information.
+#
+# Note that "main-mac.c" and "main-crb.c", the visual modules for
+# the Macintosh, must be compiled in a special way, see elsewhere.
+#
+# Note that "main-win.c", the visual module for Windows,
+# must be compiled in a special way, see elsewhere.
+#
+# Note that "main-ibm.c" and "main-emx.c", the visual modules
+# for various types of IBM-PC computers, must be compiled with
+# special Makefiles, see elsewhere.
+#
+# Note that "main-lsl.c", the visual module for Linux-SVGALIB
+# must be compiled with "Makefile.lsl", see elsewhere.
+#
+# Note that "main-acn.c", the visual module for Risc Acorn,
+# must be compiled with "Makefile.acn", see elsewhere.
+#
+# Note that "Makefile.wat" is a slight variation on "Makefile.ibm",
+# which allow the use of "main-ibm.c" with special compiler
+# (might be out-of-date).
+#
+# If you are able to construct "main-xxx.c" and/or "Makefile.xxx"
+# files for a currently unsupported system, please send them to me
+# (rr9@angband.org) for inclusion in future versions.
+#
+
+##
+## 1. Installation locations and such
+##
+## LIBDIR, BINDIR and OWNER should be set appropriately for
+## multiuser installations.
+##
+## If you want to keep it private or don't have root privilege
+## required by "make install", set LIBDIR to ./lib/ or an absolute
+## path pointing to your lib directory, and don't run "make install".
+##
+## NOTE: If LIBDIR is set to ./lib/ , you have to cd to parent directory
+## of lib before you start the game.
+##
+
+# Where lib/ files goes
+#LIBDIR = /usr/lib/games/tome/
+# Sysadmins of commercial Unix and/or BSD might prefer this
+#LIBDIR = /usr/local/lib/tome/
+# If you like the old default, use this one
+LIBDIR = ./lib/
+# Another example: single user installation using absolute path
+#LIBDIR = /home/myloginname/lib/tome/
+
+
+# Where ToME binary goes
+BINDIR = /usr/local/games
+# Another common location
+#BINDIR = /usr/local/bin
+
+# The game will run suid to this user
+OWNER = games
+
+# Ignore this if you're not making a package
+DESTDIR=
+
+##
+## 2. Some "system" definitions
+##
+## No changes are needed to compile a version that will run on both
+## X11 and Curses, in debugging mode, with maximal warnings, on many
+## normal Unix machines of the Sun OS variety (non-solaris).
+##
+## To use an "alternative" definition, simply "modify" (or "replace")
+## the definition below with one that you like.  For example, you can
+## change the compiler to "cc", or remove the "debugging" options, or
+## remove the X11 or Curses support, etc, as desired.
+##
+## See also "config.h" and "h-config.h" for important information.
+##
+## Some "examples" are given below, they can be used by simply
+## removing the FIRST column of "#" signs from the "block" of lines
+## you wish to use, and commenting out "standard" block below.
+##
+## This is not intended to be a "good" Makefile, just a "simple" one.
+##
+
+
+#
+# This is my compiler of choice, it seems to work most everywhere
+#
+CC = gcc
+
+# Profiling options
+# PROFILECOPTS = -pg
+# PROFILELDFLAGS = -pg
+
+#
+# Standard version (see main-x11.c and main-gcu.c)
+#
+# This version supports both "X11" and "curses" in a single executable.
+#
+# You may have to add various X11 include/library directories to the
+# "INCLUDES", if your machine places files in a weird location
+# (e.g. -I/usr/X11R6/include, as is almost always the case with
+# linux and *BSD). Since we have seen many linux users -- arguably
+# the largest unix population -- confused by this, and adding this
+# usually doesn't hurt, the default rule has been changed to search
+# for /usr/X11R6/include.
+#
+# You may be able to remove "-ltermcap" on some machines (ex: Solaris).
+#
+# You may have to replace "-lcurses" with "-lncurses" to use the
+# "new curses" library instead of the "old curses" library, and
+# you may have to add "-I/usr/include/ncurses" to the "INCLUDES",
+# and/or "-DUSE_NCURSES" to "DEFINES".
+#
+# See "main-gcu.c" and "config.h" for some optional "curses" defines,
+# including "USE_GETCH" and "USE_CURS_SET".  Note that "config.h" will
+# attempt to "guess" at many of these flags based on your system.
+#
+#COPTS = -Wall -O1 -pipe -g
+#INCLUDES = -I/usr/X11R6/include
+#DEFINES = -DUSE_X11 \
+#	-DUSE_EGO_GRAPHICS -DUSE_TRANSPARENCY -DSUPPORT_GAMMA \
+#	-DUSE_PRECISE_CMOVIE -DUSE_UNIXSOCK
+#LIBS = -lX11 -L/usr/X11R6/lib
+
+##
+## Variation -- Only support "main-gtk.c" (not "main-gcu.c, main-x11.c")
+##
+#COPTS = -Wall -O1 -pipe -g
+#INCLUDES = `gtk-config --cflags`
+#DEFINES = -DUSE_GTK -DUSE_TRANSPARENCY -DUSE_EGO_GRAPHICS -DSUPPORT_GAMMA
+#LIBS = `gtk-config --libs`
+
+#
+# Variation -- Only support "main-x11.c" (not "main-gcu.c")
+#
+#COPTS = -Wall -O1 -pipe -g
+#INCLUDES = -I/usr/X11R6/include
+#DEFINES = -DUSE_X11 -DUSE_TRANSPARENCY -DUSE_EGO_GRAPHICS -DSUPPORT_GAMMA
+#LIBS = -lX11 -L/usr/X11R6/lib
+
+
+##
+## Variation -- Only support "main-gcu.c" (not "main-x11.c")
+##
+#COPTS = -Wall -O1 -pipe -g
+#INCLUDES =
+#DEFINES = -DUSE_GCU
+#LIBS = -lcurses -ltermcap
+
+
+##
+## Variation -- Use "main-xaw.c" instead of "main-x11.c"
+##
+#COPTS = -Wall -O1 -pipe -g
+#INCLUDES = -I/usr/X11R6/include
+#DEFINES = -DUSE_XAW -DUSE_GCU \
+#	-DUSE_TRANSPARENCY -DUSE_EGO_GRAPHICS -DSUPPORT_GAMMA
+#LIBS = -lXaw -lXmu -lXt -lX11 -lcurses -ltermcap -L/usr/X11R6/lib
+
+##
+## Variation -- Use "main-sdl.c" instead of "main-x11.c"
+##
+SDL_CONFIG ?= sdl-config
+COPTS = -Wall -O1 -pipe -g
+INCLUDES = `$(SDL_CONFIG) --cflags`
+DEFINES = -DUSE_SDL -DUSE_GCU \
+	-DUSE_EGO_GRAPHICS -DUSE_TRANSPARENCY \
+	-DUSE_PRECISE_CMOVIE -DUSE_UNIXSOCK -DSUPPORT_GAMMA \
+	-DUSE_ISO
+LIBS = `$(SDL_CONFIG) --libs` -lSDL_image -lSDL_ttf -lcurses
+
+##
+## Variation -- Use "main-cap.c" instead of "main-gcu.c"
+##
+#COPTS = -Wall -O1 -pipe -g
+#INCLUDES = -I/usr/X11R6/include
+#DEFINES = -DUSE_X11 -DUSE_CAP \
+#	-DUSE_TRANSPARENCY -DUSE_EGO_GRAPHICS -DSUPPORT_GAMMA
+#LIBS = -lX11 -ltermcap
+
+
+##
+## Variation -- Only work on simple vt100 terminals
+##
+#COPTS = -Wall -O1 -pipe -g
+#INCLUDES =
+#DEFINES = -DUSE_CAP -DUSE_HARDCODE
+
+
+##
+## Variation -- this might work for Linux 1.1.93 using ncurses-1.8.7.
+##
+#COPTS = -Wall -O2 -fomit-frame-pointer -m486
+#INCLUDES = -I/usr/X11R6/include -I/usr/include/ncurses
+#DEFINES = -DUSE_X11 -DUSE_GCU \
+#	-DUSE_TRANSPARENCY -DUSE_EGO_GRAPHICS -DSUPPORT_GAMMA
+#LIBS = -lX11 -lncurses -L/usr/X11R6/lib
+
+
+##
+## Variation -- this might work better than the suggestion above
+##
+#COPTS = -Wall -O2 -fomit-frame-pointer
+#INCLUDES = -I/usr/X11R6/include -I/usr/include/ncurses
+#DEFINES = -DUSE_X11 -DUSE_GCU -DUSE_TPOSIX -DUSE_CURS_SET \
+#	-DUSE_TRANSPARENCY -DUSE_EGO_GRAPHICS -DSUPPORT_GAMMA
+#LIBS = -lX11 -lncurses -L/usr/X11R6/lib
+#LDFLAGS = -s
+
+
+##
+## Variation -- compile for FreeBSD with ncurses
+## -- BSD curses gives you B&W display.
+##
+#COPTS = -Wall -O2 -fomit-frame-pointer -m486
+#INCLUDES = -I/usr/X11R6/include
+#DEFINES = -DUSE_X11 -DUSE_GCU -DUSE_NCURSES \
+#	-DUSE_TRANSPARENCY -DUSE_EGO_GRAPHICS -DSUPPORT_GAMMA
+#LIBS = -lX11 -lncurses -L/usr/X11R6/lib
+
+
+##
+## Variation -- compile for Solaris
+##
+#COPTS = -Wall -O1 -pipe -g
+#INCLUDES =
+#DEFINES = -DUSE_X11 -DUSE_GCU -DSOLARIS \
+#	-DUSE_TRANSPARENCY -DUSE_EGO_GRAPHICS -DSUPPORT_GAMMA
+#LIBS = -lX11 -lsocket -lcurses
+
+
+##
+## Variation -- compile for SGI Indigo runnig Irix
+## The SGI has hardware gamma correction.
+##
+#COPTS = -Wall -O1 -pipe -g
+#INCLUDES =
+#DEFINES = -DUSE_X11 -DUSE_GCU -DSGI \
+#	-DUSE_TRANSPARENCY -DUSE_EGO_GRAPHICS
+#LIBS = -lX11 -lcurses -ltermcap -lsun
+
+
+
+##
+## Variation -- compile for Dec ALPHA OSF/1 v2.0
+##
+#CC     = cc
+##COPTS = -std -O -g3 -Olimit 4000
+#COPTS = -std -g
+#INCLUDES =
+#DEFINES = -DUSE_X11 -DUSE_GCU \
+#	-DUSE_TRANSPARENCY -DUSE_EGO_GRAPHICS -DSUPPORT_GAMMA
+#LIBS   = -lX11 -lcurses -ltermcap -lrpcsvc
+
+
+##
+## Variation -- compile for Interactive Unix (ISC) systems
+##
+#COPTS = -Wall -O1 -pipe -g
+#INCLUDES =
+#DEFINES = -DUSE_X11 -DUSE_GCU -DISC \
+#	-DUSE_TRANSPARENCY -DUSE_EGO_GRAPHICS -DSUPPORT_GAMMA
+#LIBS = -lX11 -lcurses -lnsl_s -linet -lcposix
+
+
+##
+## Variation -- Support fat binaries under NEXTSTEP
+##
+#COPTS = -Wall -O1 -pipe -g -arch m68k -arch i386
+#INCLUDES =
+#DEFINES = -DUSE_GCU
+#LIBS = -lcurses -ltermcap
+
+
+### End of configurable section ###
+
+#
+# The "source" and "object" files.
+#
+
+BASESRCS = \
+  main-gtk.c main-gcu.c main-x11.c main-xaw.c main-dmy.c \
+  z-rand.c z-util.c z-form.c z-virt.c z-term.c z-sock.c \
+  variable.c tables.c plots.c util.c cave.c dungeon.c \
+  melee1.c melee2.c modules.c \
+  object1.c object2.c randart.c squeltch.c traps.c \
+  monster1.c monster2.c monster3.c ghost.c \
+  xtra1.c xtra2.c skills.c powers.c gods.c \
+  spells1.c spells2.c \
+  status.c files.c notes.c loadsave.c \
+  cmd1.c cmd2.c cmd3.c cmd4.c cmd5.c cmd6.c cmd7.c \
+  help.c \
+  generate.c gen_maze.c gen_evol.c wild.c levels.c store.c bldg.c \
+  cmovie.c irc.c \
+  wizard2.c init2.c birth.c wizard1.c init1.c \
+  iso/simgraph.c iso/simview.c iso/world_adaptor.c iso/world_view.c \
+  main-sdl-iso.c maim-iso.c
+
+
+BASEOBJS = \
+  main-gtk.o main-gcu.o main-x11.o main-xaw.o main-dmy.o \
+  z-rand.o z-util.o z-form.o z-virt.o z-term.o z-sock.o \
+  variable.o tables.o plots.o util.o cave.o dungeon.o \
+  melee1.o melee2.o modules.o \
+  object1.o object2.o randart.o squeltch.o traps.o \
+  monster1.o monster2.o monster3.o ghost.o \
+  xtra1.o xtra2.o skills.o powers.o gods.o \
+  spells1.o spells2.o \
+  status.o files.o notes.o loadsave.o \
+  cmd1.o cmd2.o cmd3.o cmd4.o cmd5.o cmd6.o cmd7.o \
+  help.o \
+  generate.o gen_maze.o gen_evol.o wild.o levels.o store.o bldg.o \
+  cmovie.o irc.o \
+  wizard2.o init2.o birth.o wizard1.o init1.o \
+  iso/simgraph.o iso/simview.o iso/world_adaptor.o iso/world_view.o \
+  main-sdl-iso.o maim-iso.o
+
+
+LUASRCS = \
+  script.c lua_bind.c \
+  w_util.c w_player.c w_z_pack.c w_obj.c w_mnster.c w_spells.c w_quest.c w_play_c.c w_dun.c
+
+TOLUASRCS = \
+  lua/lapi.c lua/lcode.c lua/ldebug.c lua/ldo.c lua/lfunc.c lua/lgc.c \
+  lua/llex.c lua/lmem.c lua/lobject.c lua/lparser.c lua/lstate.c lua/lstring.c \
+  lua/ltable.c lua/ltests.c lua/ltm.c lua/lundump.c lua/lvm.c lua/lzio.c \
+  lua/lauxlib.c lua/lbaselib.c lua/ldblib.c lua/liolib.c lua/lstrlib.c \
+  lua/tolua_lb.c lua/tolua_rg.c lua/tolua_tt.c lua/tolua_tm.c lua/tolua_gp.c \
+  lua/tolua_eh.c lua/tolua_bd.c
+
+LUAOBJS = \
+  script.o lua_bind.o \
+  w_util.o w_player.o w_z_pack.o w_obj.o w_mnster.o w_spells.o w_quest.o w_play_c.o w_dun.o
+
+TOLUAOBJS = \
+  lua/lapi.o lua/lcode.o lua/ldebug.o lua/ldo.o lua/lfunc.o lua/lgc.o \
+  lua/llex.o lua/lmem.o lua/lobject.o lua/lparser.o lua/lstate.o lua/lstring.o \
+  lua/ltable.o lua/ltests.o lua/ltm.o lua/lundump.o lua/lvm.o lua/lzio.o \
+  lua/lauxlib.o lua/lbaselib.o lua/ldblib.o lua/liolib.o lua/lstrlib.o \
+  lua/tolua_lb.o lua/tolua_rg.o lua/tolua_tt.o lua/tolua_tm.o lua/tolua_gp.o \
+  lua/tolua_eh.o lua/tolua_bd.o
+
+#
+# Base sources and objects
+#
+
+SRCS = $(BASESRCS)
+OBJS = $(BASEOBJS)
+
+
+#
+# Compiler options
+#
+
+CFLAGS = $(COPTS) $(PROFILECOPTS) $(INCLUDES) $(DEFINES) -DDEFAULT_PATH=\"$(LIBDIR)\"
+
+
+#
+# Lua support
+#
+
+INCLUDES += -Ilua -I.
+DEFINES += -DUSE_LUA
+SRCS = $(LUASRCS) $(TOLUASRCS) $(BASESRCS)
+OBJS = $(LUAOBJS) $(TOLUAOBJS) $(BASEOBJS)
+
+# Force recreation of stub files when lua source files are updated
+# To be included in dependency rules
+TOLUADEP = $(TOLUASRCS) lua/tolua.c lua/tolualua.c
+
+#
+# IRC support
+#
+
+IRC_SERVER=irc.worldirc.org
+IRC_PORT=6667
+IRC_CHANNEL=\#tome
+
+DEFINES += \
+	-DIRC_SERVER=\"$(IRC_SERVER)\" \
+	-DIRC_PORT=\"$(IRC_PORT)\" \
+	-DIRC_CHANNEL=\"$(IRC_CHANNEL)\"
+
+# Build the binary. The new base target.
+#
+
+TARGET = tome
+
+TOLUA = ./tolua
+
+default: $(TOLUA) $(TARGET)
+	@echo "*** Note: In order to use the install rule, which now actually"
+	@echo "*** handles the installation of the library dir, you need to edit"
+	@echo "*** this makefile, going to the top and making sure LIBDIR suits"
+	@echo "*** your desired install dir properly. The LIBRARY_DIR you used"
+	@echo "*** to set in config.h is now ignored and obsolete with respect"
+	@echo "*** to this makefile. Note that if you edit this makefile, you may"
+	@echo "*** need to recompile so all the files that reference those defines"
+	@echo "*** notice the changes."
+
+$(TARGET): $(OBJS)
+	$(CC) $(PROFILELDFLAGS) $(LDFLAGS) -o $@ $(OBJS) $(LIBS)
+
+$(TOLUA): $(TOLUAOBJS) lua/tolua.c lua/tolualua.c
+	$(CC) $(CFLAGS) $(PROFILELDFLAGS) $(LDFLAGS) -o $@ $(TOLUAOBJS) lua/tolua.c lua/tolualua.c $(LIBS)
+
+#
+# An install rule.
+#
+mini_install: default
+	cp -f $(TARGET) ..
+
+install: default
+	[ -d $(DESTDIR)$(LIBDIR) ] || mkdir -p $(DESTDIR)$(LIBDIR)
+	[ -d $(DESTDIR)$(BINDIR) ] || mkdir -p $(DESTDIR)$(BINDIR)
+	cp -r ../lib/* $(DESTDIR)$(LIBDIR)
+	chown -R $(OWNER) $(DESTDIR)$(LIBDIR)
+	cp -f $(TARGET) $(DESTDIR)$(BINDIR)/$(TARGET)
+	chown $(OWNER) $(DESTDIR)$(BINDIR)/$(TARGET)
+	chmod 4755 $(DESTDIR)$(BINDIR)/$(TARGET)
+
+# old-install: $(TARGET)
+#	cp $(TARGET) ..
+
+
+#
+# Clean up old junk
+#
+
+clean:
+	rm -f *.bak *.o lua/*.o
+
+
+#
+# Generate dependancies automatically
+#
+
+depend:
+	makedepend $(INCLUDES) $(DEFINES) -D__MAKEDEPEND__ $(SRCS)
+
+.c.o:
+	$(CC) $(CFLAGS) -c -o $*.o $*.c
+
+
+#
+# Quests
+#
+plots.o: q_rand.c q_main.c q_one.c q_ultrag.c q_ultrae.c \
+	q_thief.c q_hobbit.c q_nazgul.c q_troll.c q_wight.c \
+	q_spider.c q_poison.c \
+	q_eol.c q_nirna.c q_invas.c \
+	q_betwen.c \
+	q_narsil.c q_shroom.c q_thrain.c q_wolves.c q_dragons.c q_haunted.c q_evil.c
+
+#
+# Lua library compilation rules
+#
+
+w_mnster.c: monster.pkg $(TOLUADEP)
+	$(TOLUA) -n monster -o w_mnster.c monster.pkg
+
+w_player.c: player.pkg $(TOLUADEP)
+	$(TOLUA) -n player -o w_player.c player.pkg
+
+w_play_c.c: player_c.pkg $(TOLUADEP)
+	$(TOLUA) -n player_c -o w_play_c.c player_c.pkg
+
+w_z_pack.c: z_pack.pkg $(TOLUADEP)
+	$(TOLUA) -n z_pack -o w_z_pack.c z_pack.pkg
+
+w_obj.c: object.pkg $(TOLUADEP)
+	$(TOLUA) -n object -o w_obj.c object.pkg
+
+w_util.c: util.pkg $(TOLUADEP)
+	$(TOLUA) -n util -o w_util.c util.pkg
+
+w_spells.c: spells.pkg $(TOLUADEP)
+	$(TOLUA) -n spells -o w_spells.c spells.pkg
+
+w_quest.c: quest.pkg $(TOLUADEP)
+	$(TOLUA) -n quest -o w_quest.c quest.pkg
+
+w_dun.c: dungeon.pkg $(TOLUA)
+	$(TOLUA) -n dungeon -o w_dun.c dungeon.pkg
+
+# DO NOT DELETE THIS LINE - make depend depends on it.

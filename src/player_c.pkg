@@ -1,0 +1,1060 @@
+/* File: player_c.pkg */
+
+/*
+ * Purpose: Lua interface defitions for player classes.
+ * To be processed by tolua to generate C source code.
+ */
+
+$#include "angband.h"
+
+/** @typedef cptr
+ * @note String
+ */
+typedef char* cptr;
+/** @typedef errr
+ * @note Number
+ */
+typedef int errr;
+/** @typedef bool
+ * @note Boolean
+ */
+typedef unsigned char bool;
+/** @typedef byte
+ * @note Number
+ */
+typedef unsigned char byte;
+/** @typedef s16b
+ * @note Number
+ */
+typedef signed short s16b;
+/** @typedef u16b
+ * @note Number
+ */
+typedef unsigned short u16b;
+/** @typedef s32b
+ * @note Number
+ */
+typedef signed int s32b;
+/** @typedef u32b
+ * @note Number
+ */
+typedef unsigned int u32b;
+
+/** @struct player_class
+ * @brief Player class
+ */
+struct player_class
+{
+	/** @structvar title
+	 * @brief Number
+	 * @note Type of class 
+	 */
+	s32b title;
+	/** @structvar desc
+	 * @brief Number
+	 * @note Small desc of the class 
+	 */
+	s32b desc;
+	/** @structvar titles[10]
+	 * @brief Number
+	 */
+	s32b titles[10];
+
+	/** @structvar c_adj[6]
+	 * @brief Number
+	 * @note Class stat modifier 
+	 */
+	s16b c_adj[6];
+
+	/** @structvar c_dis
+	 * @brief Number
+	 * @note class disarming 
+	 */
+	s16b c_dis;
+	/** @structvar c_dev
+	 * @brief Number
+	 * @note class magic devices 
+	 */
+	s16b c_dev;
+	/** @structvar c_sav
+	 * @brief Number
+	 * @note class saving throws 
+	 */
+	s16b c_sav;
+	/** @structvar c_stl
+	 * @brief Number
+	 * @note class stealth 
+	 */
+	s16b c_stl;
+	/** @structvar c_srh
+	 * @brief Number
+	 * @note class searching ability 
+	 */
+	s16b c_srh;
+	/** @structvar c_fos
+	 * @brief Number
+	 * @note class searching frequency 
+	 */
+	s16b c_fos;
+	/** @structvar c_thn
+	 * @brief Number
+	 * @note class to hit (normal) 
+	 */
+	s16b c_thn;
+	/** @structvar c_thb
+	 * @brief Number
+	 * @note class to hit (bows) 
+	 */
+	s16b c_thb;
+
+	/** @structvar x_dis
+	 * @brief Number
+	 * @note extra disarming 
+	 */
+	s16b x_dis;
+	/** @structvar x_dev
+	 * @brief Number
+	 * @note extra magic devices 
+	 */
+	s16b x_dev;
+	/** @structvar x_sav
+	 * @brief Number
+	 * @note extra saving throws 
+	 */
+	s16b x_sav;
+	/** @structvar x_stl
+	 * @brief Number
+	 * @note extra stealth 
+	 */
+	s16b x_stl;
+	/** @structvar x_srh
+	 * @brief Number
+	 * @note extra searching ability 
+	 */
+	s16b x_srh;
+	/** @structvar x_fos
+	 * @brief Number
+	 * @note extra searching frequency 
+	 */
+	s16b x_fos;
+	/** @structvar x_thn
+	 * @brief Number
+	 * @note extra to hit (normal) 
+	 */
+	s16b x_thn;
+	/** @structvar x_thb
+	 * @brief Number
+	 * @note extra to hit (bows) 
+	 */
+	s16b x_thb;
+
+	/** @structvar c_mhp
+	 * @brief Number
+	 * @note Class hit-dice adjustment 
+	 */
+	s16b c_mhp;
+	/** @structvar c_exp
+	 * @brief Number
+	 * @note Class experience factor 
+	 */
+	s16b c_exp;
+
+	/** @structvar powers[4]
+	 * @brief Number
+	 * @note Powers of the class 
+	 */
+	s16b powers[4];
+
+	/** @structvar spell_book
+	 * @brief Number
+	 * @note Tval of spell books (if any) 
+	 */
+	s16b spell_book;
+	/** @structvar spell_stat
+	 * @brief Number
+	 * @note Stat for spells (if any)
+	 */
+	s16b spell_stat;
+	/** @structvar spell_lev
+	 * @brief Number
+	 * @note The higher it is the higher the spells level are 
+	 */
+	s16b spell_lev;
+	/** @structvar spell_fail
+	 * @brief Number
+	 * @note The higher it is the higher the spells failure are 
+	 */
+	s16b spell_fail;
+	/** @structvar spell_mana
+	 * @brief Number
+	 * @note The higher it is the higher the spells mana are 
+	 */
+	s16b spell_mana;
+	/** @structvar spell_first
+	 * @brief Number
+	 * @note Level of first spell 
+	 */
+	s16b spell_first;
+	/** @structvar spell_weight
+	 * @brief Number
+	 * @note Weight that hurts spells 
+	 */
+	s16b spell_weight;
+	/** @structvar max_spell_level
+	 * @brief Number
+	 * @note Maximun spell level 
+	 */
+	byte max_spell_level;
+	/** @structvar magic_max_spell
+	 * @brief Number
+	 * @note Maximun numbner of spells one can learn by natural means 
+	 */
+	byte magic_max_spell;
+
+	/** @structvar flags1
+	 * @brief Number
+	 * @note flags 
+	 */
+	s32b flags1;
+
+	/** @structvar mana
+	 * @brief Number
+	 */
+	s16b mana;
+	/** @structvar blow_num
+	 * @brief Number
+	 */
+	s16b blow_num;
+	/** @structvar blow_wgt
+	 * @brief Number
+	 */
+	s16b blow_wgt;
+	/** @structvar blow_mul
+	 * @brief Number
+	 */
+	s16b blow_mul;
+	/** @structvar extra_blows
+	 * @brief Number
+	 */
+	s16b extra_blows;
+
+	/** @structvar sense_base
+	 * @brief Number
+	 */
+	s32b sense_base;
+	/** @structvar sense_pl
+	 * @brief Number
+	 */
+	s32b sense_pl;
+	/** @structvar sense_plus
+	 * @brief Number
+	 */
+	s32b sense_plus;
+	/** @structvar sense_heavy
+	 * @brief Number
+	 */
+	byte sense_heavy;
+	/** @structvar sense_heavy_magic
+	 * @brief Number
+	 */
+	byte sense_heavy_magic;
+};
+
+/** @var *cp_ptr
+ * @brief player_class
+ * @note Player class information
+ */
+extern player_class *cp_ptr;
+
+
+
+/** @struct skill_type
+ * @brief Skills
+ */
+struct skill_type
+{
+	/** @structvar name
+	 * @brief Number
+	 * @note Name 
+	 */
+	u32b name;
+	/** @structvar desc
+	 * @brief Number
+	 * @note Description 
+	 */
+	u32b desc;
+	/** @structvar action_desc
+	 * @brief Number
+	 * @note Action Description 
+	 */
+	u32b action_desc;
+
+	/** @structvar action_mkey
+	 * @brief Number
+	 * @note Action do to 
+	 */
+	s16b action_mkey;
+
+	/** @structvar i_value
+	 * @brief Number
+	 * @note Actual value 
+	 */
+	u32b i_value;
+	/** @structvar i_mod
+	 * @brief Number
+	 * @note Modifier(1 skill point = modifier skill) 
+	 */
+	u16b i_mod;
+
+	/** @structvar value
+	 * @brief Number
+	 * @note Actual value 
+	 */
+	u32b value;
+	/** @structvar mod
+	 * @brief Number
+	 * @note Modifier(1 skill point = modifier skill) 
+	 */
+	u16b mod;
+	/** @structvar rate
+	 * @brief Number
+	 * @note Modifier decreasing rate 
+	 */
+	s16b rate;
+
+	/** @structvar uses
+	 * @brief Number
+	 * @note Number of times used 
+	 */
+	u32b uses;
+
+	/** @structvar action[9999]
+	 * @brief Number
+	 * @note List of actions against other skills 
+	 */
+	s16b action[9999];
+
+	/** @structvar father
+	 * @brief Number
+	 * @note Father in the skill tree 
+	 */
+	s16b father;
+	/** @structvar dev
+	 * @brief Boolean
+	 * @note Is the branch developped ? 
+	 */
+	bool dev;
+	/** @structvar order
+	 * @brief Number
+	 * @note Order in the tree 
+	 */
+	s16b order;
+	/** @structvar hidden
+	 * @brief Boolean
+	 * @note Innactive 
+	 */
+	bool hidden;
+};
+
+/** @def MAX_SKILLS
+ * @brief Maximum number of skills
+ */
+#define MAX_SKILLS	100
+
+
+$static cptr get_skill_name(int i) { return s_name + s_info[i].name; }
+/** @fn get_skill_name(int i)
+ * @brief Return name of skill with index "i" in skill array.\n
+ * @param i Number \n the index of skill in skill array.
+ * @brief Skill index
+ * @return String \n The name of the skill with index "i" in the skill array.
+ * @note (see file w_play_c.c)
+ */
+static cptr get_skill_name(int i);
+
+/** @var old_max_s_idx
+ * @brief Number
+ * @note Previous maximum skill index
+ */
+extern u16b old_max_s_idx;
+/** @var max_s_idx
+ * @brief Number
+ * @note Current maximum skill index
+ */
+extern u16b max_s_idx;
+/** @var s_info[MAX_SKILLS]
+ * @brief skill_type
+ * @note Array of player skills
+ */
+skill_type s_info[MAX_SKILLS];
+
+/** @name Skills
+ * @{ */
+/** @def SKILL_CONVEYANCE
+ * @brief Conveyance
+ * @note
+ * Ability to learn and use spells from the Conveyance school
+ */
+#define SKILL_CONVEYANCE		1
+
+/** @def SKILL_MANA
+ * @brief Mana
+ * @note
+ * Ability to learn and use spells from the Mana school
+ */
+#define SKILL_MANA			2
+
+/** @def SKILL_FIRE
+ * @brief Fire
+ * @note
+ * Ability to learn and use spells from the Fire school
+ */
+#define SKILL_FIRE			3
+
+/** @def SKILL_AIR
+ * @brief Air
+ * @note
+ * Ability to learn and use spells from the Air school
+ */
+#define SKILL_AIR			4
+
+/** @def SKILL_WATER
+ * @brief Water
+ * @note
+ * Ability to learn and use spells from the Water school
+ */
+#define SKILL_WATER			 5
+
+/** @def SKILL_NATURE
+ * @brief Nature
+ * @note
+ * Ability to learn and use spells from the Nature school
+ */
+#define SKILL_NATURE			6
+
+/** @def SKILL_EARTH
+ * @brief Earth
+ * @note
+ * Ability to learn and use spells from the Earth school
+ */
+#define SKILL_EARTH			 7
+
+/** @def SKILL_SYMBIOTIC
+ * @brief Symbiosis
+ * @note
+ * Ability to enter in symbiosis with monsters unable to move by themselves
+ */
+#define SKILL_SYMBIOTIC		 8
+
+/** @def SKILL_MUSIC
+ * @brief Music
+ * @note
+ * Ability to learn and sing songs
+ */
+#define SKILL_MUSIC			 9
+
+/** @def SKILL_DIVINATION
+ * @brief Divination
+ * @note
+ * Ability to learn and use spells from the Divination school
+ */
+#define SKILL_DIVINATION		10
+
+/** @def SKILL_TEMPORAL
+ * @brief Temporal
+ * @note
+ * Ability to learn and use spells from the Temporal school
+ */
+#define SKILL_TEMPORAL		11
+
+/** @def SKILL_DRUID
+ * @brief Druidistic
+ * @note
+ * Ability to learn and use prayers from the Druidistic realm
+ */
+#define SKILL_DRUID			 12
+
+/** @def SKILL_DAEMON
+ * @brief Demonology
+ * @note
+ * Ability to use incantations from the Demonblades
+ */
+#define SKILL_DAEMON			13
+
+/** @def SKILL_META
+ * @brief Meta
+ * @note
+ * Ability to learn and use spells from the Meta school
+ */
+#define SKILL_META			14
+
+/** @def SKILL_MAGIC
+ * @brief Magic
+ * @note
+ * General ability to do magic, also affect mana reserves and
+ * magic device ability. Helps pseudo-id of magic objects
+ */
+#define SKILL_MAGIC			 15
+
+/** @def SKILL_COMBAT
+ * @brief Combat
+ * @note
+ * General ability to fight and to pseudo-id armours and weapons.
+ * It also allows to use heavier armours without penalties
+ */
+#define SKILL_COMBAT			16
+
+/** @def SKILL_MASTERY
+ * @brief Weaponmastery
+ * @note
+ * General ability to use melee weapons
+ */
+#define SKILL_MASTERY		17
+
+/** @def SKILL_SWORD
+ * @brief Sword-mastery
+ * @note
+ * Ability to use swords
+ */
+#define SKILL_SWORD			 18
+
+/** @def SKILL_AXE
+ * @brief Axe-mastery
+ * @note
+ * Ability to use axes
+ */
+#define SKILL_AXE			19
+
+/** @def SKILL_POLEARM
+ * @brief Polearm-mastery
+ * @note
+ * Ability to use polearms
+ */
+#define SKILL_POLEARM		20
+
+/** @def SKILL_HAFTED
+ * @brief Hafted-mastery
+ * @note
+ * Ability to use hafted weapons
+ */
+#define SKILL_HAFTED			21
+
+/** @def SKILL_BACKSTAB
+ * @brief Backstab
+ * @note
+ * Ability to backstab fleeing and sleeping monsters to increase damage
+ */
+#define SKILL_BACKSTAB		22
+
+/** @def SKILL_ARCHERY
+ * @brief Archery
+ * @note
+ * General ability to use ranged weapons
+ */
+#define SKILL_ARCHERY		23
+
+/** @def SKILL_SLING
+ * @brief Sling-mastery
+ * @note
+ * Ability to use slings
+ */
+#define SKILL_SLING			 24
+
+/** @def SKILL_BOW
+ * @brief Bow-mastery
+ * @note
+ * Ability to use bows
+ */
+#define SKILL_BOW			25
+
+/** @def SKILL_XBOW
+ * @brief Crossbow-mastery
+ * @note
+ * Ability to use crossbows
+ */
+#define SKILL_XBOW			26
+
+/** @def SKILL_BOOMERANG
+ * @brief Boomerang-mastery
+ * @note
+ * Ability to use boomerangs
+ */
+#define SKILL_BOOMERANG		 27
+
+/** @def SKILL_SPIRITUALITY
+ * @brief Spirituality
+ * @note
+ * General ability to use spiritual skills and also influence Saving Throw
+ */
+#define SKILL_SPIRITUALITY	28
+
+/** @def SKILL_MINDCRAFT
+ * @brief Mindcraft
+ * @note
+ * Ability to focus the powers of the mind
+ */
+#define SKILL_MINDCRAFT		 29
+
+/** @def SKILL_MISC
+ * @brief Misc
+ * @note
+ * Not a real skill, it is only used to regroup some skills
+ */
+#define SKILL_MISC			30
+
+/** @def SKILL_NECROMANCY
+ * @brief Necromancy
+ * @note
+ * Ability to harness the powers of the dead
+ */
+#define SKILL_NECROMANCY		31
+
+/** @def SKILL_MIMICRY
+ * @brief Mimicry
+ * @note
+ * Ability to use cloaks of mimicry to change form
+ */
+#define SKILL_MIMICRY		32
+
+/** @def SKILL_ANTIMAGIC
+ * @brief Antimagic
+ * @note
+ * Ability to generates an antimagic field
+ */
+#define SKILL_ANTIMAGIC		 33
+
+/** @def SKILL_RUNECRAFT
+ * @brief Runecraft
+ * @note
+ * Ability to combine magic runes to create your own spells
+ */
+#define SKILL_RUNECRAFT		 34
+
+/** @def SKILL_SNEAK
+ * @brief Sneakiness
+ * @note
+ * General ability at the sneakiness skills
+ */
+#define SKILL_SNEAK			 35
+
+/** @def SKILL_STEALTH
+ * @brief Stealth
+ * @note
+ * Ability to move unnoticed, silently
+ */
+#define SKILL_STEALTH		36
+
+/** @def SKILL_DISARMING
+ * @brief Disarming
+ * @note
+ * Ability to disarm the various traps
+ */
+#define SKILL_DISARMING		 37
+
+/* XXX */
+
+/** @def SKILL_ALCHEMY
+ * @brief Alchemy
+ * @note
+ * Ability to use essences to modify/create magic items
+ */
+#define SKILL_ALCHEMY		39
+
+/** @def SKILL_STEALING
+ * @brief Stealing
+ * @note
+ * Ability to steal objects
+ */
+#define SKILL_STEALING		40
+
+/** @def SKILL_SORCERY
+ * @brief Sorcery
+ * @note
+ * Ability to use all the magic schools as if their skill was sorcery
+ */
+#define SKILL_SORCERY		41
+
+/** @def SKILL_HAND
+ * @brief Barehand-combat
+ * @note
+ * Ability to fight barehanded
+ */
+#define SKILL_HAND			42
+
+/** @def SKILL_THAUMATURGY
+ * @brief Thaumaturgy
+ * @note
+ * Ability to gain and cast innate spells
+ */
+#define SKILL_THAUMATURGY	43
+
+/** @def SKILL_SUMMON
+ * @brief Summoning
+ * @note
+ * Ability to create totems from monsters and use them to summon monsters
+ */
+#define SKILL_SUMMON			44
+
+/** @def SKILL_SPELL
+ * @brief Spell-power
+ * @note
+ * Ability to increase the power of spells
+ */
+#define SKILL_SPELL			 45
+
+/** @def SKILL_DODGE
+ * @brief Dodging
+ * @note
+ * Ability to dodge blows and bolts
+ */
+#define SKILL_DODGE			 46
+
+/** @def SKILL_BEAR
+ * @brief Bearform-combat
+ * @note
+ * Ability to fight in bear form
+ */
+#define SKILL_BEAR			47
+
+/** @def SKILL_LORE
+ * @brief Monster-lore
+ * @note
+ * General ability at the monster related skills, ability to gain experience
+ * from friendly kills. It also affects the number of companions the player
+ * can have
+ */
+#define SKILL_LORE			48
+
+/** @def SKILL_PRESERVATION
+ * @brief Corpse-preservation
+ * @note
+ * Ability to not destroy the monster corpse when killing them
+ */
+#define SKILL_PRESERVATION	49
+
+/** @def SKILL_POSSESSION
+ * @brief Possession
+ * @note
+ * Ability to incarnate into monsters
+ */
+#define SKILL_POSSESSION		50
+
+/** @def SKILL_MIND
+ * @brief Mind
+ * @note
+ * Ability to learn and use spells from the Mind school
+ */
+#define SKILL_MIND			51
+
+/** @def SKILL_CRITS
+ * @brief Critical-hits
+ * @note
+ * Ability to deal critical hits with swords < 5lb
+ */
+#define SKILL_CRITS			 52
+
+/** @def SKILL_PRAY
+ * @brief Prayer
+ * @note
+ * Ability to learn and use spells from the gods schools
+ */
+#define SKILL_PRAY			53
+
+/** @def SKILL_LEARN
+ * @brief Spell-learning
+ * @note
+ * You should not see that ! that is a BUG!
+ */
+#define SKILL_LEARN			 54
+
+/** @def SKILL_UDUN
+ * @brief Udun
+ * @note
+ * Ability to learn and use spells from the Udun school
+ */
+#define SKILL_UDUN			55
+
+/** @def SKILL_DEVICE
+ * @brief Magic-Device
+ * @note
+ * Ease the use of magical devices, such as wands, staves and rods.
+ * It also helps pseudo-id of magic objects
+ */
+#define SKILL_DEVICE			56
+
+/** @def SKILL_STUN
+ * @brief Stunning-blows
+ * @note
+ * Ability to stun opponents when doing critical hits with hafted weapons > 5lb
+ */
+#define SKILL_STUN			57
+
+/** @def SKILL_BOULDER
+ * @brief Boulder-throwing
+ * @note
+ * Ability to make and throw boulders
+ */
+#define SKILL_BOULDER		58
+
+/** @def SKILL_GEOMANCY
+ * @brief Geomancy
+ * @note
+ * Ability to understand the raw elemental forces of nature and use
+ * them to advantage. Most spells need Fire/Water/Earth/Air skills
+ */
+#define SKILL_GEOMANCY		59
+
+
+/** @def SKILL_MAX
+ * @note Maximun skill value
+ */
+#define SKILL_MAX			50000
+/** @def SKILL_STEP
+ * @note 1 skill point 
+ */
+#define SKILL_STEP			1000			
+
+/** @} */
+
+/** @fn get_skill(int skill)
+ * @brief Return the value of skill with index "skill" in skill array.\n
+ * @param skill Number \n the index of skill in skill array.
+ * @brief Skill index
+ * @return Number \n The value of the skill with index "skill" in the skill
+ * array.
+ * @note (see file skills.c)
+ */
+extern s16b get_skill(int skill);
+
+/** @fn get_skill_scale(int skill, u32b scale)
+ * @brief Return the value of skill with index "skill" in skill array rescaled
+ * to a maximum of "scale".\n
+ * @param skill Number \n the index of skill in skill array.
+ * @brief Skill index
+ * @param scale Number \n the maximum rescaled skill value.
+ * @brief Scaled maximum
+ * @return Number \n The rescaled value of the skill with index "skill" in the
+ * skill array.
+ * @note (see file skills.c)
+ */
+extern s16b get_skill_scale(int skill, u32b scale);
+
+/** @fn do_get_new_skill()
+ * @brief Player select one of four new skills.
+ * @note (see file skills.c)
+ */
+extern void do_get_new_skill();
+
+/** @fn get_melee_skills()
+ * @brief Return the number of melee skills the player has.
+ * @return Number \n The number of melee skills.
+ * @note
+ * A skill is counted if the value > 0 and the skill is not hidden.
+ * @note (see file skills.c)
+ */
+extern s16b get_melee_skills();
+
+/** @fn find_skill(cptr name)
+ * @brief Return the index of skill with name "name".\n
+ * @param name String \n the name of the skill.
+ * @brief Skill name
+ * @return Number \n The index of the skill with name "name" in the skill
+ * array.
+ * @note
+ * The search is case sensitive.\n
+ * If no skills match the name, -1 is returned.
+ * @note (see file skills.c)
+ */
+extern s16b find_skill(cptr name);
+
+/** @fn find_skill_i(cptr name)
+ * @brief Return the index of skill with name "name".\n
+ * @param name String \n the name of the skill.
+ * @brief Skill name
+ * @return Number \n The index of the skill with name "name" in the skill
+ * array.
+ * @note
+ * The search ignores case.\n
+ * If no skills match the name, -1 is returned.
+ * @note (see file skills.c)
+ */
+extern s16b find_skill_i(cptr name);
+
+$static char *get_class_name() {return spp_ptr->title + c_name;}
+/** @fn *get_class_name()
+ * @brief Return the player's class.
+ * @return String \n The player's type of class + class name
+ * @note (see file w_play_c.c)
+ */
+char *get_class_name();
+
+$static char *get_race_name() {return rp_ptr->title + rp_name;}
+/** @fn *get_race_name()
+ * @brief Return the player's race.
+ * @return String \n The player's type of race + race name
+ * @note (see file w_play_c.c)
+ */
+char *get_race_name();
+
+$static char *get_subrace_name() {return rmp_ptr->title + rmp_name;}
+/** @fn *get_subrace_name()
+ * @brief Return the player's subrace.
+ * @return String \n The player's type of subrace + subrace name
+ * @note (see file w_play_c.c)
+ */
+char *get_subrace_name();
+
+/** @struct ability_type
+ * @brief Abilities
+ */
+struct ability_type
+{
+	/** @structvar action_mkey
+	 * @brief Number
+	 * @note Action do to 
+	 */
+	s16b action_mkey;
+
+		/** @structvar cost
+		 * @brief Number
+		 * @note Skill points cost 
+		 */
+		s16b cost;
+
+	/** @structvar acquired
+	 * @brief Boolean
+	 * @note Do the player actualylg ot it ? 
+	 */
+	bool acquired;
+};
+
+/** @fn find_ability(cptr name)
+ * @brief Return the index of ability with name "name".\n
+ * @param name String \n the name of the ability.
+ * @brief Ability name
+ * @return Number \n The index of the ability with name "name" in the ability
+ * array.
+ * @note
+ * The search is case sensitive.\n
+ * If no abilities match the name, -1 is returned.
+ * @note (see file skills.c)
+ */
+extern s16b find_ability(cptr name);
+
+/** @fn do_cmd_ability()
+ * @brief Allow the user to interact with abilities.
+ * @note
+ * This screen is typically used to view abilities, and increase them.
+ * @note (see file skills.c)
+ */
+extern void do_cmd_ability();
+
+/** @fn has_ability(int ab)
+ * @brief Does the player have ability "ab"?
+ * @param ab Number \n the index of ability in ability array.
+ * @brief Ability index
+ * @return Boolean \n TRUE if player has the ability, otherwise FALSE.
+ * @note (see file skills.c)
+ */
+extern bool has_ability(int ab);
+
+/** @var max_ab_idx
+ * @brief Number
+ * @note Maximum ability index
+ */
+extern s16b max_ab_idx;
+/** @var ab_info[max_ab_idx]
+ * @brief ability_type
+ * @note Array of player abilities
+ */
+extern ability_type ab_info[max_ab_idx];
+
+/** @name Abilities
+ * @{ */
+/** @def AB_SPREAD_BLOWS
+ * @brief Spread blows
+ * @note
+ * If a monster dies to an attack but the player still has blows left
+ * they won't lose the full turn, allowing them to attack some other
+ * monster in the same turn.
+ */
+#define AB_SPREAD_BLOWS		 0
+
+/** @def AB_TREE_WALK
+ * @brief Tree walking
+ * @note
+ * Allows player to walk in dense forest.
+ */
+#define AB_TREE_WALK			1
+
+/** @def AB_PERFECT_CASTING
+ * @brief Perfect casting
+ * @note
+ * Allows player to reach 0% failure rate on spells.
+ */
+#define AB_PERFECT_CASTING	2
+
+/** @def AB_MAX_BLOW1
+ * @brief Extra Max Blow(1)
+ * @note
+ * Increases player "maximum possible blows" number by 1.
+ */
+#define AB_MAX_BLOW1			3
+
+/** @def AB_MAX_BLOW2
+ * @brief Extra Max Blow(2)
+ * @note
+ * Increases player "maximum possible blows" number by 1
+ * (Cumulative with Extra Max Blow(1)).
+ */
+#define AB_MAX_BLOW2			4
+
+/** @def AB_AMMO_CREATION
+ * @brief Ammo creation
+ * @note
+ * Allows player to create shots, arrows and bolts from various materials.
+ */
+#define AB_AMMO_CREATION		5
+
+/** @def AB_DEATH_TOUCH
+ * @brief Touch of death
+ * @note
+ * Player melee blows can insta-kill, but they only receive 1/3 of the
+ * experience for that kill.
+ */
+#define AB_DEATH_TOUCH		6
+
+/** @def AB_CREATE_ART
+ * @brief Artifact creation
+ * @note
+ * In combination with a high alchemy skill this ability will let the player
+ * design their very own artifacts.
+ */
+#define AB_CREATE_ART		7
+
+/** @def AB_FAR_REACHING
+ * @brief Far reaching attack
+ * @note
+ * The player can attack an enemy one square far using a polearm.
+ * At high levels of polearm skill, they can even hit two enemies at once.
+ */
+#define AB_FAR_REACHING		 8
+
+/** @def AB_TRAPPING
+ * @brief Trapping
+ * @note
+ * Enables player to set traps which harm monsters.
+ */
+#define AB_TRAPPING			 9
+
+/** @def AB_UNDEAD_FORM
+ * @brief Undead form
+ * @note
+ * Ability to turn into a weak undead being when you "die".
+ * You must then kill enough monsters to absorb enough life energy
+ * to come back to life.
+ */
+#define AB_UNDEAD_FORM		10
+
+/** @} */
+

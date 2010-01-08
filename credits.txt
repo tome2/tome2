@@ -1,0 +1,67 @@
+Credit list(lots are still not present here, if you think you should
+drop me a line please) in no particular order:
+
+- Chris Weisiger <chrisweisiger@hotmail.com>, lots and lots of stuff,
+  and mainly lots of vaults, a whole magic realm, some special levels,
+  TANG
+- Ceilti <Ceilti@aol.com>, idea of weapons gaining xp, comments, ideas,
+  lots of PernAngband related posts on rgra
+- Static Chaos <schaos@freemail.hu>, huge numbers of patches, ideas, ...
+- Improv <qc@apk.net>, spelling/grammar fixes, ideas, safer_panics patch,
+        some new monster and artifact descriptions, cmovie stuff, and lots
+        of things
+- Mynstral, new towns and more
+- Kusunose Toru <kusunose@hcn.zaq.ne.jp> for LOTS of bugfixes
+- Akhronath for the ideas of the magic system, new realms and much more
+  oh yeah the Nazguls :)
+- Jerome Wojcik <Jerome.Wojcik@lmcp.jussieu.fr> for monster susceptibilities
+- Andreas Koch(akoch@rbg.informatik.tu-darmstadt.de) for the tiles, the
+  graphic editor and surely more :)
+- Gob for the mac ports and a nasty bug fix
+- Iain McFall for bug fixes, auto squelch and more
+- Bablos for the amiga port
+- Arch for the windows port
+- Dawnmist for the new docs
+- Jonathan Ellis for the rework of the info files
+- Hansjoerg Malthaner for the Isometric engine
+- Pelpel for bugfixes and other mac things
+- Tom Le for the website hosting
+- Willam Tanksley for lots of useful comments, ideas and bitching ;)
+- Tom Demuyt for the unbeliever idea
+- Luc French for lots of ideas & code
+- Kieron for some patches
+- Runescrye for ra_info.txt and surely more :)
+- Fearof4s for lua patches, lua tutorial, quests and stuff.
+- Pav Lucistnik for some patches and hosting the CVS
+- Mef for the huge task of updating class and magic help documents for 2.x
+  and lots and lots of other help updates!
+- Erik J Brown for some changes to help docs.
+- vrak (Per-Arne Holtmon Akoe) for magic.txt
+- Kat B for other help updates.
+- Chris Hadgis for Luck spoiler, lua *.pkg help docs, and other help docs.
+- lemming for skills.txt and stuff
+- Paladin Rithe (Brian Ronk) for birth.txt
+- John Gilmore for alchemy improvements patch
+- Massimiliano Marangio for lots and lots of help updates, typo corrections,
+  bug fixes etc.
+- Neil Stevens <neil@hakubi.us> for making stable releases
+- Jeff Epler for automatizer improvements, and certainly more in the future ;)
+- Scott Bigham for some cool patches
+- Magua(magua@speakeasy.net) who wrote the java applet to play cmovies online
+- Maylith for lots of help with the documentation, especially on the wiki
+- Furiosity for some missing item descriptions
+- SimonSorc for bugfixes
+- Greg Wooledge <greg@wooledge.org> for still more bug fixes
+- Phillip Neiswanger for tons of bug fixes and mainly 2.3.5 and possibly 2.4.0
+
+- All that I forgot in the list, hit me a bit then email me to get added
+
+- All the friendly people of the ToME mailing list
+- All the friendly people of #angband
+
+- TeCGraf for the Lua scripting language(www.lua.org)
+- Reuben Thomas for the lua bitlib
+- Waldemar Celes for tolua(automatic wrapper generator for lua, like swig, but
+  this one actually works :)
+
+- J.R.R. Tolkien for the best fantasy ever !

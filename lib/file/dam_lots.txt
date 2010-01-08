@@ -1,0 +1,21 @@
+18
+******** BUFFER LINE *********************************** DO NOT REMOVE *******
+You stab %s in the stomach.
+You cut off %s's hand.
+You chop down on %s's shins.
+You gave %s a deep gash.
+You gave %s a gigantic bruise.
+You cut off %s's arm!
+You cut off %s's leg!
+You stab %s in the heart.
+You slash at %s face.
+You throw %s down at the ground.
+You attempt to strangle %s.
+You grab %s's head and twist it.
+You knocked out several of %s's teeth!
+You broke some of %s's ribs!
+%^s spins around dizzily after your blow.
+%^s sputters at your tight, choking hold!
+%^s grunts under the force of your blows.
+%^s screams shrilly in fear.
+

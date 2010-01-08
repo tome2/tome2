@@ -1,0 +1,40 @@
+~~~~~01|Skeleton
+~~~~~02|Race Modifiers|Skeleton
+#####R=== Skeletal Race ===
+
+#####GDescription
+As undead beings, skeletons need to worry very little about poison or 
+attacks that can drain life. They do not really use eyes for perceiving 
+things, and are thus not fooled by invisibility. Their bones are resistant 
+to sharp shrapnels (not much to cut there), and they will quickly become 
+resistant to cold. It is very hard for skeletons to eat food or drink potions. 
+Although the magical effects of these will affect the skeleton even without 
+entering the skeleton's (non-existent) belly, the potion / food itself will
+fall through the skeleton's jaws, giving no nutritional benefit.
+
+#####GStat Modifiers
+Strength       0   
+Intelligence   -2   
+Wisdom         -2    
+Dexterity      0   
+Constitution   +1   
+Charisma       -4      
+Hit Dice       +0 sides        
+Spell Points   -30%
+Exp Penalty    +45%
+
+#####GRacial Skill Modifiers:
+#####BSkill                Start Mod    Skill Point Gains Mod
+Combat                  
+  Weaponmastery         0.800           [0.000]
+Sneakiness             -0.100           [0.000]
+  Stealth              -1.000           [0.000]
+  Disarming            -0.500           [0.000]
+Magic                   
+  Magic-Device         -0.500           [0.000]
+Spirituality            0.500           [0.000]
+
+#####GStarting Equipment
+A skeletal character begins the game with:
+    Some scrolls of satisfy hunger
+    Some torches

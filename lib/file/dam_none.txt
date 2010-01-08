@@ -1,0 +1,24 @@
+22
+******** BUFFER LINE *********************************** DO NOT REMOVE *******
+You scratch %s.
+You give %s a nasty bruise.
+You stub %s's toe.
+You jab %s in the ribs.
+You almost poked your eye out while fighting %s!
+You made %s's nose bleed.
+You almost slipped while fighting %s.
+%^s doesn't even flinch!
+You accidentally hurt yourself while fighting %s.
+You slap %s.
+%^s slips and falls.
+%^s laughs at your wild swings.
+You pull at %s's hair.
+You punch %s in the nose.
+You pull at %s's ear.
+%^s growls at you.
+%^s is very, very annoyed!
+You scream an insult at %s.
+%^s makes a nasty face.
+You scowl at %s.
+%^s gnashes his teeth.
+%^s lets out a gurgling laugh.

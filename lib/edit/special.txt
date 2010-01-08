@@ -1,0 +1,67 @@
+# Contains terrain parsings for the special levels now being kept in seperate map files
+#
+# Created for PernAngband 5.0.1 on 18/8/01
+# Written by Mynstral (mynstral@thehelm.com)
+
+# Permanent Wall
+F:X:63:0
+F: :63:0
+
+# Granite Wall
+F:#:57:0
+F:%:57:0
+
+# Hidden Door
+F:+:48:0
+
+# Normal Door
+F:D:32:0
+
+# Floor
+F:.:1:0
+
+# Tree
+F:T:96:0
+
+# Mountain
+F:M:97:0
+
+# Shallow Water
+F:w:84:0
+F:V:84:0
+
+# Deep Water
+F:W:187:0
+
+# Shallow Lava
+F:l:86:0
+
+# Deep Lava
+F:L:85:0
+
+# Glass Wall
+F:G:188:0
+
+# Illusion Wall
+F:I:189:0
+
+# Treasure (random) on normal floor
+F:*:1:0:0:*
+
+# Trap (random) on normal floor
+F:^:1:0:0:0:0:0:*
+
+# down staircase
+F:>:7:0
+
+# between gates
+F:4:160:0:0:0:0:0:0:-1
+F:5:160:0:0:0:0:0:0:-1
+F:6:160:0:0:0:0:0:0:-1
+F:7:160:0:0:0:0:0:0:-1
+F:A:160:0:0:0:0:0:0:-1
+F:B:160:0:0:0:0:0:0:-1
+F:C:160:0:0:0:0:0:0:-1
+F:E:160:0:0:0:0:0:0:-1
+F:F:160:0:0:0:0:0:0:-1
+F:0:160:0:0:0:0:0:0:-1

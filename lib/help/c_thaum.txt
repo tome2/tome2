@@ -1,0 +1,84 @@
+~~~~~01|Thaumaturgist
+~~~~~02|Classes|Thaumaturgy
+#####R=== Thaumaturgists ===
+
+#####GDescription
+A Thaumaturgist is a Mage that prefers chaos to order. As such, they tend to 
+learn random spells, and since attacking something creates more chaos than 
+anything else, every spell they learn is an attack spell. They have no need 
+for spell-books, as they harness the spells from within themselves. However, 
+they also have no ability to improve the power of a particular spell - once 
+learnt it will remain at the same strength for ever. Likewise, they also have
+no ability to control what they learn, and some of their spells will cause 
+them damage (like darkness spells blinding them if they do not resist 
+darkness).
+
+#####GStarting Stat Modifiers
+Strength         -5
+Intelligence     +3
+Wisdom           +0
+Dexterity        +1
+Constitution     -2
+Charisma         +1
+Hit Die          +d0
+Spell Points    +50%
+Exp Penalty      30%
+
+#####GStarting Skills:
+#####BSkill                   Start Level     Skill Point Gains
+Combat                  1.000           [0.200]
+  Weaponmastery         0.700           [0.400]
+Sneakiness              1.000           [0.900]
+  Stealth               0.000           [0.400]
+Magic                   3.000           [0.950]
+  Magic-Device          1.000           [1.050]
+  Spell-power           0.000           [0.600]
+  Mana                  0.000           [0.600]
+  Geomancy
+    Fire                0.000           [0.700]
+    Water               0.000           [0.700]
+    Air                 0.000           [0.700]
+    Earth               0.000           [0.700]
+  Meta                  0.000           [0.700]
+  Conveyance            0.000           [0.700]
+  Divination            0.000           [0.700]
+  Temporal              0.000           [0.700]
+  Mind                  0.000           [0.700]
+  Nature                0.000           [0.700]
+  Necromancy            0.000           [0.700]
+  Runecraft             0.000           [0.700]
+  Thaumaturgy           1.000           [1.000]
+Spirituality            1.000           [0.550]
+  Prayer                0.000           [0.500]
+Monster-lore            0.000           [0.500]
+
+*A Thaumaturgist cannot learn the Geomancy skill, but it is shown in his skill 
+screen because the elemental schools are sub-skills of it.
+
+#####GInnate Abilities:
+#####BAbility              Character level
+Perfect casting             1
+
+#####GStarting Equipment
+A Thaumaturgist begins the game with:
+    a Book of Beginner Cantrips
+    a Dagger
+
+
+#####GThaumaturgy
+Thaumaturgists can wreak an amazing amount of destruction, and they don't 
+even need spellbooks to do it. As they gain skill they memorise new,
+randomly generated attack spells. Note that they possess no guaranteed
+utility or alteration magics, and can never alter themselves.
+[[[[[BThaumaturgists just kill.]
+
+They use their magics through the 'm' key. They then select a general 
+group of spells, followed by a specific spell. Thaumaturgists can learn 
+more about a specific spell by browsing it; this is very useful for 
+choosing the perfect spell for the occasion.
+
+Thaumaturgy spells can take the form of a bolt, a beam, a ball (either
+centred on the caster or targetable), an area (multiple balls in the
+vicinity of the caster), or a spell that affects all monsters in line of sight.
+
+You can find a little more information here: *****m_thaum.txt*0[Thaumaturgy].

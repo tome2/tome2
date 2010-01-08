@@ -1,0 +1,250 @@
+The Panther is an uncommon monster, 
+occurring at very shallow depths. 
+It is extremely weak, not one little bit dangerous, 
+and has no magical powers. 
+
+The Brigand is an uncommon monster, 
+occurring at very shallow depths. 
+He is extremely weak, not one little bit dangerous, 
+and has no magical powers. 
+
+The Baby multi-hued dragon is an uncommon dragon, 
+occurring at very shallow depths. 
+It is extremely weak, moderately dangerous, 
+and has arcane magical powers. 
+
+The Hippogryph is a common monster, 
+occurring at very shallow depths. 
+It is extremely weak, not one little bit dangerous, 
+and has no magical powers. 
+
+The Zombified orc is a common undead monster, 
+occurring at very shallow depths. 
+It is extremely weak, somewhat dangerous, 
+and has no magical powers. 
+
+The Gnome mage is an uncommon monster, 
+occurring at very shallow depths. 
+He is laughably weak, not one little bit dangerous, 
+and has unremarkable magical powers. 
+
+The Black mamba is a somewhat rare animal, 
+occurring at very shallow depths. 
+It is extremely weak, just a small bit dangerous, 
+and has no magical powers. 
+
+The White wolf is a common animal, 
+occurring at very shallow depths. 
+It is laughably weak, somewhat dangerous, 
+and has no magical powers. 
+
+The Grape jelly is a somewhat rare monster, 
+occurring at very shallow depths. 
+It is moderately strong, just a small bit dangerous, 
+and has no magical powers. 
+
+The Nether worm mass is a somewhat rare animal, 
+occurring at very shallow depths. 
+It is laughably weak, not one little bit dangerous, 
+and has no magical powers. 
+
+Golfimbul, the Hill Orc Chief is a unique orc, 
+occurring at very shallow depths. 
+He is somewhat weak, moderately dangerous, 
+and has no magical powers. 
+
+The Master yeek is an uncommon animal, 
+occurring at very shallow depths. 
+It is extremely weak, not one little bit dangerous, 
+and has arcane magical powers. 
+
+The Priest is a common monster, 
+occurring at very shallow depths. 
+He is extremely weak, not one little bit dangerous, 
+and has unremarkable magical powers. 
+
+The Dark elven priest is a common monster, 
+occurring at very shallow depths. 
+He is extremely weak, not one little bit dangerous, 
+and has unremarkable magical powers. 
+
+The Air spirit is an uncommon monster, 
+occurring at very shallow depths. 
+It is extremely weak, somewhat dangerous, 
+and has no magical powers. 
+
+The Skeleton human is a common undead monster, 
+occurring at very shallow depths. 
+It is extremely weak, somewhat dangerous, 
+and has no magical powers. 
+
+The Zombified human is a common undead monster, 
+occurring at very shallow depths. 
+It is extremely weak, somewhat dangerous, 
+and has no magical powers. 
+
+The Tiger is an uncommon monster, 
+occurring at very shallow depths. 
+It is extremely weak, not one little bit dangerous, 
+and has no magical powers. 
+
+The Moaning spirit is an uncommon undead monster, 
+occurring at very shallow depths. 
+It is laughably weak, moderately dangerous, 
+and has rudimentary magical powers. 
+
+The Swordsman is a common monster, 
+occurring at very shallow depths. 
+He is extremely weak, not one little bit dangerous, 
+and has no magical powers. 
+
+The Stegocentipede is an uncommon monster, 
+occurring at very shallow depths. 
+It is extremely weak, not at all dangerous, 
+and has no magical powers. 
+
+The Spotted jelly is a somewhat rare monster, 
+occurring at very shallow depths. 
+It is extremely weak, moderately dangerous, 
+and has no magical powers. 
+
+The Drider is an uncommon monster, 
+occurring at very shallow depths. 
+It is extremely weak, just a little bit dangerous, 
+and has rudimentary magical powers. 
+
+The Killer brown beetle is an uncommon monster, 
+occurring at very shallow depths. 
+It is extremely weak, not at all dangerous, 
+and has no magical powers. 
+
+Boldor, King of the Yeeks is a unique animal, 
+occurring at very shallow depths. 
+He is very weak, somewhat dangerous, 
+and has remarkable magical powers. 
+
+The Ogre is an uncommon monster, 
+occurring at very shallow depths. 
+It is extremely weak, just a small bit dangerous, 
+and has no magical powers. 
+
+The Creeping mithril coins is a rare animal, 
+occurring at very shallow depths. 
+It is very weak, somewhat dangerous, 
+and has no magical powers. 
+
+The Illusionist is an uncommon monster, 
+occurring at very shallow depths. 
+He is extremely weak, not one little bit dangerous, 
+and has arcane magical powers. 
+
+The Druid is an uncommon monster, 
+occurring at very shallow depths. 
+He is extremely weak, not one little bit dangerous, 
+and has remarkable magical powers. 
+
+The Black orc is an uncommon orc, 
+occurring at very shallow depths. 
+He is extremely weak, just a little bit dangerous, 
+and has no magical powers. 
+
+The Ochre jelly is a somewhat rare monster, 
+occurring at very shallow depths. 
+It is extremely weak, very dangerous, 
+and has no magical powers. 
+
+The Giant flea is a common monster, 
+occurring at very shallow depths. 
+It is laughably weak, not one little bit dangerous, 
+and has no magical powers. 
+
+Ufthak of Cirith Ungol is a unique orc, 
+occurring at very shallow depths. 
+He is somewhat weak, moderately dangerous, 
+and has no magical powers. 
+
+The Giant white dragon fly is a somewhat rare animal, 
+occurring at very shallow depths. 
+It is laughably weak, not at all dangerous, 
+and has no magical powers. 
+
+The Blue icky thing is a rare monster, 
+occurring at very shallow depths. 
+It is laughably weak, just a small bit dangerous, 
+and has an inkling of magical powers. 
+
+The Hill giant is a common monster, 
+occurring at very shallow depths. 
+It is very weak, not one little bit dangerous, 
+and has no magical powers. 
+
+The Flesh golem is a common monster, 
+occurring at very shallow depths. 
+It is extremely weak, somewhat dangerous, 
+and has no magical powers. 
+
+The Warg is an uncommon animal, 
+occurring at very shallow depths. 
+It is laughably weak, just a little bit dangerous, 
+and has no magical powers. 
+
+The Giant black louse is a common monster, 
+occurring at very shallow depths. 
+It is laughably weak, not at all dangerous, 
+and has no magical powers. 
+
+The Lurker is a somewhat rare monster, 
+occurring at very shallow depths. 
+It is very weak, somewhat dangerous, 
+and has no magical powers. 
+
+The Wererat is an uncommon animal, 
+occurring at very shallow depths. 
+It is extremely weak, not one little bit dangerous, 
+and has simple magical powers. 
+
+The Black ogre is an uncommon giant, 
+occurring at very shallow depths. 
+It is very weak, just a little bit dangerous, 
+and has no magical powers. 
+
+The Magic mushroom patch is an uncommon monster, 
+occurring at very shallow depths. 
+It is laughably weak, not at all dangerous, 
+and has arcane magical powers. 
+
+The Guardian naga is an uncommon monster, 
+occurring at very shallow depths. 
+She is somewhat weak, not one little bit dangerous, 
+and has no magical powers. 
+
+The Light hound is a common monster, 
+occurring at very shallow depths. 
+It is laughably weak, just a little bit dangerous, 
+and has an inkling of magical powers. 
+
+The Dark hound is a common monster, 
+occurring at very shallow depths. 
+It is laughably weak, just a little bit dangerous, 
+and has an inkling of magical powers. 
+
+The Half-orc is a somewhat rare orc, 
+occurring at very shallow depths. 
+He is very weak, just a small bit dangerous, 
+and has no magical powers. 
+
+The Giant tarantula is a somewhat rare animal, 
+occurring at very shallow depths. 
+It is extremely weak, moderately dangerous, 
+and has no magical powers. 
+
+The Giant clear centipede is an uncommon monster, 
+occurring at very shallow depths. 
+It is laughably weak, just a small bit dangerous, 
+and has no magical powers. 
+
+The Mirkwood spider is an uncommon animal, 
+occurring at very shallow depths. 
+It is laughably weak, moderately dangerous, 
+and has no magical powers. 
+

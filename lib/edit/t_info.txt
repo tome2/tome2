@@ -1,0 +1,41 @@
+# File: t_info.txt
+
+# Includes the town definitions
+
+# Preferences for the town features
+%:t_pref.txt
+
+# Town Bree
+?:[AND [EQU $TOWN 1] [EQU $TOWN_DESTROY1 1] ]
+%:t_d_bree.txt
+?:[AND [EQU $TOWN 1] [NOT [EQU $TOWN_DESTROY1 1] ] ]
+%:t_bree.txt
+?:1
+
+# Town Gondor
+?:[AND [EQU $TOWN 2] [EQU $TOWN_DESTROY2 1] ]
+%:t_d_gond.txt
+?:[AND [EQU $TOWN 2] [NOT [EQU $TOWN_DESTROY2 1] ] ]
+%:t_gondol.txt
+?:1
+
+# Minas Anor
+?:[AND [EQU $TOWN 3] [EQU $TOWN_DESTROY3 1] ]
+%:t_d_mina.txt
+?:[AND [EQU $TOWN 3] [NOT [EQU $TOWN_DESTROY3 1] ] ]
+%:t_minas.txt
+?:1
+
+# Town Lothlorien
+?:[AND [EQU $TOWN 4] [EQU $TOWN_DESTROY4 1] ]
+%:t_d_lori.txt
+?:[AND [EQU $TOWN 4] [NOT [EQU $TOWN_DESTROY4 1] ] ]
+%:t_lorien.txt
+?:1
+
+# Khazad-Dum
+?:[AND [EQU $TOWN 5] [EQU $TOWN_DESTROY5 1] ]
+%:t_d_khaz.txt
+?:[AND [EQU $TOWN 5] [NOT [EQU $TOWN_DESTROY5 1] ] ]
+%:t_khazad.txt
+?:1

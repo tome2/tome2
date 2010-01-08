@@ -1,0 +1,283 @@
+# File: ba_info.txt
+
+
+# This file is used to initialize the "lib/raw/ba_info.raw" file, which is
+# used to initialize the "store/building actions type" information for
+# the Angband game.
+
+# Do not modify this file unless you know exactly what you are doing,
+# unless you wish to risk possible system crashes and broken savefiles.
+
+# N:<index>:<name>
+# C:<hated cost>:<normal cost>:<liked cost>
+# I:<action>:<acttion restriction>:<letter>
+
+# Restriction:
+# 0 = No restrictions
+# 1 = Restrict to normal & liked
+# 2 = Restrict to liked
+
+# Version stamp (required)
+
+V:2.0.0
+
+N:0:Nothing
+C:0:0:0
+I:0:0:.
+
+N:1:Sell an item
+C:0:0:0
+I:43:0:s:d
+
+N:2:Purchase an item
+C:0:0:0
+I:44:0:p:g
+
+N:3:Examine an item
+C:0:0:0
+I:45:0:x
+
+N:4:Steal an item
+C:0:0:0
+I:46:0:Z
+
+N:5:Rest for the night
+C:25:20:15
+I:17:0:r
+
+N:6:Buy food and drink
+C:3:2:1
+I:18:0:f
+
+N:7:Listen for rumours
+C:0:0:0
+I:19:0:u
+
+N:8:Presage fate
+C:600:500:480
+I:42:0:l
+
+N:9:In-Between
+C:0:0:0
+I:12:0:b
+
+N:10:Play craps
+C:0:0:0
+I:14:0:c
+
+N:11:Spin the wheel
+C:0:0:0
+I:15:0:s
+
+N:12:Play dice slots
+C:0:0:0
+I:16:0:d
+
+N:13:Game rules
+C:0:0:0
+I:13:0:r
+
+N:14:Research item
+C:1400:1300:1200
+I:1:0:a
+
+N:15:Town history
+C:0:0:0
+I:2:0:h
+
+N:16:Race legends
+C:0:0:0
+I:3:0:l
+
+N:17:Look at busts of Kings
+C:0:0:0
+I:5:0:l
+
+N:18:Research monster
+C:1600:1500:1400
+I:20:0:r
+
+N:19:View bounties
+C:0:0:0
+I:38:0:v
+
+N:20:Receive bounty money
+C:0:0:0
+I:39:0:b
+
+N:21:Get quest monster
+C:0:0:0
+I:54:0:q
+
+N:22:Turn in quest corpse
+C:0:0:0
+I:55:0:m
+
+N:23:Compare weapons
+C:220:200:180
+I:21:0:c
+
+N:24:Enchant weapon
+C:750:700:150
+I:23:0:w
+
+N:25:Enchant armour
+C:750:700:150
+I:24:0:a
+
+N:26:Recharge item
+C:350:300:75
+I:25:0:r
+
+N:27:Identify possessions
+C:900:800:100
+I:26:0:i
+
+N:28:Healing prayer
+C:600:400:0
+I:28:0:h
+
+N:29:Restoration
+C:600:500:100
+I:29:0:r
+
+N:30:Get share of stolen gold
+C:0:0:0
+I:7:2:g
+
+N:31:Enchant arrows
+C:550:500:100
+I:30:0:a
+
+N:32:Enchant bow
+C:550:500:100
+I:31:0:b
+
+N:33:Recall to dungeon
+C:300:200:100
+I:33:0:r
+
+N:34:Teleport to dungeon-level
+C:15000:10000:1000
+I:34:0:t
+
+N:35:Get a quest
+C:0:0:0
+I:6:0:q
+
+# Restrict to liked/normal
+N:36:Get a quest
+C:0:0:0
+I:46:1:q
+
+N:37:Get a quest
+C:0:0:0
+I:47:0:q
+
+N:38:Get a quest
+C:0:0:0
+I:49:0:q
+
+N:39:Herbal Healing
+C:32000:10000:0
+I:50:0:h
+
+N:40:Song of Lore
+C:2000:800:50
+I:26:0:s
+
+N:41:Distribute earnings
+C:0:0:0
+I:7:2:d
+
+N:42:Morph restoration
+C:3000:1500:750
+I:37:0:r
+
+#for The Mirror
+N:43:View fate
+C:500:500:500
+I:42:0:v
+
+#for The Mirror
+N:44:Research item
+C:1500:1500:1500
+I:1:0:a
+
+#for library in gondol
+N:45:Research item
+C:2000:2000:2000
+I:1:0:a
+
+#for Star-Dome
+N:46:Identify possessions
+C:1200:1000:250
+I:26:0:i
+
+#for Star-Dome
+N:47:Recharge item
+C:1200:1000:150
+I:25:0:r
+
+#for Valarin Temple
+N:48:Restoration
+C:1200:1000:200
+I:29:0:r
+
+#for Sea-Dome
+N:49:Morph restoration
+C:1500:1500:1500
+I:37:0:r
+
+#for The Golden Flower
+N:50:Enchant arrows
+C:1100:1000:200
+I:30:0:a
+
+#for The Golden Flower
+N:51:Enchant bow
+C:1100:1000:200
+I:31:0:b
+
+#for The Fountain
+N:52:Enchant armour
+C:1100:1000:200
+I:24:0:a
+
+#for The Fountain
+N:53:See Healers
+C:1100:1000:0
+I:28:0:h
+
+N:54:Drop an item
+C:0:0:0
+I:43:0:d:s
+
+N:55:Get an item
+C:0:0:0
+I:44:0:g:p
+
+N:56:Request an item
+C:0:0:0
+I:51:2:r
+
+N:57:Ask for loan
+C:0:0:0
+I:52:2:a
+
+N:58:Pay back loan
+C:0:0:0
+I:53:2:p
+
+N:59:Donate an item
+C:0:0:0
+I:43:0:d
+
+# Mage Tower quest in Lothlorien
+N:60:Get a quest
+C:0:0:0
+I:56:0:q
+
+N:61:Get a quest
+C:0:0:0
+I:61:0:q

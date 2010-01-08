@@ -1,0 +1,41 @@
+|||||oy
+~~~~~01|Magic|Temporal School
+~~~~~02|Temporal Magic
+~~~~~03|Skills|Temporal - Spell Info
+#####R === ToME Magic - Temporal School ===
+
+The temporal school of magic contains spells where magic is used to meddle
+in the relationship between time and space. There are rumours of a "Tome of
+the Time" which contains all the temporal school spells within its bindings.
+
+Worshipping the Goddess Yavanna Kementari also gives the ability to cast spells
+from the temporal school at a level of 1/6 of your prayer level. E.g. if the
+skill "Spirituality: Prayer" is at level 12, you can cast up to level 2
+temporal school spells.
+
+
+#####sTemporal Spells
+There are four spells available for the temporal school. These Spells are:
+1. [[[[[sMagelock] (school level 1)
+   Magically locks a door.
+   At spell level 30 it creates a glyph of warding.
+   At spell level 40 the glyph can be placed anywhere in the field of vision.
+2. [[[[[sSlow Monster] (school level 10)
+   Magically slows down the passing of time around a monster.
+   At level 20 it affects a zone.
+3. [[[[[sEssence of Speed] (school level 15)
+   Magically decreases the passing of time around you, allowing you to move
+   and act more quickly with respect to the rest of the universe.
+4. [[[[[sBanishment] (school level 30)
+   Disrupts the space/time continuum in your area and teleports all monsters
+   away.
+   At spell level 15 it also may lock them in a time bubble for some turns.
+#####v   Your Temporal and Conveyance skills must have reached a combined average level 
+#####v   of 30 in order to cast this spell.
+
+#####GNature spells that can be cast with Temporal skill
+
+1. [[[[[GGrow Trees] (dual school level 6)
+   Makes trees grow extremely quickly around you.
+#####v   Your Nature and Temporal skills must have reached a combined average level 
+#####v   of 6 in order to cast this spell.

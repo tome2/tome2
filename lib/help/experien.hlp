@@ -1,0 +1,28 @@
+|||||oy
+~~~~~01|Experience
+#####RGaining experience
+#####R==============================================
+
+The principle way for your character to gain experience (XP) is to kill 
+monsters. There are a few other ways too, like lockpicking, but these only
+give small rewards.
+
+Once your character has gained enough experience to go up a level, then she 
+will be given skill points to spend as you see fit. These points can be 
+spent on either
+
+    *****/askills.txt*0[(a) Skills] which improve more for each point you put into them, 
+or
+    *****/bability.txt*0[(b) Abilities] which are one-off purchases and grant your character new, 
+    non-improvable powers
+    
+Certain monsters can "drain" your experience, and thus your level. Although you
+do not lose the skill points you've already gained, you also will not gain
+further points until you reach a character level you have not already
+achieved. Luckily, you can restore drained experience through magical means,
+or by simply regaining the experience all over again.
+
+    *****/ynewbie.hlp*0[(y) New player help menu]
+    *****/zhelp.hlp*0[(z) Main menu] 
+    
+    

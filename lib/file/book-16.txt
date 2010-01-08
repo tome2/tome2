@@ -1,0 +1,250 @@
+The Fire elemental is an uncommon monster, 
+occurring at shallow depths. 
+It is very weak, moderately dangerous, 
+and has no magical powers. 
+
+The Astral Deva is a legendary monster, 
+occurring at shallow depths. 
+It is somewhat strong, alarmingly dangerous, 
+and has advanced magical powers. 
+
+The Water elemental is an uncommon monster, 
+occurring at shallow depths. 
+It is very weak, somewhat dangerous, 
+and has no magical powers. 
+
+The Invisible stalker is a somewhat rare monster, 
+occurring at shallow depths. 
+It is very weak, moderately dangerous, 
+and has no magical powers. 
+
+The Carrion crawler is an uncommon animal, 
+occurring at shallow depths. 
+It is very weak, somewhat dangerous, 
+and has no magical powers. 
+
+The Master thief is an uncommon monster, 
+occurring at shallow depths. 
+He is very weak, not at all dangerous, 
+and has no magical powers. 
+
+Ulfang the Black is a unique monster, 
+occurring at shallow depths. 
+He is unimaginably strong, just a little bit dangerous, 
+and has no magical powers. 
+
+The Lich is a somewhat rare undead monster, 
+occurring at shallow depths. 
+It is somewhat weak, very dangerous, 
+and has very powerful magical powers. 
+
+The Master vampire is a somewhat rare undead monster, 
+occurring at shallow depths. 
+It is moderately strong, moderately dangerous, 
+and has very powerful magical powers. 
+
+The Giant grey scorpion is a rare monster, 
+occurring at shallow depths. 
+It is moderately strong, somewhat dangerous, 
+and has no magical powers. 
+
+The Earth elemental is an uncommon monster, 
+occurring at shallow depths. 
+It is somewhat weak, very dangerous, 
+and has no magical powers. 
+
+The Air elemental is an uncommon monster, 
+occurring at shallow depths. 
+It is very weak, alarmingly dangerous, 
+and has no magical powers. 
+
+The Hell hound is a somewhat rare animal, 
+occurring at shallow depths. 
+It is moderately strong, just a small bit dangerous, 
+and has an inkling of magical powers. 
+
+The Eog golem is a rare monster, 
+occurring at shallow depths. 
+It is hellishly strong, moderately dangerous, 
+and has no magical powers. 
+
+The Olog is a common troll, 
+occurring at shallow depths. 
+It is moderately strong, somewhat dangerous, 
+and has no magical powers. 
+
+The Dagashi is a rare monster, 
+occurring at shallow depths. 
+He is somewhat weak, extremely dangerous, 
+and has no magical powers. 
+
+The Gravity hound is an uncommon animal, 
+occurring at shallow depths. 
+It is somewhat weak, somewhat dangerous, 
+and has an inkling of magical powers. 
+
+The Acidic cytoplasm is an extremely rare monster, 
+occurring at shallow depths. 
+It is moderately strong, hellishly dangerous, 
+and has no magical powers. 
+
+The Inertia hound is an uncommon animal, 
+occurring at shallow depths. 
+It is somewhat weak, just a small bit dangerous, 
+and has an inkling of magical powers. 
+
+The Impact hound is an uncommon animal, 
+occurring at shallow depths. 
+It is somewhat weak, just a small bit dangerous, 
+and has no magical powers. 
+
+The Dread is an uncommon undead monster, 
+occurring at shallow depths. 
+It is somewhat strong, moderately dangerous, 
+and has simple magical powers. 
+
+The Ooze elemental is a somewhat rare monster, 
+occurring at shallow depths. 
+It is very weak, hellishly dangerous, 
+and has small magical powers. 
+
+The Smoke elemental is a somewhat rare monster, 
+occurring at shallow depths. 
+It is very weak, moderately dangerous, 
+and has rudimentary magical powers. 
+
+The Young black dragon is a common dragon, 
+occurring at shallow depths. 
+It is somewhat weak, just a small bit dangerous, 
+and has an inkling of magical powers. 
+
+The Mumak is a somewhat rare monster, 
+occurring at shallow depths. 
+It is alarmingly strong, not one little bit dangerous, 
+and has no magical powers. 
+
+The Giant red ant is a common animal, 
+occurring at shallow depths. 
+It is very weak, moderately dangerous, 
+and has no magical powers. 
+
+The Mature white dragon is a common dragon, 
+occurring at shallow depths. 
+It is moderately strong, somewhat dangerous, 
+and has an inkling of magical powers. 
+
+The Xorn is an uncommon monster, 
+occurring at shallow depths. 
+It is very weak, very dangerous, 
+and has no magical powers. 
+
+The Shadow is a somewhat rare undead monster, 
+occurring at shallow depths. 
+It is very weak, extremely dangerous, 
+and has an inkling of magical powers. 
+
+The Phantom is a somewhat rare undead monster, 
+occurring at shallow depths. 
+It is somewhat strong, extremely dangerous, 
+and has an inkling of magical powers. 
+
+The Grey wraith is a common undead monster, 
+occurring at shallow depths. 
+It is very weak, somewhat dangerous, 
+and has small magical powers. 
+
+The Young multi-hued dragon is a common dragon, 
+occurring at shallow depths. 
+It is somewhat weak, very dangerous, 
+and has very powerful magical powers. 
+
+The Colossus is a rare monster, 
+occurring at shallow depths. 
+It is hellishly strong, extremely dangerous, 
+and has no magical powers. 
+
+The Young gold dragon is an uncommon dragon, 
+occurring at shallow depths. 
+It is somewhat weak, not at all dangerous, 
+and has an inkling of magical powers. 
+
+Rogrog the Black Troll is a unique troll, 
+occurring at shallow depths. 
+He is hellishly strong, moderately dangerous, 
+and has no magical powers. 
+
+The Mature blue dragon is a common dragon, 
+occurring at shallow depths. 
+It is moderately strong, somewhat dangerous, 
+and has an inkling of magical powers. 
+
+The Mature green dragon is a common dragon, 
+occurring at shallow depths. 
+It is moderately strong, somewhat dangerous, 
+and has an inkling of magical powers. 
+
+The Mature bronze dragon is an uncommon dragon, 
+occurring at shallow depths. 
+It is somewhat strong, just a small bit dangerous, 
+and has rudimentary magical powers. 
+
+The Young red dragon is a common dragon, 
+occurring at shallow depths. 
+It is somewhat weak, just a small bit dangerous, 
+and has an inkling of magical powers. 
+
+The Trapper is a somewhat rare monster, 
+occurring at shallow depths. 
+It is strong, moderately dangerous, 
+and has no magical powers. 
+
+The Bodak is an uncommon monster, 
+occurring at shallow depths. 
+It is moderately strong, somewhat dangerous, 
+and has average magical powers. 
+
+The Ice elemental is an uncommon monster, 
+occurring at shallow depths. 
+It is moderately strong, moderately dangerous, 
+and has unremarkable magical powers. 
+
+The Necromancer is an uncommon monster, 
+occurring at shallow depths. 
+He is somewhat weak, just a little bit dangerous, 
+and has unimaginably powerful magical powers. 
+
+Lorgan, Chief of the Easterlings is a unique monster, 
+occurring at shallow depths. 
+He is hellishly strong, very dangerous, 
+and has rudimentary magical powers. 
+
+The Demonologist is an uncommon monster, 
+occurring at shallow depths. 
+He is somewhat weak, not at all dangerous, 
+and has unremarkable magical powers. 
+
+The Mummified troll is a common undead monster, 
+occurring at shallow depths. 
+It is very weak, moderately dangerous, 
+and has no magical powers. 
+
+The Queen Ant is a unique animal, 
+occurring at shallow depths. 
+She is hellishly strong, moderately dangerous, 
+and has rudimentary magical powers. 
+
+The Will o' the Wisp is a rare monster, 
+occurring at shallow depths. 
+It is somewhat weak, hellishly dangerous, 
+and has average magical powers. 
+
+The Magma elemental is an uncommon monster, 
+occurring at shallow depths. 
+It is moderately strong, extremely dangerous, 
+and has simple magical powers. 
+
+The Black pudding is an extremely rare monster, 
+occurring at shallow depths. 
+It is moderately strong, hellishly dangerous, 
+and has no magical powers. 
+

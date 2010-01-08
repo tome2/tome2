@@ -1,0 +1,222 @@
+###################################################################
+#
+#  makefile.bcc - Angband makefile for Borland C++ 5.5 (Win32)
+#
+###################################################################
+
+
+###################################################################
+#
+#       Borland specific directives ---
+#
+.AUTODEPEND
+
+###################################################################
+#
+# Set tool and version names:
+
+CPP        = bcc32
+LINKER     = ilink32
+RC         = brc32
+
+###################################################################
+#
+# Name of the *.exe-file
+
+EXE_FILE = tome.exe
+TOLUA    = tolua.exe
+
+###################################################################
+#
+# Debug mode (un-comment for debugging)
+
+# DBGOPT= -v -N -x -xp
+
+
+###################################################################
+#
+# Set any compiler options
+
+CCOPTS = -jb -j1 -Hc -tW -lGn -w- \
+	-D_WIN32_WINNT=0x0400 -DWINVER=0x0400 \
+	-DUSE_TRANSPARENCY -DUSE_EGO_GRAPHICS -DSUPPORT_GAMMA \
+	-I$(BCCDIR)\include -I. -Ilua -DUSE_LUA \
+        -DUSE_PRECISE_CMOVIE \
+	-DUSE_WINSOCK \
+        -DIRC_SERVER=\"irc.worldirc.org\" -DIRC_PORT=\"6667\" -DIRC_CHANNEL=\"\#tome\"
+
+# Compile flags:
+CPPFLAGS= $(CCOPTS) $(DBGOPT)
+
+######################## Targets ##################################
+
+OBJ = \
+	gods.obj \
+        skills.obj \
+        irc.obj \
+	birth.obj \
+	bldg.obj \
+	cave.obj \
+	cmd1.obj \
+	cmd2.obj \
+	cmd3.obj \
+	cmd4.obj \
+	cmd5.obj \
+	cmd6.obj \
+	cmd7.obj \
+	cmovie.obj \
+	dungeon.obj \
+	files.obj \
+	generate.obj \
+        gen_maze.obj \
+        gen_evol.obj \
+	ghost.obj \
+	help.obj \
+	init1.obj \
+	init2.obj \
+	levels.obj \
+	loadsave.obj \
+	lua_bind.obj \
+	main-win.obj \
+	main.obj \
+	melee1.obj \
+	melee2.obj \
+        modules.obj \
+	monster1.obj \
+	monster2.obj \
+	monster3.obj \
+	notes.obj \
+	object1.obj \
+	object2.obj \
+	plots.obj \
+	powers.obj \
+	randart.obj \
+	readdib.obj \
+	script.obj \
+	spells1.obj \
+	spells2.obj \
+	squeltch.obj \
+	status.obj \
+	store.obj \
+	tables.obj \
+	traps.obj \
+	util.obj \
+	variable.obj \
+	wild.obj \
+	wizard1.obj \
+	wizard2.obj \
+	xtra1.obj \
+	xtra2.obj \
+	z-form.obj \
+	z-rand.obj \
+	z-term.obj \
+	z-util.obj \
+	z-virt.obj \
+        z-sock.obj \
+	w_mnster.obj \
+	w_obj.obj \
+	w_play_c.obj \
+	w_player.obj \
+	w_quest.obj \
+	w_spells.obj \
+	w_util.obj \
+	w_z_pack.obj \
+        w_dun.obj \
+	$(TOLUAOBJS)
+
+TOLUAOBJS = \
+	lua\lapi.obj \
+	lua\lauxlib.obj \
+	lua\lbaselib.obj \
+	lua\lcode.obj \
+	lua\ldblib.obj \
+	lua\ldebug.obj \
+	lua\ldo.obj \
+	lua\lfunc.obj \
+	lua\lgc.obj \
+	lua\liolib.obj \
+	lua\llex.obj \
+	lua\lmem.obj \
+	lua\lobject.obj \
+	lua\lparser.obj \
+	lua\lstate.obj \
+	lua\lstring.obj \
+	lua\lstrlib.obj \
+	lua\ltable.obj \
+	lua\ltests.obj \
+	lua\ltm.obj \
+	lua\lundump.obj \
+	lua\lvm.obj \
+	lua\lzio.obj \
+	lua\tolua.obj \
+	lua\tolua_bd.obj \
+	lua\tolua_eh.obj \
+	lua\tolua_gp.obj \
+	lua\tolua_lb.obj \
+	lua\tolua_rg.obj \
+	lua\tolua_tm.obj \
+	lua\tolua_tt.obj \
+	lua\tolualua.obj \
+
+all : $(EXE_FILE)
+	copy $(EXE_FILE) ..
+
+clean:
+	-@if exist *.obj del *.obj >nul
+	-@if exist lua\*.obj del lua\*.obj >nul
+	-@if exist *.exe del *.exe >nul
+	-@if exist *.res del *.res >nul
+	-@if exist *.tds del *.tds >nul
+	-@if exist *.ilc del *.ilc >nul
+	-@if exist *.ild del *.ild >nul
+	-@if exist *.ilf del *.ilf >nul
+	-@if exist *.ils del *.ils >nul
+
+install: $(EXE_FILE)
+	copy $(EXE_FILE) ..
+
+
+########################### Explicit Rules ########################
+$(EXE_FILE): $(OBJ) angband.res
+	$(LINKER) -aa -L$(BCCDIR)\lib -x $(OBJ) c0w32.obj, $(EXE_FILE),, cw32.lib import32.lib,, angband.res
+
+$(TOLUA): $(TOLUAOBJS)
+        $(LINKER) -aa -L$(BCCDIR)\lib -x $(TOLUAOBJS) c0x32.obj, tolua.exe,, cw32.lib import32.lib
+
+angband.res: angband.rc
+	$(RC) -r angband.rc
+
+w_mnster.c: monster.pkg $(TOLUA)
+	$(TOLUA) -n monster -o w_mnster.c monster.pkg
+
+w_player.c: player.pkg $(TOLUA)
+	$(TOLUA) -n player -o w_player.c player.pkg
+
+w_play_c.c: player_c.pkg $(TOLUA)
+	$(TOLUA) -n player_c -o w_play_c.c player_c.pkg
+
+w_z_pack.c: z_pack.pkg $(TOLUA)
+	$(TOLUA) -n z_pack -o w_z_pack.c z_pack.pkg
+
+w_obj.c: object.pkg $(TOLUA)
+	$(TOLUA) -n object -o w_obj.c object.pkg
+
+w_util.c: util.pkg $(TOLUA)
+	$(TOLUA) -n util -o w_util.c util.pkg
+
+w_spells.c: spells.pkg $(TOLUA)
+	$(TOLUA) -n spells -o w_spells.c spells.pkg
+
+w_quest.c: quest.pkg $(TOLUA)
+	$(TOLUA) -n quest -o w_quest.c quest.pkg
+
+w_dun.c: dungeon.pkg $(TOLUA)
+	$(TOLUA) -n dungeon -o w_dun.c dungeon.pkg
+
+########################### Implicit Rules ########################
+.c.obj:
+	$(CPP) $(CPPFLAGS) -c -o$*.obj $*.c
+
+.obj.exe:
+	$(CPP) $(CPPFLAGS) $<
+

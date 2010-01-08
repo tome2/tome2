@@ -1,0 +1,68 @@
+|||||oy
+~~~~~01|Symbiant
+~~~~~02|Classes|Symbiant
+#####R=== Symbiants ===
+
+#####GDescription
+Symbiants live in harmony with all of the monsters that do not move:
+the Mushrooms, Molds, Floating Eyes, and such. They can hypnotise these
+creatures and then form a symbiotic relationship. Using other symbiotic
+powers, they can even use the magical abilities of their pets.
+
+Once hypnotised, the monster is placed onto the body, or "worn" in order to 
+initiate the symbiotic relationship.
+
+#####GStarting Stat Modifiers
+Strength       +1
+Intelligence   -2
+Wisdom         +1
+Dexterity      +1
+Constitution    0
+Charisma       +1
+Hit Die        +d8
+Spell Points   +0%
+Exp Penalty    40%
+
+#####GStarting Skills
+#####BSkill                   Start Level     Skill Point Gains
+Combat                  1.000           [0.800]
+  Weaponmastery         1.000           [0.800]
+  Archery               1.000           [0.700]
+  Barehand-combat       1.000           [0.600]
+Sneakiness              1.000           [0.800]
+  Stealth               1.000           [0.800]
+  Disarming             1.000           [0.700]
+Magic                   1.000           [0.700]
+  Magic-Device          1.000           [1.000]
+Spirituality            1.000           [0.500]
+  Prayer                0.000           [0.500]
+  Music                 0.000           [0.300]
+Monster-lore            1.000           [1.100]
+  Corpse-preservation   1.000           [0.900]
+  Possession            0.000           [0.100]
+  Symbiosis             1.000           [0.800]
+
+#####GStarting Equipment
+A Symbiant begins the game with:
+    a Dagger
+    a Scroll of Summon Never-Moving Pet
+
+
+#####GSymbiosis
+Symbiants rely on the partnerships they form, hypnotising creatures
+and then "wearing" them: "I get by with a little help from my friends".
+Depending on the monster, this does nothing except protect the player
+slightly (the worn monster takes some of the damage the player would
+otherwise) or grant some very powerful attacks and summons.
+Their "spells" are used by the 'm' command; as their Symbiosis skill
+increases, they automatically gain more powers.
+For more detail about the specific powers, look here: *****m_symbio.txt*0[Symbiosis]
+~~~~~03|Symbiant|Naming your symbiote
+#####GNaming your symbiote
+For those sentimental Symbiants who like to name your symbiotes, you 
+can use the Inscribe command '{'. Inscribe your hypnotized symbiote 
+with "#named Fido" (or whatever name you choose, but don't forget the 
+leading '#'), and it will be listed in your equipment as "a Red Mold 
+named Fido", and the game will refer to your symbiote by name ("Fido 
+is healed", for instance, rather than "Your Red mold is healed").
+

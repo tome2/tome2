@@ -1,0 +1,263 @@
+
+			Artifact Lore, Vol. I
+			   Ancient Weapons
+			---------------------
+
+ 
+  The Longsword 'Ringil' (4d5) (+22,+25)
+       The Sword of Fingolfin (High-Elf).  When wielded it will
+       haste its wielder.  It is a blade of such deathly cold that 
+       it shines bright white acting as a permanent light and 
+       delivering cold criticals.  It slays evil, demons, undead
+       and trolls.  Allows you to resist cold, regenerate mana and  
+       hit points more quickly with no extra food consumption. Also
+       lets you see invisible and be immune to paralyzation.  Being
+       made of white eog, it is capable of casting Ice Storms.
+
+  The Longsword 'Anduril' (3d5) (+10,+15) [+5]
+       The  Sword of Aragorn  the  Dunadan  Ranger  and  King.   It 
+       increases your  strength  to  match  true  Kingly  strength,
+       increases  armour class by +5. Being the 'Flame of the West'
+       it delivers  heat criticals and defends  against  fire.   It 
+       slays  evil, orcs and trolls. It allows you to see invisible
+       and avoid paralyzation. So near to the element  fire  is the
+       blade, that  Fire  Balls  can  be  cast  from  its   searing
+       surface.
+
+  The Lead-filled Mace 'Grond' (9d9) (+25,+25) [+10]
+       The Hammer  of  the  Underworld,  this  is  Morgoth's  chief
+       weapon. It weighs so much that it  slows  anything  of  less
+       than godly status. It is so awesome that it  aggravates  all  
+       that see it. It makes it's wielder see all and  resist  all.
+       It slays all of Morgoths personal creations of orcs, trolls,
+       and demons and it executes  dragons  doing five times normal
+       damage against them, (it can kill all but a very few dragons
+       in one mighty blow!).   Plus it causes impact criticals that 
+       cause  earthquakes and it can  tunnel  through solid granite
+       walls!
+
+  The Two-Handed Sword 'Gurthang' (3d6) (+13,+17)
+       This Iron of  Death  belonging  to  Turin  Turambar, made of 
+       black eog, was designed to slay Dragons (and Trolls),  doing
+       five times normal damage against dragons. It gives  you  the 
+       strength to wield it, regenerates your  hit  points and mana 
+       at no extra cost and allows you to be free of paralyzation.
+
+  The Two-Handed Sword 'Mormegil' (6d7) (0,0) [-20]
+       This evil black sword is heavily cursed, slowing its wielder
+       and aggravating all that see it...
+
+  The Broadsword 'Arunruth' (2d5) (+20,+12)
+       This Sword of Accuracy  rarely  misses.  It  increases  the
+       wielders dexterity, saves from falls, slays orcs and demons,
+       and protects from paralyzation.
+
+  The Broadsword 'Glamdring' (2d5) (+10,+15)
+       This High-Elven sword (mate to Orcrist) was made during foul
+       orc wars of long ago. It was once  wielded  by  Gandalf  the
+       Grey Wizard. It slays orcs and  other  evil, shining  bright 
+       red continuously, which aids  searching  and decreases  food  
+       consumption. Its element is flame, and it gives   resistance
+       to flame to the wielder, and slays those who have not.
+
+  The Broadsword 'Orcrist' (2d5) (+10,+15)
+       This High-Elven sword (mate to Glamdring)  was  made  during
+       foul orc wars of long ago.  It was once  wielded  by  Thorin 
+       Oakenshield the Dwarf-King-Under-the-Mountain. It slays orcs 
+       and  other  evil,  shining  bright white continuously, which
+       decreases food consumption, plus  making  the  wielder  more 
+       stealthy. Being of the element frost, it protects from cold,
+       and slays non-cold based creatures.
+
+  The Broadsword 'Aeglin' (2d5) (+12,+16)
+       This High-Elven sword, is the long, lost and forgotten third
+       mate to Orcrist and Glamdring. It is also the most powerful.
+       Like Glamdring and Orcrist, made  during  the  Orc-wars,  it 
+       slays Orcish-kind, shining  bright  blue continuously, which
+       decreases food consumption and aiding  searching.  Being  of
+       electric element, it delivers lightning criticals, which  it
+       also defends against.
+
+  The Long Bow 'Belthronding' (+20,+22) (+3)
+	This Noldorin black-yew bow, belonged to the greatest elven
+	archer, Beleg Cuthalion, who was slain by his own blade, by
+	his best friend Turin Turumbar. The bow  increases  stealth 
+	and dexterity, and rarely missed its target.
+
+  The Long Bow of Bard (+17,+19)
+	This bow of men gives free action and increased dexterity.
+
+  The Light Crossbow 'Cubragol' (+10,+14)
+	This amazing bow of fire hastes its  wielder  and  brands
+	all bolts with its element.
+
+  The Bastard Sword 'Calris' (5d4) (-20,+20)
+       This sword of Lungorthin the Balrog of White  Flame,  is  an
+       evil cursed sword that needs great mastering to control  its
+       powers. If mastered it can execute dragons, slay other  evil
+       including demons and trolls, this naturally aggravates them.
+       Also it gives its wielder far greater internal constitution.
+
+  The Spear 'Aeglos' (3d6) (+15,+25) [+5]
+       This  Snow-thorn of Gil-Galad the  High-Elf,  delivers  very
+       deep cold-criticals, while  protecting  you  from  cold  and
+       increasing  your armour class.  Being  elvish  it  naturally 
+       slays orcs and trolls. It  increases  the  wielders  wisdom, 
+       slows their digestion and frees their actions  from  holding
+       forces of evil, also casting Frost Balls occasionally.
+
+  The Spear 'Nimloth' (1d6) (+11,+13) (+3 to stealth)
+       This elven spear, branded with frost, allows  its  wielder
+       to creep up on the Undead and Slay them.
+
+  The Dagger 'Angrist' (2d5) (+10,+15) [+5]
+       This Iron-cleaver of Beren the Edain, increases and sustains
+       dexterity, increases you protection,  prevents  paralyzation
+       and slays orcs and trolls.
+
+  The Small sword 'Sting' (1d6) (+7,+8)
+       This  small weapon is  one of the  most powerful weapons  of 
+       Westernesse.   Once wielded by Bilbo and Frodo  Baggins  (of
+       Hobbit kind),  Sting slays undead,  evil, and orcs and  also 
+       shines a continuous, bright blue. It increases the wielder's
+       physical statistics  and  its piercing blue light  lights up 
+       those normally invisible to sight.
+
+  The Great Axe of Durin (4d4) (+10,+20) [+15]
+       This  Wonderful  Dwarven  Axe was once  wielded by Durin the 
+       Deathless (Father  and  King  of  the  Dwarves),  gives  its 
+       wielder  high protection, executes dragons, while  resisting
+       fire and acid.  It slays  demons,  trolls  and  orcs,  frees
+       action and increases constitution.
+
+  The War Hammer of Aule (5d5) (+19,+21) [+5]
+       This is the great war hammer of the deity,  Aule  the Smith.
+       Forged in his great furnaces  it  delivers  Shock  criticals
+       causing five times normal damage to those not  resistant  to
+       this element, and even then it executes dragons, slays evil,
+       demons and undead. It resists fire, cold, acid and lightning
+       and allows you to see invisible and be free of paralyzation.
+       It increases its wielder's wisdom  so  that  one may  choose 
+       wisely what to slay with it.  Truly an awesome weapon.
+
+  The Two-Handed Great Flail 'Thunderfist' (3d6) (+5,+18)
+       This weapon of Electricity and  Flame,  delivers  shock  and
+       heat criticals, delivering five times or three times  normal
+       damage against the respective types of creatures, also slays
+       animals, trolls and orcs.  It also gives the  wielder  great
+       strength.
+
+  The Morningstar 'Bloodspike' (2d6) (+8,+22)
+       This Bloody weapon slays animals, trolls, and orcs.  It allows
+       you to see invisible creatures, as well as giving the wielder  
+       great strength.
+
+  The Quarterstaff 'Nar-i-vagil' (1d10) (+10,+20)
+       This fiery staff slays animals and resists fire, doing times
+       fire criticals. It also increases the wielders intelligence.
+
+  The Blade of Chaos 'Doomcaller' (6d5) (+18,+28) [-50]
+       This deadly blade  calls  doom  to  all  who  see  it,  this 
+       naturally aggravates them. It shows you  wherever a creature
+       is,  be  it  invisible  or  blocked  by  a  wall. It resists
+       all elements and executes dragons, slays evil,  animal,  orc
+       and troll. It delivers cold criticals, but severely  impedes
+       its wielders health.
+
+  The Three Daggers, 'Narthanc', 'Nimthanc', 'Dethanc' (1d4) (+4,+6)
+       These elemental daggers  of  flame,  frost, and  electricity
+       respectively do  their    elemental  criticals,  and  defend  
+       against them.  They also cast bolts of their element often.
+
+  The Dagger of Rilia (2d4) (+4,+3)
+       This ancient, and poisonous  dagger  casts  stinking  clouds
+       with great frequency.
+
+  The Dagger 'Belangil' (2d4) (+6,+9)
+       This nimble weapon of cold increases the wielder's dexterity
+       and regeneration, while slowing  digestion.  Being  of  dark 
+       origins it see alls invisible and casts frost balls.
+
+  The Battle Axe of Balli Stonehand (3d6) (+8,+11) [+5]
+       This Dwarvish Battle axe protects from elements,  falls  and
+       the invisible. It slays all demons, trolls and orcs,  giving
+       even dwarves the stealth, strength and  constitution  to  do
+       so, never letting holding spells affect its  use in a fight.
+
+  The Battle Axe 'Lotharang' (2d8) (+4,+3)
+       This petty-dwarvish axe, slays orcs and  trolls,  increasing
+       strength and dexterity. For those of  faint  heart  it  also
+       cures medium wounds and cuts.
+
+  The Morningstar 'Firestar' (2d6) (+5,+7) [+2]
+       This weapon of flame casts fire balls.
+
+  The Quarterstaff 'Eriril' (1d10) (+3,+5)
+       This staff of people who believe in the power of  mind  over
+       matter, greatly increases wisdom and intelligence and  gives
+       the power to identify. It also sees  invisible and slays all
+       evil.
+
+  The Longsword 'Elvagil' (2d5) (+2,+7)
+       This joyful sword increases dexterity, charisma and stealth.
+       It protects from falls and the invisible, and slays orcs and
+       trolls.
+
+  The Glaive of Pain (9d6) (+0,+30)
+       This weapon is designed to cause pain  to  anything  without 
+       discrimination.
+
+  The Lance of the Eorlingas (3d8) (+3,+21)
+       This heavy lance is suprisingly easy  to  control,  allowing 
+       slaughter of orcs, trolls and other evil (visible or not).
+
+  The Broad Axe 'Barukkheled' (2d6) (+13,+19)
+       This beautiful axe slays orcs, trolls, giants and other evil
+       (visible or not),  while  greatly  increasing  the  wielders
+       internal constitution.
+
+  The Trident of Wrath (3d8) (+16,+18)
+       This extremely heavy and dangerous trident belonging to  the
+       greatest Maiar spirit,  Osse,  slaughters  evil  and  undead
+       without mercy wherever they hide, and increases the wielder's
+       strength and dexterity.
+
+  The Scimitar 'Haradekket' (2d5) (+9,+11)
+       This sword of the south slays the invisible undead, evil and
+       animals, and increases the wielder's dexterity. In addition,
+       the  magically enhanced  blade  is  rumored  to  give  extra 
+       attacks in combat.
+
+  The Lochaber Axe 'Mundwine' (3d8) (+12,+17)
+       This strong friend in battle, slays  evil  and  resists  the 
+       elements.
+
+  The Cutlass 'Gondricam' (1d7) (+10,+11)
+       This defender increases the wielders dexterity.
+
+  The Sabre 'Careth Asdriag' (1d7) (+6,+8)      
+       This  lightning-quick blade  slays dragons,  giants, trolls,
+       orcs, and animals.
+
+  The Rapier 'Forasgil' (1d6) (+12,+19)
+       This glittering ice-blade also  slays  animals  as  well  as 
+       lighting the way.
+
+  The Executioner's Sword 'Crisdurian' (4d5) (+18,+19)
+       This executer slays evil, invisible undead, dragons,  giants
+       orcs and trolls.
+
+  The Flail 'Totila' (3d6) (+6,+8) (+2)
+       This flaming flail slays evil  in  stealth.  It  also  casts 
+       confusion.
+
+  The Short sword 'Gilettar' (1d7) (+3,+7)
+       This roguish sword  gives  better  regeneration  and  slower
+       digestion, slaying all animals with uncanny speed.
+
+  The Katana 'Aglarang' (8d4) (+0,+0)
+       This super-light and sharp  katana   greatly  increases  the
+       wielders dexterity and sustains it. Rarely does the  wielder
+       get less than four attacks a round with  it,  and  often  as
+       many as six!
+

@@ -1,0 +1,744 @@
+# File: st_info.txt
+
+# Fixed Potions of Cure Light/Serious Wounds in the Temple, Potions of 
+# Restore Str/Con in the Alchemist
+# Magic Shop - Amulet of Slow Digestion, Wand of Light, Staffs of Enlightenment,
+# Door/Stair Location, Detect Invis/Evil, and Remove Curse
+
+# This file is used to initialize the "lib/raw/st_info.raw" file, which is
+# used to initialize the "store info type" information for the Angband game.
+
+# Do not modify this file unless you know exactly what you are doing,
+# unless you wish to risk possible system crashes and broken savefiles.
+
+# Some store indexes are defined in "defines.h", and must not be
+# changed.
+
+# N:<index>:<name>
+# I:<proba>:<item name>
+# T:<proba>:<tval>:<sval>
+# G:char:attr
+# W:max number of items in the store
+
+# proba is the chance(out of 100) of the item being generated
+
+# Version stamp (required)
+
+V:2.0.0
+
+N:0:General Store
+I:100:& Wooden Torch~
+I:95:& Brass Lantern~
+I:95:& Flask~ of oil
+I:100:& Ration~ of Food
+I:100:& Hard Biscuit~
+I:90:& Strip~ of Venison
+I:70:& Pint~ of Fine Wine
+I:80:& Pint~ of Fine Ale
+I:60:& Shovel~
+I:50:& Pick~
+I:100:& Iron Spike~
+I:70:& Iron Shot~
+I:70:& Bolt~
+I:70:& Arrow~
+I:98:& Cloak~
+I:46:& Fur Cloak~
+A:0:0:1:2:3:4
+O:0:5:6:7
+G:1:U
+W:24
+
+N:1:Armoury
+I:70:& Pair~ of Soft Leather Boots
+I:60:& Pair~ of Hard Leather Boots
+I:80:& Hard Leather Cap~
+I:70:& Metal Cap~
+I:65:& Iron Helm~
+I:100:& Robe~
+I:90:& Soft Leather Armour~
+I:90:& Soft Studded Leather~
+I:90:& Hard Leather Armour~
+I:85:& Hard Studded Leather~
+I:90:& Leather Scale Mail~
+I:80:& Metal Scale Mail~
+I:75:& Chain Mail~
+I:80:& Augmented Chain Mail~
+I:75:& Metal Brigandine Armour~
+I:68:& Bar Chain Mail~
+I:100:& Set~ of Leather Gloves
+I:80:& Set~ of Gauntlets
+I:100:& Small Leather Shield~
+I:90:& Large Leather Shield~
+I:80:& Small Metal Shield~
+A:0:0:1:2:3:4
+O:8:9:10:11
+G:2:s
+W:24
+
+N:2:Weaponsmith
+I:100:& Dagger~
+I:100:& Main Gauche~
+I:100:& Rapier~
+I:100:& Small Sword~
+I:100:& Short Sword~
+I:100:& Sabre~
+I:100:& Cutlass~
+I:100:& Tulwar~
+I:100:& Broad Sword~
+I:100:& Long Sword~
+I:100:& Scimitar~
+I:100:& Katana~
+I:100:& Bastard Sword~
+I:100:& Spear~
+I:100:& Awl-Pike~
+I:100:& Trident~
+I:100:& Pike~
+I:100:& Beaked Axe~
+I:100:& Broad Axe~
+I:100:& Lance~
+I:100:& Battle Axe~
+I:100:& Hatchet~
+I:100:& Sling~
+I:100:& Short Bow~
+I:100:& Long Bow~
+I:100:& Light Crossbow~
+I:100:& Iron Shot~
+I:100:& Arrow~
+I:100:& Bolt~
+I:100:& Whip~
+I:100:& Small Wooden Boomerang~
+A:23:0:1:2:3:4
+O:12:13:14:15
+G:3:w
+W:24
+
+N:3:Temple
+I:100:& Nunchaku~
+I:100:& Quarterstaff~
+I:100:& Mace~
+I:100:& Bo Staff~
+I:100:& War Hammer~
+I:100:& Lucerne Hammer~
+I:100:& Morning Star~
+I:100:& Flail~
+I:100:& Lead-Filled Mace~
+I:100:Remove Curse
+I:100:Blessing
+I:100:Holy Chant
+I:100:Heroism
+I:100:Word of Recall
+I:100:Word of Recall
+I:100:Word of Recall
+#I:100:Cure Light Wounds
+T:100:71:34
+#I:100:Cure Serious Wounds
+#I:100:Cure Serious Wounds
+T:100:71:35
+T:100:71:35
+I:100:Cure Critical Wounds
+I:100:Cure Critical Wounds
+I:100:Restore Life Levels
+I:100:Restore Life Levels
+I:100:Restore Life Levels
+I:100:& Whip~
+I:100:& Mace~
+I:100:& Ball-and-Chain~
+I:100:& War Hammer~
+I:100:Word of Recall
+I:100:Word of Recall
+I:100:Word of Recall
+I:100:Cure Critical Wounds
+I:100:Cure Critical Wounds
+I:100:Restore Life Levels
+I:100:Restore Life Levels
+I:100:Restore Life Levels
+I:100:Remove Curse
+I:100:Remove Curse
+I:100:*Remove Curse*
+I:100:*Remove Curse*
+A:0:0:1:2:3:4
+O:26:27:28:29
+G:4:g
+W:24
+
+N:4:Alchemy shop
+I:100:Enchant Weapon To-Hit
+I:100:Enchant Weapon To-Dam
+I:100:Enchant Armour
+I:100:Identify
+I:100:Identify
+I:100:Identify
+I:100:Identify
+I:100:Light
+I:100:Phase Door
+I:100:Phase Door
+T:100:70:9
+I:100:Monster Confusion
+I:100:Magic Mapping
+I:100:Treasure Detection
+I:100:Object Detection
+I:100:Trap Detection
+I:100:Detect Invisible
+I:100:Recharging
+I:100:Satisfy Hunger
+I:100:Word of Recall
+I:100:Word of Recall
+I:100:Word of Recall
+I:100:Word of Recall
+T:100:70:9
+T:100:70:9
+#I:100:Restore Strength
+T:100:71:42
+I:100:Restore Intelligence
+I:100:Restore Wisdom
+I:100:Restore Dexterity
+#I:100:Restore Constitution
+T:100:71:46
+I:100:Restore Charisma
+I:100:Identify
+I:100:*Identify*
+I:100:*Identify*
+I:100:*Identify*
+I:100:*Identify*
+I:100:*Identify*
+I:100:*Identify*
+I:100:Light
+#I:100:Restore Strength
+T:100:71:42
+I:100:Restore Intelligence
+I:100:Restore Wisdom
+I:100:Restore Dexterity
+#I:100:Restore Constitution
+T:100:71:46
+I:100:Restore Charisma
+I:100:Enchant Armour
+I:100:Enchant Armour
+I:100:Recharging
+I:100:Satisfy Hunger
+I:100:Satisfy Hunger
+I:100:Satisfy Hunger
+A:0:0:1:2:3:4
+O:30:31:32:33
+G:5:b
+W:24
+
+N:5:Magic shop
+I:100:Protection
+I:100:Levitation
+I:100:Protection
+I:100:Fire Resistance
+I:100:Cold Resistance
+I:100:Charisma
+I:100:Slow Digestion
+T:100:40:3
+I:100:Acid Resistance
+I:100:Lightning Resistance
+I:100:Searching
+I:100:Cure Light Wounds
+# Rods
+I:100:Probing
+I:25:& Wooden Rod~ of#
+# Book
+T:100:111:50
+# Wands
+T:100:65:3
+T:100:65:8
+T:100:65:11
+T:100:65:16
+T:100:65:22
+# Staves
+T:100:55:3
+T:100:55:5
+T:100:55:8
+T:100:55:9
+T:100:55:14
+T:60:55:15
+T:60:55:16
+T:60:55:17
+A:0:0:1:2:3:4
+O:34:35:36:37
+G:6:r
+W:24
+
+N:6:Black Market
+A:30:0:1:2:3:4
+O:38:39:40:41
+G:7:D
+F:ALL_ITEM | MEDIUM_LEVEL
+W:24
+
+N:7:Home
+A:0:0:54:55:3:0
+O:0:0:0:0
+G:8:y
+W:24
+
+N:8:Book Store
+# & Book~ of Beginner Cantrips
+T:100:111:50
+T:100:111:50
+T:100:111:255
+T:100:111:255
+T:100:111:255
+T:100:111:255
+T:100:111:255
+T:100:111:255
+A:0:0:1:2:3:4
+O:42:43:44:45
+G:9:o
+W:24
+
+N:9:Pet Shop
+I:100:Egg
+T:100:70:6
+I:100:& Hard Biscuit~
+A:0:0:1:2:3:4
+O:46:47:48:49
+G:+:b
+F:MEDIUM_LEVEL
+W:12
+
+N:10:Mayor's Office
+A:0:0:16:15:35:0
+O:1:1:1:1
+G:+:o
+W:0
+
+N:11:Inn
+I:100:& Ration~ of Food
+I:100:& Hard Biscuit~
+I:100:& Strip~ of Venison
+I:100:& Pint~ of Fine Wine
+I:100:& Pint~ of Fine Ale
+A:2:4:5:6:7:0
+O:2:2:18:18
+G:+:w
+W:8
+
+N:12:The Soothsayer
+I:20:Divination
+I:20:Divination
+I:20:Divination
+I:20:Divination
+I:20:Divination
+I:20:Divination
+A:0:0:2:0:8:0
+O:3:3:3:3
+G:+:B
+F:RANDOM
+W:2
+
+N:13:Library
+I:100:Identify
+A:0:0:14:15:16:2
+O:4:4:4:4
+G:+:U
+W:2
+
+N:14:Castle
+A:0:0:16:35:0:0
+O:16:16:16:16
+G:+:o
+W:0
+
+N:15:Casino
+A:13:0:9:10:0:12
+O:17:17:17:17
+G:+:s
+W:0
+
+N:16:Beastmaster Shanty
+# Disabled the bounty list for the time being to not confuse people
+# with the bounty quest
+# A:18:0:19:20:21:22
+A:18:0:21:22:0:0
+O:19:19:19:19
+G:+:g
+W:0
+
+N:17:Fighters Hall
+A:0:0:24:25:0:0
+O:20:20:20:20
+G:+:s
+W:0
+
+N:18:Tower of Magery
+A:0:0:26:27:0:0
+O:21:21:21:21
+G:+:b
+W:0
+
+N:19:Inner Temple
+A:0:0:28:29:0:0
+O:22:22:22:22
+G:+:G
+W:0
+
+N:20:Paladins Guild
+A:0:0:28:25:0:0
+O:23:23:23:23
+G:+:g
+W:0
+
+N:21:Rangers Guild
+A:0:0:31:32:0:0
+O:24:24:24:24
+G:+:u
+W:0
+
+N:22:Thunderlords' Nest
+A:0:0:33:2:34:0
+O:25:25:25:25
+G:+:U
+W:0
+
+N:23:The Mirror
+A:0:0:44:15:16:43
+O:51:51:51:51
+G:+:U
+W:0
+
+N:24:Seat of Ruling
+A:0:0:17:35:0:0
+O:52:52:52:52
+G:+:U
+W:0
+
+N:25:Wizards Spire
+A:60:0:26:27:0:0
+O:54:54:54:54
+G:+:U
+W:0
+
+N:26:Priests Circle
+A:0:0:28:29:0:0
+O:55:55:55:55
+G:+:o
+W:0
+
+N:27:Tower of the King
+A:0:0:17:35:0:0
+O:57:57:57:57
+G:+:U
+W:0
+
+N:28:Library
+I:100:Identify
+A:0:0:14:15:16:2
+O:58:58:58:58
+G:+:U
+W:2
+
+N:29:The White Tree
+I:100:& Ration~ of Food
+I:100:& Hard Biscuit~
+I:100:& Strip~ of Venison
+I:100:& Pint~ of Fine Wine
+I:100:& Pint~ of Fine Ale
+A:2:4:5:6:7:0
+O:59:59:59:59
+G:+:w
+W:8
+
+N:30:Craftsmaster
+A:0:0:24:25:0:0
+O:60:60:60:60
+G:+:s
+W:0
+
+N:31:Earth-Dome (Nature)
+A:0:0:39:0:0:0
+O:61:61:61:61
+G:+:U
+W:0
+
+N:32:Minstrels Haven
+A:0:0:40:41:0:0
+O:62:62:62:62
+G:+:U
+W:0
+
+N:33:Star-Dome
+A:0:0:46:47:0:0
+O:63:63:63:63
+G:+:U
+W:0
+
+N:34:Valarin Temple
+A:0:0:28:48:0:0
+O:64:64:64:64
+G:+:U
+W:0
+
+N:35:Sea-Dome
+A:0:0:49:35:0:0
+O:65:65:65:65
+G:+:U
+W:0
+
+N:36:The Golden Flower
+A:0:0:50:51:0:0
+O:66:66:66:66
+G:+:U
+W:0
+
+N:37:The Fountain
+A:0:0:52:53:0:0
+O:67:67:67:67
+G:+:U
+W:0
+
+# Here begins the random shops, for the random towns
+N:38:Axe Smith
+T:100:24:256
+A:0:0:1:2:3:4
+O:12:13:14:15
+G:3:w
+F:RANDOM | MEDIUM_LEVEL
+W:12
+
+N:39:Hafted Smith
+T:100:21:256
+A:0:0:1:2:3:4
+O:12:13:14:15
+G:3:w
+F:RANDOM | MEDIUM_LEVEL
+W:12
+
+N:40:Polearm Smith
+T:100:22:256
+A:0:0:1:2:3:4
+O:12:13:14:15
+G:3:w
+F:RANDOM | MEDIUM_LEVEL
+W:12
+
+N:41:Sword Smith
+T:100:23:256
+A:0:0:1:2:3:4
+O:12:13:14:15
+G:3:w
+F:RANDOM | MEDIUM_LEVEL
+W:12
+
+N:42:Rare Jewelry Shop
+T:100:40:256
+T:100:45:256
+A:0:0:1:2:3:4
+O:34:35:36:37
+G:6:v
+F:RANDOM | DEPEND_LEVEL | DEEP_LEVEL | FORCE_LEVEL
+F:VERY_RARE
+W:10
+
+N:43:Jewelry Shop
+T:100:40:256
+T:100:45:256
+A:0:0:1:2:3:4
+O:34:35:36:37
+G:6:y
+F:RANDOM | DEPEND_LEVEL | MEDIUM_LEVEL | FORCE_LEVEL
+F:RARE
+W:20
+
+N:44:Footwear Shop
+T:100:30:256
+A:0:0:1:2:3:4
+O:8:9:10:11
+G:2:r
+F:RANDOM | MEDIUM_LEVEL
+F:COMMON
+W:12
+
+N:45:Rare Footwear Shop
+T:100:30:256
+A:0:0:1:2:3:4
+O:8:9:10:11
+G:2:r
+F:RANDOM | DEEP_LEVEL | MEDIUM_LEVEL
+F:VERY_RARE
+W:8
+
+N:46:Library
+T:100:110:256
+T:100:111:256
+T:100:112:256
+T:100:113:256
+T:100:114:256
+T:100:115:256
+T:100:116:256
+T:100:117:256
+T:100:118:256
+T:100:119:256
+T:100:120:256
+T:100:121:256
+T:100:122:256
+T:100:123:256
+T:100:124:256
+T:100:125:256
+A:27:0:1:2:3:4
+O:8:9:10:11
+G:9:y
+F:RANDOM | DEPEND_LEVEL | MEDIUM_LEVEL
+W:24
+
+N:47:Forbidden Library
+T:100:110:256
+T:100:111:256
+T:100:112:256
+T:100:113:256
+T:100:114:256
+T:100:115:256
+T:100:116:256
+T:100:117:256
+T:100:118:256
+T:100:119:256
+T:100:120:256
+T:100:121:256
+T:100:122:256
+T:100:123:256
+T:100:124:256
+T:100:125:256
+A:27:0:1:2:3:4
+O:8:9:10:11
+G:9:v
+F:RANDOM | DEPEND_LEVEL | DEEP_LEVEL
+F:RARE
+W:12
+
+N:48:Expensive Black Market
+A:0:0:1:2:3:4
+O:38:39:40:41
+G:7:v
+F:RANDOM | ALL_ITEM | DEEP_LEVEL | DEPEND_LEVEL | MEDIUM_LEVEL
+W:12
+
+N:49:Common Shop
+I:95:& Brass Lantern~
+I:100:& Flask~ of oil
+I:100:& Ration~ of Food
+I:60:& Shovel~
+I:50:& Pick~
+I:100:& Iron Spike~
+I:70:& Iron Shot~
+I:70:& Bolt~
+I:70:& Arrow~
+I:98:& Cloak~
+I:46:& Fur Cloak~
+I:100:Word of Recall
+I:100:Cure Critical Wounds
+A:0:0:1:2:3:4
+O:0:5:6:7
+G:1:U
+W:12
+F:RANDOM
+
+N:50:Dragon Hunter
+T:100:38:256
+A:0:0:1:2:3:4
+O:8:9:10:11
+G:2:v
+F:RANDOM | DEEP_LEVEL | DEPEND_LEVEL
+F:VERY_RARE
+W:12
+
+N:51:Speed Ring Market
+T:100:45:31
+A:0:0:1:2:3:4
+O:34:35:36:37
+G:6:G
+F:RANDOM | SHALLOW_LEVEL | DEPEND_LEVEL
+F:VERY_RARE
+W:6
+
+N:52:Scribe
+T:100:70:256
+A:0:0:1:2:3:4
+O:8:9:10:11
+G:5:B
+F:RANDOM | MEDIUM_LEVEL | DEPEND_LEVEL
+W:12
+
+N:53:Potion Store
+T:100:71:256
+T:100:72:256
+A:0:0:1:2:3:4
+O:8:9:10:11
+G:5:B
+F:RANDOM | MEDIUM_LEVEL | DEPEND_LEVEL
+W:12
+
+N:54:Recaller
+I:100:Word of Recall
+A:33:0:1:2:3:0
+O:8:9:10:11
+G:+:b
+F:RANDOM | COMMON
+W:2
+
+N:55:Master Archer
+T:100:19:2
+T:100:19:12
+T:20:19:13
+T:100:19:23
+T:20:19:24
+T:50:16:256
+T:50:17:256
+T:50:18:256
+A:0:0:1:2:3:4
+O:12:13:14:15
+G:3:g
+F:RANDOM | MEDIUM_LEVEL | DEPEND_LEVEL
+F:RARE
+W:24
+
+N:56:Merchants Guild
+A:0:0:56:57:58:0
+O:68:68:68:68
+G:+:g
+W:0
+
+N:57:The Mathom-house
+A:0:0:59:0:3:0
+O:0:0:0:0
+G:+:g
+F:MUSEUM
+W:255
+
+N:58:The Prancing Pony
+I:100:& Ration~ of Food
+I:100:& Hard Biscuit~
+I:100:& Strip~ of Venison
+I:100:& Pint~ of Fine Wine
+I:100:& Pint~ of Fine Ale
+A:2:4:5:6:7:0
+O:69:69:69:69
+G:+:w
+W:8
+
+##### Mining equipment for Khazad-Dum #####
+
+N:59:Mining Supply store
+T:100:20:256
+I:100:& Wooden Torch~
+I:95:& Brass Lantern~
+I:95:& Flask~ of oil
+I:75:& Dwarven Lantern~
+I:60:& Feanorian Lamp~
+T:60:65:6
+T:70:71:22
+A:0:0:1:2:3:4
+O:11:15:26:40
+F:MEDIUM_LEVEL
+G:+:s
+W:24
+
+## Library quest in Minas Anor
+
+N:60:Library
+I:100:Identify
+A:61:0:14:15:16:2
+O:4:4:4:4
+G:+:U
+W:2
+

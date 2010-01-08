@@ -1,0 +1,35 @@
+                         English Text Style
+
+* Use British spelling in preference to American spelling. Quotations,
+  however, should be left intact.
+
+* Capitalize the name of spells and special powers as you would the
+  title of a book.
+
+* Avoid unnecessary modernisms.  This helps preserve the mood -- an
+  item "allows", rather than "enables", you to do something.
+
+* When describing a person possessing an item, use "its wielder" or
+  "its wearer" in preference to "the wielder" or "the wearer".
+
+* When describing a gendered person of indeterminate gender, use
+  masculine terms.  "This icy sword increases its wielder's statistics
+  and sustains his strength."
+
+* Use the British Imperial system for measurements.  This means feet
+  and inches, not meters and centimeters.
+
+
+                           Specific Issues
+
+* Use "hit points", not "hitpoints".
+
+* Use "Long Sword", not "Long-sword" or "Longsword".
+
+* Use "Middle-earth", not "middle-earth" or "Middle Earth".
+
+* Use "staves", not "staffs".
+
+* Use "dwarves", not "dwarfs".
+
+-- markrax (Mark Schreiber) <mark7@andrew.cmu.edu>

@@ -1,0 +1,24 @@
+#G                       #W ~ ~~~   ~~~    (       #G 
+#G   ======/   =====     #W      ~~ ) ~~   )       #G    ===  ===       ===
+#G  /  //     /  __ \    #W        )~ #r,.#W~ (   (#G      //   ||   \\   //   
+#G    //     |  |  | |   #W       _#r,-"####`-^  #W  ) #G   ||    ||   ||   ||==:
+#G    ||     |  |  | |   #W     ,#D###########r`W='#D###W`.#W () #G   ||    ||   ||   ||       
+#G     \\_//  \  -- /    #W    ,#D#######################D###W:#r,=.   #G  ||   ||  ||    \\===
+#G      \_/    =====     #W   /.#D###W,".#D#####W,".#D###########r"#W##\  #G #ov2.3.5#G   
+#W  ,-.   _,-= /"._  ,-. #w ,"   #W   `:'   `:#D#####W[JW] ,.  #G  
+#W,"   `,"    `=._ `"   -#w; #G  The         #W\#D#####W;"' V  \#W            __,-.     ,-=.
+#W     /        " `-. #w  /  #G  Tales of    #W `"       `-.#W__,-""._,"     "--,"    >-=-
+#W  ,-"`.            #w _'   #G  Middle Earth#w            "._      #W`       _/
+                 _,"      #y           __        #w       "=.".
+              _,"         #y        _,'  `-.     #w           `._,=-._    _,-.      
+  _._   ,"._,"            #y      ,'_,'Y`-. `.   #w                   "-."    \,-.  
+-"   `-"                  #y     / / ,'   `.  \  #w                               `-
+                          #y    / / /       \  \ #w  One Ring to rule them all,
+Maintained by darkgod     #y   f f f         l  l#w   One Ring to find them.
+ #o darkgod@t-o-m-e.net     #y   t t t         j  j                            
+                          #y    \ \ \       /  / #w  One Ring to bring them all     
+ #ohttp://www.t-o-m-e.net   #y     \ \ \._   /  /#w and in the Darkness bind them.
+                           #y     `_`-._J-'  /         
+                           #y       `-.___,-'        
+        In the Land of Mordor, where the Shadows lie. [J.R.R. Tolkien]
+.

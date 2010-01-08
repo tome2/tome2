@@ -1,0 +1,38 @@
+|||||oy
+~~~~~01|Gods
+#####RThe Guide to the Gods.
+
+#####G1. Introduction
+        Everybody likes to have a little helping hand now and then.  What
+could be better than having a god on your side?  But it's not quite that easy.
+The gods won't help just any mortal who calls for help.  You have to give them
+a little something too.
+
+#####G2. How Do I Get in on This?
+        When you start a character, you get a choice of whether or not you
+wish to begin worshipping a God (unless you're something like a priest - they
+*must* start with a God to worship). If you do choose to be a follower of one
+of the Gods, you will gain certain abilities provided you do not do things
+that displease them. The measure of how happy your God is with you is your
+Piety - the Pt stat is your measure of Piety. Different actions will allow you
+to gain or lose Piety over time. You can change your mind about whom (if 
+anyone) to worship during the game by finding an *****tome_faq.txt*04[altar] of that God.
+
+#####G3. What about spells?
+God-granted spells are also known as prayers, and are cast using Piety instead
+of Mana. God-spells can be increased in level by improving either your Prayer
+or Spell-power skill. The chance of successfully invoking a prayer depends
+on the Prayer skill and your wisdom.
+
+Each God also grants access to standard magical spell schools; which school(s)
+vary depending on the Gods' individual preferences. Spells from these schools
+are cast using Mana, not Piety; and success depends on your intelligence, not
+your wisdom.
+
+#####G4. So, Who Are These Gods?
+        In ToME, there are five Gods you may choose to worship, being:
+1. *****g_eru.txt*0[Eru Iluvatar] - the father of the Valar.
+2. *****g_manwe.txt*0[Manwe Sulimo] - the second strongest of the Valar (Morgoth was the strongest).
+3. *****g_yavann.txt*0[Yavanna Kementari] - the Earth Queen who created plants and animals.
+4. *****g_tulkas.txt*0[Tulkas] - another of the Valar, Tulkas values strength and courage.
+5. *****g_melkor.txt*0[Melkor Bauglir] - the Dark Enemy himself, once the most powerful of the Valar.

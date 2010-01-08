@@ -1,0 +1,62 @@
+|||||oy
+~~~~~01|Yavanna
+~~~~~02|Gods|Yavanna
+#####R === Yavanna Kementari===
+
+Yavanna, the Giver of Fruits, created all plants and animals and awakened the
+Ents to protect the forests of Arda. Kementari, Queen of the Earth, is her
+surname. Her most faithful followers are the *****c_druid.txt*0[Druids].
+
+#####GThe benefits of Worshipping Yavanna
+1. As you increase your piety, Yavanna will grant you the ability to pass
+   trees while praying.
+2. She makes you regenerate faster while praying on grass.
+3. She likes it when you kill nonliving creatures, undead or demons.
+4. She likes it if you charm animals (except evil ones).
+5. Yavanna likes Ents.
+
+#####GThe disadvantages of Worshipping Yavanna
+1. Your piety slowly decreases with time, whether you are praying or not.
+2. She doesn't like it if you kill monsters while praying.
+3. She hates it if you kill animals while praying.
+4. She hates it if you hurt your animal pets.
+5. She hates it if you burn or destroy trees with magic or allow monsters to
+   do so.
+6. She will completely abandon you if you wear The One Ring.
+~~~~~03|Yavanna|Prayers
+#####GYavanna's Magic
+Worshipping Yavanna gives the adventurer access to a set of special spells
+that come directly from the hands of Yavanna. These spells use your piety to
+cast rather than your spellpoints, and the level of spells that Yavanna will
+permit you to use is determined by your Prayer skill - how skillful you are
+in asking for her help without offending her!
+
+There is a special book called the "Forest Tome of Yavanna" which contains
+instructions for the procedure for each of the prayers Yavanna will grant.
+There are five prayers all told, which are:
+1. [[[[[BCharm Animal] (Level 1)
+   Tries to tame animals in a zone around your target.
+2. [[[[[BGrow Grass] (Level 10)
+   Creates a floor of grass around you. While on grass and praying,
+   a worshipper of Yavanna will know a greater regeneration rate.
+3. [[[[[BTree Roots] (Level 15)
+   Creates roots deep in the floor from your feet, making you more stable and
+   able to do better attacks, but preventing any movement (even teleportation).
+   It also makes you recover from stunning almost immediately.
+4. [[[[[BWater Bite] (Level 20)
+   Imbues your melee weapon with a natural stream of water.
+   At level 25, it spreads over a 1 radius zone around your target.
+5. [[[[[BUproot] (Level 35)
+   Awakes a tree to help you battle the forces of Morgoth.
+
+Each of these spells can be increased in level both by improving your Prayer
+skill, and by improving your Spell-power skill.
+
+In addition to her specific magic, Yavanna will also assist with your ability
+to use some magic from the "standard" schools, in relation to how skilled you
+are at Prayer. These schools are as follows:
+    *****m_earth.txt*0[Earth School] at 1/2 the Prayer skill level.
+    *****m_nature.txt*0[Nature School] at 1/2 the Prayer skill level.
+    *****m_water.txt*0[Water School] at 1/2 the Prayer skill level.
+    *****m_tempo.txt*0[Temporal School] at 1/6 the Prayer skill level.
+The spells from these schools are all cast using your normal spellpoints.

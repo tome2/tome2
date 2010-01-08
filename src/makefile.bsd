@@ -1,0 +1,298 @@
+# This is based on Makefile.std but stripped and tuned for FreeBSD (and
+# presumably will cooperate with other BSDs)
+
+# Comment out this line if you don't want the IRC support
+IRC=TRUE
+
+## Installation locations and such
+##
+## LIBDIR, BINDIR and OWNER should be set appropriately for
+## multiuser installations.
+##
+## If you want to keep it private or don't have root privilege
+## required by "make install", set LIBDIR to ./lib/ or an absolute
+## path pointing to your lib directory, and don't run "make install".
+##
+## NOTE: If LIBDIR is set to ./lib/ , you have to cd to parent directory
+## of lib before you start the game.
+##
+
+PREFIX ?= /usr/local
+X11BASE ?= /usr/X11R6
+
+# Where lib/ files goes
+LIBDIR = $(PREFIX)/share/tome
+
+# Where ToME binary goes
+BINDIR = $(PREFIX)/bin
+
+# The game will run suid to this user
+OWNER = root
+GROUP = games
+FILE_MODE = 0664
+
+## Some "system" definitions
+##
+## No changes are needed to compile a version that will run on both
+## X11 and Curses, in debugging mode, with maximal warnings, on many
+## normal Unix machines of the Sun OS variety (non-solaris).
+##
+## To use an "alternative" definition, simply "modify" (or "replace")
+## the definition below with one that you like.  For example, you can
+## change the compiler to "cc", or remove the "debugging" options, or
+## remove the X11 or Curses support, etc, as desired.
+##
+## See also "config.h" and "h-config.h" for important information.
+##
+## Some "examples" are given below, they can be used by simply
+## removing the FIRST column of "#" signs from the "block" of lines
+## you wish to use, and commenting out "standard" block below.
+##
+## This is not intended to be a "good" Makefile, just a "simple" one.
+##
+
+
+# This is my compiler of choice, it seems to work most everywhere
+#
+CC ?= cc
+
+# Standard version (see main-x11.c and main-gcu.c)
+#
+# This version supports both "X11" and "curses" in a single executable.
+#
+# You may have to add various X11 include/library directories to the
+# "INCLUDES", if your machine places files in a weird location
+# (e.g. -I/usr/X11R6/include, as is almost always the case with
+# linux and *BSD). Since we have seen many linux users -- arguably
+# the largest unix population -- confused by this, and adding this
+# usually doesn't hurt, the default rule has been changed to search
+# for /usr/X11R6/include.
+#
+# You may be able to remove "-ltermcap" on some machines (ex: Solaris).
+#
+# You may have to replace "-lcurses" with "-lncurses" to use the
+# "new curses" library instead of the "old curses" library, and
+# you may have to add "-I/usr/include/ncurses" to the "INCLUDES",
+# and/or "-DUSE_NCURSES" to "DEFINES".
+#
+# See "main-gcu.c" and "config.h" for some optional "curses" defines,
+# including "USE_GETCH" and "USE_CURS_SET".  Note that "config.h" will
+# attempt to "guess" at many of these flags based on your system.
+#
+COPTS = -Wall -g
+INCLUDES = -I$(X11BASE)/include
+DEFINES = -DUSE_X11 -DUSE_GCU\
+	-DUSE_EGO_GRAPHICS -DUSE_TRANSPARENCY -DSUPPORT_GAMMA \
+	-DUSE_PRECISE_CMOVIE -DUSE_UNIXSOCK -DFILE_MODE=$(FILE_MODE)
+LIBS = -lX11 -lcurses -L$(X11BASE)/lib
+
+
+### End of configurable section ###
+
+#
+# The "source" and "object" files.
+#
+
+BASESRCS = \
+  main-gtk.c main-gcu.c main-x11.c main-xaw.c main-sdl.c \
+  z-rand.c z-util.c z-form.c z-virt.c z-term.c z-sock.c \
+  variable.c tables.c plots.c util.c cave.c dungeon.c \
+  melee1.c melee2.c modules.c \
+  object1.c object2.c randart.c squeltch.c traps.c \
+  monster1.c monster2.c monster3.c ghost.c \
+  xtra1.c xtra2.c skills.c powers.c gods.c \
+  spells1.c spells2.c \
+  status.c files.c notes.c loadsave.c \
+  cmd1.c cmd2.c cmd3.c cmd4.c cmd5.c cmd6.c cmd7.c \
+  help.c \
+  generate.c gen_maze.c gen_evol.c wild.c levels.c store.c bldg.c \
+  cmovie.c irc.c \
+  wizard2.c init2.c birth.c wizard1.c init1.c main.c
+
+BASEOBJS = \
+  main-gtk.o main-gcu.o main-x11.o main-xaw.o main-sdl.o \
+  z-rand.o z-util.o z-form.o z-virt.o z-term.o z-sock.o \
+  variable.o tables.o plots.o util.o cave.o dungeon.o \
+  melee1.o melee2.o modules.o \
+  object1.o object2.o randart.o squeltch.o traps.o \
+  monster1.o monster2.o monster3.o ghost.o \
+  xtra1.o xtra2.o skills.o powers.o gods.o \
+  spells1.o spells2.o \
+  status.o files.o notes.o loadsave.o \
+  cmd1.o cmd2.o cmd3.o cmd4.o cmd5.o cmd6.o cmd7.o \
+  help.o \
+  generate.o gen_maze.o gen_evol.o wild.o levels.o store.o bldg.o \
+  cmovie.o irc.o \
+  wizard2.o init2.o birth.o wizard1.o init1.o main.o
+
+LUASRCS = \
+  script.c lua_bind.c \
+  w_util.c w_player.c w_z_pack.c w_obj.c w_mnster.c w_spells.c w_quest.c w_play_c.c w_dun.c
+
+TOLUASRCS = \
+  lua/lapi.c lua/lcode.c lua/ldebug.c lua/ldo.c lua/lfunc.c lua/lgc.c \
+  lua/llex.c lua/lmem.c lua/lobject.c lua/lparser.c lua/lstate.c lua/lstring.c \
+  lua/ltable.c lua/ltests.c lua/ltm.c lua/lundump.c lua/lvm.c lua/lzio.c \
+  lua/lauxlib.c lua/lbaselib.c lua/ldblib.c lua/liolib.c lua/lstrlib.c \
+  lua/tolua_lb.c lua/tolua_rg.c lua/tolua_tt.c lua/tolua_tm.c lua/tolua_gp.c \
+  lua/tolua_eh.c lua/tolua_bd.c
+
+LUAOBJS = \
+  script.o lua_bind.o \
+  w_util.o w_player.o w_z_pack.o w_obj.o w_mnster.o w_spells.o w_quest.o w_play_c.o w_dun.o
+
+TOLUAOBJS = \
+  lua/lapi.o lua/lcode.o lua/ldebug.o lua/ldo.o lua/lfunc.o lua/lgc.o \
+  lua/llex.o lua/lmem.o lua/lobject.o lua/lparser.o lua/lstate.o lua/lstring.o \
+  lua/ltable.o lua/ltests.o lua/ltm.o lua/lundump.o lua/lvm.o lua/lzio.o \
+  lua/lauxlib.o lua/lbaselib.o lua/ldblib.o lua/liolib.o lua/lstrlib.o \
+  lua/tolua_lb.o lua/tolua_rg.o lua/tolua_tt.o lua/tolua_tm.o lua/tolua_gp.o \
+  lua/tolua_eh.o lua/tolua_bd.o
+
+#
+# Base sources and objects
+#
+
+SRCS = $(BASESRCS)
+OBJS = $(BASEOBJS)
+
+
+#
+# Compiler options
+#
+
+CFLAGS += $(COPTS) $(INCLUDES) $(DEFINES) -DDEFAULT_PATH=\"$(LIBDIR)\"
+
+
+#
+# Lua support
+#
+
+INCLUDES += -Ilua -I.
+DEFINES += -DUSE_LUA
+SRCS = $(LUASRCS) $(TOLUASRCS) $(BASESRCS)
+OBJS = $(LUAOBJS) $(TOLUAOBJS) $(BASEOBJS)
+
+# Force recreation of stub files when lua source files are updated
+# To be included in dependency rules
+TOLUADEP = $(TOLUA) $(TOLUASRCS) lua/tolua.c lua/tolualua.c
+
+#
+# IRC support
+#
+
+IRC_SERVER=irc.worldirc.org
+IRC_PORT=6667
+IRC_CHANNEL=\#tome
+
+DEFINES += \
+	-DIRC_SERVER=\"$(IRC_SERVER)\" \
+	-DIRC_PORT=\"$(IRC_PORT)\" \
+	-DIRC_CHANNEL=\"$(IRC_CHANNEL)\"
+
+
+# Build the binary. The new base target.
+#
+
+TARGET = tome
+
+TOLUA = ./tolua
+
+default: $(TOLUA) $(TARGET)
+	@echo "*** Note: In order to use the install rule, which now actually"
+	@echo "*** handles the installation of the library dir, you need to edit"
+	@echo "*** this makefile, going to the top and making sure LIBDIR suits"
+	@echo "*** your desired install dir properly. The LIBRARY_DIR you used"
+	@echo "*** to set in config.h is now ignored and obsolete with respect"
+	@echo "*** to this makefile. Note that if you edit this makefile, you may"
+	@echo "*** need to recompile so all the files that reference those defines"
+	@echo "*** notice the changes."
+
+$(TARGET): $(OBJS)
+	$(CC) $(PROFILELDFLAGS) $(LDFLAGS) -o $@ $(OBJS) $(LIBS)
+
+$(TOLUA): $(TOLUAOBJS) lua/tolua.c lua/tolualua.c
+	$(CC) $(CFLAGS) $(PROFILELDFLAGS) $(LDFLAGS) -o $@ $(TOLUAOBJS) lua/tolua.c lua/tolualua.c $(LIBS)
+
+#
+# An install rule.
+#
+mini_install: default
+	cp -f $(TARGET) ..
+
+install: default
+	[ -d $(LIBDIR) ] || mkdir -p $(LIBDIR)
+	[ -d $(BINDIR) ] || mkdir -p $(BINDIR)
+	cp -r ../lib/* $(LIBDIR)
+	chown -R $(OWNER):$(GROUP) $(LIBDIR)
+	chmod -R g+w $(LIBDIR)
+	cp -f $(TARGET) $(BINDIR)/$(TARGET)
+	strip $(BINDIR)/$(TARGET)
+	chown $(OWNER):$(GROUP) $(BINDIR)/$(TARGET)
+	chmod 2755 $(BINDIR)/$(TARGET)
+
+# old-install: $(TARGET)
+#	cp $(TARGET) ..
+
+
+#
+# Clean up old junk
+#
+
+clean:
+	rm -f *.bak *.o lua/*.o  w_*.c
+
+
+#
+# Generate dependancies automatically
+#
+
+depend:
+	makedepend $(INCLUDES) $(DEFINES) -D__MAKEDEPEND__ $(SRCS)
+
+.c.o:
+	$(CC) $(CFLAGS) -c -o $*.o $*.c
+
+
+#
+# Quests
+#
+plots.o: q_rand.c q_main.c q_one.c q_ultrag.c q_ultrae.c \
+	q_thief.c q_hobbit.c q_nazgul.c q_troll.c q_wight.c \
+	q_spider.c q_poison.c \
+	q_eol.c q_nirna.c q_invas.c \
+	q_betwen.c \
+	q_narsil.c q_shroom.c q_thrain.c q_wolves.c q_dragons.c q_haunted.c q_evil.c
+
+#
+# Lua library compilation rules
+#
+
+w_mnster.c: monster.pkg $(TOLUADEP)
+	$(TOLUA) -n monster -o w_mnster.c monster.pkg
+
+w_player.c: player.pkg $(TOLUADEP)
+	$(TOLUA) -n player -o w_player.c player.pkg
+
+w_play_c.c: player_c.pkg $(TOLUADEP)
+	$(TOLUA) -n player_c -o w_play_c.c player_c.pkg
+
+w_z_pack.c: z_pack.pkg $(TOLUADEP)
+	$(TOLUA) -n z_pack -o w_z_pack.c z_pack.pkg
+
+w_obj.c: object.pkg $(TOLUADEP)
+	$(TOLUA) -n object -o w_obj.c object.pkg
+
+w_util.c: util.pkg $(TOLUADEP)
+	$(TOLUA) -n util -o w_util.c util.pkg
+
+w_spells.c: spells.pkg $(TOLUADEP)
+	$(TOLUA) -n spells -o w_spells.c spells.pkg
+
+w_quest.c: quest.pkg $(TOLUADEP)
+	$(TOLUA) -n quest -o w_quest.c quest.pkg
+
+w_dun.c: dungeon.pkg $(TOLUA)
+	$(TOLUA) -n dungeon -o w_dun.c dungeon.pkg
+
+# DO NOT DELETE THIS LINE - make depend depends on it.

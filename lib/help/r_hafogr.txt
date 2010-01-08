@@ -1,0 +1,31 @@
+~~~~~01|Half-Ogre
+~~~~~02|Races|Half-Ogre
+#####R=== Half-Ogres ===
+
+#####GDescription
+Half-Ogres are a crossbreed between a human and an ogre. They are big, bad, and 
+stupid. For warriors, they have all the necessary attributes, and they can even
+become priests: after all, they are related to Ogre Magi, from whom they have
+learned the skill of setting trapped runes once their level is high enough. Like
+orcs, they resist darkness, and like trolls, they have their strength sustained.
+
+#####GStat Modifiers
+Strength        +3   
+Intelligence    -1   
+Wisdom          -1   
+Dexterity       -1   
+Constitution    +3   
+Charisma        -3       
+Hit Dice Sides  12         
+Exp Penalty     +30%
+
+#####GRacial Skill Modifiers:
+#####BSkill                Start Mod    Skill Point Gains Mod
+Combat                  
+  Weaponmastery         2.000           [0.000]
+Sneakiness             -0.100           [0.000]
+  Stealth              -2.000           [0.000]
+  Disarming            -0.300           [0.000]
+Magic                   
+  Magic-Device         -0.500           [0.000]
+Spirituality           -2.500           [0.000]

@@ -1,0 +1,17 @@
+***************
+*** 3198,3199
+-               /* Try the "20x20.bmp" file */
+-               path_build(filename, 1024, ANGBAND_DIR_XTRA, "graf/20x20.bmp");
+--- 3198,3199 -----
++               /* Try the "16x16.bmp" file */
++               path_build(filename, 1024, ANGBAND_DIR_XTRA, "graf/16x16.bmp");
+***************
+*** 3201
+-               /* Use the "20x20.bmp" file if it exists */
+--- 3201 -----
++               /* Use the "16x16.bmp" file if it exists */
+***************
+*** 3208
+-                       pict_wid = pict_hgt = 20;
+--- 3208 -----
++                       pict_wid = pict_hgt = 16;

@@ -1,0 +1,144 @@
+# File: t_minas.txt
+
+# Minas Anor: The Royal City of Gondor
+# Created by Mynstral (mynstral@thehelm.com)
+
+# Completed: 22/06/01
+
+# Between gate to gondolin -- need to finish the quest
+F:Z:63:3
+
+# Default for Quest 24 = entrance is quest entrance
+F:w:8:3:0:0:0:0:0:24
+
+#################### Quest 16 - The last Alliance ####################
+
+# Quest 16 finished, reward is a between gate
+?:[EQU $QUEST16 5]
+F:Z:176:3:0:0:0:0:0:0
+
+?:1
+
+############### Quest 24 - Haunted House finished = house ###############
+?:[EQU $QUEST24 2]
+F:w:74:3:0:0:0:0:0:7
+?:[EQU $QUEST24 5]
+F:w:74:3:0:0:0:0:0:7
+?:1
+
+#################### Buildings ####################
+
+# Library
+F:a:74:3:0:0:0:0:0:60
+
+# Castle
+F:b:74:3:0:0:0:0:0:14
+
+# Casino
+F:d:74:3:0:0:0:0:0:15
+
+# Inn
+F:e:74:3:0:0:0:0:0:11
+
+# Beastmaster Shanty
+F:f:74:3:0:0:0:0:0:16
+
+# Fighters hall
+F:g:74:3:0:0:0:0:0:17
+
+# Tower of Magery
+F:h:74:3:0:0:0:0:0:18
+
+# Inner temple
+F:i:74:3:0:0:0:0:0:19
+
+# Paladin guild
+F:j:74:3:0:0:0:0:0:20
+
+# Ranger guild
+F:k:74:3:0:0:0:0:0:21
+
+# Thunderlord's Hide
+F:l:74:3:0:0:0:0:0:22
+
+# Castle: Plot Minas Anor
+F:B:75:3:0:0:0:0:0:5
+
+# Merchant guild
+F:m:74:3:0:0:0:0:0:56
+
+# Library Quest
+F:x:63:3
+
+?:[EQU $QUEST"Library quest" 1]
+F:x:8:3:0:0:0:0:0:"Library quest"
+?:1
+
+############### Town Layout ###############
+
+D:######################################################################################################################################################################################################
+D:#^^########------------------                                                                     @@@@@@@                   @@@@@@@@@                                                                #
+D:#^^^------############----------             ^                                                   @@VVVVV@@                 @@VVVVVVV@@@@@@@                                       ,,,                #
+D:#^^^----------###----#######-------         ^^^^^                                                @VVVVVVV@@@@@            @@VV@@@@@@VVVVVV@@@@                                   ,,                  #
+D:#^^----ssss-----###--------####------        ^^^^^^                                              @VVVVVV@@VVV@@@          @VV@@    @@@@@@VVVV@@                                 ,,                   #
+D:#^^^---StSS-------###--#ssss--###-------      ^^^^^^^^                                           @@VVVVVVVV@VVV@@@@@@@@ @@@V@@          @@@@VV@@@@                              ,                    #
+D:#^^----ssss----OO---##--#StSS---####------     ^^^^^^^^                                           @@V@V,@@@@@@VVVVVVVV@@@VVV@              @@VVVV@@                            ,,                    #
+D:#^^----x#a#-----OOO--##--#sssss----###------    ^^^^^^^^                                           @@@@@     @@@@@@@@VVVVV@@@               @@@@VV@@@                        ,,,                     #
+D:#^ ---------------OO--###-#m#7#------###-----   ^^^^^^^^^^                                                           @VVV@@                    @@VVV@@                       ,O,                     #
+D:#^ StSSSS-----ss---OO---##-----OOOOO---###----   ^^^^^^^^^^^                                                          @@@                       @@VVV@@                      OO                      #
+D:#^^ssssss----Ssss---OOO--##---OOOOOOOO---##----   ^l^^^^^^^                                                                                     @@VVV@                      OO                       #
+D:#^ ####9#---sstSss---OOO--##-OOOOOOOOOOO--##----    ^^^^^                                                                                      @@VVV@@                     OO                        #
+D:#^^^-------##sssSss---OOO--#OOO--s--OOOOO--###---                                                                              @@@@@@@@@@     @@VVV@@                     OO                         #
+D:#^^^######---##ssh--s--OOO-OOO--StS--OOOOO---##---                                                                            @@VVVVVVVV@@@@@@@V@@@@                     OO                          #
+D:#^^^^----###---##--ssS--OOOOO#--ssss--OOOOOO--##---                                                                           @VVVVVVVVVVVV@@VV@@      OOO              OO                           #
+D:#^^--------###----ssSs#--OOO-##-#####--OOOOOO--##---            ----                                                          @VVVV@@@@VVVVVVV@@      OOOOO         OOOOO                            #
+D:#^ ----------##--#stsi--OOOO--#---------OOOOOO--#------       --------                                                       @@VVV@@  @@VVV@@@@       OO  OO       OO                                #
+D:#^^-----------###-#s#--OOOOOO-##-#sssss--OOOOOO,#####---     -----------                                                    @@VVV@@    @@@@@         OO-   OOOOOOOOO                                 #
+D:#^^-------------##-#--OOO-OOO--#--ssssss--OOOOO,,,,,#----  ---ssssssss---                                                   @VVV@@                 -OO                                               #
+D:#^^--------------#---OOO-t-OOO-##-#SStSS--OOOOOO,##,#---------ssssssss----                                                  @VV@@                --OO-                                               #
+D:#^^^--#----------##-OOO-sssOOO--#--ssssss-OOOOOO--#,#####-----SStSSSSS-----                                                @@VV@                --OO-                                                #
+D:#^^^--#-----------#OOO-##4##OOO-##-ssssss--OOOOOO-#,,######---ssssssss--O---                                              @@VVV@                -OO--                                                #
+D:#^^--###----------OOO-------OOO--#-####2#--OOOOOO-##,#k#,,##--ssssssss--O----                                             @VVV@@               --O--                                                 #
+D:#^^^-###---------OOO#--SSStS-OOO-#---------OOOOO---#,,,,,,,#--ssssssss--O-----                                           @@VV@@               --OO-                                                  #
+D:#^^-#####-------OOO-#--sssss-OOO-#--ssss--OOOOO--T-#,-----,#--#####d##--O------                                          @VVV@               --OO--                                                  #
+D:#^^#######------OOO-##-###j#-OOO-##-ssss--OOOOO-TT-#------,#-------,,,,,O------                                         @@VV@@              --OO--                                                   #
+D:#^^^########----OOO--#-------OOO--#-StSS--OOOOO-TT-#-----,,#------------O-------                                        @VVV@@             --OO--                                                    #
+D:#^^############-OOO--##-StSSS-OOO-#-ssss--OOOOO--T-#----,,##---ssssssss-O--------                                      @@VV@@             --OOO--                                                    #
+D:#^^^#########---OOO---#-sssss-OOO-#-ssss--OOOOOO---#,,,,,##----SSSSStSS-O---------                                   @@@VVV@             --OOO--                                                     #
+D:#^^#####B###----OOO---#-###6#-OOO-#-##g#---OOOOOO--#######-----ssssssss-O----------                                  @VVVV@@           ---OOO--                                                      #
+D:#^^^#######-----OOO---#-------OOO-#---------OOOOOOOOOOOOOOOOO--###e####-O-----------                                @@VVV@@         ------OO--                                                       #
+D:#^^#######bOOOOOOOO-^^^^^^^^^^MMM^^^^^^^^^^^^OOOOOOOOOOOOOOOOOOOOOOOOOOOO-----------                              @@@VVV@@         ---OOOOOO--                                                       #
+D:#^^#######bOOOOOOO############III############^OOOOOOOOOOOOOOOOOOOOOOOOOOOOO---------                             @@VVVV@@         ---OOOOOO--                                                        #
+D:#^ #######bOOOOOOO############III############^OOOOOOOOOOOOOOOOOOOOOOOOOOOOOO---------                            @VVVV@@        ----OOOOOO----                                                       #
+D:#^ #######bOOOOOOOO-^^^^^^^^^^MMM^^^^^^^^^^^^OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO-------                            @VVV@@      ------OOOO------                                                        #
+D:#^^^######Z-----OOO---#-sSss--OOO-#---------OOOOOOOOOOOOOOOOO-----------OOOOOOO------                 ---------##@VVV@## --------OOOOO-----                                                          #
+D:#^^#########----OOO---#-sSss--OOO-#-sssss--OOOOOO--#######--------sssss-O-OOOOO-----                 --OOOO-----#######--------OOOOOO-----                                                           #
+D:#^^##########---OOO---#-stss--OOO-#-SStSS-OOOOOO---####,,##-------SStSS-O-OOOOO----                 --OOOOOOOOOOOOOOOOOOOOOOOOOOOOOO-----                                                            #
+D:#^^############-OOO--##-sSss--OOO-#-sssss-OOOOO--T-##k#,,,##------sssss-O--OOOOO---                --OOOOOOOOOOOOOOOOOOOOOOOOOOOOOO-----                                                             #
+D:#^^#########----OOO--#--####-OOO--#-sssss-OOOOO-TT-#,,,,-,,#------sssss-O---OOOO---               --OOOOO-OOOOOOOOOOOOOOOOOOOOOOO-------                                                             #
+D:#^^#######------OOO-##-------OOO-##-###3#-OOOOO-TT-#,-----,#------###0#-O---OOOOO---             --OOOO---------#######---------------                                                               #
+D:#^^-#####-------OOO-#--Ssss--OOO-#--------OOOOO--T-#,-----,#------------O----OOOO----           --OOOO---------##@VVV@##-----------                                                                  #
+D:#^^^-###---------OOO#-#stss--OOO-#-ssssss--OOOOO---#,----,,#----ssssss--O-----OOOO----        ---OOOO---         @VVV@@                                                                              #
+D:#^^--###----------OOO--#sSs-OOO--#-StSSSS--OOOOOO-##,-,,,,##----SStSSS--O------OOOO----      --OOOOO----         @VVV@@                                                                              #
+D:#^^---#-----------#OOO--###-OOO-##-ssssss--OOOOOO-#,,,,####-----ssssss--O-------OOOO----    --OOOOO----          @VVVV@                                                                              #
+D:#^^^--#----------##-OOO----OOO--#--###5##-OOOOOO--#,#####-------ssssss-OO--------OOOO--------OOOOO----           @@VVV@@@                                                 @@@@                       #
+D:#^^^-------------#---OOO---OOO-##---------OOOOOO,##,#-----------####1#-O----------OOOO----OOOOOO-----             @@VVVV@@@                                             @@@@@@                       #
+D:#^^-------------##----OOO-OOO--#--ss------OOOOO,,,,,#------------------O-----------OOOOOOOOOOO-----                @@@VVVV@@                                      @@@@@@@@@V@@@                      #
+D:#^^^----------###--ss--OOOOOO-##-ssSs----OOOOOO,#####------------------O-------- ---OOOOOOOOO---                     @@VVVV@@                    @@@@@          @@@@@@@@@@@@@                        #
+D:#^^^---------##---ssSs--OOOO--#--ssts#--OOOOOO--#------ ------ssssss--OO------    ---OOOOO-----                       @@VVVV@@@                @@@VVV@@@        @@@V@@@@@@@@                         #
+D:#^^--------###---sstss#--OOO-##-ssSs#--OOOOOO--##-----    ----StSSSS--O------      -----------                         @@@VVVV@@@@@         @@@@VVVVVVV@@   @@@@@V@@V@@@V@@                          #
+D:#^^------###-----#Sss#--OOOOO#--sSsf--OOOOOO--##-----      ---ssssss--O-----        -------                              @@@VVVVVV@@@@@@@@@@@VVVVV@@@VVV@@@@@VVVV@@@@ @@@@                           #
+D:#^^^######---ss---#s#--OOO-OOO--Ss#--OOOOO---##-----        --###w##-OO-----                                               @@VVVVVVVVVVVVVVVVV@@@@@ @@@VVVVVVV@@@@                                   #
+D:#^^^-------ssssS---#--OOO--#OOO--#--OOOOO--###-----          --------O-----                                                 @@@@@@@@@@@@@@@@@@@       @@@@@@@@@                                      #
+D:#^^-sssss-#ssstss----OOO--##-OOO---OOOOO--##------            ------OO----                                                                                                                           #
+D:#^^-SSStS--#sSsss#--OOO--##---OOOOOOOO---##------               ----O----                                                                                                                            #
+D:#^^-sssss---#ss##--OO---##--X--OOOOO---###------                ---O---                                                                                                                              #
+D:#^^^#####----##---OO--###--XXX-OOO---###------                    ---                                                                                                                                #
+D:#^^^------------OOO--##---XXX#-----###-----                                                                                                                                                          #
+D:#^^--SStSS-----OO---##--XX###---####-----                                                                                                                                                            #
+D:#^^^-sssss--------###--###----###------                                                                                                                                                              #
+D:#^^--#####------###--------####------                                                                                                                                                                #
+D:#^^^----------###----#######------                                                                                                                                                                   #
+D:#^^^------############----------                                                                                                                                                                     #
+D:#^^########-----------------                                                                                                                                                                         #
+D:######################################################################################################################################################################################################

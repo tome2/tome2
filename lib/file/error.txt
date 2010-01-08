@@ -1,0 +1,67 @@
+65
+******** BUFFER LINE *********************************** DO NOT REMOVE *******
+What game do you think you are playing anyway?
+Aivan sairas kaveri kun tuollaista aikoo puuhata!
+Insufficient data for further analysis.
+Non sequitur. Your facts are uncoordinated.
+Type '?' or '\' for help.
+Invalid command.
+What?
+WHAT?!
+You must be out of your mind!
+You're killing me.
+Are you sure?
+Are you sure you know what you are doing?
+Aww, come on!
+That makes no sense.
+I beg your pardon.
+Degreelessness mode on.
+Degreelessness mode off.
+Syntax error.
+That doesn't compute.
+I don't understand you.
+???
+Sure. Piece of cake.
+Error.
+You can't do that!
+Help!
+Come again?
+Sorry?
+Sorry, I'm not sure I understand you.
+What's your point?
+Unknown command.
+Command not found.
+An unexpected error has occurred because an error of type 42 occurred.
+Somehow, you think that would never work.
+Welcome to level 42.
+Don't be ridiculous!
+lfae aierty agnxzcg?
+Soyha, azho bouate!
+I don't fully understand you.
+Why would anybody want to do THAT?
+Yes, yes, now tell me about your childhood.
+Satisfied?
+Something is wrong here.
+There's something wrong with YOU.
+You leap up 9' and perform a miraculous 5xSpiral in the air.
+Aw, shaddap!
+Shut up, smartass!
+I see little point in doing that.
+Oh, really?
+Very funny.
+You've got to be kidding!
+I'm not amused.
+I must have misheard you.
+Nothing happens.
+Where did you learn THAT command?
+When all else fails, read the instructions.
+Why not read the instructions first?
+Cut it out!
+Nothing interesting happens.
+Just how exactly am I supposed to do THAT?
+That's morally wrong and I won't do it.
+I'm not gonna take this abuse.
+AAAAAAAAAAAAAHHHHHHHHHHHHHHHRRRRRRRRRRRGGGGGGGGGGG!
+No more, if you value your character's life!
+Give it up, guy.
+Disk error. (a)bort, (r)etry, (f)ail?

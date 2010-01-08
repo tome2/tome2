@@ -1,0 +1,29 @@
+27
+******** BUFFER LINE *******************
+sniggers.
+grovels.
+picks his nose.
+pines for his precious.
+searches his pockets.
+eats some slimy creatures.
+mutters: 'My precious, wheres my precious?'
+shouts: 'No Master Hobbitsisisisis!'
+cries: 'The ring was ours for agesisisisis!'
+says: 'Smeagol sneeking! ME! Shneekingsisis!'
+screams: 'Nasty Hobbitsisisisis...'
+says: 'Come on, quickly, follow Smeagol'
+says: 'Every way is guarded, silly foolsis!'
+says: 'Nasty Bagginis, stole my precious.'
+says: 'She will kill them oh yes she will precious.'
+whines: 'Weees wants some fishises.'
+says: 'Whats has its got in its pocketses, hmmm?'
+whimpers: 'We've lost itses we have.'
+says: 'He'll eastus all the world if he getsitses it.'
+says: 'No food, no rest; Smeagol a SNEAK!'
+says: 'What a dainty little dish you will be for her.'
+says: 'Hobbitses always SOOOO Polite.'
+screams: 'Stop, Thief!'
+says: 'Makeses him drop his weapon precious.'
+grovels: 'He has only four fingers on the black hand.'
+growls: 'Not nice Hobbits, not sensible!'
+says: 'If you findesis it, give it us back.'

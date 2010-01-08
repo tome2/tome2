@@ -1,0 +1,3525 @@
+/* File: player.pkg */
+
+/*
+ * Purpose: Lua interface defitions for the player.
+ * To be processed by tolua to generate C source code.
+ */
+
+$#include "angband.h"
+
+/** @typedef cptr
+ * @note String
+ */
+typedef char* cptr;
+/** @typedef errr
+ * @note Number
+ */
+typedef int errr;
+/** @typedef bool
+ * @note Boolean
+ */
+typedef unsigned char bool;
+/** @typedef byte
+ * @note Number
+ */
+typedef unsigned char byte;
+/** @typedef s16b
+ * @note Number
+ */
+typedef signed short s16b;
+/** @typedef u16b
+ * @note Number
+ */
+typedef unsigned short u16b;
+/** @typedef s32b
+ * @note Number
+ */
+typedef signed int s32b;
+/** @typedef u32b
+ * @note Number
+ */
+typedef unsigned int u32b;
+
+/** @def PY_MAX_LEVEL
+ * @note Maximum level
+ */
+#define PY_MAX_LEVEL    50
+
+/** @var player_exp[PY_MAX_LEVEL]
+ * @brief Number
+ * @note Array of experience points per level.
+ */
+extern s32b player_exp[PY_MAX_LEVEL];
+
+/** @name Attributes
+ * @brief Indexes of the various "stats" (hard-coded by savefiles, etc).
+ * @{ */
+/** @def A_STR
+ * @note Strength */
+#define A_STR   0
+
+/** @def A_INT
+ * @note Intelligence */
+#define A_INT   1
+
+/** @def A_WIS
+ * @note Wisdom */
+#define A_WIS   2
+
+/** @def A_DEX
+ * @note Dexterity */
+#define A_DEX   3
+
+/** @def A_CON
+ * @note Constitution */
+#define A_CON   4
+
+/** @def A_CHR
+ * @note Charisma */
+#define A_CHR   5
+/** @} */
+
+/* Ugly hack, should be in foo-info, the subrace saved to the savefile */
+/** @def SUBRACE_SAVE */
+#define SUBRACE_SAVE    9
+
+
+/** @name Sex
+ * @brief Player sex constants (hard-coded by save-files, arrays, etc)
+ * @{ */
+/** @def SEX_FEMALE */
+#define SEX_FEMALE	      0
+
+/** @def SEX_MALE */
+#define SEX_MALE		1
+
+/** @def SEX_NEUTER */
+#define SEX_NEUTER	      2
+
+
+/** @def MAX_SEXES */
+#define MAX_SEXES	    3
+/** @} */
+
+/** @name Race flags
+ * @{ */
+/** @def PR1_EXPERIMENTAL
+ * @note Is still under developemnt
+ */
+#define PR1_EXPERIMENTAL	0x00000001L
+/* XXX */
+/** @def PR1_RESIST_BLACK_BREATH
+ * @note Resist black breath
+ */
+#define PR1_RESIST_BLACK_BREATH 0x00000004L
+/** @def PR1_NO_STUN
+ * @note Never stunned
+ */
+#define PR1_NO_STUN	     0x00000008L
+/** @def PR1_XTRA_MIGHT_BOW
+ * @note Xtra might with bows
+ */
+#define PR1_XTRA_MIGHT_BOW      0x00000010L
+/** @def PR1_XTRA_MIGHT_XBOW
+ * @note Xtra might with xbows
+ */
+#define PR1_XTRA_MIGHT_XBOW     0x00000020L
+/** @def PR1_XTRA_MIGHT_SLING
+ * @note Xtra might with slings
+ */
+#define PR1_XTRA_MIGHT_SLING    0x00000040L
+/** @def PR1_AC_LEVEL
+ * @note More AC with levels
+ */
+#define PR1_AC_LEVEL	    0x00000080L
+/** @def PR1_HURT_LITE
+ * @note Hurt by light
+ */
+#define PR1_HURT_LITE	   0x00000100L
+/** @def PR1_VAMPIRE
+ * @note Vampire
+ */
+#define PR1_VAMPIRE	     0x00000200L
+/** @def PR1_UNDEAD
+ * @note Undead
+ */
+#define PR1_UNDEAD	      0x00000400L
+/** @def PR1_NO_CUT
+ * @note no cuts
+ */
+#define PR1_NO_CUT	      0x00000800L
+/** @def PR1_CORRUPT
+ * @note hack-- corrupted
+ */
+#define PR1_CORRUPT	     0x00001000L
+/** @def PR1_NO_FOOD
+ * @note little gain from food
+ */
+#define PR1_NO_FOOD	     0x00002000L
+/** @def PR1_NO_GOD
+ * @note cannot worship
+ */
+#define PR1_NO_GOD	      0x00004000L
+/* XXX */
+/** @def PR1_ELF
+ * @note Is an elf
+ */
+#define PR1_ELF		 0x00010000L
+/** @def PR1_SEMI_WRAITH
+ * @note Takes damage when going in walls
+ */
+#define PR1_SEMI_WRAITH	 0x00020000L
+/** @def PR1_NO_SUBRACE_CHANGE
+ * @note Impossible to change subrace
+ */
+#define PR1_NO_SUBRACE_CHANGE   0x00040000L
+/* XXX */
+/** @def PR1_ANTIMAGIC
+ * @note antimagic ... hack
+ */
+#define PR1_ANTIMAGIC	   0x00100000L
+/** @def PR1_MOLD_FRIEND
+ * @note Not attacked by molds wielded
+ */
+#define PR1_MOLD_FRIEND	 0x00200000L
+/** @def PR1_GOD_FRIEND
+ * @note Better grace
+ */
+#define PR1_GOD_FRIEND	  0x00400000L
+/* XXX */
+/** @def PR1_INNATE_SPELLS
+ * @note KNown all spells, only need books
+ */
+#define PR1_INNATE_SPELLS       0x01000000L
+/* XXX */
+/* XXX */
+/** @def PR1_EASE_STEAL
+ * @note Gain xp by stealing
+ */
+#define PR1_EASE_STEAL	  0x08000000L
+/* XXX */
+/* XXX */
+/* XXX */
+/* XXX */
+
+/* XXX */
+/** @def PR2_ASTRAL
+ * @note Is it an astral being coming from th halls of mandos ?
+ */
+#define PR2_ASTRAL	      0x00000002L
+/* XXX */
+/** @} */
+
+/** @name Notice flags
+ * @brief Bit flags for the "p_ptr->notice" variable
+ * @{ */
+/** @def PN_COMBINE
+ * @note Combine the pack
+ */
+#define PN_COMBINE      0x00000001L
+/** @def PN_REORDER
+ * @note Reorder the pack
+ */
+#define PN_REORDER      0x00000002L
+/* xxx (many) */
+/** @} */
+
+
+/** @name Update flags
+ * @brief Bit flags for the "p_ptr->update" variable
+ * @{ */
+/** @def PU_BONUS
+ * @note Calculate bonuses
+ */
+#define PU_BONUS	0x00000001L
+/** @def PU_TORCH
+ * @note Calculate torch radius
+ */
+#define PU_TORCH	0x00000002L
+/** @def PU_BODY
+ * @note Calculate body parts
+ */
+#define PU_BODY	 0x00000004L
+/** @def PU_SANITY
+ * @note Calculate csan and msan
+ */
+#define PU_SANITY       0x00000008L
+/** @def PU_HP
+ * @note Calculate chp and mhp
+ */
+#define PU_HP	   0x00000010L
+/** @def PU_MANA
+ * @note Calculate csp and msp
+ */
+#define PU_MANA	 0x00000020L
+/** @def PU_SPELLS
+ * @note Calculate spells
+ */
+#define PU_SPELLS       0x00000040L
+/** @def PU_POWERS
+ * @note Calculate powers
+ */
+#define PU_POWERS       0x00000080L
+/* xxx (many) */
+/** @def PU_UN_VIEW
+ * @note Forget view
+ */
+#define PU_UN_VIEW      0x00010000L
+/* xxx (many) */
+/** @def PU_VIEW
+ * @note Update view
+ */
+#define PU_VIEW	 0x00100000L
+/** @def PU_MON_LITE
+ * @note Update monster light
+ */
+#define PU_MON_LITE     0x00200000L
+/* xxx */
+/** @def PU_MONSTERS
+ * @note Update monsters
+ */
+#define PU_MONSTERS     0x01000000L
+/** @def PU_DISTANCE
+ * @note Update distances
+ */
+#define PU_DISTANCE     0x02000000L
+/* xxx */
+/** @def PU_FLOW
+ * @note Update flow
+ */
+#define PU_FLOW	 0x10000000L
+/* xxx (many) */
+/** @} */
+
+
+/** @name Redraw flags
+ * @brief Bit flags for the "p_ptr->redraw" variable
+ * @{ */
+/** @def PR_MISC
+ * @note Display Race/Class
+ */
+#define PR_MISC	 0x00000001L
+/** @def PR_TITLE
+ * @note Display Title
+ */
+#define PR_TITLE	0x00000002L
+/** @def PR_LEV
+ * @note Display Level
+ */
+#define PR_LEV	  0x00000004L
+/** @def PR_EXP
+ * @note Display Experience
+ */
+#define PR_EXP	  0x00000008L
+/** @def PR_STATS
+ * @note Display Stats
+ */
+#define PR_STATS	0x00000010L
+/** @def PR_ARMOR
+ * @note Display Armor
+ */
+#define PR_ARMOR	0x00000020L
+/** @def PR_HP
+ * @note Display Hitpoints
+ */
+#define PR_HP	   0x00000040L
+/** @def PR_MANA
+ * @note Display Mana
+ */
+#define PR_MANA	 0x00000080L
+/** @def PR_GOLD
+ * @note Display Gold
+ */
+#define PR_GOLD	 0x00000100L
+/** @def PR_DEPTH
+ * @note Display Depth
+ */
+#define PR_DEPTH	0x00000200L
+/****/
+/** @def PR_HEALTH
+ * @note Display Health Bar
+ */
+#define PR_HEALTH       0x00000800L
+/** @def PR_CUT
+ * @note Display Extra (Cut)
+ */
+#define PR_CUT	  0x00001000L
+/** @def PR_STUN
+ * @note Display Extra (Stun)
+ */
+#define PR_STUN	 0x00002000L
+/** @def PR_HUNGER
+ * @note Display Extra (Hunger)
+ */
+#define PR_HUNGER       0x00004000L
+/** @def PR_PIETY
+ * @note Display Piety
+ */
+#define PR_PIETY	0x00008000L
+/** @def PR_BLIND
+ * @note Display Extra (Blind)
+ */
+#define PR_BLIND	0x00010000L
+/** @def PR_CONFUSED
+ * @note Display Extra (Confused)
+ */
+#define PR_CONFUSED     0x00020000L
+/** @def PR_AFRAID
+ * @note Display Extra (Afraid)
+ */
+#define PR_AFRAID       0x00040000L
+/** @def PR_POISONED
+ * @note Display Extra (Poisoned)
+ */
+#define PR_POISONED     0x00080000L
+/** @def PR_STATE
+ * @note Display Extra (State)
+ */
+#define PR_STATE	0x00100000L
+/** @def PR_SPEED
+ * @note Display Extra (Speed)
+ */
+#define PR_SPEED	0x00200000L
+/** @def PR_STUDY
+ * @note Display Extra (Study)
+ */
+#define PR_STUDY	0x00400000L
+/** @def PR_SANITY
+ * @note Display Sanity
+ */
+#define PR_SANITY       0x00800000L
+/** @def PR_EXTRA
+ * @note Display Extra Info
+ */
+#define PR_EXTRA	0x01000000L
+/** @def PR_BASIC
+ * @note Display Basic Info
+ */
+#define PR_BASIC	0x02000000L
+/** @def PR_MAP
+ * @note Display Map
+ */
+#define PR_MAP	  0x04000000L
+/** @def PR_WIPE
+ * @note Hack -- Total Redraw
+ */
+#define PR_WIPE	 0x08000000L
+/** @def PR_MH
+ * @note Display Monster hitpoints
+ */
+#define PR_MH	   0x10000000L
+/** @def PR_MH
+ * @note Display Monster hitpoints
+ */
+#define PR_MH	   0x10000000L
+/** @def PR_DTRAP
+ * @note Display Extra (DTrap)
+ */
+#define PR_DTRAP	0x20000000L
+/* xxx */
+/* xxx */
+/** @} */
+
+
+/** @name Window flags
+ * @brief Bit flags for the "p_ptr->window" variable (etc)
+ * @{ */
+/** @def PW_INVEN
+ * @note Display inven/equip
+ */
+#define PW_INVEN	0x00000001L
+/** @def PW_EQUIP
+ * @note Display equip/inven
+ */
+#define PW_EQUIP	0x00000002L
+/* xxx */
+/** @def PW_PLAYER
+ * @note Display character
+ */
+#define PW_PLAYER       0x00000008L
+/** @def PW_M_LIST
+ * @note Show monster list
+ */
+#define PW_M_LIST       0x00000010L
+/* xxx */
+/** @def PW_MESSAGE
+ * @note Display messages
+ */
+#define PW_MESSAGE      0x00000040L
+/** @def PW_OVERHEAD
+ * @note Display overhead view
+ */
+#define PW_OVERHEAD     0x00000080L
+/** @def PW_MONSTER
+ * @note Display monster recall
+ */
+#define PW_MONSTER      0x00000100L
+/** @def PW_OBJECT
+ * @note Display object recall
+ */
+#define PW_OBJECT       0x00000200L
+/* xxx */
+/** @def PW_SNAPSHOT
+ * @note Display snap-shot
+ */
+#define PW_SNAPSHOT     0x00000800L
+/* xxx */
+/* xxx */
+/** @def PW_BORG_1
+ * @note Display borg messages
+ */
+#define PW_BORG_1       0x00004000L
+/** @def PW_BORG_2
+ * @note Display borg status
+ */
+#define PW_BORG_2       0x00008000L
+/** @} */
+
+/** @struct deity_type
+ */
+struct deity_type
+{
+	/** @structvar name
+	 * @brief String
+	 */
+	cptr name;
+};
+/** @var deity_info[max_gods]
+ * @brief deity_type
+ * @note Array of gods.
+ */
+extern deity_type deity_info[max_gods];
+
+/** @name Body parts
+ * @{ */
+/** @def BODY_WEAPON */
+#define BODY_WEAPON     0
+
+/** @def BODY_TORSO */
+#define BODY_TORSO      1
+
+/** @def BODY_ARMS */
+#define BODY_ARMS       2
+
+/** @def BODY_FINGER */
+#define BODY_FINGER     3
+
+/** @def BODY_HEAD */
+#define BODY_HEAD       4
+
+/** @def BODY_LEGS */
+#define BODY_LEGS       5
+
+/** @def BODY_MAX */
+#define BODY_MAX	6
+/** @} */
+
+
+/** @struct player_type
+ */
+struct player_type
+{
+	/** @structvar lives
+	 * @brief Number
+	 * @note How many times we resurected
+	 */
+	s32b lives;
+
+	/** @structvar oldpy
+	 * @brief Number
+	 * @note Previous player location -KMW-
+	 */
+	s16b oldpy;
+	/** @structvar oldpx
+	 * @brief Number
+	 * @note Previous player location -KMW-
+	 */
+	s16b oldpx;
+
+	/** @structvar py
+	 * @brief Number
+	 * @note Player location
+	 */
+	s16b py;
+	/** @structvar px
+	 * @brief Number
+	 * @note Player location
+	 */
+	s16b px;
+
+	/** @structvar psex
+	 * @brief Number
+	 * @note Sex index
+	 */
+	byte psex;
+	/** @structvar prace
+	 * @brief Number
+	 * @note Race index
+	 */
+	byte prace;
+	/** @structvar pracem
+	 * @brief Number
+	 * @note Race Mod index
+	 */
+	byte pracem;
+	/** @structvar pclass
+	 * @brief Number
+	 * @note Class index
+	 */
+	byte pclass;
+	/** @structvar mimic_form
+	 * @brief Number
+	 * @note Actualy transformation
+	 */
+	byte mimic_form;
+	/** @structvar mimic_level
+	 * @brief Number
+	 * @note Level of the mimic effect
+	 */
+	s16b mimic_level;
+	/** @structvar oops
+	 * @brief Number
+	 * @note Unused
+	 */
+	byte oops;
+
+	object_type inventory[INVEN_TOTAL] @inventory_real;
+
+	/** @structvar hitdie
+	 * @brief Number
+	 * @note Hit dice (sides)
+	 */
+	byte hitdie;
+	/** @structvar expfact
+	 * @brief Number
+	 * @note Experience factor
+	 */
+	u16b expfact;
+
+	/** @structvar allow_one_death
+	 * @brief Number
+	 * @note Blood of life
+	 */
+	byte allow_one_death;
+
+	/** @structvar age
+	 * @brief Number
+	 * @note Characters age
+	 */
+	s16b age;
+	/** @structvar ht
+	 * @brief Number
+	 * @note Height
+	 */
+	s16b ht;
+	/** @structvar wt
+	 * @brief Number
+	 * @note Weight
+	 */
+	s16b wt;
+	/** @structvar sc
+	 * @brief Number
+	 * @note Social Class
+	 */
+	s16b sc;
+
+
+	/** @structvar au
+	 * @brief Number
+	 * @note Current Gold
+	 */
+	s32b au;
+
+	/** @structvar max_exp
+	 * @brief Number
+	 * @note Max experience
+	 */
+	s32b max_exp;
+	/** @structvar exp
+	 * @brief Number
+	 * @note Cur experience
+	 */
+	s32b exp;
+	/** @structvar exp_frac
+	 * @brief Number
+	 * @note Cur exp frac (times 2^16)
+	 */
+	u16b exp_frac;
+
+	/** @structvar lev
+	 * @brief Number
+	 * @note Level
+	 */
+	s16b lev;
+
+	/** @structvar town_num
+	 * @brief Number
+	 * @note Current town number
+	 */
+	s16b town_num;
+	/** @structvar inside_quest
+	 * @brief Number
+	 * @note Inside quest level
+	 */
+	s16b inside_quest;
+	/** @structvar exit_bldg
+	 * @brief Boolean
+	 * @note Goal obtained in arena? -KMW-
+	 */
+	bool exit_bldg;
+
+	/** @structvar wilderness_x
+	 * @brief Number
+	 * @note Coordinates in the wilderness
+	 */
+	s32b wilderness_x;
+	/** @structvar wilderness_y
+	 * @brief Number
+	 */
+	s32b wilderness_y;
+	/** @structvar wild_mode
+	 * @brief Boolean
+	 * @note TRUE = Small map, FLASE = Big map
+	 */
+	bool wild_mode;
+	/** @structvar old_wild_mode
+	 * @brief Boolean
+	 * @note TRUE = Small map, FLASE = Big map
+	 */
+	bool old_wild_mode;
+
+	/** @structvar mhp
+	 * @brief Number
+	 * @note Max hit pts
+	 */
+	s16b mhp;
+	/** @structvar chp
+	 * @brief Number
+	 * @note Cur hit pts
+	 */
+	s16b chp;
+	/** @structvar chp_frac
+	 * @brief Number
+	 * @note Cur hit frac (times 2^16)
+	 */
+	u16b chp_frac;
+	/** @structvar hp_mod
+	 * @brief Number
+	 * @note A modificator(permanent)
+	 */
+	s16b hp_mod;
+
+	/** @structvar msp
+	 * @brief Number
+	 * @note Max mana pts
+	 */
+	s16b msp;
+	/** @structvar csp
+	 * @brief Number
+	 * @note Cur mana pts
+	 */
+	s16b csp;
+	/** @structvar csp_frac
+	 * @brief Number
+	 * @note Cur mana frac (times 2^16)
+	 */
+	u16b csp_frac;
+
+	/** @structvar msane
+	 * @brief Number
+	 * @note Max sanity
+	 */
+	s16b msane;
+	/** @structvar csane
+	 * @brief Number
+	 * @note Cur sanity
+	 */
+	s16b csane;
+	/** @structvar csane_frac
+	 * @brief Number
+	 * @note Cur sanity frac
+	 */
+	u16b csane_frac;
+
+	/** @structvar grace
+	 * @brief Number
+	 * @note Your God's appreciation factor.
+	 */
+	s32b grace;
+	/** @structvar pgod
+	 * @brief Number
+	 * @note Your God.
+	 */
+	byte pgod;
+	/** @structvar praying
+	 * @brief Boolean
+	 * @note Praying to your god.
+	 */
+	bool praying;
+
+	/** @structvar max_plv
+	 * @brief Number
+	 * @note Max Player Level
+	 */
+	s16b max_plv;
+
+	/** @structvar stat_max[6]
+	 * @brief Number
+	 * @note Current "maximal" stat values
+	 */
+	s16b stat_max[6];
+	/** @structvar stat_cur[6]
+	 * @brief Number
+	 * @note Current "natural" stat values
+	 */
+	s16b stat_cur[6];
+
+	/** @structvar luck_cur
+	 * @brief Number
+	 * @note Current "natural" luck value (range -30 <> 30)
+	 */
+	s16b luck_cur;
+	/** @structvar luck_max
+	 * @brief Number
+	 * @note Current "maximal base" luck value (range -30 <> 30)
+	 */
+	s16b luck_max;
+	/** @structvar luck_base
+	 * @brief Number
+	 * @note Current "base" luck value (range -30 <> 30)
+	 */
+	s16b luck_base;
+
+	/** @structvar fast
+	 * @brief Number
+	 * @note Timed -- Fast
+	 */
+	s16b fast;
+	/** @structvar lightspeed
+	 * @brief Number
+	 * @note Timed -- Light Speed
+	 */
+	s16b lightspeed;
+	/** @structvar slow
+	 * @brief Number
+	 * @note Timed -- Slow
+	 */
+	s16b slow;
+	/** @structvar blind
+	 * @brief Number
+	 * @note Timed -- Blindness
+	 */
+	s16b blind;
+	/** @structvar paralyzed
+	 * @brief Number
+	 * @note Timed -- Paralysis
+	 */
+	s16b paralyzed;
+	/** @structvar confused
+	 * @brief Number
+	 * @note Timed -- Confusion
+	 */
+	s16b confused;
+	/** @structvar afraid
+	 * @brief Number
+	 * @note Timed -- Fear
+	 */
+	s16b afraid;
+	/** @structvar image
+	 * @brief Number
+	 * @note Timed -- Hallucination
+	 */
+	s16b image;
+	/** @structvar poisoned
+	 * @brief Number
+	 * @note Timed -- Poisoned
+	 */
+	s16b poisoned;
+	/** @structvar cut
+	 * @brief Number
+	 * @note Timed -- Cut
+	 */
+	s16b cut;
+	/** @structvar stun
+	 * @brief Number
+	 * @note Timed -- Stun
+	 */
+	s16b stun;
+
+	/** @structvar protevil
+	 * @brief Number
+	 * @note Timed -- Protection from Evil
+	 */
+	s16b protevil;
+	/** @structvar protgood
+	 * @brief Number
+	 * @note Timed -- Protection from Good
+	 */
+	s16b protgood;
+	/** @structvar protundead
+	 * @brief Number
+	 * @note Timed -- Protection from Undead
+	 */
+	s16b protundead;
+	/** @structvar invuln
+	 * @brief Number
+	 * @note Timed -- Invulnerable
+	 */
+	s16b invuln;
+	/** @structvar hero
+	 * @brief Number
+	 * @note Timed -- Heroism
+	 */
+	s16b hero;
+	/** @structvar shero
+	 * @brief Number
+	 * @note Timed -- Super Heroism
+	 */
+	s16b shero;
+	/** @structvar shield
+	 * @brief Number
+	 * @note Timed -- Shield Spell
+	 */
+	s16b shield;
+	/** @structvar shield_power
+	 * @brief Number
+	 * @note Timed -- Shield Spell Power
+	 */
+	s16b shield_power;
+	/** @structvar shield_opt
+	 * @brief Number
+	 * @note Timed -- Shield Spell options
+	 */
+	s16b shield_opt;
+	/** @structvar blessed
+	 * @brief Number
+	 * @note Timed -- Blessed
+	 */
+	s16b blessed;
+	/** @structvar tim_invis
+	 * @brief Number
+	 * @note Timed -- See Invisible
+	 */
+	s16b tim_invis;
+	/** @structvar tim_infra
+	 * @brief Number
+	 * @note Timed -- Infra Vision
+	 */
+	s16b tim_infra;
+
+	/** @structvar oppose_acid
+	 * @brief Number
+	 * @note Timed -- oppose acid
+	 */
+	s16b oppose_acid;
+	/** @structvar oppose_elec
+	 * @brief Number
+	 * @note Timed -- oppose lightning
+	 */
+	s16b oppose_elec;
+	/** @structvar oppose_fire
+	 * @brief Number
+	 * @note Timed -- oppose heat
+	 */
+	s16b oppose_fire;
+	/** @structvar oppose_cold
+	 * @brief Number
+	 * @note Timed -- oppose cold
+	 */
+	s16b oppose_cold;
+	/** @structvar oppose_pois
+	 * @brief Number
+	 * @note Timed -- oppose poison
+	 */
+	s16b oppose_pois;
+	/** @structvar oppose_ld
+	 * @brief Number
+	 * @note Timed -- oppose light & dark
+	 */
+	s16b oppose_ld;
+	/** @structvar oppose_cc
+	 * @brief Number
+	 * @note Timed -- oppose chaos & confusion
+	 */
+	s16b oppose_cc;
+	/** @structvar oppose_ss
+	 * @brief Number
+	 * @note Timed -- oppose sound & shards
+	 */
+	s16b oppose_ss;
+	/** @structvar oppose_nex
+	 * @brief Number
+	 * @note Timed -- oppose nexus
+	 */
+	s16b oppose_nex;
+
+
+	/** @structvar tim_esp
+	 * @brief Number
+	 * @note Timed ESP
+	 */
+	s16b tim_esp;
+	/** @structvar tim_wraith
+	 * @brief Number
+	 * @note Timed wraithform
+	 */
+	s16b tim_wraith;
+	/** @structvar tim_ffall
+	 * @brief Number
+	 * @note Timed Levitation
+	 */
+	s16b tim_ffall;
+	/** @structvar tim_fly
+	 * @brief Number
+	 * @note Timed Levitation
+	 */
+	s16b tim_fly;
+	/** @structvar tim_fire_aura
+	 * @brief Number
+	 * @note Timed Fire Aura
+	 */
+	s16b tim_fire_aura;
+	/** @structvar tim_regen
+	 * @brief Number
+	 * @note Timed regen
+	 */
+	s16b tim_regen;
+	/** @structvar tim_regen_pow
+	 * @brief Number
+	 * @note Timed regen
+	 */
+	s16b tim_regen_pow;
+	/** @structvar tim_poison
+	 * @brief Number
+	 * @note Timed poison hands
+	 */
+	s16b tim_poison;
+	/** @structvar tim_thunder
+	 * @brief Number
+	 * @note Timed thunderstorm
+	 */
+	s16b tim_thunder;
+	/** @structvar tim_thunder_p1
+	 * @brief Number
+	 * @note Timed thunderstorm
+	 */
+	s16b tim_thunder_p1;
+	/** @structvar tim_thunder_p2
+	 * @brief Number
+	 * @note Timed thunderstorm
+	 */
+	s16b tim_thunder_p2;
+
+	/** @structvar resist_magic
+	 * @brief Number
+	 * @note Timed Resist Magic (later)
+	 */
+	s16b resist_magic;
+	/** @structvar tim_invisible
+	 * @brief Number
+	 * @note Timed Invisibility
+	 */
+	s16b tim_invisible;
+	/** @structvar tim_inv_pow
+	 * @brief Number
+	 * @note Power of timed invisibility
+	 */
+	s16b tim_inv_pow;
+	/** @structvar tim_mimic
+	 * @brief Number
+	 * @note Timed Mimic
+	 */
+	s16b tim_mimic;
+	/** @structvar tim_lite
+	 * @brief Number
+	 * @note Timed Lite
+	 */
+	s16b tim_lite;
+	/** @structvar holy
+	 * @brief Number
+	 * @note Holy Aura
+	 */
+	s16b holy;
+	/** @structvar walk_water
+	 * @brief Number
+	 * @note Walk over water as a god
+	 */
+	s16b walk_water;
+	/** @structvar tim_mental_barrier
+	 * @brief Number
+	 * @note Sustain Int&Wis
+	 */
+	s16b tim_mental_barrier;
+	/** @structvar strike
+	 * @brief Number
+	 * @note True Strike(+25 hit)
+	 */
+	s16b strike;
+	/** @structvar meditation
+	 * @brief Number
+	 * @note Meditation(+50 mana -25 to hit/to dam)
+	 */
+	s16b meditation;
+	/** @structvar tim_reflect
+	 * @brief Number
+	 * @note Timed Reflection
+	 */
+	s16b tim_reflect;
+	/** @structvar tim_res_time
+	 * @brief Number
+	 * @note Timed Resistance to Time
+	 */
+	s16b tim_res_time;
+	/** @structvar tim_deadly
+	 * @brief Number
+	 * @note Timed deadly blow
+	 */
+	s16b tim_deadly;
+	/** @structvar prob_travel
+	 * @brief Number
+	 * @note Timed probability travel
+	 */
+	s16b prob_travel;
+	/** @structvar disrupt_shield
+	 * @brief Number
+	 * @note Timed disruption shield
+	 */
+	s16b disrupt_shield;
+	/** @structvar parasite
+	 * @brief Number
+	 * @note Timed parasite
+	 */
+	s16b parasite;
+	/** @structvar parasite_r_idx
+	 * @brief Number
+	 * @note Timed parasite monster
+	 */
+	s16b parasite_r_idx;
+	/** @structvar loan
+	 * @brief Number
+	 */
+	u32b loan;
+	/** @structvar loan_time
+	 * @brief Number
+	 * @note Timer -- loan
+	 */
+	u32b loan_time;
+	/** @structvar tim_magic_breath
+	 * @brief Number
+	 * @note Magical breathing -- can breath anywhere
+	 */
+	s16b tim_magic_breath;
+	/** @structvar tim_water_breath
+	 * @brief Number
+	 * @note Water breathing -- can breath underwater
+	 */
+	s16b tim_water_breath;
+
+	/** @structvar immov_cntr
+	 * @brief Number
+	 * @note Timed -- Last ``immovable'' command.
+	 */
+	s16b immov_cntr;
+
+	/** @structvar music_extra
+	 * @brief Number
+	 * @note Music songs
+	 */
+	u32b music_extra;
+	/** @structvar music_extra2
+	 * @brief Number
+	 * @note Music songs
+	 */
+	u32b music_extra2;
+
+	/** @structvar chaos_patron
+	 * @brief Number
+	 */
+	s16b chaos_patron;
+
+	/** @structvar recall_dungeon
+	 * @brief Number
+	 * @note Recall in which dungeon
+	 */
+	s16b recall_dungeon;
+	/** @structvar word_recall
+	 * @brief Number
+	 * @note Word of recall counter
+	 */
+	s16b word_recall;
+
+	/** @structvar energy
+	 * @brief Number
+	 * @note Current energy
+	 */
+	s32b energy;
+
+	/** @structvar food
+	 * @brief Number
+	 * @note Current nutrition
+	 */
+	s16b food;
+
+	/** @structvar confusing
+	 * @brief Number
+	 * @note Glowing hands
+	 */
+	byte confusing;
+	/** @structvar searching
+	 * @brief Number
+	 * @note Currently searching
+	 */
+	byte searching;
+
+	/** @structvar new_spells
+	 * @brief Number
+	 * @note Number of spells available
+	 */
+	s16b new_spells;
+
+	/** @structvar old_spells
+	 * @brief Number
+	 */
+	s16b old_spells;
+
+	/** @structvar xtra_spells
+	 * @brief Number
+	 * @note Number of xtra spell learned(via potion)
+	 */
+	s16b xtra_spells;
+
+	/** @structvar cur_lite
+	 * @brief Number
+	 * @note Radius of lite (if any)
+	 */
+	s16b cur_lite;
+
+	/*** Extra flags -- used for lua and easying stuff ***/
+	/** @structvar xtra_f1
+	 * @brief Number
+	 */
+	u32b xtra_f1;
+	/** @structvar xtra_f2
+	 * @brief Number
+	 */
+	u32b xtra_f2;
+	/** @structvar xtra_f3
+	 * @brief Number
+	 */
+	u32b xtra_f3;
+	/** @structvar xtra_f4
+	 * @brief Number
+	 */
+	u32b xtra_f4;
+	/** @structvar xtra_f5
+	 * @brief Number
+	 */
+	u32b xtra_f5;
+	/** @structvar xtra_esp
+	 * @brief Number
+	 */
+	u32b xtra_esp;
+
+	/** @structvar pspeed
+	 * @brief Number
+	 * @note Current speed
+	 */
+	s16b pspeed;
+
+	/** @structvar notice
+	 * @brief Number
+	 * @note Special Updates (bit flags)
+	 */
+	u32b notice;
+	/** @structvar update
+	 * @brief Number
+	 * @note Pending Updates (bit flags)
+	 */
+	u32b update;
+	/** @structvar redraw
+	 * @brief Number
+	 * @note Normal Redraws (bit flags)
+	 */
+	u32b redraw;
+	/** @structvar window
+	 * @brief Number
+	 * @note Window Redraws (bit flags)
+	 */
+	u32b window;
+
+	/** @structvar stat_use[6]
+	 * @brief Number
+	 * @note Current modified stats
+	 */
+	s16b stat_use[6];
+	/** @structvar stat_top[6]
+	 * @brief Number
+	 * @note Maximal modified stats
+	 */
+	s16b stat_top[6];
+
+	/** @structvar stat_add[6]
+	 * @brief Number
+	 * @note Modifiers to stat values
+	 */
+	s16b stat_add[6];
+	/** @structvar stat_ind[6]
+	 * @brief Number
+	 * @note Indexes into stat tables
+	 */
+	s16b stat_ind[6];
+	/** @structvar stat_cnt[6]
+	 * @brief Number
+	 * @note Counter for temporary drains
+	 */
+	s16b stat_cnt[6];
+	/** @structvar stat_los[6]
+	 * @brief Number
+	 * @note Amount of temporary drains
+	 */
+	s16b stat_los[6];
+
+	/** @structvar immune_acid
+	 * @brief Boolean
+	 * @note Immunity to acid
+	 */
+	bool immune_acid;
+	/** @structvar immune_elec
+	 * @brief Boolean
+	 * @note Immunity to lightning
+	 */
+	bool immune_elec;
+	/** @structvar immune_fire
+	 * @brief Boolean
+	 * @note Immunity to fire
+	 */
+	bool immune_fire;
+	/** @structvar immune_cold
+	 * @brief Boolean
+	 * @note Immunity to cold
+	 */
+	bool immune_cold;
+	/** @structvar immune_neth
+	 * @brief Boolean
+	 * @note Immunity to nether
+	 */
+	bool immune_neth;
+
+	/** @structvar resist_acid
+	 * @brief Boolean
+	 * @note Resist acid
+	 */
+	bool resist_acid;
+	/** @structvar resist_elec
+	 * @brief Boolean
+	 * @note Resist lightning
+	 */
+	bool resist_elec;
+	/** @structvar resist_fire
+	 * @brief Boolean
+	 * @note Resist fire
+	 */
+	bool resist_fire;
+	/** @structvar resist_cold
+	 * @brief Boolean
+	 * @note Resist cold
+	 */
+	bool resist_cold;
+	/** @structvar resist_pois
+	 * @brief Boolean
+	 * @note Resist poison
+	 */
+	bool resist_pois;
+
+	/** @structvar resist_conf
+	 * @brief Boolean
+	 * @note Resist confusion
+	 */
+	bool resist_conf;
+	/** @structvar resist_sound
+	 * @brief Boolean
+	 * @note Resist sound
+	 */
+	bool resist_sound;
+	/** @structvar resist_lite
+	 * @brief Boolean
+	 * @note Resist light
+	 */
+	bool resist_lite;
+	/** @structvar resist_dark
+	 * @brief Boolean
+	 * @note Resist darkness
+	 */
+	bool resist_dark;
+	/** @structvar resist_chaos
+	 * @brief Boolean
+	 * @note Resist chaos
+	 */
+	bool resist_chaos;
+	/** @structvar resist_disen
+	 * @brief Boolean
+	 * @note Resist disenchant
+	 */
+	bool resist_disen;
+	/** @structvar resist_shard
+	 * @brief Boolean
+	 * @note Resist shards
+	 */
+	bool resist_shard;
+	/** @structvar resist_nexus
+	 * @brief Boolean
+	 * @note Resist nexus
+	 */
+	bool resist_nexus;
+	/** @structvar resist_blind
+	 * @brief Boolean
+	 * @note Resist blindness
+	 */
+	bool resist_blind;
+	/** @structvar resist_neth
+	 * @brief Boolean
+	 * @note Resist nether
+	 */
+	bool resist_neth;
+	/** @structvar resist_fear
+	 * @brief Boolean
+	 * @note Resist fear
+	 */
+	bool resist_fear;
+	/** @structvar resist_continuum
+	 * @brief Boolean
+	 * @note Resist space-time continuum disruption
+	 */
+	bool resist_continuum;
+
+	/** @structvar sensible_fire
+	 * @brief Boolean
+	 * @note Fire does more damage on the player
+	 */
+	bool sensible_fire;
+	/** @structvar sensible_lite
+	 * @brief Boolean
+	 * @note Lite does more damage on the player and blinds her/him
+	 */
+	bool sensible_lite;
+
+	/** @structvar reflect
+	 * @brief Boolean
+	 * @note Reflect 'bolt' attacks
+	 */
+	bool reflect;
+	/** @structvar sh_fire
+	 * @brief Boolean
+	 * @note Fiery 'immolation' effect
+	 */
+	bool sh_fire;
+	/** @structvar sh_elec
+	 * @brief Boolean
+	 * @note Electric 'immolation' effect
+	 */
+	bool sh_elec;
+	/** @structvar wraith_form
+	 * @brief Boolean
+	 * @note wraithform
+	 */
+	bool wraith_form;
+
+	/** @structvar anti_magic
+	 * @brief Boolean
+	 * @note Anti-magic
+	 */
+	bool anti_magic;
+	/** @structvar anti_tele
+	 * @brief Boolean
+	 * @note Prevent teleportation
+	 */
+	bool anti_tele;
+
+	/** @structvar sustain_str
+	 * @brief Boolean
+	 * @note Keep strength
+	 */
+	bool sustain_str;
+	/** @structvar sustain_int
+	 * @brief Boolean
+	 * @note Keep intelligence
+	 */
+	bool sustain_int;
+	/** @structvar sustain_wis
+	 * @brief Boolean
+	 * @note Keep wisdom
+	 */
+	bool sustain_wis;
+	/** @structvar sustain_dex
+	 * @brief Boolean
+	 * @note Keep dexterity
+	 */
+	bool sustain_dex;
+	/** @structvar sustain_con
+	 * @brief Boolean
+	 * @note Keep constitution
+	 */
+	bool sustain_con;
+	/** @structvar sustain_chr
+	 * @brief Boolean
+	 * @note Keep charisma
+	 */
+	bool sustain_chr;
+
+	/** @structvar aggravate
+	 * @brief Boolean
+	 * @note Aggravate monsters
+	 */
+	bool aggravate;
+	/** @structvar teleport
+	 * @brief Boolean
+	 * @note Random teleporting
+	 */
+	bool teleport;
+
+	/** @structvar exp_drain
+	 * @brief Boolean
+	 * @note Experience draining
+	 */
+	bool exp_drain;
+	/** @structvar drain_mana
+	 * @brief Number
+	 * @note mana draining
+	 */
+	byte drain_mana;
+	/** @structvar drain_life
+	 * @brief Number
+	 * @note hp draining
+	 */
+	byte drain_life;
+
+	/** @structvar magical_breath
+	 * @brief Boolean
+	 * @note Magical breathing -- can breath anywhere
+	 */
+	bool magical_breath;
+	/** @structvar water_breath
+	 * @brief Boolean
+	 * @note Water breathing -- can breath underwater
+	 */
+	bool water_breath;
+	/** @structvar climb
+	 * @brief Boolean
+	 * @note Can climb mountains
+	 */
+	bool climb;
+	/** @structvar fly
+	 * @brief Boolean
+	 * @note Can fly over some features
+	 */
+	bool fly;
+	/** @structvar ffall
+	 * @brief Boolean
+	 * @note No damage falling
+	 */
+	bool ffall;
+	/** @structvar lite
+	 * @brief Boolean
+	 * @note Permanent light
+	 */
+	bool lite;
+	/** @structvar free_act
+	 * @brief Boolean
+	 * @note Never paralyzed
+	 */
+	bool free_act;
+	/** @structvar see_inv
+	 * @brief Boolean
+	 * @note Can see invisible
+	 */
+	bool see_inv;
+	/** @structvar regenerate
+	 * @brief Boolean
+	 * @note Regenerate hit pts
+	 */
+	bool regenerate;
+	/** @structvar hold_life
+	 * @brief Boolean
+	 * @note Resist life draining
+	 */
+	bool hold_life;
+	/** @structvar telepathy
+	 * @brief Number
+	 * @note Telepathy
+	 */
+	u32b telepathy;
+	/** @structvar slow_digest
+	 * @brief Boolean
+	 * @note Slower digestion
+	 */
+	bool slow_digest;
+	/** @structvar bless_blade
+	 * @brief Boolean
+	 * @note Blessed blade
+	 */
+	bool bless_blade;
+	/** @structvar xtra_might
+	 * @brief Number
+	 * @note Extra might bow
+	 */
+	byte xtra_might;
+	/** @structvar impact
+	 * @brief Boolean
+	 * @note Earthquake blows
+	 */
+	bool impact;
+	/** @structvar auto_id
+	 * @brief Boolean
+	 * @note Auto id items
+	 */
+	bool auto_id;
+
+	/** @structvar dis_to_h
+	 * @brief Number
+	 * @note Known bonus to hit
+	 */
+	s16b dis_to_h;
+	/** @structvar dis_to_d
+	 * @brief Number
+	 * @note Known bonus to dam
+	 */
+	s16b dis_to_d;
+	/** @structvar dis_to_a
+	 * @brief Number
+	 * @note Known bonus to ac
+	 */
+	s16b dis_to_a;
+
+	/** @structvar dis_ac
+	 * @brief Number
+	 * @note Known base ac
+	 */
+	s16b dis_ac;
+
+	/** @structvar to_m
+	 * @brief Number
+	 * @note Bonus to mana
+	 */
+	s16b to_m;
+	/** @structvar to_s
+	 * @brief Number
+	 * @note Bonus to spell
+	 */
+	s16b to_s;
+	/** @structvar to_h
+	 * @brief Number
+	 * @note Bonus to hit
+	 */
+	s16b to_h;
+	/** @structvar to_d
+	 * @brief Number
+	 * @note Bonus to dam
+	 */
+	s16b to_d;
+	/** @structvar to_a
+	 * @brief Number
+	 * @note Bonus to ac
+	 */
+	s16b to_a;
+
+	/** @structvar to_h_melee
+	 * @brief Number
+	 * @note Bonus to hit
+	 */
+	s16b to_h_melee;
+	/** @structvar to_d_melee
+	 * @brief Number
+	 * @note Bonus to dam
+	 */
+	s16b to_d_melee;
+
+	/** @structvar to_h_ranged
+	 * @brief Number
+	 * @note Bonus to hit
+	 */
+	s16b to_h_ranged;
+	/** @structvar to_d_ranged
+	 * @brief Number
+	 * @note Bonus to dam
+	 */
+	s16b to_d_ranged;
+
+	/** @structvar num_blow
+	 * @brief Number
+	 * @note Number of blows
+	 */
+	s16b num_blow;
+	/** @structvar num_fire
+	 * @brief Number
+	 * @note Number of shots
+	 */
+	s16b num_fire;
+
+	/** @structvar ac
+	 * @brief Number
+	 * @note Base ac
+	 */
+	s16b ac;
+
+	/** @structvar antimagic
+	 * @brief Number
+	 * @note Power of the anti magic field
+	 */
+	byte antimagic;
+	/** @structvar antimagic_dis
+	 * @brief Number
+	 * @note Radius of the anti magic field
+	 */
+	byte antimagic_dis;
+
+	/** @structvar see_infra
+	 * @brief Number
+	 * @note Infravision range
+	 */
+	s16b see_infra;
+
+	/** @structvar skill_dis
+	 * @brief Number
+	 * @note Skill: Disarming
+	 */
+	s16b skill_dis;
+	/** @structvar skill_dev
+	 * @brief Number
+	 * @note Skill: Magic Devices
+	 */
+	s16b skill_dev;
+	/** @structvar skill_sav
+	 * @brief Number
+	 * @note Skill: Saving throw
+	 */
+	s16b skill_sav;
+	/** @structvar skill_stl
+	 * @brief Number
+	 * @note Skill: Stealth factor
+	 */
+	s16b skill_stl;
+	/** @structvar skill_srh
+	 * @brief Number
+	 * @note Skill: Searching ability
+	 */
+	s16b skill_srh;
+	/** @structvar skill_fos
+	 * @brief Number
+	 * @note Skill: Searching frequency
+	 */
+	s16b skill_fos;
+	/** @structvar skill_thn
+	 * @brief Number
+	 * @note Skill: To hit (normal)
+	 */
+	s16b skill_thn;
+	/** @structvar skill_thb
+	 * @brief Number
+	 * @note Skill: To hit (shooting)
+	 */
+	s16b skill_thb;
+	/** @structvar skill_tht
+	 * @brief Number
+	 * @note Skill: To hit (throwing)
+	 */
+	s16b skill_tht;
+	/** @structvar skill_dig
+	 * @brief Number
+	 * @note Skill: Digging
+	 */
+	s16b skill_dig;
+
+	/** @structvar skill_points
+	 * @brief Number
+	 */
+	s16b skill_points;
+
+	/** @structvar control
+	 * @brief Number
+	 * @note Controlled monster
+	 */
+	s16b control;
+	/** @structvar control_dir
+	 * @brief Number
+	 * @note Controlled monster
+	 */
+	byte control_dir;
+	/** @structvar companion_killed
+	 * @brief Number
+	 * @note Number of companion death
+	 */
+	s16b companion_killed;
+	/** @structvar black_breath
+	 * @brief Boolean
+	 * @note The Tolkien's Black Breath
+	 */
+	bool black_breath;
+	/** @structvar body_monster
+	 * @brief Number
+	 * @note In which body is the player
+	 */
+	u16b body_monster;
+
+	/** @structvar body_parts[28]
+	 * @brief Number
+	 * @note Various body modifiers
+	 */
+	byte body_parts[28];
+
+	/** @structvar extra_body_parts[BODY_MAX]
+	 * @brief Number
+	 * @note Various body modifiers
+	 */
+	s16b extra_body_parts[BODY_MAX];
+
+	/** @structvar powers_mod[POWER_MAX_INIT]
+	 * @brief Boolean
+	 * @note Intrinsinc powers
+	 */
+	bool powers_mod[POWER_MAX_INIT];
+	/** @structvar powers[power_max]
+	 * @brief Boolean
+	 */
+	bool powers[power_max];
+
+	/** @structvar spellbinder_num
+	 * @brief Number
+	 * @note Number of spells bound
+	 */
+	byte spellbinder_num;
+	/** @structvar spellbinder[4]
+	 * @brief Number
+	 * @note Spell bounds
+	 */
+	u32b spellbinder[4];
+	/** @structvar spellbinder_trigger
+	 * @brief Number
+	 * @note Spellbinder trigger condition
+	 */
+	byte spellbinder_trigger;
+
+	/* Corruptions */
+	/** @structvar  corruptions_aux;
+	 * @brief Boolean
+	 */
+	bool corruptions[max_corruptions] @ corruptions_aux;
+
+	/* Astral */
+	/** @structvar astral
+	 * @brief Boolean
+	 * @note We started at the bottom ?
+	 */
+	bool astral;
+
+	/*** Temporary fields ***/
+
+	/** @structvar leaving
+	 * @brief Boolean
+	 * @note True if player is leaving
+	 */
+	bool leaving;
+};
+
+/** @name Spellbinder triggers
+ * @{ */
+/** @def SPELLBINDER_HP75
+ * @note Trigger spellbinder at 75% maximum hit points */
+#define SPELLBINDER_HP75	1
+
+/** @def SPELLBINDER_HP50
+ * @note Trigger spellbinder at 50% maximum hit points */
+#define SPELLBINDER_HP50	2
+
+/** @def SPELLBINDER_HP25
+ * @note Trigger spellbinder at 25% maximum hit points */
+#define SPELLBINDER_HP25	3
+/** @} */
+
+
+/** @struct player_race
+ */
+struct player_race
+{
+	/** @structvar title
+	 * @brief Number
+	 * @note Type of race
+	 */
+	s32b title;
+	/** @structvar desc
+	 * @brief Number
+	 */
+	s32b desc;
+
+	/** @structvar infra
+	 * @brief Number
+	 * @note Infra-vision range
+	 */
+	byte infra;
+};
+
+/** @struct player_race_mod
+ */
+struct player_race_mod
+{
+	/** @structvar title
+	 * @brief Number
+	 * @note Type of race mod
+	 */
+	s32b title;
+	/** @structvar desc
+	 * @brief Number
+	 * @note Desc
+	 */
+	s32b desc;
+	/** @structvar place
+	 * @brief Boolean
+	 * @note TRUE = race race modifier, FALSE = Race modifier race
+	 */
+	bool place;
+
+	/** @structvar r_adj[6]
+	 * @brief Number
+	 * @note (+) Racial stat bonuses
+	 */
+	s16b r_adj[6];
+
+	/** @structvar luck
+	 * @brief String
+	 * @note Luck
+	 */
+	char luck;
+	/** @structvar mana
+	 * @brief Number
+	 * @note Mana %
+	 */
+	s16b mana;
+
+	/** @structvar r_dis
+	 * @brief Number
+	 * @note (+) disarming
+	 */
+	s16b r_dis;
+	/** @structvar r_dev
+	 * @brief Number
+	 * @note (+) magic devices
+	 */
+	s16b r_dev;
+	/** @structvar r_sav
+	 * @brief Number
+	 * @note (+) saving throw
+	 */
+	s16b r_sav;
+	/** @structvar r_stl
+	 * @brief Number
+	 * @note (+) stealth
+	 */
+	s16b r_stl;
+	/** @structvar r_srh
+	 * @brief Number
+	 * @note (+) search ability
+	 */
+	s16b r_srh;
+	/** @structvar r_fos
+	 * @brief Number
+	 * @note (+) search frequency
+	 */
+	s16b r_fos;
+	/** @structvar r_thn
+	 * @brief Number
+	 * @note (+) combat (normal)
+	 */
+	s16b r_thn;
+	/** @structvar r_thb
+	 * @brief Number
+	 * @note (+) combat (shooting)
+	 */
+	s16b r_thb;
+
+	/** @structvar r_mhp
+	 * @brief String
+	 * @note (+) Race mod hit-dice modifier
+	 */
+	char r_mhp;
+	/** @structvar r_exp
+	 * @brief Number
+	 * @note (+) Race mod experience factor
+	 */
+	s16b r_exp;
+
+	/** @structvar b_age
+	 * @brief String
+	 * @note (+) base age
+	 */
+	char b_age;
+	/** @structvar m_age
+	 * @brief String
+	 * @note (+) mod age
+	 */
+	char m_age;
+
+	/** @structvar m_b_ht
+	 * @brief String
+	 * @note (+) base height (males)
+	 */
+	char m_b_ht;
+	/** @structvar m_m_ht
+	 * @brief String
+	 * @note (+) mod height (males)
+	 */
+	char m_m_ht;
+	/** @structvar m_b_wt
+	 * @brief String
+	 * @note (+) base weight (males)
+	 */
+	char m_b_wt;
+	/** @structvar m_m_wt
+	 * @brief String
+	 * @note (+) mod weight (males)
+	 */
+	char m_m_wt;
+
+	/** @structvar f_b_ht
+	 * @brief String
+	 * @note (+) base height (females)
+	 */
+	char f_b_ht;
+	/** @structvar f_m_ht
+	 * @brief String
+	 * @note (+) mod height (females)
+	 */
+	char f_m_ht;
+	/** @structvar f_b_wt
+	 * @brief String
+	 * @note (+) base weight (females)
+	 */
+	char f_b_wt;
+	/** @structvar f_m_wt
+	 * @brief String
+	 * @note (+) mod weight (females)
+	 */
+	char f_m_wt;
+
+	/** @structvar infra
+	 * @brief String
+	 * @note (+) Infra-vision range
+	 */
+	char infra;
+
+	/** @structvar choice[2]
+	 * @brief Number
+	 * @note Legal race choices
+	 */
+	u32b choice[2];
+
+	/** @structvar pclass[2]
+	 * @brief Number
+	 * @note Classes allowed
+	 */
+	u32b pclass[2];
+	/** @structvar mclass[2]
+	 * @brief Number
+	 * @note Classes restricted
+	 */
+	u32b mclass[2];
+
+	/** @structvar powers[4]
+	 * @brief Number
+	 * @note Powers of the subrace
+	 */
+	s16b powers[4];
+
+	/** @structvar body_parts[BODY_MAX]
+	 * @brief String
+	 * @note To help to decide what to use when body changing
+	 */
+	char body_parts[BODY_MAX];
+
+	/** @structvar flags1
+	 * @brief Number
+	 */
+	u32b flags1;
+	/** @structvar flags2
+	 * @brief Number
+	 * @note flags
+	 */
+	u32b flags2;
+
+	/** @structvar oflags1[51]
+	 * @brief Number
+	 */
+	u32b oflags1[51];
+	/** @structvar oflags2[51]
+	 * @brief Number
+	 */
+	u32b oflags2[51];
+	/** @structvar oflags3[51]
+	 * @brief Number
+	 */
+	u32b oflags3[51];
+	/** @structvar oflags4[51]
+	 * @brief Number
+	 */
+	u32b oflags4[51];
+	/** @structvar oflags5[51]
+	 * @brief Number
+	 */
+	u32b oflags5[51];
+	/** @structvar oesp[51]
+	 * @brief Number
+	 */
+	u32b oesp[51];
+	/** @structvar opval[51]
+	 * @brief Number
+	 */
+	s16b opval[51];
+
+	/** @structvar g_attr
+	 * @brief Number
+	 * @note Overlay graphic attribute
+	 */
+	byte g_attr;
+	/** @structvar g_char
+	 * @brief String
+	 * @note Overlay graphic character
+	 */
+	char g_char;
+
+	/** @structvar skill_basem[MAX_SKILLS]
+	 * @brief String
+	 */
+	char skill_basem[MAX_SKILLS];
+	/** @structvar skill_base[MAX_SKILLS]
+	 * @brief Number
+	 */
+	u32b skill_base[MAX_SKILLS];
+	/** @structvar skill_modm[MAX_SKILLS]
+	 * @brief String
+	 */
+	char skill_modm[MAX_SKILLS];
+	/** @structvar skill_mod[MAX_SKILLS]
+	 * @brief Number
+	 */
+	s16b skill_mod[MAX_SKILLS];
+};
+
+/** @var energy_use
+ * @brief Number
+ * @note Energy use for an action (0 if action does not take a turn).
+ */
+extern s32b energy_use;
+
+/** @var  player;
+ * @brief player_type
+ * @note The player.
+ */
+extern player_type *p_ptr @ player;
+
+/** @var max_rp_idx
+ * @brief Number
+ * @note Maximum number of entries in player race array.
+ */
+extern u16b max_rp_idx;
+
+/** @var race_info[max_rp_idx]
+ * @brief player_race
+ * @note Array of player races.
+ */
+extern player_race race_info[max_rp_idx];
+
+/** @var *rp_name
+ * @brief String
+ * @note Name of player race.
+ */
+extern char *rp_name;
+
+/** @var *rp_text
+ * @brief String
+ */
+extern char *rp_text;
+
+/** @var max_rmp_idx
+ * @brief Number
+ * @note Maximum number of player subraces.
+ */
+extern u16b max_rmp_idx;
+
+/** @var _mod race_mod_info[max_rmp_idx]
+ * @brief player_race
+ * @note Array of player subraces.
+ */
+extern player_race_mod race_mod_info[max_rmp_idx];
+
+/** @var *rmp_name
+ * @brief String
+ * @note Name of player subrace.
+ */
+extern char *rmp_name;
+
+/** @var *rmp_text
+ * @brief String
+ */
+extern char *rmp_text;
+
+/** @var class_info[max_c_idx]
+ * @brief player_class
+ * @note Array of classes.
+ */
+extern player_class class_info[max_c_idx];
+
+/** @var *c_name
+ * @brief String
+ * @note Name of player class.
+ */
+extern char *c_name;
+
+/** @var *c_text
+ * @brief String
+ */
+extern char *c_text;
+
+/** @var flush_failure
+ * @brief Boolean
+ * @note TRUE if flush input on any failure, otherwise FALSE.
+ */
+extern bool flush_failure;
+
+/** @fn set_roots(int v, s16b ac, s16b dam)
+ * @brief Player has timed roots.\n
+ * @param v Number \n time remaining until effect expires
+ * (must be in the range 0 to 10,000)
+ * @brief Time remaining
+ * @param ac Number \n bonus to AC
+ * @brief AC bonus
+ * @param dam Number \n bonus to melee to-damage
+ * @brief To-damage bonus
+ * @return Boolean \n TRUE if player notices the effect, otherwise FALSE.
+ * @note (see file xtra2.c)
+ */
+extern bool set_roots(int v, s16b ac, s16b dam);
+
+/** @fn set_shadow(int v)
+ * @brief Player has wraith form.\n
+ * @param v Number \n time remaining until effect expires
+ * (must be in the range 0 to 10,000)
+ * @brief Time remaining
+ * @return Boolean \n TRUE if player notices the effect, otherwise FALSE.
+ * @note (see file xtra2.c)
+ */
+extern bool set_shadow(int v);
+
+/** @fn set_parasite(int v, int r)
+ * @brief Player has timed parasite.\n
+ * @param v Number \n time remaining until effect expires
+ * (must be in the range 0 to 10,000)
+ * @brief Time remaining
+ * @param r Number \n index of race in monster race array
+ * @brief Parasite race index
+ * @return Boolean \n TRUE if player notices the effect, otherwise FALSE.
+ * @note
+ * When the time remaining reaches 0, there is an 80% chance the parasite will
+ * be born, otherwise it will die away.
+ * @note (see file xtra2.c)
+ */
+extern bool set_parasite(int v, int r);
+
+/** @fn set_disrupt_shield(int v)
+ * @brief Player has timed disrupt shield (feels invulnerable).\n
+ * @param v Number \n time remaining until effect expires
+ * (must be in the range 0 to 10,000)
+ * @brief Time remaining
+ * @return Boolean \n TRUE if player notices the effect, otherwise FALSE.
+ * @note (see file xtra2.c)
+ */
+extern bool set_disrupt_shield(int v);
+
+/** @fn set_prob_travel(int v)
+ * @brief Player has timed probability travel.\n
+ * @param v Number \n time remaining until effect expires
+ * (must be in the range 0 to 10,000)
+ * @brief Time remaining
+ * @return Boolean \n TRUE if player notices the effect, otherwise FALSE.
+ * @note (see file xtra2.c)
+ */
+extern bool set_prob_travel(int v);
+
+/** @fn set_project(int v, s16b gf, s16b dam, s16b rad, s16b flag)
+ * @brief Player's weapon has a spell effect.\n
+ * @param v Number \n time remaining until effect expires
+ * (must be in the range 0 to 10,000)
+ * @brief Time remaining
+ * @param gf Number \n spell effect
+ * @brief Spell effect
+ * @param dam Number \n damage caused by spell effect
+ * @brief Spell damage
+ * @param rad Number \n radius of spell effect
+ * @brief Spell radius
+ * @param flag Number \n spell projection effect
+ * @brief Spell properties
+ * @return Boolean \n TRUE if player notices the effect, otherwise FALSE.
+ * @note (see file xtra2.c)
+ */
+extern bool set_project(int v, s16b gf, s16b dam, s16b rad, s16b flag);
+
+/** @fn set_tim_deadly(int v)
+ * @brief Player has deadly accuracy.\n
+ * @param v Number \n time remaining until effect expires
+ * (must be in the range 0 to 10,000)
+ * @brief Time remaining
+ * @return Boolean \n TRUE if player notices the effect, otherwise FALSE.
+ * @note (see file xtra2.c)
+ */
+extern bool set_tim_deadly(int v);
+
+/** @fn set_tim_res_time(int v)
+ * @brief Player has timed time resistance.\n
+ * @param v Number \n time remaining until effect expires
+ * (must be in the range 0 to 10,000)
+ * @brief Time remaining
+ * @return Boolean \n TRUE if player notices the effect, otherwise FALSE.
+ * @note (see file xtra2.c)
+ */
+extern bool set_tim_res_time(int v);
+
+/** @fn set_tim_reflect(int v)
+ * @brief Player has timed reflection.\n
+ * @param v Number \n time remaining until effect expires
+ * (must be in the range 0 to 10,000)
+ * @brief Time remaining
+ * @return Boolean \n TRUE if player notices the effect, otherwise FALSE.
+ * @note (see file xtra2.c)
+ */
+extern bool set_tim_reflect(int v);
+
+/** @fn set_meditation(int v)
+ * @brief Player can meditate (forcibly pseudo-id).\n
+ * @param v Number \n time remaining until effect expires
+ * (must be in the range 0 to 10,000)
+ * @brief Time remaining
+ * @return Boolean \n TRUE if player notices the effect, otherwise FALSE.
+ * @note (see file xtra2.c)
+ */
+extern bool set_meditation(int v);
+
+/** @fn set_strike(int v)
+ * @brief Player has true strike.\n
+ * @param v Number \n time remaining until effect expires
+ * (must be in the range 0 to 10,000)
+ * @brief Time remaining
+ * @return Boolean \n TRUE if player notices the effect, otherwise FALSE.
+ * @note (see file xtra2.c)
+ */
+extern bool set_strike(int v);
+
+/** @fn set_walk_water(int v)
+ * @brief Player can walk on water.\n
+ * @param v Number \n time remaining until effect expires
+ * (must be in the range 0 to 10,000)
+ * @brief Time remaining
+ * @return Boolean \n TRUE if player notices the effect, otherwise FALSE.
+ * @note (see file xtra2.c)
+ */
+extern bool set_walk_water(int v);
+
+/** @fn set_tim_ffall(int v)
+ * @brief Player has timed levitation (feather-fall).\n
+ * @param v Number \n time remaining until effect expires
+ * (must be in the range 0 to 10,000)
+ * @brief Time remaining
+ * @return Boolean \n TRUE if player notices the effect, otherwise FALSE.
+ * @note (see file xtra2.c)
+ */
+extern bool set_tim_ffall(int v);
+
+/** @fn set_tim_fire_aura(int v)
+ * @brief Player has a timed fiery aura.\n
+ * @param v Number \n time remaining until effect expires
+ * (must be in the range 0 to 10,000)
+ * @brief Time remaining
+ * @return Boolean \n TRUE if player notices the effect, otherwise FALSE.
+ * @note (see file xtra2.c)
+ */
+extern bool set_tim_fire_aura(int v);
+
+/** @fn set_tim_regen(int v, int p)
+ * @brief Player has timed regeneration.\n
+ * @param v Number \n time remaining until effect expires
+ * (must be in the range 0 to 10,000)
+ * @brief Time remaining
+ * @param p Number \n power of regeneration
+ * @brief Regeneration power
+ * @return Boolean \n TRUE if player notices the effect, otherwise FALSE.
+ * @note (see file xtra2.c)
+ */
+extern bool set_tim_regen(int v, int p);
+
+/** @fn set_holy(int v)
+ * @brief Player has a timed holy aura.\n
+ * @param v Number \n time remaining until effect expires
+ * (must be in the range 0 to 10,000)
+ * @brief Time remaining
+ * @return Boolean \n TRUE if player notices the effect, otherwise FALSE.
+ * @note (see file xtra2.c)
+ */
+extern bool set_holy(int v);
+
+/** @fn set_grace(s32b v)
+ * @brief Set the amount of grace a player has with a god.\n
+ * @param v Number \n time remaining until effect expires
+ * (must be in the range -30,000 to 30,000)
+ * @brief Grace
+ * @note (see file xtra2.c)
+ */
+extern void set_grace(s32b v);
+
+/** @fn set_mimic(int v, int p, int level)
+ * @brief Player has mimic form.\n
+ * @param v Number \n time remaining until effect expires
+ * (must be in the range 0 to 10,000)
+ * @brief Time remaining
+ * @param p Number \n the mimic form
+ * @brief Mimic form
+ * @param level Number \n the level of the mimic form
+ * @brief Mimic level
+ * @return Boolean \n TRUE if player notices the effect, otherwise FALSE.
+ * @note (see file xtra2.c)
+ */
+extern bool set_mimic(int v, int p, int level);
+
+/** @fn set_no_breeders(int v)
+ * @brief Player has timed breeder prevention.\n
+ * @param v Number \n time remaining until effect expires
+ * (must be in the range 0 to 10,000)
+ * @brief Time remaining
+ * @return Boolean \n TRUE if player notices the effect, otherwise FALSE.
+ * @note (see file xtra2.c)
+ */
+extern bool set_no_breeders(int v);
+
+/** @fn set_tim_esp(int v)
+ * @brief Player has timed ESP.\n
+ * @param v Number \n time remaining until effect expires
+ * (must be in the range 0 to 10,000)
+ * @brief Time remaining
+ * @return Boolean \n TRUE if player notices the effect, otherwise FALSE.
+ * @note (see file xtra2.c)
+ */
+extern bool set_tim_esp(int v);
+
+/** @fn set_invis(int v, int p)
+ * @brief Player has timed invisibility.\n
+ * @param v Number \n time remaining until effect expires
+ * (must be in the range 0 to 10,000)
+ * @brief Time remaining
+ * @param p Number \n power of invisibility
+ * @brief Invisibility power
+ * @return Boolean \n TRUE if player notices the effect, otherwise FALSE.
+ * @note (see file xtra2.c)
+ */
+extern bool set_invis(int v, int p);
+
+/** @fn set_lite(int v)
+ * @brief Player has timed light.\n
+ * @param v Number \n time remaining until effect expires
+ * (must be in the range 0 to 10,000)
+ * @brief Time remaining
+ * @return Boolean \n TRUE if player notices the effect, otherwise FALSE.
+ * @note
+ * Note the use of "PU_VIEW", which is needed to
+ * memorize any terrain features which suddenly become "visible".
+ * @note
+ * Note that blindness is currently the only thing which can affect
+ * "player_can_see_bold()".
+ * @note (see file xtra2.c)
+ */
+extern bool set_lite(int v);
+
+/** @fn set_blind(int v)
+ * @brief Player has timed blindness.\n
+ * @param v Number \n time remaining until effect expires
+ * (must be in the range 0 to 10,000)
+ * @brief Time remaining
+ * @return Boolean \n TRUE if player notices the effect, otherwise FALSE.
+ * @note
+ * Note the use of "PU_UN_VIEW", which is needed to memorize any terrain
+ * features which suddenly become "visible".
+ * @note
+ * Note that blindness is currently the only thing which can affect
+ * "player_can_see_bold()".
+ * @note (see file xtra2.c)
+ */
+extern bool set_blind(int v);
+
+/** @fn set_confused(int v)
+ * @brief Player has timed confusion.\n
+ * @param v Number \n time remaining until effect expires
+ * (must be in the range 0 to 10,000)
+ * @brief Time remaining
+ * @return Boolean \n TRUE if player notices the effect, otherwise FALSE.
+ * @note (see file xtra2.c)
+ */
+extern bool set_confused(int v);
+
+/** @fn set_poisoned(int v)
+ * @brief Player has timed poisoning.\n
+ * @param v Number \n time remaining until effect expires
+ * (must be in the range 0 to 10,000)
+ * @brief Time remaining
+ * @return Boolean \n TRUE if player notices the effect, otherwise FALSE.
+ * @note (see file xtra2.c)
+ */
+extern bool set_poisoned(int v);
+
+/** @fn set_afraid(int v)
+ * @brief Player has timed fear.\n
+ * @param v Number \n time remaining until effect expires
+ * (must be in the range 0 to 10,000)
+ * @brief Time remaining
+ * @return Boolean \n TRUE if player notices the effect, otherwise FALSE.
+ * @note (see file xtra2.c)
+ */
+extern bool set_afraid(int v);
+
+/** @fn set_paralyzed(int v)
+ * @brief Player has timed paralysis.\n
+ * @param v Number \n time remaining until effect expires
+ * (must be in the range 0 to 10,000)
+ * @brief Time remaining
+ * @return Boolean \n TRUE if player notices the effect, otherwise FALSE.
+ * @note (see file xtra2.c)
+ */
+extern bool set_paralyzed(int v);
+
+/** @fn set_image(int v)
+ * @brief Player has timed hallucination.\n
+ * @param v Number \n time remaining until effect expires
+ * (must be in the range 0 to 10,000)
+ * @brief Time remaining
+ * @return Boolean \n TRUE if player notices the effect, otherwise FALSE.
+ * @note
+ * Note that we must redraw the map when hallucination changes.
+ * @note (see file xtra2.c)
+ */
+extern bool set_image(int v);
+
+/** @fn set_fast(int v, int p)
+ * @brief Player has timed speed boost.\n
+ * @param v Number \n time remaining until effect expires
+ * (must be in the range 0 to 10,000)
+ * @brief Time remaining
+ * @param p Number \n speed factor
+ * @brief Speed factor
+ * @return Boolean \n TRUE if player notices the effect, otherwise FALSE.
+ * @note (see file xtra2.c)
+ */
+extern bool set_fast(int v, int p);
+
+/** @fn set_light_speed(int v)
+ * @brief Player has timed light speed.\n
+ * @param v Number \n time remaining until effect expires
+ * (must be in the range 0 to 10,000)
+ * @brief Time remaining
+ * @return Boolean \n TRUE if player notices the effect, otherwise FALSE.
+ * @note (see file xtra2.c)
+ */
+extern bool set_light_speed(int v);
+
+/** @fn set_slow(int v)
+ * @brief Player has timed slowness.\n
+ * @param v Number \n time remaining until effect expires
+ * (must be in the range 0 to 10,000)
+ * @brief Time remaining
+ * @return Boolean \n TRUE if player notices the effect, otherwise FALSE.
+ * @note (see file xtra2.c)
+ */
+extern bool set_slow(int v);
+
+/** @fn set_shield(int v, int p, s16b o, s16b d1, s16b d2)
+ * @brief Player has timed mystic shield.\n
+ * @param v Number \n time remaining until effect expires
+ * (must be in the range 0 to 10,000)
+ * @brief Time remaining
+ * @param p Number \n bonus to AC
+ * @brief AC bonus
+ * @param o Number \n type of shield (see SHIELD_foo fields)
+ * @brief Shield type
+ * @param d1 Number \n number of dice for damage roll
+ * @brief Damage dice
+ * @param d2 Number \n number of sides per die for damage roll
+ * @brief Damage sides
+ * @return Boolean \n TRUE if player notices the effect, otherwise FALSE.
+ * @note (see file xtra2.c)
+ */
+extern bool set_shield(int v, int p, s16b o, s16b d1, s16b d2);
+
+/* For calc_bonus hooks */
+/** @fn apply_flags(u32b f1, u32b f2, u32b f3, u32b f4, u32b f5, u32b esp, s16b pval = 0, s16b tval = 0, s16b to_h = 0, s16b to_d = 0, s16b to_a = 0)
+ * @brief Apply flags and values to the player.\n
+ * @param f1 Number \n flags to be applied to the player
+ * @brief Flag1
+ * @param f2 Number \n flags to be applied to the player
+ * @brief Flag2
+ * @param f3 Number \n flags to be applied to the player
+ * @brief Flag3
+ * @param f4 Number \n flags to be applied to the player
+ * @brief Flag4
+ * @param f5 Number \n flags to be applied to the player
+ * @brief Flag5
+ * @param esp Number \n ESP flag
+ * @brief Esp flag
+ * @param pval Number \n PVal to be applied to the player
+ * @brief Pval
+ * @param tval Number \n TVal to be applied to the player
+ * @brief Tval
+ * @param to_h Number \n to-hit bonus to be applied to the player
+ * @brief To-hit
+ * @param to_d Number \n to-damage bonus to be applied to the player
+ * @brief To-damage
+ * @param to_a Number \n AC bonus to be applied to the player
+ * @brief AC
+ * @note
+ * f1 can apply to attribuets, spell power, mana capacity, stealth, searching
+ * ability and frequency, infravision, digging, speed, extra blows, and
+ * earthquakes.
+ * @note
+ * f2 can apply to life capacity, sensible fire, invisibility, free action,
+ * hold life, immunities (except neither), resistances, reflection, and
+ * sustains.
+ * @note
+ * f3 can apply to extra shots, aggravate, teleport, drain XP, blessed, extra
+ * might, slow digestion, regeneration, lite, see invisible, wraith form,
+ * feather fall, fire sheath, electricity sheath, anti magic, and anti
+ * teleport.
+ * @note
+ * f4 can apply to lite, flying, climbing, nether immunity, precognition, and
+ * anti-magic power and radius.
+ * @note
+ * f5 can apply to luck, critical hits, drain mana, drain life, immovable,
+ * water breath, and magic breath.
+ * @note
+ * esp can apply to, well, just telepathy.
+ * @note
+ * pval can apply to attributes, luck, spell power, mana capacity, life
+ * capacity, stealth, search ability and frequency (x 5), infravision, digging
+ * (x 20), speed, extra blows, critical blows, invisibility (x 10), extra
+ * might, anti-magic power and radius.
+ * @note
+ * tval can apply to lite
+ * @note
+ * to_h, to_d, and to_ac can apply to anti-magic power and radius.
+ * @note (see file xtra1.c)
+ */
+extern void apply_flags(u32b f1, u32b f2, u32b f3, u32b f4, u32b f5, u32b esp, s16b pval = 0, s16b tval = 0, s16b to_h = 0, s16b to_d = 0, s16b to_a = 0);
+
+/** @name Shield effect options
+ * @{ */
+/** @def SHIELD_NONE */
+#define SHIELD_NONE	     0x0000
+
+/** @def SHIELD_COUNTER */
+#define SHIELD_COUNTER	  0x0001
+
+/** @def SHIELD_FIRE */
+#define SHIELD_FIRE	     0x0002
+
+/** @def SHIELD_GREAT_FIRE */
+#define SHIELD_GREAT_FIRE       0x0004
+
+/** @def SHIELD_FEAR */
+#define SHIELD_FEAR	     0x0008
+/** @} */
+
+
+/** @fn set_tim_thunder(int v, int p1, int p2)
+ * @brief Player has timed thunderstorm.\n
+ * @param v Number \n time remaining until effect expires
+ * (must be in the range 0 to 10,000)
+ * @brief Time remaining
+ * @param p1 Number \n number of dice for damage roll
+ * @brief Damage dice
+ * @param p2 Number \n number of sides per die for damage roll
+ * @brief Damage sides
+ * @return Boolean \n TRUE if player notices the effect, otherwise FALSE.
+ * @note (see file xtra2.c)
+ */
+extern bool set_tim_thunder(int v, int p1, int p2);
+
+/** @fn set_tim_breath(int v, bool magical)
+ * @brief Player has timed magic/water breath.\n
+ * @param v Number \n time remaining until effect expires
+ * (must be in the range 0 to 10,000)
+ * @brief Time remaining
+ * @param magical Boolean \n TRUE if player has magic breath, or FALSE if the
+ * player has water breath
+ * @brief Magic breath?
+ * @return Boolean \n TRUE if player notices the effect, otherwise FALSE.
+ * @note (see file xtra2.c)
+ */
+extern bool set_tim_breath(int v, bool magical);
+
+/** @fn set_tim_fly(int v)
+ * @brief Player has timed flight.\n
+ * @param v Number \n time remaining until effect expires
+ * (must be in the range 0 to 10,000)
+ * @brief Time remaining
+ * @return Boolean \n TRUE if player notices the effect, otherwise FALSE.
+ * @note (see file xtra2.c)
+ */
+extern bool set_tim_fly(int v);
+
+/** @fn set_blessed(int v)
+ * @brief Player has timed blessing.\n
+ * @param v Number \n time remaining until effect expires
+ * (must be in the range 0 to 10,000)
+ * @brief Time remaining
+ * @return Boolean \n TRUE if player notices the effect, otherwise FALSE.
+ * @note
+ * Blessing gives +5 bonus AC and +10 bonus to-hit.
+ * @note (see file xtra2.c)
+ */
+extern bool set_blessed(int v);
+
+/** @fn set_hero(int v)
+ * @brief Player has timed heroism.\n
+ * @param v Number \n time remaining until effect expires
+ * (must be in the range 0 to 10,000)
+ * @brief Time remaining
+ * @return Boolean \n TRUE if player notices the effect, otherwise FALSE.
+ * @note
+ * Heroism gives +10 bonus max HP, +12 bonus to-hit, and resist fear.
+ * @note (see file xtra2.c)
+ */
+extern bool set_hero(int v);
+
+/** @fn set_shero(int v)
+ * @brief Player has timed berserk strength.\n
+ * @param v Number \n time remaining until effect expires
+ * (must be in the range 0 to 10,000)
+ * @brief Time remaining
+ * @return Boolean \n TRUE if player notices the effect, otherwise FALSE.
+ * @note
+ * Berserk strength gives +30 bonus max HP, +24 bonus to-hit, -10 penalty AC,
+ * and resist fear.
+ * @note (see file xtra2.c)
+ */
+extern bool set_shero(int v);
+
+/** @fn set_protevil(int v)
+ * @brief Player has timed protection from evil.\n
+ * @param v Number \n time remaining until effect expires
+ * (must be in the range 0 to 10,000)
+ * @brief Time remaining
+ * @return Boolean \n TRUE if player notices the effect, otherwise FALSE.
+ * @note
+ * Protection from evil gives the player a chance to repel evil monsters.
+ * @note (see file xtra2.c)
+ */
+extern bool set_protevil(int v);
+
+/** @fn set_protgood(int v)
+ * @brief Player has timed protection from good.\n
+ * @param v Number \n time remaining until effect expires
+ * (must be in the range 0 to 10,000)
+ * @brief Time remaining
+ * @return Boolean \n TRUE if player notices the effect, otherwise FALSE.
+ * @note
+ * Protection from good gives the player a chance to repel good monsters.
+ * @note (see file xtra2.c)
+ */
+extern bool set_protgood(int v);
+
+/** @fn set_protundead(int v)
+ * @brief Player has timed protection from undead.\n
+ * @param v Number \n time remaining until effect expires
+ * (must be in the range 0 to 10,000)
+ * @brief Time remaining
+ * @return Boolean \n TRUE if player notices the effect, otherwise FALSE.
+ * @note
+ * Protection from undead protects against getting the Black Breath in a melee
+ * attack.
+ * @note (see file xtra2.c)
+ */
+extern bool set_protundead(int v);
+
+/** @fn set_invuln(int v)
+ * @brief Player has timed invulnerability.\n
+ * @param v Number \n time remaining until effect expires
+ * (must be in the range 0 to 10,000)
+ * @brief Time remaining
+ * @return Boolean \n TRUE if player notices the effect, otherwise FALSE.
+ * @note
+ * Invulnerability prevents damage from walking on lava, walking the Straight
+ * Road, poison, cuts, and starvation. It gives +100 bonus to AC.
+ * @note
+ * It can be ended by the player attacking a monster, firing a missile,
+ * throwing an object, or activating a power.
+ * @note (see file xtra2.c)
+ */
+extern bool set_invuln(int v);
+
+/** @fn set_tim_invis(int v)
+ * @brief Player has timed "see invisibile".\n
+ * @param v Number \n time remaining until effect expires
+ * (must be in the range 0 to 10,000)
+ * @brief Time remaining
+ * @return Boolean \n TRUE if player notices the effect, otherwise FALSE.
+ * @note (see file xtra2.c)
+ */
+extern bool set_tim_invis(int v);
+
+/** @fn set_tim_infra(int v)
+ * @brief Player has timed infravision.\n
+ * @param v Number \n time remaining until effect expires
+ * (must be in the range 0 to 10,000)
+ * @brief Time remaining
+ * @return Boolean \n TRUE if player notices the effect, otherwise FALSE.
+ * @note (see file xtra2.c)
+ */
+extern bool set_tim_infra(int v);
+
+/** @fn set_mental_barrier(int v)
+ * @brief Player has timed mental barrier.\n
+ * @param v Number \n time remaining until effect expires
+ * (must be in the range 0 to 10,000)
+ * @brief Time remaining
+ * @return Boolean \n TRUE if player notices the effect, otherwise FALSE.
+ * @note
+ * Mental barrier sustains intelligence and wisdom.
+ * @note (see file xtra2.c)
+ */
+extern bool set_mental_barrier(int v);
+
+/** @fn set_poison(int v)
+ * @brief Player has timed poison hands.\n
+ * @param v Number \n time remaining until effect expires
+ * (must be in the range 0 to 10,000)
+ * @brief Time remaining
+ * @return Boolean \n TRUE if player notices the effect, otherwise FALSE.
+ * @note (see file xtra2.c)
+ */
+extern bool set_poison(int v);
+
+/** @fn set_oppose_acid(int v)
+ * @brief Player has timed acid resistance.\n
+ * @param v Number \n time remaining until effect expires
+ * (must be in the range 0 to 10,000)
+ * @brief Time remaining
+ * @return Boolean \n TRUE if player notices the effect, otherwise FALSE.
+ * @note (see file xtra2.c)
+ */
+extern bool set_oppose_acid(int v);
+
+/** @fn set_oppose_elec(int v)
+ * @brief Player has timed electricity resistance.\n
+ * @param v Number \n time remaining until effect expires
+ * (must be in the range 0 to 10,000)
+ * @brief Time remaining
+ * @return Boolean \n TRUE if player notices the effect, otherwise FALSE.
+ * @note (see file xtra2.c)
+ */
+extern bool set_oppose_elec(int v);
+
+/** @fn set_oppose_fire(int v)
+ * @brief Player has timed fire resistance.\n
+ * @param v Number \n time remaining until effect expires
+ * (must be in the range 0 to 10,000)
+ * @brief Time remaining
+ * @return Boolean \n TRUE if player notices the effect, otherwise FALSE.
+ * @note (see file xtra2.c)
+ */
+extern bool set_oppose_fire(int v);
+
+/** @fn set_oppose_cold(int v)
+ * @brief Player has timed cold resistance.\n
+ * @param v Number \n time remaining until effect expires
+ * (must be in the range 0 to 10,000)
+ * @brief Time remaining
+ * @return Boolean \n TRUE if player notices the effect, otherwise FALSE.
+ * @note (see file xtra2.c)
+ */
+extern bool set_oppose_cold(int v);
+
+/** @fn set_oppose_pois(int v)
+ * @brief Player has timed poison resistance.\n
+ * @param v Number \n time remaining until effect expires
+ * (must be in the range 0 to 10,000)
+ * @brief Time remaining
+ * @return Boolean \n TRUE if player notices the effect, otherwise FALSE.
+ * @note (see file xtra2.c)
+ */
+extern bool set_oppose_pois(int v);
+
+/** @fn set_oppose_ld(int v)
+ * @brief Player has timed light and dark resistance.\n
+ * @param v Number \n time remaining until effect expires
+ * (must be in the range 0 to 10,000)
+ * @brief Time remaining
+ * @return Boolean \n TRUE if player notices the effect, otherwise FALSE.
+ * @note (see file xtra2.c)
+ */
+extern bool set_oppose_ld(int v);
+
+/** @fn set_oppose_cc(int v)
+ * @brief Player has timed chaos and confusion resistance.\n
+ * @param v Number \n time remaining until effect expires
+ * (must be in the range 0 to 10,000)
+ * @brief Time remaining
+ * @return Boolean \n TRUE if player notices the effect, otherwise FALSE.
+ * @note (see file xtra2.c)
+ */
+extern bool set_oppose_cc(int v);
+
+/** @fn set_oppose_ss(int v)
+ * @brief Player has timed sound and shard resistance.\n
+ * @param v Number \n time remaining until effect expires
+ * (must be in the range 0 to 10,000)
+ * @brief Time remaining
+ * @return Boolean \n TRUE if player notices the effect, otherwise FALSE.
+ * @note (see file xtra2.c)
+ */
+extern bool set_oppose_ss(int v);
+
+/** @fn set_oppose_nex(int v)
+ * @brief Player has timed nexus resistance.\n
+ * @param v Number \n time remaining until effect expires
+ * (must be in the range 0 to 10,000)
+ * @brief Time remaining
+ * @return Boolean \n TRUE if player notices the effect, otherwise FALSE.
+ * @note (see file xtra2.c)
+ */
+extern bool set_oppose_nex(int v);
+
+/** @fn set_stun(int v)
+ * @brief Player stun level changes.\n
+ * @param v Number \n the level of stun (must be in the range 0 to 10,000)
+ * @brief Stun level
+ * @return Boolean \n TRUE if player notices the effect, otherwise FALSE.
+ * @note
+ * Note the special code to only notice "range" changes.
+ * @note
+ * Some races resist stunning.
+ * @note
+ * There is a v chance in 1000 or 1 in 16 that a stun will be the result of
+ * a vicious blow to the head. If so, the player will lose a point of
+ * intelligence, or wisdom, or both unless the stat is sustained.
+ * @note (see file xtra2.c)
+ */
+extern bool set_stun(int v);
+
+/** @fn set_cut(int v)
+ * @brief Player cut level changes.\n
+ * @param v Number \n the level of cut (must be in the range 0 to 10,000)
+ * @brief Cut level
+ * @return Boolean \n TRUE if player notices the effect, otherwise FALSE.
+ * @note
+ * Note the special code to only notice "range" changes.
+ * @note
+ * Some races resist cutting.
+ * @note
+ * There is a v chance in 1000 or 1 in 16 that a cut will result in scarrring.
+ * If so, the player will lose a point of charisma unless it is sustained.
+ * @note (see file xtra2.c)
+ */
+extern bool set_cut(int v);
+
+/** @fn set_food(int v)
+ * @brief Player hunger level changes.\n
+ * @param v Number \n the level of cut (must be in the range 0 to 10,000)
+ * @brief Cut level
+ * @return Boolean \n TRUE if player notices the effect, otherwise FALSE.
+ * @note
+ * The "p_ptr->food" variable can get as large as 20000, allowing the
+ * addition of the most "filling" item, Elvish Waybread, which adds
+ * 7500 food units, without overflowing the 32767 maximum limit.
+ * @note
+ * Perhaps we should disturb the player with various messages,
+ * especially messages about hunger status changes.  XXX XXX XXX
+ * @note
+ * Digestion of food is handled in "dungeon.c", in which, normally,
+ * the player digests about 20 food units per 100 game turns, more
+ * when "fast", more when "regenerating", less with "slow digestion",
+ * but when the player is "gorged", he digests 100 food units per 10
+ * game turns, or a full 1000 food units per 100 game turns.
+ * @note
+ * Note that the player's speed is reduced by 10 units while gorged,
+ * so if the player eats a single food ration (5000 food units) when
+ * full (15000 food units), he will be gorged for (5000/100)*10 = 500
+ * game turns, or 500/(100/5) = 25 player turns (if nothing else is
+ * affecting the player speed).
+ * @note (see file xtra2.c)
+ */
+extern bool set_food(int v);
+
+/** @name Hunger flags
+ * @brief Player "food" crucial values
+ * @{ */
+/** @def PY_FOOD_MAX
+ * @note Food value (Bloated)
+ */
+#define PY_FOOD_MAX	     15000
+/** @def PY_FOOD_FULL
+ * @note Food value (Normal)
+ */
+#define PY_FOOD_FULL    10000
+/** @def PY_FOOD_ALERT
+ * @note Food value (Hungry)
+ */
+#define PY_FOOD_ALERT   2000
+/** @def PY_FOOD_WEAK
+ * @note Food value (Weak)
+ */
+#define PY_FOOD_WEAK    1000
+/** @def PY_FOOD_FAINT
+ * @note Food value (Fainting)
+ */
+#define PY_FOOD_FAINT   500
+/** @def PY_FOOD_STARVE
+ * @note Food value (Starving)
+ */
+#define PY_FOOD_STARVE  100
+/** @} */
+
+/** @fn check_experience(void)
+ * @brief Check if player experience level has changed.\n
+ * @note
+ * If a player has achieved a level for the first time, give a corruption
+ * (1 chance in 3) if it applies, increase skill points, check ability levels,
+ * and add a note if notes are taken.
+ * @note (see file xtra2.c)
+ */
+extern void check_experience(void);
+
+/** @fn check_experience_obj(object_type *o_ptr)
+ * @brief Check if object "o_ptr" experience level has changed.\n
+ * @param *o_ptr object_type \n the object
+ * @brief Object
+ * @note
+ * If an object has achieved a level for the first time, apply gains.
+ * @note (see file xtra2.c)
+ */
+extern void check_experience_obj(object_type *o_ptr);
+
+/** @fn gain_exp(s32b amount)
+ * @brief Gain "amount" of experience.\n
+ * @param amount Number \n the experience points to gain.
+ * @brief Experience
+ * @note
+ * Count the number of objects which will gain experience. The objects share
+ * equally 2/3 of "amount". Give corruption if it applies. Gain experience.
+ * If experience is less than maximum, then increase maximum experience by 20%
+ * of "amount". Check for level change and print experience (check_experience).
+ * @note (see file xtra2.c)
+ */
+extern void gain_exp(s32b amount);
+
+/** @fn lose_exp(s32b amount)
+ * @brief Decrease experience by "amount".\n
+ * @param amount Number \n the experience points to lose.
+ * @brief Experience
+ * @note
+ * Experience can not fall below zero. Check for level change and print
+ * experience (check_experience).
+ * @note (see file xtra2.c)
+ */
+extern void lose_exp(s32b amount);
+
+/** @fn no_lite(void)
+ * @brief Return true if the player's grid is dark.
+ * @return Boolean \n TRUE if the player's grid is dark, otherwise FALSE.
+ * @note (see file cave.c)
+ */
+extern bool no_lite(void);
+
+/** @var dun_level
+ * @brief Number
+ * @note Current dungeon level
+ */
+extern s16b dun_level;
+
+
+/** @name Gods
+ * @{ */
+/** @def GOD_ALL */
+#define GOD_ALL		 -1
+
+/** @def GOD_NONE */
+#define GOD_NONE		0
+
+/** @def GOD_ERU */
+#define GOD_ERU		 1
+
+/** @def GOD_MANWE */
+#define GOD_MANWE	       2
+
+/** @def GOD_TULKAS */
+#define GOD_TULKAS	      3
+
+/** @def GOD_MELKOR */
+#define GOD_MELKOR	      4
+
+/** @def GOD_YAVANNA */
+#define GOD_YAVANNA	     5
+/** @} */
+
+
+/** @fn inc_piety(int god, s32b amt)
+ * @brief Increase piety for god "god" by amount "amt".\n
+ * @param god Number \n the god
+ * @brief God
+ * @param amt Number \n the amount of piety
+ * @brief Piety
+ * @note
+ * If the player worships all gods, or "god", the piety (grace) will increase.
+ * @note (see file gods.c)
+ */
+extern void inc_piety(int god, s32b amt);
+
+/** @fn abandon_god(int god)
+ * @brief Player renounces their religion.\n
+ * @param god Number \n the god
+ * @brief God
+ * @note
+ * If the player worships all gods or "god", the player worships no god and
+ * the piety score is set to 0.
+ * @note (see file gods.c)
+ */
+extern void abandon_god(int god);
+
+/** @fn wisdom_scale(int max)
+ * @brief Rescale the wisdom value to a 0 <-> max range.\n
+ * @param max Number \n the new maximum value of the rescaled wisdom
+ * @brief New maximum wisdom
+ * @return Number \n The rescaled value of player wisdom.
+ * @note (see file gods.c)
+ */
+extern int wisdom_scale(int max);
+
+/** @fn follow_god(int god, bool silent)
+ * @brief Player starts to follow god "god".\n
+ * @param god Number \n the god
+ * @brief God
+ * @param silent Boolean \n TRUE if Melkor message is displayed, otherwise
+ * FALSE.
+ * @brief Show message?
+ * @note
+ * Unbelievers can not follow a god.
+ * @note
+ * If the player does not worship a god, they start worshipping "god". If the
+ * god is Melkor, the player gains the Udun skill (show a message if silent is
+ * FALSE).
+ * @note (see file gods.c)
+ */
+extern void follow_god(int god, bool silent);
+
+/** @fn add_new_gods(char *name)
+ * @brief Add a new god to the deity array.\n
+ * @param *name String \n the name of the god
+ * @brief God name
+ * @return Number \n The index of the new god inthe deity array.
+ * @note (see file lua_bind.c)
+ */
+extern s16b    add_new_gods(char *name);
+
+/** @fn desc_god(int g_idx, int d, char *desc)
+ * @brief Return line "d" of the description of god with god index "g_idx".\n
+ * @param g_idx Number \n the index of god in the deity array.
+ * @brief God index
+ * @param d Number \n the line of the description
+ * (must be in the range 0 to 9).
+ * @brief Line of description
+ * @param *desc String
+ * @brief Description
+ * @return *desc String \n Line "d" of the god description.
+ * @note (see file lua_bind.c)
+ */
+extern void    desc_god(int g_idx, int d, char *desc);
+
+/** @name Powers
+ * @{ */
+/** @def PWR_SPIT_ACID
+ * @note Spit acid (GF_ACID) */
+#define PWR_SPIT_ACID		  0
+
+/** @def PWR_BR_FIRE
+ * @note Breathe fire (GF_FIRE) */
+#define PWR_BR_FIRE		    1
+
+/** @def PWR_HYPN_GAZE
+ * @note Hypnotic gaze */
+#define PWR_HYPN_GAZE		  2
+
+/** @def PWR_TELEKINES
+ * @note Telekinesis (fetch an object) */
+#define PWR_TELEKINES		  3
+
+/** @def PWR_VTELEPORT
+ * @note Teleport */
+#define PWR_VTELEPORT		  4
+
+/** @def PWR_MIND_BLST
+ * @note Mind blast (GF_PSI) */
+#define PWR_MIND_BLST		  5
+
+/** @def PWR_RADIATION
+ * @note Emit radiation (GF_NUKE) */
+#define PWR_RADIATION		  6
+
+/** @def PWR_VAMPIRISM
+ * @note Vampire bite */
+#define PWR_VAMPIRISM		  7
+
+/** @def PWR_SMELL_MET
+ * @note Detect treasure */
+#define PWR_SMELL_MET		  8
+
+/** @def PWR_SMELL_MON
+ * @note Detect normal monsters */
+#define PWR_SMELL_MON		  9
+
+/** @def PWR_BLINK
+ * @note Short teleport (up to 10 grids) */
+#define PWR_BLINK		      10
+
+/** @def PWR_EAT_ROCK
+ * @note Eat rock for food (wall to mud) */
+#define PWR_EAT_ROCK		   11
+
+/** @def PWR_SWAP_POS
+ * @note Swap position with a monster */
+#define PWR_SWAP_POS		   12
+
+/** @def PWR_SHRIEK
+ * @note Shriek (GF_SOUND and aggravate) */
+#define PWR_SHRIEK		     13
+
+/** @def PWR_ILLUMINE
+ * @note Lite area */
+#define PWR_ILLUMINE		   14
+
+/** @def PWR_DET_CURSE
+ * @note Detect cursed items in inventory */
+#define PWR_DET_CURSE		  15
+
+/** @def PWR_BERSERK
+ * @note Berserk rage */
+#define PWR_BERSERK		    16
+
+/** @def PWR_POLYMORPH
+ * @note Polymorph self */
+#define PWR_POLYMORPH		  17
+
+/** @def PWR_MIDAS_TCH
+ * @note Midas touch - turn an item into gold */
+#define PWR_MIDAS_TCH		  18
+
+/** @def PWR_GROW_MOLD
+ * @note Summon mold */
+#define PWR_GROW_MOLD		  19
+
+/** @def PWR_RESIST
+ * @note Temporary elemental resist */
+#define PWR_RESIST		     20
+
+/** @def PWR_EARTHQUAKE
+ * @note Cause an earthquake (destruction) */
+#define PWR_EARTHQUAKE		 21
+
+/** @def PWR_EAT_MAGIC
+ * @note Absorb energy from magic items */
+#define PWR_EAT_MAGIC		  22
+
+/** @def PWR_WEIGH_MAG
+ * @note Report magic affecting player */
+#define PWR_WEIGH_MAG		  23
+
+/** @def PWR_STERILITY
+ * @note Player experiences forced abstinence */
+#define PWR_STERILITY		  24
+
+/** @def PWR_PANIC_HIT
+ * @note Hit a monster and run away */
+#define PWR_PANIC_HIT		  25
+
+/** @def PWR_DAZZLE
+ * @note Stun, confuse, and turn monsters */
+#define PWR_DAZZLE		     26
+
+/** @def PWR_DARKRAY
+ * @note Fire a beam of light (GF_LITE) */
+#define PWR_DARKRAY		    27
+
+/** @def PWR_RECALL
+ * @note Recall to dungeon/town */
+#define PWR_RECALL		     28
+
+/** @def PWR_BANISH
+ * @note Banish evil creatures */
+#define PWR_BANISH		     29
+
+/** @def PWR_COLD_TOUCH
+ * @note Bolt of cold (GF_COLD) */
+#define PWR_COLD_TOUCH		 30
+
+/** @def PWR_LAUNCHER
+ * @note Increase the multiplier for a thrown object */
+#define PWR_LAUNCHER		   31
+
+/** @def PWR_PASSWALL
+ * @note Walk through a wall */
+#define PWR_PASSWALL		    32
+
+/** @def PWR_DETECT_TD
+ * @note Detect traps, doors, and stairs */
+#define PWR_DETECT_TD		   33
+
+/** @def PWR_COOK_FOOD
+ * @note Create some food */
+#define PWR_COOK_FOOD		   34
+
+/** @def PWR_UNFEAR
+ * @note Remove fear */
+#define PWR_UNFEAR		      35
+
+/** @def PWR_EXPL_RUNE
+ * @note Set an explosive rune */
+#define PWR_EXPL_RUNE		   36
+
+/** @def PWR_STM
+ * @note Bash a wall (stone to mud) */
+#define PWR_STM			 37
+
+/** @def PWR_POIS_DART
+ * @note Throw a poison dart (GF_POIS) */
+#define PWR_POIS_DART		   38
+
+/** @def PWR_MAGIC_MISSILE
+ * @note Fire a magic missile (GF_MISSILE) */
+#define PWR_MAGIC_MISSILE	       39
+
+/** @def PWR_GROW_TREE
+ * @note Grow trees around the player */
+#define PWR_GROW_TREE		   40
+
+/** @def PWR_BR_COLD
+ * @note Breathe cold (GF_COLD) */
+#define PWR_BR_COLD		     41
+
+/** @def PWR_BR_CHAOS
+ * @note Breathe chaos (GF_CHAOS) */
+#define PWR_BR_CHAOS		    42
+
+/** @def PWR_BR_ELEM
+ * @note Breath elements (GF_MISSILE) */
+#define PWR_BR_ELEM		     43
+
+/** @def PWR_WRECK_WORLD
+ * @note Change the world (new level) */
+#define PWR_WRECK_WORLD		 44
+
+/** @def PWR_SCARE
+ * @note Howl to scare monsters */
+#define PWR_SCARE		       45
+
+/** @def PWR_REST_LIFE
+ * @note Restore life levels */
+#define PWR_REST_LIFE		   46
+
+/** @def PWR_SUMMON_MONSTER
+ * @note Beastmaster powers (summon pets) */
+#define PWR_SUMMON_MONSTER	      47
+
+/** @def PWR_NECRO
+ * @note Cast a necromancy spell */
+#define PWR_NECRO		       48
+
+/** @def PWR_ROHAN
+ * @note Use flash aura or light speed jump */
+#define PWR_ROHAN		       49
+
+/** @def PWR_THUNDER
+ * @note Use thunder strike, ride the straight road, or go back in town */
+#define PWR_THUNDER		     50
+
+/** @def PWR_DEATHMOLD
+ * @note Use deathmold powers:\n
+ * (a) Teleport to a specific place\n
+ * (b) Fetch an item\n
+ * (c) Go up 50'\n
+ * (d) Go down 50'
+ */
+#define PWR_DEATHMOLD		   51
+
+/** @def PWR_HYPNO
+ * @note Hypnotise a pet */
+#define PWR_HYPNO		       52
+
+/** @def PWR_UNHYPNO
+ * @note Unhypnotise a pet */
+#define PWR_UNHYPNO		     53
+
+/** @def PWR_INCARNATE
+ * @note Incarnate into a body */
+#define PWR_INCARNATE		   54
+
+/** @def PWR_MAGIC_MAP
+ * @note Magic mapping */
+#define PWR_MAGIC_MAP		   55
+
+/** @def PWR_LAY_TRAP
+ * @note Set a trap */
+#define PWR_LAY_TRAP		    56
+
+/** @def PWR_MERCHANT
+ * @note Appraise item, warp item, or identify item */
+#define PWR_MERCHANT		    57
+
+/** @def PWR_COMPANION
+ * @note Create a companion */
+#define PWR_COMPANION		   58
+
+/** @def PWR_BEAR
+ * @note Mimic a bear */
+#define PWR_BEAR			59
+
+/** @def PWR_DODGE
+ * @note Report chance of dodging a monster */
+#define PWR_DODGE		       60
+
+/** @def PWR_BALROG
+ * @note Mimic a balrog */
+#define PWR_BALROG		      61
+/** @} */
+
+/* Misc */
+/** @fn do_cmd_throw(void)
+ * @brief Throw an object from the pack or floor.
+ * @note
+ * Note: "unseen" monsters are very hard to hit.
+ * @note
+ * Should throwing a weapon do full damage?  Should it allow the magic
+ * to hit bonus of the weapon to have an effect?  Should it ever cause
+ * the item to be destroyed?  Should it do any damage at all?
+ * @note (see file cmd2.c)
+ */
+extern void do_cmd_throw(void);
+
+/** @fn change_wild_mode()
+ * @brief Toggle between big map and little map.
+ * @note
+ * If the player is immovable, and the map is big, the player receives a
+ * warning and is allowed to proceed.
+ * @note
+ * If the player is about to be recalled, and the map is big, the map is
+ * not changed.
+ * @note
+ * The map is changed. The game is saved if autosave is set to "levels".
+ * @note (see file spells2.c)
+ */
+extern void change_wild_mode();
+
+/** @fn switch_class(int sclass)
+ * @brief Change to an other class.\n
+ * @param sclass Number \n the inex of the new class in the class array
+ * @brief Class index
+ * @note (see file xtra2.c)
+ */
+extern void switch_class(int sclass);
+
+/** @fn switch_subclass(int sclass)
+ * @brief Change to an other subclass.\n
+ * @param sclass Number \n the new subclass
+ * @brief Subclass
+ * @note (see file xtra2.c)
+ */
+extern void switch_subclass(int sclass);
+
+/** @fn switch_subrace(int racem, bool copy_old)
+ * @brief Change to an other subrace.\n
+ * @param racem Number \n index of subrace in subrace array
+ * @brief Subrace index
+ * @param copy_old Boolean \n TRUE if the new subrace is to be saved,
+ * otherwise FALSE.
+ * @brief Copy old subrace?
+ * @note (see file xtra2.c)
+ */
+extern void switch_subrace(int racem, bool copy_old);
+
+/** @fn get_subrace_title(int racem)
+ * @brief Return the subrace title.\n
+ * @param racem Number \n index of subrace in subrace array
+ * @brief Subrace index
+ * @return String \n Title of subrace.
+ * @note (see file xtra2.c)
+ */
+extern cptr get_subrace_title(int racem);
+
+/** @fn set_subrace_title(int racem, cptr name)
+ * @brief Set the subrace title.\n
+ * @param racem Number \n index of subrace in subrace array
+ * @brief Subrace index
+ * @param name String \n new title of subrace
+ * @brief New title
+ * @note (see file xtra2.c)
+ */
+extern void set_subrace_title(int racem, cptr name);
+
+/** @fn do_rebirth()
+ * @brief The player is reborn after a class, race, or subrace change.
+ * @note
+ * The experience factor is recalculated. The hit dice are reset and new HP
+ * are calculated. There may be a level change involved.
+ * @note (see file xtra2.c)
+ */
+extern void do_rebirth();
+
+/* Player race flags */
+$static bool lua_test_race_flags(int slot, u32b flags) { if (slot == 1) return (PRACE_FLAG(flags)) ? TRUE : FALSE; else return (PRACE_FLAG2(flags)) ? TRUE : FALSE; }
+/** @fn test_race_flags(int slot, u32b flags);
+ * @brief Test flag "flags" against race flags, race modifier flags, class
+ * flags, and specialist flags.\n
+ * @param slot Number \n 1 if testing against first set of flags (PRACE_FLAG),
+ * 2 if testing against second set of flags (PRACE_FLAG2)
+ * @brief Flag selecter.
+ * @param flags Number \n the flags to be tested
+ * @brief Test flags
+ * @return Boolean \n TRUE if test flags match any of the corresponding race,
+ * race modifier, class, and specialist flags.
+ * @note (see file w_player.c)
+ */
+static bool lua_test_race_flags@test_race_flags(int slot, u32b flags);
+
+/** @name Winner states
+ * @{ */
+/** @def WINNER_NORMAL
+ * @note Player has killed Morgoth */
+#define WINNER_NORMAL	   1
+
+/** @def WINNER_ULTRA
+ * @note Player has killed Melkor */
+#define WINNER_ULTRA	    2
+/** @} */
+
+/** @var wizard
+ * @brief Boolean
+ * @note TRUE if player currently in Wizard mode, otherwise FALSE.
+ */
+extern bool wizard;
+
+/** @var total_winner
+ * @brief Number
+ * @note Game has been won (see WINNER_foo fields).
+ */
+extern u16b total_winner;
+
+/** @var has_won
+ * @brief Number
+ * @note Game has been won (see WINNER_foo fields).
+ */
+extern u16b has_won;
+
+/** @var joke_monsters
+ * @brief Boolean
+ * @note TRUE if allowing joke monsters, otherwise FALSE.
+ */
+extern bool joke_monsters;
+
+extern s16b max_dlv[999999];

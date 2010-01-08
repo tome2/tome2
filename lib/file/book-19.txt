@@ -1,0 +1,250 @@
+The Hand druj is a rare undead monster, 
+occurring at moderate depths. 
+It is very strong, somewhat dangerous, 
+and has extremely powerful magical powers. 
+
+The Eye druj is a rare undead monster, 
+occurring at moderate depths. 
+It is unimaginably strong, moderately dangerous, 
+and has hellishly powerful magical powers. 
+
+The Skull druj is a rare undead monster, 
+occurring at moderate depths. 
+It is hellishly strong, hellishly dangerous, 
+and has hellishly powerful magical powers. 
+
+The Chaos vortex is a common monster, 
+occurring at moderate depths. 
+It is very strong, not one little bit dangerous, 
+and has no magical powers. 
+
+The Aether vortex is an uncommon monster, 
+occurring at moderate depths. 
+It is strong, unimaginably dangerous, 
+and has hellishly powerful magical powers. 
+
+The Lernean Hydra is a unique animal, 
+occurring at moderate depths. 
+It is hellishly strong, alarmingly dangerous, 
+and has hellishly powerful magical powers. 
+
+Thuringwethil is a unique undead monster, 
+occurring at moderate depths. 
+She is hellishly strong, alarmingly dangerous, 
+and has very powerful magical powers. 
+
+The Great hell wyrm is an uncommon dragon, 
+occurring at moderate depths. 
+It is hellishly strong, somewhat dangerous, 
+and has rudimentary magical powers. 
+
+The Draconic quylthulg is a somewhat rare animal, 
+occurring at moderate depths. 
+It is very strong, just a small bit dangerous, 
+and has unremarkable magical powers. 
+
+Fundin Bluecloak is a unique monster, 
+occurring at moderate depths. 
+It is hellishly strong, extremely dangerous, 
+and has unimaginably powerful magical powers. 
+
+Uriel, Angel of Fire is a unique monster, 
+occurring at moderate depths. 
+He is hellishly strong, alarmingly dangerous, 
+and has hellishly powerful magical powers. 
+
+Azriel, Angel of Death is a unique monster, 
+occurring at moderate depths. 
+He is hellishly strong, extremely dangerous, 
+and has hellishly powerful magical powers. 
+
+Ancalagon the Black is a unique dragon, 
+occurring at moderate depths. 
+He is hellishly strong, moderately dangerous, 
+and has extremely powerful magical powers. 
+
+The Nightwalker is a rare undead monster, 
+occurring at moderate depths. 
+It is hellishly strong, hellishly dangerous, 
+and has hellishly powerful magical powers. 
+
+Gabriel, the Messenger is a unique monster, 
+occurring at moderate depths. 
+He is hellishly strong, hellishly dangerous, 
+and has remarkable magical powers. 
+
+Saruman of Many Colours is a unique monster, 
+occurring at moderate-to-deep depths. 
+He is hellishly strong, hellishly dangerous, 
+and has hellishly powerful magical powers. 
+
+The Dreadlord is an uncommon undead monster, 
+occurring at moderate-to-deep depths. 
+It is hellishly strong, unimaginably dangerous, 
+and has arcane magical powers. 
+
+The Cat Lord is a unique monster, 
+occurring at moderate-to-deep depths. 
+He is hellishly strong, hellishly dangerous, 
+and has an inkling of magical powers. 
+
+The Chaos beetle is a rare monster, 
+occurring at moderate-to-deep depths. 
+It is hellishly strong, not at all dangerous, 
+and has rudimentary magical powers. 
+
+The Chaos hound is a common animal, 
+occurring at moderate-to-deep depths. 
+It is hellishly strong, just a small bit dangerous, 
+and has an inkling of magical powers. 
+
+The Great Wyrm of Chaos is an uncommon dragon, 
+occurring at moderate-to-deep depths. 
+It is hellishly strong, somewhat dangerous, 
+and has very powerful magical powers. 
+
+The Great Wyrm of Law is an uncommon dragon, 
+occurring at moderate-to-deep depths. 
+It is hellishly strong, somewhat dangerous, 
+and has very powerful magical powers. 
+
+The Great Wyrm of Balance is a rare dragon, 
+occurring at moderate-to-deep depths. 
+It is hellishly strong, somewhat dangerous, 
+and has hellishly powerful magical powers. 
+
+Tselakus, the Dreadlord is a unique undead monster, 
+occurring at moderate-to-deep depths. 
+He is hellishly strong, hellishly dangerous, 
+and has hellishly powerful magical powers. 
+
+Tiamat, Celestial Dragon of Evil is a unique dragon, 
+occurring at deep depths. 
+She is hellishly strong, unimaginably dangerous, 
+and has hellishly powerful magical powers. 
+
+The Black reaver is a somewhat rare undead monster, 
+occurring at deep depths. 
+It is hellishly strong, hellishly dangerous, 
+and has hellishly powerful magical powers. 
+
+The Master quylthulg is a somewhat rare animal, 
+occurring at deep depths. 
+It is hellishly strong, just a small bit dangerous, 
+and has hellishly powerful magical powers. 
+
+The Greater draconic quylthulg is a somewhat rare animal, 
+occurring at deep depths. 
+It is hellishly strong, just a small bit dangerous, 
+and has simple magical powers. 
+
+The Greater rotting quylthulg is a somewhat rare animal, 
+occurring at deep depths. 
+It is hellishly strong, just a small bit dangerous, 
+and has simple magical powers. 
+
+Vecna, the Emperor Lich is a unique undead monster, 
+occurring at deep depths. 
+He is hellishly strong, unimaginably dangerous, 
+and has hellishly powerful magical powers. 
+
+Omarax the Eye Tyrant is a unique monster, 
+occurring at deep depths. 
+He is hellishly strong, hellishly dangerous, 
+and has hellishly powerful magical powers. 
+
+Ungoliant, the Unlight is a unique animal, 
+occurring at deep depths. 
+She is hellishly strong, hellishly dangerous, 
+and has hellishly powerful magical powers. 
+
+The Aether hound is an uncommon animal, 
+occurring at deep depths. 
+It is hellishly strong, very dangerous, 
+and has hellishly powerful magical powers. 
+
+The Mouth of Sauron is a unique monster, 
+occurring at deep depths. 
+He is hellishly strong, hellishly dangerous, 
+and has hellishly powerful magical powers. 
+
+The Emperor Quylthulg is a unique animal, 
+occurring at deep depths. 
+It is hellishly strong, just a little bit dangerous, 
+and has unimaginably powerful magical powers. 
+
+Qlzqqlzuup, the Lord of Flesh is a unique animal, 
+occurring at deep depths. 
+It is hellishly strong, just a little bit dangerous, 
+and has hellishly powerful magical powers. 
+
+Murazor, the Witch-King of Angmar is a unique undead monster, 
+occurring at very deep depths. 
+He is hellishly strong, extremely dangerous, 
+and has hellishly powerful magical powers. 
+
+Pazuzu, Lord of Air is a unique monster, 
+occurring at very deep depths. 
+He is hellishly strong, hellishly dangerous, 
+and has advanced magical powers. 
+
+The Hell hound is a rare animal, 
+occurring at very deep depths. 
+It is somewhat strong, moderately dangerous, 
+and has an inkling of magical powers. 
+
+Cantoras, the Skeletal Lord is a unique undead monster, 
+occurring at very deep depths. 
+He is hellishly strong, unimaginably dangerous, 
+and has hellishly powerful magical powers. 
+
+The Tarrasque is a unique monster, 
+occurring at very deep depths. 
+It is hellishly strong, somewhat dangerous, 
+and has average magical powers. 
+
+Lungorthin, the Balrog of White Fire is a unique monster, 
+occurring at very deep depths. 
+He is hellishly strong, extremely dangerous, 
+and has advanced magical powers. 
+
+Draugluin, Sire of All Werewolves is a unique animal, 
+occurring at very deep depths. 
+He is hellishly strong, moderately dangerous, 
+and has simple magical powers. 
+
+Feagwath the Undead Sorceror is a unique undead monster, 
+occurring at extremely deep depths. 
+He is hellishly strong, hellishly dangerous, 
+and has hellishly powerful magical powers. 
+
+Carcharoth, the Jaws of Thirst is a unique animal, 
+occurring at extremely deep depths. 
+He is hellishly strong, moderately dangerous, 
+and has advanced magical powers. 
+
+Cerberus, Guardian of Hades is a unique animal, 
+occurring at extremely deep depths. 
+It is hellishly strong, moderately dangerous, 
+and has very powerful magical powers. 
+
+Gothmog, the High Captain of Balrogs is a unique monster, 
+occurring at extremely deep depths. 
+He is hellishly strong, unimaginably dangerous, 
+and has advanced magical powers. 
+
+Sauron, the Sorcerer is a unique monster, 
+occurring at extremely deep depths. 
+He is hellishly strong, hellishly dangerous, 
+and has hellishly powerful magical powers. 
+
+Morgoth, Lord of Darkness is a unique monster, 
+occurring at bottomless depths. 
+He is hellishly strong, hellishly dangerous, 
+and has hellishly powerful magical powers. 
+
+The Haughty noble is a common monster, 
+occurring at surface depths. 
+He is laughably weak, not one little bit dangerous, 
+and has no magical powers. 
+

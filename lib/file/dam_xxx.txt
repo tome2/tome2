@@ -1,0 +1,11 @@
+9
+******** BUFFER LINE *********************************** DO NOT REMOVE *******
+%^s disintegrates into a fine mist!
+%^s splatters all over the floor.
+%^s explodes into tiny chunks.
+%^s's bones are crushed at the force of your blow!
+You almost squash %s into a pancake!
+Your weapons neatly slice %s into many little pieces.
+You cleave %s in half.
+%^s's head flies off in a wide trajectory.
+%^s is driven several feet into the ground under your blow!

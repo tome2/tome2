@@ -1,0 +1,144 @@
+# File: pref-sdl.prf
+
+# This file implements macros for extended keyboard commands (characters not
+# within the 128 character ASCII set).
+# Basically, if you have to hold down control or alt or it's an arrow key,
+# it will be handled here. This means that we can let SDL worry about figuring
+# out what key is which; all it needs to do is give us the name and we'll map
+# it here.
+#
+# Note the use of "\e\e\e\e" (four escapes) to allow the macros to work
+# even if the game is not yet ready for a command.
+#
+# Note the use of "\\." (for "run") and "\\+" (for "alter"), to make sure
+# that the macros will work regardless of the "keymap" being used.
+#
+
+# Basic Arrow Movement
+
+A:8
+P:\[up]
+
+A:6
+P:\[right]
+
+A:4
+P:\[left]
+
+A:2
+P:\[down]
+
+# Basic Arrows with Shift Down
+
+A:\e\e\e\e\\.8
+P:\[shift-up]
+
+A:\e\e\e\e\\.6
+P:\[shift-right]
+
+A:\e\e\e\e\\.4
+P:\[shift-left]
+
+A:\e\e\e\e\\.2
+P:\[shift-down]
+
+# Basic Arrows with Control Down
+
+A:\e\e\e\e\\+8
+P:\[ctrl-up]
+
+A:\e\e\e\e\\+6
+P:\[ctrl-right]
+
+A:\e\e\e\e\\+4
+P:\[ctrl-left]
+
+A:\e\e\e\e\\+2
+P:\[ctrl-down]
+
+# Keypad
+
+A:1
+P:\[[1]]
+
+A:2
+P:\[[2]]
+
+A:3
+P:\[[3]]
+
+A:4
+P:\[[4]]
+
+A:5
+P:\[[5]]
+
+A:6
+P:\[[6]]
+
+A:7
+P:\[[7]]
+
+A:8
+P:\[[8]]
+
+A:9
+P:\[[9]]
+
+# Keypad With Shift
+
+A:\e\e\e\e\\.1
+P:\[shift-[1]]
+
+A:\e\e\e\e\\.2
+P:\[shift-[2]]
+
+A:\e\e\e\e\\.3
+P:\[shift-[3]]
+
+A:\e\e\e\e\\.4
+P:\[shift-[4]]
+
+A:\e\e\e\e\\.5
+P:\[shift-[5]]
+
+A:\e\e\e\e\\.6
+P:\[shift-[6]]
+
+A:\e\e\e\e\\.7
+P:\[shift-[7]]
+
+A:\e\e\e\e\\.8
+P:\[shift-[8]]
+
+A:\e\e\e\e\\.9
+P:\[shift-[9]]
+
+# Keypad With Control
+
+A:\e\e\e\e\\+1
+P:\[ctrl-[1]]
+
+A:\e\e\e\e\\+2
+P:\[ctrl-[2]]
+
+A:\e\e\e\e\\+3
+P:\[ctrl-[3]]
+
+A:\e\e\e\e\\+4
+P:\[ctrl-[4]]
+
+A:\e\e\e\e\\+5
+P:\[ctrl-[5]]
+
+A:\e\e\e\e\\+6
+P:\[ctrl-[6]]
+
+A:\e\e\e\e\\+7
+P:\[ctrl-[7]]
+
+A:\e\e\e\e\\+8
+P:\[ctrl-[8]]
+
+A:\e\e\e\e\\+9
+P:\[ctrl-[9]]

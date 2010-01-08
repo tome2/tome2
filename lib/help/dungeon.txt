@@ -1,0 +1,706 @@
+|||||oy
+~~~~~02|Dungeons
+#####R             /----------------------------------------\
+#####R            < The Dungeons and Places of Middle-earth  >
+#####R             \----------------------------------------/
+
+     *****dungeon.txt*04[Symbols On Your Map]           *****dungeon.txt*07[The Town and Buildings]
+     *****dungeon.txt*01[The Wilderness]                *****dungeon.txt*06[In the Dungeon]
+     *****dungeon.txt*08[Objects]                       *****dungeon.txt*13[Mining]
+     *****dungeon.txt*12[Doors, Rooms, Staircases etc.] *****dungeon.txt*18[Pets]
+     *****dungeon.txt*14[Winning]                       *****dungeon.txt*15[Dying]
+     *****dungeon.txt*16[Where to get more help]
+
+After you have *****birth.txt*0[created your character], you will begin your ToME
+adventure. Symbols appearing on your screen will represent the world's
+walls, floor, objects, features, and creatures lurking about.  In order
+to direct your character through his adventure, you will enter single
+character commands (see "*****command.txt*0[command.txt]").
+
+~~~~~03|Symbols
+~~~~~04|Identifying features
+#####R=== Symbols On Your Map ===
+
+Symbols on your map can be broken down into three categories: Features of
+the world such as walls, floor, doors, and traps; Objects which can be
+picked up such as treasure, weapons, magical devices, etc; and creatures
+which may or may not move about the dungeon, but are mostly harmful to your
+character's well being.
+
+Some symbols are used to represent more than one type of entity, and some
+symbols are used to represent entities in more than one category.  The "@"
+symbol (by default) is used to represent the character.
+
+It will not be necessary to remember all of the symbols and their meanings.
+The "slash" command ("/") will identify any character appearing on your map
+(see "*****command.txt*0[command.txt]").
+
+Note that you can use a *****command.txt*105["user pref file"] to change any of these symbols to
+something you are more comfortable with.
+   
+ 
+#####G                Features that do not block line of sight
+ 
+  .   A floor space                   1   Entrance to General Store
+  .   A trap (hidden)                 2   Entrance to Armoury
+  ^   A trap (known)                  3   Entrance to Weapon Smith
+  [[[[[y;]   A glyph of warding              4   Entrance to Temple
+  [[[[[U']   An open door                    5   Entrance to Alchemy Shop
+  [[[[[U']   A broken door                   6   Entrance to Magic Shop
+  <   A staircase up                  7   Entrance to the Black Market
+  [[[[[y<]   A quest exit                    8   Entrance to your Home
+  [[[[[r<]   A quest up level                9   Entrance to Bookstore
+  [[[[[U<]   A shaft up                      [[[[[r>]   A quest down level
+  >   A staircase down                [[[[[U>]   A shaft down
+  [[[[[y>]   A quest entrance                [[[[[v>]   Dungeon entrance
+  _   A fountain                      [[[[[D_]   An empty fountain
+  *   Straight road start/exit        [[[[[B*]   Section of the Straight Road
+  [[[[[b*]   Section of the Straight Road    [[[[[W*]   Section of the Straight Road
+  [[[[[D*]   Corrupted straight road         [[[[[R*]   An explosive rune
+  [[[[[B~]   Stream of water (shallow)       [[[[[b~]   Stream of water (deep)
+  [[[[[u~]   Tainted stream (water)          [[[[[s#]   Underground tunnel
+  [[[[[U#]   Pool of lava (shallow)          [[[[[r#]   Pool of lava (deep)
+  [[[[[D#]   Dark pit                        [[[[[u.]   Dirt
+  [[[[[g.]   Patch of Grass                  [[[[[W.]   Ice
+  [[[[[y.]   Sand                            [[[[[D.]   Ash
+  [[[[[u.]   Mud                             [[[[[v.]   Nether mist
+  [[[[[r.]   Floor                           [[[[[D0]   Altar of Darkness               
+  [[[[[R0]   Altar of Force                  [[[[[B0]   Altar of Winds                  
+  [[[[[W0]   Altar of Being                  [[[[[v+]   Void Jumpgate
+  [[[[[v;]   Monster trap                    [[[[[B.]   Glass wall
+  [[[[[w#]   Illusion wall                   [[[[[g;]   Grass with flowers
+  [[[[[w.]   Cobblestone road                [[[[[g#]   Small tree
+  [[[[[w*]   Town (in wilderness)            [[[[[U^]   Underground tunnel
+  [[[[[y+]   A web
+
+#####G                   Features that block line of sight
+
+  [[[[[w#]   A secret door                   #   A wall
+  [[[[[U+]   A closed door                   %   A mineral vein
+  [[[[[U+]   A locked door                   [[[[[o*]   A mineral vein + treasure
+  [[[[[U+]   A jammed door                   [[[[[w:]   A pile of rubble
+  [[[[[D#]   A dead tree                     [[[[[W#]   Ice wall
+  [[[[[G#]   A tree                          [[[[[y#]   Sand wall
+  [[[[[U^]   A mountain chain                [[[[[W^]   High mountain chain
+  
+
+#####G                             Objects
+ 
+  !   A potion (or flask)             /   A pole-arm
+  ?   A scroll, book, map, parchment  /   Music instrument
+  ?   A rune, runestone               |   An edged weapon
+  ,   A mushroom (or food)            \   A hafted weapon or digger
+  -   A wand, rod or rod tip          }   A sling, bow, or x-bow
+  _   A staff                         {   A shot, arrow, bolt, boomerang
+  =   A ring                          (   Soft armour/cloak
+  "   An amulet                       [   Hard armour
+  $   Gold or gems                    ]   Misc. armour
+  ~   Lites, Tools, Chests, etc       )   A shield
+  ~   Junk, Sticks, Skeletons, etc    `   Trapping kit, climbing set
+  ~   Stone, random artifact          o   Egg
+  *   An essence                      &   (unused)
+
+~~~~~05|Monsters
+#####G                             Monsters
+ 
+            $   Creeping Coins      ,   Mushroom Patch
+            a   Giant Ant           A   Angelic being
+            b   Giant Bat           B   Bird
+            c   Giant Centipede     C   Canine
+            d   Dragon              D   Ancient Dragon
+            e   Floating Eye        E   Elemental
+            f   Feline              F   Dragon Fly
+            g   Golem               G   Ghost
+            h   Humanoids           H   Hybrid
+            i   Icky-Thing          I   Insect
+            j   Jelly               J   Snake
+            k   Kobold              K   Killer Beetle
+            l   Giant Louse         L   Lich
+            m   Mold                M   Multi-Headed Hydra
+            n   Naga                N   (unused)
+            o   Orc                 O   Ogre
+            p   Human               P   Giant Human(oid)
+            q   Quadruped           Q   Quylthulg
+            r   Rodent              R   Reptile/Amphibian
+            s   Skeleton            S   Spider/Scorpion/Tick
+            t   Townsperson         T   Troll
+            u   Minor demon         U   Major demon
+            v   Vortex              V   Vampire
+            w   Worm or Worm Mass   W   Wight/Wraith
+            x   (unused)            X   Xorn/Xaren
+            y   Yeek                Y   Yeti
+            z   Zombie/Mummy        Z   Zephyr Hound
+
+
+~~~~~07|Town
+#####R=== The Town Level ===
+
+The town level is where you will begin your adventure. The town consists of
+several buildings (most with an entrance), some townspeople, and a main wall 
+which surrounds the town (with gates in it). Outside the gates may be found 
+unclaimed lands and wilderness, where beasts still run wild. The first time 
+you are in town it will be daytime (unless you are an undead character), but
+note that the sun will rise and set (rather instantly) as time passes.
+
+There are a few different towns around the world map, and your starting town
+will eventually become too small for you (if you survive the dangers of the
+dungeon). Other towns will have some different facilities, and you can find 
+your way to other towns by reading the "Adventurer's Guide to Middle-earth" 
+parchment with which *every* character begins the game.
+
+
+#####R=== Townspeople ===
+
+The town contains many different kinds of people. There are the street
+urchins, young children who will mob an adventurer for money, and seem to
+come out of the woodwork when excited. Blubbering idiots are a constant
+annoyance, but not harmful. Public drunks wander about the town singing,
+and are of no threat to anyone. Sneaky rogues who work for the black
+market are always greedily eyeing your backpack for potential new
+'purchases'...  And finally, what town would be complete without a
+swarm of half drunk warriors, who take offense or become annoyed just for
+the fun of it.
+
+Most of the townspeople should be avoided by the largest possible distance
+when you wander from store to store. Fights will break out, though, so be
+prepared. Since your character grew up in this world of intrigue, no
+experience is awarded for killing the town inhabitants, though you may
+acquire treasure.
+
+~~~~~21|Buildings
+#####R=== Town Buildings ===
+
+Your character will begin his adventure with some basic supplies, and some
+extra gold with which to purchase more supplies at the town stores.
+
+You may enter any open store and barter with the owner for items you can
+afford. When bartering, you enter prices you will pay (or accept) for some
+object. You can either enter the absolute amount, or precede a number with
+a plus or minus sign to give a positive or negative increment on your
+previous offer. But be warned that the owners can easily be insulted, and
+may even throw you out for a while if you insult them too often. [[[[[BTo enter]
+[[[[[Ba store, simply move onto the entrance, which is represented by a number]
+[[[[[Bfrom 1 to 9.]
+
+If you consistently bargain well in a store, that is, you reach the final
+offer much more often than not, then the store owner will eventually
+recognise that you are a superb haggler, and will go directly to the final
+offer instead of haggling with you. Items which cost less than 10 gold
+pieces do not count, as haggling well with these items is usually either
+very easy or almost impossible. The more expensive the item is, the less
+likely the store owner is to assume that you are a good haggler. Note that
+you may disable haggling with a software option, though this will inflict a
+10% "sales tax" on all purchases for which the store owner would have
+required you to haggle.
+
+Once inside a store, you will see the name and race of the store owner, the
+name of the store, the maximum amount of cash that the store owner will pay
+for any one item, and the store inventory, listed along with tentative
+prices, which will become "fixed" (at the "final offer") should you ever
+manage to haggle a store owner down to his final offer.
+
+You will also see an (incomplete) list of available commands. Note that
+many of the commands which work in the dungeon work in the stores as well,
+but some do not, especially those which involve "using" objects.
+
+Stores do not always have everything in stock. As the game progresses, they
+may get new items, so check back from time to time. Also, if you sell them
+an item, it may get sold to a customer while you are adventuring, so don't
+always expect to be able to get back everything you have sold.  If you have
+a lot of spare gold, you can purchase every item in a store, which will
+induce the store owner to bring out new stock, and perhaps even retire.  If
+you are low on funds (and morals), you may attempt to steal an item from
+the store, but beware -- if you are caught, the store owner will not let you
+back in for a very long time.
+
+Store owners will not buy harmful or useless items. If an object is
+unidentified, they will pay you some base price for it. Once they have
+bought it they will immediately identify the object. If it is a good object,
+they will add it to their inventory. If it was a bad bargain, they simply
+throw the item away. In any case, you may receive some knowledge of the
+item in case another is encountered.
+
+#####GThe General Store ("1")
+     The General Store sells foods, drinks, some clothing, torches, lamps,
+     oil, shovels, picks, and spikes. All of these items and some others
+     can be sold back to the General store for money.
+
+#####GThe Armoury ("2")
+     The Armoury is where the town's armour is fashioned. All sorts of
+     protective gear may be bought and sold here.
+
+#####GThe Weaponsmith's Shop ("3")
+     The Weaponsmith's Shop is where the town's weapons are fashioned. Hand
+     and missile weapons may be purchased and sold here, along with arrows,
+     bolts, and shots.
+
+#####GThe Temple ("4")
+     The Temple deals in healing and restoration potions, as well as bless
+     scrolls, word of recall scrolls, some approved priestly weapons, and 
+     priest spell books.
+
+#####GThe Alchemy shop ("5")
+     The Alchemy Shop deals in all types of potions and scrolls.
+
+#####GThe Magic User's Shop ("6")
+     The Magic User's Shop deals in all sorts of rings, wands, amulets, and
+     staves, as well as spell books.
+
+#####GThe Black Market ("7")
+     The Black Market will sell and buy anything at extortionate prices.
+     However it occasionally has VERY good items in it. The shopkeepers are
+     not known for their tolerance...
+
+#####GYour Home ("8")
+     This is your house where you can store objects that you cannot carry
+     on your travels, or will need at a later date.
+
+#####GThe Bookstore ("9")
+     The Bookstore deals in all sorts of magical books. You can purchase
+     and sell spellbooks for spellcasters and priests here.
+
+
+#####ROther Buildings
+In addition to the basic stores, there are some special buildings that can be
+found in some towns. These Buildings (represented by +'s) include:
+
+#####GMayor's Office/Castle
+     The home office for the town. Adventurers looking for work besides 
+     exploring the dungeon should hunt in here.
+
+#####GPet Shop
+     Great place to purchase eggs and get pets.
+
+#####GThe Soothsayer
+     To discover what *****/afatespoi.txt*0[fates ("a")] lie in store for you.
+
+#####GThe Prancing Pony
+     Wine, dine, rest and relax!
+
+#####GThe Nest
+     Thunderlords are masters of teleportation, and will consent to bear you 
+     to your chosen dungeon destination for a fee.
+
+#####GBeastmaster Shanty
+     For those who enjoy trophy hunting, and to research that strange animal 
+     you saw during your adventures. 
+
+#####GFighters Hall
+     The place to reforge weapons and armour.
+
+#####GRangers Guild
+     The place to reforge distance weapons and their ammunition.
+
+#####GLibrary
+     For information of all kinds.
+
+#####GGambling House
+     Read the *****/bgambling.txt*0[rules ("b")] before paying. The games are
+     not rigged, just naturally difficult.
+
+#####GTower of Magery/Wizards Spire
+     The wizards will identify your items or recharge your magical items for 
+     a fee.
+
+#####GInner temple/Priests Circle
+     A place of healing.
+
+#####GPaladin guild
+     Some healing and enchantments available.
+
+#####GThe Mathom House
+     Donate important, but unwanted items you find in the dungeon.
+
+
+~~~~~1|Wilderness
+#####R=== The Wilderness and the Wilderness Map ===
+
+Between the towns, the hand of civilisation has not tamed the lands, and
+wild creatures run rampant. This is another place that is worth exploring.
+Hidden within the wilderness are several interesting locations, with the
+four main ones for any adventurer - Barrow Downs, Mirkwood, Mordor and 
+Angband each being located at or near one of the main towns of Middle- 
+earth. These locations should be explored consecutively, as each one 
+increases in difficulty from the point where the previous dungeon finished.
+A new character should not try to go at Mordor or Angband as their first 
+dungeon (well, not if you wish to survive your first step, anyway)! 
+
+As well as these (and other) locations, the wilderness can be a good place
+to go when you are seeking a change from the scenery of the dungeons, or just
+a bit of fast experience.
+
+Be warned - some creatures found in the wilderness can be quite dangerous, 
+and travel through the wilderness can be time-consuming. If you are wishing 
+to simply move to another town, there is an overview map (called the 
+"Wilderness Map") that can be travelled through by going up "<" from the 
+town level. While travelling through this map, your character is still having 
+to actually walk through each square of the normal view, but you only see the 
+end result of them moving from one 4x4 panel to the next. As such, food 
+consumption will appear to be much higher in the Wilderness View than it is 
+normally, and it is recommended that you travel prepared. It is also possible
+for the wild creatures within the wilderness to ambush you when travelling,
+which will force you out of the Wilderness Map so that you can safely get 
+yourself out of trouble, before continuing on your way.
+
+All of the special locations can be seen as downstairs (">") on the 
+Wilderness Map and towns as "*"s. This makes it *much* easier to find your
+way from one interesting place to another.
+
+The "Adventurer's Guide to Middle-earth" (a parchment with which *every* 
+character begins the game) contains details about the towns and some of
+the dungeons, including rough directions on how to get there.
+
+~~~~~06|Dungeons|In the dungeon
+#####R=== Within The Dungeon ===
+
+Once your character is adequately supplied with food, light, armor, and
+weapons, he is ready to enter Barrow Downs. Move on top of the ">" symbol 
+and use the "Down" command (">").
+
+Your character will enter a maze of interconnecting staircases and finally
+arrive somewhere on the first level of the dungeon. Each level of the
+dungeon is fifty feet high (thus dungeon level "Lev 1" is often called
+"50 ft"), and is divided into rectangular regions several times
+larger than the screen. Once you leave a level by a
+staircase, you will never again find your way back to that region of that
+level, but there are an infinite number of other regions at that same "depth"
+that you can explore later. So be careful that you have found all the
+treasure before you leave a level, or you may never find it again! The
+monsters, of course, can use the stairs, and you may eventually encounter
+them again.
+
+In the dungeon, there are many things to find, but your character must
+survive many horrible and challenging encounters to find the treasure lying
+about and take it safely back to the town to sell.
+
+~~~~~23|Light
+There are two sources for light once inside the dungeon: permanent light
+which has been magically placed within rooms, and a light source carried by
+the player (or some of the monsters). If neither is present, the character
+will be unable to see. This will affect searching, picking locks, disarming
+traps, reading scrolls, casting spells, browsing books, etc. So be very
+careful not to run out of light!
+
+A character must wield a torch or lamp in order to supply his own light. A
+torch or lamp burns fuel as it is used, and once it is out of fuel, it stops
+supplying light. You will be warned as the light approaches this point. You 
+may use the "Fuel" command ("F") to refuel your lantern (with flasks of oil) 
+or your torch (with other torches), so it is a good idea to carry extra 
+torches or flasks of oil, as appropriate. There are rumours of objects of
+exceptional power which glow with their own never-ending light.
+
+~~~~~08|Objects
+#####R=== Objects Found In The Dungeon ===
+
+The mines are full of objects just waiting to be picked up and used. How
+did they get there? Well, the main source for useful items are all the
+foolish adventurers (like you?) that proceeded into the dungeon before you. 
+They get killed, and the helpful creatures scatter the various treasures 
+throughout the dungeon. Most cursed items are placed there by the joyful evil
+sorcerers, who enjoy a good joke when it gets you killed.
+
+You pick up objects by moving on top of them. You can carry up to 23 
+different items in your backpack while wearing and wielding up to 12 others.
+Although you are limited to 23 different items, each item may actually be a
+"pile" of up to 99 similar items. If you somehow manage to stuff 24 items
+into your pack, for example, by removing an item from your head while your
+pack is full, then your pack will "overflow" and the most recently added
+item will fall out and onto the ground. You will be warned about any command
+that seems likely to induce this behaviour.
+
+You are, in addition, limited in the total amount of weight that you can
+carry. As you approach this value, you become slower, making it easier for
+monsters to chase you. Note that there is no upper bound on how much you can
+carry, if you do not mind being slow. Your weight limit is determined by your
+strength.
+
+Objects do not block the line of sight, but may stack on top of one another, 
+with the one on top hiding others beneath it.
+
+      Q: I'm standing on a pile of items. How do I see what's in the pile 
+         without picking it all up, moving it, or destroying it all?
+      A: 1. Stand on the pile in question
+         2. Type shift + i (examine)
+         3. Type - (examine items on floor)
+         4. Type * (expand list of items on floor)
+         5. (as needed) Type letter associated with item to look at it more 
+            closely.
+
+Objects may also obscure stairs, Ways and void jumpgates.
+
+      Q: I'm standing on a pile of items. Is there a command to see if 
+         there is a stair beneath the pile?
+      A: Stairs, void jumpgates and Ways that obscured by clutter still 
+         function. 
+         You are advised to take a good hard look at your surroundings before 
+         creating lots of dungeon clutter. You can see if there is a stair 
+         beneath the pile with either of these methods:
+         1. Pick up, move, or eliminate the pile.
+         2. Press l (look), then select the square you wish to inquire about.
+            Press <enter>; it will scroll through everything on the ground, 
+            and eventually it ends with "It is in a Void Jumpgate", or 
+            whatever.
+
+
+Many objects found within the dungeon have special commands for their use.
+Wands must be Aimed, staves must be Used, scrolls must be Read, and potions
+must be Quaffed.  You may, in general, not only use items in your pack, but
+also items on the ground, if you are standing on top of them. For a detailed
+list of the commands to use objects, see *****command.txt*0[command.txt].
+
+Chests are complex objects, containing traps, locks, and possibly treasure
+or other objects inside them once they are opened. Many of the commands that 
+apply to traps or doors also apply to chests and, like traps and doors, these
+commands do not work if you are carrying the chest.
+
+One item in particular will be discussed here. [[[[[BThe scroll of "Word of]
+[[[[[BRecall"] can be found within the dungeon, or bought at the temple in 
+town. It acts in two manners, depending upon your current location. If read
+within the dungeon, it will teleport you back to town. If read in town, it
+will teleport you back down to the deepest level of the dungeon to which your
+character has previously journeyed. This makes the scroll very useful for
+getting back to the deeper levels of the dungeon. Once the scroll has been
+read it takes a while for the spell to act, so don't expect it to save you
+in a crisis. Reading a second scroll before the first has had a chance to
+take effect will cancel both scrolls. Since an accidental dive to a new depth
+(via a trapdoor, for example), may result in the Word of Recall dungeon depth
+being 'broken', so to speak (meaning that the next Word of Recall in town 
+will take you back deeper than you would like to), there is a feature in 
+ToME which allows you to read a scroll of Word of Recall on a different
+level and 'reset' the recall depth to that level (instead of the deepest 
+level).  Some dungeons cannot be recalled into, though you can still recall 
+out.
+
+You may "inscribe" any object with a textual inscription of your choice.
+These inscriptions are not limited in length, though you may not be able to
+see the whole inscription on the item.  The game applies special meaning to
+inscriptions containing any text of the form "@#" or "@x#" or "!x" or "!*",
+see "*****command.txt*0[command.txt]" and "*****macrofaq.txt*0[macrofaq.txt]".
+
+The game provides some "fake" inscriptions to help you keep track of your
+possessions. Wands and staves which are known to be empty will be inscribed
+with "empty". Objects which have been tried at least once but haven't been
+identified yet will be inscribed with "tried". Cursed objects are inscribed
+with "cursed". Broken objects may be inscribed with "broken". Also, any
+item which was purchased at a discount, implying that it is slightly
+"sub-standard", will be inscribed with the appropriate "discount", such as
+"25% off". Note that these inscriptions are fake, and cannot be removed,
+though they can be covered up by a real inscription if you so desire. Try
+"_" as a nice short one.
+
+Also, occasionally you will notice that something in your inventory or
+equipment list seems to be magical. High level characters are much more
+likely to notice this than beginning characters. When you do notice this,
+the item in question will be inscribed with "good" or "cursed" as is
+relevant.  You can increase your ability to notice magical effects of armour 
+and weapons by increasing the *****skills.txt*01[Combat] skill. You can increase your ability 
+to sense particularly well enchanted magical items (potions, scrolls. wands 
+etc) by increasing your *****skills.txt*21[Magic] skill. If you increase these 
+high enough, you will gain a special method of "sensing" your 
+inventory/equipment items, which tells you not only whether an item is "good"
+or "cursed", but also if it is "average", "special", "excellent", "terrible" or
+"worthless".
+
+~~~~~21|Objects|Colour of inventory slot letter
+The colour of the letter that identifies each item in your backpack can tell 
+you something about their magical status. Grey indicates the item has not been 
+identified yet. After identification, the colour changes to one of the 
+following: white, indicating it is normal; blue indicates it is an ego-item 
+(pseudo-id's as {excellent}); yellow indicates it is an artifact {special}; 
+green shows it is an artifact which is part of a set.
+
+It is rumoured that rings of power and extra rare spell books may be found
+deeper in the dungeon....
+
+And lastly, a final warning: not all objects are what they seem. The line
+between tasty food and annoying mushroom is a fine one, and sometimes a
+potion will reach out and bite you...
+~~~~~09|Objects|Cursed Objects
+~~~~~10|Cursed Objects
+#####R=== Cursed Objects ===
+
+Some objects, mainly armour and weapons, have had curses laid upon them.
+These horrible objects will look like any other normal item, but will
+detract from your character's stats or abilities if worn. They will also
+be impossible to remove until the curse is removed. In fact some are
+so badly cursed that even this will not work, and more potent methods are
+needed.
+
+If you wear or wield a cursed item, you will immediately feel something
+wrong. The item will also be inscribed "cursed".
+
+Shopkeepers will refuse to buy any known cursed item.
+~~~~~13|Mining
+~~~~~11|Dungeons|Mining
+#####R=== Digging and Mining ===
+
+It is possible for you to be trapped within the dungeon. You will not be able 
+to dig your way out without a digging tool (shovel, pick, or other means of 
+digging). It is absolutely essential to always carry some kind of digging tool, 
+even when you are not planning on tunnelling for treasure. Do not leave the 
+town level of Bree without a digger!
+
+Picks and shovels have a digging ability expressed as "(+<num>)", e.g. (+2). 
+The higher the number, the better the digging ability of the tool. Diggers are 
+effective against rubble, trees, and many walls. Rubble and veins may hide 
+treasure; trees do not.
+
+You dig in something with the tunnel (shift + t) command. Thorough digging
+removes one ASCII square (i.e. tile) of what is being dug. This may require
+multiple attempts depending on how good your digger is (and how high your
+strength is). Once the square is removed, you will be informed if you found
+anything there. If another diggable square exists beyond the area you just dug,
+you can begin the process again.
+
+Some dungeons contain rich strikes which may be found only by mining it out of 
+the walls. Quartz veins are the richest, yielding the most metals and gems, but 
+magma veins may also hide hoards within them. When digging rock, granite is 
+much harder to dig through than quartz or magma veins, so it is much faster to 
+follow a vein exactly and dig around the granite. There is also a game option 
+for highlighting magma and quartz within the walls, which makes this easier.
+
+If the character has a scroll, staff, or spell of treasure location, she can 
+immediately locate all strikes of treasure within a vein shown on the screen. 
+This makes mining much easier and more profitable. 
+~~~~~12|Dungeons|Doors, Passages, Rooms and Staircases
+#####R=== Staircases, Ways, Void jumpgates, Secret Doors, Passages, and Rooms ===
+
+Staircases are the manner in which you get deeper or climb out of the
+dungeon. The symbols for the up and down staircases are the same as the
+commands to use them.  A "<" represents an up staircase and a ">" represents
+a down staircase. You must move your character over the staircase before
+you can use it. You use it by typing the same character as the staircase 
+itself (either "<" or ">".)
+
+In flat environments such as forests, Ways replace staircases. On the map, Ways 
+are identical to staircases and behave the same way.
+
+Yellow down stairs and Ways are quest entrances (although not every quest
+is reached by such means).
+
+Shafts are also represented by "<" or ">", but are brown. They work similarly 
+to stairs and Ways, but if you use one, you might traverse more than one
+dungeon level all in one go as a result. 
+
+Stairs, impenetrable walls, and shop entrances like titanium walls, and the 
+doors into shops, cannot be destroyed by any means (although their location can 
+occasionally change under the right circumstances).
+~~~~~23|Void jumpgates
+A void jumpgate appears on your map as a violet "+". Jumpgates always occur in 
+pairs. To activate a jumpgate, stand on it and type ">". You will instantly 
+appear on top of its paired jumpgate, which will be somewhere else on the same 
+dungeon level.
+
+Many secret doors are used within the dungeon to confuse and demoralise
+adventurers foolish enough to enter. But with some luck, and lots of
+concentration, you can find these secret doors. Secret doors will sometimes
+hide rooms or corridors, or even entire sections of that level of the
+dungeon. Sometimes they simply hide small empty closets or even dead ends.
+Secret doors always look like granite walls, just like traps always look
+like normal floors.
+
+Creatures in the dungeon will generally know and use these secret doors, and
+can sometimes be counted on to leave them open behind them when they pass 
+through.
+
+For historical reasons, secret doors are never locked.
+
+~~~~~18|Pets
+~~~~~19|Companions
+~~~~~20|Monsters|Pets
+#####R=== Pets and Companions ===
+You may, in the course of a game, acquire friendly monsters who will help you 
+defeat enemies. There are several different types of these, you can determine 
+which your monster is by 'l'ooking at it.
+[[[[[vneutral] This monster will not help you by attacking other monsters, but nor 
+        will it attack you.
+[[[[[vco-aligned] This monster will attack other enemy monsters, but you will not 
+           gain any experience for its kills.
+[[[[[vpet] This monster will kill things for you. The amount of experience you gain 
+    from its kills is determined by the level of your *****skills.txt*42[Monster-lore] skill. 
+    This monster will gain levels and experience of its own, but cannot travel 
+    between dungeon levels.
+[[[[[vcompanion] This type of monster will not only take experience and level up like 
+          pets, but will also follow you from one dungeon level to the next. If 
+          you successfully complete an adventurer quest for a lost sword and let 
+          him join you, he will become a companion. Once again the amount of 
+          experience you gain from a companion's kill depends upon your 
+          Monster-lore skill.
+
+Your Monster-lore skill also determines the maximum number of pets and 
+companions you can have at any one time.
+
+Pets, companions and co-aligned creatures cannot deliver killing blows to 
+uniques or quest monsters. You must do this yourself!
+
+You can give commands to pets and companions to make them more useful, using
+the "P" command. The list of available commands is as follows:
+[[[[[vdismiss companions] Dismisses your companions. They can be difficult to get rid
+                   of any other way.
+[[[[[vdismiss pets] Dismisses pets. You will be given the opportunity to dismiss all 
+             current pets, or if you answer no to that first question, to 
+             dismiss specific pets.
+[[[[[vcall pets] Calls your pets (and companions) to you.
+[[[[[vfollow me] Asks your pets (and companions) to follow you. They do have a mind of 
+          their own, and may not be able to travel as fast as you can.
+[[[[[vseek and destroy] Selecting this will cause your pets and companions to wander 
+                 further from you, looking for enemies to kill.
+[[[[[vallow/disallow open doors] Selecting this toggles whether your pets and 
+                          companions can open doors.
+[[[[[vallow/disallow pickup items] Selecting this toggles whether your pets and 
+                          companions can pick up items. Disallowing it will 
+                          cause the monster to drop any items he is carrying on 
+                          the floor.
+[[[[[vgive target to a friend] Selecting this will cause one of your pets or 
+                        companions to attack your current target.
+[[[[[vgive target to all friends] Causes all pets or companions to attack your 
+                           current target.
+[[[[[vfriend forget target] All your friends will follow their normal attack 
+                     patterns, neglecting any targets you have given them.
+
+~~~~~14|Objectives
+#####R=== Game Objectives ===
+
+In ToME you will be required to complete a certain number of quests. Your 
+first quest is to discover the true nature of the evil lurking in the Tower of 
+Dol Goldur near Mirkwood.
+
+Each quest may lead on to others, and most quests can be postponed until when 
+you feel ready to tackle them. Simply explore other dungeons until you feel you
+have gained enough experience to tackle your next task. Other quests are 
+optional and can be used for further experience. 
+
+Once you have finished your final quest, when you are ready to retire, simply
+"commit suicide" ("^Q") to have your character entered into the high score list
+as a winner. Note that until you retire, you can still be killed, so you may
+want to retire before wandering into a hoard of nasties....
+
+You may also like to make a character sheet of your winning character (by 
+going through the "C"haracter screen and choosing "f"ile), and post in the
+rec.games.roguelike.angband newsgroup with a text copy of the dump pasted
+into the post. Include details about anything major that happened to your
+character - did they find a ring of speed (+10) on dungeon level 2? Or had 
+they reached dungeon level 60 before finding their first artifact? Did you 
+have a really scary moment that stands out from the rest of the game? And how
+*did* you actually win the game, anyway?
+
+~~~~~15|Dying
+~~~~~17|Loading old characters
+#####R=== Upon Death and Dying ===
+ 
+If your character falls below 0 hit points, he has died and cannot be
+restored (for most classes, anyway). A tombstone showing information about 
+your character will be displayed. You are also permitted to get a record of 
+your character, and all your equipment (identified) either on the screen or 
+in a file.
+
+Your character will leave behind a reduced save file, which contains only
+the monster memory and your option choices. It may be restored, in which
+case the new character is generated exactly as if the file was not there,
+but the new player will find his monster memory containing all the experience
+of past incarnations.
+
+In this way, death in ToME is permanent. You cannot simply 'reload at the last 
+save' as in most other contemporary games. Death is permanent, just as it is 
+in real life.
+

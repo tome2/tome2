@@ -1,0 +1,14 @@
+# The level is SAVED in the playername.mdm file
+S:mdm
+
+# Use the map in s_doom.map file
+U:s_doom.map
+
+# Use Mt Doom as level name
+N:Mt Doom
+
+D:You finally reach the top of Mount Doom, here must lie the Great Fire.
+F:DESC
+F:NO_GENO | NO_NEW_MONSTER | SPECIAL | NO_STAIR
+F:NO_TELEPORT
+

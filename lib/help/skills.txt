@@ -1,0 +1,539 @@
+|||||oy
+~~~~~55|Skills
+#####R=== ToME Skills System ===
+One of the big differences between standard "Vanilla" Angband and ToME is the
+implementation of a skill system where the player can choose what skills she
+will improve as her character progresses. As such, many abilities such as
+spell casting, fighting and trap disarming *do not* increase automatically -
+the player must choose to use skill points to improve those abilities. This
+gives the player the chance to tailor a character to suit their playing style
+with a lot more flexibility than has existed with a fixed progression system
+in the past. However, not all types of characters are able to gain skills to
+the same degree; while a fighter can learn some magic, he's unlikely to become
+as good at it as a mage can. So the number of skill points required to raise
+a skill to the next level varies according to the starting "type" of character.
+
+You can also spend skill points in "one-off purchase" *****ability.txt*0[Abilities]. 
+~~~~~56|Skills|Screen
+#####GThe Skills Menu
+Each time you gain a level of experience, you receive 6 skill points to spread
+around as you wish. To use these skill points, you need to access the skills
+menu ("G" for both keysets). This opens up a long list of abilities that can
+be improved.  The menu may look something like this:
+
+&&&&&w w w w w w w w w w w w w w w w w w w w w w w w w w w w wTwowMwEw wSwkwiwlwlwsw wSwcwrwewewnw w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w
+&&&&&BEBnBtBeBrW WtWoW WdWeWvWeWlWoWpW WaW WbWrWaWnWcWhW,W BuBpW/BdBoBwBnW WtWoW WmWoWvWeW,W BrBiBgBhBtW/BlBeBfBtW WtWoW WmWoWdWiWfWyW,W B?W WfWoWrW WhWeWlWpw w w w
+&&&&&BSBkBiBlBlB BpBoBiBnBtBsB BlBeBfBtB:B B6w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w
+&&&&&yGyeynyeyryayly yaybyiylyiytyyy ytyoy yfyiygyhyty yaynydy ytyoy ypysyeyuydyoy-yiydy yayrymyoyrysy yaynydy ywyeyaypyoynysy.w w w w w w w w w w w w w w w w w w w
+&&&&&yIyty yaylysyoy yaylylyoywysy ytyoy yuysyey yhyeyayvyiyeyry yayrymyoyuyrysy ywyiytyhyoyuyty ypyeynyaylytyiyeysw w w w w w w w w w w w w w w w w w w w w w w w w
+&&&&&G[G-G]GCGoGmGbGaGtw w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w G0G2G.G0G0G0G G[G0G.G8G0G0G]w w w w w w
+&&&&&w w w w w w-w wWwewawpwownwmwawswtwewrwyw w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w0w1w.w0w0w0w w[w0w.w8w5w0w]w w w w w w
+&&&&&w w w w w w w w o o.o oSowooorodo-omoaosotoeoroyw w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w o0o0o.o0o0o0o o[o0o.o4o0o0o]w w w w w w
+&&&&&w w w w w w w w o o.o oAoxoeo-omoaosotoeoroyw w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w o0o0o.o0o0o0o o[o0o.o4o0o0o]w w w w w w
+&&&&&w w w w w w w w o o.o oHoaofotoeodo-omoaosotoeoroyw w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w o0o0o.o0o0o0o o[o0o.o4o0o0o]w w w w w w
+&&&&&w w w w w w w w o o.o oPoooloeoaoromo-omoaosotoeoroyw w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w o0o0o.o0o0o0o o[o0o.o4o0o0o]w w w w w w
+&&&&&w w w w w w.w wAwrwcwhwewrwyw w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w0w1w.w0w0w0w w[w0w.w6w0w0w]w w w w w w
+&&&&&w w w w o o.o oAonotoiomoaogoiocw w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w o0o0o.o0o0o0o o[o0o.o5o5o0o]w w w w w w
+&&&&&w w+w wSwnwewawkwiwnwewswsw w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w0w1w.w0w0w0w w[w0w.w9w0w0w]w w w w w w
+&&&&&w w+w wMwawgwiwcw w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w0w1w.w0w0w0w w[w0w.w3w0w0w]w w w w w w
+&&&&&w w-w wSwpwiwrwiwtwuwawlwiwtwyw w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w0w1w.w0w0w0w w[w0w.w4w0w0w]w w w w w w
+&&&&&w w w w o o.o oPoroaoyoeorw w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w o0o0o.o0o0o0o o[o0o.o5o0o0o]w w w w w w
+&&&&&o o.o oMooonosotoeoro-oloooroew w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w o0o0o.o0o0o0o o[o0o.o5o0o0o]w w w w w w
+
+Now, looking at this screen, there are several things to be aware of. The
+first line lets you know if you have any available skill points to spend, and
+how many there are. Following that are 2 description lines for the currently
+selected skill - in this case they are describing the "Combat" skill. When
+looking at the list of skills, there are a few different colours used - the
+light green coloured skill (which also has its starting character in square
+brackets []) is the currently selected one - Combat in the example above.
+Skills that you cannot learn are omitted from the list. Skills that you are
+capable of learning, but as yet have not, are coloured in orange, while skills
+of which you have some knowledge are shown in white.
+
+At the end of each skill is a pair of numbers. The first represents your
+current level of knowledge in the skill, and the second how much an advance
+in this knowledge investing one skill point in this skill would produce. So,
+in the above example, if the player invested one skill point in their Combat
+skill, the skill would increase from 02.000 to 02.800.
+
+In addition, investing in some skills may raise your knowledge in others.
+This improvement is based on the modifier in the related class (the one which
+gets the free points).  For example, a skill point put into Weaponmastery
+raises Combat by 0.5 skill points. This is actually multiplied by the skill
+modifier that your character has in the Combat skill.  For example, a
+Swordmaster investing a skill point into Weaponmastery would have his Combat
+skill raised by 0.5 * [0.900] while a Runecrafter would have his Combat
+skill raised by 0.5 * [0.200].
+
+As well as this, skills are grouped together in similar types. Looking under
+the Combat skill, there are subtypes of Weaponmastery, Archery and Antimagic.
+An increase of one of these subskills may also increase the main skill by a
+small amount. You can tell which skills have subskills by the + (or -) in front
+of their name. The + indicates that there are more skills within this category.
+To open a skill category up, move the cursor up/down until the skill category
+is green, then hit the "Enter" key. Likewise, the - indicates that the category
+is already opened, and selecting this and hitting the "Enter" key will close it
+up again. Skills which don't have usable subskills start with a ".".
+
+To spend points on a skill (including skill categories), use the left/right
+arrow (right arrow or "6" adds one skill point, left arrow or "4" removes
+one). Spending points on a sub-skill will also marginally improve the parent
+skill (or skill category). When you've finished spending skill points (and any
+unspent points *will* be saved), hit the "Esc" key to finish. This will give
+a confirmation prompt to check that you really do want to spend your points as
+you've assigned them. Saying 'y' saves the changes and allows you to use or
+apply your new skills :).
+
+All skills have a maximum level of 50, and as long as you can learn a skill, 
+and have enough skill points to pump into it, it is theoretically possible to 
+get it to level 50 no matter what your race, class or how you learned it. 
+
+Each skill affects your character differently. It may be worth getting one or 
+more of your characters skills to 50, but it may not be worth investing [[[[[Bany]
+skill points in some other skills. As general and personal advice, which may
+not work for you, I'd say concentrate on a few skills, and leave the others
+empty. Just because you [[[[[Bcan] learn a skill, it doesn't mean you have to.
+It often pays to have a plan ("I'm going to make this assassin the
+stealthiest, most able-dodging, backstabber around. I'm not going to bother
+with trapping or thieving ability") which you can stick to for the whole game. 
+~~~~~57|Skills|List of skills
+#####GThe Skills Themselves
+So you want to know what each of the skills do so that you can decide how to
+spend you're hard-earned points, huh? Well, each skill affects different
+abilities, and not all of them are intuitive - but they don't take all that
+long to learn :). 
+If you don't find this informative enough, and would like more detailed spoilers 
+on what each skill does, try [[[[[ghttp://www.killerbunnies.org/angband/skill-220.html]
+for some third party help!
+The skills are:
+
+  *****skills.txt*27[Air]                 *****skills.txt*49[Alchemy]            *****skills.txt*50[Antimagic]          *****skills.txt*08[Archery]
+  *****skills.txt*05[Axe-mastery]         *****skills.txt*18[Backstab]           *****skills.txt*13[Barehand-combat]    *****skills.txt*61[Bearform-combat]
+  *****skills.txt*12[Boomerang-mastery]   *****skills.txt*58[Boulder-throwing]   *****skills.txt*10[Bow-mastery]        *****skills.txt*01[Combat]             
+  *****skills.txt*30[Conveyance]          *****skills.txt*44[Corpse-preservation]*****skills.txt*04[Critical-hits]      *****skills.txt*11[Crossbow-mastery]   
+  *****skills.txt*52[Demonology]          *****skills.txt*16[Disarming]          *****skills.txt*31[Divination]         *****skills.txt*20[Dodging]            
+  *****skills.txt*28[Earth]               *****skills.txt*25[Fire]               *****skills.txt*60[Geomancy]           *****skills.txt*06[Hafted-mastery]     
+  *****skills.txt*21[Magic]               *****skills.txt*54[Magic-device]       *****skills.txt*24[Mana]               *****skills.txt*29[Meta]               
+  *****skills.txt*47[Mimicry]             *****skills.txt*33[Mind]               *****skills.txt*41[Mindcraft]          *****skills.txt*42[Monster-lore]       
+  *****skills.txt*59[Music]               *****skills.txt*34[Nature]             *****skills.txt*35[Necromancy]         *****skills.txt*07[Polearm-mastery]    
+  *****skills.txt*45[Possession]          *****skills.txt*39[Prayer]             *****skills.txt*36[Runecraft]          *****skills.txt*09[Sling-mastery]      
+  *****skills.txt*14[Sneakiness]          *****skills.txt*22[Spell-power]        *****skills.txt*38[Spirituality]       *****skills.txt*23[Sorcery]            
+  *****skills.txt*19[Stealing]            *****skills.txt*15[Stealth]            *****skills.txt*53[Stunning-blows]     *****skills.txt*43[Summoning]          
+  *****skills.txt*03[Sword-mastery]       *****skills.txt*46[Symbiosis]          *****skills.txt*32[Temporal]           *****skills.txt*37[Thaumaturgy]        
+  *****skills.txt*48[Udun]                *****skills.txt*26[Water]              *****skills.txt*02[Weaponmastery]
+
+
+~~~~~01|Skills|Combat
+[[[[[BCombat]
+The combat skill is used to determine the maximum combined weight of armour
+you can wear before you become encumbered by it. It also affects your general
+fighting ability, although not to as great an extent as Weaponmastery, and
+determines the speed and strength of pseudo-id of weapons and armour.
+
+Investing in the combat skill? You might be interested in the 
+*****ability.txt*05[Extra Max Blow(1)] and *****ability.txt*06[(2)] abilities.
+
+Sub-skills of Combat are Weaponmastery, Archery, Barehand-combat,
+Boulder-throwing and Anti-magic.
+~~~~~02|Skills|Weaponmastery
+[[[[[BWeaponmastery]
+This skill is a sub-skill of the Combat skill. It affects your general
+ability to use melee weapons of all sorts. Spending 1 skill point on
+Weaponmastery adds 0.5 bonus skill points to Combat.
+
+Investing in the weaponmastery skill? You might be interested in the 
+*****ability.txt*02[Spread Blows] ability.
+
+Sub-skills of Weaponmastery are Sword-mastery, Axe-mastery, Hafted-mastery
+and Polearm-mastery.
+~~~~~03|Skills|Sword-mastery
+[[[[[BSword-mastery]
+This skill is a sub-skill of the Weaponmastery skill. It affects your ability
+to use bladed weapons (e.g. daggers, swords). Spending 1 skill point on your
+Sword-mastery skill adds 0.25 bonus skill points to your Weaponmastery skill
+and adds 0.07 bonus skill points to your Combat skill.
+
+Critical-hits is a sub-skill of Sword-mastery.
+~~~~~04|Skills|Critical-Hits
+[[[[[BCritical-hits]
+This skill is a sub-skill of the Sword-mastery skill. It affects your ability
+to deal critical hits to monsters using a bladed weapon that weighs less than 5
+pounds. Spending one skill point on your Critical-hits skill also increases
+your Sword-mastery skill by 0.05 skill points.
+~~~~~05|Skills|Axe-mastery
+[[[[[BAxe-mastery]
+This skill is a sub-skill of the Weaponmastery skill. It affects your ability
+to use axes. Spending 1 skill point on your Axe-mastery skill adds 0.25 bonus
+skill points to your Weaponmastery skill and adds 0.07 bonus skill points to
+your Combat skill.
+~~~~~06|Skills|Hafted-mastery
+[[[[[BHafted-mastery]
+This skill is a sub-skill of the Weaponmastery skill. It affects your ability
+to use hafted weapons (e.g. whips & maces). Spending 1 skill point on your
+Hafted-mastery skill adds 0.25 bonus skill points to your Weaponmastery skill
+and adds 0.07 bonus skill points to your Combat skill.
+
+Stunning-blows is a sub-skill of Hafted-mastery.
+~~~~~53|Skills|Stunning-blows
+[[[[[BStunning-blows]
+This skill is a sub-skill of the Hafted-mastery skill. It affects your ability
+to stun opponents when doing critical hits with a hafted weapon that weighs
+more than 5 lbs. Spending one skill point on your Stunning-blows skill also
+increases your Hafted-mastery skill by 0.05 skill points.
+~~~~~07|Skills|Polearm-mastery
+[[[[[BPolearm-mastery]
+This skill is a sub-skill of the Weaponmastery skill. It affects your ability
+to use polearms (e.g. pikes & halberds). Spending 1 skill point on your
+Polearm-mastery skill adds 0.25 bonus skill points to your Weaponmastery skill
+and adds 0.07 bonus skill points to your Combat skill.
+
+Investing in the Polearm-mastery skill? You might be interested in the 
+*****ability.txt*10[Far reaching attack] ability.
+~~~~~08|Skills|Archery
+[[[[[BArchery]
+This skill is a sub-skill of the Combat skill. It affects your general
+ability to use ranged weapons of all sorts. Spending one skill point on your 
+Archery skill adds 0.5 bonus skill points to your Combat skill.
+
+Investing in the Archery skill? You might be interested in the 
+*****ability.txt*07[Ammo creation] ability.
+
+Sub-skills of Archery include Sling-mastery, Bow-mastery, Crossbow-mastery
+and Boomerang-mastery.
+~~~~~09|Skills|Sling-mastery
+[[[[[BSling-mastery]
+This skill is a sub-skill of the Archery skill. It affects your ability to
+use Slings. Spending 1 skill point on your Sling-mastery skill adds 0.25
+bonus skill points to your Archery skill and 0.07 bonus skill points to your
+Combat skill.
+~~~~~10|Skills|Bow-mastery
+[[[[[BBow-mastery]
+This skill is a sub-skill of the Archery skill. It affects your ability to
+use both Long and Short Bows. Spending 1 skill point on your Bow-mastery
+skill adds 0.25 bonus skill points to your Archery skill and 0.07 bonus skill
+points to your Combat skill.
+~~~~~11|Skills|Crossbow-mastery
+[[[[[BCrossbow-mastery]
+This skill is a sub-skill of the Archery skill. It affects your ability
+to use both Heavy and Light Crossbows. Spending 1 skill point on your
+Crossbow-mastery skill adds 0.25 bonus skill points to your Archery skill
+and 0.07 bonus skill points to your Combat skill.
+~~~~~12|Skills|Boomerang-mastery
+[[[[[BBoomerang-mastery]
+This skill is a sub-skill of the Archery skill. It affects your ability to
+use all boomerangs. Spending 1 skill point on your Boomerang-mastery skill
+adds 0.25 bonus skill points to your Archery skill and 0.07 bonus skill
+points to your Combat skill.
+~~~~~13|Skills|Barehand-combat
+[[[[[BBarehand-combat]
+This skill is a sub-skill of the Combat skill. It affects your general ability
+to fight using martial arts. In order to utilise it, you must be capable of
+using a weapon in the first place, but choose not to. Spending 1 skill point
+on your Barehand-combat skill adds 0.5 bonus skill points to your Combat skill.
+Barehand-combat fighters develop stronger and faster attacks, and also gain
+speed bonuses, as they advance in skill.  However, they cannot use this skill
+whilst wearing heavy armour.
+~~~~~61|Skills|Bearform-combat
+[[[[[BBearform-combat]
+This skill is a sub-skill of the Combat skill. It affects your ability to fight 
+while in the form of a bear. In order to utilise it, you must be in bearform. 
+*****r_beorn.txt*0[Beornings] are the adventurers most likely to use this form of skill.
+~~~~~58|Skills|Boulder-throwing
+[[[[[BBoulder-throwing]
+This skill is a sub-skill of the Combat skill. It affects your ability to
+throw boulders and make them from granite walls. Spending 1 skill point on
+your Boulder-throwing skill adds 0.4 bonus skill points to your Combat skill.
+~~~~~50|Skills|Antimagic
+[[[[[BAntimagic]
+This skill is a sub-skill of the Combat skill.  It generates a field around
+the character within which magic cannot work. As such, it can be very useful
+to prevent monsters from casting offensive spells against you or from
+teleporting away from you just before you kill them - but it will also prevent
+you from casting spells, or teleporting away when they've almost killed you!
+It also inhibits your ability to do magic, affecting *all* the magic and
+spirituality sub-skills.
+
+This skill does not affect your ability to use scrolls and potions, but other 
+items that require [Self]Magic-Device are affected. At higher levels you gain 
+the ability to detect traps and disrupt all teleportation.
+~~~~~14|Skills|Sneakiness
+[[[[[BSneakiness]
+The sneakiness skill affects your searching and perception abilities.
+
+Sub-skills of Sneakiness include Stealth, Disarming, Trapping, Backstab,
+Stealing and Dodging.
+~~~~~15|Skills|Stealth
+[[[[[BStealth]
+This skill is a sub-skill of the Sneakiness skill. It affects your ability
+to move around the dungeon quietly so that you are not noticed by its
+inhabitants. Spending 1 skill point on your Stealth skill adds 0.15 bonus
+skill points to your Sneakiness skill.
+~~~~~16|Skills|Disarming
+[[[[[BDisarming]
+This skill is a sub-skill of the Sneakiness skill. It affects your ability
+to safely disarm any traps you find. Spending 1 skill point on your Disarming
+skill adds 0.1 bonus skill points to your Sneakiness skill.
+
+Investing in the Disarming skill? You might be interested in the *****ability.txt*11[Trapping] 
+ability.
+~~~~~18|Skills|Backstab
+[[[[[BBackstab]
+This skill is a sub-skill of the Sneakiness skill. It affects your ability
+to sneak up on monsters and do extra damage to them before they wake up.
+It also affects monsters who have turned to flee from you.  Spending 1 skill
+point on your Backstab skill adds 0.05 bonus skill points to your Sneakiness
+skill.
+~~~~~19|Skills|Stealing
+[[[[[BStealing]
+This skill is a sub-skill of the Sneakiness skill. It affects your ability
+to steal items from monsters and shops. Be careful when stealing from shops;
+if you're caught, the shopkeeper will close his doors to you and not open
+them again. I have heard that shop keepers do not stay in one shop forever
+though. Spending 1 skill point on your Stealing skill adds 0.15 bonus skill
+points to your Sneakiness skill.
+~~~~~20|Skills|Dodging
+[[[[[BDodging]
+This skill is a sub-skill of the Sneakiness skill. It affects your ability
+to dodge out of the way of monster blows and bolts. The less armour you wear 
+and the less you carry, the greater your chance of dodging a blow. Rings and 
+amulets do not affect your chance to dodge, but full armour will almost render 
+the effect of the skill obsolete. Spending 1 skill point on your Dodging skill 
+adds 0.1 bonus skill points to your Sneakiness skill.
+~~~~~21|Skills|Magic
+[[[[[BMagic]
+The Magic skill affects your general use of magic items, the amount of mana
+you can handle, and in general your ability to do magic. It can also affect
+the strength of wands and staffs.
+
+Investing in the Magic skill? You might be interested in the *****ability.txt*04[Perfect Casting] 
+ability.
+
+Sub-skills include: Magic-device, Spell-power, Sorcery, Mana, Fire, Water, Air,
+Earth, Meta, Conveyance, Divination, Temporal, Mind, Nature, Udun, Demonology,
+Necromancy, Runecraft, Thaumaturgy, and Alchemy.
+~~~~~54|Skills|Magic-device
+[[[[[BMagic-device]
+This skill is a sub-skill of the Magic skill. It eases the use of magical
+devices, such as wands, staves, and rods, and boosts the casting level of spells
+stored in a wand or a staff. *****magic.txt*02[More on this]. It also helps pseudo-id of magic
+objects. Spending 1 skill point on your Magic-device skill adds 0.07 bonus skill
+points to your Magic skill.
+~~~~~22|Skills|Spell-power
+[[[[[BSpell-power]
+This skill is a sub-skill of the Magic skill. It boosts the casting level of
+most spells you are capable of casting. For example, if you have level one in
+the mana school, you could cast "Manathrust". For every 2.5 skill levels of
+Spell-power, Manathrust becomes more powerful, adding +1 casting level to the
+spell. Note that this is not exactly the same as certain magic items which 
+boost spell power. Spending 1 skill point on your Spell-power skill adds 0.2 
+bonus skill points to your Magic skill.
+
+[[[[[BThis skill only affects the 11 primary schools] (Mana, Earth, Air, Fire, 
+Water, Meta, Mind, Temporal, Conveyance, Divination and Nature), as well as
+Geomancy and the spells granted by the Gods.
+~~~~~23|Skills|Sorcery
+[[[[[BSorcery]
+This skill is a sub-skill of the Magic skill. It allows you to access any
+spell in the 11 schools up to the sorcery skill level. For example, if you
+have a sorcery skill of 1, you could cast "Manathrust", which is a level 1
+mana school spell; and "Phase Door", which is a level 1 conveyance school
+spell. Spending 1 skill point on your Sorcery skill adds 0.2 bonus skill
+points to your Magic skill.
+
+[[[[[BThis skill only affects the 11 primary schools] (Mana, Earth, Air, Fire, 
+Water, Meta, Mind, Temporal, Conveyance, Divination and Nature).
+
+However, handling that much magic is hazardous to your health, and as such
+reduces both your hit points and your fighting ability. Any ability in sorcery
+affects your Weaponmastery, Archery, Barehand-combat and gives a negative
+percentage modifier to your total hit points, equal to the level of your
+sorcery skill (i.e. if sorcery is 12.500, hit points get modified by -12.5%).
+~~~~~24|Skills|Mana
+[[[[[BMana]
+This skill is a sub-skill of the Magic skill. It gives access to spells
+within the *****m_mana.txt*0[mana] school, and as it increases so does the casting level of
+spells already attained in the school. For example, if you have level 1 in
+the mana school, you could cast "Manathrust" at a casting level of 1. For
+every skill level you add to Mana, Manathrust will become more powerful,
+adding 1 casting level to the spell. Spending 1 skill point on your Mana
+skill adds 0.1 bonus skill points to your Magic skill.
+~~~~~60|Skills|Geomancy
+[[[[[BGeomancy]
+This skill is a subskill of the Magic skill. It gives access to spells 
+within the *****m_geoman.txt*0[Geomancy] school, and as it increases so does the casting level of
+spells already attained in the school. Most spells from this school rely 
+on the Fire, Water, Air and Earth skills as well. Spending 1 skill point 
+on your Geomancy skill adds 0.45 bonus skill points to your Fire, Water, 
+Air and Earth skills.
+~~~~~25|Skills|Fire
+[[[[[BFire]
+This skill is a sub-skill of the Magic skill. It gives access to spells
+within the *****m_fire.txt*0[fire] school, and as it increases so does the casting level of
+spells already attained in the school. Spending 1 skill point on your Fire
+skill adds 0.1 bonus skill points to your Magic skill.
+~~~~~26|Skills|Water
+[[[[[BWater]
+This skill is a sub-skill of the Magic skill. It gives access to spells
+within the *****m_water.txt*0[water] school, and as it increases so does the casting level of
+spells already attained in the school. Spending 1 skill point on your Water
+skill adds 0.1 bonus skill points to your Magic skill.
+~~~~~27|Skills|Air
+[[[[[BAir]
+This skill is a sub-skill of the Magic skill. It gives access to spells
+within the *****m_air.txt*0[air] school, and as it increases so does the casting level of
+spells already attained in the school. Spending 1 skill point on your Air
+skill adds 0.1 bonus skill points to your Magic skill.
+~~~~~28|Skills|Earth
+[[[[[BEarth]
+This skill is a sub-skill of the Magic skill. It gives access to spells
+within the *****m_earth.txt*0[earth] school, and as it increases so does the casting level of
+spells already attained in the school. Spending 1 skill point on your Earth
+skill adds 0.1 bonus skill points to your Magic skill.
+~~~~~29|Skills|Meta
+[[[[[BMeta]
+This skill is a sub-skill of the Magic skill. It gives access to spells
+within the *****m_meta.txt*0[meta] school, and as it increases so does the casting level of
+spells already attained in the school. Spending 1 skill point on your Meta
+skill adds 0.1 bonus skill points to your Magic skill.
+~~~~~30|Skills|Conveyance
+[[[[[BConveyance]
+This skill is a sub-skill of the Magic skill. It gives access to spells
+within the *****m_convey.txt*0[conveyance] school, and as it increases so does the casting level
+of spells already attained in the school. Spending 1 skill point on your
+Conveyance skill adds 0.1 bonus skill points to your Magic skill.
+~~~~~31|Skills|Divination
+[[[[[BDivination]
+This skill is a sub-skill of the Magic skill. It gives access to spells
+within the *****m_divin.txt*0[divination] school, and as it increases so does the casting level
+of spells already attained in the school. Spending 1 skill point on your
+Divination skill adds 0.1 bonus skill points to your Magic skill.
+~~~~~32|Skills|Temporal
+[[[[[BTemporal]
+This skill is a sub-skill of the Magic skill. It gives access to spells
+within the *****m_tempo.txt*0[temporal] school, and as it increases so does the casting level
+of spells already attained in the school. Spending 1 skill point on your
+Temporal skill adds 0.1 bonus skill points to your Magic skill.
+~~~~~33|Skills|Mind
+[[[[[BMind]
+This skill is a sub-skill of the Magic skill. It gives access to spells
+within the *****m_mind.txt*0[mind] school, and as it increases so does the casting level of
+spells already attained in the school. Spending 1 skill point on your Mind
+skill adds 0.1 bonus skill points to your Magic skill.
+~~~~~34|Skills|Nature
+[[[[[BNature]
+This skill is a sub-skill of the Magic skill. It gives access to spells
+within the *****m_nature.txt*0[nature] school, and as it increases so does the casting level of
+spells already attained in the school. Spending 1 skill point on your Nature
+skill adds 0.1 bonus skill points to your Magic skill.
+
+Investing in the Nature skill? You might be interested in the *****ability.txt*03[Tree Walking] 
+ability.
+~~~~~48|Skills|Udun
+[[[[[BUdun]
+This skill is a sub-skill of the Magic skill. It gives access to spells
+within the *****m_udun.txt*0[Udun] school, and is available only to worshippers of Melkor.
+As it increases so does the casting level of spells already attained in the
+school. Spending 1 skill point on your Udun skill adds 0.1 bonus skill
+points to your Magic skill.
+~~~~~52|Skills|Demonology
+[[[[[BDemonology]
+This skill is a sub-skill of the Magic skill. *****m_demono.txt*0[Demonology] gives access to spells
+contained within special Demon-blades, -shields and -horns (helms), and as it
+increases so does the casting level of spells already attained in the school.
+This skill is available only to Demonologists, or those sufficiently
+corrupted with demon-like powers. Spending 1 skill point on your Demonology
+skill adds 0.1 bonus skill points to your Magic skill.
+~~~~~35|Skills|Necromancy
+[[[[[BNecromancy]
+This skill is a sub-skill of the Magic skill. It grants access to *****m_necrom.txt*0[necromancy]
+spells. This is the base skill of the Necromancer class. Spending 1 skill
+point on your Necromancy skill adds 0.04 bonus skill points to your Magic skill.
+
+Investing in the Necromancy skill? You might be interested in the 
+*****ability.txt*08[Touch of Death] and *****ability.txt*12[Undead Form] abilities.
+~~~~~36|Skills|Runecraft
+[[[[[BRunecraft]
+This skill is a sub-skill of the Magic skill. This is the base skill of the
+Runecrafter class. Spending 1 skill point on your Runecraft skill adds 0.12
+bonus skill points to your Magic skill.
+~~~~~37|Skills|Thaumaturgy
+[[[[[BThaumaturgy]
+This skill is a sub-skill of the Magic skill. Each level of *****m_thaum.txt*0[thaumaturgy] gives
+a few random attack spells that can be cast without the use of spell books of
+any sort. However, once learned these spells do not gain in levels as the
+thaumaturgy skill or the spell-power skills are increased. Spending 1 skill
+point on your Thaumaturgy skill adds 0.06 bonus skill points to your Magic
+skill.
+~~~~~49|Skills|Alchemy
+[[[[[BAlchemy]
+The Alchemy skill affects your ability to extract and use essences to create
+magical items. 
+
+Investing in the Alchemy skill? You might be interested in the *****ability.txt*09[Artifact Creation] 
+ability.
+~~~~~38|Skills|Spirituality
+[[[[[BSpirituality]
+The spirituality skill influences things which have a "helping hand" from the
+Gods, like your saving throw, and the general spirituality skills.
+
+Sub-skills of Spirituality are Prayer, Mindcraft and Music.
+~~~~~39|Skills|Prayer
+[[[[[BPrayer]
+This skill is a sub-skill of the Spirituality skill. It affects what level of
+your *****gods.txt*0[God's] special magic you can access (and what levels of the additional
+schools that each God also provides). Spending 1 skill point on your Prayer
+skill adds 0.1 bonus skill points to your Spirituality skill and 0.1 bonus
+skill points to your Magic skill.
+~~~~~41|Skills|Mindcraft
+[[[[[BMindcraft]
+This skill is a sub-skill of the Spirituality skill. It affects what level of
+*****m_mindcr.txt*0[Mindcrafter powers] you can access, which is done without books and is
+available under the "m" menu. Spending 1 skill point on your Mindcraft skill
+adds 0.1 bonus skill points to your Spirituality skill and 0.1 bonus skill
+points to your Magic skill.
+~~~~~59|Skills|Music
+[[[[[BMusic]
+This skill is a sub-skill of the Spirituality skill. It affects what level of
+*****m_music.txt*0[Musical songs] you can access through instruments. This power 
+is available under the "m" menu. Spending 1 skill point on your Music skill 
+adds 0.1 bonus skill points to your Spirituality skill and 0.1 bonus skill
+points to your Magic skill.
+~~~~~42|Skills|Monster-lore
+[[[[[BMonster-lore]
+The monster-lore skill affects your general ability at the monster related
+skills. It determines how much experience you will gain if your *****dungeon.txt*18[pets] kill a
+monster, and how many companions you can have. At skill level 12, it allows 
+you to turn a pet into a loyal companion.
+
+Sub-skills of Monster-lore are Summoning, Corpse-preservation, Possession,
+Symbiosis, and Mimicry.
+~~~~~43|Skills|Summoning
+[[[[[BSummoning]
+This skill is a sub-skill of the Monster-lore skill. It affects your ability
+to create "totems" and use them to summon monsters to your aid. Spending 1
+skill point on your Summoning skill adds 0.1 bonus skill points to your
+Monster-lore skill.
+~~~~~44|Skills|Corpse-preservation
+[[[[[BCorpse-preservation]
+This skill is a sub-skill of the Monster-lore skill. It affects your ability
+to kill monsters without destroying their bodies, so the corpses will be
+available to use. Spending 1 skill point on your Corpse-preservation skill
+adds 0.1 bonus skill points to your Monster-lore skill.
+~~~~~45|Skills|Possession
+[[[[[BPossession]
+This skill is a sub-skill of the Monster-lore skill. It affects your ability
+to possess a dead monster's corpse. Spending 1 skill point on your Possession
+skill adds 0.1 bonus skill points to your Monster-lore skill.
+~~~~~46|Skills|Symbiosis
+[[[[[BSymbiosis]
+This skill is a sub-skill of the Monster-lore skill. It affects your ability
+to go into symbiosis with monsters that cannot move, and to cast *****m_symbio.txt*0[Symbiotic]
+spells. Spending 1 skill point on your Symbiosis skill adds 0.1 bonus skill
+points to your Monster-lore skill.
+~~~~~47|Skills|Mimicry
+[[[[[BMimicry]
+This skill is a sub-skill of the Monster-lore skill. It affects your ability
+to use cloaks of mimicry to change form and to cast *****m_mimic.txt*0[Mimicry spells].
+Spending 1 skill point on your Mimicry skill adds 0.1 bonus skill points to 
+your Monster-lore skill.

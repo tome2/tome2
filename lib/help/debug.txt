@@ -1,0 +1,278 @@
+|||||oy
+~~~~~99|Debug
+#####R=== Debug Commands ===
+
+
+Debug commands are entered as an "underlying command" (a single key)
+plus a variety of optional or required arguments.
+
+The debug commands are used for debugging and experimenting. The game
+will not be scored if you use debug commands.
+
+~~~~~100|Debug|Command List
+#####R=== Command List Summary ===
+
+ *****debug.txt*1[a  Autorestore]                          *****debug.txt*2[A  Show all stats]
+ *****debug.txt*3[b  Teleport to target]                   *****debug.txt*4[B  HP to zero]
+ *****debug.txt*5[c  Create object]                        *****debug.txt*6[C  Create artifact]
+ *****debug.txt*7[d  Detect all]                           *****debug.txt*8[D  Teleport to the wilderness]
+ *****debug.txt*9[e  Edit character attributes]            *****debug.txt*10[E  Change grid's mana]
+ *****debug.txt*11[f  *IDENTIFY*]                           *****debug.txt*12[F  Features]
+ *****debug.txt*13[g  Create good item]                     G  (unused)
+ *****debug.txt*15[h  Change life rating]                   *****debug.txt*16[H  Hostile monster creation]
+ *****debug.txt*17[i  Identify]                             I  (unused)
+ *****debug.txt*19[j  Jump to other level]                  J  (unused)
+ *****debug.txt*21[k  Check attributes]                     K  (unused)
+ *****debug.txt*23[l  Learn about objects]                  L  (unused)
+ *****debug.txt*25[m  Magic Mapping]                        *****debug.txt*26[M  Gain corruption]
+ *****debug.txt*27[n  Summon named monster]                 *****debug.txt*28[N  Summon _friendly_ named monster]
+ *****debug.txt*29[o  Edit object attributes]               O  (unused)
+ *****debug.txt*31[p  Phase door]                           *****debug.txt*32[P  Panic save]
+ *****debug.txt*33[q  Get a quest]                          Q  (unused)
+ *****debug.txt*35[r  Gain reward]                          *****debug.txt*36[R  Create a trap]
+ *****debug.txt*37[s  Summon monster]                       *****debug.txt*38[S  Change the feature of the map]
+ *****debug.txt*39[t  Teleport]                             *****debug.txt*40[T  Teleport to a town]
+ *****debug.txt*41[u  Complete map]                         *****debug.txt*42[U  Become undead]
+ *****debug.txt*43[v  Random artifact/ego item]             V  (unused)
+ *****debug.txt*45[w  Wizard light the level]               *****debug.txt*46[W  Wish]
+ *****debug.txt*47[x  XP boost]                             X  (unused)
+ y  (unused)                             Y  (unused)
+ *****debug.txt*51[z  Zap monsters]                         Z  (unused)
+ !  (unused)                            ^A  (unused)
+ *****debug.txt*55[@  Increment monster level]             ^B  (unused)
+ #  (unused)                            ^C  (unused)
+ $  (unused)                            ^D  (unused)
+ %  (unused)                            ^E  (unused)
+ ^  (unused)                            ^F  (unused)
+ &  (unused)                            ^G  (unused)
+ *****debug.txt*61[*  Lose special powers]                 ^H  (unused)
+ (  (unused)                            ^I  (unused)
+ )  (unused)                            ^J  (unused)
+ {  (unused)                            ^K  (unused)
+ }  (unused)                            ^L  (unused)
+ [  (unused)                            ^M  (unused)
+ ]  (unused)                            ^N  (unused)
+ *****debug.txt*67[-  Create object]                       ^O  (unused)
+ *****debug.txt*69[_  The path to the god dark]            ^P  (unused)
+ *****debug.txt*71[+  Gain a fate]                         ^Q  (unused)
+ *****debug.txt*73[=  Align monster]                       ^R  (unused)
+ ;  (unused)                            ^S  (unused)
+ :  (unused)                            ^T  (unused)
+ '  (unused)                            ^U  (unused)
+ *****debug.txt*75["  Create spoiler]                      ^V  (unused)
+ ,  (unused)                            ^W  (unused)
+ <  (unused)                            ^X  (unused)
+ .  (unused)                            ^Y  (unused)
+ *****debug.txt*81[>  Lua script]                          ^Z  (unused)
+ \  (unused)                             |  (unused)
+ `  (unused)                             ~  (unused)
+ *****debug.txt*91[/  Summon monster]                       *****debug.txt*92[?  Help]
+                                        ^\  (unused)
+
+~~~~~111|Debug|Command descriptions 
+#####R===  Command Descriptions ===
+
+        The following command descriptions are listed as the command name
+plus the "underlying command" key. Then comes a brief description of the
+command. Some commands use the "repeat count" to automatically repeat the
+command several times, while others use the "repeat count" as an "argument",
+for example, commands which need a "quantity" will use the "repeat count"
+instead of asking for a quantity, allowing the use of "0d" for "drop all".
+Commands which ask for a quantity will convert any "letters" into the
+maximal legal value.
+~~~~~112|Debug|General
+#####R---  General Commands ---
+~~~~~1
+[[[[[GAutorestore (a)]
+        Restores all your stats.  This includes HP, SP, hunger, lost levels, etc.
+~~~~~2
+[[[[[GShow all stats (A)]
+        This brings up the Character status menu, where you can view
+        all the stats about your character.
+~~~~~3
+[[[[[GTeleport to target (b)]
+        You first need to have a monster targeted, then you can use
+        this command to teleport next to the monster.
+~~~~~4
+[[[[[GHP to zero (B)]
+        Bring your health down to zero.
+~~~~~5
+[[[[[GCreate object (c)]
+        Allows you to select and create a new object where you stand.
+        This brings up a menu where you can choose what type of object
+        you want created.
+~~~~~6
+[[[[[GCreate artifact (C)]
+        Allows you to select and create a new artifact where you stand.
+        Use the "Command count", aka 0, to specify a number from
+        a_info.txt to put it on the ground where you are standing.
+        For example : 03^AC will create the Arkenstone of Thrane (+3)
+~~~~~7
+[[[[[GDetect all (d)]
+        Sense ways out/monsters/objects/traps.
+~~~~~8
+[[[[[GTeleport to the wilderness (D)]
+        From a dungeon this will teleport you to the wilderness level
+        and if used in the wilderness it acts like teleport.
+~~~~~9
+[[[[[GEdit character attributes (e)]
+        Edit character attributes including Str, Int, Dex, experience, gold, luck, etc.
+~~~~~10
+[[[[[GChange grid's mana (E)]
+        Alter how much mana a grid has.
+        Use the "Command count", aka 0, to specify the amount of mana
+        that you want.
+~~~~~11
+[[[[[G*IDENTIFY* (f)]
+        Like a Scroll of *Identify*.
+~~~~~12
+[[[[[GFeatures (F)]
+        Use the "Command count", aka 0, to specify a number from
+        f_info.txt to put a feature on the ground where you are
+        standing.
+~~~~~13
+[[[[[GCreate good item (g)]
+        Create a random good item where you stand.
+~~~~~15
+[[[[[GChange life rating (h)]
+        Change your life rating.
+~~~~~16
+[[[[[GHostile monster creation (H)]
+        Summons a Pack of Creatures of the same kind. Will only work
+        if MONSTER_HORDES has been defined at compile time.
+~~~~~17
+[[[[[GIdentify (i)]
+        Like a Scroll of Identify.
+~~~~~19
+[[[[[GJump to other level (j)]
+        Jump to other dungeon level. This does not work in the
+        wilderness as it is treated as all one level.
+~~~~~21
+[[[[[GCheck attributes (k)]
+        Displays your characters attributes.
+~~~~~23
+[[[[[GLearn about objects (l)]
+        Make you know about all objects. Not sure how this works.
+~~~~~25
+[[[[[GMagic Mapping (m)]
+        Like a Scroll of Magic mapping.
+~~~~~26
+[[[[[GGain corruption (M)]
+        Allows your character to gain a corruption.
+~~~~~27
+[[[[[GSummon named monster (n)]
+        Summon a monster that will appear next to you.
+        Use the "Command count", aka 0, to specify a number from
+        r_info.txt to summon a monster.
+~~~~~28
+[[[[[GSummon _friendly_ named monster (N)]
+        The same as n but the creature will be your pet. Try this
+        with number 861, Darkgod is now your pet.
+~~~~~29
+[[[[[GEdit object attributes (o)]
+        Allows you to alter the attributes of any object that you
+        have in your backpack.
+~~~~~31
+[[[[[GPhase door (p)]
+        Like a Scroll of Phase Door.
+~~~~~32
+[[[[[GPanic save (P)]
+        Save and quit the game, which is the same as doing a ^X.
+~~~~~33
+[[[[[GGet a quest (q)]
+        Get a quest.
+        Use the "Command count", aka 0, to specify a number from
+        1 to 25, as defined in defines.h ( the QUEST_XXX items ).
+        For example : 04^Aq will get you the thieves quest.
+~~~~~35
+[[[[[GGain reward (r)]
+        Some high being grants you a reward.
+~~~~~36
+[[[[[GCreate a trap (R)]
+        Use the "Command count", aka 0, to specify a number from
+        tr_info.txt to put a trap on the ground where you are
+        standing.
+~~~~~37
+[[[[[GSummon monster (s)]
+        Summon a random monster, next to where you stand.
+~~~~~38
+[[[[[GChange the feature of the map (S)]
+        This allows you to change the "special" field of the current
+        grid. This special field is used to store things like quest
+        ids, dungeon entries, and so on, not to be used unless
+        one knows what it's doing.
+~~~~~39
+[[[[[GTeleport (t)]
+        Like a Scroll of Teleport.
+~~~~~40
+[[[[[GTeleport to a town (T)]
+        Teleports you to a specific town.
+        Use the "Command count", aka 0, to specify a number from
+        wf_info.txt for where you want to go.
+        standing.
+        For example : 02^AT will teleport you to Gondolin
+~~~~~41
+[[[[[GComplete map (u)]
+        Displays the complete map of the dungeon.
+~~~~~42
+[[[[[GBecome undead (U)]
+        This is supposed to make you undead (as in the Necromantic power).
+~~~~~43
+[[[[[GRandom artifact/ego item (v)]
+        Create a random artifact/ego item where you stand.
+~~~~~45
+[[[[[GWizard light the level (w)]
+        Looks like the same as u.
+~~~~~46
+[[[[[GWish (W)]
+        Makes all your wishes come true.
+
+        Read the *****wishing.txt*0[wishing spoiler] to see how these work.
+~~~~~47
+[[[[[GXP boost (x)]
+        Use the "Command count", aka 0, to specify the increment,
+        if you do not specify a parameter it doubles your XP,
+        otherwise it increments by the specified amount.
+~~~~~51
+[[[[[GZap monsters (z)]
+        All monsters in sight range vanish like Mass Genocide, only with no
+        HP price.
+~~~~~55
+[[[[[GIncrement monster level (@)]
+        Level up a monster.
+~~~~~61
+[[[[[GLose special powers (*)]
+        Returns your powers to a normal level.
+~~~~~67
+[[[[[GCreate object (-)]
+        Allows you to create a new object where you stand. You must
+        specify an object number from k_info.txt.
+~~~~~69
+[[[[[GThe path to the god dark (_)]
+        Do not use this as it is used by DarkGod as a test for Lua
+        and will CRASH the game. You have been warned.
+~~~~~71
+[[[[[GGain a fate (+)]
+        Unearth more of your prophecy.
+~~~~~73
+[[[[[GAlign monster (=)]
+        Use the "Command count", aka 0, to specify one of the following
+        alignment types:
+            0 monster becomes enemy
+            1 monster becomes neutral
+            2 monster becomes friendly
+            3 monster becomes pet
+            4 monster becomes companion
+        You then point at an enemy and press space.
+~~~~~75
+[[[[[GCreate spoiler (")]
+        Brings up a menu that allows you to create a spoiler file.
+~~~~~81
+[[[[[GLua script (>)]
+        Allows you to run a Lua script.
+~~~~~91
+[[[[[GSummon monster (/)]
+        Summons a random monster next to you.
+~~~~~91
+[[[[[GHelp (?)]
+        Displays the main help file.

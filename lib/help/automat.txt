@@ -1,0 +1,504 @@
+|||||oy
+~~~~~01|Automatizer
+~~~~~02|Auto pick-up
+~~~~~03|Auto destroy
+~~~~~04|Autosquelch
+#####R             /----------------------------------------\
+#####R            <             The Automatizer              >
+#####R             \----------------------------------------/
+
+#####GWhat is the Automatizer?
+The automatizer is an advanced auto-pickup or auto-squelch (auto-destroyer). At
+a basic level, it will allow you to automatically destroy things that you have
+no use for once you walk over them, providing that you have identified one of
+them with your current character.
+
+#####GIs that it?
+Well no. The automatizer is far more flexible than that. The old-fashioned auto
+squelch allowed you to destroy things dependent on how they pseudo-id'd - you
+could auto-destroy all {cursed} swords for instance.
+This is fine to start with, but once you get deep in the dungeon, and have a lot
+of money and a decent weapon, you'll be interested in destroying {average} and
+{good} items too right? Well the automatizer allows you to define destruction of
+things providing you are of a certain level.
+
+#####GSounds quite cool, but wha...
+STOP RIGHT THERE! I haven't finished yet! Let's look at some other examples.
+Most of the time, scrolls of darkness are pretty useless. Unless you are a
+vampire, or an alchemist, right? So you might think it was no good to add
+auto-destroy of scrolls of darkness to the automatizer. But you'd be wrong, for
+you can add rules that are dependent on certain conditions, like that you are
+of a certain race, or class.
+
+#####GHey this is sounding good. What if it destroys my artifacts?
+It can't. Artifacts can never be destroyed, by the automatizer. However, watch
+out for items that are VERY cool but not artifacts... you wouldn't want to go
+destroying boots of speed would you? Fortunately there are provisions for this
+too, you could set a rule that destroyed all excellent boots (providing you were
+past character level 45 say), but not if they were boots of speed.
+
+#####GWoah! This sounds amazing!
+Yes it is, isn't it.
+
+#####GSo how do I use it?
+Well the very simplest way is as follows. When you hit 'k' (^D in the roguelike
+keyset) to destroy an item, you'll see that one option is "$ new automatizer
+rule(OFF)". If you want to destroy all future items like that that you find,
+then hit the $ key. You'll see that (OFF) changes to (ON). Now pick the item you
+want to destroy. Let's say it is a Potion of Salt Water. You would now, as
+normal, see a message "You destroy a Potion of Salt Water". Following this you
+get a prompt, "Destroy all of the same [T]ype, [F]amily, or [N]ame, also use
+[S]tatus (no)?". Let's take the easy one first and hit 'n' to go with name.
+You'll now see a message, "Rule added, please go to the automatizer screen
+(press = then T) to save the modified ruleset". Let's do that then, shall we. If
+this is the first time you have used the automatizer with this savefile, you'll
+be asked to enable it as you hit T. Confirm that you would like to enable it,
+otherwise it won't work.
+
+#####GWhat's the point in having it disabled then?
+Well let's say you spotted something that you weren't sure how it would be
+affected by your rules, but didn't want to destroy it; you could just disable
+the automatizer for a moment and check it over before deciding what to do with
+it and switching the automatizer back on.
+
+#####GHmmm, ok. So I've enabled the automatizer, now what?
+Well, you'll see a screen like this:
+
+&&&&&B/B-B-B-B-BRBuBlBeBsB-B-B-B-B-B/B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B\
+&&&&&B|GsGaGlGtG GwGaGtGeGrB B B w B|G<GrGuGlGeB BnBaBmBew=w"ysyaylyty ywyaytyeyrw"B BtByBpBew=w"ydyeysytyryoyyw"G>B B B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|wfwowowdB B B B B B B B B w B|G G G G G<GnGaGmGeG>wpwowtwiwownw wowfw wswawlwtw wwwawtwewrg<g/gngagmgeg>B B B B B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|B B B B B B B B B B B B B w B|g<g/grguglgeg>B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|B B B B B B B B B B B B B w B|B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|B B B B B B B B B B B B B w B|B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|B B B B B B B B B B B B B w B|B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|B B B B B B B B B B B B B w B\B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B/
+&&&&&B|B B B B B B B B B B B B B w B|w BuBpW/BdBoBwBnW WtWoW WsWcWrWoWlWlW,W BtBaBbW WtWoW WsWwWiWtWcWhW WtWoW WtWhWeW WrWuWlWeW WwWiWnWdWoWww w w w w w w w w w w w w 
+&&&&&B|w w w w w w w w w w w w w w B|w BuW/BdW WtWoW WmWoWvWeW WrWuWlWeWsW,W BnWeWwW WrWuWlWeW,W BrWeWnWaWmWeW WrWuWlWeW,W BsWaWvWeW WrWuWlWeWsw w w w w w w w w w w w 
+&&&&&B\B-B-B-B-B-B-B-B-B-B-B-B-B-B-B/w RkW WtWoW rdrirsrarbrlreW WtWhWeW WaWuWtWoWmWaWtWiWzWeWrw w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w 
+                 
+
+(snipped for brevity).
+
+The automatizer rules are written in XML, so if you're familiar with that format
+you shouldn't find things too difficult. It's also similar in format to HTML, as
+you may notice from the way that there are opening tags (<name>) and closing
+tags (</name>), and that everything between those tags is affected by that
+rule.
+
+#####GXML? HTML? What is this? Isn't ToME enough acronyms to be going on with?
+OK, so you don't know anything about mark-up languages, it's no problem. Let's
+take a look at the automatizer screen bit by bit, starting with the instructions
+bottom right.
+
+up/down to scroll. Well as you move the up/down cursor keys or number keys, a
+different rule name is highlighted in the left hand window, and that rule is
+displayed in the right hand window.
+tab to switch to the rule window. Does what it says on the tin: switches to the
+rule window (the right hand pane) to allow editing of existing rules.
+u/d to move rules. Pressing 'u' or 'd' will move the rule up or down the order
+displayed in the left hand window. Purely for cosmetic reasons.
+new rule. Adds the beginning of a new rule.
+rename rule. This is handy, as every rule added from the destroy prompt (as
+explained above) is automatically named 'destroy', which gets a bit confusing
+when you have 50 or so rules... renaming your rules will make them much easier
+to edit later.
+save rules. Saves all existing rules to a filename you designate (default is
+automat.atm). Don't forget to do this after adding new rules/before exiting the
+game.
+k to disable the automatizer. Disables the automatizer, preserving the rules you
+have made.
+
+#####GYeah yeah, so what about the rule window on the right hand side itself?
+OK, here we go. This is the real juicy stuff.
+
+Anything inside pointy brackets (greater than and less than signs) is called a
+tag. You'll notice that each tag opens with a word, and then that same word
+appears in another tag later on, preceded by a slash. These are referred to as
+opening tags (like <name> ) and closing tags (like </name> ). Everything within
+a set of closing and opening tags is affected by those tags. This will make more
+sense as we continue. Tags and the things they enclose are like "mini-rules"
+which will together make up one rule. I call these mini-rules, clauses.
+
+the first line:
+<rule name="destroy" type="destroy">
+Each rule starts with the tag <rule>, and this contains the rule name, and the
+rule type. The rule name is how it is identified in the left hand window, and
+need not be unique. The rule type will be either "destroy" (destroys items when
+conditions stated below are met) or "pickup" (picks up item when conditions are
+met) or "nothing" (neither picks up, nor destroys item when conditions are met)
+
+The second line:
+    <name>Potion of Salt Water</name>
+This tells us that for the rule to be carried out, the name of the item must be
+"Potion of Salt Water"
+
+The third line:
+</rule>
+This tells us the rule is ended.
+
+In total then, the rule named "destroy" checks to see if the name of every item
+is Potion of Salt water, and if it is, it destroys it.
+
+Nice and simple huh?
+
+#####GYes Yes, very simple. It doesn't look very advanced at the moment.
+Well, we've barely scratched the surface.
+Let's take a look at those other options we got at the destroy prompt. Let's say
+I was at a stage in the game where I wanted to be able to switch on an auto-
+destroy for all swords that pseudo-id'd as {average}. So let's say I have a
+dagger in my backpack, and I want to create an auto-destroy rule for that and
+all subsequent swords... This is what I'd do:
+Hit 'k' to destroy items and hit '$' to turn on automatizer rules. Then I'd 
+select the dagger and confirm the destruction. Hit 's' to switch the status
+toggle. This toggle will include (when ON) how the dagger pseudo-ids, and
+finally hit 'f' to add a rule saying destroy by family. What you'll see in the
+automatizer screen now is this:
+
+&&&&&B/B-B-B-B-BRBuBlBeBsB-B-B-B-B-B/B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B\
+&&&&&B|GdGeGsGtGrGoGyB B B B B B w B|G<GrGuGlGeB BnBaBmBew=w"ydyeysytyryoyyw"B BtByBpBew=w"ydyeysytyryoyyw"G>B B B B B B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|wdwewswtwrwowyB B B B B B w B|G G G G G<GaGnGdG>B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|wfwowowdB B B B B B B B B w B|G G G G G G G G G<GtGvGaGlG>w2w3g<g/gtgvgaglg>B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|B B B B B B B B B B B B B w B|G G G G G G G G G<GsGtGaGtGuGsG>wawvwewrwawgweg<g/gsgtgagtgugsg>B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|B B B B B B B B B B B B B w B|g g g g g<g/gagngdg>B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|B B B B B B B B B B B B B w B|g<g/grguglgeg>B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|B B B B B B B B B B B B B w B|B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|B B B B B B B B B B B B B w B|B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|B B B B B B B B B B B B B w B|B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|B B B B B B B B B B B B B w B|w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w B|
+&&&&&B|B B B B B B B B B B B B B w B\B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B/
+&&&&&B|B B B B B B B B B B B B B w B|w BuBpW/BdBoBwBnW WtWoW WsWcWrWoWlWlW,W BtBaBbW WtWoW WsWwWiWtWcWhW WtWoW WtWhWeW WrWuWlWeW WwWiWnWdWoWww w w w w w w w w w w w w 
+&&&&&B|w w w w w w w w w w w w w w B|w BuW/BdW WtWoW WmWoWvWeW WrWuWlWeWsW,W BnWeWwW WrWuWlWeW,W BrWeWnWaWmWeW WrWuWlWeW,W BsWaWvWeW WrWuWlWeWsw w w w w w w w w w w w 
+&&&&&B\B-B-B-B-B-B-B-B-B-B-B-B-B-B-B/w RkW WtWoW rdrirsrarbrlreW WtWhWeW WaWuWtWoWmWaWtWiWzWeWrw w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w 
+
+#####GOK, well I can see the pseudo-id status is there, what's that tval thing? And
+#####Gwhere does it say swords?
+Well actually the tval thing is where it says swords! This is what is added by
+the 'destroy by family' option.
+
+It's probably worth explaining a bit here about the internal structure of ToME
+code. Don't worry it's not too scary. In ToME, all objects are divided into
+types: swords, axes, hafted-weapons, scrolls, rings etc. Every type is further
+divided into sub-types. Eg swords are divided into daggers, broad swords, two-
+handed swords and so on. Scrolls are divided into their specific actions;
+scrolls of light, scrolls of satisfy hunger etc. Each type has a number assigned
+to it, that never changes, and so does each sub-type. In this way we can
+identify an exact object using just two values: it's type, or tvalue (tval) and
+it's sub-type, or svalue (sval). You see where we're going with this?
+Now daggers have a tval of 23 and an sval of 4. So you can see that we've said
+in the rule that all things with a tval of 23 and a status of average can be
+destroyed.
+
+#####GAh, right. I see. And what's with the <and> tags?
+Well, everything in those tags must be true for the rule to carry out. If we had
+the <tval>23</tval> and the <status>average</average> lines without the <and>
+tags, it would not be clear whether we wanted just one of those clauses to be
+true for the rule to be carried out, or both of them.
+
+#####GErr...
+In other words, without the <and> tags it might look like we wanted to destroy
+a) EVERYTHING that pseudo id'd as average, and
+b) EVERY sword, regardless of how it pseudo-id'd!
+
+#####GRight. What if I did want a rule that was more general, and had either/or
+options in it?
+Then there are tags to do that - the <or> </or> tags. If ANY of the clauses
+return as true within or tags, then the rule is carried out. Substitute <or>
+tags for the <and> tags in our sword example above, and the rule will operate in
+the rather unhelpful way I explained above (all {average} things destroyed, and
+all swords destroyed, regardless of how they pseudo-id). So essentially, if your
+rule has more than one clause, you will need to include either <and> tags or
+<or> tags, or in some cases both.
+
+#####GOK and so what does the [T]ype option do?
+It merely adds the sval, thus narrowing down the parameters for the auto-
+destroy. For instance if I'd chosen to destroy by type rather than family in the
+last example, we'd have ended up with this:
+
+&&&&&B/B-B-B-B-BRBuBlBeBsB-B-B-B-B-B/B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B\
+&&&&&B|GdGeGsGtGrGoGyB B B B B B w B|G<GrGuGlGeB BnBaBmBew=w"ydyeysytyryoyyw"B BtByBpBew=w"ydyeysytyryoyyw"G>B B B B B B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|wdwewswtwrwowyB B B B B B w B|G G G G G<GaGnGdG>B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|wfwowowdB B B B B B B B B w B|G G G G G G G G G<GaGnGdG>B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|B B B B B B B B B B B B B w B|G G G G G G G G G G G G G<GtGvGaGlG>w2w3g<g/gtgvgaglg>B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|B B B B B B B B B B B B B w B|G G G G G G G G G G G G G<GsGvGaGlB BmBiBnw=w"y4w"B BmBaBxw=w"y4w"G>g<g/gsgvgaglg>B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|B B B B B B B B B B B B B w B|g g g g g g g g g<g/gagngdg>B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|B B B B B B B B B B B B B w B|G G G G G G G G G<GsGtGaGtGuGsG>wawvwewrwawgweg<g/gsgtgagtgugsg>B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|B B B B B B B B B B B B B w B|g g g g g<g/gagngdg>B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|B B B B B B B B B B B B B w B|g<g/grguglgeg>B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|B B B B B B B B B B B B B w B|B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|B B B B B B B B B B B B B w B|B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|B B B B B B B B B B B B B w B|B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|B B B B B B B B B B B B B w B|w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w B|
+&&&&&B|B B B B B B B B B B B B B w B\B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B/
+&&&&&B|B B B B B B B B B B B B B w B|w BuBpW/BdBoBwBnW WtWoW WsWcWrWoWlWlW,W BtBaBbW WtWoW WsWwWiWtWcWhW WtWoW WtWhWeW WrWuWlWeW WwWiWnWdWoWww w w w w w w w w w w w w 
+&&&&&B|w w w w w w w w w w w w w w B|w BuW/BdW WtWoW WmWoWvWeW WrWuWlWeWsW,W BnWeWwW WrWuWlWeW,W BrWeWnWaWmWeW WrWuWlWeW,W BsWaWvWeW WrWuWlWeWsw w w w w w w w w w w w 
+&&&&&B\B-B-B-B-B-B-B-B-B-B-B-B-B-B-B/w RkW WtWoW rdrirsrarbrlreW WtWhWeW WaWuWtWoWmWaWtWiWzWeWrw w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w 
+
+You can see in this example that we have nested <and> tags. Evaluating the tags
+from the ones nested deepest first we can see that if an object has a tval of 23
+and an sval between the values of 4 and 4 (i.e. if it is 4) then the rule will
+check against the next part, which is to see if the object identifies {average}.
+If it does, then all the clauses have been met and rule is carried out. In
+short, it destroys all average daggers, rather than all average swords. Strictly
+speaking the nested <and> tags aren't needed, but they do no harm, and are added
+automatically when destroying by [T]ype.
+
+#####GThis is all well and good but the numbers are going to get rather confusing
+#####Garen't they? Be much easier if I could just write 'swords' or 'daggers'.
+Well, you can. Kind of. Instead of using the admittedly rather obtuse numbers,
+you can use the name of that tvalue rather than the number it represents. So
+instead of <tval>23</tval> you could write <tval>TV_SWORD</tval>.
+
+#####GAh that would be better. But where can I find out what all the names, and
+#####Gnumbers of tvalues are?
+Well I've written a *****defines.txt*0[file] which lists tvalues and one which lists svalues for you
+to check on, and you may want to check the objects entry in k_info.txt in your
+lib/edit directory. If you look at the entry for dagger you'll see:
+
+N:43:& Dagger~
+G:|:W
+I:23:4:0
+W:0:0:12:10
+A:0/1:5/1:10/1:20/1
+P:0:1d4:0:0:0
+<snip>
+The only line we're interested in is the one that starts I (for Index). The
+first number is the tval, and the second is the sval.
+Of course you could always rename your rule to make things clearer.
+
+#####GOK so you mentioned something about setting rules up that happen only if a
+#####Gplayer is a certain level?
+Yeah, good point. Well, let's develop our destroy average swords rule for the
+moment. Let's say we always wanted to destroy average swords by the time we got
+to character level 20. They don't earn enough gold to make it worth carrying
+back to town, and we'll have a better weapon by then anyway. So here we are in
+the automatizer screen, with the destroy sword rule displaying in the right hand
+window.  If we hit tab, the right window becomes active and the rules at the
+bottom change:
+
+&&&&&B/B-B-B-B-BRBuBlBeBsB-B-B-B-B-B/B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B\
+&&&&&B|gdgegsgtgrgogyB B B B B B w B|v<vrvuvlveB BnBaBmBew=w"ydyeysytyryoyyw"B BtByBpBew=w"ydyeysytyryoyyw"v>B B B B B B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|wdwewswtwrwowyB B B B B B w B|G G G G G<GaGnGdG>B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|wfwowowdB B B B B B B B B w B|G G G G G G G G G<GtGvGaGlG>w2w3g<g/gtgvgaglg>B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|B B B B B B B B B B B B B w B|G G G G G G G G G<GsGtGaGtGuGsG>wawvwewrwawgweg<g/gsgtgagtgugsg>B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|B B B B B B B B B B B B B w B|g g g g g<g/gagngdg>B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|B B B B B B B B B B B B B w B|v<v/vrvuvlvev>B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|B B B B B B B B B B B B B w B|B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|B B B B B B B B B B B B B w B|B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|B B B B B B B B B B B B B w B|B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|B B B B B B B B B B B B B w B\B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B/
+&&&&&B|B B B B B B B B B B B B B w B|w BuBpW/BdBoBwBnW/BlBeBfBtW/BrBiBgBhBtW WtWoW WnWaWvWiWtWaWgWeW WrWuWlWeW,W B9W/B3W/B7W/B1W WtWoW WsWcWrWoWlWlw w w w w w w w w w 
+&&&&&B|w w w w w w w w w w w w w w B|w BtBaBbW WfWoWrW WsWwWiWtWcWhW,W BaWdWdW WcWlWaWuWsWeW,W BdWeWlWeWtWeW WcWlWaWuWsWeW/WrWuWlWew w w w w w w w w w w w w w w w w w 
+&&&&&B\B-B-B-B-B-B-B-B-B-B-B-B-B-B-B/w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w 
+
+You can see the <rule> tags have changed to purple, indicating they are the
+active ones, that all key presses will act upon. Let's just quickly scoot
+through these new commands:
+up/down/left/right to navigate rule: These will change which clause is active,
+enabling you to delete that clause, or add further clauses inside that one if it
+so allows it.
+9/3/7/1 to scroll: scrolls the whole screen which can become useful if you have
+a particularly long rule or one with lots of nested clauses.
+tab for switch: will make the left-hand window active again.
+add clause: adds a new clause within the active one, providing the active clause
+is either a <and>, <or> or <not> tag.
+delete clause/rule: deletes the active clause, and any clauses nested within
+that one. Therefore if the <rule> tags are active, the whole rule will be
+deleted. Beware!
+
+So if we now hit our right arrow we see that the <and> tags are active. We can
+now add a new clause here. Let's do so by pressing 'a'. You'll now see a list of
+different types of clauses you can add, which you simply scroll through using up
+and down keys, and select by hitting enter. A brief description of the selected
+clause is shown in the right hand window. Scroll down to the 'level' rule type
+and hit enter. You'll be asked to enter a player level. Let's go for 20. You'll
+then be asked for a maximum level, put 50, as we want the rule to be true from
+level 20 and upwards. You'll now see our rule displays as:
+
+&&&&&B/B-B-B-B-BRBuBlBeBsB-B-B-B-B-B/B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B\
+&&&&&B|gdgegsgtgrgogyB B B B B B w B|G<GrGuGlGeB BnBaBmBew=w"ydyeysytyryoyyw"B BtByBpBew=w"ydyeysytyryoyyw"G>B B B B B B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|wdwewswtwrwowyB B B B B B w B|v v v v v<vavnvdv>B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|wfwowowdB B B B B B B B B w B|G G G G G G G G G<GtGvGaGlG>w2w3g<g/gtgvgaglg>B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|B B B B B B B B B B B B B w B|G G G G G G G G G<GsGtGaGtGuGsG>wawvwewrwawgweg<g/gsgtgagtgugsg>B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|B B B B B B B B B B B B B w B|G G G G G G G G G<GlGeGvGeGlB BmBiBnw=w"y2y0w"B BmBaBxw=w"y5y0w"G>g<g/glgegvgeglg>B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|B B B B B B B B B B B B B w B|v v v v v<v/vavnvdv>B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|B B B B B B B B B B B B B w B|g<g/grguglgeg>B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|B B B B B B B B B B B B B w B|B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|B B B B B B B B B B B B B w B|B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|B B B B B B B B B B B B B w B|B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|B B B B B B B B B B B B B w B\B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B/
+&&&&&B|B B B B B B B B B B B B B w B|w BuBpW/BdBoBwBnW/BlBeBfBtW/BrBiBgBhBtW WtWoW WnWaWvWiWtWaWgWeW WrWuWlWeW,W B9W/B3W/B7W/B1W WtWoW WsWcWrWoWlWlw w w w w w w w w w 
+&&&&&B|w w w w w w w w w w w w w w B|w BtBaBbW WfWoWrW WsWwWiWtWcWhW,W BaWdWdW WcWlWaWuWsWeW,W BdWeWlWeWtWeW WcWlWaWuWsWeW/WrWuWlWew w w w w w w w w w w w w w w w w w 
+&&&&&B\B-B-B-B-B-B-B-B-B-B-B-B-B-B-B/w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w 
+
+So there we go. A rule which will destroy all {average} swords once the player
+is past character level 20.
+
+#####GHmmm I've tried this, it doesn't destroy cursed swords though...
+Nope. You haven't told it to. If you want a scaling rule, which always destroys
+cursed swords and then destroys average swords at character level 20, then {good}
+swords at character level 35, have a look at this, rather more complicated rule.
+
+&&&&&B/B-B-B-B-BRBuBlBeBsB-B-B-B-B-B/B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B\
+&&&&&B|wswhwiwewlwdB B B B B B B w B|G<GrGuGlGeB BnBaBmBew=w"ysywyoyrydysw"B BtByBpBew=w"ydyeysytyryoyyw"G>B B B B B B B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|wbwowwB B B B B B B B B B w B|G G G G G<GaGnGdG>B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|whwrwdw wawrwmwowuwrB B B w B|G G G G G G G G G<GtGvGaGlG>w2w3g<g/gtgvgaglg>B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|wawxwewsB B B B B B B B B w B|G G G G G G G G G<GoGrG>B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|whwewlwmwsB B B B B B B B w B|G G G G G G G G G G G G G<GaGnGdG>B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|wswowfwtw wawrwmB B B B B w B|G G G G G G G G G G G G G G G G G<GlGeGvGeGlB BmBiBnw=w"y0w"B BmBaBxw=w"y5y0w"G>g<g/glgegvgeglg>B B B B B B B B B B B B B B B w B|
+&&&&&B|wbwowlwtwsB B B B B B B B w B|G G G G G G G G G G G G G G G G G<GoGrG>B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|wbwowowtwsB B B B B B B B w B|G G G G G G G G G G G G G G G G G G G G G<GsGtGaGtGuGsG>wvwewrwyw wbwawdg<g/gsgtgagtgugsg>B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|wgwlwowvwewsB B B B B B B w B|G G G G G G G G G G G G G G G G G G G G G<GsGtGaGtGuGsG>wbwawdg<g/gsgtgagtgugsg>B B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|wpwowlwewawrwmwsB B B B B w B|g g g g g g g g g g g g g g g g g<g/gogrg>B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|wcwlwowawkB B B B B B B B w B|g g g g g g g g g g g g g<g/gagngdg>B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|GsGwGoGrGdGsB B B B B B B w B|G G G G G G G G G G G G G<GaGnGdG>B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|whwawfwtwewdwsB B B B B B w B|G G G G G G G G G G G G G G G G G<GlGeGvGeGlB BmBiBnw=w"y1y5w"B BmBaBxw=w"y5y0w"G>g<g/glgegvgeglg>B B B B B B B B B B B B B B w B|
+&&&&&B|wawrwrwowwwsB B B B B B B w B|G G G G G G G G G G G G G G G G G<GsGtGaGtGuGsG>wawvwewrwawgweg<g/gsgtgagtgugsg>B B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|wswhwowtB B B B B B B B B w B|g g g g g g g g g g g g g<g/gagngdg>B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|wbwowowmwewrwawnwgB B B B w B|G G G G G G G G G G G G G<GaGnGdG>B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|wtwowrwcwhB B B B B B B B w B|G G G G G G G G G G G G G G G G G<GlGeGvGeGlB BmBiBnw=w"y2y5w"B BmBaBxw=w"y5y0w"G>g<g/glgegvgeglg>B B B B B B B B B B B B B B w B|
+&&&&&B|wrwowdw wtwiwpwsB B B B B w B|G G G G G G G G G G G G G G G G G<GsGtGaGtGuGsG>wgwowowdg<g/gsgtgagtgugsg>B B B B B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|wpwowtwiwownwsB B B B B B w B|g g g g g g g g g g g g g<g/gagngdg>B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|wrwiwnwgwsB B B B B B B B w B|g g g g g g g g g<g/gogrg>B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|wwwawnwdwsB B B B B B B B w B|g g g g g<g/gagngdg>B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|wmwuwswhwrwowowmwsB B B B w B|g<g/grguglgeg>B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|wswcwrwowlwlwsB B B B B B w B|B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|wawmwuwlwewtwsB B B B B B w B|w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w B|
+&&&&&B|wpwawrwcwhwmwewnwtwsB B B w B\B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B/
+&&&&&B|wswhwawpwew wpwowtB B B B w B|w BuBpW/BdBoBwBnW WtWoW WsWcWrWoWlWlW,W BtBaBbW WtWoW WsWwWiWtWcWhW WtWoW WtWhWeW WrWuWlWeW WwWiWnWdWoWww w w w w w w w w w w w w 
+&&&&&B|wswtwawvwewsw w w w w w w w B|w BuW/BdW WtWoW WmWoWvWeW WrWuWlWeWsW,W BnWeWwW WrWuWlWeW,W BrWeWnWaWmWeW WrWuWlWeW,W BsWaWvWeW WrWuWlWeWsw w w w w w w w w w w w 
+&&&&&B\B-B-B-B-B-B-B-B-B-B-B-B-B-B-B/w RkW WtWoW rdrirsrarbrlreW WtWhWeW WaWuWtWoWmWaWtWiWzWeWrw w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w 
+
+#####GWoah! What the heck is that?!
+OK ok slow down a minute. Look at it carefully and a clause at a time. It's not
+difficult. Let's take it from the top. It's a destroying rule called swords. It
+opens with some <and> tags. The object must be a sword (tval 23). Now we have an
+OR tag, so we know that there are going to be some options:
+option 1: the player is between level 0 and level 50, and the sword pseudo id's
+as either cursed or worthless.
+option 2: the player is above character level 15, and the sword pseudo id's as
+average.
+option 3: the player is above character level 25, and the sword pseudo id's as
+good.
+If any of these options are true, the rule is carried out. This rule could
+easily be copied for other weapons or pieces of armour, substituting only the
+tval, and perhaps the name.
+
+#####GHmmm ok. looks good. I might want to change those character level values
+#####Gthough. they look a bit low...
+Well yeah, that's up to your playing style I guess... If you want to edit
+clauses directly rather than delete and re-add them, you might want to edit the
+automat.atm file directly. Just open it in your text editor  (it's located in
+your lib/user directory or in ~/.tome on multiuser systems) and you'll see the
+format is identical to how it is displayed in the automatizer file. Just watch
+your spellings, and keep a back-up of the original to replace if things go
+wrong. Don't mess about in there if you feel unsure of what you're doing though.
+
+#####GSo what about those examples you gave up above? Like destroying scrolls of
+#####Gdarkness unless you are a vampire or an alchemist?
+OK, let's add this rule from scratch rather than from the destroy item prompt.
+In the automatizer screen, hit 'n' for new rule. It asks for a name and a type
+of rule (destroy/pickup/nothing). I called my rule "? of darkness", and it's a
+destroy rule. It is worthwhile thinking at this point how the rule is going to
+be structured; for very complicated rules pen and paper may help. We're going to
+need to define the object (either by name, or by tval and sval) then we're going
+to say unless the player race modifier is vampire, or the player class is
+alchemist. So we are obviously going to have more than one clause, and the
+clauses are going to have to BOTH be true for the rule to take effect so the
+first clause we add is an <and> one. So hit 'a' for add clause and enter to
+select the <and> clause. Lets now hit our right arrow, so the <and> tags are
+active, and add a new rule. We can now select the <name> tags. At this point
+we're prompted for the name. Now it's not case-sensitive, but you do need to
+spell it correctly!
+With the <and> tags still highlighted we now want to add our "unless vampire or
+alchemist" clause. Seeing as this is an "unless" type clause, we start with a
+<not> tag. So again, 'a'dd a new clause, and select <not>.
+Now make the <not> tag active by moving right and down with the cursor keys. We
+want "EITHER vampire or alchemist" so we include <or> tags, again by moving
+across to make the <not> tags active and 'a'dding a new <or> clause. Then select
+the <or> tags and 'a'dd a new <subrace> clause. Enter 'vampire'.
+So the last part is to add alchemist. Now this might at first glance seem to be
+a simple case of 'a'dding a new clause of the <class> type, within the <or>
+tags, and there is certainly nothing 'wrong' with doing this. At present there
+is no way for non-alchemists to get the alchemy skill, but it is sometimes best
+to 'future-proof' against such possibilities. That's what we're going to do
+here.
+So rather than add a <class> clause, we're going to add a <skill> clause.
+With the <or> tags active, 'a'dd a new <skill> clause. You're first asked for a
+minimum skill level. Well, we can't use any skill unless we have 1.00 whole
+skill points in it or more, so we can put 1 in here. We're then asked for a
+maximum skill level, so we'll put in 50 here. The skill name must be spelled
+correctly (as it appears on the skill screen) so we put 'Alchemy' here. Your
+complete rule now appears as follows:
+
+&&&&&B/B-B-B-B-BRBuBlBeBsB-B-B-B-B-B/B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B\
+&&&&&B|G?G GdGaGrGkGnGeGsGsB B B w B|G<GrGuGlGeB BnBaBmBew=w"y?y ydyayrykynyeysysw"B BtByBpBew=w"ydyeysytyryoyyw"G>B B B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|wswwwowrwdwsB B B B B B B w B|G G G G G<GaGnGdG>B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|wswawlwtw wwwawtwewrB B B w B|G G G G G G G G G<GnGaGmGeG>wSwcwrwowlwlw wowfw wdwawrwkwnwewswsg<g/gngagmgeg>B B B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|wfwowowdB B B B B B B B B w B|G G G G G G G G G<GnGoGtG>B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|B B B B B B B B B B B B B w B|G G G G G G G G G G G G G<GoGrG>B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|B B B B B B B B B B B B B w B|G G G G G G G G G G G G G G G G G<GsGuGbGrGaGcGeG>wvwawmwpwiwrweg<g/gsgugbgrgagcgeg>B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|B B B B B B B B B B B B B w B|G G G G G G G G G G G G G G G G G<GsGkGiGlGlB BmBiBnw=w"y1w"B BmBaBxw=w"y5y0w"G>wAwlwcwhwewmwyg<g/gsgkgiglglg>B B B B B B B B w B|
+&&&&&B|B B B B B B B B B B B B B w B|g g g g g g g g g g g g g<g/gogrg>B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|B B B B B B B B B B B B B w B|g g g g g g g g g<g/gngogtg>B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|B B B B B B B B B B B B B w B|g g g g g<g/gagngdg>B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|B B B B B B B B B B B B B w B|g<g/grguglgeg>B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|B B B B B B B B B B B B B w B|B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|B B B B B B B B B B B B B w B|B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|B B B B B B B B B B B B B w B|B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|B B B B B B B B B B B B B w B\B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B/
+&&&&&B|B B B B B B B B B B B B B w B|w BuBpW/BdBoBwBnW WtWoW WsWcWrWoWlWlW,W BtBaBbW WtWoW WsWwWiWtWcWhW WtWoW WtWhWeW WrWuWlWeW WwWiWnWdWoWww w w w w w w w w w w w w 
+&&&&&B|w w w w w w w w w w w w w w B|w BuW/BdW WtWoW WmWoWvWeW WrWuWlWeWsW,W BnWeWwW WrWuWlWeW,W BrWeWnWaWmWeW WrWuWlWeW,W BsWaWvWeW WrWuWlWeWsw w w w w w w w w w w w 
+&&&&&B\B-B-B-B-B-B-B-B-B-B-B-B-B-B-B/w RkW WtWoW rdrirsrarbrlreW WtWhWeW WaWuWtWoWmWaWtWiWzWeWrw w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w 
+
+You'll notice I've also renamed the rules to make things a bit more legible.
+
+#####GOK I'm getting there now, what about the boots of speed thing you talked about?
+Heh. Take a look at this, and see if you can work out what it's doing first
+before I talk you through it
+
+&&&&&B/B-B-B-B-BRBuBlBeBsB-B-B-B-B-B/B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B\
+&&&&&B|GbGoGoGtGsB B B B B B B B w B|G<GrGuGlGeB BnBaBmBew=w"ybyoyoytysw"B BtByBpBew=w"ydyeysytyryoyyw"G>B B B B B B B B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|w?w wdwawrwkwnwewswsB B B w B|G G G G G<GaGnGdG>B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|wswwwowrwdwsB B B B B B B w B|G G G G G G G G G<GtGvGaGlG>wTwVw_wBwOwOwTwSg<g/gtgvgaglg>B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|wswawlwtw wwwawtwewrB B B w B|G G G G G G G G G<GoGrG>B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|wfwowowdB B B B B B B B B w B|G G G G G G G G G G G G G<GaGnGdG>B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|B B B B B B B B B B B B B w B|G G G G G G G G G G G G G G G G G<GlGeGvGeGlB BmBiBnw=w"y0w"B BmBaBxw=w"y5y0w"G>g<g/glgegvgeglg>B B B B B B B B B B B B B B B w B|
+&&&&&B|B B B B B B B B B B B B B w B|G G G G G G G G G G G G G G G G G<GoGrG>B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|B B B B B B B B B B B B B w B|G G G G G G G G G G G G G G G G G G G G G<GsGtGaGtGuGsG>wvwewrwyw wbwawdg<g/gsgtgagtgugsg>B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|B B B B B B B B B B B B B w B|G G G G G G G G G G G G G G G G G G G G G<GsGtGaGtGuGsG>wbwawdg<g/gsgtgagtgugsg>B B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|B B B B B B B B B B B B B w B|g g g g g g g g g g g g g g g g g<g/gogrg>B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|B B B B B B B B B B B B B w B|g g g g g g g g g g g g g<g/gagngdg>B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|B B B B B B B B B B B B B w B|G G G G G G G G G G G G G<GaGnGdG>B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|B B B B B B B B B B B B B w B|G G G G G G G G G G G G G G G G G<GlGeGvGeGlB BmBiBnw=w"y2y0w"B BmBaBxw=w"y5y0w"G>g<g/glgegvgeglg>B B B B B B B B B B B B B B w B|
+&&&&&B|B B B B B B B B B B B B B w B|G G G G G G G G G G G G G G G G G<GsGtGaGtGuGsG>wawvwewrwawgweg<g/gsgtgagtgugsg>B B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|B B B B B B B B B B B B B w B|g g g g g g g g g g g g g<g/gagngdg>B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|B B B B B B B B B B B B B w B|G G G G G G G G G G G G G<GaGnGdG>B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|B B B B B B B B B B B B B w B|G G G G G G G G G G G G G G G G G<GlGeGvGeGlB BmBiBnw=w"y3y5w"B BmBaBxw=w"y5y0w"G>g<g/glgegvgeglg>B B B B B B B B B B B B B B w B|
+&&&&&B|B B B B B B B B B B B B B w B|G G G G G G G G G G G G G G G G G<GsGtGaGtGuGsG>wgwowowdg<g/gsgtgagtgugsg>B B B B B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|B B B B B B B B B B B B B w B|g g g g g g g g g g g g g<g/gagngdg>B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|B B B B B B B B B B B B B w B|G G G G G G G G G G G G G<GaGnGdG>B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|B B B B B B B B B B B B B w B|G G G G G G G G G G G G G G G G G<GlGeGvGeGlB BmBiBnw=w"y4y5w"B BmBaBxw=w"y5y0w"G>g<g/glgegvgeglg>B B B B B B B B B B B B B B w B|
+&&&&&B|B B B B B B B B B B B B B w B|G G G G G G G G G G G G G G G G G<GsGtGaGtGuGsG>wvwewrwyw wgwowowdg<g/gsgtgagtgugsg>B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|B B B B B B B B B B B B B w B|G G G G G G G G G G G G G G G G G<GsGtGaGtGeG>wiwdwewnwtwiwfwiwewdg<g/gsgtgagtgeg>B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|B B B B B B B B B B B B B w B|G G G G G G G G G G G G G G G G G<GnGoGtG>B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|B B B B B B B B B B B B B w B|G G G G G G G G G G G G G G G G G G G G G<GcGoGnGtGaGiGnG>wswpwewewdg<g/gcgogngtgagigng>B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|B B B B B B B B B B B B B w B|g g g g g g g g g g g g g g g g g<g/gngogtg>B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|B B B B B B B B B B B B B w B|g g g g g g g g g g g g g<g/gagngdg>B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|B B B B B B B B B B B B B w B|g g g g g g g g g<g/gogrg>B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|B B B B B B B B B B B B B w B|g g g g g<g/gagngdg>B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B w B|
+&&&&&B|B B B B B B B B B B B B B w B|g<g/grguglgeg>w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w B|
+&&&&&B|B B B B B B B B B B B B B w B\B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B/
+&&&&&B|B B B B B B B B B B B B B w B|w BuBpW/BdBoBwBnW WtWoW WsWcWrWoWlWlW,W BtBaBbW WtWoW WsWwWiWtWcWhW WtWoW WtWhWeW WrWuWlWeW WwWiWnWdWoWww w w w w w w w w w w w w 
+&&&&&B|w w w w w w w w w w w w w w B|w BuW/BdW WtWoW WmWoWvWeW WrWuWlWeWsW,W BnWeWwW WrWuWlWeW,W BrWeWnWaWmWeW WrWuWlWeW,W BsWaWvWeW WrWuWlWeWsw w w w w w w w w w w w 
+&&&&&B\B-B-B-B-B-B-B-B-B-B-B-B-B-B-B/w RkW WtWoW rdrirsrarbrlreW WtWhWeW WaWuWtWoWmWaWtWiWzWeWrw w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w 
+
+The majority of this is fairly similar to the swords rule; it destroys {average}
+boots at character level 20, {good} ones at character level 35 and cursed ones
+always. The addition is at the bottom. It adds clauses which will destroy
+excellent items providing that they have been identified and that the name does
+not contain the word "speed". The <state>identified</state> bit is important
+here, as it would destroy the boots on pseudo-id otherwise, before it even saw
+the full name of the boots.
+
+#####GThis is fantastic! Where can I get more help?
+email me: fearoffours@t-o-m-e.net

@@ -1,0 +1,92 @@
+S:0000 
+E:0059
+D:It's the witching hour!
+
+S:0100 
+E:0259
+D:There may be Vampires around!
+
+S:0200 
+E:0459
+D:Only ToME players are up now!
+
+S:0100 
+E:0459
+D:It's really *very* late!
+
+S:0500 
+E:0558
+D:Aren't you sleepy yet?
+
+S:0559 
+E:0559
+D:It doesn't matter what you found!
+
+S:0600 
+E:0759
+D:The sun is up. Time to have fun!
+
+S:0601
+E:0800
+D:Are you having fun yet?
+
+S:0800 
+E:0905
+D:@$#$@$!%@$#%$@&$^#%@$!^#&#*
+
+S:0800
+E:1059
+D:You feel there is something special about this level.
+
+S:1100 
+E:1159
+D:You see a maze of twisty passages, all alike.
+
+S:1155 
+E:1200
+D:Are you having fun yet?
+
+S:1159 
+E:1200
+D:This fortune is broken!
+
+S:1200 
+E:1205
+D:This fortune is still broken!
+
+S:1200 
+E:1359
+D:Uh oh, now you've done it!
+
+S:1400 
+E:1729
+D:What did you do with the Phial?
+
+S:1730 
+E:1744
+D:You need your chocolate vitamin!
+
+S:1745 
+E:1759
+D:Tornado Warning!
+
+S:1759 
+E:1800
+D:Night is coming. Danger! Danger!
+
+S:1700 
+E:1859
+D:Take a Vampire out for dinner!
+
+S:2100 
+E:2159
+D:Warp Factor Nine. Now!
+
+S:2200 
+E:2359
+D:PARTY!
+
+S:2359 
+E:2359
+D:It's almost the witching hour!
+

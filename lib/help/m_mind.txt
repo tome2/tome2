@@ -1,0 +1,49 @@
+|||||oy
+~~~~~01|Magic|Mind School
+~~~~~02|Mind Magic
+~~~~~03|Skills|Mind - Spell Info
+#####R === ToME Magic - Mind School ===
+
+The mind school of magic contains spells which alter the mind. There are
+rumours of a "Tome of the Mind" which contains all the mind school spells
+within its bindings.
+
+Worshipping the God Eru Iluvatar or the God Melkor Bauglir also gives the
+ability to cast spells from the mind school at a level of 1/3 of your prayer
+level. E.g. if the skill "Spirituality: Prayer" is at level 12, you can cast
+up to level 4 mind school spells.
+
+#####sMind Spells
+There are four spells available for the mind school. These spells are:
+1. [[[[[sCharm] (school level 1)
+   Tries to manipulate the mind of a monster to make it friendly.
+   At spell level 15 it turns into a ball.
+   At spell level 35 it affects all monsters in sight.
+2. [[[[[sConfuse] (school level 5)
+   Tries to manipulate the mind of a monster to confuse it.
+   At spell level 15 it turns into a ball.
+   At spell level 35 it affects all monsters in sight.
+3. [[[[[sArmor of Fear] (school level 10)
+   Creates a shield of pure fear around you. Any monster attempting to hit
+   you must save or flee.
+4. [[[[[sStun] (school level 15)
+   Tries to manipulate the mind of a monster to stun it.
+   At spell level 20 it turns into a ball.
+
+#####GFire spells that can be cast with Mind skill
+
+1. [[[[[RFire Golem] (school level 7)
+   Creates a fiery golem and controls it.
+   During the control the available keylist is:
+      Movement keys: move the golem (depending on its speed it can move more
+          than one square).
+      , : pickup all items on the floor
+      d : drop all carried items
+      i : list all carried items
+      m : end the possession/use golem powers
+      Most of the other keys are disabled; you cannot interact with your
+      real body while controlling the golem.
+   But to cast the spell you will need a lantern or a wooden torch to create
+   the golem.
+#####v   Your Fire and Mind skills must have reached a combined average level 
+#####v   of 7 in order to cast this spell.

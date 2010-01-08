@@ -1,0 +1,25 @@
+23
+******** BUFFER LINE *********************************** DO NOT REMOVE *******
+You kick %s in the belly!
+You head-butt %s.
+You push %s over.
+You broke %s's finger!
+You broke %s's toe!
+You kick %s in the shins.
+You stab %s in the arm.
+You stab %s in the leg.
+You hit %s over the head.
+You knee %s in the groin!
+You aim a high kick at %s's head.
+You stab %s in the ribs.
+You chop at %s's neck.
+You put a tight choke-hold on %s.
+You attempt to topple %s over.
+You punch %s.
+You attempt to poke %s in the eye!
+You twist %s's leg.
+You twist %s's arm.
+You bend %s's fingers.
+You punch %s in the kidneys!
+You smash %s with your elbow.
+You smash %s with your knee.

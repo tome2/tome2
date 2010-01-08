@@ -1,0 +1,428 @@
+# Prf file for use with the 8x8 tiles to define 
+# trap image locations. Separated out from main 
+# graphics definitions due to the G:T:num:y:x 
+# instead of T:num:y:x  (major problems if this
+# file is opened in the TileAssigner)
+
+# Weakness Traps
+G:T:1:0x82:0x9E
+G:T:2:0x82:0x9E
+G:T:3:0x82:0x9E
+
+# Intelligence Traps
+G:T:4:0x82:0x9E
+G:T:5:0x82:0x9E
+G:T:6:0x82:0x9E
+
+# Wisdom Traps
+G:T:7:0x82:0x9E
+G:T:8:0x82:0x9E
+G:T:9:0x82:0x9E
+
+# Fumbling Fingers Traps
+G:T:10:0x82:0x9E
+G:T:11:0x82:0x9E
+G:T:12:0x82:0x9E
+
+# Wasting Traps
+G:T:13:0x82:0x9E
+G:T:14:0x82:0x9E
+G:T:15:0x82:0x9E
+
+# Beauty Traps
+G:T:16:0x82:0x9E
+G:T:17:0x82:0x9E
+G:T:18:0x82:0x9E
+
+# Trap of Curse Weapon
+G:T:20:0xA2:0x92
+
+# Trap of Curse Armor
+G:T:21:0xA2:0x92
+
+# Earthquake Trap
+G:T:22:0xA2:0x87
+
+# Poison Needle Trap
+G:T:23:0xA2:0x8B
+
+# Summon Monster Trap
+G:T:24:0xA2:0x89
+
+# Summon Undead Trap
+G:T:25:0xA2:0x89
+
+# Summon Greater Undead Trap
+G:T:26:0xA2:0x89
+
+# Teleport Trap
+G:T:27:0x8A:0x9C
+
+# Paralyzing Trap
+G:T:28:0xA2:0x8B
+
+# Explosive Device
+G:T:29:0xA2:0x8B
+
+# Teleport Item Trap
+G:T:30:0x8A:0x9C
+
+# Lose Memory Trap
+G:T:31:0xA2:0x8B
+
+# Bitter Regret Trap
+G:T:32:0xA2:0x8B
+
+# Bowel Cramps Trap
+G:T:33:0xA2:0x8B
+
+# Blindness/Confusion Trap
+G:T:34:0xA2:0x8B
+
+# Aggravation Trap
+G:T:35:0xA2:0x87
+
+# Multiplication Trap
+G:T:36:0xA2:0x87
+
+# Steal Item Trap
+G:T:37:0xA2:0x92
+
+# Summon Fast Quylthulgs Trap
+G:T:38:0xA2:0x89
+
+# Trap of Sinking
+G:T:39:0x8A:0x9C
+
+# Trap of Mana Drain
+G:T:40:0xA2:0x8B
+
+# Trap of Missing Money
+G:T:41:0xA2:0x92
+
+# Trap of No Return
+G:T:42:0xA2:0x92
+
+# Trap of Silent Switching
+G:T:43:0xA2:0x92
+
+# Trap of Walls
+G:T:44:0xA2:0x87
+
+# Trap of Calling Out
+G:T:45:0xA2:0x89
+
+# Trap of Sliding
+G:T:46:0xA2:0x8B
+
+# Trap of Charges Drain
+G:T:47:0xA2:0x92
+
+# Trap of Stair Movement
+G:T:48:0xA2:0x87
+
+# Trap of New Trap
+G:T:49:0xA2:0x87
+
+# Trap of Scatter Items
+G:T:50:0x8A:0x9C
+
+# Trap of Decay
+G:T:51:0xA2:0x8B
+
+# Trap of Wasting Wands
+G:T:52:0xA2:0x92
+
+# Trap of Filling
+G:T:53:0xA2:0x87
+
+# Trap of Drain Speed
+G:T:54:0xA2:0x92
+
+# Lightning Bolt Trap
+G:T:60:0xA2:0x8C
+
+# Poison Bolt Trap
+G:T:61:0xA2:0x8C
+
+# Acid Bolt Trap
+G:T:62:0xA2:0x8C
+
+# Cold Bolt Trap
+G:T:63:0xA2:0x8C
+
+# Fire Bolt Trap
+G:T:64:0xA2:0x8C
+
+# Plasma Bolt Trap
+G:T:65:0xA2:0x8C
+
+# Water Bolt Trap
+G:T:66:0xA2:0x8C
+
+# Lite Bolt Trap
+G:T:67:0xA2:0x8C
+
+# Dark Bolt Trap
+G:T:68:0xA2:0x8C
+
+# Shards Bolt Trap
+G:T:69:0xA2:0x8C
+
+# Sound Bolt Trap
+G:T:70:0xA2:0x8C
+
+# Confusion Bolt Trap
+G:T:71:0xA2:0x8C
+
+# Force Bolt Trap
+G:T:72:0xA2:0x8C
+
+# Inertia Bolt Trap
+G:T:73:0xA2:0x8C
+
+# Mana Bolt Trap
+G:T:74:0xA2:0x8C
+
+# Ice Bolt Trap
+G:T:75:0xA2:0x8C
+
+# Chaos Bolt Trap
+G:T:76:0xA2:0x8C
+
+# Nether Bolt Trap
+G:T:77:0xA2:0x8C
+
+# Disenchantment Bolt Trap
+G:T:78:0xA2:0x8C
+
+# Nexus  Bolt Trap
+G:T:79:0xA2:0x8C
+
+# Time Bolt Trap
+G:T:80:0xA2:0x8C
+
+# Gravity Bolt Trap
+G:T:81:0xA2:0x8C
+
+# Lightning Ball Trap
+G:T:82:0xA2:0x8D
+
+# Poison Ball Trap
+G:T:83:0xA2:0x8D
+
+# Acid Ball Trap
+G:T:84:0xA2:0x8D
+
+# Cold Ball Trap
+G:T:85:0xA2:0x8D
+
+# Fire Ball Trap
+G:T:86:0xA2:0x8D
+
+# Plasma Ball Trap
+G:T:87:0xA2:0x8D
+
+# Water Ball Trap
+G:T:88:0xA2:0x8D
+
+# Light Ball Trap
+G:T:89:0xA2:0x8D
+
+# Darkness Ball Trap
+G:T:90:0xA2:0x8D
+
+# Shards Ball Trap
+G:T:91:0xA2:0x8D
+
+# Sound Ball Trap
+G:T:92:0xA2:0x8D
+
+# Confusion Ball Trap
+G:T:93:0xA2:0x8D
+
+# Force Ball Trap
+G:T:94:0xA2:0x8D
+
+# Inertia Ball Trap
+G:T:95:0xA2:0x8D
+
+# Mana Ball Trap
+G:T:96:0xA2:0x8D
+
+# Ice Ball Trap
+G:T:97:0xA2:0x8D
+
+# Chaos Ball Trap
+G:T:98:0xA2:0x8D
+
+# Nether Ball Trap
+G:T:99:0xA2:0x8D
+
+# Disenchantment Ball Trap
+G:T:100:0xA2:0x8D
+
+# Nexus Ball Trap
+G:T:101:0xA2:0x8D
+
+# Time Ball Trap
+G:T:102:0xA2:0x8D
+
+# Gravity Ball Trap
+G:T:103:0xA2:0x8D
+
+# Arrow Trap
+G:T:110:0xA2:0x8E
+
+# Bolt Trap
+G:T:111:0xA2:0x8E
+
+# Seeker Arrow Trap
+G:T:112:0xA2:0x8E
+
+# Seeker Bolt Trap
+G:T:113:0xA2:0x8E
+
+# Poison Arrow Trap
+G:T:114:0xA2:0x8E
+
+# Poison Bolt Trap
+G:T:115:0xA2:0x8E
+
+# Poison Seeker Arrow Trap
+G:T:116:0xA2:0x8E
+
+# Poison Seeker Bolt Trap
+G:T:117:0xA2:0x8E
+
+# Broken Dagger Trap
+G:T:118:0xA2:0x8E
+
+# Dagger Trap
+G:T:119:0xA2:0x8E
+
+# Poison Broken Dagger Trap
+G:T:120:0xA2:0x8E
+
+# Poison Dagger Trap
+G:T:121:0xA2:0x8E
+
+# Arrows Trap
+G:T:122:0xA2:0x8E
+
+# Bolts Trap
+G:T:123:0xA2:0x8E
+
+# Seeker Arrow Trap
+G:T:124:0xA2:0x8E
+
+# Seeker Bolt Trap
+G:T:125:0xA2:0x8E
+
+# Poison Arrows Trap
+G:T:126:0xA2:0x8E
+
+# Poison Bolt Trap
+G:T:127:0xA2:0x8E
+
+# Poison Seeker Arrows Trap
+G:T:128:0xA2:0x8E
+
+# Poison Seeker Bolts Trap
+G:T:129:0xA2:0x8E
+
+# Broken Daggers Trap
+G:T:130:0xA2:0x8E
+
+# Dagger Trap
+G:T:131:0xA2:0x8E
+
+# Poison Broken Daggers Trap
+G:T:132:0xA2:0x8E
+
+# Poison Daggers Trap
+G:T:133:0xA2:0x8E
+
+# Trap of Drop Item
+G:T:140:0xA2:0x92
+
+# Trap of Drop Items
+G:T:141:0xA2:0x92
+
+# Trap of Drop Everything
+G:T:142:0xA2:0x92
+
+# Trap of Femininity
+G:T:150:0xA2:0x8B
+
+# Trap of Masculinity
+G:T:151:0xA2:0x8B
+
+# Trap of Neutrality
+G:T:152:0xA2:0x8B
+
+# Trap of Aging
+G:T:153:0xA2:0x8B
+
+# Trap of Growing
+G:T:154:0xA2:0x8B
+
+# Trap of Shrinking
+G:T:155:0xA2:0x8B
+
+# Trap of Tanker Drain
+G:T:157:0xA2:0x8B
+
+# Trap of Divine Anger
+G:T:158:0xA2:0x88
+
+# Trap of Divine Wrath
+G:T:159:0xA2:0x88
+
+# Hallucination Trap
+G:T:160:0xA2:0x8B
+
+# Greater Magic Missile Trap
+G:T:161:0xA2:0x8C
+
+# Foulness Trap
+G:T:162:0xA2:0x8C
+
+# Trap of Death Ray
+G:T:163:0xA2:0x8C
+
+# Trap of Holy Fire
+G:T:164:0xA2:0x8C
+
+# Trap of Hell Fire
+G:T:165:0xA2:0x8C
+
+# Psi Bolt Trap
+G:T:166:0xA2:0x8C
+
+# Psi Drain Trap
+G:T:167:0xA2:0x8B
+
+# Plasma (Nuke) Ball Trap
+G:T:168:0xA2:0x8D
+
+# Psi Ball Trap
+G:T:169:0xA2:0x8D
+
+# Aquirement Trap
+G:T:170:0xA2:0x89
+
+# Greater Lightning Bolt Trap
+G:T:171:0xA2:0x8C
+
+# Greater Poison Bolt Trap
+G:T:172:0xA2:0x8C
+
+# Greater Acid Bolt Trap
+G:T:173:0xA2:0x8C
+
+# Greater Cold Bolt Trap
+G:T:174:0xA2:0x8C
+
+# Greater Fire Bolt Trap
+G:T:175:0xA2:0x8C

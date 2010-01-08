@@ -1,0 +1,2 @@
+#! /bin/sh
+grep CFBundleVersion carbon/Info.plist | perl -pe "s,.*<string>([^<]*)<.*,\\1,"

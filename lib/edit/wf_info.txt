@@ -1,0 +1,170 @@
+# File: wf_info.txt
+
+
+# This file is used to initialize the "lib/raw/wf_info.raw" file, which is
+# used to initialize the "wilderness feats" information for the Angband game.
+
+# Do not modify this file unless you know exactly what you are doing,
+# unless you wish to risk possible system crashes and broken savefiles.
+
+# After modifying this file, delete the "lib/raw/wf_info.raw" file.
+
+# The wilderness feat indexes are defined in "defines.h", and must not be
+# changed.
+
+# N:<index>:<name>
+# D:<long name>
+# W:<level>:<entrance>:<road>:<feat>:<terrain_idx>:<character(must be unique)>
+# F:<flags>
+# X:<feat1>...<feat18>
+
+# Note for <road> :
+# 1 = NORTH
+# 2 = SOUTH
+# 4 = EAST
+# 8 = WEST
+
+# Note for <entrance> :
+# if < 1000 then it points to a town
+# if >= 1000 then it points to the x - 1000 dungeon type
+
+# Version stamp (required)
+
+V:2.0.0
+
+N:0:Ekkaia
+D:the Encircling Sea
+W:1:0:0:182:0:X
+X:182:182:182:182:182:182:182:182:182:182:182:182:182:182:182:182:182:182
+
+N:1:Bree 
+D:a small village
+W:1:1:0:203:1:1
+X:88:88:89:89:89:89:96:96:96:96:96:96:96:96:96:96:96:96
+
+N:2:Gondolin 
+D:The hidden town of the Noldor
+W:1:2:0:203:1:2
+X:88:88:88:89:89:89:89:89:89:89:89:89:89:96:96:96:96:96
+
+N:3:Minas Anor 
+D:The great town of Gondor
+W:1:3:0:203:1:3
+X:1:1:88:88:89:89:89:89:89:89:89:89:89:89:89:89:96:96
+
+N:4:Lothlorien 
+D:The land of Galadriel
+W:1:4:0:203:1:4
+X:88:88:96:96:96:96:96:96:96:96:96:96:96:96:96:89:89:89
+
+N:5:grass
+D:a plain of grass
+W:5:0:0:89:6:.
+X:1:1:88:88:89:89:89:89:89:89:89:89:89:89:89:89:96:96
+
+N:6:forest
+D:a forest
+W:20:0:0:96:7:T
+X:88:88:96:96:96:96:96:96:96:96:96:96:96:96:96:89:89:89
+
+N:7:road
+D:a west-east road
+W:5:0:12:1:6:-
+X:1:1:88:88:89:89:89:89:89:89:89:89:89:89:89:89:96:96
+
+N:8:road
+D:a north-south road
+W:5:0:3:1:6:|
+X:1:1:88:88:89:89:89:89:89:89:89:89:89:89:89:89:96:96
+
+N:9:mountain
+D:a mountain chain
+W:50:0:0:97:11:&
+X:1:1:89:89:88:96:96:97:97:97:97:97:97:97:97:97:97:97
+
+N:10:road
+D:a west-east-south road
+W:5:0:14:1:6:,
+X:1:1:88:88:89:89:89:89:89:89:89:89:89:89:89:89:96:96
+
+# XXX
+
+N:12:The Nether Realm
+D:the entrance to the netherworld
+W:127:1006:0:7:10:6
+X:88:88:88:86:86:86:85:85:85:85:85:85:85:85:85:97:97:97
+
+N:13:deep water
+D:a deep water area
+W:70:0:0:187:2:=
+X:187:187:187:187:187:187:187:187:187:187:187:187:84:84:84:84:84:84
+
+N:14:shallow water
+D:a shallow water area
+W:20:0:0:84:3:_
+X:187:187:187:84:84:84:84:84:84:84:84:84:84:84:84:1:88:89
+
+N:15:Mirkwood
+D:The Forest of Mirkwood
+W:20:1001:0:7:7:*
+X:88:88:96:96:96:96:96:96:96:96:96:96:96:96:96:89:89:89
+
+N:16:Mordor
+D:The Gates of Mordor
+W:50:1002:0:7:11:$
+X:1:1:88:88:89:89:89:89:89:89:89:89:89:89:89:89:96:96
+
+N:17:Angband
+D:The Pits of Angband
+W:50:1003:0:7:11:%
+X:1:1:88:88:89:89:89:89:89:89:89:89:89:89:89:89:96:96
+
+N:18:hill
+D:a hill
+W:50:0:0:97:11:^
+X:1:1:89:89:88:96:96:97:97:97:97:97:97:97:97:97:97:97
+
+N:19:desert
+D:a desert
+W:5:0:0:91:6:D
+X:1:1:88:88:91:91:91:91:91:91:91:91:91:91:91:98:98:92
+
+N:20:jungle
+D:a jungle
+W:20:0:0:96:7:t
+X:88:88:96:96:96:96:96:96:96:96:96:96:96:96:96:89:89:89
+
+N:21:swamp
+D:a swamp
+W:5:0:0:89:6:@
+X:1:1:88:88:89:89:89:89:89:89:89:89:89:89:89:89:96:96
+
+N:22:glacier
+D:a glacier
+W:20:0:0:90:7:g
+X:94:94:90:90:90:90:90:90:90:90:90:90:90:90:90:90:92:92
+
+N:23:grass
+D:a plain of grass
+W:5:0:0:89:6:,
+X:1:1:88:88:89:89:89:89:89:89:89:89:89:89:89:89:96:96
+
+N:24:Moria
+D:The Doors of Moria
+W:30:1022:0:7:11:)
+X:1:1:88:88:89:89:89:89:89:89:89:89:89:89:89:89:96:96
+
+N:25:high mountain
+D:a high mountain chain
+W:80:0:0:101:11:M
+X:101:101:101:101:101:101:101:101:101:101:101:101:101:101:101:101:101:101
+
+N:26:Gondolin 
+D:The pillaged city of the Noldor
+W:1:2:0:203:1:P
+X:49:49:49:88:88:88:92:92:92:92:93:93:94:94:94:174:205:205         
+
+N:27:Khazad-dum 
+D:The dwarven stronghold
+W:1:5:0:203:1:5
+X:1:1:1:1:1:1:1:1:1:1:88:88:88:88:88:88:88:88

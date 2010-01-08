@@ -1,0 +1,535 @@
+|||||oy
+
+#####R             /----------------------------------------\
+#####R            <    monster.pkg functions helper file     >
+#####R             \----------------------------------------/
+
+
+----------------------------------------------------------------------
+
+#####R=== race_info_idx ===
+
+#####GDeclaration
+    extern monster_race* race_info_idx(int r_idx, int ego);
+
+#####GFile
+    monster2.c
+
+#####GComment
+/*
+ * Return a (monster_race*) with the combinations of the monster
+ * properties and the ego type
+ */
+
+#####GDescription
+Get monster info and ego info for monster with monster index "r_idx"
+and monster ego "ego". The ego information is applied to the monster
+information and the new monster information is returned.
+
+For example, race_info_idx(141,7) will create a brown yeek (monster)
+shaman (ego).
+
+#####GParameters
+> "r_idx" is an entry from the "r_info.txt" file. Beware: there is no
+  range checking.
+> "ego" is an entry from the "re_info.txt". Beware: there is no range
+  checking.
+
+----------------------------------------------------------------------
+
+#####R=== delete_monster_idx ===
+
+#####GDeclaration
+    extern void delete_monster_idx(int i);
+
+#####GFile
+    monster2.c
+
+#####GComment
+/*
+ * Delete a monster by index.
+ *
+ * When a monster is deleted, all of its objects are deleted.
+ */
+
+#####GDescription
+Delete monster "i" from the monster array.
+
+#####GParameters
+> "i" is the index for the monster list (m_list[]). Beware: there is
+  no range checking.
+
+----------------------------------------------------------------------
+
+#####R=== m_pop ===
+
+#####GDeclaration
+    extern s16b m_pop(void);
+
+#####GFile
+    monsters2.c
+
+#####GComment
+/*
+ * Acquires and returns the index of a "free" monster.
+ *
+ * This routine should almost never fail, but it *can* happen.
+ */
+
+#####GDescription
+Get an empty slot in the monster list (m_list[]). If there are no
+empty slots, a slot will be reclaimed from a "dead" monster. If all
+slots are full, 0 is returned, which means the function has failed
+("Too many monsters!").
+
+----------------------------------------------------------------------
+
+#####R=== get_mon_num_prep ===
+
+#####GDeclaration
+    extern errr get_mon_num_prep(void);
+
+#####GFile
+    monster2.c
+
+#####GComment
+/*
+ * Apply a "monster restriction function" to the "monster allocation table"
+ */
+
+#####GDescription
+There are no parameters, but there are some other variables which will
+need to be set. They are get_mon_num_hook and get_mon_num2_hook. They
+are pointers to functions.
+
+For example, get_mon_num_hook = monster_volcano means when
+get_mon_num_hook is called (*get_mon_num_hook)(index), the actual
+function called is monster_volcano(index). This particular function
+returns TRUE if the monster indicated by "index" has the
+RF8_WILD_VOLCANO flag set.
+
+It is a good idea to store the old value of get_mon_num_hook before
+setting a new one, and restoring it when your function is finished.
+
+Following is a list of functions which can be assigned to
+get_mon_num_hook:
+
+create_molds_hook
+create_townpeople_hook
+mon_hook_bounty
+monster_dungeon
+monster_grass
+monster_mountain
+monster_ocean
+monster_quest
+monster_shore
+monster_town
+monster_volcano
+monster_waste
+monster_wood
+mutate_monster_okay
+place_monster_okay
+summon_specific_okay
+vault_aux_animal
+vault_aux_chapel
+vault_aux_clone
+vault_aux_demon
+vault_aux_dragon
+vault_aux_giant
+vault_aux_jelly
+vault_aux_kennel
+vault_aux_orc
+vault_aux_symbol
+vault_aux_treasure
+vault_aux_troll
+vault_aux_undead
+
+Or you can write your own. The function must take an integer (index)
+as a parameter and return boolean (TRUE if the monster is selected,
+or FALSE if it is not).
+
+----------------------------------------------------------------------
+
+#####R=== get_mon_num ===
+
+#####GDeclaration
+    extern s16b get_mon_num(int level);
+
+#####GFile
+    monster2.c
+
+#####GComment
+/*
+ * Choose a monster race that seems "appropriate" to the given level
+ *
+ * This function uses the "prob2" field of the "monster allocation table",
+ * and various local information, to calculate the "prob3" field of the
+ * same table, which is then used to choose an "appropriate" monster, in
+ * a relatively efficient manner.
+ *
+ * Note that "town" monsters will *only* be created in the town, and
+ * "normal" monsters will *never* be created in the town, unless the
+ * "level" is "modified", for example, by polymorph or summoning.
+ *
+ * There is a small chance (1/50) of "boosting" the given depth by
+ * a small amount (up to four levels), except in the town.
+ *
+ * It is (slightly) more likely to acquire a monster of the given level
+ * than one of a lower level.  This is done by choosing several monsters
+ * appropriate to the given level and keeping the "hardest" one.
+ *
+ * Note that if no monsters are "appropriate", then this function will
+ * fail, and return zero, but this should *almost* never happen.
+ */
+
+Description:
+For the given level "level", return the index of an appropriate
+monster race.
+
+#####GParameters
+> "level" is a dungeon level
+
+----------------------------------------------------------------------
+
+#####R=== monster_desc ===
+
+#####GDeclaration
+    extern void monster_desc(char *desc, monster_type *m_ptr,
+    int mode);
+
+#####GFile
+    monster2.c
+
+#####GComment
+/*
+ * Build a string describing a monster in some way.
+ *
+ * We can correctly describe monsters based on their visibility.
+ * We can force all monsters to be treated as visible or invisible.
+ * We can build nominatives, objectives, possessives, or reflexives.
+ * We can selectively pronominalize hidden, visible, or all monsters.
+ * We can use definite or indefinite descriptions for hidden monsters.
+ * We can use definite or indefinite descriptions for visible monsters.
+ *
+ * Pronominalization involves the gender whenever possible and allowed,
+ * so that by cleverly requesting pronominalization / visibility, you
+ * can get messages like "You hit someone.  She screams in agony!".
+ *
+ * Reflexives are acquired by requesting Objective plus Possessive.
+ *
+ * If no m_ptr arg is given (?), the monster is assumed to be hidden,
+ * unless the "Assume Visible" mode is requested.
+ *
+ * If no r_ptr arg is given, it is extracted from m_ptr and r_info
+ * If neither m_ptr nor r_ptr is given, the monster is assumed to
+ * be neuter, singular, and hidden (unless "Assume Visible" is set),
+ * in which case you may be in trouble... :-)
+ *
+ * I am assuming that no monster name is more than 70 characters long,
+ * so that "char desc[80];" is sufficiently large for any result.
+ *
+ * Mode Flags:
+ *   0x01 --> Objective (or Reflexive)
+ *   0x02 --> Possessive (or Reflexive)
+ *   0x04 --> Use indefinites for hidden monsters ("something")
+ *   0x08 --> Use indefinites for visible monsters ("a kobold")
+ *   0x10 --> Pronominalize hidden monsters
+ *   0x20 --> Pronominalize visible monsters
+ *   0x40 --> Assume the monster is hidden
+ *   0x80 --> Assume the monster is visible
+ *
+ * Useful Modes:
+ *   0x00 --> Full nominative name ("the kobold") or "it"
+ *   0x04 --> Full nominative name ("the kobold") or "something"
+ *   0x80 --> Genocide resistance name ("the kobold")
+ *   0x88 --> Killing name ("a kobold")
+ *   0x22 --> Possessive, genderized if visible ("his") or "its"
+ *   0x23 --> Reflexive, genderized if visible ("himself") or "itself"
+ */
+
+#####GDescription
+Return a monster description "desc" for monster "monster_type" using
+flag "mode". The modes are described above.
+
+#####GParameters
+> "desc" is the returned description.
+> "monster type" is the monster (monster pointer).
+> "mode" is one of the modes described in the comments.
+
+----------------------------------------------------------------------
+
+#####R=== monster_race_desc ===
+
+#####GDeclaration
+    extern void monster_race_desc(char *desc, int r_idx,
+    int ego);
+
+#####GFile
+    monster2.c
+
+#####GComment
+(none)
+
+#####GDescription
+Return the monster description "desc" for monster with monster index
+"r_idx" and monster ego "ego". The monster description is made up of
+the ego name (if any) and monster name, or the unique name.
+
+#####GParameters
+> "desc" is the returned description.
+> "r_idx" is an entry from the "r_info.txt" file. Beware: there is no
+  range checking.
+> "ego" is an entry from the "re_info.txt". Beware: there is no range
+  checking.
+
+----------------------------------------------------------------------
+
+#####R=== place_monster_aux ===
+
+#####GDeclaration
+    extern bool place_monster_aux(int y, int x, int r_idx,
+    bool slp, bool grp, int status);
+
+#####GFile
+    monster2.c
+
+#####GComment
+/*
+ * Attempt to place a monster of the given race at the given location
+ *
+ * Note that certain monsters are now marked as requiring "friends".
+ * These monsters, if successfully placed, and if the "grp" parameter
+ * is TRUE, will be surrounded by a "group" of identical monsters.
+ *
+ * Note that certain monsters are now marked as requiring an "escort",
+ * which is a collection of monsters with similar "race" but lower
+ * level.
+ *
+ * Some monsters induce a fake "group" flag on their escorts.
+ *
+ * Note the "bizarre" use of non-recursion to prevent annoying output
+ * when running a code profiler.
+ *
+ * Note the use of the new "monster allocation table" code to restrict
+ * the "get_mon_num()" function to "legal" escort types.
+ */
+
+#####GDescription
+Attempt to place a monster at grid "y", "x". The monster has monster
+index "m_idx". The monster may be asleep ("slp"). The monster may be
+surrounded by a group of identical monsters ("grp"). The monster has
+a status of "status" (see below). The function returns TRUE if the
+monster is placed successfully, otherwise FALSE.
+
+#####GParameters
+> "y" is the y co-ordinate of the target grid.
+> "x" is the x co-ordinate of the target grid.
+> "r_idx" is an entry from the "r_info.txt" file. Beware: there is no
+  range checking.
+> "slp" is TRUE if the monster is asleep, otherwise FALSE.
+> "grp" is TRUE if the monster is surrounded by a group, otherwise
+  FALSE.
+> "status" is the status of the monster
+  *****fields.txt*0[status]
+
+----------------------------------------------------------------------
+
+#####R=== place_monster ===
+
+#####GDeclaration
+    extern bool place_monster(int y, int x, bool slp,
+    bool grp);
+
+#####GFile
+    monster2.c
+
+#####GComment
+/*
+ * Hack -- attempt to place a monster at the given location
+ *
+ * Attempt to find a monster appropriate to the "monster_level"
+ */
+
+#####GDescription
+Attempt to place a monster at grid "y", "x". The monster may be asleep
+("slp"). The monster may be surrounded by a group of identical
+monsters ("grp"). The monster is of the appropriate monster level. The
+function returns TRUE if the monster is placed successfully, otherwise
+FALSE.
+
+#####GParameters
+> "y" is the y co-ordinate of the target grid.
+> "x" is the x co-ordinate of the target grid.
+> "slp" is TRUE if the monster is asleep, otherwise FALSE.
+> "grp" is TRUE if the monster is surrounded by a group, otherwise
+  FALSE.
+
+----------------------------------------------------------------------
+
+#####R=== place_monster_one ===
+
+#####GDeclaration
+    extern s16b place_monster_one(int y, int x, int r_idx,
+    int ego, bool slp, int status);
+
+#####GFile
+    monster2.c
+
+#####GComment
+/*
+ * Attempt to place a monster of the given race at the given location.
+ *
+ * To give the player a sporting chance, any monster that appears in
+ * line-of-sight and is extremely dangerous can be marked as
+ * "FORCE_SLEEP", which will cause them to be placed with low energy,
+ * which often (but not always) lets the player move before they do.
+ *
+ * This routine refuses to place out-of-depth "FORCE_DEPTH" monsters.
+ *
+ * XXX XXX XXX Use special "here" and "dead" flags for unique monsters,
+ * remove old "cur_num" and "max_num" fields.
+ *
+ * XXX XXX XXX Actually, do something similar for artifacts, to simplify
+ * the "preserve" mode, and to make the "what artifacts" flag more useful.
+ *
+ * This is the only function which may place a monster in the dungeon,
+ * except for the savefile loading code.
+ */
+
+#####GDescription
+Attempt to place a monster at grid "y", "x". The monster has monster
+index "m_idx". The monster may be asleep ("slp"). The monster may have
+an ego type ("ego"). The monster has a status of "status" (see below).
+The function returns TRUE if the monster is placed successfully,
+otherwise FALSE.
+
+#####GParameters
+> "y" is the y co-ordinate of the target grid.
+> "x" is the x co-ordinate of the target grid.
+> "r_idx" is an entry from the "r_info.txt" file. Beware: there is no
+  range checking.
+> "slp" is TRUE if the monster is asleep, otherwise FALSE.
+> "ego" is an entry from the "re_info.txt". Beware: there is no range
+  checking.
+> "status" is the status of the monster
+  *****fields.txt*0[status]
+
+----------------------------------------------------------------------
+
+#####R=== is_friend ===
+
+#####GDeclaration
+    extern int is_friend(monster_type *m_ptr);
+
+#####GFile
+    monster3.c
+
+#####GComment
+/*
+ * Is the monster in friendly state(pet, friend, ..)
+ * -1 = enemy, 0 = neutral, 1 = friend
+ */
+
+#####GDescription
+Return a value to indicate the status of monster "m_ptr".
+  *****fields.txt*0[status]
+
+#####GParameters
+> "m_ptr" is a pointer to a monster.
+
+----------------------------------------------------------------------
+
+#####R=== is_enemy ===
+
+#####GDeclaration
+    extern bool is_enemy(monster_type *m_ptr,
+    monster_type *t_ptr);
+
+#####GFile
+    monster3.c
+
+#####GComment
+/* Should they attack each others */
+
+#####GDescription
+Return TRUE if monster "m_ptr" should attack monster "t_ptr". If
+"m_ptr" is stupid and "r_ptr" is a different type of monster then the
+function will return TRUE. If "m_ptr" is not neutral and "r_ptr" is a
+breeder, and "r_ptr" is a different type of monster then the function
+will return TRUE (and vice versa). If both monsters are not neutral
+and one is friendly and the other isn't then the function will return
+TRUE. Otherwise the function returns FALSE.
+
+#####GParameters
+> "m_ptr" is a pointer to a monster.
+> "t_ptr" is a pointer to a monster (target).
+
+----------------------------------------------------------------------
+
+#####R=== change_side ===
+
+#####GDeclaration
+    extern bool change_side(monster_type *m_ptr);
+
+#####GFile
+    monster3.c
+
+#####GComment
+(none)
+
+#####GDescription
+Change the status of monster "m_ptr" from friendly to unfriendly and
+vice versa. Friends and pets become enemies. Neutral Ms become
+neutral Ps and vice versa. Companions are unaffected. The
+function returns TRUE if the status changed, otherwise FALSE.
+
+#####GParameters
+> "m_ptr" is a pointer to a monster.
+
+----------------------------------------------------------------------
+
+#####R=== find_position ===
+
+#####GDeclaration
+    extern void find_position(int y, int x, int *yy = 0,
+    int *xx = 0);
+
+#####GFile
+    lua_bind.c
+
+#####GComment
+(none)
+
+#####GDescription
+Find a new grid "yy", "xx" within 6 grids of target grid "y", "x".
+The new grid must be within line-of-sight of the target grid. A
+maximum of 5000 attempts is made.
+
+#####GParameters
+> "y" is the y co-ordinate of the target grid.
+> "x" is the x co-ordinate of the target grid.
+> "yy" is the y co-ordinate of the new grid.
+> "xx" is the x co-ordinate of the new grid.
+
+----------------------------------------------------------------------
+
+#####R=== can_create_companion ===
+
+#####GDeclaration
+    extern bool can_create_companion();
+
+#####GFile
+    monster3.c
+
+#####GComment
+/* Returns if a new companion is allowed */
+
+#####GDescription
+Return TRUE if a companion can be created, otherwise FALSE.
+
+----------------------------------------------------------------------
+
+Back to the *****lua.hlp*0[lua help index] .
+
+
+                                                     [[[[[gThis file by Chris Hadgis]

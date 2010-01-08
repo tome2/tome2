@@ -1,0 +1,66 @@
+# Lit permanent wall
+F:X:61:6
+
+# up staircase
+F:<:6:8
+
+# Grass
+F:-:89:3
+
+# Trees
+F:t:96:3
+
+# Grass with Giant spider
+F:a:89:3:175
+
+# Grass with Giant tarantula
+F:b:89:3:275
+
+# Grass with Mirkwood Spider
+F:c:89:3:277
+
+# Grass with Aranea
+F:d:89:3:963
+
+# Grass with Elder aranea
+F:e:89:3:964
+
+# Dungeon layout
+D:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+D:X<---tttttttttttttttttttttttttttttttttttttttttttttttttttttttX
+D:X---ttttttttttttttttttttttttttta--ctttttttttttttttttttttttttX
+D:Xtt---------------ttttttttttttt--tttttttttttttttttttttttttttX
+D:Xttttttttt--------------cttttttt--ttttttttttttttttttttttttttX
+D:Xtttttttttttttt--tttttt---------c--tttttttttttttttttttttttttX
+D:Xttttttttttttta-bttt---cttttttttttttttttttttttttttttttttttttX
+D:Xttttttttttttttttttttt---tttt-ttd--c-ttt---c---tttttttttttttX
+D:Xtttttttttttttttttttc---btttttttt-----ttc-----ttttttttttttttX
+D:Xtttttttttttttttttt----tttttttttc-c---------d---c-ctttttttttX
+D:Xtttttttttttttttttb-tttt---c---t----tttttt----------ctttttttX
+D:Xtttttttttttttttttt----ttttt-----c---tttttt-c--cttttttttttttX
+D:Xttttttttttttttttc--at----c---ttttttttttttttttttttttttttttttX
+D:Xttttttttttttta----ttttt-b--tttttttttd--etttttttttttttttttttX
+D:Xtttttttttttt---c--ttttt------tttt-c-tttttttte----dtttttttttX
+D:Xttttttttttttttttttt----c--d----tttt---ttttttt--d----ettttttX
+D:Xttttttttttttttttttttt-c-d---tttttttc--cttttttt-----ttttttttX
+D:Xttttttttttta-c--ttt-------tttt-------ttttt----d--ttttttttttX
+D:Xtttttttttttt----ttttt--ttt--c--c--t-----c--ttttttttttttttttX
+D:Xttttttttttt--c---ttt--c--c---ttttt--c----t----tttttttttttttX
+D:Xtttttttttt-c----c---t-----tttttttt-----ttt-------dtttttttttX
+D:Xttttttttttt---c---tttt--c--ttttttttt-ttttttttt-d---ttttttttX
+D:Xtttttttttttta-----tttttt---d---dttd----cttttt-----tttttttttX
+D:Xtttttttttttttttttttt---c-----ttttt---c----ettd--tttttttttttX
+D:Xtttttttttttttttt----d----tttttttttttttttttttttt---tttttttttX
+D:Xttttttt-------c---tttt-d----c--ettttttttttttd-----dttttttttX
+D:Xtttttc--c-c------tttttt-------------ettttttt----tttttttttttX
+D:Xttttttt------ttttttt--c---d---ttttttttttttt--d--tttttttttttX
+D:Xttttt----cc-tttttttttttte----d-ttttttttttttttt----tttttttttX
+D:Xttttt--c------ttttttttttttttttttttttttttte--tt------ettttttX
+D:Xttt--c----ctttttttttttttttttttttttttte------------tttttttttX
+D:Xtttttttttttttttttttttttttttttttttttttttttt--e--ttttttttttttX
+D:XtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttX
+D:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+# Starting position
+P:3:3
+

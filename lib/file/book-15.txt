@@ -1,0 +1,250 @@
+The Gorgimera is an uncommon monster, 
+occurring at somewhat shallow depths. 
+It is somewhat strong, just a small bit dangerous, 
+and has no magical powers. 
+
+The Colbran is an uncommon monster, 
+occurring at somewhat shallow depths. 
+It is unimaginably strong, moderately dangerous, 
+and has an inkling of magical powers. 
+
+The Spirit naga is an uncommon monster, 
+occurring at somewhat shallow depths. 
+She is somewhat strong, somewhat dangerous, 
+and has unremarkable magical powers. 
+
+The 5-headed hydra is an uncommon animal, 
+occurring at somewhat shallow depths. 
+It is extremely strong, moderately dangerous, 
+and has rudimentary magical powers. 
+
+The Black knight is a common monster, 
+occurring at somewhat shallow depths. 
+He is somewhat weak, not one little bit dangerous, 
+and has rudimentary magical powers. 
+
+Uldor the Accursed is a unique monster, 
+occurring at somewhat shallow depths. 
+He is unimaginably strong, just a little bit dangerous, 
+and has no magical powers. 
+
+The Mage is a common monster, 
+occurring at somewhat shallow depths. 
+He is extremely weak, not one little bit dangerous, 
+and has unimaginably powerful magical powers. 
+
+The Mind flayer is a common monster, 
+occurring at somewhat shallow depths. 
+It is very weak, moderately dangerous, 
+and has remarkable magical powers. 
+
+Draebor, the Imp is a unique monster, 
+occurring at somewhat shallow depths. 
+It is somewhat strong, very dangerous, 
+and has arcane magical powers. 
+
+The Basilisk is a somewhat rare animal, 
+occurring at somewhat shallow depths. 
+It is strong, not at all dangerous, 
+and has no magical powers. 
+
+The Ice troll is a common troll, 
+occurring at somewhat shallow depths. 
+He is very weak, somewhat dangerous, 
+and has no magical powers. 
+
+The Giant purple worm is a somewhat rare animal, 
+occurring at somewhat shallow depths. 
+It is somewhat strong, somewhat dangerous, 
+and has no magical powers. 
+
+The Movanic Deva is a legendary monster, 
+occurring at somewhat shallow depths. 
+It is moderately strong, moderately dangerous, 
+and has unremarkable magical powers. 
+
+The Catoblepas is an uncommon animal, 
+occurring at somewhat shallow depths. 
+It is somewhat weak, just a small bit dangerous, 
+and has no magical powers. 
+
+The Mimic (ring) is a somewhat rare monster, 
+occurring at somewhat shallow depths. 
+It is moderately strong, extremely dangerous, 
+and has hellishly powerful magical powers. 
+
+The Young blue dragon is a common dragon, 
+occurring at somewhat shallow depths. 
+It is somewhat weak, just a small bit dangerous, 
+and has an inkling of magical powers. 
+
+The Young white dragon is a common dragon, 
+occurring at somewhat shallow depths. 
+It is somewhat weak, just a small bit dangerous, 
+and has an inkling of magical powers. 
+
+The Young green dragon is a common dragon, 
+occurring at somewhat shallow depths. 
+It is somewhat weak, just a small bit dangerous, 
+and has an inkling of magical powers. 
+
+The Young bronze dragon is a somewhat rare dragon, 
+occurring at somewhat shallow depths. 
+It is somewhat weak, just a small bit dangerous, 
+and has an inkling of magical powers. 
+
+The Mithril golem is a rare monster, 
+occurring at shallow depths. 
+It is hellishly strong, moderately dangerous, 
+and has no magical powers. 
+
+The Shadow drake is an uncommon dragon, 
+occurring at shallow depths. 
+It is very weak, just a small bit dangerous, 
+and has simple magical powers. 
+
+The Skeleton troll is a common undead monster, 
+occurring at shallow depths. 
+It is very weak, somewhat dangerous, 
+and has no magical powers. 
+
+The Manticore is an uncommon monster, 
+occurring at shallow depths. 
+It is very weak, not at all dangerous, 
+and has an inkling of magical powers. 
+
+The Giant blue ant is an uncommon animal, 
+occurring at shallow depths. 
+It is extremely weak, just a little bit dangerous, 
+and has no magical powers. 
+
+The Giant army ant is a somewhat rare monster, 
+occurring at shallow depths. 
+It is extremely weak, just a small bit dangerous, 
+and has no magical powers. 
+
+The Grave wight is a common undead monster, 
+occurring at shallow depths. 
+It is extremely weak, just a little bit dangerous, 
+and has rudimentary magical powers. 
+
+The Killer slicer beetle is an uncommon monster, 
+occurring at shallow depths. 
+It is very weak, not at all dangerous, 
+and has no magical powers. 
+
+The Ghost is a common undead monster, 
+occurring at shallow depths. 
+It is extremely weak, alarmingly dangerous, 
+and has an inkling of magical powers. 
+
+The Death watch beetle is a somewhat rare monster, 
+occurring at shallow depths. 
+It is somewhat weak, just a small bit dangerous, 
+and has no magical powers. 
+
+The Ogre shaman is an uncommon giant, 
+occurring at shallow depths. 
+It is extremely weak, not one little bit dangerous, 
+and has advanced magical powers. 
+
+The Nexus quylthulg is a common monster, 
+occurring at shallow depths. 
+It is extremely weak, not at all dangerous, 
+and has average magical powers. 
+
+Shelob, Spider of Darkness is a unique animal, 
+occurring at shallow depths. 
+She is hellishly strong, unimaginably dangerous, 
+and has very powerful magical powers. 
+
+The Ninja is an uncommon monster, 
+occurring at shallow depths. 
+He is very weak, moderately dangerous, 
+and has no magical powers. 
+
+The Memory moss is a somewhat rare monster, 
+occurring at shallow depths. 
+It is laughably weak, somewhat dangerous, 
+and has no magical powers. 
+
+The Storm giant is a common giant, 
+occurring at shallow depths. 
+It is moderately strong, moderately dangerous, 
+and has average magical powers. 
+
+The Cave troll is a common troll, 
+occurring at shallow depths. 
+He is somewhat weak, somewhat dangerous, 
+and has no magical powers. 
+
+The Half-troll is an uncommon troll, 
+occurring at shallow depths. 
+He is moderately strong, somewhat dangerous, 
+and has no magical powers. 
+
+The Mystic is a somewhat rare monster, 
+occurring at shallow depths. 
+He is moderately strong, moderately dangerous, 
+and has rudimentary magical powers. 
+
+The Barrow wight is a somewhat rare undead monster, 
+occurring at shallow depths. 
+It is extremely weak, somewhat dangerous, 
+and has small magical powers. 
+
+The Giant skeleton troll is a common undead monster, 
+occurring at shallow depths. 
+It is somewhat strong, moderately dangerous, 
+and has no magical powers. 
+
+The Chaos drake is a somewhat rare dragon, 
+occurring at shallow depths. 
+It is strong, somewhat dangerous, 
+and has remarkable magical powers. 
+
+The Law drake is a somewhat rare dragon, 
+occurring at shallow depths. 
+It is strong, somewhat dangerous, 
+and has average magical powers. 
+
+The Balance drake is a somewhat rare dragon, 
+occurring at shallow depths. 
+It is very strong, somewhat dangerous, 
+and has hellishly powerful magical powers. 
+
+The Ethereal drake is a somewhat rare dragon, 
+occurring at shallow depths. 
+It is somewhat strong, somewhat dangerous, 
+and has unremarkable magical powers. 
+
+Bert the Stone Troll is a unique troll, 
+occurring at shallow depths. 
+He is hellishly strong, somewhat dangerous, 
+and has no magical powers. 
+
+Bill the Stone Troll is a unique troll, 
+occurring at shallow depths. 
+He is hellishly strong, somewhat dangerous, 
+and has no magical powers. 
+
+Tom the Stone Troll is a unique troll, 
+occurring at shallow depths. 
+He is hellishly strong, somewhat dangerous, 
+and has no magical powers. 
+
+The Shade is a somewhat rare undead monster, 
+occurring at shallow depths. 
+It is somewhat weak, moderately dangerous, 
+and has small magical powers. 
+
+The Spectre is a somewhat rare undead monster, 
+occurring at shallow depths. 
+It is somewhat weak, moderately dangerous, 
+and has small magical powers. 
+
+The Water troll is a common troll, 
+occurring at shallow depths. 
+He is moderately strong, moderately dangerous, 
+and has no magical powers. 
+

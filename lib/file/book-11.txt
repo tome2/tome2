@@ -1,0 +1,250 @@
+The Wood spider is a somewhat rare animal, 
+occurring at surface depths. 
+It is laughably weak, somewhat dangerous, 
+and has no magical powers. 
+
+The Manes is an uncommon monster, 
+occurring at surface depths. 
+It is laughably weak, somewhat dangerous, 
+and has no magical powers. 
+
+The Bloodshot eye is a somewhat rare monster, 
+occurring at surface depths. 
+It is laughably weak, not one little bit dangerous, 
+and has no magical powers. 
+
+The Pink naga is an uncommon monster, 
+occurring at surface depths. 
+She is extremely weak, just a little bit dangerous, 
+and has no magical powers. 
+
+The Pink jelly is a common monster, 
+occurring at surface depths. 
+It is very weak, somewhat dangerous, 
+and has no magical powers. 
+
+The Giant pink frog is a common animal, 
+occurring at surface depths. 
+It is laughably weak, not at all dangerous, 
+and has no magical powers. 
+
+The Green icky thing is an uncommon monster, 
+occurring at surface depths. 
+It is laughably weak, not at all dangerous, 
+and has no magical powers. 
+
+The Zombified kobold is a common undead monster, 
+occurring at surface depths. 
+It is laughably weak, somewhat dangerous, 
+and has no magical powers. 
+
+The Lost soul is an uncommon undead monster, 
+occurring at surface depths. 
+It is laughably weak, somewhat dangerous, 
+and has rudimentary magical powers. 
+
+The Dark elf is an uncommon monster, 
+occurring at surface depths. 
+He is laughably weak, not one little bit dangerous, 
+and has an inkling of magical powers. 
+
+The Night lizard is an uncommon monster, 
+occurring at surface depths. 
+It is laughably weak, not one little bit dangerous, 
+and has no magical powers. 
+
+Mughash the Kobold Lord is a unique monster, 
+occurring at surface depths. 
+He is extremely weak, moderately dangerous, 
+and has no magical powers. 
+
+Wormtongue, Agent of Saruman is a unique monster, 
+occurring at surface depths. 
+He is very weak, not at all dangerous, 
+and has remarkable magical powers. 
+
+Lagduf, the Snaga is a unique orc, 
+occurring at surface depths. 
+He is very weak, somewhat dangerous, 
+and has no magical powers. 
+
+The Brown yeek is a common animal, 
+occurring at surface depths. 
+It is laughably weak, not one little bit dangerous, 
+and has no magical powers. 
+
+The Novice ranger is a common monster, 
+occurring at surface depths. 
+He is laughably weak, just a little bit dangerous, 
+and has an inkling of magical powers. 
+
+The Giant salamander is a common animal, 
+occurring at surface depths. 
+It is laughably weak, not at all dangerous, 
+and has no magical powers. 
+
+The Green mold is an uncommon monster, 
+occurring at surface depths. 
+It is extremely weak, moderately dangerous, 
+and has no magical powers. 
+
+The Skeleton orc is a common undead monster, 
+occurring at surface depths. 
+It is extremely weak, somewhat dangerous, 
+and has no magical powers. 
+
+The Novice paladin is an uncommon monster, 
+occurring at surface depths. 
+He is laughably weak, just a little bit dangerous, 
+and has an inkling of magical powers. 
+
+The Lemure is a somewhat rare monster, 
+occurring at surface depths. 
+It is extremely weak, somewhat dangerous, 
+and has no magical powers. 
+
+The Hill orc is a common monster, 
+occurring at surface depths. 
+He is extremely weak, just a small bit dangerous, 
+and has no magical powers. 
+
+The Bandit is an uncommon monster, 
+occurring at surface depths. 
+He is laughably weak, not one little bit dangerous, 
+and has no magical powers. 
+
+The Yeti is a somewhat rare animal, 
+occurring at surface depths. 
+It is extremely weak, not one little bit dangerous, 
+and has no magical powers. 
+
+The Bloodshot icky thing is a somewhat rare monster, 
+occurring at surface depths. 
+It is laughably weak, not at all dangerous, 
+and has no magical powers. 
+
+The Giant grey rat is a common animal, 
+occurring at surface depths. 
+It is laughably weak, somewhat dangerous, 
+and has no magical powers. 
+
+The Black harpy is a common animal, 
+occurring at surface depths. 
+She is laughably weak, not one little bit dangerous, 
+and has no magical powers. 
+
+The Orc shaman is a common orc, 
+occurring at surface depths. 
+He is laughably weak, not one little bit dangerous, 
+and has rudimentary magical powers. 
+
+The Baby blue dragon is an uncommon dragon, 
+occurring at surface depths. 
+It is extremely weak, not at all dangerous, 
+and has no magical powers. 
+
+The Baby white dragon is an uncommon dragon, 
+occurring at surface depths. 
+It is extremely weak, not at all dangerous, 
+and has no magical powers. 
+
+The Baby green dragon is an uncommon dragon, 
+occurring at surface depths. 
+It is extremely weak, not at all dangerous, 
+and has no magical powers. 
+
+The Baby black dragon is an uncommon dragon, 
+occurring at surface depths. 
+It is extremely weak, not at all dangerous, 
+and has no magical powers. 
+
+The Baby red dragon is an uncommon dragon, 
+occurring at surface depths. 
+It is extremely weak, not at all dangerous, 
+and has no magical powers. 
+
+The Giant pink ant is an uncommon monster, 
+occurring at surface depths. 
+It is laughably weak, somewhat dangerous, 
+and has no magical powers. 
+
+Brodda, the Easterling is a unique monster, 
+occurring at surface depths. 
+It is very weak, just a little bit dangerous, 
+and has no magical powers. 
+
+The King cobra is an uncommon animal, 
+occurring at surface depths. 
+It is extremely weak, just a little bit dangerous, 
+and has no magical powers. 
+
+The Giant spider is an uncommon animal, 
+occurring at very shallow depths. 
+It is extremely weak, somewhat dangerous, 
+and has no magical powers. 
+
+The Dark elven mage is a common monster, 
+occurring at very shallow depths. 
+He is laughably weak, not at all dangerous, 
+and has simple magical powers. 
+
+Orfax, Son of Boldor is a unique animal, 
+occurring at very shallow depths. 
+He is extremely weak, somewhat dangerous, 
+and has remarkable magical powers. 
+
+The Dark elven warrior is a common monster, 
+occurring at very shallow depths. 
+He is extremely weak, not one little bit dangerous, 
+and has no magical powers. 
+
+The Clear mushroom patch is an uncommon monster, 
+occurring at very shallow depths. 
+It is laughably weak, somewhat dangerous, 
+and has no magical powers. 
+
+Grishnakh, the Hill Orc is a unique orc, 
+occurring at very shallow depths. 
+He is very weak, somewhat dangerous, 
+and has no magical powers. 
+
+The Giant white tick is an uncommon animal, 
+occurring at very shallow depths. 
+It is extremely weak, somewhat dangerous, 
+and has no magical powers. 
+
+The Hairy mold is an uncommon monster, 
+occurring at very shallow depths. 
+It is extremely weak, somewhat dangerous, 
+and has no magical powers. 
+
+The Disenchanter mold is an uncommon monster, 
+occurring at very shallow depths. 
+It is extremely weak, moderately dangerous, 
+and has no magical powers. 
+
+The Pseudo dragon is an uncommon monster, 
+occurring at very shallow depths. 
+It is very weak, not at all dangerous, 
+and has simple magical powers. 
+
+The Tengu is a common monster, 
+occurring at very shallow depths. 
+It is extremely weak, just a small bit dangerous, 
+and has rudimentary magical powers. 
+
+The Creeping gold coins is a somewhat rare animal, 
+occurring at very shallow depths. 
+It is extremely weak, somewhat dangerous, 
+and has no magical powers. 
+
+The Wolf is a common animal, 
+occurring at very shallow depths. 
+It is laughably weak, just a little bit dangerous, 
+and has no magical powers. 
+
+The Giant fruit fly is a legendary animal, 
+occurring at very shallow depths. 
+It is laughably weak, not one little bit dangerous, 
+and has no magical powers. 
+

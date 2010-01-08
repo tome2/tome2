@@ -1,0 +1,14 @@
+~~~~~01|Classical
+~~~~~02|Race Modifiers|Classical
+#####R=== Classical Race ===
+
+#####GDescription
+This is the normal, classical character of your chosen race.
+
+#####GStat Modifiers
+No changes to stats.
+
+#####GStarting Equipment
+A classical character begins the game with:
+    Some rations
+    Some torches

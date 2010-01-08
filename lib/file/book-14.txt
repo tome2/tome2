@@ -1,0 +1,250 @@
+Lugdush, the Uruk is a unique orc, 
+occurring at somewhat shallow depths. 
+He is extremely strong, moderately dangerous, 
+and has no magical powers. 
+
+The Blue dragon bat is a common animal, 
+occurring at somewhat shallow depths. 
+It is laughably weak, not at all dangerous, 
+and has an inkling of magical powers. 
+
+The Mimic (scroll) is a somewhat rare monster, 
+occurring at somewhat shallow depths. 
+It is extremely weak, moderately dangerous, 
+and has average magical powers. 
+
+The Fire vortex is a common monster, 
+occurring at somewhat shallow depths. 
+It is extremely weak, somewhat dangerous, 
+and has no magical powers. 
+
+The Water vortex is a common monster, 
+occurring at somewhat shallow depths. 
+It is extremely weak, somewhat dangerous, 
+and has no magical powers. 
+
+The Cold vortex is a common monster, 
+occurring at somewhat shallow depths. 
+It is extremely weak, somewhat dangerous, 
+and has no magical powers. 
+
+The Energy vortex is a common monster, 
+occurring at somewhat shallow depths. 
+It is extremely weak, somewhat dangerous, 
+and has no magical powers. 
+
+The Mummified orc is a common undead monster, 
+occurring at somewhat shallow depths. 
+It is extremely weak, somewhat dangerous, 
+and has no magical powers. 
+
+The Killer stag beetle is a common monster, 
+occurring at somewhat shallow depths. 
+It is very weak, not one little bit dangerous, 
+and has no magical powers. 
+
+The Iron golem is an uncommon monster, 
+occurring at somewhat shallow depths. 
+It is unimaginably strong, moderately dangerous, 
+and has no magical powers. 
+
+The Giant yellow scorpion is a common monster, 
+occurring at somewhat shallow depths. 
+It is extremely weak, somewhat dangerous, 
+and has no magical powers. 
+
+The Black ooze is a common monster, 
+occurring at somewhat shallow depths. 
+It is laughably weak, somewhat dangerous, 
+and has no magical powers. 
+
+The Hardened warrior is a common monster, 
+occurring at somewhat shallow depths. 
+He is very weak, not one little bit dangerous, 
+and has no magical powers. 
+
+Azog, King of the Uruk-Hai is a unique orc, 
+occurring at somewhat shallow depths. 
+He is alarmingly strong, moderately dangerous, 
+and has no magical powers. 
+
+The Master rogue is an uncommon monster, 
+occurring at somewhat shallow depths. 
+He is extremely weak, not one little bit dangerous, 
+and has no magical powers. 
+
+The Red dragon bat is a common animal, 
+occurring at somewhat shallow depths. 
+It is laughably weak, not one little bit dangerous, 
+and has an inkling of magical powers. 
+
+The Killer white beetle is a common monster, 
+occurring at somewhat shallow depths. 
+It is very weak, not one little bit dangerous, 
+and has no magical powers. 
+
+The Giant bronze dragon fly is a common animal, 
+occurring at very shallow depths. 
+It is laughably weak, not one little bit dangerous, 
+and has no magical powers. 
+
+The Forest wight is a common undead monster, 
+occurring at somewhat shallow depths. 
+It is extremely weak, just a little bit dangerous, 
+and has an inkling of magical powers. 
+
+Ibun, Son of Mim is a unique monster, 
+occurring at somewhat shallow depths. 
+He is alarmingly strong, somewhat dangerous, 
+and has small magical powers. 
+
+Khim, Son of Mim is a unique monster, 
+occurring at somewhat shallow depths. 
+He is alarmingly strong, somewhat dangerous, 
+and has small magical powers. 
+
+The 4-headed hydra is an uncommon monster, 
+occurring at somewhat shallow depths. 
+It is strong, not one little bit dangerous, 
+and has no magical powers. 
+
+The Mummified human is a common undead monster, 
+occurring at somewhat shallow depths. 
+It is extremely weak, somewhat dangerous, 
+and has no magical powers. 
+
+The Vampire bat is an uncommon undead monster, 
+occurring at somewhat shallow depths. 
+It is extremely weak, moderately dangerous, 
+and has no magical powers. 
+
+Sangahyando of Umbar is a unique monster, 
+occurring at somewhat shallow depths. 
+He is extremely strong, somewhat dangerous, 
+and has rudimentary magical powers. 
+
+Angamaite of Umbar is a unique monster, 
+occurring at somewhat shallow depths. 
+He is extremely strong, somewhat dangerous, 
+and has rudimentary magical powers. 
+
+The Banshee is an uncommon undead monster, 
+occurring at somewhat shallow depths. 
+She is laughably weak, somewhat dangerous, 
+and has rudimentary magical powers. 
+
+The Pukelman is a somewhat rare monster, 
+occurring at somewhat shallow depths. 
+It is unimaginably strong, moderately dangerous, 
+and has small magical powers. 
+
+The Dark elven druid is a somewhat rare monster, 
+occurring at somewhat shallow depths. 
+He is moderately strong, just a little bit dangerous, 
+and has unremarkable magical powers. 
+
+The Stone troll is a common troll, 
+occurring at somewhat shallow depths. 
+He is very weak, just a little bit dangerous, 
+and has no magical powers. 
+
+The Troll priest is a common troll, 
+occurring at somewhat shallow depths. 
+He is somewhat weak, just a little bit dangerous, 
+and has unremarkable magical powers. 
+
+The Wereworm is a somewhat rare animal, 
+occurring at somewhat shallow depths. 
+It is hellishly strong, somewhat dangerous, 
+and has no magical powers. 
+
+The Carrion crawler is an uncommon animal, 
+occurring at somewhat shallow depths. 
+It is very weak, somewhat dangerous, 
+and has no magical powers. 
+
+The Killer pink beetle is an uncommon monster, 
+occurring at somewhat shallow depths. 
+It is very weak, just a small bit dangerous, 
+and has no magical powers. 
+
+The Giant grey ant is a common monster, 
+occurring at somewhat shallow depths. 
+It is extremely weak, not one little bit dangerous, 
+and has no magical powers. 
+
+Ulwarth, Son of Ulfang is a unique monster, 
+occurring at somewhat shallow depths. 
+He is extremely strong, just a little bit dangerous, 
+and has no magical powers. 
+
+The Displacer beast is an uncommon monster, 
+occurring at somewhat shallow depths. 
+It is somewhat weak, just a little bit dangerous, 
+and has no magical powers. 
+
+The Giant red tick is a common animal, 
+occurring at somewhat shallow depths. 
+It is extremely weak, just a small bit dangerous, 
+and has no magical powers. 
+
+The Cave ogre is a common monster, 
+occurring at somewhat shallow depths. 
+It is somewhat weak, just a small bit dangerous, 
+and has no magical powers. 
+
+The White wraith is a common undead monster, 
+occurring at somewhat shallow depths. 
+It is extremely weak, somewhat dangerous, 
+and has rudimentary magical powers. 
+
+The Monadic Deva is a legendary monster, 
+occurring at somewhat shallow depths. 
+It is somewhat weak, moderately dangerous, 
+and has small magical powers. 
+
+Mim, Betrayer of Turin is a unique monster, 
+occurring at somewhat shallow depths. 
+He is hellishly strong, moderately dangerous, 
+and has unremarkable magical powers. 
+
+The Killer red beetle is a common animal, 
+occurring at somewhat shallow depths. 
+It is extremely weak, just a little bit dangerous, 
+and has no magical powers. 
+
+The Creeping adamantite coins is a rare animal, 
+occurring at somewhat shallow depths. 
+It is somewhat strong, moderately dangerous, 
+and has no magical powers. 
+
+The Algroth is a common monster, 
+occurring at somewhat shallow depths. 
+It is somewhat weak, moderately dangerous, 
+and has no magical powers. 
+
+The Vibration hound is a somewhat rare animal, 
+occurring at somewhat shallow depths. 
+It is very weak, just a small bit dangerous, 
+and has an inkling of magical powers. 
+
+The Nexus hound is a somewhat rare animal, 
+occurring at somewhat shallow depths. 
+It is very weak, just a small bit dangerous, 
+and has an inkling of magical powers. 
+
+The Ogre mage is an uncommon giant, 
+occurring at somewhat shallow depths. 
+It is moderately strong, not one little bit dangerous, 
+and has arcane magical powers. 
+
+Lokkak, the Ogre Chieftain is a unique giant, 
+occurring at somewhat shallow depths. 
+He is hellishly strong, somewhat dangerous, 
+and has no magical powers. 
+
+The Vampire is a common undead monster, 
+occurring at somewhat shallow depths. 
+It is somewhat weak, moderately dangerous, 
+and has arcane magical powers. 
+

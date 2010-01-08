@@ -1,0 +1,67 @@
+|||||oy
+~~~~~01|Mage
+~~~~~02|Classes|Mage
+#####R=== Mages ===
+
+#####GDescription
+A Mage must live by his wits. He cannot hope to simply hack his way 
+through the dungeon, and so must therefore use his magic to defeat, 
+deceive, confuse, and escape. A Mage is not really complete without an
+assortment of magical devices to use in addition to his spells. He can
+master the higher level magical devices easily and has good saving throws. 
+
+There is no reason a Mage cannot become a good fighter, but spells are 
+his true realm. For more information on magic schools and spell effects see 
+the *****magic.txt*01[Magic help file].
+
+#####GStarting Stat Modifiers
+Strength         -5
+Intelligence     +3
+Wisdom           +0
+Dexterity        +1
+Constitution     -2
+Charisma         +1
+Hit Die          +d0
+Spell Points    +50%
+Exp Penalty      30%
+
+#####GStarting Skills:
+#####BSkill                   Start Level     Skill Point Gains
+Combat                  1.000           [0.500]
+  Weaponmastery         0.700           [0.500]
+Sneakiness              1.000           [0.900]
+  Stealth               0.000           [0.400]
+Magic                   1.000           [0.900]
+  Magic-Device          1.000           [1.200]
+  Spell-power           0.000           [0.600]
+  Sorcery               0.000           [0.200]
+  Mana                  1.000           [0.900]
+  Geomancy
+    Fire                0.000           [0.900]
+    Water               0.000           [0.900]
+    Air                 0.000           [0.900]
+    Earth               0.000           [0.900]
+  Meta                  0.000           [0.900]
+  Conveyance            0.000           [0.900]
+  Divination            0.000           [0.900]
+  Temporal              0.000           [0.900]
+  Mind                  0.000           [0.900]
+  Nature                0.000           [0.900]
+  Necromancy            0.000           [0.700]
+  Runecraft             0.000           [0.700]
+  Thaumaturgy           0.000           [0.700]
+Spirituality            1.000           [0.550]
+  Prayer                0.000           [0.500]
+Monster-lore            0.000           [0.500]
+
+*A Mage cannot learn the Geomancy skill, but it is shown in his skill 
+screen because the elemental schools are sub-skills of it.
+
+#####GInnate Abilities:
+#####BAbility              Character level
+Perfect casting             1
+
+#####GStarting Equipment
+A Mage begins the game with:
+    a Book of Beginner Cantrips
+    a Dagger

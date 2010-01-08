@@ -1,0 +1,49 @@
+|||||oy
+~~~~~01|Magic|Fire School
+~~~~~02|Fire Magic
+~~~~~03|Skills|Fire - Spell Info
+#####R === ToME Magic - Fire School ===
+
+The fire school of magic contains spells where the element of fire is used
+to create the final spell effect. There are rumours of a "Tome of the Eternal
+Flame" which contains all the fire school spells within its bindings.
+
+#####RFire Spells
+There are five spells available for the fire school. These spells are:
+1. [[[[[RGlobe of Light] (school level 1)
+   Creates a globe of pure light.
+   At spell level 3 it starts damaging monsters.
+   At spell level 15 it starts creating a more powerful kind of light.
+2. [[[[[RFire Golem] (dual school level 7)
+   Creates a fiery golem and controls it.
+   During the control the available keylist is:
+      Movement keys: move the golem (depending on its speed it can move more
+          than one square).
+      , : pickup all items on the floor
+      d : drop all carried items
+      i : list all carried items
+      m : end the possession/use golem powers
+      Most of the other keys are disabled; you cannot interact with your
+      real body while controlling the golem.
+   But to cast the spell you will need a lantern or a wooden torch to create
+   the golem.
+#####v   Your Fire and Mind skills must have reached a combined average level 
+#####v   of 7 in order to cast this spell.
+3. [[[[[RFireflash] (school level 10)
+   Conjures a ball of fire to burn your foes to ashes.
+   At spell level 20 it turns into a ball of holy fire.
+4. [[[[[RFirewall] (school level 15)
+   Creates a fiery wall to incinerate monsters stupid enough to attack you.
+   At spell level 6 it turns into a wall of hell fire.
+5. [[[[[RFiery Shield] (school level 20)
+   Creates a shield of fierce flames around you.
+   At spell level 8 it turns into a greater kind of flame that cannot be
+   resisted by your foes.
+
+
+#####GUdun spells that can be cast with Fire skill
+
+1. [[[[[DFlame of Udun] (dual school level 35)
+   Turns you temporarily into a powerful Balrog.
+#####v   Your Fire and Udun skills must have reached a combined average level 
+#####v   of 35 in order to cast this spell.

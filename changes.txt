@@ -1,0 +1,82 @@
+T.o.M.E 2.3.5 aka "Into the unknown" changes
+
+Interface changes:
+- The X11 and Xaw interfaces now save the dungeon and player when the
+  window is closed.
+- Fixed cpu churning bug that occurs when using certain window managers and
+  ToME is maximized.
+
+Gameplay changes:
+- Player speed now set correctly when Demon Hide corruption is enabled.
+- ToME now correctly sets various Balrog flags when player in Balrog form.
+- ToME now correctly sets the teleport flags when teleport corruption is
+  enabled.
+- ToME now uses the qrand7.map file when generating princess quests.
+- Bigs changes for generate.c to get it to produce the princess and thrain
+  rooms. Also code clean up of room geranation code.
+
+Object changes:
+- Slings of Buckland can now be generated.
+- Wiki Bug 510. Added the WIELD_CAST flag to all artifact instruments to
+  fix problems when casting spells.
+
+Misc changes:
+- Fixed small typo in the commands help file.
+- Added help for the Mathom House.
+- Fixed various compile time warnings in various files.
+- Added makefile support for main-gtk2.c in makefile.std
+- Values found in documentation for spectral race modifiers now match values
+  found in p_info.txt.
+- Wiki Bug 837. Removed references to old inscriptions handling code in
+  documentation.
+- Wiki Bug 564. Do not use the word 'restrict' as a variable name anymore.
+  It conflicts with keywords used by the Sun Studio Compiler.
+- Wiki Bug 517. Fixed incorrect descriptoin of artifacts in help files.
+- Changed description of Disarm spell to more accurately reflect what it
+  does.
+- ToME now correctly compiles main-gtk2.c on 64-bit machines.
+
+Bug fixes:
+- Wiki Bugs 841, 405, 360. Changes to get ToME to correctly build 64-bit
+  executables.
+- Applied killerbunnies patch to identify objects on grid before squelching.
+- Applied killer bunnies patch to keep the fate "you are fated to find
+  something special" from creating something special with an inappropriate
+  base object.
+- Applied killerbunnies patch stops symbiotes from gaining levels simply
+  by being hypnotized and released.
+- ToME now saves tim_fly, tim_poison, tim_regen and tim_regen_power.
+- Stores now display the inventory correctly after a purchase.
+- The race the legends display now works correctly with more than 10 dead
+  characters in history.
+- Characters are no longer generated with 0 mana points.
+- Wiki Bug 839. ToME no longer penalizes an object when it is not actually
+  cursed.
+- Wiki Bug 838. The melee style will now switch correctly from Bear to the
+  primary melee style when switching out of Bear form.
+- Wiki Bug 826. The inventory and equipment windows now update when the
+  player identifies the entire pack or uses the *Greater Identify* spell.
+- Wiki Bug 819. No more bogus level leaving messages.
+- Wiki Bug 722. ToME no longer crashes purple staircases have been trapped.
+- Wiki Bug 624. Ensure savefiles go to save and not scpt when using modules.
+- Wiki Bug 537. Partial fix of infinite loop during stair allocation on
+  small levels.
+- Wiki Bug 530. ToME no longer drops items inappropriately when changing
+  melee styles.
+- Wiki Bug 528. Character dumps now show the correct number of princess and
+  lost sword quests.
+- Wiki Bug 526. ToME no longer enters an infinite loop when fighting in
+  bare-hand combat sylte and bare-hand skill is < 1.
+- Wiki Bug 523. All types of recall check if the user really wants to leave
+  a unique level.
+- Wiki Bug 506. ToME no longer crashes attempting to drop non-existant
+  artifacts.
+- Wiki Bug 419. Use SKILL_BOULDER instead of SKILL_ARCHERY when throwing
+  a boulder.
+- Wiki Bug 411. Black breath no longer gets 3 chances to happen.
+- Wiki Bug 394 and 393. Inertia Control autocasting can no longer cast a
+  spell when antimagic field > 0 or when wielding a dark sword.
+- Wiki Bug 334. Companions are no longer saved in dungone save files.
+- Work around Mac OS 10.4.11 getlogin() bug - Neil
+- Wiki Bug 397. ToME no longer crashes on XP and Vista systems when viewing
+  quests or other info from the knowledge menu.

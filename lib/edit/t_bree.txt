@@ -1,0 +1,131 @@
+# File: t_bree.txt
+
+# Bree
+
+############### Additional default terrain settings ###############
+
+# Default for Quest 1 = entrance is quest entrance
+F:z:8:3:0:0:0:0:0:4
+
+# Default for Quest 18 = entrance is tree
+F:y:96:3
+
+# Default for Quest 18 = entrance is tree
+F:x:96:3
+
+############### Quest 4 - Thieves Hideout finished = house ###############
+?:[EQU $QUEST4 2]
+F:z:74:3:0:0:0:0:0:7
+?:[EQU $QUEST4 5]
+F:z:74:3:0:0:0:0:0:7
+?:1
+
+############### Quest 8 - Troll Glade ###############
+?:[AND [EQU $QUEST8 1] [EQU $DAYTIME 0] ]
+F:y:8:3:0:0:0:0:0:8
+?:1
+
+############### Quest 9 - Wights Grave ###############
+?:[EQU $QUEST9 1]
+F:x:8:3:0:0:0:0:0:9
+?:1
+
+###### Additionnal buildings #######
+
+# Castle: Plot Bree
+F:B:75:3:0:0:0:0:0:1
+
+# Mayor's house
+F:b:74:3:0:0:0:0:0:10
+
+# The Prancing Pony
+F:a:74:3:0:0:0:0:0:58
+
+# Soothsayer
+F:c:74:3:0:0:0:0:0:12
+
+# Merchant Guild
+F:d:74:3:0:0:0:0:0:56
+
+# The Mathom-house
+F:e:74:3:0:0:0:0:0:57
+
+############### Town Layout ###############
+
+D:######################################################################################################################################################################################################
+D:#                                                                                                                  VV              --                                                                #
+D:#                                                                                                                    V              --                                                               #
+D:#                                                                                                                     VV            --                                                               #
+D:#                                                                                                                       VVV          --                                                              #
+D:#                                                                                                                          VV        --                                                              #
+D:#OOOO                                                                                                                       V         --                                                             #
+D:#   OOOO                                                                                                                     V        --                                                             #
+D:#---   OOOOO                                                                                                                  VVV      ---                             VV                            #
+D:#------    OOOOOO                                                                                                                V      --                            VVVV                           #
+D:#----------     OO                                                                                                               V      --                           VVWWVVV                         #
+D:#--------------  OO                                                                                                               VVV    --                        VVVWWWWWVVV                       #
+D:#---------------  OOO                                                                                                               VVV   --                      VVWWWWWWWWWVV                      #
+D:#-----------------  OO                                                                                                                VVVVVVV                    VVWWWWWWWWWWWV                      #
+D:#------------------- OOOOO                                                                                                                 --VVVV   VVVVV        VVWWWWWWWWWWWVV                     #
+D:###------------------    OO                                                            ,,,,,,,,,,,,,,,,,,                                   --  VVVVV   VV    VVVVVVVWWWWWWWVVV                      #
+D:#CC####------------------ OOO                                                     ,,,,,CCCCCCCCCCCCCCCCCC,,,,,,,,,                           --          VVVVVV     VVVVWWVVV                        #
+D:#TTCCCC###---------------,, OO                                                 ,,,CCCCCCTTTTTTTTTTTTTTTTCCCCCCCCCC,,,,                        --                       VVVV                          #
+D:#--TTTTCCC###---------,,,--  OO                                              ,,CCCCTTTTTT--------------TTTTTTTTTTCCCCC,,,,,                  ^--                                                     #
+D:#------TTTCCC##-----,,------  O                                            ,,CCCTTTT..................----------TTTTTCCCCCC,,              ^^^ --                                                    #
+D:#---------TTTCC##,,,--------  OO                                          ,CCCTTT....--ssssssss-..---..........-----TTTTTTCCC,,,          ^^    --                                                   #
+D:#------------TC,,###-    ---   OO                                        ,CCTTT...-----SSSSSSSS--.----------,,.....------TTTCCCC,,       ^^     --                                                   #
+D:#-------------,TTCCC###    --   OOO                                    ,,CCTT...-,,,,--ssssssss-..-sssssssssss,---......---TTTTCCT,,    ^^       --                                                  #
+D:#---------  ,,,--TTTCCC    --     OO                                 ,,CCCTT..-------,,##9#####-.--sssssssssss-,-------...----TTCCTT,  ^^^        --                                                 #
+D:#--------  ,, ,,----TTTCC          O                                ,CCC  T..--sssSsss,,,,------.--StSStSSSStS--,------.-....--TTCCTT,^^^          --                                                #
+D:#------   ,,   ,                   OO                              ,CCTTT...---ssstSSS---,,,----.--sssssssssss---,---...----..--TTCCT^^^^ ^^        --                                               #
+D:#------- x,   ,,                    OO                            ,CCTT...-----sssssss--,,-,,---.--sssssssssss---,-...-------..--TTC^^^   ^         ----                                             #
+D:#-------     {,                      OO                           ,CTT..---,,,,###6###,,,---,,--.--###########----..----------..--T^^^^   ^       ---  --                                            #
+D:#---------                            OOO                         ,CT..,,,,----,,,,,,,,------,,-.--###b###e###-....,---sssss---.--T^^   ^         --    --                                           #
+D:#----------                             OO                       ,CCT.,sssssss----,-----------,,.-----.-----....-,--,,-StSSS---.-T^^^   ^        --      -----                                       #
+D:#-------------                           OO                     ,CCTT.-StStSSS---,-----ssssss--..-----.--....--,,,,,,-,sssss---.-T^^^      ^      --         --             ,,,                      #
+D:#-----------                              OOOOO                 ,CTT-.-sssssss---,-----SSSSSS--.------.-..--,,,-ssss--,#####---.-T^^    ^         --          -----        ,,                        #
+D:#--------                                     OO               ,CCT-..-##5####----,----ssssss-..........--XXXX,-ssss--,------...-^^^  ^ ^^  ^    ---             ----    ,,,                         #
+D:#- ----                                        OOOOOOOO        ,C  OOOO--OOOOO----,----#c##4#-.---.,----,-UUUU,-SSSS--,-----..---^^   ^   ^     ---                 -----,             OOOOOOOOOOOOOO#
+D:#-  ----                                              OOOOOOO  ,CT-OssOOOO---OOOOOOOOO--OOOO--.-T-.-sss--,XXXX,-ssss---,---..--T^^              --                      --           OOO             #
+D:#-  -----                                                   OOOOOOOOSt.---------XXXX-OOOO--OOOO---.-StS--,#0##,-ssss---,---.---^^     ^  ^      --                       ---      OOOO               #
+D:#-     ---   -----                                           ,,CT--.ss.-sssss---XXXX,---------OOOO.-sss---,,,,,-####--,---..-T^^   ^ ^          --                         ---   OO                  #
+D:#    ----     ----                                           ,,CT--.B#.-SStSS---####,------------OO-#z#-ssssss-,,,---,----.--T^^   ^           -,-                           OOOOO                   #
+D:#  -------      ----                                         ,,CTT-....-sssss--,,,,,,-------------OO-,--SSSSSt-ss-,-,---...-T^^  ^ ^           -,                         OOOO                       #
+D:#    -------   ------                                        ,,CCTT---..#2###-,sssss,-SSSSSSSS-----OO,--ssssss-tS--,.....---^^ ^^     ^^^     -,                   OOOOOOOO                          #
+D:#   -----        -----                                        ,,CCT----..,,,,,-StSSS,-ssssssss------OOO-#1##a#-ss....-----T^^        ^^      -,-               OOOOO                                 #
+D:#      ----  --------                                         ,,CCTT----..----,sssss,-##7###d#--------OO,.,,.,-##.----TTTT^^     ^  ^^       -,            OOOOO                                     #
+D:#     ---------------                                         ,,,CCTTTT--..---,##3##-,--,,,---------...OOOOOOOOOOOTTTTTCC^^^   ^^  ^^        ,-          OOO                                         #
+D:#        --------                                              ,,,CCCC  --..........,-,,---,--.......-------TTTTTOCCCCC,,^^^^^^^^^^^        -.-      OOOOO                                           #
+D:#      ----------                                              ,, ,,CCCTT----------.....-......-------TTTTTTTCCCCO,,,,,     ^^^^^^^         -.-      O                                               #
+D:#        -------                                               ,,   ,,CCTTTTTTTTTT-----...------TTTTTTTCCCCCC,,,,OOO                       -.-    OOOO                                               #
+D:#          ----                                                ,,,    ,CCCCCCCCCCTTTTT-----TTTTTTCCCCCC,,,,,,      OOO                    OOOOOOOOO                                                  #
+D:#      ^^   ----                                                ,,     ,,,,,,,,,,CCCCCTTTTTTCCCCC,,,,,,              OO                 OOO--                                                        #
+D:#    ^^^^^                                                      ,,,              ,,,,,CCCCCC,,,,,                     OOOO             OOO--                                                         #
+D:#  ^^^^^^^^^                                                     ,,                   ,,,,,,                             OOOOOOO     OOO---                                                          #
+D:#  ^^^^^^^^^                                                     ,,                                                            OOOOOOO----                                                           #
+D:# ^^^^^^^^^^^^^^^                                                ,,,                                                            ..------                                                             #
+D:#   ^^^^^^^^^^^^^^                                                ,,,                     ......                             ....-----                                                               #
+D:#   ^^^^^^^^^^^^^^^                                                ,,,          ...........    ............       ............-------,,,,                                                            #
+D:#^^^^^^^^^^^^^^^^^                                                  ,,        ...                         .........--------------       ,,,,,,,    ,,,,,,,,,                                         #
+D:#    ^^^^^^^^^^^^^                                                 ,,         .                                                               ,,,,,,       ,,,,,,,,,                                 #
+D:#  ^^^^^^^^^^^^^^                                                   ,,      ...                                                                                    ,,,,,        ------    ---        #
+D:#    ^^^^^^^^^^^^^^^                                                 ,,     .                                                                                          ,,,,,,,,-------   -----       #
+D:#    ^^^^^^^^^^^^^^                                                   ,    ..                                                                                                  ----------------      #
+D:# ^^^^^^^^^^^^^^^^                                                    ,,  ..                                                                                                ---------y--------       #
+D:#   ^^^^^^^^^^^^^^^                                                    , ..                                                                                                 -----------------        #
+D:# ^^^^^^^^^^^^^^^^                                                     ,,.                                                                                                  ---    ----   ----       #
+D:#  ^^^^^^^^^^^^^                                                        ,.                                                                                                   -      --     --        #
+D:#  ^^^^^^^^^^^^^^                                                        .                                                                                                                           #
+D:#    ^^^^^^^^^^^^^^                                                      .                                                                                                                           #
+D:######################################################################################################################################################################################################
+
+
+############### Starting positions ###############
+
+# Standard starting position for normal races
+?:[AND [EQU $LEAVING_QUEST 0] [NOT [EQU $RACE Vampire] ] ]
+P:33:131
+
+# Standard starting position for vampires (at the dungeon entrance)
+?:[AND [EQU $LEAVING_QUEST 0] [EQU $RACE Vampire] ]
+P:31:150
