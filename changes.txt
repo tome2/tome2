@@ -8,6 +8,7 @@ T.o.M.E 2.3.6
 - Fix crash bug during character dumps.
 - Misc. Mimicry fixes.
 - Prevent immunities from Balrog Form persisting too long.
+- Fix for loading/saving on Linux distribution using Fortify.
 
 
 

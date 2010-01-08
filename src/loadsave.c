@@ -237,16 +237,16 @@ static void do_subrace(int flag)
 	char buf[81];
 
 	if (flag == LS_SAVE)
-		strcpy(buf, sr_ptr->title + rmp_name);
+		strncpy(buf, sr_ptr->title + rmp_name, 80);
 	do_string(buf, 80, flag);
 	if (flag == LS_LOAD)
-		strcpy(sr_ptr->title + rmp_name, buf);
+		strncpy(sr_ptr->title + rmp_name, buf, 80);
 
 	if (flag == LS_SAVE)
-		strcpy(buf, sr_ptr->desc + rmp_text);
+		strncpy(buf, sr_ptr->desc + rmp_text, 80);
 	do_string(buf, 80, flag);
 	if (flag == LS_LOAD)
-		strcpy(sr_ptr->desc + rmp_text, buf);
+		strncpy(sr_ptr->desc + rmp_text, buf, 80);
 
 	do_byte((byte*)&sr_ptr->place, flag);
 
