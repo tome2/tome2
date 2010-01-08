@@ -2162,7 +2162,7 @@ void do_cmd_disarm_mon_trap(int y, int x)
 {
 	msg_print("You disarm the monster trap.");
 
-	place_floor(y, x);
+	place_floor_convert_glass(y, x);
 	cave[p_ptr->py][p_ptr->px].special = cave[p_ptr->py][p_ptr->px].special2 = 0;
 }
 

@@ -5520,7 +5520,7 @@ void wipe(int y1, int x1, int r)
 
 			if (m_list[c_ptr->m_idx].status != MSTATUS_COMPANION) delete_monster(y, x);
 			delete_object(y, x);
-			place_floor(y, x);
+			place_floor_convert_glass(y, x);
 		}
 	}
 
@@ -7914,7 +7914,7 @@ bool passwall(int dir, bool safe)
 			msg_print("You emerge in the wall!");
 			take_hit(damroll(10, 8), "becoming one with a wall");
 		}
-		place_floor(y, x);
+		place_floor_convert_glass(y, x);
 	}
 
 	/* Move */

@@ -197,6 +197,9 @@ F:215:0x0E/0x7F
 # battlement
 F:216:0x01/0x7F
 
+# glass wall
+F:217:0x0E/0x1F
+
 ##### Monster attr/char definitions #####
 
 # Space monster

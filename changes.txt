@@ -1,5 +1,6 @@
 T.o.M.E 2.3.6
 
+- Don't generate impassable glass walls.
 
 
 

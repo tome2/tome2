@@ -681,6 +681,9 @@ F:210:0x01/0xCA
 # hail-stone wall
 F:211:0x09/0xBC
 
+# molten glass wall
+F:217:0x0E/0xD0
+
 
 ##### Building attr/char definitions #####
 

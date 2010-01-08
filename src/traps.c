@@ -3418,7 +3418,7 @@ bool mon_hit_trap(int m_idx)
 	}
 
 	/* Remove the trap if inactive now */
-	if (remove) place_floor(my, mx);
+	if (remove) place_floor_convert_glass(my, mx);
 
 	/* did it die? */
 	return (dead);

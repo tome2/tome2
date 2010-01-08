@@ -3252,7 +3252,7 @@ static bool project_f(int who, int r, int y, int x, int dam, int typ)
 
 			if (f)
 			{
-				if (f == FEAT_FLOOR) place_floor(y, x);
+				if (f == FEAT_FLOOR) place_floor_convert_glass(y, x);
 				else cave_set_feat(y, x, f);
 
 				if (seen) obvious = TRUE;
@@ -3341,7 +3341,7 @@ static bool project_f(int who, int r, int y, int x, int dam, int typ)
 
 					/* Remove the feature */
 					if (!(f_info[c_ptr->feat].flags1 & FF1_PERMANENT))
-						place_floor(y, x);
+						place_floor_convert_glass(y, x);
 				}
 
 				/* Hack -- Force redraw */
@@ -3411,7 +3411,7 @@ static bool project_f(int who, int r, int y, int x, int dam, int typ)
 
 				/* Remove the feature */
 				if (!(f_info[c_ptr->feat].flags1 & FF1_PERMANENT))
-					place_floor(y, x);
+					place_floor_convert_glass(y, x);
 
 				/* Hack -- Force redraw */
 				note_spot(y, x);

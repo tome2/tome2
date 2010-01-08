@@ -4892,6 +4892,19 @@ void place_floor(int y, int x)
 }
 
 /*
+ * This routine is used when the current feature gets convert to a floor and
+ * the possible floor types include glass which is permanent. An unpassable
+ * feature is undesirable, so the glass gets convert to molten glass which
+ * is passable.
+ */
+void place_floor_convert_glass(int y, int x)
+{
+	place_floor(y, x);
+
+	if (cave[y][x].feat == 188) cave[y][x].feat = 217;
+}
+
+/*
  * Place a cave filler at (y, x)
  */
 void place_filler(int y, int x)

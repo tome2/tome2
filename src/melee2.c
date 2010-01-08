@@ -6833,7 +6833,7 @@ static void process_monster(int m_idx, bool is_frien)
 				c_ptr->info &= ~(CAVE_MARK);
 
 				/* Break the rune */
-				place_floor(ny, nx);
+				place_floor_convert_glass(ny, nx);
 
 				/* Allow movement */
 				do_move = TRUE;
@@ -7068,7 +7068,7 @@ static void process_monster(int m_idx, bool is_frien)
 				c_ptr->info &= ~(CAVE_MARK);
 
 				/* Break the rune */
-				place_floor(ny, nx);
+				place_floor_convert_glass(ny, nx);
 
 				/* Allow movement */
 				do_move = TRUE;

@@ -261,6 +261,9 @@ F:210:0x01/0xB2
 # hail-stone wall
 F:211:0x09/0xB1
 
+# molten glass wall
+F:217:0x0E/0xDB
+
 
 ##### Monster attr/char definitions #####
 

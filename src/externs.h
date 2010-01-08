@@ -673,6 +673,7 @@ extern void wiz_lite_extra(void);
 extern void wiz_dark(void);
 extern void cave_set_feat(int y, int x, int feat);
 extern void place_floor(int y, int x);
+extern void place_floor_convert_glass(int y, int x);
 extern void place_filler(int y, int x);
 extern void mmove2(int *y, int *x, int y1, int x1, int y2, int x2);
 extern bool projectable(int y1, int x1, int y2, int x2);
