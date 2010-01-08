@@ -11528,7 +11528,7 @@ static errr process_dungeon_file_aux(char *buf, int *yval, int *xval, int xvalst
 		}
 	}
 
-	/* Process "P:<x>:<y>" -- player position */
+	/* Process "P:<y>:<x>" -- player position */
 	else if (buf[0] == 'P')
 	{
 		if (init_flags & INIT_CREATE_DUNGEON)
