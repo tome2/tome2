@@ -1,4 +1,8 @@
-T.o.M.E 2.3.6
+T.o.M.E 2.3.7 (ah)
+
+- 
+
+T.o.M.E 2.3.6 (ah)
 
 - Don't generate impassable glass walls.
 - Mark *all* quest monsters properly.
