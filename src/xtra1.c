@@ -2620,7 +2620,7 @@ void apply_flags(u32b f1, u32b f2, u32b f3, u32b f4, u32b f5, u32b esp, s16b pva
 
 	if (f4 & (TR4_PRECOGNITION)) p_ptr->precognition = TRUE;
 
-        antimagic_mod = to_h + to_d + pval + to_a;
+        antimagic_mod = to_h + to_d + to_a;
 
 	if (f4 & (TR4_ANTIMAGIC_50))
 	{
