@@ -1078,7 +1078,7 @@ static void alloc_stairs(int feat, int num, int walls, int branch)
 			/* Quest -- must go up */
 			else if ((is_quest(dun_level) && (dun_level >= 1)) ||
 			                ((dun_level >= d_info[dungeon_type].maxdepth) &&
-			                 (!dungeon_flags1 & DF1_FORCE_DOWN)))
+			                 (!(dungeon_flags1 & DF1_FORCE_DOWN))))
 			{
 				/* Clear previous contents, add up stairs */
 				if (dungeon_flags1 & DF1_FLAT)
