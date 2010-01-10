@@ -3132,8 +3132,7 @@ errr file_character(cptr name, bool full)
 
 
 	/* Begin dump */
-	fprintf(fff, "  [%s %ld.%ld.%ld%s Character Sheet]\n\n",
-	        game_module, VERSION_MAJOR, VERSION_MINOR, VERSION_PATCH, IS_CVS);
+	fprintf(fff, "  [%s Character Sheet]\n\n", get_version_string());
 
 
 	/* Display player */
@@ -3942,8 +3941,7 @@ bool show_file(cptr name, cptr what, int line, int mode)
 
 
 		/* Show a general "title" */
-		prt(format("[%s %ld.%ld.%ld, %s, Line %d/%d]", game_module,
-		           VERSION_MAJOR, VERSION_MINOR, VERSION_PATCH,
+		prt(format("[%s, %s, Line %d/%d]", get_version_string(),
 		           h_ptr->caption, line, size), 0, 0);
 
 		/* Prompt -- menu screen */
@@ -4555,8 +4553,8 @@ void html_screenshot(cptr name)
 	             "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"DTD/xhtml1-strict.dtd\">\n"
 	             "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n"
 	             "<head>\n");
-	fprintf(htm, "<meta name=\"GENERATOR\" content=\"%s %ld.%ld.%ld\"/>\n",
-	        game_module, VERSION_MAJOR, VERSION_MINOR, VERSION_PATCH);
+	fprintf(htm, "<meta name=\"GENERATOR\" content=\"%s\"/>\n",
+	        get_version_string());
 	fprintf(htm, "<title>%s</title>\n", name);
 	fprintf(htm, "</head>\n"
 	             "<body>\n"
@@ -6185,8 +6183,8 @@ static errr top_twenty(void)
 	tmp = WIPE(&the_score, high_score);
 
 	/* Save the version */
-	sprintf(the_score.what, "%lu.%lu.%lu",
-	        VERSION_MAJOR, VERSION_MINOR, VERSION_PATCH);
+	sprintf(the_score.what, "%ld.%ld.%ld",
+	        (long int) VERSION_MAJOR, (long int) VERSION_MINOR, (long int) VERSION_PATCH);
 
 	/* Calculate and save the points */
 	sprintf(the_score.pts, "%9lu", (long)total_points());
@@ -6283,8 +6281,8 @@ errr predict_score(void)
 
 
 	/* Save the version */
-	sprintf(the_score.what, "%lu.%lu.%lu",
-	        VERSION_MAJOR, VERSION_MINOR, VERSION_PATCH);
+	sprintf(the_score.what, "%ld.%ld.%ld",
+	        (long int) VERSION_MAJOR, (long int) VERSION_MINOR, (long int) VERSION_PATCH);
 
 	/* Calculate and save the points */
 	sprintf(the_score.pts, "%9lu", (long)total_points());
@@ -6495,14 +6493,14 @@ void close_game(void)
 				add_note_type(NOTE_WINNER);
 			}
 
-			irc_disconnect_aux(format("Retired; %s %ld.%ld.%ld rules",
-			                          game_module, VERSION_MAJOR, VERSION_MINOR, VERSION_PATCH), FALSE);
+			irc_disconnect_aux(format("Retired; %s rules",
+			                          get_version_string()), FALSE);
 			kingly();
 		}
 		else
 		{
-			irc_disconnect_aux(format("Killed by %s; %s %ld.%ld.%ld rules",
-			                          died_from, game_module, VERSION_MAJOR, VERSION_MINOR, VERSION_PATCH),
+			irc_disconnect_aux(format("Killed by %s; %s rules",
+			                          died_from, get_version_string()),
 			                   FALSE);
 		}
 
@@ -6558,8 +6556,8 @@ void close_game(void)
 			add_note_type(NOTE_SAVE_GAME);
 		}
 
-		irc_disconnect_aux(format("Alive... for the time being; %s %ld.%ld.%ld rules",
-		                          game_module, VERSION_MAJOR, VERSION_MINOR, VERSION_PATCH),
+		irc_disconnect_aux(format("Alive... for the time being; %s rules",
+		                          get_version_string()),
 		                   FALSE);
 
 		/* Prompt for scores XXX XXX XXX */

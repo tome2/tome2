@@ -609,6 +609,7 @@ extern s32b DUNGEON_DEATH;
 extern deity_type *deity_info;
 extern s32b max_gods;
 extern timer_type *gl_timers;
+extern const char *get_version_string();
 
 /* plots.c */
 extern FILE *hook_file;

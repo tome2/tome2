@@ -392,8 +392,7 @@ static void spoil_obj_desc(cptr fname)
 
 
 	/* Header */
-	sprintf(buf, "Basic Items Spoilers for %s %ld.%ld.%ld%s",
-	        game_module, VERSION_MAJOR, VERSION_MINOR, VERSION_PATCH, IS_CVS);
+	sprintf(buf, "Basic Items Spoilers for %s", get_version_string());
 	spoiler_underline(buf);
 	spoiler_blanklines(2);
 
@@ -1118,8 +1117,7 @@ static void print_header(void)
 {
 	char buf[80];
 
-	sprintf(buf, "Artifact Spoilers for %s %ld.%ld.%ld%s",
-	        game_module, VERSION_MAJOR, VERSION_MINOR, VERSION_PATCH, IS_CVS);
+	sprintf(buf, "Artifact Spoilers for %s", get_version_string());
 	spoiler_underline(buf);
 }
 
@@ -1376,8 +1374,7 @@ static void spoil_mon_desc(cptr fname)
 	C_MAKE(who, max_r_idx, s16b);
 
 	/* Dump the header */
-	sprintf(buf, "Monster Spoilers for %s %ld.%ld.%ld%s",
-	        game_module, VERSION_MAJOR, VERSION_MINOR, VERSION_PATCH, IS_CVS);
+	sprintf(buf, "Monster Spoilers for %s", get_version_string());
 	spoiler_underline(buf);
 	spoiler_blanklines(2);
 
@@ -1522,8 +1519,7 @@ static void spoil_mon_info(cptr fname)
 
 
 	/* Dump the header */
-	sprintf(buf, "Monster Spoilers for %s %ld.%ld.%ld%s",
-	        game_module, VERSION_MAJOR, VERSION_MINOR, VERSION_PATCH, IS_CVS);
+	sprintf(buf, "Monster Spoilers for %s", get_version_string());
 	spoiler_underline(buf);
 	spoiler_blanklines(2);
 
@@ -2485,9 +2481,9 @@ static void spoil_bateries(cptr fname)
 	        "|||||oy\n"
 	        "~~~~~01|Spoilers|Essences\n"
 	        "~~~~~02|Alchemist|Essence Spoiler\n"
-	        "#####REssence Spoiler for %s %ld.%ld.%ld%s\n"
+	        "#####REssence Spoiler for %s\n"
 	        "#####R-----------------------------------\n\n",
-	        game_module, VERSION_MAJOR, VERSION_MINOR, VERSION_PATCH, IS_CVS);
+	        get_version_string());
 
 
 	/*New code starts here -*/
@@ -2687,8 +2683,7 @@ static void spoil_spells(cptr fname)
 	}
 
 	/* Dump the header */
-	sprintf(buf, "Spell Spoiler (Skill Level 50) for %s %ld.%ld.%ld%s",
-	        game_module, VERSION_MAJOR, VERSION_MINOR, VERSION_PATCH, IS_CVS);
+	sprintf(buf, "Spell Spoiler (Skill Level 50) for %s", get_version_string());
 	spoiler_underline(buf);
 
 	/* Dump the bookless magic powers in alphabetical order */
