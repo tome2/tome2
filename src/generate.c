@@ -8488,7 +8488,7 @@ void generate_grid_mana()
 			mana = mult * m_bonus(255, dun_level) / 2;
 			if (xtra_magic) mana += 10 + rand_int(10);
 
-			/* Never more than 255 or less than 0(parano‹a) */
+			/* Never more than 255 or less than 0(paranoia) */
 			if (mana < 0) mana = 0;
 			if (mana > 255) mana = 255;
 
