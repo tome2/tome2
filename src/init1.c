@@ -3060,7 +3060,7 @@ errr init_player_info_txt(FILE *fp, char *buf)
 		/* Process 'C' for "sensing" */
 		if ((buf[0] == 'C') && (buf[2] == 'C'))
 		{
-			s32b s[3];
+			long int s[3];
 			char h, m;
 
 			/* Scan for the values */

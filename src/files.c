@@ -3296,7 +3296,7 @@ errr file_character(cptr name, bool full)
 		else if (Total == 1)
 			fprintf(fff, "\n You have defeated one enemy.");
 		else
-			fprintf(fff, "\n You have defeated %lu enemies.", Total);
+                  fprintf(fff, "\n You have defeated %ld enemies.", (long int) Total);
 	}
 
 	hook_file = fff;
@@ -3317,7 +3317,7 @@ errr file_character(cptr name, bool full)
 		        get_month_name(bst(DAY, turn), wizard, FALSE), buf2);
 		fprintf(fff,
 		        (death ? "\n Your adventure lasted %ld day%s." : "\n You have been adventuring for %ld day%s."),
-		        days, (days == 1) ? "" : "s");
+		        (long int) days, (days == 1) ? "" : "s");
 	}
 
 	fprintf (fff, "\n\n");

@@ -355,7 +355,7 @@ static void kind_info(char *buf, char *dam, char *wgt, int *lev, s32b *val, int 
 
 
 	/* Weight */
-	sprintf(wgt, "%3ld.%ld", q_ptr->weight / 10, q_ptr->weight % 10);
+	sprintf(wgt, "%3ld.%ld", (long int) (q_ptr->weight / 10), (long int) (q_ptr->weight % 10));
 }
 
 
@@ -891,7 +891,7 @@ static void analyze_pval (object_type *o_ptr, pval_info_type *p_ptr)
 	affects_list = p_ptr->pval_affects;
 
 	/* Create the "+N" string */
-	sprintf(p_ptr->pval_desc, "%s%ld", POSITIZE(o_ptr->pval), o_ptr->pval);
+	sprintf(p_ptr->pval_desc, "%s%ld", POSITIZE(o_ptr->pval), (long int) o_ptr->pval);
 
 	/* First, check to see if the pval affects all stats */
 	if ((f1 & all_stats) == all_stats)
@@ -1082,7 +1082,7 @@ static void analyze_misc (object_type *o_ptr, char *misc_desc)
 
 	sprintf(misc_desc, "Level %u, Rarity %u, %d.%d lbs, %ld Gold",
 	        a_ptr->level, a_ptr->rarity,
-	        a_ptr->weight / 10, a_ptr->weight % 10, a_ptr->cost);
+	        a_ptr->weight / 10, a_ptr->weight % 10, (long int) a_ptr->cost);
 }
 
 

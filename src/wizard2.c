@@ -791,7 +791,7 @@ static void wiz_tweak_item(object_type *o_ptr)
 #endif
 
 	p = "Enter new 'pval' setting: ";
-	sprintf(tmp_val, "%ld", o_ptr->pval);
+	sprintf(tmp_val, "%ld", (long int) o_ptr->pval);
 	if (!get_string(p, tmp_val, 5)) return;
 	o_ptr->pval = atoi(tmp_val);
 	wiz_display_item(o_ptr);
@@ -803,7 +803,7 @@ static void wiz_tweak_item(object_type *o_ptr)
 	wiz_display_item(o_ptr);
 
 	p = "Enter new 'pval3' setting: ";
-	sprintf(tmp_val, "%ld", o_ptr->pval3);
+	sprintf(tmp_val, "%ld", (long int) o_ptr->pval3);
 	if (!get_string(p, tmp_val, 5)) return;
 	o_ptr->pval3 = atoi(tmp_val);
 	wiz_display_item(o_ptr);
@@ -845,7 +845,7 @@ static void wiz_tweak_item(object_type *o_ptr)
 	wiz_display_item(o_ptr);
 
 	p = "Enter new 'obj exp' setting: ";
-	sprintf(tmp_val, "%ld", o_ptr->exp);
+	sprintf(tmp_val, "%ld", (long int) o_ptr->exp);
 	if (!get_string(p, tmp_val, 9)) return;
 	wiz_display_item(o_ptr);
 	o_ptr->exp = atoi(tmp_val);

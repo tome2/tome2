@@ -3624,7 +3624,7 @@ s32b get_quantity(cptr prompt, s32b max)
 	if (!prompt)
 	{
 		/* Build a prompt */
-		sprintf(tmp, "Quantity (1-%ld): ", max);
+		sprintf(tmp, "Quantity (1-%ld): ", (long int) max);
 
 		/* Use that prompt */
 		prompt = tmp;
@@ -3635,7 +3635,7 @@ s32b get_quantity(cptr prompt, s32b max)
 	amt = 1;
 
 	/* Build the default */
-	sprintf(buf, "%ld", amt);
+	sprintf(buf, "%ld", (long int) amt);
 
 	/* Ask for a quantity */
 	if (!get_string(prompt, buf, 9)) return (0);

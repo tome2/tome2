@@ -3963,7 +3963,7 @@ static void do_cmd_knowledge_kill_count(void)
 		}
 		else
 		{
-			fprintf(fff, "You have defeated %lu enemies.\n\n", Total);
+                  fprintf(fff, "You have defeated %ld enemies.\n\n", (long int) Total);
 		}
 	}
 
@@ -4017,7 +4017,7 @@ static void do_cmd_knowledge_kill_count(void)
 	}
 
 	fprintf(fff, "----------------------------------------------\n");
-	fprintf(fff, "   Total: %lu creature%s killed.\n", Total, (Total == 1 ? "" : "s"));
+	fprintf(fff, "   Total: %ld creature%s killed.\n", (long int) Total, (Total == 1 ? "" : "s"));
 
 	/* Close the file */
 	my_fclose(fff);
@@ -4310,7 +4310,7 @@ static void do_cmd_knowledge_quests(void)
 					fprintf(fff, "Kill them all to get it back.\n");
 				}
 				fprintf(fff, "Number: %d, Killed: %ld.\n",
-				        random_quests[dun_level].type, quest[QUEST_RANDOM].data[0]);
+				        random_quests[dun_level].type, (long int) quest[QUEST_RANDOM].data[0]);
 				fprintf(fff, "\n");
 			}
 			/* MUST be a lua quest */

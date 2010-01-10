@@ -94,8 +94,8 @@ void add_note(char *note, char code)
 	strncpy(buf, note, 60);
 
 	/* Get date and time */
-	sprintf(long_day, "%ld:%02ld %s, %s", (bst(HOUR, turn) % 12 == 0) ? 12 : (bst(HOUR, turn) % 12),
-	        bst(MINUTE, turn), (bst(HOUR, turn) < 12) ? "AM" : "PM", get_month_name(bst(DAY, turn), FALSE,
+	sprintf(long_day, "%ld:%02ld %s, %s", (long int) ((bst(HOUR, turn) % 12 == 0) ? 12 : (bst(HOUR, turn) % 12)),
+	        (long int) bst(MINUTE, turn), (bst(HOUR, turn) < 12) ? "AM" : "PM", get_month_name(bst(DAY, turn), FALSE,
 	                        FALSE));
 
 	/* Get depth  */
@@ -124,8 +124,8 @@ void add_note_type(int note_number)
 	strftime(true_long_day, 30, "%Y-%m-%d at %H:%M:%S", localtime(&ct));
 
 	/* Get the date */
-	sprintf(buf, "%ld", bst(YEAR, turn) + START_YEAR);
-	sprintf(long_day, "%ld:%02ld %s the %s of III %s", (bst(HOUR, turn) % 12 == 0) ? 12 : (bst(HOUR, turn) % 12), bst(MINUTE, turn), (bst(HOUR, turn) < 12) ? "AM" : "PM", get_month_name(bst(DAY, turn), FALSE, FALSE), buf);
+	sprintf(buf, "%ld", (long int) (bst(YEAR, turn) + START_YEAR));
+	sprintf(long_day, "%ld:%02ld %s the %s of III %s", (long int) ((bst(HOUR, turn) % 12 == 0) ? 12 : (bst(HOUR, turn) % 12)), (long int) bst(MINUTE, turn), (bst(HOUR, turn) < 12) ? "AM" : "PM", get_month_name(bst(DAY, turn), FALSE, FALSE), buf);
 
 	/* Work out what to do */
 	switch (note_number)

@@ -492,31 +492,26 @@ static void status_bival(s32b val, byte ypos, byte xpos)
 
 static void status_numeric(s32b val, byte ypos, byte xpos)
 {
-	if (val == 0)
-		c_put_str(TERM_WHITE, ".", ypos, xpos);
-	else if (val < 0)
-	{
-		val *= -1;
-		if (val > 9)
-			c_put_str(TERM_RED, "*", ypos, xpos);
-		else
-		{
-			char strnum[2];
-			sprintf(strnum, "%lu", val);
-			c_put_str(TERM_RED, strnum, ypos, xpos);
-		}
+	u32b magnitude = ABS(val);
+	int color = TERM_WHITE; /* default */
+	char strnum[2];
+
+	if (val<0) {
+		color = TERM_RED;
+	};
+	if (val>0) {
+		color = TERM_GREEN;
+	};
+
+	if (magnitude == 0) {
+		sprintf(strnum, ".");
+	} if (magnitude > 9) {
+		sprintf(strnum, "*");
+	} else {
+		sprintf(strnum, "%lu", (unsigned long int) magnitude);
 	}
-	else if (val > 0)
-	{
-		if (val > 9)
-			c_put_str(TERM_GREEN, "*", ypos, xpos);
-		else
-		{
-			char strnum[2];
-			sprintf(strnum, "%lu", val);
-			c_put_str(TERM_GREEN, strnum, ypos, xpos);
-		}
-	}
+
+	c_put_str(color, strnum, ypos, xpos);
 }
 
 static void status_count(s32b val1, int v1, s32b val2, int v2, s32b val3, int v3, s32b val4, int v4, byte ypos, byte xpos)
@@ -746,11 +741,11 @@ static void status_companion(void)
 
 			fprintf(fff, "#####BCompanion: %s\n", m_name);
 
-			fprintf(fff, "  Lev/Exp : [[[[[G%d / %ld]\n", m_ptr->level, m_ptr->exp);
-			if (m_ptr->level < MONSTER_LEVEL_MAX) fprintf(fff, "  Next lvl: [[[[[G%ld]\n", MONSTER_EXP((s32b)m_ptr->level + 1));
+			fprintf(fff, "  Lev/Exp : [[[[[G%d / %ld]\n", m_ptr->level, (long int) m_ptr->exp);
+			if (m_ptr->level < MONSTER_LEVEL_MAX) fprintf(fff, "  Next lvl: [[[[[G%ld]\n", (long int) MONSTER_EXP((s32b)m_ptr->level + 1));
 			else fprintf(fff, "  Next lvl: [[[[[G****]\n");
 
-			fprintf(fff, "  HP      : [[[[[G%ld / %ld]\n", m_ptr->hp, m_ptr->maxhp);
+			fprintf(fff, "  HP      : [[[[[G%ld / %ld]\n", (long int) m_ptr->hp, (long int) m_ptr->maxhp);
 			fprintf(fff, "  AC      : [[[[[G%d]\n", m_ptr->ac);
 			fprintf(fff, "  Speed   : [[[[[G%d]\n", m_ptr->mspeed - 110);
 
