@@ -42,19 +42,9 @@ static void bz_done(int);
 static void bz_prep(int);
 #endif
 
-static void do_ver_byte(byte *, u32b, byte, int);
-static void do_ver_u16b(u16b *, u32b, u16b, int);
 static void do_ver_s16b(s16b *, u32b, s16b, int);
-static void do_ver_u32b(u32b *, u32b, u32b, int);
-static void do_ver_s32b(s32b *, u32b, s32b, int);
-static void do_ver_string(char *, int, u32b, char *, int);
 
 static void skip_ver_byte(u32b, int);
-static void skip_ver_u16b(u32b, int);
-static void skip_ver_s16b(u32b, int);
-static void skip_ver_u32b(u32b, int);
-static void skip_ver_s32b(u32b, int);
-static void skip_ver_string(u32b, int);
 
 errr rd_savefile(void);
 
@@ -1603,24 +1593,6 @@ static void do_string(char *str, int max, int flag)
 	exit(0);
 }
 
-/*
- * Periodically, to reduce overhead and code clutter, we'll probably
- * want to convert all calls to do_ver_??? with direct do_??? calls, and
- * break the backwards compatibility. How often this needs to happen
- * remains to be seen, as the rate of accumulation isn't very
- * predictable. -- Improv
- */
-static void do_ver_byte(byte *v, u32b version, byte defval, int flag)
-{
-	if ((flag == LS_LOAD) && (vernum < version))
-	{
-		*v = defval; 			/* Use the default value, and DO NOT READ */
-		return;
-	}
-
-	do_byte(v, flag); 			/* Otherwise, go as normal */
-}
-
 static void skip_ver_byte(u32b version, int flag)
 /* Reads and discards a byte if the savefile is as old as/older than version */
 {
@@ -1628,26 +1600,6 @@ static void skip_ver_byte(u32b version, int flag)
 	{
 		byte forget;
 		do_byte(&forget, flag);
-	}
-	return;
-}
-
-static void do_ver_u16b(u16b *v, u32b version, u16b defval, int flag)
-{
-	if ((flag == LS_LOAD) && (vernum < version))
-	{
-		*v = defval;
-		return;
-	}
-	do_u16b(v, flag);
-}
-
-static void skip_ver_u16b(u32b version, int flag)
-{
-	if ((flag == LS_LOAD) && (vernum <= version))
-	{
-		u16b forget;
-		do_u16b(&forget, flag);
 	}
 	return;
 }
@@ -1660,80 +1612,6 @@ static void do_ver_s16b(s16b *v, u32b version, s16b defval, int flag)
 		return;
 	}
 	do_s16b(v, flag);
-}
-
-static void skip_ver_s16b(u32b version, int flag)
-{
-	if ((flag == LS_LOAD) && (vernum <= version))
-	{
-		s16b forget;
-		do_s16b(&forget, flag);
-	}
-	return;
-}
-
-static void do_ver_u32b(u32b *v, u32b version, u32b defval, int flag)
-{
-	if ((flag == LS_LOAD) && (vernum < version))
-	{
-		*v = defval;
-		return;
-	}
-	do_u32b(v, flag);
-}
-
-static void skip_ver_u32b(u32b version, int flag)
-{
-	if ((flag == LS_LOAD) && (vernum <= version))
-	{
-		u32b forget;
-		do_u32b(&forget, flag);
-	}
-	return;
-}
-
-static void do_ver_s32b(s32b *v, u32b version, s32b defval, int flag)
-{
-	if ((flag == LS_LOAD) && (vernum < version))
-	{
-		*v = defval;
-		return;
-	}
-	do_s32b(v, flag);
-}
-
-static void skip_ver_s32b(u32b version, int flag)
-{
-	if ((flag == LS_LOAD) && (vernum <= version))
-	{
-		s32b forget;
-		do_s32b(&forget, flag);
-	}
-	return;
-}
-
-static void do_ver_string(char *str, int max, u32b version, char *defval,
-                          int flag)
-/* Careful, remember the argument order here */
-{
-	if ((flag == LS_LOAD) && (vernum < version))
-	{
-		strncpy(str, defval, max);
-		str[max - 1] = '\0'; 	/* Ensure that whatever happens, the result string is term'd */
-		return;
-	}
-	do_string(str, max, flag);
-}
-
-static void skip_ver_string(u32b version, int flag)
-/* This function is slow and bulky */
-{
-	if ((flag == LS_LOAD) && (vernum <= version))
-	{
-		char forget[1000];
-		do_string(forget, 999, flag);
-	}
-	return;
 }
 
 /*

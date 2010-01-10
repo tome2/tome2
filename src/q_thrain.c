@@ -95,7 +95,6 @@ bool quest_thrain_gen_hook(char *fmt)
 	int ystart;
 	int y2, x2, yval, xval;
 	int y1, x1, xsize, ysize;
-	monster_type *m_ptr;
 
 	if (dungeon_type != DUNGEON_DOL_GULDUR) return (FALSE);
 	if (cquest.data[0] != dun_level) return (FALSE);
