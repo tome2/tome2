@@ -4468,7 +4468,7 @@ cptr get_month_name(int day, bool full, bool compact)
 		{
 			char buf2[20];
 
-			sprintf(buf2, get_day(day + 1));
+			sprintf(buf2, "%s", get_day(day + 1));
 			if (full) sprintf(buf, "%s (%s day)", month_name[i], buf2);
 			else sprintf(buf, "%s", month_name[i]);
 			break;
@@ -4479,8 +4479,8 @@ cptr get_month_name(int day, bool full, bool compact)
 			char buf2[20];
 			char buf3[20];
 
-			sprintf(buf2, get_day(day + 1 - month_day[i]));
-			sprintf(buf3, get_day(day + 1));
+			sprintf(buf2, "%s", get_day(day + 1 - month_day[i]));
+			sprintf(buf3, "%s", get_day(day + 1));
 
 			if (full) sprintf(buf, "%s day of %s (%s day)", buf2, month_name[i], buf3);
 			else if (compact) sprintf(buf, "%s day of %s", buf2, month_name[i]);

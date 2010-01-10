@@ -1489,7 +1489,7 @@ static void process_world(void)
 	{
 		char buf[20];
 
-		sprintf(buf, get_day(bst(YEAR, turn) + START_YEAR));
+		sprintf(buf, "%s", get_day(bst(YEAR, turn) + START_YEAR));
 		cmsg_format(TERM_L_GREEN,
 		            "Today it is %s of the %s year of the third age.",
 		            get_month_name(bst(DAY, turn), wizard, FALSE), buf);

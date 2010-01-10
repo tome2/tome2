@@ -4856,7 +4856,7 @@ void process_player_name(bool sf)
 
 	/* Terminate */
 	tmp[k] = '\0';
-	sprintf(player_base, tmp);
+	sprintf(player_base, "%s", tmp);
 
 	/* Require a "base" name */
 	if (!player_base[0]) strcpy(player_base, "PLAYER");

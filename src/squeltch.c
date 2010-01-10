@@ -399,7 +399,7 @@ void do_cmd_automatizer()
 
 				if (!max) continue;
 
-				sprintf(name, string_exec_lua(format("return __rules[%d].table.args.name", sel)));
+				sprintf(name, "%s", string_exec_lua(format("return __rules[%d].table.args.name", sel)));
 				if (input_box("New name?", hgt / 2, wid / 2, name, 15))
 				{
 					exec_lua(format("auto_aux:rename_rule(%d, '%s')", sel, name));

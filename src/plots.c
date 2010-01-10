@@ -93,7 +93,7 @@ hooks_chain* add_hook(int h_idx, hook_type hook, cptr name)
 	{
 		MAKE(new, hooks_chain);
 		new->hook = hook;
-		sprintf(new->name, name);
+		sprintf(new->name, "%s", name);
 #ifdef DEBUG_HOOK
 		if (wizard) cmsg_format(TERM_VIOLET, "HOOK ADD: %s", name);
 		if (take_notes) add_note(format("HOOK ADD: %s", name), 'D');

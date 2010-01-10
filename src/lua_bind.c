@@ -490,7 +490,7 @@ bool alloc_room(int by0, int bx0, int ysize, int xsize, int *y1, int *x1, int *y
 /* Files */
 void lua_print_hook(cptr str)
 {
-	fprintf(hook_file, str);
+	fprintf(hook_file, "%s", str);
 }
 
 
