@@ -125,7 +125,7 @@ CC = gcc
 # including "USE_GETCH" and "USE_CURS_SET".  Note that "config.h" will
 # attempt to "guess" at many of these flags based on your system.
 #
-COPTS = -Wall -O1 -pipe -g
+COPTS = -Wall -O1 -Wno-unused-value -pipe -g
 INCLUDES = -I/usr/X11R6/include
 DEFINES = -DUSE_X11 \
 	-DUSE_EGO_GRAPHICS -DUSE_TRANSPARENCY -DSUPPORT_GAMMA \
