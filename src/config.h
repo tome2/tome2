@@ -153,11 +153,6 @@
 
 
 /*
- * OPTION: Hack -- Compile in support for "Wizard Commands"
- */
-#define ALLOW_WIZARD
-
-/*
  * OPTION: Hack -- Compile in support for "Spoiler Generation"
  */
 #define ALLOW_SPOILERS

@@ -150,8 +150,6 @@ void do_cmd_rerate(void)
 }
 
 
-#ifdef ALLOW_WIZARD
-
 /*
  * Create the artifact of the specified number -- DAN
  *
@@ -182,11 +180,6 @@ static void wiz_create_named_art()
 	/* Ignore "empty" artifacts */
 	if (!a_ptr->name) return;
 
-#if 0
-	/* Ignore generated artifacts */
-	if (a_ptr->cur_num) return;
-#endif
-
 	/* Acquire the "kind" index */
 	i = lookup_kind(a_ptr->tval, a_ptr->sval);
 
@@ -199,38 +192,7 @@ static void wiz_create_named_art()
 	/* Save the name */
 	q_ptr->name1 = a_idx;
 
-#if 0 /* Old ugly method */
-	/* Extract the fields */
-	q_ptr->pval = a_ptr->pval;
-	q_ptr->ac = a_ptr->ac;
-	q_ptr->dd = a_ptr->dd;
-	q_ptr->ds = a_ptr->ds;
-	q_ptr->to_a = a_ptr->to_a;
-	q_ptr->to_h = a_ptr->to_h;
-	q_ptr->to_d = a_ptr->to_d;
-	q_ptr->weight = a_ptr->weight;
-
-	/* Hack -- acquire "cursed" flag */
-	if (a_ptr->flags3 & (TR3_CURSED)) q_ptr->ident |= (IDENT_CURSED);
-
-	k_ptr = &k_info[q_ptr->k_idx];
-
-	/* Extract some flags */
-	object_flags(q_ptr, &f1, &f2, &f3, &f4, &f5, &esp);
-
-	/* Hack give a basic exp/exp level to an object that needs it */
-	if (f4 & TR4_LEVELS)
-	{
-		q_ptr->elevel = (k_ptr->level / 10) + 1;
-		q_ptr->exp = player_exp[q_ptr->elevel - 1];
-	}
-
-	random_artifact_resistance(q_ptr);
-
-	a_ptr->cur_num = 1;
-#else
 	apply_magic(q_ptr, -1, TRUE, TRUE, TRUE);
-#endif
 
 	/* Identify it fully */
 	object_aware(q_ptr);
@@ -1173,11 +1135,6 @@ static void wiz_quantity_item(object_type *o_ptr)
 	char tmp_val[100];
 
 
-#if 0 /* DG -- A Wizard can do whatever he/she/it wants */
-	/* Never duplicate artifacts */
-	if (artifact_p(o_ptr) || o_ptr->art_name) return;
-#endif
-
 	tmp_qnt = o_ptr->number;
 
 	/* Default */
@@ -2053,13 +2010,3 @@ void do_cmd_debug(void)
 		break;
 	}
 }
-
-
-#else
-
-#ifdef MACINTOSH
-static int i = 0;
-#endif
-
-#endif
-
