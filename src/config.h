@@ -153,11 +153,6 @@
 
 
 /*
- * OPTION: Hack -- Compile in support for "Cyborg" mode
- */
-/*#define ALLOW_BORG*/
-
-/*
  * OPTION: Hack -- Compile in support for "Wizard Commands"
  */
 #define ALLOW_WIZARD

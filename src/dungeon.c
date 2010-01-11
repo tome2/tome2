@@ -3528,45 +3528,6 @@ extern void do_cmd_debug(void);
 #endif /* ALLOW_WIZARD */
 
 
-#ifdef ALLOW_BORG
-
-/*
- * Verify use of "borg" commands
- */
-static bool enter_borg_mode(void)
-{
-	/* Ask first time */
-	if (!(noscore & 0x0010))
-	{
-		/* Mention effects */
-		msg_print("The borg commands are for debugging and experimenting.");
-		msg_print("The game will not be scored if you use borg commands.");
-		msg_print(NULL);
-
-		/* Verify request */
-		if (!get_check("Are you sure you want to use borg commands? "))
-		{
-			return (FALSE);
-		}
-
-		/* Mark savefile */
-		noscore |= 0x0010;
-	}
-
-	/* Success */
-	return (TRUE);
-}
-
-
-/*
- * Hack -- Declare the Ben Borg
- */
-extern void do_cmd_borg(void);
-
-#endif /* ALLOW_BORG */
-
-
-
 /*
  * Parse and execute the current command
  * Give "Warning" on illegal commands.
@@ -3654,25 +3615,8 @@ static void process_command(void)
 
 #endif /* ALLOW_WIZARD */
 
-
-#ifdef ALLOW_BORG
-
-		/* Special "borg" commands */
-	case KTRL('Z'):
-		{
-			/* Enter borg mode */
-			if (enter_borg_mode())
-			{
-				if (!p_ptr->wild_mode) do_cmd_borg();
-			}
-
-			break;
-		}
-
-#endif /* ALLOW_BORG */
-
-
-		/*** Inventory Commands ***/
+	
+	/*** Inventory Commands ***/
 
 		/* Wear/wield equipment */
 	case 'w':
