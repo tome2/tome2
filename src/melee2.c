@@ -4753,8 +4753,6 @@ static int mon_will_run(int m_idx)
 
 
 
-#ifdef MONSTER_FLOW
-
 /*
 * Choose the "best" direction for "flowing"
 *
@@ -4777,80 +4775,6 @@ static int mon_will_run(int m_idx)
 * being close enough to chase directly.  I have no idea what will
 * happen if you combine "smell" with low "aaf" values.
 */
-
-#if 0
-static bool get_moves_aux(int m_idx, int *yp, int *xp)
-{
-	int i, y, x, y1, x1, when = 0, cost = 999;
-
-	cave_type *c_ptr;
-
-	monster_type *m_ptr = &m_list[m_idx];
-	monster_race *r_ptr = race_inf(m_ptr);
-
-	/* Monster flowing disabled */
-	if (!flow_by_sound) return (FALSE);
-
-	/* Monster can go through rocks */
-	if (r_ptr->flags2 & (RF2_PASS_WALL)) return (FALSE);
-	if (r_ptr->flags2 & (RF2_KILL_WALL)) return (FALSE);
-
-	/* Monster location */
-	y1 = m_ptr->fy;
-	x1 = m_ptr->fx;
-
-	/* Monster grid */
-	c_ptr = &cave[y1][x1];
-
-	/* The player is not currently near the monster grid */
-	if (c_ptr->when < cave[p_ptr->py][p_ptr->px].when)
-	{
-		/* The player has never been near the monster grid */
-		if (!c_ptr->when) return (FALSE);
-
-		/* The monster is not allowed to track the player */
-		if (!flow_by_smell) return (FALSE);
-	}
-
-	/* Monster is too far away to notice the player */
-	if (c_ptr->cost > MONSTER_FLOW_DEPTH) return (FALSE);
-	if (c_ptr->cost > r_ptr->aaf) return (FALSE);
-
-	/* Hack -- Player can see us, run towards him */
-	if (player_has_los_bold(y1, x1)) return (FALSE);
-
-	/* Check nearby grids, diagonals first */
-	for (i = 7; i >= 0; i--)
-	{
-		/* Get the location */
-		y = y1 + ddy_ddd[i];
-		x = x1 + ddx_ddd[i];
-
-		/* Ignore illegal locations */
-		if (!cave[y][x].when) continue;
-
-		/* Ignore ancient locations */
-		if (cave[y][x].when < when) continue;
-
-		/* Ignore distant locations */
-		if (cave[y][x].cost > cost) continue;
-
-		/* Save the cost and time */
-		when = cave[y][x].when;
-		cost = cave[y][x].cost;
-
-		/* Hack -- Save the "twiddled" location */
-		(*yp) = p_ptr->py + 16 * ddy_ddd[i];
-		(*xp) = p_ptr->px + 16 * ddx_ddd[i];
-	}
-
-	/* No legal move (?) */
-	if (!when) return (FALSE);
-
-	/* Success */
-	return (TRUE);
-}
-#endif
 
 /*
 * Provide a location to flee to, but give the player a wide berth.
@@ -4936,8 +4860,6 @@ static bool get_fear_moves_aux(int m_idx, int *yp, int *xp)
 	/* Success */
 	return (TRUE);
 }
-
-#endif /* MONSTER_FLOW */
 
 
 /*
@@ -5193,25 +5115,6 @@ static bool get_moves(int m_idx, int *mm)
 	int x2 = p_ptr->px;
 	bool done = FALSE;
 
-#if 0
-
-#ifdef MONSTER_FLOW
-	/* Flow towards the player */
-	if (flow_by_sound)
-	{
-		/* Flow towards the player */
-		(void)get_moves_aux(m_idx, &y2, &x2);
-	}
-#endif
-
-	/* Extract the "pseudo-direction" */
-	y = m_ptr->fy - y2;
-	x = m_ptr->fx - x2;
-
-
-
-#else
-
 	/* Oups get nearer */
 	if ((is_friend(m_ptr) > 0) && (m_ptr->cdis > p_ptr->pet_follow_distance))
 	{
@@ -5401,7 +5304,7 @@ static bool get_moves(int m_idx, int *mm)
 		/* Check for no move */
 		if (!x && !y) return (FALSE);
 	}
-#endif
+
 	/* Extract the "absolute distances" */
 	ax = ABS(x);
 	ay = ABS(y);
@@ -7769,7 +7672,6 @@ void process_monsters(void)
 			test = TRUE;
 		}
 
-#ifdef MONSTER_FLOW
 		/* Hack -- Monsters can "smell" the player from far away */
 		/* Note that most monsters have "aaf" of "20" or so */
 		else if (flow_by_sound &&
@@ -7780,7 +7682,6 @@ void process_monsters(void)
 			/* We can "smell" the player */
 			test = TRUE;
 		}
-#endif /* MONSTER_FLOW */
 
 		/* Running away wont save them ! */
 		if (m_ptr->poisoned || m_ptr->bleeding) test = TRUE;

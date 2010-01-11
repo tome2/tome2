@@ -1481,8 +1481,6 @@ void do_cmd_pref(void)
 }
 
 
-#ifdef ALLOW_MACROS
-
 /*
  * Hack -- append all current macros to the given file
  */
@@ -1603,9 +1601,6 @@ static void do_cmd_macro_aux(char *buf, bool macro_screen)
 		Term_addstr( -1, TERM_WHITE, tmp);
 	}
 }
-
-#endif
-
 
 /*
  * Hack -- ask for a keymap "trigger" (see below)
@@ -1786,7 +1781,6 @@ void do_cmd_macros(void)
 
 		/* Selections */
 		prt("(1) Load a user pref file", 4, 5);
-#ifdef ALLOW_MACROS
 		prt("(2) Append macros to a file", 5, 5);
 		prt("(3) Query a macro", 6, 5);
 		prt("(4) Create a macro", 7, 5);
@@ -1796,7 +1790,6 @@ void do_cmd_macros(void)
 		prt("(8) Create a keymap", 11, 5);
 		prt("(9) Remove a keymap", 12, 5);
 		prt("(0) Enter a new action", 13, 5);
-#endif /* ALLOW_MACROS */
 
 		/* Prompt */
 		prt("Command: ", 16, 0);
@@ -1829,8 +1822,6 @@ void do_cmd_macros(void)
 				msg_print("Could not load file!");
 			}
 		}
-
-#ifdef ALLOW_MACROS
 
 		/* Save macros */
 		else if (i == '2')
@@ -2091,8 +2082,6 @@ void do_cmd_macros(void)
 			text_to_ascii(macro__buf, buf);
 		}
 
-#endif /* ALLOW_MACROS */
-
 		/* Oops */
 		else
 		{
@@ -2148,7 +2137,6 @@ void do_cmd_visuals(void)
 
 		/* Give some choices */
 		prt("(1) Load a user pref file", 4, 5);
-#ifdef ALLOW_VISUALS
 		prt("(2) Dump monster attr/chars", 5, 5);
 		prt("(3) Dump object attr/chars", 6, 5);
 		prt("(4) Dump feature attr/chars", 7, 5);
@@ -2157,7 +2145,6 @@ void do_cmd_visuals(void)
 		prt("(7) Change object attr/chars", 10, 5);
 		prt("(8) Change feature attr/chars", 11, 5);
 		prt("(9) (unused)", 12, 5);
-#endif
 		prt("(0) Reset visuals", 13, 5);
 
 		/* Prompt */
@@ -2187,8 +2174,6 @@ void do_cmd_visuals(void)
 			/* Process the given filename */
 			(void)process_pref_file(tmp);
 		}
-
-#ifdef ALLOW_VISUALS
 
 		/* Dump monster attr/chars */
 		else if (i == '2')
@@ -2564,8 +2549,6 @@ void do_cmd_visuals(void)
 			}
 		}
 
-#endif
-
 		/* Reset visuals */
 		else if (i == '0')
 		{
@@ -2631,13 +2614,11 @@ void do_cmd_colors(void)
 
 		/* Give some choices */
 		prt("(1) Load a user pref file", 4, 5);
-#ifdef ALLOW_COLORS
 		prt("(2) Dump colors", 5, 5);
 		prt("(3) Modify colors", 6, 5);
 # ifdef SUPPORT_GAMMA
 		prt("(4) Gamma correction", 7, 5);
 # endif  /* SUPPORT_GAMMA */
-#endif
 
 		/* Prompt */
 		prt("Command: ", 8, 0);
@@ -2672,8 +2653,6 @@ void do_cmd_colors(void)
 			/* Mega-Hack -- redraw */
 			Term_redraw();
 		}
-
-#ifdef ALLOW_COLORS
 
 		/* Dump colors */
 		else if (i == '2')
@@ -2874,8 +2853,6 @@ void do_cmd_colors(void)
 		}
 
 # endif  /* SUPPORT_GAMMA */
-
-#endif
 
 		/* Unknown option */
 		else

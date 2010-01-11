@@ -4449,9 +4449,6 @@ static int flow_n = 0;
  */
 void forget_flow(void)
 {
-
-#ifdef MONSTER_FLOW
-
 	int x, y;
 
 	/* Nothing to forget */
@@ -4470,13 +4467,8 @@ void forget_flow(void)
 
 	/* Start over */
 	flow_n = 0;
-
-#endif
-
 }
 
-
-#ifdef MONSTER_FLOW
 
 /*
  * Hack -- Allow us to treat the "seen" array as a queue
@@ -4524,8 +4516,6 @@ static void update_flow_aux(int y, int x, int n)
 	if (flow_head == flow_tail) flow_head = old_head;
 }
 
-#endif
-
 
 /*
  * Hack -- fill in the "cost" field of every grid that the player
@@ -4542,9 +4532,6 @@ static void update_flow_aux(int y, int x, int n)
  */
 void update_flow(void)
 {
-
-#ifdef MONSTER_FLOW
-
 	int x, y, d;
 
 	/* Hack -- disabled */
@@ -4600,9 +4587,6 @@ void update_flow(void)
 
 	/* Forget the flow info */
 	flow_head = flow_tail = 0;
-
-#endif
-
 }
 
 

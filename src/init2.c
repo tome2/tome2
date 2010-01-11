@@ -413,15 +413,11 @@ static errr init_f_info_raw(int fd)
 	fd_read(fd, (char*)(f_name), f_head->name_size);
 
 
-#ifndef DELAY_LOAD_F_TEXT
-
 	/* Allocate the "f_text" array */
 	C_MAKE(f_text, f_head->text_size, char);
 
 	/* Read the "f_text" array */
 	fd_read(fd, (char*)(f_text), f_head->text_size);
-
-#endif /* DELAY_LOAD_F_TEXT */
 
 
 	/* Success */
@@ -696,15 +692,11 @@ static errr init_k_info_raw(int fd)
 	fd_read(fd, (char*)(k_name), k_head->name_size);
 
 
-#ifndef DELAY_LOAD_K_TEXT
-
 	/* Allocate the "k_text" array */
 	C_MAKE(k_text, k_head->text_size, char);
 
 	/* Read the "k_text" array */
 	fd_read(fd, (char*)(k_text), k_head->text_size);
-
-#endif /* DELAY_LOAD_K_TEXT */
 
 
 	/* Success */
@@ -979,15 +971,11 @@ static errr init_a_info_raw(int fd)
 	fd_read(fd, (char*)(a_name), a_head->name_size);
 
 
-#ifndef DELAY_LOAD_A_TEXT
-
 	/* Allocate the "a_text" array */
 	C_MAKE(a_text, a_head->text_size, char);
 
 	/* Read the "a_text" array */
 	fd_read(fd, (char*)(a_text), a_head->text_size);
-
-#endif /* DELAY_LOAD_A_TEXT */
 
 
 	/* Success */
@@ -2087,15 +2075,11 @@ static errr init_e_info_raw(int fd)
 	fd_read(fd, (char*)(e_name), e_head->name_size);
 
 
-#ifndef DELAY_LOAD_E_TEXT
-
 	/* Allocate the "e_text" array */
 	C_MAKE(e_text, e_head->text_size, char);
 
 	/* Read the "e_text" array */
 	fd_read(fd, (char*)(e_text), e_head->text_size);
-
-#endif /* DELAY_LOAD_E_TEXT */
 
 
 	/* Success */
@@ -2624,15 +2608,11 @@ static errr init_r_info_raw(int fd)
 	fd_read(fd, (char*)(r_name), r_head->name_size);
 
 
-#ifndef DELAY_LOAD_R_TEXT
-
 	/* Allocate the "r_text" array */
 	C_MAKE(r_text, r_head->text_size, char);
 
 	/* Read the "r_text" array */
 	fd_read(fd, (char*)(r_text), r_head->text_size);
-
-#endif /* DELAY_LOAD_R_TEXT */
 
 
 	/* Success */
@@ -5014,15 +4994,11 @@ static errr init_t_info_raw(int fd)
 	fd_read(fd, (char*)(t_name), t_head->name_size);
 
 
-#ifndef DELAY_LOAD_T_TEXT
-
 	/* Allocate the "t_text" array */
 	C_MAKE(t_text, t_head->text_size, char);
 
 	/* Read the "t_text" array */
 	fd_read(fd, (char*)(t_text), t_head->text_size);
-
-#endif /* DELAY_LOAD_T_TEXT */
 
 
 	/* Success */
@@ -5576,15 +5552,12 @@ static errr init_v_info_raw(int fd)
 	fd_read(fd, (char*)(v_name), v_head->name_size);
 
 
-#ifndef DELAY_LOAD_V_TEXT
-
 	/* Allocate the "v_text" array */
 	C_MAKE(v_text, v_head->text_size, char);
 
 	/* Read the "v_text" array */
 	fd_read(fd, (char*)(v_text), v_head->text_size);
 
-#endif /* DELAY_LOAD_V_TEXT */
 
 	/* Success */
 	return (0);

@@ -163,21 +163,6 @@
 #define ALLOW_SPOILERS
 
 /*
- * OPTION: Allow "do_cmd_colors" at run-time
- */
-#define ALLOW_COLORS
-
-/*
- * OPTION: Allow "do_cmd_visuals" at run-time
- */
-#define ALLOW_VISUALS
-
-/*
- * OPTION: Allow "do_cmd_macros" at run-time
- */
-#define ALLOW_MACROS
-
-/*
  * OPTION: Allow characteres to be "auto-rolled"
  */
 #define ALLOW_AUTOROLLER
@@ -200,50 +185,6 @@
  * It should be usually be defined anyway to allow easy "updating".
  */
 #define ALLOW_TEMPLATES
-
-/*
- * OPTION: Allow loading of pre-2.7.0 savefiles.  Note that it takes
- * about 15K of code in "save-old.c" to parse the old savefile format.
- * Angband 2.8.0 will ignore a lot of info from pre-2.7.0 savefiles.
- */
-#define ALLOW_OLD_SAVEFILES
-
-
-/*
- * OPTION: Delay the loading of the "f_text" array until it is actually
- * needed, saving ~1K, since "feature" descriptions are unused.
- */
-/* #define DELAY_LOAD_F_TEXT */
-
-/*
- * OPTION: Delay the loading of the "k_text" array until it is actually
- * needed, saving ~1K, since "object" descriptions are unused.
- */
-/* #define DELAY_LOAD_K_TEXT */
-
-/*
- * OPTION: Delay the loading of the "a_text" array until it is actually
- * needed, saving ~1K, since "artifact" descriptions are unused.
- */
-/* #define DELAY_LOAD_A_TEXT */
-
-/*
- * OPTION: Delay the loading of the "e_text" array until it is actually
- * needed, saving ~1K, since "ego-item" descriptions are unused.
- */
-#define DELAY_LOAD_E_TEXT
-
-/*
- * OPTION: Delay the loading of the "r_text" array until it is actually
- * needed, saving ~60K, but "simplifying" the "monster" descriptions.
- */
-/* #define DELAY_LOAD_R_TEXT */
-
-/*
- * OPTION: Delay the loading of the "v_text" array until it is actually
- * needed, saving ~1K, but "destroying" the "vault" generation.
- */
-/* #define DELAY_LOAD_V_TEXT */
 
 
 /*
@@ -270,14 +211,7 @@
 
 
 /*
- * OPTION: Allow use of the "flow_by_smell" and "flow_by_sound"
- * software options, which enable "monster flowing".
- */
-#define MONSTER_FLOW
-
-
-/*
- * OPTION: Maximum flow depth when using "MONSTER_FLOW"
+ * OPTION: Maximum flow depth
  */
 #define MONSTER_FLOW_DEPTH 32
 
@@ -292,17 +226,6 @@
  * OPTION: Allow use of the monster health bar	-DRS-
  */
 #define DRS_SHOW_HEALTH_BAR
-
-
-
-/*
- * OPTION: Enable the "track_follow" and "track_target" options.
- * They let monsters follow the player's foot-prints, or remember
- * the player's recent locations.  This code has been removed from
- * the current version because it is being rewritten by Billy, and
- * until it is ready, it will not work.  Do not define this option.
- */
-/* #define WDT_TRACK_OPTIONS */
 
 
 
@@ -456,42 +379,6 @@
 #define DEFAULT_X11_FONT_MIRROR		DEFAULT_X11_FONT
 #define DEFAULT_X11_FONT_RECALL		DEFAULT_X11_FONT
 #define DEFAULT_X11_FONT_CHOICE		DEFAULT_X11_FONT
-
-
-
-/*
- * Hack -- Special "ancient machine" versions
- */
-#if defined(ANGBAND_LITE_MAC)
-# ifndef ANGBAND_LITE
-#  define ANGBAND_LITE
-# endif
-#endif
-
-/*
- * OPTION: Attempt to minimize the size of the game
- */
-#ifndef ANGBAND_LITE
-/* #define ANGBAND_LITE */
-#endif
-
-/*
- * Hack -- React to the "ANGBAND_LITE" flag
- */
-#ifdef ANGBAND_LITE
-# undef ALLOW_COLORS
-# undef ALLOW_VISUALS
-# undef ALLOW_MACROS
-# undef MONSTER_FLOW
-# undef WDT_TRACK_OPTIONS
-# undef ALLOW_OLD_SAVEFILES
-# undef ALLOW_BORG
-# undef ALLOW_WIZARD
-# undef ALLOW_SPOILERS
-# undef ALLOW_TEMPLATES
-# undef DELAY_LOAD_R_TEXT
-# define DELAY_LOAD_R_TEXT
-#endif
 
 
 

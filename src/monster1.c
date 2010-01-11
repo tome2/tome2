@@ -362,75 +362,8 @@ static void roff_aux(int r_idx, int ego, int remem)
 	{
 		char buf[2048];
 
-#ifdef DELAY_LOAD_R_TEXT
-
-		int fd;
-
-		/* Build the filename */
-		path_build(buf, 1024, ANGBAND_DIR_DATA, "r_info.raw");
-
-		/* Grab permission */
-		safe_setuid_grab();
-
-		/* Open the "raw" file */
-		fd = fd_open(buf, O_RDONLY);
-
-		/* Drop permission */
-		safe_setuid_drop();
-
-		/* Use file */
-		if (fd >= 0)
-		{
-			huge pos;
-
-			/* Starting position */
-			pos = r_ptr->text;
-
-			/* Additional offsets */
-			pos += r_head->head_size;
-			pos += r_head->info_size;
-			pos += r_head->name_size;
-
-#if 0
-
-			/* Maximal length */
-			len = r_head->text_size - r_ptr->text;
-
-			/* Actual length */
-			for (i = r_idx + 1; i < max_r_idx; i++)
-			{
-				/* Actual length */
-				if (r_info[i].text > r_ptr->text)
-				{
-					/* Extract length */
-					len = r_info[i].text - r_ptr->text;
-
-					/* Done */
-					break;
-				}
-			}
-
-			/* Maximal length */
-			if (len > 2048) len = 2048;
-
-#endif
-
-			/* Seek */
-			(void)fd_seek(fd, pos);
-
-			/* Read a chunk of data */
-			(void)fd_read(fd, buf, 2048);
-
-			/* Close it */
-			(void)fd_close(fd);
-		}
-
-#else
-
 		/* Simple method */
 		strcpy(buf, r_text + r_ptr->text);
-
-#endif
 
 		/* Dump it */
 		text_out(buf);

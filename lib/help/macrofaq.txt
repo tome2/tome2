@@ -1327,17 +1327,7 @@ info. See section *****macrofaq.txt*11["Pref lines summary"] for all the types o
 that can be loaded. Also see section *****macrofaq.txt*7["Pref file loading order"].
 
 #####G----------------------------------------------------------------------
-#####G6.5 I can't even FIND the macro editing commands!
-#####G----------------------------------------------------------------------
-
-Angband can be compiled without the ALLOW_MACROS symbol. This is done
-on some systems to reduce executable size. Macros and keymaps are
-still used by the game and loaded from files, but they can't be edited
-or saved from within the game. The "Interact with macros" screen only
-has the single option "Load a user pref file" in this case.
-
-#####G----------------------------------------------------------------------
-#####G6.6 It moves me when I try to use my bow/rod/wand!
+#####G6.5 It moves me when I try to use my bow/rod/wand!
 #####G----------------------------------------------------------------------
 
 Example: you type "f1" and it moves you in direction 1 (South West).
@@ -1350,7 +1340,7 @@ macros or keymaps bound to that key. Use the appropriate "Remove ..."
 command to restore the built-in Angband command.
 ~~~~~3
 #####G----------------------------------------------------------------------
-#####G6.7 My macro drops/takes off my main weapon!
+#####G6.6 My macro drops/takes off my main weapon!
 #####G----------------------------------------------------------------------
 
 This is probably caused by an auto-fire macro like "*tm1a" for magic
@@ -1374,7 +1364,7 @@ after the action string to cancel any pending messages or commands.
 See the section *****macrofaq.txt*13["Clearing the command buffer"].
 ~~~~~2
 #####G----------------------------------------------------------------------
-#####G6.8 My macro outputs "e - Floating Eye" on the message line!
+#####G6.7 My macro outputs "e - Floating Eye" on the message line!
 #####G----------------------------------------------------------------------
 
 It is wise to add an escape sequence "\e\e\e" to the beginning and end

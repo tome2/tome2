@@ -698,8 +698,6 @@ struct trap_type
  * objects, using the "next_o_idx" field of objects (see below) to
  * create the singly linked list of objects.  If "o_idx" is zero
  * then there are no objects in the grid.
- *
- * Note the special fields for the "MONSTER_FLOW" code.
  */
 
 typedef struct cave_type cave_type;
@@ -724,12 +722,9 @@ struct cave_type
 
 	byte mimic;		/* Feature to mimic */
 
-#ifdef MONSTER_FLOW
-
 	byte cost;		/* Hack -- cost of flowing */
 	byte when;		/* Hack -- when cost was computed */
 
-#endif
 	s16b effect;            /* The lasting effects */
 };
 
@@ -918,17 +913,6 @@ struct monster_type
 	bool ml;			/* Monster is "visible" */
 
 	s16b hold_o_idx;	/* Object being held (if any) */
-
-#ifdef WDT_TRACK_OPTIONS
-
-	byte ty;			/* Y location of target */
-	byte tx;			/* X location of target */
-
-	byte t_dur;			/* How long are we tracking */
-
-	byte t_bit;			/* Up to eight bit flags */
-
-#endif
 
 	u32b smart;			/* Field for "smart_learn" */
 

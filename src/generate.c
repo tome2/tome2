@@ -8595,14 +8595,9 @@ void generate_cave(void)
 				/* No inscription */
 				cave[y][x].inscription = 0;
 
-#ifdef MONSTER_FLOW
-
 				/* No flow */
 				cave[y][x].cost = 0;
 				cave[y][x].when = 0;
-
-#endif /* MONSTER_FLOW */
-
 			}
 		}
 
@@ -8660,13 +8655,9 @@ void generate_cave(void)
 					/* No inscription */
 					cave[y][x].inscription = 0;
 
-#ifdef MONSTER_FLOW
-
 					/* No flow */
 					cave[y][x].cost = 0;
 					cave[y][x].when = 0;
-
-#endif /* MONSTER_FLOW */
 				}
 			}
 
