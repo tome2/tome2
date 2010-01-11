@@ -2172,10 +2172,10 @@ bool get_item_hook_find_spell(int *item)
 /*
  * Get a spell from a book
  */
-u32b get_school_spell(cptr do_what, cptr check_fct, s16b force_book)
+s32b get_school_spell(cptr do_what, cptr check_fct, s16b force_book)
 {
 	int i, item;
-	u32b spell = -1;
+	s32b spell = -1;
 	int num = 0;
 	s32b where = 1;
 	int ask;

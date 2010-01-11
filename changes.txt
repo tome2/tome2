@@ -3,6 +3,7 @@ T.o.M.E 2.3.7 (ah)
 - Remove item pval from antimagic field strength calculation since it
   may be both non-zero and invisible (to the player).
 - Miscellaneous 64 bit fixes.
+- Fix Lua errors when hitting <ESC> while choosing spell.
 
 T.o.M.E 2.3.6 (ah)
 

@@ -822,7 +822,7 @@ extern void do_poly_self(void);
 extern void brand_weapon(int brand_type);
 extern cptr symbiote_name(bool capitalize);
 extern int use_symbiotic_power(int r_idx, bool great, bool only_number, bool no_cost);
-extern u32b get_school_spell(cptr do_what, cptr check_fct, s16b force_book);
+extern s32b get_school_spell(cptr do_what, cptr check_fct, s16b force_book);
 extern void do_cmd_copy_spell(void);
 extern void cast_school_spell(void);
 extern void browse_school_spell(int book, int pval, object_type *o_ptr);

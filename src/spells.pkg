@@ -2462,7 +2462,7 @@ extern s32b lua_spell_device_chance(s32b chance, int level, int base_level);
  * If no spell is chosen, -1 is returned.
  * @note (see file cmd5.c)
  */
-extern u32b get_school_spell(cptr do_what, cptr check_fct, s16b force_book);
+extern s32b get_school_spell(cptr do_what, cptr check_fct, s16b force_book);
 
 /** @name Last Teleportation
  * @brief Coordinates of last successful teleportation
