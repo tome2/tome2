@@ -91,24 +91,6 @@ void do_cmd_rerate(void)
 {
 	int min_value, max_value, i, percent;
 
-#ifdef TEST
-	int fubar, mlk = 0;
-
-	for (fubar = 0; fubar < max_k_idx; fubar++)
-	{
-		if ((k_info[fubar].tval == TV_POTION) || (k_info[fubar].tval == TV_POTION2))
-		{
-			k_info[fubar].x_attr = 0xBC;
-			mlk++;
-		}
-	}
-
-	msg_format ("%d changes made.", mlk);
-
-#else /* TEST */
-
-#endif /* TEST */
-
 	min_value = (PY_MAX_LEVEL * 3 * (p_ptr->hitdie - 1)) / 8;
 	min_value += PY_MAX_LEVEL;
 
