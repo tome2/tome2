@@ -22,7 +22,7 @@
  */
 
 
-#if !defined(MACINTOSH) && !defined(WINDOWS) && !defined(ACORN)
+#if !defined(MACINTOSH) && !defined(WINDOWS)
 
 
 /*
@@ -45,25 +45,6 @@ static void quit_hook(cptr s)
 	}
 }
 
-
-
-/*
- * Set the stack size (for the Amiga)
- */
-#ifdef AMIGA
-# include <dos.h>
-__near long __stack = 32768L;
-#endif
-
-
-/*
- * Set the stack size and overlay buffer (see main-286.c")
- */
-#ifdef USE_286
-# include <dos.h>
-extern unsigned _stklen = 32768U;
-extern unsigned _ovrbuffer = 0x1500;
-#endif
 
 
 #ifdef PRIVATE_USER_PATH
@@ -146,20 +127,10 @@ static bool check_create_user_dir(void)
  * We must ensure that the path ends with "PATH_SEP" if needed,
  * since the "init_file_paths()" function will simply append the
  * relevant "sub-directory names" to the given path.
- *
- * Note that the "path" must be "Angband:" for the Amiga, and it
- * is ignored for "VM/ESA", so I just combined the two.
  */
 static void init_stuff(void)
 {
 	char path[1024];
-
-#if defined(AMIGA) || defined(VM)
-
-	/* Hack -- prepare "path" */
-	strcpy(path, "Angband:");
-
-#else /* AMIGA / VM */
 
 	cptr tail;
 
@@ -175,8 +146,6 @@ static void init_stuff(void)
 
 	/* Hack -- Add a path separator (only if needed) */
 	if (!suffix(path, PATH_SEP)) strcat(path, PATH_SEP);
-
-#endif /* AMIGA / VM */
 
 	/* Initialize */
 	init_file_paths(path);
@@ -328,15 +297,6 @@ int main(int argc, char *argv[])
 	argv0 = argv[0];
 
 
-#ifdef USE_286
-	/* Attempt to use XMS (or EMS) memory for swap space */
-	if (_OvrInitExt(0L, 0L))
-	{
-		_OvrInitEms(0, 0, 64);
-	}
-#endif
-
-
 #ifdef SET_UID
 
 	/* Default permissions on files */
@@ -353,11 +313,6 @@ int main(int argc, char *argv[])
 
 	/* Get the user id (?) */
 	player_uid = getuid();
-
-#ifdef VMS
-	/* Mega-Hack -- Factor group id */
-	player_uid += (getgid() * 1000);
-#endif
 
 # ifdef SAFE_SETUID
 
@@ -694,29 +649,9 @@ usage:
 				puts("  -mdos              To use Allegro");
 #endif /* USE_DOS */
 
-#ifdef USE_IBM
-				puts("  -mibm              To use IBM/PC console");
-#endif /* USE_IBM */
-
-#ifdef USE_EMX
-				puts("  -memx              To use EMX");
-#endif /* USE_EMX */
-
 #ifdef USE_SLA
 				puts("  -msla              To use SLang");
 #endif /* USE_SLA */
-
-#ifdef USE_LSL
-				puts("  -mlsl              To use SVGALIB");
-#endif /* USE_LSL */
-
-#ifdef USE_AMI
-				puts("  -mami              To use Amiga");
-#endif /* USE_AMI */
-
-#ifdef USE_VME
-				puts("  -mvme              To use VM/ESA");
-#endif /* USE_VME */
 
 #ifdef USE_ISO
 				puts("  -miso              To use ISO");
@@ -881,34 +816,6 @@ usage:
 	}
 #endif
 
-#ifdef USE_IBM
-	/* Attempt to use the "main-ibm.c" support */
-	if (!done && (!mstr || (streq(mstr, "ibm"))))
-	{
-		extern errr init_ibm(void);
-		if (0 == init_ibm())
-		{
-			ANGBAND_SYS = "ibm";
-			done = TRUE;
-		}
-	}
-#endif
-
-
-#ifdef USE_EMX
-	/* Attempt to use the "main-emx.c" support */
-	if (!done && (!mstr || (streq(mstr, "emx"))))
-	{
-		extern errr init_emx(void);
-		if (0 == init_emx())
-		{
-			ANGBAND_SYS = "emx";
-			done = TRUE;
-		}
-	}
-#endif
-
-
 #ifdef USE_SLA
 	/* Attempt to use the "main-sla.c" support */
 	if (!done && (!mstr || (streq(mstr, "sla"))))
@@ -917,48 +824,6 @@ usage:
 		if (0 == init_sla())
 		{
 			ANGBAND_SYS = "sla";
-			done = TRUE;
-		}
-	}
-#endif
-
-
-#ifdef USE_LSL
-	/* Attempt to use the "main-lsl.c" support */
-	if (!done && (!mstr || (streq(mstr, "lsl"))))
-	{
-		extern errr init_lsl(void);
-		if (0 == init_lsl())
-		{
-			ANGBAND_SYS = "lsl";
-			done = TRUE;
-		}
-	}
-#endif
-
-
-#ifdef USE_AMI
-	/* Attempt to use the "main-ami.c" support */
-	if (!done && (!mstr || (streq(mstr, "ami"))))
-	{
-		extern errr init_ami(void);
-		if (0 == init_ami())
-		{
-			ANGBAND_SYS = "ami";
-			done = TRUE;
-		}
-	}
-#endif
-
-
-#ifdef USE_VME
-	/* Attempt to use the "main-vme.c" support */
-	if (!done && (!mstr || (streq(mstr, "vme"))))
-	{
-		extern errr init_vme(void);
-		if (0 == init_vme())
-		{
-			ANGBAND_SYS = "vme";
 			done = TRUE;
 		}
 	}
@@ -1025,19 +890,6 @@ usage:
 		if (0 == init_sdl(argc, argv))
 		{
 			ANGBAND_SYS = "sdl";
-			done = TRUE;
-		}
-	}
-#endif
-
-#ifdef USE_DMY
-	/* Attempt to use the "main-dmy.c" support */
-	if (!done && (!mstr || (streq(mstr, "dmy"))))
-	{
-		extern errr init_dummy(int, char**);
-		if (0 == init_dummy(argc, argv))
-		{
-			ANGBAND_SYS = "dmy";
 			done = TRUE;
 		}
 	}

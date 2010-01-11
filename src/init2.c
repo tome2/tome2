@@ -5,10 +5,10 @@
 #include "angband.h"
 
 
-#if !defined(MACINTOSH) && !defined(RISCOS) && defined(CHECK_MODIFICATION_TIME)
+#if !defined(MACINTOSH) && defined(CHECK_MODIFICATION_TIME)
 #include <sys/types.h>
 #include <sys/stat.h>
-#endif /* !MACINTOSH && !RISCOS && CHECK_MODIFICATION_TIME */
+#endif /* !MACINTOSH && CHECK_MODIFICATION_TIME */
 
 
 /*
@@ -130,33 +130,6 @@ void init_file_paths(char *path)
 
 
 
-#ifdef VM
-
-	/*** Use "flat" paths with VM/ESA ***/
-
-	/* Use "blank" path names */
-	ANGBAND_DIR_APEX = string_make("");
-	ANGBAND_DIR_BONE = string_make("");
-	ANGBAND_DIR_CORE = string_make("");
-	ANGBAND_DIR_DNGN = string_make("");
-	ANGBAND_DIR_DATA = string_make("");
-	ANGBAND_DIR_EDIT = string_make("");
-	ANGBAND_DIR_FILE = string_make("");
-	ANGBAND_DIR_HELP = string_make("");
-	ANGBAND_DIR_INFO = string_make("");
-	ANGBAND_DIR_MODULES = string_make("");
-	ANGBAND_DIR_NOTE = string_make("");
-	ANGBAND_DIR_PATCH = string_make("");
-	ANGBAND_DIR_SAVE = string_make("");
-	ANGBAND_DIR_SCPT = string_make("");
-	ANGBAND_DIR_PREF = string_make("");
-	ANGBAND_DIR_USER = string_make("");
-	ANGBAND_DIR_XTRA = string_make("");
-	ANGBAND_DIR_CMOV = string_make("");
-
-#else /* VM */
-
-
 	/*** Build the sub-directory names ***/
 
 	/* Build a path name */
@@ -268,9 +241,6 @@ void init_file_paths(char *path)
 	strcpy(tail, "xtra");
 	ANGBAND_DIR_XTRA = string_make(path);
 
-#endif /* VM */
-
-
 #ifdef NeXT
 
 	/* Allow "fat binary" usage with NeXT */
@@ -350,7 +320,7 @@ static cptr err_str[9] =
 #endif /* ALLOW_TEMPLATES */
 
 
-#if !defined(RISCOS) && defined(CHECK_MODIFICATION_TIME)
+#if defined(CHECK_MODIFICATION_TIME)
 
 static errr check_modification_date(int fd, cptr template_file)
 {

@@ -4667,9 +4667,6 @@ void show_inven_aux(bool mirror, bool everything)
 			byte a = object_attr(o_ptr);
 			char c = object_char(o_ptr);
 
-#ifdef AMIGA
-			if (a & 0x80) a |= 0x40;
-#endif
 			if (!o_ptr->k_idx) c = ' ';
 
 			Term_draw(col + 3, row + j, a, c);
@@ -4899,9 +4896,6 @@ void show_equip_aux(bool mirror, bool everything)
 			byte a = object_attr(o_ptr);
 			char c = object_char(o_ptr);
 
-#ifdef AMIGA
-			if (a & 0x80) a |= 0x40;
-#endif
 			if (!o_ptr->k_idx) c = ' ';
 
 			Term_draw(col + 3, row + j, a, c);

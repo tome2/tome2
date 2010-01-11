@@ -4606,7 +4606,7 @@ void html_screenshot(cptr name)
  * Because this is dead code and hardly anyone but DG needs it.
  * IMHO this should never been included in the game code -- pelpel
  */
-#if !defined(WINDOWS) && !defined(MACINTOSH) && !defined(ACORN)
+#if !defined(WINDOWS) && !defined(MACINTOSH)
 
 #define KEY_NUM         9
 static int keys_tab[KEY_NUM] =
@@ -4744,7 +4744,7 @@ bool chg_to_txt(cptr base, cptr newname)
 	return (TRUE);
 }
 
-#endif /* !WINDOWS && !MACINTOSH && !ACORN */
+#endif /* !WINDOWS && !MACINTOSH */
 
 /*
  * Peruse the On-Line-Help
@@ -4780,11 +4780,6 @@ void process_player_base()
 	/* Rename the savefile, using the player_base */
 	(void)sprintf(temp, "%s", player_base);
 #endif
-
-#ifdef VM
-	/* Hack -- support "flat directory" usage on VM/ESA */
-	(void)sprintf(temp, "%s.sv", player_base);
-#endif /* VM */
 
 	/* Build the filename */
 	path_build(savefile, 1024, ANGBAND_DIR_SAVE, temp);

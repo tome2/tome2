@@ -24,7 +24,7 @@ TOLUA_FILE(dungeon w_dun.c)
 
 # tome executable
 INCLUDE_DIRECTORIES(lua)
-ADD_EXECUTABLE(tome main-gcu.c main-x11.c main-xaw.c main-sdl.c main-dmy.c
+ADD_EXECUTABLE(tome main-gcu.c main-x11.c main-xaw.c main-sdl.c
   z-rand.c z-util.c z-form.c z-virt.c z-term.c z-sock.c
   variable.c tables.c plots.c util.c cave.c dungeon.c 
   melee1.c melee2.c modules.c 

@@ -37,7 +37,7 @@
  * The old "USE_NCU" option has been replaced with "USE_GCU".
  *
  * Several other such options are available for non-unix machines,
- * such as "MACINTOSH", "WINDOWS", "USE_IBM", "USE_EMX".
+ * such as "MACINTOSH", "WINDOWS".
  *
  * You may also need to specify the "system", using defines such as
  * "SOLARIS" (for Solaris), etc, see "h-config.h" for more info.
@@ -73,7 +73,7 @@
  * Currently used whenever available, if you get a warning about
  * "nodelay()" undefined, then make sure to undefine this.
  */
-#if defined(SYS_V) || defined(AMIGA)
+#if defined(SYS_V)
 # define USE_GETCH
 #endif
 
@@ -430,7 +430,7 @@
  * player's name, it will then save the savefile elsewhere.  Note that
  * this also gives a method of "bypassing" the "VERIFY_TIMESTAMP" code.
  */
-#if defined(MACINTOSH) || defined(WINDOWS) || defined(AMIGA)
+#if defined(MACINTOSH) || defined(WINDOWS)
 /* #define SAVEFILE_MUTABLE */
 #endif
 
@@ -467,7 +467,7 @@
 /*
  * Hack -- Special "ancient machine" versions
  */
-#if defined(USE_286) || defined(ANGBAND_LITE_MAC)
+#if defined(ANGBAND_LITE_MAC)
 # ifndef ANGBAND_LITE
 #  define ANGBAND_LITE
 # endif

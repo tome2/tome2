@@ -11,9 +11,6 @@
  *
  * This file is a big hack to make other files less of a hack.
  * This file has been rebuilt -- it may need a little more work.
- *
- * It is (very) unlikely that VMS will work without help, primarily
- * because VMS does not use the "ASCII" character set.
  */
 
 
@@ -58,8 +55,8 @@
 # include <io.h>
 #endif
 
-#if !defined(MACINTOSH) && !defined(AMIGA) && \
-    !defined(ACORN) && !defined(VM) && !defined(__MWERKS__)
+#if !defined(MACINTOSH) && \
+    !defined(__MWERKS__)
 # if defined(__TURBOC__) || defined(__WATCOMC__)
 #  include <mem.h>
 # else
@@ -68,7 +65,7 @@
 #endif
 
 
-#if !defined(NeXT) && !defined(__MWERKS__) && !defined(ACORN)
+#if !defined(NeXT) && !defined(__MWERKS__)
 # include <fcntl.h>
 #endif
 
@@ -125,7 +122,7 @@ extern char *strrchr();
 
 
 
-#if !defined(linux) && !defined(__MWERKS__) && !defined(ACORN)
+#if !defined(linux) && !defined(__MWERKS__)
 extern long atol();
 #endif
 

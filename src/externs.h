@@ -1762,10 +1762,10 @@ extern u32b _ftype;
 /* extern int FAR PASCAL WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, ...); */
 #endif
 
-#if !defined(WINDOWS) && !defined(MACINTOSH) && !defined(ACORN)
+#if !defined(WINDOWS) && !defined(MACINTOSH)
 /* files.c */
 extern bool chg_to_txt(cptr base, cptr newname);
-#endif /* !WINDOWS && !MACINTOSH && !ACORN */
+#endif /* !WINDOWS && !MACINTOSH */
 
 #ifdef ALLOW_REPEAT /* TNB */
 

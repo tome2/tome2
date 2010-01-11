@@ -1598,15 +1598,6 @@ int main(int argc, char *argv[])
 	argv0 = argv[0];
 
 
-#ifdef USE_286
-	/* Attempt to use XMS (or EMS) memory for swap space */
-	if (_OvrInitExt(0L, 0L))
-	{
-		_OvrInitEms(0, 0, 64);
-	}
-#endif
-
-
 #ifdef SET_UID
 
 	/* Default permissions on files */
@@ -1623,11 +1614,6 @@ int main(int argc, char *argv[])
 
 	/* Get the user id (?) */
 	player_uid = getuid();
-
-#ifdef VMS
-	/* Mega-Hack -- Factor group id */
-	player_uid += (getgid() * 1000);
-#endif
 
 # ifdef SAFE_SETUID
 
