@@ -153,11 +153,6 @@
 
 
 /*
- * OPTION: Hack -- Compile in support for "Spoiler Generation"
- */
-#define ALLOW_SPOILERS
-
-/*
  * OPTION: Allow characteres to be "auto-rolled"
  */
 #define ALLOW_AUTOROLLER

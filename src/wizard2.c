@@ -1650,14 +1650,11 @@ extern void do_cmd_wiz_body(s16b bidx)
 	do_cmd_redraw();
 }
 
-#ifdef ALLOW_SPOILERS
 
 /*
  * External function
  */
 extern void do_cmd_spoilers(void);
-
-#endif /* ALLOW_SPOILERS */
 
 
 
@@ -1692,14 +1689,10 @@ void do_cmd_debug(void)
 		break;
 
 
-#ifdef ALLOW_SPOILERS
-
 		/* Hack -- Generate Spoilers */
 	case '"':
 		do_cmd_spoilers();
 		break;
-
-#endif /* ALLOW_SPOILERS */
 
 	case 'A':
 		status_main();
