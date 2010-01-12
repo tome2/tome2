@@ -3289,9 +3289,7 @@ void do_cmd_fire(void)
 	energy_use = (100 / thits);
 
 	/* piercing shots ? */
-	if (p_ptr->use_piercing_shots &&
-	                ((get_skill(SKILL_BOW) > 25) || (get_skill(SKILL_XBOW) > 25) ||
-	                 (get_skill(SKILL_SLING) > 25)))
+	if (p_ptr->use_piercing_shots)
 	{
 		num_pierce = (get_skill(SKILL_COMBAT) / 10) - 1;
 		num_pierce = (num_pierce < 0) ? 0 : num_pierce;

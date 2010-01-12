@@ -5447,6 +5447,13 @@ void do_cmd_set_piercing(void)
 	char ch;
 	char com[80];
 
+	if ((get_skill(SKILL_BOW) <= 25) && (get_skill(SKILL_XBOW) <= 25) &&
+	    (get_skill(SKILL_SLING) <= 25))
+	{
+		msg_print("You can't fire piercing shots yet.");
+		return;
+	}
+
 	strnfmt(com, 80, "Allow shots to pierce? ");
 
 	while (TRUE)
@@ -5459,11 +5466,13 @@ void do_cmd_set_piercing(void)
 		if ((ch == 'Y') || (ch == 'y'))
 		{
 			p_ptr->use_piercing_shots = 1;
+			msg_print("Piercing shots activated.");
 			break;
 		}
 		if ((ch == 'N') || (ch == 'n'))
 		{
 			p_ptr->use_piercing_shots = 0;
+			msg_print("Piercing shots deactivated.");
 			break;
 		}
 	}

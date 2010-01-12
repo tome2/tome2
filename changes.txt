@@ -8,6 +8,8 @@ T.o.M.E 2.3.7 (ah)
   and <equipment/> rules.
 - Killerbunnies: Add "you do not know all your fate" to Fate menu
   if you haven't been discovered all your fates.
+- Killerbunnies: Display a message if trying to activate Piercing Shots
+  without the necessary skill levels.
 
 T.o.M.E 2.3.6 (ah)
 
