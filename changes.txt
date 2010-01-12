@@ -4,6 +4,8 @@ T.o.M.E 2.3.7 (ah)
   may be both non-zero and invisible (to the player).
 - Miscellaneous 64 bit fixes.
 - Fix Lua errors when hitting <ESC> while choosing spell.
+- Killerbunnies: Automatizer: Add patch which adds new <inventory/>
+  and <equipment/> rules.
 
 T.o.M.E 2.3.6 (ah)
 

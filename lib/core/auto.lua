@@ -196,6 +196,38 @@ function gen_rule_fct(r)
 				f = gen_rule_fct(r[1])
 			end
 			return function(object) return not %f(object) end
+		elseif r.label == "inventory" then
+			local f
+			if not r[1] then
+				f = function(object) return end
+			else
+				f = gen_rule_fct(r[1])
+			end
+			return function(object)
+				local i = 0
+				while i < INVEN_WIELD do
+					if %f(player.inventory(i)) then
+						return TRUE
+					end
+					i = i + 1
+				end
+			end
+		elseif r.label == "equipment" then
+			local f
+			if not r[1] then
+				f = function(object) return end
+			else
+				f = gen_rule_fct(r[1])
+			end
+			return function(object)
+				local i = INVEN_WIELD
+				while i < INVEN_TOTAL do
+					if %f(player.inventory(i)) then
+						return TRUE
+					end
+					i = i + 1
+				end
+			end
 		elseif r.label == "name" then
 			return function(object) if strlower(object_desc(object, -1, 0)) == strlower(%r[1]) then return TRUE end end
 		elseif r.label == "contain" then
@@ -735,6 +767,28 @@ auto_aux.types_desc =
 			if n == "" then return end
 			if find_ability(n) == -1 then return end
 			return xml:collect("<ability>"..n.."</ability>")
+		end,
+	},
+	["inventory"] =
+	{
+		{
+			"Check is true if something in player's inventory matches",
+			"the contained rule",
+		},
+		xml:collect([[<inventory><foo1>...</foo1></inventory>]]),
+		function ()
+			return xml:collect("<inventory></inventory>")
+		end,
+	},
+	["equipment"] =
+	{
+		{
+			"Check is true if something in player's equipment matches",
+			"the contained rule",
+		},
+		xml:collect([[<equipment><foo1>...</foo1></equipment>]]),
+		function ()
+			return xml:collect("<equipment></equipment>")
 		end,
 	},
 }

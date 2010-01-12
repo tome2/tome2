@@ -173,6 +173,34 @@ function xml:english_xml(t, tab, not_flag)
 		nextlevel = tab
 	    end
 	    children_not_flag = not nil
+	elseif t.label == "inventory" then
+	    if not_flag then
+		xml.write(TERM_WHITE, tab)
+		xml.write(ecol, "Nothing in your ")
+		xml.write(bcol, "inventory")
+		xml.write(ecol, " matches the following:")
+		xml.write(TERM_WHITE, "\n")
+	    else
+		xml.write(TERM_WHITE, tab)
+		xml.write(ecol, "Something in your ")
+		xml.write(bcol, "inventory")
+		xml.write(ecol, " matches the following:")
+		xml.write(TERM_WHITE, "\n")
+	    end
+	elseif t.label == "equipment" then
+	    if not_flag then
+		xml.write(TERM_WHITE, tab)
+		xml.write(ecol, "Nothing in your ")
+		xml.write(bcol, "equipment")
+		xml.write(ecol, " matches the following:")
+		xml.write(TERM_WHITE, "\n")
+	    else
+		xml.write(TERM_WHITE, tab)
+		xml.write(ecol, "Something in your ")
+		xml.write(bcol, "equipment")
+		xml.write(ecol, " matches the following:")
+		xml.write(TERM_WHITE, "\n")
+	    end
 	elseif t.label == "comment" then
 		xml.write(TERM_WHITE, tab)
 		xml.write(TERM_WHITE, "(" .. t[1] .. ")")
