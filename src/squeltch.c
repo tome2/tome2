@@ -350,10 +350,10 @@ void do_cmd_automatizer()
 			}
 			else if (c == 's')
 			{
-				char name[20];
+				char name[30];
 
 				sprintf(name, "automat.atm");
-				if (input_box("Save name?", hgt / 2, wid / 2, name, 30))
+				if (input_box("Save name?", hgt / 2, wid / 2, name, sizeof(name)))
 				{
 					char buf[1025];
 					char ch;
