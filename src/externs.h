@@ -469,7 +469,6 @@ extern cptr ANGBAND_KEYBOARD;
 extern cptr ANGBAND_GRAF;
 extern cptr ANGBAND_DIR;
 extern cptr ANGBAND_DIR_APEX;
-extern cptr ANGBAND_DIR_BONE;
 extern cptr ANGBAND_DIR_CORE;
 extern cptr ANGBAND_DIR_DNGN;
 extern cptr ANGBAND_DIR_DATA;
@@ -1686,11 +1685,6 @@ extern int get_branch(void);
 extern int get_fbranch(void);
 extern int get_flevel(void);
 extern bool get_dungeon_save(char *buf);
-
-/* ghost.c */
-extern s16b place_ghost(void);
-extern void make_bones(void);
-
 
 /* wizard2.c */
 extern void do_cmd_wiz_cure_all(void);

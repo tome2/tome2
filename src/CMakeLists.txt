@@ -29,7 +29,7 @@ ADD_EXECUTABLE(tome main-gcu.c main-x11.c main-xaw.c main-sdl.c
   variable.c tables.c plots.c util.c cave.c dungeon.c 
   melee1.c melee2.c modules.c 
   object1.c object2.c randart.c squeltch.c traps.c 
-  monster1.c monster2.c monster3.c ghost.c
+  monster1.c monster2.c monster3.c
   xtra1.c xtra2.c skills.c powers.c gods.c
   spells1.c spells2.c
   status.c files.c notes.c loadsave.c

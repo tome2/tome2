@@ -278,7 +278,7 @@ BASESRCS = \
   cmd1.c cmd2.c cmd3.c cmd4.c cmd5.c cmd6.c cmd7.c \
   store.c birth.c notes.c help.c \
   status.c randart.c gods.c modules.c \
-  wizard1.c wizard2.c levels.c ghost.c \
+  wizard1.c wizard2.c levels.c \
   generate.c gen_maze.c gen_evol.c dungeon.c init1.c init2.c \
   bldg.c squeltch.c wild.c powers.c plots.c \
   irc.c skills.c \
@@ -294,7 +294,7 @@ BASEOBJS = \
   status.o randart.o irc.o skills.o gods.o modules.o \
   xtra1.o xtra2.o spells1.o spells2.o melee1.o melee2.o \
   object1.o object2.o traps.o monster1.o monster2.o monster3.o \
-  variable.o tables.o util.o cave.o ghost.o wild.o powers.o
+  variable.o tables.o util.o cave.o wild.o powers.o
 
 LUASRCS = \
   script.c lua_bind.c \

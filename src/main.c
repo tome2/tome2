@@ -229,13 +229,6 @@ static void change_path(cptr info)
 
 #else /* VERIFY_SAVEFILE */
 
-	case 'b':
-		{
-			string_free(ANGBAND_DIR_BONE);
-			ANGBAND_DIR_BONE = string_make(s + 1);
-			break;
-		}
-
 	case 'd':
 		{
 			string_free(ANGBAND_DIR_DATA);

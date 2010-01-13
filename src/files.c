@@ -6530,9 +6530,6 @@ void close_game(void)
 			output_note(buf);
 		}
 
-		/* Dump bones file */
-		make_bones();
-
 		/* Handle score, show Top scores */
 		top_twenty();
 	}

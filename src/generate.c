@@ -8106,30 +8106,6 @@ static bool cave_gen(void)
 	if ((empty_level) && (randint(DARK_EMPTY) != 1 || (randint(100) > dun_level)))
 		wiz_lite();
 
-	/* Ghosts love to inhabit destroyed levels, but will live elsewhere */
-	i = (destroyed) ? 11 : 1;
-#if 0 /* DGDGDG -- implement ghost in a good & ncie way */
-	/* Try to place the ghost */
-	while (i-- > 0)
-	{
-
-		/* Attempt to place a ghost */
-		if (place_ghost())
-		{
-			/* Hack -- increase the rating */
-			rating += 10;
-
-			/* A ghost makes the level special */
-			good_item_flag = TRUE;
-
-			/* Make cheaters and precog aware of the ghost */
-			if (cheat_hear || p_ptr->precognition) msg_print("Player Ghost.");
-
-			/* Stop trying to place the ghost */
-			break;
-		}
-	}
-#endif
 	/* Now double the generated dungeon */
 	if (dungeon_flags1 & DF1_DOUBLE)
 	{

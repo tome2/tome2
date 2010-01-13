@@ -1036,12 +1036,6 @@ cptr ANGBAND_DIR;
 cptr ANGBAND_DIR_APEX;
 
 /*
- * Bone files for player ghosts (ascii)
- * These files are portable between platforms
- */
-cptr ANGBAND_DIR_BONE;
-
-/*
  * Core lua system
  * These files are portable between platforms
  */

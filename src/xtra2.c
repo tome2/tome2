@@ -4768,26 +4768,6 @@ bool mon_take_hit(int m_idx, int dam, bool *fear, cptr note)
 			}
 		}
 
-#if 0 /* DGDGDG -- pfft */
-		/* XXX XXX Mega-Hack -- allow another ghost later
-		 * Remove the slain bone file */
-		if (m_ptr->r_idx == max_r_idx - 1)
-		{
-			r_ptr->max_num = 1;
-
-			/* Delete the bones file */
-			sprintf(tmp, "%s%sbone%03d.%03d", ANGBAND_DIR_BONE, PATH_SEP, dungeon_type, dun_level);
-
-			/* Grab permission */
-			safe_setuid_grab();
-
-			/* Remove the bone file */
-			fd_kill(tmp);
-
-			/* Drop permission */
-			safe_setuid_drop();
-		}
-#endif
 		/* If the player kills a Unique, and the notes options are on, write a note */
 		if ((r_ptr->flags1 & RF1_UNIQUE) && take_notes && auto_notes)
 		{

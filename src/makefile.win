@@ -26,7 +26,7 @@ SRCS = \
   cmd1.c cmd2.c cmd3.c cmd4.c cmd5.c cmd6.c cmd7.c \
   status.c randart.c gods.c \
   store.c birth.c loadsave.c notes.c squeltch.c \
-  wizard1.c wizard2.c levels.c ghost.c \
+  wizard1.c wizard2.c levels.c \
   generate.c gen_maze.c gen_evol.c dungeon.c init1.c init2.c \
   main-win.c readdib.c \
   bldg.c wild.c powers.c
@@ -40,7 +40,7 @@ OBJS = \
   cmd1.obj cmd2.obj cmd3.obj cmd4.obj cmd5.obj cmd6.obj cmd7.obj \
   status.obj randart.obj gods.obj \
   store.obj birth.obj loadsave.obj notes.obj squeltch.obj \
-  wizard1.obj wizard2.obj levels.obj ghost.obj \
+  wizard1.obj wizard2.obj levels.obj \
   generate.obj gen_maze.obj gen_evol.obj dungeon.obj init1.obj init2.obj \
   main-win.obj readdib.obj \
   bldg.obj wild.obj powers.obj
@@ -54,7 +54,7 @@ OBJS32 = \
   cmd1.o32 cmd2.o32 cmd3.o32 cmd4.o32 cmd5.o32 cmd6.o32 cmd7.o32 \
   status.o32 randart.o32 gods.o32 \
   store.o32 birth.o32 loadsave.o32 notes.o32 squeltch.o32 \
-  wizard1.o32 wizard2.o32 levels.o32 ghost.o32 \
+  wizard1.o32 wizard2.o32 levels.o32 \
   generate.o32 gen_maze.o32 gen_evol.o32 dungeon.o32 init1.o32 init2.o32 \
   main-win.o32 readdib.o32 \
   bldg.o32 wild.o32
@@ -169,7 +169,7 @@ melee1 melee2 files plots help +
 cmd1 cmd2 cmd3 cmd4 cmd5 cmd6 cmd7 +
 status randart gods +
 store birth loadsave notes squeltch +
-wizard1 wizard2 levels ghost +
+wizard1 wizard2 levels +
 generate gen_maze gen_evol dungeon init1 init2 +
 main-win readdib bldg wild powers +
 ..\angband.exe,..\angband.map,import cwl,..\ext-win\src\angband.def
@@ -198,7 +198,7 @@ melee1.o32 melee2.o32 files.o32 plots.o32 help.o32 +
 cmd1.o32 cmd2.o32 cmd3.o32 cmd4.o32 cmd5.o32 cmd6.o32 cmd7.o32 +
 status.o32 randart.o32 gods.o32 +
 store.o32 birth.o32 loadsave.o32 notes.o32 squeltch.o32 +
-wizard1.o32 wizard2.o32 levels.o32 ghost.o32 +
+wizard1.o32 wizard2.o32 levels.o32 +
 generate.o32 gen_maze.o32 gen_evol.o32 dungeon.o32 init1.o32 init2.o32 +
 main-win.o32 readdib.o32 bldg.o32 wild.o32 powers.o32+
 ..\angband32.exe,..\angband.map,import32 cw32,..\ext-win\src\angband.def

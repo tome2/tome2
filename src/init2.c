@@ -81,7 +81,6 @@ void init_file_paths(char *path)
 
 	/* Free the sub-paths */
 	string_free(ANGBAND_DIR_APEX);
-	string_free(ANGBAND_DIR_BONE);
 	string_free(ANGBAND_DIR_CORE);
 	string_free(ANGBAND_DIR_DNGN);
 	string_free(ANGBAND_DIR_DATA);
@@ -135,10 +134,6 @@ void init_file_paths(char *path)
 	/* Build a path name */
 	strcpy(tail, "apex");
 	ANGBAND_DIR_APEX = string_make(path);
-
-	/* Build a path name */
-	strcpy(tail, "bone");
-	ANGBAND_DIR_BONE = string_make(path);
 
 	/* Build a path name */
 	strcpy(tail, "core");

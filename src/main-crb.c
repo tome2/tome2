@@ -123,7 +123,7 @@
  *
  *   FREF 130 = ANGBAND_CREATOR / 'APPL' (application)
  *   FREF 129 = ANGBAND_CREATOR / 'SAVE' (save file)
- *   FREF 130 = ANGBAND_CREATOR / 'TEXT' (bone file, generic text file)
+ *   FREF 130 = ANGBAND_CREATOR / 'TEXT' (generic text file)
  *   FREF 131 = ANGBAND_CREATOR / 'DATA' (binary image file, score file)
  *
  *   DLOG 128 = "About Angband..."
@@ -174,7 +174,6 @@
  *
  * File name patterns:
  *   all 'APEX' files have a filename of the form "*:apex:*" (?)
- *   all 'BONE' files have a filename of the form "*:bone:*" (?)
  *   all 'DATA' files have a filename of the form "*:data:*"
  *   all 'SAVE' files have a filename of the form "*:save:*"
  *   all 'USER' files have a filename of the form "*:user:*" (?)

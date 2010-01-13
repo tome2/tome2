@@ -70,7 +70,6 @@ OBJ = \
 	generate.obj \
         gen_maze.obj \
         gen_evol.obj \
-	ghost.obj \
 	help.obj \
 	init1.obj \
 	init2.obj \

@@ -4254,7 +4254,6 @@ static void init_stuff(void)
 	/*** Validate the paths to ensure we have a working install ***/
 
 	validate_dir(ANGBAND_DIR_APEX);
-	validate_dir(ANGBAND_DIR_BONE);
 	validate_dir(ANGBAND_DIR_DATA);
 	validate_dir(ANGBAND_DIR_EDIT);
 	validate_dir(ANGBAND_DIR_FILE);

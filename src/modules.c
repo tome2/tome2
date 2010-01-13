@@ -37,7 +37,6 @@ void module_reset_dir(cptr dir, cptr new_path)
 	char buf[1025];
 
 	if (!strcmp(dir, "apex")) d = &ANGBAND_DIR_APEX;
-	if (!strcmp(dir, "bone")) d = &ANGBAND_DIR_BONE;
 	if (!strcmp(dir, "core")) d = &ANGBAND_DIR_CORE;
 	if (!strcmp(dir, "dngn")) d = &ANGBAND_DIR_DNGN;
 	if (!strcmp(dir, "data")) d = &ANGBAND_DIR_DATA;

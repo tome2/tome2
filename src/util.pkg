@@ -2008,14 +2008,6 @@ extern cptr ANGBAND_DIR;
  */
 extern cptr ANGBAND_DIR_APEX;
 
-/** @var ANGBAND_DIR_BONE
- * @brief String
- * @note
- * Bone files for player ghosts (ascii)\n
- * These files are portable between platforms
- */
-extern cptr ANGBAND_DIR_BONE;
-
 /** @var ANGBAND_DIR_CORE
  * @brief String
  * @note
