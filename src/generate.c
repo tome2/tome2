@@ -7618,7 +7618,6 @@ static bool cave_gen(void)
 
 	int max_vault_ok = 2;
 
-	bool destroyed = FALSE;
 	bool empty_level = FALSE;
 	s16b town_level = 0;
 
