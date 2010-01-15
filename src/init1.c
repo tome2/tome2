@@ -1850,23 +1850,8 @@ errr init_player_info_txt(FILE *fp, char *buf)
 		{
 			int v1, v2, v3;
 
-#ifdef VERIFY_VERSION_STAMP
-
 			/* Scan for the values */
-			if ((3 != sscanf(buf + 2, "%d.%d.%d", &v1, &v2, &v3)) ||
-			                (v1 != rp_head->v_major) ||
-			                (v2 != rp_head->v_minor) ||
-			                (v3 != rp_head->v_patch))
-			{
-				return (2);
-			}
-
-#else /* VERIFY_VERSION_STAMP */
-
-/* Scan for the values */
 			if (3 != sscanf(buf + 2, "%d.%d.%d", &v1, &v2, &v3)) return (2);
-
-#endif /* VERIFY_VERSION_STAMP */
 
 			/* Okay to proceed */
 			okay = TRUE;
@@ -3486,23 +3471,8 @@ errr init_v_info_txt(FILE *fp, char *buf, bool start)
 		{
 			int v1, v2, v3;
 
-#ifdef VERIFY_VERSION_STAMP
-
 			/* Scan for the values */
-			if ((3 != sscanf(buf, "V:%d.%d.%d", &v1, &v2, &v3)) ||
-			                (v1 != v_head->v_major) ||
-			                (v2 != v_head->v_minor) ||
-			                (v3 != v_head->v_patch))
-			{
-				return (2);
-			}
-
-#else /* VERIFY_VERSION_STAMP */
-
-/* Scan for the values */
 			if (3 != sscanf(buf, "V:%d.%d.%d", &v1, &v2, &v3)) return (2);
-
-#endif /* VERIFY_VERSION_STAMP */
 
 			/* Okay to proceed */
 			okay = TRUE;
@@ -3755,23 +3725,8 @@ errr init_f_info_txt(FILE *fp, char *buf)
 		{
 			int v1, v2, v3;
 
-#ifdef VERIFY_VERSION_STAMP
-
-			/* Scan for the values */
-			if ((3 != sscanf(buf + 2, "%d.%d.%d", &v1, &v2, &v3)) ||
-			                (v1 != f_head->v_major) ||
-			                (v2 != f_head->v_minor) ||
-			                (v3 != f_head->v_patch))
-			{
-				return (2);
-			}
-
-#else /* VERIFY_VERSION_STAMP */
-
 			/* Scan for the values */
 			if (3 != sscanf(buf + 2, "%d.%d.%d", &v1, &v2, &v3)) return (2);
-
-#endif /* VERIFY_VERSION_STAMP */
 
 			/* Okay to proceed */
 			okay = TRUE;
@@ -4203,23 +4158,8 @@ errr init_k_info_txt(FILE *fp, char *buf)
 		{
 			int v1, v2, v3;
 
-#ifdef VERIFY_VERSION_STAMP
-
-			/* Scan for the values */
-			if ((3 != sscanf(buf + 2, "%d.%d.%d", &v1, &v2, &v3)) ||
-			                (v1 != k_head->v_major) ||
-			                (v2 != k_head->v_minor) ||
-			                (v3 != k_head->v_patch))
-			{
-				return (2);
-			}
-
-#else /* VERIFY_VERSION_STAMP */
-
 			/* Scan for the values */
 			if (3 != sscanf(buf + 2, "%d.%d.%d", &v1, &v2, &v3)) return (2);
-
-#endif /* VERIFY_VERSION_STAMP */
 
 			/* Okay to proceed */
 			okay = TRUE;
@@ -4710,23 +4650,8 @@ errr init_al_info_txt(FILE *fp, char *buf)
 		{
 			int v1, v2, v3;
 
-#ifdef VERIFY_VERSION_STAMP
-
-			/* Scan for the values */
-			if ((3 != sscanf(buf + 2, "%d.%d.%d", &v1, &v2, &v3)) ||
-			                (v1 != al_head->v_major) ||
-			                (v2 != al_head->v_minor) ||
-			                (v3 != al_head->v_patch))
-			{
-				return (2);
-			}
-
-#else /* VERIFY_VERSION_STAMP */
-
 			/* Scan for the values */
 			if (3 != sscanf(buf + 2, "%d.%d.%d", &v1, &v2, &v3)) return (2);
-
-#endif /* VERIFY_VERSION_STAMP */
 
 			/* Okay to proceed */
 			okay = TRUE;
@@ -5143,23 +5068,8 @@ errr init_a_info_txt(FILE *fp, char *buf)
 		{
 			int v1, v2, v3;
 
-#ifdef VERIFY_VERSION_STAMP
-
-			/* Scan for the values */
-			if ((3 != sscanf(buf + 2, "%d.%d.%d", &v1, &v2, &v3)) ||
-			                (v1 != a_head->v_major) ||
-			                (v2 != a_head->v_minor) ||
-			                (v3 != a_head->v_patch))
-			{
-				return (2);
-			}
-
-#else /* VERIFY_VERSION_STAMP */
-
 			/* Scan for the values */
 			if (3 != sscanf(buf + 2, "%d.%d.%d", &v1, &v2, &v3)) return (2);
-
-#endif /* VERIFY_VERSION_STAMP */
 
 			/* Okay to proceed */
 			okay = TRUE;
@@ -5498,23 +5408,8 @@ errr init_set_info_txt(FILE *fp, char *buf)
 		{
 			int v1, v2, v3;
 
-#ifdef VERIFY_VERSION_STAMP
-
-			/* Scan for the values */
-			if ((3 != sscanf(buf + 2, "%d.%d.%d", &v1, &v2, &v3)) ||
-			                (v1 != a_head->v_major) ||
-			                (v2 != a_head->v_minor) ||
-			                (v3 != a_head->v_patch))
-			{
-				return (2);
-			}
-
-#else /* VERIFY_VERSION_STAMP */
-
 			/* Scan for the values */
 			if (3 != sscanf(buf + 2, "%d.%d.%d", &v1, &v2, &v3)) return (2);
-
-#endif /* VERIFY_VERSION_STAMP */
 
 			/* Okay to proceed */
 			okay = TRUE;
@@ -5750,23 +5645,8 @@ errr init_s_info_txt(FILE *fp, char *buf)
 		{
 			int v1, v2, v3;
 
-#ifdef VERIFY_VERSION_STAMP
-
-			/* Scan for the values */
-			if ((3 != sscanf(buf + 2, "%d.%d.%d", &v1, &v2, &v3)) ||
-			                (v1 != s_head->v_major) ||
-			                (v2 != s_head->v_minor) ||
-			                (v3 != s_head->v_patch))
-			{
-				return (2);
-			}
-
-#else /* VERIFY_VERSION_STAMP */
-
 			/* Scan for the values */
 			if (3 != sscanf(buf + 2, "%d.%d.%d", &v1, &v2, &v3)) return (2);
-
-#endif /* VERIFY_VERSION_STAMP */
 
 			/* Okay to proceed */
 			okay = TRUE;
@@ -6144,23 +6024,8 @@ errr init_ab_info_txt(FILE *fp, char *buf)
 		{
 			int v1, v2, v3;
 
-#ifdef VERIFY_VERSION_STAMP
-
-			/* Scan for the values */
-			if ((3 != sscanf(buf + 2, "%d.%d.%d", &v1, &v2, &v3)) ||
-			                (v1 != ab_head->v_major) ||
-			                (v2 != ab_head->v_minor) ||
-			                (v3 != ab_head->v_patch))
-			{
-				return (2);
-			}
-
-#else /* VERIFY_VERSION_STAMP */
-
 			/* Scan for the values */
 			if (3 != sscanf(buf + 2, "%d.%d.%d", &v1, &v2, &v3)) return (2);
-
-#endif /* VERIFY_VERSION_STAMP */
 
 			/* Okay to proceed */
 			okay = TRUE;
@@ -6721,23 +6586,8 @@ errr init_e_info_txt(FILE *fp, char *buf)
 		{
 			int v1, v2, v3;
 
-#ifdef VERIFY_VERSION_STAMP
-
-			/* Scan for the values */
-			if ((3 != sscanf(buf + 2, "%d.%d.%d", &v1, &v2, &v3)) ||
-			                (v1 != e_head->v_major) ||
-			                (v2 != e_head->v_minor) ||
-			                (v3 != e_head->v_patch))
-			{
-				return (2);
-			}
-
-#else /* VERIFY_VERSION_STAMP */
-
 			/* Scan for the values */
 			if (3 != sscanf(buf + 2, "%d.%d.%d", &v1, &v2, &v3)) return (2);
-
-#endif /* VERIFY_VERSION_STAMP */
 
 			/* Okay to proceed */
 			okay = TRUE;
@@ -7284,23 +7134,8 @@ errr init_ra_info_txt(FILE *fp, char *buf)
 		{
 			int v1, v2, v3;
 
-#ifdef VERIFY_VERSION_STAMP
-
-			/* Scan for the values */
-			if ((3 != sscanf(buf + 2, "%d.%d.%d", &v1, &v2, &v3)) ||
-			                (v1 != ra_head->v_major) ||
-			                (v2 != ra_head->v_minor) ||
-			                (v3 != ra_head->v_patch))
-			{
-				return (2);
-			}
-
-#else /* VERIFY_VERSION_STAMP */
-
 			/* Scan for the values */
 			if (3 != sscanf(buf + 2, "%d.%d.%d", &v1, &v2, &v3)) return (2);
-
-#endif /* VERIFY_VERSION_STAMP */
 
 			/* Okay to proceed */
 			okay = TRUE;
@@ -7710,23 +7545,8 @@ errr init_r_info_txt(FILE *fp, char *buf)
 		{
 			int v1, v2, v3;
 
-#ifdef VERIFY_VERSION_STAMP
-
 			/* Scan for the values */
-			if ((3 != sscanf(buf + 2, "%d.%d.%d", &v1, &v2, &v3)) ||
-			                (v1 != r_head->v_major) ||
-			                (v2 != r_head->v_minor) ||
-			                (v3 != r_head->v_patch))
-			{
-				return (2);
-			}
-
-#else /* VERIFY_VERSION_STAMP */
-
-/* Scan for the values */
 			if (3 != sscanf(buf + 2, "%d.%d.%d", &v1, &v2, &v3)) return (2);
-
-#endif /* VERIFY_VERSION_STAMP */
 
 			/* Okay to proceed */
 			okay = TRUE;
@@ -8368,23 +8188,8 @@ errr init_re_info_txt(FILE *fp, char *buf)
 		{
 			int v1, v2, v3;
 
-#ifdef VERIFY_VERSION_STAMP
-
-			/* Scan for the values */
-			if ((3 != sscanf(buf + 2, "%d.%d.%d", &v1, &v2, &v3)) ||
-			                (v1 != re_head->v_major) ||
-			                (v2 != re_head->v_minor) ||
-			                (v3 != re_head->v_patch))
-			{
-				return (2);
-			}
-
-#else /* VERIFY_VERSION_STAMP */
-
 			/* Scan for the values */
 			if (3 != sscanf(buf + 2, "%d.%d.%d", &v1, &v2, &v3)) return (2);
-
-#endif /* VERIFY_VERSION_STAMP */
 
 			/* Okay to proceed */
 			okay = TRUE;
@@ -8924,23 +8729,8 @@ errr init_t_info_txt(FILE *fp, char *buf)
 		{
 			int v1, v2, v3;
 
-#ifdef VERIFY_VERSION_STAMP
-
 			/* Scan for the values */
-			if ((3 != sscanf(buf + 2, "%d.%d.%d", &v1, &v2, &v3)) ||
-			                (v1 != t_head->v_major) ||
-			                (v2 != t_head->v_minor) ||
-			                (v3 != t_head->v_patch))
-			{
-				return (2);
-			}
-
-#else /* VERIFY_VERSION_STAMP */
-
-/* Scan for the values */
 			if (3 != sscanf(buf + 2, "%d.%d.%d", &v1, &v2, &v3)) return (2);
-
-#endif /* VERIFY_VERSION_STAMP */
 
 			/* Okay to proceed */
 			okay = TRUE;
@@ -9312,23 +9102,8 @@ errr init_d_info_txt(FILE *fp, char *buf)
 		{
 			int v1, v2, v3;
 
-#ifdef VERIFY_VERSION_STAMP
-
-			/* Scan for the values */
-			if ((3 != sscanf(buf + 2, "%d.%d.%d", &v1, &v2, &v3)) ||
-			                (v1 != d_head->v_major) ||
-			                (v2 != d_head->v_minor) ||
-			                (v3 != d_head->v_patch))
-			{
-				return (2);
-			}
-
-#else /* VERIFY_VERSION_STAMP */
-
 			/* Scan for the values */
 			if (3 != sscanf(buf + 2, "%d.%d.%d", &v1, &v2, &v3)) return (2);
-
-#endif /* VERIFY_VERSION_STAMP */
 
 			/* Okay to proceed */
 			okay = TRUE;
@@ -9972,23 +9747,8 @@ errr init_st_info_txt(FILE *fp, char *buf)
 		{
 			int v1, v2, v3;
 
-#ifdef VERIFY_VERSION_STAMP
-
-			/* Scan for the values */
-			if ((3 != sscanf(buf + 2, "%d.%d.%d", &v1, &v2, &v3)) ||
-			                (v1 != st_head->v_major) ||
-			                (v2 != st_head->v_minor) ||
-			                (v3 != st_head->v_patch))
-			{
-				return (2);
-			}
-
-#else /* VERIFY_VERSION_STAMP */
-
 			/* Scan for the values */
 			if (3 != sscanf(buf + 2, "%d.%d.%d", &v1, &v2, &v3)) return (2);
-
-#endif /* VERIFY_VERSION_STAMP */
 
 			/* Okay to proceed */
 			okay = TRUE;
@@ -10276,23 +10036,8 @@ errr init_ba_info_txt(FILE *fp, char *buf)
 		{
 			int v1, v2, v3;
 
-#ifdef VERIFY_VERSION_STAMP
-
-			/* Scan for the values */
-			if ((3 != sscanf(buf + 2, "%d.%d.%d", &v1, &v2, &v3)) ||
-			                (v1 != ba_head->v_major) ||
-			                (v2 != ba_head->v_minor) ||
-			                (v3 != ba_head->v_patch))
-			{
-				return (2);
-			}
-
-#else /* VERIFY_VERSION_STAMP */
-
 			/* Scan for the values */
 			if (3 != sscanf(buf + 2, "%d.%d.%d", &v1, &v2, &v3)) return (2);
-
-#endif /* VERIFY_VERSION_STAMP */
 
 			/* Okay to proceed */
 			okay = TRUE;
@@ -10461,23 +10206,8 @@ errr init_ow_info_txt(FILE *fp, char *buf)
 		{
 			int v1, v2, v3;
 
-#ifdef VERIFY_VERSION_STAMP
-
-			/* Scan for the values */
-			if ((3 != sscanf(buf + 2, "%d.%d.%d", &v1, &v2, &v3)) ||
-			                (v1 != ow_head->v_major) ||
-			                (v2 != ow_head->v_minor) ||
-			                (v3 != ow_head->v_patch))
-			{
-				return (2);
-			}
-
-#else /* VERIFY_VERSION_STAMP */
-
 			/* Scan for the values */
 			if (3 != sscanf(buf + 2, "%d.%d.%d", &v1, &v2, &v3)) return (2);
-
-#endif /* VERIFY_VERSION_STAMP */
 
 			/* Okay to proceed */
 			okay = TRUE;
@@ -10723,23 +10453,8 @@ errr init_wf_info_txt(FILE *fp, char *buf)
 		{
 			int v1, v2, v3;
 
-#ifdef VERIFY_VERSION_STAMP
-
-			/* Scan for the values */
-			if ((3 != sscanf(buf + 2, "%d.%d.%d", &v1, &v2, &v3)) ||
-			                (v1 != wf_head->v_major) ||
-			                (v2 != wf_head->v_minor) ||
-			                (v3 != wf_head->v_patch))
-			{
-				return (2);
-			}
-
-#else /* VERIFY_VERSION_STAMP */
-
 			/* Scan for the values */
 			if (3 != sscanf(buf + 2, "%d.%d.%d", &v1, &v2, &v3)) return (2);
-
-#endif /* VERIFY_VERSION_STAMP */
 
 			/* Okay to proceed */
 			okay = TRUE;

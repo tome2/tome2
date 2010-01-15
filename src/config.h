@@ -145,14 +145,6 @@
 
 
 /*
- * OPTION: Check version stamp when loading files in lib/data directory,
- * or their source in lib/edit.
- */
-/* # #define VERIFY_VERSION_STAMP */
-
-
-
-/*
  * OPTION: Allow characteres to be "auto-rolled"
  */
 #define ALLOW_AUTOROLLER
