@@ -6676,32 +6676,6 @@ errr init_e_info_txt(FILE *fp, char *buf)
 		if (!e_ptr) return (3);
 
 
-#if 0
-
-		/* Process 'D' for "Description" */
-		if (buf[0] == 'D')
-		{
-			/* Acquire the text */
-			s = buf + 2;
-
-			/* Hack -- Verify space */
-			if (e_head->text_size + strlen(s) + 8 > fake_text_size) return (7);
-
-			/* Advance and Save the text index */
-			if (!e_ptr->text) e_ptr->text = ++e_head->text_size;
-
-			/* Append chars to the name */
-			strcpy(e_text + e_head->text_size, s);
-
-			/* Advance the index */
-			e_head->text_size += strlen(s);
-
-			/* Next... */
-			continue;
-		}
-
-#endif
-
 		/* Process 'T' for "Tval/Sval" (up to 5 lines) */
 		if (buf[0] == 'T')
 		{
