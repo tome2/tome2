@@ -43,3 +43,8 @@ ADD_EXECUTABLE(tome main-gcu.c main-x11.c main-xaw.c main-sdl.c
   w_obj.c w_util.c w_spells.c w_quest.c w_dun.c
   )
 TARGET_LINK_LIBRARIES(tome lua ${LIBS})
+
+# Installation
+INSTALL(TARGETS tome
+  RUNTIME DESTINATION bin
+)

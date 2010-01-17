@@ -1,0 +1,43 @@
+Using the CMake build system
+============================
+
+There are basically two options for how to run ToME once built.
+
+
+
+Option #1 : Run ToME from the build directory
+=============================================
+
+Simply run the commands below.
+
+       $ cmake .
+       $ make
+
+You should now be able to run
+
+       $ ./src/tome2
+
+to start ToME.
+
+This is currently the recommended option.
+
+
+
+Option #2: Run ToME from a system install location
+==================================================
+
+Run
+
+        $ cmake -DSYSTEM_INSTALL:BOOL=true .
+        $ make
+        $ sudo make install
+
+You can now run ToME from anywhere.
+
+NOTE: The user running ToME must have write access to the
+install location's lib/data subdirectory for the first run.
+(This is because the *.raw files will be generated the first
+time ToME is run.)
+
+You can also use DESTDIR when installing to install into a different
+location (useful with e.g. stow or when building distribution packages).

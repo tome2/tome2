@@ -2,6 +2,9 @@
 PROJECT (tome2)
 CMAKE_MINIMUM_REQUIRED (VERSION 2.6)
 
+# We want a readable feature summary.
+INCLUDE(FeatureSummary)
+
 # Default flags.
 IF(CMAKE_COMPILER_IS_GNUCC)
   # Let's set sensible options.
@@ -62,5 +65,19 @@ IF(CURSES_FOUND)
   SET(LIBS ${LIBS} ${CURSES_LIBRARIES})
 ENDIF()
 
+#
+# Set the path for loading the library bits.
+#
+IF(SYSTEM_INSTALL)
+  SET(DEFAULT_PATH "${CMAKE_INSTALL_PREFIX}/lib/tome")
+ELSE()
+  SET(DEFAULT_PATH "./lib")
+ENDIF()
+ADD_DEFINITIONS(-DDEFAULT_PATH="${DEFAULT_PATH}")
+
+# Print out a summary of features.
+PRINT_ENABLED_FEATURES()
+
 # Add the source subdirectory.
 ADD_SUBDIRECTORY (src)
+ADD_SUBDIRECTORY (lib)
