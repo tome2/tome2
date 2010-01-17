@@ -485,7 +485,7 @@ M:IM_COLD
 # Generated in god quest.
 # Most dungeon attributes altered during the quest. 
 # See god.lua for details
-N:30:A lost temple
+N:30:a lost temple
 D:LTm:the entrance to a lost temple.
 W:1:50:1:0:14:160
 L:1:100:1:0:1:0

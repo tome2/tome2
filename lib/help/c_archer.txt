@@ -49,7 +49,7 @@ An Archer begins the game with:
     a Sling
     some ammo
 ~~~~~03|Creating Ammo
-#####GCreating AMmo
+#####GCreating Ammo
 Archers automatically gain the *****ability.txt*07[Ammo Creation] ability when they reach character 
 level 2. (Other classes can purchase this ability when they have enough skill 
 points.) This ability is accessed via the 'm' command.  The first type of 
