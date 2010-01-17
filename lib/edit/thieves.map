@@ -10,10 +10,10 @@ F:X:61:4
 # Lit permanent wall
 F:x:61:6
 
-# Magically looked door
+# Magically locked door
 F:M:38:22
 
-# Looked door
+# Locked door
 F:D:38:6
 
 # Open door

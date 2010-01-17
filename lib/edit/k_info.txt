@@ -3735,7 +3735,7 @@ W:40:0:4:60000
 A:40/16
 P:0:1d1:0:0:0
 F:FOUNTAIN
-D:This blessed potions will greatly improve all your abilities, if they can still be improved.
+D:This blessed potion will greatly improve all your abilities, if they can still be improved.
 
 N:419:*Healing*
 G:!:d
@@ -5685,7 +5685,7 @@ T:70:51
 F:NORM_ART | FULL_NAME
 F:IGNORE_ACID | IGNORE_ELEC | IGNORE_FIRE | IGNORE_COLD
 D:It allows you to leave your body to reincarnate into
-D:another one, however, your current body is lost in the process.
+D:another one. However, your current body is lost in the process.
 
 N:721:& Dark Sword~
 G:|:D

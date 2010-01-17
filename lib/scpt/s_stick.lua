@@ -337,7 +337,7 @@ DEVICE_ETERNAL_FLAME = add_spell
 			return ""
 	end,
 	["desc"] =	{
-			"imbuing an object with the eternal fire",
+			"Imbuing an object with the eternal fire",
 	}
 }
 

@@ -79,7 +79,7 @@ An Alchemist begins the game with:
 Alchemists may then 'E'xtract essences or add 'P'owers. The Alchemist [[[[[vmust]
 be wearing GLOVES to use their alchemy powers.
 
-An Alchemists is also capable of [[[[[Bcreating their own artifacts], but
+An Alchemist is also capable of [[[[[Bcreating their own artifacts], but
 this is a time-consuming, and costly, activity. To do so, he must first 
 learn the ability *****ability.txt*09[Artifact Creation], which costs a whopping 70 skill points
 to learn, and requires some high pre-requisites. Once he has done so, 

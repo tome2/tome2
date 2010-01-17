@@ -1801,7 +1801,7 @@ D:%%%%%%%%%%%%%%%%%%%%%
 
 # XXX
 
-N:82:Lesser vault (checker.oard)
+N:82:Lesser vault (checkerboard)
 X:7:5:13:21
 D:%%%%%%%%%%%%%%%%%%%%%
 D:%XXXXXXXXXXXXXXXXXXX%

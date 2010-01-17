@@ -98,7 +98,7 @@ ENTPOTION = add_spell
 	["desc"] =	{
 			"Fills up your stomach.",
 			"At level 5 it boldens your heart.",
-			"At level 12 it make you heroic."
+			"At level 12 it makes you heroic."
 	}
 }
 

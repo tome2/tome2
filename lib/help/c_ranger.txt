@@ -50,6 +50,6 @@ Ammo creation               2
 #####GStarting Equipment
 A Ranger begins the game with:
     a Spellbook of Phase Door
-    a Short sword
+    a Short Sword
     a Short Bow
     some Arrows

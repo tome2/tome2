@@ -169,7 +169,7 @@ SCHOOL_TEMPORAL = add_school
 	["sorcery"] = TRUE,
 	["gods"] =
 	{
-		-- Yavanna Kementari provides the Temoral school at 1/6 the prayer skill
+		-- Yavanna Kementari provides the Temporal school at 1/6 the prayer skill
 		[GOD_YAVANNA] =
 		{
 			["skill"] = SKILL_PRAY,

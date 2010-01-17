@@ -786,7 +786,7 @@ F:FLOOR | CHEST | DOOR | LEVEL3
 
 N:170:Acquirement Trap
 I:1:40:5:5:18:0d0:v
-D:Woah!
+D:Whoa!
 F:FLOOR | DOOR
 
 # More bolt traps

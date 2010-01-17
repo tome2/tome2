@@ -663,7 +663,7 @@ the "P" command. The list of available commands is as follows:
 
 In ToME you will be required to complete a certain number of quests. Your 
 first quest is to discover the true nature of the evil lurking in the Tower of 
-Dol Goldur near Mirkwood.
+Dol Guldur near Mirkwood.
 
 Each quest may lead on to others, and most quests can be postponed until when 
 you feel ready to tackle them. Simply explore other dungeons until you feel you
