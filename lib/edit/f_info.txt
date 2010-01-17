@@ -627,6 +627,14 @@ E:1d1:40:NETHER
 F:ATTR_MULTI
 F:FLOOR | DONT_NOTICE_RUNNING | CAN_RUN
 
+# A diggable glass wall.
+N:103:molten glass wall
+G:.:B
+F:NO_WALK | WALL | CAN_PASS | TUNNELABLE | NOTICE
+F:DONT_NOTICE_RUNNING
+D:1:You tunnel into the molten glass wall...
+D:2:a molten glass wall blocking your way
+
 N:160:Void Jumpgate
 G:+:v
 F:FLOOR | REMEMBER | NOTICE | PERMANENT | CAN_RUN
@@ -931,14 +939,3 @@ F:NO_WALK | CAN_PASS | NOTICE | SUPPORT_LIGHT
 F:DONT_NOTICE_RUNNING | TUNNELABLE
 D:1:You tunnel into the battlement.
 D:2:a hard stone battlement blocking your way
-
-#
-# A diggable glass wall.
-#
-N:217:molten glass wall
-G:.:B
-F:NO_WALK | WALL | CAN_PASS | TUNNELABLE | NOTICE
-F:DONT_NOTICE_RUNNING
-D:1:You tunnel into the molten glass wall...
-D:2:a molten glass wall blocking your way
-

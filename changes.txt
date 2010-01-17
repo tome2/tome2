@@ -1,6 +1,7 @@
 T.o.M.E 2.3.8 (ah)
 
--
+- Change "molten glass wall" to use a different internal code to
+  hopefully avoid clashes with modules such as Theme.
 
 T.o.M.E 2.3.7 (ah)
 

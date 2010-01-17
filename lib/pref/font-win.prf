@@ -119,6 +119,9 @@ F:100:0x03/0x7F
 # nether mist
 F:102:0x0A/0x7F
 
+# glass wall
+F:103:0x0E/0x1F
+
 # Underground Tunnel
 F:173:0x02/0x7F
 
@@ -196,9 +199,6 @@ F:215:0x0E/0x7F
 
 # battlement
 F:216:0x01/0x7F
-
-# glass wall
-F:217:0x0E/0x1F
 
 ##### Monster attr/char definitions #####
 
