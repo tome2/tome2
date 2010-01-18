@@ -20,22 +20,7 @@
  * name and text information in a single pass.  Thus, the game will not
  * be able to load any template file with more than 20K of names or 60K
  * of text, even though technically, up to 64K should be legal.
- *
- * Note that if "ALLOW_TEMPLATES" is not defined, then a lot of the code
- * in this file is compiled out, and the game will not run unless valid
- * "binary template files" already exist in "lib/data".  Thus, one can
- * compile Angband with ALLOW_TEMPLATES defined, run once to create the
- * "*.raw" files in "lib/data", and then quit, and recompile without
- * defining ALLOW_TEMPLATES, which will both save 20K and prevent people
- * from changing the ascii template files in potentially dangerous ways.
- *
- * The code could actually be removed and placed into a "stand-alone"
- * program, but that feels a little silly, especially considering some
- * of the platforms that we currently support.
  */
-
-
-#ifdef ALLOW_TEMPLATES
 
 
 /*** Helper arrays for parsing ascii template files ***/
@@ -10609,15 +10594,6 @@ errr init_wf_info_txt(FILE *fp, char *buf)
 	/* Success */
 	return (0);
 }
-
-
-#else	/* ALLOW_TEMPLATES */
-
-#ifdef MACINTOSH
-static int i = 0;
-#endif
-
-#endif	/* ALLOW_TEMPLATES */
 
 
 /* Random dungeon grid effects */

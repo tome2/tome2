@@ -162,14 +162,6 @@
 
 
 /*
- * OPTION: Allow parsing of the ascii template files in "init.c".
- * This must be defined if you do not have valid binary image files.
- * It should be usually be defined anyway to allow easy "updating".
- */
-#define ALLOW_TEMPLATES
-
-
-/*
  * OPTION: Handle signals
  */
 #define HANDLE_SIGNALS
@@ -412,12 +404,6 @@
  * OPTION: Make disarming traps easy -- TNB
  */
 #define ALLOW_EASY_DISARM
-
-/*
- * Check the modification time of *_info.raw files
- * (by Keldon Jones)
- */
-#define CHECK_MODIFICATION_TIME
 
 /*
  * Using the fast autoroller can be considered as cheating
