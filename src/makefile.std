@@ -341,7 +341,7 @@ LIBS = -L/usr/X11R6/lib -lX11
 #
 
 BASESRCS = \
-  $(GTK_SRC_FILE) main-gcu.c main-x11.c main-xaw.c main-sdl.c main-dmy.c \
+  $(GTK_SRC_FILE) main-gcu.c main-x11.c main-xaw.c main-sdl.c \
   z-rand.c z-util.c z-form.c z-virt.c z-term.c z-sock.c \
   variable.c tables.c plots.c util.c cave.c dungeon.c \
   melee1.c melee2.c modules.c \
