@@ -1,5 +1,7 @@
 T.o.M.E 2.3.8 (ah)
 
+- Miscellaneous fixes to the CMake files. Thanks to Kernigh for
+  contributing these.
 - Fix for Lua code which should hopefully get things working better
   for OpenBSD users. Thanks to Kernigh for the patch.
 - Change "molten glass wall" to use a different internal code to
