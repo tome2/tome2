@@ -2,6 +2,9 @@ T.o.M.E 2.3.8 (ah)
 
 - Change "molten glass wall" to use a different internal code to
   hopefully avoid clashes with modules such as Theme.
+- Removed the check on low fuel on your light source when traveling.
+  It doesn't make sense since you can already travel without any light
+  equipped.
 
 T.o.M.E 2.3.7 (ah)
 

@@ -2885,11 +2885,10 @@ static void process_world(void)
 			}
 
 			/* The light is getting dim */
-			else if (o_ptr->timeout < 100)
+			else if ((o_ptr->timeout < 100) && (o_ptr->timeout % 10 == 0))
 			{
 				if (disturb_minor) disturb(0, 0);
 				cmsg_print(TERM_YELLOW, "Your light is growing faint.");
-				drop_from_wild();
 			}
 		}
 	}
@@ -3835,10 +3834,6 @@ static void process_command(void)
 			else if (ambush_flag)
 			{
 				msg_print("To flee the ambush you have to reach the edge of the map.");
-			}
-			else if (o_ptr->tval && (f4 & TR4_FUEL_LITE) && (o_ptr->timeout < 100))
-			{
-				msg_print("Your light is too low on fuel for you to travel with it.");
 			}
 			/* TODO: make the above stuff use this hook */
 			else if (!process_hooks(HOOK_FORBID_TRAVEL, "()"))
