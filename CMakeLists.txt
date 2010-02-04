@@ -36,21 +36,29 @@ ENDIF()
 #
 FIND_PACKAGE(SDL)
 IF(SDL_FOUND)
-  # Add SDL flags/options
-  ADD_DEFINITIONS(-DUSE_SDL)
-  INCLUDE_DIRECTORIES(${SDL_INCLUDE_DIR})
-  SET(LIBS ${LIBS} ${SDL_LIBRARY})
-  # SDL_image is also required
-  FIND_PACKAGE(SDL_image REQUIRED)
-  IF(SDLIMAGE_FOUND)
-    INCLUDE_DIRECTORIES(${SDLIMAGE_INCLUDE_DIR})
-    SET(LIBS ${LIBS} ${SDLIMAGE_LIBRARY})
-  ENDIF()
-  # SDL_ttf is also required
-  FIND_PACKAGE(SDL_ttf REQUIRED)
-  IF(SDLTTF_FOUND)
-    INCLUDE_DIRECTORIES(${SDLTTF_INCLUDE_DIR})
-    SET(LIBS ${LIBS} ${SDLTTF_LIBRARY})
+  # This is a bit roundabout, but we're working around
+  # the FindSDL_* scripts not respecting the REQUIRED
+  # flag.
+  #
+  # the SDL port also requires SDL_image and SDL_ttf
+  FIND_PACKAGE(SDL_image)
+  FIND_PACKAGE(SDL_ttf)
+  IF(SDLIMAGE_FOUND AND SDLTTF_FOUND)
+    # Add SDL flags/options
+    ADD_DEFINITIONS(-DUSE_SDL)
+    INCLUDE_DIRECTORIES(${SDL_INCLUDE_DIR} ${SDLIMAGE_INCLUDE_DIR} ${SDLTTF_INCLUDE_DIR})
+    SET(LIBS ${LIBS} ${SDLIMAGE_LIBRARY} ${SDLTTF_LIBRARY} ${SDL_LIBRARY})
+  ELSE()
+    # Let user know that (and why) we haven't enabled SDL.
+    IF(SDLIMAGE_FOUND)
+      MESSAGE(STATUS "Found SDL and SDL_image, but not SDL_ttf!")
+    ELSEIF(SDLTTF_FOUND)
+      MESSAGE(STATUS "Found SDL and SDL_ttf, but not SDL_image!")
+    ELSE()
+      MESSAGE(STATUS "Found SDL, but not SDL_image nor SDL_ttf!")
+    ENDIF()
+    # add info about finding but not enabling SDL
+    SET_FEATURE_INFO(SDL "not enabled")
   ENDIF()
 ENDIF()
 
