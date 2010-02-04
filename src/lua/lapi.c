@@ -40,12 +40,17 @@ TObject *luaA_index (lua_State *L, int index) {
 
 
 static TObject *luaA_indexAcceptable (lua_State *L, int index) {
-  if (index >= 0) {
+  if (index == 0) {
+    return NULL;
+  } else if (index > 0) {
     TObject *o = L->Cbase+(index-1);
     if (o >= L->top) return NULL;
     else return o;
+  } else {
+    TObject *o = L->top+index;
+    if(o < L->Cbase) return NULL;
+    else return o;
   }
-  else return L->top+index;
 }
 
 
