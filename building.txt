@@ -70,3 +70,13 @@ variable LDFLAGS=-L/usr/X11R6/lib when running CMake. Example:
 
 The SDL frontend also requires these packages: sdl-image, sdl-ttf
 
+
+Compiling on Windows using MinGW
+================================
+
+(See http://www.mingw.org/)
+
+To compile on Windows using MinGW, use the commands
+
+       $ cmake -G "MinGW Makefiles"
+       $ mingw32-make
