@@ -34,13 +34,8 @@ Run
 
 You can now run ToME from anywhere.
 
-NOTE: The user running ToME must have write access to the
-install location's lib/data subdirectory for the first run.
-(This is because the *.raw files will be generated the first
-time ToME is run.)
-
-You can also use DESTDIR when installing to install into a different
-location (useful with e.g. stow or when building distribution packages).
+You can also use DESTDIR when installing to a different location
+(useful with e.g. stow or when building distribution packages).
 
 
 Compiling on Ubuntu
