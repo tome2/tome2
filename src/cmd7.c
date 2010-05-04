@@ -92,7 +92,7 @@ void mimic_info(char *p, int power)
 	switch (power)
 	{
 	case 0:
-		strnfmt(p, 80, " dur %d", k_info[o_ptr->k_idx].pval2 + get_skill_scale(SKILL_MIMICRY, 70));
+		strnfmt(p, 80, " dur %d", k_info[o_ptr->k_idx].pval2 + get_skill_scale(SKILL_MIMICRY, 1000));
 		break;
 	case 1:
 		strnfmt(p, 80, " dur %d+d20", 10 + plev);
