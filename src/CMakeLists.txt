@@ -2,7 +2,7 @@
 ADD_SUBDIRECTORY(lua)
 
 SET(SRCS
-  main-gcu.c main-x11.c main-xaw.c main-sdl.c
+  main-gcu.c main-x11.c main-xaw.c main-sdl.c main-gtk2.c
   z-rand.c z-util.c z-form.c z-virt.c z-term.c z-sock.c
   variable.c tables.c plots.c util.c cave.c dungeon.c 
   melee1.c melee2.c modules.c 
