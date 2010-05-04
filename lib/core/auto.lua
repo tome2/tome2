@@ -810,9 +810,11 @@ end
 function auto_aux:add_child(sel)
 	-- <rule> and <not> contain only one match
 	if (auto_aux.rule.label == "rule" or auto_aux.rule.label == "not") and auto_aux.rule[1] then return end
+	if (auto_aux.rule.label == "rule" or auto_aux.rule.label == "equipment") and auto_aux.rule[1] then return end
+	if (auto_aux.rule.label == "rule" or auto_aux.rule.label == "inventory") and auto_aux.rule[1] then return end
 
 	-- Only <and> and <or> can contain
-	if auto_aux.rule.label ~= "rule" and auto_aux.rule.label ~= "and" and auto_aux.rule.label ~= "or"  and auto_aux.rule.label ~= "not" then return end
+	if auto_aux.rule.label ~= "rule" and auto_aux.rule.label ~= "and" and auto_aux.rule.label ~= "or"  and auto_aux.rule.label ~= "not" and  auto_aux.rule.label ~= "equipment" and auto_aux.rule.label ~= "inventory" then return end
 
 	-- get it
 	local r = auto_aux.types_desc[sel][3]()
