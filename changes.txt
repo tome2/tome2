@@ -1,7 +1,11 @@
 T.o.M.E 2.3.8 (ah)
 
-- Miscellaneous fixes to the CMake files. Thanks to Kernigh for
-  contributing these.
+Game:
+
+- Fix duration display for the Shapeshift Mimicry power. Thanks
+  to morchant for the fix.
+- Fix for creating "inventory" and "equipment" rules from the
+  Automatizer UI. Thanks to morchant for the fix.
 - Fix for Lua code which should hopefully get things working better
   for OpenBSD users. Thanks to Kernigh for the patch.
 - Change "molten glass wall" to use a different internal code to
@@ -9,6 +13,14 @@ T.o.M.E 2.3.8 (ah)
 - Removed the check on low fuel on your light source when traveling.
   It doesn't make sense since you can already travel without any light
   equipped.
+
+Build System:
+
+- Added support for building the GTK2 interface; only lightly tested.
+- Added support for building on Windows with MinGW. Thanks to wino45
+  for help with this.
+- Miscellaneous fixes to the CMake files. Thanks to Kernigh for
+  contributing these.
 
 T.o.M.E 2.3.7 (ah)
 
