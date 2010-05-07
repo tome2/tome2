@@ -38,7 +38,7 @@
 
 #ifndef IS_CVS
 /*#define IS_CVS          " (ah)" */
-#define IS_CVS          " (ah)"
+#define IS_CVS          " (ah, git)"
 #endif
 
 #define USER_PATH_VERSION "/2.3"
