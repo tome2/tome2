@@ -1,3 +1,11 @@
+T.o.M.E 2.3.9 (ah)
+
+Game:
+
+- Fixes and tweaks for Thaumaturgy to make view/area spells less
+  overpowered and to make bolt/ball spells more useful. (Credit
+  goes to Lord Estraven.)
+
 T.o.M.E 2.3.8 (ah)
 
 Game:
