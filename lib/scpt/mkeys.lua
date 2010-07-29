@@ -66,7 +66,7 @@ add_mkey
 	["mkey"]	= 102,
 	["fct"]	 = function()
 			local weapon = get_object(INVEN_WIELD);
-			if weapon.tval == TV_POLEARM and (weapon.sval == SV_HALBERD or weapon.sval == SV_PIKE or weapon.sval == SV_HEAVY_LANCE or weapon.sval == SV_LANCE) then
+			if weapon.tval == TV_POLEARM then
 			else
 				msg_print("You will need a long polearm for this!")
 				return

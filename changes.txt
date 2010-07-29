@@ -2,6 +2,7 @@ T.o.M.E 2.3.9 (ah)
 
 Game:
 
+- "Far reaching attack" now works for *all* polearms.
 - Fixes and tweaks for Thaumaturgy to make view/area spells less
   overpowered and to make bolt/ball spells more useful. (Credit
   goes to Lord Estraven.)
