@@ -6357,6 +6357,9 @@ void object_pickup(int this_o_idx)
 
 			/* Delete the object */
 			delete_object_idx(this_o_idx);
+
+                        /* Sense object. */
+                        sense_inventory();
 		}
 	}
 }

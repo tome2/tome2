@@ -154,8 +154,8 @@ byte value_check_aux2(object_type *o_ptr)
 	/* Good weapon bonuses */
 	if (o_ptr->to_h + o_ptr->to_d > 0) return (SENSE_GOOD_LIGHT);
 
-	/* No feeling */
-	return (SENSE_NONE);
+	/* Default to "average" */
+	return (SENSE_AVERAGE);
 }
 
 
@@ -239,7 +239,7 @@ static bool granted_resurrection(void)
 	return (FALSE);
 }
 
-byte select_sense(object_type *o_ptr, bool ok_combat, bool ok_magic)
+static byte select_sense(object_type *o_ptr)
 {
 	/* Valid "tval" codes */
 	switch (o_ptr->tval)
@@ -266,7 +266,7 @@ byte select_sense(object_type *o_ptr, bool ok_combat, bool ok_magic)
 	case TV_BOOMERANG:
 	case TV_TRAPKIT:
 		{
-			if (ok_combat) return 1;
+			return 1;
 			break;
 		}
 
@@ -278,14 +278,14 @@ byte select_sense(object_type *o_ptr, bool ok_combat, bool ok_magic)
 	case TV_ROD:
 	case TV_ROD_MAIN:
 		{
-			if (ok_magic) return 2;
+			return 2;
 			break;
 		}
 
 		/* Dual use? */
 	case TV_DAEMON_BOOK:
 		{
-			if (ok_combat || ok_magic) return 1;
+			return 1;
 			break;
 		}
 	}
@@ -305,12 +305,11 @@ byte select_sense(object_type *o_ptr, bool ok_combat, bool ok_magic)
  * they learn one form of ID or another, and because most magic items are
  * easy_know.
  */
-static void sense_inventory(void)
+void sense_inventory(void)
 {
 	int i, combat_lev, magic_lev;
 
 	bool heavy_combat, heavy_magic;
-	bool ok_combat, ok_magic;
 
 	byte feel;
 
@@ -323,14 +322,6 @@ static void sense_inventory(void)
 
 	/* No sensing when confused */
 	if (p_ptr->confused) return;
-
-	/* Can we pseudo id */
-#if 0
-
-	if (0 == rand_int(133 - get_skill_scale(SKILL_COMBAT, 130))) ok_combat = TRUE;
-	if (0 == rand_int(133 - get_skill_scale(SKILL_MAGIC, 130))) ok_magic = TRUE;
-
-#endif
 
 	/*
 	 * In Angband, the chance of pseudo-id uses two different formulae:
@@ -360,22 +351,8 @@ static void sense_inventory(void)
 	/* The combat skill affects weapon/armour pseudo-ID */
 	combat_lev = get_skill(SKILL_COMBAT);
 
-	/* Use the fast formula */
-	ok_combat = (0 == rand_int(9000L / (combat_lev * combat_lev + 40)));
-
 	/* The magic skill affects magic item pseudo-ID */
 	magic_lev = get_skill(SKILL_MAGIC);
-
-	/*
-	 * Use the slow formula, because spellcasters have id spells
-	 *
-	 * Lowered the base value because V rangers are known to have
-	 * pretty useless pseudo-ID. This should make it ten times more often.
-	 */
-	ok_magic = (0 == rand_int(12000L / (magic_lev + 5)));
-
-	/* Both ID rolls failed */
-	if (!ok_combat && !ok_magic) return;
 
 	/* Higher skill levels give the player better sense of items */
 	heavy_combat = (combat_lev > 10) ? TRUE : FALSE;
@@ -394,20 +371,17 @@ static void sense_inventory(void)
 		/* Skip empty slots */
 		if (!o_ptr->k_idx) continue;
 
-		/* Valid "tval" codes */
-		okay = select_sense(o_ptr, ok_combat, ok_magic);
-
-		/* Skip non-sense machines */
-		if (!okay) continue;
-
 		/* We know about it already, do not tell us again */
 		if (o_ptr->ident & (IDENT_SENSE)) continue;
 
 		/* It is fully known, no information needed */
 		if (object_known_p(o_ptr)) continue;
 
-		/* Occasional failure on inventory items */
-		if ((i < INVEN_WIELD) && (0 != rand_int(5))) continue;
+		/* Valid "tval" codes */
+		okay = select_sense(o_ptr);
+
+		/* Skip non-sense machines */
+		if (!okay) continue;
 
 		/* Check for a feeling */
 		if (okay == 1)
@@ -421,9 +395,6 @@ static void sense_inventory(void)
 
 		/* Skip non-feelings */
 		if (feel == SENSE_NONE) continue;
-
-		/* Stop everything */
-		if (disturb_minor) disturb(0, 0);
 
 		/* Get an object description */
 		object_desc(o_name, o_ptr, FALSE, 0);
@@ -3237,12 +3208,6 @@ static void process_world(void)
 
 		/* Window stuff */
 		p_ptr->window |= (PW_INVEN);
-	}
-
-	/* Feel the p_ptr->inventory */
-	if (dun_level || (!p_ptr->wild_mode))
-	{
-		sense_inventory();
 	}
 
 	/*** Process Objects ***/
