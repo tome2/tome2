@@ -6125,6 +6125,7 @@ bool get_item_floor(int *cp, cptr pmt, cptr str, int mode)
 bool get_item(int *cp, cptr pmt, cptr str, int mode)
 {
 	automatizer_create = FALSE;
+        command_see = TRUE; /* Start out displaying all alternatives. */
 
 	return get_item_floor(cp, pmt, str, mode);
 }
