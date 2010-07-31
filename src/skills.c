@@ -1148,9 +1148,9 @@ void init_skill(s32b value, s32b mod, int i)
 
 void do_get_new_skill()
 {
-	char *items[4];
-	int skl[4];
-	s32b val[4], mod[4];
+	char *items[LOST_SWORD_NSKILLS];
+	int skl[LOST_SWORD_NSKILLS];
+	s32b val[LOST_SWORD_NSKILLS], mod[LOST_SWORD_NSKILLS];
 	bool used[MAX_SKILLS];
 	int available_skills[MAX_SKILLS];
 	int max = 0, max_a = 0, res, i;
@@ -1176,8 +1176,8 @@ void do_get_new_skill()
 	/* Count the number of available skills */
 	while (available_skills[max_a] != -1) max_a++;
 
-	/* Get 4 skills */
-	for (max = 0; max < 4; max++)
+	/* Get LOST_SWORD_NSKILLS skills */
+	for (max = 0; max < LOST_SWORD_NSKILLS; max++)
 	{
 		int i;
 		skill_type *s_ptr;
@@ -1228,7 +1228,10 @@ void do_get_new_skill()
 
 	while (TRUE)
 	{
-		res = ask_menu("Choose a skill to learn(a-d to choose, ESC to cancel)?", (char **)items, 4);
+		char last = 'a' + (LOST_SWORD_NSKILLS-1);
+		char buf[80];
+		sprintf(buf, "Choose a skill to learn(a-%c to choose, ESC to cancel)?", last);
+		res = ask_menu(buf, (char **)items, LOST_SWORD_NSKILLS);
 
 		/* Ok ? lets learn ! */
 		if (res > -1)
@@ -1287,7 +1290,7 @@ void do_get_new_skill()
 	}
 
 	/* Free them ! */
-	for (max = 0; max < 4; max++)
+	for (max = 0; max < LOST_SWORD_NSKILLS; max++)
 	{
 		string_free(items[max]);
 	}

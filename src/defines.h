@@ -4622,6 +4622,9 @@ extern int PlayerUID;
 /* Ugly but needed */
 #define MAX_SKILLS              200
 
+/* Number of skill choices for Lost Sword quests. */
+#define LOST_SWORD_NSKILLS	4
+
 /* SKill flags */
 #define SKF1_HIDDEN             0x00000001      /* Starts hidden */
 #define SKF1_AUTO_HIDE          0x00000002      /* Tries to rehide at calc_bonus */
