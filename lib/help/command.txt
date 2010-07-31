@@ -572,12 +572,11 @@ for a quantity will convert any "letters" into the maximal legal value.
         wilderness map.  Going up a staircase will take you to a new dungeon
         level unless you are at the first level of the dungeon, in which case
         you will return to the surface.  Note that whenever you leave a dungeon
-        level, you will never find it again, unless the "permanent_levels" 
-        option is set or the level contains a dungeon town.  This means that
-        for all intents and purposes, any objects on that level are destroyed.
-        This includes unknown artifacts unless the "Create characters in
-        preserve mode" option was set when your character was created, in which
-        case the artifacts may show up again later.
+        level, you will never find it again, unless the level contains a dungeon
+        town.  This means that for all intents and purposes, any objects on that
+        level are destroyed. This includes unknown artifacts unless the "Create
+        characters in preserve mode" option was set when your character was
+        created, in which case the artifacts may show up again later.
 ~~~~~77
 [[[[[GGo down staircase (>)]
         Descends a down staircase you are standing on.  There are always

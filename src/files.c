@@ -2636,9 +2636,6 @@ static void display_player_ben_one(int mode)
 						}
 					}
 
-					/* Monochrome */
-					if (!use_color) a = TERM_WHITE;
-
 					/* Dump flag */
 					if (modetemp == 1 && x == 0 && y > 7 && y < 12)
 					{
@@ -2651,7 +2648,7 @@ static void display_player_ben_one(int mode)
 				}
 
 				a = TERM_WHITE;
-				if (use_color && got)
+				if (got)
 				{
 					if (modetemp == 1 && x == 0 && y > 7 && y < 12)
 					{
@@ -3223,11 +3220,6 @@ errr file_character(cptr name, bool full)
 	else
 		fprintf(fff, "\n Always unusual rooms: OFF");
 
-	if (seed_dungeon)
-		fprintf(fff, "\n Persistent Dungeons:  ON");
-	else
-		fprintf(fff, "\n Persistent Dungeons:  OFF");
-
 	fprintf(fff, "\n\n Recall Depth:");
 	for (y = 1; y < max_d_idx; y++)
 	{
@@ -3241,7 +3233,7 @@ errr file_character(cptr name, bool full)
 	if (noscore)
 		fprintf(fff, "\n You have done something illegal.");
 
-	if (PRACE_FLAGS(PR1_EXPERIMENTAL) || seed_dungeon)
+	if (PRACE_FLAGS(PR1_EXPERIMENTAL))
 		fprintf(fff, "\n You have done something experimental.");
 
 	if (stupid_monsters)

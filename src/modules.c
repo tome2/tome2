@@ -174,9 +174,6 @@ bool select_module()
 {
 	s32b k, sel, max;
 
-	/* Hack */
-	use_color = TRUE;
-
 	/* Init some lua */
 	init_lua();
 

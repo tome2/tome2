@@ -81,8 +81,6 @@ bool character_icky; 		/* The game is in an icky full screen mode */
 bool character_xtra; 		/* The game is in an icky startup mode */
 
 u32b seed_flavor; 		/* Hack -- consistent object colors */
-u32b seed_town; 			/* Hack -- consistent town layout */
-u32b seed_dungeon;               /* Simulate persisten dungeons */
 
 s16b command_cmd; 		/* Current "Angband Command" */
 
@@ -238,7 +236,6 @@ bool show_choices; 			/* Show choices in certain sub-windows */
 bool show_details; 			/* Show details in certain sub-windows */
 
 bool ring_bell; 				/* Ring the bell (on errors, etc) */
-bool use_color; 				/* Use color if possible (slow) */
 
 bool show_inven_graph; 		/* Show graphics in inventory */
 bool show_equip_graph; 		/* Show graphics in equip list */
@@ -268,9 +265,6 @@ bool speak_unique; 		/* Speaking uniques + shopkeepers */
 bool small_levels; 		/* Allow unusually small dungeon levels */
 bool empty_levels; 		/* Allow empty 'arena' levels */
 bool always_small_level;         /* Small levels */
-#if 0 /* It's controlled by insanity -- pelpel */
-bool flavored_attacks;           /* Show silly messages when fighting */
-#endif
 bool player_symbols; 		/* Use varying symbols for the player char */
 bool plain_descriptions; 	/* Plain object descriptions */
 bool stupid_monsters; 		/* Monsters use old AI */
@@ -301,7 +295,6 @@ bool dungeon_align; 			/* Generate dungeons with aligned rooms */
 bool dungeon_stair; 			/* Generate dungeons with connected stairs */
 
 bool flow_by_sound; 			/* Monsters track new player location */
-bool flow_by_smell; 			/* Monsters track old player location */
 
 bool track_follow; 			/* Monsters follow the player */
 bool track_target; 			/* Monsters target the player */
@@ -326,8 +319,6 @@ bool flush_command; 			/* Flush input before every command */
 bool fresh_before; 			/* Flush output before normal commands */
 bool fresh_after; 			/* Flush output after normal commands */
 bool fresh_message; 			/* Flush output after all messages */
-
-bool compress_savefile; 		/* Compress messages in savefiles */
 
 bool hilite_player; 			/* Hilite the player with the cursor */
 

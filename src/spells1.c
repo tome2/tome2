@@ -1123,7 +1123,7 @@ byte spell_color(int type)
 	}
 
 	/* Normal tiles or ASCII */
-	else if (use_color)
+	else
 	{
 		/* Analyze */
 		switch (type)

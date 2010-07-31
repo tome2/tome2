@@ -51,10 +51,6 @@ can also be viewed from the option menu while playing, but not changed then.
     character who is above average (but not great) in all stats. Unused points
     convert into starting gold for the player.
 
-#####GGenerate persistent dungeons    [permanent_levels]
-    Setting this option means that level 1 of the dungeon will always have
-    the same dungeon map each time you visit it (like the Nethack dungeon).
-
 #####GAlways generate very unusual rooms    [ironman_rooms]
     Tries to place a special room or vault on every dungeon level. Very fun,
     but extremely deadly - imagine that Greater Checkerboard Vault with Lokkak
@@ -180,11 +176,6 @@ off at will during the course of the game.
 
 #####GAudible bell (on errors, etc)    [ring_bell]
     Attempt to make a "bell" noise when various errors occur.
-
-#####GUse color if possible (slow)    [use_color]
-    This option enables the software support for colour.  Since this makes
-    the game slower, you should always disable this option if you are using
-    a machine which is not capable of using colours.
 
 ~~~~~09|Options|Disturbance
 #####R=== Option Set 2 -- Disturbance ===
@@ -382,10 +373,6 @@ off at will during the course of the game.
 #####GMonsters chase current location (v.slow)    [flow_by_sound]
     Allow monsters to make paths to the player when they are nearby.  This
     option is extremely slow, but can produce viciously smart monsters.
-
-#####GMonsters chase recent locations (v.slow)    [flow_by_smell]
-    As above, but also allow monsters to take advantage of "old" trails
-    that you may have left in the dungeon.
 ~~~~~3
 #####GUse special symbols for the player char   [player_symbols]
     If this option has been compiled in, it allows you to display your
@@ -508,10 +495,6 @@ off at will during the course of the game.
     displayed by the game.  This will give you maximal information, but
     may slow down the game somewhat.
 
-#####GCompress messages in savefiles    [compress_savefile]
-    Compress the savefile, by only saving the most recent messages that
-    the player has received.  This can cut the size of the savefile by a
-    drastic amount, but will result in the loss of message information.
 ~~~~~2
 #####GHilite the player with the cursor    [hilite_player]
     Place the visible cursor on the player.  This looks fine on some Unix

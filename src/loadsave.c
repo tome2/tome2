@@ -316,6 +316,7 @@ static bool do_extra(int flag)
 	s16b tmp16s;
 	u32b tmp32u;
 	u16b tmp16b;
+	u32b dummy32u = 0;
 
 	do_string(player_name, 32, flag);
 
@@ -759,10 +760,10 @@ static bool do_extra(int flag)
 		do_s16b(&rune_spells[i].mana, flag);
 	}
 
-	/* Write the "object seeds" */
-	do_u32b(&seed_dungeon, flag);
-	do_u32b(&seed_flavor, flag);
-	do_u32b(&seed_town, flag);
+	/* Load random seeds */
+	do_u32b(&dummy32u, flag);    /* Load-compatibility with old savefiles. */
+	do_u32b(&seed_flavor, flag); /* For consistent object flavors. */
+	do_u32b(&dummy32u, flag);    /* Load-compatibility with old savefiles. */
 
 	/* Special stuff */
 	do_u16b(&panic_save, flag);
@@ -2511,8 +2512,7 @@ static void do_messages(int flag)   /* FIXME! We should be able to unify this be
 
 	s16b num;
 
-	if (flag == LS_SAVE) num = (compress_savefile &&
-		                            (message_num() > 40)) ? 40 : message_num();
+	if (flag == LS_SAVE) num = message_num();
 
 	/* Total */
 	do_s16b(&num, flag);

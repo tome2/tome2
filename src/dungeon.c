@@ -5670,9 +5670,6 @@ void play_game(bool new_game)
 		/* Hack -- seed for flavors */
 		seed_flavor = rand_int(0x10000000);
 
-		/* Hack -- seed for town layout */
-		seed_town = rand_int(0x10000000);
-
 		/* Roll up a new character */
 		player_birth();
 

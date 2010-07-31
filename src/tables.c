@@ -1407,9 +1407,6 @@ option_type option_info[] =
 	  "ring_bell", "Audible bell (on errors, etc)" },
 	/* Changed to default to FALSE -- it's so extremely annoying!!! -TY */
 
-	{ &use_color, TRUE, 1, 19,
-	  "use_color", "Use color if possible (slow)" },
-
 	/*** Disturbance ***/
 
 	{ &find_ignore_stairs, FALSE, 2, 0,
@@ -1520,9 +1517,6 @@ option_type option_info[] =
 	{ &flow_by_sound, FALSE, 3, 10,
 	  "flow_by_sound", "Monsters chase current location (v.slow)" },
 
-	{ &flow_by_smell, FALSE, 3, 11,
-	  "flow_by_smell", "Monsters chase recent locations (v.slow)" },
-
 	{ &player_symbols, FALSE, 3, 12,
 	  "player_symbols", "Use special symbols for the player char"},
 
@@ -1579,9 +1573,6 @@ option_type option_info[] =
 	{ &fresh_message, FALSE, 4, 9,
 	  "fresh_message", "Flush output after every message" },
 
-	{ &compress_savefile, TRUE, 4, 10,
-	  "compress_savefile", "Compress messages in savefiles" },
-
 	{ &hilite_player, FALSE, 4, 11,
 	  "hilite_player", "Hilite the player with the cursor" },
 
@@ -1601,13 +1592,6 @@ option_type option_info[] =
 	  "center_player", "Center the view on the player (very slow)" },
 
 	/*** ToME options ***/
-
-#if 0 /* It's controlled by insanity instead :) - pelpel */
-
-	{ &flavored_attacks, TRUE, 5, 0,
-	  "flavored_attacks", "Show silly messages when fighting" },
-
-#endif /* 0 */
 
 	{ &option_ingame_help, TRUE, 5, 1,
 	  "ingame_help", "Ingame contextual help" },
@@ -1653,9 +1637,6 @@ option_type option_info[] =
 	{ &special_lvls, TRUE, 6, 4,
 	  "special_lvls", "Allow the use of special, unique, levels" },
 #endif
-	{ &permanent_levels, FALSE, 6, 5,
-	  "permanent_levels", "Generate persistent dungeons [EXPERIMENTAL]" },
-
 	{ &ironman_rooms, FALSE, 6, 6,
 	  "ironman_rooms", "Always generate very unusual rooms" },
 

@@ -2387,23 +2387,12 @@ static bool player_birth_aux_ask()
 	 * the old one (player_type members), it would be less confusing
 	 * to handle birth-only options in a uniform fashion,the above and
 	 * the following:
-	 * permanent_levels,
 	 * ironman_rooms,
 	 * joke_monsters,
 	 * always_small_level, and
 	 * fate_option
 	 */
 
-
-	/* Set dungeon seed */
-	if (permanent_levels)
-	{
-		seed_dungeon = randint(0x10000000);
-	}
-	else
-	{
-		seed_dungeon = 0;
-	}
 
 	/* Set the recall dungeon accordingly */
 	call_lua("get_module_info", "(s)", "d", "base_dungeon", &tmp);
@@ -2432,7 +2421,7 @@ static bool player_birth_aux_ask()
 	/* Heino Vander Sanden and Jimmy De Laet */
 
 	call_lua("get_module_info", "(s)", "d", "rand_quest", &allow_quest);
-	if (!ironman_rooms && !permanent_levels && allow_quest)
+	if (!ironman_rooms && allow_quest)
 	{
 		if (do_quick_start)
 		{
@@ -3771,9 +3760,6 @@ bool begin_screen()
 
 savefile_try_again:
 	sel = 0;
-
-	/* Hack */
-	use_color = TRUE;
 
 	/* Grab the savefiles */
 	max = load_savefile_names();

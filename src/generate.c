@@ -2959,8 +2959,6 @@ static void build_type5(int by0, int bx0)
 	x1 = xval - 11;
 	x2 = xval + 11;
 
-	if (seed_dungeon) Rand_quick = FALSE;
-
 	/* Place the floor area */
 	for (y = y1; y <= y2; y++)
 	{
@@ -3134,8 +3132,6 @@ static void build_type5(int by0, int bx0)
 			(void)place_monster_aux(y, x, r_idx, FALSE, FALSE, MSTATUS_ENEMY);
 		}
 	}
-
-	if (seed_dungeon) Rand_quick = TRUE;
 }
 
 
@@ -3199,8 +3195,6 @@ static void build_type6(int by0, int bx0)
 	y2 = yval + 4;
 	x1 = xval - 11;
 	x2 = xval + 11;
-
-	if (seed_dungeon) Rand_quick = FALSE;
 
 	/* Place the floor area */
 	for (y = y1 - 1; y <= y2 + 1; y++)
@@ -3530,11 +3524,6 @@ static void build_type6(int by0, int bx0)
 
 	/* Center monster */
 	place_monster_aux(yval, xval, what[7], FALSE, FALSE, MSTATUS_ENEMY);
-
-	if (seed_dungeon)
-	{
-		Rand_quick = TRUE;
-	}
 }
 
 /*
@@ -3547,12 +3536,6 @@ static void build_vault(int yval, int xval, int ymax, int xmax, cptr data)
 	cptr t;
 
 	cave_type *c_ptr;
-
-	/* Vaults are different even in persistent dungeons. */
-	if (seed_dungeon)
-	{
-		Rand_quick = FALSE;
-	}
 
 	/* Clean the between gates arrays */
 	for (i = 0; i < 8; i++)
@@ -3807,11 +3790,6 @@ static void build_vault(int yval, int xval, int ymax, int xmax, cptr data)
 				}
 			}
 		}
-	}
-
-	if (seed_dungeon)
-	{
-		Rand_quick = TRUE;
 	}
 }
 
@@ -7727,9 +7705,6 @@ static bool cave_gen(void)
 
 	process_hooks(HOOK_GEN_LEVEL, "(d)", is_quest(dun_level));
 
-	/* Monsters and objects change even in persistent dungeons. */
-	if (seed_dungeon) Rand_quick = FALSE;
-
 	/* Basic "amount" */
 	k = (dun_level / 3);
 	if (k > 10) k = 10;
@@ -8488,7 +8463,6 @@ void generate_cave(void)
 	bool loaded = FALSE;
 	char buf[80];
 	s16b town_level = 0;
-	s32b old_seed_dungeon = seed_dungeon;
 
 	/* The dungeon is not ready */
 	character_dungeon = FALSE;
@@ -8517,17 +8491,10 @@ void generate_cave(void)
 	wipe_m_list();
 
 	/* Seed the RNG if appropriate */
-	if (seed_dungeon)
-	{
-		Rand_quick = TRUE;
-		Rand_value = seed_dungeon + dun_level;
-	}
-
 	if (town_level)
 	{
 		Rand_quick = TRUE;
-		seed_dungeon = town_info[town_level].seed;
-		Rand_value = seed_dungeon;
+		Rand_value = town_info[town_level].seed;
 	}
 
 	process_hooks(HOOK_GEN_LEVEL_BEGIN, "");
@@ -8971,13 +8938,6 @@ void generate_cave(void)
 
 	/* Remember when this level was "created" */
 	old_turn = turn;
-
-	if (seed_dungeon)
-	{
-		Rand_quick = FALSE;
-
-		seed_dungeon = old_seed_dungeon;
-	}
 
 	/* Provide astral chars with the full map */
 	if (p_ptr->astral && dun_level)
