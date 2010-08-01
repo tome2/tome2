@@ -3288,21 +3288,22 @@ bool askfor_aux(char *buf, int len)
 
 	int k = 0;
 
+        int wid, hgt;
+
 	bool done = FALSE;
 
 
 	/* Locate the cursor */
 	Term_locate(&x, &y);
 
-
-	/* Paranoia -- check len */
-	if (len < 1) len = 1;
+        /* Get terminal size */
+        Term_get_size(&wid, &hgt);
 
 	/* Paranoia -- check column */
-	if ((x < 0) || (x >= 80)) x = 0;
+	if ((x < 0) || (x >= wid)) x = 0;
 
 	/* Restrict the length */
-	if (x + len > 80) len = 80 - x;
+	if (x + len > wid) len = wid - x;
 
 
 	/* Paranoia -- Clip the default entry */
