@@ -333,11 +333,11 @@ void do_cmd_automatizer()
 			}
 			else if (c == 'n')
 			{
-				char name[20];
+				char name[20] = { '\0' };
 				char typ;
 
 				sprintf(name, "No name");
-				if (input_box("Name?", hgt / 2, wid / 2, name, 15))
+				if (input_box("Name?", hgt / 2, wid / 2, name, sizeof(name)+1))
 				{
 					cptr styp = "nothing";
 					typ = msg_box("[D]estroy, [P]ickup, [I]nscribe, [N]othing rule?", hgt / 2, wid / 2);
@@ -350,10 +350,10 @@ void do_cmd_automatizer()
 			}
 			else if (c == 's')
 			{
-				char name[30];
+				char name[30] = { '\0' };
 
 				sprintf(name, "automat.atm");
-				if (input_box("Save name?", hgt / 2, wid / 2, name, sizeof(name)))
+				if (input_box("Save name?", hgt / 2, wid / 2, name, sizeof(name)+1))
 				{
 					char buf[1025];
 					char ch;
