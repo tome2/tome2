@@ -1165,6 +1165,5 @@ extern byte value_check_aux1(object_type *o_ptr);
 extern byte value_check_aux1_magic(object_type *o_ptr);
 extern byte value_check_aux2(object_type *o_ptr);
 extern byte value_check_aux2_magic(object_type *o_ptr);
-extern bool psychometry(void);
 
 extern bool remove_curse_object(object_type *o_ptr, bool all);

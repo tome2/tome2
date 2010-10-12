@@ -2559,7 +2559,7 @@ magic_power mindcraft_powers[MAX_MINDCRAFT_POWERS] =
 	{
 		15, 12, 60,
 		"Psychometry",
-		"Senses/identifies objects."
+		"Identifies objects."
 	},
 	{
 		/* Ball -> LOS */

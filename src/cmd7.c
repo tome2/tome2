@@ -619,15 +619,7 @@ void do_cmd_mindcraft(void)
 			/* Psychometry */
 		case 7:
 			{
-				if (plev < 40)
-				{
-					psychometry();
-				}
-				else
-				{
-					ident_spell();
-				}
-
+				ident_spell();
 				break;
 			}
 
