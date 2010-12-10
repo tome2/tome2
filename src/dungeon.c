@@ -1243,7 +1243,7 @@ static void process_world(void)
 
 		if ((randint(1000) < r_ptr->level - ((p_ptr->lev * 2) + get_skill(SKILL_SYMBIOTIC))))
 		{
-			msg_format("%s thinks you are not enough in symbiosis.",
+			msg_format("%s breaks free from hypnosis!",
 			           symbiote_name(TRUE));
 			carried_make_attack_normal(o_ptr->pval);
 		}
