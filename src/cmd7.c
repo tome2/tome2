@@ -606,7 +606,7 @@ void do_cmd_mindcraft(void)
 			/* Character Armour */
 		case 6:
 			{
-				set_shield(p_ptr->shield + plev, 50, 0, 0, 0);
+				set_shield(p_ptr->shield + plev, plev, 0, 0, 0);
 				if (plev > 14) set_oppose_acid(p_ptr->oppose_acid + plev);
 				if (plev > 19) set_oppose_fire(p_ptr->oppose_fire + plev);
 				if (plev > 24) set_oppose_cold(p_ptr->oppose_cold + plev);
