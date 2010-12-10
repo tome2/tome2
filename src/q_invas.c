@@ -102,38 +102,8 @@ bool quest_invasion_turn_hook(char *fmt)
 	cmsg_print(TERM_YELLOW, "A Thunderlord appears in front of you and says:");
 	cmsg_print(TERM_YELLOW, "'Hello, noble hero. I am Liron, rider of Tolan. Turgon, King of Gondolin sent me.'");
 	cmsg_print(TERM_YELLOW, "'Gondolin is being invaded; he needs your help now or everything will be lost.'");
-	cmsg_print(TERM_YELLOW, "'I can bring you to Gondolin, but we must go now.'");
-	/* This is SO important a question that flush pending inputs */
-	flush();
+	cmsg_print(TERM_YELLOW, "'Please come quickly!'");
 
-	if (!get_check("Will you come?"))
-	{
-		cmsg_print(TERM_YELLOW, "'Turgon overestimated you... Now Gondolin will fall.'");
-		cmsg_print(TERM_YELLOW, "'I will return alone and die there. May you be doomed!'");
-
-		cquest.status = QUEST_STATUS_FAILED;
-		town_info[2].destroyed = TRUE;
-
-		quick_messages = old_quick_messages;
-
-		del_hook(HOOK_END_TURN, quest_invasion_turn_hook);
-		process_hooks_restart = TRUE;
-		return (FALSE);
-	}
-	cmsg_print(TERM_YELLOW, "'You made the right decision! Quickly, jump on Tolan!'");
-	cmsg_print(TERM_YELLOW, "'Here we are: Gondolin. You must speak with Turgon now.'");
-
-	p_ptr->wild_mode = FALSE;
-	p_ptr->wilderness_x = 49;
-	p_ptr->wilderness_y = 11;
-	p_ptr->town_num = 2;
-	p_ptr->oldpx = p_ptr->px = 117;
-	p_ptr->oldpy = p_ptr->py = 24;
-	dun_level = 0;
-	p_ptr->leaving = TRUE;
-
-	cmsg_print(TERM_YELLOW, "'Turgon hails you.'");
-	quest_describe(QUEST_INVASION);
 	cquest.status = QUEST_STATUS_TAKEN;
 
 	quick_messages = old_quick_messages;
