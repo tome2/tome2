@@ -1,10 +1,21 @@
 T.o.M.E 2.3.9 (ah)
 
+User Interface:
+
+- Always display list of selectable objects immediately
+  instead of requiring user to press '*'.
+- Fix display issues with extremely wide terminals.
+- Automatizer: Fix memory corruption issues.
+- Remove obsolete and pointless options.
+
 Game:
 
-- Psycometry now always Identifies. It didn't make sense to
-  have a "forced pseudo-ID" since items are now always instantly
-  pseudo-ID'd.
+- Items are now immediately pseudo-identified upon pickup.
+- Psycometry now always Identifies regardless of level.
+- Remove the need to instantly leave for a certain quest. Lots
+  of players would get caught out by this.
+- A few Mindcraft powers now scale with skill level. (Credit
+  for these goes to Lord Estraven.)
 - "Far reaching attack" now works for *all* polearms.
 - Fixes and tweaks for Thaumaturgy to make view/area spells less
   overpowered and to make bolt/ball spells more useful. (Credit
