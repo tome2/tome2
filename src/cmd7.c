@@ -661,11 +661,11 @@ void do_cmd_mindcraft(void)
 				if (!p_ptr->fast)
 				{
 					/* Haste */
-					(void)set_fast(b, 10);
+					(void)set_fast(b, plev / 5);
 				}
 				else
 				{
-					(void)set_fast(p_ptr->fast + b, 10);
+					(void)set_fast(p_ptr->fast + b, plev / 5);
 				}
 
 				break;
