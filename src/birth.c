@@ -1075,17 +1075,6 @@ void outfit_obj(int tv, int sv, int pval, int dd, int ds)
 	if (pval)
 		q_ptr->pval = pval;
 
-	/* Merchants get a chest which is currently empty */
-#if 0 /* DGDGDGDG -- use a skill */
-	if ((tv == TV_CHEST) && (cp_ptr->magic_key == MKEY_TELEKINESIS))
-	{
-		/* Put items into the chest */
-		q_ptr->pval = -5;
-
-		/* Set the number of items in the chest */
-		q_ptr->pval2 = 6;
-	}
-#endif
 	/* These objects are "storebought" */
 	q_ptr->ident |= IDENT_MENTAL;
 	q_ptr->number = damroll(dd, ds);
@@ -3412,14 +3401,6 @@ void player_birth(void)
 	message_add(MESSAGE_MSG, "====================", TERM_L_BLUE);
 	message_add(MESSAGE_MSG, "  ", TERM_L_BLUE);
 	message_add(MESSAGE_MSG, " ", TERM_L_BLUE);
-
-	/* Verify autoskiller */
-#if 0
-	if (validate_autoskiller(spp_ptr->skill_ideal) < 0)
-	{
-		message_add(MESSAGE_MSG, "WARNING: Bad autoskill chart", TERM_VIOLET);
-	}
-#endif
 
 	/* Hack -- outfit the player */
 	player_outfit();

@@ -116,19 +116,9 @@ static bool grab_one_power(int *ra_idx, object_type *o_ptr, bool good, s16b *max
 
 void give_activation_power (object_type * o_ptr)
 {
-	/* int type = 0, chance = 0; */
-
-
-	/* A type was chosen... */
-#if 0 /* DGDGDGDG -- Todo later */
-	o_ptr->xtra2 = type;
-	o_ptr->art_flags3 |= TR3_ACTIVATE;
-	o_ptr->timeout = 0;
-#else
 	o_ptr->xtra2 = 0;
 	o_ptr->art_flags3 &= ~TR3_ACTIVATE;
 	o_ptr->timeout = 0;
-#endif
 }
 
 

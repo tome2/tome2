@@ -177,13 +177,6 @@ bool carried_make_attack_normal(int r_idx)
 		/* Extract visibility (before blink) */
 		visible = TRUE;
 
-#if 0
-
-		/* Extract visibility from carrying lite */
-		if (r_ptr->flags9 & RF9_HAS_LITE) visible = TRUE;
-
-#endif /* 0 */
-
 		/* Extract the attack "power" */
 		switch (effect)
 		{
@@ -1446,13 +1439,6 @@ bool make_attack_normal(int m_idx, byte divis)
 
 		/* Extract visibility (before blink) */
 		if (m_ptr->ml) visible = TRUE;
-
-#if 0
-
-		/* Extract visibility from carrying lite */
-		if (r_ptr->flags9 & RF9_HAS_LITE) visible = TRUE;
-
-#endif
 
 		/* Extract the attack "power" */
 		switch (effect)

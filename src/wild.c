@@ -281,47 +281,6 @@ int generate_area(int y, int x, bool border, bool corner, bool refresh)
 		}
 	}
 
-#if 0
-	/* Hack -- Use the "simple" RNG */
-	Rand_quick = TRUE;
-
-	/* Hack -- Induce consistant town layout */
-	Rand_value = wilderness[y][x].seed;
-
-	/* Generate a wilderness vault. */
-	if (magik(DUN_WILD_VAULT))
-	{
-		vault_type *v_ptr;
-		int vindex, vy, vx;
-		int i;
-
-		/* Pick a wilderness vault */
-		for (i = 0; i < 1000; i++)
-		{
-			/* Access a random vault record */
-			vindex = rand_int(max_v_idx);
-			v_ptr = &v_info[vindex];
-
-			/* Accept the first greater vault */
-			if (v_ptr->typ == 10) break;
-		}
-
-		/* Message */
-		if (cheat_room) msg_format("Wilderness Vault %d", vindex);
-
-		/* Boost the rating */
-		rating += v_ptr->rat;
-
-		vy = rand_range((v_ptr->hgt / 2) + 1, MAX_HGT - (v_ptr->hgt / 2)-1);
-		vx = rand_range((v_ptr->wid / 2) + 1, MAX_WID - (v_ptr->wid / 2)-1);
-
-		build_vault(vy, vx, v_ptr->hgt, v_ptr->wid, v_text + v_ptr->text);
-	}
-
-	/* Use the complex RNG */
-	Rand_quick = FALSE;
-#endif
-
 	/* Hack -- Use the "simple" RNG */
 	Rand_quick = TRUE;
 

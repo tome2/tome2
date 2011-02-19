@@ -1346,17 +1346,6 @@ void do_cmd_options(void)
 
 				break;
 			}
-#if 0 /* DGDGDG -- has if anyone used those */
-			/* Stacking Options */
-		case 'S':
-		case 's':
-			{
-				/* Spawn */
-				do_cmd_options_aux(7, "Stacking Options", FALSE);
-
-				break;
-			}
-#endif
 			/* Cheating Options */
 		case 'C':
 			{

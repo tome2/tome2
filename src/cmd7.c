@@ -3919,9 +3919,6 @@ void do_cmd_alchemist(void)
 			if (o_ptr->tval == TV_POTION && o_ptr->sval == SV_POTION_DETONATIONS)
 			{
 				basechance /= 10;
-#if 0 /* Let's see how it works */
-				o_ptr->discount = 100;
-#endif
 			}
 		}
 
@@ -4891,82 +4888,6 @@ void do_cmd_powermage(void)
 	p_ptr->window |= (PW_PLAYER);
 	p_ptr->redraw |= (PR_MANA);
 }
-
-
-
-#if 0
-
-/*
- * Incremental sleep spell -KMW-
- */
-static void do_sleep_monster(void)
-{
-	int dir;
-
-	if (p_ptr->lev < 15)
-	{
-		if (!get_aim_dir(&dir)) return;
-		sleep_monster(dir);
-	}
-	else if (p_ptr->lev < 30)
-	{
-		sleep_monsters_touch();
-	}
-	else
-	{
-		sleep_monsters();
-	}
-}
-
-#endif /* 0 */
-
-
-#if 0
-
-/*
- * Multiple Monster Fear -KMW-
- */
-static bool fear_monsters(void)
-{
-	return (project_hack(GF_TURN_ALL, p_ptr->lev));
-}
-
-
-/*
- * Close to Player Monster Fear -KMW-
- */
-static bool fear_monsters_touch(void)
-{
-	int flg = PROJECT_KILL | PROJECT_HIDE;
-
-	return (project(0, 1, p_ptr->py, p_ptr->px, p_ptr->lev,
-	                GF_TURN_ALL, flg));
-}
-
-
-/*
- * Incremental fear spell -KMW-
- */
-static void do_fear_monster(void)
-{
-	int dir;
-
-	if (p_ptr->lev < 15)
-	{
-		if (!get_aim_dir(&dir)) return;
-		fear_monster(dir, p_ptr->lev);
-	}
-	else if (p_ptr->lev < 30)
-	{
-		fear_monsters_touch();
-	}
-	else
-	{
-		fear_monsters();
-	}
-}
-
-#endif /* 0 */
 
 
 /*

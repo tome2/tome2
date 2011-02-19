@@ -1836,14 +1836,6 @@ static void do_item(object_type *o_ptr, int flag)
 		o_ptr->dd = k_ptr->dd;
 		o_ptr->ds = k_ptr->ds;
 
-#if 0
-		/* Acquire correct weight */
-		if ((o_ptr->tval != TV_CORPSE) &&
-		                (o_ptr->tval != TV_EGG)) o_ptr->weight = k_ptr->weight;
-
-		/* Paranoia */
-		o_ptr->name1 = o_ptr->name2 = 0;
-#endif
 		/* All done */
 		return;
 	}

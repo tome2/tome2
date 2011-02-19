@@ -4005,7 +4005,6 @@ extern int PlayerUID;
 #define BACT_GREET_KING              4
 #define BACT_KING_LEGENDS            5
 #define BACT_QUEST1                  6
-#define BACT_GOLD                    7
 #define BACT_POSTER                  8
 #define BACT_ARENA_RULES             9
 #define BACT_ARENA                  10

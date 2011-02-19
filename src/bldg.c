@@ -782,24 +782,6 @@ static bool inn_comm(int cmd)
 }
 
 
-#if 0 /* removes compiler warning */
-
-/*
- * share gold for thieves
- */
-static void share_gold(void)
-{
-	int i;
-
-
-	i = (p_ptr->lev * 2) * 10;
-	msg_format("You collect %d gold pieces", i);
-	msg_print(NULL);
-	p_ptr->au += i;
-}
-
-#endif
-
 /*
  * Display quest information
  */
@@ -1154,15 +1136,6 @@ static bool fix_item(int istart, int iend, int ispecific, bool iac,
 
 	bool repaired = FALSE;
 
-#if 0
-	if (set_reward && p_ptr->rewards[ireward])
-	{
-		msg_print("You already have been rewarded today.");
-		msg_print(NULL);
-
-		return (FALSE);
-	}
-#endif
 	clear_bldg(5, 18);
 	strnfmt(tmp_str, 80, "  Based on your skill, we can improve up to +%d", maxenchant);
 	prt(tmp_str, 5, 0);
@@ -1227,10 +1200,6 @@ static bool fix_item(int istart, int iend, int ispecific, bool iac,
 	}
 	else
 	{
-#if 0
-		if (set_reward)
-			p_ptr->rewards[ireward] = TRUE;
-#endif
 		msg_print("Press the spacebar to continue");
 		msg_print(NULL);
 
@@ -1719,15 +1688,6 @@ bool bldg_process_command(store_type *s_ptr, int i)
 			break;
 		}
 
-#if 0
-	case BACT_GREET_KING:
-		{
-			castle_greet();
-			break;
-		}
-
-#endif
-
 	case BACT_QUEST1:
 	case BACT_QUEST2:
 	case BACT_QUEST3:
@@ -1810,16 +1770,6 @@ bool bldg_process_command(store_type *s_ptr, int i)
 			break;
 		}
 
-#if 0
-
-	case BACT_GREET:
-		{
-			greet_char();
-			break;
-		}
-
-#endif
-
 	case BACT_ENCHANT_WEAPON:
 		{
 			paid = fix_item(INVEN_WIELD, INVEN_WIELD, 0, FALSE,
@@ -1891,24 +1841,6 @@ bool bldg_process_command(store_type *s_ptr, int i)
 			if (do_res_stat(A_DEX, TRUE)) paid = TRUE;
 			if (do_res_stat(A_CON, TRUE)) paid = TRUE;
 			if (do_res_stat(A_CHR, TRUE)) paid = TRUE;
-			break;
-		}
-
-		/* set timed reward flag */
-	case BACT_GOLD:
-		{
-#if 0
-			if (!p_ptr->rewards[BACT_GOLD])
-			{
-				share_gold();
-				p_ptr->rewards[BACT_GOLD] = TRUE;
-			}
-			else
-			{
-				msg_print("You just had your daily allowance!");
-				msg_print(NULL);
-			}
-#endif
 			break;
 		}
 

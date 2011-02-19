@@ -813,15 +813,6 @@ void self_knowledge(FILE *fff)
 		if (r_ptr->flags2 & RF2_MOVE_BODY)
 			info[i++] = "You can move monsters.";
 		/* Not implemented */
-#if 0
-		/* They are disabled, because the r_info.txt array has to
-		 * few RF2_TAKE_ITEM flags... */
-		if (r_ptr->flags2 & RF2_TAKE_ITEM)
-			info[i++] = "You can pick up items.";
-		else
-			info[i++] = "You cannot pick up items.";
-#endif
-		/* Not implemented */
 		if (r_ptr->flags3 & RF3_ORC)
 			info[i++] = "You have orc blood in your veins.";
 		/* Not implemented */
@@ -3222,9 +3213,6 @@ void curse_artifact(object_type * o_ptr)
 	if (o_ptr->to_h) o_ptr->to_h = 0 - ((o_ptr->to_h) + randint(4));
 	if (o_ptr->to_d) o_ptr->to_d = 0 - ((o_ptr->to_d) + randint(4));
 	o_ptr->art_flags3 |= ( TR3_HEAVY_CURSE | TR3_CURSED );
-#if 0 /* Silly */
-	if (randint(4) == 1) o_ptr-> art_flags3 |= TR3_PERMA_CURSE;
-#endif
 	if (randint(3) == 1) o_ptr-> art_flags3 |= TR3_TY_CURSE;
 	if (randint(2) == 1) o_ptr-> art_flags3 |= TR3_AGGRAVATE;
 	if (randint(3) == 1) o_ptr-> art_flags3 |= TR3_DRAIN_EXP;
@@ -7094,11 +7082,6 @@ void call_chaos(void)
 
 	Chaos_type = hurt_types[randint(30) - 1];
 	if (randint(4) == 1) line_chaos = TRUE;
-
-#if 0
-	/* Probably a meaningless line, a remnant from earlier code */
-	while (Chaos_type > GF_GRAVITY && Chaos_type < GF_ROCKET);
-#endif
 
 	if (randint(6) == 1)
 	{

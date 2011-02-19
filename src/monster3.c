@@ -45,10 +45,7 @@ bool is_enemy(monster_type *m_ptr, monster_type *t_ptr)
 {
 	monster_race *r_ptr = &r_info[m_ptr->r_idx], *rt_ptr = &r_info[t_ptr->r_idx];
 	int s1 = is_friend(m_ptr), s2 = is_friend(t_ptr);
-#if 0
-	/* Stupid monsters attacks just about everything */
-	if ((r_ptr->flags2 & RF2_STUPID) && (r_ptr->d_char != rt_ptr->d_char)) return TRUE;
-#endif
+
 	/* Monsters hates breeders */
 	if ((m_ptr->status != MSTATUS_NEUTRAL) && (rt_ptr->flags4 & RF4_MULTIPLY) && (num_repro > MAX_REPRO * 2 / 3) && (r_ptr->d_char != rt_ptr->d_char)) return TRUE;
 	if ((t_ptr->status != MSTATUS_NEUTRAL) && (r_ptr->flags4 & RF4_MULTIPLY) && (num_repro > MAX_REPRO * 2 / 3) && (r_ptr->d_char != rt_ptr->d_char)) return TRUE;
@@ -67,11 +64,6 @@ bool change_side(monster_type *m_ptr)
 	/* neutrals and companions  */
 	switch (m_ptr->status)
 	{
-#if 0
-	case MSTATUS_ENEMY:
-		m_ptr->status = MSTATUS_FRIEND;
-		break;
-#endif
 	case MSTATUS_FRIEND:
 		m_ptr->status = MSTATUS_ENEMY;
 		if ((r_ptr->flags3 & RF3_ANIMAL) && (!(r_ptr->flags3 & RF3_EVIL)))

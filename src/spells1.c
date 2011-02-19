@@ -33,12 +33,6 @@ s16b poly_r_idx(int r_idx)
 
 	int i, r;
 
-#if 0 /* No more -- hehehe -- DG */
-	/* Allowable range of "levels" for resulting monster */
-	int lev1 = r_ptr->level - ((randint(20) / randint(9)) + 1);
-	int lev2 = r_ptr->level + ((randint(20) / randint(9)) + 1);
-#endif
-
 	/* Hack -- Uniques never polymorph */
 	if (r_ptr->flags1 & RF1_UNIQUE)
 		return (r_idx);
@@ -57,11 +51,6 @@ s16b poly_r_idx(int r_idx)
 
 		/* Ignore unique monsters */
 		if (r_ptr->flags1 & (RF1_UNIQUE)) continue;
-
-#if 0
-		/* Ignore monsters with incompatible levels */
-		if ((r_ptr->level < lev1) || (r_ptr->level > lev2)) continue;
-#endif
 
 		/* Use that index */
 		r_idx = r;
@@ -945,14 +934,6 @@ void teleport_player_level(void)
  */
 void recall_player(int d, int f)
 {
-#if 0
-	if (!p_ptr->town_num)
-	{
-		/* TODO: Recall the player to the last visited town */
-		msg_print("Nothing happens.");
-		return;
-	}
-#endif
 	/* Rooted means no move */
 	if (p_ptr->tim_roots)
 	{
@@ -4413,14 +4394,6 @@ bool project_m(int who, int r, int y, int x, int dam, int typ)
 	cptr note_dies = " dies.";
 
 
-#if 0
-
-	/* Walls protect monsters */
-	/* (No, they don't)  */
-	if (!cave_floor_bold(y, x)) return (FALSE);
-
-#endif
-
 	/* Nobody here */
 	if (!c_ptr->m_idx) return (FALSE);
 
@@ -5632,9 +5605,6 @@ bool project_m(int who, int r, int y, int x, int dam, int typ)
 		/* Death Ray */
 	case GF_DEATH_RAY:
 		{
-#if 0
-			dam = 0;
-#endif
 			if (seen) obvious = TRUE;
 			if ((r_ptr->flags3 & (RF3_UNDEAD)) ||
 			                (r_ptr->flags3 & (RF3_NONLIVING)))
@@ -5938,15 +5908,6 @@ bool project_m(int who, int r, int y, int x, int dam, int typ)
 			                (!(r_ptr->flags3 & RF3_UNDEAD)) ||
 			                (m_ptr->level > randint((dam - 10) < 1 ? 1 : (dam - 10)) + 10))
 			{
-
-#if 0
-				/* Memorize a flag */
-				if (r_ptr->flags3 & (RF3_NO_CONF))
-				{
-					if (seen) r_ptr->r_flags3 |= (RF3_NO_CONF);
-				}
-#endif
-
 				/* Resist */
 				/* No obvious effect */
 				note = " is unaffected!";
@@ -7419,33 +7380,14 @@ static bool project_p(int who, int r, int y, int x, int dam, int typ, int a_rad)
 		/* Holy Orb -- Player only takes partial damage */
 	case GF_HOLY_FIRE:
 		{
-#if 0 /* DGDGDGDGD */
-			int diff = get_skill(SKILL_VALARIN) - get_skill(SKILL_NETHER);
-#else
-			int diff = 0;
-#endif
 			if (fuzzy) msg_print("You are hit by something!");
-			if (diff > 0)
-				dam /= 2;
-			else if (diff < 0)
-				dam *= 2;
 			take_hit(dam, killer);
 			break;
 		}
 
 	case GF_HELL_FIRE:
 		{
-#if 0 /* DGDGDGDGD */
-			int diff = get_skill(SKILL_VALARIN) - get_skill(SKILL_NETHER);
-#else
-			int diff = 0;
-#endif
-
 			if (fuzzy) msg_print("You are hit by something!");
-			if (diff < 0)
-				dam /= 2;
-			else if (diff > 0)
-				dam *= 2;
 			take_hit(dam, killer);
 			break;
 		}

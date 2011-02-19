@@ -2300,18 +2300,6 @@ errr Term_redraw_section(int x1, int y1, int x2, int y2)
 
 	char *c_ptr;
 
-#if 0 // DGDGDGDG
-	/* Pat */
-	if ((do_movies == 1) && IN_MAINWINDOW)
-	{
-		if (!cmovie_get_msecond())
-		{
-			fprintf(movfile, "W:1:\n");
-		}
-	}
-	/* Endpat */
-#endif
-
 	/* Bounds checking */
 	if (y2 >= Term->hgt) y2 = Term->hgt - 1;
 	if (x2 >= Term->wid) x2 = Term->wid - 1;
@@ -2455,11 +2443,6 @@ errr Term_keypress(int k)
 	/* Success (unless overflow) */
 	if (Term->key_head != Term->key_tail) return (0);
 
-#if 0
-	/* Hack -- Forget the oldest key */
-	if (++Term->key_tail == Term->key_size) Term->key_tail = 0;
-#endif
-
 	/* Problem */
 	return (1);
 }
@@ -2481,11 +2464,6 @@ errr Term_key_push(int k)
 
 	/* Success (unless overflow) */
 	if (Term->key_head != Term->key_tail) return (0);
-
-#if 0
-	/* Hack -- Forget the oldest key */
-	if (++Term->key_tail == Term->key_size) Term->key_tail = 0;
-#endif
 
 	/* Problem */
 	return (1);

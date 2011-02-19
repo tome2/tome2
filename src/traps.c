@@ -2415,97 +2415,7 @@ bool mon_hit_trap_aux_rod(int m_idx, object_type *o_ptr)
  */
 bool mon_hit_trap_aux_staff(int m_idx, object_type *o_ptr)
 {
-	/* Monster pointer and position */
-	monster_type *m_ptr = &m_list[m_idx];
-	int y = m_ptr->fy;
-	int x = m_ptr->fx;
-
-	/* sval and base level of the staff */
-	int sval = o_ptr->sval;
-
-	/* Damage amount, type, and radius */
-	int dam = 0, typ = 0;
-	int rad = 0;
-
-	/* Depend on staff type */
-	switch (sval)
-	{
-#if 0 /*must be tested*/
-	case SV_STAFF_IDENTIFY:
-	case SV_STAFF_MANA:
-	case SV_STAFF_REMOVE_CURSES:
-	case SV_STAFF_REVEAL_WAYS:
-	case SV_STAFF_SENSE_MONSTER:
-	case SV_STAFF_VISION:
-	case SV_STAFF_DISARM:
-		return (FALSE);
-
-	case SV_STAFF_LIGHT:
-		lite_room(y, x);
-		typ = GF_LITE_WEAK;
-		dam = damroll(2, 8);
-		rad = 2;
-		break;
-
-	case SV_STAFF_SUMMON:
-		for (k = 0; k < randint(4) ; k++)
-			(void)summon_specific(y, x, dun_level, 0);
-		return (FALSE);
-
-	case SV_STAFF_TELEPORTATION:
-		typ = GF_AWAY_ALL;
-		dam = 100 + 2 * level;
-		break;
-
-	case SV_STAFF_HEALING:
-		typ = GF_OLD_HEAL;
-		dam = m_ptr->maxhp * (150 + 7 * level) / 1000;
-		break;
-
-	case SV_STAFF_SHAKE:
-		earthquake(y, x, 4 + level / 5);  /* was 10 */
-		return (FALSE);
-
-	case SV_STAFF_RECOVERY:
-		m_ptr->bleeding = 0;
-		m_ptr->poisoned = 0;
-		return (FALSE);
-
-	case SV_STAFF_GENOCIDE:
-		{
-			monster_race *r_ptr = &r_info[m_ptr->r_idx];
-			genocide_aux(FALSE, r_ptr->d_char);
-			/* although there's no point in a multiple genocide trap... */
-			return (cave[y][x].m_idx == 0 ? TRUE : FALSE);
-		}
-
-	case SV_STAFF_SENSE_HIDDEN:
-		m_ptr->smart |= SM_NOTE_TRAP;
-		return (FALSE);
-
-	case SV_STAFF_WISH:
-		acquirement(y, x, randint(2) + 1, TRUE, FALSE);
-		return (FALSE);
-
-	case SV_STAFF_MITHRANDIR:
-		typ = GF_HOLY_FIRE;
-		dam = 50 + 6 * level;
-		rad = 9;  /* instead of LOS */
-
-		/* How to implement these ? */
-	case SV_STAFF_FIERY_SHIELD:
-	case SV_STAFF_WINGS_WIND:
-	case SV_STAFF_PROBABILITY_TRAVEL:
-
-#endif
-
-	default:
-		return (FALSE);
-	}
-
-	/* Actually hit the monster */
-	(void) project( -2, rad, y, x, dam, typ, PROJECT_KILL | PROJECT_ITEM | PROJECT_JUMP);
-	return (cave[y][x].m_idx == 0 ? TRUE : FALSE);
+	return (FALSE);
 }
 
 /*
@@ -2642,138 +2552,7 @@ bool mon_hit_trap_aux_scroll(int m_idx, int sval)
  */
 bool mon_hit_trap_aux_wand(int m_idx, object_type *o_ptr)
 {
-	/* Monster pointer and position */
-	monster_type *m_ptr = &m_list[m_idx];
-	int y = m_ptr->fy;
-	int x = m_ptr->fx;
-
-	/* sval and bonus level of the wand */
-	int sval = o_ptr->sval;
-
-	/* Damage amount, type, and radius */
-	int dam = 0, typ = 0;
-	int rad = 0;
-
-	/* Depend on wand type */
-	switch (sval)
-	{
-
-#if 0 /* must be tested */
-
-	case SV_WAND_MANATHRUST:
-		typ = GF_MANA;
-		dam = damroll(3 + level, 1 + 2 * level / 5 );
-		break;
-
-	case SV_WAND_FIREFLASH:
-		typ = GF_FIRE;
-		dam = 20 + level * 10;
-		rad = 2 + level / 10;
-		break;
-
-	case SV_WAND_NOXIOUS_CLOUD:
-		typ = GF_POIS;
-		dam = 7 + 3 * level;
-		rad = 3;
-		break;
-
-	case SV_WAND_THUNDERSTORM:
-		typ = GF_ELEC;  /* GF_LITE, GF_SOUND ??? */
-		dam = damroll(5 + level / 5, 10 + level / 2);
-		break;
-
-	case SV_WAND_DIG:
-	case SV_WAND_THRAIN:
-		typ = GF_KILL_WALL;
-		dam = 20 + randint(30);
-		break;
-
-	case SV_WAND_STRIKE:
-		typ = GF_FORCE;
-		dam = 50 + level;
-		break;
-
-	case SV_WAND_TELEPORT_AWAY:
-		typ = GF_AWAY_ALL;
-		dam = MAX_SIGHT * 5;
-		break;
-
-	case SV_WAND_SUMMON_ANIMAL:
-		summon_specific(y, x, dun_level, SUMMON_ANIMAL);  /* friendly ?*/
-		return (FALSE);
-
-	case SV_WAND_SLOW_MONSTER:
-		typ = GF_OLD_SLOW;
-		dam = 40 + 16 * level / 5;
-		break;
-
-	case SV_WAND_BANISHMENT:
-		typ = GF_AWAY_ALL;
-		dam = 40 + 16 * level / 5;
-		rad = 9;  /* instead of LOS */
-		break;
-
-	case SV_WAND_CHARM:
-		typ = GF_CHARM;
-		dam = 10 + 3 * level;
-		break;
-
-	case SV_WAND_CONFUSE:
-		typ = GF_OLD_CONF;
-		dam = 10 + 3 * level;
-		break;
-
-	case SV_WAND_HEAL_MONSTER:
-		typ = GF_OLD_HEAL;
-		dam = 20 + 38 * level / 5;
-		break;
-
-	case SV_WAND_SPEED:
-	case SV_WAND_HASTE_MONSTER:
-		typ = GF_OLD_SPEED;
-		dam = damroll(5, 10);
-		break;
-
-	case SV_WAND_STONE_PRISON:
-		wall_stone(y, x);
-		return (FALSE);
-
-	case SV_WAND_DISPERSE_MAGIC:
-		m_ptr->confused = 0;
-		m_ptr->mspeed = 0;
-		return (FALSE);
-
-	case SV_WAND_ICE_STORM:
-		typ = GF_COLD;
-		dam = 80 + 4 * level;
-		rad = 1 + 3 * level / 50;
-		break;
-
-	case SV_WAND_TIDAL_WAVE:
-		typ = GF_WAVE;
-		dam = 40 + 4 * level;
-		rad = 6 + level / 5;
-		break;
-
-	case SV_WAND_FIREWALL:
-		typ = GF_FIRE;
-		dam = 40 + 3 * level;
-		rad = 1;  /*instead of beam*/
-
-		/* Not sure about these */
-	case SV_WAND_MAGELOCK:
-	case SV_WAND_DEMON_BLADE:
-	case SV_WAND_POISON_BLOOD:
-
-#endif
-
-	default:
-		return (FALSE);
-	}
-
-	/* Actually hit the monster */
-	(void) project( -2, rad, y, x, dam, typ, PROJECT_KILL | PROJECT_ITEM | PROJECT_JUMP);
-	return (cave[y][x].m_idx == 0 ? TRUE : FALSE);
+	return (FALSE);
 }
 
 /*
@@ -2940,9 +2719,6 @@ bool mon_hit_trap(int m_idx)
 {
 	monster_type *m_ptr = &m_list[m_idx];
 	monster_race *r_ptr = &r_info[m_ptr->r_idx];
-#if 0 /* DGDGDGDG */
-	monster_lore *l_ptr = &l_list[m_ptr->r_idx];
-#endif
 
 	object_type *kit_o_ptr, *load_o_ptr, *j_ptr;
 
@@ -3013,10 +2789,6 @@ bool mon_hit_trap(int m_idx)
 	/* Smart monsters are better at detecting traps */
 	if (r_ptr->flags2 & RF2_SMART) smartness += 10;
 
-	/* Some monsters are great at detecting traps */
-#if 0 /* DGDGDGDG */
-	if (r_ptr->flags2 & RF2_NOTICE_TRAP) smartness += 20;
-#endif
 	/* Some monsters have already noticed one of out traps */
 	if (m_ptr->smart & SM_NOTE_TRAP) smartness += 20;
 
@@ -3032,10 +2804,6 @@ bool mon_hit_trap(int m_idx)
 		/* The next traps will be easier to spot! */
 		m_ptr->smart |= SM_NOTE_TRAP;
 
-		/* Tell the player about it */
-#if 0 /* DGDGDGDG */
-		if (m_ptr->ml) l_ptr->r_flags2 |= (RF2_NOTICE_TRAP & r_ptr->flags2);
-#endif
 		/* Get trap disarming difficulty */
 		difficulty = (kit_o_ptr->ac + kit_o_ptr->to_a);
 
@@ -3043,14 +2811,6 @@ bool mon_hit_trap(int m_idx)
 		/* Higher level monsters are better */
 		smartness = r_ptr->level / 5;
 
-		/* Some monsters are great at disarming */
-#if 0 /* DGDGDGDG */
-		if (r_ptr->flags2 & RF2_DISARM_TRAP) smartness += 20;
-#endif
-		/* After disarming one trap, the next is easier */
-#if 0 /* DGDGDGDG */
-		if (m_ptr->status & STATUS_DISARM_TRAP) smartness += 20;
-#endif
 		/* Smart monsters are better at disarming */
 		if (r_ptr->flags2 & RF2_SMART) smartness *= 2;
 
@@ -3069,19 +2829,11 @@ bool mon_hit_trap(int m_idx)
 	{
 		remove = TRUE;
 
-		/* Next time disarming will be easier */
-#if 0 /* DGDGDGDG */
-		m_ptr->status |= STATUS_DISARM_TRAP;
-#endif
 		if (m_ptr->ml)
 		{
 			/* Get the name */
 			monster_desc(m_name, m_ptr, 0);
 
-			/* Tell the player about it */
-#if 0 /* DGDGDGDG */
-			l_ptr->r_flags2 |= (RF2_DISARM_TRAP & r_ptr->flags2);
-#endif
 			/* Print a message */
 			msg_format("%^s disarms a trap!", m_name);
 		}
@@ -3362,17 +3114,6 @@ bool mon_hit_trap(int m_idx)
 
 				while (shots-- && !dead)
 				{
-#if 0
-					/* Message if visible */
-					if (m_ptr->ml)
-					{
-						/* describe the monster (again, just in case :-) */
-						monster_desc(m_name, m_ptr, 0);
-
-						/* Print a message */
-						msg_format("%^s is hit by some magic.", m_name);
-					}
-#endif
 					/* Get the effect effect */
 					switch (load_o_ptr->tval)
 					{

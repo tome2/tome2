@@ -1617,11 +1617,6 @@ option_type option_info[] =
 
 	/*** Birth Options ***/
 
-#if 0 /* XXX free -- no more used */
-	{ &vanilla_town, FALSE, 6, 0,
-	  "vanilla_town", "Use 'vanilla' town without quests and wilderness" },
-#endif
-
 	{ &maximize, TRUE, 6, 1,
 	  "maximize", "Maximise stats" },
 
@@ -1633,10 +1628,7 @@ option_type option_info[] =
 
 	{ &point_based, FALSE, 6, 17,
 	  "point_based", "Generate character using a point system" },
-#if 0
-	{ &special_lvls, TRUE, 6, 4,
-	  "special_lvls", "Allow the use of special, unique, levels" },
-#endif
+
 	{ &ironman_rooms, FALSE, 6, 6,
 	  "ironman_rooms", "Always generate very unusual rooms" },
 
@@ -1646,10 +1638,6 @@ option_type option_info[] =
 	{ &auto_notes, TRUE, 6, 8,
 	  "auto_notes", "Automatically note important events" },
 
-#if 0 /* when Ill get some ideas */
-	{ &rand_birth, FALSE, 6, 9,
-	  "rand_birth", "Random present at birth" },
-#endif
 	{ &fast_autoroller, FALSE, 6, 10,
 	  "fast_autoroller", "Fast autoroller(NOT on multiuser systems)" },
 
@@ -2923,9 +2911,6 @@ activation activation_info[MAX_T_ACT] =
 	{ "corruption", 100, ACT_MUT },
 	{ "cure insanity", 2000, ACT_CURE_INSANITY },
 	{ "light absortion", 800, ACT_LIGHT_ABSORBTION },
-#if 0 /* No more for the time being, ehehhe evil I am :> */
-	{ "cure corruption", 2000, ACT_CURE_MUT },
-#endif
 };
 
 /*

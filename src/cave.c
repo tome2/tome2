@@ -4927,29 +4927,6 @@ void mmove2(int *y, int *x, int y1, int x1, int y2, int x2)
 	/* Move mostly vertically */
 	if (dy > dx)
 	{
-
-#if 0
-
-		int k;
-
-		/* Starting shift factor */
-		shift = dy >> 1;
-
-		/* Extract a shift factor */
-		for (k = 0; k < dist; k++)
-		{
-			if (shift <= 0) shift += dy;
-			shift -= dx;
-		}
-
-		/* Sometimes move along minor axis */
-		if (shift <= 0) (*x) = (x2 < x1) ? (*x - 1) : (*x + 1);
-
-		/* Always move along major axis */
-		(*y) = (y2 < y1) ? (*y - 1) : (*y + 1);
-
-#endif
-
 		/* Extract a shift factor */
 		shift = (dist * dx + (dy - 1) / 2) / dy;
 
@@ -4963,29 +4940,6 @@ void mmove2(int *y, int *x, int y1, int x1, int y2, int x2)
 	/* Move mostly horizontally */
 	else
 	{
-
-#if 0
-
-		int k;
-
-		/* Starting shift factor */
-		shift = dx >> 1;
-
-		/* Extract a shift factor */
-		for (k = 0; k < dist; k++)
-		{
-			if (shift <= 0) shift += dx;
-			shift -= dy;
-		}
-
-		/* Sometimes move along minor axis */
-		if (shift <= 0) (*y) = (y2 < y1) ? (*y - 1) : (*y + 1);
-
-		/* Always move along major axis */
-		(*x) = (x2 < x1) ? (*x - 1) : (*x + 1);
-
-#endif
-
 		/* Extract a shift factor */
 		shift = (dist * dy + (dx - 1) / 2) / dx;
 

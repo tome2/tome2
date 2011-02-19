@@ -392,11 +392,6 @@ static s32b price_item(object_type *o_ptr, int greed, bool flip)
 	/* Add in the charisma factor */
 	factor += adj_chr_gold[p_ptr->stat_ind[A_CHR]];
 
-	/* Hack - merchants have better prices */
-#if 0 /* DGDGDGDG -- use a skill */
-	if (cp_ptr->magic_key == MKEY_TELEKINESIS)
-		factor -= p_ptr->lev / 2;
-#endif
 	/* Shop is buying */
 	if (flip)
 	{
@@ -1594,13 +1589,7 @@ void display_store(void)
 	/* The "Home" is special */
 	if (cur_store_num == 7)
 	{
-		/* Put the owner name -- mega hack */
-#if 0 /* DGDGDGDG -- use a skill */
-		if ((cp_ptr->magic_key == MKEY_TELEKINESIS) &&
-		                (p_ptr->town_num == TOWN_RANDOM)) put_str("Hole Contents", 3, 30);
-		else
-#endif
-			put_str("Your Home", 3, 30);
+		put_str("Your Home", 3, 30);
 
 		/* Label the item descriptions */
 		put_str("Item Description", 5, 3);
@@ -3026,17 +3015,6 @@ void store_sell(void)
 		}
 	}
 
-
-	/* Hack -- Cannot put a portable hole into home */
-#if 0 /* DGDGDGDG -- use a skill */
-	if ((cp_ptr->magic_key == MKEY_TELEKINESIS) &&
-	                (o_ptr->tval == TV_TOOL) && (o_ptr->sval == SV_PORTABLE_HOLE))
-	{
-		msg_print("Putting it into your home has extra-dimensional problems");
-
-		return;
-	}
-#endif
 
 	/* Assume one item */
 	amt = 1;
@@ -4487,14 +4465,6 @@ void store_request_item(void)
 	object_type forge, *q_ptr = &forge;
 	store_type *ost_ptr = st_ptr;
 
-	/* Paranoia */
-#if 0 /* DGDGDGDG -- use a skill */
-	if (cp_ptr->magic_key == MKEY_TELEKINESIS)
-	{
-		st_ptr = ost_ptr;
-		return;
-	}
-#endif
 	/* Get the Black Market */
 	st_ptr = &town_info[p_ptr->town_num].store[6];
 

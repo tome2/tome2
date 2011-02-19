@@ -135,23 +135,6 @@ static void roff_aux(int r_idx, int ego, int remem)
 
 
 
-#if 0
-
-	/* Nothing erased */
-	roff_old = 0;
-
-	/* Reset the row */
-	roff_row = 1;
-
-	/* Reset the pointer */
-	roff_p = roff_buf;
-
-	/* No spaces yet */
-	roff_s = NULL;
-
-#endif
-
-
 	/* Access the race and lore */
 	r_ptr = race_info_idx(r_idx, ego);
 

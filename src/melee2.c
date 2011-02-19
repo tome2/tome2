@@ -693,11 +693,6 @@ static bool spell_annoy(byte spell)
 	/* Teleport to */
 	if (spell == 160 + 6) return (TRUE);
 
-#if 0
-	/* Hand of Doom */
-	if (spell == 160 + 1) return (TRUE);
-#endif
-
 	/* Darkness, make traps, cause amnesia */
 	if (spell >= 160 + 9 && spell <= 160 + 11) return (TRUE);
 
@@ -1154,9 +1149,6 @@ static bool monst_spell_monst(int m_idx)
 				if (disturb_other) disturb(1, 0);
 				if (!see_m) monster_msg("You hear a shriek.");
 				else monster_msg("%^s shrieks at %s.", m_name, t_name);
-#if 0
-				aggravate_monsters(m_idx);
-#endif
 				wake_up = TRUE;
 				break;
 			}
@@ -2689,14 +2681,6 @@ static bool monst_spell_monst(int m_idx)
 				{
 					count += summon_specific(y, x, rlev, SUMMON_WRAITH);
 				}
-
-#if 0
-				/* these are not Lords of Amber... */
-				for (k = 0; k < 12; k++)
-				{
-					count += summon_specific(y, x, rlev, SUMMON_HI_UNDEAD);
-				}
-#endif
 
 				if (blind && count)
 				{
@@ -4603,14 +4587,6 @@ bool make_attack_spell(int m_idx)
 				{
 					count += summon_specific(y, x, rlev, SUMMON_WRAITH);
 				}
-
-#if 0
-				/* these are not Lords of Amber... */
-				for (k = 0; k < 12; k++)
-				{
-					count += summon_specific(y, x, rlev, SUMMON_HI_UNDEAD);
-				}
-#endif
 
 				if (blind && count)
 				{
@@ -6872,12 +6848,6 @@ static void process_monster(int m_idx, bool is_frien)
 					/* Door power */
 					k = ((c_ptr->feat - FEAT_DOOR_HEAD) & 0x07);
 
-#if 0
-					/* XXX XXX XXX Old test (pval 10 to 20) */
-					if (randint((m_ptr->hp + 1) * (50 + o_ptr->pval)) <
-					                40 * (m_ptr->hp - 10 - o_ptr->pval));
-#endif
-
 					/* Try to unlock it XXX XXX XXX */
 					if (rand_int(m_ptr->hp / 10) > k)
 					{
@@ -6898,12 +6868,6 @@ static void process_monster(int m_idx, bool is_frien)
 
 				/* Door power */
 				k = ((c_ptr->feat - FEAT_DOOR_HEAD) & 0x07);
-
-#if 0
-				/* XXX XXX XXX Old test (pval 10 to 20) */
-				if (randint((m_ptr->hp + 1) * (50 + o_ptr->pval)) <
-				                40 * (m_ptr->hp - 10 - o_ptr->pval));
-#endif
 
 				/* Attempt to Bash XXX XXX XXX */
 				if (rand_int(m_ptr->hp / 10) > k)
@@ -7033,11 +6997,6 @@ static void process_monster(int m_idx, bool is_frien)
 		if (do_move && (ny == p_ptr->py) && (nx == p_ptr->px) &&
 		                (r_ptr->flags1 & RF1_NEVER_BLOW))
 		{
-#if 0
-			/* Hack -- memorize lack of attacks */
-			if (m_ptr->ml) r_ptr->r_flags1 |= (RF1_NEVER_BLOW);
-#endif
-
 			/* Do not move */
 			do_move = FALSE;
 		}

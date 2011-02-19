@@ -713,109 +713,6 @@ void touch_zap_player(monster_type *m_ptr)
 	}
 }
 
-#if 0 /* not used, eliminates a compiler warning */
-static void natural_attack(s16b m_idx, int attack, bool *fear, bool *mdeath)
-{
-	int k, bonus, chance;
-
-	int n_weight = 0;
-	bool done_crit;
-
-	monster_type *m_ptr = &m_list[m_idx];
-
-	char m_name[80];
-
-	int dss, ddd;
-
-	char *atk_desc;
-
-
-	switch (attack)
-	{
-	default:
-		{
-			dss = ddd = n_weight = 1;
-			atk_desc = "undefined body part";
-
-			break;
-		}
-	}
-
-	/* Extract monster name (or "it") */
-	monster_desc(m_name, m_ptr, 0);
-
-
-	/* Calculate the "attack quality" */
-	bonus = p_ptr->to_h;
-	chance = (p_ptr->skill_thn + (bonus * BTH_PLUS_ADJ));
-
-	/* Test for hit */
-	if (test_hit_norm(chance, m_ptr->ac, m_ptr->ml))
-	{
-		/* Sound */
-		sound(SOUND_HIT);
-
-		msg_format("You hit %s with your %s.", m_name, atk_desc);
-
-		k = damroll(ddd, dss);
-		k = critical_norm(n_weight, p_ptr->to_h, k, -1, &done_crit);
-
-		/* Apply the player damage bonuses */
-		k += p_ptr->to_d;
-
-		/* No negative damage */
-		if (k < 0) k = 0;
-
-		/* Complex message */
-		if (wizard)
-		{
-			msg_format("You do %d (out of %d) damage.", k, m_ptr->hp);
-		}
-
-		switch (is_friend(m_ptr))
-		{
-		case 1:
-			{
-				msg_format("%^s gets angry!", m_name);
-				change_side(m_ptr);
-
-				break;
-			}
-
-		case 0:
-			{
-				msg_format("%^s gets angry!", m_name);
-				m_ptr->status = MSTATUS_NEUTRAL_M;
-
-				break;
-			}
-		}
-
-		/* Damage, check for fear and mdeath */
-		switch (attack)
-		{
-		default:
-			{
-				*mdeath = mon_take_hit(m_idx, k, fear, NULL);
-				break;
-			}
-		}
-
-		touch_zap_player(m_ptr);
-	}
-
-	/* Player misses */
-	else
-	{
-		/* Sound */
-		sound(SOUND_MISS);
-
-		/* Message */
-		msg_format("You miss %s.", m_name);
-	}
-}
-
-#endif
 
 /*
  * Carried monster can attack too.
@@ -910,13 +807,6 @@ static void carried_monster_attack(s16b m_idx, bool *fear, bool *mdeath,
 
 		/* Extract visibility (before blink) */
 		visible = TRUE;
-
-#if 0
-
-		/* Extract visibility from carrying lite */
-		if (r_ptr->flags9 & RF9_HAS_LITE) visible = TRUE;
-
-#endif /* 0 */
 
 		/* Extract the attack "power" */
 		switch (effect)
@@ -1553,13 +1443,6 @@ static void incarnate_monster_attack(s16b m_idx, bool *fear, bool *mdeath,
 
 		/* Extract visibility (before blink) */
 		visible = TRUE;
-
-#if 0
-
-		/* Extract visibility from carrying lite */
-		if (r_ptr->flags9 & RF9_HAS_LITE) visible = TRUE;
-
-#endif /* 0 */
 
 		/* Extract the attack "power" */
 		switch (effect)
@@ -3793,31 +3676,6 @@ void move_player_aux(int dir, int do_pickup, int run, bool disarm)
 			/* Hack -- Enter store */
 			command_new = '_';
 		}
-
-#if 0 /* These are noxious -- pelpel */
-
-		/* Handle quest areas -KMW- */
-		else if (cave[y][x].feat == FEAT_QUEST_ENTER)
-		{
-			/* Disturb */
-			disturb(0, 0);
-
-			/* Hack -- Enter quest level */
-			command_new = '[';
-		}
-
-		else if (cave[y][x].feat == FEAT_QUEST_EXIT)
-		{
-			leaving_quest = p_ptr->inside_quest;
-
-			p_ptr->inside_quest = cave[y][x].special;
-			dun_level = 0;
-			p_ptr->oldpx = 0;
-			p_ptr->oldpy = 0;
-			p_ptr->leaving = TRUE;
-		}
-
-#endif /* 0 */
 
 		else if (cave[y][x].feat >= FEAT_ALTAR_HEAD &&
 		                cave[y][x].feat <= FEAT_ALTAR_TAIL)

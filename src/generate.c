@@ -6488,36 +6488,6 @@ static bool possible_doorway(int y, int x)
 }
 
 
-#if 0
-
-/*
- * Places door at y, x position if at least 2 walls found
- */
-static void try_door(int y, int x)
-{
-	/* Paranoia */
-	if (!in_bounds(y, x)) return;
-
-	/* Some dungeons don't have doors at all */
-	if (dungeon_flags1 & (DF1_NO_DOORS)) return;
-
-	/* Ignore walls */
-	if (f_info[cave[y][x].feat].flags1 & FF1_WALL) return;
-
-	/* Ignore room grids */
-	if (cave[y][x].info & (CAVE_ROOM)) return;
-
-	/* Occasional door (if allowed) */
-	if (possible_doorway(y, x) && (rand_int(100) < DUN_TUN_JCT))
-	{
-		/* Place a door */
-		place_random_door(y, x);
-	}
-}
-
-#endif /* 0 */
-
-
 /*
  * Places doors around y, x position
  */

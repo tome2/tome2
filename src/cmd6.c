@@ -2381,9 +2381,6 @@ static bool quaff_potion(int tval, int sval, int pval, int pval2)
 		case SV_POTION_NEW_LIFE:
 			{
 				do_cmd_rerate();
-#if 0 /* DGDGDGDG -- No, losing corruption should be near impossible, maybe a quest to do it once but thats it */
-				lose_all_corruptions();
-#endif
 				ident = TRUE;
 
 				break;
@@ -6370,11 +6367,7 @@ const char *activation_aux(object_type * o_ptr, bool doit, int item)
 		case ACT_TERROR:
 			{
 				if (!doit) return "terror every 3 * (level+10) turns";
-#if 0
-				for (i = 0; i < 8; i++) fear_monster(ddd[i], (p_ptr->lev) + 10);
-#else
-turn_monsters(40 + p_ptr->lev);
-#endif
+				turn_monsters(40 + p_ptr->lev);
 
 				o_ptr->timeout = 3 * (p_ptr->lev + 10);
 
@@ -7418,10 +7411,7 @@ turn_monsters(40 + p_ptr->lev);
 
 		case ACT_CURE_MUT:
 			{
-#if 0 // DGDGDGD
-#else
 				msg_print("Ahah, you wish.");
-#endif
 				/* Timeout is set before return */
 
 				break;

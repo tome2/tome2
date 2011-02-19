@@ -13,58 +13,6 @@
 #include "angband.h"
 
 /*
- * adds n flags to o_ptr chosen randomly from the masks f1..f4
- */
-#if 0
-static void enhance_random(object_type *o_ptr, int n, u32b f1, u32b f2, u32b f3, u32b f4)
-{
-	int counter = 0, null_mask;
-	u32b *f, *t, x;
-
-	while (n)
-	{
-		/* inefficient, but simple */
-		x = BIT(rand_int(32));
-		switch (randint(4))
-		{
-		case 1:
-			null_mask = TR1_NULL_MASK;
-			f = &f1;
-			t = &o_ptr->art_flags1;
-			break;
-		case 2:
-			null_mask = TR2_NULL_MASK;
-			f = &f2;
-			t = &o_ptr->art_flags2;
-			break;
-		case 3:
-			null_mask = TR3_NULL_MASK;
-			f = &f3;
-			t = &o_ptr->art_flags3;
-			break;
-		case 4:
-			null_mask = TR4_NULL_MASK;
-			f = &f4;
-			t = &o_ptr->art_flags4;
-			break;
-		default:
-			null_mask = 0;
-			f = t = NULL;
-			return;
-		}
-		if (++counter > 10000) break;
-		if (x & null_mask) continue;
-		if (!(x & *f)) continue;
-		if (x & *t) continue;
-		/* success */
-		*f &= ~x;
-		*t |= x;
-		n--;
-	}
-}
-#endif
-
-/*
  * Calculate the player's total inventory weight.
  */
 s32b calc_total_weight(void)
@@ -1283,10 +1231,6 @@ s32b object_value_real(object_type *o_ptr)
 	case TV_TRAPKIT:
 	case TV_INSTRUMENT:
 		{
-#if 0 /* DG - no */
-			/* Hack -- Negative "pval" is always bad */
-			if (o_ptr->pval < 0) return (0L);
-#endif
 			/* No pval */
 			if (!o_ptr->pval) break;
 
@@ -1805,15 +1749,6 @@ bool object_similar(object_type *o_ptr, object_type *j_ptr)
 
 			/* Require identical "artifact" names */
 			if (o_ptr->name1 != j_ptr->name1) return (FALSE);
-
-			/* Random artifacts never stack */
-			/*
-			    I don't see why these shouldn't stack.
-				-- wilh
-			*/
-#if 0
-			if (o_ptr->art_name || j_ptr->art_name) return (FALSE);
-#endif
 
 			/* Require identical "ego-item" names */
 			if (o_ptr->name2 != j_ptr->name2) return (FALSE);
@@ -3540,14 +3475,6 @@ static void a_m_aux_4(object_type *o_ptr, int level, int power)
 
 	case TV_TOOL:
 		{
-			/* Hack - set the weight of portable holes */
-#if 0 /* DGDGDGDG -- use a skill */
-			if ((o_ptr->sval == SV_PORTABLE_HOLE) &&
-			                (cp_ptr->magic_key == MKEY_TELEKINESIS))
-			{
-				o_ptr->weight = portable_hole_weight();
-			}
-#endif
 			break;
 		}
 
@@ -4245,15 +4172,7 @@ void apply_magic(object_type *o_ptr, int lev, bool okay, bool good, bool great)
 	case TV_GLOVES:
 	case TV_BOOTS:
 		{
-#if 0
-			if (power ||
-			                ((o_ptr->tval == TV_HELM) && (o_ptr->sval == SV_DRAGON_HELM)) ||
-			                ((o_ptr->tval == TV_SHIELD) && (o_ptr->sval == SV_DRAGON_SHIELD)) ||
-			                ((o_ptr->tval == TV_CLOAK) && (o_ptr->sval == SV_ELVEN_CLOAK)))
-				a_m_aux_2(o_ptr, lev, power);
-#else
 			a_m_aux_2(o_ptr, lev, power);
-#endif
 			break;
 		}
 

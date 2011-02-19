@@ -729,11 +729,6 @@ static void wiz_tweak_item(object_type *o_ptr)
 	object_flags(o_ptr, &f1, &f2, &f3, &f4, &f5, &esp);
 
 
-#if 0 /* DG -- A Wizard can do whatever he/she wants */
-	/* Hack -- leave artifacts alone */
-	if (artifact_p(o_ptr) || o_ptr->art_name) return;
-#endif
-
 	p = "Enter new 'pval' setting: ";
 	sprintf(tmp_val, "%ld", (long int) o_ptr->pval);
 	if (!get_string(p, tmp_val, 5)) return;

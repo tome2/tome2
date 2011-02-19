@@ -1027,129 +1027,6 @@ void apply_effect(int y, int x)
 }
 
 
-#if 0
-/*
- * Activate corruptions' effects on player
- *
- * All the rolls against arbitrarily chosen numbers are normalised
- * (i.e. zero). They might have some cabalistic(?) significance,
- * but I seriously doubt if processors take care of the Judeo-Christian
- * tradition :) -- pelpel
- */
-static void process_corruption_effects(void)
-{}
-
-#endif
-
-
-
-#ifdef pelpel
-
-/*
- * Handle staying spell effects once every 10 game turns
- */
-static void process_effects(void)
-{
-	int i, j;
-
-	/* Every 10 game turns */
-	if (turn % 10) return;
-
-	/* Not in the small-scale wilderness map */
-	if (p_ptr->wild_mode) return;
-
-
-	/* Handle spell effects */
-	for (j = 0; j < cur_hgt - 1; j++)
-	{
-		for (i = 0; i < cur_wid - 1; i++)
-		{
-			int e = cave[j][i].effect;
-
-			if (e)
-			{
-				effect_type *e_ptr = &effects[e];
-
-				if (e_ptr->time)
-				{
-					/* Apply damage */
-					project(0, 0, j, i, e_ptr->dam, e_ptr->type,
-					        PROJECT_KILL | PROJECT_ITEM | PROJECT_HIDE);
-				}
-				else
-				{
-					cave[j][i].effect = 0;
-				}
-
-				/* Hack -- notice death */
-				if (!alive || death) return;
-
-				if (((e_ptr->flags & EFF_WAVE) && !(e_ptr->flags & EFF_LAST)) || ((e_ptr->flags & EFF_STORM) && !(e_ptr->flags & EFF_LAST)))
-				{
-					if (distance(e_ptr->cy, e_ptr->cx, j, i) < e_ptr->rad - 1)
-						cave[j][i].effect = 0;
-				}
-			}
-		}
-	}
-
-
-	/* Reduce & handle effects */
-	for (i = 0; i < MAX_EFFECTS; i++)
-	{
-		/* Skip empty slots */
-		if (effects[i].time == 0) continue;
-
-		/* Reduce duration */
-		effects[i].time--;
-
-		/* Creates a "wave" effect*/
-		if (effects[i].flags & EFF_WAVE)
-		{
-			effect_type *e_ptr = &effects[i];
-			int x, y;
-
-			e_ptr->rad++;
-			for (y = e_ptr->cy - e_ptr->rad; y <= e_ptr->cy + e_ptr->rad; y++)
-			{
-				for (x = e_ptr->cx - e_ptr->rad; x <= e_ptr->cx + e_ptr->rad; x++)
-				{
-					if (!in_bounds(y, x)) continue;
-
-					if (los(e_ptr->cy, e_ptr->cx, y, x) &&
-					                (distance(e_ptr->cy, e_ptr->cx, y, x) == e_ptr->rad))
-						cave[y][x].effect = i;
-				}
-			}
-		}
-		/* Creates a "storm" effect*/
-		else if (effects[i].flags & EFF_STORM)
-		{
-			effect_type *e_ptr = &effects[i];
-			int x, y;
-
-			e_ptr->cy = p_ptr->py;
-			e_ptr->cx = p_ptr->px;
-			for (y = e_ptr->cy - e_ptr->rad; y <= e_ptr->cy + e_ptr->rad; y++)
-			{
-				for (x = e_ptr->cx - e_ptr->rad; x <= e_ptr->cx + e_ptr->rad; x++)
-				{
-					if (!in_bounds(y, x)) continue;
-
-					if (los(e_ptr->cy, e_ptr->cx, y, x) &&
-					                (distance(e_ptr->cy, e_ptr->cx, y, x) == e_ptr->rad))
-						cave[y][x].effect = i;
-				}
-			}
-		}
-	}
-
-	/* Apply sustained effect in the player grid, if any */
-	apply_effect(p_ptr->py, p_ptr->px);
-}
-
-#endif /* pelpel */
-
 
 /* XXX XXX XXX */
 bool is_recall = FALSE;
@@ -2482,8 +2359,6 @@ static void process_world(void)
 		}
 	}
 
-#ifndef pelpel
-
 	/* handle spell effects */
 	if (!p_ptr->wild_mode)
 	{
@@ -2690,8 +2565,6 @@ static void process_world(void)
 
 		apply_effect(p_ptr->py, p_ptr->px);
 	}
-
-#endif /* !pelpel */
 
 	/* Arg cannot breath? */
 	if ((dungeon_flags2 & DF2_WATER_BREATH) && (!p_ptr->water_breath))
@@ -3657,18 +3530,6 @@ static void process_command(void)
 			if (!p_ptr->wild_mode) do_cmd_store();
 			break;
 		}
-
-#if 0 /* Merged with the '>' command -- pelpel */
-
-		/* Enter quest level -KMW- */
-	case '[':
-		{
-			if (p_ptr->control) break;
-			if (!p_ptr->wild_mode) do_cmd_quest();
-			break;
-		}
-
-#endif /* 0 */
 
 		/* Go up staircase */
 	case '<':
@@ -5274,35 +5135,6 @@ static void dungeon(void)
 
 		/* Hack -- Notice death or departure */
 		if (!alive || death) break;
-
-
-#ifdef pelpel
-
-		/* Process spell effects */
-		process_effects();
-
-		/* Notice stuff */
-		if (p_ptr->notice) notice_stuff();
-
-		/* Update stuff */
-		if (p_ptr->update) update_stuff();
-
-		/* Redraw stuff */
-		if (p_ptr->redraw) redraw_stuff();
-
-		/* Redraw stuff */
-		if (p_ptr->window) window_stuff();
-
-		/* Hack -- Hilite the player */
-		move_cursor_relative(p_ptr->py, p_ptr->px);
-
-		/* Optional fresh */
-		if (fresh_after) Term_fresh();
-
-		/* Hack -- Notice death or departure */
-		if (!alive || death) break;
-
-#endif /* pelpel */
 
 
 		total_friends = 0;

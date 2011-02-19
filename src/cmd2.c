@@ -193,17 +193,7 @@ void do_cmd_go_up(void)
 	if (go_up || go_up_many)
 	{
 
-#if 0
-		/*
-		 * I'm experimenting without this... otherwise the monsters get to
-		 * act first when we go up stairs, theoretically resulting in a possible
-		 * insta-death.
-		 */
-		/* Hack -- take a turn */
-		energy_use = 100;
-#else
-energy_use = 0;
-#endif
+		energy_use = 0;
 
 		/* Success */
 		if (c_ptr->feat == FEAT_WAY_LESS)
@@ -266,15 +256,6 @@ static bool between_effect(void)
 
 	if (cave[p_ptr->py][p_ptr->px].feat == FEAT_BETWEEN)
 	{
-#if 0							/* The Between is out of the space-time continuum anyway */
-
-		if (p_ptr->resist_continuum)
-		{
-			msg_print("The space-time continuum can't be disrupted.");
-			return (TRUE);
-		}
-
-#endif
 
 		bx = cave[p_ptr->py][p_ptr->px].special & 255;
 		by = cave[p_ptr->py][p_ptr->px].special >> 8;
@@ -445,13 +426,7 @@ void do_cmd_go_down(void)
 
 	if (go_down || go_down_many)
 	{
-
-#if 0
-		/* Hack -- take a turn */
-		energy_use = 100;
-#else
 		energy_use = 0;
-#endif
 
 		if (fall_trap)
 			msg_print("You deliberately jump through the trap door.");
@@ -2536,15 +2511,6 @@ void do_cmd_alter(void)
 			py_attack(y, x, -1);
 		}
 
-#if 0
-		/* Bash jammed doors */
-		else if ((c_ptr->feat >= FEAT_DOOR_HEAD + 0x08) &&
-		                (c_ptr->feat <= FEAT_DOOR_TAIL))
-		{
-			/* Tunnel */
-			more = do_cmd_bash_aux(y, x, dir);
-		}
-#endif
 		/* Open closed doors */
 		else if ((c_ptr->feat >= FEAT_DOOR_HEAD) &&
 		                (c_ptr->feat <= FEAT_DOOR_TAIL))
@@ -3151,29 +3117,6 @@ void do_cmd_fire(void)
 		return;
 	}
 
-#if 0							/* Old code without the quiver slot */
-
-	/* Require proper missile */
-	item_tester_tval = p_ptr->tval_ammo;
-
-	/* Get an item */
-	q = "Fire which item? ";
-	s = "You have nothing to fire.";
-	if (!get_item(&item, q, s, (USE_INVEN | USE_FLOOR))) return;
-
-
-	/* Access the item (if in the pack) */
-	if (item >= 0)
-	{
-		o_ptr = &p_ptr->inventory[item];
-	}
-	else
-	{
-		o_ptr = &o_list[0 - item];
-	}
-
-#else  /* New code with the quiver slot */
-
 	/* Get the "ammo" (if any) */
 	o_ptr = &p_ptr->inventory[INVEN_AMMO];
 
@@ -3202,7 +3145,6 @@ void do_cmd_fire(void)
 		}
 	}
 
-#endif
 
 	/* Get a direction (or cancel) */
 	if (!get_aim_dir(&dir)) return;
@@ -4322,17 +4264,6 @@ void do_cmd_unwalk()
 
 
 	if (!get_rep_dir(&dir)) return;
-
-#if 0							/* No more, but there are penalities */
-
-	/* A mold can't blink in small scale mode */
-	if (p_ptr->wild_mode)
-	{
-		msg_print("You cannot move in the overview display.");
-		return;
-	}
-
-#endif
 
 	y = p_ptr->py + ddy[dir];
 	x = p_ptr->px + ddx[dir];

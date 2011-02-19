@@ -70,45 +70,6 @@ static struct luaL_reg tome_iolib[] =
 #define luaL_check_bit(L, n)  ((long)luaL_check_number(L, n))
 #define luaL_check_ubit(L, n) ((unsigned long)luaL_check_bit(L, n))
 
-#if 0
-
-/*
- * Nuked because they can confuse some compilers (lcc for example),
- * and because of their obscurity -- pelpel
- */
-
-#define TDYADIC(name, op, t1, t2) \
-static int int_ ## name(lua_State* L) { \
-lua_pushnumber(L, \
-luaL_check_ ## t1 ## bit(L, 1) op luaL_check_ ## t2 ## bit(L, 2)); \
-return 1; \
-}
-
-#define DYADIC(name, op) \
-static int int_ ## name(lua_State* L) { \
-lua_pushnumber(L, \
-luaL_check_bit(L, 1) op luaL_check_bit(L, 2)); \
-return 1; \
-}
-
-#define MONADIC(name, op) \
-static int int_ ## name(lua_State* L) { \
-lua_pushnumber(L, op luaL_check_bit(L, 1)); \
-return 1; \
-}
-
-#define VARIADIC(name, op) \
-static int int_ ## name(lua_State *L) { \
-int n = lua_gettop(L), i; \
-long w = luaL_check_bit(L, 1); \
-for (i = 2; i <= n; i++) \
-w op ## = luaL_check_bit(L, i); \
-lua_pushnumber(L, w); \
-return 1; \
-}
-
-#endif
-
 
 /*
  * Monadic bit negation operation

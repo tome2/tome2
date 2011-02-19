@@ -1884,7 +1884,6 @@ extern s16b get_melee_skills(void);
 extern s16b get_melee_skill(void);
 extern bool forbid_gloves(void);
 extern bool forbid_non_blessed(void);
-extern int validate_autoskiller(s32b *ideal);
 extern void compute_skills(s32b *v, s32b *m, int i);
 extern void select_default_melee(void);
 extern void do_get_new_skill(void);

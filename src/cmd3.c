@@ -734,22 +734,6 @@ void do_cmd_destroy(void)
 		automatizer_add_rule(o_ptr, TRUE);
 	}
 
-#if 0 /* DGDGDGDG -- use a skill */
-	if (cp_ptr->magic_key == MKEY_TELEKINESIS)
-	{
-		/* Good merchants don't break anything... */
-		s32b value = object_value_real(o_ptr);
-
-		if (value < 0) value = -value;
-
-		/* ... otherwise they lose some experience */
-		value = value * amt / 10;
-		if (value == 0) value = 1;
-
-		lose_exp(value);
-		msg_print("Good merchants should not break anything...");
-	}
-#endif
 	/*
 	 * Hack -- If rods or wand are destroyed, the total maximum timeout or
 	 * charges of the stack needs to be reduced, unless all the items are
@@ -2143,12 +2127,6 @@ void set_portable_hole_weight(void)
 {
 	s32b weight, i, j;
 
-
-	/* Portable holes can be used only by merchants */
-#if 0 /* DGDGDGDG -- use a skill */
-	if (cp_ptr->magic_key == MKEY_TELEKINESIS) return;
-#endif
-
 	/* Calculate the weight of items in home */
 	weight = portable_hole_weight();
 
@@ -2200,12 +2178,6 @@ void do_cmd_portable_hole(void)
 	cave_type *c_ptr = &cave[p_ptr->py][p_ptr->px];
 
 	int feat, special, town_num;
-
-
-	/* Portable holes can be used only by merchants */
-#if 0 /* DGDGDGDG -- use a skill */
-	if (cp_ptr->magic_key != MKEY_TELEKINESIS) return;
-#endif
 
 	/* Is it currently wielded? */
 	if (!p_ptr->inventory[INVEN_TOOL].k_idx ||

@@ -4537,7 +4537,6 @@ bool monk_heavy_armor(void)
 static int get_artifact_idx(int level)
 {
 	int count = 0, i;
-	bool OK = FALSE;
 
 	while (count < 1000)
 	{
@@ -4557,23 +4556,12 @@ static int get_artifact_idx(int level)
 		/* Avoid granting SPECIAL_GENE artifacts */
 		if (a_ptr->flags4 & TR4_SPECIAL_GENE) continue;
 
-		OK = TRUE;
-		break;
+		return i;
 	}
 
 	/* No matches found */
-	if (OK == FALSE)
-	{
-#if 0 /* pelpel */
-		/* XXX XXX XXX Grant the Phial */
-		i = 1;
-#endif /* pelpel */
-
-		/* Grant a randart */
-		i = 0;
-	}
-
-	return i;
+	/* Grant a randart */
+	return 0;
 }
 
 /* Chose a fate */

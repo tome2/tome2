@@ -1767,19 +1767,6 @@ void update_mon(int m_idx, bool full)
 	}
 
 
-#if 0
-
-	/* Process monster light for a monster within MAX_SIGHT + max radius */
-	if (m_ptr->cdis <= MAX_SIGHT + 1)
-	{
-		if (r_ptr->flags9 & RF9_HAS_LITE)
-		{
-			p_ptr->update |= (PU_MON_LITE);
-		}
-	}
-
-#endif
-
 	/* Process "distant" monsters */
 	if (m_ptr->cdis > MAX_SIGHT)
 	{
@@ -1870,11 +1857,6 @@ void update_mon(int m_idx, bool full)
 			}
 		}
 
-		/* Merchants sense objects */
-#if 0 /* DGDGDGDG -- use a skill */
-		if ((cp_ptr->magic_key == MKEY_TELEKINESIS) && (p_ptr->lev >= 20) &&
-		                (m_ptr->hold_o_idx)) flag = TRUE;
-#endif
 		/* Apply "detection" spells */
 		if (m_ptr->mflag & (MFLAG_MARK)) flag = TRUE;
 
@@ -2303,26 +2285,8 @@ s16b place_monster_one(int y, int x, int r_idx, int ego, bool slp, int status)
 		return 0;
 	}
 
-	/* Anyway that doesn't work .... hum... TO FIX -- DG */
-#if 0
-	/* Hack -- non "town" monsters are NEVER generated in town */
-	if ((!(r_ptr->flags8 & (RF8_WILD_TOWN))) && (wf_info[wild_map[p_ptr->wilderness_y][p_ptr->wilderness_x].feat].terrain_idx == TERRAIN_TOWN) && !dun_level)
-	{
-		/* Cannot create */
-		if (place_monster_one_race) KILL(place_monster_one_race, monster_race);
-		return (0);
-	}
-#endif
 	/* Hack -- "unique" monsters must be "unique" */
-#if 0
-	if ((r_ptr->flags1 & (RF1_UNIQUE)) && (r_ptr->cur_num >= r_ptr->max_num) && (!m_allow_special[r_idx]))
-#else
-#if 0
-	if ((r_ptr->flags1 & (RF1_UNIQUE)) && (r_ptr->cur_num >= r_ptr->max_num) && (!m_allow_special[r_idx]) && (r_ptr->max_num != -1))
-#else
-		if ((r_ptr->flags1 & (RF1_UNIQUE)) && (r_ptr->cur_num >= r_ptr->max_num) && (r_ptr->max_num != -1) && (!bypass_r_ptr_max_num))
-#endif
-#endif
+	if ((r_ptr->flags1 & (RF1_UNIQUE)) && (r_ptr->cur_num >= r_ptr->max_num) && (r_ptr->max_num != -1) && (!bypass_r_ptr_max_num))
 	{
 		/* Cannot create */
 		if (wizard) cmsg_format(TERM_L_RED, "WARNING: Refused monster %d: cur_num >= max_num", r_idx);
@@ -3825,11 +3789,6 @@ void message_pain(int m_idx, int dam)
 	monster_type *m_ptr = &m_list[m_idx];
 	monster_race *r_ptr = race_inf(m_ptr);
 	char m_name[80];
-
-#if 0
-	if (!(player_can_see_bold(m_ptr->fy, m_ptr->fx)))
-		return;
-#endif
 
 	/* Get the monster name */
 	monster_desc(m_name, m_ptr, 0);

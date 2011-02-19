@@ -3815,18 +3815,6 @@ void place_corpse(monster_type *m_ptr)
 	int x = m_ptr->fx;
 	int y = m_ptr->fy;
 
-#if 0 /* If I can find some time to implement the decapitation ... */
-	object_type *w_ptr = &p_ptr->inventory[INVEN_WIELD];
-
-	int i = w_ptr->weight + ((p_ptr->to_h + w_ptr->to_h) * 5) + (p_ptr->lev * 3);
-
-	/* Handle decapitations. This is not allowed with hafted weapons. */
-	bool crit = (randint(5000) <= i);
-
-	bool decapitate = ((rand_int(m_ptr->maxhp) <= -(m_ptr->hp)) &&
-	                   (w_ptr->tval != TV_HAFTED) && crit);
-#endif
-
 	/* Get local object */
 	i_ptr = &object_type_body;
 
@@ -5080,16 +5068,6 @@ void verify_panel(void)
 	/* Recalculate the boundaries */
 	panel_bounds();
 
-	/* Hack - merchants detect items */
-#if 0 /* DGDGDGDG -- use a skill */
-	if (cp_ptr->magic_key == MKEY_TELEKINESIS)
-	{
-		hack_no_detect_message = TRUE;
-		detect_objects_normal(DEFAULT_RADIUS);
-		detect_objects_gold(DEFAULT_RADIUS);
-		hack_no_detect_message = FALSE;
-	}
-#endif
 	/* Update stuff */
 	p_ptr->update |= (PU_MONSTERS);
 
@@ -6728,14 +6706,6 @@ void gain_level_reward(int chosen_reward)
 	int type, effect;
 
 
-#if 0
-	if (!chosen_reward)
-	{
-		if (multi_rew) return;
-		else multi_rew = TRUE;
-	}
-#endif
-
 	if (p_ptr->lev == 13) nasty_chance = 2;
 	else if (!(p_ptr->lev % 13)) nasty_chance = 3;
 	else if (!(p_ptr->lev % 14)) nasty_chance = 12;
@@ -7418,14 +7388,6 @@ bool test_object_wish(char *name, object_type *o_ptr, object_type *forge, char *
 		   /* Hack hack hackery */
 		   (o_ptr->tval == TV_ROD_MAIN && strstr(name, "rod of")))
 		{
-#if 0 // DGDGDGDG
-			/* You can't wish for a wish! */
-			if ((o_ptr->tval == TV_STAFF) && (o_ptr->sval == SV_STAFF_WISHING))
-			{
-				msg_format("You cannot %s for a wish!", what);
-				return FALSE;
-			}
-#endif
 			/* try all ego */
 			for (j = max_e_idx - 1; j >= 0; j--)
 			{
