@@ -5343,7 +5343,6 @@ bool get_item_floor(int *cp, cptr pmt, cptr str, int mode)
 	int floor_num, floor_list[23], floor_top = 0;
 
 	k = 0;
-#ifdef ALLOW_REPEAT
 
 	/* Get the item index */
 	if (repeat_pull(cp))
@@ -5387,7 +5386,6 @@ bool get_item_floor(int *cp, cptr pmt, cptr str, int mode)
 		}
 	}
 
-#endif /* ALLOW_REPEAT */
 
 	/* Extract args */
 	if (mode & (USE_EQUIP)) equip = TRUE;
@@ -6061,11 +6059,8 @@ bool get_item_floor(int *cp, cptr pmt, cptr str, int mode)
 	/* Warning if needed */
 	if (oops && str) msg_print(str);
 
-#ifdef ALLOW_REPEAT
 
 	if (item) repeat_push(*cp);
-
-#endif /* ALLOW_REPEAT */
 
 	/* Result */
 	return (item);

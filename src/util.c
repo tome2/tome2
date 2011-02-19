@@ -3530,8 +3530,6 @@ s32b get_quantity(cptr prompt, s32b max)
 		return (amt);
 	}
 
-#ifdef ALLOW_REPEAT /* TNB */
-
 	/* Get the item index */
 	if ((max != 1) && repeat_pull(&aamt))
 	{
@@ -3546,8 +3544,6 @@ s32b get_quantity(cptr prompt, s32b max)
 		/* Use it */
 		return (amt);
 	}
-
-#endif /* ALLOW_REPEAT -- TNB */
 
 	/* Build a prompt if needed */
 	if (!prompt)
@@ -3581,11 +3577,8 @@ s32b get_quantity(cptr prompt, s32b max)
 	/* Enforce the minimum */
 	if (amt < 0) amt = 0;
 
-#ifdef ALLOW_REPEAT /* TNB */
 
 	if (amt) repeat_push(amt);
-
-#endif /* ALLOW_REPEAT -- TNB */
 
 	/* Return the result */
 	return (amt);
@@ -4021,8 +4014,6 @@ int get_keymap_dir(char ch)
 }
 
 
-#ifdef ALLOW_REPEAT /* TNB */
-
 #define REPEAT_MAX		20
 
 /* Number of chars saved */
@@ -4098,7 +4089,6 @@ void repeat_check(void)
 	}
 }
 
-#endif /* ALLOW_REPEAT -- TNB */
 
 /*
  * Read a number at a specific location on the screen

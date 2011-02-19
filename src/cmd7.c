@@ -157,8 +157,6 @@ bool get_magic_power(int *sn, magic_power *powers, int max_powers,
 	/* Assume cancelled */
 	*sn = ( -1);
 
-#ifdef ALLOW_REPEAT /* TNB */
-
 	/* Get the spell, if available */
 	if (repeat_pull(sn))
 	{
@@ -169,8 +167,6 @@ bool get_magic_power(int *sn, magic_power *powers, int max_powers,
 			return (TRUE);
 		}
 	}
-
-#endif /* ALLOW_REPEAT -- TNB */
 
 	/* Nothing chosen yet */
 	flag = FALSE;
@@ -325,11 +321,8 @@ bool get_magic_power(int *sn, magic_power *powers, int max_powers,
 	/* Save the choice */
 	(*sn) = i;
 
-#ifdef ALLOW_REPEAT /* TNB */
 
 	repeat_push(*sn);
-
-#endif /* ALLOW_REPEAT -- TNB */
 
 	/* Success */
 	return (TRUE);

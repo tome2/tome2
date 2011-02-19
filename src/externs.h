@@ -1748,36 +1748,22 @@ extern u32b _ftype;
 extern bool chg_to_txt(cptr base, cptr newname);
 #endif /* !WINDOWS && !MACINTOSH */
 
-#ifdef ALLOW_REPEAT /* TNB */
-
 /* util.c */
 extern void repeat_push(int what);
 extern bool repeat_pull(int *what);
 extern void repeat_check(void);
 extern void get_count(int number, int max);
 
-#endif /* ALLOW_REPEAT -- TNB */
-
-#ifdef ALLOW_EASY_OPEN /* TNB */
-
 /* variable.c */
 extern bool easy_open;
 extern bool easy_tunnel;
+extern bool easy_disarm;
 
 /* cmd2.c */
 extern bool easy_open_door(int y, int x);
 
-#endif /* ALLOW_EASY_OPEN -- TNB */
-
-#ifdef ALLOW_EASY_DISARM /* TNB */
-
-/* variable.c */
-extern bool easy_disarm;
-
 /* cmd2.c */
 extern bool do_cmd_disarm_aux(int y, int x, int dir, int do_pickup);
-
-#endif /* ALLOW_EASY_DISARM -- TNB */
 
 extern bool easy_floor;
 

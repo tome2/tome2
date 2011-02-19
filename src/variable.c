@@ -1182,14 +1182,8 @@ bool (*get_obj_num_hook)(int k_idx);
 bool monk_armour_aux;
 bool monk_notify_aux;
 
-#ifdef ALLOW_EASY_OPEN /* TNB */
 bool easy_open = TRUE;
-#endif /* ALLOW_EASY_OPEN -- TNB */
-
-#ifdef ALLOW_EASY_DISARM /* TNB */
 bool easy_disarm = TRUE;
-#endif /* ALLOW_EASY_DISARM -- TNB */
-
 bool easy_tunnel = FALSE;
 
 

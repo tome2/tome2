@@ -3393,8 +3393,6 @@ void move_player_aux(int dir, int do_pickup, int run, bool disarm)
 		oktomove = FALSE;
 	}
 
-#ifdef ALLOW_EASY_DISARM		/* TNB */
-
 	/* Disarm a visible trap */
 	else if (easy_disarm && disarm && (c_ptr->info & (CAVE_TRDT)))
 	{
@@ -3409,8 +3407,6 @@ void move_player_aux(int dir, int do_pickup, int run, bool disarm)
 		energy_use = 0;
 		oktomove = FALSE;
 	}
-
-#endif /* ALLOW_EASY_DISARM -- TNB */
 
 	/* Player can't enter ? soo bad for him/her ... */
 	else if (!player_can_enter(c_ptr->feat))
@@ -3486,15 +3482,11 @@ void move_player_aux(int dir, int do_pickup, int run, bool disarm)
 			/* Closed doors */
 			else if ((c_ptr->feat >= FEAT_DOOR_HEAD) && (c_ptr->feat <= FEAT_DOOR_TAIL))
 			{
-#ifdef ALLOW_EASY_OPEN
-
 				if (easy_open)
 				{
 					if (easy_open_door(y, x)) return;
 				}
 				else
-#endif /* ALLOW_EASY_OPEN */
-
 				{
 					msg_print("There is a closed door blocking your way.");
 

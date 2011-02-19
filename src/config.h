@@ -391,21 +391,6 @@
 /* # define TRACK_FRIENDS */
 
 /*
- * OPTION: Repeat last command -- TNB
- */
-#define ALLOW_REPEAT
-
-/*
- * OPTION: Make opening and closing things easy -- TNB
- */
-#define ALLOW_EASY_OPEN
-
-/*
- * OPTION: Make disarming traps easy -- TNB
- */
-#define ALLOW_EASY_DISARM
-
-/*
  * Using the fast autoroller can be considered as cheating
  */
 #define USE_FAST_AUTOROLLER

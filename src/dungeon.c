@@ -3287,12 +3287,8 @@ static void process_command(void)
 {
 	char error_m[80];
 
-#ifdef ALLOW_REPEAT /* TNB */
-
 	/* Handle repeating the last command */
 	repeat_check();
-
-#endif /* ALLOW_REPEAT -- TNB */
 
 	/* Process the appropriate hooks */
 	if (process_hooks(HOOK_KEYPRESS, "(d)", command_cmd)) return;
