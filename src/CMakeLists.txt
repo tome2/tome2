@@ -3,7 +3,7 @@ ADD_SUBDIRECTORY(lua)
 
 SET(SRCS
   main-gcu.c main-x11.c main-xaw.c main-sdl.c main-gtk2.c
-  z-rand.c z-util.c z-form.c z-virt.c z-term.c z-sock.c
+  z-rand.c z-util.c z-form.c z-virt.c z-term.c
   variable.c tables.c plots.c util.c cave.c dungeon.c 
   melee1.c melee2.c modules.c 
   object1.c object2.c randart.c squeltch.c traps.c 
@@ -14,7 +14,7 @@ SET(SRCS
   cmd1.c cmd2.c cmd3.c cmd4.c cmd5.c cmd6.c cmd7.c
   help.c
   generate.c gen_maze.c gen_evol.c wild.c levels.c store.c bldg.c
-  cmovie.c irc.c
+  cmovie.c
   wizard2.c init2.c birth.c wizard1.c init1.c main.c 
   # Lua bits:
   lua_bind.c script.c w_mnster.c w_player.c w_play_c.c w_z_pack.c

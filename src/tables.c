@@ -1301,7 +1301,7 @@ cptr window_flag_desc[32] =
 	NULL,
 	"Display character",
 	"Show visible monsters",
-	"Display IRC messages",
+	NULL,
 	"Display messages",
 	"Display overhead view",
 	"Display monster recall",

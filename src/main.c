@@ -687,10 +687,6 @@ usage:
 	quit_aux = quit_hook;
 
 
-	/* Install the zsock hooks we cannot do it later because main-net needs them */
-	zsock_init();
-
-
 #ifdef USE_GLU
 	/* Attempt to use the "main-glu.c" support */
 	if (!done && (!mstr || (streq(mstr, "glu"))))

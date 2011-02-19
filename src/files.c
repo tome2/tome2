@@ -6221,15 +6221,7 @@ void close_game(void)
 				add_note_type(NOTE_WINNER);
 			}
 
-			irc_disconnect_aux(format("Retired; %s rules",
-			                          get_version_string()), FALSE);
 			kingly();
-		}
-		else
-		{
-			irc_disconnect_aux(format("Killed by %s; %s rules",
-			                          died_from, get_version_string()),
-			                   FALSE);
 		}
 
 		/* Wipe the saved levels */
@@ -6280,10 +6272,6 @@ void close_game(void)
 		{
 			add_note_type(NOTE_SAVE_GAME);
 		}
-
-		irc_disconnect_aux(format("Alive... for the time being; %s rules",
-		                          get_version_string()),
-		                   FALSE);
 
 		/* Prompt for scores XXX XXX XXX */
 		prt("Press Return (or Escape).", 0, 40);

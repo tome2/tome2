@@ -2423,16 +2423,12 @@ static errr Term_xtra_x11(int n, int v)
 		/* Process random events XXX */
 	case TERM_XTRA_BORED:
 		{
-			irc_poll();
-
 			return (CheckEvent(0));
 		}
 
 		/* Process Events XXX */
 	case TERM_XTRA_EVENT:
 		{
-			irc_poll();
-
 			return (CheckEvent(v));
 		}
 
@@ -2447,8 +2443,6 @@ static errr Term_xtra_x11(int n, int v)
 
 		/* Delay for some milliseconds */
 	case TERM_XTRA_DELAY:
-		irc_poll();
-
 		usleep(1000 * v);
 		return (0);
 

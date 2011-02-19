@@ -185,49 +185,6 @@ static const struct luaL_reg bitlib[] =
 };
 
 /*
- * Some special wrappers
- */
-static int lua_zsock_read(lua_State* L)
-{
-	if (!tolua_istype(L, 1, tolua_tag(L, "zsock_hooks"), 0) ||
-	                !tolua_istype(L, 2, tolua_tag(L, "ip_connection"), 0) ||
-	                !tolua_istype(L, 3, LUA_TNUMBER, 0) ||
-	                !tolua_istype(L, 4, LUA_TNUMBER, 0) ||
-	                !tolua_isnoobj(L, 5)
-	   )
-	{
-		tolua_error(L, "#ferror in function 'read'.");
-		return 0;
-	}
-	else
-	{
-		zsock_hooks* self = (zsock_hooks*) tolua_getusertype(L, 1, 0);
-		ip_connection* conn = ((ip_connection*) tolua_getusertype(L, 2, 0));
-		int len = ((int) tolua_getnumber(L, 3, 0));
-		int start_len = len;
-		bool raw = ((bool) tolua_getnumber(L, 4, 0));
-		char *str;
-
-		if (!self) tolua_error(L, "invalid 'self' in function 'read'");
-		{
-			bool toluaI_ret;
-
-			C_MAKE(str, start_len + 1, char);
-
-			toluaI_ret = (bool)self->read(conn, str, &len, raw);
-			tolua_pushnumber(L, (long)toluaI_ret);
-			tolua_pushstring(L, str);
-			tolua_pushnumber(L, (long)len);
-
-			C_FREE(str, start_len + 1, char);
-
-			return 3;
-		}
-		return 0;
-	}
-}
-
-/*
  * Initialize lua scripting
  */
 static bool init_lua_done = FALSE;
@@ -262,9 +219,6 @@ void init_lua()
 	tolua_spells_open(L);
 	tolua_quest_open(L);
 	tolua_dungeon_open(L);
-
-	/* Register some special wrappers */
-	tolua_function(L, "zsock_hooks", "read", lua_zsock_read);
 }
 
 void init_lua_init()

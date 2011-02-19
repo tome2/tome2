@@ -1796,8 +1796,6 @@ static errr Term_xtra_win_event(int v)
 	/* Check for an event */
 	else
 	{
-		irc_poll();
-
 		/* Check */
 		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
 		{
@@ -2002,8 +2000,6 @@ static errr Term_xtra_win(int n, int v)
 		/* Delay for some milliseconds */
 	case TERM_XTRA_DELAY:
 		{
-			irc_poll();
-
 			return (Term_xtra_win_delay(v));
 		}
 

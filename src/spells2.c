@@ -4333,9 +4333,6 @@ bool ident_spell(void)
 		/* Build note and write */
 		sprintf(note, "Found The %s", item_name);
 		add_note(note, 'A');
-
-		sprintf(note, "has found The %s", item_name);
-		irc_emote(note);
 	}
 	/* Process the appropriate hooks */
 	process_hooks(HOOK_IDENTIFY, "(d,s)", item, "normal");
@@ -4372,9 +4369,6 @@ bool ident_all(void)
 			/* Build note and write */
 			sprintf(note, "Found The %s", item_name);
 			add_note(note, 'A');
-
-			sprintf(note, "has found The %s", item_name);
-			irc_emote(note);
 		}
 		/* Process the appropriate hooks */
 		process_hooks(HOOK_IDENTIFY, "(d,s)", -i, "normal");
@@ -4466,9 +4460,6 @@ bool identify_fully(void)
 		/* Build note and write */
 		sprintf(note, "Found The %s", item_name);
 		add_note(note, 'A');
-
-		sprintf(note, "has found The %s", item_name);
-		irc_emote(note);
 	}
 
 	/* Describe it fully */

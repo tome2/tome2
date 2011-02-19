@@ -1524,7 +1524,6 @@ extern bool private_check_user_directory(cptr dirpath);
 #endif
 
 /* xtra1.c */
-extern void fix_irc_message(void);
 extern void fix_message(void);
 extern void apply_flags(u32b f1, u32b f2, u32b f3, u32b f4, u32b f5, u32b esp, s16b pval, s16b tval, s16b to_h, s16b to_d, s16b to_a);
 extern int luck(int min, int max);
@@ -1781,15 +1780,6 @@ extern bool do_cmd_disarm_aux(int y, int x, int dir, int do_pickup);
 #endif /* ALLOW_EASY_DISARM -- TNB */
 
 extern bool easy_floor;
-
-
-extern void irc_poll(void);
-extern void irc_connect(void);
-extern void irc_emote(char *buf);
-extern void irc_chat(void);
-extern void irc_disconnect(void);
-extern void irc_disconnect_aux(char *str, bool message);
-extern void irc_quit(char *str);
 
 
 /* script.c */

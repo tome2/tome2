@@ -1316,7 +1316,7 @@ extern void prt(cptr str, int row, int col);
  * @brief Add a message "msg" of type "type" and colour "color" to the
  * message array.\n
  * @param type Number \n the type of message. MESSAGE_MSG for regular
- * messages, MESSAGE_IRC for IRC messages.
+ * messages.
  * @brief Type
  * @param msg String \n the message.
  * @brief Message

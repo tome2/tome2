@@ -1250,67 +1250,6 @@ void fix_message(void)
 
 
 /*
- * Hack -- display recent IRC messages in sub-windows
- *
- * XXX XXX XXX Adjust for width and split messages
- */
-void fix_irc_message(void)
-{
-	int j, i, k;
-	int w, h;
-	int x, y;
-
-	/* Scan windows */
-	for (j = 0; j < 8; j++)
-	{
-		term *old = Term;
-
-		/* No window */
-		if (!angband_term[j]) continue;
-
-		/* No relevant flags */
-		if (!(window_flag[j] & (PW_IRC))) continue;
-
-		/* Activate */
-		Term_activate(angband_term[j]);
-
-		/* Get size */
-		Term_get_size(&w, &h);
-
-		Term_clear();
-
-		/* Dump messages */
-		k = 0;
-		for (i = 0; ; i++)
-		{
-			byte type = message_type((s16b)i);
-
-			if (k >= h) break;
-			if (MESSAGE_NONE == type) break;
-			if (MESSAGE_IRC != type) continue;
-
-			/* Dump the message on the appropriate line */
-			display_message(0, (h - 1) - k, strlen(message_str((s16b)i)), message_color((s16b)i), message_str((s16b)i));
-
-			/* Cursor */
-			Term_locate(&x, &y);
-
-			/* Clear to end of line */
-			Term_erase(x, y, 255);
-
-			k++;
-		}
-
-		/* Fresh */
-		Term_fresh();
-
-		/* Restore */
-		Term_activate(old);
-	}
-}
-
-
-/*
  * Hack -- display overhead view in sub-windows
  *
  * Note that the "player" symbol does NOT appear on the map.
@@ -4449,13 +4388,6 @@ void window_stuff(void)
 	{
 		p_ptr->window &= ~(PW_MESSAGE);
 		fix_message();
-	}
-
-	/* Display overhead view */
-	if (p_ptr->window & (PW_IRC))
-	{
-		p_ptr->window &= ~(PW_IRC);
-		fix_irc_message();
 	}
 
 	/* Display overhead view */

@@ -4297,27 +4297,6 @@ static void process_command(void)
 			break;
 		}
 
-		/* Connect to IRC. */
-	case CMD_IRC_CONNECT:
-		{
-			irc_connect();
-			break;
-		}
-
-		/* Speak on IRC. */
-	case CMD_IRC_CHAT:
-		{
-			irc_chat();
-			break;
-		}
-
-		/* Disconnect from IRC. */
-	case CMD_IRC_DISCON:
-		{
-			irc_disconnect();
-			break;
-		}
-
 		/* Game time. */
 	case CMD_SHOW_TIME:
 		{

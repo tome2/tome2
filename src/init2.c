@@ -3153,9 +3153,6 @@ void init_angband(void)
 
 	/*** Initialise some arrays ***/
 
-	/* Initilize the socket */
-	zsock_init();
-
 	/* Initialise misc. values */
 	note("[Initialising values... (misc)]");
 	if (init_misc()) quit("Cannot initialise misc. values");

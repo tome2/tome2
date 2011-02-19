@@ -5146,7 +5146,7 @@ void resize_window(void)
 	p_ptr->window |= (PW_INVEN | PW_EQUIP | PW_PLAYER);
 
 	/* Window stuff */
-	p_ptr->window |= (PW_M_LIST | PW_IRC | PW_MESSAGE | PW_OVERHEAD |
+	p_ptr->window |= (PW_M_LIST | PW_MESSAGE | PW_OVERHEAD |
 	                  PW_MONSTER | PW_OBJECT);
 
 

@@ -30,7 +30,6 @@
 #include "z-form.h"
 #include "z-rand.h"
 #include "z-term.h"
-#include "z-sock.h"
 
 
 /*
