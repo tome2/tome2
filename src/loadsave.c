@@ -6,12 +6,6 @@
 
 #include "angband.h"
 
-/* Don't play with this yet */
-/* #define BZ_SAVES */
-#ifdef BZ_SAVES
-#include <bzlib.h>
-#endif /* BZ_SAVES */
-
 static void do_byte(byte *, int);
 static void do_u16b(u16b *, int);
 static void do_s16b(s16b *, int);
@@ -37,11 +31,6 @@ static bool do_dungeon(int, bool);
 static void do_grid(int);
 static void my_sentinel(char *, u16b, int);
 
-#ifdef BZ_SAVES
-static void bz_done(int);
-static void bz_prep(int);
-#endif
-
 static void do_ver_s16b(s16b *, u32b, s16b, int);
 
 static void skip_ver_byte(u32b, int);
@@ -53,11 +42,6 @@ bool panicload;
 #endif
 
 static FILE *fff; 	/* Local savefile ptr */
-
-#ifdef BZ_SAVES
-BZFILE *bzf;
-int bzerr;
-#endif /* BZ_SAVES */
 
 /*
  * Basic byte-level reading from savefile. This provides a single point
@@ -79,19 +63,7 @@ static byte sf_get(void)
 	byte c;
 
 	/* Get a character, decode the value */
-#ifndef BZ_SAVES
 	c = getc(fff) & 0xFF;
-#else
-BZ2_bzRead(&bzerr, bzf, &c, 1);
-
-	if (bzerr != 0)
-	{
-		note(format("Compression error on read"));
-		bz_done(LS_LOAD);
-		printf("Died in sf_get\n");
-		exit(0);
-	}
-#endif /* BZ_SAVES */
 
 	/* Return the value */
 	return (c);
@@ -100,64 +72,8 @@ BZ2_bzRead(&bzerr, bzf, &c, 1);
 
 static void sf_put(byte v)
 {
-#ifndef BZ_SAVES
 	(void)putc((int)v, fff);
-#else
-	BZ2_bzWrite(&bzerr, bzf, &v, 1);
-
-	if (bzerr != 0)
-	{
-		note(format("Compression error on write"));
-		bz_done(LS_SAVE);
-		printf("Died in sf_put\n");
-		exit(0);
-	}
-#endif
 }
-
-/*
- * This function does nothing if BZ_SAVES in undefined.
- */
-#ifdef BZ_SAVES
-static void bz_prep(int flag)
-{
-
-	if (flag == LS_LOAD)
-	{
-		bzf = BZ2_bzReadOpen(&bzerr, fff, 0, 0, NULL, 0);
-	}
-
-	if (flag == LS_SAVE)
-	{
-		bzf = BZ2_bzWriteOpen(&bzerr, fff, 9, 0, 30);
-	}
-
-	if (bzerr == 0)
-	{
-		return ; 					/* All is Good */
-	}
-
-	/* Otherwise, all is bad */
-	note(format("Compression error on prep"));
-	printf("Died in bz_prep\n");
-	exit(0);
-
-	/* Unreachable code */
-	bz_done(flag);
-}
-
-static void bz_done(int flag)
-{
-	if (flag == LS_LOAD)
-	{
-		BZ2_bzReadClose(&bzerr, bzf);
-	}
-	if (flag == LS_SAVE)
-	{
-		BZ2_bzWriteClose(&bzerr, bzf, 0, NULL, NULL);
-	}
-}
-#endif	/* BZ_SAVES */
 
 /*
  * Do object memory and similar stuff
@@ -827,17 +743,9 @@ void save_dungeon(void)
 	/* Drop permission */
 	if (savefile_setuid) safe_setuid_drop();
 
-#ifdef BZ_SAVES
-	bz_prep(LS_SAVE);
-#endif /* BZ_SAVES */
-
 	/* Save the dungeon */
 	do_dungeon(LS_SAVE, TRUE);
 
-	/* Done */
-#ifdef BZ_SAVES
-	bz_done(LS_SAVE);
-#endif /* BZ_SAVES */
 	my_fclose(fff);
 }
 
@@ -880,23 +788,12 @@ static bool save_player_aux(char *name)
 		/* Drop permission */
 		if (savefile_setuid) safe_setuid_drop();
 
-#ifdef BZ_SAVES
-		bz_prep(LS_SAVE);
-#endif
-
 		/* Successful open */
 		if (fff)
 		{
-#ifdef BZ_SAVES
-			bz_prep(LS_SAVE);
-#endif /* BZ_SAVES */
-
 			/* Write the savefile */
 			if (do_savefile_aux(LS_SAVE)) ok = TRUE;
 
-#ifdef BZ_SAVES
-			bz_done(LS_SAVE);
-#endif /* BZ_SAVES */
 			/* Attempt to close it */
 			if (my_fclose(fff)) ok = FALSE;
 		}
@@ -1265,17 +1162,9 @@ bool load_player(void)
 		/* Drop permission */
 		if (savefile_setuid) safe_setuid_drop();
 
-#ifdef BZ_SAVES
-		bz_prep(LS_LOAD);
-#endif /* BZ_SAVES */
-
 		/* Read the first four bytes */
 		do_u32b(&vernum, LS_LOAD);
 		do_byte(&sf_extra, LS_LOAD);
-
-#ifdef BZ_SAVES
-		bz_done(LS_LOAD);
-#endif /* BZ_SAVES */
 
 		/* XXX XXX XXX XXX Should use Angband file interface */
 		my_fclose(fff);
@@ -2861,19 +2750,12 @@ bool load_dungeon(char *ext)
 		return (FALSE);
 	}
 
-#ifdef BZ_SAVES
-	bz_prep(LS_LOAD);
-#endif /* BZ_SAVES */
-
 	/* Read the dungeon */
 	if (!do_dungeon(LS_LOAD, FALSE))
 	{
 		dun_level = old_dun;
 		dungeon_type = old_dungeon_type;
 
-#ifdef BZ_SAVES
-		bz_done(LS_LOAD);
-#endif /* BZ_SAVES */
 		my_fclose(fff);
 		return (FALSE);
 	}
@@ -2882,9 +2764,6 @@ bool load_dungeon(char *ext)
 	dungeon_type = old_dungeon_type;
 
 	/* Done */
-#ifdef BZ_SAVES
-	bz_done(LS_LOAD);
-#endif /* BZ_SAVES */
 	my_fclose(fff);
 	return (TRUE);
 }
@@ -3426,10 +3305,6 @@ errr rd_savefile(void)
 		/* Drop permission */
 		if (savefile_setuid) safe_setuid_drop();
 
-#ifdef BZ_SAVES
-		bz_prep(LS_LOAD);
-#endif /* BZ_SAVES */
-
 #ifdef SAFER_PANICS
 	}
 	else
@@ -3446,13 +3321,6 @@ errr rd_savefile(void)
 		/* Drop permission */
 		if (savefile_setuid) safe_setuid_drop();
 
-#ifdef BZ_SAVES
-		if (fff)
-		{
-			bz_prep(LS_LOAD);
-		}
-#endif /* BZ_SAVES */
-
 	}
 
 #endif /* SAFER_PANICS */
@@ -3467,9 +3335,6 @@ errr rd_savefile(void)
 	if (ferror(fff)) err = -1;
 
 	/* Close the file */
-#ifdef BZ_SAVES
-	bz_done(LS_LOAD);
-#endif /* BZ_SAVES */
 	my_fclose(fff);
 
 	/* Result */
@@ -3509,71 +3374,6 @@ static void morejunk(void)
 	spp_ptr = &class_info[p_ptr->pclass].spec[p_ptr->pspec];
 }
 
-#ifdef BZ_SAVES
-static void do_grid(int flag)
-{
-	int y = 0, x = 0;
-	cave_type *c_ptr;
-	int ymax = cur_hgt, xmax = cur_wid;
-
-	int part; 	/* Which section of the grid we're on */
-
-	my_sentinel("Before grid", 17, flag);
-
-	for (part = 0; part < 9; part++)	/* There are 8 fields to the grid, each stored
-												   in a seperate data structure */
-	{
-		for (y = 0; y < ymax; y++)
-		{
-			for (x = 0; x < xmax; x++)
-			{
-				c_ptr = &cave[y][x];
-				switch (part)
-				{
-				case 0:
-					do_u16b(&c_ptr->info, flag);
-					break;
-
-				case 1:
-					do_byte(&c_ptr->feat, flag);
-					break;
-
-				case 2:
-					do_byte(&c_ptr->mimic, flag);
-					break;
-
-				case 3:
-					do_u16b(&c_ptr->special, flag);
-					break;
-
-				case 4:
-					do_u16b(&c_ptr->special2, flag);
-					break;
-
-				case 5:
-					do_u16b(&c_ptr->t_idx, flag);
-					break;
-
-				case 6:
-					do_u16b(&c_ptr->inscription, flag);
-					break;
-
-				case 7:
-					do_byte(&c_ptr->mana, flag);
-					break;
-
-				case 8:
-					do_u16b(&c_ptr->effect, 12, 0, flag);
-					break;
-				}
-			}
-		}
-	}
-	my_sentinel("In grid", 36, flag);
-}
-#endif /* BZ_SAVES */
-
-#ifndef BZ_SAVES
 static void do_grid(int flag)
 /* Does the grid, RLE, blahblah. RLE sucks. I hate it. */
 {
@@ -3770,8 +3570,6 @@ static void do_grid(int flag)
 		}
 	}
 }
-
-#endif /* !BZ_SAVES */
 
 static void my_sentinel(char *place, u16b value, int flag)
 /* This function lets us know exactly where a savefile is
