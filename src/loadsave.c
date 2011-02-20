@@ -20,14 +20,14 @@ static void note(cptr);
 static void do_fate(int, int);
 static void do_item(object_type *, int);
 static void do_options(int);
-static bool do_store(store_type *, int);
+static bool_ do_store(store_type *, int);
 static void do_messages(int flag);
 static void do_xtra(int, int);
-static bool do_savefile_aux(int);
+static bool_ do_savefile_aux(int);
 static void junkinit(void);
 static void morejunk(void);
-static bool do_inventory(int);
-static bool do_dungeon(int, bool);
+static bool_ do_inventory(int);
+static bool_ do_dungeon(int, bool_);
 static void do_grid(int);
 static void my_sentinel(char *, u16b, int);
 
@@ -38,7 +38,7 @@ static void skip_ver_byte(u32b, int);
 errr rd_savefile(void);
 
 #ifdef SAFER_PANICS
-bool panicload;
+bool_ panicload;
 #endif
 
 static FILE *fff; 	/* Local savefile ptr */
@@ -225,7 +225,7 @@ static void do_subrace(int flag)
  * Misc. other data
  */
 static char loaded_game_module[80];
-static bool do_extra(int flag)
+static bool_ do_extra(int flag)
 {
 	int i, j;
 	byte tmp8u;
@@ -752,9 +752,9 @@ void save_dungeon(void)
 /*
  * Medium level player saver
  */
-static bool save_player_aux(char *name)
+static bool_ save_player_aux(char *name)
 {
-	bool ok = FALSE;
+	bool_ ok = FALSE;
 	int fd = -1;
 	int mode = 0644;
 
@@ -825,7 +825,7 @@ static bool save_player_aux(char *name)
 /*
  * Attempt to save the player in a savefile
  */
-bool save_player(void)
+bool_ save_player(void)
 {
 	int result = FALSE;
 	char safe[1024];
@@ -931,10 +931,10 @@ bool save_player(void)
 	return (result);
 }
 
-bool file_exist(char *buf)
+bool_ file_exist(char *buf)
 {
 	int fd;
-	bool result;
+	bool_ result;
 
 	/* Grab permission */
 	if (savefile_setuid) safe_setuid_grab();
@@ -971,7 +971,7 @@ bool file_exist(char *buf)
  * Note that we always try to load the "current" savefile, even if
  * there is no such file, so we must check for "empty" savefile names.
  */
-bool load_player(void)
+bool_ load_player(void)
 {
 	int fd = -1;
 
@@ -1515,7 +1515,7 @@ static void note(cptr msg)
 /*
  * Determine if an item can be wielded/worn (e.g. helmet, sword, bow, arrow)
  */
-static bool wearable_p(object_type *o_ptr)
+static bool_ wearable_p(object_type *o_ptr)
 {
 	/* Valid "tval" codes */
 	switch (o_ptr->tval)
@@ -1809,7 +1809,7 @@ static void do_item(object_type *o_ptr, int flag)
 static void do_monster(monster_type *m_ptr, int flag)
 {
 	int i;
-	bool tmp;
+	bool_ tmp;
 
 	/* Read the monster race */
 	do_s16b(&m_ptr->r_idx, flag);
@@ -2002,7 +2002,7 @@ static void do_lore(int r_idx, int flag)
 /*
  * Read a store
  */
-static bool do_store(store_type *str, int flag)
+static bool_ do_store(store_type *str, int flag)
 /* FIXME! Why does this return anything when
    it always returns the same thing? */
 {
@@ -2287,7 +2287,7 @@ static void do_spells(int i, int flag)
  * FIXME! This function probably could be unified better
  * Note that the inventory is "re-sorted" later by "dungeon()".
  */
-static bool do_inventory(int flag)
+static bool_ do_inventory(int flag)
 {
 	if (flag == LS_LOAD)
 	{
@@ -2432,7 +2432,7 @@ static void do_messages(int flag)   /* FIXME! We should be able to unify this be
  * The monsters/objects must be loaded in the same order
  * that they were stored, since the actual indexes matter.
  */
-static bool do_dungeon(int flag, bool no_companions)
+static bool_ do_dungeon(int flag, bool_ no_companions)
 {
 	int i;
 
@@ -2721,7 +2721,7 @@ static bool do_dungeon(int flag, bool no_companions)
 }
 
 /* Returns TRUE if we successfully load the dungeon */
-bool load_dungeon(char *ext)
+bool_ load_dungeon(char *ext)
 {
 	char tmp[16];
 	char name[1024];
@@ -2805,7 +2805,7 @@ void do_fate(int i, int flag)
 /*
  * Actually read the savefile
  */
-static bool do_savefile_aux(int flag)
+static bool_ do_savefile_aux(int flag)
 {
 	int i, j;
 
@@ -2813,7 +2813,7 @@ static bool do_savefile_aux(int flag)
 	u16b tmp16u;
 	u32b tmp32u;
 
-	bool *reals;
+	bool_ *reals;
 	u16b real_max = 0;
 
 	/* Mention the savefile version */
@@ -3187,7 +3187,7 @@ static bool do_savefile_aux(int flag)
 	}
 
 	/* Note that this forbids max_towns from shrinking, but that is fine */
-	C_MAKE(reals, max_towns, bool);
+	C_MAKE(reals, max_towns, bool_);
 
 	/* Find the real towns */
 	if (flag == LS_SAVE)
@@ -3220,7 +3220,7 @@ static bool do_savefile_aux(int flag)
 			do_store(&town_info[z].store[j], flag);
 	}
 
-	C_FREE(reals, max_towns, bool);
+	C_FREE(reals, max_towns, bool_);
 
 	if (flag == LS_SAVE) tmp32u = extra_savefile_parts;
 	do_u32b(&tmp32u, flag);

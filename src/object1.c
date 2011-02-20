@@ -276,7 +276,7 @@ static byte scroll_col[MAX_TITLES];
  * Certain items have a flavor
  * This function is used only by "flavor_init()"
  */
-static bool object_flavor(int k_idx)
+static bool_ object_flavor(int k_idx)
 {
 	object_kind *k_ptr = &k_info[k_idx];
 
@@ -374,7 +374,7 @@ void get_table_name(char *out_string)
  *
  * XXX XXX XXX Add "EASY_KNOW" flag to "k_info.txt" file
  */
-static bool object_easy_know(int i)
+static bool_ object_easy_know(int i)
 {
 	object_kind *k_ptr = &k_info[i];
 
@@ -577,7 +577,7 @@ void flavor_init(void)
 		{
 			char buf[80];
 
-			bool okay;
+			bool_ okay;
 
 			/* Start a new title */
 			buf[0] = '\0';
@@ -829,7 +829,7 @@ void reset_visuals(void)
 /*
  * Obtain the "flags" for an item
  */
-bool object_flags_no_set = FALSE;
+bool_ object_flags_no_set = FALSE;
 void object_flags(object_type *o_ptr, u32b *f1, u32b *f2, u32b *f3, u32b *f4, u32b *f5, u32b *esp)
 {
 	object_kind *k_ptr = &k_info[o_ptr->k_idx];
@@ -1024,7 +1024,7 @@ int object_power(object_type *o_ptr)
  */
 void object_flags_known(object_type *o_ptr, u32b *f1, u32b *f2, u32b *f3, u32b *f4, u32b *f5, u32b *esp)
 {
-	bool spoil = FALSE;
+	bool_ spoil = FALSE;
 
 	object_kind *k_ptr = &k_info[o_ptr->k_idx];
 
@@ -1393,17 +1393,17 @@ static char *object_desc_int(char *result, s32b num)
  */
 void object_desc(char *buf, object_type *o_ptr, int pref, int mode)
 {
-	bool hack_name = FALSE;
+	bool_ hack_name = FALSE;
 	cptr basenm, modstr;
 	int indexx;
 
-	bool aware = FALSE;
-	bool known = FALSE;
+	bool_ aware = FALSE;
+	bool_ known = FALSE;
 
-	bool append_name = FALSE;
+	bool_ append_name = FALSE;
 
-	bool show_weapon = FALSE;
-	bool show_armour = FALSE;
+	bool_ show_weapon = FALSE;
+	bool_ show_armour = FALSE;
 
 	cptr s, u;
 	char *t;
@@ -2613,10 +2613,10 @@ copyback:
 void object_desc_store(char *buf, object_type *o_ptr, int pref, int mode)
 {
 	/* Save the "aware" flag */
-	bool hack_aware = k_info[o_ptr->k_idx].aware;
+	bool_ hack_aware = k_info[o_ptr->k_idx].aware;
 
 	/* Save the "known" flag */
-	bool hack_known = (o_ptr->ident & (IDENT_KNOWN)) ? TRUE : FALSE;
+	bool_ hack_known = (o_ptr->ident & (IDENT_KNOWN)) ? TRUE : FALSE;
 
 
 	/* Set the "known" flag */
@@ -2713,7 +2713,7 @@ cptr item_activation(object_type *o_ptr, byte num)
 }
 
 /* Grab the tval desc */
-bool grab_tval_desc(int tval)
+bool_ grab_tval_desc(int tval)
 {
 	int tv = 0;
 
@@ -2736,7 +2736,7 @@ if ((first)) { (first) = FALSE; text_out((txt)); } else text_out(", ");
 /*
  * Display the damage done with a multiplier
  */
-void output_dam(object_type *o_ptr, int mult, int mult2, cptr against, cptr against2, bool *first)
+void output_dam(object_type *o_ptr, int mult, int mult2, cptr against, cptr against2, bool_ *first)
 {
 	int dam;
 
@@ -2781,8 +2781,8 @@ void display_weapon_damage(object_type *o_ptr)
 {
 	object_type forge, *old_ptr = &forge;
 	u32b f1, f2, f3, f4, f5, esp;
-	bool first = TRUE;
-	bool full = o_ptr->ident & (IDENT_MENTAL);
+	bool_ first = TRUE;
+	bool_ full = o_ptr->ident & (IDENT_MENTAL);
 
 	/* Extract the flags */
 	object_flags(o_ptr, &f1, &f2, &f3, &f4, &f5, &esp);
@@ -2826,7 +2826,7 @@ void display_weapon_damage(object_type *o_ptr)
 /*
  * Display the ammo damage done with a multiplier
  */
-void output_ammo_dam(object_type *o_ptr, int mult, int mult2, cptr against, cptr against2, bool *first)
+void output_ammo_dam(object_type *o_ptr, int mult, int mult2, cptr against, cptr against2, bool_ *first)
 {
 	int dam;
 	object_type *b_ptr = &p_ptr->inventory[INVEN_BOW];
@@ -2880,9 +2880,9 @@ void output_ammo_dam(object_type *o_ptr, int mult, int mult2, cptr against, cptr
 void display_ammo_damage(object_type *o_ptr)
 {
 	u32b f1, f2, f3, f4, f5, esp;
-	bool first = TRUE;
+	bool_ first = TRUE;
 	int i;
-	bool full = o_ptr->ident & (IDENT_MENTAL);
+	bool_ full = o_ptr->ident & (IDENT_MENTAL);
 
 	/* Extract the flags */
 	object_flags(o_ptr, &f1, &f2, &f3, &f4, &f5, &esp);
@@ -2988,7 +2988,7 @@ static cptr object_out_desc_where_found(s16b level, s16b dungeon)
 /*
  * Describe an item
  */
-bool object_out_desc(object_type *o_ptr, FILE *fff, bool trim_down, bool wait_for_it)
+bool_ object_out_desc(object_type *o_ptr, FILE *fff, bool_ trim_down, bool_ wait_for_it)
 {
 	u32b f1, f2, f3, f4, f5, esp;
 
@@ -2998,7 +2998,7 @@ bool object_out_desc(object_type *o_ptr, FILE *fff, bool trim_down, bool wait_fo
 	byte vc[64];
 	int vn;
 
-	bool first = TRUE;
+	bool_ first = TRUE;
 
 	/* Extract the flags */
 	if ((!(o_ptr->ident & (IDENT_MENTAL))) && (!fff))
@@ -4106,7 +4106,7 @@ int get_slot(int slot)
  * Determine which equipment slot (if any) an item likes, ignoring the player's
  * current body and stuff if ideal == TRUE
  */
-s16b wield_slot_ideal(object_type *o_ptr, bool ideal)
+s16b wield_slot_ideal(object_type *o_ptr, bool_ ideal)
 {
 	/* Try for a script first */
 	if (process_hooks_ret(HOOK_WIELD_SLOT, "d", "(O,d)", o_ptr, ideal))
@@ -4470,7 +4470,7 @@ cptr describe_use(int i)
 /*
  * Check an item against the item tester info
  */
-bool item_tester_okay(object_type *o_ptr)
+bool_ item_tester_okay(object_type *o_ptr)
 {
 	/* Hack -- allow listing empty slots */
 	if (item_tester_full) return (TRUE);
@@ -4500,8 +4500,8 @@ bool item_tester_okay(object_type *o_ptr)
 
 
 
-void show_equip_aux(bool mirror, bool everything);
-void show_inven_aux(bool mirror, bool everything);
+void show_equip_aux(bool_ mirror, bool_ everything);
+void show_inven_aux(bool_ mirror, bool_ everything);
 
 /*
  * Choice window "shadow" of the "show_inven()" function
@@ -4545,7 +4545,7 @@ byte get_item_letter_color(object_type *o_ptr)
  *
  * Hack -- do not display "trailing" empty slots
  */
-void show_inven_aux(bool mirror, bool everything)
+void show_inven_aux(bool_ mirror, bool_ everything)
 {
 	int i, j, k, l, z = 0;
 	int row, col, len, lim;
@@ -4706,12 +4706,12 @@ void show_inven_aux(bool mirror, bool everything)
 }
 
 
-void show_inven(bool mirror)
+void show_inven(bool_ mirror)
 {
 	show_inven_aux(mirror, FALSE);
 }
 
-void show_equip(bool mirror)
+void show_equip(bool_ mirror)
 {
 	show_equip_aux(mirror, FALSE);
 }
@@ -4719,7 +4719,7 @@ void show_equip(bool mirror)
 /*
  * Display the equipment.
  */
-void show_equip_aux(bool mirror, bool everything)
+void show_equip_aux(bool_ mirror, bool_ everything)
 {
 	int i, j, k, l;
 	int row, col, len, lim, idx;
@@ -4995,7 +4995,7 @@ void toggle_inven_equip(void)
  *
  * The item can be negative to mean "item on floor".
  */
-bool verify(cptr prompt, int item)
+bool_ verify(cptr prompt, int item)
 {
 	char o_name[80];
 
@@ -5031,7 +5031,7 @@ bool verify(cptr prompt, int item)
  *
  * The item can be negative to mean "item on floor".
  */
-static bool get_item_allow(int item)
+static bool_ get_item_allow(int item)
 {
 	cptr s;
 
@@ -5078,7 +5078,7 @@ static bool get_item_allow(int item)
 /*
  * Auxiliary function for "get_item()" -- test an index
  */
-static bool get_item_okay(int i)
+static bool_ get_item_okay(int i)
 {
 	/* Illegal items */
 	if ((i < 0) || (i >= INVEN_TOTAL)) return (FALSE);
@@ -5163,7 +5163,7 @@ static int get_tag(int *cp, char tag)
  *            mode & 0x02 -- Marked items only
  *            mode & 0x04 -- Stop after first
  */
-bool scan_floor(int *items, int *item_num, int y, int x, int mode)
+bool_ scan_floor(int *items, int *item_num, int y, int x, int mode)
 {
 	int this_o_idx, next_o_idx;
 
@@ -5314,28 +5314,28 @@ void show_floor(int y, int x)
  * This version of get_item() is called by get_item() when
  * the easy_floor is on.
  */
-bool (*get_item_extra_hook)(int *cp);
-bool get_item_floor(int *cp, cptr pmt, cptr str, int mode)
+bool_ (*get_item_extra_hook)(int *cp);
+bool_ get_item_floor(int *cp, cptr pmt, cptr str, int mode)
 {
 	char n1 = 0, n2 = 0, which = ' ';
 
 	int j, k, i1, i2, e1, e2;
 
-	bool done, item;
+	bool_ done, item;
 
-	bool oops = FALSE;
+	bool_ oops = FALSE;
 
-	bool equip = FALSE;
-	bool inven = FALSE;
-	bool floor = FALSE;
-	bool extra = FALSE;
-	bool automat = FALSE;
+	bool_ equip = FALSE;
+	bool_ inven = FALSE;
+	bool_ floor = FALSE;
+	bool_ extra = FALSE;
+	bool_ automat = FALSE;
 
-	bool allow_equip = FALSE;
-	bool allow_inven = FALSE;
-	bool allow_floor = FALSE;
+	bool_ allow_equip = FALSE;
+	bool_ allow_inven = FALSE;
+	bool_ allow_floor = FALSE;
 
-	bool toggle = FALSE;
+	bool_ toggle = FALSE;
 
 	char tmp_val[160];
 	char out_val[160];
@@ -6117,7 +6117,7 @@ bool get_item_floor(int *cp, cptr pmt, cptr str, int mode)
  * We always erase the prompt when we are done, leaving a blank line,
  * or a warning message, if appropriate, if no items are available.
  */
-bool get_item(int *cp, cptr pmt, cptr str, int mode)
+bool_ get_item(int *cp, cptr pmt, cptr str, int mode)
 {
 	automatizer_create = FALSE;
         command_see = TRUE; /* Start out displaying all alternatives. */
@@ -6128,7 +6128,7 @@ bool get_item(int *cp, cptr pmt, cptr str, int mode)
 /*
  * Hook to determine if an object is getable
  */
-static bool item_tester_hook_getable(object_type *o_ptr)
+static bool_ item_tester_hook_getable(object_type *o_ptr)
 {
 	if (!inven_carry_okay(o_ptr)) return (FALSE);
 
@@ -6259,7 +6259,7 @@ void pickup_ammo()
  *
  * This is called by py_pickup() when easy_floor is TRUE.
  */
-bool can_carry_heavy(object_type *o_ptr)
+bool_ can_carry_heavy(object_type *o_ptr)
 {
 	/* Query if object is heavy */
 	if (prompt_pickup_heavy)
@@ -6370,9 +6370,9 @@ void py_pickup_floor(int pickup)
 
 	int floor_num = 0, floor_o_idx = 0;
 
-	bool do_pickup = TRUE;
+	bool_ do_pickup = TRUE;
 
-	bool do_ask = TRUE;
+	bool_ do_ask = TRUE;
 
 	/* Hack -- ignore monster traps */
 	if (cave[p_ptr->py][p_ptr->px].feat == FEAT_MON_TRAP) return;
@@ -6555,7 +6555,7 @@ void py_pickup_floor(int pickup)
 }
 
 /* Add a flags group */
-void gain_flag_group(object_type *o_ptr, bool silent)
+void gain_flag_group(object_type *o_ptr, bool_ silent)
 {
 	int grp = 0;
 	int tries = 1000;
@@ -6650,7 +6650,7 @@ u32b get_flag(object_type *o_ptr, int grp, int k)
 }
 
 /* Add a flags from a flag group */
-void gain_flag_group_flag(object_type *o_ptr, bool silent)
+void gain_flag_group_flag(object_type *o_ptr, bool_ silent)
 {
 	int grp = 0, k = 0;
 	u32b f = 0;
@@ -6757,7 +6757,7 @@ void object_gain_level(object_type *o_ptr)
 /*
  * Item sets fcts
  */
-bool wield_set(s16b a_idx, s16b set_idx, bool silent)
+bool_ wield_set(s16b a_idx, s16b set_idx, bool_ silent)
 {
 	set_type *s_ptr = &set_info[set_idx];
 	int i;
@@ -6776,7 +6776,7 @@ bool wield_set(s16b a_idx, s16b set_idx, bool silent)
 	return (FALSE);
 }
 
-bool takeoff_set(s16b a_idx, s16b set_idx)
+bool_ takeoff_set(s16b a_idx, s16b set_idx)
 {
 	set_type *s_ptr = &set_info[set_idx];
 	int i;
@@ -6797,7 +6797,7 @@ bool takeoff_set(s16b a_idx, s16b set_idx)
 	return (FALSE);
 }
 
-bool apply_set(s16b a_idx, s16b set_idx)
+bool_ apply_set(s16b a_idx, s16b set_idx)
 {
 	set_type *s_ptr = &set_info[set_idx];
 	int i, j;
@@ -6823,7 +6823,7 @@ bool apply_set(s16b a_idx, s16b set_idx)
 	return (FALSE);
 }
 
-bool apply_flags_set(s16b a_idx, s16b set_idx,
+bool_ apply_flags_set(s16b a_idx, s16b set_idx,
                      u32b *f1, u32b *f2, u32b *f3, u32b *f4, u32b *f5, u32b *esp)
 {
 	set_type *s_ptr = &set_info[set_idx];

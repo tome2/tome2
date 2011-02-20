@@ -133,7 +133,7 @@ static void plasma_recursive(int x1, int y1, int x2, int y2,
  *
  * Return the number of floor grids
  */
-int generate_area(int y, int x, bool border, bool corner, bool refresh)
+int generate_area(int y, int x, bool_ border, bool_ corner, bool_ refresh)
 {
 	int road, entrance;
 	int x1, y1;
@@ -344,7 +344,7 @@ static border_type border;
 void wilderness_gen(int refresh)
 {
 	int i, y, x, hack_floor;
-	bool daytime;
+	bool_ daytime;
 	int xstart = 0;
 	int ystart = 0;
 	cave_type *c_ptr;
@@ -931,7 +931,7 @@ static void town_borders(int t_idx, int qy, int qx)
 	}
 }
 
-static bool create_townpeople_hook(int r_idx)
+static bool_ create_townpeople_hook(int r_idx)
 {
 	monster_race *r_ptr = &r_info[r_idx];
 
@@ -950,7 +950,7 @@ static bool create_townpeople_hook(int r_idx)
 static void town_gen_hack(int t_idx, int qy, int qx)
 {
 	int y, x, floor, num = 0;
-	bool (*old_get_mon_num_hook)(int r_idx);
+	bool_ (*old_get_mon_num_hook)(int r_idx);
 
 	int *rooms;
 
@@ -1041,7 +1041,7 @@ static void town_gen_hack(int t_idx, int qy, int qx)
 static void town_gen_circle(int t_idx, int qy, int qx)
 {
 	int y, x, cy, cx, rad, floor, num = 0;
-	bool (*old_get_mon_num_hook)(int r_idx);
+	bool_ (*old_get_mon_num_hook)(int r_idx);
 
 	int *rooms;
 

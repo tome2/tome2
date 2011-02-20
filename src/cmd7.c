@@ -124,7 +124,7 @@ void mimic_info(char *p, int power)
  * when you run it. It's probably easy to fix but I haven't tried,
  * sorry.
  */
-bool get_magic_power(int *sn, magic_power *powers, int max_powers,
+bool_ get_magic_power(int *sn, magic_power *powers, int max_powers,
                      void (*power_info)(char *p, int power), int plev, int cast_stat)
 {
 	int i;
@@ -151,7 +151,7 @@ bool get_magic_power(int *sn, magic_power *powers, int max_powers,
 
 	magic_power spell;
 
-	bool flag, redraw;
+	bool_ flag, redraw;
 
 
 	/* Assume cancelled */
@@ -727,7 +727,7 @@ void do_cmd_mindcraft(void)
 		/* Damage WIS (possibly permanently) */
 		if (rand_int(100) < 50)
 		{
-			bool perm = (rand_int(100) < 25);
+			bool_ perm = (rand_int(100) < 25);
 
 			/* Message */
 			msg_print("You have damaged your mind!");
@@ -849,7 +849,7 @@ void do_cmd_mimic_lore()
 	p_ptr->update |= (PU_BONUS);
 }
 
-static bool mimic_forbid_travel(char *fmt)
+static bool_ mimic_forbid_travel(char *fmt)
 {
 	u32b value = p_ptr->mimic_extra >> 16;
 	u32b att = p_ptr->mimic_extra & 0xFFFF;
@@ -879,7 +879,7 @@ void do_cmd_mimic(void)
 
 	magic_power spell;
 
-	static bool added_hooks = FALSE;
+	static bool_ added_hooks = FALSE;
 	if(!added_hooks)
 	{
 		add_hook(HOOK_FORBID_TRAVEL, mimic_forbid_travel, "mimic_forbid_travel");
@@ -1145,7 +1145,7 @@ void do_cmd_mimic(void)
 		/* Damage WIS (possibly permanently) */
 		if (rand_int(100) < 50)
 		{
-			bool perm = (rand_int(100) < 25);
+			bool_ perm = (rand_int(100) < 25);
 
 			/* Message */
 			msg_print("You have damaged your mind!");
@@ -1225,7 +1225,7 @@ int activation_select;
 
 /* Return true if the player is wielding the philosopher's stone
  */
-bool alchemist_has_stone(void)
+bool_ alchemist_has_stone(void)
 {
 	if (p_ptr->inventory[INVEN_LITE].name1 == 209)
 		return TRUE;
@@ -1436,7 +1436,7 @@ int calc_rqty(int i, int pval, int oldpval)
 int check_artifact_items(int pval, int oldpval, int mode)
 {
 	int i, j, k, row = 1 , col = 15, rqty, orqty, trqty;
-	bool good = TRUE;
+	bool_ good = TRUE;
 	int temporary = -1;
 	char ch;
 
@@ -1480,7 +1480,7 @@ int check_artifact_items(int pval, int oldpval, int mode)
 				 */
 				if ( a_select_flags[i].rtval == TV_CORPSE )
 				{
-					bool itemgood = TRUE;
+					bool_ itemgood = TRUE;
 
 					/*Specified race not this one */
 					if ( o_ptr->pval2 != a_select_flags[i].rpval && a_select_flags[i].rpval)
@@ -1639,12 +1639,12 @@ int check_artifact_items(int pval, int oldpval, int mode)
 
 /* Display a list of required essences,
  * and/or use up the essences. */
-bool artifact_display_or_use(int pval, int oldpval, bool use)
+bool_ artifact_display_or_use(int pval, int oldpval, bool_ use)
 {
 	int essence[MAX_BATERIE_SVAL];
 	int essenceh[MAX_BATERIE_SVAL];
 	int al_idx, i, j, k;
-	bool enough;
+	bool_ enough;
 
 	/* Temporary Items require only one item, and no essences. */
 	for ( i = 0 ; a_select_flags[i].group ; i++)
@@ -1706,7 +1706,7 @@ bool artifact_display_or_use(int pval, int oldpval, bool use)
 	if (!enough || !use )
 	{
 		int row = 1 , col = 15;
-		bool good = FALSE;
+		bool_ good = FALSE;
 		char ch;
 
 		/* display of list of required essences */
@@ -1884,7 +1884,7 @@ void select_an_activation(void)
 /* Consume 'num' magic essences and return true.
  * If there aren't enough essences, return false */
 
-bool magic_essence(int num)
+bool_ magic_essence(int num)
 {
 	int i;
 	int j = 0;
@@ -1947,7 +1947,7 @@ void do_cmd_create_artifact(object_type *q_ptr)
 
 	char out_val[160];
 	char choice = 0;
-	bool lockpval = FALSE;
+	bool_ lockpval = FALSE;
 	int pval;
 	int oldpval;
 	energy_use = 100;
@@ -2378,7 +2378,7 @@ void do_cmd_create_artifact(object_type *q_ptr)
  * recipes as a createable item. Used to determine if we
  * should extract from it.
  */
-bool alchemist_exists(int tval, int sval, int ego, int artifact)
+bool_ alchemist_exists(int tval, int sval, int ego, int artifact)
 {
 	int al_idx;
 
@@ -2407,7 +2407,7 @@ bool alchemist_exists(int tval, int sval, int ego, int artifact)
 /*
  * Hook to determine if an object can have things extracted from it.
  */
-bool item_tester_hook_extractable(object_type *o_ptr)
+bool_ item_tester_hook_extractable(object_type *o_ptr)
 {
 
 	/* No artifacts */
@@ -2427,7 +2427,7 @@ bool item_tester_hook_extractable(object_type *o_ptr)
 /*
  * Hook to determine if an object is empowerable (NOT rechargeable)
  */
-bool item_tester_hook_empower(object_type *o_ptr)
+bool_ item_tester_hook_empower(object_type *o_ptr)
 {
 	int sval = -1;
 	int lev = get_skill(SKILL_ALCHEMY);
@@ -2601,7 +2601,7 @@ void do_cmd_toggle_artifact(object_type *o_ptr)
 
 	if (!(o_ptr->art_flags4 & TR4_ART_EXP))
 	{
-		bool okay = TRUE;
+		bool_ okay = TRUE;
 
 		if ( !alchemist_has_stone())
 		{
@@ -2670,10 +2670,10 @@ void do_cmd_toggle_artifact(object_type *o_ptr)
  * if tocreate=0, will return true if the player has enough
  * in their p_ptr->inventory to empower that item.
  */
-bool alchemist_items_check(int tval, int sval, int ego, int tocreate, bool message)
+bool_ alchemist_items_check(int tval, int sval, int ego, int tocreate, bool_ message)
 {
 	int al_idx, j;
-	bool exists = FALSE;
+	bool_ exists = FALSE;
 
 
 	for ( al_idx = 0 ; al_idx < max_al_idx ; al_idx++ )
@@ -2890,7 +2890,7 @@ void alchemist_recipe_book(void)
 	int num, max_num, i, al_idx, bat, kidx;
 	int choice[61], choice2[61];
 	int mod40;
-	bool essence[MAX_BATERIE_SVAL + 1];
+	bool_ essence[MAX_BATERIE_SVAL + 1];
 	char ch;
 
 	/* Save and clear the screen */
@@ -3171,13 +3171,13 @@ void alchemist_recipe_book(void)
  * This function needs to be able to scroll a list, because
  * there are SO MANY potions. :)
  */
-int alchemist_recipe_select(int *tval, int sval, int ego, bool recipe)
+int alchemist_recipe_select(int *tval, int sval, int ego, bool_ recipe)
 {
 	int i, mod40 = 0, num, max_num = 0;
 
 	cptr tval_desc2 = "";
 	char ch;
-	bool done = FALSE;
+	bool_ done = FALSE;
 
 	int choice[60];
 	int validc[60];
@@ -3604,7 +3604,7 @@ void do_cmd_alchemist(void)
 	int item, ext = 0;
 	int value, basechance;
 	int askill;
-	bool repeat = 0;
+	bool_ repeat = 0;
 	char ch;
 
 	object_type *o_ptr, *q_ptr;
@@ -4027,11 +4027,11 @@ void do_cmd_alchemist(void)
 	else if (ext == 2)
 	{
 		int ego;
-		bool discharge_stick = FALSE;
+		bool_ discharge_stick = FALSE;
 
 		/* s_ptr holds the empty items */
 		object_type *s_ptr = NULL;
-		bool carry_s_ptr = FALSE;
+		bool_ carry_s_ptr = FALSE;
 
 		item_tester_hook = item_tester_hook_extractable;
 
@@ -4160,7 +4160,7 @@ void do_cmd_alchemist(void)
 				{
 					/* Otherwise we must create a local copy of the empty item */
 					int tval, sval;
-					bool create_item = TRUE;
+					bool_ create_item = TRUE;
 
 					tval = o_ptr->tval;
 					if ( !ego && (tval == TV_POTION || tval == TV_POTION2))
@@ -4494,7 +4494,7 @@ static void print_spell_batch(int batch, int max)
 /*
  * List ten random spells and ask to pick one.
  */
-static random_spell* select_spell_from_batch(int batch, bool quick)
+static random_spell* select_spell_from_batch(int batch, bool_ quick)
 {
 	char tmp[160];
 
@@ -4656,7 +4656,7 @@ static random_spell* select_spell_from_batch(int batch, bool quick)
 /*
  * Pick a random spell from a menu
  */
-random_spell* select_spell(bool quick)
+random_spell* select_spell(bool_ quick)
 {
 	char tmp[160];
 
@@ -5052,7 +5052,7 @@ void do_cmd_possessor()
 
 	if (ext == 1)
 	{
-		bool use_great = FALSE;
+		bool_ use_great = FALSE;
 
 		if (p_ptr->disembodied)
 		{
@@ -5106,7 +5106,7 @@ void do_cmd_possessor()
 /*
  * Hook to determine if an object is contertible in an arrow/bolt
  */
-static bool item_tester_hook_convertible(object_type *o_ptr)
+static bool_ item_tester_hook_convertible(object_type *o_ptr)
 {
 	if ((o_ptr->tval == TV_JUNK) || (o_ptr->tval == TV_SKELETON)) return TRUE;
 
@@ -5708,7 +5708,7 @@ void do_cmd_necromancer(void)
 		/* Damage CON (possibly permanently) */
 		if (rand_int(100) < 50)
 		{
-			bool perm = (rand_int(100) < 25);
+			bool_ perm = (rand_int(100) < 25);
 
 			/* Message */
 			msg_print("You have damaged your body!");
@@ -5731,7 +5731,7 @@ static s32b rune_combine = 0;
 /*
  * Hook to determine if an object is "runestone"
  */
-static bool item_tester_hook_runestone(object_type *o_ptr)
+static bool_ item_tester_hook_runestone(object_type *o_ptr)
 {
 	if (o_ptr->tval != TV_RUNE2) return (FALSE);
 
@@ -5744,7 +5744,7 @@ static bool item_tester_hook_runestone(object_type *o_ptr)
 }
 
 
-static bool item_tester_hook_runestone_full(object_type *o_ptr)
+static bool_ item_tester_hook_runestone_full(object_type *o_ptr)
 {
 	if (o_ptr->tval != TV_RUNE2) return (FALSE);
 
@@ -5760,7 +5760,7 @@ static bool item_tester_hook_runestone_full(object_type *o_ptr)
 /*
  * Hook to determine if an object is "rune-able"
  */
-static bool item_tester_hook_runeable1(object_type *o_ptr)
+static bool_ item_tester_hook_runeable1(object_type *o_ptr)
 {
 	if (o_ptr->tval != TV_RUNE1) return (FALSE);
 
@@ -5772,7 +5772,7 @@ static bool item_tester_hook_runeable1(object_type *o_ptr)
 /*
  * Hook to determine if an object is "rune-able"
  */
-static bool item_tester_hook_runeable2(object_type *o_ptr)
+static bool_ item_tester_hook_runeable2(object_type *o_ptr)
 {
 	if (o_ptr->tval != TV_RUNE2) return (FALSE);
 
@@ -6062,13 +6062,13 @@ int rune_exec(rune_spell *spell, int cost)
 /*
  * Test if all runes needed at in the player p_ptr->inventory
  */
-bool test_runespell(rune_spell *spell)
+bool_ test_runespell(rune_spell *spell)
 {
 	int i;
 
 	object_type *o_ptr;
 
-	bool typeok = FALSE;
+	bool_ typeok = FALSE;
 
 	int rune2 = 0;
 
@@ -6100,7 +6100,7 @@ bool test_runespell(rune_spell *spell)
 /*
  * Ask for rune, rune2 and mana
  */
-bool get_runespell(rune_spell *spell)
+bool_ get_runespell(rune_spell *spell)
 {
 	int item, power_rune = 0, rune2 = 0, plev = get_skill(SKILL_RUNECRAFT);
 
@@ -6112,7 +6112,7 @@ bool get_runespell(rune_spell *spell)
 
 	cptr q, s;
 
-	bool OK = FALSE;
+	bool_ OK = FALSE;
 
 
 	rune_combine = 0;
@@ -6265,7 +6265,7 @@ static void print_runespell_batch(int batch, int max)
  * List ten random spells and ask to pick one.
  */
 
-static rune_spell* select_runespell_from_batch(int batch, bool quick,
+static rune_spell* select_runespell_from_batch(int batch, bool_ quick,
                 int *s_idx)
 {
 	char tmp[160];
@@ -6364,7 +6364,7 @@ static rune_spell* select_runespell_from_batch(int batch, bool quick,
  * Pick a random spell from a menu
  */
 
-rune_spell* select_runespell(bool quick, int *s_idx)
+rune_spell* select_runespell(bool_ quick, int *s_idx)
 {
 	char tmp[160];
 
@@ -6707,7 +6707,7 @@ void do_cmd_rune_carve()
 
 		if (o_ptr->k_idx)
 		{
-			bool do_del = FALSE;
+			bool_ do_del = FALSE;
 
 			if ((o_ptr->tval == TV_RUNE1) && (o_ptr->sval == s_ptr.type)) do_del = TRUE;
 			if ((o_ptr->tval == TV_RUNE2) && (BIT(o_ptr->sval) & s_ptr.rune2)) do_del = TRUE;
@@ -6988,7 +6988,7 @@ void do_cmd_unbeliever()
 /*
  * Hook to determine if an object is totemable
  */
-static bool item_tester_hook_totemable(object_type *o_ptr)
+static bool_ item_tester_hook_totemable(object_type *o_ptr)
 {
 	/* Only full corpse */
 	if ((o_ptr->tval == TV_CORPSE) &&
@@ -7013,7 +7013,7 @@ void do_cmd_summoner_extract()
 
 	int item, r, e;
 
-	bool partial;
+	bool_ partial;
 
 
 	/* Not when confused */
@@ -7104,7 +7104,7 @@ void summon_true(int r_idx, int item)
 {
 	int i, status, x = 1, y = 1, rx, ry = 0, chance;
 
-	bool used;
+	bool_ used;
 
 	monster_race *r_ptr = &r_info[r_idx];
 
@@ -7833,7 +7833,7 @@ void do_cmd_symbiotic(void)
 		/* Damage CON (possibly permanently) */
 		if (rand_int(100) < 50)
 		{
-			bool perm = (rand_int(100) < 25);
+			bool_ perm = (rand_int(100) < 25);
 
 			/* Message */
 			msg_print("You have damaged your body!");

@@ -1,7 +1,7 @@
 #undef cquest
 #define cquest (quest[QUEST_THRAIN])
 
-bool quest_thrain_death_hook(char *fmt)
+bool_ quest_thrain_death_hook(char *fmt)
 {
 	s32b r_idx, m_idx;
 	int r, x, y;
@@ -88,7 +88,7 @@ bool quest_thrain_death_hook(char *fmt)
 	return (FALSE);
 }
 
-bool quest_thrain_gen_hook(char *fmt)
+bool_ quest_thrain_gen_hook(char *fmt)
 {
 	s32b x, y, bx0, by0;
 	int xstart;
@@ -166,7 +166,7 @@ bool quest_thrain_gen_hook(char *fmt)
 
 	return (TRUE);
 }
-bool quest_thrain_feeling_hook(char *fmt)
+bool_ quest_thrain_feeling_hook(char *fmt)
 {
 	if (dungeon_type != DUNGEON_DOL_GULDUR) return (FALSE);
 	if (cquest.data[0] != dun_level) return (FALSE);
@@ -178,7 +178,7 @@ bool quest_thrain_feeling_hook(char *fmt)
 
 	return (FALSE);
 }
-bool quest_thrain_move_hook(char *fmt)
+bool_ quest_thrain_move_hook(char *fmt)
 {
 	s32b y;
 	s32b x;
@@ -209,13 +209,13 @@ bool quest_thrain_move_hook(char *fmt)
 
 	return (FALSE);
 }
-bool quest_thrain_turn_hook(char *fmt)
+bool_ quest_thrain_turn_hook(char *fmt)
 {
 	cquest.data[1] = 0;
 	cquest.data[2] = 0;
 	return (FALSE);
 }
-bool quest_thrain_init_hook(int q)
+bool_ quest_thrain_init_hook(int q)
 {
 	if (!cquest.data[0])
 	{

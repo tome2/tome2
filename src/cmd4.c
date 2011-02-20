@@ -728,7 +728,7 @@ static void do_cmd_options_autosave(cptr info)
 }
 
 /* Switch an option by only knowing its name */
-bool change_option(cptr name, bool value)
+bool_ change_option(cptr name, bool_ value)
 {
 	int i;
 
@@ -737,7 +737,7 @@ bool change_option(cptr name, bool value)
 	{
 		if (!strcmp(option_info[i].o_text, name))
 		{
-			bool old = (*option_info[i].o_var);
+			bool_ old = (*option_info[i].o_var);
 
 			(*option_info[i].o_var) = value;
 
@@ -752,7 +752,7 @@ bool change_option(cptr name, bool value)
 /*
  * Interact with some options
  */
-void do_cmd_options_aux(int page, cptr info, bool read_only)
+void do_cmd_options_aux(int page, cptr info, bool_ read_only)
 {
 	char ch;
 
@@ -889,7 +889,7 @@ static void do_cmd_options_win(void)
 
 	char ch;
 
-	bool go = TRUE;
+	bool_ go = TRUE;
 
 	u32b old_flag[8];
 
@@ -1542,7 +1542,7 @@ static errr macro_dump(cptr fname)
  *
  * Note that both "flush()" calls are extremely important.
  */
-static void do_cmd_macro_aux(char *buf, bool macro_screen)
+static void do_cmd_macro_aux(char *buf, bool_ macro_screen)
 {
 	int i, n = 0;
 
@@ -3014,7 +3014,7 @@ void do_cmd_load_screen(void)
 	byte a = 0;
 	char c = ' ';
 
-	bool okay = TRUE;
+	bool_ okay = TRUE;
 
 	FILE *fff;
 
@@ -3263,12 +3263,12 @@ void do_cmd_knowledge_artifacts(void)
 
 	char base_name[80];
 
-	bool *okay, *okayk;
+	bool_ *okay, *okayk;
 
 
 	/* Allocate the "okay" array */
-	C_MAKE(okay, max_a_idx, bool);
-	C_MAKE(okayk, max_k_idx, bool);
+	C_MAKE(okay, max_a_idx, bool_);
+	C_MAKE(okayk, max_k_idx, bool_);
 
 	/* Temporary file */
 	if (path_temp(file_name, 1024)) return;
@@ -3500,8 +3500,8 @@ void do_cmd_knowledge_artifacts(void)
 	/* Remove the file */
 	fd_kill(file_name);
 
-	C_FREE(okay, max_a_idx, bool);
-	C_FREE(okayk, max_k_idx, bool);
+	C_FREE(okay, max_a_idx, bool_);
+	C_FREE(okayk, max_k_idx, bool_);
 }
 
 
@@ -3635,7 +3635,7 @@ static void do_cmd_knowledge_uniques(void)
 		/* Only print Uniques */
 		if (r_ptr->flags1 & (RF1_UNIQUE))
 		{
-			bool dead = (r_ptr->max_num == 0);
+			bool_ dead = (r_ptr->max_num == 0);
 
 			/* Only display "known" uniques */
 			if (dead || cheat_know || r_ptr->r_sights)
@@ -3898,7 +3898,7 @@ static void do_cmd_knowledge_kill_count(void)
 
 			if (r_ptr->flags1 & (RF1_UNIQUE))
 			{
-				bool dead = (r_ptr->max_num == 0);
+				bool_ dead = (r_ptr->max_num == 0);
 
 				if (dead)
 				{
@@ -3939,7 +3939,7 @@ static void do_cmd_knowledge_kill_count(void)
 
 		if (r_ptr->flags1 & (RF1_UNIQUE))
 		{
-			bool dead = (r_ptr->max_num == 0);
+			bool_ dead = (r_ptr->max_num == 0);
 
 			if (dead)
 			{

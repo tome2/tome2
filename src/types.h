@@ -216,21 +216,21 @@ struct object_kind
 
 	byte flavor;			/* Special object flavor (or zero) */
 
-	bool easy_know;		/* This object is always known (if aware) */
+	bool_ easy_know;		/* This object is always known (if aware) */
 
 
-	bool aware;			/* The player is "aware" of the item's effects */
+	bool_ aware;			/* The player is "aware" of the item's effects */
 
-	bool tried;			/* The player has "tried" one of the items */
+	bool_ tried;			/* The player has "tried" one of the items */
 
-	bool know;                      /* extractable flag for the alchemist */
+	bool_ know;                      /* extractable flag for the alchemist */
 
 	u32b esp;                       /* ESP flags */
 	u32b oesp;                      /* Obvious ESP flags */
 
 	byte btval;                     /* Become Object type */
 	byte bsval;                     /* Become Object sub type */
-	bool artifact;                  /* Is it a normal artifact(already generated) */
+	bool_ artifact;                  /* Is it a normal artifact(already generated) */
 
 	s16b power;                     /* Power granted(if any) */
 };
@@ -309,7 +309,7 @@ struct ego_item_type
 	u32b name;			/* Name (offset) */
 	u32b text;			/* Text (offset) */
 
-	bool before;                    /* Before or after the object name ? */
+	bool_ before;                    /* Before or after the object name ? */
 
 	byte tval[10];
 	byte min_sval[10];
@@ -540,7 +540,7 @@ struct monster_race
 	u32b r_flags8;                  /* Observed racial flags */
 	u32b r_flags9;                  /* Observed racial flags */
 
-	bool on_saved;                  /* Is the (unique) on a saved level ? */
+	bool_ on_saved;                  /* Is the (unique) on a saved level ? */
 
 	byte total_visible;             /* Amount of this race that are visible */
 
@@ -553,7 +553,7 @@ typedef struct monster_ego monster_ego;
 struct monster_ego
 {
 	u32b name;				/* Name (offset) */
-	bool before;                            /* Display ego before or after */
+	bool_ before;                            /* Display ego before or after */
 
 	monster_blow blow[4];                   /* Up to four blows per round */
 	byte blowm[4][2];
@@ -665,7 +665,7 @@ struct trap_type
 	byte minlevel;    /* what is the minimum level on which the traps should be */
 	byte color;       /* what is the color on screen */
 	u32b flags;       /* where can these traps go - and perhaps other flags */
-	bool ident;       /* do we know the name */
+	bool_ ident;       /* do we know the name */
 	s16b known;       /* how well is this trap known */
 	s16b name;        /* normal name like weakness */
 	s16b dd, ds;      /* base damage */
@@ -910,7 +910,7 @@ struct monster_type
 
 	s32b mflag;			/* Extra monster flags */
 
-	bool ml;			/* Monster is "visible" */
+	bool_ ml;			/* Monster is "visible" */
 
 	s16b hold_o_idx;	/* Object being held (if any) */
 
@@ -974,7 +974,7 @@ typedef struct option_type option_type;
 
 struct option_type
 {
-	bool	*o_var;
+	bool_	*o_var;
 
 	byte	o_norm;
 
@@ -1194,7 +1194,7 @@ struct player_race_mod
 {
 	s32b title;                     /* Type of race mod */
 	s32b desc;                      /* Desc */
-	bool place;                     /* TRUE = race race modifier, FALSE = Race modifier race */
+	bool_ place;                     /* TRUE = race race modifier, FALSE = Race modifier race */
 
 	s16b r_adj[6];                  /* (+) Racial stat bonuses */
 
@@ -1411,7 +1411,7 @@ struct meta_class_type
 typedef struct help_info help_info;
 struct help_info
 {
-	bool enabled;           /* ingame help enabled */
+	bool_ enabled;           /* ingame help enabled */
 
 	u32b help1;             /* help flags 1 */
 };
@@ -1481,12 +1481,12 @@ struct player_type
 	s16b arena_number;		/* monster number in arena -KMW- */
 	s16b inside_arena;		/* Is character inside arena? */
 	s16b inside_quest;		/* Inside quest level */
-	bool exit_bldg;			/* Goal obtained in arena? -KMW- */
+	bool_ exit_bldg;			/* Goal obtained in arena? -KMW- */
 
 	s32b wilderness_x;              /* Coordinates in the wilderness */
 	s32b wilderness_y;
-	bool wild_mode;                 /* TRUE = Small map, FLASE = Big map */
-	bool old_wild_mode;             /* TRUE = Small map, FLASE = Big map */
+	bool_ wild_mode;                 /* TRUE = Small map, FLASE = Big map */
+	bool_ old_wild_mode;             /* TRUE = Small map, FLASE = Big map */
 
 	s16b mhp;			/* Max hit pts */
 	s16b chp;			/* Cur hit pts */
@@ -1503,7 +1503,7 @@ struct player_type
 
 	s32b grace;                     /* Your God's appreciation factor. */
 	byte pgod;                      /* Your God. */
-	bool praying;                   /* Praying to your god. */
+	bool_ praying;                   /* Praying to your god. */
 	s16b melkor_sacrifice;          /* How much hp has been sacrified for damage */
 
 	s16b max_plv;                   /* Max Player Level */
@@ -1620,11 +1620,11 @@ struct player_type
 
 	s16b xtra_spells;       /* Number of xtra spell learned(via potion) */
 
-	bool old_cumber_armor;
-	bool old_cumber_glove;
-	bool old_heavy_wield;
-	bool old_heavy_shoot;
-	bool old_icky_wield;
+	bool_ old_cumber_armor;
+	bool_ old_cumber_glove;
+	bool_ old_heavy_wield;
+	bool_ old_heavy_shoot;
+	bool_ old_icky_wield;
 
 	s16b old_lite;		/* Old radius of lite (if any) */
 	s16b old_view;		/* Old radius of view (if any) */
@@ -1632,12 +1632,12 @@ struct player_type
 	s16b old_food_aux;	/* Old value of food */
 
 
-	bool cumber_armor;	/* Mana draining armor */
-	bool cumber_glove;	/* Mana draining gloves */
-	bool heavy_wield;	/* Heavy weapon */
-	bool heavy_shoot;	/* Heavy shooter */
-	bool icky_wield;	/* Icky weapon */
-	bool immovable;         /* Immovable character */
+	bool_ cumber_armor;	/* Mana draining armor */
+	bool_ cumber_glove;	/* Mana draining gloves */
+	bool_ heavy_wield;	/* Heavy weapon */
+	bool_ heavy_shoot;	/* Heavy shooter */
+	bool_ icky_wield;	/* Icky weapon */
+	bool_ immovable;         /* Immovable character */
 
 	s16b cur_lite;		/* Radius of lite (if any) */
 
@@ -1655,72 +1655,72 @@ struct player_type
 	s16b stat_cnt[6];	/* Counter for temporary drains */
 	s16b stat_los[6];	/* Amount of temporary drains */
 
-	bool immune_acid;	/* Immunity to acid */
-	bool immune_elec;	/* Immunity to lightning */
-	bool immune_fire;	/* Immunity to fire */
-	bool immune_cold;	/* Immunity to cold */
-	bool immune_neth;       /* Immunity to nether */
+	bool_ immune_acid;	/* Immunity to acid */
+	bool_ immune_elec;	/* Immunity to lightning */
+	bool_ immune_fire;	/* Immunity to fire */
+	bool_ immune_cold;	/* Immunity to cold */
+	bool_ immune_neth;       /* Immunity to nether */
 
-	bool resist_acid;	/* Resist acid */
-	bool resist_elec;	/* Resist lightning */
-	bool resist_fire;	/* Resist fire */
-	bool resist_cold;	/* Resist cold */
-	bool resist_pois;	/* Resist poison */
+	bool_ resist_acid;	/* Resist acid */
+	bool_ resist_elec;	/* Resist lightning */
+	bool_ resist_fire;	/* Resist fire */
+	bool_ resist_cold;	/* Resist cold */
+	bool_ resist_pois;	/* Resist poison */
 
-	bool resist_conf;	/* Resist confusion */
-	bool resist_sound;	/* Resist sound */
-	bool resist_lite;	/* Resist light */
-	bool resist_dark;	/* Resist darkness */
-	bool resist_chaos;	/* Resist chaos */
-	bool resist_disen;	/* Resist disenchant */
-	bool resist_shard;	/* Resist shards */
-	bool resist_nexus;	/* Resist nexus */
-	bool resist_blind;	/* Resist blindness */
-	bool resist_neth;	/* Resist nether */
-	bool resist_fear;	/* Resist fear */
-	bool resist_continuum;  /* Resist space-time continuum disruption */
+	bool_ resist_conf;	/* Resist confusion */
+	bool_ resist_sound;	/* Resist sound */
+	bool_ resist_lite;	/* Resist light */
+	bool_ resist_dark;	/* Resist darkness */
+	bool_ resist_chaos;	/* Resist chaos */
+	bool_ resist_disen;	/* Resist disenchant */
+	bool_ resist_shard;	/* Resist shards */
+	bool_ resist_nexus;	/* Resist nexus */
+	bool_ resist_blind;	/* Resist blindness */
+	bool_ resist_neth;	/* Resist nether */
+	bool_ resist_fear;	/* Resist fear */
+	bool_ resist_continuum;  /* Resist space-time continuum disruption */
 
-	bool sensible_fire;     /* Fire does more damage on the player */
-	bool sensible_lite;     /* Lite does more damage on the player and blinds her/him */
+	bool_ sensible_fire;     /* Fire does more damage on the player */
+	bool_ sensible_lite;     /* Lite does more damage on the player and blinds her/him */
 
-	bool reflect;       /* Reflect 'bolt' attacks */
-	bool sh_fire;       /* Fiery 'immolation' effect */
-	bool sh_elec;       /* Electric 'immolation' effect */
-	bool wraith_form;   /* wraithform */
+	bool_ reflect;       /* Reflect 'bolt' attacks */
+	bool_ sh_fire;       /* Fiery 'immolation' effect */
+	bool_ sh_elec;       /* Electric 'immolation' effect */
+	bool_ wraith_form;   /* wraithform */
 
-	bool anti_magic;    /* Anti-magic */
-	bool anti_tele;     /* Prevent teleportation */
+	bool_ anti_magic;    /* Anti-magic */
+	bool_ anti_tele;     /* Prevent teleportation */
 
-	bool sustain_str;	/* Keep strength */
-	bool sustain_int;	/* Keep intelligence */
-	bool sustain_wis;	/* Keep wisdom */
-	bool sustain_dex;	/* Keep dexterity */
-	bool sustain_con;	/* Keep constitution */
-	bool sustain_chr;	/* Keep charisma */
+	bool_ sustain_str;	/* Keep strength */
+	bool_ sustain_int;	/* Keep intelligence */
+	bool_ sustain_wis;	/* Keep wisdom */
+	bool_ sustain_dex;	/* Keep dexterity */
+	bool_ sustain_con;	/* Keep constitution */
+	bool_ sustain_chr;	/* Keep charisma */
 
-	bool aggravate;		/* Aggravate monsters */
-	bool teleport;		/* Random teleporting */
+	bool_ aggravate;		/* Aggravate monsters */
+	bool_ teleport;		/* Random teleporting */
 
-	bool exp_drain;		/* Experience draining */
+	bool_ exp_drain;		/* Experience draining */
 	byte drain_mana;        /* mana draining */
 	byte drain_life;        /* hp draining */
 
-	bool magical_breath;    /* Magical breathing -- can breath anywhere */
-	bool water_breath;      /* Water breathing -- can breath underwater */
-	bool climb;             /* Can climb mountains */
-	bool fly;               /* Can fly over some features */
-	bool ffall;             /* No damage falling */
-	bool lite;              /* Permanent light */
-	bool free_act;		/* Never paralyzed */
-	bool see_inv;		/* Can see invisible */
-	bool regenerate;	/* Regenerate hit pts */
-	bool hold_life;		/* Resist life draining */
+	bool_ magical_breath;    /* Magical breathing -- can breath anywhere */
+	bool_ water_breath;      /* Water breathing -- can breath underwater */
+	bool_ climb;             /* Can climb mountains */
+	bool_ fly;               /* Can fly over some features */
+	bool_ ffall;             /* No damage falling */
+	bool_ lite;              /* Permanent light */
+	bool_ free_act;		/* Never paralyzed */
+	bool_ see_inv;		/* Can see invisible */
+	bool_ regenerate;	/* Regenerate hit pts */
+	bool_ hold_life;		/* Resist life draining */
 	u32b telepathy;         /* Telepathy */
-	bool slow_digest;	/* Slower digestion */
-	bool bless_blade;	/* Blessed blade */
+	bool_ slow_digest;	/* Slower digestion */
+	bool_ bless_blade;	/* Blessed blade */
 	byte xtra_might;        /* Extra might bow */
-	bool impact;		/* Earthquake blows */
-	bool auto_id;           /* Auto id items */
+	bool_ impact;		/* Earthquake blows */
+	bool_ auto_id;           /* Auto id items */
 
 	s16b invis;             /* Invisibility */
 
@@ -1805,11 +1805,11 @@ struct player_type
 
 	s16b companion_killed;  /* Number of companion death */
 
-	bool no_mortal;         /* Fated to never die by the hand of a mortal being */
+	bool_ no_mortal;         /* Fated to never die by the hand of a mortal being */
 
-	bool black_breath;      /* The Tolkien's Black Breath */
+	bool_ black_breath;      /* The Tolkien's Black Breath */
 
-	bool precognition;      /* Like the cheat mode */
+	bool_ precognition;      /* Like the cheat mode */
 
 	/*** Extra flags -- used for lua and easying stuff ***/
 	u32b xtra_f1;
@@ -1820,7 +1820,7 @@ struct player_type
 	u32b xtra_esp;
 
 	/* Corruptions */
-	bool *corruptions;
+	bool_ *corruptions;
 
 	/*** Pet commands ***/
 	byte pet_follow_distance; /* Length of the imaginary "leash" for pets */
@@ -1832,17 +1832,17 @@ struct player_type
 
 	/*** Body changing variables ***/
 	u16b body_monster;        /* In which body is the player */
-	bool disembodied;         /* Is the player in a body ? */
+	bool_ disembodied;         /* Is the player in a body ? */
 	byte body_parts[INVEN_TOTAL - INVEN_WIELD]; /* Which body parts does he have ? */
 
 	s16b extra_body_parts[BODY_MAX];      /* Various body modifiers */
 
 	/* Astral */
-	bool astral;              /* We started at the bottom ? */
+	bool_ astral;              /* We started at the bottom ? */
 
 	/* Powers */
-	bool *powers;     /* Actual powers */
-	bool powers_mod[POWER_MAX_INIT]; /* Intrinsinc powers */
+	bool_ *powers;     /* Actual powers */
+	bool_ powers_mod[POWER_MAX_INIT]; /* Intrinsinc powers */
 
 	/* Skills */
 	s16b skill_points;
@@ -1855,8 +1855,8 @@ struct player_type
 
 	/*** Temporary fields ***/
 
-	bool did_nothing;               /* True if the last action wasnt a real action */
-	bool leaving;                   /* True if player is leaving */
+	bool_ did_nothing;               /* True if the last action wasnt a real action */
+	bool_ leaving;                   /* True if player is leaving */
 };
 
 
@@ -1938,7 +1938,7 @@ struct wilderness_map
 	u32b    seed;                   /* Seed for the RNG */
 	u16b    entrance;               /* Entrance for dungeons */
 
-	bool    known;                  /* Is it seen by the player ? */
+	bool_    known;                  /* Is it seen by the player ? */
 };
 
 /*
@@ -1955,9 +1955,9 @@ struct town_type
 
 	byte flags;             /* Town flags */
 	/* Left this for the sake of compatibility */
-	bool stocked;           /* Is the town actualy stocked ? */
+	bool_ stocked;           /* Is the town actualy stocked ? */
 
-	bool destroyed;         /* Is the town destroyed? */
+	bool_ destroyed;         /* Is the town destroyed? */
 };
 
 
@@ -1985,7 +1985,7 @@ struct artifact_select_flag {
 	byte level;		/* Player skill level to start at */
 	int desc;		/* Display this description to select flag */
 	u32b xp;		/* xp cost for this flag */
-	bool pval;		/* indicates this flag benifits from pval */
+	bool_ pval;		/* indicates this flag benifits from pval */
 	int item_desc;	/* Description of required item */
 	int item_descp;	/* Description of required item */
 	byte rtval;		/* Required items' tval */
@@ -2072,7 +2072,7 @@ struct random_spell
 	byte dam_sides;
 	byte dam_dice;
 	byte level;             /* Level needed */
-	bool untried;           /* Is the spell was tried? */
+	bool_ untried;           /* Is the spell was tried? */
 };
 
 /* A structure to describe the fate of the player */
@@ -2090,8 +2090,8 @@ struct fate
 	s16b r_idx;     /* Monster to find */
 	s16b count;     /* Number of things */
 	s16b time;      /* Turn before */
-	bool know;      /* Has it been predicted? */
-	bool icky;	/* Hackish runtime-only flag */
+	bool_ know;      /* Has it been predicted? */
+	bool_ icky;	/* Hackish runtime-only flag */
 };
 
 /* A structure for movements */
@@ -2155,7 +2155,7 @@ struct dungeon_info_type
 	s16b mindepth;                  /* Minimal depth */
 	s16b maxdepth;                  /* Maximal depth */
 
-	bool principal;                 /* If it's a part of the main dungeon */
+	bool_ principal;                 /* If it's a part of the main dungeon */
 	byte next;                      /* The next part of the main dungeon */
 	byte min_plev;                  /* Minimal plev needed to enter -- it's an anti-cheating mesure */
 
@@ -2194,7 +2194,7 @@ struct inscription_info_type
 {
 	char text[40];                  /* The inscription itself */
 	byte when;                      /* When it is executed */
-	bool know;                      /* Is the inscription know ? */
+	bool_ know;                      /* Is the inscription know ? */
 	byte mana;                      /* Grid mana needed */
 };
 
@@ -2241,7 +2241,7 @@ struct power_type
 };
 
 /* Hooks */
-typedef bool (*hook_type)(char *fmt);
+typedef bool_ (*hook_type)(char *fmt);
 
 /*
  * Structure for the "quests"
@@ -2250,9 +2250,9 @@ typedef struct quest_type quest_type;
 
 struct quest_type
 {
-	bool silent;
+	bool_ silent;
 
-	bool dynamic_desc;      /* Do we need to ask a function to get the description ? */
+	bool_ dynamic_desc;      /* Do we need to ask a function to get the description ? */
 
 	char name[40];          /* Quest name */
 
@@ -2266,7 +2266,7 @@ struct quest_type
 
 	byte type;              /* Lua or C ? */
 
-	bool (*init)(int q);    /* Function that takes care of generating hardcoded quests */
+	bool_ (*init)(int q);    /* Function that takes care of generating hardcoded quests */
 
 	s32b data[4];           /* Various datas used by the quests */
 };
@@ -2275,7 +2275,7 @@ struct random_quest
 {
 	byte type;              /* Type/number of monsters to kill(0 = no quest) */
 	s16b r_idx;             /* Monsters to crush */
-	bool done;              /* Done ? */
+	bool_ done;              /* Done ? */
 };
 
 /* Monster powers for player uses */
@@ -2285,7 +2285,7 @@ struct monster_power
 	u32b    power;          /* Power RF?_xxx */
 	cptr    name;           /* Name of it */
 	int     mana;           /* Mana needed */
-	bool    great;          /* Need the use of great spells */
+	bool_    great;          /* Need the use of great spells */
 };
 
 /* Tval descs */
@@ -2303,7 +2303,7 @@ typedef struct between_exit between_exit;
 struct between_exit
 {
 	s16b corresp;           /* Corresponding between gate */
-	bool dungeon;           /* Do we exit in a dungeon or in the wild ? */
+	bool_ dungeon;           /* Do we exit in a dungeon or in the wild ? */
 
 	s16b wild_x, wild_y;    /* Wilderness spot to land onto */
 	s16b px, py;            /* Location of the map */
@@ -2346,7 +2346,7 @@ struct birther
 
 	char history[4][60];
 
-	bool quick_ok;
+	bool_ quick_ok;
 };
 
 typedef struct hooks_chain hooks_chain;
@@ -2399,7 +2399,7 @@ struct set_type
 	byte num_use;                           /* Number actually wore */
 	struct                                  /* the various items */
 	{
-		bool present;                   /* Is it actually wore ? */
+		bool_ present;                   /* Is it actually wore ? */
 		s16b a_idx;                     /* What artifact ? */
 		s16b pval[6];                   /* Pval for each combination */
 		u32b flags1[6];                 /* Flags */
@@ -2444,9 +2444,9 @@ struct skill_type
 	s16b action[MAX_SKILLS];                /* List of actions against other skills */
 
 	s16b father;                            /* Father in the skill tree */
-	bool dev;                               /* Is the branch developped ? */
+	bool_ dev;                               /* Is the branch developped ? */
 	s16b order;                             /* Order in the tree */
-	bool hidden;                            /* Innactive */
+	bool_ hidden;                            /* Innactive */
 
 	byte random_gain_chance;                /* random gain chance, still needs the flag */
 
@@ -2493,7 +2493,7 @@ struct timer_type
 {
 	timer_type *next;       /* The next timer in the list */
 
-	bool enabled;           /* Is it currently counting? */
+	bool_ enabled;           /* Is it currently counting? */
 
 	s32b delay;             /* Delay between activations */
 	s32b countdown;         /* The current number of turns passed, when it reaches delay it fires */
@@ -2524,7 +2524,7 @@ struct ability_type
 
 	s16b cost;                              /* Skill points cost */
 
-	bool acquired;                          /* Do the player actualylg ot it ? */
+	bool_ acquired;                          /* Do the player actualylg ot it ? */
 
 	/* Prereqs */
 	s16b skills[10];                	/* List of prereq skills(10 max) */

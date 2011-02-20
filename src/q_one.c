@@ -1,7 +1,7 @@
 #undef cquest
 #define cquest (quest[QUEST_ONE])
 
-bool quest_one_move_hook(char *fmt)
+bool_ quest_one_move_hook(char *fmt)
 {
 	s32b y, x;
 	cave_type *c_ptr;
@@ -66,7 +66,7 @@ bool quest_one_move_hook(char *fmt)
 
 	return FALSE;
 }
-bool quest_one_drop_hook(char *fmt)
+bool_ quest_one_drop_hook(char *fmt)
 {
 	s32b o_idx;
 	object_type *o_ptr;
@@ -97,7 +97,7 @@ bool quest_one_drop_hook(char *fmt)
 
 	return TRUE;
 }
-bool quest_one_wield_hook(char *fmt)
+bool_ quest_one_wield_hook(char *fmt)
 {
 	s32b o_idx;
 	object_type *o_ptr;
@@ -154,7 +154,7 @@ bool quest_one_wield_hook(char *fmt)
 
 	return FALSE;
 }
-bool quest_one_hp_hook(char *fmt)
+bool_ quest_one_hp_hook(char *fmt)
 {
 	if (cquest.status == QUEST_STATUS_FAILED_DONE)
 	{
@@ -171,7 +171,7 @@ bool quest_one_hp_hook(char *fmt)
 	}
 	return (FALSE);
 }
-bool quest_one_die_hook(char *fmt)
+bool_ quest_one_die_hook(char *fmt)
 {
 	if (cquest.status == QUEST_STATUS_FAILED_DONE)
 	{
@@ -190,7 +190,7 @@ bool quest_one_die_hook(char *fmt)
 	}
 	return (FALSE);
 }
-bool quest_one_identify_hook(char *fmt)
+bool_ quest_one_identify_hook(char *fmt)
 {
 	s32b item;
 
@@ -222,10 +222,10 @@ bool quest_one_identify_hook(char *fmt)
 
 	return (FALSE);
 }
-bool quest_one_death_hook(char *fmt)
+bool_ quest_one_death_hook(char *fmt)
 {
 	s32b r_idx, m_idx;
-	bool ok = FALSE;
+	bool_ ok = FALSE;
 	monster_race *r_ptr;
 
 	m_idx = get_next_arg(fmt);
@@ -304,7 +304,7 @@ bool quest_one_death_hook(char *fmt)
 
 	return (FALSE);
 }
-bool quest_one_dump_hook(char *fmt)
+bool_ quest_one_dump_hook(char *fmt)
 {
 	if (cquest.status == QUEST_STATUS_FINISHED)
 	{
@@ -316,7 +316,7 @@ bool quest_one_dump_hook(char *fmt)
 	}
 	return (FALSE);
 }
-bool quest_one_gen_hook(char *fmt)
+bool_ quest_one_gen_hook(char *fmt)
 {
 	s32b x, y, tries = 10000;
 
@@ -346,7 +346,7 @@ bool quest_one_gen_hook(char *fmt)
 
 	return (FALSE);
 }
-bool quest_one_init_hook(int q_idx)
+bool_ quest_one_init_hook(int q_idx)
 {
 	if ((cquest.status >= QUEST_STATUS_TAKEN) && (cquest.status < QUEST_STATUS_FINISHED))
 	{

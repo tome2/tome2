@@ -16,7 +16,7 @@
 #include "angband.h"
 
 /* hack as in leave_store in store.c */
-static bool leave_bldg = FALSE;
+static bool_ leave_bldg = FALSE;
 
 /* remember building location */
 static int building_loc = 0;
@@ -25,7 +25,7 @@ static int building_loc = 0;
 /*
  * A helper function for is_state
  */
-bool is_state_aux(store_type *s_ptr, int state)
+bool_ is_state_aux(store_type *s_ptr, int state)
 {
 	owner_type *ow_ptr = &ow_info[s_ptr->owner];
 
@@ -50,7 +50,7 @@ bool is_state_aux(store_type *s_ptr, int state)
 /*
  * Test if the state accords with the player
  */
-bool is_state(store_type *s_ptr, int state)
+bool_ is_state(store_type *s_ptr, int state)
 {
 	if (state == STORE_NORMAL)
 	{
@@ -403,7 +403,7 @@ static void display_fruit(int row, int col, int fruit)
 /*
  * gamble_comm
  */
-static bool gamble_comm(int cmd)
+static bool_ gamble_comm(int cmd)
 {
 	int roll1, roll2, roll3, choice, odds, win;
 
@@ -664,9 +664,9 @@ static bool gamble_comm(int cmd)
  * ghost code does become a reality again. Does help to avoid filthy urchins.
  * Resting at night is also a quick way to restock stores -KMW- 
  */
-static bool inn_comm(int cmd)
+static bool_ inn_comm(int cmd)
 {
-	bool vampire;
+	bool_ vampire;
 
 
 	/* Extract race info */
@@ -694,7 +694,7 @@ static bool inn_comm(int cmd)
 		 */
 	case BACT_REST:  /* Rest for the night */
 		{
-			bool nighttime;
+			bool_ nighttime;
 
 			/* Extract the current time */
 			nighttime = ((bst(HOUR, turn) < 6) || (bst(HOUR, turn) >= 18));
@@ -807,7 +807,7 @@ static void get_questinfo(int questnum)
 /*
  * Request a quest from the Lord.
  */
-static bool castle_quest(int y, int x)
+static bool_ castle_quest(int y, int x)
 {
 	int plot = 0;
 
@@ -1023,7 +1023,7 @@ static void list_weapon(object_type *o_ptr, int row, int col)
 /*
  * Select melee weapons
  */
-static bool item_tester_hook_melee_weapon(object_type *o_ptr)
+static bool_ item_tester_hook_melee_weapon(object_type *o_ptr)
 {
 	return (wield_slot(o_ptr) == INVEN_WIELD);
 }
@@ -1031,7 +1031,7 @@ static bool item_tester_hook_melee_weapon(object_type *o_ptr)
 /*
  * compare_weapons -KMW-
  */
-static bool compare_weapons(void)
+static bool_ compare_weapons(void)
 {
 	int item, item2, i;
 
@@ -1121,8 +1121,8 @@ static bool compare_weapons(void)
  * sharpen arrows, repair armor, repair weapon
  * -KMW-
  */
-static bool fix_item(int istart, int iend, int ispecific, bool iac,
-                     int ireward, bool set_reward)
+static bool_ fix_item(int istart, int iend, int ispecific, bool_ iac,
+                     int ireward, bool_ set_reward)
 {
 	int i;
 
@@ -1134,7 +1134,7 @@ static bool fix_item(int istart, int iend, int ispecific, bool iac,
 
 	char out_val[80], tmp_str[80];
 
-	bool repaired = FALSE;
+	bool_ repaired = FALSE;
 
 	clear_bldg(5, 18);
 	strnfmt(tmp_str, 80, "  Based on your skill, we can improve up to +%d", maxenchant);
@@ -1216,7 +1216,7 @@ static bool fix_item(int istart, int iend, int ispecific, bool iac,
 /*
  * Research Item
  */
-static bool research_item(void)
+static bool_ research_item(void)
 {
 	clear_bldg(5, 18);
 	return (identify_fully());
@@ -1278,7 +1278,7 @@ static void show_bounties(void)
 /*
  * Filter for corpses that currently have a bounty on them.
  */
-static bool item_tester_hook_bounty(object_type* o_ptr)
+static bool_ item_tester_hook_bounty(object_type* o_ptr)
 {
 	int i;
 
@@ -1295,7 +1295,7 @@ static bool item_tester_hook_bounty(object_type* o_ptr)
 }
 
 /* Filter to match the quest monster's corpse. */
-static bool item_tester_hook_quest_monster(object_type* o_ptr)
+static bool_ item_tester_hook_quest_monster(object_type* o_ptr)
 {
 	if ((o_ptr->tval == TV_CORPSE) &&
 	                (o_ptr->pval2 == bounties[0][0])) return (TRUE);
@@ -1382,7 +1382,7 @@ static void sell_corpses(void)
 /*
  * Hook for bounty monster selection.
  */
-static bool mon_hook_bounty(int r_idx)
+static bool_ mon_hook_bounty(int r_idx)
 {
 	monster_race* r_ptr = &r_info[r_idx];
 
@@ -1605,7 +1605,7 @@ void select_bounties(void)
 /*
  * Execute a building command
  */
-bool bldg_process_command(store_type *s_ptr, int i)
+bool_ bldg_process_command(store_type *s_ptr, int i)
 {
 	store_action_type *ba_ptr = &ba_info[st_info[s_ptr->st_idx].actions[i]];
 
@@ -1613,11 +1613,11 @@ bool bldg_process_command(store_type *s_ptr, int i)
 
 	int bcost;
 
-	bool paid = FALSE;
+	bool_ paid = FALSE;
 
-	bool set_reward = FALSE;
+	bool_ set_reward = FALSE;
 
-	bool recreate = FALSE;
+	bool_ recreate = FALSE;
 
 
 	if (is_state(s_ptr, STORE_LIKED))
@@ -1694,7 +1694,7 @@ bool bldg_process_command(store_type *s_ptr, int i)
 	case BACT_QUEST4:
 		{
 			int y = 1, x = 1;
-			bool ok = FALSE;
+			bool_ ok = FALSE;
 
 			while ((x < cur_wid - 1) && !ok)
 			{
@@ -1911,7 +1911,7 @@ bool bldg_process_command(store_type *s_ptr, int i)
 	case BACT_DIVINATION:
 		{
 			int i, count = 0;
-			bool something = FALSE;
+			bool_ something = FALSE;
 
 			while (count < 1000)
 			{
@@ -2093,7 +2093,7 @@ void do_cmd_bldg(void)
 
 	char command;
 
-	bool validcmd;
+	bool_ validcmd;
 
 	store_type *s_ptr;
 

@@ -1,7 +1,7 @@
 #undef cquest
 #define cquest (quest[QUEST_NARSIL])
 
-bool quest_narsil_move_hook(char *fmt)
+bool_ quest_narsil_move_hook(char *fmt)
 {
 	s32b y, x;
 	cave_type *c_ptr;
@@ -56,7 +56,7 @@ bool quest_narsil_move_hook(char *fmt)
 
 	return TRUE;
 }
-bool quest_narsil_dump_hook(char *fmt)
+bool_ quest_narsil_dump_hook(char *fmt)
 {
 	if (cquest.status >= QUEST_STATUS_COMPLETED)
 	{
@@ -64,7 +64,7 @@ bool quest_narsil_dump_hook(char *fmt)
 	}
 	return (FALSE);
 }
-bool quest_narsil_identify_hook(char *fmt)
+bool_ quest_narsil_identify_hook(char *fmt)
 {
 	if (cquest.status == QUEST_STATUS_UNTAKEN)
 	{
@@ -106,7 +106,7 @@ bool quest_narsil_identify_hook(char *fmt)
 
 	return (FALSE);
 }
-bool quest_narsil_init_hook(int q_idx)
+bool_ quest_narsil_init_hook(int q_idx)
 {
 	if ((cquest.status >= QUEST_STATUS_TAKEN) && (cquest.status < QUEST_STATUS_FINISHED))
 	{

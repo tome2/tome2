@@ -78,9 +78,9 @@ void teleport_player_directed(int rad, int dir)
 	int min = rad / 4;
 	int dis = rad;
 	int i, d;
-	bool look = TRUE;
-	bool y_major = FALSE;
-	bool x_major = FALSE;
+	bool_ look = TRUE;
+	bool_ y_major = FALSE;
+	bool_ x_major = FALSE;
 	int y_neg = 1;
 	int x_neg = 1;
 	cave_type *c_ptr;
@@ -193,7 +193,7 @@ void teleport_away(int m_idx, int dis)
 	int ny = 0, nx = 0, oy, ox, d, i, min;
 	int tries = 0;
 
-	bool look = TRUE;
+	bool_ look = TRUE;
 
 	monster_type *m_ptr = &m_list[m_idx];
 	monster_race *r_ptr = race_inf(m_ptr);
@@ -306,7 +306,7 @@ void teleport_to_player(int m_idx)
 	int ny = 0, nx = 0, oy, ox, d, i, min;
 	int dis = 2;
 
-	bool look = TRUE;
+	bool_ look = TRUE;
 
 	monster_type *m_ptr = &m_list[m_idx];
 	monster_race *r_ptr = race_inf(m_ptr);
@@ -419,7 +419,7 @@ void teleport_to_player(int m_idx)
  * Try very hard to move the player at least a quarter that distance.
  */
 /* It'd be better if this was made an argument ... */
-bool teleport_player_bypass = FALSE;
+bool_ teleport_player_bypass = FALSE;
 
 void teleport_player(int dis)
 {
@@ -428,7 +428,7 @@ void teleport_player(int dis)
 
 	int xx = -1, yy = -1;
 
-	bool look = TRUE;
+	bool_ look = TRUE;
 
 	if (p_ptr->resist_continuum && (!teleport_player_bypass))
 	{
@@ -589,7 +589,7 @@ void get_pos_player(int dis, int *ny, int *nx)
 	int d, i, min, x = 0, y = 0;
 	int tries = 0;
 
-	bool look = TRUE;
+	bool_ look = TRUE;
 
 	if (dis > 200) dis = 200;  /* To be on the safe side... */
 
@@ -1270,8 +1270,8 @@ void take_hit(int damage, cptr hit_from)
 	object_type *o_ptr = &p_ptr->inventory[INVEN_CARRY];
 	int old_chp = p_ptr->chp;
 
-	bool pen_invuln = FALSE;
-	bool monster_take = FALSE;
+	bool_ pen_invuln = FALSE;
+	bool_ monster_take = FALSE;
 
 	char death_message[80];
 
@@ -1592,7 +1592,7 @@ void take_sanity_hit(int damage, cptr hit_from)
  * Does a given class of objects (usually) hate acid?
  * Note that acid can either melt or corrode something.
  */
-static bool hates_acid(object_type *o_ptr)
+static bool_ hates_acid(object_type *o_ptr)
 {
 	/* Analyze the type */
 	switch (o_ptr->tval)
@@ -1647,7 +1647,7 @@ static bool hates_acid(object_type *o_ptr)
 /*
  * Does a given object (usually) hate electricity?
  */
-static bool hates_elec(object_type *o_ptr)
+static bool_ hates_elec(object_type *o_ptr)
 {
 	switch (o_ptr->tval)
 	{
@@ -1668,7 +1668,7 @@ static bool hates_elec(object_type *o_ptr)
  * Hafted/Polearm weapons have wooden shafts.
  * Arrows/Bows are mostly wooden.
  */
-static bool hates_fire(object_type *o_ptr)
+static bool_ hates_fire(object_type *o_ptr)
 {
 	/* Analyze the type */
 	switch (o_ptr->tval)
@@ -1722,7 +1722,7 @@ static bool hates_fire(object_type *o_ptr)
 /*
  * Does a given object (usually) hate cold?
  */
-static bool hates_cold(object_type *o_ptr)
+static bool_ hates_cold(object_type *o_ptr)
 {
 	switch (o_ptr->tval)
 	{
@@ -2101,7 +2101,7 @@ void cold_dam(int dam, cptr kb_str)
  * Note that this function (used by stat potions) now restores
  * the stat BEFORE increasing it.
  */
-bool inc_stat(int stat)
+bool_ inc_stat(int stat)
 {
 	int value, gain;
 
@@ -2174,7 +2174,7 @@ bool inc_stat(int stat)
  * if your stat is already drained, the "max" value will not drop all
  * the way down to the "cur" value.
  */
-bool dec_stat(int stat, int amount, int mode)
+bool_ dec_stat(int stat, int amount, int mode)
 {
 	int cur, max, loss = 0, same, res = FALSE;
 
@@ -2310,7 +2310,7 @@ bool dec_stat(int stat, int amount, int mode)
 /*
  * Restore a stat.  Return TRUE only if this actually makes a difference.
  */
-bool res_stat(int stat, bool full)
+bool_ res_stat(int stat, bool_ full)
 {
 	/* Fully restore */
 	if (full)
@@ -2371,7 +2371,7 @@ bool res_stat(int stat, bool full)
  *
  * Return "TRUE" if the player notices anything
  */
-bool apply_disenchant(int mode)
+bool_ apply_disenchant(int mode)
 {
 	int t = mode;
 	object_type *o_ptr;
@@ -2981,15 +2981,15 @@ static int project_m_y;
  *
  * XXX XXX XXX Perhaps we should affect doors?
  */
-static bool project_f(int who, int r, int y, int x, int dam, int typ)
+static bool_ project_f(int who, int r, int y, int x, int dam, int typ)
 {
 	cave_type *c_ptr = &cave[y][x];
 
-	bool obvious = FALSE;
+	bool_ obvious = FALSE;
 
-	bool flag = FALSE;
+	bool_ flag = FALSE;
 
-	bool seen;
+	bool_ seen;
 
 
 	/* XXX XXX XXX */
@@ -3883,20 +3883,20 @@ static int raise_ego[MAX_RAISE] =
  *
  * We return "TRUE" if the effect of the projection is "obvious".
  */
-static bool project_o(int who, int r, int y, int x, int dam, int typ)
+static bool_ project_o(int who, int r, int y, int x, int dam, int typ)
 {
 	cave_type *c_ptr = &cave[y][x];
 
 	s16b this_o_idx, next_o_idx = 0;
 
-	bool obvious = FALSE;
+	bool_ obvious = FALSE;
 
 	u32b f1, f2, f3, f4, f5, esp;
 
 	char o_name[80];
 
 	int o_sval = 0;
-	bool is_potion = FALSE;
+	bool_ is_potion = FALSE;
 	int xx, yy;
 
 
@@ -3912,10 +3912,10 @@ static bool project_o(int who, int r, int y, int x, int dam, int typ)
 	{
 		object_type * o_ptr;
 
-		bool is_art = FALSE;
-		bool ignore = FALSE;
-		bool plural = FALSE;
-		bool do_kill = FALSE;
+		bool_ is_art = FALSE;
+		bool_ ignore = FALSE;
+		bool_ plural = FALSE;
+		bool_ do_kill = FALSE;
 
 		cptr note_kill = NULL;
 
@@ -4269,7 +4269,7 @@ static bool project_o(int who, int r, int y, int x, int dam, int typ)
 }
 
 /* Can the monster be hurt ? */
-bool hurt_monster(monster_type *m_ptr)
+bool_ hurt_monster(monster_type *m_ptr)
 {
 	if (m_ptr->status == MSTATUS_COMPANION) return FALSE;
 	else return TRUE;
@@ -4328,7 +4328,7 @@ bool hurt_monster(monster_type *m_ptr)
  *
  * We attempt to return "TRUE" if the player saw anything "useful" happen.
  */
-bool project_m(int who, int r, int y, int x, int dam, int typ)
+bool_ project_m(int who, int r, int y, int x, int dam, int typ)
 {
 	int tmp;
 
@@ -4343,13 +4343,13 @@ bool project_m(int who, int r, int y, int x, int dam, int typ)
 	cptr name = (r_name + r_ptr->name);
 
 	/* Is the monster "seen"? */
-	bool seen;
+	bool_ seen;
 
 	/* Were the effects "obvious" (if seen)? */
-	bool obvious = FALSE;
+	bool_ obvious = FALSE;
 
 	/* Were the effects "irrelevant"? */
-	bool skipped = FALSE;
+	bool_ skipped = FALSE;
 
 
 	/* Move setting */
@@ -4437,7 +4437,7 @@ bool project_m(int who, int r, int y, int x, int dam, int typ)
 
 	if (!who && (is_friend(m_ptr) >= 0))
 	{
-		bool get_angry = FALSE;
+		bool_ get_angry = FALSE;
 		/* Grrr? */
 		switch (typ)
 		{
@@ -5176,7 +5176,7 @@ bool project_m(int who, int r, int y, int x, int dam, int typ)
 		/* Gravity -- breathers resist */
 	case GF_GRAVITY:
 		{
-			bool resist_tele = FALSE;
+			bool_ resist_tele = FALSE;
 
 			if (seen) obvious = TRUE;
 
@@ -5661,7 +5661,7 @@ bool project_m(int who, int r, int y, int x, int dam, int typ)
 		/* Clone monsters (Ignore "dam") */
 	case GF_OLD_CLONE:
 		{
-			bool is_frien = FALSE;
+			bool_ is_frien = FALSE;
 
 			if (seen) obvious = TRUE;
 			if ((is_friend(m_ptr) > 0) && (randint(3) != 1))
@@ -6314,7 +6314,7 @@ bool project_m(int who, int r, int y, int x, int dam, int typ)
 			/* Only affect undead */
 			if (r_ptr->flags3 & (RF3_UNDEAD))
 			{
-				bool resists_tele = FALSE;
+				bool_ resists_tele = FALSE;
 
 				if (r_ptr->flags3 & (RF3_RES_TELE))
 				{
@@ -6360,7 +6360,7 @@ bool project_m(int who, int r, int y, int x, int dam, int typ)
 			/* Only affect evil */
 			if (r_ptr->flags3 & (RF3_EVIL))
 			{
-				bool resists_tele = FALSE;
+				bool_ resists_tele = FALSE;
 
 				if (r_ptr->flags3 & (RF3_RES_TELE))
 				{
@@ -6402,7 +6402,7 @@ bool project_m(int who, int r, int y, int x, int dam, int typ)
 		/* Teleport monster (Use "dam" as "power") */
 	case GF_AWAY_ALL:
 		{
-			bool resists_tele = FALSE;
+			bool_ resists_tele = FALSE;
 
 			if (dungeon_flags2 & DF2_NO_TELEPORT) break; /* No teleport on special levels */
 			if (r_ptr->flags3 & (RF3_RES_TELE))
@@ -7040,7 +7040,7 @@ bool project_m(int who, int r, int y, int x, int dam, int typ)
 	/* If another monster did the damage, hurt the monster by hand */
 	if (who > 0)
 	{
-		bool fear = FALSE;
+		bool_ fear = FALSE;
 
 		/* Dead monster */
 		if (mon_take_hit_mon(who, c_ptr->m_idx, dam, &fear, note_dies))
@@ -7062,7 +7062,7 @@ bool project_m(int who, int r, int y, int x, int dam, int typ)
 	/* If the player did it, give him experience, check fear */
 	else if (hurt_monster(m_ptr))
 	{
-		bool fear = FALSE;
+		bool_ fear = FALSE;
 
 		/* Hurt the monster, check for fear and death */
 		if (mon_take_hit(c_ptr->m_idx, dam, &fear, note_dies))
@@ -7124,7 +7124,7 @@ bool project_m(int who, int r, int y, int x, int dam, int typ)
 
 
 /* Is the spell unsafe for the player ? */
-bool unsafe = FALSE;
+bool_ unsafe = FALSE;
 
 
 /*
@@ -7146,18 +7146,18 @@ bool unsafe = FALSE;
  * We return "TRUE" if any "obvious" effects were observed.  XXX XXX Actually,
  * we just assume that the effects were obvious, for historical reasons.
  */
-static bool project_p(int who, int r, int y, int x, int dam, int typ, int a_rad)
+static bool_ project_p(int who, int r, int y, int x, int dam, int typ, int a_rad)
 {
 	int k = 0, do_move = 0, a = 0, b = 0, x1 = 0, y1 = 0;
 
 	/* Hack -- assume obvious */
-	bool obvious = TRUE;
+	bool_ obvious = TRUE;
 
 	/* Player blind-ness */
-	bool blind = (p_ptr->blind ? TRUE : FALSE);
+	bool_ blind = (p_ptr->blind ? TRUE : FALSE);
 
 	/* Player needs a "description" (he is blind) */
-	bool fuzzy = FALSE;
+	bool_ fuzzy = FALSE;
 
 	/* Source monster */
 	monster_type *m_ptr = NULL;
@@ -8279,7 +8279,7 @@ static bool project_p(int who, int r, int y, int x, int dam, int typ, int a_rad)
  * in the blast radius, in case the "illumination" of the grid was changed,
  * and "update_view()" and "update_monsters()" need to be called.
  */
-bool project(int who, int rad, int y, int x, int dam, int typ, int flg)
+bool_ project(int who, int rad, int y, int x, int dam, int typ, int flg)
 {
 	int i, t, dist;
 
@@ -8293,16 +8293,16 @@ bool project(int who, int rad, int y, int x, int dam, int typ, int flg)
 	int msec = delay_factor * delay_factor * delay_factor;
 
 	/* Assume the player sees nothing */
-	bool notice = FALSE;
+	bool_ notice = FALSE;
 
 	/* Assume the player has seen nothing */
-	bool visual = FALSE;
+	bool_ visual = FALSE;
 
 	/* Assume the player has seen no blast grids */
-	bool drawn = FALSE;
+	bool_ drawn = FALSE;
 
 	/* Is the player blind? */
-	bool blind = (p_ptr->blind ? TRUE : FALSE);
+	bool_ blind = (p_ptr->blind ? TRUE : FALSE);
 
 	/* Number of grids in the "path" */
 	int path_n = 0;
@@ -8817,13 +8817,13 @@ bool project(int who, int rad, int y, int x, int dam, int typ, int flg)
  *          the potion was in her inventory);
  *    o_ptr --- pointer to the potion object.
  */
-bool potion_smash_effect(int who, int y, int x, int o_sval)
+bool_ potion_smash_effect(int who, int y, int x, int o_sval)
 {
 	int radius = 2;
 	int dt = 0;
 	int dam = 0;
-	bool ident = FALSE;
-	bool angry = FALSE;
+	bool_ ident = FALSE;
+	bool_ angry = FALSE;
 
 	switch (o_sval)
 	{
@@ -9168,9 +9168,9 @@ void generate_spell(int plev)
 {
 	random_spell* rspell;
 	int dice, sides, chance, mana, power;
-	bool destruc_gen = FALSE;
-	bool simple_gen = TRUE;
-	bool ball_desc = FALSE;
+	bool_ destruc_gen = FALSE;
+	bool_ simple_gen = TRUE;
+	bool_ ball_desc = FALSE;
 
 	if (spell_num == MAX_SPELLS) return;
 

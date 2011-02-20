@@ -1,12 +1,12 @@
 #undef cquest
 #define cquest (quest[QUEST_THIEVES])
 
-bool quest_thieves_gen_hook(char *fmt)
+bool_ quest_thieves_gen_hook(char *fmt)
 {
 	int x, y;
 	int xstart = 2;
 	int ystart = 2;
-	bool again = TRUE;
+	bool_ again = TRUE;
 
 	if (p_ptr->inside_quest != QUEST_THIEVES) return FALSE;
 
@@ -61,7 +61,7 @@ bool quest_thieves_gen_hook(char *fmt)
 
 	return TRUE;
 }
-bool quest_thieves_hook(char *fmt)
+bool_ quest_thieves_hook(char *fmt)
 {
 	int i, mcnt = 0;
 
@@ -113,7 +113,7 @@ bool quest_thieves_hook(char *fmt)
 	}
 	return FALSE;
 }
-bool quest_thieves_finish_hook(char *fmt)
+bool_ quest_thieves_finish_hook(char *fmt)
 {
 	s32b q_idx;
 
@@ -146,7 +146,7 @@ bool quest_thieves_finish_hook(char *fmt)
 	return TRUE;
 }
 
-bool quest_thieves_feeling_hook(char *fmt)
+bool_ quest_thieves_feeling_hook(char *fmt)
 {
 	if (p_ptr->inside_quest != QUEST_THIEVES) return FALSE;
 
@@ -159,7 +159,7 @@ bool quest_thieves_feeling_hook(char *fmt)
 	return TRUE;
 }
 
-bool quest_thieves_init_hook(int q_idx)
+bool_ quest_thieves_init_hook(int q_idx)
 {
 	if ((cquest.status >= QUEST_STATUS_UNTAKEN) && (cquest.status < QUEST_STATUS_FINISHED))
 	{

@@ -42,7 +42,7 @@ int distance(int y1, int x1, int y2, int x2)
  * Returns TRUE if a grid is considered to be a wall for the purpose
  * of magic mapping / clairvoyance
  */
-static bool is_wall(cave_type *c_ptr)
+static bool_ is_wall(cave_type *c_ptr)
 {
 	byte feat;
 
@@ -106,7 +106,7 @@ static bool is_wall(cave_type *c_ptr)
  *
  * Use the "update_view()" function to determine player line-of-sight.
  */
-bool los(int y1, int x1, int y2, int x2)
+bool_ los(int y1, int x1, int y2, int x2)
 {
 	/* Delta */
 	int dx, dy;
@@ -333,7 +333,7 @@ bool los(int y1, int x1, int y2, int x2)
 /*
  * Returns true if the player's grid is dark
  */
-bool no_lite(void)
+bool_ no_lite(void)
 {
 	return (!player_can_see_bold(p_ptr->py, p_ptr->px));
 }
@@ -345,7 +345,7 @@ bool no_lite(void)
  *
  * Used by destruction spells, and for placing stairs, etc.
  */
-bool cave_valid_bold(int y, int x)
+bool_ cave_valid_bold(int y, int x)
 {
 	cave_type *c_ptr = &cave[y][x];
 
@@ -508,7 +508,7 @@ static void image_random(byte *ap, char *cp)
 
 #else
 
-static bool feat_supports_lighting(byte feat)
+static bool_ feat_supports_lighting(byte feat)
 {
 	if (f_info[feat].flags1 & FF1_SUPPORT_LIGHT) return TRUE;
 	else return FALSE;
@@ -615,7 +615,7 @@ static byte multi_hued_attr(monster_race *r_ptr)
 	/* Check breaths */
 	for (i = 0; i < 32; i++)
 	{
-		bool stored = FALSE;
+		bool_ stored = FALSE;
 
 		/* Don't have that breath */
 		if (!(r_ptr->flags4 & (1L << i))) continue;
@@ -902,7 +902,7 @@ void map_info(int y, int x, byte *ap, char *cp)
 	 *     col  col+1  col+2
 	 * row base darker brighter
 	 */
-	bool graf_new = ((graphics_mode == GRAPHICS_ISO) ||
+	bool_ graf_new = ((graphics_mode == GRAPHICS_ISO) ||
 	                 (graphics_mode == GRAPHICS_NEW));
 
 	/*
@@ -911,7 +911,7 @@ void map_info(int y, int x, byte *ap, char *cp)
 	 * go for better graphics support... Anyway this means a port allows
 	 * changing attr independently from its char -- pelpel
 	 */
-	bool attr_mutable = (!use_graphics ||
+	bool_ attr_mutable = (!use_graphics ||
 	                     (graphics_mode == GRAPHICS_IBM));
 
 
@@ -1591,7 +1591,7 @@ void map_info_default(int y, int x, byte *ap, char *cp)
 
 	byte c;
 
-	bool use_graphics_hack = use_graphics;
+	bool_ use_graphics_hack = use_graphics;
 	byte graphics_mode_hack = graphics_mode;
 
 
@@ -2544,8 +2544,8 @@ void display_map(int *cy, int *cx)
 
 	byte **mp;
 
-	bool old_view_special_lite;
-	bool old_view_granite_lite;
+	bool_ old_view_special_lite;
+	bool_ old_view_granite_lite;
 
 	int hgt, wid, yrat, xrat, yfactor, xfactor;
 
@@ -3362,7 +3362,7 @@ struct vinfo_hack
  *
  * We use "u" to point to an array of long integers.
  */
-static bool ang_sort_comp_hook_longs(vptr u, vptr v, int a, int b)
+static bool_ ang_sort_comp_hook_longs(vptr u, vptr v, int a, int b)
 {
 	long *x = (long*)(u);
 
@@ -4197,7 +4197,7 @@ void update_mon_lite(void)
 	cave_type *c_ptr;
 	u16b info;
 
-	bool invis;
+	bool_ invis;
 
 	s16b fast_lite_n = lite_n;
 	s16b fast_temp_n;
@@ -4959,7 +4959,7 @@ void mmove2(int *y, int *x, int y1, int x1, int y2, int x2)
  *
  * This is slightly (but significantly) different from "los(y1,x1,y2,x2)".
  */
-bool projectable(int y1, int x1, int y2, int x2)
+bool_ projectable(int y1, int x1, int y2, int x2)
 {
 	int dist, y, x;
 

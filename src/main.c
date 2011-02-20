@@ -52,7 +52,7 @@ static void quit_hook(cptr s)
 /*
  * Check and create if needed the directory dirpath
  */
-bool private_check_user_directory(cptr dirpath)
+bool_ private_check_user_directory(cptr dirpath)
 {
 	/* Is this used anywhere else in *bands? */
 	struct stat stat_buf;
@@ -94,7 +94,7 @@ bool private_check_user_directory(cptr dirpath)
  * home directory or try to create it if it doesn't exist.
  * Returns FALSE if all the attempts fail.
  */
-static bool check_create_user_dir(void)
+static bool_ check_create_user_dir(void)
 {
 	char dirpath[1024];
 	char versionpath[1024];
@@ -271,15 +271,15 @@ int main(int argc, char *argv[])
 {
 	int i;
 
-	bool done = FALSE;
+	bool_ done = FALSE;
 
-	bool new_game = FALSE;
+	bool_ new_game = FALSE;
 
 	int show_score = 0;
 
 	cptr mstr = NULL;
 
-	bool args = TRUE;
+	bool_ args = TRUE;
 
 #ifdef CHECK_MEMORY_LEAKS
 	GC_find_leak = 1;
@@ -379,7 +379,7 @@ int main(int argc, char *argv[])
 	 * used to store pref files, chardumps etc.
 	 */
 	{
-		bool ret;
+		bool_ ret;
 
 		/* Create a directory for the user's files */
 		ret = check_create_user_dir();

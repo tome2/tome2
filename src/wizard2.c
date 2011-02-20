@@ -808,7 +808,7 @@ static void wiz_reroll_item(object_type *o_ptr)
 
 	char ch;
 
-	bool changed = FALSE;
+	bool_ changed = FALSE;
 
 
 	/* Hack -- leave artifacts alone */
@@ -921,7 +921,7 @@ static void wiz_statistics(object_type *o_ptr)
 	char ch;
 	char *quality;
 
-	bool good, great;
+	bool_ good, great;
 
 	object_type forge;
 	object_type	*q_ptr;
@@ -1152,7 +1152,7 @@ static void do_cmd_wiz_play(void)
 
 	char ch;
 
-	bool changed;
+	bool_ changed;
 
 	cptr q, s;
 
@@ -1532,7 +1532,7 @@ static void do_cmd_wiz_summon(int num)
  *
  * XXX XXX XXX This function is rather dangerous
  */
-static void do_cmd_wiz_named(int r_idx, bool slp)
+static void do_cmd_wiz_named(int r_idx, bool_ slp)
 {
 	int i, x, y;
 
@@ -1566,7 +1566,7 @@ static void do_cmd_wiz_named(int r_idx, bool slp)
  *
  * XXX XXX XXX This function is rather dangerous
  */
-void do_cmd_wiz_named_friendly(int r_idx, bool slp)
+void do_cmd_wiz_named_friendly(int r_idx, bool_ slp)
 {
 	int i, x, y;
 

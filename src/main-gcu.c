@@ -987,7 +987,7 @@ errr init_gcu(int argc, char **argv)
 
 	int num_term = MAX_TERM_DATA, next_win = 0;
 
-	bool use_big_screen = FALSE;
+	bool_ use_big_screen = FALSE;
 
 
 	/* Parse args */

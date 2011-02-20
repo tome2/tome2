@@ -13,7 +13,7 @@
 
 #include "angband.h"
 
-bool do_player_trap_call_out(void)
+bool_ do_player_trap_call_out(void)
 {
 	s16b i, sn, cx, cy;
 	s16b h_index = 0;
@@ -21,7 +21,7 @@ bool do_player_trap_call_out(void)
 	monster_type *m_ptr;
 	monster_race *r_ptr;
 	char m_name[80];
-	bool ident = FALSE;
+	bool_ ident = FALSE;
 
 	for (i = 1; i < m_max; i++)
 	{
@@ -73,9 +73,9 @@ bool do_player_trap_call_out(void)
 	return (ident);
 }
 
-static bool do_trap_teleport_away(object_type *i_ptr, s16b y, s16b x)
+static bool_ do_trap_teleport_away(object_type *i_ptr, s16b y, s16b x)
 {
-	bool ident = FALSE;
+	bool_ ident = FALSE;
 	char o_name[80];
 
 	s16b o_idx = 0;
@@ -135,14 +135,14 @@ static bool do_trap_teleport_away(object_type *i_ptr, s16b y, s16b x)
 /*
  * this handles a trap that places walls around the player
  */
-static bool player_handle_trap_of_walls(void)
+static bool_ player_handle_trap_of_walls(void)
 {
-	bool ident;
+	bool_ ident;
 
 	s16b dx, dy, cx, cy;
 	s16b sx = 0, sy = 0, sn, i;
 	cave_type *cv_ptr;
-	bool map[5][5] =
+	bool_ map[5][5] =
 	        {
 	                {FALSE, FALSE, FALSE, FALSE, FALSE},
 	                {FALSE, FALSE, FALSE, FALSE, FALSE},
@@ -321,7 +321,7 @@ static bool player_handle_trap_of_walls(void)
 			/* Destroy location (if valid) */
 			if ((cx < cur_wid) && (cy < cur_hgt) && cave_valid_bold(cy, cx))
 			{
-				bool floor = (f_info[cave[cy][cx].feat].flags1 & FF1_FLOOR);
+				bool_ floor = (f_info[cave[cy][cx].feat].flags1 & FF1_FLOOR);
 
 				/* Delete any object that is still there */
 				delete_object(cy, cx);
@@ -375,7 +375,7 @@ static bool player_handle_trap_of_walls(void)
  *
  * return value = ident (always TRUE)
  */
-static bool player_handle_missile_trap(s16b num, s16b tval, s16b sval, s16b dd, s16b ds,
+static bool_ player_handle_missile_trap(s16b num, s16b tval, s16b sval, s16b dd, s16b ds,
                                        s16b pdam, cptr name)
 {
 	object_type *o_ptr, forge;
@@ -414,10 +414,10 @@ static bool player_handle_missile_trap(s16b num, s16b tval, s16b sval, s16b dd, 
 /*
  * this function handles a "breath" type trap - acid bolt, lightning balls etc.
  */
-static bool player_handle_breath_trap(s16b rad, s16b type, u16b trap)
+static bool_ player_handle_breath_trap(s16b rad, s16b type, u16b trap)
 {
 	trap_type *t_ptr = &t_info[trap];
-	bool ident;
+	bool_ ident;
 	s16b my_dd, my_ds, dam;
 
 	my_dd = t_ptr->dd;
@@ -451,11 +451,11 @@ static void trap_hit(s16b trap)
 
 /*
  * this function activates one trap type, and returns
- * a bool indicating if this trap is now identified
+ * a bool_ indicating if this trap is now identified
  */
-bool player_activate_trap_type(s16b y, s16b x, object_type *i_ptr, s16b item)
+bool_ player_activate_trap_type(s16b y, s16b x, object_type *i_ptr, s16b item)
 {
-	bool ident = FALSE;
+	bool_ ident = FALSE;
 	s16b trap;
 
 	s16b k, l;
@@ -1121,7 +1121,7 @@ bool player_activate_trap_type(s16b y, s16b x, object_type *i_ptr, s16b item)
 			s16b tmps, tmpx;
 			s16b tmpspecial, tmpspecial2;
 			u32b tmpf;
-			bool seen = FALSE;
+			bool_ seen = FALSE;
 			s16b index_x[20], index_y[20];  /* 20 stairs per level is enough? */
 			cave_type *cv_ptr;
 
@@ -1299,7 +1299,7 @@ bool player_activate_trap_type(s16b y, s16b x, object_type *i_ptr, s16b item)
 	case TRAP_OF_SCATTER_ITEMS:
 		{
 			s16b i, j;
-			bool message = FALSE;
+			bool_ message = FALSE;
 
 			for (i = 0; i < INVEN_PACK; i++)
 			{
@@ -1559,7 +1559,7 @@ bool player_activate_trap_type(s16b y, s16b x, object_type *i_ptr, s16b item)
 	case TRAP_OF_DROP_ITEMS:
 		{
 			s16b i;
-			bool message = FALSE;
+			bool_ message = FALSE;
 
 			for (i = 0; i < INVEN_PACK; i++)
 			{
@@ -1594,7 +1594,7 @@ bool player_activate_trap_type(s16b y, s16b x, object_type *i_ptr, s16b item)
 	case TRAP_OF_DROP_ALL_ITEMS:
 		{
 			s16b i;
-			bool message = FALSE;
+			bool_ message = FALSE;
 
 			for (i = 0; i < INVEN_PACK; i++)
 			{
@@ -1629,7 +1629,7 @@ bool player_activate_trap_type(s16b y, s16b x, object_type *i_ptr, s16b item)
 	case TRAP_OF_DROP_EVERYTHING:
 		{
 			s16b i;
-			bool message = FALSE;
+			bool_ message = FALSE;
 
 			for (i = 0; i < INVEN_TOTAL; i++)
 			{
@@ -1966,7 +1966,7 @@ bool player_activate_trap_type(s16b y, s16b x, object_type *i_ptr, s16b item)
 void player_activate_door_trap(s16b y, s16b x)
 {
 	cave_type *c_ptr;
-	bool ident = FALSE;
+	bool_ ident = FALSE;
 
 	c_ptr = &cave[y][x];
 
@@ -2123,7 +2123,7 @@ void wiz_place_trap(int y, int x, int idx)
 /*
  * Hook to determine if an object is a device
  */
-static bool item_tester_hook_device(object_type *o_ptr)
+static bool_ item_tester_hook_device(object_type *o_ptr)
 {
 	if (((o_ptr->tval == TV_ROD_MAIN) && (o_ptr->pval != 0)) ||
 	                (o_ptr->tval == TV_STAFF) ||
@@ -2136,7 +2136,7 @@ static bool item_tester_hook_device(object_type *o_ptr)
 /*
  * Hook to determine if an object is a potion
  */
-static bool item_tester_hook_potion(object_type *o_ptr)
+static bool_ item_tester_hook_potion(object_type *o_ptr)
 {
 	if ((o_ptr->tval == TV_POTION) ||
 	                (o_ptr->tval == TV_POTION2)) return (TRUE);
@@ -2302,7 +2302,7 @@ void do_cmd_set_trap(void)
  *
  * Return TRUE if the monster died
  */
-bool mon_hit_trap_aux_rod(int m_idx, object_type *o_ptr)
+bool_ mon_hit_trap_aux_rod(int m_idx, object_type *o_ptr)
 {
 	int dam = 0, typ = 0;
 	int rad = 0;
@@ -2413,7 +2413,7 @@ bool mon_hit_trap_aux_rod(int m_idx, object_type *o_ptr)
  *
  * Return TRUE if the monster died
  */
-bool mon_hit_trap_aux_staff(int m_idx, object_type *o_ptr)
+bool_ mon_hit_trap_aux_staff(int m_idx, object_type *o_ptr)
 {
 	return (FALSE);
 }
@@ -2423,7 +2423,7 @@ bool mon_hit_trap_aux_staff(int m_idx, object_type *o_ptr)
  *
  * Return TRUE if the monster died
  */
-bool mon_hit_trap_aux_scroll(int m_idx, int sval)
+bool_ mon_hit_trap_aux_scroll(int m_idx, int sval)
 {
 	monster_type *m_ptr = &m_list[m_idx];
 	int dam = 0, typ = 0;
@@ -2550,7 +2550,7 @@ bool mon_hit_trap_aux_scroll(int m_idx, int sval)
  *
  * Return TRUE if the monster died
  */
-bool mon_hit_trap_aux_wand(int m_idx, object_type *o_ptr)
+bool_ mon_hit_trap_aux_wand(int m_idx, object_type *o_ptr)
 {
 	return (FALSE);
 }
@@ -2560,7 +2560,7 @@ bool mon_hit_trap_aux_wand(int m_idx, object_type *o_ptr)
  *
  * Return TRUE if the monster died
  */
-bool mon_hit_trap_aux_potion(int m_idx, object_type *o_ptr)
+bool_ mon_hit_trap_aux_potion(int m_idx, object_type *o_ptr)
 {
 	monster_type *m_ptr = &m_list[m_idx];
 	int dam = 0, typ = 0;
@@ -2715,7 +2715,7 @@ bool mon_hit_trap_aux_potion(int m_idx, object_type *o_ptr)
  * Monster hitting a monster trap -MWK-
  * Returns True if the monster died, false otherwise
  */
-bool mon_hit_trap(int m_idx)
+bool_ mon_hit_trap(int m_idx)
 {
 	monster_type *m_ptr = &m_list[m_idx];
 	monster_race *r_ptr = &r_info[m_ptr->r_idx];
@@ -2734,11 +2734,11 @@ bool mon_hit_trap(int m_idx)
 
 	char m_name[80];
 
-	bool notice = FALSE;
-	bool disarm = FALSE;
-	bool remove = FALSE;
-	bool dead = FALSE;
-	bool fear = FALSE;
+	bool_ notice = FALSE;
+	bool_ disarm = FALSE;
+	bool_ remove = FALSE;
+	bool_ dead = FALSE;
+	bool_ fear = FALSE;
 	s32b special = 0;
 
 	int dam, chance, shots;
@@ -2762,7 +2762,7 @@ bool mon_hit_trap(int m_idx)
 	/* Some traps are specialized to some creatures */
 	if (f2 & TRAP2_ONLY_MASK)
 	{
-		bool affect = FALSE;
+		bool_ affect = FALSE;
 		if ((f2 & TRAP2_ONLY_DRAGON) && (r_ptr->flags3 & RF3_DRAGON)) affect = TRUE;
 		if ((f2 & TRAP2_ONLY_DEMON) && (r_ptr->flags3 & RF3_DEMON)) affect = TRUE;
 		if ((f2 & TRAP2_ONLY_UNDEAD) && (r_ptr->flags3 & RF3_UNDEAD)) affect = TRUE;

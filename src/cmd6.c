@@ -16,14 +16,14 @@
 /*
  * Forward declare
  */
-static bool activate_spell(object_type * o_ptr, byte choice);
+static bool_ activate_spell(object_type * o_ptr, byte choice);
 
 
 /*
  * General function to find an item by its name
  */
 cptr get_item_hook_find_obj_what;
-bool get_item_hook_find_obj(int *item)
+bool_ get_item_hook_find_obj(int *item)
 {
 	int i;
 	char buf[80];
@@ -95,12 +95,12 @@ bool get_item_hook_find_obj(int *item)
  * Determine the effects of eating a corpse. A corpse can be
  * eaten whole or cut into pieces for later.
  */
-static void corpse_effect(object_type *o_ptr, bool cutting)
+static void corpse_effect(object_type *o_ptr, bool_ cutting)
 {
 	monster_race *r_ptr = &r_info[o_ptr->pval2];
 
 	/* Assume no bad effects */
-	bool harmful = FALSE;
+	bool_ harmful = FALSE;
 
 	byte method, effect, d_dice, d_side;
 
@@ -907,7 +907,7 @@ static void corpse_effect(object_type *o_ptr, bool cutting)
 /*
  * Hook to determine if an object is eatable
  */
-static bool item_tester_hook_eatable(object_type *o_ptr)
+static bool_ item_tester_hook_eatable(object_type *o_ptr)
 {
 	/* Foods and, well, corpses are edible */
 	if ((o_ptr->tval == TV_FOOD) || (o_ptr->tval == TV_CORPSE)) return (TRUE);
@@ -931,7 +931,7 @@ void do_cmd_eat_food(void)
 
 	cptr q, s;
 
-	bool destroy = TRUE;
+	bool_ destroy = TRUE;
 
 
 	/* Restrict choices to food  */
@@ -1324,7 +1324,7 @@ void do_cmd_eat_food(void)
 		{
 		case SV_CORPSE_CORPSE:
 			{
-				bool no_meat = FALSE;
+				bool_ no_meat = FALSE;
 
 				/* Not all is edible. Apologies if messy. */
 
@@ -1792,7 +1792,7 @@ void do_cmd_cure_meat(void)
 /*
  * Hook to determine if an object is quaffable
  */
-static bool item_tester_hook_quaffable(object_type *o_ptr)
+static bool_ item_tester_hook_quaffable(object_type *o_ptr)
 {
 	if ((o_ptr->tval == TV_POTION) || (o_ptr->tval == TV_POTION2)) return (TRUE);
 
@@ -1801,7 +1801,7 @@ static bool item_tester_hook_quaffable(object_type *o_ptr)
 }
 
 
-static bool quaff_potion(int tval, int sval, int pval, int pval2)
+static bool_ quaff_potion(int tval, int sval, int pval, int pval2)
 {
 	int ident = FALSE;
 
@@ -2621,7 +2621,7 @@ void do_cmd_drink_fountain(void)
 {
 	cave_type *c_ptr = &cave[p_ptr->py][p_ptr->px];
 
-	bool ident;
+	bool_ ident;
 
 	int tval, sval, pval = 0;
 
@@ -2790,7 +2790,7 @@ void do_cmd_fill_bottle(void)
 /*
  * Curse the players armor
  */
-bool curse_armor(void)
+bool_ curse_armor(void)
 {
 	object_type *o_ptr;
 
@@ -2855,7 +2855,7 @@ bool curse_armor(void)
 /*
  * Curse the players weapon
  */
-bool curse_weapon(void)
+bool_ curse_weapon(void)
 {
 	object_type *o_ptr;
 
@@ -2922,7 +2922,7 @@ bool curse_weapon(void)
 /*
  * Hook to determine if an object is readable
  */
-static bool item_tester_hook_readable(object_type *o_ptr)
+static bool_ item_tester_hook_readable(object_type *o_ptr)
 {
 	if ((o_ptr->tval == TV_SCROLL) || (o_ptr->tval == TV_PARCHMENT)) return (TRUE);
 
@@ -4124,7 +4124,7 @@ void do_cmd_aim_wand(void)
 /*
  * Hook to determine if an object is zapable
  */
-static bool item_tester_hook_zapable(object_type *o_ptr)
+static bool_ item_tester_hook_zapable(object_type *o_ptr)
 {
 	if ((o_ptr->tval == TV_ROD) || (o_ptr->tval == TV_ROD_MAIN)) return (TRUE);
 
@@ -4136,7 +4136,7 @@ static bool item_tester_hook_zapable(object_type *o_ptr)
 /*
  * Hook to determine if an object is attachable
  */
-static bool item_tester_hook_attachable(object_type *o_ptr)
+static bool_ item_tester_hook_attachable(object_type *o_ptr)
 {
 	if ((o_ptr->tval == TV_ROD_MAIN) &&
 	                (o_ptr->pval == SV_ROD_NOTHING)) return (TRUE);
@@ -4242,7 +4242,7 @@ void do_cmd_zap_rod(void)
 
 	int cost;
 
-	bool require_dir;
+	bool_ require_dir;
 
 	object_type *o_ptr;
 
@@ -4255,7 +4255,7 @@ void do_cmd_zap_rod(void)
 	cptr q, s;
 
 	/* Hack -- let perception get aborted */
-	bool use_charge = TRUE;
+	bool_ use_charge = TRUE;
 
 
 	/* No magic */
@@ -4729,7 +4729,7 @@ void do_cmd_zap_rod(void)
 /*
  * Hook to determine if an object is activable
  */
-static bool item_tester_hook_activate(object_type *o_ptr)
+static bool_ item_tester_hook_activate(object_type *o_ptr)
 {
 	u32b f1, f2, f3, f4, f5, esp;
 
@@ -4793,7 +4793,7 @@ int ring_of_power()
 		/* Rewrite this -- pelpel */
 		if (summon_specific_friendly(p_ptr->py, p_ptr->px, ((plev * 3) / 2),
 		                             (plev > 47 ? SUMMON_HI_UNDEAD_NO_UNIQUES : SUMMON_UNDEAD),
-		                             (bool)(((plev > 24) && (randint(3) == 1)) ? TRUE : FALSE)))
+		                             (bool_)(((plev > 24) && (randint(3) == 1)) ? TRUE : FALSE)))
 		{
 			msg_print("Cold winds begin to blow around you, "
 			          "carrying with them the stench of decay...");
@@ -4851,7 +4851,7 @@ int ring_of_power()
 /*
  * Enchant some bolts
  */
-bool brand_bolts(void)
+bool_ brand_bolts(void)
 {
 	int i;
 
@@ -5159,13 +5159,13 @@ void do_cmd_activate(void)
 
 
 
-const char *activation_aux(object_type * o_ptr, bool doit, int item)
+const char *activation_aux(object_type * o_ptr, bool_ doit, int item)
 {
 	int plev = get_skill(SKILL_DEVICE);
 
 	int i = 0, ii = 0, ij = 0, k, dir, dummy = 0;
 	int chance;
-	bool is_junkart = (o_ptr->tval == TV_RANDART);
+	bool_ is_junkart = (o_ptr->tval == TV_RANDART);
 
 	int spell = 0;
 
@@ -5815,7 +5815,7 @@ const char *activation_aux(object_type * o_ptr, bool doit, int item)
 				else
 				{
 					if (summon_specific_friendly(p_ptr->py, p_ptr->px, ((plev * 3) / 2),
-					                             SUMMON_THUNDERLORD, (bool)(plev == 50 ? TRUE : FALSE)))
+					                             SUMMON_THUNDERLORD, (bool_)(plev == 50 ? TRUE : FALSE)))
 					{
 						msg_print("A Thunderlord comes from thin air!");
 						msg_print("'I will help you in your difficult task.'");
@@ -6510,7 +6510,7 @@ const char *activation_aux(object_type * o_ptr, bool doit, int item)
 				else
 				{
 					if (summon_specific_friendly(p_ptr->py, p_ptr->px, ((plev * 3) / 2),
-					                             SUMMON_ELEMENTAL, (bool)(plev == 50 ? TRUE : FALSE)))
+					                             SUMMON_ELEMENTAL, (bool_)(plev == 50 ? TRUE : FALSE)))
 					{
 						msg_print("An elemental materialises...");
 						msg_print("It seems obedient to you.");
@@ -6536,7 +6536,7 @@ const char *activation_aux(object_type * o_ptr, bool doit, int item)
 				else
 				{
 					if (summon_specific_friendly(p_ptr->py, p_ptr->px, ((plev * 3) / 2),
-					                             SUMMON_DEMON, (bool)(plev == 50 ? TRUE : FALSE)))
+					                             SUMMON_DEMON, (bool_)(plev == 50 ? TRUE : FALSE)))
 					{
 						msg_print("The area fills with a stench of sulphur and brimstone.");
 						msg_print("'What is thy bidding... Master?'");
@@ -6564,7 +6564,7 @@ const char *activation_aux(object_type * o_ptr, bool doit, int item)
 				{
 					if (summon_specific_friendly(p_ptr->py, p_ptr->px, ((plev * 3) / 2),
 					                             (plev > 47 ? SUMMON_HI_UNDEAD_NO_UNIQUES : SUMMON_UNDEAD),
-					                             (bool)(((plev > 24) && (randint(3) == 1)) ? TRUE : FALSE)))
+					                             (bool_)(((plev > 24) && (randint(3) == 1)) ? TRUE : FALSE)))
 					{
 						msg_print("Cold winds begin to blow around you, carrying with them the stench of decay...");
 						msg_print("Ancient, long-dead forms arise from the ground to serve you!");
@@ -7904,7 +7904,7 @@ const char *activation_aux(object_type * o_ptr, bool doit, int item)
 }
 
 
-static bool activate_spell(object_type * o_ptr, byte choice)
+static bool_ activate_spell(object_type * o_ptr, byte choice)
 {
 	int mana = 0, gf = 0, mod = 0;
 

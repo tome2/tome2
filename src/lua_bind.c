@@ -40,13 +40,13 @@ static void magic_power_info_lua(char *p, int power)
 	strcpy(p, lua_tostring(L, -1));
 	lua_settop(L, oldtop);
 }
-bool get_magic_power_lua(int *sn, magic_power *powers, int max_powers, char *info_fct, int plev, int cast_stat)
+bool_ get_magic_power_lua(int *sn, magic_power *powers, int max_powers, char *info_fct, int plev, int cast_stat)
 {
 	magic_power_info_lua_fct = info_fct;
 	return (get_magic_power(sn, powers, max_powers, magic_power_info_lua, plev, cast_stat));
 }
 
-bool lua_spell_success(magic_power *spell, int stat, char *oups_fct)
+bool_ lua_spell_success(magic_power *spell, int stat, char *oups_fct)
 {
 	int chance;
 	int minfail = 0;
@@ -136,10 +136,10 @@ s16b add_new_power(cptr name, cptr desc, cptr gain, cptr lose, byte level, byte 
 }
 
 static char *lua_item_tester_fct;
-static bool lua_item_tester(object_type* o_ptr)
+static bool_ lua_item_tester(object_type* o_ptr)
 {
 	int oldtop = lua_gettop(L);
-	bool ret;
+	bool_ ret;
 
 	lua_getglobal(L, lua_item_tester_fct);
 	tolua_pushusertype(L, o_ptr, tolua_tag(L, "object_type"));
@@ -186,10 +186,10 @@ void find_position(int y, int x, int *yy, int *xx)
 }
 
 static char *summon_lua_okay_fct;
-bool summon_lua_okay(int r_idx)
+bool_ summon_lua_okay(int r_idx)
 {
 	int oldtop = lua_gettop(L);
-	bool ret;
+	bool_ ret;
 
 	lua_getglobal(L, lua_item_tester_fct);
 	tolua_pushnumber(L, r_idx);
@@ -199,7 +199,7 @@ bool summon_lua_okay(int r_idx)
 	return (ret);
 }
 
-bool lua_summon_monster(int y, int x, int lev, bool friend, char *fct)
+bool_ lua_summon_monster(int y, int x, int lev, bool_ friend, char *fct)
 {
 	summon_lua_okay_fct = fct;
 
@@ -236,7 +236,7 @@ void desc_quest(int q_idx, int d, char *desc)
 /*
  * Misc
  */
-bool get_com_lua(cptr prompt, int *com)
+bool_ get_com_lua(cptr prompt, int *com)
 {
 	char c;
 
@@ -396,7 +396,7 @@ void get_target(int dir, int *y, int *x)
 }
 
 /* Level gen */
-void get_map_size(bool full_text, char *name, int *ysize, int *xsize)
+void get_map_size(bool_ full_text, char *name, int *ysize, int *xsize)
 {
 	*xsize = 0;
 	*ysize = 0;
@@ -410,7 +410,7 @@ void get_map_size(bool full_text, char *name, int *ysize, int *xsize)
 
 }
 
-void load_map(bool full_text, char *name, int *y, int *x)
+void load_map(bool_ full_text, char *name, int *y, int *x)
 {
 	/* Set the correct monster hook */
 	set_mon_num_hook();
@@ -429,7 +429,7 @@ void load_map(bool full_text, char *name, int *y, int *x)
 
 /* Allow lua to use a temporary file */
 static char lua_temp_name[1025];
-static bool lua_temp_file_alloc = FALSE;
+static bool_ lua_temp_file_alloc = FALSE;
 void lua_make_temp_file()
 {
 	if (lua_temp_file_alloc) return;
@@ -459,7 +459,7 @@ cptr lua_get_temp_name()
 	return lua_temp_name;
 }
 
-bool alloc_room(int by0, int bx0, int ysize, int xsize, int *y1, int *x1, int *y2, int *x2)
+bool_ alloc_room(int by0, int bx0, int ysize, int xsize, int *y1, int *x1, int *y2, int *x2)
 {
 	int xval, yval, x, y;
 
@@ -502,7 +502,7 @@ void lua_print_hook(cptr str)
 /*
  * Hook for bounty monster selection.
  */
-static bool lua_mon_hook_bounty(int r_idx)
+static bool_ lua_mon_hook_bounty(int r_idx)
 {
 	monster_race* r_ptr = &r_info[r_idx];
 
@@ -614,7 +614,7 @@ void lua_display_list(int y, int x, int h, int w, cptr title, list_type* list, i
 /*
  * Level generators
  */
-bool level_generate_script(cptr name)
+bool_ level_generate_script(cptr name)
 {
 	s32b ret = FALSE;
 
@@ -623,7 +623,7 @@ bool level_generate_script(cptr name)
 	return ret;
 }
 
-void add_scripted_generator(cptr name, bool stairs, bool monsters, bool objects, bool miscs)
+void add_scripted_generator(cptr name, bool_ stairs, bool_ monsters, bool_ objects, bool_ miscs)
 {
 	add_level_generator(name, level_generate_script, stairs, monsters, objects, miscs);
 }

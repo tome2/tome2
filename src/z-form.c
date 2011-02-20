@@ -229,10 +229,10 @@ uint vstrnfmt(char *buf, uint max, cptr fmt, va_list vp)
 	cptr s;
 
 	/* The argument is "long" */
-	bool do_long;
+	bool_ do_long;
 
 	/* The argument needs "processing" */
-	bool do_xtra;
+	bool_ do_xtra;
 
 	/* Bytes used in buffer */
 	uint n;

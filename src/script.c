@@ -187,7 +187,7 @@ static const struct luaL_reg bitlib[] =
 /*
  * Initialize lua scripting
  */
-static bool init_lua_done = FALSE;
+static bool_ init_lua_done = FALSE;
 void init_lua()
 {
 	/* Hack -- Do not initialize more than once */
@@ -249,7 +249,7 @@ void init_lua_init()
 	init_corruptions(max);
 }
 
-bool tome_dofile(char *file)
+bool_ tome_dofile(char *file)
 {
 	char buf[1024];
 	int oldtop = lua_gettop(L);
@@ -279,7 +279,7 @@ bool tome_dofile(char *file)
 	return (TRUE);
 }
 
-bool tome_dofile_anywhere(cptr dir, char *file, bool test_exist)
+bool_ tome_dofile_anywhere(cptr dir, char *file, bool_ test_exist)
 {
 	char buf[1024];
 	int oldtop = lua_gettop(L);
@@ -356,7 +356,7 @@ void dump_lua_stack(int min, int max)
 	cmsg_print(TERM_YELLOW, "END lua_stack");
 }
 
-bool call_lua(cptr function, cptr args, cptr ret, ...)
+bool_ call_lua(cptr function, cptr args, cptr ret, ...)
 {
 	int i = 0, nb = 0, nbr = 0;
 	int oldtop = lua_gettop(L), size;
@@ -472,7 +472,7 @@ bool call_lua(cptr function, cptr args, cptr ret, ...)
 	return TRUE;
 }
 
-bool get_lua_var(cptr name, char type, void *arg)
+bool_ get_lua_var(cptr name, char type, void *arg)
 {
 	int oldtop = lua_gettop(L), size;
 

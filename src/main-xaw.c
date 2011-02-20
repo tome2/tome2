@@ -478,7 +478,7 @@ static void AngbandOutputPict(AngbandWidget widget, int x, int y, int n,
 	char ec;
 
 	int x3, y3;
-	bool has_overlay;
+	bool_ has_overlay;
 
 # endif  /* USE_EGO_GRAPHICS */
 	int k, l;
@@ -1394,7 +1394,7 @@ static void handle_event(Widget widget, XtPointer client_data, XEvent *event,
 /*
  * Process an event (or just check for one)
  */
-errr CheckEvent(bool wait)
+errr CheckEvent(bool_ wait)
 {
 	XEvent event;
 
@@ -1789,7 +1789,7 @@ errr init_xaw(int argc, char *argv[])
 
 	int pict_wid = 0;
 	int pict_hgt = 0;
-	bool force_old_graphics = FALSE;
+	bool_ force_old_graphics = FALSE;
 
 #ifdef USE_TRANSPARENCY
 

@@ -27,7 +27,7 @@ static int slang_on = FALSE;
 /*
  * Can we use "color"?
  */
-static bool can_use_color = FALSE;
+static bool_ can_use_color = FALSE;
 
 
 /*

@@ -28,7 +28,7 @@ extern lua_State* L;
  */
 /* #define SAVE_HACK */
 #ifdef SAVE_HACK
-bool save_hack = TRUE;
+bool_ save_hack = TRUE;
 #endif
 
 
@@ -226,7 +226,7 @@ byte value_check_aux2_magic(object_type *o_ptr)
 /*
  * Can a player be resurrected?
  */
-static bool granted_resurrection(void)
+static bool_ granted_resurrection(void)
 {
 	PRAY_GOD(GOD_ERU)
 	{
@@ -309,7 +309,7 @@ void sense_inventory(void)
 {
 	int i, combat_lev, magic_lev;
 
-	bool heavy_combat, heavy_magic;
+	bool_ heavy_combat, heavy_magic;
 
 	byte feel;
 
@@ -495,7 +495,7 @@ static void pattern_teleport(void)
 /*
  * Returns TRUE if we are on the Straight Road...
  */
-static bool pattern_effect(void)
+static bool_ pattern_effect(void)
 {
 	if ((cave[p_ptr->py][p_ptr->px].feat < FEAT_PATTERN_START) ||
 	                (cave[p_ptr->py][p_ptr->px].feat > FEAT_PATTERN_XTRA2)) return (FALSE);
@@ -800,7 +800,7 @@ static void regen_monsters(void)
  *
  * Should belong to object1.c, renamed to object_decays() -- pelpel
  */
-bool decays(object_type *o_ptr)
+bool_ decays(object_type *o_ptr)
 {
 	u32b f1, f2, f3, f4, f5, esp;
 
@@ -1029,7 +1029,7 @@ void apply_effect(int y, int x)
 
 
 /* XXX XXX XXX */
-bool is_recall = FALSE;
+bool_ is_recall = FALSE;
 
 
 /*
@@ -1045,7 +1045,7 @@ static void process_world(void)
 	int x, y, i, j;
 
 	int regen_amount;
-	bool cave_no_regen = FALSE;
+	bool_ cave_no_regen = FALSE;
 	int upkeep_factor = 0;
 
 	dungeon_info_type *d_ptr = &d_info[dungeon_type];
@@ -1147,7 +1147,7 @@ static void process_world(void)
 		/* Hack -- Daybreak/Nighfall in town */
 		if ((turn % ((10L * DAY) / 2)) == 0)
 		{
-			bool dawn;
+			bool_ dawn;
 
 			/* Check for dawn */
 			dawn = ((turn % (10L * DAY)) == 0);
@@ -1796,7 +1796,7 @@ static void process_world(void)
 		/* Dead player */
 		if (p_ptr->chp < 0)
 		{
-			bool old_quick = quick_messages;
+			bool_ old_quick = quick_messages;
 
 			/* Sound */
 			sound(SOUND_DEATH);
@@ -2547,7 +2547,7 @@ static void process_world(void)
 	{
 		u32b f1, f2, f3, f4, f5;
 
-		bool be_silent = FALSE;
+		bool_ be_silent = FALSE;
 
 		/* check all equipment for the Black Breath flag. */
 		for (i = INVEN_WIELD; i < INVEN_TOTAL; i++)
@@ -3177,7 +3177,7 @@ static void process_world(void)
 /*
  * Verify use of "wizard" mode
  */
-static bool enter_wizard_mode(void)
+static bool_ enter_wizard_mode(void)
 {
 	/* Ask first time, but not while loading a dead char with the -w option */
 	if (!noscore && !(p_ptr->chp < 0))
@@ -3205,7 +3205,7 @@ static bool enter_wizard_mode(void)
 /*
  * Verify use of "debug" commands
  */
-static bool enter_debug_mode(void)
+static bool_ enter_debug_mode(void)
 {
 	/* Ask first time */
 	if (!noscore && !wizard)
@@ -4381,7 +4381,7 @@ void process_player(void)
 		/* Complete resting */
 		else if (resting == -2)
 		{
-			bool stop = TRUE;
+			bool_ stop = TRUE;
 			object_type *o_ptr;
 			monster_race *r_ptr;
 
@@ -5209,11 +5209,11 @@ static void load_all_pref_files(void)
  * savefile, we will commit suicide, if necessary, to allow the
  * player to start a new game.
  */
-void play_game(bool new_game)
+void play_game(bool_ new_game)
 {
 	int i, tmp_dun;
 
-	bool cheat_death = FALSE;
+	bool_ cheat_death = FALSE;
 
 	hack_corruption = FALSE;
 

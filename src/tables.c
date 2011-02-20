@@ -4589,7 +4589,7 @@ tval_desc tval_descs[] =
 /*
  * List of the between exits
  *       s16b corresp;           Corresponding between gate
- *       bool dungeon;           Do we exit in a dungeon or in the wild ?
+ *       bool_ dungeon;           Do we exit in a dungeon or in the wild ?
  *
  *       s16b wild_x, wild_y;    Wilderness spot to land onto
  *       s16b p_ptr->px, p_ptr->py;            Location of the map

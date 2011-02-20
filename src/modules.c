@@ -170,7 +170,7 @@ static void activate_module()
 cptr force_module = NULL;
 
 /* Display possible modules and select one */
-bool select_module()
+bool_ select_module()
 {
 	s32b k, sel, max;
 

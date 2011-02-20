@@ -9,7 +9,7 @@ static int wild_locs[4][2] =
 	{ 34, 48, },
 };
 
-static bool create_molds_hook(int r_idx)
+static bool_ create_molds_hook(int r_idx)
 {
 	monster_race *r_ptr = &r_info[r_idx];
 
@@ -21,10 +21,10 @@ static bool create_molds_hook(int r_idx)
 	else return FALSE;
 }
 
-bool quest_poison_gen_hook(char *fmt)
+bool_ quest_poison_gen_hook(char *fmt)
 {
 	int cy = 1, cx = 1, x, y, tries = 10000, r_idx;
-	bool (*old_get_mon_num_hook)(int r_idx);
+	bool_ (*old_get_mon_num_hook)(int r_idx);
 
 	if (cquest.status != QUEST_STATUS_TAKEN) return FALSE;
 	if (p_ptr->wilderness_y != wild_locs[cquest.data[0]][0]) return FALSE;
@@ -98,7 +98,7 @@ bool quest_poison_gen_hook(char *fmt)
 
 	return FALSE;
 }
-bool quest_poison_finish_hook(char *fmt)
+bool_ quest_poison_finish_hook(char *fmt)
 {
 	object_type forge, *q_ptr;
 	s32b q_idx;
@@ -129,7 +129,7 @@ bool quest_poison_finish_hook(char *fmt)
 
 	return TRUE;
 }
-bool quest_poison_dump_hook(char *fmt)
+bool_ quest_poison_dump_hook(char *fmt)
 {
 	if (cquest.status >= QUEST_STATUS_COMPLETED)
 	{
@@ -137,7 +137,7 @@ bool quest_poison_dump_hook(char *fmt)
 	}
 	return (FALSE);
 }
-bool quest_poison_quest_hook(char *fmt)
+bool_ quest_poison_quest_hook(char *fmt)
 {
 	object_type forge, *q_ptr;
 	s32b q_idx;
@@ -160,7 +160,7 @@ bool quest_poison_quest_hook(char *fmt)
 
 	return FALSE;
 }
-bool quest_poison_drop_hook(char *fmt)
+bool_ quest_poison_drop_hook(char *fmt)
 {
 	s32b mcnt = 0, i, x, y, o_idx;
 	object_type *o_ptr;
@@ -213,7 +213,7 @@ bool quest_poison_drop_hook(char *fmt)
 	}
 	return FALSE;
 }
-bool quest_poison_init_hook(int q_idx)
+bool_ quest_poison_init_hook(int q_idx)
 {
 	/* Get a place to place the poison */
 	if (!cquest.data[1])

@@ -1503,7 +1503,7 @@ s32b object_value(object_type *o_ptr)
  *
  * Chests, and activatable items, never stack (for various reasons).
  */
-bool object_similar(object_type *o_ptr, object_type *j_ptr)
+bool_ object_similar(object_type *o_ptr, object_type *j_ptr)
 {
 	int total = o_ptr->number + j_ptr->number;
 	u32b f1, f2, f3, f4, f5, esp, f11, f12, f13, f14, esp1, f15;
@@ -2059,7 +2059,7 @@ static void finalize_randart(object_type* o_ptr, int lev)
 	int r;
 	int i = 0;
 	int foo = lev + randnor(0, 5);
-	bool flag = TRUE;
+	bool_ flag = TRUE;
 
 	/* Paranoia */
 	if (o_ptr->tval != TV_RANDART) return;
@@ -2131,7 +2131,7 @@ static void object_mention(object_type *o_ptr)
 
 void random_artifact_resistance(object_type * o_ptr)
 {
-	bool give_resistance = FALSE, give_power = FALSE;
+	bool_ give_resistance = FALSE, give_power = FALSE;
 
 	switch (o_ptr->name1)
 	{
@@ -2220,7 +2220,7 @@ void random_artifact_resistance(object_type * o_ptr)
  *
  * Note -- see "make_artifact()" and "apply_magic()"
  */
-static bool make_artifact_special(object_type *o_ptr)
+static bool_ make_artifact_special(object_type *o_ptr)
 {
 	int i;
 	int k_idx = 0;
@@ -2304,7 +2304,7 @@ static bool make_artifact_special(object_type *o_ptr)
  *
  * Note -- see "make_artifact_special()" and "apply_magic()"
  */
-static bool make_artifact(object_type *o_ptr)
+static bool_ make_artifact(object_type *o_ptr)
 {
 	int i;
 	u32b f1, f2, f3, f4, f5, esp;
@@ -2379,11 +2379,11 @@ static bool make_artifact(object_type *o_ptr)
  *
  * This routine should only be called by "apply_magic()"
  */
-static bool make_ego_item(object_type *o_ptr, bool good)
+static bool_ make_ego_item(object_type *o_ptr, bool_ good)
 {
 	int i = 0, j;
 	int *ok_ego, ok_num = 0;
-	bool ret = FALSE;
+	bool_ ret = FALSE;
 	object_kind *k_ptr = &k_info[o_ptr->k_idx];
 
 	if (artifact_p(o_ptr) || o_ptr->name2) return (FALSE);
@@ -2394,7 +2394,7 @@ static bool make_ego_item(object_type *o_ptr, bool good)
 	for (i = 0; i < max_e_idx; i++)
 	{
 		ego_item_type *e_ptr = &e_info[i];
-		bool ok = FALSE;
+		bool_ ok = FALSE;
 
 		/* Skip "empty" items */
 		if (!e_ptr->name) continue;
@@ -3312,7 +3312,7 @@ static void a_m_aux_4(object_type *o_ptr, int level, int power)
 			/* Hack -- choose a monster */
 			monster_race* r_ptr;
 			int r_idx, count = 0;
-			bool OK = FALSE;
+			bool_ OK = FALSE;
 
 			while ((!OK) && (count < 1000))
 			{
@@ -3498,7 +3498,7 @@ void trap_hack(object_type *o_ptr)
 }
 
 /* Add a random glag to the ego item */
-void add_random_ego_flag(object_type *o_ptr, int fego, bool *limit_blows)
+void add_random_ego_flag(object_type *o_ptr, int fego, bool_ *limit_blows)
 {
 	if (fego & ETR4_SUSTAIN)
 	{
@@ -3934,7 +3934,7 @@ void add_random_ego_flag(object_type *o_ptr, int fego, bool *limit_blows)
  * true, then the item gets 3 extra "attempts" to become an artifact.
  */
 int hack_apply_magic_power = 0;
-void apply_magic(object_type *o_ptr, int lev, bool okay, bool good, bool great)
+void apply_magic(object_type *o_ptr, int lev, bool_ okay, bool_ good, bool_ great)
 {
 	int i, rolls, f1, f2, power;
 	object_kind *k_ptr = &k_info[o_ptr->k_idx];
@@ -4198,7 +4198,7 @@ void apply_magic(object_type *o_ptr, int lev, bool okay, bool good, bool great)
 	{
 		ego_item_type *e_ptr;
 		int j;
-		bool limit_blows = FALSE;
+		bool_ limit_blows = FALSE;
 		u32b f1, f2, f3, f4, f5, esp;
 		s16b e_idx;
 
@@ -4351,7 +4351,7 @@ void init_match_theme(obj_theme theme)
 /*
  * Ditto XXX XXX XXX
  */
-static bool theme_changed(obj_theme theme)
+static bool_ theme_changed(obj_theme theme)
 {
 	/* Any of the themes has been changed */
 	if (theme.treasure != match_theme.treasure) return (TRUE);
@@ -4367,7 +4367,7 @@ static bool theme_changed(obj_theme theme)
 /*
  * Maga-Hack -- match certain types of object only.
  */
-bool kind_is_theme(int k_idx)
+bool_ kind_is_theme(int k_idx)
 {
 	object_kind *k_ptr = &k_info[k_idx];
 
@@ -4561,7 +4561,7 @@ bool kind_is_theme(int k_idx)
  * Determine if an object must not be generated.
  */
 int kind_is_legal_special = -1;
-bool kind_is_legal(int k_idx)
+bool_ kind_is_legal(int k_idx)
 {
 	object_kind *k_ptr = &k_info[k_idx];
 
@@ -4608,7 +4608,7 @@ bool kind_is_legal(int k_idx)
 /*
  * Hack -- determine if a template is "good"
  */
-bool kind_is_good(int k_idx)
+bool_ kind_is_good(int k_idx)
 {
 	object_kind *k_ptr = &k_info[k_idx];
 
@@ -4705,7 +4705,7 @@ bool kind_is_good(int k_idx)
 /*
 * Determine if template is suitable for building a randart -- dsb
 */
-bool kind_is_artifactable(int k_idx)
+bool_ kind_is_artifactable(int k_idx)
 {
 	int i, j;
 	object_kind *k_ptr = &k_info[k_idx];
@@ -4748,7 +4748,7 @@ bool kind_is_artifactable(int k_idx)
  * through the forge--object_prep()--apply_magic() sequence and
  * get_obj_num() should never be called for that purpose XXX XXX XXX
  */
-bool make_object(object_type *j_ptr, bool good, bool great, obj_theme theme)
+bool_ make_object(object_type *j_ptr, bool_ good, bool_ great, obj_theme theme)
 {
 	int invprob, base;
 
@@ -4865,7 +4865,7 @@ bool make_object(object_type *j_ptr, bool good, bool great, obj_theme theme)
  *
  * This routine requires a clean floor grid destination.
  */
-void place_object(int y, int x, bool good, bool great, int where)
+void place_object(int y, int x, bool_ good, bool_ great, int where)
 {
 	s16b o_idx;
 
@@ -4977,7 +4977,7 @@ void place_object(int y, int x, bool good, bool great, int where)
  *
  * The location must be a legal, clean, floor grid.
  */
-bool make_gold(object_type *j_ptr)
+bool_ make_gold(object_type *j_ptr)
 {
 	int i;
 
@@ -5114,10 +5114,10 @@ s16b drop_near(object_type *j_ptr, int chance, int y, int x)
 
 	char o_name[80];
 
-	bool flag = FALSE;
-	bool done = FALSE;
+	bool_ flag = FALSE;
+	bool_ done = FALSE;
 
-	bool plural = FALSE;
+	bool_ plural = FALSE;
 
 
 	/* Extract plural */
@@ -5158,7 +5158,7 @@ s16b drop_near(object_type *j_ptr, int chance, int y, int x)
 		/* Scan local grids */
 		for (dx = -3; dx <= 3; dx++)
 		{
-			bool comb = FALSE;
+			bool_ comb = FALSE;
 
 			/* Calculate actual distance */
 			d = (dy * dy) + (dx * dx);
@@ -5406,7 +5406,7 @@ s16b drop_near(object_type *j_ptr, int chance, int y, int x)
 /*
  * Scatter some "great" objects near the player
  */
-void acquirement(int y1, int x1, int num, bool great, bool known)
+void acquirement(int y1, int x1, int num, bool_ great, bool_ known)
 {
 	object_type *i_ptr;
 	object_type object_type_body;
@@ -5545,7 +5545,7 @@ void inven_item_increase(int item, int num)
 /*
  * Erase an inventory slot if it has no more items
  */
-bool inven_item_optimize(int item)
+bool_ inven_item_optimize(int item)
 {
 	object_type *o_ptr = &p_ptr->inventory[item];
 
@@ -5701,7 +5701,7 @@ void floor_item_optimize(int item)
 /*
  * Check if we have space for an item in the pack without overflow
  */
-bool inven_carry_okay(object_type *o_ptr)
+bool_ inven_carry_okay(object_type *o_ptr)
 {
 	int j;
 
@@ -5747,7 +5747,7 @@ bool inven_carry_okay(object_type *o_ptr)
  * The "final" flag tells this function to bypass the "combine"
  * and "reorder" code until later.
  */
-s16b inven_carry(object_type *o_ptr, bool final)
+s16b inven_carry(object_type *o_ptr, bool_ final)
 {
 	int i, j, k;
 	int n = -1;
@@ -5905,7 +5905,7 @@ s16b inven_carry(object_type *o_ptr, bool final)
  *
  * Return the inventory slot into which the item is placed.
  */
-s16b inven_takeoff(int item, int amt, bool force_drop)
+s16b inven_takeoff(int item, int amt, bool_ force_drop)
 {
 	int slot;
 
@@ -6014,7 +6014,7 @@ s16b inven_takeoff(int item, int amt, bool force_drop)
  *
  * The object will be dropped "near" the current location
  */
-void inven_drop(int item, int amt, int dy, int dx, bool silent)
+void inven_drop(int item, int amt, int dy, int dx, bool_ silent)
 {
 	object_type forge;
 	object_type *q_ptr;
@@ -6098,7 +6098,7 @@ void combine_pack(void)
 	int i, j, k;
 	object_type *o_ptr;
 	object_type *j_ptr;
-	bool flag = FALSE;
+	bool_ flag = FALSE;
 
 
 	/* Combine the pack (backwards) */
@@ -6169,7 +6169,7 @@ void reorder_pack(void)
 	object_type *q_ptr;
 	object_type *j_ptr;
 	object_type *o_ptr;
-	bool flag = FALSE;
+	bool_ flag = FALSE;
 
 
 	/* Re-order the pack (forwards) */
@@ -6495,7 +6495,7 @@ void floor_decay(int item)
 	byte y = o_ptr->iy;
 
 	/* Maybe the player sees it */
-	bool visible = player_can_see_bold(o_ptr->iy, o_ptr->ix);
+	bool_ visible = player_can_see_bold(o_ptr->iy, o_ptr->ix);
 	char desc[80];
 
 	if (visible)

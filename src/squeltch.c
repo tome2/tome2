@@ -73,7 +73,7 @@ void squeltch_inventory(void)
 	int oldtop;
 	int i;
 	int num_iter = 0;
-	bool found = TRUE;
+	bool_ found = TRUE;
 
 	if (!automatizer_enabled) return;
 
@@ -507,11 +507,11 @@ void do_cmd_automatizer()
 }
 
 /* Add a new rule in an easy way */
-bool automatizer_create = FALSE;
-void automatizer_add_rule(object_type *o_ptr, bool destroy)
+bool_ automatizer_create = FALSE;
+void automatizer_add_rule(object_type *o_ptr, bool_ destroy)
 {
 	char ch;
-	bool do_status = FALSE;
+	bool_ do_status = FALSE;
 	cptr type = "destroy";
 
 	if (!destroy)

@@ -1,7 +1,7 @@
 #undef cquest
 #define cquest (quest[QUEST_TROLL])
 
-bool quest_troll_gen_hook(char *fmt)
+bool_ quest_troll_gen_hook(char *fmt)
 {
 	int x, y;
 	int xstart = 2;
@@ -95,7 +95,7 @@ bool quest_troll_gen_hook(char *fmt)
 	cquest.data[0] = FALSE;
 	return TRUE;
 }
-bool quest_troll_finish_hook(char *fmt)
+bool_ quest_troll_finish_hook(char *fmt)
 {
 	s32b q_idx;
 
@@ -115,7 +115,7 @@ bool quest_troll_finish_hook(char *fmt)
 
 	return TRUE;
 }
-bool quest_troll_death_hook(char *fmt)
+bool_ quest_troll_death_hook(char *fmt)
 {
 	int x, y, xstart = 2, ystart = 2;
 	s32b r_idx, m_idx;
@@ -170,7 +170,7 @@ bool quest_troll_death_hook(char *fmt)
 
 	return FALSE;
 }
-bool quest_troll_init_hook(int q_idx)
+bool_ quest_troll_init_hook(int q_idx)
 {
 	if ((cquest.status >= QUEST_STATUS_TAKEN) && (cquest.status < QUEST_STATUS_FINISHED))
 	{

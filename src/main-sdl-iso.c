@@ -49,13 +49,13 @@
 /*
  * Text place marker function protype (Hj. Malthaner)
  */
-static void set_spots(int x, int y, int n, bool v);
+static void set_spots(int x, int y, int n, bool_ v);
 
 /**
  * we need to track spots with text to avoid overdrawing text with images
  * @author Hj. Malthaner (hansjoerg.malthaner@gmx.de)
  */
-bool spots[80][24];
+bool_ spots[80][24];
 
 /**
  * mouse coordinates for Simugraph engine 
@@ -142,12 +142,12 @@ static int border_color = 0;
 
 /* some miscellaneous settings which have not been dealt
 with yet */
-static bool arg_old_graphics = FALSE;
-static bool arg_double_width = FALSE;
+static bool_ arg_old_graphics = FALSE;
+static bool_ arg_double_width = FALSE;
 
 /* not dealt with yet (although full screen toggle
 is available using Alt-Enter) */
-static bool arg_full_screen = FALSE;
+static bool_ arg_full_screen = FALSE;
 
 
 /*************************************************
@@ -224,7 +224,7 @@ struct _term_data
 	uint pos_x, pos_y;		/* upper left corner of rendering box */
 	uint size_w, size_h;	/* width, height of rendering box */
 
-	bool has_border;		/* whether this sub-window has a border or not */
+	bool_ has_border;		/* whether this sub-window has a border or not */
 	uint border_thick;		/* thickness of border to draw around window */
 #ifdef USE_GRAPHICS
 #ifdef USE_TRANSPARENCY
@@ -711,7 +711,7 @@ static unsigned char ** halloc(int w, int h)
  * spot array access procedure. Mark text output spots
  * @author Hj. Malthaner (hansjoerg.malthaner@gmx.de)
  */
-static void set_spots(const int x, const int y, const int n, const bool v)
+static void set_spots(const int x, const int y, const int n, const bool_ v)
 {
 	int i;
 
@@ -1475,7 +1475,7 @@ static errr term_data_init(term_data *td, int i)
 /*
  * Check and create if needed the directory dirpath -- copied from main.c
  */
-bool private_check_user_directory(cptr dirpath)
+bool_ private_check_user_directory(cptr dirpath)
 {
 	/* Is this used anywhere else in *bands? */
 	struct stat stat_buf;
@@ -1517,7 +1517,7 @@ bool private_check_user_directory(cptr dirpath)
  * home directory or try to create it if it doesn't exist.
  * Returns FALSE if all the attempts fail.
  */
-static bool check_create_user_dir(void)
+static bool_ check_create_user_dir(void)
 {
 	char dirpath[1024];
 	char versionpath[1024];
@@ -1571,15 +1571,15 @@ int main(int argc, char *argv[])
 {
 	int i;
 
-	bool done = FALSE;
+	bool_ done = FALSE;
 
-	bool new_game = FALSE;
+	bool_ new_game = FALSE;
 
 	int show_score = 0;
 
 	cptr mstr = NULL;
 
-	bool args = TRUE;
+	bool_ args = TRUE;
 
 	float gamma;
 	char filename[PATH_MAX + 1];
@@ -1687,7 +1687,7 @@ int main(int argc, char *argv[])
 	 * used to store pref files, chardumps etc.
 	 */
 	{
-		bool ret;
+		bool_ ret;
 
 		/* Create a directory for the user's files */
 		ret = check_create_user_dir();

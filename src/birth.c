@@ -200,7 +200,7 @@ static void save_prev_data(void)
 /*
  * Load the previous data
  */
-static void load_prev_data(bool save)
+static void load_prev_data(bool_ save)
 {
 	int i;
 
@@ -822,8 +822,8 @@ static void player_wipe(void)
 {
 	int i, j;
 
-	bool *powers;
-	bool *corruptions;
+	bool_ *powers;
+	bool_ *corruptions;
 
 
 	/* Wipe special levels */
@@ -844,7 +844,7 @@ static void player_wipe(void)
 	p_ptr->lives = 0;
 
 	/* Wipe the corruptions */
-	(void)C_WIPE(p_ptr->corruptions, max_corruptions, bool);
+	(void)C_WIPE(p_ptr->corruptions, max_corruptions, bool_);
 
 	/* Wipe the history */
 	for (i = 0; i < 4; i++)
@@ -1241,7 +1241,7 @@ static void gen_random_quests(int n)
 		/* XXX XXX XXX Try until valid choice is found */
 		while (tries)
 		{
-			bool ok;
+			bool_ ok;
 
 			tries--;
 
@@ -1625,9 +1625,9 @@ int dump_gods(int sel, int *choice, int max)
 
 
 /* Ask questions */
-static bool do_quick_start = FALSE;
+static bool_ do_quick_start = FALSE;
 
-static bool player_birth_aux_ask()
+static bool_ player_birth_aux_ask()
 {
 	int i, k, n, v, sel;
 
@@ -2531,7 +2531,7 @@ static const int birth_stat_costs[(18-10) + 1] =
  *
  * Taken from V 2.9.0
  */
-static bool player_birth_aux_point(void)
+static bool_ player_birth_aux_point(void)
 {
 	int i;
 
@@ -2709,15 +2709,15 @@ static bool player_birth_aux_point(void)
 /*
  * Use the autoroller or not to generate a char
  */
-static bool player_birth_aux_auto()
+static bool_ player_birth_aux_auto()
 {
 	int i, j, m, v;
 
 	int mode = 0;
 
-	bool flag = FALSE;
+	bool_ flag = FALSE;
 
-	bool prev = FALSE;
+	bool_ prev = FALSE;
 
 	char c;
 
@@ -2881,7 +2881,7 @@ static bool player_birth_aux_auto()
 		/* Auto-roll */
 		while (autoroll)
 		{
-			bool accept = TRUE;
+			bool_ accept = TRUE;
 
 			/* Get a new character */
 			get_stats();
@@ -3059,7 +3059,7 @@ static bool player_birth_aux_auto()
  * from continuously rolling up characters, which can be VERY
  * expensive CPU wise.  And it cuts down on player stupidity.
  */
-static bool player_birth_aux()
+static bool_ player_birth_aux()
 {
 	char c;
 
@@ -3234,7 +3234,7 @@ static bool player_birth_aux()
 /*
  * Helper function for validate_bg().
  */
-static void validate_bg_aux(int chart, bool chart_checked[], char *buf)
+static void validate_bg_aux(int chart, bool_ chart_checked[], char *buf)
 {
 	char *s;
 
@@ -3242,10 +3242,10 @@ static void validate_bg_aux(int chart, bool chart_checked[], char *buf)
 
 
 	/* Assume the chart does not exist */
-	bool chart_exists = FALSE;
+	bool_ chart_exists = FALSE;
 
 	/* Assume the chart is not complete */
-	bool chart_complete = FALSE;
+	bool_ chart_complete = FALSE;
 
 	int bg_max = max_bg_idx;
 
@@ -3307,7 +3307,7 @@ static void validate_bg(void)
 {
 	int i, race;
 
-	bool chart_checked[512];
+	bool_ chart_checked[512];
 
 	char buf[1024];
 
@@ -3430,7 +3430,7 @@ void player_birth(void)
 			while (TRUE)
 			{
 				int j;
-				bool ok = TRUE;
+				bool_ ok = TRUE;
 
 				lev = rand_range(d_ptr->mindepth, d_ptr->maxdepth - 1);
 
@@ -3499,7 +3499,7 @@ void player_birth(void)
 char savefile_module[46][80];
 char savefile_names[46][30];
 char savefile_desc[46][80];
-bool savefile_alive[46];
+bool_ savefile_alive[46];
 int savefile_idx[46];
 
 /*
@@ -3733,9 +3733,9 @@ static void dump_savefiles(int sel, int max)
 
 
 /* Asks for new game or load game */
-bool no_begin_screen = FALSE;
+bool_ no_begin_screen = FALSE;
 
-bool begin_screen()
+bool_ begin_screen()
 {
 	int m, k, sel, max;
 

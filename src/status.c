@@ -95,7 +95,7 @@ void status_move(void)
 	Term_fresh();
 	while (1)
 	{
-		bool loop_exit = FALSE;
+		bool_ loop_exit = FALSE;
 		char c;
 		c = inkey();
 		switch (c)
@@ -146,7 +146,7 @@ void status_sight(void)
 	Term_fresh();
 	while (1)
 	{
-		bool loop_exit = FALSE;
+		bool_ loop_exit = FALSE;
 		char c;
 		c = inkey();
 		switch (c)
@@ -198,7 +198,7 @@ void status_item(void)
 	Term_fresh();
 	while (1)
 	{
-		bool loop_exit = FALSE;
+		bool_ loop_exit = FALSE;
 		char c;
 		c = inkey();
 		switch (c)
@@ -257,7 +257,7 @@ void status_combat(void)
 	Term_fresh();
 	while (1)
 	{
-		bool loop_exit = FALSE;
+		bool_ loop_exit = FALSE;
 		char c;
 		c = inkey();
 		switch (c)
@@ -304,7 +304,7 @@ void status_curses(void)
 	Term_fresh();
 	while (1)
 	{
-		bool loop_exit = FALSE;
+		bool_ loop_exit = FALSE;
 		char c;
 
 		c = inkey();
@@ -355,7 +355,7 @@ void status_res(void)
 	Term_fresh();
 	while (1)
 	{
-		bool loop_exit = FALSE;
+		bool_ loop_exit = FALSE;
 		char c;
 
 		c = inkey();

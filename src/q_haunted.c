@@ -1,7 +1,7 @@
 #undef cquest
 #define cquest (quest[QUEST_HAUNTED])
 
-bool quest_haunted_gen_hook(char *fmt)
+bool_ quest_haunted_gen_hook(char *fmt)
 {
 	int x, y, i, m_idx;
 	int xstart = 2;
@@ -86,7 +86,7 @@ bool quest_haunted_gen_hook(char *fmt)
 	return TRUE;
 }
 
-bool quest_haunted_death_hook(char *fmt)
+bool_ quest_haunted_death_hook(char *fmt)
 {
 	int i, mcnt = 0;
 
@@ -118,7 +118,7 @@ bool quest_haunted_death_hook(char *fmt)
 	return FALSE;
 }
 
-bool quest_haunted_finish_hook(char *fmt)
+bool_ quest_haunted_finish_hook(char *fmt)
 {
 	s32b q_idx;
 
@@ -135,7 +135,7 @@ bool quest_haunted_finish_hook(char *fmt)
 	return TRUE;
 }
 
-bool quest_haunted_init_hook(int q_idx)
+bool_ quest_haunted_init_hook(int q_idx)
 {
 	if ((cquest.status >= QUEST_STATUS_UNTAKEN) && (cquest.status < QUEST_STATUS_FINISHED))
 	{

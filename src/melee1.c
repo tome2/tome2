@@ -118,7 +118,7 @@ static cptr desc_moan[] =
 /*
  * Attack the player via physical attacks.
  */
-bool carried_make_attack_normal(int r_idx)
+bool_ carried_make_attack_normal(int r_idx)
 {
 	monster_race *r_ptr = &r_info[r_idx];
 
@@ -130,9 +130,9 @@ bool carried_make_attack_normal(int r_idx)
 	char ddesc[80] = "your symbiote";
 	cptr sym_name = symbiote_name(TRUE);
 
-	bool blinked;
-	bool touched = FALSE, alive = TRUE;
-	bool explode = FALSE;
+	bool_ blinked;
+	bool_ touched = FALSE, alive = TRUE;
+	bool_ explode = FALSE;
 
 	/* Not allowed to attack */
 	if (r_ptr->flags1 & (RF1_NEVER_BLOW)) return (FALSE);
@@ -149,8 +149,8 @@ bool carried_make_attack_normal(int r_idx)
 	/* Scan through all four blows */
 	for (ap_cnt = 0; ap_cnt < 4; ap_cnt++)
 	{
-		bool visible = FALSE;
-		bool obvious = FALSE;
+		bool_ visible = FALSE;
+		bool_ obvious = FALSE;
 
 		int power = 0;
 		int damage = 0;
@@ -1073,7 +1073,7 @@ bool carried_make_attack_normal(int r_idx)
 					if (randint(100) < 11)
 					{
 						/* 1% chance for perm. damage */
-						bool perm = (randint(10) == 1);
+						bool_ perm = (randint(10) == 1);
 						if (dec_stat(A_CON, randint(10), perm)) obvious = TRUE;
 					}
 
@@ -1354,7 +1354,7 @@ void black_breath_attack(int chance)
 /*
  * Attack the player via physical attacks.
  */
-bool make_attack_normal(int m_idx, byte divis)
+bool_ make_attack_normal(int m_idx, byte divis)
 {
 	monster_type *m_ptr = &m_list[m_idx];
 
@@ -1375,9 +1375,9 @@ bool make_attack_normal(int m_idx, byte divis)
 
 	char ddesc[80];
 
-	bool blinked;
-	bool touched = FALSE, fear = FALSE, alive = TRUE;
-	bool explode = FALSE;
+	bool_ blinked;
+	bool_ touched = FALSE, fear = FALSE, alive = TRUE;
+	bool_ explode = FALSE;
 
 	/* Not allowed to attack */
 	if (r_ptr->flags1 & (RF1_NEVER_BLOW)) return (FALSE);
@@ -1412,8 +1412,8 @@ bool make_attack_normal(int m_idx, byte divis)
 	/* Scan through all four blows */
 	for (ap_cnt = 0; ap_cnt < 4; ap_cnt++)
 	{
-		bool visible = FALSE;
-		bool obvious = FALSE;
+		bool_ visible = FALSE;
+		bool_ obvious = FALSE;
 
 		int power = 0;
 		int damage = 0;
@@ -2699,7 +2699,7 @@ bool make_attack_normal(int m_idx, byte divis)
 					if (randint(100) < 11)
 					{
 						/* 1% chance for perm. damage */
-						bool perm = (randint(10) == 1);
+						bool_ perm = (randint(10) == 1);
 						if (dec_stat(A_CON, randint(10), perm)) obvious = TRUE;
 					}
 

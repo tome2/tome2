@@ -71,7 +71,7 @@ extern "C" {
 /**** Available Variables ****/
 
 
-extern bool Rand_quick;
+extern bool_ Rand_quick;
 extern u32b Rand_value;
 extern u16b Rand_place;
 extern u32b Rand_state[RAND_DEG];

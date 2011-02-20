@@ -64,7 +64,7 @@
 
 
 #ifdef SUPPORT_GAMMA
-static bool gamma_table_ready = FALSE;
+static bool_ gamma_table_ready = FALSE;
 #endif /* SUPPORT_GAMMA */
 
 
@@ -383,7 +383,7 @@ static int redShift, greenShift, blueShift;
 /*
  * Use smooth rescaling?
  */
-static bool smoothRescaling = TRUE;
+static bool_ smoothRescaling = TRUE;
 
 
 /*
@@ -401,7 +401,7 @@ static void GetScaledRow(XImage *Im, int x, int y, int iw, int ow,
 	int xi, si, sifrac, ci, cifrac, addWhole, addFrac;
 	unsigned long pix;
 	int prevRed, prevGreen, prevBlue, nextRed, nextGreen, nextBlue;
-	bool getNextPix;
+	bool_ getNextPix;
 
 	if (iw == ow)
 	{
@@ -580,7 +580,7 @@ static void ScaleIcon(XImage *ImIn, XImage *ImOut,
 	unsigned long tempGreen [MAX_ICON_WIDTH];
 	unsigned long tempBlue [MAX_ICON_WIDTH];
 
-	bool getNextRow;
+	bool_ getNextRow;
 
 	/* get divider value for the horizontal scaling: */
 	if (ix == ox)

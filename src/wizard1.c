@@ -1175,7 +1175,7 @@ static void spoiler_print_art(obj_desc_list *art_ptr, int name1, int set, object
 /*
  * Hack -- Create a "forged" artifact
  */
-static bool make_fake_artifact(object_type *o_ptr, int name1)
+static bool_ make_fake_artifact(object_type *o_ptr, int name1)
 {
 	int i;
 	int cur;
@@ -1466,7 +1466,7 @@ static void spoil_mon_info(cptr fname)
 {
 	char buf[1024];
 	int msex, vn, i, j, k, n;
-	bool breath, magic, sin;
+	bool_ breath, magic, sin;
 	cptr p, q;
 	cptr vp[64];
 	u32b flags1, flags2, flags3, flags4, flags5, flags6, flags9;

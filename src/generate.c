@@ -259,10 +259,10 @@ struct dun_data
 	int col_rooms;
 
 	/* Array of which blocks are used */
-	bool room_map[MAX_ROOMS_ROW][MAX_ROOMS_COL];
+	bool_ room_map[MAX_ROOMS_ROW][MAX_ROOMS_COL];
 
 	/* Hack -- there is a pit/nest on this level */
-	bool crowded;
+	bool_ crowded;
 };
 
 /*
@@ -273,12 +273,12 @@ typedef struct level_generator_type level_generator_type;
 struct level_generator_type
 {
 	cptr name;
-	bool (*generator)(cptr);
+	bool_ (*generator)(cptr);
 
-	bool default_stairs;
-	bool default_monsters;
-	bool default_objects;
-	bool default_miscs;
+	bool_ default_stairs;
+	bool_ default_monsters;
+	bool_ default_objects;
+	bool_ default_miscs;
 
 	struct level_generator_type *next;
 };
@@ -288,7 +288,7 @@ static level_generator_type *level_generators = NULL;
 /*
  * Add a new generator
  */
-void add_level_generator(cptr name, bool (*generator)(cptr name), bool stairs, bool monsters, bool objects, bool miscs)
+void add_level_generator(cptr name, bool_ (*generator)(cptr name), bool_ stairs, bool_ monsters, bool_ objects, bool_ miscs)
 {
 	level_generator_type *g;
 
@@ -440,7 +440,7 @@ static void place_down_stairs(int y, int x)
  * Helper function for place_new_way. Determine if y, x is one of
  * floor features of the current dungeon
  */
-static bool is_safe_floor(int y, int x)
+static bool_ is_safe_floor(int y, int x)
 {
 	dungeon_info_type *d_ptr = &d_info[dungeon_type];
 	byte feat = cave[y][x].feat;
@@ -464,7 +464,7 @@ void place_new_way(int *y, int *x)
 	int x0, x1, x2;
 	int y0, y1, y2;
 	cave_type *c_ptr;
-	bool ok;
+	bool_ ok;
 	int i, way_n;
 	byte way_x[MAX_WID], way_y[MAX_WID];
 
@@ -709,7 +709,7 @@ void place_new_way(int *y, int *x)
 /*
  * Returns random co-ordinates for player/monster/object
  */
-bool new_player_spot(int branch)
+bool_ new_player_spot(int branch)
 {
 	int	y, x;
 	int max_attempts = 5000;
@@ -1133,7 +1133,7 @@ static void alloc_object(int set, int typ, int num)
 		/* Pick a "legal" spot */
 		while (dummy < SAFE_MAX_ATTEMPTS)
 		{
-			bool room;
+			bool_ room;
 
 			dummy++;
 
@@ -1721,7 +1721,7 @@ static void destroy_level(void)
 /*
  * Function that sees if a square is a floor (Includes range checking)
  */
-static bool get_is_floor(int x, int y)
+static bool_ get_is_floor(int x, int y)
 {
 	/* Out of bounds */
 	if (!in_bounds(y, x)) return (FALSE);
@@ -1739,7 +1739,7 @@ static bool get_is_floor(int x, int y)
 static void check_room_boundary(int x1, int y1, int x2, int y2)
 {
 	int count, x, y;
-	bool old_is_floor, new_is_floor;
+	bool_ old_is_floor, new_is_floor;
 
 	/* Avoid doing this in irrelevant places -- pelpel */
 	if (!(dungeon_flags1 & DF1_CAVERN)) return;
@@ -1966,7 +1966,7 @@ static void vault_monsters(int y1, int x1, int num)
  * cx, cy are the returned center of the allocated room in coordinates for
  * cave.feat and cave.info etc.
  */
-bool room_alloc(int width, int height, bool crowded, int by0, int bx0, int *cx, int *cy)
+bool_ room_alloc(int width, int height, bool_ crowded, int by0, int bx0, int *cx, int *cy)
 {
 	int temp, eby, ebx, by, bx;
 
@@ -2683,7 +2683,7 @@ static void build_type4(int by0, int bx0)
 /*
  * Helper function for "monster nest (jelly)"
  */
-static bool vault_aux_jelly(int r_idx)
+static bool_ vault_aux_jelly(int r_idx)
 {
 	monster_race *r_ptr = &r_info[r_idx];
 
@@ -2704,7 +2704,7 @@ static bool vault_aux_jelly(int r_idx)
 /*
  * Helper function for "monster nest (animal)"
  */
-static bool vault_aux_animal(int r_idx)
+static bool_ vault_aux_animal(int r_idx)
 {
 	monster_race *r_ptr = &r_info[r_idx];
 
@@ -2722,7 +2722,7 @@ static bool vault_aux_animal(int r_idx)
 /*
  * Helper function for "monster nest (undead)"
  */
-static bool vault_aux_undead(int r_idx)
+static bool_ vault_aux_undead(int r_idx)
 {
 	monster_race *r_ptr = &r_info[r_idx];
 
@@ -2740,7 +2740,7 @@ static bool vault_aux_undead(int r_idx)
 /*
  * Helper function for "monster nest (chapel)"
  */
-static bool vault_aux_chapel(int r_idx)
+static bool_ vault_aux_chapel(int r_idx)
 {
 	monster_race *r_ptr = &r_info[r_idx];
 
@@ -2762,7 +2762,7 @@ static bool vault_aux_chapel(int r_idx)
 /*
  * Helper function for "monster nest (kennel)"
  */
-static bool vault_aux_kennel(int r_idx)
+static bool_ vault_aux_kennel(int r_idx)
 {
 	monster_race *r_ptr = &r_info[r_idx];
 
@@ -2778,7 +2778,7 @@ static bool vault_aux_kennel(int r_idx)
 /*
  * Helper function for "monster nest (treasure)"
  */
-static bool vault_aux_treasure(int r_idx)
+static bool_ vault_aux_treasure(int r_idx)
 {
 	monster_race *r_ptr = &r_info[r_idx];
 
@@ -2801,7 +2801,7 @@ static bool vault_aux_treasure(int r_idx)
 /*
  * Helper function for "monster nest (clone)"
  */
-static bool vault_aux_clone(int r_idx)
+static bool_ vault_aux_clone(int r_idx)
 {
 	return (r_idx == template_race);
 }
@@ -2810,7 +2810,7 @@ static bool vault_aux_clone(int r_idx)
 /*
  * Helper function for "monster nest (symbol clone)"
  */
-static bool vault_aux_symbol(int r_idx)
+static bool_ vault_aux_symbol(int r_idx)
 {
 	return ((r_info[r_idx].d_char == (r_info[template_race].d_char))
 	        && !(r_info[r_idx].flags1 & RF1_UNIQUE));
@@ -2820,7 +2820,7 @@ static bool vault_aux_symbol(int r_idx)
 /*
  * Helper function for "monster pit (orc)"
  */
-static bool vault_aux_orc(int r_idx)
+static bool_ vault_aux_orc(int r_idx)
 {
 	monster_race *r_ptr = &r_info[r_idx];
 
@@ -2839,7 +2839,7 @@ static bool vault_aux_orc(int r_idx)
 /*
  * Helper function for "monster pit (troll)"
  */
-static bool vault_aux_troll(int r_idx)
+static bool_ vault_aux_troll(int r_idx)
 {
 	monster_race *r_ptr = &r_info[r_idx];
 
@@ -2857,7 +2857,7 @@ static bool vault_aux_troll(int r_idx)
 /*
  * Helper function for "monster pit (giant)"
  */
-static bool vault_aux_giant(int r_idx)
+static bool_ vault_aux_giant(int r_idx)
 {
 	monster_race *r_ptr = &r_info[r_idx];
 
@@ -2881,7 +2881,7 @@ static u32b vault_aux_dragon_mask4;
 /*
  * Helper function for "monster pit (dragon)"
  */
-static bool vault_aux_dragon(int r_idx)
+static bool_ vault_aux_dragon(int r_idx)
 {
 	monster_race *r_ptr = &r_info[r_idx];
 
@@ -2902,7 +2902,7 @@ static bool vault_aux_dragon(int r_idx)
 /*
  * Helper function for "monster pit (demon)"
  */
-static bool vault_aux_demon(int r_idx)
+static bool_ vault_aux_demon(int r_idx)
 {
 	monster_race *r_ptr = &r_info[r_idx];
 
@@ -2946,8 +2946,8 @@ static void build_type5(int by0, int bx0)
 	int y, x, y1, x1, y2, x2, xval, yval;
 	int tmp, i;
 	cptr name;
-	bool empty = FALSE;
-	bool (*old_get_mon_num_hook)(int r_idx);
+	bool_ empty = FALSE;
+	bool_ (*old_get_mon_num_hook)(int r_idx);
 	s16b what[64];
 
 	/* Try to allocate space for room.  If fails, exit */
@@ -3183,9 +3183,9 @@ static void build_type6(int by0, int bx0)
 {
 	int tmp, what[16];
 	int i, j, y, x, y1, x1, y2, x2, xval, yval;
-	bool empty = FALSE;
+	bool_ empty = FALSE;
 	cptr name;
-	bool (*old_get_mon_num_hook)(int r_idx);
+	bool_ (*old_get_mon_num_hook)(int r_idx);
 
 	/* Try to allocate space for room.  If fails, exit */
 	if (!room_alloc(25, 11, TRUE, by0, bx0, &xval, &yval)) return;
@@ -4228,7 +4228,7 @@ void generate_hmap(int y0, int x0, int xsiz, int ysiz, int grd,
 /*
  * Convert from height-map back to the normal Angband cave format
  */
-static bool hack_isnt_wall(int y, int x, int cutoff)
+static bool_ hack_isnt_wall(int y, int x, int cutoff)
 {
 	/* Already done */
 	if (cave[y][x].info & CAVE_ICKY)
@@ -4299,8 +4299,8 @@ static void fill_hack(int y0, int x0, int y, int x, int xsize, int ysize,
 }
 
 
-bool generate_fracave(int y0, int x0, int xsize, int ysize,
-                      int cutoff, bool light, bool room)
+bool_ generate_fracave(int y0, int x0, int xsize, int ysize,
+                      int cutoff, bool_ light, bool_ room)
 {
 	int x, y, i, amount, xhsize, yhsize;
 	cave_type *c_ptr;
@@ -4535,7 +4535,7 @@ bool generate_fracave(int y0, int x0, int xsize, int ysize,
 static void build_cavern(void)
 {
 	int grd, roug, cutoff, xsize, ysize, x0, y0;
-	bool done, light, room;
+	bool_ done, light, room;
 
 	light = done = room = FALSE;
 	if (dun_level <= randint(25)) light = TRUE;
@@ -4576,7 +4576,7 @@ static void build_type10(int by0, int bx0)
 {
 	int grd, roug, cutoff, xsize, ysize, y0, x0;
 
-	bool done, light, room;
+	bool_ done, light, room;
 
 	/* Get size: note 'Evenness'*/
 	xsize = randint(22) * 2 + 6;
@@ -4885,7 +4885,7 @@ static void build_bubble_vault(int x0, int y0, int xsize, int ysize)
 
 	int i, j, k, x = 0, y = 0;
 	u16b min1, min2, temp;
-	bool done;
+	bool_ done;
 
 	/* Offset from center to top left hand corner */
 	int xhsize = xsize / 2;
@@ -5143,7 +5143,7 @@ static void build_room_vault(int x0, int y0, int xsize, int ysize)
 static void build_cave_vault(int x0, int y0, int xsiz, int ysiz)
 {
 	int grd, roug, cutoff, xhsize, yhsize, xsize, ysize, x, y;
-	bool done, light, room;
+	bool_ done, light, room;
 
 	/* Round to make sizes even */
 	xhsize = xsiz / 2;
@@ -5314,7 +5314,7 @@ static void build_maze_vault(int x0, int y0, int xsize, int ysize)
 	int y, x, dy, dx;
 	int y1, x1, y2, x2;
 	int i, m, n, num_vertices, *visited;
-	bool light;
+	bool_ light;
 	cave_type *c_ptr;
 
 
@@ -6046,7 +6046,7 @@ static void build_type11(int by0, int bx0)
 static void build_type12(int by0, int bx0)
 {
 	int light, rad, x, y, x0, y0;
-	bool emptyflag = TRUE;
+	bool_ emptyflag = TRUE;
 	int h1, h2, h3, h4;
 
 	/* Make a random metric */
@@ -6164,7 +6164,7 @@ static void build_type12(int by0, int bx0)
  *   FEAT_PERM_OUTER -- outer room walls (perma)
  *   FEAT_PERM_SOLID -- dungeon border (perma)
  */
-static void build_tunnel(int row1, int col1, int row2, int col2, bool water)
+static void build_tunnel(int row1, int col1, int row2, int col2, bool_ water)
 {
 	int i, y, x;
 	int tmp_row, tmp_col;
@@ -6172,7 +6172,7 @@ static void build_tunnel(int row1, int col1, int row2, int col2, bool water)
 	int start_row, start_col;
 	int main_loop_count = 0;
 
-	bool door_flag = FALSE;
+	bool_ door_flag = FALSE;
 
 	cave_type *c_ptr;
 
@@ -6463,7 +6463,7 @@ static int next_to_corr(int y1, int x1)
  *
  * Assumes "in_bounds(y,x)"
  */
-static bool possible_doorway(int y, int x)
+static bool_ possible_doorway(int y, int x)
 {
 	/* Count the adjacent corridors */
 	if (next_to_corr(y, x) >= 2)
@@ -6493,7 +6493,7 @@ static bool possible_doorway(int y, int x)
  */
 static void try_doors(int y, int x)
 {
-	bool dir_ok[4];
+	bool_ dir_ok[4];
 	int i, k, n;
 	int yy, xx;
 
@@ -6606,7 +6606,7 @@ static void try_doors(int y, int x)
  * Note that we restrict the number of "crowded" rooms to reduce
  * the chance of overflowing the monster list during level creation.
  */
-static bool room_build(int y, int x, int typ)
+static bool_ room_build(int y, int x, int typ)
 {
 	/* Restrict level */
 	if ((dun_level < roomdep[typ]) && !ironman_rooms) return (FALSE);
@@ -6667,7 +6667,7 @@ static bool room_build(int y, int x, int typ)
 /*
  * Set level boundaries
  */
-void set_bounders(bool empty_level)
+void set_bounders(bool_ empty_level)
 {
 	int y, x;
 
@@ -6717,21 +6717,21 @@ void set_bounders(bool empty_level)
 }
 
 /* Needed to refill empty levels */
-static void fill_level(bool use_floor, byte smooth);
+static void fill_level(bool_ use_floor, byte smooth);
 
 /*
  * Generate a normal dungeon level
  */
-bool level_generate_dungeon(cptr name)
+bool_ level_generate_dungeon(cptr name)
 {
 	int i, k, y, x, y1, x1, branch = get_branch();
 	dungeon_info_type *d_ptr = &d_info[dungeon_type];
 
 	int max_vault_ok = 2;
 
-	bool destroyed = FALSE;
-	bool empty_level = FALSE;
-	bool cavern = FALSE;
+	bool_ destroyed = FALSE;
+	bool_ empty_level = FALSE;
+	bool_ cavern = FALSE;
 	s16b town_level = 0;
 
 	/* Is it a town level ? */
@@ -7065,7 +7065,7 @@ bool level_generate_dungeon(cptr name)
 	if (dungeon_flags1 & DF1_WATER_RIVERS)
 	{
 		int max = 3 + rand_int(2);
-		bool said = FALSE;
+		bool_ said = FALSE;
 
 		for (i = 0; i < max; i++)
 		{
@@ -7081,7 +7081,7 @@ bool level_generate_dungeon(cptr name)
 	if (dungeon_flags1 & DF1_LAVA_RIVERS)
 	{
 		int max = 2 + rand_int(2);
-		bool said = FALSE;
+		bool_ said = FALSE;
 
 		for (i = 0; i < max; i++)
 		{
@@ -7388,7 +7388,7 @@ static void init_feat_info(void)
  */
 #define MAX_SHIFTS 14
 
-static void fill_level(bool use_floor, byte smooth)
+static void fill_level(bool_ use_floor, byte smooth)
 {
 	int y, x;
 	int step;
@@ -7477,7 +7477,7 @@ static void fill_level(bool use_floor, byte smooth)
 	/* Repeat subdivision until all the grids are filled in */
 	while ((step = step >> 1) > 0)
 	{
-		bool y_even, x_even;
+		bool_ y_even, x_even;
 		s16b y_wrap, x_wrap;
 		s16b y_sel, x_sel;
 		u32b selector = 0;
@@ -7559,14 +7559,14 @@ static void fill_level(bool use_floor, byte smooth)
  *
  * Note that "dun_body" adds about 4000 bytes of memory to the stack.
  */
-static bool cave_gen(void)
+static bool_ cave_gen(void)
 {
 	int i, k, y, x, y1, x1, branch;
 	dungeon_info_type *d_ptr = &d_info[dungeon_type];
 
 	int max_vault_ok = 2;
 
-	bool empty_level = FALSE;
+	bool_ empty_level = FALSE;
 	s16b town_level = 0;
 
 	level_generator_type *generator;
@@ -8198,7 +8198,7 @@ static void arena_gen(void)
 	int y, x;
 	int qy = SCREEN_HGT;
 	int qx = SCREEN_WID;
-	bool daytime;
+	bool_ daytime;
 
 	/* Day time */
 	if ((turn % (10L * DAY)) < ((10L * DAY) / 2))
@@ -8266,7 +8266,7 @@ static void quest_gen(void)
 /* Mega-Hack */
 #define REGEN_HACK 0x02
 
-bool build_special_level(void)
+bool_ build_special_level(void)
 {
 	char buf[80];
 	int y, x, ystart = 2, xstart = 2;
@@ -8384,7 +8384,7 @@ static void finalise_special_level(void)
 void generate_grid_mana()
 {
 	int y, x, mana, mult;
-	bool xtra_magic = FALSE;
+	bool_ xtra_magic = FALSE;
 
 	if (randint(XTRA_MAGIC) == 1)
 	{
@@ -8430,7 +8430,7 @@ void generate_cave(void)
 	dungeon_info_type *d_ptr = &d_info[dungeon_type];
 	int tester_1, tester_2;
 	int y, x, num, i;
-	bool loaded = FALSE;
+	bool_ loaded = FALSE;
 	char buf[80];
 	s16b town_level = 0;
 
@@ -8528,7 +8528,7 @@ void generate_cave(void)
 		/* Generate */
 		for (num = 0; TRUE; num++)
 		{
-			bool okay = TRUE;
+			bool_ okay = TRUE;
 
 			cptr why = NULL;
 

@@ -47,7 +47,7 @@
 /*
  * Use the "simple" LCRNG
  */
-bool Rand_quick = TRUE;
+bool_ Rand_quick = TRUE;
 
 
 /*

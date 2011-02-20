@@ -49,13 +49,13 @@
 /*
  * Text place marker function protype (Hj. Malthaner)
  */
-static void set_spots(int x, int y, int n, bool v);
+static void set_spots(int x, int y, int n, bool_ v);
 
 /**
  * we need to track spots with text to avoid overdrawing text with images
  * @author Hj. Malthaner (hansjoerg.malthaner@gmx.de)
  */
-bool spots[80][24];
+bool_ spots[80][24];
 
 /**
  * mouse coordinates for Simugraph engine 
@@ -155,15 +155,15 @@ border */
 
 /* some miscellaneous settings which have not been dealt
 with yet */
-static bool arg_double_width = FALSE;
+static bool_ arg_double_width = FALSE;
 
 /* flag signifying whether the game is in full screen */
-static bool arg_full_screen = FALSE;
+static bool_ arg_full_screen = FALSE;
 
 /* a flag to show whether window properties have been
 set or not... if so, the properties can be dumped
 upon quit*/
-static bool window_properties_set = FALSE;
+static bool_ window_properties_set = FALSE;
 
 /*************************************************
  GLOBAL SDL-ToME VARIABLES
@@ -181,7 +181,7 @@ redrawn -- like when doing a Term_redraw() or when
 redoing the entire screen -- all of the changes
 can be stored up before doing an update. This
 should cut down on screen flicker */
-static bool suspendUpdate = FALSE;
+static bool_ suspendUpdate = FALSE;
 
 /* some helper surfaces that are used for rendering 
 characters */
@@ -810,7 +810,7 @@ static unsigned char ** halloc(int w, int h)
  * spot array access procedure. Mark text output spots
  * @author Hj. Malthaner (hansjoerg.malthaner@gmx.de)
  */
-static void set_spots(const int x, const int y, const int n, const bool v)
+static void set_spots(const int x, const int y, const int n, const bool_ v)
 {
 	int i;
 
@@ -1355,7 +1355,7 @@ rectangle and then updates it to include only the rectangles that intersect
 with the test rectangle. If there is an intersection, the function returns
 TRUE and base now contains the intersecting rectangle. If there is no
 intersection, then the function returns FALSE */
-bool intersectRects(SDL_Rect *base, SDL_Rect *test)
+bool_ intersectRects(SDL_Rect *base, SDL_Rect *test)
 {
 	if (INTERSECT((*base),(*test)))
 	{
@@ -1431,7 +1431,7 @@ drawn, but occluding terminals will then re-blit to re-cover the area. */
 void drawTermStuff(term_data *td, SDL_Rect *rect)
 {
 	int n = 0, i;
-	bool block = FALSE, cover = FALSE;
+	bool_ block = FALSE, cover = FALSE;
 	SDL_Rect spot, isect_term, isect_scr;
 
 	/* first of all, if updating is suspended, do nothing! */
@@ -2127,7 +2127,7 @@ void manipulationMode(void)
 {
 	term_data *td;
 	SDL_Event event;
-	bool done = FALSE, moveMode = TRUE;
+	bool_ done = FALSE, moveMode = TRUE;
 	int mouse_x, mouse_y;
 	int value = 0, delta_x = 0, delta_y = 0;
 	int current_term;

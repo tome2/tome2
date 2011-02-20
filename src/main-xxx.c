@@ -721,7 +721,7 @@ errr init_xxx(void)
  * to request the start of a new game or the loading of an old
  * game, both of which should launch the "play_game()" function.
  */
-static bool CheckEvents(bool wait)
+static bool_ CheckEvents(bool_ wait)
 {
 	/* XXX XXX XXX */
 

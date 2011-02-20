@@ -5,7 +5,7 @@
 #undef cquest
 #define cquest (quest[QUEST_ULTRA_GOOD])
 
-bool quest_ultra_good_move_hook(char *fmt)
+bool_ quest_ultra_good_move_hook(char *fmt)
 {
 	s32b y, x;
 	cave_type *c_ptr;
@@ -16,7 +16,7 @@ bool quest_ultra_good_move_hook(char *fmt)
 
 	if (cquest.status == QUEST_STATUS_UNTAKEN)
 	{
-		bool old_quick_messages = quick_messages;
+		bool_ old_quick_messages = quick_messages;
 
 		if (quest[QUEST_MORGOTH].status < QUEST_STATUS_FINISHED) return (FALSE);
 
@@ -77,7 +77,7 @@ bool quest_ultra_good_move_hook(char *fmt)
 	return FALSE;
 }
 
-bool quest_ultra_good_stair_hook(char *fmt)
+bool_ quest_ultra_good_stair_hook(char *fmt)
 {
 	cptr dir;
 
@@ -103,7 +103,7 @@ bool quest_ultra_good_stair_hook(char *fmt)
 	if ((!strcmp(dir, "down")) && (dun_level == 149))
 	{
 		int i;
-		bool ultimate = FALSE;
+		bool_ ultimate = FALSE;
 
 		/* Now look for an ULTIMATE artifact, that is, one imbued with the flame */
 		for (i = INVEN_WIELD; i < INVEN_TOTAL; i++)
@@ -140,7 +140,7 @@ bool quest_ultra_good_stair_hook(char *fmt)
 	return FALSE;
 }
 
-bool quest_ultra_good_recall_hook(char *fmt)
+bool_ quest_ultra_good_recall_hook(char *fmt)
 {
 	if ((dungeon_type != DUNGEON_VOID) && (dungeon_type != DUNGEON_NETHER_REALM))
 		return FALSE;
@@ -149,7 +149,7 @@ bool quest_ultra_good_recall_hook(char *fmt)
 	return TRUE;
 }
 
-bool quest_ultra_good_death_hook(char *fmt)
+bool_ quest_ultra_good_death_hook(char *fmt)
 {
 	s32b m_idx = get_next_arg(fmt);
 
@@ -235,7 +235,7 @@ bool quest_ultra_good_death_hook(char *fmt)
 	}
 	return (FALSE);
 }
-bool quest_ultra_good_dump_hook(char *fmt)
+bool_ quest_ultra_good_dump_hook(char *fmt)
 {
 	if (quest[QUEST_ULTRA_GOOD].status >= QUEST_STATUS_TAKEN)
 	{
@@ -259,7 +259,7 @@ bool quest_ultra_good_dump_hook(char *fmt)
 }
 
 
-bool quest_ultra_good_init_hook(int q)
+bool_ quest_ultra_good_init_hook(int q)
 {
 	if ((cquest.status >= QUEST_STATUS_TAKEN) && (cquest.status < QUEST_STATUS_FINISHED))
 	{

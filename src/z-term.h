@@ -39,7 +39,7 @@ typedef struct term_win term_win;
 
 struct term_win
 {
-	bool cu, cv;
+	bool_ cu, cv;
 	byte cx, cy;
 
 	byte **a;
@@ -177,22 +177,22 @@ struct term
 
 	vptr data;
 
-	bool user_flag;
+	bool_ user_flag;
 
-	bool data_flag;
+	bool_ data_flag;
 
-	bool active_flag;
-	bool mapped_flag;
-	bool total_erase;
-	bool fixed_shape;
-	bool icky_corner;
-	bool soft_cursor;
-	bool always_pict;
-	bool higher_pict;
-	bool always_text;
-	bool unused_flag;
-	bool never_bored;
-	bool never_frosh;
+	bool_ active_flag;
+	bool_ mapped_flag;
+	bool_ total_erase;
+	bool_ fixed_shape;
+	bool_ icky_corner;
+	bool_ soft_cursor;
+	bool_ always_pict;
+	bool_ higher_pict;
+	bool_ always_text;
+	bool_ unused_flag;
+	bool_ never_bored;
+	bool_ never_frosh;
 
 	byte attr_blank;
 	char char_blank;
@@ -346,12 +346,12 @@ extern errr Term_what(int x, int y, byte *a, char *c);
 extern errr Term_flush(void);
 extern errr Term_keypress(int k);
 extern errr Term_key_push(int k);
-extern errr Term_inkey(char *ch, bool wait, bool take);
+extern errr Term_inkey(char *ch, bool_ wait, bool_ take);
 
 extern errr Term_save(void);
 extern term_win* Term_save_to(void);
 extern errr Term_load(void);
-extern errr Term_load_from(term_win *save, bool final);
+extern errr Term_load_from(term_win *save, bool_ final);
 
 extern errr Term_exchange(void);
 

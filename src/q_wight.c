@@ -1,7 +1,7 @@
 #undef cquest
 #define cquest (quest[QUEST_WIGHT])
 
-bool quest_wight_gen_hook(char *fmt)
+bool_ quest_wight_gen_hook(char *fmt)
 {
 	int x, y;
 	int xstart = 2;
@@ -103,7 +103,7 @@ bool quest_wight_gen_hook(char *fmt)
 
 	return TRUE;
 }
-bool quest_wight_death_hook(char *fmt)
+bool_ quest_wight_death_hook(char *fmt)
 {
 	s32b r_idx, m_idx;
 
@@ -127,7 +127,7 @@ bool quest_wight_death_hook(char *fmt)
 
 	return (FALSE);
 }
-bool quest_wight_finish_hook(char *fmt)
+bool_ quest_wight_finish_hook(char *fmt)
 {
 	s32b q_idx;
 	q_idx = get_next_arg(fmt);
@@ -146,7 +146,7 @@ bool quest_wight_finish_hook(char *fmt)
 
 	return TRUE;
 }
-bool quest_wight_init_hook(int q_idx)
+bool_ quest_wight_init_hook(int q_idx)
 {
 	if ((cquest.status >= QUEST_STATUS_TAKEN) && (cquest.status < QUEST_STATUS_FINISHED))
 	{

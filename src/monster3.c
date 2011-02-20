@@ -41,7 +41,7 @@ int is_friend(monster_type *m_ptr)
 }
 
 /* Should they attack each others */
-bool is_enemy(monster_type *m_ptr, monster_type *t_ptr)
+bool_ is_enemy(monster_type *m_ptr, monster_type *t_ptr)
 {
 	monster_race *r_ptr = &r_info[m_ptr->r_idx], *rt_ptr = &r_info[t_ptr->r_idx];
 	int s1 = is_friend(m_ptr), s2 = is_friend(t_ptr);
@@ -57,7 +57,7 @@ bool is_enemy(monster_type *m_ptr, monster_type *t_ptr)
 	return (FALSE);
 }
 
-bool change_side(monster_type *m_ptr)
+bool_ change_side(monster_type *m_ptr)
 {
 	monster_race *r_ptr = race_inf(m_ptr);
 
@@ -89,12 +89,12 @@ bool change_side(monster_type *m_ptr)
 }
 
 /* Multiply !! */
-bool ai_multiply(int m_idx)
+bool_ ai_multiply(int m_idx)
 {
 	monster_type *m_ptr = &m_list[m_idx];
 	monster_race *r_ptr = &r_info[m_ptr->r_idx];
 	int k, y, x, oy = m_ptr->fy, ox = m_ptr->fx;
-	bool is_frien = (is_friend(m_ptr) > 0);
+	bool_ is_frien = (is_friend(m_ptr) > 0);
 
 	/* Count the adjacent monsters */
 	for (k = 0, y = oy - 1; y <= oy + 1; y++)
@@ -134,7 +134,7 @@ bool ai_multiply(int m_idx)
 }
 
 /* Possessor incarnates */
-bool ai_possessor(int m_idx, int o_idx)
+bool_ ai_possessor(int m_idx, int o_idx)
 {
 	object_type *o_ptr = &o_list[o_idx];
 	monster_type *m_ptr = &m_list[m_idx];
@@ -288,7 +288,7 @@ void ai_deincarnate(int m_idx)
 }
 
 /* Returns if a new companion is allowed */
-bool can_create_companion(void)
+bool_ can_create_companion(void)
 {
 	int i, mcnt = 0;
 
@@ -309,7 +309,7 @@ bool can_create_companion(void)
 
 
 /* Player controlled monsters */
-bool do_control_walk(void)
+bool_ do_control_walk(void)
 {
 	/* Get a "repeated" direction */
 	if (p_ptr->control)
@@ -330,7 +330,7 @@ bool do_control_walk(void)
 		return FALSE;
 }
 
-bool do_control_inven(void)
+bool_ do_control_inven(void)
 {
 	int monst_list[23];
 
@@ -343,12 +343,12 @@ bool do_control_inven(void)
 	return TRUE;
 }
 
-bool do_control_pickup(void)
+bool_ do_control_pickup(void)
 {
 	int this_o_idx, next_o_idx = 0;
 	monster_type *m_ptr = &m_list[p_ptr->control];
 	cave_type *c_ptr;
-	bool done = FALSE;
+	bool_ done = FALSE;
 
 	if (!p_ptr->control) return FALSE;
 
@@ -390,7 +390,7 @@ bool do_control_pickup(void)
 	return TRUE;
 }
 
-bool do_control_drop(void)
+bool_ do_control_drop(void)
 {
 	monster_type *m_ptr = &m_list[p_ptr->control];
 
@@ -399,12 +399,12 @@ bool do_control_drop(void)
 	return TRUE;
 }
 
-bool do_control_magic(void)
+bool_ do_control_magic(void)
 {
 	int power = -1;
 	int num = 0, i;
 	int powers[96];
-	bool flag, redraw;
+	bool_ flag, redraw;
 	int ask;
 	char choice;
 	char out_val[160];
@@ -608,7 +608,7 @@ bool do_control_magic(void)
 }
 
 /* Finds the controlled monster and "reconnect" to it */
-bool do_control_reconnect()
+bool_ do_control_reconnect()
 {
 	int i;
 

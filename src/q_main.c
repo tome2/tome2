@@ -1,4 +1,4 @@
-bool quest_main_monsters_hook(char *fmt)
+bool_ quest_main_monsters_hook(char *fmt)
 {
 	s32b r_idx;
 	r_idx = get_next_arg(fmt);
@@ -17,7 +17,7 @@ bool quest_main_monsters_hook(char *fmt)
 	}
 	return FALSE;
 }
-bool quest_morgoth_hook(char *fmt)
+bool_ quest_morgoth_hook(char *fmt)
 {
 	/* Using test_monster_name() here would be a lot less ugly, but would take much more time */
 	monster_race *r_ptr = &r_info[862];
@@ -67,7 +67,7 @@ bool quest_morgoth_hook(char *fmt)
 	}
 	return (FALSE);
 }
-bool quest_morgoth_dump_hook(char *fmt)
+bool_ quest_morgoth_dump_hook(char *fmt)
 {
 	if (quest[QUEST_MORGOTH].status >= QUEST_STATUS_COMPLETED)
 	{
@@ -78,7 +78,7 @@ bool quest_morgoth_dump_hook(char *fmt)
 	}
 	return (FALSE);
 }
-bool quest_morgoth_init_hook(int q_idx)
+bool_ quest_morgoth_init_hook(int q_idx)
 {
 	if ((quest[QUEST_MORGOTH].status >= QUEST_STATUS_TAKEN) && (quest[QUEST_MORGOTH].status < QUEST_STATUS_FINISHED))
 	{
@@ -89,7 +89,7 @@ bool quest_morgoth_init_hook(int q_idx)
 	return (FALSE);
 }
 
-bool quest_sauron_hook(char *fmt)
+bool_ quest_sauron_hook(char *fmt)
 {
 	/* Using test_monster_name() here would be a lot less ugly, but would take much more time */
 	monster_race *r_ptr = &r_info[860];
@@ -113,7 +113,7 @@ bool quest_sauron_hook(char *fmt)
 	return (FALSE);
 }
 
-bool quest_sauron_resurect_hook(char *fmt)
+bool_ quest_sauron_resurect_hook(char *fmt)
 {
 	s32b m_idx = get_next_arg(fmt);
 	monster_type *m_ptr = &m_list[m_idx];
@@ -132,7 +132,7 @@ bool quest_sauron_resurect_hook(char *fmt)
 	return FALSE;
 }
 
-bool quest_sauron_init_hook(int q_idx)
+bool_ quest_sauron_init_hook(int q_idx)
 {
 	if ((quest[QUEST_SAURON].status >= QUEST_STATUS_TAKEN) && (quest[QUEST_SAURON].status < QUEST_STATUS_FINISHED))
 	{
@@ -143,7 +143,7 @@ bool quest_sauron_init_hook(int q_idx)
 	return (FALSE);
 }
 
-bool quest_necro_hook(char *fmt)
+bool_ quest_necro_hook(char *fmt)
 {
 	/* Using test_monster_name() here would be a lot less ugly, but would take much more time */
 	monster_race *r_ptr = &r_info[819];
@@ -165,7 +165,7 @@ bool quest_necro_hook(char *fmt)
 	}
 	return (FALSE);
 }
-bool quest_necro_init_hook(int q_idx)
+bool_ quest_necro_init_hook(int q_idx)
 {
 	if ((quest[QUEST_NECRO].status >= QUEST_STATUS_TAKEN) && (quest[QUEST_NECRO].status < QUEST_STATUS_FINISHED))
 	{

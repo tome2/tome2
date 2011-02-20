@@ -27,6 +27,10 @@ extern "C" {
 
 #include "lua.h"
 
+/* Evil hack for C++ bool_ vs. C bool. */
+#ifndef __cplusplus
+typedef unsigned char bool;
+#endif
 
 /*************************************** Exported functions */
 

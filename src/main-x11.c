@@ -1590,8 +1590,8 @@ struct co_ord
 typedef struct x11_selection_type x11_selection_type;
 struct x11_selection_type
 {
-	bool select;  /* The selection is currently in use. */
-	bool drawn;  /* The selection is currently displayed. */
+	bool_ select;  /* The selection is currently in use. */
+	bool_ drawn;  /* The selection is currently displayed. */
 	term *t;  /* The window where the selection is found. */
 	co_ord init;  /* The starting co-ordinates. */
 	co_ord cur;  /* The end co-ordinates (the current ones if still copying). */
@@ -1775,8 +1775,8 @@ static void mark_selection(void)
 {
 	co_ord min, max;
 	term *old = Term;
-	bool draw = s_ptr->select;
-	bool clear = s_ptr->drawn;
+	bool_ draw = s_ptr->select;
+	bool_ clear = s_ptr->drawn;
 
 	/* Open the correct term if necessary. */
 	if (s_ptr->t != old) Term_activate(s_ptr->t);
@@ -2090,7 +2090,7 @@ static void paste_x11_accept(const XSelectionEvent *ptr)
  * Handle various events conditional on presses of a mouse button.
  */
 static void handle_button(Time time, int x, int y, int button,
-                          bool press)
+                          bool_ press)
 {
 	/* The co-ordinates are only used in Angband format. */
 	pixel_to_square(&x, &y, x, y);
@@ -2104,7 +2104,7 @@ static void handle_button(Time time, int x, int y, int button,
 /*
  * Process events
  */
-static errr CheckEvent(bool wait)
+static errr CheckEvent(bool_ wait)
 {
 	term_data *old_td = (term_data*)(Term->data);
 
@@ -2166,7 +2166,7 @@ static errr CheckEvent(bool wait)
 	case ButtonPress:
 	case ButtonRelease:
 		{
-			bool press = (xev->type == ButtonPress);
+			bool_ press = (xev->type == ButtonPress);
 
 			/* Where is the mouse */
 			int x = xev->xbutton.x;
@@ -2594,7 +2594,7 @@ static errr Term_pict_x11(int x, int y, int n, const byte *ap, const char *cp)
 	byte ea;
 	char ec;
 	int x3, y3;
-	bool has_overlay;
+	bool_ has_overlay;
 # endif  /* USE_EGO_GRAPHICS */
 
 	int k, l;
@@ -3064,7 +3064,7 @@ errr init_x11(int argc, char *argv[])
 
 	int pict_wid = 0;
 	int pict_hgt = 0;
-	bool force_old_graphics = FALSE;
+	bool_ force_old_graphics = FALSE;
 
 #ifdef USE_TRANSPARENCY
 

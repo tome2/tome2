@@ -2483,7 +2483,7 @@ errr Term_key_push(int k)
  *
  * Remove the keypress if "take" is true.
  */
-errr Term_inkey(char *ch, bool wait, bool take)
+errr Term_inkey(char *ch, bool_ wait, bool_ take)
 {
 	/* Assume no key */
 	(*ch) = '\0';
@@ -2636,7 +2636,7 @@ errr Term_load(void)
 /*
  * Same as previous but allow to save more than one
  */
-errr Term_load_from(term_win *save, bool final)
+errr Term_load_from(term_win *save, bool_ final)
 {
 	int y;
 

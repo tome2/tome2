@@ -21,11 +21,11 @@
 /*
  * Attempt to add a power to a randart
  */
-static bool grab_one_power(int *ra_idx, object_type *o_ptr, bool good, s16b *max_times)
+static bool_ grab_one_power(int *ra_idx, object_type *o_ptr, bool_ good, s16b *max_times)
 {
 	int i = 0, j;
 	int *ok_ra, ok_num = 0;
-	bool ret = FALSE;
+	bool_ ret = FALSE;
 	u32b f1, f2, f3, f4, f5, esp;
 
 	C_MAKE(ok_ra, max_ra_idx, int);
@@ -34,7 +34,7 @@ static bool grab_one_power(int *ra_idx, object_type *o_ptr, bool good, s16b *max
 	for (i = 0; i < max_ra_idx; i++)
 	{
 		randart_part_type *ra_ptr = &ra_info[i];
-		bool ok = FALSE;
+		bool_ ok = FALSE;
 
 		/* Must have the correct fields */
 		for (j = 0; j < 20; j++)
@@ -255,16 +255,16 @@ void get_random_name(char * return_name)
 }
 
 
-bool create_artifact(object_type *o_ptr, bool a_scroll, bool get_name)
+bool_ create_artifact(object_type *o_ptr, bool_ a_scroll, bool_ get_name)
 {
 	char new_name[80];
 	int powers = 0, i;
 	s32b total_flags, total_power = 0;
-	bool a_cursed = FALSE;
+	bool_ a_cursed = FALSE;
 	u32b f1, f2, f3, f4, f5, esp;
 	s16b *max_times;
 	s16b pval = 0;
-	bool limit_blows = FALSE;
+	bool_ limit_blows = FALSE;
 
 	strcpy(new_name, "");
 
@@ -401,10 +401,10 @@ bool create_artifact(object_type *o_ptr, bool a_scroll, bool get_name)
 }
 
 
-bool artifact_scroll(void)
+bool_ artifact_scroll(void)
 {
 	int item;
-	bool okay = FALSE;
+	bool_ okay = FALSE;
 	object_type *o_ptr;
 	char o_name[80];
 

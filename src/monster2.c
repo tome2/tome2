@@ -17,7 +17,7 @@
 #define MAX_COMMENT 5
 
 /* Monster gain a few levels ? */
-void monster_check_experience(int m_idx, bool silent)
+void monster_check_experience(int m_idx, bool_ silent)
 {
 	monster_type *m_ptr = &m_list[m_idx];
 	monster_race *r_ptr = &r_info[m_ptr->r_idx];
@@ -69,7 +69,7 @@ void monster_check_experience(int m_idx, bool silent)
 }
 
 /* Monster gain some xp */
-void monster_gain_exp(int m_idx, u32b exp, bool silent)
+void monster_gain_exp(int m_idx, u32b exp, bool_ silent)
 {
 	monster_type *m_ptr = &m_list[m_idx];
 
@@ -124,11 +124,11 @@ s32b modify_aux(s32b a, s32b b, char mod)
 }
 
 /* Is this ego ok for this monster ? */
-bool mego_ok(int r_idx, int ego)
+bool_ mego_ok(int r_idx, int ego)
 {
 	monster_ego *re_ptr = &re_info[ego];
 	monster_race *r_ptr = &r_info[r_idx];
-	bool ok = FALSE;
+	bool_ ok = FALSE;
 	int i;
 
 	/* needed flags */
@@ -410,7 +410,7 @@ void delete_monster_idx(int i)
 
 	s16b this_o_idx, next_o_idx = 0;
 
-	bool had_lite = FALSE;
+	bool_ had_lite = FALSE;
 	;
 
 
@@ -863,7 +863,7 @@ errr get_mon_num_prep(void)
  * Some dungeon types restrict the possible monsters.
  * Return TRUE is the monster is OK and FALSE otherwise
  */
-bool apply_rule(monster_race *r_ptr, byte rule)
+bool_ apply_rule(monster_race *r_ptr, byte rule)
 {
 	dungeon_info_type *d_ptr = &d_info[dungeon_type];
 
@@ -953,7 +953,7 @@ bool apply_rule(monster_race *r_ptr, byte rule)
 	return FALSE;
 }
 
-bool restrict_monster_to_dungeon(int r_idx)
+bool_ restrict_monster_to_dungeon(int r_idx)
 {
 	dungeon_info_type *d_ptr = &d_info[dungeon_type];
 	monster_race *r_ptr = &r_info[r_idx];
@@ -962,7 +962,7 @@ bool restrict_monster_to_dungeon(int r_idx)
 	byte rule = d_ptr->rule_percents[rand_int(100)];
 
 	/* Apply the rule */
-	bool rule_ret = apply_rule(r_ptr, rule);
+	bool_ rule_ret = apply_rule(r_ptr, rule);
 
 	/* Should the rule be right or not ? */
 	if ((d_ptr->rules[rule].mode == DUNGEON_MODE_NAND) || (d_ptr->rules[rule].mode == DUNGEON_MODE_NOR)) rule_ret = !rule_ret;
@@ -975,7 +975,7 @@ bool restrict_monster_to_dungeon(int r_idx)
 }
 
 /* Ugly hack, let summon unappropriate monsters */
-bool summon_hack = FALSE;
+bool_ summon_hack = FALSE;
 
 /*
  * Choose a monster race that seems "appropriate" to the given level
@@ -1228,7 +1228,7 @@ void monster_desc(char *desc, monster_type *m_ptr, int mode)
 	monster_race *r_ptr = race_inf(m_ptr);
 	cptr b_name = (r_name + r_ptr->name);
 	char silly_name[80], name[100];
-	bool seen, pron;
+	bool_ seen, pron;
 	int insanity = (p_ptr->msane - p_ptr->csane) * 100 / p_ptr->msane;
 
 	if (m_ptr->ego)
@@ -1526,9 +1526,9 @@ void lore_treasure(int m_idx, int num_item, int num_gold)
 
 
 
-void sanity_blast(monster_type * m_ptr, bool necro)
+void sanity_blast(monster_type * m_ptr, bool_ necro)
 {
-	bool happened = FALSE;
+	bool_ happened = FALSE;
 	int power = 100;
 
 	if (!necro)
@@ -1722,7 +1722,7 @@ void sanity_blast(monster_type * m_ptr, bool necro)
  * as "detected last turn", and "detected this turn", and "currently
  * in line of sight", all of which are used for visibility testing.
  */
-void update_mon(int m_idx, bool full)
+void update_mon(int m_idx, bool_ full)
 {
 	monster_type *m_ptr = &m_list[m_idx];
 
@@ -1732,22 +1732,22 @@ void update_mon(int m_idx, bool full)
 	int fy = m_ptr->fy;
 	int fx = m_ptr->fx;
 
-	bool old_ml = m_ptr->ml;
+	bool_ old_ml = m_ptr->ml;
 
 	/* Seen at all */
-	bool flag = FALSE;
+	bool_ flag = FALSE;
 
 	/* Seen by vision */
-	bool easy = FALSE;
+	bool_ easy = FALSE;
 
 	/* Seen by telepathy */
-	bool hard = FALSE;
+	bool_ hard = FALSE;
 
 	/* Various extra flags */
-	bool do_empty_mind = FALSE;
-	bool do_weird_mind = FALSE;
-	bool do_invisible = FALSE;
-	bool do_cold_blood = FALSE;
+	bool_ do_empty_mind = FALSE;
+	bool_ do_weird_mind = FALSE;
+	bool_ do_invisible = FALSE;
+	bool_ do_cold_blood = FALSE;
 
 
 	/* Calculate distance */
@@ -1810,7 +1810,7 @@ void update_mon(int m_idx, bool full)
 		if (p_ptr->telepathy)
 		{
 			/* Assume we cant see */
-			bool can_esp = FALSE;
+			bool_ can_esp = FALSE;
 
 			/* Different ESP */
 			if ((p_ptr->telepathy & ESP_ORC) && (r_ptr->flags3 & RF3_ORC)) can_esp = TRUE;
@@ -1989,7 +1989,7 @@ void update_mon(int m_idx, bool full)
 /*
  * This function simply updates all the (non-dead) monsters (see above).
  */
-void update_monsters(bool full)
+void update_monsters(bool_ full)
 {
 	int i;
 
@@ -2075,7 +2075,7 @@ static int possible_randart[] =
 };
 
 
-bool kind_is_randart(int k_idx)
+bool_ kind_is_randart(int k_idx)
 {
 	int max;
 	object_kind *k_ptr = &k_info[k_idx];
@@ -2108,15 +2108,15 @@ bool kind_is_randart(int k_idx)
  * This is the only function which may place a monster in the dungeon,
  * except for the savefile loading code.
  */
-bool bypass_r_ptr_max_num = FALSE;
+bool_ bypass_r_ptr_max_num = FALSE;
 int place_monster_result = 0;
-bool place_monster_one_no_drop = FALSE;
+bool_ place_monster_one_no_drop = FALSE;
 monster_race *place_monster_one_race = NULL;
-s16b place_monster_one(int y, int x, int r_idx, int ego, bool slp, int status)
+s16b place_monster_one(int y, int x, int r_idx, int ego, bool_ slp, int status)
 {
 	int i, base;
 	char dummy[5];
-	bool add_level = FALSE;
+	bool_ add_level = FALSE;
 	int min_level = 0, max_level = 0;
 
 	cave_type *c_ptr;
@@ -2411,12 +2411,12 @@ s16b place_monster_one(int y, int x, int r_idx, int ego, bool slp, int status)
 	/* Only if not fated to die */
 	if ((dungeon_type != DUNGEON_DEATH) && (!place_monster_one_no_drop))
 	{
-		bool good = (r_ptr->flags1 & (RF1_DROP_GOOD)) ? TRUE : FALSE;
-		bool great = (r_ptr->flags1 & (RF1_DROP_GREAT)) ? TRUE : FALSE;
+		bool_ good = (r_ptr->flags1 & (RF1_DROP_GOOD)) ? TRUE : FALSE;
+		bool_ great = (r_ptr->flags1 & (RF1_DROP_GREAT)) ? TRUE : FALSE;
 
-		bool do_gold = (!(r_ptr->flags1 & (RF1_ONLY_ITEM)));
-		bool do_item = (!(r_ptr->flags1 & (RF1_ONLY_GOLD)));
-		bool do_mimic = (r_ptr->flags9 & (RF9_MIMIC));
+		bool_ do_gold = (!(r_ptr->flags1 & (RF1_ONLY_ITEM)));
+		bool_ do_item = (!(r_ptr->flags1 & (RF1_ONLY_GOLD)));
+		bool_ do_mimic = (r_ptr->flags9 & (RF9_MIMIC));
 		int j;
 
 		int force_coin = get_coin_type(r_ptr);
@@ -2675,7 +2675,7 @@ s16b place_monster_one(int y, int x, int r_idx, int ego, bool slp, int status)
 /*
  * Attempt to place a "group" of monsters around the given location
  */
-static bool place_monster_group(int y, int x, int r_idx, bool slp, int status)
+static bool_ place_monster_group(int y, int x, int r_idx, bool_ slp, int status)
 {
 	monster_race *r_ptr = &r_info[r_idx];
 
@@ -2770,7 +2770,7 @@ static int place_monster_idx = 0;
 /*
  * Hack -- help pick an escort type
  */
-static bool place_monster_okay(int r_idx)
+static bool_ place_monster_okay(int r_idx)
 {
 	monster_race *r_ptr = &r_info[place_monster_idx];
 
@@ -2814,11 +2814,11 @@ static bool place_monster_okay(int r_idx)
  * Note the use of the new "monster allocation table" code to restrict
  * the "get_mon_num()" function to "legal" escort types.
  */
-bool place_monster_aux(int y, int x, int r_idx, bool slp, bool grp, int status)
+bool_ place_monster_aux(int y, int x, int r_idx, bool_ slp, bool_ grp, int status)
 {
 	int i;
 	monster_race *r_ptr = &r_info[r_idx];
-	bool (*old_get_mon_num_hook)(int r_idx);
+	bool_ (*old_get_mon_num_hook)(int r_idx);
 
 
 	/* Place one monster, or fail */
@@ -2908,7 +2908,7 @@ bool place_monster_aux(int y, int x, int r_idx, bool slp, bool grp, int status)
  *
  * Attempt to find a monster appropriate to the "monster_level"
  */
-bool place_monster(int y, int x, bool slp, bool grp)
+bool_ place_monster(int y, int x, bool_ slp, bool_ grp)
 {
 	int r_idx;
 
@@ -2940,7 +2940,7 @@ bool place_monster(int y, int x, bool slp, bool grp)
 
 #ifdef MONSTER_HORDES
 
-bool alloc_horde(int y, int x)
+bool_ alloc_horde(int y, int x)
 {
 	int r_idx = 0;
 	monster_race * r_ptr = NULL;
@@ -3008,7 +3008,7 @@ bool alloc_horde(int y, int x)
  *
  * Use "monster_level" for the monster level
  */
-bool alloc_monster(int dis, bool slp)
+bool_ alloc_monster(int dis, bool_ slp)
 {
 	int	y, x;
 	int attempts_left = 10000;
@@ -3074,11 +3074,11 @@ static int summon_specific_type = 0;
 /*
  * Hack -- help decide if a monster race is "okay" to summon
  */
-bool summon_specific_okay(int r_idx)
+bool_ summon_specific_okay(int r_idx)
 {
 	monster_race *r_ptr = &r_info[r_idx];
 
-	bool okay = FALSE;
+	bool_ okay = FALSE;
 
 	/* Hack - Only summon dungeon monsters */
 	if (!monster_dungeon(r_idx)) return (FALSE);
@@ -3390,11 +3390,11 @@ bool summon_specific_okay(int r_idx)
  * Note that this function may not succeed, though this is very rare.
  */
 int summon_specific_level = 0;
-bool summon_specific(int y1, int x1, int lev, int type)
+bool_ summon_specific(int y1, int x1, int lev, int type)
 {
 	int i, x, y, r_idx;
-	bool Group_ok = TRUE;
-	bool (*old_get_mon_num_hook)(int r_idx);
+	bool_ Group_ok = TRUE;
+	bool_ (*old_get_mon_num_hook)(int r_idx);
 
 	/* Look for a location */
 	for (i = 0; i < 20; ++i)
@@ -3479,10 +3479,10 @@ bool summon_specific(int y1, int x1, int lev, int type)
 
 
 
-bool summon_specific_friendly(int y1, int x1, int lev, int type, bool Group_ok)
+bool_ summon_specific_friendly(int y1, int x1, int lev, int type, bool_ Group_ok)
 {
 	int i, x, y, r_idx;
-	bool (*old_get_mon_num_hook)(int r_idx);
+	bool_ (*old_get_mon_num_hook)(int r_idx);
 
 	/* Look for a location */
 	for (i = 0; i < 20; ++i)
@@ -3662,11 +3662,11 @@ void monster_swap(int y1, int x1, int y2, int x2)
 /*
  * Hack -- help decide if a monster race is "okay" to summon
  */
-static bool mutate_monster_okay(int r_idx)
+static bool_ mutate_monster_okay(int r_idx)
 {
 	monster_race *r_ptr = &r_info[r_idx];
 
-	bool okay = FALSE;
+	bool_ okay = FALSE;
 
 	/* Hack - Only summon dungeon monsters */
 	if (!monster_dungeon(r_idx)) return (FALSE);
@@ -3683,14 +3683,14 @@ static bool mutate_monster_okay(int r_idx)
  *
  * Note that "reproduction" REQUIRES empty space.
  */
-bool multiply_monster(int m_idx, bool charm, bool clone)
+bool_ multiply_monster(int m_idx, bool_ charm, bool_ clone)
 {
 	monster_type	*m_ptr = &m_list[m_idx];
 	monster_race *r_ptr = race_inf(m_ptr);
 
 	int i, y, x, new_race;
 
-	bool result = FALSE;
+	bool_ result = FALSE;
 
 	if (no_breeds)
 	{
@@ -3715,7 +3715,7 @@ bool multiply_monster(int m_idx, bool charm, bool clone)
 		/* It can mutate into a nastier monster */
 		if ((rand_int(100) < 3) && (!clone))
 		{
-			bool (*old_get_mon_num_hook)(int r_idx);
+			bool_ (*old_get_mon_num_hook)(int r_idx);
 
 			/* Backup the old hook */
 			old_get_mon_num_hook = get_mon_num_hook;
@@ -3760,7 +3760,7 @@ bool multiply_monster(int m_idx, bool charm, bool clone)
  *
  * Technically should attempt to treat "Beholder"'s as jelly's
  */
-bool hack_message_pain_may_silent = FALSE;
+bool_ hack_message_pain_may_silent = FALSE;
 void message_pain_hook(cptr fmt, ...)
 {
 	va_list vp;

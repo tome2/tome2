@@ -156,7 +156,7 @@ int get_idx(int i)
 	return (0);
 }
 
-static bool is_known(int s_idx)
+static bool_ is_known(int s_idx)
 {
 	int i;
 
@@ -181,7 +181,7 @@ static bool is_known(int s_idx)
  *
  */
 void init_table_aux(int table[MAX_SKILLS][2], int *idx, int father, int lev,
-                    bool full)
+                    bool_ full)
 {
 	int j, i;
 
@@ -200,14 +200,14 @@ void init_table_aux(int table[MAX_SKILLS][2], int *idx, int father, int lev,
 }
 
 
-void init_table(int table[MAX_SKILLS][2], int *max, bool full)
+void init_table(int table[MAX_SKILLS][2], int *max, bool_ full)
 {
 	*max = 0;
 	init_table_aux(table, max, -1, 0, full);
 }
 
 
-bool has_child(int sel)
+bool_ has_child(int sel)
 {
 	int i;
 
@@ -337,7 +337,7 @@ void print_skills(int table[MAX_SKILLS][2], int max, int sel, int start)
 /*
  * Checks various stuff to do when skills change, like new spells, ...
  */
-void recalc_skills(bool init)
+void recalc_skills(bool_ init)
 {
 	static int thaum_level = 0;
 
@@ -613,7 +613,7 @@ char *melee_names[MAX_MELEE] =
 	"Barehanded combat",
 	"Bearform combat",
 };
-static bool melee_bool[MAX_MELEE];
+static bool_ melee_bool[MAX_MELEE];
 static int melee_num[MAX_MELEE];
 
 s16b get_melee_skill()
@@ -743,7 +743,7 @@ void select_default_melee()
 /*
  * Print a batch of skills.
  */
-static void print_skill_batch(int *p, cptr *p_desc, int start, int max, bool mode)
+static void print_skill_batch(int *p, cptr *p_desc, int start, int max, bool_ mode)
 {
 	char buff[80];
 	int i = start, j = 0;
@@ -771,7 +771,7 @@ int do_cmd_activate_skill_aux()
 	char which;
 	int max = 0, i, start = 0;
 	int ret;
-	bool mode = FALSE;
+	bool_ mode = FALSE;
 	int *p;
 	cptr *p_desc;
 
@@ -792,7 +792,7 @@ int do_cmd_activate_skill_aux()
 		if (s_info[i].action_mkey && s_info[i].value && ((!s_info[i].hidden) || (i == SKILL_LEARN)))
 		{
 			int j;
-			bool next = FALSE;
+			bool_ next = FALSE;
 
 			/* Already got it ? */
 			for (j = 0; j < max; j++)
@@ -815,7 +815,7 @@ int do_cmd_activate_skill_aux()
 		if (ab_info[i].action_mkey && ab_info[i].acquired)
 		{
 			int j;
-			bool next = FALSE;
+			bool_ next = FALSE;
 
 			/* Already got it ? */
 			for (j = 0; j < max; j++)
@@ -924,7 +924,7 @@ int do_cmd_activate_skill_aux()
 void do_cmd_activate_skill()
 {
 	int x_idx;
-	bool push = TRUE;
+	bool_ push = TRUE;
 
 	/* Get the skill, if available */
 	if (repeat_pull(&x_idx))
@@ -1053,7 +1053,7 @@ void do_cmd_activate_skill()
 
 
 /* Which magic forbids non FA gloves */
-bool forbid_gloves()
+bool_ forbid_gloves()
 {
 	if (get_skill(SKILL_SORCERY)) return (TRUE);
 	if (get_skill(SKILL_MANA)) return (TRUE);
@@ -1066,7 +1066,7 @@ bool forbid_gloves()
 }
 
 /* Which gods forbid edged weapons */
-bool forbid_non_blessed()
+bool_ forbid_non_blessed()
 {
 	GOD(GOD_ERU) return (TRUE);
 	return (FALSE);
@@ -1151,7 +1151,7 @@ void do_get_new_skill()
 	char *items[LOST_SWORD_NSKILLS];
 	int skl[LOST_SWORD_NSKILLS];
 	s32b val[LOST_SWORD_NSKILLS], mod[LOST_SWORD_NSKILLS];
-	bool used[MAX_SKILLS];
+	bool_ used[MAX_SKILLS];
 	int available_skills[MAX_SKILLS];
 	int max = 0, max_a = 0, res, i;
 
@@ -1237,7 +1237,7 @@ void do_get_new_skill()
 		if (res > -1)
 		{
 			skill_type *s_ptr;
-			bool oppose = FALSE;
+			bool_ oppose = FALSE;
 			int oppose_skill = -1;
 
 			/* Check we don't oppose an existing skill */
@@ -1326,13 +1326,13 @@ s16b find_ability(cptr name)
 /*
  * Do the player have the ability
  */
-bool has_ability(int ab)
+bool_ has_ability(int ab)
 {
 	return ab_info[ab].acquired;
 }
 
 /* Do we meet the requirements */
-bool can_learn_ability(int ab)
+bool_ can_learn_ability(int ab)
 {
 	ability_type *ab_ptr = &ab_info[ab];
 	int i;

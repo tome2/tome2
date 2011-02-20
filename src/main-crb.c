@@ -483,7 +483,7 @@
 /*
  * Check and create if needed the directory dirpath
  */
-bool private_check_user_directory(cptr dirpath)
+bool_ private_check_user_directory(cptr dirpath)
 {
 	/* Is this used anywhere else in *bands? */
 	struct stat stat_buf;
@@ -525,7 +525,7 @@ bool private_check_user_directory(cptr dirpath)
  * home directory or try to create it if it doesn't exist.
  * Returns FALSE if all the attempts fail.
  */
-static bool check_create_user_dir(void)
+static bool_ check_create_user_dir(void)
 {
 	char dirpath[1024];
 	char versionpath[1024];
@@ -776,7 +776,7 @@ struct term_data
 /*
  * Forward declare -- see below
  */
-static bool CheckEvents(bool wait);
+static bool_ CheckEvents(bool_ wait);
 
 
 #ifndef MACH_O_CARBON
@@ -839,7 +839,7 @@ static term_data data[MAX_TERM_DATA];
 /*
  * Note when "open"/"new" become valid
  */
-static bool initialized = FALSE;
+static bool_ initialized = FALSE;
 
 
 
@@ -2920,7 +2920,7 @@ static errr Term_pict_mac(int x, int y, int n, const byte *ap, const char *cp)
 	/* Scan the input */
 	for (i = 0; i < n; i++)
 	{
-		bool done = FALSE;
+		bool_ done = FALSE;
 
 		byte a = *ap++;
 		char c = *cp++;
@@ -2931,7 +2931,7 @@ static errr Term_pict_mac(int x, int y, int n, const byte *ap, const char *cp)
 # ifdef USE_EGO_GRAPHICS
 		byte ea = *eap++;
 		char ec = *ecp++;
-		bool has_overlay = (ea && ec);
+		bool_ has_overlay = (ea && ec);
 # endif  /* USE_EGO_GRAPHICS */
 #endif
 
@@ -3379,7 +3379,7 @@ static void save_pref_short(const char *key, short value)
  * Load preference value for key, returns TRUE if it succeeds with
  * vptr updated appropriately, FALSE otherwise.
  */
-static bool query_load_pref_short(const char *key, short *vptr)
+static bool_ query_load_pref_short(const char *key, short *vptr)
 {
 	CFStringRef cf_key;
 	CFNumberRef cf_value;
@@ -3499,7 +3499,7 @@ static void cf_save_prefs()
  */
 static void cf_load_prefs()
 {
-	bool ok;
+	bool_ ok;
 	short pref_major, pref_minor, pref_patch, pref_extra;
 	int i;
 
@@ -3751,7 +3751,7 @@ static void save_pref_file(void)
  * is 'SAVE'.
  * Originally written by Peter Ammon
  */
-static bool select_savefile(bool all)
+static bool_ select_savefile(bool_ all)
 {
 	OSErr err;
 	FSSpec theFolderSpec;
@@ -3905,7 +3905,7 @@ static void do_menu_file_new(void)
 /*
  * Handle menu: "File" + "Open" /  "Import"
  */
-static void do_menu_file_open(bool all)
+static void do_menu_file_open(bool_ all)
 {
 	/* Let the player to choose savefile */
 	if (!select_savefile(all)) return;
@@ -5526,7 +5526,7 @@ static void quit_calmly(void)
  * undesirable monopoly of CPU. The side-effect is that you cannot do
  * while (CheckEvents(TRUE)); without discretion.
  */
-static bool CheckEvents(bool wait)
+static bool_ CheckEvents(bool_ wait)
 {
 	EventRecord event;
 

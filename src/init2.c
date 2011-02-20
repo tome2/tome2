@@ -2271,7 +2271,7 @@ static void init_basic()
 	/* Macro variables */
 	C_MAKE(macro__pat, MACRO_MAX, cptr);
 	C_MAKE(macro__act, MACRO_MAX, cptr);
-	C_MAKE(macro__cmd, MACRO_MAX, bool);
+	C_MAKE(macro__cmd, MACRO_MAX, bool_);
 
 	/* Macro action buffer */
 	C_MAKE(macro__buf, 1024, char);
@@ -2289,7 +2289,7 @@ static void init_basic()
 /*
  * Pseudo, dummy quest initializer, to actualy disable them
  */
-static bool quest_disable_init_hook(int q_idx)
+static bool_ quest_disable_init_hook(int q_idx)
 {
 	q_idx = q_idx;
 	return FALSE;
@@ -2464,19 +2464,19 @@ static errr init_wilderness(void)
 void reinit_powers_type(s16b new_size)
 {
 	power_type *new_powers_type;
-	bool *new_powers;
+	bool_ *new_powers;
 
 	C_MAKE(new_powers_type, new_size, power_type);
-	C_MAKE(new_powers, new_size, bool);
+	C_MAKE(new_powers, new_size, bool_);
 
 	/* Reallocate the extra memory */
 	if (powers_type && p_ptr->powers)
 	{
 		C_COPY(new_powers_type, powers_type, power_max, power_type);
-		C_COPY(new_powers, p_ptr->powers, power_max, bool);
+		C_COPY(new_powers, p_ptr->powers, power_max, bool_);
 
 		C_FREE(powers_type, power_max, power_type);
-		C_FREE(p_ptr->powers, power_max, bool);
+		C_FREE(p_ptr->powers, power_max, bool_);
 	}
 
 	powers_type = new_powers_type;
@@ -2540,7 +2540,7 @@ void init_schools(s16b new_size)
 void init_corruptions(s16b new_size)
 {
 	/* allocate the extra memory */
-	C_MAKE(p_ptr->corruptions, new_size, bool);
+	C_MAKE(p_ptr->corruptions, new_size, bool_);
 	max_corruptions = new_size;
 }
 
@@ -2554,9 +2554,9 @@ static errr init_other(void)
 	/*** Prepare the "dungeon" information ***/
 
 	/* Allocate and Wipe the special gene flags */
-	C_MAKE(m_allow_special, max_r_idx, bool);
-	C_MAKE(k_allow_special, max_k_idx, bool);
-	C_MAKE(a_allow_special, max_a_idx, bool);
+	C_MAKE(m_allow_special, max_r_idx, bool_);
+	C_MAKE(k_allow_special, max_k_idx, bool_);
+	C_MAKE(a_allow_special, max_a_idx, bool_);
 
 
 	/*** Prepare "vinfo" array ***/
@@ -2580,7 +2580,7 @@ static errr init_other(void)
 	/* Allocate and Wipe the special levels */
 	for (i = 0; i < MAX_DUNGEON_DEPTH; i++)
 	{
-		C_MAKE(special_lvl[i], max_d_idx, bool);
+		C_MAKE(special_lvl[i], max_d_idx, bool_);
 	}
 
 	/* Allocate and wipe each line of the cave */

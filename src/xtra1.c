@@ -1520,13 +1520,13 @@ static void calc_spells(void)
 }
 
 /* Ugly hack */
-bool calc_powers_silent = FALSE;
+bool_ calc_powers_silent = FALSE;
 
 /* Calc the player powers */
 static void calc_powers(void)
 {
 	int i, p = 0;
-	bool *old_powers;
+	bool_ *old_powers;
 
 	/* Hack -- wait for creation */
 	if (!character_generated) return;
@@ -1534,7 +1534,7 @@ static void calc_powers(void)
 	/* Hack -- handle "xtra" mode */
 	if (character_xtra) return;
 
-	C_MAKE(old_powers, power_max, bool);
+	C_MAKE(old_powers, power_max, bool_);
 
 	/* Save old powers */
 	for (i = 0; i < power_max; i++) old_powers[i] = p_ptr->powers[i];
@@ -1602,7 +1602,7 @@ static void calc_powers(void)
 	}
 
 	calc_powers_silent = FALSE;
-	C_FREE(old_powers, power_max, bool);
+	C_FREE(old_powers, power_max, bool_);
 }
 
 
@@ -2647,7 +2647,7 @@ void apply_flags(u32b f1, u32b f2, u32b f3, u32b f4, u32b f5, u32b esp, s16b pva
  * This function induces various "status" messages, unless silent is
  * TRUE.
  */
-void calc_bonuses(bool silent)
+void calc_bonuses(bool_ silent)
 {
 	int i, j, hold;
 	int old_invis;
@@ -4429,7 +4429,7 @@ void handle_stuff(void)
 }
 
 
-bool monk_empty_hands(void)
+bool_ monk_empty_hands(void)
 {
 	int i;
 	object_type *o_ptr;
@@ -4449,7 +4449,7 @@ bool monk_empty_hands(void)
 	return TRUE;
 }
 
-bool monk_heavy_armor(void)
+bool_ monk_heavy_armor(void)
 {
 	u16b monk_arm_wgt = 0;
 
@@ -4749,7 +4749,7 @@ void dump_fates(FILE *outfile)
 {
 	int i;
 	char buf[120];
-	bool pending = FALSE;
+	bool_ pending = FALSE;
 
 	if (!outfile) return;
 

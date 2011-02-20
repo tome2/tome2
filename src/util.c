@@ -1115,7 +1115,7 @@ static void trigger_text_to_ascii(char **bufptr, cptr *strptr)
 {
 	char *s = *bufptr;
 	cptr str = *strptr;
-	bool mod_status[MAX_MACRO_MOD];
+	bool_ mod_status[MAX_MACRO_MOD];
 
 	int i, len = 0;
 	int shiftstatus = 0;
@@ -1335,7 +1335,7 @@ void text_to_ascii(char *buf, cptr str)
 }
 
 
-bool trigger_ascii_to_text(char **bufptr, cptr *strptr)
+bool_ trigger_ascii_to_text(char **bufptr, cptr *strptr)
 {
 	char *s = *bufptr;
 	cptr str = *strptr;
@@ -1502,7 +1502,7 @@ void ascii_to_text(char *buf, cptr str)
 /*
 * Determine if any macros have ever started with a given character.
 */
-static bool macro__use[256];
+static bool_ macro__use[256];
 
 
 /*
@@ -1701,7 +1701,7 @@ errr macro_init(void)
 /*
 * Local "need flush" variable
 */
-static bool flush_later = FALSE;
+static bool_ flush_later = FALSE;
 
 
 /*
@@ -1709,14 +1709,14 @@ static bool flush_later = FALSE;
 *
 * Do not match any macros until "ascii 30" is found.
 */
-static bool parse_macro = FALSE;
+static bool_ parse_macro = FALSE;
 
 /*
 * Local variable -- we are inside a "macro trigger"
 *
 * Strip all keypresses until a low ascii value is found.
 */
-static bool parse_under = FALSE;
+static bool_ parse_under = FALSE;
 
 
 /*
@@ -1997,7 +1997,7 @@ char inkey(void)
 
 	char ch = 0;
 
-	bool done = FALSE;
+	bool_ done = FALSE;
 
 	term *old = Term;
 
@@ -3230,7 +3230,7 @@ static char complete_buf[100];
 static int complete_command(char *buf, int clen, int mlen)
 {
 	int i, j = 1, max = clen;
-	bool gotone = FALSE;
+	bool_ gotone = FALSE;
 
 	/* Forget the characters after the end of the string. */
 	complete_buf[clen] = '\0';
@@ -3279,8 +3279,8 @@ static int complete_command(char *buf, int clen, int mlen)
 * ESCAPE clears the buffer and the window and returns FALSE.
 * RETURN accepts the current buffer contents and returns TRUE.
 */
-bool askfor_aux_complete = FALSE;
-bool askfor_aux(char *buf, int len)
+bool_ askfor_aux_complete = FALSE;
+bool_ askfor_aux(char *buf, int len)
 {
 	int y, x;
 
@@ -3290,7 +3290,7 @@ bool askfor_aux(char *buf, int len)
 
         int wid, hgt;
 
-	bool done = FALSE;
+	bool_ done = FALSE;
 
 
 	/* Locate the cursor */
@@ -3406,9 +3406,9 @@ bool askfor_aux(char *buf, int len)
 *
 * We clear the input, and return FALSE, on "ESCAPE".
 */
-bool get_string(cptr prompt, char *buf, int len)
+bool_ get_string(cptr prompt, char *buf, int len)
 {
-	bool res;
+	bool_ res;
 
 	/* Paranoia XXX XXX XXX */
 	msg_print(NULL);
@@ -3434,7 +3434,7 @@ bool get_string(cptr prompt, char *buf, int len)
 *
 * Note that "[y/n]" is appended to the prompt.
 */
-bool get_check(cptr prompt)
+bool_ get_check(cptr prompt)
 {
 	int i;
 
@@ -3477,7 +3477,7 @@ bool get_check(cptr prompt)
 *
 * Returns TRUE unless the character is "Escape"
 */
-bool get_com(cptr prompt, char *command)
+bool_ get_com(cptr prompt, char *command)
 {
 	/* Paranoia XXX XXX XXX */
 	msg_print(NULL);
@@ -3615,7 +3615,7 @@ char request_command_ignore_keymaps[MAX_IGNORE_KEYMAPS];
 * Mega-Hack -- flag set by do_cmd_{inven,equip}() to allow keymaps in
 * auto-command mode.
 */
-bool request_command_inven_mode = FALSE;
+bool_ request_command_inven_mode = FALSE;
 
 
 /*
@@ -3796,7 +3796,7 @@ void request_command(int shopping)
 			if ((cmd == ' ') || (cmd == '\n') || (cmd == '\r'))
 			{
 				/* Get a real command */
-				bool temp = get_com("Command: ", &cmd_char);
+				bool_ temp = get_com("Command: ", &cmd_char);
 				cmd = cmd_char;
 
 				if (!temp)
@@ -3932,7 +3932,7 @@ void request_command(int shopping)
 /*
  * Check a char for "vowel-hood"
  */
-bool is_a_vowel(int ch)
+bool_ is_a_vowel(int ch)
 {
 	switch (ch)
 	{
@@ -4039,7 +4039,7 @@ void repeat_push(int what)
 }
 
 
-bool repeat_pull(int *what)
+bool_ repeat_pull(int *what)
 {
 	/* All out of keys */
 	if (repeat__idx == repeat__cnt) return (FALSE);
@@ -4100,7 +4100,7 @@ u32b get_number(u32b def, u32b max, int y, int x, char *cmd)
 	u32b res = def;
 
 	/* Player has not typed anything yet */
-	bool no_keys = TRUE;
+	bool_ no_keys = TRUE;
 
 	/* Begin the input with default */
 	prt(format("%lu", def), y, x);
@@ -4309,7 +4309,7 @@ s32b bst(s32b what, s32b t)
 	}
 }
 
-cptr get_month_name(int day, bool full, bool compact)
+cptr get_month_name(int day, bool_ full, bool_ compact)
 {
 	int i = 8;
 	static char buf[40];
@@ -4563,7 +4563,7 @@ int ask_menu(cptr ask, char **items, int max)
 /*
  * Determine if string "t" is a prefix of string "s"
  */
-bool prefix(cptr s, cptr t)
+bool_ prefix(cptr s, cptr t)
 {
 	/* Paranoia */
 	if (!s || !t)
@@ -4648,7 +4648,7 @@ void display_list(int y, int x, int h, int w, cptr title, cptr *list, int max, i
 /*
  * Creates an input box
  */
-bool input_box(cptr text, int y, int x, char *buf, int max)
+bool_ input_box(cptr text, int y, int x, char *buf, int max)
 {
 	int smax = strlen(text);
 

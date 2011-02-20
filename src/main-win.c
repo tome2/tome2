@@ -367,13 +367,13 @@ struct _term_data
 	uint size_ow2;
 	uint size_oh2;
 
-	bool size_hack;
+	bool_ size_hack;
 
-	bool xtra_hack;
+	bool_ xtra_hack;
 
-	bool visible;
+	bool_ visible;
 
-	bool bizarre;
+	bool_ bizarre;
 
 	cptr font_want;
 
@@ -407,22 +407,22 @@ static term_data *my_td;
 /*
  * game in progress
  */
-bool game_in_progress = FALSE;
+bool_ game_in_progress = FALSE;
 
 /*
  * note when "open"/"new" become valid
  */
-bool initialized = FALSE;
+bool_ initialized = FALSE;
 
 /*
  * screen paletted, i.e. 256 colors
  */
-bool paletted = FALSE;
+bool_ paletted = FALSE;
 
 /*
  * 16 colors screen, don't use RGB()
  */
-bool colors16 = FALSE;
+bool_ colors16 = FALSE;
 
 /*
  * Saved instance handle
@@ -460,7 +460,7 @@ static HWND hwndSaver;
 /*
  * Flag set once "graphics" has been initialized
  */
-static bool can_use_graphics = FALSE;
+static bool_ can_use_graphics = FALSE;
 
 /*
  * The global bitmap
@@ -484,7 +484,7 @@ static DIBINIT infMask;
 /*
  * Flag set once "sound" has been initialized
  */
-static bool can_use_sound = FALSE;
+static bool_ can_use_sound = FALSE;
 
 /*
  * An array of sound file names
@@ -557,8 +557,8 @@ static BYTE win_pal[256] =
 /*
  * Hack -- define which keys are "special"
  */
-static bool special_key[256];
-static bool ignore_key[256];
+static bool_ special_key[256];
+static bool_ ignore_key[256];
 
 #if 1
 /*
@@ -735,7 +735,7 @@ static char *analyze_font(char *path, int *wp, int *hp)
 /*
  * Check for existance of a file
  */
-static bool check_file(cptr s)
+static bool_ check_file(cptr s)
 {
 	char path[1024];
 
@@ -784,7 +784,7 @@ static bool check_file(cptr s)
 /*
  * Check for existance of a directory
  */
-static bool check_dir(cptr s)
+static bool_ check_dir(cptr s)
 {
 	int i;
 
@@ -1236,7 +1236,7 @@ static int new_palette(void)
 /*
  * Initialize graphics
  */
-static bool init_graphics()
+static bool_ init_graphics()
 {
 	/* Initialize once */
 	/*if (can_use_graphics != arg_graphics) */
@@ -1323,7 +1323,7 @@ static bool init_graphics()
 /*
  * Initialize sound
  */
-static bool init_sound()
+static bool_ init_sound()
 {
 	/* Initialize once */
 	if (!can_use_sound)
@@ -1401,7 +1401,7 @@ static errr term_force_font(term_data *td, cptr path)
 	/* Forget old font */
 	if (td->font_file)
 	{
-		bool used = FALSE;
+		bool_ used = FALSE;
 
 		/* Scan windows */
 		for (i = 0; i < MAX_TERM_DATA; i++)
@@ -1599,7 +1599,7 @@ static errr Term_user_win(int n)
 /*
  * When set to TRUE, indicates that we can use gamma_table
  */
-static bool gamma_table_ready = FALSE;
+static bool_ gamma_table_ready = FALSE;
 
 #endif /* SUPPORT_GAMMA */
 
@@ -1630,7 +1630,7 @@ static errr Term_xtra_win_react(void)
 
 		byte rv, gv, bv;
 
-		bool change = FALSE;
+		bool_ change = FALSE;
 
 #ifdef SUPPORT_GAMMA
 
@@ -3590,9 +3590,9 @@ LRESULT FAR PASCAL AngbandWndProc(HWND hWnd, UINT uMsg,
 			/* Unused */
 			/* BYTE KeyState = 0x00; */
 
-			bool mc = FALSE;
-			bool ms = FALSE;
-			bool ma = FALSE;
+			bool_ mc = FALSE;
+			bool_ ms = FALSE;
+			bool_ ma = FALSE;
 
 			/* Extract the modifiers */
 			if (GetKeyState(VK_CONTROL) & 0x8000) mc = TRUE;
@@ -3902,9 +3902,9 @@ LRESULT FAR PASCAL AngbandListProc(HWND hWnd, UINT uMsg,
 			/* Unused */
 			/* BYTE KeyState = 0x00; */
 
-			bool mc = FALSE;
-			bool ms = FALSE;
-			bool ma = FALSE;
+			bool_ mc = FALSE;
+			bool_ ms = FALSE;
+			bool_ ma = FALSE;
 
 			/* Extract the modifiers */
 			if (GetKeyState(VK_CONTROL) & 0x8000) mc = TRUE;

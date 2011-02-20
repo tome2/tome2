@@ -1,7 +1,7 @@
 #undef cquest
 #define cquest (quest[QUEST_DRAGONS])
 
-bool quest_dragons_gen_hook(char *fmt)
+bool_ quest_dragons_gen_hook(char *fmt)
 {
 	int x, y, i;
 	int xstart = 2;
@@ -89,7 +89,7 @@ bool quest_dragons_gen_hook(char *fmt)
 	return TRUE;
 }
 
-bool quest_dragons_death_hook(char *fmt)
+bool_ quest_dragons_death_hook(char *fmt)
 {
 	int i, mcnt = 0;
 
@@ -121,7 +121,7 @@ bool quest_dragons_death_hook(char *fmt)
 	return FALSE;
 }
 
-bool quest_dragons_finish_hook(char *fmt)
+bool_ quest_dragons_finish_hook(char *fmt)
 {
 	s32b q_idx;
 
@@ -138,7 +138,7 @@ bool quest_dragons_finish_hook(char *fmt)
 	return TRUE;
 }
 
-bool quest_dragons_init_hook(int q_idx)
+bool_ quest_dragons_init_hook(int q_idx)
 {
 	if ((cquest.status >= QUEST_STATUS_UNTAKEN) && (cquest.status < QUEST_STATUS_FINISHED))
 	{

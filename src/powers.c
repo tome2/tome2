@@ -15,9 +15,9 @@
 /*
  * Note: return value indicates the amount of mana to use
  */
-bool power_chance(power_type *x_ptr)
+bool_ power_chance(power_type *x_ptr)
 {
-	bool use_hp = FALSE;
+	bool_ use_hp = FALSE;
 	int diff = x_ptr->diff;
 
 	/* Always true ? */
@@ -1261,7 +1261,7 @@ static void power_activate(int power)
 /*
  * Print a batch of power.
  */
-static void print_power_batch(int *p, int start, int max, bool mode)
+static void print_power_batch(int *p, int start, int max, bool_ mode)
 {
 	char buff[80];
 	power_type* spell;
@@ -1295,7 +1295,7 @@ static power_type* select_power(int *x_idx)
 	char which;
 	int max = 0, i, start = 0;
 	power_type* ret;
-	bool mode = FALSE;
+	bool_ mode = FALSE;
 	int *p;
 
 	C_MAKE(p, power_max, int);
@@ -1384,7 +1384,7 @@ void do_cmd_power()
 {
 	int x_idx;
 	power_type *x_ptr;
-	bool push = TRUE;
+	bool_ push = TRUE;
 
 	/* Get the skill, if available */
 	if (repeat_pull(&x_idx))

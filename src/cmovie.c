@@ -167,7 +167,7 @@ s16b do_play_cmovie(cptr cmov_file)
 			}
 			else
 			{
-				bool stop = FALSE;
+				bool_ stop = FALSE;
 
 				while (TRUE)
 				{

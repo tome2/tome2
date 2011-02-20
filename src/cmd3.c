@@ -145,7 +145,7 @@ void do_cmd_equip(void)
 /*
  * The "wearable" tester
  */
-static bool item_tester_hook_wear(object_type *o_ptr)
+static bool_ item_tester_hook_wear(object_type *o_ptr)
 {
 	u32b f1, f2, f3, f4, f5, esp;
 	int slot = wield_slot(o_ptr);
@@ -183,7 +183,7 @@ static bool item_tester_hook_wear(object_type *o_ptr)
 }
 
 
-bool is_slot_ok(int slot)
+bool_ is_slot_ok(int slot)
 {
 	if ((slot >= INVEN_WIELD) && (slot < INVEN_TOTAL))
 	{
@@ -617,7 +617,7 @@ void do_cmd_destroy(void)
 
 	int old_number;
 
-	bool force = FALSE;
+	bool_ force = FALSE;
 
 	object_type *o_ptr;
 
@@ -929,7 +929,7 @@ void do_cmd_inscribe(void)
 /*
  * An "item_tester_hook" for refilling lanterns
  */
-static bool item_tester_refill_lantern(object_type *o_ptr)
+static bool_ item_tester_refill_lantern(object_type *o_ptr)
 {
 	/* Flasks of oil are okay */
 	if (o_ptr->tval == TV_FLASK) return (TRUE);
@@ -1023,7 +1023,7 @@ static void do_cmd_refill_lamp(void)
 /*
  * An "item_tester_hook" for refilling torches
  */
-static bool item_tester_refill_torch(object_type *o_ptr)
+static bool_ item_tester_refill_torch(object_type *o_ptr)
 {
 	/* Torches are okay */
 	if ((o_ptr->tval == TV_LITE) &&
@@ -1415,7 +1415,7 @@ static cptr ident_info[] =
  * We use "u" to point to array of monster indexes,
  * and "v" to select the type of sorting to perform on "u".
  */
-static bool ang_sort_comp_hook(vptr u, vptr v, int a, int b)
+static bool_ ang_sort_comp_hook(vptr u, vptr v, int a, int b)
 {
 	u16b *who = (u16b*)(u);
 
@@ -1581,19 +1581,19 @@ void do_cmd_query_symbol(void)
 	char buf[128];
 
 
-	bool all = FALSE;
+	bool_ all = FALSE;
 
-	bool uniq = FALSE;
+	bool_ uniq = FALSE;
 
-	bool norm = FALSE;
+	bool_ norm = FALSE;
 
 
-	bool name = FALSE;
+	bool_ name = FALSE;
 
 	char temp[80] = "";
 
 
-	bool recall = FALSE;
+	bool_ recall = FALSE;
 
 
 	u16b why = 0;
@@ -1826,7 +1826,7 @@ void do_cmd_query_symbol(void)
  *  research_mon
  *  -KMW-
  */
-bool research_mon()
+bool_ research_mon()
 {
 	int i, n, r_idx;
 
@@ -1839,19 +1839,19 @@ bool research_mon()
 
 	byte oldwake;
 
-	bool oldcheat;
+	bool_ oldcheat;
 
 
-	bool all = FALSE;
+	bool_ all = FALSE;
 
-	bool uniq = FALSE;
+	bool_ uniq = FALSE;
 
-	bool norm = FALSE;
+	bool_ norm = FALSE;
 
-	bool notpicked;
+	bool_ notpicked;
 
 
-	bool recall = FALSE;
+	bool_ recall = FALSE;
 
 	u16b why = 0;
 
@@ -2046,7 +2046,7 @@ bool research_mon()
 /*
  * Try to "sense" the grid's mana
  */
-bool do_cmd_sense_grid_mana()
+bool_ do_cmd_sense_grid_mana()
 {
 	int chance, i;
 
@@ -2301,9 +2301,9 @@ void cli_add(cptr active, cptr trigger, cptr descr)
 /*
  * Get a string using CLI completion.
  */
-bool get_string_cli(cptr prompt, char *buf, int len)
+bool_ get_string_cli(cptr prompt, char *buf, int len)
 {
-	bool res;
+	bool_ res;
 
 
 	/* Paranoia XXX XXX XXX */
@@ -2422,7 +2422,7 @@ void do_cmd_cli_help()
 void do_cmd_html_dump()
 {
 	char tmp_val[81];
-	bool html = TRUE;
+	bool_ html = TRUE;
 	term_win *save;
 
 	/* Save the screen */

@@ -21,7 +21,7 @@ extern lua_State *L;
 /* Maximum number of tries for teleporting */
 #define MAX_TRIES 300
 
-bool is_school_book(object_type *o_ptr)
+bool_ is_school_book(object_type *o_ptr)
 {
 	if (o_ptr->tval == TV_BOOK)
 	{
@@ -42,7 +42,7 @@ bool is_school_book(object_type *o_ptr)
 }
 
 /* Does it contains a schooled spell ? */
-static bool hook_school_spellable(object_type *o_ptr)
+static bool_ hook_school_spellable(object_type *o_ptr)
 {
 	if (is_school_book(o_ptr))
 		return TRUE;
@@ -60,7 +60,7 @@ static bool hook_school_spellable(object_type *o_ptr)
 }
 
 /* Is it a book */
-bool item_tester_hook_browsable(object_type *o_ptr)
+bool_ item_tester_hook_browsable(object_type *o_ptr)
 {
 	if (hook_school_spellable(o_ptr)) return TRUE;
 	if (o_ptr->tval >= TV_BOOK) return TRUE;
@@ -70,7 +70,7 @@ bool item_tester_hook_browsable(object_type *o_ptr)
 /*
  * Are we using a mage staff
  */
-bool is_magestaff()
+bool_ is_magestaff()
 {
 	int i;
 
@@ -155,7 +155,7 @@ void do_poly_wounds(void)
 
 	s16b change = damroll(p_ptr->lev, 5);
 
-	bool Nasty_effect = (randint(5) == 1);
+	bool_ Nasty_effect = (randint(5) == 1);
 
 
 	if (!(wounds || hit_p || Nasty_effect)) return;
@@ -461,11 +461,11 @@ void brand_weapon(int brand_type)
 /*
  * Fetch an item (teleport it right underneath the caster)
  */
-void fetch(int dir, int wgt, bool require_los)
+void fetch(int dir, int wgt, bool_ require_los)
 {
 	int ty, tx, i;
 
-	bool flag;
+	bool_ flag;
 
 	cave_type *c_ptr;
 
@@ -788,7 +788,7 @@ void wild_magic(int spell)
  * Hack -- Determine if the player is wearing an artefact ring
  * specified by art_type, that should be an index into a_info
  */
-bool check_ring(int art_type)
+bool_ check_ring(int art_type)
 {
 	int i;
 
@@ -816,7 +816,7 @@ bool check_ring(int art_type)
 /*
  * Return the symbiote's name or description.
  */
-cptr symbiote_name(bool capitalize)
+cptr symbiote_name(bool_ capitalize)
 {
 	object_type *o_ptr = &p_ptr->inventory[INVEN_CARRY];
 	static char buf[80];
@@ -859,7 +859,7 @@ cptr symbiote_name(bool capitalize)
 /*
  * Use a power of the monster in symbiosis
  */
-int use_symbiotic_power(int r_idx, bool great, bool only_number, bool no_cost)
+int use_symbiotic_power(int r_idx, bool_ great, bool_ only_number, bool_ no_cost)
 {
 	int power = -1;
 
@@ -867,7 +867,7 @@ int use_symbiotic_power(int r_idx, bool great, bool only_number, bool no_cost)
 
 	int powers[96];
 
-	bool flag, redraw;
+	bool_ flag, redraw;
 
 	int ask, plev = p_ptr->lev;
 
@@ -2108,7 +2108,7 @@ int use_symbiotic_power(int r_idx, bool great, bool only_number, bool no_cost)
  */
 static int hack_force_spell = -1;
 static object_type *hack_force_spell_obj = NULL;
-bool get_item_hook_find_spell(int *item)
+bool_ get_item_hook_find_spell(int *item)
 {
 	int i, spell;
 	char buf[80];
@@ -2179,7 +2179,7 @@ s32b get_school_spell(cptr do_what, cptr check_fct, s16b force_book)
 	int num = 0;
 	s32b where = 1;
 	int ask;
-	bool flag, redraw;
+	bool_ flag, redraw;
 	char choice;
 	char out_val[160];
 	char buf2[40];
@@ -2517,7 +2517,7 @@ void browse_school_spell(int book, int pval, object_type *o_ptr)
 }
 
 /* Can it contains a schooled spell ? */
-static bool hook_school_can_spellable(object_type *o_ptr)
+static bool_ hook_school_can_spellable(object_type *o_ptr)
 {
 	u32b f1, f2, f3, f4, f5, esp;
 

@@ -16,7 +16,7 @@
 /*
  * Invoke The Rush
  */
-bool set_rush(int v)
+bool_ set_rush(int v)
 {
 	int j;
 
@@ -55,9 +55,9 @@ bool set_rush(int v)
  * Set "p_ptr->parasite" and "p_ptr->parasite_r_idx"
  * notice observable changes
  */
-bool set_parasite(int v, int r)
+bool_ set_parasite(int v, int r)
 {
-	bool notice = FALSE;
+	bool_ notice = FALSE;
 
 	/* Hack -- Force good values */
 	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
@@ -127,9 +127,9 @@ bool set_parasite(int v, int r)
  * Set "p_ptr->tim_project" and others
  * notice observable changes
  */
-bool set_project(int v, s16b gf, s16b dam, s16b rad, s16b flag)
+bool_ set_project(int v, s16b gf, s16b dam, s16b rad, s16b flag)
 {
-	bool notice = FALSE;
+	bool_ notice = FALSE;
 
 	/* Hack -- Force good values */
 	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
@@ -180,9 +180,9 @@ bool set_project(int v, s16b gf, s16b dam, s16b rad, s16b flag)
  * Set "p_ptr->tim_roots" and others
  * notice observable changes
  */
-bool set_roots(int v, s16b ac, s16b dam)
+bool_ set_roots(int v, s16b ac, s16b dam)
 {
-	bool notice = FALSE;
+	bool_ notice = FALSE;
 
 	/* Hack -- Force good values */
 	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
@@ -231,9 +231,9 @@ bool set_roots(int v, s16b ac, s16b dam)
  * Set "p_ptr->tim_(magic|water)_breath" and others
  * notice observable changes
  */
-bool set_tim_breath(int v, bool magical)
+bool_ set_tim_breath(int v, bool_ magical)
 {
-	bool notice = FALSE;
+	bool_ notice = FALSE;
 
 	/* Hack -- Force good values */
 	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
@@ -305,9 +305,9 @@ bool set_tim_breath(int v, bool magical)
  * Set "p_ptr->absorb_soul"
  * notice observable changes
  */
-bool set_absorb_soul(int v)
+bool_ set_absorb_soul(int v)
 {
-	bool notice = FALSE;
+	bool_ notice = FALSE;
 
 	/* Hack -- Force good values */
 	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
@@ -354,9 +354,9 @@ bool set_absorb_soul(int v)
  * Set "p_ptr->disrupt_shield"
  * notice observable changes
  */
-bool set_disrupt_shield(int v)
+bool_ set_disrupt_shield(int v)
 {
-	bool notice = FALSE;
+	bool_ notice = FALSE;
 
 	/* Hack -- Force good values */
 	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
@@ -403,9 +403,9 @@ bool set_disrupt_shield(int v)
  * Set "p_ptr->prob_travel"
  * notice observable changes
  */
-bool set_prob_travel(int v)
+bool_ set_prob_travel(int v)
 {
-	bool notice = FALSE;
+	bool_ notice = FALSE;
 
 	/* Hack -- Force good values */
 	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
@@ -452,9 +452,9 @@ bool set_prob_travel(int v)
  * Set "p_ptr->tim_invis", and "p_ptr->tim_inv_pow",
  * notice observable changes
  */
-bool set_invis(int v, int p)
+bool_ set_invis(int v, int p)
 {
-	bool notice = FALSE;
+	bool_ notice = FALSE;
 
 	/* Hack -- Force good values */
 	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
@@ -503,9 +503,9 @@ bool set_invis(int v, int p)
  * Set "p_ptr->tim_poison",
  * notice observable changes
  */
-bool set_poison(int v)
+bool_ set_poison(int v)
 {
-	bool notice = FALSE;
+	bool_ notice = FALSE;
 
 	/* Hack -- Force good values */
 	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
@@ -551,9 +551,9 @@ bool set_poison(int v)
 /*
  * Set "no_breeds"
  */
-bool set_no_breeders(int v)
+bool_ set_no_breeders(int v)
 {
-	bool notice = FALSE;
+	bool_ notice = FALSE;
 
 	/* Hack -- Force good values */
 	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
@@ -599,9 +599,9 @@ bool set_no_breeders(int v)
 /*
  * Set "p_ptr->tim_deadly"
  */
-bool set_tim_deadly(int v)
+bool_ set_tim_deadly(int v)
 {
-	bool notice = FALSE;
+	bool_ notice = FALSE;
 
 	/* Hack -- Force good values */
 	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
@@ -647,9 +647,9 @@ bool set_tim_deadly(int v)
 /*
  * Set "p_ptr->tim_ffall"
  */
-bool set_tim_ffall(int v)
+bool_ set_tim_ffall(int v)
 {
-	bool notice = FALSE;
+	bool_ notice = FALSE;
 
 	/* Hack -- Force good values */
 	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
@@ -695,9 +695,9 @@ bool set_tim_ffall(int v)
 /*
  * Set "p_ptr->tim_fly"
  */
-bool set_tim_fly(int v)
+bool_ set_tim_fly(int v)
 {
-	bool notice = FALSE;
+	bool_ notice = FALSE;
 
 	/* Hack -- Force good values */
 	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
@@ -743,9 +743,9 @@ bool set_tim_fly(int v)
 /*
  * Set "p_ptr->meditation"
  */
-bool set_meditation(int v)
+bool_ set_meditation(int v)
 {
-	bool notice = FALSE;
+	bool_ notice = FALSE;
 
 	/* Hack -- Force good values */
 	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
@@ -792,9 +792,9 @@ bool set_meditation(int v)
 /*
  * Set "p_ptr->tim_reflect"
  */
-bool set_tim_reflect(int v)
+bool_ set_tim_reflect(int v)
 {
-	bool notice = FALSE;
+	bool_ notice = FALSE;
 
 	/* Hack -- Force good values */
 	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
@@ -840,9 +840,9 @@ bool set_tim_reflect(int v)
 /*
  * Set "p_ptr->tim_res_time"
  */
-bool set_tim_res_time(int v)
+bool_ set_tim_res_time(int v)
 {
-	bool notice = FALSE;
+	bool_ notice = FALSE;
 
 	/* Hack -- Force good values */
 	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
@@ -888,9 +888,9 @@ bool set_tim_res_time(int v)
 /*
  * Set "p_ptr->tim_fire_aura"
  */
-bool set_tim_fire_aura(int v)
+bool_ set_tim_fire_aura(int v)
 {
-	bool notice = FALSE;
+	bool_ notice = FALSE;
 
 	/* Hack -- Force good values */
 	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
@@ -936,9 +936,9 @@ bool set_tim_fire_aura(int v)
 /*
  * Set "p_ptr->strike"
  */
-bool set_strike(int v)
+bool_ set_strike(int v)
 {
-	bool notice = FALSE;
+	bool_ notice = FALSE;
 
 	/* Hack -- Force good values */
 	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
@@ -984,9 +984,9 @@ bool set_strike(int v)
 /*
  * Set "p_ptr->oppose_ld"
  */
-bool set_oppose_ld(int v)
+bool_ set_oppose_ld(int v)
 {
-	bool notice = FALSE;
+	bool_ notice = FALSE;
 
 	/* Hack -- Force good values */
 	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
@@ -1032,9 +1032,9 @@ bool set_oppose_ld(int v)
 /*
  * Set "p_ptr->oppose_cc"
  */
-bool set_oppose_cc(int v)
+bool_ set_oppose_cc(int v)
 {
-	bool notice = FALSE;
+	bool_ notice = FALSE;
 
 	/* Hack -- Force good values */
 	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
@@ -1080,9 +1080,9 @@ bool set_oppose_cc(int v)
 /*
  * Set "p_ptr->oppose_ss"
  */
-bool set_oppose_ss(int v)
+bool_ set_oppose_ss(int v)
 {
-	bool notice = FALSE;
+	bool_ notice = FALSE;
 
 	/* Hack -- Force good values */
 	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
@@ -1128,9 +1128,9 @@ bool set_oppose_ss(int v)
 /*
  * Set "p_ptr->oppose_nex"
  */
-bool set_oppose_nex(int v)
+bool_ set_oppose_nex(int v)
 {
-	bool notice = FALSE;
+	bool_ notice = FALSE;
 
 	/* Hack -- Force good values */
 	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
@@ -1177,9 +1177,9 @@ bool set_oppose_nex(int v)
  * Set "p_ptr->tim_mimic", and "p_ptr->mimic_form",
  * notice observable changes
  */
-bool set_mimic(int v, int p, int level)
+bool_ set_mimic(int v, int p, int level)
 {
-	bool notice = FALSE;
+	bool_ notice = FALSE;
 
 	/* Hack -- Force good values */
 	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
@@ -1240,9 +1240,9 @@ bool set_mimic(int v, int p, int level)
  * Note that blindness is currently the only thing which can affect
  * "player_can_see_bold()".
  */
-bool set_blind(int v)
+bool_ set_blind(int v)
 {
-	bool notice = FALSE;
+	bool_ notice = FALSE;
 
 	/* Hack -- Force good values */
 	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
@@ -1303,9 +1303,9 @@ bool set_blind(int v)
  * Note that blindness is currently the only thing which can affect
  * "player_can_see_bold()".
  */
-bool set_lite(int v)
+bool_ set_lite(int v)
 {
-	bool notice = FALSE;
+	bool_ notice = FALSE;
 
 	/* Hack -- Force good values */
 	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
@@ -1358,9 +1358,9 @@ bool set_lite(int v)
 /*
  * Set "p_ptr->confused", notice observable changes
  */
-bool set_confused(int v)
+bool_ set_confused(int v)
 {
-	bool notice = FALSE;
+	bool_ notice = FALSE;
 
 	/* Hack -- Force good values */
 	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
@@ -1408,9 +1408,9 @@ bool set_confused(int v)
 /*
  * Set "p_ptr->poisoned", notice observable changes
  */
-bool set_poisoned(int v)
+bool_ set_poisoned(int v)
 {
-	bool notice = FALSE;
+	bool_ notice = FALSE;
 
 	/* Hack -- Force good values */
 	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
@@ -1458,9 +1458,9 @@ bool set_poisoned(int v)
 /*
  * Set "p_ptr->afraid", notice observable changes
  */
-bool set_afraid(int v)
+bool_ set_afraid(int v)
 {
-	bool notice = FALSE;
+	bool_ notice = FALSE;
 
 	/* Hack -- Force good values */
 	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
@@ -1508,9 +1508,9 @@ bool set_afraid(int v)
 /*
  * Set "p_ptr->paralyzed", notice observable changes
  */
-bool set_paralyzed(int v)
+bool_ set_paralyzed(int v)
 {
-	bool notice = FALSE;
+	bool_ notice = FALSE;
 
 	/* Hack -- Force good values */
 	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
@@ -1560,9 +1560,9 @@ bool set_paralyzed(int v)
  *
  * Note that we must redraw the map when hallucination changes.
  */
-bool set_image(int v)
+bool_ set_image(int v)
 {
-	bool notice = FALSE;
+	bool_ notice = FALSE;
 
 	/* Hack -- Force good values */
 	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
@@ -1615,9 +1615,9 @@ bool set_image(int v)
 /*
  * Set "p_ptr->lightspeed", notice observable changes
  */
-bool set_light_speed(int v)
+bool_ set_light_speed(int v)
 {
-	bool notice = FALSE;
+	bool_ notice = FALSE;
 
 	/* Hack -- Force good values */
 	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
@@ -1661,9 +1661,9 @@ bool set_light_speed(int v)
 	return (TRUE);
 }
 
-bool set_fast(int v, int p)
+bool_ set_fast(int v, int p)
 {
-	bool notice = FALSE;
+	bool_ notice = FALSE;
 
 	/* Hack -- Force good values */
 	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
@@ -1713,9 +1713,9 @@ bool set_fast(int v, int p)
 /*
  * Set "p_ptr->slow", notice observable changes
  */
-bool set_slow(int v)
+bool_ set_slow(int v)
 {
-	bool notice = FALSE;
+	bool_ notice = FALSE;
 
 	/* Hack -- Force good values */
 	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
@@ -1763,9 +1763,9 @@ bool set_slow(int v)
 /*
  * Set "p_ptr->shield", notice observable changes
  */
-bool set_shield(int v, int p, s16b o, s16b d1, s16b d2)
+bool_ set_shield(int v, int p, s16b o, s16b d1, s16b d2)
 {
-	bool notice = FALSE;
+	bool_ notice = FALSE;
 
 	/* Hack -- Force good values */
 	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
@@ -1819,9 +1819,9 @@ bool set_shield(int v, int p, s16b o, s16b d1, s16b d2)
 /*
  * Set "p_ptr->blessed", notice observable changes
  */
-bool set_blessed(int v)
+bool_ set_blessed(int v)
 {
-	bool notice = FALSE;
+	bool_ notice = FALSE;
 
 	/* Hack -- Force good values */
 	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
@@ -1869,9 +1869,9 @@ bool set_blessed(int v)
 /*
  * Set "p_ptr->hero", notice observable changes
  */
-bool set_hero(int v)
+bool_ set_hero(int v)
 {
-	bool notice = FALSE;
+	bool_ notice = FALSE;
 
 	/* Hack -- Force good values */
 	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
@@ -1921,9 +1921,9 @@ bool set_hero(int v)
 /*
  * Set "p_ptr->holy", notice observable changes
  */
-bool set_holy(int v)
+bool_ set_holy(int v)
 {
-	bool notice = FALSE;
+	bool_ notice = FALSE;
 
 	/* Hack -- Force good values */
 	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
@@ -1970,9 +1970,9 @@ bool set_holy(int v)
 /*
  * Set "p_ptr->walk_water", notice observable changes
  */
-bool set_walk_water(int v)
+bool_ set_walk_water(int v)
 {
-	bool notice = FALSE;
+	bool_ notice = FALSE;
 
 	/* Hack -- Force good values */
 	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
@@ -2019,9 +2019,9 @@ bool set_walk_water(int v)
 /*
  * Set "p_ptr->shero", notice observable changes
  */
-bool set_shero(int v)
+bool_ set_shero(int v)
 {
-	bool notice = FALSE;
+	bool_ notice = FALSE;
 
 	/* Hack -- Force good values */
 	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
@@ -2090,9 +2090,9 @@ bool set_shero(int v)
 /*
  * Set "p_ptr->protevil", notice observable changes
  */
-bool set_protevil(int v)
+bool_ set_protevil(int v)
 {
-	bool notice = FALSE;
+	bool_ notice = FALSE;
 
 	/* Hack -- Force good values */
 	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
@@ -2136,9 +2136,9 @@ bool set_protevil(int v)
 /*
  * Set "p_ptr->protgood", notice observable changes
  */
-bool set_protgood(int v)
+bool_ set_protgood(int v)
 {
-	bool notice = FALSE;
+	bool_ notice = FALSE;
 
 	/* Hack -- Force good values */
 	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
@@ -2182,9 +2182,9 @@ bool set_protgood(int v)
 /*
  * Set "p_ptr->protundead", notice observable changes
  */
-bool set_protundead(int v)
+bool_ set_protundead(int v)
 {
-	bool notice = FALSE;
+	bool_ notice = FALSE;
 
 	/* Hack -- Force good values */
 	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
@@ -2228,9 +2228,9 @@ bool set_protundead(int v)
 /*
  * Set "p_ptr->set_shadow", notice observable changes
  */
-bool set_shadow(int v)
+bool_ set_shadow(int v)
 {
-	bool notice = FALSE;
+	bool_ notice = FALSE;
 
 	/* Hack -- Force good values */
 	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
@@ -2306,9 +2306,9 @@ bool set_shadow(int v)
 /*
  * Set "p_ptr->invuln", notice observable changes
  */
-bool set_invuln(int v)
+bool_ set_invuln(int v)
 {
-	bool notice = FALSE;
+	bool_ notice = FALSE;
 
 	/* Hack -- Force good values */
 	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
@@ -2383,9 +2383,9 @@ bool set_invuln(int v)
 /*
  * Set "p_ptr->tim_esp", notice observable changes
  */
-bool set_tim_esp(int v)
+bool_ set_tim_esp(int v)
 {
-	bool notice = FALSE;
+	bool_ notice = FALSE;
 
 	/* Hack -- Force good values */
 	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
@@ -2435,9 +2435,9 @@ bool set_tim_esp(int v)
 /*
  * Set "p_ptr->tim_thunder", notice observable changes
  */
-bool set_tim_thunder(int v, int p1, int p2)
+bool_ set_tim_thunder(int v, int p1, int p2)
 {
-	bool notice = FALSE;
+	bool_ notice = FALSE;
 
 	/* Hack -- Force good values */
 	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
@@ -2490,9 +2490,9 @@ bool set_tim_thunder(int v, int p1, int p2)
 /*
  * Set "p_ptr->tim_invis", notice observable changes
  */
-bool set_tim_invis(int v)
+bool_ set_tim_invis(int v)
 {
-	bool notice = FALSE;
+	bool_ notice = FALSE;
 
 	/* Hack -- Force good values */
 	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
@@ -2543,9 +2543,9 @@ bool set_tim_invis(int v)
 /*
  * Set "p_ptr->tim_infra", notice observable changes
  */
-bool set_tim_infra(int v)
+bool_ set_tim_infra(int v)
 {
-	bool notice = FALSE;
+	bool_ notice = FALSE;
 
 	/* Hack -- Force good values */
 	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
@@ -2596,9 +2596,9 @@ bool set_tim_infra(int v)
 /*
  * Set "p_ptr->tim_mental_barrier", notice observable changes
  */
-bool set_mental_barrier(int v)
+bool_ set_mental_barrier(int v)
 {
-	bool notice = FALSE;
+	bool_ notice = FALSE;
 
 	/* Hack -- Force good values */
 	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
@@ -2642,9 +2642,9 @@ bool set_mental_barrier(int v)
 /*
  * Set "p_ptr->oppose_acid", notice observable changes
  */
-bool set_oppose_acid(int v)
+bool_ set_oppose_acid(int v)
 {
-	bool notice = FALSE;
+	bool_ notice = FALSE;
 
 	/* Hack -- Force good values */
 	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
@@ -2689,9 +2689,9 @@ bool set_oppose_acid(int v)
 /*
  * Set "p_ptr->oppose_elec", notice observable changes
  */
-bool set_oppose_elec(int v)
+bool_ set_oppose_elec(int v)
 {
-	bool notice = FALSE;
+	bool_ notice = FALSE;
 
 	/* Hack -- Force good values */
 	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
@@ -2736,9 +2736,9 @@ bool set_oppose_elec(int v)
 /*
  * Set "p_ptr->oppose_fire", notice observable changes
  */
-bool set_oppose_fire(int v)
+bool_ set_oppose_fire(int v)
 {
-	bool notice = FALSE;
+	bool_ notice = FALSE;
 
 	/* Hack -- Force good values */
 	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
@@ -2783,9 +2783,9 @@ bool set_oppose_fire(int v)
 /*
  * Set "p_ptr->oppose_cold", notice observable changes
  */
-bool set_oppose_cold(int v)
+bool_ set_oppose_cold(int v)
 {
-	bool notice = FALSE;
+	bool_ notice = FALSE;
 
 	/* Hack -- Force good values */
 	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
@@ -2830,9 +2830,9 @@ bool set_oppose_cold(int v)
 /*
  * Set "p_ptr->oppose_pois", notice observable changes
  */
-bool set_oppose_pois(int v)
+bool_ set_oppose_pois(int v)
 {
-	bool notice = FALSE;
+	bool_ notice = FALSE;
 
 	/* Hack -- Force good values */
 	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
@@ -2877,9 +2877,9 @@ bool set_oppose_pois(int v)
 /*
  * Set "p_ptr->tim_regen", notice observable changes
  */
-bool set_tim_regen(int v, int p)
+bool_ set_tim_regen(int v, int p)
 {
-	bool notice = FALSE;
+	bool_ notice = FALSE;
 
 	/* Hack -- Force good values */
 	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
@@ -2928,10 +2928,10 @@ bool set_tim_regen(int v, int p)
  *
  * Note the special code to only notice "range" changes.
  */
-bool set_stun(int v)
+bool_ set_stun(int v)
 {
 	int old_aux, new_aux;
-	bool notice = FALSE;
+	bool_ notice = FALSE;
 
 
 	/* Hack -- Force good values */
@@ -3089,11 +3089,11 @@ bool set_stun(int v)
  *
  * Note the special code to only notice "range" changes.
  */
-bool set_cut(int v)
+bool_ set_cut(int v)
 {
 	int old_aux, new_aux;
 
-	bool notice = FALSE;
+	bool_ notice = FALSE;
 
 	/* Hack -- Force good values */
 	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
@@ -3328,11 +3328,11 @@ void drop_from_wild()
  * game turns, or 500/(100/5) = 25 player turns (if nothing else is
  * affecting the player speed).
  */
-bool set_food(int v)
+bool_ set_food(int v)
 {
 	int old_aux, new_aux;
 
-	bool notice = FALSE;
+	bool_ notice = FALSE;
 
 	/* Hack -- Force good values */
 	v = (v > 20000) ? 20000 : (v < 0) ? 0 : v;
@@ -3512,8 +3512,8 @@ bool set_food(int v)
 void check_experience(void)
 {
 	int i, gained = 0;
-	bool level_reward = FALSE;
-	bool level_corruption = FALSE;
+	bool_ level_reward = FALSE;
+	bool_ level_corruption = FALSE;
 
 
 	/* Note current level */
@@ -3915,11 +3915,11 @@ void monster_death(int m_idx)
 
 	monster_race *r_ptr = race_inf(m_ptr);
 
-	bool visible = (m_ptr->ml || (r_ptr->flags1 & (RF1_UNIQUE)));
+	bool_ visible = (m_ptr->ml || (r_ptr->flags1 & (RF1_UNIQUE)));
 
 
-	bool cloned = FALSE;
-	bool create_stairs = FALSE;
+	bool_ cloned = FALSE;
+	bool_ create_stairs = FALSE;
 	int force_coin = get_coin_type(r_ptr);
 
 	object_type forge;
@@ -4518,7 +4518,7 @@ void monster_death(int m_idx)
  * monster worth more than subsequent monsters.  This would also need
  * to induce changes in the monster recall code.
  */
-bool mon_take_hit(int m_idx, int dam, bool *fear, cptr note)
+bool_ mon_take_hit(int m_idx, int dam, bool_ *fear, cptr note)
 {
 	monster_type *m_ptr = &m_list[m_idx];
 	monster_race *r_ptr = race_inf(m_ptr);
@@ -4896,7 +4896,7 @@ static void panel_bounds(void)
  *
  * Also used in do_cmd_locate()
  */
-bool change_panel(int dy, int dx)
+bool_ change_panel(int dy, int dx)
 {
 	int y, x;
 	int wid, hgt;
@@ -5168,7 +5168,7 @@ cptr look_mon_desc(int m_idx)
 	monster_type *m_ptr = &m_list[m_idx];
 	monster_race *r_ptr = race_inf(m_ptr);
 
-	bool living = TRUE;
+	bool_ living = TRUE;
 	int perc;
 
 
@@ -5292,7 +5292,7 @@ void ang_sort(vptr u, vptr v, int n)
  * Future versions may restrict the ability to target "trappers"
  * and "mimics", but the semantics is a little bit weird.
  */
-bool target_able(int m_idx)
+bool_ target_able(int m_idx)
 {
 	monster_type *m_ptr = &m_list[m_idx];
 
@@ -5329,7 +5329,7 @@ bool target_able(int m_idx)
  *
  * We return TRUE if the target is "okay" and FALSE otherwise.
  */
-bool target_okay(void)
+bool_ target_okay(void)
 {
 	/* Accept stationary targets */
 	if (target_who < 0) return (TRUE);
@@ -5363,7 +5363,7 @@ bool target_okay(void)
  * We use "u" and "v" to point to arrays of "x" and "y" positions,
  * and sort the arrays by double-distance to the player.
  */
-static bool ang_sort_comp_distance(vptr u, vptr v, int a, int b)
+static bool_ ang_sort_comp_distance(vptr u, vptr v, int a, int b)
 {
 	byte *x = (byte*)(u);
 	byte *y = (byte*)(v);
@@ -5479,7 +5479,7 @@ static s16b target_pick(int y1, int x1, int dy, int dx)
 /*
  * Hack -- determine if a given location is "interesting"
  */
-static bool target_set_accept(int y, int x)
+static bool_ target_set_accept(int y, int x)
 {
 	cave_type *c_ptr;
 
@@ -5586,7 +5586,7 @@ static void target_set_prepare(int mode)
 }
 
 
-bool target_object(int y, int x, int mode, cptr info, bool *boring,
+bool_ target_object(int y, int x, int mode, cptr info, bool_ *boring,
                    object_type *o_ptr, char *out_val, cptr *s1, cptr *s2, cptr *s3,
                    int *query)
 {
@@ -5650,7 +5650,7 @@ static int target_set_aux(int y, int x, int mode, cptr info)
 
 	cptr s1, s2, s3;
 
-	bool boring;
+	bool_ boring;
 
 	int feat;
 
@@ -5727,7 +5727,7 @@ static int target_set_aux(int y, int x, int mode, cptr info)
 				/* Visible */
 				if (m_ptr->ml)
 				{
-					bool recall = FALSE;
+					bool_ recall = FALSE;
 
 					char m_name[80];
 
@@ -6088,15 +6088,15 @@ static int target_set_aux(int y, int x, int mode, cptr info)
  * This command will cancel any old target, even if used from
  * inside the "look" command.
  */
-bool target_set(int mode)
+bool_ target_set(int mode)
 {
 	int i, d, m;
 	int y = p_ptr->py;
 	int x = p_ptr->px;
 
-	bool done = FALSE;
+	bool_ done = FALSE;
 
-	bool flag = TRUE;
+	bool_ flag = TRUE;
 
 	char query;
 
@@ -6478,7 +6478,7 @@ bool target_set(int mode)
  *
  * Note that confusion over-rides any (explicit?) user choice.
  */
-bool get_aim_dir(int *dp)
+bool_ get_aim_dir(int *dp)
 {
 	int dir;
 
@@ -6608,7 +6608,7 @@ bool get_aim_dir(int *dp)
  * This function tracks and uses the "global direction", and uses
  * that as the "desired direction", to which "confusion" is applied.
  */
-bool get_rep_dir(int *dp)
+bool_ get_rep_dir(int *dp)
 {
 	int dir;
 
@@ -7111,12 +7111,12 @@ void gain_level_reward(int chosen_reward)
 /*
  * old -- from PsiAngband.
  */
-bool tgt_pt(int *x, int *y)
+bool_ tgt_pt(int *x, int *y)
 {
 	char ch = 0;
 	int d, cu, cv;
 	int screen_wid, screen_hgt;
-	bool success = FALSE;
+	bool_ success = FALSE;
 
 	*x = p_ptr->px;
 	*y = p_ptr->py;
@@ -7169,25 +7169,25 @@ bool tgt_pt(int *x, int *y)
 }
 
 
-bool gain_random_corruption(int choose_mut)
+bool_ gain_random_corruption(int choose_mut)
 {
 	exec_lua("gain_corruption()");
 	return (FALSE);
 }
 
-bool lose_corruption(int choose_mut)
+bool_ lose_corruption(int choose_mut)
 {
 	exec_lua("lose_corruption()");
 	return (FALSE);
 }
 
-bool lose_all_corruptions(void)
+bool_ lose_all_corruptions(void)
 {
 	exec_lua("lose_all_corruptions()");
 	return (FALSE);
 }
 
-bool get_hack_dir(int *dp)
+bool_ get_hack_dir(int *dp)
 {
 	int dir;
 	cptr p;
@@ -7286,7 +7286,7 @@ bool get_hack_dir(int *dp)
 /*
  * Do we have at least one corruption?
  */
-bool got_corruptions()
+bool_ got_corruptions()
 {
 	int i, max;
 
@@ -7305,7 +7305,7 @@ bool got_corruptions()
 /*
  * Dump the corruption list
  */
-void dump_corruptions(FILE *fff, bool color)
+void dump_corruptions(FILE *fff, bool_ color)
 {
 	int i, max;
 
@@ -7341,7 +7341,7 @@ void set_grace(s32b v)
 	handle_stuff();
 }
 
-bool test_object_wish(char *name, object_type *o_ptr, object_type *forge, char *what)
+bool_ test_object_wish(char *name, object_type *o_ptr, object_type *forge, char *what)
 {
 	int i, j, jb, save_aware;
 	char buf[200];
@@ -7378,7 +7378,7 @@ bool test_object_wish(char *name, object_type *o_ptr, object_type *forge, char *
 			for (j = max_e_idx - 1; j >= 0; j--)
 			{
 				ego_item_type *e_ptr = &e_info[j];
-				bool ok = FALSE;
+				bool_ ok = FALSE;
 
 				if (j && !e_ptr->name) continue;
 
@@ -7406,7 +7406,7 @@ bool test_object_wish(char *name, object_type *o_ptr, object_type *forge, char *
 				for (jb = max_e_idx - 1; jb >= 0; jb--)
 				{
 					ego_item_type *eb_ptr = &e_info[jb];
-					bool ok = FALSE;
+					bool_ ok = FALSE;
 
 					if (jb && !eb_ptr->name) continue;
 
@@ -7654,7 +7654,7 @@ void switch_subclass(int sclass)
 /*
  * Change to an other subrace
  */
-void switch_subrace(int racem, bool copy_old)
+void switch_subrace(int racem, bool_ copy_old)
 {
 	if ((racem < 0) && (racem >= max_rmp_idx)) return;
 

@@ -17,7 +17,7 @@
  * Return the parameter of the given command in the given file
  */
 static int start_line = 0;
-bool get_command(const char *file, char comm, char *param)
+bool_ get_command(const char *file, char comm, char *param)
 {
 	char buf[1024];
 	int i = -1;
@@ -130,7 +130,7 @@ int get_flevel()
 /*
  * Return the extension of the savefile for the level
  */
-bool get_dungeon_save(char *buf)
+bool_ get_dungeon_save(char *buf)
 {
 	char file[20];
 
@@ -145,7 +145,7 @@ bool get_dungeon_save(char *buf)
 /*
  * Return the level generator
  */
-bool get_dungeon_generator(char *buf)
+bool_ get_dungeon_generator(char *buf)
 {
 	char file[20];
 
@@ -160,7 +160,7 @@ bool get_dungeon_generator(char *buf)
 /*
  * Return the special level
  */
-bool get_dungeon_special(char *buf)
+bool_ get_dungeon_special(char *buf)
 {
 	char file[20];
 
@@ -175,7 +175,7 @@ bool get_dungeon_special(char *buf)
 /*
  * Return the special level name
  */
-bool get_dungeon_name(char *buf)
+bool_ get_dungeon_name(char *buf)
 {
 	char file[20];
 
@@ -227,7 +227,7 @@ void get_level_flags()
 /*
  * Return the special level desc
  */
-bool get_level_desc(char *buf)
+bool_ get_level_desc(char *buf)
 {
 	char file[20];
 

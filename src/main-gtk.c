@@ -172,7 +172,7 @@ struct term_data
 	GdkFont *font;
 	GdkGC *gc;
 
-	bool shown;
+	bool_ shown;
 	byte last_attr;
 
 	int font_wid;
@@ -267,7 +267,7 @@ static guint32 angband_colours[16];
 /*
  * Set to TRUE when a game is in progress
  */
-static bool game_in_progress = FALSE;
+static bool_ game_in_progress = FALSE;
 
 
 /*
@@ -277,7 +277,7 @@ static bool game_in_progress = FALSE;
  * with the MIT Shm extention which is usually active if you run
  * Angband locally, because it reduces amount of memory-to-memory copy.
  */
-static bool use_backing_store = TRUE;
+static bool_ use_backing_store = TRUE;
 
 
 
@@ -345,7 +345,7 @@ static void cleanup_angband(void)
  * Because of the way it is implemented in X11 ports,
  * we can set this to TRUE even if we are using the 8x8 tileset.
  */
-static bool use_transparency = TRUE;
+static bool_ use_transparency = TRUE;
 
 #endif /* ANG291_COMPAT */
 
@@ -389,7 +389,7 @@ static vptr hook_ralloc(huge size)
 /*
  * When set to TRUE, indicates that we can use gamma_table
  */
-static bool gamma_table_ready = FALSE;
+static bool_ gamma_table_ready = FALSE;
 
 
 # ifdef INTERACTIVE_GAMMA
@@ -578,8 +578,8 @@ static int graf_mode_request = GRAF_MODE_NONE;
 /*
  * Use smooth rescaling?
  */
-static bool smooth_rescaling = TRUE;
-static bool smooth_rescaling_request = TRUE;
+static bool_ smooth_rescaling = TRUE;
+static bool_ smooth_rescaling_request = TRUE;
 
 /*
  * Dithering
@@ -589,7 +589,7 @@ static GdkRgbDither dith_mode = GDK_RGB_DITHER_NORMAL;
 /*
  * Need to reload and resize tiles when fonts are changed.
  */
-static bool resize_request = FALSE;
+static bool_ resize_request = FALSE;
 
 /*
  * Numbers of columns and rows in current tileset
@@ -890,7 +890,7 @@ static void get_scaled_row(
 	guint32 pix;
 	rgb_type prev;
 	rgb_type next;
-	bool get_next_pix;
+	bool_ get_next_pix;
 
 	/* Unscaled */
 	if (iw == ow)
@@ -1098,7 +1098,7 @@ static void scale_icon(
 	rgb_type next[MAX_ICON_WIDTH];
 	rgb_type temp[MAX_ICON_WIDTH];
 
-	bool get_next_row;
+	bool_ get_next_row;
 
 	/* get divider value for the horizontal scaling: */
 	if (ix == ox)
@@ -1532,7 +1532,7 @@ static GdkRGBImage *resize_tiles(
  * CAVEAT: treatment of backslash is not compatible with the standard
  * C usage XXX XXX XXX XXX
  */
-static bool read_str(char *buf, u32b len, FILE *f)
+static bool_ read_str(char *buf, u32b len, FILE *f)
 {
 	int c;
 
@@ -1614,7 +1614,7 @@ static GdkRGBImage *load_xpm(cptr filename)
 	GdkRGBImage *img = NULL;
 	int width, height, colours, chars;
 	int i, j, k;
-	bool ret;
+	bool_ ret;
 	pal_type *pal = NULL;
 	pal_type *head[HASH_SIZE];
 	u32b buflen = 0;
@@ -2212,14 +2212,14 @@ static void graf_nuke()
  *
  * XXX XXX XXX Windows using the same font should share resized tiles
  */
-static bool graf_init(
+static bool_ graf_init(
         cptr filename,
         int tile_wid,
         int tile_hgt)
 {
 	term_data *td;
 
-	bool result;
+	bool_ result;
 
 	GdkRGBImage *raw_tiles, *scaled_tiles;
 
@@ -2838,7 +2838,7 @@ static errr Term_pict_gtk(
 		byte ea;
 		char ec;
 		int e_x = 0, e_y = 0;
-		bool has_overlay;
+		bool_ has_overlay;
 
 # endif  /* USE_EGO_GRAPHICS */
 
@@ -3042,7 +3042,7 @@ static errr Term_pict_gtk(
  * Process an event, if there's none block when wait is set true,
  * return immediately otherwise.
  */
-static void CheckEvent(bool wait)
+static void CheckEvent(bool_ wait)
 {
 	/* Process an event */
 	(void)gtk_main_iteration_do(wait);
@@ -4567,7 +4567,7 @@ static GtkWidget *get_widget_from_path(cptr path)
 /*
  * Enable/disable a menu item
  */
-void enable_menu_item(cptr path, bool enabled)
+void enable_menu_item(cptr path, bool_ enabled)
 {
 	GtkWidget *widget;
 
@@ -4589,7 +4589,7 @@ void enable_menu_item(cptr path, bool enabled)
 /*
  * Check/uncheck a menu item. The item should be of the GtkCheckMenuItem type
  */
-void check_menu_item(cptr path, bool checked)
+void check_menu_item(cptr path, bool_ checked)
 {
 	GtkWidget *widget;
 
@@ -4621,9 +4621,9 @@ static void file_menu_update_handler(
         gpointer user_data)
 {
 #ifndef SAVEFILE_SCREEN
-	bool game_start_ok;
+	bool_ game_start_ok;
 #endif /* !SAVEFILE_SCREEN */
-	bool save_ok, quit_ok;
+	bool_ save_ok, quit_ok;
 
 #ifndef SAVEFILE_SCREEN
 
@@ -4897,7 +4897,7 @@ static void init_gtk_window(term_data *td, int i)
 	GtkWidget *menu_bar = NULL, *box;
 	cptr font;
 
-	bool main_window = (i == 0) ? TRUE : FALSE;
+	bool_ main_window = (i == 0) ? TRUE : FALSE;
 
 
 	/* Create window */

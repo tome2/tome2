@@ -13,7 +13,7 @@
 #include "angband.h"
 
 
-static bool setuid_grabbed = TRUE;
+static bool_ setuid_grabbed = TRUE;
 
 
 /*
@@ -1005,7 +1005,7 @@ errr process_pref_file(cptr name)
 
 	errr err = 0;
 
-	bool bypass = FALSE;
+	bool_ bypass = FALSE;
 
 	/* Build the filename -- Allow users to override system pref files */
 	path_build(buf, 1024, ANGBAND_DIR_USER, name);
@@ -1961,7 +1961,7 @@ static void display_player_ben_one(int mode)
 
 	int d[INVEN_TOTAL - INVEN_WIELD + 1];
 
-	bool got;
+	bool_ got;
 
 	byte a;
 
@@ -2081,7 +2081,7 @@ static void display_player_ben_one(int mode)
 				for (n = 0; n < INVEN_TOTAL - INVEN_WIELD + 1; n++)
 				{
 					/* Change colour every two columns */
-					bool is_green = (dispx & 0x02);
+					bool_ is_green = (dispx & 0x02);
 					a = (is_green ? TERM_GREEN : TERM_SLATE);
 					c = '.';
 
@@ -2424,7 +2424,7 @@ cptr describe_player_location()
  *
  * Figure out if a row on the grid is empty
  */
-static bool file_character_print_grid_check_row(const char *buf)
+static bool_ file_character_print_grid_check_row(const char *buf)
 {
 	if (strstr(buf + 12, "+")) return TRUE;
 	if (strstr(buf + 12, "*")) return TRUE;
@@ -2445,7 +2445,7 @@ static bool file_character_print_grid_check_row(const char *buf)
  *
  * Prints the big ugly grid
  */
-static void file_character_print_grid(FILE *fff, bool show_gaps, bool show_legend)
+static void file_character_print_grid(FILE *fff, bool_ show_gaps, bool_ show_legend)
 {
 	static cptr blank_line = "                                        ";
 	static char buf[1024];
@@ -2487,7 +2487,7 @@ static void file_character_print_grid(FILE *fff, bool show_gaps, bool show_legen
  *
  * Outputs one item (for Inventory, Equipment, Home, and Mathom-house)
  */
-void file_character_print_item(FILE *fff, char label, object_type *obj, bool full)
+void file_character_print_item(FILE *fff, char label, object_type *obj, bool_ full)
 {
 	static char o_name[80];
 	static cptr paren = ")";
@@ -2506,7 +2506,7 @@ void file_character_print_item(FILE *fff, char label, object_type *obj, bool ful
  *
  * Prints out one "store" (for Home and Mathom-house)
  */
-void file_character_print_store(FILE *fff, wilderness_type_info *place, int store, bool full)
+void file_character_print_store(FILE *fff, wilderness_type_info *place, int store, bool_ full)
 {
 	int i;
 	town_type *town = &town_info[place->entrance];
@@ -2537,7 +2537,7 @@ void file_character_print_store(FILE *fff, wilderness_type_info *place, int stor
  *
  * Beware of the ugly pointer gymnastics.
  */
-bool file_character_check_stores(store_type ***store_list, int *store_list_count, wilderness_type_info *place, int store)
+bool_ file_character_check_stores(store_type ***store_list, int *store_list_count, wilderness_type_info *place, int store)
 {
 	town_type *town = &town_info[place->entrance];
 	store_type *st_ptr = &town->store[store];
@@ -2577,7 +2577,7 @@ bool file_character_check_stores(store_type ***store_list, int *store_list_count
  * XXX XXX XXX Allow the "full" flag to dump additional info,
  * and trigger its usage from various places in the code.
  */
-errr file_character(cptr name, bool full)
+errr file_character(cptr name, bool_ full)
 {
 	int i, j, x, y;
 	byte a;
@@ -2766,7 +2766,7 @@ errr file_character(cptr name, bool full)
 
 			if (r_ptr->flags1 & (RF1_UNIQUE))
 			{
-				bool dead = (r_ptr->max_num == 0);
+				bool_ dead = (r_ptr->max_num == 0);
 				if (dead)
 				{
 					Total++;
@@ -2973,7 +2973,7 @@ struct hyperlink
 
 typedef struct hyperlink hyperlink_type;
 
-bool show_file(cptr name, cptr what, int line, int mode)
+bool_ show_file(cptr name, cptr what, int line, int mode)
 {
 	int i, k, x;
 
@@ -2992,7 +2992,7 @@ bool show_file(cptr name, cptr what, int line, int mode)
 	byte color = TERM_WHITE;
 
 	/* This screen has sub-screens */
-	bool menu = FALSE;
+	bool_ menu = FALSE;
 
 	/* Current help file */
 	FILE *fff = NULL;
@@ -3596,7 +3596,7 @@ bool show_file(cptr name, cptr what, int line, int mode)
 	return (TRUE);
 }
 
-bool txt_to_html(cptr head, cptr foot, cptr base, cptr ext, bool force, bool recur)
+bool_ txt_to_html(cptr head, cptr foot, cptr base, cptr ext, bool_ force, bool_ recur)
 {
 	int i, x;
 
@@ -3737,7 +3737,7 @@ bool txt_to_html(cptr head, cptr foot, cptr base, cptr ext, bool force, bool rec
 	/* Display the file */
 	while (TRUE)
 	{
-		bool do_color = FALSE;
+		bool_ do_color = FALSE;
 
 		/* Skip a line */
 		if (my_fgets(fff, h_ptr->rbuf, 1024)) break;
@@ -4136,7 +4136,7 @@ static int get_key(char c)
  */
 typedef char chg_type[500][100];
 
-bool chg_to_txt(cptr base, cptr newname)
+bool_ chg_to_txt(cptr base, cptr newname)
 {
 	int i, j, key = 0;
 
@@ -4279,7 +4279,7 @@ void process_player_base()
 	path_build(savefile, 1024, ANGBAND_DIR_SAVE, temp);
 }
 
-void process_player_name(bool sf)
+void process_player_name(bool_ sf)
 {
 	int i, k = 0;
 	char tmp[50];
@@ -4468,7 +4468,7 @@ void do_cmd_suicide(void)
 	 * when the game is loaded again
 	 * Alternatively forget_view() and update_view() can be used
 	 */
-void remove_cave_view(bool remove)
+void remove_cave_view(bool_ remove)
 {
 	int i;
 	cave_type *c_ptr;
@@ -4636,7 +4636,7 @@ long total_points(void)
 
 		if (r_ptr->flags1 & (RF1_UNIQUE))
 		{
-			bool dead = (r_ptr->max_num == 0);
+			bool_ dead = (r_ptr->max_num == 0);
 
 			if (dead)
 			{
@@ -4688,7 +4688,7 @@ static void center_string(char *buf, cptr str)
 /*
  * Redefinable "print_tombstone" action
  */
-bool (*tombstone_aux)(void) = NULL;
+bool_ (*tombstone_aux)(void) = NULL;
 
 
 /*
@@ -4696,7 +4696,7 @@ bool (*tombstone_aux)(void) = NULL;
  */
 static void print_tomb(void)
 {
-	bool done = FALSE;
+	bool_ done = FALSE;
 
 	/* Do we use a special tombstone ? */
 	if (tombstone_aux)
@@ -5096,7 +5096,7 @@ static int highscore_where(high_score *score)
 static int highscore_add(high_score *score)
 {
 	int i, slot;
-	bool done = FALSE;
+	bool_ done = FALSE;
 
 	high_score the_score, tmpscore;
 
