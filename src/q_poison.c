@@ -23,7 +23,7 @@ static bool create_molds_hook(int r_idx)
 
 bool quest_poison_gen_hook(char *fmt)
 {
-	int cy = 1, cx = 1, x, y, try = 10000, r_idx;
+	int cy = 1, cx = 1, x, y, tries = 10000, r_idx;
 	bool (*old_get_mon_num_hook)(int r_idx);
 
 	if (cquest.status != QUEST_STATUS_TAKEN) return FALSE;
@@ -32,7 +32,7 @@ bool quest_poison_gen_hook(char *fmt)
 	if (p_ptr->wild_mode) return FALSE;
 
 	/* Find a good position */
-	while (try)
+	while (tries)
 	{
 		/* Get a random spot */
 		cy = randint(cur_hgt - 24) + 22;
@@ -42,7 +42,7 @@ bool quest_poison_gen_hook(char *fmt)
 		if (cave_empty_bold(cy, cx)) break;
 
 		/* One less try */
-		try--;
+		tries--;
 	}
 
 	/* Place the baddies */

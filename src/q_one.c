@@ -318,14 +318,14 @@ bool quest_one_dump_hook(char *fmt)
 }
 bool quest_one_gen_hook(char *fmt)
 {
-	s32b x, y, try = 10000;
+	s32b x, y, tries = 10000;
 
 	/* Paranoia */
 	if (cquest.status != QUEST_STATUS_TAKEN) return (FALSE);
 	if ((dungeon_type != DUNGEON_ANGBAND) || (dun_level != 99)) return (FALSE);
 
 	/* Find a good position */
-	while (try)
+	while (tries)
 	{
 		/* Get a random spot */
 		y = randint(cur_hgt - 4) + 2;
@@ -335,10 +335,10 @@ bool quest_one_gen_hook(char *fmt)
 		if (cave_empty_bold(y, x)) break;
 
 		/* One less try */
-		try--;
+		tries--;
 	}
 
-	if (try)
+	if (tries)
 	{
 		int m_idx = place_monster_one(y, x, test_monster_name("Sauron, the Sorcerer"), 0, FALSE, MSTATUS_ENEMY);
 		if (m_idx) m_list[m_idx].mflag |= MFLAG_QUEST;

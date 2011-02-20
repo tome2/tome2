@@ -5,7 +5,7 @@ bool quest_shroom_speak_hook(char *fmt);
 
 bool quest_shroom_town_gen_hook(char *fmt)
 {
-	int m_idx, x = 1, y = 1, try = 10000;
+	int m_idx, x = 1, y = 1, tries = 10000;
 	s32b small;
 
 	small = get_next_arg(fmt);
@@ -59,7 +59,7 @@ bool quest_shroom_town_gen_hook(char *fmt)
 	if ((bst(HOUR, turn) < 6) || (bst(HOUR, turn) >= 18) || (cquest.status > QUEST_STATUS_COMPLETED) || (small) || (p_ptr->town_num != 1)) return (FALSE);
 
 	/* Find a good position */
-	while (try)
+	while (tries)
 	{
 		/* Get a random spot */
 		y = randint(20) + (cur_hgt / 2) - 10;
@@ -71,7 +71,7 @@ bool quest_shroom_town_gen_hook(char *fmt)
 		                cave_plain_floor_bold(y, x)) break;
 
 		/* One less try */
-		try--;
+		tries--;
 	}
 
 	/* Place Farmer Maggot */

@@ -3,7 +3,7 @@
 
 bool quest_hobbit_town_gen_hook(char *fmt)
 {
-	int x = 1, y = 1, try = 10000;
+	int x = 1, y = 1, tries = 10000;
 	s32b small;
 
 	small = get_next_arg(fmt);
@@ -11,7 +11,7 @@ bool quest_hobbit_town_gen_hook(char *fmt)
 	if ((turn < (cquest.data[1] + (DAY * 10L))) || (cquest.status > QUEST_STATUS_COMPLETED) || (small) || (p_ptr->town_num != 1)) return (FALSE);
 
 	/* Find a good position */
-	while (try)
+	while (tries)
 	{
 		/* Get a random spot */
 		y = randint(20) + (cur_hgt / 2) - 10;
@@ -23,7 +23,7 @@ bool quest_hobbit_town_gen_hook(char *fmt)
 		                cave_plain_floor_bold(y, x)) break;
 
 		/* One less try */
-		try--;
+		tries--;
 	}
 
 	/* Place Melinda */
@@ -35,12 +35,12 @@ bool quest_hobbit_town_gen_hook(char *fmt)
 }
 bool quest_hobbit_gen_hook(char *fmt)
 {
-	int x = 1, y = 1, try = 10000;
+	int x = 1, y = 1, tries = 10000;
 
 	if ((cquest.status != QUEST_STATUS_TAKEN) || (dun_level != cquest.data[0]) || (dungeon_type != DUNGEON_MAZE)) return FALSE;
 
 	/* Find a good position */
-	while (try)
+	while (tries)
 	{
 		/* Get a random spot */
 		y = randint(cur_hgt - 4) + 2;
@@ -50,7 +50,7 @@ bool quest_hobbit_gen_hook(char *fmt)
 		if (cave_empty_bold(y, x)) break;
 
 		/* One less try */
-		try--;
+		tries--;
 	}
 
 	/* Place the hobbit */

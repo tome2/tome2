@@ -3,7 +3,7 @@
 
 bool quest_nazgul_gen_hook(char *fmt)
 {
-	int m_idx, x = 1, y = 1, try = 10000;
+	int m_idx, x = 1, y = 1, tries = 10000;
 	s32b small;
 
 	small = get_next_arg(fmt);
@@ -11,7 +11,7 @@ bool quest_nazgul_gen_hook(char *fmt)
 	if ((cquest.status != QUEST_STATUS_TAKEN) || (small) || (p_ptr->town_num != 1)) return (FALSE);
 
 	/* Find a good position */
-	while (try)
+	while (tries)
 	{
 		/* Get a random spot */
 		y = randint(cur_hgt - 4) + 2;
@@ -22,7 +22,7 @@ bool quest_nazgul_gen_hook(char *fmt)
 		if ((!los(p_ptr->py, p_ptr->px, y, x)) && cave_empty_bold(y, x)) break;
 
 		/* One less try */
-		try--;
+		tries--;
 	}
 
 	/* Place the nazgul */
