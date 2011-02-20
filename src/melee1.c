@@ -1558,7 +1558,9 @@ bool make_attack_normal(int m_idx, byte divis)
 
 			if ((chance > 0) && magik(chance))
 			{
-				msg_format("You dodge %s attack!", m_name);
+				char m_poss[80];
+				monster_desc(m_poss, m_ptr, 0x06);
+				msg_format("You dodge %s attack!", m_poss);
 				continue;
 			}
 
