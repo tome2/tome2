@@ -1126,47 +1126,6 @@ static void process_world(void)
 		}
 	}
 
-	/*** Check the Time and Load ***/
-
-	/*
-	 * Every 1000 game turns -- which means this section is invoked every
-	 * 100 player turns under the normal speed, and slightly more than
-	 * one per move in the reduced map.
-	 */
-	if ((turn % 1000) == 0)
-	{
-		/* Check time and load */
-		if ((0 != check_time()) || (0 != check_load()))
-		{
-			/* Warning */
-			if (closing_flag <= 2)
-			{
-				/* Disturb */
-				disturb(0, 0);
-
-				/* Count warnings */
-				closing_flag++;
-
-				/* Message */
-				msg_print("The gates to Middle Earth are closing...");
-				msg_print("Please finish up and/or save your game.");
-			}
-
-			/* Slam the gate */
-			else
-			{
-				/* Message */
-				msg_print("The gates to Middle Earth are now closed.");
-
-				/* Stop playing */
-				alive = FALSE;
-
-				/* Leaving */
-				p_ptr->leaving = TRUE;
-			}
-		}
-	}
-
 	/*** Attempt timed autosave ***/
 	if (autosave_t && autosave_freq)
 	{

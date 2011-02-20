@@ -1649,21 +1649,6 @@ int main(int argc, char *argv[])
 
 #ifdef SET_UID
 
-	/* Please note that the game is still running in the game's permission */
-
-	/* Initialize the "time" checker */
-	if (check_time_init() || check_time())
-	{
-		sdl_quit("The gates to Angband are closed (bad time).");
-	}
-
-	/* Initialize the "load" checker */
-	if (check_load_init() || check_load())
-	{
-		sdl_quit("The gates to Angband are closed (bad load).");
-	}
-
-
 	/*
 	 * Become user -- This will be the normal state for the rest of the game.
 	 *
