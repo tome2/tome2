@@ -80,7 +80,7 @@ bool_ check_hook(int h_idx)
 /* Add a hook */
 hooks_chain* add_hook(int h_idx, hook_type hook, cptr name)
 {
-	hooks_chain *new, *c = hooks_heads[h_idx];
+	hooks_chain *new_, *c = hooks_heads[h_idx];
 
 	/* Find it */
 	while ((c != NULL) && (strcmp(c->name, name)))
@@ -91,16 +91,16 @@ hooks_chain* add_hook(int h_idx, hook_type hook, cptr name)
 	/* If not already in the list, add it */
 	if (c == NULL)
 	{
-		MAKE(new, hooks_chain);
-		new->hook = hook;
-		sprintf(new->name, "%s", name);
+		MAKE(new_, hooks_chain);
+		new_->hook = hook;
+		sprintf(new_->name, "%s", name);
 #ifdef DEBUG_HOOK
 		if (wizard) cmsg_format(TERM_VIOLET, "HOOK ADD: %s", name);
 		if (take_notes) add_note(format("HOOK ADD: %s", name), 'D');
 #endif
-		new->next = hooks_heads[h_idx];
-		hooks_heads[h_idx] = new;
-		return (new);
+		new_->next = hooks_heads[h_idx];
+		hooks_heads[h_idx] = new_;
+		return (new_);
 	}
 	else return (c);
 }

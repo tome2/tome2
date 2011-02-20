@@ -3040,7 +3040,7 @@ static bool_ project_f(int who, int r, int y, int x, int dam, int typ)
 			int x1 = randint(cur_wid) - 1;
 			int y2 = y1;
 			int x2 = x1;
-			int try = 1000;
+			int tries = 1000;
 
 			/*
 			 * Avoid "interesting" and/or permanent features
@@ -3053,18 +3053,18 @@ static bool_ project_f(int who, int r, int y, int x, int dam, int typ)
 			                (f_info[cave[y][x].feat].flags1 & FF1_PERMANENT)) break;
 
 			/* Destination shouldn't be "interesting" either */
-			while (try &&
+			while (tries &&
 			                (!cave_plain_floor_bold(y2, x2) ||
 			                 (f_info[cave[y2][x2].feat].flags1 & FF1_PERMANENT)))
 			{
 				y2 = y1 = randint(cur_hgt) - 1;
 				x2 = x1 = randint(cur_wid) - 1;
 				scatter(&y2, &x2, y1, x1, 20, 0);
-				try --;
+				tries --;
 			}
 
 			/* No boarding grids found */
-			if (!try) break;
+			if (!tries) break;
 
 			/* Place a pair of between gates */
 			cave_set_feat(y, x, FEAT_BETWEEN);

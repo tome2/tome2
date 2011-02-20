@@ -1589,13 +1589,13 @@ static void calc_powers(void)
 	for (i = 0; i < power_max; i++)
 	{
 		s32b old = old_powers[i];
-		s32b new = p_ptr->powers[i];
+		s32b new_ = p_ptr->powers[i];
 
-		if (new > old)
+		if (new_ > old)
 		{
 			if (!calc_powers_silent) cmsg_print(TERM_GREEN, powers_type[i].gain_text);
 		}
-		else if (new < old)
+		else if (new_ < old)
 		{
 			if (!calc_powers_silent) cmsg_print(TERM_RED, powers_type[i].lose_text);
 		}

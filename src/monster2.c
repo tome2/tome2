@@ -59,9 +59,9 @@ void monster_check_experience(int m_idx, bool_ silent)
 		/* Gain melee power */
 		if (magik(30))
 		{
-			int i = rand_int(3), try = 20;
+			int i = rand_int(3), tries = 20;
 
-			while ((try--) && !m_ptr->blow[i].d_dice) i = rand_int(3);
+			while ((tries--) && !m_ptr->blow[i].d_dice) i = rand_int(3);
 
 			m_ptr->blow[i].d_dice++;
 		}

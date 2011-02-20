@@ -7905,10 +7905,10 @@ static bool_ cave_gen(void)
 	{
 		int oy;
 		int ox;
-		int m_idx, try = 10000;
+		int m_idx, tries = 10000;
 
 		/* Find a good position */
-		while (try)
+		while (tries)
 		{
 			/* Get a random spot */
 			oy = randint(cur_hgt - 4) + 2;
@@ -7918,7 +7918,7 @@ static bool_ cave_gen(void)
 			if (cave_empty_bold(oy, ox)) break;
 
 			/* One less try */
-			try--;
+			tries--;
 		}
 
 		/* Place the guardian */

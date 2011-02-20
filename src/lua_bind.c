@@ -199,11 +199,11 @@ bool_ summon_lua_okay(int r_idx)
 	return (ret);
 }
 
-bool_ lua_summon_monster(int y, int x, int lev, bool_ friend, char *fct)
+bool_ lua_summon_monster(int y, int x, int lev, bool_ friend_, char *fct)
 {
 	summon_lua_okay_fct = fct;
 
-	if (!friend)
+	if (!friend_)
 		return summon_specific(y, x, lev, SUMMON_LUA);
 	else
 		return summon_specific_friendly(y, x, lev, SUMMON_LUA, TRUE);
