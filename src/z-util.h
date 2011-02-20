@@ -3,6 +3,10 @@
 #ifndef INCLUDED_Z_UTIL_H
 #define INCLUDED_Z_UTIL_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "h-basic.h"
 
 
@@ -80,5 +84,8 @@ extern void core(cptr str);
 
 
 
+#ifdef __cplusplus
+} /* extern "C" */
 #endif
 
+#endif

@@ -3,6 +3,10 @@
 #ifndef INCLUDED_Z_FORM_H
 #define INCLUDED_Z_FORM_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "h-basic.h"
 
 /*
@@ -43,5 +47,8 @@ extern void quit_fmt(cptr fmt, ...);
 /* Vararg interface to "core()", using "format()" */
 extern void core_fmt(cptr fmt, ...);
 
+#ifdef __cplusplus
+} /* extern "C" */
+#endif
 
 #endif

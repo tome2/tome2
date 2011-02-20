@@ -11,6 +11,10 @@
 #ifndef INCLUDED_Z_TERM_H
 #define INCLUDED_Z_TERM_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "h-basic.h"
 
 #define IN_MAINWINDOW (Term == term_screen)
@@ -358,6 +362,9 @@ extern errr Term_activate(term *t);
 extern errr term_nuke(term *t);
 extern errr term_init(term *t, int w, int h, int k);
 
+#ifdef __cplusplus
+} /* extern "C" */
 #endif
 
+#endif
 

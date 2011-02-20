@@ -11,6 +11,10 @@
 #ifndef INCLUDED_Z_VIRT_H
 #define INCLUDED_Z_VIRT_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "h-basic.h"
 
 #ifdef CHECK_MEMORY_LEAKS
@@ -173,7 +177,10 @@ extern errr string_free(cptr str);
 
 
 
+#ifdef __cplusplus
+} /* extern "C" */
 #endif
 
 
 
+#endif

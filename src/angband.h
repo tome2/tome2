@@ -14,6 +14,12 @@
  */
 
 
+/*
+ * C++ guard.
+ */
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 /*
  * First, include the low-level includes.  Be sure to edit "h-config.h"
@@ -94,6 +100,9 @@
  *	 of the author Robert Alan Koeneke.
  */
 
+#ifdef __cplusplus
+} /* extern "C" */
+#endif
 
 #endif
 
