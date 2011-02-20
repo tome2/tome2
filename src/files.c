@@ -3106,6 +3106,9 @@ errr file_character(cptr name, bool full)
 	dump_skills(fff);
 	dump_abilities(fff);
 
+	/* Dump companions. */
+	dump_companions(fff);
+
 	if (p_ptr->companion_killed)
 	{
 		if (p_ptr->companion_killed == 1)

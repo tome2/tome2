@@ -1086,6 +1086,7 @@ extern bool monster_can_cross_terrain(byte feat, monster_race *r_ptr);
 extern void corrupt_corrupted(void);
 
 /* monster3.c */
+extern void dump_companions(FILE *outfile);
 extern void do_cmd_companion(void);
 extern bool do_control_reconnect(void);
 extern bool do_control_drop(void);

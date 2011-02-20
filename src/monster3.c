@@ -669,3 +669,38 @@ void do_cmd_companion()
 	else
 		msg_print("You must target a pet.");
 }
+
+/*
+ * List companions to the character sheet.
+ */
+void dump_companions(FILE *outfile)
+{
+	int i;
+	int done_hdr = 0;
+
+	/* Process the monsters (backwards) */
+	for (i = m_max - 1; i >= 1; i--)
+	{
+		/* Access the monster */
+		monster_type *m_ptr = &m_list[i];
+
+		/* Ignore "dead" monsters */
+		if (!m_ptr->r_idx) continue;
+
+		if (m_ptr->status == MSTATUS_COMPANION)
+		{
+			char pet_name[80];
+
+			/* Output the header if we haven't yet. */
+			if (!done_hdr)
+			{
+				done_hdr = 1;
+				fprintf(outfile, "\n\n  [Current companions]\n\n");
+			}
+
+			/* List the monster. */
+			monster_desc(pet_name, m_ptr, 0x88);
+			fprintf(outfile, "%s (level %d)\n", pet_name, m_ptr->level);
+		}
+	}
+}
