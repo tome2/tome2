@@ -20,17 +20,6 @@ extern lua_State* L;
 #define AUTO_CURSE_CHANCE 15
 #define CHAINSWORD_NOISE 100
 
-/*
- * I created this when a bug misplaced my character and the game wasn't able
- * to load it again.. very frustrating.
- * So this hack will generate a new level without calling dungeon(), and
- * then the normal behavior will apply.
- */
-/* #define SAVE_HACK */
-#ifdef SAVE_HACK
-bool_ save_hack = TRUE;
-#endif
-
 
 /*
  * Return a "feeling" (or NULL) about an item.  Method 1 (Heavy).
@@ -5488,28 +5477,8 @@ void play_game(bool_ new_game)
 		/* Update monster list window */
 		p_ptr->window |= (PW_M_LIST);
 
-#ifdef SAVE_HACK
-
-		/* Process the level */
-		if (!save_hack)
-		{
-			dungeon();
-		}
-		else
-		{
-			generate_cave();
-		}
-
-		save_hack = FALSE;
-
-		p_ptr->leaving = TRUE;
-
-#else
-
 		/* Process the level */
 		dungeon();
-
-#endif
 
 		/* Save the current level if in a persistent level */
 		tmp_dun = dun_level;
