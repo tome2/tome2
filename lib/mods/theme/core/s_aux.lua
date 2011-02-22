@@ -276,6 +276,14 @@ function get_power_name(s)
 	end
 end
 
+-- Get the level of a power
+function get_level_power(s, max, min)
+	if not max then max = 50 end
+	if not min then min = 1 end
+
+	return value_scale(s.get_current_level(), 50, max, min)
+end
+
 -- Changes the amount of power(mana, piety, whatever) for the spell
 function adjust_power(s, x)
 	if check_affect(s, "piety", FALSE) then

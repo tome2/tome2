@@ -2132,21 +2132,6 @@ struct magic_power
 	cptr    desc;
 };
 
-/** @fn *new_magic_power(int num)
- * @dgonly
- * @brief Create a wiped array of "num" magic powers.\n
- * @param num Number \n num is the number of magic powers.
- * @brief Number
- * @return magic_power \n Array of magic powers.
- * @note
- * Get a new magic type\n\n
- * Note: do not call this function directly.\n
- * Please use add_magic() in powers.lua instead.\n
- * By order of DG.
- * @note (see file lua_bind.c)
- */
-extern magic_power *new_magic_power(int num);
-
 /** @fn get_magic_power(magic_power *m_ptr, int num);
  * @dgonly
  * @brief Get magic power number "num" from array "m_ptr" of magic powers.\n

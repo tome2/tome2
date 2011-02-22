@@ -16,15 +16,6 @@
 #include "tolua.h"
 extern lua_State *L;
 
-/*
- * Get a new magic type
- */
-magic_power *new_magic_power(int num)
-{
-	magic_power *m_ptr;
-	C_MAKE(m_ptr, num, magic_power);
-	return (m_ptr);
-}
 magic_power *grab_magic_power(magic_power *m_ptr, int num)
 {
 	return (&m_ptr[num]);
