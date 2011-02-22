@@ -234,19 +234,6 @@ function msg_format(...)
 	msg_print(call(format, arg))
 end
 
--- Stacks
-function stack_push(stack, val)
-	tinsert(stack, val)
-end
-function stack_pop(stack)
-	if getn(stack) >= 1 then
-		return tremove(stack)
-	else
-		error("Tried to unstack an empty stack")
-		return nil
-	end
-end
-
 -- A way to  check if the game is now running(as opposed to initialization/character gen)
 game = {}
 add_hooks
