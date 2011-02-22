@@ -133,25 +133,6 @@ store_buy_list
 	},
 }
 
--- Test only
-function out_sticks()
-	local i
-	for i = 0, __tmp_spells_num - 1 do
-		if __tmp_spells[i].stick then
-			if __tmp_spells[i].stick[TV_WAND] then
-				print("Wand: " .. __tmp_spells[i].name)
-			end
-		end
-	end
-	for i = 0, __tmp_spells_num - 1 do
-		if __tmp_spells[i].stick then
-			if __tmp_spells[i].stick[TV_STAFF] then
-				print("Staff: " .. __tmp_spells[i].name)
-			end
-		end
-	end
-end
-
 -- Take care to have Magic shop/Temple have specific spells only
 add_hooks
 {
