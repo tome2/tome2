@@ -2463,40 +2463,6 @@ $static const char *player_name_lua(void){return (const char *)player_name;}
  */
 const char *player_name_lua@player_name();
 
-/* Temp files */
-/** @fn make_temp_file();
- * @brief Create a temporary file.
- * @note
- * If a temp file already exists, or one can't be generated, the function
- * will fail. Otherwise a file is created and the temp_file flag is set to
- * TRUE.
- * @note (see file lua_bind.c, util.c)
- */
-extern void lua_make_temp_file@make_temp_file();
-
-/** @fn close_temp_file();
- * @brief Close a temporary file.
- * @note
- * The file is closed but not released.
- * @note (see file lua_bind.c, util.c)
- */
-extern void lua_close_temp_file@close_temp_file();
-
-/** @fn end_temp_file();
- * @brief End a temporary file.
- * @note
- * The file is released and the temp_file flag is set to FALSE.
- * @note (see file lua_bind.c, util.c)
- */
-extern void lua_end_temp_file@end_temp_file();
-
-/** @fn get_temp_name();
- * @brief Return the name of the temporary file.
- * @return String \n The name of the temporary file.
- * @note (see file lua_bind.c)
- */
-extern cptr lua_get_temp_name@get_temp_name();
-
 /* Quarks */
 /** @fn quark_str(s16b num)
  * @brief Return a quark (inscription) from the quark array.\n

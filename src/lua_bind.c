@@ -413,38 +413,6 @@ void load_map(bool_ full_text, char *name, int *y, int *x)
 	process_dungeon_file_full = FALSE;
 }
 
-/* Allow lua to use a temporary file */
-static char lua_temp_name[1025];
-static bool_ lua_temp_file_alloc = FALSE;
-void lua_make_temp_file()
-{
-	if (lua_temp_file_alloc) return;
-
-	if (path_temp(lua_temp_name, 1024)) return;
-
-	/* Open a new file */
-	hook_file = my_fopen(lua_temp_name, "w");
-	lua_temp_file_alloc = TRUE;
-}
-
-void lua_close_temp_file()
-{
-	/* Close the file */
-	my_fclose(hook_file);
-}
-
-void lua_end_temp_file()
-{
-	/* Remove the file */
-	fd_kill(lua_temp_name);
-	lua_temp_file_alloc = FALSE;
-}
-
-cptr lua_get_temp_name()
-{
-	return lua_temp_name;
-}
-
 bool_ alloc_room(int by0, int bx0, int ysize, int xsize, int *y1, int *x1, int *y2, int *x2)
 {
 	int xval, yval, x, y;
