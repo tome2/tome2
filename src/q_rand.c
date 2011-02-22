@@ -429,6 +429,36 @@ bool_ quest_random_dump_hook(char *fmt)
 
 	return (FALSE);
 }
+
+bool_ quest_random_describe(FILE *fff)
+{
+	if (!(dungeon_flags1 & DF1_PRINCIPAL)) return FALSE;
+	if ((dun_level < 1) || (dun_level >= MAX_RANDOM_QUEST)) return FALSE;
+	if (!random_quests[dun_level].type) return FALSE;
+	if (random_quests[dun_level].done) return FALSE;
+	if (p_ptr->inside_quest) return FALSE;
+	if (!dun_level) return FALSE;
+
+	if (!is_randhero(dun_level))
+	{
+		fprintf(fff, "#####yCaptured princess!\n");
+		fprintf(fff, "A princess is being held prisoner and tortured here!\n");
+		fprintf(fff, "Save her from the horrible %s.\n",
+			r_info[random_quests[dun_level].r_idx].name + r_name);
+	}
+	else
+	{
+		fprintf(fff, "#####yLost sword!\n");
+		fprintf(fff, "An adventurer lost his sword to a bunch of %s!\n",
+			r_info[random_quests[dun_level].r_idx].name + r_name);
+		fprintf(fff, "Kill them all to get it back.\n");
+	}
+	fprintf(fff, "Number: %d, Killed: %ld.\n",
+		random_quests[dun_level].type, (long int) quest[QUEST_RANDOM].data[0]);
+	fprintf(fff, "\n");
+	return TRUE;
+}
+
 bool_ quest_random_init_hook(int q_idx)
 {
 	add_hook(HOOK_MONSTER_DEATH, quest_random_death_hook, "rand_death");

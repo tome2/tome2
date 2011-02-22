@@ -4225,34 +4225,13 @@ static void do_cmd_knowledge_quests(void)
 		/* Dynamic quests */
 		if (quest[i].dynamic_desc)
 		{
-			/* Random quests */
-			if (i == QUEST_RANDOM)
+			/* C type quests */
+			if (quest[i].type == HOOK_TYPE_C)
 			{
-				/**/
-				if (!(dungeon_flags1 & DF1_PRINCIPAL)) continue;
-				if ((dun_level < 1) || (dun_level >= MAX_RANDOM_QUEST)) continue;
-				if (!random_quests[dun_level].type) continue;
-				if (random_quests[dun_level].done) continue;
-				if (p_ptr->inside_quest) continue;
-				if (!dun_level) continue;
-
-				if (!is_randhero(dun_level))
+				if (!quest[i].gen_desc(fff))
 				{
-					fprintf(fff, "#####yCaptured princess!\n");
-					fprintf(fff, "A princess is being held prisoner and tortured here!\n");
-					fprintf(fff, "Save her from the horrible %s.\n",
-					        r_info[random_quests[dun_level].r_idx].name + r_name);
+					continue;
 				}
-				else
-				{
-					fprintf(fff, "#####yLost sword!\n");
-					fprintf(fff, "An adventurer lost his sword to a bunch of %s!\n",
-					        r_info[random_quests[dun_level].r_idx].name + r_name);
-					fprintf(fff, "Kill them all to get it back.\n");
-				}
-				fprintf(fff, "Number: %d, Killed: %ld.\n",
-				        random_quests[dun_level].type, (long int) quest[QUEST_RANDOM].data[0]);
-				fprintf(fff, "\n");
 			}
 			/* MUST be a lua quest */
 			else

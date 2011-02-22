@@ -3601,6 +3601,7 @@ quest_type quest_init_tome[MAX_Q_IDX_INIT] =
 		HOOK_TYPE_C,
 		quest_null_hook,
 		{0, 0},
+		NULL,
 	},
 	{
 		FALSE,
@@ -3625,6 +3626,7 @@ quest_type quest_init_tome[MAX_Q_IDX_INIT] =
 		HOOK_TYPE_C,
 		quest_necro_init_hook,
 		{0, 0},
+		NULL,
 	},
 	{
 		FALSE,
@@ -3649,6 +3651,7 @@ quest_type quest_init_tome[MAX_Q_IDX_INIT] =
 		HOOK_TYPE_C,
 		quest_sauron_init_hook,
 		{0, 0},
+		NULL,
 	},
 	{
 		FALSE,
@@ -3673,6 +3676,7 @@ quest_type quest_init_tome[MAX_Q_IDX_INIT] =
 		HOOK_TYPE_C,
 		quest_morgoth_init_hook,
 		{0, 0},
+		NULL,
 	},
 	
 	/* Bree plot */
@@ -3699,6 +3703,7 @@ quest_type quest_init_tome[MAX_Q_IDX_INIT] =
 		HOOK_TYPE_C,
 		quest_thieves_init_hook,
 		{0, 0},
+		NULL,
 	},
 	
 	{
@@ -3724,6 +3729,7 @@ quest_type quest_init_tome[MAX_Q_IDX_INIT] =
 		HOOK_TYPE_C,
 		quest_random_init_hook,
 		{0, 0},
+		quest_random_describe,
 	},
 	
 	{
@@ -3749,6 +3755,7 @@ quest_type quest_init_tome[MAX_Q_IDX_INIT] =
 		HOOK_TYPE_C,
 		quest_hobbit_init_hook,
 		{0, 0},
+		NULL,
 	},
 	
 	{
@@ -3774,6 +3781,7 @@ quest_type quest_init_tome[MAX_Q_IDX_INIT] =
 		HOOK_TYPE_C,
 		quest_nazgul_init_hook,
 		{0, 0},
+		NULL,
 	},
 	
 	{
@@ -3799,6 +3807,7 @@ quest_type quest_init_tome[MAX_Q_IDX_INIT] =
 		HOOK_TYPE_C,
 		quest_troll_init_hook,
 		{FALSE, 0},
+		NULL,
 	},
 	
 	{
@@ -3824,6 +3833,7 @@ quest_type quest_init_tome[MAX_Q_IDX_INIT] =
 		HOOK_TYPE_C,
 		quest_wight_init_hook,
 		{FALSE, 0},
+		NULL,
 	},
 	
 	/* Lorien plot */
@@ -3850,6 +3860,7 @@ quest_type quest_init_tome[MAX_Q_IDX_INIT] =
 		HOOK_TYPE_C,
 		quest_spider_init_hook,
 		{0, 0},
+		NULL,
 	},
 	{
 		FALSE,
@@ -3874,6 +3885,7 @@ quest_type quest_init_tome[MAX_Q_IDX_INIT] =
 		HOOK_TYPE_C,
 		quest_poison_init_hook,
 		{0, 0},
+		NULL,
 	},
 	/* Other quests */
 	{
@@ -3899,6 +3911,7 @@ quest_type quest_init_tome[MAX_Q_IDX_INIT] =
 		HOOK_TYPE_C,
 		quest_narsil_init_hook,
 		{0, 0},
+		NULL,
 	},
 	/* Gondolin plot */
 	{
@@ -3924,6 +3937,7 @@ quest_type quest_init_tome[MAX_Q_IDX_INIT] =
 		HOOK_TYPE_C,
 		quest_eol_init_hook,
 		{0, 0},
+		NULL,
 	},
 	{
 		FALSE,
@@ -3948,6 +3962,7 @@ quest_type quest_init_tome[MAX_Q_IDX_INIT] =
 		HOOK_TYPE_C,
 		quest_nirnaeth_init_hook,
 		{0, 0},
+		NULL,
 	},
 	{
 		FALSE,
@@ -3972,6 +3987,7 @@ quest_type quest_init_tome[MAX_Q_IDX_INIT] =
 		HOOK_TYPE_C,
 		quest_invasion_init_hook,
 		{0, 0},
+		NULL,
 	},
 	/* Minas Anor Plot*/
 	{
@@ -3997,6 +4013,7 @@ quest_type quest_init_tome[MAX_Q_IDX_INIT] =
 		HOOK_TYPE_C,
 		quest_between_init_hook,
 		{0, 0},
+		NULL,
 	},
 	{
 		FALSE,
@@ -4021,6 +4038,7 @@ quest_type quest_init_tome[MAX_Q_IDX_INIT] =
 		HOOK_TYPE_C,
 		quest_one_init_hook,
 		{0, 0},
+		NULL,
 	},
 	
 	{
@@ -4046,6 +4064,7 @@ quest_type quest_init_tome[MAX_Q_IDX_INIT] =
 		HOOK_TYPE_C,
 		quest_shroom_init_hook,
 		{0, 0},
+		NULL,
 	},
 	
 	{
@@ -4071,6 +4090,7 @@ quest_type quest_init_tome[MAX_Q_IDX_INIT] =
 		HOOK_TYPE_C,
 		quest_thrain_init_hook,
 		{0, 0},
+		NULL,
 	},
 	
 	/* The 2 ultra endings go here */
@@ -4097,6 +4117,7 @@ quest_type quest_init_tome[MAX_Q_IDX_INIT] =
 		HOOK_TYPE_C,
 		quest_ultra_good_init_hook,
 		{0, 0},
+		NULL,
 	},
 	{
 		FALSE,
@@ -4121,6 +4142,7 @@ quest_type quest_init_tome[MAX_Q_IDX_INIT] =
 		HOOK_TYPE_C,
 		quest_ultra_evil_init_hook,
 		{0, 0},
+		NULL,
 	},
 	/* More Lorien */
 	{
@@ -4146,6 +4168,7 @@ quest_type quest_init_tome[MAX_Q_IDX_INIT] =
 		HOOK_TYPE_C,
 		quest_wolves_init_hook,
 		{0, 0},
+		NULL,
 	},
 	/* More Gondolin */
 	{
@@ -4171,6 +4194,7 @@ quest_type quest_init_tome[MAX_Q_IDX_INIT] =
 		HOOK_TYPE_C,
 		quest_dragons_init_hook,
 		{0, 0},
+		NULL,
 	},
 	/* More Minas Anor */
 	{
@@ -4196,6 +4220,7 @@ quest_type quest_init_tome[MAX_Q_IDX_INIT] =
 		HOOK_TYPE_C,
 		quest_haunted_init_hook,
 		{0, 0},
+		NULL,
 	},
 	/* Khazad-Dum Plot*/
 	{
@@ -4221,6 +4246,7 @@ quest_type quest_init_tome[MAX_Q_IDX_INIT] =
 		HOOK_TYPE_C,
 		quest_evil_init_hook,
 		{0, 0},
+		NULL,
 	},
 };
 
