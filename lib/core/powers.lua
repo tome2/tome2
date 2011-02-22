@@ -70,32 +70,6 @@ function __get_magic_info(power)
 	return __current_magic_power_info[power]()
 end
 
-function execute_magic(m)
-	local sn, ret
-
-	-- Ask for a spell
-	__current_magic_power_info = m.info
-	ret, sn = select_magic_power(0, m.spells, m.max, "__get_magic_info", m.get_current_level(), m.stat)
-	if (ret == FALSE) then return end
-		
-	-- Verify mana needs
-	if (get_magic_power(m.spells, sn).mana_cost > player.csp) then msg_print("Not enough mana!") return end
-
-	-- Verify failure(second parameter is optional)
-	if m.fail then
-		__current_magic_power_fail = m.fail_fct
-		if (magic_power_sucess(get_magic_power(m.spells, sn), m.stat, "__current_magic_power_fail") == FALSE) then return end
-	else
-		if (magic_power_sucess(get_magic_power(m.spells, sn), m.stat) == FALSE) then return end
-	end
-
-	-- Actually cast the spells
-	m.spell[sn]()
-
-	-- use up some mana
-	increase_mana(-get_magic_power(m.spells, sn).mana_cost)
-end
-
 -- Get the level of a power
 function get_level_power(s, max, min)
 	if not max then max = 50 end

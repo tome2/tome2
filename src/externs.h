@@ -1776,7 +1776,6 @@ extern bool_ select_module(void);
 extern magic_power *grab_magic_power(magic_power *m_ptr, int num);
 extern bool_ get_magic_power(int *sn, magic_power *powers, int max_powers, void (*power_info)(char *p, int power), int plev, int cast_stat);
 extern magic_power *new_magic_power(int num);
-extern bool_ get_magic_power_lua(int *sn, magic_power *powers, int max_powers, char *info_fct, int plev, int cast_stat);
 extern bool_ lua_spell_success(magic_power *spell, int stat, char *oups_fct);
 
 extern object_type *new_object(void);

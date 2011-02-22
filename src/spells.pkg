@@ -2162,41 +2162,6 @@ extern magic_power *new_magic_power(int num);
  */
 extern magic_power *grab_magic_power @ get_magic_power(magic_power *m_ptr, int num);
 
-/** @fn  select_magic_power(int *sn, magic_power *powers, int max_powers, char *info_fct, int plev, int cast_stat);
- * @dgonly
- * @brief Select a magic power from array of powers.\n
- * @param *sn Number
- * @brief Power (spell) number
- * @param *powers magic_power \n powers is the array of magic powers.
- * @brief Powers
- * @param max_powers Number \n max_powers is the maximum number of magic
- * powers.
- * @brief Maximum powers
- * @param *info_fct String \n info_fct is the name of a function which will
- * return power info.
- * @brief Name of power info function
- * @param plev Number \n plev is the player's level of magic skill.
- * @brief Player magic level
- * @param cast_stat Number \n cast_stat is the required casting statistic
- * (INT or WIS).
- * @brief Casting statistic
- * @return *sn Number \n sn is the index of the power in the array of magic
- * powers.
- * @return Boolean \n TRUE if power was selected, otherwise FALSE.
- * @note
- * Allow user to choose a magic power.\n\n
- * If a valid spell is chosen, saves it in '*sn' and returns TRUE\n
- * If the user hits escape, returns FALSE, and set '*sn' to -1\n
- * If there are no legal choices, returns FALSE, and sets '*sn' to -2\n\n
- * The "prompt" should be "cast", "recite", or "study".
- * The "known" should be TRUE for cast/pray, FALSE for study\n\n
- * Note: do not call this function directly.\n
- * Please use execute_magic() in powers.lua instead.\n
- * By order of DG.
- * @note (see files lua_bind.c, cmd7.c)
- */
-extern bool get_magic_power_lua @ select_magic_power(int *sn, magic_power *powers, int max_powers, char *info_fct, int plev, int cast_stat);
-
 /** @fn  magic_power_sucess(magic_power *spell, int stat, char *oups_fct=NULL);
  * @dgonly
  * @brief Determine if using a magic power succeeds.\n

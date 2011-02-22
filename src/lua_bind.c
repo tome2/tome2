@@ -40,11 +40,6 @@ static void magic_power_info_lua(char *p, int power)
 	strcpy(p, lua_tostring(L, -1));
 	lua_settop(L, oldtop);
 }
-bool_ get_magic_power_lua(int *sn, magic_power *powers, int max_powers, char *info_fct, int plev, int cast_stat)
-{
-	magic_power_info_lua_fct = info_fct;
-	return (get_magic_power(sn, powers, max_powers, magic_power_info_lua, plev, cast_stat));
-}
 
 bool_ lua_spell_success(magic_power *spell, int stat, char *oups_fct)
 {
