@@ -133,8 +133,3 @@ function subrace_add_power(subrace, power)
 	end
 	return nil
 end
-
--- Body parts
-function player.add_body_part(part, nb)
-	player.extra_body_parts[part + 1] = player.extra_body_parts[part + 1] + nb
-end

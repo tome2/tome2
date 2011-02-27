@@ -1822,8 +1822,6 @@ struct player_type
 	bool_ disembodied;         /* Is the player in a body ? */
 	byte body_parts[INVEN_TOTAL - INVEN_WIELD]; /* Which body parts does he have ? */
 
-	s16b extra_body_parts[BODY_MAX];      /* Various body modifiers */
-
 	/* Astral */
 	bool_ astral;              /* We started at the bottom ? */
 

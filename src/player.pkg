@@ -1766,12 +1766,6 @@ struct player_type
 	 */
 	byte body_parts[28];
 
-	/** @structvar extra_body_parts[BODY_MAX]
-	 * @brief Number
-	 * @note Various body modifiers
-	 */
-	s16b extra_body_parts[BODY_MAX];
-
 	/** @structvar powers_mod[POWER_MAX_INIT]
 	 * @brief Boolean
 	 * @note Intrinsinc powers

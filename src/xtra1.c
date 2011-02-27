@@ -2116,16 +2116,11 @@ void calc_body()
 		}
 	}
 
-	/* Do we need more parts ? ;) */
-	for (i = 0; i < BODY_MAX; i++)
-		p_ptr->extra_body_parts[i] = 0;
-	process_hooks(HOOK_BODY_PARTS, "()");
-
 	for (i = 0; i < BODY_MAX; i++)
 	{
 		int b;
 
-		b = bp[i] + cp_ptr->body_parts[i] + p_ptr->extra_body_parts[i];
+		b = bp[i] + cp_ptr->body_parts[i];
 		if (b < 0) b = 0;
 		if (b > max_body_part[i]) b = max_body_part[i];
 
