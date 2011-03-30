@@ -1818,11 +1818,6 @@ void do_cmd_debug(void)
 		teleport_player(10);
 		break;
 
-		/* Panic save the game */
-	case 'P':
-		exit_game_panic();
-		break;
-
 		/* get a Quest */
 	case 'q':
 		{

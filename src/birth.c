@@ -975,9 +975,6 @@ static void player_wipe(void)
 	total_winner = 0;
 	has_won = FALSE;
 
-	/* Assume no panic save */
-	panic_save = 0;
-
 	/* Assume no cheating */
 	noscore = 0;
 	wizard = 0;

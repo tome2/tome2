@@ -156,7 +156,6 @@ extern bool_ use_bigtile;
 extern byte graphics_mode;
 extern u16b total_winner;
 extern u16b has_won;
-extern u16b panic_save;
 extern u16b noscore;
 extern s16b signal_count;
 extern bool_ inkey_base;
@@ -550,9 +549,6 @@ extern bool_ fast_autoroller;
 extern bool_ joke_monsters;
 extern bool_ munchkin_multipliers;
 extern bool_ center_player;
-#ifdef SAFER_PANICS
-extern bool_ panicload;
-#endif
 extern s16b plots[MAX_PLOTS];
 extern random_quest random_quests[MAX_RANDOM_QUEST];
 extern bool_ exp_need;

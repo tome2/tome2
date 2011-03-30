@@ -164,14 +164,6 @@ corrected it.
 A: Void jumpgates are not automatic. You must press '>' while standing
 on one to activate it. 
 
-#####G------------------------------------------------------------------------------
-#####GQ: When it panic saves it reloads an old savefile !!
-
-A: Now the panic saves use a different file to save, savefile.pnc.
-This file will be loaded first, if present, when the game is started.
-If it loads successfully, save the game immediately. Otherwise, delete
-the panic save, and your old (non-panic) savefile should be safe.
-
 ~~~~~08|Monsters|They are talking to me!
 #####G------------------------------------------------------------------------------
 #####GQ: Farmer Maggot / Melinda Proudfoot keep shouting at me, and I cannot

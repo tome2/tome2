@@ -395,11 +395,6 @@
 /* #define ALLOW_QUITTING */
 
 /*
- * Panic saves have a different name
- */
-#define SAFER_PANICS
-
-/*
  * Allow makefiles to override the default file mode
  */
 #ifndef FILE_MODE

@@ -37,10 +37,6 @@ static void skip_ver_byte(u32b, int);
 
 errr rd_savefile(void);
 
-#ifdef SAFER_PANICS
-bool_ panicload;
-#endif
-
 static FILE *fff; 	/* Local savefile ptr */
 
 /*
@@ -682,7 +678,6 @@ static bool_ do_extra(int flag)
 	do_u32b(&dummy32u, flag);    /* Load-compatibility with old savefiles. */
 
 	/* Special stuff */
-	do_u16b(&panic_save, flag);
 	do_u16b(&total_winner, flag);
 	do_u16b(&has_won, flag);
 	do_u16b(&noscore, flag);
@@ -829,37 +824,6 @@ bool_ save_player(void)
 {
 	int result = FALSE;
 	char safe[1024];
-#ifdef SAFER_PANICS
-	char panicsave[1024];
-#endif /* SAFER PANICS */
-
-
-#ifdef SAFER_PANICS
-	if (panic_save)
-	{
-		/*
-		 * Not sure how to do this so it's nicely portable to brain-damaged
-		 * OS's with short filenames
-		 */
-		strcpy(panicsave, savefile);
-		strcat(panicsave, ".pnc");
-
-		/* Grab permission */
-		if (savefile_setuid) safe_setuid_grab();
-
-		/* Remove any old panic saves */
-		fd_kill(panicsave);
-
-		/* Drop permission */
-		if (savefile_setuid) safe_setuid_drop();
-
-		/* Save character */
-		save_player_aux(panicsave);
-
-		return TRUE;
-	}
-#endif /* SAFER_PANICS */
-
 
 	/* New savefile */
 	strcpy(safe, savefile);
@@ -977,30 +941,11 @@ bool_ load_player(void)
 
 	errr err = 0;
 
-#ifdef SAFER_PANICS
-	char panic_fname[1024]; 	/* Filename for panic savefiles */
-	int testfd = -1;
-#endif /* SAFER_PANICS */
-
 #ifdef VERIFY_TIMESTAMP
 	struct stat statbuf;
 #endif /* VERIFY_TIMESTAMP */
 
 	cptr what = "generic";
-
-#ifdef SAFER_PANICS
-	panicload = FALSE;
-	strncpy(panic_fname, savefile, 1024);
-	strcat(panic_fname, ".pnc"); 	/* This might concievably cause a buffer
-										   overflow, but the rest of the code
-										   in this file does likewise. If someone
-										   ever audits pernband for security
-										   problems, well, don't blame me. The rest
-										   of the code was like this before I even
-										   got here -- Pat */
-
-#endif /* SAFER_PANICS */
-
 
 	/* Paranoia */
 	turn = 0;
@@ -1016,11 +961,7 @@ bool_ load_player(void)
 	/* XXX XXX XXX Fix this */
 
 	/* Verify the existance of the savefile */
-	if ((!file_exist(savefile))
-#ifdef SAFER_PANICS
-	                && (!file_exist(panic_fname))
-#endif /* SAFER_PANICS */
-	   )
+	if (!file_exist(savefile))
 	{
 		/* Give a message */
 		msg_format("Savefile does not exist: %s", savefile);
@@ -1104,43 +1045,6 @@ bool_ load_player(void)
 		/* Message (below) */
 		if (err) what = "Cannot open savefile";
 	}
-
-#ifdef SAFER_PANICS
-
-	/* Grab permission */
-	if (savefile_setuid) safe_setuid_grab();
-
-	/* Open panic save file */
-	testfd = fd_open(panic_fname, O_RDONLY);
-
-	/* Drop permission */
-	if (savefile_setuid) safe_setuid_drop();
-
-	fd_close(testfd);
-
-	/* A panic save exists, which is not normally the case */
-	if (testfd > 0)
-	{
-		panicload = 1;
-
-		/* Close the normal save file */
-		fd_close(fd);
-
-		/* Grab permission */
-		if (savefile_setuid) safe_setuid_grab();
-
-		/* Prefer panic saves over real saves */
-		fd = fd_open(panic_fname, O_RDONLY);
-
-		/* Drop permission */
-		if (savefile_setuid) safe_setuid_drop();
-
-		/* This is not the error if we're at this pt */
-		what = "";
-		err = 0;
-	}
-
-#endif /* SAFER_PANICS */
 
 	/* Process file */
 	if (!err)
@@ -1270,24 +1174,6 @@ bool_ load_player(void)
 			/* Reset cause of death */
 			(void)strcpy(died_from, "(alive and well)");
 		}
-
-#ifdef SAFER_PANICS
-		if (panicload)
-		{
-			/* Grab permission */
-			if (savefile_setuid) safe_setuid_grab();
-
-			/*
-			 * Done loading, it'll either immediately panic and re-save, or
-			 * we don't need the panicsave file anymore. Either way, it's safe
-			 * to zap the original panicsave
-			 */
-			fd_kill(panic_fname);
-
-			/* Drop permission */
-			if (savefile_setuid) safe_setuid_drop();
-		}
-#endif /* SAFER_PANICS */
 
 		/* Success */
 		return (TRUE);
@@ -3290,40 +3176,14 @@ errr rd_savefile(void)
 {
 	errr err = 0;
 
-#ifdef SAFER_PANICS
-	char panic_fname[1024];
-	if (!panicload)
-	{
-#endif /* SAFER_PANICS */
+	/* Grab permission */
+	if (savefile_setuid) safe_setuid_grab();
 
-		/* Grab permission */
-		if (savefile_setuid) safe_setuid_grab();
-
-		/* The savefile is a binary file */
-		fff = my_fopen(savefile, "rb");
-
-		/* Drop permission */
-		if (savefile_setuid) safe_setuid_drop();
-
-#ifdef SAFER_PANICS
-	}
-	else
-	{
-		strcpy(panic_fname, savefile);
-		strcat(panic_fname, ".pnc");
-
-		/* Grab permission */
-		if (savefile_setuid) safe_setuid_grab();
-
-		/* Open panic save file */
-		fff = my_fopen(panic_fname, "rb");
-
-		/* Drop permission */
-		if (savefile_setuid) safe_setuid_drop();
-
-	}
-
-#endif /* SAFER_PANICS */
+	/* The savefile is a binary file */
+	fff = my_fopen(savefile, "rb");
+	
+	/* Drop permission */
+	if (savefile_setuid) safe_setuid_drop();
 
 	/* Paranoia */
 	if (!fff) return ( -1);

@@ -131,7 +131,6 @@ byte graphics_mode; 		/* Current graphics mode */
 u16b total_winner; 		/* Semi-Hack -- Game has been won */
 u16b has_won;               /* Semi-Hack -- Game has been won */
 
-u16b panic_save; 		/* Track some special "conditions" */
 u16b noscore; 			/* Track various "cheating" conditions */
 
 s16b signal_count; 		/* Hack -- Count interupts */

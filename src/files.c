@@ -4354,8 +4354,6 @@ void remove_cave_view(bool_ remove)
  */
 void do_cmd_save_game(void)
 {
-	panic_save = 0;   /* Fixes an apparently long-lived bug */
-
 	remove_cave_view(TRUE);
 
 	/* Save the current level if in a persistent level */
@@ -5896,49 +5894,6 @@ void close_game(void)
 
 
 /*
- * Handle abrupt death of the visual system
- *
- * This routine is called only in very rare situations, and only
- * by certain visual systems, when they experience fatal errors.
- *
- * XXX XXX Hack -- clear the death flag when creating a HANGUP
- * save file so that player can see tombstone when restart.
- */
-void exit_game_panic(void)
-{
-	/* If nothing important has happened, just quit */
-	if (!character_generated || character_saved) quit("panic");
-
-	/* Mega-Hack -- see "msg_print()" */
-	msg_flag = FALSE;
-
-	/* Clear the top line */
-	prt("", 0, 0);
-
-	/* Hack -- turn off some things */
-	disturb(1, 0);
-
-	/* Mega-Hack -- Delay death */
-	if (p_ptr->chp < 0) death = FALSE;
-
-	/* Hardcode panic save */
-	panic_save = 1;
-
-	/* Forbid suspend */
-	signals_ignore_tstp();
-
-	/* Indicate panic save */
-	(void)strcpy(died_from, "(panic save)");
-
-	/* Panic save, or get worried */
-	if (!save_player()) quit("panic save failed!");
-
-	/* Successful panic save */
-	quit("panic save succeeded!");
-}
-
-
-/*
  * Grab a randomly selected line in lib/file/file_name
  */
 errr get_rnd_line(char *file_name, char *output)
@@ -6364,30 +6319,6 @@ static void handle_signal_abort(int sig)
 
 	/* Message */
 	Term_putstr(45, 23, -1, TERM_RED, "Panic save...");
-
-	/* Flush output */
-	Term_fresh();
-
-	/* Panic Save */
-	panic_save = 1;
-
-	/* Panic save */
-	(void)strcpy(died_from, "(panic save)");
-
-	/* Forbid suspend */
-	signals_ignore_tstp();
-
-	/* Attempt to save */
-	if (save_player())
-	{
-		Term_putstr(45, 23, -1, TERM_RED, "Panic save succeeded!");
-	}
-
-	/* Save failed */
-	else
-	{
-		Term_putstr(45, 23, -1, TERM_RED, "Panic save failed!");
-	}
 
 	/* Flush output */
 	Term_fresh();
