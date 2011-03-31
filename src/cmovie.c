@@ -31,14 +31,8 @@ s16b do_play_cmovie(cptr cmov_file)
 	/* File type is "TEXT" */
 	FILE_TYPE(FILE_TYPE_TEXT);
 
-	/* Grab permission */
-	/* safe_setuid_grab(); */
-
 	/* Read the file */
 	fff = my_fopen(buf, "r");
-
-	/* Drop permission */
-	/* safe_setuid_drop(); */
 
 	/* Failure */
 	if (!fff) return ( -1);
@@ -320,14 +314,8 @@ void do_record_cmovie(cptr cmovie)
 	/* File type is "TEXT" */
 	FILE_TYPE(FILE_TYPE_TEXT);
 
-	/* Grab permission */
-	/* safe_setuid_grab(); */
-
 	/* Check for existing file */
 	fd = fd_open(buf, O_RDONLY);
-
-	/* Drop permission */
-	/* safe_setuid_drop(); */
 
 	/* Existing file */
 	if (fd >= 0)
@@ -347,14 +335,8 @@ void do_record_cmovie(cptr cmovie)
 	/* Be sure */
 	if (!get_check("Ready to record(Press ctrl+D to enter a textual note while recording)?")) return;
 
-	/* Grab privs */
-	/* safe_setuid_grab(); */
-
 	/* Open the non-existing file */
 	if (fd < 0) movfile = my_fopen(buf, "w");
-
-	/* And drop them */
-	/* safe_setuid_drop(); */
 
 	/* Invalid file */
 	if (movfile == NULL)

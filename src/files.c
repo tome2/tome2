@@ -13,103 +13,6 @@
 #include "angband.h"
 
 
-static bool_ setuid_grabbed = TRUE;
-
-
-/*
- * You may or may not want to use the following "#undef".
- */
-/* #undef _POSIX_SAVED_IDS */
-
-
-/*
- * Hack -- drop permissions
- */
-void safe_setuid_drop(void)
-{
-	if (setuid_grabbed)
-	{
-		setuid_grabbed = FALSE;
-#ifdef SET_UID
-
-# ifdef SAFE_SETUID
-
-# ifdef SAFE_SETUID_POSIX
-
-		if (setuid(getuid()) != 0)
-		{
-			quit("setuid(): cannot set permissions correctly!");
-		}
-		if (setgid(getgid()) != 0)
-		{
-			quit("setgid(): cannot set permissions correctly!");
-		}
-
-# else
-
-		if (setreuid(geteuid(), getuid()) != 0)
-		{
-			quit("setreuid(): cannot set permissions correctly!");
-		}
-		if (setregid(getegid(), getgid()) != 0)
-		{
-			quit("setregid(): cannot set permissions correctly!");
-		}
-
-# endif
-
-# endif
-
-#endif
-	}
-
-}
-
-
-/*
- * Hack -- grab permissions
- */
-void safe_setuid_grab(void)
-{
-	if (!setuid_grabbed)
-	{
-		setuid_grabbed = TRUE;
-#ifdef SET_UID
-
-# ifdef SAFE_SETUID
-
-# ifdef SAFE_SETUID_POSIX
-
-		if (setuid(player_euid) != 0)
-		{
-			quit("setuid(): cannot set permissions correctly!");
-		}
-		if (setgid(player_egid) != 0)
-		{
-			quit("setgid(): cannot set permissions correctly!");
-		}
-
-# else
-
-		if (setreuid(geteuid(), getuid()) != 0)
-		{
-			quit("setreuid(): cannot set permissions correctly!");
-		}
-		if (setregid(getegid(), getgid()) != 0)
-		{
-			quit("setregid(): cannot set permissions correctly!");
-		}
-
-# endif  /* SAFE_SETUID_POSIX */
-
-# endif  /* SAFE_SETUID */
-
-#endif /* SET_UID */
-	}
-
-}
-
-
 /*
  * Extract the first few "tokens" from a buffer
  *
@@ -1019,14 +922,8 @@ errr process_pref_file(cptr name)
 		/* Build the pathname, this time using the system pref directory */
 		path_build(buf, 1024, ANGBAND_DIR_PREF, name);
 
-		/* Grab permission */
-		safe_setuid_grab();
-
 		/* Open the file */
 		fp = my_fopen(buf, "r");
-
-		/* Drop permission */
-		safe_setuid_drop();
 
 		/* Failed again */
 		if (!fp) return ( -1);
@@ -3032,14 +2929,8 @@ bool_ show_file(cptr name, cptr what, int line, int mode)
 		/* Access the "file" */
 		strcpy(h_ptr->path, name);
 
-		/* Grab permission */
-		safe_setuid_grab();
-
 		/* Open */
 		fff = my_fopen(h_ptr->path, "r");
-
-		/* Drop permission */
-		safe_setuid_drop();
 	}
 
 	/* Look in "help" */
@@ -3051,14 +2942,8 @@ bool_ show_file(cptr name, cptr what, int line, int mode)
 		/* Build the filename */
 		path_build(h_ptr->path, 1024, ANGBAND_DIR_HELP, name);
 
-		/* Grab permission */
-		safe_setuid_grab();
-
 		/* Open the file */
 		fff = my_fopen(h_ptr->path, "r");
-
-		/* Drop permission */
-		safe_setuid_drop();
 	}
 
 	/* Look in "info" */
@@ -3070,14 +2955,8 @@ bool_ show_file(cptr name, cptr what, int line, int mode)
 		/* Build the filename */
 		path_build(h_ptr->path, 1024, ANGBAND_DIR_INFO, name);
 
-		/* Grab permission */
-		safe_setuid_grab();
-
 		/* Open the file */
 		fff = my_fopen(h_ptr->path, "r");
-
-		/* Drop permission */
-		safe_setuid_drop();
 	}
 
 	/* Look in "file" */
@@ -3089,14 +2968,8 @@ bool_ show_file(cptr name, cptr what, int line, int mode)
 		/* Build the filename */
 		path_build(h_ptr->path, 1024, ANGBAND_DIR_FILE, name);
 
-		/* Grab permission */
-		safe_setuid_grab();
-
 		/* Open the file */
 		fff = my_fopen(h_ptr->path, "r");
-
-		/* Drop permission */
-		safe_setuid_drop();
 	}
 
 	/* Oops */
@@ -3230,15 +3103,8 @@ bool_ show_file(cptr name, cptr what, int line, int mode)
 			/* Close it */
 			my_fclose(fff);
 
-			/* Grab permission */
-			safe_setuid_grab();
-
 			/* Hack -- Re-Open the file */
 			fff = my_fopen(h_ptr->path, "r");
-
-			/* Drop permission */
-			safe_setuid_drop();
-
 
 			/* Oops */
 			if (!fff)
@@ -3657,14 +3523,8 @@ bool_ txt_to_html(cptr head, cptr foot, cptr base, cptr ext, bool_ force, bool_ 
 	/* Build the filename */
 	path_build(h_ptr->path, 1024, ANGBAND_DIR_HELP, buf_name);
 
-	/* Grab permission */
-	safe_setuid_grab();
-
 	/* Open the file */
 	htm = my_fopen(h_ptr->path, "w");
-
-	/* Drop permission */
-	safe_setuid_drop();
 
 	sprintf(buf_name, "%s.%s", base, ext);
 
@@ -3674,14 +3534,8 @@ bool_ txt_to_html(cptr head, cptr foot, cptr base, cptr ext, bool_ force, bool_ 
 	/* Build the filename */
 	path_build(h_ptr->path, 1024, ANGBAND_DIR_HELP, buf_name);
 
-	/* Grab permission */
-	safe_setuid_grab();
-
 	/* Open the file */
 	fff = my_fopen(h_ptr->path, "r");
-
-	/* Drop permission */
-	safe_setuid_drop();
 
 	/* Oops */
 	if (!fff || !htm)
@@ -3702,14 +3556,8 @@ bool_ txt_to_html(cptr head, cptr foot, cptr base, cptr ext, bool_ force, bool_ 
 	/* Build the filename */
 	path_build(h_ptr->path, 1024, ANGBAND_DIR_HELP, head);
 
-	/* Grab permission */
-	safe_setuid_grab();
-
 	/* Open the file */
 	aux = my_fopen(h_ptr->path, "r");
-
-	/* Drop permission */
-	safe_setuid_drop();
 
 	/* Copy the header */
 	if (aux)
@@ -3923,14 +3771,8 @@ bool_ txt_to_html(cptr head, cptr foot, cptr base, cptr ext, bool_ force, bool_ 
 	/* Build the filename */
 	path_build(h_ptr->path, 1024, ANGBAND_DIR_HELP, foot);
 
-	/* Grab permission */
-	safe_setuid_grab();
-
 	/* Open the file */
 	aux = my_fopen(h_ptr->path, "r");
-
-	/* Drop permission */
-	safe_setuid_drop();
 
 	/* Copy the footer */
 	if (aux)
@@ -4581,14 +4423,8 @@ static void print_tomb(void)
 		/* Build the filename */
 		path_build(buf, 1024, ANGBAND_DIR_FILE, "dead.txt");
 
-		/* Grab permission */
-		safe_setuid_grab();
-
 		/* Open the News file */
 		fp = my_fopen(buf, "r");
-
-		/* Drop permission */
-		safe_setuid_drop();
 
 		/* Dump */
 		if (fp)
@@ -5172,14 +5008,8 @@ void display_scores(int from, int to)
 	/* Build the filename */
 	path_build(buf, 1024, ANGBAND_DIR_APEX, "scores.raw");
 
-	/* Grab permission */
-	safe_setuid_grab();
-
 	/* Open the binary high score file, for reading */
 	highscore_fd = fd_open(buf, O_RDONLY);
-
-	/* Drop permission */
-	safe_setuid_drop();
 
 	/* Paranoia -- No score file */
 	if (highscore_fd < 0) quit("Score file unavailable.");
@@ -5250,13 +5080,8 @@ void show_highclass(int building)
 	/* Build the filename */
 	path_build(buf, 1024, ANGBAND_DIR_APEX, "scores.raw");
 
-	/* Grab permission */
-	safe_setuid_grab();
-
+	/* Open file */
 	highscore_fd = fd_open(buf, O_RDONLY);
-
-	/* Drop permission */
-	safe_setuid_drop();
 
 	if (highscore_fd < 0)
 	{
@@ -5348,14 +5173,8 @@ void race_score(int race_num)
 	/* Build the filename */
 	path_build(buf, 1024, ANGBAND_DIR_APEX, "scores.raw");
 
-	/* Grab permission */
-	safe_setuid_grab();
-
 	/* Open the highscore file */
 	highscore_fd = fd_open(buf, O_RDONLY);
-
-	/* Drop permission */
-	safe_setuid_drop();
 
 	if (highscore_fd < 0)
 	{
@@ -5754,14 +5573,8 @@ void wipe_saved()
 				sprintf(tmp, "%s.%s", player_base, buf);
 				path_build(name, 1024, ANGBAND_DIR_SAVE, tmp);
 
-				/* Grab permission */
-				safe_setuid_grab();
-
 				/* Remove the dungeon save file */
 				fd_kill(name);
-
-				/* Drop permission */
-				safe_setuid_drop();
 			}
 		}
 	}
@@ -5801,14 +5614,8 @@ void close_game(void)
 	/* Build the filename */
 	path_build(buf, 1024, ANGBAND_DIR_APEX, "scores.raw");
 
-	/* Grab permission */
-	safe_setuid_grab();
-
 	/* Open the high score file, for reading/writing */
 	highscore_fd = fd_open(buf, O_RDWR);
-
-	/* Drop permission */
-	safe_setuid_drop();
 
 	/* Handle death */
 	if (death)
@@ -5918,14 +5725,8 @@ errr get_rnd_line(char *file_name, char *output)
 	/* Build the filename */
 	path_build(buf, 1024, ANGBAND_DIR_FILE, file_name);
 
-	/* Grab permission */
-	safe_setuid_grab();
-
 	/* Open the file */
 	fp = my_fopen(buf, "r");
-
-	/* Drop permission */
-	safe_setuid_drop();
 
 	/* Failed */
 	if (!fp) return ( -1);
@@ -5992,14 +5793,8 @@ char *get_line(char* fname, cptr fdir, char *linbuf, int line)
 	/* Build the filename */
 	path_build(buf, 1024, fdir, fname);
 
-	/* Grab permission */
-	safe_setuid_grab();
-
 	/* Open the file */
 	fp = my_fopen(buf, "r");
-
-	/* Drop permission */
-	safe_setuid_drop();
 
 	/* Failed */
 	if (!fp) return (NULL);
@@ -6055,14 +5850,8 @@ errr get_xtra_line(char *file_name, monster_type *m_ptr, char *output)
 	/* Build the filename */
 	path_build(buf, 1024, ANGBAND_DIR_FILE, file_name);
 
-	/* Grab permission */
-	safe_setuid_grab();
-
 	/* Open the file */
 	fp = my_fopen(buf, "r");
-
-	/* Drop permission */
-	safe_setuid_drop();
 
 	/* Failed */
 	if (!fp) return ( -1);

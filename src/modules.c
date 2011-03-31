@@ -79,9 +79,6 @@ void module_reset_dir(cptr dir, cptr new_path)
 	else if (!strcmp(dir, "save"))
 	{
 		module_reset_dir_aux(&ANGBAND_DIR_SAVE, new_path);
-
-		/* Tell the savefile code that we must not use setuid */
-		savefile_setuid = FALSE;
 	}
 	else
 #endif /* PRIVATE_USER_PATH */

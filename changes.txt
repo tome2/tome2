@@ -1,3 +1,9 @@
+T.o.M.E 2.3.10 (ah)
+
+Game:
+
+- setuid operation is REMOVED; do NOT install ToME as setuid!
+
 T.o.M.E 2.3.9 (ah)
 
 User Interface:

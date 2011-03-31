@@ -3522,14 +3522,8 @@ int load_savefile_names()
 	/* File type is "TEXT" */
 	FILE_TYPE(FILE_TYPE_TEXT);
 
-	/* Grab permission */
-	if (savefile_setuid) safe_setuid_grab();
-
 	/* Read the file */
 	fff = my_fopen(buf, "r");
-
-	/* Drop permission */
-	if (savefile_setuid) safe_setuid_drop();
 
 	/* Failure */
 	if (!fff) return (0);
@@ -3601,14 +3595,8 @@ int load_savefile_names()
 		/* File type is 'SAVE' */
 		FILE_TYPE(FILE_TYPE_SAVE);
 
-		/* Grab permission */
-		if (savefile_setuid) safe_setuid_grab();
-
 		/* Try to open the savefile */
 		fd = fd_open(savefile, O_RDONLY);
-
-		/* Drop permission */
-		if (savefile_setuid) safe_setuid_drop();
 
 		/* Still existing ? */
 		if (fd >= 0)
@@ -3650,14 +3638,8 @@ void save_savefile_names()
 	/* File type is "TEXT" */
 	FILE_TYPE(FILE_TYPE_TEXT);
 
-	/* Grab permission */
-	if (savefile_setuid) safe_setuid_grab();
-
 	/* Read the file */
 	fff = my_fopen(buf, "w");
-
-	/* Drop permission */
-	if (savefile_setuid) safe_setuid_drop();
 
 	/* Failure */
 	if (!fff) return;
@@ -3816,14 +3798,8 @@ savefile_try_again:
 			strncpy(player_base, savefile_names[savefile_idx[sel - 2]], 32);
 			process_player_name(TRUE);
 
-			/* Grab permission */
-			if (savefile_setuid) safe_setuid_grab();
-
 			/* Remove the savefile */
 			fd_kill(savefile);
-
-			/* Drop permission */
-			if (savefile_setuid) safe_setuid_drop();
 
 			/* Restore 'player_base' and 'savefile' */
 			strncpy(player_base, player_base_save, 32);

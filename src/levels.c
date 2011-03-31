@@ -27,14 +27,8 @@ bool_ get_command(const char *file, char comm, char *param)
 	/* Build the filename */
 	path_build(buf, 1024, ANGBAND_DIR_DNGN, file);
 
-	/* Grab permission */
-	safe_setuid_grab();
-
 	/* Open the file */
 	fp = my_fopen(buf, "r");
-
-	/* Drop permission */
-	safe_setuid_drop();
 
 	/* The file exists ? */
 	/* no ? then command not found */

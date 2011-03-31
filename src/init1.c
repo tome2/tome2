@@ -1513,14 +1513,8 @@ static void fp_stack_push(cptr name)
 		/* Build the filename */
 		path_build(buf, 1024, ANGBAND_DIR_EDIT, name);
 
-		/* Grab permission */
-		safe_setuid_grab();
-
 		/* Open the file */
 		fp = my_fopen(buf, "r");
-
-		/* Drop permission */
-		safe_setuid_drop();
 
 		/* Parse it */
 		if (!fp) quit(format("Cannot open '%s' file.", name));
@@ -11749,14 +11743,8 @@ errr process_dungeon_file(cptr full_text, cptr name, int *yval, int *xval, int y
 		/* Build the filename */
 		path_build(buf, 1024, ANGBAND_DIR_EDIT, name);
 
-		/* Grab permission */
-		safe_setuid_grab();
-
 		/* Open the file */
 		fp = my_fopen(buf, "r");
-
-		/* Drop permission */
-		safe_setuid_drop();
 
 		/* No such file */
 		if (!fp)

@@ -729,14 +729,8 @@ void save_dungeon(void)
 	sprintf(tmp, "%s.%s", player_base, buf);
 	path_build(name, 1024, ANGBAND_DIR_SAVE, tmp);
 
-	/* Grab permission */
-	if (savefile_setuid) safe_setuid_grab();
-
 	/* Open the file */
 	fff = my_fopen(name, "wb");
-
-	/* Drop permission */
-	if (savefile_setuid) safe_setuid_drop();
 
 	/* Save the dungeon */
 	do_dungeon(LS_SAVE, TRUE);
@@ -759,14 +753,8 @@ static bool_ save_player_aux(char *name)
 	/* File type is "SAVE" */
 	FILE_TYPE(FILE_TYPE_SAVE);
 
-	/* Grab permission */
-	if (savefile_setuid) safe_setuid_grab();
-
 	/* Create the savefile */
 	fd = fd_make(name, mode);
-
-	/* Drop permission */
-	if (savefile_setuid) safe_setuid_drop();
 
 	/* File is okay */
 	if (fd >= 0)
@@ -774,14 +762,8 @@ static bool_ save_player_aux(char *name)
 		/* Close the "fd" */
 		(void)fd_close(fd);
 
-		/* Grab permission */
-		if (savefile_setuid) safe_setuid_grab();
-
 		/* Open the savefile */
 		fff = my_fopen(name, "wb");
-
-		/* Drop permission */
-		if (savefile_setuid) safe_setuid_drop();
 
 		/* Successful open */
 		if (fff)
@@ -796,14 +778,8 @@ static bool_ save_player_aux(char *name)
 		/* "broken" savefile */
 		if (!ok)
 		{
-			/* Grab permission */
-			if (savefile_setuid) safe_setuid_grab();
-
 			/* Remove "broken" files */
 			(void)fd_kill(name);
-
-			/* Drop permission */
-			if (savefile_setuid) safe_setuid_drop();
 		}
 	}
 
@@ -829,14 +805,8 @@ bool_ save_player(void)
 	strcpy(safe, savefile);
 	strcat(safe, ".new");
 
-	/* Grab permission */
-	if (savefile_setuid) safe_setuid_grab();
-
 	/* Remove it */
 	fd_kill(safe);
-
-	/* Drop permission */
-	if (savefile_setuid) safe_setuid_drop();
 
 	/* Attempt to save the player */
 	if (save_player_aux(safe))
@@ -846,9 +816,6 @@ bool_ save_player(void)
 		/* Old savefile */
 		strcpy(temp, savefile);
 		strcat(temp, ".old");
-
-		/* Grab permission */
-		if (savefile_setuid) safe_setuid_grab();
 
 		/* Remove it */
 		fd_kill(temp);
@@ -862,9 +829,6 @@ bool_ save_player(void)
 		/* Remove preserved savefile */
 		fd_kill(temp);
 
-		/* Drop permission */
-		if (savefile_setuid) safe_setuid_drop();
-
 		/* Hack -- Pretend the character was loaded */
 		character_loaded = TRUE;
 
@@ -874,14 +838,8 @@ bool_ save_player(void)
 		strcpy(temp, savefile);
 		strcat(temp, ".lok");
 
-		/* Grab permission */
-		if (savefile_setuid) safe_setuid_grab();
-
 		/* Remove lock file */
 		fd_kill(temp);
-
-		/* Drop permission */
-		if (savefile_setuid) safe_setuid_drop();
 
 #endif
 
@@ -900,14 +858,8 @@ bool_ file_exist(char *buf)
 	int fd;
 	bool_ result;
 
-	/* Grab permission */
-	if (savefile_setuid) safe_setuid_grab();
-
 	/* Open savefile */
 	fd = fd_open(buf, O_RDONLY);
-
-	/* Drop permission */
-	if (savefile_setuid) safe_setuid_drop();
 
 	/* File exists */
 	if (fd >= 0)
@@ -985,14 +937,8 @@ bool_ load_player(void)
 		strcpy(temp, savefile);
 		strcat(temp, ".lok");
 
-		/* Grab permission */
-		if (savefile_setuid) safe_setuid_grab();
-
 		/* Check for lock */
 		fkk = my_fopen(temp, "r");
-
-		/* Drop permission */
-		if (savefile_setuid) safe_setuid_drop();
 
 		/* Oops, lock exists */
 		if (fkk)
@@ -1008,14 +954,8 @@ bool_ load_player(void)
 			return (FALSE);
 		}
 
-		/* Grab permission */
-		if (savefile_setuid) safe_setuid_grab();
-
 		/* Create a lock file */
 		fkk = my_fopen(temp, "w");
-
-		/* Drop permission */
-		if (savefile_setuid) safe_setuid_drop();
 
 		/* Dump a line of info */
 		fprintf(fkk, "Lock file for savefile '%s'\n", savefile);
@@ -1030,14 +970,8 @@ bool_ load_player(void)
 	/* Okay */
 	if (!err)
 	{
-		/* Grab permission */
-		if (savefile_setuid) safe_setuid_grab();
-
 		/* Open the savefile */
 		fd = fd_open(savefile, O_RDONLY);
-
-		/* Drop permission */
-		if (savefile_setuid) safe_setuid_drop();
 
 		/* No file */
 		if (fd < 0) err = -1;
@@ -1049,9 +983,6 @@ bool_ load_player(void)
 	/* Process file */
 	if (!err)
 	{
-		/* Grab permission */
-		if (savefile_setuid) safe_setuid_grab();
-
 #ifdef VERIFY_TIMESTAMP
 
 		/* Get the timestamp */
@@ -1062,9 +993,6 @@ bool_ load_player(void)
 		/* Open the file XXX XXX XXX XXX Should use Angband file interface */
 		fff = my_fopen(savefile, "rb");
 /*		fff = fdopen(fd, "r"); */
-
-		/* Drop permission */
-		if (savefile_setuid) safe_setuid_drop();
 
 		/* Read the first four bytes */
 		do_u32b(&vernum, LS_LOAD);
@@ -1191,14 +1119,8 @@ bool_ load_player(void)
 		strcpy(temp, savefile);
 		strcat(temp, ".lok");
 
-		/* Grab permission */
-		if (savefile_setuid) safe_setuid_grab();
-
 		/* Remove lock */
 		fd_kill(temp);
-
-		/* Drop permission */
-		if (savefile_setuid) safe_setuid_drop();
 	}
 
 #endif
@@ -2618,14 +2540,8 @@ bool_ load_dungeon(char *ext)
 	sprintf(tmp, "%s.%s", player_base, ext);
 	path_build(name, 1024, ANGBAND_DIR_SAVE, tmp);
 
-	/* Grab permission */
-	if (savefile_setuid) safe_setuid_grab();
-
 	/* Open the file */
 	fff = my_fopen(name, "rb");
-
-	/* Drop permission */
-	if (savefile_setuid) safe_setuid_drop();
 
 	if (fff == NULL)
 	{
@@ -3176,15 +3092,9 @@ errr rd_savefile(void)
 {
 	errr err = 0;
 
-	/* Grab permission */
-	if (savefile_setuid) safe_setuid_grab();
-
 	/* The savefile is a binary file */
 	fff = my_fopen(savefile, "rb");
 	
-	/* Drop permission */
-	if (savefile_setuid) safe_setuid_drop();
-
 	/* Paranoia */
 	if (!fff) return ( -1);
 

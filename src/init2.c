@@ -199,7 +199,6 @@ void init_file_paths(char *path)
 		/* Savefiles are in user directory */
 		strcat(user_path, "/save");
 		ANGBAND_DIR_SAVE = string_make(user_path);
-		savefile_setuid = 0;
 	}
 
 #else /* PRIVATE_USER_PATH */
@@ -380,14 +379,8 @@ static errr init_f_info(void)
 	/* Build the filename */
 	path_build(buf, 1024, ANGBAND_DIR_EDIT, "f_info.txt");
 
-	/* Grab permission */
-	safe_setuid_grab();
-
 	/* Open the file */
 	fp = my_fopen(buf, "r");
-
-	/* Drop permission */
-	safe_setuid_drop();
 
 	/* Parse it */
 	if (!fp) quit("Cannot open 'f_info.txt' file.");
@@ -481,14 +474,8 @@ static errr init_k_info(void)
 	/* Build the filename */
 	path_build(buf, 1024, ANGBAND_DIR_EDIT, "k_info.txt");
 
-	/* Grab permission */
-	safe_setuid_grab();
-
 	/* Open the file */
 	fp = my_fopen(buf, "r");
-
-	/* Drop permission */
-	safe_setuid_drop();
 
 	/* Parse it */
 	if (!fp) quit("Cannot open 'k_info.txt' file.");
@@ -582,14 +569,8 @@ static errr init_set_info(void)
 	/* Build the filename */
 	path_build(buf, 1024, ANGBAND_DIR_EDIT, "set_info.txt");
 
-	/* Grab permission */
-	safe_setuid_grab();
-
 	/* Open the file */
 	fp = my_fopen(buf, "r");
-
-	/* Drop permission */
-	safe_setuid_drop();
 
 	/* Parse it */
 	if (!fp) quit("Cannot open 'set_info.txt' file.");
@@ -682,14 +663,8 @@ static errr init_a_info(void)
 	/* Build the filename */
 	path_build(buf, 1024, ANGBAND_DIR_EDIT, "a_info.txt");
 
-	/* Grab permission */
-	safe_setuid_grab();
-
 	/* Open the file */
 	fp = my_fopen(buf, "r");
-
-	/* Drop permission */
-	safe_setuid_drop();
 
 	/* Parse it */
 	if (!fp) quit("Cannot open 'a_info.txt' file.");
@@ -780,14 +755,8 @@ static errr init_s_info(void)
 	/* Build the filename */
 	path_build(buf, 1024, ANGBAND_DIR_EDIT, "s_info.txt");
 
-	/* Grab permission */
-	safe_setuid_grab();
-
 	/* Open the file */
 	fp = my_fopen(buf, "r");
-
-	/* Drop permission */
-	safe_setuid_drop();
 
 	/* Parse it */
 	if (!fp) quit("Cannot open 's_info.txt' file.");
@@ -878,14 +847,8 @@ static errr init_ab_info(void)
 	/* Build the filename */
 	path_build(buf, 1024, ANGBAND_DIR_EDIT, "ab_info.txt");
 
-	/* Grab permission */
-	safe_setuid_grab();
-
 	/* Open the file */
 	fp = my_fopen(buf, "r");
-
-	/* Drop permission */
-	safe_setuid_drop();
 
 	/* Parse it */
 	if (!fp) quit("Cannot open 'ab_info.txt' file.");
@@ -978,14 +941,8 @@ static errr init_e_info(void)
 	/* Build the filename */
 	path_build(buf, 1024, ANGBAND_DIR_EDIT, "e_info.txt");
 
-	/* Grab permission */
-	safe_setuid_grab();
-
 	/* Open the file */
 	fp = my_fopen(buf, "r");
-
-	/* Drop permission */
-	safe_setuid_drop();
 
 	/* Parse it */
 	if (!fp) quit("Cannot open 'e_info.txt' file.");
@@ -1073,14 +1030,8 @@ static errr init_ra_info(void)
 	/* Build the filename */
 	path_build(buf, 1024, ANGBAND_DIR_EDIT, "ra_info.txt");
 
-	/* Grab permission */
-	safe_setuid_grab();
-
 	/* Open the file */
 	fp = my_fopen(buf, "r");
-
-	/* Drop permission */
-	safe_setuid_drop();
 
 	/* Parse it */
 	if (!fp) quit("Cannot open 'ra_info.txt' file.");
@@ -1169,14 +1120,8 @@ static errr init_r_info(void)
 	/* Build the filename */
 	path_build(buf, 1024, ANGBAND_DIR_EDIT, "r_info.txt");
 
-	/* Grab permission */
-	safe_setuid_grab();
-
 	/* Open the file */
 	fp = my_fopen(buf, "r");
-
-	/* Drop permission */
-	safe_setuid_drop();
 
 	/* Parse it */
 	if (!fp) quit("Cannot open 'r_info.txt' file.");
@@ -1266,14 +1211,8 @@ static errr init_re_info(void)
 	/* Build the filename */
 	path_build(buf, 1024, ANGBAND_DIR_EDIT, "re_info.txt");
 
-	/* Grab permission */
-	safe_setuid_grab();
-
 	/* Open the file */
 	fp = my_fopen(buf, "r");
-
-	/* Drop permission */
-	safe_setuid_drop();
 
 	/* Parse it */
 	if (!fp) quit("Cannot open 're_info.txt' file.");
@@ -1364,14 +1303,8 @@ static errr init_d_info(void)
 	/* Build the filename */
 	path_build(buf, 1024, ANGBAND_DIR_EDIT, "d_info.txt");
 
-	/* Grab permission */
-	safe_setuid_grab();
-
 	/* Open the file */
 	fp = my_fopen(buf, "r");
-
-	/* Drop permission */
-	safe_setuid_drop();
 
 	/* Parse it */
 	if (!fp) quit("Cannot open 'd_info.txt' file.");
@@ -1526,14 +1459,8 @@ static errr init_player_info(void)
 	/* Build the filename */
 	path_build(buf, 1024, ANGBAND_DIR_EDIT, "p_info.txt");
 
-	/* Grab permission */
-	safe_setuid_grab();
-
 	/* Open the file */
 	fp = my_fopen(buf, "r");
-
-	/* Drop permission */
-	safe_setuid_drop();
 
 	/* Parse it */
 	if (!fp) quit("Cannot open 'p_info.txt' file.");
@@ -1626,14 +1553,8 @@ static errr init_st_info(void)
 	/* Build the filename */
 	path_build(buf, 1024, ANGBAND_DIR_EDIT, "st_info.txt");
 
-	/* Grab permission */
-	safe_setuid_grab();
-
 	/* Open the file */
 	fp = my_fopen(buf, "r");
-
-	/* Drop permission */
-	safe_setuid_drop();
 
 	/* Parse it */
 	if (!fp) quit("Cannot open 'st_info.txt' file.");
@@ -1721,14 +1642,8 @@ static errr init_ow_info(void)
 	/* Build the filename */
 	path_build(buf, 1024, ANGBAND_DIR_EDIT, "ow_info.txt");
 
-	/* Grab permission */
-	safe_setuid_grab();
-
 	/* Open the file */
 	fp = my_fopen(buf, "r");
-
-	/* Drop permission */
-	safe_setuid_drop();
 
 	/* Parse it */
 	if (!fp) quit("Cannot open 'ow_info.txt' file.");
@@ -1816,14 +1731,8 @@ static errr init_ba_info(void)
 	/* Build the filename */
 	path_build(buf, 1024, ANGBAND_DIR_EDIT, "ba_info.txt");
 
-	/* Grab permission */
-	safe_setuid_grab();
-
 	/* Open the file */
 	fp = my_fopen(buf, "r");
-
-	/* Drop permission */
-	safe_setuid_drop();
 
 	/* Parse it */
 	if (!fp) quit("Cannot open 'ba_info.txt' file.");
@@ -1913,14 +1822,8 @@ static errr init_wf_info(void)
 	/* Build the filename */
 	path_build(buf, 1024, ANGBAND_DIR_EDIT, "wf_info.txt");
 
-	/* Grab permission */
-	safe_setuid_grab();
-
 	/* Open the file */
 	fp = my_fopen(buf, "r");
-
-	/* Drop permission */
-	safe_setuid_drop();
 
 	/* Parse it */
 	if (!fp) quit("Cannot open 'wf_info.txt' file.");
@@ -2012,14 +1915,8 @@ static errr init_t_info(void)
 	/* Build the filename */
 	path_build(buf, 1024, ANGBAND_DIR_EDIT, "tr_info.txt");
 
-	/* Grab permission */
-	safe_setuid_grab();
-
 	/* Open the file */
 	fp = my_fopen(buf, "r");
-
-	/* Drop permission */
-	safe_setuid_drop();
 
 	/* Parse it */
 	if (!fp) quit("Cannot open 'tr_info.txt' file.");
@@ -2119,14 +2016,8 @@ errr init_al_info(void)
 	/* Build the filename */
 	path_build(buf, 1024, ANGBAND_DIR_EDIT, "al_info.txt");
 
-	/* Grab permission */
-	safe_setuid_grab();
-
 	/* Open the file */
 	fp = my_fopen(buf, "r");
-
-	/* Drop permission */
-	safe_setuid_drop();
 
 	/* Parse it */
 	if (!fp) quit("Cannot open 'al_info.txt' file.");
@@ -2217,14 +2108,8 @@ errr init_v_info(void)
 	/* Build the filename */
 	path_build(buf, 1024, ANGBAND_DIR_EDIT, "v_info.txt");
 
-	/* Grab permission */
-	safe_setuid_grab();
-
 	/* Open the file */
 	fp = my_fopen(buf, "r");
-
-	/* Drop permission */
-	safe_setuid_drop();
 
 	/* Parse it */
 	if (!fp) quit("Cannot open 'v_info.txt' file.");
@@ -3043,14 +2928,8 @@ void init_angband(void)
 	/* Build the filename */
 	path_build(buf, sizeof(buf), ANGBAND_DIR_FILE, news_file);
 
-	/* Grab permission */
-	safe_setuid_grab();
-
 	/* Attempt to open the file */
 	fd = fd_open(buf, O_RDONLY);
-
-	/* Drop permission */
-	safe_setuid_drop();
 
 	/* Failure */
 	if (fd < 0)
@@ -3076,14 +2955,8 @@ void init_angband(void)
 	/* Build the filename */
 	path_build(buf, sizeof(buf), ANGBAND_DIR_FILE, news_file);
 
-	/* Grab permission */
-	safe_setuid_grab();
-
 	/* Open the News file */
 	fp = my_fopen(buf, "r");
-
-	/* Drop permission */
-	safe_setuid_drop();
 
 	/* Dump */
 	if (fp)
@@ -3110,14 +2983,8 @@ void init_angband(void)
 	/* Build the filename */
 	path_build(buf, 1024, ANGBAND_DIR_APEX, "scores.raw");
 
-	/* Grab permission */
-	safe_setuid_grab();
-
 	/* Attempt to open the high score file */
 	fd = fd_open(buf, O_RDONLY);
-
-	/* Drop permission */
-	safe_setuid_drop();
 
 	/* Failure */
 	if (fd < 0)
@@ -3125,14 +2992,8 @@ void init_angband(void)
 		/* File type is "DATA" */
 		FILE_TYPE(FILE_TYPE_DATA);
 
-		/* Grab permission */
-		safe_setuid_grab();
-
 		/* Create a new high score file */
 		fd = fd_make(buf, mode);
-
-		/* Drop permission */
-		safe_setuid_drop();
 
 		/* Failure */
 		if (fd < 0)

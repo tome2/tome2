@@ -274,21 +274,15 @@
 
 
 /*
- * OPTION: Create and use a hidden directory in the user's home directory
- * for storing pref-files and character-dumps.
- */
-#if defined(SET_UID) && !defined(MACH_O_CARBON) && !defined(NO_HOME_TOME)
-#define PRIVATE_USER_PATH "~/.tome"
-#endif /* SET_UID && !MACH_O_CARBON */
-
-/*
- * Where to put the user's files on the Mac
+ * Where to put the user's files.
  */
 #if defined(MACH_O_CARBON)
 #define PRIVATE_USER_PATH "~/Library/Application Support/ToME"
 #define PRIVATE_USER_PATH_DATA
 #define PRIVATE_USER_PATH_APEX
 #define PRIVATE_USER_PATH_MODULES
+#else
+#define PRIVATE_USER_PATH "~/.tome"
 #endif
 
 /*

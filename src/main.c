@@ -341,33 +341,6 @@ int main(int argc, char *argv[])
 
 #ifdef SET_UID
 
-	/*
-	 * Become user -- This will be the normal state for the rest of the game.
-	 *
-	 * Put this here because it's totally irrelevant to single user operating
-	 * systems, as witnessed by huge number of cases where these functions
-	 * weren't used appropriately (at least in this variant).
-	 *
-	 * Whenever it is necessary to open/remove/move the files in the lib folder,
-	 * this convention must be observed:
-	 *
-	 *    safe_setuid_grab();
-	    *
-	 *    fd_open/fd_make/fd_kill/fd_move which requires game's permission,
-	 *    i.e. manipulating files under the lib directory
-	 *
-	 *    safe_setuid_drop();
-	 *
-	 * Please never ever make unmatched calls to these grab/drop functions.
-	 *
-	 * Please note that temporary files used by various information commands
-	 * and ANGBAND_DIR_USER files shouldn't be manipulated this way, because
-	 * they reside outside of the lib directory on multiuser installations.
-	 * -- pelpel
-	 */
-	safe_setuid_drop();
-
-
 	/* Acquire the "user name" as a default player name */
 	user_name(player_name, player_uid);
 

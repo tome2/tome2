@@ -440,7 +440,6 @@ char history[4][60];
  * Buffer to hold the current savefile name
  */
 char savefile[1024];
-bool_ savefile_setuid = TRUE;
 
 
 /*
