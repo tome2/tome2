@@ -510,14 +510,6 @@ int main(int argc, char *argv[])
 				return 0;
 			}
 
-		case 'c':
-		case 'C':
-			{
-				chg_to_txt(argv[i + 1], argv[i + 2]);
-
-				return 0;
-			}
-
 		case 'd':
 		case 'D':
 			{
@@ -557,7 +549,6 @@ usage:
 				puts("  -o                 Request original keyset");
 				puts("  -r                 Request rogue-like keyset");
 				puts("  -H <list of files> Convert helpfile to html");
-				puts("  -c f1 f2           Convert changelog f1 to nice txt f2");
 				puts("  -s<num>            Show <num> high scores");
 				puts("  -u<who>            Use your <who> savefile");
 				puts("  -M<which>            Use the <which> module");
