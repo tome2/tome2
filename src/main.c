@@ -217,18 +217,6 @@ static void change_path(cptr info)
 			break;
 		}
 
-#ifdef VERIFY_SAVEFILE
-
-	case 'b':
-	case 'd':
-	case 'e':
-	case 's':
-		{
-			quit_fmt("Restricted option '-d%s'", info);
-		}
-
-#else /* VERIFY_SAVEFILE */
-
 	case 'd':
 		{
 			string_free(ANGBAND_DIR_DATA);
@@ -249,8 +237,6 @@ static void change_path(cptr info)
 			ANGBAND_DIR_SAVE = string_make(s + 1);
 			break;
 		}
-
-#endif /* VERIFY_SAVEFILE */
 
 	default:
 		{

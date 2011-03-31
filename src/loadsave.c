@@ -832,17 +832,6 @@ bool_ save_player(void)
 		/* Hack -- Pretend the character was loaded */
 		character_loaded = TRUE;
 
-#ifdef VERIFY_SAVEFILE
-
-		/* Lock on savefile */
-		strcpy(temp, savefile);
-		strcat(temp, ".lok");
-
-		/* Remove lock file */
-		fd_kill(temp);
-
-#endif
-
 		/* Success */
 		result = TRUE;
 	}
@@ -893,10 +882,6 @@ bool_ load_player(void)
 
 	errr err = 0;
 
-#ifdef VERIFY_TIMESTAMP
-	struct stat statbuf;
-#endif /* VERIFY_TIMESTAMP */
-
 	cptr what = "generic";
 
 	/* Paranoia */
@@ -923,50 +908,6 @@ bool_ load_player(void)
 		return (TRUE);
 	}
 
-
-#ifdef VERIFY_SAVEFILE
-
-	/* Verify savefile usage */
-	if (!err)
-	{
-		FILE *fkk;
-
-		char temp[1024];
-
-		/* Extract name of lock file */
-		strcpy(temp, savefile);
-		strcat(temp, ".lok");
-
-		/* Check for lock */
-		fkk = my_fopen(temp, "r");
-
-		/* Oops, lock exists */
-		if (fkk)
-		{
-			/* Close the file */
-			my_fclose(fkk);
-
-			/* Message */
-			msg_print("Savefile is currently in use.");
-			msg_print(NULL);
-
-			/* Oops */
-			return (FALSE);
-		}
-
-		/* Create a lock file */
-		fkk = my_fopen(temp, "w");
-
-		/* Dump a line of info */
-		fprintf(fkk, "Lock file for savefile '%s'\n", savefile);
-
-		/* Close the lock file */
-		my_fclose(fkk);
-	}
-
-#endif
-
-
 	/* Okay */
 	if (!err)
 	{
@@ -983,13 +924,6 @@ bool_ load_player(void)
 	/* Process file */
 	if (!err)
 	{
-#ifdef VERIFY_TIMESTAMP
-
-		/* Get the timestamp */
-		(void)fstat(fd, &statbuf);
-
-#endif
-
 		/* Open the file XXX XXX XXX XXX Should use Angband file interface */
 		fff = my_fopen(savefile, "rb");
 /*		fff = fdopen(fd, "r"); */
@@ -1035,25 +969,6 @@ bool_ load_player(void)
 		/* Message (below) */
 		if (err) what = "Broken savefile";
 	}
-
-#ifdef VERIFY_TIMESTAMP
-
-	/* Verify timestamp */
-	if (!err && !arg_wizard)
-	{
-		/* Hack -- Verify the timestamp */
-		if (sf_when > (statbuf.st_ctime + 100) ||
-		                sf_when < (statbuf.st_ctime - 100))
-		{
-			/* Message */
-			what = "Invalid timestamp";
-
-			/* Oops */
-			err = -1;
-		}
-	}
-
-#endif
 
 
 	/* Okay */
@@ -1106,24 +1021,6 @@ bool_ load_player(void)
 		/* Success */
 		return (TRUE);
 	}
-
-
-#ifdef VERIFY_SAVEFILE
-
-	/* Verify savefile usage */
-	if (TRUE)
-	{
-		char temp[1024];
-
-		/* Extract name of lock file */
-		strcpy(temp, savefile);
-		strcat(temp, ".lok");
-
-		/* Remove lock */
-		fd_kill(temp);
-	}
-
-#endif
 
 
 	/* Message */

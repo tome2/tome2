@@ -114,37 +114,6 @@
 
 
 /*
- * OPTION: Verify savefile Checksums (Angband 2.7.0 and up)
- * This option can help prevent "corruption" of savefiles, and also
- * stop intentional modification by amateur users.
- */
-#define VERIFY_CHECKSUMS
-
-
-/*
- * OPTION: Forbid the use of "fiddled" savefiles.  As far as I can tell,
- * a fiddled savefile is one with an internal timestamp different from
- * the actual timestamp.  Thus, turning this option on forbids one from
- * copying a savefile to a different name.  Combined with disabling the
- * ability to save the game without quitting, and with some method of
- * stopping the user from killing the process at the tombstone screen,
- * this should prevent the use of backup savefiles.  It may also stop
- * the use of savefiles from other platforms, so be careful.
- */
-/* #define VERIFY_TIMESTAMP */
-
-
-/*
- * OPTION: Forbid the "savefile over-write" cheat, in which you simply
- * run another copy of the game, loading a previously saved savefile,
- * and let that copy over-write the "dead" savefile later.  This option
- * either locks the savefile, or creates a fake "xxx.lok" file to prevent
- * the use of the savefile until the file is deleted.  Not ready yet.
- */
-/* #define VERIFY_SAVEFILE */
-
-
-/*
  * OPTION: Allow characteres to be "auto-rolled"
  */
 #define ALLOW_AUTOROLLER
@@ -301,8 +270,7 @@
  * machines, once you manage to "load" a savefile, it stays that way.
  * Macintosh is particularly weird because you can load savefiles that
  * are not contained in the "lib:save:" folder, and if you change the
- * player's name, it will then save the savefile elsewhere.  Note that
- * this also gives a method of "bypassing" the "VERIFY_TIMESTAMP" code.
+ * player's name, it will then save the savefile elsewhere.
  */
 #if defined(MACINTOSH) || defined(WINDOWS)
 /* #define SAVEFILE_MUTABLE */
@@ -337,21 +305,6 @@
 #define DEFAULT_X11_FONT_CHOICE		DEFAULT_X11_FONT
 
 
-
-/*
- * OPTION: Attempt to prevent all "cheating"
- */
-/* #define VERIFY_HONOR */
-
-
-/*
- * React to the "VERIFY_HONOR" flag
- */
-#ifdef VERIFY_HONOR
-# define VERIFY_SAVEFILE
-# define VERIFY_CHECKSUMS
-# define VERIFY_TIMESTAMPS
-#endif
 
 /* ToME options: */
 

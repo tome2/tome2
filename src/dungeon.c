@@ -4166,8 +4166,6 @@ static void process_command(void)
 			break;
 		}
 
-#ifndef VERIFY_SAVEFILE
-
 		/* Hack -- Save and don't quit */
 	case KTRL('S'):
 		{
@@ -4175,8 +4173,6 @@ static void process_command(void)
 			do_cmd_save_game();
 			break;
 		}
-
-#endif /* VERIFY_SAVEFILE */
 
 	case KTRL('T'):
 		{
