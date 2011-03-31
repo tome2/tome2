@@ -3512,11 +3512,7 @@ int load_savefile_names()
 
 
 	/* Build the filename */
-#ifdef SAVEFILE_USE_UID
-	strnfmt(tmp, 50, "user.%d.svg", player_uid);
-#else
 	strcpy(tmp, "global.svg");
-#endif /* SAVEFILE_USE_UID */
 	path_build(buf, 1024, ANGBAND_DIR_SAVE, tmp);
 
 	/* File type is "TEXT" */
@@ -3628,11 +3624,7 @@ void save_savefile_names()
 
 
 	/* Build the filename */
-#ifdef SAVEFILE_USE_UID
-	strnfmt(tmp, 50, "user.%d.svg", player_uid);
-#else
 	strcpy(tmp, "global.svg");
-#endif /* SAVEFILE_USE_UID */
 	path_build(buf, 1024, ANGBAND_DIR_SAVE, tmp);
 
 	/* File type is "TEXT" */

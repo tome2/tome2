@@ -255,14 +255,6 @@
 #endif
 
 /*
- * On multiuser systems, add the "uid" to savefile names
- */
-#if defined(SET_UID) && !defined(MACH_O_CARBON)
-# define SAVEFILE_USE_UID
-#endif /* SET_UID && !MACH_O_CARBON */
-
-
-/*
  * OPTION: For some brain-dead computers with no command line interface,
  * namely Macintosh, there has to be some way of "naming" your savefiles.
  * The current "Macintosh" hack is to make it so whenever the character
