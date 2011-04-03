@@ -25,10 +25,6 @@
  * This code should work with most versions of "curses" or "ncurses",
  * and the "main-ncu.c" file (and USE_NCU define) are no longer used.
  *
- * See also "USE_CAP" and "main-cap.c" for code that bypasses "curses"
- * and uses the "termcap" information directly, or even bypasses the
- * "termcap" information and sends direct vt100 escape sequences.
- *
  * This file provides up to 4 term windows.
  *
  * This file will attempt to redefine the screen colors to conform to

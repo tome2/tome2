@@ -561,14 +561,6 @@ usage:
 				puts("  -- -b              Requests big screen");
 #endif /* USE_GCU */
 
-#ifdef USE_CAP
-				puts("  -mcap              To use termcap");
-#endif /* USE_CAP */
-
-#ifdef USE_DOS
-				puts("  -mdos              To use Allegro");
-#endif /* USE_DOS */
-
 #ifdef USE_SLA
 				puts("  -msla              To use SLang");
 #endif /* USE_SLA */
@@ -701,32 +693,6 @@ usage:
 	}
 #endif
 
-#ifdef USE_CAP
-	/* Attempt to use the "main-cap.c" support */
-	if (!done && (!mstr || (streq(mstr, "cap"))))
-	{
-		extern errr init_cap(int, char**);
-		if (0 == init_cap(argc, argv))
-		{
-			ANGBAND_SYS = "cap";
-			done = TRUE;
-		}
-	}
-#endif
-
-
-#ifdef USE_DOS
-	/* Attempt to use the "main-dos.c" support */
-	if (!done && (!mstr || (streq(mstr, "dos"))))
-	{
-		extern errr init_dos(void);
-		if (0 == init_dos())
-		{
-			ANGBAND_SYS = "dos";
-			done = TRUE;
-		}
-	}
-#endif
 
 #ifdef USE_SLA
 	/* Attempt to use the "main-sla.c" support */
@@ -741,45 +707,6 @@ usage:
 	}
 #endif
 
-
-#ifdef USE_PARAGUI
-	/* Attempt to use the "main-pgu.c" support */
-	if (!done && (!mstr || (streq(mstr, "pgu"))))
-	{
-		extern errr init_pgu(int, char**);
-		if (0 == init_pgu(argc, argv))
-		{
-			ANGBAND_SYS = "pgu";
-			done = TRUE;
-		}
-	}
-#endif
-
-#ifdef USE_LUA_GUI
-	/* Attempt to use the "main-lua.c" support */
-	if (!done && (!mstr || (streq(mstr, "lua"))))
-	{
-		extern errr init_lua_gui(int, char**);
-		if (0 == init_lua_gui(argc, argv))
-		{
-			ANGBAND_SYS = "lua";
-			done = TRUE;
-		}
-	}
-#endif
-
-#ifdef USE_NET
-	/* Attempt to use the "main-net.c" support */
-	if (!done && (!mstr || (streq(mstr, "net"))))
-	{
-		extern errr init_net(int, char**);
-		if (0 == init_net(argc, argv))
-		{
-			ANGBAND_SYS = "net";
-			done = TRUE;
-		}
-	}
-#endif
 
 #ifdef USE_SDL
 	/* Attempt to use the "main-sdl.c" support */
