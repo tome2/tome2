@@ -15,7 +15,7 @@ Simply run the commands below.
 
 You should now be able to run
 
-       $ ./src/tome2
+       $ ./src/tome
 
 to start ToME.
 
