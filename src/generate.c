@@ -8630,47 +8630,34 @@ void generate_cave(void)
 			/* Build the town */
 			else if (!dun_level)
 			{
+				/* Big town */
+				cur_hgt = MAX_HGT;
+				cur_wid = MAX_WID;
+
+				/* Determine number of panels */
+				max_panel_rows = (cur_hgt / SCREEN_HGT) * 2 - 2;
+				max_panel_cols = (cur_wid / SCREEN_WID) * 2 - 2;
+
+				/* Assume illegal panel */
+				panel_row_min = max_panel_rows * (SCREEN_HGT / 2);
+				panel_col_min = max_panel_cols * (SCREEN_WID / 2);
+
 				/* Big wilderness mode */
 				if (!p_ptr->wild_mode)
 				{
-					/* Big town */
-					cur_hgt = MAX_HGT;
-					cur_wid = MAX_WID;
-
-					/* Determine number of panels */
-					max_panel_rows = (cur_hgt / SCREEN_HGT) * 2 - 2;
-					max_panel_cols = (cur_wid / SCREEN_WID) * 2 - 2;
-
-					/* Assume illegal panel */
-					panel_row_min = max_panel_rows * (SCREEN_HGT / 2);
-					panel_col_min = max_panel_cols * (SCREEN_WID / 2);
-
 					/* Make the wilderness */
 					wilderness_gen(0);
-
-					okay = TRUE;
 				}
 
 				/* Small wilderness mode */
 				else
 				{
-					/* Big screen */
-					cur_hgt = MAX_HGT;
-					cur_wid = MAX_WID;
-
-					/* Determine number of panels */
-					max_panel_rows = (cur_hgt / SCREEN_HGT) * 2 - 2;
-					max_panel_cols = (cur_wid / SCREEN_WID) * 2 - 2;
-
-					/* Assume illegal panel */
-					panel_row_min = max_panel_rows * (SCREEN_HGT / 2);
-					panel_col_min = max_panel_cols * (SCREEN_WID / 2);
-
 					/* Make the wilderness */
 					wilderness_gen_small();
-
-					okay = TRUE;
 				}
+
+
+				okay = TRUE;
 			}
 
 			/* Build a dungeon level */
