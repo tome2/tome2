@@ -142,7 +142,7 @@ static void wiz_create_named_art()
 	object_type *q_ptr;
 	int i, a_idx;
 	cptr p = "Number of the artifact :";
-	char out_val[80];
+	char out_val[80] = "";
 	artifact_type *a_ptr;
 
 	if (!get_string(p, out_val, 4)) return;
