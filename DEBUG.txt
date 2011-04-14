@@ -1,0 +1,8 @@
+Debugging
+=========
+
+To turn on Debug mode when compiling run cmake with the
+
+   -DCMAKE_BUILD_TYPE=Debug
+
+parameter.

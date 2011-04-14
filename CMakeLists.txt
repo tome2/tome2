@@ -10,7 +10,7 @@ IF(CMAKE_COMPILER_IS_GNUCC)
   # Let's set sensible options.
   SET(CMAKE_C_FLAGS         "${CMAKE_C_FLAGS} -pipe -Wall -Wno-unused-value")
   SET(CMAKE_C_FLAGS_RELEASE "-O2")
-  SET(CMAKE_C_FLAGS_DEBUG   "-O1 -g")
+  SET(CMAKE_C_FLAGS_DEBUG   "-O0 -g")
 ENDIF()
 
 # Add definitions.
