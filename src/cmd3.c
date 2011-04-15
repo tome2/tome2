@@ -32,7 +32,7 @@ void do_cmd_inven(void)
 	item_tester_full = TRUE;
 
 	/* Display the p_ptr->inventory */
-	show_inven(FALSE);
+	show_inven();
 
 	/* Hack -- hide empty slots */
 	item_tester_full = FALSE;
@@ -96,7 +96,7 @@ void do_cmd_equip(void)
 	item_tester_full = TRUE;
 
 	/* Display the equipment */
-	show_equip(FALSE);
+	show_equip();
 
 	/* Hack -- undo the hack above */
 	item_tester_full = FALSE;

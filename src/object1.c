@@ -4706,14 +4706,14 @@ void show_inven_aux(bool_ mirror, bool_ everything)
 }
 
 
-void show_inven(bool_ mirror)
+void show_inven()
 {
-	show_inven_aux(mirror, FALSE);
+	show_inven_aux(FALSE, FALSE);
 }
 
-void show_equip(bool_ mirror)
+void show_equip()
 {
-	show_equip_aux(mirror, FALSE);
+	show_equip_aux(FALSE, FALSE);
 }
 
 /*
@@ -5546,7 +5546,9 @@ bool_ get_item_floor(int *cp, cptr pmt, cptr str, int mode)
 			n2 = I2A(i2);
 
 			/* Redraw if needed */
-			if (command_see) show_inven(FALSE);
+			if (command_see) {
+				show_inven();
+			}
 		}
 
 		/* Equipment screen */
@@ -5557,7 +5559,9 @@ bool_ get_item_floor(int *cp, cptr pmt, cptr str, int mode)
 			n2 = I2A(e2 - INVEN_WIELD);
 
 			/* Redraw if needed */
-			if (command_see) show_equip(FALSE);
+			if (command_see) {
+				show_equip();
+			}
 		}
 
 		/* Floor screen */
