@@ -4927,7 +4927,6 @@ void do_cmd_activate(void)
 	item_tester_hook = item_tester_hook_activate;
 
 	/* Get an item */
-	command_see = TRUE;
 	command_wrk = USE_EQUIP;
 	q = "Activate which item? ";
 	s = "You have nothing to activate.";

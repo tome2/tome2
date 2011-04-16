@@ -68,9 +68,6 @@ void do_cmd_inven(void)
 	/* Process normal keys */
 	else
 	{
-		/* Hack -- Use "display" mode */
-		command_see = TRUE;
-
 		/* Mega-Hack -- Don't disable keymaps for this key */
 		request_command_inven_mode = TRUE;
 	}
@@ -133,9 +130,6 @@ void do_cmd_equip(void)
 	/* Process normal keys */
 	else
 	{
-		/* Enter "display" mode */
-		command_see = TRUE;
-
 		/* Mega-Hack -- Don't disable keymaps for this key */
 		request_command_inven_mode = TRUE;
 	}

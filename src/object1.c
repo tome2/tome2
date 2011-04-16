@@ -5452,9 +5452,6 @@ bool_ get_item_floor(int *cp, cptr pmt, cptr str, int mode)
 	/* Require at least one legal choice */
 	if (!allow_inven && !allow_equip && !allow_floor)
 	{
-		/* Cancel command_see */
-		command_see = FALSE;
-
 		/* Oops */
 		oops = TRUE;
 
@@ -5466,8 +5463,7 @@ bool_ get_item_floor(int *cp, cptr pmt, cptr str, int mode)
 	else
 	{
 		/* Hack -- Start on equipment if requested */
-		if (command_see && (command_wrk == (USE_EQUIP))
-		                && allow_equip)
+		if ((command_wrk == (USE_EQUIP)) && allow_equip)
 		{
 			command_wrk = (USE_EQUIP);
 		}
@@ -5491,12 +5487,8 @@ bool_ get_item_floor(int *cp, cptr pmt, cptr str, int mode)
 		}
 	}
 
-	/* Hack -- start out in "display" mode */
-	if (command_see)
-	{
-		/* Save screen */
-		screen_save();
-	}
+	/* Save screen */
+	screen_save();
 
 	/* Repeat until done */
 	while (!done)
@@ -5545,10 +5537,8 @@ bool_ get_item_floor(int *cp, cptr pmt, cptr str, int mode)
 			n1 = I2A(i1);
 			n2 = I2A(i2);
 
-			/* Redraw if needed */
-			if (command_see) {
-				show_inven();
-			}
+			/* Redraw */
+			show_inven();
 		}
 
 		/* Equipment screen */
@@ -5558,10 +5548,8 @@ bool_ get_item_floor(int *cp, cptr pmt, cptr str, int mode)
 			n1 = I2A(e1 - INVEN_WIELD);
 			n2 = I2A(e2 - INVEN_WIELD);
 
-			/* Redraw if needed */
-			if (command_see) {
-				show_equip();
-			}
+			/* Redraw */
+			show_equip();
 		}
 
 		/* Floor screen */
@@ -5574,8 +5562,8 @@ bool_ get_item_floor(int *cp, cptr pmt, cptr str, int mode)
 			n1 = I2A(j - floor_top);
 			n2 = I2A(k - floor_top);
 
-			/* Redraw if needed */
-			if (command_see) show_floor(p_ptr->py, p_ptr->px);
+			/* Redraw */
+			show_floor(p_ptr->py, p_ptr->px);
 		}
 
 		/* Viewing inventory */
@@ -5590,9 +5578,6 @@ bool_ get_item_floor(int *cp, cptr pmt, cptr str, int mode)
 
 			/* Append */
 			strcat(out_val, tmp_val);
-
-			/* Indicate ability to "view" */
-			if (!command_see) strcat(out_val, " * to see,");
 
 			/* Append */
 			if (allow_equip) strcat(out_val, " / for Equip,");
@@ -5614,9 +5599,6 @@ bool_ get_item_floor(int *cp, cptr pmt, cptr str, int mode)
 			/* Append */
 			strcat(out_val, tmp_val);
 
-			/* Indicate ability to "view" */
-			if (!command_see) strcat(out_val, " * to see,");
-
 			/* Append */
 			if (allow_inven) strcat(out_val, " / for Inven,");
 
@@ -5635,9 +5617,6 @@ bool_ get_item_floor(int *cp, cptr pmt, cptr str, int mode)
 
 			/* Append */
 			strcat(out_val, tmp_val);
-
-			/* Indicate ability to "view" */
-			if (!command_see) strcat(out_val, " * to see,");
 
 			/* Append */
 			if (allow_inven)
@@ -5686,32 +5665,6 @@ bool_ get_item_floor(int *cp, cptr pmt, cptr str, int mode)
 				break;
 			}
 
-		case '*':
-		case '?':
-		case ' ':
-			{
-				/* Hide the list */
-				if (command_see)
-				{
-					/* Flip flag */
-					command_see = FALSE;
-
-					/* Load screen */
-					screen_load();
-				}
-
-				/* Show the list */
-				else
-				{
-					/* Save screen */
-					screen_save();
-
-					/* Flip flag */
-					command_see = TRUE;
-				}
-				break;
-			}
-
 		case '/':
 			{
 				if (command_wrk == (USE_INVEN))
@@ -5750,14 +5703,8 @@ bool_ get_item_floor(int *cp, cptr pmt, cptr str, int mode)
 				}
 
 				/* Hack -- Fix screen */
-				if (command_see)
-				{
-					/* Load screen */
-					screen_load();
-
-					/* Save screen */
-					screen_save();
-				}
+				screen_load();
+				screen_save();
 
 				/* Need to redraw */
 				break;
@@ -5802,14 +5749,8 @@ bool_ get_item_floor(int *cp, cptr pmt, cptr str, int mode)
 				}
 
 				/* Hack -- Fix screen */
-				if (command_see)
-				{
-					/* Load screen */
-					screen_load();
-
-					/* Save screen */
-					screen_save();
-				}
+				screen_load();
+				screen_save();
 
 				command_wrk = (USE_FLOOR);
 
@@ -6013,16 +5954,8 @@ bool_ get_item_floor(int *cp, cptr pmt, cptr str, int mode)
 		}
 	}
 
-	/* Fix the screen if necessary */
-	if (command_see)
-	{
-		/* Load screen */
-		screen_load();
-
-		/* Hack -- Cancel "display" */
-		command_see = FALSE;
-	}
-
+	/* Fix the screen */
+	screen_load();
 
 	/* Forget the item_tester_tval restriction */
 	item_tester_tval = 0;
@@ -6112,9 +6045,6 @@ bool_ get_item_floor(int *cp, cptr pmt, cptr str, int mode)
  * to allow the user to enter a command while viewing those screens, and
  * also to induce "auto-enter" of stores, and other such stuff.
  *
- * Global "p_ptr->command_see" may be set before calling this function to start
- * out in "browse" mode.  It is cleared before this function returns.
- *
  * Global "p_ptr->command_wrk" is used to choose between equip/inven listings.
  * If it is TRUE then we are viewing inventory, else equipment.
  *
@@ -6124,7 +6054,6 @@ bool_ get_item_floor(int *cp, cptr pmt, cptr str, int mode)
 bool_ get_item(int *cp, cptr pmt, cptr str, int mode)
 {
 	automatizer_create = FALSE;
-        command_see = TRUE; /* Start out displaying all alternatives. */
 
 	return get_item_floor(cp, pmt, str, mode);
 }

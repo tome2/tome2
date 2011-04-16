@@ -3923,9 +3923,6 @@ void do_cmd_store(void)
 	/* Hack -- Cancel automatic command */
 	command_new = 0;
 
-	/* Hack -- Cancel "see" mode */
-	command_see = FALSE;
-
 	/* Mega-Hack -- Clear the 'ignore-keymaps' list */
 	memset(request_command_ignore_keymaps, 0, 12);
 
@@ -4392,9 +4389,6 @@ void do_cmd_home_trump(void)
 
 	/* Hack -- Cancel automatic command */
 	command_new = 0;
-
-	/* Hack -- Cancel "see" mode */
-	command_see = FALSE;
 
 	/* Mega-Hack -- Clear the 'ignore-keymaps' list */
 	memset(request_command_ignore_keymaps, 0, 12);

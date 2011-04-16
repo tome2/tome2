@@ -4497,10 +4497,6 @@ void process_player(void)
 		}
 
 
-		/* Hack -- cancel "lurking browse mode" */
-		if (!command_new) command_see = FALSE;
-
-
 		/* Assume free turn */
 		energy_use = 0;
 

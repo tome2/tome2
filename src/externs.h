@@ -126,7 +126,6 @@ extern s16b command_cmd;
 extern s16b command_arg;
 extern s16b command_rep;
 extern s16b command_dir;
-extern s16b command_see;
 extern s16b command_wrk;
 extern s16b command_new;
 extern s32b energy_use;
