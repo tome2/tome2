@@ -1091,20 +1091,14 @@ static void player_outfit(void)
 {
 	int i;
 
-	object_type forge;
-
-	object_type *q_ptr;
-
-
 	/*
 	 * Get an adventurer guide describing a bit of the
 	 * wilderness(useless for vanilla town)
 	 */
 	if (!vanilla_town)
 	{
-		/* Get local object */
-		q_ptr = &forge;
-
+		object_type forge;
+		object_type *q_ptr = &forge;
 		/* Hack -- Give the player an adventurer guide */
 		object_prep(q_ptr, lookup_kind(TV_PARCHMENT, 20));
 		q_ptr->number = 1;
@@ -1115,13 +1109,9 @@ static void player_outfit(void)
 
 	process_hooks(HOOK_BIRTH_OBJECTS, "()");
 
-	/* Get local object */
-	q_ptr = &forge;
-
-	/* Get local object */
-	q_ptr = &forge;
-
 	{
+		object_type forge;
+		object_type *q_ptr = &forge;
 		/* Hack -- Give the player some food */
 		object_prep(q_ptr, lookup_kind(TV_FOOD, SV_FOOD_RATION));
 		q_ptr->number = (byte)rand_range(3, 7);
@@ -1130,10 +1120,9 @@ static void player_outfit(void)
 		(void)inven_carry(q_ptr, FALSE);
 	}
 
-	/* Get local object */
-	q_ptr = &forge;
-
 	{
+		object_type forge;
+		object_type *q_ptr = &forge;
 		/* Hack -- Give the player some torches */
 		object_prep(q_ptr, lookup_kind(TV_LITE, SV_LITE_TORCH));
 		q_ptr->number = (byte)rand_range(3, 7);
@@ -1142,9 +1131,6 @@ static void player_outfit(void)
 		object_known(q_ptr);
 		(void)inven_carry(q_ptr, FALSE);
 	}
-
-	/* Get local object */
-	q_ptr = &forge;
 
 	/* Rogues have a better knowledge of traps */
 	if (has_ability(AB_TRAPPING))
@@ -1157,6 +1143,8 @@ static void player_outfit(void)
 		t_info[TRAP_OF_FIRE_BOLT].ident = TRUE;
 
 		/* Hack -- Give the player a some ammo for the traps */
+		object_type forge;
+		object_type *q_ptr = &forge;
 		object_prep(q_ptr, lookup_kind(TV_SHOT, SV_AMMO_NORMAL));
 		q_ptr->number = (byte)rand_range(5, 15);
 		object_aware(q_ptr);
