@@ -4323,7 +4323,7 @@ int spell_chance_random(random_spell* rspell)
 
 
 	/* Extract the base spell failure rate */
-	chance = rspell->level + 25;
+	chance = rspell->level + 10;
 
 	/* Reduce failure rate by "effective" level adjustment */
 	chance -= 3 * (get_skill(SKILL_THAUMATURGY) - rspell->level);
