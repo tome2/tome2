@@ -9149,7 +9149,7 @@ void generate_spell(int plev)
 
 	power = rand_int(5);
 
-	dice = plev / 5;
+	dice = plev / 2;
 	sides = plev;
 	mana = plev;
 
