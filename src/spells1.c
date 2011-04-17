@@ -9147,7 +9147,7 @@ void generate_spell(int plev)
 
 	rspell = &random_spells[spell_num];
 
-	power = rand_int(15);
+	power = rand_int(5);
 
 	dice = plev / 5;
 	sides = plev;
