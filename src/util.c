@@ -171,14 +171,12 @@ void user_name(char *buf, int id)
 * Extract a "parsed" path from an initial filename
 * Normally, we simply copy the filename into the buffer
 * But leading tilde symbols must be handled in a special way
-* Replace "~user/" by the home directory of the user named "user"
 * Replace "~/" by the home directory of the current user
 */
 errr path_parse(char *buf, int max, cptr file)
 {
 	cptr	u, s;
 	struct passwd	*pw;
-	char	user[128];
 
 
 	/* Assume no result */
@@ -200,9 +198,6 @@ errr path_parse(char *buf, int max, cptr file)
 	/* Look for non-user portion of the file */
 	s = strstr(u, PATH_SEP);
 
-	/* Hack -- no long user names */
-	if (s && (s >= u + sizeof(user))) return (1);
-
 #ifdef GETLOGIN_BROKEN
 	/* Ask the environment for the home directory */
 	u = getenv("HOME");
@@ -211,21 +206,8 @@ errr path_parse(char *buf, int max, cptr file)
 
 	(void)strcpy(buf, u);
 #else
-	/* Extract a user name */
-	if (s)
-	{
-		int i;
-		for (i = 0; u < s; ++i) user[i] = *u++;
-		user[i] = '\0';
-		u = user;
-	}
-
-	/* Look up the "current" user */
-	if (u[0] == '\0') u = getlogin();
-
-	/* Look up a user (or "current" user) */
-	if (u) pw = getpwnam(u);
-	else pw = getpwuid(getuid());
+	/* Look up password data for user */
+	pw = getpwuid(getuid());
 
 	/* Nothing found? */
 	if (!pw) return (1);

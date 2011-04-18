@@ -307,8 +307,6 @@ extern s16b monster_race_idx;
 extern s16b monster_ego_idx;
 extern object_type *tracked_object;
 extern int player_uid;
-extern int player_euid;
-extern int player_egid;
 extern char player_name[32];
 extern char player_base[32];
 extern char died_from[80];

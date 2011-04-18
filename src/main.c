@@ -264,56 +264,16 @@ int main(int argc, char *argv[])
 	argv0 = argv[0];
 
 
-#ifdef SET_UID
-
 	/* Default permissions on files */
 	(void)umask(022);
-
-#endif /* SET_UID */
 
 
 	/* Get the file paths */
 	init_stuff();
 
 
-#ifdef SET_UID
-
 	/* Get the user id (?) */
 	player_uid = getuid();
-
-# ifdef SAFE_SETUID
-
-# ifdef _POSIX_SAVED_IDS
-
-	/* Save some info for later */
-	player_euid = geteuid();
-	player_egid = getegid();
-
-# endif
-
-# if 0	/* XXX XXX XXX */
-
-	/* Redundant setting necessary in case root is running the game */
-	/* If not root or game not setuid the following two calls do nothing */
-
-	if (setgid(getegid()) != 0)
-	{
-		quit("setgid(): cannot set permissions correctly!");
-	}
-
-	if (setuid(geteuid()) != 0)
-	{
-		quit("setuid(): cannot set permissions correctly!");
-	}
-
-# endif  /* XXX XXX XXX */
-
-# endif  /* SAFE_SETUID */
-
-#endif /* SET_UID */
-
-
-#ifdef SET_UID
 
 	/* Acquire the "user name" as a default player name */
 	user_name(player_name, player_uid);
@@ -332,8 +292,6 @@ int main(int argc, char *argv[])
 		/* Oops */
 		if (ret == FALSE) quit("Cannot create directory " PRIVATE_USER_PATH);
 	}
-
-#endif /* SET_UID */
 
 
 

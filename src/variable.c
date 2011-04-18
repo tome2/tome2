@@ -412,8 +412,6 @@ object_type *tracked_object;
  * User info
  */
 int player_uid;
-int player_euid;
-int player_egid;
 
 /*
  * Current player's character name
