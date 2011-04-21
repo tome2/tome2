@@ -3550,7 +3550,7 @@ void do_cmd_throw(void)
 	 * Hack -- If rods or wands are thrown, the total maximum timeout or
 	 * charges need to be allocated between the two stacks.
 	 */
-	if ((o_ptr->tval == TV_WAND))
+	if (o_ptr->tval == TV_WAND)
 	{
 		q_ptr->pval = o_ptr->pval / o_ptr->number;
 

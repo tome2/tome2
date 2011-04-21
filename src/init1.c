@@ -6181,7 +6181,7 @@ errr init_ab_info_txt(FILE *fp, char *buf)
 			level = atoi(buf + 2);
 			skill = find_skill(sec);
 
-			if ((skill == -1)) return (1);
+			if (skill == -1) return (1);
 
 			for (z = 0; z < 10; z++)
 				if (ab_ptr->skills[z] == -1) break;
@@ -6203,7 +6203,7 @@ errr init_ab_info_txt(FILE *fp, char *buf)
 
 			ab = find_ability(buf + 2);
 
-			if ((ab == -1)) return (1);
+			if (ab == -1) return (1);
 
 			for (z = 0; z < 10; z++)
 				if (ab_ptr->need_abilities[z] == -1) break;
@@ -6238,7 +6238,7 @@ errr init_ab_info_txt(FILE *fp, char *buf)
 					break;
 			}
 
-			if ((stat == 6)) return (1);
+			if (stat == 6) return (1);
 
 			ab_ptr->stat[stat] = atoi(buf + 2);
 

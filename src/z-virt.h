@@ -65,47 +65,47 @@ extern "C" {
 
 /* Wipe an array of type T[N], at location P, and return P */
 #define C_WIPE(P,N,T) \
-	(T*)(memset((char*)(P),0,C_SIZE(N,T)))
+	(memset((char*)(P),0,C_SIZE(N,T)))
 
 /* Wipe a thing of type T, at location P, and return P */
 #define WIPE(P,T) \
-	(T*)(memset((char*)(P),0,SIZE(T)))
+	(memset((char*)(P),0,SIZE(T)))
 
 
 /* Load an array of type T[N], at location P1, from another, at location P2 */
 #define C_COPY(P1,P2,N,T) \
-	(T*)(memcpy((char*)(P1),(char*)(P2),C_SIZE(N,T)))
+	(memcpy((char*)(P1),(char*)(P2),C_SIZE(N,T)))
 
 /* Load a thing of type T, at location P1, from another, at location P2 */
 #define COPY(P1,P2,T) \
-	(T*)(memcpy((char*)(P1),(char*)(P2),SIZE(T)))
+	(memcpy((char*)(P1),(char*)(P2),SIZE(T)))
 
 
 /* Free an array of N things of type T at P, return NULL */
 #define C_FREE(P,N,T) \
-	(T*)(rnfree(P,C_SIZE(N,T)))
+	(rnfree(P,C_SIZE(N,T)))
 
 /* Free one thing of type T at P, return NULL */
 #define FREE(P,T) \
-	(T*)(rnfree(P,SIZE(T)))
+	(rnfree(P,SIZE(T)))
 
 
 /* Allocate, and return, an array of type T[N] */
 #define C_RNEW(N,T) \
-	((T*)(ralloc(C_SIZE(N,T))))
+	(ralloc(C_SIZE(N,T)))
 
 /* Allocate, and return, a thing of type T */
 #define RNEW(T) \
-	((T*)(ralloc(SIZE(T))))
+	(ralloc(SIZE(T)))
 
 
 /* Allocate, wipe, and return an array of type T[N] */
 #define C_ZNEW(N,T) \
-	((T*)(C_WIPE(C_RNEW(N,T),N,T)))
+	(C_WIPE(C_RNEW(N,T),N,T))
 
 /* Allocate, wipe, and return a thing of type T */
 #define ZNEW(T) \
-	((T*)(WIPE(RNEW(T),T)))
+	(WIPE(RNEW(T),T))
 
 
 /* Allocate a wiped array of type T[N], assign to pointer P */

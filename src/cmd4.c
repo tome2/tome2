@@ -919,7 +919,7 @@ static void do_cmd_options_win(void)
 			cptr s = angband_term_name[j];
 
 			/* Use color */
-			if ((j == x)) a = TERM_L_BLUE;
+			if (j == x) a = TERM_L_BLUE;
 
 			/* Window name, staggered, centered */
 			Term_putstr(35 + j * 5 - strlen(s) / 2, 2 + j % 2, -1, a, s);
@@ -933,7 +933,7 @@ static void do_cmd_options_win(void)
 			cptr str = window_flag_desc[i];
 
 			/* Use color */
-			if ((i == y)) a = TERM_L_BLUE;
+			if (i == y) a = TERM_L_BLUE;
 
 			/* Unused option */
 			if (!str) str = "(Unused option)";
