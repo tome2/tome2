@@ -63,24 +63,6 @@ extern "C" {
 	((huge)(sizeof(T)))
 
 
-/* Compare two arrays of type T[N], at locations P1 and P2 */
-#define C_DIFF(P1,P2,N,T) \
-	(memcmp((char*)(P1),(char*)(P2),C_SIZE(N,T)))
-
-/* Compare two things of type T, at locations P1 and P2 */
-#define DIFF(P1,P2,T) \
-	(memcmp((char*)(P1),(char*)(P2),SIZE(T)))
-
-
-/* Set every byte in an array of type T[N], at location P, to V, and return P */
-#define C_BSET(P,V,N,T) \
-	(T*)(memset((char*)(P),(V),C_SIZE(N,T)))
-
-/* Set every byte in a thing of type T, at location P, to V, and return P */
-#define BSET(P,V,T) \
-	(T*)(memset((char*)(P),(V),SIZE(T)))
-
-
 /* Wipe an array of type T[N], at location P, and return P */
 #define C_WIPE(P,N,T) \
 	(T*)(memset((char*)(P),0,C_SIZE(N,T)))
