@@ -757,27 +757,6 @@ errr fd_seek(int fd, huge n)
 
 
 /*
-* Hack -- attempt to truncate a file descriptor
-*/
-errr fd_chop(int fd, huge n)
-{
-	/* XXX XXX */
-	n = n ? n : 0;
-
-	/* Verify the fd */
-	if (fd < 0) return ( -1);
-
-#if defined(SUNOS) || defined(ULTRIX) || defined(NeXT)
-	/* Truncate */
-	ftruncate(fd, n);
-#endif
-
-	/* Success */
-	return (0);
-}
-
-
-/*
 * Hack -- attempt to read data from a file descriptor
 */
 errr fd_read(int fd, char *buf, huge n)

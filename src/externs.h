@@ -1445,7 +1445,6 @@ extern int fd_make(cptr file, int mode);
 extern int fd_open(cptr file, int flags);
 extern errr fd_lock(int fd, int what);
 extern errr fd_seek(int fd, huge n);
-extern errr fd_chop(int fd, huge n);
 extern errr fd_read(int fd, char *buf, huge n);
 extern errr fd_write(int fd, cptr buf, huge n);
 extern errr fd_close(int fd);
