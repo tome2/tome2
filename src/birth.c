@@ -2117,20 +2117,6 @@ static bool_ player_birth_aux_ask()
 		}
 
 		/* Set class */
-#ifdef RESTRICT_COMBINATIONS
-		if (!(restrictions & BIT(k)))
-		{
-			noscore |= 0x0020;
-			message_add(MESSAGE_MSG, " ", TERM_VIOLET);
-			message_add(MESSAGE_MSG, " ", TERM_VIOLET);
-			message_add(MESSAGE_MSG, " ", TERM_VIOLET);
-			message_add(MESSAGE_MSG, "***************************", TERM_VIOLET);
-			message_add(MESSAGE_MSG, "***************************", TERM_VIOLET);
-			message_add(MESSAGE_MSG, "********* Cheater *********", TERM_VIOLET);
-			message_add(MESSAGE_MSG, "***************************", TERM_VIOLET);
-			message_add(MESSAGE_MSG, "***************************", TERM_VIOLET);
-		}
-#endif
 		p_ptr->pclass = class_types[k];
 
 		/* Choose class spec */

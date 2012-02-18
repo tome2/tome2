@@ -322,11 +322,6 @@
 #define USE_FAST_AUTOROLLER
 
 /*
- * Forbid the use of some race/class combinations
- */
-/* #define RESTRICT_COMBINATIONS */
-
-/*
  * Enable the CTRL + L command to quit without saving
  * Only use for debugging purpose, otherwise you are a CHEATER
  */
