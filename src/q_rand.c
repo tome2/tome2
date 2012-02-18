@@ -167,7 +167,7 @@ void hero_death(s32b m_idx, s32b r_idx)
 			int d = (i / 15) + 1;
 
 			/* Pick a location */
-			scatter(&y, &x, p_ptr->py, p_ptr->px, d, 0);
+			scatter(&y, &x, p_ptr->py, p_ptr->px, d);
 
 			/* Require "empty" floor grid */
 			if (!cave_empty_bold(y, x)) continue;

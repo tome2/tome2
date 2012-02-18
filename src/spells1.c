@@ -3033,7 +3033,7 @@ static bool_ project_f(int who, int r, int y, int x, int dam, int typ)
 			{
 				y2 = y1 = randint(cur_hgt) - 1;
 				x2 = x1 = randint(cur_wid) - 1;
-				scatter(&y2, &x2, y1, x1, 20, 0);
+				scatter(&y2, &x2, y1, x1, 20);
 				tries --;
 			}
 

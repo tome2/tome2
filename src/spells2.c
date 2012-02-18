@@ -5098,7 +5098,7 @@ bool_ genocide_aux(bool_ player_cast, char typ)
 
 			do
 			{
-				scatter(&wy, &wx, m_ptr->fy, m_ptr->fx, 10, 0);
+				scatter(&wy, &wx, m_ptr->fy, m_ptr->fx, 10);
 			}
 			while (!(in_bounds(wy, wx) && cave_floor_bold(wy, wx)) && --attempts);
 
@@ -5223,7 +5223,7 @@ bool_ mass_genocide(bool_ player_cast)
 
 			do
 			{
-				scatter(&wy, &wx, m_ptr->fy, m_ptr->fx, 10, 0);
+				scatter(&wy, &wx, m_ptr->fy, m_ptr->fx, 10);
 			}
 			while (!(in_bounds(wy, wx) && cave_floor_bold(wy, wx)) && --attempts);
 

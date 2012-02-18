@@ -87,7 +87,7 @@ bool_ set_parasite(int v, int r)
 
 				do
 				{
-					scatter(&wy, &wx, p_ptr->py, p_ptr->px, 10, 0);
+					scatter(&wy, &wx, p_ptr->py, p_ptr->px, 10);
 				}
 				while (!(in_bounds(wy, wx) && cave_floor_bold(wy, wx)) && --attempts);
 
@@ -2504,7 +2504,7 @@ void monster_death(int m_idx)
 
 			do
 			{
-				scatter(&wy, &wx, p_ptr->py, p_ptr->px, 20, 0);
+				scatter(&wy, &wx, p_ptr->py, p_ptr->px, 20);
 			}
 			while (!(in_bounds(wy, wx) && cave_floor_bold(wy, wx)) && --attempts);
 
@@ -2546,7 +2546,7 @@ void monster_death(int m_idx)
 
 			do
 			{
-				scatter(&wy, &wx, p_ptr->py, p_ptr->px, 3, 0);
+				scatter(&wy, &wx, p_ptr->py, p_ptr->px, 3);
 			}
 			while (!(in_bounds(wy, wx) && cave_floor_bold(wy, wx)) && --attempts);
 
@@ -2750,7 +2750,7 @@ void monster_death(int m_idx)
 
 		do
 		{
-			scatter(&yy, &xx, y, x, 6, 0);
+			scatter(&yy, &xx, y, x, 6);
 		}
 		while (!(in_bounds(yy, xx) && cave_floor_bold(yy, xx)) && --attempts);
 
@@ -2904,7 +2904,7 @@ void monster_death(int m_idx)
 			int d = 1;
 
 			/* Pick a location */
-			scatter(&ny, &nx, y, x, d, 0);
+			scatter(&ny, &nx, y, x, d);
 
 			/* Stagger */
 			y = ny;
@@ -6032,7 +6032,7 @@ void make_wish(void)
 
 					do
 					{
-						scatter(&wy, &wx, p_ptr->py, p_ptr->px, 5, 0);
+						scatter(&wy, &wx, p_ptr->py, p_ptr->px, 5);
 					}
 					while (!(in_bounds(wy, wx) && cave_floor_bold(wy, wx)) && --attempts);
 

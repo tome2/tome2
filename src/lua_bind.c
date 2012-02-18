@@ -148,7 +148,7 @@ void find_position(int y, int x, int *yy, int *xx)
 
 	do
 	{
-		scatter(yy, xx, y, x, 6, 0);
+		scatter(yy, xx, y, x, 6);
 	}
 	while (!(in_bounds(*yy, *xx) && cave_floor_bold(*yy, *xx)) && --attempts);
 }

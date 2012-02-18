@@ -1273,7 +1273,7 @@ static void process_world(void)
 					/* Summon */
 					while (1)
 					{
-						scatter(&yy, &xx, p_ptr->py, p_ptr->px, 6, 0);
+						scatter(&yy, &xx, p_ptr->py, p_ptr->px, 6);
 
 						/* Accept an empty grid within the boundary */
 						if (in_bounds(yy, xx) && cave_floor_bold(yy, xx)) break;

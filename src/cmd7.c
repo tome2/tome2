@@ -7365,7 +7365,7 @@ void do_cmd_symbiotic(void)
 				d = 2;
 				while (d < 100)
 				{
-					scatter(&y, &x, p_ptr->py, p_ptr->px, d, 0);
+					scatter(&y, &x, p_ptr->py, p_ptr->px, d);
 
 					if (cave_floor_bold(y, x) && (!cave[y][x].m_idx)) break;
 

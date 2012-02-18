@@ -2853,7 +2853,7 @@ bool_ place_monster_aux(int y, int x, int r_idx, bool_ slp, bool_ grp, int statu
 			int nx, ny, z, d = 3;
 
 			/* Pick a location */
-			scatter(&ny, &nx, y, x, d, 0);
+			scatter(&ny, &nx, y, x, d);
 
 			/* Require empty grids */
 			if (!cave_empty_bold(ny, nx)) continue;
@@ -3399,7 +3399,7 @@ bool_ summon_specific(int y1, int x1, int lev, int type)
 		int d = (i / 15) + 1;
 
 		/* Pick a location */
-		scatter(&y, &x, y1, x1, d, 0);
+		scatter(&y, &x, y1, x1, d);
 
 		/* Require "empty" floor grid */
 		if (!cave_empty_bold(y, x)) continue;
@@ -3487,7 +3487,7 @@ bool_ summon_specific_friendly(int y1, int x1, int lev, int type, bool_ Group_ok
 		int d = (i / 15) + 1;
 
 		/* Pick a location */
-		scatter(&y, &x, y1, x1, d, 0);
+		scatter(&y, &x, y1, x1, d);
 
 		/* Require "empty" floor grid */
 		if (!cave_empty_bold(y, x)) continue;
@@ -3701,7 +3701,7 @@ bool_ multiply_monster(int m_idx, bool_ charm, bool_ clone)
 
 
 		/* Pick a location */
-		scatter(&y, &x, m_ptr->fy, m_ptr->fx, d, 0);
+		scatter(&y, &x, m_ptr->fy, m_ptr->fx, d);
 
 		/* Require an "empty" floor grid */
 		if (!cave_empty_bold(y, x)) continue;

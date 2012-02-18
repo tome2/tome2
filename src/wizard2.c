@@ -231,7 +231,7 @@ static void do_cmd_summon_horde()
 
 	while (--attempts)
 	{
-		scatter(&wy, &wx, p_ptr->py, p_ptr->px, 3, 0);
+		scatter(&wy, &wx, p_ptr->py, p_ptr->px, 3);
 		if (cave_naked_bold(wy, wx)) break;
 	}
 
@@ -1521,7 +1521,7 @@ static void do_cmd_wiz_named(int r_idx, bool_ slp)
 		int d = 1;
 
 		/* Pick a location */
-		scatter(&y, &x, p_ptr->py, p_ptr->px, d, 0);
+		scatter(&y, &x, p_ptr->py, p_ptr->px, d);
 
 		/* Require empty grids */
 		if (!cave_empty_bold(y, x)) continue;
@@ -1556,7 +1556,7 @@ void do_cmd_wiz_named_friendly(int r_idx, bool_ slp)
 		int d = 1;
 
 		/* Pick a location */
-		scatter(&y, &x, p_ptr->py, p_ptr->px, d, 0);
+		scatter(&y, &x, p_ptr->py, p_ptr->px, d);
 
 		/* Require empty grids */
 		if (!cave_empty_bold(y, x)) continue;
