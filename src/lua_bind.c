@@ -20,17 +20,6 @@ magic_power *grab_magic_power(magic_power *m_ptr, int num)
 {
 	return (&m_ptr[num]);
 }
-static char *magic_power_info_lua_fct;
-static void magic_power_info_lua(char *p, int power)
-{
-	int oldtop = lua_gettop(L);
-
-	lua_getglobal(L, magic_power_info_lua_fct);
-	tolua_pushnumber(L, power);
-	lua_call(L, 1, 1);
-	strcpy(p, lua_tostring(L, -1));
-	lua_settop(L, oldtop);
-}
 
 bool_ lua_spell_success(magic_power *spell, int stat, char *oups_fct)
 {
