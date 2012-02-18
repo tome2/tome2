@@ -288,7 +288,7 @@ static level_generator_type *level_generators = NULL;
 /*
  * Add a new generator
  */
-void add_level_generator(cptr name, bool_ (*generator)(cptr name), bool_ stairs, bool_ monsters, bool_ objects, bool_ miscs)
+void add_level_generator(cptr name, bool_ (*generator)(), bool_ stairs, bool_ monsters, bool_ objects, bool_ miscs)
 {
 	level_generator_type *g;
 
@@ -6722,7 +6722,7 @@ static void fill_level(bool_ use_floor, byte smooth);
 /*
  * Generate a normal dungeon level
  */
-bool_ level_generate_dungeon(cptr name)
+bool_ level_generate_dungeon()
 {
 	int i, k, y, x, y1, x1, branch = get_branch();
 	dungeon_info_type *d_ptr = &d_info[dungeon_type];
@@ -6739,9 +6739,6 @@ bool_ level_generate_dungeon(cptr name)
 	{
 		if (d_ptr->t_level[i] == dun_level) town_level = d_ptr->t_idx[i];
 	}
-
-	/* unused */
-	name = name;
 
 	/* Check for arena level */
 	if ((dungeon_flags1 & (DF1_EMPTY)) ||

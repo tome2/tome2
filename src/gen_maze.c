@@ -139,16 +139,13 @@ void dig(maze_row *maze, int y, int x, int d)
 }
 
 
-bool_ level_generate_maze(cptr name)
+bool_ level_generate_maze()
 {
 	int i, j, d;
 	int y, dy = 0;
 	int x, dx = 0;
 	int m_1 = 0, m_2 = 0;
 	maze_row *maze;
-
-	/* unused */
-	name = name;
 
 	/* Allocate temporary memory */
 	C_MAKE(maze, (MAX_HGT / 2) + 2, maze_row);
