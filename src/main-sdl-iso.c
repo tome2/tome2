@@ -1470,8 +1470,6 @@ static errr term_data_init(term_data *td, int i)
 	return (0);
 }
 
-#ifdef PRIVATE_USER_PATH
-
 /*
  * Check and create if needed the directory dirpath -- copied from main.c
  */
@@ -1532,8 +1530,6 @@ static bool_ check_create_user_dir(void)
 
 	return private_check_user_directory(dirpath) && private_check_user_directory(versionpath) && private_check_user_directory(savepath);
 }
-
-#endif /* PRIVATE_USER_PATH */
 
 /*
  * Init some stuff - copied from main.c
@@ -1653,8 +1649,6 @@ int main(int argc, char *argv[])
 	user_name(player_name, player_uid);
 
 
-#ifdef PRIVATE_USER_PATH
-
 	/*
 	 * On multiuser systems, users' private directories are
 	 * used to store pref files, chardumps etc.
@@ -1668,8 +1662,6 @@ int main(int argc, char *argv[])
 		/* Oops */
 		if (ret == FALSE) sdl_quit("Cannot create directory " PRIVATE_USER_PATH);
 	}
-
-#endif /* PRIVATE_USER_PATH */
 
 #endif /* SET_UID */
 

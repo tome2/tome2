@@ -1508,9 +1508,7 @@ extern timer_type *new_timer(cptr callback, s32b delay);
 extern void del_timer(timer_type *t_ptr);
 
 /* main.c */
-#ifdef PRIVATE_USER_PATH
 extern bool_ private_check_user_directory(cptr dirpath);
-#endif
 
 /* xtra1.c */
 extern void fix_message(void);

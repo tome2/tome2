@@ -47,8 +47,6 @@ static void quit_hook(cptr s)
 
 
 
-#ifdef PRIVATE_USER_PATH
-
 /*
  * Check and create if needed the directory dirpath
  */
@@ -109,8 +107,6 @@ static bool_ check_create_user_dir(void)
 
 	return private_check_user_directory(dirpath) && private_check_user_directory(versionpath) && private_check_user_directory(savepath);
 }
-
-#endif /* PRIVATE_USER_PATH */
 
 
 /*
@@ -331,8 +327,6 @@ int main(int argc, char *argv[])
 	user_name(player_name, player_uid);
 
 
-#ifdef PRIVATE_USER_PATH
-
 	/*
 	 * On multiuser systems, users' private directories are
 	 * used to store pref files, chardumps etc.
@@ -346,8 +340,6 @@ int main(int argc, char *argv[])
 		/* Oops */
 		if (ret == FALSE) quit("Cannot create directory " PRIVATE_USER_PATH);
 	}
-
-#endif /* PRIVATE_USER_PATH */
 
 #endif /* SET_UID */
 

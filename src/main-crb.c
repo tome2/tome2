@@ -478,8 +478,6 @@
 
 #if defined(MACINTOSH) || defined(MACH_O_CARBON)
 
-#ifdef PRIVATE_USER_PATH
-
 /*
  * Check and create if needed the directory dirpath
  */
@@ -563,8 +561,6 @@ static bool_ check_create_user_dir(void)
 #endif
 	       private_check_user_directory(savepath);
 }
-
-#endif /* PRIVATE_USER_PATH */
 
 
 /*
@@ -6389,10 +6385,8 @@ int main(void)
 	/* Note the "system" */
 	ANGBAND_SYS = "mac";
 
-#ifdef PRIVATE_USER_PATH
 	if (check_create_user_dir() == FALSE)
 		quit("Cannot create directory " PRIVATE_USER_PATH);
-#endif
 
 	/* Initialize */
 	init_stuff();

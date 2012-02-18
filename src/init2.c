@@ -169,8 +169,6 @@ void init_file_paths(char *path)
 	strcpy(tail, "pref");
 	ANGBAND_DIR_PREF = string_make(path);
 
-#ifdef PRIVATE_USER_PATH
-
 	/* synchronize with module_reset_dir */
 	{
 		char user_path[1024];
@@ -200,26 +198,6 @@ void init_file_paths(char *path)
 		strcat(user_path, "/save");
 		ANGBAND_DIR_SAVE = string_make(user_path);
 	}
-
-#else /* PRIVATE_USER_PATH */
-
-	/* Build a path name */
-	strcpy(tail, "save");
-	ANGBAND_DIR_SAVE = string_make(path);
-
-	/* Build a path name */
-	strcpy(tail, "user");
-	ANGBAND_DIR_USER = string_make(path);
-
-	/* Build a path name */
-	strcpy(tail, "note");
-	ANGBAND_DIR_NOTE = string_make(path);
-
-	/* Build a .. blah blah -- Improv */
-	strcpy(tail, "cmov");
-	ANGBAND_DIR_CMOV = string_make(path);
-
-#endif /* PRIVATE_USER_PATH */
 
 	/* Build a path name */
 	strcpy(tail, "xtra");

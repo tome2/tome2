@@ -3966,13 +3966,8 @@ void process_player_base()
 {
 	char temp[128];
 
-#if defined(SAVEFILE_USE_UID) && !defined(PRIVATE_USER_PATH)
-	/* Rename the savefile, using the player_uid and player_base */
-	(void)sprintf(temp, "%d.%s", player_uid, player_base);
-#else
 	/* Rename the savefile, using the player_base */
 	(void)sprintf(temp, "%s", player_base);
-#endif
 
 	/* Build the filename */
 	path_build(savefile, 1024, ANGBAND_DIR_SAVE, temp);
