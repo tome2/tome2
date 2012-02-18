@@ -1361,11 +1361,6 @@ s16b rune_num;
 fate fates[MAX_FATES];
 
 /*
- * Vanilla town.
- */
-byte vanilla_town = FALSE;
-
-/*
  * Which dungeon ?
  * 0 = Wilderness
  * 1 = Mirkwood

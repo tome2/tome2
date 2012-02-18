@@ -3,12 +3,11 @@
 
 bool_ quest_thrain_death_hook(char *fmt)
 {
-	s32b r_idx, m_idx;
+	s32b m_idx;
 	int r, x, y;
 	monster_type *m_ptr;
 
 	m_idx = get_next_arg(fmt);
-	r_idx = m_list[m_idx].r_idx;
 
 	if ((cquest.status >= QUEST_STATUS_FINISHED) || (dun_level !=cquest.data[0]) || (dungeon_type != DUNGEON_DOL_GULDUR)) return (FALSE);
 	m_ptr = &m_list[m_idx];

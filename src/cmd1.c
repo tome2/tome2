@@ -727,8 +727,6 @@ static void carried_monster_attack(s16b m_idx, bool_ *fear, bool_ *mdeath,
 
 	monster_race *tr_ptr = race_inf(t_ptr);
 
-	cave_type *c_ptr;
-
 	int ap_cnt;
 
 	int ac, rlev, pt;
@@ -751,8 +749,6 @@ static void carried_monster_attack(s16b m_idx, bool_ *fear, bool_ *mdeath,
 	/* Get the carried monster */
 	o_ptr = &p_ptr->inventory[INVEN_CARRY];
 	if (!o_ptr->k_idx) return;
-
-	c_ptr = &cave[y][x];
 
 	r_ptr = &r_info[o_ptr->pval];
 
@@ -1368,8 +1364,6 @@ static void incarnate_monster_attack(s16b m_idx, bool_ *fear, bool_ *mdeath,
 
 	monster_race *tr_ptr = race_inf(t_ptr);
 
-	cave_type *c_ptr;
-
 	int ap_cnt;
 
 	int ac, rlev, pt;
@@ -1386,8 +1380,6 @@ static void incarnate_monster_attack(s16b m_idx, bool_ *fear, bool_ *mdeath,
 
 
 	if (!p_ptr->body_monster) return;
-
-	c_ptr = &cave[y][x];
 
 	r_ptr = race_info_idx(p_ptr->body_monster, 0);
 
@@ -2403,8 +2395,6 @@ void py_attack(int y, int x, int max_blow)
 	/* A massive hack -- life-draining weapons */
 	u32b f1, f2, f3, f4, f5, esp;
 
-	bool_ no_extra = FALSE;
-
 	int weap;
 
 	/* Disturb the player */
@@ -2875,7 +2865,6 @@ void py_attack(int y, int x, int max_blow)
 							msg_format("%^s disappears!", m_name);
 							teleport_away(c_ptr->m_idx, 50);
 							num = num_blow + 1; 	/* Can't hit it anymore! */
-							no_extra = TRUE;
 						}
 
 						else if ((chaos_effect == 5) && cave_floor_bold(y, x) &&

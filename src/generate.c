@@ -7284,8 +7284,8 @@ static void init_feat_info(void)
 	int i;
 	int cur_depth, max_depth;
 	int p1, p2;
-	int floor_lim1, floor_lim2, floor_lim3;
-	int fill_lim1, fill_lim2, fill_lim3;
+	int floor_lim1, floor_lim2;
+	int fill_lim1, fill_lim2;
 
 
 	/* Retrieve dungeon depth info (base 1, to avoid zero divide errors) */
@@ -7307,8 +7307,6 @@ static void init_feat_info(void)
 	p2 = d_ptr->floor_percent2[1];
 	floor_lim2 = floor_lim1 + p1 + (p2 - p1) * cur_depth / max_depth;
 
-	floor_lim3 = 100;
-
 	/* Setup probability info -- Fillers */
 	p1 = d_ptr->fill_percent1[0];
 	p2 = d_ptr->fill_percent1[1];
@@ -7317,8 +7315,6 @@ static void init_feat_info(void)
 	p1 = d_ptr->fill_percent2[0];
 	p2 = d_ptr->fill_percent2[1];
 	fill_lim2 = fill_lim1 + p1 + (p2 - p1) * cur_depth / max_depth;
-
-	fill_lim3 = 100;
 
 
 	/* Fill the arrays of floors and walls in the good proportions */
@@ -7567,7 +7563,6 @@ static bool_ cave_gen(void)
 	int max_vault_ok = 2;
 
 	bool_ empty_level = FALSE;
-	s16b town_level = 0;
 
 	level_generator_type *generator;
 
@@ -7588,13 +7583,6 @@ static bool_ cave_gen(void)
 		cur_wid /= 2;
 		cur_hgt /= 2;
 	}
-
-	/* Is it a town level ? */
-	for (i = 0; i < TOWN_DUNGEON; i++)
-	{
-		if (d_ptr->t_level[i] == dun_level) town_level = d_ptr->t_idx[i];
-	}
-
 
 	/* Fill the arrays of floors and walls in the good proportions */
 	init_feat_info();

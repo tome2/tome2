@@ -1093,9 +1093,8 @@ static void player_outfit(void)
 
 	/*
 	 * Get an adventurer guide describing a bit of the
-	 * wilderness(useless for vanilla town)
+	 * wilderness.
 	 */
-	if (!vanilla_town)
 	{
 		object_type forge;
 		object_type *q_ptr = &forge;

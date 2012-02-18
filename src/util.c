@@ -3590,10 +3590,9 @@ s32b get_quantity(cptr prompt, s32b max)
 */
 void pause_line(int row)
 {
-	int i;
 	prt("", row, 0);
 	put_str("[Press any key to continue]", row, 23);
-	i = inkey();
+	inkey();
 	prt("", row, 0);
 }
 

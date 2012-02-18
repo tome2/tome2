@@ -3792,8 +3792,6 @@ static void do_cmd_knowledge_pets(void)
 
 	monster_type *m_ptr;
 
-	monster_race *r_ptr;
-
 	int t_friends = 0;
 
 	int t_levels = 0;
@@ -3818,7 +3816,6 @@ static void do_cmd_knowledge_pets(void)
 	{
 		/* Access the monster */
 		m_ptr = &m_list[i];
-		r_ptr = &r_info[m_ptr->r_idx];
 
 		/* Ignore "dead" monsters */
 		if (!m_ptr->r_idx) continue;

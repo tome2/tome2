@@ -7490,7 +7490,6 @@ void process_monsters(void)
 	monster_race *r_ptr;
 
 	int old_monster_race_idx;
-	int old_monster_ego_idx;
 
 	u32b old_r_flags1 = 0L;
 	u32b old_r_flags2 = 0L;
@@ -7513,7 +7512,6 @@ void process_monsters(void)
 
 	/* Memorize old race */
 	old_monster_race_idx = monster_race_idx;
-	old_monster_ego_idx = monster_ego_idx;
 
 	/* Acquire knowledge */
 	if (monster_race_idx)

@@ -3897,7 +3897,6 @@ static bool_ project_o(int who, int r, int y, int x, int dam, int typ)
 
 	int o_sval = 0;
 	bool_ is_potion = FALSE;
-	int xx, yy;
 
 
 	/* XXX XXX XXX */
@@ -4157,8 +4156,6 @@ static bool_ project_o(int who, int r, int y, int x, int dam, int typ)
 			}
 		case GF_RAISE:
 			{
-				xx = x;
-				yy = y;
 				get_pos_player(7, &y, &x);
 
 				/* Only corpses can be raised */

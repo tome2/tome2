@@ -4155,8 +4155,6 @@ void zap_combine_rod_tip(object_type *q_ptr, int tip_item)
 
 	object_type *o_ptr;
 
-	object_kind *k_ptr;
-
 	cptr q, s;
 
 	u32b f1, f2, f3, f4, f5, esp;
@@ -4182,14 +4180,12 @@ void zap_combine_rod_tip(object_type *q_ptr, int tip_item)
 	if (item >= 0)
 	{
 		o_ptr = &p_ptr->inventory[item];
-		k_ptr = &k_info[o_ptr->k_idx];
 	}
 
 	/* Get the item (on the floor) */
 	else
 	{
 		o_ptr = &o_list[0 - item];
-		k_ptr = &k_info[o_ptr->k_idx];
 	}
 
 	/* Examine the rod */
@@ -4246,8 +4242,6 @@ void do_cmd_zap_rod(void)
 
 	object_type *o_ptr;
 
-	object_kind *k_ptr;
-
 	object_kind *tip_ptr;
 
 	u32b f1, f2, f3, f4, f5, esp;
@@ -4282,14 +4276,12 @@ void do_cmd_zap_rod(void)
 	if (item >= 0)
 	{
 		o_ptr = &p_ptr->inventory[item];
-		k_ptr = &k_info[o_ptr->k_idx];
 	}
 
 	/* Get the item (on the floor) */
 	else
 	{
 		o_ptr = &o_list[0 - item];
-		k_ptr = &k_info[o_ptr->k_idx];
 	}
 
 

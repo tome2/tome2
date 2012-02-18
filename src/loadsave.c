@@ -601,7 +601,7 @@ static bool_ do_extra(int flag)
 	do_byte(&p_ptr->allow_one_death, flag);
 	do_s16b(&p_ptr->xtra_spells, flag);
 
-	do_byte(&vanilla_town, flag);
+	do_byte(&tmp8u, flag);
 
 	do_s16b(&no_breeds, flag);
 	do_s16b(&p_ptr->protgood, flag);
@@ -1086,8 +1086,6 @@ static void do_s16b(s16b *ip, int flag)
 	}
 	if (flag == LS_SAVE)
 	{
-		s16b val;
-		val = *ip;
 		do_u16b((u16b *)ip, flag);
 		return;
 	}
@@ -1488,12 +1486,6 @@ static void do_item(object_type *o_ptr, int flag)
 	/* Ego items */
 	if (o_ptr->name2)
 	{
-		ego_item_type *e_ptr;
-
-		/* Obtain the ego-item info */
-		e_ptr = &e_info[o_ptr->name2];
-
-
 		o_ptr->dd = old_dd;
 		o_ptr->ds = old_ds;
 	}
@@ -2600,13 +2592,8 @@ static bool_ do_savefile_aux(int flag)
 	/* Read the available records */
 	for (i = 0; i < tmp16u; i++)
 	{
-		monster_race *r_ptr;
-
 		/* Read the lore */
 		do_lore(i, flag);
-
-		/* Access that monster */
-		r_ptr = &r_info[i]; 		/* FIXME! Why the hell are we doing this? */
 	}
 
 	if ((flag == LS_LOAD) && (arg_fiddle)) note("Loaded Monster Memory");

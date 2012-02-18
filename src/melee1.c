@@ -130,9 +130,7 @@ bool_ carried_make_attack_normal(int r_idx)
 	char ddesc[80] = "your symbiote";
 	cptr sym_name = symbiote_name(TRUE);
 
-	bool_ blinked;
 	bool_ touched = FALSE, alive = TRUE;
-	bool_ explode = FALSE;
 
 	/* Not allowed to attack */
 	if (r_ptr->flags1 & (RF1_NEVER_BLOW)) return (FALSE);
@@ -142,9 +140,6 @@ bool_ carried_make_attack_normal(int r_idx)
 
 	/* Extract the effective monster level */
 	rlev = ((r_ptr->level >= 1) ? r_ptr->level : 1);
-
-	/* Assume no blink */
-	blinked = FALSE;
 
 	/* Scan through all four blows */
 	for (ap_cnt = 0; ap_cnt < 4; ap_cnt++)
@@ -455,7 +450,6 @@ bool_ carried_make_attack_normal(int r_idx)
 			case RBM_EXPLODE:
 				{
 					act = "explodes.";
-					explode = TRUE;
 					break;
 				}
 

@@ -87,10 +87,9 @@ void add_note(char *note, char code)
 	char final_note[100];
 	char long_day[50];
 	char depths[32];
-	char *tmp;
 
 	/* Get the first 60 chars - so do not have an overflow */
-	tmp = C_WIPE(buf, 100, char);
+	C_WIPE(buf, 100, char);
 	strncpy(buf, note, 60);
 
 	/* Get date and time */

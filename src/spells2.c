@@ -4537,7 +4537,6 @@ bool_ recharge(int power)
 	char o_name[80];
 
 	object_type *o_ptr;
-	object_kind *k_ptr;
 
 	/* Only accept legal items */
 	item_tester_hook = item_tester_hook_recharge;
@@ -4564,7 +4563,6 @@ bool_ recharge(int power)
 
 	/* Extract the object "level" */
 	lev = k_info[o_ptr->k_idx].level;
-	k_ptr = &k_info[o_ptr->k_idx];
 
 	/* Recharge a rod */
 	if (o_ptr->tval == TV_ROD_MAIN)
@@ -6647,7 +6645,6 @@ void swap_position(int lty, int ltx)
 	int tx = ltx, ty = lty;
 	cave_type * c_ptr;
 	monster_type * m_ptr;
-	monster_race * r_ptr;
 
 	if (p_ptr->resist_continuum)
 	{
@@ -6696,7 +6693,6 @@ void swap_position(int lty, int ltx)
 	else
 	{
 		m_ptr = &m_list[c_ptr->m_idx];
-		r_ptr = race_inf(m_ptr);
 
 		sound(SOUND_TELEPORT);
 

@@ -2114,7 +2114,7 @@ bool_ place_monster_one_no_drop = FALSE;
 monster_race *place_monster_one_race = NULL;
 s16b place_monster_one(int y, int x, int r_idx, int ego, bool_ slp, int status)
 {
-	int i, base;
+	int i;
 	char dummy[5];
 	bool_ add_level = FALSE;
 	int min_level = 0, max_level = 0;
@@ -2591,10 +2591,6 @@ s16b place_monster_one(int y, int x, int r_idx, int ego, bool_ slp, int status)
 		if (i) m_ptr->mspeed += rand_spread(0, i);
 	}
 
-	/* Need to match dungeon level ? */
-	base = dun_level;
-	if (dungeon_flags2 & DF2_ADJUST_LEVEL_PLAYER)
-		base = p_ptr->lev * 2;
 
 	if (dungeon_flags2 & DF2_ADJUST_LEVEL_1_2)
 	{

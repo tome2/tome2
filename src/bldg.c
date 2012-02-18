@@ -2097,8 +2097,6 @@ void do_cmd_bldg(void)
 
 	store_type *s_ptr;
 
-	store_info_type *st_ptr;
-
 	store_action_type *ba_ptr;
 
 
@@ -2112,7 +2110,6 @@ void do_cmd_bldg(void)
 	building_loc = which;
 
 	s_ptr = &town_info[p_ptr->town_num].store[which];
-	st_ptr = &st_info[which];
 
 	p_ptr->oldpy = p_ptr->py;
 	p_ptr->oldpx = p_ptr->px;

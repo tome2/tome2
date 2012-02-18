@@ -465,8 +465,6 @@ void fetch(int dir, int wgt, bool_ require_los)
 {
 	int ty, tx, i;
 
-	bool_ flag;
-
 	cave_type *c_ptr;
 
 	object_type *o_ptr;
@@ -512,7 +510,6 @@ void fetch(int dir, int wgt, bool_ require_los)
 		/* Use a direction */
 		ty = p_ptr->py;  /* Where to drop the item */
 		tx = p_ptr->px;
-		flag = FALSE;
 
 		while (1)
 		{

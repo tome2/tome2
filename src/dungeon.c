@@ -1042,7 +1042,6 @@ static void process_world(void)
 	cave_type *c_ptr;
 
 	object_type *o_ptr;
-	object_kind *k_ptr;
 	u32b f1 = 0 , f2 = 0 , f3 = 0, f4 = 0, f5 = 0, esp = 0;
 
 
@@ -2818,7 +2817,6 @@ static void process_world(void)
 	for (j = 0, i = 0; i < INVEN_TOTAL; i++)
 	{
 		o_ptr = &p_ptr->inventory[i];
-		k_ptr = &k_info[o_ptr->k_idx];
 
 		/* Skip non-objects */
 		if (!o_ptr->k_idx) continue;
@@ -3497,10 +3495,6 @@ static void process_command(void)
 			if (p_ptr->wild_mode || dun_level || is_quest(dun_level))
 			{
 				do_cmd_go_up();
-			}
-			else if (vanilla_town)
-			{
-				/* Do nothing */
 			}
 			/* Don't let the player < when he'd just drop right back down */
 			else if (p_ptr->food < PY_FOOD_ALERT)
@@ -4368,11 +4362,9 @@ void process_player(void)
 		{
 			bool_ stop = TRUE;
 			object_type *o_ptr;
-			monster_race *r_ptr;
 
 			/* Get the carried monster */
 			o_ptr = &p_ptr->inventory[INVEN_CARRY];
-			r_ptr = &r_info[o_ptr->pval];
 
 			/* Stop resting */
 			if ((!p_ptr->drain_life) && (p_ptr->chp != p_ptr->mhp)) stop = FALSE;

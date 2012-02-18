@@ -1107,12 +1107,8 @@ static void wiz_statistics(object_type *o_ptr)
  */
 static void wiz_quantity_item(object_type *o_ptr)
 {
-	int tmp_int, tmp_qnt;
-
+	int tmp_int;
 	char tmp_val[100];
-
-
-	tmp_qnt = o_ptr->number;
 
 	/* Default */
 	sprintf(tmp_val, "%d", o_ptr->number);
@@ -1369,7 +1365,6 @@ static void wiz_create_item_2(void)
 void do_cmd_wiz_cure_all(void)
 {
 	object_type *o_ptr;
-	monster_race *r_ptr;
 
 	/* Remove curses */
 	(void)remove_all_curse();
@@ -1398,7 +1393,6 @@ void do_cmd_wiz_cure_all(void)
 	o_ptr = &p_ptr->inventory[INVEN_CARRY];
 	if (o_ptr->k_idx)
 	{
-		r_ptr = &r_info[o_ptr->pval];
 		o_ptr->pval2 = o_ptr->pval3;
 	}
 

@@ -81,7 +81,6 @@ void follow_god(int god, bool_ silent)
 bool_ show_god_info(bool_ ext)
 {
 	int pgod = p_ptr->pgod;
-	int tmp;
 
 	deity_type *d_ptr;
 
@@ -107,7 +106,7 @@ bool_ show_god_info(bool_ ext)
 			text_out(d_ptr->desc[i]);
 		text_out("\n");
 
-		tmp = inkey();
+		inkey();
 
 		Term_load();
 		character_icky = FALSE;

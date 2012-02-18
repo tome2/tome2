@@ -4892,18 +4892,6 @@ void brand_ammo(int brand_type, int bolts_only)
 {
 	int a;
 
-	int allowable;
-
-
-	if (bolts_only)
-	{
-		allowable = TV_BOLT;
-	}
-	else
-	{
-		allowable = TV_BOLT | TV_ARROW | TV_SHOT;
-	}
-
 	for (a = 0; a < INVEN_PACK; a++)
 	{
 		object_type *o_ptr = &p_ptr->inventory[a];
@@ -5349,7 +5337,6 @@ void do_cmd_archer(void)
  */
 void do_cmd_set_piercing(void)
 {
-	int ext = 0;
 	char ch;
 	char com[80];
 
@@ -5366,7 +5353,6 @@ void do_cmd_set_piercing(void)
 	{
 		if (!get_com(com, &ch))
 		{
-			ext = 0;
 			break;
 		}
 		if ((ch == 'Y') || (ch == 'y'))
@@ -7011,7 +6997,7 @@ void do_cmd_summoner_extract()
 
 	cptr q, s;
 
-	int item, r, e;
+	int item, r;
 
 	bool_ partial;
 
@@ -7059,7 +7045,6 @@ void do_cmd_summoner_extract()
 	}
 
 	r = o_ptr->pval2;
-	e = o_ptr->pval3;
 
 	if (item > 0)
 	{
@@ -7461,8 +7446,6 @@ void do_cmd_symbiotic(void)
 	int plev = get_skill(SKILL_SYMBIOTIC);
 	magic_power spell;
 
-	monster_race *r_ptr;
-
 	/* Get the carried monster */
 	object_type *o_ptr = &p_ptr->inventory[INVEN_CARRY];
 
@@ -7686,8 +7669,6 @@ void do_cmd_symbiotic(void)
 					break;
 				}
 
-				r_ptr = &r_info[o_ptr->pval];
-
 				percent1 = p_ptr->chp;
 				percent1 = (percent1 * 100) / p_ptr->mhp;
 
@@ -7739,7 +7720,6 @@ void do_cmd_symbiotic(void)
 					break;
 				}
 
-				r_ptr = &r_info[o_ptr->pval];
 				hp = o_ptr->pval3 * (15 + get_skill_scale(SKILL_SYMBIOTIC, 35)) / 100;
 				o_ptr->pval2 += hp;
 				if (o_ptr->pval2 > o_ptr->pval3) o_ptr->pval2 = o_ptr->pval3;

@@ -3469,9 +3469,6 @@ bool_ txt_to_html(cptr head, cptr foot, cptr base, cptr ext, bool_ force, bool_ 
 	/* Number of "real" lines passed by */
 	int next = 0;
 
-	/* Number of "real" lines in the file */
-	int size = 0;
-
 	char buf_name[80];
 
 	/* Color of the next line */
@@ -3549,9 +3546,6 @@ bool_ txt_to_html(cptr head, cptr foot, cptr base, cptr ext, bool_ force, bool_ 
 		/* Oops */
 		return (TRUE);
 	}
-
-	/* Save the number of "real" lines */
-	size = next;
 
 	/* Build the filename */
 	path_build(h_ptr->path, 1024, ANGBAND_DIR_HELP, head);
@@ -5034,7 +5028,7 @@ void show_highclass(int building)
 {
 
 	register int i = 0, j, m = 0;
-	int pcs, pr, ps, pc, clev, al;
+	int pr, pc, clev, al;
 	high_score the_score;
 	char buf[1024], out_val[256];
 
@@ -5099,9 +5093,7 @@ void show_highclass(int building)
 		if (highscore_seek(j)) break;
 		if (highscore_read(&the_score)) break;
 		pr = atoi(the_score.p_r);
-		ps = atoi(the_score.p_s);
 		pc = atoi(the_score.p_c);
-		pcs = atoi(the_score.p_cs);
 		clev = atoi(the_score.cur_lev);
 		al = atoi(the_score.arena_number);
 		if (((pc == (building - 10)) && (building != 1) && (building != 2)) ||
@@ -5155,7 +5147,7 @@ void show_highclass(int building)
 void race_score(int race_num)
 {
 	register int i = 0, j, m = 0;
-	int pr, ps, pc, clev, pcs, al, lastlev;
+	int pr, clev, lastlev;
 	high_score the_score;
 	char buf[1024], out_val[256], tmp_str[80];
 
@@ -5193,11 +5185,7 @@ void race_score(int race_num)
 		if (highscore_seek(j)) break;
 		if (highscore_read(&the_score)) break;
 		pr = atoi(the_score.p_r);
-		ps = atoi(the_score.p_s);
-		pc = atoi(the_score.p_c);
-		pcs = atoi(the_score.p_cs);
 		clev = atoi(the_score.cur_lev);
-		al = atoi(the_score.arena_number);
 		if (pr == race_num)
 		{
 			sprintf(out_val, "%3d) %s the %s (Level %3d)",
@@ -5254,7 +5242,7 @@ static errr top_twenty(void)
 {
 	int j;
 
-	high_score the_score, *tmp;
+	high_score the_score;
 
 	time_t ct = time((time_t*)0);
 
@@ -5323,7 +5311,7 @@ static errr top_twenty(void)
 
 
 	/* Clear the record */
-	tmp = WIPE(&the_score, high_score);
+	WIPE(&the_score, high_score);
 
 	/* Save the version */
 	sprintf(the_score.what, "%ld.%ld.%ld",

@@ -2244,7 +2244,7 @@ static bool_ make_artifact_special(object_type *o_ptr)
 		if (!(a_ptr->flags3 & TR3_INSTA_ART)) continue;
 
 		/* Cannot generate some artifacts because they can only exists in special dungeons/quests/... */
-		if ((a_ptr->flags4 & TR4_SPECIAL_GENE) && (!a_allow_special[i]) && (!vanilla_town)) continue;
+		if ((a_ptr->flags4 & TR4_SPECIAL_GENE) && (!a_allow_special[i])) continue;
 
 		/* XXX XXX Enforce minimum "depth" (loosely) */
 		if (a_ptr->level > dun_level)
@@ -2331,7 +2331,7 @@ static bool_ make_artifact(object_type *o_ptr)
 		if (a_ptr->flags3 & TR3_INSTA_ART) continue;
 
 		/* Cannot generate some artifacts because they can only exists in special dungeons/quests/... */
-		if ((a_ptr->flags4 & TR4_SPECIAL_GENE) && (!a_allow_special[i]) && (!vanilla_town)) continue;
+		if ((a_ptr->flags4 & TR4_SPECIAL_GENE) && (!a_allow_special[i])) continue;
 
 		/* Must have the correct fields */
 		if (a_ptr->tval != o_ptr->tval) continue;

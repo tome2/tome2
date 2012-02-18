@@ -3543,14 +3543,11 @@ errr vinfo_init(void)
 	{
 		int e;
 
-		vinfo_type *p;
-
-
 		/* Index */
 		e = queue_head;
 
 		/* Dequeue next grid */
-		p = queue[queue_head++];
+		queue_head++;
 
 		/* Location of main grid */
 		y = vinfo[e].grid_y[0];

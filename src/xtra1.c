@@ -429,7 +429,6 @@ static void prt_mh(void)
 	byte color;
 
 	object_type *o_ptr;
-	monster_race *r_ptr;
 
 	/* Get the carried monster */
 	o_ptr = &p_ptr->inventory[INVEN_CARRY];
@@ -439,8 +438,6 @@ static void prt_mh(void)
 		put_str("             ", ROW_MH, COL_MH);
 		return;
 	}
-
-	r_ptr = &r_info[o_ptr->pval];
 
 	put_str("MH ", ROW_MH, COL_MH);
 
@@ -2322,14 +2319,11 @@ int get_weaponmastery_skill()
 int get_archery_skill()
 {
 	int i, skill = 0;
-	object_type *o_ptr;
 
 	i = INVEN_BOW - INVEN_WIELD;
 	/* All weapons must be of the same type */
 	while (p_ptr->body_parts[i] == INVEN_BOW)
 	{
-		o_ptr = &p_ptr->inventory[INVEN_WIELD + i];
-
 		if (p_ptr->inventory[INVEN_WIELD + i].tval == TV_BOW)
 		{
 			switch (p_ptr->inventory[INVEN_WIELD + i].sval / 10)
@@ -2650,7 +2644,6 @@ void apply_flags(u32b f1, u32b f2, u32b f3, u32b f4, u32b f5, u32b esp, s16b pva
 void calc_bonuses(bool_ silent)
 {
 	int i, j, hold;
-	int old_invis;
 	int old_speed;
 	u32b old_telepathy;
 	int old_see_inv;
@@ -2670,9 +2663,6 @@ void calc_bonuses(bool_ silent)
 	/* Save the old armor class */
 	old_dis_ac = p_ptr->dis_ac;
 	old_dis_to_a = p_ptr->dis_to_a;
-
-	/* Save the old invisibility */
-	old_invis = p_ptr->invis;
 
 	/* Clear extra blows/shots */
 	extra_blows = extra_shots = 0;

@@ -124,7 +124,6 @@ static void roff_aux(int r_idx, int ego, int remem)
 	u32b	flags5;
 	u32b	flags6;
 	u32b flags7;
-	u32b flags8;
 	u32b flags9;
 
 	int	vn = 0;
@@ -207,7 +206,6 @@ static void roff_aux(int r_idx, int ego, int remem)
 	flags5 = (r_ptr->flags5 & r_ptr->r_flags5);
 	flags6 = (r_ptr->flags6 & r_ptr->r_flags6);
 	flags7 = (r_ptr->flags7 & r_ptr->r_flags7);
-	flags8 = (r_ptr->flags8 & r_ptr->r_flags8);
 	flags9 = (r_ptr->flags9 & r_ptr->r_flags9);
 
 

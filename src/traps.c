@@ -19,14 +19,12 @@ bool_ do_player_trap_call_out(void)
 	s16b h_index = 0;
 	s16b h_level = 0;
 	monster_type *m_ptr;
-	monster_race *r_ptr;
 	char m_name[80];
 	bool_ ident = FALSE;
 
 	for (i = 1; i < m_max; i++)
 	{
 		m_ptr = &m_list[i];
-		r_ptr = race_inf(m_ptr);
 
 		/* Paranoia -- Skip dead monsters */
 		if (!m_ptr->r_idx) continue;

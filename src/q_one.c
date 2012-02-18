@@ -226,11 +226,9 @@ bool_ quest_one_death_hook(char *fmt)
 {
 	s32b r_idx, m_idx;
 	bool_ ok = FALSE;
-	monster_race *r_ptr;
 
 	m_idx = get_next_arg(fmt);
 	r_idx = m_list[m_idx].r_idx;
-	r_ptr = &r_info[r_idx];
 
 	if (a_info[ART_POWER].cur_num) return FALSE;
 

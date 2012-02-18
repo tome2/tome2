@@ -528,7 +528,6 @@ extern s16b spell_num;
 extern rune_spell rune_spells[MAX_RUNES];
 extern s16b rune_num;
 extern fate fates[MAX_FATES];
-extern byte vanilla_town;
 extern byte dungeon_type;
 extern s16b *max_dlv;
 extern u32b total_bounties;

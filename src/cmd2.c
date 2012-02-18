@@ -31,8 +31,6 @@ static bool_ do_cmd_bash_fountain(int y, int x)
 {
 	int bash, temp;
 
-	cave_type *c_ptr;
-
 	bool_ more = TRUE;
 
 	monster_race *r_ptr = &r_info[p_ptr->body_monster];
@@ -47,9 +45,6 @@ static bool_ do_cmd_bash_fountain(int y, int x)
 
 	/* Take a turn */
 	energy_use = 100;
-
-	/* Get grid */
-	c_ptr = &cave[y][x];
 
 	/* Message */
 	msg_print("You smash into the fountain!");
@@ -3917,8 +3912,6 @@ void do_cmd_boomerang(void)
 
 	bool_ hit_body = FALSE;
 
-	bool_ hit_wall = FALSE;
-
 	byte missile_attr;
 
 	char missile_char;
@@ -4016,7 +4009,6 @@ void do_cmd_boomerang(void)
 		/* Stopped by walls/doors */
 		if (!cave_floor_bold(ny, nx))
 		{
-			hit_wall = TRUE;
 			break;
 		}
 

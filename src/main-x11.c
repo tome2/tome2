@@ -2285,7 +2285,7 @@ static errr CheckEvent(bool_ wait)
 		/* Move and/or Resize */
 	case ConfigureNotify:
 		{
-			int cols, rows, wid, hgt;
+			int cols, rows;
 
 			int ox = Infowin->ox;
 			int oy = Infowin->oy;
@@ -2316,10 +2316,6 @@ static errr CheckEvent(bool_ wait)
 			/* Paranoia */
 			if (cols > 255) cols = 255;
 			if (rows > 255) rows = 255;
-
-			/* Desired size of window */
-			wid = cols * td->fnt->wid + (ox + ox);
-			hgt = rows * td->fnt->hgt + (oy + oy);
 
 			/* Resize the Term (if needed) */
 			Term_resize(cols, rows);

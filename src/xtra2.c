@@ -1959,13 +1959,10 @@ bool_ set_food(int v)
  */
 void check_experience(void)
 {
-	int i, gained = 0;
+	int gained = 0;
 	bool_ level_reward = FALSE;
 	bool_ level_corruption = FALSE;
 
-
-	/* Note current level */
-	i = p_ptr->lev;
 
 	/* Hack -- lower limit */
 	if (p_ptr->exp < 0) p_ptr->exp = 0;
@@ -2099,11 +2096,6 @@ void check_experience(void)
  */
 void check_experience_obj(object_type *o_ptr)
 {
-	int i;
-
-	/* Note current level */
-	i = o_ptr->elevel;
-
 	/* Hack -- lower limit */
 	if (o_ptr->exp < 0) o_ptr->exp = 0;
 
@@ -2366,7 +2358,6 @@ void monster_death(int m_idx)
 	bool_ visible = (m_ptr->ml || (r_ptr->flags1 & (RF1_UNIQUE)));
 
 
-	bool_ cloned = FALSE;
 	bool_ create_stairs = FALSE;
 	int force_coin = get_coin_type(r_ptr);
 
@@ -2413,8 +2404,6 @@ void monster_death(int m_idx)
 		msg_print("Victorious! You're on your way to becoming Champion.");
 		p_ptr->arena_number++;
 	}
-
-	if (m_ptr->smart &(SM_CLONED)) cloned = TRUE;
 
 	/* If the doppleganger die, the variable must be set accordingly */
 	if (r_ptr->flags9 & RF9_DOPPLEGANGER) doppleganger = 0;
@@ -3086,12 +3075,10 @@ bool_ mon_take_hit(int m_idx, int dam, bool_ *fear, cptr note)
 		if (!note)
 		{
 			object_type *o_ptr;
-			object_kind *k_ptr;
 			u32b f1, f2, f3, f4, f5, esp;
 
 			/* Access the weapon */
 			o_ptr = &p_ptr->inventory[INVEN_WIELD];
-			k_ptr = &k_info[o_ptr->k_idx];
 			object_flags(o_ptr, &f1, &f2, &f3, &f4, &f5, &esp);
 
 			/* Can the weapon gain levels ? */
