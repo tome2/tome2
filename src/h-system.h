@@ -51,7 +51,7 @@
 # include <unix.h>
 #endif
 
-#if defined(WINDOWS) || defined(MSDOS) || defined(USE_EMX)
+#if defined(WINDOWS) || defined(MSDOS)
 # include <io.h>
 #endif
 

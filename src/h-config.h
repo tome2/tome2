@@ -165,7 +165,7 @@
  * or for the "Atari" platform which is Unix-like, apparently
  */
 #if !defined(MACINTOSH) && !defined(WINDOWS) && \
-    !defined(MSDOS) && !defined(USE_EMX)
+    !defined(MSDOS)
 # define SET_UID
 #endif
 
@@ -204,7 +204,7 @@
 # undef PATH_SEP
 # define PATH_SEP "\\"
 #endif
-#if defined(MSDOS) || defined(OS2) || defined(USE_EMX)
+#if defined(MSDOS) || defined(OS2)
 # undef PATH_SEP
 # define PATH_SEP "\\"
 #endif

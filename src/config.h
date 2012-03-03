@@ -205,17 +205,6 @@
 
 
 /*
- * OPTION: Hack -- EMX stuff
- */
-#ifdef USE_EMX
-
-/* Do not handle signals */
-# undef HANDLE_SIGNALS
-
-#endif
-
-
-/*
  * OPTION: Set the "default" path to the angband "lib" directory.
  *
  * See "main.c" for usage, and note that this value is only used on
