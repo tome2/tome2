@@ -1474,8 +1474,6 @@ void map_info(int y, int x, byte *ap, char *cp, byte *tap, char *tcp,
 				break;
 			}
 
-#ifdef VARIABLE_PLAYER_GRAPH
-
 		case GRAPHICS_OLD:
 			{
 				if (player_symbols)
@@ -1486,8 +1484,6 @@ void map_info(int y, int x, byte *ap, char *cp, byte *tap, char *tcp,
 
 				break;
 			}
-
-#endif /* VARIABLE_PLAYER_GRAPH */
 
 		case GRAPHICS_ISO:
 		case GRAPHICS_NEW:

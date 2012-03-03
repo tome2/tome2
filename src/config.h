@@ -291,9 +291,6 @@
 /* Should the player know his / her starting life rate? */
 /* #define SHOW_LIFE_RATE */
 
-/* Do we want different characters for different races? */
-#define VARIABLE_PLAYER_GRAPH
-
 /* Allow hordes of 'similar' monsters */
 #define MONSTER_HORDES
 
