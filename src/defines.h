@@ -3850,17 +3850,6 @@
 
 
 
-/*
- * Hack -- Prepare to use the "Secure" routines
- */
-#if defined(SET_UID) && defined(SECURE)
-extern int PlayerUID;
-# define getuid() PlayerUID
-# define geteuid() PlayerUID
-#endif
-
-
-
 /*** Color constants ***/
 
 
