@@ -323,19 +323,8 @@ static errr init_f_info(void)
 	/* Allocate the "header" */
 	MAKE(f_head, header);
 
-	/* Save the "version" */
-	f_head->v_major = VERSION_MAJOR;
-	f_head->v_minor = VERSION_MINOR;
-	f_head->v_patch = VERSION_PATCH;
-	f_head->v_extra = 0;
-
 	/* Save the "record" information */
 	f_head->info_num = max_f_idx;
-	f_head->info_len = sizeof(feature_type);
-
-	/* Save the size of "f_head" and "f_info" */
-	f_head->head_size = sizeof(header);
-	f_head->info_size = f_head->info_num * f_head->info_len;
 
 
 	/*** Make the fake arrays ***/
@@ -418,19 +407,8 @@ static errr init_k_info(void)
 	/* Allocate the "header" */
 	MAKE(k_head, header);
 
-	/* Save the "version" */
-	k_head->v_major = VERSION_MAJOR;
-	k_head->v_minor = VERSION_MINOR;
-	k_head->v_patch = VERSION_PATCH;
-	k_head->v_extra = 0;
-
 	/* Save the "record" information */
 	k_head->info_num = max_k_idx;
-	k_head->info_len = sizeof(object_kind);
-
-	/* Save the size of "k_head" and "k_info" */
-	k_head->head_size = sizeof(header);
-	k_head->info_size = k_head->info_num * k_head->info_len;
 
 
 	/*** Make the fake arrays ***/
@@ -513,19 +491,8 @@ static errr init_set_info(void)
 	/* Allocate the "header" */
 	MAKE(set_head, header);
 
-	/* Save the "version" */
-	set_head->v_major = VERSION_MAJOR;
-	set_head->v_minor = VERSION_MINOR;
-	set_head->v_patch = VERSION_PATCH;
-	set_head->v_extra = 0;
-
 	/* Save the "record" information */
 	set_head->info_num = max_set_idx;
-	set_head->info_len = sizeof(set_type);
-
-	/* Save the size of "set_head" and "set_info" */
-	set_head->head_size = sizeof(header);
-	set_head->info_size = set_head->info_num * set_head->info_len;
 
 
 	/*** Make the fake arrays ***/
@@ -607,19 +574,8 @@ static errr init_a_info(void)
 	/* Allocate the "header" */
 	MAKE(a_head, header);
 
-	/* Save the "version" */
-	a_head->v_major = VERSION_MAJOR;
-	a_head->v_minor = VERSION_MINOR;
-	a_head->v_patch = VERSION_PATCH;
-	a_head->v_extra = 0;
-
 	/* Save the "record" information */
 	a_head->info_num = max_a_idx;
-	a_head->info_len = sizeof(artifact_type);
-
-	/* Save the size of "a_head" and "a_info" */
-	a_head->head_size = sizeof(header);
-	a_head->info_size = a_head->info_num * a_head->info_len;
 
 
 	/*** Make the fake arrays ***/
@@ -701,19 +657,9 @@ static errr init_s_info(void)
 	/* Allocate the "header" */
 	MAKE(s_head, header);
 
-	/* Save the "version" */
-	s_head->v_major = VERSION_MAJOR;
-	s_head->v_minor = VERSION_MINOR;
-	s_head->v_patch = VERSION_PATCH;
-	s_head->v_extra = 0;
-
 	/* Save the "record" information */
 	s_head->info_num = max_s_idx;
-	s_head->info_len = sizeof(skill_type);
 
-	/* Save the size of "s_head" and "s_info" */
-	s_head->head_size = sizeof(header);
-	s_head->info_size = s_head->info_num * s_head->info_len;
 
 	/*** Make the fake arrays ***/
 
@@ -793,19 +739,9 @@ static errr init_ab_info(void)
 	/* Allocate the "header" */
 	MAKE(ab_head, header);
 
-	/* Save the "version" */
-	ab_head->v_major = VERSION_MAJOR;
-	ab_head->v_minor = VERSION_MINOR;
-	ab_head->v_patch = VERSION_PATCH;
-	ab_head->v_extra = 0;
-
 	/* Save the "record" information */
 	ab_head->info_num = max_ab_idx;
-	ab_head->info_len = sizeof(ability_type);
 
-	/* Save the size of "ab_head" and "ab_info" */
-	ab_head->head_size = sizeof(header);
-	ab_head->info_size = ab_head->info_num * ab_head->info_len;
 
 	/*** Make the fake arrays ***/
 
@@ -886,19 +822,9 @@ static errr init_e_info(void)
 	/* Allocate the "header" */
 	MAKE(e_head, header);
 
-	/* Save the "version" */
-	e_head->v_major = VERSION_MAJOR;
-	e_head->v_minor = VERSION_MINOR;
-	e_head->v_patch = VERSION_PATCH;
-	e_head->v_extra = 0;
-
 	/* Save the "record" information */
 	e_head->info_num = max_e_idx;
-	e_head->info_len = sizeof(ego_item_type);
 
-	/* Save the size of "e_head" and "e_info" */
-	e_head->head_size = sizeof(header);
-	e_head->info_size = e_head->info_num * e_head->info_len;
 
 	/*** Make the fake arrays ***/
 
@@ -979,19 +905,8 @@ static errr init_ra_info(void)
 	/* Allocate the "header" */
 	MAKE(ra_head, header);
 
-	/* Save the "version" */
-	ra_head->v_major = VERSION_MAJOR;
-	ra_head->v_minor = VERSION_MINOR;
-	ra_head->v_patch = VERSION_PATCH;
-	ra_head->v_extra = 0;
-
 	/* Save the "record" information */
 	ra_head->info_num = max_ra_idx;
-	ra_head->info_len = sizeof(randart_part_type);
-
-	/* Save the size of "ra_head" and "ra_info" */
-	ra_head->head_size = sizeof(header);
-	ra_head->info_size = ra_head->info_num * ra_head->info_len;
 
 
 	/*** Make the fake arrays ***/
@@ -1065,19 +980,9 @@ static errr init_r_info(void)
 	/* Allocate the "header" */
 	MAKE(r_head, header);
 
-	/* Save the "version" */
-	r_head->v_major = VERSION_MAJOR;
-	r_head->v_minor = VERSION_MINOR;
-	r_head->v_patch = VERSION_PATCH;
-	r_head->v_extra = 0;
-
 	/* Save the "record" information */
 	r_head->info_num = max_r_idx;
-	r_head->info_len = sizeof(monster_race);
 
-	/* Save the size of "r_head" and "r_info" */
-	r_head->head_size = sizeof(header);
-	r_head->info_size = r_head->info_num * r_head->info_len;
 
 	/*** Make the fake arrays ***/
 
@@ -1158,19 +1063,9 @@ static errr init_re_info(void)
 	/* Allocate the "header" */
 	MAKE(re_head, header);
 
-	/* Save the "version" */
-	re_head->v_major = VERSION_MAJOR;
-	re_head->v_minor = VERSION_MINOR;
-	re_head->v_patch = VERSION_PATCH;
-	re_head->v_extra = 0;
-
 	/* Save the "record" information */
 	re_head->info_num = max_re_idx;
-	re_head->info_len = sizeof(monster_ego);
 
-	/* Save the size of "re_head" and "re_info" */
-	re_head->head_size = sizeof(header);
-	re_head->info_size = re_head->info_num * re_head->info_len;
 
 	/*** Make the fake arrays ***/
 
@@ -1248,19 +1143,9 @@ static errr init_d_info(void)
 	/* Allocate the "header" */
 	MAKE(d_head, header);
 
-	/* Save the "version" */
-	d_head->v_major = VERSION_MAJOR;
-	d_head->v_minor = VERSION_MINOR;
-	d_head->v_patch = VERSION_PATCH;
-	d_head->v_extra = 0;
-
 	/* Save the "record" information */
 	d_head->info_num = max_d_idx;
-	d_head->info_len = sizeof(dungeon_info_type);
 
-	/* Save the size of "d_head" and "d_info" */
-	d_head->head_size = sizeof(header);
-	d_head->info_size = d_head->info_num * d_head->info_len;
 
 	/*** Make the fake arrays ***/
 
@@ -1343,57 +1228,27 @@ static errr init_player_info(void)
 	/* Allocate the "header" */
 	MAKE(rp_head, header);
 
-	/* Save the "version" */
-	rp_head->v_major = VERSION_MAJOR;
-	rp_head->v_minor = VERSION_MINOR;
-	rp_head->v_patch = VERSION_PATCH;
-	rp_head->v_extra = 0;
-
 	/* Save the "record" information */
 	rp_head->info_num = max_rp_idx;
-	rp_head->info_len = sizeof(player_race);
 
-	/* Save the size of "rp_head" and "rp_info" */
-	rp_head->head_size = sizeof(header);
-	rp_head->info_size = rp_head->info_num * rp_head->info_len;
 
 	/*** Make the header ***/
 
 	/* Allocate the "header" */
 	MAKE(rmp_head, header);
 
-	/* Save the "version" */
-	rmp_head->v_major = VERSION_MAJOR;
-	rmp_head->v_minor = VERSION_MINOR;
-	rmp_head->v_patch = VERSION_PATCH;
-	rmp_head->v_extra = 0;
-
 	/* Save the "record" information */
 	rmp_head->info_num = max_rmp_idx;
-	rmp_head->info_len = sizeof(player_race_mod);
 
-	/* Save the size of "rmp_head" and "rmp_info" */
-	rmp_head->head_size = sizeof(header);
-	rmp_head->info_size = rmp_head->info_num * rmp_head->info_len;
 
 	/*** Make the header ***/
 
 	/* Allocate the "header" */
 	MAKE(c_head, header);
 
-	/* Save the "version" */
-	c_head->v_major = VERSION_MAJOR;
-	c_head->v_minor = VERSION_MINOR;
-	c_head->v_patch = VERSION_PATCH;
-	c_head->v_extra = 0;
-
 	/* Save the "record" information */
 	c_head->info_num = max_c_idx;
-	c_head->info_len = sizeof(player_class);
 
-	/* Save the size of "c_head" and "c_info" */
-	c_head->head_size = sizeof(header);
-	c_head->info_size = c_head->info_num * c_head->info_len;
 
 	/*** Make the fake arrays ***/
 
@@ -1500,19 +1355,9 @@ static errr init_st_info(void)
 	/* Allocate the "header" */
 	MAKE(st_head, header);
 
-	/* Save the "version" */
-	st_head->v_major = VERSION_MAJOR;
-	st_head->v_minor = VERSION_MINOR;
-	st_head->v_patch = VERSION_PATCH;
-	st_head->v_extra = 0;
-
 	/* Save the "record" information */
 	st_head->info_num = max_st_idx;
-	st_head->info_len = sizeof(store_info_type);
 
-	/* Save the size of "st_head" and "st_info" */
-	st_head->head_size = sizeof(header);
-	st_head->info_size = st_head->info_num * st_head->info_len;
 
 	/*** Make the fake arrays ***/
 
@@ -1589,19 +1434,9 @@ static errr init_ow_info(void)
 	/* Allocate the "header" */
 	MAKE(ow_head, header);
 
-	/* Save the "version" */
-	ow_head->v_major = VERSION_MAJOR;
-	ow_head->v_minor = VERSION_MINOR;
-	ow_head->v_patch = VERSION_PATCH;
-	ow_head->v_extra = 0;
-
 	/* Save the "record" information */
 	ow_head->info_num = max_ow_idx;
-	ow_head->info_len = sizeof(owner_type);
 
-	/* Save the size of "head" and "ow_info" */
-	ow_head->head_size = sizeof(header);
-	ow_head->info_size = ow_head->info_num * ow_head->info_len;
 
 	/*** Make the fake arrays ***/
 
@@ -1678,19 +1513,9 @@ static errr init_ba_info(void)
 	/* Allocate the "header" */
 	MAKE(ba_head, header);
 
-	/* Save the "version" */
-	ba_head->v_major = VERSION_MAJOR;
-	ba_head->v_minor = VERSION_MINOR;
-	ba_head->v_patch = VERSION_PATCH;
-	ba_head->v_extra = 0;
-
 	/* Save the "record" information */
 	ba_head->info_num = max_ba_idx;
-	ba_head->info_len = sizeof(store_action_type);
 
-	/* Save the size of "head" and "ba_info" */
-	ba_head->head_size = sizeof(header);
-	ba_head->info_size = ba_head->info_num * ba_head->info_len;
 
 	/*** Make the fake arrays ***/
 
@@ -1767,19 +1592,9 @@ static errr init_wf_info(void)
 	/* Allocate the "header" */
 	MAKE(wf_head, header);
 
-	/* Save the "version" */
-	wf_head->v_major = VERSION_MAJOR;
-	wf_head->v_minor = VERSION_MINOR;
-	wf_head->v_patch = VERSION_PATCH;
-	wf_head->v_extra = 0;
-
 	/* Save the "record" information */
 	wf_head->info_num = max_wf_idx;
-	wf_head->info_len = sizeof(wilderness_type_info);
 
-	/* Save the size of "wf_head" and "wf_info" */
-	wf_head->head_size = sizeof(header);
-	wf_head->info_size = wf_head->info_num * wf_head->info_len;
 
 	/*** Make the fake arrays ***/
 
@@ -1860,19 +1675,9 @@ static errr init_t_info(void)
 	/* Allocate the "header" */
 	MAKE(t_head, header);
 
-	/* Save the "version" */
-	t_head->v_major = VERSION_MAJOR;
-	t_head->v_minor = VERSION_MINOR;
-	t_head->v_patch = VERSION_PATCH;
-	t_head->v_extra = 0;
-
 	/* Save the "record" information */
 	t_head->info_num = max_t_idx;
-	t_head->info_len = sizeof(trap_type);
 
-	/* Save the size of "t_head" and "t_info" */
-	t_head->head_size = sizeof(header);
-	t_head->info_size = t_head->info_num * t_head->info_len;
 
 	/*** Make the fake arrays ***/
 
@@ -1951,20 +1756,9 @@ errr init_al_info(void)
 	/* Allocate the "header" */
 	MAKE(al_head, header);
 
-	/* Save the "version" */
-	al_head->v_major = VERSION_MAJOR;
-	al_head->v_minor = VERSION_MINOR;
-	al_head->v_patch = VERSION_PATCH;
-	al_head->v_extra = 0;
-
 	/* Save the "record" information */
 	al_head->info_num = max_al_idx;
-	al_head->info_len = sizeof(alchemist_recipe);
 
-	/* Save the size of "al_head" and "al_info" */
-	al_head->head_size = sizeof(header);
-
-	al_head->info_size = al_head->info_num * al_head->info_len;
 
 
 
@@ -2053,19 +1847,9 @@ errr init_v_info(void)
 	/* Allocate the "header" */
 	MAKE(v_head, header);
 
-	/* Save the "version" */
-	v_head->v_major = VERSION_MAJOR;
-	v_head->v_minor = VERSION_MINOR;
-	v_head->v_patch = VERSION_PATCH;
-	v_head->v_extra = 0;
-
 	/* Save the "record" information */
 	v_head->info_num = max_v_idx;
-	v_head->info_len = sizeof(vault_type);
 
-	/* Save the size of "v_head" and "v_info" */
-	v_head->head_size = sizeof(header);
-	v_head->info_size = v_head->info_num * v_head->info_len;
 
 	/*** Make the fake arrays ***/
 
