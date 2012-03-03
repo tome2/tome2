@@ -447,14 +447,9 @@ static void AngbandOutputText(AngbandWidget widget, int x, int y,
  * Draw some graphical characters.
  */
 # ifdef USE_TRANSPARENCY
-# ifdef USE_EGO_GRAPHICS
 static void AngbandOutputPict(AngbandWidget widget, int x, int y, int n,
                               const byte *ap, const char *cp, const byte *tap, const char *tcp,
                               const byte *eap, const char *ecp)
-# else /* USE_EGO_GRAPHICS */
-static void AngbandOutputPict(AngbandWidget widget, int x, int y, int n,
-                              const byte *ap, const char *cp, const byte *tap, const char *tcp)
-# endif  /* USE_EGO_GRAPHICS */
 # else /* USE_TRANSPARENCY */
 static void AngbandOutputPict(AngbandWidget widget, int x, int y, int n,
                               const byte *ap, const char *cp)
@@ -473,14 +468,12 @@ static void AngbandOutputPict(AngbandWidget widget, int x, int y, int n,
 
 	int x2, y2;
 
-# ifdef USE_EGO_GRAPHICS
 	byte ea;
 	char ec;
 
 	int x3, y3;
 	bool_ has_overlay;
 
-# endif  /* USE_EGO_GRAPHICS */
 	int k, l;
 	unsigned long pixel, blank;
 
@@ -508,8 +501,6 @@ static void AngbandOutputPict(AngbandWidget widget, int x, int y, int n,
 		x2 = (tc & 0x7F) * widget->angband.fontwidth;
 		y2 = (ta & 0x7F) * widget->angband.fontheight;
 
-# ifdef USE_EGO_GRAPHICS
-
 		ea = *eap++;
 		ec = *ecp++;
 		has_overlay = (ea && ec);
@@ -518,24 +509,9 @@ static void AngbandOutputPict(AngbandWidget widget, int x, int y, int n,
 		x3 = (ec & 0x7F) * widget->angband.fontwidth;
 		y3 = (ea & 0x7F) * widget->angband.fontheight;
 
-# endif  /* USE_EGO_GRAPHICS */
-
 		/* Optimise the common case */
 		if ((x1 == x2) && (y1 == y2))
 		{
-
-# ifndef USE_EGO_GRAPHICS
-
-			/* Draw object / terrain */
-			XPutImage(XtDisplay(widget), XtWindow(widget),
-			          widget->angband.gc[0],
-			          widget->angband.tiles,
-			          x1, y1,
-			          x, y,
-			          widget->angband.fontwidth,
-			          widget->angband.fontheight);
-
-# else /* !USE_EGO_GRAPHICS */
 
 			/* No overlay */
 			if (!has_overlay)
@@ -586,38 +562,12 @@ static void AngbandOutputPict(AngbandWidget widget, int x, int y, int n,
 				          widget->angband.fontheight);
 			}
 
-# endif  /* !USE_EGO_GRAPHICS */
-
 		}
 		else
 		{
 			/* Mega Hack^2 - assume the top left corner is "black" */
 			blank = XGetPixel(widget->angband.tiles,
 			                  0, widget->angband.fontheight * 6);
-
-# ifndef USE_EGO_GRAPHICS
-
-			for (k = 0; k < widget->angband.fontwidth; k++)
-			{
-				for (l = 0; l < widget->angband.fontheight; l++)
-				{
-					/* If mask set... */
-					if ((pixel = XGetPixel(widget->angband.tiles,
-					                       x1 + k, y1 + l)) == blank)
-					{
-
-						/* Output from the terrain */
-						pixel = XGetPixel(widget->angband.tiles,
-						                  x2 + k, y2 + l);
-					}
-
-					/* Store into the temp storage. */
-					XPutPixel(widget->angband.TmpImage,
-					          k, l, pixel);
-				}
-			}
-
-#else /* !USE_EGO_GRAPHICS */
 
 		for (k = 0; k < widget->angband.fontwidth; k++)
 		{
@@ -656,8 +606,6 @@ static void AngbandOutputPict(AngbandWidget widget, int x, int y, int n,
 				          k, l, pixel);
 			}
 		}
-
-#endif /* !USE_EGO_GRAPHICS */
 
 			/* Draw to screen */
 
@@ -1635,13 +1583,8 @@ static errr Term_text_xaw(int x, int y, int n, byte a, cptr s)
  * Draw some graphical characters.
  */
 # ifdef USE_TRANSPARENCY
-# ifdef USE_EGO_GRAPHICS
 static errr Term_pict_xaw(int x, int y, int n, const byte *ap, const char *cp,
                           const byte *tap, const char *tcp, const byte *eap, const char *ecp)
-# else /* USE_EGO_GRAPHICS */
-static errr Term_pict_xaw(int x, int y, int n, const byte *ap, const char *cp,
-                          const byte *tap, const char *tcp)
-# endif  /* USE_EGO_GRAPHICS */
 # else /* USE_TRANSPARENCY */
 static errr Term_pict_xaw(int x, int y, int n, const byte *ap, const char *cp)
 # endif  /* USE_TRANSPARENCY */
@@ -1650,11 +1593,7 @@ static errr Term_pict_xaw(int x, int y, int n, const byte *ap, const char *cp)
 
 	/* Draw the pictures */
 # ifdef USE_TRANSPARENCY
-# ifdef USE_EGO_GRAPHICS
 	AngbandOutputPict(td->widget, x, y, n, ap, cp, tap, tcp, eap, ecp);
-# else /* USE_EGO_GRAPHICS */
-	AngbandOutputPict(td->widget, x, y, n, ap, cp, tap, tcp);
-# endif  /* USE_EGO_GRAPHICS */
 # else /* USE_TRANSPARENCY */
 	AngbandOutputPict(td->widget, x, y, n, ap, cp);
 # endif  /* USE_TRANSPARENCY */

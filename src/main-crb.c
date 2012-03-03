@@ -2873,14 +2873,9 @@ static errr Term_text_mac(int x, int y, int n, byte a, const char *cp)
  * Erase "n" characters starting at (x,y)
  */
 #ifdef USE_TRANSPARENCY
-# ifdef USE_EGO_GRAPHICS
 static errr Term_pict_mac(int x, int y, int n, const byte *ap, const char *cp,
                           const byte *tap, const char *tcp,
                           const byte *eap, const char *ecp)
-# else /* USE_EGO_GRAPHICS */
-static errr Term_pict_mac(int x, int y, int n, const byte *ap, const char *cp,
-                          const byte *tap, const char *tcp)
-# endif  /* USE_EGO_GRAPHICS */
 #else /* USE_TRANSPARENCY */
 static errr Term_pict_mac(int x, int y, int n, const byte *ap, const char *cp)
 #endif /* USE_TRANSPARENCY */
@@ -2924,11 +2919,9 @@ static errr Term_pict_mac(int x, int y, int n, const byte *ap, const char *cp)
 #ifdef USE_TRANSPARENCY
 		byte ta = *tap++;
 		char tc = *tcp++;
-# ifdef USE_EGO_GRAPHICS
 		byte ea = *eap++;
 		char ec = *ecp++;
 		bool_ has_overlay = (ea && ec);
-# endif  /* USE_EGO_GRAPHICS */
 #endif
 
 
@@ -2957,10 +2950,8 @@ static errr Term_pict_mac(int x, int y, int n, const byte *ap, const char *cp)
 #ifdef USE_TRANSPARENCY
 			int t_col, t_row;
 			Rect terrain_r;
-# ifdef USE_EGO_GRAPHICS
 			int e_col, e_row;
 			Rect ego_r;
-# endif  /* USE_EGO_GRAPHICS */
 #endif /* USE_TRANSPARENCY */
 
 			/* Row and Col */
@@ -2984,8 +2975,6 @@ static errr Term_pict_mac(int x, int y, int n, const byte *ap, const char *cp)
 			terrain_r.right = terrain_r.left + graf_width;
 			terrain_r.bottom = terrain_r.top + graf_height;
 
-# ifdef USE_EGO_GRAPHICS
-
 			/* If there's an overlay */
 			if (has_overlay)
 			{
@@ -2999,8 +2988,6 @@ static errr Term_pict_mac(int x, int y, int n, const byte *ap, const char *cp)
 				ego_r.right = ego_r.left + graf_width;
 				ego_r.bottom = ego_r.top + graf_height;
 			}
-
-# endif  /* USE_EGO_GRAPHICS */
 
 #endif /* USE_TRANSPARENCY */
 
@@ -3065,8 +3052,6 @@ static errr Term_pict_mac(int x, int y, int n, const byte *ap, const char *cp)
 						         (BitMap*)*pixmap_h,
 						         &src_r, &dst_r, transparent, NULL);
 
-# ifdef USE_EGO_GRAPHICS
-
 					/* Draw overlay if there's one */
 					if (has_overlay)
 					{
@@ -3074,8 +3059,6 @@ static errr Term_pict_mac(int x, int y, int n, const byte *ap, const char *cp)
 						         (BitMap*)*pixmap_h,
 						         &ego_r, &dst_r, transparent, NULL);
 					}
-
-# endif  /* USE_EGO_GRAPHICS */
 
 					break;
 				}

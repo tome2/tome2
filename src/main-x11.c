@@ -2564,13 +2564,8 @@ static errr Term_text_x11(int x, int y, int n, byte a, cptr s)
  * Draw some graphical characters.
  */
 # ifdef USE_TRANSPARENCY
-# ifdef USE_EGO_GRAPHICS
 static errr Term_pict_x11(int x, int y, int n, const byte *ap, const char *cp,
                           const byte *tap, const char *tcp, const byte *eap, const char *ecp)
-# else /* USE_EGO_GRAPHICS */
-static errr Term_pict_x11(int x, int y, int n, const byte *ap, const char *cp,
-                          const byte *tap, const char *tcp)
-# endif  /* USE_EGO_GRAPHICS */
 # else /* USE_TRANSPARENCY */
 static errr Term_pict_x11(int x, int y, int n, const byte *ap, const char *cp)
 # endif  /* USE_TRANSPARENCY */
@@ -2586,12 +2581,10 @@ static errr Term_pict_x11(int x, int y, int n, const byte *ap, const char *cp)
 	char tc;
 	int x2, y2;
 
-# ifdef USE_EGO_GRAPHICS
 	byte ea;
 	char ec;
 	int x3, y3;
 	bool_ has_overlay;
-# endif  /* USE_EGO_GRAPHICS */
 
 	int k, l;
 
@@ -2625,8 +2618,6 @@ static errr Term_pict_x11(int x, int y, int n, const byte *ap, const char *cp)
 		x2 = (tc & 0x7F) * td->fnt->twid;
 		y2 = (ta & 0x7F) * td->fnt->hgt;
 
-# ifdef USE_EGO_GRAPHICS
-
 		ea = *eap++;
 		ec = *ecp++;
 		has_overlay = (ea && ec);
@@ -2635,22 +2626,9 @@ static errr Term_pict_x11(int x, int y, int n, const byte *ap, const char *cp)
 		x3 = (ec & 0x7F) * td->fnt->twid;
 		y3 = (ea & 0x7F) * td->fnt->hgt;
 
-# endif  /* USE_EGO_GRAPHICS */
-
 		/* Optimise the common case */
 		if ((x1 == x2) && (y1 == y2))
 		{
-# ifndef USE_EGO_GRAPHICS
-
-			/* Draw object / terrain */
-			XPutImage(Metadpy->dpy, td->win->win,
-			          clr[0]->gc,
-			          td->tiles,
-			          x1, y1,
-			          x, y,
-			          td->fnt->twid, td->fnt->hgt);
-# else /* !USE_EGO_GRAPHICS */
-
 			/* Draw object / terrain */
 			if (!has_overlay)
 			{
@@ -2691,34 +2669,12 @@ static errr Term_pict_x11(int x, int y, int n, const byte *ap, const char *cp)
 				          td->fnt->twid, td->fnt->hgt);
 			}
 
-# endif  /* !USE_EGO_GRAPHICS */
-
 		}
 		else
 		{
 
 			/* Mega Hack^2 - assume the top left corner is "black" */
 			blank = XGetPixel(td->tiles, 0, td->fnt->hgt * 6);
-
-# ifndef USE_EGO_GRAPHICS
-
-			for (k = 0; k < td->fnt->twid; k++)
-			{
-				for (l = 0; l < td->fnt->hgt; l++)
-				{
-					/* If mask set... */
-					if ((pixel = XGetPixel(td->tiles, x1 + k, y1 + l)) == blank)
-					{
-						/* Output from the terrain */
-						pixel = XGetPixel(td->tiles, x2 + k, y2 + l);
-					}
-
-					/* Store into the temp storage. */
-					XPutPixel(td->TmpImage, k, l, pixel);
-				}
-			}
-
-# else /* !USE_EGO_GRAPHICS */
 
 			for (k = 0; k < td->fnt->twid; k++)
 			{
@@ -2754,7 +2710,6 @@ static errr Term_pict_x11(int x, int y, int n, const byte *ap, const char *cp)
 				}
 			}
 
-# endif  /* !USE_EGO_GRAPHICS */
 
 
 			/* Draw to screen */

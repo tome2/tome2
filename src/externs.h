@@ -634,11 +634,7 @@ extern bool_ los(int y1, int x1, int y2, int x2);
 extern bool_ cave_valid_bold(int y, int x);
 extern bool_ no_lite(void);
 #ifdef USE_TRANSPARENCY
-#ifdef USE_EGO_GRAPHICS
 extern void map_info(int y, int x, byte *ap, char *cp, byte *tap, char *tcp, byte *eap, char *ecp);
-#else /* USE_EGO_GRAPHICS */
-extern void map_info(int y, int x, byte *ap, char *cp, byte *tap, char *tcp);
-#endif /* USE_EGO_GRAPHICS */
 #else /* USE_TRANSPARENCY */
 extern void map_info(int y, int x, byte *ap, char *cp);
 #endif /* USE_TRANSPARENCY */

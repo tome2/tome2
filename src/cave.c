@@ -867,12 +867,8 @@ static byte darker_attrs[16] =
 
 
 #ifdef USE_TRANSPARENCY
-#ifdef USE_EGO_GRAPHICS
 void map_info(int y, int x, byte *ap, char *cp, byte *tap, char *tcp,
               byte *eap, char *ecp)
-#else /* USE_EGO_GRAPHICS */
-void map_info(int y, int x, byte *ap, char *cp, byte *tap, char *tcp)
-#endif /* USE_EGO_GRAPHICS */
 #else /* USE_TRANSPARENCY */
 void map_info(int y, int x, byte *ap, char *cp)
 #endif /* USE_TRANSPARENCY */
@@ -943,13 +939,9 @@ void map_info(int y, int x, byte *ap, char *cp)
 	f_ptr = &f_info[feat];
 
 
-#ifdef USE_EGO_GRAPHICS
-
 	/* Reset attr/char */
 	*eap = 0;
 	*ecp = 0;
-
-#endif /* USE_EGO_GRAPHICS */
 
 
 	/**** Layer 1 -- Terrain feature ****/
@@ -994,8 +986,6 @@ void map_info(int y, int x, byte *ap, char *cp)
 			                (t_info[t_idx].g_char != 0))
 			{
 
-#ifdef USE_EGO_GRAPHICS
-
 				if (graf_new)
 				{
 					*eap = t_info[t_idx].g_attr;
@@ -1006,13 +996,6 @@ void map_info(int y, int x, byte *ap, char *cp)
 					a = t_info[t_idx].g_attr;
 					c = t_info[t_idx].g_char;
 				}
-
-#else /* USE_EGO_GRAPHICS */
-
-				a = t_info[t_idx].g_attr;
-				c = t_info[t_idx].g_char;
-
-#endif /* USE_EGO_GRAPHICS */
 
 			}
 			else
@@ -1336,18 +1319,12 @@ void map_info(int y, int x, byte *ap, char *cp)
 			{
 				monster_race *r_ptr = race_inf(m_ptr);
 
-#ifdef USE_EGO_GRAPHICS
-
 				/* Reset attr/char */
 				*eap = 0;
 				*ecp = 0;
 
-#endif /* USE_EGO_GRAPHICS */
-
 				if (use_graphics)
 				{
-
-#ifdef USE_EGO_GRAPHICS
 
 					if (graf_new)
 					{
@@ -1359,8 +1336,6 @@ void map_info(int y, int x, byte *ap, char *cp)
 						/* Desired char */
 						*ecp = re_ptr->g_char;
 					}
-
-#endif /* USE_EGO_GRAPHICS */
 
 					/* Use base monster */
 					r_ptr = &r_info[m_ptr->r_idx];
@@ -1469,13 +1444,9 @@ void map_info(int y, int x, byte *ap, char *cp)
 	{
 		monster_race *r_ptr = &r_info[p_ptr->body_monster];
 
-#ifdef USE_EGO_GRAPHICS
-
 		/* Reset attr/char */
 		*eap = 0;
 		*ecp = 0;
-
-#endif /* USE_EGO_GRAPHICS */
 
 		/* Get the "player" attr */
 		if (!avoid_other && attr_mutable && (r_ptr->flags1 & RF1_ATTR_MULTI))
@@ -1526,8 +1497,6 @@ void map_info(int y, int x, byte *ap, char *cp)
 
 #endif /* VARIABLE_PLAYER_GRAPH */
 
-#ifdef USE_EGO_GRAPHICS
-
 		case GRAPHICS_ISO:
 		case GRAPHICS_NEW:
 			{
@@ -1556,8 +1525,6 @@ void map_info(int y, int x, byte *ap, char *cp)
 
 				break;
 			}
-
-#endif /* USE_EGO_GRAPHICS */
 
 		}
 
@@ -2198,11 +2165,9 @@ void lite_spot(int y, int x)
 	byte ta;
 	char tc;
 
-# ifdef USE_EGO_GRAPHICS
 	byte ea;
 	char ec;
 
-# endif  /* USE_EGO_GRAPHICS */
 #endif /* USE_TRANSPARENCY */
 
 
@@ -2210,8 +2175,6 @@ void lite_spot(int y, int x)
 	if (panel_contains(y, x))
 	{
 #ifdef USE_TRANSPARENCY
-
-# ifdef USE_EGO_GRAPHICS
 
 		/* Examine the grid */
 		map_info(y, x, &a, (char*)&c, &ta, &tc, &ea, &ec);
@@ -2232,30 +2195,6 @@ void lite_spot(int y, int x)
 			}
 			Term_queue_char(panel_col_of(x) + 1, y - panel_row_prt, a2, c2, 0, 0, 0, 0);
 		}
-
-# else /* USE_EGO_GRAPHICS */
-
-		/* Examine the grid */
-		map_info(y, x, &a, &c, &ta, &tc);
-
-		/* Hack -- Queue it */
-		Term_queue_char(panel_col_of(x), y - panel_row_prt, a, c, ta, tc);
-		if (use_bigtile)
-		{
-			if (a & 0x80)
-			{
-				a2 = 255;
-				c2 = 255;
-			}
-			else
-			{
-				a2 = TERM_WHITE;
-				c2 = ' ';
-			}
-			Term_queue_char(panel_col_of(x) + 1, y - panel_row_prt, a2, c2, 0, 0);
-		}
-
-# endif  /* USE_EGO_GRAPHICS */
 
 #else /* USE_TRANSPARENCY */
 
@@ -2318,8 +2257,6 @@ void prt_map(void)
 #ifdef USE_TRANSPARENCY
 			byte ta;
 			char tc;
-
-#ifdef USE_EGO_GRAPHICS
 			byte ea;
 			char ec;
 
@@ -2342,27 +2279,7 @@ void prt_map(void)
 				}
 				Term_queue_char(panel_col_of(x) + 1, y - panel_row_prt, a2, c2, 0, 0, 0, 0);
 			}
-#else /* USE_EGO_GRAPHICS */
-/* Determine what is there */
-			map_info(y, x, &a, &c, &ta, &tc);
-			/* Efficiency -- Redraw that grid of the map */
-			Term_queue_char(panel_col_of(x), y - panel_row_prt, a, c, ta, tc);
-			if (use_bigtile)
-			{
-				if (a & 0x80)
-				{
-					a2 = 255;
-					c2 = 255;
-				}
-				else
-				{
-					a2 = TERM_WHITE;
-					c2 = ' ';
-				}
-				Term_queue_char(panel_col_of(x) + 1, y - panel_row_prt, a2, c2, 0, 0);
-			}
 
-#endif /* USE_EGO_GRAPHICS */
 #else /* USE_TRANSPARENCY */
 			/* Determine what is there */
 			map_info(y, x, &a, &c);
@@ -2627,11 +2544,7 @@ void display_map(int *cy, int *cx)
 
 			/* Extract the current attr/char at that map location */
 #ifdef USE_TRANSPARENCY
-# ifdef USE_EGO_GRAPHICS
 			map_info(j, i, &ta, &tc, &ta, &tc, &ta, &tc);
-# else /* USE_EGO_GRAPHICS */
-			map_info(j, i, &ta, &tc, &ta, &tc);
-# endif  /* USE_EGO_GRAPHICS */
 #else /* USE_TRANSPARENCY */
 			map_info(j, i, &ta, &tc);
 #endif /* USE_TRANSPARENCY */

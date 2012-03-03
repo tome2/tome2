@@ -2711,8 +2711,6 @@ static void overlay_tiles_2(
 }
 
 
-# ifdef USE_EGO_GRAPHICS
-
 /*
  * XXX XXX Low level graphics helper
  * Draw a tile at (e_x, e_y) over one at (s_x, s_y) over another one
@@ -2759,8 +2757,6 @@ static void overlay_tiles_3(
 	}
 }
 
-# endif  /* USE_EGO_GRAPHICS */
-
 # endif  /* USE_TRANSPARENCY */
 
 
@@ -2770,18 +2766,11 @@ static void overlay_tiles_3(
  * Draw "n" tiles/characters starting at (x,y)
  */
 # ifdef USE_TRANSPARENCY
-# ifdef USE_EGO_GRAPHICS
 static errr Term_pict_gtk(
         int x, int y, int n,
         const byte *ap, const char *cp,
         const byte *tap, const char *tcp,
         const byte *eap, const char *ecp)
-# else /* USE_EGO_GRAPHICS */
-static errr Term_pict_gtk(
-        int x, int y, int n,
-        const byte *ap, const char *cp,
-        const byte *tap, const char *tcp)
-# endif  /* USE_EGO_GRAPHICS */
 # else /* USE_TRANSPARENCY */
 static errr Term_pict_gtk(
         int x, int y, int n,
@@ -2833,14 +2822,10 @@ static errr Term_pict_gtk(
 		char tc;
 		int t_x, t_y;
 
-# ifdef USE_EGO_GRAPHICS
-
 		byte ea;
 		char ec;
 		int e_x = 0, e_y = 0;
 		bool_ has_overlay;
-
-# endif  /* USE_EGO_GRAPHICS */
 
 # endif  /* USE_TRANSPARENCY */
 
@@ -2855,14 +2840,10 @@ static errr Term_pict_gtk(
 		ta = *tap++;
 		tc = *tcp++;
 
-# ifdef USE_EGO_GRAPHICS
-
 		/* Overlay attr/char */
 		ea = *eap++;
 		ec = *ecp++;
 		has_overlay = (ea && ec);
-
-# endif  /* USE_EGO_GRAPHICS */
 
 # endif  /* USE_TRANSPARENCY */
 
@@ -2876,16 +2857,12 @@ static errr Term_pict_gtk(
 		t_y = (((byte)ta & 0x7F) % tile_rows) * td->tile_hgt;
 		t_x = (((byte)tc & 0x7F) % tile_cols) * td->tile_wid;
 
-# ifdef USE_EGO_GRAPHICS
-
 		/* Overlay Row and Col */
 		if (has_overlay)
 		{
 			e_y = (((byte)ea & 0x7F) % tile_rows) * td->tile_hgt;
 			e_x = (((byte)ec & 0x7F) % tile_cols) * td->tile_wid;
 		}
-
-# endif  /* USE_EGO_GRAPHICS */
 
 
 # ifdef USE_DOUBLE_TILES
@@ -2908,8 +2885,6 @@ static errr Term_pict_gtk(
 		if (!use_transparency ||
 		                ((s_x == t_x) && (s_y == t_y)))
 		{
-
-# ifdef USE_EGO_GRAPHICS
 
 			/* The simplest possible case - no overlay */
 			if (!has_overlay)
@@ -2939,17 +2914,6 @@ static errr Term_pict_gtk(
 				gdk_flush();
 			}
 
-# else /* USE_EGO_GRAPHICS */
-
-			/* Draw the tile */
-			gdk_draw_rgb_image_2(
-			        TERM_DATA_DRAWABLE(td), td->gc, td->tiles,
-			        s_x, s_y,
-			        d_x, d_y,
-			        td->tile_wid, td->tile_hgt);
-
-# endif  /* USE_EGO_GRAPHICS */
-
 		}
 
 		/*
@@ -2958,13 +2922,6 @@ static errr Term_pict_gtk(
 		 */
 		else
 		{
-
-# ifndef USE_EGO_GRAPHICS
-
-			/* Draw mon/PC/obj over terrain */
-			overlay_tiles_2(td, s_x, s_y, t_x, t_y);
-
-# else /* !USE_EGO_GRAPHICS */
 
 			/* No overlay */
 			if (!has_overlay)
@@ -2980,8 +2937,6 @@ static errr Term_pict_gtk(
 				overlay_tiles_3(td, e_x, e_y, s_x, s_y,
 				                t_x, t_y);
 			}
-
-# endif  /* !USE_EGO_GRAPHICS */
 
 			/* Draw it */
 			gdk_draw_rgb_image_2(

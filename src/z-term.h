@@ -55,13 +55,11 @@ struct term_win
 	byte *vta;
 	char *vtc;
 
-#ifdef USE_EGO_GRAPHICS
 	byte **ea;
 	char **ec;
 
 	byte *vea;
 	char *vec;
-#endif /* USE_EGO_GRAPHICS */
 
 #endif /* USE_TRANSPARENCY */
 
@@ -235,11 +233,7 @@ struct term
 	void (*resize_hook)(void);
 
 #ifdef USE_TRANSPARENCY
-#ifdef USE_EGO_GRAPHICS
 	errr (*pict_hook)(int x, int y, int n, const byte *ap, const char *cp, const byte *tap, const char *tcp, const byte *eap, const char *ecp);
-#else /* USE_EGO_GRAPHICS */
-	errr (*pict_hook)(int x, int y, int n, const byte *ap, const char *cp, const byte *tap, const char *tcp);
-#endif /* USE_EGO_GRAPHICS */
 #else /* USE_TRANSPARENCY */
 	errr (*pict_hook)(int x, int y, int n, const byte *ap, const char *cp);
 #endif /* USE_TRANSPARENCY */
@@ -308,15 +302,9 @@ extern int scansubdir_max;
 extern cptr scansubdir_result[255];
 
 #ifdef USE_TRANSPARENCY
-#ifdef USE_EGO_GRAPHICS
 extern void Term_queue_char(int x, int y, byte a, char c, byte ta, char tc, byte ea, char ec);
 
 extern void Term_queue_line(int x, int y, int n, byte *a, char *c, byte *ta, char *tc, byte *ea, char *ec);
-#else /* USE_EGO_GRAPHICS */
-extern void Term_queue_char(int x, int y, byte a, char c, byte ta, char tc);
-
-extern void Term_queue_line(int x, int y, int n, byte *a, char *c, byte *ta, char *tc);
-#endif /* USE_EGO_GRAPHICS */
 #else /* USE_TRANSPARENCY */
 extern void Term_queue_char(int x, int y, byte a, char c);
 

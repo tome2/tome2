@@ -2213,11 +2213,7 @@ static errr Term_text_win(int x, int y, int n, byte a, const char *s)
  * If "graphics" is not available, we simply "wipe" the given grids.
  */
 # ifdef USE_TRANSPARENCY
-# ifdef USE_EGO_GRAPHICS
 static errr Term_pict_win(int x, int y, int n, const byte *ap, const char *cp, const byte *tap, const char *tcp, const byte *eap, const char *ecp)
-# else /* USE_EGO_GRAPHICS */
-static errr Term_pict_win(int x, int y, int n, const byte *ap, const char *cp, const byte *tap, const char *tcp)
-# endif  /* USE_EGO_GRAPHICS */
 # else /* USE_TRANSPARENCY */
 static errr Term_pict_win(int x, int y, int n, const byte *ap, const char *cp)
 # endif  /* USE_TRANSPARENCY */
@@ -2236,11 +2232,7 @@ static errr Term_pict_win(int x, int y, int n, const byte *ap, const char *cp)
 
 	HDC hdcMask = NULL;
 
-#ifdef USE_EGO_GRAPHICS
-
 	int x4, y4;
-
-#endif
 
 # endif  /* USE_TRANSPARENCY */
 
@@ -2321,7 +2313,6 @@ static errr Term_pict_win(int x, int y, int n, const byte *ap, const char *cp)
 				/* Draw the tile */
 				BitBlt(hdc, x2, y2, tw2, h2, hdcSrc, x1, y1, SRCPAINT);
 
-#ifdef USE_EGO_GRAPHICS
 				if (ecp[i] != 0 && eap[i] != 0)
 				{
 					x4 = (ecp[i] & 0x7F) * w1;
@@ -2333,7 +2324,6 @@ static errr Term_pict_win(int x, int y, int n, const byte *ap, const char *cp)
 					/* Draw the tile */
 					BitBlt(hdc, x2, y2, tw2, h2, hdcSrc, x4, y4, SRCPAINT);
 				}
-#endif
 			}
 
 			/* Need to stretch */
@@ -2355,7 +2345,6 @@ static errr Term_pict_win(int x, int y, int n, const byte *ap, const char *cp)
 					StretchBlt(hdc, x2, y2, tw2, h2, hdcSrc, x1, y1, w1, h1, SRCPAINT);
 				}
 
-#ifdef USE_EGO_GRAPHICS
 				if (ecp[i] != 0 && eap[i] != 0)
 				{
 					x4 = (ecp[i] & 0x7F) * w1;
@@ -2367,7 +2356,6 @@ static errr Term_pict_win(int x, int y, int n, const byte *ap, const char *cp)
 					/* Draw the tile */
 					StretchBlt(hdc, x2, y2, tw2, h2, hdcSrc, x4, y4, w1, h1, SRCPAINT);
 				}
-#endif
 			}
 		}
 		else
