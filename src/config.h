@@ -258,14 +258,6 @@
 
 
 /*
- * OPTION: Capitalize the "user_name" (for "default" player name)
- * This option is only relevant on SET_UID machines.
- */
-#define CAPITALIZE_USER_NAME
-
-
-
-/*
  * OPTION: Person to bother if something goes wrong.
  */
 #define MAINTAINER      "darkgod@t-o-m-e.net"
