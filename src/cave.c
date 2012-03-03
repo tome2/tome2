@@ -866,12 +866,8 @@ static byte darker_attrs[16] =
 };
 
 
-#ifdef USE_TRANSPARENCY
 void map_info(int y, int x, byte *ap, char *cp, byte *tap, char *tcp,
               byte *eap, char *ecp)
-#else /* USE_TRANSPARENCY */
-void map_info(int y, int x, byte *ap, char *cp)
-#endif /* USE_TRANSPARENCY */
 {
 	cave_type *c_ptr;
 
@@ -1225,13 +1221,9 @@ void map_info(int y, int x, byte *ap, char *cp)
 		image_random(ap, cp);
 	}
 
-#ifdef USE_TRANSPARENCY
-
 	/* Save the terrain info for the transparency effects */
 	*tap = a;
 	*tcp = c;
-
-#endif /* USE_TRANSPARENCY */
 
 	/* Save the info */
 	*ap = a;
@@ -2161,21 +2153,16 @@ void lite_spot(int y, int x)
 	byte a, a2;
 	byte c, c2;
 
-#ifdef USE_TRANSPARENCY
 	byte ta;
 	char tc;
 
 	byte ea;
 	char ec;
 
-#endif /* USE_TRANSPARENCY */
-
 
 	/* Redraw if on screen */
 	if (panel_contains(y, x))
 	{
-#ifdef USE_TRANSPARENCY
-
 		/* Examine the grid */
 		map_info(y, x, &a, (char*)&c, &ta, &tc, &ea, &ec);
 
@@ -2195,30 +2182,6 @@ void lite_spot(int y, int x)
 			}
 			Term_queue_char(panel_col_of(x) + 1, y - panel_row_prt, a2, c2, 0, 0, 0, 0);
 		}
-
-#else /* USE_TRANSPARENCY */
-
-		/* Examine the grid */
-		map_info(y, x, &a, (char *) &c);
-
-		/* Hack -- Queue it */
-		Term_queue_char(panel_col_of(x), y - panel_row_prt, a, c);
-		if (use_bigtile)
-		{
-			if (a & 0x80)
-			{
-				a2 = 255;
-				c2 = 255;
-			}
-			else
-			{
-				a2 = TERM_WHITE;
-				c2 = ' ';
-			}
-			Term_queue_char(panel_col_of(x) + 1, y - panel_row_prt, a2, c2);
-		}
-
-#endif /* USE_TRANSPARENCY */
 
 	}
 }
@@ -2254,7 +2217,6 @@ void prt_map(void)
 			byte a, a2;
 			char c, c2;
 
-#ifdef USE_TRANSPARENCY
 			byte ta;
 			char tc;
 			byte ea;
@@ -2279,28 +2241,6 @@ void prt_map(void)
 				}
 				Term_queue_char(panel_col_of(x) + 1, y - panel_row_prt, a2, c2, 0, 0, 0, 0);
 			}
-
-#else /* USE_TRANSPARENCY */
-			/* Determine what is there */
-			map_info(y, x, &a, &c);
-
-			/* Efficiency -- Redraw that grid of the map */
-			Term_queue_char(panel_col_of(x), y - panel_row_prt, a, c);
-			if (use_bigtile)
-			{
-				if (a & 0x80)
-				{
-					a2 = 255;
-					c2 = 255;
-				}
-				else
-				{
-					a2 = TERM_WHITE;
-					c2 = ' ';
-				}
-				Term_queue_char(panel_col_of(x) + 1, y - panel_row_prt, a2, c2);
-			}
-#endif /* USE_TRANSPARENCY */
 		}
 	}
 
@@ -2543,11 +2483,7 @@ void display_map(int *cy, int *cx)
 			x = i * xfactor / xrat + 1;
 
 			/* Extract the current attr/char at that map location */
-#ifdef USE_TRANSPARENCY
 			map_info(j, i, &ta, &tc, &ta, &tc, &ta, &tc);
-#else /* USE_TRANSPARENCY */
-			map_info(j, i, &ta, &tc);
-#endif /* USE_TRANSPARENCY */
 
 			/* Extract the priority of that attr/char */
 			tp = priority(ta, tc);

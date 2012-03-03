@@ -217,10 +217,6 @@ struct _term_data
 								rendered to before blitting to main screen */	
 	int black,white,purple;	/* basic colors keyed to this terminal's surface */
 
-#ifdef USE_GRAPHICS
-#ifdef USE_TRANSPARENCY
-#endif
-#endif
 };
 
 /* The array of term data structures */
@@ -1907,10 +1903,6 @@ static errr term_data_init(term_data *td, int i)
 
 
 	printf("Init-int term: %d\n",i);
-#ifdef USE_GRAPHICS
-#ifdef USE_TRANSPARENCY
-#endif
-#endif
 
 	/* Success */
 	return (0);

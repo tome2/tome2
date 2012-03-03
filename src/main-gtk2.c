@@ -73,7 +73,6 @@
 #ifdef ANGBAND300
 # define can_save TRUE	/* Mimick the short-lived flag */
 # define C_FREE(P, N, T)	FREE(P)	/* Emulate the long-lived macro */
-# define USE_TRANSPARENCY	/* Because it's default now */
 #endif /* ANGBAND300 */
 
 #ifdef GUMBAND
@@ -187,10 +186,8 @@ struct term_data
 	int tile_hgt;
 
 	GdkRGBImage *tiles;
-# ifdef USE_TRANSPARENCY
 	guint32 bg_pixel;
 	GdkRGBImage *trans_buf;
-# endif  /* USE_TRANSPARENCY */
 
 #endif /* USE_GRAPHICS */
 
@@ -2190,16 +2187,11 @@ static void graf_nuke()
 		/* Forget pointer */
 		td->tiles = NULL;
 
-# ifdef USE_TRANSPARENCY
-
 		/* Free previously allocated transparency buffer */
 		if (td->trans_buf) gdk_rgb_image_destroy(td->trans_buf);
 
 		/* Forget stale pointer */
 		td->trans_buf = NULL;
-
-# endif  /* USE_TRANSPARENCY */
-
 	}
 }
 
@@ -2223,9 +2215,7 @@ static bool_ graf_init(
 
 	GdkRGBImage *raw_tiles, *scaled_tiles;
 
-# ifdef USE_TRANSPARENCY
 	GdkRGBImage *buffer;
-# endif  /* USE_TRANSPARENCY */
 
 	int i;
 
@@ -2300,8 +2290,6 @@ static bool_ graf_init(
 			td->tiles = scaled_tiles;
 		}
 
-# ifdef USE_TRANSPARENCY
-
 		/* See if we have to (re)allocate a new buffer XXX */
 		if ((td->trans_buf == NULL) ||
 		                (td->trans_buf->width != td->tile_wid) ||
@@ -2337,8 +2325,6 @@ static bool_ graf_init(
 		                       raw_tiles,
 		                       0,
 		                       tile_hgt * 6);
-
-# endif  /* USE_TRANSPARENCY */
 
 	}
 
@@ -2502,15 +2488,11 @@ static void Term_nuke_gtk(term *t)
 	/* Forget pointer */
 	td->tiles = NULL;
 
-# ifdef USE_TRANSPARENCY
-
 	/* Free transparency buffer */
 	if (td->trans_buf) gdk_rgb_image_destroy(td->trans_buf);
 
 	/* Amnesia */
 	td->trans_buf = NULL;
-
-# endif  /* USE_TRANSPARENCY */
 
 #endif /* USE_GRAPHICS */
 }
@@ -2670,8 +2652,6 @@ static errr Term_curs_gtk(int x, int y)
 
 #ifdef USE_GRAPHICS
 
-# ifdef USE_TRANSPARENCY
-
 /*
  * XXX XXX Low level graphics helper
  * Draw a tile at (s_x, s_y) over one at (t_x, t_y) and store the
@@ -2757,7 +2737,6 @@ static void overlay_tiles_3(
 	}
 }
 
-# endif  /* USE_TRANSPARENCY */
 
 
 /*
@@ -2765,17 +2744,11 @@ static void overlay_tiles_3(
  *
  * Draw "n" tiles/characters starting at (x,y)
  */
-# ifdef USE_TRANSPARENCY
 static errr Term_pict_gtk(
         int x, int y, int n,
         const byte *ap, const char *cp,
         const byte *tap, const char *tcp,
         const byte *eap, const char *ecp)
-# else /* USE_TRANSPARENCY */
-static errr Term_pict_gtk(
-        int x, int y, int n,
-        const byte *ap, const char *cp)
-# endif  /* USE_TRANSPARENCY */
 {
 	term_data *td = (term_data*)(Term->data);
 
@@ -2816,8 +2789,6 @@ static errr Term_pict_gtk(
 		char c;
 		int s_x, s_y;
 
-# ifdef USE_TRANSPARENCY
-
 		byte ta;
 		char tc;
 		int t_x, t_y;
@@ -2827,14 +2798,10 @@ static errr Term_pict_gtk(
 		int e_x = 0, e_y = 0;
 		bool_ has_overlay;
 
-# endif  /* USE_TRANSPARENCY */
-
 
 		/* Grid attr/char */
 		a = *ap++;
 		c = *cp++;
-
-# ifdef USE_TRANSPARENCY
 
 		/* Terrain attr/char */
 		ta = *tap++;
@@ -2845,13 +2812,9 @@ static errr Term_pict_gtk(
 		ec = *ecp++;
 		has_overlay = (ea && ec);
 
-# endif  /* USE_TRANSPARENCY */
-
 		/* Row and Col */
 		s_y = (((byte)a & 0x7F) % tile_rows) * td->tile_hgt;
 		s_x = (((byte)c & 0x7F) % tile_cols) * td->tile_wid;
-
-# ifdef USE_TRANSPARENCY
 
 		/* Terrain Row and Col */
 		t_y = (((byte)ta & 0x7F) % tile_rows) * td->tile_hgt;
@@ -2948,17 +2911,6 @@ static errr Term_pict_gtk(
 			/* Hack -- Prevent potential display problem */
 			gdk_flush();
 		}
-
-# else /* USE_TRANSPARENCY */
-
-		/* Draw the tile */
-		gdk_draw_rgb_image_2(
-		        TERM_DATA_DRAWABLE(td), td->gc, td->tiles,
-		        s_x, s_y,
-		        d_x, d_y,
-		        td->tile_wid, td->tile_hgt);
-
-# endif  /* USE_TRANSPARENCY */
 
 		/*
 		 * Advance x-coordinate - wide font fillers are taken care of
@@ -3665,8 +3617,6 @@ static void change_wide_tile_mode_event_handler(
 # endif  /* USE_DOUBLE_TILES */
 
 
-# ifdef USE_TRANSPARENCY
-
 /*
  * Toggles the boolean value of use_transparency
  */
@@ -3681,8 +3631,6 @@ static void change_trans_mode_event_handler(
 	/* Hack - force redraw */
 	Term_key_push(KTRL('R'));
 }
-
-# endif  /* USE_TRANSPARENCY */
 
 #endif /* USE_GRAPHICS */
 
@@ -4435,10 +4383,8 @@ static GtkItemFactoryEntry main_menu_items[] =
 	  NULL, 0, "<Separator>", NULL },
 	{ "/Options/Graphics/Smoothing", NULL,
 	  change_smooth_mode_event_handler, 0, "<CheckItem>", NULL },
-# ifdef USE_TRANSPARENCY
 	{ "/Options/Graphics/Transparency", NULL,
 	  change_trans_mode_event_handler, 0, "<CheckItem>", NULL },
-# endif  /* USE_TRANSPARENCY */
 
 #endif /* USE_GRAPHICS */
 
@@ -4769,13 +4715,9 @@ static void graf_menu_update_handler(
 	        "<Angband>/Options/Graphics/Smoothing",
 	        smooth_rescaling);
 
-# ifdef USE_TRANSPARENCY
-
 	check_menu_item(
 	        "<Angband>/Options/Graphics/Transparency",
 	        use_transparency);
-
-# endif  /* USE_TRANSPARENCY */
 }
 
 #endif /* USE_GRAPHICS */

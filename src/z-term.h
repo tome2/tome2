@@ -48,7 +48,6 @@ struct term_win
 	byte *va;
 	char *vc;
 
-#ifdef USE_TRANSPARENCY
 	byte **ta;
 	char **tc;
 
@@ -60,8 +59,6 @@ struct term_win
 
 	byte *vea;
 	char *vec;
-
-#endif /* USE_TRANSPARENCY */
 
 };
 
@@ -232,11 +229,7 @@ struct term
 
 	void (*resize_hook)(void);
 
-#ifdef USE_TRANSPARENCY
 	errr (*pict_hook)(int x, int y, int n, const byte *ap, const char *cp, const byte *tap, const char *tcp, const byte *eap, const char *ecp);
-#else /* USE_TRANSPARENCY */
-	errr (*pict_hook)(int x, int y, int n, const byte *ap, const char *cp);
-#endif /* USE_TRANSPARENCY */
 
 };
 
@@ -301,16 +294,8 @@ extern char scansubdir_dir[1024];
 extern int scansubdir_max;
 extern cptr scansubdir_result[255];
 
-#ifdef USE_TRANSPARENCY
 extern void Term_queue_char(int x, int y, byte a, char c, byte ta, char tc, byte ea, char ec);
-
 extern void Term_queue_line(int x, int y, int n, byte *a, char *c, byte *ta, char *tc, byte *ea, char *ec);
-#else /* USE_TRANSPARENCY */
-extern void Term_queue_char(int x, int y, byte a, char c);
-
-extern void Term_queue_line(int x, int y, int n, byte *a, char *c);
-#endif /* USE_TRANSPARENCY */
-
 extern void Term_queue_chars(int x, int y, int n, byte a, cptr s);
 
 extern errr Term_fresh(void);

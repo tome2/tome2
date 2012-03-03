@@ -633,11 +633,7 @@ extern int distance(int y1, int x1, int y2, int x2);
 extern bool_ los(int y1, int x1, int y2, int x2);
 extern bool_ cave_valid_bold(int y, int x);
 extern bool_ no_lite(void);
-#ifdef USE_TRANSPARENCY
 extern void map_info(int y, int x, byte *ap, char *cp, byte *tap, char *tcp, byte *eap, char *ecp);
-#else /* USE_TRANSPARENCY */
-extern void map_info(int y, int x, byte *ap, char *cp);
-#endif /* USE_TRANSPARENCY */
 extern void map_info_default(int y, int x, byte *ap, char *cp);
 extern void move_cursor_relative(int row, int col);
 extern void print_rel(char c, byte a, int y, int x);
