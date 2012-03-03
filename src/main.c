@@ -498,19 +498,6 @@ usage:
 				puts("  -m<sys>            Force 'main-<sys>.c' usage");
 				puts("  -d<def>            Define a 'lib' dir sub-path");
 
-#ifdef USE_GTK
-				puts("  -mgtk              To use GTK");
-				puts("  --                 Sub options");
-				puts("  -- -n#             Number of terms to use");
-				puts("  -- -b              Turn off software backing store");
-# ifdef USE_GRAPHICS
-				puts("  -- -s              Turn off smoothscaling graphics");
-				puts("  -- -o              Requests \"old\" graphics");
-				puts("  -- -g              Requests \"new\" graphics");
-				puts("  -- -t              Enable transparency effect");
-# endif  /* USE_GRAPHICS */
-#endif /* USE_GTK */
-
 #ifdef USE_GTK2
 				puts("  -mgtk2             To use GTK2");
 				puts("  --                 Sub options");
