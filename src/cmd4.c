@@ -1638,18 +1638,8 @@ static errr keymap_dump(cptr fname)
 	int mode;
 
 
-	/* Roguelike */
-	if (rogue_like_commands)
-	{
-		mode = KEYMAP_MODE_ROGUE;
-	}
-
-	/* Original */
-	else
-	{
-		mode = KEYMAP_MODE_ORIG;
-	}
-
+	/* Keymap mode */
+	mode = get_keymap_mode();
 
 	/* Build the filename */
 	path_build(buf, 1024, ANGBAND_DIR_USER, fname);
@@ -1725,17 +1715,8 @@ void do_cmd_macros(void)
 	int mode;
 
 
-	/* Roguelike */
-	if (rogue_like_commands)
-	{
-		mode = KEYMAP_MODE_ROGUE;
-	}
-
-	/* Original */
-	else
-	{
-		mode = KEYMAP_MODE_ORIG;
-	}
+	/* Keymap mode */
+	mode = get_keymap_mode();
 
 	/* File type is "TEXT" */
 	FILE_TYPE(FILE_TYPE_TEXT);

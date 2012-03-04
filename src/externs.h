@@ -1513,6 +1513,7 @@ extern int test_item_name(cptr name);
 extern char msg_box(cptr text, int y, int x);
 extern timer_type *new_timer(cptr callback, s32b delay);
 extern void del_timer(timer_type *t_ptr);
+extern int get_keymap_mode();
 
 /* main.c */
 extern bool_ private_check_user_directory(cptr dirpath);

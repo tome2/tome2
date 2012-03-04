@@ -3648,18 +3648,8 @@ void request_command(int shopping)
 	cptr act;
 
 
-	/* Roguelike */
-	if (rogue_like_commands)
-	{
-		mode = KEYMAP_MODE_ROGUE;
-	}
-
-	/* Original */
-	else
-	{
-		mode = KEYMAP_MODE_ORIG;
-	}
-
+	/* Keymap mode */
+	mode = get_keymap_mode();
 
 	/* No command yet */
 	command_cmd = 0;
@@ -3978,17 +3968,8 @@ int get_keymap_dir(char ch)
 	}
 	else
 	{
-		/* Roguelike */
-		if (rogue_like_commands)
-		{
-			mode = KEYMAP_MODE_ROGUE;
-		}
-
-		/* Original */
-		else
-		{
-			mode = KEYMAP_MODE_ORIG;
-		}
+		/* Keymap mode */
+		mode = get_keymap_mode();
 
 		/* Extract the action (if any) */
 		act = keymap_act[mode][(byte)(ch)];
@@ -4729,4 +4710,16 @@ void del_timer(timer_type *t_ptr)
 	}
 	else
 		cmsg_print(TERM_VIOLET, "Unknown timer!");
+}
+
+int get_keymap_mode()
+{
+	if (rogue_like_commands)
+	{
+		return KEYMAP_MODE_ROGUE;
+	}
+	else
+	{
+		return KEYMAP_MODE_ORIG;
+	}
 }
