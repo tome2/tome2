@@ -803,17 +803,17 @@ static void corpse_effect(object_type *o_ptr, bool_ cutting)
 		}
 		if (r_ptr->flags2 & RF2_SHAPECHANGER)
 		{
-			// DGDGDG			(void)set_mimic(20 , rand_int(MIMIC_VALAR));
+			/* DGDGDG			(void)set_mimic(20 , rand_int(MIMIC_VALAR)); */
 		}
 
 		if (r_ptr->flags3 & RF3_DEMON)
 		{
-			// DGDGDG			(void)set_mimic(30 , MIMIC_DEMON);
+			/* DGDGDG			(void)set_mimic(30 , MIMIC_DEMON); */
 		}
 
 		if (r_ptr->flags3 & RF3_UNDEAD)
 		{
-			// DGDGDG			(void)set_mimic(30 , MIMIC_VAMPIRE);
+			/* DGDGDG			(void)set_mimic(30 , MIMIC_VAMPIRE); */
 		}
 
 		if (r_ptr->flags3 & RF3_NO_FEAR)
