@@ -109,7 +109,7 @@ bool_ quest_ultra_good_stair_hook(char *fmt)
 		for (i = INVEN_WIELD; i < INVEN_TOTAL; i++)
 		{
 			u32b f1, f2, f3, f4, f5, esp;
-			object_type *o_ptr = &p_ptr->inventory[i];
+			object_type *o_ptr = get_object(i);
 
 			if (!o_ptr->k_idx) continue;
 

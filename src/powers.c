@@ -296,8 +296,7 @@ static void power_activate(int power)
 				{
 					ok = 0;
 
-					if (item >= 0) o2_ptr = &p_ptr->inventory[item];
-					else o2_ptr = &o_list[0 - item];
+					o2_ptr = get_object(item);
 
 					/* Is the item cursed? */
 					if ((item >= INVEN_WIELD) && cursed_p(o2_ptr))
@@ -1064,14 +1063,7 @@ static void power_activate(int power)
 			s = "You have nothing to drain.";
 			if (!get_item(&item, q, s, (USE_INVEN | USE_FLOOR))) break;
 
-			if (item >= 0)
-			{
-				o_ptr = &p_ptr->inventory[item];
-			}
-			else
-			{
-				o_ptr = &o_list[0 - item];
-			}
+			o_ptr = get_object(item);
 
 			lev = k_info[o_ptr->k_idx].level;
 

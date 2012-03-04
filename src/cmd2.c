@@ -3103,15 +3103,8 @@ void do_cmd_fire(void)
 		if (!get_item(&item, q, s, (USE_INVEN | USE_FLOOR))) return;
 
 
-		/* Access the item (if in the pack) */
-		if (item >= 0)
-		{
-			o_ptr = &p_ptr->inventory[item];
-		}
-		else
-		{
-			o_ptr = &o_list[0 - item];
-		}
+		/* Access the item */
+		o_ptr = get_object(item);
 	}
 
 
@@ -3523,15 +3516,8 @@ void do_cmd_throw(void)
 	s = "You have nothing to throw.";
 	if (!get_item(&item, q, s, (USE_INVEN | USE_FLOOR))) return;
 
-	/* Access the item (if in the pack) */
-	if (item >= 0)
-	{
-		o_ptr = &p_ptr->inventory[item];
-	}
-	else
-	{
-		o_ptr = &o_list[0 - item];
-	}
+	/* Access the item */
+	o_ptr = get_object(item);
 
 
 	object_flags(o_ptr, &f1, &f2, &f3, &f4, &f5, &esp);

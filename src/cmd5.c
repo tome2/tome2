@@ -131,17 +131,8 @@ void do_cmd_browse(void)
 	s = "You have no books that you can read.";
 	if (!get_item(&item, q, s, (USE_INVEN | USE_EQUIP | USE_FLOOR))) return;
 
-	/* Get the item (in the pack) */
-	if (item >= 0)
-	{
-		o_ptr = &p_ptr->inventory[item];
-	}
-
-	/* Get the item (on the floor) */
-	else
-	{
-		o_ptr = &o_list[0 - item];
-	}
+	/* Get the item */
+	o_ptr = get_object(item);
 
 	do_cmd_browse_aux(o_ptr);
 }
@@ -2198,17 +2189,8 @@ s32b get_school_spell(cptr do_what, cptr check_fct, s16b force_book)
 		sprintf(buf3, "%s from which book?", do_what);
 		if (!get_item(&item, buf3, buf2, USE_INVEN | USE_EQUIP | USE_EXTRA )) return -1;
 
-		/* Get the item (in the pack) */
-		if (item >= 0)
-		{
-			o_ptr = &p_ptr->inventory[item];
-		}
-
-		/* Get the item (on the floor) */
-		else
-		{
-			o_ptr = &o_list[0 - item];
-		}
+		/* Get the item */
+		o_ptr = get_object(item);
 
 		object_flags(o_ptr, &f1, &f2, &f3, &f4, &f5, &esp);
 

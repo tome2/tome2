@@ -4899,17 +4899,8 @@ bool_ verify(cptr prompt, int item)
 
 	object_type *o_ptr;
 
-	/* Inventory */
-	if (item >= 0)
-	{
-		o_ptr = &p_ptr->inventory[item];
-	}
-
-	/* Floor */
-	else
-	{
-		o_ptr = &o_list[0 - item];
-	}
+	/* Get object */
+	o_ptr = get_object(item);
 
 	/* Describe */
 	object_desc(o_name, o_ptr, TRUE, 3);
@@ -4933,17 +4924,8 @@ static bool_ get_item_allow(int item)
 
 	object_type *o_ptr;
 
-	/* Inventory */
-	if (item >= 0)
-	{
-		o_ptr = &p_ptr->inventory[item];
-	}
-
-	/* Floor */
-	else
-	{
-		o_ptr = &o_list[0 - item];
-	}
+	/* Get object */
+	o_ptr = get_object(item);
 
 	/* No inscription */
 	if (!o_ptr->note) return (TRUE);

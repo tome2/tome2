@@ -199,17 +199,7 @@ bool_ quest_one_identify_hook(char *fmt)
 	{
 		object_type *o_ptr;
 
-		/* Inventory */
-		if (item >= 0)
-		{
-			o_ptr = &p_ptr->inventory[item];
-		}
-
-		/* Floor */
-		else
-		{
-			o_ptr = &o_list[0 - item];
-		}
+		o_ptr = get_object(item);
 
 		if ((o_ptr->name1 == ART_POWER) && (!object_known_p(o_ptr)))
 		{

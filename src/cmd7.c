@@ -3672,16 +3672,9 @@ void do_cmd_alchemist(void)
 
 		if (!get_item(&item, q, s, (USE_INVEN | USE_FLOOR))) return;
 
-		/* Get the item (in the pack) */
-		if (item >= 0)
-		{
-			o_ptr = &p_ptr->inventory[item];
-		}
-		/* Get the item (on the floor) */
-		else
-		{
-			o_ptr = &o_list[0 - item];
-		}
+		/* Get the item */
+		o_ptr = get_object(item);
+
 		/* Create an artifact from an ego or double ego item,
 		 * from a previous artifact, or finish an artifact
 		 */
@@ -4010,15 +4003,8 @@ void do_cmd_alchemist(void)
 		s = "You have no item to extract power from.";
 		if (!get_item(&item, q, s, (USE_INVEN | USE_FLOOR))) return;
 
-		/* Get the item (in the pack) */
-		if (item >= 0)
-		{
-			o_ptr = &p_ptr->inventory[item];
-		}
-		else
-		{
-			o_ptr = &o_list[0 - item];
-		}
+		/* Get the item */
+		o_ptr = get_object(item);
 
 		/* This is to prevent creating magic essences by extracting
 		 * from a recharged wand of dragon breath or something.
@@ -4239,14 +4225,7 @@ void do_cmd_alchemist(void)
 
 					/* reset o_ptr to the original stack,
 					 * which contains at least another item */
-					if (item >= 0)
-					{
-						o_ptr = &p_ptr->inventory[item];
-					}
-					else
-					{
-						o_ptr = &o_list[0 - item];
-					}
+					o_ptr = get_object(item);
 				}
 			}
 		}
@@ -4277,17 +4256,8 @@ void do_cmd_alchemist(void)
 		s = "You have no rechargable items.";
 		if (!get_item(&item, q, s, (USE_INVEN | USE_FLOOR ))) return;
 
-		/* Get the item (in the pack) */
-		if (item >= 0)
-		{
-			o_ptr = &p_ptr->inventory[item];
-		}
-
-		/* Get the item (on the floor) */
-		else
-		{
-			o_ptr = &o_list[0 - item];
-		}
+		/* Get the item */
+		o_ptr = get_object(item);
 
 		/* Make sure we have enough essences to recharge this */
 		if (!alchemist_items_check(o_ptr->tval, o_ptr->sval, 0, 0, TRUE))
@@ -5182,18 +5152,6 @@ void do_cmd_archer(void)
 		s = "You have no item to convert.";
 		if (!get_item(&item, q, s, (USE_INVEN | USE_FLOOR))) return;
 
-		/* Get the item (in the pack) */
-		if (item >= 0)
-		{
-			q_ptr = &p_ptr->inventory[item];
-		}
-
-		/* Get the item (on the floor) */
-		else
-		{
-			q_ptr = &o_list[0 - item];
-		}
-
 		/* Get local object */
 		q_ptr = &forge;
 
@@ -5231,18 +5189,6 @@ void do_cmd_archer(void)
 		q = "Convert which item? ";
 		s = "You have no item to convert.";
 		if (!get_item(&item, q, s, (USE_INVEN | USE_FLOOR))) return;
-
-		/* Get the item (in the pack) */
-		if (item >= 0)
-		{
-			q_ptr = &p_ptr->inventory[item];
-		}
-
-		/* Get the item (on the floor) */
-		else
-		{
-			q_ptr = &o_list[0 - item];
-		}
 
 		/* Get local object */
 		q_ptr = &forge;
@@ -6048,17 +5994,8 @@ bool_ get_runespell(rune_spell *spell)
 	s = "You have no rune to use.";
 	if (!get_item(&item, q, s, (USE_INVEN | USE_FLOOR))) return FALSE;
 
-	/* Get the item (in the pack) */
-	if (item >= 0)
-	{
-		o_ptr = &p_ptr->inventory[item];
-	}
-
-	/* Get the item (on the floor) */
-	else
-	{
-		o_ptr = &o_list[0 - item];
-	}
+	/* Get the item */
+	o_ptr = get_object(item);
 	type = o_ptr->sval;
 
 	while (1)
@@ -6070,17 +6007,9 @@ bool_ get_runespell(rune_spell *spell)
 
 		if (OK) break;
 
-		/* Get the item (in the pack) */
-		if (item >= 0)
-		{
-			o_ptr = &p_ptr->inventory[item];
-		}
+		/* Get the item */
+		o_ptr = get_object(item);
 
-		/* Get the item (on the floor) */
-		else
-		{
-			o_ptr = &o_list[0 - item];
-		}
 		rune_combine |= 1 << o_ptr->sval;
 		rune2 |= 1 << o_ptr->sval;
 	}
@@ -6466,16 +6395,8 @@ void do_cmd_runestone()
 	s = "You have no runestone to cast from.";
 	if (!get_item(&item, q, s, (USE_INVEN | USE_FLOOR))) return;
 
-	/* Get the item (in the pack) */
-	if (item >= 0)
-	{
-		o_ptr = &p_ptr->inventory[item];
-	}
-	/* Get the item (on the floor) */
-	else
-	{
-		o_ptr = &o_list[0 - item];
-	}
+	/* Get the item */
+	o_ptr = get_object(item);
 
 	s_ptr.type = o_ptr->pval;
 	s_ptr.rune2 = o_ptr->pval2;
@@ -6585,16 +6506,8 @@ void do_cmd_rune_carve()
 	s = "You have no runestone to use.";
 	if (!get_item(&item, q, s, (USE_INVEN | USE_FLOOR))) return;
 
-	/* Get the item (in the pack) */
-	if (item >= 0)
-	{
-		o_ptr = &p_ptr->inventory[item];
-	}
-	/* Get the item (on the floor) */
-	else
-	{
-		o_ptr = &o_list[0 - item];
-	}
+	/* Get the item */
+	o_ptr = get_object(item);
 
 	o_ptr->pval = s_ptr.type;
 	o_ptr->pval2 = s_ptr.rune2;
@@ -6959,17 +6872,9 @@ void do_cmd_summoner_extract()
 	s = "You have no corpse to use.";
 	if (!get_item(&item, q, s, (USE_INVEN | USE_FLOOR))) return;
 
-	/* Get the item (in the pack) */
-	if (item >= 0)
-	{
-		o_ptr = &p_ptr->inventory[item];
-	}
+	/* Get the item */
+	o_ptr = get_object(item);
 
-	/* Get the item (on the floor) */
-	else
-	{
-		o_ptr = &o_list[0 - item];
-	}
 
 	if (r_info[o_ptr->pval2].flags1 & RF1_UNIQUE)
 	{
@@ -7131,14 +7036,7 @@ void do_cmd_summoner_summon()
 	if (!get_item(&item, q, s, (USE_INVEN | USE_FLOOR))) return;
 
 	/* Access the item */
-	if (item >= 0)
-	{
-		o_ptr = &p_ptr->inventory[item];
-	}
-	else
-	{
-		o_ptr = &o_list[0 - item];
-	}
+	o_ptr = get_object(item);
 
 	/* Take a turn */
 	energy_use = 100;
