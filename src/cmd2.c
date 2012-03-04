@@ -196,13 +196,7 @@ void do_cmd_go_up(void)
 		else
 			msg_print("You enter a maze of up staircases.");
 
-		if (autosave_l)
-		{
-			is_autosave = TRUE;
-			msg_print("Autosaving the game...");
-			do_cmd_save_game();
-			is_autosave = FALSE;
-		}
+		autosave_checkpoint();
 
 		if (p_ptr->inside_quest)
 		{
@@ -433,13 +427,7 @@ void do_cmd_go_down(void)
 				msg_print("You enter a maze of down staircases.");
 		}
 
-		if (autosave_l)
-		{
-			is_autosave = TRUE;
-			msg_print("Autosaving the game...");
-			do_cmd_save_game();
-			is_autosave = FALSE;
-		}
+		autosave_checkpoint();
 
 		/* Go down */
 		if (go_down)

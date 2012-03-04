@@ -901,6 +901,7 @@ extern void process_player_name(bool_ sf);
 extern void get_name(void);
 extern void do_cmd_suicide(void);
 extern void do_cmd_save_game(void);
+extern void autosave_checkpoint();
 extern long total_points(void);
 extern void display_scores(int from, int to);
 extern errr predict_score(void);

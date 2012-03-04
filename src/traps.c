@@ -848,12 +848,9 @@ bool_ player_activate_trap_type(s16b y, s16b x, object_type *i_ptr, s16b item)
 			}
 
 			/* Still alive and autosave enabled */
-			if (autosave_l && (p_ptr->chp >= 0))
+			if (p_ptr->chp >= 0)
 			{
-				is_autosave = TRUE;
-				msg_print("Autosaving the game...");
-				do_cmd_save_game();
-				is_autosave = FALSE;
+				autosave_checkpoint();
 			}
 
 			if (dungeon_flags1 & DF1_TOWER) dun_level--;

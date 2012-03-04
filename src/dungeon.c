@@ -465,13 +465,7 @@ static void pattern_teleport(void)
 	/* Accept request */
 	msg_format("You teleport to dungeon level %d.", command_arg);
 
-	if (autosave_l)
-	{
-		is_autosave = TRUE;
-		msg_print("Autosaving the game...");
-		do_cmd_save_game();
-		is_autosave = FALSE;
-	}
+	autosave_checkpoint();
 
 	/* Change level */
 	dun_level = command_arg;
@@ -3089,12 +3083,9 @@ static void process_world(void)
 			 * The player is yanked up/down as soon as
 			 * he loads the autosaved game.
 			 */
-			if (autosave_l && (p_ptr->word_recall == 1))
+			if (p_ptr->word_recall == 1)
 			{
-				is_autosave = TRUE;
-				msg_print("Autosaving the game...");
-				do_cmd_save_game();
-				is_autosave = FALSE;
+				autosave_checkpoint();
 			}
 
 			/* Make SURE that persistent levels are saved

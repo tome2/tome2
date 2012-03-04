@@ -4239,7 +4239,19 @@ void do_cmd_save_game(void)
 	(void)strcpy(died_from, "(alive and well)");
 }
 
-
+/*
+ * Auto-save depending on whether the auto save flag is set.
+ */
+void autosave_checkpoint()
+{
+	if (autosave_l)
+	{
+		is_autosave = TRUE;
+		msg_print("Autosaving the game...");
+		do_cmd_save_game();
+		is_autosave = FALSE;
+	}
+}
 
 /*
  * Hack -- Calculates the total number of points earned                -JWT-
