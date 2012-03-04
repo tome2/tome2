@@ -346,18 +346,7 @@ static void power_activate(int power)
 					}
 
 					/* Destroy item */
-					if (item >= 0)
-					{
-						inven_item_increase(item, -1);
-						inven_item_describe(item);
-						inven_item_optimize(item);
-					}
-					else
-					{
-						inven_item_increase(0 - item, -1);
-						inven_item_describe(0 - item);
-						inven_item_optimize(0 - item);
-					}
+					inc_stack_size(item, -1);
 				}
 			}
 		}

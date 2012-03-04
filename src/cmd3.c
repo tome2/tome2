@@ -345,19 +345,8 @@ void do_cmd_wield(void)
 	/* Modify quantity */
 	q_ptr->number = num;
 
-	/* Decrease the item (from the pack) */
-	if (item >= 0)
-	{
-		inven_item_increase(item, -num);
-		inven_item_optimize(item);
-	}
-
-	/* Decrease the item (from the floor) */
-	else
-	{
-		floor_item_increase(0 - item, -num);
-		floor_item_optimize(0 - item);
-	}
+	/* Decrease the item */
+	inc_stack_size_ex(item, -num, OPTIMIZE, NO_DESCRIBE);
 
 	/* Access the wield slot */
 	o_ptr = &p_ptr->inventory[slot];
@@ -742,21 +731,8 @@ void do_cmd_destroy(void)
 	if (f3 & TR3_BLESSED)
 		inc_piety(GOD_ERU, -10 * k_info[o_ptr->k_idx].level);
 
-	/* Eliminate the item (from the pack) */
-	if (item >= 0)
-	{
-		inven_item_increase(item, -amt);
-		inven_item_describe(item);
-		inven_item_optimize(item);
-	}
-
-	/* Eliminate the item (from the floor) */
-	else
-	{
-		floor_item_increase(0 - item, -amt);
-		floor_item_describe(0 - item);
-		floor_item_optimize(0 - item);
-	}
+	/* Eliminate the item */
+	inc_stack_size(item, -amt);
 }
 
 
@@ -993,21 +969,8 @@ static void do_cmd_refill_lamp(void)
 		msg_print("Your lamp is full.");
 	}
 
-	/* Decrease the item (from the pack) */
-	if (item >= 0)
-	{
-		inven_item_increase(item, -1);
-		inven_item_describe(item);
-		inven_item_optimize(item);
-	}
-
-	/* Decrease the item (from the floor) */
-	else
-	{
-		floor_item_increase(0 - item, -1);
-		floor_item_describe(0 - item);
-		floor_item_optimize(0 - item);
-	}
+	/* Decrease the item stack */
+	inc_stack_size(item, -1);
 
 	/* Recalculate torch */
 	p_ptr->update |= (PU_TORCH);
@@ -1088,21 +1051,8 @@ static void do_cmd_refill_torch(void)
 		msg_print("Your torch glows more brightly.");
 	}
 
-	/* Decrease the item (from the pack) */
-	if (item >= 0)
-	{
-		inven_item_increase(item, -1);
-		inven_item_describe(item);
-		inven_item_optimize(item);
-	}
-
-	/* Decrease the item (from the floor) */
-	else
-	{
-		floor_item_increase(0 - item, -1);
-		floor_item_describe(0 - item);
-		floor_item_optimize(0 - item);
-	}
+	/* Decrease the item stack */
+	inc_stack_size(item, -1);
 
 	/* Recalculate torch */
 	p_ptr->update |= (PU_TORCH);

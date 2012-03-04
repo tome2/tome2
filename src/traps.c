@@ -803,8 +803,8 @@ bool_ player_activate_trap_type(s16b y, s16b x, object_type *i_ptr, s16b item)
 				/* Drop it somewhere */
 				do_trap_teleport_away(q_ptr, y, x);
 
-				inven_item_increase(i, -1);
-				inven_item_optimize(i);
+				inc_stack_size_ex(i, -1, OPTIMIZE, NO_DESCRIBE);
+
 				ident = TRUE;
 			}
 			break;
@@ -932,10 +932,11 @@ bool_ player_activate_trap_type(s16b y, s16b x, object_type *i_ptr, s16b item)
 				if ((j_ptr->tval == TV_SCROLL) &&
 				                (j_ptr->sval == SV_SCROLL_WORD_OF_RECALL))
 				{
-					inven_item_increase(j, -j_ptr->number);
-					inven_item_optimize(j);
+					inc_stack_size_ex(j, -j_ptr->number, OPTIMIZE, NO_DESCRIBE);
+
 					combine_pack();
 					reorder_pack();
+
 					if (!ident)
 					{
 						msg_print("A small fire works its way through your backpack. "
@@ -1317,8 +1318,8 @@ bool_ player_activate_trap_type(s16b y, s16b x, object_type *i_ptr, s16b item)
 					if (!cave_floor_bold(cy, cx)) continue;
 
 					object_copy(j_ptr, &p_ptr->inventory[i]);
-					inven_item_increase(i, -999);
-					inven_item_optimize(i);
+
+					inc_stack_size_ex(i, -999, OPTIMIZE, NO_DESCRIBE);
 
 					p_ptr->notice |= (PN_COMBINE | PN_REORDER);
 
@@ -1571,8 +1572,9 @@ bool_ player_activate_trap_type(s16b y, s16b x, object_type *i_ptr, s16b item)
 
 				/* drop carefully */
 				drop_near(&tmp_obj, 0, y, x);
-				inven_item_increase(i, -999);
-				inven_item_optimize(i);
+
+				inc_stack_size_ex(i, -999, OPTIMIZE, NO_DESCRIBE);
+
 				p_ptr->notice |= (PN_COMBINE | PN_REORDER);
 
 				if (!message)
@@ -1606,8 +1608,9 @@ bool_ player_activate_trap_type(s16b y, s16b x, object_type *i_ptr, s16b item)
 
 				/* drop carefully */
 				drop_near(&tmp_obj, 0, y, x);
-				inven_item_increase(i, -999);
-				inven_item_optimize(i);
+
+				inc_stack_size_ex(i, -999, OPTIMIZE, NO_DESCRIBE);
+
 				p_ptr->notice |= (PN_COMBINE | PN_REORDER);
 
 				if (!message)
@@ -1640,8 +1643,9 @@ bool_ player_activate_trap_type(s16b y, s16b x, object_type *i_ptr, s16b item)
 				/* drop carefully */
 
 				drop_near(&tmp_obj, 0, y, x);
-				inven_item_increase(i, -999);
-				inven_item_optimize(i);
+
+				inc_stack_size_ex(i, -999, OPTIMIZE, NO_DESCRIBE);
+
 				p_ptr->notice |= (PN_COMBINE | PN_REORDER);
 
 				if (!message)
@@ -2277,10 +2281,8 @@ void do_cmd_set_trap(void)
 	cave[p_ptr->py][p_ptr->px].special2 = floor_carry(p_ptr->py, p_ptr->px, i_ptr);
 
 	/* Modify, Describe, Optimize */
-	inven_item_increase(item_kit, -1);
-	inven_item_describe(item_kit);
-	inven_item_increase(item_load, -num);
-	inven_item_describe(item_load);
+	inc_stack_size_ex(item_kit, -1, NO_OPTIMIZE, DESCRIBE);
+	inc_stack_size_ex(item_load, -num, NO_OPTIMIZE, DESCRIBE);
 
 	for (i = 0; i < INVEN_WIELD; i++)
 	{

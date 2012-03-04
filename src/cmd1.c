@@ -2070,8 +2070,8 @@ void do_nazgul(int *k, int *num, int num_blow, int weap, monster_race *r_ptr,
 		{
 			msg_print("Your weapon *DISINTEGRATES*!");
 			*k = 0;
-			inven_item_increase(INVEN_WIELD + weap, -1);
-			inven_item_optimize(INVEN_WIELD + weap);
+
+			inc_stack_size_ex(INVEN_WIELD + weap, -1, OPTIMIZE, NO_DESCRIBE);
 
 			/* To stop attacking */
 			*num = num_blow;
@@ -2089,8 +2089,8 @@ void do_nazgul(int *k, int *num, int num_blow, int weap, monster_race *r_ptr,
 			if (magik(25) && allow_shatter)
 			{
 				msg_print("Your weapon is destroyed!");
-				inven_item_increase(INVEN_WIELD + weap, -1);
-				inven_item_optimize(INVEN_WIELD + weap);
+				
+				inc_stack_size_ex(INVEN_WIELD + weap, -1, OPTIMIZE, NO_DESCRIBE);
 
 				/* To stop attacking */
 				*num = num_blow;
@@ -2111,8 +2111,8 @@ void do_nazgul(int *k, int *num, int num_blow, int weap, monster_race *r_ptr,
 			if (!rand_int(1000) && allow_shatter)
 			{
 				msg_print("Your weapon is destroyed!");
-				inven_item_increase(INVEN_WIELD + weap, -1);
-				inven_item_optimize(INVEN_WIELD + weap);
+
+				inc_stack_size_ex(INVEN_WIELD + weap, -1, OPTIMIZE, NO_DESCRIBE);
 
 				/* To stop attacking */
 				*num = num_blow;

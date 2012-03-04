@@ -1365,9 +1365,7 @@ static void sell_corpses(void)
 			/* Increase the number of collected bounties */
 			total_bounties++;
 
-			inven_item_increase(item, -1);
-			inven_item_describe(item);
-			inven_item_optimize(item);
+			inc_stack_size(item, -1);
 
 			return;
 		}
@@ -1538,9 +1536,7 @@ static void sell_quest_monster(void)
 		msg_print(NULL);
 	}
 
-	inven_item_increase(item, -1);
-	inven_item_describe(item);
-	inven_item_optimize(item);
+	inc_stack_size(item, -1);
 }
 
 

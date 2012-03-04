@@ -1326,8 +1326,7 @@ void take_hit(int damage, cptr hit_from)
 			cmsg_format(TERM_L_RED,
 			            "%s dies from protecting you, you feel very sad...",
 			            sym_name);
-			inven_item_increase(INVEN_CARRY, -1);
-			inven_item_optimize(INVEN_CARRY);
+			inc_stack_size_ex(INVEN_CARRY, -1, OPTIMIZE, NO_DESCRIBE);
 			damage -= o_ptr->pval2;
 			o_ptr->pval2 = 0;
 			p_ptr->redraw |= PR_MH;
@@ -1884,8 +1883,7 @@ static int inven_damage(inven_func typ, int perc)
 				}
 
 				/* Destroy "amt" items */
-				inven_item_increase(i, -amt);
-				inven_item_optimize(i);
+				inc_stack_size_ex(i, -amt, OPTIMIZE, NO_DESCRIBE);
 
 				/* Count the casualties */
 				k += amt;

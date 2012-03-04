@@ -5695,6 +5695,45 @@ void floor_item_optimize(int item)
 }
 
 
+/*
+ * Increase stack size for item, describe and optimize.
+ */
+void inc_stack_size(int item, int delta) {
+	inc_stack_size_ex(item, delta, OPTIMIZE, DESCRIBE);
+}
+
+/*
+ * Increase stack size for item.
+ */
+void inc_stack_size_ex(int item, int delta, optimize_flag opt, describe_flag desc) {
+	/* Pack item? */
+	if (item >= 0)
+	{
+		inven_item_increase(item, -1);
+		if (desc == DESCRIBE)
+		{
+			inven_item_describe(item);
+		}
+		if (opt == OPTIMIZE)
+		{
+			inven_item_optimize(item);
+		}
+	}
+
+	/* Floor item? */
+	else
+	{
+		floor_item_increase(0 - item, -1);
+		if (desc == DESCRIBE)
+		{
+			floor_item_describe(0 - item);
+		}
+		if (opt == OPTIMIZE)
+		{
+			floor_item_optimize(0 - item);
+		}
+	}
+}
 
 
 
@@ -5977,8 +6016,7 @@ s16b inven_takeoff(int item, int amt, bool_ force_drop)
 	}
 
 	/* Modify, Optimize */
-	inven_item_increase(item, -amt);
-	inven_item_optimize(item);
+	inc_stack_size_ex(item, -amt, OPTIMIZE, NO_DESCRIBE);
 
 	if ((item == INVEN_CARRY) && (get_skill(SKILL_SYMBIOTIC)))
 	{
@@ -6080,9 +6118,7 @@ void inven_drop(int item, int amt, int dy, int dx, bool_ silent)
 		drop_near(q_ptr, 0, dy, dx);
 
 		/* Modify, Describe, Optimize */
-		inven_item_increase(item, -amt);
-		inven_item_describe(item);
-		inven_item_optimize(item);
+		inc_stack_size(item, -amt);
 	}
 }
 
@@ -6423,8 +6459,7 @@ void pack_decay(int item)
 	wt = r_ptr->weight;
 
 	/* Get rid of decayed object */
-	inven_item_increase(item, -amt);
-	inven_item_optimize(item);
+	inc_stack_size_ex(item, -amt, OPTIMIZE, NO_DESCRIBE);
 
 	if (i_ptr->tval == TV_CORPSE)
 	{

@@ -80,8 +80,8 @@ bool_ quest_hobbit_give_hook(char *fmt)
 	msg_print("Merton Proudfoot reads the scroll and is recalled to the safety of his home.");
 
 	delete_monster_idx(m_idx);
-	inven_item_increase(item, -1);
-	inven_item_optimize(item);
+
+	inc_stack_size_ex(item, -1, OPTIMIZE, NO_DESCRIBE);
 
 	cquest.status = QUEST_STATUS_COMPLETED;
 

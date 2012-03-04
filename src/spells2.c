@@ -670,21 +670,8 @@ bool_ alchemy(void) /* Turns an object into gold, gain some of its value in a sh
 
 	}
 
-	/* Eliminate the item (from the pack) */
-	if (item >= 0)
-	{
-		inven_item_increase(item, -amt);
-		inven_item_describe(item);
-		inven_item_optimize(item);
-	}
-
-	/* Eliminate the item (from the floor) */
-	else
-	{
-		floor_item_increase(0 - item, -amt);
-		floor_item_describe(0 - item);
-		floor_item_optimize(0 - item);
-	}
+	/* Eliminate the item */
+	inc_stack_size(item, -amt);
 
 	return TRUE;
 }
@@ -4758,21 +4745,8 @@ bool_ recharge(int power)
 				/* Reduce rod stack maximum timeout, drain wands. */
 				if (o_ptr->tval == TV_WAND) o_ptr->pval = 0;
 
-				/* Reduce and describe inventory */
-				if (item >= 0)
-				{
-					inven_item_increase(item, -1);
-					inven_item_describe(item);
-					inven_item_optimize(item);
-				}
-
-				/* Reduce and describe floor item */
-				else
-				{
-					floor_item_increase(0 - item, -1);
-					floor_item_describe(0 - item);
-					floor_item_optimize(0 - item);
-				}
+				/* Reduce and describe */
+				inc_stack_size(item, -1);
 			}
 
 			/* Destroy all memebers of a stack of objects. */
@@ -4785,20 +4759,7 @@ bool_ recharge(int power)
 
 
 				/* Reduce and describe inventory */
-				if (item >= 0)
-				{
-					inven_item_increase(item, -999);
-					inven_item_describe(item);
-					inven_item_optimize(item);
-				}
-
-				/* Reduce and describe floor item */
-				else
-				{
-					floor_item_increase(0 - item, -999);
-					floor_item_describe(0 - item);
-					floor_item_optimize(0 - item);
-				}
+				inc_stack_size(item, -999);
 			}
 		}
 	}

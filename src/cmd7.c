@@ -1545,15 +1545,7 @@ int check_artifact_items(int pval, int oldpval, int mode)
 
 				if ( mode == 1 )
 				{
-					inven_item_increase(k, -trqty);
-					inven_item_describe(k);
-					/*
-					 if we optimize this now, it moves everything after it
-					 in the p_ptr->inventory up one, and the pointer to the item
-					 being artifactized now points to something else.
-					 DON'T DO IT!
-					 inven_item_optimize(k);
-					 */
+					inc_stack_size_ex(k, -trqty, NO_OPTIMIZE, DESCRIBE);
 				}
 			}/* if p_ptr->inventory item is acceptable */
 
@@ -1756,13 +1748,8 @@ bool_ artifact_display_or_use(int pval, int oldpval, bool_ use)
 			{
 				int num = p_ptr->inventory[k].number;
 
-				inven_item_increase(k, MAX( -essence[i], -num));
-				inven_item_describe(k);
-				/*
-				 messy bug, don't optimize here because it
-				 rearanges the p_ptr->inventory.
-				 inven_item_optimize(k);
-				 */
+				inc_stack_size_ex(k, MAX( -essence[i], -num), NO_OPTIMIZE, DESCRIBE);
+
 				essence[i] -= MIN(num, essence[i]);
 			}
 
@@ -1914,9 +1901,7 @@ bool_ magic_essence(int num)
 			 * artifactable object should come before the essences.
 			 */
 			j -= o_ptr->number;
-			inven_item_increase(i, -num);
-			inven_item_describe(i);
-			inven_item_optimize(i);
+			inc_stack_size(i, -num);
 			num = j;
 			if (num <= 0) break;
 			/* Stay on this slot; do not increment i. */
@@ -2746,10 +2731,7 @@ bool_ alchemist_items_check(int tval, int sval, int ego, int tocreate, bool_ mes
 						/* At this point, the item is required, destroy it. */
 						if ( tocreate )
 						{
-							inven_item_increase(j, 0 - rqty);
-							if ( message)
-								inven_item_describe(j);
-							inven_item_optimize(j);
+							inc_stack_size_ex(j, 0 - rqty, OPTIMIZE, message ? DESCRIBE : NO_DESCRIBE);
 						}
 
 						/* When we find enough of the item, break out of the
@@ -3818,19 +3800,7 @@ void do_cmd_alchemist(void)
 		carry_o_ptr = TRUE;
 
 		/* Destroy the initial object */
-		if (item >= 0)
-		{
-			/* Destroy an item in the pack */
-			inven_item_increase(item, -qty);
-			inven_item_describe(item);
-		}
-		else
-		{
-			/* Destroy an item on the floor */
-			floor_item_increase(0 - item, -qty);
-			floor_item_describe(0 - item);
-			floor_item_optimize(0 - item);
-		}
+		inc_stack_size(item, -qty);
 
 
 		if ( ego )
@@ -4260,18 +4230,7 @@ void do_cmd_alchemist(void)
 					if (o_ptr->number == 1)
 						repeat = 0;
 
-					if (item >= 0)
-					{
-						inven_item_increase(item, ( -1));
-						inven_item_describe(item);
-						inven_item_optimize(item);
-					}
-					else
-					{
-						floor_item_increase(0 - item, ( -1));
-						floor_item_describe(0 - item);
-						floor_item_optimize(0 - item);
-					}
+					inc_stack_size(item, -1);
 				}
 				else
 				{
@@ -5254,18 +5213,7 @@ void do_cmd_archer(void)
 
 		msg_print("You make some ammo.");
 
-		if (item >= 0)
-		{
-			inven_item_increase(item, -1);
-			inven_item_describe(item);
-			inven_item_optimize(item);
-		}
-		else
-		{
-			floor_item_increase(0 - item, -1);
-			floor_item_describe(0 - item);
-			floor_item_optimize(0 - item);
-		}
+		inc_stack_size(item, -1);
 
 		(void)inven_carry(q_ptr, FALSE);
 	}
@@ -5315,18 +5263,7 @@ void do_cmd_archer(void)
 
 		msg_print("You make some ammo.");
 
-		if (item >= 0)
-		{
-			inven_item_increase(item, -1);
-			inven_item_describe(item);
-			inven_item_optimize(item);
-		}
-		else
-		{
-			floor_item_increase(0 - item, -1);
-			floor_item_describe(0 - item);
-			floor_item_optimize(0 - item);
-		}
+		inc_stack_size(item, -1);
 
 		(void)inven_carry(q_ptr, FALSE);
 	}
@@ -6700,8 +6637,7 @@ void do_cmd_rune_carve()
 
 			if (do_del)
 			{
-				inven_item_increase(i, -1);
-				inven_item_optimize(i);
+				inc_stack_size_ex(i, -1, OPTIMIZE, NO_DESCRIBE);
 			}
 		}
 	}
@@ -7046,18 +6982,7 @@ void do_cmd_summoner_extract()
 
 	r = o_ptr->pval2;
 
-	if (item > 0)
-	{
-		inven_item_increase(item, -1);
-		inven_item_describe(item);
-		inven_item_optimize(item);
-	}
-	else
-	{
-		floor_item_increase( -item, -1);
-		floor_item_describe( -item);
-		floor_item_optimize( -item);
-	}
+	inc_stack_size(item, -1);
 
 	if (magik(r_info[o_ptr->pval2].level - get_skill(SKILL_SUMMON)))
 	{
@@ -7178,21 +7103,8 @@ void summon_true(int r_idx, int item)
 	/* Destroy the totem if the used flag is set */
 	if (used)
 	{
-		/* Eliminate the totem (from the pack) */
-		if (item >= 0)
-		{
-			inven_item_increase(item, -1);
-			inven_item_describe(item);
-			inven_item_optimize(item);
-		}
-
-		/* Eliminate the totem (from the floor) */
-		else
-		{
-			floor_item_increase(0 - item, -1);
-			floor_item_describe(0 - item);
-			floor_item_optimize(0 - item);
-		}
+		/* Eliminate the totem */
+		inc_stack_size(item, -1);
 	}
 
 	/* Done */

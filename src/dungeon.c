@@ -2831,9 +2831,7 @@ static void process_world(void)
 
 			if (o_ptr->timeout <= 0)
 			{
-				inven_item_increase(i, -99);
-				inven_item_describe(i);
-				inven_item_optimize(i);
+				inc_stack_size(i, -99);
 
 				/* Combine and Reorder pack */
 				p_ptr->notice |= (PN_COMBINE | PN_REORDER);
@@ -2935,9 +2933,8 @@ static void process_world(void)
 						m_ptr->status = MSTATUS_COMPANION;
 					}
 
-					inven_item_increase(i, -1);
-					inven_item_describe(i);
-					inven_item_optimize(i);
+					inc_stack_size(i, -1);
+
 					j++;
 				}
 			}
@@ -4471,9 +4468,7 @@ void process_player(void)
 			drop_near(o_ptr, 0, p_ptr->py, p_ptr->px);
 
 			/* Modify, Describe, Optimize */
-			inven_item_increase(item, -255);
-			inven_item_describe(item);
-			inven_item_optimize(item);
+			inc_stack_size(item, -255);
 
 			/* Notice stuff (if needed) */
 			if (p_ptr->notice) notice_stuff();

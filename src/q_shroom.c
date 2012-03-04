@@ -133,8 +133,7 @@ bool_ quest_shroom_give_hook(char *fmt)
 	if ((o_ptr->tval != TV_FOOD) || (o_ptr->pval2 != 1)) return (FALSE);
 
 	/* Take a mushroom */
-	inven_item_increase(item, -1);
-	inven_item_optimize(item);
+	inc_stack_size_ex(item, -1, OPTIMIZE, NO_DESCRIBE);
 	cquest.data[0]++;
 
 	if (cquest.data[0] == cquest.data[1])

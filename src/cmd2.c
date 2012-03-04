@@ -2618,9 +2618,7 @@ void do_cmd_spike(void)
 			if (c_ptr->feat < FEAT_DOOR_TAIL) c_ptr->feat++;
 
 			/* Use up, and describe, a single spike, from the bottom */
-			inven_item_increase(item, -1);
-			inven_item_describe(item);
-			inven_item_optimize(item);
+			inc_stack_size(item, -1);
 		}
 	}
 }
@@ -3130,20 +3128,8 @@ void do_cmd_fire(void)
 	/* Single object */
 	q_ptr->number = 1;
 
-	/* Reduce and describe p_ptr->inventory */
-	if (item >= 0)
-	{
-		inven_item_increase(item, -1);
-		inven_item_describe(item);
-		inven_item_optimize(item);
-	}
-
-	/* Reduce and describe floor item */
-	else
-	{
-		floor_item_increase(0 - item, -1);
-		floor_item_optimize(0 - item);
-	}
+	/* Reduce stack and describe */
+	inc_stack_size(item, -1);
 
 	/* Break goi/manashield */
 	if (p_ptr->invuln)
@@ -3600,21 +3586,8 @@ void do_cmd_throw(void)
 	/* Single object */
 	q_ptr->number = 1;
 
-	/* Reduce and describe p_ptr->inventory */
-	if (item >= 0)
-	{
-		inven_item_increase(item, -1);
-		inven_item_describe(item);
-		inven_item_optimize(item);
-	}
-
-	/* Reduce and describe floor item */
-	else
-	{
-		floor_item_increase(0 - item, -1);
-		floor_item_optimize(0 - item);
-	}
-
+	/* Reduce stack and describe */
+	inc_stack_size(item, -1);
 
 	/* Description */
 	object_desc(o_name, q_ptr, FALSE, 3);
@@ -4168,8 +4141,7 @@ void do_cmd_boomerang(void)
 				                (rand_int(100) < j))
 				{
 					msg_print(format("Your %s is destroyed.", o_name));
-					inven_item_increase(INVEN_BOW, -1);
-					inven_item_optimize(INVEN_BOW);
+					inc_stack_size_ex(INVEN_BOW, -1, OPTIMIZE, NO_DESCRIBE);
 				}
 			}
 
@@ -4717,9 +4689,7 @@ void do_cmd_sacrifice(void)
 					}
 
 					/* Remove the item */
-					inven_item_increase(item, -1);
-					inven_item_describe(item);
-					inven_item_optimize(item);
+					inc_stack_size(item, -1);
 				}
 			}
 			else

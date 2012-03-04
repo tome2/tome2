@@ -1483,23 +1483,10 @@ void do_cmd_eat_food(void)
 	}
 
 
-	/* Destroy a food in the pack */
+	/* Destroy food? */
 	if (destroy)
 	{
-		if (item >= 0)
-		{
-			inven_item_increase(item, -1);
-			inven_item_describe(item);
-			inven_item_optimize(item);
-		}
-
-		/* Destroy a food on the floor */
-		else
-		{
-			floor_item_increase(0 - item, -1);
-			floor_item_describe(0 - item);
-			floor_item_optimize(0 - item);
-		}
+		inc_stack_size(item, -1);
 	}
 }
 
@@ -1771,21 +1758,8 @@ void do_cmd_cure_meat(void)
 
 	if (o_ptr->timeout > o_ptr->pval) o_ptr->timeout = o_ptr->pval;
 
-	/* Use up the potions in the pack */
-	if (item >= 0)
-	{
-		inven_item_increase(item, 0 - num);
-		inven_item_describe(item);
-		inven_item_optimize(item);
-	}
-
-	/* Use up the potions on the floor */
-	else
-	{
-		floor_item_increase(0 - item, 0 - num);
-		floor_item_describe(0 - item);
-		floor_item_optimize(0 - item);
-	}
+	/* Use up the potions */
+	inc_stack_size(item, -num);
 }
 
 
@@ -2596,21 +2570,8 @@ void do_cmd_quaff_potion(void)
 	(void)set_food(p_ptr->food + o_ptr->pval);
 
 
-	/* Destroy a potion in the pack */
-	if (item >= 0)
-	{
-		inven_item_increase(item, -1);
-		inven_item_describe(item);
-		inven_item_optimize(item);
-	}
-
-	/* Destroy a potion on the floor */
-	else
-	{
-		floor_item_increase(0 - item, -1);
-		floor_item_describe(0 - item);
-		floor_item_optimize(0 - item);
-	}
+	/* Destroy potion */
+	inc_stack_size(item, -1);
 }
 
 
@@ -2747,21 +2708,8 @@ void do_cmd_fill_bottle(void)
 
 	if (amt > c_ptr->special2) amt = c_ptr->special2;
 
-	/* Destroy bottles in the pack */
-	if (item >= 0)
-	{
-		inven_item_increase(item, -amt);
-		inven_item_describe(item);
-		inven_item_optimize(item);
-	}
-
-	/* Destroy bottles on the floor */
-	else
-	{
-		floor_item_increase(0 - item, -amt);
-		floor_item_describe(0 - item);
-		floor_item_optimize(0 - item);
-	}
+	/* Destroy bottles */
+	inc_stack_size(item, -amt);
 
 	/* Create the potion */
 	q_ptr = &forge;
@@ -3696,21 +3644,8 @@ void do_cmd_read_scroll(void)
 
 	sound(SOUND_SCROLL);
 
-	/* Destroy a scroll in the pack */
-	if (item >= 0)
-	{
-		inven_item_increase(item, -1);
-		inven_item_describe(item);
-		inven_item_optimize(item);
-	}
-
-	/* Destroy a scroll on the floor */
-	else
-	{
-		floor_item_increase(0 - item, -1);
-		floor_item_describe(0 - item);
-		floor_item_optimize(0 - item);
-	}
+	/* Destroy scroll */
+	inc_stack_size(item, -1);
 
 	if (get_skill(SKILL_ALCHEMY))
 	{
@@ -4212,20 +4147,8 @@ void zap_combine_rod_tip(object_type *q_ptr, int tip_item)
 	/* Attach the tip to the rod */
 	o_ptr->pval = q_ptr->sval;
 
-	/* Destroy a rod tip in the pack */
-	if (tip_item >= 0)
-	{
-		inven_item_increase(tip_item, -1);
-		inven_item_describe(tip_item);
-		inven_item_optimize(tip_item);
-	}
-	/* Destroy a rod tip on the floor */
-	else
-	{
-		floor_item_increase(0 - tip_item, -1);
-		floor_item_describe(0 - tip_item);
-		floor_item_optimize(0 - tip_item);
-	}
+	/* Destroy rod tip */
+	inc_stack_size(tip_item, -1);
 }
 
 
@@ -7592,16 +7515,8 @@ const char *activation_aux(object_type * o_ptr, bool_ doit, int item)
 
 					/* It explodes, doesn't it ? */
 					take_hit(damroll(2, 10), "an exploding ring");
-					if ( item > 0)
-					{
-						inven_item_increase(item, -255);
-						inven_item_optimize(item);
-					}
-					else
-					{
-						floor_item_increase( -item, -255);
-						floor_item_optimize( -item);
-					}
+
+					inc_stack_size_ex(item, -255, OPTIMIZE, NO_DESCRIBE);
 				}
 
 				break;

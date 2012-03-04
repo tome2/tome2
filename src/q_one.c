@@ -84,8 +84,7 @@ bool_ quest_one_drop_hook(char *fmt)
 	cmsg_print(TERM_YELLOW, "You feel the powers of evil weakening.");
 	cmsg_print(TERM_YELLOW, "Now you can go onto the hunt for Sauron!");
 
-	inven_item_increase(o_idx, -99);
-	inven_item_optimize(o_idx);
+	inc_stack_size_ex(o_idx, -99, OPTIMIZE, NO_DESCRIBE);
 
 	abandon_god(GOD_MELKOR);
 

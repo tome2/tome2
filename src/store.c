@@ -3143,9 +3143,7 @@ void store_sell(void)
 			}
 
 			/* Take the item from the player, describe the result */
-			inven_item_increase(item, -amt);
-			inven_item_describe(item);
-			inven_item_optimize(item);
+			inc_stack_size(item, -amt);
 
 			/* Handle stuff */
 			handle_stuff();
@@ -3194,9 +3192,7 @@ void store_sell(void)
 		choice = 0;
 
 		/* Take it from the players inventory */
-		inven_item_increase(item, -amt);
-		inven_item_describe(item);
-		inven_item_optimize(item);
+		inc_stack_size(item, -amt);
 
 		/* Handle stuff */
 		handle_stuff();
@@ -3230,9 +3226,7 @@ void store_sell(void)
 		}
 
 		/* Take it from the players inventory */
-		inven_item_increase(item, -amt);
-		inven_item_describe(item);
-		inven_item_optimize(item);
+		inc_stack_size(item, -amt);
 
 		/* Handle stuff */
 		handle_stuff();
@@ -3877,9 +3871,7 @@ void do_cmd_store(void)
 				msg_format("You drop %s (%c).", o_name, index_to_label(item));
 
 				/* Remove it from the players inventory */
-				inven_item_increase(item, -255);
-				inven_item_describe(item);
-				inven_item_optimize(item);
+				inc_stack_size(item, -255);
 
 				/* Handle stuff */
 				handle_stuff();
@@ -4356,9 +4348,7 @@ void do_cmd_home_trump(void)
 				msg_format("You drop %s (%c).", o_name, index_to_label(item));
 
 				/* Remove it from the players inventory */
-				inven_item_increase(item, -255);
-				inven_item_describe(item);
-				inven_item_optimize(item);
+				inc_stack_size(item, -255);
 
 				/* Handle stuff */
 				handle_stuff();

@@ -2174,8 +2174,7 @@ bool_ make_attack_normal(int m_idx, byte divis)
 						}
 
 						/* Steal the items */
-						inven_item_increase(i, -1);
-						inven_item_optimize(i);
+						inc_stack_size_ex(i, -1, OPTIMIZE, NO_DESCRIBE);
 
 						/* Obvious */
 						obvious = TRUE;
@@ -2219,8 +2218,7 @@ bool_ make_attack_normal(int m_idx, byte divis)
 						           o_name, index_to_label(i));
 
 						/* Steal the items */
-						inven_item_increase(i, -1);
-						inven_item_optimize(i);
+						inc_stack_size_ex(i, -1, OPTIMIZE, NO_DESCRIBE);
 
 						/* Obvious */
 						obvious = TRUE;

@@ -6685,4 +6685,3 @@ bool_ apply_flags_set(s16b a_idx, s16b set_idx,
 
 
 
-

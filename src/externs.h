@@ -7,6 +7,12 @@
  * (z-virt.h, z-util.h, z-form.h, term.h, random.h)
  */
 
+/*
+ * Options for inc_stack_size_ex
+ */
+typedef enum { OPTIMIZE, NO_OPTIMIZE } optimize_flag;
+typedef enum { DESCRIBE, NO_DESCRIBE } describe_flag;
+
 
 /*
  * Automatically generated "variable" declarations
@@ -1093,6 +1099,8 @@ extern bool_ is_enemy(monster_type *m_ptr, monster_type *t_ptr);
 /* object2.c */
 extern byte get_item_letter_color(object_type *o_ptr);
 extern void describe_device(object_type *o_ptr);
+extern void inc_stack_size(int item, int delta);
+extern void inc_stack_size_ex(int item, int delta, optimize_flag opt, describe_flag desc);
 extern void object_pickup(int this_o_idx);
 extern int get_slot(int slot);
 extern bool_ apply_flags_set(s16b a_idx, s16b set_idx, u32b *f1, u32b *f2, u32b *f3, u32b *f4, u32b *f5, u32b *esp);
