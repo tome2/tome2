@@ -630,3 +630,73 @@ cptr approximate_distance(int y, int x, int y2, int x2)
 		return "not very far";
 	}
 }
+
+bool_ drop_text_left(byte c, cptr str, int y, int o)
+{
+	int i = strlen(str);
+	int x = 39 - (strlen(str) / 2) + o;
+	while (i > 0)
+	{
+		int a = 0;
+		int time = 0;
+
+		if (str[i-1] != ' ')
+		{
+			while (a < x + i - 1)
+			{
+				Term_putch(a - 1, y, c, 32);
+				Term_putch(a, y, c, str[i-1]);
+				time = time + 1;
+				if (time >= 4)
+				{
+					Term_xtra(TERM_XTRA_DELAY, 1);
+					time = 0;
+				}
+				Term_redraw_section(a - 1, y, a, y);
+				a = a + 1;
+
+				inkey_scan = TRUE;
+				if (inkey()) {
+					return TRUE;
+				}
+			}
+		}
+		
+		i = i - 1;
+	}
+	return FALSE;
+}
+
+bool_ drop_text_right(byte c, cptr str, int y, int o)
+{
+	int x = 39 - (strlen(str) / 2) + o;
+	int i = 1;
+	while (i <= strlen(str))
+	{
+		int a = 79;
+		int time = 0;
+
+		if (str[i-1] != ' ') {
+			while (a >= x + i - 1)
+			{
+				Term_putch(a + 1, y, c, 32);
+				Term_putch(a, y, c, str[i-1]);
+				time = time + 1;
+				if (time >= 4) {
+					Term_xtra(TERM_XTRA_DELAY, 1);
+					time = 0;
+				}
+				Term_redraw_section(a, y, a + 1, y);
+				a = a - 1;
+
+				inkey_scan = TRUE;
+				if (inkey()) {
+					return TRUE;
+				}
+			}
+		}
+
+		i = i + 1;
+	}
+	return FALSE;
+}
