@@ -871,6 +871,7 @@ extern void do_cmd_unbeliever(void);
 extern void do_cmd_runecrafter(void);
 extern void do_cmd_symbiotic(void);
 extern s32b sroot(s32b n);
+extern int clamp_failure_chance(int chance, int minfail);
 
 /* dungeon.c */
 extern byte value_check_aux1(object_type *o_ptr);

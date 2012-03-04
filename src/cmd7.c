@@ -234,15 +234,8 @@ bool_ get_magic_power(int *sn, magic_power *powers, int max_powers,
 					/* Extract the minimum failure rate */
 					minfail = adj_mag_fail[p_ptr->stat_ind[cast_stat]];
 
-					/* Minimum failure rate */
-					if (chance < minfail) chance = minfail;
-
-					/* Stunning makes spells harder */
-					if (p_ptr->stun > 50) chance += 25;
-					else if (p_ptr->stun) chance += 15;
-
-					/* Always a 5 percent chance of working */
-					if (chance > 95) chance = 95;
+					/* Failure rate */
+					chance = clamp_failure_chance(chance, minfail);
 
 					/* Get info */
 					power_info(comment, i);
@@ -404,15 +397,8 @@ void do_cmd_mindcraft(void)
 	/* Extract the minimum failure rate */
 	minfail = adj_mag_fail[p_ptr->stat_ind[A_WIS]];
 
-	/* Minimum failure rate */
-	if (chance < minfail) chance = minfail;
-
-	/* Stunning makes spells harder */
-	if (p_ptr->stun > 50) chance += 25;
-	else if (p_ptr->stun) chance += 15;
-
-	/* Always a 5 percent chance of working */
-	if (chance > 95) chance = 95;
+	/* Failure rate */
+	chance = clamp_failure_chance(chance, minfail);
 
 	/* Failed spell */
 	if (rand_int(100) < chance)
@@ -755,17 +741,8 @@ static int get_mimic_chance(int mimic)
 	chance -= get_skill_scale(SKILL_MIMICRY, 150);
 	chance -= 3 * adj_mag_stat[p_ptr->stat_ind[A_DEX]];
 
-	if (chance < 2) chance = 2;
-
-	/* Stunning makes spells harder */
-	if (p_ptr->stun > 50) chance += 25;
-	else if (p_ptr->stun) chance += 15;
-
-	/* Always a 5 percent chance of working */
-	if (chance > 95) chance = 95;
-
 	/* Return the chance */
-	return (chance);
+	return clamp_failure_chance(chance, 2);
 }
 
 
@@ -4363,18 +4340,8 @@ int spell_chance_random(random_spell* rspell)
 	/* Extract the minimum failure rate */
 	minfail = adj_mag_fail[p_ptr->stat_ind[A_INT]];
 
-	/* Minimum failure rate */
-	if (chance < minfail) chance = minfail;
-
-	/* Stunning makes spells harder */
-	if (p_ptr->stun > 50) chance += 25;
-	else if (p_ptr->stun) chance += 15;
-
-	/* Always a 5 percent chance of working */
-	if (chance > 95) chance = 95;
-
-	/* Return the chance */
-	return (chance);
+	/* Failure rate */
+	return clamp_failure_chance(chance, minfail);
 }
 
 
@@ -5357,15 +5324,8 @@ void do_cmd_necromancer(void)
 	/* Extract the minimum failure rate */
 	minfail = adj_mag_fail[p_ptr->stat_ind[A_CON]];
 
-	/* Minimum failure rate */
-	if (chance < minfail) chance = minfail;
-
-	/* Stunning makes spells harder */
-	if (p_ptr->stun > 50) chance += 25;
-	else if (p_ptr->stun) chance += 15;
-
-	/* Always a 5 percent chance of working */
-	if (chance > 95) chance = 95;
+	/* Failure rate */
+	chance = clamp_failure_chance(chance, minfail);
 
 	/* Failed spell */
 	if (rand_int(100) < chance)
@@ -5733,18 +5693,8 @@ int spell_chance_rune(rune_spell* spell)
 	/* Extract the minimum failure rate */
 	minfail = adj_mag_fail[p_ptr->stat_ind[A_DEX]];
 
-	/* Minimum failure rate */
-	if (chance < minfail) chance = minfail;
-
-	/* Stunning makes spells harder */
-	if (p_ptr->stun > 50) chance += 25;
-	else if (p_ptr->stun) chance += 15;
-
-	/* Always a 5 percent chance of working */
-	if (chance > 95) chance = 95;
-
 	/* Return the chance */
-	return (chance);
+	return clamp_failure_chance(chance, minfail);
 }
 
 
@@ -7314,15 +7264,8 @@ void do_cmd_symbiotic(void)
 	/* Extract the minimum failure rate */
 	minfail = adj_mag_fail[p_ptr->stat_ind[A_INT]];
 
-	/* Minimum failure rate */
-	if (chance < minfail) chance = minfail;
-
-	/* Stunning makes spells harder */
-	if (p_ptr->stun > 50) chance += 25;
-	else if (p_ptr->stun) chance += 15;
-
-	/* Always a 5 percent chance of working */
-	if (chance > 95) chance = 95;
+	/* Failure rate */
+	chance = clamp_failure_chance(chance, minfail);
 
 	/* Failed spell */
 	if (rand_int(100) < chance)
@@ -7686,4 +7629,24 @@ void do_cmd_create_boulder()
 		/* Take a turn */
 		energy_use = 100;
 	}
+}
+
+/*
+ * Clamp failure chance
+ */
+extern int clamp_failure_chance(int chance, int minfail)
+{
+	if (minfail < 0) minfail = 0;
+
+	/* Minimum failure rate */
+	if (chance < minfail) chance = minfail;
+
+	/* Stunning makes spells harder */
+	if (p_ptr->stun > 50) chance += 25;
+	else if (p_ptr->stun) chance += 15;
+
+	/* Always a 5 percent chance of working */
+	if (chance > 95) chance = 95;
+
+	return chance;
 }

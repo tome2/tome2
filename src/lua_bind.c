@@ -44,15 +44,8 @@ bool_ lua_spell_success(magic_power *spell, int stat, char *oups_fct)
 	/* Extract the minimum failure rate */
 	minfail = adj_mag_fail[p_ptr->stat_ind[stat]];
 
-	/* Minimum failure rate */
-	if (chance < minfail) chance = minfail;
-
-	/* Stunning makes spells harder */
-	if (p_ptr->stun > 50) chance += 25;
-	else if (p_ptr->stun) chance += 15;
-
-	/* Always a 5 percent chance of working */
-	if (chance > 95) chance = 95;
+	/* Failure rate */
+	chance = clamp_failure_chance(chance, minfail);
 
 	/* Failed spell */
 	if (rand_int(100) < chance)
@@ -300,18 +293,8 @@ s32b lua_spell_chance(s32b chance, int level, int skill_level, int mana, int cur
 	/* Hack -- Priest prayer penalty for "edged" weapons  -DGK */
 	if ((forbid_non_blessed()) && (p_ptr->icky_wield)) chance += 25;
 
-	/* Minimum failure rate */
-	if (chance < minfail) chance = minfail;
-
-	/* Stunning makes spells harder */
-	if (p_ptr->stun > 50) chance += 25;
-	else if (p_ptr->stun) chance += 15;
-
-	/* Always a 5 percent chance of working */
-	if (chance > 95) chance = 95;
-
 	/* Return the chance */
-	return (chance);
+	return clamp_failure_chance(chance, minfail);
 }
 
 s32b lua_spell_device_chance(s32b chance, int level, int base_level)
@@ -323,20 +306,9 @@ s32b lua_spell_device_chance(s32b chance, int level, int base_level)
 
 	/* Extract the minimum failure rate */
 	minfail = 15 - get_skill_scale(SKILL_DEVICE, 25);
-	if (minfail < 0) minfail = 0;
-
-	/* Minimum failure rate */
-	if (chance < minfail) chance = minfail;
-
-	/* Stunning makes spells harder */
-	if (p_ptr->stun > 50) chance += 25;
-	else if (p_ptr->stun) chance += 15;
-
-	/* Always a 5 percent chance of working */
-	if (chance > 95) chance = 95;
 
 	/* Return the chance */
-	return (chance);
+	return clamp_failure_chance(chance, minfail);
 }
 
 /* Cave */
