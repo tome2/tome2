@@ -1,0 +1,75 @@
+# File: t_d_imlad.txt
+
+# Imladris map and destruction by furiosity <furiosity@zionmainframe.net>
+
+# NB! This file assumes usage of the following files from the 'theme' module:
+# f_info.txt and t_pref.txt
+# Please download the module and refer to the files for the terrain feature definitions http://modules.t-o-m-e.net/
+# Don't forget to modify the maximum number of terrain features, etc. in misc.txt as well.
+
+D:######################################################################################################################################################################################################
+D:#                                      @^^^@             @@%%%%%%%%%%^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^%%%^#
+D:#                                       @^^^@             @@%%%%%%%%%%^^^^^^^^^^^^^^^^^^^^^^^^HHH#####HHHHHHHHHHHHHHHHHHHHHHDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^%%%%^#
+D:#                                        @^^^@             @@%%%%%%%%%%^^^^^^^^^^^^^^^^^^^^HHHHHH#####HHHHHHHHHHHHHHHHHHHHHHDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD^^^^^^^^^^^^^^^^^^^^^^^^^^^^^%%%%^^#
+D:#                                         @^^^@             @@%%%%%%%%%%^^^^^^^^^^^^^^^^HHHH###HH#####HHHHHHHHHHHHHHHHHHHHHHHDDDDDDDD                      DDDDDDD^^^^^^^^^^^^^^^^^^^^^^^^^^^^%%%%^^^#
+D:#                                          @^^^@             @@%%%%%%%%%%^^^^^^^^^^^^^^HH######HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHDDDDDDDDDDDD                    DDDDDD^^^^^^^^^^^^^^^^^^^^^^^^^^%%%%^^^^#
+D:#                                           @^^^@             @@%%%%%%%%%%^^^^^^^^HHHHH#######HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHDDDDDDDDDDD                 DDDDDDD^^^^^^^^^^^^^^^^^^^^^^^^^%%%%^^^^^#
+D:#                                            @^^^@             @@%%%%%%%%%%^^^^^^^^^HHH####HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHDDDDDDDD                     DDDDDDDDDDDD^^^^^^^^^^^^^^^^^^^^^%%%^^^^^^^#
+D:#                                             @^^^@             @@%%%%%%%%%%^^^^^^%%^HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHDDDDDDDDDDDDDDD              DDDDDDDDDDDD^^^^^^^^^^^^^^^^^^%%%^^^^^^^^^#
+D:#                                              @^^^@             @@%%%%%%%%%%^^^^^^^%^HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHDDDDDDDDDDDDDDDDDDDDDDDD           DDDD^^^^^^^^^^^^^^^^^^^^^^%%%%^^^^^^^^^^#
+D:#                                               @^^^@             @@%%%%%%%%%^^^^^^%@^^HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHDDDDDDDDDDDDDDDDDDDDDDDDDD       DDDDD^^^^^^^^^^^^^^^^^^^^%%%%^^^^^^^^^^^^#
+D:#                                                @^^^@             @@%%%%%%%%%^^^^^^%@^^HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHDDDDDDDDDDDDDDDDDDDDDDDDDD     DDDDDDD^^^^^^^^^^^^^^^^%%%%^^^^^^^^^^^^^^#
+D:#                                                 @^^^@             @@%%%%%%%%%%%%C%%@@^^HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHDDDDDDDDDDDDDDDDDDDDD^^^^^^^^^^,^^@%%%%^^^^^^^^^^^^^^^^#
+D:#                                                  @^^^@             @@%%%%%%%%%%CC%@@@@^^HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHDDDDDDDDDDDDDDDDDDDDD^^^^^,,,,^^@%%%%^^^^^^^^^^^^^^^^^#
+D:#                                                   @^^^@             @@%%%%%%%%CC%%@@@@@^^HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHDDDDDDDDDDDDDDDDDDDDD^^,,^^^@@%%%%^^^^^^^^^^^^^^^^^^#
+D:#                                                    @^^^@             @@%%%%%%CC%%%%%@@@@^^^HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHDDDDDDDDDDDDDDDDDDD,,^^^^@%%%%%^^^^^^^^^^^^^^^^^^^#
+D:#                                                     @^^^@             @@%%%%CC%%%%%%%@@@@@^^^^HHHHHHHHHHHHHHHHHHHHHHHHHHCCCCCCCCCCCCCCCCCCCCCCCHHHHDDDDDDDDDDDDDD,,,^^^@@%%%%@^^^^^^^^^^^^^^^^^^^^^#
+D:#                                                      @^^^@             @@%%CC%%%%%%%%%%@@@@@@^^HHHHHHHHHHHHHHHHHHHHHHHHHCCCCCCCCCCCCCCCCCCCCCCCHHHHHHHHHHHHDDDHH,,^^^@@%%%%%@^^^^^^^^^^^^^^^^^^^^^^#
+D:#                   DDDDDD                              @^^^@            @^^CC%%%%%%%%%%%%%@@@@@^^HHHHHHHHHHHHHHHHHHHHHHHHCCCCCCCCCCCCCCCCCCCCCCCHHHHHHHHHHHHH,,,,^^^@@%%%%%^^^^D^^^^^^^^^^^^^^^^^^^^#
+D:#                DDDDDDD  DDD                            @^^^@       @^^^^^^^%%%%%%%%%%%%%%%%@@@@^^HHHHHHHHHH,,,,,,,,,,,,,CCCCCCCCCCCCCCCCCCCCCCC,HHHHHHHHHH,,^^^^^@@%%%%%^^^DDDDD^^^^^^^^^^^^^^^^^^^#
+D:#              DDDD         DDD                           @^^^@^@@^^@^^^^@  @@%%%%%%%%%%%%%%%%%%@@^^^^HHHH,,,,,,,,,,,,,,,,CCCCCCCCCCCCCCCCCCCCCCC,HHHHHHHHH,,^^^@@@%%%%%@^^DDD  DDD^^^^^^^^^^^^^^^^^^#
+D:#            DDD  DDD   D     DDD                          @^^^^^^^^^^^@     @@@%%%%%%%%%%%%%%%%%@@@^^,,,,,,HHHHHHHHHHHHH,CCCCCCCCCCCCCCCCCCCCCCC,HHHHHH,,,^^^@@%%%%%%%@^^DDD  DDD^^^^^^^^^^^^^^^^^^^#
+D:#          DDD  D  DDD     D    DD                           @^^@               @@@@@%%%%%%%%%%%%%%@#,,,,,^^^HHHHHHHHHHHH,CCCCCCCCCCCCCCCCCCCCCCC,HHHHH,,^^^@@%%%%%%%%@^^DDD  DDD^^^^^^^^^^^^^^^^^^^^#
+D:#         DDD    D DDDDDDD       DD                                                @@@@@%%%%%%%%%%%#,,,,,#@@^^^^^^^^HHHHHHCCCCCCCCCCCCCCCCCCCCCCC,H,,,,^^^@@%%%%%%%%%@^^DD  DDD^^^^^^^^^^^^^^^^^^^^^^#
+D:#        DD          DDDDDD,,DD,,DD,,                                                  @@@@%%%%%%%#,,,,,#%%%@@@@@@@^^HHHHHH,HHHHHHHHHHHHHHHHHHHH,,,,^^^^@@%%%%%%%%%%@^^DD  DDD^^^^^^^^^^^^^^^^^^^^^^^#
+D:#        DD   DDD  DD   ,,,DD,,DD,,D,,                                        ,,,,,,,     @@@@%%%#,,,,,#%%%%%%%%%%@@@^^^^^^,,,,,,,,,,,,,,,,,,,,,,^^^^@@@%%%%%%%%%%@@^^DD  DDD^^^^^^^^^^^^^^^^^^^^^^^^#
+D:#       DDD      D    ,,DDD DDD DDDDD,,                                  ,,,,,,,,,,,,,,,     @@%#,,,,,#%%%%%%%%%%%%%%@@@@@^^^^^^^^^^^^^^^^^^^^^^^^@@@%%%%%%%%%%%@@@^^DD  DDD^^^^^^^^^^^^^^^^^^^^^^^^^#
+D:#       DDDD         ,,DD          DDDD,,,,,,            ,,,,           ,,,,,       ,,,,,,,,,,@#,,,,,#%%%%%%%%%%%%%%%%%%%%@@@@@@@@@@@@@@@@@@@@@@@@%%%%%%%%%%%%@@@@^^DD  DD^^^^^^^^^^^^^^^^^^^^^^^^^^^#
+D:#         D DDD    D,,DD D     DD  DD,,,,^^,,,,  ,,,, ,,,, ,,,,       ,,,,                ,,,,,,,,@@#@@@@@%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%@@@@^^^^DD  DD^^^^^^^^^^^^^^^^^^^^^^^^^^^^#
+D:#             DDD D,,DD     DD    DD,,,,^^^^^^,,,,  ,,,,    ,,,,,    ,,,,                      ,,,,@@@   @@@@@%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%@@@^^^^DDD   DD^^^^^^^^^^^^^^^^^^^^^^^^^^^^^#
+D:#                D,,DDD           D,,,,^^@@^^^^@          @^@,,,,,  ,,,,                                      @@@@@@%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%@@@@DDDDDDDD    DD^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^#
+D:#            ,,,,,,DDDD DDDD    DDDD,,,,^^@ @^^^@             ,,,,,,,,,,                                            @@@@@@@@%%%%%%%%%%%%%%%%%%%%%@@@@@@       DDDDDDDDD^^@@^^^^^^^^^^^^^^^^^^^^^^^^^^#
+D:#          ,,,,^^^^^^DDD      DDD^^,,,,^^@   @^^^^^@            ,,,,,                                                     @@@@@@@@@@@@@@@@@@@@@@@             @^@DDDD^^@  @^^^^^^^^^^^^^^^^^^^^^^^^^^#
+D:#      ,,,,,^^^^@  @^^^DDDDDDDD^^^^,,,,^^@     @^^^^^^@          ,,,                                                                                              @^^^@        ^^^^^^^^^^^^^^^^^^^^^^#
+D:#    ,,,,^^^^@      @^^^^^^^^^^^^^,,,,^^@         @^^^^^^^^^@         @^^^^@^^^^^@^^^^^^^^^@                                                                    @^^^@               ^^^^^^^^^^^^^^^^^#
+D:#,,,,,^^^^@            @^^^^^^^^^,,,,^^@              @^^^^^^^^^^^^^^^^@ @^^^@ @^^^@    @^^^^@^^^@                                                            @^^^@                     ^^^^^^^^^^^^^#
+D:#^^^^^^@                  @^^^^^^^,,,,^^@                       @^^^@                      @^^^@^^^@@^^^^^^^^^^^^^^^^^^^^@@^^^@^^^@^^^@^^^@^^^@^^^@@^^^@@^^^@@^^^@                          ^^^^^^^^^#
+D:#                           @^^^^^,,,,^^@                                                       @^^^^@  @^^^@ @^^^@ @^^^@^^^@^^^@^^^@^^^@^^^@^^^@^^^@@^^^@@^^^@                                ^^^^^^#
+D:#                            @^^^,,,,^^@                                                                                                                                                          ^^^#
+D:#                             @^^,,,,^^@                                                                                                                                                           ^^#
+D:#                              @^^,,,,^^@                                                                                                                                                            #
+D:#                               @^^,,,,^^@                                                                                                                                                           #
+D:#                                @^^,,,,^^@                                                                                                                                                          #
+D:#                                 @^^,,,,^^@                                                                                                                                                         #
+D:#                                  @^^,,,,^^@                                                                                                                                                        #
+D:#                                   @^^,,,,^^@                                                                                                                                                       #
+D:#                                    @^^,,,,^^@                                                                                                                                                      #
+D:#                                     @^^,,,,^^@                                                                                                                                                     #
+D:#                                      @^^,,,,^^@                                                                                                                                                    #
+D:#                                       @^^,,,,^^@                                                                                                                                                   #
+D:#                                        @^^,,,,^^@                                                                                                                                                  #
+D:#                                         @^^,,,,^^@                                                                                                                                                 #
+D:#                                          @^^^,,,,                                                                                                                                                  #
+D:#                                           @^^,,,,                                                                                                                                                  #
+D:#                                          @^^,,,,                                                                                                                                                   #
+D:#                                        @^^,,,,                                                                                                                                                     #
+D:#                                      @^^,,,,                                                                                                                                                       #
+D:#                                     @^^,,,,                                                                                                                                                        #
+D:#                                    @^^,,,,                                                                                                                                                         #
+D:#                                   @^^,,,,                                                                                                                                                          #
+D:#                                  @^^,,,,                                                                                                                                                           #
+D:#                                 @^^,,,,                                                                                                                                                            #
+D:#                                @^^,,,,                                                                                                                                                             #
+D:#                               @^^,,,,                                                                                                                                                              #
+D:#                              @^^,,,,                                                                                                                                                               #
+D:######################################################################################################################################################################################################

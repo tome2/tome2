@@ -1,0 +1,31 @@
+~~~~~01|Blue
+~~~~~02|Race Modifiers|Blue
+#####R=== Blue Dragons ===
+
+#####GDescription
+These dragons are utterly in command of the element of Earth.
+As such, they have an innate resistance to electricity, which
+with time becomes full immunity, as they can use the power of
+the Earth to neutralize electrical discharges. They have access
+to the Earth school of magic and can conjure up showers of 
+blazing sparks to dazzle their opponents. They are especially
+agile and lithe, and their dexterity will increase with experience.
+
+#####GStat Modifiers
+Strength       0   
+Intelligence   0   
+Wisdom         0    
+Dexterity      +3   
+Constitution   0   
+Charisma       0      
+Hit Dice       +0 sides        
+Exp Penalty    +0%
+
+#####GSkill Bonuses (supplementary to existing skills)
+Earth            1.000           [0.600]
+
+#####GStarting Equipment
+A Blue dragon character begins the game with:
+    Some rations
+    Some torches
+    A spellbook of Stone Skin

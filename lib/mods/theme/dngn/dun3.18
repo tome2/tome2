@@ -1,0 +1,5 @@
+N:Dim Gates
+U:s_gates.map
+D:Visions of death fill your mind.
+F:DESC | NO_GENO | NO_NEW_MONSTER | SPECIAL | NO_STAIR
+F:ASK_LEAVE | NO_TELEPORT

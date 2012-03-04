@@ -1,0 +1,109 @@
+# Special level "The Orc Barracks" in the Pits of Angband
+#
+# Created for PernAngband 5.0.1 on 18/8/01
+
+%:special.txt
+
+#Y:40:118:126:149:264:238:285:313:330:404:15:0:0:35:22
+# Shrieker
+F:a:1:0:40
+
+# snaga
+F:b:1:0:118
+
+# cave orc
+F:c:1:0:126
+
+# hill orc
+F:d:1:0:149
+
+# half orc
+F:e:1:0:264
+
+# ogre
+F:f:1:0:238
+
+# ogrillion
+F:g:1:0:285
+
+# bolg
+F:h:1:0:330
+
+# uruk
+F:i:1:0:313
+
+# black orc
+F:j:1:0:244
+
+### Random Monsters and/or Items
+# Random monster (upto 5 levels ood) on normal floor
+F:&:1:0:*35
+
+# Random monster (upto 11 levels ood) on normal floor
+F:@:1:0:*46
+
+# Random monster (upto 9 levels ood) and
+# Random object (upto 7 levels ood) on normal floor
+F:8:1:0:*44:*42
+
+# Random monster (upto 40 levels ood) and
+# Random object (upto 20 levels ood
+F:9:1:0:*75:*55
+
+# Random monster (upto 3 levels ood)
+F:-:1:0:*38
+
+# Random object (upto 7 levels ood)
+F:=:1:0:0:*42
+
+### Guaranteed Items
+
+# The Key of Orthanc
+F:1:1:0:0:0:0:15
+
+### Level Design
+D:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+D:Xa.......................ccccccccc.......................aX
+D:X.lllllllllllllllllllllllllllllllllllllllllllllllllllllll.X
+D:X.l......................ccccccccc.....g.g..............l.X
+D:X.l.XXXXXXXXXXXXXXXXXXXXXXXXX.XXXXXXXXXXDXXXXXXXXXXXXXX.l.X
+D:X.l.Xa.......efX1Xfe.......aX.X.aaa.D.gX.XacbdddccjjjaX.l.X
+D:X.l.D........efG.Gfe........D.D.bbb.XXXX.XcfbcbcbbjjeeX.l.X
+D:X.l.X........efX.Xfe........X.X.bbb.D.gX.XfbbgdcbdbjjjX.l.X
+D:X.l.XXXXXX...efG.Gfe...XXXXXX.X.bbb.XXXX.XebdcfbdccejjX.l.X
+D:X.l.X.c..XXX.efX.Xfe.XXXcc.aX.D.ccc.D.gX.XcfcbgeebdebfX.l.X
+D:X.l.D..d..aXXXfX.XfXXXe.....D.X.ccc.XXXX.XedbcdbcdcggeX.l.X
+D:X.l.X........XXX.XXX..bbb.ddX.X.ddd.D.gX.XdgfcfegbeebcX.l.X
+D:X.l.X..f.c.bf.G...G.c..cc...X.D.ddd.XXXX.XcbeefccbfbdbX.l.X
+D:X.l.X.d..bb.d.Gi.iG...cbb.bdX.X.eee.D.gX.XbgcfbgcfdebcX.l.X
+D:X.l.X.cc...c..G.7.G.cc..d.e.X.X.eee.XXXX.XcbdfeccdbcdbX.l.X
+D:X.l.X..b.f.bbXGGGGGX.bbb.bb.X.D.f.f.D.gX.XfdebbdgeefgdX.l.X
+D:X.l.D.c..dbbXXa...aXXX..d...D.X.f.f.XXXX.DdefddbcbdbddX.l.X
+D:X.l.X...c.XXX..g.g...XXX...bX.X.....D..XGXXeegcefdcefcX.l.X
+D:X.l.Xbb..aXg.gggjgggg.gX.bbaXDXaaa..XXjIa8XacbddbegbdaX.l.X
+D:X.l.XXXXXXXXDXXXXXXXXDXXXXXXXaXXXXXXXXXXXXXXXXXXXXXXXXX.l.X
+D:X.l........................Da.aD........................l.X
+D:X.l.XXXXXXXXXXXXXXXXXXXXXXXXXaXXXXXXXXXXXXXXXXXXXXXXXXX.l.X
+D:X.l.....eeeeee.........fffXXXDXXXfff.........eeeeee.....l.X
+D:X.l.....eeeeee.........fffX.....Xfff.........eeeeee.....l.X
+D:X.llllllllllllllllllllllllX.....Xllllllllllllllllllllllll.X
+D:Xa.....................XXXXGGGGGXXXX.....................aX
+D:XXXXXXXXXXIXXXXXXXXXXXXXgafff>fffagXXXXXXXXXXXXXIXXXXXXXXXX
+D:XjjjX.#########.XfffXXgggfffffffffgggXXfffX.#########.XjjjX
+D:XfffX...........XeeeXggggjjj...jjjggggXgggX...........XfffX
+D:XfffXGGGDX.XXXXXX...Xgggg....h....ggggX...XXXXXX.XDGGGXfffX
+D:Xgg......X.X........Xgggg.........ggggX........X.X......eeX
+D:Xgg....ggX.X.XXXXXX.XXgggggggggggggggXX.XXXXXX.X.Xee....eeX
+D:Xgg....ggX.X.X......XXXXgggggggggggXXXX......X.X.Xee....eeX
+D:Xgg....ggX.X.X.XXXXXX..XXXXfffffXXXX..XXXXXX.X.X.Xee....eeX
+D:Xgg....ggX.X.X.........#.4XXXDXXX4.#.........X.X.Xee....eeX
+D:Xgg....ggX.X.XXXXXXXXXIXXXXa...aXXXXIXXXXXXXXX.X.Xee....eeX
+D:Xgg....ggX.X.Xigfedcba.XiX..X#X..XiX.abcdefgiX.X.Xee....eeX
+D:Xgg....ggX.X.XGGGGGGGGGX....X.X....IGGGGGGGGGX.X.Xee....eeX
+D:XggggggggX.X.X@@@@@@@@@IXXXaX7XaXXXX@@@@@@@@@X.X.XeeeeeeeeX
+D:XggggggggI.X+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX+X.IeeeeeeeeX
+D:XaaaaagggX.......................................XeeeaaaaaX
+D:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+### Starting Location
+P:22:31

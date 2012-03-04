@@ -1,0 +1,104 @@
+# Special level "Bridge Of Khazad-Dum" in Moria (lvl50)
+# Made by Burb Lulls, reworked later for Theme by furiosity <furiosity@gmail.com>
+
+%:special.txt
+
+# chasm
+F:-:87:0
+
+# rubble
+F:;:49:0
+
+# Random monster (up to 5 levels ood) on normal floor
+F:a:1:0:*55
+
+# Random monster (up to 11 levels ood) on normal floor
+F:b:1:0:*61
+
+# Random monster (up to 9 levels ood)
+F:c:1:0:*59
+
+# Random monster (up to 40 levels ood)
+# Random object (up to 20 levels ood
+# These are behind granite walls, only go after them if you really want to!
+F:d:1:0:*90:*70
+
+# Random monster (up to 3 levels ood)
+F:e:1:0:*53
+
+# Random monster (up to 7 levels ood)
+F:f:1:0:*57
+
+### Guardian -- Durin's Bane on normal floor
+F:@:1:0:872
+
+### Escorts (since these can't appear due to the SPECIAL_GENE flag on Durin's bane)
+
+# Mornungol on normal floor
+F:g:1:0:720
+
+# Ungorrog on normal floor
+F:h:1:0:992
+
+# Sererrog on normal floor
+F:i:1:0:995
+
+# Naurungol on normal floor
+F:j:1:0:994
+
+# Faunungol on normal floor
+F:k:1:0:993
+
+# Morgulrog on normal floor
+F:m:1:0:999
+
+# Helcungol on normal floor
+F:n:1:0:648
+
+### Dungeon Design
+D:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+D:X----------------------------------------------------------------------------LLLLLLLLLLLLLL-----------------------------------X
+D:X----------------------------------------------------------------------------LXXXXXXXXXXXXLLLLLLLLLLLLLLLLLLLLLLLLL-----------X
+D:X----------------------------------------------------------------------------LX;........;XXXXXXXXXXXXXXXXXXXXXXXXXL-----------X
+D:X----------------------------------------------------------------------------LX...c...f..........e.....f......c..XL-----------X
+D:X----------------------------------------------------------------------------LX;.........XXXXXXXXXXXXXXXXDDXXXXDDXL-----------X
+D:X----LLLLLLLLLLLLLL--------------------------LLLLL---------------------------LXXXXXXXXX..XLLLLLLLLLLLLLLX..D.cX..XL-----------X
+D:X--LLLXXXXXXXXXXXXLLL----------------------LLXXXXXLL-----------LLLLLLLL------LLLLLLLLLX..XXLLLLLLLLLLLLLXXXXXXXDDXL-----------X
+D:X-LLXXX..........XXXLLL------------------LLXXX..aXXXLLL-----LLLXXXXXXXLL-------------LXX..XXLLLLLLLLLLLLX..D..D..XL-----------X
+D:XLXXX..............XXXLL----------------LXXX;......XXXLL--LLXXXX;.f..XXLLLLLLLLLLLLLLLLXX..XXXXXXXXXXXXLXDDXXXXDDXL-----------X
+D:XLX;.................XXL--LLLLLLLLLLLLLLLX...XXXXa..;XXLLLXXX......X..XXXXXXXXXXXXXXXXXXXX.;XX;......;XLX..Xb.D..XL-----------X
+D:XLXXX................;XL--LXXXXXXXXXXXXXXDDXXXLLXXX.;.XXXXX....XXXXXX.D............;XXXXX...XX...XX...XLXDDXXXXXXXL-----------X
+D:XLLLXXX............X..XL--LX;...........a..a;XLLLLXXX..f;...;XXXLLLLXXX...f.....e...XXXXX..XXX...XX...XLX..D.bD..XL-----------X
+D:X--LLLXXXXX..XXXXXXX..XLLLLX.................XLLLLLLXX..D..XXXLLLLLLLLX......a......D............XX...XLXDDXXXXDDXL-----------X
+D:X----LLLLLXDDXLLLLLX..XXXXXXa................XLLLLLLLXXXX...XLLLLLLLLLX...c.....f...XXXXXXXXXX..bXXc..XLX..Db.X..XL-----------X
+D:X--------LX..XLLLLLX.......D........f........XLLLLLLLLLLXX.cXLLLLLLLLLX;...........;XLLLLLLLLX.XXXXXX.XLXXXXXXXDDXLLLLL-------X
+D:X--LLLLLLLX.eXLLLLLXXXXXXXXX;...............;XLLLLLLLLLLXXXDXLLLLLLLLLXXDXXXXXXXXXXXXLLLLLLLLX..XXXXf.XLX...a....XXXXXLL------X
+D:X--LXXXXXXX..XXXXXXXXXXLLLLXXXXXXXXXDDXXXXXXXXLLLLLLLLLXX..bXLLLLLLLLLX..XLLLLLLLLLLLLLLLLLLLX..eXX...XLX..b..b..D...XXLL-----X
+D:X--LX..e..............XLLLLLLLLXXXXX..XXXXXXLLLLLLLLLLXX...XXLLLLLLLLLX##XLLLLLLLLLLLLLLLLLLLX;......;XLX....e...XX..fXXL-----X
+D:X--LXDDXXXXXXXXXXXXX..XLLLLLLXXX;..f......;XLLLLLLLLLXXc.XXXLLLLLLLXXXX..XXXXLLLLLLLLLLLLLLLLXXXX..XXXXLXXXXXXXXXXXX...XL-----X
+D:X--LX..XLLLLLLLLLLLX.eXLLLLLXX.D.......c...XLLLLLLLXXX..XXLLLLLLLXXX........XXXLXXXXXXXXXXXXXXXXXDDXXXXXXXXXXXLLLLLXX.eXL-----X
+D:X--LX..XLLXXXXXLLLLXDDXLLLLXX.eX;...b.....;XLLLLLLLX..fXXLLLLLLLLX...d.....d..XLX.e..b...e...c...f...c...b...XLLLLXX..XXLL----X
+D:X--LX..XLLXXccXLLLLX..XLLLXX..XXXXXXXXXXXXXXLXXXXXXXDDXXXXXXLLLLLXX.....d....XXLXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXLXXXX..XXXXL----X
+D:X--LX..XLLXX..XLLLLX..XLLXX..XXLLLLLLLLLLLLLLX;....f..f...;XLLLLLLXX;......;XXLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLX;a..f..;XL----X
+D:X--LX..XLLXXDDXXXXXX..XLXX..XXLLLLLLLLLLLLLLLX.............XLLLLLLXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXLLLLXXXX..XXXXL----X
+D:X--LX.aXLLXX..........XLX..XXLLLLLLLLLLLLLLLLX..c...cc..c..XLLLLXXX-------------------------------------XXXLLLLLLX...cXLLL----X
+D:X--LX..XLLXXXXXXXXXXXXXXX..XLLLLLLLLLLLLLLLLLX;...........;XLLLXX-----------------------------------------XXLLLLLXX.;XXL------X
+D:X--LX..XLLLLLLLLLLLLLLLLXDDXLLLLLLLLLLLLLLLLLXXXXXXXXXXXXXXXLLLX-------------------------------------------XLLLLLLX;.XLL------X
+D:X--LX..XXXXXXXXXXXXXXXXXX.eXLLLLLLLLLLLLLLLLLLLLLLLXXXL.l.XXLLLX-------------------------------------------XLLLLLLX.;XL-------X
+D:X--LX;...a.........a.......XLLLLLLLLLLLLLLLLLLLLLXXX.l.X.l.XXLLX----LLLLLLL---------------------..;....XXXXXXXXLLLX;.XL-------X
+D:X--LXXXXXXXXXXXXXDDXXXXXXXXXXLLLLLLLLLLLLLLLLLLLLX.l.XXXXXl.XXLX-LLLLX-X-;-;-X-X-X-;-X-X-X-;-X-X-X-X-X....XXaaXXLLXc;XL-------X
+D:X--LLLLLLLLLLLLLX.fXLLLLLLLLLXXXXXXXLLLLLLLLLLLLLXX.lXXXLXL.lXXXlllLLkX-X-X-X-X-;-X-X-X-;-X-X-;-X-X-X-.....XX..XXLX;.XLLLLLLL-X
+D:X------LLLLLLLLLX..XLLLLLLLLLX..d..XLLLLLLLLLLLLLLXX..lXXXXL.lXXlljjhkmmnn....................c...a........XXX..XXX..XXXXXXXLLX
+D:X------LXXXXXXXXX..XXXXXXXXXXX#####XXLLLLLLLLLLLLLLXXX.lXLXX..l#ljgiikmmmnnn....................f...e......#...........f..cXXLX
+D:X------LX;................;XX;.....;XLLLLLLLLLLXXXXX..lXXLLXL..#lj@ihkkkmnnn..................c...a........#.b..X.XXXXXXXX.fXLX
+D:X------LX....e.........a...XX..c....XLLLLLLLLLLXLl..lXXXLXLXL..#ljgiikmmmnnn....................f...e......#....X.XXXXXXXX.fXLX
+D:X------LX.......f...c......XX...e.f.XLLLLLLLLLLXL..LXXLLXXLXXL.#lljjhkmmnn....................c...a........#...........f..cXXLX
+D:X------LX....c....b....c...DD;.....;XLLLLLLLLLXXXDXXXLLLLLLLXXXXlllLLkX-X-X-X-X-X-;-X-X-X-;-X-X-X-;-X-.....XXX..XXXXXXXXXXXXLLX
+D:X------LX;................;XXXXXXXXXXLLLLLLLLLXLlelLXLLLLLLLLLLX-LLLLX-;-X-X-;-X-X-X-;-X-X-X-;-;-X-X-X....-XX..XXLLLLLLLLLLLL-X
+D:X------LXXXXXXXXXXXXXXXXXXXXLLLLLLLLLLLLLLLLLLXLl>lLXLL------LLX----LLLLLLL---------------------.......----XeeXXLL------------X
+D:X------LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLXLlllLXL--------LX-------------------------------------------XXXXLL-------------X
+D:X-----------------------------LLL-----------LLXXLLLXXL--------LXX-----------------------------------------XXLLLL--------------X
+D:X-------------------------------LL-----------LLXXXXXLL--------LLXXX-------------------------------------XXXLL-----------------X
+D:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+### Starting Location
+P:10:10

@@ -1,0 +1,33 @@
+|||||oy
+~~~~~01|Help|Main Menu
+~~~~~02|Main Menu
+#####RWelcome to the ToME Online Help System.
+#####R==============================================
+
+Please choose one of the following online help files:
+
+    *****/ageneral.txt*0[(a) About this help system]
+    *****/bnewbie.hlp*0[(b) Help for new players] Skills, magic, races, classes + more
+    *****/cadvanced.hlp*0[(c) Help for more experienced players] Options, Macros, Automatizer etc
+    *****/dtome_faq.txt*0[(d) ToME FAQ] Common questions
+    
+    *****/sspoiler.hlp*0[(s) Spoiler menu] Dungeons, fates, luck, corruptions and stuff
+
+
+    *****/xindex.txt*0[(x) Alphabetical index] Trouble finding something? Try here
+
+#####GBasic keys:
+Space          | Advance 1 page (screen)
+2, down arrow  | Advance 1 line
+8, up arrow    | Back up 1 line
+-              | Back up 1 page (screen)
+6, right arrow | Advance 1 link
+4, left arrow  | Back up 1 link
+Return         | Activate the selected link
+Escape         | Leave the Online Help
+Backspace, ?   | Return to previous Help File
+#              | Go to a specific line (defaults to line 0)
+%              | Go to a specific help file (defaults to help.hlp)
+=              | Highlight lines containing a string (e.g. "word")
+/              | Search for a string (e.g. "word")
+

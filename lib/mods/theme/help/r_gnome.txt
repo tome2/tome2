@@ -1,0 +1,36 @@
+~~~~~01|Gnome
+~~~~~02|Races|Gnome
+#####R=== Gnomes ===
+
+#####GDescription
+Gnomes are smaller than dwarves but larger than halflings. Like the hobbits,
+they live in the earth in burrow-like homes. Gnomes make excellent magi,
+and have very good saving throws. They are good at searching, disarming,
+perception, and stealth. They have lower strength than humans and they are
+not very good at fighting with hand weapons, but have developed a fondness
+for the crossbow. Gnomes have fair infra-vision, so they can detect
+warm-blooded creatures at a distance. Gnomes are intrinsically protected
+against paralysis and some slowing effects. At higher levels, gnomes learn
+to teleport at will.
+
+#####GStat Modifiers
+Strength        -1   
+Intelligence    +2   
+Wisdom          0   
+Dexterity       +2   
+Constitution    +1   
+Charisma        -2       
+Hit Dice Sides  8         
+Exp Penalty     +35%
+
+#####GRacial Skill Modifiers:
+#####BSkill                Start Mod    Skill Point Gains Mod
+Combat                  
+  Weaponmastery        -0.800           [0.000]
+  Archery		1.200           [0.000]
+Sneakiness              0.600           [0.000]
+  Stealth               3.000           [0.000]
+  Disarming             1.000           [0.000]
+Magic                   
+  Magic-Device          1.200           [0.000]
+Spirituality            6.000           [0.000]

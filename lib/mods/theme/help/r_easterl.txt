@@ -1,0 +1,34 @@
+~~~~~01|Easterling
+~~~~~02|Races|Easterling
+#####R=== Easterlings ===
+
+#####GDescription
+From the time of the Dagor Bragollach, the Easterlings have stood as
+the treacherous race of men. Swarthy and stout, these humans cannot
+be stunned, get a penchant for landing on their feet, and are not
+confused easily, once they have gained some experience. They are equally 
+good at all kinds of weapons, being trained in combat from an early age. 
+They do not trust magic, however, and have little skill in it.
+
+#####GStat Modifiers
+Strength        +2   
+Intelligence    -2   
+Wisdom          -2   
+Dexterity       -2   
+Constitution    +2   
+Charisma        -1       
+Hit Dice Sides  10         
+Exp Penalty     +40%
+
+#####GSkill bonuses (supplementary to existing skills)
+Combat                 1.000           [0.100]
+  Weaponmastery        0.500           [0.100]
+    Sword-mastery      0.000           [0.100]
+    Axe-mastery        0.000           [0.100]
+    Hafted-mastery     0.000           [0.100]
+    Polearm-mastery    0.000           [0.100]
+  Archery              2.000           [0.200]
+Sneakiness             1.000           [0.300]
+  Stealth              1.000           [0.200]
+  Disarming            1.000           [0.200]
+Spirituality           2.500           [0.300]

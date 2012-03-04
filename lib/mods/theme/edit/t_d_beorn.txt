@@ -1,0 +1,75 @@
+# File: t_d_beorn.txt
+
+# Beorn's Halls map and destruction by furiosity <furiosity@zionmainframe.net>
+
+# NB! This file assumes usage of the following files from the 'theme' module:
+# f_info.txt and t_pref.txt
+# Please download the module and refer to the files for the terrain feature definitions http://modules.t-o-m-e.net/
+# Don't forget to modify the maximum number of terrain features, etc. in misc.txt as well.
+
+D:######################################################################################################################################################################################################
+D:#                                                        HHHHHHDDHDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDHHDHDDDHHHHHHHHHHHHHHHHHH                                                       #
+D:#HHHH            HHHHHH        HHHHHH          HHHHHHHHHHHHHHHDDDDHDDDDHDDHHHHHHHHHHHHHHHHH@%%@HHHHHHHHHHHHHHHDDDDDHHHHDDDHHHHHHHHHHHHH                                                              #
+D:#              HHHHHHHHHHHHHHHHHHHH                  HHHDDDHHHDDDDHDDHHHHHHHHHHHHHHHDDDDDDD%%DDDDDDDDDHHHHHHHHHHHDDDDDHHHHHDDDDHHHHHHHH                                                              #
+D:#    HHHHHHHH        HHHH          HHHHHHHHHH       HHHDDDDDHHHDDHDDHHHHHHHHHHHHHHDDDDDHH@%%@HHDDDDDDDDDDDDDDDDHHHHHHDDDHHDDDDDDHHHHHH      HH                                                       #
+D:#                                                     HHDDDHHHHHHDDHHHHHHHHHHHHHHDDDHHHH@%%@HHH@@@@@@@HHHHDDDDDDDDDHHHHDDDHDDDDHHHDHHHH                                                              #
+D:#HHHHHHHH                                            HHHHHHHHHHDDDHHHHHHHHHHHHHHDDDHHHH@%%@HHH@@@@@@@@@HHHHHHHHHDDDDDDHHHDDHHHHHDDDDDHHHHHHHH                                                        #
+D:#HHHH                                  HHHHHHHHHHHHHHHHHDHHHHDDDHHHHHHHHHHHHHHDDDHHHHH@%%@HHH@@@@@@@@@@@HHHHHHHHHHHDDDDHHHDDDHHHHHDHHHHHHHH                                                          #
+D:#HHHH                    HHHHHHHH                  HHHDDDDDHDDDHHHHHHHHHHHHHHDDDHHHHHH@%%@HH@@@@@@@@@@@@@HHHHHHHHHHHHDDDHHHHDDHHHHHHHHHHHH                                                           #
+D:#    HHHHHH          HHHHHHHH      HHHHHHHH      HHHHHDDDDDHDDHHHHHHHHHHHHHHDDDHHHHHH@%%@HH@@@@@@@@@@@@@@@HHHHHHHHHHHHDDDHHHHDDHHHDDDHHHH                                                            #
+D:#HH        HHHHHHHH                HHHHHH        HHHDHHDDDHDDHHHHHHHHHHHHHHDDDHHHHHHH@%%@H@@@@@@@@@@@@@@@@@HHHHHHHHHHHHDDDHHHHDDHDDDDDHHHH                                                           #
+D:#  HHHHHH          HHHH      HHHH        HHHHHHHHHDDDDDHHHDDHHHHHHHHHHHHHHDDDHHHHHHH@%%@HH@@@@@@@@@@@@@@@@@HHHHHHHHHHHHHDDDHHHHDDHDDDHHHHHHH                                                         #
+D:#  HHHHHHHHHHHH        HHHHHH            HHHHHHHHHHDDDHHDDDHHHHHHHHHHHHHHHHDDDHHHHH@%%@HHH@@@@@@@@@@@@@@@@@HHHHHHHHHHHHDDDHHDHHHDDHHHHDDDDHHH                                                        #
+D:#HHHHHH                HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHDDDHHHHHHHHHHHHHHHDDDHHHHHHH@%%@HHH@@@@@@@@@@@@@@@HHHHHHHHHHHHDDDHHHDDHHDDHHHDDDDDDHH                                                        #
+D:#HHHH        HHHHHHHH    HHHHHHHH        HHHHHHHHHHHDHHHDDHHHHHHHHHHHHHHHHHDDDHHHHHHH@%%@HHH@@@@@@@@@@@@@HHHHHHHHHHHHHHDDDHHDDHHHDDHHHDDDDHHHH                                                       #
+D:#HH                  HHHHHHHH      HHHHHH      HHHDDDDDHDDHHHHHHHHHHHHHHHHDDDHHHHHHHH@%%@HHHH@@@@@@@@@@@HHHHHHHHHHHHHHHHDDDHHDHHHHDDHHHHHHHHHH                                                       #
+D:#                        HHHHHHHHHHHH      HHHHHHHHDDDHDDD HHHHHHHHHHHHHHHHDDDHHHHH@HH@%%@HHHH@@@@@@@@@HHHHHHHHHHHHHHHHDDDHHHDHHHHHDDDHDDDDHH                                                        #
+D:#HHHH                    HHHH          HHHHHHHHHHHHHDHHD@H@HHHHHHHHHHHHHHHDDDHHHHH@@@HH@%%@HHHH@@@@@@@HHHHHHHHHHHHHHHHHHDDDHHDDHHHHDDDHDHHHHHH                                                       #
+D:#        HHHHHHHHHH          HHHHHH        HHHHDDDDHHHDDD@H@HHHHHHHHHHHHHHHDDDHHH@@@@@HH@%%@HHHHHHHHHHHHHHHHHHHHHHHHHHHHHDDDHDHHHHHDDHHDDHHHH                                                        #
+D:#                  HHHHHH      HHHH        HHHDDDDDDHHDDHH@H@HHHHHHHHHHHHHDDDHHHHH@@@HH@%%@HHHHHHHHHHHHHHHHHHHHHHHHHHHHHDDDHHDDDHHHHDDHHHDDDHH                                                       #
+D:#HHHH    HHHHHH    HHHHHHHHHH      HHHHHHHHHHHHDDDDHHHDDDH@H@HHHHHHHHHHHHHHDDDHHHHH@HHHH@%%@HHHHHHH@@@HHHHHHH@@@@@HHHHHHHDDDHHHHHHHHDDHHDDDDDHH                                                      #
+D:#HH            HHHH        HHHHHHHH          HHHHHHHHHDDDHH@H@HHHHHHHHHHHHDDDHHHHHHHHHH@%%@HHHHHH@@@@@@@HHHH@@@@@@@HHHHDDDHHHDDDHHHHDDHHHDDDHHHH                                                     #
+D:#      HHHH            HHHH        HH      HHHHHHDDDDDDHHHH@H@HHHHHHHHHHHHHDDDHHHHHHHH@%%@HHHHH@@@@@@@HHHHHHH@@@@@HHHDDDDHHHDDDHHHHHDDHHHHHHH                                                        #
+D:#        HHHHHHHH      HH      HH      HHHHHHHHHDDDHHHDDDHH@H@HHHHHHHHHHHHDDDHHHHHHHH@%%@HHHH@@@@@@@HHHHHHHHHHHHHHHDDDDHHHHDDDHHHHHHDDHHDDDHH                                                        #
+D:#HH              HHHHHHHH      HHHHHHHH      HHHHDDDDHDDDHH@H@HHHHHHHHHHHHHDDDHHHHHH@%%@HHHHHHH@@@HHHHHHHHHHHHHHHHHDDHHHHHHHHHHHHHHHDDHDDDDDHH                                                       #
+D:#HH        HHHH      HHHH    HHHHHHHHHHHHHHHHHHHDHHHHHDDDHH@H@HHHHHHHHHHHHDDDHHHHHH@%%@HHHHHHHHHHHHHHHHHHHHXXXXXXXXDHHHHHHHHHHHHHHHHDDHHDDDHH                                                        #
+D:#              HHHHHH        HHHHHH    HHHHHHHDDDDDHHHHDDHH@H@HHHHHHHHHHHHHDDDHHHHHH@%%@HHHHHHHHHHHHHHHHHHH========DHHHHHHHHHDDHHHHHDDHHHHHHHH                                                       #
+D:#HH                HHHHHHHHHH        HHHH  HHHDDDDDHHDHDDHH@H@HHHHHHHHHHHHDDDHHHHHH@%%@HHHHXXXXX@@@@@@@@@@@========DHHHHHHHHHHDDHHHHDDDHHDDDHHHH                                                     #
+D:#HHHH                                       HHHHDHHHHDHDDHH@H@HHHHHHHHHHHHHDDDHHHHHH@%%@HHH=====,,,,,,,,,,,,=======DHDHHHHHHHHHDDDHHDDDHDDDDDHHHH                                                    #
+D:#        HHHHHHHHHH                          HHHHDDDDHDDDHH@H@HHHHHHHHHHHHDDDHHHHHH@%%@HHHH==,==@@@@@@@@@@@HHHHHHHHHHHHHHHHDDDHHHHHHDDHHHHDDDHHH                                                     #
+D:#    HHHH                HHHHHH            HHHHHDDDDDDHDDHH@H@HHHHHHHHHHHHHDDDHHHHH@%%@HHHHH@,@HHHHHHHHH==================HDHHHHHHHHHDDHHDHHHH                                                       #
+D:#            HHHHHH      HHHHHHHHHH        HHHHHHDDDDHHHDHH@H@HHHHHHHHHHHHDDDHHHHDDH@%%@HHHH@,@HHHHHHHHH==================HDHHHHDDDHHDDHDDDHHH                                                       #
+D:#              HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHDDHH@H@HHHHHHHHHHHDDDHHHHHHH@%%@HHHHH@,@HHHHHHHHH==================@DHHHHDHDHHDDHDDDHHH                                                       #
+D:#,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,gg,,,,,,,,,,,,,,,,,,,,,,,,,,%%,,,,,,,,,,,,,,,,,,,,,,,,,,,=HHHHHHHH=,,,@HHDHHHHDDHHDHHHHHH                                                     #
+D:#,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,++,,,,,,,,,,,,,,,,,,,,,,,,,%%,,,,,,,,,,,,,,,,,,,,,,,,,,,,=HHHHHHHH=@D,,@HDDDDHDDHHHDDDHHHHH                                                   #
+D:#HH        HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHDDHH@H@HHHHHHHHHHHHDDDHHHH@%%@HHHHHHHHHHH,H,,,HHH==================HDH,@HHHHDHDDHHDDDDDHH                                                     #
+D:#                            HHHHHHHH        HHHHHHDDHDDDHH@H@HHHHHHHHHHHHHDDDHH@%%@HHHHHHHHHH@,@HH,,,,H==================HDH,@HDDDDHDDHHHDDDHHHH                                                    #
+D:#HH        HHHHHHHH                HHHHHHHH    HHHDDDDHDDHH@H@HHHHHHHHDDDHHHDDD@%%@HHHHHHHHHH@,@HHHHHH,,==================HDH,@HHHDDHDDHHHHHHHHH                                                     #
+D:#HHHHHH            HHHHHHHHHH            HHHHHHHHHHDDHHDDHH@H@HHHHHHDDDHHHHHDD@%%@HHHHHHHHHH@,@HHHHHHHHD@,HHHHHHHHHHHHHHHHH@,,@HDDHHDDDHHDDDHH                                                       #
+D:#HH      HHHHHH            HHHHHHHH        HHHHDDDHHHHHDDHH@H@HHHHHHHDDDHHHDDD%%@HHHHHHHHHH@,@HHHHHHHHHDD@,,,@HHHHHHHHHHH@,,,@HHHHHHHDDHHDDDHH                                                       #
+D:#    HHHH      HHHHHH                HHHHHHHHHDDDDDHHHDDDHH@H@HHHHHHHHDDDHDDDD%%@HHHHHHHHH@,@HHHHHHHHHHHDDH@,,,,,@@@@,,,,,@@HHHHHHHHHDD DDDDDHH                                                      #
+D:#          HHHH          HHHH          HHHHHHHDDHDDHHHDDDHH@H@HHHHHHHHHHHHHDD%%@HHHHHHHHH@,@HHHHHHHHHHHHDDDDHH@,,,,,,,,,@HHDDDHHHHHHDDHHHDDDHH                                                       #
+D:#      HHHHHHHH        HHHHHHHHHHHH    HHHHHHHHHHHHDHHDDDHHH@H@HHHHHHHHHHHHHD%%DHHHHHHHHHH@,@HHHHHHHHHHHHDDDDHH@@@@@@@@@HHHHDDDDDHHHDDHHHDDDHH                                                       #
+D:#        HH        HH            HHHHHH      HHHHDDDDDHDDHHH@H@HHHHHHHHHHHH@%%DDDHHHHHHHHHH,,@HHHHHHHHHHHHHDDDDHHHHHHHHDDHHHHHDDDHHHDDHHHHHHHH                                                       #
+D:#                        HHHHHH            HHHHHHHDDDHHHDDHH@H@HHHHHHHHHHH@%%@HDDDHHXXXXXXX,H,@HHHHHHHHHHHHHDDDDDHHHHHDDDDDHHHHHDDDHDDHHHHHHH                                                        #
+D:#      HHHHHHHHHHHH    HHHHHHHHHHHHHHHH      HHHHHHHHHHDDDHH@H@HHHHHHHHHHHH@%%DDDHHH=======,H,,@HHHHHHHHHHHHHHHDDDDHHHHHHHHHHHHHHHHHDDHHDHHHHH                                                       #
+D:#        HHHHHHHHHHHH              HHHHHHHHHHHHHDDDDHHHDDDHH@H@HHHHHHHHHHH@%%@HDDDHH=======,H,HHHHHHHHHHHHHHHHHHHHDDDDDDDHHHHHHHHHHDDDHDDDHHHH                                                       #
+D:#                        HHHHHH          HHHHHHDDDDDDHHHDDHH@H@HHHHHHHHHHHH@%%DDDDHH====,==,H,XXXXHHHHHHHHHHHHHHHHHHHHDDDDDDHHDHHHHHDDHHDHHHHH                                                       #
+D:#      HHHHHH                    HHHH        HHHDDDDHHHDDDDH@H@HHHHHHHHHHHH@%%@DDDDHHHHH,,,,H,====HHHHHHHHHHHHHHH@@@HHHHHHDDDHHHHHHDDHHHHHHHHH                                                       #
+D:#HHHHHH        HHHHHHHHHH      HHHHHH    HHHHHHHHHHHDDHHDDDH@H@HHHHHHHHHHHHH@%%@DDDDHHHHHHHHH,=,==HHHHHHHHHHHHHH@VVVV@HHHHHDDDHHHHHDHHHHHHHHHH                                                       #
+D:#      HHHHHH        HHHHHH        HHHHHH    HHHHHHDDDDHHDD@H@HHHHHHHHHHHHH@%%@HHDDDHHHHHHHHH,,,HHHHHHHHHHHHHHHHH@VVVV@HHHHDDDDHHHDDHHHDDDHHH                                                        #
+D:#HHHH  HHHHHHHHHHHHHH      HHHHHHHHHHHH    HHHHHHHHHDDHHDDDH@HHHHHHHHHHHHH@%%@HHHHDDDHHHHHHHHHHHHHHHHHHHHHHHHHHHHH@VVVV@HHDDDDHHHHDDHHDDDDDHH                                                        #
+D:#HH  HHHHHHHHHH            HHHH          HHHHHHHHHHHHHHHHDDDHHHHHHHHHHHHH@%%@HHHHHHDDDHHHHHHHHHHHHHHHHHHH@HHHHHHHHH@@@@HHDDDDHHHHDDHHHHDHDHH                                                         #
+D:#  HHHH        HHHHHHHH      HHHHHHHH      HHHHHHHHHDDDHDDDDHHHHHHHHHHH@%%%@HHHHHHHHDDDHHHHHHHHHHHHHHHH@@@@@HHHHHHHHHHHHDDDDHHHHHDDHHHHHHH                                                           #
+D:#      HHHHHHHHHH    HHHHHHHHHH    HHHHHHHH  HHHHHHDDDDDHHDDHHHHHHHHHHHH@%%%@HHHHHHHHDDDHHHHHHHHHHHHHH@@@@@@@HHHHHHHHHHDDDDHHHHDDDHHHHHHHHHHHH                                                       #
+D:#      HHHHHH    HHHHHH      HHHH      HHHH    HHHHDDDDDHHHDDHHHHHHHHH@%%%@HHHHHHHHHHHDDDHHHHHHHHHHHHHH@@@@@HHHHHHHHHHDDDDHHHHDDHHHHHHHHHHHH                                                         #
+D:#  HHHHHHHH            HHHHHH                  HHHHHHHHHDDDHDDHHHHHHHHH@%%%@HHHHHHHHHHDDDDHHHHHHHHHHHHHHH@HHHHHHHHHHHDDDHHHHHDDHHHHHHHHHHHHH                                                         #
+D:#        HHHHHH            HHHHHH                HHHHHHDDDDDHDDHHHHHHH@%%%@DDDHHHHHHHHHDDDDDHHHHHHHHHHHHHHHHHHHHHHHDDHHHDHDDDDHHDDDDDHHHHHH                                                          #
+D:#    HH            HHHH            HHHHHHHH      HHHHHHHDDDHHHDDHHHHHH@%%@DDDHHHHHHHHHHHHDDDDDDDHHHHHHHHHHHHDDDDDDDDDHHHHHHDDDHHHHDDDDDHHHHDHH                                                       #
+D:#        HHHHHHHH      HHHHHHHHHHHH        HHHHHH     HHHHHDHHHDDHHHH@%%@HHHHHHHHHHDDDHHHHHHDDDDDDDDDDDDDDDDDDDDDDDHHHHHHHDD HDDDHHDDDHHHH                                                           #
+D:#  HHHHHH      HHHHHHHH          HHHHHHHHHH      HHHHHH DDDDDDHHDDHH@%%@HHHHHHHHHHHHHHHHHHHHHHHHHDDDDDDDDDDHHHHHHHHHHHHHHDDHHDDDDDHHHH                                                               #
+D:#HHHHHHHHHHHH        HHHHHHHHHHHHHH        HHHHHHHHHHHH DDDDDHHDDDDD%%@HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHDDHHHHDDDHHHHHHHHHHHHH                                                       #
+D:#      HHHHHHHHHH    HHHHHH        HHHHHH      HHHHHHHHHH DDDHDDDDDDDDHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHDDDHHHHHHHHHHHHHHHH                                                            #
+D:#HHHHHH        HHHHHH      HHHHHHHH      HHHHHHHH    HHHHHHHHHDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDHHDDDDDHHHHHHHHH                                                            #
+D:#HHHHHH            HHHHHHHH                HHHHHHHHHHHHHH  HHHDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDHHHHHHHHHHHHHH                                                         #
+D:######################################################################################################################################################################################################

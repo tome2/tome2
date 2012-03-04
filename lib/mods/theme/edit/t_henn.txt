@@ -1,0 +1,96 @@
+# File: t_henn.txt
+
+# Henneth Annun map by furiosity <furiosity@zionmainframe.net>
+# NB! The additional terrain features and stores (if any) assume usage of the following files from the 'theme' module:
+# f_info.txt, t_pref.txt, st_info.txt, and ba_info.txt
+# Please download the module and refer to the files for the terrain feature definitions http://modules.t-o-m-e.net/
+# Don't forget to modify the maximum number of terrain features, etc. in misc.txt as well.
+
+### Additional terrain features ###
+
+# Low hill
+F:h:213:3
+
+# Swift waterfall
+F:f:238:3
+
+# Slippery ledge
+F:l:239:3
+
+### Buildings ###
+
+# Ranger Conclave
+F:k:74:3:0:0:0:0:0:78
+
+# Fighters Hall
+F:a:74:3:0:0:0:0:0:17
+
+# Rangers Guild
+F:b:74:3:0:0:0:0:0:21
+
+D:######################################################################################################################################################################################################
+D:#hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhWWWWWWWWWWhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh#
+D:#hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhWWTTWWWWWhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh#
+D:#hhhhhhhhhhhhh^^^^^^^^^^^^hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh^^^^^^^^^^^^hhhhhhhhhhhhhhhhhhhhhhhhhhhhhWWWWWTWWWh^hhhhhhhhhhhh^^^^^^^^^^^^hhhhhhhhhhhhhhhhhhhhhhhh^^^^^^^^^^^^hhhhhhhhhhh#
+D:#hhhhhhhhhhhh^^^^^^^^^^^^hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh^^^^^^^^^^^^hhhhhhhhhhhhhhhhhhhhhhhhhhhh^hWWWWWTWWWhhhhhhhhhhhh^^^^^^^^^^^^hhhhhhhhhhhhhhhhhhhhhhhh^^^^^^^^^^^^hhhhhhhhhhhhh#
+D:#hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh^WhWWWTWWhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh#
+D:#hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh^^^^^^W^^hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh#
+D:#hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh^^^^^^^^^hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh#
+D:#hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh^hh^^^@@@@@^^hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh#
+D:#hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh^hh^@@,,,,@^^hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh#
+D:#hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh^^h^^@,,,,,,@@^^^hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh#
+D:#hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh^h^^^@,,,,,,,,,@@^hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh#
+D:#hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh^^^@@,,,,,,,,,,^@^hh^hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh^,#
+D:#hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh^^^^^^^^^^^^^^^^hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh^^@,,,,,,,,,,,,^^^^^^hhhhhhhhhhhhhhhh^^^^^^^^^^^^^^^^hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh^,^#
+D:#hhhhhhhhhhhhhhhh^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh^^@,,,,,,,,,,,,,,,@^^hhhhhhhhhhhhhhhh^^^^^^^^^^^^^^^^hhhhhhhhhhhhhhhh^^^^^^^^^^^^^^^^^,^h#
+D:#hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh^^^^^^^^^^^^^^^^hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh^h^^@,,,,,,,,,,,,,,,@^^hhhhhhhhhhhhhhhh^^^^^^^^^^^^^^^^hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh^,^hh#
+D:#hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh^^@^@,,,,,,,,,,,,,,,@^^hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh^,^hhh#
+D:#hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh^^@^@,,,,,,,,,,,,,,,,,@^^hhhhhhhhhhhhhhhh^^^^^^^^^^^^^^^^hhhhhhhhhhhhhhhhhhhhhhhhhhhh^,^hhhh#
+D:#hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh^^^^^^^^^^^^^^^^hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh^^^@,,,,,,,,,,,,,,,,,,,,@^^hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh^^^^^^^^^^^^^^^^hhhhhhhhhhh^,^hhhhh#
+D:#hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh^^^^^@@,,,,,,,,,,,,,,,,,,,,,,@^^hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh^,^hhhhhh#
+D:#hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh^^^^^^^^^^^^^^^^hhhhhhhhhhhhhhhhhhhhhhhhhhhhhh^h^h^^@@@a,,,,,,,,,,,,,,,,,,,,,,,,@^^^^hhhhhhhhhhhhhhhh^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^hhhhh^,^hhhhhhh#
+D:#hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh^h^^^@,,,,,,,,,,,,,,,,,,,,,,,,,,,,,b@@^^^hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh^,^hhhhhhhh#
+D:#hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh^^^@@,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,@@^^^hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh^,^hhhhhhhhh#
+D:#hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh^^@,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,@@^^^hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh^,^hhhhhhhhhh#
+D:#hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh^^@,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,@@^^hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh^,^hhhhhhhhhhh#
+D:#hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh^^@,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,@@^^hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh^,^hhhhhhhhhhhh#
+D:#hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh^^@,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,@^^hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh^,^hhhhhhhhhhhhh#
+D:#hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh^^@,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,@^^hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh^,^hhhhhhhhhhhhhh#
+D:#hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh^^@,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,@^^hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh^,^hhhhhhhhhhhhhhh#
+D:#hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh^^@,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,@^^hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh^,^hhhhhhhhhhhhhhhh#
+D:#hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh^^@,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,@^^hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh^,^hhhhhhhhhhhhhhhhh#
+D:#hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh^^^@,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,@^^hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh^,^hhhhhhhhhhhhhhhhhh#
+D:#hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh^^@@,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,@^^hhhhhhhhhhhhhhhhhhhhhhhhhhhhh^,^hhhhhhhhhhhhhhhhhhh#
+D:#hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh^^@@,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,@^^hhhhhhhhhhhhhhhhhhhhhhhhhhhh^,^hhhhhhhhhhhhhhhhhhhh#
+D:#hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh^^@,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,@^^hhhhhhhhhhhhhhhhhhhhhhhhhh^,^hhhhhhhhhhhhhhhhhhhhh#
+D:#hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh^^@@,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,@^^hhhhhhhhhhhhhhhhhhhhhhhhh^,^hhhhhhhhhhhhhhhhhhhhhh#
+D:#hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh^^@@,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,@^^hhhhhhhhhhhhhhhhhhhhhhhh^,^hhhhhhhhhhhhhhhhhhhhhhh#
+D:#hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh^^@@,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,@^^hhhhhhhhhh^hhhhhhhhhhhh^,^hhhhhhhhhhhhhhhhhhhhhhhh#
+D:#hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh^^@,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,@^^hhhhhhhhhhhhhhhhhhhhhhh^,^hhhhhhhhhhhhhhhhhhhhhhhhh#
+D:#hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh^^@@,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,@^^hhhhhhhhhhhhhhhhhhhhhh^,^hhhhhhhhhhhhhhhhhhhhhhhhhh#
+D:#hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh^^@@,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,@^^hhhhhhhhhhhhhhhhhhhhh^,^hhhhhhhhhhhhhhhhhhhhhhhhhhhh#
+D:#hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh^^@,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,@^^hhhhhhhhhhhhhhhhhhhh^^,^hhhhhhhhhhhhhhhhhhhhhhhhhhh#
+D:#hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh^^@,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,@^^hhhhhhhhhhhhhhhhhhhh^,^hhhhhhhhhhhhhhhhhhhhhhhhhhhh#
+D:#hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh^^@,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,@^^hhhhhhhhhhhhhhhhhhhhh^,^hhhhhhhhhhhhhhhhhhhhhhhhhhhh#
+D:#hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh^^@@,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,@^^hhhh^hhhhhhhhhhhhhhh^,^hhhhhhhhhhhhhhhhhhhhhhhhhhhhh#
+D:#hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh^^@@@3,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,@^^hhhhhhhhhhhhhhhhhhh^,^hhhhhhhhhhhhhhhhhhhhhhhhhhhhhh#
+D:#hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh^^^@@,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,k@^^hhhhhhhhhh^^hhhhhhh^,^hhhhhhhhhhhhhhhhhhhhhhhhhhhhhh#
+D:#hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh^^^@@,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,@@^^hhhhh^hhhhhhhhhh^^h^,^hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh#
+D:#hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh^^^^@@^@@,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,@^^^hhhhhh^hhhhhhhhhhhh^,^hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh#
+D:#hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh^^^@^^@2,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,@^^hhhhhhhhhhhhhhhhhhhh^,^hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh#
+D:#hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh^^^^@@@,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,@@^^hhhhhhhhhhhhhhhhhhhh^,^hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh#
+D:#hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh^^^^@@,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,@^^^hhhhhhhhhhhh^h^hhhhh^,,^hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh#
+D:#hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh^^^@,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,@@@^^^hh^hhhhhhhhhh^h^hhh^^,,^hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh#
+D:#hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^@,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,^^^^^^^^^^^^^h^hhhhhhhh^^,,^^hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh#
+D:#hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh^^^^^,^,^,^,^,^,^,^,^,^,^,^,^,^^^^@,,,,,,,,,,,,,,,,^^^^^^^^^^^^^^^^^^,,,,,,,,,,,^^^^^^^^^^,,^^,hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh#
+D:#hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh^^,,,,^,^,^,^,^,^,^,^,^,^,^,^,^,,,^^^,,,,,,,,,,,,,,,^^^^,,,,,,,,,,,,,,,,,,^^^^^^^,,,,,,,,,,,,,,^^hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh#
+D:#hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh^^,^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^,,^,,,,,,,,,,,,,,,,,,,TTTTTTTTTTTTTTTTTTTTTTTTTT^^^^^^^^^^^^^7hTThThhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh#
+D:#hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh^^,hh^^CC^^^^^^^^^^^^^^^^^^^^^^^^^^,,,lllllllllllllll^^^^^^^^^^^^^^^^^^^^^^^^^TWWWWWWWTT^T^ThThhhhhTTThhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh#
+D:#hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh^^,hhh^CCCCCCCCCCCCCCCCCCCCCCCCCffffffffllllllllllllllffffff^^^^^^^^CCCCCCCCC^^^^WWWWWTThhhhhhhhhhhhTThhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh#
+D:#hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh^^,hhhh^CCCCCCCCCCCCCCCCCCCCCCCCCffffffffffllllllllllffffffffffCCCC^^CCCCCCCCCCCCC^^^^^TTTTTTTTTTTTTTThhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh#
+D:#hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh^^,hhhhh^CCCCCCCCCCCCCCCCCCCCCCffffffffffffffffffffffffffffffffffCCCCCCCCCCCCCCCCCCCC^C^^^^^^^^^^TTTTTThhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh#
+D:#hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh^^,hhhhhh^CCCCCCCCCCCCCCCCCCCCCffffffffffffffffffffffffffffffffffffCCC^CCCCCCCCCCCCCCC^^CCCCC^C^^^T^^^^^TThhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh#
+D:#hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh^^,hhhhhhh^CCCCCCCCCCCCCCCCCCCCCCffffffffffffffffffffffffffffffffffCCCC^CCCCCCCCCCCCCCCCC^^^^CCCCC^^^CCC^^^Thhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh#
+D:#hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh^^,hhhhhhhh^CCCCCCCCCCCCCCCCCCCCCCCffffffffffffffffffffffffffffffffCCCCC^CCCCCCCCCCCCCCC^CCCCCCCCC^^CCCCCC^Thhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh#
+D:#hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh^^,hhhhhhhhh^CCCCCCCCCCCCCCCCCCCCCCCCCffffffffffffffffffffffffffffCCCCCCC^CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC^Thhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh#
+D:######################################################################################################################################################################################################

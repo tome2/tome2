@@ -1,0 +1,40 @@
+|||||oy
+~~~~~01|Magic|Mana School
+~~~~~02|Mana Magic
+~~~~~03|Skills|Mana - Spell Info
+#####R === ToME Magic - Mana School ===
+
+The mana school of magic contains spells where the raw force of magic is used
+to create the final spell effect. There are rumours of a "Tome of Magical 
+Energy" which contains all the mana school spells within its bindings.
+
+Worshipping Eru Iluvatar or Varda Elentari also gives the ability to cast spells 
+from the mana school at a level of 1/2 or 1/4, respectively, of your prayer level. 
+E.g. if the skill "Spirituality: Prayer" is at level 10, Eru worshippers can cast 
+up to level 5 mana school spells whereas Varda worshippers can cast up to level 3
+mana school spells.
+
+#####sMana Spells
+There are four spells available for the mana school. These spells are:
+1. [[[[[sManathrust] (school level 1)
+   Conjures up mana into a powerful bolt.
+   The damage is irresistible and will increase with spell level.
+2. [[[[[sRemove Curses] (school level 10)
+   Removes curses of worn objects.
+   At spell level 20, removes heavy curses.
+3. [[[[[sElemental Shield] (school level 20)
+   Provides resistance to the four basic elements.
+4. [[[[[sDisruption Shield] (school level 45)
+   Uses mana instead of hitpoints to take damage.
+   At spell level 5 switches to Globe of Invulnerability.
+   The spell breaks as soon as a melee, shooting, throwing or magical skill
+   action is attempted, and lasts only a short time otherwise.
+
+
+#####GUdun spells that can be cast with Mana skill
+
+1. [[[[[DDrain] (dual school level 1)
+   Drains the mana contained in wands, staves and rods to increase yours.
+#####v   Your Mana and Udun skills must have reached a combined average level 
+#####v   of 1 in order to cast this spell.
+   

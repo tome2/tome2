@@ -1,0 +1,145 @@
+# File: t_pref.txt
+
+# Defines the preferences for the town features
+# letter:feature:cave_info:monster:object:ego:artifact:trap:special
+
+# Barrow-Downs entrance
+F:{:7:3:0:0:0:0:0:4
+
+# Mirkwood Forest entrance
+F:~:7:3:0:0:0:0:0:1
+
+# Land of Mordor entrance
+F:|:7:3:0:0:0:0:0:2
+
+# Angband Dungeon entrance
+F:>:7:3:0:0:0:0:0:3
+
+# Mountain chain
+F:^:97:3
+
+# Floor
+F:.:1:3
+
+# Trees
+F:T:96:3
+
+# Deep water
+F:W:187:3
+
+# Shallow water
+F:V:84:3
+
+# Deep Lava
+F:L:85:3
+
+# Shallow Lava
+F:K:86:3
+
+# Chasm
+F:C:87:3
+
+# Dirt
+F:,:88:3
+
+# Mud
+F:@:94:3
+
+# Rubble
+F:;:49:3
+
+# Grass
+F:-:89:3
+
+# Permanent wall
+F:#:63:3
+
+# Brick Roof
+F:s:193:3
+# Brick Roof Top
+F:S:194:3
+# Brick Roof Chimney
+F:t:195:3
+
+# Grass Roof
+F:X:190:3
+# Grass Roof Top
+F:U:191:3
+# Grass Roof Chimney
+F:Y:192:3
+
+# Cobblestone Road
+F:O:200:3
+
+# General Store
+F:1:74:3:0:0:0:0:0:0
+
+# Armoury
+F:2:74:3:0:0:0:0:0:1
+
+# Weapons Smith
+F:3:74:3:0:0:0:0:0:2
+
+# Temple
+F:4:74:3:0:0:0:0:0:3
+
+# Alchemy Shop
+F:5:74:3:0:0:0:0:0:4
+
+# Magic Shop
+F:6:74:3:0:0:0:0:0:5
+
+# Black Market
+F:7:74:3:0:0:0:0:0:6
+
+# Home
+F:8:74:3:0:0:0:0:0:7
+
+# Bookstore
+F:9:74:3:0:0:0:0:0:8
+
+# Pet Shop
+F:0:74:3:0:0:0:0:0:9
+
+# Underground Tunnels -- used for tunnels in towns
+F:I:173:3
+
+# Underground Tunnels -- used for tunnels in towns
+F:M:204:3
+
+# Fake blank feature
+F: :0:3
+
+### Flowers for Theme ###
+
+#Elanor (yellow)
+F:E:79:3
+
+#Fumellar (red)
+F:F:80:3
+
+#Anemones (purple)
+F:A:81:3
+
+#Niphredil (white)
+F:N:82:3
+
+#Iris (blue)
+F:R:83:3
+
+### Destroyed town features ###
+
+# Dead/burnt tree
+F:D:92:3
+
+# Ash
+F:H:93:3
+
+# Fire
+F:=:205:3
+
+# Permanent rubble
+F:$:206:3
+
+# Tainted water
+F:%:174:3

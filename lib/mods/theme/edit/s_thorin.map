@@ -1,0 +1,47 @@
+# Thorin's Trail level with Thorin's key and a bunch of dwarves. 
+# Based on Lesser Vault (Cross), tweaked to suit parent dungeon.
+# Map by furiosity <furiosity@gmail.com>
+# Arena-style level (no random treasure except monster drops)
+
+%:special.txt
+
+# Grass with Thorin's key
+F:1:89:0:0:0:0:210
+
+# Grass 
+F:,:89:0
+
+# Small tree
+F:t:202:0
+
+### Guaranteed monsters
+
+# Dark dwarven warrior on grass
+F:a:89:0:179
+
+# Dark dwarven smith on grass
+F:b:89:0:180
+
+# Dark dwarven lord on grass
+F:c:89:0:181
+
+# Dark dwarven priest on grass
+F:d:89:0:182
+
+### Dungeon Design
+
+D:XXXXXXXXXXXXXXXXXXXXXX
+D:XXXXXXXXXXXXXXXXXXXXXX
+D:XXTTc,d,,,,,,,,b,cTTXX
+D:XXTt,d,VXXDXXV,,b,tTXX
+D:XX,,d,VWXa,aXWV,,b,,XX
+D:XX,XXXXXXdcdXXXXXXX,XX
+D:XX,,,,,,Xc1cX,,,,,,,XX
+D:XXXXXXX,XdcdX,XXXXXXXX
+D:XX,,,c,,XbbbXWV,,a,,XX
+D:XXTt,,cVXXXXXV,,a,tTXX
+D:XX>T,,VWX,,,,,,a,cTTXX
+D:XXXXXXXXXX,XXXXXXXXXXX
+D:XXXXXXXXXXXXXXXXXXXXXX
+
+P:13:13

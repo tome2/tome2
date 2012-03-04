@@ -1,0 +1,33 @@
+~~~~~01|Limrog
+~~~~~02|Race Modifiers|Limrog
+#####R=== Limroeg (Fish Demons) ===
+
+#####GDescription
+Humanoid creatures with gill slits at the necks. They can
+survive underwater for extended periods of time, and with 
+sufficient experience, they'll learn to breathe without any
+air at all. Somewhat weak and sickly, they are highly agile
+and masters of the Conveyance, Temporal, and Meta schools of
+magic. They also have several special abilities that enable
+them to disappear and reappear at will.
+
+#####GStat Modifiers
+Strength       -2  
+Intelligence   +1  
+Wisdom         +1   
+Dexterity      +3  
+Constitution   -1  
+Charisma       -1     
+Hit Dice       +1 sides        
+Exp Penalty    +50%
+
+#####GSkill Bonuses (supplementary to existing skills)
+Magic                 0.000           [0.200]
+Conveyance            0.000           [0.500]
+Temporal              0.000           [0.500]
+Meta                  0.000           [0.500]
+
+#####GStarting Equipment
+A Limrog character begins the game with:
+    Some rations
+    Some torches

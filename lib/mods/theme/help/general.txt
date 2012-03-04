@@ -1,0 +1,39 @@
+|||||oy
+~~~~~01|Help
+#####R=== Using the Online Help ===
+
+This help system has been designed to be read whilst in-game. Printing it off 
+will make it look clumsy and a little difficult to read.
+
+Any text in orange/yellow colour is likely to be a hyperlink, and pressing 
+<enter> while the link is active (yellow) will take you to the relevant page. 
+Navigate between viewable links by using the left-right keys. Some links also 
+have bracketed letters included in the links. Pressing these letters on your 
+keyboard will activate the link even if it is orange.
+
+The help files total over 850 kb, so there is a lot of information. They have 
+been designed to be browsed, but you may be looking for specific information, 
+in which case you should try looking at the alphabetical *****index.txt*0[index].
+
+Here are all the relevant keypresses for navigating the help system.
+
+#####GKey            | Action
+-------------------------------------------------------------------
+Escape         | Leave the Online Help
+Backspace      | Return to previous Help File
+Space          | Advance 1 page (screen)
+2, down arrow  | Advance 1 line
+8, up arrow    | Back up 1 line
+-              | Back up 1 page (screen)
+6, right arrow | Advance 1 link
+4, left arrow  | Back up 1 link
+Return         | Activate the selected link
+#              | Go to a specific line (defaults to line 0)
+%              | Go to a specific help file (defaults to help.hlp)
+=              | Highlight lines containing a string (e.g. "word")
+/              | Search for a string (e.g. "word")
+-------------------------------------------------------------------
+
+There are other sources for help playing ToME. Try http://forum.t-o-m-e.net
+and http://wiki.t-o-m-e.net . We also have an IRC channel #tome on the
+worldirc and freenode networks (they are linked) which is fairly low traffic.

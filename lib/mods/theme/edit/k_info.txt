@@ -1,0 +1,6865 @@
+# File: k_info.txt
+
+
+# This file is used to initialize the "lib/data/k_info.raw" file, which is
+# used to initialize the "object kind" information for the Angband game.
+
+# Do not modify this file unless you know exactly what you are doing,
+# unless you wish to risk possible system crashes and broken savefiles.
+
+# After modifying this file, delete the "lib/data/k_info.raw" file.
+
+# Available slots are marked with # XXX: 294, 299, 444-464, ...
+
+# XXX XXX Add some "IGNORE_XXX" flags to Rings, Amulets, etc.
+
+# The old "MULTI_HUED" objects are now "violet", and no other object
+# is violet, so all six violet objects can be made "multi-hued", though
+# this would be a heinous hack.  XXX XXX
+
+# Note that object zero is used for the "stack" picture (unused).
+
+# N: serial number : & object name~
+# G: symbol : color
+# I: tval : sval : pval
+# W: depth : rarity : weight : cost
+# P: base armor class : base damage : plus to-hit : plus to-dam : plus to-ac
+# A: depth/rarity : depth/rarity : etc
+# F: flag | flag | etc
+
+# Version stamp (required)
+
+V:2.0.0
+
+
+##### Something special #####
+
+N:0:something
+G:&:w
+
+
+##### Mushrooms #####
+
+N:1:Blindness
+G:,:d
+I:80:1:500
+W:5:0:1:0
+A:5/1
+D:'E'ating this mushrooms will blind you. You cannot cast magic 
+D:or see monsters when you are blinded. You can still use magic items or
+D:quaff potions.
+
+N:2:Fear
+G:,:d
+I:80:2:500
+W:5:0:1:0
+A:5/1
+D:'E'ating this mushroom will make you scared.
+D:You will not be able to hit your enemies in combat if you're scared.
+
+N:3:Confusion
+G:,:d
+I:80:3:500
+W:5:0:1:0
+A:5/1
+D:'E'ating this mushroom will confuse you. You will not be able to cast spells,
+D:use wands, staves or scrolls. You can still quaff potions, though.
+
+N:4:Hallucination
+G:,:d
+I:80:4:500
+W:10:0:1:0
+A:10/1
+D:'E'ating this mushroom will make you hallucinate.
+D:You will not be able to recognise any monster or item.
+
+N:5:Cure Poison
+G:,:d
+I:80:12:500
+W:10:0:1:60
+A:10/1
+D:'E'ating this mushroom will cure you from poison.
+
+N:6:Cure Blindness
+G:,:d
+I:80:13:500
+W:10:0:1:50
+A:10/1
+D:'E'ating this mushroom will cure you from blindness.
+
+N:7:Cure Fear
+G:,:d
+I:80:14:500
+W:10:0:1:25
+A:10/1
+D:'E'ating this mushroom will cure your paranoia.  Paranoia is the state when you are
+D:too afraid to attack monsters.
+
+N:8:Cure Confusion
+G:,:d
+I:80:15:500
+W:10:0:1:50
+A:10/1
+D:'E'ating this mushroom will cure your confusion.  Confusion is when you are too confused
+D:to cast spells, zap staves, aim wands or read scrolls.
+
+N:9:Weakness
+G:,:d
+I:80:6:500
+W:10:0:1:0
+A:10/1
+P:0:5d5:0:0:0
+D:'E'ating this mushroom will reduce your strength by one point.
+
+N:10:Unhealth
+G:,:d
+I:80:10:500
+W:15:0:1:50
+A:15/1
+P:0:10d10:0:0:0
+D:'E'ating this mushroom will reduce your constitution by one point.
+
+N:11:Restore Constitution
+G:,:d
+I:80:18:500
+W:20:0:1:350
+A:20/1
+D:'E'ating this mushroom will restore your constitution. Your constitution
+D:needs restoring when it is displayed in yellow.
+
+N:12:Restoring
+G:,:d
+I:80:19:500
+W:20:0:1:1000
+A:20/8:30/4:40/1
+D:'E'ating this mushroom will restore your strength, dexterity, constitution,
+D:intelligence, wisdom and charisma. These need restoring when they
+D:are displayed in yellow.
+
+N:13:Stupidity
+G:,:d
+I:80:8:500
+W:15:0:1:0
+A:15/1
+D:'E'ating this mushroom will reduce your intelligence by one point.
+D:That's a bad thing.
+
+N:14:Naivety
+G:,:d
+I:80:9:500
+W:15:0:1:0
+A:15/1
+D:'E'ating this mushroom will reduce your wisdom by one point.
+D:That's a bad thing.
+
+N:15:Poison
+G:,:d
+I:80:0:500
+W:5:0:1:0
+A:5/1:5/1
+P:0:4d4:0:0:0
+D:'E'ating this mushroom will poison you. Poisoning makes you lose one hitpoint
+D:per turn until you magically stop the poison or until your body has
+D:fought off the poison.
+D:That's a bad thing.
+
+N:16:Sickness
+G:,:d
+I:80:7:500
+W:10:0:1:0
+A:10/1
+P:0:4d4:0:0:0
+D:'E'ating this mushroom will reduce your constitution by one point.
+D:It will also damage you quite severely in the process.
+D:That's a bad thing.
+
+N:17:Paralysis
+G:,:d
+I:80:5:500
+W:20:0:1:0
+A:20/1
+D:'E'ating this mushroom will paralyse you for a certain time.
+D:Any nearby monsters will take this opportunity to kill you.
+D:That's a bad thing.
+
+N:18:Restore Strength
+G:,:d
+I:80:17:500
+W:20:0:1:350
+A:20/1
+D:'E'ating this mushroom will restore your strength. Your strength
+D:needs restoring when it is displayed in yellow.
+
+N:19:Disease
+G:,:d
+I:80:11:500
+W:20:0:1:50
+A:20/1
+P:0:10d10:0:0:0
+D:'E'ating this mushroom will reduce your strength by one point.
+D:It will also damage you quite severely in the process.
+D:That's a bad thing.
+
+N:20:Cure Serious Wounds
+G:,:d
+I:80:16:500
+W:15:0:1:75
+A:15/1
+D:'E'ating this mushroom will heal several hit points. Your hit points
+D:need healing when they are displayed in yellow or red.
+
+##### Normal Food #####
+
+N:21:& Ration~ of Cram
+G:,:U
+I:80:35:5000
+W:0:0:10:3
+A:0/1:5/1:10/1
+D:It is biscuitish, keeps good indefinitely, is supposed to be sustaining but
+D:certainly not entertaining. Its origin is Esgaroth, the city of Lake-men.
+D:You can 'E'at it.
+
+N:22:& Round Seed-Cake~
+G:,:U
+I:80:32:500
+W:0:0:2:1
+D:It's a treat, but 'E'ating it will only fill your stomach for a short time.
+
+N:23:& Strip~ of Venison
+G:,:u
+I:80:33:1500
+W:0:0:2:2
+D:It looks great, and 'E'ating it will fill your stomach well.
+
+N:24:& Slime Mold~
+G:,:g
+I:80:36:3000
+W:1:0:5:2
+A:1/1
+D:It looks disgusting, but if you really want to you can 'E'at it.
+D:Not an incredible taste experience, but that'd be asking a bit much.
+
+# New - now Lembas works as a scroll of Satisfy Hunger
+N:25:& Lembas~
+G:,:B
+I:80:37:0
+W:5:0:3:10
+A:5/1:10/1:20/1
+D:Small golden-brown wafers wrapped in silver leaves. Its fabrication is a 
+D:secret of the Elves, and it sustains life where nothing else can. If you 
+D:'E'at it, you will be full.
+
+N:26:& Pint~ of Fine Ale
+G:,:y
+I:80:38:500
+W:0:0:5:1
+D:A bottle of a dark beer-like beverage from Eriador. You can drink it by pressing 'E'.
+
+N:27:& Pint~ of Old Winyards
+G:,:r
+I:80:39:1000
+W:0:0:10:2
+D:A bottle of fine wine from Eriador. You can drink it by pressing 'E'.
+
+##### Extra digger #####
+
+N:28:& Mattock~
+G:\:D
+I:20:7:3
+W:50:0:250:700
+A:50/2
+P:0:1d8:0:0:0
+F:TUNNEL
+f:TUNNEL
+D:This is a digging tool. Use it to dig in walls, destroy doors, or cut wood.
+
+# The Blue Stone 'Coimir' -- see artifact list
+
+N:29:& Blue Stone~
+G:":B
+I:40:18:0
+W:60:0:3:90000
+F:INSTA_ART | SPECIAL_GENE
+
+##### Edged Weapons #####
+
+N:30:& Broken Dagger~
+G:|:D
+I:23:1:0
+W:0:0:5:1
+A:0/2:5/2
+P:0:1d1:-2:-4:0
+F:SHOW_MODS
+D:The blade itself is a foot long and broken off not far above the hilt.
+
+N:31:& Bastard Sword~
+G:|:W
+I:23:21:0
+W:15:0:140:350
+A:15/1
+P:0:3d4:0:0:0
+F:SHOW_MODS | COULD2H
+f:COULD2H
+D:This is a long, double-edged sword with a plain hilt that could
+D:be wielded in one or two hands. It's called a "bastard sword" because in
+D:size, it falls between the broad sword and the two-handed sword, thus not
+D:having a family of its own. It's typically around 51 inches long.
+D:It is effective for cutting through tougher armours. It could be used for
+D:thrusting, but most wielders swing it like a bat.
+
+N:32:& Scimitar~
+G:|:W
+I:23:18:0
+W:10:0:130:250
+A:10/1
+P:0:2d5:0:0:0
+F:SHOW_MODS
+D:This oriental blade has 2 edges and is deeply curved. It has a wide
+D:and very sharp end. It is the forefather of the sabre.
+
+N:33:& Tulwar~
+G:|:W
+I:23:15:0
+W:5:0:100:200
+A:5/1
+P:0:2d4:0:0:0
+F:SHOW_MODS
+D:This vicious sword is half sword and half club, with a slight hook on the tip.
+
+N:34:& Broad Sword~
+G:|:W
+I:23:16:0
+W:10:0:150:255
+A:10/1:15/1
+P:0:2d5:0:0:0
+F:SHOW_MODS
+D:This broader version of the long sword is a standard weapon in the army
+D:of Gondolin.
+
+N:35:& Short Sword~
+G:|:W
+I:23:10:0
+W:5:0:80:90
+A:5/1
+P:0:1d7:0:0:0
+F:SHOW_MODS
+D:This shorter version of the long sword is a common weapon for rogues
+D:and mages.
+
+N:36:& Blade~ of Chaos
+G:|:v
+I:23:30:0
+W:70:0:180:4000
+A:70/8
+P:0:6d5:0:0:0
+F:ATTR_MULTI
+F:RES_CHAOS | CHAOTIC | SHOW_MODS
+f:RES_CHAOS | CHAOTIC
+D:A mighty sword which seems to be completely blunt. However, it is a conduit
+D:into the realms of pure chaos and strikes its victims with the devastating
+D:might of chaos itself whenever it connects. It gives you resistance to chaos
+D:and it can polymorph, teleport, confuse or drain hit points from the monster
+D:you hit. It occasionally causes earthquakes as well.
+
+N:37:& Two-Handed Sword~
+G:|:W
+I:23:25:0
+W:30:0:200:775
+A:30/1:40/1
+P:0:3d6:0:0:0
+F:SHOW_MODS | MUST2H
+f:MUST2H
+D:This blade is lot longer, wider and heavier than a long sword. You have to
+D:wield it with two hands. This means that wielding a shield makes fighting
+D:very difficult.
+
+N:38:& Main Gauche~
+G:|:W
+I:23:5:0
+W:3:0:30:25
+A:3/1
+P:0:1d5:0:0:0
+F:SHOW_MODS
+D:This blade is sinuously curved and tipped with a harpoon-like end.
+D:This blade has a large handguard and was designed as an off-hand weapon.
+D:This short but cruel blade is a favourite among orcs.
+
+N:39:& Cutlass~
+G:|:W
+I:23:12:0
+W:5:0:110:85
+A:5/1
+P:0:1d7:0:0:0
+F:SHOW_MODS
+D:This oriental weapon is a short, thick, curving sword
+D:with a single cutting edge. This simple slashing weapon
+D:is typically carried by buccaneers, pirates, and sailors.
+
+N:40:& Executioner's Sword~
+G:|:r
+I:23:28:0
+W:40:0:260:850
+A:40/1
+P:0:4d5:0:0:0
+F:SHOW_MODS | MUST2H
+f:MUST2H
+D:These weapons have been built in all sizes. They are custom-made
+D:for warriors that want to set out and kill their archenemy. These
+D:blades are rare, costly and very deadly.
+
+N:41:& Katana~
+G:|:W
+I:23:20:0
+W:20:0:120:400
+A:20/1
+P:0:3d4:0:0:0
+F:SHOW_MODS | COULD2H
+f:COULD2H
+D:The katana is a long blade with only a small disk for a guard.
+D:Its hilt is long enough for two hands, though it could be used
+D:with only one hand, and is usually wrapped in cloth or leather.
+D:The art of forging such swords is largely unknown in this part
+D:of Middle-earth, and such weapons are typically imported from
+D:distant lands.
+
+N:42:& Long Sword~
+G:|:W
+I:23:17:0
+W:10:0:130:300
+A:10/1:20/1
+P:0:2d5:0:0:0
+F:SHOW_MODS
+D:A long straight sword, tapering to a pronounced point. Mainly good for
+D:piercing attacks, but it can be used for slashing, too. It is a very
+D:popular design and has become standard issue in many armies.
+
+N:43:& Dagger~
+G:|:W
+I:23:4:0
+W:0:0:12:10
+A:0/1:5/1:10/1:20/1
+P:0:1d4:0:0:0
+F:SHOW_MODS
+D:It's the standard weapon of rogues and thieves.  The blade is
+D:a foot long.
+
+N:44:& Rapier~
+G:|:W
+I:23:7:0
+W:5:0:40:42
+A:5/1
+P:0:1d6:0:0:0
+F:SHOW_MODS
+D:The rapier's hilt consisted of a pair of oval guards pierced with holes,
+D:recurved quillions, and a knuckle guard.  The guard is very intricate
+D:and very effective as protection.
+
+N:45:& Sabre~
+G:|:W
+I:23:11:0
+W:5:0:50:50
+A:5/1
+P:0:1d7:0:0:0
+F:SHOW_MODS
+D:A long, one-edged, slightly curved sword with a knuckle guard and short
+D:hilt.  It is two-edged in its lower part.
+
+N:46:& Small Sword~
+G:|:W
+I:23:8:0
+W:5:0:75:48
+A:5/1
+P:0:1d6:0:0:0
+F:SHOW_MODS
+D:It's the favourite weapon of strong mages and thieves. The blade is
+D:about twenty inches long. It's very easy to handle, although it is a lot less
+D:efficient than the longer and heavier designs.
+
+N:47:& Broken Sword~
+G:|:D
+I:23:2:0
+W:0:0:30:2
+A:0/2:5/2
+P:0:1d2:-2:-4:0
+F:SHOW_MODS
+D:Just a hilt and a few inches of blade, broken off in a jagged stump.
+D:Probably worthless.
+
+##### Hafted Weapons #####
+
+N:48:& Ball-and-Chain~
+G:\:D
+I:21:6:0
+W:20:0:150:200
+A:20/1
+P:0:2d4:0:0:0
+F:SHOW_MODS | COULD2H
+f:COULD2H
+D:This weapon has a ball linked with a chain to a wooden handle.
+D:Preferred tactic is smashing the brains of your opponent.
+
+N:49:& Whip~
+G:\:D
+I:21:2:0
+W:3:0:30:30
+A:3/1
+P:0:1d6:0:0:0
+F:SHOW_MODS
+D:This weapon is light and easy to fight with. It has nasty barbs and
+D:hooks fixed to the thong to make it useful in combat.
+D:Whips easily give multiple attacks.
+
+N:50:& Flail~
+G:\:D
+I:21:13:0
+W:10:0:150:353
+A:10/1
+P:0:2d6:0:0:0
+F:SHOW_MODS | COULD2H
+f:COULD2H
+D:This weapon was originally used to cut corn. More warlike versions
+D:sport a large blade stuck on a wooden handle. The hinge allows it to get
+D:past enemy defences or to strike with added momentum when used skillfully.
+
+N:51:& Two-Handed Flail~
+G:\:y
+I:21:18:0
+W:45:0:280:590
+A:45/1
+P:0:3d6:0:0:0
+F:SHOW_MODS | MUST2H
+f:MUST2H
+D:This two-handed version of the flail gives the fighter a fearsome
+D:weapon that can do a fair amount of damage.  It typically has several
+D:spiked metal lumps on chains.
+
+N:52:& Morning Star~
+G:\:D
+I:21:12:0
+W:10:0:150:396
+A:10/1
+P:0:2d6:0:0:0
+F:SHOW_MODS
+D:This weapon consists of a large club with chains that have wooden balls
+D:with metal spikes on the end.
+
+N:53:& Mace~
+G:\:D
+I:21:5:0
+W:5:0:120:130
+A:5/1
+P:0:2d4:0:0:0
+F:SHOW_MODS | COULD2H
+f:COULD2H
+D:This weapon is a club ending in a sphere. The sphere is studded
+D:with metal shards, and thus can both crush and cut your adversary.
+
+N:54:& Quarterstaff~
+G:\:U
+I:21:3:0
+W:10:0:150:200
+A:10/1
+P:0:1d9:0:0:0
+F:SHOW_MODS | COULD2H
+f:COULD2H
+D:A long, wooden pole, usually the height of the wielder. Four of them can be
+D:made out of the trunk of one young tree, hence the name. The quarterstaff
+D:is an excellent weapon for travellers as it doubles both as a walking staff
+D:and as a deterrent against brigands. The quarterstaff is used more in
+D:fencing and brawling than melee combat.
+
+N:55:& War Hammer~
+G:\:D8
+I:21:8:0
+W:5:0:120:225
+A:5/1
+P:0:3d3:0:0:0
+F:SHOW_MODS | COULD2H
+f:COULD2H
+D:A large hammer, designed to crush skulls with mighty strikes.
+
+N:56:& Lead-Filled Mace~
+G:\:D
+I:21:15:0
+W:15:0:180:502
+A:15/1
+P:0:3d4:0:0:0
+F:SHOW_MODS | COULD2H
+f:COULD2H
+D:A large, mean mace filled with lead in order to wreak a maximum of havoc.
+
+N:57:& Mace~ of Disruption
+G:\:v
+I:21:20:0
+W:80:0:400:4300
+A:80/5
+P:0:5d8:0:0:0
+F:SLAY_UNDEAD | SHOW_MODS | MUST2H
+f:MUST2H | SLAY_UNDEAD
+D:This mace is custom-made for priests that go out to destroy evil.
+D:It is deadly, especially for undead.
+
+N:58:& Lucerne Hammer~
+G:\:B
+I:21:10:0
+W:10:0:120:376
+A:10/1
+P:0:2d5:0:0:0
+F:SHOW_MODS | COULD2H
+f:COULD2H
+D:A war hammer combined with a spearpoint, mounted on a long pole.
+
+##### Polearms #####
+
+N:59:& Beaked Axe~
+G:/:s
+I:22:10:0
+W:15:0:180:408
+A:15/1
+P:0:2d6:0:0:0
+F:SHOW_MODS | MUST2H
+f:MUST2H
+D:This polearm has a beak mounted opposite the blade.
+
+N:60:& Glaive~
+G:/:s
+I:22:13:0
+W:20:0:190:363
+A:20/1
+P:0:2d6:0:0:0
+F:SHOW_MODS | COULD2H
+f:COULD2H
+D:A polearm with a long, slightly curved knife-like blade. It has spurs on
+D:the dull side of the blade. It's primarily a slashing and chopping weapon. Glaives
+D:are often used to protect archers, crossbowmen, and gunners while they reload.
+D:Outside of combat they are a popular processional weapon and therefore many
+D:have ornately carved blades.
+
+N:61:& Halberd~
+G:/:s
+I:22:15:0
+W:25:0:190:430
+A:25/1
+P:0:3d5:0:0:0
+F:SHOW_MODS | COULD2H
+f:COULD2H
+D:The halberd has a broad, short axe blade on a 5-6 ft long haft, with a
+D:spearpoint at the top, often a back-spike and occasionally a butt-spike. Used to
+D:combat heavier armour. It's usually used for cutting and stabbing.  It's the most
+D:versatile polearm in Middle-earth. The axe is used in general melee. The top
+D:pike is used to pierce armour, or is set against a cavalry charge. The back
+D:hook could unseat horses, trip opponents, parry a blow, or be a general
+D:piercing weapon.
+
+N:62:& Awl-Pike~
+G:/:s
+I:22:4:0
+W:10:0:160:340
+A:10/1
+P:0:1d8:0:0:0
+F:SHOW_MODS | COULD2H
+f:COULD2H
+D:This is a polearm with a long square-sectioned spike on the end.
+
+N:63:& Pike~
+G:/:s
+I:22:8:0
+W:15:0:160:358
+A:15/1
+P:0:2d5:0:0:0
+F:SHOW_MODS | COULD2H
+f:COULD2H
+D:A staff, 16-18 feet long, that has a small piercing head about 10 inches
+D:long. The pike is often used by infantry to fend off cavalry.  It is very
+D:effective against mounted troops.
+
+N:64:& Spear~
+G:/:s
+I:22:2:0
+W:5:0:50:36
+A:5/1
+P:0:1d6:0:0:0
+F:SHOW_MODS
+D:Spears tend to have a strong, wide, leaf-shaped head with a ridge down the
+D:middle. The spearhead is attached to the wooden shaft by a socket. The
+D:sockets are usually riveted to the shaft and some have two small lugs near
+D:the base of the socket to allow the head to be possibly bound on as well.
+D:This spear is 7 feet long.
+
+N:65:& Trident~
+G:/:y
+I:22:5:0
+W:5:0:70:120
+A:5/1
+P:0:1d8:0:0:0
+F:SHOW_MODS | COULD2H
+f:COULD2H
+D:The trident is based on the pitchfork.  In fact, when not used as a weapon,
+D:it is often employed as a pitchfork. It is famous for its uses in
+D:gladiatorial arenas. It is used much like a spear and could even be thrown
+D:like one in desperate situations.
+
+N:66:& Lance~
+G:/:s
+I:22:20:0
+W:10:0:300:230
+A:10/1
+P:0:2d8:0:0:0
+F:SHOW_MODS | MUST2H
+f:MUST2H
+D:This is the original polearm. It is shaped like a spear but is bigger. It's
+D:meant to fend off enemies, not to be thrown.
+
+N:67:& Great Axe~
+G:/:s
+I:24:25:0
+W:40:0:230:500
+A:40/1
+P:0:4d4:0:0:0
+F:SHOW_MODS | MUST2H
+f:MUST2H
+D:A huge and heavy two-headed axe.
+
+N:68:& Battle Axe~
+G:/:s
+I:22:22:0
+W:15:0:170:334
+A:15/1
+P:0:2d8:0:0:0
+F:SHOW_MODS | COULD2H
+f:COULD2H
+D:Nordic polearm with a broad blade and a hook mounted on the end of the shaft.
+D:The Nordics' take on the halberd. The polearm of choice for many Nordics,
+D:ideally suited for slashing, thrusting, and unseating cavalry.
+
+N:69:& Lochaber Axe~
+G:/:D
+I:22:28:0
+W:45:0:250:750
+A:45/1
+P:0:3d8:0:0:0
+F:SHOW_MODS | COULD2H
+f:COULD2H
+D:Nordic polearm with a broad blade and a hook mounted on the end of the shaft.
+D:Another Nordic version of the halberd. The polearm of choice for many Nordics,
+D:this weapon is ideally suited for slashing, thrusting, and unseating cavalry.
+
+N:70:& Broad Axe~
+G:/:s
+I:24:11:0
+W:15:0:160:304
+A:15/1
+P:0:2d6:0:0:0
+F:SHOW_MODS | COULD2H
+f:COULD2H
+D:A one-headed axe made for combat, with an elongated moon-shaped blade.
+
+N:71:& Scythe~
+G:/:s
+I:22:17:0
+W:45:0:250:800
+A:45/1
+P:0:5d3:0:0:0
+F:SHOW_MODS | COULD2H
+f:COULD2H
+D:A simple farm implement, converted into a weapon by slightly straightening
+D:its blade and putting it in line with its pole, instead of the typical
+D:right angle.
+
+N:72:& Scythe~ of Slicing
+G:/:r
+I:22:30:0
+W:80:0:250:10000
+A:80/20
+P:0:8d4:0:0:0
+F:SHOW_MODS | MUST2H | WOUNDING | VORPAL
+f:MUST2H | VORPAL | WOUNDING
+D:The simple design of the war scythe, but this one uses a finely crafted and
+D:incredibly sharp steel blade which causes terrible wounds when it hits.
+
+##### Bows, Crossbows, Slings #####
+
+N:73:& Short Bow~
+G:}:U
+I:19:12:0
+W:3:0:30:50
+A:3/1:50/2
+F:SHOW_MODS
+D:A piece of bent wood, fitted with a string. Easy to transport and use, but
+D:its effect is not very impressive. You can 'f'ire it after you 'w'ield it.
+
+N:74:& Long Bow~
+G:}:U
+I:19:13:0
+W:10:0:40:120
+A:10/1:70/2
+F:SHOW_MODS
+D:A bow almost as long as a human. It takes considerable strength and skill to
+D:use and is rather awkward to carry around inside buildings. Nevertheless, it
+D:shoots arrows with astonishing force. You can 'f'ire it after you 'w'ield it.
+
+N:75:& Light Crossbow~
+G:}:s
+I:19:23:0
+W:15:0:110:140
+A:15/1:60/2
+F:SHOW_MODS
+D:A metal bow mounted on a wooden stock. It is used for shooting bolts. This
+D:design is relatively light and not too difficult to cock, but also shoots its
+D:quarrels with less force. You can 'f'ire with it after you 'w'ield it.
+
+N:76:& Heavy Crossbow~
+G:}:s
+I:19:24:0
+W:30:0:200:300
+A:30/1:80/2
+F:SHOW_MODS
+D:A metal bow mounted on a wooden stock, with attached cocking mechanism. It
+D:takes considerable time and strength to cock it and it's rather heavy.
+D:However, it hurls its ammunition with incredible force. You can 'f'ire with
+D:it after you 'w'ield it.
+
+N:77:& Sling~
+G:}:u
+I:19:2:0
+W:1:0:5:5
+A:1/1:40/2
+F:SHOW_MODS
+D:A simple cloth or leather pouch with two strings attached. It is used to hurl
+D:pebbles or iron shots. You can 'f'ire with it after you 'w'ield it.
+
+##### Missiles #####
+
+N:78:& Arrow~
+G:{:U
+I:17:1:0
+W:3:0:2:1
+A:3/1:15/1:50/1
+P:0:1d4:0:0:0
+F:SHOW_MODS
+D:A simple metal head on a piece of wood or bamboo, fitted with some feathers.
+D:You can use it for 'f'iring a bow.
+
+N:79:& Seeker Arrow~
+G:{:G
+I:17:2:0
+W:55:0:2:20
+A:55/2:80/2
+P:0:4d4:0:0:0
+F:SHOW_MODS
+D:A precision-made arrow, which allows you to hit precisely the most vulnerable
+D:place of an opponent. You can use it for 'f'iring a bow.
+
+N:80:& Bolt~
+G:{:s
+I:18:1:0
+W:3:0:3:2
+A:3/1:25/1:60/1
+P:0:1d5:0:0:0
+F:SHOW_MODS
+D:Short metal arrows, to be fired with crossbows. You can use it for 'f'iring a
+D:crossbow.
+
+N:81:& Seeker Bolt~
+G:{:B
+I:18:2:0
+W:65:0:3:25
+A:65/2:90/2
+P:0:4d5:0:0:0
+F:SHOW_MODS
+D:A precision-made bolt, which allows you to hit exactly the most vulnerable
+D:place of an opponent. You can use it for 'f'iring a crossbow.
+
+N:82:& Rounded Pebble~
+G:{:s
+I:16:0:0
+W:0:0:4:1
+A:0/1:10/2
+P:0:1d2:0:0:0
+F:SHOW_MODS
+D:Small round stones. When fired with a sling, they could even hurt a giant.
+D:You can use them for 'f'iring a sling.
+
+N:83:& Iron Shot~
+G:{:s
+I:16:1:0
+W:3:0:5:2
+A:3/1:40/2
+P:0:1d4:0:0:0
+F:SHOW_MODS
+D:Metal balls, made for shooting with slings. You can use them for 'f'iring a
+D:sling.
+
+##### Shovels and Picks #####
+
+N:84:& Shovel~
+G:\:s
+I:20:1:1
+W:1:0:60:10
+A:5/2
+P:0:1d2:0:0:0
+F:TUNNEL
+f:TUNNEL
+D:A simple digging tool for shovelling away rubble and maybe even soft rock.
+
+N:85:& Gnomish Shovel~
+G:\:G
+I:20:2:2
+W:20:0:60:100
+A:20/3
+P:0:1d2:0:0:0
+F:TUNNEL
+f:TUNNEL
+D:Crafted by the gnomes, its design profits greatly from the gnomes' expertise
+D:honed in the burrowing of their hovels.
+
+N:86:& Dwarven Shovel~
+G:\:B
+I:20:3:3
+W:40:0:120:200
+A:40/4
+P:0:1d3:0:0:0
+F:TUNNEL
+f:TUNNEL
+D:The lighter digging tool used by dwarves to remove debris, but also good
+D:enough to clear away bits of rock when no pick is easily available.
+
+N:87:& Pick~
+G:\:s
+I:20:4:1
+W:5:0:150:50
+A:10/2
+P:0:1d3:0:0:0
+F:TUNNEL
+f:TUNNEL
+D:A heavy digging tool, primarily for earthworking, but also good for tunnelling
+D:through stone, if one is willing to perform the time-consuming labour.
+
+N:88:& Orcish Pick~
+G:\:g
+I:20:5:2
+W:30:0:180:300
+A:30/3
+P:0:1d3:0:0:0
+F:TUNNEL
+f:TUNNEL
+D:Although orcs tend to dig rather untidy mines and overcome difficulties in
+D:this work less by skill than mere stubbornness, they have amassed
+D:quite some expertise in mining, which has gone into this digging tool.
+
+N:89:& Dwarven Pick~
+G:\:b
+I:20:6:3
+W:50:0:200:600
+A:50/4
+P:0:1d4:0:0:0
+F:TUNNEL
+f:TUNNEL
+D:The dwarves, miners of legend, have made this pick, which is so expertly
+D:crafted that even weaklings can bore through solid rock with it.
+
+##### Armour #####
+
+N:90:& Elven Cloak~
+G:(:G
+I:35:2:0
+W:30:0:5:1500
+A:30/4
+P:4:0d0:0:0:4
+F:IGNORE_ACID | IGNORE_COLD | IGNORE_FIRE | IGNORE_ELEC
+F:STEALTH | SEARCH | LUCK
+f:STEALTH
+D:A wonderfully light cloak coloured in brown and green hues. Its colouring
+D:greatly helps the wearer to avoid undesired attention. Wearing it makes you
+D:feel lucky and somehow you seem to see what was meant to stay unseen.
+
+N:91:& Pair~ of Soft Leather Boots
+G:]:U
+I:30:2:0
+W:3:0:20:7
+A:3/1
+P:2:1d1:0:0:0
+D:A pair of low boots, comfortable to wear.
+
+N:92:& Pair~ of Hard Leather Boots
+G:]:U
+I:30:3:0
+W:5:0:40:12
+A:5/1
+P:3:1d1:0:0:0
+D:A pair of boots, with hardened leather at the caps, offering a little
+D:extra protection for the feet.
+
+N:93:& Pair~ of Metal Shod Boots
+G:]:s
+I:30:6:0
+W:20:0:80:50
+A:20/1
+P:6:1d1:0:0:0
+D:Heavy boots, with metal strips at the toes, heels and other vulnerable parts,
+D:to better protect the wearer's feet from harm.
+
+N:94:& Hard Leather Cap~
+G:]:u
+I:32:2:0
+W:3:0:15:12
+A:3/1
+P:2:0d0:0:0:0
+D:A piece of protective headgear made from hardened leather, just covering the
+D:skull.
+
+N:95:& Metal Cap~
+G:]:s
+I:32:3:0
+W:10:0:20:30
+A:10/1
+P:3:1d1:0:0:0
+D:A metal skullcap with nose and cheekguards.
+
+N:96:& Iron Helm~
+G:]:s
+I:32:5:0
+W:20:0:75:75
+A:20/1
+P:5:1d3:0:0:0
+D:A large helmet that can protect the entire head. Ventilation and bad vision
+D:can be a problem, however.
+
+N:97:& Steel Helm~
+G:]:W
+I:32:6:0
+W:40:0:60:200
+A:40/1
+P:6:1d3:0:0:0
+D:A helmet which protects the entire head. The expensive steel as base material
+D:allows it to offer very good protection while being fairly light.
+
+N:98:& Iron Crown~
+G:]:s
+I:33:10:0
+W:45:0:20:500
+A:45/1
+P:0:1d1:0:0:0
+D:An iron circlet which might be worn, but which is purely ornamental unless it
+D:has special powers.
+
+N:99:& Golden Crown~
+G:]:y
+I:33:11:0
+W:45:0:30:1000
+A:45/1
+P:0:1d1:0:0:0
+F:IGNORE_ACID
+D:A gilded crown, which just looks good. Sometimes such headgear also has
+D:additional properties which might make it worth wearing.
+
+N:100:& Jewel Encrusted Crown~
+G:]:v
+I:33:12:0
+W:50:0:40:2000
+A:50/1
+P:0:1d1:0:0:0
+F:IGNORE_ACID
+D:A gorgeous-looking silver crown, adorned with several gems. You might wear it
+D:on your head, if you really think you're worthy.
+
+N:101:& Robe~
+G:(:b
+I:36:2:0
+W:1:0:20:4
+A:1/1:50/1
+P:2:0d0:0:0:0
+D:A full-length garment which can be worn on the body. It is not really
+D:armour, but mages often wear them as they are very light and don't hinder
+D:movement much.
+
+N:102:& Filthy Rag~
+G:(:D
+I:36:1:0
+W:0:0:20:1
+A:0/1
+P:1:0d0:0:0:-1
+D:A piece of discarded cloth, smelly and dirty. Probably worthless.
+
+N:103:& Soft Leather Armour~
+G:(:U
+I:36:4:0
+W:3:0:80:18
+A:3/1
+P:4:0d0:0:0:0
+D:A suit of soft armour, light and unencumbering, but not very protective.
+
+N:104:& Soft Studded Leather~
+G:(:U
+I:36:5:0
+W:3:0:90:35
+A:3/1
+P:5:1d1:0:0:0
+D:A leather jerkin with metal studs in critical places offering slightly better
+D:protection.
+
+N:105:& Hard Leather Armour~
+G:(:U
+I:36:6:0
+W:5:0:100:150
+A:5/1
+P:6:1d1:-1:0:0
+D:A leather armour covering only the body. It is made of hardened leather to
+D:make it harder to penetrate.  It's also a bit harder to move in, as it is
+D:rather stiff.
+
+N:106:& Hard Studded Leather~
+G:(:U
+I:36:7:0
+W:10:0:110:200
+A:10/1
+P:7:1d2:-1:0:0
+D:A suit of hardened leather armour, reinforced with metal studs.
+
+N:107:& Leather Scale Mail~
+G:(:U
+I:36:11:0
+W:15:0:140:450
+A:15/1
+P:11:1d1:-1:0:0
+D:A suit of armour made of overlapping hardened leather scales. It offers good
+D:protection while still being rather lightweight.
+
+N:108:& Metal Scale Mail~
+G:[:s
+I:37:3:0
+W:25:0:250:550
+A:25/1
+P:13:1d4:-2:0:0
+D:A suit of overlapping metal scales, sewn onto a leather or cloth jerkin.
+
+N:109:& Chain Mail~
+G:[:s
+I:37:4:0
+W:25:0:220:750
+A:25/1
+P:14:1d4:-2:0:0
+D:A suit of interlinked metal rings, to be worn over a woollen garment.
+
+N:110:& Rusty Chain Mail~
+G:[:r
+I:37:1:0
+W:25:0:200:550
+A:25/1
+P:14:1d4:-5:0:-8
+D:This chain mail has rusted beyond repair. It can still be worn, but some of
+D:the rings have gone missing and the rust has made the suit inflexible.
+D:Consequently, it offers very poor protection and is cumbersome to move in.
+
+N:111:& Augmented Chain Mail~
+G:[:s
+I:37:6:0
+W:30:0:270:900
+A:30/1
+P:16:1d4:-2:0:0
+D:A suit of interlinked metal rings, with additional metal plates or scales
+D:covering vulnerable parts of the wearer.
+
+N:112:& Bar Chain Mail~
+G:[:s
+I:37:8:0
+W:35:0:280:950
+A:35/1
+P:18:1d4:-2:0:0
+D:A suit of interlinked metal rings, with additional short metal bars added in
+D:many places to prevent penetration of the armour by piercing attacks.
+
+N:113:& Metal Brigandine Armour~
+G:[:s
+I:37:9:0
+W:35:0:290:1100
+A:35/1
+P:19:1d4:-3:0:0
+D:This is a leather armour with many small metal plates fixed to it, covering
+D:it entirely.
+
+N:114:& Partial Plate Armour~
+G:[:W
+I:37:12:0
+W:45:0:260:1200
+A:45/1
+P:22:1d6:-3:0:0
+D:An armour made of steel plates, covering only the body of the wearer.
+
+N:115:& Metal Lamellar Armour~
+G:[:W
+I:37:13:0
+W:45:0:340:1250
+A:45/1
+P:23:1d6:-3:0:0
+D:Lamellar consists of small rectangular plates (lames) attached to each other
+D:at each edge or corner with leather lacings through small holes in the plates.
+
+N:116:& Full Plate Armour~
+G:[:W
+I:37:15:0
+W:45:0:380:1350
+A:45/1
+P:25:2d4:-3:0:0
+D:A suit of armour made of metal plates, covering the body, arms and upper legs.
+D:A very effective but very heavy armour.
+
+N:117:& Ribbed Plate Armour~
+G:[:W
+I:37:18:0
+W:50:0:380:1500
+A:50/1
+P:28:2d4:-3:0:0
+D:This full suit of armour has been strengthened in places to better deflect or
+D:absorb blows.
+
+N:118:& Galvorn Plate Mail~
+G:[:g
+I:37:30:0
+W:75:0:420:20000
+A:75/4
+P:40:2d4:-4:0:0
+F:IGNORE_ACID | IGNORE_COLD | IGNORE_ELEC | IGNORE_FIRE |
+D:A suit of plate armour fashioned from a metal whose secret is only known to Eol,
+D:the dark Elvensmith. It is practically unbreakable.
+
+N:119:& Mithril Plate Mail~
+G:[:B
+I:37:25:0
+W:60:0:300:15000
+A:60/3
+P:35:2d4:-3:0:0
+F:IGNORE_ACID
+D:A full suit of plate armour, fashioned from the rare true-silver. Only the
+D:dwarves know the secret of making armour or weapons of this metal.
+
+N:120:& Mithril Chain Mail~
+G:[:B
+I:37:20:0
+W:55:0:150:7000
+A:55/3
+P:28:1d4:-1:0:0
+F:IGNORE_ACID
+D:A suit of chain mail, made by dwarven smiths from the rare and precious metal
+D:also called true-silver.
+
+N:121:& Double Chain Mail~
+G:[:s
+I:37:7:0
+W:30:0:250:850
+A:30/1
+P:16:1d4:-2:0:0
+D:A suit of chain mail, with an additional layer of mail in some places.
+
+# This shield does not belong here
+
+N:122:& Shield~ of Deflection
+G:[:B
+I:34:10:0
+W:70:0:100:10000
+A:70/3
+P:10:1d1:0:0:10
+F:IGNORE_ACID
+D:A large shield fashioned from a metal alloy that is not subject to corrosion.
+D:It was especially crafted to better deflect attacks.
+
+### The Cloaks ###
+
+N:123:& Cloak~
+G:(:g
+I:35:1:0
+W:1:0:10:3
+A:1/1:20/1
+P:1:0d0:0:0:0
+D:A cloth coat typically worn as a loose outer garment. It is spacious enough
+D:to be worn even over bulky metal armour.
+
+N:124:& Shadow Cloak~
+G:(:D
+I:35:6:1
+W:60:0:5:7500
+A:75/4
+P:6:0d0:0:0:4
+F:RES_DARK | RES_LITE | STEALTH
+f:STEALTH
+D:A rare cloak imbued with magic to radiate a strange twilight, absorbing both
+D:extreme brightness and darkness.
+
+### The Gloves ###
+
+N:125:& Set~ of Leather Gloves
+G:]:U
+I:31:1:0
+W:1:0:5:3
+A:1/1
+P:1:0d0:0:0:0
+D:Light gloves which do not seriously hinder finger movements, while still
+D:protecting the hands somewhat.
+
+N:126:& Set~ of Gauntlets
+G:]:U
+I:31:2:0
+W:10:0:25:35
+A:10/1
+P:2:1d1:0:0:0
+D:Metal gloves protecting the hands up to the middle of the lower arm.
+
+N:127:& Set~ of Cesti
+G:]:W
+I:31:5:0
+W:50:0:40:100
+A:50/1
+P:5:1d1:0:0:0
+D:A set of metal gloves with nasty spikes and barbs. Though originally made to
+D:help in combat, the additional metal on the backs of the hands also offers a
+D:lot more protection.
+
+### The shields ###
+
+N:128:& Small Leather Shield~
+G:):U
+I:34:2:0
+W:3:0:50:30
+A:3/1
+P:2:1d1:0:0:0
+D:A small disc of lindenwood, with a leather covering on one side.
+
+N:129:& Large Leather Shield~
+G:):U
+I:34:4:0
+W:15:0:100:120
+A:15/1
+P:4:1d2:0:0:0
+D:A large oval or rectangular shield. It is made of wood, typically linden, and
+D:covered with a layer of hardened leather to offer better protection.
+
+N:130:& Small Metal Shield~
+G:):s
+I:34:3:0
+W:10:0:65:50
+A:10/1
+P:3:1d2:0:0:0
+D:A small shield strengthened with a layer of metal.
+
+N:131:& Large Metal Shield~
+G:):s
+I:34:5:0
+W:30:0:120:200
+A:30/1
+P:5:1d3:0:0:0
+D:A large piece of wood, rectangular or oval in shape, and covered with metal
+D:to strengthen it. It's to be worn strapped to the arm not occupied by the
+D:weapon when fighting.
+
+##### Rings #####
+
+N:132:Strength
+G:=:d
+I:45:24:0
+W:30:0:2:500
+A:30/1
+F:STR | HIDE_TYPE | SUST_STR
+f:STR
+D:This bauble magically improves your strength.
+
+N:133:Dexterity
+G:=:d
+I:45:26:0
+W:30:0:2:500
+A:30/1
+F:DEX | HIDE_TYPE | SUST_DEX
+f:DEX
+D:This piece of jewellery magically improves your agility.
+
+N:134:Constitution
+G:=:d
+I:45:27:0
+W:30:0:2:500
+A:30/1
+F:CON | HIDE_TYPE | SUST_CON
+f:CON
+D:This ring magically grants you health, improving your constitution.
+
+N:135:Intelligence
+G:=:d
+I:45:25:0
+W:30:0:2:500
+A:30/1
+F:INT | HIDE_TYPE | SUST_INT
+f:INT
+D:This magical piece of jewellery makes you smarter.
+
+N:136:Speed
+G:=:d
+I:45:31:0
+W:75:0:2:100000
+A:75/1
+F:SPEED | HIDE_TYPE
+f:SPEED
+D:This wonderful ring grants you additional energy, allowing you to act faster.
+
+N:137:Searching
+G:=:d
+I:45:23:0
+W:5:0:2:250
+A:5/1
+F:SEARCH | HIDE_TYPE
+f:SEARCH
+D:This ring magically improves your attention, so you can detect hidden things better.
+
+# New : It can be activated but at the cost of its destruction
+N:138:Teleportation
+G:=:d
+I:45:4:0
+W:5:0:2:250
+A:5/1
+a:HARDCORE=DEST_TELE
+F:CURSED | TELEPORT | EASY_KNOW | ACTIVATE
+f:TELEPORT
+D:This ring will uncontrollably send you to different places at its whim.
+D:You can use its power once at your will, but it will destroy the ring.
+
+N:139:Slow Digestion
+G:=:d
+I:45:6:0
+W:5:0:2:250
+A:5/1
+F:SLOW_DIGEST | EASY_KNOW
+f:SLOW_DIGEST
+D:This magical bauble grants you some sustenance, allowing you to subsist on less food.
+
+N:142:Levitation
+G:=:d
+I:45:7:0
+W:5:0:2:200
+A:5/1
+F:FEATHER | EASY_KNOW
+f:FEATHER
+D:When you put on this ring, you will be able to float just above the floor.
+D:It prevents you from drowning, and all your falls will be painless.
+
+N:143:Poison Resistance
+G:=:d
+I:45:20:0
+W:60:0:2:16000
+A:60/2
+F:RES_POIS | EASY_KNOW
+f:RES_POIS
+D:This magical ring grants protection from poison.
+D:It is rumoured that in deep dungeons monsters can kill you at once if you
+D:don't have poison resistance.
+
+N:144:Free Action
+G:=:d
+I:45:21:0
+W:20:0:2:1500
+A:20/1
+F:FREE_ACT | EASY_KNOW
+f:FREE_ACT
+D:This magical bauble prevents you from being held.
+D:Some monsters will paralyse you and then kill you if you lack free action.
+
+N:145:Weakness
+G:=:d
+I:45:2:-5
+W:5:0:2:0
+A:5/1
+F:CURSED | STR | HIDE_TYPE
+f:STR
+D:This accursed ring will sap your strength, rendering you much weaker as long as you wear it.
+
+N:146:Flames
+G:=:d
+I:45:18:0
+W:50:0:2:3000
+A:50/1
+P:0:0d0:0:0:15
+a:HARDCORE=BA_FIRE_4
+F:RES_FIRE | ACTIVATE
+f:RES_FIRE | IGNORE_FIRE
+D:This fiery circlet grants you protection, makes fire less dangerous and even
+D:allows you to call forth a ball of flame.
+
+N:147:Acid
+G:=:d
+I:45:17:0
+W:50:0:2:3000
+A:50/1
+P:0:0d0:0:0:15
+a:HARDCORE=BA_ACID_4
+F:RES_ACID | ACTIVATE
+f:RES_ACID | IGNORE_ACID
+D:This magical ring is imbued with spells of devouring acid, granting protection against such
+D:assaults and the ability to shoot acid at your foes.
+
+N:148:Ice
+G:=:d
+I:45:19:0
+W:50:0:2:3000
+A:50/1
+a:HARDCORE=BA_COLD_4
+P:0:0d0:0:0:15
+F:RES_COLD | ACTIVATE
+f:RES_COLD | IGNORE_COLD
+D:This ring is imbued with supernatural cold, which makes you less vulnerable to such effects
+D:and occasionally allows you to throw balls of ice at your foes.
+
+N:149:Woe
+G:=:d
+I:45:0:-5
+W:50:0:2:0
+A:50/1
+F:CURSED | TELEPORT | WIS | CHR | HIDE_TYPE | AUTO_CURSE
+D:This accursed ring will turn you into a bumbling fool and, in addition, magically 
+D:transports you to places you never wanted to see. It can recurse itself if
+D:you leave it on too long.
+
+N:150:Stupidity
+G:=:d
+I:45:3:-5
+W:5:0:2:0
+A:5/1
+F:CURSED | INT | HIDE_TYPE
+f:INT
+D:This wicked ring feeds off your intellect, magically making you stupid.
+
+N:151:Damage
+G:=:d
+I:45:29:0
+W:20:0:2:500
+A:20/1
+F:HIDE_TYPE
+D:This ring makes your hands magically strong in combat, allowing you to inflict
+D:greater pain with your hand-to-hand attacks.
+
+N:152:Accuracy
+G:=:d
+I:45:28:0
+W:20:0:2:500
+A:20/1
+F:HIDE_TYPE | EASY_USE | ACTIVATE |
+a:HARDCORE=WHIRLWIND
+D:This ring magically improves your control in combat, allowing you to hit more often.
+D:It can also sometimes be used to hit several nearby opponents with deadly accuracy.
+
+N:153:Protection
+G:=:d
+I:45:16:0
+W:10:0:2:500
+A:10/1
+D:This ring creates a magical aura around you, protecting you against the blows of your enemies.
+
+N:154:Aggravate Monster
+G:=:d
+I:45:1:0
+W:5:0:2:0
+A:5/1
+F:CURSED | AGGRAVATE | EASY_KNOW | AUTO_CURSE
+f:AGGRAVATE
+D:This faithless ring will draw opponents' attention towards its hapless owner.
+D:If you have any pets, it will also make them turn against you.
+
+N:155:See Invisible
+G:=:d
+I:45:22:0
+W:30:0:2:340
+A:30/1
+F:SEE_INVIS | EASY_KNOW
+f:SEE_INVIS
+D:This magical piece of jewellery allows your eyes to perceive beings otherwise unseen.
+
+N:162:Slaying
+G:=:d
+I:45:30:0
+W:40:0:2:1000
+A:40/1
+F:SHOW_MODS
+D:This ring magically improves your fighting prowess, allowing to hit more often and harder.
+
+##### Amulets #####
+
+N:163:Brilliance
+G:":d
+I:40:6:0
+W:50:0:3:1000
+A:50/4
+F:INT | WIS | HIDE_TYPE | LITE1
+D:This talisman grants a sharper wit, greater insight and brightness to light dark places.
+
+N:164:Charisma
+G:":d
+I:40:7:0
+W:30:0:3:500
+A:30/1
+F:CHR | HIDE_TYPE
+f:CHR
+D:This amulet grants beauty beyond mere looks.
+
+N:165:Searching
+G:":d
+I:40:5:0
+W:15:0:3:600
+A:15/1
+F:SEARCH | HIDE_TYPE
+f:SEARCH
+D:This amulet grants keen sight, finding things that are hidden.
+
+N:166:Teleportation
+G:":d
+I:40:1:0
+W:10:0:3:250
+A:10/1
+F:CURSED | TELEPORT | EASY_KNOW
+f:TELEPORT
+D:This amulet nastily throws you all over the place.
+
+# Replacing Adornment with Protection from Evil from T-Plus by Ingeborg S. Norden
+
+N:169:Protection from Evil
+G:":d
+I:40:2:0
+W:25:0:3:10000
+A:25/1
+F:EASY_KNOW | ACTIVATE | BLESSED | ESP_EVIL
+a:HARDCORE=PROT_EVIL
+D:This blessed amulet fends off evil beings and warns the wearer
+D:of their presence.
+
+##### Extra armour #####
+
+N:170:& Double Ring Mail~
+G:[:s
+I:37:5:0
+W:25:0:230:700
+A:25/1
+P:15:1d4:-2:0:0
+D:A suit of leather armour with metal rings sewn onto it. In addition, in important parts it is
+D:reinforced with mail.
+
+##### Additional amulets #####
+
+N:171:the Magi
+G:":d
+I:40:8:0
+W:70:0:3:30000
+A:70/8
+P:0:0d0:-4:-4:0
+F:INT | SUST_INT | SEARCH | SPELL_CONTAIN | WIELD_CAST
+F:FREE_ACT | RES_BLIND | RES_CONF |
+F:IGNORE_ACID | IGNORE_ELEC | IGNORE_FIRE | IGNORE_COLD
+D:This rare amulet is highly desirable for mages, as it makes its wearer smarter, more attentive
+D:and impervious to magics which would make their own magic-use impossible.
+
+N:172:Doom
+G:":d
+I:40:0:-5
+W:50:0:3:0
+A:50/1
+F:CURSED | STR | INT | WIS | DEX | CON | CHR | HIDE_TYPE
+F:AUTO_CURSE | CURSE_NO_DROP
+D:This wicked amulet will drain all your abilities, turning you into a mere shadow of yourself. It
+D:is exceedingly hard to get rid of.
+
+##### Scrolls #####
+
+N:173:Enchant Weapon To-Hit
+G:?:d
+I:70:17:0
+W:15:0:5:125
+A:15/1
+D:This magical scroll will allow you to improve the accuracy of a weapon in your possession.
+D:However, weapons which are already very highly enchanted are more difficult to improve
+D:further.
+
+N:174:Enchant Weapon To-Dam
+G:?:d
+I:70:18:0
+W:15:0:5:125
+A:15/1
+D:Upon reading this scroll, a magical enchantment will be placed on a weapon in your
+D:possession, increasing the pain it inflicts when hitting. On very highly enchanted weapons this
+D:enchantment may fail, wasting the scroll.
+
+N:175:Enchant Armour
+G:?:d
+I:70:16:0
+W:15:0:5:125
+A:15/1
+D:This scroll will try to enchant a piece of armour in your possession, making it more effective
+D:in protecting you. Highly enchanted armour is likely not to accept this enchantment, however.
+
+N:176:Identify
+G:?:d
+I:70:12:0
+W:1:0:5:50
+A:1/1:5/1:10/1:30/1
+D:If you read this scroll, the identity of an item you specify will be laid open to you.
+
+N:177:*Identify*
+G:?:d
+I:70:13:0
+W:30:0:5:1000
+A:30/1:50/2:80/1:100/1
+D:This scroll will allow you to gain insight into an object's special properties.
+D:Only the highly magical objects, like rare rings and amulets or very unusual weapons
+D:and armour possess abilities which warrant the use of this magic.
+
+N:178:Rumour
+G:?:d
+I:70:51:0
+W:1:0:5:10
+A:1/1
+D:A piece of paper inscribed with a little text. You may meditate over it or ignore it at your
+D:leisure.
+
+N:179:Chaos
+G:?:d
+I:70:50:0
+W:100:0:5:10000
+A:100/8
+F:IGNORE_FIRE | IGNORE_ACID | IGNORE_COLD | IGNORE_ELEC
+D:A piece of paper inscribed with strange shifting runes. Upon reading them, they will release
+D:a blast of chaotic forces.
+
+N:180:Remove Curse
+G:?:d
+I:70:14:0
+W:10:0:5:100
+A:10/1:20/2:40/2
+D:A scroll inscribed with a beneficial formula. Upon reading it, evil magics will be removed
+D:from your possessions.
+
+N:181:Light
+G:?:d
+I:70:24:0
+W:0:0:5:15
+A:0/1:3/1:10/1
+D:A scroll which will create a permanent magical light, illuminating your surroundings.
+
+N:182:Fire
+G:?:d
+I:70:48:0
+W:50:0:5:1000
+A:50/4
+F:IGNORE_FIRE
+D:A piece of paper inscribed with runes glowing brightly red. Upon reading them, a large blast
+D:of fire will be released.
+
+N:183:Ice
+G:?:d
+I:70:49:0
+W:75:0:5:5000
+A:75/6
+F:IGNORE_COLD
+D:A piece of paper inscribed with light-blue runes that radiate a strange cold. Upon reading them,
+D:a large icy blast will be released.
+
+N:184:Summon Monsters
+G:?:d
+I:70:4:0
+W:1:0:5:0
+A:1/1
+D:This scroll was made by mischievous sorcerers. If it is read, a few creatures will appear to fight
+D:you.
+
+N:185:Phase Door
+G:?:d
+I:70:8:0
+W:1:0:5:15
+A:1/1
+D:Upon reading this scroll, you will be translocated over a short distance.
+
+N:186:Teleportation
+G:?:d
+I:70:9:0
+W:10:0:5:40
+A:10/1
+D:If you read this scroll, you will immediately be transported to another place on the level.
+
+N:187:Teleport Level
+G:?:d
+I:70:10:0
+W:20:0:5:50
+A:20/1
+D:This scroll will magically transport you to the level directly above or below, when read.
+
+N:188:Monster Confusion
+G:?:d
+I:70:36:0
+W:5:0:5:30
+A:5/1
+D:Reading this scroll will cause your hands to glow with a strange mesmerising light that will
+D:attempt to confuse the next creature you hit with a hand or weapon attack.
+
+N:189:Magic Mapping
+G:?:d
+I:70:25:0
+W:5:0:5:40
+A:5/1
+D:Reading this scroll will reveal the layout of your immediate surroundings to you.
+
+N:190:Rune of Protection
+G:?:d
+I:70:38:0
+W:50:0:5:500
+A:50/2:90/4
+D:This scroll is inscribed with a powerful protective incantation. When read, this will erect a
+D:strong magical ward around the location you currently stand on. Be aware that this magic is
+D:easily disturbed by already present structures and thus cannot work where an object is lying, or
+D:on a trap.
+
+N:191:*Remove Curse*
+G:?:d
+I:70:15:0
+W:50:0:5:8000
+A:50/2:75/2:85/2:95/1
+D:This valuable scroll is inscribed with a powerful blessing capable of dispelling all but the
+D:mightiest curses which may have been laid on your possessions.
+
+N:192:Treasure Detection
+G:?:d
+I:70:26:0
+W:0:0:5:15
+A:0/1
+D:This scroll magically reveals the locations of nearby loose change to you.
+
+N:193:Object Detection
+G:?:d
+I:70:27:0
+W:0:0:5:15
+A:0/1
+D:This scroll shows nearby objects to you. It only makes you aware of items on the floor,
+D:however, not those carried by creatures.
+
+N:194:Trap Detection
+G:?:d
+I:70:28:0
+W:5:0:5:35
+A:5/1:10/1
+D:This scroll is very helpful, because it reveals the locations of nearby snares and traps which you
+D:might otherwise blunder into.
+
+##### Extra ammunition #####
+
+N:195:& Sheaf Arrow~
+G:{:o
+I:17:1:0
+W:10:0:4:3
+A:15/2:50/2
+P:0:1d5:0:0:0
+F:SHOW_MODS
+D:These arrows have bigger arrowheads and bigger feathers.
+D:They also make bigger holes.
+
+N:196:& Mithril Shot~
+G:{:B
+I:16:2:0
+W:40:0:4:20
+A:40/2:65/1
+P:0:3d4:5:5:0
+F:SHOW_MODS | IGNORE_ACID
+D:Sling bullets made from the slags of mithril smelting. They are unusually heavy, hitting
+D:with great force, and are almost imperishable.
+
+##### Additional scrolls #####
+
+N:197:Door/Stair Location
+G:?:d
+I:70:29:0
+W:5:0:5:35
+A:5/1:10/1:15/1
+D:This scroll will reveal nearby doors and stairs.
+
+N:198:Acquirement
+G:?:d
+I:70:46:0
+W:20:0:5:100000
+A:20/8
+D:A great treasure is magically stored within the shimmering runes of this scroll. Reading the
+D:words will release it.
+
+N:199:*Acquirement*
+G:?:d
+I:70:47:0
+W:60:0:5:200000
+A:60/16
+D:Several great treasures have been hidden in a magical compartment. This scroll serves as the
+D:key and will release them when read.
+
+N:200:Mass Genocide
+G:?:d
+I:70:45:0
+W:50:0:5:1000
+A:50/4:100/4
+D:An astoundingly powerful death spell is stored in the runes of this spell.  Reading
+D:it will annihilate all nearby creatures. Only a few beings of legendary stature
+D:can withstand it.
+
+N:201:Detect Invisible
+G:?:d
+I:70:30:0
+W:1:0:5:15
+A:1/1
+D:A minor detection spell is stored in this scroll, showing you the locations of otherwise
+D:unseen beings for a brief moment.
+
+N:202:Aggravation
+G:?:d
+I:70:1:0
+W:5:0:5:0
+A:5/1
+D:This nasty scroll will make a loud noise when read, waking up foes in your vicinity.
+
+N:203:Trap Creation
+G:?:d
+I:70:7:0
+W:10:0:5:0
+A:10/1
+D:If you read this rather annoying scroll, snares and pitfalls will magically be planted all around
+D:you, ready to do nasty things to you once you walk onto them.
+
+N:204:Trap/Door Destruction
+G:?:d
+I:70:39:0
+W:10:0:5:50
+A:10/1
+D:A very specifically destructive spell is written on this scroll. It will smash all traps and all
+D:doors immediately next to you.
+
+N:205:Artifact Creation
+G:?:d
+I:70:52:0
+W:70:0:5:200000
+A:70/16
+D:The mighty magic on this scroll will imbue a mundane item you possess with supernatural powers,
+D:also rendering the object indestructible.
+
+N:206:Recharging
+G:?:d
+I:70:22:0
+W:40:0:5:200
+A:40/1
+D:This scroll is inscribed with a spell releasing the enchantments used to give wands and
+D:staves their power, allowing you to replenish their spent charges.
+
+N:207:Genocide
+G:?:d
+I:70:44:0
+W:40:0:5:750
+A:40/4:80/4
+D:This rare and powerful scroll will annihilate all members of a specified race of monsters in
+D:your current location, but this will also exact a price of pain from you.
+
+N:208:Darkness
+G:?:d
+I:70:0:0
+W:1:0:5:0
+A:1/1
+D:This scroll will create a blast of utter darkness, which then fades to leave the immediate
+D:surroundings in a lasting gloom. The extreme darkness can blind those who are not used to
+D:it.
+
+N:209:Protection from Evil
+G:?:d
+I:70:37:0
+W:30:0:5:250
+A:30/1
+D:Upon reading the runes on this piece of paper, a faint aura of holiness will spring into existence
+D:around you, protecting you from blows of evil creatures, unless they are more powerful than you.
+
+N:210:Satisfy Hunger
+G:?:d
+I:70:32:0
+W:5:0:5:10
+A:5/1:20/1:50/1:75/1
+D:Reading this scroll will create a nutritious mass in your stomach, satisfying your hunger.
+
+N:211:Dispel Undead
+G:?:d
+I:70:42:0
+W:40:0:5:200
+A:40/1
+D:A powerful exorcism is inscribed on this scroll. When read it will hurt undead abominations
+D:nearby, possibly even destroying them.
+
+N:212:*Enchant Weapon*
+G:?:d
+I:70:21:0
+W:50:0:5:500
+A:50/1
+D:Reading this scroll will magically infuse a weapon of your choice, making it more effective
+D:in combat. It may not work on weapons that are already powerful or unique.
+
+N:213:Curse Weapon
+G:?:d
+I:70:3:0
+W:50:0:5:0
+A:50/1
+D:This scroll will ruin your weapon beyond repair. Only weapons of legend have a hope of
+D:escaping destruction, but even they will often be shattered.
+
+N:214:*Enchant Armour*
+G:?:d
+I:70:20:0
+W:50:0:5:500
+A:50/1:50/1
+D:This scroll will place a great enchantment on a piece of armour of your choice, making it much
+D:better at protecting you. Mark that improving armours which are already highly enchanted is very
+D:difficult and will often fail.
+
+N:215:Curse Armour
+G:?:d
+I:70:2:0
+W:50:0:5:0
+A:50/1
+D:This scroll bears a curse that will tear your armour to shreds.
+
+N:216:Summon Undead
+G:?:d
+I:70:5:0
+W:15:0:5:0
+A:15/1
+D:These spells scribed by ancient necromancers will call their horrible creatures to haunt you.
+
+N:217:Blessing
+G:?:d
+I:70:33:0
+W:1:0:5:15
+A:1/1
+D:The recitation of this scroll will grant you a blessing of the Valar, making you more confident
+D:in attack and defence for a few moments.
+
+N:218:Holy Chant
+G:?:d
+I:70:34:0
+W:10:0:5:40
+A:10/1
+D:This blessing will give you a holy warrior's prowess in battle for a while.
+
+N:219:Holy Prayer
+G:?:d
+I:70:35:0
+W:25:0:5:80
+A:25/1
+D:This incantation lets you fight as a warrior of Valinor for quite a while, supreme in attack and
+D:defence.
+
+N:220:Word of Recall
+G:?:d
+I:70:11:0
+W:5:0:5:150
+A:5/1
+D:The spell on this scroll will slowly build an ethereal conduit to the surface for you if you are in
+D:a dungeon, and into the dungeon if you are above ground. Upon completion, which takes a while, you
+D:will suddenly be translocated to the other place.
+
+N:221:*Destruction*
+G:?:d
+I:70:41:0
+W:40:0:5:250
+A:40/1
+D:This scroll is inscribed with a mighty conjuration which wrecks the dungeon all around you.
+D:Monsters and objects will be annihilated by this blast; only completely indestructible things can
+D:withstand it.
+
+##### Potions #####
+
+N:222:Slime Mold Juice
+G:!:d
+I:71:2:400
+W:0:0:4:2
+A:0/1
+P:0:1d1:0:0:0
+F:FOUNTAIN
+D:A strange sort of yellowish-green slime, too viscous to even slosh in the bottle.
+
+N:223:Apple Juice
+G:!:d
+I:71:1:250
+W:0:0:4:1
+A:0/1
+P:0:1d1:0:0:0
+F:FOUNTAIN
+D:A healthy fruit beverage.
+
+N:224:Water
+G:!:d
+I:71:0:200
+W:0:0:4:1
+A:0/1
+P:0:1d1:0:0:0
+F:FOUNTAIN
+D:A small bottle filled with pure water.
+
+N:225:Strength
+G:!:d
+I:71:48:0
+W:20:0:4:8000
+A:20/6:25/3:30/1
+P:0:1d1:0:0:0
+D:This beneficial potion will permanently improve your physical strength.
+
+N:226:Weakness
+G:!:d
+I:71:16:0
+W:3:0:4:0
+A:3/1
+P:0:3d12:0:0:0
+F:FOUNTAIN
+D:This nasty potion will sap your strength, making you weaker.
+
+N:227:Restore Strength
+G:!:d
+I:71:42:0
+W:25:0:4:300
+A:25/1
+P:0:1d1:0:0:0
+F:FOUNTAIN
+D:This magical potion will bring back your physical power to its full extent, should it be drained.
+
+N:228:Intelligence
+G:!:d
+I:71:49:0
+W:20:0:4:8000
+A:20/6:25/3:30/1
+P:0:1d1:0:0:0
+D:This beneficial potion will magically enhance your wit, permanently improving your intellect.
+
+N:229:Stupidity
+G:!:d
+I:71:17:0
+W:20:0:4:0
+A:20/1
+P:0:1d1:0:0:0
+F:FOUNTAIN
+D:This accursed potion will cloud your intellect, making you stupid.
+
+N:230:Restore Intelligence
+G:!:d
+I:71:43:0
+W:25:0:4:300
+A:25/1
+P:0:1d1:0:0:0
+F:FOUNTAIN
+D:This beneficial potion will magically heal your brain, restoring drained intelligence.
+
+N:231:Wisdom
+G:!:d
+I:71:50:0
+W:20:0:4:8000
+A:20/6:25/3:30/1
+P:0:1d1:0:0:0
+D:This potion grants great insight, making you permanently wiser.
+
+N:232:Naivety
+G:!:d
+I:71:18:0
+W:20:0:4:0
+A:20/1
+P:0:1d1:0:0:0
+F:FOUNTAIN
+D:This potion casts a shadow on your knowledge, making you naive.
+
+N:233:Restore Wisdom
+G:!:d
+I:71:44:0
+W:25:0:4:300
+A:25/1
+P:0:1d1:0:0:0
+F:FOUNTAIN
+D:This potion benefits the naive, bringing back their wisdom to what it once was.
+
+N:234:Charisma
+G:!:d
+I:71:53:0
+W:20:0:4:1000
+A:20/1:25/1
+P:0:1d1:0:0:0
+F:FOUNTAIN
+D:This potion infuses you with permanent beauty and charm.
+
+N:235:Ugliness
+G:!:d
+I:71:21:0
+W:20:0:4:0
+A:20/1
+P:0:1d1:0:0:0
+F:FOUNTAIN
+D:This wicked potion slightly twists your features, making you appear less fair.
+
+N:236:Restore Charisma
+G:!:d
+I:71:47:0
+W:20:0:4:300
+A:20/1
+P:0:1d1:0:0:0
+F:FOUNTAIN
+D:This useful potion restores drained charm.
+
+N:237:Curing
+G:!:d
+I:71:61:100
+W:18:0:4:250
+A:18/1:40/1
+P:0:1d1:0:0:0
+F:FOUNTAIN
+D:This blessed potion helps to recover from a wide variety of ailments.
+
+### Note! Invulnerability decreases your food... ###
+
+N:238:Invulnerability
+G:!:d
+I:71:62:-2500
+W:90:0:4:100000
+A:90/9
+P:0:1d1:0:0:0
+F:FOUNTAIN
+D:This immensely powerful potion makes your physique almost indestructible for a very short
+D:time. Very rarely, an attempt to hurt you will still succeed, so don't be too confident.
+
+N:239:New Life
+G:!:d
+I:71:63:100
+W:50:0:4:750000
+A:50/20:100/10:120/5
+P:0:1d1:0:0:0
+F:FOUNTAIN
+D:This potion fundamentally twists your physical features, as if you were another mother's child.
+D:Your physique will be shaped anew. This may make you more or less hardy in battle.
+
+N:240:Cure Serious Wounds
+G:!:d
+I:71:35:100
+W:3:0:4:40
+A:3/1
+P:0:1d1:0:0:0
+F:FOUNTAIN
+D:This beneficial potion will cure some wounds and other inhibiting ailments.
+
+N:241:Cure Critical Wounds
+G:!:d
+I:71:36:100
+W:5:0:4:100
+A:5/1
+P:0:1d1:0:0:0
+F:FOUNTAIN
+D:This potion will cure a good bit of hurt you have suffered and also allows you to recover
+D:from unhealthy conditions like blood poisoning, confusion or blindness.
+
+N:242:Healing
+G:!:d
+I:71:37:200
+W:15:0:4:300
+A:15/1:30/1:60/1
+P:0:1d1:0:0:0
+F:FOUNTAIN
+D:This blessed potion greatly heals you and also cures many other ailments from
+D:which you might suffer.
+
+N:243:Constitution
+G:!:d
+I:71:52:0
+W:20:0:4:8000
+A:20/6:25/3:30/1
+P:0:1d1:0:0:0
+D:This magical concoction greatly improves your health, making you permanently tougher.
+
+N:244:Experience
+G:!:d
+I:71:59:0
+W:65:0:4:25000
+A:65/1
+P:0:1d1:0:0:0
+D:This exceptional drink instills into you knowledge, allowing you to advance further in your trade.
+
+N:245:Sleep
+G:!:d
+I:71:11:100
+W:0:0:4:0
+A:0/1
+P:0:1d1:0:0:0
+F:FOUNTAIN
+D:This potion will make you fall asleep for some turns, allowing monsters
+D:to attack you with impunity.
+
+N:246:Blindness
+G:!:d
+I:71:7:0
+W:0:0:4:0
+A:0/1
+P:0:1d1:0:0:0
+F:FOUNTAIN
+D:This slightly poisonous potion temporarily impedes your eyesight, making you unable to see.
+
+N:247:Booze
+G:!:d
+I:71:9:50
+W:0:0:4:0
+A:0/1
+P:0:1d1:0:0:0
+F:FOUNTAIN
+D:A small bottle of a dark brown distilled beverage. It will impede your ability to see clearly.
+
+N:248:Poison
+G:!:d
+I:71:6:0
+W:3:0:4:0
+A:3/1
+P:0:1d1:0:0:0
+F:FOUNTAIN
+D:This bottle is filled with a mild but still dangerous liquid poison. Drinking it would be highly
+D:unwise.
+
+N:249:Speed
+G:!:d
+I:71:29:0
+W:1:0:4:75
+A:1/1:40/1:60/1
+P:0:1d1:0:0:0
+F:FOUNTAIN
+D:A magical drink which temporarily allows you to act much faster.
+
+N:250:Slowness
+G:!:d
+I:71:4:50
+W:1:0:4:0
+A:1/1
+P:0:1d1:0:0:0
+F:FOUNTAIN
+D:A magical concoction that will temporarily force you to move and act a lot slower.
+
+N:251:Dexterity
+G:!:d
+I:71:51:0
+W:20:0:4:8000
+A:20/6:25/3:30/1
+P:0:1d1:0:0:0
+D:A strange magical drink which permanently improves your agility.
+
+N:252:Restore Dexterity
+G:!:d
+I:71:45:0
+W:25:0:4:300
+A:25/1
+P:0:1d1:0:0:0
+F:FOUNTAIN
+D:This magical brew brings your agility back to its former glory should it have been reduced.
+
+N:253:Restore Constitution
+G:!:d
+I:71:46:0
+W:25:0:4:300
+A:25/1
+P:0:1d1:0:0:0
+F:FOUNTAIN
+D:A beneficial magical concoction, restoring your damaged health.
+
+N:254:Lose Memories
+G:!:d
+I:71:13:0
+W:10:0:4:0
+A:10/1
+P:0:1d1:0:0:0
+F:FOUNTAIN
+D:This wicked potion will make you lose a lot of the experience you've gained.
+
+N:255:Salt Water
+G:!:d
+I:71:5:0
+W:0:0:4:1
+A:0/1
+P:0:1d1:0:0:0
+F:FOUNTAIN
+D:A solution of salt in water, made for curing meat. Drinking it causes violent nausea.
+
+N:256:Enlightenment
+G:!:d
+I:71:56:0
+W:25:0:4:800
+A:25/1:50/1:100/1
+P:0:1d1:0:0:0
+F:FOUNTAIN
+D:An exceptional magical drink which lets you "remember" your current location as if you had
+D:already seen all of it.
+
+N:257:Heroism
+G:!:d
+I:71:32:0
+W:1:0:4:35
+A:1/1
+P:0:1d1:0:0:0
+F:FOUNTAIN
+D:Quaffing this potion will temporarily make you fight like a hero of great might.
+
+N:258:Berserk Strength
+G:!:d
+I:71:33:0
+W:3:0:4:100
+A:3/1
+P:0:1d1:0:0:0
+F:FOUNTAIN
+D:This strange drink will instill in you a wild battle rage for a while.
+
+N:259:Boldness
+G:!:d
+I:71:28:0
+W:1:0:4:10
+A:1/1
+P:0:1d1:0:0:0
+F:FOUNTAIN
+D:This drink will improve your courage, dispelling all fear.
+
+N:260:Restore Life Levels
+G:!:d
+I:71:41:0
+W:40:0:4:400
+A:40/1
+P:0:1d1:0:0:0
+F:FOUNTAIN
+D:If your life force has been drained, this blessed brew will bring it back.
+
+N:261:Resist Heat
+G:!:d
+I:71:30:0
+W:1:0:4:30
+A:1/1
+P:0:1d1:0:0:0
+F:FOUNTAIN
+D:This magical potion will render you less vulnerable to outward heat.
+
+N:262:Resist Cold
+G:!:d
+I:71:31:0
+W:1:0:4:30
+A:1/1
+P:0:1d1:0:0:0
+F:FOUNTAIN
+D:This magical potion will for a short while grant you a familiarity with frost, so that you take
+D:less harm from extreme cold.
+
+N:263:Detect Invisible
+G:!:d
+I:71:25:0
+W:3:0:4:50
+A:3/1
+P:0:1d1:0:0:0
+F:FOUNTAIN
+D:This magical concoction will temporarily improve your eyesight so that you can see creatures
+D:otherwise unseen.
+
+N:264:Slow Poison
+G:!:d
+I:71:26:0
+W:1:0:4:25
+A:1/1
+P:0:1d1:0:0:0
+F:FOUNTAIN
+D:This healthy potion will dilute poisons in your blood and reduce the damage they cause.
+
+N:265:Neutralise Poison
+G:!:d
+I:71:27:0
+W:5:0:4:75
+A:5/1
+P:0:1d1:0:0:0
+F:FOUNTAIN
+D:This powerful antidote will negate the effect of all poisons currently affecting you.
+
+N:266:Restore Mana
+G:!:d
+I:71:40:0
+W:25:0:4:350
+A:25/1
+P:0:1d1:0:0:0
+F:FOUNTAIN
+D:This potion infuses the drinker with pure magic force, bringing their magical potential back to
+D:its full extent.
+
+N:267:Infra-vision
+G:!:d
+I:71:24:0
+W:3:0:4:20
+A:3/1
+P:0:1d1:0:0:0
+F:FOUNTAIN
+D:This potion temporarily grants or improves the ability to optically perceive heat sources.
+
+N:268:Resistance
+G:!:d
+I:71:60:100
+W:20:0:4:250
+A:20/1:45/1:80/1:100/1
+P:0:1d1:0:0:0
+F:IGNORE_ACID | IGNORE_ELEC | IGNORE_FIRE | IGNORE_COLD
+F:FOUNTAIN
+D:This great potion infuses you with the power of the elements, so that you can better
+D:withstand their ravages.
+
+##### Wands #####
+
+# Wand of school spells
+N:269:Spell
+G:-:d
+I:65:1:0
+W:3:0:10:100
+A:3/1:13/1:23/1:43/1:63/1:83/1
+P:0:1d1:0:0:0
+F:SPECIAL_GENE
+
+N:270:Manathrust
+G:-:d
+I:65:3:-1:SPELL=Manathrust
+W:3:0:10:100
+A:3/1
+P:0:1d1:0:0:0
+
+N:271:Fireflash
+G:-:d
+I:65:4:-1:SPELL=Fireflash
+W:10:0:10:100
+A:10/2
+P:0:1d1:0:0:0
+
+N:272:Firewall
+G:-:d
+I:65:5:-1:SPELL=Firewall
+W:20:0:10:100
+A:20/1
+P:0:1d1:0:0:0
+
+N:273:Tidal Wave
+G:-:d
+I:65:6:-1:SPELL=Tidal Wave
+W:20:0:10:100
+A:20/1
+P:0:1d1:0:0:0
+
+N:274:Ice Storm
+G:-:d
+I:65:7:-1:SPELL=Ice Storm
+W:15:0:10:100
+A:15/1
+P:0:1d1:0:0:0
+
+N:275:Noxious Cloud
+G:-:d
+I:65:8:-1:SPELL=Noxious Cloud
+W:5:0:10:100
+A:5/2
+P:0:1d1:0:0:0
+
+N:276:Poison Blood
+G:-:d
+I:65:9:-1:SPELL=Poison Blood
+W:30:0:10:100
+A:30/2
+P:0:1d1:0:0:0
+
+N:277:Thunderstorm
+G:-:d
+I:65:10:-1:SPELL=Thunderstorm
+W:40:0:10:100
+A:40/2
+P:0:1d1:0:0:0
+
+N:278:Dig
+G:-:d
+I:65:11:-1:SPELL=Dig
+W:15:0:10:100
+A:15/1
+P:0:1d1:0:0:0
+
+N:279:Stone Prison
+G:-:d
+I:65:12:-1:SPELL=Stone Prison
+W:50:0:10:100
+A:50/3
+P:0:1d1:0:0:0
+
+N:280:Strike
+G:-:d
+I:65:13:-1:SPELL=Strike
+W:30:0:10:100
+A:30/1
+P:0:1d1:0:0:0
+
+N:281:Teleport Away
+G:-:d
+I:65:14:-1:SPELL=Teleport Away
+W:20:0:10:100
+A:20/1
+P:0:1d1:0:0:0
+
+N:282:Summon Animal
+G:-:d
+I:65:15:-1:SPELL=Summon Animal
+W:60:0:10:100
+A:60/1
+P:0:1d1:0:0:0
+
+N:283:Magelock
+G:-:d
+I:65:16:-1:SPELL=Magelock
+W:1:0:10:100
+A:3/2
+P:0:1d1:0:0:0
+
+N:284:Slow Monster
+G:-:d
+I:65:17:-1:SPELL=Slow Monster
+W:3:0:10:100
+A:3/2
+P:0:1d1:0:0:0
+
+N:285:Essence of Speed
+G:-:d
+I:65:18:-1:SPELL=Essence of Speed
+W:25:0:10:100
+A:25/2
+P:0:1d1:0:0:0
+
+N:286:Banishment
+G:-:d
+I:65:19:-1:SPELL=Banishment
+W:45:0:10:100
+A:45/2
+P:0:1d1:0:0:0
+
+N:287:Disperse Magic
+G:-:d
+I:65:20:-1:SPELL=Disperse Magic
+W:10:0:10:100
+A:10/2
+P:0:1d1:0:0:0
+
+N:288:Charm
+G:-:d
+I:65:21:-1:SPELL=Charm
+W:15:0:10:100
+A:15/1
+P:0:1d1:0:0:0
+
+N:289:Confuse
+G:-:d
+I:65:22:-1:SPELL=Confuse
+W:7:0:10:100
+A:7/2
+P:0:1d1:0:0:0
+
+N:290:Demon Blade
+G:-:d
+I:65:23:-1:SPELL=Demon Blade
+W:60:0:10:100
+A:60/1
+P:0:1d1:0:0:0
+
+N:291:Heal Monster
+G:-:d
+I:65:24:-1:SPELL=Heal Monster
+W:1:0:10:0
+A:1/4
+P:0:1d1:0:0:0
+
+N:292:Haste Monster
+G:-:d
+I:65:25:-1:SPELL=Haste Monster
+W:1:0:10:0
+A:1/4
+P:0:1d1:0:0:0
+
+
+##### Extra ammunition #####
+
+N:293:& Flight Arrow~
+G:{:y
+I:17:1:0
+W:3:0:1:1
+A:3/2
+P:0:1d3:0:0:0
+F:SHOW_MODS
+D:An arrow designed for longer flight. Consequently, it is lighter and hits with less force. You can use it for 'f'iring a bow.
+
+# XXX
+
+N:295:& Boulder~
+G:*:W
+I:11:1:0
+W:3:0:50:1
+A:3/200
+P:0:5d5:0:0:0
+F:SPECIAL_GENE
+D:A big nasty-looking piece of rock.
+
+# Used for a quest
+N:296:& Flame~ Imperishable
+G:~:v
+I:11:255:0
+W:127:0:4:0
+A:127/255
+P:0:1d1:0:0:0
+T:39:2
+F:NORM_ART | FULL_NAME | SPECIAL_GENE
+F:ACTIVATE | ACTIVATE_NO_WIELD
+a:SPELL=Artifact Eternal Flame
+D:An impossibly bright, flickering living flame. It can be used
+D:once to imbue an object with the power of Eru Iluvatar himself.
+
+N:297:& Necromantic Teeth~
+G:|:D
+I:23:34:0
+W:0:0:7:10
+A:0/1:5/1:10/1:20/1
+P:0:1d4:0:0:0
+F:SHOW_MODS | VAMPIRIC | SPECIAL_GENE
+D:A temporary weapon that only a necromancer can use.
+
+# The Horn of the Thunderlords
+N:298:& Golden Horn~ of the Thunderlords
+G:_:d
+I:55:23:-1:SPELL=Artifact Thunderlords
+W:50:10:10:12000
+P:0:1d4:0:0:0
+A:50/200
+T:55:8
+F:IGNORE_ACID | IGNORE_FIRE | IGNORE_ELEC | IGNORE_COLD | 
+F:NO_RECHARGE | EASY_USE | RECHARGED | NORM_ART | FULL_NAME | SPECIAL_GENE
+D:This horn was given to you as a reward. Blow it if you are in dire need
+D:of leaving your current location fast.
+
+# XXX
+
+##### Staves #####
+
+N:300:Spell
+G:_:d
+I:55:1:0
+W:5:0:50:100
+A:5/1:15/1:35/1:45/1:65/1:75/1:85/1:95/1
+P:0:1d2:0:0:0
+F:SPECIAL_GENE
+
+N:301:Nothing
+G:_:d
+I:55:2:-1:SPELL=Nothing
+W:5:0:50:100
+A:5/1
+P:0:1d2:0:0:0
+
+N:302:Globe of Light
+G:_:d
+I:55:3:-1:SPELL=Globe of Light
+W:7:0:50:100
+A:7/1
+P:0:1d2:0:0:0
+
+N:303:Fiery Shield
+G:_:d
+I:55:4:-1:SPELL=Fiery Shield
+W:15:0:50:100
+A:15/2
+P:0:1d2:0:0:0
+
+N:304:Remove Curses
+G:_:d
+I:55:5:-1:SPELL=Remove Curses
+W:10:0:50:100
+A:10/1
+P:0:1d2:0:0:0
+
+N:305:Wings of Winds
+G:_:d
+I:55:6:-1:SPELL=Wings of Winds
+W:25:0:50:100
+A:25/2
+P:0:1d2:0:0:0
+
+N:306:Shake
+G:_:d
+I:55:7:-1:SPELL=Shake
+W:30:0:50:100
+A:30/1
+P:0:1d2:0:0:0
+
+N:307:Disarm
+G:_:d
+I:55:8:-1:SPELL=Disarm
+W:2:0:50:100
+A:2/1
+P:0:1d2:0:0:0
+
+N:308:Teleportation
+G:_:d
+I:55:9:-1:SPELL=Teleportation
+W:20:0:50:100
+A:20/1
+P:0:1d2:0:0:0
+
+N:309:Probability Travel
+G:_:d
+I:55:10:-1:SPELL=Probability Travel
+W:50:0:50:100
+A:50/3
+P:0:1d2:0:0:0
+
+N:310:Recovery
+G:_:d
+I:55:11:-1:SPELL=Recovery
+W:20:0:50:100
+A:20/1
+P:0:1d2:0:0:0
+
+N:311:Healing
+G:_:d
+I:55:12:-1:SPELL=Healing
+W:25:0:50:100
+A:25/2
+P:0:1d2:0:0:0
+
+N:312:Vision
+G:_:d
+I:55:13:-1:SPELL=Vision
+W:30:0:50:100
+A:30/1
+P:0:1d2:0:0:0
+
+N:313:Identify
+G:_:d
+I:55:14:-1:SPELL=Identify
+W:10:0:50:100
+A:10/1
+P:0:1d2:0:0:0
+
+N:314:Sense Hidden
+G:_:d
+I:55:15:-1:SPELL=Sense Hidden
+W:10:0:50:100
+A:10/1
+P:0:1d2:0:0:0
+
+N:315:Reveal Ways
+G:_:d
+I:55:16:-1:SPELL=Reveal Ways
+W:5:0:50:100
+A:5/1
+P:0:1d2:0:0:0
+
+N:316:Sense Monsters
+G:_:d
+I:55:17:-1:SPELL=Sense Monsters
+W:5:0:50:100
+A:5/1
+P:0:1d2:0:0:0
+
+N:317:Genocide
+G:_:d
+I:55:18:-1:SPELL=Genocide
+W:55:0:50:100
+A:55/2
+P:0:1d2:0:0:0
+
+N:318:Summon
+G:_:d
+I:55:19:-1:SPELL=Summon
+W:5:0:50:100
+A:5/1
+P:0:1d2:0:0:0
+
+N:319:Sterilization
+G:_:d
+I:55:24:-1:SPELL=Sterilize
+W:20:0:50:100
+A:20/3
+P:0:1d2:0:0:0
+
+N:320:Wish
+G:_:d
+I:55:20:-1:SPELL=Wish
+W:95:0:50:10000
+A:95/40
+P:0:1d2:0:0:0
+F:NO_RECHARGE
+
+N:321:Mana
+G:_:d
+I:55:21:-1:SPELL=Mana
+W:60:0:50:100
+A:60/2
+P:0:1d2:0:0:0
+
+# XXX
+# ...
+# XXX
+
+##### School Books #####
+
+N:330:& Tome~ of Magical Energy
+G:?:B
+I:111:0:0
+W:50:0:30:25000
+A:50/4
+P:0:1d1:0:0:0
+F:FULL_NAME | EASY_KNOW
+D:The slick black cover of this tome seems to glow
+D:with an inner violet light. You feel more attuned
+D:to raw magic as you hold it.
+
+N:331:& Tome~ of the Eternal Flame
+G:?:R
+I:111:1:0
+W:50:0:30:25000
+A:50/4
+P:0:1d1:0:0:0
+F:FULL_NAME | EASY_KNOW | IGNORE_FIRE
+D:The cover of this tome is bright red, with flickering
+D:flames dancing across it once in a while. As you hold
+D:it, you begin to gain a much closer knowledge of all
+D:that is fiery.
+
+N:332:& Tome~ of the Blowing Wind
+G:?:b
+I:111:2:0
+W:50:0:30:25000
+A:50/4
+P:0:1d1:0:0:0
+F:FULL_NAME | EASY_KNOW | IGNORE_ELEC
+D:The pages of this tome have a tendency to turn themselves,
+D:as though flipped by an errant wind. As you hold it,
+D:you start feeling wind at your fingertips.
+
+N:333:& Tome~ of the Impenetrable Earth
+G:?:U
+I:111:3:0
+W:50:0:30:25000
+A:50/4
+P:0:1d1:0:0:0
+F:FULL_NAME | EASY_KNOW | IGNORE_ACID
+D:The solid leather cover of this tome seems permanently
+D:stained with caked mud and grass. Heavy it is to lift,
+D:yet strangely comforting to hold - you feel stronger
+D:and better supported.
+
+N:334:& Tome~ of the Everrunning Wave
+G:?:B
+I:111:4:0
+W:50:0:30:25000
+A:50/4
+P:0:1d1:0:0:0
+F:FULL_NAME | EASY_KNOW
+D:The cover and pages of this tome seem to be perpetually
+D:wet, though they are not wet to the touch. As you hold
+D:it, you begin to understand ocean storms better.
+
+N:335:& Tome~ of Translocation
+G:?:B
+I:111:5:0
+W:50:0:30:25000
+A:50/4
+P:0:1d1:0:0:0
+F:FULL_NAME | EASY_KNOW
+D:This book seems to flicker strangely. It's one of those books
+D:with an annoying tendency to disappear when you need it and
+D:reappear in the unlikeliest places. As you hold it, you start
+D:to understand what conveyance really means.
+
+N:336:& Tome~ of the Tree
+G:?:G
+I:111:6:0
+W:50:0:30:25000
+A:50/4
+P:0:1d1:0:0:0
+F:FULL_NAME | EASY_KNOW
+D:The cover of this tome is a bright shade of green, and it gives off
+D:a healthy, zesty scent that makes your thoughts clearer. As you
+D:hold it, your heart goes out to all living things upon Arda.
+
+N:337:& Tome~ of Knowledge
+G:?:D
+I:111:7:0
+W:50:0:30:25000
+A:50/4
+P:0:1d1:0:0:0
+F:FULL_NAME | EASY_KNOW
+D:A thick book with solid leather binding. It looks entirely 
+D:unremarkable, but as you hold it, you feel strangely able 
+D:to learn the inner workings of things and creatures.
+
+##### Chests #####
+
+N:338:& Small wooden chest~
+G:~:s
+I:7:1:0
+W:5:0:250:20
+A:5/1
+P:0:2d3:0:0:0
+D:A small wooden box, locked and possibly trapped.
+
+N:339:& Large wooden chest~
+G:~:s
+I:7:5:0
+W:15:0:500:60
+A:15/1
+P:0:2d5:0:0:0
+D:A large wooden box, locked and possibly trapped
+
+N:340:& Small iron chest~
+G:~:s
+I:7:2:0
+W:25:0:300:100
+A:25/1
+P:0:2d4:0:0:0
+D:A small rectangular container made of wood and reinforced with iron corners and latches.
+D:It is locked and possibly trapped.
+
+N:341:& Large iron chest~
+G:~:s
+I:7:6:0
+W:35:0:1000:150
+A:35/1
+P:0:2d6:0:0:0
+D:A large container made of wood, with a heavy iron lock, and probably a trap.
+
+N:342:& Small steel chest~
+G:~:s
+I:7:3:0
+W:45:0:500:200
+A:45/1
+P:0:2d4:0:0:0
+D:A small wooden box with strong steel locks and reinforcements. It's likely to be trapped.
+
+N:343:& Large steel chest~
+G:~:s
+I:7:7:0
+W:55:0:1000:250
+A:55/1
+P:0:2d6:0:0:0
+D:A nearly indestructible chest of wood and steel. The lock doesn't look impenetrable, but it
+D:might be trapped.
+
+N:344:& Ruined chest~
+G:~:s
+I:7:0:0
+W:0:0:250:0
+A:75/1
+D:A broken, empty chest.
+
+##### Various Stuff #####
+
+N:345:& Iron Spike~
+G:~:W
+I:5:0:0
+W:1:0:10:1
+A:1/1
+P:0:1d1:0:0:0
+D:A small spur of iron. Ramming one between a door and its frame might jam it.
+
+N:346:& Wooden Torch~
+G:~:u
+I:39:0:0:4000
+W:1:0:30:2
+A:1/1
+P:0:1d1:0:0:0
+F:EASY_KNOW | LITE1 | FUEL_LITE
+f:LITE1 | FUEL_LITE
+D:A piece of wood with an oily rag wrapped around it. When lit, it will give off a little light and
+D:much smoke.
+
+N:347:& Brass Lantern~
+G:~:U
+I:39:1:0:7500
+W:3:0:50:35
+A:3/1
+P:0:1d1:0:0:0
+F:EASY_KNOW | IGNORE_FIRE | LITE2 | FUEL_LITE
+f:LITE2 | FUEL_LITE
+D:A brass container with a wick emerging from it, protected from draughts by a sheet of greased
+D:paper. It can be carried by a handle.
+
+N:348:& Flask~ of oil
+G:!:y
+I:77:0:7500
+W:1:0:10:3
+A:1/1
+P:0:2d6:0:0:0
+D:A small clay container, filled with thick oil. The oil is flammable and can be used as lantern
+D:fuel.
+
+N:349:& Empty Bottle~
+G:!:w
+I:2:1:0
+W:0:0:2:1
+A:0/1
+P:0:1d1:0:0:0
+D:A small glass bottle. It's empty.
+
+
+##### Here are the Rod Tips #####
+
+N:350:Havoc
+G:-:d
+I:66:28:90
+W:95:0:15:150000
+A:100/16
+P:0:1d1:0:0:0
+F:IGNORE_ACID | IGNORE_COLD | IGNORE_ELEC | IGNORE_FIRE
+D:This powerful rod will release great blasts of destructive energy, but there's no knowing what
+D:this effect will concentrate on.
+
+N:351:Door/Stair Location
+G:-:d
+I:66:1:10
+W:15:0:15:1000
+A:15/1
+P:0:1d1:0:0:0
+F:IGNORE_ACID | IGNORE_COLD | IGNORE_ELEC | IGNORE_FIRE
+D:When fuelled with enough ambient mana, this rod can detect nearby passages.
+
+N:352:Trap Location
+G:-:d
+I:66:29:8
+W:5:0:15:100
+A:5/1:10/1:20/1
+P:0:1d1:0:0:0
+F:IGNORE_ACID | IGNORE_COLD | IGNORE_ELEC | IGNORE_FIRE
+D:Zapping this rod will release a minor detection magic, alerting you of nearby pits and snares.
+
+N:353:Probing
+G:-:d
+I:66:7:50
+W:40:0:15:4000
+A:40/4
+P:0:1d1:0:0:0
+F:IGNORE_ACID | IGNORE_COLD | IGNORE_ELEC | IGNORE_FIRE
+D:A rod of knowledge which will tell you about nearby creatures' health.
+D:If they are sleeping, the intrusion will wake them.
+
+N:354:Recall
+G:-:d
+I:66:3:80
+W:30:0:15:4500
+A:30/4
+P:0:1d1:0:0:0
+F:IGNORE_ACID | IGNORE_COLD | IGNORE_ELEC | IGNORE_FIRE
+D:A rod which can transport you from the depths to your home and back.
+
+N:355:Illumination
+G:-:d
+I:66:4:8
+W:20:0:15:1000
+A:20/1
+P:0:1d1:0:0:0
+F:EASY_KNOW
+F:IGNORE_ACID | IGNORE_COLD | IGNORE_ELEC | IGNORE_FIRE
+D:This rod carries a minor spell of brightness, lighting your immediate surroundings whenever
+D:activated.
+
+N:356:Light
+G:-:d
+I:66:15:15
+W:10:0:15:500
+A:10/1
+P:0:1d1:0:0:0
+F:IGNORE_ACID | IGNORE_COLD | IGNORE_ELEC | IGNORE_FIRE
+D:This rod can shoot a lance of bright light, hurting creatures which lurk in the dark.
+
+N:357:Lightning Bolts
+G:-:d
+I:66:21:30
+W:20:0:15:2000
+A:20/1
+P:0:1d1:0:0:0
+F:IGNORE_ACID | IGNORE_COLD | IGNORE_ELEC | IGNORE_FIRE
+D:This rod shoots a small spark of lightning, zapping the creature it hits.
+
+N:358:Frost Bolts
+G:-:d
+I:66:23:35
+W:25:0:15:2500
+A:25/1
+P:0:1d1:0:0:0
+F:IGNORE_ACID | IGNORE_COLD | IGNORE_ELEC | IGNORE_FIRE
+D:A small but extremely cold shard of ice will fly from this rod to the enemy you zap it at.
+
+N:359:Fire Bolts
+G:-:d
+I:66:22:40
+W:30:0:15:3000
+A:30/1
+P:0:1d1:0:0:0
+F:IGNORE_ACID | IGNORE_COLD | IGNORE_ELEC | IGNORE_FIRE
+D:This rod fires a magical flaming arrow at your foe, burning them.
+
+N:360:Polymorph
+G:-:d
+I:66:19:25
+W:35:0:15:1200
+A:35/1
+P:0:1d1:0:0:0
+F:IGNORE_ACID | IGNORE_COLD | IGNORE_ELEC | IGNORE_FIRE
+D:This rod of change will cause its target creature to mutate into someone else.
+D:Beware, it can make a weak enemy into a more powerful one.
+
+N:361:Slow Monster
+G:-:d
+I:66:17:25
+W:30:0:15:1500
+A:30/1
+P:0:1d1:0:0:0
+F:IGNORE_ACID | IGNORE_COLD | IGNORE_ELEC | IGNORE_FIRE
+D:This obstructive rod will slow the creature its spell hits.
+
+N:362:Sleep Monster
+G:-:d
+I:66:16:25
+W:30:0:15:1500
+A:30/1
+P:0:1d1:0:0:0
+F:IGNORE_ACID | IGNORE_COLD | IGNORE_ELEC | IGNORE_FIRE
+D:This sorcerous rod will cause its target to stop in its tracks.
+
+N:363:Drain Life
+G:-:d
+I:66:18:30
+W:75:0:15:3600
+A:75/4
+P:0:1d1:0:0:0
+F:IGNORE_ACID | IGNORE_COLD | IGNORE_ELEC | IGNORE_FIRE
+D:This necromantic magical rod will hurt a living creature struck by its spell.
+
+N:364:Teleport Other
+G:-:d
+I:66:13:60
+W:45:0:15:1400
+A:45/2
+P:0:1d1:0:0:0
+F:IGNORE_ACID | IGNORE_COLD | IGNORE_ELEC | IGNORE_FIRE
+D:This rod of movement will displace its target to another location.
+
+N:365:Disarming
+G:-:d
+I:66:14:50
+W:35:0:15:2100
+A:35/1
+P:0:1d1:0:0:0
+F:IGNORE_ACID | IGNORE_COLD | IGNORE_ELEC | IGNORE_FIRE
+D:This rod will clear a path for you, triggering and thus rendering harmless all traps on the way.
+
+N:366:Lightning Balls
+G:-:d
+I:66:25:50
+W:55:0:15:4000
+A:55/1
+P:0:1d1:0:0:0
+F:IGNORE_ACID | IGNORE_COLD | IGNORE_ELEC | IGNORE_FIRE
+D:This rod will hurl a large ball of lightning at its target, electrifying all it engulfs.
+
+N:367:Cold Balls
+G:-:d
+I:66:27:55
+W:60:0:15:4500
+A:60/1
+P:0:1d1:0:0:0
+F:IGNORE_ACID | IGNORE_COLD | IGNORE_ELEC | IGNORE_FIRE
+D:This rod will call forth a minor storm of ice which freezes everything in the area of its blast.
+
+N:368:Fire Balls
+G:-:d
+I:66:26:60
+W:75:0:15:5000
+A:75/1
+P:0:1d1:0:0:0
+D:This rod will cause a small storm of flame to rage in a small circular area of your choice.
+F:IGNORE_ACID | IGNORE_COLD | IGNORE_ELEC | IGNORE_FIRE
+
+N:369:Acid Balls
+G:-:d
+I:66:24:60
+W:70:0:15:5500
+A:70/1
+P:0:1d1:0:0:0
+F:IGNORE_ACID | IGNORE_COLD | IGNORE_ELEC | IGNORE_FIRE
+D:This destructive rod will drown its target and its immediate surroundings in caustic acid.
+
+N:370:Acid Bolts
+G:-:d
+I:66:20:40
+W:40:0:15:3500
+A:40/1
+P:0:1d1:0:0:0
+F:IGNORE_ACID | IGNORE_COLD | IGNORE_ELEC | IGNORE_FIRE
+D:This rod will shoot a small glob of powerful acid at its target.
+
+N:371:Enlightenment
+G:-:d
+I:66:5:40
+W:65:0:15:10000
+A:65/4
+P:0:1d1:0:0:0
+F:IGNORE_ACID | IGNORE_COLD | IGNORE_ELEC | IGNORE_FIRE
+D:This rod grants you knowledge of your surroundings.
+
+N:372:Perception
+G:-:d
+I:66:2:20
+W:50:0:15:13000
+A:50/8:100/8
+P:0:1d1:0:0:0
+F:IGNORE_ACID | IGNORE_COLD | IGNORE_ELEC | IGNORE_FIRE
+D:This rod makes you insightful, laying open the identity of your possessions.
+
+N:373:Curing
+G:-:d
+I:66:8:35
+W:65:0:15:15000
+A:65/8
+P:0:1d1:0:0:0
+F:IGNORE_ACID | IGNORE_COLD | IGNORE_ELEC | IGNORE_FIRE
+D:This is a rod with minor healing powers, alleviating many disabling conditions.
+
+N:374:Healing
+G:-:d
+I:66:9:120
+W:80:0:15:20000
+A:80/8
+P:0:1d1:0:0:0
+F:IGNORE_ACID | IGNORE_COLD | IGNORE_ELEC | IGNORE_FIRE
+D:This rod has major healing powers and can restore your health if you have been wounded.
+
+N:375:Detection
+G:-:d
+I:66:6:80
+W:30:0:15:5000
+A:30/8
+P:0:1d1:0:0:0
+F:IGNORE_ACID | IGNORE_COLD | IGNORE_ELEC | IGNORE_FIRE
+D:This rod grants knowledge about all things worthy of notice in your vicinity.
+
+N:376:Restoration
+G:-:d
+I:66:10:140
+W:80:0:15:25000
+A:80/16
+P:0:1d1:0:0:0
+F:IGNORE_ACID | IGNORE_COLD | IGNORE_ELEC | IGNORE_FIRE
+D:This rod lets you remember and gain back previously reduced abilities.
+
+N:377:Speed
+G:-:d
+I:66:11:100
+W:95:0:15:50000
+A:95/16
+P:0:1d1:0:0:0
+F:IGNORE_ACID | IGNORE_COLD | IGNORE_ELEC | IGNORE_FIRE
+D:This energising rod will allow you to act a lot faster for some time.
+
+# Ring of Spell
+
+N:378:Spell
+G:=:d
+I:45:58:0
+W:10:0:2:1000
+A:10/1
+F:SPELL_CONTAIN | WIELD_CAST
+f:SPELL_CONTAIN
+D:This ring is a container for spells. Those that are skilled in copying spells can inscribe a
+D:spell onto it.
+
+# Amulet of Spell
+
+N:379:Spell
+G:":d
+I:40:27:0
+W:10:0:2:1000
+A:10/1
+F:SPELL_CONTAIN | WIELD_CAST
+f:SPELL_CONTAIN
+D:This amulet is a container for spells. Those that are skilled in copying spells can inscribe a
+D:spell onto it.
+
+# XXX
+# XXX
+# XXX
+# XXX
+# XXX
+# XXX
+# XXX
+# XXX
+# XXX
+# XXX
+# XXX
+
+##### Skeletons #####
+
+N:391:& Broken Skull~
+G:~:w
+I:1:1:0
+W:0:0:1:0
+A:0/1
+P:0:1d1:0:0:0
+D:A yellowing, mud-stained, cracked skull.
+
+N:392:& Broken Bone~
+G:~:w
+I:1:2:0
+W:0:0:2:0
+A:0/1
+P:0:1d1:0:0:0
+D:A yellowish bone, broken off.
+
+N:393:& Canine Skeleton~
+G:~:w
+I:1:4:0
+W:1:0:10:0
+A:1/1
+P:0:1d1:0:0:0
+D:The only thing this dog has is its bones.
+
+N:394:& Rodent Skeleton~
+G:~:w
+I:1:3:0
+W:1:0:10:0
+A:1/1
+P:0:1d1:0:0:0
+D:A dead critter's remains.
+
+N:395:& Human Skeleton~
+G:~:w
+I:1:8:0
+W:5:0:60:0
+A:5/1
+P:0:1d2:0:0:0
+D:The remains of a human who met his or her demise here.
+
+N:396:& Dwarf Skeleton~
+G:~:w
+I:1:7:0
+W:5:0:50:0
+A:5/1
+P:0:1d2:0:0:0
+D:The remains of a dwarf who met his or her demise here.
+
+N:397:& Elf Skeleton~
+G:~:w
+I:1:6:0
+W:5:0:40:0
+A:5/1
+P:0:1d2:0:0:0
+D:The remains of an elf who met his or her demise here.
+
+N:398:& Gnome Skeleton~
+G:~:w
+I:1:5:0
+W:5:0:30:0
+A:5/1
+P:0:1d2:0:0:0
+D:The remains of a gnome who met his or her demise here.
+
+##### Additional weapon #####
+
+N:399:& Great Hammer~
+G:\:D
+I:21:19:0
+W:45:0:300:350
+A:45/3
+P:0:4d6:0:0:0
+F:SHOW_MODS
+D:A massive smith's hammer, so large and heavy it can be used as a weapon.
+
+##### Dragon Scale Mail #####
+
+N:400:& Black Dragon Scale Mail~
+G:[:s
+I:38:1:0
+W:60:0:200:50000
+A:60/8
+P:30:2d4:-2:0:10
+a:HARDCORE=BR_ACID
+F:RES_ACID | FLY |
+f:RES_ACID |
+F:ACTIVATE | IGNORE_ACID | IGNORE_ELEC | IGNORE_FIRE | IGNORE_COLD
+D:A pitch-black armour made from a black dragon's hide.
+D:It contains some of the dead beast's powers.
+
+N:401:& Blue Dragon Scale Mail~
+G:[:b
+I:38:2:0
+W:50:0:200:40000
+A:50/8
+P:30:2d4:-2:0:10
+a:HARDCORE=BR_ELEC
+F:RES_ELEC | FLY |
+f:RES_ELEC |
+F:ACTIVATE | IGNORE_ACID | IGNORE_ELEC | IGNORE_FIRE | IGNORE_COLD
+D:A shimmering bright blue armour made from a blue dragon's hide.
+D:It contains some of the dead beast's powers.
+
+N:402:& White Dragon Scale Mail~
+G:[:w
+I:38:3:0
+W:50:0:200:40000
+A:50/8
+a:HARDCORE=BR_COLD
+P:30:2d4:-2:0:10
+F:RES_COLD | FLY |
+f:RES_COLD |
+F:ACTIVATE | IGNORE_ACID | IGNORE_ELEC | IGNORE_FIRE | IGNORE_COLD
+D:A gleaming white armour made from a white dragon's hide.
+D:It contains some of the dead beast's powers.
+
+N:403:& Red Dragon Scale Mail~
+G:[:r
+I:38:4:0
+W:60:0:200:50000
+A:60/8
+P:30:2d4:-2:0:10
+a:HARDCORE=BR_FIRE
+F:RES_FIRE | FLY |
+f:RES_FIRE |
+F:ACTIVATE | IGNORE_ACID | IGNORE_ELEC | IGNORE_FIRE | IGNORE_COLD
+D:A glowing red armour made from a red dragon's hide.
+D:It contains some of the dead beast's powers.
+
+N:404:& Green Dragon Scale Mail~
+G:[:g
+I:38:5:0
+W:50:0:200:40000
+A:50/8
+P:30:2d4:-2:0:10
+a:HARDCORE=BR_POIS
+F:RES_POIS | FLY |
+f:RES_POIS |
+F:ACTIVATE | IGNORE_ACID | IGNORE_ELEC | IGNORE_FIRE | IGNORE_COLD
+D:A dirty green, foul-smelling armour made from a green dragon's hide.
+D:It contains some of the dead beast's powers.
+
+N:405:& Multi-Hued Dragon Scale Mail~
+G:[:v
+I:38:6:0
+W:90:0:200:150000
+A:90/32
+P:30:2d4:-2:0:10
+a:HARDCORE=BR_MANY
+F:ATTR_MULTI
+F:RES_ACID | RES_ELEC | RES_FIRE | RES_COLD | RES_POIS | FLY |
+f:RES_ACID | RES_ELEC | RES_FIRE | RES_COLD | RES_POIS |
+F:ACTIVATE | IGNORE_ACID | IGNORE_ELEC | IGNORE_FIRE | IGNORE_COLD
+D:A powerful armour glowing red, blue, green, black, and white.
+D:made from a multihued dragon's hide, it contains some of the dead beast's powers.
+
+N:406:& Pseudo Dragon Scale Mail~
+G:[:v
+I:38:10:0
+W:70:0:200:70000
+A:70/16
+P:30:2d4:-2:0:10
+a:HARDCORE=BR_LIGHT
+F:RES_LITE | RES_DARK | FLY |
+F:ACTIVATE | IGNORE_ACID | IGNORE_ELEC | IGNORE_FIRE | IGNORE_COLD
+D:A strangely glowing armour made from a pseudo-dragon's hide.
+D:It contains some of the dead beast's powers.
+
+N:407:& Law Dragon Scale Mail~
+G:[:B
+I:38:12:0
+W:80:0:200:80000
+A:80/16
+P:30:2d4:-2:0:10
+a:HARDCORE=BR_SHARD
+F:RES_SOUND | RES_SHARDS | FLY |
+F:ACTIVATE | IGNORE_ACID | IGNORE_ELEC | IGNORE_FIRE | IGNORE_COLD
+D:A sharp-scaled armour that seems to roar, made from a law dragon's hide.
+D:It contains some of the dead beast's powers.
+
+N:408:& Bronze Dragon Scale Mail~
+G:[:U
+I:38:14:0
+W:50:0:200:40000
+A:50/8
+P:30:2d4:-2:0:10
+a:HARDCORE=BR_CONF
+F:RES_CONF | FLY |
+F:ACTIVATE | IGNORE_ACID | IGNORE_ELEC | IGNORE_FIRE | IGNORE_COLD
+D:A brownish armour glittering in a dazzling light, made from a bronze dragon's hide.
+D:It contains some of the dead beast's powers.
+
+N:409:& Gold Dragon Scale Mail~
+G:[:y
+I:38:16:0
+W:60:0:200:50000
+A:60/8
+P:30:2d4:-2:0:10
+a:HARDCORE=BR_SOUND
+F:RES_SOUND | FLY |
+F:ACTIVATE | IGNORE_ACID | IGNORE_ELEC | IGNORE_FIRE | IGNORE_COLD
+D:A suit of armour with rustling scales, made from a gold dragon's hide.
+D:It contains some of the dead beast's powers.
+
+N:410:& Chaos Dragon Scale Mail~
+G:[:v
+I:38:18:0
+W:80:0:200:80000
+A:80/16
+P:30:2d4:-2:0:10
+a:HARDCORE=BR_CHAOS
+F:ATTR_MULTI
+F:RES_CHAOS | RES_DISEN | FLY |
+f:RES_CHAOS |
+F:ACTIVATE | IGNORE_ACID | IGNORE_ELEC | IGNORE_FIRE | IGNORE_COLD
+D:A suit of armour made of dragon hide. It glows in colours you have never seen before. As you
+D:put it on, you feel like you could change the world and are no longer afraid of your equipment
+D:losing its magic.
+
+N:411:& Balance Dragon Scale Mail~
+G:[:v
+I:38:20:0
+W:95:0:200:100000
+A:95/32
+P:30:2d4:-2:0:10
+a:HARDCORE=BR_BALANCE
+F:RES_CHAOS | RES_DISEN | RES_SOUND | RES_SHARDS | FLY |
+F:ACTIVATE | IGNORE_ACID | IGNORE_ELEC | IGNORE_FIRE | IGNORE_COLD
+D:A suit of armour made of the hide of a dead dragon. When wearing it, you feel like you
+D:understand the principles of law and chaos, and no longer fear either.
+
+N:412:& Power Dragon Scale Mail~
+G:[:v
+I:38:30:0
+W:100:0:250:350000
+A:100/64
+P:40:2d4:-3:0:15
+a:HARDCORE=BR_POWER
+F:ATTR_MULTI
+F:RES_ACID | RES_FIRE | RES_COLD | RES_ELEC | RES_POIS | FLY |
+F:RES_NETHER | RES_NEXUS | RES_CHAOS | RES_LITE | RES_DARK |
+F:RES_SHARDS | RES_SOUND | RES_DISEN | RES_CONF |
+F:ACTIVATE | IGNORE_ACID | IGNORE_ELEC | IGNORE_FIRE | IGNORE_COLD
+D:A suit of armour made of a very thick richly coloured dragonhide. You think you'll never have
+D:to fear dragons if you put it on.
+
+#### PDSM has been restored to (almost) its former glory in Zangband
+
+N:413:& Dragon Helm~
+G:]:G
+I:32:7:0
+W:45:0:50:10000
+A:80/4
+P:8:1d3:0:0:10
+F:IGNORE_ACID | IGNORE_FIRE | IGNORE_ELEC | IGNORE_COLD
+D:An iron helmet, covered with a layer of dragonhide. It offers great protection and may grant
+D:protection against some dragon's attacks, based on the dragon the hide was taken from.
+
+N:414:& Dragon Shield~
+G:[:G
+I:34:6:0
+W:70:0:100:10000
+A:80/4
+P:8:1d3:0:0:10
+F:IGNORE_ACID | IGNORE_FIRE | IGNORE_ELEC | IGNORE_COLD
+D:A large shield, with a dragonskin cover. Depending on which dragon the hide came from, it
+D:might grant protection against some sorts of dragon breath.
+
+##### Extra potions #####
+
+N:415:Death
+G:!:d
+I:71:23:0
+W:55:0:4:0
+A:55/4
+P:0:20d20:0:0:0
+F:FOUNTAIN
+D:A potent and very quickly working poison, sometimes utilised by those who wish to end their
+D:lives. It is immensely toxic and will seriously hurt you even if you just get some of it on your
+D:hands.
+
+N:416:Ruination
+G:!:d
+I:71:15:0
+W:40:0:4:0
+A:40/8
+P:0:20d20:0:0:0
+F:FOUNTAIN
+D:This wicked potion will seriously damage your abilities beyond the powers of magical
+D:restoration.
+
+N:417:Detonations
+G:!:d
+I:71:22:0
+W:60:0:4:10000
+A:60/8
+P:0:25d25:0:0:0
+F:FOUNTAIN
+D:This bottle is filled with a strange substance which will violently explode if strongly agitated.
+
+N:418:Augmentation
+G:!:d
+I:71:55:0
+W:40:0:4:60000
+A:40/16
+P:0:1d1:0:0:0
+F:FOUNTAIN
+D:This blessed potion will greatly improve all your abilities if they can still be improved.
+
+N:419:*Healing*
+G:!:d
+I:71:38:0
+W:40:0:4:1500
+A:40/4:60/2:80/1
+P:0:1d1:0:0:0
+F:FOUNTAIN
+D:This highly desirable potion will greatly help recovering from wounds, typically healing you
+D:fully.
+
+N:420:Life
+G:!:d
+I:71:39:0
+W:60:0:4:5000
+A:60/4:100/2
+P:0:1d1:0:0:0
+F:FOUNTAIN
+D:This wonderful potion will fully heal you no matter how badly you're hurt, allow drained
+D:abilities to recover and remove various other ailments.
+
+N:421:Self Knowledge
+G:!:d
+I:71:58:0
+W:40:0:4:2000
+A:40/1
+P:0:1d1:0:0:0
+F:FOUNTAIN
+D:A drink of insight that lets you know yourself better.
+
+N:422:*Enlightenment*
+G:!:d
+I:71:57:0
+W:70:0:4:80000
+A:70/4
+P:0:1d1:0:0:0
+F:FOUNTAIN
+D:This magical concoction will grant you great insight, magically improving your wits and
+D:wisdom, letting you know precisely who and where you are and what you possess.
+
+# XXX
+# XXX
+
+N:425:Fear Resistance
+G:=:d
+I:45:38:0
+W:10:0:2:300
+A:10/2
+F:RES_FEAR | EASY_KNOW
+f:RES_FEAR |
+D:This ring grants courage, so that you can never become afraid.
+
+N:426:Light and Darkness Resistance
+G:=:d
+I:45:39:0
+W:30:0:2:3000
+A:30/2
+F:RES_LITE | RES_DARK | EASY_KNOW
+f:RES_LITE | RES_DARK |
+D:This ring protects against fluctuations of the light.
+
+N:427:Nether Resistance
+G:=:d
+I:45:40:0
+W:34:0:2:14500
+A:34/2
+F:RES_NETHER | HOLD_LIFE | EASY_KNOW
+f:RES_NETHER |
+D:This blessed ring improves your life force, protecting you from the draining forces of nether
+D:and other attempts to suck your lifeblood.
+
+N:428:Nexus Resistance
+G:=:d
+I:45:41:0
+W:24:0:2:3000
+A:24/2
+F:RES_NEXUS | EASY_KNOW
+f:RES_NEXUS |
+D:This ring of stability protects you from the warping forces of nexus.
+
+N:429:Sound Resistance
+G:=:d
+I:45:42:0
+W:26:0:2:3000
+A:26/2
+F:RES_SOUND | EASY_KNOW
+f:RES_SOUND |
+D:This ring projects an aura of quiet around you, protecting you from loud noise.
+
+N:430:Confusion Resistance
+G:=:d
+I:45:43:0
+W:22:0:2:3000
+A:22/2
+F:RES_CONF | EASY_KNOW
+f:RES_CONF |
+D:This ring stabilises your mind, protecting you from all kinds of befuddlement.
+
+N:431:Shard Resistance
+G:=:d
+I:45:44:0
+W:25:0:2:3000
+A:25/2
+F:RES_SHARDS | EASY_KNOW
+f:RES_SHARDS |
+D:This piece of jewellery magically toughens your skin, protecting you from flying shrapnel.
+
+N:432:Disenchantment Resistance
+G:=:d
+I:45:45:0
+W:90:0:2:15000
+A:90/10
+F:RES_DISEN | EASY_KNOW
+f:RES_DISEN |
+D:This rare ring of preservation protects your equipment from attempts to sap its magic, also
+D:causing you to suffer less pain from such attacks.
+
+N:433:Chaos Resistance
+G:=:d
+I:45:46:0
+W:50:0:2:13000
+A:50/2
+F:RES_CHAOS | RES_CONF | EASY_KNOW
+f:RES_CHAOS |
+D:This ring protects you from the horribly warping forces of chaos.
+
+N:434:Blindness Resistance
+G:=:d
+I:45:47:0
+W:60:0:2:7500
+A:60/2
+F:RES_BLIND | EASY_KNOW
+f:RES_BLIND |
+D:This ring magically preserves your eyesight, making you impervious to any attempt to blind
+D:you.
+
+N:435:Arnor
+G:=:d
+I:45:48:0
+W:100:0:2:100000
+A:100/5
+F:RES_DISEN | RES_POIS | HOLD_LIFE | FREE_ACT
+f:RES_DISEN | RES_POIS | HOLD_LIFE | FREE_ACT
+D:This blessed ring will protect you from disenchantment, poison, attempts to drain your life
+D:force and holding magic.
+
+N:436:Extra Attacks
+G:=:d
+I:45:49:0
+W:50:0:2:100000
+A:50/2
+F:BLOWS | ACTIVATE | EASY_USE |
+f:BLOWS | ACTIVATE
+a:HARDCORE=SPIN
+D:This powerful ring of fighters greatly enhances your fighting speed, allowing you to attack
+D:more often in a round of combat.
+
+N:437:Cure Light Wounds
+G:!:d
+I:71:34:50
+W:0:0:4:15
+A:0/1:1/1:3/1
+P:0:1d1:0:0:0
+F:FOUNTAIN
+D:This healthy drink heals a little damage you have taken.
+
+N:438:Clumsiness
+G:!:d
+I:71:19:0
+W:5:0:4:0
+A:5/1
+P:0:1d1:0:0:0
+F:FOUNTAIN
+D:This nasty concoction will numb your nerves, making you clumsier.
+
+N:439:Sickliness
+G:!:d
+I:71:20:0
+W:10:0:4:0
+A:10/1
+P:0:1d1:0:0:0
+F:FOUNTAIN
+D:This unhealthy drink damages your health, reducing your physical constitution.
+
+###### Here start the maps #####
+
+# Map of Bree
+N:440:Map of Bree
+G:?:s
+I:8:200:0
+W:3:100:5:100
+A:3/3
+D:A map, showing the town of Bree and the landscape around it.
+
+# Map of Gondolin
+N:441:Map of Gondolin
+G:?:s
+I:8:201:0
+W:70:100:5:50000
+A:70/3
+D:A map detailing the place of the hidden city of Gondolin. 
+
+# Map of Lothlorien
+N:442:Map of Lothlorien
+G:?:s
+I:8:202:0
+W:6:100:5:1000
+A:6/3
+D:A map vaguely describing the forest of Lothlorien and the elven settlements therein.
+
+# Map of Minas Anor
+N:443:Map of Minas Anor
+G:?:s
+I:8:203:0
+W:36:100:5:10000
+A:36/3
+D:A map of the great city of Gondor.
+
+# XXX Numbers 444-464 unused #
+
+N:465:& Silver Arrow~
+G:{:W
+I:17:3:0
+W:55:0:2:35
+A:50/4:90/2
+P:0:3d4:0:0:0
+F:SHOW_MODS | SLAY_EVIL | IGNORE_ACID | IGNORE_FIRE
+D:An arrow to be shot with a bow, its iron head coated with hallowed silver,
+D:a material that sears the flesh of all evil creatures.
+
+N:466:& Silver Bolt~
+G:{:w
+I:18:3:0
+W:50:0:2:40
+A:60/4:95/2
+P:0:3d5:0:0:0
+F:SHOW_MODS | SLAY_EVIL | IGNORE_ACID | IGNORE_FIRE
+D:This crossbow bolt has a silver tip, blessed by the Valar for fighting evil.
+
+N:468:Wisdom
+G:":d
+I:40:28:0
+W:30:0:3:500
+A:30/1
+F:WIS | SUST_WIS |  HIDE_TYPE
+f:WIS |
+D:This magical amulet will magically make you wiser, and fend off
+D:attacks that would reduce your wisdom. Beware: if cursed, the
+D:amulet will do the opposite.
+
+N:469:Regeneration
+G:":d
+I:40:30:0
+W:30:0:3:600
+A:30/3
+F:REGEN | EASY_KNOW
+f:REGEN |
+D:Wearing this amulet will trigger your body's regenerational
+D:processes quicker and make them proceed faster.
+
+N:470:Infravision
+G:":d
+I:40:26:0
+W:10:0:3:200
+A:10/1
+F:INFRA | HIDE_TYPE
+f:INFRA |
+D:This amulet will increase your ability to sense warm-blooded
+D:creatures in your vicinity. Beware: if cursed, it will do
+D:just the opposite.
+
+N:471:Devotion
+G:":d
+I:40:25:0
+W:70:0:3:30000
+A:70/8
+F:WIS | CHR | SUST_WIS | SUST_CHR | LITE1 | HIDE_TYPE |
+F:RES_DARK | RES_LITE | RES_FIRE | HOLD_LIFE |
+D:This blessed amulet will protect your wisdom and charms from
+D:diminishing, often adding to them as well. It also grants
+D:some extra protective magics by the grace of the Valar.
+
+N:472:Weaponmastery
+G:":d
+I:40:24:0
+W:70:0:3:30000
+A:70/8
+F:STR | CON | SUST_STR | SUST_CON | FREE_ACT | HIDE_TYPE |
+F:RES_FEAR | RES_DISEN |
+D:The ultimate amulet for a warrior, it will grant protection
+D:in the face of some evil magics, protect your strength and health,
+D:also increasing them. Beware: if cursed, the amulet will
+D:sap your strength and health instead.
+
+N:473:Trickery
+G:":d
+I:40:23:0
+W:70:0:3:30000
+A:70/8
+F:DEX | SUST_DEX | STEALTH | SPEED | INFRA | HIDE_TYPE |
+F:RES_NEXUS | RES_POIS
+D:The ultimate amulet for a rogue or assassin, it protects the
+D:wearer against some evil magics, granting improvements in
+D:the abilities vital to these adventurers. Beware: if cursed,
+D:the amulet will do just the opposite.
+
+N:474:Telepathy
+G:":d
+I:40:22:0
+W:50:0:3:25000
+A:50/6
+F:ESP_ALL |
+f:ESP_ALL |
+F:IGNORE_ACID | IGNORE_ELEC | IGNORE_FIRE | IGNORE_COLD
+D:This rare and powerful amulet lays bare the minds of monsters
+D:before the wearer.
+
+N:475:Sustenance
+G:":d
+I:40:21:0
+W:60:0:3:20000
+A:60/4
+F:SUST_STR | SUST_INT | SUST_WIS | SUST_DEX | SUST_CON | SUST_CHR |
+F:HOLD_LIFE | SLOW_DIGEST | EASY_KNOW |
+F:IGNORE_ACID | IGNORE_ELEC | IGNORE_FIRE | IGNORE_COLD
+D:This blessed amulet will make the wearer impervious to evil magics
+D:that would sap innate abilities. It also slows down the digestive
+D:system, making food less necessary on long journeys.
+
+# The Palantir of Minas Ithil -- see artifact list
+
+N:476:& Palantir~
+G:~:y
+I:39:107:0
+W:75:0:200:0
+P:0:10d10:0:0:0
+F:INSTA_ART
+
+# The Elfstone 'Elessar' -- see artifact list
+
+N:477:& Elfstone~
+G:":g
+I:40:19:0
+W:60:0:3:50000
+F:INSTA_ART
+
+# The Jewel 'Evenstar' -- see artifact list
+
+N:478:& Jewel~
+G:":w
+I:40:20:0
+W:50:0:3:35000
+F:INSTA_ART
+
+# The Ring of Durin -- see artifact list
+
+N:479:& Ring~
+G:=:d
+I:45:57:0
+W:70:0:2:65000
+F:INSTA_ART | SPECIAL_GENE
+
+##### And here starts the gold/gems #####
+
+N:480:copper
+G:$:u
+I:100:1:0
+W:1:0:0:3
+
+N:481:copper
+G:$:u
+I:100:2:0
+W:1:0:0:4
+
+N:482:copper
+G:$:u
+I:100:3:0
+W:1:0:0:5
+
+N:483:silver
+G:$:s
+I:100:4:0
+W:1:0:0:6
+
+N:484:silver
+G:$:s
+I:100:5:0
+W:1:0:0:7
+
+N:485:silver
+G:$:s
+I:100:6:0
+W:1:0:0:8
+
+N:486:garnets
+G:$:r
+I:100:7:0
+W:1:0:0:9
+
+N:487:garnets
+G:$:r
+I:100:8:0
+W:1:0:0:10
+
+N:488:gold
+G:$:y
+I:100:9:0
+W:1:0:0:12
+
+N:489:gold
+G:$:y
+I:100:10:0
+W:1:0:0:14
+
+N:490:gold
+G:$:y
+I:100:11:0
+W:1:0:0:16
+
+N:491:opals
+G:$:W
+I:100:12:0
+W:1:0:0:18
+
+N:492:sapphires
+G:$:b
+I:100:13:0
+W:1:0:0:20
+
+N:493:rubies
+G:$:r
+I:100:14:0
+W:1:0:0:24
+
+N:494:diamonds
+G:$:w
+I:100:15:0
+W:1:0:0:28
+
+N:495:emeralds
+G:$:g
+I:100:16:0
+W:1:0:0:32
+
+N:496:mithril
+G:$:B
+I:100:17:0
+W:1:0:0:40
+
+N:497:adamantite
+G:$:G
+I:100:18:0
+W:1:0:0:80
+
+
+##### Objects 498 and 499 are the "Morgoth Artifacts" #####
+
+# These objects, like objects 500 to 511, are never created
+# without being turned into artifacts.  This simplifies the
+# code for "killing the winner monster".
+
+N:498:& Mighty Hammer~
+G:\:D
+I:21:50:0
+W:15:0:200:1000
+P:0:3d9:0:0:0
+F:SHOW_MODS | INSTA_ART | MUST2H | SPECIAL_GENE
+f:MUST2H
+
+N:499:& Massive Iron Crown~
+G:]:D
+I:33:50:0
+W:44:0:20:1000
+P:0:1d1:0:0:0
+F:INSTA_ART | SPECIAL_GENE
+
+
+##### Objects 500 to 511 are "Special Artifacts" #####
+
+# These objects do not specify "full names" because the artifact name
+# is added in "obj-desc.c" based on the artifact index ("i_ptr->name1").
+#
+# These objects do specify a "base name", which is used when the object
+# is "aware" (always true for lites)
+#
+# The Lites (and the One Ring) specify "physical colors", which
+# over-ride the "flavor" colors, if any.  Note that the "One Ring"
+# also has a specific check for "unknown" in which it changes its
+# name to "a plain gold ring".  See "object1.c"
+#
+# Note that ALL artifacts are given "IGNORE_ACID/ELEC/FIRE/COLD",
+# so we do not need to specify that here.
+#
+# Note that the "INSTA_ART" flag is used to prevent these objects from
+# being created without also turning them into artifacts.  This flag
+# must be specified both here and in the artifact template.
+#
+# The only reason for having six different "ring" templates and three
+# different "amulet" templates is to allow each "special artifact" to
+# have a different "color" and "flavor", and also to allow the use of
+# special "base names" (such as "Necklace").
+
+
+# The Phial of Galadriel -- see artifact list
+
+N:500:& Phial~
+G:~:y
+I:39:100:0
+W:20:0:10:10000
+P:0:1d1:0:0:0
+F:INSTA_ART
+
+# The Star of Elendil -- see artifact list
+
+N:501:& Star~
+G:~:B
+I:39:101:0
+W:30:0:5:25000
+P:0:1d1:0:0:0
+F:INSTA_ART
+
+# The Arkenstone of Thrain -- see artifact list
+
+N:502:& Arkenstone~
+G:~:R
+I:39:102:0
+W:60:0:5:60000
+P:0:1d1:0:0:0
+F:INSTA_ART
+
+
+# The Amulet of Annatar -- see artifact list
+
+N:503:& Amulet~
+G:":d
+I:40:10:0
+W:70:0:3:90000
+F:INSTA_ART
+
+# The Amulet of Ingwe -- see artifact list
+
+N:504:& Amulet~
+G:":d
+I:40:11:0
+W:60:0:3:90000
+F:INSTA_ART
+
+# The Necklace 'Nauglamir' -- see artifact list
+
+N:505:& Necklace~
+G:":d
+I:40:12:0
+W:70:0:3:75000
+F:INSTA_ART
+
+
+# The Ring of Barahir -- see artifact list
+
+N:506:& Ring~
+G:=:d
+I:45:32:0
+W:50:0:2:65000
+F:INSTA_ART
+
+# The Ring of Tulkas -- see artifact list
+# Gone in Theme
+#N:507:& Ring~
+#G:=:d
+#I:45:33:0
+#W:90:0:2:150000
+#F:INSTA_ART
+
+# The Ring of Power 'Narya' -- see artifact list
+
+N:508:& Ring~
+G:=:d
+I:45:34:0
+W:80:0:2:100000
+F:INSTA_ART | SPECIAL_GENE
+
+# The Ring of Power 'Nenya' -- see artifact list
+
+N:509:& Ring~
+G:=:d
+I:45:35:0
+W:90:0:2:200000
+F:INSTA_ART
+
+# The Ring of Power 'Vilya' -- see artifact list
+
+N:510:& Ring~
+G:=:d
+I:45:36:0
+W:100:0:2:300000
+F:INSTA_ART
+
+# The Ring of Power 'The One Ring' -- see artifact list
+
+N:511:& Ring~
+G:=:y
+I:45:37:0
+W:110:0:2:5000000
+F:INSTA_ART
+
+
+### Room for new objects added after 511 (Zangband 2.1.0): 512-575
+
+# XXX
+# XXX
+# XXX
+# XXX
+# XXX
+# XXX
+# XXX
+# XXX
+
+N:520:Reflection
+G:":d
+I:40:9:0
+W:60:0:3:30000
+A:60/4
+F:REFLECT | EASY_KNOW
+f:REFLECT |
+F:IGNORE_ACID | IGNORE_ELEC | IGNORE_FIRE | IGNORE_COLD
+D:This wondrous amulet will magically make the wearer
+D:reflect arrows and bolts launched by adversaries.
+
+#521 and 522 cannot have EASY_KNOW because they may be cursed
+
+N:521:Anti-Magic
+G:":d
+I:40:13:0
+W:40:0:3:30000
+A:40/4
+F:NO_MAGIC
+f:NO_MAGIC
+F:IGNORE_ACID | IGNORE_ELEC | IGNORE_FIRE | IGNORE_COLD
+D:This amulet wards off magic of any kind, good or bad.
+
+N:522:Anti-Teleportation
+G:":d
+I:40:14:0
+W:30:0:3:15000
+A:30/4
+F:NO_TELE
+f:NO_TELE
+F:IGNORE_ACID | IGNORE_ELEC | IGNORE_FIRE | IGNORE_COLD
+D:This amulet will prevent the space-time continuum from
+D:being disrupted around the wearer.
+
+#523 cannot have EASY_KNOW because it can get random resistances
+
+N:523:Resistance
+G:":d
+I:40:15:0
+W:50:0:3:25000
+A:50/4
+F:RES_ACID | RES_ELEC | RES_FIRE | RES_COLD
+f:RES_ACID | RES_ELEC | RES_FIRE | RES_COLD
+F:IGNORE_ACID | IGNORE_ELEC | IGNORE_FIRE | IGNORE_COLD
+D:This amulet will make the wearer resist the elements.
+
+##### New arms #####
+
+N:524:& Zweihander~
+G:|:w
+I:23:29:0
+W:40:0:280:580
+A:40/3
+P:0:4d6:0:0:0
+F:SHOW_MODS | MUST2H
+f:MUST2H
+D:This great sword of foreign origin is approximately 6 feet long. The hilt is
+D:long enough for even four hands to grip. A mighty weapon for a warrior.
+
+# Dwarven lantern
+N:525:& Dwarven Lantern~
+G:~:b
+I:39:3:0
+W:15:0:50:5000
+A:15/2
+P:0:1d1:0:0:0
+F:EASY_KNOW | IGNORE_FIRE | LITE2
+f:LITE2
+D:Made by the Dwarves, this lantern provides light in the
+D:darkest recesses of the earth.
+
+N:526:& Splint Mail~
+G:[:D
+I:37:10:0
+W:35:0:250:950
+A:35/1
+P:19:1d4:-2:0:0
+D:A variant of banded mail. The metal strips are applied to the backing of chain,
+D:leather, or cloth rather than horizontally.
+
+# Everburning torch
+N:527:& Everburning Torch~
+G:~:R
+I:39:2:0
+W:5:0:50:2500
+A:5/1
+P:0:1d1:0:0:0
+F:EASY_KNOW | IGNORE_FIRE | LITE1
+f:LITE1
+D:This enchanted torch never needs to be fuelled.
+
+N:528:& Trifurcate Spear~
+G:/:o
+I:22:26:0
+W:35:0:140:400
+A:35/3
+P:0:2d9:0:0:0
+F:SHOW_MODS
+D:This deadly spear's point has three branches, suited for inflicting
+D:slightly greater damage per hit than a regular spear.
+
+N:529:& Three Piece Rod~
+G:\:u
+I:21:11:0
+W:20:0:120:350
+A:20/3
+P:0:3d3:0:0:0
+F:SHOW_MODS
+D:A descendant of the threshing flail, consisting of three short wooden
+D:pieces linked by chain or rope.
+
+# Feanorian Lamp
+N:530:& Feanorian Lamp~
+G:~:B
+I:39:4:0
+W:25:0:50:15000
+A:25/3
+P:0:1d1:0:0:0
+F:EASY_KNOW | IGNORE_FIRE | LITE3
+f:LITE3
+D:Made by the descendants of the Noldo craftsman, this lamp
+D:contains a part of the flame which burned inside Feanor.
+
+N:531:& Fur Cloak~
+G:(:W
+I:35:3:0
+W:20:0:30:100
+A:20/2:30/2
+P:3:0d0:0:0:0
+F:RES_COLD
+D:A coat made from the fur of various wild animals - it is
+D:somewhat bulky, but still spacious enough to wear over armour.
+D:It is ideal for cold weather conditions.
+
+N:532:Water Curing
+G:!:d
+I:72:18:80
+W:0:0:4:0
+A:0/1
+P:0:1d1:0:0:0
+F:SPECIAL_GENE
+D:It is a magical component that can purify water.
+
+N:533:& Hatchet~
+G:/:s
+I:24:1:0
+W:10:0:60:120
+A:10/2
+P:0:1d5:0:0:0
+F:SHOW_MODS | COULD2H
+f:COULD2H
+D:This is a larger version of a throwing axe. It has a single
+D:blade with a pick on the reverse, designed for armour piercing.
+
+##### New armour #####
+
+N:535:& Mumak Hide Armour~
+G:(:s
+I:36:8:0
+W:15:0:110:400
+A:15/1
+P:8:1d1:-1:0:0
+D:This suit of armour is fashioned from the hide of a dead Mumak,
+D:or Oliphaunt. It is tough, leathery, and a bit cumbersome.
+
+N:536:& Leather Jerkin~
+G:(:U
+I:36:12:0
+W:20:0:70:550
+A:20/3
+P:7:1d2:0:0:0
+D:A kind of vest with a colarless neck, made from roughout leather. This 
+D:is what Middle-earth rangers usually wear on their travels.
+
+##### New weapons #####
+
+N:537:& Sickle~
+G:/:s
+I:22:3:0
+W:10:0:70:110
+A:10/3
+P:0:2d3:0:0:0
+F:SHOW_MODS
+D:A semicircular blade attached to a short handle, good for chopping
+D:things up into pieces.
+
+# XXX
+# XXX
+# XXX
+# XXX
+
+N:542:& Club~
+G:\:u
+I:21:1:0
+W:0:0:100:3
+A:0/1
+P:0:1d4:0:0:0
+F:SHOW_MODS
+D:A stout heavy stick, thicker at one end. Useful for
+D:shattering and smashing things.
+
+N:543:& Broad Spear~
+G:/:w
+I:22:7:0
+W:14:0:100:240
+A:14/3
+P:0:1d9:0:0:0
+F:SHOW_MODS
+D:It looks like it has just come from the forge. Designed specifically for
+D:foot soldiers combatting mounted cavalry, it is too heavy to be effective
+D:when thrown.
+
+N:544:& Khopesh~
+G:|:W
+I:23:14:0
+W:10:0:130:190
+A:10/2
+P:0:2d4:0:0:0
+F:SHOW_MODS
+D:This sword comes from the regions of Far Harad. The blade is straight
+D:for 18 inches, and then it curves for another 2 feet.
+
+N:545:& Flamberge~
+G:|:W
+I:23:26:0
+W:40:0:230:600
+A:40/2
+P:0:3d7:0:0:0
+F:SHOW_MODS | MUST2H
+f:MUST2H
+D:A large, two-handed sword with a blade that weaves
+D:left and right until it reaches the hilt.
+
+N:546:& Claymore~
+G:|:W
+I:23:23:0
+W:40:0:200:600
+A:40/2
+P:0:2d8:0:0:0
+F:SHOW_MODS | COULD2H
+f:COULD2H
+D:Also known as a Claidhmore, or Greatsword, this weapon is favoured
+D:by powerful mercenaries. The blade is large, straight, and broad,
+D:almost as large as a two-handed sword.
+
+N:547:& Espadon~
+G:|:W
+I:23:24:0
+W:40:0:200:600
+A:40/3
+P:0:2d9:0:0:0
+F:SHOW_MODS | MUST2H
+f:MUST2H
+D:This is the strictly two-handed version of the bastard sword.
+D:The blade is of medium length, double-edged, and considerably
+D:heavy to wield.
+
+N:548:& Great Scimitar~
+G:|:W
+I:23:22:0
+W:40:0:240:500
+A:40/3
+P:0:4d5:0:0:0
+F:SHOW_MODS | MUST2H
+f:MUST2H
+D:This is a larger version of the curved oriental blade.
+D:Runes of war decorate its golden hilt.
+
+
+### Trapping Kits
+
+N:549:Arrow
+G:`:r
+I:46:2:0
+W:10:0:60:150
+A:10/2:50/2
+F:SHOW_MODS
+D:It must be loaded with arrows, which will be
+D:fired at the monster who triggers the trap.
+
+N:550:Bolt
+G:`:o
+I:46:3:0
+W:20:0:220:300
+A:20/2:50/2
+F:SHOW_MODS
+D:It must be loaded with crossbow bolts, which will
+D:be fired at the monster who triggers the trap.
+
+N:551:& Fauchard~
+G:/:s
+I:22:6:0
+W:18:0:155:301
+A:18/2
+P:0:1d10:0:0:0
+F:SHOW_MODS | COULD2H
+f:COULD2H
+D:It is a type of glaive with two ornate hooks on the back
+D:of the blade. It is typically 8 to 9 feet long.
+
+N:552:& Guisarme~
+G:/:s
+I:22:16:0
+W:21:0:165:320
+A:21/1
+P:0:2d5:0:0:0
+F:SHOW_MODS | COULD2H
+f:COULD2H
+D:Mounted on a long shaft for maximum reach, this weapon is
+D:effective at repelling both cavalry and infantry.
+
+N:553:& Heavy Lance~
+G:/:s
+I:22:29:0
+W:43:0:400:700
+A:43/2
+P:0:4d8:0:0:0
+F:SHOW_MODS | MUST2H
+f:MUST2H
+D:This is a shock weapon. Its purpose is to unhorse a rider
+D:in single combat, or smash through the armour of opposing lines.
+
+N:554:& Basilard~
+G:|:w
+I:23:9:0
+W:15:0:80:220
+A:15/3
+P:0:1d8:0:0:0
+F:SHOW_MODS
+D:This is a two-edged dagger with a long blade. A favourite among travellers
+D:and warriors alike, because it can be worn comfortably with plain clothes
+D:as well as armour.
+
+### Trapping Kits
+
+N:555:Catapult
+G:`:R
+I:46:1:0
+W:1:0:50:40
+A:1/2:20/2
+F:SHOW_MODS
+D:It must be loaded with sling bullets, which will
+D:be fired at the monster who triggers the trap.
+
+N:556:& Ring Mail~
+G:[:s
+I:37:2:0
+W:20:0:200:500
+A:20/1
+P:12:1d4:-2:0:0
+D:A suit of non-overlapping metal rings sewn onto a
+D:heavy leather backing.
+
+N:557:& Cord Armour~
+G:(:y
+I:36:9:0
+W:5:0:80:40
+A:5/1
+P:6:1d1:0:0:0
+D:Fibres of hemp or other natural material woven and knotted
+D:into a thick, tough fabric.
+
+N:558:& Paper Armour~
+G:(:w
+I:36:3:0
+W:5:0:30:40
+A:5/2
+P:4:1d1:0:0:0
+F:SENS_FIRE
+D:Thickly pleated sheets of paper assembled together into
+D:a suit of armour. It is useful against arrows, but it may
+D:catch on fire quite easily.
+
+N:559:& Padded Armour~
+G:(:y
+I:36:10:0
+W:2:0:60:40
+A:2/1
+P:4:1d1:0:0:0
+D:Heavy, multi-layered cloth sewn together to cover the body,
+D:with extra padding between layers.
+
+### Trapping Kits
+
+N:560:Fumes
+G:`:G
+I:46:4:0
+W:2:0:20:50
+A:2/2:30/2
+D:It must be loaded with potions, which will splatter
+D:over the monster who triggers the trap.
+
+N:561:& Golden Ring Mail~
+G:(:y
+I:36:15:0
+W:35:0:150:500
+A:35/7
+P:8:1d4:-1:0:0
+D:A suit of non-overlapping thin golden rings sewn onto a soft leather
+D:backing. It looks beautiful, and is worn on special occasions.
+
+### Trapping Kits
+
+N:562:Magic
+G:`:g
+I:46:5:0
+W:5:0:20:50
+A:5/2:40/2
+F:IGNORE_ACID | IGNORE_FIRE | IGNORE_COLD | IGNORE_ELEC
+D:It must be loaded with scrolls, which will release
+D:their spells at the monster who triggers the trap.
+
+N:563:Device
+G:`:v
+I:46:6:0
+W:20:0:20:50
+A:20/2:40/2:60/2
+F:IGNORE_ACID | IGNORE_FIRE | IGNORE_COLD | IGNORE_ELEC
+D:It must be loaded with a magic device (wand, staff, or rod), which
+D:will fire its spell at the monster who triggers the trap.
+
+# XXX
+# XXX
+# XXX
+# XXX
+# XXX
+
+N:569:Nothing
+G:-:d
+I:66:0:1
+W:5:0:10:50
+A:5/1
+P:0:1d1:0:0:0
+
+
+#Artifact Potion
+N:573:& Blood~ of Life
+G:!:d
+I:71:3:200
+W:70:0:4:10000
+A:70/16
+P:0:1d1:0:0:0
+T:71:2
+F:NORM_ART | FULL_NAME
+D:This magical potion contains a small part of the power of
+D:Eru Iluvatar on Middle-Earth.
+
+# XXX
+# XXX
+# XXX
+
+# Mage staffs (for Sorcerers to wield.)
+
+N:577:& Mage Staff~
+G:\:B
+I:6:1:0
+W:5:0:12:300
+A:5/1:20/1:50/1:80/1
+P:0:1d4:0:0:0
+F:SHOW_MODS | COULD2H
+f:COULD2H
+D:It looks like a simple walking stick, plain and nondescript.
+D:In the hands of a spellcaster, it can be a deadly weapon.
+
+# An extra ring, out of place
+
+N:578:Lightning
+G:=:d
+I:45:56:0
+W:50:0:2:3000
+A:50/1
+P:0:0d0:0:0:15
+a:HARDCORE=BA_ELEC_4
+F:RES_ELEC | ACTIVATE
+f:RES_ELEC | IGNORE_ELEC
+D:This sparkling circlet grants you protection, makes electricity less
+D:dangerous and even allows you to call forth a ball of lightning.
+
+# XXX
+# XXX
+# XXX
+
+# The Ring of Flare -- see artifact list
+# Gone in Theme.
+#N:582:& Ring~
+#G:=:y
+#I:45:52:5
+#W:50:25:2:75000
+#F:INSTA_ART
+
+N:583:Invisibility
+G:!:d
+I:71:8:0
+W:3:0:4:50
+A:3/1
+P:0:1d1:0:0:0
+F:FOUNTAIN
+D:This magical brew will temporarily hide you from sight, and also attunes you to this state so
+D:that your eyes can still perceive your hidden form.
+
+# Potion of Corruption
+
+N:585:Corruption
+G:!:d
+I:71:10:0
+W:10:0:4:0
+A:10/1:17/1:27/1
+P:0:1d1:0:0:0
+F:FOUNTAIN
+D:This concoction of toxic wastes will strangely warp your shape.
+
+# Ring of Invisibility
+
+N:586:Invisibility
+G:=:d
+I:45:53:4
+W:50:0:2:10000
+A:50/1
+F:INVIS | HIDE_TYPE
+f:INVIS |
+D:This magical bauble will hide you from sight.
+
+# XXX
+
+######### Here are the parchments ########
+
+N:588:Deep Thoughts
+G:?:o
+I:8:0:0
+W:3:0:5:50
+A:3/1
+D:This parchment contains the thoughts of a powerful
+D:wizard who departed Middle-earth long ago.
+
+N:589:More Deep Thoughts
+G:?:o
+I:8:1:0
+W:4:0:5:50
+A:4/1
+D:This parchment contains the thoughts of a powerful
+D:wizard who departed Middle-earth long ago.
+
+N:590:Compendium of Deep Thoughts
+G:?:o
+I:8:2:0
+W:5:0:5:50
+A:5/1
+D:This parchment contains the thoughts of a powerful
+D:wizard who departed Middle-earth long ago.
+
+# Artifact Lore - Edged weapons
+N:591:Artifact Lore Vol. I
+G:?:o
+I:8:6:0
+W:40:0:5:500
+A:40/3
+D:This parchment contains information about unique
+D:artifacts that are rumoured to exist upon Arda.
+
+# Artifact Lore - Hafted weapons
+N:592:Artifact Lore Vol. II
+G:?:o
+I:8:7:0
+W:40:0:5:500
+A:40/3
+D:This parchment contains information about unique
+D:artifacts that are rumoured to exist upon Arda.
+
+# Artifact Lore - Polearms
+N:593:Artifact Lore Vol. III
+G:?:o
+I:8:8:0
+W:40:0:5:500
+A:40/3
+D:This parchment contains information about unique
+D:artifacts that are rumoured to exist upon Arda.
+
+N:594:Monstrous Compendium 1
+G:?:o
+I:8:9:0
+W:10:0:5:100
+A:10/2
+D:This parchment contains a small part of the collected
+D:lore concerning monsters inhabiting Arda.
+
+N:595:Monstrous Compendium 2
+G:?:o
+I:8:10:0
+W:11:0:5:200
+A:11/2
+D:This parchment contains a small part of the collected
+D:lore concerning monsters inhabiting Arda.
+
+N:596:Monstrous Compendium 3
+G:?:o
+I:8:11:0
+W:12:0:5:300
+A:12/2
+D:This parchment contains a small part of the collected
+D:lore concerning monsters inhabiting Arda.
+
+N:597:Monstrous Compendium 4
+G:?:o
+I:8:12:0
+W:13:0:5:400
+A:13/2
+D:This parchment contains a small part of the collected
+D:lore concerning monsters inhabiting Arda.
+
+N:598:Monstrous Compendium 5
+G:?:o
+I:8:13:0
+W:14:0:5:500
+A:14/2
+D:This parchment contains a small part of the collected
+D:lore concerning monsters inhabiting Arda.
+
+N:599:Monstrous Compendium 6
+G:?:o
+I:8:14:0
+W:15:0:5:600
+A:15/2
+D:This parchment contains a small part of the collected
+D:lore concerning monsters inhabiting Arda.
+
+N:600:Monstrous Compendium 7
+G:?:o
+I:8:15:0
+W:16:0:5:700
+A:16/2
+D:This parchment contains a small part of the collected
+D:lore concerning monsters inhabiting Arda.
+
+N:601:Monstrous Compendium 8
+G:?:o
+I:8:16:0
+W:17:0:5:800
+A:17/2
+D:This parchment contains a small part of the collected
+D:lore concerning monsters inhabiting Arda.
+
+N:602:Monstrous Compendium 9
+G:?:o
+I:8:17:0
+W:18:0:5:900
+A:18/2
+D:This parchment contains a small part of the collected
+D:lore concerning monsters inhabiting Arda.
+
+N:603:Monstrous Compendium 10
+G:?:o
+I:8:18:0
+W:19:0:5:1000
+A:19/2
+D:This parchment contains a small part of the collected
+D:lore concerning monsters inhabiting Arda.
+
+N:604:Monstrous Compendium 11
+G:?:o
+I:8:19:0
+W:20:0:5:1200
+A:20/2
+D:This parchment contains a small part of the collected
+D:lore concerning monsters inhabiting Arda.
+
+#### Here come the shape-shifting potions. ####
+
+N:605:& Morphic Oil~ of #
+G:!:d
+I:72:1:0
+W:5:0:4:100
+A:1/3:5/1:10/1
+P:0:1d1:0:0:0
+F:FULL_NAME | EASY_KNOW
+D:This concoction can transform your body for a short period of time.
+
+### New Parchments for Theme - monster and artifact spoilers
+
+# XXX 
+
+# Artifact Lore - Axes
+N:607:Artifact Lore Vol. IV
+G:?:o
+I:8:22:0
+W:40:0:5:500
+A:40/3
+D:This parchment contains information about unique
+D:artifacts that are rumoured to exist upon Arda.
+
+# Artifact Lore - Shooters and missiles
+N:608:Artifact Lore Vol. V
+G:?:o
+I:8:23:0
+W:40:0:5:500
+A:40/3
+D:This parchment contains information about unique
+D:artifacts that are rumoured to exist upon Arda.
+
+# Artifact Lore - Musical instruments
+N:609:Artifact Lore Vol. VI
+G:?:o
+I:8:24:0
+W:40:0:5:500
+A:40/3
+D:This parchment contains information about unique
+D:artifacts that are rumoured to exist upon Arda.
+
+# Artifact Lore - Body armour
+N:610:Artifact Lore Vol. VII
+G:?:o
+I:8:25:0
+W:40:0:5:500
+A:40/3
+D:This parchment contains information about unique
+D:artifacts that are rumoured to exist upon Arda.
+
+# Artifact Lore - Cloaks
+N:611:Artifact Lore Vol. VIII
+G:?:o
+I:8:26:0
+W:40:0:5:500
+A:40/3
+D:This parchment contains information about unique
+D:artifacts that are rumoured to exist upon Arda.
+
+# Artifact Lore - Shields and Boots
+N:612:Artifact Lore Vol. IX
+G:?:o
+I:8:27:0
+W:40:0:5:500
+A:40/3
+D:This parchment contains information about unique
+D:artifacts that are rumoured to exist upon Arda.
+
+# Artifact Lore - Headgear and Gloves
+N:613:Artifact Lore Vol. X
+G:?:o
+I:8:28:0
+W:40:0:5:500
+A:40/3
+D:This parchment contains information about unique
+D:artifacts that are rumoured to exist upon Arda.
+
+# Artifact Lore - Gothmog's set and other sets
+N:614:Artifact Lore Vol. XI
+G:?:o
+I:8:29:0
+W:40:0:5:1000
+A:40/3
+D:This parchment contains information about unique
+D:artifacts that are rumoured to exist upon Arda.
+
+# Artifact Lore - Light sources
+N:615:Artifact Lore Vol. IX
+G:?:o
+I:8:30:0
+W:40:0:5:500
+A:40/3
+D:This parchment contains information about unique
+D:artifacts that are rumoured to exist upon Arda.
+
+# Artifact Lore - Amulets and Rings
+N:616:Artifact Lore Vol. X
+G:?:o
+I:8:31:0
+W:40:0:5:500
+A:40/3
+D:This parchment contains information about unique
+D:artifacts that are rumoured to exist upon Arda.
+
+# Artifact Lore - Tools
+N:617:Artifact Lore Vol. XI
+G:?:o
+I:8:32:0
+W:40:0:5:500
+A:40/3
+D:This parchment contains information about unique
+D:artifacts that are rumoured to exist upon Arda.
+
+# The Mimic's cloaks
+
+N:618:& #~
+G:(:y
+I:35:100:0:50
+W:5:130:30:100
+A:5/1:15/1:35/1:55/1:75/1
+P:1:1d1:0:0:0
+D:Combined with proper skill, this cloak can make you seem
+D:like a different creature. Otherwise, it just provides some
+D:extra protection.
+
+# XXX
+# XXX
+# XXX
+# XXX
+# XXX
+# XXX
+# XXX
+# XXX
+# XXX
+# XXX
+# XXX
+# XXX
+# XXX
+# XXX
+# XXX
+# XXX
+# XXX
+# XXX
+# XXX
+# XXX
+# XXX
+# XXX
+
+# Here are the corpses
+
+N:641:corpse
+G:~:U
+I:9:1:3000
+W:20:0:80:0
+A:30/1
+P:0:1d1:0:0:0
+F:DECAY
+D:A decaying corpse.
+
+N:642:skeleton
+G:~:U
+I:9:2:800
+W:20:0:2:0
+A:30/1
+P:0:1d1:0:0:0
+D:The bony remains of some creature.
+
+N:643:head
+G:~:U
+I:9:3:600
+W:20:0:10:0
+A:30/1
+P:0:1d1:0:0:0
+F:DECAY
+D:A severed head.
+
+N:644:skull
+G:~:U
+I:9:4:1000
+W:20:0:20:0
+A:30/1
+P:0:1d1:0:0:0
+D:A white bony skull.
+
+N:645:raw meat
+G:~:U
+I:9:5:1200
+W:20:0:10:2
+A:30/1
+P:0:1d1:0:0:0
+F:DECAY
+D:A piece of raw meat.
+
+N:646:& Great Eagle Down Coat~
+G:(:y
+I:36:16:0
+W:5:0:60:400
+A:25/1
+P:9:1d1:0:0:0
+F:RES_FIRE | RES_COLD |
+D:This coat is made from the down of Manwe's Great Eagles, 
+D:gathered painstakingly from nests. It is magical, protecting  
+D:the wearer from extremes of temperatures.
+
+# The Key to Orthanc -- see artifact list
+N:647:& Key~
+G:~:g
+I:39:106:0
+W:15:0:15:20000
+F:INSTA_ART | SPECIAL_GENE
+
+# Here are the boomerangs
+
+N:648:& Small Wooden Boomerang~
+G:{:y
+I:15:1:0
+W:1:0:60:10
+A:1/1:5/2:10/2:20/2
+P:0:1d4:0:0:0
+D:A small curved piece of wood.
+
+N:649:& Wooden Boomerang~
+G:{:y
+I:15:2:0
+W:10:0:60:100
+A:10/1:20/2
+P:0:1d8:0:0:0
+D:A curved leaf-shaped piece of wood.
+
+N:650:& Small Metal Boomerang~
+G:{:y
+I:15:3:0
+W:20:0:60:400
+A:20/1:30/2
+P:0:3d4:0:0:0
+D:A small curved piece of wood with metal blades on the "forward" edges.
+
+N:651:& Metal Boomerang~
+G:{:y
+I:15:4:0
+W:30:0:60:800
+A:30/1:50/2
+P:0:4d5:0:0:0
+D:A curved leaf-shaped piece of wood, its "forward" edges enhanced with metal blades.
+
+# The Space-Time Anchor -- see artifact list
+N:652:& Anchor~
+G:~:v
+I:39:105:0
+W:30:0:15:50000
+F:INSTA_ART
+
+# To convert monsters into objects for wielding them ! ! ! :)
+# Funny, funny, funny :)
+# pval the monster idx, pval2 for the monster hp
+N:653:& ~
+G:~:y
+I:99:1:0
+W:127:200:60:0
+A:127/255
+P:0:0d0:0:0:0
+
+N:654:Summon Never-Moving Pet
+G:?:d
+I:70:6:0
+W:5:0:5:125
+A:5/1:15/1:25/1:35/1:65/1:85/1:95/1
+D:A piece of paper, inscribed with runes which will summon an immobile creature to your aid.
+
+# XXX
+# XXX
+
+###The potions of cure insanity, in light, medium, regular, and full
+###versions. Cure light's W:x entry reduced to 1, so it doesn't boost level rating when appearing
+###at 50' - nyra
+
+N:657:Cure Light Insanity
+G:!:d
+I:72:14:0
+W:1:5:4:15
+A:5/1:1/1:3/1
+P:0:1d1:0:0:0
+F:FOUNTAIN
+D:A magical potion which drives away irrational quirks of behaviour.
+
+N:658:Cure Serious Insanity
+G:!:d
+I:72:15:0
+W:10:5:4:40
+A:10/1
+P:0:1d1:0:0:0
+F:FOUNTAIN
+D:A magical brew which will lift shadows that have been cast on your soul.
+
+N:659:Cure Critical Insanity
+G:!:d
+I:72:16:0
+W:15:5:4:100
+A:15/3
+P:0:1d1:0:0:0
+F:FOUNTAIN
+D:This drink will cure you even of serious mental disorders.
+
+N:660:Cure Insanity
+G:!:d
+I:72:17:0
+W:25:5:4:300
+A:25/3
+P:0:1d1:0:0:0
+F:FOUNTAIN
+D:This blessed potion can make you completely sane and healthy, even if you have only the
+D:faintest shred of sanity left.
+
+# The Phial of Undeath -- see artifact list. He he he he...
+
+#N:661:& Phial~
+#G:~:y
+#I:39:103:0
+#W:1:0:10:0
+#P:0:1d1:0:0:0
+#F:INSTA_ART
+
+# Here is the random artifact type.
+# This is used as a template -- the sval will be chosen later
+# on in the game to be an index to the random_artifacts array,
+# which in turn determines:
+#
+#  Name
+#  Color
+#  Level
+#  Cost
+
+N:662:Random Artifact
+G:~:o
+I:102:0:0
+W:1:0:50:0
+A:1/1:10/1:20/1:30/1
+F:INSTA_ART | ACTIVATE | ACTIVATE_NO_WIELD
+
+N:663:Craftsmanship
+G:?:d
+I:70:19:0
+W:80:0:5:200000
+A:80/16
+D:A powerful scroll, desired by many, as it can magically improve the special powers of magical
+D:weaponry.
+
+# A Parchment, not the Artifact
+N:664:The One Ring
+G:?:s
+I:8:4:0
+W:10:100:5:50
+A:10/2
+D:This parchment contains words in the Black Speech and Westron,
+D:and they seem to speak of a powerful Ring... could it be true?
+
+# XXX 665 - 668 were the old music books
+
+### Musical Instruments ###
+
+N:669:& Horn~
+G:/:W
+I:14:60:1
+W:7:0:30:400
+A:7/2:20/1:40/1:80/1
+P:0:1d1:0:0:0
+F:CON | ACTIVATE | WIELD_CAST
+D:A simple wind instrument made from brass. If used by inexperienced musicians it sounds
+D:like somebody making "prbbt!" noises down a drainpipe.
+
+N:670:& Drum~
+G:/:W
+I:14:58:1
+W:7:0:30:400
+A:7/2:20/1:40/1:80/1
+P:0:1d1:0:0:0
+F:STR | WIELD_CAST
+D:A sort of clay pot with a bit of skin stretched over its mouth.
+
+N:671:& Harp~
+G:/:W
+I:14:59:1
+W:7:0:30:400
+A:7/2:20/1:40/1:80/1
+P:0:1d1:0:0:0
+F:CHR | WIELD_CAST
+D:A number of strings held by a wooden frame.
+
+# XXX
+# XXX
+
+# The Palantir of Orthanc -- see artifact list
+
+N:675:& Palantir~
+G:~:y
+I:39:104:0
+W:75:0:200:100000
+P:0:10d10:0:0:0
+F:INSTA_ART
+
+### The Monster Egg template; note the theoretical weight of 3 lbs ###
+
+N:676:Egg
+G:,:W
+I:10:1:0
+W:5:0:30:100
+A:5/1:15/1:25/1:35/1
+P:0:1d1:0:0:0
+F:ACTIVATE | ACTIVATE_NO_WIELD
+
+### Two more scrolls ###
+
+N:677:Reset Recall
+G:?:d
+I:70:23:0
+W:20:0:5:125
+A:20/1:25/1:35/1
+D:A strange formula is inscribed on this scroll, which allows you to define another place as the
+D:location to which recalls shall move you.
+
+N:678:Divination
+G:?:d
+I:70:31:0
+W:20:0:5:600
+A:30/1:45/1:55/1
+D:This scroll is inscribed with a ritual which allows you to discern what fate holds in store for
+D:you.
+
+### Here comes the Runes ###
+
+N:679:Self
+G:?:b
+I:105:0:0
+W:3:5:2:40
+A:3/1
+P:0:1d1:0:0:0
+F:EASY_KNOW
+D:A rune signifying the caster.
+
+N:680:Ray
+G:?:b
+I:105:2:0
+W:10:5:2:300
+A:10/1
+P:0:1d1:0:0:0
+F:IGNORE_COLD | IGNORE_ELEC | EASY_KNOW
+D:A rune signifying a beam or ray.
+
+N:681:Sphere
+G:?:b
+I:105:3:0
+W:15:5:2:1000
+A:15/1
+P:0:1d1:0:0:0
+F:IGNORE_ELEC | IGNORE_FIRE | IGNORE_COLD | EASY_KNOW
+D:A rune signifying a ball or sphere.
+
+N:682:Knowledge
+G:?:b
+I:104:91:0
+W:6:5:2:200
+A:6/1
+P:0:1d1:0:0:0
+F:EASY_KNOW
+D:A rune signifying knowledge.
+
+N:683:Life
+G:?:D
+I:104:53:0
+W:3:5:2:200
+A:3/1
+P:0:1d1:0:0:0
+F:EASY_KNOW
+D:A rune signifying life.
+
+N:684:Fire
+G:?:r
+I:104:5:0
+W:10:5:2:300
+A:10/1
+P:0:1d1:0:0:0
+F:IGNORE_FIRE | EASY_KNOW
+D:A rune signifying flame.
+
+N:685:Cold
+G:?:b
+I:104:4:0
+W:12:5:2:300
+A:12/1
+P:0:1d1:0:0:0
+F:IGNORE_COLD | EASY_KNOW
+D:A rune signifying cold.
+
+N:686:Lightning
+G:?:W
+I:104:1:0
+W:13:5:2:300
+A:13/1
+P:0:1d1:0:0:0
+F:IGNORE_ELEC | EASY_KNOW
+D:A rune signifying a lightning beam.
+
+N:687:Acid
+G:?:B
+I:104:3:0
+W:16:5:2:300
+A:16/1
+P:0:1d1:0:0:0
+F:IGNORE_ACID | EASY_KNOW
+D:A rune signifying acid.
+
+N:688:Element
+G:?:g
+I:104:10:0
+W:23:5:2:1000
+A:23/1
+P:0:1d1:0:0:0
+F:IGNORE_ACID | IGNORE_ELEC | IGNORE_FIRE | IGNORE_COLD | EASY_KNOW
+D:A rune signifying an element.
+
+N:689:Chaos
+G:?:v
+I:104:30:0
+W:26:5:2:2000
+A:26/1
+P:0:1d1:0:0:0
+F:ATTR_MULTI
+F:IGNORE_ACID | IGNORE_ELEC | IGNORE_FIRE | IGNORE_COLD | EASY_KNOW
+D:A rune signifying raw chaos.
+
+N:690:Mind
+G:?:D
+I:104:85:0
+W:19:5:2:3000
+A:19/1
+P:0:1d1:0:0:0
+F:IGNORE_ELEC | EASY_KNOW
+D:A rune signifying the mind.
+
+N:691:Holding
+G:?:B
+I:104:75:0
+W:5:5:2:500
+A:5/1
+P:0:1d1:0:0:0
+F:IGNORE_ACID | EASY_KNOW
+D:A rune signifying the action of holding, or sleep.
+
+N:692:Arrow
+G:?:b
+I:105:1:0
+W:6:5:2:100
+A:6/1
+P:0:1d1:0:0:0
+F:IGNORE_ELEC | EASY_KNOW
+D:A rune signifying an arrow.
+
+N:693:Power Surge
+G:?:b
+I:105:4:0
+W:50:5:2:5000
+A:50/1
+P:0:1d1:0:0:0
+F:IGNORE_ELEC | IGNORE_FIRE | IGNORE_COLD | IGNORE_ACID | EASY_KNOW
+D:A rune signifying a powerful surge.
+
+N:694:Armageddon
+G:?:b
+I:105:5:0
+W:30:5:2:4000
+A:30/1
+P:0:1d1:0:0:0
+F:IGNORE_ELEC | IGNORE_FIRE | IGNORE_COLD | IGNORE_ACID | EASY_KNOW
+D:A rune signifying a powerful blast.
+
+N:695:Gravity
+G:?:G
+I:104:35:0
+W:16:5:2:300
+A:16/1
+P:0:1d1:0:0:0
+F:IGNORE_ACID | EASY_KNOW
+D:A rune signifying the forces of gravity.
+
+# XXX
+
+N:697:Undeath
+G:?:G
+I:104:92:0
+W:35:5:2:1000
+A:35/1
+P:0:1d1:0:0:0
+F:IGNORE_ACID | EASY_KNOW
+D:A rune signifying undeath.
+
+N:698:Protection
+G:?:G
+I:104:74:0
+W:45:5:2:1500
+A:45/1
+P:0:1d1:0:0:0
+F:IGNORE_ACID | EASY_KNOW
+D:A rune signifying protection.
+
+# XXX
+
+# The Ring of Precognition (now a k_info.txt artifact)
+N:700:& Ring~ of Precognition
+G:=:d
+I:45:51:0
+W:90:0:2:300000
+A:90/100
+T:45:23
+F:PRECOGNITION |
+f:PRECOGNITION |
+F:NORM_ART | FULL_NAME
+F:IGNORE_ACID | IGNORE_ELEC | IGNORE_FIRE | IGNORE_COLD
+D:This magical ring allows you to know what you will encounter in the near future.
+
+# Athelas, cures Black Breath
+
+N:701:& Sprig~ of Athelas
+G:,:g
+I:80:40:0
+W:25:5:2:450
+A:25/2:55/1:85/1
+D:A sprig of a healing plant brought to Middle-Earth by the Numenoreans. Also known
+D:as Kingsfoil, it will cure you from the ravages of the Black Breath.
+
+# XXX
+# XXX
+# XXX
+# XXX
+# XXX
+# XXX
+# XXX
+# XXX
+# XXX
+# XXX
+# XXX
+# XXX
+# XXX
+# XXX
+# XXX
+# XXX
+# XXX
+# XXX
+
+# The Scroll of Deincarnation (now an artifact)
+
+N:720:& Old Scroll~ of Deincarnation
+G:?:d
+I:70:40:0
+W:90:0:5:160000
+A:90/140
+T:70:51
+F:NORM_ART | FULL_NAME
+F:IGNORE_ACID | IGNORE_ELEC | IGNORE_FIRE | IGNORE_COLD
+D:It allows you to leave your body to reincarnate into
+D:another one. However, your current body is lost in the process.
+
+N:721:& Dark Sword~
+G:|:D
+I:23:33:0
+W:25:0:70:500
+A:25/1:80/2
+P:0:3d7:0:0:0
+F:SHOW_MODS | ANTIMAGIC_50
+f:ANTIMAGIC_50
+D:A strange, very sharp long sword, which seems to drain light from its surroundings. As you
+D:wield it, you feel much less attuned to magic.
+
+N:722:Numenorean for Beginners (I)
+G:?:s
+I:8:101:0
+W:10:100:5:100
+A:10/2
+D:These ancient words still contain magic.
+
+N:723:Numenorean for Beginners (II)
+G:?:s
+I:8:102:0
+W:5:100:5:150
+A:5/2
+D:These ancient words still contain magic.
+
+N:724:Advanced Lessons of Numenorean
+G:?:s
+I:8:103:0
+W:20:100:5:300
+A:20/2
+D:These ancient words still contain magic.
+
+N:725:Advanced Lessons of Sindarin
+G:?:s
+I:8:104:0
+W:20:100:5:400
+A:20/2
+D:These ancient words still contain magic.
+
+##### Junk #####
+
+N:726:& Shard~ of Pottery
+G:~:r
+I:11:3:0
+W:0:0:5:0
+A:0/1
+P:0:1d1:0:0:0
+F:EASY_KNOW
+D:A piece of clay that looks like it got broken off something.
+
+N:727:& Broken Stick~
+G:~:r
+I:11:6:0
+W:0:0:3:0
+A:0/1
+P:0:1d1:0:0:0
+F:EASY_KNOW
+D:A piece of rotten wood.
+
+# XXX
+# XXX
+# XXX
+# XXX
+# XXX
+# XXX
+# XXX
+# XXX
+# XXX
+# XXX
+
+N:738:& Book~ of Beginner Cantrips
+G:?:w
+I:111:50:0
+W:5:0:30:100
+A:5/1
+P:0:1d1:0:0:0
+D:A standard beginner's spellbook with some useful spells.
+D:The cover is blood-stained and weather-worn.
+
+N:739:& Book~ of Teleportation
+G:?:w
+I:111:51:0
+W:10:0:30:1000
+A:10/1
+P:0:1d1:0:0:0
+D:A standard spellbook with a few spells.
+D:The smell of the cover makes you think of wind.
+
+# XXX
+
+N:741:& Book~ of Summoning
+G:?:w
+I:111:52:0
+W:7:0:30:700
+A:7/1
+P:0:1d1:0:0:0
+D:A standard spellbook with a few spells.
+D:It smells like camel.
+
+# XXX
+
+# The Potion of Learning - no longer an artifact in Theme
+
+N:743:Learning
+G:!:d
+I:71:12:200
+W:99:2:2:100000
+A:99/10
+P:0:1d1:0:0:0
+F:EASY_KNOW
+D:This old potion is supposed to grant more learning power
+D:to its user.
+
+# XXX
+# XXX
+# XXX
+# XXX
+# XXX
+# XXX
+# XXX
+
+N:751:Khuzdul - The Hidden Tongue of the Dwarves
+G:?:s
+I:8:105:0
+W:2:100:5:50
+A:2/2
+D:These ancient words still contain magic.
+
+N:752:Nandorin for Dummies
+G:?:s
+I:8:106:0
+W:20:100:5:100
+A:20/2
+D:These ancient words still contain magic.
+
+N:753:Advanced Lessons of Orcish
+G:?:s
+I:8:107:0
+W:30:100:5:200
+A:30/2
+D:These ancient words still contain magic.
+
+# Here's the Ring of Flying
+N:755:Flying
+G:=:d
+I:45:54:0
+W:20:0:2:16000
+A:20/3
+F:FLY | EASY_KNOW
+f:FLY |
+D:This ring is imbued with the power of eagles. It grants you the power of flight.
+
+N:756:& Tome~ of the Time
+G:?:b
+I:111:8:0
+W:50:0:30:25000
+A:50/4
+P:0:1d1:0:0:0
+F:FULL_NAME | EASY_KNOW
+D:This tome seems to have trouble deciding whether it really exists now. Its flickering pages
+D:contain all that is known about the currents of time.
+
+N:757:& Spellbook~ of #
+G:?:w
+I:111:255:0
+W:10:0:30:200
+A:10/1:20/1:30/1:40/1:50/1:60/1:70/1
+P:0:1d1:0:0:0
+D:This book contains a single spell within its pages.
+
+N:758:& Tome~ of Meta Spells
+G:?:v
+I:111:9:0
+W:50:0:30:25000
+A:50/4
+P:0:1d1:0:0:0
+F:FULL_NAME | EASY_KNOW | IGNORE_FIRE | ATTR_MULTI
+D:This tome gives you deeper insights on the works of magic.
+
+N:759:& Tome~ of the Mind
+G:?:B
+I:111:10:0
+W:50:0:30:25000
+A:50/4
+P:0:1d1:0:0:0
+F:FULL_NAME | EASY_KNOW
+D:This tome has no pages; knowledge is transferred to you if you simply
+D:hold it.
+
+N:760:& Holy Tome~ of Eru Iluvatar
+G:?:G
+I:111:20:0
+W:50:0:30:25000
+A:50/4
+P:0:1d1:0:0:0
+F:FULL_NAME | EASY_KNOW
+D:This dusty tome is filled with ancient rituals,
+D:designed to uncover all that is hidden.
+
+N:761:& Holy Tome~ of Manwe Sulimo
+G:?:B
+I:111:21:0
+W:50:0:30:25000
+A:50/4
+P:0:1d1:0:0:0
+F:FULL_NAME | EASY_KNOW
+D:A large jewel-encrusted tome that transfers
+D:wisdom and understanding to its bearer.
+
+N:762:& War Tome~ of Tulkas
+G:?:R
+I:111:22:0
+W:50:0:30:25000
+A:50/4
+P:0:1d1:0:0:0
+F:FULL_NAME | EASY_KNOW
+D:This tome fills you with glorious visions of total devastation.
+D:Anyone in your way shall be destroyed.
+
+N:763:& Unholy Tome~ of the Hellflame
+G:?:v
+I:111:11:0
+W:50:0:30:25000
+A:50/4
+P:0:1d1:0:0:0
+F:FULL_NAME | EASY_KNOW | ATTR_MULTI
+D:This singed book smells like burned flesh.  Its power is as evident
+D:as its thirst for your blood.
+
+N:764:& Corrupted Tome~ of Melkor
+G:?:D
+I:111:23:0
+W:50:0:30:25000
+A:50/4
+P:0:1d1:0:0:0
+F:FULL_NAME | EASY_KNOW
+D:A black and scarlet flame springs from this tome, issuing
+D:a thunderous roar, and you hear the screams of tormented souls.
+
+N:765:& Ironclad Tome~ of Aule
+G:?:s
+I:111:63:0
+W:50:0:30:25000
+A:50/4
+P:0:1d1:0:0:0
+F:FULL_NAME | EASY_KNOW
+D:The sleek black cover of this tome is covered with intricate
+D:carved decorations, inset with rubies that sparkle like fire.
+
+N:766:& Shining Tome~ of Varda
+G:?:y
+I:111:64:0
+W:50:0:30:25000
+A:50/4
+P:0:1d1:0:0:0
+F:FULL_NAME | EASY_KNOW
+D:This tome's cover and pages radiate a soft white light.
+
+N:767:& Ocean Tome~ of Ulmo
+G:?:B
+I:111:65:0
+W:50:0:30:25000
+A:50/4
+P:0:1d1:0:0:0
+F:FULL_NAME | EASY_KNOW
+D:This book smells faintly of seaweed and appears to be wet.
+
+N:768:& Forest Tome~ of Yavanna
+G:?:G
+I:111:24:0
+W:50:0:30:25000
+A:50/4
+P:0:1d1:0:0:0
+F:FULL_NAME | EASY_KNOW
+D:The cover of this tome reminds you of tree bark.
+D:You feel the smell of grass and flowers as you read it.
+
+# for the Library Quest
+# Tome of PLAYER
+N:769:Tome of#
+G:?:v
+I:111:61:0
+W:50:0:30:25000
+A:50/4
+P:0:1d1:0:0:0
+F:FULL_NAME | EASY_KNOW | ATTR_MULTI | SPECIAL_GENE
+F:IGNORE_ACID | IGNORE_ELEC | IGNORE_FIRE | IGNORE_COLD | NORM_ART
+D:This book has some of your favourite spells inside.
+
+# The Ring of Phasing -- see artifact list
+
+N:770:& Ring~
+G:=:d
+I:45:55:0
+W:110:0:2:300000
+A:110/5
+F:INSTA_ART | SPECIAL_GENE
+
+N:771:& Holy Tome~ of Mandos
+G:?:w
+I:111:66:0
+W:50:0:30:25000
+A:50/4
+P:0:1d1:0:0:0
+F:FULL_NAME | EASY_KNOW
+D:Just holding this tome makes you fill with quiet strength.
+
+# XXX #
+# XXX #
+# XXX #
+# XXX #
+
+# Rod Tip of Home Summoning: now an artifact
+#N:776:& Great Rod Tip~ of Home Summoning
+N:776:Home Summoning
+G:-:d
+I:66:30:75
+W:90:0:15:150000
+A:100/14
+P:0:1d1:0:0:0
+T:66:1
+F:NORM_ART | FULL_NAME
+F:IGNORE_FIRE | IGNORE_ACID | IGNORE_COLD | IGNORE_ELEC
+D:This rod creates a little hatch, allowing access to your home no matter how far away it is.
+
+# Additional swords
+N:777:& Shadow Blade~
+G:|:D
+I:23:32:1
+W:50:900:45:2000
+A:48/4:60/2:80/1
+P:0:4d4:-2:2:0
+F:IGNORE_ACID | RES_DARK | STEALTH
+f:STEALTH
+D:A thin long sword made of a completely black metal, which reflects no light.
+
+N:778:& Bluesteel Blade~
+G:|:b
+I:23:31:0
+W:60:1800:50:6000
+A:60/20
+P:0:1d6:4:0:0
+F:SHOW_MODS | VORPAL
+D:A small sword made of a blueish metal with a strangely rough surface. As anything is hurt
+D:with it, the weapon will stick inside the wound and cause horrible wounds when torn away.
+
+# Amulet
+N:779:the Serpents
+G:":G
+I:40:17:0
+W:25:0:3:10000
+A:25/1
+a:HARDCORE=BA_POIS_4
+F:RES_POIS | DEX | ACTIVATE
+D:A petrified serpent's tongue, hung on a thin chain to be clasped around your neck. It makes you
+D:like a snake, able to wriggle out of tight corners, impervious to poisons and poisonous
+D:yourself.
+
+# XXX
+# XXX
+# XXX
+# XXX
+# XXX
+
+# The Nine Rings for mortal men doomed to die! When a Nazgul is
+# destroyed, it drops a Ring of Power with random powers.
+
+N:785:Ring~ of Power
+G:=:d
+I:45:5:0
+W:100:0:2:1
+A:100/100
+F:INVIS | DRAIN_EXP | CURSED | HEAVY_CURSE | CURSE_NO_DROP
+f:INVIS
+F:SPECIAL_GENE | FULL_NAME
+
+# To help people climb mountains...
+
+N:786:& Climbing Set~
+G:`:B
+I:12:0:0
+W:40:0:2:50000
+A:40/3
+F:CLIMB
+f:CLIMB
+D:A bunch of screws and hooks, a small pick and a very long rope. As long as a wall or rock face
+D:isn't really high, this collection of tools should help you across it.
+
+# Parchment to help beginners
+N:787:Adventurer's Guide to Middle-earth
+G:?:o
+I:8:20:0
+W:0:0:5:1
+A:0/1
+D:This parchment contains vital information no adventurer can live without.
+
+##### Demonblades #####
+N:788:& Demonblade~
+G:|:R
+I:115:55:0
+W:10:0:150:500
+A:10/1
+P:0:4d6:0:0:0
+F:SHOW_MODS | SLAY_DEMON | WIELD_CAST
+D:This blade has been taken from the corpse of a demon.
+D:Some demonic energy is still coursing through it, helping
+D:you slay other demons.
+
+N:789:& Demonshield~
+G:]:R
+I:115:56:0
+W:15:0:70:500
+A:15/1
+P:5:1d1:0:0:0
+F:REGEN | WIELD_CAST
+D:This shield has been taken from the corpse of a demon.
+D:Some demonic energy is still coursing through it, giving
+D:life to any that wield it.
+
+N:790:& Demonhorn~
+G:[:R
+I:115:57:0
+W:20:0:30:500
+A:20/1
+P:2:1d1:0:0:0
+F:LITE2 | WIELD_CAST
+D:This horn is about six feet long, and originates from a demon.
+D:Some demonic energy is still coursing through it.
+
+# XXX
+# XXX
+
+### Rods ###
+
+N:793:& Wooden Rod~ of#
+G:-:u
+I:67:10:0
+W:10:0:15:100
+A:5/1:10/1
+P:0:1d1:0:0:0
+D:The most common rod of all. It's the wood of oak, cut at midnight by a fair maiden.
+
+N:794:& Copper Rod~ of#
+G:-:s
+I:67:20:0
+W:15:0:15:200
+A:15/1
+P:0:1d1:0:0:0
+D:This is the common rod of the dwarves.  It is created by chanting incessantly for 48 hours.
+
+N:795:& Iron Rod~ of#
+G:-:D
+I:67:50:0
+W:20:0:15:500
+A:20/1
+P:0:1d1:0:0:0
+D:This is the better version of the copper rod. It has been forged with iron that comes from
+D:the greatest depths, where even the Dwarves fear to go.
+
+N:796:& Moonstone Rod~ of#
+G:-:U
+I:67:75:0
+W:25:0:15:750
+A:25/1
+P:0:1d1:0:0:0
+D:This rod has been fashioned from moonrock.  Its alien nature gives it quite a bit of capacity.
+
+N:797:& Silver Rod~ of#
+G:-:s
+I:67:100:0
+W:30:0:15:1000
+A:30/1
+P:0:1d1:0:0:0
+D:This rod is used often used by court mages. Its creation costs an insane amount of gold.
+
+N:798:& Golden Rod~ of#
+G:-:y
+I:67:125:0
+W:40:0:15:1250
+A:40/2
+P:0:1d1:0:0:0
+D:These rods are rare, since finding gold that can withstand the great magic
+D:capacity that this rod holds is very difficult.
+
+N:799:& Mithril Rod~ of#
+G:-:B
+I:67:160:0
+W:50:0:15:1600
+A:50/5
+P:0:1d1:0:0:0
+D:The mithril of this rod comes from very deep, too deep. Unknown powers have been
+D:infused in this rod, making it the second most powerful type of rod on Middle-earth.
+
+N:800:& Tilkal Rod~ of#
+G:-:v
+I:67:200:0
+W:70:0:15:2000
+A:70/30
+P:0:1d1:0:0:0
+F:ATTR_MULTI
+F:IGNORE_ACID | IGNORE_FIRE | IGNORE_COLD | IGNORE_ELEC
+D:This is the rarest and most powerful kind of rod there is. Its material was once used
+D:to chain Melkor Bauglir in the Halls of Mandos, and only Aule knows the secret of its
+D:making. Treasure this rod greatly.
+
+N:801:& Greater Ration~ of Health
+G:,:g
+I:80:41:0
+W:90:0:2:60000
+A:90/70
+D:This food will, once eaten, permanently add 70 HP.
+
+# Scroll of Mass Resurrection - artifact scroll
+N:802:& Crumpled Scroll~ of Mass Resurrection
+G:?:d
+I:70:43:0
+W:55:0:5:0
+A:55/1
+T:70:1
+F:NORM_ART | FULL_NAME
+F:IGNORE_FIRE | IGNORE_ACID | IGNORE_COLD | IGNORE_ELEC
+D:This magical scroll sends a call to the halls of Mandos, issuing forth all those who have been
+D:slain by the reader.
+
+### Axes ###
+
+N:803:& Cleaver~
+G:/:s
+I:24:2:0
+W:13:0:110:175
+A:13/1
+P:0:2d4:0:0:0
+F:SHOW_MODS
+D:A small axe with a heavy rectangular blade.
+
+N:804:& Light War Axe~
+G:/:s
+I:24:8:0
+W:16:0:140:300
+A:16/1
+P:0:2d5:0:0:0
+F:SHOW_MODS
+D:A broad-bladed axe, suited for battle.
+
+N:805:& Slaughter Axe~
+G:/:G
+I:24:30:0
+W:70:0:300:6000
+A:70/8
+P:0:5d7:0:0:0
+F:SLAY_ANIMAL | SHOW_MODS
+D:A huge axe, the sort used for slaughtering animals, this weapon is unusually deadly against
+D:natural creatures.
+
+N:806:& Runestone~
+G:?:v
+I:105:255:0
+W:10:5:2:300
+A:10/3:20/2:30/1:60/1
+P:0:1d1:0:0:0
+F:IGNORE_COLD | IGNORE_ELEC | IGNORE_FIRE | IGNORE_ACID
+D:A small oval stone. One surface is flat, as if something ought to be scratched or inscribed into
+D:it.
+
+N:807:& Fortune cookie~
+G:,:U
+I:80:42:500
+W:0:0:2:10
+A:0/1:5/1:10/1
+D:A small, sweet bakery product, with a scrap of paper inside.
+
+# 808 was Portable hole
+
+N:809:Critical Hits
+G:=:d
+I:45:59:0
+W:50:0:2:10000
+A:50/3
+F:CRIT
+f:CRIT
+D:A magical ring to make it likelier for the wearer to hit exceptionally heavily.
+
+# The Wand of Stone to Mud of Thrain
+N:810:& Wand~ of Digging of Thrain
+G:-:d
+I:65:26:-1:SPELL=Dig
+W:10:10:10:3200
+A:10/200
+P:0:10d10:0:0:0
+T:65:6
+F:RECHARGE | SPECIAL_GENE | EASY_USE | RECHARGED | NORM_ART | FULL_NAME
+D:The miner's friend.  This wand was used by Thrain to dig into the
+D:walls of the dungeon.  Its indestructible nature makes it quite useful.
+
+# The Staff of Holy Fire of Mithrandir
+N:811:& Gnarled Staff~ of Holy Fire of Mithrandir
+G:_:d
+I:55:22:-1:SPELL=Holy Fire of Mithrandir
+W:50:10:10:12000
+P:0:10d4:0:0:0
+A:50/200
+T:55:8
+F:RECHARGE | EASY_USE | RECHARGED | NORM_ART | FULL_NAME
+D:Mithrandir's staff that throws powerful fire attacks at all enemies.  It
+D:can be recharged without blowing up, for it is built to hold
+D:much magical energy.
+
+### Summoner totems ###
+
+N:812:Partial Totem
+G:":v
+I:54:1:0
+W:10:10:10:120
+P:0:1d1:0:0:0
+A:10/200
+F:SPECIAL_GENE
+D:An item which a Summoner can use to animate a copy of a creature that
+D:only exists by the will of its master.
+
+N:813:True Totem
+G:":v
+I:54:2:0
+W:10:10:10:120
+P:0:1d1:0:0:0
+A:10/200
+F:SPECIAL_GENE
+D:An item which a Summoner can use to revive a true copy of a creature.
+
+### Holy relics for God Quests ###
+
+N:814:& Piece~ of the Relic of Eru
+G:~:v
+I:11:7:0
+W:0:0:0:1000
+A:0/1
+P:0:1d1:0:0:0
+F:SPECIAL_GENE | IGNORE_COLD | IGNORE_ELEC | IGNORE_FIRE | IGNORE_ACID
+D:Although it looks like a piece of junk, it is actually part of an ancient
+D:relic belonging to Priests of Eru. The relic now lies in pieces, hidden
+D:from all but but his most dedicated followers.
+
+N:815:& Piece~ of the Relic of Manwe
+G:~:v
+I:11:8:0
+W:0:0:0:1000
+A:0/1
+P:0:1d1:0:0:0
+F:SPECIAL_GENE | IGNORE_COLD | IGNORE_ELEC | IGNORE_FIRE | IGNORE_ACID
+D:Although it looks like a piece of junk, it is actually part of an ancient
+D:relic belonging to Priests of Manwe. The relic now lies in pieces, hidden
+D:from all but his most dedicated followers.
+
+N:816:& Piece~ of the Relic of Tulkas
+G:~:v
+I:11:9:0
+W:0:0:0:1000
+A:0/1
+P:0:1d1:0:0:0
+F:SPECIAL_GENE | IGNORE_COLD | IGNORE_ELEC | IGNORE_FIRE | IGNORE_ACID
+D:Although it looks like a piece of junk, it is actually part of an ancient
+D:relic belonging to worshippers of Tulkas. The relic now lies in pieces,
+D:hidden from all but his most dedicated followers.
+
+N:817:& Piece~ of the Relic of Melkor
+G:~:v
+I:11:10:0
+W:0:0:0:1000
+A:0/1
+P:0:1d1:0:0:0
+F:SPECIAL_GENE | IGNORE_COLD | IGNORE_ELEC | IGNORE_FIRE | IGNORE_ACID
+D:Although it looks like a piece of junk, it is actually part of an ancient
+D:relic belonging to Dark Priests. The relic now lies in pieces, hidden
+D:from all but the most faithful followers of Melkor.
+
+N:818:& Piece~ of the Relic of Yavanna
+G:~:v
+I:11:11:0
+W:0:0:0:1000
+A:0/1
+P:0:1d1:0:0:0
+F:SPECIAL_GENE | IGNORE_COLD | IGNORE_ELEC | IGNORE_FIRE | IGNORE_ACID
+D:Although it looks like a piece of junk, it is actually part of an ancient
+D:relic belonging to Druids. The relic now lies in pieces, hidden
+D:from all but the most faithful followers of Yavanna.
+
+### Dwarven Rings of Power were here
+
+# XXX #
+# XXX #
+# XXX #
+# XXX #
+# XXX #
+# XXX #
+
+### More God relics ###
+
+N:825:& Piece~ of the Relic of Aule
+G:~:v
+I:11:16:0
+W:0:0:0:1000
+A:0/1
+P:0:1d1:0:0:0
+F:SPECIAL_GENE | FULL_NAME
+F:IGNORE_ACID | IGNORE_COLD | IGNORE_ELEC | IGNORE_FIRE |
+D:Although it looks like a piece of junk, it is actually part of an ancient
+D:relic belonging to the Stonewrights. The relic now lies in pieces, hidden
+D:from all but the most faithful followers of Aule.
+
+N:826:& Piece~ of the Relic of Varda
+G:~:v
+I:11:17:0
+W:0:0:0:1000
+A:0/1
+P:0:1d1:0:0:0
+F:SPECIAL_GENE | FULL_NAME
+F:IGNORE_ACID | IGNORE_COLD | IGNORE_ELEC | IGNORE_FIRE |
+D:Although it looks like a piece of junk, it is actually part of an ancient
+D:relic belonging to the Priests of Varda. The relic now lies in pieces, 
+D:hidden from all but the most faithful followers of Varda.
+
+N:827:& Piece~ of the Relic of Ulmo
+G:~:v
+I:11:18:0
+W:0:0:0:1000
+A:0/1
+P:0:1d1:0:0:0
+F:SPECIAL_GENE | FULL_NAME
+F:IGNORE_ACID | IGNORE_COLD | IGNORE_ELEC | IGNORE_FIRE |
+D:Although it looks like a piece of junk, it is actually part of an ancient
+D:relic belonging to the Priests of Ulmo. The relic now lies in pieces, hidden
+D:from all but the most faithful followers of Ulmo.
+
+N:828:& Piece~ of the Relic of Mandos
+G:~:v
+I:11:19:0
+W:0:0:0:1000
+A:0/1
+P:0:1d1:0:0:0
+F:SPECIAL_GENE | FULL_NAME
+F:IGNORE_ACID | IGNORE_COLD | IGNORE_ELEC | IGNORE_FIRE |
+D:Although it looks like a piece of junk, it is actually part of an ancient
+D:relic belonging to the Priests of Mandos. The relic now lies in pieces, 
+D:hidden from all but the most faithful followers of Mandos.
+
+# XXX Orome's relic goes here #
+# XXX Lorien/Nienna's relic goes here #
+
+### New items for the Theme module ###
+
+### Food ###
+
+N:831:& Pinch~ of Longbottom Leaf
+G:.:g
+I:80:45:10
+#Prized at stores :P
+W:1:1:1:300
+A:1/1
+D:It's chewing tobacco, and not very nutritious. It is said to 
+D:contain great stress-relieving properties.
+
+# XXX #
+# XXX #
+# XXX #
+# XXX #
+
+N:836:& Jar~ of Honey
+G:~:y
+I:80:43:1000
+W:1:1:10:50
+A:1/1:5/1:10/1:15/1
+D:A clay jar filled with pure honey. You can 'E'at it.
+
+N:837:& Jug~ of Milk
+G:~:w
+I:80:44:1000
+W:1:1:10:50
+A:1/1
+D:A clay jug filled with fresh milk. You wonder how that is 
+D:possible in the dungeon. You can drink it by pressing 'E'.
+
+### Amulets and rings ###
+
+N:838:of War
+G:":d
+I:40:3:3
+W:70:12:3:55000
+A:70/12
+F:BLOWS | STR | DEX
+F:AGGRAVATE | DRAIN_MANA | DRAIN_EXP
+D:This rare amulet will magically improve your fighting prowess 
+D:greatly, but this improvement comes at a cost. Nothing can 
+D:ignore the challenge this amulet magically issues when worn.
+
+N:839:of Life
+G:":d
+I:40:16:1
+W:70:12:3:100000
+A:70/12
+F:LIFE | SUST_CON | HOLD_LIFE | DRAIN_MANA
+D:This rare amulet will magically increase your life force and 
+D:even prevent it from being sapped. However, wearing this 
+D:amulet makes you feel less adept at using magic.
+
+# New jewelry from T-Plus by Ingeborg S. Norden
+# They reuse some svals and so colours will match. This will change when ToME3 comes out.
+
+N:840:Wizardry
+G:=:d
+I:45:10:2
+W:100:0:2:125000
+A:100/10
+F:MANA | SPELL | SPELL_CONTAIN | WIELD_CAST | HIDE_TYPE |
+f:IGNORE_ACID | IGNORE_COLD | IGNORE_ELEC | IGNORE_FIRE | SPELL |
+D:This powerful ring not only stores a chosen spell (which must be 
+D:engraved by 'copying' it); it also improves the power of cast spells 
+D:and augments the wearer's magical reserves.
+
+N:841:Vitality
+G:=:d
+I:45:11:2
+W:100:0:2:125000
+A:100/10
+F:SUST_STR | SUST_DEX | SUST_CON | REGEN |
+F:HOLD_LIFE | LIFE |
+F:HIDE_TYPE | ACTIVATE |
+a:HARDCORE=CURE_HUNGER
+f:SUST_STR | SUST_DEX | SUST_CON | REGEN |
+D:This valuable ring enhances and protects the wearer's life force in every way.
+
+N:842:Clear Thought
+G:=:d
+I:45:12:0
+W:100:0:2:125000
+A:100/10
+F:SUST_INT | SUST_WIS | RES_FEAR | RES_CONF |
+F:ACTIVATE | EASY_KNOW |
+a:HARDCORE=CURE_INSANITY
+f:SUST_INT | SUST_WIS |
+D:This valuable ring protects the wearer's intellect and intuition, as well as   
+D:guarding him from most mental attacks.  From time to time, the wearer can 
+D:even purge himself of insanity.
+
+### New scroll ###
+N:846:Sterilise
+G:?:d
+I:70:54:0
+W:40:0:5:200
+A:30/1
+D:This scroll humanely neuters all nearby monsters.
+
+### Maps ###
+
+### Massimiliano Marangio's map ###
+N:847:Map of Middle-earth
+G:?:s
+I:8:204:0
+W:70:100:30:100000
+A:70/3
+D:A large map describing all lands of Middle-earth.
+
+# Map of Edoras
+N:848:Map of Edoras
+G:?:s
+I:8:205:0
+W:10:100:5:500
+D:A map of the capital city of Rohan.
+
+# Map of Esgaroth
+N:849:Map of Esgaroth
+G:?:s
+I:8:206:0
+W:15:100:5:1500
+D:A map of the city upon the Long Lake at the foot 
+D:of the Lonely Mountain.
+
+# Map of Hobbiton
+N:850:Map of Hobbiton
+G:?:s
+I:8:207:0
+W:5:100:5:150
+D:A map of the famous Halfling village.
+
+# Map of Osgiliath
+N:851:Map of Osgiliath
+G:?:s
+I:8:208:0
+W:25:100:5:10000
+D:A map of the proud stronghold of Gondor.
+
+# Map of Pelargir
+N:852:Map of Pelargir
+G:?:s
+I:8:209:0
+W:25:100:5:10000
+D:A map of the great city of Men at the mouth 
+D:of the Anduin river.
+
+# Map of Beorn's domain
+N:853:Map of Beorn's domain
+G:?:s
+I:8:210:0
+W:20:100:5:3000
+D:A map showing the location of the house of Beorn.
+
+# Map of Dale
+N:854:Map of Dale
+G:?:s
+I:8:211:0
+W:10:100:5:200
+D:A map of the area where Dale is being rebuilt.
+
+# Map of Henneth Annun
+N:855:Map of Henneth Annun
+G:?:s
+I:8:212:0
+W:70:100:5:30000
+D:A map showing the secret location of the Ranger 
+D:outpost in Ithilien.
+
+# Map of Helm's Deep
+N:856:Map of Helm's Deep
+G:?:s
+I:8:213:0
+W:50:100:5:3000
+D:A map showing the location of the greatest 
+D:fortress in Rohan.
+
+# Map of Thranduil's realm
+N:857:Map of Thranduil's realm
+G:?:s
+I:8:214:0
+W:60:100:5:8000
+D:A map showing the location of the secret realm 
+D:of the Wood-elves.
+
+# Map of Imladris
+N:858:Map of Imladris
+G:?:s
+I:8:215:0
+W:60:100:5:9000
+
+### Axes from T-Plus ###
+
+N:859:& Bearded Axe~
+G:\:s
+I:24:3:0
+W:8:0:35:100
+P:0:1d6:0:0:0
+A:8/1:15/1
+F:SHOW_MODS | COULD2H
+f:COULD2H
+D:A throwing-length axe with a "beard", an increased depth at the lower
+D:end of the blade. Surprisingly light and durable, it doubles as a
+D:wood-chopping implement in times of peace.
+
+N:860:& Double Axe~
+G:\:s
+I:24:4:0
+W:25:0:200:450
+P:0:3d6:0:0:0
+A:25/1:40/1
+F:SHOW_MODS | MUST2H
+f:MUST2H
+D:A mighty axe with two moon-shaped blades on each side of the headpiece,
+D:the immense weight leads to slow but powerful swings.
+
+N:861:& Crusader Axe~
+G:\:W
+I:24:6:0
+W:10:0:130:300
+A:10/1:20/1
+P:0:2d5:0:0:0
+F:SHOW_MODS
+D:The predecessor of the Battle Axe. Shorter and lighter, it delivers less
+D:of a punch, but is favored by mounted cavalry.
+
+N:862:& Reaper Axe~
+G:\:W
+I:24:7:0
+W:22:0:150:420
+A:22/1
+P:0:3d4:0:0:0
+F:SHOW_MODS | COULD2H
+f:COULD2H
+D:A large axe with an elongated moon shaped blade. Strikes a good balance
+D:between swinging power and speed.
+
+### New armour adapted from T-Plus (well, I had Mithril Helms before T-Plus 
+### did, but they didn't work, so I took them out. :P)
+
+N:863:& Mithril Helm~
+G:]:B
+I:32:8:0
+W:50:0:60:2500
+P:7:1d2:0:0:5
+F:IGNORE_ACID
+D:A cone-shaped helm with cheekguards, made of True-silver.
+
+N:864:& Set~ of Mithril Gauntlets
+G:]:B
+I:31:4:0
+W:50:0:25:3500
+A:50/2
+P:4:1d2:0:0:5
+F:IGNORE_ACID
+D:Flexible and strong set of handguards, with a gripping
+D:surface and surprisingly smooth interior.
+
+N:865:& Small Mithril Shield~
+G:):B
+I:34:7:0
+W:50:0:65:5000
+A:50/2
+P:5:1d2:0:0:5
+F:IGNORE_ACID
+D:A light shield made of a metal alloy, with a mithril 
+D:coating.
+
+### Added in Theme
+N:866:& Large Mithril Shield~
+G:):B
+I:34:8:0
+W:50:0:80:7000
+A:50/2
+P:8:1d2:0:0:10
+F:IGNORE_ACID
+D:A sturdy shield made of a metal alloy, with a mithril 
+D:coating.
+
+### Artifacts ###
+
+# New artifacts needed for Erebor quest
+
+N:867:Map
+G:?:U
+I:8:33:0
+W:70:100:30:50000
+F:INSTA_ART |
+D:At first glance, this looks like another crumpled piece of paper. 
+D:As you smooth out the parchment, you see the faint outline of a 
+D:map... You have a feeling you might find use for this map one day.
+D:Better hang on to it, you never know when you might need it.
+
+N:868:& Key~
+G:-:W
+I:11:13:0
+W:70:100:5:50000
+F:INSTA_ART | 
+D:As you clear away some mud from this item, you notice that it is 
+D:actually a small silver key. You wonder what it opens. Perhaps 
+D:you should hang on to this key, you might find it useful later.
+D:Better hang on to it, you never know when you might need it.
+
+# New artifact that acts as a junkart
+N:869:& Cup~
+G:+:y
+I:11:14:0
+W:70:100:50:100000
+F:INSTA_ART | 
+D:It looks like a lump of clay, and as you prepare to throw it 
+D:away, a piece breaks off, and you see a faint gleam of gold. 
+D:Taking off the rest of the caked-on mud, you see that it is 
+D:a golden cup with ornate jewels. It may hold hidden powers. 
+
+# The Red Arrow of Gondor - see artifact list
+N:870:& Red Arrow~
+G:{:R
+I:11:15:0
+W:40:70:2:70000
+F:INSTA_ART
+D:As you clear away some dirt from this object, you notice that it is an arrow 
+D:with steel barbs, black flights, and a red tip. Perhaps it isn't so useless.
+
+# The Sceptre of Numenor - see artifact list
+N:871:& Sceptre~
+G:|:B
+I:12:2:4
+W:50:40:24:80000
+F:INSTA_ART
+D:A beautiful golden sceptre of kings, encrusted with shining gems.
+
+# The Rod of Annuminas - see artifact list
+N:872:& Rod~
+G:|:G
+I:12:3:4
+W:60:50:24:80000
+F:INSTA_ART
+D:A royal sceptre made of gold and silver, inlaid with emeralds.
+
+# The Necklace of Girion - see artifact list
+N:873:& Necklace~
+G:":G
+I:40:4:5
+W:20:5:2:15000
+F:INSTA_ART
+
+# The Amulet of Faramir - see artifact list
+N:874:& Amulet~
+G:":B
+I:40:29:5
+W:10:2:2:10000
+F:INSTA_ART 
+
+# The Black Banner of Gondor - see artifact list
+N:875:& Black Banner~
+G:~:D
+I:39:108:0
+W:60:30:50:50000
+F:LITE1 | INSTA_ART
+D:A strange banner of black thread rolled up as though it were a scroll.
+
+# The Pearl 'Nimphelos' - see artifact list
+N:876:& Pearl~
+G:~:w
+I:39:109:1
+W:20:10:10:40000
+P:0:1d1:0:0:0
+F:LITE3 | INSTA_ART | FULL_NAME
+D:A beautiful shining pearl, about the size of a dove's egg.
+
+# The Silmaril of Flames - see artifact list
+N:877:& Silmaril~
+G:*:R
+I:39:110:2
+W:75:90:200:100000
+P:0:10d10:0:0:0
+F:LITE2 | LITE3 | INSTA_ART | FULL_NAME
+D:A dazzling, mesmerizingly beautiful jewel, shining in pure white 
+D:light with a slight tinge of red. It hurts your eyes to look at it, 
+D:yet you cannot bear to turn away from it, either.
+
+# The Silmaril of the Seas - see artifact list
+N:878:& Silmaril~
+G:*:B
+I:39:111:2
+W:75:90:200:100000
+P:0:10d10:0:0:0
+F:LITE2 | LITE3 | INSTA_ART
+D:A dazzling, mesmerizingly beautiful jewel, shining in pure white 
+D:light with a slight tinge of blue. It hurts your eyes to look at it, 
+D:yet you cannot bear to turn away from it, either.
+
+### Golden Harp of Thorin - see artifact list.
+N:879:& Golden Harp~
+G:/:y
+I:14:59:2
+W:50:0:30:40000
+P:0:1d1:0:0:0
+F:INSTA_ART
+D:A musical instrument made of pure shining gold.
+
+### Map of the Northern Reaches
+
+N:880:Map of Forodwaith
+G:?:s
+I:8:216:0
+W:40:100:30:40000
+A:40/3
+D:A map showing the northern reaches of Middle-earth.
+
+N:881:& Ranger's Arrow~
+G:{:g
+I:17:3:0
+W:5:7:1:3
+P:0:2d6:0:0:0
+A:5/7:20/7:50/7
+F:SHOW_MODS
+F:SLAY_ANIMAL | ESP_ANIMAL
+D:A sharpened metal head on a piece of wood, fitted with decorative 
+D:green feathers. You can use it for 'f'iring a bow.
+
+N:882:& Throwing Axe~
+G:/:s
+I:24:7:0
+A:0/2:5/2:10/2:20/2
+W:0:0:15:30
+P:0:1d3:0:0:0
+F:SHOW_MODS
+D:The smallest and lightest of its kind, this axe has a single blade 
+D:with a sharp steel tip, counterbalanced by a pointed fluke.
+
+# Buckler adapted from FuryMod in Theme 1.1.5
+
+N:883:& Buckler~
+G:):U
+I:34:1:1
+W:10:9:50:10
+P:-30:1d1:0:0:0
+A:10/2:15/2:20/2
+F:BLOWS
+f:BLOWS
+D:A small, round fist-shield made of wood, with a central dome 
+D:under which there is a handle. Generally used with smaller 
+D:arms; the buckler does not afford much protection. Its chief 
+D:use is as an aid in fighting.
+
+# Mithril boomerangs adapted from FuryMod in Theme 1.1.5
+
+N:884:& Small Mithril Boomerang~
+G:{:B
+I:15:3:0
+W:25:0:40:300
+A:25/1:35:/2
+P:0:2d5:0:0:0
+F:SHOW_MODS | IGNORE_ACID
+D:A small curved piece of wood with mithril blades on the "forward" edges.
+
+N:885:& Mithril Boomerang~
+G:{:B
+I:15:4:0
+W:35:5:40:1000
+A:35/1:50/2
+P:0:5d6:0:0:0
+F:SHOW_MODS | IGNORE_ACID
+D:A curved leaf-shaped piece of wood, its "forward" edges enhanced with mithril blades.
+
+# N: serial number : & object name~
+# G: symbol : color
+# I: tval : sval : pval
+# W: depth : rarity : weight : cost
+# P: base armor class : base damage : plus to-hit : plus to-dam : plus to-ac
+# A: depth/rarity : depth/rarity : etc
+# F: flag | flag | etc

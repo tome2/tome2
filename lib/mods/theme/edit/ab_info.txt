@@ -1,0 +1,109 @@
+# File: ab_info.txt
+
+
+# This file is used to initialize the "lib/data/ab_info.raw" file, which is
+# used to initialize the "abilities" information for the ToME game.
+
+# Do not modify this file unless you know exactly what you are doing,
+# unless you wish to risk possible system crashes and broken savefiles.
+
+# The ToME abilities indexes are defined in "defines.h", and must not be changed.
+# If you want to add new ones, add them after the tome ones
+
+# N:idx:name
+# D:desc
+# I:cost(in skill points)
+# A:action mkey:action desc
+
+# Prerequisites
+# k:level:skill
+# S:level(linear mode):stats
+# a:needed ability
+
+# E:excluding ability:excluding ability
+
+# If you need more sophisticated prereqs use the HOOK_LEARN_ABILITY
+
+# Version stamp (required)
+
+# Do not forget to update misc.txt with an entry like the following :
+# Maximum number of traits in ab_info.txt
+# M:b:50
+
+V:2.2.0
+
+N:0:Spread blows
+D:If a monster dies to your attack but you still have blows left
+D:you won't lose the full turn, allowing you to attack some other
+D:monster in the same turn
+D:Prereq: Weaponmastery skill@30, Dex@17
+I:5
+k:30:Weaponmastery
+S:17:DEX
+
+N:1:Tree walking
+D:Allows you to walk in dense forest
+D:Prereq: Nature skill@20
+I:7
+k:20:Nature
+
+N:2:Perfect casting
+D:Allows you to reach 0% failure rate on spells
+D:Prereq: Magic skill@35
+I:6
+k:35:Magic
+
+N:3:Extra Max Blow(1)
+D:Increases your max possible blows number by 1
+D:Prereq: Combat@10
+I:7
+k:10:Combat
+
+N:4:Extra Max Blow(2)
+D:Increases your max possible blows number by 1
+D:Prereq: Combat@20, Extra Max Blow(1)
+I:7
+k:20:Combat
+a:Extra Max Blow(1)
+
+N:5:Ammo creation
+D:Allows you to create shots, arrows and bolts from various materials
+D:Prereq: Archery@10
+A:10:Forge ammo
+I:8
+k:10:Archery
+
+N:6:Touch of death
+D:Your melee blows can insta-kill, but you only receive 1/3 of the experience
+D:Prereq: Necromancy@50, Combat@40, DEX@30, STR@30
+A:100:Activate touch of death
+I:15
+k:50:Necromancy
+k:40:Combat
+S:30:DEX
+S:30:STR
+
+N:8:Far reaching attack
+D:You can attack an enemy one square far using a long polearm.
+D:At high levels of Polearm-mastery skill, you can even hit two enemies at once.
+D:Prereq: Combat@15, Polearm-mastery@15
+I:10
+A:102:Far reaching attack
+k:15:Combat
+k:15:Polearm-mastery
+
+N:9:Trapping
+D:Ability to set monster traps
+D:Prereq: Disarming@15
+I:10
+A:14:Set trap
+k:15:Disarming
+
+N:10:Undead Form
+D:Ability to turn into a weak undead being when you "die".
+D:You must then kill enough monsters to absorb enough life energy
+D:to come back to life.
+D:Prereq: Necromancy@30, INT@25
+I:15
+k:30:Necromancy
+S:25:INT

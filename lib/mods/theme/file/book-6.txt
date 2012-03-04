@@ -1,0 +1,171 @@
+			 ---------------------- 
+			| Artifact Lore Vol. I |
+			|     Edged Weapons    |
+			 ---------------------- 
+
+The Main Gauche of Azaghal
+    The weapon of Azaghal when he wounded Glaurung.  It is deadly when
+    fighting dragons and is said to make the breaths of fire completely
+    harmless.
+
+The Main Gauche of Maedhros
+    A short thrusting blade with a large guard worn by Maedhros the Tall,
+    eldest son of Feanor, and wielded with his left hand after the loss of his
+    right hand in the pits of Thangorodrim.
+
+The Broken Dagger 'Angrist'
+    The knife Beren Barahir`s son took from Curufin and with which he cut out
+    a Silmaril from the crown of Morgoth, The blade snapped and broke when he
+    tried to gain one more and the splint hit Morgoth at his chin.  It was
+    made of Telchar the dwarf from Nogrod and it could cut through stone. Even
+    broken, it retains power. 
+
+The Dagger of Samwise
+    A fiery dagger finely balanced for deadly throws.
+    It is one of the 3 legendary daggers.
+
+The Dagger of Peregrin
+    A frosty dagger finely balanced for deadly throws.
+    It is one of the 3 legendary daggers.
+
+The Dagger of Meriadoc
+    A dagger covered in sparks and finely balanced for deadly throws.
+    It is one of the 3 legendary daggers.
+
+The Dagger of Rilia
+    A large stiletto dagger that glistens with odourless poison, to which the
+    wearer seems oddly immune.
+
+The Dagger 'Belangil'
+    A frosty dagger surrounded in a nimbus of ice with a hilt of elk horn and
+    an edge to wound the wind.
+
+The Bastard Sword 'Calris'
+    This sword has runes of power incused on its ornate hilt, and a single
+    blood channel that gleams coldly blue as you grasp this mighty weapon of
+    peril.
+
+The Broad Sword 'Aranruth'
+    The beautiful sword of Thingol with a hilt of gold and silver inlay,
+    glistening icily enough to freeze the hearts of demons.  You feel supple
+    and lightfooted as you hold it.
+
+The Broad Sword 'Glamdring'
+    This fiery, shining blade earned its sobriquet "Foe-Hammer" from dying
+    orcs who dared to come near hidden Gondolin. Inscribed upon the guard in
+    Cirth is the followinggd daedheloth, dam an Glamhoth." - "Turgon King of
+    Gondolin wields, has and holdsthe sword Glamdring, foe of Morgoth's realm,
+    hammer to the Din-horde."
+
+The Broad Sword 'Orcrist'
+    This coldly gleaming blade is called simply "Biter", by orcs who came to
+    know its power all too well.
+
+The Two-Handed Sword 'Anglachel'
+    A giant sword once wielded by mighty Turin, and a great dragonbane which
+    bathed in Glaurung's blood. Its blade once shone brightly, it can cleave
+    iron as though it is old wood. Beleg Cuthalion chose this sword from the
+    armoury of Thingol in Doriath. Turin son of Hurin slew his friend Beleg
+    with it by accident, and since then the blade is black and dull. 
+
+The Two-Handed Sword 'Zarcuthra'
+    Dark and deadly runes stand stark against the naked steel of this awesome
+    weapon, and you feel a stunning power of slaying and rending as you slowly
+    approach.
+
+The Dark Sword 'Mormegil'
+    A foul, twisted sword with blackened spines and knobs, whose very name is
+    a curse upon the lips of Elves and Men.
+
+The Cutlass 'Gondricam'
+    Famed sea-defender of Lebennin.  A short, slightly curved chopping blade 
+    with a perfect edge shining cleanly in the sun, an object of hate to the
+    men of Umbar who met it in combat.
+
+The Executioner's Sword 'Crisdurian'
+    A giant's weapon, with a long blade tall and straight thrusting out from a
+    massive double-pronged hilt.  On its blade are written doomspells against
+    both the living and undead.
+
+The Long Sword 'Ringil'
+    The weapon of Fingolfin, High King of the Noldor; it shines like a column
+    of ice lit by light unquenchable.  Morgoth came but unwillingly to meet it
+    of old; his lame foot will remind him of its might should he meet it again.
+
+The Long Sword 'Anguirel'
+    Forged of black galvorn by the Dark-Elven smith Eol, this blade has the
+    living lightning trapped inside.
+
+The Long Sword 'Elvagil'
+    The "Singing Blade", whose wearer can slay Orcs and Trolls in the hidden
+    and secret places of the earth.
+
+The Rapier 'Forasgil'
+    A slender, tapered blade whose wielder strikes icy blows with deadly
+    accuracy.
+
+The Sabre 'Careth Asdriag'
+    An heirloom of the Lords of Rhun far to the east, and a name of dismay to
+    creatures natural and unnatural.
+
+The Short Sword 'Sting' 
+    The perfect size for Bilbo, and stamped forever by the courage he found in
+    Mirkwood, this sturdy little blade grants the wearer combat prowess and
+    survival abilities they did not know they had. The blade is inscribed with
+    Tengwar writing "Sting is my name, I am the spiders' bane."
+
+The Scimitar 'Haradekket'
+    A damascened scimitar that seems wondrously easy to hold.  Famed in song
+    as the "Sickle of Harad", and a deadly foe to the undead.
+
+The Short Sword 'Gilettar'
+    A stubby blade worn by Beren, whose horn sounded of old in the glades of
+    Brethil. 
+
+The Blade of Chaos 'Daedheloth'
+    This weapon of wrath is named after the realm of Morgoth Bauglir. Cursed
+    with a violent anger, dives hungrily into the flesh of its enemies. It
+    gathers shadows of death into its owner as they inflict wounds that will
+    never heal.
+
+The Long Sword 'Sereghathol' 
+    Blood-Sword it is called, after its thirst for the blood of foes. 
+
+The Long Sword of Angmar 
+    Dark flames wreath the naked steel of the Witch-King of Angmar.  A mighty
+    curse to all those who wield it apart from its master, the torture of the
+    wraithworld awaits those who dare.
+
+The Broken Sword 'Narsil'
+    These are the shards of the mighty blade of Isildur, which deprived the
+    dark lord Sauron of The One Ring of Power. Legend has it that the sword
+    that was broken shall be reforged. You can barely make out a Tengwar
+    inscription on the pommel, reading "Narsil essenya, macil meletya;Telchar
+    carneron Navarotesse." - "Narsil is my name, a mighty sword;Telchar made
+    me in Nogrod."
+
+The Long Sword of Dernhelm
+    Eomer's sister Eowyn once wielded this shining sword when she battled
+    the Witch-King of Angmar, hiding her true identity to join the battle. 
+    Others are less likely to notice the wielder immediately.  Eowyn's sword
+    also allowed her to move swiftly, sense powerful enemies, inflict terrible
+    wounds, and partly withstand the worst attacks of the Nazgul.
+
+The Bluesteel Blade 'Ancanaur'
+    "The Jaws of Fire", this is the sword that Feanor forged in secret to do
+    battle against his enemies. The sword which threatened Fingolfin, the
+    sword which in the end did not prevent its owner's untimely death.
+
+The Broad Sword 'Guthwine'
+    The sword of Eomer, son of Eomund, leader of the Riders of the Mark. As
+    one flashed this sword with Anduril during a battle long ago. Legendary
+    are its powers in the rallying of desperate troops.
+
+The Long Sword 'Herugrim'
+    The ancient blade of Theoden, King of the Mark. It was taken from the king
+    by Grima the Wormtongue, and hidden from him in a dusty chest. It was once
+    instrumental in restoring the King's wits from evil bewitchment.
+
+The Bluesteel Blade of Ephel Duath
+    This filthy orc-blade is famed for vile deeds of torture and blood, and its 
+    wielder will never cease to fear treachery.

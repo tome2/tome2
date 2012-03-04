@@ -1,0 +1,45 @@
+|||||oy
+#####R /--------------------------\
+#####R< A partial list of GF_FLAGS >
+#####R \--------------------------/
+
+GF_ARROW:       arrows 
+GF_MISSILE:     magic missiles
+GF_MANA:        mana
+GF_LITE_WEAK:   light
+GF_DARK_WEAK:   dark
+GF_WATER:       water
+GF_PLASMA:      plasma
+GF_METEOR:      meteors
+GF_ICE:         ice
+GF_GRAVITY:     gravity
+GF_INERTIA:     inertia
+GF_FORCE:       force
+GF_TIME:        pure time
+GF_ACID:        acid
+GF_ELEC:        lightning
+GF_FIRE:        flames
+GF_COLD:        cold
+GF_POIS:        poison
+GF_LITE:        pure light
+GF_DARK:        pure dark
+GF_CONFUSION:   confusion
+GF_SOUND:       sound
+GF_SHARDS:      shards
+GF_NEXUS:       nexus
+GF_NETHER:      nether
+GF_CHAOS:       chaos
+GF_DISENCHANT:  disenchantment
+GF_KILL_WALL:   wall destruction
+GF_KILL_DOOR:   door destruction
+GF_KILL_TRAP:   trap destruction
+GF_STONE_WALL:  wall creation
+GF_MAKE_DOOR:   door creation
+GF_MAKE_TRAP:   trap creation
+GF_DESTRUCTION: destruction
+
+Back to the *****lua.hlp*0[lua help index] .
+
+                             [[[[[gThis file by fearoffours (fearoffours@moppy.co.uk)]
+
+

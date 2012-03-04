@@ -1,0 +1,68 @@
+		 ------------------------
+		| Monstrous Compendium 4 |
+		|        Animals         |
+	 	 ------------------------
+
+
+                *** Cattle (c) ***
+
+Mostly domesticated four-legged beasts of burden, these
+animals will not bother you unless you bother them first.
+In fact, [[[[[wSheep], [[[[[uCows], [[[[[sHorses], [[[[[WMearas], [[[[[yPonies], [[[[[DOxen],
+[[[[[rKine of Araw], and [[[[[UDeer] will tend to ignore adventurers
+completely. [[[[[oBoars], however, are a different matter. They
+have strong legs and fierce tusks, which they will use 
+against anyone who stumbles into their territory.
+
+                *** Canines (C) ***
+
+Four-legged animals with shaggy fur. Most of them are not
+very dangerous - in fact, the [[[[[sScruffy little dogs] will 
+not do much except growl, and [[[[[yJackals] can be deadly against
+very weak adventurers, but will not hold their own against
+even moderately experienced ones. [[[[[oFoxes], [[[[[uWolves], [[[[[wWhite] 
+[[[[[wwolves], and [[[[[BBlink dogs] can be a nuisance, but not overmuch.
+The evil [[[[[gWolf chieftains], [[[[[DWerewolves], [[[[[DWargs], [[[[[RHellhounds],
+and [[[[[rGreater Hellhounds], however, are very dangerous.
+
+                *** Felines (f) ***
+
+Lithe, four-legged animals with sleek fur and sharp claws.
+The [[[[[WScrawny cat] lives in the town and tends to walk by 
+itself. The [[[[[UWild cats], [[[[[gTree cats], and [[[[[bNight cats] are all
+quite menacing, but only dangerous in packs. The powerful
+[[[[[DPanthers], [[[[[oTigers], [[[[[wSnow tigers], and [[[[[ySabre-tooth tigers]
+are not to be toyed with. The [[[[[uLeopards] and [[[[[RLions] are the 
+strongest of all the feline monsters.
+
+              *** Quadrupeds (q) ***
+
+Four-legged creatures of varying breeds, these monsters 
+are all quite large and fierce - their bulk alone is 
+enough to intimidate you. The weakest are the [[[[[yApes], who
+make a lot of noise but aren't very dangerous. The [[[[[WOld] 
+[[[[[Wbears] just want everyone to leave them alone. There are 
+many other different kinds of bears, among them the 
+[[[[[uCave bears], [[[[[rWar bears], [[[[[UGrizzly bears], [[[[[wPolar bears], 
+[[[[[bBlue bears], [[[[[RFire bears], [[[[[BAquatic bears], and [[[[[DWerebears].
+The [[[[[sMumakil] are gigantic elephantine forms, stomping all
+over the dungeon and waving their tusks threateningly. The
+[[[[[GNight mares] are fearsome skeletal horses with glowing eyes.
+The [[[[[gCatoblepas] are strange ox-like forms with huge heads but
+thin, weak necks. The [[[[[oRust monsters] are weird, small animals
+that look perpetually hungry.
+
+                 *** Birds (B) ***
+
+There are many different types of birds on Middle-earth,
+and the [[[[[RChaffinches], [[[[[WSparrows], [[[[[BNightingales], [[[[[UThrushes],
+[[[[[WRavens], [[[[[oGulls], [[[[[rEagles], and [[[[[rGreat eagles] will not harm
+anyone who does not harm them first. The [[[[[wSwans] hold a very
+special place with the Valar, and woe be to anyone who 
+knowingly harms a Swan. However, not all birds are harmless.
+The [[[[[RKirinki] can wake up entire towns with their shrill cry,
+The [[[[[sCrows] and [[[[[DCrebain] are ever hungry for carrion, as are
+[[[[[GGorcrows]. The [[[[[uHunting hawks] seek prey without regard for 
+friend or foe. The [[[[[DWinged Horrors] are not quite birds, they 
+are Great Eagles corrupted by Morgoth to serve his ends.
+

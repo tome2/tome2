@@ -1,0 +1,238 @@
+# Map "s_factory.map"
+# 
+# Special Level "Foul Factory" in the Illusory Castle
+#
+# Created for ToME 3.x on 11/11/2003
+# Written by Lord Dimwit (lorddimwit@hotmail.com)
+# 
+# Middle-game dungeon
+# Comments: This level isn't designed to kill the player, really, just
+# induce such severe aggravation that their head explodes.  There are
+# two parts of it, the "abusive trickery" part that leads the player
+# through a horrendous maze of strategically placed glass walls, permanent
+# walls, and ethereal walls (like permanent walls only invisible, very awful),
+# followed by a "Factory" stage that follows more traditional patterns of
+# throwing monsters systematically at the player.
+
+# Backported to ToME 2.x by Massimiliano Marangio on 02/07/2004
+
+# Replaced the letter : by R for Rubble
+# Changed the starting position to 21:51
+# Corrected the exits of the jumpgates
+
+### F:<letter>:<terrain>:<cave_info>:<monster>:<object>:<ego>:<artifact>:<trap>:<special>:<mimic>
+ 
+### Terrain Features 
+
+
+# Permanent wall
+F:X:61:4
+
+# Fake wall
+F:I:189:0
+
+# Ethereal wall
+F:#:245:0
+
+# Copper Pillar
+F:;:244:0
+
+# Mountains
+F:M:97:0
+
+# granite
+F:G:57:4
+
+# Floor
+F:.:1:0
+
+# Deep Water
+F:~:187:4
+
+# Ash
+F:,:93:4
+
+# Fire
+F:%:205:0
+
+# Deep lava
+F:L:85:0
+
+# Shallow lava
+F:l:86:0
+
+# Glass Wall
+F:_:188:0
+
+# Rubble
+F:R:49:0
+
+# Trees
+F:T:96:0
+
+# Tainted water
+F:t:174:0
+
+# Chasm
+F:C:87:0
+
+# up staircase
+F:<:6:0
+
+# down staircase
+F:>:7:0
+
+# between gate 1
+F:1:160:6:0:0:0:0:0:845
+
+# between gate 2
+F:2:160:6:0:0:0:0:0:846
+
+# between gate 3
+F:3:160:6:0:0:0:0:0:4370
+
+# between gate 4
+F:4:160:6:0:0:0:0:0:3339
+
+# between gate 5
+F:5:160:6:0:0:0:0:0:4119
+
+# between gate 6
+F:6:160:6:0:0:0:0:0:6659
+
+# between gate 7
+F:7:160:6:0:0:0:0:0:9257
+
+# between gate 8
+F:8:160:6:0:0:0:0:0:8018
+
+# between gate 9
+F:9:160:6:0:0:0:0:0:9298
+
+# between gate A
+F:A:160:6:0:0:0:0:0:805
+
+# between gate B
+F:B:160:6:0:0:0:0:0:831
+
+# between gate D
+F:D:160:6:0:0:0:0:0:809
+
+# between gate E
+F:E:160:6:0:0:0:0:0:2826
+
+# between gate F
+F:F:160:6:0:0:0:0:0:2831
+
+# between gate H
+F:H:160:6:0:0:0:0:0:4631
+
+# between gate J
+F:J:160:6:0:0:0:0:0:7198
+
+# between gate K
+F:K:160:6:0:0:0:0:0:7990
+
+# between gate N
+F:N:160:6:0:0:0:0:0:9253
+
+# Treasure on floor
+F:$:1:0:0:*65
+
+# Trap (random) on floor
+F:^:1:0:0:0:0:0:*
+
+
+### Monsters
+
+# Eog Golem on floor
+F:g:1:0:530
+
+# Clay Golem on floor
+F:a:1:0:261
+
+# Aquatic Golem in water (OK, just for show)
+F:?:187:0:899
+
+# Stone Golem on floor
+F:b:1:0:323
+
+# Iron Golem on floor
+F:c:1:0:367
+
+# Colbran on floor
+F:d:1:0:435
+
+# Mithril golem on floor
+F:e:1:0:464
+
+# Colossus on floor
+F:f:1:0:558
+
+# Drolem on floor
+F:h:1:0:691
+
+# Demonic Q on shallow lava
+F:Q:86:0:727
+
+# Livingstone on floor
+F:i:1:0:336
+
+# Random monster (upto 8 levels ood) on normal floor
+F:&:1:0:*58
+
+
+### Items
+
+# Broken Stick
+F:s:1:0:0:727
+
+
+### Guaranteed Items
+
+# The Boots of the Machine
+F:*:205:0:0:0:0:218
+
+
+### Level layout
+
+D:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+D:X..e.e...I.......Xe..c.a..ca.c.....1X..3..XQQX,llllllllllllll2XX#Gi.X.X..XLABLX..X
+D:X.XXX...XXX.....XXXe.c..XXX__XX__XXXX.;.;.XllX,ll,ll,XXXXXXXXXXi.X#.XiXXXXL%%LXXXX
+D:X&XXXe.XX~XXeeeXX~XXe..XX~~~~~~ttttXX.....X,,,,Ll,ll,X..XII.X.X.i.XXG_XXXXL%%LXXXX
+D:X..&..XX~~~XXeXX~?~XX.&X~~~~t~ttttttX.;.;.X,lllll,ll,XX_..XX.XX#X..X#XXf.X_GG_X.fX
+D:XGXGXGX?~~~~_c_~~~~~X.&XX~~~~t~ttttXX.....X,L,,,,,lL,.X.#XXi..G.XXiX..XX.........X
+D:X.....XX~~?XXcXX~~~XXa..XXX__XX__XXXX.;.;.X,L,.XXX%L%XXXXcXX.XXX.X.X.X.XX.X.ff.X.X
+D:XXgXgXgXX~XXcccXX?XXXXX.a^^a.^^a...bXXXGXXX%L%XX.XX%XXa.aXIX.Xi#.XiXI.X.X........X
+D:XgXgXgXgXXX^^^^^XXX,ccXXXXXXXXXXXb.XX#...#XX%XX.XI_XX....X.X.#XXXIX.#GX.X.X....X.X
+D:X.......4X.^^5^^.X.c.c..c..c.c..c.XX.#...#.XXXIXX.X.a.c..XXi..I.X._.X.XXX...&&...X
+D:X..&&...XXXXXXXXXXc,c,c.XX_XX..ccXX..#...#..XX#iiX.X.a..a.XX.#XX._X.XX.XX.X....X.X
+D:X......XXEX,,,c,c,cc,ccXXMRMXXc.XX...#...#...XXX#iXXXXXc..IXGX.XXiX.....X........X
+D:XXXXXXXX..X,,,,,,,,,,,XXM..RMXXXX$$XXX...XXX$$XX..XX_GXXXXXX.Ii.X_X.X#XXX.X....X.X
+D:XT.T._.g.gXX,C,,,.,C,c_M.R.R.MXX$$$XXX...XXX$$$XX..XIXIXII.i.XX_.X.XX.XXXXGGGGGGXX
+D:X.T.T_.....XXlXXXXXlXFXXM..RMXX$$XXXXX...XXXXX$$XX.#.XX.X_X_XXI#.XXIIX.Xeee...eeeX
+D:X..T._.g..g.XlX_D_XlXXXXXM.MXX$$$#....%%%....#$$$X.X..XX_G.#.X.XXIXX..cXXXX...XXXX
+D:XMMMMX...&..XlX_._XlX6..XXXXXX$$$#....%*%....#$$$X._X#iX.XX..G_Xi.XXd..XLl#_._#lLX
+D:Xs.s._..&.&.XlX_._XlX..gg....X$$$#....%%%....#$$$X.IIX.X..XIXX.X.G#X..dXLl#_._#lLX
+D:X.s.s_g....XXlXXGXXlXX.g..d&.XX$$XXXXX...XXXXX$$XXXX._XG#X.XX.X_X.XX.c.XXXX...XXXX
+D:XXXXXXXXXXIXLLLXGXLLLXgg.g.d..XX$$$XXX...XXX$$$XX<...XiXX.X.Xi.X.X.Xd..X.........X
+D:Xgg.gXg.gXIXL%LXGXL%LXGXXX__XXXXX$$XXX...XXX$$XXXXXXIXXiX#XX#XX#X_XX...XXXXXXXIXXX
+D:X^^X^X^X^X^XX_XXGXX_XXGXXg..g.%.XX...X...X...XX.GI.X._iXXG...I..I.GX..dIX#I#I#I#IX
+D:X^^X^X^X^X^Xhl,&c.a&g.l.XX.g.g%RRXX..X###X..XX..#_X..XXX_iXXIXiXi_.Xc..X.IX.XXXIXX
+D:X^^X^X^X^X^X&,,,l&,lac.&.__.g.%.R.XX...>...XX#X.X..XX#.._X.X.X.#.XGX.X.XX_XX.X#i.X
+D:XH.Xg.gXg.gXla,ca&,f.fl.leXX..%R.RRXX.....XX.G.XX#XXI.XX.#.XGXXXiX.#X.XX.i._X.XGX#
+D:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXGXXXXXXXG.X..X#XXX.XX.XXI._XIX.XIXXI#.XXX.X
+D:X,.,G,&&,ee,ff,hgg,&&,,,.,,I7XXXc..aX.;.;.X&..XXXG#XX.G.XXX..XG######.G.#..##..iXX
+D:X^X,G.&&.ee,ff..gg,&&,.,,,,XXX..MRM.X.....X.....XXX.IIX.XGI.XX..IXXXXXXXXXXX._.X._
+D:X^X,XXXXXXXXXXX.XXXXXX,,.XXX..$.....X.;.;.Xh..&...GXXXGXi#IXX.IXX..#.....#.XX##XXX
+D:X^X,llL,LlLL,LXXXlll,XXXXX..aMR..$.cX.....X.....XXXX8XXXXXXXX#IX###..##.#..#XI.XKX
+D:X^XlLCCCCCCCCLllll%%l.R.R.R.R..M.R..X.;.;.X&..XXX.#X#.i.#.XXX#X...###.#.##.#.X#IXX
+D:X^X,lL,llL,Ll,XXX,lllXXXXXc.M..R.c..X.....XXXXX#.#.XIX#Xi.X...X###.#####.#...X#XXX
+D:X^X,XXXXXXXXXXX.XXXXXX,.,XXX...$.M..X.;.;.Xh.##i#.#XX_IX.#X.##I....#.#.###.##X#I.X
+D:X^X.G,&&,,gg.&.,ee,ff,,.,.,XXXa..R..X.....X..#.###.XIXX.X.X.##XX####..#..###II.X.X
+D:X,,,G,&&,,gg.&h.ee,ff,..,.,I^XXXM..9X.;J;.Xh.##.###..iiX#.X....II.....#....IX..XNX
+D:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+
+### Starting location
+P:21:51

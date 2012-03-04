@@ -1,0 +1,61 @@
+|||||oy
+~~~~~01|Gods|Aule
+~~~~~02|Aule
+#####R === Aule the Smith ===
+
+Aule the Smith is the inventor and smith of the Valar. 
+His most faithful followers are those of the class *****c_stonewr.txt*0[Stonewright].
+
+#####GThe benefits of worshipping Aule the Smith
+1. As you increase your piety, Aule will grant you a boost to your accuracy 
+   and damage to a maximum of +5.
+2. As your piety increases, he will grant you resistance to fire.
+3. If you are praying to him at the time, there is a chance that he will
+   cast Stone Skin on you.
+4. Aule likes Dwarves, Petty-dwarves, Gnomes, and Dark Elves.
+4. Your piety will increase slightly more if you are wielding an axe or a hammer.
+   
+#####GThe disadvantages of worshipping Aule the Smith
+1. He doesn't like it if you kill dwarves of any kind.
+2. Your piety will decrease over time unless you are a Dwarf, Petty-dwarf, 
+   Gnome, or Dark-Elf.
+3. He will completely abandon you if you wear The One Ring.
+~~~~~~03|Aule|Prayers
+#####GAule's Magic
+Worshipping Aule the Smith gives the adventurer access to a set of special
+spells that come directly from the hands of Aule. These spells use your piety
+to cast rather than your spellpoints, and the level of spells that Aule will 
+permit you to use is determined by your Prayer skill - how skillful you are
+in asking for his help without offending him! 
+
+There is a special book - called the "The Earth Tome of Aule" which 
+contains instructions for the procedure for each of the prayers Eru will 
+grant. There are four prayers all told, which are:
+1. [[[[[BFirebrand] (Level 1)
+   Imbues your melee weapon with fire to deal more damage.
+   At level 15 it spreads over a 1 radius zone around your target.
+   At level 30 it deals holy fire damage.
+2. [[[[[BEnchant Weapon] (Level 10)
+   Tries to enchant a weapon to-hit.
+   At level 5 it also enchants to-dam.
+   At level 45 it enhances the special powers of magical weapons.
+   The might of the enchantment increases with level.
+3. [[[[[BEnchant Armour] (Level 15)
+   Tries to enchant a piece of armour.
+   At level 20 it also enchants to-hit and to-dam.
+   At level 40 it enhances the special powers of magical armour
+   The might of the enchantment increases with level.
+4. [[[[[BChild of Aule] (Level 20)
+   Summons a levelled Dwarven warrior to help you battle the forces
+   of Morgoth.
+   
+Each of these spells can be increased in level both by improving your Prayer
+skill, and by improving your Spell-power skill.
+
+In addition to his specific magic, Aule will also assist with your ability to
+use some magic from the "standard" schools, in relation to how skilled you 
+are at Prayer. These schools are as follows:
+
+    *****m_earth.txt*0[Earth School] at 1/3 the Prayer skill level.
+    *****m_fire.txt*0[Fire School] at 3/5 the Prayer skill level.
+The spells from these schools are all cast using your normal spellpoints.

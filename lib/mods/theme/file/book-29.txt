@@ -1,0 +1,75 @@
+			 ----------------------- 
+			| Artifact Lore Vol. XI |
+			|  Rumoured Item Sets   |
+			 ----------------------- 
+
+Rumour has it that if an item set is complete, the 
+wearer shall gain additional magical powers.
+
+Gothmog's Armoury
+	The Demonblade of Gothmog
+	The Demonshield of Gothmog
+	The Demonhorn of Gothmog
+
+The Elven Gifts
+	Phial of Galadriel
+	Sting
+
+The Dragon Slayer
+	The Long Bow of bard
+	The Black Arrow of Bard
+
+The Trinity
+	The Dagger of Samwise
+	The Dagger of Meriadoc
+	The Dagger of Peregrin
+
+Thorin's Gear
+	The Small Metal Shield of Thorin
+	The Harp of Thorin
+	The Metal Cap of Thorin
+
+Peregrin's Gifts
+	The Chain Mail of Peregrin Took
+	The Elven Cloak of Peregrin Took
+
+Ghan-buri-Ghan's Garb
+	The Filthy Rag of Ghan-Buri-Ghan
+	The Cloak of Ghan-buri-Ghan 
+
+The Glory of the King
+	The Long Sword 'Anduril'
+	The Black Banner of Gondor
+	The Golden Crown of Gondor
+
+Saruman's Travel Gear
+	The Mage Staff of Saruman
+	The Robe of Curunir
+	The Palantir of Orthanc
+
+Elendil's Heirlooms
+	The Ring of Barahir
+	The Star of Elendil
+	The Rod of Annuminas
+
+Flame of Wrath
+	The Amulet of Carlammas
+	The Morning Star 'Naurgil'
+
+Shadow Ward
+	The Soft Leather Armour 'Hithlomir'
+	The Set of Leather Gloves 'Cammithrim'
+
+Eorl's Arms
+	Lance of Eorlingas
+	The Metal Brigandine Armour of the Rohirrim
+
+Gil-Galad's Battle Gear
+	The Shield of Deflection of Gil-Galad
+	The Spear 'Aiglos'
+	The Steel Helm of Gil-Galad
+
+Dwarven Heritage
+      Arkenstone of Thrain
+      Mattock of Nain
+      Lochaber Axe of the Dwarves

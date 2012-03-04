@@ -1,0 +1,239 @@
+# s_ship.map
+#
+# Special Level "Arvedui's Galleon" in the Helcaraxe#
+#
+# Created for ToME 3.x on 9/11/03
+#
+# Written by Lord Dimwit (lorddimwit@hotmail.com)
+# Middle-game dungeon
+# Comments: This large level is a variation on the classic 'ghost ship' theme;
+# the ship was caught in the Helcaraxe and everyone on board died.  The polar waters
+# surrounding the ship contain some unpleasant surprises for inquisitive and unwary
+# adventurers--the hardest monsters on the map are actually there.
+
+# Ported to ToME 2.x on 6/6/04 by masmarangio
+#
+# Changed the starting position to 28:122
+# Replaced the undefined letter 'c' with '.'
+# The exits of the between gates pointed to incorrect positions.
+# I'm not sure esp. about the correct exit of gate #3.
+
+
+#%:special.txt
+
+
+### Terrain Features
+
+# up staircase
+F:<:6:0
+
+# down staircase
+F:>:7:0
+
+# Permanent wall
+F:X:61:4
+
+# Glacial Wall
+F:#:246:4
+
+# Ice Wall
+F:M:95:4
+
+# Deep Water
+F: :187:4
+
+# Fog
+F:*:210:4
+
+# Shallow water
+F:~:84:4
+
+# Ice
+F:.:90:4
+
+# Hidden Door
+F:+:48:0
+
+# Normal Door
+F:=:32:0
+
+# Ash
+F:,:93:4
+
+# Fake wall
+F:I:189:4
+
+
+### Monsters
+
+# Leviathan in deep water
+F:L:187:0:782
+
+# Greater Kraken in deep water
+F:K:187:0:775
+
+# Lesser Kraken in deep water
+F:k:187:0:740
+
+# Giant Squid in deep water
+F:s:187:0:482
+
+# Killer Whale in deep water
+F:w:187:0:917
+
+# Drowned Soul in shallow water
+F:G:84:0:895
+
+# Ancient White Dragon on ice
+F:D:90:0:617
+
+# Mature White Dragon on ice
+F:d:90:0:549
+
+# Ice Troll on ice
+F:T:90:0:454
+
+# Headless Ghost on ice
+F:H:90:0:533
+
+# Shadow on ice
+F:g:90:0:665
+
+# Young White Dragon on ice
+F:b:90:0:460
+
+# Zombified Human on ice
+F:z:90:0:229
+
+# Greater mummy on ice
+F:m:90:0:522
+
+# Cold Hound on ice
+F:Z:90:0:308
+
+# Giant White Dragon Fly on ice
+F:F:90:0:250
+
+# Ice Elemental on ice
+F:E:90:0:570
+
+# Yeti on ice
+F:Y:90:0:154
+
+# Ice skeleton on ice
+F:i:90:0:379
+
+# Skeleton human on ice
+F:h:90:0:228
+
+# Ghost on ice (apologies to Eldridge Cleever)
+F:W:90:0:477
+
+# Hand druj on ice
+F:S:90:0:748
+
+# Eye druj on ice
+F:J:90:0:749
+
+# Dread on ice
+F:o:90:0:534
+
+# Dreadmaster on ice
+F:O:90:0:690
+
+# Night mare on ice
+F:q:90:0:622
+
+# Random monster (upto 5 levels ood) on ice
+F:&:90:0:*40
+
+# Random monster (upto 9 levels ood) and
+# Random object (upto 7 levels ood) on ice
+F:8:90:0:*44:*42
+
+# Treasure (random) on ice
+F:$:90:0:0:*47
+
+# Treasure (good) on ice
+F:%:90:0:0:*60
+
+# Trap (random) on ice
+F:^:90:0:0:0:0:0:*
+
+# Trap (random) on shallow water
+F:t:84:0:0:0:0:0:*
+
+# Trap (random) on fog
+F:@:210:0:0:0:0:0:*
+
+# Human skeleton on ice
+F:x:90:0:0:395
+
+
+### Between Gates
+
+# between gate 3: was 711
+F:3:160:6:0:0:0:0:0:1136
+
+# between gate A: was 6247
+F:A:160:6:0:0:0:0:0:6761
+
+# between gate 4: was 3339
+F:4:160:6:0:0:0:0:0:3853
+
+# between gate B: was 3085
+F:B:160:6:0:0:0:0:0:3599
+
+
+### Guaranteed Items
+
+# The Mage Staff of Forochel
+F:!:90:0:0:0:0:213
+
+
+### Level Design
+
+D:XXXXXXXXXXXXXXXX                  XXXXXXXXXXXX                                              XXXXXXX    XXXXXXXXXXXXXXX      XXXX 
+D:X###############..~  .#. k    w ~.#XX######### .~~     s                                 G..#####..  w  .###.######X##~~ .GX.### 
+D:X####%####...~      ~.~      s .#.X#~~.#####  .~                             s       w G..#.##.#.XGG~XXk~.####A####.~X   ~~.X... 
+D:X##%#$#######...~ w       wXXXXXX#XXXX###XXX #~XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX..XX....~.XX  X#xX.#..#.#G. w ~X G~~ 
+D:X##$#########....     s   XXXTT^...~.~#####w~###~~~~8....**.tE.&E ^^.M^.xx.....x..ZZ..^XTTTT M...GG.~..  w G.###~XX~~#XX .  s X  
+D:X#########...~   w      XXXTTTT.^..x~.H####  ###~~D....8**.~M~.E..M^.MM^..xh.h...ZZZZ^~M.,.,.,.~~ .G...~~  ~###.   w  . w  M.d.  
+D:X#####.x.x~~~         XXXTTTXXXMxx.H.####### ~##~~~8...#.**.~tE&EE^^~%M^.h.x.E.xh.ZZ..^X.,.^....~ ...G.~  s ~#  XX ~~    w   X   
+D:X######...~~  MM~  w XXX^^XXX.MMMxx...G#####w  ~#~.~..&...**E.MEt.^^.MM^~..i.....ZZZZ^~M.,.,,.gM.~.,~.,G.G~~ G~.  G~.MM XX..~    
+D:X##.....~~        XXX^E=^XX$b.MMMMxH..HG#.##  w ~#~##~8....*E~.&EM^^.M^h..i..x.x..ZZ..^XTTTTX.,.,~........~.G~~..w . G~...G~X    
+D:X...~~~    K    XXX^^EXXXX$$$..MMXXXXXXX####   #####XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX..,.X..M~.........~G..G ~~.G...G~    
+D: ~~~   w      XXX^^EXXXdX%d$$b$$XXd~~~~#####  s   ###.,.W.**,.x.,.,.,.,.,.***,,....,x....,,.SX.,.,.,..,o.,.,.~~.G..~.G..G..~X k  
+D: w  MMM.  w XXX^E^XXX.,*XDDd$$$XXd$..~~~~####    ###.,.,.,.**..,.,i.,.,W,.,**..z.,.,.q...g.,......~.,.,.,.,.~.~..F.~M~......~    
+D:    MM.   XXX4EEXXXi^**.XX%%$dXX$d$.H#####~G~~####.~.,~..,.h*,,~,.,.,.,~,.,.,.H.,.~.,..~,.,,,.~,.,.~.,.,.X.~,g.~~..~.~..,..,X    
+D:   s    XXXBXXXXX^.**.W.,XDD%XXb$$b####..G~~~G###~.,,.,.,.,...,,.x,.~.,.,~..,.~.,.,~,.,.,,.,.,~,.,.,.~,.,..,X.,.***.~***,W.,X    
+D:      XXX.o..X.g***i.*.,.XX%XX######^^^^t      ##ttt^^^^^t^^^^^^t^^^^^t^^^^^^^t^^^^^^t^^^^t^^tt^^^tt^^^^t^tXo..x************X    
+D: k  XXX^E..o.XX8.****,.g..XXX..#........~~~~~ttt###~~.,.G~.......XXXXX..~,..,,..,,.~.,..,.,..,,..,.,x..,.ooX******W***g.*.g*X    
+D:  XXX%S^^E..ooX,*****,..,.X.....h........XXX~~~tt#tt   w ~~G~...XXXXXXX.,**.,..D.**.G.,~,..XXX...~~~.....o8X***.~.,.****$$..X    
+D: XX%%%^mm.E..oXH**.^.*i.....#.....i..*..XXXXX~~            G~~.XXXXXXXXX~.*..,.,*..~,..,.,XXXXX...~..,.XXXXXo.W.$$.g.x....o.X    
+D:  XXX%S^^E..ooX8.*~~...,~~##...,..,.***,.XXX~G~     k       ~~~~XXXXXXX.,.*. g...*..x..W.~.XXX.***.,,o..oO8X.o.,.o.xx$$$XXXXX    
+D:    XXX^E..o.XXH.###....###~~~.,h..,.*.,..~~.~~           s   ~~.XXXXX.~..**...i~**.....~.,,.,,.***~,,,.oXXXXXXXXXXXXXXXX.!.X    
+D: s    XXX.o..X&..w~##..##~~~X~^^^^^^^^^^t^ttt^tt   w   tt^tttt^^tt^^^^^ttt^^^^ttt@@^^^^ttt^^^^^ttt@^^ttXXXW ^^.M*.t^oo.^^...X  s 
+D:   ~~~  XXX>XXH~G..#####~G~~Gt..,.,..,.,xx..x ~~~     i~~xx.~...x....~.~..~..,~..***..~..~...,~.~*.~.XXXE.^^H..SM.~^.oo....JX    
+D: ~~....~~ XXX$8w~.^####G~G ~i.XX.,,.,...........G~~~s~~ iiF~...........~.......x.,.**~....,~....~.*XXX.EE.W.^^.M*.~^^^o^O^..X    
+D: ~.#..#..~~ XXX8##t..##~#.G.t..XX..,H...,.W...,...,~~...,...*,,.x...,.i.....g.....**.........XXXXXXX...EE.^^H..SM.~.^oo...^JX    
+D: ~.##.##..~   XXX###GG~~~*h~.^..XX.....,....,.W...,.G....W.***...,...,...,....,...,**..q....SX3tttW#...EE.W.^^.M*.t.oo.^.^.XX    
+D: ~~.###..~~     X##.##~~G^~~~~i*^XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX~~   
+D: ~~...###.~  k  ~###X.G~~@Gh~x*~^..^i.zX8~i.~..h....zzzXiX..^$.T.t$......F.t..XX..^TTT*..M..Y....^.Y.^*.^..~....X.x..x~.<XX~.    
+D: ~.....####.....#####XXXx@@~i~.z..z.it,#**t..h..Gzh.zzX@.@Xd*t.~...*~.t......^X..T.^T*@*TXMM...^....^**@.^.x*...+..~....XX..~    
+D:    ~~.#$%#########....XXX~h~i.HH...h,i^X*.H..h.^G..WX@.E.^X**8..Y.~*8...Y...^+XXXXXXXXXXXMF...~....^.*..x.***..X..x..~XX...~~w  
+D:   ~~.#$$######.~   ~w  XXX$~.x..~G^..,i.,.~.h.^~~..zzX@.@Xd*......F**..~....^XbM..^~ZZZZXMM..*.....~^......*.XXXXXXXIXX.~~#~w   
+D: L  ~~xx########.~~       XXX$$.G#GX#.i,,^ih.^W.zG^zzzXiX.$.t88.~..^**F..T...tXX~~.^^ZZZZM~..**@~~.Y~..^#^..xXI&X8&..XX ~~~## w  
+D:     ~.########..~~        XXXXX~#X~X#XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX   ~###~w  
+D:  ~~.#########..~ w    K   w     ~#####    w  ~.M.~                    ~..####.~  s~~~~.~~              s  K            ~##..~   
+D:  ~..#########.~                  ~#####      ~...~             k     ~..###.~    ~~####~~~          w            w    ~###..~   
+D:   XXXXXXXXXXXX                    XXXXXX                              XXXXXX      XXXXXXXXX                           XXXXXX    
+
+ 
+### Starting Location
+P:28:122
+
+
+
+
+

@@ -1,0 +1,63 @@
+|||||oy
+~~~~~01|Help|Spoiled FAQ
+~~~~~02|FAQ - contains spoilers
+#####R                             ToME Spoiler FAQ
+#####R                     Updated for version 2.3.x
+
+#####G------------------------------------------------------------------------------
+
+This page contains significant spoilers. Don't browse it unless you want some 
+parts of the game ruined, but don't expect the spoilers to spoil you completely!
+
+~~~~~07|Spoilers|Lothlorien Poisoned water quest
+#####G------------------------------------------------------------------------------
+#####GQ: I'm trying to find the Poisoned water quest at Lothlorien, but cannot
+#####G   find the quest entrance!
+
+A: This quest is located in the wilderness. To the west of Lothlorien are 4 
+water squares in an upside down L shape. One of these squares will contain the
+quest. (Viewed from the Wilderness map).  There is no yellow > sign, so don't
+bother looking for one.
+~~~~~20|Spoilers|God Quest - directions
+~~~~~23|Gods|Quest - Spoilers
+#####G------------------------------------------------------------------------------
+#####GQ: I've been given directions to a temple by my God but can't find the 
+#####G   temple anywhere!
+
+A: It [[[[[BIS] there. However, your god's idea of compass directions that are 
+not directly on the 4 main axes are probably slightly less acurate than your 
+idea. In other words, if your god says it is South-East, s/he means it is 
+somewhere in the quadrant that is between the south and east axes.
+~~~~~21|Spoilers|God Quest - relic
+#####G------------------------------------------------------------------------------
+#####GQ: Where is the relic by god was talking about? I've looked in the lost 
+#####G   temple and can't find it anywhere!
+
+A: It [[[[[BIS] there. However, when your god told you to look for it VERY  
+carefully, s/he meant it. Regardless of your game settings, the relic will only
+be created once in the temple, at a random place. If you have searched the 
+whole temple once over, and not located it, then you have missed it, and it is
+lost forever.  Each temple has 5 dungeon levels, and the relic might be on
+any of these 5 levels.
+~~~~~22|Spoilers|God Quest - how many?
+#####G------------------------------------------------------------------------------
+#####GQ: Apparently my god has lost another piece of a relic and wants me to go 
+#####G   find it again. How many of these are there? 
+
+A: You can receive up to seven god quests, with the final piece yielding an 
+extra reward. However you will only receive extra quests if you have 
+sucessfully completed all the previous ones. 
+~~~~~23|Spoilers|Secret Valley
+#####G------------------------------------------------------------------------------
+#####GQ: What's this Secret Valley place in the northern part of the wilderness?
+
+This is a stay-over from regular ToME, where that valley is the location of 
+Gondolin. In Theme, Gondolin is elsewhere, and the Secret Valley is simply a 
+cosmetic change to avoid confusion.
+
+~~~~~24|Spoilers|Erebor
+#####G------------------------------------------------------------------------------
+#####GQ: Why can't I get past the first level of Erebor?
+
+Think back to "The Hobbit". What did Bilbo and his friends use to enter the Lonely
+Mountain? Locating the town of Dale and asking the mayor might prove profitable...

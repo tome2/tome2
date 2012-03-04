@@ -1,0 +1,1245 @@
+# File: f_info.txt
+
+
+# This file is used to initialize the "lib/raw/f_info.raw" file, which is
+# used to initialize the "terrain feature" information for the Angband game.
+
+# Do not modify this file unless you know exactly what you are doing,
+# unless you wish to risk possible system crashes and broken savefiles.
+
+# After modifying this file, delete the "lib/raw/f_info.raw" file.
+
+# Note that the terrain feature are grouped into very regular groups,
+# such that each of the bits in the feature type conveys information.
+
+# Note that terrain feature zero contains the "darkness" picture.
+
+
+# Version stamp (required)
+
+V:2.0.0
+
+
+# 0x00 --> nothing
+
+N:0:nothing
+G: :w
+F:FLOOR
+
+# 0x01 --> open floor
+
+N:1:open floor
+G:.:w
+F:FLOOR | DONT_NOTICE_RUNNING | SUPPORT_LIGHT | CAN_RUN
+F:SUPPORT_GROWTH
+
+# 0x02 -> fountain
+N:2:fountain
+G:_:w
+F:FLOOR | NOTICE | REMEMBER | CAN_RUN
+D:0:The liquid here seems magical.
+
+# 0x03 --> glyph of warding
+
+N:3:glyph of warding
+G:;:y
+F:FLOOR | NOTICE | SUPPORT_LIGHT | CAN_RUN | REMEMBER
+D:0:There is a mighty spell of protection here.
+
+# 0x04 --> open door
+
+N:4:open door
+G:':U
+F:FLOOR | NOTICE | REMEMBER | CAN_RUN | DOOR
+
+# 0x05 --> broken door
+
+N:5:broken door
+G:':U
+F:FLOOR | NOTICE | REMEMBER | CAN_RUN | DOOR
+
+# 0x06 --> up stairs (perm)
+
+N:6:up staircase
+G:<:w
+F:FLOOR | PERMANENT | NOTICE | SUPPORT_LIGHT | REMEMBER | CAN_RUN
+D:0:There is an up staircase here.
+D:1:You cannot tunnel a stair.
+
+# 0x07 --> down stairs (perm)
+
+N:7:down staircase
+G:>:w
+F:FLOOR | PERMANENT | NOTICE | SUPPORT_LIGHT | REMEMBER | CAN_RUN
+D:0:There is a down staircase here.
+D:1:You cannot tunnel a stair.
+
+N:8:quest entrance
+G:>:y
+F:FLOOR | PERMANENT | REMEMBER | NOTICE | CAN_RUN
+D:1:You cannot tunnel a quest entrance.
+
+N:9:quest exit
+G:<:y
+F:FLOOR | PERMANENT | REMEMBER | NOTICE | CAN_RUN
+D:1:You cannot tunnel a quest exit.
+
+N:10:quest down level
+G:>:r
+F:FLOOR | PERMANENT | REMEMBER | NOTICE | CAN_RUN
+
+N:11:quest up level
+G:<:r
+F:FLOOR | PERMANENT | REMEMBER | NOTICE | CAN_RUN
+
+N:12:town exit
+G:>:g
+F:FLOOR | PERMANENT | REMEMBER | NOTICE | CAN_RUN
+
+N:13:shaft down
+G:>:U
+F:FLOOR | PERMANENT | REMEMBER | NOTICE | CAN_RUN
+D:0:There is a shaft down here.
+D:1:You cannot tunnel a shaft.
+
+N:14:shaft up
+G:<:U
+F:FLOOR | PERMANENT | REMEMBER | NOTICE | CAN_RUN
+D:0:There is a shaft up here.
+D:1:You cannot tunnel a shaft.
+
+# 0x0F -> empty fountain
+N:15:fountain
+G:_:D
+F:FLOOR | NOTICE | REMEMBER | CAN_RUN
+D:0:The fountain seems empty.
+
+N:16:web
+G:+:y
+F:CAN_PASS | NOTICE | WEB | NOTICE | TUNNELABLE
+D:1:You tunnel through the web.
+D:2:a web blocking your way
+
+# Trap -- the flags are not used by the program
+N:17:trap
+G:^:w
+F:FLOOR | NOTICE | REMEMBER
+
+# 0x12 --> 0x1F -- UNUSED
+
+# 0x2x --> locked door (power 0)
+
+N:32:door
+G:+:U
+M:32
+F:WALL | NO_WALK | CAN_PASS | NO_VISION | NOTICE | REMEMBER | DOOR
+F:TUNNELABLE
+D:1:You bash the boor.
+
+# 0x2x --> locked door (power 1)
+
+N:33:locked door
+G:+:U
+M:32
+F:WALL | NO_WALK | CAN_PASS | NO_VISION | NOTICE | REMEMBER | DOOR
+F:TUNNELABLE
+D:1:You bash the boor.
+
+# 0x2x --> locked door (power 2)
+
+N:34:locked door
+G:+:U
+M:32
+F:WALL | NO_WALK | CAN_PASS | NO_VISION | NOTICE | REMEMBER | DOOR
+F:TUNNELABLE
+D:1:You bash the boor.
+
+# 0x2x --> locked door (power 3)
+
+N:35:locked door
+G:+:U
+M:32
+F:WALL | NO_WALK | CAN_PASS | NO_VISION | NOTICE | REMEMBER | DOOR
+F:TUNNELABLE
+D:1:You bash the boor.
+
+# 0x2x --> locked door (power 4)
+
+N:36:locked door
+G:+:U
+M:32
+F:WALL | NO_WALK | CAN_PASS | NO_VISION | NOTICE | REMEMBER | DOOR
+F:TUNNELABLE
+D:1:You bash the boor.
+
+# 0x2x --> locked door (power 5)
+
+N:37:locked door
+G:+:U
+M:32
+F:WALL | NO_WALK | CAN_PASS | NO_VISION | NOTICE | REMEMBER | DOOR
+F:TUNNELABLE
+D:1:You bash the boor.
+
+# 0x2x --> locked door (power 6)
+
+N:38:locked door
+G:+:U
+M:32
+F:WALL | NO_WALK | CAN_PASS | NO_VISION | NOTICE | REMEMBER | DOOR
+F:TUNNELABLE
+D:1:You bash the boor.
+
+# 0x2x --> locked door (power 7)
+
+N:39:locked door
+G:+:U
+M:32
+F:WALL | NO_WALK | CAN_PASS | NO_VISION | NOTICE | REMEMBER | DOOR
+F:TUNNELABLE
+D:1:You bash the boor.
+
+# 0x2x --> jammed door (power 0)
+
+N:40:jammed door
+G:+:U
+M:32
+F:WALL | NO_WALK | CAN_PASS | NO_VISION | REMEMBER | NOTICE
+F:TUNNELABLE
+D:1:You bash the boor.
+
+# 0x2x --> jammed door (power 1)
+
+N:41:jammed door
+G:+:U
+M:32
+F:WALL | NO_WALK | CAN_PASS | NO_VISION | REMEMBER | NOTICE
+F:TUNNELABLE
+D:1:You bash the boor.
+
+# 0x2x --> jammed door (power 2)
+
+N:42:jammed door
+G:+:U
+M:32
+F:WALL | NO_WALK | CAN_PASS | NO_VISION | REMEMBER | NOTICE
+F:TUNNELABLE
+D:1:You bash the boor.
+
+# 0x2x --> jammed door (power 3)
+
+N:43:jammed door
+G:+:U
+M:32
+F:WALL | NO_WALK | CAN_PASS | NO_VISION | REMEMBER | NOTICE
+F:TUNNELABLE
+D:1:You bash the boor.
+
+# 0x2x --> jammed door (power 4)
+
+N:44:jammed door
+G:+:U
+M:32
+F:WALL | NO_WALK | CAN_PASS | NO_VISION | REMEMBER | NOTICE
+F:TUNNELABLE
+D:1:You bash the boor.
+
+# 0x2x --> jammed door (power 5)
+
+N:45:jammed door
+G:+:U
+M:32
+F:WALL | NO_WALK | CAN_PASS | NO_VISION | REMEMBER | NOTICE
+F:TUNNELABLE
+D:1:You bash the boor.
+
+# 0x2x --> jammed door (power 6)
+
+N:46:jammed door
+G:+:U
+M:32
+F:WALL | NO_WALK | CAN_PASS | NO_VISION | REMEMBER | NOTICE
+F:TUNNELABLE
+D:1:You bash the boor.
+
+# 0x2x --> jammed door (power 7)
+
+N:47:jammed door
+G:+:U
+M:32
+F:WALL | NO_WALK | CAN_PASS | NO_VISION | REMEMBER | NOTICE
+F:TUNNELABLE
+D:1:You bash the boor.
+
+# 0x30 --> secret door
+
+N:48:secret door
+G:#:w
+M:56
+F:WALL | NO_WALK | CAN_PASS | NO_VISION | DOOR
+F:DONT_NOTICE_RUNNING
+F:TUNNELABLE
+D:1:You tunnel.
+
+# 0x31 --> rubble
+
+N:49:pile of rubble
+G:::w
+F:WALL | NO_WALK | CAN_PASS | NO_VISION | NOTICE
+F:CAN_FLY | SUPPORT_LIGHT
+F:TUNNELABLE
+D:1:You dig in the rubble.
+
+# 0x32 --> magma vein
+
+N:50:magma vein
+G:%:s
+F:WALL | NO_WALK | CAN_PASS | NO_VISION | NOTICE | SUPPORT_LIGHT
+F:DONT_NOTICE_RUNNING
+F:TUNNELABLE
+D:1:You tunnel into the magma vein.
+
+# 0x33 --> quartz vein
+
+N:51:quartz vein
+G:%:w
+F:WALL | NO_WALK | CAN_PASS | NO_VISION | NOTICE | SUPPORT_LIGHT
+F:DONT_NOTICE_RUNNING
+F:TUNNELABLE
+D:1:You tunnel into the quartz vein.
+
+# 0x34 --> magma vein + treasure
+
+N:52:magma vein
+G:%:s
+M:50
+F:WALL | NO_WALK | CAN_PASS | NO_VISION | NOTICE | SUPPORT_LIGHT
+F:DONT_NOTICE_RUNNING
+F:TUNNELABLE
+D:1:You tunnel into the magma vein.
+
+# 0x35 --> quartz vein + treasure
+
+N:53:quartz vein
+G:%:w
+M:51
+F:WALL | NO_WALK | CAN_PASS | NO_VISION | NOTICE | SUPPORT_LIGHT
+F:DONT_NOTICE_RUNNING
+F:TUNNELABLE
+D:1:You tunnel into the quartz vein.
+
+# 0x36 --> magma vein + known treasure
+
+N:54:magma vein with treasure
+G:*:o
+F:WALL | NO_WALK | CAN_PASS | NO_VISION | NOTICE | SUPPORT_LIGHT
+F:DONT_NOTICE_RUNNING
+F:TUNNELABLE
+D:1:You tunnel into the magma vein.
+
+# 0x37 --> quartz vein + known treasure
+
+N:55:quartz vein with treasure
+G:*:o
+F:WALL | NO_WALK | CAN_PASS | NO_VISION | NOTICE | SUPPORT_LIGHT
+F:DONT_NOTICE_RUNNING
+F:TUNNELABLE
+D:1:You tunnel into the quartz vein.
+
+# 0x38 --> granite wall -- basic
+
+N:56:granite wall
+G:#:w
+F:WALL | NO_WALK | CAN_PASS | NO_VISION | SUPPORT_LIGHT
+F:DONT_NOTICE_RUNNING
+F:TUNNELABLE
+D:1:You tunnel into the granite wall.
+
+# 0x39 --> granite wall -- inner
+
+N:57:granite wall
+G:#:w
+M:56
+F:WALL | NO_WALK | CAN_PASS | NO_VISION | SUPPORT_LIGHT
+F:DONT_NOTICE_RUNNING
+F:TUNNELABLE
+D:1:You tunnel into the granite wall.
+
+# 0x3A --> granite wall -- outer
+
+N:58:granite wall
+G:#:w
+M:56
+F:WALL | NO_WALK | CAN_PASS | NO_VISION | SUPPORT_LIGHT
+F:DONT_NOTICE_RUNNING
+F:TUNNELABLE
+D:1:You tunnel into the granite wall.
+
+# 0x3B --> granite wall -- solid
+
+N:59:granite wall
+G:#:w
+M:56
+F:WALL | NO_WALK | CAN_PASS | NO_VISION | SUPPORT_LIGHT
+F:DONT_NOTICE_RUNNING
+F:TUNNELABLE
+D:1:You tunnel into the granite wall.
+
+# 0x3C --> permanent wall -- basic (perm)
+
+N:60:permanent wall
+G:#:w
+F:WALL | NO_WALK | NO_VISION | PERMANENT | SUPPORT_LIGHT
+F:DONT_NOTICE_RUNNING
+
+# 0x3D --> permanent wall -- inner (perm)
+
+N:61:permanent wall
+G:#:w
+M:60
+F:WALL | NO_WALK | NO_VISION | PERMANENT | SUPPORT_LIGHT
+F:DONT_NOTICE_RUNNING
+
+# 0x3E --> permanent wall -- outer (perm)
+
+N:62:permanent wall
+G:#:w
+M:60
+F:WALL | NO_WALK | NO_VISION | PERMANENT | SUPPORT_LIGHT
+F:DONT_NOTICE_RUNNING
+
+# 0x3F --> permanent wall -- solid (perm)
+
+N:63:permanent wall
+G:#:w
+M:60
+F:WALL | NO_WALK | NO_VISION | PERMANENT | SUPPORT_LIGHT
+F:DONT_NOTICE_RUNNING
+
+N:64:explosive rune
+G:*:R
+F:FLOOR | CAN_LEVITATE | CAN_FLY | NOTICE | SUPPORT_LIGHT
+D:0:This rune seems unstable.
+
+N:65:Straight Road startpoint
+G:*:w
+F:FLOOR | REMEMBER | NOTICE
+
+N:66:section of the Straight Road
+G:*:B
+F:FLOOR | REMEMBER | NOTICE
+
+N:67:section of the Straight Road
+G:*:b
+F:FLOOR | REMEMBER | NOTICE
+
+N:68:section of the Straight Road
+G:*:B
+F:FLOOR | REMEMBER | NOTICE
+
+N:69:section of the Straight Road
+G:*:b
+F:FLOOR | REMEMBER | NOTICE
+
+N:70:section of the Straight Road
+G:*:W
+F:FLOOR | REMEMBER | NOTICE
+
+N:71:section of the Straight Road (discharged)
+G:*:W
+F:FLOOR | REMEMBER | NOTICE
+
+N:72:Straight Road exit
+G:*:w
+F:FLOOR | REMEMBER | NOTICE
+
+N:73:corrupted section of the Straight Road
+G:*:D
+F:FLOOR | REMEMBER | NOTICE
+
+# 74 --> shop
+
+N:74:Building
+G:1:U
+F:FLOOR | PERMANENT | REMEMBER | NOTICE | CAN_RUN
+
+# 75 --> 78 Quests index
+
+N:75:permanent wall
+G:#:w
+F:WALL | NO_WALK | NO_VISION | PERMANENT | SUPPORT_LIGHT
+F:DONT_NOTICE_RUNNING
+
+N:76:permanent wall
+G:#:w
+F:WALL | NO_WALK | NO_VISION | PERMANENT | SUPPORT_LIGHT
+F:DONT_NOTICE_RUNNING
+
+N:77:permanent wall
+G:#:w
+F:WALL | NO_WALK | NO_VISION | PERMANENT | SUPPORT_LIGHT
+F:DONT_NOTICE_RUNNING
+
+N:78:permanent wall
+G:#:w
+F:WALL | NO_WALK | NO_VISION | PERMANENT | SUPPORT_LIGHT
+F:DONT_NOTICE_RUNNING
+
+#Elanor
+N:79:grass with Elanor flowers
+G:&:y
+F:FLOOR | DONT_NOTICE_RUNNING | CAN_RUN
+F:SUPPORT_GROWTH
+
+#Fumellar
+N:80:grass with Fumella flowers
+G:;:r
+F:FLOOR | DONT_NOTICE_RUNNING | CAN_RUN
+F:SUPPORT_GROWTH
+
+#Anemones
+N:81:grass with anemones
+G:;:v
+F:FLOOR | DONT_NOTICE_RUNNING | CAN_RUN
+F:SUPPORT_GROWTH
+
+#Niphredil
+N:82:grass with Niphredil flowers
+G:;:w
+F:FLOOR | DONT_NOTICE_RUNNING | CAN_RUN
+F:SUPPORT_GROWTH
+
+#Iris
+N:83:grass with irises
+G:;:b
+F:FLOOR | DONT_NOTICE_RUNNING | CAN_RUN
+F:SUPPORT_GROWTH
+
+N:84:stream of shallow water
+G:~:B
+S:B:B:B:B:B:B:b
+F:ATTR_MULTI
+F:FLOOR | CAN_LEVITATE | CAN_FLY | REMEMBER | SUPPORT_LIGHT | CAN_RUN
+F:DONT_NOTICE_RUNNING
+F:SUPPORT_GROWTH
+
+# -1 = player level
+N:85:pool of deep lava
+G:.:R
+E:-1d2:1:FIRE
+F:FLOOR | CAN_LEVITATE | CAN_FLY | REMEMBER | SUPPORT_LIGHT
+D:0:You move across the deep lava.
+
+N:86:stream of shallow lava
+G:.:r
+E:-1d1:1:FIRE
+F:FLOOR | CAN_LEVITATE | CAN_FLY | REMEMBER | SUPPORT_LIGHT
+D:0:You move across the shallow lava.
+
+N:87:dark pit
+G:#:D
+F:CAN_LEVITATE | CAN_FLY
+F:NO_WALK | SUPPORT_LIGHT
+F:DONT_NOTICE_RUNNING
+D:0:Ohhh, it is dark and deep.
+
+N:88:dirt
+G:.:U
+F:FLOOR | SUPPORT_LIGHT | CAN_RUN
+F:DONT_NOTICE_RUNNING
+F:SUPPORT_GROWTH
+
+N:89:patch of grass
+G:.:G
+F:FLOOR | SUPPORT_LIGHT | CAN_RUN
+F:DONT_NOTICE_RUNNING
+F:SUPPORT_GROWTH
+
+N:90:ice
+G:.:W
+E:1d1:50:ICE
+F:FLOOR | NOTICE
+
+N:91:sand
+G:.:y
+F:FLOOR | DONT_NOTICE_RUNNING | CAN_RUN
+F:SUPPORT_GROWTH
+
+N:92:dead tree
+G:#:D
+F:CAN_FLY | CAN_PASS
+F:WALL | NO_WALK | NO_VISION | NOTICE
+F:DONT_NOTICE_RUNNING
+F:TUNNELABLE
+D:1:You chop away at the dead tree.
+D:2:a tree blocking your way
+
+N:93:ash
+G:.:s
+F:FLOOR | DONT_NOTICE_RUNNING | CAN_RUN
+F:SUPPORT_GROWTH
+
+N:94:puddle of mud
+G:.:u
+F:FLOOR | DONT_NOTICE_RUNNING | CAN_RUN
+F:SUPPORT_GROWTH
+
+N:95:ice wall
+G:#:W
+F:WALL | NO_WALK | CAN_PASS | NO_VISION | SUPPORT_LIGHT
+F:DONT_NOTICE_RUNNING
+F:TUNNELABLE
+D:1:You tunnel into the ice wall... #BOh, chilly#w.
+D:2:an ice wall blocking your way
+
+N:96:tree
+G:#:G
+F:CAN_FLY | CAN_PASS | SUPPORT_LIGHT
+F:WALL | NO_WALK | NO_VISION
+F:DONT_NOTICE_RUNNING
+F:TUNNELABLE
+D:1:You chop away at the tree.
+D:2:a tree blocking your way
+
+N:97:mountain chain
+G:^:U
+F:CAN_CLIMB | CAN_PASS | SUPPORT_LIGHT
+F:WALL | NO_WALK | NO_VISION
+F:DONT_NOTICE_RUNNING
+F:PERMANENT
+D:1:You cannot tunnel into such a hard stone.
+D:2:a hard stone block blocking your way
+
+# 0x62 --> sandwall
+
+N:98:sandwall
+G:#:y
+F:WALL | NO_WALK | CAN_PASS | NO_VISION
+F:DONT_NOTICE_RUNNING
+F:TUNNELABLE
+D:1:You easily dig into the sandwall.
+D:2:a sandwall blocking your way
+
+# 0x63 --> sandwall + treasure
+
+N:99:sandwall
+G:%:y
+M:98
+F:WALL | NO_WALK | CAN_PASS | NO_VISION
+F:DONT_NOTICE_RUNNING
+F:TUNNELABLE
+D:1:You easily dig into the sandwall.
+D:2:a sandwall blocking your way
+
+# 0x64 --> sandwall + known treasure
+
+N:100:sandwall with treasure
+G:*:o
+F:WALL | NO_WALK | CAN_PASS | NO_VISION | NOTICE
+F:DONT_NOTICE_RUNNING
+F:TUNNELABLE
+D:1:You easily tunnel into the sandwall.
+D:2:a sandwall blocking your way
+
+N:101:high mountain chain
+G:^:W
+F:WALL | NO_WALK | NO_VISION | PERMANENT
+F:DONT_NOTICE_RUNNING
+D:1:This rock is far too hard.
+D:2:a very hard stone block blocking your way
+
+N:102:nether mist
+G:.:v
+S:v:R:r:v:R:r:D
+E:1d1:40:NETHER
+F:ATTR_MULTI
+F:FLOOR | DONT_NOTICE_RUNNING | CAN_RUN
+
+# A diggable glass wall.
+N:103:molten glass wall
+G:.:B
+F:NO_WALK | WALL | CAN_PASS | TUNNELABLE | NOTICE
+F:DONT_NOTICE_RUNNING
+D:1:You tunnel into the molten glass wall...
+D:2:a molten glass wall blocking your way
+
+N:159:Void Jumpgate
+G:+:v
+F:FLOOR | REMEMBER | NOTICE | PERMANENT | CAN_RUN
+D:0:A dark rift opens to the void here.
+
+N:160:Void Jumpgate
+G:+:v
+F:FLOOR | REMEMBER | NOTICE | PERMANENT | CAN_RUN
+D:0:A dark rift opens to the void here.
+
+###### Here are the altars. ######
+
+N:161:Altar of Being
+G:0:W
+F:FLOOR | REMEMBER | NOTICE | CAN_RUN
+D:0:You feel at peace.
+
+N:162:Altar of Winds
+G:0:B
+F:FLOOR | REMEMBER | NOTICE | CAN_RUN
+D:0:You grow a desire to become a bird.
+
+N:163:Altar of Force
+G:0:R
+F:FLOOR | REMEMBER | NOTICE | CAN_RUN
+D:0:You grow a desire to fight evil.
+
+N:164:Altar of Darkness
+G:0:D
+F:FLOOR | REMEMBER | NOTICE | CAN_RUN
+D:0:Images of pain and death fill your mind.
+
+N:165:Altar of Nature
+G:0:g
+F:FLOOR | REMEMBER | NOTICE | CAN_RUN
+D:0:You feel the desire to walk in a great forest.
+
+N:166:Altar of Stone
+G:0:s
+F:FLOOR | REMEMBER | NOTICE | CAN_RUN
+D:0:You grow a desire to forge items.
+
+N:167:Altar of Light
+G:0:y
+F:FLOOR | REMEMBER | NOTICE | CAN_RUN
+D:0:You grow a desire to light up dark places.
+
+N:168:Altar of Waters
+G:0:b
+F:FLOOR | REMEMBER | NOTICE | CAN_RUN
+D:0:You grow a desire to bathe in the ocean.
+
+N:169:Altar of Doom
+G:0:o
+F:FLOOR | REMEMBER | NOTICE | CAN_RUN
+D:0:You grow a desire to do justice.
+
+# XXX
+# XXX
+# XXX
+# XXX
+# XXX
+# XXX
+# XXX
+# XXX
+
+# Used as a marker for random quests
+N:172:open floor
+G:.:w
+F:FLOOR | CAN_RUN | DONT_NOTICE_RUNNING
+F:SUPPORT_GROWTH
+
+# Underground Tunnel
+N:173:Underground Tunnel
+G:#:s
+F:FLOOR | REMEMBER | SUPPORT_LIGHT | DONT_NOTICE_RUNNING | CAN_RUN
+D:0:Oh, an underground tunnel!
+
+# Tainted water
+N:174:stream of tainted water
+G:~:u
+F:FLOOR | CAN_LEVITATE | CAN_FLY | REMEMBER | SUPPORT_LIGHT
+F:DONT_NOTICE_RUNNING
+
+N:175:monster trap
+G:;:v
+F:FLOOR
+
+N:176:Void Jumpgate
+G:+:v
+F:FLOOR | REMEMBER | NOTICE | PERMANENT | CAN_RUN
+D:0:A dark rift opens to the void here.
+
+N:177:lava wall
+G:#:R
+S:R:R:r:r:U:u:R
+F:ATTR_MULTI
+F:WALL | NO_WALK | NO_VISION | PERMANENT | DONT_NOTICE_RUNNING
+D:1:The lava is far too hot to tunnel into it.
+D:2:a lava wall blocking your way
+
+N:178:Great Fire
+G:%:v
+S:R:R:y:v:y:v:R
+E:150d2:1:HELL_FIRE
+F:ATTR_MULTI
+F:FLOOR | REMEMBER | NOTICE | PERMANENT
+D:0:This fire is so powerful it could destroy even the most powerful artifacts.
+
+N:179:path to the next area
+G:>:w
+F:FLOOR | PERMANENT | NOTICE | REMEMBER | CAN_RUN
+D:0:There is a path leading to the next area here.
+D:1:You cannot tunnel a path.
+
+N:180:path to the previous area
+G:<:w
+F:FLOOR | PERMANENT | NOTICE | REMEMBER | CAN_RUN
+D:0:There is a path leading to the previous area here.
+D:1:You cannot tunnel a path.
+
+N:181:field
+G:::g
+F:FLOOR | PERMANENT | NOTICE | REMEMBER
+F:DONT_NOTICE_RUNNING
+D:1:You cannot tunnel a field.
+
+N:182:Ekkaia, the Encircling Sea
+G:*:b
+S:b:b:b:b:b:b:B
+F:ATTR_MULTI
+F:WALL | NO_WALK | NO_VISION | PERMANENT | SUPPORT_LIGHT
+F:DONT_NOTICE_RUNNING
+
+N:183:void
+G: :d
+F:FLOOR
+
+# XXX 182 - 186
+
+# 187 --> terrain -- deep water
+
+N:187:pool of deep water
+G:~:b
+S:b:b:b:b:b:b:B
+F:ATTR_MULTI
+F:FLOOR | CAN_LEVITATE | CAN_FLY | REMEMBER | SUPPORT_LIGHT
+
+# Glass wall -- can see but not pass
+N:188:glass wall
+G:.:B
+F:NO_WALK | WALL | PERMANENT | NOTICE
+F:DONT_NOTICE_RUNNING
+D:1:This glass seems to be totaly impenetrable.
+D:2:a glass wall blocking your way
+
+# Illusion wall -- can't see but can pass
+N:189:illusion wall
+G:#:w
+F:FLOOR | NO_VISION | REMEMBER | SUPPORT_LIGHT | DONT_NOTICE_RUNNING
+D:0:Looks like this wall is not so real.
+
+# Grass roof
+N:190:Grass roof
+G:#:y
+F:WALL | NO_WALK | NO_VISION | PERMANENT | DONT_NOTICE_RUNNING
+
+# grass roof top
+N:191:grass roof top
+G:#:y
+F:WALL | NO_WALK | NO_VISION | PERMANENT | DONT_NOTICE_RUNNING
+
+# grass roof chimney
+N:192:grass roof chimney
+G:#:y
+F:WALL | NO_WALK | NO_VISION | PERMANENT | DONT_NOTICE_RUNNING
+
+# brick roof
+N:193:brick roof
+G:#:r
+F:WALL | NO_WALK | NO_VISION | PERMANENT | DONT_NOTICE_RUNNING
+
+# brick roof top
+N:194:brick roof top
+G:#:r
+F:WALL | NO_WALK | NO_VISION | PERMANENT | DONT_NOTICE_RUNNING
+
+# brick roof chimney
+N:195:brick roof chimney
+G:#:r
+F:WALL | NO_WALK | NO_VISION | PERMANENT | DONT_NOTICE_RUNNING
+
+# window
+N:196:window
+G:#:w
+F:WALL | NO_WALK | NO_VISION | PERMANENT | DONT_NOTICE_RUNNING
+
+# small window
+N:197:small window
+G:#:w
+F:WALL | NO_WALK | NO_VISION | PERMANENT | DONT_NOTICE_RUNNING
+
+# rain barrel
+N:198:rain barrel
+G:#:w
+F:WALL | NO_WALK | NO_VISION | PERMANENT | DONT_NOTICE_RUNNING
+
+# grass with Kingsfoil flowers
+N:199:grass with Kingsfoil flowers
+G:;:G
+F:FLOOR | DONT_NOTICE_RUNNING | CAN_RUN
+F:SUPPORT_GROWTH
+
+# cobblestone road
+N:200:cobblestone road
+G:.:w
+F:FLOOR | DONT_NOTICE_RUNNING | CAN_RUN
+
+# cobblestone with outlet
+N:201:cobblestone with outlet
+G:.:w
+F:FLOOR | DONT_NOTICE_RUNNING | CAN_RUN
+
+N:202:small tree
+G:#:g
+F:FLOOR | DONT_NOTICE_RUNNING | CAN_RUN | SUPPORT_LIGHT | REMEMBER
+F:NO_VISION
+
+# Just to have a town entrance picture
+N:203:town
+G:*:w
+F:FLOOR | NOTICE
+
+# Underground Tunnel
+N:204:Underground Tunnel
+G:^:U
+F:FLOOR | REMEMBER | SUPPORT_LIGHT | DONT_NOTICE_RUNNING | CAN_RUN
+D:0:Oh, an underground tunnel!
+
+# Fire
+N:205:a blazing fire
+G:%:y
+S:y:y:y:R:r:y:R
+E:-1d2:1:FIRE
+D:0:The blazing fire burns you!
+F:ATTR_MULTI
+F:FLOOR | CAN_FLY | REMEMBER | SUPPORT_LIGHT
+F:DONT_NOTICE_RUNNING
+
+# Permanent rubble -- town use
+N:206:pile of rubble
+G:::w
+F:WALL | NO_WALK | CAN_PASS | NO_VISION | NOTICE
+F:CAN_FLY | SUPPORT_LIGHT | PERMANENT
+D:1:Looks like this pile of rubble is quite hard.
+
+# Rocky ground - rougher terrain.
+N:207:rocky ground
+G:.:s
+F:FLOOR | SUPPORT_LIGHT | CAN_RUN
+F:DONT_NOTICE_RUNNING
+
+# cloud-like vapour. Floor for Eru's temple
+N:208:cloud-like vapour
+G:.:W
+S:W:B:B:W:w:W:B
+F:FLOOR | CAN_LEVITATE | CAN_FLY | SUPPORT_LIGHT 
+F:ATTR_MULTI | CAN_RUN | DONT_NOTICE_RUNNING
+
+# condensing water
+N:209:condensing water
+G:~:B
+S:B:B:B:B:B:B:b
+F:ATTR_MULTI
+F:FLOOR | CAN_LEVITATE | CAN_FLY | REMEMBER | SUPPORT_LIGHT | CAN_RUN
+F:DONT_NOTICE_RUNNING
+
+# Dense mist. Can pass through, but not see through
+N:210:dense mist
+G:#:w
+S:w:W:s:s:s:w:w
+F:FLOOR | NO_VISION | REMEMBER | SUPPORT_LIGHT
+F:ATTR_MULTI | DONT_NOTICE_RUNNING
+D:0:You wander through the mist.
+D:1:You cannot tunnel through mist!
+
+# Hail-stone wall
+N:211:hail-stone wall
+G:#:W
+F:WALL | NO_WALK | CAN_PASS | NO_VISION | NOTICE | SUPPORT_LIGHT
+F:DONT_NOTICE_RUNNING
+F:TUNNELABLE
+D:1:You tunnel into the hail-stone wall.
+
+N:212:dead small tree
+G:#:D
+F:FLOOR | DONT_NOTICE_RUNNING | CAN_RUN | SUPPORT_LIGHT | REMEMBER
+F:NO_VISION
+
+# Low hill
+N:213:low hill
+G:^:g
+F:FLOOR | DONT_NOTICE_RUNNING| CAN_RUN | SUPPORT_LIGHT | NO_VISION
+D:0:You go over the hill.
+D:1:You cannot tunnel through that.
+
+#Angband and Mordor (Ered Lithui, Ephel Duath) mountains
+N:214:dark mountain chain
+G:^:D
+F:WALL | NO_WALK | NO_VISION | PERMANENT
+F:DONT_NOTICE_RUNNING
+D:1:This rock is far too hard.
+D:2:a very hard stone block blocking your way
+
+#Ered Luin - Blue Mountains
+N:215:blue mountain chain
+G:^:B
+F:CAN_CLIMB | CAN_PASS | SUPPORT_LIGHT
+F:WALL | NO_WALK | NO_VISION
+F:DONT_NOTICE_RUNNING
+F:PERMANENT
+D:1:You cannot tunnel into such a hard stone.
+D:2:a hard stone block blocking your way
+
+#Ered Mithrin - Grey Mountains
+N:216:grey mountain chain
+G:^:s
+F:CAN_CLIMB | CAN_PASS | SUPPORT_LIGHT
+F:WALL | NO_WALK | NO_VISION
+F:DONT_NOTICE_RUNNING
+F:PERMANENT
+D:1:You cannot tunnel into such a hard stone.
+D:2:a hard stone block blocking your way
+
+#Orodruin - Mount Doom
+N:217:part of Mount Doom
+G:^:R
+F:WALL | NO_WALK | NO_VISION | NOTICE | SUPPORT_LIGHT
+F:DONT_NOTICE_RUNNING
+F:PERMANENT
+D:1:You cannot tunnel through that.
+D:2:a stream of searing lava barring your way
+
+#Snow-capped peak
+N:218:snow-capped peak
+G:^:w
+F:WALL | NO_WALK | NO_VISION | NOTICE | SUPPORT_LIGHT
+F:DONT_NOTICE_RUNNING | PERMANENT
+D:1:The ice is too cold to tunnel into it.
+D:2:an unusually thick wall of ice barring your way
+
+#Fir tree
+#BUG - these do not burn.
+N:219:fir tree
+G:#:g
+F:CAN_FLY | CAN_PASS | SUPPORT_LIGHT
+F:WALL | NO_WALK | NO_VISION
+F:DONT_NOTICE_RUNNING
+F:TUNNELABLE
+D:1:You chop away at the fir tree.
+D:2:a fir tree blocking your way
+
+#section of a flet (wooden platforms built high up in the trees of Lothlórien)
+N:220:section of a flet
+G:_:u
+F:FLOOR | DONT_NOTICE_RUNNING | CAN_RUN
+
+#light post
+N:221:light post
+G:|:w
+F:WALL | NO_WALK | CAN_FLY | CAN_PASS
+F:SUPPORT_LIGHT | REMEMBER
+D:1:You cannot tunnel a light post.
+D:2:A light post blocking your way
+
+#Water lily
+N:222:water lily
+G:;:B
+F:FLOOR | DONT_NOTICE_RUNNING | CAN_RUN
+F:SUPPORT_GROWTH
+
+#Dead Marshes swamp water
+N:223:part of the Dead Marshes
+G:~:G
+E:10d10:6:CONFUSION
+F:FLOOR | CAN_LEVITATE | CAN_FLY | REMEMBER | SUPPORT_LIGHT
+
+#Morannon
+N:224:Black Gate
+G:+:D
+F:CAN_CLIMB | CAN_PASS | SUPPORT_LIGHT
+F:WALL | NO_WALK | NO_VISION | NOTICE 
+F:DONT_NOTICE_RUNNING
+F:PERMANENT
+D:1:You cannot tunnel through that.
+D:2:a closed Black Gate blocking your way
+
+#River (overland view only)
+N:225:river
+G:~:w
+S:w:w:w:B:w:w:B
+F:ATTR_MULTI
+F:FLOOR | CAN_LEVITATE | CAN_FLY | REMEMBER | SUPPORT_LIGHT | CAN_RUN
+F:DONT_NOTICE_RUNNING | SUPPORT_GROWTH 
+
+#Swamp
+N:226:swamp pool
+G:~:g
+E:1d1:1:POISON
+F:FLOOR | CAN_LEVITATE | CAN_FLY | REMEMBER | SUPPORT_LIGHT
+
+#Anduin river
+N:227:stream of the Anduin river
+G:~:B
+E:1d1:1:WATER
+S:w:w:w:b:w:w:b
+F:ATTR_MULTI
+F:FLOOR | CAN_LEVITATE | CAN_FLY | REMEMBER | SUPPORT_LIGHT | SUPPORT_GROWTH
+
+#Road sign to Gondolin to avoid Maeglin quest silliness somewhat
+N:228:road sign that says 'Find Gondolin!'
+G:?:v
+S:v:R:B:G:w:v:R
+F:ATTR_MULTI
+F:WALL | PERMANENT | NOTICE | SUPPORT_LIGHT | REMEMBER | 
+
+### New terrain features for town use ###
+
+#Beehive
+N:229:beehive
+G:*:o
+E:1d1:1:POISON
+F:WALL | PERMANENT | CAN_FLY | REMEMBER | SUPPORT_LIGHT | 
+F:CAN_PASS | NO_WALK | NO_VISION | DONT_NOTICE_RUNNING | 
+D:0:Ouch! A bee stung you!
+D:1:You'll just get stung.
+D:2:a beehive blocking your way
+
+#Dirt road - same as dirt but more appropriate for towns
+N:230:dirt road
+G:.:U
+F:FLOOR | DONT_NOTICE_RUNNING | CAN_RUN
+F:SUPPORT_GROWTH
+
+#Wide gate
+N:231:wide gate
+G:-:D
+F:WALL | PERMANENT | CAN_FLY | SUPPORT_LIGHT | NOTICE | 
+F:CAN_PASS | NO_WALK | NO_VISION | DONT_NOTICE_RUNNING | 
+D:1:You cannot tunnel through that.
+D:2:a closed gate barring your way
+
+#Same gate, but opened
+N:232:open gate
+G:':D
+F:FLOOR | DONT_NOTICE_RUNNING | CAN_RUN | SUPPORT_LIGHT | 
+
+### For wood houses, bridges, etc:
+
+#Wooden board - horizontal
+N:233:wooden board
+G:-:u
+F:WALL | PERMANENT | SUPPORT_LIGHT | NO_WALK | NO_VISION | CAN_FLY
+D:1:You cannot tunnel through that.
+D:2:a wooden board blocking your way
+
+#Wooden board - vertical
+N:234:wooden board
+G:|:u
+F:WALL | PERMANENT | SUPPORT_LIGHT | NO_WALK | NO_VISION | CAN_FLY
+D:1:You cannot tunnel through that.
+D:2:a wooden board blocking your way
+
+#Light wooden board - horizontal
+N:235:wooden board
+G:-:U
+F:WALL | PERMANENT | SUPPORT_LIGHT | NO_WALK | NO_VISION | CAN_FLY
+D:1:You cannot tunnel through that.
+D:2:a wooden board blocking your way
+
+#Light wooden board - vertical
+N:236:wooden board
+G:|:U
+F:WALL | PERMANENT | SUPPORT_LIGHT | NO_WALK | NO_VISION | CAN_FLY
+D:1:You cannot tunnel through that.
+D:2:a wooden board blocking your way
+
+#White tree
+#BUG - these do not burn.
+N:237:white tree
+G:#:w
+F:CAN_FLY | CAN_PASS | SUPPORT_LIGHT
+F:WALL | NO_WALK | NO_VISION | PERMANENT 
+F:DONT_NOTICE_RUNNING
+D:1:You cannot tunnel through that.
+D:2:a white tree blocking your way
+
+#Swift waterfall
+N:238:swift waterfall
+G:|:B
+E:25d10:1:WATER
+S:w:w:w:b:w:w:b
+F:ATTR_MULTI
+F:FLOOR | CAN_LEVITATE | CAN_FLY | REMEMBER | SUPPORT_LIGHT | 
+F:DONT_NOTICE_RUNNING | SUPPORT_GROWTH | 
+
+#Slippery rock ledge
+N:239:slippery rock ledge
+G:&:s
+E:5d10:1:COLD
+F:FLOOR | CAN_LEVITATE | CAN_FLY | SUPPORT_LIGHT | 
+F:SUPPORT_GROWTH
+
+#Stable
+N:240:stable
+G:#:u
+F:WALL | NO_WALK | NO_VISION | PERMANENT | CAN_FLY
+D:1:You cannot tunnel through that.
+D:2:a stable wall blocking your way
+
+#Wooden plank
+N:241:wooden plank
+G:%:U
+F:FLOOR | CAN_RUN | DONT_NOTICE_RUNNING | SUPPORT_LIGHT | 
+F:SUPPORT_GROWTH  | 
+
+#Fosse (dry moat)
+N:242:fosse pit
+G:&:g
+F:CAN_LEVITATE | CAN_FLY
+F:NO_WALK | SUPPORT_LIGHT
+F:DONT_NOTICE_RUNNING
+D:1:You cannot tunnel through that.
+D:2:a dry moat blocking your way
+
+#Mallorn
+N:243:Mallorn
+G:*:y
+S:y:W:W:y:w:W:y
+F:CAN_FLY | CAN_PASS | SUPPORT_LIGHT
+F:WALL | NO_WALK | NO_VISION
+F:DONT_NOTICE_RUNNING
+D:1:It isn't a good idea to harm a Mallorn.
+D:2:a Mallorn blocking your way
+
+# New features for the Maps of Lord Dimwit
+
+N:244:copper pillar
+G:#:u
+S:u:u:u:o:u:u:u
+F:WALL | NO_WALK | CAN_PASS | NO_VISION | NOTICE | SUPPORT_LIGHT
+F:DONT_NOTICE_RUNNING | ATTR_MULTI
+D:1:The copper is too tough to tunnel through.
+D:2:a copper pillar blocking your way
+
+N:245:ethereal wall
+G:.:w
+F:WALL | NO_WALK | PERMANENT | NOTICE | DONT_NOTICE_RUNNING
+D:1:You can't even see your obstruction!
+D:2:an unseen force blocking your way
+
+N:246:glacial wall
+G:#:B
+F:WALL | NO_WALK | CAN_PASS | NO_VISION | SUPPORT_LIGHT
+F:DONT_NOTICE_RUNNING | TUNNELABLE
+D:1:You tunnel into the glacial wall... #BOh, chilly!#w.
+D:2:a hard glacial wall blocking your way
+
+N:247:battlement
+G:#:w
+F:NO_WALK | CAN_PASS | NOTICE | SUPPORT_LIGHT
+F:DONT_NOTICE_RUNNING | TUNNELABLE
+D:1:You tunnel into the battlement.
+D:2:a hard stone battlement blocking your way
+
+N:248:door of Orthanc
+G:':r
+F:FLOOR | NOTICE | REMEMBER | CAN_RUN
+F:SUPPORT_LIGHT | DONT_NOTICE_RUNNING
+D:0:The Key of Orthanc allows you to pass.

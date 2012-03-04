@@ -1,0 +1,55 @@
+		 ------------------------
+		| Monstrous Compendium 6 |
+		|   Morgoth's minions    |
+	 	 ------------------------
+
+                *** Orcs (o) ***
+
+Squat, swarthy creatures rumoured to have been Elves once.
+The [[[[[Usnotlings] and [[[[[osnaga] are the lowest form of Orc, weak
+but dangerous in packs. There are different breeds of Orc,
+depending on their dwelling-place: [[[[[uHill orcs], [[[[[GCave orcs],
+and [[[[[Dblack orcs]. The [[[[[sHalf-orcs] are a cross-breed of Orcs
+and humans. The [[[[[BUruk-hai] are a stronger breed, they can 
+bear the light of the sun. The [[[[[wElite] uruks are the most
+dangerous kind of Orc there is.
+
+                *** Ogres (O) ***
+
+Monstrous and destructive creatures of legend and folklore.
+The [[[[[wOgrillon] is a cross-breed of an Orc and an Ogre, and
+the [[[[[oHalf-ogre] is a cross between an Ogre and a human. The
+garden-variety [[[[[UOgres] are more common than their [[[[[gForest]-
+dwelling, [[[[[sMountain]-dwelling, and [[[[[uCave]-dwelling cousins.
+The [[[[[DBlack ogres] shy away from the sun, the [[[[[BMerrows] live
+in or near water. There are some [[[[[yRebel ogres] who have 
+turned against their plundering fellows and will try to aid
+adventurers.
+
+               *** Giants (P) ***
+
+Enormous humanoids with powerful muscles, aligned with evil.
+There are [[[[[WStone giants], [[[[[BStorm giants], [[[[[rFire giants], [[[[[wFrost] 
+[[[[[wgiants], and [[[[[UHill giants] - while very large and dangerous,
+they pale in comparison to the much stronger [[[[[uCyclops], [[[[[bCloud] 
+[[[[[bgiants], and the terrifying [[[[[sRock giants]. The [[[[[yLesser titans]
+and [[[[[oGreater titans] are in a class of their own, their power
+and magical abilities unmatched by any. The [[[[[RRebel giants] are
+those who have broken with the forces of Darkness.
+
+               *** Trolls (T) ***
+
+Lumbering evil creatures originated in mockery of the Ents.
+The [[[[[UHalf-trolls] are bizarre crosses between trolls and Men.
+The [[[[[uCave-trolls], [[[[[wSnow-trolls], [[[[[sHill trolls], [[[[[gForest trolls],
+[[[[[BWater trolls], and [[[[[WStone trolls] are dangerous and usually
+move in large groups. Even more dangerous are the [[[[[oAlgroths],
+the [[[[[yOlog-hai], and the [[[[[BScrags]. The [[[[[RWar trolls], [[[[[rEldraks], and
+[[[[[bEttins] can only be described as killing machines.
+
+                *** Yeeks (y) ***
+
+Small humanoid figures whose origin lies outside Middle-earth.
+There are [[[[[Bblue], [[[[[ubrown], [[[[[Ddark], [[[[[wwhite], [[[[[sgray], and [[[[[yyellow]
+Yeeks. The [[[[[gmaster yeeks] are somewhat proficient at magic, and
+[[[[[Uadventurer yeeks] will try to help you.

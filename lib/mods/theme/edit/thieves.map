@@ -1,0 +1,64 @@
+# Floor
+F:.:1:6
+
+# Dark floor
+F:,:1:4
+
+# Permanent wall
+F:X:61:4
+
+# Lit permanent wall
+F:x:61:6
+
+# Magically locked door
+F:M:38:22
+
+# Locked door
+F:D:38:6
+
+# Open door
+F:d:4:6
+
+# up staircase
+F:<:6:8
+
+# Floor with Novice rogue
+F:a:1:6:44:0:0:0:0:0:0:2
+
+# Floor with Bandit
+F:b:1:6:150:43:*:0:0:0:0:2
+
+# Dark floor with novice rogue
+F:f:1:4:44:0:0:0:0:0:0:2
+
+# Floor with human skeleton
+F:z:1:6:0:395
+
+# Dungeon layout
+D:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+D:x.....x....zx.....x.............x
+D:x.....x.....x.....x.............x
+D:x.....x.....x.....x.............x
+D:xxxMxxxxxdxxxxxdxxxxxxxxxDxxxxxxx
+D:XXx..........................xXXX
+D:XXx.xxxxx.xxxxx.xxxxxxxxx.xx,xXXX
+D:XXxxxXXXxxxXXXxxxXXXXXXXxxx,,,XXX
+D:XXXXxxxxxxxxxxxxxxxxxXXXXX,,,,,XX
+D:XXXXxa..xb..x...x...xXXXX,,,,,,,X
+D:XXXXx...x...xa..x...xXXXX,,,,,,,X
+D:XXXXx..ax...x...x.a.xXXXX,,,,,,,X
+D:xxxxxxDxxxDxxxDxxxDxxXXXXX,,,,,XX
+D:x,,,x...............xXXXXXX,,,XXX
+D:x,,,x..x.........x..xXXXXXXX,XXXX
+D:x,,,D.....x...x.....D,,,,,,,,XXXX
+D:x,,,x..x.........x..xXXXXXXXXXXXX
+D:x,,,x...............xXXXXXXXXXXXX
+D:x,,,xxDxxxDxxxDxxxDxxXXXXXXXXXXXX
+D:x,,,x...x...x.a.xa..xXXXXXXXXXXXX
+D:x,,,xa.ax.a.x...x...xXXXXXXXXXXXX
+D:xf,fx...x...x...x...xXXXXXXXXXXXX
+D:xxxxxxxxxxxxxxxxxxxxxXXXXXXXXXXXX
+
+# Starting position
+P:4:4
+

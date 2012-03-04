@@ -1,0 +1,9 @@
+# Father branch is Barrow-Downs(4), on level 10
+A:4
+L:9
+
+N:Bilbo's trail
+U:s_bilbo.map
+D:#yYou hear someone shout, "I am in a frightful hurry, but Gandalf told me to leave this map for you! Find it, then seek Thorin in Mirkwood!"#w
+F:DESC | NO_GENO | NO_NEW_MONSTER | SPECIAL | NO_STAIR
+F:ASK_LEAVE | NO_TELEPORT

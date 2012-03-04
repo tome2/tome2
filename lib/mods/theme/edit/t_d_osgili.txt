@@ -1,0 +1,78 @@
+# File: t_d_osgili.txt
+
+# Osgiliath map and destruction by furiosity <furiosity@zionmainframe.net>
+
+# NB! This file assumes usage of the following files from the 'theme' module:
+# f_info.txt and t_pref.txt
+# Please download the module and refer to the files for the terrain feature definitions http://modules.t-o-m-e.net/
+# Don't forget to modify the maximum number of terrain features, etc. in misc.txt as well.
+
+#Anduin river
+F:a:227:3
+
+D:######################################################################################################################################################################################################
+D:#                                                         #################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@##########################                                                         #
+D:#                                                     ######@@@@@@@@@@@@@@@@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@@@@@@@@@@@@@@@@@@@@@@@@####                         ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,#
+D:#                                                 #####@@@@@@@########@@@@@@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@#####@@@#####@@@#####@@######                     ,,,                            #
+D:#                                               ####@@@@@@@@@,########@@@@@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@@#####,,,#####,,,#####,@@@@@#####                 ,,,                             #
+D:#                                             ####@@@@@@@@@@,,########@@@@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@#####@@@#####@@@#####@,@@@@@@@#####             ,,,                              #
+D:#                                          ####@@@@########,@,@@@@@@@@@@@@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@@@,@@@@@@@,@@@@@@@,@@@@,,,,,@@@@@####          ,,,                               #
+D:#                                        ####@@@@@,########,@,@@@@@@@@@@@@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@@@@,,,,@@@@,,,,@@@@,,,,@@@@@,,,,@@@####      ,,,                                 #
+D:#                                     $###@@@@@@@,@########@@,@@@@@@@@@@@@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@@@@#####@@@#####@@@#####@@@@#####@@@####   ,,,                                  #
+D:#                                   $$$@@@@@@@@@@@,,@@@@@@@@@,########@@@@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@@@@#####,,,#####,,,#####,,,@#####@@@@#####,,,                                   #
+D:#                                 $,,=@@@@@@########,@@@@@@@@,########@@@@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@@#####@@@#####@@@#####@@@@#####@@@@@@@#,,,                                    #
+D:#                                ##=,,D@@@@@########,@@@@@@@@,########@@@@@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@@,@@@@@@@,@@@@@@@,@@@@@@@@,@@@@@@@@=,,=###                                  #
+D:#                               ###@D,,D@@@@########@,@@@@@@@,@@@@@@@@@@@@@@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@,,,@@@@@,,,,@@@@,@@@@@@@,@@@@@@@=,,=  ###                                 #
+D:#                              ##@@@@D,,D@@@@@@@@@@@@@,@@@@D@@,@@@@@@@@@@@@@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@#####@@@#####@@@D@@@@#####@@@@=,,=     ##                                #
+D:#                             ##@@@@@@D,,D@@@@@@@@@@@@@,@@DDD@@,@########@@@@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@@#####,,,#####,,DDD,,,#####@@@=,,=       ##                               #
+D:#                            ##@@@@@#@@D,,D@@@@@########,@@D@@@@,########@@@@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@#####@@@#####@@@D@@@@#####@@=,,=         ##                              #
+D:#                           ##@@@@@@#@@@D,,D@@@@########,@@@@@@@,########@@@@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@@@@,@@@@@@@,@@@@@@@@@@@@,@@@=,,=   DDDDD   ##                             #
+D:#                          ##@@@@@@###@@@D,,D@@@########@,@@@@@@,@@@@@@@@@@@@@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@@@@@,@@@@@@@,@@@@@@,,,,,@@@=,,=   DDDDDDD   ##                            #
+D:#                         ##@@@@@@@###@@@@D,,D@@@@@@@@@@@@,@@@@@,@@@@@@@@@@@@@@@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@#####@@@#####@@#####@@@@=,,=     DDDDD     ##                           #
+D:#                        ##@@@@@@@#####@@@@D,,D@@@@@@@@@@@@,,,@@@,@########@@@@@@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@#####,,,#####@@#####@@@=,,=                 ##                          #
+D:#                       ##@@@@@@@@#####@@@@@D,,D@@@@@@########,@@@,########@@@@@@@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@#####@@@#####@@#####@@=,,=,,,,,,,,,,,,,,,,,,,##                         #
+D:#                      ##@@@@@@###########@@@D,,D@@@@@########,@@@,########@@@@@@@@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@@@,@@@@@@@,@@@@@@,@@@=,,= ,,$$,,,#####,,###,, ##                        #
+D:#                      ##@@@@@@###########@@@@D,,D@@@@########@,@,@@@@@@@@@@@@@@@@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@@,,@@@@@@@@@,,,,,,@@@=,,=  ,,#$$,,#####,,###,, ##                        #
+D:#                      ##@@@#################@@D,,D@@@@@@@@@@@@@,,,@@@@@@@@@@@@@@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@#####@@@@@@@#####@@@@=,,= H ,,###############,,  ##                       #
+D:#                     ##@@@@#################@@@D,,D@@@@@@@########,@@@@@@@@@@@@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@@#####,,,,,,,#####@@@=,,= HH ,,###############,,  ##                       #
+D:#                     ##@@@@#################@@@@D,,D@@@@@@########,@@@@@@@@@@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@#####@@@@@@@#####@@=,,= HHH ,,,#############,,,  ##                       #
+D:#                     ##@@@@@@@@@@@@@@@@@@@@@@@@@@D,,D@@@@@########@@@@@@@@@@@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@@@@@@@@@@@@@@@@@@@@@@=,,= HHHH ,,,#############,,,   ##                      #
+D:#                    ################@@@@@@@@@@@@@@=,,=@@@@@@@@@@@@@@@@@@@@=##aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@##=@@@@@@@@@@@@@@@@@=,,= HHHHH ,,,#########$$$$,,,   ##                      #
+D:#                    ##D             DDDDDDDDDDDDDDDD,,DDDDDDDDDDDDDDDDDDDDDD#aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa###DDDDDDDDDDDDDDDDDDD,,=        ,,,###########$$,,,                           #
+D:#                    ##D,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,$$###########$$,,                           #
+D:#                    ##D,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,$############$$,,                           #
+D:#                    ##D,,cccccccccccDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD,,DDD#aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa#DDDDDDDDDDDDDDDDDDD,,=        ,,$##############,,    CC                     #
+D:#                    ##D,,c  %%%%%  c@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@=,,=@=##@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@##=@@@@@@@@@@@@@@@@=,,=DDDDDDD ,,,##############,,                           #
+D:#                    ##D,,c %%=%=%% c@@@######@@@@@@@@@@@@@@@@@D@@@@@D,,D@@@@@@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@@@@@@@@@@@@@@@@@@=,,=D,,,,,D ,,$$#############,,                           #
+D:#                    ##D,,c%%%%%%%%%c@@@######@@@@@@@@@@@@@@@@DDD@@@D,,D@@@@@@@@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@@@=HHHHHHHHH=@@@@=,,=D,%%%,D ,,$$#############,,    ##                     #
+D:#                    ##D,,c %%=%=%%,c@@@######@@@@@@@@@@@@@@@@@D@@@D,,D@@@@@@@@@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@@HHHHHHHHHHHHH@@@=,,=D,%%%DD ,,$$############$$,    ##                     #
+D:#                    ##D,,c  %%%%% ,c@@@######@@@@@@@@######@@@@@@D,,D@@@@@@@@@@@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@@@@=HHHHHHHHH=@@@@=,,=D,,,,,,,,,,############$$$,    ##                     #
+D:#                    ##D,,ccccccccc,@@@@@@,@@@@@@@@@@@######@@@@@D,,D@@@@@@@@@@@@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@@@@@@@@@@@@@@@@@@@@=,,=DDDDDDD ,,,###########$$,,,    ##                     #
+D:#                    ##D,,,,,,,,,,,,@@@@@@,@@@@@DD@@@@######@@@@D,,D##########@@@@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa=DDDDDDDDDDDDDDDDDDDDDD,,         ,,,#############,,,   ##                      #
+D:#                    ################@@@@@@,@@@DDDD@@@######@@@D,,D@##########@@@@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,#############,,,   ##                      #
+D:#                     ##@@@@@@@@@@@@@@######,@@@DD@@@@@@,@@@@@D,,D@@##########@@@@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa=DDDDDDDDDDDDDDDDDDDDDDD,,        ,,#############$$,,   ##                      #
+D:#                     ##@@@@@@@@@@@@@@######@,@@@@@@@@@,@@@@@D,,D@@@##,####,##@@@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@@@@@@@@@@@@@@@@@@@@@@@@=,,=HHHHH ,,###############,,  ##                       #
+D:#                      ##@@@######@@@@######@@,@@######,@@@@D,,D@@@@@@,@@@@,@@@=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@@@@@@=HHHHHHHHHHH=@@@@@@=,,=HHHH ,,###,,#$$##,,#$$,,  ##                       #
+D:#                      ##@@@######@@@@######@@@,@######,@@@D,,,,,,,,,,,,,,,,,,,aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@@@@@@HHHHHHHHHHHHH@@@@@@@=,,=HHH ,,$$#,,$$###,,$$#,, ##                        #
+D:#                       ##@@######@@@@@@,@@@@@@@,######,@@D,,D@@@@@@@@@@@@@@@@@=#########aaaaaaaaaaaaaaaaaaaaaaaaaa@@@@@@@@=HHHHHHHHHHH=@@@@@@@@=,,=HH ,,,,,,,,,,,,,,,,,,,##                         #
+D:#                        ##@######@@@@@@@,@@@@@@,######,@D,,D@@@@@@@@@@@@@@@@@@@@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@=,,=H ,                  ##                         #
+D:#                        ##@@@,@@@@@@@@@@,@@@@@@@,,,,,,,D,,=DDDDDDDDDDDDDDDDDD=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa=DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD,,= ,      DDDDD      ##                          #
+D:#                         ##@@@,@@@@@@@@@,@@@@@@@@,@@@@D,,,,,,,,,,,,,,,,,,,,,,aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,     DDDDDDD    ###                          #
+D:#                          ##@@@@,######@,@######,@@@@D,,=DD,DDDDDDDDDDDDDDDDD=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa=DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD,,      DDDDD     ##                           #
+D:#                           ##@@@,######@,@######,@@@D,,D@@D,D@@@@@@@@@@@@@@@@@@@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@=,,=             ##                            #
+D:#                            ##@@,######@,@######,@@D,,D@@@D,D@@@@@@@@@@@@@@@@@@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@@@#####@@@@@@@@@@@@@@@@@@@@#####@@@=,,=           ##                             #
+D:#                             ##@,######@,@######,@D,,D#####,#####@@@@@@@@@@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@#####,,,,,,,,,,,,,,,,,,,,#####@@@@=,,=        ###                              #
+D:#                              ##@,,,@@@@,@@@,,,,@D,,D@#k@=H,H=@m#@@@@@@@@@@@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@@#####@@@@@@@@@@@@@@@@@@@@#####@@@@@=,,=      ##                                #
+D:#                               ##@@@,,,,,,,,@@@@D,,D@@#@@#H,H#@@#@@@@@@@@@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@@,@@@@@@@@@@@@@@@@@@@@@@@@,,,,@@@@@=,,=    ##                                 #
+D:#                                ###@@@@@@@D@@@@D,,D@@@#@@#H,H#@@#@@@@@@@@@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@#####@@@@@@@@=@@@@@@@@@@@@@@#####@@@@=,, =##$                                  #
+D:#                                  ###@@@@DDD@@D,,D@####@##H,H##@####@@@@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@#####@@@@@@@@@@@@@@@,,,,,,,,#####@@@@@=,,,,,                                   #
+D:#                                    ###@@@D@@D,,D@@#@@@@# H,H #@@@@#@@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@@@@#####@@@@@@@@@@@@@@,@#####@@#####@@@@@##$$                                     #
+D:#                                      ###@@@D,,D@@@#@@@@# H,H #@@@@#@@@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@@@@@@@,@@@@@@@@@@,,,,,,@@#####@@@@@@@@@####                                        #
+D:#                                        ##$=,,D@@@@####@##H,H##@####@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@@@@@#####@@@@@@@,@#####@@#####@@@@@@@####                                          #
+D:#                                            ,=@@@@@@@@#@@#H4H#@@#@@@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@@@@@@#####@@,,,,,@@#####@@@@@@@@@@@@####                                            #
+D:#                                            $##@@@@@@@#@@#####@@#@@@@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@@@@@#####@,#####@@#####@@@@@@@@@####                                               #
+D:#                                              ###@@@@@#l@@@@@@@H#@@@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@@@@@@@@@@,@@,@#####@@@@@@@@@@@@@#####                                                 #
+D:#                                                ###@@@###########@@@@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@@@@@@@@@@@@@@,@@@#####@@@@@@@@@@####                                                     #
+D:#                                                 ###@@@@@@@@@@@@@@@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@@@@@@@@@@@@@@@@@@@@@@@@@@######                                                         #
+D:#                                                  ###############@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@##############################                                                            #
+D:######################################################################################################################################################################################################

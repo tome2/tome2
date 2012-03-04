@@ -1,0 +1,47 @@
+~~~~~01|Clairvoyant
+~~~~~02|Classes|Clairvoyant
+#####R=== Clairvoyants ===
+
+#####GDescription
+Clairvoyants are masters of the mind, they are
+especially proficient at Mindcraft, Divination,
+and the Mind school of magic. They sacrifice 
+breadth of ability for additional favour with 
+their deity, so it makes sense to pick a deity 
+to worship when playing a clairvoyant character.
+It is not, however, a requirement.
+
+#####GStarting Stat Modifiers
+Strength         -5
+Intelligence     +3
+Wisdom           +0
+Dexterity        +1
+Constitution     -2
+Charisma         +1
+Bonus Blows       0
+Hit Die          +d0
+Exp Penalty      30%
+
+#####GStarting Skills:
+#####BSkill                   Start Level     Skill Point Gains
+Combat                  1.000           [0.300]
+  Weaponmastery         0.700           [0.500]
+Sneakiness              1.000           [0.900]
+Magic                   1.000		[0.900]
+  Magic-Device          1.000		[1.200]
+  Spell-power           0.000		[0.600]
+  Divination            1.000		[1.000]
+  Mind                  1.000		[1.000]
+Spirituality            1.000           [1.000]
+  Prayer		0.000		[1.000]
+  Mindcraft		1.000		[0.700]
+Monster-lore            0.000           [0.500]
+
+#####GStarting Equipment
+A clairvoyant begins the game with:
+    A book of Beginner Cantrips
+    A quarterstaff
+
+#####GInnate Abilities:
+#####BAbility              Character level
+Perfect casting             1

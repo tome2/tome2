@@ -1,0 +1,46 @@
+~~~~~01|Ascetic
+~~~~~02|Classes|Ascetic
+#####R=== Ascetics ===
+
+#####GDescription
+An Ascetic is a monk who has forsaken all worldly
+things, including deity worship and magic. Ascetics
+must survive by their fists and their natural
+ability to resist magic. Despite not worshipping any
+gods, Ascetics are highly spiritual, and can achieve
+excellent saving throws in addition to their magic-
+repelling abilities.
+
+#####GStarting Stat Modifiers
+Strength         +1
+Intelligence     -2
+Wisdom           +1
+Dexterity        +1
+Constitution     +0
+Charisma         +1
+Bonus Blows       0
+Hit Die          +d8
+Exp Penalty      40%
+
+#####GStarting Skills:
+#####BSkill                   Start Level     Skill Point Gains
+Combat                  1.000           [0.900]
+  Archery               1.000           [0.700]
+  Barehand-combat       1.000           [0.900]
+  Antimagic             1.000           [1.000]
+Sneakiness              1.000           [0.700]
+  Stealth               1.000           [1.000]
+  Disarming             1.000           [0.900]
+  Dodging               0.000           [1.000]
+Spirituality            1.000           [0.700]
+Monster-lore            1.000           [1.100]
+  Corpse-preservation   1.000           [0.700]
+
+#####GStarting Equipment
+An ascetic begins the game with:
+    a potion of healing
+
+#####GInnate Abilities:
+#####BAbility              Character level
+Extra Max Blow(1)           1
+Extra Max Blow(1)           5

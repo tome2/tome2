@@ -1,0 +1,761 @@
+clean_ruleset()
+add_ruleset
+[[
+<rule name="oilflask" type="destroy" module="Theme">
+    <name>flask of oil</name>
+</rule>
+<rule name="emptychest" type="destroy" module="Theme">
+    <and>
+        <and>
+            <tval>7</tval>
+        </and>
+        <status>empty</status>
+    </and>
+</rule>
+<rule name="junkmushrooms" type="destroy" module="Theme">
+    <and>
+        <tval>80</tval>
+        <sval min="0" max="11"></sval>
+    </and>
+</rule>
+<rule name="junkjewelry" type="destroy" module="Theme">
+    <and>
+        <or>
+            <and>
+                <tval>40</tval>
+                <sval min="0" max="0"></sval>
+            </and>
+            <and>
+                <tval>45</tval>
+                <sval min="0" max="4"></sval>
+            </and>
+		<and>
+			<tval>40</tval>
+			<status>bad</status>
+		</and>
+		<and>
+			<tval>45</tval>
+			<status>bad</status>
+		</and>
+        </or>
+    </and>
+</rule>
+<rule name="junkpotions" type="destroy" module="Theme">
+    <and>
+            <not>
+                <ability>Trapping</ability>
+            </not>
+        <or>
+            <and>
+                <tval>71</tval>
+                <sval min="4" max="7"></sval>
+            </and>
+            <and>
+                <tval>71</tval>
+                <sval min="9" max="11"></sval>
+            </and>
+            <and>
+                <tval>71</tval>
+                <sval min="13" max="13">13</sval>
+            </and>
+            <and>
+                <tval>71</tval>
+                <sval min="15" max="21"></sval>
+            </and>
+        </or>
+    </and>
+</rule>
+<rule name="junkwands" type="destroy" module="Theme">
+    <and>
+        <tval>65</tval>
+        <sval min="24" max="25"></sval>
+    </and>
+</rule>
+<rule name="junkscrolls" type="destroy" module="Theme">
+    <and>
+            <not>
+                <ability>Trapping</ability>
+            </not>
+        <or>
+            <and>
+                <tval>70</tval>
+                <sval min="0" max="0"></sval>
+                <not>
+                    <subrace>Vampire</subrace>
+                </not>
+            </and>
+		<and>
+        		<tval>70</tval>
+        		<sval min="1" max="5"></sval>
+	      </and>
+		<and>
+        		<tval>70</tval>
+        		<sval min="7" max="7"></sval>
+	      </and>
+        </or>
+    </and>
+</rule>
+<rule name="brokendagger" type="destroy" module="Theme">
+    <and>
+        <name>Broken Dagger</name>
+        <or>
+            <status>average</status>
+            <status>bad</status>
+            <status>very bad</status>
+            <and>
+                <level min="40" max="50"></level>
+                <status>very good</status>
+            </and>
+        </or>
+    </and>
+</rule>
+<rule name="magestaffs" type="destroy" module="Theme">
+    <and>
+        <tval>6</tval>
+        <or>
+            <and>
+                <level min="0" max="50"></level>
+                <or>
+                    <status>very bad</status>
+                    <status>bad</status>
+                </or>
+            </and>
+            <and>
+                <level min="15" max="50"></level>
+                <status>average</status>
+            </and>
+            <and>
+                <level min="25" max="50"></level>
+                <status>good</status>
+            </and>
+            <and>
+                <level min="40" max="50"></level>
+                <status>very good</status>
+            </and>
+        </or>
+    </and>
+</rule>
+<rule name="instruments" type="destroy" module="Theme">
+    <and>
+        <tval>14</tval>
+        <or>
+            <and>
+                <level min="0" max="50"></level>
+                <or>
+                    <status>very bad</status>
+                    <status>bad</status>
+                </or>
+            </and>
+            <and>
+                <level min="15" max="50"></level>
+                <status>average</status>
+            </and>
+            <and>
+                <level min="25" max="50"></level>
+                <status>good</status>
+            </and>
+            <and>
+                <level min="40" max="50"></level>
+                <status>very good</status>
+            </and>
+        </or>
+    </and>
+</rule>
+<rule name="boomerangs" type="destroy" module="Theme">
+    <and>
+        <tval>15</tval>
+        <or>
+            <and>
+                <level min="0" max="50"></level>
+                <or>
+                    <status>very bad</status>
+                    <status>bad</status>
+                </or>
+            </and>
+            <and>
+                <level min="15" max="50"></level>
+                <status>average</status>
+            </and>
+            <and>
+                <level min="25" max="50"></level>
+                <status>good</status>
+            </and>
+            <and>
+                <level min="40" max="50"></level>
+                <status>very good</status>
+            </and>
+        </or>
+    </and>
+</rule>
+<rule name="shots" type="destroy" module="Theme">
+    <and>
+        <tval>16</tval>
+        <or>
+            <and>
+                <level min="0" max="50"></level>
+                <or>
+                    <status>very bad</status>
+                    <status>bad</status>
+                </or>
+            </and>
+            <and>
+                <level min="25" max="50"></level>
+                <status>average</status>
+            </and>
+            <and>
+                <level min="35" max="50"></level>
+                <status>good</status>
+            </and>
+            <and>
+                <level min="40" max="50"></level>
+                <status>very good</status>
+            </and>
+        </or>
+    </and>
+</rule>
+<rule name="arrows" type="destroy" module="Theme">
+    <and>
+        <tval>17</tval>
+        <or>
+            <and>
+                <level min="0" max="50"></level>
+                <or>
+                    <status>very bad</status>
+                    <status>bad</status>
+                </or>
+            </and>
+            <and>
+                <level min="25" max="50"></level>
+                <status>average</status>
+            </and>
+            <and>
+                <level min="35" max="50"></level>
+                <status>good</status>
+            </and>
+            <and>
+                <level min="40" max="50"></level>
+                <status>very good</status>
+            </and>
+        </or>
+    </and>
+</rule>
+<rule name="bolts" type="destroy" module="Theme">
+    <and>
+        <tval>18</tval>
+        <or>
+            <and>
+                <level min="0" max="50"></level>
+                <or>
+                    <status>very bad</status>
+                    <status>bad</status>
+                </or>
+            </and>
+            <and>
+                <level min="25" max="50"></level>
+                <status>average</status>
+            </and>
+            <and>
+                <level min="35" max="50"></level>
+                <status>good</status>
+            </and>
+            <and>
+                <level min="40" max="50"></level>
+                <status>very good</status>
+            </and>
+        </or>
+    </and>
+</rule>
+<rule name="missile" type="destroy" module="Theme">
+    <and>
+        <tval>19</tval>
+        <or>
+            <and>
+                <level min="0" max="50"></level>
+                <or>
+                    <status>very bad</status>
+                    <status>bad</status>
+                </or>
+            </and>
+            <and>
+                <level min="15" max="50"></level>
+                <status>average</status>
+            </and>
+            <and>
+                <level min="25" max="50"></level>
+                <status>good</status>
+            </and>
+            <and>
+                <level min="40" max="50"></level>
+                <status>very good</status>
+            </and>
+        </or>
+    </and>
+</rule>
+<rule name="diggers" type="destroy" module="Theme">
+    <and>
+        <tval>20</tval>
+        <or>
+            <and>
+                <level min="0" max="50"></level>
+                <or>
+                    <status>very bad</status>
+                    <status>bad</status>
+                </or>
+            </and>
+            <and>
+                <level min="15" max="50"></level>
+                <status>average</status>
+            </and>
+            <and>
+                <level min="25" max="50"></level>
+                <status>good</status>
+            </and>
+            <and>
+                <level min="40" max="50"></level>
+                <status>very good</status>
+            </and>
+        </or>
+    </and>
+</rule>
+<rule name="hafted" type="destroy" module="Theme">
+    <and>
+        <tval>21</tval>
+        <or>
+            <and>
+                <level min="0" max="50"></level>
+                <or>
+                    <status>very bad</status>
+                    <status>bad</status>
+                </or>
+            </and>
+            <and>
+                <level min="15" max="50"></level>
+                <status>average</status>
+            </and>
+            <and>
+                <level min="25" max="50"></level>
+                <status>good</status>
+            </and>
+            <and>
+                <level min="40" max="50"></level>
+                <status>very good</status>
+            </and>
+        </or>
+    </and>
+</rule>
+<rule name="polearm" type="destroy" module="Theme">
+    <and>
+        <tval>22</tval>
+        <or>
+            <and>
+                <level min="0" max="50"></level>
+                <or>
+                    <status>very bad</status>
+                    <status>bad</status>
+                </or>
+            </and>
+            <and>
+                <level min="15" max="50"></level>
+                <status>average</status>
+            </and>
+            <and>
+                <level min="25" max="50"></level>
+                <status>good</status>
+            </and>
+            <and>
+                <level min="40" max="50"></level>
+                <status>very good</status>
+            </and>
+        </or>
+    </and>
+</rule>
+<rule name="swords" type="destroy" module="Theme">
+    <and>
+        <tval>23</tval>
+        <or>
+            <and>
+                <level min="0" max="50"></level>
+                <or>
+                    <status>very bad</status>
+                    <status>bad</status>
+                </or>
+            </and>
+            <and>
+                <level min="15" max="50"></level>
+                <status>average</status>
+            </and>
+            <and>
+                <level min="25" max="50"></level>
+                <status>good</status>
+            </and>
+            <and>
+                <level min="40" max="50"></level>
+                <status>very good</status>
+            </and>
+        </or>
+    </and>
+</rule>
+<rule name="axes" type="destroy" module="Theme">
+    <and>
+        <tval>24</tval>
+        <or>
+            <and>
+                <level min="0" max="50"></level>
+                <or>
+                    <status>very bad</status>
+                    <status>bad</status>
+                </or>
+            </and>
+            <and>
+                <level min="15" max="50"></level>
+                <status>average</status>
+            </and>
+            <and>
+                <level min="25" max="50"></level>
+                <status>good</status>
+            </and>
+            <and>
+                <level min="40" max="50"></level>
+                <status>very good</status>
+            </and>
+        </or>
+    </and>
+</rule>
+<rule name="boots" type="destroy" module="Theme">
+    <and>
+        <tval>30</tval>
+        <or>
+            <and>
+                <level min="0" max="50"></level>
+                <or>
+                    <status>very bad</status>
+                    <status>bad</status>
+                </or>
+            </and>
+            <and>
+                <level min="15" max="50"></level>
+                <status>average</status>
+            </and>
+            <and>
+                <level min="25" max="50"></level>
+                <status>good</status>
+            </and>
+            <and>
+                <level min="40" max="50"></level>
+                <status>very good</status>
+            </and>
+        </or>
+    </and>
+</rule>
+<rule name="gloves" type="destroy" module="Theme">
+    <and>
+        <tval>31</tval>
+        <or>
+            <and>
+                <level min="0" max="50"></level>
+                <or>
+                    <status>very bad</status>
+                    <status>bad</status>
+                </or>
+            </and>
+            <and>
+                <level min="15" max="50"></level>
+                <status>average</status>
+            </and>
+            <and>
+                <level min="25" max="50"></level>
+                <status>good</status>
+            </and>
+            <and>
+                <level min="40" max="50"></level>
+                <status>very good</status>
+            </and>
+        </or>
+    </and>
+</rule>
+<rule name="helms" type="destroy" module="Theme">
+    <and>
+        <tval>32</tval>
+        <or>
+            <and>
+                <level min="0" max="50"></level>
+                <or>
+                    <status>very bad</status>
+                    <status>bad</status>
+                </or>
+            </and>
+            <and>
+                <level min="15" max="50"></level>
+                <status>average</status>
+            </and>
+            <and>
+                <level min="25" max="50"></level>
+                <status>good</status>
+            </and>
+            <and>
+                <level min="40" max="50"></level>
+                <status>very good</status>
+            </and>
+        </or>
+    </and>
+</rule>
+<rule name="crowns" type="destroy" module="Theme">
+    <and>
+        <tval>33</tval>
+        <or>
+            <and>
+                <level min="0" max="50"></level>
+                <or>
+                    <status>very bad</status>
+                    <status>bad</status>
+                </or>
+            </and>
+            <and>
+                <level min="15" max="50"></level>
+                <status>average</status>
+            </and>
+            <and>
+                <level min="25" max="50"></level>
+                <status>good</status>
+            </and>
+            <and>
+                <level min="40" max="50"></level>
+                <status>very good</status>
+            </and>
+        </or>
+    </and>
+</rule>
+<rule name="shields" type="destroy" module="Theme">
+    <and>
+        <tval>34</tval>
+        <or>
+            <and>
+                <level min="0" max="50"></level>
+                <or>
+                    <status>very bad</status>
+                    <status>bad</status>
+                </or>
+            </and>
+            <and>
+                <level min="15" max="50"></level>
+                <status>average</status>
+            </and>
+            <and>
+                <level min="25" max="50"></level>
+                <status>good</status>
+            </and>
+            <and>
+                <level min="40" max="50"></level>
+                <status>very good</status>
+            </and>
+        </or>
+    </and>
+</rule>
+<rule name="cloaks" type="destroy" module="Theme">
+    <and>
+        <tval>35</tval>
+        <or>
+            <and>
+                <level min="0" max="50"></level>
+                <or>
+                    <status>very bad</status>
+                    <status>bad</status>
+                </or>
+            </and>
+            <and>
+                <level min="15" max="50"></level>
+                <status>average</status>
+            </and>
+            <and>
+                <level min="25" max="50"></level>
+                <status>good</status>
+            </and>
+            <and>
+                <level min="40" max="50"></level>
+                <status>very good</status>
+            </and>
+        </or>
+    </and>
+</rule>
+<rule name="softarmour" type="destroy" module="Theme">
+    <and>
+        <tval>36</tval>
+        <or>
+            <and>
+                <level min="0" max="50"></level>
+                <or>
+                    <status>very bad</status>
+                    <status>bad</status>
+                </or>
+            </and>
+            <and>
+                <level min="15" max="50"></level>
+                <status>average</status>
+            </and>
+            <and>
+                <level min="25" max="50"></level>
+                <status>good</status>
+            </and>
+            <and>
+                <level min="40" max="50"></level>
+                <status>very good</status>
+            </and>
+        </or>
+    </and>
+</rule>
+<rule name="hardarmour" type="destroy" module="Theme">
+    <and>
+        <tval>37</tval>
+        <or>
+            <and>
+                <level min="0" max="50"></level>
+                <or>
+                    <status>very bad</status>
+                    <status>bad</status>
+                </or>
+            </and>
+            <and>
+                <level min="15" max="50"></level>
+                <status>average</status>
+            </and>
+            <and>
+                <level min="25" max="50"></level>
+                <status>good</status>
+            </and>
+            <and>
+                <level min="40" max="50"></level>
+                <status>very good</status>
+            </and>
+        </or>
+    </and>
+</rule>
+<rule name="dragonarmour" type="destroy" module="Theme">
+    <and>
+        <tval>38</tval>
+        <or>
+            <and>
+                <level min="0" max="50"></level>
+                <or>
+                    <status>very bad</status>
+                    <status>bad</status>
+                </or>
+            </and>
+            <and>
+                <level min="40" max="50"></level>
+                <status>average</status>
+            </and>
+            <and>
+                <level min="45" max="50"></level>
+                <status>good</status>
+            </and>
+            <and>
+                <level min="49" max="50"></level>
+                <status>very good</status>
+            </and>
+        </or>
+    </and>
+</rule>
+<rule name="daemonbooks" type="destroy" module="Theme">
+	<and>
+		<and>
+			<tval>115</tval>
+			<sval min="55" max="57"></sval>
+		</and>
+		<or>
+            <and>
+                <level min="0" max="50"></level>
+                <or>
+                    <status>very bad</status>
+                    <status>bad</status>
+                </or>
+            </and>
+            <and>
+                <level min="15" max="50"></level>
+                <status>average</status>
+            </and>
+            <and>
+                <level min="25" max="50"></level>
+                <status>good</status>
+            </and>
+            <and>
+                <level min="49" max="50"></level>
+                <status>very good</status>
+            </and>
+		</or>
+	</and>
+</rule>
+<rule name="trapkits" type="destroy" module="Theme">
+        <and>
+            <tval>46</tval>
+            <or>
+                <status>bad</status>
+                <status>very bad</status>
+            </or>
+        </and>
+</rule>
+<rule name="classitems" type="destroy" module="Theme">
+    <or>
+        <and>
+            <tval>9</tval>
+            <and>
+                <not>
+                    <skill min="1" max="50">Corpse-preservation</skill>
+                </not>
+                <not>
+                    <skill min="1" max="50">Possession</skill>
+                </not>
+                <not>
+                    <skill min="1" max="50">Summoning</skill>
+                </not>
+            </and>
+        </and>
+        <and>
+            <or>
+                <tval>104</tval>
+                <tval>105</tval>
+            </or>
+            <not>
+                <skill min="1" max="50">Runecraft</skill>
+            </not>
+        </and>
+        <and>
+            <tval>46</tval>
+            <not>
+                <ability>Trapping</ability>
+            </not>
+            <or>
+                <status>average</status>
+                <status>good</status>
+            </or>
+        </and>
+        <and>
+            <and>
+                <not>
+                    <class>Archer</class>
+                </not>
+                <not>
+                    <class>Ranger</class>
+                </not>
+                <not>
+                    <class>Sniper</class>
+                </not>
+            </and>
+            <tval>11</tval>
+        </and>
+        <and>
+            <and>
+                <not>
+                    <class>Archer</class>
+                </not>
+                <not>
+                    <class>Ranger</class>
+                </not>
+                <not>
+                    <class>Sniper</class>
+                </not>
+            </and>
+            <tval>1</tval>
+        </and>
+    </or>
+</rule>
+]]

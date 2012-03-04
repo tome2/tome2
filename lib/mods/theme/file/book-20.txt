@@ -1,0 +1,192 @@
+#####R             /----------------------------------------\
+#####R            <  Adventurer's guide to the Middle-earth  >
+#####R             \----------------------------------------/
+
+Summary:
+*****/abook-20.txt*1[(a) The main towns and dungeons]
+*****/bbook-20.txt*2[(b) Other towns]
+*****/cbook-20.txt*3[(c) Other strange and frightening places]
+*****/dbook-20.txt*4[(d) Equipment issues]
+*****/ebook-20.txt*5[(e) Macros]
+
+#####GIntroduction:
+
+Middle-earth is vast and mysterious, full of dangers and rewards for 
+the brave adventurer.
+
+New adventurers should know that pressing < and > can switch
+the wilderness view between a normal scale and a larger map. This map
+makes travelling faster, but you cannot enter wilderness dungeons from 
+it, and chances of being ambushed are high. The wariest of adventurers
+will choose to take the well-worn roads when such roads are available,
+and grass fields when there are no roads. Beware of Belegaer and the 
+Dead Marshes!
+
+
+~~~~~1
+#####G(a) The main towns and dungeons
+
+You start in a small village named Bree in the western part of Middle-earth.
+Here you will also find the entrance to the Barrow-Downs, a fairly safe and
+simple dungeon.
+
+When the Barrow-Downs become too easy for you, and Bree too small,
+you might consider going to Lothlorien, the land of Galadriel. [[[[[BNote that]
+[[[[[Byou should take a lot of food with you, for it is a long journey.] 
+You'll have to head south-east following the Moria mountain's chain, then 
+walk around the forest of Fangorn to head north to finally find your destination. 
+Lothlorien is instantly recognisable by its Mallorn trees. The chief city of this 
+land and the abode of Galadriel and Celebron is Caras Galadhon. The Forest of 
+Mirkwood (another dungeon) can be found to the north-east of Lothlorien.
+
+If you survive this dangerous dungeon, you should head south, following
+the Anduin river. There, near the dark land of Mordor, you will find the
+great town of Gondor, Minas Anor. From there you may want to pay a visit 
+to the land of Mordor, which is east of Minas Anor. You cannot pass through 
+the Black Gate of Mordor without a means of climbing mountains, for the 
+gate is guarded heavily, night and day. The only ways into Mordor are through 
+the dreaded Spider Pass (Cirith Ungol), or the circuitous route through the 
+valley of Nurnen and the horrid plains of Gorgoroth.
+
+After Mordor you should finally travel to Gondolin, the hidden town of the
+Noldor. From this city, you will be able to attack Angband, the
+dungeon of Morgoth, which is north-east of Gondolin. This city is well-
+protected by what remains of the Echoriath, and there is but one route 
+into it that does not force you to travel by the sea. To be sure of finding
+Gondolin, travel north along the Blue Mountains, then take the north-eastern
+route from the second northernmost peak.
+
+
+~~~~~2
+#####G(b) Other towns
+
+To the west of Bree, in the middle of a land called the Shire, there is a 
+small village called Hobbiton, inhabited by Halflings. Nested in some low 
+hills, it isn't hard to find, and their hospitality is legendary.
+
+To the east of Bree, there is Rivendell - the hidden valley of the Elves, 
+where Elrond lives in the Last Homely House (Imladris). Beyond the Misty 
+Mountains, near the entrance to Mirkwood Forest, there is the house of 
+Beorn.
+
+When you are in Lothlorien, be sure to pay your respects to the Valar at 
+Cerin Amroth, which is immediately to the north of Caras Galadhon.
+
+Edoras, the capital of Rohan (home of the horse-lords, the Rohirrim) can be
+found to the south of Caras Galadhon. It is a well-protected fortress, second
+only to the fortress of Helm's Deep, which stands watch against Isengard.
+
+There are two cities near Minas Anor - Pelargir (the great city at the 
+mouth of the Anduin River) and Osgiliath, the citadel of Stars. Pelargir is 
+to the south-west of Minas Anor, and Osgiliath is to the north-east of 
+Gondor's capital. Rumour has it that there is a Ranger outpost somewhere in 
+Ithilien, immediately to the north of Osgiliath.
+
+If you travel north towards the Lonely Mountain, you will come upon 
+Esgaroth, the city of Lake-men. Near Esgaroth is the construction site for 
+Dale, and if you follow the river, you may find yourself a guest in the 
+Halls of Thranduil, King of the Wood-Elves.
+
+Deep in the heart of the Misty Mountains, in a heavily guarded area that 
+cannot be access but through the Mines of Moria, lies Khazad-dum, the 
+greatest city ever built by Dwarves.
+
+~~~~~3
+#####G(c) Other strange and frightening places
+
+The Old Forest to the west of Bree (and east of Hobbiton) is what remains 
+of the big forests of the First Age, but it has been corrupted. It is said 
+that it is guarded by a living tree.
+
+You may also wish to investigate the Orc Caves east of Bree; they are
+another place suitable for those finished with the Barrow-Downs. They also
+are rumoured to hold great mysteries - these are the same caves where Bilbo
+had once found the One Ring of power.
+
+Durin's Bane, the Balrog of Moria, guards the Mines of Moria, to the south-east
+of Bree. The Mines are also the only means of access to the Dwarven 
+stronghold of Khazad-dum.
+
+Nearly at the edge of land, there is a magical Maze. Many adventurers
+that ventured there never came back. It is rumoured that a Minotaur is
+lurking down there, guarding an ancient and powerful artifact.
+Bring along digging equipment and some means to recall.
+
+During the Second Age of the world there was a great island called
+Numenor. The people who dwelt there were wise and powerful, but as time
+passed their last kings fell under the power of Sauron. Under Sauron's
+orders, they tried to attack Valinor, the blessed land, and for this
+Numenor was destroyed, swallowed by the sea. The ruins are still
+accessible, far out to sea to the west of Bree. Any adventurer going 
+there should be sure to bring equipment that enables underwater 
+breathing, however - without it, you shall perish.
+
+Many other strange places wait to be explored by the valiant adventurer,
+but their locations are secret. You will have to find them yourself!
+Among them are the Grinding Ice of the Helcaraxe, Forodwaith, the caves
+beneath Isengard, the land of Rhun, and many others.
+
+
+~~~~~4
+#####G(d) Equipment issues
+
+Beware, adventurer! If you plan to go down into the dungeons, be prepared. Some
+items you will need badly.
+
+First, think of some light: maybe a lantern is better than the torches.
+
+Second things to mention are your combat equipment. Sometimes the weapon and
+armor you got from your mentor are not enough for the nasties inside the
+dungeons.
+
+And third and most important, [[[[[Balways carry a shovel or other digger with you],
+because there is much rubble in the dungeons, which you cannot clear with
+your hands.
+
+~~~~~5
+#####G(e) Macros
+
+Spellcasters might find that pressing 4 keys (at least) to cast a spell is a
+lot, they are right. That is why there are macros. You can access the macro
+screen by pressing @. You can find help on the *****macrofaq.txt*0[macros] in the docs.
+
+Now you either have the hard way or the easy way.
+
+**The Hard Way**
+
+What the fellow adventurer should know is how to create a basic spell macro.
+Press @ to enter the macro screen.
+Press 4 to create a new macro.
+Press the key to bind the macro to, usually one uses the F* keys(you can combine
+them with the ctrl, shift, ... keys too)
+Enter the key sequence to be done for the macro.
+Press 2 to save the macro.
+
+Now a problem that might arise, imagine your macro looks like: mcaa*t
+to cast manathrust spell('m' to use skill, 'c' for cast a spell skill,
+'a' for first book, 'a' for first spell, *t to… target the first monster).
+This macro will break if you gain a new skill so that "Cast a spell" is no more
+the skill 'c', or if you get a new book. There is a way around that.
+When the game asks for a skill or a spell it allows you to press @ to enter
+the skill/spell name directly, so your macro would become:
+m@Cast a spell\r@Manathrust\r*t
+Now this will always work as long as one of your books have the spell in it.
+
+
+**The Easy Way**
+
+This time you will only use the macro recorder. To do that:
+Press $ to start it
+Now each key you press will be recorded, so press all keys you want.
+It is recommended to start your macro by pressing Escape key a few time, so
+if there are messages when you use the macro it will first erase them instead
+of screwing your macro :)
+it is also recommended to take advantage of the @ key when selecting skills or
+objects whenever the possibility is offered to you. It will make sure you
+always use the good object/skill even if it moves in your inventory.
+Once all keys are pressed press $ again to stop it.
+It you are satisfied with your macro now you get to press the key to bind it
+to.
+
+As in the Hard Way you must use the macro screen if you want to permanently
+save your macros.

@@ -1,0 +1,37 @@
+~~~~~01|Wood Elf
+~~~~~02|Races|Wood Elf
+#####R=== Wood Elves ===
+
+#####GDescription
+The first love of Wood Elves is hunting. As such, their skill with the bow
+is unparalleled. They train tirelessly with their bows, to the point of 
+neglecting even melee skills. They resist light as with other elves, and 
+do extra damage with a ranged weapon. They are almost custom made for the 
+archer class, but also make interesting warriors. Even Wood Elf Mages
+are feasible, using the bow to attack and saving their magic for defence.
+They are more dangerous but less wise than High-Elves.
+
+#####GStat Modifiers
+Strength        +2   
+Intelligence    +2   
+Wisdom          -3   
+Dexterity       +5   
+Constitution     0   
+Charisma        +1       
+Hit Dice Sides  7         
+Exp Penalty     +30%
+
+#####GRacial Skills
+Combat               0.000           [0.000]
+  Archery            4.000           [0.000]
+  Weaponmastery      1.000           [0.200]
+Sneakiness           0.800           [0.000]
+  Stealth            5.000           [0.000]
+  Disarming          0.500           [0.000]
+Magic                0.000           [0.000]
+  Magic-Device       0.600           [0.000]
+Spirituality         3.000           [0.000]
+
+#####GInnate Abilities:
+#####BAbility              Character level
+Tree-walking                1

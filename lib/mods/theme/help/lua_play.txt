@@ -1,0 +1,1225 @@
+|||||oy
+
+#####R             /----------------------------------------\
+#####R            <     player.pkg functions helper file     >
+#####R             \----------------------------------------/
+
+----------------------------------------------------------------------
+
+#####RFunction: set_parasite
+
+#####GDeclaration: bool set_parasite(int v, int r);
+
+#####GFile: xtra2.c
+
+#####GComment: 
+/*
+* Set "p_ptr->parasite" and "p_ptr->parasite_r_idx"
+* notice observable changes
+*/
+
+#####GDescription:
+Set time "v" until parasite with monster index "r" is created. The
+player gets the message "You feel something growing in you" if "v"
+is > 0. Otherwise the player gets the message "Your body convulse
+and spawn <monster name>" if the monster is created (80% chance) or
+"The hideous thing growing in you seems to die" if the monster dies.
+
+#####GParameters:
+>v is the time until the parasite gestates (must be between 0 and
+  10000).
+>r is the monster index of parasite to be created.
+
+----------------------------------------------------------------------
+
+#####RFunction: set_disrupt_shield
+
+#####GDeclaration: bool set_disrupt_shield(int v);
+
+#####GFile: xtra2.c
+
+#####GComment: 
+/*
+* Set "p_ptr->disrupt_shield"
+* notice observable changes
+*/
+
+#####GDescription:
+Set time "v" until shield of invulnerability expires. The player gets
+the message "You feel invulnerable" if "v" is > 0. Otherwise the
+player gets the message "You are more vulnerable".
+
+#####GParameters:
+>v is the time until the shield expires (must be between 0 and
+  10000).
+
+----------------------------------------------------------------------
+
+#####RFunction: set_prob_travel
+
+#####GDeclaration: bool set_prob_travel(int v);
+
+#####GFile: xtra2.c
+
+#####GComment: 
+/*
+* Set "p_ptr->prob_travel"
+* notice observable changes
+*/
+
+#####GDescription:
+Set time "v" until random teleportation expires. The player gets
+the message "You feel instable" if "v" is > 0. Otherwise the
+player gets the message "You are more stable".
+
+#####GParameters:
+>v is the time until random teleportation expires (must be between 0
+  and 10000).
+
+----------------------------------------------------------------------
+
+#####RFunction: set_tim_deadly
+
+#####GDeclaration: bool set_tim_deadly(int v);
+
+#####GFile: xtra2.c
+
+#####GComment: 
+/*
+* Set "p_ptr->tim_deadly"
+*/
+
+#####GDescription:
+Set time "v" until deadly accuracy expires. The player gets the
+message "You feel extremely accurate" if "v" is > 0. Otherwise the
+player gets the message "You are suddenly much less accurate".
+
+#####GParameters:
+>v is the time until deadly accuracy expires (must be between 0 and
+  10000).
+
+----------------------------------------------------------------------
+
+#####RFunction: set_tim_res_time
+
+#####GDeclaration: bool set_tim_res_time(int v);
+
+#####GFile: xtra2.c
+
+#####GComment: 
+/*
+* Set "p_ptr->tim_res_time"
+*/
+
+#####GDescription:
+Set time "v" until space-time distortions expire. The player gets the
+message "You are now protected against the space-time distortions" if
+"v" is > 0. Otherwise the player gets the message "You are no longer
+protected against the space-time distortions".
+
+#####GParameters:
+>v is the time until space-time distortions expire (must be between
+  0 and 10000).
+
+----------------------------------------------------------------------
+
+#####RFunction: set_tim_reflect
+
+#####GDeclaration: bool set_tim_reflect(int v);
+
+#####GFile: xtra2.c
+
+#####GComment: 
+/*
+* Set "p_ptr->tim_reflect"
+*/
+
+#####GDescription:
+Set time "v" until reflection expire. The player gets the message
+"You start reflecting the world around you" if "v" is > 0. Otherwise
+the player gets the message "You stop reflecting".
+
+#####GParameters:
+>v is the time until reflection expires (must be between 0 and
+  10000).
+
+----------------------------------------------------------------------
+
+#####RFunction: set_meditation
+
+#####GDeclaration: bool set_meditation(int v);
+
+#####GFile: xtra2.c
+
+#####GComment: 
+/*
+* Set "p_ptr->meditation"
+*/
+
+#####GDescription:
+Set time "v" until meditation expire. The player gets the message
+"You start meditating on yourself" if "v" is > 0. Otherwise the
+player gets the message "You stop your self meditation".
+
+#####GParameters:
+>v is the time until meditation expires (must be between 0 and
+  10000).
+
+----------------------------------------------------------------------
+
+#####RFunction: set_strike
+
+#####GDeclaration: bool set_strike(int v);
+
+#####GFile: xtra2.c
+
+#####GComment: 
+/*
+* Set "p_ptr->strike"
+*/
+
+#####GDescription:
+Set time "v" until accurate strikes expire. The player gets the
+message "You feel very accurate" if "v" is > 0. Otherwise the player
+gets the message "You are no longer very accurate".
+
+#####GParameters:
+>v is the time until accurate strikes expire (must be between 0 and
+  10000).
+
+----------------------------------------------------------------------
+
+#####RFunction: set_walk_water
+
+#####GDeclaration: bool set_walk_water(int v);
+
+#####GFile: xtra2.c
+
+#####GComment: 
+/*
+* Set "p_ptr->walk_water", notice observable changes
+*/
+
+#####GDescription:
+Set time "v" until walking on water expires. The player gets the
+message "You feel strangely insubmersible" if "v" is > 0. Otherwise
+the player gets the message "You are no longer insubmersible".
+
+#####GParameters:
+>v is the time until walking on water expires (must be between 0 and
+  10000).
+
+----------------------------------------------------------------------
+
+#####RFunction: set_tim_ffall
+
+#####GDeclaration: bool set_tim_ffall(int v);
+
+#####GFile: xtra2.c
+
+#####GComment: 
+/*
+* Set "p_ptr->tim_ffall"
+*/
+
+#####GDescription:
+Set time "v" until feather-fall expires. The player gets the message
+"You feel very light" if "v" is > 0. Otherwise the player gets the
+message "You are suddenly heavier".
+
+#####GParameters:
+>v is the time until feather-fall expires (must be between 0 and
+  10000).
+
+----------------------------------------------------------------------
+
+#####RFunction: set_tim_fire_aura
+
+#####GDeclaration: bool set_tim_fire_aura(int v);
+
+#####GFile: xtra2.c
+
+#####GComment: 
+/*
+* Set "p_ptr->tim_fire_aura"
+*/
+
+#####GDescription:
+Set time "v" until fiery aura expires. The player gets the message
+"You are enveloped in flames" if "v" is > 0. Otherwise the player
+gets the message "You are no longer enveloped in flames".
+
+#####GParameters:
+>v is the time until fiery aura expires (must be between 0 and
+  10000).
+
+----------------------------------------------------------------------
+
+#####RFunction: set_holy
+
+#####GDeclaration: bool set_holy(int v);
+
+#####GFile: xtra2.c
+
+#####GComment: 
+/*
+* Set "p_ptr->holy", notice observable changes
+*/
+
+#####GDescription:
+Set time "v" until holiness expires. The player gets the message
+"You feel a holy aura around you" if "v" is > 0. Otherwise the
+player gets the message "The holy aura vanishes".
+
+#####GParameters:
+>v is the time until holiness expires (must be between 0 and 10000).
+
+----------------------------------------------------------------------
+
+#####RFunction: set_grace
+
+#####GDeclaration: void set_grace(s32b v);
+
+#####GFile: xtra2.c
+
+#####GComment: 
+/*
+* Set "p_ptr->grace", notice observable changes
+*/
+
+#####GDescription:
+Set grace to value "v". Don't allow grace to fall below -30000 or
+rise above 30000.
+
+#####GParameters:
+>v is the value of grace.
+
+----------------------------------------------------------------------
+
+#####RFunction: set_mimic
+
+#####GDeclaration: bool set_mimic(int v, int p);
+
+#####GFile: xtra2.c
+
+#####GComment: 
+/*
+* Set "p_ptr->tim_mimic", and "p_ptr->mimic_form",
+* notice observable changes
+*/
+
+#####GDescription:
+Set time "v" until morph into monster with monster index "p" expires.
+The player gets the message "You feel your body change" if "v" is > 0.
+Otherwise the player gets the message "You are no longer transformed".
+
+#####GParameters:
+>v is the time until transformation expires (must be between 0 and
+  10000).
+>p is the monster index of the monster the player wants to mimic.
+
+----------------------------------------------------------------------
+
+#####RFunction: set_no_breeders
+
+#####GDeclaration: bool set_no_breeders(int v);
+
+#####GFile: xtra2.c
+
+#####GComment: 
+/*
+* Set "no_breeds"
+*/
+
+#####GDescription:
+Set time "v" until breeders can breed again. The player gets the
+message "You feel an anti-sexual aura" if "v" is > 0. Otherwise the
+player gets the message "You no longer feel an anti-sexual aura".
+Okay...
+
+#####GParameters:
+>v is the time until breeders can breed again (must be between 0 and
+  10000).
+
+----------------------------------------------------------------------
+
+#####RFunction: set_invis
+
+#####GDeclaration: bool set_invis(int v,int p);
+
+#####GFile: xtra2.c
+
+#####GComment: 
+/*
+* Set "p_ptr->tim_invis", and "p_ptr->tim_inv_pow",
+* notice observable changes
+*/
+
+#####GDescription:
+Set time "v" until invisibility expires. The player gets the message
+"You feel your body fade away" if "v" is > 0. Otherwise the player
+gets the message "You are no longer invisible".
+
+#####GParameters:
+>v is the time until invisibility expires (must be between 0 and
+  10000).
+>p is the power of timed invisibility.
+
+----------------------------------------------------------------------
+
+#####RFunction: set_lite
+
+#####GDeclaration: bool set_lite(int v);
+
+#####GFile: xtra2.c
+
+#####GComment: 
+/*
+* Set "p_ptr->tim_lite", notice observable changes
+*
+* Note the use of "PU_VIEW", which is needed to
+* memorise any terrain features which suddenly become "visible".
+* Note that blindness is currently the only thing which can affect
+* "player_can_see_bold()".
+*/
+
+#####GDescription:
+Set time "v" until brightness expires. The player gets the message
+"You suddenly seem brighter" if "v" is > 0. Otherwise the player
+gets the message "You are no longer bright".
+
+#####GParameters:
+>v is the time until brightness expires (must be between 0 and
+  10000).
+
+----------------------------------------------------------------------
+
+#####RFunction: set_blind
+
+#####GDeclaration: bool set_blind(int v);
+
+#####GFile: xtra2.c
+
+#####GComment: 
+/*
+* Set "p_ptr->blind", notice observable changes
+*
+* Note the use of "PU_UN_VIEW", which is needed to memorise any terrain
+* features which suddenly become "visible".
+* Note that blindness is currently the only thing which can affect
+* "player_can_see_bold()".
+*/
+
+#####GDescription:
+Set time "v" until blindness expires. The player gets the message "You
+are blind" if "v" is > 0. Otherwise the player gets the message "You
+can see again".
+
+#####GParameters:
+>v is the time until blindness expires (must be between 0 and
+  10000).
+
+----------------------------------------------------------------------
+
+#####RFunction: set_confused
+
+#####GDeclaration: bool set_confused(int v);
+
+#####GFile: xtra2.c
+
+#####GComment: 
+/*
+* Set "p_ptr->confused", notice observable changes
+*/
+
+#####GDescription:
+Set time "v" until confusion expires. The player gets the message "You
+are confused" if "v" is > 0. Otherwise the player gets the message
+"You feel less confused now".
+
+#####GParameters:
+>v is the time until confusion expires (must be between 0 and
+  10000).
+
+----------------------------------------------------------------------
+
+#####RFunction: set_poisoned
+
+#####GDeclaration: bool set_poisoned(int v);
+
+#####GFile: xtra2.c
+
+#####GComment: 
+/*
+* Set "p_ptr->poisoned", notice observable changes
+*/
+
+#####GDescription:
+Set time "v" until poison expires. The player gets the message "You
+are poisoned" if "v" is > 0. Otherwise the player gets the message
+"You are no longer poisoned".
+
+#####GParameters:
+>v is the time until poison expires (must be between 0 and 10000).
+
+----------------------------------------------------------------------
+
+#####RFunction: set_afraid
+
+#####GDeclaration: bool set_afraid(int v);
+
+#####GFile: xtra2.c
+
+#####GComment: 
+/*
+* Set "p_ptr->afraid", notice observable changes
+*/
+
+#####GDescription:
+Set time "v" until fear expires. The player gets the message "You are
+terrified" if "v" is > 0. Otherwise the player gets the message "You
+feel bolder now".
+
+#####GParameters:
+>v is the time until fear expires (must be between 0 and 10000).
+
+----------------------------------------------------------------------
+
+#####RFunction: set_paralyzed
+
+#####GDeclaration: bool set_paralyzed(int v);
+
+#####GFile: xtra2.c
+
+#####GComment: 
+/*
+* Set "p_ptr->paralyzed", notice observable changes
+*/
+
+#####GDescription:
+Set time "v" until paralysis expires. The player gets the message "You
+are paralyzed" if "v" is > 0. Otherwise the player gets the message
+"You can move again".
+
+#####GParameters:
+>v is the time until paralysis expires (must be between 0 and
+  10000).
+
+----------------------------------------------------------------------
+
+#####RFunction: set_image
+
+#####GDeclaration: bool set_image(int v);
+
+#####GFile: xtra2.c
+
+#####GComment: 
+/*
+* Set "p_ptr->image", notice observable changes
+*
+* Note that we must redraw the map when hallucination changes.
+*/
+
+#####GDescription:
+Set time "v" until hallucination expires. The player gets the message
+"Oh, wow! Everything looks so cosmic now" if "v" is > 0. Otherwise
+the player gets the message "You can see clearly again".
+
+#####GParameters:
+>v is the time until hallucination expires (must be between 0 and
+  10000).
+
+----------------------------------------------------------------------
+
+#####RFunction: set_fast
+
+#####GDeclaration: bool set_fast(int v, int p);
+
+#####GFile: xtra2.c
+
+#####GComment: 
+(none)
+
+#####GDescription:
+Set time "v" until speed of speed factor "p" expires. The player gets
+the message "You feel yourself moving faster" if "v" is > 0. Otherwise
+the player gets the message "You feel yourself slow down".
+
+#####GParameters:
+>v is the time until speed expires (must be between 0 and 10000).
+>p is the speed factor.
+
+----------------------------------------------------------------------
+
+#####RFunction: set_light_speed
+
+#####GDeclaration: bool set_light_speed(int v);
+
+#####GFile: xtra2.c
+
+#####GComment: 
+/*
+* Set "p_ptr->lightspeed", notice observable changes
+*/
+
+#####GDescription:
+Set time "v" until light-speed expires. The player gets the message
+"You feel as if time has stopped" if "v" is > 0. Otherwise the player
+gets the message "You feel time returning to its normal rate".
+
+#####GParameters:
+>v is the time until light-speed expires (must be between 0 and
+  10000).
+
+----------------------------------------------------------------------
+
+#####RFunction: set_slow
+
+#####GDeclaration: bool set_slow(int v);
+
+#####GFile: xtra2.c
+
+#####GComment: 
+/*
+* Set "p_ptr->slow", notice observable changes
+*/
+
+#####GDescription:
+Set time "v" until slowness expires. The player gets the message "You
+feel yourself moving slower" if "v" is > 0. Otherwise the player gets
+the message "You feel yourself speed up".
+
+#####GParameters:
+>v is the time until slowness expires (must be between 0 and 10000).
+
+----------------------------------------------------------------------
+
+#####RFunction: set_shield
+
+#####GDeclaration: bool set_shield(int v, int p, s16b o, s16b d1, s16b d2);
+
+#####GFile: xtra2.c
+
+#####GComment: 
+/*
+* Set "p_ptr->shield", notice observable changes
+*/
+
+#####GDescription:
+Set time "v" until stone-shield expires. The player gets the message
+"Your skin turns to stone" if "v" is > 0. Otherwise the player gets
+the message "Your skin returns to normal". Stone-shield has spell
+power "p", spell option "o", and power options "d1" and "d2".
+
+#####GParameters:
+>v is the time until stone-shield expires (must be between 0 and
+  10000).
+>p is the power of the stone-shield spell.
+>o is the option of the stone-shield spell.
+>d1 is the power for option 1 of the stone-shield spell.
+>d2 is the power for option 2 of the stone-shield spell.
+
+----------------------------------------------------------------------
+
+#####RFunction: set_blessed
+
+#####GDeclaration: bool set_blessed(int v);
+
+#####GFile: xtra2.c
+
+#####GComment: 
+/*
+* Set "p_ptr->blessed", notice observable changes
+*/
+
+#####GDescription:
+Set time "v" until blessing expires. The player gets the message "You
+feel righteous" if "v" is > 0. Otherwise the player gets the message
+"The prayer has expired".
+
+#####GParameters:
+>v is the time until blessing expires (must be between 0 and 10000).
+
+----------------------------------------------------------------------
+
+#####RFunction: set_hero
+
+#####GDeclaration: bool set_hero(int v);
+
+#####GFile: xtra2.c
+
+#####GComment: 
+/*
+* Set "p_ptr->hero", notice observable changes
+*/
+
+#####GDescription:
+Set time "v" until heroism expires. The player gets the message "You
+feel like a hero" if "v" is > 0. Otherwise the player gets the
+message "The heroism wears off".
+
+#####GParameters:
+>v is the time until heroism expires (must be between 0 and
+  10000).
+
+----------------------------------------------------------------------
+
+#####RFunction: set_shero
+
+#####GDeclaration: bool set_shero(int v);
+
+#####GFile: xtra2.c
+
+#####GComment: 
+/*
+* Set "p_ptr->shero", notice observable changes
+*/
+
+#####GDescription:
+Set time "v" until berserk expires. The player gets the message "You
+feel like a killing machine" if "v" is > 0. Otherwise the player gets
+the message "You feel less Berserk".
+
+#####GParameters:
+>v is the time until berserk expires (must be between 0 and 10000).
+
+----------------------------------------------------------------------
+
+#####RFunction: set_protevil
+
+#####GDeclaration: bool set_protevil(int v);
+
+#####GFile: xtra2.c
+
+#####GComment: 
+/*
+* Set "p_ptr->protevil", notice observable changes
+*/
+
+#####GDescription:
+Set time "v" until protection from evil expires. The player gets the
+message "You feel safe from evil" if "v" is > 0. Otherwise the player
+gets the message "You no longer feel safe from evil".
+
+#####GParameters:
+>v is the time until protection from evil expires (must be between 0
+  and 10000).
+
+----------------------------------------------------------------------
+
+#####RFunction: set_protgood
+
+#####GDeclaration: bool set_protgood(int v);
+
+#####GFile: xtra2.c
+
+#####GComment: 
+/*
+* Set "p_ptr->protgood", notice observable changes
+*/
+
+#####GDescription:
+Set time "v" until protection from good expires. The player gets the
+message "You feel safe from good" if "v" is > 0. Otherwise the player
+gets the message "You no longer feel safe from good".
+
+#####GParameters:
+>v is the time until protection from evil expires (must be between 0
+  and 10000).
+
+----------------------------------------------------------------------
+
+#####RFunction: set_protundead
+
+#####GDeclaration: bool set_protundead(int v);
+
+#####GFile: xtra2.c
+
+#####GComment: 
+/*
+* Set "p_ptr->protundead", notice observable changes
+*/
+
+#####GDescription:
+Set time "v" until protection from undead expires. The player gets the
+message "You feel safe from undead" if "v" is > 0. Otherwise the
+player gets the message "You no longer feel safe from undead".
+
+#####GParameters:
+>v is the time until protection from undead expires (must be between
+  0 and 10000).
+
+----------------------------------------------------------------------
+
+#####RFunction: set_invuln
+
+#####GDeclaration: bool set_invuln(int v);
+
+#####GFile: xtra2.c
+
+#####GComment: 
+/*
+* Set "p_ptr->invuln", notice observable changes
+*/
+
+#####GDescription:
+Set time "v" until invulnerability expires. The player gets the
+message "Invulnerability" if "v" is > 0. Otherwise the player gets
+the message "The invulnerability wears off".
+
+#####GParameters:
+>v is the time until invulnerability expires (must be between 0 and
+  10000).
+
+----------------------------------------------------------------------
+
+#####RFunction: set_tim_invis
+
+#####GDeclaration: bool set_tim_invis(int v);
+
+#####GFile: xtra2.c
+
+#####GComment: 
+/*
+* Set "p_ptr->tim_invis", notice observable changes
+*/
+
+#####GDescription:
+Set time "v" until see invisible expires. The player gets the message
+"Your eyes feel very sensitive" if "v" is > 0. Otherwise the player
+gets the message "Your eyes feel less sensitive".
+
+#####GParameters:
+>v is the time until see invisible expires (must be between 0 and
+  10000).
+
+----------------------------------------------------------------------
+
+#####RFunction: set_tim_infra
+
+#####GDeclaration: bool set_tim_infra(int v);
+
+#####GFile: xtra2.c
+
+#####GComment: 
+/*
+* Set "p_ptr->tim_infra", notice observable changes
+*/
+
+#####GDescription:
+Set time "v" until infravision expires. The player gets the message
+"Your eyes begin to tingle" if "v" is > 0. Otherwise the player gets
+the message "Your eyes stop tingling".
+
+#####GParameters:
+>v is the time until infravision expires (must be between 0 and
+  10000).
+
+----------------------------------------------------------------------
+
+#####RFunction: set_mental_barrier
+
+#####GDeclaration: bool set_mental_barrier(int v);
+
+#####GFile: xtra2.c
+
+#####GComment: 
+/*
+* Set "p_ptr->tim_mental_barrier", notice observable changes
+*/
+
+#####GDescription:
+Set time "v" until mental barrier expires. The player gets the message
+"Your mind grows stronger" if "v" is > 0. Otherwise the player gets
+the message "Your mind is no longer especially strong".
+
+#####GParameters:
+>v is the time until mental barrier expires (must be between 0 and
+  10000).
+
+----------------------------------------------------------------------
+
+#####RFunction: set_oppose_acid
+
+#####GDeclaration: bool set_oppose_acid(int v);
+
+#####GFile: xtra2.c
+
+#####GComment: 
+
+#####GDescription:
+Set time "v" until feather-fall expires. The player gets the message
+"You feel very light" if "v" is > 0. Otherwise the player gets the
+message "You are suddenly heavier".
+
+#####GParameters:
+>v is the time until feather-fall expires (must be between 0 and
+  10000).
+>v is the time until feather-fall expires (must be between 0 and
+  10000).
+
+----------------------------------------------------------------------
+
+#####RFunction: set_oppose_elec
+
+#####GDeclaration: bool set_oppose_elec(int v);
+
+#####GFile: xtra2.c
+
+#####GComment: 
+/*
+* Set "p_ptr->oppose_elec", notice observable changes
+*/
+
+#####GDescription:
+Set time "v" until electricity resistance expires. The player gets
+the message "You feel resistant to electricity" if "v" is > 0.
+Otherwise the player gets the message "You feel less resistant to
+electricity".
+
+#####GParameters:
+>v is the time until electricity resistance expires (must be between
+  0 and 10000).
+
+----------------------------------------------------------------------
+
+#####RFunction: set_oppose_fire
+
+#####GDeclaration: bool set_oppose_fire(int v);
+
+#####GFile: xtra2.c
+
+#####GComment: 
+/*
+* Set "p_ptr->oppose_fire", notice observable changes
+*/
+
+#####GDescription:
+Set time "v" until fire resistance expires. The player gets the
+message "You feel resistant to fire" if "v" is > 0. Otherwise the
+player gets the message "You feel less resistant to fire".
+
+#####GParameters:
+>v is the time until fire resistance expires (must be between 0 and
+  10000).
+
+----------------------------------------------------------------------
+
+#####RFunction: set_oppose_cold
+
+#####GDeclaration: bool set_oppose_cold(int v);
+
+#####GFile: xtra2.c
+
+#####GComment: 
+/*
+* Set "p_ptr->oppose_cold", notice observable changes
+*/
+
+#####GDescription:
+Set time "v" until cold resistance expires. The player gets the
+message "You feel resistant to cold" if "v" is > 0. Otherwise the
+player gets the message "You feel less resistant to cold".
+
+#####GParameters:
+>v is the time until cold resistance expires (must be between 0 and
+  10000).
+
+----------------------------------------------------------------------
+
+#####RFunction: set_oppose_pois
+
+#####GDeclaration: bool set_oppose_pois(int v);
+
+#####GFile: xtra2.c
+
+#####GComment: 
+/*
+* Set "p_ptr->oppose_pois", notice observable changes
+*/
+
+#####GDescription:
+Set time "v" until poison resistance expires. The player gets the
+message "You feel resistant to poison" if "v" is > 0. Otherwise the
+player gets the message "You feel less resistant to poison".
+
+#####GParameters:
+>v is the time until poison resistance expires (must be between 0 and
+  10000).
+
+----------------------------------------------------------------------
+
+#####RFunction: set_oppose_ld
+
+#####GDeclaration: bool set_oppose_ld(int v);
+
+#####GFile: xtra2.c
+
+#####GComment: 
+/*
+* Set "p_ptr->oppose_ld"
+*/
+
+#####GDescription:
+Set time "v" until light and dark resistance expires. The player gets
+the message "You feel protected against the light's fluctuation" if
+"v" is > 0. Otherwise the player gets the message "You are no longer
+protected against the light's fluctuation".
+
+#####GParameters:
+>v is the time until light and dark resistance expires (must be
+  between 0 and 10000).
+
+----------------------------------------------------------------------
+
+#####RFunction: set_oppose_cc
+
+#####GDeclaration: bool set_oppose_cc(int v);
+
+#####GFile: xtra2.c
+/*
+* Set "p_ptr->oppose_cc"
+*/
+
+#####GComment: 
+
+#####GDescription:
+Set time "v" until chaos resistance expires. The player gets the
+message "You feel protected against raw chaos" if "v" is > 0.
+Otherwise the player gets the message "You are no longer protected
+against chaos".
+
+#####GParameters:
+>v is the time until chaos resistance expires (must be between 0 and
+  10000).
+
+----------------------------------------------------------------------
+
+#####RFunction: set_oppose_ss
+
+#####GDeclaration: bool set_oppose_ss(int v);
+
+#####GFile: xtra2.c
+
+#####GComment: 
+/*
+* Set "p_ptr->oppose_ss"
+*/
+
+#####GDescription:
+Set time "v" until sound and shard resistance expires. The player gets
+the message "You feel protected against the ravages of sound and
+shards" if "v" is > 0. Otherwise the player gets the message "You are
+no longer protected against the ravages of sound and shards".
+
+#####GParameters:
+>v is the time until sound and shard resistance expires (must be
+  between 0 and 10000).
+
+----------------------------------------------------------------------
+
+#####RFunction: set_oppose_nex
+
+#####GDeclaration: bool set_oppose_nex(int v);
+
+#####GFile: xtra2.c
+
+#####GComment: 
+/*
+* Set "p_ptr->oppose_nex"
+*/
+
+#####GDescription:
+Set time "v" until nexus resistance expires. The player gets the
+message "You feel protected against the strange forces of nexus" if
+"v" is > 0. Otherwise the player gets the message "You are no longer
+protected against the strange forces of nexus".
+
+#####GParameters:
+>v is the time until nexus resistance expires (must be between 0 and
+  10000).
+
+----------------------------------------------------------------------
+
+#####RFunction: set_stun
+
+#####GDeclaration: bool set_stun(int v);
+
+#####GFile: xtra2.c
+
+#####GComment: 
+/*
+* Set "p_ptr->stun", notice observable changes
+*
+* Note the special code to only notice "range" changes.
+*/
+
+#####GDescription:
+Set stun level "v". If the player race can't be stunned then the level
+is forced to 0. A value > 100 means the player is knocked out. A value
+>50 is a heavy stun. A value > 0 is a stun. If the stun level has
+increased, a message is printed. There is a small chance of stun level
+in 1000, or a 1 in 16 chance of a vicious blow which decreases
+intelligence and/or wisdom for a while.
+
+#####GParameters:
+>v is the stun level.
+
+----------------------------------------------------------------------
+
+#####RFunction: set_cut
+
+#####GDeclaration: bool set_cut(int v);
+
+#####GFile: xtra2.c
+
+#####GComment: 
+/*
+* Set "p_ptr->cut", notice observable changes
+*
+* Note the special code to only notice "range" changes.
+*/
+
+#####GDescription:
+Set cut level "v". If the player race can't be cut then the time is
+forced to 0. A value > 1000 is a mortal wound. A value > 200 is a deep
+gash. A value > 100 is a severe cut. A value > 50 is a nasty cut. A
+value > 25 is a bad cut. A value > 10 is a light cut. A value > 0 is a
+graze. If the cut level has increased, a message is printed. There is
+a small chance of stun level in 1000, or a 1 in 16 chance of scarring
+which decreases charisma for a while.
+
+#####GParameters:
+>v is the cut level.
+
+----------------------------------------------------------------------
+
+#####RFunction: set_food
+
+#####GDeclaration: bool set_food(int v);
+
+#####GFile: xtra2.c
+
+#####GComment: 
+/*
+* Set "p_ptr->food", notice observable changes
+*
+* The "p_ptr->food" variable can get as large as 20000, allowing the
+* addition of the most "filling" item, Elvish Waybread, which adds
+* 7500 food units, without overflowing the 32767 maximum limit.
+*
+* Perhaps we should disturb the player with various messages,
+* especially messages about hunger status changes.  XXX XXX XXX
+*
+* Digestion of food is handled in "dungeon.c", in which, normally,
+* the player digests about 20 food units per 100 game turns, more
+* when "fast", more when "regenerating", less with "slow digestion",
+* but when the player is "gorged", he digests 100 food units per 10
+* game turns, or a full 1000 food units per 100 game turns.
+*
+* Note that the player's speed is reduced by 10 units while gorged,
+* so if the player eats a single food ration (5000 food units) when
+* full (15000 food units), he will be gorged for (5000/100)*10 = 500
+* game turns, or 500/(100/5) = 25 player turns (if nothing else is
+* affecting the player speed).
+*/
+
+#####GDescription:
+Set hunger level "v". A value < 500 is fainting. A value < 1000 is
+weak. A value < 2000 is weak. A value < 10000 is full. A value
+< 15000 is bloated. A value < 20000 is gorged. If one of these
+levels is crossed a message is printed.
+
+#####GParameters:
+>v is the hunger level (must be between 0 and 20000).
+
+----------------------------------------------------------------------
+
+#####RFunction: check_experience
+
+#####GDeclaration: void check_experience(void);
+
+#####GFile: xtra2.c
+
+#####GComment: 
+/*
+* Advance experience levels and print experience
+*/
+
+#####GDescription:
+Check if player experience level has changed. If a player has achieved
+a level for the first time, give reward or corruption (1 chance in 3)
+if they apply, and increase skill points.
+
+----------------------------------------------------------------------
+
+#####RFunction: check_experience_obj
+
+#####GDeclaration: void check_experience_obj(object_type *o_ptr);
+
+#####GFile: xtra2.c
+
+#####GComment: 
+/*
+* Advance experience levels and print experience
+*/
+
+#####GDescription:
+Check if object "o_ptr" experience level has changed. If an object has
+achieved a level for the first time, apply gains.
+
+#####GParameters:
+>o_ptr is the pointer to the object gaining experience.
+
+----------------------------------------------------------------------
+
+#####RFunction: gain_exp
+
+#####GDeclaration: void gain_exp(s32b amount);
+
+#####GFile: xtra2.c
+
+#####GComment: 
+/*
+* Gain experience (share it to objects if needed)
+*/
+
+#####GDescription:
+Gain "amount" of experience. Count the number of objects which will
+gain experience. The objects share equally 2/3 of "amount". Give
+corruption if it applies. Gain experience. If experience is less
+than maximum, then increase maximum experience by 20% of "amount".
+Check for level change and print experience (check_experience).
+
+#####GParameters:
+>amount is the amount of experience to share.
+
+----------------------------------------------------------------------
+
+#####RFunction: lose_exp
+
+#####GDeclaration: void lose_exp(s32b amount);
+
+#####GFile: xtra2.c
+
+#####GComment: 
+/*
+* Lose experience
+*/
+
+#####GDescription:
+Decrease experience by "amount". Experience can not fall below zero.
+Check for level change and print experience (check_experience).
+
+#####GParameters:
+>amount is the amount of experience to lose.
+
+----------------------------------------------------------------------
+
+
+Back to the *****lua.hlp*0[lua help index] .
+
+
+                                                     [[[[[gThis file by Chris Hadgis]
+
+

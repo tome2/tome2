@@ -1,0 +1,185 @@
+# File: t_lorien.txt
+
+# Caras Galadhon map by furiosity <furiosity@zionmainframe.net>
+# Original Lothlorien map by Akhronath <zzhou22876@aol.com>
+
+# NB! The additional terrain features and stores (if any) assume usage of the following files from the 'theme' module:
+# f_info.txt, t_pref.txt, st_info.txt, and ba_info.txt
+# Please download the module and refer to the files for the terrain feature definitions http://modules.t-o-m-e.net/
+# Don't forget to modify the maximum number of terrain features, etc. in misc.txt as well.
+
+# Default for Mage/Fireproof Quest = entrance is tree
+F:z:96:3
+
+# Default for Quest 10 = entrance is tree
+F:y:96:3
+
+# Default for Quest 11 = entrance is tree
+F:x:96:3
+
+# Default for entrance to the Void, entrance is dirt
+F:v:88:3
+
+# Default for Quest 22 = entrance is quest entrance
+F:w:8:3:0:0:0:0:0:22
+
+############### Quest 22 - Wolves hut finished = house ###############
+?:[EQU $QUEST22 2]
+F:w:74:3:0:0:0:0:0:7
+?:[EQU $QUEST22 5]
+F:w:74:3:0:0:0:0:0:7
+?:1
+
+############### Entrance to the Void ###############
+?:[EQU $QUEST20 1]
+F:v:7:3:0:0:0:0:0:11
+?:1
+
+############### Quest 10 - Spiders of Mirkwood ###############
+# Quest 10 taken, entrance is quest entrance
+?:[EQU $QUEST10 1]
+F:y:8:3:0:0:0:0:0:10
+?:1
+
+############### Quest - Mage/Fireroof quest ###############
+# Mage/Fireproof Quest taken, entrance is quest entrance
+?:[EQU $QUEST"Old Mages quest" 1]
+F:z:8:3:0:0:0:0:0:"Old Mages quest"
+?:1
+
+### Additional terrain features ###
+
+# Flet
+F:o:220:3
+
+# Fosse (dry moat)
+F:p:242:3
+
+#Mallorn
+F:m:243:3
+
+#Small tree
+F:l:202:3
+
+###################### Buildings ########################
+
+# The Mirror
+F:a:74:3:0:0:0:0:0:23
+
+# Castle: Plot Lorien
+F:B:75:3:0:0:0:0:0:2
+
+# Seat of Ruling
+F:b:74:3:0:0:0:0:0:24
+
+# Inn
+F:c:74:3:0:0:0:0:0:69
+
+# Beastmaster Shanty
+F:d:74:3:0:0:0:0:0:16
+
+# Fighters Hall
+F:f:74:3:0:0:0:0:0:17
+
+# Wizards Spire
+F:g:74:3:0:0:0:0:0:25
+
+# Priests Circle
+F:h:74:3:0:0:0:0:0:26
+
+# Rangers Guild 
+F:i:74:3:0:0:0:0:0:21
+
+# Nest
+F:j:74:3:0:0:0:0:0:22
+
+# Hunter store
+F:k:74:3:0:0:0:0:0:61
+
+# Museum
+F:q:74:3:0:0:0:0:0:57
+
+# Music shop
+F:r:74:3:0:0:0:0:0:64
+
+# Force elven monsters
+f:ELVEN
+
+# Town Layout
+
+D:######################################################################################################################################################################################################
+D:#                                                                                                OOO                                                                                                 #
+D:#                                                                                      OOOOOOOOOOOOOOOOOOOOOOOOO                                                                                     #
+D:#                                                                                OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO                                                                                #
+D:#                                                                            OOOOOOOOOOOppppppppppppppppppppppOOOOOOOOOOOO                                                                           #
+D:#                                                                        OOOOOOOOOpppppppppppppppppppppppppppppppppppOOOOOOOO                                                                        #
+D:#                                                                     OOOOOOOppppppppppppppppppppppppppppppppppppppppppppOOOOOOOy                                                                    #
+D:#                                                                   OOOOOOpppppppppppppppppppppppppppppppppppppppppppppppppppOOOOOO                                                                  #
+D:#                                                                 OOOOOppppppppppppppppppppppppppppppppppppppppppppppppppppppppOOOOOO                                                                #
+D:#                                                               OOOOOpppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppOOOOO                                                              #
+D:#                                                             OOOOppppppppppppppppppppppppTTTTTTTToxTTTTTTTTTpppppppppppppppppppppppOOOOO                                                            #
+D:#                                                           OOOOpppppppppppppppppppppTTTTT      lo9ol        TTTTTppppppppppppppppppppOOOO                                                           #
+D:#                                                         OOOOOpppppppppppppppppppTTT            lol              TTTpppppppppppppppppppOOOO                                                         #
+D:#                                                        OOOOppppppppppppppppppTTT              l,,,l                TTTppppppppppppppppppOOOO                                                       #
+D:#                                                      OOOOpppppppppppppppppTTT           lllllll,,,lllllllll           TTTppppppppppppppppOOOO                                                      #
+D:#                                                     OOOOppppppppppppppppTTT          lll,,,,,,,,,,,,,,,,,,,lll        loTTpppppppppppppppppOOO                                                     #
+D:#                                                    OOOOppppppppppppppppTz         lll,,,,,,,,,,,,,,,,,,,,,,,,,ll     lodoTTppppppppppppppppOOO                                                     #
+D:#                                                   OOOppppppppppppppppTTol       ll,,,,lllllllll,,,llllolllll,,,,l   l,,ol   TTpppppppppppppppOOO                                                   #
+D:#                                                  OOOppppppppppppppppTTogol     l,,,lllo       l,,,l  o0o    ll,,,l l,,ll     TTpppppppppppppppOOO                                                  #
+D:#                                                 OOOOppppppppppppppTT  lo,,l   l,,l   oko      l,,,l   o       ll,,l,,l         TpppppppppppppppOOO                                                 #
+D:#                                                OOOOppppppppppppppTT    ll,,l l,,l     o       l,,,l             l,,,l           TpppppppppppppppOOO                                                #
+D:#                                                OOOppppppppppppppTT       l,,l,,l              l,,,l            ll,,,l            TpppppppppppppppOOO                                               #
+D:#                                               OOOpppppppppppppppT         l,,,l             ll,,,,,ll         l,,l,,l             TppppppppppppppOOO                                               #
+D:#                                              OOOpppppppppppppppT          l,o,lll          l,,l,,,l,,l      ll,,l l,,l             TppppppppppppppOOO                                              #
+D:#                                             OOOOppppppppppppppT          l,o2o,,,ll       l,,ll,,,ll,,l    l,,,l   l,,l             TppppppppppppppOOO                                             #
+D:#                                             OOOppppppppppppppTT         l,,lolll,,,l     l,,l l,,,l l,,l ll,,ll     l,,l             TppppppppppppppOO                                             #
+D:#                                             OOOppppppppppppppT         l,,l     ll,,ll  l,,l  l,,,l  l,,l,,,l        o,,l            TppppppppppppppOO                                             #
+D:#                                             OOOpppppppppppppTT        l,,l        l,,,ll,,l   l,,,l   ll,,l         o6o,,l           TppppppppppppppOOO                                            #
+D:#                                            OOOppppppppppppppT        l,,l          ll,,,,ll   mm,mm  ll,,,,l         o l,,l           TpppppppppppppOOO                                            #
+D:#                                            OOOppppppppppppppT       l,,l         o   l,,,,,lmm-----mm,,,ll,,l           l,,l          TppppppppppppppOOO                                           #
+D:#                                            OOppppppppppppppTT      l,,l         oro l,,ll,,,mm-----mm,ll  l,,l           l,,l         TppppppppppppppOOO                                           #
+D:#                                            OOppppppppppppppTTl     l,,l          o l,,l  l,,---@@@---mm    l,,l          l,,l         TppppppppppppppOOO                                           #
+D:#                                            OOppppppppppppppTlollllll,,lllllllllllll,,lllllmm--@@V@@--mmllllll,,lllllllllll,,llllllllolTppppppppppppppOOO                                           #
+D:#                                            OOppppppppppppppToio,,,,,,,,,,,,,,,,,,,,,,,,,,,,,--@VWV@--,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,ohoTppppppppppppppOOO                                           #
+D:#                                            OOppppppppppppppTlollllll,,lllllllllllll,,lllllmm---@V@@@-mml    l,,lllllllllll,,llllllllolTppppppppppppppOOO                                           #
+D:#                                            OOppppppppppppppTTl     l,,l            l,,l   mm,-----VV@,,,ll  l,,l         l,,l         TppppppppppppppOOO                                           #
+D:#                                            OOOppppppppppppppT      l,,o             l,,l l,mmm--o-@VV@m,,,ll,,lo         l,,l         TppppppppppppppOO                                            #
+D:#                                            OOOppppppppppppppT      l,o4o             l,,l,,l mmobom@VV@ll,,,lloqo        o,,l         TppppppppppppppOO                                            #
+D:#                                            OOOppppppppppppppT       l,ol              l,,,l   mmomm@VVV@ l,,,,lo        o5o,l        TTpppppppppppppOOO                                            #
+D:#                                            OOOpppppppppppppppT       l,,l           ll,,,ll   l,,,l @@VV@@lll,,,ll       o,l         TppppppppppppppOOO                                            #
+D:#                                             OOOppppppppppppppT        l,,l        ll,,,ll,,l  l,,,l   @VVV@  ll,,,ll   l,,l         TTpppppppppppppOOO                                             #
+D:#                                             OOOpppppppppppppppT        l,,l      l,,,ll  l,,l l,,,l  l,@VV@    ll,,,l l,,l          TppppppppppppppOOO                                             #
+D:#                                              OOOppppppppppppppTT        l,,l  lll,,ll     l,,ll,,,l l,,l@VV@     ll,,l,,l          TpppppppppppppppOO                                              #
+D:#                                              OOOpppppppppppppppT         l,,ll,,,,l        l,,l,,,ll,,l @VVV@      ll,,ll         TTppppppppppppppOOO                                              #
+D:#                                               OOOpppppppppppppppTT        l,,,,,ll          l,,,,,o,,l    @VV@@    l,,l,,ll      TTpppppppppppppppOO                                               #
+D:#                                                OOOpppppppppppppppT        l,,,ll             ll,,o1ol      @VVV@  l,,l ll,,l    TTpppppppppppppppOOO                                               #
+D:#                                                OOOppppppppppppppppT     ll,,l,,l              l,,,ol      l,@VV@ l,,l    ll,o  TTpppppppppppppppOOO                                                #
+D:#                                                 OOOppppppppppppppppTT  lo,,l l,,l   o         l,,,l      l,,l@VV@,,l       owoTTpppppppppppppppOOO                                                 #
+D:#                                                  OOOppppppppppppppppTTlofol   l,,llo3olllllllll,,,lllllll,,,,@VVV@l         oTppppppppppppppppOOO                                                  #
+D:#                                                   OOOpppppppppppppppppTTol     l,,,,o,,,,,,,,,,,,,,,,,,,,,lllv@@VV@        TTppppppppppppppppOOO                                                   #
+D:#                                                    OOOOpppppppppppppppppTT      lll,,,,,,,,,,,,,,,,,,,,,,l @VVV@@VV@@    TTpppppppppppppppppOOO                                                    #
+D:#                                                  ##7OOOOpppppppppppppppppTTT       llllllllloll,,,lllllll @VWaWV@@VVV@ TTppppppppppppppppppOOO                                                     #
+D:#                                                  B##  OOOppppppppppppppppppTTT             ocol,,,l        @VVV@  @VV@TppppppppppppppppppOOOO                                                      #
+D:#                                                        OOOOpppppppppppppppppppTTT           o l,,,lllll      @@  TT@VV@pppppppppppppppppOOO                                                        #
+D:#                                                         OOOOpppppppppppppppppppppTTTT         l,,,,,,,,l     TTTTTp@VVV@ppppppppppppppOOOO                                                         #
+D:#                                                           OOOOpppppppppppppppppppppppTTTTTTT  l,,,,,,,,TTTTTTTpppppp@@VV@@ppppppppppOOOO                                                           #
+D:#                                                             OOOOppppppppppppppppppppppppppppTTTTTTTTOOOppppppppppppppp@VVV@pppppppOOOOO                                                            #
+D:#                                                               OOOOpppppppppppppppppppppppppppppppppOOOppppppppppppppppp@VV@pppppOOOOO                                                              #
+D:#                                                                 OOOOOpppppppppppppppppppppppppppppOOOppppppppppppppppppp@VV@ppOOOOO                                                                #
+D:#                                                                   OOOOOOpppppppppppppppppppppppppOOOpppppppppppppppppppp@VVV@OOO                                                                   #
+D:#                                                                      OOOOOOpppppppppppppppppppppOOOppppppppppppppppppppOO@@VV@@                                                                    #
+D:#                                                                         OOOOOOOpppppppppppppppppOOOppppppppppppppppOOOOOOOO@VVV@                                                                   #
+D:#                                                                            OOOOOOOOOOpppppppppppOOOpppppppppppOOOOOOOOO     @VV@                                                                   #
+D:#                                                                                OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO         @VVV@                                                                  #
+D:#                                                                                       OOOOOOOOOOOOOOOOOOOOOOO                @@VVV@                                                                #
+D:######################################################################################################################################################################################################
+
+# Default starting position
+?:[EQU $LEAVING_QUES  0]
+P:13:99
+
+# Starting position when coming from quest 12
+?:[EQU $LEAVING_QUES  12]
+P:26:109
+
+

@@ -1,0 +1,54 @@
+|||||oy
+~~~~~01|Demonologist
+~~~~~02|Classes|Demonologist
+#####R=== Demonologists ===
+
+#####GDescription
+Masters of the Demons, members of this class can gain tremendous power
+over demonkind, either for good or for evil ends.
+
+Their spells are contained in specific blades, shields and helms (actually
+shaped in the form of horns) which when wielded allow the Demonologist to
+cast spells unique to her class; each piece of equipment holds 3 spells.
+
+See the information on the *****m_demono.txt*0[Demonology] school of magic for more details.
+
+#####GStarting Stat Modifiers
+Strength         +5
+Intelligence     -2
+Wisdom           -2
+Dexterity        +2
+Constitution     +2
+Charisma         -1
+Hit Die          +d9
+Spell Points     +0%
+Exp Penalty       0%
+
+#####GStarting Skills:
+#####BSkill                   Start Level     Skill Point Gains
+Combat                  2.000           [0.750]
+  Weaponmastery         1.000           [0.750]
+    Sword-mastery       0.000           [0.600]
+  Archery               2.000           [0.400]
+Sneakiness              2.000           [1.800]
+  Stealth               0.000           [0.400]
+  Disarming             2.000           [1.800]
+Magic                   2.000           [0.700]
+  Magic-Device          1.000           [1.150]
+  Demonology            1.000           [1.000]
+Spirituality            2.000           [0.700]
+  Prayer                0.000           [0.500]
+Monster-lore            0.000           [0.500]
+
+#####GInnate Abilities:
+#####BAbility              Character level
+Extra Max Blow(1)           1
+Extra Max Blow(2)           1
+Spread blows                25
+
+#####GStarting Equipment
+A Demonologist begins the game with:
+    a Ring of Fear Resistance
+    a Demonblade
+    a Chain Mail
+   

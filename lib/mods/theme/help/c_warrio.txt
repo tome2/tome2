@@ -1,0 +1,54 @@
+~~~~~01|Warrior
+~~~~~02|Classes|Warrior
+#####R=== Warriors ===
+
+#####GDescription
+A Warrior is a hack-and-slash character, who solves most of his problems
+by cutting them to pieces, but will occasionally fall back on the help 
+of a magical device or a bow. 
+
+A Warrior learns no magic, and can even suppress it like an Unbeliever through 
+the Antimagic skill.
+
+#####GStarting Stat Modifiers
+Strength         +5
+Intelligence     -2
+Wisdom           -2
+Dexterity        +2
+Constitution     +2
+Charisma         -1
+Hit Die          +d9
+Spell Points     +0%
+Exp Penalty       0%
+
+#####GStarting Skills:
+#####BSkill                   Start Level     Skill Point Gains
+Combat                  2.000           [0.800]
+  Weaponmastery         1.000           [0.850]
+    Sword-mastery       0.000           [0.400]
+    Axe-mastery         0.000           [0.400]
+    Hafted-mastery      0.000           [0.400]
+    Polearm-mastery     0.000           [0.400]
+  Archery               1.000           [0.600]
+  Antimagic             0.000           [0.550]
+Sneakiness              1.000           [0.900]
+  Stealth               0.000           [0.400]
+  Disarming             1.000           [0.900]
+Magic                   1.000           [0.300]
+  Magic-Device          1.000           [1.150]
+Spirituality            1.000           [0.400]
+  Prayer                0.000           [0.500]
+Monster-lore            0.000           [0.500]
+
+#####GInnate Abilities:
+#####BAbility              Character level
+Extra Max Blow(1)           1
+Extra Max Blow(2)           1
+Spread blows                25
+
+#####GStarting Equipment
+A Warrior begins the game with:
+    a Ring of Fear Resistance
+    a Broad Sword
+    a Chain Mail
+

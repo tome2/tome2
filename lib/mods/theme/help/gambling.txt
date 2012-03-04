@@ -1,0 +1,29 @@
+|||||oy
+~~~~~01|Gambling
+#####R=== Gambling Rules ===
+
+#####GBetween : 
+       Three 12-sided dice rolled; 2 black, 1 red. The red
+       die must be between both black to win. If the red die
+       matches a black die, you lose. Pays 3 to 1
+#####GCraps: 
+       Two 6-sided dice are rolled. On first roll, a 7 or 11
+       wins. A 2, 3 or 12 loses. Otherwise roll until the first
+       roll is matched (win) or a 7 is rolled (loss). Pays 2 to 1
+#####GWheel: 
+       Pick a number from 0-9. If the number shows on wheel
+       after it stops spinning, you win. Pays 10 to 1
+
+#####GSlots: 
+       Three dice rolled. Matches win gold.
+       Numbers are:
+       1=Lemon, 2=Orange, 3=Sword, 4=Shield, 5=Plum, 6=Cherry
+       Payoffs are as follows:
+       Cherry Cherry Lemon  2-1   Cherry Cherry Orange  3-1
+       Cherry Cherry Sword  4-1   Cherry Cherry Shield  5-1
+       Cherry Cherry Plum   6-1
+       Lemon Lemon Lemon    4-1   Orange Orange Orange 16-1
+       Sword Sword Sword    6-1   Shield Shield Shield 25-1
+       Plum Plum Plum       9-1   Cherry Cherry Cherry 36-1
+
+

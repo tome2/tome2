@@ -1,0 +1,898 @@
+|||||oy
+
+#####R             /----------------------------------------\
+#####R            <      util.pkg functions helper file      >
+#####R             \----------------------------------------/
+
+----------------------------------------------------------------------
+
+#####R=== bst ===
+
+#####GDeclaration
+    s32b bst(s32b what, s32b t);
+
+#####GFile
+    util.c
+
+#####GComment
+/*
+ * Break scalar time
+ */
+
+#####GDescription
+Return the minute, hour, day, or year for turn "t". One turn takes 7.5
+seconds.
+
+#####GParameters
+> "what" is the unit to be returned and must be one of
+  MINUTE (number of turns per minute, which is 8)
+  HOUR   (number of turns per hour, which is 480)
+  DAY    (number of turns per day, which is 11,520)
+  YEAR   (number of turns per year, which is 4,204,800)
+> "t" is the number of turns.
+
+----------------------------------------------------------------------
+
+#####R=== path_build ===
+
+#####GDeclaration
+    errr path_build(char *buf, int max, cptr path, cptr file);
+
+#####GFile
+    util.c
+
+#####GComment
+/*
+* Create a new path by appending a file (or directory) to a path
+*
+* This requires no special processing on simple machines, except
+* for verifying the size of the filename, but note the ability to
+* bypass the given "path" with certain special file-names.
+*
+* Note that the "file" may actually be a "sub-path", including
+* a path and a file.
+*
+* Note that this function yields a path which must be "parsed"
+* using the "parse" function above.
+*/
+
+#####GDescription
+Append file "file" to path "path" and return the result in "buf". The
+length of "buf" is a maximum of "max" characters. If "file" starts
+with '~' then return "file". If "file" starts with the path separator
+and the path separator is not blank then return "file". If there is no
+path then return "file". Otherwise return "path" + path separator +
+"file". The path separator is defined in "H-config.h".
+
+#####GParameters
+> "buf" contains the new path.
+> "max" is the maximum number of characters allowed in "buf".
+> "path" is the original path.
+> "file" is the original file.
+
+----------------------------------------------------------------------
+
+#####R=== move_cursor ===
+
+#####GDeclaration
+    void move_cursor(int row, int col);
+
+#####GFile
+    util.c
+
+#####GComment
+/*
+* Move the cursor
+*/
+
+#####GDescription
+Move the cursor to row "row" and column "col".
+
+#####GParameters
+> "row" is the row the cursor is to be moved to.
+> "col" is the column the cursor is to be moved to.
+
+----------------------------------------------------------------------
+
+#####R=== inkey ===
+
+#####GDeclaration
+    char inkey(void);
+
+#####GFile
+    util.c
+
+#####GComment
+/*
+* Get a keypress from the user.
+*
+* This function recognises a few "global parameters".  These are variables
+* which, if set to TRUE before calling this function, will have an effect
+* on this function, and which are always reset to FALSE by this function
+* before this function returns.  Thus they function just like normal
+* parameters, except that most calls to this function can ignore them.
+*
+* If "inkey_xtra" is TRUE, then all pending keypresses will be flushed,
+* and any macro processing in progress will be aborted.  This flag is
+* set by the "flush()" function, which does not actually flush anything
+* itself, but rather, triggers delayed input flushing via "inkey_xtra".
+*
+* If "inkey_scan" is TRUE, then we will immediately return "zero" if no
+* keypress is available, instead of waiting for a keypress.
+*
+* If "inkey_base" is TRUE, then all macro processing will be bypassed.
+* If "inkey_base" and "inkey_scan" are both TRUE, then this function will
+* not return immediately, but will wait for a keypress for as long as the
+* normal macro matching code would, allowing the direct entry of macro
+* triggers.  The "inkey_base" flag is extremely dangerous!
+*
+* If "inkey_flag" is TRUE, then we will assume that we are waiting for a
+* normal command, and we will only show the cursor if "hilite_player" is
+* TRUE (or if the player is in a store), instead of always showing the
+* cursor.  The various "main-xxx.c" files should avoid saving the game
+* in response to a "menu item" request unless "inkey_flag" is TRUE, to
+* prevent savefile corruption.
+*
+* If we are waiting for a keypress, and no keypress is ready, then we will
+* refresh (once) the window which was active when this function was called.
+*
+* Note that "back-quote" is automatically converted into "escape" for
+* convenience on machines with no "escape" key.  This is done after the
+* macro matching, so the user can still make a macro for "backquote".
+*
+* Note the special handling of "ascii 30" (ctrl-caret, aka ctrl-shift-six)
+* and "ascii 31" (ctrl-underscore, aka ctrl-shift-minus), which are used to
+* provide support for simple keyboard "macros".  These keys are so strange
+* that their loss as normal keys will probably be noticed by nobody.  The
+* "ascii 30" key is used to indicate the "end" of a macro action, which
+* allows recursive macros to be avoided.  The "ascii 31" key is used by
+* some of the "main-xxx.c" files to introduce macro trigger sequences.
+*
+* Hack -- we use "ascii 29" (ctrl-right-bracket) as a special "magic" key,
+* which can be used to give a variety of "sub-commands" which can be used
+* any time.  These sub-commands could include commands to take a picture of
+* the current screen, to start/stop recording a macro action, etc.
+*
+* If "angband_term[0]" is not active, we will make it active during this
+* function, so that the various "main-xxx.c" files can assume that input
+* is only requested (via "Term_inkey()") when "angband_term[0]" is active.
+*
+* Mega-Hack -- This function is used as the entry point for clearing the
+* "signal_count" variable, and of the "character_saved" variable.
+*
+* Hack -- Note the use of "inkey_next" to allow "keymaps" to be processed.
+*
+* Mega-Hack -- Note the use of "inkey_hack" to allow the "Borg" to steal
+* control of the keyboard from the user.
+*/
+
+#####GDescription
+Get a keypress from the user.
+
+----------------------------------------------------------------------
+
+#####R=== cmsg_print ===
+
+#####GDeclaration
+    void cmsg_print(byte color, cptr msg);
+
+#####GFile
+    util.c
+
+#####GComment
+/*
+* Output a message to the top line of the screen.
+*
+* Break long messages into multiple pieces (40-72 chars).
+*
+* Allow multiple short messages to "share" the top line.
+*
+* Prompt the user to make sure he has a chance to read them.
+*
+* These messages are memorised for later reference (see above).
+*
+* We could do "Term_fresh()" to provide "flicker" if needed.
+*
+* The global "msg_flag" variable can be cleared to tell us to
+* "erase" any "pending" messages still on the screen.
+*
+* XXX XXX XXX Note that we must be very careful about using the
+* "msg_print()" functions without explicitly calling the special
+* "msg_print(NULL)" function, since this may result in the loss
+* of information if the screen is cleared, or if anything is
+* displayed on the top line.
+*
+* XXX XXX XXX Note that "msg_print(NULL)" will clear the top line
+* even if no messages are pending.  This is probably a hack.
+*/
+
+#####GDescription
+In color "color", output message "msg" to the top line of the screen.
+If the message is blank or has more than 1000 characters, nothing is
+printed. Long messages are split after the 40th character and before
+the 72nd character.
+
+#####GParameters
+> "color" is the color of the message.
+  *****fields.txt*0[colors]
+> "msg" is the message.
+
+----------------------------------------------------------------------
+
+#####R=== msg_print ===
+
+#####GDeclaration
+    void msg_print(cptr msg);
+
+#####GFile
+    util.c
+
+#####GComment
+/* Hack -- for compatibility and easy sake */
+
+#####GDescription
+Print message "msg" in white (see cmsg_print() above).
+
+#####GParameters
+> "msg" is the message.
+
+----------------------------------------------------------------------
+
+#####R=== screen_save ===
+
+#####GDeclaration
+    void screen_save(void);
+
+#####GFile
+    util.c
+
+#####GComment
+/*
+ * Save the screen, and increase the "icky" depth.
+ *
+ * This function must match exactly one call to "screen_load()".
+ */
+
+#####GDescription
+Save a screen shot.
+
+----------------------------------------------------------------------
+
+#####R=== screen_load ===
+
+#####GDeclaration
+    void screen_load(void);
+
+#####GFile
+    util.c
+
+#####GComment
+/*
+ * Load the screen, and decrease the "icky" depth.
+ *
+ * This function must match exactly one call to "screen_save()".
+ */
+
+#####GDescription
+Load a previously saved screen shot.
+
+----------------------------------------------------------------------
+
+#####R=== c_put_str ===
+
+#####GDeclaration
+    void c_put_str(byte attr, cptr str, int row, int col);
+
+#####GFile
+    util.c
+
+#####GComment
+/*
+* Display a string on the screen using an attribute.
+*
+* At the given location, using the given attribute, if allowed,
+* add the given string.  Do not clear the line.
+*/
+
+#####GDescription
+Put string "str" at row "row" and column "col" with attribute "attr".
+
+#####GParameters
+> "attr" is the color of the message.
+  *****fields.txt*0[colors]
+> "msg" is the message.
+> "row" is the row the message is to be printed at.
+> "col" is the column the message is to be printed at.
+
+----------------------------------------------------------------------
+
+#####R=== c_prt ===
+
+#####GDeclaration
+    void c_prt(byte attr, cptr str, int row, int col);
+
+#####GFile
+    util.c
+
+#####GComment
+/*
+* Display a string on the screen using an attribute, and clear
+* to the end of the line.
+*/
+
+#####GDescription
+Clear row "row" from column "col". Put string "str" at "row", "col"
+with attribute "attr".
+
+#####GParameters
+> "attr" is the color of the message.
+  *****fields.txt*0[colors]
+> "msg" is the message.
+> "row" is the row the message is to be printed at.
+> "col" is the column the message is to be printed at.
+
+----------------------------------------------------------------------
+
+#####R=== clear_from ===
+
+#####GDeclaration
+    void clear_from(int row);
+
+#####GFile
+    util.c
+
+#####GComment
+/*
+* Clear part of the screen
+*/
+
+#####GDescription
+Clear the screen from row "row" onwards.
+
+#####GParameters
+> "row" is the first row of the screen to be cleared.
+
+----------------------------------------------------------------------
+
+#####R=== askfor_aux ===
+
+#####GDeclaration
+    bool askfor_aux(char *buf, int len);
+
+#####GFile
+    util.c
+
+#####GComment
+/*
+* Get some input at the cursor location.
+* Assume the buffer is initialized to a default string.
+* Note that this string is often "empty" (see below).
+* The default buffer is displayed in yellow until cleared.
+* Pressing RETURN right away accepts the default entry.
+* Normal chars clear the default and append the char.
+* Backspace clears the default or deletes the final char.
+* ESCAPE clears the buffer and the window and returns FALSE.
+* RETURN accepts the current buffer contents and returns TRUE.
+*/
+
+#####GDescription
+Get string "buf" from the screen. "buf" is to be no more than "len"
+bytes. The string starts at the current cursor position. The length
+can not exceed the number of bytes from the cursor to the end of the
+line. Accept user input until the escape or return key is pressed.
+
+#####GParameters
+> "buf" is the string returned from the screen.
+> "len" is the length of the string. If it is <1 it is forced to 1.
+
+----------------------------------------------------------------------
+
+#####R=== get_string ===
+
+#####GDeclaration
+    bool get_string(cptr prompt, char *buf, int len);
+
+#####GFile
+    util.c
+
+#####GComment
+/*
+* Get a string from the user
+*
+* The "prompt" should take the form "Prompt: "
+*
+* Note that the initial contents of the string is used as
+* the default response, so be sure to "clear" it if needed.
+*
+* We clear the input, and return FALSE, on "ESCAPE".
+*/
+
+#####GDescription
+Print prompt "prompt" at the top-left corner of the screen and return
+response "buf" which will have a maximum length "length". If ESCAPE
+is entered, the function returns FALSE, otherwise it returns TRUE.
+
+#####GParameters
+> "prompt" is the prompt for input.
+> "buf" is the returned response.
+> "len" is the maximum length of the string.
+
+----------------------------------------------------------------------
+
+#####R=== get_check ===
+
+#####GDeclaration
+    bool get_check(cptr prompt);
+
+#####GFile
+    util.c
+
+#####GComment
+/*
+* Verify something with the user
+*
+* The "prompt" should take the form "Query? "
+*
+* Note that "[y/n]" is appended to the prompt.
+*/
+
+#####GDescription
+Ask the user question "prompt" which requires a yes/no answer. The
+prompt appears in the top-left corner of the screen. A response of
+'Y' (either case) returns TRUE. A response of 'N' (either case) or
+ESCAPE returns FALSE.
+
+#####GParameters
+> "prompt" is the question asked. It has a maximum length of 70
+  characters.
+
+----------------------------------------------------------------------
+
+#####R=== get_com_lua ===
+
+#####GDeclaration
+    bool get_com_lua @ get_com(cptr promtp, int *com);
+
+#####GFile
+    util.c
+
+#####GComment
+/*
+* Prompts for a keypress
+*
+* The "prompt" should take the form "Command: "
+*
+* Returns TRUE unless the character is "Escape"
+*/
+
+#####GDescription
+Ask the user for command "prompt" and return the key press "com". A
+response of ESCAPE returns FALSE. All other responses return TRUE.
+
+#####GParameters
+> "prompt" is the prompt for the key press.
+> "com" is the returned key press.
+
+----------------------------------------------------------------------
+
+#####R=== get_quantity ===
+
+#####GDeclaration
+    s32b get_quantity(cptr prompt, s32b max);
+
+#####GFile
+    util.c
+
+#####GComment
+/*
+* Request a "quantity" from the user
+*
+* Hack -- allow "command_arg" to specify a quantity
+*/
+
+#####GDescription
+Ask the user for quantity "prompt" of maximum value "max" and return
+a quantity. If the user quantity is higher than the maximum then the
+maximum is returned. If the response is a letter then the maximum is
+returned. If the user quantity is negative then zero is returned.
+
+#####GParameters
+> "prompt" is the prompt for a quantity.
+> "max" is the maximum value allowed.
+
+----------------------------------------------------------------------
+
+#####R=== test_monster_name ===
+
+#####GDeclaration
+    int test_monster_name(cptr name);
+
+#####GFile
+    util.c
+
+#####GComment
+/*
+ * Given monster name as string, return the index in r_info array. Name
+ * must exactly match (look out for commas and the like!), or else 0 is 
+ * returned. Case doesn't matter. -GSN-
+ */
+
+#####GDescription
+Return the monster index for monster with name "name". If no match is
+found then zero is returned.
+
+#####GParameters
+> "name" is the monster name.
+
+----------------------------------------------------------------------
+
+#####R=== test_item_name ===
+
+#####GDeclaration
+    int test_item_name(cptr name);
+
+#####GFile
+    util.c
+
+#####GComment
+/*
+ * Given item name as string, return the index in k_info array. Name
+ * must exactly match (look out for commas and the like!), or else 0 is 
+ * returned. Case doesn't matter. -DG-
+ */
+
+#####GDescription
+Return the item index for item with name "name". If no match is found
+then zero is returned.
+
+#####GParameters
+> "name" is the item name.
+
+----------------------------------------------------------------------
+
+#####R=== luck ===
+
+#####GDeclaration
+    int luck(int min, int max);
+
+#####GFile
+    xtra1.c
+
+#####GComment
+/*
+ * Return a luck number between a certain range
+ */
+
+#####GDescription
+Return a number for luck between minimum "min" and maximum "max". The
+value begins with the player's current luck. The value is forced to
+be between -30 and +30. 30 is added to give a value between 0 and 60.
+The value is multiplied by the range (maximum - minimum) and divided
+by 60. The value is increased by the minimum. The value is returned.
+
+For example, if the player's current luck is 15, the minimum is -10,
+and the maximum is 10 (range 20), then the value returned is
+(45 * 20) / 60 which is 900 / 60 which is 15 + the minimum -10 gives
+a returned value of 5.
+
+#####GParameters
+> "min" is the minimum luck.
+> "max" is the maximum luck. Beware: this should be greater than the
+  minimum but it is not checked!
+
+----------------------------------------------------------------------
+
+#####R=== get_player_race_name ===
+
+#####GDeclaration
+    cptr get_player_race_name(int pr, int ps);
+
+#####GFile
+    util.c
+
+#####GComment
+(none)
+
+#####GDescription
+Return the name for player race "pr" and player sub-race "ps".
+
+#####GParameters
+> "pr" is the index for player race.
+> "ps" is the index for player sub-race.
+
+----------------------------------------------------------------------
+
+#####R=== quit ===
+
+#####GDeclaration
+    void quit(cptr str);
+
+#####GFile
+    z-util.c
+
+#####GComment
+/*
+ * Exit (ala "exit()").  If 'str' is NULL, do "exit(0)".
+ * If 'str' begins with "+" or "-", do "exit(atoi(str))".
+ * Otherwise, plog() 'str' and exit with an error code of -1.
+ * But always use 'quit_aux', if set, before anything else.
+ */
+
+#####GDescription
+Quit the game. If "str" is a string then write the string to the
+error file or screen. If "str" is a number then exit with the
+number as the exit code.
+
+#####GParameters
+> "str" is an error message or exit code.
+
+----------------------------------------------------------------------
+
+#####R=== dump_hooks ===
+
+#####GDeclaration
+    void dump_hooks();
+
+#####GFile
+    plots.c
+
+#####GComment
+(none)
+
+#####GDescription
+Print the name and type (C or Lua) of hooks in the hook list.
+
+----------------------------------------------------------------------
+
+#####R=== add_hook_script ===
+
+#####GDeclaration
+    void add_hook_script(int h_idx, char *script, cptr name);
+
+#####GFile
+    plots.c
+
+#####GComment
+(none)
+
+#####GDescription
+To hook list with index "h_idx", add a script with script file
+"script" and name "name" as a Lua hook if a hook with that name
+does not already exist.
+
+#####GParameters
+> "h_idx" is the index of the hook list in the array of hook lists.
+> "script" is the name of the script file.
+> "name" is the name of the hook to be added.
+
+----------------------------------------------------------------------
+
+#####R=== del_hook_name ===
+
+#####GDeclaration
+    void del_hook_name(int h_idx, cptr name);
+
+#####GFile
+    plots.c
+
+#####GComment
+(none)
+
+#####GDescription
+Search hook list with index "h_idx" and remove the hook with name
+"name".
+
+#####GParameters
+> "h_idx" is the index of the hook list in the array of hook lists.
+> "name" is the name of the hook to be removed.
+
+----------------------------------------------------------------------
+
+#####R=== pern_dofile ===
+
+#####GDeclaration
+    bool pern_dofile(char *file);
+
+#####GFile
+    script.c
+
+#####GComment
+(none)
+
+#####GDescription
+Parse the Lua script file "file".
+
+#####GParameters
+> "file" is the Lua script file to be parsed.
+
+----------------------------------------------------------------------
+
+#####R=== intMod ===
+
+#####GDeclaration
+    s32b intMod(s32b a, s32b b);
+
+#####GFile
+    script.c
+
+#####GComment
+(none)
+
+#####GDescription
+Return the result of operation "a" mod  "b" (a % b).
+
+#####GParameters
+> "a" is a number.
+> "b" is a number.
+
+----------------------------------------------------------------------
+
+#####R=== intAnd ===
+
+#####GDeclaration
+    s32b intAnd(s32b a, s32b b);
+
+#####GFile
+    script.c
+
+#####GComment
+(none)
+
+#####GDescription
+Return the result of bitwise operation "a" AND "b" (a & b).
+
+#####GParameters
+> "a" is a number.
+> "b" is a number.
+
+----------------------------------------------------------------------
+
+#####R=== intOr ===
+
+#####GDeclaration
+    s32b intOr(s32b a, s32b b);
+
+#####GFile
+    script.c
+
+#####GComment
+(none)
+
+#####GDescription
+Return the result of bitwise operation "a" OR "b" (a | b).
+
+#####GParameters
+> "a" is a number.
+> "b" is a number.
+
+----------------------------------------------------------------------
+
+#####R=== intXor ===
+
+#####GDeclaration
+    s32b intXor(s32b a, s32b b);
+
+#####GFile
+    script.c
+
+#####GComment
+(none)
+
+#####GDescription
+Return the result of bitwise operation "a" XOR "b" (a ^ b).
+
+#####GParameters
+> "a" is a number.
+> "b" is a number.
+
+----------------------------------------------------------------------
+
+#####R=== intShiftl ===
+
+#####GDeclaration
+    s32b intShiftl(s32b a, s32b b);
+
+#####GFile
+    script.c
+
+#####GComment
+(none)
+
+#####GDescription
+Return the result of bitwise operation "a" << "b".
+
+#####GParameters
+> "a" is a number.
+> "b" is a number.
+
+----------------------------------------------------------------------
+
+#####R=== intShiftr ===
+
+#####GDeclaration
+    s32b intShiftr(s32b a, s32b b);
+
+#####GFile
+    script.c
+
+#####GComment
+(none)
+
+#####GDescription
+Return the result of bitwise operation "a" >> "b".
+
+#####GParameters
+> "a" is a number.
+> "b" is a number.
+
+----------------------------------------------------------------------
+
+#####R=== intBitNot ===
+
+#####GDeclaration
+    s32b intBitNot(s32b b);
+
+#####GFile
+    script.c
+
+#####GComment
+(none)
+
+#####GDescription
+Return the result of bitwise operation NOT "b" (~ b).
+
+#####GParameters
+> "b" is a number.
+
+----------------------------------------------------------------------
+
+#####R=== register_savefile ===
+
+#####GDeclaration
+    void register_savefile(int num);
+
+#####GFile
+    loadsave.c
+
+#####GComment
+/*
+ * Add num slots to the savefile
+ */
+
+#####GDescription
+Add "num" slots to the save file.
+
+#####GParameters
+> "num" is the number of slots to add to the savefile. If num is <0
+  then "num" is forced to zero.
+
+----------------------------------------------------------------------
+
+#####R=== save_number_key ===
+
+#####GDeclaration
+    void save_number_key(char *key, s32b val);
+
+#####GFile
+    util.c
+
+#####GComment
+(none)
+
+#####GDescription
+Save the length of key "key", the key itself, and the value "val" as
+bytes in the savefile.
+
+#####GParameters
+> "key" is the key string for the value.
+> "val" is the value to be saved.
+
+----------------------------------------------------------------------
+
+
+
+Back to the *****lua.hlp*0[lua help index] .
+
+
+                                                     [[[[[gThis file by Chris Hadgis]
+

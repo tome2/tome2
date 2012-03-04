@@ -1,0 +1,87 @@
+|||||oy
+~~~~~01|Monk
+~~~~~02|Classes|Monk
+#####R=== Monks ===
+
+#####GDescription
+The Monk character class is very different from all other classes. 
+Although they can use weapons and armour just like any other class, 
+their training in martial arts makes them much more powerful with no 
+armour nor weapons. 
+
+As the Monk's skill level rises, new and more powerful forms of attack become 
+available. It is also rumoured that the monastic training makes experienced 
+monks faster than any other character class!
+
+A Monk might need to wear some kind of armour to gain the resistances necessary 
+for survival at higher levels, but if that armour is too heavy, it will 
+severely disturb his/her martial arts maneuvers.
+
+If skill points are invested in *****skills.txt*20[Dodging], a Monk's defensive capabilities 
+(blocking and dodging) will also increase. However, if armour is being worn, 
+dodging is much less effective. Fortunately, a Monk can increase his/her 
+ability to fight while still wearing armor by increasing his/her 
+*****skills.txt*13[Barehanded-combat] skill. 
+
+Monks also have access to the schools of *****m_meta.txt*0[Meta], 
+*****m_tempo.txt*0[Temporal] and *****m_mind.txt*0[Mind] magic.
+
+#####GStarting Stat Modifiers
+Strength         +1
+Intelligence     -2
+Wisdom           +1
+Dexterity        +1
+Constitution     +0
+Charisma         +1
+Hit Die          +d8
+Spell Points     +0%
+Exp Penalty      40%
+
+#####GStarting Skills:
+#####BSkill                   Start Level     Skill Point Gains
+Combat                  0.000           [0.900]
+  Weaponmastery         0.000           [0.300]
+  Archery               0.000           [0.400]
+  Barehand-combat       1.000           [0.900]
+Sneakiness              1.000           [0.900]
+  Stealth               1.000           [0.900]
+  Disarming             1.000           [0.900]
+  Dodging               0.000           [0.700]
+Magic                   0.000           [0.600]
+  Magic-Device          1.000           [1.000]
+  Meta                  0.000           [0.500]
+  Temporal              0.000           [0.500]
+  Mind                  0.000           [0.500]
+Spirituality            1.000           [0.900]
+  Prayer                0.000           [0.500]
+  Music                 0.000           [0.300]
+Monster-lore            1.000           [1.100]
+  Corpse-preservation   1.000           [0.500]
+  Possession            0.000           [0.100]
+
+#####GStarting Equipment
+A Monk begins the game with:
+    a Potion of Healing
+    a Soft Leather Armour
+~~~~~03|Monk|Monk attacks
+~~~~~04|Tables|Monk attacks
+#####GMonk Attacks
+#####BAttack Name     Min.lvl Damage  Stun    Notes
+-----------------------------------------------------------------------------
+Punch           1       1d4     -
+Kick            2       1d6     -
+Strike          3       1d7     -
+Knee            5       2d3     *       Painful to males; likely to stun them
+Elbow           7       1d8     -
+Butt            9       2d5     -
+Ankle Kick      11      3d4     -       May slow down the opponent
+Uppercut        13      4d4     6
+Double-kick     16      5d4     8
+Cat's Claw      20      5d5     -
+Jump Kick       25      5d6     10
+Eagle's Claw    29      6d6     -
+Circle Kick     33      6d8     10
+Iron Fist       37      8d8     10
+Flying Kick     41      8d10    12
+Dragon Fist     45      10d10   16
+Crushing Blow   48      10d12   18

@@ -1,0 +1,46 @@
+~~~~~01|Trapper
+~~~~~02|Classes|Trapper
+#####R=== Trappers ===
+
+#####GDescription
+A Pacifist is someone who prefers not to use violence to 
+achieve their ends. The trappers are not averse, however,
+to destroying monsters via traps and using corpses they
+find to create totems in order to summon aid. They 
+may also use spells provided by their deities.
+
+#####GStarting Stat Modifiers
+Strength          0
+Intelligence     +2
+Wisdom           +2
+Dexterity        +2
+Constitution      0
+Charisma         +4
+Bonus Blows       0
+Hit Die           0
+Exp Penalty       0%
+
+#####GStarting Skills:
+#####BSkill                   Start Level     Skill Point Gains
+Sneakiness              0.000           [0.600]                                                     
+  Stealth               0.000           [0.600]                                                     
+  Disarming             1.000           [0.600]                                                     
+  Dodging               1.000           [0.700]                                                     
+Magic                   1.000           [0.600]                                                     
+  Spell-power           0.000           [0.500]                                                     
+  Nature                1.000           [1.000]                                                     
+Spirituality            0.000           [0.700]                                                     
+  Prayer                0.000           [0.500]                                                     
+Monster-lore            1.000           [0.900]                                                     
+  Summoning             1.000           [0.600]                                                     
+
+#####GStarting Equipment
+A trapper begins the game with:
+    a catapult trap set
+    some iron shots
+
+#####GInnate Abilities:
+#####BAbility              Character level
+Trapping                    1
+Ammo creation               10
+Perfect casting             15

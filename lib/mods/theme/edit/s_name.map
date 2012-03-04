@@ -1,0 +1,110 @@
+# Special level "The Nameless Level" in the Pits of Angband
+#
+# Created for PernAngband 5.0.1 on 18/8/01
+# Written by Mynstral (mynstral@thehelm.com)
+
+%:special.txt
+
+# Great Storm Wyrm on normal floor
+F:a:1:0:728
+
+# Mature Red Dragon on normal floor
+F:b:1:0:589
+
+# Mature White Dragon on normal floor
+F:c:1:0:549
+
+# Ancient Blue Dragon on normal floor
+F:d:1:0:601
+
+# Ancient Black Dragon on normal floor
+F:e:1:0:624
+
+# Ancient Multi-hued Dragon on normal floor
+F:f:1:0:675
+
+# Great Hell Wyrm on normal floor
+F:g:1:0:756
+
+# Great Wyrm of Many Colours on normal floor
+F:h:1:0:790
+
+# Great Ice Wyrm on normal floor
+F:i:1:0:741
+
+# Sky Drake on normal floor
+F:j:1:0:793
+
+### Random Monsters and/or Items
+# Random monster (upto 5 levels ood) on normal floor
+F:&:1:0:*100
+
+# Random monster (upto 11 levels ood) on normal floor
+F:@:1:0:*106
+
+# Random monster (upto 9 levels ood) and
+# Random object (upto 7 levels ood) on normal floor
+F:8:1:0:*104:*102
+
+# Random monster (upto 40 levels ood) and
+# Random object (upto 20 levels ood
+F:9:1:0:*135:*115
+
+# Random monster (upto 3 levels ood)
+F:-:1:0:*98
+
+# Random object (upto 7 levels ood)
+F:=:1:0:0:*102
+
+### Guaranteed Items
+# The Multi-Hued Dragon Scale Mail 'Razorback' on normal floor
+F:1:1:0:0:0:0:16
+
+### Level Design
+D:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+D:X.....LLLLLLLLL.....XXX.G=-&&=-G^.........>X
+D:X.LLL...........LLLXX...G=-&.=-G^........1.X
+D:X.L9L.LLLLLLLLLLLLX%...EGE.=&.FG^..........X
+D:X.L99.L&..........X%....G..&-..G^....j.....X
+D:X.LLLLL&LLLLLLLLL.LXX...G=-=&-=G^..........X
+D:X....&&&L.......L.L*XXX.G-=&&-=G^^^^^^^^^^^X
+D:XLLLLLLLL.LLLLL..&L**XXXXXXXGGGG%XXXXXXXXXXX
+D:XXXXXXLL..L***LLLLLLLX^^^^8Xi....%@@^^.^^@@X
+D:X5..8X.&.XXXXXX......D^^^^8XIIIIIXbb^^.^^ccX
+D:X...8X...XA...X.LLLLLX^^^^8X.....X..^^.^^..X
+D:X...8X.XXXC...X.LL...XXXIXXX^^^^^X..^^.^^..X
+D:XGXXXX.LfX7...X&LL.L.Xa^^^aXf...fX..^^.^^..X
+D:X.X5XL.L*XB...X&&..L.X^b^b^X^^^^^X..^^.^^..X
+D:X.X^XL.L*XXXXXXLLLLL.X^^7^^X.....X..^^.^^..X
+D:X.X^XL.L***fXL.....&&X^b^b^XIIIIIX..^^.^^..X
+D:X.X^XL.LLLLLXL.LLLLLLXa^^^aXi....X..^^.^^..X
+D:X.X^XL.........XXXXXXXXX%XXXXXXXXX..^^.^^..X
+D:X.X^XXXXXXXXXXLX^...^Xe-^=dX^^..&X..^^.^^..X
+D:X.X^^^^^^^^^^XLX.^^^.X-^^^=X^^..&X..^^.^^..X
+D:X.XXXXXXXXXX^X8Xf^B^.%^^6^^%^^C.&X..^^.^^..X
+D:X.LLLLLLLLL+^XXX.^^^.X-^^^=X^^..&X..^^.^^..X
+D:X.XXXXXXXXXXXXXX^...^Xd-^=eX^^..&X..^^.^^..X
+D:X.Xbbbbb......XXXXXXXXXX%XXXXXXXXX..^^.^^..X
+D:X.XbbbbXXXX^^^^XX....X^^^^^X...h.X..^^.^^..X
+D:X.XbbbXX^^XXX^^^XX...X^ccc^X....0X..^^.^^..X
+D:X.XbbXX.^X%bXX^^^XX..X^.A.^X.....X..^^0^^..X
+D:X.IbXX..XXbbbXX^^^XX.X^ccc^XIXXXXXXXXXXXXXXX
+D:X.XXX..XX.....X%^^^XXX^^^^^XlllllllllllllllX
+D:X.X99.XXW......XX^^^XXXXXXXXlllllllllllllllX
+D:X.X99XXWWW...a..XX^^.XXllllllLLLLLlXXXX%XXXX
+D:X.XXXX..WWW.....cXX^.XXXXXlllllllllXVVVVVVVX
+D:X.X8.....WWW....ccX^.X^^^XLLLlLLLLLXVVVVVVVX
+D:X.X%XXXXXXXWW...cXXX.X+X^XlllllllllXV%%%%%VX
+D:X.X.......XWWW..X%^X.XLX^XlLLLLLLLLXV%8^8%VX
+D:X.XXXXXX%.X.WWWXX^^X.XLX^XlllllllllXV%^a^%VX
+D:X.X.IIIIX.X..WXX..XXcXLX^XLLLlLLLLlXV%^^^%VX
+D:X.X%XXXIX.X..XX..XXccXLX^XlglllLgllXV%^^^%VX
+D:X.Xa.6XIX.X.XX..XXcccXLX^XlllllXXXXXV%^a^%VX
+D:X+XXX.XIX.X.X99XXccccXLX^XXXXXXX888XV%8^8%VX
+D:X%%%Xa%.X.%8X99XcccccXLX^^^^^^4X...XV%%%%%VX
+D:X%.%XXXXXXXXXXXXIXXXXXLXXXXXXXXX...XVVVVVVVX
+D:X.%%+..........................G..4X...F...X
+D:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+### Starting Location
+P:43:4

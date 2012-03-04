@@ -1,0 +1,304 @@
+# File: font-win.prf
+
+#
+# This file is used by Angband (when it was compiled using "main-win.c")
+# to specify simple attr/char remappings using a standard font, allowing
+# the use of special pseudo-graphic pictures for walls and such.
+#
+# Note that this file is extremely similar to the file "font-ibm.prf",
+# but it uses different codes, since it uses the special pseudo-graphic
+# symbols defined in the "lib/xtra/font/*.FON" files, and there is only
+# one special wall type, so we have to use special "colors".
+#
+
+
+##### Feature attr/char definitions #####
+
+# open floor
+F:1:0x01/0x1F
+
+# web
+F:16:0x0B/0x7F
+
+# secret door
+F:48:0x01/0x7F
+
+# magma vein
+F:50:0x02/0x7F
+
+# quartz vein
+F:51:0x09/0x7F
+
+# magma vein
+F:52:0x02/0x7F
+
+# quartz vein
+F:53:0x09/0x7F
+
+# granite wall
+F:56:0x01/0x7F
+
+# granite wall
+F:57:0x01/0x7F
+
+# granite wall
+F:58:0x01/0x7F
+
+# granite wall
+F:59:0x01/0x7F
+
+# permanent wall
+F:60:0x01/0x7F
+
+# permanent wall
+F:61:0x01/0x7F
+
+# permanent wall
+F:62:0x01/0x7F
+
+# permanent wall
+F:63:0x01/0x7F
+
+# permanent wall
+F:75:0x01/0x7F
+
+# permanent wall
+F:76:0x01/0x7F
+
+# permanent wall
+F:77:0x01/0x7F
+
+# permanent wall
+F:78:0x01/0x7F
+
+# pool of deep lava
+F:85:0x0C/0x1F
+
+# stream of shallow lava
+F:86:0x04/0x1F
+
+# dark pit
+F:87:0x08/0x7F
+
+# dirt
+F:88:0x0F/0x1F
+
+# patch of grass
+F:89:0x0D/0x1F
+
+# ice
+F:90:0x09/0x1F
+
+# sand
+F:91:0x0B/0x1F
+
+# dead tree
+F:92:0x08/0x7F
+
+# ash
+F:93:0x02/0x1F
+
+# mud
+F:94:0x07/0x1F
+
+# ice wall
+F:95:0x09/0x7F
+
+# tree
+F:96:0x0D/0x7F
+
+# sandwall
+F:98:0x0B/0x7F
+
+# sandwall
+F:99:0x0B/0x7F
+
+# sandwall with treasure
+F:100:0x03/0x7F
+
+# nether mist
+F:102:0x0A/0x7F
+
+# glass wall
+F:103:0x0E/0x1F
+
+# Underground Tunnel
+F:173:0x02/0x7F
+
+# lava wall
+F:177:0x0C/0x7F
+
+# Great Fire
+F:178:0x0A/0x7F
+
+# field
+F:181:0x05/0x1F
+
+# glass wall
+F:188:0x0E/0x1F
+
+# illusion wall
+F:189:0x01/0x7F
+
+# Grass roof
+F:190:0x0B/0x7F
+
+# grass roof top
+F:191:0x0B/0x7F
+
+# grass roof chimney
+F:192:0x0B/0x7F
+
+# brick roof
+F:193:0x04/0x7F
+
+# brick roof top
+F:194:0x04/0x7F
+
+# brick roof chimney
+F:195:0x04/0x7F
+
+# rain barrel
+F:198:0x01/0x7F
+
+# cobblestone road
+F:200:0x01/0x1F
+
+# cobblestone with outlet
+F:201:0x01/0x1F
+
+# small tree
+F:202:0x05/0x7F
+
+# Underground Tunnel
+F:204:0x0F/0x7F
+
+# a blazing fire
+F:205:0x0B/0x7F
+
+# rocky ground
+F:207:0x02/0x1F
+
+# cloud-like vapour
+F:208:0x09/0x1F
+
+# dense mist
+F:210:0x01/0x7F
+
+# hail-stone wall
+F:211:0x09/0x7F
+
+# copper pillar
+F:244:0x07/0x7F
+
+# ethereal wall
+F:245:0x01/0x1F
+
+# glacial wall
+F:246:0x0E/0x7F
+
+# battlement
+F:247:0x01/0x7F
+
+# dark pit
+F:248:0x04:0x27
+
+##### Monster attr/char definitions #####
+
+# Space monster
+R:144:0x00/0x1F
+
+# Old Man Willow
+R:206:0x02/0x7F
+
+# Lurker
+R:247:0x01/0x1F
+
+# Tangleweed
+R:248:0x05/0x7F
+
+# Poison ivy
+R:266:0x05/0x7F
+
+# Giant Venus Flytrap
+R:317:0x05/0x7F
+
+# Stunwall
+R:326:0x09/0x7F
+
+# Huorn
+R:329:0x05/0x7F
+
+# Landmine
+R:333:0x01/0x1F
+
+# Livingstone
+R:336:0x09/0x7F
+
+# Vampiric mist
+R:365:0x08/0x7F
+
+# It
+R:393:0x09/0x1F
+
+# Xiclotlan
+R:396:0x08/0x7F
+
+# Roper
+R:426:0x08/0x7F
+
+# Lesser wall monster
+R:448:0x09/0x7F
+
+# Chaos tile
+R:458:0x0A/0x1F
+
+# Mist giant
+R:552:0x0E/0x7F
+
+# Trapper
+R:565:0x01/0x1F
+
+# Time bomb
+R:567:0x01/0x1F
+
+# Weird fume
+R:625:0x0A/0x7F
+
+# Colour out of space
+R:678:0x0A/0x1F
+
+# Ent
+R:708:0x0D/0x7F
+
+# Quickbeam, the Ent
+R:714:0x0D/0x7F
+
+# Greater wall monster
+R:718:0x09/0x7F
+
+# Ahtu, Avatar of Nyarlathotep
+R:761:0x08/0x7F
+
+# Null, the Living Void
+R:803:0x00/0x1F
+
+# Rocket mine
+R:870:0x0C/0x1F
+
+# Bouncing mine
+R:871:0x0E/0x1F
+
+# Fangorn the Treebeard, Lord of the Ents
+R:934:0x0D/0x7F
+
+# The Glass Golem
+R:1033:0x09/0x7F
+
+# Golgarach, the Living Rock
+R:1035:0x09/0x7F
+
+# Spirit
+R:1053:0x09/0x1F
+
+

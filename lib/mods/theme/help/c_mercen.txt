@@ -1,0 +1,49 @@
+~~~~~01|Mercenary
+~~~~~02|Classes|Mercenary
+#####R=== Mercenaries ===
+
+#####GDescription
+Mercenaries are daring swashbucklers, masters of the blade. They
+do not have the magical abilities Rogues have, but they are just
+as stealthy and much deadlier with a light sword. They do gain
+some magical mastery over time, but only in the Temporal school.
+
+#####GStarting Stat Modifiers
+Strength       +2
+Intelligence   +1
+Wisdom         -2
+Dexterity      +3
+Constitution   +1
+Charisma       -1
+Bonus Blows    0
+Hit Die        +d6
+Exp Penalty    25%
+
+#####GStarting Skills:
+#####BSkill                   Start Level     Skill Point Gains
+Combat                  1.000           [0.700]                                                     
+  Weaponmastery         1.000           [0.900]                                                     
+    Sword-mastery       1.000           [0.700]                                                     
+      Critical-hits     1.000           [0.700]                                                     
+Sneakiness              1.000           [2.000]                                                     
+  Stealth               1.000           [1.500]                                                     
+  Disarming             1.000           [2.000]                                                     
+  Backstab              1.000           [1.000]                                                     
+  Stealing              1.000           [2.000]                                                     
+  Dodging               1.000           [2.000]                                                     
+Magic                   1.000           [0.700]                                                     
+  Magic-Device          1.000           [1.550]                                                     
+  Temporal              0.000           [1.000]                                                     
+Spirituality            1.000           [0.700]                                                     
+  Prayer                0.000           [0.500]                                                     
+Monster-lore            0.000           [0.500]                                                     
+
+#####GStarting Equipment
+A mercenary begins the game with:
+    a rapier
+    a cloak
+
+#####GInnate Abilities:
+#####BAbility              Character level
+Extra-Max-Blow(1)           10
+Extra-Max-Blow(1)           15

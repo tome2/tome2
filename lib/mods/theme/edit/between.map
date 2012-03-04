@@ -1,0 +1,71 @@
+# Created by Mynstral (mynstral@thehelm.com)
+# Made for PernAngband on 14/08/2001
+
+# Monsters starts awake
+N:0
+
+# Permanent wall
+F:X:63:3
+
+# Floor with dirt
+F:.:88:3
+
+# Floor with grass
+F:,:89:3
+
+# Tree
+F:T:96:3
+
+# Floor with grass with a green thunderlord
+F:G:89:5:955
+
+# Floor with grass with a blue thunderlord
+F:L:89:5:956
+
+# Floor with grass with a brown thunderlord
+F:B:89:5:957:0:0:0:0:0:0:2
+
+# Floor with grass with a bronze thunderlord
+F:z:89:5:958:0:0:0:0:0:0:2
+
+# Floor with dirt with a bronze thunderlord
+F:Z:88:5:958:0:0:0:0:0:0:2
+
+# Floor with grass with a gold thunderlord
+F:D:88:5:959:0:0:0:0:0:0:2
+
+D:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+D:X..T.TT..T...T...T...T.....T....T......T...T.,,.....T......T....T...T.T..T..TT...T..T.TT.T.TT.TX
+D:X.T.TTTTT...T..TT..T..T.T.T.T...T.....T..T.TT,,..T...T.....T..T......T..T.T..T.T.TT.T.T.T..TTT.X
+D:XTTT.T.T.T.T..TTT.T.T.TTT.T.T.T..T..T.T..T..T.,,..T....T....T..T.T.T..T.T..T.T.TT.T.TT.TT.TTT.TX
+D:XTTT.T...T....T....T..T.TT..T.T.T...T...GG....,,...GG....T...T...T.TTT.T..TTTT.TT...T.TT..T.T.TX
+D:X.TTT..T.T..TTTT.T.T..T..T.TT...T......G..L..,,...L..G..T..T.T...T....T.TTTTTT..TTTTT.T..TT..T.X
+D:XTT.T.TTT.T.T.T.T.T.T.T...T..T...T..T.G..L..B,,.B..L..G....T..T...TT.T.T..TTT.T.TTTT.TTTT..T.T.X
+D:X.T.TT..T.TT.TTT.T.T.T.T.T.T...T.T.T.G..L..B.,,..B..L..G..T..T...T...T.T.T..TTTT.T.T.TT.T.T.TT.X
+D:X.TT.T.TTT.T.T.T.T..T.T..T....T..T..G..L..B..,Z...B..L..G..T...T.T..T...T...T.T.T.TTT.T.T.T..T.X
+D:XT.T.TT.TTTT.TT.T.TTT...T.T.T...T.T.G..L..B..ZDz..B..L..G...T.T...T.T...T..T..T...T..T.TT.T.T.TX
+D:XTTT..TTTT.T.T.T..T.T....T...T..T.T..G..L..B.,,..B..L..G..T....T...T....T....T..T..TT.T.T.TTT..X
+D:XTT.TT..T.T.T.T.T...T...T....T.T..T.T.G..L...,,....L..G..T..T...T..T.......T...T....T..T..TT...X
+D:XTTT.T..T.T..T.T..T...T..T....TT..T.T..GG....,,.....GG...T.T...T.T...T..T.T...T....T...T..T.T..X
+D:XTT...T.T..T....T....T....T....T...T....T.T..,,,.....T...T..T...T.....T...T...T..T..T...T..T.T.X
+D:XT..T.T...T...T...T.....T....T....T....T...TTTTTTTT...T...T...T....T.....T......T....T.....T..TX
+D:XT.T...T...T..T.T...T.T.T..T...T.T...T...T.T...,.T...T...T...T...T..T.....T....T....T...T...T.TX
+D:XTT.T.T.T.T..T..T.T.T.....T....T..T...T.......,,..T........T...T...T...T...T.....T..T..T...TTT.X
+D:X..TT...T..T.....T...T....T...T...T...T..T...,,.....T..T..T.....T.T...T...T...T..T..T.T...T.TT.X
+D:X.TT..T....T.T..T...T..T...T..T.T.T..T..T.T.,,..T..T..T....T..T..T...T.T....T....T...TT.TTTTTT.X
+D:X.T.TTTTTT.T.T.T...T..T..T.....T.T..T...T.T.,,...T...T......T.....T....T...T..T....T..TT.TTTTTTX
+D:XTTT.T.T.TTTTT.TTT...T..T...TT.T.T...T.T....,,.T...T.....T.....T....T.......T..T...T.TT.T.T.TT.X
+D:XTT.T..T.TT.T.T.TT.T...T.T..T.T.......T..T.,,.....T....T....T...........T..T...TT.TTTTTTTTTTTTTX
+D:XTTTT....TT.T.T.TTTTT.T...T..T.T..T......T.,,T......T....T....T.....T...T...T..TTTT.T.TT.T.TTTTX
+D:XTT.TTTTTT.T.TT.TTTTTT...T....TT.T...T....,,.T...T....T.....T....T....T....T..TT.T.TTT.T.T.T.TTX
+D:XTT.T..TTT.T.T.TTTTTTTT.T...T....T....T.T,,.........T....T....T....T...T.T.T.TTT.T.T.T.T..T.T.TX
+D:XTT.T..TTT..T.T.T.T.TT..T.T.T......T.T.T.,,..T...T...T...T..T...T...T.T.TTT.T.T.T.T.T.T.T.T..T.X
+D:X.T.T.T.T.T.T..T.T.T.T.T.T..T...T..T.TT.T.,,..T...T.....T.....T.....T..TTT.T.T.TTTTT.T.TTT.TT.TX
+D:XTT.T.T.T.TTTT.T..T.T.T.TTTT.T..T.T..T.TT.,,.T...T..T..T.......T.T....TTTTT.TTTT.T.TTT.TTTT.T.TX
+D:XT.T.TT.TTTT.T.T.T.TTT.T.T.TT......T...T...,,..T...T...T....T....T.TTT.T.T.T.T.T.T..T.T.T.T.TT.X
+D:XT.TTT.T.T.TTTT.T.T.T.T.TTT.TT..T...T...T..,,..T...T....T....T..TT.T.TT.TTTTT.T.T.TT.TT.TT.T.T.T
+D:XTT.T.T.TT.T.TTTT.T..TT.T.T.TT.T.T.T..T....,,.T...T...T....T..TTTTTTTT.T.T.T.T.T.TT.T.TTTTT.T.TX
+D:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+# Starting position
+P:17:47

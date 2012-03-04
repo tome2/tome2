@@ -1,0 +1,63 @@
+			 ------------------------- 
+			| Artifact Lore Vol. XIII |
+			|    Amulets and Rings    |
+			 ------------------------- 
+
+The Amulet of Carlammas
+    A fiery circle of bronze, with mighty spells to ward off evil.
+    It is one of two items infused with holy fire.
+
+The Amulet of Ingwe
+    The ancient heirloom of Ingwe, high lord of the Vanyar, against whom
+    nothing of evil could stand.
+
+The Necklace 'Nauglamir'
+    A carencet of gold, set with a multitude of shining gems of Valinor. 
+    Despite its size, its weight seems as that of gossamer.
+
+The Blue Stone 'Coimir'
+    Called 'Life-jewel' by the Vanyar of old, this flawless sapphire pendant
+    bears potent runes that preserve body and soul.
+
+The Elfstone 'Elessar' 
+    This green gem glows with inner light.  Aragorn son of Arathorn wore it at
+    the Battle of the Pelennor Fields, and he was himself given the name of
+    'Elessar' by the people of Gondor because of this.
+
+The Jewel 'Evenstar'
+    A pure white jewel, the last gift of Queen Arwen Undomiel to Frodo
+    Baggins, intended to be worn around his neck on the chain that had once
+    borne the One Ring.
+
+The Necklace of Girion 
+    A necklace of emeralds, green as the grass. It once belonged to Girion,
+    King of Dale, and was given to the Dwarves of the Lonely Mountain as
+    payment for a mithril mail shirt for Girion's son. It seems to have
+    overgrown with a strange moss over the years.
+
+The Amulet of Faramir
+    A slim neckpiece of True-silver, with quiet spells of Ithilien to aid and
+    protect the wearer.
+
+The Ring of Barahir
+    A ring shaped into twinned serpents with eyes of emerald meeting beneath a
+    crown of flowers, an ancient treasure of Isildur's house.
+
+The Ring of Power 'Narya'
+    The Ring of Fire, set with a ruby that glows like flame.  Narya is one of
+    the three Rings of Power created by the Elves and hidden by them from
+    Sauron.
+
+The Ring of Power 'Nenya'
+    The Ring of Adamant, with a pure white stone as centrepiece.  Nenya is one
+    of the three Rings of Power created by the Elves and hidden by them from
+    Sauron.
+
+The Ring of Power 'Vilya'
+    The Ring of Sapphire, with clear blue gems that shine like stars,
+    glittering untouchable despite all that Sauron ever wrought.  Vilya is one
+    of the three Rings of Power created by the Elves and hidden by them from
+    Sauron.
+
+Rumour speaks of other rings of Power, too, as well as of a single ring
+whose name is foul and history treacherous.

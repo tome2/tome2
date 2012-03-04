@@ -1,0 +1,75 @@
+# File: t_d_lori.txt
+
+# Caras Galadhon map and destruction by furiosity <furiosity@zionmainframe.net>
+
+# NB! This file assumes usage of the following files from the 'theme' module:
+# f_info.txt and t_pref.txt
+# Please download the module and refer to the files for the terrain feature definitions http://modules.t-o-m-e.net/
+# Don't forget to modify the maximum number of terrain features, etc. in misc.txt as well.
+
+D:######################################################################################################################################################################################################
+D:#                                                                                                ,,,                                                                                                 #
+D:#                                                                                      ,,,,,,,,,,,,,,,,,,,,,,,,,                                                                                     #
+D:#                                                                                ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,                                                                                #
+D:#                                                                            ,,,,,,,,,,,CCCCCCCCCCCCCCCCCCCCCC,,,,,,,,,,,,                                                                           #
+D:#                                                                        ,,,,,,,,,CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC,,,,,,,,                                                                        #
+D:#                                                                     ,,,,,,,CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC,,,,,,,y                                                                    #
+D:#                                                                   ,,,,,,CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC,,,,,,                                                                  #
+D:#                                                                 ,,,,,CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC,,,,,,                                                                #
+D:#                                                               ,,,,,CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC,,,,,                                                              #
+D:#                                                             ,,,,CCCCCCCCCCCCCCCCCCCCCCCCDDDDDDDD,DDDDDDDDDDCCCCCCCCCCCCCCCCCCCCCCC,,,,,                                                            #
+D:#                                                           ,,,,CCCCCCCCCCCCCCCCCCCCCDDDDD      D,@,D        DDDDDCCCCCCCCCCCCCCCCCCCC,,,,                                                           #
+D:#                                                         ,,,,,CCCCCCCCCCCCCCCCCCCDDD            D,D              DDDCCCCCCCCCCCCCCCCCCC,,,,                                                         #
+D:#                                                        ,,,,CCCCCCCCCCCCCCCCCCDDD              D,,,D                DDDCCCCCCCCCCCCCCCCCC,,,,                                                       #
+D:#                                                      ,,,,CCCCCCCCCCCCCCCCCDDD           DDDDDDD,,,DDDDDDDDD           DDDCCCCCCCCCCCCCCCC,,,,                                                      #
+D:#                                                     ,,,,CCCCCCCCCCCCCCCCDDD          DDD,,,,,,,,,,,,,,,,,,,DDD        D,DDCCCCCCCCCCCCCCCCC,,,                                                     #
+D:#                                                    ,,,,CCCCCCCCCCCCCCCCD=         DDD,,,,,,,,,,,,,,,,,,,,,,,,,DD     D,=,DDCCCCCCCCCCCCCCCC,,,                                                     #
+D:#                                                   ,,,CCCCCCCCCCCCCCCCDD,D       DD,,,,DDDDDDDDD,,,DDDD,DDDDD,,,,D   D,,,D   DDCCCCCCCCCCCCCCC,,,                                                   #
+D:#                                                  ,,,CCCCCCCCCCCCCCCCDD,=,D     D,,,DDD        D,,,D  ,=,    DD,,,D D,,DD     DDCCCCCCCCCCCCCCC,,,                                                  #
+D:#                                                 ,,,,CCCCCCCCCCCCCCDD  D,,,D   D,,D            D,,,D   ,       DD,,D,,D         DCCCCCCCCCCCCCCC,,,                                                 #
+D:#                                                ,,,,CCCCCCCCCCCCCCDD    DD,,D D,,D             D,,,D             D,,,D           DCCCCCCCCCCCCCCC,,,                                                #
+D:#                                                ,,,CCCCCCCCCCCCCCDD       D,,D,,D              D,,,D            DD,,,D            DCCCCCCCCCCCCCCC,,,                                               #
+D:#                                               ,,,CCCCCCCCCCCCCCCD         D,,,D             DD,,,,,DD         D,,D,,D             DCCCCCCCCCCCCCC,,,                                               #
+D:#                                              ,,,CCCCCCCCCCCCCCCD          D,,,DDD          D,,D,,,D,,D      DD,,D D,,D             DCCCCCCCCCCCCCC,,,                                              #
+D:#                                             ,,,,CCCCCCCCCCCCCCD          D,,=,,,,DD       D,,DD,,,DD,,D    D,,,D   D,,D             DCCCCCCCCCCCCCC,,,                                             #
+D:#                                             ,,,CCCCCCCCCCCCCCDD         D,,D,DDD,,,D     D,,D D,,,D D,,D DD,,DD     D,,D             DCCCCCCCCCCCCCC,,                                             #
+D:#                                             ,,,CCCCCCCCCCCCCCD         D,,D     DD,,DD  D,,D  D,,,D  D,,D,,,D        ,,,D            DCCCCCCCCCCCCCC,,                                             #
+D:#                                             ,,,CCCCCCCCCCCCCDD        D,,D        D,,,DD,,D   D,,,D   DD,,D         ,=,,,D           DCCCCCCCCCCCCCC,,,                                            #
+D:#                                            ,,,CCCCCCCCCCCCCCD        D,,D          DD,,,,DD   DD,DD  DD,,,,D         , D,,D           DCCCCCCCCCCCCC,,,                                            #
+D:#                                            ,,,CCCCCCCCCCCCCCD       D,,D             D,,,,,DDD-----DD,,,DD,,D           D,,D          DCCCCCCCCCCCCCC,,,                                           #
+D:#                                            ,,CCCCCCCCCCCCCCDD      D,,D             D,,DD,,,DD-----DD,DD  D,,D           D,,D         DCCCCCCCCCCCCCC,,,                                           #
+D:#                                            ,,CCCCCCCCCCCCCCDDD     D,,D            D,,D  D,,---@@@---DD    D,,D          D,,D         DCCCCCCCCCCCCCC,,,                                           #
+D:#                                            ,,CCCCCCCCCCCCCCDD,DDDDDD,,DDDDDDDDDDDDD,,DDDDDDD--@@%@@--DDDDDDDD,,DDDDDDDDDDD,,DDDDDDDD,DDCCCCCCCCCCCCCC,,,                                           #
+D:#                                            ,,CCCCCCCCCCCCCCD,=,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,--@%=%@--,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,=,DCCCCCCCCCCCCCC,,,                                           #
+D:#                                            ,,CCCCCCCCCCCCCCDD,DDDDDD,,DDDDDDDDDDDDD,,DDDDDDD---@%@@@-DDD    D,,DDDDDDDDDDD,,DDDDDDDD,DDCCCCCCCCCCCCCC,,,                                           #
+D:#                                            ,,CCCCCCCCCCCCCCDDD     D,,D            D,,D   DD,-----%%@,,,DD  D,,D         D,,D         DCCCCCCCCCCCCCC,,,                                           #
+D:#                                            ,,,CCCCCCCCCCCCCCD      D,,,             D,,D D,DDD--,-@%%@D,,,DD,,D          D,,D         DCCCCCCCCCCCCCC,,                                            #
+D:#                                            ,,,CCCCCCCCCCCCCCD      D,,=,             D,,D,,D DD,=,D@%%@DD,,,DD           ,,,D         DCCCCCCCCCCCCCC,,                                            #
+D:#                                            ,,,CCCCCCCCCCCCCCD       D,,D              D,,,D   DD,DD@%%%@ D,,,,DD        ,=,,D        DDCCCCCCCCCCCCC,,,                                            #
+D:#                                            ,,,CCCCCCCCCCCCCCCD       D,,D           DD,,,DD   D,,,D @@%%@@DDD,,,DD       ,,D         DCCCCCCCCCCCCCC,,,                                            #
+D:#                                             ,,,CCCCCCCCCCCCCCD        D,,D        DD,,,DD,,D  D,,,D   @%%%@  DD,,,DD   D,,D         DDCCCCCCCCCCCCC,,,                                             #
+D:#                                             ,,,CCCCCCCCCCCCCCCD        D,,D      D,,,DD  D,,D D,,,D  D,@%%@    DD,,,D D,,D          DCCCCCCCCCCCCCC,,,                                             #
+D:#                                              ,,,CCCCCCCCCCCCCCDD        D,,D  DDD,,DD     D,,DD,,,D D,,D@%%@     DD,,D,,D          DCCCCCCCCCCCCCCC,,                                              #
+D:#                                              ,,,CCCCCCCCCCCCCCCD         D,,DD,,,,D        D,,D,,,DD,,D @%%%@      DD,,DD         DDCCCCCCCCCCCCCC,,,                                              #
+D:#                                               ,,,CCCCCCCCCCCCCCCDD        D,,,,,DD          D,,,,,,,,D    @%%@@    D,,D,,DD      DDCCCCCCCCCCCCCCC,,                                               #
+D:#                                                ,,,CCCCCCCCCCCCCCCD        D,,,DD             DD,,,=,D      @%%%@  D,,D DD,,D    DDCCCCCCCCCCCCCCC,,,                                               #
+D:#                                                ,,,CCCCCCCCCCCCCCCCD     DD,,D,,D              D,,,,D      D,@%%@ D,,D    DD,,  DDCCCCCCCCCCCCCCC,,,                                                #
+D:#                                                 ,,,CCCCCCCCCCCCCCCCDD  D,,,D D,,D   ,         D,,,D      D,,D@%%@,,D       ,=,DDCCCCCCCCCCCCCCC,,,                                                 #
+D:#                                                  ,,,CCCCCCCCCCCCCCCCDDD,=,D   D,,DD,=,DDDDDDDDD,,,DDDDDDD,,,,@%%%@D         ,DCCCCCCCCCCCCCCCC,,,                                                  #
+D:#                                                   ,,,CCCCCCCCCCCCCCCCCDD,D     D,,,,,,,,,,,,,,,,,,,,,,,,,,DDD%@@%%@        DDCCCCCCCCCCCCCCCC,,,                                                   #
+D:#                                                    ,,,,CCCCCCCCCCCCCCCCCDD      DDD,,,,,,,,,,,,,,,,,,,,,,D @%%%@@%%@@    DDCCCCCCCCCCCCCCCCC,,,                                                    #
+D:#                                                  $$=,,,,CCCCCCCCCCCCCCCCCDDD       DDDDDDDDD,DD,,,DDDDDDD @%%=%%@@%%%@ DDCCCCCCCCCCCCCCCCCC,,,                                                     #
+D:#                                                  $##  ,,,CCCCCCCCCCCCCCCCCCDDD             ,=,D,,,D        @%%%@  @%%@DCCCCCCCCCCCCCCCCCC,,,,                                                      #
+D:#                                                        ,,,,CCCCCCCCCCCCCCCCCCCDDD           , D,,,DDDDD      @@  DD@%%@CCCCCCCCCCCCCCCCC,,,                                                        #
+D:#                                                         ,,,,CCCCCCCCCCCCCCCCCCCCCDDDD         D,,,,,,,,D     DDDDDC@%%%@CCCCCCCCCCCCCC,,,,                                                         #
+D:#                                                           ,,,,CCCCCCCCCCCCCCCCCCCCCCCDDDDDDD  D,,,,,,,,DDDDDDDCCCCCC@@%%@@CCCCCCCCCC,,,,                                                           #
+D:#                                                             ,,,,CCCCCCCCCCCCCCCCCCCCCCCCCCCCDDDDDDDD,,,CCCCCCCCCCCCCCC@%%%@CCCCCCC,,,,,                                                            #
+D:#                                                               ,,,,CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC,,,CCCCCCCCCCCCCCCCC@%%@CCCCC,,,,,                                                              #
+D:#                                                                 ,,,,,CCCCCCCCCCCCCCCCCCCCCCCCCCCCC,,,CCCCCCCCCCCCCCCCCCC@%%@CC,,,,,                                                                #
+D:#                                                                   ,,,,,,CCCCCCCCCCCCCCCCCCCCCCCCC,,,CCCCCCCCCCCCCCCCCCCC@%%%@,,,                                                                   #
+D:#                                                                      ,,,,,,CCCCCCCCCCCCCCCCCCCCC,,,CCCCCCCCCCCCCCCCCCCC,,@@%%@@                                                                    #
+D:#                                                                         ,,,,,,,CCCCCCCCCCCCCCCCC,,,CCCCCCCCCCCCCCCC,,,,,,,,@%%%@                                                                   #
+D:#                                                                            ,,,,,,,,,,CCCCCCCCCCC,,,CCCCCCCCCCC,,,,,,,,,     @%%@                                                                   #
+D:#                                                                                ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,         @%%%@                                                                  #
+D:#                                                                                       ,,,,,,,,,,,,,,,,,,,,,,,                @@%%%@                                                                #
+D:######################################################################################################################################################################################################

@@ -1,0 +1,47 @@
+		 ------------------------
+		| Monstrous Compendium 9 |
+		|    Undead Creatures    |
+	 	 ------------------------
+
+                *** Mewlips (i) ***
+
+Mewlips are evil cannibal spirits from the marshlands.
+They come in different varieties: [[[[[wclear], [[[[[sgray], [[[[[oorange],
+[[[[[rbloodshot], [[[[[ggreen], [[[[[bblue], [[[[[ubrown], [[[[[Wstone], [[[[[yyellow], [[[[[Rpink],
+[[[[[Gtree], [[[[[Bair], [[[[[Uplague], and [[[[[Ddeath].
+
+
+                 *** Golems (g) ***
+
+Massive animated statues made from different materials.
+There are [[[[[obronze], [[[[[wbone], [[[[[ueog], [[[[[Bmithril], [[[[[siron], [[[[[baquatic],
+[[[[[Wstone], [[[[[Uclay], [[[[[Rflesh], and [[[[[ffire golems], in addition to the
+more cunning [[[[[ycolbrans], [[[[[DPukelmen], [[[[[gdrolems], [[[[[Gcolossus], and
+[[[[[ssilent watchers].
+
+               *** Skeletons (s) ***
+
+There are skeletal forms of just about any monster that once
+inhabited Middle-earth. Some such forms, however, have never
+been alive in the first place - they are horrible abominations
+animated by powerful wizards. Among them are the [[[[[wice skeletons],
+[[[[[sflying skulls], [[[[[Dcrypt creeps], [[[[[yhand druj], [[[[[oskull druj], and 
+[[[[[reye druj].
+
+                *** Zombies (z) ***
+
+Zombie forms of all living creatures may appear in the dungeons.
+However, some zombie-like undead from before the First Age do
+exist: [[[[[Ughouls], [[[[[ygreater mummies], [[[[[Dghoulkings], [[[[[ughasts], and
+[[[[[Rrotting corpses].
+
+                *** Vampires (V) ***
+
+There are vampire forms of just about any race - [[[[[Whuman], [[[[[Gelf], [[[[[Dorc],
+[[[[[wyeek], [[[[[oogre], [[[[[utroll], [[[[[Rdwarf], and [[[[[Bgnome]. The [[[[[sOriental vampires]
+come from beyond the land of Rhun. There are [[[[[bVampire lords], [[[[[rElder]
+[[[[[rvampires], and [[[[[gMaster vampires]. The [[[[[UAdventurer vampires] are those
+who have denounced the way of the Dark and attempt to follow a path
+of Light as best they can.
+
+

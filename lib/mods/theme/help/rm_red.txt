@@ -1,0 +1,30 @@
+~~~~~01|Red
+~~~~~02|Race Modifiers|Red
+#####R=== Red Dragons ===
+
+#####GDescription
+These dragons are utterly in command of the element of fire.
+Not only are they surrounded by a fiery blaze, but they learn
+to withstand the effects of fire entirely as they become more
+experienced. They are also able to draw upon their master 
+element to become even stronger as they mature. They can 
+breathe fire and they have access to the Fire school of magic.
+
+#####GStat Modifiers
+Strength      +3   
+Intelligence   0   
+Wisdom         0    
+Dexterity      0   
+Constitution   0   
+Charisma       0      
+Hit Dice      +0 sides        
+Exp Penalty   +0%
+
+#####GSkill Bonuses (supplementary to existing skills)
+Fire            1.000           [0.600]
+
+#####GStarting Equipment
+A Red dragon character begins the game with:
+    Some rations
+    Some torches
+    A spellbook of Globe of Light

@@ -1,0 +1,54 @@
+|||||oy
+~~~~~01|Gods|Varda
+~~~~~02|Varda
+#####R === Varda Elentari ===
+
+Varda Elentari is the greatest Queen of the Valar. Her most faithful followers 
+are those of the class *****c_pr_varda.txt*0[Priest(Varda)].
+
+#####GThe benefits of worshipping Varda Elentari
+1. She grants her followers permanent light of radius 1.
+2. As you increase your piety, Varda will grant you resistance to light 
+   while praying.
+3. Your piety will increase while you are in lit areas.
+4. Varda loves when you use spells involving light.
+   
+#####GThe disadvantages of worshipping Varda Elentari
+1. Your piety will decrease while you are in dark places.
+2. Varda dislikes evil races (Orcs, Trolls, Dragons, and Demons).
+3. Your piety will slowly decrease while praying.
+4. She will completely abandon you if you wear The One Ring.
+~~~~~~03|Varda|Prayers
+#####GVarda Elentari's Magic
+Worshipping Varda Elentari gives the adventurer access to a set of special
+spells that come directly from the hands of Varda. These spells use your piety
+to cast rather than your spellpoints, and the level of spells that Varda will 
+permit you to use is determined by your Prayer skill - how skillful you are
+in asking for her help without offending her! 
+
+There is a special book - called the "Shining Tome of Varda" which 
+contains instructions for the procedure for each of the prayers Varda will 
+grant. There are four prayers all told, which are:
+1. [[[[[BLight of Valinor] (Level 1)
+   Lights up a room.
+   At spell level 3 it starts damaging monsters.
+   At spell level 15 it starts creating a more powerful kind of light.
+2. [[[[[BCall of Almaren] (Level 10)
+   Banishes evil beings.
+   At spell level 20 it dispels evil beings.
+3. [[[[[BEvenstar] (Level 30)
+   Maps and lights the whole level.
+   At spell level 40 it maps and lights the whole level, in addition to 
+   letting you know yourself better and identifying your whole pack.
+4. [[[[[BStar Kindler] (Level 35)
+   Does multiple bursts of light damage. The power increases with level.
+   
+Each of these spells can be increased in level both by improving your Prayer
+skill, and by improving your Spell-power skill.
+
+In addition to her specific magic, Varda will also assist with your ability to
+use some magic from the "standard" schools, in relation to how skilled you 
+are at Prayer. These schools are as follows:
+    *****m_mana.txt*0[Mana School] at 1/4 the Prayer skill level.
+    *****m_meta.txt*0[Meta School] at 1/3 the Prayer skill level.
+The spells from these schools are all cast using your normal spellpoints.

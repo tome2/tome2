@@ -1,0 +1,33 @@
+~~~~~01|Dragons
+~~~~~02|Races|Dragons
+#####R=== Dragons ===
+
+#####GDescription
+Dragons are majestic creatures of power traditionally aligned with
+the forces of evil. However, some may choose to become adventurers.
+They may not wield any weapons, bows, or play musical instruments.
+However, they are able to fly from birth, and gain resistances to
+some of the elements (depending on their subrace). Dragons have to 
+choose a subrace specific to their race. Dragons make very good
+Mages, but they cannot become Geomancers, because they are unable
+to wield mage staves. As winged beings, Dragons may not wear cloaks.
+
+#####GStat Modifiers
+Strength        +3   
+Intelligence    +2   
+Wisdom          +2   
+Dexterity       -2   
+Constitution    +2   
+Charisma        -5       
+Hit Dice Sides  9         
+Exp Penalty     +150%
+
+#####GRacial Skills
+Combat                      0.000           [0.000]
+  Barehand-combat           0.000           [0.400]
+Sneakiness                  0.000           [0.000]
+  Stealth                 -10.000           [0.000]
+  Disarming                 1.000           [0.000]
+Magic                       0.000           [0.000]
+  Magic-Device              0.500           [0.000]
+Spirituality               -4.000           [0.000]

@@ -1,0 +1,30 @@
+~~~~~01|Sarnrog
+~~~~~02|Race Modifiers|Sarnrog
+#####R=== Sarnroeg (Stone Demons ===
+
+#####GDescription
+Medium-sized winged humanoids that look like they are 
+made of stone - they are Druedain that have been corrupted
+by Melkor. Though clumsy and dumb, they are strong and stout.
+They learn to resist the basic elements quite well, and they
+can sustain themselves by eating stones and rocks. They have
+the ability to throw boulders at their enemies, and are good
+at digging tunnels.
+
+#####GStat Modifiers
+Strength       +2  
+Intelligence   -1  
+Wisdom         -2   
+Dexterity      -2  
+Constitution   +2  
+Charisma       -1     
+Hit Dice       +2 sides        
+Exp Penalty    +20%
+
+#####GSkill Bonuses (supplementary to existing skills)
+Boulder-throwing            1.000           [0.500]
+
+#####GStarting Equipment
+A Sarnrog character begins the game with:
+    Some rations
+    Some torches

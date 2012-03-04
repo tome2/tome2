@@ -1,0 +1,29 @@
+#####R=== Merchants ===
+
+#####GDescription
+A Merchant is neither a warrior nor a spellcaster. They still have some great
+advantages, they can use chests to warp items into other items, they can
+indentify items, they soon learn to detect all objects in the area, and
+at higher level they can see all monsters carrying objects. They will also
+get the power to appraise items and to turn them into gold. A merchant will
+naturraly get better prices in shops and get access to the merchant guild
+services, loan and item request.
+
+#####GPrimary Stats
+Charisma
+Intelligence (Ability stat)
+
+#####GMagic Usage
+Merchants can use portable holes to carry more stuff than other classes but
+at the cost of an increased weight. To do that they must wear a portable hole
+and use it with 'm'.
+They also can use their merchants abilities and midas touch in the 'U' menu.
+
+#####GStarting Equipment
+A merchant begins the game with:
+    A portable hole
+    A small steel chest containing gold and items
+    A long sword
+    A wand of tame monsters
+
+

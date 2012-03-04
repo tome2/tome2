@@ -1,0 +1,91 @@
+# File: misc.txt
+
+# Maximum number of towns
+M:T:100
+
+# Maximum number of non random towns(must be < 20)
+M:t:17
+
+# Maximum x size of the wilderness
+M:X:101
+
+# Maximum y size of the wilderness
+M:Y:66
+
+# Maximum number of randart parts in ra_info.txt
+M:Z:519
+
+# Maximum number of monsters in r_info.txt
+# WARNING ! add one more to the real count for the player ghost !!
+M:R:1081
+
+# Maximum number of monsters in re_info.txt
+# WARNING ! Use the exact amount of ego types used, if not you
+# will get weird results !
+M:r:14
+
+# Maximum number of items in k_info.txt
+M:K:886
+
+# Maximum number of vaults in v_info.txt
+M:V:108
+
+# Maximum number of terrain features in f_info.txt
+M:F:249
+
+# Maximum number of alchemist recipes
+M:a:1000
+
+# Maximum number of artifacts in a_info.txt
+M:A:257
+
+# Maximum number of sets types in set_info.txt
+M:s:17
+
+# Maximum number of ego-items in e_info.txt
+M:E:238
+
+# Maximum number of dungeon types in d_info.txt
+M:D:41
+
+# Maximum number of trap types in tr_info.txt
+M:U:176
+
+# Maximum number of terrain types in wf_info.txt
+M:W:64
+
+# Maximum number of owners types in ow_info.txt
+M:N:215
+
+# Maximum number of building actions in ba_info.txt
+M:B:70
+
+# Maximum number of store types in st_info.txt
+M:S:89
+
+# Maximum size for "o_list[]"
+M:O:1024
+
+# Maximum size for "m_list[]"
+M:M:768
+
+# Maximum number of race types in p_info.txt
+M:P:R:24
+
+# Maximum number of subrace types in p_info.txt
+M:P:S:26
+
+# Maximum number of class types in p_info.txt
+M:P:C:50
+
+# Maximum number of meta class types in p_info.txt
+M:P:M:1
+
+# Maximum number of histories types in p_info.txt
+M:P:H:294
+
+# Maximum number of skills in s_info.txt
+M:k:60
+
+# Maximum number of traits in ab_info.txt
+M:b:50

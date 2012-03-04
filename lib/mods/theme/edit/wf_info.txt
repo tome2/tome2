@@ -1,0 +1,394 @@
+# File: wf_info.txt
+
+
+# This file is used to initialize the "lib/raw/wf_info.raw" file, which is
+# used to initialize the "wilderness feats" information for the Angband game.
+
+# Do not modify this file unless you know exactly what you are doing,
+# unless you wish to risk possible system crashes and broken savefiles.
+
+# After modifying this file, delete the "lib/raw/wf_info.raw" file.
+
+# The wilderness feat indexes are defined in "defines.h", and must not be
+# changed.
+
+# N:<index>:<name>
+# D:<long name>
+# W:<level>:<entrance>:<road>:<feat>:<terrain_idx>:<character(must be unique)>
+# F:<flags>
+# X:<feat1>...<feat18>
+
+# Note for <road> :
+# 1 = NORTH
+# 2 = SOUTH
+# 4 = EAST
+# 8 = WEST
+
+# Note for <entrance> :
+# if < 1000 then it points to a town
+# if >= 1000 then it points to the x - 1000 dungeon type
+
+# <feat> is the feature from f_info that will be used to represent the tile 
+# in the map
+
+# <terrain_idx> is one of the TERRAIN_foo defines of defines.h 
+
+# define                 idx feature                  r_info flag
+
+# TERRAIN_EDGE             0 /* Edge of the World */  none
+# TERRAIN_TOWN             1 /* Town */               WILD_TOWN
+# TERRAIN_DEEP_WATER       2 /* Deep water */         WILD_OCEAN
+# TERRAIN_SHALLOW_WATER    3 /* Shallow water */      WILD_SHORE
+# TERRAIN_SWAMP            4 /* Swamp */              not implemented
+# TERRAIN_DIRT             5 /* Snow */               WILD_WASTE
+# TERRAIN_GRASS            6 /* Grass */              WILD_GRASS
+# TERRAIN_TREES            7 /* Trees */              WILD_WOOD
+# TERRAIN_DESERT           8 /* Desert */             not implemented
+# TERRAIN_SHALLOW_LAVA     9 /* Shallow lava */       WILD_VOLCANO
+# TERRAIN_DEEP_LAVA       10 /* Deep lava */          WILD_VOLCANO
+# TERRAIN_MOUNTAIN        11 /* Mountain */           WILD_MOUNTAIN
+
+# <character> is the character used to reference this wf_info entry on the 
+# wilderness map file 
+
+# X: list of f_info features used by the plasma generator to create the levels 
+#    corresponding to that wilderness tile (like, lots of mountain, some  
+#    trees, a bit of water...)
+
+# Version stamp (required)
+
+V:2.0.0
+
+N:0:Ekkaia
+D:the Encircling Sea
+W:1:0:0:182:0:X
+X:182:182:182:182:182:182:182:182:182:182:182:182:182:182:182:182:182:182
+
+N:1:Bree 
+D:a small village
+W:1:1:0:203:1:1
+X:88:88:89:89:89:89:79:96:96:96:96:96:96:96:96:96:96:96
+
+N:2:Gondolin 
+D:The hidden town of the Noldor
+W:1:2:0:203:1:2
+X:88:88:88:89:89:89:89:89:89:89:89:89:89:82:96:96:96:96
+
+N:3:Minas Anor 
+D:The great town of Gondor
+W:1:3:0:203:1:3
+X:1:1:88:88:89:89:89:89:89:89:89:89:89:89:89:83:96:96
+
+N:4:Caras Galadhon 
+D:Lothlorien's chief city
+W:1:4:0:203:1:4
+X:88:88:96:96:96:96:199:96:80:96:96:96:96:96:96:89:89:89
+
+N:5:grass
+D:a plain of grass
+W:20:0:0:89:6:.
+X:89:89:89:89:89:89:199:89:81:89:89:89:89:89:89:89:96:96
+
+N:6:forest
+D:a forest
+W:40:0:0:96:7:T
+X:88:88:96:96:96:96:199:96:82:96:96:96:96:96:96:89:89:89
+
+N:7:road
+D:a west-east road
+W:5:0:12:200:6:-
+X:200:200:88:88:89:89:199:89:89:89:79:89:89:89:89:89:96:96
+
+N:8:road
+D:a north-south road
+W:5:0:3:200:6:|
+X:200:200:88:88:89:89:199:89:89:89:79:89:89:89:89:89:96:96
+
+N:9:mountain
+D:a mountain chain
+W:60:0:0:97:11:&
+X:1:1:89:89:88:96:96:97:97:97:97:97:97:97:97:97:97:97
+
+N:10:road
+D:a west-east-south road
+W:5:0:14:200:6:+
+X:200:200:88:88:89:199:89:89:89:89:79:89:89:89:89:89:96:96
+
+N:11:road
+D:a west-east-north road
+W:5:0:13:200:6:z
+X:200:200:88:88:89:199:89:89:89:89:79:89:89:89:89:89:96:96
+
+N:12:The Nether Realm
+D:the entrance to the netherworld
+W:127:1006:0:7:10:6
+X:88:88:88:86:86:86:85:85:85:85:85:85:85:85:85:97:97:97
+
+N:13:deep water
+D:a deep water area
+W:90:0:0:187:2:=
+X:187:187:187:187:187:187:187:187:187:187:187:187:84:84:84:84:84:84
+
+N:14:shallow water
+D:a shallow water area
+W:35:0:0:225:3:_
+X:187:187:187:84:84:84:84:84:222:222:84:84:84:84:84:1:88:89
+
+N:15:Mirkwood
+D:The Forest of Mirkwood
+W:13:1001:0:7:7:*
+X:88:88:96:96:82:96:96:96:96:79:96:96:96:96:96:89:89:89
+
+N:16:Barad-Dur
+D:Barad-Dur
+W:34:1002:0:7:11:$
+X:1:1:94:94:94:94:212:94:94:94:94:94:94:94:94:94:212:212
+
+N:17:Angband
+D:The Pits of Angband
+W:67:1003:0:7:11:%
+X:94:94:90:90:90:90:90:90:90:90:90:90:90:90:90:90:92:92
+
+N:18:mountain
+D:a mountain
+W:60:0:0:97:11:^
+X:1:1:89:89:94:96:96:97:97:97:97:97:97:97:97:97:97:97
+
+N:19:desert
+D:a desert
+W:44:0:0:91:5:D
+X:91:91:91:91:91:91:91:91:91:91:91:91:91:91:91:91:91:92
+
+N:20:jungle
+D:a jungle
+W:40:0:0:202:7:t
+X:88:88:202:96:202:96:202:96:81:96:202:96:202:96:96:89:89:89
+
+#The Dead Marshes replace 'swamp'
+# Ugly: I used a non-wilderness terrain_idx to force meaner monsters -furiosity
+N:21:Dead Marshes
+D:a part of the Dead Marshes
+W:127:0:0:223:174:S
+X:223:223:223:223:223:223:223:223:223:223:84:223:210:223:208:208:102:223
+
+N:22:glacier
+D:a glacier
+W:45:0:0:90:5:g
+X:94:94:90:90:90:90:90:90:90:90:90:90:90:90:90:90:92:92
+
+N:23:grass
+D:a plain of grass
+W:15:0:0:228:6:,
+X:1:1:88:88:228:228:228:228:228:79:228:228:228:228:228:228:96:96
+
+N:24:Moria
+D:The Doors of Moria
+W:50:1022:0:7:11:)
+X:1:1:88:88:89:89:89:89:89:89:89:89:89:89:89:89:96:96
+
+N:25:high mountain
+D:a high mountain chain
+W:80:0:0:101:11:M
+X:101:101:101:101:101:101:101:101:101:101:101:101:101:101:101:101:101:101
+
+N:26:Gondolin 
+D:The pillaged city of the Noldor
+W:1:2:0:203:1:P
+X:49:49:49:88:88:88:92:92:92:92:93:93:94:94:94:174:205:205         
+
+N:27:Khazad-dum 
+D:The dwarven stronghold
+W:1:5:0:203:1:5
+X:1:1:1:1:1:1:1:1:1:1:88:88:88:88:88:88:88:88
+
+N:28:dark pit
+D:a dark pit
+W:60:0:0:87:5:C
+X:87:87:87:87:87:87:87:87:87:214:214:214:214:214:214:214:214:214
+
+N:29:low hill
+D:a low hill
+W:15:0:0:213:6:H
+X:1:1:89:89:88:96:96:213:213:213:213:213:213:213:213:213:213:213
+
+N:30:dark mountain
+D:a dark mountain
+W:80:0:0:214:11:A
+X:214:214:214:214:214:214:214:214:214:214:214:214:214:214:214:214:214:214
+
+N:31:blue mountain
+D:a blue mountain
+W:50:0:0:215:11:B
+X:1:1:89:89:88:96:96:215:215:83:215:215:215:215:215:215:215:215
+
+N:32:grey mountain
+D:a grey mountain
+W:40:0:0:216:11:G
+X:1:1:89:89:88:96:96:216:216:216:80:216:216:216:216:216:216:216
+
+N:33:Mount Doom
+D:a part of Mount Doom
+W:127:0:0:217:11:U
+X:217:217:217:217:217:217:217:217:217:217:217:217:217:217:217:217:217:217
+
+N:34:Mallorn forest
+D:a Mallorn forest
+W:5:0:0:243:7:!
+X:88:88:243:243:96:96:243:199:82:243:243:96:243:96:243:243:243:243
+
+N:35:Redhorn Pass
+D:Redhorn Pass
+W:30:0:0:218:6:R 
+X:94:94:90:90:90:90:90:94:90:90:90:94:90:90:90:90:95:95
+
+N:36:Morannon
+D:Morannon (the Black Gate of Mordor)
+W:34:0:0:224:11:O
+X:224:224:224:224:224:224:224:224:224:224:224:224:224:224:224:224:224:224
+
+N:37:evergreen wood
+D:an evergreen wood
+W:40:0:0:202:7:E
+X:94:94:219:219:219:219:219:219:82:219:219:219:219:219:219:89:94:94
+
+N:38:Rivendell
+D:the valley of Rivendell
+W:5:14:0:96:1:L
+X:88:97:202:96:202:97:202:96:81:97:202:96:202:96:96:89:97:89
+
+N:39:Gorgoroth
+D:the valley of terror
+W:90:0:0:91:5:V
+X:91:91:91:86:94:94:94:86:91:91:94:94:86:94:94:86:91:94
+
+N:40:Northern Waste
+D:the northern wastelands
+W:30:0:0:93:5:W
+X:91:90:90:91:90:91:90:91:90:91:91:91:90:91:90:91:91:91
+
+N:41:crossroads
+D:a crossroads
+W:5:0:15:200:6:x
+X:200:200:88:88:89:199:89:89:89:89:79:89:89:89:89:89:96:96
+
+N:42:north-south-east road
+D:a north-south-east road
+W:5:0:7:200:6:[
+X:200:200:88:88:89:199:89:89:89:89:79:89:89:89:89:89:96:96
+
+N:43:swamp
+D:a swamp
+W:45:0:0:226:3:I
+X:226:226:174:84:84:226:174:226:84:84:174:226:226:174:226:174:84:174
+
+N:44:Nurn
+D:the valley of Nurn
+W:50:0:0:94:6:"
+X:94:93:94:89:93:89:94:89:93:94:94:93:89:93:89:93:94:94
+
+N:45:The Brown Lands
+D:the Brown Lands
+W:30:0:0:174:5:;
+X:174:174:89:89:174:174:89:89:174:94:93:174:174:94:174:89:89:94
+
+N:46:Udun
+D:the valley of Udun
+W:50:0:0:86:6:'
+X:94:93:86:86:94:93:86:86:94:93:86:86:94:93:86:86:94:93
+
+N:47:Anduin
+D:Anduin, the great river
+W:35:0:0:227:3:~
+X:187:227:187:84:84:227:84:84:222:227:84:84:227:84:84:227:88:94
+
+# Former location of Gondolin (to avoid silliness with Maeglin quest)
+N:48:Secret Valley
+D:the secret valley with directions to Gondolin
+W:0:0:12:89:1:J
+X:228:228:228:228:228:228:228:228:228:228:228:228:228:228:228:228:228:228
+
+### New Towns ###
+
+# Beorn's Halls 
+N:49:Beorn's Halls
+D:the dwelling of Beorn the Shape-changer
+W:1:6:0:89:1:6
+X:88:88:89:89:89:89:79:96:96:96:96:96:96:96:96:96:96:96
+
+# Cerin Amroth 
+N:50:Cerin Amroth
+D:a place of peace
+W:1:7:0:89:1:7
+X:88:88:89:89:89:89:79:96:96:96:96:96:96:96:96:96:96:96
+
+# Dale
+N:51:Dale 
+D:a city of Men, being rebuilt
+W:1:8:0:91:1:8
+X:91:91:91:91:91:91:91:91:91:91:91:91:91:91:91:91:91:91
+
+# Edoras
+N:52:Edoras 
+D:the capital of Rohan
+W:1:9:0:203:1:9
+X:88:88:89:89:89:89:79:96:96:96:96:96:96:96:96:96:96:96
+
+# Esgaroth
+N:53:Esgaroth 
+D:the city of Lake-Men
+W:1:10:0:203:1:a
+X:88:88:89:89:89:89:79:96:96:96:96:96:96:96:96:96:96:96
+
+# Helm's Deep
+N:54:Helm's Deep 
+D:the great fortress of the Rohirrim
+W:1:11:0:89:1:b
+X:88:88:89:89:89:89:79:96:96:96:96:96:96:96:96:96:96:96
+
+# Henneth Annun
+N:55:Henneth Annun 
+D:a Ranger hideout
+W:1:12:0:89:1:c
+X:88:88:89:89:89:89:79:96:96:96:96:96:96:96:96:96:96:96
+
+# Hobbiton
+N:56:Hobbiton 
+D:a Hobbit village
+W:1:13:0:203:1:d
+X:88:88:89:89:89:89:79:96:96:96:96:96:96:96:96:96:96:96
+
+# Osgiliath
+N:57:Osgiliath 
+D:a stronghold of Men
+W:1:15:0:203:1:e
+X:88:88:89:89:89:89:79:96:96:96:96:96:96:96:96:96:96:96
+
+# Pelargir
+N:58:Pelargir 
+D:the great city at the mouth of Anduin
+W:1:16:0:203:1:f
+X:88:88:89:89:89:89:79:96:96:96:96:96:96:96:96:96:96:96
+
+# Thranduil's Halls
+N:59:Thranduil's Halls 
+D:the hidden realm of the Wood-elves
+W:1:17:0:213:1:o
+X:88:88:89:89:89:89:79:96:96:96:96:96:96:96:96:96:96:96
+
+### Cirith Ungol a 'defined' feature to allow it to have two entrances
+N:60:Cirith Ungol
+D:the dreaded Spider Pass
+W:25:1009:0:7:6:s
+X:91:91:91:86:94:94:94:86:91:91:94:94:86:94:94:86:91:94
+
+### Bree Swamp
+N:61:Bree Swamp
+D:The Bree Swamp
+W:1:0:0:225:6:u
+X:187:187:187:84:84:84:84:84:222:222:84:84:84:84:84:1:88:89
+
+### Orc Cave a 'defined' feature to allow it to have two entrances
+N:62:Orc Cave
+D:a dark tunnel leading to an Orc Cave
+W:15:1019:0:7:6:q
+X:1:1:88:88:89:89:89:89:89:89:89:89:89:89:89:89:96:96

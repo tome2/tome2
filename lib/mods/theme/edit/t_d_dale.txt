@@ -1,0 +1,75 @@
+# File: t_d_dale.txt
+
+# Dale map and destruction by furiosity <furiosity@zionmainframe.net>
+
+# NB! This file assumes usage of the following files from the 'theme' module:
+# f_info.txt and t_pref.txt
+# Please download the module and refer to the files for the terrain feature definitions http://modules.t-o-m-e.net/
+# Don't forget to modify the maximum number of terrain features, etc. in misc.txt as well.
+
+D:######################################################################################################################################################################################################
+D:#                                                                                                                                                                                                    #
+D:#                                                                                                                                                                                                    #
+D:#                                                                                                                                                                                                    #
+D:#                                                                                                                                                                                                    #
+D:#                                                                                                                                                                                                    #
+D:#                                                                                                                                                                                                    #
+D:#                                                                                                                                                                                                    #
+D:#                                                                                                                                                                                                    #
+D:#                                                                                                                                                                                                    #
+D:#                                                                                                                                                                                                    #
+D:#                                                                                                                                                                                                    #
+D:#                                                                                                                                                                                                    #
+D:#                                                                                                                                                                                                    #
+D:#                                                                                                                                                                                                    #
+D:#                                                                                                                                                                                                    #
+D:#                                 @@@@@@@@@@@@@@@@                                                                                                                                                   #
+D:#                               @@%%%%%%%%%%%%%%%%@@                                                                                                                                                 #
+D:#                            @@@%%%%%%%%%%%%%%%%%%%%@                                                                                                                                                #
+D:#                           @%%%%%%%%%%%%%%%%%%%%%%%%@                                                                                                                                               #
+D:#                           @%%%%%%%%%%%%%%%%%%%%%%%@$$$$$$$$$$$$$$$                                                                                                                                 #
+D:#                            @@@@%%%%%%%%%%%%%%%%%@@@HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH                                                          #
+D:#                                @%%%%%%%%%%%@@@@@@HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH                                                        #
+D:#                                @%@@@@@@@@@@@@HHStSSSSSHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHDDDHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH                   @@@@@@                            #
+D:#                                @%#HHHHHHHHHHHHHsssssssHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHDDDDDHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH              @@%%%%%%@                           #
+D:#                                @%#HHHHHHHHHHHHH#######HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHDDDHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH               @@%%%%%%%%%%@@@                       #
+D:#                                @%#HHHHHHHHHHHHH###@###HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH     @%%%%%%%%%%%%%%%@@                     #
+D:#                                @%#HHHHHHHHHHH$HHHH@HHHH$HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH@%%%%%%%%%%%%%%%%@                    #
+D:#                                 ##HHHHHHHHHHHHHHHH@HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH$HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH==================@                    #
+D:#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@,,,,,,,,,,,,,,,,,,@@@@@@@@@@@@@@@@@@@@@#
+D:#                                  #HHHHHHHHHHHHHHHHH@HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH@HHHHSSSDSHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH@==================@                    #
+D:#                                  #HHHHHHHHHHHHHHHHHH@HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH@HEHsssssHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH@%%%%%%%%%%%%%%%%@@@                     #
+D:#                                  #HHHHHHHHHHHHHHHHHHH@HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH@HH#H###HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH@@@%%%%%%%%%%%%%%@                      #
+D:#                                  #HHHHHHHHHHHHHHHHHHHH@HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH@H##@##HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH@@@%%%%%%%%%@@                       #
+D:#                                  #HHHHHHHHHHHHHHHHHHHHH@HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH@@@@HHH$HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH@@@@@@@@@@                        #
+D:#                                  #HHHHHHHHHHHHHHHHHHHHHH@HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH@HHHH@HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH                         #
+D:#                                  #HHHHHHHHHHHHHHHHHHHHHHH@HHHHHHHHHHHHHHHHHSSSHHHHHHHHHHHHHHH@HHHHHH@HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH                        #
+D:#                                  #HHHHHHHHHHHHHHHHHHHHHHHH@HHHHHHHHHHHHHHsssssHHHHHHHHHHHHHH@HHHHHHHH@HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH                       #
+D:#                                  #HHHHHHHHHHHHHHHHHHHHHHHHH@HHHHHHHHH$########HHHHHHHHHHHHH@HHHHHHHHHH@HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH                      #
+D:#                                  $HHHHHHHHHHHHHHHHHHHHHHHHHH@HHHHHHHH$########HHHHHHHHHHHH@HHHHHHHHHHHH@HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH                     #
+D:#                                  $HHHHHHHHHHHHHHHHHHHHHHHHHHH@HHHHHH@HHHHHHHHHHHHHHH,@@@@@HHHHHHHHHHHHHH@HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH                    #
+D:#                                  #HHHHHHHHHHHHHHHHHHHHHHHHHHHH@@@@@@@HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH@HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH                   #
+D:#                                  #HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH$HHHHHHHHHHHHHHHHHHHHHHHHHHH@HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH                  #
+D:#                                  #HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH@HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH                 #
+D:#                                  #HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH@$HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH                #
+D:#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#
+D:#                                  #HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH$H@HHHHHHHHHHHHHHUUUUUUYUUUUHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH#
+D:#                                  #HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH@HHHHHHHHHHHHHXXXXXXXXXXXHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH#
+D:#                                  #HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH@HHHHHHHHHHHH===========HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH#
+D:#                                  #HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH@$HHHHHHHHHH=====@=====HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH#
+D:#                                  #HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH$@@@@@@@@@@@@@@@@@HHHHHH$HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH#
+D:#                                HH#HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH@@@@@HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH#
+D:#                              HHHH#HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH@%%%%%@HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH#
+D:#                            HHHHHD#HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH@%%%%%%%@HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH#
+D:#                         HHHHHHHDD#HHHHHHHHHHHHHHHHHHHHHHHHHHHHHH@%%%%%%%%%@HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH#
+D:#                  HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH@%%%%%%%%%%%@HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH#
+D:#                     HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH@%%%%%%%%%@HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH#
+D:#                        HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH@%%%%%%%@HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH#
+D:#                           HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH@%%%%%@HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH#
+D:#                              HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH@@@@@HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH#
+D:#                                HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH#
+D:#                                  HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH#
+D:#                                  HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH#
+D:#                                 HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH#
+D:#                             HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH#
+D:######################################################################################################################################################################################################

@@ -1,0 +1,6 @@
+N:Galleon
+U:s_ship.map
+D:A ship of antique design lies jammed in the ice here.
+F:DESC | NO_GENO | NO_NEW_MONSTER | SPECIAL | NO_STAIR
+F:ASK_LEAVE | NO_TELEPORT
+

@@ -1,0 +1,63 @@
+# File: xtra-new.prf
+
+#
+# This file defines special attr/char mappings for use in "graphics" mode
+#
+# Edited for use with Adam Bolt's new graphics by Robert Ruehlmann < rr9@angband.org >
+#
+# See "lib/help/command.txt" and "src/files.c" for more information.
+#
+
+
+##### AK 20011216 Default pictures for all races that
+#     are not handled below, without caring for class
+
+
+?:[EQU $RACE Human]
+R:0:0x89/0xA0
+?:[EQU $RACE Half-Elf]
+R:0:0x89/0xA1
+?:[EQU $RACE Elf]
+R:0:0x89/0xA2
+?:[EQU $RACE Hobbit]
+R:0:0x89/0xA3
+?:[EQU $RACE Gnome]
+R:0:0x89/0xA4
+?:[EQU $RACE Dwarf]
+R:0:0x89/0xA5
+?:[EQU $RACE Orc]
+R:0:0x89/0xA6
+?:[EQU $RACE Troll]
+R:0:0x89/0xA7
+?:[EQU $RACE Dunadan]
+R:0:0x89/0xA8
+?:[EQU $RACE High-Elf]
+R:0:0x89/0xA9
+?:[EQU $RACE Half-Ogre]
+R:0:0x89/0xAA
+?:[EQU $RACE Beorning]
+R:0:0x89/0xAB
+?:[EQU $RACE Druadan]
+R:0:0x89/0xAC
+?:[EQU $RACE Petty-Dwarf]
+R:0:0x89/0xAD
+?:[EQU $RACE Dark-Elf]
+R:0:0x89/0xAE
+?:[EQU $RACE Ent]
+R:0:0x89/0xAF
+?:[EQU $RACE RohanKnight]
+R:0:0x89/0xB0
+?:[EQU $RACE Eagle]
+R:0:0x89/0xB1
+?:[EQU $RACE Dragon]
+R:0:0x89/0xB2
+?:[EQU $RACE Yeek]
+R:0:0x89/0xB3
+?:[EQU $RACE Wood-Elf]
+R:0:0x89/0xB4
+?:[EQU $RACE Maia]
+R:0:0x89/0xB5
+?:[EQU $RACE Easterling]
+R:0:0x89/0xB6
+?:[EQU $RACE Demon]
+R:0:0x89/0xB7

@@ -1,0 +1,42 @@
+|||||oy
+~~~~~01|Magic|Air School
+~~~~~02|Air Magic
+~~~~~03|Skills|Air - Spell Info
+#####R === ToME Magic - Air School ===
+
+The air school of magic contains spells where the element of air is used
+to create the final spell effect. There are rumours of a "Tome of the Blowing
+Wind" which contains all the air school spells within its bindings.
+
+Worshipping the God Manwe Sulimo also gives the ability to cast spells from
+the air school at a level of 2/3 of your prayer level. E.g. if the skill
+"Spirituality: Prayer" is at level 12, you can cast up to level 8 air school
+spells.
+
+#####BAir Spells
+There are six spells available for the air school. These spells are:
+1. [[[[[BNoxious Cloud] (school level 3)
+   Creates a cloud of poison.
+   The cloud will persist for some turns, damaging all monsters passing by.
+   At spell level 30 it turns into a thick gas attacking all living beings.
+2. [[[[[BPoison Blood] (school level 12)
+   Grants resist poison.
+   At spell level 15 it provides poison branding to the wielded weapon.
+3. [[[[[BInvisibility] (school level 16)
+   Grants invisibility.
+4. [[[[[BSterilize] (school level 20)
+   Prevents explosive breeding for a while.
+5. [[[[[BWings of Winds] (dual school level 22)
+   Grants the power of levitation.
+   At spell level 16 it grants the power of controlled flight.
+#####v   Your Air and Conveyance skills must have reached a combined average level 
+#####v   of 22 in order to cast this spell.
+6. [[[[[BThunderstorm] (dual school level 25)
+   Charges up the air around you with electricity.
+   Each turn it will throw a bolt of thunder at a random monster in sight.
+   This thunder does 3 types of damage:
+      one third of lightning
+      one third of sound
+      and one third of light.
+#####v   Your Air and Nature skills must have reached a combined average level 
+#####v   of 25 in order to cast this spell.

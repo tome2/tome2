@@ -1,0 +1,254 @@
+# File: set_info.txt
+
+
+# This file is used to initialize the "lib/raw/set_info.raw" file, which is
+# used to initialize the "item set" information for the Angband game.
+
+# Do not modify this file unless you know exactly what you are doing,
+# unless you wish to risk possible system crashes and broken savefiles.
+
+# Version stamp (required)
+
+# N:idx:name
+# D:description
+# P:artifact index:number of item needed:pval
+# F:flags
+
+V:2.0.0
+
+# The Elven Gifts, took from Oangband
+
+N:0:Elven Gifts
+D:It is one of two Elven items once entrusted to Hobbits.
+# Phial of Galadriel
+P:1:2:1
+F:WIS | CHR | RES_DARK
+# Sting
+P:88:2:2
+F:STEALTH | REGEN
+
+
+# The Dragon Slayer
+
+N:1:Dragon Slayer
+D:It is one of two items rumoured to be the bane of dragons.
+# Bow of bard
+P:125:2:3
+F:DEX | CON | RES_FIRE
+# Arrow of Bard
+P:63:2:5
+F:SPEED
+
+
+# The Trinity -- Possessor set
+
+N:2:The Trinity
+D:It is one of the 3 legendary daggers.
+# Dagger of Samwise
+P:66:3:1
+F:STR | KILL_DRAGON | REGEN | SH_FIRE
+# Dagger of Peregrin
+P:67:3:1
+F:KILL_DEMON | IM_COLD | CON
+# Dagger of Meriadoc
+P:68:3:1
+F:KILL_UNDEAD | SH_ELEC | FLY | DEX
+
+
+# Gothmog's Armoury -- Demonologists' set
+
+N:3:Gothmog's Armoury
+D:It is one of three items that once belonged to Gothmog, 
+D:the High Captain of the Balrogs.
+# The demonblade of Gothmog
+P:181:3:7
+F:STR | CON | SPEED | VAMPIRIC
+# The demonshield of Gothmog
+P:182:3:0
+F:IM_FIRE | IM_COLD | SH_ELEC
+# The demonhorn of Gothmog
+P:183:3:0
+F:ESP_EVIL | ESP_GOOD | AUTO_ID
+
+### New sets added in Theme ###
+
+# Thorin Oakenshield's gear - bards might find this useful :)
+
+N:4:Thorin's Gear
+D:It is one of three items that once belonged to 
+D:Thorin Oakenshield, King under the Mountain.
+# The small metal shield of Thorin
+P:30:3:2
+F:CHR | ESP_TROLL
+# The golden harp of Thorin
+P:135:3:4
+F:INT | SUST_INT
+# The mithril helm of Thorin
+P:136:3:4
+F:WIS | SUST_WIS
+
+# Peregrin Took's gear - adapted from T-Plus by Ingeborg S. Norden
+
+N:5:Peregrin's Gear
+D:It is one of two items that once belonged to the hobbit 
+D:hero, Peregrin Took.
+# Chain Mail of Peregrin Took
+P:165:2:0
+F:RES_CONF | RES_NEXUS | SUST_STR
+# Elven Cloak of Peregrin Took
+P:184:2:2
+F:DEX | SUST_DEX | CHR | SUST_CHR | SLOW_DIGEST |
+
+# Ghan-buri-Ghan's Garb - suggested by ShinesmanOffWhite in the forums
+
+N:6:Ghan-buri-Ghan's Garb
+D:It is one of two items that once belonged to 
+D:the leader of the Druedain.
+# The Filthy Rag of Ghan-Buri-Ghan
+P:189:2:0
+F:IM_COLD | IM_ACID
+# The Cloak of Ghan-buri-Ghan 
+P:190:2:0
+F:ESP_ALL
+
+# Requisites of the King of Gondor - suggested by ShinesmanOffWhite in the forums
+
+N:7:The Glory of the King
+D:It is one of three items belonging to the Kings of 
+D:Gondor.
+# The Long Sword 'Anduril'
+P:83:3:0
+F:BRAND_ELEC | KILL_DEMON | KILL_DRAGON | SLAY_UNDEAD | IM_FIRE | 
+# The Black Banner of Gondor
+P:191:3:0
+F:LITE3
+# The Golden Crown of Gondor
+P:42:3:0
+F:ESP_ALL
+
+# Saruman's stuff - suggested by ShinesmanOffWhite in the forums
+
+N:8:Saruman's Travel Gear
+D:It is one of three items belonging to the Istari wizard Saruman.
+# The Mage Staff of Saruman
+P:192:3:0
+F:REFLECT | FREE_ACT
+# The Robe of Curunir
+P:193:3:0
+F:RES_FIRE | RES_ACID | RES_POIS | RES_DARK | RES_BLIND | RES_SOUND | 
+# The Palantir of Orthanc
+P:202:3:0
+F:AUTO_ID
+
+# Heirlooms of the House of Elendil - set suggested by Massimiliano Marangio in the forums
+
+N:9:Elendil's Heirlooms
+D:It is one of three items belonging to the House of Elendil.
+# The Ring of Barahir
+P:8:3:0
+F:RES_LITE | RES_BLIND | 
+# The Star of Elendil
+P:2:3:1
+F:STR | INT | WIS | DEX | CON | CHR | LUCK | 
+# The Rod of Annuminas
+P:199:3:0
+F:RES_FEAR | ESP_EVIL
+
+# Flame of Wrath - from Oangband
+
+N:10:Flame of Wrath
+D:It is one of two items infused with holy fire.
+# The Amulet of Annatar
+P:4:2:1
+F:WIS | IM_FIRE | RES_FEAR
+# The Morning Star 'Naurgil'
+P:115:2:4
+F:STR | SLAY_EVIL | SLAY_UNDEAD
+
+# Light/Dark Set - from Oangband
+
+N:11:Shadow Ward
+D:It is one of two items rumoured to defy the Shadow.
+# The Soft Leather Armour 'Hithlomir'
+P:168:2:2
+F:SEARCH | RES_BLIND
+# The Set of Leather Gloves 'Cammithrim'
+P:53:2:2
+F:DEX | SUST_DEX
+
+# Eorl/Rohan Set - from Oangband
+
+N:12:Eorl's Arms
+D:It is one of two items that once belonged to Eorl the Young, 
+D:valiant hero of the Mark.
+# Lance of Eorlingas
+P:100:2:1
+F:FREE_ACT
+# The Metal Brigandine Armour of the Rohirrim
+P:21:2:0
+F:CON | REGEN
+
+# Gil-Galad's Set - from Oangband
+
+N:13:Gil-Galad's Battle Gear
+D:It is one of three pieces of the battle gear of Gil-Galad, 
+D:mighty Elven king of old.
+# The Shield of Deflection of Gil-Galad
+P:169:3:0
+F:RES_FIRE | RES_POIS | SUST_CON
+# The Spear 'Aiglos'
+P:97:3:0
+F:SLAY_DEMON | RES_NETHER
+# The Mithril Helm of Gil-Galad
+P:26:3:0
+#Why *shouldn't* warrior-types get a chance for AUTO_ID without penalties to luck before they kill Morgy?
+F:AUTO_ID
+
+# Dwarven Heritage
+# http://wiki.t-o-m-e.net/IdeaArchive_2fNew_20Item_20Set_3a_20Heritage_20of_20Khazad
+
+N:14:Dwarven Heritage
+D:It is one of three Dwarven items of legend.
+# The Arkenstone of Thrain
+P:3:3:0
+F:SUST_STR | FREE_ACT | SUST_CON
+# Mattock of Nain
+P:174:3:6
+F:CON
+# Lochaber Axe of the Dwarves
+P:105:3:0
+F:IM_ACID | RES_SHARDS | SUST_DEX | SUST_WIS | REFLECT
+
+# Woodland Realm (bow of Legolas, staff of Thranduil, cap of Thranduil)  
+
+N:15:Woodland Realm
+D:It is one of three items belonging to the Wood-elves of Mirkwood.
+# The Hard Leather Cap of Thranduil
+P:36:3:1
+F:SUST_INT | SUST_WIS | SPEED
+# The Long Bow of Legolas
+P:224:3:2
+F:SUST_DEX | SPEED
+# The Quarterstaff of Thranduil
+P:74:3:0
+# What can I say. I love archers. :P
+F:AUTO_ID
+
+# Gimli's Gear (Gimli's shield, boots and axe)
+
+N:16:Gimli's Gear
+D:It is one of three items belonging to Gimli the dwarf.
+# The Small Metal Shield of Gimli
+P:132:3:0
+F:SUST_STR | SUST_CON | SUST_INT
+# The Bearded Axe of Gimli
+P:133:3:0
+F:SLAY_EVIL | SLAY_GIANT | BRAND_FIRE
+# The Pair of Metal Shod Boots of Gimli
+P:180:3:5
+F:LUCK
+
+# N:idx:name
+# D:description
+# P:artifact index:number of item needed:pval
+# F:flags

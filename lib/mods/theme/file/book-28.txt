@@ -1,0 +1,102 @@
+			 ---------------------- 
+			| Artifact Lore Vol. X |
+			| Headgear and Gloves  |
+			 ---------------------- 
+
+The Hard Leather Cap of Thranduil
+    The hunting cap of King Thranduil, to whose ears come all the secrets of
+    his forest domain.
+
+The Metal Cap of Thengel 
+    A ridged helmet made of steel, and embossed with scenes of valour in
+    fine-engraved silver.  It grants the wearer nobility, clearness of thought
+    and understanding.
+
+The Steel Helm of Hammerhand 
+    A great helm as steady as the heroes of the Westdike. Mighty were the
+    blows of Helm, the Hammerhand!
+
+The Dragon Helm of Dor-Lomin 
+    The legendary dragon helm of Turin Turambar, an object of dread to the
+    servants of Morgoth.
+
+The Iron Helm 'Holhenneth'
+    A famous helm of forged iron granting extraordinary powers of mind and
+    awareness.
+
+The Iron Helm of Gorlim
+    A headpiece, gaudy and barbaric, that betrayed a warrior when he most
+    needed succour.
+
+The Metal Cap of Thorin 
+    Mighty was Thorin Oakenshield as he emerged from the Gate of the Lonely
+    Mountain on the day of the Battle of the Five Armies, clad in shining
+    armour, part of which was this helm. He gleamed like gold in the dying
+    fire of the day, red light leapt from his eyes, and his foes were
+    terrified at the mere sight of him.
+
+The Iron Helm of Knowledge
+    This helm, designed by Petty-Dwarves ages ago to act as the brain of a
+    long lost project, is made of finest glass.  Its light banishes all
+    secrets, and makes audible whispers from the deceased.
+
+The Metal Cap of Celebrimbor
+    This once belonged to Celebrimbor, maker of the Rings of Power.  One who
+    knows both fire and acid, from the business of forging and engraving, will
+    fear neitheraware of Sauron before Sauron became aware of him, when Sauron
+    put on the One Ring for the first time.
+
+The Steel Helm of Gil-galad 
+    The shining helm that Gil-galad, legendary Elven-king, wore in battle.
+
+The Iron Crown of Beruthiel
+    The midnight-hued steel circlet of the sorceress-queen Beruthiel, which
+    grants extraordinary powers of sight and awareness at a terrible physical
+    cost.
+
+The Golden Crown of Gondor
+    The shining winged circlet brought by Elendil from dying Numenor, emblem
+    of Gondor though an age of the world.
+
+The Jewel-Encrusted Crown of Numenor
+    A crown of massive gold, set with wondrous jewels of thought and warding,
+    worn by the kings of ancient Numenor.  Its wearer may go into battle
+    always knowing what he faces - unless his own folly blinds him to the
+    nature and magnitude of the task.
+
+The Set of Leather Gloves 'Cambeleg'
+    A hero's handgear that lends great prowess in battle.
+
+The Set of Leather Gloves 'Cammithrim'
+    These gloves glow so brightly as to light the way for their owner and cast
+    magical bolts with great frequency.
+
+The Set of Gauntlets 'Paurhach'
+    A fiery set of gauntlets that can even shoot fire from the user's hands.
+
+The Set of Gauntlets 'Paurnimmen'
+    A set of handgear so icy as to be able to fire frost bolts.
+
+The Set of Gauntlets 'Pauraegen'
+    A set of handgear with sparks surrounding it, able to fire bolts of
+    electricity.
+
+The Set of Gauntlets 'Paurnen'
+    A set of handgear so corrosive that it may fire bolts of acid.
+
+The Set of Gauntlets 'Camlost' 
+    A pair of gauntlets that sap combat ability, named after the empty hand of
+    Beren that once clasped a Silmaril.
+
+The Set of Cesti of Fingolfin 
+    The hand-sheathing of Fingolfin, warrior-king of Elves and Men, who gave
+    Morgoth seven mighty wounds and pain that will last forever.
+
+The Set of Gauntlets of Eol 
+    The iron-shod gauntlets of the Dark Elven smith Eol, tingling with magics
+    that he could channel in battle.
+
+The Set of Cesti 'Skycleaver'
+    The handgear of a legendary dragonslaying hero.  The wearer of these wyrmskin 
+    gauntlets will be versed in all aerial ways, and will fear no dragon that walks 
+    or flies.

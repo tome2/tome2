@@ -1,0 +1,136 @@
+~~~~~01|Corruptions (Spoiler)
+~~~~~02|Spoilers|Corruptions
+#####R=== ToME Corruptions Spoiler ===
+
+Sometimes adventurers become exposed to the dark powers of Morgoth. If they 
+are unable to resist these powers, they become corrupted. Corruptions can 
+change their physical or mental abilities, some of which can be good, and
+some bad. Most corruptions will affect you permanently, although some only 
+operate when they are activated (whether by player choice or as a random 
+event). You can check which corruptions do you have in the knowledge screen 
+6 (accessed through the '~' menu) or in a character dump.
+
+#####GGaining and (not) losing corruptions
+There are several ways that you can become corrupted.
+
+You can become corrupted by quaffing a Potion of Corruption or by drinking
+from a Fountain of Corruption. Also some strange items can be activated
+for corruption.
+
+Corruptions are permanent. Once you have one, you have it for life.
+
+[[[[[BBalrog Aura]
+  Surrounds you with a fiery aura
+  But it can burn scrolls when you read them
+[[[[[GGain message: A corrupted wall of flames surrounds you.]
+[[[[[RLose message: The wall of corrupted flames abandons you.]
+
+
+[[[[[BBalrog Wings]
+  Creates ugly, but working, wings allowing you to fly
+  But it reduces charisma by 4 and dexterity by 2
+[[[[[GGain message: Wings of shadow grow in your back.]
+[[[[[RLose message: The wings in your back fall apart.]
+
+
+[[[[[BBalrog Strength]
+  Provides 3 strength and 1 constitution
+  But it reduces charisma by 1 and dexterity by 3
+[[[[[GGain message: Your muscles get unnatural strength.]
+[[[[[RLose message: Your muscles get weaker again.]
+
+
+[[[[[BBalrog Form]
+  Allows you to turn into a Balrog at will
+  You need Balrog Aura, Balrog Wings and Balrog Strength to activate it
+[[[[[GGain message: You feel the might of a Balrog inside you.]
+[[[[[RLose message: The presence of the Balrog seems to abandon you.]
+It depends on:
+  Balrog Aura
+  Balrog Wings
+  Balrog Strength
+
+
+[[[[[BDemon Spirit]
+  Increases your intelligence by 1
+  But reduce your charisma by 2
+[[[[[GGain message: Your spirit opens to corrupted thoughts.]
+[[[[[RLose message: Your spirit closes again to the corrupted thoughts.]
+
+
+[[[[[BDemon Hide]
+  Increases your armour class by your level
+  Provides immunity to fire at level 40
+  But reduces speed by your level / 7
+[[[[[GGain message: Your skin grows into a thick hide.]
+[[[[[RLose message: Your skin returns to a natural state.]
+
+
+[[[[[BDemon Breath]
+  Provides fire breath
+  But gives a small chance to spoil potions when you quaff them
+[[[[[GGain message: Your breath becomes mephitic.]
+[[[[[RLose message: Your breath is once again normal.]
+
+
+[[[[[BDemon Realm]
+  Provides access to the demon school skill and the use of demonic equipment
+  You need Demon Spirit, Demon Hide and Demon Breath to activate it
+[[[[[GGain message: You feel more attuned to the demon realm.]
+[[[[[RLose message: You lose your attunement to the demon realm.]
+It depends on:
+  Demon Spirit
+  Demon Hide
+  Demon Breath
+
+
+[[[[[BRandom teleportation]
+  Randomly teleports you around
+[[[[[GGain message: Space seems to fizzle around you.]
+[[[[[RLose message: Space solidify again around you.]
+It is opposed to:
+  Anti-teleportation
+
+
+[[[[[BAnti-teleportation]
+  Prevents all teleportations, be it of you or monsters
+[[[[[GGain message: Space continuum freezes around you.]
+[[[[[RLose message: Space continuum can once more be altered around you.]
+It is opposed to:
+  Random teleportation
+
+
+[[[[[BTroll Blood]
+  Troll blood flows in your veins, granting increased regeneration
+  It also enables you to feel the presence of other troll beings
+  But it will make your presence more noticeable and aggravating
+[[[[[GGain message: Your blood thickens, you sense corruption in it.]
+[[[[[RLose message: Your blood returns to a normal state.]
+
+
+[[[[[BVampiric Teeth]
+  Your teeth allow you to drain blood to feed yourself
+  However your stomach now only accepts blood.
+[[[[[GGain message: You grow vampiric teeth!]
+It is not removable.
+
+
+[[[[[BVampiric Strength]
+  Your body seems somewhat dead
+  In this near-undead state it has improved strength, constitution and
+  intelligence, but also reduced dexterity, wisdom and charisma.
+[[[[[GGain message: Your body seems more dead than alive.]
+It is not removable.
+It depends on:
+  Vampiric Teeth
+
+
+[[[[[BVampire]
+  You are a Vampire. As such you resist cold, poison, darkness and nether.
+  Your life is sustained, but you cannot stand the light of the sun.
+[[[[[GGain message: You die to be reborn in a Vampire form.]
+It is not removable.
+It depends on:
+  Vampiric Strength
+
+

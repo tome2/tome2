@@ -1,0 +1,75 @@
+			 ----------------------- 
+			| Artifact Lore Vol. IX |
+			|   Shields and Boots   |
+			 ----------------------- 
+
+The Small Mithril Shield of Thorin
+    Invoking the strength and endurance of Thorin, King under the Mountain,
+    this little metal shield is proof against the Element of Earth.
+
+The Large Leather Shield of Celegorm 
+    This shield emblazoned with a multitude of creatures not seen for ages
+    once protected Celegorm, lord of Himlad; around it lies a mystic balance
+    that contains the conflicts of the elements.
+
+The Large Metal Shield of Anarion
+    The great metal-bound shield of Anarion, son of Elendil, who Sauron found
+    himself powerless to wither or diminish.
+
+The Small Metal Shield of Gimli
+    A gift from the King of Rohan to Gimli the Dwarf, this shield combines the 
+    cunning and stamina of Gimli Elf-friend, Gimli the Lock-bearer.
+
+The Shield of Deflection of Gil-galad 
+    The legendary shield of Gil-Galad, who fought his way to the gates of the
+    Dark Tower, and with whom came light even to Gorgoroth.
+
+The Large Leather Shield of the Haradrim
+    A great shield from the far lands of the South, whose wielder will go
+    charging into battle heedless of danger, with the strength and endurance
+    of a madman. Nor will he fear poison, for the Southron barbarians handle
+    poisoned darts naturally.
+
+The Mithril Shield of Earendil 
+    A shining shield, once borne by the great mariner Earendil, "scored with
+    runes to keep all wounds and harm from him".
+
+The Large Metal Shield of Erkenbrand
+    Tall and strong stood Erkenbrand, Lord of the Westfold, as he rode to combat 
+    the forces of Isengard. The valour of Helm Hammerhand lived again in him. 
+    This shield is painted red according to Rohan custom and it grants magical 
+    protection against enemy projectiles, as well as lets the wearer sense 
+    approaching enemy hordes.
+
+The Pair of Soft Leather Boots of Wormtongue
+    The pair of boots used by Grima son of Galmod, also named the Wormtongue - a
+    treacherous but persuasive counsellor, ever ready to betray, sneak, lie,
+    cheat and steal - but never ready to actually fight.
+
+The Pair of Hard Leather Boots of Feanor
+    This wondrous pair of leather boots once sped Feanor, creator of the
+    Silmarils and the mightiest of the Eldar, along the Grinding Ice and to
+    Middle-earth at last.
+
+The Pair of Soft Leather Boots 'Dal-i-thalion'
+    A pair of high-laced shoes, strong against the powers of corruption and
+    withering, that grant the wearer extraordinary agility.
+
+The Pair of Metal Shod Boots of Thror
+    Sturdy footwear of leather and steel as enduring as the long-suffering
+    Dwarven King-in-exile who wore them.  Of dwarven make, the wearer of these
+    boots will be completely at home in the mountains.
+
+The Pair of Hard Leather Boots of Nevrast
+    Footgear made of bear leather and set with opals, which grant the wearer
+    silent, hasted movement.
+
+The Pair of Metal Shod Boots of Gimli 
+    A set of iron-shod boots stamped by Gimli's combat prowess, a peerless
+    ally to those journeying through halls of stone under mountains.
+
+The Pair of Metal Shod Boots of the Machine
+    A massive pair of adamantite boots studded with gold, the final and greatest 
+    product of the petty-dwarven magical forge. Despite the great powers they 
+    contain, they are heavy and awkward enough to make quite a racket whenever 
+    you move.

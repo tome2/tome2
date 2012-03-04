@@ -1,0 +1,98 @@
+			 ------------------------ 
+			| Artifact Lore Vol. VII |
+			|      Body Armour       |
+			 ------------------------ 
+
+The Leather Scale Mail 'Thalkettoth'
+    A tunic and skirt sewn with thick, overlapping scales of hardened leather
+    whose wearer moves with agility and assurance.
+
+The Robe of Incanus 
+    Gandalf's long, flowing robe.  It provides insight and allows the wearer
+    to see things not seen by all.
+
+The Robe of Great Luck 
+    Once created by a powerful wizard this robe to grant him incredible
+    luck... It seems he forgot to wear it.
+
+The Hard Leather Armour of Himring 
+    Contained within this studded cuirass of pliable leather is the memory of
+    unvanquished Himring, defiant fortress surrounded by the legions of
+    Morgoth.
+
+The Soft Leather Armour 'Hithlomir' 
+    Familiar with the secret ways hidden in darkness, this leather cuirass is
+    truly more than it appears.
+
+The Robe of Belegaer 
+    This pearl-trimmed blue robe was created by a Maia loremaster in Ulmo's
+    service.  No ocean storm can harm its wearer or anything he carries; the
+    pressure and darkness of deep water cannot hinder him, either.
+
+The Leather Jerkin of Tom Bombadil 
+    This garment was once the property of Tom Bombadil - a strange being
+    rumoured to be older than Arda itself. It may be the explanation for how
+    Tom could always turn up when he was most needed.
+
+The Filthy Rag of Ghan-buri-Ghan 
+    The wrappings of a leader among the wild Men of Druadan forest. It
+    contains a multitude of tiny pockets filled with small darts dripping with
+    venom. 
+
+The Robe of Curunir 
+    The white robe of the Istari wizard Curunir, known on Middle-earth as
+    Saruman the White and Saruman of Many Colours. Imbued with cold and
+    lightning used in the creation of the Fire of Orthanc, it grants the
+    wearer some mastery over these elements. 
+
+The Galvorn Plate Mail of Eol 
+    A suit of imperishable galvorn, with conquerable strength to endure evil
+    and disruptive magics, that protects the life force of its wearer like
+    nothing else can. Eol the Dark Elf made it in secret for his son, but
+    Maeglin left Nan Elmoth with his mother Aredhel and never got to wear it. 
+
+The Full Plate Armour of Isildur
+    A gleaming steel suit covering the wearer from neck to foot, with runes of
+    warding and stability deeply engraved into its surface.
+
+The Metal Brigandine Armour of the Rohirrim
+    A stiff suit of armour composed of small metal plates sewn to an inner
+    layer of heavy canvas, and covered with a second layer of cloth. Within it
+    is the spirit of Eorl the Young, matchless in combat.
+
+The Mithril Chain Mail 'Belegennon'
+    This wondrous suit of fine-linked chain shimmers as though of pure silver.
+    It stands untouched amidst the fury of the elements, and a power of
+    concealment rests within.
+
+The Mithril Plate Mail of Celeborn
+    A shimmering suit of true-silver, forged long ago by dwarven smiths of
+    legend.  It gleams with purest white as you gaze upon it, and mighty are
+    it powers to protect and banish.
+
+The Chain Mail of Arvedui 
+    A hauberk, leggings, and sleeves of interlocking steel rings, well padded
+    with leather. You feel strong and tall as Arvedui, last king of Arnor, as
+    you put it on.
+
+The Augmented Chain Mail of Caspanion 
+    A hauberk, leggings, and sleeves of interlocking steel rings,
+    strategically reinforced at vital locations with a second layer of chain. 
+    Magics to enhance body and mind lie within, and no door can hope to resist
+    the wearer.
+
+The Chain Mail of Peregrin Took
+    This sturdy mail shirt was a gift from the nobility of Gondor to the
+    halfling Peregrin Took.  It enables a warrior to fight more capably and
+    cling to life when others would be killed. It also reveals enemies
+    (especially trolls) hiding in the dark, and terrifies anyone who threatens
+    the wearer. 
+
+The Multi-Hued Dragon Scale Mail 'Lothronfaun'
+    A massive suit of heavy dragon scales deeply saturated with many colours. 
+    It throbs with angry energies. May-cloud it is called, after the element
+    lightning which courses with it with unusual vigour.
+
+The Power Dragon Scale Mail 'Loknare' 
+    A mighty suit of dragon armour, set with the scales of dragons of both Law
+    and Chaos, and with power over both. Loknare means Dragonblaze.

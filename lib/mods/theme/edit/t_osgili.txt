@@ -1,0 +1,136 @@
+# File: t_osgili.txt
+
+# Osgiliath map by furiosity <furiosity@zionmainframe.net>
+# NB! The additional terrain features and stores (if any) assume usage of the following files from the 'theme' module:
+# f_info.txt, t_pref.txt, st_info.txt, and ba_info.txt
+# Please download the module and refer to the files for the terrain feature definitions http://modules.t-o-m-e.net/
+# Don't forget to modify the maximum number of terrain features, etc. in misc.txt as well.
+
+### Additional terrain features ###
+
+#Anduin river
+F:a:227:3
+
+#Small tree
+F:b:202:3
+
+#Wooden board
+F:c:235:3
+
+#light post
+F:d:221:3
+
+# Altars
+F:k:161:3
+F:l:162:3
+F:m:163:3
+F:n:165:3
+F:w:166:3
+F:x:167:3
+F:y:168:3
+F:z:169:3
+
+### Buildings ###
+
+# The Twinkling Star inn
+F:e:74:3:0:0:0:0:0:68
+
+# The Castle of Stars
+F:f:74:3:0:0:0:0:0:85
+
+# Map store
+F:g:74:3:0:0:0:0:0:66
+
+# Museum
+F:h:74:3:0:0:0:0:0:57
+
+# Soothsayer
+F:i:74:3:0:0:0:0:0:12
+
+# Library
+F:j:74:3:0:0:0:0:0:13
+
+# Casino
+F:o:74:3:0:0:0:0:0:15
+
+# Fighters Hall
+F:p:74:3:0:0:0:0:0:17
+
+# Tower of Magery
+F:q:74:3:0:0:0:0:0:18
+
+# Inner Temple
+F:r:74:3:0:0:0:0:0:19
+
+# Paladins Guild
+F:u:74:3:0:0:0:0:0:20
+
+# Rangers Guild
+F:v:74:3:0:0:0:0:0:21
+
+D:######################################################################################################################################################################################################
+D:#---------------------------------------------------------#################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@##########################---------------------------------------------------------#
+D:#OOOOOOOOOOOOOOOOOOOOOOOOOOOO-------------------------######,,,,,,,,,,,,,,,@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@,,,,,,,,,,,,,,,,,,,,,,,,####-------------------------OOOOOOOOOOOOOOOOOOOOOOOOOOOOOO#
+D:#---------------------------OO--------------------#####,,,,,,,########,,,,@@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@,#####,,,#####,,,#####,,######---------------------OOO----------------------------#
+D:#----------------------------OO-----------------####,,,,,,,,,O7#######,,,,@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@,,#####OOO#####OOO#####O,,,,,#####-----------------OOO-----------------------------#
+D:#-----------------------------OO--------------####,,,,,,,,,,OO########,,,@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@,,#####,,,#####,,,#####,O,,,,,,,#####-------------OOO------------------------------#
+D:#------------------------------OO----------####,,,,########O,O,,,,,,,,,,,@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@,,,,O,,,,,,,O,,,,,,,O,,,,OOOOO,,,,,####----------OOO-------------------------------#
+D:#-------------------------------OO-------####,,,,,Og#######O,O,,,,,,,,,,,@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@,,,,,OOOO,,,,OOOO,,,,OOOO,,,,,OOOO,,,####------OOO---------------------------------#
+D:#--------------------------------OO---####,,,,,,,O,########,,O,,,,,,,,,,,@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@,,,,,#####,,,#####,,,#####,,,,#####,,,####---OOO----------------------------------#
+D:#---------------------------------OO###,,,,,,,,,,,OO,,,,,,,,,O########,,,@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@,,,,#####OOO#####OOO#####OOO,#####,,,,#####OOO-----------------------------------#
+D:#---------------------------------#OOd,,,,,,########O,,,,,,,,O3#######,,,@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@,#####,,,#####,,,#####,,,,#####,,,,,,,#OOO------------------------------------#
+D:#--------------------------------##dOOb,,,,,#######2O,,,,,,,,O########,,,@@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@,,,O,,,,,,,O,,,,,,,O,,,,,,,,O,,,,,,,,dOOd###----------------------------------#
+D:#-------------------------------###,bOOb,,,,########,O,,,,,,,O,,,,,,,,,,,,,@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@,,OOO,,,,,OOOO,,,,O,,,,,,,O,,,,,,,dOOd--###---------------------------------#
+D:#------------------------------##,,,,bOOb,,,,,,,,,,,,,O,,,,T,,O,,,,,,,,,,,,@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@,,#####,,,#####,,,T,,,,#####,,,,dOOd-----##--------------------------------#
+D:#-----------------------------##,,,,,,bOOb,,,,,,,,,,,,,O,,TTT,,O,########,,,@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@,,#####OOO#####OOTTTOOO#####,,,dOOd-------##-------------------------------#
+D:#----------------------------##,,,,,#,,bOOb,,,,,########O,,T,,,,Oo#######,,,@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@,#####,,,#####,,,T,,,,#####,,dOOd---------##------------------------------#
+D:#---------------------------##,,,,,,#,,,bOOb,,,,#######5O,,,,,,,O########,,,@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@,,,,O,,,,,,,O,,,,,,,,,,,,O,,,dOOd---TTTTT---##-----------------------------#
+D:#--------------------------##,,,,,,###,,,bOOb,,,########,O,,,,,,O,,,,,,,,,,,,@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@,,,,O,,,,,,,O,,,,,,OOOOO,,,dOOd---TTTTTTT---##----------------------------#
+D:#-------------------------##,,,,,,,###,,,,bOOb,,,,,,,,,,,,O,,,,,O,,,,,,,,,,,,,@@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@,#####,,,#####,,#####,,,,dOOd-----TTTTT-----##---------------------------#
+D:#------------------------##,,,,,,,#####,,,,bOOb,,,,,,,,,,,,OOO,,,O,########,,,,@@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@,,#####OOO#####,,#####,,,dOOd-----------------##--------------------------#
+D:#-----------------------##,,,,,,,,#####,,,,,bOOb,,,,,,########O,,,O0#######,,,,,,@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@,,#####,,,#####,,#####,,dOOdOOOOOOOOOOOOOOOOOOO##-------------------------#
+D:#----------------------##,,,,,,###########,,,bOOb,,,,,#######6O,,,O########,,,,,,@@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@,,,,O,,,,,,,O,,,,,,O,,,dOOd-O.###..#####..###.O-##------------------------#
+D:#----------------------##,,,,,,###########,,,,bOOb,,,,########,O,O,,,,,,,,,,,,,,,@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@,,,OO,,,,,,,,,OOOOOO,,,dOOd--O.###..#####..###.O-##------------------------#
+D:#----------------------##,,,#################,,bOOb,,,,,,,,,,,,,OOO,,,,,,,,,,,,,@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@,#####,,,,,,,#####,,,,dOOd-F-O.###############.O--##-----------------------#
+D:#---------------------##,,,,#################,,,bOOb,,,,,,,#######9O,,,,,,,,,,@@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@,,#####OOOOOOO#####,,,dOOd-FF-O.###############.O--##-----------------------#
+D:#---------------------##,,,,########q########,,,,bOOb,,,,,,########O,,,,,,,,,@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@,,#####,,,,,,,#####,,dOOd-FFF-O..#############..O--##-----------------------#
+D:#---------------------##,,,,,,,,,,,,,,,,,,,,,,,,,,bOOb,,,,,########,,,,,,,,,,@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@,,,,,,,,,,,,,,,,,,,,,dOOd-FFFF-O..#############..O---##----------------------#
+D:#--------------------################,,,,,,,,,,,,,,dOOd,,,,,,,,,,,,,,,,,,,,d##@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@,##d,,,,,,,,,,,,,,,,,dOOd-FFFFF-O..#############..O---##----------------------#
+D:#--------------------##T-------------bbbbbbbbbbbbbbbbOObbbbbbbbbbbbbbbbbbbbbb############################################bbbbbbbbbbbbbbbbbbbOOd--------O..#############..O----##---------------------#
+D:#--------------------##TOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO.###############.O----##---------------------#
+D:#--------------------##TOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO.###############.O----##---------------------#
+D:#--------------------##TOOcccccccccccbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbOObbb############################################bbbbbbbbbbbbbbbbbbbOOd--------O.f##############.O----##---------------------#
+D:#--------------------##TOOc--VVVVV--c,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,dOOd,d##@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@##d,,,,,,,,,,,,,,,,dOOdbbbbbbb-O.f##############.O----##---------------------#
+D:#--------------------##TOOc-VVdWdVV-c,,,######,,,,,,,,,,,,,,,,,T,,,,,bOOb,,,,,@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@,,,,,,,,,,,,,,,,,,,dOOdbOOOOOb-O.f##############.O----##---------------------#
+D:#--------------------##TOOcVVVWWWVVVc,,,######,,,,,,,,,,,,,,,,TTT,,,bOOb,,,,,,,@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@,,,,dAAAAAAAAAd,,,,dOOdbOVVVOb-O.###############.O----##---------------------#
+D:#--------------------##TOOc-VVdWdVVOc,,,######,,,,,,,,,,,,,,,,,T,,,bOOb,,,,,,,,@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@,,,AAAAAAAAAAAAA,,,dOOdbOVVVbb-O.###############.O----##---------------------#
+D:#--------------------##TOOc--VVVVV-Oc,,,##h###,,,,,,,,######,,,,,,bOOb,,,,,,,,,,@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@,,,,,dAAAAAAAAAd,,,,dOOdbOOOOOOOO..#############..O----##---------------------#
+D:#--------------------##TOOcccccccccO,,,,,,O,,,,,,,,,,,######,,,,,bOOb,,,,,,,,,,,@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@,,,,,,,,,,,,,,,,,,,,,dOOdbbbbbbb-O..#############..O----##---------------------#
+D:#--------------------##TOOOOOOOOOOOO,,,,,,O,,,,,TT,,,,######,,,,bOOb##########,,,@aaaaaaaaaaaaaaaaaaaaaaaa###########dbbbbbbbbbbbbbbbbbbbbbbOO---------O..#############..O---##----------------------#
+D:#--------------------################,,,,,,O,,,TTTT,,,##pp##,,,bOOb,##########,,,@aaaaaaaaaaaaaaaa@@######OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO..#############..O---##----------------------#
+D:#---------------------##,,,,,,,,,,,,,,######O,,,TT,,,,,,O,,,,,bOOb,,##########,,,@aaaaaaaaaaaa######OOOOOO###########dbbbbbbbbbbbbbbbbbbbbbbbOO--------O.###############.O---##----------------------#
+D:#---------------------##,,,,,,,,,,,,,,######,O,,,,,,,,,O,,,,,bOOb,,,##1####e##,,@aaaaaaa######OOOOOO#######aaaaaaaa@,,,,,,,,,,,,,,,,,,,,,,,,,dOOdFFFFF-O.###############.O--##-----------------------#
+D:#----------------------##,,,######,,,,######,,O,,######O,,,,bOOb,,,,,,O,,,,O,,,d########OOOOOO#######aaaaaaaaaaaaaa@,,,,,,,dRRRRRRRRRRRd,,,,,,dOOdFFFF-O.###..#####..###.O--##-----------------------#
+D:#----------------------##,,,######,,,,##jj##,,,O,######O,,,bOOOOOOOOOOOOOOOOOOOOOOOOOOOO#######aaaaaaaaaaaaaaaaaaaa@,,,,,,,RRRRRRRRRRRRR,,,,,,,dOOdFFF-O.###..#####..###.O-##------------------------#
+D:#-----------------------##,,######,,,,,,O,,,,,,,O######O,,bOOb,,,,,,,,,,,,,,,,,d#########aaaaaaaaaaaaaaaaaaaaaaaaaa@,,,,,,,dRRRRRRRRRRRd,,,,,,,,dOOdFF-OOOOOOOOOOOOOOOOOOO##-------------------------#
+D:#------------------------##,##i###,,,,,,,O,,,,,,Or#####O,bOOb,,,,,,,,,,,,,,,,,,,@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,dOOdF-O------------------##-------------------------#
+D:#------------------------##,,,O,,,,,,,,,,O,,,,,,,OOOOOOObOOdbbbbbbbbbbbbbbbbbbd####################################dbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbOOd-O------TTTTT------##--------------------------#
+D:#-------------------------##,,,O,,,,,,,,,O,,,,,,,,O,,,,bOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO-----TTTTTTT----###--------------------------#
+D:#--------------------------##,,,,O######,O,######O,,,,bOOdbbObbbbbbbbbbbbbbbbbd####################################dbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbOO------TTTTT-----##---------------------------#
+D:#---------------------------##,,,O######,O,######O,,,bOOb,,bOb,,,,,,,,,,,,,,,,,,@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,dOOd-------------##----------------------------#
+D:#----------------------------##,,O######,O,######O,,bOOb,,,bOb,,,,,,,,,,,,,,@@@@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@,,,#####,,,,,,,,,,,,,,,,,,,,#####,,,dOOd-----------##-----------------------------#
+D:#-----------------------------##,O##u###,O,##v###O,bOOb####bOb####,,,,,,,,,@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@,,#####OOOOOOOOOOOOOOOOOOOO#####,,,,dOOd--------###------------------------------#
+D:#------------------------------##,OOO,,,,O,,,OOOO,bOOb,#k,,dOd,,m#,,,,,,,,,@@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@,,#####,,,,,,,,,,,,,,,,,,,,#####,,,,,dOOd------##--------------------------------#
+D:#-------------------------------##,,,OOOOOOOO,,,,bOOb,,#,,#NON#,,#,,,,,,,,@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@,,,O,,,,,,,,,,,,,,,,,,,,,,,,OOOO,,,,,dOOd----##---------------------------------#
+D:#--------------------------------###,,,,,,,T,,,,bOOb,,,#,,#NON#,,#,,,,,,,@@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@,,#####,,,,,,,,d,,,,,,,,,,,,,,#####,,,,dOO-d###----------------------------------#
+D:#----------------------------------###,,,,TTT,,bOOb,####,##NON##,####,,@@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@,,#####,,,,,,,,,,,,,,,OOOOOOOO#####,,,,,dOOOOO-----------------------------------#
+D:#------------------------------------###,,,T,,bOOb,,#y,,,#-NON-#,,,z#,@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@,,,#####,,,,,,,,,,,,,,O,#####,,#####,,,,,####OOOOO--------------------------------#
+D:#--------------------------------------###,,,bOOb,,,#w,,,#-NON-#,,,x#,@@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@,,,,,,,,O,,,,,,,,,,OOOOOO,,#####,,,,,,,,,####-----OOOOO------------------------------#
+D:#----------------------------------------###dOOb,,,,####,##NON##,####@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@,,,,,,#####,,,,,,,O,#####,,#####,,,,,,,####---------OOOOO----------------------------#
+D:#------------------------------------------OOOd,,,,,,,,#,,#N4N#,,#,,@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@,,,,,,,#####,,OOOOO,,#####,,,,,,,,,,,,####-------------OOOOO--------------------------#
+D:#-----------------------------------------OOO###,,,,,,,#,,#####,,#,,,@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@,,,,,,#####,O#####,,#####,,,,,,,,,####-------------------OOOO------------------------#
+D:#----------------------------------------OOO---###,,,,,#l,,,,,,,n#,,@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@,,,,,,,,,O,,O,#####,,,,,,,,,,,,,#####------------------------OOOO---------------------#
+D:#---------------------------------------OOO------###,,,###########,,@@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@,,,,,,,,,,,,,O,,,#####,,,,,,,,,,####-------------------------------OOOO------------------#
+D:#OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO--------###,,,,,,,,,,,,,,@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@,,,,,,,,,,,,,,,,,,,,,,,,,,,######-------------------------------------OOOOOOOOOOOOOOOOOOOO#
+D:#--------------------------------------------------###############@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@##############################------------------------------------------------------------#
+D:######################################################################################################################################################################################################

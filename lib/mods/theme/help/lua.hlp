@@ -1,0 +1,34 @@
+|||||oy
+~~~~~01|Help|Lua scripting for ToME
+#####R     Welcome to the ToME Lua Help System.
+#####R=============================================
+
+Please choose one of the following help files:
+
+     *****/alua_intr.txt*0[(a) An Introduction to scripting]
+     *****/blua_pow.txt*0[(b) Adding a racial power (the 'U' menu)]
+     *****/clua_skil.txt*0[(c) Adding new skills (the 'm' menu)]
+     *****/dlua_ques.txt*0[(d) Adding a quest]
+
+     
+     *****/elua_mon.txt*0[(e) Useful functions in monster.pkg]
+     *****/flua_play.txt*0[(f) Useful functions in player.pkg]
+     *****/glua_spel.txt*0[(g) Useful functions in spell.pkg]
+     *****/hlua_util.txt*0[(h) Useful functions in util.pkg]
+
+     *****/ilua_gf.txt*0[(g) A list of GF_FOO flags]
+
+
+     *****/zhelp.hlp*0[(z) Main Help menu]
+
+
+
+
+
+
+
+
+
+
+
+

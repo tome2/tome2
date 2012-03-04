@@ -1,0 +1,129 @@
+|||||oy
+~~~~~01|Luck (spoiler)
+~~~~~02|Spoilers|Luck
+#####RLuck
+
+"You've got to ask yourself one question: do I feel lucky? Well do ya 
+punk?"
+        --Clint Eastwood (Dirty Harry)
+
+#####G1. Starting luck
+Most races start with no luck points. Those that start with luck are listed
+below from most luck to least luck.
+
+Hobbit (+5); 
+Maia (+4); 
+Gnome, Dunadan (+2); 
+Beorning (+1);
+Half-Ogre, Dark Elf, Ent (-2); 
+Orc (-3); 
+Troll (-4); 
+Petty Dwarf, Yeek (-5).
+
+Most subraces start with no luck points. Those that start with luck are listed
+below from most luck to least luck.
+
+Barbarian (+1); 
+Spectre, Skeleton (-3); 
+Zombie (-4).
+
+So, a Hobbit starts with 5 luck points, a Beorning Barbarian starts with 2 luck
+points, while a Yeek Zombie starts with -9 luck points.
+
+#####G2. Descriptions
+Drinking a potion of self-knowledge will tell you how lucky or unlucky your
+character is.
+
+DESCRIPTION         VALUE
+incredibly unlucky  less than -27
+extremely unlucky   less than -18
+very unlucky        less than -9
+unlucky             less than 0
+normal luck         0
+lucky               more than 0
+very lucky          more than 9
+extremely lucky     more than 18
+incredibly lucky    more than 27
+
+Luck < -30 is treated as -30 and luck > 30 is treated as +30.
+
+#####G3. Items affecting luck
+Elven cloaks give a bonus to luck.
+
+All Morgul items have -10 luck.
+Weapons of Telchar give a bonus to luck.
+Weapons of the Glamhoth are unlucky.
+Lucky amulets give a bonus to luck.
+Unlucky amulets are, well, unlucky.
+
+Artifacts can affect your luck. Beware: not all artifacts give you good luck.
+Listed below are the artifacts which affect your luck.
+
+The Phial of Galadriel (+4)
+The Arkenstone of Thrain (+3)
+The Ring of Power 'Narya' (+1)
+The Ring of Power 'Nenya' (+2)
+The Ring of Power 'Vilya' (+3)
+The Metal Cap of Thengel (+3)
+The Shadow Cloak of Luthien (+2)
+The Set of Cesti of Fingolfin (+4)
+The Broken Dagger 'Angrist' (+5)
+The Long Sword 'Anduril' (+4)
+The Long Sword of Dernhelm (+5)
+The Long Bow of Bard (+2)
+The Mage Staff of Manwe (+12)
+The Golden Harp of Thorin (+2)
+The Harp of Maglor (+3)
+The Drum of the Sky (+2)
+The Harp of Daeron (+1)
+The Long Sword of Tulkas (+10)
+The Robe of Great Luck (+60)
+The Heavy Crossbow of Orome (+5)
+The Iron Helm of Knowledge (-6)
+The Shield of Deflection of Gil-galad (+5)
+The Set of Gauntlets of Eol (+3)
+The Demonblade of Gothmog (-20)
+The Elven Cloak of Peregrin Took (+3)
+The Ring 'Fuin' (+15)
+The Blue Stone 'Coimir' (+2)
+The Elven Cloak of Mellyrn (+4)
+The Set of Cesti 'Skycleaver' (+1)
+The Robe of Belegaer (+5)
+The Harp of Tom Bombadil (+4)
+The Horn 'Valaroma' (+4)
+The Sceptre of Numenor (-3)
+The Rod of Annuminas (+4)
+The Lucerne Hammer of the Eruchin (+10)
+The Trident of Ulmo (+10)
+The Broad Axe of Aule (+10)
+The Rapier of Vaire (+10)
+The Long Bow of Irmo (+5)
+The Sling of Nessa (+5)
+The Boomerang of Varda (+5)
+The Ring of Power of the Blacklocks (+3)
+
+#####G4. What does it affect.
+It affects your chance to-hit in ranged combat and melee combat.
+
+It affects your chance of critical hits in ranged combat and melee combat.
+
+It affects your chance of being missed by a monster attack. This effectively
+changes armour class by -13 (incredibly unlucky) to +13 (incredibly lucky).
+
+It affects the rarity of special objects, artifacts, and ego items.
+
+It affects the number of wishes on a staff of wishing.
+
+It affects the base level for applying magic to an item.
+
+It affects the chance of an item being good or great.
+
+It affects the chance of creating a special object.
+
+It prevents the death fate if you are lucky.
+
+It affects the number of skill points you receive when quaffing the Potion of
+Learning.
+
+
+                                   Written for ToME 2.0 by Chris Hadgis

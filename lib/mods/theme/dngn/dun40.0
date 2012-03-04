@@ -1,0 +1,9 @@
+# Father branch is Mirkwood(1), on level 33
+A:1
+L:22
+
+N:Thorin's trail
+U:s_thorin.map
+D:#yYou hear someone shout, "My mad kinsmen have taken the key to the Lonely Mountain! Get the key, then find that fool hobbit and my map! If you haven't already."#w
+F:DESC | NO_GENO | NO_NEW_MONSTER | SPECIAL | NO_STAIR
+F:ASK_LEAVE | NO_TELEPORT

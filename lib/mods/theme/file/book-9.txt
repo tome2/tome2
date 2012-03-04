@@ -1,0 +1,99 @@
+		    ------------------------
+		   | Monstrous Compendium 1 |
+		   |       Humanoids        |
+	 	    ------------------------
+
+                  *** Townsfolk (t) ***
+
+These are the monsters you will find in the various towns all across 
+Middle-earth. Most of them are neutral to the player, though those who 
+are not neutral are quite harmless, unless you take them on before you 
+are strong enough. The townsfolk include [[[[[oAimless-looking merchants], 
+[[[[[UPitiful-looking beggars], [[[[[ySinging, happy drunks], [[[[[uMangy-looking lepers], 
+[[[[[GVillage idiots], [[[[[WBlubbering idiots], [[[[[RBoil-covered wretches], [[[[[gWoodsmen], 
+[[[[[wSanctimonious-looking preachers], [[[[[vWeary-looking travellers], 
+[[[[[DFilthy street urchins], [[[[[rMean-looking mercenaries], 
+[[[[[bAgents of the black market], and [[[[[BBattle-scarred veterans].
+
+                    *** Humans (p) ***
+
+These are the various humans inhabiting Middle-earth, from all trades 
+and professions, of varying degrees of experience. The novices and 
+apprentices are just what their titles imply: new to the craft and thus
+easier to deal with than more advanced masters. Depending on the 
+player's race, some of these may be neutral or even coaligned. The 
+trades include [[[[[brogues], [[[[[uwarriors], [[[[[rmages], [[[[[omystics], [[[[[Rsorcerers], [[[[[Wrangers],
+[[[[[Gdruids], [[[[[wpaladins], [[[[[ymindcrafters], and [[[[[gpriests].
+
+These also include various subraces of humans from different parts of
+Middle-earth, including the moderately dangerous [[[[[Ueasterlings], [[[[[rVariags], 
+[[[[[UCorsairs of Umbar], [[[[[uHaradrim], [[[[[sWainriders], and [[[[[gDunlendings], the very
+dangerous [[[[[DBlack Numenoreans] and [[[[[DOathbreakers], as well as the friendly
+(yet deadly when roused) [[[[[BWavelords].
+
+
+               *** Elves and Halflings (h) ***
+
+The Halflings are a shy race, so there are not that many of them - only
+the [[[[[sScruffy-looking hobbits] and [[[[[UHalfling slingers]. Very stealthy and 
+good shots, Halflings. They make excellent burglars.
+
+The [[[[[BMermaids] are an enigma, some argue that they are simply drowned 
+Elven maidens, others say they're half-human, half-fish. Whatever they
+are, they are quite dangerous to the unwary adventurer. Another odd
+race are the [[[[[yMind flayers], whose mind powers are legendary and ability
+to deprive others of their sanity unmatched.
+
+The majority of Elven monsters an adventurer will encounter in the 
+dungeons will be Dark Elves, all good at a particular profession, and
+much better at these professions than their human counterparts. There 
+are simple [[[[[DDark elves] who live by their wits and a bit of magic, and 
+then there are [[[[[vDark elven warlocks], [[[[[RDark elven sorcerers], [[[[[GDark elven] 
+[[[[[Gdruids], [[[[[gDark elven priests], [[[[[uDark elven warriors], and [[[[[rDark elven] 
+[[[[[rmages], all commanded by [[[[[DDark elven lords].
+
+Not all Elves you meet will be hostile and expert at the Dark arts, 
+however, among them the [[[[[bAquatic elven warriors], [[[[[WElven archers],
+[[[[[wHigh-elven rangers], and [[[[[oAquatic elven mages].
+
+                   *** Dwarves (k) ***
+
+A hardy and stout race, the Dwarves make formidable opponents to any 
+adventurer who encounters them. They, too, practice a variety of trades,
+though their spectrum is not as wide-ranging as that of humans or elves.
+The [[[[[DDark dwarven lords] rule over the [[[[[gDark dwarven priests], [[[[[uDark dwarven] 
+[[[[[uwarriors], and [[[[[wDark dwarven smiths].
+
+The Dwarves do not trust magic, but a subrace of them - the Petty-dwarves
+- do practice it, you will see both plain [[[[[sPetty-dwarves] and [[[[[RPetty-dwarf] 
+[[[[[Rmages].
+
+Some adventurers who know the correct incantation will be able to summon 
+[[[[[Udwarven warriors] to their aid.
+
+           *** Gnomes, leprawns, and their kin (l) ***
+
+The gnomes are a less-well-known race on Middle-earth; they are related 
+to the Petty-dwarves, but they are not nearly as stout as Dwarves. The 
+gnomes are quite cunning and smart, but not very strong. Their [[[[[sgnome lords]
+command the [[[[[ugnome warriors], [[[[[bgnome rogues], [[[[[rgnome priests], [[[[[Rgnome mages], 
+[[[[[wgnome paladins], and [[[[[ognome mystics].
+
+A race closely related to gnomes are the leprawns - they are even smaller 
+than gnomes, and much weaker. However, leprawns breed very quickly and an 
+unwary adventurer might be overrun if he is not careful! The [[[[[vmalicious] 
+[[[[[vleprawns] are a nuisance, the [[[[[Wwizard leprawns] are a dangerous nuisance,
+and one is not advised to underestimate the [[[[[Ddeath leprawns].
+
+There also exist [[[[[Gcheerful leprawns] and [[[[[Uadventurer gnomes], who have broken
+with the traditions of their races, and might agree to help other adventurers.
+
+A strange race from the depths are the [[[[[glizard men] with their [[[[[rlizard kings] - 
+they are quite strong and command powerful magic. These creatures prefer to 
+live in swamps and shallow water areas, however, so you will not encounter 
+them in the dungeons often.
+
+
+
+
+

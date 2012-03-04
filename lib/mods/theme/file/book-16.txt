@@ -1,0 +1,43 @@
+		 -------------------------
+		| Monstrous Compendium 8  |
+		| Depth dwellers, hybrids |
+	 	 -------------------------
+
+               *** Nagas (n) ***
+
+Giant snake-like figures with a woman's torso. There are
+[[[[[ggreen], [[[[[Rred], [[[[[Dblack], [[[[[Bwater], [[[[[oswamp], [[[[[ubrown], [[[[[Wsilver],
+[[[[[vnight], [[[[[Gtree], [[[[[sdark], [[[[[bocean], [[[[[yguardian], and [[[[[wspirit nagas].
+The [[[[[Uadventurer nagas] are friendly to their fellows.
+
+               *** Hydras (M) ***
+
+Strange reptilian creatures with several heads, guarding 
+treasure hoards. There are [[[[[u2-headed], [[[[[o3-headed], [[[[[y4-headed],
+[[[[[g5-headed], [[[[[w6-headed], [[[[[G7-headed], [[[[[s8-headed], [[[[[r9-headed],
+[[[[[b10-headed], [[[[[R11-headed], [[[[[W12-headed], [[[[[v13-headed], [[[[[B14-headed],
+[[[[[U15-headed], as well as [[[[[DKiller hydras].
+
+               *** Hybrids (H) ***
+
+These creatures are all crosses between two (or sometimes
+more) different beings. The [[[[[wWhite harpies], [[[[[DBlack harpies],
+and [[[[[oOwlbears] are not very dangerous. The [[[[[UHippogryphs],
+[[[[[uGriffons], [[[[[RGorgimaerae], [[[[[BBehemoths], [[[[[rChimaerae], [[[[[yManticores],
+and [[[[[GSphinxes] are more dangerous and deadly. The [[[[[bGorgons],
+[[[[[WHeadless], [[[[[gSwamp things], and [[[[[vJabberwocks] are the deadliest.
+
+            *** Depth dwellers (~) ***
+
+These creatures inhabit the oceans, lakes, and seas of Arda.
+Along with the [[[[[BSand mites], [[[[[BBox jellyfish], [[[[[GBarracudas], and
+[[[[[RPiranhas] there are [[[[[yStargazers], [[[[[gOctopi], [[[[[WGlobefish], [[[[[sPikes],
+[[[[[sSwordfish], and [[[[[sFlounders]. More dangerous are [[[[[rGiant crayfish],
+[[[[[RGiant piranhas], and [[[[[gGiant squid]. Among the larger depth-
+dwellers, there are the [[[[[WHammerhead sharks], [[[[[oTiger sharks],
+[[[[[wWhite sharks], [[[[[oSeahorses], and [[[[[gGiant octopi]. The largest and
+more dangerous creatures include the [[[[[DWhales], [[[[[UElder stargazers],
+[[[[[wGreat white sharks], [[[[[uUndead stargazers], [[[[[GLesser Krakens], 
+[[[[[wKiller whales], and [[[[[GGreater Krakens]. The most dangerous ocean
+dweller is the [[[[[vLeviathan].
+

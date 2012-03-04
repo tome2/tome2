@@ -1,0 +1,47 @@
+		 -------------------------
+		| Monstrous Compendium 11 |
+		|  Elemental creatures    |
+	 	 -------------------------
+
+               *** Vortices (v) ***
+
+These strange creatures are like localised tornadoes,
+carrying with them the various elements: [[[[[rfire], [[[[[benergy],
+[[[[[ggas], [[[[[wcold], [[[[[sacid], [[[[[ushards], [[[[[vnexus], [[[[[ymana], [[[[[Uconfusion],
+[[[[[Wslowness], [[[[[vchaos], [[[[[Gnether], [[[[[Rplasma], and [[[[[Btime]. Among 
+these, the nastiest by far are the [[[[[vstorms of unmagic],
+as well as [[[[[oshimmering], [[[[[Ddeath], and [[[[[vaether] vortices.
+
+                *** Spirits (E) ***
+
+These are the spirits contained in various elements, they
+are weaker than the proper elementals. There are [[[[[rFire] 
+[[[[[rspirits], [[[[[bWater spirits], [[[[[uEarth spirits], and [[[[[BAir spirits]
+alongside [[[[[WWill'o the wisps] and [[[[[yInvisible stalkers].
+
+               *** Elementals (E) ***
+
+Towering masses of raw elements, twisting and shaking all
+in their wake: [[[[[rfire], [[[[[bwater], [[[[[uearth], [[[[[Bair], [[[[[wice], [[[[[omagma],
+[[[[[Uconfusion], [[[[[Ddark], [[[[[Rsmoke], [[[[[gooze], [[[[[sslowness], [[[[[Gtime], and 
+[[[[[vchaos].
+
+           *** Hulking figures (X, Y) ***
+
+These are strange hulking shapes that puzzle anyone who
+comes across them. They include the [[[[[sXaren], the [[[[[uXorn],
+[[[[[UUmber hulk], [[[[[DDeath hulk], [[[[[wWhite hulk], [[[[[oOrange hulk], [[[[[rFire] 
+[[[[[rhulk], [[[[[gForest hulk], [[[[[bNight hulk], [[[[[WSilver hulk], [[[[[vChaos hulk],
+[[[[[yYellow hulk], [[[[[RRed hulk], [[[[[GGreen hulk], and [[[[[Bblue hulk]. The 
+[[[[[sSasquatch] and [[[[[wYeti] resemble humans, but they are still
+quite strange.
+
+            *** Zephyr Hounds (Z) ***
+
+They are dog-like figures wreathed in the elements. They 
+tend to move in packs, and are among the most vicious of
+all dungeon dwellers. The hounds may be: [[[[[Bclear], [[[[[rfire],
+[[[[[benergy], [[[[[gair], [[[[[wcold], [[[[[sacid], [[[[[vmulti-hued], [[[[[Ddark], [[[[[olight],
+[[[[[uearth], [[[[[Baquatic], [[[[[vnexus], [[[[[rwater], [[[[[Rplasma], [[[[[yvibration],
+[[[[[vchaos], [[[[[Gnether], [[[[[uimpact], [[[[[Winertia], [[[[[Ugravity], [[[[[Gethereal],
+[[[[[Btime], and [[[[[vaether].

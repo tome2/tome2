@@ -1,0 +1,313 @@
+Chronological list of changes made in Theme module.
+
+Detailed list: http://www.zionmainframe.ca/tome/theme/changes.html
+Known bugs: http://www.zionmainframe.ca/tome/theme/bugs.html
+Credits: http://www.zionmainframe.ca/tome/theme/credits.html
+
+Theme 0.0.1 AKA "The Beginning"
+
+	- 20 new terrain features
+	- removed Alchemy [the class, the skill, and the Artifact Creation ability]
+	- removed DeathMolds [replaced with Dragons from Annals of Ea]
+	- Morgoth's corrupted races may no longer play as Lost Souls
+	- changed the intro screen and wording
+	- removed access to the Lost Hobbit quest (NEVER_GENE to both Proudfoots)
+
+Theme 0.0.2 AKA "Object Mayhem"
+
+	- removed all items relating to alchemy and portable hole
+	- changed many descriptions and item names
+	- fountainized more potions
+	- Greater Ration of Health and the Potion of Learning are no longer artifacts, but more rare.
+	- rings and amulets are all indestructible now
+	- amulets of Devotion are blessed
+	- Adamantite rods are now Tilkal rods and more rare
+	- Espadons must be wielded two-handed
+	- the Bardiche replaces the Basillard
+	- Adamantite armour is now Galvorn
+	- Paper Armour makes wearer sensitive to fire; Fur cloaks grant cold resistance.
+	- Rhino Hide Armour became Mumak Hide Armour
+	- Golden Ring Mail replaces Stone and Hide Armour
+	- adjusted leather jacket, renamed to leather jerkin
+
+Theme 0.0.3 AKA "Wordsmith"
+
+	- new rumours
+	- revamped list of silly monster names
+	- junkarts got a total facelift
+	- monster speech made more thematic all across the board
+	- more thematic last words (both monsters and player)
+
+Theme 0.0.4 AKA "Monstervore" 
+(veteran *banders beware: many, many changes to monsters. Read the detailed list, the starting parchment, or take extra time to look around. 'Monstervore' is about right for the version name, in fact.)
+
+	- more neutral monsters all across the board
+	- Zangband and CthAngband monsters are gone, joke monsters greatly revamped.
+	- Angels, icky things, centipedes, and kobolds are gone.
+	- many colour changes to reduce confusion, different monsters should be easier to, uh, differentiate
+	- gnomes, leprechauns, and lizard men are now using the 'l' symbol instead of 'h'
+	- dwarves use the 'k' symbol instead of 'h'
+	- wainriders, black numenoreans, and oathbreakers are in, knights of all kinds are out.
+	- none of the 'cold' variety dragons have flight
+	- mature non-aquatic dragons have been renamed to drakes
+	- great wyrms are now great worms
+	- baby dragons are hatchling dragons
+	- Smaug no longer erroneously described as an 'uruloki' - uruloki can't fly.
+	- Nazgul are all represented by the letter N now (too many dark gray Ws as it is)
+	- renamed some uniques to be more in-theme
+	- Huan and Shadowfax are now neutral
+	- brought back aquatic elven warriors (friend), aquatic elven mages (friend), Headless, and mermaids from Z.
+	- completely new set of demons (major and minor) all in-theme, replacing the old D&D demons.
+	- the White Balrog renamed and re-described to avoid confusion due to the above.
+	- minotaurs, maulotaurs, and hippocampi are gone. The unique Maze guardian stays.
+
+Theme 0.0.5 AKA "Artifactual"
+
+	- removed joke artifacts, many ammo artifacts, the phial of undeath, and toris mejistos
+	- changed many artifact names
+	- broadened some descriptions
+	- Gurthang renamed to Angalachel (detailed explanation in changelog.txt)
+	- The sword formerly known as Vorpal Blade is sentient
+	- Sting is a short sword, not small sword
+	- Anduril now resists being shattered by Morgul beings.
+	- Angrist is a broken dagger and gives a luck bonus.
+	- Theoden King had a sword, not an axe. That axe is now of Dain Ironfoot.
+
+Theme 0.0.6 AKA "Brave New World"
+
+	- wilderness map corrected a lot to fit the Middle-Earth map, dungeon locations have changed considerably.
+	- some places on the map have names now, so you can wander through Rivendell, the Brown Lands, Udun, etc.
+	- three words: the Dead Marshes. Avoid 'em.
+	- some dungeons renamed; many new terrain features.
+	- in general, the wilderness is a lot more dangerous to travel (thanks to BlackSmurf for the inspiration).
+	- Angband levels 101-127 separated out into Utumno.
+	- 7 new dungeons, all with a final guardian and guaranteed artifact or randart.
+	- random towns in Cirith Ungol, Blue Mountains, Dol Amroth, Near Harad.
+	- Gondolin map tweaked a bit to suit new location.
+	- Lothlorien has been renamed to Caras Galadhon.
+
+Theme 0.0.7 AKA "The Forge"
+
+	- 16 new item types, some from T-Plus, some as suggested in the forum, others my own - mostly for 'game 	  	  	  flavour' [no pun intended :-)]
+	- 37 new ego-types, many from T-Plus and Annals of Ea
+	- 35 new artifacts, many from T-Plus, some from Annals of Ea, some implemented based on forum suggestions
+	- 6 new item sets, one of my own, one from T-Plus, others as suggested in the forum
+	- over 200 new monsters:
+		- centipedes replaced by 9 types of cattle and one unique (Boar of Everholt)
+		- icky things replaced by mewlips (undead things of hobbit-lore), 14 types
+		- 59 new uniques (8 are unkillable, wilderness-only Valar, 8 are joke monsters)
+
+Theme 0.0.8 AKA "Gone to Town"
+	
+	- numerous bug fixes, refer to changelog.txt for details
+	- 4 new artifacts, 4 new sets, 3 new ego types, some item and monster tweaks
+	- 14 new terrain features for town use
+	- 12 new towns, of these 7 are not visible on the wilderness map (all have parchments)
+	- Caras Galadhon map redone completely, Gondolin map tweaked to suit new location
+	- 'Rest for the night' option available for free in player home and some thematic locations
+	- 8 new store types
+	- rewritten store owner list
+
+Theme 0.0.9 AKA "Out, Out, Damned Spot!"
+
+	- a bugfix release on the heels of ToME 2.2.7; see changelog.txt for details
+	- Player can now push past neutral monsters, thanks to a lua script written by BauMog
+	- Bjorn (a joke unique based on a DiTLer) replaces Varda
+	- Player can get free dinner at some thematic locations where player race is liked
+	- Increased quality of rods at the magic rod market
+	- The Valar have an equal number of non-spoiler lines now.
+	- Renumbered the planned releases (see below)
+	- From now on bugfix releases will always come separately.
+
+Theme 0.1.0 AKA "A Farewell to Kobolds"
+
+	- several bugfixes, see changelog.txt for details
+	- only in-theme races can now be Lost Souls: Eldar and Maiar. I put half-elves among them too, as there's 	  conflicting information on whether half-elves made it to the Halls of Mandos or not.
+	- thematised Maiar, Ents, Hobbits, Dwarves, and Wood Elves.
+	- 4 new races: Druedain (replace Kobolds), Easterlings, Roeg (minor demons), Eagles (replace Thunderlords)
+	- 6 dragon subraces
+	- 10 demon subraces
+	- Beefed up Rangers and removed ability to worship anyone but Melkor from Demonologists and Necromancers.
+	- 7 new subclasses
+
+Theme 0.1.1 AKA "Sleeping Awake"
+
+	- several bugfixes, see changelog.txt for details
+	- some tweaks to the Clairvoyants, Ascetics, and Mercenaries
+	- a new joke monster, and more monspeak.txt lines
+	- 3 new ego types
+	- some preliminary changes to lua scripts, mostly stuff from the ToME Script library and T-Plus
+
+Theme 0.1.2 AKA "Friends and Neighbours"
+
+	- a player/monster race alignment scheme based on the T-Plus code for Angel alignments
+
+Theme 0.1.3 AKA "Odds and Ends"
+
+	- tweaks to various info files
+	- added 6 Dwarven Rings of Power
+
+Theme 0.1.4 AKA "Milk and Bones"
+
+	- two lua scriptlets for players who like Ammo creation but don't like scumming for junk
+	- two lua scriptlets for some thematic fun
+
+Theme 0.5.0 AKA "Eternity of Stars"
+
+	- removed weapons belonging to the Valar from a_info (changed names)
+	- renamed existing Eternity items
+	- added 8 new Ultimate items for the Void-divers
+
+Theme 1.0.0 AKA "Shiny and New"
+
+	- Four new Valar: Varda, Aule, Ulmo, Mandos. All with their own magic schools, priest classes, and quest temples.
+	- Fully documented all the changes so far for the ingame help.
+	- Some monster and item tweaks.
+	- Numerous tweaks to the new races and classes.
+	- The Pacifists are now a class alongside warriors, mages, and priests - there are two subclasses.
+
+Theme 1.0.1. AKA "Khazad aimenu!"
+
+	- Fixed some God-related issues
+	- Some miscellaneous cosmetic fixes
+	- Updated automatiser file to work regardless of object flavour display
+	- 4 new axe types from T-Plus
+	- New ego magestaff
+
+Theme 1.0.2. AKA "Order of the Swan"
+
+	- Fixed the Elemental Mastery ego-type
+	- God quest fixes
+	- 3 new ego types, 2 new artifacts, and 1 new item set
+	- Fog on the Barrow-Downs is back, toned down.
+	- New monster: Knight of the Swan (white 'p')
+	- Mithril armour adapted from T-Plus
+
+Theme 1.0.3 AKA "Old and New"
+
+	- New special level in Erebor
+	- New amulet ego-type
+	- Axed the Rustproof and of Valour ego-types
+	- Tweaked Ranger class further
+	- (2.3.0 CVS) Axed several out-of-theme artifacts to make room for new ones from ToME3
+	- (2.3.0 CVS) War-mage class (T-Plus) is useless with the new Mage class, removed
+
+Theme 1.0.4 AKA "Jocos Et Dii Amant"
+
+	- Ulmo now dislikes the player using fire magic and Orc players (Thanks to LogrusMage)
+	- Fixed the monster flag problem which caused lua errors in Ulmo's temple dungeon
+	- Commented out Nienna and Orome in r_info
+
+Theme 1.0.5 AKA "As You Like It"
+
+	- New tiles for terrain and objects
+	- Pref file for 16x16 tileset uses ASCII characters for the *missing* monsters
+	- Pref file for 8x8 tileset uses ASCII characters for *all* monsters.
+
+Theme 1.0.6 AKA "Flame of Udun"
+	
+	- Fixed a bug that prevented Ulmo from working properly
+	- Re-added the Maia restrictions for corruptions
+	- Added some new corruptions (from MM's script)
+
+Theme 1.0.7 AKA "All Shall Wait"
+
+	- Monster tiles and pref files done
+	- Renamed *thanc daggers
+	- Renamed Halls of Mandos and lifted the elves-only restrictions.
+	- Thror's map is now actually a map
+	- More corruptions from MM's script
+	- Added NO_TARGET to monsters that start out neutral
+
+Theme 1.0.8 AKA "To The Keep!"
+
+	- Several small bugfixes
+	- Some documentation updates
+	- Fixed Aule's spells to prevent insane pval increases
+	- (2.3.0 CVS) Several documentation tweaks
+	- (2.3.0 CVS) misc.lua was not called from init.lua
+
+Theme 1.0.9 AKA "Through the Darkness"
+
+	- Several small bugfixes
+	- Several documentation and in-game parchment updates
+	- Pippin's dagger (former *thanc) is now part of another set, too
+	- Graphics package updated, plus .gif files as in 2.3.0
+	- (2.3.0 CVS) Removed museums from all towns but three
+
+Theme 1.1.0 AKA "Forever There"
+
+	- Minor piety-gain tweaks to Ulmo and Melkor
+	- Took away 'normal' magic schools from Thaumaturgists
+	- Mages got .400 in Disarming
+	- Trolls got a bonus to hafted-mastery
+
+Theme 1.1.1 AKA "I Amar Prestar Aen"
+	
+	- New special level by Burb Lulls
+	- Some item, monster, artifact, class, and ego tweaks
+	- Fireproofing quest is now for a rune, not potion
+	- Tweaked the Tears of Luthien spell
+
+Theme 1.1.2 AKA "Serpensortia"
+
+	- minor bugfixes/tweaks: items, races, classes
+	- (2.3.0 CVS) fixed the new jewelry crashing bug
+	- (2.3.0 CVS) removed several types of old rings and amulets
+
+Theme 1.1.3 AKA "Phoenix Song"
+
+	- Updated all files from the 2.3.0 (CVS) version to 2.3.1
+	- Removed Peregrin's dagger from the Peregrin's Gear set.
+	- Aule followers should be able to sacrifice self-made items now.
+	- The coordinates for Melkor's god quests have been fixed.
+	- Added more text to the Erebor map and key to make sure player keeps them.
+
+Theme 1.1.4 AKA "Release the River"
+
+	- Updated all files from the 2.3.1 version to 2.3.3
+	- Fixed bugs with maps, sets, jumpgates and quests.
+	- Updated a number of help files on gods and magic.
+	- Retired two ego types and reworked some others.
+	- Retired the Polymorph corruption.
+	- Replaced Carlammas with a new artifact and added a new ring ego type.
+
+Theme 1.1.5 AKA "Angles and Corners"
+
+	- Some feature flag tweaks.
+	- Orc Cave now leads out on the other side of the Misty Mountains.
+	- Two new special levels to accomodate Erebor quest items; new special final level in Isengard.
+	- Eagles' nest in Khazad-dum.
+
+Theme 1.1.6 AKA "Curses to This Mirage"
+
+	- Some monster flag tweaks.
+	- Neutral monsters forced into wilderness.
+	- Fixed player-related bugs with stat gain and starting equipment.
+
+Theme 1.1.7 AKA "Poor Madeleine"
+
+	- Some item tweaks.
+	- Removed several miscellaneous food items.
+	- 5 new item types.
+
+Theme 1.1.8 AKA "Little White Candle"
+
+	- Numerous ego item tweaks.
+	- Renamed several ego types to be more in-theme.
+	- Removed Rings of the Elements to avoid redundancy.
+	- 3 new ego types.
+
+Theme 1.1.9 AKA "Kit Bag Full of Marbles"
+
+	- Several randart tweaks.
+	- FF now offers three additional skills.
+	- Non-elves can no longer be LostSouls.
+	- Flight at birth now means mountain climbing at clvl50
+
+Theme 1.2.0 AKA "Twining Light"
+
+	- Several artifact tweaks.
+	- Removed the dwarven rings of power.
+	- 3 new artifacts.
+	- 1 new item set.

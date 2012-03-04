@@ -1,0 +1,105 @@
+# File: t_pelar.txt
+
+# Pelargir map by furiosity <furiosity@zionmainframe.net>
+# NB! The additional terrain features and stores (if any) assume usage of the following files from the 'theme' module:
+# f_info.txt, t_pref.txt, st_info.txt, and ba_info.txt
+# Please download the module and refer to the files for the terrain feature definitions http://modules.t-o-m-e.net/
+# Don't forget to modify the maximum number of terrain features, etc. in misc.txt as well.
+
+### Additional terrain features ###
+
+#Anduin river
+F:a:227:3
+
+### Buildings ###
+
+# The Grey Swan inn
+F:b:74:3:0:0:0:0:0:68
+
+# The Prince's Tower
+F:c:74:3:0:0:0:0:0:86
+
+# Music store
+F:d:74:3:0:0:0:0:0:64
+
+# Rune Shop
+F:e:74:3:0:0:0:0:0:62
+
+# Hunting Store
+F:f:74:3:0:0:0:0:0:61
+
+# Library
+F:i:74:3:0:0:0:0:0:13
+
+# Casino
+F:j:74:3:0:0:0:0:0:15
+
+# Beastmaster
+F:k:74:3:0:0:0:0:0:16
+
+D:######################################################################################################################################################################################################
+D:#-------------------------------------------------@VVVVV@##VVVVV@@-----------------------------------------------------------------------------------------------------------------------------------#                                                                                                                                                                                      #
+D:#-------------------------------------------------@VVVVV@####VVVVV@----------------------------------------------------------------------------------------------------------------------------------#
+D:#-------------------------------------------------@VVVVV@######VVVV@@@-------------------------------------------------------------------------------------------------------------------------------#
+D:#-------------------------------------------------@VVVVV@####,###VVVVV@@-----------------------------------------------------------------------------------------------------------------------------#
+D:#-------------------------------------------------@VVVVV@####,,####VVVVV@@---------------------------------------------------------------------------------------------------------------------------#
+D:#-------------------------------------------------@VVVVV@####,,,,####VVVVV@@@------------------------------------------------------------------------------------------------------------------------#
+D:#-------------------------------------------------@VVVVV@####,,,,,,#####VVVVV@@@---------------------------------------------------------------------------------------------------------------------#
+D:#-------------------------------------------------@VVVVV@####,####,,,,#####VVVVV@@-------------------------------------------------------------------------------------------------------------------#
+D:#-------------------------------------------------@VVVVV@####,####,,,,,,#####VVVVV@@@----------------------------------------------------------------------------------------------------------------#
+D:#-------------------------------------------------@VVVVV@####,###7,,,,,,,,,#####VVVVV@@@-------------------------------------------------------------------------------------------------------------#
+D:#-------------------------------------------------@VVVVV@####,,,,,,,TTTT,,,,,,#####VVVVV@@@----------------------------------------------------------------------------------------------------------#
+D:#-------------------------------------------------@VVVVV@####,,,,TTTT,TTTT,,,,,,,#####VVVVV@@@-------------------------------------------------------------------------------------------------------#
+D:#-------------------------------------------------@VVVVV@####,,,TTTT,,,TTTT,,,,,,,,,#####VVVVV@@@----------------------------------------------------------------------------------------------------#
+D:#-------------------------------------------------@VVVVV@####,,TTTT,,,,,,,,,,,,,,,,,,,,#####VVVVV@@@@------------------------------------------------------------------------------------------------#
+D:#-------------------------------------------------@VVVVV@####,TTTT,,,,###,,,,,,#######,,,,,#####VVVVV@@----------------------------------------------------------------------------------------------#
+D:#-------------------------------------------------@VVVVV@####,,,,,,,,,####,,,,,#######,,,,,,,#####VVVVV@@@-------------------------------------------------------------------------------------------#
+D:#-------------------------------------------------@VVVVV@####,,,,,,,,,,####,,,,###2###,,,,,,OOOO#####VVVVV@@@----------------------------------------------------------------------------------------#
+D:#-------------------------------------------------@VVVVV@####,,,,,,,,,,,####,,,,,,,O,,,,,OOOO,,,,,,##VVVVVVVV@@@-----------------------------------------------------------------------------------aa#
+D:#-------------------------------------------------@VVVVV@####,,,,,,,,,,,,####,,,,,,,O,OOOO,,,,,,,,,#VVVV###VVVVV@@@@----------------------------------------------------------------------------aaaaa#
+D:#-------------------------------------------------@VVVVV@####,,#######,,,,#######,,OOOO,,,,,,,,,,,#VVVV#@@#####VVVVV@@------------------------------------------------------------------------aaaaaaa#
+D:#-------------------------------------------------@VVVVV@####,,#######,,,,##4##OOOOO,,,,TTT,,,,,,#VVVV#,,,,,#####VVVVV@@@-----------------------------------------------------------------aaaaaaaaaaa#
+D:#-------------------------------------------------@VVVVV@####,,#######,,,,###OOO.,,,,,,TTTTT,,,,#VVVV#,,,,,,,,,#####VVVVV@@@-----------------------------------------------------------aaaaaaaaaaaaaa#
+D:#-------------------------------------------------@VVVVV@####,,###3###,,,,#OOO##.###,,,,TTT,,,,#VVVV#,,,,####,,,,,#####VVVVV@@@-----------------------------------------------------aaaaaaaaaaaaaaaaa#
+D:#-------------------------------------------------@VVVVV@####,,,,,O,,,,,,,OOOO##...####,,,,,,,#VVVV#O,,,,####,,,,,,,,#####VVVVV@@@@-----------------------------------------------aaaaaaaaaaaaaaaaaaa#
+D:#-------------------------------------------------@VVVVV@####,,,,,,O,,,OOOO,,,##......####,,,#VVVV#,,O,,,5###,,,,,,,,,O,#####VVVVV@@------------------------------------------aaaaaaaaaaaaaaaaaaaaaaa#
+D:#-------------------------------------------------@VVVVV@####,,,,,,,OOOO,,,,,,##.........####VVVV#,,,,OOOO,,,,,,,,,,,,,O,,,#####VVVVV@@@------------------------------------aaaaaaaaaaaaaaaaaaaaaaaaa#
+D:#-------------------------------------------------@VVVVV@####,,,,OOOO,,,TTT,,,##................#,,,,,,,,OOOO,,,,,,,,,,OOOOOOO#####VVVVV@@@------------------------------aaaaaaaaaaaaaaaaaaaaaaaaaaaa#
+D:#-------------------------------------------------@VVVVV@####,OOOO,,,,,TTTTT,.##...............####,,,,,,,,,OOO,,,,,,,,O,,,,,,,,,#####VVVVV@@@-----------------------aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa#
+D:#-------------------------------------------------OOOOOOOOOOOOO,,,,,,,,,TTT,,,##..................####,,,,,,O,,OOO,,,,,O,,,,,,,,,,,,#####VVVVV@@@----------------aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa#
+D:#-------------------------------------------------@VVVVV@####,,,,,,,,,,,,,,,,,##......,#cc#..........####,,,O,,,,,O,###d###,,,,,,,,,,,,#####VVVVV@@@---------aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa#
+D:#-------------------------------------------------@VVVVV@#######################.....########...........####O,,,,,,O#######,,,,,,,,,,,,,,,#####VVVVV@-----aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa#
+D:#-------------------------------------------------OVVVVVVVVVVVVVVVVVVVVVVVVVVV......c########c.............####,,#############,,,,,,,#####,,,#####VVVVV@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa#
+D:#-------------------------------------------------OVVVVVVVVVVVVVVVVVVVVVVVVVVV.......########................OOOO6###########9OOOOOOOOO#,,,,,,,,#####VVV@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa#
+D:#-------------------------------------------------@VVVVVVVVVVVVVVVVVVVVVVVVVVV.........#cc#...............#####,O#############O,,,,,,#####,,,#####aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa#
+D:#-------------------------------------------------@VVVVV@#######################.......................####,,,,,,O,,#######,OO,,,,,,,,,,,,#####aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa#
+D:#-------------------------------------------------@VVVVV@####,,,,,,,,,,,,OOOOO##....................#####,,,,,,,,,O,###e###O,,,,,,,,,,,#####aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa#
+D:#-------------------------------------------------@VVVVV@####,,#####,,,,O,,,,,##..................###,,,,,,,,,,,,,,OOOOOOOO,,,,,,,,#####aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa#
+D:#-------------------------------------------------@VVVVV@####,,####bOO,O,,,,,,##.................###,,,,,#######,,,,,,,,,,,,,,,,#####aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa#
+D:#-------------------------------------------------@VVVVV@####,,#####,,O,,####,##................aaa##,,,,#######,,,,,,,,,,,,,#####aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa#
+D:#-------------------------------------------------@VVVVV@####,,,,O,,,,OOO1###,##.........####aaaaaaa##,,,#######,,,,,,,,,,#####aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa#
+D:#-------------------------------------------------@VVVVV@####,,,,O,,,,O,,####,##.....#####,,##aaaaaaa##,,,,,,,,,,,,,,,,#####aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa#
+D:#-------------------------------------------------@VVVVV@####,,##f##,,,O,,,,,,##..####,,,,,,,##aaaaaaa##,,,,,,,,,,,,,######aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa#
+D:#-------------------------------------------------@VVVVV@####,,#####,,,,O,,,,,##O###,,,,,,,,,,##aaaaaaa##,,,,,,,,#####aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa#
+D:#-------------------------------------------------@VVVVV@####,,#####,,,,,O,,,,#O###,,,,,,,,,,,,##aaaaaaa##,,,######aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa#
+D:#-------------------------------------------------@VVVVV@####,,,,O,,,,,,,,O,,,OO,,,,,#######,,,,##aaaaaaa#####aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa#
+D:#-------------------------------------------------@VVVVV@####,,,,O,,,,,.,,OOOO,O,,,,,#######,,,,,##aaaaaaa##aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa#
+D:#-------------------------------------------------@VVVVV@####,,##k##,,,,,O##j##,O,,,,#######,,,,,,##aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa#
+D:#-------------------------------------------------@VVVVV@####,,#####,,,,O,#####,,O,,,#######,,,,,,###aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa#
+D:#-------------------------------------------------@VVVVV@####,,#####,,,O,,#####,,,O,,,,,,,,,,,,,#####aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa#
+D:#-------------------------------------------------@VVVVV@####,,,,O,,,,O,,,,,,,,,,,,O,,,,,,,,,#####aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa#
+D:#-------------------------------------------------@VVVVV@####,,,,O,,,O,,,,,,,,,,,,,,O,,,,,#####aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa#
+D:#-------------------------------------------------@VVVVV@####,,##i##,OOO0####,,,,,,,,O,#####aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa#
+D:#-------------------------------------------------@VVVVV@####,,#####,O,,#####,,,,,,,#####aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa#
+D:#-------------------------------------------------@VVVVV@####,,#####,O,,#####,,,,#####aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa#
+D:#-------------------------------------------------@VVVVV@####,,,O,,,,O,,,,,,,,,#####aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa#
+D:#-------------------------------------------------@VVVVV@####,,###,,,O,,,,,,#####aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa#
+D:#-------------------------------------------------@VVVVV@####,,###,,,O,,,#####aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa#
+D:#-------------------------------------------------@VVVVV@####,,,,,,,,O#####aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa#
+D:#-------------------------------------------------@VVVVV@####,,,,,,#####aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa#
+D:#-------------------------------------------------@VVVVV@####,,,#####aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa#
+D:#-------------------------------------------------@VVVVV@##########aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa#
+D:#-------------------------------------------------@VVVVV@#######aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa#
+D:#-------------------------------------------------@VVVVV@####aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa#
+D:#-------------------------------------------------@VVVVV@##aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa#
+D:######################################################################################################################################################################################################

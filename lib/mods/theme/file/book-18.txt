@@ -1,0 +1,55 @@
+		 --------------------------
+		| Monstrous Compendium 10  |
+		| Demons and other Horrors |
+	 	 --------------------------
+
+              *** Minor Demons (u) ***
+
+These demons (roeg) are corrupted forms of natural creatures.
+The individual types of demons are as follows: [[[[[bLimrog] (fish),
+[[[[[UCaborrog] (frog), [[[[[DLygrog] (snake), [[[[[oDraugrog] (wolf), [[[[[rHurog] (dog),
+[[[[[sSarnrog] (stone), [[[[[gNarrog] (rat), [[[[[yAewrog] (bird), [[[[[BRawrog] (lion),
+and [[[[[RAdanrog] (human).
+
+              *** Major Demons (u) ***
+
+The major demons are of two kinds - the spider demons, spawn of
+Ungoliant, and the Balroeg, corrupted Maiar. The spider demons
+are as follows: [[[[[gUngorrog] (power spider demon), [[[[[WHelcungol] (ice),
+[[[[[rNaurungol] (fire), [[[[[sMornungol] (black), and [[[[[BFaunungol] (cloud).
+There are also the [[[[[BGaurroeg] (water demons), [[[[[oMorgulroeg] (magic
+demons), [[[[[uDagorrog] (war demons), [[[[[ySererrog] (blood demons), and 
+the [[[[[UMenelroeg] (sky demons). The Balroeg can be [[[[[RRed], [[[[[DBlack],
+[[[[[wWhite], and [[[[[bBlue] - commanded by [[[[[GBalrog Captains] and [[[[[vGreater]
+[[[[[vBalroeg].
+
+             *** Greater Undead (G) ***
+
+The ghosts are incorporeal beings with awesome magical powers.
+Some of them aren't very impressive, like the [[[[[gGreen glutton] 
+[[[[[gghost] and the [[[[[sPoltergeist]. Others are deadlier - [[[[[wGhosts],
+[[[[[BPhantom beasts], [[[[[BDrowned souls], [[[[[BPhantom warriors], the [[[[[DShadows], 
+[[[[[DPossessors], [[[[[DShades], and [[[[[USpectres]. The friendly [[[[[WSpirits] will
+try to help adventurers. The [[[[[bBanshee], [[[[[GSpirit troll], [[[[[vPhantom],
+[[[[[uHeadless ghost], and [[[[[uMoaning spirit] are all to be reckoned with.
+In a class of their own are the [[[[[oDreads], [[[[[rDreadlords], and the 
+[[[[[yDreadmasters].
+
+                 *** Liches (L) ***
+
+Yet another kind of powerful undead. Many things can take the form
+of a lich, but the [[[[[oLich], [[[[[GCrypt thing], [[[[[WIron lich], [[[[[rMaster lich],
+[[[[[uMonastic lich], [[[[[UDemilich], [[[[[BArchlich], [[[[[DBlack reaver], and [[[[[sLesser] 
+[[[[[sblack reaver] all deserve special mention.
+
+
+                *** Wraiths (W) ***
+
+Wraiths are incorporeal beings frequently found in graveyards and
+at the sites of unavenged murders. There are [[[[[wWhite wraiths], [[[[[sGrey]
+[[[[[swraiths], [[[[[WSilver wraiths], [[[[[GNether wraiths], and [[[[[DBlack wraiths].
+The [[[[[UAdventurer wraiths] will try to help you. Fierce and magical 
+are the many wights: [[[[[BBarrow wights], [[[[[gForest wights], [[[[[bGrave wights], 
+[[[[[oSwamp wights], and [[[[[rEmperor wights]. The most dangerous among the 
+wraith beings are the [[[[[uRevenant], [[[[[DNightwalker], [[[[[DNightcrawler], and 
+[[[[[DNightwing].

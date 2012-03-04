@@ -1,0 +1,108 @@
+# File: t_hobb.txt
+
+# Hobbiton map by furiosity <furiosity@zionmainframe.net>
+# NB! The additional terrain features and stores (if any) assume usage of the following files from the 'theme' module:
+# f_info.txt, t_pref.txt, st_info.txt, and ba_info.txt
+# Please download the module and refer to the files for the terrain feature definitions http://modules.t-o-m-e.net/
+# Don't forget to modify the maximum number of terrain features, etc. in misc.txt as well.
+
+### Additional terrain features ###
+
+#Wooden board
+F:a:235:3
+
+#Small tree
+F:b:202:3
+
+#Field
+F:c:181:3
+
+#Stable
+F:d:240:3
+
+#Low hill
+F:h:213:3
+
+#Mallorn
+F:m:243:3
+
+### Buildings ###
+
+# Farm
+F:f:74:3:0:0:0:0:0:67
+
+# Green Dragon
+F:g:74:3:0:0:0:0:0:74
+
+# Bag End
+F:i:74:3:0:0:0:0:0:84
+
+# Beastmaster
+F:j:74:3:0:0:0:0:0:16
+
+D:######################################################################################################################################################################################################
+D:#bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbhhhhhhhhhhhhhhhhhhhhhhhhhhihhhhhhhccccchhOOhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh#
+D:#bccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccbb------------------------OO-------ccmccTOO------------------------------------------------------------------------------------------#
+D:#bccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccbb-----------------------OO--------ccccTOO-------------------------------------------------------------------------------------------#
+D:#bccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccbb----------------------OO-------------OO--------------------------------------------------------------------------------------------#
+D:#bccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccbb---------------------OO---------------OO-------------------------------------------------------------------------------------------#
+D:#bccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccbb--------------------OO---------------OO--------------------------------------------------------------------------------------------#
+D:#bccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccbb-------------------OO-----------------OOb------------------------------------------------------------------------------------------#
+D:#bccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccbb------------------OO-----------------OOb-------------------------------------------------------------------------------------------#
+D:#bccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccbb-----------------OO##############---OO---------------------------------------------------------------------------------------------#
+D:#bccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccbb-----------OOOOOOOOOOOOOOOOOOOOO#---OOb--------------------------------------------------------------------------------------------#
+D:#bccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccbb----------OO---#OOOOOOOOOOOOOOOO#---OOb--------------------------------------------------------------------------------------------#
+D:#bccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccbb----------OO---#OOOddddddddddOOO#---OO---------------------------------------------------------------------------------------------#
+D:#bccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccbb----------OO---#OOOddddddddddOOO#---OO---------------------------------------------------------------------------------------------#
+D:#bccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccbb----------OO---#OOOOddddddddjOOOOOOOO----------------------------------------------------------------------------------------------#
+D:#bccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccbb----------OO---#OOOddddddddddOOO#--OOb----TT---------------------------------------------------------------------------------------#
+D:#bccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccbb-----------OO--#OOOddddddddddOOO#--OO--TT-TTT--------------------------------------------------------------------------------------#
+D:#bccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccbb-----------OO--#OOOOOOOOOOOOOOOO#--OO-TT-------------------------------------------------------------------------------------------#
+D:#bccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccbb------------OO-OOOOOOOOOOOOOOOOO#--OObTT------T------------------------------------------------------------------------------------#
+D:#bccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccbb-------------OOO#################--OObTT-------------------------------------------------------------------------------------------#
+D:#bccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccbb--------------OO------------------OOOOOOOOOOOO-------------------------------------------------------------------------------------#
+D:#bccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccbb---------------OO-----------------OOb--#####--OO-----------------------------------------------------------------------------------#
+D:#bccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccbb-----------------OO---------------OOb--#######ff##---------------------------------------------------------------------------------#
+D:#bccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccbb------------------OO-----------T--OOb--###########---------------------------------------------------------------------------------#
+D:#bccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccbb---------------TTTTOO--------TTT-OOb---###########---------------------------------------------------------------------------------#
+D:#bccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccbb----------------TT--OO-----------OOb---#####---------------------------------------------------------------------------------------#
+D:#bccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccbb------------------TT-OO-----TTT--OOb---#####---------------------------------------------------------------------------------------#
+D:#bccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccbb------------------TT--OO-----T---OOb-----------------------------------------------------------------------------------------------#
+D:#bccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccbb-------------------TTT-OO--TT---OOb------------------------------------------------------------------------------------------------#
+D:#bccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccbb-------------------TTTT-OOTTT--OOb-------------------------------------------------------------------------------------------------#
+D:#bccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccbb---------------------TTT-OO--bOOb--------------------------------------------------------------------------------------------------#
+D:#bccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccbb----------------------TTT-OOOOOb---------------------------------------------------------------------------------------------------#
+D:#bccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccbb-----------------------TT--OOOb----------------------------------------------------------------------------------------------------#
+D:#bccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccbb----------------------TTT-OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO#
+D:#bccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccbb----------------------TT-bOOb------------------------------------------------------------------------------------------------------#
+D:#bccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccbb----------------------TT-OOb-------------------------------------------------------------------------------------------------------#
+D:#bccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccbb----------------------TT-OOb-------------------------------------------------------------------------------------------------------#
+D:#bccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccbb---------------------TTT-OOb-------------------------------------------------------------------------------------------------------#
+D:#bccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccbb----------------------T--OOb-##############----------------------------------------------------------------------------------------#
+D:#bccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccbb-----------------TTT-TTT-OO--##############----------------------------------------------------------------------------------------#
+D:#bccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccbb------------------T-TTTT-OOOO1#############----------------------------------------------------------------------------------------#
+D:#bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbOO--##############@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#
+D:#VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVaOOaV##############VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV#
+D:#VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVaOOaVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV#
+D:#VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVaOOaVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV#
+D:#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@bOO@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#
+D:#-----------------------------------------------------------------------------------------bOO--------------------------------------------------------------------------------------------------------#
+D:#-----------------------------------------------------------------------------------hhhh---OO--------hhh-----hhh-------------------------------------------------------------------------------------#
+D:#--------------------------------------------------TT-----TT------TT-----hhhh------hhhhhh--OO-------hhhhh---hhhhh------------------------------------------------------------------------------------#
+D:#-------------------------------------------------TTTT---TTTT----TTTT---hhhhhh----hhhhhhhh-OO------hhhhhhh--hh5hh--TT---TT---TT----------------------------------------------------------------------#
+D:#--------------------------------------------------TT-----TT------TT---hhh3hhhh---hhhh2hhh-OO------hhh0hhh--------TTTT-TTTT-TTTT---------------------------------------------------------------------#
+D:#OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO#
+D:#OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO#
+D:#------------------------------------------------------------------######-hhhh-hhh------hhhOO-hh-----hhhh----h-hh-TTTT-TTTT-TTTT---------------------------------------------------------------------#
+D:#------------------------------------------------------------------######--hhhhhh--------hhOO-hhh-----hh-----hhhh--TT---TT---TT----------------------------------------------------------------------#
+D:#------------------------------------------------------------------######---hhhh----------hOO-hhh-------------hh-------------------------------------------------------------------------------------#
+D:#------------------------------------------------------------------######------------------OO-hh-------#####-----------------------------------------------------------------------------------------#
+D:#------------------------------------------------------------------######--------hhhhh-----OO----------#####-----------------------------------------------------------------------------------------#
+D:#------------------------------------------------------------------######-------hhhhhhh----OO---hh-----g####-----------------------------------------------------------------------------------------#
+D:#------------------------------------------------------------------------------hhhh4hhhh---OO--hhhh----#####-----------------------------------------------------------------------------------------#
+D:#------------------------------------------------------------------------------------------OO-hhhhhh---#####-----------------------------------------------------------------------------------------#
+D:#-------------------------------------------------------------------------------------hhh--OO-hh6hhh-------------------------------------------------------------------------------------------------#
+D:#------------------------------------------------------------------------------------hhhhh-OO--------------------------------------------------------------------------------------------------------#
+D:#------------------------------------------------------------------------------------hh7hh-OO--------------------------------------------------------------------------------------------------------#
+D:#------------------------------------------------------------------------------------------OO--------------------------------------------------------------------------------------------------------#
+D:######################################################################################################################################################################################################

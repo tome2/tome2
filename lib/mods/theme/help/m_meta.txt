@@ -1,0 +1,75 @@
+|||||oy
+~~~~~01|Magic|Meta School
+~~~~~02|Meta Magic
+~~~~~03|Skills|Meta - Spell Info
+#####R === ToME Magic - Meta School ===
+
+The meta school of magic contains spells where the raw forces of magic are 
+manipulated by the spell. There are rumours of a "Tome of Meta Spells" which
+contains all the meta school spells within its bindings.
+
+Worshipping Manwe Sulimo or Varda Elentari also gives the ability to cast 
+spells from the meta school at a level of 1/3 of your prayer level. E.g. if 
+the skill "Spirituality: Prayer" is at level 15, Manwe and Varda worshippers
+alike can cast up to level 5 meta school spells.
+
+#####sMeta Spells
+There are five spells available for the meta school. These spells are:
+1. [[[[[sRecharge] (school level 5)
+   Taps the ambient mana to recharge an object's power (charges or mana).
+2. [[[[[sDisperse Magic] (school level 15)
+   Dispels a lot of magic that can affect you, be it good or bad:
+   Spell Level 1: blindness and light.
+   Spell Level 5: confusion and hallucination.
+   Spell Level 10: speed (either bad or good) and light speed.
+   Spell Level 15: stunning, meditation and cuts.
+   Spell Level 20: heroism, super heroism, blessing, shields, fear, parasites
+      and mimicry.
+3. [[[[[sSpellbinder] (school level 20)
+   Stores spells in a trigger.
+   When the condition is met all spells fire off at the same time.  This spell
+   takes a long time to cast so you are advised to prepare it in a safe area.
+   Also it will use the mana for the Spellbinder and the mana for the selected
+   spells.
+4. [[[[[sTracker] (dual school level 30)
+   Tracks down the last teleportation that happened on the level and teleports
+   you to it.
+#####v   Your Meta and Conveyance skills must have reached a combined average level 
+#####v   of 30 in order to cast this spell.
+5. [[[[[sInertia Control] (school level 37)
+   Changes the energy flow of a spell to be continuously recasted at a given
+   interval. The inertia-controlled spell reduces your maximum mana by four
+   times its cost.
+   
+#####R=== List of Controllable Spells ===
+   Armor of Fear
+   Banishment
+   Disperse Magic
+   Disruption Shield
+   Elemental Shield
+   Ent's Potion
+   Essence of Speed
+   Fiery Shield
+   Flame of Udun
+   Globe of Light
+   Grow Trees
+   Ice Storm
+   Invisibility
+   Phase Door
+   Poison Blood
+   Probability Travel
+   Recovery
+   Regeneration
+   Remove Curses
+   Reveal Ways
+   Sense Hidden
+   Sense Monsters
+   Shake
+   Stone Skin
+   Teleportation
+   Thunderstorm
+   Tidal Wave
+   Vapor
+   Vision
+   Wings of Winds
+   Wraithform

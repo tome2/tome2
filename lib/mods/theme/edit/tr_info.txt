@@ -1,0 +1,817 @@
+# This file comes from Angband64 written by Jurriaan Kalkman
+# and describes the traps items can have
+#
+#  byte type;            /* this goes into sval */
+#  s16b probability;     /* probability of existence in 1000 */
+#  s16b another;         /* does this trap easily combine in 1000 */
+#  s16b pvalinc;         /* how much does this trap attribute to pval */
+#  byte difficulty;      /* how difficult to disarm */
+#  byte level;           /* minimum level - disenchantment trap at 200' is */
+#                        /* not so nice */
+#  byte color;
+#  cptr name;            /* what name does this trap have */
+#
+#  d TERM_DARK  |r TERM_RED  |D TERM_L_DARK |R TERM_L_RED
+#  w TERM_WHITE |g TERM_GREEN|W TERM_L_WHITE|G TERM_L_GREEN
+#  s TERM_SLATE |b TERM_BLUE |v TERM_VIOLET |B TERM_L_BLUE
+#  o TERM_ORANGE|u TERM_UMBER|y TERM_YELLOW |U TERM_L_UMBER
+#
+# b blue   for stat traps
+# w white  for teleport traps
+# o orange for dungeon rearrangement traps
+# v violet for summoning traps
+# y yellow for stealing/equipment traps
+# r red    for other character affecting traps
+# g green  for elemental bolt trap
+# B umber  for elemental ball trap
+# R l red  for arrow/dagger traps
+# W        for compound trap!!!
+# don't use U or you'll get trapped doors that are indistinguishable from untrapped doors!
+#
+#  an unknown character is multi-hued!
+#
+# N:type:name
+# I:diff:prob:another:pval:minlevel:damage:color
+# I:diff:prob:            :minlevel:      :color
+# D:description
+
+V:2.0.0
+
+#
+# stat traps
+#
+
+N:1:Weakness Trap
+I:2:100:5:5:2:0d0:b
+D:A poisoned needle weakens you!
+F:FLOOR | CHEST | DOOR
+
+N:2:Weakness Trap
+I:5:100:5:5:20:0d0:b
+D:A poisoned needle seriously weakens you!
+F:FLOOR | CHEST | DOOR
+
+N:3:Weakness Trap
+I:7:100:5:8:40:0d0:b
+D:A poisoned needle permanently weakens you!
+F:FLOOR | CHEST | DOOR
+
+N:4:Intelligence Trap
+I:2:100:5:2:2:0d0:b
+D:A poisoned needle makes you feel stupid!
+F:FLOOR | CHEST | DOOR
+
+N:5:Intelligence Trap
+I:5:100:5:5:20:0d0:b
+D:A poisoned needle makes you feel very stupid!
+F:FLOOR | CHEST | DOOR
+
+N:6:Intelligence Trap
+I:7:100:5:8:40:0d0:b
+D:A poisoned needle makes you feel permanently stupid!
+F:FLOOR | CHEST | DOOR
+
+N:7:Wisdom Trap
+I:2:100:5:2:2:0d0:b
+D:A poisoned needle makes you feel naive!
+F:FLOOR | CHEST | DOOR
+
+N:8:Wisdom Trap
+I:5:100:5:5:20:0d0:b
+D:A poisoned needle makes you feel very naive!
+F:FLOOR | CHEST | DOOR
+
+N:9:Wisdom Trap
+I:7:100:5:8:40:0d0:b
+D:A poisoned needle makes you feel permanently naive!
+F:FLOOR | CHEST | DOOR
+
+N:10:Fumbling Fingers Trap
+I:2:100:5:2:2:0d0:b
+D:A poisoned needle makes you feel clumsy!
+F:FLOOR | CHEST | DOOR
+
+N:11:Fumbling Fingers Trap
+I:5:100:5:5:20:0d0:b
+D:A poisoned needle makes you feel very clumsy!
+F:FLOOR | CHEST | DOOR
+
+N:12:Fumbling Fingers Trap
+I:7:100:5:8:40:0d0:b
+D:A poisoned needle makes you feel permanently clumsy!
+F:FLOOR | CHEST | DOOR
+
+N:13:Wasting Trap
+I:2:100:5:2:2:0d0:b
+D:A poisoned needle makes you feel sickly!
+F:FLOOR | CHEST | DOOR
+
+N:14:Wasting Trap
+I:5:100:5:5:20:0d0:b
+D:A poisoned needle makes you feel very sickly!
+F:FLOOR | CHEST | DOOR
+
+N:15:Wasting Trap
+I:7:100:5:8:40:0d0:b
+D:A poisoned needle makes you feel permanently sickly!
+F:FLOOR | CHEST | DOOR
+
+N:16:Beauty Trap
+I:2:100:5:2:2:0d0:b
+D:A poisoned needle scars you!
+F:FLOOR | CHEST | DOOR
+
+N:17:Beauty Trap
+I:5:100:5:5:20:0d0:b
+D:A poisoned needle scars you horribly!
+F:FLOOR | CHEST | DOOR
+
+N:18:Beauty Trap
+I:7:100:5:8:40:0d0:b
+D:A poisoned needle scars you permanently!
+F:FLOOR | CHEST | DOOR
+
+#
+# miscellaneous traps
+#
+
+N:20:Trap of Curse Weapon
+I:5:10:0:12:20:0d0:y
+D:Your weapon will never be the same...
+F:FLOOR | CHEST | DOOR
+
+N:21:Trap of Curse Armour
+I:5:15:0:12:20:0d0:y
+D:Your armour doesn't exactly get better by setting off this trap...
+F:FLOOR | CHEST | DOOR
+
+N:22:Earthquake Trap
+I:5:20:0:10:10:0d0:o
+D:The ceiling collapses around you!
+F:FLOOR | CHEST | DOOR
+
+N:23:Poison Needle Trap
+I:1:50:50:3:2:0d0:r
+D:A poisoned needle pricks you!
+F:FLOOR | CHEST | DOOR
+
+N:24:Summon Monster Trap
+I:2:50:40:4:2:0d0:v
+D:Monsters defend the memory of the owner...
+F:FLOOR | CHEST | DOOR
+
+N:25:Summon Undead Trap
+I:4:25:40:6:10:0d0:v
+D:Undead rise from the grave to defend this!
+F:FLOOR | CHEST | DOOR
+
+N:26:Summon Greater Undead Trap
+I:8:10:50:20:20:0d0:v
+D:Greater undead defend this!
+F:FLOOR | CHEST | DOOR
+
+N:27:Teleport Trap
+I:3:100:50:3:2:0d0:w
+D:Now you know why nobody ever got close enough to disarm this trap...
+F:FLOOR | CHEST | DOOR
+
+N:28:Paralysing Trap
+I:1:100:20:2:2:0d0:r
+D:You suddenly cannot move!
+F:FLOOR | CHEST | DOOR
+
+N:29:Explosive Device
+I:3:100:80:0:3:3d8:r
+D:Ha! It explodes before your hands can illegally touch it!
+F:FLOOR | CHEST | DOOR
+
+N:30:Teleport Item Trap
+I:3:50:50:3:5:0d0:w
+D:The item magically disappears from your greedy hands!
+F:FLOOR | CHEST
+
+N:31:Lose Memory Trap
+I:6:30:30:6:10:0d0:r
+D:You suddenly can't remember what you were doing here...
+F:FLOOR | CHEST | DOOR
+
+N:32:Bitter Regret Trap
+I:9:15:20:9:20:0d0:r
+D:You already regret trying this...
+F:FLOOR | CHEST | DOOR
+
+N:33:Bowel Cramps Trap
+I:1:90:20:1:6:0d0:r
+D:Your stomach twists with a sharp pang!
+F:FLOOR | CHEST | DOOR
+
+N:34:Blindness/Confusion Trap
+I:4:100:50:4:6:0d0:r
+D:You suddenly can't see, and thinking is difficult too....
+F:FLOOR | CHEST | DOOR
+
+N:35:Aggravation Trap
+I:2:100:50:2:3:0d0:o
+D:Your hear a high-pitched humming noise...
+F:FLOOR | CHEST | DOOR
+
+N:36:Multiplication Trap
+I:3:90:0:3:5:0d0:o
+D:The floor around you doesn't seem the same...
+F:FLOOR | CHEST | DOOR
+
+N:37:Steal Item Trap
+I:3:100:50:3:6:0d0:y
+D:The chest seems to swell, while your backpack feels lighter..
+F:FLOOR | CHEST
+
+N:38:Summon Fast Quylthulgs Trap
+I:8:50:10:10:25:0d0:v
+D:Parts of the owner seem to return from somewhere else, as you slow in awe.
+F:FLOOR | CHEST | DOOR
+
+N:39:Trap of Sinking
+I:2:50:0:0:3:0d0:w
+D:A trapdoor opens up under you!
+F:FLOOR | DOOR
+
+N:40:Trap of Mana Drain
+I:4:100:50:3:4:0d0:r
+D:You suddenly can't think so clearly any more...
+F:FLOOR | CHEST | DOOR
+
+N:41:Trap of Missing Money
+I:2:100:50:2:2:0d0:y
+D:Money isn't everything, they say...
+F:FLOOR | CHEST | DOOR
+
+N:42:Trap of No Return
+I:5:20:10:4:8:0d0:y
+D:Do stay a while!
+F:FLOOR | CHEST | DOOR
+
+N:43:Trap of Silent Switching
+I:4:100:50:3:6:0d0:y
+D:You suddenly are a different person!
+F:FLOOR | CHEST | DOOR
+
+N:44:Trap of Walls
+I:6:100:50:2:10:0d0:o
+D:The room seems to shrink!
+F:FLOOR | CHEST | DOOR
+
+N:45:Trap of Calling Out
+I:10:100:100:5:15:0d0:v
+D:You hear something coming closer, much closer.
+F:FLOOR | CHEST | DOOR
+
+N:46:Trap of Sliding
+I:8:50:50:4:8:0d0:r
+D:Your feet seem to have a life of their own!
+F:FLOOR | CHEST | DOOR
+
+N:47:Trap of Charges Drain
+I:6:100:70:2:3:0d0:y
+D:You feel as if you've just lost something...
+F:FLOOR | CHEST | DOOR
+
+N:48:Trap of Stair Movement
+I:6:100:50:3:4:0d0:o
+D:The dungeon seems different...
+F:FLOOR | CHEST | DOOR
+
+N:49:Trap of New Trap
+I:5:100:5:0:4:0d0:o
+D:Somehow, disarming isn't over, you feel...
+F:FLOOR | CHEST | DOOR
+
+N:50:Trap of Scatter Items
+I:10:50:50:6:12:0d0:w
+D:You hear crashing sounds from all over the dungeon!
+F:FLOOR | CHEST | DOOR
+
+N:51:Trap of Decay
+I:4:100:50:4:4:0d0:r
+D:Your stomach isn't empty, but suddenly you think of food.
+F:FLOOR | CHEST | DOOR
+
+N:52:Trap of Wasting Wands
+I:6:100:40:4:5:0d0:y
+D:Your wands seem different...
+F:FLOOR | CHEST | DOOR
+
+N:53:Trap of Filling
+I:10:100:0:10:25:0d0:o
+D:The whole room vibrates in a strange way...
+F:FLOOR | CHEST | DOOR
+
+N:54:Trap of Drain Speed
+I:8:50:10:25:80:0d0:y
+D:You suddenly seem to have more time to self-reflect...
+F:FLOOR | CHEST | DOOR
+
+#
+# bolt traps
+#
+
+N:60:Lightning Bolt Trap
+I:2:80:5:3:2:2d8:g
+D:You are jolted with electricity!
+F:FLOOR | CHEST | DOOR | LEVEL1
+
+N:61:Poison Bolt Trap
+I:2:80:5:3:2:2d8:g
+D:A blast of poison gas hits you!
+F:FLOOR | CHEST | DOOR | LEVEL1
+
+N:62:Acid Bolt Trap
+I:2:80:5:3:2:2d8:g
+D:A jet of acid shoots out at you!
+F:FLOOR | CHEST | DOOR | LEVEL1
+
+N:63:Cold Bolt Trap
+I:2:80:5:3:2:2d8:g
+D:You are suddenly very cold!
+F:FLOOR | CHEST | DOOR | LEVEL1
+
+N:64:Fire Bolt Trap
+I:2:80:5:3:2:2d8:g
+D:You are suddenly very hot!
+F:FLOOR | CHEST | DOOR | LEVEL1
+
+N:65:Plasma Bolt Trap
+I:6:80:5:6:15:10d12:g
+D:A bolt of plasma hits you!
+F:FLOOR | CHEST | DOOR | LEVEL3
+
+N:66:Water Bolt Trap
+I:4:80:5:5:8:5d10:g
+D:A gush of water hits you!
+F:FLOOR | CHEST | DOOR | LEVEL2
+
+N:67:Light Bolt Trap
+I:4:80:5:5:8:5d10:g
+D:There is a sudden flash of light around you!
+F:FLOOR | CHEST | DOOR | LEVEL2
+
+N:68:Dark Bolt Trap
+I:4:80:5:5:8:5d10:g
+D:A bolt of pure elemental darkness hits you!
+F:FLOOR | CHEST | DOOR | LEVEL2
+
+N:69:Shards Bolt Trap
+I:6:80:5:6:15:6d10:g
+D:A blast of crystal shards hits you!
+F:FLOOR | CHEST | DOOR | LEVEL3
+
+N:70:Sound Bolt Trap
+I:6:80:5:6:15:10d12:g
+D:A sudden roar of sound hurts your eardrums!
+F:FLOOR | CHEST | DOOR | LEVEL3
+
+N:71:Confusion Bolt Trap
+I:4:80:5:5:8:6d10:g
+D:A blast of confusion gas engulfs you!
+F:FLOOR | CHEST | DOOR | LEVEL2
+
+N:72:Force Bolt Trap
+I:6:80:5:6:15:10d12:g
+D:A bolt of pure force hits you!
+F:FLOOR | CHEST | DOOR | LEVEL3
+
+N:73:Inertia Bolt Trap
+I:6:80:5:6:15:10d12:g
+D:Your feet feel like lead!
+F:FLOOR | CHEST | DOOR | LEVEL3
+
+N:74:Mana Bolt Trap
+I:8:80:5:9:25:15d16:g
+D:A bolt of pure magic hits you!
+F:FLOOR | CHEST | DOOR | LEVEL4
+
+N:75:Ice Bolt Trap
+I:4:80:5:5:8:5d10:g
+D:A bolt of ice hits you!
+F:FLOOR | CHEST | DOOR | LEVEL2
+
+N:76:Chaos Bolt Trap
+I:6:80:5:6:15:10d12:g
+D:A blast of raw chaos hits you!
+F:FLOOR | CHEST | DOOR | LEVEL3
+
+N:77:Nether Bolt Trap
+I:8:80:5:9:25:15d16:g
+D:A bolt of negative energy hits you!
+F:FLOOR | CHEST | DOOR | LEVEL4
+
+N:78:Disenchantment Bolt Trap
+I:8:80:5:9:25:15d16:g
+D:There is a static feeling in the air...
+F:FLOOR | CHEST | DOOR | LEVEL4
+
+N:79:Nexus Bolt Trap
+I:6:80:5:6:15:10d12:g
+D:A bolt of nexus hits you!
+F:FLOOR | CHEST | DOOR | LEVEL3
+
+N:80:Time Bolt Trap
+I:8:80:5:9:25:15d16:g
+D:Suddenly, several months pass by in a second!
+F:FLOOR | CHEST | DOOR | LEVEL4
+
+N:81:Gravity Bolt Trap
+I:6:80:5:6:15:10d12:g
+D:Gravity suddenly warps around you!
+F:FLOOR | CHEST | DOOR | LEVEL3
+
+#
+# ball traps
+#
+
+N:82:Lightning Ball Trap
+I:3:60:5:5:8:3d10:B
+D:A massive electrical charge shoots through you!
+F:FLOOR | CHEST | DOOR | LEVEL1
+
+N:83:Poison Ball Trap
+I:3:60:5:5:8:3d10:B
+D:A large cloud of poison gas envelops you!
+F:FLOOR | CHEST | DOOR | LEVEL1
+
+N:84:Acid Ball Trap
+I:3:60:5:5:8:3d10:B
+D:You are suddenly drenched in acid!
+F:FLOOR | CHEST | DOOR | LEVEL1
+
+N:85:Cold Ball Trap
+I:3:60:5:5:8:3d10:B
+D:A blast of hideously cold air envelops you!
+F:FLOOR | CHEST | DOOR | LEVEL1
+
+N:86:Fire Ball Trap
+I:3:60:5:5:8:3d10:B
+D:You are suddenly in the centre of a raging inferno!
+F:FLOOR | CHEST | DOOR | LEVEL1
+
+N:87:Plasma Ball Trap
+I:8:60:5:8:20:12d18:B
+D:You are engulfed in plasma!
+F:FLOOR | CHEST | DOOR | LEVEL3
+
+N:88:Water Ball Trap
+I:5:60:5:6:15:8d12:B
+D:A whirlpool engulfs you!
+F:FLOOR | CHEST | DOOR | LEVEL2
+
+N:89:Light Ball Trap
+I:5:60:5:6:15:8d12:B
+D:A massive flash of light erupts around you!
+F:FLOOR | CHEST | DOOR | LEVEL2
+
+N:90:Darkness Ball Trap
+I:5:60:5:6:15:8d12:B
+D:A large patch of darkness erupts around you!
+F:FLOOR | CHEST | DOOR | LEVEL2
+
+N:91:Shards Ball Trap
+I:8:60:5:8:20:12d18:B
+D:A violent blast of crystal shards hits you!
+F:FLOOR | CHEST | DOOR | LEVEL3
+
+N:92:Sound Ball Trap
+I:8:60:5:8:20:12d18:B
+D:BOOM! Your eardrums nearly explode!
+F:FLOOR | CHEST | DOOR | LEVEL3
+
+N:93:Confusion Ball Trap
+I:5:60:5:6:15:8d12:B
+D:You are enveloped in a cloud of confusion gas!
+F:FLOOR | CHEST | DOOR | LEVEL2
+
+N:94:Force Ball Trap
+I:8:60:5:8:20:12d18:B
+D:A violent blast of pure force smashes down around you!
+F:FLOOR | CHEST | DOOR | LEVEL3
+
+N:95:Inertia Ball Trap
+I:8:60:5:8:20:12d18:B
+D:Suddenly, your entire body feels like lead!
+F:FLOOR | CHEST | DOOR | LEVEL3
+
+N:96:Mana Ball Trap
+I:10:60:5:10:30:16d20:B
+D:You are hit by a blast of pure magic!
+F:FLOOR | CHEST | DOOR | LEVEL4
+
+N:97:Ice Ball Trap
+I:5:60:5:6:15:8d12:B
+D:A massive blast of ice crystals engulfs you!
+F:FLOOR | CHEST | DOOR | LEVEL2
+
+N:98:Chaos Ball Trap
+I:8:60:5:8:20:12d18:B
+D:A violent blast of raw chaos engulfs you!
+F:FLOOR | CHEST | DOOR | LEVEL3
+
+N:99:Nether Ball Trap
+I:10:60:5:10:30:16d20:g
+D:A blast of energy from the netherworld engulfs you!
+F:FLOOR | CHEST | DOOR | LEVEL4
+
+# N:type:name
+# I:diff:prob:another:pval:minlevel:color
+# D:description
+
+N:100:Disenchantment Ball Trap
+I:10:60:5:10:30:16d20:B
+D:You are hit by a blast of pure anti-magic!
+F:FLOOR | CHEST | DOOR | LEVEL4
+
+N:101:Nexus Ball Trap
+I:8:60:5:8:20:12d18:B
+D:A ball of nexus hits you!
+F:FLOOR | CHEST | DOOR | LEVEL3
+
+N:102:Time Ball Trap
+I:10:60:5:10:30:16d20:B
+D:Suddenly, several years pass by in a second!
+F:FLOOR | CHEST | DOOR | LEVEL4
+
+N:103:Gravity Ball Trap
+I:8:60:5:8:20:12d18:B
+D:You suddenly feel gravity warp violently around you!
+F:FLOOR | CHEST | DOOR | LEVEL3
+
+N:110:Arrow Trap
+I:2:100:0:5:2:0d0:R
+D:An arrow shoots out at you.
+F:FLOOR | CHEST | DOOR
+
+N:111:Bolt Trap
+I:2:100:0:5:5:0d0:R
+D:A bolt shoots out at you.
+F:FLOOR | CHEST | DOOR
+
+N:112:Seeker Arrow Trap
+I:2:100:0:6:10:0d0:R
+D:A seeker arrow shoots out at you.
+F:FLOOR | CHEST | DOOR
+
+N:113:Seeker Bolt Trap
+I:2:100:0:6:12:0d0:R
+D:A seeker bolt shoots out at you.
+F:FLOOR | CHEST | DOOR
+
+N:114:Poison Arrow Trap
+I:2:100:0:5:4:0d0:R
+D:A poisoned arrow shoots out at you.
+F:FLOOR | CHEST | DOOR
+
+N:115:Poison Bolt Trap
+I:2:100:0:6:6:0d0:R
+D:A poisoned bolt shoots out at you.
+F:FLOOR | CHEST | DOOR
+
+N:116:Poison Seeker Arrow Trap
+I:2:100:0:7:12:0d0:R
+D:A poisoned seeker arrow shoots out at you.
+F:FLOOR | CHEST | DOOR
+
+N:117:Poison Seeker Bolt Trap
+I:2:100:0:7:15:0d0:R
+D:A poisoned seeker bolt shoots out at you.
+F:FLOOR | CHEST | DOOR
+
+N:118:Broken Dagger Trap
+I:2:100:0:5:2:0d0:R
+D:An broken dagger shoots out at you.
+F:FLOOR | CHEST | DOOR
+
+N:119:Dagger Trap
+I:2:100:0:5:5:0d0:R
+D:A dagger shoots out at you.
+F:FLOOR | CHEST | DOOR
+
+N:120:Poison Broken Dagger Trap
+I:2:100:0:5:4:0d0:R
+D:A poisoned broken dagger shoots out at you.
+F:FLOOR | CHEST | DOOR
+
+N:121:Poison Dagger Trap
+I:2:100:0:6:6:0d0:R
+D:A poisoned dagger shoots out at you.
+F:FLOOR | CHEST | DOOR
+
+#
+# multiple arrows/daggers traps
+#
+
+N:122:Arrows Trap
+I:4:100:0:7:16:0d0:R
+D:Some arrows shoot out at you.
+F:FLOOR | CHEST | DOOR
+
+N:123:Bolts Trap
+I:4:100:0:7:18:0d0:R
+D:Some bolts shoot out at you.
+F:FLOOR | CHEST | DOOR
+
+N:124:Seeker Arrow Trap
+I:5:100:0:8:20:0d0:R
+D:Some seeker arrows shoot out at you.
+F:FLOOR | CHEST | DOOR
+
+N:125:Seeker Bolt Trap
+I:5:100:0:8:24:0d0:R
+D:Some seeker bolts shoot out at you.
+F:FLOOR | CHEST | DOOR
+
+N:126:Poison Arrows Trap
+I:5:100:0:8:18:0d0:R
+D:Some poisoned arrows shoot out at you.
+F:FLOOR | CHEST | DOOR
+
+N:127:Poison Bolt Trap
+I:6:100:0:8:20:0d0:R
+D:Some poisoned bolts shoot out at you.
+F:FLOOR | CHEST | DOOR
+
+N:128:Poison Seeker Arrows Trap
+I:7:100:0:9:27:0d0:R
+D:Some poisoned seeker arrows shoot out at you.
+F:FLOOR | CHEST | DOOR
+
+N:129:Poison Seeker Bolts Trap
+I:9:100:0:9:30:0d0:R
+D:Some poisoned seeker bolts shoot out at you.
+F:FLOOR | CHEST | DOOR
+
+N:130:Broken Daggers Trap
+I:4:100:0:6:12:0d0:R
+D:Some broken daggers shoot out at you.
+F:FLOOR | CHEST | DOOR
+
+N:131:Dagger Trap
+I:4:100:0:6:15:0d0:R
+D:Some daggers shoot out at you.
+F:FLOOR | CHEST | DOOR
+
+N:132:Poison Broken Daggers Trap
+I:5:100:0:7:18:0d0:R
+D:Some poisoned broken daggers shoot out at you.
+F:FLOOR | CHEST | DOOR
+
+N:133:Poison Daggers Trap
+I:6:100:0:7:23:0d0:R
+D:Some poisoned daggers shoot out at you.
+F:FLOOR | CHEST | DOOR
+
+N:140:Trap of Drop Item
+I:3:50:0:2:5:0d0:y
+D:A sudden sound startles you and you drop something!
+F:FLOOR | CHEST | DOOR
+
+N:141:Trap of Drop Items
+I:5:50:0:5:12:0d0:y
+D:A sudden sound startles you and you drop several things!
+F:FLOOR | CHEST | DOOR
+
+N:142:Trap of Drop Everything
+I:8:50:0:8:20:0d0:y
+D:A sudden sound startles you and you drop everything!
+F:FLOOR | CHEST | DOOR
+
+#-SC-
+N:150:Trap of Femininity
+I:4:30:5:0:10:2d8:r
+D:You feel like a new woman!
+F:FLOOR | CHEST | DOOR
+
+N:151:Trap of Masculinity
+I:4:30:5:0:10:2d8:r
+D:You feel like a new man!
+F:FLOOR | CHEST | DOOR
+
+N:152:Trap of Neutrality
+I:4:30:5:0:10:2d8:r
+D:You feel like a new woman... erm, a new man... er, WHAT did you say???
+F:FLOOR | CHEST | DOOR
+
+N:153:Trap of Aging
+I:5:50:5:0:15:1d8:r
+D:You suddenly age very fast!
+F:CHEST | DOOR
+
+N:154:Trap of Growing
+I:3:75:5:0:5:1d8:r
+D:You begin to grow!
+F:FLOOR | CHEST | DOOR
+
+N:155:Trap of Shrinking
+I:3:75:5:0:5:1d8:r
+D:You begin to shrink!
+F:FLOOR | CHEST | DOOR
+
+#N:156: UNUSED
+
+#N:157: UNUSED
+
+N:158:Trap of Divine Anger
+I:6:100:5:0:15:0d0:G
+D:A voice booms out "Have a care, mortal!"
+F:FLOOR | CHEST | DOOR
+
+N:159:Trap of Divine Wrath
+I:9:50:5:0:30:0d0:G
+D:A voice booms out "Sacrilege!"
+F:FLOOR | CHEST | DOOR
+
+N:160:Hallucination Trap
+I:3:100:10:0:4:0d0:r
+D:Your vision is clouded by a blast of kaleidoscopic light!
+F:FLOOR | CHEST | DOOR
+
+# Bolt traps
+N:161:Greater Magic Missile Trap
+I:6:80:5:6:75:25d20:g
+D:A greater magic missile hits you!
+F:FLOOR | CHEST | DOOR | LEVEL3
+
+#N:162:Foulness Trap
+#I:6:80:5:6:15:10d12:g
+#D:You feel foul!
+#F:FLOOR | CHEST | DOOR | LEVEL3
+
+#N:163:Trap of Death Ray
+#I:8:80:5:9:25:15d16:g
+#D:A Ray of Death hits you!
+#F:FLOOR | CHEST | DOOR | LEVEL4
+
+N:164:Trap of Holy Fire
+I:6:80:5:6:15:10d12:g
+D:Holy fire rises around you!
+F:FLOOR | CHEST | DOOR | LEVEL3
+
+N:165:Trap of Hell Fire
+I:6:80:5:6:15:10d12:g
+D:Hellfire rises around you!
+F:FLOOR | CHEST | DOOR | LEVEL3
+
+N:166:Psi Bolt Trap
+I:6:80:5:6:15:10d12:g
+D:Your mind is suddenly blasted!
+F:FLOOR | CHEST | DOOR | LEVEL3
+
+N:167:Psi Drain Trap
+I:6:80:5:6:15:8d10:r
+D:You suddenly can't think clearly any more...
+F:FLOOR | CHEST | DOOR | LEVEL3
+
+# Ball Traps
+
+### this one *ought* to be a Nuke Ball trap, not plasma ball, as trap 87 
+### is also plasma ball. I've put the description right in advance.
+
+#N:168:Plasma Ball Trap
+#I:8:60:5:8:20:12d18:B
+#D:A blast of radiation engulfs you!
+#F:FLOOR | CHEST | DOOR | LEVEL3
+
+N:169:Psi Ball Trap
+I:8:60:5:8:20:12d18:B
+D:Your brain is suddenly blasted!
+F:FLOOR | CHEST | DOOR | LEVEL3
+
+# Useful traps
+
+N:170:Acquirement Trap
+I:1:40:5:5:18:0d0:v
+D:Whoa!
+F:FLOOR | DOOR
+
+# More bolt traps
+
+N:171:Greater Lightning Bolt Trap
+I:3:60:5:3:6:6d6:g
+D:You are jolted with electricity!
+F:FLOOR | CHEST | DOOR | LEVEL1
+
+N:172:Greater Poison Bolt Trap
+I:3:60:5:3:6:6d6:g
+D:A blast of deadly poison gas hits you! 
+F:FLOOR | CHEST | DOOR | LEVEL1
+
+N:173:Greater Acid Bolt Trap
+I:3:60:5:3:6:6d6:g
+D:A jet of acid shoots out at you! It burns severely!
+F:FLOOR | CHEST | DOOR | LEVEL1
+
+N:174:Greater Cold Bolt Trap
+I:3:60:5:3:6:6d6:g
+D:You are suddenly extremely cold!
+F:FLOOR | CHEST | DOOR | LEVEL1
+
+N:175:Greater Fire Bolt Trap
+I:3:60:5:3:6:6d6:g
+D:You are suddenly extremely hot!
+F:FLOOR | CHEST | DOOR | LEVEL1

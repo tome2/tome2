@@ -1,0 +1,30 @@
+~~~~~01|Rawrog
+~~~~~02|Race Modifiers|Rawrog
+#####R=== Rawroeg (Lion Demons) ===
+
+#####GDescription
+Tall humanoids with glorious red-gold hair and decidedly
+catlike faces, the Rawroeg are corrupted lions. Strong,
+healthy, intelligent and wise, they fear very little and
+can emit roars that instill fear into the very souls of 
+their enemies. They learn to resist the elements fairly 
+well as they gain experience. They make good warriors.
+
+#####GStat Modifiers
+Strength       +2   
+Intelligence   +1   
+Wisdom         +1    
+Dexterity      -1   
+Constitution   +2   
+Charisma       +1      
+Hit Dice       +2 sides        
+Exp Penalty    +30%
+
+#####GSkill Bonuses (supplementary to existing skills)
+Combat                   0.000           [0.100]
+Weaponmastery            0.000           [0.100]
+
+#####GStarting Equipment
+A Rawrog character begins the game with:
+    Some rations
+    Some torches

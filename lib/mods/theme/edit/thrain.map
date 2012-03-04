@@ -1,0 +1,35 @@
+# Floor
+F:.:1:0:0:0:0:0:0:0:61
+
+# Some Nazguls
+F:1:1:0:951:0:0:0:0:0:61:2
+F:2:1:0:952:0:0:0:0:0:61:2
+F:o:1:0:866:0:0:0:0:0:61
+
+# Marker
+F:,:172:6:0:0:0:0:0:0:61
+
+# Lit permanent wall
+F:x:61:6
+
+# Door
+F:D:48:0:0:0:0:0:0:0:61
+
+# Floor with Trap
+F:t:1:8:0:0:0:0:*
+
+# Deep lava
+F:l:85:0:0:0:0:0:0:0:61
+
+# Dungeon layout
+D:          
+D: xxxxxxxx 
+D: xoooo..x 
+D: xo2oo..x 
+D: xlloo..x 
+D: x,loo..D 
+D: xlloo..x 
+D: xo1oo..x 
+D: xoooo..x 
+D: xxxxxxxx 
+D:          

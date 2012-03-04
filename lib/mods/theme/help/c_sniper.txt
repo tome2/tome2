@@ -1,0 +1,50 @@
+~~~~~01|Sniper
+~~~~~02|Classes|Sniper
+#####R=== Snipers ===
+
+#####GDescription
+Snipers are stealthy archers who kill from a safe
+distance and aren't very good at hand-to-hand combat.
+They have some ability in the Conveyance school of 
+magic, which can let them disappear quickly if the
+need should arise.
+
+#####GStarting Stat Modifiers
+Strength         +2
+Intelligence     +1
+Wisdom           +0
+Dexterity        +2
+Constitution     +1
+Charisma         +1
+Bonus Blows       0
+Hit Die          +d4
+Exp Penalty      30%
+
+#####GStarting Skills:
+#####BSkill                   Start Level     Skill Point Gains
+Combat                  1.000           [0.500]                                                     
+  Weaponmastery         1.000           [0.500]                                                     
+  Archery               1.000           [0.750]                                                     
+    Sling-mastery       0.000           [0.300]                                                     
+    Bow-mastery         0.000           [0.300]                                                     
+    Crossbow-mastery    0.000           [0.300]                                                     
+    Boomerang-mastery   0.000           [0.300]                                                     
+Sneakiness              2.000           [1.000]                                                     
+  Stealth               1.000           [0.700]                                                     
+  Disarming             1.000           [1.000]                                                     
+  Backstab              1.000           [0.700]                                                     
+Magic                   1.000           [0.600]                                                     
+  Magic-Device          1.000           [1.100]                                                     
+  Conveyance            1.000           [0.500]                                                     
+Spirituality            0.000           [0.500]                                                     
+  Prayer                0.000           [0.500]                                                     
+Monster-lore            0.000           [0.500]                                                     
+
+#####GStarting Equipment
+A sniper begins the game with:
+    a short bow
+    some ammo
+
+#####GInnate Abilities:
+#####BAbility              Character level
+Ammo creation               2

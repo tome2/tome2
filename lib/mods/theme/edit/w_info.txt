@@ -1,0 +1,141 @@
+# PernAngband wilderness definition file by DarkGod (darkgod@pernangband.org)
+# with the help form Gwidon S. Naskrent (naskrent@artemida.amu.edu.pl)
+# Designed to "look like" Middle-earth map
+# Updated to include a more accurate location of Angband/Gondolin and many new features by furiosity for Theme
+
+W:D:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+W:D:Xg=====================gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggX
+W:D:Xgggggg==============gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggX
+W:D:Xggggggg==============ggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggX
+W:D:Xgggggggggg===========ggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggX
+W:D:XWWAAWCCCWWWW===========WWWgggWWWWWgggggggggWWWWWWWWWWggggWWWWWWWWWWWWWggggWWWWWWWWggggWWWWWWWWWggggX
+W:D:XWWAAAACCCCWWWWAA========WWWWWWWWWWWWWggggggggWWWWWWWWWWWWWWWWWWWWWWWWWWggWWWWWWWWWWWWWWWWWWWWWWEEEEX
+W:D:XWWWWAAAAAW%AAAA========WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW.EEEEEEEEX
+W:D:XWWWWWWAAWAAAWW===========WWWWWWW...WWWWWWWWWW..........WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW.EEEEEEEEEEEX
+W:D:XWWWWWWWWWWWWWW==========..WWW....WWWWWWWW................WWWWGGGGWWWWWWWW......WWWWW.EEEEEEEEEEEEEEX
+W:D:XTM.MMMMWWWW===...====...........HHHH..................GGGGGGGWWWDWWWW.........WWWW.EEEEEEEEEEEEEEEEX
+W:D:XT.2MMM=======.BB.=............HHHHHHHH..&&&&&...J..GGGGGGGGGGGGG.................tEEEEEtEEEEttEEEEEX
+?:[EQU $TOWN_DESTROY2 1]
+W:M:0:1
+W:D:XT.PMMM=======.BB.=............HHHHHHHH..&&&&&......GGGGGGGGGGGGG.................tEEEEEtEEEEttEEEEEX
+?:1
+W:D:XMMMMM======..BB.===.............HHHH.......&&&&&&GG.._._.......................ttttttttttttttttttttX
+W:D:X======...._.BB._..._............................&....._._TTT................GG........tttttttttttttX
+W:D:X=====...._..BB.._.._..HHHH................&....&&&~~~~.TT_TTTT..........G.....GGG........tttttt^^^^X
+W:D:X===....._...BB..._._..HHH.......HHHHHH.....&&&&._&&..~.TTT_T_TT..^D......GGGGGG..............ttt^^^X
+W:D:X===...._..TBBB...._._..H.=....HHH|HH..........__.&&__~.TTTT_o_TT.D8........_.....................^^X
+W:D:X===...._....BB....._..HH.=_....H.|..........__...&&..~.TTTTTT_TT.=........_........................X
+W:D:X===..._...BBBB...._....HHHH__....|........._.....&&..~.TTTTTT____a........_........................X
+W:D:X===...._..TTBB..._........._.....|H......._......&q..~6TTTTT&&&T._........._.......................X
+W:D:X===....==..TBBB._......HH.._.TT..|.HH...._..TTT._&&..~..*TT&I&&&T._........._......................X
+W:D:X====...==.....==......HHd+-_TTTT-x1HH---------_Lq&&---------------_........_.......................X
+W:D:X=====..========....H....H|..____H|uH....._..._.._&...~..TTTTTTTTTT._........_......................X
+W:D:X==============....HHH....|..._TTH|......._.._.._&&^...~..TTTTTTTTT.._........_....................tX
+W:D:X======..==....BB...H.....|..._..H|HH...._.._...&&.....~..TTTTTTTT...._......_....................ttX
+W:D:X======........BB.........[---_...|.H...._._..^^&&^.I._~..TTTTTTTT....._......_..................tttX
+W:D:X======........BB............._[--|....._.._..^^&&___I.~~.TTTTTTTT......_.._._..................ttttX
+W:D:X======........BB....B......._....|....._._...^^&&.....~~.TTTTT.T........__.._.................tttttX
+W:D:X=======.....TBBB..BBBB....._.....|....._....^^&&&....~~...TTTT.............._...............tttttttX
+W:D:X==========..TBBBT........._......|...._.....^^&&.....~~...TTTT..............._...._.......TtTttttttX
+W:D:X==========..TTTBBTBB....._.......|II__.....^)^&&....~~....TTTTTTT............._.__._=...TTTTTTtttttX
+W:D:X==========...TTBTT......_........___II_..._^^^&&....~~..TTTTTTTTTT............._....==...T==TTtttttX
+W:D:X==========.....T.T....._........_.....____^___R__...~~.TTTTTTTTTT...................========TTtttttX
+W:D:X===========.=........._........_..........^^&&&_!7!~~..TT&TTTTTTT..................=========TttttttX
+W:D:X================....__........_..ttt......^M&&._!4!~~..TTTTTTTTT...................=========...ttttX
+W:D:X=================.==E........_....tt.....TTMM&..!!!~.....TTTTT..................^^.========......ttX
+W:D:X===================EE........._.........TTMMM.......~~.........................^^^^.=======.......tX
+W:D:X===================E==......._..........TTM)MTTTTT._..~~~~;;....................^^^.==...==.......tX
+W:D:X===================E==......_...........T&MWMMTTTT_I_.....~;;..................^^^^^.=...=........tX
+W:D:X=====================......_.ttt........T&M5MTTTTTT..__I~~;;...................^^^^^^.............tX
+W:D:X=====================.....=_.tt.........&&MMMTTTTT.....~...........................^^.............tX
+W:D:X======================...==..ttt........&&_&&&.._.......~~........................................tX
+W:D:X=======================.===..............^_^....._........~.......................................tX
+W:D:X===========================..............._......._......~........................................tX
+W:D:X==========================.tt......._._.._........_....H=HH...SSS.................................tX
+W:D:X==========================.tt._.._t_...__.........._..H===H.SSSS.................................ttX
+W:D:X==========================..__.__._._._..&&&b....._....H=HH..SS.A.A.............................tttX
+W:D:X============================....._..._.__.&&&......_....~~.....AAOAAA..A..AA..A..A..AA.........ttttX
+W:D:X===========================.............._&&&^^....._....~~I...AA''AAAAAAAAAAAAAAAAAAAAAAA......tttX
+W:D:X===========================.......^.&.^^&&&&&&&......__.~~III...AAVVVVVV$AVVVAVAA_"""_"""""".....ttX
+W:D:X===========================.....^^.&.&_&^&.&^&_&&&9...._..~~II..AAVVUVVVVVVVVVVA_"""""_"""""".....tX
+W:D:X===========================....^....__^^...^^^._^&&........~~.c.AAVVUUVVVVVVVAA_"""""""_"""".......X
+W:D:X===========================..^^^_.._.......^^._.^^&&&........~~.AAVVVVVVVVVVAA""_""""""_"""""""....X
+W:D:X============================.^T_.__._........_&^^^.&&&&&......e.AAsAAVAAAVVV"""""_""""_"""""""....DX
+W:D:X============================.T^_..._....HH.._&&&^^.._&&&&.&...~.AAA""A"A""""""""=="""_"""""""""".DDX
+W:D:X============================.T^._.HHHHHHHH...__...._^&^&&&&&.~..AA""""""""""""======_"""""""""""DDDX
+W:D:X===========================.^^._...H.H........._.._.^&^^._^3.~..sA"""_"_"""""=====""""""""""""DDDDDX
+W:D:X==========================..^^.._.....===.=====_._&^...._...^.~.AA"__"_"__======"""""AA""""DDDDDDDDX
+W:D:X==========================.H...._...===========_&&^...._._...~~.AA_""""""""""""_""A"AADDDDDDDDDDDDDX
+W:D:X========================.HHH=...=_.==========&^^^^.._._..._.~~..AAA""AAA""A"""AA_AAAADDDDDDDDDDDDDDX
+W:D:X======================....=====.==============^.^._=._.....~~...AAAAAAAAAAAAAAAAAAADDDDDDDDDDDDDDDDX
+W:D:X==============================================.^^^==....~~~~....................DDDDDDDDDDDDDDDDDDDX
+W:D:X===============================================..====~~~f~...............DDDDDDDDDDDDDDDDDDDDDDDDDDX
+W:D:X===============================================.==^==_............DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDX
+W:D:X=================================================^^===........DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDX
+W:D:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+# Definition of all the entrances to the dungeons
+# W:E:<dungeon>:<y>:<x>
+
+#Orodruin
+W:E:5:50:70
+
+# Numenor
+W:E:7:25:1
+
+# Paths of the Dead
+W:E:16:49:38
+
+# Illusory Castle
+W:E:17:15:96
+
+# Maze
+W:E:18:57:28
+
+# Erebor
+W:E:20:15:66
+
+# Old Forest
+W:E:21:21:31
+
+# The Sacred Land Of Mountains
+W:E:25:37:80
+
+# The Wild Land Of Rhun
+W:E:26:28:92
+
+# The Withered Heath
+W:E:27:10:65
+
+# The Grinding Ice
+W:E:29:1:1
+
+# Dol Guldur
+W:E:23:33:58
+
+# The Northern Waste
+W:E:31:5:44
+
+# The Blue Mountains
+W:E:32:29:18
+
+# Dol Amroth
+W:E:33:60:48
+
+# Angmar
+W:E:34:13:48
+
+# Near Harad
+W:E:35:64:97
+
+# Isengard
+W:E:36:42:43
+
+# Tol Eressea
+W:E:37:64:1
+
+# Utumno
+W:E:38:1:99
+
+# Starting position
+W:P:35:21

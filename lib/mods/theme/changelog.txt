@@ -1,0 +1,73 @@
+=== RECENT VERSION HISTORY (1.1.5 to 1.2.0) ===
+
+1.1.5 AKA "Angles and Corners"
+- Dropped the NOTICE flag from regular sandwalls.
+- Flight is now possible over wooden wilderness structures.
+- The Anduin River lost the CAN_RUN and DONT_NOTICE_RUNNING flags.
+- The Orc Cave now leads you out to the other side of the Misty Mountains.
+- Put an Eagles' nest into Khazad-Dum.
+
+- The Map of Thror no longer lives in the Bree town quest. It is now on a special (branch) level of the Barrow-Downs.
+- The Key of Thorin no longer lives in the Minas Anor town quest. It is now on a special (branch) level of Mirkwood.
+- Reworked the Bridge of Khazad-Dum level to be more nasty and random, played with the layout a bit.
+- Added new level "Orthanc" in the Isengard dungeon, based heavily on the one created by Burb Lulls. There is, however, a canonical twist (or two). >:)
+
+1.1.6 AKA "Curses to This Mirage"
+- Druids (r_info) lost the EVIL flag. These are supposed to be Yavanna's people and they're certainly not evil. The dark elven druids are stil evil.
+- All neutral monsters defined in r_info have been forced into the wilderness.
+- The coaligned spirits now have the GOOD flag. This is mostly to clean up the Mandos piety code (later).
+
+- Fixed the automatic stat gain script to forget stat gain on death, so the savefile can be reused and monster memory retained.
+- Drastically reduced piety gain for quaffing pots of corruption. It's meant to be a fun thematic addition, not a scumming tactic.
+- Aewroeg, Narroeg and Wainriders now start with their stated spellbooks
+
+1.1.7 AKA "Poor Madeleine"
+- Rings and amulets no longer ignore the elements. The rationale for this was that Middle-earth magical items are *really* magical and therefore powerful, but it was unbalancing, not to mention made it a pain destroying objects in the late game.
+- Rings of Lordly Protection have been renamed to 'of Arnor'
+- Pushed Potions of Corruption deeper into the dungeon.
+- Changed names on Aule's and Ulmo's spellbooks to be more impressive-sounding
+- Removed the miscellaneous food items, except for Longbottom leaf, milk and honey.
+- New item types: Ranger's Arrow, Throwing Axe, Buckler, Small Mithril Boomerang, Mithril Boomerang (the latter three adapted from FuryMod)
+
+1.1.8 AKA "Little White Candle"
+- Weapons of Unmagic now have negative to-hit and to-dam modifiers; demonology equipment can no longer get this ego type.
+- Reworked the T-Plus "Rogue" ego type for boots to balance it: reduced the pval, added to_h and to_d penalties and made the stealth and luck bonuses rarer.
+- Boots of Elvenkind no longer guarantee a speed bonus; chance is 50%.
+- Pushed 'of the Maiar' items deeper into the dungeon.
+- Filthy Rags of Leprousness are no more; they're replaced by Armour of Dunharrow (same effects, but can show up on all soft & hard armour plus cloaks)
+- A number of the "bad" ego types got the aggravation flag to offset the benefits of flip-scumming.
+- Drastically reduced magic breath chances on Ethereal robes and cloaks.
+- The 'of Lordliness' ego type is now 'of Arnor'; 'of Might' is now 'of Gondor'; 'of Nothingness' is now 'of Angmar'; boots of speed are now 'of Rohan' and all 'of Stealth' is now 'of Eriador'. Because of the hobbit connection, the 'of Eriador' items now have a 10% chance of a luck bonus equal to the stealth bonus (which remains at 100%).
+- The 'of Arnor' and 'of Gondor' ego types can now show up on all headgear, not just crowns.
+- The 'Sharp' ego has been extended to arrows and crossbow bolts (I added a new index and called them 'Sharpened' to make sure the additional cost is not exorbitant).
+- The 'of Sensitivity' ego type is no longer possible on body armour; there were too many T-lines in e_info.txt.
+- The 'Elemental' ego type on rings is only possible on high-level rings and amulets now; same reason as above.
+- The 'Blazing' ego type is now only possible on crowns, high-level rings and amulets; same reason as above.
+- The 'Radiant' ego type is now only possible on crowns, high-level rings and all amulets (as before); same reason as above.
+- The 'Glowing' and 'Dazzling' ego types are now only possible on crowns and low-level rings and amulets; same reason as above.
+- Rings of the Elements have been removed; one Elemental ego for jewelry is enough.
+- New ego types: Magical for jewelry, cloaks, soft armour and gloves -- makes the item ignore the elements and gives a 50% chance of the ability to store a spell. Magical for missile launchers -- adds a tiny boost to mana; designed with magic-using archer and warrior-types in mind.
+
+1.1.9 AKA "Kit Bag Full of Marbles"
+- Randart magestaves can now gain % to life
+- Randart armour, lights, jewelry and magestaves can now get the ability to store a spell
+- Randart high-level soft armour, hard armour and DSM can gain nether immunity
+- Randart light weapons (no broken ones) can gain sentience
+
+- Humans may no longer be Lost Souls for thematic reasons; the Doom of Men is that their fate after death is unknown to anyone except Eru. This applies to: Edain, Druedain, Rohirrim, Dunedain, Easterlings and Beornings. Also no longer allowed as LostSouls are yeeks, orcs, trolls and half-ogres.
+- Flying creatures (Eagles, Dragons, Aewroeg) now learn to fly high enough to pass mountains at clvl50.
+
+- FF now may also offer the following skills: Nature, Runecraft, Boulder-throwing.
+
+1.2.0 AKA "Twining Light"
+- Ultimate amulet no longer weighs 60lbs. >.>
+- Reworked the Paur* artifact gauntlets to be more thematic, added stat bonuses and sustains. I never liked the fact that it was a no-brainer which of them to keep if you had all four.
+- Fixed some rarity bugs with a number of Theme artifacts.
+- Removed the lesser (Dwarven) rings of power (except the Ring of Durin). They were taking up artifact space and didn't do much. They'll be back, tweaked, in a 3.0.0-compatible Theme.
+- Fixed some lurking bugs in in set_info
+- Reduced rarity on the Cloak of Valinor. It was a little incongruous that it cost far less than Ancanaur and was far more rare than is decent.
+- Gandalf's robe now gives fire immunity
+- Ancanaur is now a shadow blade, not a bluesteel blade.
+- The Golden Horn of the Thunderlords now ignores elements.
+- New artifacts: Erkenbrand's shield, Gimli's axe and shield.
+- New item set: Gimli's Gear (boots, axe, shield)

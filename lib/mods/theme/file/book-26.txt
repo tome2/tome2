@@ -1,0 +1,56 @@
+			 ------------------------- 
+			| Artifact Lore Vol. VIII |
+			|          Cloaks         |
+			 ------------------------- 
+
+The Cloak 'Holcolleth'
+    This elven-grey mantle possesses great powers of tranquility and of
+    concealment, and grants the wearer the knowledge and understanding of the
+    Sindar.
+
+The Cloak of Thingol
+    A sable-hued cloak, with glowing elven-runes to restore magic showing calm
+    and clear as moonlight on still water.
+
+The Cloak of Thorongil
+    A cloak of shimmering green and brown that grants sight beyond sight and
+    shakes off holding magics, worn by Aragorn son of Arathorn in his youth as
+    he adventured under the name of Thorongil.
+
+The Cloak 'Colannon'
+    A crystal-blue cape of fine silk worn by a silent messenger of the forces
+    of Law. Somehow, its wearer is always able to escape trouble.
+
+The Shadow Cloak of Luthien 
+    The opaque midnight folds, inset with a multitude of tiny diamonds, of
+    this cloak swirl around you and you feel a hint, a fragment of the
+    knowledge and power to restore that lay in Luthien, the most beautiful
+    being that ever knew death.
+
+The Shadow Cloak of Tuor 
+    From the ruin of Gondolin did Tuor escape, through secret ways and
+    travail, shielded by his cloak from a multitude of hostile eyes.
+
+The Elven Cloak of Peregrin Took
+    This simple-looking cloak, dyed in hues that blend into the woodlands, was
+    a gift from the elves of Lothlorien to the halfling Peregrin Took.  Its
+    wearer has an uncanny knack for making friends, escaping bonds, moving
+    among enemies completely unseen - and finding food.
+
+The Cloak 'Menelcol'
+    This deep-blue velvet cloak, embroidered with silvery stars, sheds
+    acelestial light that reveals hidden things and bestows unearthly beauty. 
+    It also wards off damage from elements of the skies, and allows the wearer
+    to fly unscathed even through airless space.
+
+The Cloak of Ghan-buri-Ghan 
+    This dark-coloured cloak once belonged to the leader of the Druedain. As
+    you put it on, you feel safer from attempts to waylay you on your travels. 
+
+The Cloak of Valinor
+    A magical cloak that grants the wearer ultimate protection.
+
+The Elven Cloak of Mellyrn
+    Bearing the same lyrical name as the great trees of Lothlorien and containing 
+    in its close-woven folds the speed and skill of the Galadhrim, this grey cloak 
+    is ideal for those who travel in forests.

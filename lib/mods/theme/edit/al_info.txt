@@ -1,0 +1,12 @@
+# File: al_info.txt
+
+
+# This file is used to initialize the "lib/raw/al_info.raw" file, which is
+# used as the alchemist recipes in ToME
+
+# This file is intentionally blank in Theme
+# because the Alchemist class has been removed.
+
+# Version stamp (required)
+
+V:2.0.0

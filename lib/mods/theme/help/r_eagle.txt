@@ -1,0 +1,32 @@
+~~~~~01|Eagle
+~~~~~02|Races|Eagle
+#####R=== Eagles ===
+
+#####GDescription
+"The Eagles are coming! The Eagles are coming!" Ever has this cry signified
+the Great Eagles of Manwe coming to a battlefield or a dire emergency to aid
+the forces of good. Majestic magical birds ever faithful to Manwe Sulimo,
+though they may choose to worship other Valar during their time on Arda. They
+have been given many gifts by Manwe, not the least important of which is the
+ability to resist the elements as they mature. They cannot wield weapons, 
+bows, or play musical instruments, however. The Eagles' greatest enemies are
+the dragons, and they learn to detect the presence of dragons fairly early.
+As winged creatures, Eagles may not wear cloaks.
+
+#####GStat Modifiers
+Strength        +6   
+Intelligence    +2   
+Wisdom          +1   
+Dexterity       -2   
+Constitution    +3   
+Charisma        +6       
+Hit Dice Sides  12         
+Exp Penalty     +200%
+
+#####GRacial Skills
+Combat                       0.000           [0.000]
+  Barehand-combat            1.000           [0.300]
+Sneakiness                   3.000           [0.000]
+  Stealth                  -16.000           [0.000]
+  Disarming                  6.000           [0.000]
+Spirituality                 5.000           [0.000]

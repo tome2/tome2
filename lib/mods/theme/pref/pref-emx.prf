@@ -1,0 +1,19 @@
+# File: pref-emx.prf
+
+#
+# Include "pref-ibm.prf" to get the default macros.
+#
+# Note that, while most key-to-trigger mappings are the same as DOS/Win,
+# some few odd keys will be different or not available at all.
+#
+# Examples: Ctrl-Escape, Alt-PrintScreen
+#
+# What's NOT working: color palette redefinitions.
+#
+
+%:pref-win.prf
+
+
+# shift-5 - rest
+A:R\r
+P:^_Sx4C\r

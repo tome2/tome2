@@ -1,0 +1,30 @@
+|||||oy
+~~~~~01|ToME - a General Description
+#####R             /----------------------------------------\
+#####R            <              What is ToME?               >
+#####R             \----------------------------------------/
+
+Tales of Middle Earth (ToME) is a fantasy adventure game, based on the works 
+of Tolkien. Focusing on game-play rather than fancy graphics that get boring 
+after a week, ToME will keep you playing for years. 
+
+Explore dozens of different dungeons including hundreds of randomly generated 
+levels filled with multitudes of different items and treasures. Fight off 
+hundreds of monsters and uniques from the stories in a complex fighting system. 
+Gain experience and learn skills; choose from the dozens of races and classes 
+available to the player; cast spells from simple teleportation spells to
+advanced spells that can wipe out a whole army at once. It's the only game where
+you can burn spell books by trudging in lava (unless you have gained immunity
+from some armour), dry up rivers to cast mighty spells, strike at orcs with
+blades attuned to slay them specifically, summon armies from a simple totem,
+and even enter a symbiotic relationship with a mold!
+
+Explore dungeons, gain power, and save Middle-earth!
+
+The player will begin his adventure on the town level where he may acquire 
+supplies, weapons, armour, and magical devices by bartering with various shop 
+owners. After preparing for his adventure, the player can descend into the 
+dungeon near Bree where fantastic adventures await his coming! 
+
+Make sure you read the parchment you are given when you start the game, and 
+read the in-game documentation.

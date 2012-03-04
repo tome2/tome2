@@ -1,0 +1,10 @@
+~~~~~01|Pacifist
+~~~~~02|Classes|Pacifist
+#####R=== Pacifists ===
+
+#####GDescription
+A Pacifist is someone who prefers not to use violence to 
+achieve their ends. There are two types of Pacifists:
+
+*****c_peacemag.txt*0[Peace-mage]
+*****c_trapper.txt*0[Trapper]

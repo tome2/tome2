@@ -1,0 +1,23 @@
+#G                       #W ~ ~~~   ~~~    (       #G 
+#G   ======/   =====     #W      ~~ ) ~~   )       #G    ===  ===       ===
+#G  /  //     /  __ \    #W        )~ #r,.#W~ (   (#G      //   ||   \\   //   
+#G    //     |  |  | |   #W       _#r,-"####`-^  #W  ) #G   ||    ||   ||   ||==:
+#G    ||     |  |  | |   #W     ,#D###########r`W='#D###W`.#W () #G   ||    ||   ||   ||       
+#G     \\_//  \  -- /    #W    ,#D#######################D###W:#r,=.   #G  ||   ||  ||    \\===
+#G      \_/    =====     #W   /.#D###W,".#D#####W,".#D###########r"#W##\                
+#W  ,-.   _,-= /"._  ,-. #w ,"   #W   `:'   `:#D#####W[JW] ,.  #G  #R "Theme"
+#W,"   `,"    `=._ `"   -#w; #G  The         #W\#D#####W;"' V  \#W            __,-.     ,-=.
+#W     /        " `-. #w  /  #GTroubles of   #W `"       `-.#W__,-""._,"     "--,"    >-=-
+#W  ,-"`.            #w _'   #G  Middle Earth#w            "._      #W`       _/
+                 _,"                                      #w"=.".
+              _,"          #ohttp://www.t-o-m-e.net         #w`._,=-._    _,-.      
+  _._   ,"._,"                                                      #w"-."    \,-.  
+-"   `-"                                                                        #w`-
+ ToME maintained by darkgod                                  Module by furiosity
+     #Bdarkgod@t-o-m-e.net                                  #Bfuriosity@gmail.com
+#y                            One Ring to rule them all,
+#y                              One Ring to find them,
+#y                            One Ring to bring them all,
+#y                           And in the Darkness bind them
+#y                    In the Land of Mordor, where the Shadows lie. 
+#B                                  [J.R.R. Tolkien]

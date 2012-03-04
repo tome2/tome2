@@ -1,0 +1,81 @@
+			 ---------------------- 
+			| Artifact Lore Vol. V |
+			|    Missile Weapons   |
+			 ---------------------- 
+
+The Long Bow 'Belthronding'
+    The great bow of Beleg, made of black yew and strung with elven hair that
+    faintly shines a pale clear gold.
+
+The Long Bow of Bard
+    The great yew bow of grim-faced Bard, who shot the mightiest arrow that
+    songs record.
+
+The Light Crossbow 'Cubragol'
+    A crossbow that grants fiery speed to he who finds it, and from which
+    shoot bolts that blaze with flame unquenchable.
+
+The Sling of the Thain
+    This sling was crafted by Faramir I, Thain of the Shire, just in case the
+    nasties of his father's stories ever dare to enter the Shire again.
+
+The Sling of Farmer Maggot
+    This ordinary seeming leather sling has been raised to legendary status
+    amongst generations of hobbit children.  Farmer Maggot's ability to notice
+    and strike any mushroom thief anywhere within his patch almost keeps young
+    poachers at bay, but once they get within range they soon flee for less
+    painful pastures, frequently with rounded pebbles stinging their
+    backsides...
+
+The Heavy Crossbow of Umbar
+    A great brazen arbalest with arms of gleaming steel, shooting quarrels
+    with speed and power for those brave enough to risk betrayal.
+
+The Short Bow of Amrod
+    This bow, and its twin, belonged to Feanor's last two twin sons, Amrod and
+    Amras, who both hunted with the Green-elves for a time.  Like the twins,
+    the bows are similar, for both protect their wielders from the elementsand
+    strength, while the other gives quickness and subtlety.
+
+The Short Bow of Amras
+    This bow, and its twin, belonged to Feanor's last two twin sons, Amrod and
+    Amras, who both hunted with the Green-elves for a time.  Like the twins,
+    the bows are similar, for both protect their wielders from the elementsand
+    subtlety, while the other gives endurance and strength.
+
+The Light Crossbow of Brand
+    The bow of Brand, last King of Dale. It was given to him as a gift by the
+    King under the Mountain of Erebor, and has access to an especially secret
+    realm of Dwarven lore. 
+
+The Seeker Arrow of Bard
+    Deadliest of arrows, imbued with elemental strength, this shaft is feared
+    especially by the wyrmkin.
+
+The Seeker Arrow of Gondor
+    An arrow that was created to rid the world of demons.
+
+The Seeker Bolt of Feanor
+    Made during the war against Morgoth by Feanor, this powerful bolt is the
+    bane of Morgoth's power, and has especial strength against those foes who
+    are already dead.
+
+The Silver Bolt 'Dailir'
+    The beloved dart of Beleg Cuthalion. It never failed to be found unharmed,
+    until it broke when Beleg fell upon it while he was carrying Turin
+    Turambar away from an Orc-camp, the night Beleg met his end. Turin remade
+    the bolt and kept it to his dying day in memory of his friend.
+
+The Metal Boomerang of Beor
+    Beor's boomerang makes its wielder as agile as the winds, and as hard to
+    harm.
+
+The Metal Boomerang 'Glimdrir'
+    A powerful boomerang that makes one agile and fast, with a thirst for evil
+    and undead creatures, but demands its wielder not teleport, for fear of
+    desertion.
+
+The Long Bow of Legolas
+    The great bow of Legolas, one of the Nine Walkers of old. Handcrafted specially 
+    for Thranduil's son in Lothlorien, this bow gives clarity of sight and agility 
+    to the wielder. 

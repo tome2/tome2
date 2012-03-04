@@ -1,0 +1,87 @@
+85
+a Bag
+a Shiny, Black Box
+a Deck of Cards
+a Rusty, Slimy Box
+an Eyeball
+a Red Tome
+a Red Gem
+a Blue Gem
+a Green Gem
+a White Gem
+an Orange Gem
+a Black Gem
+a Gray Gem
+a Translucent Gem
+a Boulder
+a Voodoo Doll
+a Mirror
+a Black Cube
+a Prism
+a Violet Gem
+a Pentagram
+a Glass Eyeball
+something weird
+a Shard of Pottery
+a Green Tome
+a Black Tome
+a White Tome
+a Pendulum
+a Black Candle
+a Tiny Doll
+a Black Staff
+a Violet Tome
+a Shiny Dagger
+a Gray Tome
+a Broken Stick
+a Parchment
+a Big Bag
+a Small Bag
+a Broken Skull
+a Blue Box
+a Gray Bottle
+an Orange Tome
+a Shiny Gem
+an Ancient Gray Tome
+a Crystal Ball
+a Golden Box
+a Broken Bone
+a Soft Leather Hat
+a Broken Bottle
+an Arcane Parchment
+many Small Wooden Sticks
+some Clay Tablets
+a Smoky Vial
+a Doll
+a Human Skeleton
+a Clay Jar
+an Arcane Parchment
+a Strange Parchment
+a Large Eye
+a Small Eye
+a Decayed Eye
+a Large Crystal Ball
+a Mud-Stained Parchment
+a Medallion
+a Jewel-Encrusted Skull
+a Slimy Mold
+a Battered Book
+a Small Note
+an Old Parchment
+a Small Figurine
+a Torch
+a Rune
+a Singed Parchment
+a Sphere
+a Red Book
+an Acorn
+a Strange Horn
+a Music-Box
+a Blue Mold
+a Torn Book
+a Greasy Parchment
+a Blackened Figurine
+a Pipe
+an Avian Figurine
+a Crutch
+

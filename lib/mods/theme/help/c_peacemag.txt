@@ -1,0 +1,46 @@
+~~~~~01|Peace-mage
+~~~~~02|Classes|Peace-mage
+#####R=== Peace-mages ===
+
+#####GDescription
+A Pacifist is someone who prefers not to use violence to 
+achieve their ends. The peace-mages choose to use defensive
+spells and rely on symbiosis to protect themselves. They 
+may also use spells provided by their deities.
+
+#####GStarting Stat Modifiers
+Strength          0
+Intelligence     +2
+Wisdom           +2
+Dexterity        +2
+Constitution      0
+Charisma         +4
+Bonus Blows       0
+Hit Die           0
+Exp Penalty       0%
+
+#####GStarting Skills:
+#####BSkill                   Start Level     Skill Point Gains
+Sneakiness              0.000           [0.600]                                                     
+  Stealth               0.000           [0.600]                                                     
+  Disarming             1.000           [0.600]                                                     
+  Dodging               1.000           [0.700]                                                     
+Magic                   1.000           [0.600]                                                     
+  Spell-power           0.000           [0.500]                                                     
+  Meta                  0.000           [0.700]                                                     
+  Conveyance            1.000           [0.700]                                                     
+  Divination            0.000           [0.700]                                                     
+  Temporal              0.000           [0.700]                                                     
+  Nature                1.000           [1.000]                                                     
+Spirituality            0.000           [0.700]                                                     
+  Prayer                0.000           [0.500]                                                     
+Monster-lore            1.000           [0.900]                                                     
+  Symbiosis             1.000           [0.600]   
+                                                  
+#####GStarting Equipment
+A peace-mage begins the game with:
+    a scroll of summon never-moving pet
+
+#####GInnate Abilities:
+#####BAbility              Character level
+Perfect casting             15

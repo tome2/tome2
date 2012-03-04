@@ -1,0 +1,75 @@
+		 ------------------------
+		| Monstrous Compendium 2 |
+		|  Mostly never-moving   |
+	 	 ------------------------
+
+             *** Floating eyes (e) ***
+
+Strange disembodied eyes, floating around the dungeon. Some 
+of them are comparatively harmless (such as the [[[[[oFloating eyes],
+[[[[[RRadiation eyes], [[[[[rBloodshot eyes], and [[[[[vDisenchanter eyes]),
+others moderately dangerous (such as the [[[[[DEvil eyes], [[[[[sGauths],
+[[[[[gGas spores], and [[[[[BSpectators]), yet others extremely deadly - 
+these include the [[[[[UBeholders], [[[[[uUndead beholders], [[[[[bEyes of the]
+[[[[[bdeep], and the [[[[[yBeholder hive-mothers]. Whatever you do, do 
+not get too close to them
+
+
+                *** Jellies (j) ***
+
+You will sometimes encounter large quavering piles of flesh
+just lying around the dungeon or making their way along the 
+walls. They all have different defense mechanisms, which with 
+time an adventurer will learn to recognise by looking at their 
+colour. Among the less dangerous types are [[[[[wWhite jellies], [[[[[rRed]
+[[[[[rjellies], [[[[[bBlue jellies], [[[[[vGrape jellies], [[[[[gGreen jellies], [[[[[WSilver]
+[[[[[Wjellies], [[[[[yYellow jellies], [[[[[oSpotted jellies], and [[[[[uRot jellies]. 
+Considerably more dangerous are the [[[[[DUndead masses] and [[[[[UOchre]
+[[[[[Ujellies], as well as [[[[[DBlack puddings]. Among the moving jellies, 
+watch out for [[[[[gGreen oozes], [[[[[bBlue oozes], [[[[[DBlack oozes], [[[[[GGelatinous]
+[[[[[Gcubes], [[[[[RGibbering mouthers], and [[[[[BAcidic cytoplasms].
+
+                 *** Molds (m) ***
+
+Molds are strange growths on the dungeon floor which have
+developed defense mechanisms to deal with anyone who tries
+to disturb them. They come in many varieties and prefer
+different habitats, and some of them can be quite dangerous
+because they have rudimentary mastery of the elements. The
+most common varieties of mold are the [[[[[sGrey mold], the [[[[[rRed]
+[[[[[rmold], the [[[[[oHairy mold], the [[[[[gGreen mold], the [[[[[uBrown mold], 
+the [[[[[yYellow mold], the [[[[[wWhite mold], and the [[[[[WSilver mold]. 
+More rare are [[[[[vDisenchanter molds], [[[[[bShimmering molds], [[[[[RPink]
+[[[[[Rmolds], [[[[[GTree molds], and [[[[[BBlue molds]. A very rare and dire
+creature is the [[[[[DDeath mold] - unwary adventurers beware! The
+[[[[[UAdventurer molds] are friendly towards their fellows, but 
+not very strong.
+
+            *** Mushroom patches (,) ***
+
+You'd think it safe to eat them - you'd be wrong. Mushroom
+patches are masters of disguise and can cause quite a bit 
+of damage to unwary adventurers. Fortunately, most of them 
+are extremely weak and can be destroyed quickly if you can
+just get close enough. The commonly found varieties include
+the [[[[[sgrey], [[[[[Bclear], [[[[[vpurple], [[[[[ospotted], [[[[[yyellow], [[[[[Rshrieker], [[[[[Ddark], 
+[[[[[wwhite], [[[[[ubrown], [[[[[Wsilver], and [[[[[Ggreen] mushroom patches. More rare 
+are [[[[[gshambling mounds], [[[[[Bmagic mushroom patches], [[[[[rblood sprouts], 
+and [[[[[bmemory mosses].
+
+               *** Quylthulgs (Q) ***
+
+Strange pulsing mounds of flesh that looks utterly harmless.
+As with any other monster, however, looks are very deceiving
+when it comes to the [[[[[yQuylthulgs]. They are expert at asking
+for other creatures' help, as weall as conveyance magic. The
+only friendly type is the [[[[[wAdventurer quylthulg] - these have
+many friends among their own kin. The [[[[[vNexus quylthulg] is 
+unmatched in conveyance magic; you will have trouble getting
+close to it. The other quylthulgs usually prefer to call for
+aid, and you can tell what kind of creatures are likely to 
+come to its call, usually. There are [[[[[DSpider], [[[[[sCanine], [[[[[bAquatic],
+[[[[[uRotting], [[[[[gDraconic], [[[[[rDemonic], [[[[[UGreater rotting], [[[[[Ggreater] 
+[[[[[GDraconic], [[[[[RGreater demonic], and [[[[[BMaster quylthulgs].
+
+

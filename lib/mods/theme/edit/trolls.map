@@ -1,0 +1,58 @@
+# Permanent wall
+F:X:63:3
+
+# up stairs
+F:<:6:3
+
+# Floor with tree
+F:T:96:3
+
+# Floor with tree(marked)
+F:H:96:1027
+
+# Floor with dirt
+F:.:88:3
+
+# Floor with grass
+F:;:89:3
+
+# Floor with forest troll
+F:f:89:3:297:0:0:0:0:0:0:2
+
+# Floor with stone troll
+F:s:89:3:401:0:0:0:0:0:0:2
+
+# Floor with algroth
+F:a:89:3:424:0:0:0:0:0:0:2
+
+# Floor with Bert
+F:b:89:3:493:0:0:0:0:0:0:2
+
+# Floor with Bill
+F:i:89:3:494:0:0:0:0:0:0:2
+
+# Floor with a Dwarven skeleton
+F:k:89:8:0:396
+
+# Marker
+F:,:172:6
+
+# Dungeon layout
+D:XXXXXXXXXXXXXXXXXXXXXXXXXXXX
+D:X..HTTTTTTTTTTTTTTTTTTTTTTTX
+D:XH...;TTTTTTTTTTTTTTTTTTTTTX
+D:XTTT;;HTTTTTTTTTTTTTa.TTTTTX
+D:XTTH.k...TTTHHkTHTs.fTTTTTTX
+D:XTTTT;..f.TT.;...HTTTTaTTTTX
+D:XTTTTTHT...;......TTT..HTTTX
+D:XTTTTTTT;;.k..;k.HH.i.TTTTTX
+D:XTTTTTTH.HTHTT..TH.,.HTTTTTX
+D:XTTTTT;THTTTTTHTH.bTTTTTTTTX
+D:XTTT.f.TTTTTTTaTTs;TTTTTTTTX
+D:XTTs..TTTTTTT...fHTTTTTTTTTX
+D:XTTTas.TTTTTTTTTTTTTTTTTTTTX
+D:XTTTTTTTTTTTTTTTTTTTTTTTTTTX
+D:XXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+# Starting position
+P:3:3

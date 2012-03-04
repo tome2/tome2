@@ -1,0 +1,68 @@
+		 ------------------------
+		| Monstrous Compendium 7 |
+		|   Dragons and Worms    |
+	 	 ------------------------
+
+               *** Worms (w) ***
+
+Large slimy masses of worms crawl all around dungeons.
+There are [[[[[Bclear], [[[[[rred], [[[[[bblue], [[[[[ggreen], [[[[[wwhite], [[[[[yyellow],
+[[[[[Dnether], and [[[[[vdisenchanter] worm masses. Additionally, 
+there are [[[[[Ugiant slugs] and [[[[[ugiant leeches] which are more
+dangerous than the worm masses. The [[[[[vpurple worms] and 
+[[[[[ysandworms] are even more dangerous, and then there are
+the [[[[[uwereworms], huge wormlike shapes dripping acid.
+
+             *** Dragon worms (w) ***
+
+These will eventually grow into dragons, unless killed.
+There are [[[[[Rred], [[[[[Bblue], [[[[[Ggreen], [[[[[Wwhite], [[[[[sblack], [[[[[ygold], 
+[[[[[ubronze], and [[[[[vmulti-hued ones].
+
+            *** Hatchling dragons (d) ***
+
+The [[[[[opseudo-dragon] is a small relative of the dragon that 
+inhabits dark caves. The hatchling dragons are newly-born,
+still soft, with eyes unaccustomed to light and scales 
+shimmering with a hint of colour: [[[[[rred], [[[[[bblue], [[[[[ggreen], 
+[[[[[wwhite], [[[[[sblack], [[[[[Ubronze], [[[[[ygold], and [[[[[vmulti-hued]. There are
+also the aquatic [[[[[WHatchling dragon turtles].
+
+
+              *** Young dragons (d) ***
+
+The young dragons sport still-tender scales, coloured more
+brightly than those of the Hatchling dragons: [[[[[rred], [[[[[bblue],
+[[[[[ggreen], [[[[[wwhite], [[[[[sblack], [[[[[Ubronze], [[[[[ygold], and [[[[[vmulti-hued].
+The [[[[[Wyoung dragon turtles] live in or near water.
+
+                 *** Drakes (d) ***
+
+These dragons are already mature, and their scales are very
+brightly covered, according to the elements each dragon
+draws its power from. There are [[[[[rFire-drakes], [[[[[bBlue drakes],
+[[[[[gGreen drakes], [[[[[wCold-drakes], [[[[[sBlack drakes], [[[[[UBronze drakes],
+[[[[[yGolden drakes], [[[[[vMulti-hued drakes], [[[[[vBalance drakes], [[[[[vLaw] 
+[[[[[vdrakes], [[[[[vChaos drakes], [[[[[uCrystal drakes], [[[[[oEthereal drakes],
+[[[[[GShadow drakes], and [[[[[sMature dragon turtles].
+
+
+              *** Ancient dragons (D) ***
+
+These dragons are very old, cunning, and powerful. They are
+considerably larger than the drakes, and they too draw their
+colouring from their elements: [[[[[rred], [[[[[bblue], [[[[[ggreen], [[[[[wwhite], 
+[[[[[sblack], [[[[[Ubronze], [[[[[ygold], and [[[[[vmulti-hued]. In addition, there 
+are the [[[[[GDeath drakes], [[[[[UGreat crystal drakes], [[[[[oAncient ethereal] 
+[[[[[odrakes], [[[[[BSky drakes], and [[[[[WAncient dragon turtles].
+
+             *** Greater dragons (D) ***
+
+The mightiest and most powerful of dragonkind, these beasts
+are older than time itself. Their very names instill fear into
+your very soul: the [[[[[rGreat Worm of Fire], the [[[[[bGreat Storm Worm],
+the [[[[[gGreat Swamp Worm], the [[[[[wGreat Ice Worm], the [[[[[sGreat Bile Worm],
+the [[[[[UGreat Worm of Perplexity], the [[[[[yGreat Worm of Thunder],
+the [[[[[vGreat Worm of Many Colours], the [[[[[GFastitocalon], the [[[[[vGreat] 
+[[[[[vWorm of Balance], the [[[[[RDracolisk], the [[[[[vGreat Worm of Chaos], the
+[[[[[GDracolich], the [[[[[BGreat Worm of Law], and the [[[[[vGreat Wyrm of Power].

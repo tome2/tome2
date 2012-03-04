@@ -1,0 +1,50 @@
+|||||oy
+~~~~~01|Priest - Ulmo
+~~~~~02|Classes|Priest - Ulmo
+~~~~~03|Ulmo|Priest - Ulmo
+#####R=== Ulmo's Priests ===
+
+#####GDescription
+*****g_ulmo.txt*0[Ulmo] is the Lord of the Waters, second in power only
+to Manwe, and the most wrathful of the Valar after Tulkas Astaldo. He
+made a great contribution to the War of Wrath when he led Tuor to Gondolin,
+and he is ever watchful for the contrivances of Melkor Bauglir. His 
+preferred weapon type is the polearm, and his priests learn to become
+very proficient with it. A priest of Ulmo is like unto living
+water, channelled through Ulmo's magic.
+
+#####GStarting Stat Modifiers
+Strength         -1
+Intelligence     -3
+Wisdom           +3
+Dexterity        -1
+Constitution     +0
+Charisma         +2
+Bonus Blows       0
+Hit Die          +d2
+Exp Penalty      20%
+
+#####GStarting Skills:
+#####BSkill                   Start Level     Skill Point Gains
+Combat                  2.000           [0.700]
+  Weaponmastery         1.000           [0.700]
+    Polearm-mastery     0.000		[0.400]
+Sneakiness              1.000           [0.900]
+  Stealth               0.000           [0.400]
+  Disarming		      0.000		    [0.900]
+Magic                   1.000           [0.900]
+  Magic-Device          1.000           [1.050]
+  Spell-power           0.000           [0.800]
+Spirituality            1.000           [1.000]
+  Prayer                1.000           [1.500]
+  Mindcraft             0.000           [0.600]
+Monster-lore            0.000           [0.500]
+
+#####GInnate Abilities:
+#####BAbility              Character level
+Perfect-casting             1
+
+#####GStarting Equipment
+A priest serving Ulmo begins the game with:
+    A spellbook of Song of Belegaer
+    A trident

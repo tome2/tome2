@@ -1,0 +1,39 @@
+~~~~~01|Ent
+~~~~~02|Races|Ent
+#####R=== Ents ===
+
+#####GDescription
+The Ents are a powerful race dating back to the beginning of the world and
+are the eldest of all animals or plants that inhabit Arda. Spirits of the land,
+they were summoned to guard the forests of Middle-earth. Being much like
+trees they are very slow but strong, and very susceptible to fire. They cannot
+be poisoned, however, and their bark is very tough. As the Shepherds of the Trees,
+they have the innate ability to cause trees to rise about them for protection.
+
+#####GStat Modifiers
+Strength        +10   
+Intelligence    -3   
+Wisdom          +2   
+Dexterity       -5   
+Constitution    +11   
+Charisma        -3       
+Hit Dice Sides  14        
+Exp Penalty     +110%
+
+#####GRacial Skill Modifiers:
+#####BSkill                Start Mod    Skill Point Gains Mod
+Combat                  
+  Weaponmastery        -0.300           [0.000]
+  Archery	       -0.200           [0.000]
+  Barehand-combat       0.000           [0.200]
+  Boulder-throwing      0.000           [0.600]
+Sneakiness              0.500           [0.000]
+  Stealth              -6.000           [0.000]
+  Disarming             0.500           [0.000]
+Magic                   
+  Magic-Device          0.500           [0.000]
+Spirituality           10.000           [0.000]
+
+#####GInnate Abilities:
+#####BAbility              Character level
+Tree-walking                1

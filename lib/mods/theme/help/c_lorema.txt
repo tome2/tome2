@@ -1,0 +1,54 @@
+|||||oy
+~~~~~01|Loremaster
+~~~~~02|Classes|Loremaster
+#####R=== Loremasters ===
+
+#####GDescription
+Loremasters are students of the creatures of Arda.
+
+To protect themselves during their observations, they usually learn how to
+pass unobserved, but should their attempt fail they have decent saving throws
+and almost always learn some kind of combat style, but the exact preference
+varies from Loremaster to Loremaster.
+
+As a result of their studies, they become familiar with a broad range of
+skills, ranging from *****skills.txt*45[Possession] and *****m_symbio.txt*0[Symbiosis] to *****skills.txt*43[Summoning] and *****skills.txt*47[Mimicry].
+
+#####GStarting Stat Modifiers
+Strength         +1
+Intelligence     -2
+Wisdom           +1
+Dexterity        +1
+Constitution     +0
+Charisma         +1
+Hit Die          +d8
+Spell Points     +0%
+Exp Penalty      40%
+
+#####GStarting Skills:
+#####BSkill                   Start Level     Skill Point Gains
+Combat                  1.000           [0.700]
+  Weaponmastery         1.000           [0.700]
+  Archery               1.000           [0.700]
+  Barehand-combat       1.000           [0.700]
+Sneakiness              1.000           [0.700]
+  Stealth               1.000           [0.700]
+  Disarming             1.000           [0.700]
+Magic                   0.000           [0.600]
+  Magic-Device          1.000           [1.000]
+Spirituality            1.000           [0.700]
+  Prayer                0.000           [0.500]
+  Music                 0.000           [0.300]
+Monster-lore            1.000           [1.100]
+  Summoning             0.000           [0.500]
+  Corpse-preservation   1.000           [0.700]
+  Possession            0.000           [0.500]
+  Symbiosis             0.000           [0.500]
+  Mimicry               0.000           [0.500]
+
+#####GStarting Equipment
+A Loremaster begins the game with:
+    a Sling
+    a Hard Leather Armour
+    a Quarterstaff
+    some Rounded Pebbles

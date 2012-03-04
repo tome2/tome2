@@ -1,0 +1,32 @@
+~~~~~01|Elf
+~~~~~02|Races|Elf
+#####R=== Elves ===
+
+#####GDescription
+Elves are better magicians than humans, but not as good at fighting. They 
+tend to be smarter and faster than either humans or half-elves and also 
+have better wisdom. Elves are better at searching, disarming, perception, 
+stealth, bows, and magic, but they are not as good at hand weapons.
+They resist light effects intrinsically.
+
+#####GStat Modifiers
+Strength        -1   
+Intelligence    +2   
+Wisdom          +2   
+Dexterity       +1   
+Constitution    -2   
+Charisma        +2       
+Hit Dice Sides  8         
+Exp Penalty     +20%
+
+#####GRacial Skill Modifiers:
+#####BSkill                Start Mod    Skill Point Gains Mod
+Combat                  
+  Weaponmastery        -5.000           [0.000]
+  Archery		1.500           [0.000]
+Sneakiness              0.800           [0.000]
+  Stealth               2.000           [0.000]
+  Disarming             0.500           [0.000]
+Magic                   
+  Magic-Device          0.600           [0.000]
+Spirituality            3.000           [0.000]

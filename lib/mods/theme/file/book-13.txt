@@ -1,0 +1,54 @@
+		 ------------------------
+		| Monstrous Compendium 5 |
+		|  Fliers and Crawlers   |
+	 	 ------------------------
+
+
+                *** Bats (b) ***
+
+Small flying creatures with webbed wings and sharp teeth.
+The [[[[[ofruit bats] are the weakest of them all. Other kinds 
+include [[[[[Utan], [[[[[ubrown], [[[[[wsnow], [[[[[sgrey], [[[[[Wsilver], [[[[[yyellow], [[[[[Ggreen],
+[[[[[rred dragon], [[[[[bblue dragon], and [[[[[vdisenchanter bats]. The most
+dangerous of this race the [[[[[BMongbats], [[[[[dVampire bats], [[[[[gBats] 
+[[[[[gof Gorgoroth], and [[[[[RDoombats].
+
+               *** Rodents (R) ***
+
+Small chittering creatures with quick feet and sharp teeth.
+The [[[[[Uwild rabbits] are utterly harmless unless angered, as 
+are [[[[[oSquirrels]. The various giant mice ([[[[[wwhite], [[[[[Bsilver], [[[[[rred],
+[[[[[bblue], and [[[[[yyellow]) and rats ([[[[[Wwhite], [[[[[sgrey], [[[[[Rpink], and [[[[[Gtree])
+are somewhat dangerous, as they tend to run in large packs.
+The [[[[[urock moles], [[[[[Dwererats], and [[[[[gsquirrels of Mirkwood] are
+among the more dangerous rodents.
+
+
+                *** Snakes (J) ***
+
+Fast and stealthy creatures that slither along the floor. The
+[[[[[Ueels] are harmless, except when angered. The large [[[[[bblue], [[[[[Wsilver],
+[[[[[vpurple], [[[[[Rred], [[[[[sgrey], [[[[[yyellow], [[[[[ubrown], and [[[[[wwhite] snakes are 
+somewhat dangerous. The [[[[[rRattlesnakes], [[[[[oCopperhead] snakes, 
+[[[[[DBlack mambas], and [[[[[gKing cobras] are quite dangerous and fierce.
+The aquatic [[[[[BElectric eels] and [[[[[GLimlugs] (sea serpents) are 
+among the most dangerous of their kind.
+
+               *** Beetles (K) ***
+
+Very large insects with tough carapaces. Most of them are not
+too dangerous. They come in the following varieties: [[[[[wwhite], 
+[[[[[ubrown], [[[[[rred], [[[[[sgray], [[[[[oorange], [[[[[bblue], [[[[[Wsilver], [[[[[Ggreen], [[[[[Utree], 
+[[[[[Rfire], [[[[[gstag], [[[[[Baquatic], [[[[[yslicer], [[[[[viridescent], and [[[[[Ddeath watch].
+
+
+               *** Reptiles (R) ***
+
+The majority of reptiles found on Middle-earth are not very 
+dangerous - these include the [[[[[ynewts], [[[[[ucave lizards], [[[[[Urock lizards],
+[[[[[bnight lizards], [[[[[Bblue lizards], [[[[[oswamp lizards], [[[[[rgiant pink frogs],
+[[[[[ggiant green frogs], [[[[[wsnow-frogs], and [[[[[Wgiant silver frogs]. The 
+[[[[[Rgiant salamanders] and [[[[[Ggiant turtles] should be approached 
+with caution, while the [[[[[sbasilisks] and [[[[[Dgreater basilisks] are 
+extremely dangerous and should not be toyed with!
+

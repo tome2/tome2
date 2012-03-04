@@ -1,0 +1,49 @@
+|||||oy
+~~~~~01|Priest - Mandos
+~~~~~02|Classes|Priest - Mandos
+~~~~~03|Mandos|Priest - Mandos
+#####R=== Priests of Mandos ===
+
+#####GDescription
+*****g_mandos.txt*0[Mandos] is the Doomsman of the Valar, Lord of 
+the House of the Dead and he recalls the souls of the fallen ones.
+A Master of Spirit, he knows all that is going to happen, except 
+that which lies in the will of Eru himself. Manwe calls upon Mandos
+to pass judgment upon the Ainur and Eru's children alike. The priests
+of Mandos fight righteously to rid the world of evil.
+
+#####GStarting Stat Modifiers
+Strength         -1
+Intelligence     -3
+Wisdom           +3
+Dexterity        -1
+Constitution     +0
+Charisma         +2
+Bonus Blows       0
+Hit Die          +d2
+Exp Penalty      20%
+
+#####GStarting Skills:
+#####BSkill                   Start Level     Skill Point Gains
+Combat                  2.000           [0.700]
+  Weaponmastery         1.000           [0.700]
+    Hafted-mastery      0.000		    [0.400]
+Sneakiness              1.000           [0.900]
+  Stealth               0.000           [0.400]
+  Disarming		      0.000		    [0.900]
+Magic                   1.000           [0.900]
+  Magic-Device          1.000           [1.050]
+  Spell-power           0.000           [0.800]
+Spirituality            1.000           [1.000]
+  Prayer                1.000           [1.500]
+  Mindcraft             0.000           [0.600]
+Monster-lore            0.000           [0.500]
+
+#####GInnate Abilities:
+#####BAbility              Character level
+Perfect-casting             1
+
+#####GStarting Equipment
+A priest serving Varda begins the game with:
+    A spellbook of Tears of Luthien
+    A mace

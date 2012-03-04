@@ -1,0 +1,56 @@
+|||||oy
+~~~~~01|Ranger
+~~~~~02|Classes|Ranger
+#####R=== Rangers ===
+
+#####GDescription
+Rangers are warrior-mages, devoted to nature. They are good fighters 
+and quite effective with bows; their magic often allows them to avoid
+the worst of situations, but they have only a mild chance of resisting
+magical effects and are not terribly stealthy. They can, however, 
+learn the ability to summon aid using totems.
+
+They have access to the schools of *****m_divin.txt*0[Divination] and *****m_nature.txt*0[Nature] magic.
+
+#####GStarting Stat Modifiers
+Strength         +2
+Intelligence     +1
+Wisdom           +0
+Dexterity        +2
+Constitution     +1
+Charisma         +1
+Hit Die          +d4
+Spell Points     +0%
+Exp Penalty      30%
+
+#####GStarting Skills:
+#####BSkill                   Start Level     Skill Point Gains
+Combat                  1.000           [0.800]
+  Weaponmastery         1.000           [0.700]
+  Archery               1.000           [0.750]
+    Sling-mastery       0.000           [0.300]
+    Bow-mastery         0.000           [0.300]
+    Crossbow-mastery    0.000           [0.300]
+    Boomerang-mastery   0.000           [0.300]
+Sneakiness              1.000           [0.950]
+  Stealth               0.000           [0.400]
+  Disarming             1.000           [1.600]
+Magic                   1.000           [0.700]
+  Magic-Device          1.000           [1.100]
+  Divination            0.000           [0.500]
+  Nature                0.000           [0.500]
+Spirituality            1.000           [0.400]
+  Prayer                0.000           [0.500]
+Monster-lore            0.000           [0.900]
+  Summoning             0.000           [0.300]
+
+
+#####GInnate Abilities:
+#####BAbility              Character level
+Ammo creation               2
+
+#####GStarting Equipment
+A Ranger begins the game with:
+    a Short Sword
+    a Short Bow
+    some Arrows

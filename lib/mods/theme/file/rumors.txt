@@ -1,0 +1,201 @@
+199
+******** BUFFER LINE *********************************** DO NOT REMOVE *******
+They say that you can't trust rumors.
+You have no more Black Potions of Death.
+Losto Caradhras, sedho, hodo, nuitho i 'ruith!
+Ando Eldarinwa a lasta quettanya, Fenda Casarinwa!
+Andelu i ven.
+Le aphadar aen.
+Nai tiruvantel ar varyuvantel i Valar tielyanna nu vilya.
+Throw a Potion of Blindness at a monster and it cannot cast any spells!
+Gu kibum kelkum-ishi, burzum-ishi. Akha - gum-ishi ashi gurum.
+Not satisfied with the artifacts you find? Then create your own!
+They say that Sauron has forged an all-powerful Ring.
+A good item will not corrode.
+They say that Nibelungs live in dark caves.
+Some weapons that slay dragons can be very deadly against them...
+Finding the Phial of Galadriel at Level 1 is nothing to be proud of.
+There are Black Market stores hidden deep in the dungeon.
+What a pity, you cannot read it!
+You will encounter a dark, tall stranger...
+A Mithril mail will not rust.
+An Galvorn mail cannot be destroyed by the elements.
+A Rusty Chain Mail cannot rust any further.
+Nedin dagor hen ú-'erir ortheri. Natha daged dhaer!
+A Eruchin, u-dano i faelas a hyn an uben tanatha le faelas!
+Tangado a chadad!
+A Wand of Death is useless against monsters that are tougher than you.
+A Wand of Death is of little use against foes that are dead already.
+Try taking off your armor before fighting a Gelatinous Cube!
+They say that only one sword can score *CRITICAL* hits.
+This rumor is not true.
+If you can fall like a feather, you need not care about gravity.
+They say that you should rejoice if you find a scroll labeled ""!
+You don't always have to kill everything you meet!
+If you can't beat it, leave it alone!
+An umber hulk can be a confusing sight.
+There *is* a good use for Potions of Detonations, Ruination and Death...
+Watch your step!
+It's a bad idea to throw away a Longsword (4d5).
+It's a bad idea to wield a Longsword (4d5).
+It's useless to bash monsters with bows - but there's one notable exception...
+Actually, Slime Mold Juice is not completely useless.
+Faeg i-varv din na lanc a nu ranc!
+Ever tried inscribing your armor {erodeproof}?
+Using a Morningstar in the evening has no effect.
+Why are you wasting time reading fortunes?
+There is a horrible, ghastly fate awaiting you... at 2700'!
+You can get the Longsword 'Ringil' by doing the following:
+You can protect yourself from Great Wyrms of Power by doing the following:
+Togo hon dad! Dago hon!
+Za dashu snaku Zigur, Durbgu nazgshu, Durbgu dashshu!
+Forth Eorlingas!
+Try inscribing the name of the first monster killed by it in the weapon!
+I Aear can ven na mar.
+Aiya Earendil Elenion Ancalima!
+There's something bad about what you are carrying in your backpack...
+Thieves are more likely to appear if you are carrying a lot of money.
+Brand's sword, Werewindle, probably knows more than just one trick.
+They say that Scrolls of *Curse Weapon* can create powerful cursed artifacts.
+They say that the Chainsword makes monsters mad with its awful noise!
+They say that Ringil shines so brightly that it makes monsters angry.
+Orcs are mortally afraid of weapons that can slay them.
+There is a way to turn a Ring of Speed (-20) into a Ring of Speed (+20).
+There is no way to turn a Ring of Speed (-20) into a Ring of Speed (+20).
+FRODO LIVES!!!
+A Elbereth! Gilthoniel!
+Hail Earendil brightest of the Stars!
+You feel the Longsword (t) you are carrying in your backpack is special...
+If you start seeing red monsters, you have probably gained infravision.
+They say that the dungeon is deeper than the Abyss.
+When all else fails, read the instructions.
+No poison is immediately deadly.
+I have seen a Ring of Speed (+50) in the Black Market!
+Telepathy works like a two-way door.
+Elvish waybread might negate the effects of poison.
+Once uncursed, Calris will become a deadly weapon.
+Havo dad and pass the damn Lembas.
+You feel your luck is turning...
+If you thought Death swords were bad, wait until you meet Killer katanas!
+Overeating can be bad for your health if there are others nearby.
+Cave dwellers are accustomed to darkness and rarely enjoy bright light.
+A creature made of stone can be slain by a spell that turns stone to mud.
+It is often a good idea to throw items that you don't want to eat or drink.
+The faster you run the more food you will burn.
+Invisible monsters will often expose themselves if you drop items around you.
+They say that the key to killing tougher monsters is called "hit&run".
+The Sea calls us home.
+Wearing an Amulet of Doom will take you into the Dungeons of Doom.
+You can often wrest one last charge from an empty wand if you try hard enough.
+Wands may recharge themselves if you leave them on the floor long enough.
+There is more than one way to deal with a locked door.
+Afraid of your valuables getting stolen? Carry more junk!
+Their armour is weak at the neck... and beneath the arm.
+If you hear something smash into splinters, you had better watch out.
+They say that you had better leave Greater hell-beasts alone.
+Selling unidentified potions to shopkeepers might be safer than quaffing them.
+Always look out for trapdoors on "special" feeling levels!
+There is a way to max out your stats with Potions of Charisma & Nexus.
+Unique opponents will recover their health faster than other creatures.
+Prepare to fire!
+Show them no mercy, for you shall receive none.
+Iorhael, lasto beth nin, tolo dan nan galad!
+A Potion of Detonations is also known as nitroglycerin.
+They cannot win this fight. They are all going to die!
+There is a trap on this level!
+A weapon of Undead Slaying has all you need to kill a ghost.
+A weapon of Dragon Slaying may give you resistance to a dragon's breath attack.
+There-is-no life in-the-cold, in-the-dark. Here - in-the-void only death.
+All that is shall come to an end - a dark day dawns for the gods.
+The One Ring is powerful, but will eventually destroy its owner.
+May your blood-stained horn fall upon the enemy-heads!
+May the Valar protect you on your path under the sky.
+Wands of Heal Monster are useful! Hint: ball spell, @....moo(o)ooo
+Guaranteed heal self - scenario: o'@, type c4c4c4c4
+If it can't see you, it can't hurt you!
+If it can't see you, you might still be able to hurt it...
+Nadath na i moe cerich.
+No animal is interested in sex if it is mortally scared.
+There is much yet you have to do.
+You are being followed.
+There is a plenty of Longswords around 1000'.
+The Road is very dangerous.
+Sleep Caradhras, be still, lie still, hold your wrath!
+The Shadow does not hold sway yet.
+There are often stairways in graveyards: bad people are carried to hell...
+Only a god of Thunder could ride a lightning bolt!
+The world is changed; I can feel it in the water...
+I can feel it in the earth, I can smell it in the air.
+They say the Valar have returned to walk upon Middle-earth.
+Weapons of Flame will light your way.
+Nauthannen i ned ol reniannen.
+Gandalf was here.
+They say that the gods get angry if you pray too much.
+For any remedy there is a misery.
+Poison will kill you slowly.
+Didn't you forget to pay?
+Death is just life's way of telling you you've been fired.
+They say that nobody can defeat his own ghost.
+A greedy genocide can be a fatal mistake, especially if you are low on hits.
+Ignore the previous rumour.
+There are scrolls that can be read only by mages.
+Some undead opponents will come back if defeated, more powerful than before!
+The answer is 42.
+I thought I had strayed into a dream.
+One level further down somebody is getting killed, right now.
+Gate of Elves listen to my word, Threshold of Dwarves!
+Bashing a creature may sometimes stun it.
+Nin o Chithaeglir lasto beth daer; rimmo nin Bruinen dan in Ulaer!
+One Ring to rule them all, One Ring to find them.
+One Ring to bring them all and in the darkness bind them.
+Three Rings for the Elven-kings under the sky...
+Never carry a Potion of Detonations if there is a fire trap nearby!
+Laugh to scorn the power of man, for none of woman born shall harm thee!
+All hail thee that shalt be king hereafter!
+You are fated to never die by the hand of a mortal being.
+The Hru hits you. The Hru hits you. The Hru hits you. The Hru hits you.
+-more-
+Appearance is only the frosting, not the cake!
+A feeling of Death flows through your body.
+Violence is no solution.
+Boots of Speed (+50) are no myth!
+You will need to Restore the Constitution if the Anarchists strike.
+Drain you of your sanity: Face the Thing That Should Not Be!
+Since by curse it came to me, accursed be this Ring!
+Each shall itch to possess the Ring, but none in it shall find pleasure!
+I know whatever was; whatever is, whatever shall be.
+You are fated to find something special on Level 99.
+Pudpadnoy Tooboothokoot is possessed by a demon known only as "It".
+They say that the One Ring has a very special curse.
+They say that alcohol is bad for your health.
+What if you DON'T give a name to the artifact you create..?
+They say that ancient battlefields are often haunted.
+Beware of pits that fill the whole level!
+Liar! I have not the gold!
+They say that the true name of wall monsters is 177.
+Never mind the Phial of Galadriel - the Phial of the Gods is better.
+A Ring of Speed? Phooey! Try looking for a Ring of *Speed*!
+Noro lim, Asfaloth, noro lim!
+If you hear heavy steps - watch out!
+A visit to the Zoo is educational: you meet many strange animals.
+What happens if you wear a Ring of Extra Ring Fingers (-2) {cursed}?
+I amar prestar aen, han mathon ne nen han mathon ne chae a han noston ned 'wilith.
+If I cancel tomorrow the undead will thank me today.
+Hellfire will burn your soul...
+You are fated to die on level 1.
+Why doesn't Detect Monsters show invisible monsters? 'Cos you can't see 'em!
+You are fated to find the Long Sword 'Ringil' on level 5.
+There's slime all over the walls.
+*** LOW HITPOINT WARNING! ***
+You cruelly stab the helpless, sleeping Software bug!
+Tangado haid! Leithio i philinn!
+It looked harmless.
+Spirit, hatch that painted spirit of the lamb sparrow.
+Gone insane from the pain that sure they know: for who the flange sound?
+'Ere, 'oo are you?
+Not to be never, never not to see, so as to dub the thee unforgiven.
+A Morphic Oil of Abomination will turn you into Morgoth himself.
+A Morphic Oil of Abomination will kill you.
+You are fated to win this game.
+The eternal death of eons of the foreigner of the lie can die not absolutely.
+They say that the dark mists of Morgoth can both bestow and remove the curse.
