@@ -12,13 +12,6 @@ function __savefile_load(key, val)
 	end
 end
 
-function dump_loadsave()
-	local k, e
-	for k, e in __loadsave_name do
-		msg_print(k.." :: ".. e.name.." ["..e.default.."]")
-	end
-end
-
 -- called when the game is saved, can only save numbers
 -- assosiate a key with them to allow the loading code to recognize them
 function __savefile_save()
