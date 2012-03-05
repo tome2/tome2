@@ -124,10 +124,15 @@ bool_ set_parasite(int v, int r)
 }
 
 /*
- * Set "p_ptr->tim_project" and others
- * notice observable changes
+ * Set a simple player field.
  */
-bool_ set_project(int v, s16b gf, s16b dam, s16b rad, s16b flag)
+static bool_ set_simple_field(
+	s16b *p_field,
+	s16b v,
+	byte activate_color,
+	cptr activate_msg,
+	byte deactivate_color,
+	cptr deactivate_msg)
 {
 	bool_ notice = FALSE;
 
@@ -137,9 +142,9 @@ bool_ set_project(int v, s16b gf, s16b dam, s16b rad, s16b flag)
 	/* Open */
 	if (v)
 	{
-		if (!p_ptr->tim_project)
+		if (!*p_field)
 		{
-			msg_print("Your weapon starts glowing.");
+			cmsg_print(activate_color, activate_msg);
 			notice = TRUE;
 		}
 	}
@@ -147,19 +152,15 @@ bool_ set_project(int v, s16b gf, s16b dam, s16b rad, s16b flag)
 	/* Shut */
 	else
 	{
-		if (p_ptr->tim_project)
+		if (*p_field)
 		{
-			msg_print("Your weapon stops glowing.");
+			cmsg_print(deactivate_color, deactivate_msg);
 			notice = TRUE;
 		}
 	}
 
 	/* Use the value */
-	p_ptr->tim_project = v;
-	p_ptr->tim_project_gf = gf;
-	p_ptr->tim_project_dam = dam;
-	p_ptr->tim_project_rad = rad;
-	p_ptr->tim_project_flag = flag;
+	*p_field = v;
 
 	/* Nothing to notice */
 	if (!notice)
@@ -174,6 +175,27 @@ bool_ set_project(int v, s16b gf, s16b dam, s16b rad, s16b flag)
 
 	/* Result */
 	return (TRUE);
+}
+
+/*
+ * Set "p_ptr->tim_project" and others
+ * notice observable changes
+ */
+bool_ set_project(int v, s16b gf, s16b dam, s16b rad, s16b flag)
+{
+	bool_ notice = set_simple_field(
+		&p_ptr->tim_project, v,
+		TERM_WHITE, "Your weapon starts glowing.",
+		TERM_WHITE, "Your weapon stops glowing.");
+
+	/* Use the values */
+	p_ptr->tim_project_gf = gf;
+	p_ptr->tim_project_dam = dam;
+	p_ptr->tim_project_rad = rad;
+	p_ptr->tim_project_flag = flag;
+
+	/* Result */
+	return notice;
 }
 
 /*
@@ -182,49 +204,17 @@ bool_ set_project(int v, s16b gf, s16b dam, s16b rad, s16b flag)
  */
 bool_ set_roots(int v, s16b ac, s16b dam)
 {
-	bool_ notice = FALSE;
+	bool_ notice = set_simple_field(
+		&p_ptr->tim_roots, v,
+		TERM_WHITE, "Roots dive into the floor from your feet.",
+		TERM_WHITE, "The roots of your feet suddenly vanish.");
 
-	/* Hack -- Force good values */
-	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
-
-	/* Open */
-	if (v)
-	{
-		if (!p_ptr->tim_roots)
-		{
-			msg_print("Roots dive into the floor from your feet.");
-			notice = TRUE;
-		}
-	}
-
-	/* Shut */
-	else
-	{
-		if (p_ptr->tim_roots)
-		{
-			msg_print("The roots of your feet suddenly vanish.");
-			notice = TRUE;
-		}
-	}
-
-	/* Use the value */
-	p_ptr->tim_roots = v;
+	/* Use the values */
 	p_ptr->tim_roots_dam = dam;
 	p_ptr->tim_roots_ac = ac;
 
-	/* Nothing to notice */
-	if (!notice)
-		return (FALSE);
-
-	/* Disturb */
-	if (disturb_state)
-		disturb(0, 0);
-
-	/* Recalculate bonuses */
-	p_ptr->update |= (PU_BONUS);
-
 	/* Result */
-	return (TRUE);
+	return notice;
 }
 
 /*
@@ -233,72 +223,20 @@ bool_ set_roots(int v, s16b ac, s16b dam)
  */
 bool_ set_tim_breath(int v, bool_ magical)
 {
-	bool_ notice = FALSE;
-
-	/* Hack -- Force good values */
-	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
-
-	/* Open */
-	if (v)
-	{
-		if (magical)
-		{
-			if (!p_ptr->tim_magic_breath)
-			{
-				msg_print("Air seems to fill your lungs without breathing.");
-				notice = TRUE;
-			}
-		}
-		else
-		{
-			if (!p_ptr->tim_water_breath)
-			{
-				msg_print("Water seems to fill your lungs.");
-				notice = TRUE;
-			}
-		}
-	}
-
-	/* Shut */
-	else
-	{
-		if (magical)
-		{
-			if (p_ptr->tim_magic_breath)
-			{
-				msg_print("You need to breathe again.");
-				notice = TRUE;
-			}
-		}
-		else
-		{
-			if (p_ptr->tim_water_breath)
-			{
-				msg_print("The water filling your lungs evaporates.");
-				notice = TRUE;
-			}
-		}
-	}
-
-	/* Use the value */
 	if (magical)
-		p_ptr->tim_magic_breath = v;
+	{
+		return set_simple_field(
+			&p_ptr->tim_magic_breath, v,
+			TERM_WHITE, "Air seems to fill your lungs without breathing.",
+			TERM_WHITE, "You need to breathe again.");
+	}
 	else
-		p_ptr->tim_water_breath = v;
-
-	/* Nothing to notice */
-	if (!notice)
-		return (FALSE);
-
-	/* Disturb */
-	if (disturb_state)
-		disturb(0, 0);
-
-	/* Recalculate bonuses */
-	p_ptr->update |= (PU_BONUS);
-
-	/* Result */
-	return (TRUE);
+	{
+		return set_simple_field(
+			&p_ptr->tim_water_breath, v,
+			TERM_WHITE, "Water seems to fill your lungs.",
+			TERM_WHITE, "The water filling your lungs evaporates.");
+	}
 }
 
 /*
@@ -307,47 +245,10 @@ bool_ set_tim_breath(int v, bool_ magical)
  */
 bool_ set_absorb_soul(int v)
 {
-	bool_ notice = FALSE;
-
-	/* Hack -- Force good values */
-	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
-
-	/* Open */
-	if (v)
-	{
-		if (!p_ptr->absorb_soul)
-		{
-			cmsg_print(TERM_L_DARK, "You start absorbing the souls of your foes.");
-			notice = TRUE;
-		}
-	}
-
-	/* Shut */
-	else
-	{
-		if (p_ptr->absorb_soul)
-		{
-			cmsg_print(TERM_L_DARK, "You stop absorbing the souls of dead foes.");
-			notice = TRUE;
-		}
-	}
-
-	/* Use the value */
-	p_ptr->absorb_soul = v;
-
-	/* Nothing to notice */
-	if (!notice)
-		return (FALSE);
-
-	/* Disturb */
-	if (disturb_state)
-		disturb(0, 0);
-
-	/* Recalculate bonuses */
-	p_ptr->update |= (PU_BONUS);
-
-	/* Result */
-	return (TRUE);
+	return set_simple_field(
+		&p_ptr->absorb_soul, v,
+		TERM_L_DARK, "You start absorbing the souls of your foes.",
+		TERM_L_DARK, "You stop absorbing the souls of dead foes.");
 }
 
 /*
@@ -356,47 +257,10 @@ bool_ set_absorb_soul(int v)
  */
 bool_ set_disrupt_shield(int v)
 {
-	bool_ notice = FALSE;
-
-	/* Hack -- Force good values */
-	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
-
-	/* Open */
-	if (v)
-	{
-		if (!p_ptr->disrupt_shield)
-		{
-			cmsg_print(TERM_L_BLUE, "You feel invulnerable.");
-			notice = TRUE;
-		}
-	}
-
-	/* Shut */
-	else
-	{
-		if (p_ptr->disrupt_shield)
-		{
-			cmsg_print(TERM_L_RED, "You are more vulnerable.");
-			notice = TRUE;
-		}
-	}
-
-	/* Use the value */
-	p_ptr->disrupt_shield = v;
-
-	/* Nothing to notice */
-	if (!notice)
-		return (FALSE);
-
-	/* Disturb */
-	if (disturb_state)
-		disturb(0, 0);
-
-	/* Recalculate bonuses */
-	p_ptr->update |= (PU_BONUS);
-
-	/* Result */
-	return (TRUE);
+	return set_simple_field(
+		&p_ptr->disrupt_shield, v,
+		TERM_L_BLUE, "You feel invulnerable.",
+		TERM_L_RED, "You are more vulnerable.");
 }
 
 /*
@@ -405,47 +269,10 @@ bool_ set_disrupt_shield(int v)
  */
 bool_ set_prob_travel(int v)
 {
-	bool_ notice = FALSE;
-
-	/* Hack -- Force good values */
-	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
-
-	/* Open */
-	if (v)
-	{
-		if (!p_ptr->prob_travel)
-		{
-			msg_print("You feel instable.");
-			notice = TRUE;
-		}
-	}
-
-	/* Shut */
-	else
-	{
-		if (p_ptr->prob_travel)
-		{
-			msg_print("You are more stable.");
-			notice = TRUE;
-		}
-	}
-
-	/* Use the value */
-	p_ptr->prob_travel = v;
-
-	/* Nothing to notice */
-	if (!notice)
-		return (FALSE);
-
-	/* Disturb */
-	if (disturb_state)
-		disturb(0, 0);
-
-	/* Recalculate bonuses */
-	p_ptr->update |= (PU_BONUS);
-
-	/* Result */
-	return (TRUE);
+	return set_simple_field(
+		&p_ptr->prob_travel, v,
+		TERM_WHITE, "You feel instable.",
+		TERM_WHITE, "You are more stable.");
 }
 
 /*
@@ -454,49 +281,16 @@ bool_ set_prob_travel(int v)
  */
 bool_ set_invis(int v, int p)
 {
-	bool_ notice = FALSE;
+	bool_ notice = set_simple_field(
+		&p_ptr->tim_invisible, v,
+		TERM_WHITE, "You feel your body fade away.",
+		TERM_WHITE, "You are no longer invisible.");
 
-	/* Hack -- Force good values */
-	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
-
-	/* Open */
-	if (v)
-	{
-		if (!p_ptr->tim_invisible)
-		{
-			msg_print("You feel your body fade away.");
-			notice = TRUE;
-		}
-	}
-
-	/* Shut */
-	else
-	{
-		if (p_ptr->tim_invisible)
-		{
-			msg_print("You are no longer invisible.");
-			notice = TRUE;
-			p = 0;
-		}
-	}
-
-	/* Use the value */
-	p_ptr->tim_invisible = v;
+	/* Use the power value */
 	p_ptr->tim_inv_pow = p;
 
-	/* Nothing to notice */
-	if (!notice)
-		return (FALSE);
-
-	/* Disturb */
-	if (disturb_state)
-		disturb(0, 0);
-
-	/* Recalculate bonuses */
-	p_ptr->update |= (PU_BONUS);
-
 	/* Result */
-	return (TRUE);
+	return notice;
 }
 
 /*
@@ -505,47 +299,10 @@ bool_ set_invis(int v, int p)
  */
 bool_ set_poison(int v)
 {
-	bool_ notice = FALSE;
-
-	/* Hack -- Force good values */
-	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
-
-	/* Open */
-	if (v)
-	{
-		if (!p_ptr->tim_poison)
-		{
-			msg_print("Your hands are dripping with venom.");
-			notice = TRUE;
-		}
-	}
-
-	/* Shut */
-	else
-	{
-		if (p_ptr->tim_poison)
-		{
-			msg_print("The venom source dries out.");
-			notice = TRUE;
-		}
-	}
-
-	/* Use the value */
-	p_ptr->tim_poison = v;
-
-	/* Nothing to notice */
-	if (!notice)
-		return (FALSE);
-
-	/* Disturb */
-	if (disturb_state)
-		disturb(0, 0);
-
-	/* Recalculate bonuses */
-	p_ptr->update |= (PU_BONUS);
-
-	/* Result */
-	return (TRUE);
+	return set_simple_field(
+		&p_ptr->tim_poison, v,
+		TERM_WHITE, "Your hands are dripping with venom.",
+		TERM_WHITE, "The venom source dries out.");
 }
 
 /*
@@ -553,47 +310,10 @@ bool_ set_poison(int v)
  */
 bool_ set_no_breeders(int v)
 {
-	bool_ notice = FALSE;
-
-	/* Hack -- Force good values */
-	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
-
-	/* Open */
-	if (v)
-	{
-		if (!no_breeds)
-		{
-			msg_print("You feel an anti-sexual aura.");
-			notice = TRUE;
-		}
-	}
-
-	/* Shut */
-	else
-	{
-		if (no_breeds)
-		{
-			msg_print("You no longer feel an anti-sexual aura.");
-			notice = TRUE;
-		}
-	}
-
-	/* Use the value */
-	no_breeds = v;
-
-	/* Nothing to notice */
-	if (!notice)
-		return (FALSE);
-
-	/* Disturb */
-	if (disturb_state)
-		disturb(0, 0);
-
-	/* Recalculate bonuses */
-	p_ptr->update |= (PU_BONUS);
-
-	/* Result */
-	return (TRUE);
+	return set_simple_field(
+		&no_breeds, v,
+		TERM_WHITE, "You feel an anti-sexual aura.",
+		TERM_WHITE, "You no longer feel an anti-sexual aura.");
 }
 
 /*
@@ -601,47 +321,10 @@ bool_ set_no_breeders(int v)
  */
 bool_ set_tim_deadly(int v)
 {
-	bool_ notice = FALSE;
-
-	/* Hack -- Force good values */
-	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
-
-	/* Open */
-	if (v)
-	{
-		if (!p_ptr->tim_deadly)
-		{
-			msg_print("You feel extremely accurate.");
-			notice = TRUE;
-		}
-	}
-
-	/* Shut */
-	else
-	{
-		if (p_ptr->tim_deadly)
-		{
-			msg_print("You are suddenly much less accurate.");
-			notice = TRUE;
-		}
-	}
-
-	/* Use the value */
-	p_ptr->tim_deadly = v;
-
-	/* Nothing to notice */
-	if (!notice)
-		return (FALSE);
-
-	/* Disturb */
-	if (disturb_state)
-		disturb(0, 0);
-
-	/* Recalculate bonuses */
-	p_ptr->update |= (PU_BONUS);
-
-	/* Result */
-	return (TRUE);
+	return set_simple_field(
+		&p_ptr->tim_deadly, v,
+		TERM_WHITE, "You feel extremely accurate.",
+		TERM_WHITE, "You are suddenly much less accurate.");
 }
 
 /*
@@ -649,47 +332,10 @@ bool_ set_tim_deadly(int v)
  */
 bool_ set_tim_ffall(int v)
 {
-	bool_ notice = FALSE;
-
-	/* Hack -- Force good values */
-	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
-
-	/* Open */
-	if (v)
-	{
-		if (!p_ptr->tim_ffall)
-		{
-			msg_print("You feel very light.");
-			notice = TRUE;
-		}
-	}
-
-	/* Shut */
-	else
-	{
-		if (p_ptr->tim_ffall)
-		{
-			msg_print("You are suddenly heavier.");
-			notice = TRUE;
-		}
-	}
-
-	/* Use the value */
-	p_ptr->tim_ffall = v;
-
-	/* Nothing to notice */
-	if (!notice)
-		return (FALSE);
-
-	/* Disturb */
-	if (disturb_state)
-		disturb(0, 0);
-
-	/* Recalculate bonuses */
-	p_ptr->update |= (PU_BONUS);
-
-	/* Result */
-	return (TRUE);
+	return set_simple_field(
+		&p_ptr->tim_ffall, v,
+		TERM_WHITE, "You feel very light.",
+		TERM_WHITE, "You are suddenly heavier.");
 }
 
 /*
@@ -697,47 +343,10 @@ bool_ set_tim_ffall(int v)
  */
 bool_ set_tim_fly(int v)
 {
-	bool_ notice = FALSE;
-
-	/* Hack -- Force good values */
-	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
-
-	/* Open */
-	if (v)
-	{
-		if (!p_ptr->tim_fly)
-		{
-			msg_print("You feel able to reach the clouds.");
-			notice = TRUE;
-		}
-	}
-
-	/* Shut */
-	else
-	{
-		if (p_ptr->tim_fly)
-		{
-			msg_print("You are suddenly a lot heavier.");
-			notice = TRUE;
-		}
-	}
-
-	/* Use the value */
-	p_ptr->tim_fly = v;
-
-	/* Nothing to notice */
-	if (!notice)
-		return (FALSE);
-
-	/* Disturb */
-	if (disturb_state)
-		disturb(0, 0);
-
-	/* Recalculate bonuses */
-	p_ptr->update |= (PU_BONUS);
-
-	/* Result */
-	return (TRUE);
+	return set_simple_field(
+		&p_ptr->tim_fly, v,
+		TERM_WHITE, "You feel able to reach the clouds.",
+		TERM_WHITE, "You are suddenly a lot heavier.");
 }
 
 /*
@@ -745,48 +354,19 @@ bool_ set_tim_fly(int v)
  */
 bool_ set_meditation(int v)
 {
-	bool_ notice = FALSE;
-
-	/* Hack -- Force good values */
-	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
-
-	/* Open */
-	if (v)
-	{
-		if (!p_ptr->meditation)
-		{
-			msg_print("You start meditating on yourself...");
-			notice = TRUE;
-		}
-	}
-
-	/* Shut */
-	else
-	{
-		if (p_ptr->meditation)
-		{
-			msg_print("You stop your self meditation.");
-			notice = TRUE;
-		}
-	}
-
-	/* Use the value */
-	p_ptr->meditation = v;
-
-	/* Nothing to notice */
-	if (!notice)
-		return (FALSE);
-
-	/* Disturb */
-	if (disturb_state)
-		disturb(0, 0);
+	bool_ notice = set_simple_field(
+		&p_ptr->meditation, v,
+		TERM_WHITE, "You start meditating on yourself...",
+		TERM_WHITE, "You stop your self meditation.");
 
 	/* Recalculate bonuses */
-	p_ptr->update |= (PU_BONUS);
-	p_ptr->update |= (PU_MANA);
+	if (notice)
+	{
+		p_ptr->update |= (PU_MANA);
+	}
 
 	/* Result */
-	return (TRUE);
+	return notice;
 }
 
 /*
@@ -794,47 +374,10 @@ bool_ set_meditation(int v)
  */
 bool_ set_tim_reflect(int v)
 {
-	bool_ notice = FALSE;
-
-	/* Hack -- Force good values */
-	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
-
-	/* Open */
-	if (v)
-	{
-		if (!p_ptr->tim_reflect)
-		{
-			msg_print("You start reflecting the world around you.");
-			notice = TRUE;
-		}
-	}
-
-	/* Shut */
-	else
-	{
-		if (p_ptr->tim_reflect)
-		{
-			msg_print("You stop reflecting.");
-			notice = TRUE;
-		}
-	}
-
-	/* Use the value */
-	p_ptr->tim_reflect = v;
-
-	/* Nothing to notice */
-	if (!notice)
-		return (FALSE);
-
-	/* Disturb */
-	if (disturb_state)
-		disturb(0, 0);
-
-	/* Recalculate bonuses */
-	p_ptr->update |= (PU_BONUS);
-
-	/* Result */
-	return (TRUE);
+	return set_simple_field(
+		&p_ptr->tim_reflect, v,
+		TERM_WHITE, "You start reflecting the world around you.",
+		TERM_WHITE, "You stop reflecting.");
 }
 
 /*
@@ -842,47 +385,10 @@ bool_ set_tim_reflect(int v)
  */
 bool_ set_tim_res_time(int v)
 {
-	bool_ notice = FALSE;
-
-	/* Hack -- Force good values */
-	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
-
-	/* Open */
-	if (v)
-	{
-		if (!p_ptr->tim_res_time)
-		{
-			msg_print("You are now protected against space-time distortions.");
-			notice = TRUE;
-		}
-	}
-
-	/* Shut */
-	else
-	{
-		if (p_ptr->tim_res_time)
-		{
-			msg_print("You are no longer protected against space-time distortions.");
-			notice = TRUE;
-		}
-	}
-
-	/* Use the value */
-	p_ptr->tim_res_time = v;
-
-	/* Nothing to notice */
-	if (!notice)
-		return (FALSE);
-
-	/* Disturb */
-	if (disturb_state)
-		disturb(0, 0);
-
-	/* Recalculate bonuses */
-	p_ptr->update |= (PU_BONUS);
-
-	/* Result */
-	return (TRUE);
+	return set_simple_field(
+		&p_ptr->tim_res_time, v,
+		TERM_WHITE, "You are now protected against space-time distortions.",
+		TERM_WHITE, "You are no longer protected against space-time distortions.");
 }
 
 /*
@@ -890,47 +396,10 @@ bool_ set_tim_res_time(int v)
  */
 bool_ set_tim_fire_aura(int v)
 {
-	bool_ notice = FALSE;
-
-	/* Hack -- Force good values */
-	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
-
-	/* Open */
-	if (v)
-	{
-		if (!p_ptr->tim_fire_aura)
-		{
-			msg_print("You are enveloped in flames.");
-			notice = TRUE;
-		}
-	}
-
-	/* Shut */
-	else
-	{
-		if (p_ptr->tim_fire_aura)
-		{
-			msg_print("You are no longer enveloped in flames.");
-			notice = TRUE;
-		}
-	}
-
-	/* Use the value */
-	p_ptr->tim_fire_aura = v;
-
-	/* Nothing to notice */
-	if (!notice)
-		return (FALSE);
-
-	/* Disturb */
-	if (disturb_state)
-		disturb(0, 0);
-
-	/* Recalculate bonuses */
-	p_ptr->update |= (PU_BONUS);
-
-	/* Result */
-	return (TRUE);
+	return set_simple_field(
+		&p_ptr->tim_fire_aura, v,
+		TERM_WHITE, "You are enveloped in flames.",
+		TERM_WHITE, "You are no longer enveloped in flames.");
 }
 
 /*
@@ -938,47 +407,10 @@ bool_ set_tim_fire_aura(int v)
  */
 bool_ set_strike(int v)
 {
-	bool_ notice = FALSE;
-
-	/* Hack -- Force good values */
-	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
-
-	/* Open */
-	if (v)
-	{
-		if (!p_ptr->strike)
-		{
-			msg_print("You feel very accurate.");
-			notice = TRUE;
-		}
-	}
-
-	/* Shut */
-	else
-	{
-		if (p_ptr->strike)
-		{
-			msg_print("You are no longer very accurate.");
-			notice = TRUE;
-		}
-	}
-
-	/* Use the value */
-	p_ptr->strike = v;
-
-	/* Nothing to notice */
-	if (!notice)
-		return (FALSE);
-
-	/* Disturb */
-	if (disturb_state)
-		disturb(0, 0);
-
-	/* Recalculate bonuses */
-	p_ptr->update |= (PU_BONUS);
-
-	/* Result */
-	return (TRUE);
+	return set_simple_field(
+		&p_ptr->strike, v,
+		TERM_WHITE, "You feel very accurate.",
+		TERM_WHITE, "You are no longer very accurate.");
 }
 
 /*
@@ -986,47 +418,10 @@ bool_ set_strike(int v)
  */
 bool_ set_oppose_ld(int v)
 {
-	bool_ notice = FALSE;
-
-	/* Hack -- Force good values */
-	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
-
-	/* Open */
-	if (v)
-	{
-		if (!p_ptr->oppose_ld)
-		{
-			msg_print("You feel protected against light's fluctuation.");
-			notice = TRUE;
-		}
-	}
-
-	/* Shut */
-	else
-	{
-		if (p_ptr->oppose_ld)
-		{
-			msg_print("You are no longer protected against light's fluctuation.");
-			notice = TRUE;
-		}
-	}
-
-	/* Use the value */
-	p_ptr->oppose_ld = v;
-
-	/* Nothing to notice */
-	if (!notice)
-		return (FALSE);
-
-	/* Disturb */
-	if (disturb_state)
-		disturb(0, 0);
-
-	/* Recalculate bonuses */
-	p_ptr->update |= (PU_BONUS);
-
-	/* Result */
-	return (TRUE);
+	return set_simple_field(
+		&p_ptr->oppose_ld, v,
+		TERM_WHITE, "You feel protected against light's fluctuation.",
+		TERM_WHITE, "You are no longer protected against light's fluctuation.");
 }
 
 /*
@@ -1034,47 +429,10 @@ bool_ set_oppose_ld(int v)
  */
 bool_ set_oppose_cc(int v)
 {
-	bool_ notice = FALSE;
-
-	/* Hack -- Force good values */
-	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
-
-	/* Open */
-	if (v)
-	{
-		if (!p_ptr->oppose_cc)
-		{
-			msg_print("You feel protected against raw chaos.");
-			notice = TRUE;
-		}
-	}
-
-	/* Shut */
-	else
-	{
-		if (p_ptr->oppose_cc)
-		{
-			msg_print("You are no longer protected against chaos.");
-			notice = TRUE;
-		}
-	}
-
-	/* Use the value */
-	p_ptr->oppose_cc = v;
-
-	/* Nothing to notice */
-	if (!notice)
-		return (FALSE);
-
-	/* Disturb */
-	if (disturb_state)
-		disturb(0, 0);
-
-	/* Recalculate bonuses */
-	p_ptr->update |= (PU_BONUS);
-
-	/* Result */
-	return (TRUE);
+	return set_simple_field(
+		&p_ptr->oppose_cc, v,
+		TERM_WHITE, "You feel protected against raw chaos.",
+		TERM_WHITE, "You are no longer protected against chaos.");
 }
 
 /*
@@ -1082,47 +440,10 @@ bool_ set_oppose_cc(int v)
  */
 bool_ set_oppose_ss(int v)
 {
-	bool_ notice = FALSE;
-
-	/* Hack -- Force good values */
-	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
-
-	/* Open */
-	if (v)
-	{
-		if (!p_ptr->oppose_ss)
-		{
-			msg_print("You feel protected against the ravages of sound and shards.");
-			notice = TRUE;
-		}
-	}
-
-	/* Shut */
-	else
-	{
-		if (p_ptr->oppose_ss)
-		{
-			msg_print("You are no longer protected against the ravages of sound and shards.");
-			notice = TRUE;
-		}
-	}
-
-	/* Use the value */
-	p_ptr->oppose_ss = v;
-
-	/* Nothing to notice */
-	if (!notice)
-		return (FALSE);
-
-	/* Disturb */
-	if (disturb_state)
-		disturb(0, 0);
-
-	/* Recalculate bonuses */
-	p_ptr->update |= (PU_BONUS);
-
-	/* Result */
-	return (TRUE);
+	return set_simple_field(
+		&p_ptr->oppose_ss, v,
+		TERM_WHITE, "You feel protected against the ravages of sound and shards.",
+		TERM_WHITE, "You are no longer protected against the ravages of sound and shards.");
 }
 
 /*
@@ -1130,47 +451,10 @@ bool_ set_oppose_ss(int v)
  */
 bool_ set_oppose_nex(int v)
 {
-	bool_ notice = FALSE;
-
-	/* Hack -- Force good values */
-	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
-
-	/* Open */
-	if (v)
-	{
-		if (!p_ptr->oppose_nex)
-		{
-			msg_print("You feel protected against the strange forces of nexus.");
-			notice = TRUE;
-		}
-	}
-
-	/* Shut */
-	else
-	{
-		if (p_ptr->oppose_nex)
-		{
-			msg_print("You are no longer protected against the strange forces of nexus.");
-			notice = TRUE;
-		}
-	}
-
-	/* Use the value */
-	p_ptr->oppose_nex = v;
-
-	/* Nothing to notice */
-	if (!notice)
-		return (FALSE);
-
-	/* Disturb */
-	if (disturb_state)
-		disturb(0, 0);
-
-	/* Recalculate bonuses */
-	p_ptr->update |= (PU_BONUS);
-
-	/* Result */
-	return (TRUE);
+	return set_simple_field(
+		&p_ptr->oppose_nex, v,
+		TERM_WHITE, "You feel protected against the strange forces of nexus.",
+		TERM_WHITE, "You are no longer protected against the strange forces of nexus.");
 }
 
 /*
@@ -1242,57 +526,31 @@ bool_ set_mimic(int v, int p, int level)
  */
 bool_ set_blind(int v)
 {
-	bool_ notice = FALSE;
+	bool_ notice = set_simple_field(
+		&p_ptr->blind, v,
+		TERM_WHITE, "You are blind!",
+		TERM_WHITE, "You can see again.");
 
-	/* Hack -- Force good values */
-	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
-
-	/* Open */
-	if (v)
+	if (notice)
 	{
-		if (!p_ptr->blind)
-		{
-			msg_print("You are blind!");
-			notice = TRUE;
-		}
+		/* Fully update the visuals */
+		p_ptr->update |= (PU_UN_VIEW | PU_VIEW | PU_MONSTERS | PU_MON_LITE);
+
+		/* Redraw map */
+		p_ptr->redraw |= (PR_MAP);
+
+		/* Redraw the "blind" */
+		p_ptr->redraw |= (PR_BLIND);
+
+		/* Window stuff */
+		p_ptr->window |= (PW_OVERHEAD);
+
+		/* Handle stuff */
+		handle_stuff();
 	}
-
-	/* Shut */
-	else
-	{
-		if (p_ptr->blind)
-		{
-			msg_print("You can see again.");
-			notice = TRUE;
-		}
-	}
-
-	/* Use the value */
-	p_ptr->blind = v;
-
-	/* Nothing to notice */
-	if (!notice) return (FALSE);
-
-	/* Disturb */
-	if (disturb_state) disturb(0, 0);
-
-	/* Fully update the visuals */
-	p_ptr->update |= (PU_UN_VIEW | PU_VIEW | PU_MONSTERS | PU_MON_LITE);
-
-	/* Redraw map */
-	p_ptr->redraw |= (PR_MAP);
-
-	/* Redraw the "blind" */
-	p_ptr->redraw |= (PR_BLIND);
-
-	/* Window stuff */
-	p_ptr->window |= (PW_OVERHEAD);
-
-	/* Handle stuff */
-	handle_stuff();
 
 	/* Result */
-	return (TRUE);
+	return notice;
 }
 
 /*
@@ -1305,54 +563,28 @@ bool_ set_blind(int v)
  */
 bool_ set_lite(int v)
 {
-	bool_ notice = FALSE;
+	bool_ notice = set_simple_field(
+		&p_ptr->tim_lite, v,
+		TERM_WHITE, "You suddenly seem brighter!",
+		TERM_WHITE, "You are no longer bright.");
 
-	/* Hack -- Force good values */
-	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
-
-	/* Open */
-	if (v)
+	if (notice)
 	{
-		if (!p_ptr->tim_lite)
-		{
-			msg_print("You suddenly seem brighter!");
-			notice = TRUE;
-		}
+		/* Fully update the visuals */
+		p_ptr->update |= (PU_VIEW | PU_MONSTERS);
+
+		/* Redraw map */
+		p_ptr->redraw |= (PR_MAP);
+
+		/* Window stuff */
+		p_ptr->window |= (PW_OVERHEAD);
+
+		/* Handle stuff */
+		handle_stuff();
 	}
-
-	/* Shut */
-	else
-	{
-		if (p_ptr->tim_lite)
-		{
-			msg_print("You are no longer bright.");
-			notice = TRUE;
-		}
-	}
-
-	/* Use the value */
-	p_ptr->tim_lite = v;
-
-	/* Nothing to notice */
-	if (!notice) return (FALSE);
-
-	/* Disturb */
-	if (disturb_state) disturb(0, 0);
-
-	/* Fully update the visuals */
-	p_ptr->update |= (PU_VIEW | PU_MONSTERS);
-
-	/* Redraw map */
-	p_ptr->redraw |= (PR_MAP);
-
-	/* Window stuff */
-	p_ptr->window |= (PW_OVERHEAD);
-
-	/* Handle stuff */
-	handle_stuff();
 
 	/* Result */
-	return (TRUE);
+	return notice;
 }
 
 /*
@@ -1360,48 +592,23 @@ bool_ set_lite(int v)
  */
 bool_ set_confused(int v)
 {
-	bool_ notice = FALSE;
+	bool_ notice = 
+		set_simple_field(
+			&p_ptr->confused, v,
+			TERM_WHITE, "You are confused!",
+			TERM_WHITE, "You feel less confused now.");
 
-	/* Hack -- Force good values */
-	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
-
-	/* Open */
-	if (v)
+	if (notice)
 	{
-		if (!p_ptr->confused)
-		{
-			msg_print("You are confused!");
-			notice = TRUE;
-		}
+		/* Redraw the "confused" */
+		p_ptr->redraw |= (PR_CONFUSED);
+
+		/* Handle stuff */
+		handle_stuff();
 	}
-
-	/* Shut */
-	else
-	{
-		if (p_ptr->confused)
-		{
-			msg_print("You feel less confused now.");
-			notice = TRUE;
-		}
-	}
-
-	/* Use the value */
-	p_ptr->confused = v;
-
-	/* Nothing to notice */
-	if (!notice) return (FALSE);
-
-	/* Disturb */
-	if (disturb_state) disturb(0, 0);
-
-	/* Redraw the "confused" */
-	p_ptr->redraw |= (PR_CONFUSED);
-
-	/* Handle stuff */
-	handle_stuff();
 
 	/* Result */
-	return (TRUE);
+	return notice;
 }
 
 
@@ -1410,48 +617,22 @@ bool_ set_confused(int v)
  */
 bool_ set_poisoned(int v)
 {
-	bool_ notice = FALSE;
+	bool_ notice = set_simple_field(
+		&p_ptr->poisoned, v,
+		TERM_WHITE, "You are poisoned!",
+		TERM_WHITE, "You are no longer poisoned.");
 
-	/* Hack -- Force good values */
-	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
-
-	/* Open */
-	if (v)
+	if (notice)
 	{
-		if (!p_ptr->poisoned)
-		{
-			msg_print("You are poisoned!");
-			notice = TRUE;
-		}
+		/* Redraw the "poisoned" */
+		p_ptr->redraw |= (PR_POISONED);
+
+		/* Handle stuff */
+		handle_stuff();
 	}
-
-	/* Shut */
-	else
-	{
-		if (p_ptr->poisoned)
-		{
-			msg_print("You are no longer poisoned.");
-			notice = TRUE;
-		}
-	}
-
-	/* Use the value */
-	p_ptr->poisoned = v;
-
-	/* Nothing to notice */
-	if (!notice) return (FALSE);
-
-	/* Disturb */
-	if (disturb_state) disturb(0, 0);
-
-	/* Redraw the "poisoned" */
-	p_ptr->redraw |= (PR_POISONED);
-
-	/* Handle stuff */
-	handle_stuff();
 
 	/* Result */
-	return (TRUE);
+	return notice;
 }
 
 
@@ -1460,48 +641,22 @@ bool_ set_poisoned(int v)
  */
 bool_ set_afraid(int v)
 {
-	bool_ notice = FALSE;
+	bool_ notice = set_simple_field(
+		&p_ptr->afraid, v,
+		TERM_WHITE, "You are terrified!",
+		TERM_WHITE, "You feel bolder now.");
 
-	/* Hack -- Force good values */
-	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
-
-	/* Open */
-	if (v)
+	if (notice)
 	{
-		if (!p_ptr->afraid)
-		{
-			msg_print("You are terrified!");
-			notice = TRUE;
-		}
+		/* Redraw the "afraid" */
+		p_ptr->redraw |= (PR_AFRAID);
+
+		/* Handle stuff */
+		handle_stuff();
 	}
-
-	/* Shut */
-	else
-	{
-		if (p_ptr->afraid)
-		{
-			msg_print("You feel bolder now.");
-			notice = TRUE;
-		}
-	}
-
-	/* Use the value */
-	p_ptr->afraid = v;
-
-	/* Nothing to notice */
-	if (!notice) return (FALSE);
-
-	/* Disturb */
-	if (disturb_state) disturb(0, 0);
-
-	/* Redraw the "afraid" */
-	p_ptr->redraw |= (PR_AFRAID);
-
-	/* Handle stuff */
-	handle_stuff();
 
 	/* Result */
-	return (TRUE);
+	return notice;
 }
 
 
@@ -1510,48 +665,22 @@ bool_ set_afraid(int v)
  */
 bool_ set_paralyzed(int v)
 {
-	bool_ notice = FALSE;
+	bool_ notice = set_simple_field(
+		&p_ptr->paralyzed, v,
+		TERM_WHITE, "You are paralyzed!",
+		TERM_WHITE, "You can move again.");
 
-	/* Hack -- Force good values */
-	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
-
-	/* Open */
-	if (v)
+	if (notice)
 	{
-		if (!p_ptr->paralyzed)
-		{
-			msg_print("You are paralyzed!");
-			notice = TRUE;
-		}
+		/* Redraw the state */
+		p_ptr->redraw |= (PR_STATE);
+
+		/* Handle stuff */
+		handle_stuff();
 	}
-
-	/* Shut */
-	else
-	{
-		if (p_ptr->paralyzed)
-		{
-			msg_print("You can move again.");
-			notice = TRUE;
-		}
-	}
-
-	/* Use the value */
-	p_ptr->paralyzed = v;
-
-	/* Nothing to notice */
-	if (!notice) return (FALSE);
-
-	/* Disturb */
-	if (disturb_state) disturb(0, 0);
-
-	/* Redraw the state */
-	p_ptr->redraw |= (PR_STATE);
-
-	/* Handle stuff */
-	handle_stuff();
 
 	/* Result */
-	return (TRUE);
+	return notice;
 }
 
 
@@ -1562,54 +691,28 @@ bool_ set_paralyzed(int v)
  */
 bool_ set_image(int v)
 {
-	bool_ notice = FALSE;
+	bool_ notice = set_simple_field(
+		&p_ptr->image, v,
+		TERM_WHITE, "Oh, wow! Everything looks so cosmic now!",
+		TERM_WHITE, "You can see clearly again.");
 
-	/* Hack -- Force good values */
-	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
-
-	/* Open */
-	if (v)
+	if (notice)
 	{
-		if (!p_ptr->image)
-		{
-			msg_print("Oh, wow! Everything looks so cosmic now!");
-			notice = TRUE;
-		}
+		/* Redraw map */
+		p_ptr->redraw |= (PR_MAP);
+
+		/* Update monsters */
+		p_ptr->update |= (PU_MONSTERS);
+
+		/* Window stuff */
+		p_ptr->window |= (PW_OVERHEAD | PW_M_LIST);
+
+		/* Handle stuff */
+		handle_stuff();
 	}
-
-	/* Shut */
-	else
-	{
-		if (p_ptr->image)
-		{
-			msg_print("You can see clearly again.");
-			notice = TRUE;
-		}
-	}
-
-	/* Use the value */
-	p_ptr->image = v;
-
-	/* Nothing to notice */
-	if (!notice) return (FALSE);
-
-	/* Disturb */
-	if (disturb_state) disturb(0, 0);
-
-	/* Redraw map */
-	p_ptr->redraw |= (PR_MAP);
-
-	/* Update monsters */
-	p_ptr->update |= (PU_MONSTERS);
-
-	/* Window stuff */
-	p_ptr->window |= (PW_OVERHEAD | PW_M_LIST);
-
-	/* Handle stuff */
-	handle_stuff();
 
 	/* Result */
-	return (TRUE);
+	return notice;
 }
 
 /*
@@ -1617,48 +720,20 @@ bool_ set_image(int v)
  */
 bool_ set_light_speed(int v)
 {
-	bool_ notice = FALSE;
+	bool_ notice = 
+		set_simple_field(
+			&p_ptr->lightspeed, v,
+			TERM_WHITE, "You feel as if time has stopped!",
+			TERM_WHITE, "You feel time returning to its normal rate.");
 
-	/* Hack -- Force good values */
-	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
-
-	/* Open */
-	if (v)
+	if (notice)
 	{
-		if (!p_ptr->lightspeed)
-		{
-			msg_print("You feel as if time has stopped!");
-			notice = TRUE;
-		}
+		/* Handle stuff */
+		handle_stuff();
 	}
-
-	/* Shut */
-	else
-	{
-		if (p_ptr->lightspeed)
-		{
-			msg_print("You feel time returning to its normal rate.");
-			notice = TRUE;
-		}
-	}
-
-	/* Use the value */
-	p_ptr->lightspeed = v;
-
-	/* Nothing to notice */
-	if (!notice) return (FALSE);
-
-	/* Disturb */
-	if (disturb_state) disturb(0, 0);
-
-	/* Recalculate bonuses */
-	p_ptr->update |= (PU_BONUS);
-
-	/* Handle stuff */
-	handle_stuff();
 
 	/* Result */
-	return (TRUE);
+	return notice;
 }
 
 bool_ set_fast(int v, int p)
@@ -1715,48 +790,19 @@ bool_ set_fast(int v, int p)
  */
 bool_ set_slow(int v)
 {
-	bool_ notice = FALSE;
+	bool_ notice = set_simple_field(
+		&p_ptr->slow, v,
+		TERM_WHITE, "You feel yourself moving slower!",
+		TERM_WHITE, "You feel yourself speed up.");
 
-	/* Hack -- Force good values */
-	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
-
-	/* Open */
-	if (v)
+	if (notice)
 	{
-		if (!p_ptr->slow)
-		{
-			msg_print("You feel yourself moving slower!");
-			notice = TRUE;
-		}
+		/* Handle stuff */
+		handle_stuff();
 	}
-
-	/* Shut */
-	else
-	{
-		if (p_ptr->slow)
-		{
-			msg_print("You feel yourself speed up.");
-			notice = TRUE;
-		}
-	}
-
-	/* Use the value */
-	p_ptr->slow = v;
-
-	/* Nothing to notice */
-	if (!notice) return (FALSE);
-
-	/* Disturb */
-	if (disturb_state) disturb(0, 0);
-
-	/* Recalculate bonuses */
-	p_ptr->update |= (PU_BONUS);
-
-	/* Handle stuff */
-	handle_stuff();
 
 	/* Result */
-	return (TRUE);
+	return notice;
 }
 
 
@@ -1765,53 +811,26 @@ bool_ set_slow(int v)
  */
 bool_ set_shield(int v, int p, s16b o, s16b d1, s16b d2)
 {
-	bool_ notice = FALSE;
+	bool_ notice = set_simple_field(
+		&p_ptr->shield, v,
+		TERM_WHITE, "A mystic shield forms around your body!",
+		TERM_WHITE, "Your mystic shield crumbles away.");
 
-	/* Hack -- Force good values */
-	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
-
-	/* Open */
-	if (v)
-	{
-		if (!p_ptr->shield)
-		{
-			msg_print("A mystic shield forms around your body!");
-			notice = TRUE;
-		}
-	}
-
-	/* Shut */
-	else
-	{
-		if (p_ptr->shield)
-		{
-			msg_print("Your mystic shield crumbles away.");
-			notice = TRUE;
-			p = 0;
-		}
-	}
-
-	/* Use the value */
-	p_ptr->shield = v;
+	/* Use the values */
 	p_ptr->shield_power = p;
 	p_ptr->shield_opt = o;
 	p_ptr->shield_power_opt = d1;
 	p_ptr->shield_power_opt2 = d2;
 
-	/* Nothing to notice */
-	if (!notice) return (FALSE);
-
-	/* Disturb */
-	if (disturb_state) disturb(0, 0);
-
-	/* Recalculate bonuses */
-	p_ptr->update |= (PU_BONUS);
-
-	/* Handle stuff */
-	handle_stuff();
+	/* Notice? */
+	if (notice)
+	{
+		/* Handle stuff */
+		handle_stuff();
+	}
 
 	/* Result */
-	return (TRUE);
+	return notice;
 }
 
 
@@ -1821,48 +840,19 @@ bool_ set_shield(int v, int p, s16b o, s16b d1, s16b d2)
  */
 bool_ set_blessed(int v)
 {
-	bool_ notice = FALSE;
+	bool_ notice = set_simple_field(
+		&p_ptr->blessed, v,
+		TERM_WHITE, "You feel righteous!",
+		TERM_WHITE, "The prayer has expired.");
 
-	/* Hack -- Force good values */
-	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
-
-	/* Open */
-	if (v)
+	if (notice)
 	{
-		if (!p_ptr->blessed)
-		{
-			msg_print("You feel righteous!");
-			notice = TRUE;
-		}
+		/* Handle stuff */
+		handle_stuff();
 	}
-
-	/* Shut */
-	else
-	{
-		if (p_ptr->blessed)
-		{
-			msg_print("The prayer has expired.");
-			notice = TRUE;
-		}
-	}
-
-	/* Use the value */
-	p_ptr->blessed = v;
-
-	/* Nothing to notice */
-	if (!notice) return (FALSE);
-
-	/* Disturb */
-	if (disturb_state) disturb(0, 0);
-
-	/* Recalculate bonuses */
-	p_ptr->update |= (PU_BONUS);
-
-	/* Handle stuff */
-	handle_stuff();
 
 	/* Result */
-	return (TRUE);
+	return notice;
 }
 
 
@@ -1871,51 +861,22 @@ bool_ set_blessed(int v)
  */
 bool_ set_hero(int v)
 {
-	bool_ notice = FALSE;
+	bool_ notice = set_simple_field(
+		&p_ptr->hero, v,
+		TERM_WHITE, "You feel like a hero!",
+		TERM_WHITE, "The heroism wears off.");
 
-	/* Hack -- Force good values */
-	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
-
-	/* Open */
-	if (v)
+	if (notice)
 	{
-		if (!p_ptr->hero)
-		{
-			msg_print("You feel like a hero!");
-			notice = TRUE;
-		}
+		/* Recalculate hitpoints */
+		p_ptr->update |= (PU_HP);
+
+		/* Handle stuff */
+		handle_stuff();
 	}
-
-	/* Shut */
-	else
-	{
-		if (p_ptr->hero)
-		{
-			msg_print("The heroism wears off.");
-			notice = TRUE;
-		}
-	}
-
-	/* Use the value */
-	p_ptr->hero = v;
-
-	/* Nothing to notice */
-	if (!notice) return (FALSE);
-
-	/* Disturb */
-	if (disturb_state) disturb(0, 0);
-
-	/* Recalculate bonuses */
-	p_ptr->update |= (PU_BONUS);
-
-	/* Recalculate hitpoints */
-	p_ptr->update |= (PU_HP);
-
-	/* Handle stuff */
-	handle_stuff();
 
 	/* Result */
-	return (TRUE);
+	return notice;
 }
 
 /*
@@ -1923,48 +884,19 @@ bool_ set_hero(int v)
  */
 bool_ set_holy(int v)
 {
-	bool_ notice = FALSE;
+	bool_ notice = set_simple_field(
+		&p_ptr->holy, v,
+		TERM_WHITE, "You feel a holy aura around you!",
+		TERM_WHITE, "The holy aura vanishes.");
 
-	/* Hack -- Force good values */
-	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
-
-	/* Open */
-	if (v)
+	if (notice)
 	{
-		if (!p_ptr->holy)
-		{
-			msg_print("You feel a holy aura around you!");
-			notice = TRUE;
-		}
+		/* Handle stuff */
+		handle_stuff();
 	}
-
-	/* Shut */
-	else
-	{
-		if (p_ptr->holy)
-		{
-			msg_print("The holy aura vanishes.");
-			notice = TRUE;
-		}
-	}
-
-	/* Use the value */
-	p_ptr->holy = v;
-
-	/* Nothing to notice */
-	if (!notice) return (FALSE);
-
-	/* Disturb */
-	if (disturb_state) disturb(0, 0);
-
-	/* Recalculate bonuses */
-	p_ptr->update |= (PU_BONUS);
-
-	/* Handle stuff */
-	handle_stuff();
 
 	/* Result */
-	return (TRUE);
+	return notice;
 }
 
 /*
@@ -1972,48 +904,19 @@ bool_ set_holy(int v)
  */
 bool_ set_walk_water(int v)
 {
-	bool_ notice = FALSE;
+	bool_ notice = set_simple_field(
+		&p_ptr->walk_water, v,
+		TERM_WHITE, "You feel strangely buoyant!",
+		TERM_WHITE, "You feel much less buoyant.");
 
-	/* Hack -- Force good values */
-	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
-
-	/* Open */
-	if (v)
+	if (notice)
 	{
-		if (!p_ptr->walk_water)
-		{
-			msg_print("You feel strangely buoyant!");
-			notice = TRUE;
-		}
+		/* Handle stuff */
+		handle_stuff();
 	}
-
-	/* Shut */
-	else
-	{
-		if (p_ptr->walk_water)
-		{
-			msg_print("You feel much less buoyant.");
-			notice = TRUE;
-		}
-	}
-
-	/* Use the value */
-	p_ptr->walk_water = v;
-
-	/* Nothing to notice */
-	if (!notice) return (FALSE);
-
-	/* Disturb */
-	if (disturb_state) disturb(0, 0);
-
-	/* Recalculate bonuses */
-	p_ptr->update |= (PU_BONUS);
-
-	/* Handle stuff */
-	handle_stuff();
 
 	/* Result */
-	return (TRUE);
+	return notice;
 }
 
 /*
@@ -2021,69 +924,28 @@ bool_ set_walk_water(int v)
  */
 bool_ set_shero(int v)
 {
-	bool_ notice = FALSE;
+	bool_ notice = set_simple_field(
+		&p_ptr->shero, v,
+		TERM_WHITE, "You feel like a killing machine!",
+		TERM_WHITE, "You feel less berserk.");
 
-	/* Hack -- Force good values */
-	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
-
-	/* Open */
-	if (v)
+	if (notice)
 	{
-		if (!p_ptr->shero)
-		{
-			msg_print("You feel like a killing machine!");
-			notice = TRUE;
+		/* Redraw map */
+		p_ptr->redraw |= (PR_MAP);
 
-			/* Redraw map */
-			p_ptr->redraw |= (PR_MAP);
+		/* Update monsters */
+		p_ptr->update |= (PU_MONSTERS | PU_HP);
 
-			/* Update monsters */
-			p_ptr->update |= (PU_MONSTERS);
+		/* Window stuff */
+		p_ptr->window |= (PW_OVERHEAD);
 
-			/* Window stuff */
-			p_ptr->window |= (PW_OVERHEAD);
-		}
+		/* Handle stuff */
+		handle_stuff();
 	}
-
-	/* Shut */
-	else
-	{
-		if (p_ptr->shero)
-		{
-			msg_print("You feel less berserk.");
-			notice = TRUE;
-
-			/* Redraw map */
-			p_ptr->redraw |= (PR_MAP);
-
-			/* Update monsters */
-			p_ptr->update |= (PU_MONSTERS);
-
-			/* Window stuff */
-			p_ptr->window |= (PW_OVERHEAD);
-		}
-	}
-
-	/* Use the value */
-	p_ptr->shero = v;
-
-	/* Nothing to notice */
-	if (!notice) return (FALSE);
-
-	/* Disturb */
-	if (disturb_state) disturb(0, 0);
-
-	/* Recalculate bonuses */
-	p_ptr->update |= (PU_BONUS);
-
-	/* Recalculate hitpoints */
-	p_ptr->update |= (PU_HP);
-
-	/* Handle stuff */
-	handle_stuff();
 
 	/* Result */
-	return (TRUE);
+	return notice;
 }
 
 
@@ -2092,45 +954,19 @@ bool_ set_shero(int v)
  */
 bool_ set_protevil(int v)
 {
-	bool_ notice = FALSE;
+	bool_ notice = set_simple_field(
+		&p_ptr->protevil, v,
+		TERM_WHITE, "You feel safe from evil!",
+		TERM_WHITE, "You no longer feel safe from evil.");
 
-	/* Hack -- Force good values */
-	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
-
-	/* Open */
-	if (v)
+	if (notice)
 	{
-		if (!p_ptr->protevil)
-		{
-			msg_print("You feel safe from evil!");
-			notice = TRUE;
-		}
+		/* Handle stuff */
+		handle_stuff();
 	}
-
-	/* Shut */
-	else
-	{
-		if (p_ptr->protevil)
-		{
-			msg_print("You no longer feel safe from evil.");
-			notice = TRUE;
-		}
-	}
-
-	/* Use the value */
-	p_ptr->protevil = v;
-
-	/* Nothing to notice */
-	if (!notice) return (FALSE);
-
-	/* Disturb */
-	if (disturb_state) disturb(0, 0);
-
-	/* Handle stuff */
-	handle_stuff();
 
 	/* Result */
-	return (TRUE);
+	return notice;
 }
 
 /*
@@ -2138,45 +974,19 @@ bool_ set_protevil(int v)
  */
 bool_ set_protgood(int v)
 {
-	bool_ notice = FALSE;
+	bool_ notice = set_simple_field(
+		&p_ptr->protgood, v,
+		TERM_WHITE, "You feel safe from good!",
+		TERM_WHITE, "You no longer feel safe from good.");
 
-	/* Hack -- Force good values */
-	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
-
-	/* Open */
-	if (v)
+	if (notice)
 	{
-		if (!p_ptr->protgood)
-		{
-			msg_print("You feel safe from good!");
-			notice = TRUE;
-		}
+		/* Handle stuff */
+		handle_stuff();
 	}
-
-	/* Shut */
-	else
-	{
-		if (p_ptr->protgood)
-		{
-			msg_print("You no longer feel safe from good.");
-			notice = TRUE;
-		}
-	}
-
-	/* Use the value */
-	p_ptr->protgood = v;
-
-	/* Nothing to notice */
-	if (!notice) return (FALSE);
-
-	/* Disturb */
-	if (disturb_state) disturb(0, 0);
-
-	/* Handle stuff */
-	handle_stuff();
 
 	/* Result */
-	return (TRUE);
+	return notice;
 }
 
 /*
@@ -2184,45 +994,18 @@ bool_ set_protgood(int v)
  */
 bool_ set_protundead(int v)
 {
-	bool_ notice = FALSE;
+	bool_ notice = set_simple_field(
+		&p_ptr->protundead, v,
+		TERM_WHITE, "You feel safe from undead!",
+		TERM_WHITE, "You no longer feel safe from undead.");
 
-	/* Hack -- Force good values */
-	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
-
-	/* Open */
-	if (v)
-	{
-		if (!p_ptr->protundead)
-		{
-			msg_print("You feel safe from undead!");
-			notice = TRUE;
-		}
+	if (notice) {
+		/* Handle stuff */
+		handle_stuff();
 	}
-
-	/* Shut */
-	else
-	{
-		if (p_ptr->protundead)
-		{
-			msg_print("You no longer feel safe from undead.");
-			notice = TRUE;
-		}
-	}
-
-	/* Use the value */
-	p_ptr->protundead = v;
-
-	/* Nothing to notice */
-	if (!notice) return (FALSE);
-
-	/* Disturb */
-	if (disturb_state) disturb(0, 0);
-
-	/* Handle stuff */
-	handle_stuff();
 
 	/* Result */
-	return (TRUE);
+	return notice;
 }
 
 /*
@@ -2230,74 +1013,28 @@ bool_ set_protundead(int v)
  */
 bool_ set_shadow(int v)
 {
-	bool_ notice = FALSE;
+	bool_ notice = set_simple_field(
+		&p_ptr->tim_wraith, v,
+		TERM_WHITE, "You leave the physical world and turn into a wraith-being!",
+		TERM_WHITE, "You feel opaque.");
 
-	/* Hack -- Force good values */
-	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
-
-	/* Open */
-	if (v)
+	if (notice)
 	{
-		if (!p_ptr->tim_wraith)
-		{
+		/* Redraw map */
+		p_ptr->redraw |= (PR_MAP);
 
-			msg_print("You leave the physical world and turn into a wraith-being!");
-			notice = TRUE;
+		/* Update monsters */
+		p_ptr->update |= (PU_MONSTERS);
 
-			{
-				/* Redraw map */
-				p_ptr->redraw |= (PR_MAP);
+		/* Window stuff */
+		p_ptr->window |= (PW_OVERHEAD);
 
-				/* Update monsters */
-				p_ptr->update |= (PU_MONSTERS);
-
-				/* Window stuff */
-				p_ptr->window |= (PW_OVERHEAD);
-			}
-		}
+		/* Handle stuff */
+		handle_stuff();
 	}
-
-	/* Shut */
-	else
-	{
-		if (p_ptr->tim_wraith)
-		{
-			msg_print("You feel opaque.");
-			notice = TRUE;
-			{
-				/* Redraw map */
-				p_ptr->redraw |= (PR_MAP);
-
-				/* Update monsters */
-				p_ptr->update |= (PU_MONSTERS);
-
-				/* Window stuff */
-				p_ptr->window |= (PW_OVERHEAD);
-			}
-		}
-	}
-
-	/* Use the value */
-	p_ptr->tim_wraith = v;
-
-	/* Nothing to notice */
-	if (!notice) return (FALSE);
-
-	/* Disturb */
-	if (disturb_state) disturb(0, 0);
-
-	/* Recalculate bonuses */
-	p_ptr->update |= (PU_BONUS);
-
-
-
-
-	/* Handle stuff */
-	handle_stuff();
 
 	/* Result */
-	return (TRUE);
-
+	return notice;
 }
 
 
@@ -2308,74 +1045,28 @@ bool_ set_shadow(int v)
  */
 bool_ set_invuln(int v)
 {
-	bool_ notice = FALSE;
+	bool_ notice = set_simple_field(
+		&p_ptr->invuln, v,
+		TERM_L_BLUE, "Invulnerability!",
+		TERM_L_RED, "The invulnerability wears off.");
 
-	/* Hack -- Force good values */
-	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
-
-	/* Open */
-	if (v)
+	if (notice)
 	{
-		if (!p_ptr->invuln)
-		{
+		/* Redraw map */
+		p_ptr->redraw |= (PR_MAP);
+		
+		/* Update monsters */
+		p_ptr->update |= (PU_MONSTERS);
+		
+		/* Window stuff */
+		p_ptr->window |= (PW_OVERHEAD);
 
-			cmsg_print(TERM_L_BLUE, "Invulnerability!");
-			notice = TRUE;
-
-			{
-				/* Redraw map */
-				p_ptr->redraw |= (PR_MAP);
-
-				/* Update monsters */
-				p_ptr->update |= (PU_MONSTERS);
-
-				/* Window stuff */
-				p_ptr->window |= (PW_OVERHEAD);
-			}
-		}
+		/* Handle stuff */
+		handle_stuff();
 	}
-
-	/* Shut */
-	else
-	{
-		if (p_ptr->invuln)
-		{
-			cmsg_print(TERM_L_RED, "The invulnerability wears off.");
-			notice = TRUE;
-			{
-				/* Redraw map */
-				p_ptr->redraw |= (PR_MAP);
-
-				/* Update monsters */
-				p_ptr->update |= (PU_MONSTERS);
-
-				/* Window stuff */
-				p_ptr->window |= (PW_OVERHEAD);
-			}
-		}
-	}
-
-	/* Use the value */
-	p_ptr->invuln = v;
-
-	/* Nothing to notice */
-	if (!notice) return (FALSE);
-
-	/* Disturb */
-	if (disturb_state) disturb(0, 0);
-
-	/* Recalculate bonuses */
-	p_ptr->update |= (PU_BONUS);
-
-
-
-
-	/* Handle stuff */
-	handle_stuff();
 
 	/* Result */
-	return (TRUE);
-
+	return notice;
 }
 
 
@@ -2385,51 +1076,22 @@ bool_ set_invuln(int v)
  */
 bool_ set_tim_esp(int v)
 {
-	bool_ notice = FALSE;
+	bool_ notice = set_simple_field(
+		&p_ptr->tim_esp, v,
+		TERM_WHITE, "You feel your consciousness expand!",
+		TERM_WHITE, "Your consciousness contracts again.");
 
-	/* Hack -- Force good values */
-	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
-
-	/* Open */
-	if (v)
+	if (notice)
 	{
-		if (!p_ptr->tim_esp)
-		{
-			msg_print("You feel your consciousness expand!");
-			notice = TRUE;
-		}
+		/* Update the monsters */
+		p_ptr->update |= (PU_MONSTERS);
+
+		/* Handle stuff */
+		handle_stuff();
 	}
-
-	/* Shut */
-	else
-	{
-		if (p_ptr->tim_esp)
-		{
-			msg_print("Your consciousness contracts again.");
-			notice = TRUE;
-		}
-	}
-
-	/* Use the value */
-	p_ptr->tim_esp = v;
-
-	/* Nothing to notice */
-	if (!notice) return (FALSE);
-
-	/* Disturb */
-	if (disturb_state) disturb(0, 0);
-
-	/* Recalculate bonuses */
-	p_ptr->update |= (PU_BONUS);
-
-	/* Update the monsters */
-	p_ptr->update |= (PU_MONSTERS);
-
-	/* Handle stuff */
-	handle_stuff();
 
 	/* Result */
-	return (TRUE);
+	return notice;
 }
 
 /*
@@ -2492,51 +1154,22 @@ bool_ set_tim_thunder(int v, int p1, int p2)
  */
 bool_ set_tim_invis(int v)
 {
-	bool_ notice = FALSE;
+	bool_ notice = set_simple_field(
+		&p_ptr->tim_invis, v,
+		TERM_WHITE, "Your eyes feel very sensitive!",
+		TERM_WHITE, "Your eyes feel less sensitive.");
 
-	/* Hack -- Force good values */
-	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
-
-	/* Open */
-	if (v)
+	if (notice)
 	{
-		if (!p_ptr->tim_invis)
-		{
-			msg_print("Your eyes feel very sensitive!");
-			notice = TRUE;
-		}
+		/* Update the monsters */
+		p_ptr->update |= (PU_MONSTERS);
+
+		/* Handle stuff */
+		handle_stuff();
 	}
-
-	/* Shut */
-	else
-	{
-		if (p_ptr->tim_invis)
-		{
-			msg_print("Your eyes feel less sensitive.");
-			notice = TRUE;
-		}
-	}
-
-	/* Use the value */
-	p_ptr->tim_invis = v;
-
-	/* Nothing to notice */
-	if (!notice) return (FALSE);
-
-	/* Disturb */
-	if (disturb_state) disturb(0, 0);
-
-	/* Recalculate bonuses */
-	p_ptr->update |= (PU_BONUS);
-
-	/* Update the monsters */
-	p_ptr->update |= (PU_MONSTERS);
-
-	/* Handle stuff */
-	handle_stuff();
 
 	/* Result */
-	return (TRUE);
+	return notice;
 }
 
 
@@ -2545,51 +1178,22 @@ bool_ set_tim_invis(int v)
  */
 bool_ set_tim_infra(int v)
 {
-	bool_ notice = FALSE;
+	bool_ notice = set_simple_field(
+		&p_ptr->tim_infra, v,
+		TERM_WHITE, "Your eyes begin to tingle!",
+		TERM_WHITE, "Your eyes stop tingling.");
 
-	/* Hack -- Force good values */
-	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
-
-	/* Open */
-	if (v)
+	if (notice)
 	{
-		if (!p_ptr->tim_infra)
-		{
-			msg_print("Your eyes begin to tingle!");
-			notice = TRUE;
-		}
+		/* Update the monsters */
+		p_ptr->update |= (PU_MONSTERS);
+
+		/* Handle stuff */
+		handle_stuff();
 	}
-
-	/* Shut */
-	else
-	{
-		if (p_ptr->tim_infra)
-		{
-			msg_print("Your eyes stop tingling.");
-			notice = TRUE;
-		}
-	}
-
-	/* Use the value */
-	p_ptr->tim_infra = v;
-
-	/* Nothing to notice */
-	if (!notice) return (FALSE);
-
-	/* Disturb */
-	if (disturb_state) disturb(0, 0);
-
-	/* Recalculate bonuses */
-	p_ptr->update |= (PU_BONUS);
-
-	/* Update the monsters */
-	p_ptr->update |= (PU_MONSTERS);
-
-	/* Handle stuff */
-	handle_stuff();
 
 	/* Result */
-	return (TRUE);
+	return notice;
 }
 
 
@@ -2598,45 +1202,19 @@ bool_ set_tim_infra(int v)
  */
 bool_ set_mental_barrier(int v)
 {
-	bool_ notice = FALSE;
+	bool_ notice = set_simple_field(
+		&p_ptr->tim_mental_barrier, v,
+		TERM_WHITE, "Your mind grows stronger!",
+		TERM_WHITE, "Your mind is no longer especially strong.");
 
-	/* Hack -- Force good values */
-	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
-
-	/* Open */
-	if (v)
+	if (notice)
 	{
-		if (!p_ptr->tim_mental_barrier)
-		{
-			msg_print("Your mind grows stronger!");
-			notice = TRUE;
-		}
+		/* Handle stuff */
+		handle_stuff();
 	}
-
-	/* Shut */
-	else
-	{
-		if (p_ptr->tim_mental_barrier)
-		{
-			msg_print("Your mind is no longer especially strong.");
-			notice = TRUE;
-		}
-	}
-
-	/* Use the value */
-	p_ptr->tim_mental_barrier = v;
-
-	/* Nothing to notice */
-	if (!notice) return (FALSE);
-
-	/* Disturb */
-	if (disturb_state) disturb(0, 0);
-
-	/* Handle stuff */
-	handle_stuff();
 
 	/* Result */
-	return (TRUE);
+	return notice;
 }
 
 /*
@@ -2644,45 +1222,19 @@ bool_ set_mental_barrier(int v)
  */
 bool_ set_oppose_acid(int v)
 {
-	bool_ notice = FALSE;
+	bool_ notice = set_simple_field(
+		&p_ptr->oppose_acid, v,
+		TERM_WHITE, "You feel resistant to acid!",
+		TERM_WHITE, "You feel less resistant to acid.");
 
-	/* Hack -- Force good values */
-	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
-
-	/* Open */
-	if (v)
+	if (notice)
 	{
-		if (!p_ptr->oppose_acid)
-		{
-			msg_print("You feel resistant to acid!");
-			notice = TRUE;
-		}
+		/* Handle stuff */
+		handle_stuff();
 	}
-
-	/* Shut */
-	else
-	{
-		if (p_ptr->oppose_acid)
-		{
-			msg_print("You feel less resistant to acid.");
-			notice = TRUE;
-		}
-	}
-
-	/* Use the value */
-	p_ptr->oppose_acid = v;
-
-	/* Nothing to notice */
-	if (!notice) return (FALSE);
-
-	/* Disturb */
-	if (disturb_state) disturb(0, 0);
-
-	/* Handle stuff */
-	handle_stuff();
 
 	/* Result */
-	return (TRUE);
+	return notice;
 }
 
 
@@ -2691,45 +1243,19 @@ bool_ set_oppose_acid(int v)
  */
 bool_ set_oppose_elec(int v)
 {
-	bool_ notice = FALSE;
+	bool_ notice = set_simple_field(
+		&p_ptr->oppose_elec, v,
+		TERM_WHITE, "You feel resistant to electricity!",
+		TERM_WHITE, "You feel less resistant to electricity.");
 
-	/* Hack -- Force good values */
-	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
-
-	/* Open */
-	if (v)
+	if (notice)
 	{
-		if (!p_ptr->oppose_elec)
-		{
-			msg_print("You feel resistant to electricity!");
-			notice = TRUE;
-		}
+		/* Handle stuff */
+		handle_stuff();
 	}
-
-	/* Shut */
-	else
-	{
-		if (p_ptr->oppose_elec)
-		{
-			msg_print("You feel less resistant to electricity.");
-			notice = TRUE;
-		}
-	}
-
-	/* Use the value */
-	p_ptr->oppose_elec = v;
-
-	/* Nothing to notice */
-	if (!notice) return (FALSE);
-
-	/* Disturb */
-	if (disturb_state) disturb(0, 0);
-
-	/* Handle stuff */
-	handle_stuff();
 
 	/* Result */
-	return (TRUE);
+	return notice;
 }
 
 
@@ -2738,45 +1264,19 @@ bool_ set_oppose_elec(int v)
  */
 bool_ set_oppose_fire(int v)
 {
-	bool_ notice = FALSE;
+	bool_ notice = set_simple_field(
+		&p_ptr->oppose_fire, v,
+		TERM_WHITE, "You feel resistant to fire!",
+		TERM_WHITE, "You feel less resistant to fire.");
 
-	/* Hack -- Force good values */
-	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
-
-	/* Open */
-	if (v)
+	if (notice)
 	{
-		if (!p_ptr->oppose_fire)
-		{
-			msg_print("You feel resistant to fire!");
-			notice = TRUE;
-		}
+		/* Handle stuff */
+		handle_stuff();
 	}
-
-	/* Shut */
-	else
-	{
-		if (p_ptr->oppose_fire)
-		{
-			msg_print("You feel less resistant to fire.");
-			notice = TRUE;
-		}
-	}
-
-	/* Use the value */
-	p_ptr->oppose_fire = v;
-
-	/* Nothing to notice */
-	if (!notice) return (FALSE);
-
-	/* Disturb */
-	if (disturb_state) disturb(0, 0);
-
-	/* Handle stuff */
-	handle_stuff();
 
 	/* Result */
-	return (TRUE);
+	return notice;
 }
 
 
@@ -2785,45 +1285,19 @@ bool_ set_oppose_fire(int v)
  */
 bool_ set_oppose_cold(int v)
 {
-	bool_ notice = FALSE;
+	bool_ notice = set_simple_field(
+		&p_ptr->oppose_cold, v,
+		TERM_WHITE, "You feel resistant to cold!",
+		TERM_WHITE, "You feel less resistant to cold.");
 
-	/* Hack -- Force good values */
-	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
-
-	/* Open */
-	if (v)
+	if (notice)
 	{
-		if (!p_ptr->oppose_cold)
-		{
-			msg_print("You feel resistant to cold!");
-			notice = TRUE;
-		}
+		/* Handle stuff */
+		handle_stuff();
 	}
-
-	/* Shut */
-	else
-	{
-		if (p_ptr->oppose_cold)
-		{
-			msg_print("You feel less resistant to cold.");
-			notice = TRUE;
-		}
-	}
-
-	/* Use the value */
-	p_ptr->oppose_cold = v;
-
-	/* Nothing to notice */
-	if (!notice) return (FALSE);
-
-	/* Disturb */
-	if (disturb_state) disturb(0, 0);
-
-	/* Handle stuff */
-	handle_stuff();
 
 	/* Result */
-	return (TRUE);
+	return notice;
 }
 
 
@@ -2832,45 +1306,19 @@ bool_ set_oppose_cold(int v)
  */
 bool_ set_oppose_pois(int v)
 {
-	bool_ notice = FALSE;
+	bool_ notice = set_simple_field(
+		&p_ptr->oppose_pois, v,
+		TERM_WHITE, "You feel resistant to poison!",
+		TERM_WHITE, "You feel less resistant to poison.");
 
-	/* Hack -- Force good values */
-	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
-
-	/* Open */
-	if (v)
+	if (notice)
 	{
-		if (!p_ptr->oppose_pois)
-		{
-			msg_print("You feel resistant to poison!");
-			notice = TRUE;
-		}
+		/* Handle stuff */
+		handle_stuff();
 	}
-
-	/* Shut */
-	else
-	{
-		if (p_ptr->oppose_pois)
-		{
-			msg_print("You feel less resistant to poison.");
-			notice = TRUE;
-		}
-	}
-
-	/* Use the value */
-	p_ptr->oppose_pois = v;
-
-	/* Nothing to notice */
-	if (!notice) return (FALSE);
-
-	/* Disturb */
-	if (disturb_state) disturb(0, 0);
-
-	/* Handle stuff */
-	handle_stuff();
 
 	/* Result */
-	return (TRUE);
+	return notice;
 }
 
 

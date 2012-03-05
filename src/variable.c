@@ -1318,7 +1318,7 @@ bool_ ambush_flag;
 bool_ fate_flag;
 
 /* No breeders */
-u16b no_breeds;
+s16b no_breeds;
 
 /* Carried monsters can't take the damage if this is them which attack the player */
 bool_ carried_monster_hit = FALSE;

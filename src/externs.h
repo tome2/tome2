@@ -517,7 +517,7 @@ extern s16b max_set_idx;
 extern int init_flags;
 extern bool_ ambush_flag;
 extern bool_ fate_flag;
-extern u16b no_breeds;
+extern s16b no_breeds;
 extern bool_ carried_monster_hit;
 extern random_artifact random_artifacts[MAX_RANDARTS];
 extern s32b RANDART_WEAPON;

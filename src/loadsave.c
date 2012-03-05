@@ -603,7 +603,7 @@ static bool_ do_extra(int flag)
 
 	do_byte(&vanilla_town, flag);
 
-	do_u16b(&no_breeds, flag);
+	do_s16b(&no_breeds, flag);
 	do_s16b(&p_ptr->protgood, flag);
 
 	/* Auxilliary variables */
