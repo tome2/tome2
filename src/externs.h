@@ -998,6 +998,7 @@ extern void save_number_key(char *key, u32b val);
 extern int monst_spell_monst_spell;
 extern bool_ mon_take_hit_mon(int s_idx, int m_idx, int dam, bool_ *fear, cptr note);
 extern int check_hit2(int power, int level, int ac);
+extern int get_attack_power(int effect);
 extern bool_ carried_make_attack_normal(int r_idx);
 extern bool_ make_attack_normal(int m_idx, byte divis);
 extern bool_ make_attack_spell(int m_idx);

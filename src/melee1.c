@@ -115,6 +115,87 @@ static cptr desc_moan[] =
 	"says she is always happy."
 };
 
+
+/*
+ * Get the "power" of an attack of given effect type.
+ */
+int get_attack_power(int effect)
+{
+	switch (effect)
+	{
+	case RBE_HURT:
+		return 60;
+	case RBE_POISON:
+		return 5;
+	case RBE_UN_BONUS:
+		return 20;
+	case RBE_UN_POWER:
+		return 15;
+	case RBE_EAT_GOLD:
+		return 5;
+	case RBE_EAT_ITEM:
+		return 5;
+	case RBE_EAT_FOOD:
+		return 5;
+	case RBE_EAT_LITE:
+		return 5;
+	case RBE_ACID:
+		return 0;
+	case RBE_ELEC:
+		return 10;
+	case RBE_FIRE:
+		return 10;
+	case RBE_COLD:
+		return 10;
+	case RBE_BLIND:
+		return 2;
+	case RBE_CONFUSE:
+		return 10;
+	case RBE_TERRIFY:
+		return 10;
+	case RBE_PARALYZE:
+		return 2;
+	case RBE_LOSE_STR:
+		return 0;
+	case RBE_LOSE_DEX:
+		return 0;
+	case RBE_LOSE_CON:
+		return 0;
+	case RBE_LOSE_INT:
+		return 0;
+	case RBE_LOSE_WIS:
+		return 0;
+	case RBE_LOSE_CHR:
+		return 0;
+	case RBE_LOSE_ALL:
+		return 2;
+	case RBE_SHATTER:
+		return 60;
+	case RBE_EXP_10:
+		return 5;
+	case RBE_EXP_20:
+		return 5;
+	case RBE_EXP_40:
+		return 5;
+	case RBE_EXP_80:
+		return 5;
+	case RBE_DISEASE:
+		return 5;
+	case RBE_TIME:
+		return 5;
+	case RBE_SANITY:
+		return 60;
+	case RBE_HALLU:
+		return 10;
+	case RBE_PARASITE:
+		return 5;
+	case RBE_ABOMINATION:
+		return 30;
+	}
+	/* Unknown effects have no power */
+	return 0;
+}
+
 /*
  * Attack the player via physical attacks.
  */
@@ -173,111 +254,7 @@ bool_ carried_make_attack_normal(int r_idx)
 		visible = TRUE;
 
 		/* Extract the attack "power" */
-		switch (effect)
-		{
-		case RBE_HURT:
-			power = 60;
-			break;
-		case RBE_POISON:
-			power = 5;
-			break;
-		case RBE_UN_BONUS:
-			power = 20;
-			break;
-		case RBE_UN_POWER:
-			power = 15;
-			break;
-		case RBE_EAT_GOLD:
-			power = 5;
-			break;
-		case RBE_EAT_ITEM:
-			power = 5;
-			break;
-		case RBE_EAT_FOOD:
-			power = 5;
-			break;
-		case RBE_EAT_LITE:
-			power = 5;
-			break;
-		case RBE_ACID:
-			power = 0;
-			break;
-		case RBE_ELEC:
-			power = 10;
-			break;
-		case RBE_FIRE:
-			power = 10;
-			break;
-		case RBE_COLD:
-			power = 10;
-			break;
-		case RBE_BLIND:
-			power = 2;
-			break;
-		case RBE_CONFUSE:
-			power = 10;
-			break;
-		case RBE_TERRIFY:
-			power = 10;
-			break;
-		case RBE_PARALYZE:
-			power = 2;
-			break;
-		case RBE_LOSE_STR:
-			power = 0;
-			break;
-		case RBE_LOSE_DEX:
-			power = 0;
-			break;
-		case RBE_LOSE_CON:
-			power = 0;
-			break;
-		case RBE_LOSE_INT:
-			power = 0;
-			break;
-		case RBE_LOSE_WIS:
-			power = 0;
-			break;
-		case RBE_LOSE_CHR:
-			power = 0;
-			break;
-		case RBE_LOSE_ALL:
-			power = 2;
-			break;
-		case RBE_SHATTER:
-			power = 60;
-			break;
-		case RBE_EXP_10:
-			power = 5;
-			break;
-		case RBE_EXP_20:
-			power = 5;
-			break;
-		case RBE_EXP_40:
-			power = 5;
-			break;
-		case RBE_EXP_80:
-			power = 5;
-			break;
-		case RBE_DISEASE:
-			power = 5;
-			break;
-		case RBE_TIME:
-			power = 5;
-			break;
-		case RBE_SANITY:
-			power = 60;
-			break;
-		case RBE_HALLU:
-			power = 10;
-			break;
-		case RBE_PARASITE:
-			power = 5;
-			break;
-		case RBE_ABOMINATION:
-			power = 30;
-			break;
-		}
+		power = get_attack_power(effect);
 
 
 		/* Monster hits player */
