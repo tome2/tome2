@@ -1824,7 +1824,6 @@ extern void lua_delete_list(list_type *, int size);
 extern void lua_add_to_list(list_type *, int idx, cptr str);
 extern void lua_display_list(int y, int x, int h, int w, cptr title, list_type *list, int max, int begin, int sel, byte sel_color);
 
-extern void add_scripted_generator(cptr name, bool_ stairs, bool_ monsters, bool_ objects, bool_ miscs);
 
 /* skills.c */
 extern void dump_skills(FILE *fff);

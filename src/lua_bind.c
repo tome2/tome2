@@ -527,23 +527,6 @@ void lua_display_list(int y, int x, int h, int w, cptr title, list_type* list, i
 }
 
 /*
- * Level generators
- */
-bool_ level_generate_script(cptr name)
-{
-	s32b ret = FALSE;
-
-	call_lua("level_generate", "(s)", "d", name, &ret);
-
-	return ret;
-}
-
-void add_scripted_generator(cptr name, bool_ stairs, bool_ monsters, bool_ objects, bool_ miscs)
-{
-	add_level_generator(name, level_generate_script, stairs, monsters, objects, miscs);
-}
-
-/*
  * Gods
  */
 s16b add_new_gods(char *name)

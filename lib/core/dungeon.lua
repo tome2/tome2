@@ -69,38 +69,3 @@ function place_trap(y, x, level)
 	%place_trap(y, x)
 	dun_level = old_dun
 end
-
--- Level generators processing
-__level_generators = {}
-
-function level_generator(t)
-	assert(t.name, "no generator name")
-	assert(t.gen, "no generator function")
-
-	if not t.stairs then t.stairs = TRUE end
-	if not t.monsters then t.monsters = TRUE end
-	if not t.objects then t.objects = TRUE end
-	if not t.miscs then t.miscs = TRUE end
-
-	__level_generators[t.name] = t.gen
-	add_scripted_generator(t.name, t.stairs, t.monsters, t.objects, t.miscs)
-end
-
-function level_generate(name)
-	assert(__level_generators[name], "Unknown level generator '"..name.."'")
-	return __level_generators[name]()
-end
-
---[[ Example
-level_generator
-{
-	["name"]	= "test",
-	["gen"]	 = function()
-			print("zog")
-			for i = 1, 30 do
-				cave(i, 2).feat = 1
-			end
-			return new_player_spot(get_branch())
-	end,
-}
-]]

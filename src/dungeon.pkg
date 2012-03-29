@@ -1496,17 +1496,6 @@ extern void place_floor(int y, int x);
  */
 extern void place_filler(int y, int x);
 
-/** @fn add_scripted_generator(cptr name, bool stairs, bool monsters, bool objects, bool miscs)
- * @dgonly
- * @param name String \n Name of generator
- * @param stairs Boolean \n TRUE if stairs can be generated, otherwise FALSE
- * @param monsters Boolean \n TRUE if monsters can be generated, otherwise FALSE
- * @param objects Boolean \n TRUE if objects can be generated, otherwise FALSE
- * @param miscs Boolean \n TRUE if other stuff can be generated, otherwise FALSE
- * @note (defined in file lua_bind.c)
- */
-extern void add_scripted_generator(cptr name, bool stairs, bool monsters, bool objects, bool miscs);
-
 /** @fn new_player_spot(int branch)
  * @brief Places player in a new location.\n
  * @param branch Number \n branch is the dungeon branch (if any).
