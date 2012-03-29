@@ -573,10 +573,6 @@ usage:
 				puts("  -msla              To use SLang");
 #endif /* USE_SLA */
 
-#ifdef USE_ISO
-				puts("  -miso              To use ISO");
-#endif /* USE_ISO */
-
 #ifdef USE_SDL
 				puts("  -msdl              To use SDL");
 				puts("  --                 Sub options");
@@ -754,19 +750,6 @@ usage:
 		if (0 == init_pgu(argc, argv))
 		{
 			ANGBAND_SYS = "pgu";
-			done = TRUE;
-		}
-	}
-#endif
-
-#ifdef USE_ISO
-	/* Attempt to use the "main-iso.c" support */
-	if (!done && (!mstr || (streq(mstr, "iso"))))
-	{
-		extern errr init_iso(int, char**);
-		if (0 == init_iso(argc, argv))
-		{
-			ANGBAND_SYS = "iso";
 			done = TRUE;
 		}
 	}

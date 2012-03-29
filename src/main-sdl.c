@@ -32,64 +32,6 @@
 
 #include <math.h>
 
-#ifdef USE_ISO
-/*
- * Simugraph system (Hj. Malthaner)
- */
-#include "iso/simsys.h"
-#include "iso/simgraph.h"
-#include "iso/world_adaptor.h"
-#include "iso/world_view.h"
-/*
- * Simugraph specific routines
- * by Hj. Malthaner
- */
-#include "iso/hackdef.h"
-
-/*
- * Text place marker function protype (Hj. Malthaner)
- */
-static void set_spots(int x, int y, int n, bool_ v);
-
-/**
- * we need to track spots with text to avoid overdrawing text with images
- * @author Hj. Malthaner (hansjoerg.malthaner@gmx.de)
- */
-bool_ spots[80][24];
-
-/**
- * mouse coordinates for Simugraph engine 
- * @author Hj. Malthaner (hansjoerg.malthaner@gmx.de)
- */
-int mx, my;
-
-/*
- * Hajo: this flags need to be set when opening windows
- */
-
-static int tex_width;
-static int tex_height;
-static int tex_xoff;
-static int tex_yoff;
-
-static unsigned int tab16[1 << 16];
-
-/**
- * this is used if we need to fake an 8 bit array
- * @author Hj. Malthaner
- */
-static unsigned short * data8;
-
-// buffers to store char code/attr for graphics
-unsigned char **iso_ap;
-unsigned char **iso_cp;
-unsigned char **iso_atp;
-unsigned char **iso_ctp;
-unsigned char **iso_aep;
-unsigned char **iso_cep;
-
-#endif /* USE_ISO */
-
 /*************************************************
  GLOBAL SDL-ToME PROPERTIES
  *************************************************/
@@ -452,406 +394,6 @@ void loadAndRenderFont(char *fname, int size)
 	}
 }
 
-#ifdef USE_ISO
-/*************************************************
- ISO SUPPORT FUNCTIONS
- *************************************************/
-/**
- * inits operating system stuff
- * @author Hj. Malthaner (hansjoerg.malthaner@gmx.de)
- */
-int dr_os_init(int n, int *parameter)
-{
-	// Hajo:
-	// unused in isov-x11
-	return TRUE;
-}
-
-
-/**
- * opens graphics device/context/window of size w*h
- * @param w width
- * @param h height
- * @author Hj. Malthaner (hansjoerg.malthaner@gmx.de)
- */
-int dr_os_open(int w, int h)
-{
-	const int left = 13;
-
-/*	tex_width = (data[0].fd->dw * (data[0].t.wid - left + 2) + 3) & 0xFFFC;
-	tex_height = data[0].fd->dh * (data[0].t.hgt - 2);
-
-	tex_xoff = data[0].fd->dw * left;
-	tex_yoff = data[0].fd->dh * 1 + 1; 
-*/
-
-	//tex_width = (data[0].size_w - (left - 2) * (data[0].size_w / data[0].cols) + 3) & 0xFFFC;
-	// this is too big (but works :-))
-	tex_width = data[0].size_w & 0xfffc;
-	tex_height = (data[0].size_h / data[0].rows) * (data[0].rows-2);
-
-	tex_xoff = (tex_width / data[0].cols) * left;
-	tex_yoff = (tex_height / data[0].rows) * 1 + 1;
-	
-	return TRUE;
-}
-
-
-/**
- * closes operating system stuff
- * @author Hj. Malthaner (hansjoerg.malthaner@gmx.de)
- */
-int dr_os_close()
-{
-	// Hajo:
-	// unused in isov-x11
-	return TRUE;
-}
-
-
-/**
- * retrieve display width
- * @author Hj. Malthaner (hansjoerg.malthaner@gmx.de)
- */
-int dr_get_width()
-{
-	return data[0].size_w;
-}
-
-
-/**
- * retrieve display height
- * @author Hj. Malthaner (hansjoerg.malthaner@gmx.de)
- */
-int dr_get_height()
-{
-	return data[0].size_h;
-}
-
-
-/**
- * this is used if we need to fake an 8 bit array
- * @author Hj. Malthaner
- */
-static unsigned short * data8;
-
-
-/**
- * creates a (maybe virtual) array of graphics data
- * @author Hj. Malthaner
- */
-unsigned short * dr_textur_init()
-{
-	int i;
-
-	printf("isov-sdl::dr_textur_init()\n");
-	printf(" width  = %d\n", data[0].size_w);
-	printf(" height = %d\n", data[0].size_h);
-
-	for (i = 0; i < (1 << 16); i++)
-	{
-		// FIXME!!!
-		// must consider color bits, or breaks in anything else but RGB 555
-		unsigned int R;
-		unsigned int G;
-		unsigned int B;
-
-		// RGB 555
-		R = (i & 0x7C00) >> 10;
-		G = (i & 0x03E0) >> 5;
-		B = (i & 0x001F) >> 0;
-
-
-		tab16[i] = SDL_MapRGB(screen->format, R << 3, G << 3, B << 3);
-	}
-
-
-
-	data8 = malloc((data[0].size_w) * (data[0].size_h) * 2);
-
-	printf(" textur = %p\n", data8);
-
-	// fake an 16 bit array and convert data before displaying
-	return data8;
-}
-
-static void flush_area(int dest_x, int dest_y,
-                       int x, int y, int w, int h)
-{
-	SDL_Surface *face = screen;
-
-	if (SDL_LockSurface(face) == 0)
-	{
-		int i, j;
-		const int bpp = screen->format->BytesPerPixel;
-
-		for (j = 0; j < h; j++)
-		{
-			unsigned short * p = data8 + (y + j) * tex_width + x;
-			unsigned char * row = face->pixels + (dest_y + j) * face->pitch + dest_x * bpp;
-
-
-			for (i = 0; i < w; i++)
-			{
-				*((unsigned short*)row) = tab16[ *p++ ];
-				row += bpp;
-			}
-		}
-		SDL_UnlockSurface(face);
-	}
-}
-
-/**
- * displays the array of graphics data
- * @author Hj. Malthaner
- */
-void dr_textur(int xp, int yp, int w, int h)
-{
-	int y;
-
-	// clipping unten
-	if (yp + h > tex_height)
-	{
-		h = tex_height - yp;
-	}
-
-	/* debug spots
-	for(y=0; y<24; y++) {
-	int x;
-
-	for(x=0; x<80; x++) {
-	 if(spots[x][y]) {
-	printf("X");
-	 } else {
-	printf(".");
-	 }
-}
-	printf("\n");
-}
-	*/
-
-	for (y = 0; y < SCREEN_HGT; y++)
-	{
-		const int left = 13;
-		const int y1 = y + 1;
-		int x = 0;
-
-		yp = data[0].size_h / data[0].rows * y;
-
-		spots[79][y1] = FALSE;
-
-		do
-		{
-			int n = 0;
-			while (x + n + left < 80 && !spots[x + n + left][y1])
-			{
-				n++;
-			}
-
-			xp = data[0].size_w / data[0].cols * x;
-
-
-			flush_area(tex_xoff + xp, tex_yoff + yp,
-			           xp, yp,
-			           data[0].size_w / data[0].cols*(n),
-				   data[0].size_h / data[0].rows);
-
-			x += n;
-
-			while (x + left < 80 && spots[x + left][y1])
-			{
-				x++;
-			}
-		}
-		while (x + left < 80);
-	}
-}
-
-
-/**
- * use this method to flush graphics pipeline (undrawn stuff) onscreen.
- * @author Hj. Malthaner
- */
-void dr_flush()
-{
-	// Iso-view for angband needs no sync.
-	// XSync(md,FALSE);
-}
-
-
-/**
- * set colormap entries
- * @author Hj. Malthaner
- */
-void dr_setRGB8multi(int first, int count, unsigned char * data)
-{
-	// Hajo:
-	// unused in isov-x11
-}
-
-
-/**
- * display/hide mouse pointer
- * @author Hj. Malthaner (hansjoerg.malthaner@gmx.de)
- */
-void show_pointer(int yesno)
-{
-	// Hajo:
-	// unused in isov-x11
-}
-
-
-/**
- * move mouse pointer
- * @author Hj. Malthaner (hansjoerg.malthaner@gmx.de)
- */
-void move_pointer(int x, int y)
-{
-	// Hajo:
-	// unused in isov-x11
-}
-
-
-/**
- * update softpointer position
- * @author Hj. Malthaner (hansjoerg.malthaner@gmx.de)
- */
-void ex_ord_update_mx_my()
-{
-	// Hajo:
-	// unused in isov-x11
-}
-
-
-/**
- * get events from the system
- * @author Hj. Malthaner (hansjoerg.malthaner@gmx.de)
- */
-void GetEvents()
-{
-	// Hajo:
-	// unused in isov-x11
-}
-
-
-/**
- * get events from the system without waiting
- * @author Hj. Malthaner (hansjoerg.malthaner@gmx.de)
- */
-void GetEventsNoWait()
-{
-	// Hajo:
-	// unused in isov-x11
-}
-
-
-/**
- * @returns time since progrma start in milliseconds
- * @author Hj. Malthaner
- */
-long long dr_time(void)
-{
-	// Hajo:
-	// unused in isov-x11
-	return 0;
-}
-
-
-/**
- * sleeps some microseconds
- * @author Hj. Malthaner
- */
-void dr_sleep(unsigned long usec)
-{
-	// Hajo:
-	// unused in isov-x11
-}
-
-
-/**
- * loads a sample
- * @return a handle for that sample or -1 on failure
- * @author Hj. Malthaner
- */
-int dr_load_sample(const char *filename)
-{
-	// Hajo:
-	// unused in isov-x11
-	return TRUE;
-}
-
-
-/**
- * plays a sample
- * @param key the key for the sample to be played
- * @author Hj. Malthaner
- */
-void dr_play_sample(int key, int volume)
-{
-	// Hajo:
-	// unused in isov-x11
-}
-
-static unsigned char ** halloc(int w, int h)
-{
-	unsigned char **field = (unsigned char **)malloc(sizeof(unsigned char *) * h);
-	int i;
-
-	for (i = 0; i < h; i++)
-	{
-		field[i] = (unsigned char *)malloc(sizeof(unsigned char) * w);
-		memset(field[i], 32 , w);
-	}
-
-	return field;
-}
-
-/**
- * spot array access procedure. Mark text output spots
- * @author Hj. Malthaner (hansjoerg.malthaner@gmx.de)
- */
-static void set_spots(const int x, const int y, const int n, const bool_ v)
-{
-	int i;
-
-	for (i = x; i < x + n; i++)
-	{
-		spots[i][y] = v;
-	}
-}
-
-
-/***********************************************/
-#endif /* USE_ISO */
-
-/***********************************************/
-
-/*** Function hooks needed by "Term" ***/
-
-static void Term_init_sdl(term *t)
-{
-	term_data *td = (term_data*)(t->data);
-	DB("Term_init_sdl");
-	/* XXX XXX XXX */
-}
-
-static void Term_nuke_sdl(term *t)
-{
-	term_data *td = (term_data*)(t->data);
-	DB("Term_nuke_sdl");
-	/* XXX XXX XXX */
-}
-
-static errr Term_user_sdl(int n)
-{
-	term_data *td = (term_data*)(Term->data);
-	DB("Term_user_sdl");
-	/* XXX XXX XXX */
-
-	/* Unknown */
-	return (1);
-}
-
 /* KEYPRESS_STRING repeatedly sends characters to the terminal
 XXX - should implement routine from maim-sdl.c, it's sooo much
 cleaner */
@@ -909,39 +451,6 @@ void handleEvent(SDL_Event *event)
 				manipulationMode();
 			}
 
-#ifdef USE_ISO
-			/* toggle tile size */
-			if (event->key.keysym.sym == SDLK_SCROLLOCK) 
-			{
-			    switch (display_get_tile_size())
-			    {
-				case 32:
-				    display_select_tile_size(0);
-				    break;
-				case 64:
-				    display_select_tile_size(1);
-				    break;
-				default:
-				    display_select_tile_size(0);
-				    break;
-			    }
-			    reset_visuals();
-			    strcpy(buf, "graf-iso.prf");
-			    process_pref_file(buf);
-			    refresh_display();
-			    SDL_UpdateRect(screen, 0, 0, data[0].size_w, data[0].size_h);
-			}
-			
-			/* cycle grid type none/objects+monsters only/full */
-			if ((event->key.keysym.sym == '#') && \
-				(SDL_GetModState() & KMOD_ALT))
-			{
-			    set_grid(get_grid()+1);
-			    refresh_display();
-			}
-
-#endif
-			
 			/*printf("ascii_part: %d\n",ascii_part);*/
 			if (ascii_part)
 			{
@@ -1107,14 +616,6 @@ static errr Term_xtra_sdl(int n, int v)
 			 * necessary flushing issues.
 			 */
 
-#ifdef USE_ISO
-	 		// Hajo:
-			// refresh the graphical view
-
-			refresh_display();
-			SDL_UpdateRect(screen, 0, 0, data[0].size_w, data[0].size_h);
-//			SDL_UpdateRect(td->face, 0, 0, 80*td->w, 24*td->h);
-#else /* regular SDL */
 			/* If terminal display has been held for any reason,
 			then update the whole thing now!*/			
 			DB("TERM_XTRA_FRESH");
@@ -1125,7 +626,6 @@ static errr Term_xtra_sdl(int n, int v)
 				suspendUpdate = FALSE;				
 				drawTermStuff(td,NULL);
 			}
-#endif /* USE_ISO */			
 			return (0);
 		}
 
@@ -1179,10 +679,6 @@ static errr Term_xtra_sdl(int n, int v)
 			 * handling "color changes" and the "arg_sound" and/or
 			 * "arg_graphics" options.
 			 */
-#ifdef USE_ISO
-	    	strcpy(buf, "graf-iso.prf");
-			process_pref_file(buf);
-#endif /* USE_ISO */
 			return (1);
 		}
 
@@ -1541,9 +1037,6 @@ void createCursor(byte r, byte g, byte b, byte a)
 surface onto the correct location */
 static errr Term_curs_sdl(int x, int y)
 {
-#ifdef USE_ISO
-	highlite_spot(x, y);
-#else /* regular SDL */
 	term_data *td = (term_data*)(Term->data);
 	static SDL_Rect base;
 
@@ -1560,7 +1053,6 @@ static errr Term_curs_sdl(int x, int y)
 
 	/* Now draw to the main screen */
 	drawTermStuff(td,&base);
-#endif	/* USE_ISO */
 	/* Success */
 	return (0);
 }
@@ -1662,16 +1154,6 @@ void eraseTerminal(void)
  */
 static errr Term_text_sdl(int x, int y, int n, byte a, const char *cp)
 {
-#ifdef USE_ISO
-	if (a < 16)
-	{
-		set_spots(x, y, n, TRUE);
-	}
-	else
-	{
-		set_spots(x, y, n, FALSE);
-	}
-#else
 	term_data *td = (term_data*)(Term->data);
 	static SDL_Rect base;
 	SDL_Rect base_back;
@@ -1731,60 +1213,6 @@ static errr Term_text_sdl(int x, int y, int n, byte a, const char *cp)
 	/* And update */
 	drawTermStuff(td,&base_back);
 
-#endif /* USE_ISO */	
-	/* Success */
-	return (0);
-}
-
-/*
- * Draw some attr/char pairs on the screen
- *
- * This routine should display the given "n" attr/char pairs at
- * the given location (x,y).  This function is only used if one
- * of the flags "always_pict" or "higher_pict" is defined.
- *
- * You must be sure that the attr/char pairs, when displayed, will
- * erase anything (including any visual cursor) that used to be at
- * the given location.  On many machines this is automatic, but on
- * others, you must first call "Term_wipe_xxx(x, y, 1)".
- *
- * With the "higher_pict" flag, this function can be used to allow
- * the display of "pseudo-graphic" pictures, for example, by using
- * the attr/char pair as an encoded index into a pixmap of special
- * "pictures".
- *
- * With the "always_pict" flag, this function can be used to force
- * every attr/char pair to be drawn by this function, which can be
- * very useful if this file can optimize its own display calls.
- *
- * This function is often associated with the "arg_graphics" flag.
- *
- * This function is only used if one of the "higher_pict" and/or
- * "always_pict" flags are set.
- */
-#ifndef USE_ISO
-static errr Term_pict_sdl(int x, int y, int n, const byte *ap, const char *cp)
-{
-	term_data *td = (term_data*)(Term->data);
-	DB("Term_pict_sdl");
-	/* XXX XXX XXX */
-	
-#else
-// for ISO-view we need USE_TRANSPARENCY and USE_EGO_GRAPHICS defined
-static errr Term_pict_sdl(int x, int y, int n, const byte *ap, const char *cp, const byte *tap, const char *tcp, const byte *eap, const char *ecp)
-{
-	/* Hajo: memorize output */
-	memcpy(&iso_ap[y][x], ap, n);
-	memcpy(&iso_cp[y][x], cp, n);
-	memcpy(&iso_atp[y][x], tap, n);
-	memcpy(&iso_ctp[y][x], tcp, n);
-	memcpy(&iso_aep[y][x], eap, n);
-	memcpy(&iso_cep[y][x], ecp, n);
-
-	// here is no text
-	set_spots(x, y, n, FALSE);
-
-#endif /* USE_ISO */
 	/* Success */
 	return (0);
 }
@@ -2438,9 +1866,6 @@ static errr term_data_init(term_data *td, int i)
 	t->curs_hook = Term_curs_sdl;
 	t->wipe_hook = Term_wipe_sdl;
 	t->text_hook = Term_text_sdl;
-#ifdef USE_ISO
-	t->pict_hook = Term_pict_sdl;
-#endif /* USE_ISO */
 
 	/* Save the data */
 	t->data = td;
@@ -2825,38 +2250,6 @@ errr init_sdl(int argc, char **argv)
 	
 	/* Enable key repeat! */
 	SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY,SDL_DEFAULT_REPEAT_INTERVAL);
-
-	#ifdef USE_ISO
-	DB("Isometric view uses always graphics mode.\n");
-	use_graphics = TRUE;
-
-	
-	/* Hajo: allocate memory for output data */
-	/* These arrays are read by the iso-view and written from this file */
-	iso_cp = halloc(data[0].t.wid, data[0].t.hgt);
-	iso_ap = halloc(data[0].t.wid, data[0].t.hgt);
-	iso_ctp = halloc(data[0].t.wid, data[0].t.hgt);
-	iso_atp = halloc(data[0].t.wid, data[0].t.hgt);
-	iso_cep = halloc(data[0].t.wid, data[0].t.hgt);
-	iso_aep = halloc(data[0].t.wid, data[0].t.hgt);
-
-	// Hmm, no ANGBAND_SYS in old iso-code
-	// if I change this I don't have to load the *.prf manually?
-	// 
-	// seems not to work for the following:	
-	/* Hajo: set mode */
-	ANGBAND_GRAF = "iso";
-
-	/* Hajo: init view */
-	init_adaptor();
-	
-	center_player = TRUE;
-#endif /* USE_ISO */
-
-#ifdef USE_ISO
-	// Juergen: HACK, but this all is just for testing ...
-	data[0].t.higher_pict = TRUE;
-#endif
 
 	/* main-sdl initialized! */
 	return 0;
