@@ -3826,31 +3826,6 @@ static gboolean keypress_event_handler(
 			return (TRUE);
 		}
 
-		/* Hack - the cursor keys */
-	case GDK_Up:
-		{
-			Term_keypress('8');
-			return (TRUE);
-		}
-
-	case GDK_Down:
-		{
-			Term_keypress('2');
-			return (TRUE);
-		}
-
-	case GDK_Left:
-		{
-			Term_keypress('4');
-			return (TRUE);
-		}
-
-	case GDK_Right:
-		{
-			Term_keypress('6');
-			return (TRUE);
-		}
-
 	case GDK_Shift_L:
 	case GDK_Shift_R:
 	case GDK_Control_L:
