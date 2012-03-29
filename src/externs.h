@@ -1824,6 +1824,11 @@ extern void lua_delete_list(list_type *, int size);
 extern void lua_add_to_list(list_type *, int idx, cptr str);
 extern void lua_display_list(int y, int x, int h, int w, cptr title, list_type *list, int max, int begin, int sel, byte sel_color);
 
+extern cptr compass(int y, int x, int y2, int x2);
+extern cptr approximate_distance(int y, int x, int y2, int x2);
+
+extern cptr compass(int y, int x, int y2, int x2);
+extern cptr approximate_distance(int y, int x, int y2, int x2);
 
 /* skills.c */
 extern void dump_skills(FILE *fff);

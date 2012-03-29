@@ -1514,6 +1514,12 @@ extern void quit(cptr str);
  */
 extern s32b value_scale(int value, int vmax, int max, int min);
 
+/*
+ * compass, approximate_distance
+ */
+extern cptr compass(int y, int x, int y2, int x2);
+extern cptr approximate_distance(int y, int x, int y2, int x2);
+
 /** @fn text_out_c(byte a, cptr str)
  * @brief Output text to the screen (in color) or to a file depending on the
  * selected hook.\n
