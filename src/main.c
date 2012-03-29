@@ -10,10 +10,6 @@
 
 #include "angband.h"
 
-/* Use runtime location of lib directory */
-#ifdef ENABLE_BINRELOC
-#include "prefix.h"
-#endif
 
 
 /*
@@ -134,11 +130,7 @@ static void init_stuff(void)
 	tail = getenv("TOME_PATH");
 
 	/* Use the angband_path, or a default */
-#ifndef ENABLE_BINRELOC
 	strcpy(path, tail ? tail : DEFAULT_PATH);
-#else /* Runtime lookup of location */
-	strcpy(path, br_strcat(DATADIR, "/tome/lib"));
-#endif
 
 	/* Hack -- Add a path separator (only if needed) */
 	if (!suffix(path, PATH_SEP)) strcat(path, PATH_SEP);
