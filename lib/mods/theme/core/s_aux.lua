@@ -531,47 +531,6 @@ function cast_school_spell(s, s_ptr, no_cost)
 end
 
 
--- Helper functions
-HAVE_ARTIFACT = 0
-HAVE_OBJECT = 1
-HAVE_EGO = 2
-function have_object(mode, type, find, find2)
-	local o, i, min, max
-	
-	max = 0
-	min = 0
-	if band(mode, USE_EQUIP) == USE_EQUIP then
-		min = INVEN_WIELD
-		max = INVEN_TOTAL
-	end
-	if band(mode, USE_INVEN) == USE_INVEN then
-		min = 0
-		if max == 0 then max = INVEN_WIELD end
-	end
-
-	i = min
-	while i < max do
-		o = get_object(i)
-		if o.k_idx ~= 0 then
-			if type == HAVE_ARTIFACT then
-				if find == o.name1 then return i end
-			end
-			if type == HAVE_OBJECT then
-				if find2 == nil then
-					if find == o.k_idx then return i end
-				else
-					if (find == o.tval) and (find2 == o.sval) then return i end
-				end
-			end
-			if type == HAVE_EGO then
-				if (find == o.name2) or (find == o.name2b) then return i end
-			end
-		end
-		i = i + 1
-	end
-	return -1
-end
-
 -- Can the spell be randomly found(in random books)
 function can_spell_random(i)
 	return __tmp_spells[i].random
