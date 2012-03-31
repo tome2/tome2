@@ -187,16 +187,7 @@ function library_quest.print_spell(color, y, spl)
 		local lvl, na = get_level_school(s, 50, -50)
 		local xx, sch_str
 
-		xx = nil
-		sch_str = ""
-		for index, sch in __spell_school[s] do
-			if xx then
-				sch_str = sch_str.."/"..school(sch).name
-			else
-				xx = 1
-				sch_str = sch_str..school(sch).name
-			end
-		end
+		sch_str = spell_school_name(s)
 
 		if s == spl then
 			if na then

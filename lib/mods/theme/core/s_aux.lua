@@ -293,6 +293,22 @@ function adjust_power(s, x)
 	end
 end
 
+-- Get spell school name(s) as a /-separated string.
+function spell_school_name(s)
+	local xx, sch_str
+	xx = nil
+	sch_str = ""
+	for index, sch in __spell_school[s] do
+		if xx then
+			sch_str = sch_str.."/"..school(sch).name
+		else
+			xx = 1
+			sch_str = sch_str..school(sch).name
+		end
+	end
+	return sch_str
+end
+
 -- Print the book and the spells
 function print_book(book, spl, obj)
 	local x, y, index, sch, size, s
@@ -317,16 +333,7 @@ function print_book(book, spl, obj)
 			else color = TERM_L_GREEN end
 		end
 		
-		xx = nil
-		sch_str = ""
-		for index, sch in __spell_school[s] do
-			if xx then
-				sch_str = sch_str.."/"..school(sch).name
-			else
-				xx = 1
-				sch_str = sch_str..school(sch).name
-			end
-		end
+		sch_str = spell_school_name(s)
 
 		if na then
 			c_prt(color, format("%c) %-20s%-16s   %3s %4s %3d%s %s", size + strbyte("a"), spell(s).name, sch_str, na, get_mana(s), spell_chance(s), "%", __spell_info[s]()), y, x)
