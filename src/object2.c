@@ -5709,7 +5709,7 @@ void inc_stack_size_ex(int item, int delta, optimize_flag opt, describe_flag des
 	/* Pack item? */
 	if (item >= 0)
 	{
-		inven_item_increase(item, -1);
+		inven_item_increase(item, delta);
 		if (desc == DESCRIBE)
 		{
 			inven_item_describe(item);
@@ -5723,7 +5723,7 @@ void inc_stack_size_ex(int item, int delta, optimize_flag opt, describe_flag des
 	/* Floor item? */
 	else
 	{
-		floor_item_increase(0 - item, -1);
+		floor_item_increase(0 - item, delta);
 		if (desc == DESCRIBE)
 		{
 			floor_item_describe(0 - item);
