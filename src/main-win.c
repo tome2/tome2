@@ -232,14 +232,6 @@
  */
 #include <windows.h>
 
-/*
- * For IRC stuff
- */
-#ifdef USE_WINSOCK
-#define ZSOCK_TIMER_ID   1
-#define ZSOCK_TIMER_RATE 50
-#endif
-
 
 /*
  * Exclude parts of MMSYSTEM.H that are not needed
