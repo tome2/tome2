@@ -474,3 +474,6 @@ bool_ quest_null_hook(int q)
 
 /*************************** Bounty Quest *************************/
 #include "q_bounty.c"
+
+/************************** Library Quest *************************/
+#include "q_library.c"

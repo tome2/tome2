@@ -4,13 +4,6 @@
 
 library_quest = {}
 
--- Map helper
-library_quest.place_random = function(minY, minX, maxY, maxX, monster)
-	y = randint(maxY - minY + 1) + minY
-	x = randint(maxX - minX + 1) + minX
-	return place_monster_one(y, x, monster, 0, TRUE, MSTATUS_ENEMY)
-end
-
 -- Book creation helpers
 library_quest.bookable_spells =
 {
@@ -278,71 +271,8 @@ add_quest
 			load_map("library.map", 2, 2)
 			level_flags2 = DF2_NO_GENO
 
-			-- generate the Liches 518
-			liches = damroll(4, 2) -- plus one on the map
-			while(liches > 0) do
-				if 0 < library_quest.place_random(4, 4, 14, 37, 518) then
-					liches = liches - 1
-				end
-			end
-
-			-- generate the Monastic liches 611
-			liches = damroll(1, 2)
-			while(liches > 0) do
-				if 0 < library_quest.place_random(14, 34, 37, 67, 611) then
-					liches = liches - 1
-				end
-			end
-
-			-- generate more Monastic liches 611
-			liches = damroll(1, 2) - 1
-			while(liches > 0) do
-				if 0 < library_quest.place_random(4, 34, 14, 67, 611) then
-					liches = liches - 1
-				end
-			end
-
-			-- generate even more Monastic liches 611
-			liches = damroll(1, 2) - 1
-			while(liches > 0) do
-				if 0 < library_quest.place_random(14, 4, 37, 34, 611) then
-					liches = liches - 1
-				end
-			end
-
-			-- Flesh golem 256
-			golems = 2
-			while(golems > 0) do
-				if 0 < library_quest.place_random(10, 10, 37, 67, 256) then
-					golems = golems - 1
-				end
-			end
-
-			-- Clay golem 261
-			golems = 2
-			while(golems > 0) do
-				if 0 < library_quest.place_random(10, 10, 37, 67, 261) then
-					golems = golems - 1
-				end
-			end
-
-			-- Iron golem 367
-			golems = 2
-			while(golems > 0) do
-				if 0 < library_quest.place_random(10, 10, 37, 67, 367) then
-					golems = golems - 1
-				end
-			end
-
-			-- Mithril Golem 464
-			golems = 1
-			while(golems > 0) do
-				if 0 < library_quest.place_random(10, 10, 37, 67, 464) then
-					golems = golems - 1
-				end
-			end
-
-			-- one Master lich is on the map
+                        -- generate monsters
+                        quest_library_gen_hook()
 
 			return TRUE
 		end,
