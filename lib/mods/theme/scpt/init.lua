@@ -31,7 +31,6 @@ tome_dofile("gods_new.lua")
 tome_dofile("spells.lua")
 
 -- Add some quests
-tome_dofile("bounty.lua")
 tome_dofile("god.lua")
 tome_dofile("fireprof.lua")
 tome_dofile("library.lua")

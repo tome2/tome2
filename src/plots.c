@@ -471,3 +471,6 @@ bool_ quest_null_hook(int q)
 /*************************** Other plot ***************************/
 #include "q_narsil.c"
 #include "q_thrain.c"
+
+/*************************** Bounty Quest *************************/
+#include "q_bounty.c"

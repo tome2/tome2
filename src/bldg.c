@@ -2030,6 +2030,18 @@ bool_ bldg_process_command(store_type *s_ptr, int i)
 			break;
 		}
 
+	case BACT_DROP_ITEM:
+	{
+		quest_bounty_drop_item();
+		break;
+	}
+
+	case BACT_GET_ITEM:
+	{
+		quest_bounty_get_item();
+		break;
+	}
+
 	default:
 		{
 			if (process_hooks_ret(HOOK_BUILDING_ACTION, "dd", "(d)", bact))

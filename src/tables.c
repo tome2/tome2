@@ -4248,6 +4248,23 @@ quest_type quest_init_tome[MAX_Q_IDX_INIT] =
 		{0, 0},
 		NULL,
 	},
+	/* Bounty */
+	{
+		FALSE,
+		TRUE,
+		"Bounty quest",
+		{
+			"", /* dynamic desc */
+		},
+		QUEST_STATUS_UNTAKEN,
+		-1,
+		NULL,
+		HOOK_TYPE_C,
+		quest_bounty_init_hook,
+		{0, 0, 0, 0},
+		quest_bounty_describe,
+	},
+
 };
 
 

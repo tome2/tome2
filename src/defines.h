@@ -4039,6 +4039,8 @@
 #define BACT_REQUEST_ITEM           51
 #define BACT_GET_LOAN               52
 #define BACT_PAY_BACK_LOAN          53
+#define BACT_DROP_ITEM              54
+#define BACT_GET_ITEM               55
 /* If one adds new BACT_ do NOT forget to increase max_bact in variables.c */
 
 
@@ -4406,7 +4408,8 @@
 #define QUEST_DRAGONS           23
 #define QUEST_HAUNTED           24
 #define QUEST_EVIL              25
-#define MAX_Q_IDX_INIT          26
+#define QUEST_BOUNTY            26
+#define MAX_Q_IDX_INIT          27
 
 #define PLOT_MAIN               0
 #define PLOT_BREE               1

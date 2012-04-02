@@ -159,12 +159,3 @@ extern s16b    add_new_quest @ new_quest(char *name);
  * @note (see file lua_bind.c)
  */
 extern void    desc_quest @ quest_desc(int q_idx, int d, char *desc);
-
-/** @fn get_new_bounty_monster(int lev);
- * @brief Find a good random bounty monster.\n
- * @param lev Number \n the level of the bounty monster.
- * @brief Monster level
- * @return Number \n The index of the monster in the r_info array.
- * @note (see file lua_bind.c)
- */
-extern int lua_get_new_bounty_monster@get_new_bounty_monster(int lev);
