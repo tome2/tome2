@@ -957,8 +957,7 @@ extern errr init_ba_info_txt(FILE *fp, char *buf);
 extern errr init_st_info_txt(FILE *fp, char *buf);
 extern errr init_ow_info_txt(FILE *fp, char *buf);
 extern errr init_wf_info_txt(FILE *fp, char *buf);
-extern bool_ process_dungeon_file_full;
-extern errr process_dungeon_file(cptr full_text, cptr name, int *yval, int *xval, int ymax, int xmax, bool_ init);
+extern errr process_dungeon_file(cptr name, int *yval, int *xval, int ymax, int xmax, bool_ init, bool_ full);
 
 /* init2.c */
 extern void init_corruptions(s16b new_size);
@@ -1436,7 +1435,6 @@ extern errr path_parse(char *buf, int max, cptr file);
 extern errr path_temp(char *buf, int max);
 extern errr path_build(char *buf, int max, cptr path, cptr file);
 extern FILE *my_fopen(cptr file, cptr mode);
-extern errr my_str_fgets(cptr full_text, char *buf, huge n);
 extern errr my_fgets(FILE *fff, char *buf, huge n);
 extern errr my_fputs(FILE *fff, cptr buf, huge n);
 extern errr my_fclose(FILE *fff);
@@ -1808,8 +1806,8 @@ extern cave_type *lua_get_cave(int y, int x);
 extern void set_target(int y, int x);
 extern void get_target(int dir, int *y, int *x);
 
-extern void get_map_size(bool_ full_text, char *name, int *ysize, int *xsize);
-extern void load_map(bool_ full_text, char *name, int *y, int *x);
+extern void get_map_size(char *name, int *ysize, int *xsize);
+extern void load_map(char *name, int *y, int *x);
 extern bool_ alloc_room(int by0, int bx0, int ysize, int xsize, int *y1, int *x1, int *y2, int *x2);
 
 extern void lua_print_hook(cptr str);

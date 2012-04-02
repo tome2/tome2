@@ -2345,29 +2345,10 @@ extern s16b ddy_ddd[9];
 
 
 /* Gen stuff */
-/** @fn get_map_size(bool full_text, char *name, int *ysize = 0, int *xsize = 0)
- * @brief Return the size of the map in file "name".\n
- * @param full_text Boolean \n if TRUE, "name" contains the map itself,
- * otherwise "name" is the name of the map file.
- * @brief Name is a map?
- * @param *name String \n the map itself, or the name of the map file.
- * @brief Map
- * @param *ysize Number
- * @brief Maximum y-coordinate
- * @param *xsize Number
- * @brief Maximum x-coordinate
- * @return *ysize Number \n The maximum y-coordinate of the map.
- * @return *xsize Number \n The maximum x-coordinate of the map.
- * @note (see file lua_bind.c, init1.c)
- */
-extern void get_map_size(bool full_text, char *name, int *ysize = 0, int *xsize = 0);
 
-/** @fn load_map(bool full_text, char *name, int *y = 2, int *x = 2)
+/** @fn load_map(char *name, int *y = 2, int *x = 2)
  * @brief Load the map in file "name".\n
- * @param full_text Boolean \n if TRUE, "name" contains the map itself,
- * otherwise "name" is the name of the map file.
- * @brief Name is a map?
- * @param *name String \n the map itself, or the name of the map file.
+ * @param *name String \n the name of the map file.
  * @brief Map
  * @param *y Number
  * @brief Maximum y-coordinate
@@ -2379,7 +2360,7 @@ extern void get_map_size(bool full_text, char *name, int *ysize = 0, int *xsize 
  * The map is loaded and the player is placed at the starting position.
  * @note (see file lua_bind.c)
  */
-extern void load_map(bool full_text, char *name, int *y = 2, int *x = 2);
+extern void load_map(char *name, int *y = 2, int *x = 2);
 
 /** @fn alloc_room(int by0, int bx0, int ysize, int xsize, int *y1 = 0, int *x1 = 0, int *y2 = 0, int *x2 = 0)
  * @brief Allocate the space needed by a room in the room_map array.\n

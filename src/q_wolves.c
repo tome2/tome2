@@ -31,7 +31,7 @@ bool_ quest_wolves_gen_hook(char *fmt)
 	get_mon_num_prep();
 
 	init_flags = INIT_CREATE_DUNGEON;
-	process_dungeon_file(NULL, "wolves.map", &ystart, &xstart, cur_hgt, cur_wid, TRUE);
+	process_dungeon_file("wolves.map", &ystart, &xstart, cur_hgt, cur_wid, TRUE, FALSE);
 	dungeon_flags2 |= DF2_NO_GENO;
 
 	/* Place some random wolves */

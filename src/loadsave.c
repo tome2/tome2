@@ -2190,15 +2190,15 @@ static bool_ do_dungeon(int flag, bool_ no_companions)
 		int xstart = 0;
 		int ystart = 0;
 		/* Init the wilderness */
-		process_dungeon_file(NULL, "w_info.txt", &ystart, &xstart, cur_hgt, cur_wid,
-		                     TRUE);
+		process_dungeon_file("w_info.txt", &ystart, &xstart, cur_hgt, cur_wid,
+		                     TRUE, FALSE);
 
 		/* Init the town */
 		xstart = 0;
 		ystart = 0;
 		init_flags = 0;
-		process_dungeon_file(NULL, "t_info.txt", &ystart, &xstart, cur_hgt, cur_wid,
-		                     TRUE);
+		process_dungeon_file("t_info.txt", &ystart, &xstart, cur_hgt, cur_wid,
+		                     TRUE, FALSE);
 	}
 
 	do_grid(flag);

@@ -10626,8 +10626,7 @@ static dungeon_grid letter[255];
 /*
  * Parse a sub-file of the "extra info"
  */
-bool_ process_dungeon_file_full = FALSE;
-static errr process_dungeon_file_aux(char *buf, int *yval, int *xval, int xvalstart, int ymax, int xmax)
+static errr process_dungeon_file_aux(char *buf, int *yval, int *xval, int xvalstart, int ymax, int xmax, bool_ full)
 {
 	int i;
 
@@ -10651,7 +10650,7 @@ static errr process_dungeon_file_aux(char *buf, int *yval, int *xval, int xvalst
 	if (buf[0] == '%')
 	{
 		/* Attempt to Process the given file */
-		return (process_dungeon_file(NULL, buf + 2, yval, xval, ymax, xmax, FALSE));
+		return (process_dungeon_file(buf + 2, yval, xval, ymax, xmax, FALSE, full));
 	}
 
 	/* Process "N:<sleep>" */
@@ -11089,7 +11088,7 @@ static errr process_dungeon_file_aux(char *buf, int *yval, int *xval, int xvalst
 				c_ptr->special = letter[idx].special;
 			}
 		}
-		if ((process_dungeon_file_full) && (*xval < x)) *xval = x;
+		if (full && (*xval < x)) *xval = x;
 		(*yval)++;
 
 		return (0);
@@ -11703,7 +11702,7 @@ static cptr process_dungeon_file_expr(char **sp, char *fp)
 }
 
 
-errr process_dungeon_file(cptr full_text, cptr name, int *yval, int *xval, int ymax, int xmax, bool_ init)
+errr process_dungeon_file(cptr name, int *yval, int *xval, int ymax, int xmax, bool_ init, bool_ full)
 {
 	FILE *fp = 0;
 
@@ -11731,30 +11730,21 @@ errr process_dungeon_file(cptr full_text, cptr name, int *yval, int *xval, int y
 		}
 	}
 
-	/* We dont need any files for full_text */
-	if (full_text)
-	{
-		/* Init */
-		my_str_fgets(full_text, NULL, 0);
-	}
-	else
-	{
-		/* Build the filename */
-		path_build(buf, 1024, ANGBAND_DIR_EDIT, name);
+	/* Build the filename */
+	path_build(buf, 1024, ANGBAND_DIR_EDIT, name);
 
-		/* Open the file */
-		fp = my_fopen(buf, "r");
+	/* Open the file */
+	fp = my_fopen(buf, "r");
 
-		/* No such file */
-		if (!fp)
-		{
-			msg_format("Cannot find file %s at %s", name, buf);
-			return ( -1);
-		}
+	/* No such file */
+	if (!fp)
+	{
+		msg_format("Cannot find file %s at %s", name, buf);
+		return ( -1);
 	}
 
 	/* Process the file */
-	while (0 == ((full_text) ? my_str_fgets(full_text, buf, 1024) : my_fgets(fp, buf, 1024)))
+	while (0 == my_fgets(fp, buf, 1024))
 	{
 		/* Count lines */
 		num++;
@@ -11798,7 +11788,7 @@ errr process_dungeon_file(cptr full_text, cptr name, int *yval, int *xval, int y
 		if (buf[0] == '%')
 		{
 			/* Process that file if allowed */
-			(void)process_dungeon_file(NULL, buf + 2, yval, xval, ymax, xmax, FALSE);
+			(void)process_dungeon_file(buf + 2, yval, xval, ymax, xmax, FALSE, full);
 
 			/* Continue */
 			continue;
@@ -11806,7 +11796,7 @@ errr process_dungeon_file(cptr full_text, cptr name, int *yval, int *xval, int y
 
 
 		/* Process the line */
-		err = process_dungeon_file_aux(buf, yval, xval, xmin, ymax, xmax);
+		err = process_dungeon_file_aux(buf, yval, xval, xmin, ymax, xmax, full);
 
 		/* Oops */
 		if (err) break;
@@ -11821,11 +11811,8 @@ errr process_dungeon_file(cptr full_text, cptr name, int *yval, int *xval, int y
 		msg_format("Parsing '%s'", buf);
 	}
 
-	if (!full_text)
-	{
-		/* Close the file */
-		my_fclose(fp);
-	}
+	/* Close the file */
+	my_fclose(fp);
 
 	/* Result */
 	return (err);

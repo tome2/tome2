@@ -343,21 +343,15 @@ void get_target(int dir, int *y, int *x)
 }
 
 /* Level gen */
-void get_map_size(bool_ full_text, char *name, int *ysize, int *xsize)
+void get_map_size(char *name, int *ysize, int *xsize)
 {
 	*xsize = 0;
 	*ysize = 0;
 	init_flags = INIT_GET_SIZE;
-	process_dungeon_file_full = TRUE;
-	if (full_text)
-		process_dungeon_file(name, "embeded map script", ysize, xsize, cur_hgt, cur_wid, TRUE);
-	else
-		process_dungeon_file(NULL, name, ysize, xsize, cur_hgt, cur_wid, TRUE);
-	process_dungeon_file_full = FALSE;
-
+	process_dungeon_file(name, ysize, xsize, cur_hgt, cur_wid, TRUE, TRUE);
 }
 
-void load_map(bool_ full_text, char *name, int *y, int *x)
+void load_map(char *name, int *y, int *x)
 {
 	/* Set the correct monster hook */
 	set_mon_num_hook();
@@ -366,12 +360,7 @@ void load_map(bool_ full_text, char *name, int *y, int *x)
 	get_mon_num_prep();
 
 	init_flags = INIT_CREATE_DUNGEON;
-	process_dungeon_file_full = TRUE;
-	if (full_text)
-		process_dungeon_file(name, "embeded map script", y, x, cur_hgt, cur_wid, TRUE);
-	else
-		process_dungeon_file(NULL, name, y, x, cur_hgt, cur_wid, TRUE);
-	process_dungeon_file_full = FALSE;
+	process_dungeon_file(name, y, x, cur_hgt, cur_wid, TRUE, TRUE);
 }
 
 bool_ alloc_room(int by0, int bx0, int ysize, int xsize, int *y1, int *x1, int *y2, int *x2)

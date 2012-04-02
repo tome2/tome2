@@ -46,22 +46,6 @@ function rotate_dir(dir, mov)
 	return dir
 end
 
--- Check if the map is a filename or directly a map
-function load_map(map, y, x)
-	if strsub(map, 1, 5) == "#!map" then
-		%load_map(TRUE, map, y, x)
-	else
-		%load_map(FALSE, map, y, x)
-	end
-end
-function get_map_size(map)
-	if strsub(map, 1, 5) == "#!map" then
-		return %get_map_size(TRUE, map)
-	else
-		return %get_map_size(FALSE, map)
-	end
-end
-
 -- Place a trap for a specific level
 function place_trap(y, x, level)
 	local old_dun = dun_level

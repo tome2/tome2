@@ -8291,9 +8291,7 @@ bool_ build_special_level(void)
 	get_mon_num_prep();
 
 	init_flags = INIT_CREATE_DUNGEON | INIT_POSITION;
-	process_dungeon_file_full = TRUE;
-	process_dungeon_file(NULL, buf, &ystart, &xstart, cur_hgt, cur_wid, TRUE);
-	process_dungeon_file_full = FALSE;
+	process_dungeon_file(buf, &ystart, &xstart, cur_hgt, cur_wid, TRUE, TRUE);
 
 	special_lvl[level][dungeon_type] = REGEN_HACK;
 	generate_special_feeling = TRUE;

@@ -316,12 +316,7 @@ bool_ quest_random_gen_hook(char *fmt)
 	bx0 = get_next_arg(fmt);
 
 	/* Pick a room size */
-	xsize = 0;
-	ysize = 0;
-	init_flags = INIT_GET_SIZE;
-	process_dungeon_file_full = TRUE;
-	process_dungeon_file(NULL, format("qrand%d.map", random_quests[dun_level].type), &ysize, &xsize, cur_hgt, cur_wid, TRUE);
-	process_dungeon_file_full = FALSE;
+	get_map_size(format("qrand%d.map", random_quests[dun_level].type), &ysize, &xsize);
 
 	/* Try to allocate space for room.  If fails, exit */
 	if (!room_alloc(xsize + 2, ysize + 2, FALSE, by0, bx0, &xval, &yval)) return FALSE;
@@ -353,9 +348,7 @@ bool_ quest_random_gen_hook(char *fmt)
 	xstart = x1;
 	ystart = y1;
 	init_flags = INIT_CREATE_DUNGEON;
-	process_dungeon_file_full = TRUE;
-	process_dungeon_file(NULL, format("qrand%d.map", random_quests[dun_level].type), &ystart, &xstart, cur_hgt, cur_wid, TRUE);
-	process_dungeon_file_full = FALSE;
+	process_dungeon_file(format("qrand%d.map", random_quests[dun_level].type), &ystart, &xstart, cur_hgt, cur_wid, TRUE, TRUE);
 
 	for (x = x1; x < xstart; x++)
 		for (y = y1; y < ystart; y++)
