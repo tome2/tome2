@@ -263,6 +263,40 @@ s32b lua_get_level(s32b s, s32b lvl, s32b max, s32b min, s32b bonus)
 	return lvl;
 }
 
+/** This is the function to use when casting through a stick */
+s32b get_level_device(s32b s, s32b max, s32b min)
+{
+	int lvl;
+	int get_level_use_stick = exec_lua("return get_level_use_stick");
+	int get_level_max_stick = exec_lua("return get_level_max_stick");
+
+	/* No max specified ? assume 50 */
+	if (max <= 0) {
+		max = 50;
+	}
+	/* No min specified ? */
+	if (min <= 0) {
+		min = 1;
+	}
+
+	lvl = s_info[SKILL_DEVICE].value;
+	lvl = lvl + (get_level_use_stick * SKILL_STEP);
+
+	/* Sticks are limited */
+	if (lvl - ((school_spells[s].skill_level + 1) * SKILL_STEP) >= get_level_max_stick * SKILL_STEP)
+	{
+		lvl = (get_level_max_stick + school_spells[s].skill_level - 1) * SKILL_STEP;
+	}
+
+	/* / 10 because otherwise we can overflow a s32b and we can use a u32b because the value can be negative
+	-- The loss of information should be negligible since 1 skill = 1000 internally
+	*/
+	lvl = lvl / 10;
+	lvl = lua_get_level(s, lvl, max, min, 0);
+
+	return lvl;
+}
+
 s32b lua_spell_chance(s32b chance, int level, int skill_level, int mana, int cur_mana, int stat)
 {
 	int minfail;

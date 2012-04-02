@@ -200,35 +200,6 @@ function get_level_school(s, max, min)
 	return lvl, nil
 end
 
--- This is the function to use when casting through a stick
-function get_level_device(s, max, min)
-	local lvl
-
-	-- No max specified ? assume 50
-	if not max then
-		max = 50
-	end
-
-	lvl = s_info[SKILL_DEVICE + 1].value
-	lvl = lvl + (get_level_use_stick * SKILL_STEP)
-
-	-- Sticks are limited
-	if lvl - ((spell(s).skill_level + 1) * SKILL_STEP) >= get_level_max_stick * SKILL_STEP then
-		lvl = (get_level_max_stick + spell(s).skill_level - 1) * SKILL_STEP
-	end
-
-	-- / 10 because otherwise we can overflow a s32b and we can use a u32b because the value can be negative
-	-- The loss of information should be negligible since 1 skill = 1000 internally
-	lvl = lvl / 10
-	if not min then
-		lvl = lua_get_level(s, lvl, max, 1, 0)
-	else
-		lvl = lua_get_level(s, lvl, max, min, 0)
-	end
-
-	return lvl
-end
-
 -- The real get_level, works for schooled magic and for innate powers
 get_level_use_stick = -1
 get_level_max_stick = -1
@@ -236,6 +207,8 @@ function get_level(s, max, min)
 	if type(s) == "number" then
 		-- Ahah shall we use Magic device instead ?
 		if get_level_use_stick > -1 then
+                        if not max then max = 50 end
+                        if not min then min = 1  end
 			return get_level_device(s, max, min)
 		else
 			local lvl, na = get_level_school(s, max, min)
