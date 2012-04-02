@@ -267,8 +267,6 @@ s32b lua_get_level(s32b s, s32b lvl, s32b max, s32b min, s32b bonus)
 s32b get_level_device(s32b s, s32b max, s32b min)
 {
 	int lvl;
-	int get_level_use_stick = exec_lua("return get_level_use_stick");
-	int get_level_max_stick = exec_lua("return get_level_max_stick");
 
 	/* No max specified ? assume 50 */
 	if (max <= 0) {
@@ -297,10 +295,6 @@ s32b get_level_device(s32b s, s32b max, s32b min)
 	return lvl;
 }
 
-static int get_level(s32b s) {
-	return exec_lua(format("return get_level(%d, 50)", s));
-}
-
 static int get_mana(s32b s) {
 	return exec_lua(format("return get_mana(%d)", s));
 }
@@ -316,15 +310,25 @@ static int get_spell_stat(s32b s) {
 /** Returns spell chance of failure for spell */
 s32b spell_chance(s32b s)
 {
-	int get_level_use_stick = exec_lua("return get_level_use_stick");
         spell_type *s_ptr = &school_spells[s];
-	int level = get_level(s);
+	int level = get_level(s, 50, 1);
 
 	/* Extract the base spell failure rate */
 	if (get_level_use_stick > -1) {
 		return lua_spell_device_chance(s_ptr->fail, level, s_ptr->skill_level);
 	} else {
 		return lua_spell_chance(s_ptr->fail, level, s_ptr->skill_level, get_mana(s), get_power(s), get_spell_stat(s));
+	}
+}
+
+s32b get_level(s32b s, s32b max, s32b min)
+{
+	/** Ahah shall we use Magic device instead ? */
+	if (get_level_use_stick > -1) {
+		return get_level_device(s, max, min);
+	} else {
+		int level = exec_lua(format("local lvl, na = get_level_school(%d, %d, %d); return lvl", s, max, min));
+		return level;
 	}
 }
 

@@ -201,22 +201,10 @@ function get_level_school(s, max, min)
 end
 
 -- The real get_level, works for schooled magic and for innate powers
-get_level_use_stick = -1
-get_level_max_stick = -1
 function get_level(s, max, min)
-	if type(s) == "number" then
-		-- Ahah shall we use Magic device instead ?
-		if get_level_use_stick > -1 then
-                        if not max then max = 50 end
-                        if not min then min = 1  end
-			return get_level_device(s, max, min)
-		else
-			local lvl, na = get_level_school(s, max, min)
-			return lvl
-		end
-	else
-		return get_level_power(s, max, min)
-	end
+   if not max then max = 50 end
+   if not min then min = 1  end
+   return %get_level(s, max, min)
 end
 
 -- Can we cast the spell ?
@@ -247,14 +235,6 @@ function get_power_name(s)
 	else
 		return "mana"
 	end
-end
-
--- Get the level of a power
-function get_level_power(s, max, min)
-	if not max then max = 50 end
-	if not min then min = 1 end
-
-	return value_scale(s.get_current_level(), 50, max, min)
 end
 
 -- Changes the amount of power(mana, piety, whatever) for the spell

@@ -1431,7 +1431,6 @@ extern s32b rescale(s32b x, s32b max, s32b new_max);
 extern bool_ input_box(cptr text, int y, int x, char *buf, int max);
 extern void draw_box(int y, int x, int h, int w);
 extern void display_list(int y, int x, int h, int w, cptr title, cptr *list, int max, int begin, int sel, byte sel_color);
-extern s32b value_scale(int value, int vmax, int max, int min);
 extern int ask_menu(cptr ask, char **items, int max);
 extern cptr get_player_race_name(int pr, int ps);
 extern cptr get_month_name(int month, bool_ full, bool_ compact);
@@ -1798,8 +1797,12 @@ extern school_type *grab_school_type(s16b num);
 extern s32b lua_get_level(s32b s, s32b lvl, s32b max, s32b min, s32b bonus);
 extern s32b get_level_device(s32b s, s32b max, s32b min);
 extern s32b spell_chance(s32b s);
+extern s32b get_level(s32b s, s32b max, s32b min);
 extern s32b lua_spell_chance(s32b chance, int level, int skill_level, int mana, int cur_mana, int stat);
 extern s32b lua_spell_device_chance(s32b chance, int level, int base_level);
+
+extern s32b get_level_max_stick;
+extern s32b get_level_use_stick;
 
 extern cave_type *lua_get_cave(int y, int x);
 extern void set_target(int y, int x);

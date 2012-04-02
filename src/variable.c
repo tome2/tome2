@@ -1170,6 +1170,8 @@ bool_ easy_open = TRUE;
 bool_ easy_disarm = TRUE;
 bool_ easy_tunnel = FALSE;
 
+s32b get_level_max_stick = -1;
+s32b get_level_use_stick = -1;
 
 /*
  * Maximum size of the wilderness map

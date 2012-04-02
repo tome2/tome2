@@ -1499,21 +1499,6 @@ extern cptr get_player_race_name(int pr, int ps);
  */
 extern void quit(cptr str);
 
-/** @fn value_scale(int value, int vmax, int max, int min)
- * @brief Rescale a value
- * @param value Number \n the original value
- * @brief Original value
- * @param vmax Number \n the maximum the original value can be
- * @brief Original maximum
- * @param max Number \n the maximum new value
- * @brief New maximum
- * @param min Number \n the minimum new value
- * @brief New minimum
- * @return Number \n The rescaled value
- * @note (see file util.c)
- */
-extern s32b value_scale(int value, int vmax, int max, int min);
-
 /*
  * compass, approximate_distance
  */

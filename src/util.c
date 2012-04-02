@@ -4318,19 +4318,6 @@ bool_ prefix(cptr s, cptr t)
 }
 
 /*
- * Rescale a value
- */
-s32b value_scale(int value, int vmax, int max, int min)
-{
-	s32b full_max = max - min;
-
-	value = (value * full_max) / vmax;
-	value += min;
-
-	return value;
-}
-
-/*
  * Displays a box
  */
 void draw_box(int y, int x, int h, int w)

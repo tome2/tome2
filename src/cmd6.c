@@ -3616,12 +3616,15 @@ void set_stick_mode(object_type *o_ptr)
 	s32b bonus = o_ptr->pval3 & 0xFFFF;
 	s32b max = o_ptr->pval3 >> 16;
 
-	exec_lua(format("get_level_use_stick = %d; get_level_max_stick = %d", bonus, max));
+	get_level_use_stick = bonus;
+	get_level_max_stick = max;
 }
+
 /* Remove 'stick mode' */
 void unset_stick_mode()
 {
-	exec_lua("get_level_use_stick = -1; get_level_max_stick = -1");
+	get_level_use_stick = -1;
+	get_level_max_stick = -1;
 }
 
 
