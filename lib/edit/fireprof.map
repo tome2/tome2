@@ -1,0 +1,60 @@
+# Created by fearoffours (fearoffours@moppy.co.uk)
+# Made for ToME 2.1.x on 03/09/02
+
+# Permanent wall
+F:X:63:3
+
+# Floor with dirt
+F:.:88:3
+
+# shallow lava
+F:f:86:3
+
+# Deep lava
+F:F:85:3
+
+### Random Monsters and/or Items
+# Random object (upto 3 levels ood)
+F:!:88:5:0:*21
+
+# red mold 
+F:m:88:5:324
+
+# Chimaera
+F:H:88:5:341
+
+# Red dragon bat
+F:b:88:5:377
+
+# Hellhound and
+# Random object (upto 7 levels ood) on normal floor
+F:C:88:5:613:*25
+
+# Quest exit
+F:<:6:3
+
+D:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+D:X......m.................H.........b...m......X
+D:X.............b...............................X
+D:X.......................m.....m.......H...b.C.X
+D:X...............m.!........b.............FFFf.X
+D:X.........m!............H....!........fffFFFffX
+D:X..................................fffFFFFFFfFX
+D:XFFf..............................fFFFFff..fffX
+D:XFFFff........FFFFFF...........fffFFFfff......X
+D:XfFFFFfff....FFFFFFFf.......fffFFFFFf.........X
+D:X.fFFFFFFff.FFFFFFFFFfF..fffFFFFFFff..........X
+D:X..fFFFFFFFffFFFfffFFFfffFFFFFFFFf............X
+D:X...fFFFFFFFFFFff.ffFFFFFFFFFFFff.............X
+D:X....fffFFFFFFff...ffFFFFFFFFFf...............X
+D:X.......ffFFFf.......ffffFFfff................X
+D:X.........fff.................................X
+D:X.............................................X
+D:X.............................................X
+D:X.............................................X
+D:X..................................<..........X
+D:X.............................................X
+D:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+# Starting position
+P:22:26
