@@ -1797,6 +1797,7 @@ extern spell_type *grab_spell_type(s16b num);
 extern school_type *grab_school_type(s16b num);
 extern s32b lua_get_level(s32b s, s32b lvl, s32b max, s32b min, s32b bonus);
 extern s32b get_level_device(s32b s, s32b max, s32b min);
+extern s32b spell_chance(s32b s);
 extern s32b lua_spell_chance(s32b chance, int level, int skill_level, int mana, int cur_mana, int stat);
 extern s32b lua_spell_device_chance(s32b chance, int level, int base_level);
 

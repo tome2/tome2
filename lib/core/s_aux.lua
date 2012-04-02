@@ -401,23 +401,6 @@ function spell_in_book(book, spell)
 	return FALSE
 end
 
--- Returns spell chance of failure for spell
-function spell_chance(s)
-	local chance, s_ptr
-
-	s_ptr = spell(s)
-
-	-- Extract the base spell failure rate
-	if get_level_use_stick > -1 then
-		chance = lua_spell_device_chance(s_ptr.fail, get_level(s, 50), s_ptr.skill_level)
-	else
-		chance = lua_spell_chance(s_ptr.fail, get_level(s, 50), s_ptr.skill_level, get_mana(s), get_power(s), get_spell_stat(s))
-	end
-
-	-- Return the chance
-	return chance
-end
-
 function check_affect(s, name, default)
 	local s_ptr = __tmp_spells[s]
 	local a

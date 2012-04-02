@@ -3683,7 +3683,7 @@ void do_cmd_use_staff(void)
 	ident = FALSE;
 
 	/* get the chance */
-	chance = exec_lua(format("return spell_chance(%d)", o_ptr->pval2));
+	chance = spell_chance(o_ptr->pval2);
 
 	/* Extract object flags */
 	object_flags(o_ptr, &f1, &f2, &f3, &f4, &f5, &esp);
@@ -3877,7 +3877,7 @@ void do_cmd_aim_wand(void)
 	set_stick_mode(o_ptr);
 
 	/* get the chance */
-	chance = exec_lua(format("return spell_chance(%d)", o_ptr->pval2));
+	chance = spell_chance(o_ptr->pval2);
 
 	/* Extract object flags */
 	object_flags(o_ptr, &f1, &f2, &f3, &f4, &f5, &esp);
