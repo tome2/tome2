@@ -1825,6 +1825,10 @@ extern cptr approximate_distance(int y, int x, int y2, int x2);
 extern bool_ drop_text_left(byte c, cptr s, int y, int o);
 extern bool_ drop_text_right(byte c, cptr s, int y, int o);
 
+/* q_library.c */
+extern void    library_quest_fill_book();
+extern int     library_quest_book_slots_left();
+
 /* skills.c */
 extern void dump_skills(FILE *fff);
 extern s16b find_skill(cptr name);

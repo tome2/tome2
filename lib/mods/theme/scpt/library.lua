@@ -29,70 +29,6 @@ library_quest.bookable_spells =
 	MANDOS_TEARS_LUTHIEN, MANDOS_TALE_DOOM
 }
 
-library_quest.get_term_size = function()
-	local width = 0
-	local height = 0
-	ret, width, height = Term_get_size(width, height)
-	return width, height
-end
-
-library_quest.book_slots_left = function()
-	if school_book[61][1] == -1 then
-		return 3
-	elseif school_book[61][2] == -1 then
-		return 2
-	elseif school_book[61][3] == -1 then
-		return 1
-	else
-		return 0
-	end
-end
-
-library_quest.book_contains_spell = function(spell)
-	if school_book[61][1] == spell then
-		return TRUE
-	elseif school_book[61][2] == spell then
-		return TRUE
-	elseif school_book[61][3] == spell then
-		return TRUE
-	else
-		return FALSE
-	end
-end
-
-library_quest.add_spell = function(spell)
-	if school_book[61][1] == -1 then
-		school_book[61][1] = spell
-		return TRUE
-	elseif school_book[61][2] == -1 then
-		school_book[61][2] = spell
-		return TRUE
-	elseif school_book[61][3] == -1 then
-		school_book[61][3] = spell
-		return TRUE
-	else
-		return FALSE
-	end
-end
-
-library_quest.remove_spell = function(spell)
-	if school_book[61][1] == spell then
-		school_book[61][1] = school_book[61][2]
-		school_book[61][2] = school_book[61][3]
-		school_book[61][3] = -1
-		return TRUE
-	elseif school_book[61][2] == spell then
-		school_book[61][2] = school_book[61][3]
-		school_book[61][3] = -1
-		return TRUE
-	elseif school_book[61][3] == spell then
-		school_book[61][3] = -1
-		return TRUE
-	else
-		return FALSE
-	end
-end
-
 -- Print a spell (taken from s_aux)
 function library_quest.print_spell(color, y, spl)
 	local x, index, sch, size, s
@@ -125,107 +61,6 @@ function library_quest.print_spell(color, y, spl)
 		end
 	end
 	return y
-end
-
--- spell selection routines inspired by skills.c
-library_quest.print_spells = function(first, current)
-	Term_clear()
-	width, height = library_quest.get_term_size()
-	slots = library_quest.book_slots_left()
-
-	c_prt(TERM_WHITE, "Book Creation Screen", 0, 0);
-	c_prt(TERM_WHITE, "Up/Down to move, Right/Left to modify, I to describe, Esc to Save/Cancel", 1, 0);
-
-	if slots == 0 then
-		c_prt(TERM_L_RED, "The book can hold no more spells.", 2, 0);
-	elseif slots == 1 then
-		c_prt(TERM_L_BLUE, "The book can hold 1 more spell.", 2, 0);
-	else
-		c_prt(TERM_L_BLUE, "The book can hold "..slots.." more spells.", 2, 0);
-	end
-
-	row = 3;
-	for index, spell in library_quest.bookable_spells do
-		if index >= first then
-			if index == current then
-				color = TERM_GREEN
-			elseif library_quest.book_contains_spell(spell) == TRUE then
-				color = TERM_WHITE
-			else
-				color = TERM_ORANGE
-			end
-			library_quest.print_spell(color, row, spell)
-	
-			if row == height - 1 then
-				return
-			end
-			row = row + 1
-		end
-	end
-end
-
-library_quest.fill_book = function()
-	-- Always start with a cleared book
-	school_book[61] = {-1, -1, -1}
-
-	screen_save()
-	width, height = library_quest.get_term_size()
-	-- room for legend
-	margin = 3
-
-	first = 1
-	current = 1
-	done = FALSE
-
-	while done == FALSE do
-		library_quest.print_spells(first, current)
-
-		inkey_scan = FALSE
-		inkey_base = TRUE
-		char = inkey()
-		dir = get_keymap_dir(char)
-		if char == ESCAPE then
-			if library_quest.book_slots_left() == 0 then
-				flush()
-				done = get_check("Really create the book?")
-			else
-				done = TRUE
-			end
-		elseif char == strbyte('\r') then
-			-- TODO: make tree of schools
-		elseif char == strbyte('n') then
-			current = current + height
-		elseif char == strbyte('p') then
-			current = current - height
-		elseif char == strbyte('I') then
-			print_spell_desc(library_quest.bookable_spells[current], 0)
-			inkey()
-		elseif dir == 2 then
-			current = current + 1
-		elseif dir == 8 then
-			current = current - 1
-		elseif dir == 6 then
-			if library_quest.book_contains_spell(library_quest.bookable_spells[current]) == FALSE then
-				library_quest.add_spell(library_quest.bookable_spells[current])
-			end
-		elseif dir == 4 then
-			library_quest.remove_spell(library_quest.bookable_spells[current])
-		end
-		total = getn(library_quest.bookable_spells)
-		if current > total then
-			current = total
-		elseif current < 1 then
-			current = 1
-		end
-		
-		if current > (first + height - margin - 1) then
-			first = current - height + margin + 1
-		elseif first > current then
-			first = current
-		end
-	end
-
-	screen_load()
 end
 
 -- Quest data and hooks
@@ -345,8 +180,8 @@ add_building_action
 		elseif (quest(LIBRARY_QUEST).status == QUEST_STATUS_COMPLETED) then
 			msg_print("Thank you!  Let me make a special book for you.")
 			msg_print("Tell me three spells and I will write them in the book.")
-			library_quest.fill_book()
-			if library_quest.book_slots_left() == 0 then
+			library_quest_fill_book()
+			if library_quest_book_slots_left() == 0 then
 				quest(LIBRARY_QUEST).status = QUEST_STATUS_REWARDED
 				book = create_object(TV_BOOK, 61)
 				book.art_name = quark_add(player_name())
