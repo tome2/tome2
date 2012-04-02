@@ -5296,22 +5296,6 @@ void play_game(bool_ new_game)
 	/* Roll new character */
 	if (new_game)
 	{
-		s32b ret;
-
-		/* Are we authorized to create new chars? */
-		call_lua("get_module_info", "(s)", "d", "allow_birth", &ret);
-
-		if (!ret)
-		{
-			msg_box("Sorry, this module does not allow character creation.", -1, -1);
-
-			/* Close stuff */
-			close_game();
-
-			/* Quit */
-			quit(NULL);
-		}
-
 		process_hooks(HOOK_INIT, "()");
 
 		/* The dungeon is not ready */

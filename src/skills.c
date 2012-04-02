@@ -31,7 +31,7 @@ void increase_skill(int i, s16b *invest)
 	if (s_info[i].value >= SKILL_MAX) return;
 
 	/* Cannot allocate more than player level + max_skill_overage levels */
-	call_lua("get_module_info", "(s)", "d", "max_skill_overage", &max_skill_overage);
+	max_skill_overage = modules[game_module_idx].skills.max_skill_overage;
 	if (((s_info[i].value + s_info[i].mod) / SKILL_STEP) >= (p_ptr->lev + max_skill_overage + 1))
 	{
 		int hgt, wid;

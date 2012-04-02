@@ -4418,6 +4418,11 @@
 #define MAX_PLOTS               7
 
 /*
+ * Modules
+ */
+#define MAX_MODULES             2
+
+/*
  * Hooks
  */
 #define HOOK_MONSTER_DEATH      0

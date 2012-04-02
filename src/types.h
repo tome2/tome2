@@ -2520,3 +2520,65 @@ struct ability_type
 	s16b need_abilities[10];              	/* List of prereq abilities(10 max) */
 	s16b forbid_abilities[10];		/* List of forbidden abilities(10 max) */
 };
+
+/**
+ * Module metadata
+ */
+typedef struct module_meta_type module_meta_type;
+struct module_meta_type
+{
+	/* Module name */
+	cptr name;
+	
+	/* Module version number */
+	struct {
+		s32b major;
+		s32b minor;
+		s32b patch;
+	} version;
+	
+        /* Module author */
+	struct {
+		cptr name;
+		cptr email;
+	} author;
+	
+	/* Module description */
+	cptr desc;
+
+	/* Save file tag */
+	cptr save_file_tag;
+
+	/* Module directory */
+	cptr module_dir;
+};
+
+/**
+ * Modules
+ */
+typedef struct module_type module_type;
+struct module_type
+{
+	/* Metadata about the module: author, description, etc. */
+	module_meta_type meta;
+
+	/* Random artifact generation chances */
+	struct {
+		s32b weapon_chance;
+		s32b armor_chance;
+		s32b jewelry_chance;
+	} randarts;
+
+	/* Max player level. */
+	int max_plev;
+
+	/* Skills */
+	struct {
+		/* Skill points per level */
+		s32b skill_per_level;
+		/* Maximum "overage" for skill points, i.e. how many skill
+		   points you can go above your current level. */
+		s32b max_skill_overage;
+	} skills;
+
+};

@@ -1933,15 +1933,6 @@ static void init_basic()
 	}
 }
 
-/*
- * Pseudo, dummy quest initializer, to actualy disable them
- */
-static bool_ quest_disable_init_hook(int q_idx)
-{
-	q_idx = q_idx;
-	return FALSE;
-}
-
 
 /*
  * Initialise misc. values
@@ -1951,8 +1942,6 @@ static errr init_misc(void)
 	int xstart = 0;
 	int ystart = 0;
 	int i;
-	s32b allow_quest;
-	s32b allow_rquest;
 
 	/*** Prepare the various "bizarre" arrays ***/
 
@@ -1977,25 +1966,11 @@ static errr init_misc(void)
 	C_COPY(powers_type, powers_type_init, POWER_MAX_INIT, power_type);
 
 	/* Prepare quests */
-	call_lua("get_module_info", "(s)", "d", "C_quest", &allow_quest);
-	call_lua("get_module_info", "(s)", "d", "rand_quest", &allow_rquest);
-
 	quest = NULL;
 	max_q_idx = MAX_Q_IDX_INIT;
 	reinit_quests(max_q_idx);
 
 	C_COPY(quest, quest_init_tome, MAX_Q_IDX_INIT, quest_type);
-
-	/* If we dont allow C quests, we dont let them init */
-	if (!allow_quest)
-	{
-		for (i = 0; i < MAX_Q_IDX_INIT; i++)
-		{
-			if (allow_rquest && (i == QUEST_RANDOM))
-				continue;
-			quest[i].init = quest_disable_init_hook;
-		}
-	}
 
 	/* Prepare gods */
 	deity_info = NULL;

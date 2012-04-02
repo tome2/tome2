@@ -692,7 +692,7 @@ static bool_ do_extra(int flag)
 	{
 		s32b ok;
 
-		call_lua("module_savefile_loadable", "(s,d)", "d", loaded_game_module, death, &ok);
+		ok = module_savefile_loadable(loaded_game_module);
 
 		/* Argh bad game module! */
 		if (!ok)

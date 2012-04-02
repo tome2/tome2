@@ -1564,6 +1564,7 @@ s16b last_teleportation_x = -1;
  * The current game module
  */
 cptr game_module;
+s32b game_module_idx;
 s32b VERSION_MAJOR;
 s32b VERSION_MINOR;
 s32b VERSION_PATCH;
@@ -1572,7 +1573,11 @@ s32b VERSION_PATCH;
  * Some module info
  */
 s32b max_plev = 50;
+s32b DUNGEON_BASE = 4;
 s32b DUNGEON_DEATH = 28;
+s32b DUNGEON_ASTRAL = 8;
+s32b DUNGEON_ASTRAL_WILD_X = 45;
+s32b DUNGEON_ASTRAL_WILD_Y = 19;
 
 /*
  * Gods

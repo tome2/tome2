@@ -88,7 +88,6 @@ static void dump_modules(int sel, int max)
 	int i;
 
 	char buf[40], pre = ' ', post = ')';
-	cptr name;
 
 	char ind;
 
@@ -109,13 +108,11 @@ static void dump_modules(int sel, int max)
 			post = ')';
 		}
 
-		call_lua("get_module_name", "(d)", "s", i, &name);
-		strnfmt(buf, 40, "%c%c%c %s", pre, ind, post, name);
+		strnfmt(buf, 40, "%c%c%c %s", pre, ind, post, modules[i].meta.name);
 
 		if (sel == i)
 		{
-			call_lua("get_module_desc", "(d)", "s", i, &name);
-			print_desc_aux(name, 5, 0);
+			print_desc_aux(modules[i].meta.desc, 5, 0);
 
 			c_put_str(TERM_L_BLUE, buf, 10 + (i / 4), 20 * (i % 4));
 		}
@@ -124,22 +121,23 @@ static void dump_modules(int sel, int max)
 	}
 }
 
-static void activate_module()
+static void activate_module(int module_idx)
 {
+	module_type *module_ptr = &modules[module_idx];
+
 	/* Initialize the module table */
-	call_lua("assign_current_module", "(s)", "", game_module);
+	game_module_idx = module_idx;
 
 	/* Do misc inits  */
-	call_lua("get_module_info", "(s)", "d", "max_plev", &max_plev);
-	call_lua("get_module_info", "(s)", "d", "death_dungeon", &DUNGEON_DEATH);
+	max_plev = module_ptr->max_plev;
 
-	call_lua("get_module_info", "(s)", "d", "random_artifact_weapon_chance", &RANDART_WEAPON);
-	call_lua("get_module_info", "(s)", "d", "random_artifact_armor_chance", &RANDART_ARMOR);
-	call_lua("get_module_info", "(s)", "d", "random_artifact_jewelry_chance", &RANDART_JEWEL);
+	RANDART_WEAPON = module_ptr->randarts.weapon_chance;
+	RANDART_ARMOR = module_ptr->randarts.armor_chance;
+	RANDART_JEWEL = module_ptr->randarts.jewelry_chance;
 
-	call_lua("get_module_info", "(s,d)", "d", "version", 1, &VERSION_MAJOR);
-	call_lua("get_module_info", "(s,d)", "d", "version", 2, &VERSION_MINOR);
-	call_lua("get_module_info", "(s,d)", "d", "version", 3, &VERSION_PATCH);
+	VERSION_MAJOR = module_ptr->meta.version.major;
+	VERSION_MINOR = module_ptr->meta.version.minor;
+	VERSION_PATCH = module_ptr->meta.version.patch;
 	version_major = VERSION_MAJOR;
 	version_minor = VERSION_MINOR;
 	version_patch = VERSION_PATCH;
@@ -155,6 +153,31 @@ static void activate_module()
 	process_player_base();
 }
 
+static void init_module(module_type *module_ptr)
+{
+	/* Set up module directories? */
+	cptr dir = module_ptr->meta.module_dir;
+	if (dir) {
+		module_reset_dir("apex", dir);
+		module_reset_dir("core", dir);
+		module_reset_dir("data", dir);
+		module_reset_dir("dngn", dir);
+		module_reset_dir("edit", dir); 
+		module_reset_dir("file", dir);
+		module_reset_dir("help", dir);
+		module_reset_dir("note", dir);
+		module_reset_dir("save", dir);
+		module_reset_dir("scpt", dir);
+		module_reset_dir("user", dir);
+		module_reset_dir("pref", dir);
+	}
+}
+
+bool_ module_savefile_loadable(cptr savefile_mod)
+{
+	return (strcmp(savefile_mod, modules[game_module_idx].meta.save_file_tag) == 0);
+}
+
 /* Did the player force a module on command line */
 cptr force_module = NULL;
 
@@ -166,32 +189,35 @@ bool_ select_module()
 	/* Init some lua */
 	init_lua();
 
-	/* Some ports need to separate the module scripts from the installed mods,
-	   so we need to check for these in two different places */
-	if(!tome_dofile_anywhere(ANGBAND_DIR_CORE, "mods_aux.lua", FALSE))
-		tome_dofile_anywhere(ANGBAND_DIR_MODULES, "mods_aux.lua", TRUE);
-	if(!tome_dofile_anywhere(ANGBAND_DIR_CORE, "modules.lua", FALSE))
-		tome_dofile_anywhere(ANGBAND_DIR_MODULES, "modules.lua", TRUE);
-
-	/* Grab the savefiles */
-	call_lua("max_modules", "()", "d", &max);
+	/* How many modules? */
+	max = MAX_MODULES;
 
 	/* No need to bother the player if there is only one module */
 	sel = -1;
-	if (force_module)
-		call_lua("find_module", "(s)", "d", force_module, &sel);
-	if (max == 1)
+	if (force_module) {
+		/* Find module by name */
+		int i=0;
+		for (i=0; i<MAX_MODULES; i++) {
+			if (strcmp(force_module, modules[i].meta.name) == 0) {
+				break;
+			}
+		}
+		if (i<MAX_MODULES) {
+			sel = i;
+		}
+	}
+	/* Only a single choice */
+	if (max == 1) {
 		sel = 0;
+	}
+	/* No module selected */
 	if (sel != -1)
 	{
-		cptr tmp;
-
 		/* Process the module */
-		call_lua("init_module", "(d)", "", sel);
-		call_lua("get_module_name", "(d)", "s", sel, &tmp);
-		game_module = string_make(tmp);
+		init_module(&modules[sel]);
+		game_module = string_make(modules[sel].meta.name);
 
-		activate_module();
+		activate_module(sel);
 
 		return FALSE;
 	}
@@ -251,7 +277,6 @@ bool_ select_module()
 
 		{
 			int x;
-			cptr tmp;
 
 			if (islower(k)) x = A2I(k);
 			else x = A2I(tolower(k)) + 26;
@@ -259,11 +284,10 @@ bool_ select_module()
 			if ((x < 0) || (x >= max)) continue;
 
 			/* Process the module */
-			call_lua("init_module", "(d)", "", x);
-			call_lua("get_module_name", "(d)", "s", x, &tmp);
-			game_module = string_make(tmp);
+			init_module(&modules[x]);
+			game_module = string_make(modules[x].meta.name);
 
-			activate_module();
+			activate_module(x);
 
 			return (FALSE);
 		}

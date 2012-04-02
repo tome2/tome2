@@ -4790,3 +4790,46 @@ gf_name_type gf_names[] =
 	{ GF_ATTACK, "projected melee attacks" },
 	{ -1, NULL },
 };
+
+/**
+ * Modules
+ */
+module_type modules[MAX_MODULES] =
+{
+	{ 
+		{ "ToME",
+		  { 2, 3, 9 },
+		  { "DarkGod", "darkgod@t-o-m-e.net" },
+		  "The Tales of Middle-earth, the standard and official game.\n"
+		  "You are set on a quest to investigate the old tower of Dol Guldur.\n"
+		  "But who knows what will happen...",
+		  "ToME",
+		  NULL /* default dir */,
+		},
+		/* Randarts: */
+		{ 30, 20, 20 },
+		/* Max player level: */
+		50,
+		/* Skills: */
+		{ 6, 4, },
+	},
+
+	{
+		{ "Theme",
+		  { 1, 2, 0 },
+		  { "furiosity", "furiosity@gmail.com" },
+		  "A module that goes back to Tolkien roots, though by no means canonical.\n"
+		  "A new wilderness map, new monsters, objects, artifacts, uniques, ego items,\n"
+		  "terrain features, gods, races, subraces, and classes. Have fun. :-)",
+		  "Theme",
+		  "theme",
+		},
+		/* Randarts: */
+		{ 30, 30, 30 },
+		/* Max player level: */
+		50,
+		/* Skill overage: */
+		{ 6, 5, },
+	}
+
+};

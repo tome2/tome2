@@ -2808,15 +2808,11 @@ void do_cmd_note(void)
  */
 void do_cmd_version(void)
 {
-	cptr author, email;
-
-	call_lua("get_module_info", "(s,d)", "s", "author", 1, &author);
-	call_lua("get_module_info", "(s,d)", "s", "author", 2, &email);
-
 	/* Silly message */
 	msg_format("You are playing %s made by %s (%s).",
 	           get_version_string(),
-	           author, email);
+	           modules[game_module_idx].meta.author.name,
+		   modules[game_module_idx].meta.author.email);
 	call_lua("patchs_display", "()", "");
 }
 

@@ -2037,11 +2037,8 @@ void check_experience(void)
 
 		if (p_ptr->skill_last_level < p_ptr->lev)
 		{
-			s32b pts;
-			call_lua("exec_module_info", "(s)", "d", "skill_per_level", &pts);
-
 			p_ptr->skill_last_level = p_ptr->lev;
-			p_ptr->skill_points += pts;
+			p_ptr->skill_points += modules[game_module_idx].skills.skill_per_level;
 			cmsg_format(TERM_L_GREEN, "You can increase %d more skills.", p_ptr->skill_points);
 			p_ptr->redraw |= PR_STUDY;
 		}

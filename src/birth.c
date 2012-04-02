@@ -1615,8 +1615,6 @@ static bool_ player_birth_aux_ask()
 {
 	int i, k, n, v, sel;
 
-	s32b tmp;
-
 	int racem[100], max_racem = 0;
 
 	u32b restrictions[2];
@@ -1631,8 +1629,6 @@ static bool_ player_birth_aux_ask()
 	char inp[200];
 
 	s16b *class_types;
-
-	s32b allow_quest;
 
 	/*** Intro ***/
 
@@ -2354,23 +2350,16 @@ static bool_ player_birth_aux_ask()
 
 
 	/* Set the recall dungeon accordingly */
-	call_lua("get_module_info", "(s)", "d", "base_dungeon", &tmp);
-	dungeon_type = tmp;
+	dungeon_type = DUNGEON_BASE;
 	p_ptr->recall_dungeon = dungeon_type;
 	max_dlv[dungeon_type] = d_info[dungeon_type].mindepth;
 
 	if (p_ptr->astral)
 	{
-		s32b x, y, astral_dun;
-
-		call_lua("get_module_info", "(s)", "d", "astral_dungeon", &astral_dun);
-		dungeon_type = astral_dun;
-
 		/* Somewhere in the misty mountains */
-		call_lua("get_module_info", "(s)", "d", "astral_wild_x", &x);
-		call_lua("get_module_info", "(s)", "d", "astral_wild_y", &y);
-		p_ptr->wilderness_x = x;
-		p_ptr->wilderness_y = y;
+		dungeon_type = DUNGEON_ASTRAL;
+		p_ptr->wilderness_x = DUNGEON_ASTRAL_WILD_X;
+		p_ptr->wilderness_y = DUNGEON_ASTRAL_WILD_Y;
 	}
 
 	/* Clean up */
@@ -2379,8 +2368,7 @@ static bool_ player_birth_aux_ask()
 	/*** User enters number of quests ***/
 	/* Heino Vander Sanden and Jimmy De Laet */
 
-	call_lua("get_module_info", "(s)", "d", "rand_quest", &allow_quest);
-	if (!ironman_rooms && allow_quest)
+	if (!ironman_rooms)
 	{
 		if (do_quick_start)
 		{
@@ -2445,8 +2433,6 @@ static bool_ player_birth_aux_ask()
 	p_ptr->inside_quest = 0;
 
 	/* Init the plots */
-	call_lua("get_module_info", "(s)", "d", "C_quest", &allow_quest);
-	if (allow_quest)
 	{
 		plots[PLOT_MAIN] = QUEST_NECRO;
 		quest[plots[PLOT_MAIN]].status = QUEST_STATUS_TAKEN;
@@ -3694,7 +3680,7 @@ savefile_try_again:
 	{
 		s32b can_use;
 
-		call_lua("module_savefile_loadable", "(s)", "d", savefile_module[k], &can_use);
+		can_use = module_savefile_loadable(savefile_module[k]);
 		if (can_use)
 		{
 			savefile_idx[m++] = k;

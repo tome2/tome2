@@ -97,6 +97,7 @@ extern int cli_total;
 extern quest_type quest_init_tome[MAX_Q_IDX_INIT];
 extern int max_body_part[BODY_MAX];
 extern gf_name_type gf_names[];
+extern module_type modules[MAX_MODULES];
 
 
 /* variable.c */
@@ -588,11 +589,16 @@ extern bool_ automatizer_enabled;
 extern s16b last_teleportation_y;
 extern s16b last_teleportation_x;
 extern cptr game_module;
+extern s32b game_module_idx;
 extern s32b VERSION_MAJOR;
 extern s32b VERSION_MINOR;
 extern s32b VERSION_PATCH;
 extern s32b max_plev;
+extern s32b DUNGEON_BASE;
 extern s32b DUNGEON_DEATH;
+extern s32b DUNGEON_ASTRAL;
+extern s32b DUNGEON_ASTRAL_WILD_X;
+extern s32b DUNGEON_ASTRAL_WILD_Y;
 extern deity_type *deity_info;
 extern s32b max_gods;
 extern timer_type *gl_timers;
@@ -1758,6 +1764,7 @@ extern bool_ get_lua_var(cptr name, char type, void *arg);
 extern void module_reset_dir(cptr dir, cptr new_path);
 extern cptr force_module;
 extern bool_ select_module(void);
+extern bool_ module_savefile_loadable(cptr savefile_mod);
 
 
 /* lua_bind.c */
