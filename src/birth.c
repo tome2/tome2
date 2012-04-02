@@ -1083,6 +1083,35 @@ void outfit_obj(int tv, int sv, int pval, int dd, int ds)
 
 
 /*
+ * Give the player an object.
+ */
+static void player_outfit_object(int qty, int tval, int sval)
+{
+	object_type forge;
+	object_type *q_ptr = &forge;
+	object_prep(q_ptr, lookup_kind(tval, sval));
+	q_ptr->number = qty;
+	object_aware(q_ptr);
+	object_known(q_ptr);
+	(void)inven_carry(q_ptr, FALSE);
+}
+
+
+/*
+ * Give player a spell book.
+ */
+static void player_outfit_spellbook(cptr spell_name)
+{
+	object_type forge;
+	object_type *q_ptr = &forge;
+	object_prep(q_ptr, lookup_kind(TV_BOOK, 255));
+	q_ptr->pval = find_spell(spell_name);
+	q_ptr->ident |= IDENT_MENTAL | IDENT_KNOWN;
+	inven_carry(q_ptr, FALSE);
+}
+
+
+/*
  * Init players with some belongings
  *
  * Having an item makes the player "aware" of its purpose.
@@ -1090,33 +1119,147 @@ void outfit_obj(int tv, int sv, int pval, int dd, int ds)
 static void player_outfit(void)
 {
 	int i;
+	cptr class_name = spp_ptr->title + c_name;
+	cptr subrace_name = rmp_ptr->title + rmp_name;
 
 	/*
 	 * Get an adventurer guide describing a bit of the
 	 * wilderness.
 	 */
 	{
+		/* Hack -- Give the player an adventurer guide */
+		player_outfit_object(1, TV_PARCHMENT, 20);
+	}
+
+	/*
+	 * Provide spell books
+	 */
+	if (game_module_idx == MODULE_TOME)
+	{
+		if (streq(class_name, "Ranger"))
+		{
+			player_outfit_spellbook("Phase Door");
+		}
+	}
+	if (streq(class_name, "Geomancer"))
+	{
+		player_outfit_spellbook("Geyser");
+	}
+	if (streq(class_name, "Priest(Eru)"))
+	{
+		player_outfit_spellbook("See the Music");
+	}
+	if (streq(class_name, "Priest(Manwe)"))
+	{
+		player_outfit_spellbook("Manwe's Blessing");
+	}
+	if (streq(class_name, "Druid"))
+	{
+		player_outfit_spellbook("Charm Animal");
+	}
+	if (streq(class_name, "Dark-Priest"))
+	{
+		player_outfit_spellbook("Curse");
+	}
+	if (streq(class_name, "Paladin"))
+	{
+		player_outfit_spellbook("Divine Aim");
+	}
+	if (game_module_idx == MODULE_THEME)
+	{
+		/* Priests */
+		if (streq(class_name, "Stonewright"))
+		{
+			player_outfit_spellbook("Firebrand");
+		}
+		if (streq(class_name, "Priest(Varda)"))
+		{
+			player_outfit_spellbook("Light of Valinor");
+		}
+		if (streq(class_name, "Priest(Ulmo)"))
+		{
+			player_outfit_spellbook("Song of Belegaer");
+		}
+		if (streq(class_name, "Priest(Mandos)"))
+		{
+			player_outfit_spellbook("Tears of Luthien");
+		}
+
+		/* Dragons */
+		if (streq(subrace_name, "Red"))
+		{
+			player_outfit_spellbook("Globe of Light");
+		}
+		if (streq(subrace_name, "Black"))
+		{
+			player_outfit_spellbook("Geyser");
+		}
+		if (streq(subrace_name, "Green"))
+		{
+			player_outfit_spellbook("Noxious Cloud");
+		}
+		if (streq(subrace_name, "Blue"))
+		{
+			player_outfit_spellbook("Stone Skin");
+		}
+		if (streq(subrace_name, "White"))
+		{
+			player_outfit_spellbook("Sense Monsters");
+		}
+		if (streq(subrace_name, "Ethereal"))
+		{
+			player_outfit_spellbook("Recharge");
+		}
+
+		/* Demons */
+		if (streq(subrace_name, "(Aewrog)"))
+		{
+			player_outfit_spellbook("Charm");
+		}
+		if (streq(subrace_name, "(Narrog)"))
+		{
+			player_outfit_spellbook("Phase Door");
+		}
+
+		/* Peace-mages */
+		if (streq(class_name, "Peace-mage"))
+		{
+			player_outfit_spellbook("Phase Door");
+		}
+
+		/* Wainriders */
+		if (streq(class_name, "Wainrider"))
+		{
+			player_outfit_spellbook("Curse");
+		}
+	}
+
+	if (streq(class_name, "Mimic"))
+	{
 		object_type forge;
 		object_type *q_ptr = &forge;
-		/* Hack -- Give the player an adventurer guide */
-		object_prep(q_ptr, lookup_kind(TV_PARCHMENT, 20));
-		q_ptr->number = 1;
-		object_aware(q_ptr);
-		object_known(q_ptr);
-		(void)inven_carry(q_ptr, FALSE);
+		
+		object_prep(q_ptr, lookup_kind(TV_CLOAK, SV_MIMIC_CLOAK));
+		q_ptr->pval2 = resolve_mimic_name("Mouse");
+		q_ptr->ident |= IDENT_MENTAL | IDENT_KNOWN;
+		inven_carry(q_ptr, FALSE);
+	}
+
+	if (game_module_idx == MODULE_THEME)
+	{
+		/* Give everyone a scroll of WoR. */
+		player_outfit_object(1, TV_SCROLL, SV_SCROLL_WORD_OF_RECALL);
+
+		/* Identify everything in pack. */
+		identify_pack_fully();
 	}
 
 	process_hooks(HOOK_BIRTH_OBJECTS, "()");
 
 	{
-		object_type forge;
-		object_type *q_ptr = &forge;
 		/* Hack -- Give the player some food */
-		object_prep(q_ptr, lookup_kind(TV_FOOD, SV_FOOD_RATION));
-		q_ptr->number = (byte)rand_range(3, 7);
-		object_aware(q_ptr);
-		object_known(q_ptr);
-		(void)inven_carry(q_ptr, FALSE);
+		int qty = (byte)rand_range(3, 7);
+		player_outfit_object(qty, TV_FOOD, SV_FOOD_RATION);
 	}
 
 	{

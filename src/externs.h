@@ -811,7 +811,7 @@ extern s32b get_school_spell(cptr do_what, cptr check_fct, s16b force_book);
 extern void do_cmd_copy_spell(void);
 extern void cast_school_spell(void);
 extern void browse_school_spell(int book, int pval, object_type *o_ptr);
-extern int find_spell(char *name);
+extern int find_spell(const char *name);
 extern bool_ is_school_book(object_type *o_ptr);
 
 /* cmd6.c */

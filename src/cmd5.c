@@ -2538,7 +2538,7 @@ void do_cmd_copy_spell()
 /*
  * Finds a spell by name, optimized for speed
  */
-int find_spell(char *name)
+int find_spell(const char *name)
 {
 	int oldtop, spell;
 	oldtop = lua_gettop(L);

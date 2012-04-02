@@ -4420,6 +4420,8 @@
 /*
  * Modules
  */
+#define MODULE_TOME             0
+#define MODULE_THEME            1
 #define MAX_MODULES             2
 
 /*
