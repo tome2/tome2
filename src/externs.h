@@ -1702,15 +1702,6 @@ extern int stricmp(cptr a, cptr b);
 extern int usleep(huge usecs);
 #endif
 
-#ifdef SUPPORT_GAMMA
-/* util.c */
-extern void build_gamma_table(int gamma);
-extern byte gamma_table[256];
-
-/* variable.c */
-extern u16b gamma_val;
-#endif
-
 #ifdef MACINTOSH
 /* main-mac.c */
 /* extern void main(void); */

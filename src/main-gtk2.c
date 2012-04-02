@@ -52,9 +52,6 @@
  * ZAngband has its own enhanced main-gtk.c as mentioned above, and
  * you *should* use it :-)
  *
- * ANG291_COMPAT does not include Angband 2.9.x's gamma correction code.
- * If you like to use SUPPORT_GAMMA, copy the code bracketed
- * inside of #ifdef SUPPORT_GAMMA in util.c of Angband 2.9.1 or greater.
  */
 #define TOME
 
@@ -62,7 +59,6 @@
 # define ANG293_COMPAT	/* Requires V2.9.3 compatibility code */
 # define ANG291_COMPAT	/* Requires V2.9.1 compatibility code */
 # define ANG281_RESET_VISUALS	/* The old style reset_visuals() */
-# define INTERACTIVE_GAMMA	/* Supports interactive gamma correction */
 # define SAVEFILE_SCREEN	/* New/Open integrated into the game */
 # define USE_DOUBLE_TILES	/* Mogami's bigtile patch */
 #endif /* TOME */
@@ -381,118 +377,6 @@ static vptr hook_ralloc(huge size)
 
 /**** Low level routines - colours and graphics ****/
 
-#ifdef SUPPORT_GAMMA
-
-/*
- * When set to TRUE, indicates that we can use gamma_table
- */
-static bool_ gamma_table_ready = FALSE;
-
-
-# ifdef INTERACTIVE_GAMMA
-
-/*
- * Initialise the gamma-correction table for current gamma_val
- * - interactive version
- */
-static void setup_gamma_table(void)
-{
-	static u16b old_gamma_val = 0;
-
-	/* Don't have to rebuild the table */
-	if (gamma_val == old_gamma_val) return;
-
-	/* Temporarily inactivate the table */
-	gamma_table_ready = FALSE;
-
-	/* Validate gamma_val */
-	if ((gamma_val <= 0) || (gamma_val >= 256))
-	{
-		/* Reset */
-		old_gamma_val = gamma_val = 0;
-
-		/* Leave it inactive */
-		return;
-	}
-
-	/* (Re)build the gamma table */
-	build_gamma_table(gamma_val);
-
-	/* Remember the gamma value used */
-	old_gamma_val = gamma_val;
-
-	/* Activate the table */
-	gamma_table_ready = TRUE;
-}
-
-# else /* INTERACTIVE_GAMMA */
-
-/*
- * Initialise the gamma-correction table if environment variable
- * ANGBAND_X11_GAMMA is set and contains a meaningful value
- *
- * Restored for cross-variant compatibility
- */
-static void setup_gamma_table(void)
-{
-	cptr tmp;
-	int gamma_val;
-
-
-	/* The table's already set up */
-	if (gamma_table_ready) return;
-
-	/*
-	 * XXX XXX It's documented nowhere, but ANGBAND_X11_GAMMA is
-	 * 256 * (1 / gamma), rounded to integer. A recommended value
-	 * is 183, which is an approximation of the Macintosh hardware
-	 * gamma of 1.4.
-	 *
-	 *   gamma	ANGBAND_X11_GAMMA
-	 *   -----	-----------------
-	 *   1.2	213
-	 *   1.25	205
-	 *   1.3	197
-	 *   1.35	190
-	 *   1.4	183
-	 *   1.45	177
-	 *   1.5	171
-	 *   1.6	160
-	 *   1.7	151
-	 *   ...
-	 *
-	 * XXX XXX The environment variable, or better,
-	 * the interact with colours command should allow users
-	 * to specify gamma values (or gamma value * 100).
-	 */
-	tmp = getenv("ANGBAND_X11_GAMMA");
-
-	/* Nothing to do */
-	if (tmp == NULL) return;
-
-	/* Extract the value */
-	gamma_val = atoi(tmp);
-
-	/*
-	 * Only need to build the table if gamma exists and set to
-	 * a meaningful value.
-	 *
-	 * XXX It may be a good idea to prevent use of very high gamma values,
-	 * say, greater than 2.5, which is gamma of normal CRT display IIRC.
-	 */
-	if ((gamma_val <= 0) || (gamma_val >= 256)) return;
-
-	/* Build the gamma correction table */
-	build_gamma_table(gamma_val);
-
-	/* The table is properly set up */
-	gamma_table_ready = TRUE;
-}
-
-# endif  /* INTERACTIVE_GAMMA */
-
-#endif /* SUPPORT_GAMMA */
-
 
 /*
  * Remeber RGB values for sixteen Angband colours, in a format
@@ -509,13 +393,6 @@ static void init_colours(void)
 	int i;
 
 
-#ifdef SUPPORT_GAMMA
-
-	/* (Re)build gamma table if necessary */
-	setup_gamma_table();
-
-#endif /* SUPPORT_GAMMA */
-
 	/* Process each colour */
 	for (i = 0; i < 16; i++)
 	{
@@ -525,18 +402,6 @@ static void init_colours(void)
 		red = angband_color_table[i][1];
 		green = angband_color_table[i][2];
 		blue = angband_color_table[i][3];
-
-#ifdef SUPPORT_GAMMA
-
-		/* Hack -- Gamma Correction */
-		if (gamma_table_ready)
-		{
-			red = gamma_table[red];
-			green = gamma_table[green];
-			blue = gamma_table[blue];
-		}
-
-#endif /* SUPPORT_GAMMA */
 
 		/* Remember a GdkRGB value, that is 0xRRGGBB */
 		angband_colours[i] = (red << 16) | (green << 8) | blue;
@@ -1044,18 +909,6 @@ static void put_rgb_scan(
 		g = (scan[xi].green + adj) / div;
 		b = (scan[xi].blue + adj) / div;
 
-#ifdef SUPPORT_GAMMA
-
-		/* Apply gamma correction if requested and available */
-		if (gamma_table_ready)
-		{
-			r = gamma_table[r];
-			g = gamma_table[g];
-			b = gamma_table[b];
-		}
-
-#endif /* SUPPORT_GAMMA */
-
 		/* Make a (virtual) 24-bit pixel */
 		pix = (r << 16) | (g << 8) | (b);
 
@@ -1312,19 +1165,6 @@ static void copy_pixels(
 	/* Copy to the image */
 	for (i = 0; i < wid; i++)
 	{
-#ifdef SUPPORT_GAMMA
-
-		if (gamma_table_ready)
-		{
-			*dst++ = gamma_table[src[3 * xoffsets[i]]];
-			*dst++ = gamma_table[src[3 * xoffsets[i] + 1]];
-			*dst++ = gamma_table[src[3 * xoffsets[i] + 2]];
-
-			continue;
-		}
-
-#endif /* SUPPORT_GAMMA */
-
 		*dst++ = src[3 * xoffsets[i]];
 		*dst++ = src[3 * xoffsets[i] + 1];
 		*dst++ = src[3 * xoffsets[i] + 2];

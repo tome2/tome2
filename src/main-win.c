@@ -992,12 +992,6 @@ static void save_prefs(void)
 	strcpy(buf, arg_sound ? "1" : "0");
 	WritePrivateProfileString("Angband", "Sound", buf, ini_file);
 
-#ifdef SUPPORT_GAMMA
-	/* Save the "gamma_val" */
-	sprintf(buf, "%d", gamma_val);
-	WritePrivateProfileString("Angband", "GammaVal", buf, ini_file);
-#endif /* SUPPORT_GAMMA */
-
 	/* Save window prefs */
 	for (i = 0; i < MAX_TERM_DATA; ++i)
 	{
@@ -1063,11 +1057,6 @@ static void load_prefs(void)
 
 	/* Extract the "arg_sound" flag */
 	arg_sound = (GetPrivateProfileInt("Angband", "Sound", 0, ini_file) != 0);
-
-#ifdef SUPPORT_GAMMA
-	/* Extract the "gamma_val" */
-	gamma_val = GetPrivateProfileInt("Angband", "GammaVal", 0, ini_file);
-#endif /* SUPPORT_GAMMA */
 
 	/* Load window prefs */
 	for (i = 0; i < MAX_TERM_DATA; ++i)
@@ -1574,16 +1563,6 @@ static errr Term_user_win(int n)
 }
 
 
-#ifdef SUPPORT_GAMMA
-
-/*
- * When set to TRUE, indicates that we can use gamma_table
- */
-static bool_ gamma_table_ready = FALSE;
-
-#endif /* SUPPORT_GAMMA */
-
-
 /*
  * React to global changes
  */
@@ -1612,33 +1591,6 @@ static errr Term_xtra_win_react(void)
 
 		bool_ change = FALSE;
 
-#ifdef SUPPORT_GAMMA
-
-		static u16b old_gamma_val = 0;
-
-
-		/* React to change in the gamma value */
-		if (gamma_val != old_gamma_val)
-		{
-			/* Temporarily inactivate the gamma table */
-			gamma_table_ready = FALSE;
-
-			/* Only need to build the table if gamma exists */
-			if (gamma_val)
-			{
-				/* Rebuild the table */
-				build_gamma_table(gamma_val);
-
-				/* Activate the table */
-				gamma_table_ready = TRUE;
-			}
-
-			/* Remember the gamma value used */
-			old_gamma_val = gamma_val;
-		}
-
-#endif /* SUPPORT_GAMMA */
-
 		/* Save the default colors */
 		for (i = 0; i < 256; i++)
 		{
@@ -1646,18 +1598,6 @@ static errr Term_xtra_win_react(void)
 			rv = angband_color_table[i][1];
 			gv = angband_color_table[i][2];
 			bv = angband_color_table[i][3];
-
-#ifdef SUPPORT_GAMMA
-
-			/* Hack - Gamma correction */
-			if (gamma_table_ready)
-			{
-				rv = gamma_table[rv];
-				gv = gamma_table[gv];
-				bv = gamma_table[bv];
-			}
-
-#endif /* SUPPORT_GAMMA */
 
 			/* Extract a full color code */
 			code = PALETTERGB(rv, gv, bv);

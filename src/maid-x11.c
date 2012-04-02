@@ -63,11 +63,6 @@
 ((unsigned)(keysym) >= 0xFF00)
 
 
-#ifdef SUPPORT_GAMMA
-static bool_ gamma_table_ready = FALSE;
-#endif /* SUPPORT_GAMMA */
-
-
 /*
  * Hack -- Convert an RGB value to an X11 Pixel, or die.
  */
@@ -78,40 +73,6 @@ static unsigned long create_pixel(Display *dpy, byte red, byte green, byte blue)
 	char cname[8];
 
 	XColor xcolour;
-
-#ifdef SUPPORT_GAMMA
-	static u16b old_gamma_val = 0;
-
-
-	/* React to change in the gamma value */
-	if (gamma_val != old_gamma_val)
-	{
-		/* Temporarily inactivate the gamma table */
-		gamma_table_ready = FALSE;
-
-		/* Only need to build the table if gamma exists */
-		if (gamma_val)
-		{
-			/* Rebuild the table */
-			build_gamma_table(gamma_val);
-
-			/* We can use gamma_table[] now */
-			gamma_table_ready = TRUE;
-		}
-
-		/* Remember the gamma value */
-		old_gamma_val = gamma_val;
-	}
-
-	/* Hack -- Gamma Correction */
-	if (gamma_table_ready)
-	{
-		red = gamma_table[red];
-		green = gamma_table[green];
-		blue = gamma_table[blue];
-	}
-
-#endif /* SUPPORT_GAMMA */
 
 	/* Build the color */
 

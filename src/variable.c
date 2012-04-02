@@ -604,17 +604,6 @@ byte angband_color_table[256][4] =
 };
 
 
-#ifdef SUPPORT_GAMMA
-
-/*
- * Gamma correction - gamma_val == (int)(256 / gamma)
- * The value of 0 means no gamma correction (== 1.0)
- */
-u16b gamma_val;
-
-#endif /* SUPPORT_GAMMA */
-
-
 /*
  * Standard sound names
  */
