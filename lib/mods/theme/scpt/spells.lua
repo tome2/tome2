@@ -44,10 +44,6 @@ SCHOOL_FIRE = add_school
 	["sorcery"] = TRUE,
 	["hooks"] =
 	{
-		[HOOK_CALC_BONUS] = function()
-			if get_skill(SKILL_FIRE) >= 35 then
-			end
-		end,
 		[HOOK_CALC_POWERS] = function()
 			if get_skill(SKILL_FIRE) >= 50 then
 --				player.add_power(PWR_FIRE_SHAPE)
@@ -73,11 +69,6 @@ SCHOOL_AIR = add_school
 	["sorcery"] = TRUE,
 	["hooks"] =
 	{
-		[HOOK_CALC_BONUS] = function()
-			if get_skill(SKILL_AIR) >= 50 then
-				player.magical_breath = TRUE
-			end
-		end,
 		[HOOK_CALC_POWERS] = function()
 			if get_skill(SKILL_AIR) >= 50 then
 --				player.add_powe(PWR_AIR_SHAPE)
@@ -103,11 +94,6 @@ SCHOOL_WATER = add_school
 	["sorcery"] = TRUE,
 	["hooks"] =
 	{
-		[HOOK_CALC_BONUS] = function()
-			if get_skill(SKILL_WATER) >= 30 then
-				player.water_breath = TRUE
-			end
-		end,
 		[HOOK_CALC_POWERS] = function()
 			if get_skill(SKILL_WATER) >= 50 then
 --				player.add_powe(PWR_WATER_SHAPE)

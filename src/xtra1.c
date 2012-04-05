@@ -2489,6 +2489,20 @@ static void calc_gods()
 	}
 }
 
+/* Apply spell schools */
+static void calc_schools()
+{
+	if (get_skill(SKILL_AIR) >= 50)
+	{
+		p_ptr->magical_breath = TRUE;
+	}
+
+	if (get_skill(SKILL_WATER) >= 30)
+	{
+		p_ptr->water_breath = TRUE;
+	}
+}
+
 /* Apply flags */
 static int extra_blows;
 static int extra_shots;
@@ -2902,6 +2916,9 @@ void calc_bonuses(bool_ silent)
 
 	/* Let the scripts do what they need */
 	process_hooks(HOOK_CALC_BONUS, "()");
+
+	/* Take care of spell schools */
+	calc_schools();
 
 	/* The powers gived by the wielded monster */
 	calc_wield_monster();

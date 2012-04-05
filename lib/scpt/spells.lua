@@ -42,14 +42,6 @@ SCHOOL_AIR = add_school
 	["skill"] = SKILL_AIR,
 	["spell_power"] = TRUE,
 	["sorcery"] = TRUE,
-	["hooks"] =
-	{
-		[HOOK_CALC_BONUS] = function()
-			if get_skill(SKILL_AIR) >= 50 then
-				player.magical_breath = TRUE
-			end
-		end,
-	},
 	["gods"] =
 	{
 		-- Manwe Sulimo provides the Air school at 2/3 the prayer skill
@@ -67,14 +59,6 @@ SCHOOL_WATER = add_school
 	["skill"] = SKILL_WATER,
 	["spell_power"] = TRUE,
 	["sorcery"] = TRUE,
-	["hooks"] =
-	{
-		[HOOK_CALC_BONUS] = function()
-			if get_skill(SKILL_WATER) >= 30 then
-				player.water_breath = TRUE
-			end
-		end,
-	},
 	["gods"] =
 	{
 		-- Yavanna Kementari provides the Water school at 1/2 the prayer skill
