@@ -1787,6 +1787,10 @@ extern void    desc_quest(int q_idx, int d, char *desc);
 
 extern s16b    add_new_gods(char *name);
 extern void    desc_god(int g_idx, int d, char *desc);
+extern s16b    get_god_AULE();
+extern s16b    get_god_VARDA();
+extern s16b    get_god_ULMO();
+extern s16b    get_god_MANDOS();
 
 extern bool_    get_com_lua(cptr promtp, int *com);
 
