@@ -3956,9 +3956,6 @@ void calc_bonuses(bool_ silent)
 		p_ptr->skill_sav = 10;
 	else
 		p_ptr->skill_sav += 10;
-
-	/* Let the scripts do what they need */
-	process_hooks(HOOK_CALC_BONUS_END, "(d)", silent);
 }
 
 
