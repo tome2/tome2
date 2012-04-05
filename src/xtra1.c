@@ -2986,9 +2986,6 @@ void calc_bonuses(bool_ silent)
 		calc_body_bonus();
 	}
 
-	/* Let the scripts do what they need */
-	process_hooks(HOOK_CALC_BONUS, "()");
-
 	/* Take care of spell schools */
 	calc_schools();
 

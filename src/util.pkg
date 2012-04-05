@@ -415,12 +415,6 @@ typedef unsigned int u32b;
  */
 #define HOOK_READ	       28
 
-/** @def HOOK_CALC_BONUS
- * @brief Calculate player "state" bonuses.
- * @note (see xtra1.c)
- */
-#define HOOK_CALC_BONUS	 29
-
 /** @def HOOK_CALC_POWERS
  * @brief Calculate player powers.
  * @note (see xtra1.c)
