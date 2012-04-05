@@ -42,14 +42,6 @@ SCHOOL_FIRE = add_school
 	["skill"] = SKILL_FIRE,
 	["spell_power"] = TRUE,
 	["sorcery"] = TRUE,
-	["hooks"] =
-	{
-		[HOOK_CALC_POWERS] = function()
-			if get_skill(SKILL_FIRE) >= 50 then
---				player.add_power(PWR_FIRE_SHAPE)
-			end
-		end,
-	},
 	["gods"] = 
 	{
 		-- Aule provides the Fire school at 3/5 the prayer skill
@@ -67,14 +59,6 @@ SCHOOL_AIR = add_school
 	["skill"] = SKILL_AIR,
 	["spell_power"] = TRUE,
 	["sorcery"] = TRUE,
-	["hooks"] =
-	{
-		[HOOK_CALC_POWERS] = function()
-			if get_skill(SKILL_AIR) >= 50 then
---				player.add_powe(PWR_AIR_SHAPE)
-			end
-		end,
-	},
 	["gods"] =
 	{
 		-- Manwe Sulimo provides the Air school at 2/3 the prayer skill
@@ -92,14 +76,6 @@ SCHOOL_WATER = add_school
 	["skill"] = SKILL_WATER,
 	["spell_power"] = TRUE,
 	["sorcery"] = TRUE,
-	["hooks"] =
-	{
-		[HOOK_CALC_POWERS] = function()
-			if get_skill(SKILL_WATER) >= 50 then
---				player.add_powe(PWR_WATER_SHAPE)
-			end
-		end,
-	},
 	["gods"] =
 	{
 		-- Yavanna Kementari provides the Water school at 1/2 the prayer skill
@@ -124,14 +100,6 @@ SCHOOL_EARTH = add_school
 	["skill"] = SKILL_EARTH,
 	["spell_power"] = TRUE,
 	["sorcery"] = TRUE,
-	["hooks"] =
-	{
-		[HOOK_CALC_POWERS] = function()
-			if get_skill(SKILL_EARTH) >= 50 then
---				player.add_powe(PWR_EARTH_SHAPE)
-			end
-		end,
-	},
 	["gods"] =
 	{
 		-- Tulkas provides the Earth school at 4/5 the prayer skill
