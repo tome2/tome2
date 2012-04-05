@@ -2351,7 +2351,7 @@ int get_archery_skill()
 }
 
 /* Apply gods */
-void calc_gods()
+static void calc_gods()
 {
 	/* Boost WIS if the player follows Eru */
 	GOD(GOD_ERU)
