@@ -20,32 +20,6 @@ function explode_dir(dir)
 	return ddy[dir + 1], ddx[dir + 1]
 end
 
-function rotate_dir(dir, mov)
-	if mov > 0 then
-		if dir == 7 then dir = 8
-		elseif dir == 8 then dir = 9
-		elseif dir == 9 then dir = 6
-		elseif dir == 6 then dir = 3
-		elseif dir == 3 then dir = 2
-		elseif dir == 2 then dir = 1
-		elseif dir == 1 then dir = 4
-		elseif dir == 4 then dir = 7
-		end
-	elseif mov < 0 then
-		if dir == 7 then dir = 4
-		elseif dir == 4 then dir = 1
-		elseif dir == 1 then dir = 2
-		elseif dir == 2 then dir = 3
-		elseif dir == 3 then dir = 6
-		elseif dir == 6 then dir = 9
-		elseif dir == 9 then dir = 8
-		elseif dir == 8 then dir = 7
-		end
-	end
-
-	return dir
-end
-
 -- Place a trap for a specific level
 function place_trap(y, x, level)
 	local old_dun = dun_level

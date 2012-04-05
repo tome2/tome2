@@ -1394,6 +1394,10 @@ extern void random_misc (object_type * o_ptr, bool_ is_scroll);
 extern void random_plus(object_type * o_ptr, bool_ is_scroll);
 extern bool_ reset_recall(bool_ no_trepas_max_depth);
 extern void remove_dg_curse(void);
+extern void geomancy_random_wall(int y, int x);
+extern void geomancy_random_floor(int y, int x, bool_ kill_wall);
+extern void geomancy_dig(int oy, int ox, int dir, int length);
+extern void channel_the_elements(int y, int x, int level);
 
 /* randart.c */
 extern int get_activation_power(void);
@@ -1787,6 +1791,7 @@ extern void    desc_quest(int q_idx, int d, char *desc);
 
 extern s16b    add_new_gods(char *name);
 extern void    desc_god(int g_idx, int d, char *desc);
+extern int     get_lua_int(cptr name);
 extern s16b    get_god_AULE();
 extern s16b    get_god_VARDA();
 extern s16b    get_god_ULMO();

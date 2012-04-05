@@ -2465,3 +2465,10 @@ extern s16b last_teleportation_x;
  * @note (see file spells1.c)
  */
 extern void get_pos_player(int dis, int *ny=0, int *nx=0);
+
+/**
+ * Geomancy
+ */
+extern void geomancy_random_floor(int y, int x, bool kill_wall);
+extern void geomancy_dig(int y, int x, int dir, int length);
+extern void channel_the_elements(int y, int x, int level);

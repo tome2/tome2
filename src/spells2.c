@@ -8074,3 +8074,350 @@ void create_between_gate(int dist, int y, int x)
 		cave[ij][ii].special = p_ptr->px + (p_ptr->py << 8);
 	}
 }
+
+/**
+ * Geomancy
+ */
+typedef struct geomancy_entry {
+	int skill;
+	int feat;
+	int min_skill_level;
+} geomancy_entry;
+
+static int choose_geomancy_feature(int n, geomancy_entry *table)
+{
+	int feat = -1;
+	/* choose feature */
+	while (feat < 0) {
+		geomancy_entry *t = &table[rand_int(n)];
+
+		/* Do we meet the requirements ?
+		   And then select the features based on skill proportions */
+		if ((get_skill(t->skill) >= t->min_skill_level) && magik(get_skill_scale(t->skill, 100)))
+		{
+			feat = t->feat;
+		}
+	}
+	/* return */
+	return feat;
+}
+
+static int rotate_dir(int dir, int mov)
+{
+	if (mov > 0)
+	{
+		switch (dir) {
+		case 7: return 8;
+		case 8: return 9;
+		case 9: return 6;
+		case 6: return 3;
+		case 3: return 2;
+		case 2: return 1;
+		case 1: return 4;
+		case 4: return 7;
+		}
+	}
+	else if (mov < 0)
+	{
+		switch (dir) {
+		case 7: return 4;
+		case 4: return 1;
+		case 1: return 2;
+		case 2: return 3;
+		case 3: return 6;
+		case 6: return 9;
+		case 9: return 8;
+		case 8: return 7;
+		}
+	}
+
+	return dir;
+}
+
+void geomancy_random_wall(int y, int x)
+{
+#define TABLE_SIZE 4
+	cave_type *c_ptr = &cave[y][x];
+	int feat = -1;
+	geomancy_entry table[TABLE_SIZE] = {
+		/* Fire element */
+		{ SKILL_FIRE, FEAT_SANDWALL, 1},
+		/* Water element */
+		{ SKILL_WATER, FEAT_TREES, 1},
+		{ SKILL_WATER, FEAT_ICE_WALL, 12},
+		/* Earth element */
+		{ SKILL_EARTH, FEAT_WALL_EXTRA, 1}
+	};
+
+	/* Do not destroy permanent things */
+	if (f_info[c_ptr->feat].flags1 & FF1_PERMANENT) {
+		return;
+	}
+
+	/* Choose feature */
+	feat = choose_geomancy_feature(TABLE_SIZE, table);
+	if (feat >= 0)
+	{
+		cave_set_feat(y, x, feat);
+	}
+#undef TABLE_SIZE
+}
+
+void geomancy_random_floor(int y, int x, bool_ kill_wall)
+{
+#define TABLE_SIZE 9
+	cave_type *c_ptr = &cave[y][x];
+	int feat = -1;
+	geomancy_entry table[TABLE_SIZE] = {
+		/* Fire element */
+		{ SKILL_FIRE, FEAT_SAND, 1},
+		{ SKILL_FIRE, FEAT_SHAL_LAVA, 8},
+		{ SKILL_FIRE, FEAT_DEEP_LAVA, 18},
+		/* Water element */
+		{ SKILL_WATER, FEAT_SHAL_WATER, 1},
+		{ SKILL_WATER, FEAT_DEEP_WATER, 8},
+		{ SKILL_WATER, FEAT_ICE, 18},
+		/* Earth element */
+		{ SKILL_EARTH, FEAT_GRASS, 1},
+		{ SKILL_EARTH, FEAT_FLOWER, 8},
+		{ SKILL_EARTH, FEAT_DARK_PIT, 18}
+	};
+
+	/* Do not destroy permanent things */
+	if (f_info[c_ptr->feat].flags1 & FF1_PERMANENT) {
+		return;
+	}
+	if (!(kill_wall || (f_info[c_ptr->feat].flags1 & FF1_FLOOR))) {
+		return;
+	}
+
+	/* Choose feature */
+	feat = choose_geomancy_feature(TABLE_SIZE, table);
+	if (feat >= 0)
+	{
+		cave_set_feat(y, x, feat);
+	}
+#undef TABLE_SIZE
+}
+
+static bool_ geomancy_can_tunnel(int y, int x)
+{
+	switch (cave[y][x].feat)
+	{
+	case FEAT_WALL_EXTRA:
+	case FEAT_WALL_OUTER:
+	case FEAT_WALL_INNER:
+	case FEAT_WALL_SOLID:
+	case FEAT_MAGMA:
+	case FEAT_QUARTZ:
+	case FEAT_MAGMA_H:
+	case FEAT_QUARTZ_H:
+	case FEAT_MAGMA_K:
+	case FEAT_QUARTZ_K:
+	case FEAT_TREES:
+	case FEAT_DEAD_TREE:
+	case FEAT_SANDWALL:
+	case FEAT_SANDWALL_H:
+	case FEAT_SANDWALL_K:
+	case FEAT_ICE_WALL:
+		return TRUE;
+	default:
+		return FALSE;
+	}
+}
+
+void geomancy_dig(int oy, int ox, int dir, int length)
+{
+	int dy = ddy[dir];
+	int dx = ddx[dir];
+	int y = dy + oy;
+	int x = dx + ox;
+	int i;
+
+	for (i=0; i<length; i++)
+	{
+		/* stop at the end of tunnelable things */
+		if (!geomancy_can_tunnel(y, x)) {
+			break;
+		}
+
+		if (geomancy_can_tunnel(y - 1, x - 1)) { geomancy_random_wall(y - 1, x - 1); }
+		if (geomancy_can_tunnel(y - 1, x    )) { geomancy_random_wall(y - 1, x    ); }
+		if (geomancy_can_tunnel(y - 1, x + 1)) { geomancy_random_wall(y - 1, x + 1); }
+
+		if (geomancy_can_tunnel(y    , x - 1)) { geomancy_random_wall(y    , x - 1); }
+		if (geomancy_can_tunnel(y    , x + 1)) { geomancy_random_wall(y    , x + 1); }
+
+		if (geomancy_can_tunnel(y + 1, x - 1)) { geomancy_random_wall(y + 1, x - 1); }
+		if (geomancy_can_tunnel(y + 1, x    )) { geomancy_random_wall(y + 1, x    ); }
+		if (geomancy_can_tunnel(y + 1, x + 1)) { geomancy_random_wall(y + 1, x + 1); }
+
+		y = y + dy;
+		x = x + dx;
+	}
+
+	/* Step back towards origin */
+	y = y - dy;
+	x = x - dx;
+	while ((y != oy) || (x != ox))
+	{
+		geomancy_random_floor(y, x, TRUE);
+
+		/* Should we branch ? */
+		if (magik(20))
+		{
+			int rot = magik(50) ? -1 : 1;
+			geomancy_dig(y, x, rotate_dir(dir, rot), length / 3);
+		}
+
+		y = y - dy;
+		x = x - dx;
+	}
+}
+
+void channel_the_elements(int y, int x, int level)
+{
+	switch (cave[y][x].feat)
+	{
+	case FEAT_GRASS:
+		hp_player(p_ptr->mhp * (5 + get_skill_scale(SKILL_EARTH, 20)) / 100);
+		break;
+
+	case FEAT_FLOWER:
+		hp_player(p_ptr->mhp * (5 + get_skill_scale(SKILL_EARTH, 30)) / 100);
+		break;
+
+	case FEAT_DARK_PIT:
+	{
+		int dir, type;
+		if (!get_aim_dir(&dir)) break;
+
+		type = (get_skill(SKILL_EARTH) >= 18) ? GF_NETHER : GF_DARK;
+
+		fire_bolt(type, dir, damroll(10, get_skill(SKILL_EARTH)));
+
+		break;
+	}
+
+	case FEAT_SHAL_WATER:
+	{
+		int dir, type;
+		if (!get_aim_dir(&dir)) break;
+
+		type = (get_skill(SKILL_WATER) >= 18) ? GF_WAVE : GF_WATER;
+
+		if (get_skill(SKILL_WATER) >= 8)
+		{
+			fire_beam(type, dir, damroll(3, get_skill(SKILL_WATER)));
+		}
+		else
+		{
+			fire_bolt(type, dir, damroll(3, get_skill(SKILL_WATER)));
+		}
+
+		break;
+	}
+
+	case FEAT_DEEP_WATER:
+	{
+		int dir, type;
+		if (!get_aim_dir(&dir)) break;
+
+		type = (get_skill(SKILL_WATER) >= 18) ? GF_WAVE : GF_WATER;
+
+		if (get_skill(SKILL_WATER) >= 8)
+		{
+			fire_beam(type, dir, damroll(5, get_skill(SKILL_WATER)));
+		}
+		else
+		{
+			fire_bolt(type, dir, damroll(5, get_skill(SKILL_WATER)));
+		}
+
+		break;
+	}
+
+	case FEAT_ICE:
+	{
+		int dir;
+		if (!get_aim_dir(&dir)) break;
+
+		if (get_skill(SKILL_WATER) >= 12)
+		{
+			fire_ball(GF_ICE, dir, get_skill_scale(SKILL_WATER, 340), 3);
+		}
+		else
+		{
+			fire_bolt(GF_ICE, dir, damroll(3, get_skill(SKILL_WATER)));
+		}
+
+		break;
+	}
+
+	case FEAT_SAND:
+	{
+		int type, dur, FIERYAURA;
+		
+		FIERYAURA = get_lua_int("FIERYAURA");
+		type = (get_level(FIERYAURA, 50, 1) >= 8) ? SHIELD_GREAT_FIRE : SHIELD_FIRE;
+
+		dur = randint(20) + level + get_skill(SKILL_AIR);
+		set_shield(dur, 0, type, 5 + get_skill_scale(SKILL_FIRE, 20), 5 + get_skill_scale(SKILL_FIRE, 14));
+		set_blind(dur);
+
+		break;
+	}
+
+	case FEAT_SHAL_LAVA:
+	{
+		int dir;
+		if (!get_aim_dir(&dir)) break;
+
+		if (get_skill(SKILL_FIRE) >= 15)
+		{
+			fire_bolt(GF_HELL_FIRE, dir, damroll(get_skill_scale(SKILL_FIRE, 30), 15));
+		}
+		else
+		{
+			fire_bolt(GF_FIRE, dir, damroll(get_skill_scale(SKILL_FIRE, 30), 15));
+		}
+
+		break;
+	}
+
+	case FEAT_DEEP_LAVA:
+	{
+		int dir;
+		if (!get_aim_dir(&dir)) break;
+
+		if (get_skill(SKILL_FIRE) >= 15)
+		{
+			fire_ball(GF_HELL_FIRE, dir, damroll(get_skill_scale(SKILL_FIRE, 30), 15), 3);
+		}
+		else
+		{
+			fire_ball(GF_FIRE, dir, damroll(get_skill_scale(SKILL_FIRE, 30), 15), 3);
+		}
+
+		break;
+	}
+
+	default:
+		msg_print("You cannot channel this area.");
+		return;
+	}
+
+	/* Drain area? */
+	if (magik(100 - level))
+	{
+		if (cave[y][x].feat == FEAT_FLOWER)
+		{
+			cave_set_feat(y, x, FEAT_GRASS);
+		}
+		else
+		{
+			cave_set_feat(y, x, FEAT_FLOOR);
+		}
+		msg_print("The area is drained.");
+	}
+}

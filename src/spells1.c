@@ -3834,15 +3834,14 @@ static bool_ project_f(int who, int r, int y, int x, int dam, int typ)
 	case GF_ELEMENTAL_WALL:
 		{
 			if ((p_ptr->py != y) || (p_ptr->px != x)) {
-				exec_lua(format("geomancy_random_wall(%d,%d);", y, x));
+				geomancy_random_wall(y, x);
 			}
-
 			break;
 		}
 
 	case GF_ELEMENTAL_GROWTH:
 		{
-			exec_lua(format("geomancy_random_floor(%d, %d)", y, x));
+			geomancy_random_floor(y, x, FALSE);
 			break;
 		}
 	}

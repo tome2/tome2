@@ -608,6 +608,11 @@ void desc_god(int g_idx, int d, char *desc)
 		strncpy(deity_info[g_idx].desc[d], desc, 79);
 }
 
+int get_lua_int(cptr name)
+{
+	return exec_lua(format("return %s", name));
+}
+
 static int get_god_theme(cptr name)
 {
 	if (game_module_idx == MODULE_THEME)
