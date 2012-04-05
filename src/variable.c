@@ -1598,6 +1598,24 @@ timer_type *gl_timers = NULL;
 s16b tim_precognition = 0;
 
 /**
+ * Corruptions
+ */
+s16b CORRUPT_BALROG_AURA = -1;
+s16b CORRUPT_BALROG_WINGS = -1;
+s16b CORRUPT_BALROG_STRENGTH = -1;
+s16b CORRUPT_BALROG_FORM = -1;
+s16b CORRUPT_DEMON_SPIRIT = -1;
+s16b CORRUPT_DEMON_HIDE = -1;
+s16b CORRUPT_DEMON_BREATH = -1;
+s16b CORRUPT_DEMON_REALM = -1;
+s16b CORRUPT_RANDOM_TELEPORT = -1;
+s16b CORRUPT_ANTI_TELEPORT = -1;
+s16b CORRUPT_TROLL_BLOOD = -1;
+s16b CORRUPT_VAMPIRE_TEETH = -1;
+s16b CORRUPT_VAMPIRE_STRENGTH = -1;
+s16b CORRUPT_VAMPIRE_VAMPIRE = -1;
+
+/**
  * Get the version string.
  */
 const char *get_version_string()

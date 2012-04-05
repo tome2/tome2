@@ -15,10 +15,6 @@ CORRUPT_BALROG_AURA = add_corruption
 	},
 	["hooks"]       =
 	{
-		[HOOK_CALC_BONUS] = function()
-			player.xtra_f3 = bor(player.xtra_f3, TR3_SH_FIRE)
-			player.xtra_f3 = bor(player.xtra_f3, TR3_LITE1)
-		end,
 		[HOOK_READ] = function(obj)
 			if magik(5) == TRUE then
 				msg_print("Your demon aura burns the scroll before you read it!")
@@ -41,14 +37,6 @@ CORRUPT_BALROG_WINGS = add_corruption
 			  "  Creates ugly, but working, wings allowing you to fly",
 			  "  But it reduces charisma by 4 and dexterity by 2"
 	},
-	["hooks"]       =
-	{
-		[HOOK_CALC_BONUS] = function()
-			player.xtra_f4 = bor(player.xtra_f4, TR4_FLY)
-			player.modify_stat(A_CHR, -4)
-			player.modify_stat(A_DEX, -2)
-		end,
-	},
 }
 
 CORRUPT_BALROG_STRENGTH = add_corruption
@@ -61,15 +49,6 @@ CORRUPT_BALROG_STRENGTH = add_corruption
 	{
 			  "  Provides 3 strength and 1 constitution",
 			  "  But it reduces charisma by 1 and dexterity by 3"
-	},
-	["hooks"]       =
-	{
-		[HOOK_CALC_BONUS] = function()
-			player.modify_stat(A_STR, 3)
-			player.modify_stat(A_CON, 1)
-			player.modify_stat(A_DEX, -3)
-			player.modify_stat(A_CHR, -1)
-		end,
 	},
 }
 
@@ -120,13 +99,6 @@ CORRUPT_DEMON_SPIRIT = add_corruption
 				return not nil
 			end
 	end,
-	["hooks"]       =
-	{
-		[HOOK_CALC_BONUS] = function()
-			player.modify_stat(A_INT, 1)
-			player.modify_stat(A_CHR, -2)
-		end,
-	},
 }
 
 CORRUPT_DEMON_HIDE = add_corruption
@@ -150,15 +122,6 @@ CORRUPT_DEMON_HIDE = add_corruption
 				return not nil
 			end
 	end,
-	["hooks"]       =
-	{
-		[HOOK_CALC_BONUS] = function()
-			player.to_a = player.to_a + player.lev
-			player.dis_to_a = player.dis_to_a + player.lev
-			player.pspeed = player.pspeed - (player.lev / 7)
-			if player.lev >= 40 then player.xtra_f2 = bor(player.xtra_f2, TR2_IM_FIRE) end
-		end,
-	},
 }
 
 CORRUPT_DEMON_BREATH = add_corruption
@@ -214,15 +177,6 @@ CORRUPT_DEMON_REALM = add_corruption
 				return not nil
 			end
 	end,
-	["hooks"]       =
-	{
-		[HOOK_CALC_BONUS] = function()
-			-- 1500 may seem a lot, but people are rather unlikely to get the corruption very soon
-			-- due to the dependencies
-			if s_info[SKILL_DAEMON + 1].mod == 0 then s_info[SKILL_DAEMON + 1].mod = 1500 end
-			s_info[SKILL_DAEMON + 1].hidden = FALSE;
-		end,
-	},
 }
 
 
@@ -252,9 +206,6 @@ CORRUPT_RANDOM_TELEPORT = add_corruption
 	-- No oppose field, it will be automatically set when we declare the anti-telep corruption to oppose us
 	["hooks"]       =
 	{
-		[HOOK_CALC_BONUS] = function()
-			player.xtra_f3 = bor(player.xtra_f3, TR3_TELEPORT)
-		end,
 		[HOOK_PROCESS_WORLD] = function()
 			if rand_int(300) == 1 then
 				if magik(70) == TRUE then
@@ -303,11 +254,6 @@ CORRUPT_ANTI_TELEPORT = add_corruption
 		[HOOK_CALC_POWERS] = function()
 			player.add_power(POWER_COR_SPACE_TIME)
 		end,
-		[HOOK_CALC_BONUS] = function()
-			if player.corrupt_anti_teleport_stopped == FALSE then
-				player.resist_continuum = TRUE
-			end
-		end,
 		[HOOK_PROCESS_WORLD] = function()
 			if player.corrupt_anti_teleport_stopped == TRUE then
 				local amt = player.msp + player.csp
@@ -347,13 +293,6 @@ CORRUPT_TROLL_BLOOD = add_corruption
 				return not nil
 			end
 	end,
-	["hooks"]       =
-	{
-		[HOOK_CALC_BONUS] = function()
-			player.xtra_f3 = bor(player.xtra_f3, TR3_REGEN, TR3_AGGRAVATE)
-			player.xtra_esp = bor(player.xtra_esp, ESP_TROLL)
-		end,
-	},
 }
 
 -- The vampire corruption set
@@ -1082,8 +1021,6 @@ CORRUPT_ = add_corruption
 	},
 	["hooks"]       =
 	{
-		[HOOK_CALC_BONUS] = function()
-		end,
 	},
 }
 ]]

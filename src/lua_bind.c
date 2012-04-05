@@ -586,6 +586,19 @@ void lua_display_list(int y, int x, int h, int w, cptr title, list_type* list, i
 }
 
 /*
+ * Corruptions
+ */
+bool_ player_has_corruption(int corruption_idx)
+{
+	if (corruption_idx < 0)
+	{
+		return FALSE;
+	}
+
+	return (p_ptr->corruptions[corruption_idx]);
+}
+
+/*
  * Gods
  */
 s16b add_new_gods(char *name)

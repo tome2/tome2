@@ -604,6 +604,20 @@ extern s32b max_gods;
 extern timer_type *gl_timers;
 extern s16b tim_precognition;
 extern const char *get_version_string();
+extern s16b CORRUPT_BALROG_AURA;
+extern s16b CORRUPT_BALROG_WINGS;
+extern s16b CORRUPT_BALROG_STRENGTH;
+extern s16b CORRUPT_BALROG_FORM;
+extern s16b CORRUPT_DEMON_SPIRIT;
+extern s16b CORRUPT_DEMON_HIDE;
+extern s16b CORRUPT_DEMON_BREATH;
+extern s16b CORRUPT_DEMON_REALM;
+extern s16b CORRUPT_RANDOM_TELEPORT;
+extern s16b CORRUPT_ANTI_TELEPORT;
+extern s16b CORRUPT_TROLL_BLOOD;
+extern s16b CORRUPT_VAMPIRE_TEETH;
+extern s16b CORRUPT_VAMPIRE_STRENGTH;
+extern s16b CORRUPT_VAMPIRE_VAMPIRE;
 
 /* plots.c */
 extern FILE *hook_file;
@@ -1833,6 +1847,8 @@ extern list_type *lua_create_list(int size);
 extern void lua_delete_list(list_type *, int size);
 extern void lua_add_to_list(list_type *, int idx, cptr str);
 extern void lua_display_list(int y, int x, int h, int w, cptr title, list_type *list, int max, int begin, int sel, byte sel_color);
+
+extern bool_ player_has_corruption(int corruption_idx);
 
 extern cptr compass(int y, int x, int y2, int x2);
 extern cptr approximate_distance(int y, int x, int y2, int x2);

@@ -2503,6 +2503,78 @@ static void calc_schools()
 	}
 }
 
+/* Apply corruptions */
+static void calc_corruptions()
+{
+	if (player_has_corruption(CORRUPT_BALROG_AURA))
+	{
+		p_ptr->xtra_f3 |= TR3_SH_FIRE;
+		p_ptr->xtra_f3 |= TR3_LITE1;
+	}
+
+	if (player_has_corruption(CORRUPT_BALROG_WINGS))
+	{
+		p_ptr->xtra_f4 |= TR4_FLY;
+		p_ptr->stat_add[A_CHR] -= 4;
+		p_ptr->stat_add[A_DEX] -= 2;
+	}
+
+	if (player_has_corruption(CORRUPT_BALROG_STRENGTH))
+	{
+		p_ptr->stat_add[A_STR] += 3;
+		p_ptr->stat_add[A_CON] += 1;
+		p_ptr->stat_add[A_DEX] -= 3;
+		p_ptr->stat_add[A_CHR] -= 1;
+	}
+
+	if (player_has_corruption(CORRUPT_DEMON_SPIRIT))
+	{
+		p_ptr->stat_add[A_INT] += 1;
+		p_ptr->stat_add[A_CHR] -= 2;
+	}
+
+	if (player_has_corruption(CORRUPT_DEMON_HIDE))
+	{
+		p_ptr->to_a     = p_ptr->to_a     + p_ptr->lev;
+		p_ptr->dis_to_a = p_ptr->dis_to_a + p_ptr->lev;
+		p_ptr->pspeed = p_ptr->pspeed - (p_ptr->lev / 7);
+		if (p_ptr->lev >= 40)
+		{
+			p_ptr->xtra_f2 |= TR2_IM_FIRE;
+		}
+	}
+
+	if (player_has_corruption(CORRUPT_DEMON_REALM))
+	{
+		/* 1500 may seem a lot, but people are rather unlikely to
+		   get the corruption very soon due to the dependencies. */
+		if (s_info[SKILL_DAEMON].mod == 0)
+		{
+			s_info[SKILL_DAEMON].mod = 1500;
+		}
+		s_info[SKILL_DAEMON].hidden = FALSE;
+	}
+
+	if (player_has_corruption(CORRUPT_RANDOM_TELEPORT))
+	{
+		p_ptr->xtra_f3 |= TR3_TELEPORT;
+	}
+
+	if (player_has_corruption(CORRUPT_ANTI_TELEPORT))
+	{
+		if (p_ptr->corrupt_anti_teleport_stopped == FALSE)
+		{
+			p_ptr->resist_continuum = TRUE;
+		}
+	}
+
+	if (player_has_corruption(CORRUPT_TROLL_BLOOD))
+	{
+		p_ptr->xtra_f3 |= (TR3_REGEN | TR3_AGGRAVATE);
+		p_ptr->xtra_esp |= ESP_TROLL;
+	}
+}
+
 /* Apply flags */
 static int extra_blows;
 static int extra_shots;
@@ -2919,6 +2991,9 @@ void calc_bonuses(bool_ silent)
 
 	/* Take care of spell schools */
 	calc_schools();
+
+	/* Take care of corruptions */
+	calc_corruptions();
 
 	/* The powers gived by the wielded monster */
 	calc_wield_monster();

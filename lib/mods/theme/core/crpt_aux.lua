@@ -140,7 +140,6 @@ function add_corruption(c)
 	assert(c.get_text, "No corruption get_text")
 	assert(c.lose_text, "No corruption lose_text")
 	assert(c.desc, "No corruption desc")
-	assert(c.hooks, "Nothing to do for corruption")
 	if not c.random then c.random = TRUE end
 	if not c.removable then c.removable = TRUE end
 	if not c.allow then c.allow = function() return not nil end end
@@ -155,16 +154,18 @@ function add_corruption(c)
 	end
 
 	local index, h
-	for index, h in c.hooks do
-		add_hook_script(index, "__lua__corrupt_callback"..__corruptions_callbacks_max, "__lua__corrupt_callback"..__corruptions_callbacks_max)
-		setglobal("__lua__corrupt_callback"..__corruptions_callbacks_max,
-			function (...)
-				if test_depend_corrupt(%__corruptions_max) == TRUE then
-					return call(%h, arg)
+        if type(c.hooks) == "table" then
+		for index, h in c.hooks do
+			add_hook_script(index, "__lua__corrupt_callback"..__corruptions_callbacks_max, "__lua__corrupt_callback"..__corruptions_callbacks_max)
+			setglobal("__lua__corrupt_callback"..__corruptions_callbacks_max,
+				function (...)
+					if test_depend_corrupt(%__corruptions_max) == TRUE then
+						return call(%h, arg)
+					end
 				end
-			end
-		)
-		__corruptions_callbacks_max = __corruptions_callbacks_max + 1
+			)
+			__corruptions_callbacks_max = __corruptions_callbacks_max + 1
+		end
 	end
 
 	if type(c.desc) == "table" then

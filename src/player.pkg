@@ -1815,6 +1815,25 @@ struct player_type
 	bool leaving;
 };
 
+/**
+ * Corruptions
+ */
+extern s16b CORRUPT_BALROG_AURA;
+extern s16b CORRUPT_BALROG_WINGS;
+extern s16b CORRUPT_BALROG_STRENGTH;
+extern s16b CORRUPT_BALROG_FORM;
+extern s16b CORRUPT_DEMON_SPIRIT;
+extern s16b CORRUPT_DEMON_HIDE;
+extern s16b CORRUPT_DEMON_BREATH;
+extern s16b CORRUPT_DEMON_REALM;
+extern s16b CORRUPT_RANDOM_TELEPORT;
+extern s16b CORRUPT_ANTI_TELEPORT;
+extern s16b CORRUPT_TROLL_BLOOD;
+extern s16b CORRUPT_VAMPIRE_TEETH;
+extern s16b CORRUPT_VAMPIRE_STRENGTH;
+extern s16b CORRUPT_VAMPIRE_VAMPIRE;
+
+
 /** @name Spellbinder triggers
  * @{ */
 /** @def SPELLBINDER_HP75
