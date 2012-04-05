@@ -35,8 +35,6 @@ POWER_WEB = add_power
 
 -- Activating/stopping space-continuum
 -- When stopped it will induce constant mana loss
-player.corrupt_anti_teleport_stopped = FALSE
-add_loadsave("player.corrupt_anti_teleport_stopped", FALSE)
 POWER_COR_SPACE_TIME = add_power
 {
 	["name"] =      "control space/time continuum",

@@ -1797,6 +1797,7 @@ struct player_type
 	 * @brief Boolean
 	 */
 	bool corruptions[max_corruptions] @ corruptions_aux;
+        bool corrupt_anti_teleport_stopped;
 
 	/* Astral */
 	/** @structvar astral

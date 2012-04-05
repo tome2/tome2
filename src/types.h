@@ -1808,6 +1808,7 @@ struct player_type
 
 	/* Corruptions */
 	bool_ *corruptions;
+        bool_ corrupt_anti_teleport_stopped;
 
 	/*** Pet commands ***/
 	byte pet_follow_distance; /* Length of the imaginary "leash" for pets */

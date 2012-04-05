@@ -591,6 +591,8 @@ static bool_ do_extra(int flag)
 			p_ptr->corruptions[i] = tmp8u;
 	}
 
+	do_byte((byte*)&p_ptr->corrupt_anti_teleport_stopped, flag);
+
 	do_byte(&p_ptr->confusing, flag);
 	do_byte((byte*)&p_ptr->black_breath, flag);
 	do_byte((byte*)&fate_flag, flag);
