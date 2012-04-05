@@ -939,6 +939,36 @@ void recall_player(int d, int f)
 }
 
 
+/*
+ * Check the gods
+ */
+static void project_check_gods(int typ)
+{
+	if (p_ptr->pgod == get_god_VARDA())
+	{
+		if ((typ == GF_LITE) || (typ == GF_LITE_WEAK))
+		{
+			/* Raise piety for using lite */
+			set_grace(p_ptr->grace + 1);
+		}
+	}
+
+	if (p_ptr->pgod == get_god_ULMO())
+	{
+		if ((typ == GF_FIRE) ||
+		    (typ == GF_HELL_FIRE) ||
+		    (typ == GF_HOLY_FIRE) ||
+		    (typ == GF_LAVA_FLOW) ||
+		    (typ == GF_METEOR) ||
+		    (typ == GF_NUKE) ||
+		    (typ == GF_PLASMA))
+		{
+			/* Reduce piety for using any kind of fire magic */
+			set_grace(p_ptr->grace - 5);
+		}
+	}
+}
+
 
 /*
  * Get a legal "multi-hued" color for drawing "spells"
@@ -988,12 +1018,6 @@ static byte mh_attr(int max)
  */
 byte spell_color(int type)
 {
-	/* Hooks! */
-	if (process_hooks_ret(HOOK_GF_COLOR, "d", "(d,d)", type, streq(ANGBAND_GRAF, "new")))
-	{
-		return process_hooks_return[0].num;
-	}
-
 	/* Check if A.B.'s new graphics should be used (rr9) */
 	if (streq(ANGBAND_GRAF, "new"))
 	{
@@ -1075,6 +1099,11 @@ byte spell_color(int type)
 		case GF_TELEKINESIS:
 		case GF_DOMINATION:
 			return (0x09);
+		case GF_INSTA_DEATH:
+			return 0;
+		case GF_ELEMENTAL_WALL:
+		case GF_ELEMENTAL_GROWTH:
+			return 0;
 		}
 
 	}
@@ -1161,6 +1190,11 @@ byte spell_color(int type)
 		case GF_TELEKINESIS:
 		case GF_DOMINATION:
 			return (randint(3) != 1 ? TERM_L_BLUE : TERM_WHITE);
+		case GF_INSTA_DEATH:
+			return TERM_DARK;
+		case GF_ELEMENTAL_WALL:
+		case GF_ELEMENTAL_GROWTH:
+			return TERM_GREEN;
 		}
 	}
 
@@ -2975,6 +3009,9 @@ static bool_ project_f(int who, int r, int y, int x, int dam, int typ)
 	/* Remember if the grid is with the LoS of player */
 	seen = player_can_see_bold(y, x);
 
+	/* Check gods */
+	project_check_gods(typ);
+
 	/* Analyze the type */
 	switch (typ)
 	{
@@ -3793,14 +3830,19 @@ static bool_ project_f(int who, int r, int y, int x, int dam, int typ)
 			obvious = TRUE;
 			break;
 		}
-	default:
+
+	case GF_ELEMENTAL_WALL:
 		{
-			/* Hooks! */
-			if (process_hooks_ret(HOOK_GF_EXEC, "dd", "(s,d,d,d,d,d,d)", "grid", who, typ, dam, r, y, x))
-			{
-				obvious = process_hooks_return[0].num;
-				flag = process_hooks_return[1].num;
+			if ((p_ptr->py != y) || (p_ptr->px != x)) {
+				exec_lua(format("geomancy_random_wall(%d,%d);", y, x));
 			}
+
+			break;
+		}
+
+	case GF_ELEMENTAL_GROWTH:
+		{
+			exec_lua(format("geomancy_random_floor(%d, %d)", y, x));
 			break;
 		}
 	}
@@ -3879,6 +3921,8 @@ static bool_ project_o(int who, int r, int y, int x, int dam, int typ)
 	/* Reduce damage by distance */
 	dam = (dam + r) / (r + 1);
 
+	/* Check new gods. */
+	project_check_gods(typ);
 
 	/* Scan all objects in the grid */
 	for (this_o_idx = c_ptr->o_idx; this_o_idx; this_o_idx = next_o_idx)
@@ -4173,15 +4217,7 @@ static bool_ project_o(int who, int r, int y, int x, int dam, int typ)
 				break;
 			}
 		default:
-			{
-				/* Hooks! */
-				if (process_hooks_ret(HOOK_GF_EXEC, "dd", "(s,d,d,d,d,d,d,O)", "object", who, typ, dam, r, y, x, o_ptr))
-				{
-					obvious = process_hooks_return[0].num;
-					do_kill = process_hooks_return[1].num;
-				}
-				break;
-			}
+			break;
 		}
 
 
@@ -4385,6 +4421,9 @@ bool_ project_m(int who, int r, int y, int x, int dam, int typ)
 	dam = (dam + r) / (r + 1);
 
 
+	/* Check gods */
+	project_check_gods(typ);
+
 	/* Get the monster name (BEFORE polymorphing) */
 	monster_desc(m_name, m_ptr, 0);
 
@@ -4484,14 +4523,13 @@ bool_ project_m(int who, int r, int y, int x, int dam, int typ)
 			if (r_ptr->flags3 & RF3_HURT_LITE)
 				get_angry = TRUE;
 			break;
-		default:
-			/* Hooks! */
-			if (process_hooks_ret(HOOK_GF_EXEC, "d", "(s,d,d,d,d,d,d,M)", "angry", who, typ, dam, r, y, x, m_ptr))
-			{
-				get_angry = process_hooks_return[0].num;
-			}
-			else
-				get_angry = TRUE;
+		case GF_INSTA_DEATH:
+			get_angry = TRUE;
+			break;
+		case GF_ELEMENTAL_GROWTH:
+		case GF_ELEMENTAL_WALL:
+			get_angry = FALSE;
+			break;
 		}
 
 		/* Now anger it if appropriate */
@@ -6746,36 +6784,25 @@ bool_ project_m(int who, int r, int y, int x, int dam, int typ)
 			break;
 		}
 
-		/* Default */
-	default:
+	case GF_INSTA_DEATH:
 		{
-			/* Hooks! */
-			if (process_hooks_ret(HOOK_GF_EXEC, "dddddddddss", "(s,d,d,d,d,d,d,M)", "monster", who, typ, dam, r, y, x, m_ptr))
-			{
-				obvious = process_hooks_return[0].num;
-				dam = process_hooks_return[1].num;
-				do_stun = process_hooks_return[2].num;
-				do_fear = process_hooks_return[3].num;
-				do_conf = process_hooks_return[4].num;
-				do_dist = process_hooks_return[5].num;
-				do_pois = process_hooks_return[6].num;
-				do_cut = process_hooks_return[7].num;
-				do_poly = process_hooks_return[8].num;
-				if (process_hooks_return[9].str != NULL)
-					note = process_hooks_return[9].str;
-				if (process_hooks_return[10].str != NULL)
-					note_dies = process_hooks_return[10].str;
-			}
-			else
-			{
-				/* Irrelevant */
+			if (magik(95) && !(r_ptr->flags1 & RF1_UNIQUE) && !(r_ptr->flags3 & RF3_UNDEAD) && !(r_ptr->flags3 & RF3_NONLIVING)) {
+				/* Kill outright, but reduce exp. */
+				m_ptr->level = m_ptr->level / 3;
+				dam = 32535; /* Should be enough */
+				note = " faints.";
+				note_dies = " is sucked out of life.";
+			} else {
+				/* No effect */
 				skipped = TRUE;
-
-				/* No damage */
-				dam = 0;
 			}
+
 			break;
 		}
+
+	default:
+		skipped = TRUE;
+		break;
 	}
 
 
@@ -8018,17 +8045,9 @@ static bool_ project_p(int who, int r, int y, int x, int dam, int typ, int a_rad
 		/* Default */
 	default:
 		{
-			/* Hooks! */
-			if (process_hooks_ret(HOOK_GF_EXEC, "dd", "(s,d,d,d,d,d,d)", "player", who, typ, dam, r, y, x))
-			{
-				obvious = process_hooks_return[0].num;
-				dam = process_hooks_return[1].num;
-			}
-			else
-			{
-				/* No damage */
-				dam = 0;
-			}
+			/* No damage */
+			dam = 0;
+
 			break;
 		}
 	}

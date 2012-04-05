@@ -1,21 +1,5 @@
 -- Mkeys for skills & abilities
 
-GF_INSTA_DEATH = add_spell_type
-{
-	["color"]       = { TERM_DARK, 0 },
-	["angry"]       = function() return TRUE, TRUE end,
-	["monster"]     = function(who, dam, rad, y, x, monst)
-			local race = race_info_idx(monst.r_idx, monst.ego)
-			if magik(5) == FALSE or band(race.flags1, RF1_UNIQUE) ~= FALSE or band(race.flags3, RF3_UNDEAD) ~= FALSE or band(race.flags3, RF3_NONLIVING) ~= FALSE then
-				return TRUE, FALSE
-			else
-				-- Reduce the exp gained this way
-				monst.level = monst.level / 3
-				return TRUE, FALSE, 32535, 0, 0, 0, 0, 0, 0, 0, " faints.", " is sucked out of life."
-			end
-	end,
-}
-
 -- Death touch ability
 add_mkey
 {

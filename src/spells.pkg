@@ -340,8 +340,17 @@ typedef unsigned int u32b;
 /** @def GF_CHARM_UNMOVING */
 #define GF_CHARM_UNMOVING 110
 
+/** @def GF_INSTA_DEATH */
+#define GF_INSTA_DEATH 111
+
+/** @def GF_ELEMENTAL_WALL */
+#define GF_ELEMENTAL_WALL 112
+
+/** @def GF_ELEMENTAL_GROWTH */
+#define GF_ELEMENTAL_GROWTH 113
+
 /** @def MAX_GF */
-#define MAX_GF          111
+#define MAX_GF          114
 /** @} */
 
 /** @name Spell Projection Flags

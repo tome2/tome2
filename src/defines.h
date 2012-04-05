@@ -2674,7 +2674,10 @@
 #define GF_TRAP_DEMONSOUL 108
 #define GF_ATTACK       109
 #define GF_CHARM_UNMOVING 110
-#define MAX_GF          111
+#define GF_INSTA_DEATH 111
+#define GF_ELEMENTAL_WALL 112
+#define GF_ELEMENTAL_GROWTH 113
+#define MAX_GF          114
 
 /*
  * Some things which induce learning
@@ -4488,8 +4491,6 @@
 #define HOOK_EAT                55
 #define HOOK_DIE                56
 #define HOOK_CALC_HP            57
-#define HOOK_GF_COLOR           58
-#define HOOK_GF_EXEC            59
 #define HOOK_CALC_MANA          60
 #define HOOK_LOAD_END           61
 #define HOOK_RECALL             62

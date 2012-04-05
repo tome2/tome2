@@ -31,17 +31,6 @@ function geomancy_random_wall(y, x)
 end
 
 
-GF_ELEMENTAL_WALL = add_spell_type
-{
-	["color"]       = { TERM_GREEN, 0 },
-	["angry"]       = function() return TRUE, FALSE end,
-	["grid"]     	= function(who, dam, rad, y, x)
-			if player.py ~= y or player.px ~= x then
-				geomancy_random_wall(y, x)
-			end
-	end,
-}
-
 function geomancy_random_floor(y, x, kill_wall)
 	local c_ptr = cave(y, x)
 
@@ -80,15 +69,6 @@ function geomancy_random_floor(y, x, kill_wall)
 	cave_set_feat(y, x, feat)
 end
 
-
-GF_ELEMENTAL_GROWTH = add_spell_type
-{
-	["color"]       = { TERM_GREEN, 0 },
-	["angry"]       = function() return TRUE, FALSE end,
-	["grid"]     	= function(who, dam, rad, y, x)
-			geomancy_random_floor(y, x)
-	end,
-}
 
 CALL_THE_ELEMENTS = add_spell
 {

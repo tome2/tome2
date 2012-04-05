@@ -192,14 +192,6 @@ GOD_VARDA = add_god
 				player.cur_lite = player.cur_lite + 1
 			end
 		end,
-		[HOOK_GF_EXEC] = function (target, who, type, dam, r, y, x, m_ptr)
-			if (player.pgod == GOD_VARDA) then
-				if ((type == GF_LITE) or (type == GF_LITE_WEAK)) then
-					-- Raise piety for using lite
-					set_grace(player.grace + 1)
-				end
-			end
-		end,
 	},
 }
 
@@ -273,14 +265,6 @@ GOD_ULMO = add_god
 				(m_ptr.r_idx == test_monster_name("The Watcher in the Water")) then
 					-- These monsters earn higher penalties
 					set_grace(player.grace - 500)
-				end
-			end
-		end,
-		[HOOK_GF_EXEC] = function (target, who, type, dam, r, y, x, m_ptr)
-			if (player.pgod == GOD_ULMO) then
-				if ((type == GF_FIRE) or (type == GF_HELL_FIRE) or (type == GF_HOLY_FIRE) or (type == GF_LAVA_FLOW) or (type == GF_METEOR) or (type == GF_NUKE) or (type == GF_PLASMA)) then
-					-- Reduce piety for using any kind of fire magic
-					set_grace(player.grace - 5)
 				end
 			end
 		end,

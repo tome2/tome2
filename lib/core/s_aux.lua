@@ -621,32 +621,3 @@ end
 function activate_activation(spl, item)
 	__spell_spell[spl](item)
 end
-
-
-------- Add new GF type ----------
-max_gf = MAX_GF
-function add_spell_type(t)
-	t.index = max_gf
-	max_gf = max_gf + 1
-	assert(t.color, "No GF color")
-	if not t.monster then t.monster = function() end end
-	if not t.angry then t.angry = function() end end
-	if not t.object then t.object = function() end end
-	if not t.player then t.player = function() end end
-	if not t.grid then t.grid = function() end end
-
-	add_hooks
-	{
-		[HOOK_GF_COLOR] = function (gf, new_gfx)
-			local t = %t
-			if gf == t.index then return TRUE, t.color[new_gfx + 1] end
-		end,
-		[HOOK_GF_EXEC] = function (action, who, gf, dam, rad, y, x, extra)
-			local t = %t
-			if t.index == gf then
-				return t[action](who, dam, rad, y, x, extra)
-			end
-		end,
-	}
-	return t.index
-end
