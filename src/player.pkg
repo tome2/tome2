@@ -2622,6 +2622,11 @@ extern void apply_flags(u32b f1, u32b f2, u32b f3, u32b f4, u32b f5, u32b esp, s
 #define SHIELD_FEAR	     0x0008
 /** @} */
 
+/**
+ * Timered precognition
+ */
+extern s16b tim_precognition;
+
 
 /** @fn set_tim_thunder(int v, int p1, int p2)
  * @brief Player has timed thunderstorm.\n

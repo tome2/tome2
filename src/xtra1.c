@@ -2424,6 +2424,69 @@ void calc_gods()
 		if (p_ptr->grace > 15000) p_ptr->stat_add[A_STR] += 1;
 		if (p_ptr->grace > 20000) p_ptr->stat_add[A_STR] += 1;
 	}
+
+	/* Aule provides to-hit/damage bonuses and fire resistance */
+	GOD(get_god_AULE())
+	{
+		if (p_ptr->grace > 0)
+		{
+			int bonus;
+			/* Resist fire, not shown on the character screen (?) */
+			if (p_ptr->grace > 5000)
+			{
+				p_ptr->resist_fire = TRUE;
+			}
+
+			bonus = p_ptr->grace / 5000;
+			if (bonus > 5)
+			{
+				bonus = 5;
+			}
+
+			p_ptr->to_h = p_ptr->to_h + bonus;
+			p_ptr->dis_to_h = p_ptr->dis_to_h + bonus;
+			p_ptr->to_d = p_ptr->to_d + bonus;
+			p_ptr->dis_to_d = p_ptr->dis_to_d + bonus;
+		}
+	}
+
+	/* Mandos provides nether resistance and, while praying,
+	   nether immunity and prevents teleportation. */
+	GOD(get_god_MANDOS())
+	{
+		p_ptr->resist_neth = TRUE;
+
+		if ((p_ptr->grace > 10000) &&
+		    (p_ptr->praying == TRUE))
+		{
+			p_ptr->resist_continuum = TRUE;
+		}
+
+		if ((p_ptr->grace > 20000) &&
+		    (p_ptr->praying == TRUE))
+		{
+			p_ptr->immune_neth = TRUE;
+		}
+	}
+
+	/* Ulmo provides water breath and, while praying can
+	   provide poison resistance and magic breath. */
+	GOD(get_god_ULMO())
+	{
+		p_ptr->water_breath = TRUE;
+
+		if ((p_ptr->grace > 1000) &&
+		    (p_ptr->praying == TRUE))
+		{
+			p_ptr->resist_pois = TRUE;
+		}
+
+		if ((p_ptr->grace > 15000) &&
+		    (p_ptr->praying == TRUE))
+		{
+			p_ptr->magical_breath = TRUE;
+		}
+	}
 }
 
 /* Apply flags */
@@ -3149,6 +3212,12 @@ void calc_bonuses(bool_ silent)
 	{
 		p_ptr->to_a += 100;
 		p_ptr->dis_to_a += 100;
+	}
+
+	/* Temporary precognition */
+	if (tim_precognition > 0)
+	{
+		apply_flags(0, 0, 0, TR4_PRECOGNITION, 0, 0, 0, 0, 0, 0, 0);
 	}
 
 	/* Breath */

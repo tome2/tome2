@@ -1592,6 +1592,11 @@ s32b max_gods = MAX_GODS_INIT;
  */
 timer_type *gl_timers = NULL;
 
+/*
+ * Timered precognition.
+ */
+s16b tim_precognition = 0;
+
 /**
  * Get the version string.
  */

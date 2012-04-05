@@ -22,24 +22,6 @@ GOD_AULE = add_god
 	},
 	["hooks"] =
 	{
-		[HOOK_CALC_BONUS] = function()
-			if (player.pgod == GOD_AULE) and (player.grace > 0) then
-				-- Resist fire, not shown on the character screen (?)
-				if (player.grace > 5000) then
-					player.resist_fire = TRUE
-				end
-
-				local bonus = player.grace / 5000
-				if bonus > 5 then
-					bonus = 5
-				end
-				player.to_h = player.to_h + bonus
-				player.dis_to_h = player.dis_to_h + bonus
-				player.to_d = player.to_d + bonus
-				player.dis_to_d = player.dis_to_d + bonus
-				
-			end
-		end,
 		[HOOK_PROCESS_WORLD] = function()
 			if (player.pgod == GOD_AULE) then
 				GRACE_DELAY = GRACE_DELAY + 1
@@ -204,25 +186,6 @@ GOD_ULMO = add_god
 	},
 	["hooks"] =
 	{
-		[HOOK_CALC_BONUS] = function()
-			if (player.pgod == GOD_ULMO) then
-				player.water_breath = TRUE
-			end
-			if (player.pgod == GOD_ULMO) and (player.grace > 0) then
-				local bonus = player.grace / 5000
-					if bonus > 5 then
-						bonus = 5
-				end
-				
-				if ((player.grace > 1000) and (player.praying == TRUE)) then
-					player.resist_pois = TRUE
-				end
-				if ((player.grace > 15000) and (player.praying == TRUE)) then
-					player.magic_breath = TRUE
-				end
-			end
-		end,
-		
 		[HOOK_MONSTER_DEATH] = function(m_idx)
 			if (player.pgod == GOD_ULMO) then
 				m_ptr = monster(m_idx)
@@ -319,25 +282,6 @@ GOD_MANDOS = add_god
 	},
 	["hooks"] =
 	{
-		[HOOK_CALC_BONUS] = function()
-			if (player.pgod == GOD_MANDOS) then
-				player.resist_neth = TRUE
-			end
-			if (player.pgod == GOD_MANDOS) and (player.grace > 0) then
-				local bonus = player.grace / 5000
-					if bonus > 5 then
-						bonus = 5
-				end
-				
-				if ((player.grace > 10000) and (player.praying == TRUE)) then
-				player.resist_continuum = TRUE
-				end
-	
-				if ((player.grace > 20000) and (player.praying == TRUE)) then
-				player.immune_neth = TRUE
-				end
-			end
-		end,
 		[HOOK_PROCESS_WORLD] = function()
 			if (player.pgod == GOD_MANDOS) then
 				GRACE_DELAY = GRACE_DELAY + 1

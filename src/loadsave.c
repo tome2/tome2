@@ -512,6 +512,7 @@ static bool_ do_extra(int flag)
 	do_s16b(&p_ptr->blessed, flag);
 	do_s16b(&p_ptr->control, flag);
 	do_byte(&p_ptr->control_dir, flag);
+	do_s16b(&tim_precognition, flag);
 	do_s16b(&p_ptr->tim_thunder, flag);
 	do_s16b(&p_ptr->tim_thunder_p1, flag);
 	do_s16b(&p_ptr->tim_thunder_p2, flag);

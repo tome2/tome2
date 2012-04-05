@@ -602,6 +602,7 @@ extern s32b DUNGEON_ASTRAL_WILD_Y;
 extern deity_type *deity_info;
 extern s32b max_gods;
 extern timer_type *gl_timers;
+extern s16b tim_precognition;
 extern const char *get_version_string();
 
 /* plots.c */

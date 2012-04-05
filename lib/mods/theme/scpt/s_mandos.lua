@@ -4,8 +4,6 @@ BOOK_MANDOS = 66
 
 -- precognition timer for high-level spell [from T-Plus by Ingeborg S. Norden]
 
-add_loadsave("tim_precognition",0) 
-
 function set_precognition(v) 
    local notice = FALSE 
    if (v < 0) then v = 0 end 
@@ -33,13 +31,6 @@ end
 -- related hooks
 
 add_hooks{ 
-   [HOOK_CALC_BONUS] = function() 
-      if (tim_precognition > 0) then 
-         --player.precognition = TRUE 
-         apply_flags(0, 0, 0, TR4_PRECOGNITION, 0, 0, 0, 0, 0, 0, 0) 
-      end 
-   end, 
-
    [HOOK_PROCESS_WORLD] = function() 
       if (tim_precognition > 0) then 
          set_precognition(tim_precognition - 1) 
