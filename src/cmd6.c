@@ -2907,13 +2907,7 @@ void do_cmd_read_scroll(void)
 		ident = FALSE;
 	}
 
-	/* New scripts, can override the ingame code */
-	else if (process_hooks_ret(HOOK_READ, "dd", "(O)", o_ptr))
-	{
-		used_up = process_hooks_return[0].num;
-		ident = process_hooks_return[1].num;
-	}
-	/* Traditional scrolls */
+	/* Scrolls */
 	else if (o_ptr->tval == TV_SCROLL)
 	{
 		/* Analyze the scroll */

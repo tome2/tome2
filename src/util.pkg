@@ -401,20 +401,6 @@ typedef unsigned int u32b;
  */
 #define HOOK_ZAP		27
 
-/** @def HOOK_READ
- * @brief Player reads a scroll.\n
- * @param Object o_ptr \n the scroll to read.
- * @brief Scroll
- * @return Boolean \n TRUE if scroll was read, otherwise FALSE.
- * @return Number used_up \n TRUE if the scroll was used up, otherwise FALSE.
- * @return Number ident \n TRUE if the scroll was identifed, otherwise FALSE.
- * @note
- * If the hook returns TRUE, the hook sets the "scroll used up" and
- * "scroll identified" flags.
- * @note (see file cmd6.c)
- */
-#define HOOK_READ	       28
-
 /** @def HOOK_CALC_POWERS
  * @brief Calculate player powers.
  * @note (see xtra1.c)
