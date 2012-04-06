@@ -172,9 +172,6 @@ CORRUPT_ANTI_TELEPORT = add_corruption
 	},
 	["hooks"]       =
 	{
-		[HOOK_BIRTH_OBJECTS] = function()
-			player.corrupt_anti_teleport_stopped = FALSE
-		end,
 		[HOOK_PROCESS_WORLD] = function()
 			if player.corrupt_anti_teleport_stopped == TRUE then
 				local amt = player.msp + player.csp
