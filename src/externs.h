@@ -638,6 +638,9 @@ extern s16b MUT1_MIDAS_TCH;
 extern s16b MUT1_GROW_MOLD;
 extern s16b MUT1_RESIST;
 extern s16b MUT1_EARTHQUAKE;
+extern s16b POWER_INVISIBILITY;
+extern s16b POWER_WEB;
+extern s16b POWER_COR_SPACE_TIME;
 
 /* plots.c */
 extern FILE *hook_file;

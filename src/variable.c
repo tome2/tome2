@@ -1635,6 +1635,15 @@ s16b MUT1_GROW_MOLD = -1;
 s16b MUT1_RESIST = -1;
 s16b MUT1_EARTHQUAKE = -1;
 
+
+/*
+ * Powers
+ */
+s16b POWER_INVISIBILITY = -1;
+s16b POWER_WEB = -1;
+s16b POWER_COR_SPACE_TIME = -1;
+
+
 /**
  * Get the version string.
  */

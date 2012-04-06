@@ -3429,6 +3429,11 @@ extern void    desc_god(int g_idx, int d, char *desc);
 #define PWR_BALROG		      61
 /** @} */
 
+extern s16b POWER_INVISIBILITY;
+extern s16b POWER_WEB;
+extern s16b POWER_COR_SPACE_TIME;
+
+
 /* Misc */
 /** @fn do_cmd_throw(void)
  * @brief Throw an object from the pack or floor.
