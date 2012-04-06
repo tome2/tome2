@@ -149,23 +149,9 @@ function add_corruption(c)
 		__corruptions[o].oppose[__corruptions_max] = TRUE
 	end
 
-	local index, h
-        if type(c.hooks) == "table" then
-		for index, h in c.hooks do
-			add_hook_script(index, "__lua__corrupt_callback"..__corruptions_callbacks_max, "__lua__corrupt_callback"..__corruptions_callbacks_max)
-			setglobal("__lua__corrupt_callback"..__corruptions_callbacks_max,
-				function (...)
-					if test_depend_corrupt(%__corruptions_max) == TRUE then
-						return call(%h, arg)
-					end
-				end
-			)
-			__corruptions_callbacks_max = __corruptions_callbacks_max + 1
-		end
-	end
-
 	if type(c.desc) == "table" then
 		local new_desc = ""
+                local index, h
 		for index, h in c.desc do
 			new_desc = new_desc..h.."\n"
 		end

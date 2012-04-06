@@ -525,8 +525,5 @@ CORRUPT_ = add_corruption
 	{
 			  "  ",
 	},
-	["hooks"]       =
-	{
-	},
 }
 ]]
