@@ -58,12 +58,6 @@ CORRUPT_BALROG_FORM = add_corruption
 			[CORRUPT_BALROG_WINGS] = TRUE,
 			[CORRUPT_BALROG_STRENGTH] = TRUE
 	},
-	["hooks"]       =
-	{
-		[HOOK_CALC_POWERS] = function()
-			player.add_power(PWR_BALROG)
-		end,
-	},
 }
 
 
@@ -105,12 +99,6 @@ CORRUPT_DEMON_BREATH = add_corruption
 	{
 			  "  Provides fire breath",
 			  "  But gives a small chance to spoil potions when you quaff them",
-	},
-	["hooks"]       =
-	{
-		[HOOK_CALC_POWERS] = function()
-			player.add_power(PWR_BR_FIRE)
-		end,
 	},
 }
 
@@ -186,9 +174,6 @@ CORRUPT_ANTI_TELEPORT = add_corruption
 	{
 		[HOOK_BIRTH_OBJECTS] = function()
 			player.corrupt_anti_teleport_stopped = FALSE
-		end,
-		[HOOK_CALC_POWERS] = function()
-			player.add_power(POWER_COR_SPACE_TIME)
 		end,
 		[HOOK_PROCESS_WORLD] = function()
 			if player.corrupt_anti_teleport_stopped == TRUE then
@@ -339,12 +324,6 @@ MUT1_SPIT_ACID = add_corruption
 			  "  Damage=level Radius 1+(level/30)",
 			  "  Level=9, Cost=9, Stat=DEX, Difficulty=15",
 	},
-	["hooks"]       =
-	{
-		[HOOK_CALC_POWERS] = function()
-			player.add_power(PWR_SPIT_ACID)
-		end,
-	},
 }
 
 MUT1_BR_FIRE = add_corruption
@@ -358,12 +337,6 @@ MUT1_BR_FIRE = add_corruption
 			  "  Fires a fire ball.",
 			  "  Damage=2*level Radius 1+(level/20)",
 			  "  Level=20, Cost=10, Stat=CON, Difficulty=18",
-	},
-	["hooks"]       =
-	{
-		[HOOK_CALC_POWERS] = function()
-			player.add_power(PWR_BR_FIRE)
-		end,
 	},
 }
 
@@ -379,12 +352,6 @@ MUT1_HYPN_GAZE = add_corruption
 			  "  Power=level",
 			  "  Level=12, Cost=12, Stat=CHR, Difficulty=18",
 	},
-	["hooks"]       =
-	{
-		[HOOK_CALC_POWERS] = function()
-			player.add_power(PWR_HYPN_GAZE)
-		end,
-	},
 }
 
 MUT1_TELEKINES = add_corruption
@@ -398,12 +365,6 @@ MUT1_TELEKINES = add_corruption
 			  "  Move an object in line of sight to you.",
 			  "  Max weight equal to (level) pounds",
 			  "  Level=9, Cost=9, Stat=WIS, Difficulty=14",
-	},
-	["hooks"]       =
-	{
-		[HOOK_CALC_POWERS] = function()
-			player.add_power(PWR_TELEKINES)
-		end,
 	},
 }
 
@@ -419,12 +380,6 @@ MUT1_VTELEPORT = add_corruption
 			  "  Distance 10+4*level squares",
 			  "  Level=7, Cost=7, Stat=WIS, Difficulty=15",
 	},
-	["hooks"]       =
-	{
-		[HOOK_CALC_POWERS] = function()
-			player.add_power(PWR_VTELEPORT)
-		end,
-	},
 }
 
 MUT1_MIND_BLST = add_corruption
@@ -438,12 +393,6 @@ MUT1_MIND_BLST = add_corruption
 			  "  Fires a mind blasting bolt (psi damage).",
 			  "  Psi Damage (3+(level-1)/5)d3",
 			  "  Level=5, Cost=3, Stat=WIS, Difficulty=15",
-	},
-	["hooks"]       =
-	{
-		[HOOK_CALC_POWERS] = function()
-			player.add_power(PWR_MIND_BLST)
-		end,
 	},
 }
 
@@ -460,12 +409,6 @@ MUT1_VAMPIRISM = add_corruption
 			  "  heals you and satiates you. Doesn't work on all monsters",
 			  "  Level=4, Cost=5, Stat=CON, Difficulty=9",
 	},
-	["hooks"]       =
-	{
-		[HOOK_CALC_POWERS] = function()
-			player.add_power(PWR_VAMPIRISM)
-		end,
-	},
 }
 
 MUT1_SMELL_MET = add_corruption
@@ -479,12 +422,6 @@ MUT1_SMELL_MET = add_corruption
 			  "  You can detect nearby precious metal (treasure).",
 			  "  Radius 25",
 			  "  Level=3, Cost=2, Stat=INT, Difficulty=12",
-	},
-	["hooks"]       =
-	{
-		[HOOK_CALC_POWERS] = function()
-			player.add_power(PWR_SMELL_MET)
-		end,
 	},
 }
 
@@ -500,12 +437,6 @@ MUT1_SMELL_MON = add_corruption
 			  "  Radius 25",
 			  "  Level=5, Cost=4, Stat=INT, Difficulty=15",
 	},
-	["hooks"]       =
-	{
-		[HOOK_CALC_POWERS] = function()
-			player.add_power(PWR_SMELL_MON)
-		end,
-	},
 }
 
 MUT1_BLINK = add_corruption
@@ -518,12 +449,6 @@ MUT1_BLINK = add_corruption
 	{
 			  "  You can teleport yourself short distances (10 squares).",
 			  "  Level=3, Cost=3, Stat=WIS, Difficulty=12",
-	},
-	["hooks"]       =
-	{
-		[HOOK_CALC_POWERS] = function()
-			player.add_power(PWR_BLINK)
-		end,
 	},
 }
 
@@ -539,12 +464,6 @@ MUT1_EAT_ROCK = add_corruption
 			  "  leaving an empty space behind.",
 			  "  Level=8, Cost=12, Stat=CON, Difficulty=18",
 	},
-	["hooks"]       =
-	{
-		[HOOK_CALC_POWERS] = function()
-			player.add_power(PWR_EAT_ROCK)
-		end,
-	},
 }
 
 MUT1_SWAP_POS = add_corruption
@@ -558,12 +477,6 @@ MUT1_SWAP_POS = add_corruption
 			  "  You can switch locations with another being,",
 			  "  unless it resists teleportation.",
 			  "  Level=15, Cost=12, Stat=DEX, Difficulty=16",
-	},
-	["hooks"]       =
-	{
-		[HOOK_CALC_POWERS] = function()
-			player.add_power(PWR_SWAP_POS)
-		end,
 	},
 }
 
@@ -579,12 +492,6 @@ MUT1_SHRIEK = add_corruption
 			  "  Damage=level*4, Radius=8, centered on player",
 			  "  Level=4, Cost=4, Stat=CON, Difficulty=6",
 	},
-	["hooks"]       =
-	{
-		[HOOK_CALC_POWERS] = function()
-			player.add_power(PWR_SHRIEK)
-		end,
-	},
 }
 
 MUT1_ILLUMINE = add_corruption
@@ -598,12 +505,6 @@ MUT1_ILLUMINE = add_corruption
 			  "  You can emit bright light that illuminates an area.",
 			  "  Damage=2d(level/2) Radius=(level/10)+1",
 			  "  Level=3, Cost=2, Stat=INT, Difficulty=10",
-	},
-	["hooks"]       =
-	{
-		[HOOK_CALC_POWERS] = function()
-			player.add_power(PWR_ILLUMINE)
-		end,
 	},
 }
 
@@ -619,12 +520,6 @@ MUT1_DET_CURSE = add_corruption
 			  "  It detects cursed items in the inventory",
 			  "  Level=7, Cost=14, Stat=WIS, Difficulty=14",
 	},
-	["hooks"]       =
-	{
-		[HOOK_CALC_POWERS] = function()
-			player.add_power(PWR_DET_CURSE)
-		end,
-	},
 }
 
 MUT1_BERSERK = add_corruption
@@ -638,12 +533,6 @@ MUT1_BERSERK = add_corruption
 			  "  You can drive yourself into a berserk frenzy.",
 			  "  It grants super-heroism. Duration=10+1d(level)",
 			  "  Level=8, Cost=8, Stat=STR, Difficulty=14",
-	},
-	["hooks"]       =
-	{
-		[HOOK_CALC_POWERS] = function()
-			player.add_power(PWR_BERSERK)
-		end,
 	},
 }
 
@@ -660,12 +549,6 @@ MUT1_MIDAS_TCH = add_corruption
 			  "  Turns a non-artifact object into 1/3 its value in gold",
 			  "  Level=10, Cost=5, Stat=INT, Difficulty=12",
 	},
-	["hooks"]       =
-	{
-		[HOOK_CALC_POWERS] = function()
-			player.add_power(PWR_MIDAS_TCH)
-		end,
-	},
 }
 
 MUT1_GROW_MOLD = add_corruption
@@ -679,12 +562,6 @@ MUT1_GROW_MOLD = add_corruption
 			  "  You can cause mold to grow near you.",
 			  "  Summons up to 8 molds around the player",
 			  "  Level=1, Cost=6, Stat=CON, Difficulty=14",
-	},
-	["hooks"]       =
-	{
-		[HOOK_CALC_POWERS] = function()
-			player.add_power(PWR_GROW_MOLD)
-		end,
 	},
 }
 
@@ -701,12 +578,6 @@ MUT1_RESIST = add_corruption
 			  "  elements and poison. Duration=20 + d20",
 			  "  Level=10, Cost=12, Stat=CON, Difficulty=12",
 	},
-	["hooks"]       =
-	{
-		[HOOK_CALC_POWERS] = function()
-			player.add_power(PWR_RESIST)
-		end,
-	},
 }
 
 MUT1_EARTHQUAKE = add_corruption
@@ -720,12 +591,6 @@ MUT1_EARTHQUAKE = add_corruption
 			  "  You can bring down the dungeon around your ears.",
 			  "  Radius=10, center on the player",
 			  "  Level=12, Cost=12, Stat=STR, Difficulty=16",
-	},
-	["hooks"]       =
-	{
-		[HOOK_CALC_POWERS] = function()
-			player.add_power(PWR_EARTHQUAKE)
-		end,
 	},
 }
 --[[

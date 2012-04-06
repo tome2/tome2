@@ -57,12 +57,6 @@ CORRUPT_BALROG_FORM = add_corruption
 			[CORRUPT_BALROG_WINGS] = TRUE,
 			[CORRUPT_BALROG_STRENGTH] = TRUE
 	},
-	["hooks"]       =
-	{
-		[HOOK_CALC_POWERS] = function()
-			player.add_power(PWR_BALROG)
-		end,
-	},
 }
 
 
@@ -104,12 +98,6 @@ CORRUPT_DEMON_BREATH = add_corruption
 	{
 			  "  Provides fire breath",
 			  "  But gives a small chance to spoil potions when you quaff them",
-	},
-	["hooks"]       =
-	{
-		[HOOK_CALC_POWERS] = function()
-			player.add_power(PWR_BR_FIRE)
-		end,
 	},
 }
 
@@ -185,9 +173,6 @@ CORRUPT_ANTI_TELEPORT = add_corruption
 	{
 		[HOOK_BIRTH_OBJECTS] = function()
 			player.corrupt_anti_teleport_stopped = FALSE
-		end,
-		[HOOK_CALC_POWERS] = function()
-			player.add_power(POWER_COR_SPACE_TIME)
 		end,
 		[HOOK_PROCESS_WORLD] = function()
 			if player.corrupt_anti_teleport_stopped == TRUE then
