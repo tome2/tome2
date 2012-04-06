@@ -1832,6 +1832,26 @@ extern s16b CORRUPT_TROLL_BLOOD;
 extern s16b CORRUPT_VAMPIRE_TEETH;
 extern s16b CORRUPT_VAMPIRE_STRENGTH;
 extern s16b CORRUPT_VAMPIRE_VAMPIRE;
+extern s16b MUT1_SPIT_ACID;
+extern s16b MUT1_BR_FIRE;
+extern s16b MUT1_HYPN_GAZE;
+extern s16b MUT1_TELEKINES;
+extern s16b MUT1_VTELEPORT;
+extern s16b MUT1_MIND_BLST;
+extern s16b MUT1_VAMPIRISM;
+extern s16b MUT1_SMELL_MET;
+extern s16b MUT1_SMELL_MON;
+extern s16b MUT1_BLINK;
+extern s16b MUT1_EAT_ROCK;
+extern s16b MUT1_SWAP_POS;
+extern s16b MUT1_SHRIEK;
+extern s16b MUT1_ILLUMINE;
+extern s16b MUT1_DET_CURSE;
+extern s16b MUT1_BERSERK;
+extern s16b MUT1_MIDAS_TCH;
+extern s16b MUT1_GROW_MOLD;
+extern s16b MUT1_RESIST;
+extern s16b MUT1_EARTHQUAKE;
 
 
 /** @name Spellbinder triggers
