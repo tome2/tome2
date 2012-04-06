@@ -6066,24 +6066,6 @@ void corrupt_corrupted(void)
 }
 
 /*
- * Change to an other class
- */
-void switch_class(int sclass)
-{
-	p_ptr->pclass = sclass;
-	cp_ptr = &class_info[p_ptr->pclass];
-}
-
-/*
- * Change to an other subclass
- */
-void switch_subclass(int sclass)
-{
-	p_ptr->pspec = sclass;
-	spp_ptr = &class_info[p_ptr->pclass].spec[p_ptr->pspec];
-}
-
-/*
  * Change to an other subrace
  */
 void switch_subrace(int racem, bool_ copy_old)

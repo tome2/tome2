@@ -3461,22 +3461,6 @@ extern void do_cmd_throw(void);
  */
 extern void change_wild_mode();
 
-/** @fn switch_class(int sclass)
- * @brief Change to an other class.\n
- * @param sclass Number \n the inex of the new class in the class array
- * @brief Class index
- * @note (see file xtra2.c)
- */
-extern void switch_class(int sclass);
-
-/** @fn switch_subclass(int sclass)
- * @brief Change to an other subclass.\n
- * @param sclass Number \n the new subclass
- * @brief Subclass
- * @note (see file xtra2.c)
- */
-extern void switch_subclass(int sclass);
-
 /** @fn switch_subrace(int racem, bool copy_old)
  * @brief Change to an other subrace.\n
  * @param racem Number \n index of subrace in subrace array

@@ -1583,8 +1583,6 @@ extern void do_rebirth(void);
 extern cptr get_subrace_title(int racem);
 extern void set_subrace_title(int racem, cptr name);
 extern void switch_subrace(int racem, bool_ copy_old);
-extern void switch_class(int sclass);
-extern void switch_subclass(int sclass);
 extern void drop_from_wild(void);
 extern void clean_wish_name(char *buf, char *name);
 extern bool_ test_object_wish(char *name, object_type *o_ptr, object_type *forge, char *what);
