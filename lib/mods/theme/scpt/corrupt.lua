@@ -189,7 +189,6 @@ CORRUPT_VAMPIRE_TEETH = add_corruption
 	["allow"]       = function()
 		if test_race_flags(1, PR1_NO_SUBRACE_CHANGE) == FALSE then return not nil else return nil end
 	end,
-	["gain"]	= function() player_gain_vampire_teeth() end,
 }
 CORRUPT_VAMPIRE_STRENGTH = add_corruption
 {
@@ -209,7 +208,6 @@ CORRUPT_VAMPIRE_STRENGTH = add_corruption
 	{
 			[CORRUPT_VAMPIRE_TEETH] = TRUE,
 	},
-	["gain"]	= function() player_gain_vampire_strength() end,
 }
 CORRUPT_VAMPIRE_VAMPIRE = add_corruption
 {
@@ -228,7 +226,6 @@ CORRUPT_VAMPIRE_VAMPIRE = add_corruption
 	{
 			[CORRUPT_VAMPIRE_STRENGTH] = TRUE,
 	},
-	["gain"]	= function() player_gain_vampire() end,
 }
 
 -- The old activable corruptions / mutations

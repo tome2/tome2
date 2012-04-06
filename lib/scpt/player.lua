@@ -5,9 +5,9 @@ function __birth_hook_objects()
 
 	-- Start the undeads, as undeads with the corruptions
 	if get_subrace_name() == "Vampire" then
-		player.corruption(CORRUPT_VAMPIRE_TEETH, TRUE)
-		player.corruption(CORRUPT_VAMPIRE_STRENGTH, TRUE)
-		player.corruption(CORRUPT_VAMPIRE_VAMPIRE, TRUE)
+		player_gain_corruption(CORRUPT_VAMPIRE_TEETH)
+		player_gain_corruption(CORRUPT_VAMPIRE_STRENGTH)
+		player_gain_corruption(CORRUPT_VAMPIRE_VAMPIRE)
 	end
 end
 

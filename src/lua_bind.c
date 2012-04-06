@@ -657,7 +657,7 @@ static void subrace_add_power(player_race_mod *rmp_ptr, int power)
 	}
 }
 
-void player_gain_vampire_teeth()
+static void player_gain_vampire_teeth()
 {
 	player_race_mod *rmp_ptr = NULL;
 
@@ -671,7 +671,7 @@ void player_gain_vampire_teeth()
 		| PR1_NO_SUBRACE_CHANGE;
 }
 
-void player_gain_vampire_strength()
+static void player_gain_vampire_strength()
 {
 	player_race_mod *rmp_ptr = &race_mod_info[SUBRACE_SAVE];
 	/* Apply the bonuses/penalities */
@@ -690,7 +690,7 @@ void player_gain_vampire_strength()
 	cmsg_print(TERM_L_DARK, "You feel death slipping inside.");
 }
 
-void player_gain_vampire()
+static void player_gain_vampire()
 {
 	player_race_mod *rmp_ptr = &race_mod_info[SUBRACE_SAVE];
 
@@ -719,6 +719,39 @@ void player_gain_vampire()
 		| TR2_HOLD_LIFE;
 	rmp_ptr->oflags3[2] = rmp_ptr->oflags3[2]
 		| TR3_LITE1;
+}
+
+static void player_set_corruption(int c, bool_ set)
+{
+	p_ptr->corruptions[c] = set;
+	p_ptr->redraw = p_ptr->redraw | PR_BASIC;
+	p_ptr->update = p_ptr->update | PU_BONUS | PU_TORCH | PU_BODY | PU_POWERS;
+
+}
+
+void player_gain_corruption(int corruption_idx)
+{
+	player_set_corruption(corruption_idx, TRUE);
+
+	if (corruption_idx == CORRUPT_VAMPIRE_TEETH)
+	{
+		player_gain_vampire_teeth();
+	}
+	else if (corruption_idx == CORRUPT_VAMPIRE_STRENGTH)
+	{
+		player_gain_vampire_strength();
+	}
+	else if (corruption_idx == CORRUPT_VAMPIRE_VAMPIRE)
+	{
+		player_gain_vampire();
+	}
+}
+
+void player_lose_corruption(int corruption_idx)
+{
+	player_set_corruption(corruption_idx, FALSE);
+	/* Currently no corruptions need
+	   any special handling when lost */
 }
 
 /*

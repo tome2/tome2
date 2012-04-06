@@ -1854,9 +1854,8 @@ extern s16b MUT1_RESIST;
 extern s16b MUT1_EARTHQUAKE;
 
 extern bool player_can_gain_corruption(int corruption_idx);
-extern void player_gain_vampire_teeth();
-extern void player_gain_vampire_strength();
-extern void player_gain_vampire();
+extern void player_gain_corruption(int corruption_idx);
+extern void player_lose_corruption(int corruption_idx);
 
 /** @name Spellbinder triggers
  * @{ */

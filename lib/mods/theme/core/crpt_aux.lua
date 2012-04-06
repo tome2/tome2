@@ -5,20 +5,8 @@ __corruptions_max = 0
 __corruptions_callbacks_max = 0
 
 -- Get the corruption
-function player.corruption(c, set)
-	if set then
-		player.corruptions_aux[c + 1] = set
-		player.redraw = bor(player.redraw, PR_BASIC)
-		player.update = bor(player.update, PU_BONUS, PU_TORCH, PU_BODY, PU_POWERS)
-		if (set == TRUE) and (__corruptions[c].gain) then
-			__corruptions[c].gain()
-		end
-		if (set == FALSE) and (__corruptions[c].lose) then
-			__corruptions[c].lose()
-		end
-	else
-		return player.corruptions_aux[c + 1]
-	end
+function player.corruption(c)
+	return player.corruptions_aux[c + 1]
 end
 
 -- Test if we have that corruption
@@ -76,7 +64,7 @@ function gain_corruption(group)
 	if (max > 0) then
 		local ret = rand_int(max)
 
-		player.corruption(pos[ret], TRUE)
+		player_gain_corruption(pos[ret])
 		cmsg_print(TERM_L_RED, __corruptions[pos[ret]].get_text)
 
 		return pos[ret]
@@ -103,13 +91,13 @@ function lose_corruption()
 	if (max > 0) then
 		local ret = rand_int(max)
 
-		player.corruption(pos[ret], FALSE)
+		player_lose_corruption(pos[ret])
 		cmsg_print(TERM_L_RED, __corruptions[pos[ret]].lose_text)
 
 		-- Ok now lets see if it broke some dependancies
 		for i = 0, max - 1 do
 			if player.corruption(pos[i]) ~= test_depend_corrupt(pos[i]) then
-				player.corruption(pos[i], FALSE)
+				player_lose_corruption(pos[i])
 				cmsg_print(TERM_L_RED, __corruptions[pos[i]].lose_text)
 			end
 		end
