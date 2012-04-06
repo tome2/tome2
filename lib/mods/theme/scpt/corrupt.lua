@@ -13,17 +13,6 @@ CORRUPT_BALROG_AURA = add_corruption
 			  "  Surrounds you with a fiery aura",
 			  "  But it can burn scrolls when you read them"
 	},
-	["hooks"]       =
-	{
-		[HOOK_READ] = function(obj)
-			if magik(5) == TRUE then
-				msg_print("Your demon aura burns the scroll before you read it!")
-				return TRUE, TRUE, FALSE
-			else
-				return FALSE
-			end
-		end,
-	},
 }
 
 CORRUPT_BALROG_WINGS = add_corruption

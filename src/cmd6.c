@@ -2899,8 +2899,16 @@ void do_cmd_read_scroll(void)
 	/* Assume the scroll will get used up */
 	used_up = TRUE;
 
+	/* Corruption */
+	if (player_has_corruption(CORRUPT_BALROG_AURA) && magik(5))
+	{
+		msg_print("Your demon aura burns the scroll before you read it!");
+		used_up = TRUE;
+		ident = FALSE;
+	}
+
 	/* New scripts, can override the ingame code */
-	if (process_hooks_ret(HOOK_READ, "dd", "(O)", o_ptr))
+	else if (process_hooks_ret(HOOK_READ, "dd", "(O)", o_ptr))
 	{
 		used_up = process_hooks_return[0].num;
 		ident = process_hooks_return[1].num;
@@ -3505,6 +3513,14 @@ void do_cmd_read_scroll(void)
 				ident = TRUE;
 
 				if (!artifact_scroll()) used_up = FALSE;
+
+				break;
+			}
+
+		case SV_SCROLL_STERILIZATION:
+			{
+				msg_print("A neutralising wave radiates from you!");
+				set_no_breeders(randint(100) + 100);
 
 				break;
 			}

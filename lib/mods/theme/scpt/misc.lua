@@ -1,14 +1,3 @@
--- New scrolls
-function sterilize_scroll(tval, sval)
-	if tval == 70 and sval == 54 then
-		msg_print("A neutralising wave radiates from you!")
-		set_no_breeders(randint(100) + 100)
-		return TRUE
-	end
-end
-
-add_hook_script(HOOK_READ, "sterilize_scroll", "sterilize_scroll")
-
 -- Neil's automagic statgain script
 
 player.last_rewarded_level = 1

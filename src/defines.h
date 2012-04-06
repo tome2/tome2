@@ -1938,6 +1938,7 @@
 #define SV_SCROLL_RUMOR                 51
 #define SV_SCROLL_ARTIFACT              52
 #define SV_SCROLL_NOTHING               53
+#define SV_SCROLL_STERILIZATION         54
 
 /* The "sval" codes for TV_POTION */
 #define SV_POTION_WATER                  0
