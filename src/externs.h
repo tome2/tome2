@@ -1869,6 +1869,7 @@ extern void lua_add_to_list(list_type *, int idx, cptr str);
 extern void lua_display_list(int y, int x, int h, int w, cptr title, list_type *list, int max, int begin, int sel, byte sel_color);
 
 extern bool_ player_has_corruption(int corruption_idx);
+extern bool_ player_can_gain_corruption(int corruption_idx);
 
 extern cptr compass(int y, int x, int y2, int x2);
 extern cptr approximate_distance(int y, int x, int y2, int x2);

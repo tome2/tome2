@@ -219,14 +219,6 @@ CORRUPT_TROLL_BLOOD = add_corruption
 			  "  It also enables you to feel the presence of other troll beings",
 			  "  But it will make your presence more noticeable and aggravating",
 	},
-	["can_gain"] =	function()
-			-- Ok trolls should not get this one. never.
-			if get_race_name() == "Troll" then
-				return nil
-			else
-				return not nil
-			end
-	end,
 }
 
 -- The vampire corruption set

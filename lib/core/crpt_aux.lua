@@ -55,11 +55,7 @@ function test_depend_corrupt(corrupt, can_gain)
 	end
 
 	-- are we even allowed to get it?
-	if __corruptions[corrupt].can_gain and (not __corruptions[corrupt].can_gain()) then
-		return FALSE
-	end
-
-	return TRUE
+	return player_can_gain_corruption(corrupt)
 end
 
 -- Gain a new corruption

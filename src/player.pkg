@@ -1853,6 +1853,7 @@ extern s16b MUT1_GROW_MOLD;
 extern s16b MUT1_RESIST;
 extern s16b MUT1_EARTHQUAKE;
 
+extern bool player_can_gain_corruption(int corruption_idx);
 
 /** @name Spellbinder triggers
  * @{ */

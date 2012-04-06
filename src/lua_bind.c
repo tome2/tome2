@@ -11,6 +11,7 @@
  */
 
 #include "angband.h"
+#include <assert.h>
 
 #include "lua.h"
 #include "tolua.h"
@@ -595,7 +596,51 @@ bool_ player_has_corruption(int corruption_idx)
 		return FALSE;
 	}
 
+
+
 	return (p_ptr->corruptions[corruption_idx]);
+}
+
+bool_ player_can_gain_corruption(int corruption_idx)
+{
+	cptr r_name = rp_ptr->title + rp_name;
+	bool_ allowed = TRUE; /* Allowed by default */
+
+	assert(corruption_idx >= 0);
+
+	if (corruption_idx == CORRUPT_TROLL_BLOOD)
+	{
+		/* Ok trolls should not get this one. never. */
+		if (streq(r_name, "Troll"))
+		{
+			allowed = FALSE;
+		}
+	}
+
+	/* Theme module adds additional restrictions for Maiar */
+
+	if (game_module_idx == MODULE_THEME)
+	{
+		if (streq(r_name, "Maia"))
+		{
+			/* We use a whitelist of corruptions for Maiar */
+			bool_ allow = FALSE;
+			if ((corruption_idx == CORRUPT_BALROG_AURA) ||
+			    (corruption_idx == CORRUPT_BALROG_WINGS) ||
+			    (corruption_idx == CORRUPT_BALROG_STRENGTH) ||
+			    (corruption_idx == CORRUPT_BALROG_FORM) ||
+			    (corruption_idx == CORRUPT_DEMON_BREATH))
+			{
+				allow = TRUE;
+			};
+
+			/* Mix result into 'allowed' flag */
+			allowed = allowed & allow;
+		}
+	}
+
+	/* Result */
+	return allowed;
 }
 
 /*

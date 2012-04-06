@@ -79,15 +79,6 @@ CORRUPT_DEMON_SPIRIT = add_corruption
 			  "  Increases your intelligence by 1",
 			  "  But reduce your charisma by 2",
 	},
-["can_gain"] =	function()
-			-- Maiar can't get this one!
-			local str = get_race_name()
-			if str == "Maia" then
-				return nil
-			else
-				return not nil
-			end
-	end,
 }
 
 CORRUPT_DEMON_HIDE = add_corruption
@@ -102,15 +93,6 @@ CORRUPT_DEMON_HIDE = add_corruption
 			  "  Provides immunity to fire at level 40",
 			  "  But reduces speed by your level / 7",
 	},
-["can_gain"] =	function()
-			-- Maiar can't get this one!
-			local str = get_race_name()
-			if str == "Maia" then
-				return nil
-			else
-				return not nil
-			end
-	end,
 }
 
 CORRUPT_DEMON_BREATH = add_corruption
@@ -149,15 +131,6 @@ CORRUPT_DEMON_REALM = add_corruption
 			[CORRUPT_DEMON_HIDE] = TRUE,
 			[CORRUPT_DEMON_BREATH] = TRUE
 	},
-["can_gain"] =	function()
-			-- Maiar can't get this one!
-			local str = get_race_name()
-			if str == "Maia" then
-				return nil
-			else
-				return not nil
-			end
-	end,
 }
 
 
@@ -175,15 +148,6 @@ CORRUPT_RANDOM_TELEPORT = add_corruption
 	{
 			  "  Randomly teleports you around",
 	},
-["can_gain"] =	function()
-			-- Maiar can't get this one!
-			local str = get_race_name()
-			if str == "Maia" then
-				return nil
-			else
-				return not nil
-			end
-	end,
 	-- No oppose field, it will be automatically set when we declare the anti-telep corruption to oppose us
 	["hooks"]       =
 	{
@@ -218,15 +182,6 @@ CORRUPT_ANTI_TELEPORT = add_corruption
 	{
 			[CORRUPT_RANDOM_TELEPORT] = TRUE
 	},
-	["can_gain"] =	function()
-			-- Maiar can't get this one!
-			local str = get_race_name()
-			if str == "Maia" then
-				return nil
-			else
-				return not nil
-			end
-	end,
 	["hooks"]       =
 	{
 		[HOOK_BIRTH_OBJECTS] = function()
@@ -265,15 +220,6 @@ CORRUPT_TROLL_BLOOD = add_corruption
 			  "  It also enables you to feel the presence of other troll beings",
 			  "  But it will make your presence more noticeable and aggravating",
 	},
-	["can_gain"] =	function()
-			-- Ok trolls should not get this one. never.
-			local str = get_race_name()
-			if (str == "Maia") or (str == "Troll") then
-				return nil
-			else
-				return not nil
-			end
-	end,
 }
 
 -- The vampire corruption set
@@ -290,15 +236,6 @@ CORRUPT_VAMPIRE_TEETH = add_corruption
 			  "  Your teeth allow you to drain blood to feed yourself",
 			  "  However your stomach now only accepts blood.",
 	},
-	["can_gain"] =	function()
-			-- Maiar can't get this one!
-			local str = get_race_name()
-			if str == "Maia" then
-				return nil
-			else
-				return not nil
-			end
-	end,
 	["allow"]       = function()
 		if test_race_flags(1, PR1_NO_SUBRACE_CHANGE) == FALSE then return not nil else return nil end
 	end,
@@ -330,15 +267,6 @@ CORRUPT_VAMPIRE_STRENGTH = add_corruption
 	{
 			[CORRUPT_VAMPIRE_TEETH] = TRUE,
 	},
-	["can_gain"] =	function()
-			-- Maiar can't get this one!
-			local str = get_race_name()
-			if str == "Maia" then
-				return nil
-			else
-				return not nil
-			end
-	end,
 	["gain"]	= function()
 		-- Apply the bonuses/penalities
 		subrace(SUBRACE_SAVE).r_mhp = subrace(SUBRACE_SAVE).r_mhp + 1
@@ -376,15 +304,6 @@ CORRUPT_VAMPIRE_VAMPIRE = add_corruption
 	{
 			[CORRUPT_VAMPIRE_STRENGTH] = TRUE,
 	},
-	["can_gain"] =	function()
-			-- Maiar can't get this one!
-			local str = get_race_name()
-			if str == "Maia" then
-				return nil
-			else
-				return not nil
-			end
-	end,
 	["gain"]	= function()
 		-- Be a Vampire and be proud of it
 		local title = get_subrace_title(SUBRACE_SAVE)
@@ -420,15 +339,6 @@ MUT1_SPIT_ACID = add_corruption
 			  "  Damage=level Radius 1+(level/30)",
 			  "  Level=9, Cost=9, Stat=DEX, Difficulty=15",
 	},
-	["can_gain"] =	function()
-			-- Maiar can't get this one!
-			local str = get_race_name()
-			if str == "Maia" then
-				return nil
-			else
-				return not nil
-			end
-	end,
 	["hooks"]       =
 	{
 		[HOOK_CALC_POWERS] = function()
@@ -449,15 +359,6 @@ MUT1_BR_FIRE = add_corruption
 			  "  Damage=2*level Radius 1+(level/20)",
 			  "  Level=20, Cost=10, Stat=CON, Difficulty=18",
 	},
-	["can_gain"] =	function()
-			-- Maiar can't get this one!
-			local str = get_race_name()
-			if str == "Maia" then
-				return nil
-			else
-				return not nil
-			end
-	end,
 	["hooks"]       =
 	{
 		[HOOK_CALC_POWERS] = function()
@@ -478,15 +379,6 @@ MUT1_HYPN_GAZE = add_corruption
 			  "  Power=level",
 			  "  Level=12, Cost=12, Stat=CHR, Difficulty=18",
 	},
-	["can_gain"] =	function()
-			-- Maiar can't get this one!
-			local str = get_race_name()
-			if str == "Maia" then
-				return nil
-			else
-				return not nil
-			end
-	end,
 	["hooks"]       =
 	{
 		[HOOK_CALC_POWERS] = function()
@@ -507,15 +399,6 @@ MUT1_TELEKINES = add_corruption
 			  "  Max weight equal to (level) pounds",
 			  "  Level=9, Cost=9, Stat=WIS, Difficulty=14",
 	},
-	["can_gain"] =	function()
-			-- Maiar can't get this one!
-			local str = get_race_name()
-			if str == "Maia" then
-				return nil
-			else
-				return not nil
-			end
-	end,
 	["hooks"]       =
 	{
 		[HOOK_CALC_POWERS] = function()
@@ -536,15 +419,6 @@ MUT1_VTELEPORT = add_corruption
 			  "  Distance 10+4*level squares",
 			  "  Level=7, Cost=7, Stat=WIS, Difficulty=15",
 	},
-	["can_gain"] =	function()
-			-- Maiar can't get this one!
-			local str = get_race_name()
-			if str == "Maia" then
-				return nil
-			else
-				return not nil
-			end
-	end,
 	["hooks"]       =
 	{
 		[HOOK_CALC_POWERS] = function()
@@ -565,15 +439,6 @@ MUT1_MIND_BLST = add_corruption
 			  "  Psi Damage (3+(level-1)/5)d3",
 			  "  Level=5, Cost=3, Stat=WIS, Difficulty=15",
 	},
-	["can_gain"] =	function()
-			-- Maiar can't get this one!
-			local str = get_race_name()
-			if str == "Maia" then
-				return nil
-			else
-				return not nil
-			end
-	end,
 	["hooks"]       =
 	{
 		[HOOK_CALC_POWERS] = function()
@@ -595,15 +460,6 @@ MUT1_VAMPIRISM = add_corruption
 			  "  heals you and satiates you. Doesn't work on all monsters",
 			  "  Level=4, Cost=5, Stat=CON, Difficulty=9",
 	},
-	["can_gain"] =	function()
-			-- Maiar can't get this one!
-			local str = get_race_name()
-			if str == "Maia" then
-				return nil
-			else
-				return not nil
-			end
-	end,
 	["hooks"]       =
 	{
 		[HOOK_CALC_POWERS] = function()
@@ -624,15 +480,6 @@ MUT1_SMELL_MET = add_corruption
 			  "  Radius 25",
 			  "  Level=3, Cost=2, Stat=INT, Difficulty=12",
 	},
-	["can_gain"] =	function()
-			-- Maiar can't get this one!
-			local str = get_race_name()
-			if str == "Maia" then
-				return nil
-			else
-				return not nil
-			end
-	end,
 	["hooks"]       =
 	{
 		[HOOK_CALC_POWERS] = function()
@@ -653,15 +500,6 @@ MUT1_SMELL_MON = add_corruption
 			  "  Radius 25",
 			  "  Level=5, Cost=4, Stat=INT, Difficulty=15",
 	},
-	["can_gain"] =	function()
-			-- Maiar can't get this one!
-			local str = get_race_name()
-			if str == "Maia" then
-				return nil
-			else
-				return not nil
-			end
-	end,
 	["hooks"]       =
 	{
 		[HOOK_CALC_POWERS] = function()
@@ -681,15 +519,6 @@ MUT1_BLINK = add_corruption
 			  "  You can teleport yourself short distances (10 squares).",
 			  "  Level=3, Cost=3, Stat=WIS, Difficulty=12",
 	},
-	["can_gain"] =	function()
-			-- Maiar can't get this one!
-			local str = get_race_name()
-			if str == "Maia" then
-				return nil
-			else
-				return not nil
-			end
-	end,
 	["hooks"]       =
 	{
 		[HOOK_CALC_POWERS] = function()
@@ -710,15 +539,6 @@ MUT1_EAT_ROCK = add_corruption
 			  "  leaving an empty space behind.",
 			  "  Level=8, Cost=12, Stat=CON, Difficulty=18",
 	},
-	["can_gain"] =	function()
-			-- Maiar can't get this one!
-			local str = get_race_name()
-			if str == "Maia" then
-				return nil
-			else
-				return not nil
-			end
-	end,
 	["hooks"]       =
 	{
 		[HOOK_CALC_POWERS] = function()
@@ -739,15 +559,6 @@ MUT1_SWAP_POS = add_corruption
 			  "  unless it resists teleportation.",
 			  "  Level=15, Cost=12, Stat=DEX, Difficulty=16",
 	},
-	["can_gain"] =	function()
-			-- Maiar can't get this one!
-			local str = get_race_name()
-			if str == "Maia" then
-				return nil
-			else
-				return not nil
-			end
-	end,
 	["hooks"]       =
 	{
 		[HOOK_CALC_POWERS] = function()
@@ -768,15 +579,6 @@ MUT1_SHRIEK = add_corruption
 			  "  Damage=level*4, Radius=8, centered on player",
 			  "  Level=4, Cost=4, Stat=CON, Difficulty=6",
 	},
-	["can_gain"] =	function()
-			-- Maiar can't get this one!
-			local str = get_race_name()
-			if str == "Maia" then
-				return nil
-			else
-				return not nil
-			end
-	end,
 	["hooks"]       =
 	{
 		[HOOK_CALC_POWERS] = function()
@@ -797,15 +599,6 @@ MUT1_ILLUMINE = add_corruption
 			  "  Damage=2d(level/2) Radius=(level/10)+1",
 			  "  Level=3, Cost=2, Stat=INT, Difficulty=10",
 	},
-	["can_gain"] =	function()
-			-- Maiar can't get this one!
-			local str = get_race_name()
-			if str == "Maia" then
-				return nil
-			else
-				return not nil
-			end
-	end,
 	["hooks"]       =
 	{
 		[HOOK_CALC_POWERS] = function()
@@ -826,15 +619,6 @@ MUT1_DET_CURSE = add_corruption
 			  "  It detects cursed items in the inventory",
 			  "  Level=7, Cost=14, Stat=WIS, Difficulty=14",
 	},
-	["can_gain"] =	function()
-			-- Maiar can't get this one!
-			local str = get_race_name()
-			if str == "Maia" then
-				return nil
-			else
-				return not nil
-			end
-	end,
 	["hooks"]       =
 	{
 		[HOOK_CALC_POWERS] = function()
@@ -855,15 +639,6 @@ MUT1_BERSERK = add_corruption
 			  "  It grants super-heroism. Duration=10+1d(level)",
 			  "  Level=8, Cost=8, Stat=STR, Difficulty=14",
 	},
-	["can_gain"] =	function()
-			-- Maiar can't get this one!
-			local str = get_race_name()
-			if str == "Maia" then
-				return nil
-			else
-				return not nil
-			end
-	end,
 	["hooks"]       =
 	{
 		[HOOK_CALC_POWERS] = function()
@@ -885,15 +660,6 @@ MUT1_MIDAS_TCH = add_corruption
 			  "  Turns a non-artifact object into 1/3 its value in gold",
 			  "  Level=10, Cost=5, Stat=INT, Difficulty=12",
 	},
-	["can_gain"] =	function()
-			-- Maiar can't get this one!
-			local str = get_race_name()
-			if str == "Maia" then
-				return nil
-			else
-				return not nil
-			end
-	end,
 	["hooks"]       =
 	{
 		[HOOK_CALC_POWERS] = function()
@@ -914,15 +680,6 @@ MUT1_GROW_MOLD = add_corruption
 			  "  Summons up to 8 molds around the player",
 			  "  Level=1, Cost=6, Stat=CON, Difficulty=14",
 	},
-	["can_gain"] =	function()
-			-- Maiar can't get this one!
-			local str = get_race_name()
-			if str == "Maia" then
-				return nil
-			else
-				return not nil
-			end
-	end,
 	["hooks"]       =
 	{
 		[HOOK_CALC_POWERS] = function()
@@ -944,15 +701,6 @@ MUT1_RESIST = add_corruption
 			  "  elements and poison. Duration=20 + d20",
 			  "  Level=10, Cost=12, Stat=CON, Difficulty=12",
 	},
-	["can_gain"] =	function()
-			-- Maiar can't get this one!
-			local str = get_race_name()
-			if str == "Maia" then
-				return nil
-			else
-				return not nil
-			end
-	end,
 	["hooks"]       =
 	{
 		[HOOK_CALC_POWERS] = function()
@@ -973,15 +721,6 @@ MUT1_EARTHQUAKE = add_corruption
 			  "  Radius=10, center on the player",
 			  "  Level=12, Cost=12, Stat=STR, Difficulty=16",
 	},
-	["can_gain"] =	function()
-			-- Maiar can't get this one!
-			local str = get_race_name()
-			if str == "Maia" then
-				return nil
-			else
-				return not nil
-			end
-	end,
 	["hooks"]       =
 	{
 		[HOOK_CALC_POWERS] = function()
