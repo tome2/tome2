@@ -854,3 +854,10 @@ bool_ drop_text_right(byte c, cptr str, int y, int o)
 	}
 	return FALSE;
 }
+
+void increase_mana(int delta)
+{
+	char buf[256];
+	sprintf(buf, "increase_mana(%d)", delta);
+	exec_lua(buf);
+}

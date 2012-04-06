@@ -137,22 +137,6 @@ CORRUPT_RANDOM_TELEPORT = add_corruption
 			  "  Randomly teleports you around",
 	},
 	-- No oppose field, it will be automatically set when we declare the anti-telep corruption to oppose us
-	["hooks"]       =
-	{
-		[HOOK_PROCESS_WORLD] = function()
-			if rand_int(300) == 1 then
-				if magik(70) == TRUE then
-					if get_check("Teleport?") == TRUE then
-						teleport_player(50)
-					end
-				else
-					disturb(0, 0)
-					msg_print("Your corruption takes over you, you teleport!")
-					teleport_player(50)
-				end
-			end
-		end,
-	},
 }
 
 -- Anti-teleportation corruption, can be stopped with this power
@@ -169,22 +153,6 @@ CORRUPT_ANTI_TELEPORT = add_corruption
 	["oppose"]     	=
 	{
 			[CORRUPT_RANDOM_TELEPORT] = TRUE
-	},
-	["hooks"]       =
-	{
-		[HOOK_PROCESS_WORLD] = function()
-			if player.corrupt_anti_teleport_stopped == TRUE then
-				local amt = player.msp + player.csp
-				amt = amt / 100
-				if (amt < 1) then amt = 1 end
-				increase_mana(-amt)
-				if player.csp == 0 then
-					player.corrupt_anti_teleport_stopped = FALSE
-					msg_print("You stop controlling your corruption.")
-					player.update = bor(player.update, PU_BONUS)
-				end
-			end
-		end,
 	},
 }
 

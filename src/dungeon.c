@@ -1016,6 +1016,52 @@ bool_ is_recall = FALSE;
 
 
 /*
+ * Hook for corruptions
+ */
+static void process_world_corruptions()
+{
+	if (player_has_corruption(CORRUPT_RANDOM_TELEPORT))
+	{
+		if (rand_int(300) == 1)
+		{
+			if (magik(70))
+			{
+				if (get_check("Teleport?"))
+				{
+					teleport_player(50);
+				}
+				else
+				{
+					disturb(0, 0);
+					msg_print("Your corruption takes over you, you teleport!");
+					teleport_player(50);
+				}
+			}
+		}
+	}
+
+	if (player_has_corruption(CORRUPT_ANTI_TELEPORT))
+	{
+		if (p_ptr->corrupt_anti_teleport_stopped)
+		{
+			int amt = p_ptr->msp + p_ptr->csp;
+			amt = amt / 100;
+			if (amt < 1) {
+				amt = 1;
+			}
+			increase_mana(-amt);
+			if (p_ptr->csp == 0)
+			{
+				p_ptr->corrupt_anti_teleport_stopped = FALSE;
+				msg_print("You stop controlling your corruption.");
+				p_ptr->update = p_ptr->update | PU_BONUS;
+			}
+		}
+	}
+}
+
+
+/*
  * Handle certain things once every 10 game turns
  *
  * Note that a single movement in the overhead wilderness mode
@@ -1060,6 +1106,9 @@ static void process_world(void)
 	{
 		/* Let the script live! */
 		process_hooks(HOOK_PROCESS_WORLD, "()");
+
+		/* Handle corruptions */
+		process_world_corruptions();
 
 		/* Handle the player song */
 		check_music();
