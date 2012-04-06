@@ -361,18 +361,6 @@ typedef unsigned int u32b;
  */
 #define HOOK_INIT	       22
 
-/** @def HOOK_QUAFF
- * @brief Player quaffs a potion.\n
- * @param Object o_ptr \n the potion to quaff.
- * @brief Potion
- * @return Boolean \n TRUE if potion was quaffed, otherwise FALSE.
- * @return Number ident \n TRUE if the potion was identifed, otherwise FALSE.
- * @note
- * If the hook returns TRUE, the hook sets the "potion identified" flag.
- * @note (see file cmd6.c)
- */
-#define HOOK_QUAFF	      23
-
 /** @def HOOK_AIM */
 #define HOOK_AIM		24
 

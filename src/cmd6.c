@@ -2495,14 +2495,9 @@ void do_cmd_quaff_potion(void)
 		msg_print("Your demon breath spoils the potion!");
 		ident = FALSE;
 	}
-
-	/* Analyze the potion */
-	else if (process_hooks_ret(HOOK_QUAFF, "d", "(O)", o_ptr))
-	{
-		ident = process_hooks_return[0].num;
-	}
 	else
 	{
+		/* Normal potion handling */
 		ident = quaff_potion(o_ptr->tval, o_ptr->sval, o_ptr->pval, o_ptr->pval2);
 	}
 

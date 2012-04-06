@@ -4457,7 +4457,6 @@
 #define HOOK_PLAYER_LEVEL       20
 #define HOOK_WIELD              21
 #define HOOK_INIT               22
-#define HOOK_QUAFF              23
 #define HOOK_AIM                24
 #define HOOK_USE                25
 #define HOOK_ACTIVATE           26
