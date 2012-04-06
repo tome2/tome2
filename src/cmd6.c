@@ -2335,6 +2335,17 @@ static bool_ quaff_potion(int tval, int sval, int pval, int pval2)
 
 		case SV_POTION_MUTATION:
 			{
+				/* In Theme, Melkor likes players who quaff
+				   potions of corruption. */
+				if (game_module_idx == MODULE_THEME)
+				{
+					GOD(GOD_MELKOR)
+					{
+						msg_print("Your quaffing of this potion pleases Melkor!");
+						set_grace(p_ptr->grace + 2);
+					}
+				}
+
 				msg_print("You feel the dark corruptions of Morgoth coming over you!");
 				gain_random_corruption(0);
 				ident = TRUE;
@@ -2478,8 +2489,15 @@ void do_cmd_quaff_potion(void)
 	/* Object level */
 	lev = k_info[o_ptr->k_idx].level;
 
+	/* Demon Breath corruption can spoil potions. */
+	if (player_has_corruption(CORRUPT_DEMON_BREATH) && magik(9))
+	{
+		msg_print("Your demon breath spoils the potion!");
+		ident = FALSE;
+	}
+
 	/* Analyze the potion */
-	if (process_hooks_ret(HOOK_QUAFF, "d", "(O)", o_ptr))
+	else if (process_hooks_ret(HOOK_QUAFF, "d", "(O)", o_ptr))
 	{
 		ident = process_hooks_return[0].num;
 	}

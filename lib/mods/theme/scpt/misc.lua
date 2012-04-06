@@ -164,18 +164,6 @@ add_building_action
 	end
 }
 
--- function to make Melkor like it if a player quaffs potions of corruption
-function melkor_potion_corruption(object)
-	if (player.pgod == GOD_MELKOR) then
-		if (object.tval == TV_POTION) and (object.sval == SV_POTION_MUTATION) then
-		msg_print("Your quaffing of this potion pleases Melkor!")
-		set_grace(player.grace + 2)
-		return FALSE
-		end
-	end
-end
-add_hook_script(HOOK_QUAFF, "melkor_potion_corruption", "melkor_potion_corruption")
-
 -- function to check for Key of Orthanc before proceeding to the final level in Isengard
 add_hooks
 {

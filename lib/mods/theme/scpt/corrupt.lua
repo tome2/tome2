@@ -129,14 +129,6 @@ CORRUPT_DEMON_BREATH = add_corruption
 		[HOOK_CALC_POWERS] = function()
 			player.add_power(PWR_BR_FIRE)
 		end,
-		[HOOK_QUAFF] = function(obj)
-			if magik(9) == TRUE then
-				msg_print("Your demon breath spoils the potion!")
-				return TRUE, FALSE
-			else
-				return FALSE
-			end
-		end,
 	},
 }
 
