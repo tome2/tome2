@@ -123,13 +123,3 @@ add_hook_script(HOOK_MKEY, "__mkey_fct_activate", "__mkey_fct_activate")
 function subrace(racem)
 	return race_mod_info[racem + 1]
 end
-
-function subrace_add_power(subrace, power)
-	for i = 1, 4 do
-		if subrace.powers[i] == -1 then
-			subrace.powers[i] = power
-			return not nil
-		end
-	end
-	return nil
-end

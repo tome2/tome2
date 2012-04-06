@@ -189,15 +189,7 @@ CORRUPT_VAMPIRE_TEETH = add_corruption
 	["allow"]       = function()
 		if test_race_flags(1, PR1_NO_SUBRACE_CHANGE) == FALSE then return not nil else return nil end
 	end,
-	["gain"]	= function()
-		switch_subrace(SUBRACE_SAVE, TRUE);
-
-		subrace_add_power(subrace(SUBRACE_SAVE), PWR_VAMPIRISM)
-		subrace(SUBRACE_SAVE).flags1 = bor(subrace(SUBRACE_SAVE).flags1, PR1_VAMPIRE, PR1_UNDEAD, PR1_NO_SUBRACE_CHANGE)
-	end,
-	["hooks"]       =
-	{
-	},
+	["gain"]	= function() player_gain_vampire_teeth() end,
 }
 CORRUPT_VAMPIRE_STRENGTH = add_corruption
 {
@@ -217,25 +209,7 @@ CORRUPT_VAMPIRE_STRENGTH = add_corruption
 	{
 			[CORRUPT_VAMPIRE_TEETH] = TRUE,
 	},
-	["gain"]	= function()
-		-- Apply the bonuses/penalities
-		subrace(SUBRACE_SAVE).r_mhp = subrace(SUBRACE_SAVE).r_mhp + 1
-		subrace(SUBRACE_SAVE).r_exp = subrace(SUBRACE_SAVE).r_exp + 100
-
-		subrace(SUBRACE_SAVE).r_adj[A_STR + 1] = subrace(SUBRACE_SAVE).r_adj[A_STR + 1] + 3
-		subrace(SUBRACE_SAVE).r_adj[A_INT + 1] = subrace(SUBRACE_SAVE).r_adj[A_INT + 1] + 2
-		subrace(SUBRACE_SAVE).r_adj[A_WIS + 1] = subrace(SUBRACE_SAVE).r_adj[A_WIS + 1] - 3
-		subrace(SUBRACE_SAVE).r_adj[A_DEX + 1] = subrace(SUBRACE_SAVE).r_adj[A_DEX + 1] - 2
-		subrace(SUBRACE_SAVE).r_adj[A_CON + 1] = subrace(SUBRACE_SAVE).r_adj[A_CON + 1] + 1
-		subrace(SUBRACE_SAVE).r_adj[A_CHR + 1] = subrace(SUBRACE_SAVE).r_adj[A_CHR + 1] - 4
-
-		-- be reborn!
-		do_rebirth()
-		cmsg_print(TERM_L_DARK, "You feel death slipping inside.")
-	end,
-	["hooks"]       =
-	{
-	},
+	["gain"]	= function() player_gain_vampire_strength() end,
 }
 CORRUPT_VAMPIRE_VAMPIRE = add_corruption
 {
@@ -254,25 +228,7 @@ CORRUPT_VAMPIRE_VAMPIRE = add_corruption
 	{
 			[CORRUPT_VAMPIRE_STRENGTH] = TRUE,
 	},
-	["gain"]	= function()
-		-- Be a Vampire and be proud of it
-		local title = get_subrace_title(SUBRACE_SAVE)
-		if title == " " or title == "Vampire" then
-			title = "Vampire"
-			subrace(SUBRACE_SAVE).place = FALSE
-		else
-			title = "Vampire "..title
-		end
-		set_subrace_title(SUBRACE_SAVE, title)
-
-		-- Bonus/and .. not bonus :)
-		subrace(SUBRACE_SAVE).flags1 = bor(subrace(SUBRACE_SAVE).flags1, PR1_HURT_LITE)
-		subrace(SUBRACE_SAVE).oflags2[2] = bor(subrace(SUBRACE_SAVE).oflags2[2], TR2_RES_POIS, TR2_RES_NETHER, TR2_RES_COLD, TR2_RES_DARK, TR2_HOLD_LIFE)
-		subrace(SUBRACE_SAVE).oflags3[2] = bor(subrace(SUBRACE_SAVE).oflags3[2], TR3_LITE1)
-	end,
-	["hooks"]       =
-	{
-	},
+	["gain"]	= function() player_gain_vampire() end,
 }
 
 -- The old activable corruptions / mutations

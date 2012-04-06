@@ -1854,6 +1854,9 @@ extern s16b MUT1_RESIST;
 extern s16b MUT1_EARTHQUAKE;
 
 extern bool player_can_gain_corruption(int corruption_idx);
+extern void player_gain_vampire_teeth();
+extern void player_gain_vampire_strength();
+extern void player_gain_vampire();
 
 /** @name Spellbinder triggers
  * @{ */
@@ -3460,45 +3463,6 @@ extern void do_cmd_throw(void);
  * @note (see file spells2.c)
  */
 extern void change_wild_mode();
-
-/** @fn switch_subrace(int racem, bool copy_old)
- * @brief Change to an other subrace.\n
- * @param racem Number \n index of subrace in subrace array
- * @brief Subrace index
- * @param copy_old Boolean \n TRUE if the new subrace is to be saved,
- * otherwise FALSE.
- * @brief Copy old subrace?
- * @note (see file xtra2.c)
- */
-extern void switch_subrace(int racem, bool copy_old);
-
-/** @fn get_subrace_title(int racem)
- * @brief Return the subrace title.\n
- * @param racem Number \n index of subrace in subrace array
- * @brief Subrace index
- * @return String \n Title of subrace.
- * @note (see file xtra2.c)
- */
-extern cptr get_subrace_title(int racem);
-
-/** @fn set_subrace_title(int racem, cptr name)
- * @brief Set the subrace title.\n
- * @param racem Number \n index of subrace in subrace array
- * @brief Subrace index
- * @param name String \n new title of subrace
- * @brief New title
- * @note (see file xtra2.c)
- */
-extern void set_subrace_title(int racem, cptr name);
-
-/** @fn do_rebirth()
- * @brief The player is reborn after a class, race, or subrace change.
- * @note
- * The experience factor is recalculated. The hit dice are reset and new HP
- * are calculated. There may be a level change involved.
- * @note (see file xtra2.c)
- */
-extern void do_rebirth();
 
 /* Player race flags */
 $static bool lua_test_race_flags(int slot, u32b flags) { if (slot == 1) return (PRACE_FLAG(flags)) ? TRUE : FALSE; else return (PRACE_FLAG2(flags)) ? TRUE : FALSE; }

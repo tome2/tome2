@@ -1871,6 +1871,9 @@ extern void lua_display_list(int y, int x, int h, int w, cptr title, list_type *
 
 extern bool_ player_has_corruption(int corruption_idx);
 extern bool_ player_can_gain_corruption(int corruption_idx);
+extern void player_gain_vampire_teeth();
+extern void player_gain_vampire_strength();
+extern void player_gain_vampire();
 
 extern cptr compass(int y, int x, int y2, int x2);
 extern cptr approximate_distance(int y, int x, int y2, int x2);

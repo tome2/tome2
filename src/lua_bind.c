@@ -643,6 +643,84 @@ bool_ player_can_gain_corruption(int corruption_idx)
 	return allowed;
 }
 
+static void subrace_add_power(player_race_mod *rmp_ptr, int power)
+{
+	int i;
+
+	for (i=0; i<4; i++)
+	{
+		if (rmp_ptr->powers[i] == -1)
+		{
+			rmp_ptr->powers[i] = power;
+			return;
+		}
+	}
+}
+
+void player_gain_vampire_teeth()
+{
+	player_race_mod *rmp_ptr = NULL;
+
+	switch_subrace(SUBRACE_SAVE, TRUE);
+
+	rmp_ptr = &race_mod_info[SUBRACE_SAVE];
+	subrace_add_power(rmp_ptr, PWR_VAMPIRISM);
+	rmp_ptr->flags1 = rmp_ptr->flags1
+		| PR1_VAMPIRE
+		| PR1_UNDEAD
+		| PR1_NO_SUBRACE_CHANGE;
+}
+
+void player_gain_vampire_strength()
+{
+	player_race_mod *rmp_ptr = &race_mod_info[SUBRACE_SAVE];
+	/* Apply the bonuses/penalities */
+	rmp_ptr->r_mhp = rmp_ptr->r_mhp + 1;
+	rmp_ptr->r_exp = rmp_ptr->r_exp + 100;
+
+	rmp_ptr->r_adj[A_STR + 1] = rmp_ptr->r_adj[A_STR + 1] + 3;
+	rmp_ptr->r_adj[A_INT + 1] = rmp_ptr->r_adj[A_INT + 1] + 2;
+	rmp_ptr->r_adj[A_WIS + 1] = rmp_ptr->r_adj[A_WIS + 1] - 3;
+	rmp_ptr->r_adj[A_DEX + 1] = rmp_ptr->r_adj[A_DEX + 1] - 2;
+	rmp_ptr->r_adj[A_CON + 1] = rmp_ptr->r_adj[A_CON + 1] + 1;
+	rmp_ptr->r_adj[A_CHR + 1] = rmp_ptr->r_adj[A_CHR + 1] - 4;
+
+	/* be reborn! */
+	do_rebirth();
+	cmsg_print(TERM_L_DARK, "You feel death slipping inside.");
+}
+
+void player_gain_vampire()
+{
+	player_race_mod *rmp_ptr = &race_mod_info[SUBRACE_SAVE];
+
+	/* Be a Vampire and be proud of it */
+	cptr title = get_subrace_title(SUBRACE_SAVE);
+	if (streq(title, " ") || streq(title, "Vampire"))
+	{
+		title = "Vampire";
+		rmp_ptr->place = FALSE;
+		set_subrace_title(SUBRACE_SAVE, title);
+	}
+	else
+	{
+		char buf[512];
+		sprintf(buf, "Vampire %s", title);
+		set_subrace_title(SUBRACE_SAVE, buf);
+	}
+
+	/* Bonus/and .. not bonus :) */
+	rmp_ptr->flags1 = rmp_ptr->flags1 | PR1_HURT_LITE;
+	rmp_ptr->oflags2[2] = rmp_ptr->oflags2[2]
+		| TR2_RES_POIS
+		| TR2_RES_NETHER
+		| TR2_RES_COLD
+		| TR2_RES_DARK
+		| TR2_HOLD_LIFE;
+	rmp_ptr->oflags3[2] = rmp_ptr->oflags3[2]
+		| TR3_LITE1;
+}
+
 /*
  * Gods
  */
