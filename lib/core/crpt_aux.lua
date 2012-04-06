@@ -120,15 +120,6 @@ function lose_corruption()
 	end
 end
 
--- Lose all corruptions (for e.g. Potion of New Life)
-function lose_all_corruptions()
-	local i;
-	for i = 0, __corruptions_max - 1 do
-		lose_corruption()
-	end
-	return -1
-end
-
 -- Creates a new corruption
 function add_corruption(c)
 	assert(c.color, "No corruption color")

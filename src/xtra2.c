@@ -5613,12 +5613,6 @@ bool_ lose_corruption(int choose_mut)
 	return (FALSE);
 }
 
-bool_ lose_all_corruptions(void)
-{
-	exec_lua("lose_all_corruptions()");
-	return (FALSE);
-}
-
 bool_ get_hack_dir(int *dp)
 {
 	int dir;

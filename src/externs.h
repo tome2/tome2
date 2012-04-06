@@ -1679,7 +1679,6 @@ extern bool_ curse_weapon(void);
 extern bool_ curse_armor(void);
 extern void random_resistance(object_type * q_ptr, bool_ is_scroll, int specific);
 extern bool_ lose_corruption(int choose_mut);
-extern bool_ lose_all_corruptions(void);
 extern void great_side_effect(void);
 extern void nasty_side_effect(void);
 extern void deadly_side_effect(bool_ god);
