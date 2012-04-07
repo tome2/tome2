@@ -4046,6 +4046,7 @@
 #define BACT_PAY_BACK_LOAN          53
 #define BACT_DROP_ITEM              54
 #define BACT_GET_ITEM               55
+#define BACT_LIBRARY_QUEST          61
 /* If one adds new BACT_ do NOT forget to increase max_bact in variables.c */
 
 

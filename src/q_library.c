@@ -240,3 +240,68 @@ void quest_library_gen_hook()
 	library_quest_place_nrandom(
 		10, 10, 37, 67, MONSTER_MITHRIL_GOLEM, 1);
 }
+
+static int get_status()
+{
+	return exec_lua("return quest(LIBRARY_QUEST).status");
+}
+
+static void set_status(int new_status)
+{
+	exec_lua(format("quest(LIBRARY_QUEST).status = %d", new_status));
+}
+
+void quest_library_building(bool_ *paid, bool_ *recreate)
+{
+	int status = get_status();
+
+	/* the quest hasn't been requested already, right? */
+	if (status == QUEST_STATUS_UNTAKEN)
+	{
+		/* quest has been taken now */
+		set_status(QUEST_STATUS_TAKEN);
+
+		/* issue instructions */
+		msg_print("I need get some stock from my main library, but it is infested with monsters!");
+		msg_print("Please use the side entrance and vanquish the intruders for me.");
+
+		*paid = FALSE;
+		*recreate = TRUE;
+	}
+
+	/* if quest completed */
+	else if (status == QUEST_STATUS_COMPLETED)
+	{
+		msg_print("Thank you!  Let me make a special book for you.");
+		msg_print("Tell me three spells and I will write them in the book.");
+		library_quest_fill_book();
+		if (library_quest_book_slots_left() == 0)
+		{
+			set_status(QUEST_STATUS_REWARDED);
+
+			{
+				object_type forge;
+				object_type *q_ptr = &forge;
+				object_prep(q_ptr, lookup_kind(TV_BOOK, 61));
+				q_ptr->art_name = quark_add(player_name);
+				q_ptr->found = OBJ_FOUND_REWARD;
+				object_aware(q_ptr);
+				object_known(q_ptr);
+				inven_carry(q_ptr, FALSE);
+			}
+		}
+	}
+
+	/* if the player asks for a quest when they already have it,
+	 * but haven't failed it, give them some extra instructions */
+	else if (status == QUEST_STATUS_TAKEN)
+	{
+		msg_print("Please use the side entrance and vanquish the intruders for me.");
+	}
+
+	/* quest failed or completed, then give no more quests */
+	else if ((status == QUEST_STATUS_FAILED) || (status == QUEST_STATUS_REWARDED))
+	{
+		msg_print("I have no more quests for you.");
+	}
+}
