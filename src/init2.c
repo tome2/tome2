@@ -4,6 +4,7 @@
 
 #include "angband.h"
 
+#include <assert.h>
 
 /*
  * This file is used to initialise various variables and arrays for the
@@ -2157,13 +2158,6 @@ void init_schools(s16b new_size)
 	/* allocate the extra memory */
 	C_MAKE(schools, new_size, school_type);
 	max_schools = new_size;
-}
-
-void init_corruptions(s16b new_size)
-{
-	/* allocate the extra memory */
-	C_MAKE(p_ptr->corruptions, new_size, bool_);
-	max_corruptions = new_size;
 }
 
 /*

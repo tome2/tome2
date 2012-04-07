@@ -823,7 +823,6 @@ static void player_wipe(void)
 	int i, j;
 
 	bool_ *powers;
-	bool_ *corruptions;
 
 
 	/* Wipe special levels */
@@ -831,20 +830,15 @@ static void player_wipe(void)
 
 	/* Save the powers & corruptions */
 	powers = p_ptr->powers;
-	corruptions = p_ptr->corruptions;
 
 	/* Hack -- zero the struct */
 	p_ptr = WIPE(p_ptr, player_type);
 
 	/* Restore the powers & corruptions */
 	p_ptr->powers = powers;
-	p_ptr->corruptions = corruptions;
 
 	/* Not dead yet */
 	p_ptr->lives = 0;
-
-	/* Wipe the corruptions */
-	(void)C_WIPE(p_ptr->corruptions, max_corruptions, bool_);
 
 	/* Wipe the history */
 	for (i = 0; i < 4; i++)

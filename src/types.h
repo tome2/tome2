@@ -1807,7 +1807,7 @@ struct player_type
 	u32b xtra_esp;
 
 	/* Corruptions */
-	bool_ *corruptions;
+	bool_ corruptions[CORRUPTIONS_MAX];
         bool_ corrupt_anti_teleport_stopped;
 
 	/*** Pet commands ***/
@@ -2582,4 +2582,22 @@ struct module_type
 		s32b max_skill_overage;
 	} skills;
 
+};
+
+/**
+ * Corruptions
+ */
+typedef struct corruption_type corruption_type;
+struct corruption_type
+{
+	int  modules[3]; /* Modules where this corruption is available; terminated with -1 entry */
+	byte color;
+	cptr group;
+	cptr name;
+	cptr get_text;
+	cptr lose_text; /* If NULL, the corruption is NOT removable by any means */
+	cptr desc;
+	s16b depends[5]; /* terminated by a -1 entry */
+	s16b opposes[5]; /* terminated by a -1 entry */
+	void (*gain_callback)(); /* callback to invoke when gained */
 };

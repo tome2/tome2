@@ -75,10 +75,10 @@ add_hooks{
 [HOOK_GAME_START] = function() 
 
   	if ((get_race_name() == "Maia") and 
-	(player.corruption(CORRUPT_BALROG_AURA) ~= TRUE) and 
-	(player.corruption(CORRUPT_BALROG_WINGS) ~= TRUE) and 
-	(player.corruption(CORRUPT_BALROG_STRENGTH) ~= TRUE) and 
-	(player.corruption(CORRUPT_BALROG_FORM) ~= TRUE)) then 
+	(player_has_corruption(CORRUPT_BALROG_AURA) ~= TRUE) and
+	(player_has_corruption(CORRUPT_BALROG_WINGS) ~= TRUE) and
+	(player_has_corruption(CORRUPT_BALROG_STRENGTH) ~= TRUE) and
+	(player_has_corruption(CORRUPT_BALROG_FORM) ~= TRUE)) then
 	-- "Proper" Maiar aggravate evil beings
     	TIMER_AGGRAVATE_EVIL.enabled = TRUE
 	-- Good beings (except swans, GWoPs, Wyrm Spirits, and some joke uniques) are coaligned with Maiar 

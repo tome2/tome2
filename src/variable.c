@@ -1542,11 +1542,6 @@ int cli_total = 0;
 int max_bact = 56;
 
 /*
- * Max corruptions
- */
-s16b max_corruptions = 0;
-
-/*
  * Ingame contextual help
  */
 bool_ option_ingame_help = TRUE;
@@ -1596,44 +1591,6 @@ timer_type *gl_timers = NULL;
  * Timered precognition.
  */
 s16b tim_precognition = 0;
-
-/**
- * Corruptions
- */
-s16b CORRUPT_BALROG_AURA = -1;
-s16b CORRUPT_BALROG_WINGS = -1;
-s16b CORRUPT_BALROG_STRENGTH = -1;
-s16b CORRUPT_BALROG_FORM = -1;
-s16b CORRUPT_DEMON_SPIRIT = -1;
-s16b CORRUPT_DEMON_HIDE = -1;
-s16b CORRUPT_DEMON_BREATH = -1;
-s16b CORRUPT_DEMON_REALM = -1;
-s16b CORRUPT_RANDOM_TELEPORT = -1;
-s16b CORRUPT_ANTI_TELEPORT = -1;
-s16b CORRUPT_TROLL_BLOOD = -1;
-s16b CORRUPT_VAMPIRE_TEETH = -1;
-s16b CORRUPT_VAMPIRE_STRENGTH = -1;
-s16b CORRUPT_VAMPIRE_VAMPIRE = -1;
-s16b MUT1_SPIT_ACID = -1;
-s16b MUT1_BR_FIRE = -1;
-s16b MUT1_HYPN_GAZE = -1;
-s16b MUT1_TELEKINES = -1;
-s16b MUT1_VTELEPORT = -1;
-s16b MUT1_MIND_BLST = -1;
-s16b MUT1_VAMPIRISM = -1;
-s16b MUT1_SMELL_MET = -1;
-s16b MUT1_SMELL_MON = -1;
-s16b MUT1_BLINK = -1;
-s16b MUT1_EAT_ROCK = -1;
-s16b MUT1_SWAP_POS = -1;
-s16b MUT1_SHRIEK = -1;
-s16b MUT1_ILLUMINE = -1;
-s16b MUT1_DET_CURSE = -1;
-s16b MUT1_BERSERK = -1;
-s16b MUT1_MIDAS_TCH = -1;
-s16b MUT1_GROW_MOLD = -1;
-s16b MUT1_RESIST = -1;
-s16b MUT1_EARTHQUAKE = -1;
 
 
 /*

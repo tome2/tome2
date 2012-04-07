@@ -2347,7 +2347,7 @@ static bool_ quaff_potion(int tval, int sval, int pval, int pval2)
 				}
 
 				msg_print("You feel the dark corruptions of Morgoth coming over you!");
-				gain_random_corruption(0);
+				gain_random_corruption();
 				ident = TRUE;
 				break;
 			}
@@ -7220,7 +7220,7 @@ const char *activation_aux(object_type * o_ptr, bool_ doit, int item)
 		case ACT_MUT:
 			{
 				if (!doit) return "gain corruption every 10 turns";
-				gain_random_corruption(0);
+				gain_random_corruption();
 				/* Timeout is set before return */
 
 				break;

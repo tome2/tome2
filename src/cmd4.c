@@ -4069,7 +4069,10 @@ void do_cmd_knowledge_corruptions(void)
 	fff = my_fopen(file_name, "w");
 
 	/* Dump the corruptions to file */
-	if (fff) dump_corruptions(fff, TRUE);
+	if (fff)
+	{
+		dump_corruptions(fff, TRUE, FALSE);
+	}
 
 	/* Close the file */
 	my_fclose(fff);

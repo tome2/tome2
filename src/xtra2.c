@@ -12,6 +12,7 @@
  */
 
 #include "angband.h"
+#include <assert.h>
 
 /*
  * Invoke The Rush
@@ -5147,7 +5148,7 @@ void gain_level_reward(int chosen_reward)
 	{
 		msg_format("%^s rewards you with a corruption!",
 		           chaos_patrons[p_ptr->chaos_patron]);
-		(void)gain_random_corruption(0);
+		gain_random_corruption();
 		return;
 	}
 
@@ -5600,19 +5601,6 @@ bool_ tgt_pt(int *x, int *y)
 	return success;
 }
 
-
-bool_ gain_random_corruption(int choose_mut)
-{
-	exec_lua("gain_corruption()");
-	return (FALSE);
-}
-
-bool_ lose_corruption(int choose_mut)
-{
-	exec_lua("lose_corruption()");
-	return (FALSE);
-}
-
 bool_ get_hack_dir(int *dp)
 {
 	int dir;
@@ -5707,51 +5695,6 @@ bool_ get_hack_dir(int *dp)
 
 	/* A "valid" direction was entered */
 	return (TRUE);
-}
-
-/*
- * Do we have at least one corruption?
- */
-bool_ got_corruptions()
-{
-	int i, max;
-
-	max = exec_lua("return __corruptions_max");
-
-	for (i = 0; i < max; i++)
-	{
-		if (exec_lua(format("if test_depend_corrupt(%d) == TRUE then return TRUE else return FALSE end", i)))
-		{
-			return TRUE;
-		}
-	}
-	return FALSE;
-}
-
-/*
- * Dump the corruption list
- */
-void dump_corruptions(FILE *fff, bool_ color)
-{
-	int i, max;
-
-	if (!fff) return;
-
-	max = exec_lua("return __corruptions_max");
-
-	for (i = 0; i < max; i++)
-	{
-		if (exec_lua(format("if test_depend_corrupt(%d) == TRUE then return TRUE else return FALSE end", i)))
-		{
-			int c = exec_lua(format("return __corruptions[%d].color", i));
-
-			if (color)
-				fprintf(fff, "#####%c%s:\n", conv_color[c], string_exec_lua(format("return __corruptions[%d].name", i)));
-			else
-				fprintf(fff, "%s:\n", string_exec_lua(format("return __corruptions[%d].name", i)));
-			fprintf(fff, "%s\n", string_exec_lua(format("return __corruptions[%d].desc", i)));
-		}
-	}
 }
 
 /*
@@ -6048,11 +5991,11 @@ void corrupt_corrupted(void)
 {
 	if (magik(45))
 	{
-		lose_corruption(0);
+		lose_corruption();
 	}
 	else
 	{
-		gain_random_corruption(0);
+		gain_random_corruption();
 	}
 
 	/* We are done. */

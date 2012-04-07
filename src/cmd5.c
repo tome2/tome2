@@ -236,7 +236,7 @@ void do_poly_self(void)
 			/* Polymorph into a less corrupted form */
 			power -= 10;
 
-			lose_corruption(0);
+			lose_corruption();
 		}
 
 		/*

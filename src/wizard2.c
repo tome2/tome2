@@ -1758,7 +1758,7 @@ void do_cmd_debug(void)
 
 		/* corruption */
 	case 'M':
-		(void) gain_random_corruption(command_arg);
+		gain_random_corruption();
 		break;
 
 		/* Specific reward */

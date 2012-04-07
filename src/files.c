@@ -2736,11 +2736,7 @@ errr file_character(cptr name, bool_ full)
 	file_character_print_grid(fff, FALSE, FALSE);
 
 	/* Dump corruptions */
-	if (got_corruptions())
-	{
-		fprintf(fff, "\n Corruption list:\n");
-		dump_corruptions(fff, FALSE);
-	}
+	dump_corruptions(fff, FALSE, TRUE);
 
 	/* Dump skills */
 	dump_skills(fff);

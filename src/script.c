@@ -245,8 +245,7 @@ void init_lua_init()
 	}
 
 	/* Finish up the corruptions */
-	max = exec_lua("return __corruptions_max");
-	init_corruptions(max);
+	init_corruptions();
 }
 
 bool_ tome_dofile(char *file)

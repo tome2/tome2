@@ -17,9 +17,6 @@ tome_dofile("powers.lua")
 -- Add the mimic shapes
 tome_dofile("mimic.lua")
 
--- Add the corruptions
-tome_dofile("corrupt.lua")
-
 -- Add the mkey activations
 tome_dofile("mkeys.lua")
 
