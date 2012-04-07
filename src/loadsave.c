@@ -637,12 +637,11 @@ static bool_ do_extra(int flag)
 	/* Are we in astral mode? */
 	do_byte((byte*)&p_ptr->astral, flag);
 
-	if (flag == LS_SAVE) tmp16s = POWER_MAX_INIT;
+	if (flag == LS_SAVE) tmp16s = POWER_MAX;
 	do_s16b(&tmp16s, flag);
-	if ((flag == LS_LOAD) && (tmp16s > POWER_MAX_INIT))
+	if ((flag == LS_LOAD) && (tmp16s > POWER_MAX))
 		note(format("Too many (%u) powers!", tmp16s));
-	if (flag == LS_SAVE) tmp16s = POWER_MAX_INIT;
-	for (i = 0; i < tmp16s; i++)
+	for (i = 0; i < POWER_MAX; i++)
 		do_byte((byte*)&p_ptr->powers_mod[i], flag);
 
 	skip_ver_byte(100, flag);

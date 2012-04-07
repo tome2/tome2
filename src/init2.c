@@ -1959,13 +1959,6 @@ static errr init_misc(void)
 	/* Hack -- No messages yet */
 	message__tail = MESSAGE_BUF;
 
-	/* Prepare powers */
-	p_ptr->powers = NULL;
-	powers_type = NULL;
-	power_max = POWER_MAX_INIT;
-	reinit_powers_type(power_max);
-	C_COPY(powers_type, powers_type_init, POWER_MAX_INIT, power_type);
-
 	/* Prepare quests */
 	quest = NULL;
 	max_q_idx = MAX_Q_IDX_INIT;
@@ -2078,34 +2071,6 @@ static errr init_wilderness(void)
 	generate_encounter = FALSE;
 
 	return 0;
-}
-
-/*
- * XXX XXX XXX XXX XXX Realloc is not guaranteed to work (see main-gtk.c
- * and main-mac.c.
- */
-void reinit_powers_type(s16b new_size)
-{
-	power_type *new_powers_type;
-	bool_ *new_powers;
-
-	C_MAKE(new_powers_type, new_size, power_type);
-	C_MAKE(new_powers, new_size, bool_);
-
-	/* Reallocate the extra memory */
-	if (powers_type && p_ptr->powers)
-	{
-		C_COPY(new_powers_type, powers_type, power_max, power_type);
-		C_COPY(new_powers, p_ptr->powers, power_max, bool_);
-
-		C_FREE(powers_type, power_max, power_type);
-		C_FREE(p_ptr->powers, power_max, bool_);
-	}
-
-	powers_type = new_powers_type;
-	p_ptr->powers = new_powers;
-
-	power_max = new_size;
 }
 
 void reinit_quests(s16b new_size)

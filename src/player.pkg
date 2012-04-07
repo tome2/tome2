@@ -1766,15 +1766,15 @@ struct player_type
 	 */
 	byte body_parts[28];
 
-	/** @structvar powers_mod[POWER_MAX_INIT]
+	/** @structvar powers_mod[POWER_MAX]
 	 * @brief Boolean
 	 * @note Intrinsinc powers
 	 */
-	bool powers_mod[POWER_MAX_INIT];
-	/** @structvar powers[power_max]
+	bool powers_mod[POWER_MAX];
+	/** @structvar powers[POWER_MAX]
 	 * @brief Boolean
 	 */
-	bool powers[power_max];
+	bool powers[POWER_MAX];
 
 	/** @structvar spellbinder_num
 	 * @brief Number

@@ -1297,11 +1297,10 @@ static power_type* select_power(int *x_idx)
 	int max = 0, i, start = 0;
 	power_type* ret;
 	bool_ mode = FALSE;
-	int *p;
+	int p[POWER_MAX];
 
-	C_MAKE(p, power_max, int);
 	/* Count the max */
-	for (i = 0; i < power_max; i++)
+	for (i = 0; i < POWER_MAX; i++)
 	{
 		if (p_ptr->powers[i])
 		{
@@ -1375,8 +1374,6 @@ static power_type* select_power(int *x_idx)
 		character_icky = FALSE;
 	}
 
-	C_FREE(p, power_max, int);
-
 	return ret;
 }
 
@@ -1390,7 +1387,7 @@ void do_cmd_power()
 	/* Get the skill, if available */
 	if (repeat_pull(&x_idx))
 	{
-		if ((x_idx < 0) || (x_idx >= power_max)) return;
+		if ((x_idx < 0) || (x_idx >= POWER_MAX)) return;
 		x_ptr = &powers_type[x_idx];
 		push = FALSE;
 	}
@@ -1398,7 +1395,7 @@ void do_cmd_power()
 	else
 	{
 		x_idx = command_arg - 1;
-		if ((x_idx < 0) || (x_idx >= power_max)) return;
+		if ((x_idx < 0) || (x_idx >= POWER_MAX)) return;
 		x_ptr = &powers_type[x_idx];
 	}
 

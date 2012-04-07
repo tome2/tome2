@@ -2163,12 +2163,6 @@ extern magic_power *grab_magic_power @ get_magic_power(magic_power *m_ptr, int n
  */
 extern bool lua_spell_success @ magic_power_sucess(magic_power *spell, int stat, char *oups_fct=NULL);
 
-/** @var power_max
- * @brief Number
- * @note Maximum number of innate powers.
- */
-extern s16b power_max;
-
 /* Schools  */
 
 /** @struct school_spell_type

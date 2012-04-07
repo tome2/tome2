@@ -4301,7 +4301,7 @@
 /*
  * Powers (mutation, activations, ...)
  */
-#define POWER_MAX_INIT                 65
+#define POWER_MAX                      65
 
 #define PWR_SPIT_ACID                  0
 #define PWR_BR_FIRE                    1

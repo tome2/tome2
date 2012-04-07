@@ -3135,7 +3135,7 @@ flags_group flags_groups[MAX_FLAG_GROUP] =
 };
 
 /* Powers */
-power_type powers_type_init[POWER_MAX_INIT] =
+power_type powers_type[POWER_MAX] =
 {
 	{
 		"spit acid",

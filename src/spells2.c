@@ -1089,7 +1089,7 @@ void self_knowledge(FILE *fff)
 	}
 
 	/* List powers */
-	for (iter = 0; iter < power_max; iter++)
+	for (iter = 0; iter < POWER_MAX; iter++)
 	{
 		if (p_ptr->powers[iter])
 		{

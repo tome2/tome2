@@ -1827,8 +1827,8 @@ struct player_type
 	bool_ astral;              /* We started at the bottom ? */
 
 	/* Powers */
-	bool_ *powers;     /* Actual powers */
-	bool_ powers_mod[POWER_MAX_INIT]; /* Intrinsinc powers */
+	bool_ powers[POWER_MAX];     /* Actual powers */
+	bool_ powers_mod[POWER_MAX]; /* Intrinsinc powers */
 
 	/* Skills */
 	s16b skill_points;

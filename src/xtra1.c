@@ -1569,7 +1569,7 @@ bool_ calc_powers_silent = FALSE;
 static void calc_powers(void)
 {
 	int i, p = 0;
-	bool_ *old_powers;
+	bool_ old_powers[POWER_MAX];
 
 	/* Hack -- wait for creation */
 	if (!character_generated) return;
@@ -1577,14 +1577,12 @@ static void calc_powers(void)
 	/* Hack -- handle "xtra" mode */
 	if (character_xtra) return;
 
-	C_MAKE(old_powers, power_max, bool_);
-
 	/* Save old powers */
-	for (i = 0; i < power_max; i++) old_powers[i] = p_ptr->powers[i];
+	for (i = 0; i < POWER_MAX; i++) old_powers[i] = p_ptr->powers[i];
 
 	/* Get intrinsincs */
-	for (i = 0; i < POWER_MAX_INIT; i++) p_ptr->powers[i] = p_ptr->powers_mod[i];
-	for (; i < power_max; i++) p_ptr->powers[i] = 0;
+	for (i = 0; i < POWER_MAX; i++) p_ptr->powers[i] = p_ptr->powers_mod[i];
+	for (; i < POWER_MAX; i++) p_ptr->powers[i] = 0;
 
 	/* Calculate powers granted by corruptions */
 	calc_powers_corruption();
@@ -1632,7 +1630,7 @@ static void calc_powers(void)
 	}
 
 	/* Now lets warn the player */
-	for (i = 0; i < power_max; i++)
+	for (i = 0; i < POWER_MAX; i++)
 	{
 		s32b old = old_powers[i];
 		s32b new_ = p_ptr->powers[i];
@@ -1648,7 +1646,6 @@ static void calc_powers(void)
 	}
 
 	calc_powers_silent = FALSE;
-	C_FREE(old_powers, power_max, bool_);
 }
 
 

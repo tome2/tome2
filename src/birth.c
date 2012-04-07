@@ -822,20 +822,12 @@ static void player_wipe(void)
 {
 	int i, j;
 
-	bool_ *powers;
-
 
 	/* Wipe special levels */
 	wipe_saved();
 
-	/* Save the powers & corruptions */
-	powers = p_ptr->powers;
-
 	/* Hack -- zero the struct */
 	p_ptr = WIPE(p_ptr, player_type);
-
-	/* Restore the powers & corruptions */
-	p_ptr->powers = powers;
 
 	/* Not dead yet */
 	p_ptr->lives = 0;
@@ -1039,7 +1031,7 @@ static void player_wipe(void)
 	p_ptr->loan = p_ptr->loan_time = 0;
 
 	/* Wipe the power list */
-	for (i = 0; i < POWER_MAX_INIT; i++)
+	for (i = 0; i < POWER_MAX; i++)
 	{
 		p_ptr->powers_mod[i] = 0;
 	}

@@ -1480,12 +1480,6 @@ hist_type *bg;
 int max_bg_idx;
 
 /*
- * Powers
- */
-s16b power_max = POWER_MAX_INIT;
-power_type *powers_type;
-
-/*
  * Variable savefile stuff
  */
 s32b extra_savefile_parts = 0;
