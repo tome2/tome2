@@ -1509,7 +1509,7 @@ void object_desc(char *buf, object_type *o_ptr, int pref, int mode)
 			}
 			else
 			{
-				call_lua("get_mimic_info", "(d,s)", "s", o_ptr->pval2, "name", &modstr);
+				modstr = get_mimic_name(o_ptr->pval2);
 			}
 			if (((plain_descriptions) && (aware)) || o_ptr->ident & IDENT_STOREB)
 				basenm = "& Potion~";
@@ -1540,7 +1540,7 @@ void object_desc(char *buf, object_type *o_ptr, int pref, int mode)
 			show_armour = TRUE;
 			if (o_ptr->sval == SV_MIMIC_CLOAK)
 			{
-				call_lua("get_mimic_info", "(d,s)", "s", o_ptr->pval2, "obj_name", &modstr);
+				modstr = get_mimic_object_name(o_ptr->pval2);
 			}
 			break;
 		}

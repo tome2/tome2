@@ -2644,7 +2644,7 @@ errr file_character(cptr name, bool_ full)
 
 		if (p_ptr->tim_mimic)
 		{
-			call_lua("get_mimic_info", "(d,s)", "s", p_ptr->mimic_form, "name", &mimic);
+			mimic = get_mimic_name(p_ptr->mimic_form);
 			fprintf(fff, "\n You %s disguised as a %s.", (death ? "were" : "are"), mimic);
 		}
 	}

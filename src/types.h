@@ -2602,3 +2602,29 @@ struct corruption_type
 	void (*gain_callback)(); /* callback to invoke when gained */
 	s16b power;              /* index of granted power if >= 0, ignored otherwise */
 };
+
+/**
+ * Mimicry forms
+ */
+typedef struct mimic_duration_type mimic_duration_type;
+struct mimic_duration_type
+{
+	s16b min;
+	s16b max;
+};
+
+typedef struct mimic_form_type mimic_form_type;
+struct mimic_form_type
+{
+	int modules[3]; /* Modules where this mimicry form is available; terminated with a -1 entry */
+	cptr name;     /* Name of mimicry form */
+	cptr obj_name; /* Object mimicry form name */
+	cptr desc;     /* Description */
+	cptr realm;    /* Realm of mimicry */
+	bool_ limit;   /* If true, the form is not available except through special means */
+	byte level;
+	byte rarity;
+	mimic_duration_type duration;
+	s32b (*calc)();  /* Callback to calculate bonuses; return number of blows to add */
+	void (*power)(); /* Callback to calculate powers */
+};

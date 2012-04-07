@@ -2761,9 +2761,7 @@ static void a_m_aux_2(object_type *o_ptr, int level, int power)
 				o_ptr->pval = randint(4);        /* No cursed elven cloaks...? */
 			else if (o_ptr->sval == SV_MIMIC_CLOAK)
 			{
-				s32b mimic;
-
-				call_lua("find_random_mimic_shape", "(d,d)", "d", level, TRUE, &mimic);
+				s32b mimic = find_random_mimic_shape(level, TRUE);
 				o_ptr->pval2 = mimic;
 			}
 			break;
@@ -3437,9 +3435,7 @@ static void a_m_aux_4(object_type *o_ptr, int level, int power)
 	case TV_POTION2:
 		if (o_ptr->sval == SV_POTION2_MIMIC)
 		{
-			s32b mimic;
-
-			call_lua("find_random_mimic_shape", "(d,d)", "d", level, FALSE, &mimic);
+			s32b mimic = find_random_mimic_shape(level, FALSE);
 			o_ptr->pval2 = mimic;
 		}
 		break;

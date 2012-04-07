@@ -223,6 +223,7 @@
 
 /* Mimicry */
 #define MAX_MIMIC_POWERS  5
+#define MIMIC_FORMS_MAX 14
 
 /* Symbiosis */
 #define MAX_SYMBIOTIC_POWERS  9

@@ -249,7 +249,7 @@ static void prt_title(void)
 	/* Mimic shape */
 	if (p_ptr->mimic_form)
 	{
-		call_lua("get_mimic_info", "(d,s)", "s", p_ptr->mimic_form, "show_name", &p);
+		p = get_mimic_name(p_ptr->mimic_form);
 	}
 
 	/* Wizard */
@@ -1592,7 +1592,9 @@ static void calc_powers(void)
 		}
 	}
 	else if (p_ptr->mimic_form)
-		call_lua("calc_mimic_power", "(d)", "", p_ptr->mimic_form);
+	{
+		calc_mimic_power();
+	}
 
 	/* Add in class powers */
 	for (i = 0; i < 4; i++)
@@ -2261,14 +2263,6 @@ void calc_body_bonus()
 	if (r_ptr->flags7 & RF7_AQUATIC) p_ptr->water_breath = TRUE;
 }
 
-
-byte calc_mimic()
-{
-	s32b blow = 0;
-
-	call_lua("calc_mimic", "(d)", "d", p_ptr->mimic_form, &blow);
-	return blow;
-}
 
 /* Returns the number of extra blows based on abilities. */
 static int get_extra_blows_ability() {

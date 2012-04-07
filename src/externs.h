@@ -1521,6 +1521,16 @@ extern int get_keymap_mode();
 /* main.c */
 extern bool_ private_check_user_directory(cptr dirpath);
 
+/* mimic.c */
+extern s16b resolve_mimic_name(cptr name);
+extern s16b find_random_mimic_shape(byte level, bool_ limit);
+extern cptr get_mimic_name(s16b mf_idx);
+extern cptr get_mimic_object_name(s16b mf_idx);
+extern byte get_mimic_level(s16b mf_idx);
+extern s32b get_mimic_random_duration(s16b mf_idx);
+extern byte calc_mimic();
+extern void calc_mimic_power();
+
 /* xtra1.c */
 extern void fix_message(void);
 extern void apply_flags(u32b f1, u32b f2, u32b f3, u32b f4, u32b f5, u32b esp, s16b pval, s16b tval, s16b to_h, s16b to_d, s16b to_a);
@@ -1545,7 +1555,6 @@ extern void fate_desc(char *desc, int fate);
 extern void dump_fates(FILE *OutFile);
 
 /* xtra2.c */
-extern int resolve_mimic_name(cptr name);
 extern void do_rebirth(void);
 extern cptr get_subrace_title(int racem);
 extern void set_subrace_title(int racem, cptr name);

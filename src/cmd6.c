@@ -2389,9 +2389,7 @@ static bool_ quaff_potion(int tval, int sval, int pval, int pval2)
 			{
 				if (!p_ptr->mimic_form)
 				{
-					s32b time;
-
-					call_lua("get_mimic_rand_dur", "(d)", "d", pval2, &time);
+					s32b time = get_mimic_random_duration(pval2);
 
 					set_mimic(time, pval2, (p_ptr->lev * 2) / 3);
 

@@ -388,8 +388,7 @@ bool_ create_artifact(object_type *o_ptr, bool_ a_scroll, bool_ get_name)
 	/* HACKS for ToME */
 	if (o_ptr->tval == TV_CLOAK && o_ptr->sval == SV_MIMIC_CLOAK)
 	{
-		s32b mimic;
-		call_lua("find_random_mimic_shape", "(d,d)", "d", 127, TRUE, &mimic);
+		s32b mimic = find_random_mimic_shape(127, TRUE);
 		o_ptr->pval2 = mimic;
 	}
 	else if (f5 & TR5_SPELL_CONTAIN)

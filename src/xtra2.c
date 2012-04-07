@@ -6061,14 +6061,3 @@ void do_rebirth()
 
 	lite_spot(p_ptr->py, p_ptr->px);
 }
-
-/*
- * Quick mimic name to index function
- */
-int resolve_mimic_name(cptr name)
-{
-	s32b idx;
-
-	call_lua("resolve_mimic_name", "(s)", "d", name, &idx);
-	return idx;
-}
