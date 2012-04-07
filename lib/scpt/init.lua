@@ -22,7 +22,6 @@ tome_dofile("gods.lua")
 
 -- Add some quests
 tome_dofile("god.lua")
-tome_dofile("fireprof.lua")
 tome_dofile("library.lua")
 
 -- Add joke stuff

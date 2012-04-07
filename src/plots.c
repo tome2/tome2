@@ -11,6 +11,7 @@
  */
 
 #include "angband.h"
+#include <assert.h>
 
 #include "lua/lua.h"
 #include "tolua.h"
@@ -477,3 +478,6 @@ bool_ quest_null_hook(int q)
 
 /************************** Library Quest *************************/
 #include "q_library.c"
+
+/************************* Fireproofing Quest *********************/
+#include "q_fireprof.c"

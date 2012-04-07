@@ -4285,7 +4285,22 @@ quest_type quest_init_tome[MAX_Q_IDX_INIT] =
 		{0, 0, 0, 0},
 		quest_bounty_describe,
 	},
-
+	/* Fireproofing */
+	{
+		FALSE,
+		TRUE,
+		"Old Mages quest",
+		{
+			"", /* dynamic desc */
+		},
+		QUEST_STATUS_UNTAKEN,
+		20,
+		NULL,
+		HOOK_TYPE_C,
+		quest_fireproof_init_hook,
+		{0, 0, 0, 0},
+		quest_fireproof_describe,
+	},
 };
 
 

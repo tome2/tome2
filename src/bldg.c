@@ -2048,6 +2048,12 @@ bool_ bldg_process_command(store_type *s_ptr, int i)
 		break;
 	}
 
+	case BACT_FIREPROOF_QUEST:
+	{
+		quest_fireproof_building(&paid, &recreate);
+		break;
+	}
+
 	default:
 		{
 			if (process_hooks_ret(HOOK_BUILDING_ACTION, "dd", "(d)", bact))
