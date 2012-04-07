@@ -1593,14 +1593,6 @@ timer_type *gl_timers = NULL;
 s16b tim_precognition = 0;
 
 
-/*
- * Powers
- */
-s16b POWER_INVISIBILITY = -1;
-s16b POWER_WEB = -1;
-s16b POWER_COR_SPACE_TIME = -1;
-
-
 /**
  * Get the version string.
  */

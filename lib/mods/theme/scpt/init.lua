@@ -11,9 +11,6 @@ tome_dofile("help.lua")
 -- let the store specific stuff happen!
 tome_dofile("stores.lua")
 
--- Add various 'U' powers
-tome_dofile("powers.lua")
-
 -- Add the mimic shapes
 tome_dofile("mimic.lua")
 

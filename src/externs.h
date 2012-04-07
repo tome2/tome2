@@ -603,9 +603,6 @@ extern s32b max_gods;
 extern timer_type *gl_timers;
 extern s16b tim_precognition;
 extern const char *get_version_string();
-extern s16b POWER_INVISIBILITY;
-extern s16b POWER_WEB;
-extern s16b POWER_COR_SPACE_TIME;
 
 /* plots.c */
 extern FILE *hook_file;

@@ -3571,6 +3571,27 @@ power_type powers_type_init[POWER_MAX_INIT] =
 		"You no longer feel the fire of Udun in you.",
 		35, 80, A_WIS, 25,
 	},
+	{
+		"invisibility",
+		"You are able melt into the shadows to become invisible.",
+		"You suddenly become able to melt into the shadows.",
+		"You lose your shadow-melting ability.",
+		30, 10, A_DEX, 20,
+	},
+	{
+		"web",
+		"You are able throw a thick and very resistant spider web.",
+		"You suddenly become able to weave webs.",
+		"You lose your web-weaving capability.",
+		25, 30, A_DEX, 20,
+	},
+	{
+		"control space/time continuum",
+		"You are able to control the space/time continuum.",
+		"You become able to control the space/time continuum.",
+		"You are no more able to control the space/time continuum.",
+		1, 10, A_WIS, 10,
+	},
 };
 
 /*

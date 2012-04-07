@@ -3427,9 +3427,9 @@ extern void    desc_god(int g_idx, int d, char *desc);
 #define PWR_BALROG		      61
 /** @} */
 
-extern s16b POWER_INVISIBILITY;
-extern s16b POWER_WEB;
-extern s16b POWER_COR_SPACE_TIME;
+#define POWER_INVISIBILITY              62
+#define POWER_WEB                       63
+#define POWER_COR_SPACE_TIME            64
 
 
 /* Misc */

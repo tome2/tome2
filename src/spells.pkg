@@ -754,20 +754,6 @@ extern bool project(int who, int rad, int y, int x, int dam, int typ, int flg);
  */
 extern void corrupt_player(void);
 
-/** @fn grow_things(s16b type, int rad)
- * @brief Grow "type" things within "rad" distance of the player.\n
- * @param type Number \n type of thing to grow (FEAT field).
- * @brief Type
- * @param rad Number \n rad is the radius of the area where things may grow.
- * @brief Radius
- * @note
- * Grow things\n\n
- * Up to (rad * (rad + 11)) things can be grown around the player. The
- * grids must support growth.
- * @note (see file spells2.c)
- */
-extern void grow_things(s16b type, int rad);
-
 /** @fn grow_grass(int rad)
  * @brief Grow grass within "rad" distance of the player.\n
  * @param rad Number \n rad is the radius of the area where grass may grow.

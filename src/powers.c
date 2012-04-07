@@ -1221,7 +1221,32 @@ static void power_activate(int power)
 		use_ability_blade();
 		break;
 
+	case POWER_INVISIBILITY:
+		set_invis(20 + randint(30), 30);
+		break;
+
+	case POWER_WEB:
+		/* Warning, beware of f_info changes .. I hate to do that .. */
+		grow_things(16, 1 + (p_ptr->lev / 10));
+		break;
+
+	case POWER_COR_SPACE_TIME:
+		if (p_ptr->corrupt_anti_teleport_stopped)
+		{
+			p_ptr->corrupt_anti_teleport_stopped = FALSE;
+			msg_print("You stop controlling your corruption.");
+			p_ptr->update |= PU_BONUS;
+		}
+		else
+		{
+			p_ptr->corrupt_anti_teleport_stopped = TRUE;
+			msg_print("You start controlling your corruption, teleportation works once more.");
+			p_ptr->update |= PU_BONUS;
+		}
+		break;
+
 	default:
+
 		if (!process_hooks(HOOK_ACTIVATE_POWER, "(d)", power))
 		{
 			msg_format("Warning power_activate() called with invalid power(%d).", power);

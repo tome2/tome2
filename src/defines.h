@@ -4301,7 +4301,7 @@
 /*
  * Powers (mutation, activations, ...)
  */
-#define POWER_MAX_INIT                 62
+#define POWER_MAX_INIT                 65
 
 #define PWR_SPIT_ACID                  0
 #define PWR_BR_FIRE                    1
@@ -4366,6 +4366,9 @@
 #define PWR_BEAR                        59
 #define PWR_DODGE                       60
 #define PWR_BALROG                      61
+#define POWER_INVISIBILITY              62
+#define POWER_WEB                       63
+#define POWER_COR_SPACE_TIME            64
 
 #define ADD_POWER(pow, p)       ((pow)[(p)] = TRUE)
 
