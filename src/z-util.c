@@ -127,6 +127,9 @@ bool_ func_false(void)
  */
 bool_ streq(cptr a, cptr b)
 {
+	if ((a == NULL) && (b == NULL)) { return TRUE; }
+	if (a == NULL) { return FALSE; }
+	if (b == NULL) { return FALSE; }
 	return (!strcmp(a, b));
 }
 
