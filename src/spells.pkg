@@ -2163,37 +2163,6 @@ extern magic_power *grab_magic_power @ get_magic_power(magic_power *m_ptr, int n
  */
 extern bool lua_spell_success @ magic_power_sucess(magic_power *spell, int stat, char *oups_fct=NULL);
 
-/** @fn add_new_power(cptr name, cptr desc, cptr gain, cptr lose, byte level, byte cost, byte stat, byte diff)
- * @dgonly
- * @brief Add a new power to the array of magic powers.\n
- * @param name String \n name is the name of the power.
- * @brief Name
- * @param desc String \n desc is the description of the power.
- * @brief Description
- * @param gain String \n gain describes the effect when the power starts
- * working.
- * @brief Gain message
- * @param lose String \n loss describes the effect when the power stops
- * working.
- * @brief Lose message
- * @param level Number \n level is the magic skill level a player needs to
- * use the power.
- * @brief Level
- * @param cost Number \n cost is the number of mana points required to use the
- * power.
- * @brief Mana cost
- * @param stat Number \n stat is the required casting statistic (INT or WIS).
- * @brief Casting statistic
- * @param diff Number \n diff is the difficulty.
- * @brief Difficulty
- * @return Number \n The index of the new power in the magic power array.
- * @note
- * Note: do not call this function.\n
- * By order of DG.
- * @note (see file lua_bind.c)
- */
-s16b add_new_power(cptr name, cptr desc, cptr gain, cptr lose, byte level, byte cost, byte stat, byte diff);
-
 /** @var power_max
  * @brief Number
  * @note Maximum number of innate powers.

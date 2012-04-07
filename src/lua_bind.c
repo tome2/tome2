@@ -77,33 +77,6 @@ void end_object(object_type *o_ptr)
 	FREE(o_ptr, object_type);
 }
 
-/*
- * Powers
- */
-s16b add_new_power(cptr name, cptr desc, cptr gain, cptr lose, byte level, byte cost, byte stat, byte diff)
-{
-	/* Increase the size */
-	reinit_powers_type(power_max + 1);
-
-	/* Copy the strings */
-	C_MAKE(powers_type[power_max - 1].name, strlen(name) + 1, char);
-	strcpy(powers_type[power_max - 1].name, name);
-	C_MAKE(powers_type[power_max - 1].desc_text, strlen(desc) + 1, char);
-	strcpy(powers_type[power_max - 1].desc_text, desc);
-	C_MAKE(powers_type[power_max - 1].gain_text, strlen(gain) + 1, char);
-	strcpy(powers_type[power_max - 1].gain_text, gain);
-	C_MAKE(powers_type[power_max - 1].lose_text, strlen(lose) + 1, char);
-	strcpy(powers_type[power_max - 1].lose_text, lose);
-
-	/* Copy the other stuff */
-	powers_type[power_max - 1].level = level;
-	powers_type[power_max - 1].cost = cost;
-	powers_type[power_max - 1].stat = stat;
-	powers_type[power_max - 1].diff = diff;
-
-	return (power_max - 1);
-}
-
 static char *lua_item_tester_fct;
 static bool_ lua_item_tester(object_type* o_ptr)
 {
