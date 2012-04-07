@@ -69,13 +69,13 @@ add_quest
 					-- no teleport
 					level_flags2 = DF2_NO_TELEPORT
 
-					-- determine type of rune
+					-- determine type of item
 					fireproof_quest.essence = randint(5)
 
 					-- create essence
 					essence = create_object(TV_RUNE2, fireproof_quest.essence)
 
-					-- mark rune
+					-- mark item
 					essence.pval2 = fireproof_quest.essence
 					essence.note = quark_add("quest")
 
@@ -129,7 +129,7 @@ add_quest
 			[HOOK_STAIR] = function()
 				local ret
 
-				-- only ask this if player about to go up stairs of quest and hasn't retrieved rune
+				-- only ask this if player about to go up stairs of quest and hasn't retrieved item
 				if (player.inside_quest ~= FIREPROOF_QUEST) or 
 				(quest(FIREPROOF_QUEST).status == QUEST_STATUS_COMPLETED) then
 					return FALSE
@@ -156,13 +156,13 @@ add_quest
 			end,
 			[HOOK_GET] = function(o_ptr)
 
-				-- if they're in the quest and haven't picked up the rune already, continue
+				-- if they're in the quest and haven't picked up the item already, continue
 				if (player.inside_quest ~= FIREPROOF_QUEST) or 
 				(quest(FIREPROOF_QUEST).status == QUEST_STATUS_COMPLETED) then
 					return FALSE
 				else
 
-					-- check that it's the real rune and not another one generated via the random object placing in fireproof.map
+					-- check that it's the real item and not another one generated via the random object placing in fireproof.map
 					if (o_ptr.pval2 == fireproof_quest.essence) then
 
 						-- ok mark the quest 'completed'
@@ -182,6 +182,12 @@ add_building_action
 	["index"] =     56,
 	["action"] =    function()
 
+			local i1 = "I need a very special rune for a spell I am working on. I am too old to "
+                        local p = "Which rune?"
+                        local pni = "You have no runes to return"
+                        local tval = TV_RUNE2
+                        local location = "The rune is in a cave just behind the shop."
+
 			local num_books, num_staff, num_scroll
 
 			num_books = fireproof_quest.item_points_remaining / fireproof_quest.BOOK_POINTS
@@ -196,36 +202,36 @@ add_building_action
 				fireproof_quest.item_points_remaining = fireproof_quest.TOTAL_ITEM_POINTS
 
 				-- issue instructions
-				msg_print("I need a very special rune for a spell I am working on. I am too old to ")
+				msg_print(i1)
 				msg_print("fetch it myself. Please bring it back to me. You can find it north of here.")
 				msg_print("Be careful with it, it's fragile and might be destroyed easily.")
 
 				return TRUE, FALSE, TRUE
-			-- if quest completed (rune was retrieved)
+			-- if quest completed (item was retrieved)
 			elseif (quest(FIREPROOF_QUEST).status == QUEST_STATUS_COMPLETED) then
 
-				-- ask for rune
-				ret, item = get_item("Which rune?",
-						     "You have no runes to return",
+				-- ask for item
+				ret, item = get_item(p,
+						     pni,
 						     bor(USE_INVEN),
 						     function (obj)
 
-							-- check it's the 'marked' rune
-							if (obj.tval == TV_RUNE2) and (obj.sval == fireproof_quest.essence) and (obj.pval2 == fireproof_quest.essence) then
+							-- check it's the 'marked' item
+							if (obj.tval == tval) and (obj.sval == fireproof_quest.essence) and (obj.pval2 == fireproof_quest.essence) then
 								return TRUE
 							end
 							return FALSE
 						     end
 				)
 
-				-- didn't get the rune?
+				-- didn't get the item?
 				if (ret == FALSE) then 
 					return TRUE
 
-				-- got the rune!
+				-- got the item!
 				else
 
-					-- take rune
+					-- take item
 					inven_item_increase(item, -1)
 					inven_item_optimize(item)
 					msg_print("Great! Let me fireproof some of your items in thanks. I can do "..num_books.." books, ")
@@ -261,7 +267,7 @@ add_building_action
 
 			-- if the player asks for a quest when they already have it, but haven't failed it, give them some extra instructions
 			elseif (quest(FIREPROOF_QUEST).status == QUEST_STATUS_TAKEN) then
-				msg_print("The rune is in a cave just behind the shop.")
+				msg_print(location)
 
 			-- ok not all books have been fireproofed... lets do the rest
 			elseif (quest(FIREPROOF_QUEST).status == QUEST_STATUS_FINISHED) then

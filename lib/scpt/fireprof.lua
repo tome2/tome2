@@ -69,13 +69,13 @@ add_quest
 					-- no teleport
 					level_flags2 = DF2_NO_TELEPORT
 
-					-- determine type of essence
+					-- determine type of item
 					fireproof_quest.essence = randint(18)
 
 					-- create essence
 					essence = create_object(TV_BATERIE, fireproof_quest.essence)
 
-					-- mark essence
+					-- mark item
 					essence.pval2 = fireproof_quest.essence
 					essence.note = quark_add("quest")
 
@@ -129,7 +129,7 @@ add_quest
 			[HOOK_STAIR] = function()
 				local ret
 
-				-- only ask this if player about to go up stairs of quest and hasn;t retrieved essence
+				-- only ask this if player about to go up stairs of quest and hasn't retrieved item
 				if (player.inside_quest ~= FIREPROOF_QUEST) or 
 				(quest(FIREPROOF_QUEST).status == QUEST_STATUS_COMPLETED) then
 					return FALSE
@@ -156,13 +156,13 @@ add_quest
 			end,
 			[HOOK_GET] = function(o_ptr)
 
-				-- if they're in the quest and haven't picked up the essence already, continue
+				-- if they're in the quest and haven't picked up the item already, continue
 				if (player.inside_quest ~= FIREPROOF_QUEST) or 
 				(quest(FIREPROOF_QUEST).status == QUEST_STATUS_COMPLETED) then
 					return FALSE
 				else
 
-					-- check that it's the real essence and not another one generated via the random object placing in fireproof.map
+					-- check that it's the real item and not another one generated via the random object placing in fireproof.map
 					if (o_ptr.pval2 == fireproof_quest.essence) then
 
 						-- ok mark the quest 'completed'
@@ -182,6 +182,12 @@ add_building_action
 	["index"] =     56,
 	["action"] =    function()
 
+			local i1 = "I need a very special essence for a spell I am working on. I am too old to "
+                        local p = "Which essence?"
+                        local pni = "You have no essences to return"
+                        local tval = TV_BATERIE
+                        local location = "The essence is in a cave just behind the shop."
+
 			local num_books, num_staff, num_scroll
 
 			num_books = fireproof_quest.item_points_remaining / fireproof_quest.BOOK_POINTS
@@ -196,36 +202,36 @@ add_building_action
 				fireproof_quest.item_points_remaining = fireproof_quest.TOTAL_ITEM_POINTS
 
 				-- issue instructions
-				msg_print("I need a very special essence for a spell I am working on. I am too old to ")
+				msg_print(i1)
 				msg_print("fetch it myself. Please bring it back to me. You can find it north of here.")
 				msg_print("Be careful with it, it's fragile and might be destroyed easily.")
 
 				return TRUE, FALSE, TRUE
-			-- if quest completed (essence was retrieved)
+			-- if quest completed (item was retrieved)
 			elseif (quest(FIREPROOF_QUEST).status == QUEST_STATUS_COMPLETED) then
 
-				-- ask for essence
-				ret, item = get_item("Which essence?",
-						     "You have no essences to return",
+				-- ask for item
+				ret, item = get_item(p,
+						     pni,
 						     bor(USE_INVEN),
 						     function (obj)
 
-							-- check it's the 'marked' essence
-							if (obj.tval == TV_BATERIE) and (obj.sval == fireproof_quest.essence) and (obj.pval2 == fireproof_quest.essence) then
+							-- check it's the 'marked' item
+							if (obj.tval == tval) and (obj.sval == fireproof_quest.essence) and (obj.pval2 == fireproof_quest.essence) then
 								return TRUE
 							end
 							return FALSE
 						     end
 				)
 
-				-- didn't get the essence?
+				-- didn't get the item?
 				if (ret == FALSE) then 
 					return TRUE
 
-				-- got the essence!
+				-- got the item!
 				else
 
-					-- take essence
+					-- take item
 					inven_item_increase(item, -1)
 					inven_item_optimize(item)
 					msg_print("Great! Let me fireproof some of your items in thanks. I can do "..num_books.." books, ")
@@ -261,7 +267,7 @@ add_building_action
 
 			-- if the player asks for a quest when they already have it, but haven't failed it, give them some extra instructions
 			elseif (quest(FIREPROOF_QUEST).status == QUEST_STATUS_TAKEN) then
-				msg_print("The essence is in a cave just behind the shop.")
+				msg_print(location)
 
 			-- ok not all books have been fireproofed... lets do the rest
 			elseif (quest(FIREPROOF_QUEST).status == QUEST_STATUS_FINISHED) then
