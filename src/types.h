@@ -2600,4 +2600,5 @@ struct corruption_type
 	s16b depends[5]; /* terminated by a -1 entry */
 	s16b opposes[5]; /* terminated by a -1 entry */
 	void (*gain_callback)(); /* callback to invoke when gained */
+	s16b power;              /* index of granted power if >= 0, ignored otherwise */
 };

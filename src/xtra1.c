@@ -1523,40 +1523,18 @@ static void calc_spells(void)
 static void calc_powers_corruption()
 {
 	/* Map of corruptions to a power */
-	s16b power_by_corruption[][2] =
-		{ { CORRUPT_BALROG_FORM   , PWR_BALROG           },
-		  { CORRUPT_DEMON_BREATH  , PWR_BR_FIRE          },
-		  { CORRUPT_ANTI_TELEPORT , POWER_COR_SPACE_TIME },
-		  { MUT1_SPIT_ACID        , PWR_SPIT_ACID        },
-		  { MUT1_BR_FIRE          , PWR_BR_FIRE          },
-		  { MUT1_HYPN_GAZE        , PWR_HYPN_GAZE        },
-		  { MUT1_TELEKINES        , PWR_TELEKINES        },
-		  { MUT1_VTELEPORT        , PWR_VTELEPORT        },
-		  { MUT1_MIND_BLST        , PWR_MIND_BLST        },
-		  { MUT1_VAMPIRISM        , PWR_VAMPIRISM        },
-		  { MUT1_SMELL_MET        , PWR_SMELL_MET        },
-		  { MUT1_SMELL_MON        , PWR_SMELL_MON        },
-		  { MUT1_BLINK            , PWR_BLINK            },
-		  { MUT1_EAT_ROCK         , PWR_EAT_ROCK         },
-		  { MUT1_SWAP_POS         , PWR_SWAP_POS         },
-		  { MUT1_SHRIEK           , PWR_SHRIEK           },
-		  { MUT1_ILLUMINE         , PWR_ILLUMINE         },
-		  { MUT1_DET_CURSE        , PWR_DET_CURSE        },
-		  { MUT1_BERSERK          , PWR_BERSERK          },
-		  { MUT1_MIDAS_TCH        , PWR_MIDAS_TCH        },
-		  { MUT1_GROW_MOLD        , PWR_GROW_MOLD        },
-		  { MUT1_RESIST           , PWR_RESIST           },
-		  { MUT1_EARTHQUAKE       , PWR_EARTHQUAKE       },
-		  { -1                    , -1                   },
-		};
 	int i;
 
 	/* Grant powers according to whatever corruptions the player has */
-	for (i = 0; power_by_corruption[i][0] >= 0; i++)
+	for (i = 0; i < CORRUPTIONS_MAX; i++)
 	{
-		if (player_has_corruption(power_by_corruption[i][0]))
+		if (player_has_corruption(i))
 		{
-			p_ptr->powers[power_by_corruption[i][1]] = TRUE;
+			int p = get_corruption_power(i);
+			if (p >= 0)
+			{
+				p_ptr->powers[p] = TRUE;
+			}
 		}
 	}
 }

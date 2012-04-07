@@ -104,6 +104,7 @@ corruption_type corruptions[CORRUPTIONS_MAX] =
 		{ -1 },
 		{ -1 },
 		NULL,
+		-1,
 	},
 
 	{ /* 1 */
@@ -118,6 +119,7 @@ corruption_type corruptions[CORRUPTIONS_MAX] =
 		{ -1 },
 		{ -1 },
 		NULL,
+		-1,
 	},
 
 	{ /* 2 */
@@ -132,6 +134,7 @@ corruption_type corruptions[CORRUPTIONS_MAX] =
 		{ -1 },
 		{ -1 },
 		NULL,
+		-1,
 	},
 
 	{ /* 3 */
@@ -146,6 +149,7 @@ corruption_type corruptions[CORRUPTIONS_MAX] =
 		{ CORRUPT_BALROG_AURA, CORRUPT_BALROG_WINGS, CORRUPT_BALROG_STRENGTH },
 		{ -1 },
 		NULL,
+		PWR_BALROG,
 	},
 
 	/*
@@ -163,6 +167,7 @@ corruption_type corruptions[CORRUPTIONS_MAX] =
 		{ -1 },
 		{ -1 },
 		NULL,
+		-1,
 	},
 
 	{ /* 5 */
@@ -178,6 +183,7 @@ corruption_type corruptions[CORRUPTIONS_MAX] =
 		{ -1 },
 		{ -1 },
 		NULL,
+		-1,
 	},
 
 	{ /* 6 */
@@ -192,6 +198,7 @@ corruption_type corruptions[CORRUPTIONS_MAX] =
 		{ -1 },
 		{ -1 },
 		NULL,
+		PWR_BR_FIRE,
 	},
 
 	{ /* 7 */
@@ -206,6 +213,7 @@ corruption_type corruptions[CORRUPTIONS_MAX] =
 		{ CORRUPT_DEMON_SPIRIT, CORRUPT_DEMON_HIDE,  CORRUPT_DEMON_BREATH },
 		{ -1 },
 		NULL,
+		-1,
 	},
 
 	/*
@@ -223,6 +231,7 @@ corruption_type corruptions[CORRUPTIONS_MAX] =
 		{ -1 },
 		{ CORRUPT_ANTI_TELEPORT, -1 },
 		NULL,
+		-1,
 	},
 
 	{ /* 9 */
@@ -236,6 +245,7 @@ corruption_type corruptions[CORRUPTIONS_MAX] =
 		{ -1 },
 		{  CORRUPT_RANDOM_TELEPORT, -1 },
 		NULL,
+		POWER_COR_SPACE_TIME,
 	},
 
 	/*
@@ -255,6 +265,7 @@ corruption_type corruptions[CORRUPTIONS_MAX] =
 		{ -1 },
 		{ -1 },
 		NULL,
+		-1,
 	},
 	
 	/*
@@ -273,6 +284,7 @@ corruption_type corruptions[CORRUPTIONS_MAX] =
 		{ -1 },
 		{ -1 },
 		player_gain_vampire_teeth,
+		-1,
 	},
 
 	{ /* 12 */
@@ -288,6 +300,7 @@ corruption_type corruptions[CORRUPTIONS_MAX] =
 		{ CORRUPT_VAMPIRE_TEETH, -1 },
 		{ -1 },
 		player_gain_vampire_strength,
+		-1,
 	},
 
 	{ /* 13 */
@@ -302,6 +315,7 @@ corruption_type corruptions[CORRUPTIONS_MAX] =
 		{ CORRUPT_VAMPIRE_STRENGTH, -1 },
 		{ -1 },
 		player_gain_vampire,
+		-1,
 	},
 
 	/*
@@ -321,6 +335,7 @@ corruption_type corruptions[CORRUPTIONS_MAX] =
 		{ -1 },
 		{ -1 },
 		NULL,
+		PWR_SPIT_ACID,
 	},
 
 	{ /* 15 */
@@ -336,6 +351,7 @@ corruption_type corruptions[CORRUPTIONS_MAX] =
 		{ -1 },
 		{ -1 },
 		NULL,
+		PWR_BR_FIRE,
 	},
 
 	{ /* 16 */
@@ -351,6 +367,7 @@ corruption_type corruptions[CORRUPTIONS_MAX] =
 		{ -1 },
 		{ -1 },
 		NULL,
+		PWR_HYPN_GAZE,
 	},
 
 	{ /* 17 */
@@ -366,6 +383,7 @@ corruption_type corruptions[CORRUPTIONS_MAX] =
 		{ -1 },
 		{ -1 },
 		NULL,
+		PWR_TELEKINES,
 	},
 
 	{ /* 18 */
@@ -381,6 +399,7 @@ corruption_type corruptions[CORRUPTIONS_MAX] =
 		{ -1 },
 		{ -1 },
 		NULL,
+		PWR_VTELEPORT,
 	},
 
 	{ /* 19 */
@@ -396,6 +415,7 @@ corruption_type corruptions[CORRUPTIONS_MAX] =
 		{ -1 },
 		{ -1 },
 		NULL,
+		PWR_MIND_BLST,
 	},
 
 	{ /* 20 */
@@ -412,6 +432,7 @@ corruption_type corruptions[CORRUPTIONS_MAX] =
 		{ -1 },
 		{ -1 },
 		NULL,
+		PWR_VAMPIRISM,
 	},
 
 	{ /* 21 */
@@ -427,6 +448,7 @@ corruption_type corruptions[CORRUPTIONS_MAX] =
 		{ -1 },
 		{ -1 },
 		NULL,
+		PWR_SMELL_MET,
 	},
 
 	{ /* 22 */
@@ -442,6 +464,7 @@ corruption_type corruptions[CORRUPTIONS_MAX] =
 		{ -1 },
 		{ -1 },
 		NULL,
+		PWR_SMELL_MON,
 	},
 
 	{ /* 23 */
@@ -456,6 +479,7 @@ corruption_type corruptions[CORRUPTIONS_MAX] =
 		{ -1 },
 		{ -1 },
 		NULL,
+		PWR_BLINK,
 	},
 
 	{ /* 24 */
@@ -471,6 +495,7 @@ corruption_type corruptions[CORRUPTIONS_MAX] =
 		{ -1 },
 		{ -1 },
 		NULL,
+		PWR_EAT_ROCK,
 	},
 
 	{ /* 25 */
@@ -486,6 +511,7 @@ corruption_type corruptions[CORRUPTIONS_MAX] =
 		{ -1 },
 		{ -1 },
 		NULL,
+		PWR_SWAP_POS,
 	},
 
 	{ /* 26 */
@@ -501,6 +527,7 @@ corruption_type corruptions[CORRUPTIONS_MAX] =
 		{ -1 },
 		{ -1 },
 		NULL,
+		PWR_SHRIEK,
 	},
 
 	{ /* 27 */
@@ -516,6 +543,7 @@ corruption_type corruptions[CORRUPTIONS_MAX] =
 		{ -1 },
 		{ -1 },
 		NULL,
+		PWR_ILLUMINE,
 	},
 
 	{ /* 28 */
@@ -531,6 +559,7 @@ corruption_type corruptions[CORRUPTIONS_MAX] =
 		{ -1 },
 		{ -1 },
 		NULL,
+		PWR_DET_CURSE,
 	},
 
 	{ /* 29 */
@@ -546,6 +575,7 @@ corruption_type corruptions[CORRUPTIONS_MAX] =
 		{ -1 },
 		{ -1 },
 		NULL,
+		PWR_BERSERK,
 	},
 
 	{ /* 30 */
@@ -561,6 +591,7 @@ corruption_type corruptions[CORRUPTIONS_MAX] =
 		{ -1 },
 		{ -1 },
 		NULL,
+		PWR_MIDAS_TCH,
 	},
 
 	{ /* 31 */
@@ -576,6 +607,7 @@ corruption_type corruptions[CORRUPTIONS_MAX] =
 		{ -1 },
 		{ -1 },
 		NULL,
+		PWR_GROW_MOLD,
 	},
 
 	{ /* 32 */
@@ -592,6 +624,7 @@ corruption_type corruptions[CORRUPTIONS_MAX] =
 		{ -1 },
 		{ -1 },
 		NULL,
+		PWR_RESIST,
 	},
 
 	{ /* 33 */
@@ -607,6 +640,7 @@ corruption_type corruptions[CORRUPTIONS_MAX] =
 		{ -1 },
 		{ -1 },
 		NULL,
+		PWR_EARTHQUAKE,
 	},
 
 };
@@ -914,3 +948,26 @@ void dump_corruptions(FILE *fff, bool_ color, bool_ header)
 	}
 }
 
+/*
+ * Get the power granted by a corruption. Returns -1
+ * if the given corruption does not grant a power.
+ */
+s16b get_corruption_power(int corruption_idx)
+{
+	corruption_type *c_ptr = NULL;
+
+	assert(corruption_idx >= 0);
+	assert(corruption_idx < CORRUPTIONS_MAX);
+
+	c_ptr = &corruptions[corruption_idx];
+
+	if ((c_ptr->power >= 0) && (c_ptr->power < POWER_MAX))
+	{
+		return c_ptr->power;
+	}
+	else
+	{
+		assert(c_ptr->power == -1); /* Sanity check: Should always be the case. */
+		return -1;
+	}
+}
