@@ -34,6 +34,16 @@ static int get_relic_num()
 	return get_lua_int("god_quest.relic_num");
 }
 
+static int get_status()
+{
+	return exec_lua("return quest(GOD_QUEST).status");
+}
+
+static void set_status(int new_status)
+{
+	exec_lua(format("quest(GOD_QUEST).status = %d", new_status));
+}
+
 static void set_relic_generated(bool_ v)
 {
 	switch (v)
@@ -50,9 +60,19 @@ static void set_relic_generated(bool_ v)
 	}
 }
 
+static bool_ get_relic_generated()
+{
+	return get_lua_int("god_quest.relic_generated");
+}
+
 static void set_relic_gen_tries(int v)
 {
 	exec_lua(format("god_quest.relic_gen_tries = %d", v));
+}
+
+static int get_relic_gen_tries()
+{
+	return get_lua_int("god_quest.relic_gen_tries");
 }
 
 void quest_god_place_rand_dung()
@@ -620,4 +640,59 @@ void quest_god_set_god_dungeon_attributes_mandos()
 	d_info[DUNGEON_GOD].rules[0].r_char[3] = '\0';
 	d_info[DUNGEON_GOD].rules[0].r_char[4] = '\0';
 	d_info[DUNGEON_GOD].rules[0].mflags3 = RF3_UNDEAD | RF3_EVIL;
+}
+
+void quest_god_level_end_gen_hook()
+{
+	/* Check for dungeon */
+	if ((dungeon_type != DUNGEON_GOD) ||
+	    (get_status() == QUEST_STATUS_UNTAKEN))
+	{
+		return;
+	}
+
+	/* if the relic has been created at this point, then it was
+	   created on the *PREVIOUS* call of HOOK_LEVEL_END_GEN, and
+	   therefore the player has caused another level generation in
+	   the temple and hence failed the quest.*/
+
+	else if ((get_relic_generated() == TRUE) &&
+		 (get_status() != QUEST_STATUS_FAILED))
+	{
+		/* fail the quest, don't give another one, don't give
+		 * this message again */
+		set_status(QUEST_STATUS_FAILED);
+
+		/* God issues instructions */
+		cmsg_format(TERM_L_BLUE, "The voice of %s booms in your head:", deity_info[p_ptr->pgod].name);
+
+		cmsg_print(TERM_YELLOW, "'Thou art a fool!");
+		cmsg_print(TERM_YELLOW, "I told thee to look carefully for the relic. It appears thou hast missed the");
+		cmsg_print(TERM_YELLOW, "opportunity to claim it in my name, as I sense that those monsters who ");
+		cmsg_print(TERM_YELLOW, "have overrun my temple have destroyed it themselves.");
+		cmsg_print(TERM_YELLOW, "I shall not ask thee to do such a thing again, as thou hast failed me in this");
+		cmsg_print(TERM_YELLOW, "simple task!'");
+	}
+
+	/* Force relic generation on 5th attempt if others have been
+	 * unsuccessful. */
+
+	else if ((get_relic_gen_tries() == 4) &&
+		 (get_relic_generated() == FALSE))
+	{
+		quest_god_generate_relic();
+	}
+
+	else
+	{
+		/* 1/5 chance of generation */
+		if (magik(20))
+		{
+			quest_god_generate_relic();
+		}
+		else
+		{
+			set_relic_gen_tries(get_relic_gen_tries() + 1);
+		}
+	}
 }

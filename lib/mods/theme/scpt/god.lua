@@ -153,40 +153,7 @@ add_quest
 			end
 		end,
 		[HOOK_LEVEL_END_GEN] = function()
-			local chance
-
-			-- Check for dungeon
-			if (current_dungeon_idx ~= god_quest.DUNGEON_GOD) or (quest(GOD_QUEST).status == QUEST_STATUS_UNTAKEN) then
-				return
-			-- if the relic has been created at this point, then it was created on the *PREVIOUS* call of HOOK_LEVEL_END_GEN, and 
-			-- therefore the player has caused another level generation in the temple and hence failed the quest.
-			elseif (god_quest.relic_generated == TRUE) and quest(GOD_QUEST).status ~= QUEST_STATUS_FAILED then 
-				
-					-- fail the quest, don't give another one, don't give this message again
-					quest(GOD_QUEST).status = QUEST_STATUS_FAILED
-					-- God issues instructions
-					cmsg_print(TERM_L_BLUE, "The voice of "..deity(player.pgod).name.." booms in your head:")
-
-					cmsg_print(TERM_YELLOW, "'Thou art a fool!")
-					cmsg_print(TERM_YELLOW, "I told thee to look carefully for the relic. It appears thou hast missed the")
-					cmsg_print(TERM_YELLOW, "opportunity to claim it in my name, as I sense that those monsters who ")
-					cmsg_print(TERM_YELLOW, "have overrun my temple have destroyed it themselves.")
-					cmsg_print(TERM_YELLOW, "I shall not ask thee to do such a thing again, as thou hast failed me in this")
-					cmsg_print(TERM_YELLOW, "simple task!'")					
-			else
-				-- Force relic generation on 5th attempt if others have been unsuccessful.
-				if (god_quest.relic_gen_tries == 4) and (god_quest.relic_generated == FALSE) then
-					quest_god_generate_relic()
-				else
-					-- 1/5 chance of generation
-					chance = randint(5)
-					if (chance == 5) then
-						quest_god_generate_relic()
-					else
-						god_quest.relic_gen_tries = god_quest.relic_gen_tries + 1
-					end
-				end
-			end
+			quest_god_level_end_gen_hook()
 		end,
 		[HOOK_ENTER_DUNGEON] = function(d_idx)
 			-- call the function to set the dungeon variables (dependant on pgod) the first time we enter the dungeon
