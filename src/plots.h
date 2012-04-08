@@ -65,3 +65,4 @@ extern bool_ quest_fireproof_describe(FILE *fff);
 
 /******* Plot God Quest **************/
 extern void quest_god_place_rand_dung();
+extern void quest_god_generate_relic();

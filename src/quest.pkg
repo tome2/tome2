@@ -164,3 +164,4 @@ extern void    desc_quest @ quest_desc(int q_idx, int d, char *desc);
  * God quest
  */
 extern void quest_god_place_rand_dung();
+extern void quest_god_generate_relic();

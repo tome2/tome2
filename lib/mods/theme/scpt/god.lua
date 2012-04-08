@@ -174,12 +174,12 @@ add_quest
 			else
 				-- Force relic generation on 5th attempt if others have been unsuccessful.
 				if (god_quest.relic_gen_tries == 4) and (god_quest.relic_generated == FALSE) then
-					generate_relic()
+					quest_god_generate_relic()
 				else
 					-- 1/5 chance of generation
 					chance = randint(5)
 					if (chance == 5) then
-						generate_relic()
+						quest_god_generate_relic()
 					else
 						god_quest.relic_gen_tries = god_quest.relic_gen_tries + 1
 					end
@@ -276,61 +276,6 @@ add_quest
 		end,
 	},
 }
-
--- this function generates the relic at a randomly determined place in the temple.
-function generate_relic()
-	local tries, grid, x, y, relic
-
-	-- initialise tries variable
-	tries = 1000
-
-	while (tries > 0) do
-
-		tries = tries - 1
-		-- get grid coordinates from current height/width, minus one to prevent relic being generated in outside wall. (would crash the game)
-		y = randint(cur_hgt-1)
-		x = randint(cur_wid-1)
-		grid = cave(y, x)
-
-		-- are the coordinates on a floor, not on a permanent feature (eg stairs), and not on a trap ?
-		if (cave_is(grid, FF1_FLOOR) == TRUE) and (cave_is(grid, FF1_PERMANENT) == FALSE) and (grid.t_idx == 0) then break end
-
-	end 
-	
-	-- create relic
-	relic = create_object(TV_JUNK, god_quest.relic_num)
-
-	-- inscribe it to prevent automatizer 'accidents'
-	relic.note = quark_add("quest")
-
-	-- If no safe co-ords were found, put it in the players backpack
-	if tries == 0 then
-
-		-- explain it
-		msg_print(TERM_L_BLUE, "You luckily stumble across the relic on the stairs!")
-
-		if (inven_carry_okay(relic)) then
-			inven_carry(relic, FALSE)
-		else
-		-- no place found, drop it on the stairs
-			drop_near(relic, -1, player.py, player.px)
-		end
-
-	else
-		-- drop it
-		drop_near(relic, -1, y, x)
-	end
-
-	-- Only generate once!
-	god_quest.relic_generated = TRUE
-
-	-- Reset some variables
-	god_quest.relic_gen_tries = 0
-
-end
-
-
-
 
 function set_god_dungeon_attributes()
 
