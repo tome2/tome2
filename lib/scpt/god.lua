@@ -106,7 +106,7 @@ add_quest
 					god_quest.quests_given = god_quest.quests_given + 1
 
 					-- actually place the dungeon in a random place
-					place_rand_dung()
+					quest_god_place_rand_dung()
 
 					-- store the variables of the coords where the player was given the quest
 					god_quest.player_y, god_quest.player_x = player.get_wild_coord()
@@ -268,55 +268,6 @@ add_quest
 		end,
 	},
 }
-
--- this function places the lost temple at a randomly determined place.
-function place_rand_dung()
-	local tries, grid
-
-	-- erase old dungeon
-		if (god_quest.quests_given > 0) then 
-		place_dungeon(god_quest.dung_y, god_quest.dung_x)
-		
-		-- erase old recall level
-		max_dlv[god_quest.DUNGEON_GOD + 1] = 0
-	end
-
-	-- initialise tries variable
-	tries = 1000
-
-	while tries > 0 do
-
-		tries = tries - 1
-		-- get grid coordinates, within a range which prevents dungeon being generated at the very edge of the wilderness (would crash the game).
-		god_quest.dung_x = rand_range(1, max_wild_x-2)
-		god_quest.dung_y = rand_range(1, max_wild_y-2)
-
-		-- Is there a town/dungeon/potentially impassable feature there, ?
-		if (wild_map(god_quest.dung_y, god_quest.dung_x).entrance ~= 0)
-		or (wild_feat(wild_map(god_quest.dung_y, god_quest.dung_x)).entrance ~= 0)
-		or (wild_feat(wild_map(god_quest.dung_y, god_quest.dung_x)).terrain_idx == TERRAIN_EDGE)
-		or (wild_feat(wild_map(god_quest.dung_y, god_quest.dung_x)).terrain_idx == TERRAIN_DEEP_WATER)
-		or (wild_feat(wild_map(god_quest.dung_y, god_quest.dung_x)).terrain_idx == TERRAIN_TREES)
-		or (wild_feat(wild_map(god_quest.dung_y, god_quest.dung_x)).terrain_idx == TERRAIN_SHALLOW_LAVA)
-		or (wild_feat(wild_map(god_quest.dung_y, god_quest.dung_x)).terrain_idx == TERRAIN_DEEP_LAVA)
-		or (wild_feat(wild_map(god_quest.dung_y, god_quest.dung_x)).terrain_idx == TERRAIN_MOUNTAIN) then
-			-- try again
-		else
-			--neither player, nor wall, then stop this 'while'
-			break
-		end
-	end
-
-	-- Uhuh BAD ! lets use the default location up bree
-	if tries == 0 then
-		god_quest.dung_x = 32
-		god_quest.dung_y = 19
-	end
-
-	-- create god dungeon in that place
-	place_dungeon(god_quest.dung_y, god_quest.dung_x, god_quest.DUNGEON_GOD)
-
-end
 
 -- this function generates the relic at a randomly determined place in the temple.
 function generate_relic()

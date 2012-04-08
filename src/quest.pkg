@@ -159,3 +159,8 @@ extern s16b    add_new_quest @ new_quest(char *name);
  * @note (see file lua_bind.c)
  */
 extern void    desc_quest @ quest_desc(int q_idx, int d, char *desc);
+
+/*
+ * God quest
+ */
+extern void quest_god_place_rand_dung();
