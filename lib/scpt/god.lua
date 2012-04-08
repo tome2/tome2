@@ -100,53 +100,7 @@ add_quest
 			god_quest.relic_generated = FALSE
 		end,
 		[HOOK_PLAYER_LEVEL] = function(gained)
-			if gained > 0 then
-				-- roll for chance of quest
-				local give_god_quest = magik(god_quest.CHANCE_OF_GOD_QUEST)
-
-				-- check player is worshipping a god, not already on a god quest.
-				if (player.astral ~= FALSE) or (player.pgod <= 0) 
-				or (quest(GOD_QUEST).status == QUEST_STATUS_TAKEN) or (quest(GOD_QUEST).status == QUEST_STATUS_FAILED)
-				or (god_quest.quests_given >= god_quest.MAX_NUM_GOD_QUESTS) or (give_god_quest == FALSE)
-				or ((current_dungeon_idx == god_quest.DUNGEON_GOD) and (dun_level > 0)) or (player.lev <= god_quest.dun_minplev) then
-					-- Don't let a player get quests with trickery
-					if player.lev > god_quest.dun_minplev then
-						god_quest.dun_minplev = player.lev
-					end
-					return
-				else
-					-- each god has different characteristics, so the quests are differnet depending on your god
-					setup_relic_number()
-
-					-- This var will need resetting
-					god_quest.relic_generated = FALSE
-					quest(GOD_QUEST).status = QUEST_STATUS_TAKEN
-					god_quest.quests_given = god_quest.quests_given + 1
-
-					-- actually place the dungeon in a random place
-					quest_god_place_rand_dung()
-
-					-- store the variables of the coords where the player was given the quest
-					god_quest.player_y, god_quest.player_x = player.get_wild_coord()
-
-					-- God issues instructions
-					cmsg_print(TERM_L_BLUE, "The voice of "..deity(player.pgod).name.." booms in your head:")
-
-					cmsg_print(TERM_YELLOW, "'I have a task for thee.")
-					cmsg_print(TERM_YELLOW, "Centuries ago an ancient relic of mine was broken apart.")
-					cmsg_print(TERM_YELLOW, "The pieces of it have been lost in fallen temples.")
-					cmsg_print(TERM_YELLOW, "Thou art to find my lost temple and retrieve a piece of the relic.")
-					cmsg_print(TERM_YELLOW, "When thy task is done, thou art to lift it in the air and call upon my name.")
-					cmsg_print(TERM_YELLOW, "I shall then come to reclaim what is mine!")
-
-					msg_directions()
-
-					-- Prepare depth of dungeon. If this was generated in set_god_dungeon_attributes(),
-					-- then we'd have trouble if someone levelled up in the dungeon!
-					god_quest.dun_mindepth = player.lev*2/3
-					god_quest.dun_maxdepth = god_quest.dun_mindepth + 4
-				end
-			end
+			quest_god_player_level_hook(gained)
 		end,
 		[HOOK_LEVEL_END_GEN] = function()
 			quest_god_level_end_gen_hook()

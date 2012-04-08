@@ -3,10 +3,16 @@
 
 /* d_idx of the god_quest (Lost Temple) dungeon */
 #define DUNGEON_GOD 30
+#define CHANCE_OF_GOD_QUEST 21
 
 static int get_quests_given()
 {
 	return get_lua_int("god_quest.quests_given");
+}
+
+static void set_quests_given(int i)
+{
+	exec_lua(format("god_quest.quests_given = %d", i));
 }
 
 static int get_dung_y()
@@ -44,6 +50,11 @@ static void set_status(int new_status)
 	exec_lua(format("quest(GOD_QUEST).status = %d", new_status));
 }
 
+static int MAX_NUM_GOD_QUESTS()
+{
+	return get_lua_int("god_quest.MAX_NUM_GOD_QUESTS");
+}
+
 static void set_relic_generated(bool_ v)
 {
 	switch (v)
@@ -73,6 +84,52 @@ static void set_relic_gen_tries(int v)
 static int get_relic_gen_tries()
 {
 	return get_lua_int("god_quest.relic_gen_tries");
+}
+
+static void set_player_y(int y)
+{
+	exec_lua(format("god_quest.player_y = %d", y));
+}
+
+static void set_player_x(int x)
+{
+	exec_lua(format("god_quest.player_x = %d", x));
+}
+
+static int get_dun_mindepth()
+{
+	return get_lua_int("god_quest.dun_mindepth");
+}
+
+static void set_dun_mindepth(int d)
+{
+	exec_lua(format("god_quest.dun_mindepth = %d", d));
+}
+
+static void set_dun_maxdepth(int d)
+{
+	exec_lua(format("god_quest.dun_maxdepth = %d", d));
+
+}
+
+static void set_dun_minplev(int p)
+{
+	exec_lua(format("god_quest.dun_minplev = %d", p));
+}
+
+static int get_dun_minplev()
+{
+	return get_lua_int("god_quest.dun_minplev");
+}
+
+static void setup_relic_number()
+{
+	exec_lua("setup_relic_number()");
+}
+
+static void msg_directions()
+{
+	exec_lua("msg_directions()");
 }
 
 void quest_god_place_rand_dung()
@@ -694,5 +751,76 @@ void quest_god_level_end_gen_hook()
 		{
 			set_relic_gen_tries(get_relic_gen_tries() + 1);
 		}
+	}
+}
+
+void quest_god_player_level_hook(int gained)
+{
+	if (gained <= 0)
+	{
+		return;
+	}
+
+	/* check player is worshipping a god, not already on a god quest. */
+	if ((p_ptr->astral) ||
+	    (p_ptr->pgod <= 0) ||
+	    (get_status() == QUEST_STATUS_TAKEN) ||
+	    (get_status() == QUEST_STATUS_FAILED) ||
+	    (get_quests_given() >= MAX_NUM_GOD_QUESTS()) ||
+	    (magik(CHANCE_OF_GOD_QUEST) == FALSE) ||
+	    ((dungeon_type == DUNGEON_GOD) &&
+	     (dun_level > 0)) ||
+	    (p_ptr->lev <= get_dun_minplev()))
+	{
+		/* Don't let a player get quests with trickery */
+		if (p_ptr->lev > get_dun_minplev())
+		{
+			set_dun_minplev(p_ptr->lev);
+		}
+		return;
+	}
+	else
+	{
+		/* each god has different characteristics, so the quests are differnet depending on your god */
+		setup_relic_number();
+		
+		/* This var will need resetting */
+		set_relic_generated(FALSE);
+		set_status(QUEST_STATUS_TAKEN);
+		set_quests_given(get_quests_given() + 1);
+		
+		/* actually place the dungeon in a random place */
+		quest_god_place_rand_dung();
+		
+		/* store the variables of the coords where the player was given the quest */
+		if (p_ptr->wild_mode)
+		{
+			set_player_x(p_ptr->px);
+			set_player_y(p_ptr->py);
+		}
+		else
+		{
+			set_player_x(p_ptr->wilderness_x);
+			set_player_y(p_ptr->wilderness_y);
+		}
+		
+		/* God issues instructions */
+		cmsg_format(TERM_L_BLUE, "The voice of %s booms in your head:", deity_info[p_ptr->pgod].name);
+		
+		cmsg_print(TERM_YELLOW, "'I have a task for thee.");
+		cmsg_print(TERM_YELLOW, "Centuries ago an ancient relic of mine was broken apart.");
+		cmsg_print(TERM_YELLOW, "The pieces of it have been lost in fallen temples.");
+		cmsg_print(TERM_YELLOW, "Thou art to find my lost temple and retrieve a piece of the relic.");
+		cmsg_print(TERM_YELLOW, "When thy task is done, thou art to lift it in the air and call upon my name.");
+		cmsg_print(TERM_YELLOW, "I shall then come to reclaim what is mine!");
+		
+		msg_directions();
+		
+		/* Prepare depth of dungeon. If this was
+		 * generated in set_god_dungeon_attributes(),
+		 * then we'd have trouble if someone levelled
+		 * up in the dungeon! */
+		set_dun_mindepth(p_ptr->lev*2/3);
+		set_dun_maxdepth(get_dun_mindepth() + 4);
 	}
 }
