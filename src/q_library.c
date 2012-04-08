@@ -7,6 +7,11 @@
 #define MONSTER_IRON_GOLEM 367
 #define MONSTER_MITHRIL_GOLEM 464
 
+static int LIBRARY_QUEST()
+{
+	return get_lua_int("LIBRARY_QUEST");
+}
+
 static s16b library_quest_place_random(int minY, int minX, int maxY, int maxX, int r_idx)
 {
 	int y = randint(maxY - minY + 1) + minY;
@@ -214,8 +219,22 @@ void library_quest_fill_book()
 	screen_load();
 }
 
-void quest_library_gen_hook()
+bool_ quest_library_gen_hook()
 {
+	/* Only if player doing this quest */
+	if (p_ptr->inside_quest != LIBRARY_QUEST())
+	{
+		return FALSE;
+	}
+
+	{
+		int y = 2;
+		int x = 2;
+		load_map("library.map", &y, &x);
+		dungeon_flags2 = DF2_NO_GENO;
+	}
+
+	/* Generate monsters */
 	library_quest_place_nrandom(
 		4, 4, 14, 37, MONSTER_LICH, damroll(4,2));
 
@@ -239,6 +258,8 @@ void quest_library_gen_hook()
 
 	library_quest_place_nrandom(
 		10, 10, 37, 67, MONSTER_MITHRIL_GOLEM, 1);
+
+	return TRUE;
 }
 
 static int get_status()

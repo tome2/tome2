@@ -98,18 +98,7 @@ add_quest
 		end,
 
 		[HOOK_GEN_QUEST] = function()
-			-- Only if player doing this quest
-			if (player.inside_quest ~= LIBRARY_QUEST) then
-				return FALSE
-			end
-
-			load_map("library.map", 2, 2)
-			level_flags2 = DF2_NO_GENO
-
-                        -- generate monsters
-                        quest_library_gen_hook()
-
-			return TRUE
+			return quest_library_gen_hook()
 		end,
 		[HOOK_STAIR] = function()
 			local ret
