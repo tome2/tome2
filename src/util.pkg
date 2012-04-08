@@ -2475,6 +2475,7 @@ extern bool drop_text_right(byte c, cptr s, int y, int o);
 
 extern bool quest_library_gen_hook();
 extern bool quest_library_stair_hook();
+extern void quest_library_monster_death_hook();
 
 /**
  * Mimicry

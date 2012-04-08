@@ -101,25 +101,7 @@ add_quest
 			return quest_library_stair_hook()
 		end,
 		[HOOK_MONSTER_DEATH] = function()
-			-- if they're in the quest and haven't won, continue
-			if (player.inside_quest ~= LIBRARY_QUEST) or (quest(LIBRARY_QUEST).status == QUEST_STATUS_COMPLETED) then
-				return FALSE
-			end
-
-			i = 1
-			count = -1
-			while i <= m_max do
-				local monster = m_list[i]
-				if (monster.r_idx > 0) and (monster.status <= MSTATUS_ENEMY) then
-					count = count + 1
-				end
-				i = i + 1
-			end
-
-			if count == 0 then
-				quest(LIBRARY_QUEST).status = QUEST_STATUS_COMPLETED
-				msg_print(TERM_YELLOW, "The library is safe now.")
-			end
+			return quest_library_monster_death_hook()
 		end,
 	},
 }

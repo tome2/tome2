@@ -308,25 +308,45 @@ bool_ quest_library_stair_hook()
 	}
 }
 
-static int get_status()
+void quest_library_monster_death_hook()
 {
-	return exec_lua("return quest(LIBRARY_QUEST).status");
-}
+	int i, count = -1;
 
-static void set_status(int new_status)
-{
-	exec_lua(format("quest(LIBRARY_QUEST).status = %d", new_status));
+	/* if they're in the quest and haven't won, continue */
+	if ((p_ptr->inside_quest != LIBRARY_QUEST()) ||
+	    (library_quest_get_status() == QUEST_STATUS_COMPLETED))
+	{
+		return;
+	}
+
+	/* Count all the enemies left alive */
+	for (i = 0; i < m_max; i++)
+	{
+		monster_type *m_ptr = &m_list[i];
+		if ((m_ptr->r_idx > 0) &&
+		    (m_ptr->status <= MSTATUS_ENEMY))
+		{
+			count = count + 1;
+		}
+	}
+
+	/* We've just killed the last monster */
+	if (count == 0)
+	{
+		library_quest_set_status(QUEST_STATUS_COMPLETED);
+		cmsg_print(TERM_YELLOW, "The library is safe now.");
+	}
 }
 
 void quest_library_building(bool_ *paid, bool_ *recreate)
 {
-	int status = get_status();
+	int status = library_quest_get_status();
 
 	/* the quest hasn't been requested already, right? */
 	if (status == QUEST_STATUS_UNTAKEN)
 	{
 		/* quest has been taken now */
-		set_status(QUEST_STATUS_TAKEN);
+		library_quest_set_status(QUEST_STATUS_TAKEN);
 
 		/* issue instructions */
 		msg_print("I need get some stock from my main library, but it is infested with monsters!");
@@ -344,7 +364,7 @@ void quest_library_building(bool_ *paid, bool_ *recreate)
 		library_quest_fill_book();
 		if (library_quest_book_slots_left() == 0)
 		{
-			set_status(QUEST_STATUS_REWARDED);
+			library_quest_set_status(QUEST_STATUS_REWARDED);
 
 			{
 				object_type forge;
