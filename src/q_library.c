@@ -1,4 +1,7 @@
 #undef cquest
+#define cquest (quest[QUEST_LIBRARY])
+
+#define print_hook(fmt,...) do { fprintf(hook_file, fmt, ##__VA_ARGS__); } while (0)
 
 #define MONSTER_LICH 518
 #define MONSTER_MONASTIC_LICH 611
@@ -6,21 +9,6 @@
 #define MONSTER_CLAY_GOLEM 261
 #define MONSTER_IRON_GOLEM 367
 #define MONSTER_MITHRIL_GOLEM 464
-
-static int LIBRARY_QUEST()
-{
-	return get_lua_int("LIBRARY_QUEST");
-}
-
-static int library_quest_get_status()
-{
-	return exec_lua("return quest(LIBRARY_QUEST).status");
-}
-
-static void library_quest_set_status(int new_status)
-{
-	exec_lua(format("quest(LIBRARY_QUEST).status = %d", new_status));
-}
 
 static s16b library_quest_place_random(int minY, int minX, int maxY, int maxX, int r_idx)
 {
@@ -40,17 +28,17 @@ static void library_quest_place_nrandom(int minY, int minX, int maxY, int maxX, 
 	}
 }
 
-static int library_quest_book_get_slot(int slot)
+static s32b library_quest_book_get_slot(int slot)
 {
-	return exec_lua(format("return school_book[61][%d]", slot));
+	return cquest.data[slot-1];
 }
 
-static int library_quest_book_set_slot(int slot, int spell)
+static void library_quest_book_set_slot(int slot, s32b spell)
 {
-	return exec_lua(format("school_book[61][%d] = %d", slot, spell));
+	cquest.data[slot-1] = spell;
 }
 
-int library_quest_book_slots_left()
+static int library_quest_book_slots_left()
 {
 	if (library_quest_book_get_slot(1) == -1) {
 		return 3;
@@ -65,7 +53,15 @@ int library_quest_book_slots_left()
 
 static bool_ library_quest_book_contains_spell(int spell)
 {
-	return exec_lua(format("return spell_in_book(61, %d)", spell));
+	int i;
+	for (i = 1; i <= 3; i++)
+	{
+		if (library_quest_book_get_slot(i) == spell)
+		{
+			return TRUE;
+		}
+	}
+	return FALSE;
 }
 
 static int library_quest_bookable_spells_at(int i) {
@@ -82,6 +78,15 @@ static int library_quest_print_spell(int color, int row, int spell) {
 
 static int library_quest_print_spell_desc(int s, int y) {
 	return exec_lua(format("print_spell_desc(%d, %d)", s, y));
+}
+
+static void quest_library_finalize_book()
+{
+	int i = 0;
+	for (i = 1; i <= 3; i++)
+	{
+		exec_lua(format("school_book[61][%d] = %d", i, library_quest_book_get_slot(i)));
+	}
 }
 
 static void library_quest_add_spell(int spell) {
@@ -155,13 +160,15 @@ static void library_quest_print_spells(int first, int current)
 	}
 }
 
-void library_quest_fill_book()
+static void library_quest_fill_book()
 {
 	int width, height, margin, first, current;
 	bool_ done;
 
 	/* Always start with a cleared book */
-	exec_lua("school_book[61] = {-1, -1, -1}");
+	library_quest_book_set_slot(1, -1);
+	library_quest_book_set_slot(2, -1);
+	library_quest_book_set_slot(3, -1);
 
 	screen_save();
 	Term_get_size(&width, &height);
@@ -229,10 +236,10 @@ void library_quest_fill_book()
 	screen_load();
 }
 
-bool_ quest_library_gen_hook()
+static bool_ quest_library_gen_hook()
 {
 	/* Only if player doing this quest */
-	if (p_ptr->inside_quest != LIBRARY_QUEST())
+	if (p_ptr->inside_quest != QUEST_LIBRARY)
 	{
 		return FALSE;
 	}
@@ -272,13 +279,13 @@ bool_ quest_library_gen_hook()
 	return TRUE;
 }
 
-bool_ quest_library_stair_hook()
+static bool_ quest_library_stair_hook()
 {
 	bool_ ret;
 
 	/* only ask this if player about to go up stairs of quest and hasn't won yet */
-	if ((p_ptr->inside_quest != LIBRARY_QUEST()) ||
-	    (library_quest_get_status() == QUEST_STATUS_COMPLETED))
+	if ((p_ptr->inside_quest != QUEST_LIBRARY) ||
+	    (cquest.status == QUEST_STATUS_COMPLETED))
 	{
 		return FALSE;
 	}
@@ -298,7 +305,7 @@ bool_ quest_library_stair_hook()
 	if (ret == TRUE)
 	{
 		/* fail the quest */
-		library_quest_set_status(QUEST_STATUS_FAILED);
+		cquest.status = QUEST_STATUS_FAILED;
 		return FALSE;
 	}
 	else
@@ -308,15 +315,15 @@ bool_ quest_library_stair_hook()
 	}
 }
 
-void quest_library_monster_death_hook()
+static bool_ quest_library_monster_death_hook(char *fmt)
 {
 	int i, count = -1;
 
 	/* if they're in the quest and haven't won, continue */
-	if ((p_ptr->inside_quest != LIBRARY_QUEST()) ||
-	    (library_quest_get_status() == QUEST_STATUS_COMPLETED))
+	if ((p_ptr->inside_quest != QUEST_LIBRARY) ||
+	    (cquest.status == QUEST_STATUS_COMPLETED))
 	{
-		return;
+		return FALSE;
 	}
 
 	/* Count all the enemies left alive */
@@ -333,20 +340,23 @@ void quest_library_monster_death_hook()
 	/* We've just killed the last monster */
 	if (count == 0)
 	{
-		library_quest_set_status(QUEST_STATUS_COMPLETED);
+		cquest.status = QUEST_STATUS_COMPLETED;
 		cmsg_print(TERM_YELLOW, "The library is safe now.");
 	}
+
+	/* Normal processing */
+	return FALSE;
 }
 
 void quest_library_building(bool_ *paid, bool_ *recreate)
 {
-	int status = library_quest_get_status();
+	int status = cquest.status;
 
 	/* the quest hasn't been requested already, right? */
 	if (status == QUEST_STATUS_UNTAKEN)
 	{
 		/* quest has been taken now */
-		library_quest_set_status(QUEST_STATUS_TAKEN);
+		cquest.status = QUEST_STATUS_TAKEN;
 
 		/* issue instructions */
 		msg_print("I need get some stock from my main library, but it is infested with monsters!");
@@ -364,7 +374,7 @@ void quest_library_building(bool_ *paid, bool_ *recreate)
 		library_quest_fill_book();
 		if (library_quest_book_slots_left() == 0)
 		{
-			library_quest_set_status(QUEST_STATUS_REWARDED);
+			cquest.status = QUEST_STATUS_REWARDED;
 
 			{
 				object_type forge;
@@ -376,6 +386,8 @@ void quest_library_building(bool_ *paid, bool_ *recreate)
 				object_known(q_ptr);
 				inven_carry(q_ptr, FALSE);
 			}
+
+			quest_library_finalize_book();
 		}
 	}
 
@@ -392,3 +404,46 @@ void quest_library_building(bool_ *paid, bool_ *recreate)
 		msg_print("I have no more quests for you.");
 	}
 }
+
+bool_ quest_library_describe(FILE *hook_file)
+{
+	if (cquest.status == QUEST_STATUS_TAKEN)
+	{
+		print_hook("#####yAn Old Mages Quest! (Danger Level: 35)\n");
+		print_hook("Make the library safe for the old mage in Minas Anor.\n");
+		print_hook("\n");
+	}
+	else if (cquest.status == QUEST_STATUS_COMPLETED)
+	{
+		/* Quest done, book not gotten yet */
+		print_hook("#####yAn Old Mages Quest!\n");
+		print_hook("You have made the library safe for the old mage in Minas Anor.\n");
+		print_hook("Perhaps you should see about a reward.\n");
+		print_hook("\n");
+	}
+
+	/* Normal processing */
+	return TRUE;
+}
+
+bool_ quest_library_init_hook(int q)
+{
+	/* Only need hooks if the quest is unfinished. */
+	if ((cquest.status >= QUEST_STATUS_UNTAKEN) &&
+	    (cquest.status < QUEST_STATUS_FINISHED))
+	{
+		add_hook(HOOK_GEN_QUEST    , quest_library_gen_hook          , "library_gen_hook");
+		add_hook(HOOK_STAIR        , quest_library_stair_hook        , "library_stair_hook");
+		add_hook(HOOK_MONSTER_DEATH, quest_library_monster_death_hook, "library_monster_death_hook");
+	}
+
+	/* If quest was rewarded we need to initialize the real player's spellbook. */
+	if (cquest.status == QUEST_STATUS_REWARDED)
+	{
+		quest_library_finalize_book();
+	}
+
+	return FALSE;
+}
+
+#undef print_hook

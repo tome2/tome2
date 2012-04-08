@@ -4301,6 +4301,22 @@ quest_type quest_init_tome[MAX_Q_IDX_INIT] =
 		{0, 0, 0, 0},
 		quest_fireproof_describe,
 	},
+	/* Library */
+	{
+		FALSE,
+		TRUE,
+		"Library quest",
+		{
+			"", /* dynamic desc */
+		},
+		QUEST_STATUS_UNTAKEN,
+		35,
+		NULL,
+		HOOK_TYPE_C,
+		quest_library_init_hook,
+		{ -1, -1, -1, -1 },
+		quest_library_describe,
+	},
 };
 
 

@@ -159,9 +159,3 @@ extern s16b    add_new_quest @ new_quest(char *name);
  * @note (see file lua_bind.c)
  */
 extern void    desc_quest @ quest_desc(int q_idx, int d, char *desc);
-
-/**
- * Library Quest
- */
-extern void    library_quest_fill_book();
-extern int     library_quest_book_slots_left();

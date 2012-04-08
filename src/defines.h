@@ -4420,7 +4420,8 @@
 #define QUEST_EVIL              25
 #define QUEST_BOUNTY            26
 #define QUEST_FIREPROOF         27
-#define MAX_Q_IDX_INIT          28
+#define QUEST_LIBRARY           28
+#define MAX_Q_IDX_INIT          29
 
 #define PLOT_MAIN               0
 #define PLOT_BREE               1
