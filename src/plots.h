@@ -55,6 +55,7 @@ extern bool_ quest_bounty_describe(FILE *fff);
 
 /******* Plot Library Quest *******/
 extern bool_ quest_library_gen_hook();
+extern bool_ quest_library_stair_hook();
 extern void quest_library_building(bool_ *paid, bool_ *recreate);
 
 /******* Plot Fireproof Quest *********/

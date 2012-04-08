@@ -12,6 +12,16 @@ static int LIBRARY_QUEST()
 	return get_lua_int("LIBRARY_QUEST");
 }
 
+static int library_quest_get_status()
+{
+	return exec_lua("return quest(LIBRARY_QUEST).status");
+}
+
+static void library_quest_set_status(int new_status)
+{
+	exec_lua(format("quest(LIBRARY_QUEST).status = %d", new_status));
+}
+
 static s16b library_quest_place_random(int minY, int minX, int maxY, int maxX, int r_idx)
 {
 	int y = randint(maxY - minY + 1) + minY;
@@ -260,6 +270,42 @@ bool_ quest_library_gen_hook()
 		10, 10, 37, 67, MONSTER_MITHRIL_GOLEM, 1);
 
 	return TRUE;
+}
+
+bool_ quest_library_stair_hook()
+{
+	bool_ ret;
+
+	/* only ask this if player about to go up stairs of quest and hasn't won yet */
+	if ((p_ptr->inside_quest != LIBRARY_QUEST()) ||
+	    (library_quest_get_status() == QUEST_STATUS_COMPLETED))
+	{
+		return FALSE;
+	}
+
+	if (cave[p_ptr->py][p_ptr->px].feat != FEAT_LESS)
+	{
+		return FALSE;
+	}
+
+	/* flush all pending input */
+	flush();
+
+	/* confirm */
+	ret = get_check("Really abandon the quest?");
+
+	/* if yes, then */
+	if (ret == TRUE)
+	{
+		/* fail the quest */
+		library_quest_set_status(QUEST_STATUS_FAILED);
+		return FALSE;
+	}
+	else
+	{
+		/* if no, they stay in the quest */
+		return TRUE;
+	}
 }
 
 static int get_status()

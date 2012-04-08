@@ -98,30 +98,7 @@ add_quest
 			return quest_library_gen_hook()
 		end,
 		[HOOK_STAIR] = function()
-			local ret
-
-			-- only ask this if player about to go up stairs of quest and hasn't won yet
-			if (player.inside_quest ~= LIBRARY_QUEST) or (quest(LIBRARY_QUEST).status == QUEST_STATUS_COMPLETED) then
-				return FALSE
-			end
-
-			if cave(player.py, player.px).feat ~= FEAT_LESS then return end
-
-			-- flush all pending input
-			flush()
-
-			-- confirm
-			ret = get_check("Really abandon the quest?")
-
-			-- if yes, then
-			if ret == TRUE then
-				-- fail the quest
-				quest(LIBRARY_QUEST).status = QUEST_STATUS_FAILED
-				return FALSE
-			else 
-				-- if no, they stay in the quest
-				return TRUE
-			end
+			return quest_library_stair_hook()
 		end,
 		[HOOK_MONSTER_DEATH] = function()
 			-- if they're in the quest and haven't won, continue
