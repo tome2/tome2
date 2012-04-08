@@ -165,3 +165,12 @@ extern void    desc_quest @ quest_desc(int q_idx, int d, char *desc);
  */
 extern void quest_god_place_rand_dung();
 extern void quest_god_generate_relic();
+extern void quest_god_set_god_dungeon_attributes_eru();
+extern void quest_god_set_god_dungeon_attributes_manwe();
+extern void quest_god_set_god_dungeon_attributes_tulkas();
+extern void quest_god_set_god_dungeon_attributes_melkor();
+extern void quest_god_set_god_dungeon_attributes_yavanna();
+extern void quest_god_set_god_dungeon_attributes_aule();
+extern void quest_god_set_god_dungeon_attributes_varda();
+extern void quest_god_set_god_dungeon_attributes_ulmo();
+extern void quest_god_set_god_dungeon_attributes_mandos();

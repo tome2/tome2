@@ -183,3 +183,441 @@ void quest_god_generate_relic()
 	/* Reset some variables */
 	set_relic_gen_tries(0);
 }
+
+void quest_god_set_god_dungeon_attributes_eru()
+{
+	/* The Eru temple is based on Meneltarma. */
+
+	/* W: Not too many monsters (they'll be tough though, with big
+	 * levels) */
+	d_info[DUNGEON_GOD].min_m_alloc_level = 14;
+	d_info[DUNGEON_GOD].max_m_alloc_chance = 200;
+
+	/* L: Dirt and grass. More dirt at bottom, more grass at
+	 * top. rocky ground would be nice */
+	d_info[DUNGEON_GOD].floor1 = 88;
+	d_info[DUNGEON_GOD].floor2 = 89;
+	d_info[DUNGEON_GOD].floor_percent1[0] = 70;
+	d_info[DUNGEON_GOD].floor_percent2[0] = 30;
+	d_info[DUNGEON_GOD].floor_percent1[1] = 10;
+	d_info[DUNGEON_GOD].floor_percent2[1] = 90;
+
+	/* A: Outer wall mountain chain. other walls granite */
+	d_info[DUNGEON_GOD].fill_type1 = 97;
+	d_info[DUNGEON_GOD].fill_percent1[0] = 100;
+	d_info[DUNGEON_GOD].outer_wall = 57;
+	d_info[DUNGEON_GOD].inner_wall = 97;
+	d_info[DUNGEON_GOD].fill_method = 2;
+
+	/* O: "At Meneltarma no weapon or tool had ever been borne"
+	 * (but invaders would have left a small number) */
+	d_info[DUNGEON_GOD].objs.treasure = 45;
+	d_info[DUNGEON_GOD].objs.combat = 5;
+	d_info[DUNGEON_GOD].objs.magic = 45;
+	d_info[DUNGEON_GOD].objs.tools = 5;
+
+	/* F: A large pillar, with stairs created at edges. (You can't
+	 * climb a rock through the middle, can you?) */
+	d_info[DUNGEON_GOD].flags1 =
+		DF1_BIG | DF1_NO_DOORS | DF1_CIRCULAR_ROOMS |
+		DF1_EMPTY | DF1_TOWER | DF1_FLAT | DF1_ADJUST_LEVEL_2;
+	d_info[DUNGEON_GOD].flags2 =
+		DF2_ADJUST_LEVEL_1_2 |
+		DF2_NO_SHAFT |
+		DF2_ADJUST_LEVEL_PLAYER;
+
+	/* R: */
+	d_info[DUNGEON_GOD].rules[0].mode = 3;
+	d_info[DUNGEON_GOD].rules[0].percent = 50;
+
+	/* M: We want evil or flying characters */
+	d_info[DUNGEON_GOD].rules[0].mflags3 = RF3_EVIL;
+
+	d_info[DUNGEON_GOD].rules[1].mode = 3;
+	d_info[DUNGEON_GOD].rules[1].percent = 50;
+
+	/* M: We want evil or flying characters */
+	d_info[DUNGEON_GOD].rules[1].mflags7 = RF7_CAN_FLY;
+}
+
+void quest_god_set_god_dungeon_attributes_manwe()
+{
+	/* Manwe's lost temple is high in the clouds */
+
+	/* W: Has average number of monsters. */
+	d_info[DUNGEON_GOD].min_m_alloc_level = 18;
+	d_info[DUNGEON_GOD].max_m_alloc_chance = 160;
+
+	/* L: floor will be 'cloud-like vapour' and pools of
+	 * 'condensing water' */
+	d_info[DUNGEON_GOD].floor1 = 208;
+	d_info[DUNGEON_GOD].floor2 = 209;
+	d_info[DUNGEON_GOD].floor_percent1[0] = 85;
+	d_info[DUNGEON_GOD].floor_percent2[0] = 15;
+
+	/* A: Outer wall is 'hail stone wall', inner wall 'dense
+	 * fog'. FIlled at max smoothing, like islands. */
+	d_info[DUNGEON_GOD].fill_type1 = 211;
+	d_info[DUNGEON_GOD].fill_percent1[0] = 100;
+	d_info[DUNGEON_GOD].outer_wall = 210;
+	d_info[DUNGEON_GOD].inner_wall = 211;
+	d_info[DUNGEON_GOD].fill_method = 4;
+
+	/* O: Can't imagine Manwe having much treasure. Little need
+	 * for tools in a cloud temple. lots of magical stuff
+	 * though... */
+	d_info[DUNGEON_GOD].objs.treasure = 15;
+	d_info[DUNGEON_GOD].objs.combat = 25;
+	d_info[DUNGEON_GOD].objs.magic = 55;
+	d_info[DUNGEON_GOD].objs.tools = 5;
+
+	/* F: It's open, goes up like a tower, give it a few
+	 * interesting rooms, make the monsters hard(ish). */
+	d_info[DUNGEON_GOD].flags1 =
+		DF1_NO_DOORS | DF1_TOWER |
+		DF1_CAVERN | DF1_ADJUST_LEVEL_2;
+	d_info[DUNGEON_GOD].flags2 =
+		DF2_NO_SHAFT | DF2_ADJUST_LEVEL_PLAYER;
+
+	/* R: */
+	d_info[DUNGEON_GOD].rules[0].mode = 3;
+	d_info[DUNGEON_GOD].rules[0].percent = 20;
+	d_info[DUNGEON_GOD].rules[1].mode = 3;
+	d_info[DUNGEON_GOD].rules[1].percent = 20;
+	d_info[DUNGEON_GOD].rules[2].mode = 3;
+	d_info[DUNGEON_GOD].rules[2].percent = 20;
+	d_info[DUNGEON_GOD].rules[3].mode = 3;
+	d_info[DUNGEON_GOD].rules[3].percent = 20;
+	d_info[DUNGEON_GOD].rules[4].mode = 3;
+	d_info[DUNGEON_GOD].rules[4].percent = 20;
+
+	/* M: We want air(poison-type) or flying characters. Orcs
+	 * too. They would have ransacked his elf-loving temple :) */
+	d_info[DUNGEON_GOD].rules[0].mflags2 = RF2_INVISIBLE;
+	d_info[DUNGEON_GOD].rules[1].mflags3 = RF3_ORC | RF3_IM_POIS;
+	d_info[DUNGEON_GOD].rules[2].mflags4 = RF4_BR_POIS | RF4_BR_GRAV;
+	d_info[DUNGEON_GOD].rules[3].mflags5 = RF5_BA_POIS;
+	d_info[DUNGEON_GOD].rules[4].mflags7 = RF7_CAN_FLY;
+}
+
+void quest_god_set_god_dungeon_attributes_tulkas()
+{
+	/* Tulkas dungeon is quite normal, possibly a bit boring to be
+	 * honest. Maybe I should add something radical to it.  'The
+	 * house of Tulkas in the midmost of Valmar was a house of
+	 * mirth and revelry. It sprang into the air with many
+	 * storeys, and had a tower of bronze and pillars of copper in
+	 * a wide arcade'
+	 */
+
+	/* W: but with lots of monsters */
+	d_info[DUNGEON_GOD].min_m_alloc_level = 20;
+	d_info[DUNGEON_GOD].max_m_alloc_chance = 120;
+
+	/* L: floor is normal */
+	d_info[DUNGEON_GOD].floor1 = 1;
+	d_info[DUNGEON_GOD].floor_percent1[0] = 100;
+
+	/* A: Granite walls */
+	d_info[DUNGEON_GOD].fill_type1 = 56;
+	d_info[DUNGEON_GOD].fill_percent1[0] = 100;
+	d_info[DUNGEON_GOD].outer_wall = 58;
+	d_info[DUNGEON_GOD].inner_wall = 57;
+	d_info[DUNGEON_GOD].fill_method = 0;
+
+	/* O: Loads of combat drops */
+	d_info[DUNGEON_GOD].objs.treasure = 10;
+	d_info[DUNGEON_GOD].objs.combat = 70;
+	d_info[DUNGEON_GOD].objs.magic = 5;
+	d_info[DUNGEON_GOD].objs.tools = 15;
+
+	/* F: fairly standard */
+	d_info[DUNGEON_GOD].flags1 = DF1_NO_DESTROY | DF1_ADJUST_LEVEL_2;
+	d_info[DUNGEON_GOD].flags2 = DF2_ADJUST_LEVEL_PLAYER;
+
+	/* R: */
+	d_info[DUNGEON_GOD].rules[0].mode = 3;
+	d_info[DUNGEON_GOD].rules[0].percent = 100;
+
+	/* M: plenty demons please */
+	d_info[DUNGEON_GOD].rules[0].mflags3 = RF3_DEMON | RF3_EVIL;
+}
+
+void quest_god_set_god_dungeon_attributes_melkor()
+{
+	/* Melkors dungeon will be dark, fiery and stuff */
+
+	/* Many many monsters! (but prob ADJUST_LEVEL_1_2) */
+	d_info[DUNGEON_GOD].min_m_alloc_level = 24;
+	d_info[DUNGEON_GOD].max_m_alloc_chance = 80;
+
+	/* L: floor is dirt/mud/nether */
+	d_info[DUNGEON_GOD].floor1 = 88;
+	d_info[DUNGEON_GOD].floor2 = 94;
+	d_info[DUNGEON_GOD].floor3 = 102;
+	d_info[DUNGEON_GOD].floor_percent1[0] = 45;
+	d_info[DUNGEON_GOD].floor_percent2[0] = 45;
+	d_info[DUNGEON_GOD].floor_percent3[0] = 10;
+	d_info[DUNGEON_GOD].floor_percent1[1] = 35;
+	d_info[DUNGEON_GOD].floor_percent2[1] = 35;
+	d_info[DUNGEON_GOD].floor_percent3[1] = 30;
+
+	/* A: Granite walls to fill but glass walls for room
+	 * perimeters (you can see the nasty monsters coming) */
+	d_info[DUNGEON_GOD].fill_type1 = 188;
+	d_info[DUNGEON_GOD].fill_percent1[0] = 100;
+	d_info[DUNGEON_GOD].outer_wall = 188;
+	d_info[DUNGEON_GOD].inner_wall = 57;
+	d_info[DUNGEON_GOD].fill_method = 1;
+
+	/* O: Even drops */
+	d_info[DUNGEON_GOD].objs.treasure = 25;
+	d_info[DUNGEON_GOD].objs.combat = 25;
+	d_info[DUNGEON_GOD].objs.magic = 25;
+	d_info[DUNGEON_GOD].objs.tools = 25;
+
+	/* F: Small, lava rivers, nasty monsters hehehehehe */
+	d_info[DUNGEON_GOD].flags1 = DF1_SMALL | DF1_LAVA_RIVERS | DF1_ADJUST_LEVEL_1;
+	d_info[DUNGEON_GOD].flags2 = DF2_ADJUST_LEVEL_1_2 | DF2_ADJUST_LEVEL_PLAYER;
+
+	/* R: No restrictions on monsters here */
+	d_info[DUNGEON_GOD].rules[0].mode = 0;
+	d_info[DUNGEON_GOD].rules[0].percent = 80;
+
+	/* R: Apart from making sure we have some GOOD ones */
+	d_info[DUNGEON_GOD].rules[1].mode = 3;
+	d_info[DUNGEON_GOD].rules[1].percent = 20;
+
+	/* M: */
+	d_info[DUNGEON_GOD].rules[1].mflags3 = RF3_GOOD;
+}
+
+void quest_god_set_god_dungeon_attributes_yavanna()
+{
+	/* Yavannas dungeon will be very natural, tress and stuff. */
+
+	d_info[DUNGEON_GOD].min_m_alloc_level = 22;
+	d_info[DUNGEON_GOD].max_m_alloc_chance = 100;
+
+	/* L: floor is grass/flowers, plus dirt so not always
+	 * regenerating quick! */
+	d_info[DUNGEON_GOD].floor1 = 89;
+	d_info[DUNGEON_GOD].floor2 = 199;
+	d_info[DUNGEON_GOD].floor3 = 88;
+	d_info[DUNGEON_GOD].floor_percent1[0] = 40;
+	d_info[DUNGEON_GOD].floor_percent2[0] = 15;
+	d_info[DUNGEON_GOD].floor_percent3[0] = 45;
+
+	/* A: Tree walls to fill, small trees for inner walls */
+	d_info[DUNGEON_GOD].fill_type1 = 96;
+	d_info[DUNGEON_GOD].fill_percent1[0] = 100;
+	d_info[DUNGEON_GOD].outer_wall = 202;
+	d_info[DUNGEON_GOD].inner_wall = 96;
+	d_info[DUNGEON_GOD].fill_method = 1;
+
+	/* O: not much combat.. tools where ransackers have tried to
+	 * chop trees down. */
+	d_info[DUNGEON_GOD].objs.treasure = 20;
+	d_info[DUNGEON_GOD].objs.combat = 10;
+	d_info[DUNGEON_GOD].objs.magic = 30;
+	d_info[DUNGEON_GOD].objs.tools = 40;
+
+	/* F: Natural looking */
+	d_info[DUNGEON_GOD].flags1 =
+		DF1_NO_DOORS | DF1_WATER_RIVERS |
+		DF1_NO_DESTROY | DF1_ADJUST_LEVEL_1 | 
+		DF1_NO_RECALL;
+	d_info[DUNGEON_GOD].flags2 =
+		DF2_ADJUST_LEVEL_1_2 | DF2_NO_SHAFT |
+		DF2_NO_GENO | DF2_ADJUST_LEVEL_PLAYER;
+
+	/* R: Demons, Undead, non-living */
+	d_info[DUNGEON_GOD].rules[0].mode = 3;
+	d_info[DUNGEON_GOD].rules[0].percent = 100;
+
+	/* M: */
+	d_info[DUNGEON_GOD].rules[0].mflags3 =
+		RF3_DEMON | RF3_UNDEAD | RF3_NONLIVING;
+}
+
+void quest_god_set_god_dungeon_attributes_aule()
+{
+	d_info[DUNGEON_GOD].min_m_alloc_level = 24;
+	d_info[DUNGEON_GOD].max_m_alloc_chance = 80;
+
+	/* L: floor is dirt/mud/shallow water */
+	d_info[DUNGEON_GOD].floor1 = 88;
+	d_info[DUNGEON_GOD].floor2 = 94;
+	d_info[DUNGEON_GOD].floor3 = 84;
+	d_info[DUNGEON_GOD].floor_percent1[0] = 45;
+	d_info[DUNGEON_GOD].floor_percent2[0] = 45;
+	d_info[DUNGEON_GOD].floor_percent3[0] = 10;
+	d_info[DUNGEON_GOD].floor_percent1[1] = 35;
+	d_info[DUNGEON_GOD].floor_percent2[1] = 35;
+	d_info[DUNGEON_GOD].floor_percent3[1] = 30;
+
+	/* A: Grey mountains, inner walls are low hills */
+	d_info[DUNGEON_GOD].fill_type1 = 216;
+	d_info[DUNGEON_GOD].fill_percent1[0] = 100;
+	d_info[DUNGEON_GOD].outer_wall = 216;
+	d_info[DUNGEON_GOD].inner_wall = 213;
+	d_info[DUNGEON_GOD].fill_method = 1;
+
+	/* O: Weapons and tools only */
+	d_info[DUNGEON_GOD].objs.treasure = 0;
+	d_info[DUNGEON_GOD].objs.combat = 50;
+	d_info[DUNGEON_GOD].objs.magic = 0;
+	d_info[DUNGEON_GOD].objs.tools = 50;
+
+	/* F: Small, no destroyed levels, min monster level = dungeon
+	 * level */
+	d_info[DUNGEON_GOD].flags1 = 
+		DF1_SMALL | DF1_NO_DESTROY |
+		DF1_ADJUST_LEVEL_1 | DF1_NO_STREAMERS;
+
+	/* R: No restrictions on monsters here */
+	d_info[DUNGEON_GOD].rules[0].mode = 0;
+	d_info[DUNGEON_GOD].rules[0].percent = 80;
+}
+
+void quest_god_set_god_dungeon_attributes_varda()
+{
+	/* Varda lives with Manwe, so high in the clouds */
+
+	/* W: Has average number of monsters. */
+	d_info[DUNGEON_GOD].min_m_alloc_level = 18;
+	d_info[DUNGEON_GOD].max_m_alloc_chance = 160;
+
+	/* L: floor will be grass and flowers */
+	d_info[DUNGEON_GOD].floor1 = 89;
+	d_info[DUNGEON_GOD].floor2 = 82;
+	d_info[DUNGEON_GOD].floor_percent1[0] = 85;
+	d_info[DUNGEON_GOD].floor_percent2[0] = 15;
+
+	/* A: Outer wall is 'hail stone wall', inner wall 'dense
+	 * fog'. Filled at max smoothing, like islands. */
+	d_info[DUNGEON_GOD].fill_type1 = 211;
+	d_info[DUNGEON_GOD].fill_percent1[0] = 100;
+	d_info[DUNGEON_GOD].outer_wall = 210;
+	d_info[DUNGEON_GOD].inner_wall = 211;
+	d_info[DUNGEON_GOD].fill_method = 4;
+
+	/* O: Varda likes magical items and tools, not much treasure
+	 * or weapons */
+	d_info[DUNGEON_GOD].objs.treasure = 15;
+	d_info[DUNGEON_GOD].objs.combat = 5;
+	d_info[DUNGEON_GOD].objs.magic = 55;
+	d_info[DUNGEON_GOD].objs.tools = 25;
+
+	/* F: It's open, goes up like a tower, give it a few
+	 * interesting rooms, make the monsters hard(ish). */
+	d_info[DUNGEON_GOD].flags1 =
+		DF1_NO_DOORS | DF1_TOWER |
+		DF1_CAVERN | DF1_ADJUST_LEVEL_1;
+	d_info[DUNGEON_GOD].flags2 =
+		DF2_NO_SHAFT | DF2_ADJUST_LEVEL_PLAYER;
+
+	/* R: */
+	d_info[DUNGEON_GOD].rules[0].mode = 3;
+	d_info[DUNGEON_GOD].rules[0].percent = 20;
+	d_info[DUNGEON_GOD].rules[1].mode = 3;
+	d_info[DUNGEON_GOD].rules[1].percent = 20;
+	d_info[DUNGEON_GOD].rules[2].mode = 3;
+	d_info[DUNGEON_GOD].rules[2].percent = 20;
+	d_info[DUNGEON_GOD].rules[3].mode = 3;
+	d_info[DUNGEON_GOD].rules[3].percent = 20;
+	d_info[DUNGEON_GOD].rules[4].mode = 3;
+	d_info[DUNGEON_GOD].rules[4].percent = 20;
+
+	/* M: We want air(poison-type) or flying characters. Orcs too. */
+	d_info[DUNGEON_GOD].rules[0].mflags2 = RF2_INVISIBLE;
+	d_info[DUNGEON_GOD].rules[1].mflags3 = RF3_ORC | RF3_IM_POIS;
+	d_info[DUNGEON_GOD].rules[2].mflags4 = RF4_BR_POIS | RF4_BR_GRAV;
+	d_info[DUNGEON_GOD].rules[3].mflags5 = RF5_BA_POIS;
+	d_info[DUNGEON_GOD].rules[4].mflags7 = RF7_CAN_FLY;
+}
+
+void quest_god_set_god_dungeon_attributes_ulmo()
+{
+	/* Ulmo dungeon is basically Tulkas, except with acquatic creatures. */
+
+	/* W: but with lots of monsters */
+	d_info[DUNGEON_GOD].min_m_alloc_level = 20;
+	d_info[DUNGEON_GOD].max_m_alloc_chance = 120;
+
+	/* L: floor is dirt */
+	d_info[DUNGEON_GOD].floor1 = 88;
+	d_info[DUNGEON_GOD].floor_percent1[0] = 100;
+
+	/* A: Cheat: walls are water. */
+	d_info[DUNGEON_GOD].fill_type1 = 187;
+	d_info[DUNGEON_GOD].fill_percent1[0] = 100;
+	d_info[DUNGEON_GOD].outer_wall = 238;
+	d_info[DUNGEON_GOD].inner_wall = 84;
+	d_info[DUNGEON_GOD].fill_method = 0;
+
+	/* O: Lots of treasure, not much else. */
+	d_info[DUNGEON_GOD].objs.treasure = 90;
+	d_info[DUNGEON_GOD].objs.combat = 0;
+	d_info[DUNGEON_GOD].objs.magic = 5;
+	d_info[DUNGEON_GOD].objs.tools = 5;
+
+	/* F: fairly standard */
+	d_info[DUNGEON_GOD].flags1 = DF1_NO_DESTROY | DF1_ADJUST_LEVEL_2;
+	d_info[DUNGEON_GOD].flags2 = DF2_ADJUST_LEVEL_PLAYER;
+
+	/* R: */
+	d_info[DUNGEON_GOD].rules[0].mode = 3;
+	d_info[DUNGEON_GOD].rules[0].percent = 35;
+	d_info[DUNGEON_GOD].rules[1].mode = 3;
+	d_info[DUNGEON_GOD].rules[1].percent = 30;
+	d_info[DUNGEON_GOD].rules[2].mode = 3;
+	d_info[DUNGEON_GOD].rules[2].percent = 30;
+
+	/* M: Aquatic creatures only. */
+	d_info[DUNGEON_GOD].rules[0].mflags3 = RF7_CAN_FLY;
+	d_info[DUNGEON_GOD].rules[1].mflags3 = RF7_AQUATIC;
+	d_info[DUNGEON_GOD].rules[2].mflags3 = RF3_RES_WATE;
+}
+
+void quest_god_set_god_dungeon_attributes_mandos()
+{
+	/* Mandos dungeon is basically Tulkas, except with undead. */
+
+	/* W: but with lots of monsters */
+	d_info[DUNGEON_GOD].min_m_alloc_level = 20;
+	d_info[DUNGEON_GOD].max_m_alloc_chance = 120;
+
+	/* L: floor is normal */
+	d_info[DUNGEON_GOD].floor1 = 1;
+	d_info[DUNGEON_GOD].floor_percent1[0] = 100;
+
+	/* A: Granite walls */
+	d_info[DUNGEON_GOD].fill_type1 = 56;
+	d_info[DUNGEON_GOD].fill_percent1[0] = 100;
+	d_info[DUNGEON_GOD].outer_wall = 58;
+	d_info[DUNGEON_GOD].inner_wall = 57;
+	d_info[DUNGEON_GOD].fill_method = 0;
+
+	/* O: Loads of combat drops */
+	d_info[DUNGEON_GOD].objs.treasure = 10;
+	d_info[DUNGEON_GOD].objs.combat = 70;
+	d_info[DUNGEON_GOD].objs.magic = 5;
+	d_info[DUNGEON_GOD].objs.tools = 15;
+
+	/* F: fairly standard */
+	d_info[DUNGEON_GOD].flags1 = DF1_NO_DESTROY | DF1_ADJUST_LEVEL_2;
+	d_info[DUNGEON_GOD].flags2 = DF2_ADJUST_LEVEL_PLAYER;
+
+	/* R: */
+	d_info[DUNGEON_GOD].rules[0].mode = 3;
+	d_info[DUNGEON_GOD].rules[0].percent = 100;
+
+	/* M: vampires! */
+	d_info[DUNGEON_GOD].rules[0].r_char[0] = 'V';
+	d_info[DUNGEON_GOD].rules[0].r_char[1] = '\0';
+	d_info[DUNGEON_GOD].rules[0].r_char[2] = '\0';
+	d_info[DUNGEON_GOD].rules[0].r_char[3] = '\0';
+	d_info[DUNGEON_GOD].rules[0].r_char[4] = '\0';
+	d_info[DUNGEON_GOD].rules[0].mflags3 = RF3_UNDEAD | RF3_EVIL;
+}
