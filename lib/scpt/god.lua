@@ -33,6 +33,12 @@ function print_directions(feel_it, pfunc)
 	end
 end
 
+function msg_directions()
+	print_directions(TRUE, function (line)
+		cmsg_print(TERM_YELLOW, line)
+	end)
+end
+
 -- Set up relic number according to god
 function setup_relic_number()
 	if player.pgod == GOD_ERU then
@@ -133,9 +139,7 @@ add_quest
 					cmsg_print(TERM_YELLOW, "When thy task is done, thou art to lift it in the air and call upon my name.")
 					cmsg_print(TERM_YELLOW, "I shall then come to reclaim what is mine!")
 
-					print_directions(TRUE, function (line)
-						cmsg_print(TERM_YELLOW, line)
-					end)
+					msg_directions()
 
 					-- Prepare depth of dungeon. If this was generated in set_god_dungeon_attributes(),
 					-- then we'd have trouble if someone levelled up in the dungeon!
