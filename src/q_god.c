@@ -122,6 +122,16 @@ static int get_dun_minplev()
 	return get_lua_int("god_quest.dun_minplev");
 }
 
+static int get_relics_found()
+{
+	return get_lua_int("god_quest.relics_found");
+}
+
+static void set_relics_found(int v)
+{
+	exec_lua(format("god_quest.relics_found = %d", v));
+}
+
 static void setup_relic_number()
 {
 	exec_lua("setup_relic_number()");
@@ -823,4 +833,58 @@ void quest_god_player_level_hook(int gained)
 		set_dun_mindepth(p_ptr->lev*2/3);
 		set_dun_maxdepth(get_dun_mindepth() + 4);
 	}
+}
+
+bool_ quest_god_get_hook(int item)
+{
+	object_type *o_ptr = NULL;
+
+	item = -item; /* Workaround */
+	o_ptr = get_object(item);
+
+	/* -- Is it the relic, and check to make sure the relic hasn't already been identified */
+	if ((get_status() == QUEST_STATUS_TAKEN) &&
+	    (o_ptr->tval == TV_JUNK) &&
+	    (o_ptr->sval == get_relic_num()) &&
+	    (o_ptr->pval != TRUE) &&
+	    (get_relics_found() < get_quests_given()))
+	{
+		cmsg_format(TERM_L_BLUE, "%s speaks to you:", deity_info[p_ptr->pgod].name);
+
+		/* Is it the last piece of the relic? */
+		if (get_quests_given() == MAX_NUM_GOD_QUESTS())
+		{
+			cmsg_print(TERM_YELLOW, "'At last! Thou hast found all of the relic pieces.");
+
+			/* reward player by increasing prayer skill */
+			cmsg_print(TERM_YELLOW, "Thou hast done exceptionally well! I shall increase thy prayer skill even more!'");
+			s_info[SKILL_PRAY].value += (10 * s_info[SKILL_PRAY].mod);
+		}
+		else
+		{
+			cmsg_print(TERM_YELLOW, "'Well done! Thou hast found part of the relic.");
+			cmsg_print(TERM_YELLOW, "I shall surely ask thee to find more of it later!");
+			cmsg_print(TERM_YELLOW, "I will take it from thee for now'");
+
+			/* reward player by increasing prayer skill */
+			cmsg_print(TERM_YELLOW, "'As a reward, I shall teach thee how to pray better'");
+			s_info[SKILL_PRAY].value += (5 * s_info[SKILL_PRAY].mod);
+		}
+
+		/* Take the relic piece */
+		inc_stack_size_ex(item, -1, OPTIMIZE, NO_DESCRIBE);
+
+		/* relic piece has been identified */
+		o_ptr->pval = TRUE;
+		set_relics_found(get_relics_found() + 1);
+
+		/* Make sure quests can be given again if neccesary */
+		set_status(QUEST_STATUS_UNTAKEN);
+
+		/* Prevent further processing of 'take' action; we've
+		   destroyed the item. */
+		return TRUE;
+	}
+
+	return FALSE;
 }

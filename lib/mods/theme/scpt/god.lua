@@ -138,46 +138,7 @@ add_quest
 			end
 		end,
 		[HOOK_GET] = function(o_ptr, item)
-				-- Is it the relic, and check to make sure the relic hasn't already been identified
-			if (quest(GOD_QUEST).status == QUEST_STATUS_TAKEN) and (o_ptr.tval == TV_JUNK) and (o_ptr.sval == god_quest.relic_num)
-			and (o_ptr.pval ~= TRUE)  and (god_quest.relics_found < god_quest.quests_given) then
-
-				-- more God talky-talky
-				cmsg_print(TERM_L_BLUE, deity(player.pgod).name.." speaks to you:")
-
-				-- Is it the last piece of the relic?
-				if (god_quest.quests_given == god_quest.MAX_NUM_GOD_QUESTS) then
-					cmsg_print(TERM_YELLOW, "'At last! Thou hast found all of the relic pieces.")
-
-					-- reward player by increasing prayer skill
-					cmsg_print(TERM_YELLOW, "Thou hast done exceptionally well! I shall increase thy prayer skill even more!'")
-					skill(SKILL_PRAY).value = skill(SKILL_PRAY).value + (10 * (skill(SKILL_PRAY).mod))
-
-					-- Take the relic piece
-					floor_item_increase(item, -1)
-					floor_item_optimize(item)
-				else
-					cmsg_print(TERM_YELLOW, "'Well done! Thou hast found part of the relic.")
-					cmsg_print(TERM_YELLOW, "I shall surely ask thee to find more of it later!")
-					cmsg_print(TERM_YELLOW, "I will take it from thee for now'")
-
-					-- Take the relic piece
-					floor_item_increase(item, -1)
-					floor_item_optimize(item)
-
-					-- reward player by increasing prayer skill
-					cmsg_print(TERM_YELLOW, "'As a reward, I shall teach thee how to pray better'")
-					skill(SKILL_PRAY).value = skill(SKILL_PRAY).value + (5 * (skill(SKILL_PRAY).mod))
-				end
-
-				-- relic piece has been identified
-				o_ptr.pval = TRUE
-				god_quest.relics_found = god_quest.relics_found + 1
-
-				-- Make sure quests can be given again if neccesary
-				quest(GOD_QUEST).status = QUEST_STATUS_UNTAKEN
-				return TRUE
-			end
+			return quest_god_get_hook(item)
 		end,
 		[HOOK_CHAR_DUMP] = function()
 
