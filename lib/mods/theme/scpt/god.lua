@@ -12,30 +12,39 @@ god_quest.MAX_NUM_GOD_QUESTS = 7
 -- d_idx of the god_quest (Lost Temple) dungeon
 god_quest.DUNGEON_GOD = 30
 
+-- Show directions given a function to print
+function print_directions(feel_it, pfunc)
+	local home, home_axis, home_distance, home2, home2_axis, home2_distance = get_god_quest_axes()
+
+	local feel_it_str = "."
+	if feel_it == TRUE then
+		feel_it_str = ", I can feel it.'"
+	end
+
+	if home_axis ~= "close" then
+		pfunc("The temple lies "..home_distance.." to the "..home_axis.." of "..home..", ")
+	else
+		pfunc("The temple lies very close to "..home..", ")
+	end
+	if home2_axis ~= "close" then
+		pfunc( "and "..home2_distance.." to the "..home2_axis.." of "..home2..feel_it_str)
+	else
+		pfunc("and very close to "..home2..feel_it_str)
+	end
+end
+
 add_quest
 {
 	["global"] =    "GOD_QUEST",
 	["name"] =      "God quest",
 	["desc"] =      function()
-
 			if quest(GOD_QUEST).status == QUEST_STATUS_TAKEN then
-
-				-- get the direction that the dungeon lies from lothlorien/angband
-				local home, home_axis, home_distance, home2, home2_axis, home2_distance = get_god_quest_axes()
-
 				print_hook("#####yGod quest "..god_quest.quests_given.."!\n")
 				print_hook("Thou art to find the lost temple of thy God and\n");
 				print_hook("to retrieve the lost part of the relic for thy God! \n")
-				if home_axis ~= "close" then
-					print_hook("The temple lies "..home_distance.." to the "..home_axis.." of "..home..", \n")
-				else
-					print_hook("The temple lies very close to "..home..", \n")
-				end
-				if home2_axis ~= "close" then
-					print_hook( "and "..home2_distance.." to the "..home2_axis.." of "..home2..", I can feel it.' \n")
-				else
-					print_hook("and very close to "..home2..", I can feel it.' \n")
-				end					
+				print_directions(FALSE, function (line)
+					print_hook(line .. "\n")
+				end)
 				print_hook("\n")
 			end
 	end,
@@ -70,8 +79,6 @@ add_quest
 			god_quest.relic_generated = FALSE
 		end,
 		[HOOK_PLAYER_LEVEL] = function(gained)
-			local home_axis, home
-
 			if gained > 0 then
 				-- roll for chance of quest
 				local give_god_quest = magik(god_quest.CHANCE_OF_GOD_QUEST)
@@ -119,9 +126,6 @@ add_quest
 					-- store the variables of the coords where the player was given the quest
 					god_quest.player_y, god_quest.player_x = player.get_wild_coord()
 
-					-- establish direction of player and 'home' from dungeon
-					local home, home_axis, home_distance, home2, home2_axis, home2_distance = get_god_quest_axes()
-
 					-- God issues instructions
 					cmsg_print(TERM_L_BLUE, "The voice of "..deity(player.pgod).name.." booms in your head:")
 
@@ -131,17 +135,10 @@ add_quest
 					cmsg_print(TERM_YELLOW, "Thou art to find my lost temple and retrieve a piece of the relic.")
 					cmsg_print(TERM_YELLOW, "When thy task is done, thou art to lift it in the air and call upon my name.")
 					cmsg_print(TERM_YELLOW, "I shall then come to reclaim what is mine!")
-					if home_axis ~= "close" then
-						cmsg_print(TERM_YELLOW, "The temple lies "..home_distance.." to the "..home_axis.." of "..home..", ")
-					else
-						cmsg_print(TERM_YELLOW, "The temple lies very close to "..home..",")
-					end
 
-					if home2_axis ~= "close" then
-						cmsg_print(TERM_YELLOW, "and "..home2_distance.." to the "..home2_axis.." of "..home2..", I can feel it.'")
-					else
-						cmsg_print(TERM_YELLOW, "and very close to "..home2..", I can feel it.'")
-					end
+					print_directions(TRUE, function (line)
+						cmsg_print(TERM_YELLOW, line)
+					end)
 
 					-- Prepare depth of dungeon. If this was generated in set_god_dungeon_attributes(),
 					-- then we'd have trouble if someone levelled up in the dungeon!
