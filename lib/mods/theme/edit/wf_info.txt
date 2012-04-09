@@ -301,12 +301,6 @@ D:Anduin, the great river
 W:35:0:0:227:3:~
 X:187:227:187:84:84:227:84:84:222:227:84:84:227:84:84:227:88:94
 
-# Former location of Gondolin (to avoid silliness with Maeglin quest)
-N:48:Secret Valley
-D:the secret valley with directions to Gondolin
-W:0:0:12:89:1:J
-X:228:228:228:228:228:228:228:228:228:228:228:228:228:228:228:228:228:228
-
 ### New Towns ###
 
 # Beorn's Halls 
