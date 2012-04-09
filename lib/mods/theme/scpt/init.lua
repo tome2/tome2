@@ -39,6 +39,3 @@ tome_dofile("monsters.lua")
 
 -- Add miscellaneous stuff
 tome_dofile("misc.lua")
-
--- Add map-related quest fix
-tome_dofile("gondolin.lua")
