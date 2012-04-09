@@ -869,7 +869,7 @@ static bool_ castle_quest(int y, int x)
 		get_questinfo(plots[plot]);
 
 		/* Add the hooks */
-		if (quest[plots[plot]].type == HOOK_TYPE_C) quest[plots[plot]].init(plots[plot]);
+		quest[plots[plot]].init(plots[plot]);
 
 		return (TRUE);
 	}

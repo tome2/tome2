@@ -4152,19 +4152,9 @@ static void do_cmd_knowledge_quests(void)
 		/* Dynamic quests */
 		if (quest[i].dynamic_desc)
 		{
-			/* C type quests */
-			if (quest[i].type == HOOK_TYPE_C)
+			if (!quest[i].gen_desc(fff))
 			{
-				if (!quest[i].gen_desc(fff))
-				{
-					continue;
-				}
-			}
-			/* MUST be a lua quest */
-			else
-			{
-				hook_file = fff;
-				exec_lua(format("__quest_dynamic_desc[%d]()", i));
+				continue;
 			}
 		}
 

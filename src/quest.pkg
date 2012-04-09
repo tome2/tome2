@@ -106,12 +106,6 @@ struct quest_type
 	 * @note Dungeon level 
 	 */
 	s16b level;
-
-	/** @structvar type
-	 * @brief Number
-	 * @note Lua or C ? 
-	 */
-	byte type;
 };
 
 /** @var  quest_aux;

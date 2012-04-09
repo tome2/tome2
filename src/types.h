@@ -2250,8 +2250,6 @@ struct quest_type
 
 	s16b *plot;             /* Which plot does it belongs to? */
 
-	byte type;              /* Lua or C ? */
-
 	bool_ (*init)(int q);    /* Function that takes care of generating hardcoded quests */
 
 	s32b data[9];          /* Various datas used by the quests */

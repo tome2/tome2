@@ -3619,7 +3619,6 @@ quest_type quest[MAX_Q_IDX] =
 		0,
 
 		NULL,
-		HOOK_TYPE_C,
 		quest_null_hook,
 		{0, 0},
 		NULL,
@@ -3644,7 +3643,6 @@ quest_type quest[MAX_Q_IDX] =
 		70,
 	
 		&plots[PLOT_MAIN],
-		HOOK_TYPE_C,
 		quest_necro_init_hook,
 		{0, 0},
 		NULL,
@@ -3669,7 +3667,6 @@ quest_type quest[MAX_Q_IDX] =
 		99,
 	
 		&plots[PLOT_MAIN],
-		HOOK_TYPE_C,
 		quest_sauron_init_hook,
 		{0, 0},
 		NULL,
@@ -3694,7 +3691,6 @@ quest_type quest[MAX_Q_IDX] =
 		100,
 	
 		&plots[PLOT_MAIN],
-		HOOK_TYPE_C,
 		quest_morgoth_init_hook,
 		{0, 0},
 		NULL,
@@ -3721,7 +3717,6 @@ quest_type quest[MAX_Q_IDX] =
 		5,
 	
 		&plots[PLOT_BREE],
-		HOOK_TYPE_C,
 		quest_thieves_init_hook,
 		{0, 0},
 		NULL,
@@ -3747,7 +3742,6 @@ quest_type quest[MAX_Q_IDX] =
 		5,
 	
 		NULL,
-		HOOK_TYPE_C,
 		quest_random_init_hook,
 		{0, 0},
 		quest_random_describe,
@@ -3773,7 +3767,6 @@ quest_type quest[MAX_Q_IDX] =
 		25,
 	
 		&plots[PLOT_OTHER],
-		HOOK_TYPE_C,
 		quest_hobbit_init_hook,
 		{0, 0},
 		NULL,
@@ -3799,7 +3792,6 @@ quest_type quest[MAX_Q_IDX] =
 		40,
 	
 		&plots[PLOT_BREE],
-		HOOK_TYPE_C,
 		quest_nazgul_init_hook,
 		{0, 0},
 		NULL,
@@ -3825,7 +3817,6 @@ quest_type quest[MAX_Q_IDX] =
 		30,
 	
 		&plots[PLOT_BREE],
-		HOOK_TYPE_C,
 		quest_troll_init_hook,
 		{FALSE, 0},
 		NULL,
@@ -3851,7 +3842,6 @@ quest_type quest[MAX_Q_IDX] =
 		30,
 	
 		&plots[PLOT_BREE],
-		HOOK_TYPE_C,
 		quest_wight_init_hook,
 		{FALSE, 0},
 		NULL,
@@ -3878,7 +3868,6 @@ quest_type quest[MAX_Q_IDX] =
 		25,
 	
 		&plots[PLOT_LORIEN],
-		HOOK_TYPE_C,
 		quest_spider_init_hook,
 		{0, 0},
 		NULL,
@@ -3903,7 +3892,6 @@ quest_type quest[MAX_Q_IDX] =
 		30,
 	
 		&plots[PLOT_LORIEN],
-		HOOK_TYPE_C,
 		quest_poison_init_hook,
 		{0, 0},
 		NULL,
@@ -3929,7 +3917,6 @@ quest_type quest[MAX_Q_IDX] =
 		20,
 	
 		&plots[PLOT_OTHER],
-		HOOK_TYPE_C,
 		quest_narsil_init_hook,
 		{0, 0},
 		NULL,
@@ -3955,7 +3942,6 @@ quest_type quest[MAX_Q_IDX] =
 		30,
 	
 		&plots[PLOT_GONDOLIN],
-		HOOK_TYPE_C,
 		quest_eol_init_hook,
 		{0, 0},
 		NULL,
@@ -3980,7 +3966,6 @@ quest_type quest[MAX_Q_IDX] =
 		37,
 	
 		&plots[PLOT_GONDOLIN],
-		HOOK_TYPE_C,
 		quest_nirnaeth_init_hook,
 		{0, 0},
 		NULL,
@@ -4005,7 +3990,6 @@ quest_type quest[MAX_Q_IDX] =
 		80,
 	
 		&plots[PLOT_GONDOLIN],
-		HOOK_TYPE_C,
 		quest_invasion_init_hook,
 		{0, 0},
 		NULL,
@@ -4031,7 +4015,6 @@ quest_type quest[MAX_Q_IDX] =
 		80,
 	
 		&plots[PLOT_MINAS],
-		HOOK_TYPE_C,
 		quest_between_init_hook,
 		{0, 0},
 		NULL,
@@ -4056,7 +4039,6 @@ quest_type quest[MAX_Q_IDX] =
 		99,
 	
 		&plots[PLOT_MAIN],
-		HOOK_TYPE_C,
 		quest_one_init_hook,
 		{0, 0},
 		NULL,
@@ -4082,7 +4064,6 @@ quest_type quest[MAX_Q_IDX] =
 		3,
 	
 		&plots[PLOT_OTHER],
-		HOOK_TYPE_C,
 		quest_shroom_init_hook,
 		{0, 0},
 		NULL,
@@ -4108,7 +4089,6 @@ quest_type quest[MAX_Q_IDX] =
 		60,
 	
 		&plots[PLOT_OTHER],
-		HOOK_TYPE_C,
 		quest_thrain_init_hook,
 		{0, 0},
 		NULL,
@@ -4135,7 +4115,6 @@ quest_type quest[MAX_Q_IDX] =
 		150,
 	
 		&plots[PLOT_MAIN],
-		HOOK_TYPE_C,
 		quest_ultra_good_init_hook,
 		{0, 0},
 		NULL,
@@ -4160,7 +4139,6 @@ quest_type quest[MAX_Q_IDX] =
 		150,
 	
 		&plots[PLOT_MAIN],
-		HOOK_TYPE_C,
 		quest_ultra_evil_init_hook,
 		{0, 0},
 		NULL,
@@ -4186,7 +4164,6 @@ quest_type quest[MAX_Q_IDX] =
 		15,
 	
 		&plots[PLOT_LORIEN],
-		HOOK_TYPE_C,
 		quest_wolves_init_hook,
 		{0, 0},
 		NULL,
@@ -4212,7 +4189,6 @@ quest_type quest[MAX_Q_IDX] =
 		25,
 	
 		&plots[PLOT_GONDOLIN],
-		HOOK_TYPE_C,
 		quest_dragons_init_hook,
 		{0, 0},
 		NULL,
@@ -4238,7 +4214,6 @@ quest_type quest[MAX_Q_IDX] =
 		45,
 	
 		&plots[PLOT_MINAS],
-		HOOK_TYPE_C,
 		quest_haunted_init_hook,
 		{0, 0},
 		NULL,
@@ -4264,7 +4239,6 @@ quest_type quest[MAX_Q_IDX] =
 		60,
 	
 		&plots[PLOT_KHAZAD],
-		HOOK_TYPE_C,
 		quest_evil_init_hook,
 		{0, 0},
 		NULL,
@@ -4280,7 +4254,6 @@ quest_type quest[MAX_Q_IDX] =
 		QUEST_STATUS_UNTAKEN,
 		-1,
 		NULL,
-		HOOK_TYPE_C,
 		quest_bounty_init_hook,
 		{0, 0, 0, 0},
 		quest_bounty_describe,
@@ -4296,7 +4269,6 @@ quest_type quest[MAX_Q_IDX] =
 		QUEST_STATUS_UNTAKEN,
 		20,
 		NULL,
-		HOOK_TYPE_C,
 		quest_fireproof_init_hook,
 		{0, 0, 0, 0},
 		quest_fireproof_describe,
@@ -4312,7 +4284,6 @@ quest_type quest[MAX_Q_IDX] =
 		QUEST_STATUS_UNTAKEN,
 		35,
 		NULL,
-		HOOK_TYPE_C,
 		quest_library_init_hook,
 		{ -1, -1, -1, -1 },
 		quest_library_describe,
@@ -4328,7 +4299,6 @@ quest_type quest[MAX_Q_IDX] =
 		QUEST_STATUS_UNTAKEN,
 		-1,
 		NULL,
-		HOOK_TYPE_C,
 		quest_god_init_hook,
 		{ 0 /* quests_given */,
 		  0 /* relics_found */,

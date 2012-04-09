@@ -2709,7 +2709,10 @@ static bool_ do_savefile_aux(int flag)
 			}
 
 			/* Init the hooks */
-			if ((flag == LS_LOAD) && (quest[i].type == HOOK_TYPE_C)) quest[i].init(i);
+			if (flag == LS_LOAD)
+			{
+				quest[i].init(i);
+			}
 		}
 
 		/* Position in the wilderness */
