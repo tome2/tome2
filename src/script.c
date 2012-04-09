@@ -24,7 +24,6 @@ int tolua_util_open (lua_State *L);
 int tolua_z_pack_open (lua_State *L);
 int tolua_object_open (lua_State *L);
 int tolua_spells_open (lua_State *L);
-int tolua_quest_open (lua_State *L);
 int tolua_dungeon_open (lua_State *L);
 
 /*
@@ -217,7 +216,6 @@ void init_lua()
 	tolua_object_open(L);
 	tolua_monster_open(L);
 	tolua_spells_open(L);
-	tolua_quest_open(L);
 	tolua_dungeon_open(L);
 }
 

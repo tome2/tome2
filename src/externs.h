@@ -1795,8 +1795,6 @@ extern void find_position(int y, int x, int *yy, int *xx);
 extern bool_ summon_lua_okay(int r_idx);
 extern bool_ lua_summon_monster(int y, int x, int lev, bool_ ffriend, char *fct);
 
-extern void    desc_quest(int q_idx, int d, char *desc);
-
 extern s16b    add_new_gods(char *name);
 extern void    desc_god(int g_idx, int d, char *desc);
 extern int     get_lua_int(cptr name);

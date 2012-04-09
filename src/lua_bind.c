@@ -152,15 +152,6 @@ bool_ lua_summon_monster(int y, int x, int lev, bool_ friend_, char *fct)
 }
 
 /*
- * Quests
- */
-void desc_quest(int q_idx, int d, char *desc)
-{
-	if (d >= 0 && d < 10)
-		strncpy(quest[q_idx].desc[d], desc, 79);
-}
-
-/*
  * Misc
  */
 bool_ get_com_lua(cptr prompt, int *com)

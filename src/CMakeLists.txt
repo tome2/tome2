@@ -19,7 +19,7 @@ SET(SRCS
   wizard2.c init2.c birth.c wizard1.c init1.c main.c 
   # Lua bits:
   lua_bind.c script.c w_mnster.c w_player.c w_play_c.c w_z_pack.c
-  w_obj.c w_util.c w_spells.c w_quest.c w_dun.c
+  w_obj.c w_util.c w_spells.c w_dun.c
 )
 
 # Need a few additional source files for Windows.
@@ -58,7 +58,6 @@ TOLUA_FILE(z_pack w_z_pack.c)
 TOLUA_FILE(object w_obj.c)
 TOLUA_FILE(util w_util.c)
 TOLUA_FILE(spells w_spells.c)
-TOLUA_FILE(quest w_quest.c)
 TOLUA_FILE(dungeon w_dun.c)
 
 # tome executable
