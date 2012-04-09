@@ -295,7 +295,7 @@ bool_ quest_god_describe(FILE *fff)
 	return TRUE;
 }
 
-void quest_god_place_rand_dung()
+static void quest_god_place_rand_dung()
 {
 	int x = -1, y = -1, tries;
 
@@ -362,7 +362,7 @@ void quest_god_place_rand_dung()
 	cquest_dung_y = y;
 }
 
-void quest_god_generate_relic()
+static void quest_god_generate_relic()
 {
 	int tries = 1000, x = -1, y = -1;
 	object_type relic;
@@ -919,7 +919,7 @@ static bool_ quest_god_level_end_gen_hook(char *fmt)
 	return FALSE;
 }
 
-bool_ quest_god_player_level_hook(char *fmt)
+static bool_ quest_god_player_level_hook(char *fmt)
 {
 	s32b gained = get_next_arg(fmt);
 
@@ -979,7 +979,7 @@ bool_ quest_god_player_level_hook(char *fmt)
 	return FALSE;
 }
 
-bool_ quest_god_get_hook(char *fmt)
+static bool_ quest_god_get_hook(char *fmt)
 {
 	s32b item;
 	object_type *o_ptr = NULL;
