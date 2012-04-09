@@ -142,7 +142,28 @@ static void set_relics_found(int v)
 
 static void setup_relic_number()
 {
-	exec_lua("setup_relic_number()");
+	int i;
+	int sval_by_god[][2] = {
+		{ GOD_ERU, 7 },
+		{ GOD_MANWE, 8 },
+		{ GOD_TULKAS, 9 },
+		{ GOD_MELKOR, 10 },
+		{ GOD_YAVANNA, 11 },
+		{ GOD_AULE, 16 },
+		{ GOD_VARDA, 17 },
+		{ GOD_ULMO, 18 },
+		{ GOD_MANDOS, 19 },
+		{ -1, -1 },
+	};
+
+	for (i = 0; sval_by_god[i][1] != -1; i++)
+	{
+		if (p_ptr->pgod == sval_by_god[i][0])
+		{
+			int sval = sval_by_god[i][1];
+			exec_lua(format("god_quest.relic_num = %d", sval));
+		}
+	}
 }
 
 static void msg_directions()

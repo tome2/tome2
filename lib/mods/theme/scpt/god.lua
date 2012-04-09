@@ -39,29 +39,6 @@ function msg_directions()
 	end)
 end
 
--- Set up relic number according to god
-function setup_relic_number()
-	if player.pgod == GOD_ERU then
-		god_quest.relic_num = 7
-	elseif player.pgod == GOD_MANWE then
-		god_quest.relic_num = 8
-	elseif player.pgod == GOD_TULKAS then
-		god_quest.relic_num = 9
-	elseif player.pgod == GOD_MELKOR then
-		god_quest.relic_num = 10
-	elseif player.pgod == GOD_YAVANNA then
-		god_quest.relic_num = 11
-	elseif player.pgod == GOD_AULE then
-		god_quest.relic_num = 16
-	elseif player.pgod == GOD_VARDA then
-		god_quest.relic_num = 17
-	elseif player.pgod == GOD_ULMO then
-		god_quest.relic_num = 18
-	elseif player.pgod == GOD_MANDOS then
-		god_quest.relic_num = 19
-	end
-end
-
 add_quest
 {
 	["global"] =    "GOD_QUEST",
