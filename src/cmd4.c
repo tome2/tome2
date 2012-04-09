@@ -4149,8 +4149,8 @@ static void do_cmd_knowledge_quests(void)
 	{
 		i = order[z];
 
-		/* Dynamic quests */
-		if (quest[i].dynamic_desc)
+		/* Dynamic descriptions */
+		if (quest[i].gen_desc != NULL)
 		{
 			if (!quest[i].gen_desc(fff))
 			{

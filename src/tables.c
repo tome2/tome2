@@ -3601,7 +3601,6 @@ quest_type quest[MAX_Q_IDX] =
 {
 	{
 		FALSE,
-		FALSE,
 		"",
 		{
 			"",
@@ -3624,7 +3623,6 @@ quest_type quest[MAX_Q_IDX] =
 		NULL,
 	},
 	{
-		FALSE,
 		FALSE,
 		"Dol Guldur",
 		{
@@ -3649,7 +3647,6 @@ quest_type quest[MAX_Q_IDX] =
 	},
 	{
 		FALSE,
-		FALSE,
 		"Sauron",
 		{
 			"It is time to take the battle to Morgoth. But, before you can",
@@ -3672,7 +3669,6 @@ quest_type quest[MAX_Q_IDX] =
 		NULL,
 	},
 	{
-		FALSE,
 		FALSE,
 		"Morgoth",
 		{
@@ -3699,7 +3695,6 @@ quest_type quest[MAX_Q_IDX] =
 	/* Bree plot */
 	{
 		FALSE,
-		FALSE,
 		"Thieves!",
 		{
 			"There are thieves robbing my people! They live in a small",
@@ -3724,7 +3719,6 @@ quest_type quest[MAX_Q_IDX] =
 	
 	{
 		FALSE,
-		TRUE,
 		"Random Quest",
 		{
 			"",
@@ -3748,7 +3742,6 @@ quest_type quest[MAX_Q_IDX] =
 	},
 	
 	{
-		FALSE,
 		FALSE,
 		"Lost Hobbit",
 		{
@@ -3774,7 +3767,6 @@ quest_type quest[MAX_Q_IDX] =
 	
 	{
 		FALSE,
-		FALSE,
 		"The Dark Horseman",
 		{
 			"A dark-cloaked horseman has been spotted several times in town.",
@@ -3799,7 +3791,6 @@ quest_type quest[MAX_Q_IDX] =
 	
 	{
 		FALSE,
-		FALSE,
 		"The Trolls Glade",
 		{
 			"A group of Forest Trolls settled in an abandoned forest in the",
@@ -3823,7 +3814,6 @@ quest_type quest[MAX_Q_IDX] =
 	},
 	
 	{
-		FALSE,
 		FALSE,
 		"The Wight Grave",
 		{
@@ -3850,7 +3840,6 @@ quest_type quest[MAX_Q_IDX] =
 	/* Lorien plot */
 	{
 		FALSE,
-		FALSE,
 		"Spiders of Mirkwood",
 		{
 			"Powers lurk deep within Mirkwood. Spiders have blocked the",
@@ -3873,7 +3862,6 @@ quest_type quest[MAX_Q_IDX] =
 		NULL,
 	},
 	{
-		FALSE,
 		FALSE,
 		"Poisoned Water",
 		{
@@ -3899,7 +3887,6 @@ quest_type quest[MAX_Q_IDX] =
 	/* Other quests */
 	{
 		FALSE,
-		FALSE,
 		"The Broken Sword",
 		{
 			"You have found Narsil, a broken sword. It is said that the sword that",
@@ -3924,7 +3911,6 @@ quest_type quest[MAX_Q_IDX] =
 	/* Gondolin plot */
 	{
 		FALSE,
-		FALSE,
 		"Eol the Dark Elf",
 		{
 			"We have disturbing tidings. Eol the Dark Elf has come seeking his kin in",
@@ -3948,7 +3934,6 @@ quest_type quest[MAX_Q_IDX] =
 	},
 	{
 		FALSE,
-		FALSE,
 		"Nirnaeth Arnoediad",
 		{
 			"The fortunes of war in the north turn against us.",
@@ -3971,7 +3956,6 @@ quest_type quest[MAX_Q_IDX] =
 		NULL,
 	},
 	{
-		FALSE,
 		FALSE,
 		"Invasion of Gondolin",
 		{
@@ -3997,7 +3981,6 @@ quest_type quest[MAX_Q_IDX] =
 	/* Minas Anor Plot*/
 	{
 		FALSE,
-		FALSE,
 		"The Last Alliance",
 		{
 			"The armies of Morgoth are closing in on the last remaining strongholds",
@@ -4020,7 +4003,6 @@ quest_type quest[MAX_Q_IDX] =
 		NULL,
 	},
 	{
-		FALSE,
 		FALSE,
 		"The One Ring",
 		{
@@ -4046,7 +4028,6 @@ quest_type quest[MAX_Q_IDX] =
 	
 	{
 		FALSE,
-		FALSE,
 		"Mushroom supplies",
 		{
 			"Farmer Maggot asked you to bring him back his mushrooms.",
@@ -4070,7 +4051,6 @@ quest_type quest[MAX_Q_IDX] =
 	},
 	
 	{
-		FALSE,
 		FALSE,
 		"The prisoner of Dol Guldur",
 		{
@@ -4097,7 +4077,6 @@ quest_type quest[MAX_Q_IDX] =
 	/* The 2 ultra endings go here */
 	{
 		FALSE,
-		FALSE,
 		"Falling Toward Apotheosis",
 		{
 			"You must enter the Void where Melkor spirit lurks to destroy",
@@ -4120,7 +4099,6 @@ quest_type quest[MAX_Q_IDX] =
 		NULL,
 	},
 	{
-		FALSE,
 		FALSE,
 		"Falling Toward Apotheosis",
 		{
@@ -4146,7 +4124,6 @@ quest_type quest[MAX_Q_IDX] =
 	/* More Lorien */
 	{
 		FALSE,
-		FALSE,
 		"Wolves!",
 		{
 			"There are wolves pestering my people! They gather in a hut",
@@ -4170,7 +4147,6 @@ quest_type quest[MAX_Q_IDX] =
 	},
 	/* More Gondolin */
 	{
-		FALSE,
 		FALSE,
 		"Dragons!",
 		{
@@ -4196,7 +4172,6 @@ quest_type quest[MAX_Q_IDX] =
 	/* More Minas Anor */
 	{
 		FALSE,
-		FALSE,
 		"Haunted House!",
 		{
 			"There are undead pestering my people! They gather in a hut",
@@ -4220,7 +4195,6 @@ quest_type quest[MAX_Q_IDX] =
 	},
 	/* Khazad-Dum Plot*/
 	{
-		FALSE,
 		FALSE,
 		"Evil!",
 		{
@@ -4246,7 +4220,6 @@ quest_type quest[MAX_Q_IDX] =
 	/* Bounty */
 	{
 		FALSE,
-		TRUE,
 		"Bounty quest",
 		{
 			"", /* dynamic desc */
@@ -4261,7 +4234,6 @@ quest_type quest[MAX_Q_IDX] =
 	/* Fireproofing */
 	{
 		FALSE,
-		TRUE,
 		"Old Mages quest",
 		{
 			"", /* dynamic desc */
@@ -4276,7 +4248,6 @@ quest_type quest[MAX_Q_IDX] =
 	/* Library */
 	{
 		FALSE,
-		TRUE,
 		"Library quest",
 		{
 			"", /* dynamic desc */
@@ -4291,7 +4262,6 @@ quest_type quest[MAX_Q_IDX] =
 	/* God quest */
 	{
 		FALSE,
-		TRUE,
 		"God quest",
 		{
 			"", /* dynamic desc */

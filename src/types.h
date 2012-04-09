@@ -2238,8 +2238,6 @@ struct quest_type
 {
 	bool_ silent;
 
-	bool_ dynamic_desc;      /* Do we need to ask a function to get the description ? */
-
 	char name[40];          /* Quest name */
 
 	char desc[10][80];      /* Quest desc */

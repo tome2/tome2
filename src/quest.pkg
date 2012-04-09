@@ -89,12 +89,6 @@ struct quest_type
 	 */
 	bool silent;
 
-	/** @structvar dynamic_desc
-	 * @brief Boolean
-	 * @note Do we need to ask a function to get the description ? 
-	 */
-	bool dynamic_desc;
-
 	/** @structvar status
 	 * @brief Number
 	 * @note Is the quest taken, completed, finished? 
