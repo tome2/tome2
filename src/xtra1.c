@@ -2449,7 +2449,7 @@ static void calc_gods()
 		if (p_ptr->grace > 0)
 		{
 			int bonus;
-			/* Resist fire, not shown on the character screen (?) */
+			/* Resist fire*/
 			if (p_ptr->grace > 5000)
 			{
 				p_ptr->resist_fire = TRUE;

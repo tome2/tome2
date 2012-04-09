@@ -1595,6 +1595,48 @@ void player_flags(u32b *f1, u32b *f2, u32b *f3, u32b *f4, u32b *f5, u32b *esp)
 		if (p_ptr->grace > 10000) (*f1) |= TR1_STR;
 	}
 
+	GOD(GOD_AULE)
+	{
+		if (p_ptr->grace > 5000)
+		{
+			(*f2) |= TR2_RES_FIRE;
+		}
+	}
+
+	GOD(GOD_MANDOS)
+	{
+		(*f2) |= TR2_RES_NETHER;
+
+		if ((p_ptr->grace > 10000) &&
+		    (p_ptr->praying == TRUE))
+		{
+			(*f3) |= TR3_NO_TELE;
+		}
+
+		if ((p_ptr->grace > 20000) &&
+		    (p_ptr->praying == TRUE))
+		{
+			(*f4) |= TR4_IM_NETHER;
+		}
+	}
+
+	GOD(GOD_ULMO)
+	{
+		(*f5) |= TR5_WATER_BREATH;
+
+		if ((p_ptr->grace > 1000) &&
+		    (p_ptr->praying == TRUE))
+		{
+			(*f2) |= TR2_RES_POIS;
+		}
+
+		if ((p_ptr->grace > 15000) &&
+		    (p_ptr->praying == TRUE))
+		{
+			(*f5) |= TR5_MAGIC_BREATH;
+		}
+	}
+
 	/* Classes */
 	for (i = 1; i <= p_ptr->lev; i++)
 	{
