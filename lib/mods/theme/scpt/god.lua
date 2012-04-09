@@ -141,26 +141,7 @@ add_quest
 			return quest_god_get_hook(item)
 		end,
 		[HOOK_CHAR_DUMP] = function()
-
-			if (god_quest.quests_given > 0) then
-
-				local relics = god_quest.relics_found
-				local append_text = ""
-				if (god_quest.relics_found == god_quest.MAX_NUM_GOD_QUESTS) then
-					relics = "all"
-					append_text = " and pleased your god"
-				else
-					if (god_quest.relics_found == 0) then
-						relics = "none"
-					end
-					if (quest(GOD_QUEST).status == QUEST_STATUS_FAILED) then
-						append_text = " and failed in your quest"
-					end
-				end
-
-				print_hook("\n You found "..(relics).." of the relic pieces"..(append_text)..".")
-
-			end
+			return quest_god_char_dump()
 		end,
 	},
 }

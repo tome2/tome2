@@ -1,6 +1,8 @@
 #include "angband.h"
 #include <assert.h>
 
+#define print_hook(fmt,...) do { fprintf(hook_file, fmt, ##__VA_ARGS__); } while (0)
+
 /* d_idx of the god_quest (Lost Temple) dungeon */
 #define DUNGEON_GOD 30
 #define CHANCE_OF_GOD_QUEST 21
@@ -887,4 +889,35 @@ bool_ quest_god_get_hook(int item)
 	}
 
 	return FALSE;
+}
+
+void quest_god_char_dump()
+{
+	if (get_quests_given() > 0)
+	{
+		int relics = get_relics_found();
+		char relics_text[128];
+		cptr append_text = "";
+
+		snprintf(relics_text, sizeof(relics_text), "%d", relics);
+
+		if (relics == MAX_NUM_GOD_QUESTS())
+		{
+			strcpy(relics_text, "all");
+			append_text = " and pleased your god";
+		}
+		else
+		{
+			if (relics == 0)
+			{
+				strcpy(relics_text, "none");
+			}
+			if (get_status() == QUEST_STATUS_FAILED)
+			{
+				append_text = " and failed in your quest";
+			}
+		}
+
+		print_hook("\n You found %s of the relic pieces%s.", relics_text, append_text);
+	}
 }

@@ -78,3 +78,4 @@ extern void quest_god_set_god_dungeon_attributes_mandos();
 extern void quest_god_level_end_gen_hook();
 extern void quest_god_player_level_hook(int gained);
 extern bool_ quest_god_get_hook(int o_idx);
+extern void quest_god_char_dump();
