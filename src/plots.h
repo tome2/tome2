@@ -71,3 +71,4 @@ extern void quest_god_player_level_hook(int gained);
 extern bool_ quest_god_get_hook(int o_idx);
 extern void quest_god_char_dump();
 extern void quest_god_enter_dungeon_hook(int d_idx);
+extern void quest_god_describe();

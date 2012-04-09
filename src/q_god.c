@@ -3,6 +3,92 @@
 
 #define print_hook(fmt,...) do { fprintf(hook_file, fmt, ##__VA_ARGS__); } while (0)
 
+/*
+ * Returns the direction of the compass that y2, x2 is from y, x
+ * the return value will be one of the following: north, south,
+ * east, west, north-east, south-east, south-west, north-west,
+ * or "close" if it is within 2 tiles.
+ *
+ * The returned string is allocated with strdup().
+ */
+static char *compass(int y, int x, int y2, int x2)
+{
+	char compass_dir[64];
+
+	// is it close to the north/south meridian?
+	int y_diff = y2 - y;
+
+	// determine if y2, x2 is to the north or south of y, x
+	const char *y_axis;
+	if ((y_diff > -3) && (y_diff < 3))
+	{
+		y_axis = 0;
+	}
+	else if (y2 > y)
+	{
+		y_axis = "south";
+	}
+	else
+	{
+		y_axis = "north";
+	}
+
+	// is it close to the east/west meridian?
+	int x_diff = x2 - x;
+
+	// determine if y2, x2 is to the east or west of y, x
+	const char *x_axis;
+	if ((x_diff > -3) && (x_diff < 3))
+	{
+		x_axis = 0;
+	}
+	else if (x2 > x)
+	{
+		x_axis = "east";
+	}
+	else
+	{
+		x_axis = "west";
+	}
+
+	// Maybe it is very close
+	if ((!x_axis) && (!y_axis)) { strcpy(compass_dir, "close"); }
+	// Maybe it is (almost) due N/S
+	else if (!x_axis) { strcpy(compass_dir, y_axis); }
+	// Maybe it is (almost) due E/W
+	else if (!y_axis) { strcpy(compass_dir, x_axis); }
+	//  or if it is neither
+	else { sprintf(compass_dir, "%s-%s", y_axis, x_axis); }
+
+	/* Return a copy */
+	return strdup(compass_dir);
+}
+
+/* Returns a relative approximation of the 'distance' of y2, x2 from y, x. */
+static cptr approximate_distance(int y, int x, int y2, int x2)
+{
+	//  how far to away to the north/south?
+	int y_diff = abs(y2 - y);
+	// how far to away to the east/west?
+	int x_diff = abs(x2 - x);
+	// find which one is the larger distance
+	int most_dist = x_diff;
+	if (y_diff > most_dist) {
+		most_dist = y_diff;
+	}
+
+	// how far away then?
+	if (most_dist >= 41) {
+		return "a very long way";
+	} else if (most_dist >= 25) {
+		return "a long way";
+	} else if (most_dist >= 8) {
+		return "quite some way";
+	} else {
+		return "not very far";
+	}
+}
+
 /* d_idx of the god_quest (Lost Temple) dungeon */
 #define DUNGEON_GOD 30
 #define CHANCE_OF_GOD_QUEST 21
@@ -166,9 +252,150 @@ static void setup_relic_number()
 	}
 }
 
-static void msg_directions()
+static void get_home_coordinates(int *home1_y, int *home1_x, char **home1,
+				 int *home2_y, int *home2_x, char **home2)
 {
-	exec_lua("msg_directions()");
+	/* Which are the waypoints? */
+	if (p_ptr->pgod != GOD_MELKOR)
+	{
+		*home1 = "Bree";
+		*home2 = "Minas Anor";
+	}
+	else
+	{
+		*home1 = "the Pits of Angband";
+		*home2 = "the Land of Mordor";
+	}
+
+	/* Module specific locations */
+	if (game_module_idx == MODULE_TOME)
+	{
+		if (p_ptr->pgod != GOD_MELKOR)
+		{
+			*home1_y = 21;
+			*home1_x = 34;
+			*home2_y = 56;
+			*home2_x = 60;
+		}
+		else
+		{
+			*home1_y = 7;
+			*home1_x = 34;
+			*home2_y = 58;
+			*home2_x = 65;
+		}
+	}
+	else if (game_module_idx == MODULE_THEME)
+	{
+		if (p_ptr->pgod != GOD_MELKOR)
+		{
+			*home1_y = 21;
+			*home1_x = 35;
+			*home2_y = 56;
+			*home2_x = 60;
+		}
+		else
+		{
+			*home1_y = 7;
+			*home1_x = 11;
+			*home2_y = 49;
+			*home2_x = 70;
+		}
+	}
+	else
+	{
+		assert(FALSE); /* Uh, oh */
+	}
+}
+
+/* Print using cmsg_print. */
+static void print_using_cmsg(cptr line)
+{
+	cmsg_print(TERM_YELLOW, line);
+}
+
+/* Print using print_hook. */
+static void print_using_print_hook(cptr line)
+{
+	print_hook("%s\n", line);
+}
+
+/* Show directions */
+static void print_directions(bool_ feel_it, void (*pfunc)(cptr))
+{
+	int home1_y, home1_x;
+	int home2_y, home2_x;
+	char *home1 = NULL;
+	char *home2 = NULL;
+	char *home1_axis = NULL;
+	char *home2_axis = NULL;
+	cptr home1_distance = NULL;
+	cptr home2_distance = NULL;
+	cptr feel_it_str = feel_it ? ", I can feel it.'" : ".";
+	char buf[256];
+
+	get_home_coordinates(
+		&home1_y, &home1_x, &home1,
+		&home2_y, &home2_x, &home2);
+
+	home1_axis = compass(home1_y, home1_x, get_dung_y(), get_dung_x());
+	home2_axis = compass(home2_y, home2_x, get_dung_y(), get_dung_x());
+
+	home1_distance = approximate_distance(home1_y, home1_x, get_dung_y(), get_dung_x());
+	home2_distance = approximate_distance(home2_y, home2_x, get_dung_y(), get_dung_x());
+
+	/* Build the message */
+	if (!streq(home1_axis, "close"))
+	{
+		snprintf(buf, sizeof(buf),
+			 "The temple lies %s to the %s of %s, ",
+			 home1_distance,
+			 home1_axis,
+			 home1);
+		pfunc(buf);
+	}
+	else
+	{
+		snprintf(buf, sizeof(buf),
+			 "The temple lies very close to %s, ",
+			 home1);
+		pfunc(buf);
+	}
+
+	if (!streq(home2_axis, "close"))
+	{
+		snprintf(buf, sizeof(buf),
+			 "and %s to the %s of %s%s",
+			 home2_distance,
+			 home2_axis,
+			 home2,
+			 feel_it_str);
+		pfunc(buf);
+	}
+	else
+	{
+		snprintf(buf, sizeof(buf),
+			 "and very close to %s%s",
+			 home2,
+			 feel_it_str);
+		pfunc(buf);
+	}
+
+	/* Free dyanmically allocated strings */
+	free(home1_axis);
+	free(home2_axis);
+}
+
+void quest_god_describe()
+{
+	if (get_status() == QUEST_STATUS_TAKEN)
+	{
+		print_hook("#####yGod quest %d!\n", get_quests_given());
+		print_hook("Thou art to find the lost temple of thy God and\n");
+		print_hook("to retrieve the lost part of the relic for thy God! \n");
+		print_directions(FALSE, print_using_print_hook);
+		print_hook("\n");
+	}
 }
 
 void quest_god_place_rand_dung()
@@ -853,7 +1080,7 @@ void quest_god_player_level_hook(int gained)
 		cmsg_print(TERM_YELLOW, "When thy task is done, thou art to lift it in the air and call upon my name.");
 		cmsg_print(TERM_YELLOW, "I shall then come to reclaim what is mine!");
 		
-		msg_directions();
+		print_directions(TRUE, print_using_cmsg);
 		
 		/* Prepare depth of dungeon. If this was
 		 * generated in set_god_dungeon_attributes(),

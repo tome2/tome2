@@ -1305,12 +1305,6 @@ extern cptr get_player_race_name(int pr, int ps);
  */
 extern void quit(cptr str);
 
-/*
- * compass, approximate_distance
- */
-extern cptr compass(int y, int x, int y2, int x2);
-extern cptr approximate_distance(int y, int x, int y2, int x2);
-
 /** @fn text_out_c(byte a, cptr str)
  * @brief Output text to the screen (in color) or to a file depending on the
  * selected hook.\n
