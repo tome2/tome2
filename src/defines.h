@@ -4421,7 +4421,8 @@
 #define QUEST_BOUNTY            26
 #define QUEST_FIREPROOF         27
 #define QUEST_LIBRARY           28
-#define MAX_Q_IDX_INIT          29
+#define QUEST_GOD               29
+#define MAX_Q_IDX_INIT          30
 
 #define PLOT_MAIN               0
 #define PLOT_BREE               1

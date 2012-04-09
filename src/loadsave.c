@@ -2703,7 +2703,7 @@ static bool_ do_savefile_aux(int flag)
 		for (i = 0; i < max_quests_ldsv; i++)
 		{
 			do_s16b(&quest[i].status, flag);
-			for (j = 0; j < 4; j++)
+			for (j = 0; j < sizeof(quest[i].data)/sizeof(quest[i].data[0]); j++)
 			{
 				do_s32b(&(quest[i].data[j]), flag);
 			}

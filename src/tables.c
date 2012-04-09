@@ -4317,6 +4317,31 @@ quest_type quest_init_tome[MAX_Q_IDX_INIT] =
 		{ -1, -1, -1, -1 },
 		quest_library_describe,
 	},
+	/* God quest */
+	{
+		FALSE,
+		TRUE,
+		"God quest",
+		{
+			"", /* dynamic desc */
+		},
+		QUEST_STATUS_UNTAKEN,
+		-1,
+		NULL,
+		HOOK_TYPE_C,
+		quest_god_init_hook,
+		{ 0 /* quests_given */,
+		  0 /* relics_found */,
+		  1 /* dun_mindepth */,
+		  4 /* dun_maxdepth */,
+		  0 /* dun_minplev */,
+		  0 /* relic_gen_tries */,
+		  FALSE /* relic_generated */,
+		  1 /* dung_x */,
+		  1 /* dung_y */,
+		},
+		quest_god_describe,
+	},
 };
 
 

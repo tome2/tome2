@@ -64,11 +64,5 @@ extern bool_ quest_fireproof_init_hook(int q);
 extern bool_ quest_fireproof_describe(FILE *fff);
 
 /******* Plot God Quest **************/
-extern void quest_god_place_rand_dung();
-extern void quest_god_generate_relic();
-extern void quest_god_level_end_gen_hook();
-extern void quest_god_player_level_hook(int gained);
-extern bool_ quest_god_get_hook(int o_idx);
-extern void quest_god_char_dump();
-extern void quest_god_enter_dungeon_hook(int d_idx);
-extern void quest_god_describe();
+extern bool_ quest_god_describe(FILE *);
+extern bool_ quest_god_init_hook(int q);

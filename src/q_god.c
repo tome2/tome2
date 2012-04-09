@@ -1,7 +1,20 @@
 #include "angband.h"
 #include <assert.h>
 
-#define print_hook(fmt,...) do { fprintf(hook_file, fmt, ##__VA_ARGS__); } while (0)
+#define cquest (quest[QUEST_GOD])
+#define cquest_quests_given (cquest.data[0])
+#define cquest_relics_found (cquest.data[1])
+#define cquest_dun_mindepth (cquest.data[2])
+#define cquest_dun_maxdepth (cquest.data[3])
+#define cquest_dun_minplev (cquest.data[4])
+#define cquest_relic_gen_tries (cquest.data[5])
+#define cquest_relic_generated (cquest.data[6])
+#define cquest_dung_x (cquest.data[7])
+#define cquest_dung_y (cquest.data[8])
+
+/* d_idx of the god_quest (Lost Temple) dungeon */
+#define DUNGEON_GOD 30
+#define CHANCE_OF_GOD_QUEST 21
 
 /*
  * Returns the direction of the compass that y2, x2 is from y, x
@@ -89,134 +102,22 @@ static cptr approximate_distance(int y, int x, int y2, int x2)
 	}
 }
 
-/* d_idx of the god_quest (Lost Temple) dungeon */
-#define DUNGEON_GOD 30
-#define CHANCE_OF_GOD_QUEST 21
-
-static int get_quests_given()
-{
-	return get_lua_int("god_quest.quests_given");
-}
-
-static void set_quests_given(int i)
-{
-	exec_lua(format("god_quest.quests_given = %d", i));
-}
-
-static int get_dung_y()
-{
-	return get_lua_int("god_quest.dung_y");
-}
-
-static int get_dung_x()
-{
-	return get_lua_int("god_quest.dung_x");
-}
-
-static void set_dung_y(int y)
-{
-	exec_lua(format("god_quest.dung_y = %d", y));
-}
-
-static void set_dung_x(int x)
-{
-	exec_lua(format("god_quest.dung_x = %d", x));
-}
-
-static int get_relic_num()
-{
-	return get_lua_int("god_quest.relic_num");
-}
-
-static int get_status()
-{
-	return exec_lua("return quest(GOD_QUEST).status");
-}
-
-static void set_status(int new_status)
-{
-	exec_lua(format("quest(GOD_QUEST).status = %d", new_status));
-}
-
 static int MAX_NUM_GOD_QUESTS()
 {
-	return get_lua_int("god_quest.MAX_NUM_GOD_QUESTS");
-}
-
-static void set_relic_generated(bool_ v)
-{
-	switch (v)
+	if (game_module_idx == MODULE_TOME)
 	{
-	case TRUE:
-		exec_lua("god_quest.relic_generated = TRUE");
-		break;
-	case FALSE:
-		exec_lua("god_quest.relic_generated = FALSE");
-		break;
-	default:
-		assert(FALSE);
-		break;
+		return 5;
 	}
+	if (game_module_idx == MODULE_THEME)
+	{
+		return 7;
+	}
+	/* Uh, oh. */
+	assert(FALSE);
+	return 0;
 }
 
-static bool_ get_relic_generated()
-{
-	return get_lua_int("god_quest.relic_generated");
-}
-
-static void set_relic_gen_tries(int v)
-{
-	exec_lua(format("god_quest.relic_gen_tries = %d", v));
-}
-
-static int get_relic_gen_tries()
-{
-	return get_lua_int("god_quest.relic_gen_tries");
-}
-
-static int get_dun_mindepth()
-{
-	return get_lua_int("god_quest.dun_mindepth");
-}
-
-static void set_dun_mindepth(int d)
-{
-	exec_lua(format("god_quest.dun_mindepth = %d", d));
-}
-
-static int get_dun_maxdepth()
-{
-	return get_lua_int("god_quest.dun_maxdepth");
-
-}
-
-static void set_dun_maxdepth(int d)
-{
-	exec_lua(format("god_quest.dun_maxdepth = %d", d));
-
-}
-
-static void set_dun_minplev(int p)
-{
-	exec_lua(format("god_quest.dun_minplev = %d", p));
-}
-
-static int get_dun_minplev()
-{
-	return get_lua_int("god_quest.dun_minplev");
-}
-
-static int get_relics_found()
-{
-	return get_lua_int("god_quest.relics_found");
-}
-
-static void set_relics_found(int v)
-{
-	exec_lua(format("god_quest.relics_found = %d", v));
-}
-
-static void setup_relic_number()
+static byte get_relic_num()
 {
 	int i;
 	int sval_by_god[][2] = {
@@ -237,9 +138,12 @@ static void setup_relic_number()
 		if (p_ptr->pgod == sval_by_god[i][0])
 		{
 			int sval = sval_by_god[i][1];
-			exec_lua(format("god_quest.relic_num = %d", sval));
+			return sval;
 		}
 	}
+
+	/* Uh, oh. */
+	assert(FALSE);
 }
 
 static void get_home_coordinates(int *home1_y, int *home1_x, char **home1,
@@ -299,19 +203,20 @@ static void get_home_coordinates(int *home1_y, int *home1_x, char **home1,
 }
 
 /* Print using cmsg_print. */
-static void print_using_cmsg(cptr line)
+static void print_using_cmsg(cptr line, void *dummy)
 {
 	cmsg_print(TERM_YELLOW, line);
 }
 
 /* Print using print_hook. */
-static void print_using_print_hook(cptr line)
+static void print_using_print_hook(cptr line, void *f_)
 {
-	print_hook("%s\n", line);
+	FILE *f = (FILE *) f_;
+	fprintf(f, "%s\n", line);
 }
 
 /* Show directions */
-static void print_directions(bool_ feel_it, void (*pfunc)(cptr))
+static void print_directions(bool_ feel_it, void (*pfunc)(cptr, void *), void *pfdata)
 {
 	int home1_y, home1_x;
 	int home2_y, home2_x;
@@ -328,11 +233,11 @@ static void print_directions(bool_ feel_it, void (*pfunc)(cptr))
 		&home1_y, &home1_x, &home1,
 		&home2_y, &home2_x, &home2);
 
-	home1_axis = compass(home1_y, home1_x, get_dung_y(), get_dung_x());
-	home2_axis = compass(home2_y, home2_x, get_dung_y(), get_dung_x());
+	home1_axis = compass(home1_y, home1_x, cquest_dung_y, cquest_dung_x);
+	home2_axis = compass(home2_y, home2_x, cquest_dung_y, cquest_dung_x);
 
-	home1_distance = approximate_distance(home1_y, home1_x, get_dung_y(), get_dung_x());
-	home2_distance = approximate_distance(home2_y, home2_x, get_dung_y(), get_dung_x());
+	home1_distance = approximate_distance(home1_y, home1_x, cquest_dung_y, cquest_dung_x);
+	home2_distance = approximate_distance(home2_y, home2_x, cquest_dung_y, cquest_dung_x);
 
 	/* Build the message */
 	if (!streq(home1_axis, "close"))
@@ -342,14 +247,14 @@ static void print_directions(bool_ feel_it, void (*pfunc)(cptr))
 			 home1_distance,
 			 home1_axis,
 			 home1);
-		pfunc(buf);
+		pfunc(buf, pfdata);
 	}
 	else
 	{
 		snprintf(buf, sizeof(buf),
 			 "The temple lies very close to %s, ",
 			 home1);
-		pfunc(buf);
+		pfunc(buf, pfdata);
 	}
 
 	if (!streq(home2_axis, "close"))
@@ -360,7 +265,7 @@ static void print_directions(bool_ feel_it, void (*pfunc)(cptr))
 			 home2_axis,
 			 home2,
 			 feel_it_str);
-		pfunc(buf);
+		pfunc(buf, pfdata);
 	}
 	else
 	{
@@ -368,7 +273,7 @@ static void print_directions(bool_ feel_it, void (*pfunc)(cptr))
 			 "and very close to %s%s",
 			 home2,
 			 feel_it_str);
-		pfunc(buf);
+		pfunc(buf, pfdata);
 	}
 
 	/* Free dyanmically allocated strings */
@@ -376,16 +281,18 @@ static void print_directions(bool_ feel_it, void (*pfunc)(cptr))
 	free(home2_axis);
 }
 
-void quest_god_describe()
+bool_ quest_god_describe(FILE *fff)
 {
-	if (get_status() == QUEST_STATUS_TAKEN)
+	if (cquest.status == QUEST_STATUS_TAKEN)
 	{
-		print_hook("#####yGod quest %d!\n", get_quests_given());
-		print_hook("Thou art to find the lost temple of thy God and\n");
-		print_hook("to retrieve the lost part of the relic for thy God! \n");
-		print_directions(FALSE, print_using_print_hook);
-		print_hook("\n");
+		fprintf(fff, "#####yGod quest %d!\n", cquest_quests_given);
+		fprintf(fff, "Thou art to find the lost temple of thy God and\n");
+		fprintf(fff, "to retrieve the lost part of the relic for thy God! \n");
+		print_directions(FALSE, print_using_print_hook, fff);
+		fprintf(fff, "\n");
 	}
+
+	return TRUE;
 }
 
 void quest_god_place_rand_dung()
@@ -393,9 +300,9 @@ void quest_god_place_rand_dung()
 	int x = -1, y = -1, tries;
 
 	/* erase old dungeon */
-	if (get_quests_given() > 0)
+	if (cquest_quests_given > 0)
 	{
-		wild_map[get_dung_y()][get_dung_x()].entrance = 0;
+		wild_map[cquest_dung_y][cquest_dung_x].entrance = 0;
 		
 		/* erase old recall level */
 		max_dlv[DUNGEON_GOD] = 0;
@@ -451,8 +358,8 @@ void quest_god_place_rand_dung()
 	wild_map[y][x].entrance = 1000 + DUNGEON_GOD;
 
 	/* set quest variables */
-	set_dung_x(x);
-	set_dung_y(y);
+	cquest_dung_x = x;
+	cquest_dung_y = y;
 }
 
 void quest_god_generate_relic()
@@ -511,10 +418,10 @@ void quest_god_generate_relic()
 	}
 
 	/* Only generate once! */
-	set_relic_generated(TRUE);
+	cquest_relic_generated = TRUE;
 
 	/* Reset some variables */
-	set_relic_gen_tries(0);
+	cquest_relic_gen_tries = 0;
 }
 
 static void quest_god_set_god_dungeon_attributes_eru()
@@ -955,13 +862,13 @@ static void quest_god_set_god_dungeon_attributes_mandos()
 	d_info[DUNGEON_GOD].rules[0].mflags3 = RF3_UNDEAD | RF3_EVIL;
 }
 
-void quest_god_level_end_gen_hook()
+static bool_ quest_god_level_end_gen_hook(char *fmt)
 {
 	/* Check for dungeon */
 	if ((dungeon_type != DUNGEON_GOD) ||
-	    (get_status() == QUEST_STATUS_UNTAKEN))
+	    (cquest.status == QUEST_STATUS_UNTAKEN))
 	{
-		return;
+		return FALSE;
 	}
 
 	/* if the relic has been created at this point, then it was
@@ -969,12 +876,12 @@ void quest_god_level_end_gen_hook()
 	   therefore the player has caused another level generation in
 	   the temple and hence failed the quest.*/
 
-	else if ((get_relic_generated() == TRUE) &&
-		 (get_status() != QUEST_STATUS_FAILED))
+	else if ((cquest_relic_generated == TRUE) &&
+		 (cquest.status != QUEST_STATUS_FAILED))
 	{
 		/* fail the quest, don't give another one, don't give
 		 * this message again */
-		set_status(QUEST_STATUS_FAILED);
+		cquest.status = QUEST_STATUS_FAILED;
 
 		/* God issues instructions */
 		cmsg_format(TERM_L_BLUE, "The voice of %s booms in your head:", deity_info[p_ptr->pgod].name);
@@ -990,8 +897,8 @@ void quest_god_level_end_gen_hook()
 	/* Force relic generation on 5th attempt if others have been
 	 * unsuccessful. */
 
-	else if ((get_relic_gen_tries() == 4) &&
-		 (get_relic_generated() == FALSE))
+	else if ((cquest_relic_gen_tries == 4) &&
+		 (cquest_relic_generated == FALSE))
 	{
 		quest_god_generate_relic();
 	}
@@ -1005,45 +912,46 @@ void quest_god_level_end_gen_hook()
 		}
 		else
 		{
-			set_relic_gen_tries(get_relic_gen_tries() + 1);
+			cquest_relic_gen_tries = cquest_relic_gen_tries + 1;
 		}
 	}
+
+	return FALSE;
 }
 
-void quest_god_player_level_hook(int gained)
+bool_ quest_god_player_level_hook(char *fmt)
 {
+	s32b gained = get_next_arg(fmt);
+
 	if (gained <= 0)
 	{
-		return;
+		return FALSE;
 	}
 
 	/* check player is worshipping a god, not already on a god quest. */
 	if ((p_ptr->astral) ||
 	    (p_ptr->pgod <= 0) ||
-	    (get_status() == QUEST_STATUS_TAKEN) ||
-	    (get_status() == QUEST_STATUS_FAILED) ||
-	    (get_quests_given() >= MAX_NUM_GOD_QUESTS()) ||
+	    (cquest.status == QUEST_STATUS_TAKEN) ||
+	    (cquest.status == QUEST_STATUS_FAILED) ||
+	    (cquest_quests_given >= MAX_NUM_GOD_QUESTS()) ||
 	    (magik(CHANCE_OF_GOD_QUEST) == FALSE) ||
 	    ((dungeon_type == DUNGEON_GOD) &&
 	     (dun_level > 0)) ||
-	    (p_ptr->lev <= get_dun_minplev()))
+	    (p_ptr->lev <= cquest_dun_minplev))
 	{
 		/* Don't let a player get quests with trickery */
-		if (p_ptr->lev > get_dun_minplev())
+		if (p_ptr->lev > cquest_dun_minplev)
 		{
-			set_dun_minplev(p_ptr->lev);
+			cquest_dun_minplev = p_ptr->lev;
 		}
-		return;
+		return FALSE;
 	}
 	else
 	{
-		/* each god has different characteristics, so the quests are differnet depending on your god */
-		setup_relic_number();
-		
 		/* This var will need resetting */
-		set_relic_generated(FALSE);
-		set_status(QUEST_STATUS_TAKEN);
-		set_quests_given(get_quests_given() + 1);
+		cquest.status = QUEST_STATUS_TAKEN;
+		cquest_relic_generated = FALSE;
+		cquest_quests_given = cquest_quests_given + 1;
 		
 		/* actually place the dungeon in a random place */
 		quest_god_place_rand_dung();
@@ -1058,35 +966,41 @@ void quest_god_player_level_hook(int gained)
 		cmsg_print(TERM_YELLOW, "When thy task is done, thou art to lift it in the air and call upon my name.");
 		cmsg_print(TERM_YELLOW, "I shall then come to reclaim what is mine!");
 		
-		print_directions(TRUE, print_using_cmsg);
+		print_directions(TRUE, print_using_cmsg, NULL);
 		
 		/* Prepare depth of dungeon. If this was
 		 * generated in set_god_dungeon_attributes(),
 		 * then we'd have trouble if someone levelled
 		 * up in the dungeon! */
-		set_dun_mindepth(p_ptr->lev*2/3);
-		set_dun_maxdepth(get_dun_mindepth() + 4);
+		cquest_dun_mindepth = p_ptr->lev*2/3;
+		cquest_dun_maxdepth = cquest_dun_mindepth + 4;
 	}
+
+	return FALSE;
 }
 
-bool_ quest_god_get_hook(int item)
+bool_ quest_god_get_hook(char *fmt)
 {
+	s32b item;
 	object_type *o_ptr = NULL;
+
+	get_next_arg("d"); /* ignore first arg */
+	item = get_next_arg("d");
 
 	item = -item; /* Workaround */
 	o_ptr = get_object(item);
 
 	/* -- Is it the relic, and check to make sure the relic hasn't already been identified */
-	if ((get_status() == QUEST_STATUS_TAKEN) &&
+	if ((cquest.status == QUEST_STATUS_TAKEN) &&
 	    (o_ptr->tval == TV_JUNK) &&
 	    (o_ptr->sval == get_relic_num()) &&
 	    (o_ptr->pval != TRUE) &&
-	    (get_relics_found() < get_quests_given()))
+	    (cquest_relics_found < cquest_quests_given))
 	{
 		cmsg_format(TERM_L_BLUE, "%s speaks to you:", deity_info[p_ptr->pgod].name);
 
 		/* Is it the last piece of the relic? */
-		if (get_quests_given() == MAX_NUM_GOD_QUESTS())
+		if (cquest_quests_given == MAX_NUM_GOD_QUESTS())
 		{
 			cmsg_print(TERM_YELLOW, "'At last! Thou hast found all of the relic pieces.");
 
@@ -1110,10 +1024,10 @@ bool_ quest_god_get_hook(int item)
 
 		/* relic piece has been identified */
 		o_ptr->pval = TRUE;
-		set_relics_found(get_relics_found() + 1);
+		cquest_relics_found = cquest_relics_found + 1;
 
 		/* Make sure quests can be given again if neccesary */
-		set_status(QUEST_STATUS_UNTAKEN);
+		cquest.status = QUEST_STATUS_UNTAKEN;
 
 		/* Prevent further processing of 'take' action; we've
 		   destroyed the item. */
@@ -1123,11 +1037,11 @@ bool_ quest_god_get_hook(int item)
 	return FALSE;
 }
 
-void quest_god_char_dump()
+static bool_ quest_god_char_dump_hook(char *fmt)
 {
-	if (get_quests_given() > 0)
+	if (cquest_quests_given > 0)
 	{
-		int relics = get_relics_found();
+		int relics = cquest_relics_found;
 		char relics_text[128];
 		cptr append_text = "";
 
@@ -1144,14 +1058,18 @@ void quest_god_char_dump()
 			{
 				strcpy(relics_text, "none");
 			}
-			if (get_status() == QUEST_STATUS_FAILED)
+			if (cquest.status == QUEST_STATUS_FAILED)
 			{
 				append_text = " and failed in your quest";
 			}
 		}
 
-		print_hook("\n You found %s of the relic pieces%s.", relics_text, append_text);
+		fprintf(hook_file, "\n You found %s of the relic pieces%s.",
+			relics_text,
+			append_text);
 	}
+
+	return FALSE;
 }
 
 static void set_god_dungeon_attributes()
@@ -1202,13 +1120,13 @@ static void set_god_dungeon_attributes()
 	 * the player clvl when the quest is given */
 	{
 		dungeon_info_type *d_ptr = &d_info[DUNGEON_GOD];
-		d_ptr->mindepth = get_dun_mindepth();
-		d_ptr->maxdepth = get_dun_maxdepth();
-		d_ptr->min_plev = get_dun_minplev();
+		d_ptr->mindepth = cquest_dun_mindepth;
+		d_ptr->maxdepth = cquest_dun_maxdepth;
+		d_ptr->min_plev = cquest_dun_minplev;
 	}
 }
 
-void quest_god_enter_dungeon_hook(int d_idx)
+static void quest_god_dungeon_setup(int d_idx)
 {
 	/* call the function to set the dungeon variables (dependant
 	 * on pgod) the first time we enter the dungeon */
@@ -1218,4 +1136,58 @@ void quest_god_enter_dungeon_hook(int d_idx)
 	}
 
 	set_god_dungeon_attributes();
+}
+
+static bool_ quest_god_enter_dungeon_hook(char *fmt)
+{
+	s32b d_idx = get_next_arg(fmt);
+	quest_god_dungeon_setup(d_idx);
+	return FALSE;
+}
+
+static bool_ quest_god_gen_level_begin_hook(char *fmt)
+{
+	quest_god_dungeon_setup(dungeon_type);
+	return FALSE;
+}
+
+static bool_ quest_god_stair_hook(char *fmt)
+{
+	quest_god_dungeon_setup(dungeon_type);
+	return FALSE;
+}
+
+static bool_ quest_god_birth_objects_hook(char *fmt)
+{
+	cquest_quests_given = 0;
+	cquest_relics_found = 0;
+	cquest_dun_mindepth = 1;
+	cquest_dun_maxdepth = 4;
+	cquest_dun_minplev = 0;
+	cquest_relic_gen_tries = 0;
+	cquest_relic_generated = FALSE;
+
+	return FALSE;
+}
+
+bool_ quest_god_init_hook(int q)
+{
+	/* Only need hooks if the quest is unfinished. */
+	if ((cquest.status >= QUEST_STATUS_UNTAKEN) &&
+	    (cquest.status < QUEST_STATUS_FINISHED))
+	{
+		add_hook(HOOK_LEVEL_END_GEN,   quest_god_level_end_gen_hook,   "q_god_level_end_gen");
+		add_hook(HOOK_ENTER_DUNGEON,   quest_god_enter_dungeon_hook,   "q_god_enter_dungeon");
+		add_hook(HOOK_GEN_LEVEL_BEGIN, quest_god_gen_level_begin_hook, "q_god_gen_level_begin");
+		add_hook(HOOK_STAIR,           quest_god_stair_hook,           "q_god_hook_stair");
+		add_hook(HOOK_GET,             quest_god_get_hook,             "q_god_get");
+		add_hook(HOOK_CHAR_DUMP,       quest_god_char_dump_hook,       "q_god_char_dump");
+		add_hook(HOOK_PLAYER_LEVEL,    quest_god_player_level_hook,    "q_god_player_level");
+	}
+
+	/* Need this to re-initialize at birth; the quest data is
+	 * zeroed which isn't quite right. */
+	add_hook(HOOK_BIRTH_OBJECTS, quest_god_birth_objects_hook, "q_god_birth_objects");
+	
+	return FALSE;
 }

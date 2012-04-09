@@ -2254,7 +2254,7 @@ struct quest_type
 
 	bool_ (*init)(int q);    /* Function that takes care of generating hardcoded quests */
 
-	s32b data[4];           /* Various datas used by the quests */
+	s32b data[9];          /* Various datas used by the quests */
 
 	bool_ (*gen_desc)(FILE *fff); /* Function for generating description. */
 };
