@@ -15,7 +15,7 @@ F:w:8:3:0:0:0:0:0:24
 
 # Quest 16 finished, reward is a between gate
 ?:[EQU $QUEST16 5]
-F:Z:176:3:0:0:0:0:0:0
+F:Z:176:3:0:0:0:0:0:2
 
 ?:1
 

@@ -4673,6 +4673,14 @@ between_exit between_exits[MAX_BETWEEN_EXITS] =
 		10, 35,
 		0, 0
 	},
+	/* Theme: Minas Tirith -> Gondolin link */
+	{
+		0,
+		FALSE,
+		3, 11,
+		119, 25,
+		0, 0
+	},
 };
 
 /*
