@@ -174,16 +174,6 @@ static int get_relic_gen_tries()
 	return get_lua_int("god_quest.relic_gen_tries");
 }
 
-static void set_player_y(int y)
-{
-	exec_lua(format("god_quest.player_y = %d", y));
-}
-
-static void set_player_x(int x)
-{
-	exec_lua(format("god_quest.player_x = %d", x));
-}
-
 static int get_dun_mindepth()
 {
 	return get_lua_int("god_quest.dun_mindepth");
@@ -1057,18 +1047,6 @@ void quest_god_player_level_hook(int gained)
 		
 		/* actually place the dungeon in a random place */
 		quest_god_place_rand_dung();
-		
-		/* store the variables of the coords where the player was given the quest */
-		if (p_ptr->wild_mode)
-		{
-			set_player_x(p_ptr->px);
-			set_player_y(p_ptr->py);
-		}
-		else
-		{
-			set_player_x(p_ptr->wilderness_x);
-			set_player_y(p_ptr->wilderness_y);
-		}
 		
 		/* God issues instructions */
 		cmsg_format(TERM_L_BLUE, "The voice of %s booms in your head:", deity_info[p_ptr->pgod].name);

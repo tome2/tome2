@@ -29,8 +29,6 @@ add_quest
 		["god_quest.relic_generated"] = FALSE,
 		["god_quest.dung_x"] = 1,
 		["god_quest.dung_y"] = 1,
-		["god_quest.player_x"] = 0,
-		["god_quest.player_y"] = 0,
 	},
 	["hooks"] =     {
 		-- Start the game without the quest, given it by chance
