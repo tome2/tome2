@@ -66,16 +66,8 @@ extern bool_ quest_fireproof_describe(FILE *fff);
 /******* Plot God Quest **************/
 extern void quest_god_place_rand_dung();
 extern void quest_god_generate_relic();
-extern void quest_god_set_god_dungeon_attributes_eru();
-extern void quest_god_set_god_dungeon_attributes_manwe();
-extern void quest_god_set_god_dungeon_attributes_tulkas();
-extern void quest_god_set_god_dungeon_attributes_melkor();
-extern void quest_god_set_god_dungeon_attributes_yavanna();
-extern void quest_god_set_god_dungeon_attributes_aule();
-extern void quest_god_set_god_dungeon_attributes_varda();
-extern void quest_god_set_god_dungeon_attributes_ulmo();
-extern void quest_god_set_god_dungeon_attributes_mandos();
 extern void quest_god_level_end_gen_hook();
 extern void quest_god_player_level_hook(int gained);
 extern bool_ quest_god_get_hook(int o_idx);
 extern void quest_god_char_dump();
+extern void quest_god_enter_dungeon_hook(int d_idx);

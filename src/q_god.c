@@ -108,6 +108,12 @@ static void set_dun_mindepth(int d)
 	exec_lua(format("god_quest.dun_mindepth = %d", d));
 }
 
+static int get_dun_maxdepth()
+{
+	return get_lua_int("god_quest.dun_maxdepth");
+
+}
+
 static void set_dun_maxdepth(int d)
 {
 	exec_lua(format("god_quest.dun_maxdepth = %d", d));
@@ -273,7 +279,7 @@ void quest_god_generate_relic()
 	set_relic_gen_tries(0);
 }
 
-void quest_god_set_god_dungeon_attributes_eru()
+static void quest_god_set_god_dungeon_attributes_eru()
 {
 	/* The Eru temple is based on Meneltarma. */
 
@@ -329,7 +335,7 @@ void quest_god_set_god_dungeon_attributes_eru()
 	d_info[DUNGEON_GOD].rules[1].mflags7 = RF7_CAN_FLY;
 }
 
-void quest_god_set_god_dungeon_attributes_manwe()
+static void quest_god_set_god_dungeon_attributes_manwe()
 {
 	/* Manwe's lost temple is high in the clouds */
 
@@ -389,7 +395,7 @@ void quest_god_set_god_dungeon_attributes_manwe()
 	d_info[DUNGEON_GOD].rules[4].mflags7 = RF7_CAN_FLY;
 }
 
-void quest_god_set_god_dungeon_attributes_tulkas()
+static void quest_god_set_god_dungeon_attributes_tulkas()
 {
 	/* Tulkas dungeon is quite normal, possibly a bit boring to be
 	 * honest. Maybe I should add something radical to it.  'The
@@ -432,7 +438,7 @@ void quest_god_set_god_dungeon_attributes_tulkas()
 	d_info[DUNGEON_GOD].rules[0].mflags3 = RF3_DEMON | RF3_EVIL;
 }
 
-void quest_god_set_god_dungeon_attributes_melkor()
+static void quest_god_set_god_dungeon_attributes_melkor()
 {
 	/* Melkors dungeon will be dark, fiery and stuff */
 
@@ -481,7 +487,7 @@ void quest_god_set_god_dungeon_attributes_melkor()
 	d_info[DUNGEON_GOD].rules[1].mflags3 = RF3_GOOD;
 }
 
-void quest_god_set_god_dungeon_attributes_yavanna()
+static void quest_god_set_god_dungeon_attributes_yavanna()
 {
 	/* Yavannas dungeon will be very natural, tress and stuff. */
 
@@ -529,7 +535,7 @@ void quest_god_set_god_dungeon_attributes_yavanna()
 		RF3_DEMON | RF3_UNDEAD | RF3_NONLIVING;
 }
 
-void quest_god_set_god_dungeon_attributes_aule()
+static void quest_god_set_god_dungeon_attributes_aule()
 {
 	d_info[DUNGEON_GOD].min_m_alloc_level = 24;
 	d_info[DUNGEON_GOD].max_m_alloc_chance = 80;
@@ -569,7 +575,7 @@ void quest_god_set_god_dungeon_attributes_aule()
 	d_info[DUNGEON_GOD].rules[0].percent = 80;
 }
 
-void quest_god_set_god_dungeon_attributes_varda()
+static void quest_god_set_god_dungeon_attributes_varda()
 {
 	/* Varda lives with Manwe, so high in the clouds */
 
@@ -626,7 +632,7 @@ void quest_god_set_god_dungeon_attributes_varda()
 	d_info[DUNGEON_GOD].rules[4].mflags7 = RF7_CAN_FLY;
 }
 
-void quest_god_set_god_dungeon_attributes_ulmo()
+static void quest_god_set_god_dungeon_attributes_ulmo()
 {
 	/* Ulmo dungeon is basically Tulkas, except with acquatic creatures. */
 
@@ -669,7 +675,7 @@ void quest_god_set_god_dungeon_attributes_ulmo()
 	d_info[DUNGEON_GOD].rules[2].mflags3 = RF3_RES_WATE;
 }
 
-void quest_god_set_god_dungeon_attributes_mandos()
+static void quest_god_set_god_dungeon_attributes_mandos()
 {
 	/* Mandos dungeon is basically Tulkas, except with undead. */
 
@@ -920,4 +926,70 @@ void quest_god_char_dump()
 
 		print_hook("\n You found %s of the relic pieces%s.", relics_text, append_text);
 	}
+}
+
+static void set_god_dungeon_attributes()
+{
+	/* dungeon properties altered according to which god player is worshipping, */
+	if (p_ptr->pgod == GOD_ERU)
+	{
+		quest_god_set_god_dungeon_attributes_eru();
+	}
+	else if (p_ptr->pgod == GOD_MANWE)
+	{
+		quest_god_set_god_dungeon_attributes_manwe();
+	}
+	else if (p_ptr->pgod == GOD_TULKAS)
+	{
+		quest_god_set_god_dungeon_attributes_tulkas();
+	}
+	else if (p_ptr->pgod == GOD_MELKOR)
+	{
+		quest_god_set_god_dungeon_attributes_melkor();
+	}
+	else if (p_ptr->pgod == GOD_YAVANNA)
+	{
+		quest_god_set_god_dungeon_attributes_yavanna();
+	}
+	else if (p_ptr->pgod == get_god_AULE())
+	{
+		quest_god_set_god_dungeon_attributes_aule();
+	}
+	else if (p_ptr->pgod == get_god_VARDA())
+	{
+		quest_god_set_god_dungeon_attributes_varda();
+	}
+	else if (p_ptr->pgod == get_god_ULMO())
+	{
+		quest_god_set_god_dungeon_attributes_ulmo();
+	}
+	else if (p_ptr->pgod == get_god_MANDOS())
+	{
+		quest_god_set_god_dungeon_attributes_mandos();
+	}
+	else
+	{
+		assert(FALSE);		/* Uh, oh! */
+	}
+
+	/* W: All dungeons are 5 levels deep, and created at 2/3 of
+	 * the player clvl when the quest is given */
+	{
+		dungeon_info_type *d_ptr = &d_info[DUNGEON_GOD];
+		d_ptr->mindepth = get_dun_mindepth();
+		d_ptr->maxdepth = get_dun_maxdepth();
+		d_ptr->min_plev = get_dun_minplev();
+	}
+}
+
+void quest_god_enter_dungeon_hook(int d_idx)
+{
+	/* call the function to set the dungeon variables (dependant
+	 * on pgod) the first time we enter the dungeon */
+	if (d_idx != DUNGEON_GOD)
+	{
+		return;
+	}
+
+	set_god_dungeon_attributes();
 }

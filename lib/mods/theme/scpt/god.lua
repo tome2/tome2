@@ -114,28 +114,13 @@ add_quest
 			quest_god_level_end_gen_hook()
 		end,
 		[HOOK_ENTER_DUNGEON] = function(d_idx)
-			-- call the function to set the dungeon variables (dependant on pgod) the first time we enter the dungeon
-			if d_idx ~= god_quest.DUNGEON_GOD then
-				return
-			else
-				set_god_dungeon_attributes()
-			end
+			quest_god_enter_dungeon_hook(d_idx)
 		end,
 		[HOOK_GEN_LEVEL_BEGIN] = function()
-			-- call the function to set the dungeon variables (dependant on pgod) when we WoR back into the dungeon
-			if current_dungeon_idx ~= god_quest.DUNGEON_GOD then
-				return
-			else
-				set_god_dungeon_attributes()
-			end
+			quest_god_enter_dungeon_hook(current_dungeon_idx)
 		end,
 		[HOOK_STAIR] = function()
-			-- call the function to set the dungeon variables (dependant on pgod) every time we go down a level
-			if current_dungeon_idx ~= god_quest.DUNGEON_GOD then
-				return
-			else
-				set_god_dungeon_attributes()
-			end
+			quest_god_enter_dungeon_hook(current_dungeon_idx)
 		end,
 		[HOOK_GET] = function(o_ptr, item)
 			return quest_god_get_hook(item)
@@ -145,36 +130,6 @@ add_quest
 		end,
 	},
 }
-
-function set_god_dungeon_attributes()
-
-	-- dungeon properties altered according to which god player is worshipping,
-	if player.pgod == GOD_ERU then
-		quest_god_set_god_dungeon_attributes_eru()
-	elseif player.pgod == GOD_MANWE then
-		quest_god_set_god_dungeon_attributes_manwe()
-	elseif player.pgod == GOD_TULKAS then
-		quest_god_set_god_dungeon_attributes_tulkas()
-	elseif player.pgod == GOD_MELKOR then
-		quest_god_set_god_dungeon_attributes_melkor()
-	elseif player.pgod == GOD_YAVANNA then
-		quest_god_set_god_dungeon_attributes_yavanna()
-	elseif player.pgod == GOD_AULE then
-		quest_god_set_god_dungeon_attributes_aule()
-	elseif player.pgod == GOD_VARDA then
-		quest_god_set_god_dungeon_attributes_varda()
-	elseif player.pgod == GOD_ULMO then
-		quest_god_set_god_dungeon_attributes_ulmo()
-	elseif player.pgod == GOD_MANDOS then
-		quest_god_set_god_dungeon_attributes_mandos()
-	end
-
-	-- W: All dungeons are 5 levels deep, and created at 2/3 of the player clvl when the quest is given
-	dungeon(god_quest.DUNGEON_GOD).mindepth = god_quest.dun_mindepth
-	dungeon(god_quest.DUNGEON_GOD).maxdepth = god_quest.dun_maxdepth
-	dungeon(god_quest.DUNGEON_GOD).minplev = god_quest.dun_minplev
-
-end
 
 -- Calling this function returns the direction the dungeon is in from the players position at the time
 -- the quest was given, and also the direction from angband (if the player is worshipping Melkor) or lothlorien.
