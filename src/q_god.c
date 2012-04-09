@@ -951,19 +951,19 @@ static void set_god_dungeon_attributes()
 	{
 		quest_god_set_god_dungeon_attributes_yavanna();
 	}
-	else if (p_ptr->pgod == get_god_AULE())
+	else if (p_ptr->pgod == GOD_AULE)
 	{
 		quest_god_set_god_dungeon_attributes_aule();
 	}
-	else if (p_ptr->pgod == get_god_VARDA())
+	else if (p_ptr->pgod == GOD_VARDA)
 	{
 		quest_god_set_god_dungeon_attributes_varda();
 	}
-	else if (p_ptr->pgod == get_god_ULMO())
+	else if (p_ptr->pgod == GOD_ULMO)
 	{
 		quest_god_set_god_dungeon_attributes_ulmo();
 	}
-	else if (p_ptr->pgod == get_god_MANDOS())
+	else if (p_ptr->pgod == GOD_MANDOS)
 	{
 		quest_god_set_god_dungeon_attributes_mandos();
 	}

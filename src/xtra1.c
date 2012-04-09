@@ -2444,7 +2444,7 @@ static void calc_gods()
 	}
 
 	/* Aule provides to-hit/damage bonuses and fire resistance */
-	GOD(get_god_AULE())
+	GOD(GOD_AULE)
 	{
 		if (p_ptr->grace > 0)
 		{
@@ -2470,7 +2470,7 @@ static void calc_gods()
 
 	/* Mandos provides nether resistance and, while praying,
 	   nether immunity and prevents teleportation. */
-	GOD(get_god_MANDOS())
+	GOD(GOD_MANDOS)
 	{
 		p_ptr->resist_neth = TRUE;
 
@@ -2489,7 +2489,7 @@ static void calc_gods()
 
 	/* Ulmo provides water breath and, while praying can
 	   provide poison resistance and magic breath. */
-	GOD(get_god_ULMO())
+	GOD(GOD_ULMO)
 	{
 		p_ptr->water_breath = TRUE;
 

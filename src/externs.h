@@ -598,6 +598,10 @@ extern s32b DUNGEON_ASTRAL_WILD_X;
 extern s32b DUNGEON_ASTRAL_WILD_Y;
 extern deity_type *deity_info;
 extern s32b max_gods;
+extern s32b GOD_AULE;
+extern s32b GOD_VARDA;
+extern s32b GOD_ULMO;
+extern s32b GOD_MANDOS;
 extern timer_type *gl_timers;
 extern s16b tim_precognition;
 extern const char *get_version_string();
@@ -1800,10 +1804,6 @@ extern void    desc_quest(int q_idx, int d, char *desc);
 extern s16b    add_new_gods(char *name);
 extern void    desc_god(int g_idx, int d, char *desc);
 extern int     get_lua_int(cptr name);
-extern s16b    get_god_AULE();
-extern s16b    get_god_VARDA();
-extern s16b    get_god_ULMO();
-extern s16b    get_god_MANDOS();
 
 extern bool_    get_com_lua(cptr promtp, int *com);
 

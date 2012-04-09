@@ -944,7 +944,7 @@ void recall_player(int d, int f)
  */
 static void project_check_gods(int typ)
 {
-	if (p_ptr->pgod == get_god_VARDA())
+	if (p_ptr->pgod == GOD_VARDA)
 	{
 		if ((typ == GF_LITE) || (typ == GF_LITE_WEAK))
 		{
@@ -953,7 +953,7 @@ static void project_check_gods(int typ)
 		}
 	}
 
-	if (p_ptr->pgod == get_god_ULMO())
+	if (p_ptr->pgod == GOD_ULMO)
 	{
 		if ((typ == GF_FIRE) ||
 		    (typ == GF_HELL_FIRE) ||

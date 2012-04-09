@@ -589,38 +589,6 @@ int get_lua_int(cptr name)
 	return exec_lua(format("return %s", name));
 }
 
-static int get_god_theme(cptr name)
-{
-	if (game_module_idx == MODULE_THEME)
-	{
-		return exec_lua(format("return GOD_%s", name));
-	}
-	else
-	{
-		return -1;
-	}
-}
-
-s16b get_god_AULE()
-{
-	return get_god_theme("AULE");
-}
-
-s16b get_god_MANDOS()
-{
-	return get_god_theme("MANDOS");
-}
-
-s16b get_god_VARDA()
-{
-	return get_god_theme("VARDA");
-}
-
-s16b get_god_ULMO()
-{
-	return get_god_theme("ULMO");
-}
-
 /*
  * Returns the direction of the compass that y2, x2 is from y, x
  * the return value will be one of the following: north, south,
