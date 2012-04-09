@@ -40,7 +40,7 @@ void init_hooks()
 {
 	int i;
 
-	for (i = 0; i < MAX_Q_IDX_INIT; i++)
+	for (i = 0; i < MAX_Q_IDX; i++)
 	{
 		if ((quest[i].type == HOOK_TYPE_C) && (quest[i].init != NULL)) quest[i].init(i);
 	}

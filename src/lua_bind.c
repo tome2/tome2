@@ -154,21 +154,6 @@ bool_ lua_summon_monster(int y, int x, int lev, bool_ friend_, char *fct)
 /*
  * Quests
  */
-s16b add_new_quest(char *name)
-{
-	int i;
-
-	/* Increase the size */
-	reinit_quests(max_q_idx + 1);
-	quest[max_q_idx - 1].type = HOOK_TYPE_LUA;
-	strncpy(quest[max_q_idx - 1].name, name, 39);
-
-	for (i = 0; i < 10; i++)
-		strncpy(quest[max_q_idx - 1].desc[i], "", 39);
-
-	return (max_q_idx - 1);
-}
-
 void desc_quest(int q_idx, int d, char *desc)
 {
 	if (d >= 0 && d < 10)

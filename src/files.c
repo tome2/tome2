@@ -4329,7 +4329,7 @@ long total_points(void)
 	temp += p_ptr->au / 5;
 
 	/* Completing quest increase score */
-	for (i = 0; i < max_q_idx; i++)
+	for (i = 0; i < MAX_Q_IDX; i++)
 	{
 		if (quest[i].status >= QUEST_STATUS_COMPLETED)
 		{

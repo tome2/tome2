@@ -525,10 +525,12 @@ void wilderness_gen(int refresh)
 	}
 
 	/* Set rewarded quests to finished */
-	for (i = 0; i < max_q_idx; i++)
+	for (i = 0; i < MAX_Q_IDX; i++)
 	{
 		if (quest[i].status == QUEST_STATUS_REWARDED)
+		{
 			quest[i].status = QUEST_STATUS_FINISHED;
+		}
 	}
 
 	process_hooks(HOOK_WILD_GEN, "(d)", FALSE);
@@ -591,10 +593,12 @@ void wilderness_gen_small()
 	p_ptr->py = p_ptr->wilderness_y;
 
 	/* Set rewarded quests to finished */
-	for (i = 0; i < max_q_idx; i++)
+	for (i = 0; i < MAX_Q_IDX; i++)
 	{
 		if (quest[i].status == QUEST_STATUS_REWARDED)
+		{
 			quest[i].status = QUEST_STATUS_FINISHED;
+		}
 	}
 
 	process_hooks(HOOK_WILD_GEN, "(d)", TRUE);

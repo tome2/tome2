@@ -4127,7 +4127,7 @@ static void do_cmd_knowledge_quests(void)
 
 	char file_name[1024];
 
-	int *order;
+	int order[MAX_Q_IDX] = { };
 
 	int num = 0;
 
@@ -4140,14 +4140,12 @@ static void do_cmd_knowledge_quests(void)
 	/* Open a new file */
 	fff = my_fopen(file_name, "w");
 
-	C_MAKE(order, max_q_idx, int);
-
-	for (i = 0; i < max_q_idx; i++)
+	for (i = 0; i < MAX_Q_IDX; i++)
 	{
 		insert_sort_quest(order, &num, i);
 	}
 
-	for (z = 0; z < max_q_idx; z++)
+	for (z = 0; z < MAX_Q_IDX; z++)
 	{
 		i = order[z];
 
@@ -4193,8 +4191,6 @@ static void do_cmd_knowledge_quests(void)
 			}
 		}
 	}
-
-	C_FREE(order, max_q_idx, int);
 
 	/* Close the file */
 	my_fclose(fff);

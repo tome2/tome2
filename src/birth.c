@@ -858,7 +858,7 @@ static void player_wipe(void)
 	}
 
 	/* Wipe the quests */
-	for (i = 0; i < MAX_Q_IDX_INIT; i++)
+	for (i = 0; i < MAX_Q_IDX; i++)
 	{
 		quest[i].status = QUEST_STATUS_UNTAKEN;
 		for (j = 0; j < sizeof(quest[i].data)/sizeof(quest[i].data[0]); j++)

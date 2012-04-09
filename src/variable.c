@@ -1487,8 +1487,7 @@ s32b extra_savefile_parts = 0;
 /*
  * Quests
  */
-s16b max_q_idx = MAX_Q_IDX_INIT;
-quest_type *quest;
+quest_type quest[MAX_Q_IDX];
 
 /*
  * Display the player as a special symbol when in bad health ?

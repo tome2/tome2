@@ -1795,7 +1795,7 @@ void do_cmd_debug(void)
 	case 'q':
 		{
 			/*                        if (quest[command_arg].status == QUEST_STATUS_UNTAKEN)*/
-			if ((command_arg >= 1) && (command_arg < MAX_Q_IDX_INIT) && (command_arg != QUEST_RANDOM))
+			if ((command_arg >= 1) && (command_arg < MAX_Q_IDX) && (command_arg != QUEST_RANDOM))
 			{
 				quest[command_arg].status = QUEST_STATUS_TAKEN;
 				*(quest[command_arg].plot) = command_arg;

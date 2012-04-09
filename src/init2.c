@@ -1959,13 +1959,6 @@ static errr init_misc(void)
 	/* Hack -- No messages yet */
 	message__tail = MESSAGE_BUF;
 
-	/* Prepare quests */
-	quest = NULL;
-	max_q_idx = MAX_Q_IDX_INIT;
-	reinit_quests(max_q_idx);
-
-	C_COPY(quest, quest_init_tome, MAX_Q_IDX_INIT, quest_type);
-
 	/* Prepare gods */
 	deity_info = NULL;
 	max_gods = MAX_GODS_INIT;
@@ -2071,25 +2064,6 @@ static errr init_wilderness(void)
 	generate_encounter = FALSE;
 
 	return 0;
-}
-
-void reinit_quests(s16b new_size)
-{
-	quest_type *new_quest;
-
-	C_MAKE(new_quest, new_size, quest_type);
-
-	/* Reallocate the extra memory */
-	if (quest)
-	{
-		C_COPY(new_quest, quest, max_q_idx, quest_type);
-
-		C_FREE(quest, max_q_idx, quest_type);
-	}
-
-	quest = new_quest;
-
-	max_q_idx = new_size;
 }
 
 void reinit_gods(s16b new_size)

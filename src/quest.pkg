@@ -76,6 +76,8 @@ typedef unsigned int u32b;
 #define QUEST_STATUS_FAILED_DONE     6
 /** @} */
 
+#define MAX_Q_IDX 30
+
 /** @struct quest_type
  * @brief Quest
  */
@@ -112,17 +114,11 @@ struct quest_type
 	byte type;
 };
 
-/** @var max_q_idx
- * @brief Number
- * @note Maximum number of quests in quest list
- */
-extern s16b max_q_idx;
-
 /** @var  quest_aux;
  * @brief quest_type
  * @note Array of quests
  */
-extern quest_type quest[max_q_idx] @ quest_aux;
+extern quest_type quest[MAX_Q_IDX] @ quest_aux;
 
 $static quest_type *lua_get_quest(int q_idx){return &quest[q_idx];}
 
@@ -135,27 +131,3 @@ $static quest_type *lua_get_quest(int q_idx){return &quest[q_idx];}
  */
 static quest_type *lua_get_quest @ quest(int q_idx);
 
-/** @fn new_quest(char *name);
- * @dgonly
- * @brief Add a new quest to the end of the quest array.\n
- * @param *name String \n the name of the new quest.
- * @brief Quest name
- * @return Number \n The index of the new quest in the quest array.
- * @note (see file lua_bind.c)
- */
-extern s16b    add_new_quest @ new_quest(char *name);
-
-/** @fn quest_desc(int q_idx, int d, char *desc);
- * @dgonly
- * @brief Return the description of a quest.\n
- * @param q_idx Number \n the index of a quest in the quest array.
- * @brief Quest index
- * @param d Number \n the index of a line in the quest description.
- * @brief Description line
- * @param *desc String
- * @brief Description
- * @return *desc String \n Line "d" of the description of quest with index
- * "q_idx" in the quest array.
- * @note (see file lua_bind.c)
- */
-extern void    desc_quest @ quest_desc(int q_idx, int d, char *desc);

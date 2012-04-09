@@ -2689,18 +2689,18 @@ static bool_ do_savefile_aux(int flag)
 			do_s16b(&(d_info[i].t_num), flag);
 		}
 
-		if (flag == LS_SAVE) max_quests_ldsv = MAX_Q_IDX_INIT;
-		/* Number of quests */
+		/* Sanity check number of quests */
+		if (flag == LS_SAVE) max_quests_ldsv = MAX_Q_IDX;
 		do_u16b(&max_quests_ldsv, flag);
 
 		/* Incompatible save files */
-		if ((flag == LS_LOAD) && (max_quests_ldsv > MAX_Q_IDX_INIT))
+		if ((flag == LS_LOAD) && (max_quests_ldsv != MAX_Q_IDX))
 		{
-			note(format("Too many (%u) quests!", max_quests_ldsv));
+			note(format("Invalid number of quests (%u)!", max_quests_ldsv));
 			return (FALSE);
 		}
 
-		for (i = 0; i < max_quests_ldsv; i++)
+		for (i = 0; i < MAX_Q_IDX; i++)
 		{
 			do_s16b(&quest[i].status, flag);
 			for (j = 0; j < sizeof(quest[i].data)/sizeof(quest[i].data[0]); j++)

@@ -3597,7 +3597,7 @@ power_type powers_type[POWER_MAX] =
 /*
  * The Quests
  */
-quest_type quest_init_tome[MAX_Q_IDX_INIT] =
+quest_type quest[MAX_Q_IDX] =
 {
 	{
 		FALSE,
