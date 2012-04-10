@@ -2,17 +2,6 @@
 
 add_loadsave("GRACE_DELAY",0)
 
-function aule_stone_skin()
-local type
-	if player.grace >= 10000 then
-		type = SHIELD_COUNTER
-	else
-		type = 0
-	end
-
-	set_shield(randint(10) + 10 + (player.grace / 100), 10 + (player.grace / 100), type, 2 + (player.grace / 200), 3 + (player.grace / 400))
-end
-
 GOD_AULE = add_god
 {
 	["name"] = "Aule the Smith",
@@ -22,53 +11,6 @@ GOD_AULE = add_god
 	},
 	["hooks"] =
 	{
-		[HOOK_PROCESS_WORLD] = function()
-			if (player.pgod == GOD_AULE) then
-				GRACE_DELAY = GRACE_DELAY + 1
-				if GRACE_DELAY >= 15 then
-					-- Aule likes Dwarves and Dark Elves (Eol's influence here)
-					if 
-					(get_race_name() ~= "Dwarf") and 
-					(get_race_name() ~= "Petty-dwarf") and 
-					(get_race_name() ~= "Gnome") and 
-					(get_race_name() ~= "Dark-Elf") then
-						set_grace(player.grace - 1)
-					end
-					
-					-- Search inventory for axe or hammer - Gain 1 point of grace for each hammer or axe
-					for i = 0, INVEN_TOTAL - 1 do
-						if ((player.inventory(i).tval) == TV_AXE) then 
-							set_grace(player.grace + 1)
-						end
-						if ((player.inventory(i).tval) == TV_HAFTED) then
-							if (((player.inventory(i).sval) == SV_WAR_HAMMER) or ((player.inventory(i).sval) == SV_LUCERN_HAMMER) or ((player.inventory(i).sval) == SV_GREAT_HAMMER)) then
-								set_grace(player.grace + 1)
-							end
-						end
-					end
-					
-					if (player.praying == TRUE) then
-						set_grace(player.grace - 2)
-						
-						-- Chance of casting Stoneskin if praying
-						local chance
-						if (player.grace >= 50000) then
-							chance = 50000
-						else
-							chance = 50000 - player.grace
-						end
-
-						if (randint(100000) <= 100000 / chance) then
-							aule_stone_skin()
-							msg_print("Aule casts Stone Skin on you.")
-						end
-						
-					end
-					GRACE_DELAY = 0
-				end
-				
-			end
-		end,
 		[HOOK_SACRIFICE_GOD] = function() 
 			if (player.pgod == GOD_AULE) then 
 				local ret, item, obj, value 

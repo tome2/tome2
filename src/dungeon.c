@@ -1163,6 +1163,87 @@ static void process_world_gods()
 		}
 	}
 
+	GOD(GOD_AULE)
+	{
+		if (grace_delay_trigger())
+		{
+			int i;
+
+			/* Aule likes Dwarves and Dark Elves (Eol's
+			 * influence here) */
+			if  (!(streq(race_name, "Dwarf") ||
+			       streq(race_name, "Petty-dwarf") ||
+			       streq(race_name, "Gnome") ||
+			       streq(race_name, "Dark-Elf")))
+			{
+				inc_piety(GOD_ALL, -1);
+			}
+
+			/* Search inventory for axe or hammer - Gain 1
+			 * point of grace for each hammer or axe */
+			for (i = 0; i < INVEN_TOTAL; i++)
+			{
+				int tval = p_ptr->inventory[i].tval;
+				int sval = p_ptr->inventory[i].sval;
+
+				switch (tval)
+				{
+				case TV_AXE:
+					inc_piety(GOD_ALL, 1);
+					break;
+
+				case TV_HAFTED:
+					if ((sval == SV_WAR_HAMMER) ||
+					    (sval == SV_LUCERN_HAMMER) ||
+					    (sval == SV_GREAT_HAMMER))
+					{
+						inc_piety(GOD_ALL, 1);
+					}
+					break;
+				}
+			}
+
+			/* Praying may grant you a free stone skin
+			 * once in a while */
+			if (p_ptr->praying)
+			{
+				int chance;
+				s32b grace;
+
+				inc_piety(GOD_ALL, -2);
+				grace = p_ptr->grace; /* shorthand */
+
+				chance = 1;
+				if (grace >= 50000)
+				{
+					chance = 50000;
+				}
+				else
+				{
+					chance = 50000 - grace;
+				}
+
+				if (randint(100000) <= 100000 / chance)
+				{
+					s16b type = 0;
+
+					if (grace >= 10000)
+					{
+						type = SHIELD_COUNTER;
+					}
+
+					set_shield(
+						randint(10) + 10 + (grace / 100),
+						10 + (grace / 100),
+						type,
+						2 + (grace / 200),
+						3 + (grace / 400));
+
+					msg_print("Aule casts Stone Skin on you.");
+				}
+			}
+		}
+	}
 }
 
 /*
