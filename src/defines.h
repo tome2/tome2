@@ -4541,7 +4541,6 @@
 #define HOOK_LOAD_END           61
 #define HOOK_RECALL             62
 #define HOOK_FOLLOW_GOD         63
-#define HOOK_SACRIFICE_GOD      64
 #define HOOK_BODY_PARTS         65
 #define HOOK_APPLY_MAGIC        66
 #define HOOK_PLAYER_EXP         67

@@ -724,12 +724,6 @@ typedef unsigned int u32b;
  */
 #define HOOK_FOLLOW_GOD	 63
 
-/** @def HOOK_SACRIFICE_GOD
- * @brief Player sacrifices to a god.
- * @note (see file cmd2.c)
- */
-#define HOOK_SACRIFICE_GOD      64
-
 /** @def HOOK_BODY_PARTS
  * @brief Calculate which body parts the player has.
  * @note (see file xtra1.c)

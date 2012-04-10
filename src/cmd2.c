@@ -4703,14 +4703,12 @@ void do_cmd_sacrifice(void)
 					inc_stack_size(item, -1);
 				}
 			}
-			else if (p_ptr->pgod == GOD_AULE)
+
+			GOD(GOD_AULE)
 			{
 				do_cmd_sacrifice_aule();
 			}
-			else
-			{
-				process_hooks(HOOK_SACRIFICE_GOD, "()", "");
-			}
+
 		}
 	}
 }
