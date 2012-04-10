@@ -1120,6 +1120,49 @@ static void process_world_gods()
 			}
 		}
 	}
+
+	GOD(GOD_ULMO)
+	{
+		if (grace_delay_trigger())
+		{
+			int i;
+			/* Ulmo likes the Edain (except Easterlings) */
+			if (streq(race_name, "Human") ||
+			    streq(race_name, "Dunadan") ||
+			    streq(race_name, "Druadan") ||
+			    streq(race_name, "RohanKnight"))
+			{
+				inc_piety(GOD_ALL, 2);
+			}
+			else if (streq(race_name, "Easterling") ||
+				 streq(race_name, "Demon") ||
+				 streq(race_name, "Orc"))
+			{
+				/* hated races */
+				inc_piety(GOD_ALL, -2);
+			}
+			else
+			{
+				inc_piety(GOD_ALL, 1);
+			}
+
+			if (p_ptr->praying)
+			{
+				inc_piety(GOD_ALL, -1);
+			}
+
+			/* Gain 1 point for each trident in inventory */
+			for (i = 0; i < INVEN_TOTAL; i++)
+			{
+				if ((p_ptr->inventory[i].tval == TV_POLEARM) &&
+				    (p_ptr->inventory[i].sval == SV_TRIDENT))
+				{
+					inc_piety(GOD_ALL, 1);
+				}
+			}
+		}
+	}
+
 }
 
 /*

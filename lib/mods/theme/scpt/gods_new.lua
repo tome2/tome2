@@ -204,45 +204,6 @@ GOD_ULMO = add_god
 				end
 			end
 		end,
-		[HOOK_PROCESS_WORLD] = function()
-			if (player.pgod == GOD_ULMO) then
-				GRACE_DELAY = GRACE_DELAY + 1
-				if GRACE_DELAY >= 15 then
-					-- Ulmo likes the Edain (except Easterlings)
-					if 
-					(get_race_name() == "Human") or 
-					(get_race_name() == "Dunadan") or 
-					(get_race_name() == "Druadan") or 
-					(get_race_name() == "RohanKnight") then 
-						set_grace(player.grace + 1)
-					
-					elseif (
-					(get_race_name() == "Easterling") or 
-					(get_race_name() == "Demon") or
-					(get_race_name() == "Orc")) then
-					-- hated races
-					set_grace(player.grace - 2)
-					else
-						set_grace(player.grace + 1)
-					end
-					
-					if (player.praying == TRUE) then
-						set_grace(player.grace - 1)
-					end					
-					-- Search inventory for axe or hammer - Gain 1 point of grace for each hammer or axe
-					for i = 0, INVEN_TOTAL - 1 do
-						if ((player.inventory(i).tval) == TV_POLEARM) then
-							if ((player.inventory(i).sval) == SV_TRIDENT) then
-								set_grace(player.grace + 1)
-							end
-						end
-					end
-
-					GRACE_DELAY = 0
-				end
-				
-			end
-		end,
 	},
 }
 
