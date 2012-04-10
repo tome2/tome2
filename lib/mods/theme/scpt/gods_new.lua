@@ -1,7 +1,5 @@
 -- This file contains all the new gods
 
-add_loadsave("GRACE_DELAY",0)
-
 GOD_AULE = add_god
 {
 	["name"] = "Aule the Smith",

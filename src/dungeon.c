@@ -1066,14 +1066,12 @@ static void process_world_corruptions()
  */
 static bool_ grace_delay_trigger()
 {
-	int grace_delay = get_lua_int("GRACE_DELAY");
-	int new_grace_delay = 1 + grace_delay;
-	exec_lua(format("GRACE_DELAY = %d", new_grace_delay));
+	p_ptr->grace_delay++;
 
-	if (new_grace_delay >= 15)
+	if (p_ptr->grace_delay >= 15)
 	{
 		/* reset */
-		exec_lua("GRACE_DELAY = 0");
+		p_ptr->grace_delay = 0;
 		/* triggered */
 		return TRUE;
 	}

@@ -458,6 +458,7 @@ static bool_ do_extra(int flag)
 
 	/* Gods */
 	do_s32b(&p_ptr->grace, flag);
+	do_s32b(&p_ptr->grace_delay, flag);
 	do_byte((byte*)&p_ptr->praying, flag);
 	do_s16b(&p_ptr->melkor_sacrifice, flag);
 	do_byte(&p_ptr->pgod, flag);

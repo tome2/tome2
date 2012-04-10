@@ -1489,6 +1489,7 @@ struct player_type
 	u16b csane_frac;              /* Cur sanity frac */
 
 	s32b grace;                     /* Your God's appreciation factor. */
+	s32b grace_delay;               /* Delay factor for granting piety. */
 	byte pgod;                      /* Your God. */
 	bool_ praying;                   /* Praying to your god. */
 	s16b melkor_sacrifice;          /* How much hp has been sacrified for damage */
