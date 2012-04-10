@@ -141,33 +141,6 @@ GOD_VARDA = add_god
 	},
 	["hooks"] =
 	{
-		[HOOK_PROCESS_WORLD] = function()
-			if (player.pgod == GOD_VARDA) then
-				GRACE_DELAY = GRACE_DELAY + 1
-				
-				-- piety increase if in light
-				if (GRACE_DELAY >= 15) then
-					if band(cave(player.py, player.px).info, CAVE_GLOW) ~= 0 then
-						set_grace(player.grace + 2)
-					end
-					if (
-					(get_race_name() == "Orc") or 
-					(get_race_name() == "Troll") or 
-					(get_race_name() == "Dragon") or 
-					(get_race_name() == "Demon")) then
-					-- Varda hates evils
-					set_grace(player.grace - 2)
-					else
-						set_grace(player.grace - 1)
-					end
-					
-					if (player.praying == TRUE) then
-						set_grace(player.grace - 1)
-					end
-					GRACE_DELAY = 0
-				end
-			end
-		end,
 		[HOOK_CALC_LITE] = function()
 			if (player.pgod == GOD_VARDA) then
 				-- increase lite radius

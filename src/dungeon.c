@@ -1062,6 +1062,67 @@ static void process_world_corruptions()
 
 
 /*
+ * Shim for accessing Lua variable.
+ */
+static bool_ grace_delay_trigger()
+{
+	int grace_delay = get_lua_int("GRACE_DELAY");
+	int new_grace_delay = 1 + grace_delay;
+	exec_lua(format("GRACE_DELAY = %d", new_grace_delay));
+
+	if (new_grace_delay >= 15)
+	{
+		/* reset */
+		exec_lua("GRACE_DELAY = 0");
+		/* triggered */
+		return TRUE;
+	}
+	else
+	{
+		/* not triggered */
+		return FALSE;
+	}
+}
+
+/*
+ * Hook for gods
+ */
+static void process_world_gods()
+{
+	const char *race_name = rp_ptr->title + rp_name;
+
+	GOD(GOD_VARDA)
+	{
+		if (grace_delay_trigger())
+		{
+			/* Piety increases if in light. */
+			if (cave[p_ptr->py][p_ptr->px].info & CAVE_GLOW)
+			{
+				inc_piety(GOD_ALL, 2);
+			}
+
+			if (streq(race_name, "Orc") ||
+			    streq(race_name, "Troll") ||
+			    streq(race_name, "Dragon") ||
+			    streq(race_name, "Demon"))
+			{
+				/* Varda hates evil races */
+				inc_piety(GOD_ALL, -2);
+			} else {
+				/* ... and everyone slightly less */
+				inc_piety(GOD_ALL, -1);
+			}
+
+			/* Prayer uses piety */
+			if (p_ptr->praying)
+			{
+				inc_piety(GOD_ALL, -1);
+			}
+		}
+	}
+}
+
+/*
  * Handle certain things once every 10 game turns
  *
  * Note that a single movement in the overhead wilderness mode
@@ -1109,6 +1170,9 @@ static void process_world(void)
 
 		/* Handle corruptions */
 		process_world_corruptions();
+
+		/* Handle gods */
+		process_world_gods();
 
 		/* Handle the player song */
 		check_music();
