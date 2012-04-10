@@ -2327,6 +2327,67 @@ void place_corpse(monster_type *m_ptr)
 
 
 /*
+ * Check if monster race is in a given list. The list
+ * must be NULL-terminated.
+ */
+static bool_ monster_race_in_list_p(monster_type *m_ptr, cptr races[])
+{
+	int i=0;
+	for (i=0; races[i] != NULL; i++)
+	{
+		if (m_ptr->r_idx == test_monster_name(races[i])) {
+			return TRUE;
+		}
+	}
+	/* Not found */
+	return FALSE;
+}
+
+/*
+ * Handle the "death" of a monster (Gods)
+ */
+static void monster_death_gods(int m_idx, monster_type *m_ptr)
+{
+	if (p_ptr->pgod == GOD_AULE)
+	{
+		/* TODO: This should really be a racial flag
+		   which can be added to the r_info file. */
+		cptr DWARVES[] = {
+			"Petty-dwarf",
+			"Petty-dwarf mage",
+			"Dark dwarven warrior",
+			"Dark dwarven smith",
+			"Dark dwarven lord",
+			"Dark dwarven priest",
+			"Dwarven warrior",
+			NULL,
+		};
+		cptr UNIQUE_DWARVES[] = {
+			"Nar, the Dwarf",
+			"Naugladur, Lord of Nogrod",
+			"Telchar the Smith",
+			"Fundin Bluecloak",
+			"Khim, Son of Mim",
+			"Ibun, Son of Mim",
+			"Mim, Betrayer of Turin",
+			NULL,
+		};
+
+		/* Aule dislikes the killing of dwarves */
+		if (monster_race_in_list_p(m_ptr, DWARVES))
+		{
+			inc_piety(GOD_ALL, -20);
+		}
+
+		/* ... and UNIQUE dwarves */
+		if (monster_race_in_list_p(m_ptr, UNIQUE_DWARVES))
+		{
+			inc_piety(GOD_ALL, -500);
+		}
+	}
+}
+
+/*
  * Handle the "death" of a monster.
  *
  * Disperse treasures centered at the monster location based on the
@@ -2368,6 +2429,9 @@ void monster_death(int m_idx)
 
 	/* Process the appropriate hooks */
 	process_hooks(HOOK_MONSTER_DEATH, "(d)", m_idx);
+
+	/* Per-god processing */
+	monster_death_gods(m_idx, m_ptr);
 
 	/* If companion dies, take note */
 	if (m_ptr->status == MSTATUS_COMPANION) p_ptr->companion_killed++;

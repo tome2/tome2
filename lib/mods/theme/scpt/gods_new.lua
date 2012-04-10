@@ -9,33 +9,6 @@ GOD_AULE = add_god
 	},
 	["hooks"] =
 	{
-		[HOOK_MONSTER_DEATH] = function(m_idx)
-			if (player.pgod == GOD_AULE) then
-				m_ptr = monster(m_idx)
-				if 
-				(m_ptr.r_idx == test_monster_name("Petty-dwarf"))  or 
-				(m_ptr.r_idx == test_monster_name("Petty-dwarf mage"))  or 
-				(m_ptr.r_idx == test_monster_name("Dark dwarven warrior"))  or 
-				(m_ptr.r_idx == test_monster_name("Dark dwarven smith"))  or 
-				(m_ptr.r_idx == test_monster_name("Dark dwarven lord"))  or 
-				(m_ptr.r_idx == test_monster_name("Dark dwarven priest"))  or 
-				(m_ptr.r_idx == test_monster_name("Dwarven warrior")) then
-					-- Aule dislikes you killing dwarves
-					set_grace(player.grace - 20)
-				end
-				if 
-				(m_ptr.r_idx == test_monster_name("Nar, the Dwarf"))  or 
-				(m_ptr.r_idx == test_monster_name("Naugladur, Lord of Nogrod"))  or 
-				(m_ptr.r_idx == test_monster_name("Telchar the Smith"))  or 
-				(m_ptr.r_idx == test_monster_name("Fundin Bluecloak"))  or 
-				(m_ptr.r_idx == test_monster_name("Khim, Son of Mim")) or 
-				(m_ptr.r_idx == test_monster_name("Ibun, Son of Mim")) or 
-				(m_ptr.r_idx == test_monster_name("Mim, Betrayer of Turin")) then
-					-- These uniques earn a bigger penalty
-					set_grace(player.grace - 500)
-				end
-			end
-		end,
 	}
 }
 
