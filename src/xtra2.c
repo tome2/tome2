@@ -2439,6 +2439,94 @@ static void monster_death_gods(int m_idx, monster_type *m_ptr)
 			inc_piety(GOD_ALL, -500);
 		}
 	}
+
+	if (p_ptr->pgod == GOD_MANDOS)
+	{
+		cptr MINOR_BONUS_RACES[] = {
+			"Vampire",
+			"Master vampire",
+			"Oriental vampire",
+			"Vampire lord",
+			"Vampire orc",
+			"Vampire yeek",
+			"Vampire ogre",
+			"Vampire troll",
+			"Vampire dwarf",
+			"Vampire gnome",
+			"Elder vampire",
+			NULL,
+		};
+		cptr MAJOR_BONUS_RACES[] = {
+			"Vampire elf",
+			"Thuringwethil, the Vampire Messenger",
+			NULL,
+		};
+		cptr MINOR_PENALTY[] = {
+			"Dark elf",
+			"Dark elven druid",
+			"Eol, the Dark Elf",
+			"Maeglin, the Traitor of Gondolin",
+			"Dark elven mage",
+			"Dark elven warrior",
+			"Dark elven priest",
+			"Dark elven lord",
+			"Dark elven warlock",
+			"Dark elven sorcerer",
+			NULL,
+		};
+		cptr MEDIUM_PENALTY[] = {
+			"Glorfindel of Rivendell",
+			"Finrod Felagund",
+			"Thranduil, King of the Wood Elves",
+			"Aquatic elven warrior",
+			"Aquatic elven mage",
+			"High-elven ranger",
+			"Elven archer",
+			NULL,
+		};
+		cptr MAJOR_PENALTY[] = {
+			"Child spirit",
+			"Young spirit",
+			"Mature spirit",
+			"Experienced spirit",
+			"Wise spirit",
+			NULL,
+		};
+
+		if (monster_race_in_list_p(m_ptr, MINOR_BONUS_RACES))
+		{
+			/* He really likes it if you kill Vampires
+			 * (but not the adventurer kind :P) */
+			inc_piety(GOD_ALL, 50);
+		}
+
+		if (monster_race_in_list_p(m_ptr, MAJOR_BONUS_RACES))
+		{
+			/* He *loves* it if you kill vampire Elves. He
+			 * will also thank you extra kindly if you
+			 * kill Thuringwethil */
+			inc_piety(GOD_ALL, 200);
+		}
+
+		if (monster_race_in_list_p(m_ptr, MINOR_PENALTY))
+		{
+			/* He doesn't like it if you kill normal Elves
+			 * (means more work for him :P) */
+			inc_piety(GOD_ALL, -20);
+		}
+
+		if (monster_race_in_list_p(m_ptr, MEDIUM_PENALTY))
+		{
+			/* He hates it if you kill coaligned Elves */
+			inc_piety(GOD_ALL, -200);
+		}
+
+		if (monster_race_in_list_p(m_ptr, MAJOR_PENALTY))
+		{
+			/* He *hates* it if you kill the coaligned Spirits */
+			inc_piety(GOD_ALL, -1000);
+		}
+	}
 }
 
 /*
