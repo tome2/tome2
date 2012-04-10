@@ -158,39 +158,6 @@ GOD_MANDOS = add_god
 	},
 	["hooks"] =
 	{
-		[HOOK_PROCESS_WORLD] = function()
-			if (player.pgod == GOD_MANDOS) then
-				GRACE_DELAY = GRACE_DELAY + 1
-				if GRACE_DELAY >= 15 then
-					-- He loves astral beings 
-					if (get_subrace_name() == "LostSoul") then
-						set_grace(player.grace + 1)
-					end
-
-					-- He likes High Elves only, though, as races
-					if (get_race_name() ~= "High-Elf") then 
-						set_grace(player.grace - 1)
-					end
-				end
-				-- piety increase if (condition)
-				if (GRACE_DELAY >= 15) then
-					if (
-					(get_subrace_name() == "Vampire") or 
-					(get_race_name() == "Demon")) then
-					-- hated races
-					set_grace(player.grace - 10)
-					else
-						set_grace(player.grace + 2)
-					end
-					-- he really doesn't like to be disturbed
-					if (player.praying == TRUE) then
-						set_grace(player.grace - 5)
-					end					
-					GRACE_DELAY = 0
-				end
-				
-			end
-		end,
 		[HOOK_MONSTER_DEATH] = function(m_idx)
 			if (player.pgod == GOD_MANDOS) then
 				m_ptr = monster(m_idx)

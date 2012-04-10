@@ -1090,6 +1090,7 @@ static bool_ grace_delay_trigger()
 static void process_world_gods()
 {
 	const char *race_name = rp_ptr->title + rp_name;
+	const char *subrace_name = rmp_ptr->title + rmp_name;
 
 	GOD(GOD_VARDA)
 	{
@@ -1244,6 +1245,41 @@ static void process_world_gods()
 			}
 		}
 	}
+
+	GOD(GOD_MANDOS)
+	{
+		if (grace_delay_trigger())
+		{
+			/* He loves astral beings  */
+			if (streq(subrace_name, "LostSoul"))
+			{
+				inc_piety(GOD_ALL, 1);
+			}
+
+			/* He likes High Elves only, though, as races */
+			if (!streq(race_name, "High-Elf"))
+			{
+				inc_piety(GOD_ALL, -1);
+			}
+
+			/* Really hates vampires and demons */
+			if (streq(subrace_name, "Vampire") ||
+			    streq(race_name, "Demon"))
+			{
+				inc_piety(GOD_ALL, -10);
+			}
+			else
+			{
+				inc_piety(GOD_ALL, 2);
+			}
+			/* he really doesn't like to be disturbed */
+			if (p_ptr->praying)
+			{
+				inc_piety(GOD_ALL, -5);
+			}
+		}
+	}
+
 }
 
 /*
