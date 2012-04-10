@@ -9,39 +9,6 @@ GOD_AULE = add_god
 	},
 	["hooks"] =
 	{
-		[HOOK_SACRIFICE_GOD] = function() 
-			if (player.pgod == GOD_AULE) then 
-				local ret, item, obj, value 
-				ret, item = get_item( 
-					"Sacrifice which item? ", 
-					"You have nothing to sacrifice.", 
-					USE_INVEN, 
-					function(obj) 
-						-- perhaps restrict this only to metal armour and weapons 
-						if (obj.found == OBJ_FOUND_SELFMADE) then 
-							return TRUE 
-						end 
-						return FALSE 
-					end 
-				) 
-
-				-- Item selected 
-				if ret == TRUE then 
-					-- Increase piety by the value of the item / 10 
-					-- object_value is not available in Lua, therefore I used the 
-					-- cost of the base item, without magical boni 
-					obj = get_object(item) 
-					-- value = object_value(obj)/10 
-					value = k_info[obj.k_idx + 1].cost/10
-
-					set_grace(player.grace + value) 
-
-					-- remove the object 
-					inven_item_increase(item, -1) 
-					inven_item_optimize(item) 
-				end 
-			end 
-		end,
 		[HOOK_MONSTER_DEATH] = function(m_idx)
 			if (player.pgod == GOD_AULE) then
 				m_ptr = monster(m_idx)

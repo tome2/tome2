@@ -4574,6 +4574,43 @@ static bool_ item_tester_hook_sacrifiable(object_type *o_ptr)
 }
 
 /*
+ * Is item eligible for sacrifice to Aule?
+ */
+static bool_ item_tester_hook_sacrifice_aule(object_type *o_ptr)
+{
+	/* perhaps restrict this only to metal armour and weapons  */
+	return (o_ptr->found == OBJ_FOUND_SELFMADE);
+}
+
+/*
+ * Handle sacrifices to Aule
+ */
+static void do_cmd_sacrifice_aule()
+{
+	int item;
+
+	item_tester_hook = item_tester_hook_sacrifice_aule;
+	if (!get_item(&item,
+		      "Sacrifice which item? ",
+		      "You have nothing to sacrifice.",
+		      USE_INVEN))
+	{
+		return;
+	}
+
+	/* Increase piety by the value of the item / 10. */
+	{
+		object_type *o_ptr = get_object(item);
+		s32b delta = object_value(o_ptr) / 10;
+
+		inc_piety(GOD_ALL, delta);
+	}
+
+	/* Destroy the object */
+	inc_stack_size(item, -1);
+}
+
+/*
  * Handle sacrifices.
  * Grace is increased by value of sacrifice.
  */
@@ -4665,6 +4702,10 @@ void do_cmd_sacrifice(void)
 					/* Remove the item */
 					inc_stack_size(item, -1);
 				}
+			}
+			else if (p_ptr->pgod == GOD_AULE)
+			{
+				do_cmd_sacrifice_aule();
 			}
 			else
 			{
