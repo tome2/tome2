@@ -21,12 +21,6 @@ GOD_VARDA = add_god
 	},
 	["hooks"] =
 	{
-		[HOOK_CALC_LITE] = function()
-			if (player.pgod == GOD_VARDA) then
-				-- increase lite radius
-				player.cur_lite = player.cur_lite + 1
-			end
-		end,
 	},
 }
 

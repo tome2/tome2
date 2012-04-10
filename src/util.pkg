@@ -760,12 +760,6 @@ typedef unsigned int u32b;
  */
 #define HOOK_BIRTH	      68
 
-/** @def HOOK_CALC_LITE
- * @brief Calculate the lite radius.
- * @note (see file xtra1.c)
- */
-#define HOOK_CALC_LITE		    69
-
 /** @def HOOK_LEARN_ABILITY
  * @brief Player learns an ability.\n
  * @param Number ab \n index of ability in ability (ab_info) array.

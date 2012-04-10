@@ -1969,6 +1969,18 @@ void calc_hitpoints(void)
 }
 
 
+/*
+ * God hooks for light
+ */
+static void calc_torch_gods()
+{
+	if (p_ptr->pgod == GOD_VARDA)
+	{
+		/* increase lite radius */
+		p_ptr->cur_lite += 1;
+	}
+}
+
 
 /*
  * Extract and set the current "lite radius"
@@ -2018,8 +2030,8 @@ static void calc_torch(void)
 	/* but does glow as an intrinsic.                  */
 	if (p_ptr->cur_lite == 0 && p_ptr->lite) p_ptr->cur_lite = 1;
 
-	/* Hooked powers */
-	process_hooks(HOOK_CALC_LITE, "()");
+	/* gods */
+	calc_torch_gods();
 
 	/* end experimental mods */
 
