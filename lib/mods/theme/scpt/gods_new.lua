@@ -39,51 +39,6 @@ GOD_ULMO = add_god
 	},
 	["hooks"] =
 	{
-		[HOOK_MONSTER_DEATH] = function(m_idx)
-			if (player.pgod == GOD_ULMO) then
-				m_ptr = monster(m_idx)
-				if 
-				(m_ptr.r_idx == test_monster_name("Swordfish"))  or 
-				(m_ptr.r_idx == test_monster_name("Barracuda"))  or 
-				(m_ptr.r_idx == test_monster_name("Globefish"))  or 
-				(m_ptr.r_idx == test_monster_name("Aquatic bear"))  or 
-				(m_ptr.r_idx == test_monster_name("Pike"))  or 
-				(m_ptr.r_idx == test_monster_name("Electric eel"))  or 
-				(m_ptr.r_idx == test_monster_name("Giant crayfish"))  or 
-				(m_ptr.r_idx == test_monster_name("Mermaid"))  or 
-				(m_ptr.r_idx == test_monster_name("Leviathan"))  or 
-				(m_ptr.r_idx == test_monster_name("Box jellyfish"))  or 
-				(m_ptr.r_idx == test_monster_name("Giant piranha"))  or 
-				(m_ptr.r_idx == test_monster_name("Piranha"))  or 
-				(m_ptr.r_idx == test_monster_name("Ocean naga"))  or 
-				(m_ptr.r_idx == test_monster_name("Whale"))  or 
-				(m_ptr.r_idx == test_monster_name("Octopus"))  or 
-				(m_ptr.r_idx == test_monster_name("Giant octopus"))  or 
-				(m_ptr.r_idx == test_monster_name("Drowned soul"))  or 
-				(m_ptr.r_idx == test_monster_name("Tiger shark"))  or 
-				(m_ptr.r_idx == test_monster_name("Hammerhead shark"))  or 
-				(m_ptr.r_idx == test_monster_name("Great white shark"))  or 
-				(m_ptr.r_idx == test_monster_name("White shark"))  or 
-				(m_ptr.r_idx == test_monster_name("Stargazer"))  or 
-				(m_ptr.r_idx == test_monster_name("Flounder"))  or 
-				(m_ptr.r_idx == test_monster_name("Giant turtle"))  or 
-				(m_ptr.r_idx == test_monster_name("Killer whale"))  or 
-				(m_ptr.r_idx == test_monster_name("Water naga"))  or 
-				(m_ptr.r_idx == test_monster_name("Behemoth")) then
-					-- He doesn't like it if you kill these monsters
-					set_grace(player.grace - 20)
-				end
-				if 
-				(m_ptr.r_idx == test_monster_name("Seahorse"))  or 
-				(m_ptr.r_idx == test_monster_name("Aquatic elven warrior")) or
-				(m_ptr.r_idx == test_monster_name("Aquatic elven mage")) or
-				(m_ptr.r_idx == test_monster_name("Wavelord")) or
-				(m_ptr.r_idx == test_monster_name("The Watcher in the Water")) then
-					-- These monsters earn higher penalties
-					set_grace(player.grace - 500)
-				end
-			end
-		end,
 	},
 }
 

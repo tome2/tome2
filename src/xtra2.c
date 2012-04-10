@@ -2385,6 +2385,60 @@ static void monster_death_gods(int m_idx, monster_type *m_ptr)
 			inc_piety(GOD_ALL, -500);
 		}
 	}
+
+	if (p_ptr->pgod == GOD_ULMO)
+	{
+		/* He doesn't like it if you kill these monsters */
+		cptr MINOR_RACES[] = {
+			"Swordfish",
+			"Barracuda",
+			"Globefish",
+			"Aquatic bear",
+			"Pike",
+			"Electric eel",
+			"Giant crayfish",
+			"Mermaid",
+			"Leviathan",
+			"Box jellyfish",
+			"Giant piranha",
+			"Piranha",
+			"Ocean naga",
+			"Whale",
+			"Octopus",
+			"Giant octopus",
+			"Drowned soul",
+			"Tiger shark",
+			"Hammerhead shark",
+			"Great white shark",
+			"White shark",
+			"Stargazer",
+			"Flounder",
+			"Giant turtle",
+			"Killer whale",
+			"Water naga",
+			"Behemoth",
+			NULL,
+		};
+		/* These monsters earn higher penalties */
+		cptr MAJOR_RACES[] = {
+			"Seahorse",
+			"Aquatic elven warrior",
+			"Aquatic elven mage",
+			"Wavelord",
+			"The Watcher in the Water",
+			NULL,
+		};
+
+		if (monster_race_in_list_p(m_ptr, MINOR_RACES))
+		{
+			inc_piety(GOD_ALL, -20);
+		}
+
+		if (monster_race_in_list_p(m_ptr, MAJOR_RACES))
+		{
+			inc_piety(GOD_ALL, -500);
+		}
+	}
 }
 
 /*
