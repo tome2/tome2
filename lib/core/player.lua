@@ -3,11 +3,6 @@
 -- Lua player funtions
 --
 
--- Gods
-function deity(i)
-	return deity_info[1 + i]
-end
-
 -------- skill stuff ---------
 
 -- Easy skill access

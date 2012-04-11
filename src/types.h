@@ -1987,6 +1987,7 @@ struct artifact_select_flag {
 typedef struct deity_type deity_type;
 struct deity_type
 {
+	int  modules[3]; /* terminated with -1 */
 	cptr name;
 	char desc[10][80];
 };

@@ -537,29 +537,6 @@ void lua_display_list(int y, int x, int h, int w, cptr title, list_type* list, i
 
 
 
-/*
- * Gods
- */
-s16b add_new_gods(char *name)
-{
-	int i;
-
-	/* Increase the size */
-	reinit_gods(max_gods + 1);
-	deity_info[max_gods - 1].name = string_make(name);
-
-	for (i = 0; i < 10; i++)
-		strncpy(deity_info[max_gods - 1].desc[i], "", 39);
-
-	return (max_gods - 1);
-}
-
-void desc_god(int g_idx, int d, char *desc)
-{
-	if (d >= 0 && d < 10)
-		strncpy(deity_info[g_idx].desc[d], desc, 79);
-}
-
 int get_lua_int(cptr name)
 {
 	return exec_lua(format("return %s", name));

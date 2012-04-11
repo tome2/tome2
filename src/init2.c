@@ -1959,13 +1959,6 @@ static errr init_misc(void)
 	/* Hack -- No messages yet */
 	message__tail = MESSAGE_BUF;
 
-	/* Prepare gods */
-	deity_info = NULL;
-	max_gods = MAX_GODS_INIT;
-	reinit_gods(max_gods);
-
-	C_COPY(deity_info, deity_info_init, MAX_GODS_INIT, deity_type);
-
 	/* Prepare schools */
 	max_spells = 0;
 	max_schools = 0;
@@ -2064,25 +2057,6 @@ static errr init_wilderness(void)
 	generate_encounter = FALSE;
 
 	return 0;
-}
-
-void reinit_gods(s16b new_size)
-{
-	deity_type *new_deity;
-
-	C_MAKE(new_deity, new_size, deity_type);
-
-	/* Reallocate the extra memory */
-	if (deity_info)
-	{
-		C_COPY(new_deity, deity_info, max_gods, deity_type);
-
-		C_FREE(deity_info, max_gods, deity_type);
-	}
-
-	deity_info = new_deity;
-
-	max_gods = new_size;
 }
 
 void init_spells(s16b new_size)

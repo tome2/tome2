@@ -125,15 +125,38 @@ int wisdom_scale(int max)
 	return (i * max) / 37;
 }
 
+/*
+ * Check if god is enabled for the current module
+ */
+bool_ god_enabled(struct deity_type *deity)
+{
+	int i;
+
+	for (i = 0; deity->modules[i] != -1; i++)
+	{
+		if (deity->modules[i] == game_module_idx)
+		{
+			return TRUE;
+		}
+	}
+	/* Not enabled */
+	return FALSE;
+}
+
 /* Find a god by name */
 int find_god(cptr name)
 {
 	int i;
 
-	for (i = 0; i < max_gods; i++)
+	for (i = 0; i < MAX_GODS; i++)
 	{
-		/* The name matches */
-		if (streq(deity_info[i].name, name)) return (i);
+		/* The name matches and god is "enabled" for the
+		   current module. */
+		if (god_enabled(&deity_info[i]) &&
+		    streq(deity_info[i].name, name))
+		{
+			return (i);
+		}
 	}
 	return -1;
 }

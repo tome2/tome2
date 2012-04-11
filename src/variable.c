@@ -1570,16 +1570,6 @@ s32b DUNGEON_ASTRAL_WILD_X = 45;
 s32b DUNGEON_ASTRAL_WILD_Y = 19;
 
 /*
- * Gods
- */
-deity_type *deity_info;
-s32b max_gods = MAX_GODS_INIT;
-s32b GOD_AULE = -99;
-s32b GOD_VARDA = -99;
-s32b GOD_ULMO = -99;
-s32b GOD_MANDOS = -99;
-
-/*
  * Timers
  */
 timer_type *gl_timers = NULL;

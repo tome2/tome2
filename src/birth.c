@@ -2331,16 +2331,17 @@ static bool_ player_birth_aux_ask()
 	}
 	else
 	{
-		int *choice;
+		int choice[MAX_GODS];
 		int max = 0;
 
-		C_MAKE(choice, max_gods, int);
-
 		/* Get the list of possible gods */
-		for (n = 0; n < max_gods; n++)
+		for (n = 0; n < MAX_GODS; n++)
 		{
-			if ((cp_ptr->gods | spp_ptr->gods) & BIT(n))
+			if (god_enabled(&deity_info[n]) &&
+			    ((cp_ptr->gods | spp_ptr->gods) & BIT(n)))
+			{
 				choice[max++] = n;
+			}
 		}
 
 		if (!max)
@@ -2368,8 +2369,6 @@ static bool_ player_birth_aux_ask()
 				if (c == 'Q') quit(NULL);
 				if (c == 'S')
 				{
-					C_FREE(choice, max_gods, int);
-
 					return (FALSE);
 				}
 				if (c == '*')
@@ -2423,8 +2422,6 @@ static bool_ player_birth_aux_ask()
 				}
 				else bell();
 			}
-
-			C_FREE(choice, max_gods, int);
 
 			/* Set god */
 			p_ptr->pgod = k;

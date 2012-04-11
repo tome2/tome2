@@ -4698,7 +4698,11 @@
 #define GOD_TULKAS              3
 #define GOD_MELKOR              4
 #define GOD_YAVANNA             5
-#define MAX_GODS_INIT           6
+#define GOD_AULE                6
+#define GOD_VARDA               7
+#define GOD_ULMO                8
+#define GOD_MANDOS              9
+#define MAX_GODS               10
 
 #define GOD(g)                  if (p_ptr->pgod == (g))
 #define PRAY_GOD(g)             if ((p_ptr->pgod == (g)) && (p_ptr->praying))

@@ -2739,9 +2739,10 @@ cptr deity_standing[11] =
  * Only the first four lines are printed at birth. 
  */
 
-deity_type deity_info_init[MAX_GODS_INIT] =
+deity_type deity_info[MAX_GODS] =
 {
 	{
+		{ MODULE_TOME, MODULE_THEME, -1, },
 		"Nobody",
 		{
 			"Atheist",
@@ -2757,6 +2758,7 @@ deity_type deity_info_init[MAX_GODS_INIT] =
 		},
 	},
 	{
+		{ MODULE_TOME, MODULE_THEME, -1, },
 		"Eru Iluvatar",
 		{
 			"He is the supreme god, he created the world, and most of its inhabitants.",
@@ -2772,6 +2774,7 @@ deity_type deity_info_init[MAX_GODS_INIT] =
 		},
 	},
 	{
+		{ MODULE_TOME, MODULE_THEME, -1, },
 		"Manwe Sulimo",
 		{
 			"He is the king of the Valar, most powerful of them after Melkor.",
@@ -2787,6 +2790,7 @@ deity_type deity_info_init[MAX_GODS_INIT] =
 		},
 	},
 	{
+		{ MODULE_TOME, MODULE_THEME, -1, },
 		"Tulkas",
 		{
 			"He is the last of the Valar that came to the world, and the fiercest fighter.",
@@ -2802,6 +2806,7 @@ deity_type deity_info_init[MAX_GODS_INIT] =
 		},
 	},
 	{
+		{ MODULE_TOME, MODULE_THEME, -1, },
 		"Melkor Bauglir",
 		{
 			"He is the most powerful of the Valar. He became corrupted and he's now ",
@@ -2817,10 +2822,75 @@ deity_type deity_info_init[MAX_GODS_INIT] =
 		},
 	},
 	{
+		{ MODULE_TOME, MODULE_THEME, -1, },
 		"Yavanna Kementari",
 		{
 			"She is the Vala of nature, protectress of the great forests of "
 			"Middle-earth.",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+		},
+	},
+	{
+		{ MODULE_THEME, -1, },
+		"Aule the Smith",
+		{
+			"Aule is a smith, and the creator of the Dwarves.",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+		},
+	},
+	{
+		{ MODULE_THEME, -1, },
+		"Varda Elentari",
+		{
+			"The Queen of the Stars. In light is her power and joy.",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+		},
+	},
+	{
+		{ MODULE_THEME, -1, },
+		"Ulmo",
+		{
+			"Ulmo is called Lord of Waters, he rules all that is water"
+			"on Arda.",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+		},
+	},
+	{
+		{ MODULE_THEME, -1, },
+		"Mandos",
+		{
+			"The Doomsman of the Valar and keeper of the slain.",
 			"",
 			"",
 			"",

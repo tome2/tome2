@@ -475,21 +475,6 @@ extern s32b player_exp[PY_MAX_LEVEL];
 #define PW_BORG_2       0x00008000L
 /** @} */
 
-/** @struct deity_type
- */
-struct deity_type
-{
-	/** @structvar name
-	 * @brief String
-	 */
-	cptr name;
-};
-/** @var deity_info[max_gods]
- * @brief deity_type
- * @note Array of gods.
- */
-extern deity_type deity_info[max_gods];
-
 /** @name Body parts
  * @{ */
 /** @def BODY_WEAPON */
@@ -3098,10 +3083,10 @@ extern s16b dun_level;
 #define GOD_YAVANNA	     5
 /** @} */
 
-extern s32b GOD_AULE;
-extern s32b GOD_VARDA;
-extern s32b GOD_ULMO;
-extern s32b GOD_MANDOS;
+#define GOD_AULE                6
+#define GOD_VARDA               7
+#define GOD_ULMO                8
+#define GOD_MANDOS              9
 
 
 /** @fn inc_piety(int god, s32b amt)
@@ -3135,46 +3120,6 @@ extern void abandon_god(int god);
  * @note (see file gods.c)
  */
 extern int wisdom_scale(int max);
-
-/** @fn follow_god(int god, bool silent)
- * @brief Player starts to follow god "god".\n
- * @param god Number \n the god
- * @brief God
- * @param silent Boolean \n TRUE if Melkor message is displayed, otherwise
- * FALSE.
- * @brief Show message?
- * @note
- * Unbelievers can not follow a god.
- * @note
- * If the player does not worship a god, they start worshipping "god". If the
- * god is Melkor, the player gains the Udun skill (show a message if silent is
- * FALSE).
- * @note (see file gods.c)
- */
-extern void follow_god(int god, bool silent);
-
-/** @fn add_new_gods(char *name)
- * @brief Add a new god to the deity array.\n
- * @param *name String \n the name of the god
- * @brief God name
- * @return Number \n The index of the new god inthe deity array.
- * @note (see file lua_bind.c)
- */
-extern s16b    add_new_gods(char *name);
-
-/** @fn desc_god(int g_idx, int d, char *desc)
- * @brief Return line "d" of the description of god with god index "g_idx".\n
- * @param g_idx Number \n the index of god in the deity array.
- * @brief God index
- * @param d Number \n the line of the description
- * (must be in the range 0 to 9).
- * @brief Line of description
- * @param *desc String
- * @brief Description
- * @return *desc String \n Line "d" of the god description.
- * @note (see file lua_bind.c)
- */
-extern void    desc_god(int g_idx, int d, char *desc);
 
 /** @name Powers
  * @{ */
