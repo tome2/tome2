@@ -1771,6 +1771,8 @@ extern void module_reset_dir(cptr dir, cptr new_path);
 extern cptr force_module;
 extern bool_ select_module(void);
 extern bool_ module_savefile_loadable(cptr savefile_mod);
+extern void tome_intro();
+extern void theme_intro();
 
 
 /* lua_bind.c */
@@ -1827,9 +1829,6 @@ extern list_type *lua_create_list(int size);
 extern void lua_delete_list(list_type *, int size);
 extern void lua_add_to_list(list_type *, int idx, cptr str);
 extern void lua_display_list(int y, int x, int h, int w, cptr title, list_type *list, int max, int begin, int sel, byte sel_color);
-
-extern bool_ drop_text_left(byte c, cptr s, int y, int o);
-extern bool_ drop_text_right(byte c, cptr s, int y, int o);
 
 extern void increase_mana(int delta);
 

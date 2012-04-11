@@ -5567,7 +5567,8 @@ void play_game(bool_ new_game)
 	/* Roll new character */
 	if (new_game)
 	{
-		process_hooks(HOOK_INIT, "()");
+		/* Show intro */
+		modules[game_module_idx].intro();
 
 		/* The dungeon is not ready */
 		character_dungeon = FALSE;

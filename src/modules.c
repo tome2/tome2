@@ -296,3 +296,202 @@ bool_ select_module()
 	/* Shouldnt happen */
 	return (FALSE);
 }
+
+static bool_ dleft(byte c, cptr str, int y, int o)
+{
+	int i = strlen(str);
+	int x = 39 - (strlen(str) / 2) + o;
+	while (i > 0)
+	{
+		int a = 0;
+		int time = 0;
+
+		if (str[i-1] != ' ')
+		{
+			while (a < x + i - 1)
+			{
+				Term_putch(a - 1, y, c, 32);
+				Term_putch(a, y, c, str[i-1]);
+				time = time + 1;
+				if (time >= 4)
+				{
+					Term_xtra(TERM_XTRA_DELAY, 1);
+					time = 0;
+				}
+				Term_redraw_section(a - 1, y, a, y);
+				a = a + 1;
+
+				inkey_scan = TRUE;
+				if (inkey()) {
+					return TRUE;
+				}
+			}
+		}
+
+		i = i - 1;
+	}
+	return FALSE;
+}
+
+static bool_ dright(byte c, cptr str, int y, int o)
+{
+	int x = 39 - (strlen(str) / 2) + o;
+	int i = 1;
+	while (i <= strlen(str))
+	{
+		int a = 79;
+		int time = 0;
+
+		if (str[i-1] != ' ') {
+			while (a >= x + i - 1)
+			{
+				Term_putch(a + 1, y, c, 32);
+				Term_putch(a, y, c, str[i-1]);
+				time = time + 1;
+				if (time >= 4) {
+					Term_xtra(TERM_XTRA_DELAY, 1);
+					time = 0;
+				}
+				Term_redraw_section(a, y, a + 1, y);
+				a = a - 1;
+
+				inkey_scan = TRUE;
+				if (inkey()) {
+					return TRUE;
+				}
+			}
+		}
+
+		i = i + 1;
+	}
+	return FALSE;
+}
+
+typedef struct intro_text intro_text;
+struct intro_text
+{
+	bool_ (*drop_func)(byte, cptr, int, int);
+	byte color;
+	cptr text;
+	int y0;
+	int x0;
+};
+
+static bool_ show_intro(intro_text intro_texts[])
+{
+	int i = 0;
+
+	Term_clear();
+	for (i = 0; ; i++)
+	{
+		intro_text *it = &intro_texts[i];
+		if (it->drop_func == NULL)
+		{
+			break;
+		}
+		else if (it->drop_func(it->color, it->text, it->y0, it->x0))
+		{
+			/* Abort */
+			return TRUE;
+		}
+	}
+
+	/* Wait for key */
+	Term_putch(0, 0, TERM_DARK, 32);
+	inkey_scan = FALSE;
+	inkey();
+
+	/* Continue */
+	return FALSE;
+}
+
+void tome_intro()
+{
+	intro_text intro1[] =
+	{
+		{ dleft , TERM_L_BLUE, "Art thou an adventurer,", 10, 0, },
+		{ dright, TERM_L_BLUE, "One who passes through the waterfalls we call danger", 11, -1, },
+		{ dleft , TERM_L_BLUE, "to find the true nature of the legends beyond them?", 12, 0, },
+		{ dright, TERM_L_BLUE, "If this is so, then seeketh me.", 13, -1, },
+		{ dleft , TERM_WHITE , "[Press any key to continue]", 23, -1, },
+		{ NULL, }
+	};
+	intro_text intro2[] =
+	{
+		{ dleft , TERM_L_BLUE , "DarkGod", 8, 0, },
+		{ dright, TERM_WHITE  , "in collaboration with", 9, -1, },
+		{ dleft , TERM_L_GREEN, "Eru Iluvatar,", 10, 0, },
+		{ dright, TERM_L_GREEN, "Manwe", 11, -1, },
+		{ dleft , TERM_WHITE  , "and", 12, 0, },
+		{ dright, TERM_L_GREEN, "All the T.o.M.E. contributors(see credits.txt)", 13, -1, },
+		{ dleft , TERM_WHITE  , "present", 15, 1, },
+		{ dright, TERM_YELLOW , "T.o.M.E.", 16, 0, },
+		{ dleft , TERM_WHITE  , "[Press any key to continue]", 23, -1, },
+		{ NULL, }
+	};
+
+	screen_save();
+
+	/* Intro 1 */
+	if (show_intro(intro1))
+	{
+		goto exit;
+	}
+
+	/* Intro 2 */
+	if (show_intro(intro2))
+	{
+		goto exit;
+	}
+
+exit:
+	screen_load();
+}
+
+void theme_intro()
+{
+	struct intro_text intro1[] =
+	{
+		{ dleft , TERM_L_BLUE , "Three Rings for the Elven-kings under the sky,", 10, 0, },
+		{ dright, TERM_L_BLUE , "Seven for the Dwarf-lords in their halls of stone,", 11, -1, },
+		{ dleft , TERM_L_BLUE , "Nine for Mortal Men doomed to die,", 12, 0, },
+		{ dright, TERM_L_BLUE , "One for the Dark Lord on his dark throne", 13, -1, },
+		{ dleft , TERM_L_BLUE , "In the land of Mordor, where the Shadows lie.", 14, 0, },
+		{ dright, TERM_L_BLUE , "One Ring to rule them all, One Ring to find them,", 15, -1, },
+		{ dleft , TERM_L_BLUE , "One Ring to bring them all and in the darkness bind them", 16, 0, },
+		{ dright, TERM_L_BLUE , "In the land of Mordor, where the Shadows lie.", 17, -1, },
+		{ dright, TERM_L_GREEN, "--J.R.R. Tolkien", 18, 0, },
+		{ dleft , TERM_WHITE  , "[Press any key to continue]", 23, -1, },
+		{ NULL, },
+	};
+	struct intro_text intro2[] =
+	{
+		{ dleft , TERM_L_BLUE , "furiosity", 8, 0, },
+		{ dright, TERM_WHITE  , "in collaboration with", 9, -1, },
+		{ dleft , TERM_L_GREEN, "DarkGod and all the ToME contributors,", 10, 0, },
+		{ dright, TERM_L_GREEN, "module creators, t-o-m-e.net forum posters,", 11, -1, },
+		{ dleft , TERM_WHITE  , "and", 12, 0, },
+		{ dright, TERM_L_GREEN, "by the grace of the Valar", 13, -1, },
+		{ dleft , TERM_WHITE  , "present", 15, 1, },
+		{ dright, TERM_YELLOW , "Theme (a module for ToME)", 16, 0, },
+		{ dleft , TERM_WHITE  , "[Press any key to continue]", 23, -1, },
+		{ NULL, },
+	};
+	
+       	screen_save();
+ 
+	/* Intro 1 */
+	if (show_intro(intro1))
+	{
+		goto exit;
+	}
+
+	/* Intro 2 */
+	if (show_intro(intro2))
+	{
+		goto exit;
+	}
+
+exit:
+	screen_load();
+}

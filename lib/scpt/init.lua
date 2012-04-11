@@ -26,6 +26,3 @@ tome_dofile("joke.lua")
 
 -- Some tests, if the file is not present, this is fine
 tome_dofile_anywhere(ANGBAND_DIR_SCPT, "dg_test.lua", FALSE)
-
--- A nice custom intro :)
-tome_dofile("intro.lua")

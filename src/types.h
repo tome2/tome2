@@ -2580,6 +2580,8 @@ struct module_type
 		s32b max_skill_overage;
 	} skills;
 
+	/* Function to show introduction to module */
+	void (*intro)();
 };
 
 /**

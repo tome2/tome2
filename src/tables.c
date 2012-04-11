@@ -4924,6 +4924,8 @@ module_type modules[MAX_MODULES] =
 		50,
 		/* Skills: */
 		{ 6, 4, },
+		/* Intro function */
+		tome_intro,
 	},
 
 	{
@@ -4942,6 +4944,8 @@ module_type modules[MAX_MODULES] =
 		50,
 		/* Skill overage: */
 		{ 6, 5, },
+		/* Intro function */
+		theme_intro,
 	}
 
 };

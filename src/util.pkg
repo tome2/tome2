@@ -355,12 +355,6 @@ typedef unsigned int u32b;
  */
 #define HOOK_WIELD	      21
 
-/** @def HOOK_INIT
- * @brief Game initialised.
- * @note (see file dungeon.c)
- */
-#define HOOK_INIT	       22
-
 /** @def HOOK_AIM */
 #define HOOK_AIM		24
 
@@ -2435,9 +2429,6 @@ extern void calc_bonuses(bool silent);
 
 extern void note_spot(int y, int x);
 extern void lite_spot(int y, int x);
-
-extern bool drop_text_left(byte c, cptr s, int y, int o);
-extern bool drop_text_right(byte c, cptr s, int y, int o);
 
 /**
  * Mimicry
