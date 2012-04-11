@@ -14,9 +14,6 @@ tome_dofile("stores.lua")
 -- Add the mkey activations
 tome_dofile("mkeys.lua")
 
--- Add god stuff
-tome_dofile("gods.lua")
-
 -- Add the schools of magic
 tome_dofile("spells.lua")
 

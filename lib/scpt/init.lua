@@ -17,9 +17,6 @@ tome_dofile("mkeys.lua")
 -- Add the schools of magic
 tome_dofile("spells.lua")
 
--- Add god stuff
-tome_dofile("gods.lua")
-
 -- Add some quests
 tome_dofile("library.lua")
 

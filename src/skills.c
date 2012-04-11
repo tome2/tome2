@@ -366,6 +366,14 @@ void recalc_skills(bool_ init)
 				msg_format("You have gained %d new thaumaturgy spells.", thaum_gain);
 		}
 
+		/* Antimagic means you don't believe in gods. */
+		if ((p_ptr->pgod != GOD_NONE) &&
+		    (s_info[SKILL_ANTIMAGIC].value > 0))
+		{
+			msg_print("You no longer believe.");
+			abandon_god(GOD_ALL);
+		}
+
 		process_hooks(HOOK_RECALC_SKILLS, "()");
 
 		/* Update stuffs */
