@@ -18,19 +18,8 @@ NOXIOUSCLOUD = add_spell
 				["max_level"] =		{ 25, 50 },
 			},
 	},
-	["spell"] = 	function()
-			local ret, dir, type
-
-			ret, dir = get_aim_dir()
-			if ret == FALSE then return end
-			if get_level(NOXIOUSCLOUD, 50) >= 30 then type = GF_UNBREATH
-			else type = GF_POIS end
-			fire_cloud(type, dir, 7 + get_level(NOXIOUSCLOUD, 150), 3, 5 + get_level(NOXIOUSCLOUD, 40))
-			return TRUE
-	end,
-	["info"] = 	function()
-			return "dam "..(7 + get_level(NOXIOUSCLOUD, 150)).." rad 3 dur "..(5 + get_level(NOXIOUSCLOUD, 40))
-	end,
+	["spell"] = 	function() return air_noxious_cloud() end,
+	["info"] = 	function() return air_noxious_cloud_info() end,
 	["desc"] =	{
 			"Creates a cloud of poison",
 			"The cloud will persist for some turns, damaging all monsters passing by",
@@ -57,17 +46,8 @@ AIRWINGS = add_spell
 			},
 	},
 	["inertia"] = 	{ 1, 10 },
-	["spell"] = 	function()
-			if get_level(AIRWINGS, 50) >= 16 then
-				if player.tim_fly == 0 then return set_tim_fly(randint(10) + 5 + get_level(AIRWINGS, 25)) end
-			else
-				if player.tim_ffall == 0 then return set_tim_ffall(randint(10) + 5 + get_level(AIRWINGS, 25)) end
-			end
-			return FALSE
-	end,
-	["info"] = 	function()
-			return "dur "..(5 + get_level(AIRWINGS, 25)).."+d10"
-	end,
+	["spell"] = 	function() return air_wings_of_winds() end,
+	["info"] = 	function() return air_wings_of_winds_info() end,
 	["desc"] =	{
 			"Grants the power of levitation",
 			"At level 16 it grants the power of controlled flight"
@@ -83,12 +63,8 @@ INVISIBILITY = add_spell
 	["mana_max"] = 	20,
 	["fail"] = 	50,
 	["inertia"] = 	{ 1, 30 },
-	["spell"] = 	function()
-			if player.tim_invisible == 0 then return set_invis(randint(20) + 15 + get_level(INVISIBILITY, 50), 20 + get_level(INVISIBILITY, 50)) end
-	end,
-	["info"] = 	function()
-			return "dur "..(15 + get_level(INVISIBILITY, 50)).."+d20 power "..(20 + get_level(INVISIBILITY, 50))
-	end,
+	["spell"] = 	function() return air_invisibility() end,
+	["info"] = 	function() return air_invisibility_info() end,
 	["desc"] =	{
 			"Grants invisibility"
 	}
@@ -113,15 +89,8 @@ POISONBLOOD = add_spell
 			},
 	},
 	["inertia"] = 	{ 1, 35 },
-	["spell"] = 	function()
-			local obvious = nil
-		       	if player.oppose_pois == 0 then obvious = set_oppose_pois(randint(30) + 25 + get_level(POISONBLOOD, 25)) end
-		       	if (player.tim_poison == 0) and (get_level(POISONBLOOD, 50) >= 15) then obvious = is_obvious(set_poison(randint(30) + 25 + get_level(POISONBLOOD, 25)), obvious) end
-			return obvious
-       	end,
-	["info"] = 	function()
-			return "dur "..(25 + get_level(POISONBLOOD, 25)).."+d30"
-	end,
+	["spell"] = 	function() return air_poison_blood() end,
+	["info"] = 	function() return air_poison_blood_info() end,
 	["desc"] =	{
 			"Grants resist poison",
 			"At level 15 it provides poison branding to wielded weapon"
@@ -147,13 +116,8 @@ THUNDERSTORM = add_spell
 			},
 	},
 	["inertia"] = 	{ 2, 15 },
-	["spell"] = 	function()
-			if player.tim_thunder == 0 then return set_tim_thunder(randint(10) + 10 + get_level(THUNDERSTORM, 25), 5 + get_level(THUNDERSTORM, 10), 10 + get_level(THUNDERSTORM, 25)) end
-			return FALSE
-	end,
-	["info"] = 	function()
-			return "dam "..(5 + get_level(THUNDERSTORM, 10)).."d"..(10 + get_level(THUNDERSTORM, 25)).." dur "..(10 + get_level(THUNDERSTORM, 25)).."+d10"
-	end,
+	["spell"] = 	function() return air_thunderstorm() end,
+	["info"] = 	function() return air_thunderstorm_info() end,
 	["desc"] =	{
 			"Charges up the air around you with electricity",
 			"Each turn it will throw a thunder bolt at a random monster in sight",
@@ -180,13 +144,8 @@ STERILIZE = add_spell
 				["max_level"] =		{ 20, 50 },
 			},
 	},
-	["spell"] = 	function()
-			set_no_breeders((30) + 20 + get_level(STERILIZE, 70))
-			return TRUE
-	end,
-	["info"] = 	function()
-			return "dur "..(20 + get_level(STERILIZE, 70)).."+d30"
-	end,
+	["spell"] = 	function() return air_sterilize() end,
+	["info"] = 	function() return air_sterilize_info() end,
 	["desc"] =	{
 			"Prevents explosive breeding for a while."
 	}

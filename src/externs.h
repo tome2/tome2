@@ -1400,6 +1400,27 @@ extern void geomancy_random_floor(int y, int x, bool_ kill_wall);
 extern void geomancy_dig(int oy, int ox, int dir, int length);
 extern void channel_the_elements(int y, int x, int level);
 
+/* spells3.c */
+extern s32b NOXIOUSCLOUD;
+extern s32b AIRWINGS;
+extern s32b INVISIBILITY;
+extern s32b POISONBLOOD;
+extern s32b THUNDERSTORM;
+extern s32b STERILIZE;
+
+bool_ *air_noxious_cloud();
+char  *air_noxious_cloud_info();
+bool_ *air_wings_of_winds();
+char  *air_wings_of_winds_info();
+bool_ *air_invisibility();
+char  *air_invisibility_info();
+bool_ *air_poison_blood();
+char  *air_poison_blood_info();
+bool_ *air_thunderstorm();
+char  *air_thunderstorm_info();
+bool_ *air_sterilize();
+char  *air_sterilize_info();
+
 /* randart.c */
 extern int get_activation_power(void);
 extern void build_prob(cptr learn);
