@@ -708,22 +708,6 @@ typedef unsigned int u32b;
  */
 #define HOOK_RECALL	     62
 
-/** @def HOOK_FOLLOW_GOD
- * @brief Player follows a god (gets religion).\n
- * @param Number god \n the god to follow.
- * @brief God
- * @param String action \n "ask" to check if player can follow the god, or
- * "done" to do something with the god.
- * @brief Action
- * @return Boolean \n For "ask": TRUE if player can not follow the god,
- * otherwise FALSE.
- * @note
- * If the action is "ask" and the hook returns TRUE, follow_god() returns.
- * If the action is "done" the return code is ignored.
- * @note (see file gods.c)
- */
-#define HOOK_FOLLOW_GOD	 63
-
 /** @def HOOK_BODY_PARTS
  * @brief Calculate which body parts the player has.
  * @note (see file xtra1.c)
