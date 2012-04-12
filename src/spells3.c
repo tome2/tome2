@@ -24,6 +24,13 @@ s32b DEMON_SUMMON;
 s32b DISCHARGE_MINION;
 s32b CONTROL_DEMON;
 
+s32b STARIDENTIFY;
+s32b IDENTIFY;
+s32b VISION;
+s32b SENSEHIDDEN;
+s32b REVEALWAYS;
+s32b SENSEMONSTERS;
+
 /* FIXME: Hackish workaround while we're still tied to Lua. This lets
  us return Lua's "nil" and a non-nil value (which is all the s_aux.lua
  cares about). */
@@ -684,5 +691,161 @@ char  *demonology_control_demon_info()
 	sprintf(buf,
 		"power %d",
 		(50 + get_level_s(CONTROL_DEMON, 250)));
+	return buf;
+}
+
+bool_ *divination_greater_identify()
+{
+	if (get_check("Cast on yourself?"))
+	{
+		self_knowledge(NULL);
+	}
+	else
+	{
+		identify_fully();
+	}
+	return CAST;
+}
+
+char  *divination_greater_identify_info()
+{
+	return "";
+}
+
+bool_ *divination_identify()
+{
+	if (get_level_s(IDENTIFY, 50) >= 27)
+	{
+		identify_pack();
+		fire_ball(GF_IDENTIFY, 0, 1, get_level_s(IDENTIFY, 3));
+		p_ptr->notice |= (PN_COMBINE | PN_REORDER);
+		return CAST;
+	}
+	else if (get_level_s(IDENTIFY, 50) >= 17)
+	{
+		identify_pack();
+		fire_ball(GF_IDENTIFY, 0, 1, 0);
+		p_ptr->notice |= (PN_COMBINE | PN_REORDER);
+		return CAST;
+	}
+	else if (ident_spell() == TRUE)
+	{
+		return CAST;
+	}
+	else
+	{
+		return NO_CAST;
+	}
+}
+
+char  *divination_identify_info()
+{
+	static char buf[128];
+
+	if (get_level_s(IDENTIFY, 50) >= 27)
+	{
+		sprintf(buf, "rad %d", get_level_s(IDENTIFY, 3));
+		return buf;
+	}
+	else
+	{
+		return "";
+	}
+}
+
+bool_ *divination_vision()
+{
+	if (get_level_s(VISION, 50) >= 25)
+	{
+		wiz_lite_extra();
+	}
+	else
+	{
+		map_area();
+	}
+	return CAST;
+
+}
+
+char  *divination_vision_info()
+{
+	return "";
+}
+
+bool_ *divination_sense_hidden()
+{
+	detect_traps(15 + get_level(SENSEHIDDEN, 40, 0));
+	if (get_level_s(SENSEHIDDEN, 50) >= 15)
+	{
+		set_tim_invis(10 + randint(20) + get_level_s(SENSEHIDDEN, 40));
+	}
+	return CAST;
+}
+
+char  *divination_sense_hidden_info()
+{
+	static char buf[128];
+
+	if (get_level_s(SENSEHIDDEN, 50) >= 15)
+	{
+		sprintf(buf,
+			"rad %d dur %d+d20",
+			(15 + get_level_s(SENSEHIDDEN, 40)),
+			(10 + get_level_s(SENSEHIDDEN, 40)));
+	}
+	else
+	{
+		sprintf(buf,
+			"rad %d",
+			(15 + get_level_s(SENSEHIDDEN, 40)));
+	}
+
+	return buf;
+}
+
+bool_ *divination_reveal_ways()
+{
+	detect_doors(10 + get_level(REVEALWAYS, 40, 0));
+	detect_stairs(10 + get_level(REVEALWAYS, 40, 0));
+	return CAST;
+}
+
+char  *divination_reveal_ways_info()
+{
+	static char buf[128];
+	sprintf(buf,
+		"rad %d",
+		(10 + get_level_s(REVEALWAYS, 40)));
+	return buf;
+}
+
+bool_ *divination_sense_monsters()
+{
+	detect_monsters_normal(10 + get_level(SENSEMONSTERS, 40, 0));
+	if (get_level_s(SENSEMONSTERS, 50) >= 30)
+	{
+		set_tim_esp(10 + randint(10) + get_level_s(SENSEMONSTERS, 20));
+	}
+	return CAST;
+}
+
+char  *divination_sense_monsters_info()
+{
+	static char buf[128];
+
+	if (get_level_s(SENSEMONSTERS, 50) >= 30)
+	{
+		sprintf(buf,
+			"rad %d dur %d+d10",
+			(10 + get_level_s(SENSEMONSTERS, 40)),
+			(10 + get_level_s(SENSEMONSTERS, 20)));
+	}
+	else
+	{
+		sprintf(buf,
+			"rad %d",
+			(10 + get_level_s(SENSEMONSTERS, 40)));
+	}
+
 	return buf;
 }

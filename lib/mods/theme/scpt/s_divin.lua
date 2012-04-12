@@ -9,17 +9,8 @@ STARIDENTIFY = add_spell
 	["mana"] = 	30,
 	["mana_max"] = 	30,
 	["fail"] = 	80,
-	["spell"] = 	function()
-			if get_check("Cast on yourself?") == TRUE then
-				self_knowledge()
-			else
-				identify_fully()
-			end
-			return TRUE
-	end,
-	["info"] = 	function()
-		       	return ""
-	end,
+	["spell"] = 	function() return divination_greater_identify() end,
+	["info"] = 	function() return divination_greater_identify_info() end,
 	["desc"] =	{
 			"Asks for an object and fully identify it, providing the full list of powers",
 			"Cast at yourself it will reveal your powers"
@@ -44,34 +35,8 @@ IDENTIFY = add_spell
 				["max_level"] =		{ 15, 40 },
 			},
 	},
-	["spell"] = 	function()
-			if get_level(IDENTIFY, 50) >= 27 then
-				local obvious
-				obvious = identify_pack()
-				obvious = is_obvious(fire_ball(GF_IDENTIFY, 0, 1, get_level(IDENTIFY, 3)), obvious)
-				if obvious == TRUE then
-					player.notice = bor(player.notice, PN_COMBINE, PN_REORDER)
-				end
-				return obvious
-			elseif get_level(IDENTIFY, 50) >= 17 then
-				local obvious
-				obvious = identify_pack()
-				obvious = is_obvious(fire_ball(GF_IDENTIFY, 0, 1, 0), obvious)
-				if obvious == TRUE then
-					player.notice = bor(player.notice, PN_COMBINE, PN_REORDER)
-				end
-				return obvious
-			else
-				if ident_spell() == TRUE then return TRUE else return end
-			end
-	end,
-	["info"] = 	function()
-			if get_level(IDENTIFY, 50) >= 27 then
-				return "rad "..(get_level(IDENTIFY, 3))
-			else
-				return ""
-			end
-	end,
+	["spell"] = 	function() return divination_identify() end,
+	["info"] = 	function() return divination_identify_info() end,
 	["desc"] =	{
 			"Asks for an object and identifies it",
 			"At level 17 it identifies all objects in the inventory",
@@ -99,17 +64,8 @@ VISION = add_spell
 			},
 	},
 	["inertia"] = 	{ 2, 200 },
-	["spell"] = 	function()
-			if get_level(VISION, 50) >= 25 then
-				wiz_lite_extra()
-			else
-				map_area()
-			end
-			return TRUE
-	end,
-	["info"] = 	function()
-			return ""
-	end,
+	["spell"] = 	function() return divination_vision() end,
+	["info"] = 	function() return divination_vision_info() end,
 	["desc"] =	{
 			"Detects the layout of the surrounding area",
 			"At level 25 it maps and lights the whole level",
@@ -135,21 +91,8 @@ SENSEHIDDEN = add_spell
 			},
 	},
 	["inertia"] = 	{ 1, 10 },
-	["spell"] = 	function()
-			local obvious = nil
-			obvious = detect_traps(15 + get_level(SENSEHIDDEN, 40, 0))
-			if get_level(SENSEHIDDEN, 50) >= 15 then
-				obvious = is_obvious(set_tim_invis(10 + randint(20) + get_level(SENSEHIDDEN, 40)), obvious)
-			end
-			return obvious
-	end,
-	["info"] = 	function()
-			if get_level(SENSEHIDDEN, 50) >= 15 then
-				return "rad "..(15 + get_level(SENSEHIDDEN, 40)).." dur "..(10 + get_level(SENSEHIDDEN, 40)).."+d20"
-			else
-				return "rad "..(15 + get_level(SENSEHIDDEN, 40))
-			end
-	end,
+	["spell"] = 	function() return divination_sense_hidden() end,
+	["info"] = 	function() return divination_sense_hidden_info() end,
 	["desc"] =	{
 			"Detects the traps in a certain radius around you",
 			"At level 15 it allows you to sense invisible for a while"
@@ -175,15 +118,8 @@ REVEALWAYS = add_spell
 			},
 	},
 	["inertia"] = 	{ 1, 10 },
-	["spell"] = 	function()
-			local obvious
-			obvious = detect_doors(10 + get_level(REVEALWAYS, 40, 0))
-			obvious = is_obvious(detect_stairs(10 + get_level(REVEALWAYS, 40, 0)), obvious)
-			return obvious
-	end,
-	["info"] = 	function()
-			return "rad "..(10 + get_level(REVEALWAYS, 40))
-	end,
+	["spell"] = 	function() return divination_reveal_ways() end,
+	["info"] = 	function() return divination_reveal_ways_info() end,
 	["desc"] =	{
 			"Detects the doors/stairs/ways in a certain radius around you",
 	}
@@ -208,21 +144,8 @@ SENSEMONSTERS = add_spell
 			},
 	},
 	["inertia"] = 	{ 1, 10 },
-	["spell"] = 	function()
-			local obvious
-			obvious = detect_monsters_normal(10 + get_level(SENSEMONSTERS, 40, 0))
-			if get_level(SENSEMONSTERS, 50) >= 30 then
-				obvious = is_obvious(set_tim_esp(10 + randint(10) + get_level(SENSEMONSTERS, 20)), obvious)
-			end
-			return obvious
-	end,
-	["info"] = 	function()
-			if get_level(SENSEMONSTERS, 50) >= 30 then
-				return "rad "..(10 + get_level(SENSEMONSTERS, 40)).." dur "..(10 + get_level(SENSEMONSTERS, 20)).."+d10"
-			else
-				return "rad "..(10 + get_level(SENSEMONSTERS, 40))
-			end
-	end,
+	["spell"] = 	function() return divination_sense_monsters() end,
+	["info"] = 	function() return divination_sense_monsters_info() end,
 	["desc"] =	{
 			"Detects all monsters near you",
 			"At level 30 it allows you to sense monster minds for a while"

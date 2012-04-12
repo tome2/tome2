@@ -1470,6 +1470,26 @@ char  *demonology_discharge_minion_info();
 bool_ *demonology_control_demon();
 char  *demonology_control_demon_info();
 
+extern s32b STARIDENTIFY;
+extern s32b IDENTIFY;
+extern s32b VISION;
+extern s32b SENSEHIDDEN;
+extern s32b REVEALWAYS;
+extern s32b SENSEMONSTERS;
+
+bool_ *divination_greater_identify();
+char  *divination_greater_identify_info();
+bool_ *divination_identify();
+char  *divination_identify_info();
+bool_ *divination_vision();
+char  *divination_vision_info();
+bool_ *divination_sense_hidden();
+char  *divination_sense_hidden_info();
+bool_ *divination_reveal_ways();
+char  *divination_reveal_ways_info();
+bool_ *divination_sense_monsters();
+char  *divination_sense_monsters_info();
+
 /* randart.c */
 extern int get_activation_power(void);
 extern void build_prob(cptr learn);
