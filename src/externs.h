@@ -1421,6 +1421,26 @@ char  *air_thunderstorm_info();
 bool_ *air_sterilize();
 char  *air_sterilize_info();
 
+extern s32b BLINK;
+extern s32b DISARM;
+extern s32b TELEPORT;
+extern s32b TELEAWAY;
+extern s32b RECALL;
+extern s32b PROBABILITY_TRAVEL;
+
+bool_ *convey_blink();
+char  *convey_blink_info();
+bool_ *convey_disarm();
+char  *convey_disarm_info();
+bool_ *convey_teleport();
+char  *convey_teleport_info();
+bool_ *convey_teleport_away();
+char  *convey_teleport_away_info();
+bool_ *convey_recall();
+char  *convey_recall_info();
+bool_ *convey_probability_travel();
+char  *convey_probability_travel_info();
+
 /* randart.c */
 extern int get_activation_power(void);
 extern void build_prob(cptr learn);

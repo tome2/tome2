@@ -7,6 +7,13 @@ s32b POISONBLOOD;
 s32b THUNDERSTORM;
 s32b STERILIZE;
 
+s32b BLINK;
+s32b DISARM;
+s32b TELEPORT;
+s32b TELEAWAY;
+s32b RECALL;
+s32b PROBABILITY_TRAVEL;
+
 /* FIXME: Hackish workaround while we're still tied to Lua. This lets
  us return Lua's "nil" and a non-nil value (which is all the s_aux.lua
  cares about). */
@@ -160,5 +167,190 @@ char *air_sterilize_info()
 	sprintf(buf,
 		"dur %d+d30",
 		(20 + get_level_s(STERILIZE, 70)));
+	return buf;
+}
+
+bool_ *convey_blink()
+{
+	if (get_level_s(BLINK, 50) >= 30)
+	{
+		int oy = p_ptr->py;
+		int ox = p_ptr->px;
+
+		teleport_player(10 + get_level_s(BLINK, 8));
+		create_between_gate(0, oy, ox);
+		return CAST;
+	}
+	else
+	{
+		teleport_player(10 + get_level_s(BLINK, 8));
+		return CAST;
+	}
+}
+
+char *convey_blink_info()
+{
+	static char buf[128];
+	sprintf(buf,
+		"distance %d",
+		(10 + get_level_s(BLINK, 8)));
+	return buf;
+}
+
+bool_ *convey_disarm()
+{
+	destroy_doors_touch();
+	if (get_level_s(DISARM, 50) >= 10)
+	{
+		destroy_traps_touch();
+	}
+
+	return CAST;
+}
+
+char *convey_disarm_info()
+{
+	return "";
+}
+
+bool_ *convey_teleport()
+{
+	p_ptr->energy -= (25 - get_level_s(TELEPORT, 50));
+	teleport_player(100 + get_level_s(TELEPORT, 100));
+	return CAST;
+}
+
+char *convey_teleport_info()
+{
+	static char buf[128];
+	sprintf(buf,
+		"distance %d",
+		(100 + get_level_s(TELEPORT, 100)));
+	return buf;
+}
+
+bool_ *convey_teleport_away()
+{
+	if (get_level_s(TELEAWAY, 50) >= 20)
+	{
+		project_hack(GF_AWAY_ALL, 100);
+		return CAST;
+	}
+	else if (get_level_s(TELEAWAY, 50) >= 10)
+	{
+		int dir;
+		if (!get_aim_dir(&dir))
+		{
+			return NO_CAST;
+		}
+
+		fire_ball(GF_AWAY_ALL, dir, 100, 3 + get_level_s(TELEAWAY, 4));
+		return CAST;
+	}
+	else
+	{
+		int dir;
+		if (!get_aim_dir(&dir))
+		{
+			return NO_CAST;
+		}
+		teleport_monster(dir);
+		return CAST;
+	}
+}
+
+char *convey_teleport_away_info()
+{
+	return "";
+}
+
+static int recall_get_d()
+{
+	int d = 21 - get_level_s(RECALL, 15);
+	if (d < 0)
+	{
+		d = 0;
+	}
+	return d;
+}
+
+static int recall_get_f()
+{
+	int f = 15 - get_level_s(RECALL, 10);
+	if (f < 1)
+	{
+		f = 1;
+	}
+	return f;
+}
+
+bool_ *convey_recall()
+{
+	int x,y;
+	cave_type *c_ptr;
+
+	if (!tgt_pt(&x, &y))
+	{
+		return NO_CAST;
+	}
+
+	c_ptr = &cave[y][x];
+
+	if ((y == p_ptr->py) &&
+	    (x == p_ptr->px))
+	{
+		int d = recall_get_d();
+		int f = recall_get_f();
+		recall_player(d, f);
+		return CAST;
+	}
+	else if (c_ptr->m_idx > 0)
+	{
+		swap_position(y, x);
+		return CAST;
+	}
+	else if (c_ptr->o_idx > 0)
+	{
+		set_target(y, x);
+		if (get_level_s(RECALL, 50) >= 15)
+		{
+			fetch(5, 10 + get_level_s(RECALL, 150), FALSE);
+		}
+		else
+		{
+			fetch(5, 10 + get_level_s(RECALL, 150), TRUE);
+		}
+		return CAST;
+	}
+	else
+	{
+		return NO_CAST;
+	}
+}
+
+char *convey_recall_info()
+{
+	static char buf[128];
+	int d = recall_get_d();
+	int f = recall_get_f();
+
+	sprintf(buf,
+		"dur %d+d%d weight %dlb",
+		f, d, (1 + get_level_s(RECALL, 15)));
+	return buf;
+}
+
+bool_ *convey_probability_travel()
+{
+	set_prob_travel(randint(20) + get_level_s(PROBABILITY_TRAVEL, 60));
+	return CAST;
+}
+
+char *convey_probability_travel_info()
+{
+	static char buf[128];
+	sprintf(buf,
+		"dur %d+d20",
+		get_level_s(PROBABILITY_TRAVEL, 60));
 	return buf;
 }
