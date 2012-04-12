@@ -1441,6 +1441,35 @@ char  *convey_recall_info();
 bool_ *convey_probability_travel();
 char  *convey_probability_travel_info();
 
+extern s32b DEMON_BLADE;
+extern s32b DEMON_MADNESS;
+extern s32b DEMON_FIELD;
+extern s32b DOOM_SHIELD;
+extern s32b UNHOLY_WORD;
+extern s32b DEMON_CLOAK;
+extern s32b DEMON_SUMMON;
+extern s32b DISCHARGE_MINION;
+extern s32b CONTROL_DEMON;
+
+bool_ *demonology_demon_blade();
+char  *demonology_demon_blade_info();
+bool_ *demonology_demon_madness();
+char  *demonology_demon_madness_info();
+bool_ *demonology_demon_field();
+char  *demonology_demon_field_info();
+bool_ *demonology_doom_shield();
+char  *demonology_doom_shield_info();
+bool_ *demonology_unholy_word();
+char  *demonology_unholy_word_info();
+bool_ *demonology_demon_cloak();
+char  *demonology_demon_cloak_info();
+bool_ *demonology_summon_demon();
+char  *demonology_summon_demon_info();
+bool_ *demonology_discharge_minion();
+char  *demonology_discharge_minion_info();
+bool_ *demonology_control_demon();
+char  *demonology_control_demon_info();
+
 /* randart.c */
 extern int get_activation_power(void);
 extern void build_prob(cptr learn);
