@@ -14,24 +14,8 @@ ERU_SEE = add_spell
 	-- Unnafected by blindness
 	["blind"] =     FALSE,
 	["random"] = 	SKILL_SPIRITUALITY,
-	["spell"] = 	function()
-			local obvious
-			obvious = set_tim_invis(randint(20) + 10 + get_level(ERU_SEE, 100))
-			if get_level(ERU_SEE) >= 30 then
-				wiz_lite_extra()
-				obvious = TRUE
-			elseif get_level(ERU_SEE) >= 10 then
-				map_area()
-				obvious = TRUE
-			end
-			if get_level(ERU_SEE) >= 20 then
-				obvious = is_obvious(set_blind(0), obvious)
-			end
-			return obvious
-	end,
-	["info"] = 	function()
-			return "dur "..(10 + get_level(ERU_SEE, 100)).."+d20"
-	end,
+	["spell"] = 	function() return eru_see_the_music() end,
+	["info"] = 	function() return eru_see_the_music_info() end,
 	["desc"] =	{
 			"Allows you to 'see' the Great Music from which the world",
 			"originates, allowing you to see unseen things",
@@ -53,21 +37,8 @@ ERU_LISTEN = add_spell
 	["piety"] =     TRUE,
 	["stat"] =      A_WIS,
 	["random"] = 	SKILL_SPIRITUALITY,
-	["spell"] = 	function()
-			if get_level(ERU_LISTEN) >= 30 then
-				ident_all()
-				identify_pack()
-				return TRUE
-			elseif get_level(ERU_LISTEN) >= 14 then
-				identify_pack()
-				return TRUE
-			else
-				return ident_spell()
-			end
-	end,
-	["info"] = 	function()
-			return ""
-	end,
+	["spell"] = 	function() return eru_listen_to_the_music() end,
+	["info"] = 	function() return eru_listen_to_the_music_info() end,
 	["desc"] =	{
 			"Allows you to listen to the Great Music from which the world",
 			"originates, allowing you to understand the meaning of things",
@@ -88,17 +59,8 @@ ERU_UNDERSTAND = add_spell
 	["piety"] =     TRUE,
 	["stat"] =      A_WIS,
 	["random"] = 	SKILL_SPIRITUALITY,
-	["spell"] = 	function()
-			if get_level(ERU_UNDERSTAND) >= 10 then
-				identify_pack_fully()
-				return TRUE
-			else
-				return identify_fully()
-			end
-	end,
-	["info"] = 	function()
-			return ""
-	end,
+	["spell"] = 	function() return eru_know_the_music() end,
+	["info"] = 	function() return eru_know_the_music_info() end,
 	["desc"] =	{
 			"Allows you to understand the Great Music from which the world",
 			"originates, allowing you to know the full abilities of things",
@@ -118,12 +80,8 @@ ERU_PROT = add_spell
 	["piety"] =     TRUE,
 	["stat"] =      A_WIS,
 	["random"] = 	SKILL_SPIRITUALITY,
-	["spell"] = 	function()
-			return fire_ball(GF_MAKE_GLYPH, 0, 1, 1 + get_level(ERU_PROT, 2, 0))
-	end,
-	["info"] = 	function()
-			return "rad "..(1 + get_level(ERU_PROT, 2, 0))
-	end,
+	["spell"] = 	function() return eru_lay_of_protection() end,
+	["info"] = 	function() return eru_lay_of_protection_info() end,
 	["desc"] =	{
 			"Creates a circle of safety around you",
 	}

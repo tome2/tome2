@@ -2542,3 +2542,20 @@ bool_ *earth_strike();
 char  *earth_strike_info();
 bool_ *earth_shake();
 char  *earth_shake_info();
+
+/*
+ * Eru
+ */
+extern s32b ERU_SEE;
+extern s32b ERU_LISTEN;
+extern s32b ERU_UNDERSTAND;
+extern s32b ERU_PROT;
+
+bool_ *eru_see_the_music();
+char  *eru_see_the_music_info();
+bool_ *eru_listen_to_the_music();
+char  *eru_listen_to_the_music_info();
+bool_ *eru_know_the_music();
+char  *eru_know_the_music_info();
+bool_ *eru_lay_of_protection();
+char  *eru_lay_of_protection_info();

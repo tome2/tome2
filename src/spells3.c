@@ -37,6 +37,11 @@ s32b STONEPRISON;
 s32b STRIKE;
 s32b SHAKE;
 
+s32b ERU_SEE;
+s32b ERU_LISTEN;
+s32b ERU_UNDERSTAND;
+s32b ERU_PROT;
+
 /* FIXME: Hackish workaround while we're still tied to Lua. This lets
  us return Lua's "nil" and a non-nil value (which is all the s_aux.lua
  cares about). */
@@ -1007,3 +1012,88 @@ char  *earth_shake_info()
 	return buf;
 }
 
+bool_ *eru_see_the_music()
+{
+	set_tim_invis(randint(20) + 10 + get_level_s(ERU_SEE, 100));
+
+	if (get_level_s(ERU_SEE, 50) >= 30)
+	{
+		wiz_lite_extra();
+	}
+	else if (get_level_s(ERU_SEE, 50) >= 10)
+	{
+		map_area();
+	}
+
+	if (get_level_s(ERU_SEE, 50) >= 20)
+	{
+		set_blind(0);
+	}
+
+	return CAST;
+}
+
+char  *eru_see_the_music_info()
+{
+	static char buf[128];
+	sprintf(buf,
+		"dur %d+d20",
+		(10 + get_level_s(ERU_SEE, 100)));
+	return buf;
+}
+
+bool_ *eru_listen_to_the_music()
+{
+	if (get_level_s(ERU_LISTEN, 50) >= 30)
+	{
+		ident_all();
+		identify_pack();
+	}
+	else if (get_level_s(ERU_LISTEN, 50) >= 14)
+	{
+		identify_pack();
+	}
+	else
+	{
+		ident_spell();
+	}
+	return CAST;
+}
+
+char  *eru_listen_to_the_music_info()
+{
+	return "";
+}
+
+bool_ *eru_know_the_music()
+{
+	if (get_level_s(ERU_UNDERSTAND, 50) >= 10)
+	{
+		identify_pack_fully();
+	}
+	else
+	{
+		identify_fully();
+	}
+	return CAST;
+}
+
+char  *eru_know_the_music_info()
+{
+	return "";
+}
+
+bool_ *eru_lay_of_protection()
+{
+	fire_ball(GF_MAKE_GLYPH, 0, 1, 1 + get_level(ERU_PROT, 2, 0));
+	return CAST;
+}
+
+char  *eru_lay_of_protection_info()
+{
+	static char buf[128];
+	sprintf(buf,
+		"rad %d",
+		(1 + get_level(ERU_PROT, 2, 0)));
+	return buf;
+}
