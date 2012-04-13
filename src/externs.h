@@ -1521,6 +1521,23 @@ char  *eru_know_the_music_info();
 bool_ *eru_lay_of_protection();
 char  *eru_lay_of_protection_info();
 
+extern s32b GLOBELIGHT;
+extern s32b FIREFLASH;
+extern s32b FIERYAURA;
+extern s32b FIREWALL;
+extern s32b FIREGOLEM;
+
+bool_ *fire_globe_of_light();
+char  *fire_globe_of_light_info();
+bool_ *fire_fireflash();
+char  *fire_fireflash_info();
+bool_ *fire_fiery_shield();
+char  *fire_fiery_shield_info();
+bool_ *fire_firewall();
+char  *fire_firewall_info();
+bool_ *fire_golem();
+char  *fire_golem_info();
+
 /* randart.c */
 extern int get_activation_power(void);
 extern void build_prob(cptr learn);

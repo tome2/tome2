@@ -42,6 +42,12 @@ s32b ERU_LISTEN;
 s32b ERU_UNDERSTAND;
 s32b ERU_PROT;
 
+s32b GLOBELIGHT;
+s32b FIREFLASH;
+s32b FIERYAURA;
+s32b FIREWALL;
+s32b FIREGOLEM;
+
 /* FIXME: Hackish workaround while we're still tied to Lua. This lets
  us return Lua's "nil" and a non-nil value (which is all the s_aux.lua
  cares about). */
@@ -1095,5 +1101,189 @@ char  *eru_lay_of_protection_info()
 	sprintf(buf,
 		"rad %d",
 		(1 + get_level(ERU_PROT, 2, 0)));
+	return buf;
+}
+
+bool_ *fire_globe_of_light()
+{
+	if (get_level_s(GLOBELIGHT, 50) >= 3)
+	{
+		lite_area(10, 4);
+	}
+	else
+	{
+		lite_room(p_ptr->py, p_ptr->px);
+	}
+
+	if (get_level_s(GLOBELIGHT, 50) >= 15)
+	{
+		fire_ball(GF_LITE,
+			  0,
+			  10 + get_level_s(GLOBELIGHT, 100),
+			  5 + get_level_s(GLOBELIGHT, 6));
+		p_ptr->update |= PU_VIEW;
+	}
+	return CAST;
+}
+
+char  *fire_globe_of_light_info()
+{
+	static char buf[128];
+
+	if (get_level_s(GLOBELIGHT, 50) >= 15)
+	{
+		sprintf(buf, "dam %d rad %d",
+			(10 + get_level_s(GLOBELIGHT, 100)),
+			(5 + get_level_s(GLOBELIGHT, 6)));
+	}
+	else
+	{
+		buf[0] = '\0';
+	}
+
+	return buf;
+}
+
+bool_ *fire_fireflash()
+{
+	int dir;
+	int type = GF_FIRE;
+
+	if (get_level_s(FIREFLASH, 50) >= 20)
+	{
+		type = GF_HOLY_FIRE;
+	}
+
+	if (!get_aim_dir(&dir))
+	{
+		return NO_CAST;
+	}
+
+	fire_ball(type, dir,
+		  20 + get_level_s(FIREFLASH, 500),
+		  2 + get_level_s(FIREFLASH, 5));
+	return CAST;
+}
+
+char  *fire_fireflash_info()
+{
+	static char buf[128];
+	sprintf(buf,
+		"dam %d rad %d",
+		(20 + get_level_s(FIREFLASH, 500)),
+		(2 + get_level_s(FIREFLASH, 5)));
+	return buf;
+}
+
+bool_ *fire_fiery_shield()
+{
+	int type = SHIELD_FIRE;
+	if (get_level_s(FIERYAURA, 50) >= 8)
+	{
+		type = SHIELD_GREAT_FIRE;
+	}
+
+	set_shield(randint(20) + 10 + get_level_s(FIERYAURA, 70),
+		   10,
+		   type,
+		   5 + get_level_s(FIERYAURA, 10),
+		   5 + get_level_s(FIERYAURA, 7));
+	return CAST;
+}
+
+char  *fire_fiery_shield_info()
+{
+	static char buf[128];
+  	sprintf(buf,
+		"dam %dd%d dur %d+d20",
+		(5 + get_level_s(FIERYAURA, 15)),
+		(5 + get_level_s(FIERYAURA, 7)),
+		(10 + get_level_s(FIERYAURA, 70)));
+	return buf;
+}
+
+bool_ *fire_firewall()
+{
+	int dir;
+	int type = GF_FIRE;
+	if (get_level_s(FIREWALL, 50) >= 6)
+	{
+		type = GF_HELL_FIRE;
+	}
+
+	if (!get_aim_dir(&dir))
+	{
+		return NO_CAST;
+	}
+
+	fire_wall(type, dir,
+		  40 + get_level_s(FIREWALL, 150),
+		  10 + get_level_s(FIREWALL, 14));
+	return CAST;
+}
+
+char  *fire_firewall_info()
+{
+	static char buf[128];
+	sprintf(buf,
+		"dam %d dur %d",
+		(40 + get_level_s(FIREWALL, 150)),
+		(10 + get_level_s(FIREWALL, 14)));
+	return buf;
+}
+
+bool_ item_tester_hook_fire_golem(object_type *o_ptr)
+{
+	return ((o_ptr->tval == TV_LITE) &&
+		((o_ptr->sval == SV_LITE_TORCH) ||
+		 (o_ptr->sval == SV_LITE_LANTERN)));
+}
+
+bool_ *fire_golem()
+{
+	int item, x, y, m_idx;
+
+	/* Can we reconnect ? */
+	if (do_control_reconnect())
+	{
+		msg_print("Control re-established.");
+		return NO_CAST;
+	}
+
+	item_tester_hook = item_tester_hook_fire_golem;
+	if (!get_item(&item,
+		      "Which light source do you want to use to create the golem?",
+		      "You have no light source for the golem",
+		      USE_INVEN | USE_EQUIP))
+	{
+		return NO_CAST;
+	}
+
+	/* Destroy the source object */
+	inc_stack_size(item, -1);
+
+	/* Summon it */
+	m_allow_special[1043 + 1] = TRUE;
+	find_position(p_ptr->py, p_ptr->px, &y, &x);
+	m_idx = place_monster_one(y, x, 1043, 0, FALSE, MSTATUS_FRIEND);
+	m_allow_special[1043 + 1] = FALSE;
+
+	/* level it */
+	if (m_idx != 0)
+	{
+		monster_set_level(m_idx, 7 + get_level_s(FIREGOLEM, 70));
+		p_ptr->control = m_idx;
+		m_list[m_idx].mflag |= MFLAG_CONTROL;
+	}
+
+	return CAST;
+}
+
+char  *fire_golem_info()
+{
+	static char buf[128];
+	sprintf(buf,
+		"golem level %d",
+		(7 + get_level_s(FIREGOLEM, 70)));
 	return buf;
 }
