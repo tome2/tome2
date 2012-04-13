@@ -31,6 +31,12 @@ s32b SENSEHIDDEN;
 s32b REVEALWAYS;
 s32b SENSEMONSTERS;
 
+s32b STONESKIN;
+s32b DIG;
+s32b STONEPRISON;
+s32b STRIKE;
+s32b SHAKE;
+
 /* FIXME: Hackish workaround while we're still tied to Lua. This lets
  us return Lua's "nil" and a non-nil value (which is all the s_aux.lua
  cares about). */
@@ -849,3 +855,155 @@ char  *divination_sense_monsters_info()
 
 	return buf;
 }
+
+bool_ *earth_stone_skin()
+{
+	int type;
+
+	type = 0;
+	if (get_level_s(STONESKIN, 50) >= 25)
+	{
+		type = SHIELD_COUNTER;
+	}
+
+	set_shield(randint(10) + 10 + get_level_s(STONESKIN, 100),
+		   10 + get_level_s(STONESKIN, 50),
+		   type,
+		   2 + get_level_s(STONESKIN, 5),
+		   3 + get_level_s(STONESKIN, 5));
+	return CAST;
+}
+
+char  *earth_stone_skin_info()
+{
+	static char buf[128];
+
+	if (get_level_s(STONESKIN, 50) >= 25)
+	{
+		sprintf(buf,
+			"dam %dd%d dur %d+d10 AC %d",
+			(2 + get_level_s(STONESKIN, 5)),
+			(3 + get_level_s(STONESKIN, 5)),
+			(10 + get_level_s(STONESKIN, 100)),
+			(10 + get_level_s(STONESKIN, 50)));
+	}
+	else
+	{
+		sprintf(buf,
+			"dur %d+d10 AC %d",
+			(10 + get_level_s(STONESKIN, 100)),
+			(10 + get_level_s(STONESKIN, 50)));
+	}
+
+	return buf;
+}
+
+bool_ *earth_dig()
+{
+	int dir;
+	if (!get_aim_dir(&dir))
+	{
+		return NO_CAST;
+	}
+
+	wall_to_mud(dir);
+	return CAST;
+}
+
+char  *earth_dig_info()
+{
+	return "";
+}
+
+bool_ *earth_stone_prison()
+{
+	int x,y;
+
+	if (get_level_s(STONEPRISON, 50) >= 10)
+	{
+		if (!tgt_pt(&x, &y))
+		{
+			return NO_CAST;
+		}
+	}
+	else
+	{
+		y = p_ptr->py;
+		x = p_ptr->px;
+	}
+
+	wall_stone(y, x);
+	return CAST;
+}
+
+char  *earth_stone_prison_info()
+{
+	return "";
+}
+
+bool_ *earth_strike()
+{
+	int dir, dmg;
+
+	if (!get_aim_dir(&dir))
+	{
+		return NO_CAST;
+	}
+
+	dmg = 50 + get_level_s(STRIKE, 50);
+	if (get_level_s(STRIKE, 50) >= 12)
+	{
+		fire_ball(GF_FORCE, dir, dmg, 1);
+	}
+	else
+	{
+		fire_ball(GF_FORCE, dir, dmg, 0);
+	}
+
+	return CAST;
+}
+
+char  *earth_strike_info()
+{
+	static char buf[128];
+	int dmg = 50 + get_level_s(STRIKE, 50);
+
+	if (get_level_s(STRIKE, 50) >= 12)
+	{
+		sprintf(buf, "dam %d rad 1", dmg);
+	}
+	else
+	{
+		sprintf(buf, "dam %d", dmg);
+	}
+
+	return buf;
+}
+
+bool_ *earth_shake()
+{
+	int x,y;
+
+	if (get_level_s(SHAKE, 50) >= 10)
+	{
+		if (!tgt_pt(&x, &y))
+		{
+			return NO_CAST;
+		}
+	}
+	else
+	{
+		x = p_ptr->px;
+		y = p_ptr->py;
+	}
+	earthquake(y, x, 4 + get_level_s(SHAKE, 10));
+	return CAST;
+}
+
+char  *earth_shake_info()
+{
+	static char buf[128];
+	sprintf(buf, "rad %d", (4 + get_level_s(SHAKE, 10)));
+	return buf;
+}
+

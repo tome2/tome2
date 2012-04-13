@@ -2522,3 +2522,23 @@ bool_ *divination_reveal_ways();
 char  *divination_reveal_ways_info();
 bool_ *divination_sense_monsters();
 char  *divination_sense_monsters_info();
+
+/*
+ * Earth
+ */
+extern s32b STONESKIN;
+extern s32b DIG;
+extern s32b STONEPRISON;
+extern s32b STRIKE;
+extern s32b SHAKE;
+
+bool_ *earth_stone_skin();
+char  *earth_stone_skin_info();
+bool_ *earth_dig();
+char  *earth_dig_info();
+bool_ *earth_stone_prison();
+char  *earth_stone_prison_info();
+bool_ *earth_strike();
+char  *earth_strike_info();
+bool_ *earth_shake();
+char  *earth_shake_info();
