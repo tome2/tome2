@@ -2579,3 +2579,32 @@ bool_ *fire_firewall();
 char  *fire_firewall_info();
 bool_ *fire_golem();
 char  *fire_golem_info();
+
+/*
+ * Geomancy
+ */
+extern s32b CALL_THE_ELEMENTS;
+extern s32b CHANNEL_ELEMENTS;
+extern s32b ELEMENTAL_WAVE;
+extern s32b VAPORIZE;
+extern s32b GEOLYSIS;
+extern s32b DRIPPING_TREAD;
+extern s32b GROW_BARRIER;
+extern s32b ELEMENTAL_MINION;
+
+bool_ *geomancy_call_the_elements();
+char  *geomancy_call_the_elements_info();
+bool_ *geomancy_channel_elements();
+char  *geomancy_channel_elements_info();
+bool_ *geomancy_elemental_wave();
+char  *geomancy_elemental_wave_info();
+bool_ *geomancy_vaporize();
+char  *geomancy_vaporize_info();
+bool_ *geomancy_geolysis();
+char  *geomancy_geolysis_info();
+bool_ *geomancy_dripping_tread();
+char  *geomancy_dripping_tread_info();
+bool_ *geomancy_grow_barrier();
+char  *geomancy_grow_barrier_info();
+bool_ *geomancy_elemental_minion();
+char  *geomancy_elemental_minion_info();

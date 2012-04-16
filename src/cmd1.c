@@ -3098,6 +3098,17 @@ void move_player_aux(int dir, int do_pickup, int run, bool_ disarm)
 	/* Some hooks */
 	if (process_hooks(HOOK_MOVE, "(d,d)", y, x)) return;
 
+	if (p_ptr->dripping_tread > 0)
+	{
+		geomancy_random_floor(y, x, FALSE);
+		p_ptr->dripping_tread -= 1;
+		if (p_ptr->dripping_tread == 0)
+		{
+			msg_print("You stop dripping raw elemental energies.");
+		}
+	}
+
+
 	/* Get the monster */
 	m_ptr = &m_list[c_ptr->m_idx];
 	mr_ptr = race_inf(m_ptr);

@@ -48,6 +48,15 @@ s32b FIERYAURA;
 s32b FIREWALL;
 s32b FIREGOLEM;
 
+s32b CALL_THE_ELEMENTS;
+s32b CHANNEL_ELEMENTS;
+s32b ELEMENTAL_WAVE;
+s32b VAPORIZE;
+s32b GEOLYSIS;
+s32b DRIPPING_TREAD;
+s32b GROW_BARRIER;
+s32b ELEMENTAL_MINION;
+
 /* FIXME: Hackish workaround while we're still tied to Lua. This lets
  us return Lua's "nil" and a non-nil value (which is all the s_aux.lua
  cares about). */
@@ -1285,5 +1294,396 @@ char  *fire_golem_info()
 	sprintf(buf,
 		"golem level %d",
 		(7 + get_level_s(FIREGOLEM, 70)));
+	return buf;
+}
+
+bool_ *geomancy_call_the_elements()
+{
+	int dir = 0;
+
+	if (get_level_s(CALL_THE_ELEMENTS, 50) >= 17)
+	{
+		if (!get_aim_dir(&dir))
+		{
+			return FALSE;
+		}
+	}
+
+	fire_ball(GF_ELEMENTAL_GROWTH,
+		  dir,
+		  1,
+		  1 + get_level(CALL_THE_ELEMENTS, 5, 0));
+
+	return CAST;
+}
+
+char *geomancy_call_the_elements_info()
+{
+	static char buf[128];
+	sprintf(buf,
+		"rad %d",
+		(1 + get_level(CALL_THE_ELEMENTS, 5, 0)));
+	return buf;
+}
+
+bool_ *geomancy_channel_elements()
+{
+	channel_the_elements(p_ptr->py, p_ptr->px, get_level_s(CHANNEL_ELEMENTS, 50));
+	return CAST;
+}
+
+char *geomancy_channel_elements_info()
+{
+	return "";
+}
+
+typedef struct eff_type eff_type;
+struct eff_type {
+	s16b feat;
+	s16b low_effect;
+	s16b high_effect;
+	s16b damage;
+};
+
+static eff_type *geomancy_find_effect(eff_type effs[], int feat)
+{
+	int i;
+	for (i = 0; effs[i].feat >= 0; i++)
+	{
+		eff_type *p = &effs[i];
+		if (p->feat == feat)
+		{
+			return p;
+		}
+	}
+	return NULL;
+}
+
+bool_ *geomancy_elemental_wave()
+{
+	int dir = 0, y = 0, x = 0;
+	eff_type *eff_ptr = NULL;
+	eff_type t[] =
+	{
+		/* Earth */
+		{ FEAT_GRASS, GF_POIS, GF_POIS, 10 + get_skill_scale(SKILL_EARTH, 200) },
+		{ FEAT_FLOWER, GF_POIS, GF_POIS, 10 + get_skill_scale(SKILL_EARTH, 300) },
+
+		/* Water */
+		{ FEAT_SHAL_WATER, GF_WATER, GF_WATER, 10 + get_skill_scale(SKILL_WATER, 200) },
+		{ FEAT_DEEP_WATER, GF_WATER, GF_WATER, 10 + get_skill_scale(SKILL_WATER, 300) },
+		{ FEAT_ICE, GF_ICE, GF_ICE, 10 + get_skill_scale(SKILL_WATER, 200) },
+
+		/* Fire */
+		{ FEAT_SAND, GF_LITE, GF_LITE, 10 + get_skill_scale(SKILL_FIRE, 400) },
+		{ FEAT_SHAL_LAVA, GF_FIRE, GF_HOLY_FIRE, 10 + get_skill_scale(SKILL_FIRE, 200) },
+		{ FEAT_DEEP_LAVA, GF_FIRE, GF_HOLY_FIRE, 10 + get_skill_scale(SKILL_FIRE, 300) },
+		{ -1, -1, -1, -1 },
+	};
+
+	if (!get_rep_dir(&dir))
+	{
+		return FALSE;
+	}
+
+	y = ddy[dir] + p_ptr->py;
+	x = ddx[dir] + p_ptr->px;
+
+	eff_ptr = geomancy_find_effect(t, cave[y][x].feat);
+
+	if (!eff_ptr)
+	{
+		msg_print("You cannot channel this area.");
+		return NO_CAST;
+	}
+	else
+	{
+		s16b typ = eff_ptr->low_effect;
+		char buf[16];
+		s32b EFF_DIR;
+
+		sprintf(buf, "EFF_DIR%d", dir);
+		EFF_DIR = get_lua_int(buf);
+
+		if (get_level_s(ELEMENTAL_WAVE, 50) >= 20)
+		{
+			typ = eff_ptr->high_effect;
+		}
+
+		cave_set_feat(y, x, FEAT_FLOOR);
+
+		fire_wave(typ,
+			  0,
+			  eff_ptr->damage,
+			  0,
+			  6 + get_level_s(ELEMENTAL_WAVE, 20),
+			  EFF_WAVE + EFF_LAST + EFF_DIR);
+
+		return CAST;
+	}
+}
+
+char *geomancy_elemental_wave_info()
+{
+	return "";
+}
+
+bool_ *geomancy_vaporize()
+{
+	eff_type *eff_ptr = NULL;
+	eff_type t[] = {
+		/* Earth stuff */
+		{ FEAT_GRASS, GF_POIS, GF_POIS, 5 + get_skill_scale(SKILL_EARTH, 100) },
+		{ FEAT_FLOWER, GF_POIS, GF_POIS, 5 + get_skill_scale(SKILL_EARTH, 150) },
+		{ FEAT_DARK_PIT, GF_DARK, GF_DARK, 5 + get_skill_scale(SKILL_EARTH, 200) },
+		/* Water stuff */
+		{ FEAT_SHAL_WATER, GF_WATER, GF_WATER, 5 + get_skill_scale(SKILL_WATER, 100) },
+		{ FEAT_DEEP_WATER, GF_WATER, GF_WATER, 5 + get_skill_scale(SKILL_WATER, 150) },
+		{ FEAT_ICE, GF_ICE, GF_ICE, 5 + get_skill_scale(SKILL_WATER, 100) },
+		/* Fire stuff */
+		{ FEAT_SAND, GF_LITE, GF_LITE, 5 + get_skill_scale(SKILL_FIRE, 200) },
+		{ FEAT_SHAL_LAVA, GF_FIRE, GF_HOLY_FIRE, 5 + get_skill_scale(SKILL_FIRE, 100) },
+		{ FEAT_DEEP_LAVA, GF_FIRE, GF_HOLY_FIRE, 5 + get_skill_scale(SKILL_FIRE, 150) },
+		{ -1, -1, -1, -1 },
+	};
+
+	eff_ptr = geomancy_find_effect(t, cave[p_ptr->py][p_ptr->px].feat);
+
+	if (!eff_ptr)
+	{
+		msg_print("You cannot channel this area.");
+		return NO_CAST;
+	}
+	else
+	{
+		s16b typ = eff_ptr->low_effect;
+		if (get_level_s(VAPORIZE, 50) >= 20)
+		{
+			typ = eff_ptr->high_effect;
+		}
+
+		cave_set_feat(p_ptr->py, p_ptr->px, FEAT_FLOOR);
+
+		fire_cloud(typ,
+			   0,
+			   eff_ptr->damage,
+			   1 + get_level_s(VAPORIZE, 4),
+			   10 + get_level_s(VAPORIZE, 20));
+
+		return CAST;
+	}
+}
+
+char *geomancy_vaporize_info()
+{
+	static char buf[128];
+	sprintf(buf,
+		"rad %d dur %d",
+		(1 + get_level_s(VAPORIZE, 4)),
+		(10 + get_level_s(VAPORIZE, 20)));
+	return buf;
+}
+
+bool_ *geomancy_geolysis()
+{
+	int dir = 0;
+
+	if (!get_rep_dir(&dir))
+	{
+		return NO_CAST;
+	}
+
+	msg_print("Elements recombine before you, laying down an open path.");
+	geomancy_dig(p_ptr->py, p_ptr->px, dir, 5 + get_level_s(GEOLYSIS, 12));
+
+	return CAST;
+}
+
+char *geomancy_geolysis_info()
+{
+	static char buf[128];
+	sprintf(buf,
+		"length %d",
+		(5 + get_level_s(GEOLYSIS, 12)));
+	return buf;
+}
+
+bool_ *geomancy_dripping_tread()
+{
+	if (p_ptr->dripping_tread == 0)
+	{
+		p_ptr->dripping_tread = randint(15) + 10 + get_level_s(DRIPPING_TREAD, 50);
+		msg_print("You start dripping raw elemental energies.");
+	}
+	else
+	{
+		p_ptr->dripping_tread = 0;
+		msg_print("You stop dripping raw elemental energies.");
+	}
+
+	return CAST;
+}
+
+char *geomancy_dripping_tread_info()
+{
+	static char buf[128];
+	sprintf(buf, 
+		"dur %d+d15 movs",
+		(10 + get_level_s(DRIPPING_TREAD, 50)));
+	return buf;
+}
+
+bool_ *geomancy_grow_barrier()
+{
+	int dir = 0;
+
+	if (get_level_s(GROW_BARRIER, 50) >= 20)
+	{
+		if (!get_aim_dir(&dir))
+		{
+			return FALSE;
+		}
+	}
+
+	fire_ball(GF_ELEMENTAL_WALL, dir, 1, 1);
+	return CAST;
+}
+
+char *geomancy_grow_barrier_info()
+{
+	return "";
+}
+
+typedef struct geo_summon geo_summon;
+struct geo_summon {
+	s16b feat;
+	s16b skill_idx;
+	cptr *summon_names;
+};
+
+geo_summon *geomancy_find_summon(geo_summon summons[], int feat)
+{
+	int i;
+	for (i = 0; summons[i].feat >= 0; i++)
+	{
+		geo_summon *summon = &summons[i];
+		if (summon->feat == feat)
+		{
+			return summon;
+		}
+	}
+	return NULL;
+}
+
+int geomancy_count_elements(cptr *elements)
+{
+	int i;
+	for (i = 0; elements[i] != NULL; i++)
+	{
+	}
+	return i;
+}
+
+bool_ *geomancy_elemental_minion()
+{
+	int dir = 0;
+	int x = 0, y = 0;
+	geo_summon *summon_ptr = NULL;
+	cptr earth_summons[] = {
+		"Earth elemental",
+		"Xorn",
+		"Xaren",
+		NULL
+	};
+	cptr air_summons[] = {
+		"Air elemental",
+		"Ancient blue dragon",
+		"Great Storm Wyrm",
+		"Sky Drake",
+		NULL
+	};
+	cptr fire_summons[] = {
+		"Fire elemental",
+		"Ancient red dragon",
+		NULL
+	};
+	cptr water_summons[] = {
+		"Water elemental",
+		"Water troll",
+		"Water demon",
+		NULL
+	};
+	geo_summon summons[] = {
+		{ FEAT_WALL_EXTRA, SKILL_EARTH, earth_summons },
+		{ FEAT_WALL_OUTER, SKILL_EARTH, earth_summons },
+		{ FEAT_WALL_INNER, SKILL_EARTH, earth_summons },
+		{ FEAT_WALL_SOLID, SKILL_EARTH, earth_summons },
+		{ FEAT_MAGMA, SKILL_EARTH, earth_summons },
+		{ FEAT_QUARTZ, SKILL_EARTH, earth_summons },
+		{ FEAT_MAGMA_H, SKILL_EARTH, earth_summons },
+		{ FEAT_QUARTZ_H, SKILL_EARTH, earth_summons },
+		{ FEAT_MAGMA_K, SKILL_EARTH, earth_summons },
+		{ FEAT_QUARTZ_K, SKILL_EARTH, earth_summons },
+
+		{ FEAT_DARK_PIT, SKILL_AIR, air_summons },
+
+		{ FEAT_SANDWALL, SKILL_FIRE, fire_summons },
+		{ FEAT_SANDWALL_H, SKILL_FIRE, fire_summons },
+		{ FEAT_SANDWALL_K, SKILL_FIRE, fire_summons },
+		{ FEAT_SHAL_LAVA, SKILL_FIRE, fire_summons },
+		{ FEAT_DEEP_LAVA, SKILL_FIRE, fire_summons },
+
+		{ FEAT_ICE_WALL, SKILL_WATER, water_summons },
+		{ FEAT_SHAL_WATER, SKILL_WATER, water_summons },
+		{ FEAT_DEEP_WATER, SKILL_WATER, water_summons },
+
+		{ -1, -1, NULL },
+	};
+
+	if (!get_rep_dir(&dir))
+	{
+		return NO_CAST;
+	}
+
+	y = ddy[dir] + p_ptr->py;
+	x = ddx[dir] + p_ptr->px;
+
+	summon_ptr = geomancy_find_summon(summons, cave[y][x].feat);
+	
+	if (!summon_ptr)
+	{
+		msg_print("You cannot summon from this area.");
+		return NO_CAST;
+	}
+	else
+	{
+		cptr *names = summon_ptr->summon_names;
+		int max = get_skill_scale(summon_ptr->skill_idx,
+					  geomancy_count_elements(names));
+		int r_idx = test_monster_name(names[rand_int(max)]);
+		int mx, my, m_idx;
+
+		/* Summon it */
+		find_position(y, x, &my, &mx);
+		m_idx = place_monster_one(my, mx, r_idx, 0, FALSE, MSTATUS_FRIEND);
+
+		/* Level it */
+		if (m_idx)
+		{
+			monster_set_level(m_idx, 10 + get_level_s(ELEMENTAL_MINION, 120));
+		}
+
+		cave_set_feat(y, x, FEAT_FLOOR);
+
+		return CAST;
+	}
+}
+
+char *geomancy_elemental_minion_info()
+{
+	static char buf[128];
+	sprintf(buf,
+		"min level %d",
+		(10 + get_level_s(ELEMENTAL_MINION, 120)));
 	return buf;
 }

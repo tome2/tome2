@@ -1837,6 +1837,9 @@ struct player_type
 	s16b melee_style;       /* How are  */
 	s16b use_piercing_shots; /* for archery */
 
+	/* Dripping Tread spell timer */
+	s16b dripping_tread;
+
 	/* Help */
 	help_info help;
 

@@ -2874,6 +2874,9 @@ static bool_ do_savefile_aux(int flag)
 	do_byte(&p_ptr->pet_open_doors, flag);
 	do_byte(&p_ptr->pet_pickup_items, flag);
 
+	/* Dripping Tread */
+	do_s16b(&p_ptr->dripping_tread, flag);
+
 	/* Read the inventory */
 	if (!do_inventory(flag) && (flag == LS_LOAD))	/* do NOT reverse this ordering */
 	{
