@@ -351,6 +351,23 @@ static void do_cmd_wiz_change_aux(void)
 	/* Update */
 	check_experience();
 
+
+	/* Default */
+	sprintf(tmp_val, "%ld", (long) (p_ptr->grace));
+
+	/* Query */
+	if (!get_string("Piety: ", tmp_val, 9)) return;
+
+	/* Extract */
+	tmp_long = atol(tmp_val);
+
+	/* Verify */
+	if (tmp_long < 0) tmp_long = 0L;
+
+	/* Save */
+	p_ptr->grace = tmp_long;
+
+
 	/* Default */
 	sprintf(tmp_val, "%d", p_ptr->luck_base);
 
