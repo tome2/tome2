@@ -1,5 +1,7 @@
 #include "angband.h"
 
+#include <assert.h>
+
 s32b NOXIOUSCLOUD = -1; /* Identifier */
 s32b AIRWINGS = -1; /* Identifier */
 s32b INVISIBILITY;
@@ -61,6 +63,11 @@ s32b MANATHRUST;
 s32b DELCURSES;
 s32b RESISTS;
 s32b MANASHIELD;
+
+s32b MANWE_SHIELD;
+s32b MANWE_AVATAR;
+s32b MANWE_BLESS;
+s32b MANWE_CALL;
 
 /* FIXME: Hackish workaround while we're still tied to Lua. This lets
  us return Lua's "nil" and a non-nil value (which is all the s_aux.lua
@@ -1823,3 +1830,134 @@ char *mana_disruption_shield_info()
 	return buf;
 }
 
+bool_ *manwe_wind_shield()
+{
+	s32b dur = get_level_s(MANWE_SHIELD, 50) + 10 + randint(20);
+
+	set_protevil(dur);
+	if (get_level_s(MANWE_SHIELD, 50) >= 10)
+	{
+		int type = 0;
+		if (get_level_s(MANWE_SHIELD, 50) >= 20)
+		{
+			type = SHIELD_COUNTER;
+		}
+
+		set_shield(dur,
+			   get_level_s(MANWE_SHIELD, 30),
+			   type,
+			   1 + get_level_s(MANWE_SHIELD, 2),
+			   1 + get_level_s(MANWE_SHIELD, 6));
+	}
+
+	return CAST;
+}
+
+char  *manwe_wind_shield_info()
+{
+	static char buf[128];
+
+	sprintf(buf,
+		"dur %d+d20",
+		(get_level_s(MANWE_SHIELD, 50) + 10));
+
+	if (get_level_s(MANWE_SHIELD, 50) >= 10)
+	{
+		char tmp[128];
+		sprintf(tmp, " AC %d", get_level_s(MANWE_SHIELD, 30));
+		strcat(buf, tmp);
+	}
+
+	if (get_level_s(MANWE_SHIELD, 50) >= 20)
+	{
+		char tmp[128];
+		sprintf(tmp, " dam %dd%d",
+			(1 + get_level_s(MANWE_SHIELD, 2)),
+			(1 + get_level_s(MANWE_SHIELD, 6)));
+		strcat(buf, tmp);
+	}
+
+	return buf;
+}
+
+bool_ *manwe_avatar()
+{
+	s16b mimic_idx = resolve_mimic_name("Maia");
+	assert(mimic_idx >= 0);
+
+	set_mimic(get_level_s(MANWE_AVATAR, 20) + randint(10),
+		  mimic_idx,
+		  p_ptr->lev);
+	return CAST;
+}
+
+char  *manwe_avatar_info()
+{
+	static char buf[128];
+	sprintf(buf,
+		"dur %d+d10",
+		get_level_s(MANWE_AVATAR, 20));
+	return buf;
+}
+
+bool_ *manwe_blessing()
+{
+	s32b dur = get_level_s(MANWE_BLESS, 70) + 30 + randint(40);
+
+	set_blessed(dur);
+	set_afraid(0);
+	set_lite(0);
+
+	if (get_level_s(MANWE_BLESS, 50) >= 10)
+	{
+		set_hero(dur);
+	}
+	if (get_level_s(MANWE_BLESS, 50) >= 20)
+	{
+		set_shero(dur);
+	}
+	if (get_level_s(MANWE_BLESS, 50) >= 30)
+	{
+		set_holy(dur);
+	}
+
+	return CAST;
+}
+
+char  *manwe_blessing_info()
+{
+	static char buf[128];
+	sprintf(buf,
+		"dur %d+d40",
+		get_level_s(MANWE_BLESS, 70) + 30);
+	return buf;
+}
+
+bool_ *manwe_call()
+{
+	int y = 0, x = 0, m_idx = -1, r_idx = -1;
+
+	find_position(p_ptr->py, p_ptr->px, &y, &x);
+
+	r_idx = test_monster_name("Great eagle");
+	assert(r_idx >= 1);
+
+	m_idx = place_monster_one(y, x, r_idx, 0, FALSE, MSTATUS_FRIEND);
+
+	if (m_idx > 0)
+	{
+		monster_set_level(m_idx, 20 + get_level(MANWE_CALL, 70, 0));
+		return CAST;
+	}
+
+	return NO_CAST;
+}
+
+char  *manwe_call_info()
+{
+	static char buf[128];
+	sprintf(buf,
+		"level %d",
+		get_level_s(MANWE_CALL, 70) + 20);
+	return buf;
+}

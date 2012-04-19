@@ -1578,6 +1578,20 @@ char *mana_elemental_shield_info();
 bool_ *mana_disruption_shield();
 char *mana_disruption_shield_info();
 
+extern s32b MANWE_SHIELD;
+extern s32b MANWE_AVATAR;
+extern s32b MANWE_BLESS;
+extern s32b MANWE_CALL;
+
+bool_ *manwe_wind_shield();
+char  *manwe_wind_shield_info();
+bool_ *manwe_avatar();
+char  *manwe_avatar_info();
+bool_ *manwe_blessing();
+char  *manwe_blessing_info();
+bool_ *manwe_call();
+char  *manwe_call_info();
+
 /* randart.c */
 extern int get_activation_power(void);
 extern void build_prob(cptr learn);
