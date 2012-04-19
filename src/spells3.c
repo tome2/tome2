@@ -57,6 +57,11 @@ s32b DRIPPING_TREAD;
 s32b GROW_BARRIER;
 s32b ELEMENTAL_MINION;
 
+s32b MANATHRUST;
+s32b DELCURSES;
+s32b RESISTS;
+s32b MANASHIELD;
+
 /* FIXME: Hackish workaround while we're still tied to Lua. This lets
  us return Lua's "nil" and a non-nil value (which is all the s_aux.lua
  cares about). */
@@ -1687,3 +1692,134 @@ char *geomancy_elemental_minion_info()
 		(10 + get_level_s(ELEMENTAL_MINION, 120)));
 	return buf;
 }
+
+static void get_manathrust_dam(s16b *num, s16b *sides)
+{
+	*num = 3 + get_level_s(MANATHRUST, 50);
+	*sides = 1 + get_level_s(MANATHRUST, 20);
+}
+
+bool_ *mana_manathrust()
+{
+	int dir;
+	s16b num = 0;
+	s16b sides = 0;
+
+	if (!get_aim_dir(&dir))
+	{
+		return NO_CAST;
+	}
+
+	get_manathrust_dam(&num, &sides);
+	fire_bolt(GF_MANA, dir, damroll(num, sides));
+	return CAST;
+}
+
+char *mana_manathrust_info()
+{
+	s16b num = 0;
+	s16b sides = 0;
+	static char buf[128];
+
+	get_manathrust_dam(&num, &sides);
+	sprintf(buf,
+		"dam %dd%d",
+		num,
+		sides);
+	return buf;
+}
+
+bool_ *mana_remove_curses()
+{
+	bool_ done = FALSE;
+
+	if (get_level_s(DELCURSES, 50) >= 20)
+	{
+		done = remove_all_curse();
+	}
+	else
+	{
+		done = remove_curse();
+	}
+
+	if (done)
+	{
+		msg_print("The curse is broken!");
+	}
+
+	return CAST;
+}
+
+char *mana_remove_curses_info()
+{
+	return "";
+}
+
+bool_ *mana_elemental_shield()
+{
+	bool_ *res = NO_CAST;
+
+	if (p_ptr->oppose_fire == 0)
+	{
+		set_oppose_fire(randint(10) + 15 + get_level_s(RESISTS, 50));
+		res = CAST;
+	}
+
+	if (p_ptr->oppose_cold == 0)
+	{
+		set_oppose_cold(randint(10) + 15 + get_level_s(RESISTS, 50));
+		res = CAST;
+	}
+
+	if (p_ptr->oppose_elec == 0)
+	{
+		set_oppose_elec(randint(10) + 15 + get_level_s(RESISTS, 50));
+		res = CAST;
+	}
+
+	if (p_ptr->oppose_acid == 0)
+	{
+		set_oppose_acid(randint(10) + 15 + get_level_s(RESISTS, 50));
+		res = CAST;
+	}
+
+	return res;
+}
+
+char *mana_elemental_shield_info()
+{
+	static char buf[128];
+	sprintf(buf,
+		"dur %d+d10",
+		(15 + get_level_s(RESISTS, 50)));
+	return buf;
+}
+
+bool_ *mana_disruption_shield()
+{
+	if (get_level_s(MANASHIELD, 50) >= 5)
+	{
+		if (p_ptr->invuln == 0)
+		{
+			set_invuln(randint(5) + 3 + get_level_s(MANASHIELD, 10));
+			return CAST;
+		}
+	}
+	else if (p_ptr->disrupt_shield == 0)
+	{
+		set_disrupt_shield(randint(5) + 3 + get_level_s(MANASHIELD, 10));
+		return CAST;
+	}
+
+	return NO_CAST;
+}
+
+char *mana_disruption_shield_info()
+{
+	static char buf[128];
+	sprintf(buf,
+		"dur %d+d5",
+		(3 + get_level_s(MANASHIELD, 10)));
+	return buf;
+}
+

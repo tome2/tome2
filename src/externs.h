@@ -1564,6 +1564,20 @@ char  *geomancy_grow_barrier_info();
 bool_ *geomancy_elemental_minion();
 char  *geomancy_elemental_minion_info();
 
+extern s32b MANATHRUST;
+extern s32b DELCURSES;
+extern s32b RESISTS;
+extern s32b MANASHIELD;
+
+bool_ *mana_manathrust();
+char *mana_manathrust_info();
+bool_ *mana_remove_curses();
+char *mana_remove_curses_info();
+bool_ *mana_elemental_shield();
+char *mana_elemental_shield_info();
+bool_ *mana_disruption_shield();
+char *mana_disruption_shield_info();
+
 /* randart.c */
 extern int get_activation_power(void);
 extern void build_prob(cptr learn);
