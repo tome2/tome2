@@ -671,7 +671,14 @@ s32b get_mimic_random_duration(s16b mf_idx)
 byte calc_mimic()
 {
 	mimic_form_type *mf_ptr = get_mimic_form(p_ptr->mimic_form);
-	return mf_ptr->calc();
+	if (mf_ptr->calc != NULL)
+	{
+		return mf_ptr->calc();
+	}
+	else
+	{
+		return 0;
+	}
 }
 
 /*
@@ -680,5 +687,8 @@ byte calc_mimic()
 void calc_mimic_power()
 {
 	mimic_form_type *mf_ptr = get_mimic_form(p_ptr->mimic_form);
-	return mf_ptr->power();
+	if (mf_ptr->power != NULL)
+	{
+		mf_ptr->power();
+	}
 }
