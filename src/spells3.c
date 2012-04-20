@@ -1968,7 +1968,92 @@ char  *manwe_call_info()
 
 void do_melkor_curse(int m_idx)
 {
-	exec_lua(format("do_melkor_curse(%d)", m_idx));
+	monster_type *m_ptr = NULL;
+	assert(m_idx >= 0);
+
+	m_ptr = &m_list[m_idx];
+
+	if (get_level_s(MELKOR_CURSE, 50) >= 35)
+	{
+		monster_race *r_ptr = race_info_idx(m_ptr->r_idx, m_ptr->ego);
+
+		m_ptr->maxhp = m_ptr->maxhp - r_ptr->hside;
+		if (m_ptr->maxhp < 1)
+		{
+			m_ptr->maxhp = 1;
+		}
+		if (m_ptr->hp > m_ptr->maxhp)
+		{
+			m_ptr->hp = m_ptr->maxhp;
+		}
+
+		p_ptr->redraw |= PR_HEALTH;
+	}
+
+	if (get_level_s(MELKOR_CURSE, 50) >= 25)
+	{
+		m_ptr->speed  = m_ptr->speed  - get_level_s(MELKOR_CURSE, 7);
+		m_ptr->mspeed = m_ptr->mspeed - get_level_s(MELKOR_CURSE, 7);
+
+		if (m_ptr->speed < 70)
+		{
+			m_ptr->speed = 70;
+		}
+
+		if (m_ptr->mspeed < 70)
+		{
+			m_ptr->mspeed = 70;
+		}
+	}
+
+	if (get_level_s(MELKOR_CURSE, 50) >= 15)
+	{
+		m_ptr->ac = m_ptr->ac - get_level_s(MELKOR_CURSE, 50);
+
+		if (m_ptr->ac < -70)
+		{
+			m_ptr->ac = -70;
+		}
+	}
+
+	/* Reduce melee too */
+	{
+		int i;
+		int pow = get_level_s(MELKOR_CURSE, 2);
+
+		for (i = 0; i < 4; i++)
+		{
+			if (m_ptr->blow[i].d_dice <= 0)
+			{
+				break;
+			}
+
+			if (m_ptr->blow[i].d_dice < pow)
+			{
+				pow = m_ptr->blow[i].d_dice;
+			}
+			if (m_ptr->blow[i].d_side < pow)
+			{
+				pow = m_ptr->blow[i].d_side;
+			}
+
+			m_ptr->blow[i].d_dice = m_ptr->blow[i].d_dice - pow;
+		}
+	}
+
+	/* Describe what happened */
+	{
+		char buf[128];
+
+		monster_desc(buf, m_ptr, 0);
+		buf[0] = toupper(buf[0]);
+
+		strcat(buf, " looks weaker.");
+		msg_print(buf);
+	}
+
+	/* wake it */
+	m_ptr->csleep = 0;
 }
 
 bool_ *melkor_curse()
