@@ -69,6 +69,10 @@ s32b MANWE_AVATAR;
 s32b MANWE_BLESS;
 s32b MANWE_CALL;
 
+s32b MELKOR_CURSE;
+s32b MELKOR_CORPSE_EXPLOSION;
+s32b MELKOR_MIND_STEAL;
+
 /* FIXME: Hackish workaround while we're still tied to Lua. This lets
  us return Lua's "nil" and a non-nil value (which is all the s_aux.lua
  cares about). */
@@ -1959,5 +1963,104 @@ char  *manwe_call_info()
 	sprintf(buf,
 		"level %d",
 		get_level_s(MANWE_CALL, 70) + 20);
+	return buf;
+}
+
+void do_melkor_curse(int m_idx)
+{
+	exec_lua(format("do_melkor_curse(%d)", m_idx));
+}
+
+bool_ *melkor_curse()
+{
+	int dir = 0;
+
+	if (!get_aim_dir(&dir))
+	{
+		return NO_CAST;
+	}
+
+	if (target_who < 0)
+	{
+		msg_print("You must target a monster.");
+		return NO_CAST;
+	}
+	else
+	{
+		do_melkor_curse(target_who);
+		return CAST;
+	}
+}
+
+char  *melkor_curse_info()
+{
+	return "";
+}
+
+bool_ *melkor_corpse_explosion()
+{
+	fire_ball(GF_CORPSE_EXPL,
+		  0,
+		  20 + get_level_s(MELKOR_CORPSE_EXPLOSION, 70),
+		  2 + get_level_s(MELKOR_CORPSE_EXPLOSION, 5));
+	return CAST;
+}
+
+char  *melkor_corpse_explosion_info()
+{
+	static char buf[128];
+	sprintf(buf,
+		"dam %d%%",
+		20 + get_level_s(MELKOR_CORPSE_EXPLOSION, 70));
+	return buf;
+}
+
+bool_ *melkor_mind_steal()
+{
+	int dir = 0;
+
+	if (!get_aim_dir(&dir))
+	{
+		return FALSE;
+	}
+
+	if (target_who < 0)
+	{
+		msg_print("You must target a monster.");
+		return NO_CAST;
+	}
+	else
+	{
+		monster_type *m_ptr = &m_list[target_who];
+		int chance = get_level_s(MELKOR_MIND_STEAL, 50);
+		monster_race *r_ptr = race_info_idx(m_ptr->r_idx, m_ptr->ego);
+		char buf[128];
+
+		monster_desc(buf, m_ptr, 0);
+		buf[0] = toupper(buf[0]);
+
+		if ((randint(m_ptr->level) < chance) &&
+		    ((r_ptr->flags1 & RF1_UNIQUE) == 0))
+		{
+			p_ptr->control = target_who;
+			m_ptr->mflag |= MFLAG_CONTROL;
+			strcat(buf, " falls under your control.");
+		}
+		else
+		{
+			strcat(buf, " resists.");
+		}
+
+		msg_print(buf);
+		return CAST;
+	}
+}
+
+char  *melkor_mind_steal_info()
+{
+	static char buf[128];
+	sprintf(buf,
+		"chance 1d(mlvl)<%d",
+		get_level_s(MELKOR_MIND_STEAL, 50));
 	return buf;
 }

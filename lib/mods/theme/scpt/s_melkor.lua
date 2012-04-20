@@ -60,20 +60,8 @@ MELKOR_CURSE = add_spell
 	["piety"] =     TRUE,
 	["stat"] =      A_WIS,
 	["random"] = 	SKILL_SPIRITUALITY,
-	["spell"] = 	function()
-				local ret, dir = get_aim_dir()
-				if ret == FALSE then return end
-
-				if target_who == -1 then
-					msg_print("You must target a monster.")
-				else
-					do_melkor_curse(target_who)
-				end
-				return TRUE
-	end,
-	["info"] = 	function()
-			return ""
-	end,
+	["spell"] = 	function() return melkor_curse() end,
+	["info"] = 	function() return melkor_curse_info() end,
 	["desc"] =	{
 			"It curses a monster, reducing its melee power",
 			"At level 5 it can be auto-casted (with no piety cost) while fighting",
@@ -95,12 +83,8 @@ MELKOR_CORPSE_EXPLOSION = add_spell
 	["piety"] =     TRUE,
 	["stat"] =      A_WIS,
 	["random"] = 	SKILL_SPIRITUALITY,
-	["spell"] = 	function()
-			return fire_ball(GF_CORPSE_EXPL, 0, 20 + get_level(MELKOR_CORPSE_EXPLOSION, 70), 2 + get_level(MELKOR_CORPSE_EXPLOSION, 5))
-	end,
-	["info"] = 	function()
-			return "dam "..(20 + get_level(MELKOR_CORPSE_EXPLOSION, 70)).."%"
-	end,
+	["spell"] = 	function() return melkor_corpse_explosion() end,
+	["info"] = 	function() return melkor_corpse_explosion_info() end,
 	["desc"] =	{
 			"It makes corpses in an area around you explode for a percent of their",
 			"hit points as damage",
@@ -119,34 +103,8 @@ MELKOR_MIND_STEAL = add_spell
 	["piety"] =     TRUE,
 	["stat"] =      A_WIS,
 	["random"] = 	SKILL_SPIRITUALITY,
-	["spell"] = 	function()
-				local ret, dir = get_aim_dir()
-				if ret == FALSE then return end
-
-				if target_who == -1 then
-					msg_print("You must target a monster.")
-				else
-					local chance, m_ptr, r_ptr
-
-					m_ptr = monster(target_who)
-					r_ptr = race_info_idx(m_ptr.r_idx, m_ptr.ego)
-					chance = get_level(MELKOR_MIND_STEAL)
-					if (randint(m_ptr.level) < chance) and (band(r_ptr.flags1, RF1_UNIQUE) == 0) then
-						player.control = target_who
-						m_ptr.mflag = bor(m_ptr.mflag, MFLAG_CONTROL)
-
-						local m_name = monster_desc(m_ptr, 0).." falls under your control."
-						msg_print(strupper(strsub(m_name, 0, 1))..strsub(m_name, 2))
-					else
-						local m_name = monster_desc(m_ptr, 0).." resists."
-						msg_print(strupper(strsub(m_name, 0, 1))..strsub(m_name, 2))
-					end
-					return TRUE
-				end
-	end,
-	["info"] = 	function()
-			return "chance 1d(mlvl)<"..(get_level(MELKOR_MIND_STEAL))
-	end,
+	["spell"] = 	function() return melkor_mind_steal() end,
+	["info"] = 	function() return melkor_mind_steal_info() end,
 	["desc"] =	{
 			"It allows your spirit to temporarily leave your own body, which will",
 			"be vulnerable, to control one of your enemies body."

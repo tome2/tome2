@@ -2475,7 +2475,7 @@ void py_attack(int y, int x, int max_blow)
 								if (chance < 1) chance = 1;
 								if ((p_ptr->grace > 5000) && magik(chance))
 								{
-									exec_lua(format("do_melkor_curse(%d)", c_ptr->m_idx));
+									do_melkor_curse(c_ptr->m_idx);
 								}
 							}
 						}

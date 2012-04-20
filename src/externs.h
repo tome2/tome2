@@ -1592,6 +1592,19 @@ char  *manwe_blessing_info();
 bool_ *manwe_call();
 char  *manwe_call_info();
 
+extern s32b MELKOR_CURSE;
+extern s32b MELKOR_CORPSE_EXPLOSION;
+extern s32b MELKOR_MIND_STEAL;
+
+void do_melkor_curse(int m_idx);
+
+bool_ *melkor_curse();
+char  *melkor_curse_info();
+bool_ *melkor_corpse_explosion();
+char  *melkor_corpse_explosion_info();
+bool_ *melkor_mind_steal();
+char  *melkor_mind_steal_info();
+
 /* randart.c */
 extern int get_activation_power(void);
 extern void build_prob(cptr learn);
