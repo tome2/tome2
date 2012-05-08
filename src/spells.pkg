@@ -490,22 +490,6 @@ extern void teleport_away(int m_idx, int dis);
  */
 extern void teleport_player(int dis);
 
-/** @fn teleport_player_to(int ny, int nx)
- * @brief Teleport player to a grid near coordinate ("ny", "nx").\n
- * @param ny Number \n ny is the y co-ordinate of the location.
- * @brief Y coordinate
- * @param nx Number \n nx is the x co-ordinate of the location.
- * @brief X coordinate
- * @note
- * Teleport player to a grid near the given location\n\n
- * This function is slightly obsessive about correctness.\n
- * This function allows teleporting into vaults (!)\n\n
- * If the location is empty, the player goes there, otherwise they go to
- * a grid as close as possible to the location.
- * @note (see file spells1.c)
- */
-extern void teleport_player_to(int ny, int nx);
-
 /** @fn teleport_monster_to(int m_idx, int ny, int nx)
  * @brief Teleport monster indicated by "m_idx" to a grid near coordinate
  * ("ny", "nx").\n
@@ -2382,22 +2366,6 @@ extern s32b lua_spell_device_chance(s32b chance, int level, int base_level);
  */
 extern s32b get_school_spell(cptr do_what, cptr check_fct, s16b force_book);
 
-/** @name Last Teleportation
- * @brief Coordinates of last successful teleportation
- * @{ */
-/** @var last_teleportation_y
- * @brief Number
- * @note y-coordinate of last successful teleportation
- */
-extern s16b last_teleportation_y;
-
-/** @var last_teleportation_x
- * @brief Number
- * @note x-coordinate of last successful teleportation
- */
-extern s16b last_teleportation_x;
-/** @} */
-
 /** @fn get_pos_player(int dis, int *ny=0, int *nx=0)
  * @brief Get a grid near the player.\n
  * @param dis Number \n is the maximum distance away from the player.
@@ -2647,3 +2615,20 @@ bool_ *melkor_corpse_explosion();
 char  *melkor_corpse_explosion_info();
 bool_ *melkor_mind_steal();
 char  *melkor_mind_steal_info();
+
+extern s32b RECHARGE;
+extern s32b SPELLBINDER;
+extern s32b DISPERSEMAGIC;
+extern s32b TRACKER;
+extern s32b INERTIA_CONTROL;
+
+bool_ *meta_recharge();
+char *meta_recharge_info();
+bool_ *meta_spellbinder();
+char *meta_spellbinder_info();
+bool_ *meta_disperse_magic();
+char *meta_disperse_magic_info();
+bool_ *meta_tracker();
+char *meta_tracker_info();
+bool_ *meta_inertia_control();
+char *meta_inertia_control_info();

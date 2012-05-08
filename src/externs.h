@@ -1605,6 +1605,28 @@ char  *melkor_corpse_explosion_info();
 bool_ *melkor_mind_steal();
 char  *melkor_mind_steal_info();
 
+extern s32b RECHARGE;
+extern s32b SPELLBINDER;
+extern s32b DISPERSEMAGIC;
+extern s32b TRACKER;
+extern s32b INERTIA_CONTROL;
+extern timer_type *TIMER_INERTIA_CONTROL;
+
+bool_ *meta_recharge();
+char *meta_recharge_info();
+bool_ *meta_spellbinder();
+char *meta_spellbinder_info();
+bool_ *meta_disperse_magic();
+char *meta_disperse_magic_info();
+bool_ *meta_tracker();
+char *meta_tracker_info();
+bool_ *meta_inertia_control();
+char *meta_inertia_control_info();
+
+void meta_inertia_control_timer_callback();
+void meta_inertia_control_calc_mana(int *msp);
+void meta_inertia_control_hook_birth_objects();
+
 /* randart.c */
 extern int get_activation_power(void);
 extern void build_prob(cptr learn);
@@ -1716,6 +1738,7 @@ extern int test_mego_name(cptr name);
 extern int test_item_name(cptr name);
 extern char msg_box(cptr text, int y, int x);
 extern timer_type *new_timer(cptr callback, s32b delay);
+extern timer_type *new_timer_c(void (*callback)(), s32b delay);
 extern void del_timer(timer_type *t_ptr);
 extern int get_keymap_mode();
 
@@ -2007,6 +2030,7 @@ extern spell_type *grab_spell_type(s16b num);
 extern school_type *grab_school_type(s16b num);
 extern s32b lua_get_level(s32b s, s32b lvl, s32b max, s32b min, s32b bonus);
 extern s32b get_level_device(s32b s, s32b max, s32b min);
+extern int get_mana(s32b s);
 extern s32b spell_chance(s32b s);
 extern s32b get_level(s32b s, s32b max, s32b min);
 extern s32b lua_spell_chance(s32b chance, int level, int skill_level, int mana, int cur_mana, int stat);

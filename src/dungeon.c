@@ -1345,7 +1345,14 @@ static void process_world(void)
 		if (!t_ptr->countdown)
 		{
 			t_ptr->countdown = t_ptr->delay;
-			call_lua(t_ptr->callback, "()", "");
+			if (t_ptr->callback_c)
+			{
+				t_ptr->callback_c();
+			}
+			if (t_ptr->callback)
+			{
+				call_lua(t_ptr->callback, "()", "");
+			}
 		}
 	}
 

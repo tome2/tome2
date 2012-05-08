@@ -93,13 +93,6 @@ function new_timer(t)
 	return timer
 end
 
--- saves all timer values
-function save_timer(name)
-	add_loadsave(name..".enabled", FALSE)
-	add_loadsave(name..".delay", 1)
-	add_loadsave(name..".countdown", 1)
-end
-
 
 -- displays a scrolling list
 function display_list(y, x, h, w, title, list, begin, sel, sel_color)

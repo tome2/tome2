@@ -4417,7 +4417,7 @@ void scansubdir(cptr dir)
 /*
  * Timers
  */
-timer_type *new_timer(cptr callback, s32b delay)
+static timer_type *new_timer_init(s32b delay)
 {
 	timer_type *t_ptr;
 
@@ -4425,11 +4425,26 @@ timer_type *new_timer(cptr callback, s32b delay)
 	t_ptr->next = gl_timers;
 	gl_timers = t_ptr;
 
-	t_ptr->callback = string_make(callback);
+	t_ptr->callback_c = NULL;
+	t_ptr->callback = NULL;
 	t_ptr->delay = delay;
 	t_ptr->countdown = delay;
 	t_ptr->enabled = FALSE;
 
+	return t_ptr;
+}
+
+timer_type *new_timer(cptr callback, s32b delay)
+{
+	timer_type *t_ptr = new_timer_init(delay);
+	t_ptr->callback = string_make(callback);
+	return t_ptr;
+}
+
+timer_type *new_timer_c(void (*callback)(), s32b delay)
+{
+	timer_type *t_ptr = new_timer_init(delay);
+	t_ptr->callback_c = callback;
 	return t_ptr;
 }
 

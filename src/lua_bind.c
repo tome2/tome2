@@ -245,7 +245,7 @@ s32b get_level_device(s32b s, s32b max, s32b min)
 	return lvl;
 }
 
-static int get_mana(s32b s) {
+int get_mana(s32b s) {
 	return exec_lua(format("return get_mana(%d)", s));
 }
 

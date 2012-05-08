@@ -1974,6 +1974,11 @@ static errr init_misc(void)
 	for (i = 0; i < MAX_EFFECTS; i++)
 		effects[i].time = 0;
 
+	/* Initialize timers */
+	TIMER_INERTIA_CONTROL =
+		new_timer_c(meta_inertia_control_timer_callback,
+			    10);
+
 	return 0;
 }
 

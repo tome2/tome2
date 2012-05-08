@@ -1843,6 +1843,9 @@ struct player_type
 	/* Help */
 	help_info help;
 
+	/* Inertia control */
+	s32b inertia_controlled_spell;
+
 	/*** Temporary fields ***/
 
 	bool_ did_nothing;               /* True if the last action wasnt a real action */
@@ -2487,7 +2490,8 @@ struct timer_type
 	s32b delay;             /* Delay between activations */
 	s32b countdown;         /* The current number of turns passed, when it reaches delay it fires */
 
-	cptr callback;          /* The lua function to call upon firing(no C callback yet .. maybe) */
+	cptr callback;          /* The lua function to call upon firing (if any) */
+	void (*callback_c)();   /* The C function to call upon firing */
 };
 
 /*

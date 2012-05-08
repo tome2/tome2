@@ -575,6 +575,7 @@ static bool_ do_extra(int flag)
 	do_s32b(&p_ptr->loan, flag);
 	do_s32b(&p_ptr->loan_time, flag);
 	do_s16b(&p_ptr->absorb_soul, flag);
+	do_s32b(&p_ptr->inertia_controlled_spell, flag);
 
 	do_s16b(&p_ptr->chaos_patron, flag);
 
@@ -1060,6 +1061,16 @@ static void do_byte(byte *v, int flag)
 	/* We should never reach here, so bail out */
 	printf("FATAL: do_byte passed %d\n", flag);
 	exit(0);
+}
+
+static void do_bool(bool_ *f, int flag)
+{
+	byte b = *f;
+	do_byte(&b, flag);
+	if (flag == LS_LOAD)
+	{
+		*f = b;
+	}
 }
 
 static void do_u16b(u16b *v, int flag)
@@ -2500,6 +2511,24 @@ void do_fate(int i, int flag)
 }
 
 /*
+ * Load/save timers.
+ */
+static void do_timers(int flag)
+{
+	timer_type *t_ptr;
+
+	for (t_ptr = gl_timers; t_ptr != NULL; t_ptr = t_ptr->next)
+	{
+		if (t_ptr->callback_c)
+		{
+			do_bool(&t_ptr->enabled, flag);
+			do_s32b(&t_ptr->delay, flag);
+			do_s32b(&t_ptr->countdown, flag);
+		}
+	}
+}
+
+/*
  * Actually read the savefile
  */
 static bool_ do_savefile_aux(int flag)
@@ -2568,6 +2597,9 @@ static bool_ do_savefile_aux(int flag)
 	if (flag == LS_SAVE)
 		strcpy(loaded_game_module, game_module);
 	do_string(loaded_game_module, 80, flag);
+
+	/* Timers */
+	do_timers(flag);
 
 	/* Read RNG state */
 	do_randomizer(flag);

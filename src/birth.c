@@ -1038,6 +1038,9 @@ static void player_wipe(void)
 
 	/* No companions killed */
 	p_ptr->companion_killed = 0;
+
+	/* Inertia control */
+	p_ptr->inertia_controlled_spell = -1;
 }
 
 
@@ -1241,6 +1244,7 @@ static void player_outfit(void)
 	}
 
 	process_hooks(HOOK_BIRTH_OBJECTS, "()");
+	meta_inertia_control_hook_birth_objects();
 
 	{
 		/* Hack -- Give the player some food */

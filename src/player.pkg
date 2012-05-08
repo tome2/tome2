@@ -1761,22 +1761,6 @@ struct player_type
 	 */
 	bool powers[POWER_MAX];
 
-	/** @structvar spellbinder_num
-	 * @brief Number
-	 * @note Number of spells bound
-	 */
-	byte spellbinder_num;
-	/** @structvar spellbinder[4]
-	 * @brief Number
-	 * @note Spell bounds
-	 */
-	u32b spellbinder[4];
-	/** @structvar spellbinder_trigger
-	 * @brief Number
-	 * @note Spellbinder trigger condition
-	 */
-	byte spellbinder_trigger;
-
 	/* Corruptions */
         bool corrupt_anti_teleport_stopped;
 

@@ -73,6 +73,13 @@ s32b MELKOR_CURSE;
 s32b MELKOR_CORPSE_EXPLOSION;
 s32b MELKOR_MIND_STEAL;
 
+s32b RECHARGE;
+s32b SPELLBINDER;
+s32b DISPERSEMAGIC;
+s32b TRACKER;
+s32b INERTIA_CONTROL;
+timer_type *TIMER_INERTIA_CONTROL = 0;
+
 /* FIXME: Hackish workaround while we're still tied to Lua. This lets
  us return Lua's "nil" and a non-nil value (which is all the s_aux.lua
  cares about). */
@@ -2148,4 +2155,307 @@ char  *melkor_mind_steal_info()
 		"chance 1d(mlvl)<%d",
 		get_level_s(MELKOR_MIND_STEAL, 50));
 	return buf;
+}
+
+bool_ *meta_recharge()
+{
+	recharge(60 + get_level_s(RECHARGE, 140));
+	return CAST;
+}
+
+char *meta_recharge_info()
+{
+	static char buf[128];
+	sprintf(buf,
+		"power %d",
+		60 + get_level_s(RECHARGE, 140));
+	return buf;
+}
+
+static int get_spellbinder_max()
+{
+	int i = get_level_s(SPELLBINDER, 4);
+	if (i > 4)
+	{
+		i = 4;
+	}
+	return i;
+}
+
+bool_ *meta_spellbinder()
+{
+	if (p_ptr->spellbinder_num != 0)
+	{
+		typedef struct trigger trigger;
+		struct trigger {
+			int idx;
+			cptr desc;
+		};
+		trigger triggers[] = {
+			{ SPELLBINDER_HP75, "75% HP", },
+			{ SPELLBINDER_HP50, "50% HP", },
+			{ SPELLBINDER_HP25, "25% HP", },
+			{ -1, NULL, },
+		};
+		int trigger_idx = -1;
+		int i;
+
+		assert(p_ptr->spellbinder_trigger >= 0);
+
+		for (trigger_idx = 0; triggers[trigger_idx].idx >= 0; trigger_idx++)
+		{
+			if (triggers[trigger_idx].idx == p_ptr->spellbinder_trigger)
+			{
+				break;
+			}
+		}
+
+		msg_print("The spellbinder is already active.");
+		msg_format("It will trigger at %s.", triggers[trigger_idx].desc);
+		msg_print("With the spells: ");
+		for (i = 0; i < p_ptr->spellbinder_num; i++)
+		{ 
+			msg_print(school_spells[p_ptr->spellbinder[i]].name);
+		}
+
+		/* Doesn't cost anything */
+		return NO_CAST;
+	}
+	else
+	{
+		char c;
+		int i;
+
+		if (!get_com("Trigger at [a]75% hp [b]50% hp [c]25% hp?", &c))
+		{
+			return NO_CAST;
+		}
+		
+		switch (c)
+		{
+		case 'a':
+			p_ptr->spellbinder_trigger = SPELLBINDER_HP75;
+			break;
+		case 'b':
+			p_ptr->spellbinder_trigger = SPELLBINDER_HP50;
+			break;
+		case 'c':
+			p_ptr->spellbinder_trigger = SPELLBINDER_HP25;
+			break;
+		default:
+			return NO_CAST;
+			
+		}
+
+		p_ptr->spellbinder_num = get_spellbinder_max();
+		i = p_ptr->spellbinder_num;
+		while (i > 0)
+		{
+			s32b s = get_school_spell("bind", "is_ok_spell", 0);
+			if (s == -1)
+			{
+				p_ptr->spellbinder_trigger = 0;
+				p_ptr->spellbinder_num = 0;
+				return CAST;
+			} else {
+				if (school_spells[s].skill_level > 7 + get_level_s(SPELLBINDER, 35))
+				{
+					msg_format("You are only allowed spells with a base level of %d.", (7 + get_level_s(SPELLBINDER, 35)));
+					return CAST;
+				}
+			}
+
+			p_ptr->spellbinder[i] = s;
+			i = i - 1;
+		}
+		
+		p_ptr->energy = p_ptr->energy - 3100;
+		msg_print("Spellbinder ready.");
+		return CAST;
+	}
+}
+
+char *meta_spellbinder_info()
+{
+	static char buf[128];
+	sprintf(buf,
+		"number %d max level %d",
+		get_spellbinder_max(),
+		(7 + get_level_s(SPELLBINDER, 35)));
+	return buf;
+}
+
+bool_ *meta_disperse_magic()
+{
+	set_blind(0);
+	set_lite(0);
+	if (get_level_s(DISPERSEMAGIC, 50) >= 5)
+	{
+		set_confused(0);
+		set_image(0);
+	}
+	if (get_level_s(DISPERSEMAGIC, 50) >= 10)
+	{
+		set_slow(0);
+		set_fast(0, 0);
+		set_light_speed(0);
+	}
+	if (get_level_s(DISPERSEMAGIC, 50) >= 15)
+	{
+		set_stun(0);
+		set_meditation(0);
+		set_cut(0);
+	}
+	if (get_level_s(DISPERSEMAGIC, 50) >= 20)
+	{
+		set_hero(0);
+		set_shero(0);
+		set_blessed(0);
+		set_shield(0, 0, 0, 0, 0);
+		set_afraid(0);
+		set_parasite(0, 0);
+		set_mimic(0, 0, 0);
+	}
+	return CAST;
+}
+
+char *meta_disperse_magic_info()
+{
+	return "";
+}
+
+bool_ *meta_tracker()
+{
+	if ((last_teleportation_y < 0) ||
+	    (last_teleportation_x < 0))
+	{
+		msg_print("There has not been any teleporatation here.");
+	}
+	else
+	{
+		teleport_player_to(last_teleportation_y, last_teleportation_x);
+	}
+	return CAST;
+}
+
+char *meta_tracker_info()
+{
+	return "";
+}
+
+static void stop_inertia_controlled_spell()
+{
+	assert(TIMER_INERTIA_CONTROL != NULL);
+
+	p_ptr->inertia_controlled_spell = -1;
+	TIMER_INERTIA_CONTROL->enabled = FALSE;
+	p_ptr->update = p_ptr->update | PU_MANA;
+}
+
+void meta_inertia_control_hook_birth_objects()
+{
+	stop_inertia_controlled_spell();
+}
+
+static bool_ lua_var_is_nil(cptr var)
+{
+	char buf[128];
+	sprintf(buf, "return (%s == nil)", var);
+	return exec_lua(buf);
+}
+
+bool_ *meta_inertia_control()
+{
+	s32b s;
+	char prefix[128];
+	char inertia_0_var[128];
+	char inertia_1_var[128];
+	int inertia_0;
+	int inertia_1;
+
+	if (p_ptr->inertia_controlled_spell != -1)
+	{
+		msg_print("You cancel your inertia flow control.");
+		stop_inertia_controlled_spell();
+		return NO_CAST;
+	}
+
+	s = get_school_spell("control", "is_ok_spell", 0);
+	if (s == -1)
+	{
+		stop_inertia_controlled_spell();
+		return NO_CAST;
+	}
+
+	sprintf(prefix, "__tmp_spells[%d].inertia", (int) s);
+	sprintf(inertia_0_var, "__tmp_spells[%d].inertia[1]", (int) s);
+	sprintf(inertia_1_var, "__tmp_spells[%d].inertia[2]", (int) s);
+
+	if (lua_var_is_nil(prefix))
+	{
+		msg_print("This spell inertia flow can not be controlled.");
+		stop_inertia_controlled_spell();
+		return NO_CAST;
+	}
+
+	inertia_0 = get_lua_int(inertia_0_var);
+	if (inertia_0 > get_level_s(INERTIA_CONTROL, 10))
+	{
+		msg_format("This spell inertia flow(%d) is too strong to be controlled by your current spell.", inertia_0);
+		stop_inertia_controlled_spell();
+		return NO_CAST;
+	}
+
+	inertia_1 = get_lua_int(inertia_1_var);
+
+	p_ptr->inertia_controlled_spell = s;
+	TIMER_INERTIA_CONTROL->enabled = TRUE;
+	TIMER_INERTIA_CONTROL->delay = inertia_1;
+	TIMER_INERTIA_CONTROL->countdown = TIMER_INERTIA_CONTROL->delay;
+	p_ptr->update |= PU_MANA;
+	msg_format("Inertia flow controlling spell %s.", school_spells[s].name);
+	return CAST;
+}
+
+char *meta_inertia_control_info()
+{
+	static char buf[128];
+	sprintf(buf,
+		"level %d",
+		get_level_s(INERTIA_CONTROL, 10));
+	return buf;
+}
+
+void meta_inertia_control_timer_callback()
+{
+	/* Don't cast a controlled spell in wilderness mode */
+	if (p_ptr->antimagic)
+	{
+		msg_print("Your anti-magic field disrupts any magic attempts.");
+	}
+	else if (p_ptr->anti_magic)
+	{
+		msg_print("Your anti-magic shell disrupts any magic attempts.");
+	}
+	else if ((p_ptr->inertia_controlled_spell != -1) &&
+		 (!p_ptr->wild_mode))
+	{
+		char buf[128];
+		sprintf(buf,
+			"__spell_spell[%d]()",
+			p_ptr->inertia_controlled_spell);
+		exec_lua(buf);
+	}
+}
+
+void meta_inertia_control_calc_mana(int *msp)
+{
+	if (p_ptr->inertia_controlled_spell != -1)
+	{
+		*msp = *msp - (get_mana(p_ptr->inertia_controlled_spell) * 4);
+		if (*msp < 0)
+		{
+			*msp = 0;
+		}
+	}
 }

@@ -1793,6 +1793,8 @@ static void calc_mana(void)
 		msp = process_hooks_return[0].num;
 	}
 
+	meta_inertia_control_calc_mana(&msp);
+
 	/* Mana can never be negative */
 	if (msp < 0) msp = 0;
 
