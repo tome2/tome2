@@ -2490,8 +2490,7 @@ struct timer_type
 	s32b delay;             /* Delay between activations */
 	s32b countdown;         /* The current number of turns passed, when it reaches delay it fires */
 
-	cptr callback;          /* The lua function to call upon firing (if any) */
-	void (*callback_c)();   /* The C function to call upon firing */
+	void (*callback)();   /* The C function to call upon firing */
 };
 
 /*

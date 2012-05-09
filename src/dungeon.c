@@ -13,6 +13,8 @@
 #include "angband.h"
 #include "lua/lua.h"
 #include "tolua.h"
+#include <assert.h>
+
 extern lua_State* L;
 
 #define TY_CURSE_CHANCE 100
@@ -1345,14 +1347,8 @@ static void process_world(void)
 		if (!t_ptr->countdown)
 		{
 			t_ptr->countdown = t_ptr->delay;
-			if (t_ptr->callback_c)
-			{
-				t_ptr->callback_c();
-			}
-			if (t_ptr->callback)
-			{
-				call_lua(t_ptr->callback, "()", "");
-			}
+			assert(t_ptr->callback != NULL);
+			t_ptr->callback();
 		}
 	}
 

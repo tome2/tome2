@@ -2289,43 +2289,6 @@ extern cptr game_module;
 extern int get_keymap_dir(char ch);
 
 /*
- * Timers
- */
-/** @struct timer_type
- */
-struct timer_type
-{
-	/** @structvar *next
-	 * @brief timer_type
-	 * @note The next timer in the list
-	 */
-	timer_type *next;
-
-	/** @structvar enabled
-	 * @brief Boolean
-	 * @note Is it currently counting?
-	 */
-	bool enabled;
-
-	/** @structvar delay
-	 * @brief Number
-	 * @note Delay between activations
-	 */
-	s32b delay;
-	/** @structvar countdown
-	 * @brief Number
-	 * @note The current number of turns passed, when it reaches delay it fires
-	 */
-	s32b countdown;
-
-	/** @structvar callback
-	 * @brief String
-	 * @note The lua function to call upon firing(no C callback yet .. maybe)
-	 */
-	cptr callback;
-};
-
-/*
  * Lists
  */
 /** @struct list_type

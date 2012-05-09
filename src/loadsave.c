@@ -2519,12 +2519,9 @@ static void do_timers(int flag)
 
 	for (t_ptr = gl_timers; t_ptr != NULL; t_ptr = t_ptr->next)
 	{
-		if (t_ptr->callback_c)
-		{
-			do_bool(&t_ptr->enabled, flag);
-			do_s32b(&t_ptr->delay, flag);
-			do_s32b(&t_ptr->countdown, flag);
-		}
+		do_bool(&t_ptr->enabled, flag);
+		do_s32b(&t_ptr->delay, flag);
+		do_s32b(&t_ptr->countdown, flag);
 	}
 }
 
