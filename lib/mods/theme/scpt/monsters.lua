@@ -62,15 +62,6 @@ end
 
 -- cast dispel evil with 0 damage every 10 turns 
 
-TIMER_AGGRAVATE_EVIL = new_timer 
-{ 
-   ["enabled"] = FALSE, 
-   ["delay"] = 10, 
-   ["callback"] = function() 
-      dispel_evil(0) 
-   end, 
-} 
-
 add_hooks{ 
 [HOOK_GAME_START] = function() 
 
@@ -80,7 +71,7 @@ add_hooks{
 	(player_has_corruption(CORRUPT_BALROG_STRENGTH) ~= TRUE) and
 	(player_has_corruption(CORRUPT_BALROG_FORM) ~= TRUE)) then
 	-- "Proper" Maiar aggravate evil beings
-    	TIMER_AGGRAVATE_EVIL.enabled = TRUE
+        timer_aggravate_evil_enable()
 	-- Good beings (except swans, GWoPs, Wyrm Spirits, and some joke uniques) are coaligned with Maiar 
 
 	monst_al_add(MSTATUS_FRIEND, {25, 29, 45, 97, 109, 147, 225, 335, 346, 443, 581, 629, 699, 853, 984, 1007, 1017}, {21})

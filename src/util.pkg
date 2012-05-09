@@ -2325,27 +2325,6 @@ struct timer_type
 	cptr callback;
 };
 
-/** @fn *new_timer(cptr callback, s32b delay)
- * @brief Create a timer with callback "callback" and delay "delay".\n
- * @param callback String \n the callback associated with the timer.
- * @brief Callback
- * @param delay Number \n the delay associated with the timer.
- * @brief Delay
- * @return timer_type \n The new timer.
- * @note
- * The timer's countdown is also set to "delay". The timer is disabled.
- * @note (see file util.c)
- */
-extern timer_type *new_timer(cptr callback, s32b delay);
-
-/** @fn del_timer(timer_type *t_ptr)
- * @brief Delete timer "t_ptr".\n
- * @param *t_ptr timer_type \n the timer to be deleted.
- * @brief Timer
- * @note (see file util.c)
- */
-extern void del_timer(timer_type *t_ptr);
-
 /*
  * Lists
  */
@@ -2434,3 +2413,8 @@ extern void lite_spot(int y, int x);
  * Mimicry
  */
 extern s16b resolve_mimic_name(cptr name);
+
+/**
+ * Timers
+ */
+void timer_aggravate_evil_enable();

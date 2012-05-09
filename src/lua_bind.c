@@ -548,3 +548,17 @@ void increase_mana(int delta)
 	sprintf(buf, "increase_mana(%d)", delta);
 	exec_lua(buf);
 }
+
+timer_type *TIMER_AGGRAVATE_EVIL = 0;
+
+void timer_aggravate_evil_enable()
+{
+    	TIMER_AGGRAVATE_EVIL->enabled = TRUE;
+}
+
+void timer_aggravate_evil_callback()
+{
+	dispel_evil(0);
+}
+
+

@@ -71,28 +71,6 @@ function msg_print(c, m)
 	end
 end
 
--- better timer add function
-__timers_callback_max = 0
-
-function new_timer(t)
-	assert(t.delay > 0, "no timer delay")
-	assert(t.enabled, "no timer enabled state")
-	assert(t.callback, "no timer callback")
-
-	local timer
-	if type(t.callback) == "function" then
-		setglobal("__timers_callback_"..__timers_callback_max, t.callback)
-		timer = %new_timer("__timers_callback_"..__timers_callback_max, t.delay)
-		__timers_callback_max = __timers_callback_max + 1
-	else
-		timer = %new_timer(t.callback, t.delay)
-	end
-
-	timer.enabled = t.enabled
-
-	return timer
-end
-
 
 -- displays a scrolling list
 function display_list(y, x, h, w, title, list, begin, sel, sel_color)

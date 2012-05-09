@@ -1737,7 +1737,6 @@ extern int test_monster_name(cptr name);
 extern int test_mego_name(cptr name);
 extern int test_item_name(cptr name);
 extern char msg_box(cptr text, int y, int x);
-extern timer_type *new_timer(cptr callback, s32b delay);
 extern timer_type *new_timer_c(void (*callback)(), s32b delay);
 extern void del_timer(timer_type *t_ptr);
 extern int get_keymap_mode();
@@ -2060,6 +2059,11 @@ extern void lua_add_to_list(list_type *, int idx, cptr str);
 extern void lua_display_list(int y, int x, int h, int w, cptr title, list_type *list, int max, int begin, int sel, byte sel_color);
 
 extern void increase_mana(int delta);
+
+extern timer_type *TIMER_AGGRAVATE_EVIL;
+
+void timer_aggravate_evil_enable();
+void timer_aggravate_evil_callback();
 
 /* skills.c */
 extern void dump_skills(FILE *fff);

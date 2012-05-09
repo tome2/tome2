@@ -1978,6 +1978,9 @@ static errr init_misc(void)
 	TIMER_INERTIA_CONTROL =
 		new_timer_c(meta_inertia_control_timer_callback,
 			    10);
+	TIMER_AGGRAVATE_EVIL =
+		new_timer_c(timer_aggravate_evil_callback,
+			    10);
 
 	return 0;
 }
