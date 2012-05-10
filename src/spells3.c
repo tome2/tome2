@@ -90,6 +90,10 @@ s32b SLOWMONSTER;
 s32b ESSENCESPEED;
 s32b BANISHMENT;
 
+s32b TULKAS_AIM;
+s32b TULKAS_WAVE;
+s32b TULKAS_SPIN;
+
 
 /* FIXME: Hackish workaround while we're still tied to Lua. This lets
  us return Lua's "nil" and a non-nil value (which is all the s_aux.lua
@@ -2775,4 +2779,59 @@ char *tempo_banishment_info()
 		"power " FMTs32b,
 		tempo_banishment_power());
 	return buf;
+}
+
+bool_ *tulkas_divine_aim()
+{
+	s32b dur = get_level_s(TULKAS_AIM, 50) + randint(10);
+
+	set_strike(dur);
+	if (get_level_s(TULKAS_AIM, 50) >= 20)
+	{
+		set_tim_deadly(dur);
+	}
+
+	return CAST;
+}
+
+char *tulkas_divine_aim_info()
+{
+	static char buf[128];
+	sprintf(buf,
+		"dur " FMTs32b "+d10",
+		get_level_s(TULKAS_AIM, 50));
+	return buf;
+}
+
+bool_ *tulkas_wave_of_power()
+{
+	int dir;
+
+	if (!get_aim_dir(&dir))
+	{
+		return NO_CAST;
+	}
+
+	fire_bolt(GF_ATTACK, dir, get_level_s(TULKAS_WAVE, p_ptr->num_blow));
+	return CAST;
+}
+
+char *tulkas_wave_of_power_info()
+{
+	static char buf[128];
+	sprintf(buf,
+		"blows " FMTs32b,
+		get_level_s(TULKAS_WAVE, p_ptr->num_blow));
+	return buf;
+}
+
+bool_ *tulkas_whirlwind()
+{
+	fire_ball(GF_ATTACK, 0, 1, 1);
+	return CAST;
+}
+
+char *tulkas_whirlwind_info()
+{
+	return "";
 }

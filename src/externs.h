@@ -1655,6 +1655,17 @@ char  *tempo_essence_of_speed_info();
 bool_ *tempo_banishment();
 char  *tempo_banishment_info();
 
+extern s32b TULKAS_AIM;
+extern s32b TULKAS_WAVE;
+extern s32b TULKAS_SPIN;
+
+bool_ *tulkas_divine_aim();
+char  *tulkas_divine_aim_info();
+bool_ *tulkas_wave_of_power();
+char  *tulkas_wave_of_power_info();
+bool_ *tulkas_whirlwind();
+char  *tulkas_whirlwind_info();
+
 /* randart.c */
 extern int get_activation_power(void);
 extern void build_prob(cptr learn);
