@@ -1641,6 +1641,20 @@ char  *mind_armor_of_fear_info();
 bool_ *mind_stun();
 char  *mind_stun_info();
 
+extern s32b MAGELOCK;
+extern s32b SLOWMONSTER;
+extern s32b ESSENCESPEED;
+extern s32b BANISHMENT;
+
+bool_ *tempo_magelock();
+char  *tempo_magelock_info();
+bool_ *tempo_slow_monster();
+char  *tempo_slow_monster_info();
+bool_ *tempo_essence_of_speed();
+char  *tempo_essence_of_speed_info();
+bool_ *tempo_banishment();
+char  *tempo_banishment_info();
+
 /* randart.c */
 extern int get_activation_power(void);
 extern void build_prob(cptr learn);

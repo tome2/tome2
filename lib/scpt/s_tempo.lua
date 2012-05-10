@@ -19,32 +19,8 @@ MAGELOCK = add_spell
 				["max_level"] =		{ 15, 45 },
 			},
 	},
-	["spell"] = 	function()
-			if get_level(MAGELOCK, 50) >= 30 then
-				local ret, x, y, c_ptr
-
-				if get_level(MAGELOCK, 50) >= 40 then
-					ret, x, y = tgt_pt()
-					if ret == FALSE then return end
-					if cave_is(cave(y, x), FF1_FLOOR) == FALSE or cave_is(cave(y, x), FF1_PERMANENT) == TRUE or los(player.py, player.px, y, x) == FALSE then
-						msg_print("You cannot place it there.")
-						return TRUE
-					end
-				else
-					y = player.py
-					x = player.px
-				end
-				cave_set_feat(y, x, 3)
-				return TRUE
-			else
-				ret, dir = get_aim_dir()
-				if ret == FALSE then return end
-				return wizard_lock(dir)
-			end
-	end,
-	["info"] = 	function()
-		       	return ""
-	end,
+	["spell"] = 	function() return tempo_magelock() end,
+	["info"] = 	function() return tempo_magelock_info() end,
 	["desc"] =	{
 			"Magically locks a door",
 			"At level 30 it creates a glyph of warding",
@@ -70,24 +46,8 @@ SLOWMONSTER = add_spell
 				["max_level"] =		{ 20, 50 },
 			},
 	},
-	["spell"] = 	function()
-	       		local ret, dir
-
-			ret, dir = get_aim_dir()
-			if ret == FALSE then return end
-			if get_level(SLOWMONSTER, 50) >= 20 then
-				return fire_ball(GF_OLD_SLOW, dir, 40 + get_level(SLOWMONSTER, 160), 1)
-			else
-				return fire_bolt(GF_OLD_SLOW, dir, 40 + get_level(SLOWMONSTER, 160))
-			end
-	end,
-	["info"] = 	function()
-			if get_level(SLOWMONSTER, 50) >= 20 then
-			       	return "power "..(40 + get_level(SLOWMONSTER, 160)).." rad 1"
-			else
-			       	return "power "..(40 + get_level(SLOWMONSTER, 160))
-			end
-	end,
+	["spell"] = 	function() return tempo_slow_monster() end,
+	["info"] = 	function() return tempo_slow_monster_info() end,
 	["desc"] =	{
 			"Magically slows down the passing of time around a monster",
 			"At level 20 it affects a zone"
@@ -113,12 +73,8 @@ ESSENCESPEED = add_spell
 			},
 	},
 	["inertia"] = 	{ 5, 20 },
-	["spell"] = 	function()
-			if player.fast == 0 then return set_fast(10 + randint(10) + get_level(ESSENCESPEED, 50), 5 + get_level(ESSENCESPEED, 20)) end
-	end,
-	["info"] = 	function()
-		       	return "dur "..(10 + get_level(ESSENCESPEED, 50)).."+d10 speed "..(5 + get_level(ESSENCESPEED, 20))
-	end,
+	["spell"] = 	function() return tempo_essence_of_speed() end,
+	["info"] = 	function() return tempo_essence_of_speed_info() end,
 	["desc"] =	{
 			"Magically decreases the passing of time around you, making you move faster with",
 			"respect to the rest of the universe."
@@ -144,17 +100,8 @@ BANISHMENT = add_spell
 			},
 	},
 	["inertia"] = 	{ 5, 50 },
-	["spell"] = 	function()
-			local obvious
-			obvious = project_los(GF_AWAY_ALL, 40 + get_level(BANISHMENT, 160))
-			if get_level(BANISHMENT, 50) >= 15 then
-				obvious = is_obvious(project_los(GF_STASIS, 20 + get_level(BANISHMENT, 120)), obvious)
-			end
-			return obvious
-	end,
-	["info"] = 	function()
-		     	return "power "..(40 + get_level(BANISHMENT, 160))
-	end,
+	["spell"] = 	function() return tempo_banishment() end,
+	["info"] = 	function() return tempo_banishment_info() end,
 	["desc"] =	{
 			"Disrupts the space/time continuum in your area and teleports all monsters away.",
 			"At level 15 it may also lock them in a time bubble for a while."

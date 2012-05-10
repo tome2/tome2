@@ -85,6 +85,11 @@ s32b CONFUSE;
 s32b ARMOROFFEAR;
 s32b STUN;
 
+s32b MAGELOCK;
+s32b SLOWMONSTER;
+s32b ESSENCESPEED;
+s32b BANISHMENT;
+
 
 /* FIXME: Hackish workaround while we're still tied to Lua. This lets
  us return Lua's "nil" and a non-nil value (which is all the s_aux.lua
@@ -2622,5 +2627,152 @@ char  *mind_stun_info()
 	sprintf(buf,
 		"power %d",
 		mind_stun_power());
+	return buf;
+}
+
+bool_ *tempo_magelock()
+{
+	if (get_level_s(MAGELOCK, 50) >= 30)
+	{
+		int x,y;
+
+		if (get_level_s(MAGELOCK, 50) >= 40)
+		{
+			cave_type *c_ptr = NULL;
+
+			if (!tgt_pt(&x, &y))
+			{
+				return NO_CAST;
+			}
+
+			c_ptr = &cave[y][x];
+
+			if ((!(f_info[c_ptr->feat].flags1 | FF1_FLOOR)) ||
+			    (f_info[c_ptr->feat].flags1 | FF1_PERMANENT) ||
+			    (!los(p_ptr->py, p_ptr->px, y, x)))
+			{
+				msg_print("You cannot place it there.");
+				return NO_CAST;
+			}
+		} else {
+			y = p_ptr->py;
+			x = p_ptr->px;
+		}
+		cave_set_feat(y, x, 3);
+		return CAST;
+	} else {
+		int dir;
+		if (!get_aim_dir(&dir))
+		{
+			return NO_CAST;
+		}
+		wizard_lock(dir);
+		return CAST;
+	}
+}
+
+char *tempo_magelock_info()
+{
+	return "";
+}
+
+static s32b tempo_slow_monster_power()
+{
+	return 40 + get_level_s(SLOWMONSTER, 160);
+}
+
+bool_ *tempo_slow_monster()
+{
+	int dir;
+	s32b pwr;
+
+	if (!get_aim_dir(&dir))
+	{
+		return NO_CAST;
+	}
+
+	pwr = tempo_slow_monster_power();
+	if (get_level_s(SLOWMONSTER, 50) >= 20)
+	{
+		fire_ball(GF_OLD_SLOW, dir, pwr, 1);
+	}
+	else
+	{
+		fire_bolt(GF_OLD_SLOW, dir, pwr);
+	}
+
+	return CAST;
+}
+
+char *tempo_slow_monster_info()
+{
+	static char buf[128];
+	s32b pwr = tempo_slow_monster_power();
+
+	if (get_level_s(SLOWMONSTER, 50) >= 20)
+	{
+		sprintf(buf, "power " FMTs32b " rad 1", pwr);
+	}
+	else
+	{
+		sprintf(buf, "power " FMTs32b, pwr);
+	}
+	return buf;
+}
+
+static s32b tempo_essence_of_speed_base_duration()
+{
+	return 10 + get_level_s(ESSENCESPEED, 50);
+}
+
+static s32b tempo_essence_of_speed_bonus()
+{
+	return 5 + get_level_s(ESSENCESPEED, 20);
+}
+
+bool_ *tempo_essence_of_speed()
+{
+	if (p_ptr->fast == 0)
+	{
+		set_fast(randint(10) + tempo_essence_of_speed_base_duration(),
+			 tempo_essence_of_speed_bonus());
+	}
+	return CAST;
+}
+
+char *tempo_essence_of_speed_info()
+{
+	static char buf[128];
+	sprintf(buf,
+		"dur " FMTs32b "+d10 speed " FMTs32b,
+		tempo_essence_of_speed_base_duration(),
+		tempo_essence_of_speed_bonus());
+	return buf;
+}
+
+static s32b tempo_banishment_power()
+{
+	return 40 + get_level_s(BANISHMENT, 160);
+}
+
+bool_ *tempo_banishment()
+{
+	s32b pwr = tempo_banishment_power();
+
+	project_hack(GF_AWAY_ALL, pwr);
+	if (get_level_s(BANISHMENT, 50) >= 15)
+	{
+		project_hack(GF_STASIS, 20 + get_level_s(BANISHMENT, 120));
+	}
+	
+	return CAST;
+}
+
+char *tempo_banishment_info()
+{
+	static char buf[128];
+	sprintf(buf,
+		"power " FMTs32b,
+		tempo_banishment_power());
 	return buf;
 }
