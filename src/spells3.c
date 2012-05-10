@@ -124,7 +124,7 @@ char *air_noxious_cloud_info()
 {
 	static char buf[128];
 	sprintf(buf,
-		"dam %d rad 3 dur %d",
+		"dam " FMTs32b " rad 3 dur " FMTs32b,
 		(7 + get_level_s(NOXIOUSCLOUD, 150)),
 		(5 + get_level_s(NOXIOUSCLOUD, 40)));
 	return buf;
@@ -152,7 +152,7 @@ bool_ *air_wings_of_winds()
 char *air_wings_of_winds_info()
 {
 	static char buf[128];
-	sprintf(buf, "dur %d+d10", (5 + get_level_s(AIRWINGS, 25)));
+	sprintf(buf, "dur " FMTs32b "+d10", (5 + get_level_s(AIRWINGS, 25)));
 	return buf;
 }
 
@@ -170,7 +170,7 @@ bool_ *air_invisibility()
 char *air_invisibility_info()
 {
 	static char buf[128];
-	sprintf(buf, "dur %d+d20 power %d",
+	sprintf(buf, "dur " FMTs32b "+d20 power " FMTs32b,
 		(15 + get_level_s(INVISIBILITY, 50)),
 		(20 + get_level_s(INVISIBILITY, 50)));
 	return buf;
@@ -200,7 +200,7 @@ char *air_poison_blood_info()
 {
 	static char buf[128];
 	sprintf(buf,
-		"dur %d+d30",
+		"dur " FMTs32b "+d30",
 		(25 + get_level_s(POISONBLOOD, 25)));
 	return buf;
 }
@@ -220,7 +220,7 @@ char *air_thunderstorm_info()
 {
 	static char buf[128];
 	sprintf(buf,
-		"dam %dd%d dur %d+d10",
+		"dam " FMTs32b "d" FMTs32b " dur " FMTs32b "+d10",
 		(5 + get_level_s(THUNDERSTORM, 10)),
 		(10 + get_level_s(THUNDERSTORM, 25)),
 		(10 + get_level_s(THUNDERSTORM, 25)));
@@ -237,7 +237,7 @@ char *air_sterilize_info()
 {
 	static char buf[128];
 	sprintf(buf,
-		"dur %d+d30",
+		"dur " FMTs32b "+d30",
 		(20 + get_level_s(STERILIZE, 70)));
 	return buf;
 }
@@ -264,7 +264,7 @@ char *convey_blink_info()
 {
 	static char buf[128];
 	sprintf(buf,
-		"distance %d",
+		"distance " FMTs32b,
 		(10 + get_level_s(BLINK, 8)));
 	return buf;
 }
@@ -296,7 +296,7 @@ char *convey_teleport_info()
 {
 	static char buf[128];
 	sprintf(buf,
-		"distance %d",
+		"distance " FMTs32b,
 		(100 + get_level_s(TELEPORT, 100)));
 	return buf;
 }
@@ -407,7 +407,7 @@ char *convey_recall_info()
 	int f = recall_get_f();
 
 	sprintf(buf,
-		"dur %d+d%d weight %dlb",
+		"dur %d+d%d weight " FMTs32b "lb",
 		f, d, (1 + get_level_s(RECALL, 15)));
 	return buf;
 }
@@ -422,7 +422,7 @@ char *convey_probability_travel_info()
 {
 	static char buf[128];
 	sprintf(buf,
-		"dur %d+d20",
+		"dur " FMTs32b "+d20",
 		get_level_s(PROBABILITY_TRAVEL, 60));
 	return buf;
 }
@@ -455,7 +455,7 @@ char  *demonology_demon_blade_info()
 {
 	static char buf[128];
 	sprintf(buf,
-		"dur %d+d20 dam %d/blow",
+		"dur " FMTs32b "+d20 dam " FMTs32b "/blow",
 		(get_level_s(DEMON_BLADE, 80)),
 		(4 + get_level_s(DEMON_BLADE, 40)));
 	return buf;
@@ -503,7 +503,7 @@ char  *demonology_demon_madness_info()
 {
 	static char buf[128];
 	sprintf(buf,
-		"dam %d rad %d",
+		"dam " FMTs32b " rad " FMTs32b,
 		(20 + get_level_s(DEMON_MADNESS, 200)),
 		(1 + get_level(DEMON_MADNESS, 4, 0)));
 	return buf;
@@ -530,7 +530,7 @@ char  *demonology_demon_field_info()
 {
 	static char buf[128];
 	sprintf(buf,
-		"dam %d dur %d",
+		"dam " FMTs32b " dur " FMTs32b,
 		(20 + get_level_s(DEMON_FIELD, 70)),
 		(30 + get_level_s(DEMON_FIELD, 100)));
 	return buf;
@@ -550,7 +550,7 @@ char  *demonology_doom_shield_info()
 {
 	static char buf[128];
 	sprintf(buf,
-		"dur %d+d10 dam %dd%d",
+		"dur " FMTs32b "+d10 dam " FMTs32b "d" FMTs32b,
 		(20 + get_level_s(DOOM_SHIELD, 100)),
 		(1 + get_level_s(DOOM_SHIELD, 14)),
 		(10 + get_level_s(DOOM_SHIELD, 15)));
@@ -618,7 +618,7 @@ char  *demonology_unholy_word_info()
 {
 	static char buf[128];
 	sprintf(buf,
-		"heal mhp%% of %d%%",
+		"heal mhp%% of " FMTs32b "%%",
 		(30 + get_level(UNHOLY_WORD, 50, 0)));
 	return buf;
 }
@@ -633,7 +633,7 @@ char  *demonology_demon_cloak_info()
 {
 	static char buf[128];
 	sprintf(buf,
-		"dur %d+d5",
+		"dur " FMTs32b "+d5",
 		(5 + get_level(DEMON_CLOAK, 15, 0)));
 	return buf;
 }
@@ -670,7 +670,7 @@ char  *demonology_summon_demon_info()
 {
 	static char buf[128];
 	sprintf(buf,
-		"level %d",
+		"level " FMTs32b,
 		(5 + get_level_s(DEMON_SUMMON, 100)));
 	return buf;
 }
@@ -722,7 +722,7 @@ char  *demonology_discharge_minion_info()
 {
 	static char buf[128];
 	sprintf(buf,
-		"dam %d%% max %d",
+		"dam " FMTs32b "%% max " FMTs32b,
 		(20 + get_level(DISCHARGE_MINION, 60, 0)),
 		(100 + get_level(DISCHARGE_MINION, 500, 0)));
 	return buf;
@@ -744,7 +744,7 @@ char  *demonology_control_demon_info()
 {
 	static char buf[128];
 	sprintf(buf,
-		"power %d",
+		"power " FMTs32b,
 		(50 + get_level_s(CONTROL_DEMON, 250)));
 	return buf;
 }
@@ -799,7 +799,7 @@ char  *divination_identify_info()
 
 	if (get_level_s(IDENTIFY, 50) >= 27)
 	{
-		sprintf(buf, "rad %d", get_level_s(IDENTIFY, 3));
+		sprintf(buf, "rad " FMTs32b, get_level_s(IDENTIFY, 3));
 		return buf;
 	}
 	else
@@ -844,14 +844,14 @@ char  *divination_sense_hidden_info()
 	if (get_level_s(SENSEHIDDEN, 50) >= 15)
 	{
 		sprintf(buf,
-			"rad %d dur %d+d20",
+			"rad " FMTs32b " dur " FMTs32b "+d20",
 			(15 + get_level_s(SENSEHIDDEN, 40)),
 			(10 + get_level_s(SENSEHIDDEN, 40)));
 	}
 	else
 	{
 		sprintf(buf,
-			"rad %d",
+			"rad " FMTs32b,
 			(15 + get_level_s(SENSEHIDDEN, 40)));
 	}
 
@@ -869,7 +869,7 @@ char  *divination_reveal_ways_info()
 {
 	static char buf[128];
 	sprintf(buf,
-		"rad %d",
+		"rad " FMTs32b,
 		(10 + get_level_s(REVEALWAYS, 40)));
 	return buf;
 }
@@ -891,14 +891,14 @@ char  *divination_sense_monsters_info()
 	if (get_level_s(SENSEMONSTERS, 50) >= 30)
 	{
 		sprintf(buf,
-			"rad %d dur %d+d10",
+			"rad " FMTs32b " dur " FMTs32b "+d10",
 			(10 + get_level_s(SENSEMONSTERS, 40)),
 			(10 + get_level_s(SENSEMONSTERS, 20)));
 	}
 	else
 	{
 		sprintf(buf,
-			"rad %d",
+			"rad " FMTs32b,
 			(10 + get_level_s(SENSEMONSTERS, 40)));
 	}
 
@@ -930,7 +930,7 @@ char  *earth_stone_skin_info()
 	if (get_level_s(STONESKIN, 50) >= 25)
 	{
 		sprintf(buf,
-			"dam %dd%d dur %d+d10 AC %d",
+			"dam " FMTs32b "d" FMTs32b " dur " FMTs32b "+d10 AC " FMTs32b,
 			(2 + get_level_s(STONESKIN, 5)),
 			(3 + get_level_s(STONESKIN, 5)),
 			(10 + get_level_s(STONESKIN, 100)),
@@ -939,7 +939,7 @@ char  *earth_stone_skin_info()
 	else
 	{
 		sprintf(buf,
-			"dur %d+d10 AC %d",
+			"dur " FMTs32b "+d10 AC " FMTs32b,
 			(10 + get_level_s(STONESKIN, 100)),
 			(10 + get_level_s(STONESKIN, 50)));
 	}
@@ -1052,7 +1052,7 @@ bool_ *earth_shake()
 char  *earth_shake_info()
 {
 	static char buf[128];
-	sprintf(buf, "rad %d", (4 + get_level_s(SHAKE, 10)));
+	sprintf(buf, "rad " FMTs32b, (4 + get_level_s(SHAKE, 10)));
 	return buf;
 }
 
@@ -1081,7 +1081,7 @@ char  *eru_see_the_music_info()
 {
 	static char buf[128];
 	sprintf(buf,
-		"dur %d+d20",
+		"dur " FMTs32b "+d20",
 		(10 + get_level_s(ERU_SEE, 100)));
 	return buf;
 }
@@ -1137,7 +1137,7 @@ char  *eru_lay_of_protection_info()
 {
 	static char buf[128];
 	sprintf(buf,
-		"rad %d",
+		"rad " FMTs32b,
 		(1 + get_level(ERU_PROT, 2, 0)));
 	return buf;
 }
@@ -1170,7 +1170,7 @@ char  *fire_globe_of_light_info()
 
 	if (get_level_s(GLOBELIGHT, 50) >= 15)
 	{
-		sprintf(buf, "dam %d rad %d",
+		sprintf(buf, "dam " FMTs32b " rad " FMTs32b,
 			(10 + get_level_s(GLOBELIGHT, 100)),
 			(5 + get_level_s(GLOBELIGHT, 6)));
 	}
@@ -1207,7 +1207,7 @@ char  *fire_fireflash_info()
 {
 	static char buf[128];
 	sprintf(buf,
-		"dam %d rad %d",
+		"dam " FMTs32b " rad " FMTs32b,
 		(20 + get_level_s(FIREFLASH, 500)),
 		(2 + get_level_s(FIREFLASH, 5)));
 	return buf;
@@ -1233,7 +1233,7 @@ char  *fire_fiery_shield_info()
 {
 	static char buf[128];
   	sprintf(buf,
-		"dam %dd%d dur %d+d20",
+		"dam " FMTs32b "d" FMTs32b " dur " FMTs32b "+d20",
 		(5 + get_level_s(FIERYAURA, 15)),
 		(5 + get_level_s(FIERYAURA, 7)),
 		(10 + get_level_s(FIERYAURA, 70)));
@@ -1264,7 +1264,7 @@ char  *fire_firewall_info()
 {
 	static char buf[128];
 	sprintf(buf,
-		"dam %d dur %d",
+		"dam " FMTs32b " dur " FMTs32b,
 		(40 + get_level_s(FIREWALL, 150)),
 		(10 + get_level_s(FIREWALL, 14)));
 	return buf;
@@ -1321,7 +1321,7 @@ char  *fire_golem_info()
 {
 	static char buf[128];
 	sprintf(buf,
-		"golem level %d",
+		"golem level " FMTs32b,
 		(7 + get_level_s(FIREGOLEM, 70)));
 	return buf;
 }
@@ -1350,7 +1350,7 @@ char *geomancy_call_the_elements_info()
 {
 	static char buf[128];
 	sprintf(buf,
-		"rad %d",
+		"rad " FMTs32b,
 		(1 + get_level(CALL_THE_ELEMENTS, 5, 0)));
 	return buf;
 }
@@ -1507,7 +1507,7 @@ char *geomancy_vaporize_info()
 {
 	static char buf[128];
 	sprintf(buf,
-		"rad %d dur %d",
+		"rad " FMTs32b " dur " FMTs32b,
 		(1 + get_level_s(VAPORIZE, 4)),
 		(10 + get_level_s(VAPORIZE, 20)));
 	return buf;
@@ -1532,7 +1532,7 @@ char *geomancy_geolysis_info()
 {
 	static char buf[128];
 	sprintf(buf,
-		"length %d",
+		"length " FMTs32b,
 		(5 + get_level_s(GEOLYSIS, 12)));
 	return buf;
 }
@@ -1557,7 +1557,7 @@ char *geomancy_dripping_tread_info()
 {
 	static char buf[128];
 	sprintf(buf, 
-		"dur %d+d15 movs",
+		"dur " FMTs32b "+d15 movs",
 		(10 + get_level_s(DRIPPING_TREAD, 50)));
 	return buf;
 }
@@ -1712,7 +1712,7 @@ char *geomancy_elemental_minion_info()
 {
 	static char buf[128];
 	sprintf(buf,
-		"min level %d",
+		"min level " FMTs32b,
 		(10 + get_level_s(ELEMENTAL_MINION, 120)));
 	return buf;
 }
@@ -1747,7 +1747,7 @@ char *mana_manathrust_info()
 
 	get_manathrust_dam(&num, &sides);
 	sprintf(buf,
-		"dam %dd%d",
+		"dam " FMTs16b "d" FMTs16b,
 		num,
 		sides);
 	return buf;
@@ -1814,7 +1814,7 @@ char *mana_elemental_shield_info()
 {
 	static char buf[128];
 	sprintf(buf,
-		"dur %d+d10",
+		"dur " FMTs32b "+d10",
 		(15 + get_level_s(RESISTS, 50)));
 	return buf;
 }
@@ -1842,7 +1842,7 @@ char *mana_disruption_shield_info()
 {
 	static char buf[128];
 	sprintf(buf,
-		"dur %d+d5",
+		"dur " FMTs32b "+d5",
 		(3 + get_level_s(MANASHIELD, 10)));
 	return buf;
 }
@@ -1875,20 +1875,20 @@ char  *manwe_wind_shield_info()
 	static char buf[128];
 
 	sprintf(buf,
-		"dur %d+d20",
+		"dur " FMTs32b "+d20",
 		(get_level_s(MANWE_SHIELD, 50) + 10));
 
 	if (get_level_s(MANWE_SHIELD, 50) >= 10)
 	{
 		char tmp[128];
-		sprintf(tmp, " AC %d", get_level_s(MANWE_SHIELD, 30));
+		sprintf(tmp, " AC " FMTs32b, get_level_s(MANWE_SHIELD, 30));
 		strcat(buf, tmp);
 	}
 
 	if (get_level_s(MANWE_SHIELD, 50) >= 20)
 	{
 		char tmp[128];
-		sprintf(tmp, " dam %dd%d",
+		sprintf(tmp, " dam " FMTs32b "d" FMTs32b,
 			(1 + get_level_s(MANWE_SHIELD, 2)),
 			(1 + get_level_s(MANWE_SHIELD, 6)));
 		strcat(buf, tmp);
@@ -1912,7 +1912,7 @@ char  *manwe_avatar_info()
 {
 	static char buf[128];
 	sprintf(buf,
-		"dur %d+d10",
+		"dur " FMTs32b "+d10",
 		get_level_s(MANWE_AVATAR, 20));
 	return buf;
 }
@@ -1945,7 +1945,7 @@ char  *manwe_blessing_info()
 {
 	static char buf[128];
 	sprintf(buf,
-		"dur %d+d40",
+		"dur " FMTs32b "+d40",
 		get_level_s(MANWE_BLESS, 70) + 30);
 	return buf;
 }
@@ -1974,7 +1974,7 @@ char  *manwe_call_info()
 {
 	static char buf[128];
 	sprintf(buf,
-		"level %d",
+		"level " FMTs32b,
 		get_level_s(MANWE_CALL, 70) + 20);
 	return buf;
 }
@@ -2108,7 +2108,7 @@ char  *melkor_corpse_explosion_info()
 {
 	static char buf[128];
 	sprintf(buf,
-		"dam %d%%",
+		"dam " FMTs32b "%%",
 		20 + get_level_s(MELKOR_CORPSE_EXPLOSION, 70));
 	return buf;
 }
@@ -2158,7 +2158,7 @@ char  *melkor_mind_steal_info()
 {
 	static char buf[128];
 	sprintf(buf,
-		"chance 1d(mlvl)<%d",
+		"chance 1d(mlvl)<" FMTs32b,
 		get_level_s(MELKOR_MIND_STEAL, 50));
 	return buf;
 }
@@ -2173,7 +2173,7 @@ char *meta_recharge_info()
 {
 	static char buf[128];
 	sprintf(buf,
-		"power %d",
+		"power " FMTs32b,
 		60 + get_level_s(RECHARGE, 140));
 	return buf;
 }
@@ -2266,7 +2266,7 @@ bool_ *meta_spellbinder()
 			} else {
 				if (school_spells[s].skill_level > 7 + get_level_s(SPELLBINDER, 35))
 				{
-					msg_format("You are only allowed spells with a base level of %d.", (7 + get_level_s(SPELLBINDER, 35)));
+					msg_format("You are only allowed spells with a base level of " FMTs32b ".", (7 + get_level_s(SPELLBINDER, 35)));
 					return CAST;
 				}
 			}
@@ -2285,7 +2285,7 @@ char *meta_spellbinder_info()
 {
 	static char buf[128];
 	sprintf(buf,
-		"number %d max level %d",
+		"number %d max level " FMTs32b,
 		get_spellbinder_max(),
 		(7 + get_level_s(SPELLBINDER, 35)));
 	return buf;
@@ -2393,9 +2393,9 @@ bool_ *meta_inertia_control()
 		return NO_CAST;
 	}
 
-	sprintf(prefix, "__tmp_spells[%d].inertia", (int) s);
-	sprintf(inertia_0_var, "__tmp_spells[%d].inertia[1]", (int) s);
-	sprintf(inertia_1_var, "__tmp_spells[%d].inertia[2]", (int) s);
+	sprintf(prefix, "__tmp_spells[" FMTs32b "].inertia", s);
+	sprintf(inertia_0_var, "__tmp_spells[" FMTs32b "].inertia[1]", s);
+	sprintf(inertia_1_var, "__tmp_spells[" FMTs32b "].inertia[2]", s);
 
 	if (lua_var_is_nil(prefix))
 	{
@@ -2427,7 +2427,7 @@ char *meta_inertia_control_info()
 {
 	static char buf[128];
 	sprintf(buf,
-		"level %d",
+		"level " FMTs32b,
 		get_level_s(INERTIA_CONTROL, 10));
 	return buf;
 }
@@ -2448,7 +2448,7 @@ void meta_inertia_control_timer_callback()
 	{
 		char buf[128];
 		sprintf(buf,
-			"__spell_spell[%d]()",
+			"__spell_spell[" FMTs32b "]()",
 			p_ptr->inertia_controlled_spell);
 		exec_lua(buf);
 	}

@@ -285,7 +285,7 @@ bool_ quest_god_describe(FILE *fff)
 {
 	if (cquest.status == QUEST_STATUS_TAKEN)
 	{
-		fprintf(fff, "#####yGod quest %d!\n", cquest_quests_given);
+		fprintf(fff, "#####yGod quest " FMTs32b "!\n", cquest_quests_given);
 		fprintf(fff, "Thou art to find the lost temple of thy God and\n");
 		fprintf(fff, "to retrieve the lost part of the relic for thy God! \n");
 		print_directions(FALSE, print_using_print_hook, fff);
