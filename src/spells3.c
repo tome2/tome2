@@ -80,6 +80,12 @@ s32b TRACKER;
 s32b INERTIA_CONTROL;
 timer_type *TIMER_INERTIA_CONTROL = 0;
 
+s32b CHARM;
+s32b CONFUSE;
+s32b ARMOROFFEAR;
+s32b STUN;
+
+
 /* FIXME: Hackish workaround while we're still tied to Lua. This lets
  us return Lua's "nil" and a non-nil value (which is all the s_aux.lua
  cares about). */
@@ -2458,4 +2464,163 @@ void meta_inertia_control_calc_mana(int *msp)
 			*msp = 0;
 		}
 	}
+}
+
+static int mind_charm_power()
+{
+	return 10 + get_level_s(CHARM, 150);
+}
+
+bool_ *mind_charm()
+{
+	int pwr = mind_charm_power();
+	int level = get_level_s(CHARM, 50);
+
+	if (level >= 35)
+	{
+		project_hack(GF_CHARM, pwr);
+	}
+	else
+	{
+		int dir;
+		if (!get_aim_dir(&dir))
+		{
+			return NO_CAST;
+		}
+
+		if (level >= 15)
+		{
+			fire_ball(GF_CHARM, dir, pwr, 3);
+		}
+		else
+		{
+			fire_bolt(GF_CHARM, dir, pwr);
+		}
+	}
+
+	return CAST;
+}
+
+char *mind_charm_info()
+{
+	static char buf[128];
+	sprintf(buf,
+		"power %d",
+		mind_charm_power());
+	return buf;
+}
+
+static int mind_confuse_power()
+{
+	return 10 + get_level_s(CONFUSE, 150);
+}
+
+bool_ *mind_confuse()
+{
+	int pwr = mind_confuse_power();
+	int level = get_level_s(CONFUSE, 50);
+
+	if (level >= 35)
+	{
+		project_hack(GF_OLD_CONF, pwr);
+	}
+	else
+	{
+		int dir;
+		if (!get_aim_dir(&dir))
+		{
+			return NO_CAST;
+		}
+		
+		if (level >= 15)
+		{
+			fire_ball(GF_OLD_CONF, dir, pwr, 3);
+		}
+		else
+		{
+			fire_bolt(GF_OLD_CONF, dir, pwr);
+		}
+	}
+		
+	return CAST;
+}
+
+char *mind_confuse_info()
+{
+	static char buf[128];
+	sprintf(buf,
+		"power %d",
+		mind_confuse_power());
+	return buf;
+}
+
+static int mind_armor_of_fear_base_duration()
+{
+	return 10 + get_level_s(ARMOROFFEAR, 100);
+}
+
+static int mind_armor_of_fear_power_sides()
+{
+	return 1 + get_level_s(ARMOROFFEAR, 7);
+}
+
+static int mind_armor_of_fear_power_dice()
+{
+	return 5 + get_level_s(ARMOROFFEAR, 20);
+}
+
+bool_ *mind_armor_of_fear()
+{
+	set_shield(randint(10) + mind_armor_of_fear_base_duration(),
+		   10,
+		   SHIELD_FEAR,
+		   mind_armor_of_fear_power_sides(),
+		   mind_armor_of_fear_power_dice());
+	return CAST;
+}
+
+char  *mind_armor_of_fear_info()
+{
+	static char buf[128];
+	sprintf(buf,
+		"dur %d+d10 power %dd%d",
+		mind_armor_of_fear_base_duration(),
+		mind_armor_of_fear_power_sides(),
+		mind_armor_of_fear_power_dice());
+	return buf;
+}
+
+static int mind_stun_power()
+{
+	return 10 + get_level_s(STUN, 150);
+}
+
+bool_ *mind_stun()
+{
+	int dir;
+
+	if (!get_aim_dir(&dir))
+	{
+		return NO_CAST;
+	}
+
+	if (get_level_s(STUN, 50) >= 20)
+	{
+		fire_ball(GF_STUN, dir, mind_stun_power(), 3);
+	}
+	else
+	{
+		fire_bolt(GF_STUN, dir, mind_stun_power());
+	}
+
+	return CAST;
+}
+
+char  *mind_stun_info()
+{
+	static char buf[128];
+	sprintf(buf,
+		"power %d",
+		mind_stun_power());
+	return buf;
 }

@@ -1627,6 +1627,20 @@ void meta_inertia_control_timer_callback();
 void meta_inertia_control_calc_mana(int *msp);
 void meta_inertia_control_hook_birth_objects();
 
+extern s32b CHARM;
+extern s32b CONFUSE;
+extern s32b ARMOROFFEAR;
+extern s32b STUN;
+
+bool_ *mind_charm();
+char  *mind_charm_info();
+bool_ *mind_confuse();
+char  *mind_confuse_info();
+bool_ *mind_armor_of_fear();
+char  *mind_armor_of_fear_info();
+bool_ *mind_stun();
+char  *mind_stun_info();
+
 /* randart.c */
 extern int get_activation_power(void);
 extern void build_prob(cptr learn);

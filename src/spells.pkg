@@ -2632,3 +2632,17 @@ bool_ *meta_tracker();
 char *meta_tracker_info();
 bool_ *meta_inertia_control();
 char *meta_inertia_control_info();
+
+extern s32b CHARM;
+extern s32b CONFUSE;
+extern s32b ARMOROFFEAR;
+extern s32b STUN;
+
+bool_ *mind_charm();
+char  *mind_charm_info();
+bool_ *mind_confuse();
+char  *mind_confuse_info();
+bool_ *mind_armor_of_fear();
+char  *mind_armor_of_fear_info();
+bool_ *mind_stun();
+char  *mind_stun_info();
