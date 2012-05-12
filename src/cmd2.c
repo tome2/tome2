@@ -4565,8 +4565,10 @@ static bool_ item_tester_hook_sacrifiable(object_type *o_ptr)
 			return (TRUE);
 
 		/* Books without any udun spells */
-		if ((o_ptr->tval == TV_BOOK) && (exec_lua(format("return udun_in_book(%d, %d)", o_ptr->sval, o_ptr->pval)) == 0))
+		if ((o_ptr->tval == TV_BOOK) && udun_in_book(o_ptr->sval, o_ptr->pval) <= 0)
+		{
 			return TRUE;
+		}
 	}
 
 	/* Assume not */

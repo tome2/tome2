@@ -94,6 +94,11 @@ s32b TULKAS_AIM;
 s32b TULKAS_WAVE;
 s32b TULKAS_SPIN;
 
+s32b DRAIN;
+s32b GENOCIDE;
+s32b WRAITHFORM;
+s32b FLAMEOFUDUN;
+
 
 /* FIXME: Hackish workaround while we're still tied to Lua. This lets
  us return Lua's "nil" and a non-nil value (which is all the s_aux.lua
@@ -2835,3 +2840,150 @@ char *tulkas_whirlwind_info()
 {
 	return "";
 }
+
+/* Return the number of Udun/Melkor spells in a given book */
+int udun_in_book(s32b sval, s32b pval)
+{
+	char buf[128];
+	sprintf(buf, "return udun_in_book(" FMTs32b "," FMTs32b ")",
+		sval, pval);
+	return exec_lua(buf);
+}
+
+static bool_ udun_object_is_drainable(object_type *o_ptr)
+{
+	return ((o_ptr->tval == TV_WAND) ||
+		(o_ptr->tval == TV_ROD_MAIN) ||
+		(o_ptr->tval == TV_STAFF));
+}
+
+bool_ *udun_drain()
+{
+	int item;
+	object_type *o_ptr = NULL;
+
+	/* Ask for an item */
+	item_tester_hook = udun_object_is_drainable;
+	if (!get_item(&item,
+		      "What item to drain?",
+		      "You have nothing you can drain",
+		      USE_INVEN))
+	{
+		return NO_CAST;
+	}
+
+	/* Drain */
+
+	/* get the item */
+	o_ptr = get_object(item);
+
+	switch (o_ptr->tval)
+	{
+	case TV_STAFF:
+	case TV_WAND:
+	{
+		object_kind *k_ptr = &k_info[o_ptr->k_idx];
+
+		/* Generate mana */
+		increase_mana(o_ptr->pval * k_ptr->level * o_ptr->number);
+
+		/* Destroy it */
+		inc_stack_size(item, -99);
+
+		break;
+	}
+
+	case TV_ROD_MAIN:
+	{
+		/* Generate mana */
+		increase_mana(o_ptr->timeout);
+
+		/* Drain it */
+		o_ptr->timeout = 0;
+
+		/* Combine / Reorder the pack (later) */
+		p_ptr->notice |= PN_COMBINE | PN_REORDER;
+		p_ptr->window |= PW_INVEN | PW_EQUIP | PW_PLAYER;
+		break;
+	}
+
+	default:
+		assert(FALSE);
+	}
+
+	return CAST;
+}
+
+char *udun_drain_info()
+{
+	return "";
+}
+
+bool_ *udun_genocide()
+{
+	if (get_level_s(GENOCIDE, 50) < 10)
+	{
+		genocide(TRUE);
+	}
+	else
+	{
+		if (get_check("Genocide all monsters near you? "))
+		{
+			mass_genocide(TRUE);
+		}
+		else
+		{
+			genocide(TRUE);
+		}
+	}
+
+	return CAST;
+}
+
+char *udun_genocide_info()
+{
+	return "";
+}
+
+static int udun_wraithform_base_duration()
+{
+	return 20 + get_level_s(WRAITHFORM, 40);
+}
+
+bool_ *udun_wraithform()
+{
+	set_shadow(randint(30) + udun_wraithform_base_duration());
+	return CAST;
+}
+
+char *udun_wraithform_info()
+{
+	static char buf[128];
+	sprintf(buf,
+		"dur %d+d30",
+		udun_wraithform_base_duration());
+	return buf;
+}
+
+static int udun_flame_of_udun_base_duration()
+{
+	return 5 + get_level_s(FLAMEOFUDUN, 30);
+}
+
+bool_ *udun_flame_of_udun()
+{
+	set_mimic(randint(15) + udun_flame_of_udun_base_duration(),
+		  resolve_mimic_name("Balrog"),
+		  get_level_s(FLAMEOFUDUN, 50));
+	return CAST;
+}
+
+char *udun_flame_of_udun_info()
+{
+	static char buf[128];
+	sprintf(buf,
+		"dur %d+d15",
+		udun_flame_of_udun_base_duration());
+	return buf;
+}
+

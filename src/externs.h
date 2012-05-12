@@ -1666,6 +1666,22 @@ char  *tulkas_wave_of_power_info();
 bool_ *tulkas_whirlwind();
 char  *tulkas_whirlwind_info();
 
+extern s32b DRAIN;
+extern s32b GENOCIDE;
+extern s32b WRAITHFORM;
+extern s32b FLAMEOFUDUN;
+
+int udun_in_book(s32b sval, s32b pval);
+
+bool_ *udun_drain();
+char  *udun_drain_info();
+bool_ *udun_genocide();
+char  *udun_genocide_info();
+bool_ *udun_wraithform();
+char  *udun_wraithform_info();
+bool_ *udun_flame_of_udun();
+char  *udun_flame_of_udun_info();
+
 /* randart.c */
 extern int get_activation_power(void);
 extern void build_prob(cptr learn);
