@@ -105,6 +105,12 @@ s32b ENTPOTION;
 s32b VAPOR;
 s32b GEYSER;
 
+s32b YAVANNA_CHARM_ANIMAL;
+s32b YAVANNA_GROW_GRASS;
+s32b YAVANNA_TREE_ROOTS;
+s32b YAVANNA_WATER_BITE;
+s32b YAVANNA_UPROOT;
+
 
 /* FIXME: Hackish workaround while we're still tied to Lua. This lets
  us return Lua's "nil" and a non-nil value (which is all the s_aux.lua
@@ -3182,3 +3188,189 @@ char *water_geyser_info()
 		sides);
 	return buf;
 }
+
+static int charm_animal_power()
+{
+	return 10 + get_level_s(YAVANNA_CHARM_ANIMAL, 170);
+}
+
+static int charm_animal_radius()
+{
+	return get_level_s(YAVANNA_CHARM_ANIMAL, 2);
+}
+
+bool_ *yavanna_charm_animal()
+{
+	int dir;
+
+	if (!get_aim_dir(&dir))
+	{
+		return NO_CAST;
+	}
+
+	fire_ball(GF_CONTROL_ANIMAL,
+		  dir,
+		  charm_animal_power(),
+		  charm_animal_radius());
+	return CAST;
+}
+
+char *yavanna_charm_animal_info()
+{
+	static char buf[128];
+	sprintf(buf,
+		"power %d rad %d",
+		charm_animal_power(),
+		charm_animal_radius());
+	return buf;
+}
+
+static int yavanna_grow_grass_radius()
+{
+	return get_level_s(YAVANNA_GROW_GRASS, 4);
+}
+
+bool_ *yavanna_grow_grass()
+{
+	grow_grass(yavanna_grow_grass_radius());
+	return CAST;
+}
+
+char *yavanna_grow_grass_info()
+{
+	static char buf[128];
+	sprintf(buf,
+		"rad %d",
+		yavanna_grow_grass_radius());
+	return buf;
+}
+
+static int tree_roots_duration()
+{
+	return 10 + get_level_s(YAVANNA_TREE_ROOTS, 30);
+}
+
+static int tree_roots_ac()
+{
+	return 10 + get_level_s(YAVANNA_TREE_ROOTS, 60);
+}
+
+static int tree_roots_damage()
+{
+	return 10 + get_level_s(YAVANNA_TREE_ROOTS, 20);
+}
+
+bool_ *yavanna_tree_roots()
+{
+	set_roots(tree_roots_duration(),
+		  tree_roots_ac(),
+		  tree_roots_damage());
+	return CAST;
+}
+
+char *yavanna_tree_roots_info()
+{
+	static char buf[128];
+	sprintf(buf,
+		"dur %d AC %d dam %d",
+		tree_roots_duration(),
+		tree_roots_ac(),
+		tree_roots_damage());
+	return buf;
+}
+
+static int water_bite_base_duration()
+{
+	return 30 + get_level_s(YAVANNA_WATER_BITE, 150);
+}
+
+static int water_bite_damage()
+{
+	return 10 + get_level_s(YAVANNA_WATER_BITE, 50);
+}
+
+bool_ *yavanna_water_bite()
+{
+	int rad = 0;
+
+	if (get_level_s(YAVANNA_WATER_BITE, 50) >= 25)
+	{
+		rad = 1;
+	}
+
+	set_project(randint(30) + water_bite_base_duration(),
+		    GF_WATER,
+		    water_bite_damage(),
+		    rad,
+		    PROJECT_STOP | PROJECT_KILL);
+	return CAST;
+}
+
+char *yavanna_water_bite_info()
+{
+	static char buf[128];
+	sprintf(buf,
+		"dur %d+d30 dam %d/blow",
+		water_bite_base_duration(),
+		water_bite_damage());
+	return buf;
+}
+
+static int uproot_mlevel()
+{
+	return 30 + get_level_s(YAVANNA_UPROOT, 70);
+}
+
+bool_ *yavanna_uproot()
+{
+	int dir, x, y;
+	cave_type *c_ptr;
+
+	if (!get_rep_dir(&dir))
+	{
+		return NO_CAST;
+	}
+
+	y = ddy[dir];
+	x = ddx[dir];
+
+	y += p_ptr->py;
+	x += p_ptr->px;
+
+	c_ptr = &cave[y][x];
+
+	if (c_ptr->feat == FEAT_TREES)
+	{
+		s16b m_idx;
+
+		cave_set_feat(y, x, FEAT_GRASS);
+
+		/* Summon it */
+		find_position(y, x, &y, &x);
+		m_idx = place_monster_one(y, x, test_monster_name("Ent"), 0, FALSE, MSTATUS_FRIEND);
+
+		/* level it */
+		if (m_idx != 0)
+		{
+			monster_set_level(m_idx, uproot_mlevel());
+		}
+
+		msg_print("The tree awakes!");
+		return CAST;
+	}
+	else
+	{
+		msg_print("There is no tree there.");
+		return NO_CAST;
+	}
+}
+
+char *yavanna_uproot_info()
+{
+	static char buf[128];
+	sprintf(buf,
+		"lev %d",
+		uproot_mlevel());
+	return buf;
+}
+

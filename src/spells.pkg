@@ -2702,3 +2702,20 @@ bool_ *water_vapor();
 char  *water_vapor_info();
 bool_ *water_geyser();
 char  *water_geyser_info();
+
+extern s32b YAVANNA_CHARM_ANIMAL;
+extern s32b YAVANNA_GROW_GRASS;
+extern s32b YAVANNA_TREE_ROOTS;
+extern s32b YAVANNA_WATER_BITE;
+extern s32b YAVANNA_UPROOT;
+
+bool_ *yavanna_charm_animal();
+char  *yavanna_charm_animal_info();
+bool_ *yavanna_grow_grass();
+char  *yavanna_grow_grass_info();
+bool_ *yavanna_tree_roots();
+char  *yavanna_tree_roots_info();
+bool_ *yavanna_water_bite();
+char  *yavanna_water_bite_info();
+bool_ *yavanna_uproot();
+char  *yavanna_uproot_info();
