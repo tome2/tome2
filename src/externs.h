@@ -1716,6 +1716,26 @@ char  *yavanna_water_bite_info();
 bool_ *yavanna_uproot();
 char  *yavanna_uproot_info();
 
+extern s32b GROWTREE;
+extern s32b HEALING;
+extern s32b RECOVERY;
+extern s32b REGENERATION;
+extern s32b SUMMONANNIMAL;
+extern s32b GROW_ATHELAS;
+
+bool_ *nature_grow_trees();
+char *nature_grow_trees_info();
+bool_ *nature_healing();
+char *nature_healing_info();
+bool_ *nature_recovery();
+char *nature_recovery_info();
+bool_ *nature_regeneration();
+char *nature_regeneration_info();
+bool_ *nature_summon_animal();
+char *nature_summon_animal_info();
+bool_ *nature_grow_athelas();
+char *nature_grow_athelas_info();
+
 /* randart.c */
 extern int get_activation_power(void);
 extern void build_prob(cptr learn);

@@ -111,6 +111,13 @@ s32b YAVANNA_TREE_ROOTS;
 s32b YAVANNA_WATER_BITE;
 s32b YAVANNA_UPROOT;
 
+s32b GROWTREE;
+s32b HEALING;
+s32b RECOVERY;
+s32b REGENERATION;
+s32b SUMMONANNIMAL;
+s32b GROW_ATHELAS = -1;
+
 
 /* FIXME: Hackish workaround while we're still tied to Lua. This lets
  us return Lua's "nil" and a non-nil value (which is all the s_aux.lua
@@ -3374,3 +3381,149 @@ char *yavanna_uproot_info()
 	return buf;
 }
 
+static int nature_grow_trees_radius()
+{
+	return 2 + get_level_s(GROWTREE, 7);
+}
+
+bool_ *nature_grow_trees()
+{
+	grow_trees(nature_grow_trees_radius());
+	return CAST;
+}
+
+char *nature_grow_trees_info()
+{
+	static char buf[128];
+	sprintf(buf,
+		"rad %d",
+		nature_grow_trees_radius());
+	return buf;
+}
+
+static int nature_healing_percentage()
+{
+	return 15 + get_level_s(HEALING, 35);
+}
+
+static int nature_healing_hp()
+{
+	return p_ptr->mhp * nature_healing_percentage() / 100;
+}
+
+bool_ *nature_healing()
+{
+	hp_player(nature_healing_hp());
+	return CAST;
+}
+
+char *nature_healing_info()
+{
+	static char buf[128];
+	sprintf(buf,
+		"heal %d%% = %dhp",
+		nature_healing_percentage(),
+		nature_healing_hp());
+	return buf;
+}
+
+bool_ *nature_recovery()
+{
+	set_poisoned(p_ptr->poisoned / 2);
+	if (get_level_s(RECOVERY, 50) >= 5)
+	{
+		set_poisoned(0);
+		set_cut(0);
+	}
+	if (get_level_s(RECOVERY, 50) >= 10)
+	{
+		do_res_stat(A_STR, TRUE);
+		do_res_stat(A_CON, TRUE);
+		do_res_stat(A_DEX, TRUE);
+		do_res_stat(A_WIS, TRUE);
+		do_res_stat(A_INT, TRUE);
+		do_res_stat(A_CHR, TRUE);
+	}
+	if (get_level_s(RECOVERY, 50) >= 15)
+	{
+		restore_level();
+	}
+	return CAST;
+}
+
+char *nature_recovery_info()
+{
+	return "";
+}
+
+static int regeneration_base_duration()
+{
+	return 5 + get_level_s(REGENERATION, 50);
+}
+
+static int regeneration_power()
+{
+	return 300 + get_level_s(REGENERATION, 700);
+}
+
+bool_ *nature_regeneration()
+{
+	if (p_ptr->tim_regen == 0)
+	{
+		set_tim_regen(randint(10) + regeneration_base_duration(),
+			      regeneration_power());
+		return CAST;
+	}
+	return NO_CAST;
+}
+
+char *nature_regeneration_info()
+{
+	static char buf[128];
+	sprintf(buf,
+		"dur %d+d10 power %d",
+		regeneration_base_duration(),
+		regeneration_power());
+	return buf;
+}
+
+static int summon_animal_level()
+{
+	return 25 + get_level_s(SUMMONANNIMAL, 50);
+}
+
+bool_ *nature_summon_animal()
+{
+	summon_specific_level = summon_animal_level();
+	summon_specific_friendly(p_ptr->py,
+				 p_ptr->px,
+				 dun_level,
+				 SUMMON_ANIMAL,
+				 TRUE);
+	return CAST;
+}
+
+char *nature_summon_animal_info()
+{
+	static char buf[128];
+	sprintf(buf,
+		"level %d",
+		summon_animal_level());
+	return buf;
+}
+
+bool_ *nature_grow_athelas()
+{
+        if (p_ptr->black_breath)
+	{
+		msg_print("The hold of the Black Breath on you is broken!");
+		p_ptr->black_breath = FALSE;
+	}
+
+	return CAST;
+}
+
+char *nature_grow_athelas_info()
+{
+	return "";
+}
