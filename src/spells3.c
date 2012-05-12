@@ -99,6 +99,12 @@ s32b GENOCIDE;
 s32b WRAITHFORM;
 s32b FLAMEOFUDUN;
 
+s32b TIDALWAVE;
+s32b ICESTORM;
+s32b ENTPOTION;
+s32b VAPOR;
+s32b GEYSER;
+
 
 /* FIXME: Hackish workaround while we're still tied to Lua. This lets
  us return Lua's "nil" and a non-nil value (which is all the s_aux.lua
@@ -2987,3 +2993,192 @@ char *udun_flame_of_udun_info()
 	return buf;
 }
 
+static int tidal_wave_damage()
+{
+	return 40 + get_level_s(TIDALWAVE, 200);
+}
+
+static int tidal_wave_duration()
+{
+	return 6 + get_level_s(TIDALWAVE, 10);
+}
+
+bool_ *water_tidal_wave()
+{
+	fire_wave(GF_WAVE,
+		  0,
+		  tidal_wave_damage(),
+		  0,
+		  tidal_wave_duration(),
+		  EFF_WAVE);
+	return CAST;
+}
+
+char *water_tidal_wave_info()
+{
+	static char buf[128];
+	sprintf(buf,
+		"dam %d dur %d",
+		tidal_wave_damage(),
+		tidal_wave_duration());
+	return buf;
+}
+
+static int water_ice_storm_damage()
+{
+	return 80 + get_level_s(ICESTORM, 200);
+}
+
+static int water_ice_storm_radius()
+{
+	return 1 + get_level(ICESTORM, 3, 0);
+}
+
+static int water_ice_storm_duration()
+{
+	return 20 + get_level_s(ICESTORM, 70);
+}
+
+bool_ *water_ice_storm()
+{
+	int type = GF_COLD;
+
+	if (get_level_s(ICESTORM, 50) >= 10)
+	{
+		type = GF_ICE;
+	}
+
+	fire_wave(type,
+		  0,
+		  water_ice_storm_damage(),
+		  water_ice_storm_radius(),
+		  water_ice_storm_duration(),
+		  EFF_STORM);
+
+	return CAST;
+}
+
+char *water_ice_storm_info()
+{
+	static char buf[128];
+	sprintf(buf,
+		"dam %d rad %d dur %d",
+		water_ice_storm_damage(),
+		water_ice_storm_radius(),
+		water_ice_storm_duration());
+	return buf;
+}
+
+static int water_ent_potion_base_duration()
+{
+	return 25 + get_level_s(ENTPOTION, 40);;
+}
+
+bool_ *water_ent_potion()
+{
+	set_food(PY_FOOD_MAX - 1);
+	msg_print("The Ent's Potion fills your stomach.");
+	
+	if (get_level_s(ENTPOTION, 50) >= 5)
+	{
+		set_afraid(0);
+	}
+	if (get_level_s(ENTPOTION, 50) >= 12)
+	{
+		set_hero(p_ptr->hero + randint(25) + water_ent_potion_base_duration());
+	}
+
+	return CAST;
+}
+
+char *water_ent_potion_info()
+{
+	if (get_level_s(ENTPOTION, 50) >= 12)
+	{
+		static char buf[128];
+		sprintf(buf,
+			"dur %d+d25",
+			water_ent_potion_base_duration());
+		return buf;
+	}
+	else
+	{
+		return "";
+	}
+}
+
+static int water_vapor_damage()
+{
+	return 3 + get_level_s(VAPOR, 20);
+}
+
+static int water_vapor_radius()
+{
+	return 3 + get_level(VAPOR, 9, 0);
+}
+
+static int water_vapor_duration()
+{
+	return 5;
+}
+
+bool_ *water_vapor()
+{
+	fire_cloud(GF_WATER,
+		   0,
+		   water_vapor_damage(),
+		   water_vapor_radius(),
+		   water_vapor_duration());
+	return CAST;
+}
+
+char *water_vapor_info()
+{
+	static char buf[128];
+	sprintf(buf,
+		"dam %d rad %d dur %d",
+		water_vapor_damage(),
+		water_vapor_radius(),
+		water_vapor_duration());
+	return buf;
+}
+
+static void get_geyser_damage(int *dice, int *sides)
+{
+	assert(dice != NULL);
+	assert(sides != NULL);
+
+	*dice = get_level_s(GEYSER, 10);
+	*sides = 3 + get_level_s(GEYSER, 35);
+}
+
+bool_ *water_geyser()
+{
+	int dir, dice, sides;
+
+	if (!get_aim_dir(&dir))
+	{
+		return NO_CAST;
+	}
+
+	get_geyser_damage(&dice, &sides);
+	fire_bolt_or_beam(2 * get_level_s(GEYSER, 85),
+			  GF_WATER,
+			  dir,
+			  damroll(dice, sides));
+	return CAST;
+}
+
+char *water_geyser_info()
+{
+	static char buf[128];
+	int dice, sides;
+
+	get_geyser_damage(&dice, &sides);
+
+	sprintf(buf,
+		"dam %dd%d",
+		dice,
+		sides);
+	return buf;
+}

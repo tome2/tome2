@@ -2,6 +2,10 @@
 
 BOOK_ULMO = 65
 
+function get_belegaer_damage()
+       return get_level(ULMO_BELEGAER, 10), 3 + get_level(ULMO_BELEGAER, 35)
+end
+
 -- "Song of Belegaer" copied from Geyser
 ULMO_BELEGAER = add_spell
 {
@@ -18,11 +22,11 @@ ULMO_BELEGAER = add_spell
 		local ret, dir
 		ret, dir = get_aim_dir()
 		if ret == FALSE then return end
-		return fire_bolt_or_beam(2 * get_level(ULMO_BELEGAER, 85), GF_WATER, dir, damroll(get_geyser_damage()))
+		return fire_bolt_or_beam(2 * get_level(ULMO_BELEGAER, 85), GF_WATER, dir, damroll(get_belegaer_damage()))
 	end,
 	["info"] = function()
 		local n, d
-		n, d = get_geyser_damage()
+		n, d = get_belegaer_damage()
 		return "dam "..n.."d"..d
 	end,
 	["desc"] =

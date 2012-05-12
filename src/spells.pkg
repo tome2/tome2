@@ -2685,3 +2685,20 @@ bool_ *udun_wraithform();
 char  *udun_wraithform_info();
 bool_ *udun_flame_of_udun();
 char  *udun_flame_of_udun_info();
+
+extern s32b TIDALWAVE;
+extern s32b ICESTORM;
+extern s32b ENTPOTION;
+extern s32b VAPOR;
+extern s32b GEYSER;
+
+bool_ *water_tidal_wave();
+char  *water_tidal_wave_info();
+bool_ *water_ice_storm();
+char  *water_ice_storm_info();
+bool_ *water_ent_potion();
+char  *water_ent_potion_info();
+bool_ *water_vapor();
+char  *water_vapor_info();
+bool_ *water_geyser();
+char  *water_geyser_info();
