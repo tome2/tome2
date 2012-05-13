@@ -1841,6 +1841,20 @@ char  *music_horns_of_ylmir_info();
 bool_ *music_ambarkanta_spell();
 char  *music_ambarkanta_info();
 
+extern s32b AULE_FIREBRAND;
+extern s32b AULE_ENCHANT_WEAPON;
+extern s32b AULE_ENCHANT_ARMOUR;
+extern s32b AULE_CHILD;
+
+bool_ *aule_firebrand_spell();
+char  *aule_firebrand_info();
+bool_ *aule_enchant_weapon_spell();
+char  *aule_enchant_weapon_info();
+bool_ *aule_enchant_armour_spell();
+char  *aule_enchant_armour_info();
+bool_ *aule_child_spell();
+char  *aule_child_info();
+
 /* randart.c */
 extern int get_activation_power(void);
 extern void build_prob(cptr learn);

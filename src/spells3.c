@@ -147,6 +147,11 @@ s32b MUSIC_WIND;
 s32b MUSIC_YLMIR;
 s32b MUSIC_AMBARKANTA;
 
+s32b AULE_FIREBRAND;
+s32b AULE_ENCHANT_WEAPON;
+s32b AULE_ENCHANT_ARMOUR;
+s32b AULE_CHILD;
+
 
 /* FIXME: Hackish workaround while we're still tied to Lua. This lets
  us return Lua's "nil" and a non-nil value (which is all the s_aux.lua
@@ -4207,4 +4212,212 @@ bool_ *music_ambarkanta_spell()
 char *music_ambarkanta_info()
 {
 	return "";
+}
+
+bool_ *aule_firebrand_spell()
+{
+	int rad = 0;
+	int type = GF_FIRE;
+	s32b level = get_level_s(AULE_FIREBRAND, 50);
+
+	if (level > 30)
+	{
+		type = GF_HOLY_FIRE;
+	}
+
+	if (level >= 15)
+	{
+		rad = 1;
+	}
+
+	set_project(level + randint(20),
+		    type,
+		    4 + level,
+		    rad,
+		    PROJECT_STOP | PROJECT_KILL);
+	return CAST;
+}
+
+char  *aule_firebrand_info()
+{
+	s32b level = get_level_s(AULE_FIREBRAND, 50);
+	static char buf[128];
+
+	sprintf(buf,
+		"dur " FMTs32b "+d20 dam " FMTs32b "/blow",
+		level,
+		4 + level);
+	return buf;
+}
+
+static bool_ aule_enchant_weapon_item_tester(object_type *o_ptr)
+{
+	if (o_ptr->name1 > 0)
+	{
+		return FALSE;
+	}
+
+	switch (o_ptr->tval)
+	{
+	case TV_MSTAFF:
+	case TV_BOW:
+	case TV_HAFTED:
+	case TV_POLEARM:
+	case TV_SWORD:
+	case TV_AXE:
+		return TRUE;
+
+	default:
+		return FALSE;
+	}
+}
+
+bool_ *aule_enchant_weapon_spell()
+{
+	s32b level = get_level_s(AULE_ENCHANT_WEAPON, 50);
+	s16b num_h, num_d, num_p;
+	int item;
+	object_type *o_ptr = NULL;
+
+	num_h = 1 + randint(level/12);
+	num_d = 0;
+	num_p = 0;
+
+	if (level >= 5)
+	{
+		num_d = 1 + randint(level/12);
+	}
+	if (level >= 45)
+	{
+		num_p = 1;
+	}
+
+	item_tester_hook = aule_enchant_weapon_item_tester;
+	if (!get_item(&item,
+		      "Which object do you want to enchant?",
+		      "You have no objects to enchant.",
+		      USE_INVEN))
+	{
+		return NO_CAST;
+	}
+
+	o_ptr = get_object(item);
+
+	o_ptr->to_h = o_ptr->to_h + num_h;
+	o_ptr->to_d = o_ptr->to_d + num_d;
+	o_ptr->pval = o_ptr->pval + num_p;
+
+	return CAST;
+}
+
+char  *aule_enchant_weapon_info()
+{
+	static char buf[128];
+	sprintf(buf,
+		"tries " FMTs32b,
+		1 + get_level_s(AULE_ENCHANT_WEAPON, 50)/12);
+	return buf;
+}
+
+bool_ aule_enchant_armor_item_tester(object_type *o_ptr)
+{
+	if (o_ptr->name1 > 0)
+	{
+		return FALSE;
+	}
+
+	switch (o_ptr->tval)
+	{
+	case TV_BOOTS:
+	case TV_GLOVES:
+	case TV_HELM:
+	case TV_CROWN:
+	case TV_SHIELD:
+	case TV_CLOAK:
+	case TV_SOFT_ARMOR:
+	case TV_HARD_ARMOR:
+	case TV_DRAG_ARMOR:
+		return TRUE;
+
+	default:
+		return FALSE;
+	}
+}
+
+bool_ *aule_enchant_armour_spell()
+{
+	s32b level = get_level_s(AULE_ENCHANT_ARMOUR, 50);
+	s16b num_h, num_d, num_a, num_p;
+	int item;
+	object_type *o_ptr = NULL;
+
+	num_a = 1 + randint(level/10);
+	num_h = 0;
+	num_d = 0;
+	num_p = 0;
+	if (level >= 20)
+	{
+		num_h = 1;
+		num_d = 1;
+	}
+	if (level >= 40)
+	{
+		num_p = 1;
+	}
+
+	item_tester_hook = aule_enchant_armor_item_tester;
+	if (!get_item(&item,
+		      "Which object do you want to enchant?",
+		      "You have no objects to enchant.",
+		      USE_INVEN))
+	{
+		return NO_CAST;
+	}
+
+	o_ptr = get_object(item);
+
+	o_ptr->to_h = o_ptr->to_h + num_h;
+	o_ptr->to_d = o_ptr->to_d + num_d;
+	o_ptr->pval = o_ptr->pval + num_p;
+	o_ptr->to_a = o_ptr->to_a + num_a;
+
+	return CAST;
+}
+
+char  *aule_enchant_armour_info()
+{
+	static char buf[128];
+	sprintf(buf,
+		"tries " FMTs32b,
+		1 + get_level_s(AULE_ENCHANT_ARMOUR, 50)/10);
+	return buf;
+}
+
+bool_ *aule_child_spell()
+{
+	int y, x;
+	s16b m_idx;
+
+	find_position(p_ptr->py, p_ptr->px, &y, &x);
+	m_idx = place_monster_one(y, x, test_monster_name("Dwarven warrior"),
+				  0, FALSE, MSTATUS_FRIEND);
+ 
+	if (m_idx)
+	{
+		monster_set_level(m_idx, 20 + get_level(AULE_CHILD, 70, 0));
+		return CAST;
+	}
+	else
+	{
+		return NO_CAST;
+	}
+}
+
+char  *aule_child_info()
+{
+	static char buf[128];
+	sprintf(buf,
+		"level " FMTs32b,
+		20 + get_level_s(AULE_CHILD, 70));
+	return buf;
 }
