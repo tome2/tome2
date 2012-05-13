@@ -4145,6 +4145,25 @@ s16b wield_slot_ideal(object_type *o_ptr, bool_ ideal)
 			}
 			return -1;
 		}
+
+	case TV_DAEMON_BOOK:
+		{
+			int slot = -1;
+
+			switch (o_ptr->sval)
+			{
+			case SV_DEMONBLADE : slot = INVEN_WIELD; break;
+			case SV_DEMONSHIELD: slot = INVEN_ARM; break;
+			case SV_DEMONHORN  : slot = INVEN_HEAD; break;
+			}
+
+			if ((slot >= 0) && (!ideal))
+			{
+				slot = get_slot(slot);
+			}
+
+			return slot;
+		}
 	}
 
 	/* No slot available */

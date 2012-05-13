@@ -164,33 +164,3 @@ CONTROL_DEMON = add_spell
 			"Attempts to control a demon",
 	}
 }
-
--- ok we need to have different wield slots
-add_hooks
-{
-	[HOOK_WIELD_SLOT] =     function (obj, ideal)
-			if (obj.tval == TV_DAEMON_BOOK) then
-				local slot
-				if (obj.sval == SV_DEMONBLADE) then
-					if(ideal == TRUE) then
-						slot = INVEN_WIELD
-					else
-						slot = get_slot(INVEN_WIELD)
-					end
-				elseif (obj.sval == SV_DEMONSHIELD) then
-					if(ideal == TRUE) then
-						slot = INVEN_ARM
-					else
-						slot = get_slot(INVEN_ARM)
-					end
-				elseif (obj.sval == SV_DEMONHORN) then
-					if(ideal == TRUE) then
-						slot = INVEN_HEAD
-					else
-						slot = get_slot(INVEN_HEAD)
-					end
-				end
-				return TRUE, slot
-			end
-	end,
-}

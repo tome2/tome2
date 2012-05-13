@@ -835,11 +835,6 @@ static obj_theme lua_obj_theme @ theme_forge;
 #define SV_CORPSE_SKULL      4
 #define SV_CORPSE_MEAT       5
 
-/* The "sval" codes for TV_DAEMON_BOOK */
-#define SV_DEMONBLADE  55
-#define SV_DEMONSHIELD 56
-#define SV_DEMONHORN   57
-
 /*
  * Special Object Flags
  */
