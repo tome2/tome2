@@ -2783,3 +2783,64 @@ bool_ *device_radagast();
 char  *device_radagast_info();
 bool_ *device_valaroma();
 char  *device_valaroma_info();
+
+extern s32b MUSIC_STOP;
+extern s32b MUSIC_HOLD;
+extern s32b MUSIC_CONF;
+extern s32b MUSIC_STUN;
+extern s32b MUSIC_LITE;
+extern s32b MUSIC_HEAL;
+extern s32b MUSIC_HERO;
+extern s32b MUSIC_TIME;
+extern s32b MUSIC_MIND;
+extern s32b MUSIC_BLOW;
+extern s32b MUSIC_WIND;
+extern s32b MUSIC_YLMIR;
+extern s32b MUSIC_AMBARKANTA;
+
+bool_ *music_stop_singing_spell();
+char  *music_stop_singing_info();
+
+int    music_holding_pattern_lasting();
+bool_ *music_holding_pattern_spell();
+char  *music_holding_pattern_info();
+
+int    music_illusion_pattern_lasting();
+bool_ *music_illusion_pattern_spell();
+char  *music_illusion_pattern_info();
+
+int    music_stun_pattern_lasting();
+bool_ *music_stun_pattern_spell();
+char  *music_stun_pattern_info();
+
+int    music_song_of_the_sun_lasting();
+bool_ *music_song_of_the_sun_spell();
+char  *music_song_of_the_sun_info();
+
+int    music_flow_of_life_lasting();
+bool_ *music_flow_of_life_spell();
+char  *music_flow_of_life_info();
+
+int    music_heroic_ballad_lasting();
+bool_ *music_heroic_ballad_spell();
+char  *music_heroic_ballad_info();
+
+int    music_hobbit_melodies_lasting();
+bool_ *music_hobbit_melodies_spell();
+char  *music_hobbit_melodies_info();
+
+int    music_clairaudience_lasting();
+bool_ *music_clairaudience_spell();
+char  *music_clairaudience_info();
+
+bool_ *music_blow_spell();
+char  *music_blow_info();
+
+bool_ *music_gush_of_wind_spell();
+char  *music_gush_of_wind_info();
+
+bool_ *music_horns_of_ylmir_spell();
+char  *music_horns_of_ylmir_info();
+
+bool_ *music_ambarkanta_spell();
+char  *music_ambarkanta_info();

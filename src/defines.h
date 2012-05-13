@@ -4088,36 +4088,6 @@
 #define ALCHEMIST_ENCHANT_AC       0x04
 
 /*
- * Music songs
- */
-#define MUSIC_NONE              0
-#define MUSIC_SLOW              1
-#define MUSIC_CONF              2
-#define MUSIC_STUN              3
-#define MUSIC_LIFE              4
-#define MUSIC_MIND              5
-#define MUSIC_LITE              6
-#define MUSIC_FURY              7
-#define MUSIC_AWARE             8
-#define MUSIC_ID                9
-#define MUSIC_ILLUSION          10
-#define MUSIC_WALL              11
-#define MUSIC_RESIST            12
-#define MUSIC_TIME              13
-#define MUSIC_BETWEEN           14
-#define MUSIC_CHARME            15
-#define MUSIC_VIBRA             16
-#define MUSIC_HOLY              17
-#define MUSIC_HIDE              18
-#define MUSIC_LIBERTY           19
-#define MUSIC_RAISE             20
-#define MUSIC_SHADOW            21
-#define MUSIC_STAR_ID           22
-
-#define MAX_MUSIC               23
-#define MAX_MUSICS              11
-
-/*
  * Fate
  */
 #define MAX_FATES               200

@@ -950,8 +950,8 @@ static void check_music()
 	if (p_ptr->csp < use_mana)
 	{
 		msg_print("You stop your spell.");
-		p_ptr->music_extra = MUSIC_NONE;
-		p_ptr->music_extra2 = MUSIC_NONE;
+		p_ptr->music_extra = 0;
+		p_ptr->music_extra2 = 0;
 	}
 	else
 	{

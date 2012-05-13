@@ -13,13 +13,8 @@ MUSIC_STOP = add_spell
 	["random"] =    SKILL_MUSIC,
 	["pval"] =      1,
 	["blind"] =     FALSE,
-	["spell"] =     function()
-			player.start_lasting_spell(0)
-			return TRUE
-	end,
-	["info"] =      function()
-			return ""
-	end,
+	["spell"] =     function() return music_stop_singing_spell() end,
+	["info"] =      function() return music_stop_singing_info() end,
 	["desc"] =      {
 			"Stops the current song, if any."
 	}
@@ -38,17 +33,9 @@ MUSIC_HOLD = add_spell
 	["random"] =    SKILL_MUSIC,
 	["pval"] =      1,
 	["blind"] =     FALSE,
-	["lasting"] =   function()
-			project_los(GF_OLD_SLOW, 10 + get_level(MUSIC_HOLD, 100))
-			return get_mana(MUSIC_HOLD)
-	end,
-	["spell"] =     function()
-			player.start_lasting_spell(MUSIC_HOLD)
-			return TRUE
-	end,
-	["info"] =      function()
-			return "power "..(10 + get_level(MUSIC_HOLD, 100))
-	end,
+	["lasting"] =   function() return music_holding_pattern_lasting() end,
+	["spell"] =     function() return music_holding_pattern_spell() end,
+	["info"] =      function() return music_holding_pattern_info() end,
 	["desc"] =      {
 			"Slows down all monsters listening the song.",
 			"Consumes the amount of mana each turn.",
@@ -67,17 +54,9 @@ MUSIC_CONF = add_spell
 	["random"] =    SKILL_MUSIC,
 	["pval"] =      2,
 	["blind"] =     FALSE,
-	["lasting"] =   function()
-			project_los(GF_OLD_CONF, 10 + get_level(MUSIC_CONF, 100))
-			return get_mana(MUSIC_CONF)
-	end,
-	["spell"] =     function()
-			player.start_lasting_spell(MUSIC_CONF)
-			return TRUE
-	end,
-	["info"] =      function()
-			return "power "..(10 + get_level(MUSIC_CONF, 100))
-	end,
+	["lasting"] =   function() return music_illusion_pattern_lasting() end,
+	["spell"] =     function() return music_illusion_pattern_spell() end,
+	["info"] =      function() return music_illusion_pattern_info() end,
 	["desc"] =      {
 			"Tries to confuse all monsters listening the song.",
 			"Consumes the amount of mana each turn.",
@@ -96,17 +75,9 @@ MUSIC_STUN = add_spell
 	["random"] =    SKILL_MUSIC,
 	["pval"] =      4,
 	["blind"] =     FALSE,
-	["lasting"] =   function()
-			project_los(GF_STUN, 10 + get_level(MUSIC_STUN, 90))
-			return get_mana(MUSIC_STUN)
-	end,
-	["spell"] =     function()
-			player.start_lasting_spell(MUSIC_STUN)
-			return TRUE
-	end,
-	["info"] =      function()
-			return "power "..(10 + get_level(MUSIC_STUN, 90))
-	end,
+	["lasting"] =   function() return music_stun_pattern_lasting() end,
+	["spell"] =     function() return music_stun_pattern_spell() end,
+	["info"] =      function() return music_stun_pattern_info() end,
 	["desc"] =      {
 			"Stuns all monsters listening the song.",
 			"Consumes the amount of mana each turn.",
@@ -126,17 +97,9 @@ MUSIC_LITE = add_spell
 	["random"] =    SKILL_MUSIC,
 	["blind"] =     FALSE,
 	["pval"] =      1,
-	["lasting"] =   function()
-			set_lite(5)
-			return 1
-	end,
-	["spell"] =     function()
-			player.start_lasting_spell(MUSIC_LITE)
-			return TRUE
-	end,
-	["info"] =      function()
-			return ""
-	end,
+	["lasting"] =   function() return music_song_of_the_sun_lasting() end,
+	["spell"] =     function() return music_song_of_the_sun_spell() end,
+	["info"] =      function() return music_song_of_the_sun_info() end,
 	["desc"] =      {
 			"Provides light as long as you sing.",
 			"Consumes the amount of mana each turn.",
@@ -154,17 +117,9 @@ MUSIC_HEAL = add_spell
 	["stat"] =      A_CHR,
 	["random"] =    SKILL_MUSIC,
 	["pval"] =      2,
-	["lasting"] =   function()
-			hp_player(7 + get_level(MUSIC_HEAL, 100))
-			return get_mana(MUSIC_HEAL)
-	end,
-	["spell"] =     function()
-			player.start_lasting_spell(MUSIC_HEAL)
-			return TRUE
-	end,
-	["info"] =      function()
-			return "heal "..(7 + get_level(MUSIC_HEAL, 100)).."/turn"
-	end,
+	["lasting"] =   function() return music_flow_of_life_lasting() end,
+	["spell"] =     function() return music_flow_of_life_spell() end,
+	["info"] =      function() return music_flow_of_life_info() end,
 	["desc"] =      {
 			"Heals you as long as you sing.",
 			"Consumes the amount of mana each turn.",
@@ -182,26 +137,9 @@ MUSIC_HERO = add_spell
 	["stat"] =      A_CHR,
 	["random"] =    SKILL_MUSIC,
 	["pval"] =      2,
-	["lasting"] =   function()
-			set_hero(5)
-			if get_level(MUSIC_HERO) >= 10 then
-				set_shero(5)
-			end
-			if get_level(MUSIC_HERO) >= 20 then
-				set_strike(5)
-			end
-			if get_level(MUSIC_HERO) >= 25 then
-				set_oppose_cc(5)
-			end
-			return get_mana(MUSIC_HERO)
-	end,
-	["spell"] =     function()
-			player.start_lasting_spell(MUSIC_HERO)
-			return TRUE
-	end,
-	["info"] =      function()
-			return ""
-	end,
+	["lasting"] =   function() return music_heroic_ballad_lasting() end,
+	["spell"] =     function() return music_heroic_ballad_spell() end,
+	["info"] =      function() return music_heroic_ballad_info() end,
 	["desc"] =      {
 			"Increases melee accuracy",
 			"At level 10 it increases it even more and reduces armour a bit",
@@ -222,24 +160,9 @@ MUSIC_TIME = add_spell
 	["stat"] =      A_CHR,
 	["random"] =    SKILL_MUSIC,
 	["pval"] =      3,
-	["lasting"] =   function()
-			set_shield(5, 10 + get_level(MUSIC_TIME, 50), 0, 0, 0)
-			if get_level(MUSIC_TIME) >= 15 then
-				set_fast(5, 7 + get_level(MUSIC_TIME, 10))
-			end
-			return get_mana(MUSIC_TIME)
-	end,
-	["spell"] =     function()
-			player.start_lasting_spell(MUSIC_TIME)
-			return TRUE
-	end,
-	["info"] =      function()
-			if get_level(MUSIC_TIME) >= 15 then
-				return "AC "..(10 + get_level(MUSIC_TIME, 50)).." speed "..(7 + get_level(MUSIC_TIME, 10))
-			else
-				return "AC "..(10 + get_level(MUSIC_TIME, 50))
-			end
-	end,
+	["lasting"] =   function() return music_hobbit_melodies_lasting() end,
+	["spell"] =     function() return music_hobbit_melodies_spell() end,
+	["info"] =      function() return music_hobbit_melodies_info() end,
 	["desc"] =      {
 			"Greatly increases your reflexes allowing you to block more melee blows.",
 			"At level 15 it also makes you faster.",
@@ -258,24 +181,9 @@ MUSIC_MIND = add_spell
 	["stat"] =      A_CHR,
 	["random"] =    SKILL_MUSIC,
 	["pval"] =      4,
-	["lasting"] =   function()
-			set_tim_esp(5)
-			if get_level(MUSIC_MIND) >= 10 then
-				fire_ball(GF_IDENTIFY, 0, 1, 1 + get_level(MUSIC_MIND, 3, 0))
-			end
-			return get_mana(MUSIC_MIND)
-	end,
-	["spell"] =     function()
-			player.start_lasting_spell(MUSIC_MIND)
-			return TRUE
-	end,
-	["info"] =      function()
-			if get_level(MUSIC_MIND) >= 10 then
-				return "rad "..(1 + get_level(MUSIC_MIND, 3, 0))
-			else
-				return ""
-			end
-	end,
+	["lasting"] =   function() return music_clairaudience_lasting() end,
+	["spell"] =     function() return music_clairaudience_spell() end,
+	["info"] =      function() return music_clairaudience_info() end,
 	["desc"] =      {
 			"Allows you to sense monster minds as long as you sing.",
 			"At level 10 it identifies all objects in a radius on the floor,",
@@ -297,17 +205,8 @@ MUSIC_BLOW = add_spell
 	["stat"] =      A_CHR,
 	["random"] =    SKILL_MUSIC,
 	["pval"] =      1,
-	["spell"] =     function()
-			fire_ball(GF_SOUND,
-				  0,
-				  damroll(2 + get_level(MUSIC_BLOW, 10, 0), 4 + get_level(MUSIC_BLOW, 40, 0)),
-				  1 + get_level(MUSIC_BLOW, 12, 0)
-				 )
-			return TRUE
-	end,
-	["info"] =      function()
-			return "dam "..(2 + get_level(MUSIC_BLOW, 10, 0)).."d"..(4 + get_level(MUSIC_BLOW, 40, 0)).." rad "..(1 + get_level(MUSIC_BLOW, 12, 0))
-	end,
+	["spell"] =     function() return music_blow_spell() end,
+	["info"] =      function() return music_blow_info() end,
 	["desc"] =      {
 			"Produces a powerful, blowing, sound all around you.",
 	}
@@ -324,17 +223,8 @@ MUSIC_WIND = add_spell
 	["stat"] =      A_CHR,
 	["random"] =    SKILL_MUSIC,
 	["pval"] =      2,
-	["spell"] =     function()
-			fire_ball(GF_AWAY_ALL,
-				  0,
-				  10 + get_level(MUSIC_BLOW, 40, 0),
-				  1 + get_level(MUSIC_BLOW, 12, 0)
-				 )
-			return TRUE
-	end,
-	["info"] =      function()
-			return "dist "..(10 + get_level(MUSIC_BLOW, 40, 0)).." rad "..(1 + get_level(MUSIC_BLOW, 12, 0))
-	end,
+	["spell"] =     function() return music_gush_of_wind_spell() end,
+	["info"] =      function() return music_gush_of_wind_info() end,
 	["desc"] =      {
 			"Produces a outgoing gush of wind that sends monsters away.",
 	}
@@ -351,13 +241,8 @@ MUSIC_YLMIR = add_spell
 	["stat"] =      A_CHR,
 	["random"] =    SKILL_MUSIC,
 	["pval"] =      3,
-	["spell"] =     function()
-			earthquake(player.py, player.px, 2 + get_level(SHAKE, 10))
-			return TRUE
-	end,
-	["info"] =      function()
-			return "rad "..(2 + get_level(SHAKE, 10))
-	end,
+	["spell"] =     function() return music_horns_of_ylmir_spell() end,
+	["info"] =      function() return music_horns_of_ylmir_info() end,
 	["desc"] =      {
 			"Produces an earth shaking sound.",
 	}
@@ -374,70 +259,10 @@ MUSIC_AMBARKANTA = add_spell
 	["stat"] =      A_CHR,
 	["random"] =    SKILL_MUSIC,
 	["pval"] =      4,
-	["spell"] =     function()
-			alter_reality()
-			return TRUE
-	end,
-	["info"] =      function()
-			return ""
-	end,
+	["spell"] =     function() return music_ambarkanta_spell() end,
+	["info"] =      function() return music_ambarkanta_info() end,
 	["desc"] =      {
 			"Produces a reality shaking sound that transports you to a nearly",
 			"identical reality.",
 	}
 }
-
-
---[[
-MUSIC_ = add_spell
-{
-	["name"] =      "(I)",
-	["school"] =    {SCHOOL_MUSIC},
-	["level"] =     1,
-	["mana"] =      0,
-	["mana_max"] =  0,
-	["fail"] =      20,
-	["stat"] =      A_CHR,
-	["random"] =    SKILL_MUSIC,
-	["pval"] =      1,
-	["lasting"] =   function()
-			return get_mana(MUSIC_)
-	end,
-	["spell"] =     function()
-			player.start_lasting_spell(MUSIC_)
-			return TRUE
-	end,
-	["info"] =      function()
-			return ""
-	end,
-	["desc"] =      {
-			"",
-			"Consumes the amount of mana each turn.",
-	}
-}
-
-or
-
-MUSIC_ = add_spell
-{
-	["name"] =      "(I)",
-	["school"] =    {SCHOOL_MUSIC},
-	["level"] =     1,
-	["mana"] =      0,
-	["mana_max"] =  0,
-	["fail"] =      20,
-	["stat"] =      A_CHR,
-	["random"] =    SKILL_MUSIC,
-	["pval"] =      1,
-	["spell"] =     function()
-
-			return TRUE
-	end,
-	["info"] =      function()
-			return ""
-	end,
-	["desc"] =      {
-			"",
-	}
-}
-]]

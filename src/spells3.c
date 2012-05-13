@@ -133,6 +133,20 @@ s32b DEVICE_THUNDERLORDS;
 s32b DEVICE_RADAGAST = -1;
 s32b DEVICE_VALAROMA = -1;
 
+s32b MUSIC_STOP;
+s32b MUSIC_HOLD;
+s32b MUSIC_CONF;
+s32b MUSIC_STUN;
+s32b MUSIC_LITE;
+s32b MUSIC_HEAL;
+s32b MUSIC_HERO;
+s32b MUSIC_TIME;
+s32b MUSIC_MIND;
+s32b MUSIC_BLOW;
+s32b MUSIC_WIND;
+s32b MUSIC_YLMIR;
+s32b MUSIC_AMBARKANTA;
+
 
 /* FIXME: Hackish workaround while we're still tied to Lua. This lets
  us return Lua's "nil" and a non-nil value (which is all the s_aux.lua
@@ -3895,6 +3909,302 @@ bool_ *device_valaroma()
 }
 
 char  *device_valaroma_info()
+{
+	return "";
+}
+
+void static start_lasting_spell(int spl)
+{
+	p_ptr->music_extra = -spl;
+}
+
+bool_ *music_stop_singing_spell()
+{
+	start_lasting_spell(0);
+	return CAST;
+}
+
+char *music_stop_singing_info()
+{
+	return "";
+}
+
+static int holding_pattern_power()
+{
+	return 10 + get_level_s(MUSIC_HOLD, 100);
+}
+
+int music_holding_pattern_lasting()
+{
+	project_hack(GF_OLD_SLOW, holding_pattern_power());
+	return get_mana(MUSIC_HOLD);
+}
+
+bool_ *music_holding_pattern_spell()
+{
+	start_lasting_spell(MUSIC_HOLD);
+	return CAST;
+}
+
+char *music_holding_pattern_info()
+{
+	static char buf[128];
+	sprintf(buf,
+		"power %d",
+		holding_pattern_power());
+	return buf;
+}
+
+static int illusion_pattern_power()
+{
+	return 10 + get_level_s(MUSIC_CONF, 100);
+}
+
+int music_illusion_pattern_lasting()
+{
+	project_hack(GF_OLD_CONF, illusion_pattern_power());
+	return get_mana(MUSIC_CONF);
+}
+
+bool_ *music_illusion_pattern_spell()
+{
+	start_lasting_spell(MUSIC_CONF);
+	return CAST;
+}
+
+char *music_illusion_pattern_info()
+{
+	static char buf[128];
+	sprintf(buf,
+		"power %d",
+		illusion_pattern_power());
+	return buf;
+}
+
+static int stun_pattern_power()
+{
+	return 10 + get_level_s(MUSIC_STUN, 90);
+}
+
+int music_stun_pattern_lasting()
+{
+	project_hack(GF_STUN, stun_pattern_power());
+	return get_mana(MUSIC_STUN);
+}
+
+bool_ *music_stun_pattern_spell()
+{
+	start_lasting_spell(MUSIC_STUN);
+	return CAST;
+}
+
+char *music_stun_pattern_info()
+{
+	static char buf[128];
+	sprintf(buf,
+		"power %d",
+		stun_pattern_power());
+	return buf;
+}
+
+int music_song_of_the_sun_lasting()
+{
+	set_lite(5);
+	return 1;
+}
+
+bool_ *music_song_of_the_sun_spell()
+{
+	start_lasting_spell(MUSIC_LITE);
+	return CAST;
+}
+
+char *music_song_of_the_sun_info()
+{
+	return "";
+}
+
+int flow_of_life_hp()
+{
+	return 7 + get_level_s(MUSIC_HEAL, 100);
+}
+
+int music_flow_of_life_lasting()
+{
+	hp_player(flow_of_life_hp());
+	return get_mana(MUSIC_HEAL);
+}
+
+bool_ *music_flow_of_life_spell()
+{
+	start_lasting_spell(MUSIC_HEAL);
+	return CAST;
+}
+
+char *music_flow_of_life_info()
+{
+	static char buf[128];
+	sprintf(buf,
+		"heal %d/turn",
+		flow_of_life_hp());
+	return buf;
+}
+
+int music_heroic_ballad_lasting()
+{
+	set_hero(5);
+	if (get_level_s(MUSIC_HERO, 50) >= 10)
+	{
+		set_shero(5);
+	}
+	if (get_level_s(MUSIC_HERO, 50) >= 20)
+	{
+		set_strike(5);
+	}
+	if (get_level_s(MUSIC_HERO, 50) >= 25)
+	{
+		set_oppose_cc(5);
+	}
+	return get_mana(MUSIC_HERO);
+}
+
+bool_ *music_heroic_ballad_spell()
+{
+	start_lasting_spell(MUSIC_HERO);
+	return CAST;
+}
+
+char *music_heroic_ballad_info()
+{
+	return "";
+}
+
+int music_hobbit_melodies_lasting()
+{
+	set_shield(5, 10 + get_level_s(MUSIC_TIME, 50), 0, 0, 0);
+	if (get_level_s(MUSIC_TIME, 50) >= 15)
+	{
+		set_fast(5, 7 + get_level_s(MUSIC_TIME, 10));
+	}
+	return get_mana(MUSIC_TIME);
+}
+
+bool_ *music_hobbit_melodies_spell()
+{
+	start_lasting_spell(MUSIC_TIME);
+	return CAST;
+}
+
+char *music_hobbit_melodies_info()
+{
+	static char buf[128];
+	if (get_level_s(MUSIC_TIME, 50) >= 15)
+	{
+		sprintf(buf, "AC " FMTs32b " speed " FMTs32b,
+			10 + get_level_s(MUSIC_TIME, 50),
+			7 + get_level_s(MUSIC_TIME, 10));
+	}
+	else
+	{
+		sprintf(buf, "AC " FMTs32b,
+			10 + get_level_s(MUSIC_TIME, 50));
+	}
+	return buf;
+}
+
+int music_clairaudience_lasting()
+{
+	set_tim_esp(5);
+	if (get_level_s(MUSIC_MIND, 50) >= 10)
+	{
+		fire_ball(GF_IDENTIFY, 0, 1, 1 + get_level(MUSIC_MIND, 3, 0));
+	}
+	return get_mana(MUSIC_MIND);
+}
+
+bool_ *music_clairaudience_spell()
+{
+	start_lasting_spell(MUSIC_MIND);
+	return CAST;
+}
+
+char *music_clairaudience_info()
+{
+	static char buf[128];
+
+	if (get_level_s(MUSIC_MIND, 50) >= 10)
+	{
+		sprintf(buf, "rad " FMTs32b,
+			1 + get_level(MUSIC_MIND, 3, 0));
+		return buf;
+	}
+	else
+	{
+		return "";
+	}
+}
+
+bool_ *music_blow_spell()
+{
+	fire_ball(GF_SOUND,
+		  0,
+		  damroll(2 + get_level(MUSIC_BLOW, 10, 0), 4 + get_level(MUSIC_BLOW, 40, 0)),
+		  1 + get_level(MUSIC_BLOW, 12, 0));
+	return CAST;
+}
+
+char *music_blow_info()
+{
+	static char buf[128];
+	sprintf(buf,
+		"dam " FMTs32b "d" FMTs32b " rad " FMTs32b,
+		2 + get_level(MUSIC_BLOW, 10, 0),
+		4 + get_level(MUSIC_BLOW, 40, 0),
+		1 + get_level(MUSIC_BLOW, 12, 0));
+	return buf;
+}
+
+bool_ *music_gush_of_wind_spell()
+{
+	fire_ball(GF_AWAY_ALL,
+		  0,
+		  10 + get_level(MUSIC_BLOW, 40, 0),
+		  1 + get_level(MUSIC_BLOW, 12, 0));
+	return CAST;
+}
+
+char *music_gush_of_wind_info()
+{
+	static char buf[128];
+	sprintf(buf,
+		"dist " FMTs32b " rad " FMTs32b,
+		10 + get_level(MUSIC_BLOW, 40, 0),
+		1 + get_level(MUSIC_BLOW, 12, 0));
+	return buf;
+}
+
+bool_ *music_horns_of_ylmir_spell()
+{
+	earthquake(p_ptr->py, p_ptr->px, 2 + get_level_s(SHAKE, 10));
+	return CAST;
+}
+
+char *music_horns_of_ylmir_info()
+{
+	static char buf[128];
+	sprintf(buf,
+		"rad " FMTs32b,
+		2 + get_level_s(SHAKE, 10));
+	return buf;
+}
+
+bool_ *music_ambarkanta_spell()
+{
+	alter_reality();
+	return CAST;
+}
+
+char *music_ambarkanta_info()
 {
 	return "";
 }
