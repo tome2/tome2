@@ -118,6 +118,21 @@ s32b REGENERATION;
 s32b SUMMONANNIMAL;
 s32b GROW_ATHELAS = -1;
 
+s32b DEVICE_HEAL_MONSTER;
+s32b DEVICE_SPEED_MONSTER;
+s32b DEVICE_WISH;
+s32b DEVICE_SUMMON;
+s32b DEVICE_MANA;
+s32b DEVICE_NOTHING;
+s32b DEVICE_LEBOHAUM;
+s32b DEVICE_MAGGOT;
+s32b DEVICE_HOLY_FIRE;
+s32b DEVICE_ETERNAL_FLAME;
+s32b DEVICE_DURANDIL;
+s32b DEVICE_THUNDERLORDS;
+s32b DEVICE_RADAGAST = -1;
+s32b DEVICE_VALAROMA = -1;
+
 
 /* FIXME: Hackish workaround while we're still tied to Lua. This lets
  us return Lua's "nil" and a non-nil value (which is all the s_aux.lua
@@ -3524,6 +3539,362 @@ bool_ *nature_grow_athelas()
 }
 
 char *nature_grow_athelas_info()
+{
+	return "";
+}
+
+static int device_heal_monster_hp()
+{
+	return 20 + get_level_s(DEVICE_HEAL_MONSTER, 380);
+}
+
+bool_ *device_heal_monster()
+{
+	int dir;
+
+	if (!get_aim_dir(&dir))
+	{
+		return NO_CAST;
+	}
+
+	fire_ball(GF_OLD_HEAL, dir, device_heal_monster_hp(), 0);
+	return CAST;
+}
+
+char  *device_heal_monster_info()
+{
+	static char buf[128];
+	sprintf(buf,
+		"heal %d",
+		device_heal_monster_hp());
+	return buf;
+}
+
+bool_ *device_haste_monster()
+{
+	int dir;
+
+	if (!get_aim_dir(&dir))
+	{
+		return NO_CAST;
+	}
+
+	fire_ball(GF_OLD_SPEED, dir, 1, 0);
+	return CAST;
+}
+
+char  *device_haste_monster_info()
+{
+	return "speed +10";
+}
+
+bool_ *device_wish()
+{
+	make_wish();
+	return CAST;
+}
+
+char  *device_wish_info()
+{
+	return "";
+}
+
+bool_ *device_summon_monster()
+{
+	int i;
+	for (i = 0; i < 4 + get_level_s(DEVICE_SUMMON, 30); i++)
+	{
+		summon_specific(p_ptr->py, p_ptr->px, dun_level, 0);
+	}
+	return CAST;
+}
+
+char  *device_summon_monster_info()
+{
+	return "";
+}
+
+static int device_mana_pct()
+{
+	return 20 + get_level_s(DEVICE_MANA, 50);
+}
+
+bool_ *device_mana()
+{
+	increase_mana((p_ptr->msp * device_mana_pct()) / 100);
+	return CAST;
+}
+
+char  *device_mana_info()
+{
+	static char buf[128];
+	sprintf(buf,
+		"restore %d%%",
+		device_mana_pct());
+	return buf;
+}
+
+bool_ *device_nothing()
+{
+	return CAST;
+}
+
+char  *device_nothing_info()
+{
+	return "";
+}
+
+bool_ *device_lebohaum()
+{
+	msg_print("You hear a little song in your head in some unknown tongue:");
+	msg_print("'Avec le casque Lebohaum y a jamais d'anicroches, je parcours les dongeons,");
+	msg_print("j'en prend plein la caboche. Avec le casque Lebohaum, tout ces monstres a la");
+	msg_print("con, je leur met bien profond: c'est moi le maitre du dongeon!'");
+	return CAST;
+}
+
+char  *device_lebohaum_info()
+{
+	return "";
+}
+
+bool_ *device_maggot()
+{
+	int dir;
+
+	if (!get_aim_dir(&dir))
+	{
+		return NO_CAST;
+	}
+
+	fire_ball(GF_TURN_ALL, dir, 40, 2);
+	return CAST;
+}
+
+char  *device_maggot_info()
+{
+	return "power 40 rad 2";
+}
+
+static int holy_fire_damage()
+{
+	return 50 + get_level_s(DEVICE_HOLY_FIRE, 300);
+}
+
+bool_ *device_holy_fire()
+{
+	project_hack(GF_HOLY_FIRE, holy_fire_damage());
+	return CAST;
+}
+
+char  *device_holy_fire_info()
+{
+	static char buf[128];
+	sprintf(buf,
+		"dam %d",
+		holy_fire_damage());
+	return buf;
+}
+
+static int get_eternal_artifact_idx(object_type *o_ptr)
+{
+	if ((o_ptr->tval == TV_SWORD) && (o_ptr->sval == SV_LONG_SWORD)) {
+		return 147;
+	} else if ((o_ptr->tval == TV_MSTAFF) && (o_ptr->sval == SV_MSTAFF)) {
+		return 127;
+	} else if ((o_ptr->tval == TV_BOW) && (o_ptr->sval == SV_HEAVY_XBOW)) {
+		return 152;
+	} else if ((o_ptr->tval == TV_DRAG_ARMOR) && (o_ptr->sval == SV_DRAGON_POWER)) {
+		return 17;
+	}
+
+	if (game_module_idx == MODULE_THEME)
+	{
+		if ((o_ptr->tval == TV_HAFTED) && (o_ptr->sval == SV_LUCERN_HAMMER)) {
+			return 241;
+		} else if ((o_ptr->tval == TV_POLEARM) && (o_ptr->sval == SV_TRIDENT)) {
+			return 242;
+		} else if ((o_ptr->tval == TV_AXE) && (o_ptr->sval == SV_BROAD_AXE)) {
+			return 243;
+		} else if ((o_ptr->tval == TV_BOW) && (o_ptr->sval == SV_LONG_BOW)) {
+			return 245;
+		} else if ((o_ptr->tval == TV_BOOMERANG) && (o_ptr->sval == SV_BOOM_METAL)) {
+			return 247;
+		} else if ((o_ptr->tval == TV_BOW) && (o_ptr->sval == SV_SLING)) {
+			return 246;
+		} else if ((o_ptr->tval == TV_SWORD) && (o_ptr->sval == SV_RAPIER)) {
+			return 244;
+		} else if ((o_ptr->tval == TV_AMULET) && (o_ptr->sval == SV_AMULET_SPELL)) {
+			return 248;
+		}
+	}
+
+	/* Not usable */
+	return -1;
+}
+
+static bool_ eternal_flame_item_tester_hook(object_type *o_ptr)
+{
+	if ((o_ptr->name1 > 0) ||
+	    (o_ptr->name2 > 0))
+	{
+		return FALSE;
+	}
+
+	return (get_eternal_artifact_idx(o_ptr) >= 0);
+}
+
+bool_ *device_eternal_flame(int flame_item)
+{
+	int item;
+	object_type *o_ptr = NULL;
+	int artifact_idx = -1;
+
+	item_tester_hook = eternal_flame_item_tester_hook;
+	if (!get_item(&item,
+		      "Which object do you want to imbue?",
+		      "You have no objects to imbue.",
+		      USE_INVEN))
+	{
+		return FALSE;
+	}
+
+	/* Get the artifact idx */
+	artifact_idx = get_eternal_artifact_idx(o_ptr);
+	assert(artifact_idx >= 0);
+
+	/* Forge the item */
+	o_ptr = get_object(item);
+	o_ptr->name1 = artifact_idx;
+
+	apply_magic(o_ptr, -1, TRUE, TRUE, TRUE);
+
+	o_ptr->found = OBJ_FOUND_SELFMADE;
+
+	inven_item_increase(flame_item, -1);
+	inven_item_describe(flame_item);
+	inven_item_optimize(flame_item);
+
+	return CAST;
+}
+
+char  *device_eternal_flame_info()
+{
+	return "";
+}
+
+bool_ *device_durandil()
+{
+	msg_print("You hear a little song in your head in some unknown tongue:");
+	msg_print("'Les epees Durandils sont forgees dans les mines par des nains.");
+	msg_print("Avec ca c'est facile de tuer un troll avec une seule main. Pas besoin");
+	msg_print("de super entrainement nis de niveau 28. Quand tu sors l'instrument");
+	msg_print("c'est l'ennemi qui prend la fuite! Avec ton epee Durandil quand tu");
+	msg_print("parcours les chemins, tu massacre sans peine les brigands et les gobelins,");
+	msg_print("les rats geants, les ogres mutants, les zombies et les liches, tu les");
+	msg_print("decoupe en tranches comme si c'etait des parts de quiches.");
+	msg_print("Les epees Durandil! Les epees Durandil!");
+	msg_print("Quand tu la sort dans un dongeon au moins t'as pas l'air debile.");
+	msg_print("C'est l'arme des bourins qui savent etre subtils.");
+	msg_print("Ne partez pas a l'aventure sans votre epee Durandil!'");
+	return CAST;
+}
+
+char  *device_durandil_info()
+{
+	return "";
+}
+
+bool_ *device_thunderlords()
+{
+	switch (game_module_idx)
+	{
+	case MODULE_TOME:
+		{
+			if (dun_level > 0)
+			{
+				msg_print("As you blow the horn a thunderlord pops out of nowhere and grabs you.");
+				recall_player(0, 1);
+			}
+			else
+			{
+				msg_print("You cannot use it there.");
+			}
+			return CAST;
+		}
+
+	case MODULE_THEME:
+		{
+			if (dun_level > 0)
+			{
+				msg_print("As you blow the horn, an Eagle of Manwe appears overhead.");
+				recall_player(0, 1);
+			}
+			else
+			{
+				msg_print("You cannot use it there.");
+			}
+			return CAST;
+		}
+
+	default:
+		assert(FALSE);
+		return NO_CAST;
+	}
+}
+
+char  *device_thunderlords_info()
+{
+	return "";
+}
+
+bool_ *device_radagast()
+{
+	cmsg_print(TERM_GREEN, "The staff's power cleanses you completely!");
+	remove_all_curse();
+	do_res_stat(A_STR, TRUE);
+	do_res_stat(A_CON, TRUE);
+	do_res_stat(A_DEX, TRUE);
+	do_res_stat(A_WIS, TRUE);
+	do_res_stat(A_INT, TRUE);
+	do_res_stat(A_CHR, TRUE);
+	restore_level();
+	// clean_corruptions(); TODO: Do we want to implement this?
+	hp_player(5000);
+	heal_insanity(5000);
+	set_poisoned(0);
+	set_blind(0);
+	set_confused(0);
+	set_image(0);
+	set_stun(0);
+	set_cut(0);
+	set_parasite(0, 0);
+
+	if (p_ptr->black_breath)
+	{
+		msg_print("The hold of the Black Breath on you is broken!");
+	}
+	p_ptr->black_breath = FALSE;
+
+	p_ptr->update |= PU_BONUS;
+	p_ptr->window |= PW_PLAYER;
+
+	return CAST;
+}
+
+char  *device_radagast_info()
+{
+	return "";
+}
+
+bool_ *device_valaroma()
+{
+	int power = 5 * p_ptr->lev;
+	banish_evil(power);
+	return CAST;
+}
+
+char  *device_valaroma_info()
 {
 	return "";
 }
