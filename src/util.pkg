@@ -524,12 +524,6 @@ typedef unsigned int u32b;
  */
 #define HOOK_BUILDING_ACTION    44
 
-/** @def HOOK_PROCESS_WORLD
- * @brief Update world every ten turns.
- * @note (see file dungeon.c)
- */
-#define HOOK_PROCESS_WORLD      45
-
 /** @def HOOK_WIELD_SLOT
  * @brief Find equipment slot for object.\n
  * @param Object o_ptr \n the object to wield.

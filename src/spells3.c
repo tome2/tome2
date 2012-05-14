@@ -152,6 +152,11 @@ s32b AULE_ENCHANT_WEAPON;
 s32b AULE_ENCHANT_ARMOUR;
 s32b AULE_CHILD;
 
+s32b MANDOS_TEARS_LUTHIEN = -1;
+s32b MANDOS_SPIRIT_FEANTURI = -1;
+s32b MANDOS_TALE_DOOM = -1;
+s32b MANDOS_CALL_HALLS = -1;
+
 
 /* FIXME: Hackish workaround while we're still tied to Lua. This lets
  us return Lua's "nil" and a non-nil value (which is all the s_aux.lua
@@ -4419,5 +4424,123 @@ char  *aule_child_info()
 	sprintf(buf,
 		"level " FMTs32b,
 		20 + get_level_s(AULE_CHILD, 70));
+	return buf;
+}
+
+static int tears_of_luthien_hp()
+{
+	return 10 * get_level_s(MANDOS_TEARS_LUTHIEN, 30);
+}
+
+bool_ *mandos_tears_of_luthien_spell()
+{
+	hp_player(tears_of_luthien_hp());
+	set_stun(0);
+	set_cut(0);
+	set_afraid(0);
+	return CAST;
+}
+
+char  *mandos_tears_of_luthien_info()
+{
+	static char buf[128];
+	sprintf(buf,
+		"heals %d",
+		tears_of_luthien_hp());
+	return buf;
+}
+
+bool_ *mandos_spirit_of_the_feanturi_spell()
+{
+	s32b level = get_level_s(MANDOS_SPIRIT_FEANTURI, 50);
+
+	set_afraid(0);
+	set_confused(0);
+
+	if (level >= 20)
+	{
+                do_res_stat(A_WIS, TRUE);
+                do_res_stat(A_INT, TRUE);
+	}
+            
+	if (level >= 30)
+	{
+                set_image(0);
+                heal_insanity(p_ptr->msane * level / 100); 
+	}
+            
+	return CAST;
+}
+
+char  *mandos_spirit_of_the_feanturi_info()
+{
+	static char buf[128];
+	s32b level = get_level_s(MANDOS_SPIRIT_FEANTURI, 50) ;
+	if (level >= 20)
+	{
+		sprintf(buf, "heals " FMTs32b "%%", level);
+		return buf;
+	}
+	else
+	{
+		return "";
+	}
+}
+
+static int tale_of_doom_duration()
+{
+	return 5 + get_level_s(MANDOS_TALE_DOOM,10);
+}
+
+bool_ *mandos_tale_of_doom_spell()
+{
+	set_tim_precognition(tale_of_doom_duration());
+	return CAST;
+}
+
+char  *mandos_tale_of_doom_info()
+{
+	static char buf[128];
+	sprintf(buf,
+		"dur %d",
+		tale_of_doom_duration());
+	return buf;
+}
+
+int call_to_the_halls_mlev()
+{
+	return 20 + get_level(MANDOS_CALL_HALLS, 70, 0);
+}
+
+bool_ *mandos_call_to_the_halls_spell()
+{
+#define N_SUMMONS 2
+	int y, x;
+	s16b m_idx, r_idx;
+	s16b summons[N_SUMMONS] = {
+		test_monster_name("Experienced spirit"),
+		test_monster_name("Wise spirit"),
+	};
+
+	r_idx = summons[rand_int(N_SUMMONS)];
+	assert(r_idx >= 0);
+
+	find_position(p_ptr->py, p_ptr->px, &y, &x);
+	m_idx = place_monster_one(y, x, r_idx, 0, FALSE, MSTATUS_FRIEND);
+	if (m_idx)
+	{
+		monster_set_level(m_idx, call_to_the_halls_mlev());
+		return CAST;
+	}
+	return NO_CAST;
+#undef N_SUMMONS
+}
+
+char  *mandos_call_to_the_halls_info()
+{
+	static char buf[128];
+	sprintf(buf,
+		"level %d",
+		call_to_the_halls_mlev());
 	return buf;
 }

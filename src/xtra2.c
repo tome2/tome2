@@ -241,6 +241,17 @@ bool_ set_tim_breath(int v, bool_ magical)
 }
 
 /*
+ * Set timered precognition
+ */
+bool_ set_tim_precognition(int v)
+{
+	return set_simple_field(
+		&p_ptr->tim_precognition, v,
+		TERM_WHITE, "You feel able to predict the future.",
+		TERM_WHITE, "You feel less able to predict the future.");
+}
+
+/*
  * Set "p_ptr->absorb_soul"
  * notice observable changes
  */

@@ -1587,6 +1587,7 @@ struct player_type
 	s16b absorb_soul;   /* Timed soul absordtion */
 	s16b tim_magic_breath;      /* Magical breathing -- can breath anywhere */
 	s16b tim_water_breath;      /* Water breathing -- can breath underwater */
+	s16b tim_precognition;      /* Timed precognition */
 
 	s16b immov_cntr;    /* Timed -- Last ``immovable'' command. */
 

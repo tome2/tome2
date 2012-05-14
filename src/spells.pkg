@@ -2858,3 +2858,17 @@ bool_ *aule_enchant_armour_spell();
 char  *aule_enchant_armour_info();
 bool_ *aule_child_spell();
 char  *aule_child_info();
+
+extern s32b MANDOS_TEARS_LUTHIEN;
+extern s32b MANDOS_SPIRIT_FEANTURI;
+extern s32b MANDOS_TALE_DOOM;
+extern s32b MANDOS_CALL_HALLS;
+
+bool_ *mandos_tears_of_luthien_spell();
+char  *mandos_tears_of_luthien_info();
+bool_ *mandos_spirit_of_the_feanturi_spell();
+char  *mandos_spirit_of_the_feanturi_info();
+bool_ *mandos_tale_of_doom_spell();
+char  *mandos_tale_of_doom_info();
+bool_ *mandos_call_to_the_halls_spell();
+char  *mandos_call_to_the_halls_info();

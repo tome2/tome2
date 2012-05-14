@@ -594,7 +594,6 @@ extern s32b DUNGEON_ASTRAL_WILD_X;
 extern s32b DUNGEON_ASTRAL_WILD_Y;
 extern deity_type deity_info[MAX_GODS];
 extern timer_type *gl_timers;
-extern s16b tim_precognition;
 extern const char *get_version_string();
 
 /* plots.c */
@@ -1855,6 +1854,20 @@ char  *aule_enchant_armour_info();
 bool_ *aule_child_spell();
 char  *aule_child_info();
 
+extern s32b MANDOS_TEARS_LUTHIEN;
+extern s32b MANDOS_SPIRIT_FEANTURI;
+extern s32b MANDOS_TALE_DOOM;
+extern s32b MANDOS_CALL_HALLS;
+
+bool_ *mandos_tears_of_luthien_spell();
+char  *mandos_tears_of_luthien_info();
+bool_ *mandos_spirit_of_the_feanturi_spell();
+char  *mandos_spirit_of_the_feanturi_info();
+bool_ *mandos_tale_of_doom_spell();
+char  *mandos_tale_of_doom_info();
+bool_ *mandos_call_to_the_halls_spell();
+char  *mandos_call_to_the_halls_info();
+
 /* randart.c */
 extern int get_activation_power(void);
 extern void build_prob(cptr learn);
@@ -2021,6 +2034,7 @@ extern bool_ set_disrupt_shield(int v);
 extern bool_ set_prob_travel(int v);
 extern bool_ set_absorb_soul(int v);
 extern bool_ set_tim_breath(int v, bool_ magical);
+extern bool_ set_tim_precognition(int v);
 extern bool_ set_tim_deadly(int v);
 extern bool_ set_tim_res_time(int v);
 extern bool_ set_tim_reflect(int v);

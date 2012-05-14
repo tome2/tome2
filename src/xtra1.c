@@ -3336,7 +3336,7 @@ void calc_bonuses(bool_ silent)
 	}
 
 	/* Temporary precognition */
-	if (tim_precognition > 0)
+	if (p_ptr->tim_precognition > 0)
 	{
 		apply_flags(0, 0, 0, TR4_PRECOGNITION, 0, 0, 0, 0, 0, 0, 0);
 	}

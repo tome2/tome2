@@ -1574,11 +1574,6 @@ s32b DUNGEON_ASTRAL_WILD_Y = 19;
  */
 timer_type *gl_timers = NULL;
 
-/*
- * Timered precognition.
- */
-s16b tim_precognition = 0;
-
 
 /**
  * Get the version string.

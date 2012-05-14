@@ -1325,9 +1325,6 @@ static void process_world(void)
 	 */
 	if (dun_level || (!p_ptr->wild_mode))
 	{
-		/* Let the script live! */
-		process_hooks(HOOK_PROCESS_WORLD, "()");
-
 		/* Handle corruptions */
 		process_world_corruptions();
 
@@ -2148,6 +2145,12 @@ static void process_world(void)
 	if (p_ptr->tim_magic_breath)
 	{
 		(void)set_tim_breath(p_ptr->tim_magic_breath - 1, TRUE);
+	}
+
+	/* Timed precognition */
+	if (p_ptr->tim_precognition > 0)
+	{
+		set_tim_precognition(p_ptr->tim_precognition - 1);
 	}
 
 	/* Timed regen */
