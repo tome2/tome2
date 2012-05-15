@@ -17,6 +17,20 @@
 
 extern lua_State *L;
 
+static int spell_x(int sval, int pval, int i)
+{
+	if (sval == 255)
+	{
+		return pval;
+	}
+	else
+	{
+		char buf[128];
+		sprintf(buf, "school_book[%d][%d]", sval, i+1);
+                return get_lua_int(buf);
+	}
+}
+
 
 /* Maximum number of tries for teleporting */
 #define MAX_TRIES 300
@@ -2327,14 +2341,14 @@ s32b get_school_spell(cptr do_what, cptr check_fct, s16b force_book)
 
 				/* Display a list of spells */
 				call_lua("print_book", "(d,d,O)", "d", sval, pval, o_ptr, &where);
-				exec_lua(format("print_spell_desc(spell_x(%d, %d, %d), %d)", sval, pval, i, where));
+				print_spell_desc(spell_x(sval, pval, i), where);
 			}
 			else
 			{
 				s32b ok;
 
 				/* Save the spell index */
-				spell = exec_lua(format("return spell_x(%d, %d, %d)", sval, pval, i));
+				spell = spell_x(sval, pval, i);
 
 				/* Do we need to do some pre test */
 				call_lua(check_fct, "(d,O)", "d", spell, o_ptr, &ok);
@@ -2479,7 +2493,7 @@ void browse_school_spell(int book, int pval, object_type *o_ptr)
 
 		/* Display a list of spells */
 		call_lua("print_book", "(d,d,O)", "d", book, pval, o_ptr, &where);
-		exec_lua(format("print_spell_desc(spell_x(%d, %d, %d), %d)", book, pval, i, where));
+		print_spell_desc(spell_x(book, pval, i), where);
 	}
 
 

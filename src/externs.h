@@ -1898,6 +1898,9 @@ char  *varda_evenstar_info();
 bool_ *varda_star_kindler_spell();
 char  *varda_star_kindler_info();
 
+/* spells4.c */
+void print_spell_desc(int s, int y);
+
 /* randart.c */
 extern int get_activation_power(void);
 extern void build_prob(cptr learn);

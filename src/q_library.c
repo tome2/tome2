@@ -140,10 +140,6 @@ static int library_quest_print_spell(int color, int row, int spell) {
 	return exec_lua(format("library_quest.print_spell(%d,%d,%d)", color, row, spell));
 }
 
-static int library_quest_print_spell_desc(int s, int y) {
-	return exec_lua(format("print_spell_desc(%d, %d)", s, y));
-}
-
 static void quest_library_finalize_book()
 {
 	int i = 0;
@@ -270,7 +266,7 @@ static void library_quest_fill_book()
 		} else if (ch == 'p') {
 			current = current - height;
 		} else if (ch == 'I') {
-			library_quest_print_spell_desc(spell_idx, 0);
+			print_spell_desc(spell_idx, 0);
 			inkey();
 		} else if (dir == 2) {
 			current = current + 1;

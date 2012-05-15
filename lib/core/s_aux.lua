@@ -300,42 +300,12 @@ function print_book(book, spl, obj)
 	return y
 end
 
--- Output the describtion when it is used as a spell
-function print_spell_desc(s, y)
-	local index, desc, x
-	
-	x = 0
-
-	if type(__spell_desc[s]) == "string" then c_prt(TERM_L_BLUE, __spell_desc[s], y, x)
-	else
-		for index, desc in __spell_desc[s] do
-			c_prt(TERM_L_BLUE, desc, y, x)
-			y = y + 1
-		end
-	end
-	if check_affect(s, "piety", FALSE) then
-		c_prt(TERM_L_WHITE, "It uses piety to cast.", y, x)
-		y = y + 1
-	end
-	if not check_affect(s, "blind") then
-		c_prt(TERM_ORANGE, "It is castable even while blinded.", y, x)
-		y = y + 1
-	end
-	if not check_affect(s, "confusion") then
-		c_prt(TERM_ORANGE, "It is castable even while confused.", y, x)
-		y = y + 1
-	end
-end
-
 -- Output the desc when sued as a device
 function print_device_desc(s)
 	local index, desc
 
-	if type(__spell_desc[s]) == "string" then text_out(__spell_desc[s])
-	else
-		for index, desc in __spell_desc[s] do
-			text_out("\n" .. desc)
-		end
+	for index, desc in __spell_desc[s] do
+		text_out("\n" .. desc)
 	end
 end
 
@@ -354,22 +324,6 @@ function book_spells_num(book)
 		size = size + 1
 	end
 	return size
-end
-
-function spell_x(book, spl, s)
-	if book == 255 then
-		return spl
-	else
-		local i, x, val
-
-		i, val = next(school_book[book], nil)
-		x = 0
-		while x < s do
-			i, val = next(school_book[book], i)
-			x = x + 1
-		end
-		return val
-	end
 end
 
 function spell_in_book(book, spell)

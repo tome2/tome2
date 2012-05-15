@@ -539,7 +539,9 @@ void lua_display_list(int y, int x, int h, int w, cptr title, list_type* list, i
 
 int get_lua_int(cptr name)
 {
-	return exec_lua(format("return %s", name));
+	char buf[128];
+	sprintf(buf, "return %s", name);
+	return exec_lua(buf);
 }
 
 void increase_mana(int delta)
