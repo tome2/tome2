@@ -612,6 +612,8 @@ extern hook_return process_hooks_return[20];
 extern bool_ process_hooks_ret(int h_idx, char *ret, char *fmt, ...);
 extern bool_ process_hooks(int h_idx, char *fmt, ...);
 
+extern void initialize_bookable_spells();
+
 /* help.c */
 extern void ingame_help(bool_ enable);
 

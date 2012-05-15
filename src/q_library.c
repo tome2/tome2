@@ -10,6 +10,78 @@
 #define MONSTER_IRON_GOLEM 367
 #define MONSTER_MITHRIL_GOLEM 464
 
+#define MAX_BOOKABLE_SPELLS 128
+
+static s16b bookable_spells[MAX_BOOKABLE_SPELLS];
+static s16b bookable_spells_size = 0;
+
+static void push_spell(s16b spell_idx)
+{
+	assert(bookable_spells_size < MAX_BOOKABLE_SPELLS);
+	bookable_spells[bookable_spells_size++] = spell_idx;
+}
+
+void initialize_bookable_spells()
+{
+	push_spell(MANATHRUST);
+	push_spell(DELCURSES);
+	push_spell(GLOBELIGHT);
+	push_spell(FIREGOLEM);
+	push_spell(FIREFLASH);
+	push_spell(FIREWALL);
+	push_spell(GEYSER);
+	push_spell(VAPOR);
+	push_spell(ENTPOTION);
+	push_spell(NOXIOUSCLOUD);
+	push_spell(POISONBLOOD);
+	push_spell(STONESKIN);
+	push_spell(DIG);
+	push_spell(RECHARGE);
+	push_spell(DISPERSEMAGIC);
+	push_spell(BLINK);
+	push_spell(DISARM);
+	push_spell(TELEPORT);
+	push_spell(SENSEMONSTERS);
+	push_spell(SENSEHIDDEN);
+	push_spell(REVEALWAYS);
+	push_spell(IDENTIFY);
+	push_spell(VISION);
+	push_spell(MAGELOCK);
+	push_spell(SLOWMONSTER);
+	push_spell(ESSENCESPEED);
+	push_spell(CHARM);
+	push_spell(CONFUSE);
+	push_spell(ARMOROFFEAR);
+	push_spell(STUN);
+	push_spell(GROWTREE);
+	push_spell(HEALING);
+	push_spell(RECOVERY);
+	push_spell(ERU_SEE);
+	push_spell(ERU_LISTEN);
+	push_spell(MANWE_BLESS);
+	push_spell(MANWE_SHIELD);
+	push_spell(YAVANNA_CHARM_ANIMAL);
+	push_spell(YAVANNA_GROW_GRASS);
+	push_spell(YAVANNA_TREE_ROOTS);
+	push_spell(TULKAS_AIM);
+	push_spell(TULKAS_SPIN);
+	push_spell(MELKOR_CURSE);
+	push_spell(MELKOR_CORPSE_EXPLOSION);
+	push_spell(DRAIN);
+
+	if (game_module_idx == MODULE_THEME)
+	{
+		push_spell(AULE_FIREBRAND);
+		push_spell(AULE_CHILD);
+		push_spell(VARDA_LIGHT_VALINOR);
+		push_spell(VARDA_EVENSTAR);
+		push_spell(ULMO_BELEGAER);
+		push_spell(ULMO_WRATH);
+		push_spell(MANDOS_TEARS_LUTHIEN);
+		push_spell(MANDOS_TALE_DOOM);
+	}
+}
+
 static s16b library_quest_place_random(int minY, int minX, int maxY, int maxX, int r_idx)
 {
 	int y = randint(maxY - minY + 1) + minY;
@@ -64,14 +136,6 @@ static bool_ library_quest_book_contains_spell(int spell)
 	return FALSE;
 }
 
-static int library_quest_bookable_spells_at(int i) {
-	return exec_lua(format("return library_quest.bookable_spells[%d]", i + 1));
-}
-
-static int library_quest_getn_bookable_spells() {
-	return exec_lua("return getn(library_quest.bookable_spells)");
-}
-
 static int library_quest_print_spell(int color, int row, int spell) {
 	return exec_lua(format("library_quest.print_spell(%d,%d,%d)", color, row, spell));
 }
@@ -117,7 +181,7 @@ static void library_quest_print_spells(int first, int current)
 {
 	int width, height;
 	int slots, row;
-	int nspells, index;
+	int index;
 
 	Term_clear();
 	Term_get_size(&width, &height);
@@ -137,9 +201,8 @@ static void library_quest_print_spells(int first, int current)
 
 	row = 3;
 
-	nspells = library_quest_getn_bookable_spells();
-	for (index = 0; index < nspells; index++) {
-		int spell = library_quest_bookable_spells_at(index);
+	for (index = 0; index < bookable_spells_size; index++) {
+		int spell = bookable_spells[index];
 		if (index >= first) {
 			int color;
 			if (index == current) {
@@ -183,13 +246,15 @@ static void library_quest_fill_book()
 	while (done == FALSE)
 	{
 		char ch;
-		int dir, total;
+		int dir, spell_idx;
 
 		library_quest_print_spells(first, current);
 
 		inkey_scan = FALSE;
 		ch = inkey();
 		dir = get_keymap_dir(ch);
+
+		spell_idx = bookable_spells[current];
 
 		if (ch == ESCAPE) {
 			if (library_quest_book_slots_left() == 0) {
@@ -205,23 +270,23 @@ static void library_quest_fill_book()
 		} else if (ch == 'p') {
 			current = current - height;
 		} else if (ch == 'I') {
-			library_quest_print_spell_desc(library_quest_bookable_spells_at(current), 0);
+			library_quest_print_spell_desc(spell_idx, 0);
 			inkey();
 		} else if (dir == 2) {
 			current = current + 1;
 		} else if (dir == 8) {
 			current = current - 1;
 		} else if (dir == 6) {
-			if (library_quest_book_contains_spell(library_quest_bookable_spells_at(current)) == FALSE) {
-				library_quest_add_spell(library_quest_bookable_spells_at(current));
+			if (library_quest_book_contains_spell(spell_idx) == FALSE)
+			{
+				library_quest_add_spell(spell_idx);
 			}
 		} else if (dir == 4) {
-			library_quest_remove_spell(library_quest_bookable_spells_at(current));
+			library_quest_remove_spell(spell_idx);
 		}
 
-		total = library_quest_getn_bookable_spells();
-		if (current >= total) {
-			current = total - 1;
+		if (current >= bookable_spells_size) {
+			current = bookable_spells_size - 1;
 		} else if (current < 0) {
 			current = 0;
 		}

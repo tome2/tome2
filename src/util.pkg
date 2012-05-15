@@ -2375,3 +2375,8 @@ extern s16b resolve_mimic_name(cptr name);
  * Timers
  */
 void timer_aggravate_evil_enable();
+
+/**
+ * Initialize bookable spells.
+ */
+void initialize_bookable_spells();

@@ -17,6 +17,9 @@ tome_dofile("mkeys.lua")
 -- Add the schools of magic
 tome_dofile("spells.lua")
 
+-- Post-spell creation initialization
+initialize_bookable_spells()
+
 -- Add some quests
 tome_dofile("library.lua")
 
