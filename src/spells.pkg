@@ -2886,3 +2886,17 @@ bool_ *ulmo_call_of_the_ulumuri_spell();
 char  *ulmo_call_of_the_ulumuri_info();
 bool_ *ulmo_wrath_of_ulmo_spell();
 char  *ulmo_wrath_of_ulmo_info();
+
+extern s32b VARDA_LIGHT_VALINOR;
+extern s32b VARDA_CALL_ALMAREN;
+extern s32b VARDA_EVENSTAR;
+extern s32b VARDA_STARKINDLER;
+
+bool_ *varda_light_of_valinor_spell();
+char  *varda_light_of_valinor_info();
+bool_ *varda_call_of_almaren_spell();
+char  *varda_call_of_almaren_info();
+bool_ *varda_evenstar_spell();
+char  *varda_evenstar_info();
+bool_ *varda_star_kindler_spell();
+char  *varda_star_kindler_info();

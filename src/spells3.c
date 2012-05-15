@@ -162,6 +162,10 @@ s32b ULMO_DRAUGHT_ULMONAN;
 s32b ULMO_CALL_ULUMURI;
 s32b ULMO_WRATH;
 
+s32b VARDA_LIGHT_VALINOR;
+s32b VARDA_CALL_ALMAREN;
+s32b VARDA_EVENSTAR;
+s32b VARDA_STARKINDLER;
 
 /* FIXME: Hackish workaround while we're still tied to Lua. This lets
  us return Lua's "nil" and a non-nil value (which is all the s_aux.lua
@@ -4707,3 +4711,129 @@ char *ulmo_wrath_of_ulmo_info()
 		wrath_of_ulmo_duration());
 	return buf;
 }
+
+static int light_of_valinor_damage()
+{
+	return 10 + get_level_s(VARDA_LIGHT_VALINOR, 100);
+}
+
+static int light_of_valinor_radius()
+{
+	return 5 + get_level_s(VARDA_LIGHT_VALINOR, 6);
+}
+
+bool_ *varda_light_of_valinor_spell()
+{
+	if (get_level_s(VARDA_LIGHT_VALINOR, 50) >= 3)
+	{
+		lite_area(10, 4);
+	}
+	else
+	{
+		lite_room(p_ptr->py, p_ptr->px);
+	}
+
+	if (get_level_s(VARDA_LIGHT_VALINOR, 50) >= 15)
+	{
+		fire_ball(GF_LITE,
+			  0,
+			  light_of_valinor_damage(),
+			  light_of_valinor_radius());
+	}
+
+	return CAST;
+}
+
+char *varda_light_of_valinor_info()
+{
+	static char buf[128];
+	if (get_level_s(VARDA_LIGHT_VALINOR, 50) >= 15)
+	{
+		sprintf(buf,
+			"dam %d rad " FMTs32b,
+			light_of_valinor_damage(),
+			light_of_valinor_radius());
+		return buf;
+	}
+	else
+	{
+		return "";
+	}
+}
+
+bool_ *varda_call_of_almaren_spell()
+{
+	int power = 5 * p_ptr->lev;
+	if (get_level_s(VARDA_CALL_ALMAREN, 50) >= 20)
+	{
+		dispel_evil(power);
+	}
+	else
+	{
+		banish_evil(power);
+	}
+	return CAST;
+}
+
+char *varda_call_of_almaren_info()
+{
+	return "";
+}
+
+bool_ *varda_evenstar_spell()
+{
+	wiz_lite_extra();
+	if (get_level_s(VARDA_EVENSTAR, 50) >= 40)
+	{
+		identify_pack();
+		self_knowledge(NULL);
+	}
+
+	return CAST;
+}
+
+char *varda_evenstar_info()
+{
+	return "";
+}
+
+static int star_kindler_bursts()
+{
+	return p_ptr->lev / 5;
+}
+
+static int star_kindler_damage()
+{
+	return 20 + get_level_s(VARDA_STARKINDLER, 100);
+}
+
+bool_ *varda_star_kindler_spell()
+{
+	int dir, i, n = star_kindler_bursts();
+
+	if (!get_aim_dir(&dir))
+	{
+		return NO_CAST;
+	}
+
+	for (i = 0; i < n; i++)
+	{
+		fire_ball(GF_LITE,
+			  dir,
+			  star_kindler_damage(),
+			  10);
+	}
+
+	return CAST;
+}
+
+char *varda_star_kindler_info()
+{
+	static char buf[128];
+	sprintf(buf,
+		"dam %d bursts %d rad 10",
+		star_kindler_damage(),
+		star_kindler_bursts());
+	return buf;
+}
+
