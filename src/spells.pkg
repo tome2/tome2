@@ -2872,3 +2872,17 @@ bool_ *mandos_tale_of_doom_spell();
 char  *mandos_tale_of_doom_info();
 bool_ *mandos_call_to_the_halls_spell();
 char  *mandos_call_to_the_halls_info();
+
+extern s32b ULMO_BELEGAER;
+extern s32b ULMO_DRAUGHT_ULMONAN;
+extern s32b ULMO_CALL_ULUMURI;
+extern s32b ULMO_WRATH;
+
+bool_ *ulmo_song_of_belegaer_spell();
+char  *ulmo_song_of_belegaer_info();
+bool_ *ulmo_draught_of_ulmonan_spell();
+char  *ulmo_draught_of_ulmonan_info();
+bool_ *ulmo_call_of_the_ulumuri_spell();
+char  *ulmo_call_of_the_ulumuri_info();
+bool_ *ulmo_wrath_of_ulmo_spell();
+char  *ulmo_wrath_of_ulmo_info();

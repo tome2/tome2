@@ -157,6 +157,11 @@ s32b MANDOS_SPIRIT_FEANTURI = -1;
 s32b MANDOS_TALE_DOOM = -1;
 s32b MANDOS_CALL_HALLS = -1;
 
+s32b ULMO_BELEGAER;
+s32b ULMO_DRAUGHT_ULMONAN;
+s32b ULMO_CALL_ULUMURI;
+s32b ULMO_WRATH;
+
 
 /* FIXME: Hackish workaround while we're still tied to Lua. This lets
  us return Lua's "nil" and a non-nil value (which is all the s_aux.lua
@@ -4542,5 +4547,163 @@ char  *mandos_call_to_the_halls_info()
 	sprintf(buf,
 		"level %d",
 		call_to_the_halls_mlev());
+	return buf;
+}
+
+static void get_belegaer_damage(int *dice, int *sides)
+{
+	*dice = get_level_s(ULMO_BELEGAER, 10);
+	*sides = 3 + get_level_s(ULMO_BELEGAER, 35);
+}
+
+bool_ *ulmo_song_of_belegaer_spell()
+{
+	int dir, dice, sides;
+
+	if (!get_aim_dir(&dir))
+	{
+		return NO_CAST;
+	}
+
+	get_belegaer_damage(&dice, &sides);
+	fire_bolt_or_beam(2 * get_level_s(ULMO_BELEGAER, 85),
+			  GF_WATER,
+			  dir,
+			  damroll(dice, sides));
+	return CAST;
+}
+
+char *ulmo_song_of_belegaer_info()
+{
+	static char buf[128];
+	int dice, sides;
+
+	get_belegaer_damage(&dice, &sides);
+	sprintf(buf,
+		"dam %dd%d",
+		dice,
+		sides);
+	return buf;
+}
+
+int draught_of_ulmonan_hp()
+{
+	return 5 * get_level_s(ULMO_DRAUGHT_ULMONAN, 50);
+}
+
+bool_ *ulmo_draught_of_ulmonan_spell()
+{
+	s32b level = get_level_s(ULMO_DRAUGHT_ULMONAN, 50);
+		
+	hp_player(draught_of_ulmonan_hp());
+
+	set_poisoned(0);
+	set_cut(0);
+	set_stun(0);
+	set_blind(0);
+
+	if (level >= 10)
+	{
+		do_res_stat(A_STR, TRUE);
+		do_res_stat(A_CON, TRUE);
+		do_res_stat(A_DEX, TRUE);
+	}
+
+	if (level >= 20)
+	{
+		set_parasite(0, 0);
+		set_mimic(0, 0, 0);
+	}
+
+	return CAST;
+}
+
+char *ulmo_draught_of_ulmonan_info()
+{
+	static char buf[128];
+	sprintf(buf,
+		"cure %d",
+		draught_of_ulmonan_hp());
+	return buf;
+}
+
+static int call_of_the_ulumuri_mlev()
+{
+	return 30 + get_level(ULMO_CALL_ULUMURI, 70, 0);
+}
+
+bool_ *ulmo_call_of_the_ulumuri_spell()
+{
+#define N_SUMMONS 2
+	int x,y;
+	s16b m_idx, r_idx;
+	s16b summons[N_SUMMONS] = {
+		test_monster_name("Water spirit"),
+		test_monster_name("Water elemental")
+	};
+
+	r_idx = summons[rand_int(N_SUMMONS)];
+	assert(r_idx >= 0);
+
+	find_position(p_ptr->py, p_ptr->px, &y, &x);
+
+	m_idx = place_monster_one(y, x, r_idx, 0, FALSE, MSTATUS_FRIEND);
+	if (m_idx)
+	{
+		monster_set_level(m_idx, call_of_the_ulumuri_mlev());
+		return CAST;
+	}
+
+	return NO_CAST;
+#undef N_SUMMONS
+}
+
+char *ulmo_call_of_the_ulumuri_info()
+{
+	static char buf[128];
+	sprintf(buf,
+		"level %d",
+		call_of_the_ulumuri_mlev());
+	return buf;
+}
+
+static int wrath_of_ulmo_damage()
+{
+	return 40 + get_level_s(ULMO_WRATH, 150);
+}
+
+static int wrath_of_ulmo_duration()
+{
+	return 10 + get_level_s(ULMO_WRATH, 14);
+}
+
+bool_ *ulmo_wrath_of_ulmo_spell()
+{
+	int dir, type = GF_WATER;
+
+	if (get_level_s(ULMO_WRATH, 50) >= 30)
+	{
+		type = GF_WAVE;
+	}
+
+	if (!get_aim_dir(&dir))
+	{
+		return NO_CAST;
+	}
+
+	fire_wall(type,
+		  dir,
+		  wrath_of_ulmo_damage(),
+		  wrath_of_ulmo_duration());
+	return CAST;
+}
+
+char *ulmo_wrath_of_ulmo_info()
+{
+	static char buf[128];
+	sprintf(buf,
+		"dam %d dur %d",
+		wrath_of_ulmo_damage(),
+		wrath_of_ulmo_duration());
 	return buf;
 }

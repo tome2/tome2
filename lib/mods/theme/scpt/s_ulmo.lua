@@ -2,10 +2,6 @@
 
 BOOK_ULMO = 65
 
-function get_belegaer_damage()
-       return get_level(ULMO_BELEGAER, 10), 3 + get_level(ULMO_BELEGAER, 35)
-end
-
 -- "Song of Belegaer" copied from Geyser
 ULMO_BELEGAER = add_spell
 {
@@ -18,17 +14,8 @@ ULMO_BELEGAER = add_spell
 	["piety"] = TRUE,
 	["stat"] =      A_WIS,
 	["random"] =    SKILL_SPIRITUALITY,
-	["spell"] = function()
-		local ret, dir
-		ret, dir = get_aim_dir()
-		if ret == FALSE then return end
-		return fire_bolt_or_beam(2 * get_level(ULMO_BELEGAER, 85), GF_WATER, dir, damroll(get_belegaer_damage()))
-	end,
-	["info"] = function()
-		local n, d
-		n, d = get_belegaer_damage()
-		return "dam "..n.."d"..d
-	end,
+	["spell"] = function() return ulmo_song_of_belegaer_spell() end,
+	["info"] = function() return ulmo_song_of_belegaer_info() end,
 	["desc"] =
 	{
 		"Channels the power of the Great Sea into your fingertips.",
@@ -48,28 +35,8 @@ ULMO_DRAUGHT_ULMONAN = add_spell
 	["piety"] = TRUE,
 	["stat"] =      A_WIS,
 	["random"] =    SKILL_SPIRITUALITY,
-	["spell"] = 	function()
-			local level = get_level(ULMO_DRAUGHT_ULMONAN, 50)
-			local obvious = hp_player(5 * level)
-			obvious = is_obvious(set_poisoned(0), obvious)
-			obvious = is_obvious(set_cut(0), obvious)
-			obvious = is_obvious(set_stun(0), obvious)
-			obvious = is_obvious(set_blind(0), obvious)
-			if level >= 10 then
-				obvious = is_obvious(do_res_stat(A_STR, TRUE), obvious)
-				obvious = is_obvious(do_res_stat(A_CON, TRUE), obvious)
-				obvious = is_obvious(do_res_stat(A_DEX, TRUE), obvious)
-			end
-			if level >= 20 then
-				obvious =  is_obvious(set_parasite(0, 0), obvious)
-				obvious = is_obvious(set_mimic(0, 0, 0), obvious)
-			end
-			return obvious
-	end,		
-	["info"] = 	function()
-			local level = get_level(ULMO_DRAUGHT_ULMONAN, 50)
-			return "cure "..(5 * level)
-	end,
+	["spell"] = 	function() return ulmo_draught_of_ulmonan_spell() end,
+	["info"] = 	function() return ulmo_draught_of_ulmonan_info() end,
 	["desc"] =	{
 			"Fills you with a draught with powerful curing effects,",
 			"prepared by Ulmo himself.",
@@ -92,24 +59,8 @@ ULMO_CALL_ULUMURI = add_spell
 	["piety"] = TRUE,
 	["stat"] =      A_WIS,
 	["random"] =    SKILL_SPIRITUALITY,
-	["spell"] =     function()
-			local y, x, m_idx
-			local summons =
-				{
-				test_monster_name("Water spirit"),
-				test_monster_name("Water elemental"),
-				}
-			y, x = find_position(player.py, player.px)
-			m_idx = place_monster_one(y, x, summons[rand_range(1, 2)], 0, FALSE, MSTATUS_FRIEND)
-			if m_idx ~= 0 then
-				monster_set_level(m_idx, 30 + get_level(ULMO_CALL_ULUMURI, 70, 0))
-				return TRUE
-			end
-	end,
-
-	["info"] = 	function()
-			return "level "..(get_level(ULMO_CALL_ULUMURI, 70))
-	end,
+	["spell"] =     function() return ulmo_call_of_the_ulumuri_spell() end,
+	["info"] = 	function() return ulmo_call_of_the_ulumuri_info() end,
 	["desc"] =	{
 			"Summons a leveled water spirit or elemental",
 			"to fight for you",
@@ -129,21 +80,8 @@ ULMO_WRATH = add_spell
 	["piety"] = TRUE,
 	["stat"] =      A_WIS,
 	["random"] =    SKILL_SPIRITUALITY,
-	["spell"] =     function()
-		local ret, dir, type
-		if (get_level(ULMO_WRATH, 50) >= 30) then
-			type = GF_WAVE
-		else
-			type = GF_WATER
-		end
-		ret, dir = get_aim_dir()
-		if ret == FALSE then return end
-		fire_wall(type, dir, 40 + get_level(ULMO_WRATH, 150), 10 + get_level(ULMO_WRATH, 14))
-		return TRUE
-	end,
-	["info"] =      function()
-		return "dam "..(40 + get_level(ULMO_WRATH, 150)).." dur "..(10 + get_level(ULMO_WRATH, 14))
-	end,
+	["spell"] =     function() return ulmo_wrath_of_ulmo_spell() end,
+	["info"] =      function() return ulmo_wrath_of_ulmo_info() end,
 	["desc"] =      {
 			"Conjures up a sea storm.",
 			"At level 30 it turns into a more forceful storm."
