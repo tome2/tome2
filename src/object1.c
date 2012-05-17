@@ -2847,7 +2847,7 @@ void describe_device(object_type *o_ptr)
 		text_out_c(TERM_GREEN, string_exec_lua(format("return tostring(spell_chance(%d))", o_ptr->pval2)));
 
 		text_out("\nSpell info: ");
-		text_out_c(TERM_YELLOW, string_exec_lua(format("return __spell_info[%d]()", o_ptr->pval2)));
+		text_out_c(TERM_YELLOW, get_spell_info(o_ptr->pval2));
 
 		/* Leave device mode  */
 		unset_stick_mode();

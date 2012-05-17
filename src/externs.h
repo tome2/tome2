@@ -2341,6 +2341,8 @@ extern timer_type *TIMER_AGGRAVATE_EVIL;
 void timer_aggravate_evil_enable();
 void timer_aggravate_evil_callback();
 
+cptr get_spell_info(s32b s);
+
 /* skills.c */
 extern void dump_skills(FILE *fff);
 extern s16b find_skill(cptr name);

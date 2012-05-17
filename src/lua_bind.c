@@ -577,4 +577,7 @@ void timer_aggravate_evil_callback()
 	dispel_evil(0);
 }
 
-
+cptr get_spell_info(s32b s)
+{
+	return string_exec_lua(format("return __spell_info[" FMTs32b "]()", s));
+}
