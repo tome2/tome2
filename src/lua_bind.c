@@ -249,7 +249,7 @@ int get_mana(s32b s) {
 	return exec_lua(format("return get_mana(%d)", s));
 }
 
-static int get_power(s32b s) {
+int get_power(s32b s) {
 	return exec_lua(format("return get_power(%d)", s));
 }
 
