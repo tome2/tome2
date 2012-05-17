@@ -558,6 +558,13 @@ int get_lua_int(cptr name)
 	return exec_lua(buf);
 }
 
+int get_lua_list_size(cptr list_var)
+{
+	char buf[128];
+	sprintf(buf, "return getn(%s)", list_var);
+	return exec_lua(buf);
+}
+
 void increase_mana(int delta)
 {
 	char buf[256];

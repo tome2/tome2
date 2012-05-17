@@ -2295,6 +2295,7 @@ extern bool_ lua_summon_monster(int y, int x, int lev, bool_ ffriend, char *fct)
 
 extern s16b    add_new_gods(char *name);
 extern int     get_lua_int(cptr name);
+extern int     get_lua_list_size(cptr list_name);
 
 extern bool_    get_com_lua(cptr promtp, int *com);
 
