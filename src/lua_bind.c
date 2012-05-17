@@ -271,13 +271,27 @@ s32b spell_chance(s32b s)
 	}
 }
 
+void get_level_school(s32b s, s32b max, s32b min, s32b *level, bool_ *na)
+{
+	if (level != NULL)
+	{
+		*level = exec_lua(format("local lvl, na = get_level_school(%d, %d, %d); return lvl", s, max, min));
+	}
+
+	if (na != NULL)
+	{
+		*na =  exec_lua(format("local lvl, na = get_level_school(%d, %d, %d); return (na == \"n/a\")", s, max, min));
+	}
+}
+
 s32b get_level(s32b s, s32b max, s32b min)
 {
 	/** Ahah shall we use Magic device instead ? */
 	if (get_level_use_stick > -1) {
 		return get_level_device(s, max, min);
 	} else {
-		int level = exec_lua(format("local lvl, na = get_level_school(%d, %d, %d); return lvl", s, max, min));
+		s32b level;
+		get_level_school(s, max, min, &level, NULL);
 		return level;
 	}
 }
