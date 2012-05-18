@@ -81,7 +81,6 @@ __spell_spell = {}
 __spell_info = {}
 __spell_desc = {}
 __spell_school = {}
-school_book = {}
 
 -- Find a spell by name
 function find_spell(name)
@@ -262,44 +261,6 @@ function spell_school_name(s)
 	return sch_str
 end
 
--- Print the book and the spells
-function print_book(book, spl, obj)
-	local x, y, index, sch, size, s
-
-	x = 0
-	y = 2
-	size = 0
-
-	-- Hack if the book is 255 it is a random book
-	if book == 255 then
-		school_book[book] = {spl}
-	end
-
-	-- Parse all spells
-	for index, s in school_book[book] do
-		local color = TERM_L_DARK
-		local lvl, na = get_level_school(s, 50, -50)
-		local xx, sch_str
-
-		if is_ok_spell(s, obj) then
-			if get_mana(s) > get_power(s) then color = TERM_ORANGE
-			else color = TERM_L_GREEN end
-		end
-		
-		sch_str = spell_school_name(s)
-
-		if na then
-			c_prt(color, format("%c) %-20s%-16s   %3s %4s %3d%s %s", size + strbyte("a"), spell(s).name, sch_str, na, get_mana(s), spell_chance(s), "%", __spell_info[s]()), y, x)
-		else
-			c_prt(color, format("%c) %-20s%-16s   %3d %4s %3d%s %s", size + strbyte("a"), spell(s).name, sch_str, lvl, get_mana(s), spell_chance(s), "%", __spell_info[s]()), y, x)
-		end
-		y = y + 1
-		size = size + 1
-	end
-	prt(format("   %-20s%-16s Level Cost Fail Info", "Name", "School"), 1, x)
-	return y
-end
-
 -- Output the desc when sued as a device
 function print_device_desc(s)
 	local index, desc
@@ -307,32 +268,6 @@ function print_device_desc(s)
 	for index, desc in __spell_desc[s] do
 		text_out("\n" .. desc)
 	end
-end
-
-function book_spells_num(book)
-	local size, index, sch
-
-	size = 0
-
-	-- Hack if the book is 255 it is a random book
-	if book == 255 then
-		return 1
-	end
-
-	-- Parse all spells
-	for index, s in school_book[book] do
-		size = size + 1
-	end
-	return size
-end
-
-function spell_in_book(book, spell)
-	local i, s
-
-	for i, s in school_book[book] do
-		if s == spell then return TRUE end
-	end
-	return FALSE
 end
 
 function check_affect(s, name, default)

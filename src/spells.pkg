@@ -2900,3 +2900,11 @@ bool_ *varda_evenstar_spell();
 char  *varda_evenstar_info();
 bool_ *varda_star_kindler_spell();
 char  *varda_star_kindler_info();
+
+/**
+ * spells4.c
+ */
+void init_school_books();
+
+extern s32b SCHOOL_UDUN;
+extern s32b SCHOOL_MELKOR;

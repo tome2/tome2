@@ -20,9 +20,6 @@ tome_dofile("spells.lua")
 -- Post-spell creation initialization
 initialize_bookable_spells()
 
--- Add some quests
-tome_dofile("library.lua")
-
 -- Add joke stuff
 tome_dofile("drunk.lua")
 tome_dofile("joke.lua")

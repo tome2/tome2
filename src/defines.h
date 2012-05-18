@@ -4718,3 +4718,42 @@
 #define AB_FAR_REACHING         8
 #define AB_TRAPPING             9
 #define AB_UNDEAD_FORM          10
+
+/**
+ * Spell school books/tomes
+ */
+#define TOME_MANA 0
+#define TOME_FIRE 1
+#define TOME_WINDS 2
+#define TOME_EARTH 3
+#define TOME_WATER 4
+#define TOME_TRANSLOCATION 5
+#define TOME_NATURE 6
+#define TOME_KNOWLEDGE 7
+#define TOME_TIME 8
+#define TOME_META 9
+#define TOME_MIND 10
+#define TOME_HELLFLAME 11
+#define TOME_ERU 20
+#define TOME_MANWE 21
+#define TOME_TULKAS 22
+#define TOME_MELKOR 23
+#define TOME_YAVANNA 24
+#define BOOK_CANTRIPS 50
+#define BOOK_TELEPORTATION 51
+#define BOOK_SUMMONING 52
+#define BOOK_DEMON_SWORD 55
+#define BOOK_DEMON_SHIELD 56
+#define BOOK_DEMON_HELM 57
+#define BOOK_DRUMS 58
+#define BOOK_HARPS 59
+#define BOOK_HORNS 60
+#define BOOK_PLAYER 61
+#define BOOK_GEOMANCY 62
+#define BOOK_AULE 63
+#define BOOK_VARDA 64
+#define BOOK_ULMO 65
+#define BOOK_MANDOS 66
+#define BOOK_RANDOM 255
+
+#define SCHOOL_BOOKS_SIZE 256

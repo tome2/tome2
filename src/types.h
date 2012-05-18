@@ -2469,6 +2469,23 @@ struct school_type
 };
 
 /*
+ * Spell index list.
+ */
+typedef struct spell_idx_list spell_idx_list;
+struct spell_idx_list {
+	s32b i; /* Spell index */
+	spell_idx_list *next; /* for list */
+};
+
+/*
+ * School book.
+ */
+typedef struct school_book_type school_book_type;
+struct school_book_type {
+	spell_idx_list *spell_idx_list;
+};
+
+/*
  * Desc for GF_FOO
  */
 typedef struct gf_name_type gf_name_type;

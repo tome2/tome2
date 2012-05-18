@@ -4696,7 +4696,7 @@ void do_cmd_sacrifice(void)
 					/* In books it depends of the spell levels*/
 					if (o_ptr->tval == TV_BOOK)
 					{
-						int x = exec_lua(format("return levels_in_book(%d, %d)", o_ptr->sval, o_ptr->pval));
+						int x = levels_in_book(o_ptr->sval, o_ptr->pval);
 
 						inc_piety(GOD_MELKOR, 2 * x);
 					}

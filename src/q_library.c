@@ -136,16 +136,13 @@ static bool_ library_quest_book_contains_spell(int spell)
 	return FALSE;
 }
 
-static int library_quest_print_spell(int color, int row, int spell) {
-	return exec_lua(format("library_quest.print_spell(%d,%d,%d)", color, row, spell));
-}
-
 static void quest_library_finalize_book()
 {
 	int i = 0;
 	for (i = 1; i <= 3; i++)
 	{
-		exec_lua(format("school_book[61][%d] = %d", i, library_quest_book_get_slot(i)));
+		school_book_type *school_book = school_books_at(BOOK_PLAYER);
+		school_book_add_spell(school_book, library_quest_book_get_slot(i));
 	}
 }
 
@@ -209,7 +206,7 @@ static void library_quest_print_spells(int first, int current)
 				color = TERM_ORANGE;
 			}
 
-			library_quest_print_spell(color, row, spell);
+			print_spell(NULL, color, row, spell);
 
 			if (row == height - 1) {
 				return;

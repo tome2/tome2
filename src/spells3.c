@@ -2911,10 +2911,70 @@ char *tulkas_whirlwind_info()
 /* Return the number of Udun/Melkor spells in a given book */
 int udun_in_book(s32b sval, s32b pval)
 {
-	char buf[128];
-	sprintf(buf, "return udun_in_book(" FMTs32b "," FMTs32b ")",
-		sval, pval);
-	return exec_lua(buf);
+	int count = 0;
+	school_book_type *school_book;
+	spell_idx_list *spell_idx = NULL;
+	struct sglib_spell_idx_list_iterator it;
+
+	random_book_setup(sval, pval);
+
+	/* Get the school book */
+	school_book = school_books_at(sval);
+
+	/* Go through spells */
+	for (spell_idx = sglib_spell_idx_list_it_init(&it, school_book->spell_idx_list);
+	     spell_idx != NULL;
+	     spell_idx = sglib_spell_idx_list_it_next(&it))
+	{
+		int j;
+		int n;
+		char buf[128];
+
+		sprintf(buf, "__spell_school[" FMTs32b "+1]", spell_idx->i);
+		n = get_lua_list_size(buf);
+
+		for (j = 0; j < n; j++)
+		{
+			int sch;
+			sprintf(buf, "__spell_school[" FMTs32b "][%d+1]", spell_idx->i, j);
+			sch = get_lua_int(buf);
+
+			if ((sch == SCHOOL_UDUN) ||
+			    (sch == SCHOOL_MELKOR))
+			{
+				count++;
+			}
+		}
+	}
+
+	return count;
+}
+
+int levels_in_book(s32b sval, s32b pval)
+{
+	int levels = 0;
+	school_book_type *school_book;
+	spell_idx_list *spell_idx = NULL;
+	struct sglib_spell_idx_list_iterator it;
+
+	random_book_setup(sval, pval);
+
+	/* Get the school book */
+	school_book = school_books_at(sval);
+
+	/* Parse all spells */
+	for (spell_idx = sglib_spell_idx_list_it_init(&it, school_book->spell_idx_list);
+	     spell_idx != NULL;
+	     spell_idx = sglib_spell_idx_list_it_next(&it))
+	{
+		char buf[128];
+		s32b s = spell_idx->i;
+
+		sprintf(buf, "__tmp_spells[" FMTs32b "].level", s);
+		levels += get_lua_int(buf);
+	}
+
+	return levels;
 }
 
 static bool_ udun_object_is_drainable(object_type *o_ptr)

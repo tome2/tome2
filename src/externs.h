@@ -1673,6 +1673,7 @@ extern s32b WRAITHFORM;
 extern s32b FLAMEOFUDUN;
 
 int udun_in_book(s32b sval, s32b pval);
+int levels_in_book(s32b sval, s32b pval);
 
 bool_ *udun_drain();
 char  *udun_drain_info();
@@ -1899,7 +1900,22 @@ bool_ *varda_star_kindler_spell();
 char  *varda_star_kindler_info();
 
 /* spells4.c */
+
+SGLIB_DEFINE_LIST_PROTOTYPES(spell_idx_list, compare_spell_idx, next);
+
+extern s32b SCHOOL_UDUN;
+extern s32b SCHOOL_MELKOR;
+
 void print_spell_desc(int s, int y);
+void init_school_books();
+school_book_type *school_books_at(int sval);
+void school_book_add_spell(school_book_type *school_book, s32b spell_idx);
+void random_book_setup(s16b sval, s32b spell_idx);
+int print_spell(cptr label, byte color, int y, s32b s);
+int print_book(s16b sval, s32b pval, object_type *obj);
+int school_book_length(int sval);
+int spell_x(int sval, int pval, int i);
+bool_ school_book_contains_spell(int sval, s32b spell_idx);
 
 /* randart.c */
 extern int get_activation_power(void);
