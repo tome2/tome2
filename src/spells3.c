@@ -2527,11 +2527,7 @@ void meta_inertia_control_timer_callback()
 	else if ((p_ptr->inertia_controlled_spell != -1) &&
 		 (!p_ptr->wild_mode))
 	{
-		char buf[128];
-		sprintf(buf,
-			"__spell_spell[" FMTs32b "]()",
-			p_ptr->inertia_controlled_spell);
-		exec_lua(buf);
+		lua_cast_school_spell(p_ptr->inertia_controlled_spell, TRUE);
 	}
 }
 

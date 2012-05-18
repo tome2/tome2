@@ -2828,6 +2828,8 @@ void display_ammo_damage(object_type *o_ptr)
  */
 void describe_device(object_type *o_ptr)
 {
+	char buf[128];
+
 	/* Wands/... of shcool spell */
 	if (((o_ptr->tval == TV_WAND) || (o_ptr->tval == TV_STAFF)) && object_known_p(o_ptr))
 	{
@@ -2844,7 +2846,8 @@ void describe_device(object_type *o_ptr)
 		text_out_c(TERM_L_BLUE, format("%d", school_spells[o_ptr->pval2].skill_level));
 
 		text_out("\nSpell fail: ");
-		text_out_c(TERM_GREEN, string_exec_lua(format("return tostring(spell_chance(%d))", o_ptr->pval2)));
+		sprintf(buf, FMTs32b, spell_chance(o_ptr->pval2));
+		text_out_c(TERM_GREEN, buf);
 
 		text_out("\nSpell info: ");
 		text_out_c(TERM_YELLOW, get_spell_info(o_ptr->pval2));

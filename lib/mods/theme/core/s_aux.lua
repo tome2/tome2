@@ -218,33 +218,6 @@ function get_mana(s)
 	return spell(s).mana + get_level(s, spell(s).mana_max - spell(s).mana, 0)
 end
 
--- Return the amount of power(mana, piety, whatever) for the spell
-function get_power(s)
-	if check_affect(s, "piety", FALSE) then
-		return player.grace
-	else
-		return player.csp
-	end
-end
-
--- Return the amount of power(mana, piety, whatever) for the spell
-function get_power_name(s)
-	if check_affect(s, "piety", FALSE) then
-		return "piety"
-	else
-		return "mana"
-	end
-end
-
--- Changes the amount of power(mana, piety, whatever) for the spell
-function adjust_power(s, x)
-	if check_affect(s, "piety", FALSE) then
-		inc_piety(GOD_ALL, x)
-	else
-		increase_mana(x)
-	end
-end
-
 -- Get spell school name(s) as a /-separated string.
 function spell_school_name(s)
 	local xx, sch_str
@@ -290,76 +263,6 @@ end
 function get_spell_stat(s)
 	if not __tmp_spells[s].stat then return A_INT
 	else return __tmp_spells[s].stat end
-end
-
-function cast_school_spell(s, s_ptr, no_cost)
-	local use = FALSE
-
-	-- No magic
-	if (player.antimagic > 0) then
-		msg_print("Your anti-magic field disrupts any magic attempts.")
-		return
-	end
-
-	-- No magic
-	if (player.anti_magic == TRUE) then
-		msg_print("Your anti-magic shell disrupts any magic attempts.")
-		return
-	end
-
-	-- if it costs something then some condition must be met
-	if not no_cost then
-	 	-- Require lite
-		if (check_affect(s, "blind")) and ((player.blind > 0) or (no_lite() == TRUE)) then
-			msg_print("You cannot see!")
-			return
-		end
-
-		-- Not when confused
-		if (check_affect(s, "confusion")) and (player.confused > 0) then
-			msg_print("You are too confused!")
-			return
-		end
-
-		-- Enough mana
-		if (get_mana(s) > get_power(s)) then
-			if (get_check("You do not have enough "..get_power_name(s)..", do you want to try anyway?") == FALSE) then return end
-		end
-	
-		-- Invoke the spell effect
-		if (magik(spell_chance(s)) == FALSE) then
-			if (__spell_spell[s]() ~= nil) then
-				use  = TRUE
-			end
-		else
-			local index, sch
-
-			-- added because this is *extremely* important --pelpel
-			if (flush_failure) then flush() end
-
-			msg_print("You failed to get the spell off!")
-			for index, sch in __spell_school[s] do
-				if __schools[sch].fail then
-					__schools[sch].fail(spell_chance(s))
-				end
-			end
-			use  = TRUE
-		end
-	else
-		__spell_spell[s]()
-	end
-
-	if use == TRUE then
-		-- Reduce mana
-		adjust_power(s, -get_mana(s))
-
-		-- Take a turn
-		if is_magestaff() == TRUE then energy_use = 80
-		else energy_use = 100 end
-	end
-
-	player.redraw = bor(player.redraw, PR_MANA)
-	player.window = bor(player.window, PW_PLAYER)
 end
 
 

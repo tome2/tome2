@@ -39,7 +39,7 @@ add_mkey
 
 			-- Actualy cast the choice
 			if (s ~= -1) then
-				cast_school_spell(s, spell(s))
+				cast_school_spell(s)
 			end
 	end,
 }

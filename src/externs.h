@@ -1916,6 +1916,7 @@ int print_book(s16b sval, s32b pval, object_type *obj);
 int school_book_length(int sval);
 int spell_x(int sval, int pval, int i);
 bool_ school_book_contains_spell(int sval, s32b spell_idx);
+void lua_cast_school_spell(s32b spell_idx, bool_ no_cost);
 
 /* randart.c */
 extern int get_activation_power(void);

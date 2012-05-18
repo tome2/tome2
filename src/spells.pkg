@@ -2297,35 +2297,9 @@ extern s32b lua_get_level(s32b s, s32b lvl, s32b max, s32b min, s32b bonus);
 /** Get level of device */
 extern s32b get_level_device(s32b s, s32b max, s32b min);
 
-/** Get change of failure for spell. */
-extern s32b spell_chance(s32b s);
-
 /** Get level of spell */
 extern s32b get_level(s32b s, s32b max, s32b min);
 
-
-/** @fn lua_spell_chance(s32b chance, int level, int skill_level, int mana, int cur_mana, int stat)
- * @dgonly
- * @brief Get the chance a spell will fail.\n
- * @param chance Number \n chance is the inital chance a spell will work.
- * @brief Initial chance
- * @param level Number \n level represents the level of player skill.
- * @brief Player skill level
- * @param skill_level Number \n *unused*.
- * @brief *Unused*
- * @param mana Number \n mana is the mana required by the spell.
- * @brief Spell mana
- * @param cur_mana Number \n cur_mana is the player's current mana.
- * @brief Player mana
- * @param stat Number \n stat is the required casting statistic (INT or WIS).
- * @brief Casting statistic
- * @return Number \n Chance of failure.
- * @note
- * Note: do not call this function directly.\n
- * By order of DG.
- * @note (see file lua_bind.c)
- */
-extern s32b lua_spell_chance(s32b chance, int level, int skill_level, int mana, int cur_mana, int stat);
 
 /** @fn lua_spell_device_chance(s32b chance, int level, int base_level)
  * @dgonly
@@ -2908,3 +2882,4 @@ void init_school_books();
 
 extern s32b SCHOOL_UDUN;
 extern s32b SCHOOL_MELKOR;
+void lua_cast_school_spell @ cast_school_spell(s32b spell_idx, bool no_cost = FALSE);

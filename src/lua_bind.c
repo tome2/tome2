@@ -249,10 +249,6 @@ int get_mana(s32b s) {
 	return exec_lua(format("return get_mana(%d)", s));
 }
 
-int get_power(s32b s) {
-	return exec_lua(format("return get_power(%d)", s));
-}
-
 static int get_spell_stat(s32b s) {
 	return exec_lua(format("return get_spell_stat(%d)", s));
 }

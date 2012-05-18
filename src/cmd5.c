@@ -2409,7 +2409,7 @@ void cast_school_spell()
 	/* Actualy cast the choice */
 	if (spell != -1)
 	{
-		exec_lua(format("cast_school_spell(%d, spell(%d))", spell, spell));
+		lua_cast_school_spell(spell, FALSE);
 	}
 }
 

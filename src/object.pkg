@@ -1132,7 +1132,6 @@ extern object_type *new_object();
 extern void end_object(object_type *o_ptr);
 extern bool get_item @ get_item_aux(int *cp, cptr pmt, cptr str, int mode);
 extern void lua_set_item_tester(int tval, char *fct);
-extern bool is_magestaff();
 extern void identify_pack_fully(void);
 extern s16b inven_carry(object_type *o_ptr, bool final);
 extern s32b calc_total_weight(void);

@@ -1259,7 +1259,7 @@ void spellbinder_trigger()
 	for (i = 0; i < p_ptr->spellbinder_num; i++)
 	{
 		msg_format("Triggering spell %s.", school_spells[p_ptr->spellbinder[i]].name);
-		exec_lua(format("cast_school_spell(%d, spell(%d), TRUE)", p_ptr->spellbinder[i], p_ptr->spellbinder[i]));
+		lua_cast_school_spell(p_ptr->spellbinder[i], TRUE);
 	}
 	p_ptr->spellbinder_num = 0;
 	p_ptr->spellbinder_trigger = 0;

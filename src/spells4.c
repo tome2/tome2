@@ -35,6 +35,31 @@ static bool_ castable_while_confused(int s)
 	return exec_lua(buf);
 }
 
+/** Describe what type of energy the spell uses for casting */
+cptr get_power_name(s32b s)
+{
+	return uses_piety_to_cast(s) ? "piety" : "mana";
+}
+
+/* Changes the amount of power(mana, piety, whatever) for the spell */
+void adjust_power(s32b s, s32b amount)
+{
+	if (uses_piety_to_cast(s))
+	{
+		inc_piety(GOD_ALL, amount);
+	}
+	else
+	{
+		increase_mana(amount);
+	}
+}
+
+/* Return the amount of power available for casting spell */
+s32b get_power(s32b s)
+{
+	return uses_piety_to_cast(s) ? p_ptr->grace : p_ptr->csp;
+}
+
 /* Output the describtion when it is used as a spell */
 void print_spell_desc(int s, int y)
 {
@@ -482,4 +507,99 @@ int print_book(s16b sval, s32b pval, object_type *obj)
 
 	prt(format("   %-20s%-16s Level Cost Fail Info", "Name", "School"), 1, 0);
 	return y;
+}
+
+static bool_ call_spell_function(s32b s)
+{
+	char buf[128];
+	sprintf(buf, "return (__spell_spell[" FMTs32b "]() ~= nil)", s);
+	return exec_lua(buf);
+}
+
+void lua_cast_school_spell(s32b s, bool_ no_cost)
+{
+	bool_ use = FALSE;
+
+	/* No magic? */
+	if (p_ptr->antimagic > 0)
+	{
+		msg_print("Your anti-magic field disrupts any magic attempts.");
+		return;
+	}
+
+	/* No magic? */
+	if (p_ptr->anti_magic)
+	{
+		msg_print("Your anti-magic shell disrupts any magic attempts.");
+		return;
+	}
+
+	/* if it costs something then some condition must be met */
+	if (!no_cost)
+	{
+	 	/* Require lite */
+		if (!castable_while_blind(s) && ((p_ptr->blind > 0) || no_lite()))
+		{
+			msg_print("You cannot see!");
+			return;
+		}
+
+		/* Not when confused */
+		if (!castable_while_confused(s) && (p_ptr->confused > 0))
+		{
+			msg_print("You are too confused!");
+			return;
+		}
+
+		/* Enough mana */
+		if (get_mana(s) > get_power(s))
+		{
+			char buf[128];
+			sprintf(buf,
+				"You do not have enough %s, do you want to try anyway?",
+				get_power_name(s));
+
+			if (!get_check(buf))
+			{
+				return;
+			}
+		}
+	
+		/* Invoke the spell effect */
+		if (!magik(spell_chance(s)))
+		{
+			use = call_spell_function(s);
+		}
+		else
+		{
+			use  = TRUE;
+
+			/* failures are dangerous; we'll flush the input buffer
+			   so it isn't missed. */
+			if (flush_failure)
+			{
+				flush();
+			}
+
+			msg_print("You failed to get the spell off!");
+		}
+	}
+	else
+	{
+		call_spell_function(s);
+	}
+
+	/* Use the mana/piety */
+	if (use == TRUE)
+	{
+		/* Reduce mana */
+		adjust_power(s, -get_mana(s));
+
+		/* Take a turn */
+		energy_use = is_magestaff() ? 80 : 100;
+	}
+
+	/* Refresh player */
+	p_ptr->redraw |= PR_MANA;
+	p_ptr->window |= PW_PLAYER;
 }
