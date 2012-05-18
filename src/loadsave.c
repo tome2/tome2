@@ -579,7 +579,7 @@ static bool_ do_extra(int flag)
 
 	do_s16b(&p_ptr->chaos_patron, flag);
 
-	if ((flag == LS_SAVE)) { tmp16s = CORRUPTIONS_MAX; }
+	if (flag == LS_SAVE) { tmp16s = CORRUPTIONS_MAX; }
 	do_s16b(&tmp16s, flag);
 	if (tmp16s > CORRUPTIONS_MAX) {
 		quit("Too many corruptions");
@@ -587,12 +587,12 @@ static bool_ do_extra(int flag)
 
 	for (i = 0; i < tmp16s; i++)
 	{
-		if ((flag == LS_SAVE))
+		if (flag == LS_SAVE)
 			tmp8u = p_ptr->corruptions[i];
 
 		do_byte(&tmp8u, flag);
 
-		if ((flag == LS_LOAD))
+		if (flag == LS_LOAD)
 			p_ptr->corruptions[i] = tmp8u;
 	}
 
