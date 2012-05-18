@@ -63,24 +63,17 @@ s32b get_power(s32b s)
 /* Output the describtion when it is used as a spell */
 void print_spell_desc(int s, int y)
 {
-	int i;
+	string_list *sl;
+	struct sglib_string_list_iterator it;
 
-	for (i=0; ; i++)
+	for (sl = sglib_string_list_it_init(&it, school_spells[s].description);
+	     sl != NULL;
+	     sl = sglib_string_list_it_next(&it))
 	{
-		char buf[128];
-		cptr desc = NULL;
-
-		sprintf(buf, "return __spell_desc[%d][%d]", s, i+1);
-		desc = string_exec_lua(buf);
-		if (!desc)
-		{
-			break;
-		}
-
-		c_prt(TERM_L_BLUE, desc, y, 0);
+		c_prt(TERM_L_BLUE, sl->s, y, 0);
 		y++;
 	}
-	
+
 	if (uses_piety_to_cast(s))
 	{
 		c_prt(TERM_L_WHITE, "It uses piety to cast.", y, 0);
@@ -602,4 +595,11 @@ void lua_cast_school_spell(s32b s, bool_ no_cost)
 	/* Refresh player */
 	p_ptr->redraw |= PR_MANA;
 	p_ptr->window |= PW_PLAYER;
+}
+
+void spell_description_add_line(s32b spell_idx, cptr line)
+{
+	string_list *e = malloc(sizeof(string_list));
+	string_list_init(e, line);
+	sglib_string_list_add(&school_spells[spell_idx].description, e);
 }

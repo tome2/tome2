@@ -1918,6 +1918,8 @@ int spell_x(int sval, int pval, int i);
 bool_ school_book_contains_spell(int sval, s32b spell_idx);
 void lua_cast_school_spell(s32b spell_idx, bool_ no_cost);
 
+void spell_description_add_line(s32b spell_idx, cptr line);
+
 /* randart.c */
 extern int get_activation_power(void);
 extern void build_prob(cptr learn);

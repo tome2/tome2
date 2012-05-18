@@ -2475,6 +2475,7 @@ struct spell_type
 	byte mana_max;			/* Required mana at max lvl */
 	s16b fail;			/* Minimum chance of failure */
 	s16b level;                     /* Spell level(0 = not learnt) */
+	string_list *description;       /* List of strings */
 };
 
 typedef struct school_type school_type;

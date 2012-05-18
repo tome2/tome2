@@ -72,14 +72,16 @@ function finish_spell(must_i)
 	spell(i).skill_level = s.level
 	__spell_spell[i] = s.spell
 	__spell_info[i] = s.info
-	__spell_desc[i] = s.desc
+	local j,desc
+	for j,desc in s.desc do
+		spell_description_add_line(i, desc)
+	end
 	return i
 end
 
 -- Creates the school books array
 __spell_spell = {}
 __spell_info = {}
-__spell_desc = {}
 __spell_school = {}
 
 -- Find a spell by name
@@ -234,15 +236,6 @@ function spell_school_name(s)
 	return sch_str
 end
 
--- Output the desc when sued as a device
-function print_device_desc(s)
-	local index, desc
-
-	for index, desc in __spell_desc[s] do
-		text_out("\n" .. desc)
-	end
-end
-
 function check_affect(s, name, default)
 	local s_ptr = __tmp_spells[s]
 	local a
@@ -387,26 +380,6 @@ end
 -- Get the number of desired charges
 function get_stick_charges(spl)
 	return __tmp_spells[spl].stick.charge[1] + randint(__tmp_spells[spl].stick.charge[2]);
-end
-
--- Get activation desc
-function get_activation_desc(spl)
-	local turns
-	if type(__tmp_spells[spl].activate) == 'number' then
-		turns = __tmp_spells[spl].activate
-	else
-		turns = __tmp_spells[spl].activate[1] .. '+d' .. __tmp_spells[spl].activate[2]
-	end
-	return __tmp_spells[spl].desc[1] .. ' every ' .. turns .. ' turns'
-end
-
--- Compute the timeout of an activation
-function get_activation_timeout(spl)
-	if type(__tmp_spells[spl].activate) == 'number' then
-		return __tmp_spells[spl].activate
-	else
-		return __tmp_spells[spl].activate[1] + randint(__tmp_spells[spl].activate[2])
-	end
 end
 
 -- Fire off the spell

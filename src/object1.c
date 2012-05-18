@@ -2824,6 +2824,23 @@ void display_ammo_damage(object_type *o_ptr)
 }
 
 /*
+ * Describe the device spell
+ */
+static void print_device_desc(int s)
+{
+	string_list *sl;
+	struct sglib_string_list_iterator it;
+
+	for (sl = sglib_string_list_it_init(&it, school_spells[s].description);
+	     sl != NULL;
+	     sl = sglib_string_list_it_next(&it))
+	{
+		text_out("\n");
+		text_out(sl->s);
+	}
+}
+
+/*
  * Describe a magic stick powers
  */
 void describe_device(object_type *o_ptr)
@@ -2837,7 +2854,7 @@ void describe_device(object_type *o_ptr)
 		set_stick_mode(o_ptr);
 
 		text_out("\nSpell description:");
-		exec_lua(format("print_device_desc(%d)", o_ptr->pval2));
+		print_device_desc(o_ptr->pval2);
 
 		text_out("\nSpell level: ");
 		text_out_c(TERM_L_BLUE, string_exec_lua(format("return tostring(get_level(%d, 50, 0))", o_ptr->pval2)));

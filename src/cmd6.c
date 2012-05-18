@@ -4989,9 +4989,58 @@ void do_cmd_activate(void)
 }
 
 
+static void get_activation_duration(int spl, int *base, int *sides)
+{
+	assert(base != NULL);
+	assert(sides != NULL);
+
+	*base = get_lua_int(format("__tmp_spells[%d].activate[1]", spl));
+	if (*base <= 0)
+	{
+		base = 0;
+	}
+
+	*sides = get_lua_int(format("__tmp_spells[%d].activate[2]", spl));
+	if (*sides <= 0)
+	{
+		sides = 0;
+	}
+}
+
+static void get_activation_desc(char *buf, int spl)
+{
+	spell_type *spell = &school_spells[spl];
+	char turns[32];
+	int base, sides;
+
+	get_activation_duration(spl, &base, &sides);
+
+	sprintf(turns, "%d", base);
+	if (sides > 0)
+	{
+		char buf[32];
+		sprintf(buf, "+d%d", sides);
+		strcat(turns, buf);
+	}
+
+	assert(spell->description != NULL);
+	assert(spell->description->s != NULL);
+	sprintf(buf, "%s every %s turns",
+		spell->description->s,
+		turns);
+}
+
+static int get_activation_timeout(int spl)
+{
+	int base, sides;
+	get_activation_duration(spl, &base, &sides);
+	return base + randint(sides);
+}
+
 
 const char *activation_aux(object_type * o_ptr, bool_ doit, int item)
 {
+	static char buf[256];
 	int plev = get_skill(SKILL_DEVICE);
 
 	int i = 0, ii = 0, ij = 0, k, dir, dummy = 0;
@@ -5034,11 +5083,12 @@ const char *activation_aux(object_type * o_ptr, bool_ doit, int item)
 		if (doit)
 		{
 			call_lua("activate_activation", "(d,d)", "", -spell, item);
-			o_ptr->timeout = exec_lua(format("return get_activation_timeout(%d)", -spell));
+			o_ptr->timeout = get_activation_timeout(-spell);
 		}
 		else
 		{
-			return string_exec_lua(format("return get_activation_desc(%d)", -spell));
+			get_activation_desc(buf, -spell);
+			return buf;
 		}
 	}
 	else
