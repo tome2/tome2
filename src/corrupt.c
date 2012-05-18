@@ -40,12 +40,12 @@ static void player_gain_vampire_strength()
 	rmp_ptr->r_mhp = rmp_ptr->r_mhp + 1;
 	rmp_ptr->r_exp = rmp_ptr->r_exp + 100;
 
-	rmp_ptr->r_adj[A_STR + 1] = rmp_ptr->r_adj[A_STR + 1] + 3;
-	rmp_ptr->r_adj[A_INT + 1] = rmp_ptr->r_adj[A_INT + 1] + 2;
-	rmp_ptr->r_adj[A_WIS + 1] = rmp_ptr->r_adj[A_WIS + 1] - 3;
-	rmp_ptr->r_adj[A_DEX + 1] = rmp_ptr->r_adj[A_DEX + 1] - 2;
-	rmp_ptr->r_adj[A_CON + 1] = rmp_ptr->r_adj[A_CON + 1] + 1;
-	rmp_ptr->r_adj[A_CHR + 1] = rmp_ptr->r_adj[A_CHR + 1] - 4;
+	rmp_ptr->r_adj[A_STR] = rmp_ptr->r_adj[A_STR] + 3;
+	rmp_ptr->r_adj[A_INT] = rmp_ptr->r_adj[A_INT] + 2;
+	rmp_ptr->r_adj[A_WIS] = rmp_ptr->r_adj[A_WIS] - 3;
+	rmp_ptr->r_adj[A_DEX] = rmp_ptr->r_adj[A_DEX] - 2;
+	rmp_ptr->r_adj[A_CON] = rmp_ptr->r_adj[A_CON] + 1;
+	rmp_ptr->r_adj[A_CHR] = rmp_ptr->r_adj[A_CHR] - 4;
 
 	/* be reborn! */
 	do_rebirth();
