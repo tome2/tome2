@@ -1594,6 +1594,11 @@ char *geomancy_vaporize_info()
 	return buf;
 }
 
+bool_ geomancy_vaporize_depends()
+{
+	return get_skill(SKILL_AIR) >= 4;
+}
+
 bool_ *geomancy_geolysis()
 {
 	int dir = 0;
@@ -1616,6 +1621,11 @@ char *geomancy_geolysis_info()
 		"length " FMTs32b,
 		(5 + get_level_s(GEOLYSIS, 12)));
 	return buf;
+}
+
+bool_ geomancy_geolysis_depends()
+{
+	return get_skill(SKILL_EARTH) >= 7;
 }
 
 bool_ *geomancy_dripping_tread()
@@ -1643,6 +1653,11 @@ char *geomancy_dripping_tread_info()
 	return buf;
 }
 
+bool_ geomancy_dripping_tread_depends()
+{
+	return get_skill(SKILL_WATER) >= 10;
+}
+
 bool_ *geomancy_grow_barrier()
 {
 	int dir = 0;
@@ -1662,6 +1677,11 @@ bool_ *geomancy_grow_barrier()
 char *geomancy_grow_barrier_info()
 {
 	return "";
+}
+
+bool_ geomancy_grow_barrier_depends()
+{
+	return get_skill(SKILL_EARTH) >= 12;
 }
 
 typedef struct geo_summon geo_summon;

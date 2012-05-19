@@ -2542,12 +2542,16 @@ bool_ *geomancy_elemental_wave();
 char  *geomancy_elemental_wave_info();
 bool_ *geomancy_vaporize();
 char  *geomancy_vaporize_info();
+bool_  geomancy_vaporize_depends();
 bool_ *geomancy_geolysis();
 char  *geomancy_geolysis_info();
+bool_  geomancy_geolysis_depends();
 bool_ *geomancy_dripping_tread();
 char  *geomancy_dripping_tread_info();
+bool_  geomancy_dripping_tread_depends();
 bool_ *geomancy_grow_barrier();
 char  *geomancy_grow_barrier_info();
+bool_  geomancy_grow_barrier_depends();
 bool_ *geomancy_elemental_minion();
 char  *geomancy_elemental_minion_info();
 

@@ -83,9 +83,7 @@ VAPORIZE = add_spell
 	["blind"] =     FALSE,
 	-- Must have at least 4 Air
 	["random"] =    0,
-	["depend"] =    function()
-			if get_skill(SKILL_AIR) >= 4 then return TRUE end
-	end,
+	["depend"] =    function() return geomancy_vaporize_depends() end,
 	["spell"] = 	function() return geomancy_vaporize() end,
 	["info"] = 	function() return geomancy_vaporize_info() end,
 	["desc"] =	{
@@ -105,9 +103,7 @@ GEOLYSIS = add_spell
 	["blind"] =     FALSE,
 	["random"] =    0,
 	-- Must have at least 7 Earth
-	["depend"] =    function()
-			if get_skill(SKILL_EARTH) >= 7 then return TRUE end
-	end,
+	["depend"] =    function() return geomancy_geolysis_depends() end,
 	["spell"] = 	function() return geomancy_geolysis() end,
 	["info"] = 	function() return geomancy_geolysis_info() end,
 	["desc"] =	{
@@ -128,9 +124,7 @@ DRIPPING_TREAD = add_spell
 	["blind"] =     FALSE,
 	["random"] =    0,
 	-- Must have at least 10 Water
-	["depend"] =    function()
-			if get_skill(SKILL_WATER) >= 10 then return TRUE end
-	end,
+	["depend"] =    function() return geomancy_dripping_tread_depends() end,
 	["spell"] =     function() return geomancy_dripping_tread() end,
 	["info"] = 	function() return geomancy_dripping_tread_info() end,
 	["desc"] =	{
@@ -150,9 +144,7 @@ GROW_BARRIER = add_spell
 	["blind"] =     FALSE,
 	["random"] =    0,
 	-- Must have at least 12 Earth
-	["depend"] =    function()
-			if get_skill(SKILL_EARTH) >= 12 then return TRUE end
-	end,
+	["depend"] =    function() return geomancy_grow_barrier_depends() end,
 	["spell"] = 	function() return geomancy_grow_barrier() end,
 	["info"] = 	function() return geomancy_grow_barrier_info() end,
 	["desc"] =	{
