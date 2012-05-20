@@ -4806,7 +4806,7 @@ char *varda_light_of_valinor_info()
 	if (get_level_s(VARDA_LIGHT_VALINOR, 50) >= 15)
 	{
 		sprintf(buf,
-			"dam %d rad " FMTs32b,
+			"dam %d rad %d",
 			light_of_valinor_damage(),
 			light_of_valinor_radius());
 		return buf;
