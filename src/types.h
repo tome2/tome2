@@ -62,6 +62,7 @@ SGLIB_DEFINE_LIST_PROTOTYPES(string_list, compare_string, next);
 
 void string_list_init(string_list *sl, cptr s); /* Initialize element; copies string */
 void string_list_destroy(string_list *sl);      /* Destroy element */
+void string_list_append(string_list **slist, cptr s); /* Append string */
 
 
 

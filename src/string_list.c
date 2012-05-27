@@ -30,6 +30,7 @@ void string_list_destroy(string_list *sl)
 {
 	assert(sl != NULL);
 
+	/* Free contained string */
 	if (sl->s) {
 		string_free(sl->s);
 		sl->s = NULL;
@@ -37,4 +38,15 @@ void string_list_destroy(string_list *sl)
 
 	/* We do NOT free the rest of the list. */
 	sl->next = NULL;
+}
+
+/**
+ * Append a string to a string_list.
+ */
+void string_list_append(string_list **slist, cptr s)
+{
+	string_list *e = malloc(sizeof(string_list));
+	string_list_init(e, s);
+
+	sglib_string_list_add(slist, e);
 }

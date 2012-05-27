@@ -599,7 +599,5 @@ void lua_cast_school_spell(s32b s, bool_ no_cost)
 
 void spell_description_add_line(s32b spell_idx, cptr line)
 {
-	string_list *e = malloc(sizeof(string_list));
-	string_list_init(e, line);
-	sglib_string_list_add(&school_spells[spell_idx].description, e);
+	string_list_append(&school_spells[spell_idx].description, line);
 }
