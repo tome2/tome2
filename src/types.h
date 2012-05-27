@@ -2504,6 +2504,12 @@ struct skill_type
 
 
 /*
+ * Casting type
+ */
+typedef enum { USE_SPELL_POINTS, USE_PIETY } casting_type;
+
+
+/*
  * The spell function must provide the desc
  */
 typedef struct spell_type spell_type;
