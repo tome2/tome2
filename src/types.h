@@ -2431,6 +2431,17 @@ struct cli_comm
 };
 
 /*
+ * Range
+ */
+typedef struct range_type range_type;
+struct range_type
+{
+	s32b min;
+	s32b max;
+};
+
+
+/*
  * Skills !
  */
 typedef struct skill_type skill_type;

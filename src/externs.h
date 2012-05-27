@@ -1924,6 +1924,9 @@ void lua_cast_school_spell(s32b spell_idx, bool_ no_cost);
 
 void spell_description_add_line(s32b spell_idx, cptr line);
 
+/* range.c */
+extern void range_init(range_type *range, s32b min, s32b max);
+
 /* randart.c */
 extern int get_activation_power(void);
 extern void build_prob(cptr learn);
