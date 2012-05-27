@@ -601,3 +601,21 @@ void spell_description_add_line(s32b spell_idx, cptr line)
 {
 	string_list_append(&school_spells[spell_idx].description, line);
 }
+
+void device_allocation_init(device_allocation *device_allocation, byte tval)
+{
+	assert(device_allocation != NULL);
+
+	device_allocation->tval = tval;
+	device_allocation->rarity = 0;
+	range_init(&device_allocation->base_level, 0, 0);
+	range_init(&device_allocation->max_level, 0, 0);
+	device_allocation->next = NULL;
+}
+
+int compare_device_allocation(device_allocation *a, device_allocation *b)
+{
+	return SGLIB_NUMERIC_COMPARATOR(a->tval, b->tval);
+}
+
+SGLIB_DEFINE_LIST_FUNCTIONS(device_allocation, compare_device_allocation, next);

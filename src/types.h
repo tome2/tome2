@@ -2442,6 +2442,24 @@ struct range_type
 
 
 /*
+ * Device allocation for skill
+ */
+typedef struct device_allocation device_allocation;
+struct device_allocation
+{
+	byte tval;
+	s32b rarity;
+	range_type base_level;
+	range_type max_level;
+	/* Next device allocation in the list */
+	device_allocation *next;
+};
+
+int compare_device_allocation(device_allocation *a, device_allocation *b);
+SGLIB_DEFINE_LIST_PROTOTYPES(device_allocation, compare_device_allocation, next);
+
+
+/*
  * Skills !
  */
 typedef struct skill_type skill_type;

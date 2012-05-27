@@ -1923,6 +1923,7 @@ bool_ school_book_contains_spell(int sval, s32b spell_idx);
 void lua_cast_school_spell(s32b spell_idx, bool_ no_cost);
 
 void spell_description_add_line(s32b spell_idx, cptr line);
+void device_allocation_init(device_allocation *device_allocation, byte tval);
 
 /* range.c */
 extern void range_init(range_type *range, s32b min, s32b max);
