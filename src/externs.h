@@ -1925,6 +1925,12 @@ void lua_cast_school_spell(s32b spell_idx, bool_ no_cost);
 void spell_description_add_line(s32b spell_idx, cptr line);
 void device_allocation_init(device_allocation *device_allocation, byte tval);
 
+void dice_init(dice_type *dice, long base, long num, long sides);
+bool_ dice_parse(dice_type *dice, cptr s);
+void dice_parse_checked(dice_type *dice, cptr s);
+long dice_roll(dice_type *dice);
+void dice_print(dice_type *dice, char *buf);
+
 /* range.c */
 extern void range_init(range_type *range, s32b min, s32b max);
 

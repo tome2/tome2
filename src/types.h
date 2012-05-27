@@ -2440,6 +2440,16 @@ struct range_type
 	s32b max;
 };
 
+/*
+ * Dice
+ */
+typedef struct dice_type dice_type;
+struct dice_type
+{
+	long base;  /* Base value to which roll is added. */
+	long num;   /* Number of dice */
+	long sides; /* Sides per dice */
+};
 
 /*
  * Device allocation for skill
