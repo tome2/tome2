@@ -1907,8 +1907,31 @@ char  *varda_star_kindler_info();
 
 SGLIB_DEFINE_LIST_PROTOTYPES(spell_idx_list, compare_spell_idx, next);
 
-extern s32b SCHOOL_UDUN;
+extern s32b SCHOOL_AIR;
+extern s32b SCHOOL_AULE;
+extern s32b SCHOOL_CONVEYANCE;
+extern s32b SCHOOL_DEMON;
+extern s32b SCHOOL_DEVICE;
+extern s32b SCHOOL_DIVINATION;
+extern s32b SCHOOL_EARTH;
+extern s32b SCHOOL_ERU;
+extern s32b SCHOOL_FIRE;
+extern s32b SCHOOL_GEOMANCY;
+extern s32b SCHOOL_MANA;
+extern s32b SCHOOL_MANDOS;
+extern s32b SCHOOL_MANWE;
 extern s32b SCHOOL_MELKOR;
+extern s32b SCHOOL_META;
+extern s32b SCHOOL_MIND;
+extern s32b SCHOOL_MUSIC;
+extern s32b SCHOOL_NATURE;
+extern s32b SCHOOL_TEMPORAL;
+extern s32b SCHOOL_TULKAS;
+extern s32b SCHOOL_UDUN;
+extern s32b SCHOOL_ULMO;
+extern s32b SCHOOL_VARDA;
+extern s32b SCHOOL_WATER;
+extern s32b SCHOOL_YAVANNA;
 
 void print_spell_desc(int s, int y);
 void init_school_books();
