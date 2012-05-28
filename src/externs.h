@@ -1906,6 +1906,7 @@ char  *varda_star_kindler_info();
 /* spells4.c */
 
 SGLIB_DEFINE_LIST_PROTOTYPES(spell_idx_list, compare_spell_idx, next);
+SGLIB_DEFINE_LIST_PROTOTYPES(school_idx, compare_school_idx, next);
 
 extern s32b SCHOOL_AIR;
 extern s32b SCHOOL_AULE;
@@ -1932,6 +1933,10 @@ extern s32b SCHOOL_ULMO;
 extern s32b SCHOOL_VARDA;
 extern s32b SCHOOL_WATER;
 extern s32b SCHOOL_YAVANNA;
+
+void school_idx_init(school_idx *e, s32b i);
+school_idx *school_idx_new(s32b i);
+void school_idx_add_new(school_idx **list, s32b i);
 
 void print_spell_desc(int s, int y);
 void init_school_books();

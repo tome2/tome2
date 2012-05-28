@@ -2504,6 +2504,16 @@ struct skill_type
 
 
 /*
+ * School index list.
+ */
+typedef struct school_idx school_idx;
+struct school_idx {
+	s32b i; /* School index */
+	school_idx *next; /* for list */
+};
+
+
+/*
  * Casting type
  */
 typedef enum { USE_SPELL_POINTS, USE_PIETY } casting_type;

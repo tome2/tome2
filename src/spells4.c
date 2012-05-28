@@ -37,6 +37,39 @@ static int compare_spell_idx(spell_idx_list *a, spell_idx_list *b)
 
 SGLIB_DEFINE_LIST_FUNCTIONS(spell_idx_list, compare_spell_idx, next);
 
+static int compare_school_idx(school_idx *a, school_idx *b)
+{
+	return SGLIB_NUMERIC_COMPARATOR(a->i, b->i);
+}
+
+SGLIB_DEFINE_LIST_FUNCTIONS(school_idx, compare_school_idx, next);
+
+void school_idx_init(school_idx *e, s32b i)
+{
+	assert(e != NULL);
+
+	e->i = i;
+	e->next = NULL;
+}
+
+school_idx *school_idx_new(s32b i)
+{
+	school_idx *e = malloc(sizeof(school_idx));
+	assert(e != NULL);
+
+	school_idx_init(e, i);
+
+	return e;
+}
+
+void school_idx_add_new(school_idx **list, s32b i)
+{
+	school_idx *e = school_idx_new(i);
+	assert(e != NULL);
+
+	sglib_school_idx_add(list, e);
+}
+
 static bool_ uses_piety_to_cast(int s)
 {
 	char buf[128];
