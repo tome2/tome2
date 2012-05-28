@@ -3655,7 +3655,7 @@ void unset_stick_mode()
 static void activate_stick(s16b s, bool_ *obvious, bool_ *use_charge)
 {
 	spell_type *spell = spell_at(s);
-	bool_ *ret;
+	casting_result ret;
 
 	assert(obvious != NULL);
 	assert(use_charge != NULL);
@@ -3663,15 +3663,22 @@ static void activate_stick(s16b s, bool_ *obvious, bool_ *use_charge)
 
 	ret = spell->effect_func(-1);
 
-	if (ret == NULL)
+	switch (ret)
 	{
+	case NO_CAST:
 		*use_charge = FALSE;
 		*obvious = FALSE;
-	}
-	else
-	{
+		break;
+	case CAST_HIDDEN:
 		*use_charge = TRUE;
-		*obvious = *ret;
+		*obvious = FALSE;
+		break;
+	case CAST_OBVIOUS:
+		*use_charge = TRUE;
+		*obvious = TRUE;
+		break;
+	default:
+		assert(FALSE);
 	}
 }
 

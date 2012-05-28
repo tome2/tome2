@@ -848,7 +848,7 @@ extern bool do_inc_stat(int stat);
  * Done by a potion of "self knowledge".
  * @note (see file spells2.c)
  */
-extern void identify_pack(void);
+extern bool identify_pack(void);
 
 /** @fn remove_curse(void)
  * @brief Remove all curses except for heavy curses.

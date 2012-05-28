@@ -348,7 +348,7 @@ bool_ do_inc_stat(int stat)
  * Identify everything being carried.
  * Done by a potion of "self knowledge".
  */
-void identify_pack(void)
+bool_ identify_pack(void)
 {
 	int i;
 
@@ -370,6 +370,7 @@ void identify_pack(void)
 
 	p_ptr->notice |= (PN_COMBINE | PN_REORDER);
 	p_ptr->window |= (PW_INVEN | PW_EQUIP | PW_PLAYER);
+	return TRUE;
 }
 
 /*

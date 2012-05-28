@@ -579,7 +579,7 @@ static bool_ call_spell_function(s32b s)
 {
 	spell_type *spell = spell_at(s);
 	assert(spell->effect_func != NULL);
-	return (spell->effect_func(-1) != NULL);
+	return (spell->effect_func(-1) != NO_CAST);
 }
 
 void lua_cast_school_spell(s32b s, bool_ no_cost)

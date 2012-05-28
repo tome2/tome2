@@ -167,19 +167,35 @@ s32b VARDA_CALL_ALMAREN;
 s32b VARDA_EVENSTAR;
 s32b VARDA_STARKINDLER;
 
-/* FIXME: Hackish workaround while we're still tied to Lua. This lets
- us return Lua's "nil" and a non-nil value (which is all the s_aux.lua
- cares about). */
-bool_ *NO_CAST = NULL;
-bool_ CAST_VAL = 0xca; /* Any value will do */
-bool_ *CAST = &CAST_VAL;
-
 s32b get_level_s(int sp, int max)
 {
 	return get_level(sp, max, 1);
 }
 
-bool_ *air_noxious_cloud(int item)
+static casting_result cast(bool_ effect)
+{
+	return effect ? CAST_OBVIOUS : CAST_HIDDEN;
+}
+
+static casting_result cplus(casting_result old, bool_ effect)
+{
+	if (old == NO_CAST)
+	{
+		return cast(effect);
+	}
+	else
+	{
+		if ((old == CAST_OBVIOUS) || (effect == TRUE)) {
+			return CAST_OBVIOUS;
+		}
+		else
+		{
+			return CAST_HIDDEN;
+		}
+	}
+}
+
+casting_result air_noxious_cloud(int item)
 {
 	int dir, type;
 
@@ -198,7 +214,7 @@ bool_ *air_noxious_cloud(int item)
 	}
 
 	fire_cloud(type, dir, 7 + get_level_s(NOXIOUSCLOUD, 150), 3, 5 + get_level_s(NOXIOUSCLOUD, 40));
-	return CAST;
+	return CAST_OBVIOUS;
 }
 
 char *air_noxious_cloud_info()
@@ -211,23 +227,24 @@ char *air_noxious_cloud_info()
 	return buf;
 }
 
-bool_ *air_wings_of_winds(int item)
+casting_result air_wings_of_winds(int item)
 {
 	if (get_level_s(AIRWINGS, 50) >= 16)
 	{
 		if (p_ptr->tim_fly == 0)
 		{
-			set_tim_fly(randint(10) + 5 + get_level_s(AIRWINGS, 25));
-			return CAST;
+			return cast(set_tim_fly(randint(10) + 5 + get_level_s(AIRWINGS, 25)));
 		}
-		else if (p_ptr->tim_ffall == 0)
+	}
+	else
+	{
+		if (p_ptr->tim_ffall == 0)
 		{
-			set_tim_ffall(randint(10) + 5 + get_level_s(AIRWINGS, 25));
-			return CAST;
+			return cast(set_tim_ffall(randint(10) + 5 + get_level_s(AIRWINGS, 25)));
 		}
 	}
 
-	return NO_CAST;
+	return CAST_HIDDEN;
 }
 
 char *air_wings_of_winds_info()
@@ -237,15 +254,14 @@ char *air_wings_of_winds_info()
 	return buf;
 }
 
-bool_ *air_invisibility(int item)
+casting_result air_invisibility(int item)
 {
 	if (p_ptr->tim_invisible == 0)
 	{
-		set_invis(randint(20) + 15 + get_level_s(INVISIBILITY, 50), 20 + get_level_s(INVISIBILITY, 50));
-		return CAST;
+		return cast(set_invis(randint(20) + 15 + get_level_s(INVISIBILITY, 50), 20 + get_level_s(INVISIBILITY, 50)));
 	}
 
-	return NO_CAST;
+	return CAST_HIDDEN;
 }
 
 char *air_invisibility_info()
@@ -257,24 +273,22 @@ char *air_invisibility_info()
 	return buf;
 }
 
-bool_ *air_poison_blood(int item)
+casting_result air_poison_blood(int item)
 {
-	bool_ *cast = NO_CAST;
+	casting_result result = NO_CAST;
 
 	if (p_ptr->oppose_pois == 0)
 	{
-		set_oppose_pois(randint(30) + 25 + get_level_s(POISONBLOOD, 25));
-		cast = CAST;
+		result = cplus(result, set_oppose_pois(randint(30) + 25 + get_level_s(POISONBLOOD, 25)));
 	}
 
 	if ((p_ptr->tim_poison == 0) &&
 	    (get_level_s(POISONBLOOD, 50) >= 15))
 	{
-		set_poison(randint(30) + 25 + get_level_s(POISONBLOOD, 25));
-		cast = CAST;
+		result = cplus(result, set_poison(randint(30) + 25 + get_level_s(POISONBLOOD, 25)));
 	}
 
-	return cast;
+	return result;
 }
 
 char *air_poison_blood_info()
@@ -286,15 +300,14 @@ char *air_poison_blood_info()
 	return buf;
 }
 
-bool_ *air_thunderstorm(int item)
+casting_result air_thunderstorm(int item)
 {
 	if (p_ptr->tim_thunder == 0)
 	{
-		set_tim_thunder(randint(10) + 10 + get_level_s(THUNDERSTORM, 25), 5 + get_level_s(THUNDERSTORM, 10), 10 + get_level_s(THUNDERSTORM, 25));
-		return CAST;
+		return cast(set_tim_thunder(randint(10) + 10 + get_level_s(THUNDERSTORM, 25), 5 + get_level_s(THUNDERSTORM, 10), 10 + get_level_s(THUNDERSTORM, 25)));
 	}
 
-	return NO_CAST;
+	return CAST_HIDDEN;
 }
 
 char *air_thunderstorm_info()
@@ -308,10 +321,10 @@ char *air_thunderstorm_info()
 	return buf;
 }
 
-bool_ *air_sterilize(int item)
+casting_result air_sterilize(int item)
 {
 	set_no_breeders((30) + 20 + get_level_s(STERILIZE, 70));
-	return CAST;
+	return CAST_OBVIOUS;
 }
 
 char *air_sterilize_info()
@@ -323,7 +336,7 @@ char *air_sterilize_info()
 	return buf;
 }
 
-bool_ *convey_blink(int item)
+casting_result convey_blink(int item)
 {
 	if (get_level_s(BLINK, 50) >= 30)
 	{
@@ -332,12 +345,12 @@ bool_ *convey_blink(int item)
 
 		teleport_player(10 + get_level_s(BLINK, 8));
 		create_between_gate(0, oy, ox);
-		return CAST;
+		return CAST_OBVIOUS;
 	}
 	else
 	{
 		teleport_player(10 + get_level_s(BLINK, 8));
-		return CAST;
+		return CAST_OBVIOUS;
 	}
 }
 
@@ -350,15 +363,17 @@ char *convey_blink_info()
 	return buf;
 }
 
-bool_ *convey_disarm(int item)
+casting_result convey_disarm(int item)
 {
-	destroy_doors_touch();
+	casting_result result = NO_CAST;
+
+	result = cplus(result, destroy_doors_touch());
 	if (get_level_s(DISARM, 50) >= 10)
 	{
-		destroy_traps_touch();
+		result = cplus(result, destroy_traps_touch());
 	}
 
-	return CAST;
+	return result;
 }
 
 char *convey_disarm_info()
@@ -366,11 +381,11 @@ char *convey_disarm_info()
 	return "";
 }
 
-bool_ *convey_teleport(int item)
+casting_result convey_teleport(int item)
 {
 	p_ptr->energy -= (25 - get_level_s(TELEPORT, 50));
 	teleport_player(100 + get_level_s(TELEPORT, 100));
-	return CAST;
+	return CAST_OBVIOUS;
 }
 
 char *convey_teleport_info()
@@ -382,12 +397,11 @@ char *convey_teleport_info()
 	return buf;
 }
 
-bool_ *convey_teleport_away(int item)
+casting_result convey_teleport_away(int item)
 {
 	if (get_level_s(TELEAWAY, 50) >= 20)
 	{
-		project_hack(GF_AWAY_ALL, 100);
-		return CAST;
+		return cast(project_hack(GF_AWAY_ALL, 100));
 	}
 	else if (get_level_s(TELEAWAY, 50) >= 10)
 	{
@@ -397,8 +411,7 @@ bool_ *convey_teleport_away(int item)
 			return NO_CAST;
 		}
 
-		fire_ball(GF_AWAY_ALL, dir, 100, 3 + get_level_s(TELEAWAY, 4));
-		return CAST;
+		return cast(fire_ball(GF_AWAY_ALL, dir, 100, 3 + get_level_s(TELEAWAY, 4)));
 	}
 	else
 	{
@@ -407,8 +420,7 @@ bool_ *convey_teleport_away(int item)
 		{
 			return NO_CAST;
 		}
-		teleport_monster(dir);
-		return CAST;
+		return cast(teleport_monster(dir));
 	}
 }
 
@@ -437,7 +449,7 @@ static int recall_get_f()
 	return f;
 }
 
-bool_ *convey_recall(int item)
+casting_result convey_recall(int item)
 {
 	int x,y;
 	cave_type *c_ptr;
@@ -455,12 +467,12 @@ bool_ *convey_recall(int item)
 		int d = recall_get_d();
 		int f = recall_get_f();
 		recall_player(d, f);
-		return CAST;
+		return CAST_OBVIOUS;
 	}
 	else if (c_ptr->m_idx > 0)
 	{
 		swap_position(y, x);
-		return CAST;
+		return CAST_OBVIOUS;
 	}
 	else if (c_ptr->o_idx > 0)
 	{
@@ -473,7 +485,7 @@ bool_ *convey_recall(int item)
 		{
 			fetch(5, 10 + get_level_s(RECALL, 150), TRUE);
 		}
-		return CAST;
+		return CAST_OBVIOUS;
 	}
 	else
 	{
@@ -493,10 +505,9 @@ char *convey_recall_info()
 	return buf;
 }
 
-bool_ *convey_probability_travel(int item)
+casting_result convey_probability_travel(int item)
 {
-	set_prob_travel(randint(20) + get_level_s(PROBABILITY_TRAVEL, 60));
-	return CAST;
+	return cast(set_prob_travel(randint(20) + get_level_s(PROBABILITY_TRAVEL, 60)));
 }
 
 char *convey_probability_travel_info()
@@ -508,7 +519,7 @@ char *convey_probability_travel_info()
 	return buf;
 }
 
-bool_ *demonology_demon_blade(int item)
+casting_result demonology_demon_blade(int item)
 {
 	int rad, type;
 
@@ -524,12 +535,11 @@ bool_ *demonology_demon_blade(int item)
 		rad = 1;
 	}
 
-	set_project(randint(20) + get_level_s(DEMON_BLADE, 80),
-		    type,
-		    4 + get_level_s(DEMON_BLADE, 40),
-		    rad,
-		    PROJECT_STOP | PROJECT_KILL);
-	return CAST;
+	return cast(set_project(randint(20) + get_level_s(DEMON_BLADE, 80),
+				type,
+				4 + get_level_s(DEMON_BLADE, 40),
+				rad,
+				PROJECT_STOP | PROJECT_KILL));
 }
 
 char  *demonology_demon_blade_info()
@@ -542,8 +552,9 @@ char  *demonology_demon_blade_info()
 	return buf;
 }
 
-bool_ *demonology_demon_madness(int item)
+casting_result demonology_demon_madness(int item)
 {
+	casting_result result = NO_CAST;
 	int dir, type, y1, x1, y2, x2;
 
 	if (!get_aim_dir(&dir))
@@ -566,18 +577,20 @@ bool_ *demonology_demon_madness(int item)
 	y2 = p_ptr->py - (y1 - p_ptr->py);
 	x2 = p_ptr->px - (x1 - p_ptr->px);
 
-	project(0, 1 + get_level(DEMON_MADNESS, 4, 0),
-		y1, x1,
-		20 + get_level_s(DEMON_MADNESS, 200),
-		type,
-		PROJECT_STOP | PROJECT_GRID | PROJECT_ITEM | PROJECT_KILL);
-	project(0, 1 + get_level(DEMON_MADNESS, 4, 0),
-		y2, x2,
-		20 + get_level_s(DEMON_MADNESS, 200),
-		type,
-		PROJECT_STOP | PROJECT_GRID | PROJECT_ITEM | PROJECT_KILL);
+	result = cplus(result,
+		       project(0, 1 + get_level(DEMON_MADNESS, 4, 0),
+			       y1, x1,
+			       20 + get_level_s(DEMON_MADNESS, 200),
+			       type,
+			       PROJECT_STOP | PROJECT_GRID | PROJECT_ITEM | PROJECT_KILL));
+	result = cplus(result,
+		       project(0, 1 + get_level(DEMON_MADNESS, 4, 0),
+			       y2, x2,
+			       20 + get_level_s(DEMON_MADNESS, 200),
+			       type,
+			       PROJECT_STOP | PROJECT_GRID | PROJECT_ITEM | PROJECT_KILL));
 
-	return CAST;
+	return result;
 }
 
 char  *demonology_demon_madness_info()
@@ -590,7 +603,7 @@ char  *demonology_demon_madness_info()
 	return buf;
 }
 
-bool_ *demonology_demon_field(int item)
+casting_result demonology_demon_field(int item)
 {
 	int dir;
 
@@ -599,12 +612,11 @@ bool_ *demonology_demon_field(int item)
 		return NO_CAST;
 	}
 	
-	fire_cloud(GF_NEXUS,
-		   dir,
-		   20 + get_level_s(DEMON_FIELD, 70),
-		   7,
-		   30 + get_level_s(DEMON_FIELD, 100));
-	return CAST;
+	return cast(fire_cloud(GF_NEXUS,
+			       dir,
+			       20 + get_level_s(DEMON_FIELD, 70),
+			       7,
+			       30 + get_level_s(DEMON_FIELD, 100)));
 }
 
 char  *demonology_demon_field_info()
@@ -617,14 +629,13 @@ char  *demonology_demon_field_info()
 	return buf;
 }
 
-bool_ *demonology_doom_shield(int item)
+casting_result demonology_doom_shield(int item)
 {
-	set_shield(randint(10) + 20 + get_level_s(DOOM_SHIELD, 100),
-		   -300 + get_level_s(DOOM_SHIELD, 100),
-		   SHIELD_COUNTER,
-		   1 + get_level_s(DOOM_SHIELD, 14),
-		   10 + get_level_s(DOOM_SHIELD, 15));
-	return CAST;
+	return cast(set_shield(randint(10) + 20 + get_level_s(DOOM_SHIELD, 100),
+			       -300 + get_level_s(DOOM_SHIELD, 100),
+			       SHIELD_COUNTER,
+			       1 + get_level_s(DOOM_SHIELD, 14),
+			       10 + get_level_s(DOOM_SHIELD, 15)));
 }
 
 char  *demonology_doom_shield_info()
@@ -638,7 +649,7 @@ char  *demonology_doom_shield_info()
 	return buf;
 }
 
-bool_ *demonology_unholy_word(int item)
+casting_result demonology_unholy_word(int item)
 {
 	int x, y;
 	cave_type *c_ptr = NULL;
@@ -687,7 +698,7 @@ bool_ *demonology_unholy_word(int item)
 			delete_monster_idx(c_ptr->m_idx);
 		}
 		
-		return CAST;
+		return CAST_OBVIOUS;
 	}
 	else
 	{
@@ -704,10 +715,9 @@ char  *demonology_unholy_word_info()
 	return buf;
 }
 
-bool_ *demonology_demon_cloak(int item)
+casting_result demonology_demon_cloak(int item)
 {
-	set_tim_reflect(randint(5) + 5 + get_level(DEMON_CLOAK, 15, 0));
-	return CAST;
+	return cast(set_tim_reflect(randint(5) + 5 + get_level(DEMON_CLOAK, 15, 0)));
 }
 
 char  *demonology_demon_cloak_info()
@@ -719,7 +729,7 @@ char  *demonology_demon_cloak_info()
 	return buf;
 }
 
-bool_ *demonology_summon_demon(int item)
+casting_result demonology_summon_demon(int item)
 {
 	int type, level, minlevel;
 
@@ -739,12 +749,15 @@ bool_ *demonology_summon_demon(int item)
 		type = SUMMON_HI_DEMON;
 	}
 
-	if (!summon_specific_friendly(p_ptr->py, p_ptr->px, level, type, TRUE))
+	if (summon_specific_friendly(p_ptr->py, p_ptr->px, level, type, TRUE))
+	{
+		return CAST_OBVIOUS;
+	}
+	else
 	{
 		msg_print("Something blocks your summoning!");
+		return CAST_HIDDEN;
 	}
-
-	return CAST;
 }
 
 char  *demonology_summon_demon_info()
@@ -756,7 +769,7 @@ char  *demonology_summon_demon_info()
 	return buf;
 }
 
-bool_ *demonology_discharge_minion(int item)
+casting_result demonology_discharge_minion(int item)
 {
 	cave_type *c_ptr;
 	int x, y;
@@ -788,10 +801,9 @@ bool_ *demonology_discharge_minion(int item)
 		}
 
 		/* We use project instead of fire_ball because we must tell it exactly where to land */
-		project(0, 2, y, x, dam,
-			GF_GRAVITY,
-			PROJECT_STOP | PROJECT_GRID | PROJECT_ITEM | PROJECT_KILL);
-		return CAST;
+		return cast(project(0, 2, y, x, dam,
+				    GF_GRAVITY,
+				    PROJECT_STOP | PROJECT_GRID | PROJECT_ITEM | PROJECT_KILL));
 	}
 	else
 	{
@@ -809,7 +821,7 @@ char  *demonology_discharge_minion_info()
 	return buf;
 }
 
-bool_ *demonology_control_demon(int item)
+casting_result demonology_control_demon(int item)
 {
 	int dir;
 	if (!get_aim_dir(&dir))
@@ -817,8 +829,7 @@ bool_ *demonology_control_demon(int item)
 		return NO_CAST;
 	}
 
-	fire_ball(GF_CONTROL_DEMON, dir, 50 + get_level_s(CONTROL_DEMON, 250), 0);
-	return CAST;
+	return cast(fire_ball(GF_CONTROL_DEMON, dir, 50 + get_level_s(CONTROL_DEMON, 250), 0));
 }
 
 char  *demonology_control_demon_info()
@@ -830,7 +841,7 @@ char  *demonology_control_demon_info()
 	return buf;
 }
 
-bool_ *divination_greater_identify(int item)
+casting_result divination_greater_identify(int item)
 {
 	if (get_check("Cast on yourself?"))
 	{
@@ -840,7 +851,7 @@ bool_ *divination_greater_identify(int item)
 	{
 		identify_fully();
 	}
-	return CAST;
+	return CAST_OBVIOUS;
 }
 
 char  *divination_greater_identify_info()
@@ -848,25 +859,25 @@ char  *divination_greater_identify_info()
 	return "";
 }
 
-bool_ *divination_identify(int item)
+casting_result divination_identify(int item)
 {
 	if (get_level_s(IDENTIFY, 50) >= 27)
 	{
-		identify_pack();
-		fire_ball(GF_IDENTIFY, 0, 1, get_level_s(IDENTIFY, 3));
-		p_ptr->notice |= (PN_COMBINE | PN_REORDER);
-		return CAST;
+		casting_result result = NO_CAST;
+		result = cplus(result, identify_pack());
+		result = cplus(result, fire_ball(GF_IDENTIFY, 0, 1, get_level_s(IDENTIFY, 3)));
+		return result;
 	}
 	else if (get_level_s(IDENTIFY, 50) >= 17)
 	{
-		identify_pack();
-		fire_ball(GF_IDENTIFY, 0, 1, 0);
-		p_ptr->notice |= (PN_COMBINE | PN_REORDER);
-		return CAST;
+		casting_result result = NO_CAST;
+		result = cplus(result, identify_pack());
+		result = cplus(result, fire_ball(GF_IDENTIFY, 0, 1, 0));
+		return result;
 	}
-	else if (ident_spell() == TRUE)
+	else if (ident_spell())
 	{
-		return CAST;
+		return CAST_OBVIOUS;
 	}
 	else
 	{
@@ -889,7 +900,7 @@ char  *divination_identify_info()
 	}
 }
 
-bool_ *divination_vision(int item)
+casting_result divination_vision(int item)
 {
 	if (get_level_s(VISION, 50) >= 25)
 	{
@@ -899,7 +910,7 @@ bool_ *divination_vision(int item)
 	{
 		map_area();
 	}
-	return CAST;
+	return CAST_OBVIOUS;
 
 }
 
@@ -908,14 +919,17 @@ char  *divination_vision_info()
 	return "";
 }
 
-bool_ *divination_sense_hidden(int item)
+casting_result divination_sense_hidden(int item)
 {
-	detect_traps(15 + get_level(SENSEHIDDEN, 40, 0));
+	casting_result result = NO_CAST;
+
+	result = cplus(result, detect_traps(15 + get_level(SENSEHIDDEN, 40, 0)));
 	if (get_level_s(SENSEHIDDEN, 50) >= 15)
 	{
-		set_tim_invis(10 + randint(20) + get_level_s(SENSEHIDDEN, 40));
+		result = cplus(result, set_tim_invis(10 + randint(20) + get_level_s(SENSEHIDDEN, 40)));
 	}
-	return CAST;
+
+	return result;
 }
 
 char  *divination_sense_hidden_info()
@@ -939,11 +953,12 @@ char  *divination_sense_hidden_info()
 	return buf;
 }
 
-bool_ *divination_reveal_ways(int item)
+casting_result divination_reveal_ways(int item)
 {
-	detect_doors(10 + get_level(REVEALWAYS, 40, 0));
-	detect_stairs(10 + get_level(REVEALWAYS, 40, 0));
-	return CAST;
+	casting_result result = NO_CAST;
+	result = cplus(result, detect_doors(10 + get_level(REVEALWAYS, 40, 0)));
+	result = cplus(result, detect_stairs(10 + get_level(REVEALWAYS, 40, 0)));
+	return result;
 }
 
 char  *divination_reveal_ways_info()
@@ -955,14 +970,16 @@ char  *divination_reveal_ways_info()
 	return buf;
 }
 
-bool_ *divination_sense_monsters(int item)
+casting_result divination_sense_monsters(int item)
 {
-	detect_monsters_normal(10 + get_level(SENSEMONSTERS, 40, 0));
+	casting_result result = NO_CAST;
+
+	result = cplus(result, detect_monsters_normal(10 + get_level(SENSEMONSTERS, 40, 0)));
 	if (get_level_s(SENSEMONSTERS, 50) >= 30)
 	{
-		set_tim_esp(10 + randint(10) + get_level_s(SENSEMONSTERS, 20));
+		result = cplus(result, set_tim_esp(10 + randint(10) + get_level_s(SENSEMONSTERS, 20)));
 	}
-	return CAST;
+	return result;
 }
 
 char  *divination_sense_monsters_info()
@@ -986,7 +1003,7 @@ char  *divination_sense_monsters_info()
 	return buf;
 }
 
-bool_ *earth_stone_skin(int item)
+casting_result earth_stone_skin(int item)
 {
 	int type;
 
@@ -996,12 +1013,11 @@ bool_ *earth_stone_skin(int item)
 		type = SHIELD_COUNTER;
 	}
 
-	set_shield(randint(10) + 10 + get_level_s(STONESKIN, 100),
-		   10 + get_level_s(STONESKIN, 50),
-		   type,
-		   2 + get_level_s(STONESKIN, 5),
-		   3 + get_level_s(STONESKIN, 5));
-	return CAST;
+	return cast(set_shield(randint(10) + 10 + get_level_s(STONESKIN, 100),
+			       10 + get_level_s(STONESKIN, 50),
+			       type,
+			       2 + get_level_s(STONESKIN, 5),
+			       3 + get_level_s(STONESKIN, 5)));
 }
 
 char  *earth_stone_skin_info()
@@ -1028,7 +1044,7 @@ char  *earth_stone_skin_info()
 	return buf;
 }
 
-bool_ *earth_dig(int item)
+casting_result earth_dig(int item)
 {
 	int dir;
 	if (!get_aim_dir(&dir))
@@ -1036,8 +1052,7 @@ bool_ *earth_dig(int item)
 		return NO_CAST;
 	}
 
-	wall_to_mud(dir);
-	return CAST;
+	return cast(wall_to_mud(dir));
 }
 
 char  *earth_dig_info()
@@ -1045,7 +1060,7 @@ char  *earth_dig_info()
 	return "";
 }
 
-bool_ *earth_stone_prison(int item)
+casting_result earth_stone_prison(int item)
 {
 	int x,y;
 
@@ -1063,7 +1078,7 @@ bool_ *earth_stone_prison(int item)
 	}
 
 	wall_stone(y, x);
-	return CAST;
+	return CAST_OBVIOUS;
 }
 
 char  *earth_stone_prison_info()
@@ -1071,7 +1086,7 @@ char  *earth_stone_prison_info()
 	return "";
 }
 
-bool_ *earth_strike(int item)
+casting_result earth_strike(int item)
 {
 	int dir, dmg;
 
@@ -1083,14 +1098,12 @@ bool_ *earth_strike(int item)
 	dmg = 50 + get_level_s(STRIKE, 50);
 	if (get_level_s(STRIKE, 50) >= 12)
 	{
-		fire_ball(GF_FORCE, dir, dmg, 1);
+		return cast(fire_ball(GF_FORCE, dir, dmg, 1));
 	}
 	else
 	{
-		fire_ball(GF_FORCE, dir, dmg, 0);
+		return cast(fire_ball(GF_FORCE, dir, dmg, 0));
 	}
-
-	return CAST;
 }
 
 char  *earth_strike_info()
@@ -1110,7 +1123,7 @@ char  *earth_strike_info()
 	return buf;
 }
 
-bool_ *earth_shake(int item)
+casting_result earth_shake(int item)
 {
 	int x,y;
 
@@ -1127,7 +1140,7 @@ bool_ *earth_shake(int item)
 		y = p_ptr->py;
 	}
 	earthquake(y, x, 4 + get_level_s(SHAKE, 10));
-	return CAST;
+	return CAST_OBVIOUS;
 }
 
 char  *earth_shake_info()
@@ -1137,25 +1150,29 @@ char  *earth_shake_info()
 	return buf;
 }
 
-bool_ *eru_see_the_music(int item)
+casting_result eru_see_the_music(int item)
 {
-	set_tim_invis(randint(20) + 10 + get_level_s(ERU_SEE, 100));
+	casting_result result = NO_CAST;
+
+	result = cplus(result, set_tim_invis(randint(20) + 10 + get_level_s(ERU_SEE, 100)));
 
 	if (get_level_s(ERU_SEE, 50) >= 30)
 	{
 		wiz_lite_extra();
+		result = CAST_OBVIOUS;
 	}
 	else if (get_level_s(ERU_SEE, 50) >= 10)
 	{
 		map_area();
+		result = CAST_OBVIOUS;
 	}
 
 	if (get_level_s(ERU_SEE, 50) >= 20)
 	{
-		set_blind(0);
+		result = cplus(result, set_blind(0));
 	}
 
-	return CAST;
+	return result;
 }
 
 char  *eru_see_the_music_info()
@@ -1167,22 +1184,25 @@ char  *eru_see_the_music_info()
 	return buf;
 }
 
-bool_ *eru_listen_to_the_music(int item)
+casting_result eru_listen_to_the_music(int item)
 {
+	casting_result result = NO_CAST;
+
 	if (get_level_s(ERU_LISTEN, 50) >= 30)
 	{
-		ident_all();
-		identify_pack();
+		result = cplus(result, ident_all());
+		result = cplus(result, identify_pack());
 	}
 	else if (get_level_s(ERU_LISTEN, 50) >= 14)
 	{
-		identify_pack();
+		result = cplus(result, identify_pack());
 	}
 	else
 	{
-		ident_spell();
+		result = cplus(result, ident_spell());
 	}
-	return CAST;
+
+	return result;
 }
 
 char  *eru_listen_to_the_music_info()
@@ -1190,17 +1210,17 @@ char  *eru_listen_to_the_music_info()
 	return "";
 }
 
-bool_ *eru_know_the_music(int item)
+casting_result eru_know_the_music(int item)
 {
 	if (get_level_s(ERU_UNDERSTAND, 50) >= 10)
 	{
 		identify_pack_fully();
+		return CAST_OBVIOUS;
 	}
 	else
 	{
-		identify_fully();
+		return cast(identify_fully());
 	}
-	return CAST;
 }
 
 char  *eru_know_the_music_info()
@@ -1208,10 +1228,9 @@ char  *eru_know_the_music_info()
 	return "";
 }
 
-bool_ *eru_lay_of_protection(int item)
+casting_result eru_lay_of_protection(int item)
 {
-	fire_ball(GF_MAKE_GLYPH, 0, 1, 1 + get_level(ERU_PROT, 2, 0));
-	return CAST;
+	return cast(fire_ball(GF_MAKE_GLYPH, 0, 1, 1 + get_level(ERU_PROT, 2, 0)));
 }
 
 char  *eru_lay_of_protection_info()
@@ -1223,26 +1242,31 @@ char  *eru_lay_of_protection_info()
 	return buf;
 }
 
-bool_ *fire_globe_of_light(int item)
+casting_result fire_globe_of_light(int item)
 {
+	casting_result result = NO_CAST;
+
 	if (get_level_s(GLOBELIGHT, 50) >= 3)
 	{
-		lite_area(10, 4);
+		result = cplus(result, lite_area(10, 4));
 	}
 	else
 	{
 		lite_room(p_ptr->py, p_ptr->px);
+		result = CAST_OBVIOUS;
 	}
 
 	if (get_level_s(GLOBELIGHT, 50) >= 15)
 	{
-		fire_ball(GF_LITE,
-			  0,
-			  10 + get_level_s(GLOBELIGHT, 100),
-			  5 + get_level_s(GLOBELIGHT, 6));
+		result = cplus(result,
+			       fire_ball(GF_LITE,
+					 0,
+					 10 + get_level_s(GLOBELIGHT, 100),
+					 5 + get_level_s(GLOBELIGHT, 6)));
 		p_ptr->update |= PU_VIEW;
 	}
-	return CAST;
+
+	return result;
 }
 
 char  *fire_globe_of_light_info()
@@ -1263,7 +1287,7 @@ char  *fire_globe_of_light_info()
 	return buf;
 }
 
-bool_ *fire_fireflash(int item)
+casting_result fire_fireflash(int item)
 {
 	int dir;
 	int type = GF_FIRE;
@@ -1278,10 +1302,9 @@ bool_ *fire_fireflash(int item)
 		return NO_CAST;
 	}
 
-	fire_ball(type, dir,
-		  20 + get_level_s(FIREFLASH, 500),
-		  2 + get_level_s(FIREFLASH, 5));
-	return CAST;
+	return cast(fire_ball(type, dir,
+			      20 + get_level_s(FIREFLASH, 500),
+			      2 + get_level_s(FIREFLASH, 5)));
 }
 
 char  *fire_fireflash_info()
@@ -1294,7 +1317,7 @@ char  *fire_fireflash_info()
 	return buf;
 }
 
-bool_ *fire_fiery_shield(int item)
+casting_result fire_fiery_shield(int item)
 {
 	int type = SHIELD_FIRE;
 	if (get_level_s(FIERYAURA, 50) >= 8)
@@ -1302,12 +1325,11 @@ bool_ *fire_fiery_shield(int item)
 		type = SHIELD_GREAT_FIRE;
 	}
 
-	set_shield(randint(20) + 10 + get_level_s(FIERYAURA, 70),
-		   10,
-		   type,
-		   5 + get_level_s(FIERYAURA, 10),
-		   5 + get_level_s(FIERYAURA, 7));
-	return CAST;
+	return cast(set_shield(randint(20) + 10 + get_level_s(FIERYAURA, 70),
+			       10,
+			       type,
+			       5 + get_level_s(FIERYAURA, 10),
+			       5 + get_level_s(FIERYAURA, 7)));
 }
 
 char  *fire_fiery_shield_info()
@@ -1321,7 +1343,7 @@ char  *fire_fiery_shield_info()
 	return buf;
 }
 
-bool_ *fire_firewall(int item)
+casting_result fire_firewall(int item)
 {
 	int dir;
 	int type = GF_FIRE;
@@ -1338,7 +1360,7 @@ bool_ *fire_firewall(int item)
 	fire_wall(type, dir,
 		  40 + get_level_s(FIREWALL, 150),
 		  10 + get_level_s(FIREWALL, 14));
-	return CAST;
+	return CAST_OBVIOUS;
 }
 
 char  *fire_firewall_info()
@@ -1358,7 +1380,7 @@ bool_ item_tester_hook_fire_golem(object_type *o_ptr)
 		 (o_ptr->sval == SV_LITE_LANTERN)));
 }
 
-bool_ *fire_golem(int ignored)
+casting_result fire_golem(int ignored)
 {
 	int item, x, y, m_idx;
 
@@ -1395,7 +1417,7 @@ bool_ *fire_golem(int ignored)
 		m_list[m_idx].mflag |= MFLAG_CONTROL;
 	}
 
-	return CAST;
+	return CAST_OBVIOUS;
 }
 
 char  *fire_golem_info()
@@ -1407,7 +1429,7 @@ char  *fire_golem_info()
 	return buf;
 }
 
-bool_ *geomancy_call_the_elements(int item)
+casting_result geomancy_call_the_elements(int item)
 {
 	int dir = 0;
 
@@ -1415,7 +1437,7 @@ bool_ *geomancy_call_the_elements(int item)
 	{
 		if (!get_aim_dir(&dir))
 		{
-			return FALSE;
+			return NO_CAST;
 		}
 	}
 
@@ -1424,7 +1446,7 @@ bool_ *geomancy_call_the_elements(int item)
 		  1,
 		  1 + get_level(CALL_THE_ELEMENTS, 5, 0));
 
-	return CAST;
+	return CAST_OBVIOUS;
 }
 
 char *geomancy_call_the_elements_info()
@@ -1436,10 +1458,10 @@ char *geomancy_call_the_elements_info()
 	return buf;
 }
 
-bool_ *geomancy_channel_elements(int item)
+casting_result geomancy_channel_elements(int item)
 {
 	channel_the_elements(p_ptr->py, p_ptr->px, get_level_s(CHANNEL_ELEMENTS, 50));
-	return CAST;
+	return CAST_OBVIOUS;
 }
 
 char *geomancy_channel_elements_info()
@@ -1469,7 +1491,7 @@ static eff_type *geomancy_find_effect(eff_type effs[], int feat)
 	return NULL;
 }
 
-bool_ *geomancy_elemental_wave(int item)
+casting_result geomancy_elemental_wave(int item)
 {
 	int dir = 0, y = 0, x = 0;
 	eff_type *eff_ptr = NULL;
@@ -1493,7 +1515,7 @@ bool_ *geomancy_elemental_wave(int item)
 
 	if (!get_rep_dir(&dir))
 	{
-		return FALSE;
+		return NO_CAST;
 	}
 
 	y = ddy[dir] + p_ptr->py;
@@ -1529,7 +1551,7 @@ bool_ *geomancy_elemental_wave(int item)
 			  6 + get_level_s(ELEMENTAL_WAVE, 20),
 			  EFF_WAVE + EFF_LAST + EFF_DIR);
 
-		return CAST;
+		return CAST_OBVIOUS;
 	}
 }
 
@@ -1538,7 +1560,7 @@ char *geomancy_elemental_wave_info()
 	return "";
 }
 
-bool_ *geomancy_vaporize(int item)
+casting_result geomancy_vaporize(int item)
 {
 	eff_type *eff_ptr = NULL;
 	eff_type t[] = {
@@ -1580,7 +1602,7 @@ bool_ *geomancy_vaporize(int item)
 			   1 + get_level_s(VAPORIZE, 4),
 			   10 + get_level_s(VAPORIZE, 20));
 
-		return CAST;
+		return CAST_OBVIOUS;
 	}
 }
 
@@ -1599,7 +1621,7 @@ bool_ geomancy_vaporize_depends()
 	return get_skill(SKILL_AIR) >= 4;
 }
 
-bool_ *geomancy_geolysis(int item)
+casting_result geomancy_geolysis(int item)
 {
 	int dir = 0;
 
@@ -1611,7 +1633,7 @@ bool_ *geomancy_geolysis(int item)
 	msg_print("Elements recombine before you, laying down an open path.");
 	geomancy_dig(p_ptr->py, p_ptr->px, dir, 5 + get_level_s(GEOLYSIS, 12));
 
-	return CAST;
+	return CAST_OBVIOUS;
 }
 
 char *geomancy_geolysis_info()
@@ -1628,7 +1650,7 @@ bool_ geomancy_geolysis_depends()
 	return get_skill(SKILL_EARTH) >= 7;
 }
 
-bool_ *geomancy_dripping_tread(int item)
+casting_result geomancy_dripping_tread(int item)
 {
 	if (p_ptr->dripping_tread == 0)
 	{
@@ -1641,7 +1663,7 @@ bool_ *geomancy_dripping_tread(int item)
 		msg_print("You stop dripping raw elemental energies.");
 	}
 
-	return CAST;
+	return CAST_OBVIOUS;
 }
 
 char *geomancy_dripping_tread_info()
@@ -1658,7 +1680,7 @@ bool_ geomancy_dripping_tread_depends()
 	return get_skill(SKILL_WATER) >= 10;
 }
 
-bool_ *geomancy_grow_barrier(int item)
+casting_result geomancy_grow_barrier(int item)
 {
 	int dir = 0;
 
@@ -1666,12 +1688,12 @@ bool_ *geomancy_grow_barrier(int item)
 	{
 		if (!get_aim_dir(&dir))
 		{
-			return FALSE;
+			return NO_CAST;
 		}
 	}
 
 	fire_ball(GF_ELEMENTAL_WALL, dir, 1, 1);
-	return CAST;
+	return CAST_OBVIOUS;
 }
 
 char *geomancy_grow_barrier_info()
@@ -1714,7 +1736,7 @@ int geomancy_count_elements(cptr *elements)
 	return i;
 }
 
-bool_ *geomancy_elemental_minion(int item)
+casting_result geomancy_elemental_minion(int item)
 {
 	int dir = 0;
 	int x = 0, y = 0;
@@ -1805,7 +1827,7 @@ bool_ *geomancy_elemental_minion(int item)
 
 		cave_set_feat(y, x, FEAT_FLOOR);
 
-		return CAST;
+		return CAST_OBVIOUS;
 	}
 }
 
@@ -1824,7 +1846,7 @@ static void get_manathrust_dam(s16b *num, s16b *sides)
 	*sides = 1 + get_level_s(MANATHRUST, 20);
 }
 
-bool_ *mana_manathrust(int item)
+casting_result mana_manathrust(int item)
 {
 	int dir;
 	s16b num = 0;
@@ -1836,8 +1858,7 @@ bool_ *mana_manathrust(int item)
 	}
 
 	get_manathrust_dam(&num, &sides);
-	fire_bolt(GF_MANA, dir, damroll(num, sides));
-	return CAST;
+	return cast(fire_bolt(GF_MANA, dir, damroll(num, sides)));
 }
 
 char *mana_manathrust_info()
@@ -1854,25 +1875,25 @@ char *mana_manathrust_info()
 	return buf;
 }
 
-bool_ *mana_remove_curses(int item)
+casting_result mana_remove_curses(int item)
 {
-	bool_ done = FALSE;
+	casting_result result = NO_CAST;
 
 	if (get_level_s(DELCURSES, 50) >= 20)
 	{
-		done = remove_all_curse();
+		result = cplus(result, remove_all_curse());
 	}
 	else
 	{
-		done = remove_curse();
+		result = cplus(result, remove_curse());
 	}
 
-	if (done)
+	if (result == CAST_OBVIOUS)
 	{
 		msg_print("The curse is broken!");
 	}
 
-	return CAST;
+	return result;
 }
 
 char *mana_remove_curses_info()
@@ -1880,32 +1901,28 @@ char *mana_remove_curses_info()
 	return "";
 }
 
-bool_ *mana_elemental_shield(int item)
+casting_result mana_elemental_shield(int item)
 {
-	bool_ *res = NO_CAST;
+	casting_result res = NO_CAST;
 
 	if (p_ptr->oppose_fire == 0)
 	{
-		set_oppose_fire(randint(10) + 15 + get_level_s(RESISTS, 50));
-		res = CAST;
+		res = cplus(res, set_oppose_fire(randint(10) + 15 + get_level_s(RESISTS, 50)));
 	}
 
 	if (p_ptr->oppose_cold == 0)
 	{
-		set_oppose_cold(randint(10) + 15 + get_level_s(RESISTS, 50));
-		res = CAST;
+		res = cplus(res, set_oppose_cold(randint(10) + 15 + get_level_s(RESISTS, 50)));
 	}
 
 	if (p_ptr->oppose_elec == 0)
 	{
-		set_oppose_elec(randint(10) + 15 + get_level_s(RESISTS, 50));
-		res = CAST;
+		res = cplus(res, set_oppose_elec(randint(10) + 15 + get_level_s(RESISTS, 50)));
 	}
 
 	if (p_ptr->oppose_acid == 0)
 	{
-		set_oppose_acid(randint(10) + 15 + get_level_s(RESISTS, 50));
-		res = CAST;
+		res = cplus(res, set_oppose_acid(randint(10) + 15 + get_level_s(RESISTS, 50)));
 	}
 
 	return res;
@@ -1920,20 +1937,18 @@ char *mana_elemental_shield_info()
 	return buf;
 }
 
-bool_ *mana_disruption_shield(int item)
+casting_result mana_disruption_shield(int item)
 {
 	if (get_level_s(MANASHIELD, 50) >= 5)
 	{
 		if (p_ptr->invuln == 0)
 		{
-			set_invuln(randint(5) + 3 + get_level_s(MANASHIELD, 10));
-			return CAST;
+			return cast(set_invuln(randint(5) + 3 + get_level_s(MANASHIELD, 10)));
 		}
 	}
 	else if (p_ptr->disrupt_shield == 0)
 	{
-		set_disrupt_shield(randint(5) + 3 + get_level_s(MANASHIELD, 10));
-		return CAST;
+		return cast(set_disrupt_shield(randint(5) + 3 + get_level_s(MANASHIELD, 10)));
 	}
 
 	return NO_CAST;
@@ -1948,11 +1963,13 @@ char *mana_disruption_shield_info()
 	return buf;
 }
 
-bool_ *manwe_wind_shield(int item)
+casting_result manwe_wind_shield(int item)
 {
+	casting_result res = NO_CAST;
 	s32b dur = get_level_s(MANWE_SHIELD, 50) + 10 + randint(20);
 
-	set_protevil(dur);
+	res = cplus(res, set_protevil(dur));
+
 	if (get_level_s(MANWE_SHIELD, 50) >= 10)
 	{
 		int type = 0;
@@ -1961,14 +1978,15 @@ bool_ *manwe_wind_shield(int item)
 			type = SHIELD_COUNTER;
 		}
 
-		set_shield(dur,
-			   get_level_s(MANWE_SHIELD, 30),
-			   type,
-			   1 + get_level_s(MANWE_SHIELD, 2),
-			   1 + get_level_s(MANWE_SHIELD, 6));
+		res = cplus(res,
+			    set_shield(dur,
+				       get_level_s(MANWE_SHIELD, 30),
+				       type,
+				       1 + get_level_s(MANWE_SHIELD, 2),
+				       1 + get_level_s(MANWE_SHIELD, 6)));
 	}
 
-	return CAST;
+	return res;
 }
 
 char  *manwe_wind_shield_info()
@@ -1998,15 +2016,14 @@ char  *manwe_wind_shield_info()
 	return buf;
 }
 
-bool_ *manwe_avatar(int item)
+casting_result manwe_avatar(int item)
 {
 	s16b mimic_idx = resolve_mimic_name("Maia");
 	assert(mimic_idx >= 0);
 
-	set_mimic(get_level_s(MANWE_AVATAR, 20) + randint(10),
-		  mimic_idx,
-		  p_ptr->lev);
-	return CAST;
+	return cast(set_mimic(get_level_s(MANWE_AVATAR, 20) + randint(10),
+			      mimic_idx,
+			      p_ptr->lev));
 }
 
 char  *manwe_avatar_info()
@@ -2018,28 +2035,29 @@ char  *manwe_avatar_info()
 	return buf;
 }
 
-bool_ *manwe_blessing(int item)
+casting_result manwe_blessing(int item)
 {
+	casting_result res = NO_CAST;
 	s32b dur = get_level_s(MANWE_BLESS, 70) + 30 + randint(40);
 
-	set_blessed(dur);
-	set_afraid(0);
-	set_lite(0);
+	res = cplus(res, set_blessed(dur));
+	res = cplus(res, set_afraid(0));
+	res = cplus(res, set_lite(0));
 
 	if (get_level_s(MANWE_BLESS, 50) >= 10)
 	{
-		set_hero(dur);
+		res = cplus(res, set_hero(dur));
 	}
 	if (get_level_s(MANWE_BLESS, 50) >= 20)
 	{
-		set_shero(dur);
+		res = cplus(res, set_shero(dur));
 	}
 	if (get_level_s(MANWE_BLESS, 50) >= 30)
 	{
-		set_holy(dur);
+		res = cplus(res, set_holy(dur));
 	}
 
-	return CAST;
+	return res;
 }
 
 char  *manwe_blessing_info()
@@ -2051,7 +2069,7 @@ char  *manwe_blessing_info()
 	return buf;
 }
 
-bool_ *manwe_call(int item)
+casting_result manwe_call(int item)
 {
 	int y = 0, x = 0, m_idx = -1, r_idx = -1;
 
@@ -2065,7 +2083,7 @@ bool_ *manwe_call(int item)
 	if (m_idx > 0)
 	{
 		monster_set_level(m_idx, 20 + get_level(MANWE_CALL, 70, 0));
-		return CAST;
+		return CAST_OBVIOUS;
 	}
 
 	return NO_CAST;
@@ -2170,7 +2188,7 @@ void do_melkor_curse(int m_idx)
 	m_ptr->csleep = 0;
 }
 
-bool_ *melkor_curse(int item)
+casting_result melkor_curse(int item)
 {
 	int dir = 0;
 
@@ -2187,7 +2205,7 @@ bool_ *melkor_curse(int item)
 	else
 	{
 		do_melkor_curse(target_who);
-		return CAST;
+		return CAST_OBVIOUS;
 	}
 }
 
@@ -2196,13 +2214,12 @@ char  *melkor_curse_info()
 	return "";
 }
 
-bool_ *melkor_corpse_explosion(int item)
+casting_result melkor_corpse_explosion(int item)
 {
-	fire_ball(GF_CORPSE_EXPL,
-		  0,
-		  20 + get_level_s(MELKOR_CORPSE_EXPLOSION, 70),
-		  2 + get_level_s(MELKOR_CORPSE_EXPLOSION, 5));
-	return CAST;
+	return cast(fire_ball(GF_CORPSE_EXPL,
+			      0,
+			      20 + get_level_s(MELKOR_CORPSE_EXPLOSION, 70),
+			      2 + get_level_s(MELKOR_CORPSE_EXPLOSION, 5)));
 }
 
 char  *melkor_corpse_explosion_info()
@@ -2214,13 +2231,13 @@ char  *melkor_corpse_explosion_info()
 	return buf;
 }
 
-bool_ *melkor_mind_steal(int item)
+casting_result melkor_mind_steal(int item)
 {
 	int dir = 0;
 
 	if (!get_aim_dir(&dir))
 	{
-		return FALSE;
+		return NO_CAST;
 	}
 
 	if (target_who < 0)
@@ -2251,7 +2268,7 @@ bool_ *melkor_mind_steal(int item)
 		}
 
 		msg_print(buf);
-		return CAST;
+		return CAST_OBVIOUS;
 	}
 }
 
@@ -2264,10 +2281,9 @@ char  *melkor_mind_steal_info()
 	return buf;
 }
 
-bool_ *meta_recharge(int item)
+casting_result meta_recharge(int item)
 {
-	recharge(60 + get_level_s(RECHARGE, 140));
-	return CAST;
+	return cast(recharge(60 + get_level_s(RECHARGE, 140)));
 }
 
 char *meta_recharge_info()
@@ -2289,7 +2305,7 @@ static int get_spellbinder_max()
 	return i;
 }
 
-bool_ *meta_spellbinder(int item)
+casting_result meta_spellbinder(int item)
 {
 	if (p_ptr->spellbinder_num != 0)
 	{
@@ -2363,12 +2379,12 @@ bool_ *meta_spellbinder(int item)
 			{
 				p_ptr->spellbinder_trigger = 0;
 				p_ptr->spellbinder_num = 0;
-				return CAST;
+				return CAST_OBVIOUS;
 			} else {
 				if (school_spells[s].skill_level > 7 + get_level_s(SPELLBINDER, 35))
 				{
 					msg_format("You are only allowed spells with a base level of " FMTs32b ".", (7 + get_level_s(SPELLBINDER, 35)));
-					return CAST;
+					return CAST_OBVIOUS;
 				}
 			}
 
@@ -2378,7 +2394,7 @@ bool_ *meta_spellbinder(int item)
 		
 		p_ptr->energy = p_ptr->energy - 3100;
 		msg_print("Spellbinder ready.");
-		return CAST;
+		return CAST_OBVIOUS;
 	}
 }
 
@@ -2392,38 +2408,40 @@ char *meta_spellbinder_info()
 	return buf;
 }
 
-bool_ *meta_disperse_magic(int item)
+casting_result meta_disperse_magic(int item)
 {
-	set_blind(0);
-	set_lite(0);
+	casting_result res = NO_CAST;
+
+	res = cplus(res, set_blind(0));
+	res = cplus(res, set_lite(0));
 	if (get_level_s(DISPERSEMAGIC, 50) >= 5)
 	{
-		set_confused(0);
-		set_image(0);
+		res = cplus(res, set_confused(0));
+		res = cplus(res, set_image(0));
 	}
 	if (get_level_s(DISPERSEMAGIC, 50) >= 10)
 	{
-		set_slow(0);
-		set_fast(0, 0);
-		set_light_speed(0);
+		res = cplus(res, set_slow(0));
+		res = cplus(res, set_fast(0, 0));
+		res = cplus(res, set_light_speed(0));
 	}
 	if (get_level_s(DISPERSEMAGIC, 50) >= 15)
 	{
-		set_stun(0);
-		set_meditation(0);
-		set_cut(0);
+		res = cplus(res, set_stun(0));
+		res = cplus(res, set_meditation(0));
+		res = cplus(res, set_cut(0));
 	}
 	if (get_level_s(DISPERSEMAGIC, 50) >= 20)
 	{
-		set_hero(0);
-		set_shero(0);
-		set_blessed(0);
-		set_shield(0, 0, 0, 0, 0);
-		set_afraid(0);
-		set_parasite(0, 0);
-		set_mimic(0, 0, 0);
+		res = cplus(res, set_hero(0));
+		res = cplus(res, set_shero(0));
+		res = cplus(res, set_blessed(0));
+		res = cplus(res, set_shield(0, 0, 0, 0, 0));
+		res = cplus(res, set_afraid(0));
+		res = cplus(res, set_parasite(0, 0));
+		res = cplus(res, set_mimic(0, 0, 0));
 	}
-	return CAST;
+	return res;
 }
 
 char *meta_disperse_magic_info()
@@ -2431,7 +2449,7 @@ char *meta_disperse_magic_info()
 	return "";
 }
 
-bool_ *meta_tracker(int item)
+casting_result meta_tracker(int item)
 {
 	if ((last_teleportation_y < 0) ||
 	    (last_teleportation_x < 0))
@@ -2442,7 +2460,7 @@ bool_ *meta_tracker(int item)
 	{
 		teleport_player_to(last_teleportation_y, last_teleportation_x);
 	}
-	return CAST;
+	return CAST_OBVIOUS;
 }
 
 char *meta_tracker_info()
@@ -2464,7 +2482,7 @@ void meta_inertia_control_hook_birth_objects()
 	stop_inertia_controlled_spell();
 }
 
-bool_ *meta_inertia_control(int item)
+casting_result meta_inertia_control(int item)
 {
 	s32b s;
 	spell_type *spell;
@@ -2506,7 +2524,7 @@ bool_ *meta_inertia_control(int item)
 	TIMER_INERTIA_CONTROL->countdown = TIMER_INERTIA_CONTROL->delay;
 	p_ptr->update |= PU_MANA;
 	msg_format("Inertia flow controlling spell %s.", school_spells[s].name);
-	return CAST;
+	return CAST_OBVIOUS;
 }
 
 char *meta_inertia_control_info()
@@ -2553,14 +2571,14 @@ static int mind_charm_power()
 	return 10 + get_level_s(CHARM, 150);
 }
 
-bool_ *mind_charm(int item)
+casting_result mind_charm(int item)
 {
 	int pwr = mind_charm_power();
 	int level = get_level_s(CHARM, 50);
 
 	if (level >= 35)
 	{
-		project_hack(GF_CHARM, pwr);
+		return cast(project_hack(GF_CHARM, pwr));
 	}
 	else
 	{
@@ -2572,15 +2590,13 @@ bool_ *mind_charm(int item)
 
 		if (level >= 15)
 		{
-			fire_ball(GF_CHARM, dir, pwr, 3);
+			return cast(fire_ball(GF_CHARM, dir, pwr, 3));
 		}
 		else
 		{
-			fire_bolt(GF_CHARM, dir, pwr);
+			return cast(fire_bolt(GF_CHARM, dir, pwr));
 		}
 	}
-
-	return CAST;
 }
 
 char *mind_charm_info()
@@ -2597,14 +2613,14 @@ static int mind_confuse_power()
 	return 10 + get_level_s(CONFUSE, 150);
 }
 
-bool_ *mind_confuse(int item)
+casting_result mind_confuse(int item)
 {
 	int pwr = mind_confuse_power();
 	int level = get_level_s(CONFUSE, 50);
 
 	if (level >= 35)
 	{
-		project_hack(GF_OLD_CONF, pwr);
+		return cast(project_hack(GF_OLD_CONF, pwr));
 	}
 	else
 	{
@@ -2616,15 +2632,13 @@ bool_ *mind_confuse(int item)
 		
 		if (level >= 15)
 		{
-			fire_ball(GF_OLD_CONF, dir, pwr, 3);
+			return cast(fire_ball(GF_OLD_CONF, dir, pwr, 3));
 		}
 		else
 		{
-			fire_bolt(GF_OLD_CONF, dir, pwr);
+			return cast(fire_bolt(GF_OLD_CONF, dir, pwr));
 		}
 	}
-		
-	return CAST;
 }
 
 char *mind_confuse_info()
@@ -2651,14 +2665,13 @@ static int mind_armor_of_fear_power_dice()
 	return 5 + get_level_s(ARMOROFFEAR, 20);
 }
 
-bool_ *mind_armor_of_fear(int item)
+casting_result mind_armor_of_fear(int item)
 {
-	set_shield(randint(10) + mind_armor_of_fear_base_duration(),
-		   10,
-		   SHIELD_FEAR,
-		   mind_armor_of_fear_power_sides(),
-		   mind_armor_of_fear_power_dice());
-	return CAST;
+	return cast(set_shield(randint(10) + mind_armor_of_fear_base_duration(),
+			       10,
+			       SHIELD_FEAR,
+			       mind_armor_of_fear_power_sides(),
+			       mind_armor_of_fear_power_dice()));
 }
 
 char  *mind_armor_of_fear_info()
@@ -2677,7 +2690,7 @@ static int mind_stun_power()
 	return 10 + get_level_s(STUN, 150);
 }
 
-bool_ *mind_stun(int item)
+casting_result mind_stun(int item)
 {
 	int dir;
 
@@ -2688,14 +2701,12 @@ bool_ *mind_stun(int item)
 
 	if (get_level_s(STUN, 50) >= 20)
 	{
-		fire_ball(GF_STUN, dir, mind_stun_power(), 3);
+		return cast(fire_ball(GF_STUN, dir, mind_stun_power(), 3));
 	}
 	else
 	{
-		fire_bolt(GF_STUN, dir, mind_stun_power());
+		return cast(fire_bolt(GF_STUN, dir, mind_stun_power()));
 	}
-
-	return CAST;
 }
 
 char  *mind_stun_info()
@@ -2707,7 +2718,7 @@ char  *mind_stun_info()
 	return buf;
 }
 
-bool_ *tempo_magelock(int item)
+casting_result tempo_magelock(int item)
 {
 	if (get_level_s(MAGELOCK, 50) >= 30)
 	{
@@ -2736,15 +2747,14 @@ bool_ *tempo_magelock(int item)
 			x = p_ptr->px;
 		}
 		cave_set_feat(y, x, 3);
-		return CAST;
+		return CAST_OBVIOUS;
 	} else {
 		int dir;
 		if (!get_aim_dir(&dir))
 		{
 			return NO_CAST;
 		}
-		wizard_lock(dir);
-		return CAST;
+		return cast(wizard_lock(dir));
 	}
 }
 
@@ -2758,7 +2768,7 @@ static s32b tempo_slow_monster_power()
 	return 40 + get_level_s(SLOWMONSTER, 160);
 }
 
-bool_ *tempo_slow_monster(int item)
+casting_result tempo_slow_monster(int item)
 {
 	int dir;
 	s32b pwr;
@@ -2771,14 +2781,12 @@ bool_ *tempo_slow_monster(int item)
 	pwr = tempo_slow_monster_power();
 	if (get_level_s(SLOWMONSTER, 50) >= 20)
 	{
-		fire_ball(GF_OLD_SLOW, dir, pwr, 1);
+		return cast(fire_ball(GF_OLD_SLOW, dir, pwr, 1));
 	}
 	else
 	{
-		fire_bolt(GF_OLD_SLOW, dir, pwr);
+		return cast(fire_bolt(GF_OLD_SLOW, dir, pwr));
 	}
-
-	return CAST;
 }
 
 char *tempo_slow_monster_info()
@@ -2807,14 +2815,14 @@ static s32b tempo_essence_of_speed_bonus()
 	return 5 + get_level_s(ESSENCESPEED, 20);
 }
 
-bool_ *tempo_essence_of_speed(int item)
+casting_result tempo_essence_of_speed(int item)
 {
 	if (p_ptr->fast == 0)
 	{
-		set_fast(randint(10) + tempo_essence_of_speed_base_duration(),
-			 tempo_essence_of_speed_bonus());
+		return cast(set_fast(randint(10) + tempo_essence_of_speed_base_duration(),
+				     tempo_essence_of_speed_bonus()));
 	}
-	return CAST;
+	return NO_CAST;
 }
 
 char *tempo_essence_of_speed_info()
@@ -2832,17 +2840,20 @@ static s32b tempo_banishment_power()
 	return 40 + get_level_s(BANISHMENT, 160);
 }
 
-bool_ *tempo_banishment(int item)
+casting_result tempo_banishment(int item)
 {
+	casting_result result = NO_CAST;
 	s32b pwr = tempo_banishment_power();
 
-	project_hack(GF_AWAY_ALL, pwr);
+	result = cplus(result, project_hack(GF_AWAY_ALL, pwr));
+
 	if (get_level_s(BANISHMENT, 50) >= 15)
 	{
-		project_hack(GF_STASIS, 20 + get_level_s(BANISHMENT, 120));
+		result = cplus(result,
+			       project_hack(GF_STASIS, 20 + get_level_s(BANISHMENT, 120)));
 	}
 	
-	return CAST;
+	return result;
 }
 
 char *tempo_banishment_info()
@@ -2854,17 +2865,18 @@ char *tempo_banishment_info()
 	return buf;
 }
 
-bool_ *tulkas_divine_aim(int item)
+casting_result tulkas_divine_aim(int item)
 {
+	casting_result result = NO_CAST;
 	s32b dur = get_level_s(TULKAS_AIM, 50) + randint(10);
 
-	set_strike(dur);
+	result = cplus(result, set_strike(dur));
 	if (get_level_s(TULKAS_AIM, 50) >= 20)
 	{
-		set_tim_deadly(dur);
+		result = cplus(result, set_tim_deadly(dur));
 	}
 
-	return CAST;
+	return result;
 }
 
 char *tulkas_divine_aim_info()
@@ -2876,7 +2888,7 @@ char *tulkas_divine_aim_info()
 	return buf;
 }
 
-bool_ *tulkas_wave_of_power(int item)
+casting_result tulkas_wave_of_power(int item)
 {
 	int dir;
 
@@ -2885,8 +2897,7 @@ bool_ *tulkas_wave_of_power(int item)
 		return NO_CAST;
 	}
 
-	fire_bolt(GF_ATTACK, dir, get_level_s(TULKAS_WAVE, p_ptr->num_blow));
-	return CAST;
+	return cast(fire_bolt(GF_ATTACK, dir, get_level_s(TULKAS_WAVE, p_ptr->num_blow)));
 }
 
 char *tulkas_wave_of_power_info()
@@ -2898,10 +2909,9 @@ char *tulkas_wave_of_power_info()
 	return buf;
 }
 
-bool_ *tulkas_whirlwind(int item)
+casting_result tulkas_whirlwind(int item)
 {
-	fire_ball(GF_ATTACK, 0, 1, 1);
-	return CAST;
+	return cast(fire_ball(GF_ATTACK, 0, 1, 1));
 }
 
 char *tulkas_whirlwind_info()
@@ -2980,7 +2990,7 @@ static bool_ udun_object_is_drainable(object_type *o_ptr)
 		(o_ptr->tval == TV_STAFF));
 }
 
-bool_ *udun_drain(int ignored)
+casting_result udun_drain(int ignored)
 {
 	int item;
 	object_type *o_ptr = NULL;
@@ -3034,7 +3044,7 @@ bool_ *udun_drain(int ignored)
 		assert(FALSE);
 	}
 
-	return CAST;
+	return CAST_OBVIOUS;
 }
 
 char *udun_drain_info()
@@ -3042,7 +3052,7 @@ char *udun_drain_info()
 	return "";
 }
 
-bool_ *udun_genocide(int item)
+casting_result udun_genocide(int item)
 {
 	if (get_level_s(GENOCIDE, 50) < 10)
 	{
@@ -3060,7 +3070,7 @@ bool_ *udun_genocide(int item)
 		}
 	}
 
-	return CAST;
+	return CAST_OBVIOUS;
 }
 
 char *udun_genocide_info()
@@ -3073,10 +3083,9 @@ static int udun_wraithform_base_duration()
 	return 20 + get_level_s(WRAITHFORM, 40);
 }
 
-bool_ *udun_wraithform(int item)
+casting_result udun_wraithform(int item)
 {
-	set_shadow(randint(30) + udun_wraithform_base_duration());
-	return CAST;
+	return cast(set_shadow(randint(30) + udun_wraithform_base_duration()));
 }
 
 char *udun_wraithform_info()
@@ -3093,12 +3102,11 @@ static int udun_flame_of_udun_base_duration()
 	return 5 + get_level_s(FLAMEOFUDUN, 30);
 }
 
-bool_ *udun_flame_of_udun(int item)
+casting_result udun_flame_of_udun(int item)
 {
-	set_mimic(randint(15) + udun_flame_of_udun_base_duration(),
-		  resolve_mimic_name("Balrog"),
-		  get_level_s(FLAMEOFUDUN, 50));
-	return CAST;
+	return cast(set_mimic(randint(15) + udun_flame_of_udun_base_duration(),
+			      resolve_mimic_name("Balrog"),
+			      get_level_s(FLAMEOFUDUN, 50)));
 }
 
 char *udun_flame_of_udun_info()
@@ -3120,7 +3128,7 @@ static int tidal_wave_duration()
 	return 6 + get_level_s(TIDALWAVE, 10);
 }
 
-bool_ *water_tidal_wave(int item)
+casting_result water_tidal_wave(int item)
 {
 	fire_wave(GF_WAVE,
 		  0,
@@ -3128,7 +3136,7 @@ bool_ *water_tidal_wave(int item)
 		  0,
 		  tidal_wave_duration(),
 		  EFF_WAVE);
-	return CAST;
+	return CAST_OBVIOUS;
 }
 
 char *water_tidal_wave_info()
@@ -3156,7 +3164,7 @@ static int water_ice_storm_duration()
 	return 20 + get_level_s(ICESTORM, 70);
 }
 
-bool_ *water_ice_storm(int item)
+casting_result water_ice_storm(int item)
 {
 	int type = GF_COLD;
 
@@ -3172,7 +3180,7 @@ bool_ *water_ice_storm(int item)
 		  water_ice_storm_duration(),
 		  EFF_STORM);
 
-	return CAST;
+	return CAST_OBVIOUS;
 }
 
 char *water_ice_storm_info()
@@ -3191,7 +3199,7 @@ static int water_ent_potion_base_duration()
 	return 25 + get_level_s(ENTPOTION, 40);;
 }
 
-bool_ *water_ent_potion(int item)
+casting_result water_ent_potion(int item)
 {
 	set_food(PY_FOOD_MAX - 1);
 	msg_print("The Ent's Potion fills your stomach.");
@@ -3205,7 +3213,7 @@ bool_ *water_ent_potion(int item)
 		set_hero(p_ptr->hero + randint(25) + water_ent_potion_base_duration());
 	}
 
-	return CAST;
+	return CAST_OBVIOUS;
 }
 
 char *water_ent_potion_info()
@@ -3239,14 +3247,14 @@ static int water_vapor_duration()
 	return 5;
 }
 
-bool_ *water_vapor(int item)
+casting_result water_vapor(int item)
 {
 	fire_cloud(GF_WATER,
 		   0,
 		   water_vapor_damage(),
 		   water_vapor_radius(),
 		   water_vapor_duration());
-	return CAST;
+	return CAST_OBVIOUS;
 }
 
 char *water_vapor_info()
@@ -3269,7 +3277,7 @@ static void get_geyser_damage(int *dice, int *sides)
 	*sides = 3 + get_level_s(GEYSER, 35);
 }
 
-bool_ *water_geyser(int item)
+casting_result water_geyser(int item)
 {
 	int dir, dice, sides;
 
@@ -3279,11 +3287,10 @@ bool_ *water_geyser(int item)
 	}
 
 	get_geyser_damage(&dice, &sides);
-	fire_bolt_or_beam(2 * get_level_s(GEYSER, 85),
-			  GF_WATER,
-			  dir,
-			  damroll(dice, sides));
-	return CAST;
+	return cast(fire_bolt_or_beam(2 * get_level_s(GEYSER, 85),
+				      GF_WATER,
+				      dir,
+				      damroll(dice, sides)));
 }
 
 char *water_geyser_info()
@@ -3310,7 +3317,7 @@ static int charm_animal_radius()
 	return get_level_s(YAVANNA_CHARM_ANIMAL, 2);
 }
 
-bool_ *yavanna_charm_animal(int item)
+casting_result yavanna_charm_animal(int item)
 {
 	int dir;
 
@@ -3319,11 +3326,10 @@ bool_ *yavanna_charm_animal(int item)
 		return NO_CAST;
 	}
 
-	fire_ball(GF_CONTROL_ANIMAL,
-		  dir,
-		  charm_animal_power(),
-		  charm_animal_radius());
-	return CAST;
+	return cast(fire_ball(GF_CONTROL_ANIMAL,
+			      dir,
+			      charm_animal_power(),
+			      charm_animal_radius()));
 }
 
 char *yavanna_charm_animal_info()
@@ -3341,10 +3347,10 @@ static int yavanna_grow_grass_radius()
 	return get_level_s(YAVANNA_GROW_GRASS, 4);
 }
 
-bool_ *yavanna_grow_grass(int item)
+casting_result yavanna_grow_grass(int item)
 {
 	grow_grass(yavanna_grow_grass_radius());
-	return CAST;
+	return CAST_OBVIOUS;
 }
 
 char *yavanna_grow_grass_info()
@@ -3371,12 +3377,11 @@ static int tree_roots_damage()
 	return 10 + get_level_s(YAVANNA_TREE_ROOTS, 20);
 }
 
-bool_ *yavanna_tree_roots(int item)
+casting_result yavanna_tree_roots(int item)
 {
-	set_roots(tree_roots_duration(),
-		  tree_roots_ac(),
-		  tree_roots_damage());
-	return CAST;
+	return cast(set_roots(tree_roots_duration(),
+			      tree_roots_ac(),
+			      tree_roots_damage()));
 }
 
 char *yavanna_tree_roots_info()
@@ -3400,7 +3405,7 @@ static int water_bite_damage()
 	return 10 + get_level_s(YAVANNA_WATER_BITE, 50);
 }
 
-bool_ *yavanna_water_bite(int item)
+casting_result yavanna_water_bite(int item)
 {
 	int rad = 0;
 
@@ -3409,12 +3414,11 @@ bool_ *yavanna_water_bite(int item)
 		rad = 1;
 	}
 
-	set_project(randint(30) + water_bite_base_duration(),
-		    GF_WATER,
-		    water_bite_damage(),
-		    rad,
-		    PROJECT_STOP | PROJECT_KILL);
-	return CAST;
+	return cast(set_project(randint(30) + water_bite_base_duration(),
+				GF_WATER,
+				water_bite_damage(),
+				rad,
+				PROJECT_STOP | PROJECT_KILL));
 }
 
 char *yavanna_water_bite_info()
@@ -3432,7 +3436,7 @@ static int uproot_mlevel()
 	return 30 + get_level_s(YAVANNA_UPROOT, 70);
 }
 
-bool_ *yavanna_uproot(int item)
+casting_result yavanna_uproot(int item)
 {
 	int dir, x, y;
 	cave_type *c_ptr;
@@ -3467,7 +3471,7 @@ bool_ *yavanna_uproot(int item)
 		}
 
 		msg_print("The tree awakes!");
-		return CAST;
+		return CAST_OBVIOUS;
 	}
 	else
 	{
@@ -3490,10 +3494,10 @@ static int nature_grow_trees_radius()
 	return 2 + get_level_s(GROWTREE, 7);
 }
 
-bool_ *nature_grow_trees(int item)
+casting_result nature_grow_trees(int item)
 {
 	grow_trees(nature_grow_trees_radius());
-	return CAST;
+	return CAST_OBVIOUS;
 }
 
 char *nature_grow_trees_info()
@@ -3515,10 +3519,9 @@ static int nature_healing_hp()
 	return p_ptr->mhp * nature_healing_percentage() / 100;
 }
 
-bool_ *nature_healing(int item)
+casting_result nature_healing(int item)
 {
-	hp_player(nature_healing_hp());
-	return CAST;
+	return cast(hp_player(nature_healing_hp()));
 }
 
 char *nature_healing_info()
@@ -3531,28 +3534,31 @@ char *nature_healing_info()
 	return buf;
 }
 
-bool_ *nature_recovery(int item)
+casting_result nature_recovery(int item)
 {
-	set_poisoned(p_ptr->poisoned / 2);
+	casting_result result = NO_CAST;
+
+	result = cplus(result, set_poisoned(p_ptr->poisoned / 2));
 	if (get_level_s(RECOVERY, 50) >= 5)
 	{
-		set_poisoned(0);
-		set_cut(0);
+		result = cplus(result, set_poisoned(0));
+		result = cplus(result, set_cut(0));
 	}
 	if (get_level_s(RECOVERY, 50) >= 10)
 	{
-		do_res_stat(A_STR, TRUE);
-		do_res_stat(A_CON, TRUE);
-		do_res_stat(A_DEX, TRUE);
-		do_res_stat(A_WIS, TRUE);
-		do_res_stat(A_INT, TRUE);
-		do_res_stat(A_CHR, TRUE);
+		result = cplus(result, do_res_stat(A_STR, TRUE));
+		result = cplus(result, do_res_stat(A_CON, TRUE));
+		result = cplus(result, do_res_stat(A_DEX, TRUE));
+		result = cplus(result, do_res_stat(A_WIS, TRUE));
+		result = cplus(result, do_res_stat(A_INT, TRUE));
+		result = cplus(result, do_res_stat(A_CHR, TRUE));
 	}
 	if (get_level_s(RECOVERY, 50) >= 15)
 	{
-		restore_level();
+		result = cplus(result, restore_level());
 	}
-	return CAST;
+
+	return result;
 }
 
 char *nature_recovery_info()
@@ -3570,13 +3576,12 @@ static int regeneration_power()
 	return 300 + get_level_s(REGENERATION, 700);
 }
 
-bool_ *nature_regeneration(int item)
+casting_result nature_regeneration(int item)
 {
 	if (p_ptr->tim_regen == 0)
 	{
-		set_tim_regen(randint(10) + regeneration_base_duration(),
-			      regeneration_power());
-		return CAST;
+		return cast(set_tim_regen(randint(10) + regeneration_base_duration(),
+					  regeneration_power()));
 	}
 	return NO_CAST;
 }
@@ -3596,15 +3601,14 @@ static int summon_animal_level()
 	return 25 + get_level_s(SUMMONANNIMAL, 50);
 }
 
-bool_ *nature_summon_animal(int item)
+casting_result nature_summon_animal(int item)
 {
 	summon_specific_level = summon_animal_level();
-	summon_specific_friendly(p_ptr->py,
-				 p_ptr->px,
-				 dun_level,
-				 SUMMON_ANIMAL,
-				 TRUE);
-	return CAST;
+	return cast(summon_specific_friendly(p_ptr->py,
+					     p_ptr->px,
+					     dun_level,
+					     SUMMON_ANIMAL,
+					     TRUE));
 }
 
 char *nature_summon_animal_info()
@@ -3616,15 +3620,16 @@ char *nature_summon_animal_info()
 	return buf;
 }
 
-bool_ *nature_grow_athelas(int item)
+casting_result nature_grow_athelas(int item)
 {
         if (p_ptr->black_breath)
 	{
 		msg_print("The hold of the Black Breath on you is broken!");
 		p_ptr->black_breath = FALSE;
+		return CAST_OBVIOUS;
 	}
 
-	return CAST;
+	return CAST_HIDDEN;
 }
 
 char *nature_grow_athelas_info()
@@ -3637,7 +3642,7 @@ static int device_heal_monster_hp()
 	return 20 + get_level_s(DEVICE_HEAL_MONSTER, 380);
 }
 
-bool_ *device_heal_monster(int item)
+casting_result device_heal_monster(int item)
 {
 	int dir;
 
@@ -3646,8 +3651,7 @@ bool_ *device_heal_monster(int item)
 		return NO_CAST;
 	}
 
-	fire_ball(GF_OLD_HEAL, dir, device_heal_monster_hp(), 0);
-	return CAST;
+	return cast(fire_ball(GF_OLD_HEAL, dir, device_heal_monster_hp(), 0));
 }
 
 char  *device_heal_monster_info()
@@ -3659,7 +3663,7 @@ char  *device_heal_monster_info()
 	return buf;
 }
 
-bool_ *device_haste_monster(int item)
+casting_result device_haste_monster(int item)
 {
 	int dir;
 
@@ -3668,8 +3672,7 @@ bool_ *device_haste_monster(int item)
 		return NO_CAST;
 	}
 
-	fire_ball(GF_OLD_SPEED, dir, 1, 0);
-	return CAST;
+	return cast(fire_ball(GF_OLD_SPEED, dir, 1, 0));
 }
 
 char  *device_haste_monster_info()
@@ -3677,10 +3680,10 @@ char  *device_haste_monster_info()
 	return "speed +10";
 }
 
-bool_ *device_wish(int item)
+casting_result device_wish(int item)
 {
 	make_wish();
-	return CAST;
+	return CAST_OBVIOUS;
 }
 
 char  *device_wish_info()
@@ -3688,14 +3691,17 @@ char  *device_wish_info()
 	return "";
 }
 
-bool_ *device_summon_monster(int item)
+casting_result device_summon_monster(int item)
 {
+	casting_result result = NO_CAST;
 	int i;
+
 	for (i = 0; i < 4 + get_level_s(DEVICE_SUMMON, 30); i++)
 	{
-		summon_specific(p_ptr->py, p_ptr->px, dun_level, 0);
+		result = cplus(result, summon_specific(p_ptr->py, p_ptr->px, dun_level, 0));
 	}
-	return CAST;
+
+	return result;
 }
 
 char  *device_summon_monster_info()
@@ -3708,10 +3714,10 @@ static int device_mana_pct()
 	return 20 + get_level_s(DEVICE_MANA, 50);
 }
 
-bool_ *device_mana(int item)
+casting_result device_mana(int item)
 {
 	increase_mana((p_ptr->msp * device_mana_pct()) / 100);
-	return CAST;
+	return CAST_OBVIOUS;
 }
 
 char  *device_mana_info()
@@ -3723,9 +3729,9 @@ char  *device_mana_info()
 	return buf;
 }
 
-bool_ *device_nothing(int item)
+casting_result device_nothing(int item)
 {
-	return CAST;
+	return CAST_HIDDEN;
 }
 
 char  *device_nothing_info()
@@ -3733,13 +3739,13 @@ char  *device_nothing_info()
 	return "";
 }
 
-bool_ *device_lebohaum(int item)
+casting_result device_lebohaum(int item)
 {
 	msg_print("You hear a little song in your head in some unknown tongue:");
 	msg_print("'Avec le casque Lebohaum y a jamais d'anicroches, je parcours les dongeons,");
 	msg_print("j'en prend plein la caboche. Avec le casque Lebohaum, tout ces monstres a la");
 	msg_print("con, je leur met bien profond: c'est moi le maitre du dongeon!'");
-	return CAST;
+	return CAST_OBVIOUS;
 }
 
 char  *device_lebohaum_info()
@@ -3747,7 +3753,7 @@ char  *device_lebohaum_info()
 	return "";
 }
 
-bool_ *device_maggot(int item)
+casting_result device_maggot(int item)
 {
 	int dir;
 
@@ -3756,8 +3762,7 @@ bool_ *device_maggot(int item)
 		return NO_CAST;
 	}
 
-	fire_ball(GF_TURN_ALL, dir, 40, 2);
-	return CAST;
+	return cast(fire_ball(GF_TURN_ALL, dir, 40, 2));
 }
 
 char  *device_maggot_info()
@@ -3770,10 +3775,9 @@ static int holy_fire_damage()
 	return 50 + get_level_s(DEVICE_HOLY_FIRE, 300);
 }
 
-bool_ *device_holy_fire(int item)
+casting_result device_holy_fire(int item)
 {
-	project_hack(GF_HOLY_FIRE, holy_fire_damage());
-	return CAST;
+	return cast(project_hack(GF_HOLY_FIRE, holy_fire_damage()));
 }
 
 char  *device_holy_fire_info()
@@ -3833,7 +3837,7 @@ static bool_ eternal_flame_item_tester_hook(object_type *o_ptr)
 	return (get_eternal_artifact_idx(o_ptr) >= 0);
 }
 
-bool_ *device_eternal_flame(int flame_item)
+casting_result device_eternal_flame(int flame_item)
 {
 	int item;
 	object_type *o_ptr = NULL;
@@ -3845,7 +3849,7 @@ bool_ *device_eternal_flame(int flame_item)
 		      "You have no objects to imbue.",
 		      USE_INVEN))
 	{
-		return FALSE;
+		return NO_CAST;
 	}
 
 	/* Get the artifact idx */
@@ -3864,7 +3868,7 @@ bool_ *device_eternal_flame(int flame_item)
 	inven_item_describe(flame_item);
 	inven_item_optimize(flame_item);
 
-	return CAST;
+	return CAST_OBVIOUS;
 }
 
 char  *device_eternal_flame_info()
@@ -3872,7 +3876,7 @@ char  *device_eternal_flame_info()
 	return "";
 }
 
-bool_ *device_durandil(int item)
+casting_result device_durandil(int item)
 {
 	msg_print("You hear a little song in your head in some unknown tongue:");
 	msg_print("'Les epees Durandils sont forgees dans les mines par des nains.");
@@ -3886,7 +3890,7 @@ bool_ *device_durandil(int item)
 	msg_print("Quand tu la sort dans un dongeon au moins t'as pas l'air debile.");
 	msg_print("C'est l'arme des bourins qui savent etre subtils.");
 	msg_print("Ne partez pas a l'aventure sans votre epee Durandil!'");
-	return CAST;
+	return CAST_OBVIOUS;
 }
 
 char  *device_durandil_info()
@@ -3894,7 +3898,7 @@ char  *device_durandil_info()
 	return "";
 }
 
-bool_ *device_thunderlords(int item)
+casting_result device_thunderlords(int item)
 {
 	switch (game_module_idx)
 	{
@@ -3909,7 +3913,7 @@ bool_ *device_thunderlords(int item)
 			{
 				msg_print("You cannot use it there.");
 			}
-			return CAST;
+			return CAST_OBVIOUS;
 		}
 
 	case MODULE_THEME:
@@ -3923,7 +3927,7 @@ bool_ *device_thunderlords(int item)
 			{
 				msg_print("You cannot use it there.");
 			}
-			return CAST;
+			return CAST_OBVIOUS;
 		}
 
 	default:
@@ -3937,7 +3941,7 @@ char  *device_thunderlords_info()
 	return "";
 }
 
-bool_ *device_radagast(int item)
+casting_result device_radagast(int item)
 {
 	cmsg_print(TERM_GREEN, "The staff's power cleanses you completely!");
 	remove_all_curse();
@@ -3968,7 +3972,7 @@ bool_ *device_radagast(int item)
 	p_ptr->update |= PU_BONUS;
 	p_ptr->window |= PW_PLAYER;
 
-	return CAST;
+	return CAST_OBVIOUS;
 }
 
 char  *device_radagast_info()
@@ -3976,11 +3980,11 @@ char  *device_radagast_info()
 	return "";
 }
 
-bool_ *device_valaroma(int item)
+casting_result device_valaroma(int item)
 {
 	int power = 5 * p_ptr->lev;
 	banish_evil(power);
-	return CAST;
+	return CAST_HIDDEN;
 }
 
 char  *device_valaroma_info()
@@ -3993,10 +3997,10 @@ void static start_lasting_spell(int spl)
 	p_ptr->music_extra = -spl;
 }
 
-bool_ *music_stop_singing_spell(int item)
+casting_result music_stop_singing_spell(int item)
 {
 	start_lasting_spell(0);
-	return CAST;
+	return CAST_OBVIOUS;
 }
 
 char *music_stop_singing_info()
@@ -4015,10 +4019,10 @@ int music_holding_pattern_lasting()
 	return get_mana(MUSIC_HOLD);
 }
 
-bool_ *music_holding_pattern_spell(int item)
+casting_result music_holding_pattern_spell(int item)
 {
 	start_lasting_spell(MUSIC_HOLD);
-	return CAST;
+	return CAST_OBVIOUS;
 }
 
 char *music_holding_pattern_info()
@@ -4041,10 +4045,10 @@ int music_illusion_pattern_lasting()
 	return get_mana(MUSIC_CONF);
 }
 
-bool_ *music_illusion_pattern_spell(int item)
+casting_result music_illusion_pattern_spell(int item)
 {
 	start_lasting_spell(MUSIC_CONF);
-	return CAST;
+	return CAST_OBVIOUS;
 }
 
 char *music_illusion_pattern_info()
@@ -4067,10 +4071,10 @@ int music_stun_pattern_lasting()
 	return get_mana(MUSIC_STUN);
 }
 
-bool_ *music_stun_pattern_spell(int item)
+casting_result music_stun_pattern_spell(int item)
 {
 	start_lasting_spell(MUSIC_STUN);
-	return CAST;
+	return CAST_OBVIOUS;
 }
 
 char *music_stun_pattern_info()
@@ -4088,10 +4092,10 @@ int music_song_of_the_sun_lasting()
 	return 1;
 }
 
-bool_ *music_song_of_the_sun_spell(int item)
+casting_result music_song_of_the_sun_spell(int item)
 {
 	start_lasting_spell(MUSIC_LITE);
-	return CAST;
+	return CAST_OBVIOUS;
 }
 
 char *music_song_of_the_sun_info()
@@ -4110,10 +4114,10 @@ int music_flow_of_life_lasting()
 	return get_mana(MUSIC_HEAL);
 }
 
-bool_ *music_flow_of_life_spell(int item)
+casting_result music_flow_of_life_spell(int item)
 {
 	start_lasting_spell(MUSIC_HEAL);
-	return CAST;
+	return CAST_OBVIOUS;
 }
 
 char *music_flow_of_life_info()
@@ -4143,10 +4147,10 @@ int music_heroic_ballad_lasting()
 	return get_mana(MUSIC_HERO);
 }
 
-bool_ *music_heroic_ballad_spell(int item)
+casting_result music_heroic_ballad_spell(int item)
 {
 	start_lasting_spell(MUSIC_HERO);
-	return CAST;
+	return CAST_OBVIOUS;
 }
 
 char *music_heroic_ballad_info()
@@ -4164,10 +4168,10 @@ int music_hobbit_melodies_lasting()
 	return get_mana(MUSIC_TIME);
 }
 
-bool_ *music_hobbit_melodies_spell(int item)
+casting_result music_hobbit_melodies_spell(int item)
 {
 	start_lasting_spell(MUSIC_TIME);
-	return CAST;
+	return CAST_OBVIOUS;
 }
 
 char *music_hobbit_melodies_info()
@@ -4197,10 +4201,10 @@ int music_clairaudience_lasting()
 	return get_mana(MUSIC_MIND);
 }
 
-bool_ *music_clairaudience_spell(int item)
+casting_result music_clairaudience_spell(int item)
 {
 	start_lasting_spell(MUSIC_MIND);
-	return CAST;
+	return CAST_OBVIOUS;
 }
 
 char *music_clairaudience_info()
@@ -4219,13 +4223,13 @@ char *music_clairaudience_info()
 	}
 }
 
-bool_ *music_blow_spell(int item)
+casting_result music_blow_spell(int item)
 {
 	fire_ball(GF_SOUND,
 		  0,
 		  damroll(2 + get_level(MUSIC_BLOW, 10, 0), 4 + get_level(MUSIC_BLOW, 40, 0)),
 		  1 + get_level(MUSIC_BLOW, 12, 0));
-	return CAST;
+	return CAST_OBVIOUS;
 }
 
 char *music_blow_info()
@@ -4239,13 +4243,13 @@ char *music_blow_info()
 	return buf;
 }
 
-bool_ *music_gush_of_wind_spell(int item)
+casting_result music_gush_of_wind_spell(int item)
 {
 	fire_ball(GF_AWAY_ALL,
 		  0,
 		  10 + get_level(MUSIC_BLOW, 40, 0),
 		  1 + get_level(MUSIC_BLOW, 12, 0));
-	return CAST;
+	return CAST_OBVIOUS;
 }
 
 char *music_gush_of_wind_info()
@@ -4258,10 +4262,10 @@ char *music_gush_of_wind_info()
 	return buf;
 }
 
-bool_ *music_horns_of_ylmir_spell(int item)
+casting_result music_horns_of_ylmir_spell(int item)
 {
 	earthquake(p_ptr->py, p_ptr->px, 2 + get_level_s(SHAKE, 10));
-	return CAST;
+	return CAST_OBVIOUS;
 }
 
 char *music_horns_of_ylmir_info()
@@ -4273,10 +4277,10 @@ char *music_horns_of_ylmir_info()
 	return buf;
 }
 
-bool_ *music_ambarkanta_spell(int item)
+casting_result music_ambarkanta_spell(int item)
 {
 	alter_reality();
-	return CAST;
+	return CAST_OBVIOUS;
 }
 
 char *music_ambarkanta_info()
@@ -4284,7 +4288,7 @@ char *music_ambarkanta_info()
 	return "";
 }
 
-bool_ *aule_firebrand_spell(int item)
+casting_result aule_firebrand_spell(int item)
 {
 	int rad = 0;
 	int type = GF_FIRE;
@@ -4300,12 +4304,11 @@ bool_ *aule_firebrand_spell(int item)
 		rad = 1;
 	}
 
-	set_project(level + randint(20),
-		    type,
-		    4 + level,
-		    rad,
-		    PROJECT_STOP | PROJECT_KILL);
-	return CAST;
+	return cast(set_project(level + randint(20),
+				type,
+				4 + level,
+				rad,
+				PROJECT_STOP | PROJECT_KILL));
 }
 
 char  *aule_firebrand_info()
@@ -4342,7 +4345,7 @@ static bool_ aule_enchant_weapon_item_tester(object_type *o_ptr)
 	}
 }
 
-bool_ *aule_enchant_weapon_spell(int ignored)
+casting_result aule_enchant_weapon_spell(int ignored)
 {
 	s32b level = get_level_s(AULE_ENCHANT_WEAPON, 50);
 	s16b num_h, num_d, num_p;
@@ -4377,7 +4380,7 @@ bool_ *aule_enchant_weapon_spell(int ignored)
 	o_ptr->to_d = o_ptr->to_d + num_d;
 	o_ptr->pval = o_ptr->pval + num_p;
 
-	return CAST;
+	return CAST_OBVIOUS;
 }
 
 char  *aule_enchant_weapon_info()
@@ -4414,7 +4417,7 @@ bool_ aule_enchant_armor_item_tester(object_type *o_ptr)
 	}
 }
 
-bool_ *aule_enchant_armour_spell(int ignored)
+casting_result aule_enchant_armour_spell(int ignored)
 {
 	s32b level = get_level_s(AULE_ENCHANT_ARMOUR, 50);
 	s16b num_h, num_d, num_a, num_p;
@@ -4451,7 +4454,7 @@ bool_ *aule_enchant_armour_spell(int ignored)
 	o_ptr->pval = o_ptr->pval + num_p;
 	o_ptr->to_a = o_ptr->to_a + num_a;
 
-	return CAST;
+	return CAST_OBVIOUS;
 }
 
 char  *aule_enchant_armour_info()
@@ -4463,7 +4466,7 @@ char  *aule_enchant_armour_info()
 	return buf;
 }
 
-bool_ *aule_child_spell(int item)
+casting_result aule_child_spell(int item)
 {
 	int y, x;
 	s16b m_idx;
@@ -4475,7 +4478,7 @@ bool_ *aule_child_spell(int item)
 	if (m_idx)
 	{
 		monster_set_level(m_idx, 20 + get_level(AULE_CHILD, 70, 0));
-		return CAST;
+		return CAST_OBVIOUS;
 	}
 	else
 	{
@@ -4497,13 +4500,16 @@ static int tears_of_luthien_hp()
 	return 10 * get_level_s(MANDOS_TEARS_LUTHIEN, 30);
 }
 
-bool_ *mandos_tears_of_luthien_spell(int item)
+casting_result mandos_tears_of_luthien_spell(int item)
 {
-	hp_player(tears_of_luthien_hp());
-	set_stun(0);
-	set_cut(0);
-	set_afraid(0);
-	return CAST;
+	casting_result result = NO_CAST;
+
+	result = cplus(result, hp_player(tears_of_luthien_hp()));
+	result = cplus(result, set_stun(0));
+	result = cplus(result, set_cut(0));
+	result = cplus(result, set_afraid(0));
+
+	return result;
 }
 
 char  *mandos_tears_of_luthien_info()
@@ -4515,26 +4521,27 @@ char  *mandos_tears_of_luthien_info()
 	return buf;
 }
 
-bool_ *mandos_spirit_of_the_feanturi_spell(int item)
+casting_result mandos_spirit_of_the_feanturi_spell(int item)
 {
+	casting_result result = NO_CAST;
 	s32b level = get_level_s(MANDOS_SPIRIT_FEANTURI, 50);
 
-	set_afraid(0);
-	set_confused(0);
+	result = cplus(result, set_afraid(0));
+	result = cplus(result, set_confused(0));
 
 	if (level >= 20)
 	{
-                do_res_stat(A_WIS, TRUE);
-                do_res_stat(A_INT, TRUE);
+                result = cplus(result, do_res_stat(A_WIS, TRUE));
+                result = cplus(result, do_res_stat(A_INT, TRUE));
 	}
             
 	if (level >= 30)
 	{
-                set_image(0);
-                heal_insanity(p_ptr->msane * level / 100); 
+                result = cplus(result, set_image(0));
+                result = cplus(result, heal_insanity(p_ptr->msane * level / 100)); 
 	}
             
-	return CAST;
+	return result;
 }
 
 char  *mandos_spirit_of_the_feanturi_info()
@@ -4557,10 +4564,9 @@ static int tale_of_doom_duration()
 	return 5 + get_level_s(MANDOS_TALE_DOOM,10);
 }
 
-bool_ *mandos_tale_of_doom_spell(int item)
+casting_result mandos_tale_of_doom_spell(int item)
 {
-	set_tim_precognition(tale_of_doom_duration());
-	return CAST;
+	return cast(set_tim_precognition(tale_of_doom_duration()));
 }
 
 char  *mandos_tale_of_doom_info()
@@ -4577,7 +4583,7 @@ int call_to_the_halls_mlev()
 	return 20 + get_level(MANDOS_CALL_HALLS, 70, 0);
 }
 
-bool_ *mandos_call_to_the_halls_spell(int item)
+casting_result mandos_call_to_the_halls_spell(int item)
 {
 #define N_SUMMONS 2
 	int y, x;
@@ -4595,7 +4601,7 @@ bool_ *mandos_call_to_the_halls_spell(int item)
 	if (m_idx)
 	{
 		monster_set_level(m_idx, call_to_the_halls_mlev());
-		return CAST;
+		return CAST_OBVIOUS;
 	}
 	return NO_CAST;
 #undef N_SUMMONS
@@ -4616,7 +4622,7 @@ static void get_belegaer_damage(int *dice, int *sides)
 	*sides = 3 + get_level_s(ULMO_BELEGAER, 35);
 }
 
-bool_ *ulmo_song_of_belegaer_spell(int item)
+casting_result ulmo_song_of_belegaer_spell(int item)
 {
 	int dir, dice, sides;
 
@@ -4626,11 +4632,10 @@ bool_ *ulmo_song_of_belegaer_spell(int item)
 	}
 
 	get_belegaer_damage(&dice, &sides);
-	fire_bolt_or_beam(2 * get_level_s(ULMO_BELEGAER, 85),
-			  GF_WATER,
-			  dir,
-			  damroll(dice, sides));
-	return CAST;
+	return cast(fire_bolt_or_beam(2 * get_level_s(ULMO_BELEGAER, 85),
+				      GF_WATER,
+				      dir,
+				      damroll(dice, sides)));
 }
 
 char *ulmo_song_of_belegaer_info()
@@ -4651,31 +4656,32 @@ int draught_of_ulmonan_hp()
 	return 5 * get_level_s(ULMO_DRAUGHT_ULMONAN, 50);
 }
 
-bool_ *ulmo_draught_of_ulmonan_spell(int item)
+casting_result ulmo_draught_of_ulmonan_spell(int item)
 {
+	casting_result result = NO_CAST;
 	s32b level = get_level_s(ULMO_DRAUGHT_ULMONAN, 50);
 		
-	hp_player(draught_of_ulmonan_hp());
+	result = cplus(result, hp_player(draught_of_ulmonan_hp()));
 
-	set_poisoned(0);
-	set_cut(0);
-	set_stun(0);
-	set_blind(0);
+	result = cplus(result, set_poisoned(0));
+	result = cplus(result, set_cut(0));
+	result = cplus(result, set_stun(0));
+	result = cplus(result, set_blind(0));
 
 	if (level >= 10)
 	{
-		do_res_stat(A_STR, TRUE);
-		do_res_stat(A_CON, TRUE);
-		do_res_stat(A_DEX, TRUE);
+		result = cplus(result, do_res_stat(A_STR, TRUE));
+		result = cplus(result, do_res_stat(A_CON, TRUE));
+		result = cplus(result, do_res_stat(A_DEX, TRUE));
 	}
 
 	if (level >= 20)
 	{
-		set_parasite(0, 0);
-		set_mimic(0, 0, 0);
+		result = cplus(result, set_parasite(0, 0));
+		result = cplus(result, set_mimic(0, 0, 0));
 	}
 
-	return CAST;
+	return result;
 }
 
 char *ulmo_draught_of_ulmonan_info()
@@ -4692,7 +4698,7 @@ static int call_of_the_ulumuri_mlev()
 	return 30 + get_level(ULMO_CALL_ULUMURI, 70, 0);
 }
 
-bool_ *ulmo_call_of_the_ulumuri_spell(int item)
+casting_result ulmo_call_of_the_ulumuri_spell(int item)
 {
 #define N_SUMMONS 2
 	int x,y;
@@ -4711,7 +4717,7 @@ bool_ *ulmo_call_of_the_ulumuri_spell(int item)
 	if (m_idx)
 	{
 		monster_set_level(m_idx, call_of_the_ulumuri_mlev());
-		return CAST;
+		return CAST_OBVIOUS;
 	}
 
 	return NO_CAST;
@@ -4737,7 +4743,7 @@ static int wrath_of_ulmo_duration()
 	return 10 + get_level_s(ULMO_WRATH, 14);
 }
 
-bool_ *ulmo_wrath_of_ulmo_spell(int item)
+casting_result ulmo_wrath_of_ulmo_spell(int item)
 {
 	int dir, type = GF_WATER;
 
@@ -4755,7 +4761,7 @@ bool_ *ulmo_wrath_of_ulmo_spell(int item)
 		  dir,
 		  wrath_of_ulmo_damage(),
 		  wrath_of_ulmo_duration());
-	return CAST;
+	return CAST_OBVIOUS;
 }
 
 char *ulmo_wrath_of_ulmo_info()
@@ -4778,26 +4784,30 @@ static int light_of_valinor_radius()
 	return 5 + get_level_s(VARDA_LIGHT_VALINOR, 6);
 }
 
-bool_ *varda_light_of_valinor_spell(int item)
+casting_result varda_light_of_valinor_spell(int item)
 {
+	casting_result result = NO_CAST;
+
 	if (get_level_s(VARDA_LIGHT_VALINOR, 50) >= 3)
 	{
-		lite_area(10, 4);
+		result = cplus(result, lite_area(10, 4));
 	}
 	else
 	{
 		lite_room(p_ptr->py, p_ptr->px);
+		result = CAST_OBVIOUS;
 	}
 
 	if (get_level_s(VARDA_LIGHT_VALINOR, 50) >= 15)
 	{
-		fire_ball(GF_LITE,
-			  0,
-			  light_of_valinor_damage(),
-			  light_of_valinor_radius());
+		result = cplus(result,
+			       fire_ball(GF_LITE,
+					 0,
+					 light_of_valinor_damage(),
+					 light_of_valinor_radius()));
 	}
 
-	return CAST;
+	return result;
 }
 
 char *varda_light_of_valinor_info()
@@ -4817,7 +4827,7 @@ char *varda_light_of_valinor_info()
 	}
 }
 
-bool_ *varda_call_of_almaren_spell(int item)
+casting_result varda_call_of_almaren_spell(int item)
 {
 	int power = 5 * p_ptr->lev;
 	if (get_level_s(VARDA_CALL_ALMAREN, 50) >= 20)
@@ -4828,7 +4838,7 @@ bool_ *varda_call_of_almaren_spell(int item)
 	{
 		banish_evil(power);
 	}
-	return CAST;
+	return CAST_OBVIOUS;
 }
 
 char *varda_call_of_almaren_info()
@@ -4836,7 +4846,7 @@ char *varda_call_of_almaren_info()
 	return "";
 }
 
-bool_ *varda_evenstar_spell(int item)
+casting_result varda_evenstar_spell(int item)
 {
 	wiz_lite_extra();
 	if (get_level_s(VARDA_EVENSTAR, 50) >= 40)
@@ -4845,7 +4855,7 @@ bool_ *varda_evenstar_spell(int item)
 		self_knowledge(NULL);
 	}
 
-	return CAST;
+	return CAST_OBVIOUS;
 }
 
 char *varda_evenstar_info()
@@ -4863,7 +4873,7 @@ static int star_kindler_damage()
 	return 20 + get_level_s(VARDA_STARKINDLER, 100);
 }
 
-bool_ *varda_star_kindler_spell(int item)
+casting_result varda_star_kindler_spell(int item)
 {
 	int dir, i, n = star_kindler_bursts();
 
@@ -4880,7 +4890,7 @@ bool_ *varda_star_kindler_spell(int item)
 			  10);
 	}
 
-	return CAST;
+	return CAST_OBVIOUS;
 }
 
 char *varda_star_kindler_info()

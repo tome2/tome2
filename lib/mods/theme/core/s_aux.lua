@@ -144,16 +144,3 @@ function get_level(s, max, min)
    if not min then min = 1  end
    return %get_level(s, max, min)
 end
-
--- Helper function for spell effect to know if they are or not obvious
-function is_obvious(effect, old)
-	if old then
-		if old == TRUE or effect == TRUE then
-			return TRUE
-		else
-			return FALSE
-		end
-	else
-		return effect
-	end
-end

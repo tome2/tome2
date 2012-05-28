@@ -2520,6 +2520,15 @@ typedef enum { USE_SPELL_POINTS, USE_PIETY } casting_type;
 
 
 /*
+ * Spell effect function result
+ */
+typedef enum {
+	NO_CAST,             /* Spell not cast; user aborted */
+	CAST_OBVIOUS,        /* Cast; caster discovers effect (devices) */
+	CAST_HIDDEN          /* Cast; caster does NOT discover effect (devices) */
+} casting_result;
+
+/*
  * The spell function must provide the desc
  */
 typedef struct spell_type spell_type;
@@ -2529,7 +2538,7 @@ struct spell_type
 	byte skill_level;               /* Required level (to learn) */
 	string_list *description;       /* List of strings */
 
-	bool_ *(*effect_func)(int o_idx);  /* Spell effect function */
+	casting_result (*effect_func)(int o_idx);  /* Spell effect function */
 	char* (*info_func)();           /* Information function */
 	int (*lasting_func)();         /* Lasting effect function */
 	bool_ (*depend_func)();         /* Check dependencies */
