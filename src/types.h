@@ -2527,7 +2527,6 @@ struct spell_type
 {
 	cptr name;                      /* Name */
 	byte skill_level;               /* Required level (to learn) */
-	s16b level;                     /* Spell level(0 = not learnt) */
 	string_list *description;       /* List of strings */
 
 	bool_ *(*effect_func)(int o_idx);  /* Spell effect function */

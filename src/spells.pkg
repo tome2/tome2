@@ -2168,11 +2168,6 @@ struct spell_type@school_spell_type
 	 */
 	byte skill_level;
     
-        /** @structvar level
-         * @brief Number
-         * @note Spell level(0 = not learnt) 
-         */
-        s16b level;
 };
 
 /** @struct school_type
