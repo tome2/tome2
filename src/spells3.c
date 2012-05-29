@@ -174,7 +174,7 @@ bool_ *NO_CAST = NULL;
 bool_ CAST_VAL = 0xca; /* Any value will do */
 bool_ *CAST = &CAST_VAL;
 
-static s32b get_level_s(int sp, int max)
+s32b get_level_s(int sp, int max)
 {
 	return get_level(sp, max, 1);
 }
