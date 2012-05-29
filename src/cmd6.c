@@ -3650,6 +3650,33 @@ void unset_stick_mode()
 
 
 /*
+ * Activate a device
+ */
+static void activate_stick(s16b s, bool_ *obvious, bool_ *use_charge)
+{
+	spell_type *spell = spell_at(s);
+	bool_ *ret;
+
+	assert(obvious != NULL);
+	assert(use_charge != NULL);
+	assert(spell->effect_func != NULL);
+
+	ret = spell->effect_func(-1);
+
+	if (ret == NULL)
+	{
+		*use_charge = FALSE;
+		*obvious = FALSE;
+	}
+	else
+	{
+		*use_charge = TRUE;
+		*obvious = *ret;
+	}
+}
+
+
+/*
  * Use a staff.                        -RAK-
  *
  * One charge of one staff disappears.
@@ -3660,7 +3687,7 @@ void do_cmd_use_staff(void)
 {
 	int item, ident, chance;
 
-	s32b obvious, use_charge;
+	bool_ obvious, use_charge;
 
 	object_type *o_ptr;
 
@@ -3754,7 +3781,7 @@ void do_cmd_use_staff(void)
 
 
 	/* Analyze the staff */
-	call_lua("activate_stick", "(d)", "dd", o_ptr->pval2, &obvious, &use_charge);
+	activate_stick(o_ptr->pval2, &obvious, &use_charge);
 
 	/* Combine / Reorder the pack (later) */
 	p_ptr->notice |= (PN_COMBINE | PN_REORDER);
@@ -3850,7 +3877,7 @@ void do_cmd_use_staff(void)
  */
 void do_cmd_aim_wand(void)
 {
-	s32b obvious, use_charge;
+	bool_ obvious, use_charge;
 
 	int item, ident, chance, sval;
 
@@ -3945,7 +3972,7 @@ void do_cmd_aim_wand(void)
 	sval = o_ptr->sval;
 
 	/* Analyze the wand */
-	call_lua("activate_stick", "(d)", "dd", o_ptr->pval2, &obvious, &use_charge);
+	activate_stick(o_ptr->pval2, &obvious, &use_charge);
 
 	/* Combine / Reorder the pack (later) */
 	p_ptr->notice |= (PN_COMBINE | PN_REORDER);
@@ -4989,42 +5016,16 @@ void do_cmd_activate(void)
 }
 
 
-static void get_activation_duration(int spl, int *base, int *sides)
-{
-	assert(base != NULL);
-	assert(sides != NULL);
-
-	*base = get_lua_int(format("__tmp_spells[%d].activate[1]", spl));
-	if (*base <= 0)
-	{
-		base = 0;
-	}
-
-	*sides = get_lua_int(format("__tmp_spells[%d].activate[2]", spl));
-	if (*sides <= 0)
-	{
-		sides = 0;
-	}
-}
-
 static void get_activation_desc(char *buf, int spl)
 {
-	spell_type *spell = &school_spells[spl];
+	spell_type *spell = spell_at(spl);
 	char turns[32];
-	int base, sides;
 
-	get_activation_duration(spl, &base, &sides);
-
-	sprintf(turns, "%d", base);
-	if (sides > 0)
-	{
-		char buf[32];
-		sprintf(buf, "+d%d", sides);
-		strcat(turns, buf);
-	}
+	dice_print(&spell->activation_duration, turns);
 
 	assert(spell->description != NULL);
 	assert(spell->description->s != NULL);
+
 	sprintf(buf, "%s every %s turns",
 		spell->description->s,
 		turns);
@@ -5032,11 +5033,16 @@ static void get_activation_desc(char *buf, int spl)
 
 static int get_activation_timeout(int spl)
 {
-	int base, sides;
-	get_activation_duration(spl, &base, &sides);
-	return base + randint(sides);
+	spell_type *spell = spell_at(spl);
+	return dice_roll(&spell->activation_duration);
 }
 
+static void activate_activation(long s, int item)
+{
+	spell_type *spell = spell_at(s);
+	assert(spell->effect_func != NULL);
+	spell->effect_func(item);
+}
 
 const char *activation_aux(object_type * o_ptr, bool_ doit, int item)
 {
@@ -5082,7 +5088,7 @@ const char *activation_aux(object_type * o_ptr, bool_ doit, int item)
 	{
 		if (doit)
 		{
-			call_lua("activate_activation", "(d,d)", "", -spell, item);
+			activate_activation(-spell, item);
 			o_ptr->timeout = get_activation_timeout(-spell);
 		}
 		else

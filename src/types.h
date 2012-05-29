@@ -2527,11 +2527,37 @@ struct spell_type
 {
 	cptr name;                      /* Name */
 	byte skill_level;               /* Required level (to learn) */
-	byte mana;			/* Required mana at lvl 1 */
-	byte mana_max;			/* Required mana at max lvl */
-	s16b fail;			/* Minimum chance of failure */
 	s16b level;                     /* Spell level(0 = not learnt) */
 	string_list *description;       /* List of strings */
+
+	bool_ *(*effect_func)(int o_idx);  /* Spell effect function */
+	char* (*info_func)();           /* Information function */
+	int (*lasting_func)();         /* Lasting effect function */
+	bool_ (*depend_func)();         /* Check dependencies */
+
+	s16b minimum_pval;              /* Minimum required pval for item-based spells */
+
+	casting_type casting_type;      /* Type of casting required */
+	s16b         casting_stat;      /* Stat used for casting */
+
+	bool_        castable_while_blind;
+	bool_        castable_while_confused;
+
+	dice_type          device_charges;      /* Number of charges for devices */
+	device_allocation *device_allocation;	/* Allocation table for devices */
+
+	s16b         random_type;       /* Type of random items in which skill may appear */
+
+	s32b         failure_rate;      /* Failure rate */
+
+	s32b         inertia_difficulty; /* Mana cost when used in Inertia Control */
+	s32b         inertia_delay;      /* Delay between castings */
+
+	range_type   mana_range;
+
+	dice_type    activation_duration; /* Duration for activation (if any) */
+
+	school_idx *schools;
 };
 
 typedef struct school_type school_type;

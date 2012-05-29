@@ -17,6 +17,11 @@
 #include "tolua.h"
 extern lua_State *L;
 
+s16b can_spell_random(s16b spell_idx)
+{
+	return spell_at(spell_idx)->random_type;
+}
+
 magic_power *grab_magic_power(magic_power *m_ptr, int num)
 {
 	return (&m_ptr[num]);
@@ -171,19 +176,6 @@ s16b new_school(int i, cptr name, s16b skill)
 	return (i);
 }
 
-s16b new_spell(int i, cptr name)
-{
-	school_spells[i].name = string_make(name);
-	school_spells[i].level = 0;
-	school_spells[i].level = 0;
-	return (i);
-}
-
-spell_type *grab_spell_type(s16b num)
-{
-	return (&school_spells[num]);
-}
-
 school_type *grab_school_type(s16b num)
 {
 	return (&schools[num]);
@@ -245,12 +237,10 @@ s32b get_level_device(s32b s, s32b max, s32b min)
 	return lvl;
 }
 
-int get_mana(s32b s) {
-	return exec_lua(format("return get_mana(%d)", s));
-}
-
-static int get_spell_stat(s32b s) {
-	return exec_lua(format("return get_spell_stat(%d)", s));
+int get_mana(s32b s)
+{
+	spell_type *spell = spell_at(s);
+	return get_level(s, spell->mana_range.max, spell->mana_range.min);
 }
 
 /** Returns spell chance of failure for spell */
@@ -261,9 +251,9 @@ s32b spell_chance(s32b s)
 
 	/* Extract the base spell failure rate */
 	if (get_level_use_stick > -1) {
-		return lua_spell_device_chance(s_ptr->fail, level, s_ptr->skill_level);
+		return lua_spell_device_chance(s_ptr->failure_rate, level, s_ptr->skill_level);
 	} else {
-		return lua_spell_chance(s_ptr->fail, level, s_ptr->skill_level, get_mana(s), get_power(s), get_spell_stat(s));
+		return lua_spell_chance(s_ptr->failure_rate, level, s_ptr->skill_level, get_mana(s), get_power(s), s_ptr->casting_stat);
 	}
 }
 
@@ -582,5 +572,8 @@ void timer_aggravate_evil_callback()
 
 cptr get_spell_info(s32b s)
 {
-	return string_exec_lua(format("return __spell_info[" FMTs32b "]()", s));
+	spell_type *spell = spell_at(s);
+
+	assert(spell->info_func != NULL);
+	return spell->info_func();
 }

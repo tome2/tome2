@@ -2857,7 +2857,8 @@ void describe_device(object_type *o_ptr)
 		print_device_desc(o_ptr->pval2);
 
 		text_out("\nSpell level: ");
-		text_out_c(TERM_L_BLUE, string_exec_lua(format("return tostring(get_level(%d, 50, 0))", o_ptr->pval2)));
+		sprintf(buf, FMTs32b, get_level(o_ptr->pval2, 50, 0));
+		text_out_c(TERM_L_BLUE, buf);
 
 		text_out("\nMinimum Magic Device level to increase spell level: ");
 		text_out_c(TERM_L_BLUE, format("%d", school_spells[o_ptr->pval2].skill_level));

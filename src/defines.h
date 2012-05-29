@@ -866,6 +866,11 @@
 #define MAX_BETWEEN_EXITS       3
 
 /*
+ * Maximum number of school spells
+ */
+#define SCHOOL_SPELLS_MAX 200
+
+/*
  * Number of effects
  */
 #define MAX_EFFECTS             128

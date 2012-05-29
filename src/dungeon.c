@@ -801,30 +801,10 @@ bool_ decays(object_type *o_ptr)
 
 static int process_lasting_spell(s16b music)
 {
-	int oldtop, use_mana;
+	spell_type *spell = spell_at(-music);
 
-	if (music > 0) return FALSE;
-
-	oldtop = lua_gettop(L);
-
-	music = -music;
-
-	/* Push the function */
-	lua_getglobal(L, "exec_lasting_spell");
-
-	/* Push the spell */
-	tolua_pushnumber(L, music);
-
-	/* Call the function */
-	if (lua_call(L, 1, 1))
-	{
-		cmsg_format(TERM_VIOLET, "ERROR in lua_call while calling lasting spell");
-		return 0;
-	}
-
-	use_mana = tolua_getnumber(L, -(lua_gettop(L) - oldtop), 0);
-	lua_settop(L, oldtop);
-	return use_mana;
+	assert(spell->lasting_func != NULL);
+	return spell->lasting_func();
 }
 
 static void gere_class_special()

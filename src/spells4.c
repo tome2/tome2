@@ -72,23 +72,17 @@ void school_idx_add_new(school_idx **list, s32b i)
 
 static bool_ uses_piety_to_cast(int s)
 {
-	char buf[128];
-	sprintf(buf, "return check_affect(%d, \"piety\", FALSE)", s);
-	return exec_lua(buf);
+	return spell_at(s)->casting_type == USE_PIETY;
 }
 
 static bool_ castable_while_blind(int s)
 {
-	char buf[128];
-	sprintf(buf, "return not check_affect(%d, \"blind\")", s);
-	return exec_lua(buf);
+	return spell_at(s)->castable_while_blind;
 }
 
 static bool_ castable_while_confused(int s)
 {
-	char buf[128];
-	sprintf(buf, "return not check_affect(%d, \"confusion\")", s);
-	return exec_lua(buf);
+	return spell_at(s)->castable_while_confused;
 }
 
 /** Describe what type of energy the spell uses for casting */
@@ -484,22 +478,45 @@ void random_book_setup(s16b sval, s32b spell_idx)
 	}
 }
 
-static cptr spell_school_name(s32b s)
+static void spell_school_name(char *buf, spell_type *spell)
 {
-	return string_exec_lua(format("return spell_school_name(%d)", s));
+	school_idx *school_idx = NULL;
+	struct sglib_school_idx_iterator sit;
+	bool_ first = TRUE;
+
+	buf[0] = '\0';
+
+	for (school_idx = sglib_school_idx_it_init(&sit, spell->schools);
+	     school_idx != NULL;
+	     school_idx = sglib_school_idx_it_next(&sit))
+	{
+		int sch = school_idx->i;
+		school_type *school = grab_school_type(sch);
+		/* Add separator? */
+		if (!first)
+		{
+			strcat(buf, "/");
+		}
+		first = FALSE;
+
+		/* Add school name */
+		strcat(buf, school->name);
+	}
 }
 
 int print_spell(cptr label_, byte color, int y, s32b s)
 {
 	s32b level;
 	bool_ na;
-	cptr sch_str = spell_school_name(s);
+	spell_type *spell = spell_at(s);
+	char sch_str[128];
 	cptr spell_info = get_spell_info(s);
 	cptr label = (label_ == NULL) ? "" : label_;
 	char level_str[8] = "n/a";
 	char buf[128];
 
 	get_level_school(s, 50, -50, &level, &na);
+	spell_school_name(sch_str, spell);
 
 	if (!na)
 	{
@@ -539,10 +556,10 @@ int print_book(s16b sval, s32b pval, object_type *obj)
 	{
 		s32b s = spell_idx->i;
 		byte color = TERM_L_DARK;
-		int is_ok;
+		bool_ is_ok;
 		char label[8];
 
-		call_lua("is_ok_spell", "(d,O)", "d", s, obj, &is_ok);
+		is_ok = is_ok_spell(s, obj);
 		if (is_ok)
 		{
 			color = (get_mana(s) > get_power(s)) ? TERM_ORANGE : TERM_L_GREEN;
@@ -560,9 +577,9 @@ int print_book(s16b sval, s32b pval, object_type *obj)
 
 static bool_ call_spell_function(s32b s)
 {
-	char buf[128];
-	sprintf(buf, "return (__spell_spell[" FMTs32b "]() ~= nil)", s);
-	return exec_lua(buf);
+	spell_type *spell = spell_at(s);
+	assert(spell->effect_func != NULL);
+	return (spell->effect_func(-1) != NULL);
 }
 
 void lua_cast_school_spell(s32b s, bool_ no_cost)
@@ -667,6 +684,13 @@ void device_allocation_init(device_allocation *device_allocation, byte tval)
 	range_init(&device_allocation->base_level, 0, 0);
 	range_init(&device_allocation->max_level, 0, 0);
 	device_allocation->next = NULL;
+}
+
+device_allocation *device_allocation_new(byte tval)
+{
+	device_allocation *d = malloc(sizeof(device_allocation));
+	device_allocation_init(d, tval);
+	return d;
 }
 
 int compare_device_allocation(device_allocation *a, device_allocation *b)

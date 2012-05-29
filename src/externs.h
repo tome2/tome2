@@ -564,8 +564,8 @@ extern hist_type *bg;
 extern int max_bg_idx;
 extern s32b extra_savefile_parts;
 extern bool_ player_char_health;
-extern s16b max_spells;
-extern spell_type *school_spells;
+extern s16b school_spells_count;
+extern spell_type school_spells[SCHOOL_SPELLS_MAX];
 extern s16b max_schools;
 extern school_type *schools;
 extern int project_time;
@@ -801,7 +801,8 @@ extern void do_poly_self(void);
 extern void brand_weapon(int brand_type);
 extern cptr symbiote_name(bool_ capitalize);
 extern int use_symbiotic_power(int r_idx, bool_ great, bool_ only_number, bool_ no_cost);
-extern s32b get_school_spell(cptr do_what, cptr check_fct, s16b force_book);
+extern bool_ is_ok_spell(s32b spell_idx, object_type *o_ptr);
+extern s32b get_school_spell(cptr do_what, s16b force_book);
 extern void do_cmd_copy_spell(void);
 extern void cast_school_spell(void);
 extern void browse_school_spell(int book, int pval, object_type *o_ptr);
@@ -969,7 +970,6 @@ extern errr process_dungeon_file(cptr name, int *yval, int *xval, int ymax, int 
 
 /* init2.c */
 extern void init_corruptions();
-extern void init_spells(s16b new_size);
 extern void init_schools(s16b new_size);
 extern void reinit_gods(s16b new_size);
 extern void reinit_quests(s16b new_size);
@@ -1411,17 +1411,17 @@ extern s32b POISONBLOOD;
 extern s32b THUNDERSTORM;
 extern s32b STERILIZE;
 
-bool_ *air_noxious_cloud();
+bool_ *air_noxious_cloud(int);
 char  *air_noxious_cloud_info();
-bool_ *air_wings_of_winds();
+bool_ *air_wings_of_winds(int);
 char  *air_wings_of_winds_info();
-bool_ *air_invisibility();
+bool_ *air_invisibility(int);
 char  *air_invisibility_info();
-bool_ *air_poison_blood();
+bool_ *air_poison_blood(int);
 char  *air_poison_blood_info();
-bool_ *air_thunderstorm();
+bool_ *air_thunderstorm(int);
 char  *air_thunderstorm_info();
-bool_ *air_sterilize();
+bool_ *air_sterilize(int);
 char  *air_sterilize_info();
 
 extern s32b BLINK;
@@ -1431,17 +1431,17 @@ extern s32b TELEAWAY;
 extern s32b RECALL;
 extern s32b PROBABILITY_TRAVEL;
 
-bool_ *convey_blink();
+bool_ *convey_blink(int);
 char  *convey_blink_info();
-bool_ *convey_disarm();
+bool_ *convey_disarm(int);
 char  *convey_disarm_info();
-bool_ *convey_teleport();
+bool_ *convey_teleport(int);
 char  *convey_teleport_info();
-bool_ *convey_teleport_away();
+bool_ *convey_teleport_away(int);
 char  *convey_teleport_away_info();
-bool_ *convey_recall();
+bool_ *convey_recall(int);
 char  *convey_recall_info();
-bool_ *convey_probability_travel();
+bool_ *convey_probability_travel(int);
 char  *convey_probability_travel_info();
 
 extern s32b DEMON_BLADE;
@@ -1454,23 +1454,23 @@ extern s32b DEMON_SUMMON;
 extern s32b DISCHARGE_MINION;
 extern s32b CONTROL_DEMON;
 
-bool_ *demonology_demon_blade();
+bool_ *demonology_demon_blade(int);
 char  *demonology_demon_blade_info();
-bool_ *demonology_demon_madness();
+bool_ *demonology_demon_madness(int);
 char  *demonology_demon_madness_info();
-bool_ *demonology_demon_field();
+bool_ *demonology_demon_field(int);
 char  *demonology_demon_field_info();
-bool_ *demonology_doom_shield();
+bool_ *demonology_doom_shield(int);
 char  *demonology_doom_shield_info();
-bool_ *demonology_unholy_word();
+bool_ *demonology_unholy_word(int);
 char  *demonology_unholy_word_info();
-bool_ *demonology_demon_cloak();
+bool_ *demonology_demon_cloak(int);
 char  *demonology_demon_cloak_info();
-bool_ *demonology_summon_demon();
+bool_ *demonology_summon_demon(int);
 char  *demonology_summon_demon_info();
-bool_ *demonology_discharge_minion();
+bool_ *demonology_discharge_minion(int);
 char  *demonology_discharge_minion_info();
-bool_ *demonology_control_demon();
+bool_ *demonology_control_demon(int);
 char  *demonology_control_demon_info();
 
 extern s32b STARIDENTIFY;
@@ -1480,17 +1480,17 @@ extern s32b SENSEHIDDEN;
 extern s32b REVEALWAYS;
 extern s32b SENSEMONSTERS;
 
-bool_ *divination_greater_identify();
+bool_ *divination_greater_identify(int);
 char  *divination_greater_identify_info();
-bool_ *divination_identify();
+bool_ *divination_identify(int);
 char  *divination_identify_info();
-bool_ *divination_vision();
+bool_ *divination_vision(int);
 char  *divination_vision_info();
-bool_ *divination_sense_hidden();
+bool_ *divination_sense_hidden(int);
 char  *divination_sense_hidden_info();
-bool_ *divination_reveal_ways();
+bool_ *divination_reveal_ways(int);
 char  *divination_reveal_ways_info();
-bool_ *divination_sense_monsters();
+bool_ *divination_sense_monsters(int);
 char  *divination_sense_monsters_info();
 
 extern s32b STONESKIN;
@@ -1499,15 +1499,15 @@ extern s32b STONEPRISON;
 extern s32b STRIKE;
 extern s32b SHAKE;
 
-bool_ *earth_stone_skin();
+bool_ *earth_stone_skin(int);
 char  *earth_stone_skin_info();
-bool_ *earth_dig();
+bool_ *earth_dig(int);
 char  *earth_dig_info();
-bool_ *earth_stone_prison();
+bool_ *earth_stone_prison(int);
 char  *earth_stone_prison_info();
-bool_ *earth_strike();
+bool_ *earth_strike(int);
 char  *earth_strike_info();
-bool_ *earth_shake();
+bool_ *earth_shake(int);
 char  *earth_shake_info();
 
 extern s32b ERU_SEE;
@@ -1515,13 +1515,13 @@ extern s32b ERU_LISTEN;
 extern s32b ERU_UNDERSTAND;
 extern s32b ERU_PROT;
 
-bool_ *eru_see_the_music();
+bool_ *eru_see_the_music(int);
 char  *eru_see_the_music_info();
-bool_ *eru_listen_to_the_music();
+bool_ *eru_listen_to_the_music(int);
 char  *eru_listen_to_the_music_info();
-bool_ *eru_know_the_music();
+bool_ *eru_know_the_music(int);
 char  *eru_know_the_music_info();
-bool_ *eru_lay_of_protection();
+bool_ *eru_lay_of_protection(int);
 char  *eru_lay_of_protection_info();
 
 extern s32b GLOBELIGHT;
@@ -1530,15 +1530,15 @@ extern s32b FIERYAURA;
 extern s32b FIREWALL;
 extern s32b FIREGOLEM;
 
-bool_ *fire_globe_of_light();
+bool_ *fire_globe_of_light(int);
 char  *fire_globe_of_light_info();
-bool_ *fire_fireflash();
+bool_ *fire_fireflash(int);
 char  *fire_fireflash_info();
-bool_ *fire_fiery_shield();
+bool_ *fire_fiery_shield(int);
 char  *fire_fiery_shield_info();
-bool_ *fire_firewall();
+bool_ *fire_firewall(int);
 char  *fire_firewall_info();
-bool_ *fire_golem();
+bool_ *fire_golem(int);
 char  *fire_golem_info();
 
 extern s32b CALL_THE_ELEMENTS;
@@ -1550,25 +1550,25 @@ extern s32b DRIPPING_TREAD;
 extern s32b GROW_BARRIER;
 extern s32b ELEMENTAL_MINION;
 
-bool_ *geomancy_call_the_elements();
+bool_ *geomancy_call_the_elements(int);
 char  *geomancy_call_the_elements_info();
-bool_ *geomancy_channel_elements();
+bool_ *geomancy_channel_elements(int);
 char  *geomancy_channel_elements_info();
-bool_ *geomancy_elemental_wave();
+bool_ *geomancy_elemental_wave(int);
 char  *geomancy_elemental_wave_info();
-bool_ *geomancy_vaporize();
+bool_ *geomancy_vaporize(int);
 char  *geomancy_vaporize_info();
 bool_  geomancy_vaporize_depends();
-bool_ *geomancy_geolysis();
+bool_ *geomancy_geolysis(int);
 char  *geomancy_geolysis_info();
 bool_  geomancy_geolysis_depends();
-bool_ *geomancy_dripping_tread();
+bool_ *geomancy_dripping_tread(int);
 char  *geomancy_dripping_tread_info();
 bool_  geomancy_dripping_tread_depends();
-bool_ *geomancy_grow_barrier();
+bool_ *geomancy_grow_barrier(int);
 char  *geomancy_grow_barrier_info();
 bool_  geomancy_grow_barrier_depends();
-bool_ *geomancy_elemental_minion();
+bool_ *geomancy_elemental_minion(int);
 char  *geomancy_elemental_minion_info();
 
 extern s32b MANATHRUST;
@@ -1576,13 +1576,13 @@ extern s32b DELCURSES;
 extern s32b RESISTS;
 extern s32b MANASHIELD;
 
-bool_ *mana_manathrust();
+bool_ *mana_manathrust(int);
 char *mana_manathrust_info();
-bool_ *mana_remove_curses();
+bool_ *mana_remove_curses(int);
 char *mana_remove_curses_info();
-bool_ *mana_elemental_shield();
+bool_ *mana_elemental_shield(int);
 char *mana_elemental_shield_info();
-bool_ *mana_disruption_shield();
+bool_ *mana_disruption_shield(int);
 char *mana_disruption_shield_info();
 
 extern s32b MANWE_SHIELD;
@@ -1590,13 +1590,13 @@ extern s32b MANWE_AVATAR;
 extern s32b MANWE_BLESS;
 extern s32b MANWE_CALL;
 
-bool_ *manwe_wind_shield();
+bool_ *manwe_wind_shield(int);
 char  *manwe_wind_shield_info();
-bool_ *manwe_avatar();
+bool_ *manwe_avatar(int);
 char  *manwe_avatar_info();
-bool_ *manwe_blessing();
+bool_ *manwe_blessing(int);
 char  *manwe_blessing_info();
-bool_ *manwe_call();
+bool_ *manwe_call(int);
 char  *manwe_call_info();
 
 extern s32b MELKOR_CURSE;
@@ -1605,11 +1605,11 @@ extern s32b MELKOR_MIND_STEAL;
 
 void do_melkor_curse(int m_idx);
 
-bool_ *melkor_curse();
+bool_ *melkor_curse(int);
 char  *melkor_curse_info();
-bool_ *melkor_corpse_explosion();
+bool_ *melkor_corpse_explosion(int);
 char  *melkor_corpse_explosion_info();
-bool_ *melkor_mind_steal();
+bool_ *melkor_mind_steal(int);
 char  *melkor_mind_steal_info();
 
 extern s32b RECHARGE;
@@ -1619,15 +1619,15 @@ extern s32b TRACKER;
 extern s32b INERTIA_CONTROL;
 extern timer_type *TIMER_INERTIA_CONTROL;
 
-bool_ *meta_recharge();
+bool_ *meta_recharge(int);
 char *meta_recharge_info();
-bool_ *meta_spellbinder();
+bool_ *meta_spellbinder(int);
 char *meta_spellbinder_info();
-bool_ *meta_disperse_magic();
+bool_ *meta_disperse_magic(int);
 char *meta_disperse_magic_info();
-bool_ *meta_tracker();
+bool_ *meta_tracker(int);
 char *meta_tracker_info();
-bool_ *meta_inertia_control();
+bool_ *meta_inertia_control(int);
 char *meta_inertia_control_info();
 
 void meta_inertia_control_timer_callback();
@@ -1639,13 +1639,13 @@ extern s32b CONFUSE;
 extern s32b ARMOROFFEAR;
 extern s32b STUN;
 
-bool_ *mind_charm();
+bool_ *mind_charm(int);
 char  *mind_charm_info();
-bool_ *mind_confuse();
+bool_ *mind_confuse(int);
 char  *mind_confuse_info();
-bool_ *mind_armor_of_fear();
+bool_ *mind_armor_of_fear(int);
 char  *mind_armor_of_fear_info();
-bool_ *mind_stun();
+bool_ *mind_stun(int);
 char  *mind_stun_info();
 
 extern s32b MAGELOCK;
@@ -1653,24 +1653,24 @@ extern s32b SLOWMONSTER;
 extern s32b ESSENCESPEED;
 extern s32b BANISHMENT;
 
-bool_ *tempo_magelock();
+bool_ *tempo_magelock(int);
 char  *tempo_magelock_info();
-bool_ *tempo_slow_monster();
+bool_ *tempo_slow_monster(int);
 char  *tempo_slow_monster_info();
-bool_ *tempo_essence_of_speed();
+bool_ *tempo_essence_of_speed(int);
 char  *tempo_essence_of_speed_info();
-bool_ *tempo_banishment();
+bool_ *tempo_banishment(int);
 char  *tempo_banishment_info();
 
 extern s32b TULKAS_AIM;
 extern s32b TULKAS_WAVE;
 extern s32b TULKAS_SPIN;
 
-bool_ *tulkas_divine_aim();
+bool_ *tulkas_divine_aim(int);
 char  *tulkas_divine_aim_info();
-bool_ *tulkas_wave_of_power();
+bool_ *tulkas_wave_of_power(int);
 char  *tulkas_wave_of_power_info();
-bool_ *tulkas_whirlwind();
+bool_ *tulkas_whirlwind(int);
 char  *tulkas_whirlwind_info();
 
 extern s32b DRAIN;
@@ -1681,13 +1681,13 @@ extern s32b FLAMEOFUDUN;
 int udun_in_book(s32b sval, s32b pval);
 int levels_in_book(s32b sval, s32b pval);
 
-bool_ *udun_drain();
+bool_ *udun_drain(int);
 char  *udun_drain_info();
-bool_ *udun_genocide();
+bool_ *udun_genocide(int);
 char  *udun_genocide_info();
-bool_ *udun_wraithform();
+bool_ *udun_wraithform(int);
 char  *udun_wraithform_info();
-bool_ *udun_flame_of_udun();
+bool_ *udun_flame_of_udun(int);
 char  *udun_flame_of_udun_info();
 
 extern s32b TIDALWAVE;
@@ -1696,15 +1696,15 @@ extern s32b ENTPOTION;
 extern s32b VAPOR;
 extern s32b GEYSER;
 
-bool_ *water_tidal_wave();
+bool_ *water_tidal_wave(int);
 char  *water_tidal_wave_info();
-bool_ *water_ice_storm();
+bool_ *water_ice_storm(int);
 char  *water_ice_storm_info();
-bool_ *water_ent_potion();
+bool_ *water_ent_potion(int);
 char  *water_ent_potion_info();
-bool_ *water_vapor();
+bool_ *water_vapor(int);
 char  *water_vapor_info();
-bool_ *water_geyser();
+bool_ *water_geyser(int);
 char  *water_geyser_info();
 
 extern s32b YAVANNA_CHARM_ANIMAL;
@@ -1713,15 +1713,15 @@ extern s32b YAVANNA_TREE_ROOTS;
 extern s32b YAVANNA_WATER_BITE;
 extern s32b YAVANNA_UPROOT;
 
-bool_ *yavanna_charm_animal();
+bool_ *yavanna_charm_animal(int);
 char  *yavanna_charm_animal_info();
-bool_ *yavanna_grow_grass();
+bool_ *yavanna_grow_grass(int);
 char  *yavanna_grow_grass_info();
-bool_ *yavanna_tree_roots();
+bool_ *yavanna_tree_roots(int);
 char  *yavanna_tree_roots_info();
-bool_ *yavanna_water_bite();
+bool_ *yavanna_water_bite(int);
 char  *yavanna_water_bite_info();
-bool_ *yavanna_uproot();
+bool_ *yavanna_uproot(int);
 char  *yavanna_uproot_info();
 
 extern s32b GROWTREE;
@@ -1731,17 +1731,17 @@ extern s32b REGENERATION;
 extern s32b SUMMONANNIMAL;
 extern s32b GROW_ATHELAS;
 
-bool_ *nature_grow_trees();
+bool_ *nature_grow_trees(int);
 char *nature_grow_trees_info();
-bool_ *nature_healing();
+bool_ *nature_healing(int);
 char *nature_healing_info();
-bool_ *nature_recovery();
+bool_ *nature_recovery(int);
 char *nature_recovery_info();
-bool_ *nature_regeneration();
+bool_ *nature_regeneration(int);
 char *nature_regeneration_info();
-bool_ *nature_summon_animal();
+bool_ *nature_summon_animal(int);
 char *nature_summon_animal_info();
-bool_ *nature_grow_athelas();
+bool_ *nature_grow_athelas(int);
 char *nature_grow_athelas_info();
 
 extern s32b DEVICE_HEAL_MONSTER;
@@ -1759,33 +1759,33 @@ extern s32b DEVICE_THUNDERLORDS;
 extern s32b DEVICE_RADAGAST;
 extern s32b DEVICE_VALAROMA;
 
-bool_ *device_heal_monster();
+bool_ *device_heal_monster(int);
 char  *device_heal_monster_info();
-bool_ *device_haste_monster();
+bool_ *device_haste_monster(int);
 char  *device_haste_monster_info();
-bool_ *device_wish();
+bool_ *device_wish(int);
 char  *device_wish_info();
-bool_ *device_summon_monster();
+bool_ *device_summon_monster(int);
 char  *device_summon_monster_info();
-bool_ *device_mana();
+bool_ *device_mana(int);
 char  *device_mana_info();
-bool_ *device_nothing();
+bool_ *device_nothing(int);
 char  *device_nothing_info();
-bool_ *device_lebohaum();
+bool_ *device_lebohaum(int);
 char  *device_lebohaum_info();
-bool_ *device_maggot();
+bool_ *device_maggot(int);
 char  *device_maggot_info();
-bool_ *device_holy_fire();
+bool_ *device_holy_fire(int);
 char  *device_holy_fire_info();
-bool_ *device_eternal_flame();
+bool_ *device_eternal_flame(int);
 char  *device_eternal_flame_info();
-bool_ *device_durandil();
+bool_ *device_durandil(int);
 char  *device_durandil_info();
-bool_ *device_thunderlords();
+bool_ *device_thunderlords(int);
 char  *device_thunderlords_info();
-bool_ *device_radagast();
+bool_ *device_radagast(int);
 char  *device_radagast_info();
-bool_ *device_valaroma();
+bool_ *device_valaroma(int);
 char  *device_valaroma_info();
 
 extern s32b MUSIC_STOP;
@@ -1802,51 +1802,51 @@ extern s32b MUSIC_WIND;
 extern s32b MUSIC_YLMIR;
 extern s32b MUSIC_AMBARKANTA;
 
-bool_ *music_stop_singing_spell();
+bool_ *music_stop_singing_spell(int);
 char  *music_stop_singing_info();
 
 int    music_holding_pattern_lasting();
-bool_ *music_holding_pattern_spell();
+bool_ *music_holding_pattern_spell(int);
 char  *music_holding_pattern_info();
 
 int    music_illusion_pattern_lasting();
-bool_ *music_illusion_pattern_spell();
+bool_ *music_illusion_pattern_spell(int);
 char  *music_illusion_pattern_info();
 
 int    music_stun_pattern_lasting();
-bool_ *music_stun_pattern_spell();
+bool_ *music_stun_pattern_spell(int);
 char  *music_stun_pattern_info();
 
 int    music_song_of_the_sun_lasting();
-bool_ *music_song_of_the_sun_spell();
+bool_ *music_song_of_the_sun_spell(int);
 char  *music_song_of_the_sun_info();
 
 int    music_flow_of_life_lasting();
-bool_ *music_flow_of_life_spell();
+bool_ *music_flow_of_life_spell(int);
 char  *music_flow_of_life_info();
 
 int    music_heroic_ballad_lasting();
-bool_ *music_heroic_ballad_spell();
+bool_ *music_heroic_ballad_spell(int);
 char  *music_heroic_ballad_info();
 
 int    music_hobbit_melodies_lasting();
-bool_ *music_hobbit_melodies_spell();
+bool_ *music_hobbit_melodies_spell(int);
 char  *music_hobbit_melodies_info();
 
 int    music_clairaudience_lasting();
-bool_ *music_clairaudience_spell();
+bool_ *music_clairaudience_spell(int);
 char  *music_clairaudience_info();
 
-bool_ *music_blow_spell();
+bool_ *music_blow_spell(int);
 char  *music_blow_info();
 
-bool_ *music_gush_of_wind_spell();
+bool_ *music_gush_of_wind_spell(int);
 char  *music_gush_of_wind_info();
 
-bool_ *music_horns_of_ylmir_spell();
+bool_ *music_horns_of_ylmir_spell(int);
 char  *music_horns_of_ylmir_info();
 
-bool_ *music_ambarkanta_spell();
+bool_ *music_ambarkanta_spell(int);
 char  *music_ambarkanta_info();
 
 extern s32b AULE_FIREBRAND;
@@ -1854,13 +1854,13 @@ extern s32b AULE_ENCHANT_WEAPON;
 extern s32b AULE_ENCHANT_ARMOUR;
 extern s32b AULE_CHILD;
 
-bool_ *aule_firebrand_spell();
+bool_ *aule_firebrand_spell(int);
 char  *aule_firebrand_info();
-bool_ *aule_enchant_weapon_spell();
+bool_ *aule_enchant_weapon_spell(int);
 char  *aule_enchant_weapon_info();
-bool_ *aule_enchant_armour_spell();
+bool_ *aule_enchant_armour_spell(int);
 char  *aule_enchant_armour_info();
-bool_ *aule_child_spell();
+bool_ *aule_child_spell(int);
 char  *aule_child_info();
 
 extern s32b MANDOS_TEARS_LUTHIEN;
@@ -1868,13 +1868,13 @@ extern s32b MANDOS_SPIRIT_FEANTURI;
 extern s32b MANDOS_TALE_DOOM;
 extern s32b MANDOS_CALL_HALLS;
 
-bool_ *mandos_tears_of_luthien_spell();
+bool_ *mandos_tears_of_luthien_spell(int);
 char  *mandos_tears_of_luthien_info();
-bool_ *mandos_spirit_of_the_feanturi_spell();
+bool_ *mandos_spirit_of_the_feanturi_spell(int);
 char  *mandos_spirit_of_the_feanturi_info();
-bool_ *mandos_tale_of_doom_spell();
+bool_ *mandos_tale_of_doom_spell(int);
 char  *mandos_tale_of_doom_info();
-bool_ *mandos_call_to_the_halls_spell();
+bool_ *mandos_call_to_the_halls_spell(int);
 char  *mandos_call_to_the_halls_info();
 
 extern s32b ULMO_BELEGAER;
@@ -1882,13 +1882,13 @@ extern s32b ULMO_DRAUGHT_ULMONAN;
 extern s32b ULMO_CALL_ULUMURI;
 extern s32b ULMO_WRATH;
 
-bool_ *ulmo_song_of_belegaer_spell();
+bool_ *ulmo_song_of_belegaer_spell(int);
 char  *ulmo_song_of_belegaer_info();
-bool_ *ulmo_draught_of_ulmonan_spell();
+bool_ *ulmo_draught_of_ulmonan_spell(int);
 char  *ulmo_draught_of_ulmonan_info();
-bool_ *ulmo_call_of_the_ulumuri_spell();
+bool_ *ulmo_call_of_the_ulumuri_spell(int);
 char  *ulmo_call_of_the_ulumuri_info();
-bool_ *ulmo_wrath_of_ulmo_spell();
+bool_ *ulmo_wrath_of_ulmo_spell(int);
 char  *ulmo_wrath_of_ulmo_info();
 
 extern s32b VARDA_LIGHT_VALINOR;
@@ -1896,13 +1896,13 @@ extern s32b VARDA_CALL_ALMAREN;
 extern s32b VARDA_EVENSTAR;
 extern s32b VARDA_STARKINDLER;
 
-bool_ *varda_light_of_valinor_spell();
+bool_ *varda_light_of_valinor_spell(int);
 char  *varda_light_of_valinor_info();
-bool_ *varda_call_of_almaren_spell();
+bool_ *varda_call_of_almaren_spell(int);
 char  *varda_call_of_almaren_info();
-bool_ *varda_evenstar_spell();
+bool_ *varda_evenstar_spell(int);
 char  *varda_evenstar_info();
-bool_ *varda_star_kindler_spell();
+bool_ *varda_star_kindler_spell(int);
 char  *varda_star_kindler_info();
 
 /* spells4.c */
@@ -1954,12 +1954,20 @@ void lua_cast_school_spell(s32b spell_idx, bool_ no_cost);
 
 void spell_description_add_line(s32b spell_idx, cptr line);
 void device_allocation_init(device_allocation *device_allocation, byte tval);
+device_allocation *device_allocation_new(byte tval);
 
 void dice_init(dice_type *dice, long base, long num, long sides);
 bool_ dice_parse(dice_type *dice, cptr s);
 void dice_parse_checked(dice_type *dice, cptr s);
 long dice_roll(dice_type *dice);
 void dice_print(dice_type *dice, char *buf);
+
+/* spells5.c */
+void school_spells_init();
+spell_type *spell_at(s32b index);
+s16b get_random_spell(s16b random_type, int lev);
+bool_ check_spell_depends(s16b spell_idx);
+int spell_get_school_idx(s16b spell_idx, int i);
 
 /* range.c */
 extern void range_init(range_type *range, s32b min, s32b max);
@@ -2341,6 +2349,7 @@ extern void theme_intro();
 
 
 /* lua_bind.c */
+extern s16b can_spell_random(s16b spell_idx);
 extern magic_power *grab_magic_power(magic_power *m_ptr, int num);
 extern bool_ get_magic_power(int *sn, magic_power *powers, int max_powers, void (*power_info)(char *p, int power), int plev, int cast_stat);
 extern bool_ lua_spell_success(magic_power *spell, int stat, char *oups_fct);
@@ -2363,8 +2372,6 @@ extern int     get_lua_list_size(cptr list_name);
 extern bool_    get_com_lua(cptr promtp, int *com);
 
 extern s16b new_school(int i, cptr name, s16b skill);
-extern s16b new_spell(int i, cptr name);
-extern spell_type *grab_spell_type(s16b num);
 extern school_type *grab_school_type(s16b num);
 extern s32b lua_get_level(s32b s, s32b lvl, s32b max, s32b min, s32b bonus);
 extern s32b get_level_device(s32b s, s32b max, s32b min);

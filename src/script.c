@@ -234,14 +234,6 @@ void init_lua_init()
 		exec_lua(format("finish_school(%d)", i));
 	}
 
-	/* Finish up the spells */
-	max = exec_lua("return __tmp_spells_num");
-	init_spells(max);
-	for (i = 0; i < max; i++)
-	{
-		exec_lua(format("finish_spell(%d)", i));
-	}
-
 	/* Finish up the corruptions */
 	init_corruptions();
 }

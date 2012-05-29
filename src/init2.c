@@ -1960,10 +1960,8 @@ static errr init_misc(void)
 	message__tail = MESSAGE_BUF;
 
 	/* Prepare schools */
-	max_spells = 0;
 	max_schools = 0;
 	schools = NULL;
-	school_spells = NULL;
 
 	process_hooks(HOOK_INIT_GAME, "(s)", "begin");
 
@@ -2065,13 +2063,6 @@ static errr init_wilderness(void)
 	generate_encounter = FALSE;
 
 	return 0;
-}
-
-void init_spells(s16b new_size)
-{
-	/* allocate the extra memory */
-	C_MAKE(school_spells, new_size, spell_type);
-	max_spells = new_size;
 }
 
 void init_schools(s16b new_size)

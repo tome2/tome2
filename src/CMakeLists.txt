@@ -10,7 +10,7 @@ SET(SRCS
   object1.c object2.c randart.c squeltch.c traps.c 
   monster1.c monster2.c monster3.c
   xtra1.c xtra2.c skills.c powers.c gods.c
-  spells1.c spells2.c spells3.c spells4.c corrupt.c mimic.c
+  spells1.c spells2.c spells3.c spells4.c spells5.c corrupt.c mimic.c
   status.c files.c notes.c loadsave.c string_list.c
   cmd1.c cmd2.c cmd3.c cmd4.c cmd5.c cmd6.c cmd7.c
   help.c range.c

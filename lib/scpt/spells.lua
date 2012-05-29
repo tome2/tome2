@@ -286,36 +286,8 @@ SCHOOL_MUSIC = add_school
 	["skill"] = SKILL_MUSIC,
 }
 
--- Put some spells
-tome_dofile("s_fire.lua")
-tome_dofile("s_mana.lua")
-tome_dofile("s_water.lua")
-tome_dofile("s_air.lua")
-tome_dofile("s_earth.lua")
-tome_dofile("s_convey.lua")
-tome_dofile("s_nature.lua")
-tome_dofile("s_divin.lua")
-tome_dofile("s_tempo.lua")
-tome_dofile("s_meta.lua")
-tome_dofile("s_mind.lua")
-tome_dofile("s_udun.lua")
-tome_dofile("s_geom.lua")
-
--- God's specific spells
-tome_dofile("s_eru.lua")
-tome_dofile("s_manwe.lua")
-tome_dofile("s_tulkas.lua")
-tome_dofile("s_melkor.lua")
-tome_dofile("s_yavann.lua")
-
--- Specific schools
-tome_dofile("s_demon.lua")
-
--- Device spells
-tome_dofile("s_stick.lua")
-
--- Musics
-tome_dofile("s_music.lua")
+-- Initialize school spells.
+school_spells_init()
 
 -- Initialize spellbooks
 init_school_books()

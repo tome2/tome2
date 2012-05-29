@@ -35,7 +35,7 @@ add_mkey
 				return
 			end
 
-			s = get_school_spell("cast", "is_ok_spell", 62);
+			s = get_school_spell("cast", 62);
 
 			-- Actualy cast the choice
 			if (s ~= -1) then
