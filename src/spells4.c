@@ -491,7 +491,7 @@ static void spell_school_name(char *buf, spell_type *spell)
 	     school_idx = sglib_school_idx_it_next(&sit))
 	{
 		int sch = school_idx->i;
-		school_type *school = grab_school_type(sch);
+		school_type *school = school_at(sch);
 		/* Add separator? */
 		if (!first)
 		{

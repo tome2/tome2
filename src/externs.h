@@ -566,8 +566,8 @@ extern s32b extra_savefile_parts;
 extern bool_ player_char_health;
 extern s16b school_spells_count;
 extern spell_type school_spells[SCHOOL_SPELLS_MAX];
-extern s16b max_schools;
-extern school_type *schools;
+extern s16b schools_count;
+extern school_type schools[SCHOOLS_MAX];
 extern int project_time;
 extern s32b project_time_effect;
 extern effect_type effects[MAX_EFFECTS];
@@ -970,7 +970,6 @@ extern errr process_dungeon_file(cptr name, int *yval, int *xval, int ymax, int 
 
 /* init2.c */
 extern void init_corruptions();
-extern void init_schools(s16b new_size);
 extern void reinit_gods(s16b new_size);
 extern void reinit_quests(s16b new_size);
 extern void create_stores_stock(int t);
@@ -1966,8 +1965,16 @@ void dice_print(dice_type *dice, char *buf);
 void school_spells_init();
 spell_type *spell_at(s32b index);
 s16b get_random_spell(s16b random_type, int lev);
-bool_ check_spell_depends(s16b spell_idx);
-int spell_get_school_idx(s16b spell_idx, int i);
+bool_ check_spell_depends(spell_type *spell);
+
+/* spells6.c */
+
+SGLIB_DEFINE_LIST_PROTOTYPES(school_provider, compare_school_provider, next);
+
+void schools_init();
+school_type *school_at(int index);
+
+void mana_school_calc_mana(int *msp);
 
 /* range.c */
 extern void range_init(range_type *range, s32b min, s32b max);
@@ -2371,9 +2378,7 @@ extern int     get_lua_list_size(cptr list_name);
 
 extern bool_    get_com_lua(cptr promtp, int *com);
 
-extern s16b new_school(int i, cptr name, s16b skill);
-extern school_type *grab_school_type(s16b num);
-extern s32b lua_get_level(s32b s, s32b lvl, s32b max, s32b min, s32b bonus);
+extern s32b lua_get_level(spell_type *spell, s32b lvl, s32b max, s32b min, s32b bonus);
 extern s32b get_level_device(s32b s, s32b max, s32b min);
 extern int get_mana(s32b s);
 extern int get_power(s32b s);

@@ -2170,78 +2170,6 @@ struct spell_type@school_spell_type
     
 };
 
-/** @struct school_type
- * @brief Spell school
- */
-struct school_type
-{
-        /** @structvar name
-         * @brief String
-         * @note Name 
-         */
-        cptr name;
-        /** @structvar skill
-         * @brief Number
-         * @note Skil used for that school 
-         */
-        s16b skill;
-};
-
-/** @fn new_school(int i, cptr name, s16b skill)
- * @dgonly
- * @brief Add school to array of schools.\n
- * @param i Number \n i is index of school array where school is added.
- * There is no range checking.
- * @brief Index
- * @param name String \n name is the name of the school.
- * @brief Name
- * @param skill Number \n skill is the skill of the school.
- * @brief Skill
- * @return Number \ The index parameter.
- * @note
- * Note: do not call this function directly.\n
- * Please use add_school() in s_aux.lua instead.\n
- * By order of DG.
- * @note (see file lua_bind.c)
- */
-extern s16b new_school(int i, cptr name, s16b skill);
-
-/** @fn school(s16b num);
- * @dgonly
- * @brief Get school "num" from array of schools.\n
- * @param num Number \n num is the index of the school.
- * There is no range checking.
- * @brief Index
- * @return school_type \n The school.
- * @note
- * Note: do not call this function directly.\n
- * By order of DG.
- * @note (see file lua_bind.c)
- */
-extern school_type *grab_school_type @ school(s16b num);
-
-/** @fn lua_get_level(s32b s, s32b lvl, s32b max, s32b min, s32b bonus)
- * @dgonly
- * @brief Get the casting level of school spell "s".\n
- * @param s Number \n s is the index of the spell in array of school spells.
- * There is no range checking.
- * @brief Spell index
- * @param lvl Number \n lvl represents the level of player skill.
- * @brief Player skill level
- * @param max Number \n max is the maximum level for the spell.
- * @brief Maximum spell level
- * @param min Number \n min is the minimum level for the spell.
- * @brief Minimum spell level
- * @param bonus Number \n bonus is any bonus to final level.
- * @brief Bonus
- * @return Number \n Casting level.
- * @note
- * Note: do not call this function directly.\n
- * By order of DG.
- * @note (see file lua_bind.c)
- */
-extern s32b lua_get_level(s32b s, s32b lvl, s32b max, s32b min, s32b bonus);
-
 /** Get level of device */
 extern s32b get_level_device(s32b s, s32b max, s32b min);
 
@@ -2344,5 +2272,8 @@ void spell_description_add_line(s32b spell_idx, cptr line);
  */
 void school_spells_init();
 s16b get_random_spell(s16b random_type, int lev);
-bool check_spell_depends(s16b spell_idx);
-int spell_get_school_idx(s16b spell_idx, int i);
+
+/**
+ * spells6.c
+ */
+void schools_init();

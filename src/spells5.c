@@ -90,41 +90,14 @@ s16b get_random_spell(s16b random_type, int level)
 	return -1;
 }
 
-bool_ check_spell_depends(s16b spell_idx)
+bool_ check_spell_depends(spell_type *spell)
 {
-	spell_type *spell = spell_at(spell_idx);
+	assert(spell != NULL);
+
 	if (spell->depend_func != NULL) {
 		return spell->depend_func();
 	} else {
 		return TRUE;
-	}
-}
-
-int spell_get_school_idx(s16b spell_idx, int idx)
-{
-	spell_type *spell = spell_at(spell_idx);
-	school_idx *school_idx = NULL;
-	struct sglib_school_idx_iterator sit;
-
-	if (idx < 0)
-	{
-		return -1;
-	}
-
-	for (school_idx = sglib_school_idx_it_init(&sit, spell->schools);
-	     school_idx != NULL && idx > 0;
-	     school_idx = sglib_school_idx_it_next(&sit))
-	{
-		/* Just counting down */
-	}
-
-	if (school_idx == NULL)
-	{
-		return -1;
-	}
-	else
-	{
-		return school_idx->i;
 	}
 }
 

@@ -1500,8 +1500,8 @@ bool_ player_char_health;
  */
 s16b school_spells_count = 0;
 spell_type school_spells[SCHOOL_SPELLS_MAX];
-s16b max_schools;
-school_type *schools;
+s16b schools_count = 0;
+school_type schools[SCHOOLS_MAX];
 
 /*
  * Lasting spell effects

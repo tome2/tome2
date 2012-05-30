@@ -226,14 +226,6 @@ void init_lua_init()
 	/* Load the first lua file */
 	tome_dofile_anywhere(ANGBAND_DIR_CORE, "init.lua", TRUE);
 
-	/* Finish up schools */
-	max = exec_lua("return __schools_num");
-	init_schools(max);
-	for (i = 0; i < max; i++)
-	{
-		exec_lua(format("finish_school(%d)", i));
-	}
-
 	/* Finish up the corruptions */
 	init_corruptions();
 }

@@ -1959,10 +1959,7 @@ static errr init_misc(void)
 	/* Hack -- No messages yet */
 	message__tail = MESSAGE_BUF;
 
-	/* Prepare schools */
-	max_schools = 0;
-	schools = NULL;
-
+	/* Initialize game */
 	process_hooks(HOOK_INIT_GAME, "(s)", "begin");
 
 	/* Initialise the values */
@@ -2063,13 +2060,6 @@ static errr init_wilderness(void)
 	generate_encounter = FALSE;
 
 	return 0;
-}
-
-void init_schools(s16b new_size)
-{
-	/* allocate the extra memory */
-	C_MAKE(schools, new_size, school_type);
-	max_schools = new_size;
 }
 
 /*

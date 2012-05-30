@@ -871,6 +871,11 @@
 #define SCHOOL_SPELLS_MAX 200
 
 /*
+ * Maximum number of spell schools
+ */
+#define SCHOOLS_MAX 50
+
+/*
  * Number of effects
  */
 #define MAX_EFFECTS             128
