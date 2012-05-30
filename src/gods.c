@@ -147,6 +147,23 @@ int wisdom_scale(int max)
 }
 
 /*
+ * Get deity info for a given god index.
+ * Returns NULL for the "atheist" god.
+ */
+deity_type *god_at(byte god_idx)
+{
+	assert(god_idx >= 0);
+	assert(god_idx < MAX_GODS);
+
+	if (god_idx == 0)
+	{
+		return NULL;
+	}
+
+	return &deity_info[god_idx];
+}
+
+/*
  * Check if god is enabled for the current module
  */
 bool_ god_enabled(struct deity_type *deity)
