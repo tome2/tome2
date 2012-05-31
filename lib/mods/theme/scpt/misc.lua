@@ -54,17 +54,6 @@ end
 
 add_hook_script(HOOK_GIVE, "drunk_takes_wine", "drunk_takes_wine")
 
--- winged races are allowed soft armor only, no cloaks (from T-Plus)
-function __hook_wings_wear(obj) 
-    local str = get_race_name() 
-    local type = obj.tval
-         if (str == "Dragon" or str == "Eagle") and (type == 35 or type == 37 or type == 38) then 
-            return TRUE, -1 
-         end        
-end 
-
-add_hook_script(HOOK_WIELD_SLOT, "__hook_wings_wear", "__hook_wings_wear") 
-
 -- A not-too-scummy way of generating junk for ammo
 function food_vessel(object)
    if ((object.tval == 80) and (object.sval == 43)) or

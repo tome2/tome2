@@ -4029,6 +4029,24 @@ s16b wield_slot_ideal(object_type *o_ptr, bool_ ideal)
 	if (process_hooks_ret(HOOK_WIELD_SLOT, "d", "(O,d)", o_ptr, ideal))
 		return process_hooks_return[0].num;
 
+	/* Theme has restrictions for winged races. */
+	if (game_module_idx == MODULE_THEME)
+	{
+		cptr race_name = rp_ptr->title + rp_name;
+
+		if (streq(race_name, "Dragon") ||
+		    streq(race_name, "Eagle"))
+		{
+			switch (o_ptr->tval)
+			{
+			case TV_CLOAK:
+			case TV_HARD_ARMOR:
+			case TV_DRAG_ARMOR:
+				return -1;
+			}
+		}
+	}
+
 	/* Slot for equipment */
 	switch (o_ptr->tval)
 	{
