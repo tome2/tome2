@@ -132,30 +132,3 @@ store_buy_list
 		TV_INSTRUMENT,
 	},
 }
-
--- Take care to have Magic shop/Temple have specific spells only
-add_hooks
-{
-	[HOOK_STORE_STOCK] = function (index, name, level)
-			if name == "Magic shop" then
-				-- Books
-				if magik(20) == TRUE then
-					object_prep(obj_forge, lookup_kind(TV_BOOK, 255))
-					local spell = get_random_spell(SKILL_MAGIC, 20)
-					if spell > -1 then
-						obj_forge.pval = spell
-						return TRUE, obj_forge
-					end
-				end
-			elseif name == "Temple" then
-				if magik(20) == TRUE then
-					object_prep(obj_forge, lookup_kind(TV_BOOK, 255))
-					local spell = get_random_spell(SKILL_SPIRITUALITY, 20)
-					if spell > -1 then
-						obj_forge.pval = spell
-						return TRUE, obj_forge
-					end
-				end
-			end
-	end,
-}

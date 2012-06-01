@@ -1164,6 +1164,38 @@ static void store_create(void)
 			q_ptr = process_hooks_return[0].o_ptr;
 		}
 
+		/* Magic Shop */
+		else if (streq(st_info[st_ptr->st_idx].name + st_name, "Magic shop") &&
+			 magik(20))
+		{
+			s16b spell;
+
+			object_prep(&forge, lookup_kind(TV_BOOK, BOOK_RANDOM));
+			spell = get_random_spell(SKILL_MAGIC, 20);
+			assert (spell > -1);
+			forge.pval = spell;
+
+			/* Use the forged object */
+			q_ptr = &forge;
+			obj_all_done = TRUE;
+		}
+
+		/* Temple */
+		else if (streq(st_info[st_ptr->st_idx].name + st_name, "Temple") &&
+			 magik(20))
+		{
+			s16b spell;
+
+			object_prep(&forge, lookup_kind(TV_BOOK, BOOK_RANDOM));
+			spell = get_random_spell(SKILL_SPIRITUALITY, 20);
+			assert(spell > -1);
+			forge.pval = spell;
+
+			/* Use the forged object */
+			q_ptr = &forge;
+			obj_all_done = TRUE;
+		}
+
 		/* Black Market */
 		else if (st_info[st_ptr->st_idx].flags1 & SF1_ALL_ITEM)
 		{
