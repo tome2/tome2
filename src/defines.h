@@ -142,15 +142,7 @@
  * Total number of stores (see "store.c", etc)
  */
 #define STORE_GENERAL   0
-#define STORE_ARMOURY   1
-#define STORE_WEAPON    2
-#define STORE_TEMPLE    3
-#define STORE_ALCHEMIST 4
-#define STORE_MAGIC     5
-#define STORE_BLACK     6
 #define STORE_HOME      7
-#define STORE_BOOK      8
-#define STORE_PET       9
 
 /*
  * Maximum number of player "sex" types (see "table.c", etc)
@@ -4505,7 +4497,6 @@
 #define HOOK_BUILDING_ACTION    44
 #define HOOK_WIELD_SLOT         46
 #define HOOK_STORE_STOCK        47
-#define HOOK_STORE_BUY          48
 #define HOOK_GEN_LEVEL_BEGIN    49
 #define HOOK_GET                50
 #define HOOK_REDRAW             51

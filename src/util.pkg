@@ -556,24 +556,6 @@ typedef unsigned int u32b;
  */
 #define HOOK_STORE_STOCK	47
 
-/** @def HOOK_STORE_BUY
- * @brief Store buys an item.\n
- * @param Number st_idx \n the index of the store in st_info array.
- * @brief Store index
- * @param String name \n the name of the store.
- * @brief Store name
- * @param Object o_ptr \n the object to buy.
- * @brief Object
- * @return Boolean \n TRUE if the hook has processed the object, otherwise
- * FALSE.
- * @return Number buy \n TRUE if the store will buy the object, otherwise
- * FALSE.
- * @note
- * If the hook returns TRUE, store_will_buy() will return "buy".
- * @note (see file store.c)
- */
-#define HOOK_STORE_BUY	  48
-
 /** @def HOOK_GEN_LEVEL_BEGIN
  * @brief Generate a random dungeon level.
  * @note (see file generate.c)

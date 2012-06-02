@@ -8,9 +8,6 @@ tome_dofile("player.lua")
 -- Load the ingame contextual help
 tome_dofile("help.lua")
 
--- let the store specific stuff happen!
-tome_dofile("stores.lua")
-
 -- Add the mkey activations
 tome_dofile("mkeys.lua")
 

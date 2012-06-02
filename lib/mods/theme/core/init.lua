@@ -20,9 +20,6 @@ tome_dofile_anywhere(ANGBAND_DIR_CORE, "dungeon.lua")
 -- Load the ingame contextual help
 tome_dofile_anywhere(ANGBAND_DIR_CORE, "help.lua")
 
--- let the store specific stuff happen!
-tome_dofile_anywhere(ANGBAND_DIR_CORE, "stores.lua")
-
 --------------------------------------------------------------
 --------------------------------------------------------------
 --------------------------------------------------------------
