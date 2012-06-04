@@ -14,7 +14,6 @@ INSTALL(DIRECTORY
   info
   mods
   note
-  plot
   pref
   save
   scpt
