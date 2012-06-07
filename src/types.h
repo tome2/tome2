@@ -2255,6 +2255,12 @@ struct power_type
 /* Hooks */
 typedef bool_ (*hook_type)(char *fmt);
 
+typedef struct hook_move_in hook_move_in;
+struct hook_move_in {
+	int y;
+	int x;
+};
+
 /*
  * Structure for the "quests"
  */
