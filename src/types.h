@@ -2363,6 +2363,8 @@ typedef struct hooks_chain hooks_chain;
 struct hooks_chain
 {
 	hook_type hook;
+	bool_ (*hook_f)(void *, void *, void *);
+	void *hook_data;
 	char name[40];
 	char script[40];
 	byte type;

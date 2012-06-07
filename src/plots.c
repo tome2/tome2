@@ -109,6 +109,14 @@ hooks_chain* add_hook(int h_idx, hook_type hook, cptr name)
 	else return (c);
 }
 
+void add_hook_new(int h_idx, bool_ (*hook_f)(void *, void *, void *), cptr name, void *data)
+{
+	hooks_chain *c = add_hook(h_idx, NULL, name);
+	c->hook_f = hook_f;
+	c->hook_data = data;
+	c->type = HOOK_TYPE_NEW;
+}
+
 void add_hook_script(int h_idx, char *script, cptr name)
 {
 	hooks_chain *c = add_hook(h_idx, NULL, name);
@@ -387,9 +395,15 @@ static bool_ vprocess_hooks_return (int h_idx, char *ret, char *fmt, va_list *ap
 				c = c->next;
 			lua_settop(L, oldtop);
 		}
+		else if (c->type == HOOK_TYPE_NEW)
+		{
+			/* Skip; handled in process_hooks_new */
+			c = c->next;
+		}
 		else
 		{
 			msg_format("Unkown hook type %d, name %s", c->type, c->name);
+			c = c->next;
 		}
 	}
 
@@ -416,6 +430,41 @@ bool_ process_hooks(int h_idx, char *fmt, ...)
 	ret = vprocess_hooks_return (h_idx, "", fmt, &ap);
 	va_end(ap);
 	return (ret);
+}
+
+bool_ process_hooks_new(int h_idx, void *in, void *out)
+{
+	hooks_chain *c = hooks_heads[h_idx];
+
+	while (c != NULL)
+	{
+		/* Only new-style hooks; skip the rest. */
+		if (c->type != HOOK_TYPE_NEW)
+		{
+			c = c->next;
+			continue;
+		}
+
+		/* Invoke hook function; stop processing if
+		   the hook returns TRUE */
+		if (c->hook_f(c->hook_data, in, out))
+		{
+			return TRUE;
+		}
+
+		/* Should we restart processing at the beginning? */
+		if (process_hooks_restart)
+		{
+			c = hooks_heads[h_idx];
+			process_hooks_restart = FALSE;
+		}
+		else
+		{
+			c = c->next;
+		}
+	}
+
+	return FALSE;
 }
 
 /******** Plots & Quest stuff ********/
