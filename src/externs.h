@@ -617,7 +617,7 @@ extern bool_ process_hooks_new(int h_idx, void *in, void *out);
 extern void initialize_bookable_spells();
 
 /* help.c */
-extern void ingame_help(bool_ enable);
+extern void init_hooks_help();
 
 /* birth.c */
 extern void print_desc_aux(cptr txt, int y, int x);

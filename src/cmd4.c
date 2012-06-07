@@ -1442,9 +1442,6 @@ void do_cmd_options(void)
 
 	/* Restore the screen */
 	screen_load();
-
-	/* Set the ingame help */
-	ingame_help(p_ptr->help.enabled);
 }
 
 

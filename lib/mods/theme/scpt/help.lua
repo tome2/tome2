@@ -9,17 +9,6 @@
 ingame_help
 {
 	["hook"] =      HOOK_MOVE,
-	["event"] =     function(y, x) if cave(y, x).feat == FEAT_BETWEEN then return TRUE end end,
-	["desc"] =
-	{
-		"Void Jumpgates can be entered by pressing the > key. They will transport",
-		"you to another jumpgate, but beware of the cold damage that might kill you.",
-	}
-}
-
-ingame_help
-{
-	["hook"] =      HOOK_MOVE,
 	["event"] =     function(y, x) if cave(y, x).feat == FEAT_FOUNTAIN then return TRUE end end,
 	["desc"] =
 	{
