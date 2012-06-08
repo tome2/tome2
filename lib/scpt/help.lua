@@ -30,28 +30,6 @@ ingame_help
 
 ingame_help
 {
-	["hook"] =      HOOK_END_TURN,
-	["event"] =     function(y, x) return TRUE end,
-	["desc"] =
-	{
-		"Welcome to ToME! I am the spirit of knowledge and my task is to help you",
-		"to get used to how to play. I have prepared a #vparchment#y for you to #vread#y.",
-		"Press r, then space then select it. You can also check the documentation",
-		"by pressing ? at (nearly) any time.",
-		"The first place you can explore is Barrow-downs. Go to the west of town",
-		"and you should see a #v>#y there.",
-		"If you miss any of this you can press ctrl+p to see your message log.",
-		"Now I must reveal your task here. You are on a quest to investigate",
-		"the dreadful tower of Dol Guldur in the Mirkwood forest to see what evil",
-		"lurks there, but beware, you are not yet ready.",
-		"If you do not want me to bother you any more with tips, press = then go",
-		"into the ToME options and deactivate the ingame_help option.",
-		"You can see your quest log by pressing ctrl+q. Now go to your destiny!",
-	}
-}
-
-ingame_help
-{
 	["no_test"] =   TRUE,
 	["callback"] =  "select_context",
 	["fct"] =       function(typ, name)

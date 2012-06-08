@@ -13,8 +13,8 @@
 
 #include "angband.h"
 
-#define DESC_MAX 10
-#define TRIGGERED_HELP_MAX 12
+#define DESC_MAX 14
+#define TRIGGERED_HELP_MAX 14
 
 #define HELP_VOID_JUMPGATE 0
 #define HELP_FOUNTAIN      1
@@ -28,6 +28,8 @@
 #define HELP_GET_TRAP_KIT  9
 #define HELP_GET_DEVICE   10
 #define HELP_WILDERNESS   11
+#define HELP_GAME_TOME    12
+#define HELP_GAME_THEME   13
 
 /**
  * Struct for help triggered by a boolean condition
@@ -110,6 +112,14 @@ static bool_ trigger_end_turn_wilderness(void *in, void *out) {
 	return (((p_ptr->wilderness_x != 34) ||
 		 (p_ptr->wilderness_y != 21)) &&
 		(!p_ptr->astral));
+}
+
+static bool_ trigger_game_theme(void *in, void *out) {
+	return (game_module_idx == MODULE_THEME);
+}
+
+static bool_ trigger_game_tome(void *in, void *out) {
+	return (game_module_idx == MODULE_TOME);
 }
 
 /**
@@ -218,6 +228,44 @@ static triggered_help_type triggered_help[TRIGGERED_HELP_MAX] =
 	    "fast, but that comes to the cost of GREATLY increased food consumption.",
 	    "So you should bring lots of food and really watch your hunger status.",
 	    "To enter the overview mode, press < while in the wilderness.",
+	    NULL
+	  }
+	},
+	{ HELP_GAME_TOME,
+	  HOOK_END_TURN,
+	  trigger_game_tome,
+	  { "Welcome to ToME! I am the spirit of knowledge and my task is to help you",
+	    "to get used to how to play. I have prepared a #vparchment#y for you to #vread#y.",
+	    "Press r, then space then select it. You can also check the documentation",
+	    "by pressing ? at (nearly) any time.",
+	    "The first place you can explore is Barrow-downs. Go to the west of town",
+	    "and you should see a #v>#y there.",
+	    "If you miss any of this you can press ctrl+p to see your message log.",
+	    "Now I must reveal your task here. You are on a quest to investigate",
+	    "the dreadful tower of Dol Guldur in the Mirkwood forest to see what evil",
+	    "lurks there, but beware, you are not yet ready.",
+	    "If you do not want me to bother you any more with tips, press = then go",
+	    "into the ToME options and deactivate the ingame_help option.",
+	    "You can see your quest log by pressing ctrl+q. Now go to your destiny!",
+	    NULL
+	  }
+	},
+	{ HELP_GAME_THEME,
+	  HOOK_END_TURN,
+	  trigger_game_theme,
+	  { "Welcome to Theme! I am the spirit of knowledge and my task is to help you",
+	    "to get used to how to play. I have prepared a #vparchment#y for you to #vread#y.",
+	    "Press r, then space then select it. You can also check the documentation",
+	    "by pressing ? at (nearly) any time.",
+	    "The first place you can explore is Barrow-downs. Go to the west of town",
+	    "and you should see a #v>#y there.",
+	    "If you miss any of this you can press ctrl+p to see your message log.",
+	    "Now I must reveal your task here. You are on a quest to investigate",
+	    "the dreadful tower of Dol Guldur in the Mirkwood forest to see what evil",
+	    "lurks there, but beware, you are not yet ready.",
+	    "If you do not want me to bother you any more with tips, press = then go",
+	    "into the ToME options and deactivate the ingame_help option.",
+	    "You can see your quest log by pressing ctrl+q. Now go to your destiny!",
 	    NULL
 	  }
 	}
