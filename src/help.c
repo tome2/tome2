@@ -14,7 +14,7 @@
 #include "angband.h"
 
 #define DESC_MAX 10
-#define TRIGGERED_HELP_MAX 8
+#define TRIGGERED_HELP_MAX 9
 
 #define HELP_VOID_JUMPGATE 0
 #define HELP_FOUNTAIN      1
@@ -24,6 +24,7 @@
 #define HELP_GET_ESSENCE   5
 #define HELP_GET_RUNE      6
 #define HELP_GET_ROD       7
+#define HELP_GET_ROD_TIP   8
 
 /**
  * Struct for help triggered by a boolean condition
@@ -84,6 +85,11 @@ static bool_ trigger_get_rune(void *in, void *out) {
 static bool_ trigger_get_rod(void *in, void *out) {
 	hook_get_in *g = (hook_get_in *) in;
 	return (g->o_ptr->tval == TV_ROD_MAIN);
+}
+
+static bool_ trigger_get_rod_tip(void *in, void *out) {
+	hook_get_in *g = (hook_get_in *) in;
+	return (g->o_ptr->tval == TV_ROD);
 }
 
 /**
@@ -152,6 +158,16 @@ static triggered_help_type triggered_help[TRIGGERED_HELP_MAX] =
 	  { "This is a rod. You will need to attach a rod tip to it before you",
 	    "can use it. This main part of the rod may give the rod bonuses",
 	    "like quicker charging time, or a larger capacity for charges.",
+	    NULL
+	  }
+	},
+	{ HELP_GET_ROD_TIP,
+	  HOOK_GET,
+	  trigger_get_rod_tip,
+	  { "You've found a rod-tip! You will need to attach it to a rod base",
+	    "before you can use it. Once it has been attatched (use the 'z' key)",
+	    "you cannot unattach it! The rod tip will determine the effect of",
+	    "the rod. To use your rod, 'z'ap it once it has been assembled.",
 	    NULL
 	  }
 	}

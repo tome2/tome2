@@ -257,19 +257,6 @@ ingame_help
 ingame_help
 {
 	["hook"] =      HOOK_GET,
-	["event"] =     function(obj, idx) if obj.tval == TV_ROD then return TRUE end end,
-	["desc"] =
-	{
-		"You've found a rod-tip! You will need to attach it to a rod base",
-		"before you can use it. Once it has been attatched (use the 'z' key)",
-		"you cannot unattach it! The rod tip will determine the effect of",
-		"the rod. To use your rod, 'z'ap it once it has been assembled.",
-	}
-}
-
-ingame_help
-{
-	["hook"] =      HOOK_GET,
 	["event"] =     function(obj, idx) if obj.tval == TV_TRAPKIT then return TRUE end end,
 	["desc"] =
 	{
