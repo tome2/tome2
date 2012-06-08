@@ -290,19 +290,6 @@ ingame_help
 
 ingame_help
 {
-	["hook"] =      HOOK_GET,
-	["event"] =     function(obj, idx) if obj.tval == TV_TRAPKIT then return TRUE end end,
-	["desc"] =
-	{
-		"Ooooh, a trapping kit. If you have ability in the trapping skill,",
-		"you can lay this trap (via the 'm' key) to harm unsuspecting foes.",
-		"You'll generally need either some ammo or magic device depending",
-		"on the exact type of trap kit.",
-	}
-}
-
-ingame_help
-{
 	["hook"] =      HOOK_RECALC_SKILLS,
 	["event"] =     function() if game.started and (get_melee_skills() > 1) then return TRUE end end,
 	["desc"] =

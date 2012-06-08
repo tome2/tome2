@@ -14,7 +14,7 @@
 #include "angband.h"
 
 #define DESC_MAX 10
-#define TRIGGERED_HELP_MAX 9
+#define TRIGGERED_HELP_MAX 10
 
 #define HELP_VOID_JUMPGATE 0
 #define HELP_FOUNTAIN      1
@@ -25,6 +25,7 @@
 #define HELP_GET_RUNE      6
 #define HELP_GET_ROD       7
 #define HELP_GET_ROD_TIP   8
+#define HELP_GET_TRAP_KIT  9
 
 /**
  * Struct for help triggered by a boolean condition
@@ -90,6 +91,11 @@ static bool_ trigger_get_rod(void *in, void *out) {
 static bool_ trigger_get_rod_tip(void *in, void *out) {
 	hook_get_in *g = (hook_get_in *) in;
 	return (g->o_ptr->tval == TV_ROD);
+}
+
+static bool_ trigger_get_trap_kit(void *in, void *out) {
+	hook_get_in *g = (hook_get_in *) in;
+	return (g->o_ptr->tval == TV_TRAPKIT);
 }
 
 /**
@@ -168,6 +174,16 @@ static triggered_help_type triggered_help[TRIGGERED_HELP_MAX] =
 	    "before you can use it. Once it has been attatched (use the 'z' key)",
 	    "you cannot unattach it! The rod tip will determine the effect of",
 	    "the rod. To use your rod, 'z'ap it once it has been assembled.",
+	    NULL
+	  }
+	},
+	{ HELP_GET_TRAP_KIT,
+	  HOOK_GET,
+	  trigger_get_trap_kit,
+	  { "Ooooh, a trapping kit. If you have ability in the trapping skill,",
+	    "you can lay this trap (via the 'm' key) to harm unsuspecting foes.",
+	    "You'll generally need either some ammo or magic device depending",
+	    "on the exact type of trap kit.",
 	    NULL
 	  }
 	}
