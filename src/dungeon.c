@@ -5321,6 +5321,11 @@ static void dungeon(void)
 		/* Process the appropriate hooks */
 		process_hooks(HOOK_END_TURN, "(d)", is_quest(dun_level));
 
+		{
+			hook_end_turn_in in = { is_quest(dun_level) };
+			process_hooks_new(HOOK_END_TURN, &in, NULL);
+		}
+
 		/* Make it pulsate and live !!!! */
 		if ((dungeon_flags1 & DF1_EVOLVE) && dun_level)
 		{

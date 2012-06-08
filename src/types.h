@@ -2266,6 +2266,11 @@ struct hook_get_in {
 	int o_idx;
 };
 
+typedef struct hook_end_turn_in hook_end_turn_in;
+struct hook_end_turn_in {
+	bool_ is_quest;
+};
+
 /*
  * Structure for the "quests"
  */
