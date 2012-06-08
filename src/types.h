@@ -2260,6 +2260,12 @@ struct hook_move_in {
 	int x;
 };
 
+typedef struct hook_get_in hook_get_in;
+struct hook_get_in {
+	object_type *o_ptr;
+	int o_idx;
+};
+
 /*
  * Structure for the "quests"
  */

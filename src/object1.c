@@ -6193,6 +6193,15 @@ void object_pickup(int this_o_idx)
 		if (process_hooks(HOOK_GET, "(O,d)", o_ptr, this_o_idx))
 			return;
 
+		/* Hooks */
+		{
+			hook_get_in in = { o_ptr, this_o_idx };
+			if (process_hooks_new(HOOK_GET, &in, NULL))
+			{
+				return;
+			}
+		}
+
 		q_ptr = &p_ptr->inventory[INVEN_AMMO];
 
 		/* Carry the item */
