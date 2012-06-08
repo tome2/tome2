@@ -14,13 +14,14 @@
 #include "angband.h"
 
 #define DESC_MAX 10
-#define TRIGGERED_HELP_MAX 5
+#define TRIGGERED_HELP_MAX 6
 
 #define HELP_VOID_JUMPGATE 0
 #define HELP_FOUNTAIN      1
 #define HELP_FOUND_OBJECT  2
 #define HELP_FOUND_ALTAR   3
 #define HELP_FOUND_STAIR   4
+#define HELP_GET_ESSENCE   5
 
 /**
  * Struct for help triggered by a boolean condition
@@ -67,6 +68,11 @@ static bool_ trigger_found_stairs(void *in, void *out) {
 	return (cave[p->y][p->x].feat == FEAT_MORE);
 }
 
+static bool_ trigger_get_essence(void *in, void *out) {
+	hook_get_in *g = (hook_get_in *) in;
+	return (g->o_ptr->tval == TV_BATERIE);
+}
+
 /**
  * Trigger-based help items
  */
@@ -110,6 +116,13 @@ static triggered_help_type triggered_help[TRIGGERED_HELP_MAX] =
 	  trigger_found_stairs,
 	  { "Ah, this is a stair, or a way into something. Press > to enter it.",
 	    "But be ready to fight what lies within, for it might not be too friendly.",
+	    NULL }
+	},
+	{ HELP_GET_ESSENCE,
+	  HOOK_GET,
+	  trigger_get_essence,
+	  { "Ah, an essence! Those magical containers stores energies. They are used",
+	    "with the Alchemy skill to create or modify the powers of items.",
 	    NULL }
 	}
 };

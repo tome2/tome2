@@ -257,17 +257,6 @@ ingame_help
 ingame_help
 {
 	["hook"] =      HOOK_GET,
-	["event"] =     function(obj, idx) if obj.tval == TV_BATERIE then return TRUE end end,
-	["desc"] =
-	{
-		"Ah, an essence! Those magical containers stores energies. They are used",
-		"with the Alchemy skill to create or modify the powers of items.",
-	}
-}
-
-ingame_help
-{
-	["hook"] =      HOOK_GET,
 	["event"] =     function(obj, idx) if obj.tval == TV_RUNE1 or obj.tval == TV_RUNE2 then return TRUE end end,
 	["desc"] =
 	{
