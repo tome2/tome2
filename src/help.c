@@ -14,7 +14,7 @@
 #include "angband.h"
 
 #define DESC_MAX 14
-#define TRIGGERED_HELP_MAX 14
+#define TRIGGERED_HELP_MAX 16
 
 #define HELP_VOID_JUMPGATE 0
 #define HELP_FOUNTAIN      1
@@ -30,6 +30,8 @@
 #define HELP_WILDERNESS   11
 #define HELP_GAME_TOME    12
 #define HELP_GAME_THEME   13
+#define HELP_1ST_LEVEL    14
+#define HELP_20TH_LEVEL   15
 
 /**
  * Struct for help triggered by a boolean condition
@@ -120,6 +122,14 @@ static bool_ trigger_game_theme(void *in, void *out) {
 
 static bool_ trigger_game_tome(void *in, void *out) {
 	return (game_module_idx == MODULE_TOME);
+}
+
+static bool_ trigger_1st_level(void *in, void *out) {
+	return (p_ptr->lev > 1);
+}
+
+static bool_ trigger_20th_level(void *in, void *out) {
+	return (p_ptr->lev >= 20);
 }
 
 /**
@@ -266,6 +276,24 @@ static triggered_help_type triggered_help[TRIGGERED_HELP_MAX] =
 	    "If you do not want me to bother you any more with tips, press = then go",
 	    "into the ToME options and deactivate the ingame_help option.",
 	    "You can see your quest log by pressing ctrl+q. Now go to your destiny!",
+	    NULL
+	  }
+	},
+	{ HELP_1ST_LEVEL,
+	  HOOK_PLAYER_LEVEL,
+	  trigger_1st_level,
+	  { "Ok, so you now gained a level, and you have skill points to spend.",
+	    "To do so simply press G to learn skills. Reading the documentation",
+	    "about skills and abilities is also strongly recommended.",
+	    NULL
+	  }
+	},
+	{ HELP_20TH_LEVEL,
+	  HOOK_PLAYER_LEVEL,
+	  trigger_20th_level,
+	  { "I see you are now at least level 20. Nice! If you want to gloat about your",
+	    "character you could press 'C' then 'f' to make a character dump and post it to",
+	    "http://angband.oook.cz/ where it will end up in the ladder.",
 	    NULL
 	  }
 	}

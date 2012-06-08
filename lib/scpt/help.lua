@@ -8,18 +8,6 @@
 
 ingame_help
 {
-	["hook"] =      HOOK_PLAYER_LEVEL,
-	["event"] =     function(y, x) if player.lev > 1 then return TRUE end end,
-	["desc"] =
-	{
-		"Ok, so you now gained a level, and you have skill points to spend.",
-		"To do so simply press G to learn skills. Reading the documentation",
-		"about skills and abilities is also strongly recommended.",
-	}
-}
-
-ingame_help
-{
 	["callback"] =  "monster_chat",
 	["desc"] =
 	{
@@ -224,17 +212,5 @@ ingame_help
 	{
 		"Ah, you now possess more than one melee type. To switch between them press m",
 		"and select the switch melee type option.",
-	}
-}
-
-ingame_help
-{
-	["hook"] =      HOOK_PLAYER_LEVEL,
-	["event"] =     function(y, x) if player.lev >= 20 then return TRUE end end,
-	["desc"] =
-	{
-		"I see you are now at least level 20. Nice! If you want to gloat about your",
-		"character you could press 'C' then 'f' to make a character dump and post it to",
-		"http://angband.oook.cz/ where it will end up in the ladder.",
 	}
 }
