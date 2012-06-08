@@ -14,10 +14,11 @@
 #include "angband.h"
 
 #define DESC_MAX 10
-#define TRIGGERED_HELP_MAX 2
+#define TRIGGERED_HELP_MAX 3
 
 #define HELP_VOID_JUMPGATE 0
 #define HELP_FOUNTAIN      1
+#define HELP_FOUND_OBJECT  2
 
 /**
  * Struct for help triggered by a boolean condition
@@ -48,6 +49,11 @@ static bool_ trigger_fountain(void *in, void *out) {
 	return cave[p->y][p->x].feat == FEAT_FOUNTAIN;
 }
 
+static bool_ trigger_found_object(void *in, void *out) {
+	hook_move_in *p = (hook_move_in *) in;
+	return cave[p->y][p->x].o_idx != 0;
+}
+
 /**
  * Trigger-based help items
  */
@@ -65,6 +71,16 @@ static triggered_help_type triggered_help[TRIGGERED_HELP_MAX] =
 	  trigger_fountain,
 	  { "Fountains are always magical. You can quaff from them by pressing H.",
 	    "Beware that unlike potions they cannot be identified.",
+	    NULL }
+	},
+	{ HELP_FOUND_OBJECT,
+	  HOOK_MOVE,
+	  trigger_found_object,
+	  { "So you found your first item! Nice, eh? Now when you stumble across",
+	    "objects, you can pick them up by pressing g, and if you are wondering",
+	    "what they do, press I (then *, then the letter for the item) to get",
+	    "some basic information. You may also want to identify them with scrolls,",
+	    "staves, rods or spells.",
 	    NULL }
 	}
 };

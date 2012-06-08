@@ -9,20 +9,6 @@
 ingame_help
 {
 	["hook"] =      HOOK_MOVE,
-	["event"] =     function(y, x) if cave(y, x).o_idx ~= 0 then return TRUE end end,
-	["desc"] =
-	{
-		"So you found your first item! Nice, eh? Now when you stumble across",
-		"objects, you can pick them up by pressing g, and if you are wondering",
-		"what they do, press I (then *, then the letter for the item) to get",
-		"some basic information. You may also want to identify them with scrolls,",
-		"staves, rods or spells.",
-	}
-}
-
-ingame_help
-{
-	["hook"] =      HOOK_MOVE,
 	["event"] =     function(y, x) if (cave(y, x).feat >= FEAT_ALTAR_HEAD) and (cave(y, x).feat <= FEAT_ALTAR_TAIL) then return TRUE end end,
 	["desc"] =
 	{
