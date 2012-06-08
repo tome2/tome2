@@ -36,17 +36,6 @@ ingame_help
 
 ingame_help
 {
-	["hook"] =      HOOK_MOVE,
-	["event"] =     function(y, x) if cave(y, x).feat == FEAT_MORE then return TRUE end end,
-	["desc"] =
-	{
-		"Ah, this is a stair, or a way into something. Press > to enter it.",
-		"But be ready to fight what lies within, for it might not be too friendly.",
-	}
-}
-
-ingame_help
-{
 	["callback"] =  "monster_chat",
 	["desc"] =
 	{

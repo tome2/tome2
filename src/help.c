@@ -14,12 +14,13 @@
 #include "angband.h"
 
 #define DESC_MAX 10
-#define TRIGGERED_HELP_MAX 4
+#define TRIGGERED_HELP_MAX 5
 
 #define HELP_VOID_JUMPGATE 0
 #define HELP_FOUNTAIN      1
 #define HELP_FOUND_OBJECT  2
 #define HELP_FOUND_ALTAR   3
+#define HELP_FOUND_STAIR   4
 
 /**
  * Struct for help triggered by a boolean condition
@@ -61,6 +62,11 @@ static bool_ trigger_found_altar(void *in, void *out) {
 		(cave[p->y][p->x].feat <= FEAT_ALTAR_TAIL));
 }
 
+static bool_ trigger_found_stairs(void *in, void *out) {
+	hook_move_in *p = (hook_move_in *) in;
+	return (cave[p->y][p->x].feat == FEAT_MORE);
+}
+
 /**
  * Trigger-based help items
  */
@@ -97,6 +103,13 @@ static triggered_help_type triggered_help[TRIGGERED_HELP_MAX] =
 	    "usualy called Gods. You can press O to become a follower.",
 	    "Beware that once you follow a god, you are not allowed to change.",
 	    "For an exact description of what gods do and want, read the documentation.",
+	    NULL }
+	},
+	{ HELP_FOUND_STAIR,
+	  HOOK_MOVE,
+	  trigger_found_stairs,
+	  { "Ah, this is a stair, or a way into something. Press > to enter it.",
+	    "But be ready to fight what lies within, for it might not be too friendly.",
 	    NULL }
 	}
 };
