@@ -6,22 +6,6 @@
 -------------------------------------------------------------------------------
 -------------------------------------------------------------------------------
 
--- Beware this one, if Bree is moved from 21, 34 (y, x) on the wilderness map it will break
-ingame_help
-{
-	["hook"] =      HOOK_END_TURN,
-	["event"] =     function(y, x)
-		if ((player.wilderness_x ~= 34) or (player.wilderness_y ~= 21) and (player.astral == FALSE)) then return TRUE end
-	end,
-	["desc"] =
-	{
-		"Ahh wilderness travel... The overview mode will allow you to travel",
-		"fast, but that comes to the cost of GREATLY increased food consumption.",
-		"So you should bring lots of food and really watch your hunger status.",
-		"To enter the overview mode, press < while in the wilderness.",
-	}
-}
-
 ingame_help
 {
 	["hook"] =      HOOK_PLAYER_LEVEL,

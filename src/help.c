@@ -14,7 +14,7 @@
 #include "angband.h"
 
 #define DESC_MAX 10
-#define TRIGGERED_HELP_MAX 11
+#define TRIGGERED_HELP_MAX 12
 
 #define HELP_VOID_JUMPGATE 0
 #define HELP_FOUNTAIN      1
@@ -27,6 +27,7 @@
 #define HELP_GET_ROD_TIP   8
 #define HELP_GET_TRAP_KIT  9
 #define HELP_GET_DEVICE   10
+#define HELP_WILDERNESS   11
 
 /**
  * Struct for help triggered by a boolean condition
@@ -103,6 +104,12 @@ static bool_ trigger_get_magic_device(void *in, void *out) {
 	hook_get_in *g = (hook_get_in *) in;
 	return ((g->o_ptr->tval == TV_WAND) ||
 		(g->o_ptr->tval == TV_STAFF));
+}
+
+static bool_ trigger_end_turn_wilderness(void *in, void *out) {
+	return (((p_ptr->wilderness_x != 34) ||
+		 (p_ptr->wilderness_y != 21)) &&
+		(!p_ptr->astral));
 }
 
 /**
@@ -201,6 +208,16 @@ static triggered_help_type triggered_help[TRIGGERED_HELP_MAX] =
 	    "contains a spell, often from one of the primary magic schools. There",
 	    "is a lot of information you can find about this object if you identify",
 	    "it and 'I'nspect it. Check the help file on Magic for more about these.",
+	    NULL
+	  }
+	},
+	{ HELP_WILDERNESS,
+	  HOOK_END_TURN,
+	  trigger_end_turn_wilderness,
+	  { "Ahh wilderness travel... The overview mode will allow you to travel",
+	    "fast, but that comes to the cost of GREATLY increased food consumption.",
+	    "So you should bring lots of food and really watch your hunger status.",
+	    "To enter the overview mode, press < while in the wilderness.",
 	    NULL
 	  }
 	}
