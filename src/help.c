@@ -14,11 +14,12 @@
 #include "angband.h"
 
 #define DESC_MAX 10
-#define TRIGGERED_HELP_MAX 3
+#define TRIGGERED_HELP_MAX 4
 
 #define HELP_VOID_JUMPGATE 0
 #define HELP_FOUNTAIN      1
 #define HELP_FOUND_OBJECT  2
+#define HELP_FOUND_ALTAR   3
 
 /**
  * Struct for help triggered by a boolean condition
@@ -54,6 +55,12 @@ static bool_ trigger_found_object(void *in, void *out) {
 	return cave[p->y][p->x].o_idx != 0;
 }
 
+static bool_ trigger_found_altar(void *in, void *out) {
+	hook_move_in *p = (hook_move_in *) in;
+	return ((cave[p->y][p->x].feat >= FEAT_ALTAR_HEAD) &&
+		(cave[p->y][p->x].feat <= FEAT_ALTAR_TAIL));
+}
+
 /**
  * Trigger-based help items
  */
@@ -81,6 +88,15 @@ static triggered_help_type triggered_help[TRIGGERED_HELP_MAX] =
 	    "what they do, press I (then *, then the letter for the item) to get",
 	    "some basic information. You may also want to identify them with scrolls,",
 	    "staves, rods or spells.",
+	    NULL }
+	},
+	{ HELP_FOUND_ALTAR,
+	  HOOK_MOVE,
+	  trigger_found_altar,
+	  { "Altars are the way to reach the Valar, powers of the world,",
+	    "usualy called Gods. You can press O to become a follower.",
+	    "Beware that once you follow a god, you are not allowed to change.",
+	    "For an exact description of what gods do and want, read the documentation.",
 	    NULL }
 	}
 };

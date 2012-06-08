@@ -6,19 +6,6 @@
 -------------------------------------------------------------------------------
 -------------------------------------------------------------------------------
 
-ingame_help
-{
-	["hook"] =      HOOK_MOVE,
-	["event"] =     function(y, x) if (cave(y, x).feat >= FEAT_ALTAR_HEAD) and (cave(y, x).feat <= FEAT_ALTAR_TAIL) then return TRUE end end,
-	["desc"] =
-	{
-		"Altars are the way to reach the Valar, powers of the world,",
-		"usualy called Gods. You can press O to become a follower.",
-		"Beware that once you follow a god, you are not allowed to change.",
-		"For an exact description of what gods do and want, read the documentation."
-	}
-}
-
 -- Beware this one, if Bree is moved from 21, 34 (y, x) on the wilderness map it will break
 ingame_help
 {
