@@ -14,7 +14,7 @@
 #include "angband.h"
 
 #define DESC_MAX 10
-#define TRIGGERED_HELP_MAX 6
+#define TRIGGERED_HELP_MAX 7
 
 #define HELP_VOID_JUMPGATE 0
 #define HELP_FOUNTAIN      1
@@ -22,6 +22,7 @@
 #define HELP_FOUND_ALTAR   3
 #define HELP_FOUND_STAIR   4
 #define HELP_GET_ESSENCE   5
+#define HELP_GET_RUNE      6
 
 /**
  * Struct for help triggered by a boolean condition
@@ -71,6 +72,12 @@ static bool_ trigger_found_stairs(void *in, void *out) {
 static bool_ trigger_get_essence(void *in, void *out) {
 	hook_get_in *g = (hook_get_in *) in;
 	return (g->o_ptr->tval == TV_BATERIE);
+}
+
+static bool_ trigger_get_rune(void *in, void *out) {
+	hook_get_in *g = (hook_get_in *) in;
+	return ((g->o_ptr->tval == TV_RUNE1) ||
+		(g->o_ptr->tval == TV_RUNE2));
 }
 
 /**
@@ -124,6 +131,14 @@ static triggered_help_type triggered_help[TRIGGERED_HELP_MAX] =
 	  { "Ah, an essence! Those magical containers stores energies. They are used",
 	    "with the Alchemy skill to create or modify the powers of items.",
 	    NULL }
+	},
+	{ HELP_GET_RUNE,
+	  HOOK_GET,
+	  trigger_get_rune,
+	  { "Ah, a rune! Runes are used with the Runecraft skill to allow you to",
+	    "create spells on your own.",
+	    NULL
+	  }
 	}
 };
 

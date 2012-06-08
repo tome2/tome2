@@ -257,17 +257,6 @@ ingame_help
 ingame_help
 {
 	["hook"] =      HOOK_GET,
-	["event"] =     function(obj, idx) if obj.tval == TV_RUNE1 or obj.tval == TV_RUNE2 then return TRUE end end,
-	["desc"] =
-	{
-		"Ah, a rune! Runes are used with the Runecraft skill to allow you to",
-		"create spells on your own.",
-	}
-}
-
-ingame_help
-{
-	["hook"] =      HOOK_GET,
 	["event"] =     function(obj, idx) if obj.tval == TV_ROD_MAIN then return TRUE end end,
 	["desc"] =
 	{
