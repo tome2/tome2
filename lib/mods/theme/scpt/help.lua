@@ -301,19 +301,6 @@ ingame_help
 
 ingame_help
 {
-	["hook"] =      HOOK_GET,
-	["event"] =     function(obj, idx) if obj.tval == TV_WAND or obj.tval == TV_STAFF then return TRUE end end,
-	["desc"] =
-	{
-		"You've found a magical device, either a staff or a wand. Each staff",
-		"contains a spell, often from one of the primary magic schools. There",
-		"is a lot of information you can find about this object if you identify",
-		"it and 'I'nspect it. Check the help file on Magic for more about these.",
-	}
-}
-
-ingame_help
-{
 	["hook"] =      HOOK_PLAYER_LEVEL,
 	["event"] =     function(y, x) if player.lev >= 20 then return TRUE end end,
 	["desc"] =

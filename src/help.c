@@ -14,7 +14,7 @@
 #include "angband.h"
 
 #define DESC_MAX 10
-#define TRIGGERED_HELP_MAX 10
+#define TRIGGERED_HELP_MAX 11
 
 #define HELP_VOID_JUMPGATE 0
 #define HELP_FOUNTAIN      1
@@ -26,6 +26,7 @@
 #define HELP_GET_ROD       7
 #define HELP_GET_ROD_TIP   8
 #define HELP_GET_TRAP_KIT  9
+#define HELP_GET_DEVICE   10
 
 /**
  * Struct for help triggered by a boolean condition
@@ -96,6 +97,12 @@ static bool_ trigger_get_rod_tip(void *in, void *out) {
 static bool_ trigger_get_trap_kit(void *in, void *out) {
 	hook_get_in *g = (hook_get_in *) in;
 	return (g->o_ptr->tval == TV_TRAPKIT);
+}
+
+static bool_ trigger_get_magic_device(void *in, void *out) {
+	hook_get_in *g = (hook_get_in *) in;
+	return ((g->o_ptr->tval == TV_WAND) ||
+		(g->o_ptr->tval == TV_STAFF));
 }
 
 /**
@@ -184,6 +191,16 @@ static triggered_help_type triggered_help[TRIGGERED_HELP_MAX] =
 	    "you can lay this trap (via the 'm' key) to harm unsuspecting foes.",
 	    "You'll generally need either some ammo or magic device depending",
 	    "on the exact type of trap kit.",
+	    NULL
+	  }
+	},
+	{ HELP_GET_DEVICE,
+	  HOOK_GET,
+	  trigger_get_magic_device,
+	  { "You've found a magical device, either a staff or a wand. Each staff",
+	    "contains a spell, often from one of the primary magic schools. There",
+	    "is a lot of information you can find about this object if you identify",
+	    "it and 'I'nspect it. Check the help file on Magic for more about these.",
 	    NULL
 	  }
 	}
