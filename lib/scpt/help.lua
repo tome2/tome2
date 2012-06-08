@@ -257,18 +257,6 @@ ingame_help
 ingame_help
 {
 	["hook"] =      HOOK_GET,
-	["event"] =     function(obj, idx) if obj.tval == TV_ROD_MAIN then return TRUE end end,
-	["desc"] =
-	{
-		"This is a rod. You will need to attach a rod tip to it before you",
-		"can use it. This main part of the rod may give the rod bonuses",
-		"like quicker charging time, or a larger capacity for charges.",
-	}
-}
-
-ingame_help
-{
-	["hook"] =      HOOK_GET,
 	["event"] =     function(obj, idx) if obj.tval == TV_ROD then return TRUE end end,
 	["desc"] =
 	{

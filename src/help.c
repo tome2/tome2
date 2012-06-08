@@ -14,7 +14,7 @@
 #include "angband.h"
 
 #define DESC_MAX 10
-#define TRIGGERED_HELP_MAX 7
+#define TRIGGERED_HELP_MAX 8
 
 #define HELP_VOID_JUMPGATE 0
 #define HELP_FOUNTAIN      1
@@ -23,6 +23,7 @@
 #define HELP_FOUND_STAIR   4
 #define HELP_GET_ESSENCE   5
 #define HELP_GET_RUNE      6
+#define HELP_GET_ROD       7
 
 /**
  * Struct for help triggered by a boolean condition
@@ -78,6 +79,11 @@ static bool_ trigger_get_rune(void *in, void *out) {
 	hook_get_in *g = (hook_get_in *) in;
 	return ((g->o_ptr->tval == TV_RUNE1) ||
 		(g->o_ptr->tval == TV_RUNE2));
+}
+
+static bool_ trigger_get_rod(void *in, void *out) {
+	hook_get_in *g = (hook_get_in *) in;
+	return (g->o_ptr->tval == TV_ROD_MAIN);
 }
 
 /**
@@ -137,6 +143,15 @@ static triggered_help_type triggered_help[TRIGGERED_HELP_MAX] =
 	  trigger_get_rune,
 	  { "Ah, a rune! Runes are used with the Runecraft skill to allow you to",
 	    "create spells on your own.",
+	    NULL
+	  }
+	},
+	{ HELP_GET_ROD,
+	  HOOK_GET,
+	  trigger_get_rod,
+	  { "This is a rod. You will need to attach a rod tip to it before you",
+	    "can use it. This main part of the rod may give the rod bonuses",
+	    "like quicker charging time, or a larger capacity for charges.",
 	    NULL
 	  }
 	}
