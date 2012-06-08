@@ -1415,9 +1415,8 @@ struct meta_class_type
 typedef struct help_info help_info;
 struct help_info
 {
-	bool_ enabled;           /* ingame help enabled */
-
-	u32b help1;             /* help flags 1 */
+	bool_ enabled;              /* ingame help enabled */
+	bool_ activated[HELP_MAX];  /* help item #i activated? */
 };
 
 

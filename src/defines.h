@@ -4538,11 +4538,7 @@
 /*
  * In game help
  */
-#define HELP1_BETWEEN           0x00000001
-#define HELP1_ALTAR             0x00000002
-#define HELP1_FOUNTAIN          0x00000004
-#define HELP1_IDENTIFY          0x00000008
-#define HELP1_WILD_MODE         0x00000010
+#define HELP_MAX 64
 
 /*
  * Special weapon effects

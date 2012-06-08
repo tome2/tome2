@@ -7,6 +7,7 @@
 #include "angband.h"
 
 static void do_byte(byte *, int);
+static void do_bool(bool_ *, int);
 static void do_u16b(u16b *, int);
 static void do_s16b(s16b *, int);
 static void do_u32b(u32b *, int);
@@ -482,7 +483,10 @@ static bool_ do_extra(int flag)
 		p_ptr->max_plv = p_ptr->lev;
 
 	do_byte((byte*)&(p_ptr->help.enabled), flag);
-	do_u32b(&(p_ptr->help.help1), flag);
+	for (i = 0; i < HELP_MAX; i++)
+	{
+		do_bool(&(p_ptr->help.activated[i]), flag);
+	}
 
 	/* More info */
 	tmp16s = 0;
