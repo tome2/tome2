@@ -2271,6 +2271,11 @@ struct hook_end_turn_in {
 	bool_ is_quest;
 };
 
+typedef struct hook_player_level_in hook_player_level_in;
+struct hook_player_level_in {
+	int gained_levels;
+};
+
 /*
  * Structure for the "quests"
  */
