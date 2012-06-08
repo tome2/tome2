@@ -14,9 +14,10 @@
 #include "angband.h"
 
 #define DESC_MAX 10
-#define TRIGGERED_HELP_MAX 1
+#define TRIGGERED_HELP_MAX 2
 
 #define HELP_VOID_JUMPGATE 0
+#define HELP_FOUNTAIN      1
 
 /**
  * Struct for help triggered by a boolean condition
@@ -42,6 +43,11 @@ static bool_ trigger_void_jumpgate(void *in, void *out) {
 	return cave[p->y][p->x].feat == FEAT_BETWEEN;
 }
 
+static bool_ trigger_fountain(void *in, void *out) {
+	hook_move_in *p = (hook_move_in *) in;
+	return cave[p->y][p->x].feat == FEAT_FOUNTAIN;
+}
+
 /**
  * Trigger-based help items
  */
@@ -52,6 +58,13 @@ static triggered_help_type triggered_help[TRIGGERED_HELP_MAX] =
 	  trigger_void_jumpgate,
 	  { "Void Jumpgates can be entered by pressing the > key. They will transport",
 	    "you to another jumpgate, but beware of the cold damage that might kill you.",
+	    NULL }
+	},
+	{ HELP_FOUNTAIN,
+	  HOOK_MOVE,
+	  trigger_fountain,
+	  { "Fountains are always magical. You can quaff from them by pressing H.",
+	    "Beware that unlike potions they cannot be identified.",
 	    NULL }
 	}
 };

@@ -9,17 +9,6 @@
 ingame_help
 {
 	["hook"] =      HOOK_MOVE,
-	["event"] =     function(y, x) if cave(y, x).feat == FEAT_FOUNTAIN then return TRUE end end,
-	["desc"] =
-	{
-		"Fountains are always magical. You can quaff from them by pressing H.",
-		"Beware that unlike potions they cannot be identified.",
-	}
-}
-
-ingame_help
-{
-	["hook"] =      HOOK_MOVE,
 	["event"] =     function(y, x) if cave(y, x).o_idx ~= 0 then return TRUE end end,
 	["desc"] =
 	{
