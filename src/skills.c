@@ -375,6 +375,7 @@ void recalc_skills(bool_ init)
 		}
 
 		process_hooks(HOOK_RECALC_SKILLS, "()");
+		process_hooks_new(HOOK_RECALC_SKILLS, NULL, NULL);
 
 		/* Update stuffs */
 		p_ptr->update |= (PU_BONUS | PU_HP | PU_MANA | PU_SPELLS | PU_POWERS |
