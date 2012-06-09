@@ -24,18 +24,6 @@ ingame_help
 			-- list of files for classes, { filename, anchor }
 			local t =
 			{
-				["subrace"] =
-				{
-					["Barbarian"] = { "rm_barb.txt", 0 },
-					["Classical"] = { "rm_class.txt", 0 },
-					["Corrupted"] = { "rm_corru.txt", 0 },
-					["Hermit"] = { "rm_herm.txt", 0 },
-					["LostSoul"] = { "rm_lsoul.txt", 0 },
-					["Skeleton"] = { "rm_skel.txt", 0 },
-					["Spectre"] = { "rm_spec.txt", 0 },
-					["Vampire"] = { "rm_vamp.txt", 0 },
-					["Zombie"] = { "rm_zomb.txt", 0 },
-				},
 				["class"] =
 				{
 					["Alchemist"] = { "c_alchem.txt", 0 },

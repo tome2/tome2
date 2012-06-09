@@ -24,34 +24,6 @@ ingame_help
 			-- list of files for classes, { filename, anchor }
 			local t =
 			{
-				["subrace"] =
-				{
-					["Barbarian"] = { "rm_barb.txt", 0 },
-					["Classical"] = { "rm_class.txt", 0 },
-					["Corrupted"] = { "rm_corru.txt", 0 },
-					["Hermit"] = { "rm_herm.txt", 0 },
-					["LostSoul"] = { "rm_lsoul.txt", 0 },
-					["Skeleton"] = { "rm_skel.txt", 0 },
-					["Spectre"] = { "rm_spec.txt", 0 },
-					["Vampire"] = { "rm_vamp.txt", 0 },
-					["Zombie"] = { "rm_zomb.txt", 0 },
-					["Red"] = {"rm_red.txt", 0 },
-					["Black"] = {"rm_black.txt", 0 },
-					["Green"] = {"rm_green.txt", 0 },
-					["Blue"] = {"rm_blue.txt", 0 },
-					["White"] = {"rm_white.txt", 0 },
-					["Ethereal"] = {"rm_ether.txt", 0 },
-					["(Narrog)"] = {"rm_narrog.txt", 0 },
-					["(Aewrog)"] = {"rm_aewrog.txt", 0 },
-					["(Hurog)"] = {"rm_hurog.txt", 0 },
-					["(Sarnrog)"] = {"rm_sarnrog.txt", 0 },
-					["(Caborrog)"] = {"rm_cabrog.txt", 0 },
-					["(Draugrog)"] = {"rm_drarog.txt", 0 },
-					["(Lygrog)"] = {"rm_lygrog.txt", 0 },
-					["(Limrog)"] = {"rm_limrog.txt", 0 },
-					["(Rawrog)"] = {"rm_rawrog.txt", 0 },
-					["(Adanrog)"] = {"rm_adanrog.txt", 0 },
-				},
 				["class"] =
 				{
 					["Archer"] = { "c_archer.txt", 0 },

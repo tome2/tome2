@@ -2050,7 +2050,10 @@ static bool_ player_birth_aux_ask()
 						while (!(BIT(racem[k]) & rmp_ptr->choice[racem[k] / 32]));
 						break;
 					}
-					else if (c == '?') exec_lua(format("ingame_help('select_context', 'subrace', '%s')", race_mod_info[racem[sel]].title + rmp_name));
+					else if (c == '?')
+					{
+						help_subrace(race_mod_info[racem[sel]].title + rmp_name);
+					}
 
 					k = (islower(c) ? A2I(c) : -1);
 					if ((k >= 0) && (k < max_racem) &&

@@ -619,6 +619,7 @@ extern void initialize_bookable_spells();
 /* help.c */
 extern void init_hooks_help();
 extern void help_race(cptr race);
+extern void help_subrace(cptr subrace);
 
 /* birth.c */
 extern void print_desc_aux(cptr txt, int y, int x);
