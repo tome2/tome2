@@ -610,6 +610,7 @@
 #define MKEY_COMPANION          22
 #define MKEY_PIERCING           23
 #define MKEY_DEATH_TOUCH        100
+#define MKEY_GEOMANCY           101
 
 
 /*** Screen Locations ***/

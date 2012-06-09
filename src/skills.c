@@ -1074,6 +1074,34 @@ void do_cmd_activate_skill()
 		}
 		break;
 	}
+	case MKEY_GEOMANCY:
+	{
+		s32b s = -1;
+		object_type *o_ptr = NULL;
+
+		/* No magic */
+		if (p_ptr->antimagic > 0)
+		{
+			msg_print("Your anti-magic field disrupts any magic attempts.");
+			break;
+		}
+
+		o_ptr = get_object(INVEN_WIELD);
+		if ((o_ptr->k_idx <= 0) ||
+		    (o_ptr->tval != TV_MSTAFF))
+		{
+			msg_print("You must wield a magestaff to use Geomancy.");
+			break;
+		}
+
+		s = get_school_spell("cast", BOOK_GEOMANCY);
+		if (s >= 0)
+		{
+			lua_cast_school_spell(s, FALSE);
+		}
+
+		break;
+	}
 	default:
 		process_hooks(HOOK_MKEY, "(d)", x_idx);
 		break;

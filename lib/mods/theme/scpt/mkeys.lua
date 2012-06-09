@@ -1,33 +1,5 @@
 -- Mkeys for skills & abilities
 
--- Geomancy skill
-add_mkey
-{
-	["mkey"] 	= 101,
-	["fct"] 	= function()
-			local s
-
-			-- No magic
-			if (player.antimagic > 0) then
-				msg_print("Your anti-magic field disrupts any magic attempts.")
-				return
-			end
-
-			local obj = get_object(INVEN_WIELD)
-			if (obj.k_idx <= 0) or (obj.tval ~= TV_MSTAFF) then
-				msg_print('You must wield a magestaff to use Geomancy.')
-				return
-			end
-
-			s = get_school_spell("cast", 62);
-
-			-- Actualy cast the choice
-			if (s ~= -1) then
-				cast_school_spell(s)
-			end
-	end,
-}
-
 -- Far reaching attack of polearms
 add_mkey
 {
