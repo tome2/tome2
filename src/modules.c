@@ -543,6 +543,27 @@ static bool_ drunk_takes_wine(void *data, void *in_, void *out)
 	}
 }
 
+static bool_ hobbit_food(void *data, void *in_, void *out)
+{
+	hook_give_in *in = (hook_give_in *) in_;
+	monster_type *m_ptr = &m_list[in->m_idx];
+	object_type *o_ptr = get_object(in->item);
+
+	if ((m_ptr->r_idx == test_monster_name("Scruffy-looking hobbit")) &&
+	    (o_ptr->tval == TV_FOOD))
+	{
+		cmsg_print(TERM_YELLOW, "'Yum!'");
+
+		inc_stack_size_ex(in->item, -1, OPTIMIZE, NO_DESCRIBE);
+
+		return TRUE;
+	}
+	else
+	{
+		return FALSE;
+	}
+}
+
 void init_hooks_module()
 {
 	/*
@@ -568,6 +589,11 @@ void init_hooks_module()
 		add_hook_new(HOOK_PLAYER_LEVEL,
 			     auto_stat_gain_hook,
 			     "auto_stat_gain",
+			     NULL);
+
+		add_hook_new(HOOK_GIVE,
+			     hobbit_food,
+			     "hobbit_food",
 			     NULL);
 
 		break;

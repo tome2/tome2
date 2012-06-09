@@ -22,25 +22,6 @@ function longbottom_leaf(object)
 end
 add_hook_script(HOOK_EAT, "longbottom_leaf", "longbottom_leaf")
 
--- Hobbits like food
-function hobbit_food(m_idx, item)
-
-	m_ptr = monster(m_idx)
-	o_ptr = get_object(item)
-
-	if (m_ptr.r_idx == test_monster_name("Scruffy-looking hobbit")) 
-	and (o_ptr.tval == TV_FOOD) then
-		cmsg_print(TERM_YELLOW, "'Yum!'")
-		inven_item_increase(item, -1)
-		inven_item_optimize(item)
-		return TRUE
-	else
-		return FALSE
-	end
-end
-
-add_hook_script(HOOK_GIVE, "hobbit_food", "hobbit_food")
-
 -- Smeagol likes rings
 function smeagol_ring(m_idx, item)
 
