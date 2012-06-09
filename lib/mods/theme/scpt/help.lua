@@ -218,14 +218,3 @@ ingame_help
 			end
 	end,
 }
-
-ingame_help
-{
-	["hook"] =      HOOK_RECALC_SKILLS,
-	["event"] =     function() if game.started and (get_melee_skills() > 1) then return TRUE end end,
-	["desc"] =
-	{
-		"Ah, you now possess more than one melee type. To switch between them press m",
-		"and select the switch melee type option.",
-	}
-}

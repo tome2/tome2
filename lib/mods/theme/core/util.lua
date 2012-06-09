@@ -118,12 +118,3 @@ end
 function msg_format(...)
 	msg_print(call(format, arg))
 end
-
--- A way to  check if the game is now running(as opposed to initialization/character gen)
-game = {}
-add_hooks
-{
-	[HOOK_GAME_START] = function ()
-		game.started = TRUE
-	end
-}

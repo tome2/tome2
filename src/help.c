@@ -14,7 +14,7 @@
 #include "angband.h"
 
 #define DESC_MAX 14
-#define TRIGGERED_HELP_MAX 17
+#define TRIGGERED_HELP_MAX 18
 
 #define HELP_VOID_JUMPGATE 0
 #define HELP_FOUNTAIN      1
@@ -33,6 +33,12 @@
 #define HELP_1ST_LEVEL    14
 #define HELP_20TH_LEVEL   15
 #define HELP_ID_SPELL_ITM 16
+#define HELP_MELEE_SKILLS 17
+
+/**
+ * Game started?
+ */
+static bool_ game_started = FALSE;
 
 /**
  * Struct for help triggered by a boolean condition
@@ -146,6 +152,10 @@ static bool_ trigger_identify_spell_item(void *in_, void *out) {
 		}
 	}
 	return FALSE;
+}
+
+static bool_ trigger_melee_skills(void *in, void *out) {
+	return (game_started && (get_melee_skills() > 1));
 }
 
 /**
@@ -322,6 +332,14 @@ static triggered_help_type triggered_help[TRIGGERED_HELP_MAX] =
 	    "is permanent; the spell cannot be removed or changed later.",
 	    NULL
 	  }
+	},
+	{ HELP_MELEE_SKILLS,
+	  HOOK_RECALC_SKILLS,
+	  trigger_melee_skills,
+	  { "Ah, you now possess more than one melee type. To switch between them press m",
+	    "and select the switch melee type option.",
+	    NULL
+	  }
 	}
 };
 
@@ -345,6 +363,12 @@ static bool_ triggered_help_hook(void *data, void *in, void *out)
 		}
 	}
 	/* Don't stop processing */
+	return FALSE;
+}
+
+static bool_ hook_game_start(void *data, void *in, void *out)
+{
+	game_started = TRUE;
 	return FALSE;
 }
 
@@ -373,6 +397,11 @@ static void setup_triggered_help_hooks()
 	{
 		setup_triggered_help_hook(i);
 	}
+
+	add_hook_new(HOOK_GAME_START,
+		     hook_game_start,
+		     "help_game_start",
+		     NULL);
 }
 
 /*
