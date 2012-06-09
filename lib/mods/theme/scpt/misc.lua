@@ -22,27 +22,6 @@ function longbottom_leaf(object)
 end
 add_hook_script(HOOK_EAT, "longbottom_leaf", "longbottom_leaf")
 
--- Smeagol likes rings
-function smeagol_ring(m_idx, item)
-
-   m_ptr = monster(m_idx)
-   o_ptr = get_object(item)
-
-   if (m_ptr.r_idx == test_monster_name("Smeagol"))
-         and (o_ptr.tval == TV_RING) then
-
-      cmsg_print(TERM_YELLOW, "'MY... PRECIOUSSSSS!!!'")
-
-      inven_item_increase(item, -1)
-      inven_item_optimize(item)
-      return TRUE
-   else
-      return FALSE
-   end
-end
-
-add_hook_script(HOOK_GIVE, "smeagol_ring", "smeagol_ring") 
-
 -- functions to check for Map and Key of Thror before proceeding in Erebor
 -- Thank you, Massimiliano Marangio :-)
 add_hooks
