@@ -282,6 +282,25 @@ context_help_type skill_table[] =
 };
 
 /**
+ * Ability help files
+ */
+context_help_type ability_table[] =
+{
+	{ "Spread blows",        "ability.txt",  2 },
+	{ "Tree walking",        "ability.txt",  3 },
+	{ "Perfect casting",     "ability.txt",  4 },
+	{ "Extra Max Blow(1)",   "ability.txt",  5 },
+	{ "Extra Max Blow(2)",   "ability.txt",  6 },
+	{ "Ammo creation",       "ability.txt",  7 },
+	{ "Touch of death",      "ability.txt",  8 },
+	{ "Artifact Creation",   "ability.txt",  9 },
+	{ "Far reaching attack", "ability.txt", 10 },
+	{ "Trapping",            "ability.txt", 11 },
+	{ "Undead Form",         "ability.txt", 12 },
+	{ NULL,                  NULL,           0 },
+};
+
+/**
  * Trigger functions
  */
 static bool_ trigger_void_jumpgate(void *in, void *out) {
@@ -706,4 +725,9 @@ void help_god(cptr god)
 void help_skill(cptr skill)
 {
 	show_context_help(find_context_help(skill_table, skill));
+}
+
+void help_ability(cptr ability)
+{
+	show_context_help(find_context_help(ability_table, ability));
 }

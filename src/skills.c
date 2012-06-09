@@ -1611,8 +1611,10 @@ if (ab_info[i].name)
 			if (wizard && (c == '-')) ab_info[table[sel]].acquired = FALSE;
 
 			/* Contextual help */
-			if (c == '?') exec_lua(format("ingame_help('select_context', 'ability', '%s')", ab_info[table[sel]].name + ab_name));
-			;
+			if (c == '?')
+			{
+				help_ability(ab_info[table[sel]].name + ab_name);
+			}
 
 			/* Handle boundaries and scrolling */
 			if (sel < 0) sel = max - 1;

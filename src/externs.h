@@ -623,6 +623,7 @@ extern void help_subrace(cptr subrace);
 extern void help_class(cptr klass);
 extern void help_god(cptr god);
 extern void help_skill(cptr skill);
+extern void help_ability(cptr ability);
 
 /* birth.c */
 extern void print_desc_aux(cptr txt, int y, int x);
