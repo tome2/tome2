@@ -14,7 +14,7 @@
 #include "angband.h"
 
 #define DESC_MAX 14
-#define TRIGGERED_HELP_MAX 16
+#define TRIGGERED_HELP_MAX 17
 
 #define HELP_VOID_JUMPGATE 0
 #define HELP_FOUNTAIN      1
@@ -32,6 +32,7 @@
 #define HELP_GAME_THEME   13
 #define HELP_1ST_LEVEL    14
 #define HELP_20TH_LEVEL   15
+#define HELP_ID_SPELL_ITM 16
 
 /**
  * Struct for help triggered by a boolean condition
@@ -130,6 +131,21 @@ static bool_ trigger_1st_level(void *in, void *out) {
 
 static bool_ trigger_20th_level(void *in, void *out) {
 	return (p_ptr->lev >= 20);
+}
+
+static bool_ trigger_identify_spell_item(void *in_, void *out) {
+	hook_identify_in *in = (hook_identify_in *) in_;
+
+	if (in->mode == IDENT_FULL)
+	{
+		u32b f1, f2, f3, f4, f5, esp;
+		object_flags(in->o_ptr, &f1, &f2, &f3, &f4, &f5, &esp);
+		if (f5 & TR5_SPELL_CONTAIN)
+		{
+			return TRUE;
+		}
+	}
+	return FALSE;
 }
 
 /**
@@ -294,6 +310,16 @@ static triggered_help_type triggered_help[TRIGGERED_HELP_MAX] =
 	  { "I see you are now at least level 20. Nice! If you want to gloat about your",
 	    "character you could press 'C' then 'f' to make a character dump and post it to",
 	    "http://angband.oook.cz/ where it will end up in the ladder.",
+	    NULL
+	  }
+	},
+	{ HELP_ID_SPELL_ITM,
+	  HOOK_IDENTIFY,
+	  trigger_identify_spell_item,
+	  { "Ah, an item that can contain a spell. To use it you must have some levels of",
+	    "Magic skill and then you get the option to copy a spell when pressing m.",
+	    "Then just select which spell to copy and to which object. Note that doing so",
+	    "is permanent; the spell cannot be removed or changed later.",
 	    NULL
 	  }
 	}

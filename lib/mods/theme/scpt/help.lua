@@ -221,25 +221,6 @@ ingame_help
 
 ingame_help
 {
-	["hook"] =      HOOK_IDENTIFY,
-	["event"] =     function(i, mode)
-				if mode == "full" then
-					local obj = get_object(i)
-					local f1, f2, f3, f4, f5, esp = object_flags(obj)
-					if band(f5, TR5_SPELL_CONTAIN) ~= 0 then return TRUE end
-				end
-			end,
-	["desc"] =
-	{
-		"Ah, an item that can contain a spell. To use it you must have some levels of",
-		"Magic skill and then you get the option to copy a spell when pressing m.",
-		"Then just select which spell to copy and to which object. Note that doing so",
-		"is permanent; the spell cannot be removed or changed later.",
-	}
-}
-
-ingame_help
-{
 	["hook"] =      HOOK_RECALC_SKILLS,
 	["event"] =     function() if game.started and (get_melee_skills() > 1) then return TRUE end end,
 	["desc"] =
