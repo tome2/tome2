@@ -611,6 +611,7 @@
 #define MKEY_PIERCING           23
 #define MKEY_DEATH_TOUCH        100
 #define MKEY_GEOMANCY           101
+#define MKEY_REACH_ATTACK       102
 
 
 /*** Screen Locations ***/
@@ -4486,7 +4487,6 @@
 #define HOOK_KEYPRESS           31
 #define HOOK_CHAT               32
 #define HOOK_MON_SPEAK          33
-#define HOOK_MKEY               34
 #define HOOK_BIRTH_OBJECTS      35
 #define HOOK_ACTIVATE_DESC      36
 #define HOOK_INIT_GAME          37

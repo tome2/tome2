@@ -5,9 +5,6 @@
 -- Load the class specific stuff
 tome_dofile("player.lua")
 
--- Add the mkey activations
-tome_dofile("mkeys.lua")
-
 -- Add the schools of magic
 schools_init()
 school_spells_init()

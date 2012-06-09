@@ -1102,8 +1102,50 @@ void do_cmd_activate_skill()
 
 		break;
 	}
+	case MKEY_REACH_ATTACK:
+	{
+		object_type *o_ptr = NULL;
+		int dir, dy, dx, targetx, targety, max_blows, flags;
+
+		o_ptr = get_object(INVEN_WIELD);
+		if (o_ptr->tval == TV_POLEARM)
+		{
+			msg_print("You will need a long polearm for this!");
+			return;
+		}
+
+		if (!get_rep_dir(&dir))
+		{
+			return;
+		}
+
+		dy = ddy[dir];
+		dx = ddx[dir];
+		dy = dy * 2;
+		dx = dx * 2;
+		targety = p_ptr->py + dy;
+		targetx = p_ptr->px + dx;
+
+		max_blows = get_skill_scale(SKILL_POLEARM, p_ptr->num_blow / 2);
+		if (max_blows == 0)
+		{
+			max_blows = 1;
+		}
+
+		energy_use = energy_use + 200;
+
+		flags = PROJECT_BEAM | PROJECT_KILL;
+		if (get_skill(SKILL_POLEARM) < 40)
+		{
+			flags |= PROJECT_STOP;
+		}
+
+		project(0, 0, targety, targetx,
+			max_blows, GF_ATTACK, flags);
+
+		break;
+	}
 	default:
-		process_hooks(HOOK_MKEY, "(d)", x_idx);
 		break;
 	}
 }

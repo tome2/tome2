@@ -426,14 +426,6 @@ typedef unsigned int u32b;
  */
 #define HOOK_MON_SPEAK	  33
 
-/** @def HOOK_MKEY
- * @brief Player uses skill.\n
- * @param Number x_idx \n the skill to execute.
- * @brief Skill index
- * @note (see file skills.c)
- */
-#define HOOK_MKEY	       34
-
 /** @def HOOK_BIRTH_OBJECTS
  * @brief Player receives objects at birth.
  * @note (see file birth.c)

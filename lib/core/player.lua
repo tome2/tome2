@@ -56,32 +56,6 @@ function player.get_wild_coord()
 end
 
 
---- Mkeys
-
--- Create a new power
-__mkey_fct = {}
-function add_mkey(p)
-	local i
-
-	assert(p.mkey, "No mkey mkey!")
-	assert(p.fct, "No mkeey fct!")
-
-	__mkey_fct[p.mkey] = p.fct
-end
-
-function __mkey_fct_activate(power)
-	if __mkey_fct[power] then
-		__mkey_fct[power]()
-		return TRUE
-	else
-		return FALSE
-	end
-end
-
--- Register in the hook list
-add_hook_script(HOOK_MKEY, "__mkey_fct_activate", "__mkey_fct_activate")
-
-
 -- Subraces
 function subrace(racem)
 	return race_mod_info[racem + 1]
