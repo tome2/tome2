@@ -553,8 +553,10 @@ void do_cmd_skill()
 			if (wizard && (c == '-')) skill_bonus[table[sel][0]] -= SKILL_STEP;
 
 			/* Contextual help */
-			if (c == '?') exec_lua(format("ingame_help('select_context', 'skill', '%s')", s_info[table[sel][0]].name + s_name));
-			;
+			if (c == '?')
+			{
+				help_skill(s_info[table[sel][0]].name + s_name);
+			}
 
 			/* Handle boundaries and scrolling */
 			if (sel < 0) sel = max - 1;

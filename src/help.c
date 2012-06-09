@@ -219,6 +219,69 @@ context_help_type god_table[] =
 };
 
 /**
+ * Skill help files
+ */
+context_help_type skill_table[] =
+{
+	{ "Air",                 "skills.txt", 27 },
+	{ "Alchemy",             "skills.txt", 49 },
+	{ "Antimagic",           "skills.txt", 50 },
+	{ "Archery",             "skills.txt",  8 },
+	{ "Axe-mastery",         "skills.txt",  5 },
+	{ "Backstab",            "skills.txt", 18 },
+	{ "Barehand-combat",     "skills.txt", 13 },
+	{ "Boomerang-mastery",   "skills.txt", 12 },
+	{ "Boulder-throwing",    "skills.txt", 58 },
+	{ "Bow-mastery",         "skills.txt", 10 },
+	{ "Combat",              "skills.txt",  1 },
+	{ "Conveyance",          "skills.txt", 30 },
+	{ "Corpse-preservation", "skills.txt", 44 },
+	{ "Critical-hits",       "skills.txt",  4 },
+	{ "Crossbow-mastery",    "skills.txt", 11 },
+	{ "Demonology",          "skills.txt", 52 },
+	{ "Disarming",           "skills.txt", 16 },
+	{ "Divination",          "skills.txt", 31 },
+	{ "Dodging",             "skills.txt", 20 },
+	{ "Druidistic",          "skills.txt", 40 },
+	{ "Earth",               "skills.txt", 28 },
+	{ "Fire",                "skills.txt", 25 },
+	{ "Geomancy",            "skills.txt", 60 },
+	{ "Hafted-mastery",      "skills.txt",  6 },
+	{ "Magic",               "skills.txt", 21 },
+	{ "Magic-Device",        "skills.txt", 54 },
+	{ "Mana",                "skills.txt", 24 },
+	{ "Meta",                "skills.txt", 29 },
+	{ "Mimicry",             "skills.txt", 47 },
+	{ "Mind",                "skills.txt", 33 },
+	{ "Mindcraft",           "skills.txt", 41 },
+	{ "Monster-lore",        "skills.txt", 42 },
+	{ "Music",               "skills.txt", 59 },
+	{ "Nature",              "skills.txt", 34 },
+	{ "Necromancy",          "skills.txt", 35 },
+	{ "Polearm-mastery",     "skills.txt",  7 },
+	{ "Possession",          "skills.txt", 45 },
+	{ "Prayer",              "skills.txt", 39 },
+	{ "Runecraft",           "skills.txt", 36 },
+	{ "Sling-mastery",       "skills.txt",  9 },
+	{ "Sneakiness",          "skills.txt", 14 },
+	{ "Spell-power",         "skills.txt", 22 },
+	{ "Spirituality",        "skills.txt", 38 },
+	{ "Sorcery",             "skills.txt", 23 },
+	{ "Stealing",            "skills.txt", 19 },
+	{ "Stealth",             "skills.txt", 15 },
+	{ "Stunning-blows",      "skills.txt", 53 },
+	{ "Summoning",           "skills.txt", 43 },
+	{ "Sword-mastery",       "skills.txt",  3 },
+	{ "Symbiosis",           "skills.txt", 46 },
+	{ "Temporal",            "skills.txt", 32 },
+	{ "Thaumaturgy",         "skills.txt", 37 },
+	{ "Udun",                "skills.txt", 48 },
+	{ "Weaponmastery",       "skills.txt",  2 },
+	{ "Water",               "skills.txt", 26 },
+	{ NULL,                  NULL,          0 },
+};
+
+/**
  * Trigger functions
  */
 static bool_ trigger_void_jumpgate(void *in, void *out) {
@@ -638,4 +701,9 @@ void help_god(cptr god)
 	{
 		show_context_help(context_help);
 	}
+}
+
+void help_skill(cptr skill)
+{
+	show_context_help(find_context_help(skill_table, skill));
 }
