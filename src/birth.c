@@ -2196,7 +2196,10 @@ static bool_ player_birth_aux_ask()
 				}
 				k = (islower(c) ? A2I(c) : (D2I(c) + 26));
 				if ((k >= 0) && (k < n)) break;
-				if (c == '?') exec_lua(format("ingame_help('select_context', 'class', '%s')", class_info[class_types[sel]].title + c_name));
+				if (c == '?')
+				{
+					help_class(class_info[class_types[sel]].title + c_name);
+				}
 				else if (c == '=')
 				{
 					screen_save();
@@ -2275,7 +2278,10 @@ static bool_ player_birth_aux_ask()
 				}
 				k = (islower(c) ? A2I(c) : (D2I(c) + 26));
 				if ((k >= 0) && (k < n)) break;
-				if (c == '?') exec_lua(format("ingame_help('select_context', 'class', '%s')", class_info[p_ptr->pclass].spec[sel].title + c_name));
+				if (c == '?')
+				{
+					help_class(class_info[p_ptr->pclass].spec[sel].title + c_name);
+				}
 				else if (c == '=')
 				{
 					screen_save();

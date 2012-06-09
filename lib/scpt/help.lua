@@ -24,42 +24,6 @@ ingame_help
 			-- list of files for classes, { filename, anchor }
 			local t =
 			{
-				["class"] =
-				{
-					["Alchemist"] = { "c_alchem.txt", 0 },
-					["Archer"] = { "c_archer.txt", 0 },
-					["Assassin"] = { "c_assass.txt", 0 },
-					["Axemaster"] = { "c_axemas.txt", 0 },
-					["Bard"] = { "c_bard.txt", 0 },
-					["Dark-Priest"] = { "c_pr_drk.txt", 0 },
-					["Demonologist"] = { "c_demono.txt", 0 },
-					["Druid"] = { "c_druid.txt", 0 },
-					["Geomancer"] = { "c_geoman.txt", 0 },
-					["Haftedmaster"] = { "c_hafted.txt", 0 },
-					["Loremaster"] = { "c_lorema.txt", 0 },
-					["Mage"] = { "c_mage.txt", 0 },
-					["Mimic"] = { "c_mimic.txt", 0 },
-					["Mindcrafter"] = { "c_mindcr.txt", 0 },
-					["Monk"] = { "c_monk.txt", 0 },
-					["Necromancer"] = { "c_necro.txt", 0 },
-					["Paladin"] = { "c_palad.txt", 0 },
-					["Polearmmaster"] = { "c_polear.txt", 0 },
-					["Possessor"] = { "c_posses.txt", 0 },
-					["Priest"] = { "c_priest.txt", 0 },
-					["Priest(Eru)"] = { "c_pr_eru.txt", 0 },
-					["Priest(Manwe)"] = { "c_pr_man.txt", 0 },
-					["Ranger"] = { "c_ranger.txt", 0 },
-					["Rogue"] = { "c_rogue.txt", 0 },
-					["Runecrafter"] = { "c_runecr.txt", 0 },
-					["Sorceror"] = { "c_sorcer.txt", 0 },
-					["Summoner"] = { "c_summon.txt", 0 },
-					["Swordmaster"] = { "c_swordm.txt", 0 },
-					["Symbiant"] = { "c_symbia.txt", 0 },
-					["Thaumaturgist"] = { "c_thaum.txt", 0 },
-					["Unbeliever"] = { "c_unbel.txt", 0 },
-					["Warper"] = { "c_warper.txt", 0 },
-					["Warrior"] = { "c_warrio.txt", 0 },
-				},
 				["god"] =
 				{
 					["Eru Iluvatar"] = { "g_eru.txt", 0 },
