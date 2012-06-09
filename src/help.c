@@ -199,6 +199,26 @@ context_help_type class_table[] =
 };
 
 /**
+ * God help files
+ */
+context_help_type god_table[] =
+{
+	/* ToME */
+	{ "Eru Iluvatar",      "g_eru.txt",    0 },
+	{ "Manwe Sulimo",      "g_manwe.txt",  0 },
+	{ "Tulkas",            "g_tulkas.txt", 0 },
+	{ "Melkor Bauglir",    "g_melkor.txt", 0 },
+	{ "Yavanna Kementari", "g_yavann.txt", 0 },
+	/* Theme */
+	{ "Aule the Smith",    "g_aule.txt",   0 },
+	{ "Mandos",            "g_mandos.txt", 0 },
+	{ "Ulmo",              "g_ulmo.txt",   0 },
+	{ "Varda Elentari",    "g_varda.txt",  0 },
+	/* End of list */
+	{ NULL,                NULL,           0 },
+};
+
+/**
  * Trigger functions
  */
 static bool_ trigger_void_jumpgate(void *in, void *out) {
@@ -607,4 +627,15 @@ void help_subrace(cptr subrace)
 void help_class(cptr klass)
 {
 	show_context_help(find_context_help(class_table, klass));
+}
+
+void help_god(cptr god)
+{
+	context_help_type *context_help =
+		find_context_help(god_table, god);
+
+	if (context_help != NULL)
+	{
+		show_context_help(context_help);
+	}
 }

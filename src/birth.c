@@ -2398,7 +2398,10 @@ static bool_ player_birth_aux_ask()
 					k = choice[k];
 					break;
 				}
-				if (c == '?') exec_lua(format("ingame_help('select_context', 'god', '%s')", deity_info[choice[sel]].name));
+				if (c == '?')
+				{
+					help_god(deity_info[choice[sel]].name);
+				}
 				else if (c == '=')
 				{
 					screen_save();

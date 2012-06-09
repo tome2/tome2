@@ -24,14 +24,6 @@ ingame_help
 			-- list of files for classes, { filename, anchor }
 			local t =
 			{
-				["god"] =
-				{
-					["Eru Iluvatar"] = { "g_eru.txt", 0 },
-					["Manwe Sulimo"] = { "g_manwe.txt", 0 },
-					["Tulkas"] = { "g_tulkas.txt", 0 },
-					["Melkor Bauglir"] = { "g_melkor.txt", 0 },
-					["Yavanna Kementari"] = { "g_yavann.txt", 0 },  
-				},
 				["skill"] =
 				{
 					["Air"] = { "skills.txt", 27 },
