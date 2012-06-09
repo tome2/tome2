@@ -1924,7 +1924,10 @@ static bool_ player_birth_aux_ask()
 				}
 				k = (islower(c) ? A2I(c) : -1);
 				if ((k >= 0) && (k < n)) break;
-				if (c == '?') exec_lua(format("ingame_help('select_context', 'race', '%s')", race_info[sel].title + rp_name));
+				if (c == '?')
+				{
+					help_race(race_info[sel].title + rp_name);
+				}
 				else if (c == '=')
 				{
 					screen_save();

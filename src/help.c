@@ -57,6 +57,55 @@ struct triggered_help_type
 };
 
 /**
+ * Struct for context-sensitive help
+ */
+typedef struct context_help_type context_help_type;
+struct context_help_type
+{
+	cptr key;       /* Lookup key */
+	cptr file_name; /* Name of help file */
+	int anchor;     /* Anchor in file */
+};
+
+/**
+ * Race help files.
+ */
+context_help_type race_table[] =
+{
+	/* ToME */
+	{ "Beorning",    "r_beorn.txt",   0 },
+	{ "DeathMold",   "r_deathm.txt",  0 },
+	{ "Dark-Elf",    "r_drkelf.txt",  0 },
+	{ "Dunadan",     "r_dunad.txt",   0 },
+	{ "Dwarf",       "r_dwarf.txt",   0 },
+	{ "Elf",         "r_elf.txt",     0 },
+	{ "Ent",         "r_ent.txt",     0 },
+	{ "Gnome",       "r_gnome.txt",   0 },
+	{ "Half-Elf",    "r_hafelf.txt",  0 },
+	{ "Half-Ogre",   "r_hafogr.txt",  0 },
+	{ "High-Elf",    "r_hielf.txt",   0 },
+	{ "Hobbit",      "r_hobbit.txt",  0 },
+	{ "Human",       "r_human.txt",   0 },
+	{ "Kobold",      "r_kobold.txt",  0 },
+	{ "Maia",        "r_maia.txt",    0 },
+	{ "Orc",         "r_orc.txt",     0 },
+	{ "Petty-Dwarf", "r_pettyd.txt",  0 },
+	{ "RohanKnight", "r_rohank.txt",  0 },
+	{ "Thunderlord", "r_thlord.txt",  0 },
+	{ "Troll",       "r_troll.txt",   0 },
+	{ "Wood-Elf",    "r_wodelf.txt",  0 },
+	{ "Yeek",        "r_yeek.txt",    0 },
+	/* Theme */
+	{ "Dragon",      "r_dragon.txt",  0 },
+	{ "Druadan",     "r_druadan.txt", 0 },
+	{ "Eagle",       "r_eagle.txt",   0 },
+	{ "Easterling",  "r_easterl.txt", 0 },
+	{ "Demon",       "r_demon.txt",   0 },
+	/* End of list */
+	{ NULL,          NULL,            0 },
+};
+
+/**
  * Trigger functions
  */
 static bool_ trigger_void_jumpgate(void *in, void *out) {
@@ -410,4 +459,49 @@ static void setup_triggered_help_hooks()
 void init_hooks_help()
 {
 	setup_triggered_help_hooks();
+}
+
+/*
+ * Show help file
+ */
+static void show_context_help(context_help_type *context_help)
+{
+	assert(context_help != NULL);
+
+	screen_save();
+
+	show_file(context_help->file_name, 0, -context_help->anchor, 0);
+
+	screen_load();
+}
+
+/*
+ * Find context help
+ */
+static context_help_type *find_context_help(context_help_type table[], cptr key)
+{
+	int i;
+
+	for (i = 0; ; i++)
+	{
+		context_help_type *context_help = &table[i];
+
+		if (context_help->key == NULL)
+		{
+			return NULL; /* End of list */
+		}
+
+		if (streq(key, context_help->key))
+		{
+			return context_help;
+		}
+	}
+}
+
+/*
+ * Racial help
+ */
+void help_race(cptr race)
+{
+	show_context_help(find_context_help(race_table, race));
 }
