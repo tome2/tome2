@@ -343,6 +343,34 @@ bool_ do_inc_stat(int stat)
 }
 
 
+/*
+ * Process all identify hooks
+ */
+void identify_hooks(int i, object_type *o_ptr, identify_mode mode)
+{
+	cptr mode_s = NULL;
+
+	switch (mode)
+	{
+	case IDENT_NORMAL:
+		mode_s = "normal";
+		break;
+	case IDENT_FULL:
+		mode_s = "full";
+		break;
+	default:
+		assert(FALSE);
+	}
+
+	/* Process the appropriate hooks */
+	process_hooks(HOOK_IDENTIFY, "(d,s)", i, mode_s);
+
+	{
+		hook_identify_in in = { o_ptr, mode };
+		process_hooks_new(HOOK_IDENTIFY, &in, NULL);
+	}
+}
+
 
 /*
  * Identify everything being carried.
@@ -365,7 +393,7 @@ bool_ identify_pack(void)
 		object_known(o_ptr);
 
 		/* Process the appropriate hooks */
-		process_hooks(HOOK_IDENTIFY, "(d,s)", i, "normal");
+		identify_hooks(i, o_ptr, IDENT_NORMAL);
 	}
 
 	p_ptr->notice |= (PN_COMBINE | PN_REORDER);
@@ -408,7 +436,7 @@ void identify_pack_fully(void)
 		make_item_fully_identified(o_ptr);
 
 		/* Process the appropriate hooks */
-		process_hooks(HOOK_IDENTIFY, "(d,s)", i, "full");
+		identify_hooks(i, o_ptr, IDENT_FULL);
 	}
 
 	p_ptr->update |= (PU_BONUS);
@@ -4294,7 +4322,7 @@ bool_ ident_spell(void)
 		add_note(note, 'A');
 	}
 	/* Process the appropriate hooks */
-	process_hooks(HOOK_IDENTIFY, "(d,s)", item, "normal");
+	identify_hooks(item, o_ptr, IDENT_NORMAL);
 
 	/* Something happened */
 	return (TRUE);
@@ -4330,7 +4358,7 @@ bool_ ident_all(void)
 			add_note(note, 'A');
 		}
 		/* Process the appropriate hooks */
-		process_hooks(HOOK_IDENTIFY, "(d,s)", -i, "normal");
+		identify_hooks(-i, o_ptr, IDENT_NORMAL);
 	}
 
 	/* Something happened */
@@ -4416,7 +4444,7 @@ bool_ identify_fully(void)
 	object_out_desc(o_ptr, NULL, FALSE, TRUE);
 
 	/* Process the appropriate hooks */
-	process_hooks(HOOK_IDENTIFY, "(d,s)", item, "full");
+	identify_hooks(item, o_ptr, IDENT_FULL);
 
 	/* Success */
 	return (TRUE);

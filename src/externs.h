@@ -1264,6 +1264,7 @@ extern void explosive_rune(void);
 extern bool_ do_dec_stat(int stat, int mode);
 extern bool_ do_res_stat(int stat, bool_ full);
 extern bool_ do_inc_stat(int stat);
+extern void identify_hooks(int i, object_type *o_ptr, identify_mode type);
 extern bool_ identify_pack(void);
 extern void identify_pack_fully(void);
 extern bool_ remove_curse(void);

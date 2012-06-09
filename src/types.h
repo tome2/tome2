@@ -2276,6 +2276,14 @@ struct hook_player_level_in {
 	int gained_levels;
 };
 
+typedef enum { IDENT_NORMAL, IDENT_FULL } identify_mode;
+
+typedef struct hook_identify_in hook_identify_in;
+struct hook_identify_in {
+	object_type *o_ptr;
+	identify_mode mode;
+};
+
 /*
  * Structure for the "quests"
  */

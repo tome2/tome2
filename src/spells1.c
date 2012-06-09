@@ -4151,7 +4151,7 @@ static bool_ project_o(int who, int r, int y, int x, int dam, int typ)
 				o_ptr->ident |= (IDENT_MENTAL);
 
 				/* Process the appropriate hooks */
-				process_hooks(HOOK_IDENTIFY, "(d,s)", 0 - this_o_idx, "full");
+				identify_hooks(0 - this_o_idx, o_ptr, IDENT_FULL);
 
 				/* Squelch ! */
 				squeltch_grid();
@@ -4164,7 +4164,7 @@ static bool_ project_o(int who, int r, int y, int x, int dam, int typ)
 				object_known(o_ptr);
 
 				/* Process the appropriate hooks */
-				process_hooks(HOOK_IDENTIFY, "(d,s)", 0 - this_o_idx, "normal");
+				identify_hooks(0 - this_o_idx, o_ptr, IDENT_NORMAL);
 
 				/* Squelch ! */
 				squeltch_grid();
