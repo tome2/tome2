@@ -5,9 +5,6 @@
 -- Load the class specific stuff
 tome_dofile("player.lua")
 
--- Load the ingame contextual help
-tome_dofile("help.lua")
-
 -- Add the mkey activations
 tome_dofile("mkeys.lua")
 

@@ -2120,12 +2120,6 @@ extern void load_map(char *name, int *y = 2, int *x = 2);
  */
 extern bool alloc_room(int by0, int bx0, int ysize, int xsize, int *y1 = 0, int *x1 = 0, int *y2 = 0, int *x2 = 0);
 
-/** @var option_ingame_help
- * @brief Boolean
- * @note Ingame contextual help flag
- */
-extern bool option_ingame_help;
-
 /* Misc stuff */
 /** @fn input_box(cptr title, int max);
  * @brief Create an input box and ask the user a question.\n

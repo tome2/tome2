@@ -17,9 +17,6 @@ tome_dofile_anywhere(ANGBAND_DIR_CORE, "monsters.lua")
 tome_dofile_anywhere(ANGBAND_DIR_CORE, "building.lua")
 tome_dofile_anywhere(ANGBAND_DIR_CORE, "dungeon.lua")
 
--- Load the ingame contextual help
-tome_dofile_anywhere(ANGBAND_DIR_CORE, "help.lua")
-
 --------------------------------------------------------------
 --------------------------------------------------------------
 --------------------------------------------------------------
