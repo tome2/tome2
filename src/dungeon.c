@@ -5653,6 +5653,7 @@ void play_game(bool_ new_game)
 
 	/* Ok tell the scripts that the game is about to start */
 	process_hooks(HOOK_GAME_START, "()");
+	process_hooks_new(HOOK_GAME_START, NULL, NULL);
 
 	/* Character is now "complete" */
 	character_generated = TRUE;
