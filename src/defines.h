@@ -4513,6 +4513,7 @@
 #define HOOK_APPLY_MAGIC        66
 #define HOOK_PLAYER_EXP         67
 #define HOOK_BIRTH              68
+#define HOOK_MON_ASK_HELP       69
 #define HOOK_LEARN_ABILITY      70
 #define HOOK_MOVED              71
 #define HOOK_GAME_START         72

@@ -14,7 +14,7 @@
 #include "angband.h"
 
 #define DESC_MAX 14
-#define TRIGGERED_HELP_MAX 18
+#define TRIGGERED_HELP_MAX 19
 
 #define HELP_VOID_JUMPGATE 0
 #define HELP_FOUNTAIN      1
@@ -34,6 +34,7 @@
 #define HELP_20TH_LEVEL   15
 #define HELP_ID_SPELL_ITM 16
 #define HELP_MELEE_SKILLS 17
+#define HELP_MON_ASK_HELP 18
 
 /**
  * Game started?
@@ -402,6 +403,10 @@ static bool_ trigger_melee_skills(void *in, void *out) {
 	return (game_started && (get_melee_skills() > 1));
 }
 
+static bool_ trigger_always(void *in, void *out) {
+	return TRUE;
+}
+
 /**
  * Trigger-based help items
  */
@@ -582,6 +587,14 @@ static triggered_help_type triggered_help[TRIGGERED_HELP_MAX] =
 	  trigger_melee_skills,
 	  { "Ah, you now possess more than one melee type. To switch between them press m",
 	    "and select the switch melee type option.",
+	    NULL
+	  }
+	},
+	{ HELP_MON_ASK_HELP,
+	  HOOK_MON_ASK_HELP,
+	  trigger_always,
+	  { "Somebody is speaking to you it seems. You can talk back with the Y key.",
+	    "This can lead to quests. You can also give items to 'monsters' with the y key.",
 	    NULL
 	  }
 	}

@@ -196,7 +196,7 @@ bool_ quest_shroom_speak_hook(char *fmt)
 		m_name = get_next_arg_str(fmt);
 
 		msg_format("%^s asks your help.", m_name);
-		exec_lua("ingame_help('monster_chat')");
+		process_hooks_new(HOOK_MON_ASK_HELP, NULL, NULL);
 	}
 	else
 	{
