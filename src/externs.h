@@ -2362,6 +2362,7 @@ extern bool_ select_module(void);
 extern bool_ module_savefile_loadable(cptr savefile_mod);
 extern void tome_intro();
 extern void theme_intro();
+extern void init_hooks_module();
 
 
 /* lua_bind.c */

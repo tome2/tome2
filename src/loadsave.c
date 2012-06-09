@@ -580,6 +580,7 @@ static bool_ do_extra(int flag)
 	do_s32b(&p_ptr->loan_time, flag);
 	do_s16b(&p_ptr->absorb_soul, flag);
 	do_s32b(&p_ptr->inertia_controlled_spell, flag);
+	do_s16b(&p_ptr->last_rewarded_level, flag);
 
 	do_s16b(&p_ptr->chaos_patron, flag);
 

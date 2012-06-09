@@ -5631,6 +5631,7 @@ void play_game(bool_ new_game)
 	/* Initialize hooks */
 	init_hooks();
 	init_hooks_help();
+	init_hooks_module();
 
 	/* React to changes */
 	Term_xtra(TERM_XTRA_REACT, 0);

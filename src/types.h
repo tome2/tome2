@@ -1863,6 +1863,9 @@ struct player_type
 	/* Inertia control */
 	s32b inertia_controlled_spell;
 
+	/* For automatic stat-gain */
+	s16b last_rewarded_level;
+
 	/*** Temporary fields ***/
 
 	bool_ did_nothing;               /* True if the last action wasnt a real action */

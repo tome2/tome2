@@ -1041,6 +1041,9 @@ static void player_wipe(void)
 
 	/* Inertia control */
 	p_ptr->inertia_controlled_spell = -1;
+
+	/* Automatic stat-gain */
+	p_ptr->last_rewarded_level = 1;
 }
 
 

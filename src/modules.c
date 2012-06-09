@@ -495,3 +495,44 @@ void theme_intro()
 exit:
 	screen_load();
 }
+
+static bool_ auto_stat_gain_hook(void *data, void *in, void *out)
+{
+	while (p_ptr->last_rewarded_level * 5 <= p_ptr->lev)
+	{
+		do_inc_stat(A_STR);
+		do_inc_stat(A_INT);
+		do_inc_stat(A_WIS);
+		do_inc_stat(A_DEX);
+		do_inc_stat(A_CON);
+		do_inc_stat(A_CHR);
+
+		p_ptr->last_rewarded_level += 1;
+	}
+
+	return FALSE;
+}
+
+void init_hooks_module()
+{
+	switch (game_module_idx)
+	{
+	case MODULE_TOME:
+	{
+		break;
+	}
+
+	case MODULE_THEME:
+	{
+		add_hook_new(HOOK_PLAYER_LEVEL,
+			     auto_stat_gain_hook,
+			     "auto_stat_gain",
+			     NULL);
+
+		break;
+	}
+
+	default:
+		assert(FALSE);
+	}
+}
