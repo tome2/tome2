@@ -1,29 +1,3 @@
--- silly function that allows a drunk to take a bottle of wine/ale from the player
-
-function drunk_takes_wine(m_idx, item)
-
-	m_ptr = monster(m_idx)
-	o_ptr = get_object(item)
-
-	if (m_ptr.r_idx == test_monster_name("Singing, happy drunk")) 
-			and (o_ptr.tval == TV_FOOD) and ((o_ptr.sval == 38) or (o_ptr.sval == 39)) then
-
-		cmsg_print(TERM_YELLOW, "'Hic!'")
-
-		inven_item_increase(item, -1)
-		inven_item_optimize(item)
-
--- HackSmurf: the drunk may drop an empty bottle
-		bottle = create_object(TV_BOTTLE,1)
-		drop_near(bottle, 50, player.py, player.px)
-		return TRUE
-	else
-		return FALSE
-	end
-end
-
-add_hook_script(HOOK_GIVE, "drunk_takes_wine", "drunk_takes_wine")
-
 -- A not-too-scummy way of generating junk for ammo
 function food_vessel(object)
    if ((object.tval == 80) and (object.sval == 43)) or

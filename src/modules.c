@@ -513,8 +513,49 @@ static bool_ auto_stat_gain_hook(void *data, void *in, void *out)
 	return FALSE;
 }
 
+static bool_ drunk_takes_wine(void *data, void *in_, void *out)
+{
+	hook_give_in *in = (hook_give_in *) in_;
+	monster_type *m_ptr = &m_list[in->m_idx];
+	object_type *o_ptr = get_object(in->item);
+
+	if ((m_ptr->r_idx == test_monster_name("Singing, happy drunk")) &&
+	    (o_ptr->tval == TV_FOOD) &&
+	    ((o_ptr->sval == 38) ||
+	     (o_ptr->sval == 39)))
+	{
+		cmsg_print(TERM_YELLOW, "'Hic!'");
+
+		/* Destroy item */
+		inc_stack_size_ex(in->item, -1, OPTIMIZE, NO_DESCRIBE);
+
+		/* Create empty bottle */
+		{
+			object_type forge;
+			object_prep(&forge, lookup_kind(TV_BOTTLE,1));
+			drop_near(&forge, 50, p_ptr->py, p_ptr->px);
+			return TRUE;
+		}
+	}
+	else
+	{
+		return FALSE;
+	}
+}
+
 void init_hooks_module()
 {
+	/*
+	 * Common hooks
+	 */
+	add_hook_new(HOOK_GIVE,
+		     drunk_takes_wine,
+		     "drunk_takes_wine",
+		     NULL);
+
+	/*
+	 * Module-specific hooks
+	 */
 	switch (game_module_idx)
 	{
 	case MODULE_TOME:

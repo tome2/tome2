@@ -2287,6 +2287,12 @@ struct hook_identify_in {
 	identify_mode mode;
 };
 
+typedef struct hook_give_in hook_give_in;
+struct hook_give_in {
+	int m_idx;
+	int item;
+};
+
 /*
  * Structure for the "quests"
  */

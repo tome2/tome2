@@ -5103,7 +5103,11 @@ void do_cmd_give()
 	/* Process hooks if there are any */
 	if (!process_hooks(HOOK_GIVE, "(d,d)", c_ptr->m_idx, item))
 	{
-		msg_print("The monster does not want your item.");
+		hook_give_in in = { c_ptr->m_idx, item };
+		if (!process_hooks_new(HOOK_GIVE, &in, NULL))
+		{
+			msg_print("The monster does not want your item.");
+		}
 	}
 
 	/* Take a turn, even if the offer is declined */

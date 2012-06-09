@@ -14,7 +14,6 @@ init_school_books()
 initialize_bookable_spells()
 
 -- Add joke stuff
-tome_dofile("drunk.lua")
 tome_dofile("joke.lua")
 
 -- Some tests, if the file is not present, this is fine
