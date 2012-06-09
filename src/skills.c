@@ -1056,6 +1056,24 @@ void do_cmd_activate_skill()
 	case MKEY_PIERCING:
 		do_cmd_set_piercing();
 		break;
+	case MKEY_DEATH_TOUCH:
+	{
+		if (p_ptr->csp > 40)
+		{
+			increase_mana(-40);
+			set_project(randint(30) + 10,
+				    GF_INSTA_DEATH,
+				    1,
+				    0,
+				    PROJECT_STOP | PROJECT_KILL);
+			energy_use = 100;
+		}
+		else
+		{
+			msg_print("You need at least 40 mana.");
+		}
+		break;
+	}
 	default:
 		process_hooks(HOOK_MKEY, "(d)", x_idx);
 		break;

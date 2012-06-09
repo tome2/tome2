@@ -1,21 +1,5 @@
 -- Mkeys for skills & abilities
 
--- Death touch ability
-add_mkey
-{
-	["mkey"] 	= 100,
-	["fct"] 	= function()
-			if player.csp > 40 then
-				increase_mana(-40)
-				set_project(randint(30) + 10, GF_INSTA_DEATH, 1, 0, bor(PROJECT_STOP, PROJECT_KILL))
-				energy_use = 100
-			else
-				msg_print("You need at least 40 mana.")
-			end
-	end,
-}
-
-
 -- Geomancy skill
 add_mkey
 {
