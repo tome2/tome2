@@ -2054,6 +2054,14 @@ bool_ bldg_process_command(store_type *s_ptr, int i)
 		break;
 	}
 
+	case BACT_EREBOR_KEY:
+	{
+		msg_print("You will need Thorin's Key and Thrain's Map"
+			  " to get anywhere in Erebor. One may be found"
+			  " in the Barrow-Downs. The other, in Mirkwood.");
+		break;
+	}
+
 	default:
 		{
 			if (process_hooks_ret(HOOK_BUILDING_ACTION, "dd", "(d)", bact))

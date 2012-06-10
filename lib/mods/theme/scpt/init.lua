@@ -18,6 +18,3 @@ tome_dofile_anywhere(ANGBAND_DIR_SCPT, "dg_test.lua", FALSE)
 
 -- Add monster interaction
 tome_dofile("monsters.lua")
-
--- Add miscellaneous stuff
-tome_dofile("misc.lua")

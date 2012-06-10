@@ -74,6 +74,30 @@ static bool_ do_cmd_bash_fountain(int y, int x)
 	return (more);
 }
 
+/*
+ * Stair hooks
+ */
+static bool_ stair_hooks(stairs_direction direction)
+{
+	cptr direction_s = (direction == STAIRS_UP) ? "up" : "down";
+
+	/* Old-style hooks */
+	if (process_hooks(HOOK_STAIR, "(s)", direction_s))
+	{
+		return TRUE; /* Prevent movement */
+	}
+
+	/* New-style hooks */
+	{
+		hook_stair_in in = { direction };
+		hook_stair_out out = { TRUE }; /* Allow by default */
+
+		process_hooks_new(HOOK_STAIR, &in, &out);
+
+		return (!out.allow);
+	}
+}
+
 
 /*
  * Go up one level
@@ -93,7 +117,10 @@ void do_cmd_go_up(void)
 	c_ptr = &cave[p_ptr->py][p_ptr->px];
 
 	/* Can we ? */
-	if (process_hooks(HOOK_STAIR, "(s)", "up")) return;
+	if (stair_hooks(STAIRS_UP))
+	{
+		return;
+	}
 
 	/* Normal up stairs */
 	if ((c_ptr->feat == FEAT_LESS) || (c_ptr->feat == FEAT_WAY_LESS))
@@ -318,7 +345,10 @@ void do_cmd_go_down(void)
 	}
 
 	/* Can we ? */
-	if (process_hooks(HOOK_STAIR, "(s)", "down")) return;
+	if (stair_hooks(STAIRS_DOWN))
+	{
+		return;
+	}
 
 	/* Normal up stairs */
 	if (c_ptr->feat == FEAT_SHAFT_DOWN)

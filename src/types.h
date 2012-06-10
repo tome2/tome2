@@ -2303,6 +2303,18 @@ struct hook_eat_out {
 	bool_ ident;
 };
 
+typedef enum { STAIRS_UP, STAIRS_DOWN } stairs_direction;
+
+typedef struct hook_stair_in hook_stair_in;
+struct hook_stair_in {
+	stairs_direction direction;
+};
+
+typedef struct hook_stair_out hook_stair_out;
+struct hook_stair_out {
+	bool_ allow;
+};
+
 /*
  * Structure for the "quests"
  */

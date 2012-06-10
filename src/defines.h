@@ -4053,6 +4053,7 @@
 #define BACT_GET_ITEM               55
 #define BACT_FIREPROOF_QUEST        56
 #define BACT_LIBRARY_QUEST          61
+#define BACT_EREBOR_KEY             66
 /* If one adds new BACT_ do NOT forget to increase max_bact in variables.c */
 
 

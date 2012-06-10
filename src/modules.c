@@ -620,6 +620,85 @@ static bool_ food_vessel(void *data, void *in_, void *out)
 	return FALSE;
 }
 
+/*
+ * Player must have appropriate keys to enter Erebor.
+ */
+static bool_ erebor_stair(void *data, void *in_, void *out_)
+{
+	hook_stair_in *in = (hook_stair_in *) in_;
+	hook_stair_out *out = (hook_stair_out *) out_;
+
+	if ((dungeon_type == 20) &&
+	    (dun_level == 60) &&
+	    (in->direction == STAIRS_DOWN))
+	{
+		int i, keys;
+
+		keys = 0;
+		for (i = 0; i < INVEN_TOTAL - 1; i++)
+		{
+			if ((p_ptr->inventory[i].name1 == 209) ||
+			    (p_ptr->inventory[i].name1 == 210))
+			{
+				keys += 1;
+			}
+		}
+
+		if (keys >= 2)
+		{
+			msg_print("The moon-letters on the map show you "
+				  "the keyhole! You use the key to enter.");
+			out->allow = TRUE;
+		}
+		else
+		{
+			msg_print("You have found a door, but you cannot "
+				  "find a way to enter. Ask in Dale, perhaps?");
+			out->allow = FALSE;
+		}
+	}
+
+	return FALSE;
+}
+
+/*
+ * Orthanc requires a key.
+ */
+static bool_ orthanc_stair(void *data, void *in_, void *out_)
+{
+	hook_stair_in *in = (hook_stair_in *) in_;
+	hook_stair_out *out = (hook_stair_out *) out_;
+
+	if ((dungeon_type == 36) &&
+	    (dun_level == 39) &&
+	    (in->direction == STAIRS_DOWN))
+	{
+		int i, keys;
+
+		keys = 0;
+		for (i = 0; i < INVEN_TOTAL - 1; i++)
+		{
+			if (p_ptr->inventory[i].name1 == 15)
+			{
+				keys += 1;
+			}
+		}
+
+		if (keys >= 1)
+		{
+			msg_print("#BYou have the key to the tower of Orthanc! You may proceed.#w");
+			out->allow = TRUE;
+		}
+		else
+		{
+			msg_print("#yYou may not enter Orthanc without the key to the gates!#w Rumours say the key was lost in the Mines of Moria...");
+			out->allow = FALSE;
+		}
+	}
+
+	return FALSE;
+}
+
 void init_hooks_module()
 {
 	/*
@@ -665,6 +744,16 @@ void init_hooks_module()
 		add_hook_new(HOOK_EAT,
 			     food_vessel,
 			     "food_vessel",
+			     NULL);
+
+		add_hook_new(HOOK_STAIR,
+			     erebor_stair,
+			     "erebor_stair",
+			     NULL);
+
+		add_hook_new(HOOK_STAIR,
+			     orthanc_stair,
+			     "orthanc_stair",
 			     NULL);
 
 		break;
