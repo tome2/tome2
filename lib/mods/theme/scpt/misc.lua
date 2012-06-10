@@ -12,16 +12,6 @@ end
 
 add_hook_script(HOOK_EAT, "food_vessel", "food_vessel")
 
--- Longbottom Leaf *is* a great stress reliever:
-function longbottom_leaf(object)
-	if (object.tval == 80) and (object.sval == 45) then
-		msg_print("What a stress reliever!")
-		heal_insanity(1000)
-		return FALSE
-	end
-end
-add_hook_script(HOOK_EAT, "longbottom_leaf", "longbottom_leaf")
-
 -- functions to check for Map and Key of Thror before proceeding in Erebor
 -- Thank you, Massimiliano Marangio :-)
 add_hooks

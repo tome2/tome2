@@ -585,6 +585,21 @@ static bool_ smeagol_ring(void *data, void *in_, void *out)
 	}
 }
 
+static bool_ longbottom_leaf(void *data, void *in_, void *out_)
+{
+	hook_eat_in *in = (hook_eat_in *) in_;
+
+	if ((in->o_ptr->tval == TV_FOOD) &&
+	    (in->o_ptr->sval == 45))
+	{
+		msg_print("What a stress reliever!");
+		heal_insanity(1000);
+		return TRUE;
+	}
+
+	return FALSE;
+}
+
 void init_hooks_module()
 {
 	/*
@@ -620,6 +635,11 @@ void init_hooks_module()
 		add_hook_new(HOOK_GIVE,
 			     smeagol_ring,
 			     "smeagol_ring",
+			     NULL);
+
+		add_hook_new(HOOK_EAT,
+			     longbottom_leaf,
+			     "longbottom_leaf",
 			     NULL);
 
 		break;

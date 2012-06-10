@@ -2293,6 +2293,16 @@ struct hook_give_in {
 	int item;
 };
 
+typedef struct hook_eat_in hook_eat_in;
+struct hook_eat_in {
+	object_type *o_ptr;
+};
+
+typedef struct hook_eat_out hook_eat_out;
+struct hook_eat_out {
+	bool_ ident;
+};
+
 /*
  * Structure for the "quests"
  */
