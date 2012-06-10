@@ -600,6 +600,26 @@ static bool_ longbottom_leaf(void *data, void *in_, void *out_)
 	return FALSE;
 }
 
+static bool_ food_vessel(void *data, void *in_, void *out)
+{
+	hook_eat_in *in = (hook_eat_in *) in_;
+
+	if (((in->o_ptr->tval == TV_FOOD) && (in->o_ptr->sval == 43)) ||
+	    ((in->o_ptr->tval == TV_FOOD) && (in->o_ptr->sval == 44)))
+	{
+		object_type forge;
+
+		object_prep(&forge, lookup_kind(TV_JUNK, 3));
+
+		forge.ident |= IDENT_MENTAL | IDENT_KNOWN;
+		inven_carry(&forge, FALSE);
+
+		return TRUE;
+	}
+
+	return FALSE;
+}
+
 void init_hooks_module()
 {
 	/*
@@ -640,6 +660,11 @@ void init_hooks_module()
 		add_hook_new(HOOK_EAT,
 			     longbottom_leaf,
 			     "longbottom_leaf",
+			     NULL);
+
+		add_hook_new(HOOK_EAT,
+			     food_vessel,
+			     "food_vessel",
 			     NULL);
 
 		break;

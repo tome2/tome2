@@ -1,17 +1,3 @@
--- A not-too-scummy way of generating junk for ammo
-function food_vessel(object)
-   if ((object.tval == 80) and (object.sval == 43)) or
-	((object.tval == 80) and (object.sval == 44)) then
-      local obj = create_object(TV_JUNK, 3)
-	obj.ident = bor(obj.ident, IDENT_MENTAL, IDENT_KNOWN)
-	inven_carry(obj, FALSE)
-	end_object(obj)
-	return FALSE
-   end
-end
-
-add_hook_script(HOOK_EAT, "food_vessel", "food_vessel")
-
 -- functions to check for Map and Key of Thror before proceeding in Erebor
 -- Thank you, Massimiliano Marangio :-)
 add_hooks
