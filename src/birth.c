@@ -1246,6 +1246,13 @@ static void player_outfit(void)
 		identify_pack_fully();
 	}
 
+	if (streq(rmp_ptr->title + rmp_name, "Vampire"))
+	{
+		player_gain_corruption(CORRUPT_VAMPIRE_TEETH);
+		player_gain_corruption(CORRUPT_VAMPIRE_STRENGTH);
+		player_gain_corruption(CORRUPT_VAMPIRE_VAMPIRE);
+	}
+
 	process_hooks(HOOK_BIRTH_OBJECTS, "()");
 	meta_inertia_control_hook_birth_objects();
 

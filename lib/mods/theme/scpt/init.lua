@@ -2,9 +2,6 @@
 -- This file is loaded at the initialisation of ToME
 --
 
--- Load the class specific stuff
-tome_dofile("player.lua")
-
 -- Add the schools of magic
 schools_init()
 school_spells_init()
