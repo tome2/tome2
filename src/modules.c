@@ -699,6 +699,51 @@ static bool_ orthanc_stair(void *data, void *in_, void *out_)
 	return FALSE;
 }
 
+/*
+ * Movement from Theme
+ */
+bool_ theme_push_past(void *data, void *in_, void *out_)
+{
+	hook_move_in *p = (hook_move_in *) in_;
+	cave_type *c_ptr = &cave[p->y][p->x];
+
+	if (c_ptr->m_idx > 0)
+	{
+		monster_type *m_ptr = &m_list[c_ptr->m_idx];
+		monster_race *mr_ptr = race_inf(m_ptr);
+
+		if (m_ptr->status >= MSTATUS_NEUTRAL)
+		{
+			if ((cave_floor_bold(p->y, p->x) == TRUE) ||
+			    (mr_ptr->flags2 == RF2_PASS_WALL))
+			{
+				char buf[128];
+
+				monster_desc(buf, m_ptr, 0);
+				msg_print(format("You push past %s.", buf));
+
+				m_ptr->fy = p_ptr->py;
+				m_ptr->fx = p_ptr->px;
+				cave[p_ptr->py][p_ptr->px].m_idx = c_ptr->m_idx;
+				c_ptr->m_idx = 0;
+			}
+			else
+			{
+				char buf[128];
+
+				monster_desc(buf, m_ptr, 0);
+				msg_print(format("%s is in your way!", buf));
+				energy_use = 0;
+
+				return TRUE;
+			}
+		}
+	}
+
+	return FALSE;
+}
+
+
 void init_hooks_module()
 {
 	/*
@@ -754,6 +799,11 @@ void init_hooks_module()
 		add_hook_new(HOOK_STAIR,
 			     orthanc_stair,
 			     "orthanc_stair",
+			     NULL);
+
+		add_hook_new(HOOK_MOVE,
+			     theme_push_past,
+			     "__hook_push_past",
 			     NULL);
 
 		break;
