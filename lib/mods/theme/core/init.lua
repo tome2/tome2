@@ -14,7 +14,6 @@ tome_dofile_anywhere(ANGBAND_DIR_CORE, "util.lua")
 tome_dofile_anywhere(ANGBAND_DIR_CORE, "player.lua")
 tome_dofile_anywhere(ANGBAND_DIR_CORE, "objects.lua")
 tome_dofile_anywhere(ANGBAND_DIR_CORE, "monsters.lua")
-tome_dofile_anywhere(ANGBAND_DIR_CORE, "building.lua")
 tome_dofile_anywhere(ANGBAND_DIR_CORE, "dungeon.lua")
 
 -- The dofile functions for each patch
