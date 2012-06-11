@@ -27,46 +27,6 @@ magic_power *grab_magic_power(magic_power *m_ptr, int num)
 	return (&m_ptr[num]);
 }
 
-bool_ lua_spell_success(magic_power *spell, int stat, char *oups_fct)
-{
-	int chance;
-	int minfail = 0;
-
-	/* Spell failure chance */
-	chance = spell->fail;
-
-	/* Reduce failure rate by "effective" level adjustment */
-	chance -= 3 * (p_ptr->lev - spell->min_lev);
-
-	/* Reduce failure rate by INT/WIS adjustment */
-	chance -= 3 * (adj_mag_stat[p_ptr->stat_ind[stat]] - 1);
-
-	/* Not enough mana to cast */
-	if (spell->mana_cost > p_ptr->csp)
-	{
-		chance += 5 * (spell->mana_cost - p_ptr->csp);
-	}
-
-	/* Extract the minimum failure rate */
-	minfail = adj_mag_fail[p_ptr->stat_ind[stat]];
-
-	/* Failure rate */
-	chance = clamp_failure_chance(chance, minfail);
-
-	/* Failed spell */
-	if (rand_int(100) < chance)
-	{
-		if (flush_failure) flush();
-		msg_format("You failed to concentrate hard enough!");
-		sound(SOUND_FAIL);
-
-		if (oups_fct != NULL)
-			exec_lua(format("%s(%d)", oups_fct, chance));
-		return (FALSE);
-	}
-	return (TRUE);
-}
-
 /*
  * Create objects
  */

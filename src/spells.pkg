@@ -2126,27 +2126,6 @@ struct magic_power
  */
 extern magic_power *grab_magic_power @ get_magic_power(magic_power *m_ptr, int num);
 
-/** @fn  magic_power_sucess(magic_power *spell, int stat, char *oups_fct=NULL);
- * @dgonly
- * @brief Determine if using a magic power succeeds.\n
- * @param *spell magic_power \n Spell is the magic power the player is using.
- * @brief Power (spell)
- * @param stat Number \n stat is the required casting statistic (INT or WIS).
- * @brief Casting statistic
- * @param *oups_fct String \n oups_fct is the message displayed when the power
- * fails.
- * @brief Fail message
- * @return Boolean \n TRUE if spell succeeds, otherwise FALSE.
- * @note
- * The chance of using a power is adjusted for player magic skill, casting
- * statistic, player mana points, and stunning. There is always at least a
- * 5% chance the power works.\n\n
- * Note: do not call this function.\n
- * By order of DG.
- * @note (see file lua_bind.c)
- */
-extern bool lua_spell_success @ magic_power_sucess(magic_power *spell, int stat, char *oups_fct=NULL);
-
 extern s16b can_spell_random(s16b spell_idx);
 
 /* Schools  */
