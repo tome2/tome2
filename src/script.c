@@ -226,6 +226,14 @@ void init_lua_init()
 	/* Load the first lua file */
 	tome_dofile_anywhere(ANGBAND_DIR_CORE, "init.lua", TRUE);
 
+	/* Initialize schooled spells */
+	schools_init();
+	school_spells_init();
+	init_school_books();
+
+	/* Post-spell creation initialization */
+	initialize_bookable_spells();
+
 	/* Finish up the corruptions */
 	init_corruptions();
 }

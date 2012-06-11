@@ -17,7 +17,6 @@ INSTALL(DIRECTORY
   plot
   pref
   save
-  scpt
   user
   xtra
   DESTINATION ${DEFAULT_PATH}

@@ -17,15 +17,6 @@ tome_dofile_anywhere(ANGBAND_DIR_CORE, "monsters.lua")
 tome_dofile_anywhere(ANGBAND_DIR_CORE, "building.lua")
 tome_dofile_anywhere(ANGBAND_DIR_CORE, "dungeon.lua")
 
---------------------------------------------------------------
---------------------------------------------------------------
---------------------------------------------------------------
--------------Here we load the non vital scripts---------------
------------------------from lib/scpt--------------------------
---------------------------------------------------------------
---------------------------------------------------------------
-tome_dofile("init.lua")
-
 -- The dofile functions for each patch
 patch_dofile = {}
 
