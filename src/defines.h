@@ -4456,6 +4456,37 @@
 #define CORRUPTIONS_MAX 34
 
 /*
+ * Races
+ */
+#define RACE_HUMAN 0
+#define RACE_HALF_ELF 1
+#define RACE_ELF 2
+#define RACE_HOBBIT 3
+#define RACE_GNOME 4
+#define RACE_DWARF 5
+#define RACE_ORC 6
+#define RACE_TROLL 7
+#define RACE_DUNADAN 8
+#define RACE_HIGH_ELF 9
+#define RACE_HALF_OGRE 10
+#define RACE_BEORNING 11
+#define RACE_KOBOLD 12        /* ToME */
+#define RACE_DRUADAN 12       /* Theme */
+#define RACE_PETTY_DWARF 13
+#define RACE_DARK_ELF 14
+#define RACE_ENT 15
+#define RACE_ROHANKNIGHT 16
+#define RACE_THUNDERLORD 17 /* ToME */
+#define RACE_EAGLE 17       /* Theme */
+#define RACE_DEATHMOLD 18   /* ToME */
+#define RACE_DRAGON 18      /* Theme */
+#define RACE_YEEK 19
+#define RACE_WOOD_ELF 20
+#define RACE_MAIA 21
+#define RACE_EASTERLING 22 /* Theme */
+#define RACE_DEMON 23 /* Theme */
+
+/*
  * Hooks
  */
 #define HOOK_MONSTER_DEATH      0
@@ -4480,6 +4511,7 @@
 #define HOOK_MONSTER_AI         19
 #define HOOK_PLAYER_LEVEL       20
 #define HOOK_WIELD              21
+#define HOOK_NEW_MONSTER_END    22
 #define HOOK_AIM                24
 #define HOOK_USE                25
 #define HOOK_ACTIVATE           26

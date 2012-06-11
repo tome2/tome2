@@ -743,6 +743,387 @@ bool_ theme_push_past(void *data, void *in_, void *out_)
 	return FALSE;
 }
 
+/*
+ * Check if monster race is in list. The list is terminated
+ * with a -1.
+ */
+static bool_ race_in_list(int r_idx, int race_idxs[])
+{
+	int i;
+
+	for (i = 0; race_idxs[i] >= 0; i++)
+	{
+		if (r_idx == race_idxs[i])
+		{
+			return TRUE;
+		}
+	}
+
+	return FALSE;
+}
+
+/*
+ * Monster racial alignment from Theme.
+ */
+static s16b *compute_monster_status(int r_idx)
+{
+	static s16b FRIEND_ = MSTATUS_FRIEND;
+	static s16b *FRIEND = &FRIEND_;
+	static s16b NEUTRAL_ = MSTATUS_NEUTRAL;
+	static s16b *NEUTRAL = &NEUTRAL_;
+
+	object_type *o_ptr = NULL;
+
+	switch (p_ptr->prace)
+	{
+	case RACE_MAIA:
+	{
+		int good_race_idxs[] = {
+			25, 29, 45, 97, 109,
+			147, 225, 335, 346, 443,
+			581, 629, 699, 853, 984,
+			1007, 1017, -1
+		};
+
+		if (!(player_has_corruption(CORRUPT_BALROG_AURA)) &&
+		    !(player_has_corruption(CORRUPT_BALROG_WINGS)) &&
+		    !(player_has_corruption(CORRUPT_BALROG_STRENGTH)) &&
+		    !(player_has_corruption(CORRUPT_BALROG_FORM)) &&
+		    race_in_list(r_idx, good_race_idxs))
+		{
+			/* Good beings (except swans, GWoPs, Wyrm
+			 * Spirits, and some joke uniques) are
+			 * coaligned with Maiar */
+			return FRIEND;
+		}
+
+		break;
+	}
+
+	case RACE_HUMAN:
+	case RACE_DUNADAN:
+	case RACE_DRUADAN:
+	case RACE_ROHANKNIGHT:
+	{
+		int nonevil_humanoid_race_idxs[] = {
+			43, 45, 46, 83, 93,
+			97, 109, 110, 142, 147,
+			216, 225, 293, 345, 346,
+			693, 699, 937, 988, 997,
+			998, 1000, -1
+		};
+		
+		if (race_in_list(r_idx, nonevil_humanoid_race_idxs))
+		{
+			return NEUTRAL;
+		}
+
+		break;
+	}
+
+	case RACE_ELF:
+	case RACE_HOBBIT:
+	case RACE_WOOD_ELF:
+	{
+		int nonevil_sentient_race_idxs[] = {
+			43, 45, 46, 83, 93,
+			97, 109, 110, 142, 147,
+			216, 225, 293, 345, 346,
+			693, 699, 937, 988, 997,
+			998, 1000, 74, 103, 882,
+			1017, -1
+		};
+
+		if (race_in_list(r_idx, nonevil_sentient_race_idxs))
+		{
+			return NEUTRAL;
+		}
+
+		break;
+	}
+
+	case RACE_GNOME:
+	{
+		int gnomish_race_idxs[] = {
+			103, 281, 680, 984, 1001,
+			1003, 1007, 1011, 1014, 1016,
+			-1
+		};
+
+		if (race_in_list(r_idx, gnomish_race_idxs))
+		{
+			return NEUTRAL;
+		}
+
+		break;
+	}
+
+	case RACE_DWARF:
+	case RACE_PETTY_DWARF:
+	{
+		int dwarvish_race_idxs[] = {
+			111, 112, 179, 180, 181,
+			182, -1
+		};
+
+		if (race_in_list(r_idx, dwarvish_race_idxs))
+		{
+			return NEUTRAL;
+		}
+
+		break;
+	}
+
+	case RACE_ORC:
+	{
+		int low_orc_race_idxs[] = {
+			87, 118, 126, 149, 244,
+			251, 264, -1
+		};
+
+		if ((p_ptr->pgod == GOD_MELKOR) &&
+		    race_in_list(r_idx, low_orc_race_idxs))
+		{
+			return FRIEND;
+		}
+
+		break;
+	}
+
+	case RACE_TROLL:
+	{
+		int low_troll_race_idxs[] = {
+			297, 401, 403, 424, 454,
+			491, 496, 509, 538, -1
+		};
+
+		if ((p_ptr->pgod == GOD_MELKOR) &&
+		    race_in_list(r_idx, low_troll_race_idxs))
+		{
+			return NEUTRAL;
+		}
+
+		break;
+	}
+
+	case RACE_HALF_OGRE:
+	{
+		int ogre_race_idxs[] = {
+			262, 285, 415, 430, 479,
+			745, 918, -1
+		};
+
+		if (race_in_list(r_idx, ogre_race_idxs))
+		{
+			return NEUTRAL;
+		}
+
+		break;
+	}
+
+	case RACE_BEORNING:
+	{
+		/* Bears; not werebears. */
+		int bear_race_idxs[] = {
+			160, 173, 191, 854,
+			855, 867, 873, -1
+		};
+
+		if (race_in_list(r_idx, bear_race_idxs))
+		{
+			return NEUTRAL;
+		}
+
+		break;
+	}
+
+	case RACE_DARK_ELF:
+	{
+		int dark_elven_race_idxs[] = {
+			122, 178, 183, 226, 348,
+			375, 400, 657, -1
+		};
+
+		if (race_in_list(r_idx, dark_elven_race_idxs))
+		{
+			return FRIEND;
+		}
+
+		break;
+	}
+
+	case RACE_ENT:
+	{
+		int plant_race_idxs[] = {
+			248, 266, 317, 329, 396,
+			-1
+		};
+
+		if (race_in_list(r_idx, plant_race_idxs))
+		{
+			return FRIEND;
+		}
+
+		/* And since the above is largely useless except out
+		   in the wild...  If an Ent worships Yavanna,
+		   lower-level animals are coaligned should make the
+		   early game a bit easier for Ents. */
+
+		if (p_ptr->pgod == GOD_YAVANNA)
+		{
+			int lower_animal_race_idxs[] = {
+				 21,  23,  24,  25,  26,
+				 27,  28,  29,  30,  31,
+				 33,  35,  36,  37,  38,
+				 39,  41,  49,  50,  52,
+				 56,  57,  58,  59,  60,
+				 61,  62,  69,  70,  75,
+				 77,  78,  79,  86,  88,
+				 89,  90,  95,  96, 105,
+				106, 114, 119, 120, 121,
+				123, 127, 134, 141, 143,
+				151, 154, 155, 156, 160,
+				161, 168, 171, 173, 174,
+				175, 176, 187, 191, 196,
+				197, 198, 210, 211, 213,
+				230, 236, 250, 259, -1
+			};
+
+			if (race_in_list(r_idx, lower_animal_race_idxs))
+			{
+				return FRIEND;
+			}
+		}
+
+		break;
+	}
+
+	case RACE_EAGLE:
+	{
+		int nonevil_nonneurtal_bird_race_idxs[] = {
+			61, 141, 151, 279, -1
+		};
+
+		if (race_in_list(r_idx, nonevil_nonneurtal_bird_race_idxs))
+		{
+			return FRIEND;
+		}
+
+		break;
+	}
+
+	case RACE_DRAGON:
+	{
+		int hatchling_dragon_race_idxs[] = {
+			163, 164, 165, 166, 167,
+			204, 218, 219, 911, -1
+		};
+
+		if (race_in_list(r_idx, hatchling_dragon_race_idxs))
+		{
+			return FRIEND;
+		}
+
+		break;
+	}
+
+	case RACE_YEEK:
+	{
+		int yeek_race_idxs[] = {
+			580, 583, 594, 653, 655,
+			659, 661, -1
+		};
+
+		if (race_in_list(r_idx, yeek_race_idxs))
+		{
+			return NEUTRAL;
+		}
+
+		break;
+	}
+
+	};
+
+	/* Oathbreakers are coaligned if player is wielding Anduril.
+	   It's dirty, but it works, and it doesn't bother checking
+	   demons and the races who can't wield weapons. */
+	o_ptr = get_object(INVEN_WIELD);
+	if (o_ptr != NULL &&
+	    o_ptr->name1 == ART_ANDURIL)
+	{
+		switch (p_ptr->prace)
+		{
+		case RACE_HUMAN:
+		case RACE_HALF_ELF:
+		case RACE_ELF:
+		case RACE_HOBBIT:
+		case RACE_GNOME:
+		case RACE_DWARF:
+		case RACE_ORC:
+		case RACE_TROLL:
+		case RACE_DUNADAN:
+		case RACE_HIGH_ELF:
+		case RACE_HALF_OGRE:
+		case RACE_BEORNING:
+		case RACE_DRUADAN:
+		case RACE_PETTY_DWARF:
+		case RACE_DARK_ELF:
+		case RACE_ENT:
+		case RACE_ROHANKNIGHT:
+		case RACE_YEEK:
+		case RACE_WOOD_ELF:
+		case RACE_MAIA:
+		case RACE_EASTERLING:
+		case RACE_DEMON:
+		{
+			int oathbreaker_race_idxs[] = {
+				731, -1
+			};
+
+			if (race_in_list(r_idx, oathbreaker_race_idxs))
+			{
+				return FRIEND;
+			}
+
+			break;
+		}
+		}
+	}
+
+	/* No status override */
+	return NULL;
+}
+
+static bool_ theme_level_end_gen(void *data, void *in, void *out)
+{
+	int i = 0;
+
+	for (i = 0; i < m_max; i++)
+	{
+		monster_type *m_ptr = &m_list[i];
+		int r_idx = m_ptr->r_idx;
+		s16b *status = compute_monster_status(r_idx);
+		if (status)
+		{
+			m_ptr->status = *status;
+		}
+	}
+
+	return FALSE;
+}
+
+static bool_ theme_new_monster_end(void *data, void *in_, void *out)
+{
+	hook_new_monster_end_in *in = (hook_new_monster_end_in *) in_;
+	s16b *status = compute_monster_status(in->m_ptr->r_idx);
+
+	if (status)
+	{
+		in->m_ptr->status = *status;
+	}
+
+	return FALSE;
+}
 
 void init_hooks_module()
 {
@@ -804,6 +1185,16 @@ void init_hooks_module()
 		add_hook_new(HOOK_MOVE,
 			     theme_push_past,
 			     "__hook_push_past",
+			     NULL);
+
+		add_hook_new(HOOK_LEVEL_END_GEN,
+			     theme_level_end_gen,
+			     "theme_level_end_gen",
+			     NULL);
+
+		add_hook_new(HOOK_NEW_MONSTER_END,
+			     theme_new_monster_end,
+			     "theme_new_monster_end",
 			     NULL);
 
 		break;

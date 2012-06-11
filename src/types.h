@@ -2315,6 +2315,11 @@ struct hook_stair_out {
 	bool_ allow;
 };
 
+typedef struct hook_new_monster_end_in hook_new_monster_end_in;
+struct hook_new_monster_end_in {
+	monster_type *m_ptr;
+};
+
 /*
  * Structure for the "quests"
  */
