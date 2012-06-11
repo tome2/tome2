@@ -82,33 +82,6 @@ void end_object(object_type *o_ptr)
 	FREE(o_ptr, object_type);
 }
 
-static char *lua_item_tester_fct;
-static bool_ lua_item_tester(object_type* o_ptr)
-{
-	int oldtop = lua_gettop(L);
-	bool_ ret;
-
-	lua_getglobal(L, lua_item_tester_fct);
-	tolua_pushusertype(L, o_ptr, tolua_tag(L, "object_type"));
-	lua_call(L, 1, 1);
-	ret = lua_tonumber(L, -1);
-	lua_settop(L, oldtop);
-	return (ret);
-}
-
-void lua_set_item_tester(int tval, char *fct)
-{
-	if (tval)
-	{
-		item_tester_tval = tval;
-	}
-	else
-	{
-		lua_item_tester_fct = fct;
-		item_tester_hook = lua_item_tester;
-	}
-}
-
 char *lua_object_desc(object_type *o_ptr, int pref, int mode)
 {
 	static char buf[150];
@@ -130,30 +103,6 @@ void find_position(int y, int x, int *yy, int *xx)
 		scatter(yy, xx, y, x, 6);
 	}
 	while (!(in_bounds(*yy, *xx) && cave_floor_bold(*yy, *xx)) && --attempts);
-}
-
-static char *summon_lua_okay_fct;
-bool_ summon_lua_okay(int r_idx)
-{
-	int oldtop = lua_gettop(L);
-	bool_ ret;
-
-	lua_getglobal(L, lua_item_tester_fct);
-	tolua_pushnumber(L, r_idx);
-	lua_call(L, 1, 1);
-	ret = lua_tonumber(L, -1);
-	lua_settop(L, oldtop);
-	return (ret);
-}
-
-bool_ lua_summon_monster(int y, int x, int lev, bool_ friend_, char *fct)
-{
-	summon_lua_okay_fct = fct;
-
-	if (!friend_)
-		return summon_specific(y, x, lev, SUMMON_LUA);
-	else
-		return summon_specific_friendly(y, x, lev, SUMMON_LUA, TRUE);
 }
 
 /*

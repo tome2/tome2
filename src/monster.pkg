@@ -2062,25 +2062,6 @@ extern bool summon_specific(int y1, int x1, int lev, int type);
  */
 extern bool summon_specific_friendly(int y1, int x1, int lev, int type, bool Group_ok);
 
-/** @fn summon_monster_aux(int y, int x, int lev, bool friend, char *fct);
- * @brief Place a monster near grid "y","x".\n 
- * @param y Number \n the y coordinate of the target grid
- * @brief Y-coordinate
- * @param x Number \n the x coordinate of the target grid
- * @brief X-coordinate
- * @param lev Number \n the monster level of the summoning monster
- * @brief Summoner level
- * @param friend Boolean \n TRUE if friendly monsters are to be summoned,
- * otherwise FALSE
- * @brief Friendly?
- * @param *fct String \n the function which determines which type of monster
- * will be summoned
- * @brief Monster type function
- * @return Boolean \n TRUE if a monster was summoned, otherwise FALSE.
- * @note (see file w_mnster.c)
- */
-extern bool lua_summon_monster @ summon_monster_aux(int y, int x, int lev, bool friend, char *fct);
-
 /** @fn can_create_companion()
  * @brief Determine if a companion can be created.
  * @return Boolean \n TRUE if a companion can be created, otherwise FALSE.
@@ -2300,10 +2281,6 @@ extern void monster_set_level(int m_idx, int level);
  */
 #define SUMMON_QUYLTHULG            57
 
-/** @def SUMMON_LUA
- * @note Summon monsters according to a Lua script.
- */
-#define SUMMON_LUA                  58
 /** @} */
 
 /** @fn do_control_reconnect()

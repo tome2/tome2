@@ -2582,7 +2582,6 @@
 #define SUMMON_SHADOWS              55
 #define SUMMON_GHOST                56
 #define SUMMON_QUYLTHULG            57
-#define SUMMON_LUA                  58
 
 
 /*

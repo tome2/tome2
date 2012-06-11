@@ -2379,8 +2379,6 @@ extern char *lua_object_desc(object_type *o_ptr, int pref, int mode);
 extern s16b    add_new_power(cptr name, cptr desc, cptr gain, cptr lose, byte level, byte cost, byte stat, byte diff);
 
 extern void find_position(int y, int x, int *yy, int *xx);
-extern bool_ summon_lua_okay(int r_idx);
-extern bool_ lua_summon_monster(int y, int x, int lev, bool_ ffriend, char *fct);
 
 extern s16b    add_new_gods(char *name);
 extern int     get_lua_int(cptr name);

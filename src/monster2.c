@@ -3355,11 +3355,6 @@ bool_ summon_specific_okay(int r_idx)
 			break;
 		}
 
-	case SUMMON_LUA:
-		{
-			okay = summon_lua_okay(r_idx);
-			break;
-		}
 	}
 
 	/* Result */
