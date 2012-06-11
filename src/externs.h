@@ -994,7 +994,6 @@ extern u32b fake_text_size;
 extern bool_ gen_joke_monsters(void *data, void *in, void *out);
 
 /* loadsave.c */
-extern void register_savefile(int num);
 extern bool_ file_exist(char *buf);
 extern s16b rd_variable(void);
 extern void wr_variable(s16b *var);
@@ -1004,8 +1003,6 @@ extern void save_dungeon(void);
 extern bool_ save_player(void);
 extern bool_ load_player(void);
 extern errr rd_savefile_new(void);
-extern void load_number_key(char *key, u32b *val);
-extern void save_number_key(char *key, u32b val);
 
 /* melee1.c */
 /* melee2.c */

@@ -1369,27 +1369,6 @@ extern cptr string_exec_lua(char *file);
  */
 extern void lua_print_hook@print_hook(cptr str);
 
-/* Savefile stuff */
-/** @fn register_savefile(int num)
- * @brief Add "num" slots to the savefile.\n
- * @param num Number \n the number of slots to add.
- * @brief Slots
- * @note (see file loadsave.c)
- */
-extern void register_savefile(int num);
-
-/** @fn save_number_key(char *key, s32b val)
- * @brief Save a key-value combination in the save file.\n
- * @param *key String \n the key to save.
- * @brief Key
- * @param val Number \n the value of the key.
- * @brief Value
- * @note
- * The length of the key is stored first, then the key, then the value.
- * @note (see file loadsave.c)
- */
-extern void save_number_key(char *key, s32b val);
-
 
 /* Tables */
 /** @var adj_mag_study[100]

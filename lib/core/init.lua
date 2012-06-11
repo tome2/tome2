@@ -3,9 +3,6 @@
 -- Load the system functions
 --
 
--- Name of globals to save
-tome_dofile_anywhere(ANGBAND_DIR_CORE, "load.lua")
-
 -- Very thin xml parser(49 lines ;)
 tome_dofile_anywhere(ANGBAND_DIR_CORE, "xml.lua")
 
@@ -15,11 +12,3 @@ tome_dofile_anywhere(ANGBAND_DIR_CORE, "player.lua")
 tome_dofile_anywhere(ANGBAND_DIR_CORE, "objects.lua")
 tome_dofile_anywhere(ANGBAND_DIR_CORE, "monsters.lua")
 tome_dofile_anywhere(ANGBAND_DIR_CORE, "dungeon.lua")
-
---------------------------------------------------------------
---------------------------------------------------------------
---------------------------------------------------------------
---
--- Do not thouch after this line
---
-tome_dofile_anywhere(ANGBAND_DIR_CORE, "load2.lua")

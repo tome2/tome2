@@ -2954,31 +2954,6 @@ static bool_ do_savefile_aux(int flag)
 
 	C_FREE(reals, max_towns, bool_);
 
-	if (flag == LS_SAVE) tmp32u = extra_savefile_parts;
-	do_u32b(&tmp32u, flag);
-	if (flag == LS_SAVE)
-	{
-		/* Save the stuff */
-		process_hooks(HOOK_SAVE_GAME, "()");
-	}
-
-	if (flag == LS_LOAD)
-	{
-		u32b len = tmp32u;
-
-		while (len)
-		{
-			char key_buf[100];
-
-			/* Load a key */
-			load_number_key(key_buf, &tmp32u);
-
-			/* Process it -- the hooks can use it or ignore it */
-			process_hooks(HOOK_LOAD_GAME, "(s,l)", key_buf, tmp32u);
-			len--;
-		}
-	}
-
 	/* I'm not dead yet... */
 	if (!death)
 	{
@@ -3293,41 +3268,4 @@ static void my_sentinel(char *place, u16b value, int flag)
 	}
 	note(format("Impossible has occurred")); 	/* Programmer error */
 	exit(0);
-}
-
-/********** Variable savefile stuff **************/
-
-/*
- * Add num slots to the savefile
- */
-void register_savefile(int num)
-{
-	extra_savefile_parts += (num > 0) ? num : 0;
-}
-
-void save_number_key(char *key, u32b val)
-{
-	byte len = strlen(key);
-
-	do_byte(&len, LS_SAVE);
-	while (*key)
-	{
-		do_byte((byte*)key, LS_SAVE);
-		key++;
-	}
-	do_u32b(&val, LS_SAVE);
-}
-
-void load_number_key(char *key, u32b *val)
-{
-	byte len, i = 0;
-
-	do_byte(&len, LS_LOAD);
-	while (i < len)
-	{
-		do_byte((byte*)&key[i], LS_LOAD);
-		i++;
-	}
-	key[i] = '\0';
-	do_u32b(val, LS_LOAD);
 }
