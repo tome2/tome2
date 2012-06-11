@@ -1135,6 +1135,11 @@ void init_hooks_module()
 		     "drunk_takes_wine",
 		     NULL);
 
+	add_hook_new(HOOK_LEVEL_END_GEN,
+		     gen_joke_monsters,
+		     "gen_joke_monsters",
+		     NULL);
+
 	/*
 	 * Module-specific hooks
 	 */
