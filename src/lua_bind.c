@@ -483,9 +483,17 @@ int get_lua_list_size(cptr list_var)
 
 void increase_mana(int delta)
 {
-	char buf[256];
-	sprintf(buf, "increase_mana(%d)", delta);
-	exec_lua(buf);
+	p_ptr->csp += delta;
+	p_ptr->redraw |= PR_MANA;
+
+	if (p_ptr->csp < 0)
+	{
+		p_ptr->csp = 0;
+	}
+	if (p_ptr->csp > p_ptr->msp)
+	{
+		p_ptr->csp = p_ptr->msp;
+	}
 }
 
 timer_type *TIMER_AGGRAVATE_EVIL = 0;

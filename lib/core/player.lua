@@ -30,21 +30,6 @@ function player.inventory(i)
 	return player.inventory_real[i + 1]
 end
 
--- modify mana
--- returns TRUE if there is a pb
-function increase_mana(amt)
-	player.csp = player.csp + amt
-	player.redraw = bor(player.redraw, PR_MANA)
-	if (player.csp < 0) then
-		player.csp = 0
-		return TRUE
-	end
-	if (player.csp > player.msp) then
-		player.csp = player.msp
-	end
-	return FALSE
-end
-
 
 -- Return the coordinates of the player whether in wild or not
 function player.get_wild_coord()
