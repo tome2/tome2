@@ -2417,7 +2417,6 @@ extern char lua_msg_box(cptr title);
 extern list_type *lua_create_list(int size);
 extern void lua_delete_list(list_type *, int size);
 extern void lua_add_to_list(list_type *, int idx, cptr str);
-extern void lua_display_list(int y, int x, int h, int w, cptr title, list_type *list, int max, int begin, int sel, byte sel_color);
 
 extern void increase_mana(int delta);
 

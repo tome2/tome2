@@ -434,37 +434,6 @@ char lua_msg_box(cptr title)
 	return msg_box(title, hgt / 2, wid / 2);
 }
 
-list_type *lua_create_list(int size)
-{
-	list_type *l;
-	cptr *list;
-
-	MAKE(l, list_type);
-	C_MAKE(list, size, cptr);
-	l->list = list;
-	return l;
-}
-
-void lua_delete_list(list_type *l, int size)
-{
-	int i;
-
-	for (i = 0; i < size; i++)
-		string_free(l->list[i]);
-	C_FREE(l->list, size, cptr);
-	FREE(l, list_type);
-}
-
-void lua_add_to_list(list_type *l, int idx, cptr str)
-{
-	l->list[idx] = string_make(str);
-}
-
-void lua_display_list(int y, int x, int h, int w, cptr title, list_type* list, int max, int begin, int sel, byte sel_color)
-{
-	display_list(y, x, h, w, title, list->list, max, begin, sel, sel_color);
-}
-
 
 
 int get_lua_int(cptr name)
