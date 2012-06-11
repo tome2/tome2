@@ -12,6 +12,3 @@ initialize_bookable_spells()
 
 -- Some tests, if the file is not present, this is fine
 tome_dofile_anywhere(ANGBAND_DIR_SCPT, "dg_test.lua", FALSE)
-
--- Add monster interaction
-tome_dofile("monsters.lua")

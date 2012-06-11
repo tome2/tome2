@@ -1152,6 +1152,8 @@ void init_hooks_module()
 
 	case MODULE_THEME:
 	{
+		timer_aggravate_evil_enable();
+
 		add_hook_new(HOOK_PLAYER_LEVEL,
 			     auto_stat_gain_hook,
 			     "auto_stat_gain",

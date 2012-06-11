@@ -548,7 +548,14 @@ void timer_aggravate_evil_enable()
 
 void timer_aggravate_evil_callback()
 {
-	dispel_evil(0);
+	if ((p_ptr->prace == RACE_MAIA) &&
+	    (!player_has_corruption(CORRUPT_BALROG_AURA)) &&
+	    (!player_has_corruption(CORRUPT_BALROG_WINGS)) &&
+	    (!player_has_corruption(CORRUPT_BALROG_STRENGTH)) &&
+	    (!player_has_corruption(CORRUPT_BALROG_FORM)))
+	{
+		dispel_evil(0);
+	}
 }
 
 cptr get_spell_info(s32b s)
