@@ -2618,7 +2618,6 @@ errr file_character(cptr name, bool_ full)
 
 	/* List the patches */
 	hook_file = fff;
-	exec_lua("patchs_list()");
 
 	fprintf(fff, "\n\n  [Miscellaneous information]\n");
 	if (joke_monsters)

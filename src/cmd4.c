@@ -2810,7 +2810,6 @@ void do_cmd_version(void)
 	           get_version_string(),
 	           modules[game_module_idx].meta.author.name,
 		   modules[game_module_idx].meta.author.email);
-	call_lua("patchs_display", "()", "");
 }
 
 

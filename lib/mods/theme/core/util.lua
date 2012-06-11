@@ -20,32 +20,6 @@ end
 
 set_safe_globals()
 
--- Patch modules
-__patch_modules = {}
-
-function patch_version(name, version)
-	assert(not __patch_modules[name], "Patch " .. name .. " already loaded!!!")
-	__patch_modules[name] = version
-end
-
-function patchs_list()
-	local k, e, first
-	first = FALSE
-	for k, e in __patch_modules do
-		if first == FALSE then print_hook("\n\n  [Patch modules]\n") first = TRUE end
-		print_hook("\n "..k.." version "..e)
-	end
-	if first == TRUE then print_hook("\n") end
-end
-
-function patchs_display()
-	local k, e
-	for k, e in __patch_modules do
-		msg_print("Patch: "..k.." version "..e)
-	end
-end
-
-
 -- Better hook interface
 __hooks_list_callback = {}
 __hooks_list_callback_max = 0
