@@ -396,13 +396,6 @@ char lua_msg_box(cptr title)
 
 
 
-int get_lua_list_size(cptr list_var)
-{
-	char buf[128];
-	sprintf(buf, "return getn(%s)", list_var);
-	return exec_lua(buf);
-}
-
 void increase_mana(int delta)
 {
 	p_ptr->csp += delta;
