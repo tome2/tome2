@@ -1491,6 +1491,29 @@ static eff_type *geomancy_find_effect(eff_type effs[], int feat)
 	return NULL;
 }
 
+static u32b dir_to_eff_flags(int dir)
+{
+	assert(dir >= 1);
+	assert(dir <= 9);
+
+	switch (dir)
+	{
+	case 1: return EFF_DIR1;
+	case 2: return EFF_DIR2;
+	case 3: return EFF_DIR3;
+	case 4: return EFF_DIR4;
+	case 5: return 0;
+	case 6: return EFF_DIR6;
+	case 7: return EFF_DIR7;
+	case 8: return EFF_DIR8;
+	case 9: return EFF_DIR9;
+	default:
+		assert(FALSE);
+	}
+	/* Default */
+	return 0;
+}
+
 casting_result geomancy_elemental_wave(int item)
 {
 	int dir = 0, y = 0, x = 0;
@@ -1531,11 +1554,7 @@ casting_result geomancy_elemental_wave(int item)
 	else
 	{
 		s16b typ = eff_ptr->low_effect;
-		char buf[16];
-		s32b EFF_DIR;
-
-		sprintf(buf, "EFF_DIR%d", dir);
-		EFF_DIR = get_lua_int(buf);
+		u32b dir_flag = dir_to_eff_flags(dir);
 
 		if (get_level_s(ELEMENTAL_WAVE, 50) >= 20)
 		{
@@ -1549,7 +1568,7 @@ casting_result geomancy_elemental_wave(int item)
 			  eff_ptr->damage,
 			  0,
 			  6 + get_level_s(ELEMENTAL_WAVE, 20),
-			  EFF_WAVE + EFF_LAST + EFF_DIR);
+			  EFF_WAVE + EFF_LAST + dir_flag);
 
 		return CAST_OBVIOUS;
 	}

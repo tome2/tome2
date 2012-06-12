@@ -8385,9 +8385,8 @@ void channel_the_elements(int y, int x, int level)
 
 	case FEAT_SAND:
 	{
-		int type, dur, FIERYAURA;
+		int type, dur;
 		
-		FIERYAURA = get_lua_int("FIERYAURA");
 		type = (get_level(FIERYAURA, 50, 1) >= 8) ? SHIELD_GREAT_FIRE : SHIELD_FIRE;
 
 		dur = randint(20) + level + get_skill(SKILL_AIR);

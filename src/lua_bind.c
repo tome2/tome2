@@ -396,13 +396,6 @@ char lua_msg_box(cptr title)
 
 
 
-int get_lua_int(cptr name)
-{
-	char buf[128];
-	sprintf(buf, "return %s", name);
-	return exec_lua(buf);
-}
-
 int get_lua_list_size(cptr list_var)
 {
 	char buf[128];

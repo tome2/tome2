@@ -2380,7 +2380,6 @@ extern s16b    add_new_power(cptr name, cptr desc, cptr gain, cptr lose, byte le
 extern void find_position(int y, int x, int *yy, int *xx);
 
 extern s16b    add_new_gods(char *name);
-extern int     get_lua_int(cptr name);
 extern int     get_lua_list_size(cptr list_name);
 
 extern bool_    get_com_lua(cptr promtp, int *com);
