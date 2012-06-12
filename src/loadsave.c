@@ -2539,7 +2539,6 @@ static bool_ do_savefile_aux(int flag)
 
 	byte tmp8u;
 	u16b tmp16u;
-	u32b tmp32u;
 
 	bool_ *reals;
 	u16b real_max = 0;
