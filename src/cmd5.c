@@ -17,8 +17,6 @@
 
 #include <assert.h>
 
-extern lua_State *L;
-
 /* Maximum number of tries for teleporting */
 #define MAX_TRIES 300
 
