@@ -3523,9 +3523,9 @@ bool_ txt_to_html(cptr head, cptr foot, cptr base, cptr ext, bool_ force, bool_ 
 	/* Char array type of hyperlink info */
 	hyperlink_type *h_ptr;
 
-	cptr file_ext;
-	cptr link_prefix;
-	cptr link_suffix;
+	cptr file_ext = "html";
+	cptr link_prefix = "";
+	cptr link_suffix = "";
 
 	/* Pointer to general buffer in the above */
 	char *buf;
@@ -3541,14 +3541,6 @@ bool_ txt_to_html(cptr head, cptr foot, cptr base, cptr ext, bool_ force, bool_ 
 	{
 		h_ptr->link_x[i] = -1;
 	}
-
-	/* Parse it(yeah lua is neat :) */
-	tome_dofile_anywhere(ANGBAND_DIR_HELP, "def.aux", TRUE);
-
-	/* Ok now get the parameters */
-	file_ext = string_exec_lua("return file_ext");
-	link_prefix = string_exec_lua("return link_prefix");
-	link_suffix = string_exec_lua("return link_suffix");
 
 	sprintf(buf_name, "%s.%s", base, file_ext);
 
