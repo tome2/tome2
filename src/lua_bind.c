@@ -13,10 +13,6 @@
 #include "angband.h"
 #include <assert.h>
 
-#include "lua.h"
-#include "tolua.h"
-extern lua_State *L;
-
 s16b can_spell_random(s16b spell_idx)
 {
 	return spell_at(spell_idx)->random_type;

@@ -2652,8 +2652,7 @@ void init_angband(void)
 	wipe_hooks();
 
 	/* Initialise some other arrays */
-	note("[Initialising lua scripting... (lua)]");
-	init_lua();
+	note("[Initialising scripting... (script)]");
 	init_lua_init();
 
 	/* Initialise skills info */

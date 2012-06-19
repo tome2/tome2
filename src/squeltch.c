@@ -11,8 +11,6 @@
  */
 
 #include "angband.h"
-#include "lua/lua.h"
-#include "tolua.h"
 #include <jansson.h>
 
 #define RULES_MAX 4096

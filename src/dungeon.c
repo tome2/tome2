@@ -11,11 +11,7 @@
  */
 
 #include "angband.h"
-#include "lua/lua.h"
-#include "tolua.h"
 #include <assert.h>
-
-extern lua_State* L;
 
 #define TY_CURSE_CHANCE 100
 #define DG_CURSE_CHANCE 50

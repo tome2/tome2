@@ -202,9 +202,6 @@ bool_ select_module()
 {
 	s32b k, sel, max;
 
-	/* Init some lua */
-	init_lua();
-
 	/* How many modules? */
 	max = MAX_MODULES;
 

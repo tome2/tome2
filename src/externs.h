@@ -2345,15 +2345,7 @@ extern bool_ easy_floor;
 
 
 /* script.c */
-extern void init_lua(void);
 extern void init_lua_init(void);
-extern int exec_lua(char *file);
-extern cptr string_exec_lua(char *file);
-extern bool_ tome_dofile(char *file);
-extern bool_ tome_dofile_anywhere(cptr dir, char *file, bool_ test_exist);
-extern void dump_lua_stack(int min, int max);
-extern bool_ call_lua(cptr function, cptr args, cptr ret, ...);
-extern bool_ get_lua_var(cptr name, char type, void *arg);
 
 /* modules.c */
 extern void module_reset_dir(cptr dir, cptr new_path);

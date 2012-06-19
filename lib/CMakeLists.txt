@@ -5,7 +5,6 @@ INSTALL(FILES
 INSTALL(DIRECTORY 
   apex
   cmov
-  core
   data
   dngn
   edit

@@ -406,7 +406,7 @@ static bool_ fireproof_stair_hook(char *fmt)
 	}
 	else
 	{
-		bool ret;
+		bool_ ret;
 
 		if (cave[p_ptr->py][p_ptr->px].feat != FEAT_LESS)
 		{

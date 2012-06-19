@@ -12,8 +12,6 @@
 
 
 #include "angband.h"
-#include "lua/lua.h"
-#include "tolua.h"
 
 #include <assert.h>
 

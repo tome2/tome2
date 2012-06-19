@@ -4558,7 +4558,6 @@
 #define MAX_HOOKS               77
 
 #define HOOK_TYPE_C             0
-#define HOOK_TYPE_LUA           1
 #define HOOK_TYPE_NEW           2
 
 /*

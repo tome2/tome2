@@ -1,6 +1,3 @@
-# Lua support code.
-ADD_SUBDIRECTORY(lua)
-
 SET(SRCS
   main-gcu.c main-x11.c main-xaw.c main-sdl.c main-gtk2.c
   z-rand.c z-util.c z-form.c z-virt.c z-term.c
@@ -19,8 +16,7 @@ SET(SRCS
   cmovie.c
   wizard2.c init2.c birth.c wizard1.c init1.c main.c 
   # Lua bits:
-  lua_bind.c script.c w_mnster.c w_player.c w_play_c.c w_z_pack.c
-  w_obj.c w_util.c w_spells.c w_dun.c
+  lua_bind.c script.c
 )
 
 # Need a few additional source files for Windows.
@@ -40,26 +36,6 @@ if(WIN32)
   endif(MINGW)
 endif(WIN32)
 
-
-# Macro for defining tolua targets.
-MACRO(TOLUA_FILE MODULE_NAME OUTPUT_FILE_NAME)
-  ADD_CUSTOM_COMMAND(
-    OUTPUT ${OUTPUT_FILE_NAME}
-    COMMAND tolua -n ${MODULE_NAME} -o ${CMAKE_CURRENT_BINARY_DIR}/${OUTPUT_FILE_NAME} ${CMAKE_CURRENT_SOURCE_DIR}/${MODULE_NAME}.pkg
-    DEPENDS tolua ${CMAKE_CURRENT_SOURCE_DIR}/${MODULE_NAME}.pkg
-    )
-  SET_SOURCE_FILES_PROPERTIES("${OUTPUT_FILE_NAME}" PROPERTIES GENERATED TRUE)
-ENDMACRO(TOLUA_FILE)
-
-# Process all the needed modules.
-TOLUA_FILE(monster w_mnster.c)
-TOLUA_FILE(player w_player.c)
-TOLUA_FILE(player_c w_play_c.c)
-TOLUA_FILE(z_pack w_z_pack.c)
-TOLUA_FILE(object w_obj.c)
-TOLUA_FILE(util w_util.c)
-TOLUA_FILE(spells w_spells.c)
-TOLUA_FILE(dungeon w_dun.c)
 
 # tome executable
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR})
