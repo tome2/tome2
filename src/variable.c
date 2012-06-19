@@ -1405,6 +1405,7 @@ bool_ option_ingame_help = TRUE;
  * Automatizer enabled status
  */
 bool_ automatizer_enabled = FALSE;
+bool_ automatizer_create = FALSE;
 
 /*
  * Location of the last teleportation thath affected the level

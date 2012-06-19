@@ -5379,7 +5379,7 @@ static void load_all_pref_files(void)
 	 * rules on save and subsequent game load. */
 	/* sprintf(buf2, "%s.atm", player_name); */
 	/* path_build(buf, sizeof(buf), ANGBAND_DIR_USER, buf2); */
-	/* automatizer_init(buf); */
+	/* automatizer_load(buf); */
 }
 
 /*

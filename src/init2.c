@@ -2698,6 +2698,9 @@ void init_angband(void)
 	/* Init random artifact names */
 	build_prob(artifact_names_list);
 
+	/* Initialize the automatizer */
+	automatizer_init();
+
 	/*** Load default user pref files ***/
 
 	/* Initialise feature info */
@@ -2727,9 +2730,9 @@ void init_angband(void)
 	/* Process that file */
 	process_pref_file(buf);
 
-	/* Initialise the automatizer */
+	/* Load automatizer rules */
 	path_build(buf, sizeof(buf), ANGBAND_DIR_USER, "automat.atm");
-	automatizer_init(buf);
+	automatizer_load(buf);
 
 	/* Done */
 	note("[Initialisation complete]");
