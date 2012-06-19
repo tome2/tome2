@@ -181,6 +181,22 @@ bool_ module_savefile_loadable(cptr savefile_mod)
 /* Did the player force a module on command line */
 cptr force_module = NULL;
 
+/* Find module index by name. Returns -1 if matching module not found */
+int find_module(cptr name)
+{
+	int i = 0;
+
+	for (i=0; i<MAX_MODULES; i++)
+	{
+		if (streq(name, modules[i].meta.name))
+		{
+			return i;
+		}
+	}
+
+	return -1;
+}
+
 /* Display possible modules and select one */
 bool_ select_module()
 {
@@ -196,15 +212,7 @@ bool_ select_module()
 	sel = -1;
 	if (force_module) {
 		/* Find module by name */
-		int i=0;
-		for (i=0; i<MAX_MODULES; i++) {
-			if (strcmp(force_module, modules[i].meta.name) == 0) {
-				break;
-			}
-		}
-		if (i<MAX_MODULES) {
-			sel = i;
-		}
+		sel = find_module(force_module);
 	}
 	/* Only a single choice */
 	if (max == 1) {

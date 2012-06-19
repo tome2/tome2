@@ -5420,7 +5420,11 @@ static void load_all_pref_files(void)
 	process_pref_file(buf);
 
 	/* Process player specific automatizer sets */
-	tome_dofile_anywhere(ANGBAND_DIR_USER, format("%s.atm", player_name), FALSE);
+	/* TODO: Disabled temporarily because it causes duplicate
+	 * rules on save and subsequent game load. */
+	/* sprintf(buf2, "%s.atm", player_name); */
+	/* path_build(buf, sizeof(buf), ANGBAND_DIR_USER, buf2); */
+	/* automatizer_init(buf); */
 }
 
 /*

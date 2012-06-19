@@ -994,7 +994,7 @@ extern u32b fake_text_size;
 extern bool_ gen_joke_monsters(void *data, void *in, void *out);
 
 /* loadsave.c */
-extern bool_ file_exist(char *buf);
+extern bool_ file_exist(cptr buf);
 extern s16b rd_variable(void);
 extern void wr_variable(s16b *var);
 extern void wr_scripts(void);
@@ -2275,7 +2275,7 @@ extern void squeltch_grid(void);
 extern void do_cmd_automatizer(void);
 extern void automatizer_add_rule(object_type *o_ptr, bool_ destroy);
 extern bool_ automatizer_create;
-
+extern void automatizer_init(cptr file_name);
 
 
 /*
@@ -2363,6 +2363,7 @@ extern bool_ module_savefile_loadable(cptr savefile_mod);
 extern void tome_intro();
 extern void theme_intro();
 extern void init_hooks_module();
+extern int find_module(cptr name);
 
 
 /* lua_bind.c */

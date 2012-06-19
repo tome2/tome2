@@ -2779,8 +2779,8 @@ void init_angband(void)
 	process_pref_file(buf);
 
 	/* Initialise the automatizer */
-	tome_dofile_anywhere(ANGBAND_DIR_CORE, "auto.lua", TRUE);
-	tome_dofile_anywhere(ANGBAND_DIR_USER, "automat.atm", FALSE);
+	path_build(buf, sizeof(buf), ANGBAND_DIR_USER, "automat.atm");
+	automatizer_init(buf);
 
 	/* Done */
 	note("[Initialisation complete]");

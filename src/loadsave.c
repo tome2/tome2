@@ -854,7 +854,7 @@ bool_ save_player(void)
 	return (result);
 }
 
-bool_ file_exist(char *buf)
+bool_ file_exist(cptr buf)
 {
 	int fd;
 	bool_ result;
