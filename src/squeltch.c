@@ -1289,7 +1289,7 @@ static bool_* automatizer_auto_pickup(object_type *o_ptr, int item_idx)
 static bool_ apply_rule(arule_type *rule, object_type *o_ptr, int item_idx)
 {
 	/* Check module */
-	if (rule->module_idx == game_module_idx)
+	if (rule->module_idx != game_module_idx)
 	{
 		return FALSE;
 	}
