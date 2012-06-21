@@ -4,16 +4,11 @@
 #include "spell_type_fwd.h"
 
 #include "h-type.h"
+#include "types_fwd.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-/*
- * Forward declarations
- */
-struct device_allocation;
-struct range_type;
 
 /*
  * Casting type

@@ -1,5 +1,7 @@
 /* File: types.h */
 
+#include "types_fwd.h"
+
 /* Purpose: global type declarations */
 
 /*
