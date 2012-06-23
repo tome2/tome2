@@ -520,7 +520,7 @@ int print_spell(cptr label_, byte color, int y, s32b s)
 
 	if (!na)
 	{
-		sprintf(level_str, "%3d", level);
+		sprintf(level_str, "%3d", (int) level);
 	}
 
 	sprintf(buf, "%s%-20s%-16s   %s %4d %3d%% %s",
@@ -529,7 +529,7 @@ int print_spell(cptr label_, byte color, int y, s32b s)
 		sch_str,
 		level_str,
 		get_mana(s),
-		spell_chance(s),
+		(int) spell_chance(s),
 		spell_info);
 	c_prt(color, buf, y, 0);
 
