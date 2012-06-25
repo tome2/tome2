@@ -89,6 +89,9 @@ Compiling on Windows using MinGW
 
 (See http://www.mingw.org/)
 
+The source MUST be unpacked in a directory without spaces in the
+name.
+
 To compile on Windows using MinGW, use the commands
 
        $ cmake -G "MinGW Makefiles"
