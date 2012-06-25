@@ -240,6 +240,7 @@
 #define PRIVATE_USER_PATH_MODULES
 #else
 #define PRIVATE_USER_PATH "~/.tome"
+#define PRIVATE_USER_PATH_APEX
 #endif
 
 /*
