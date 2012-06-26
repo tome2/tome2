@@ -13,18 +13,6 @@
 #include "angband.h"
 
 
-/*
- * Hack -- Link a copyright message into the executable
- */
-cptr copyright[5] =
-{
-	"Copyright (c) 1989 James E. Wilson, Robert A. Keoneke",
-	"",
-	"This software may be copied and distributed for educational, research,",
-	"and not for profit purposes provided that this copyright and statement",
-	"are included in all such copies."
-};
-
 int max_macrotrigger = 0;
 char *macro_template = NULL;
 char *macro_modifier_chr;
