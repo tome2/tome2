@@ -5486,16 +5486,12 @@ void play_game(bool_ new_game)
 		}
 	}
 
-#if 1
-
 	/* Process old character */
 	if (!new_game)
 	{
 		/* Process the player name */
 		process_player_name(FALSE);
 	}
-
-#endif
 
 	/* Init the RNG */
 	if (Rand_quick)

@@ -501,20 +501,10 @@ static void image_random(byte *ap, char *cp)
 /*
  * The 16x16 tile of the terrain supports lighting
  */
-#if 1
-
-#define feat_supports_lighting(F) \
-((f_info[F].flags1 & FF1_SUPPORT_LIGHT) != 0)
-
-#else
-
 static bool_ feat_supports_lighting(byte feat)
 {
-	if (f_info[feat].flags1 & FF1_SUPPORT_LIGHT) return TRUE;
-	else return FALSE;
+	return (f_info[feat].flags1 & FF1_SUPPORT_LIGHT) != 0;
 }
-
-#endif
 
 
 char get_shimmer_color()

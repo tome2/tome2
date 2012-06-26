@@ -586,29 +586,12 @@ void place_new_way(int *y, int *x)
 		/* Check if it connects to current dungeon */
 		while (in_bounds(yy, xx))
 		{
-#if 1
-
 			/* Check grids ahead */
 			if (is_safe_floor(yy + y0, xx + x0)) ok = TRUE;
 
 			/* Check side grids */
 			if (is_safe_floor(yy + y1, xx + x1)) ok = TRUE;
 			if (is_safe_floor(yy + y2, xx + x2)) ok = TRUE;
-
-#else
-
-			/*
-			* This can create unconnected sections if it bumps into a
-			* non-penetrating streamer
-			*/
-			/* Check grids ahead */
-			if (cave_floor_bold(yy + y0, xx + x0)) ok = TRUE;
-
-			/* Check side grids */
-			if (cave_floor_bold(yy + y1, xx + x1)) ok = TRUE;
-			if (cave_floor_bold(yy + y2, xx + x2)) ok = TRUE;
-
-#endif
 
 			/* Connected */
 			if (ok) break;

@@ -548,7 +548,6 @@ static BYTE win_pal[256] =
 static bool_ special_key[256];
 static bool_ ignore_key[256];
 
-#if 1
 /*
  * Hack -- initialization list for "special_key"
  */
@@ -573,88 +572,6 @@ static byte ignore_key_list[] = {
 	VK_SHIFT, VK_CONTROL, VK_MENU, VK_LWIN, VK_RWIN,
 	VK_LSHIFT, VK_RSHIFT, VK_LCONTROL, VK_RCONTROL, VK_LMENU, VK_RMENU, 0
 };
-
-#else
-/*
-* Hack -- initialization list for "special_key"
-*
-* We ignore the modifier keys (shift, control, alt, num lock, scroll lock),
-* and the normal keys (escape, tab, return, letters, numbers, etc), but we
-* catch the keypad keys (with and without numlock set, including keypad 5),
-* the function keys (including the "menu" key which maps to F10), and the
-* "pause" key (between scroll lock and numlock).  We also catch a few odd
-* keys which I do not recognize, but which are listed among keys which we
-* do catch, so they should be harmless to catch.
-*/
-static byte special_key_list[] =
-{
-	VK_CLEAR, 		/* 0x0C (KP<5>) */
-
-	VK_PAUSE, 		/* 0x13 (pause) */
-
-	VK_PRIOR, 		/* 0x21 (KP<9>) */
-	VK_NEXT, 		/* 0x22 (KP<3>) */
-	VK_END, 			/* 0x23 (KP<1>) */
-	VK_HOME, 		/* 0x24 (KP<7>) */
-	VK_LEFT, 		/* 0x25 (KP<4>) */
-	VK_UP, 			/* 0x26 (KP<8>) */
-	VK_RIGHT, 		/* 0x27 (KP<6>) */
-	VK_DOWN, 		/* 0x28 (KP<2>) */
-	VK_SELECT, 		/* 0x29 (?????) */
-	VK_PRINT, 		/* 0x2A (?????) */
-	VK_EXECUTE, 		/* 0x2B (?????) */
-	VK_SNAPSHOT, 	/* 0x2C (?????) */
-	VK_INSERT, 		/* 0x2D (KP<0>) */
-	VK_DELETE, 		/* 0x2E (KP<.>) */
-	VK_HELP, 		/* 0x2F (?????) */
-
-#if 0
-	VK_NUMPAD0, 		/* 0x60 (KP<0>) */
-	VK_NUMPAD1, 		/* 0x61 (KP<1>) */
-	VK_NUMPAD2, 		/* 0x62 (KP<2>) */
-	VK_NUMPAD3, 		/* 0x63 (KP<3>) */
-	VK_NUMPAD4, 		/* 0x64 (KP<4>) */
-	VK_NUMPAD5, 		/* 0x65 (KP<5>) */
-	VK_NUMPAD6, 		/* 0x66 (KP<6>) */
-	VK_NUMPAD7, 		/* 0x67 (KP<7>) */
-	VK_NUMPAD8, 		/* 0x68 (KP<8>) */
-	VK_NUMPAD9, 		/* 0x69 (KP<9>) */
-	VK_MULTIPLY, 	/* 0x6A (KP<*>) */
-	VK_ADD, 			/* 0x6B (KP<+>) */
-	VK_SEPARATOR, 	/* 0x6C (?????) */
-	VK_SUBTRACT, 	/* 0x6D (KP<->) */
-	VK_DECIMAL, 		/* 0x6E (KP<.>) */
-	VK_DIVIDE, 		/* 0x6F (KP</>) */
-#endif
-
-	VK_F1, 			/* 0x70 */
-	VK_F2, 			/* 0x71 */
-	VK_F3, 			/* 0x72 */
-	VK_F4, 			/* 0x73 */
-	VK_F5, 			/* 0x74 */
-	VK_F6, 			/* 0x75 */
-	VK_F7, 			/* 0x76 */
-	VK_F8, 			/* 0x77 */
-	VK_F9, 			/* 0x78 */
-	VK_F10, 			/* 0x79 */
-	VK_F11, 			/* 0x7A */
-	VK_F12, 			/* 0x7B */
-	VK_F13, 			/* 0x7C */
-	VK_F14, 			/* 0x7D */
-	VK_F15, 			/* 0x7E */
-	VK_F16, 			/* 0x7F */
-	VK_F17, 			/* 0x80 */
-	VK_F18, 			/* 0x81 */
-	VK_F19, 			/* 0x82 */
-	VK_F20, 			/* 0x83 */
-	VK_F21, 			/* 0x84 */
-	VK_F22, 			/* 0x85 */
-	VK_F23, 			/* 0x86 */
-	VK_F24, 			/* 0x87 */
-
-	0
-};
-#endif
 
 
 /*

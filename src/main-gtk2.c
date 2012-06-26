@@ -3586,7 +3586,6 @@ static gboolean keypress_event_handler(
         GdkEventKey *event,
         gpointer user_data)
 {
-#if 1
 	int i, mc, ms, mo, mx;
 
 	char msg[128];
@@ -3703,123 +3702,6 @@ static gboolean keypress_event_handler(
 	}
 
 	return (TRUE);
-
-#else
-	int i, mc, ms, mo, mx;
-
-	char msg[128];
-
-
-	/* Extract four "modifier flags" */
-	mc = (event->state & GDK_CONTROL_MASK) ? TRUE : FALSE;
-	ms = (event->state & GDK_SHIFT_MASK) ? TRUE : FALSE;
-	mo = (event->state & GDK_MOD1_MASK) ? TRUE : FALSE;
-	mx = (event->state & GDK_MOD3_MASK) ? TRUE : FALSE;
-	printf("0=%d 9=%d;; keyval=%d; mc=%d, ms=%d  ::=:: ", GDK_KP_0, GDK_KP_9, event->keyval, mc, ms);
-	/* Enqueue the normal key(s) */
-	for (i = 0; i < event->length; i++) printf("%d;", event->string[i]);
-	printf("\n");
-
-	/*
-	* Hack XXX
-	* Parse shifted numeric (keypad) keys specially.
-	*/
-	if ((event->state & GDK_SHIFT_MASK)
-	                && (event->keyval >= GDK_KP_Left) && (event->keyval <= GDK_KP_Delete))
-	{
-		/* Build the macro trigger string */
-		strnfmt(msg, 128, "%cS_%X%c", 31, event->keyval, 13);
-		printf("%cS_%X%c", 31, event->keyval, 13);
-
-		/* Enqueue the "macro trigger" string */
-		for (i = 0; msg[i]; i++) Term_keypress(msg[i]);
-
-		/* Hack -- auto-define macros as needed */
-		if (event->length && (macro_find_exact(msg) < 0))
-		{
-			/* Create a macro */
-			macro_add(msg, event->string);
-		}
-
-		return (TRUE);
-	}
-
-	/* Normal keys with no modifiers */
-	if (event->length && !mo && !mx)
-	{
-		/* Enqueue the normal key(s) */
-		for (i = 0; i < event->length; i++) Term_keypress(event->string[i]);
-
-		/* All done */
-		return (TRUE);
-	}
-
-	/* Handle a few standard keys (bypass modifiers) XXX XXX XXX */
-	switch ((uint) event->keyval)
-	{
-	case GDK_Escape:
-		{
-			Term_keypress(ESCAPE);
-			return (TRUE);
-		}
-
-	case GDK_Return:
-		{
-			Term_keypress('\r');
-			return (TRUE);
-		}
-
-	case GDK_Tab:
-		{
-			Term_keypress('\t');
-			return (TRUE);
-		}
-
-	case GDK_Delete:
-	case GDK_BackSpace:
-		{
-			Term_keypress('\010');
-			return (TRUE);
-		}
-
-	case GDK_Shift_L:
-	case GDK_Shift_R:
-	case GDK_Control_L:
-	case GDK_Control_R:
-	case GDK_Caps_Lock:
-	case GDK_Shift_Lock:
-	case GDK_Meta_L:
-	case GDK_Meta_R:
-	case GDK_Alt_L:
-	case GDK_Alt_R:
-	case GDK_Super_L:
-	case GDK_Super_R:
-	case GDK_Hyper_L:
-	case GDK_Hyper_R:
-		{
-			/* Hack - do nothing to control characters */
-			return (TRUE);
-		}
-	}
-
-	/* Build the macro trigger string */
-	strnfmt(msg, 128, "%c%s%s%s%s_%X%c", 31,
-	        mc ? "N" : "", ms ? "S" : "",
-	        mo ? "O" : "", mx ? "M" : "",
-	        event->keyval, 13);
-
-	/* Enqueue the "macro trigger" string */
-	for (i = 0; msg[i]; i++) Term_keypress(msg[i]);
-
-	/* Hack -- auto-define macros as needed */
-	if (event->length && (macro_find_exact(msg) < 0))
-	{
-		/* Create a macro */
-		macro_add(msg, event->string);
-	}
-
-	return (TRUE);
-#endif
 }
 
 
