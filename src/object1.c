@@ -1509,7 +1509,7 @@ void object_desc(char *buf, object_type *o_ptr, int pref, int mode)
 			}
 			else
 			{
-				call_lua("get_mimic_info", "(d,s)", "s", o_ptr->pval2, "name", &modstr);
+				modstr = get_mimic_name(o_ptr->pval2);
 			}
 			if (((plain_descriptions) && (aware)) || o_ptr->ident & IDENT_STOREB)
 				basenm = "& Potion~";
@@ -1540,7 +1540,7 @@ void object_desc(char *buf, object_type *o_ptr, int pref, int mode)
 			show_armour = TRUE;
 			if (o_ptr->sval == SV_MIMIC_CLOAK)
 			{
-				call_lua("get_mimic_info", "(d,s)", "s", o_ptr->pval2, "obj_name", &modstr);
+				modstr = get_mimic_object_name(o_ptr->pval2);
 			}
 			break;
 		}
@@ -2824,10 +2824,29 @@ void display_ammo_damage(object_type *o_ptr)
 }
 
 /*
+ * Describe the device spell
+ */
+static void print_device_desc(int s)
+{
+	string_list *sl;
+	struct sglib_string_list_iterator it;
+
+	for (sl = sglib_string_list_it_init(&it, school_spells[s].description);
+	     sl != NULL;
+	     sl = sglib_string_list_it_next(&it))
+	{
+		text_out("\n");
+		text_out(sl->s);
+	}
+}
+
+/*
  * Describe a magic stick powers
  */
 void describe_device(object_type *o_ptr)
 {
+	char buf[128];
+
 	/* Wands/... of shcool spell */
 	if (((o_ptr->tval == TV_WAND) || (o_ptr->tval == TV_STAFF)) && object_known_p(o_ptr))
 	{
@@ -2835,19 +2854,21 @@ void describe_device(object_type *o_ptr)
 		set_stick_mode(o_ptr);
 
 		text_out("\nSpell description:");
-		exec_lua(format("print_device_desc(%d)", o_ptr->pval2));
+		print_device_desc(o_ptr->pval2);
 
 		text_out("\nSpell level: ");
-		text_out_c(TERM_L_BLUE, string_exec_lua(format("return tostring(get_level(%d, 50, 0))", o_ptr->pval2)));
+		sprintf(buf, FMTs32b, get_level(o_ptr->pval2, 50, 0));
+		text_out_c(TERM_L_BLUE, buf);
 
 		text_out("\nMinimum Magic Device level to increase spell level: ");
 		text_out_c(TERM_L_BLUE, format("%d", school_spells[o_ptr->pval2].skill_level));
 
 		text_out("\nSpell fail: ");
-		text_out_c(TERM_GREEN, string_exec_lua(format("return tostring(spell_chance(%d))", o_ptr->pval2)));
+		sprintf(buf, FMTs32b, spell_chance(o_ptr->pval2));
+		text_out_c(TERM_GREEN, buf);
 
 		text_out("\nSpell info: ");
-		text_out_c(TERM_YELLOW, string_exec_lua(format("return __spell_info[%d]()", o_ptr->pval2)));
+		text_out_c(TERM_YELLOW, get_spell_info(o_ptr->pval2));
 
 		/* Leave device mode  */
 		unset_stick_mode();
@@ -4008,6 +4029,24 @@ s16b wield_slot_ideal(object_type *o_ptr, bool_ ideal)
 	if (process_hooks_ret(HOOK_WIELD_SLOT, "d", "(O,d)", o_ptr, ideal))
 		return process_hooks_return[0].num;
 
+	/* Theme has restrictions for winged races. */
+	if (game_module_idx == MODULE_THEME)
+	{
+		cptr race_name = rp_ptr->title + rp_name;
+
+		if (streq(race_name, "Dragon") ||
+		    streq(race_name, "Eagle"))
+		{
+			switch (o_ptr->tval)
+			{
+			case TV_CLOAK:
+			case TV_HARD_ARMOR:
+			case TV_DRAG_ARMOR:
+				return -1;
+			}
+		}
+	}
+
 	/* Slot for equipment */
 	switch (o_ptr->tval)
 	{
@@ -4144,6 +4183,25 @@ s16b wield_slot_ideal(object_type *o_ptr, bool_ ideal)
 					return get_slot(INVEN_AMMO);
 			}
 			return -1;
+		}
+
+	case TV_DAEMON_BOOK:
+		{
+			int slot = -1;
+
+			switch (o_ptr->sval)
+			{
+			case SV_DEMONBLADE : slot = INVEN_WIELD; break;
+			case SV_DEMONSHIELD: slot = INVEN_ARM; break;
+			case SV_DEMONHORN  : slot = INVEN_HEAD; break;
+			}
+
+			if ((slot >= 0) && (!ideal))
+			{
+				slot = get_slot(slot);
+			}
+
+			return slot;
 		}
 	}
 
@@ -6134,6 +6192,15 @@ void object_pickup(int this_o_idx)
 		/* Tell the scripts */
 		if (process_hooks(HOOK_GET, "(O,d)", o_ptr, this_o_idx))
 			return;
+
+		/* Hooks */
+		{
+			hook_get_in in = { o_ptr, this_o_idx };
+			if (process_hooks_new(HOOK_GET, &in, NULL))
+			{
+				return;
+			}
+		}
 
 		q_ptr = &p_ptr->inventory[INVEN_AMMO];
 

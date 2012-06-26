@@ -44,6 +44,30 @@ void abandon_god(int god)
 }
 
 /*
+ * Check if god may be followed by player
+ */
+static bool_ may_follow_god(int god)
+{
+	if (god == GOD_MELKOR)
+	{
+		int i;
+
+		/* Check if player has wielded The One Ring */
+		for (i = INVEN_WIELD; i < INVEN_TOTAL; i++)
+		{
+			if (p_ptr->inventory[i].name1 == ART_POWER)
+			{
+				msg_print("The One Ring has corrupted "
+					  "you, and you are rejected.");
+				return FALSE;
+			}
+		}
+	}
+	/* Default is to allow */
+	return TRUE;
+}
+
+/*
  * Get a religion
  */
 void follow_god(int god, bool_ silent)
@@ -56,7 +80,7 @@ void follow_god(int god, bool_ silent)
 	}
 
 	/* Are we allowed ? */
-	if (process_hooks(HOOK_FOLLOW_GOD, "(d,s)", god, "ask"))
+	if (!may_follow_god(god))
 		return;
 
 	if (p_ptr->pgod == GOD_NONE)
@@ -69,9 +93,6 @@ void follow_god(int god, bool_ silent)
 			s_info[SKILL_UDUN].hidden = FALSE;
 			if (!silent) msg_print("You feel the dark powers of Melkor in you.  You can now use the Udun skill.");
 		}
-
-		/* Anything to be done? */
-		process_hooks(HOOK_FOLLOW_GOD, "(d,s)", god, "done");
 	}
 }
 
@@ -125,15 +146,55 @@ int wisdom_scale(int max)
 	return (i * max) / 37;
 }
 
+/*
+ * Get deity info for a given god index.
+ * Returns NULL for the "atheist" god.
+ */
+deity_type *god_at(byte god_idx)
+{
+	assert(god_idx >= 0);
+	assert(god_idx < MAX_GODS);
+
+	if (god_idx == 0)
+	{
+		return NULL;
+	}
+
+	return &deity_info[god_idx];
+}
+
+/*
+ * Check if god is enabled for the current module
+ */
+bool_ god_enabled(struct deity_type *deity)
+{
+	int i;
+
+	for (i = 0; deity->modules[i] != -1; i++)
+	{
+		if (deity->modules[i] == game_module_idx)
+		{
+			return TRUE;
+		}
+	}
+	/* Not enabled */
+	return FALSE;
+}
+
 /* Find a god by name */
 int find_god(cptr name)
 {
 	int i;
 
-	for (i = 0; i < max_gods; i++)
+	for (i = 0; i < MAX_GODS; i++)
 	{
-		/* The name matches */
-		if (streq(deity_info[i].name, name)) return (i);
+		/* The name matches and god is "enabled" for the
+		   current module. */
+		if (god_enabled(&deity_info[i]) &&
+		    streq(deity_info[i].name, name))
+		{
+			return (i);
+		}
 	}
 	return -1;
 }

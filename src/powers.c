@@ -1221,7 +1221,32 @@ static void power_activate(int power)
 		use_ability_blade();
 		break;
 
+	case POWER_INVISIBILITY:
+		set_invis(20 + randint(30), 30);
+		break;
+
+	case POWER_WEB:
+		/* Warning, beware of f_info changes .. I hate to do that .. */
+		grow_things(16, 1 + (p_ptr->lev / 10));
+		break;
+
+	case POWER_COR_SPACE_TIME:
+		if (p_ptr->corrupt_anti_teleport_stopped)
+		{
+			p_ptr->corrupt_anti_teleport_stopped = FALSE;
+			msg_print("You stop controlling your corruption.");
+			p_ptr->update |= PU_BONUS;
+		}
+		else
+		{
+			p_ptr->corrupt_anti_teleport_stopped = TRUE;
+			msg_print("You start controlling your corruption, teleportation works once more.");
+			p_ptr->update |= PU_BONUS;
+		}
+		break;
+
 	default:
+
 		if (!process_hooks(HOOK_ACTIVATE_POWER, "(d)", power))
 		{
 			msg_format("Warning power_activate() called with invalid power(%d).", power);
@@ -1272,11 +1297,10 @@ static power_type* select_power(int *x_idx)
 	int max = 0, i, start = 0;
 	power_type* ret;
 	bool_ mode = FALSE;
-	int *p;
+	int p[POWER_MAX];
 
-	C_MAKE(p, power_max, int);
 	/* Count the max */
-	for (i = 0; i < power_max; i++)
+	for (i = 0; i < POWER_MAX; i++)
 	{
 		if (p_ptr->powers[i])
 		{
@@ -1350,8 +1374,6 @@ static power_type* select_power(int *x_idx)
 		character_icky = FALSE;
 	}
 
-	C_FREE(p, power_max, int);
-
 	return ret;
 }
 
@@ -1365,7 +1387,7 @@ void do_cmd_power()
 	/* Get the skill, if available */
 	if (repeat_pull(&x_idx))
 	{
-		if ((x_idx < 0) || (x_idx >= power_max)) return;
+		if ((x_idx < 0) || (x_idx >= POWER_MAX)) return;
 		x_ptr = &powers_type[x_idx];
 		push = FALSE;
 	}
@@ -1373,7 +1395,7 @@ void do_cmd_power()
 	else
 	{
 		x_idx = command_arg - 1;
-		if ((x_idx < 0) || (x_idx >= power_max)) return;
+		if ((x_idx < 0) || (x_idx >= POWER_MAX)) return;
 		x_ptr = &powers_type[x_idx];
 	}
 

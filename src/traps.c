@@ -2062,6 +2062,17 @@ void place_trap(int y, int x)
 
 
 /*
+ * Place a leveled trap at given position
+ */
+void place_trap_leveled(int y, int x, int lev)
+{
+	int prev_dun_level = dun_level;
+	dun_level = lev;
+	place_trap(y,x);
+	dun_level = prev_dun_level;
+}
+
+/*
  * Places a random trap on the given chest.
  *
  * The object must be a valid chest.

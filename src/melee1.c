@@ -2877,7 +2877,7 @@ bool_ make_attack_normal(int m_idx, byte divis)
 			{
 				/* Change to resist(but never total protection) */
 /*				if (magik(3) || (magik(m_ptr->level - (p_ptr->lev / 2))))
-					call_lua("gain_corruption", "(s)", "", "Vampire");*/
+					gain_corruption("Vampire");*/
 			}
 
 			if (explode)

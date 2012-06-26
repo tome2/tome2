@@ -7,6 +7,7 @@
 #include "angband.h"
 
 static void do_byte(byte *, int);
+static void do_bool(bool_ *, int);
 static void do_u16b(u16b *, int);
 static void do_s16b(s16b *, int);
 static void do_u32b(u32b *, int);
@@ -458,6 +459,7 @@ static bool_ do_extra(int flag)
 
 	/* Gods */
 	do_s32b(&p_ptr->grace, flag);
+	do_s32b(&p_ptr->grace_delay, flag);
 	do_byte((byte*)&p_ptr->praying, flag);
 	do_s16b(&p_ptr->melkor_sacrifice, flag);
 	do_byte(&p_ptr->pgod, flag);
@@ -481,7 +483,10 @@ static bool_ do_extra(int flag)
 		p_ptr->max_plv = p_ptr->lev;
 
 	do_byte((byte*)&(p_ptr->help.enabled), flag);
-	do_u32b(&(p_ptr->help.help1), flag);
+	for (i = 0; i < HELP_MAX; i++)
+	{
+		do_bool(&(p_ptr->help.activated[i]), flag);
+	}
 
 	/* More info */
 	tmp16s = 0;
@@ -512,6 +517,7 @@ static bool_ do_extra(int flag)
 	do_s16b(&p_ptr->blessed, flag);
 	do_s16b(&p_ptr->control, flag);
 	do_byte(&p_ptr->control_dir, flag);
+	do_s16b(&p_ptr->tim_precognition, flag);
 	do_s16b(&p_ptr->tim_thunder, flag);
 	do_s16b(&p_ptr->tim_thunder_p1, flag);
 	do_s16b(&p_ptr->tim_thunder_p2, flag);
@@ -573,22 +579,29 @@ static bool_ do_extra(int flag)
 	do_s32b(&p_ptr->loan, flag);
 	do_s32b(&p_ptr->loan_time, flag);
 	do_s16b(&p_ptr->absorb_soul, flag);
+	do_s32b(&p_ptr->inertia_controlled_spell, flag);
+	do_s16b(&p_ptr->last_rewarded_level, flag);
 
 	do_s16b(&p_ptr->chaos_patron, flag);
 
-	if (flag == LS_SAVE) tmp16s = max_corruptions;
+	if (flag == LS_SAVE) { tmp16s = CORRUPTIONS_MAX; }
 	do_s16b(&tmp16s, flag);
+	if (tmp16s > CORRUPTIONS_MAX) {
+		quit("Too many corruptions");
+	}
 
 	for (i = 0; i < tmp16s; i++)
 	{
-		if ((flag == LS_SAVE) && (i < max_corruptions))
+		if (flag == LS_SAVE)
 			tmp8u = p_ptr->corruptions[i];
 
 		do_byte(&tmp8u, flag);
 
-		if ((flag == LS_LOAD) && (i < max_corruptions))
+		if (flag == LS_LOAD)
 			p_ptr->corruptions[i] = tmp8u;
 	}
+
+	do_byte((byte*)&p_ptr->corrupt_anti_teleport_stopped, flag);
 
 	do_byte(&p_ptr->confusing, flag);
 	do_byte((byte*)&p_ptr->black_breath, flag);
@@ -631,12 +644,11 @@ static bool_ do_extra(int flag)
 	/* Are we in astral mode? */
 	do_byte((byte*)&p_ptr->astral, flag);
 
-	if (flag == LS_SAVE) tmp16s = POWER_MAX_INIT;
+	if (flag == LS_SAVE) tmp16s = POWER_MAX;
 	do_s16b(&tmp16s, flag);
-	if ((flag == LS_LOAD) && (tmp16s > POWER_MAX_INIT))
+	if ((flag == LS_LOAD) && (tmp16s > POWER_MAX))
 		note(format("Too many (%u) powers!", tmp16s));
-	if (flag == LS_SAVE) tmp16s = POWER_MAX_INIT;
-	for (i = 0; i < tmp16s; i++)
+	for (i = 0; i < POWER_MAX; i++)
 		do_byte((byte*)&p_ptr->powers_mod[i], flag);
 
 	skip_ver_byte(100, flag);
@@ -693,7 +705,7 @@ static bool_ do_extra(int flag)
 	{
 		s32b ok;
 
-		call_lua("module_savefile_loadable", "(s,d)", "d", loaded_game_module, death, &ok);
+		ok = module_savefile_loadable(loaded_game_module);
 
 		/* Argh bad game module! */
 		if (!ok)
@@ -843,7 +855,7 @@ bool_ save_player(void)
 	return (result);
 }
 
-bool_ file_exist(char *buf)
+bool_ file_exist(cptr buf)
 {
 	int fd;
 	bool_ result;
@@ -1055,6 +1067,16 @@ static void do_byte(byte *v, int flag)
 	/* We should never reach here, so bail out */
 	printf("FATAL: do_byte passed %d\n", flag);
 	exit(0);
+}
+
+static void do_bool(bool_ *f, int flag)
+{
+	byte b = *f;
+	do_byte(&b, flag);
+	if (flag == LS_LOAD)
+	{
+		*f = b;
+	}
 }
 
 static void do_u16b(u16b *v, int flag)
@@ -2495,6 +2517,21 @@ void do_fate(int i, int flag)
 }
 
 /*
+ * Load/save timers.
+ */
+static void do_timers(int flag)
+{
+	timer_type *t_ptr;
+
+	for (t_ptr = gl_timers; t_ptr != NULL; t_ptr = t_ptr->next)
+	{
+		do_bool(&t_ptr->enabled, flag);
+		do_s32b(&t_ptr->delay, flag);
+		do_s32b(&t_ptr->countdown, flag);
+	}
+}
+
+/*
  * Actually read the savefile
  */
 static bool_ do_savefile_aux(int flag)
@@ -2503,7 +2540,6 @@ static bool_ do_savefile_aux(int flag)
 
 	byte tmp8u;
 	u16b tmp16u;
-	u32b tmp32u;
 
 	bool_ *reals;
 	u16b real_max = 0;
@@ -2563,6 +2599,9 @@ static bool_ do_savefile_aux(int flag)
 	if (flag == LS_SAVE)
 		strcpy(loaded_game_module, game_module);
 	do_string(loaded_game_module, 80, flag);
+
+	/* Timers */
+	do_timers(flag);
 
 	/* Read RNG state */
 	do_randomizer(flag);
@@ -2685,27 +2724,30 @@ static bool_ do_savefile_aux(int flag)
 			do_s16b(&(d_info[i].t_num), flag);
 		}
 
-		if (flag == LS_SAVE) max_quests_ldsv = MAX_Q_IDX_INIT;
-		/* Number of quests */
+		/* Sanity check number of quests */
+		if (flag == LS_SAVE) max_quests_ldsv = MAX_Q_IDX;
 		do_u16b(&max_quests_ldsv, flag);
 
 		/* Incompatible save files */
-		if ((flag == LS_LOAD) && (max_quests_ldsv > MAX_Q_IDX_INIT))
+		if ((flag == LS_LOAD) && (max_quests_ldsv != MAX_Q_IDX))
 		{
-			note(format("Too many (%u) quests!", max_quests_ldsv));
+			note(format("Invalid number of quests (%u)!", max_quests_ldsv));
 			return (FALSE);
 		}
 
-		for (i = 0; i < max_quests_ldsv; i++)
+		for (i = 0; i < MAX_Q_IDX; i++)
 		{
 			do_s16b(&quest[i].status, flag);
-			for (j = 0; j < 4; j++)
+			for (j = 0; j < sizeof(quest[i].data)/sizeof(quest[i].data[0]); j++)
 			{
 				do_s32b(&(quest[i].data[j]), flag);
 			}
 
 			/* Init the hooks */
-			if ((flag == LS_LOAD) && (quest[i].type == HOOK_TYPE_C)) quest[i].init(i);
+			if (flag == LS_LOAD)
+			{
+				quest[i].init(i);
+			}
 		}
 
 		/* Position in the wilderness */
@@ -2866,6 +2908,9 @@ static bool_ do_savefile_aux(int flag)
 	do_byte(&p_ptr->pet_open_doors, flag);
 	do_byte(&p_ptr->pet_pickup_items, flag);
 
+	/* Dripping Tread */
+	do_s16b(&p_ptr->dripping_tread, flag);
+
 	/* Read the inventory */
 	if (!do_inventory(flag) && (flag == LS_LOAD))	/* do NOT reverse this ordering */
 	{
@@ -2908,31 +2953,6 @@ static bool_ do_savefile_aux(int flag)
 	}
 
 	C_FREE(reals, max_towns, bool_);
-
-	if (flag == LS_SAVE) tmp32u = extra_savefile_parts;
-	do_u32b(&tmp32u, flag);
-	if (flag == LS_SAVE)
-	{
-		/* Save the stuff */
-		process_hooks(HOOK_SAVE_GAME, "()");
-	}
-
-	if (flag == LS_LOAD)
-	{
-		u32b len = tmp32u;
-
-		while (len)
-		{
-			char key_buf[100];
-
-			/* Load a key */
-			load_number_key(key_buf, &tmp32u);
-
-			/* Process it -- the hooks can use it or ignore it */
-			process_hooks(HOOK_LOAD_GAME, "(s,l)", key_buf, tmp32u);
-			len--;
-		}
-	}
 
 	/* I'm not dead yet... */
 	if (!death)
@@ -3248,41 +3268,4 @@ static void my_sentinel(char *place, u16b value, int flag)
 	}
 	note(format("Impossible has occurred")); 	/* Programmer error */
 	exit(0);
-}
-
-/********** Variable savefile stuff **************/
-
-/*
- * Add num slots to the savefile
- */
-void register_savefile(int num)
-{
-	extra_savefile_parts += (num > 0) ? num : 0;
-}
-
-void save_number_key(char *key, u32b val)
-{
-	byte len = strlen(key);
-
-	do_byte(&len, LS_SAVE);
-	while (*key)
-	{
-		do_byte((byte*)key, LS_SAVE);
-		key++;
-	}
-	do_u32b(&val, LS_SAVE);
-}
-
-void load_number_key(char *key, u32b *val)
-{
-	byte len, i = 0;
-
-	do_byte(&len, LS_LOAD);
-	while (i < len)
-	{
-		do_byte((byte*)&key[i], LS_LOAD);
-		i++;
-	}
-	key[i] = '\0';
-	do_u32b(val, LS_LOAD);
 }

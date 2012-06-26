@@ -2535,7 +2535,8 @@ static bool_ make_ego_item(object_type *o_ptr, bool_ good)
  */
 void charge_stick(object_type *o_ptr)
 {
-	o_ptr->pval = exec_lua(format("return get_stick_charges(%d)", o_ptr->pval2));
+	spell_type *spell = spell_at(o_ptr->pval2);
+	o_ptr->pval = dice_roll(&spell->device_charges);
 }
 
 /*
@@ -2761,9 +2762,7 @@ static void a_m_aux_2(object_type *o_ptr, int level, int power)
 				o_ptr->pval = randint(4);        /* No cursed elven cloaks...? */
 			else if (o_ptr->sval == SV_MIMIC_CLOAK)
 			{
-				s32b mimic;
-
-				call_lua("find_random_mimic_shape", "(d,d)", "d", level, TRUE, &mimic);
+				s32b mimic = find_random_mimic_shape(level, TRUE);
 				o_ptr->pval2 = mimic;
 			}
 			break;
@@ -3228,6 +3227,94 @@ static void a_m_aux_3(object_type *o_ptr, int level, int power)
 
 
 /*
+ * Get device allocation for a given spell and tval
+ */
+static device_allocation *get_device_allocation(spell_type *spell, byte tval)
+{
+	struct sglib_device_allocation_iterator it;
+	device_allocation *device_allocation;
+
+	for (device_allocation = sglib_device_allocation_it_init(&it, spell->device_allocation);
+	     device_allocation != NULL;
+	     device_allocation = sglib_device_allocation_it_next(&it))
+	{
+		if (device_allocation->tval == tval)
+		{
+			return device_allocation;
+		}
+	}
+
+	return NULL;
+}
+
+/*
+ * Get a spell for a given stick(wand, staff, rod)
+ */
+long get_random_stick(byte tval, int level)
+{
+	int tries;
+
+	for (tries = 0; tries < 1000; tries++)
+	{
+		long spell_idx = rand_int(school_spells_count);
+		spell_type *spell = spell_at(spell_idx);
+		device_allocation *device_allocation = get_device_allocation(spell, tval);
+
+		if ((device_allocation != NULL) &&
+		    (rand_int(spell->skill_level * 3) < level) &&
+		    (magik(100 - device_allocation->rarity)))
+		{
+			return spell_idx;
+		}
+	}
+
+	return -1;
+}
+
+
+/*
+ * Randomized level
+ */
+static int randomized_level_in_range(range_type *range, int level)
+{
+	s32b r = range->max - range->min;
+
+	/* The basic idea is to have a max possible level of half the dungeon level */
+	if (r * 2 > level)
+	{
+		r = level / 2;
+	}
+
+	/* Randomize a bit */
+	r = m_bonus(r, dun_level);
+
+	/* get the result */
+	return range->min + r;
+}
+
+
+/*
+ * Get a random base level
+ */
+static int get_stick_base_level(byte tval, int level, int spl)
+{
+	spell_type *spell = spell_at(spl);
+	device_allocation *device_allocation = get_device_allocation(spell, tval);
+	return randomized_level_in_range(&device_allocation->base_level, level);
+}
+
+/*
+ * Get a random max level
+ */
+static int get_stick_max_level(byte tval, int level, int spl)
+{
+	spell_type *spell = spell_at(spl);
+	device_allocation *device_allocation = get_device_allocation(spell, tval);
+	return randomized_level_in_range(&device_allocation->max_level, level);
+}
+
+
+/*
  * Apply magic to an item known to be "boring"
  *
  * Hack -- note the special code for various items
@@ -3265,9 +3352,13 @@ static void a_m_aux_4(object_type *o_ptr, int level, int power)
 
 				/* Only random ones */
 				if (magik(75))
-					i = exec_lua(format("return get_random_spell(SKILL_MAGIC, %d)", level));
+				{
+					i = get_random_spell(SKILL_MAGIC, level);
+				}
 				else
-					i = exec_lua(format("return get_random_spell(SKILL_SPIRITUALITY, %d)", level));
+				{
+					i = get_random_spell(SKILL_SPIRITUALITY, level);
+				}
 
 				/* Use globe of light(or the first one) */
 				if (i == -1)
@@ -3361,9 +3452,12 @@ static void a_m_aux_4(object_type *o_ptr, int level, int power)
 			/* Decide the spell, pval == -1 means to bypass spell selection */
 			if (o_ptr->pval != -1)
 			{
-				int spl = exec_lua("return get_random_stick(TV_WAND, dun_level)");
+				int spl = get_random_stick(TV_WAND, dun_level);
 
-				if (spl == -1) spl = exec_lua("return find_spell('Manathrust')");
+				if (spl == -1)
+				{
+					spl = MANATHRUST;
+				}
 
 				o_ptr->pval2 = spl;
 			}
@@ -3374,8 +3468,8 @@ static void a_m_aux_4(object_type *o_ptr, int level, int power)
 			}
 
 			/* Ok now get a base level */
-			call_lua("get_stick_base_level", "(d,d,d)", "d", TV_WAND, dun_level, o_ptr->pval2, &bonus_lvl);
-			call_lua("get_stick_max_level", "(d,d,d)", "d", TV_WAND, dun_level, o_ptr->pval2, &max_lvl);
+			bonus_lvl = get_stick_base_level(TV_WAND, dun_level, o_ptr->pval2);
+			max_lvl = get_stick_max_level(TV_WAND, dun_level, o_ptr->pval2);
 			o_ptr->pval3 = (max_lvl << 16) + (bonus_lvl & 0xFFFF);
 
 			/* Hack -- charge wands */
@@ -3389,9 +3483,12 @@ static void a_m_aux_4(object_type *o_ptr, int level, int power)
 			/* Decide the spell, pval == -1 means to bypass spell selection */
 			if (o_ptr->pval != -1)
 			{
-				int spl = exec_lua("return get_random_stick(TV_STAFF, dun_level)");
+				int spl = get_random_stick(TV_STAFF, dun_level);
 
-				if (spl == -1) spl = exec_lua("return find_spell('Globe of Light')");
+				if (spl == -1)
+				{
+					spl = GLOBELIGHT;
+				}
 
 				o_ptr->pval2 = spl;
 			}
@@ -3402,8 +3499,8 @@ static void a_m_aux_4(object_type *o_ptr, int level, int power)
 			}
 
 			/* Ok now get a base level */
-			call_lua("get_stick_base_level", "(d,d,d)", "d", TV_STAFF, dun_level, o_ptr->pval2, &bonus_lvl);
-			call_lua("get_stick_max_level", "(d,d,d)", "d", TV_STAFF, dun_level, o_ptr->pval2, &max_lvl);
+			bonus_lvl = get_stick_base_level(TV_STAFF, dun_level, o_ptr->pval2);
+			max_lvl = get_stick_max_level(TV_STAFF, dun_level, o_ptr->pval2);
 			o_ptr->pval3 = (max_lvl << 16) + (bonus_lvl & 0xFFFF);
 
 			/* Hack -- charge staffs */
@@ -3437,9 +3534,7 @@ static void a_m_aux_4(object_type *o_ptr, int level, int power)
 	case TV_POTION2:
 		if (o_ptr->sval == SV_POTION2_MIMIC)
 		{
-			s32b mimic;
-
-			call_lua("find_random_mimic_shape", "(d,d)", "d", level, FALSE, &mimic);
+			s32b mimic = find_random_mimic_shape(level, FALSE);
 			o_ptr->pval2 = mimic;
 		}
 		break;
@@ -3979,8 +4074,8 @@ void apply_magic(object_type *o_ptr, int lev, bool_ okay, bool_ good, bool_ grea
 				}
 
 				/* Determine a base and a max level */
-				call_lua("get_stick_base_level", "(d,d,d)", "d", o_ptr->tval, dun_level, o_ptr->pval2, &base_lvl);
-				call_lua("get_stick_max_level", "(d,d,d)", "d", o_ptr->tval, dun_level, o_ptr->pval2, &max_lvl);
+				base_lvl = get_stick_base_level(o_ptr->tval, dun_level, o_ptr->pval2);
+				max_lvl = get_stick_max_level(o_ptr->tval, dun_level, o_ptr->pval2);
 				o_ptr->pval3 = (max_lvl << 16) + (base_lvl & 0xFFFF);
 
 				/* Hack -- charge wands */

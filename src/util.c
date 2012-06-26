@@ -4318,19 +4318,6 @@ bool_ prefix(cptr s, cptr t)
 }
 
 /*
- * Rescale a value
- */
-s32b value_scale(int value, int vmax, int max, int min)
-{
-	s32b full_max = max - min;
-
-	value = (value * full_max) / vmax;
-	value += min;
-
-	return value;
-}
-
-/*
  * Displays a box
  */
 void draw_box(int y, int x, int h, int w)
@@ -4430,15 +4417,15 @@ void scansubdir(cptr dir)
 /*
  * Timers
  */
-timer_type *new_timer(cptr callback, s32b delay)
+timer_type *new_timer(void (*callback)(), s32b delay)
 {
-	timer_type *t_ptr;
+	timer_type *t_ptr = NULL;
 
 	MAKE(t_ptr, timer_type);
 	t_ptr->next = gl_timers;
 	gl_timers = t_ptr;
 
-	t_ptr->callback = string_make(callback);
+	t_ptr->callback = callback;
 	t_ptr->delay = delay;
 	t_ptr->countdown = delay;
 	t_ptr->enabled = FALSE;
@@ -4459,7 +4446,7 @@ void del_timer(timer_type *t_ptr)
 			gl_timers = t_ptr->next;
 		else
 			old->next = t_ptr->next;
-		string_free(t_ptr->callback);
+
 		FREE(t_ptr, timer_type);
 	}
 	else

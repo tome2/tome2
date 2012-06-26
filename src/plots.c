@@ -11,10 +11,7 @@
  */
 
 #include "angband.h"
-
-#include "lua/lua.h"
-#include "tolua.h"
-extern lua_State* L;
+#include <assert.h>
 
 /* #define DEBUG_HOOK */
 
@@ -39,9 +36,12 @@ void init_hooks()
 {
 	int i;
 
-	for (i = 0; i < MAX_Q_IDX_INIT; i++)
+	for (i = 0; i < MAX_Q_IDX; i++)
 	{
-		if ((quest[i].type == HOOK_TYPE_C) && (quest[i].init != NULL)) quest[i].init(i);
+		if (quest[i].init != NULL)
+		{
+			quest[i].init(i);
+		}
 	}
 }
 
@@ -105,14 +105,12 @@ hooks_chain* add_hook(int h_idx, hook_type hook, cptr name)
 	else return (c);
 }
 
-void add_hook_script(int h_idx, char *script, cptr name)
+void add_hook_new(int h_idx, bool_ (*hook_f)(void *, void *, void *), cptr name, void *data)
 {
 	hooks_chain *c = add_hook(h_idx, NULL, name);
-#ifdef DEBUG_HOOK
-	if (wizard) cmsg_format(TERM_VIOLET, "HOOK LUA ADD: %s : %s", name, script);
-#endif
-	sprintf(c->script, "%s", script);
-	c->type = HOOK_TYPE_LUA;
+	c->hook_f = hook_f;
+	c->hook_data = data;
+	c->type = HOOK_TYPE_NEW;
 }
 
 /* Remove a hook */
@@ -287,105 +285,15 @@ static bool_ vprocess_hooks_return (int h_idx, char *ret, char *fmt, va_list *ap
 				c = c->next;
 			}
 		}
-		else if (c->type == HOOK_TYPE_LUA)
+		else if (c->type == HOOK_TYPE_NEW)
 		{
-			int i = 0, nb = 0, nbr = 1;
-			int oldtop = lua_gettop(L), size;
-
-			/* Push the function */
-			lua_getglobal(L, c->script);
-
-			/* Push and count the arguments */
-			COPY(&real_ap, ap, va_list);
-			while (fmt[i])
-			{
-				switch (fmt[i++])
-				{
-				case 'd':
-				case 'l':
-					tolua_pushnumber(L, va_arg(real_ap, s32b));
-					nb++;
-					break;
-				case 's':
-					tolua_pushstring(L, va_arg(real_ap, char*));
-					nb++;
-					break;
-				case 'O':
-					tolua_pushusertype(L, (void*)va_arg(real_ap, object_type*), tolua_tag(L, "object_type"));
-					nb++;
-					break;
-				case 'M':
-					tolua_pushusertype(L, (void*)va_arg(real_ap, monster_type*), tolua_tag(L, "monster_type"));
-					nb++;
-					break;
-				case '(':
-				case ')':
-				case ',':
-					break;
-				}
-			}
-
-			/* Count returns */
-			nbr += strlen(ret);
-
-			/* Call the function */
-			if (lua_call(L, nb, nbr))
-			{
-				cmsg_format(TERM_VIOLET, "ERROR in lua_call while calling '%s' lua hook script. Breaking the hook chain now.", c->script);
-				return FALSE;
-			}
-
-			/* Number of returned values, SHOULD be the same as nbr, but I'm paranoid */
-			size = lua_gettop(L) - oldtop;
-
-			/* get the extra returns if needed */
-			for (i = 0; i < nbr - 1; i++)
-			{
-				if ((ret[i] == 'd') || (ret[i] == 'l'))
-				{
-					if (lua_isnumber(L, ( -size) + 1 + i)) process_hooks_return[i].num = tolua_getnumber(L, ( -size) + 1 + i, 0);
-					else process_hooks_return[i].num = 0;
-				}
-				else if (ret[i] == 's')
-				{
-					if (lua_isstring(L, ( -size) + 1 + i)) process_hooks_return[i].str = tolua_getstring(L, ( -size) + 1 + i, "");
-					else process_hooks_return[i].str = NULL;
-				}
-				else if (ret[i] == 'O')
-				{
-					if (tolua_istype(L, ( -size) + 1 + i, tolua_tag(L, "object_type"), 0))
-						process_hooks_return[i].o_ptr = (object_type*)tolua_getuserdata(L, ( -size) + 1 + i, NULL);
-					else
-						process_hooks_return[i].o_ptr = NULL;
-				}
-				else if (ret[i] == 'M')
-				{
-					if (tolua_istype(L, ( -size) + 1 + i, tolua_tag(L, "monster_type"), 0))
-						process_hooks_return[i].m_ptr = (monster_type*)tolua_getuserdata(L, ( -size) + 1 + i, NULL);
-					else
-						process_hooks_return[i].m_ptr = NULL;
-				}
-				else process_hooks_return[i].num = 0;
-			}
-
-			/* Get the basic return(continue or stop the hook chain) */
-			if (tolua_getnumber(L, -size, 0))
-			{
-				lua_settop(L, oldtop);
-				return (TRUE);
-			}
-			if (process_hooks_restart)
-			{
-				c = hooks_heads[h_idx];
-				process_hooks_restart = FALSE;
-			}
-			else
-				c = c->next;
-			lua_settop(L, oldtop);
+			/* Skip; handled in process_hooks_new */
+			c = c->next;
 		}
 		else
 		{
 			msg_format("Unkown hook type %d, name %s", c->type, c->name);
+			c = c->next;
 		}
 	}
 
@@ -412,6 +320,41 @@ bool_ process_hooks(int h_idx, char *fmt, ...)
 	ret = vprocess_hooks_return (h_idx, "", fmt, &ap);
 	va_end(ap);
 	return (ret);
+}
+
+bool_ process_hooks_new(int h_idx, void *in, void *out)
+{
+	hooks_chain *c = hooks_heads[h_idx];
+
+	while (c != NULL)
+	{
+		/* Only new-style hooks; skip the rest. */
+		if (c->type != HOOK_TYPE_NEW)
+		{
+			c = c->next;
+			continue;
+		}
+
+		/* Invoke hook function; stop processing if
+		   the hook returns TRUE */
+		if (c->hook_f(c->hook_data, in, out))
+		{
+			return TRUE;
+		}
+
+		/* Should we restart processing at the beginning? */
+		if (process_hooks_restart)
+		{
+			c = hooks_heads[h_idx];
+			process_hooks_restart = FALSE;
+		}
+		else
+		{
+			c = c->next;
+		}
+	}
+
+	return FALSE;
 }
 
 /******** Plots & Quest stuff ********/
@@ -471,3 +414,12 @@ bool_ quest_null_hook(int q)
 /*************************** Other plot ***************************/
 #include "q_narsil.c"
 #include "q_thrain.c"
+
+/*************************** Bounty Quest *************************/
+#include "q_bounty.c"
+
+/************************** Library Quest *************************/
+#include "q_library.c"
+
+/************************* Fireproofing Quest *********************/
+#include "q_fireprof.c"

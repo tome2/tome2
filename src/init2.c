@@ -4,6 +4,7 @@
 
 #include "angband.h"
 
+#include <assert.h>
 
 /*
  * This file is used to initialise various variables and arrays for the
@@ -1933,15 +1934,6 @@ static void init_basic()
 	}
 }
 
-/*
- * Pseudo, dummy quest initializer, to actualy disable them
- */
-static bool_ quest_disable_init_hook(int q_idx)
-{
-	q_idx = q_idx;
-	return FALSE;
-}
-
 
 /*
  * Initialise misc. values
@@ -1951,8 +1943,6 @@ static errr init_misc(void)
 	int xstart = 0;
 	int ystart = 0;
 	int i;
-	s32b allow_quest;
-	s32b allow_rquest;
 
 	/*** Prepare the various "bizarre" arrays ***/
 
@@ -1969,47 +1959,7 @@ static errr init_misc(void)
 	/* Hack -- No messages yet */
 	message__tail = MESSAGE_BUF;
 
-	/* Prepare powers */
-	p_ptr->powers = NULL;
-	powers_type = NULL;
-	power_max = POWER_MAX_INIT;
-	reinit_powers_type(power_max);
-	C_COPY(powers_type, powers_type_init, POWER_MAX_INIT, power_type);
-
-	/* Prepare quests */
-	call_lua("get_module_info", "(s)", "d", "C_quest", &allow_quest);
-	call_lua("get_module_info", "(s)", "d", "rand_quest", &allow_rquest);
-
-	quest = NULL;
-	max_q_idx = MAX_Q_IDX_INIT;
-	reinit_quests(max_q_idx);
-
-	C_COPY(quest, quest_init_tome, MAX_Q_IDX_INIT, quest_type);
-
-	/* If we dont allow C quests, we dont let them init */
-	if (!allow_quest)
-	{
-		for (i = 0; i < MAX_Q_IDX_INIT; i++)
-		{
-			if (allow_rquest && (i == QUEST_RANDOM))
-				continue;
-			quest[i].init = quest_disable_init_hook;
-		}
-	}
-
-	/* Prepare gods */
-	deity_info = NULL;
-	max_gods = MAX_GODS_INIT;
-	reinit_gods(max_gods);
-
-	C_COPY(deity_info, deity_info_init, MAX_GODS_INIT, deity_type);
-
-	/* Prepare schools */
-	max_spells = 0;
-	max_schools = 0;
-	schools = NULL;
-	school_spells = NULL;
-
+	/* Initialize game */
 	process_hooks(HOOK_INIT_GAME, "(s)", "begin");
 
 	/* Initialise the values */
@@ -2018,6 +1968,14 @@ static errr init_misc(void)
 	/* Init the spell effects */
 	for (i = 0; i < MAX_EFFECTS; i++)
 		effects[i].time = 0;
+
+	/* Initialize timers */
+	TIMER_INERTIA_CONTROL =
+		new_timer(meta_inertia_control_timer_callback,
+			  10);
+	TIMER_AGGRAVATE_EVIL =
+		new_timer(timer_aggravate_evil_callback,
+			  10);
 
 	return 0;
 }
@@ -2102,93 +2060,6 @@ static errr init_wilderness(void)
 	generate_encounter = FALSE;
 
 	return 0;
-}
-
-/*
- * XXX XXX XXX XXX XXX Realloc is not guaranteed to work (see main-gtk.c
- * and main-mac.c.
- */
-void reinit_powers_type(s16b new_size)
-{
-	power_type *new_powers_type;
-	bool_ *new_powers;
-
-	C_MAKE(new_powers_type, new_size, power_type);
-	C_MAKE(new_powers, new_size, bool_);
-
-	/* Reallocate the extra memory */
-	if (powers_type && p_ptr->powers)
-	{
-		C_COPY(new_powers_type, powers_type, power_max, power_type);
-		C_COPY(new_powers, p_ptr->powers, power_max, bool_);
-
-		C_FREE(powers_type, power_max, power_type);
-		C_FREE(p_ptr->powers, power_max, bool_);
-	}
-
-	powers_type = new_powers_type;
-	p_ptr->powers = new_powers;
-
-	power_max = new_size;
-}
-
-void reinit_quests(s16b new_size)
-{
-	quest_type *new_quest;
-
-	C_MAKE(new_quest, new_size, quest_type);
-
-	/* Reallocate the extra memory */
-	if (quest)
-	{
-		C_COPY(new_quest, quest, max_q_idx, quest_type);
-
-		C_FREE(quest, max_q_idx, quest_type);
-	}
-
-	quest = new_quest;
-
-	max_q_idx = new_size;
-}
-
-void reinit_gods(s16b new_size)
-{
-	deity_type *new_deity;
-
-	C_MAKE(new_deity, new_size, deity_type);
-
-	/* Reallocate the extra memory */
-	if (deity_info)
-	{
-		C_COPY(new_deity, deity_info, max_gods, deity_type);
-
-		C_FREE(deity_info, max_gods, deity_type);
-	}
-
-	deity_info = new_deity;
-
-	max_gods = new_size;
-}
-
-void init_spells(s16b new_size)
-{
-	/* allocate the extra memory */
-	C_MAKE(school_spells, new_size, spell_type);
-	max_spells = new_size;
-}
-
-void init_schools(s16b new_size)
-{
-	/* allocate the extra memory */
-	C_MAKE(schools, new_size, school_type);
-	max_schools = new_size;
-}
-
-void init_corruptions(s16b new_size)
-{
-	/* allocate the extra memory */
-	C_MAKE(p_ptr->corruptions, new_size, bool_);
-	max_corruptions = new_size;
 }
 
 /*
@@ -2781,8 +2652,7 @@ void init_angband(void)
 	wipe_hooks();
 
 	/* Initialise some other arrays */
-	note("[Initialising lua scripting... (lua)]");
-	init_lua();
+	note("[Initialising scripting... (script)]");
 	init_lua_init();
 
 	/* Initialise skills info */
@@ -2908,8 +2778,8 @@ void init_angband(void)
 	process_pref_file(buf);
 
 	/* Initialise the automatizer */
-	tome_dofile_anywhere(ANGBAND_DIR_CORE, "auto.lua", TRUE);
-	tome_dofile_anywhere(ANGBAND_DIR_USER, "automat.atm", FALSE);
+	path_build(buf, sizeof(buf), ANGBAND_DIR_USER, "automat.atm");
+	automatizer_init(buf);
 
 	/* Done */
 	note("[Initialisation complete]");

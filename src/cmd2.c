@@ -74,6 +74,30 @@ static bool_ do_cmd_bash_fountain(int y, int x)
 	return (more);
 }
 
+/*
+ * Stair hooks
+ */
+static bool_ stair_hooks(stairs_direction direction)
+{
+	cptr direction_s = (direction == STAIRS_UP) ? "up" : "down";
+
+	/* Old-style hooks */
+	if (process_hooks(HOOK_STAIR, "(s)", direction_s))
+	{
+		return TRUE; /* Prevent movement */
+	}
+
+	/* New-style hooks */
+	{
+		hook_stair_in in = { direction };
+		hook_stair_out out = { TRUE }; /* Allow by default */
+
+		process_hooks_new(HOOK_STAIR, &in, &out);
+
+		return (!out.allow);
+	}
+}
+
 
 /*
  * Go up one level
@@ -93,7 +117,10 @@ void do_cmd_go_up(void)
 	c_ptr = &cave[p_ptr->py][p_ptr->px];
 
 	/* Can we ? */
-	if (process_hooks(HOOK_STAIR, "(s)", "up")) return;
+	if (stair_hooks(STAIRS_UP))
+	{
+		return;
+	}
 
 	/* Normal up stairs */
 	if ((c_ptr->feat == FEAT_LESS) || (c_ptr->feat == FEAT_WAY_LESS))
@@ -318,7 +345,10 @@ void do_cmd_go_down(void)
 	}
 
 	/* Can we ? */
-	if (process_hooks(HOOK_STAIR, "(s)", "down")) return;
+	if (stair_hooks(STAIRS_DOWN))
+	{
+		return;
+	}
 
 	/* Normal up stairs */
 	if (c_ptr->feat == FEAT_SHAFT_DOWN)
@@ -4565,12 +4595,51 @@ static bool_ item_tester_hook_sacrifiable(object_type *o_ptr)
 			return (TRUE);
 
 		/* Books without any udun spells */
-		if ((o_ptr->tval == TV_BOOK) && (exec_lua(format("return udun_in_book(%d, %d)", o_ptr->sval, o_ptr->pval)) == 0))
+		if ((o_ptr->tval == TV_BOOK) && udun_in_book(o_ptr->sval, o_ptr->pval) <= 0)
+		{
 			return TRUE;
+		}
 	}
 
 	/* Assume not */
 	return (FALSE);
+}
+
+/*
+ * Is item eligible for sacrifice to Aule?
+ */
+static bool_ item_tester_hook_sacrifice_aule(object_type *o_ptr)
+{
+	/* perhaps restrict this only to metal armour and weapons  */
+	return (o_ptr->found == OBJ_FOUND_SELFMADE);
+}
+
+/*
+ * Handle sacrifices to Aule
+ */
+static void do_cmd_sacrifice_aule()
+{
+	int item;
+
+	item_tester_hook = item_tester_hook_sacrifice_aule;
+	if (!get_item(&item,
+		      "Sacrifice which item? ",
+		      "You have nothing to sacrifice.",
+		      USE_INVEN))
+	{
+		return;
+	}
+
+	/* Increase piety by the value of the item / 10. */
+	{
+		object_type *o_ptr = get_object(item);
+		s32b delta = object_value(o_ptr) / 10;
+
+		inc_piety(GOD_ALL, delta);
+	}
+
+	/* Destroy the object */
+	inc_stack_size(item, -1);
 }
 
 /*
@@ -4657,7 +4726,7 @@ void do_cmd_sacrifice(void)
 					/* In books it depends of the spell levels*/
 					if (o_ptr->tval == TV_BOOK)
 					{
-						int x = exec_lua(format("return levels_in_book(%d, %d)", o_ptr->sval, o_ptr->pval));
+						int x = levels_in_book(o_ptr->sval, o_ptr->pval);
 
 						inc_piety(GOD_MELKOR, 2 * x);
 					}
@@ -4666,10 +4735,12 @@ void do_cmd_sacrifice(void)
 					inc_stack_size(item, -1);
 				}
 			}
-			else
+
+			GOD(GOD_AULE)
 			{
-				process_hooks(HOOK_SACRIFICE_GOD, "()", "");
+				do_cmd_sacrifice_aule();
 			}
+
 		}
 	}
 }
@@ -5062,7 +5133,11 @@ void do_cmd_give()
 	/* Process hooks if there are any */
 	if (!process_hooks(HOOK_GIVE, "(d,d)", c_ptr->m_idx, item))
 	{
-		msg_print("The monster does not want your item.");
+		hook_give_in in = { c_ptr->m_idx, item };
+		if (!process_hooks_new(HOOK_GIVE, &in, NULL))
+		{
+			msg_print("The monster does not want your item.");
+		}
 	}
 
 	/* Take a turn, even if the offer is declined */

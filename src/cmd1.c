@@ -2466,7 +2466,7 @@ void py_attack(int y, int x, int max_blow)
 						/* Melkor can cast curse for you*/
 						PRAY_GOD(GOD_MELKOR)
 						{
-							int lv = exec_lua("return get_level(MELKOR_CURSE, 100)");
+							int lv = get_level_s(MELKOR_CURSE, 100);
 
 							if (lv >= 10)
 							{
@@ -2475,7 +2475,7 @@ void py_attack(int y, int x, int max_blow)
 								if (chance < 1) chance = 1;
 								if ((p_ptr->grace > 5000) && magik(chance))
 								{
-									exec_lua(format("do_melkor_curse(%d)", c_ptr->m_idx));
+									do_melkor_curse(c_ptr->m_idx);
 								}
 							}
 						}
@@ -3097,6 +3097,24 @@ void move_player_aux(int dir, int do_pickup, int run, bool_ disarm)
 
 	/* Some hooks */
 	if (process_hooks(HOOK_MOVE, "(d,d)", y, x)) return;
+
+	{
+		hook_move_in in = { y, x };
+		if (process_hooks_new(HOOK_MOVE, &in, NULL)) {
+			return; /* Prevent movement */
+		}
+	}
+
+	if (p_ptr->dripping_tread > 0)
+	{
+		geomancy_random_floor(y, x, FALSE);
+		p_ptr->dripping_tread -= 1;
+		if (p_ptr->dripping_tread == 0)
+		{
+			msg_print("You stop dripping raw elemental energies.");
+		}
+	}
+
 
 	/* Get the monster */
 	m_ptr = &m_list[c_ptr->m_idx];

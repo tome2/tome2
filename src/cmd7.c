@@ -735,7 +735,7 @@ static int get_mimic_chance(int mimic)
 {
 	s32b chance;
 
-	call_lua("get_mimic_info", "(d,s)", "d", mimic, "level", &chance);
+	chance = get_mimic_level(mimic);
 	chance *= 3;
 
 	chance -= get_skill_scale(SKILL_MIMICRY, 150);

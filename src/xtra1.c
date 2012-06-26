@@ -249,7 +249,7 @@ static void prt_title(void)
 	/* Mimic shape */
 	if (p_ptr->mimic_form)
 	{
-		call_lua("get_mimic_info", "(d,s)", "s", p_ptr->mimic_form, "show_name", &p);
+		p = get_mimic_name(p_ptr->mimic_form);
 	}
 
 	/* Wizard */
@@ -1516,6 +1516,30 @@ static void calc_spells(void)
 	p_ptr->new_spells = 0;
 }
 
+
+/*
+ * Calculate powers of player given the current set of corruptions.
+ */
+static void calc_powers_corruption()
+{
+	/* Map of corruptions to a power */
+	int i;
+
+	/* Grant powers according to whatever corruptions the player has */
+	for (i = 0; i < CORRUPTIONS_MAX; i++)
+	{
+		if (player_has_corruption(i))
+		{
+			int p = get_corruption_power(i);
+			if (p >= 0)
+			{
+				p_ptr->powers[p] = TRUE;
+			}
+		}
+	}
+}
+
+
 /* Ugly hack */
 bool_ calc_powers_silent = FALSE;
 
@@ -1523,7 +1547,7 @@ bool_ calc_powers_silent = FALSE;
 static void calc_powers(void)
 {
 	int i, p = 0;
-	bool_ *old_powers;
+	bool_ old_powers[POWER_MAX];
 
 	/* Hack -- wait for creation */
 	if (!character_generated) return;
@@ -1531,14 +1555,15 @@ static void calc_powers(void)
 	/* Hack -- handle "xtra" mode */
 	if (character_xtra) return;
 
-	C_MAKE(old_powers, power_max, bool_);
-
 	/* Save old powers */
-	for (i = 0; i < power_max; i++) old_powers[i] = p_ptr->powers[i];
+	for (i = 0; i < POWER_MAX; i++) old_powers[i] = p_ptr->powers[i];
 
 	/* Get intrinsincs */
-	for (i = 0; i < POWER_MAX_INIT; i++) p_ptr->powers[i] = p_ptr->powers_mod[i];
-	for (; i < power_max; i++) p_ptr->powers[i] = 0;
+	for (i = 0; i < POWER_MAX; i++) p_ptr->powers[i] = p_ptr->powers_mod[i];
+	for (; i < POWER_MAX; i++) p_ptr->powers[i] = 0;
+
+	/* Calculate powers granted by corruptions */
+	calc_powers_corruption();
 
 	/* Hooked powers */
 	process_hooks(HOOK_CALC_POWERS, "()");
@@ -1567,7 +1592,9 @@ static void calc_powers(void)
 		}
 	}
 	else if (p_ptr->mimic_form)
-		call_lua("calc_mimic_power", "(d)", "", p_ptr->mimic_form);
+	{
+		calc_mimic_power();
+	}
 
 	/* Add in class powers */
 	for (i = 0; i < 4; i++)
@@ -1583,7 +1610,7 @@ static void calc_powers(void)
 	}
 
 	/* Now lets warn the player */
-	for (i = 0; i < power_max; i++)
+	for (i = 0; i < POWER_MAX; i++)
 	{
 		s32b old = old_powers[i];
 		s32b new_ = p_ptr->powers[i];
@@ -1599,7 +1626,6 @@ static void calc_powers(void)
 	}
 
 	calc_powers_silent = FALSE;
-	C_FREE(old_powers, power_max, bool_);
 }
 
 
@@ -1766,6 +1792,9 @@ static void calc_mana(void)
 	{
 		msp = process_hooks_return[0].num;
 	}
+
+	mana_school_calc_mana(&msp);
+	meta_inertia_control_calc_mana(&msp);
 
 	/* Mana can never be negative */
 	if (msp < 0) msp = 0;
@@ -1943,6 +1972,18 @@ void calc_hitpoints(void)
 }
 
 
+/*
+ * God hooks for light
+ */
+static void calc_torch_gods()
+{
+	if (p_ptr->pgod == GOD_VARDA)
+	{
+		/* increase lite radius */
+		p_ptr->cur_lite += 1;
+	}
+}
+
 
 /*
  * Extract and set the current "lite radius"
@@ -1992,8 +2033,8 @@ static void calc_torch(void)
 	/* but does glow as an intrinsic.                  */
 	if (p_ptr->cur_lite == 0 && p_ptr->lite) p_ptr->cur_lite = 1;
 
-	/* Hooked powers */
-	process_hooks(HOOK_CALC_LITE, "()");
+	/* gods */
+	calc_torch_gods();
 
 	/* end experimental mods */
 
@@ -2238,14 +2279,6 @@ void calc_body_bonus()
 }
 
 
-byte calc_mimic()
-{
-	s32b blow = 0;
-
-	call_lua("calc_mimic", "(d)", "d", p_ptr->mimic_form, &blow);
-	return blow;
-}
-
 /* Returns the number of extra blows based on abilities. */
 static int get_extra_blows_ability() {
         /* Count bonus abilities */
@@ -2351,7 +2384,7 @@ int get_archery_skill()
 }
 
 /* Apply gods */
-void calc_gods()
+static void calc_gods()
 {
 	/* Boost WIS if the player follows Eru */
 	GOD(GOD_ERU)
@@ -2423,6 +2456,155 @@ void calc_gods()
 		if (p_ptr->grace > 10000) p_ptr->stat_add[A_STR] += 1;
 		if (p_ptr->grace > 15000) p_ptr->stat_add[A_STR] += 1;
 		if (p_ptr->grace > 20000) p_ptr->stat_add[A_STR] += 1;
+	}
+
+	/* Aule provides to-hit/damage bonuses and fire resistance */
+	GOD(GOD_AULE)
+	{
+		if (p_ptr->grace > 0)
+		{
+			int bonus;
+			/* Resist fire*/
+			if (p_ptr->grace > 5000)
+			{
+				p_ptr->resist_fire = TRUE;
+			}
+
+			bonus = p_ptr->grace / 5000;
+			if (bonus > 5)
+			{
+				bonus = 5;
+			}
+
+			p_ptr->to_h = p_ptr->to_h + bonus;
+			p_ptr->dis_to_h = p_ptr->dis_to_h + bonus;
+			p_ptr->to_d = p_ptr->to_d + bonus;
+			p_ptr->dis_to_d = p_ptr->dis_to_d + bonus;
+		}
+	}
+
+	/* Mandos provides nether resistance and, while praying,
+	   nether immunity and prevents teleportation. */
+	GOD(GOD_MANDOS)
+	{
+		p_ptr->resist_neth = TRUE;
+
+		if ((p_ptr->grace > 10000) &&
+		    (p_ptr->praying == TRUE))
+		{
+			p_ptr->resist_continuum = TRUE;
+		}
+
+		if ((p_ptr->grace > 20000) &&
+		    (p_ptr->praying == TRUE))
+		{
+			p_ptr->immune_neth = TRUE;
+		}
+	}
+
+	/* Ulmo provides water breath and, while praying can
+	   provide poison resistance and magic breath. */
+	GOD(GOD_ULMO)
+	{
+		p_ptr->water_breath = TRUE;
+
+		if ((p_ptr->grace > 1000) &&
+		    (p_ptr->praying == TRUE))
+		{
+			p_ptr->resist_pois = TRUE;
+		}
+
+		if ((p_ptr->grace > 15000) &&
+		    (p_ptr->praying == TRUE))
+		{
+			p_ptr->magical_breath = TRUE;
+		}
+	}
+}
+
+/* Apply spell schools */
+static void calc_schools()
+{
+	if (get_skill(SKILL_AIR) >= 50)
+	{
+		p_ptr->magical_breath = TRUE;
+	}
+
+	if (get_skill(SKILL_WATER) >= 30)
+	{
+		p_ptr->water_breath = TRUE;
+	}
+}
+
+/* Apply corruptions */
+static void calc_corruptions()
+{
+	if (player_has_corruption(CORRUPT_BALROG_AURA))
+	{
+		p_ptr->xtra_f3 |= TR3_SH_FIRE;
+		p_ptr->xtra_f3 |= TR3_LITE1;
+	}
+
+	if (player_has_corruption(CORRUPT_BALROG_WINGS))
+	{
+		p_ptr->xtra_f4 |= TR4_FLY;
+		p_ptr->stat_add[A_CHR] -= 4;
+		p_ptr->stat_add[A_DEX] -= 2;
+	}
+
+	if (player_has_corruption(CORRUPT_BALROG_STRENGTH))
+	{
+		p_ptr->stat_add[A_STR] += 3;
+		p_ptr->stat_add[A_CON] += 1;
+		p_ptr->stat_add[A_DEX] -= 3;
+		p_ptr->stat_add[A_CHR] -= 1;
+	}
+
+	if (player_has_corruption(CORRUPT_DEMON_SPIRIT))
+	{
+		p_ptr->stat_add[A_INT] += 1;
+		p_ptr->stat_add[A_CHR] -= 2;
+	}
+
+	if (player_has_corruption(CORRUPT_DEMON_HIDE))
+	{
+		p_ptr->to_a     = p_ptr->to_a     + p_ptr->lev;
+		p_ptr->dis_to_a = p_ptr->dis_to_a + p_ptr->lev;
+		p_ptr->pspeed = p_ptr->pspeed - (p_ptr->lev / 7);
+		if (p_ptr->lev >= 40)
+		{
+			p_ptr->xtra_f2 |= TR2_IM_FIRE;
+		}
+	}
+
+	if (player_has_corruption(CORRUPT_DEMON_REALM))
+	{
+		/* 1500 may seem a lot, but people are rather unlikely to
+		   get the corruption very soon due to the dependencies. */
+		if (s_info[SKILL_DAEMON].mod == 0)
+		{
+			s_info[SKILL_DAEMON].mod = 1500;
+		}
+		s_info[SKILL_DAEMON].hidden = FALSE;
+	}
+
+	if (player_has_corruption(CORRUPT_RANDOM_TELEPORT))
+	{
+		p_ptr->xtra_f3 |= TR3_TELEPORT;
+	}
+
+	if (player_has_corruption(CORRUPT_ANTI_TELEPORT))
+	{
+		if (p_ptr->corrupt_anti_teleport_stopped == FALSE)
+		{
+			p_ptr->resist_continuum = TRUE;
+		}
+	}
+
+	if (player_has_corruption(CORRUPT_TROLL_BLOOD))
+	{
+		p_ptr->xtra_f3 |= (TR3_REGEN | TR3_AGGRAVATE);
+		p_ptr->xtra_esp |= ESP_TROLL;
 	}
 }
 
@@ -2837,8 +3019,11 @@ void calc_bonuses(bool_ silent)
 		calc_body_bonus();
 	}
 
-	/* Let the scripts do what they need */
-	process_hooks(HOOK_CALC_BONUS, "()");
+	/* Take care of spell schools */
+	calc_schools();
+
+	/* Take care of corruptions */
+	calc_corruptions();
 
 	/* The powers gived by the wielded monster */
 	calc_wield_monster();
@@ -3149,6 +3334,12 @@ void calc_bonuses(bool_ silent)
 	{
 		p_ptr->to_a += 100;
 		p_ptr->dis_to_a += 100;
+	}
+
+	/* Temporary precognition */
+	if (p_ptr->tim_precognition > 0)
+	{
+		apply_flags(0, 0, 0, TR4_PRECOGNITION, 0, 0, 0, 0, 0, 0, 0);
 	}
 
 	/* Breath */
@@ -3956,9 +4147,6 @@ void calc_bonuses(bool_ silent)
 		p_ptr->skill_sav = 10;
 	else
 		p_ptr->skill_sav += 10;
-
-	/* Let the scripts do what they need */
-	process_hooks(HOOK_CALC_BONUS_END, "(d)", silent);
 }
 
 

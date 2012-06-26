@@ -397,7 +397,8 @@ int main(int argc, char *argv[])
 				char *s;
 				int j;
 
-				init_lua();
+				init_lua_init();
+
 				for (j = i + 1; j < argc; j++)
 				{
 					s = argv[j];

@@ -142,15 +142,7 @@
  * Total number of stores (see "store.c", etc)
  */
 #define STORE_GENERAL   0
-#define STORE_ARMOURY   1
-#define STORE_WEAPON    2
-#define STORE_TEMPLE    3
-#define STORE_ALCHEMIST 4
-#define STORE_MAGIC     5
-#define STORE_BLACK     6
 #define STORE_HOME      7
-#define STORE_BOOK      8
-#define STORE_PET       9
 
 /*
  * Maximum number of player "sex" types (see "table.c", etc)
@@ -223,6 +215,7 @@
 
 /* Mimicry */
 #define MAX_MIMIC_POWERS  5
+#define MIMIC_FORMS_MAX 14
 
 /* Symbiosis */
 #define MAX_SYMBIOTIC_POWERS  9
@@ -616,6 +609,9 @@
 #define MKEY_BOULDER            21
 #define MKEY_COMPANION          22
 #define MKEY_PIERCING           23
+#define MKEY_DEATH_TOUCH        100
+#define MKEY_GEOMANCY           101
+#define MKEY_REACH_ATTACK       102
 
 
 /*** Screen Locations ***/
@@ -862,7 +858,17 @@
 /* Features 0xCF - 0xFF -- unused */
 
 
-#define MAX_BETWEEN_EXITS       2
+#define MAX_BETWEEN_EXITS       3
+
+/*
+ * Maximum number of school spells
+ */
+#define SCHOOL_SPELLS_MAX 200
+
+/*
+ * Maximum number of spell schools
+ */
+#define SCHOOLS_MAX 50
 
 /*
  * Number of effects
@@ -1938,6 +1944,7 @@
 #define SV_SCROLL_RUMOR                 51
 #define SV_SCROLL_ARTIFACT              52
 #define SV_SCROLL_NOTHING               53
+#define SV_SCROLL_STERILIZATION         54
 
 /* The "sval" codes for TV_POTION */
 #define SV_POTION_WATER                  0
@@ -2575,7 +2582,6 @@
 #define SUMMON_SHADOWS              55
 #define SUMMON_GHOST                56
 #define SUMMON_QUYLTHULG            57
-#define SUMMON_LUA                  58
 
 
 /*
@@ -2674,7 +2680,10 @@
 #define GF_TRAP_DEMONSOUL 108
 #define GF_ATTACK       109
 #define GF_CHARM_UNMOVING 110
-#define MAX_GF          111
+#define GF_INSTA_DEATH 111
+#define GF_ELEMENTAL_WALL 112
+#define GF_ELEMENTAL_GROWTH 113
+#define MAX_GF          114
 
 /*
  * Some things which induce learning
@@ -4039,6 +4048,11 @@
 #define BACT_REQUEST_ITEM           51
 #define BACT_GET_LOAN               52
 #define BACT_PAY_BACK_LOAN          53
+#define BACT_DROP_ITEM              54
+#define BACT_GET_ITEM               55
+#define BACT_FIREPROOF_QUEST        56
+#define BACT_LIBRARY_QUEST          61
+#define BACT_EREBOR_KEY             66
 /* If one adds new BACT_ do NOT forget to increase max_bact in variables.c */
 
 
@@ -4077,36 +4091,6 @@
 #define ALCHEMIST_ENCHANT_DAM      0x01
 #define ALCHEMIST_ENCHANT_PVAL     0x02
 #define ALCHEMIST_ENCHANT_AC       0x04
-
-/*
- * Music songs
- */
-#define MUSIC_NONE              0
-#define MUSIC_SLOW              1
-#define MUSIC_CONF              2
-#define MUSIC_STUN              3
-#define MUSIC_LIFE              4
-#define MUSIC_MIND              5
-#define MUSIC_LITE              6
-#define MUSIC_FURY              7
-#define MUSIC_AWARE             8
-#define MUSIC_ID                9
-#define MUSIC_ILLUSION          10
-#define MUSIC_WALL              11
-#define MUSIC_RESIST            12
-#define MUSIC_TIME              13
-#define MUSIC_BETWEEN           14
-#define MUSIC_CHARME            15
-#define MUSIC_VIBRA             16
-#define MUSIC_HOLY              17
-#define MUSIC_HIDE              18
-#define MUSIC_LIBERTY           19
-#define MUSIC_RAISE             20
-#define MUSIC_SHADOW            21
-#define MUSIC_STAR_ID           22
-
-#define MAX_MUSIC               23
-#define MAX_MUSICS              11
 
 /*
  * Fate
@@ -4295,7 +4279,7 @@
 /*
  * Powers (mutation, activations, ...)
  */
-#define POWER_MAX_INIT                 62
+#define POWER_MAX                      65
 
 #define PWR_SPIT_ACID                  0
 #define PWR_BR_FIRE                    1
@@ -4360,6 +4344,9 @@
 #define PWR_BEAR                        59
 #define PWR_DODGE                       60
 #define PWR_BALROG                      61
+#define POWER_INVISIBILITY              62
+#define POWER_WEB                       63
+#define POWER_COR_SPACE_TIME            64
 
 #define ADD_POWER(pow, p)       ((pow)[(p)] = TRUE)
 
@@ -4406,7 +4393,11 @@
 #define QUEST_DRAGONS           23
 #define QUEST_HAUNTED           24
 #define QUEST_EVIL              25
-#define MAX_Q_IDX_INIT          26
+#define QUEST_BOUNTY            26
+#define QUEST_FIREPROOF         27
+#define QUEST_LIBRARY           28
+#define QUEST_GOD               29
+#define MAX_Q_IDX               30
 
 #define PLOT_MAIN               0
 #define PLOT_BREE               1
@@ -4416,6 +4407,83 @@
 #define PLOT_MINAS              5
 #define PLOT_KHAZAD             6
 #define MAX_PLOTS               7
+
+/*
+ * Modules
+ */
+#define MODULE_TOME             0
+#define MODULE_THEME            1
+#define MAX_MODULES             2
+
+/*
+ * Corruptions
+ */
+#define CORRUPT_BALROG_AURA 0
+#define CORRUPT_BALROG_WINGS 1
+#define CORRUPT_BALROG_STRENGTH 2
+#define CORRUPT_BALROG_FORM 3
+#define CORRUPT_DEMON_SPIRIT 4
+#define CORRUPT_DEMON_HIDE 5
+#define CORRUPT_DEMON_BREATH 6
+#define CORRUPT_DEMON_REALM 7
+#define CORRUPT_RANDOM_TELEPORT 8
+#define CORRUPT_ANTI_TELEPORT 9
+#define CORRUPT_TROLL_BLOOD 10
+#define CORRUPT_VAMPIRE_TEETH 11
+#define CORRUPT_VAMPIRE_STRENGTH 12
+#define CORRUPT_VAMPIRE_VAMPIRE 13
+#define MUT1_SPIT_ACID 14
+#define MUT1_BR_FIRE 15
+#define MUT1_HYPN_GAZE 16
+#define MUT1_TELEKINES 17
+#define MUT1_VTELEPORT 18
+#define MUT1_MIND_BLST 19
+#define MUT1_VAMPIRISM 20
+#define MUT1_SMELL_MET 21
+#define MUT1_SMELL_MON 22
+#define MUT1_BLINK 23
+#define MUT1_EAT_ROCK 24
+#define MUT1_SWAP_POS 25
+#define MUT1_SHRIEK 26
+#define MUT1_ILLUMINE 27
+#define MUT1_DET_CURSE 28
+#define MUT1_BERSERK 29
+#define MUT1_MIDAS_TCH 30
+#define MUT1_GROW_MOLD 31
+#define MUT1_RESIST 32
+#define MUT1_EARTHQUAKE 33
+#define CORRUPTIONS_MAX 34
+
+/*
+ * Races
+ */
+#define RACE_HUMAN 0
+#define RACE_HALF_ELF 1
+#define RACE_ELF 2
+#define RACE_HOBBIT 3
+#define RACE_GNOME 4
+#define RACE_DWARF 5
+#define RACE_ORC 6
+#define RACE_TROLL 7
+#define RACE_DUNADAN 8
+#define RACE_HIGH_ELF 9
+#define RACE_HALF_OGRE 10
+#define RACE_BEORNING 11
+#define RACE_KOBOLD 12        /* ToME */
+#define RACE_DRUADAN 12       /* Theme */
+#define RACE_PETTY_DWARF 13
+#define RACE_DARK_ELF 14
+#define RACE_ENT 15
+#define RACE_ROHANKNIGHT 16
+#define RACE_THUNDERLORD 17 /* ToME */
+#define RACE_EAGLE 17       /* Theme */
+#define RACE_DEATHMOLD 18   /* ToME */
+#define RACE_DRAGON 18      /* Theme */
+#define RACE_YEEK 19
+#define RACE_WOOD_ELF 20
+#define RACE_MAIA 21
+#define RACE_EASTERLING 22 /* Theme */
+#define RACE_DEMON 23 /* Theme */
 
 /*
  * Hooks
@@ -4442,19 +4510,15 @@
 #define HOOK_MONSTER_AI         19
 #define HOOK_PLAYER_LEVEL       20
 #define HOOK_WIELD              21
-#define HOOK_INIT               22
-#define HOOK_QUAFF              23
+#define HOOK_NEW_MONSTER_END    22
 #define HOOK_AIM                24
 #define HOOK_USE                25
 #define HOOK_ACTIVATE           26
 #define HOOK_ZAP                27
-#define HOOK_READ               28
-#define HOOK_CALC_BONUS         29
 #define HOOK_CALC_POWERS        30
 #define HOOK_KEYPRESS           31
 #define HOOK_CHAT               32
 #define HOOK_MON_SPEAK          33
-#define HOOK_MKEY               34
 #define HOOK_BIRTH_OBJECTS      35
 #define HOOK_ACTIVATE_DESC      36
 #define HOOK_INIT_GAME          37
@@ -4465,10 +4529,8 @@
 #define HOOK_LEVEL_REGEN        42
 #define HOOK_LEVEL_END_GEN      43
 #define HOOK_BUILDING_ACTION    44
-#define HOOK_PROCESS_WORLD      45
 #define HOOK_WIELD_SLOT         46
 #define HOOK_STORE_STOCK        47
-#define HOOK_STORE_BUY          48
 #define HOOK_GEN_LEVEL_BEGIN    49
 #define HOOK_GET                50
 #define HOOK_REDRAW             51
@@ -4478,18 +4540,14 @@
 #define HOOK_EAT                55
 #define HOOK_DIE                56
 #define HOOK_CALC_HP            57
-#define HOOK_GF_COLOR           58
-#define HOOK_GF_EXEC            59
 #define HOOK_CALC_MANA          60
 #define HOOK_LOAD_END           61
 #define HOOK_RECALL             62
-#define HOOK_FOLLOW_GOD         63
-#define HOOK_SACRIFICE_GOD      64
 #define HOOK_BODY_PARTS         65
 #define HOOK_APPLY_MAGIC        66
 #define HOOK_PLAYER_EXP         67
 #define HOOK_BIRTH              68
-#define HOOK_CALC_LITE          69
+#define HOOK_MON_ASK_HELP       69
 #define HOOK_LEARN_ABILITY      70
 #define HOOK_MOVED              71
 #define HOOK_GAME_START         72
@@ -4497,11 +4555,10 @@
 #define HOOK_CALC_WEIGHT        74
 #define HOOK_FORBID_TRAVEL      75
 #define HOOK_DEBUG_COMMAND      76
-#define HOOK_CALC_BONUS_END     77
-#define MAX_HOOKS               78
+#define MAX_HOOKS               77
 
 #define HOOK_TYPE_C             0
-#define HOOK_TYPE_LUA           1
+#define HOOK_TYPE_NEW           2
 
 /*
  * Defines for loadsave.c
@@ -4515,11 +4572,7 @@
 /*
  * In game help
  */
-#define HELP1_BETWEEN           0x00000001
-#define HELP1_ALTAR             0x00000002
-#define HELP1_FOUNTAIN          0x00000004
-#define HELP1_IDENTIFY          0x00000008
-#define HELP1_WILD_MODE         0x00000010
+#define HELP_MAX 64
 
 /*
  * Special weapon effects
@@ -4644,7 +4697,11 @@
 #define GOD_TULKAS              3
 #define GOD_MELKOR              4
 #define GOD_YAVANNA             5
-#define MAX_GODS_INIT           6
+#define GOD_AULE                6
+#define GOD_VARDA               7
+#define GOD_ULMO                8
+#define GOD_MANDOS              9
+#define MAX_GODS               10
 
 #define GOD(g)                  if (p_ptr->pgod == (g))
 #define PRAY_GOD(g)             if ((p_ptr->pgod == (g)) && (p_ptr->praying))
@@ -4693,3 +4750,42 @@
 #define AB_FAR_REACHING         8
 #define AB_TRAPPING             9
 #define AB_UNDEAD_FORM          10
+
+/**
+ * Spell school books/tomes
+ */
+#define TOME_MANA 0
+#define TOME_FIRE 1
+#define TOME_WINDS 2
+#define TOME_EARTH 3
+#define TOME_WATER 4
+#define TOME_TRANSLOCATION 5
+#define TOME_NATURE 6
+#define TOME_KNOWLEDGE 7
+#define TOME_TIME 8
+#define TOME_META 9
+#define TOME_MIND 10
+#define TOME_HELLFLAME 11
+#define TOME_ERU 20
+#define TOME_MANWE 21
+#define TOME_TULKAS 22
+#define TOME_MELKOR 23
+#define TOME_YAVANNA 24
+#define BOOK_CANTRIPS 50
+#define BOOK_TELEPORTATION 51
+#define BOOK_SUMMONING 52
+#define BOOK_DEMON_SWORD 55
+#define BOOK_DEMON_SHIELD 56
+#define BOOK_DEMON_HELM 57
+#define BOOK_DRUMS 58
+#define BOOK_HARPS 59
+#define BOOK_HORNS 60
+#define BOOK_PLAYER 61
+#define BOOK_GEOMANCY 62
+#define BOOK_AULE 63
+#define BOOK_VARDA 64
+#define BOOK_ULMO 65
+#define BOOK_MANDOS 66
+#define BOOK_RANDOM 255
+
+#define SCHOOL_BOOKS_SIZE 256

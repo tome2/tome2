@@ -1442,9 +1442,6 @@ void do_cmd_options(void)
 
 	/* Restore the screen */
 	screen_load();
-
-	/* Set the ingame help */
-	ingame_help(p_ptr->help.enabled);
 }
 
 
@@ -2808,16 +2805,11 @@ void do_cmd_note(void)
  */
 void do_cmd_version(void)
 {
-	cptr author, email;
-
-	call_lua("get_module_info", "(s,d)", "s", "author", 1, &author);
-	call_lua("get_module_info", "(s,d)", "s", "author", 2, &email);
-
 	/* Silly message */
 	msg_format("You are playing %s made by %s (%s).",
 	           get_version_string(),
-	           author, email);
-	call_lua("patchs_display", "()", "");
+	           modules[game_module_idx].meta.author.name,
+		   modules[game_module_idx].meta.author.email);
 }
 
 
@@ -4073,7 +4065,10 @@ void do_cmd_knowledge_corruptions(void)
 	fff = my_fopen(file_name, "w");
 
 	/* Dump the corruptions to file */
-	if (fff) dump_corruptions(fff, TRUE);
+	if (fff)
+	{
+		dump_corruptions(fff, TRUE, FALSE);
+	}
 
 	/* Close the file */
 	my_fclose(fff);
@@ -4128,7 +4123,7 @@ static void do_cmd_knowledge_quests(void)
 
 	char file_name[1024];
 
-	int *order;
+	int order[MAX_Q_IDX] = { };
 
 	int num = 0;
 
@@ -4141,33 +4136,21 @@ static void do_cmd_knowledge_quests(void)
 	/* Open a new file */
 	fff = my_fopen(file_name, "w");
 
-	C_MAKE(order, max_q_idx, int);
-
-	for (i = 0; i < max_q_idx; i++)
+	for (i = 0; i < MAX_Q_IDX; i++)
 	{
 		insert_sort_quest(order, &num, i);
 	}
 
-	for (z = 0; z < max_q_idx; z++)
+	for (z = 0; z < MAX_Q_IDX; z++)
 	{
 		i = order[z];
 
-		/* Dynamic quests */
-		if (quest[i].dynamic_desc)
+		/* Dynamic descriptions */
+		if (quest[i].gen_desc != NULL)
 		{
-			/* C type quests */
-			if (quest[i].type == HOOK_TYPE_C)
+			if (!quest[i].gen_desc(fff))
 			{
-				if (!quest[i].gen_desc(fff))
-				{
-					continue;
-				}
-			}
-			/* MUST be a lua quest */
-			else
-			{
-				hook_file = fff;
-				exec_lua(format("__quest_dynamic_desc[%d]()", i));
+				continue;
 			}
 		}
 
@@ -4194,8 +4177,6 @@ static void do_cmd_knowledge_quests(void)
 			}
 		}
 	}
-
-	C_FREE(order, max_q_idx, int);
 
 	/* Close the file */
 	my_fclose(fff);

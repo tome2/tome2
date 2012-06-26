@@ -4,6 +4,15 @@ Using the CMake build system
 There are basically two options for how to run ToME once built.
 
 
+Prerequisites
+=============
+
+You will need to have the following libraries installed
+on your system somewhere where CMake can find them:
+
+   - jansson
+     See http://www.digip.org/jansson/
+
 
 Option #1 : Run ToME from the build directory
 =============================================
@@ -45,6 +54,10 @@ If you're having trouble compiling on an Ubuntu install you are
 probably missing the
 
     build-essential
+
+package. You'll also need to install the
+
+    libjansson-dev
 
 package.
 

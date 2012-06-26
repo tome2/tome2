@@ -869,7 +869,7 @@ static bool_ castle_quest(int y, int x)
 		get_questinfo(plots[plot]);
 
 		/* Add the hooks */
-		if (quest[plots[plot]].type == HOOK_TYPE_C) quest[plots[plot]].init(plots[plot]);
+		quest[plots[plot]].init(plots[plot]);
 
 		return (TRUE);
 	}
@@ -2029,6 +2029,38 @@ bool_ bldg_process_command(store_type *s_ptr, int i)
 			paid = TRUE;
 			break;
 		}
+
+	case BACT_DROP_ITEM:
+	{
+		quest_bounty_drop_item();
+		break;
+	}
+
+	case BACT_GET_ITEM:
+	{
+		quest_bounty_get_item();
+		break;
+	}
+
+	case BACT_LIBRARY_QUEST:
+	{
+		quest_library_building(&paid, &recreate);
+		break;
+	}
+
+	case BACT_FIREPROOF_QUEST:
+	{
+		quest_fireproof_building(&paid, &recreate);
+		break;
+	}
+
+	case BACT_EREBOR_KEY:
+	{
+		msg_print("You will need Thorin's Key and Thrain's Map"
+			  " to get anywhere in Erebor. One may be found"
+			  " in the Barrow-Downs. The other, in Mirkwood.");
+		break;
+	}
 
 	default:
 		{

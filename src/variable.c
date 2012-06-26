@@ -1170,6 +1170,8 @@ bool_ easy_open = TRUE;
 bool_ easy_disarm = TRUE;
 bool_ easy_tunnel = FALSE;
 
+s32b get_level_max_stick = -1;
+s32b get_level_use_stick = -1;
 
 /*
  * Maximum size of the wilderness map
@@ -1478,12 +1480,6 @@ hist_type *bg;
 int max_bg_idx;
 
 /*
- * Powers
- */
-s16b power_max = POWER_MAX_INIT;
-power_type *powers_type;
-
-/*
  * Variable savefile stuff
  */
 s32b extra_savefile_parts = 0;
@@ -1491,8 +1487,7 @@ s32b extra_savefile_parts = 0;
 /*
  * Quests
  */
-s16b max_q_idx = MAX_Q_IDX_INIT;
-quest_type *quest;
+quest_type quest[MAX_Q_IDX];
 
 /*
  * Display the player as a special symbol when in bad health ?
@@ -1503,10 +1498,10 @@ bool_ player_char_health;
 /*
  * The spell list of schools
  */
-s16b max_spells;
-spell_type *school_spells;
-s16b max_schools;
-school_type *schools;
+s16b school_spells_count = 0;
+spell_type school_spells[SCHOOL_SPELLS_MAX];
+s16b schools_count = 0;
+school_type schools[SCHOOLS_MAX];
 
 /*
  * Lasting spell effects
@@ -1537,12 +1532,7 @@ int cli_total = 0;
 /*
  * max_bact, only used so that lua scripts can add new bacts without worrying about the numbers
  */
-int max_bact = 54;
-
-/*
- * Max corruptions
- */
-s16b max_corruptions = 0;
+int max_bact = 127;
 
 /*
  * Ingame contextual help
@@ -1564,6 +1554,7 @@ s16b last_teleportation_x = -1;
  * The current game module
  */
 cptr game_module;
+s32b game_module_idx;
 s32b VERSION_MAJOR;
 s32b VERSION_MINOR;
 s32b VERSION_PATCH;
@@ -1572,18 +1563,17 @@ s32b VERSION_PATCH;
  * Some module info
  */
 s32b max_plev = 50;
+s32b DUNGEON_BASE = 4;
 s32b DUNGEON_DEATH = 28;
-
-/*
- * Gods
- */
-deity_type *deity_info;
-s32b max_gods = MAX_GODS_INIT;
+s32b DUNGEON_ASTRAL = 8;
+s32b DUNGEON_ASTRAL_WILD_X = 45;
+s32b DUNGEON_ASTRAL_WILD_Y = 19;
 
 /*
  * Timers
  */
 timer_type *gl_timers = NULL;
+
 
 /**
  * Get the version string.

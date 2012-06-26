@@ -184,43 +184,6 @@ static void wiz_create_named_art()
 	msg_print("Allocated.");
 }
 
-/*
- * Hack -- quick debugging hook
- */
-void do_cmd_wiz_hack_ben(int num)
-{
-	s32b a;
-
-	/*        MAKE(r_ptr, monster_race);
-	        COPY(r_ptr, &r_info[500], monster_race);
-
-	        r_ptr->level = 1;
-	        r_ptr->flags6 |= RF6_BLINK;
-	        r_ptr->freq_inate = r_ptr->freq_spell = 90;
-
-	        place_monster_one_race = r_ptr;
-	        place_monster_one(p_ptr->py - 1, p_ptr->px, 500, 0, TRUE, MSTATUS_PET);*/
-
-	get_lua_var("a", 'd', &a);
-	msg_format("a: %d", a);
-
-	/* Success */
-	return;
-}
-
-void do_cmd_lua_script()
-{
-	char script[80] = "tome_dofile_anywhere(ANGBAND_DIR_CORE, 'gen_idx.lua')";
-
-	if (!get_string("Script:", script, 80)) return;
-
-	exec_lua(script);
-
-	/* Success */
-	return;
-}
-
-
 #ifdef MONSTER_HORDES
 
 /* Summon a horde of monsters */
@@ -350,6 +313,23 @@ static void do_cmd_wiz_change_aux(void)
 
 	/* Update */
 	check_experience();
+
+
+	/* Default */
+	sprintf(tmp_val, "%ld", (long) (p_ptr->grace));
+
+	/* Query */
+	if (!get_string("Piety: ", tmp_val, 9)) return;
+
+	/* Extract */
+	tmp_long = atol(tmp_val);
+
+	/* Verify */
+	if (tmp_long < 0) tmp_long = 0L;
+
+	/* Save */
+	p_ptr->grace = tmp_long;
+
 
 	/* Default */
 	sprintf(tmp_val, "%d", p_ptr->luck_base);
@@ -1758,7 +1738,7 @@ void do_cmd_debug(void)
 
 		/* corruption */
 	case 'M':
-		(void) gain_random_corruption(command_arg);
+		gain_random_corruption();
 		break;
 
 		/* Specific reward */
@@ -1795,11 +1775,11 @@ void do_cmd_debug(void)
 	case 'q':
 		{
 			/*                        if (quest[command_arg].status == QUEST_STATUS_UNTAKEN)*/
-			if ((command_arg >= 1) && (command_arg < MAX_Q_IDX_INIT) && (command_arg != QUEST_RANDOM))
+			if ((command_arg >= 1) && (command_arg < MAX_Q_IDX) && (command_arg != QUEST_RANDOM))
 			{
 				quest[command_arg].status = QUEST_STATUS_TAKEN;
 				*(quest[command_arg].plot) = command_arg;
-				if (quest[command_arg].type == HOOK_TYPE_C) quest[command_arg].init(command_arg);
+				quest[command_arg].init(command_arg);
 				break;
 			}
 			break;
@@ -1892,11 +1872,6 @@ void do_cmd_debug(void)
 		do_cmd_wiz_zap();
 		break;
 
-		/* Hack -- whatever I desire */
-	case '_':
-		do_cmd_wiz_hack_ben(command_arg);
-		break;
-
 		/* Mimic shape changing */
 	case '*':
 		p_ptr->tim_mimic = 100;
@@ -1935,10 +1910,6 @@ void do_cmd_debug(void)
 
 	case '/':
 		summon_specific(p_ptr->py, p_ptr->px, max_dlv[dungeon_type], command_arg);
-		break;
-
-	case '>':
-		do_cmd_lua_script();
 		break;
 
 		/* Not a Wizard Command */

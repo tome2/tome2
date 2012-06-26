@@ -2657,6 +2657,12 @@ s16b place_monster_one(int y, int x, int r_idx, int ego, bool_ slp, int status)
 
 	place_monster_one_race = NULL;
 
+	/* Processs hooks */
+	{
+		hook_new_monster_end_in in = { m_ptr };
+		process_hooks_new(HOOK_NEW_MONSTER_END, &in, NULL);
+	}
+
 	/* Success */
 	place_monster_result = c_ptr->m_idx;
 	return c_ptr->m_idx;
@@ -3349,11 +3355,6 @@ bool_ summon_specific_okay(int r_idx)
 			break;
 		}
 
-	case SUMMON_LUA:
-		{
-			okay = summon_lua_okay(r_idx);
-			break;
-		}
 	}
 
 	/* Result */

@@ -963,9 +963,16 @@ void do_cmd_eat_food(void)
 	lev = k_info[o_ptr->k_idx].level;
 
 	/* Scripted foods */
+	hook_eat_in in = { o_ptr };
+	hook_eat_out out = { FALSE };
+
 	if (process_hooks_ret(HOOK_EAT, "d", "(O)", o_ptr))
 	{
 		ident = process_hooks_return[0].num;
+	}
+	else if (process_hooks_new(HOOK_EAT, &in, &out))
+	{
+		ident = out.ident;
 	}
 	/* (not quite) Normal foods */
 	else if (o_ptr->tval == TV_FOOD)
@@ -2335,8 +2342,19 @@ static bool_ quaff_potion(int tval, int sval, int pval, int pval2)
 
 		case SV_POTION_MUTATION:
 			{
+				/* In Theme, Melkor likes players who quaff
+				   potions of corruption. */
+				if (game_module_idx == MODULE_THEME)
+				{
+					GOD(GOD_MELKOR)
+					{
+						msg_print("Your quaffing of this potion pleases Melkor!");
+						set_grace(p_ptr->grace + 2);
+					}
+				}
+
 				msg_print("You feel the dark corruptions of Morgoth coming over you!");
-				gain_random_corruption(0);
+				gain_random_corruption();
 				ident = TRUE;
 				break;
 			}
@@ -2378,9 +2396,7 @@ static bool_ quaff_potion(int tval, int sval, int pval, int pval2)
 			{
 				if (!p_ptr->mimic_form)
 				{
-					s32b time;
-
-					call_lua("get_mimic_rand_dur", "(d)", "d", pval2, &time);
+					s32b time = get_mimic_random_duration(pval2);
 
 					set_mimic(time, pval2, (p_ptr->lev * 2) / 3);
 
@@ -2478,13 +2494,15 @@ void do_cmd_quaff_potion(void)
 	/* Object level */
 	lev = k_info[o_ptr->k_idx].level;
 
-	/* Analyze the potion */
-	if (process_hooks_ret(HOOK_QUAFF, "d", "(O)", o_ptr))
+	/* Demon Breath corruption can spoil potions. */
+	if (player_has_corruption(CORRUPT_DEMON_BREATH) && magik(9))
 	{
-		ident = process_hooks_return[0].num;
+		msg_print("Your demon breath spoils the potion!");
+		ident = FALSE;
 	}
 	else
 	{
+		/* Normal potion handling */
 		ident = quaff_potion(o_ptr->tval, o_ptr->sval, o_ptr->pval, o_ptr->pval2);
 	}
 
@@ -2899,13 +2917,15 @@ void do_cmd_read_scroll(void)
 	/* Assume the scroll will get used up */
 	used_up = TRUE;
 
-	/* New scripts, can override the ingame code */
-	if (process_hooks_ret(HOOK_READ, "dd", "(O)", o_ptr))
+	/* Corruption */
+	if (player_has_corruption(CORRUPT_BALROG_AURA) && magik(5))
 	{
-		used_up = process_hooks_return[0].num;
-		ident = process_hooks_return[1].num;
+		msg_print("Your demon aura burns the scroll before you read it!");
+		used_up = TRUE;
+		ident = FALSE;
 	}
-	/* Traditional scrolls */
+
+	/* Scrolls */
 	else if (o_ptr->tval == TV_SCROLL)
 	{
 		/* Analyze the scroll */
@@ -3509,6 +3529,14 @@ void do_cmd_read_scroll(void)
 				break;
 			}
 
+		case SV_SCROLL_STERILIZATION:
+			{
+				msg_print("A neutralising wave radiates from you!");
+				set_no_breeders(randint(100) + 100);
+
+				break;
+			}
+
 		default:
 			{
 				break;
@@ -3616,12 +3644,49 @@ void set_stick_mode(object_type *o_ptr)
 	s32b bonus = o_ptr->pval3 & 0xFFFF;
 	s32b max = o_ptr->pval3 >> 16;
 
-	exec_lua(format("get_level_use_stick = %d; get_level_max_stick = %d", bonus, max));
+	get_level_use_stick = bonus;
+	get_level_max_stick = max;
 }
+
 /* Remove 'stick mode' */
 void unset_stick_mode()
 {
-	exec_lua("get_level_use_stick = -1; get_level_max_stick = -1");
+	get_level_use_stick = -1;
+	get_level_max_stick = -1;
+}
+
+
+/*
+ * Activate a device
+ */
+static void activate_stick(s16b s, bool_ *obvious, bool_ *use_charge)
+{
+	spell_type *spell = spell_at(s);
+	casting_result ret;
+
+	assert(obvious != NULL);
+	assert(use_charge != NULL);
+	assert(spell->effect_func != NULL);
+
+	ret = spell->effect_func(-1);
+
+	switch (ret)
+	{
+	case NO_CAST:
+		*use_charge = FALSE;
+		*obvious = FALSE;
+		break;
+	case CAST_HIDDEN:
+		*use_charge = TRUE;
+		*obvious = FALSE;
+		break;
+	case CAST_OBVIOUS:
+		*use_charge = TRUE;
+		*obvious = TRUE;
+		break;
+	default:
+		assert(FALSE);
+	}
 }
 
 
@@ -3636,7 +3701,7 @@ void do_cmd_use_staff(void)
 {
 	int item, ident, chance;
 
-	s32b obvious, use_charge;
+	bool_ obvious, use_charge;
 
 	object_type *o_ptr;
 
@@ -3683,7 +3748,7 @@ void do_cmd_use_staff(void)
 	ident = FALSE;
 
 	/* get the chance */
-	chance = exec_lua(format("return spell_chance(%d)", o_ptr->pval2));
+	chance = spell_chance(o_ptr->pval2);
 
 	/* Extract object flags */
 	object_flags(o_ptr, &f1, &f2, &f3, &f4, &f5, &esp);
@@ -3730,7 +3795,7 @@ void do_cmd_use_staff(void)
 
 
 	/* Analyze the staff */
-	call_lua("activate_stick", "(d)", "dd", o_ptr->pval2, &obvious, &use_charge);
+	activate_stick(o_ptr->pval2, &obvious, &use_charge);
 
 	/* Combine / Reorder the pack (later) */
 	p_ptr->notice |= (PN_COMBINE | PN_REORDER);
@@ -3826,7 +3891,7 @@ void do_cmd_use_staff(void)
  */
 void do_cmd_aim_wand(void)
 {
-	s32b obvious, use_charge;
+	bool_ obvious, use_charge;
 
 	int item, ident, chance, sval;
 
@@ -3877,7 +3942,7 @@ void do_cmd_aim_wand(void)
 	set_stick_mode(o_ptr);
 
 	/* get the chance */
-	chance = exec_lua(format("return spell_chance(%d)", o_ptr->pval2));
+	chance = spell_chance(o_ptr->pval2);
 
 	/* Extract object flags */
 	object_flags(o_ptr, &f1, &f2, &f3, &f4, &f5, &esp);
@@ -3921,7 +3986,7 @@ void do_cmd_aim_wand(void)
 	sval = o_ptr->sval;
 
 	/* Analyze the wand */
-	call_lua("activate_stick", "(d)", "dd", o_ptr->pval2, &obvious, &use_charge);
+	activate_stick(o_ptr->pval2, &obvious, &use_charge);
 
 	/* Combine / Reorder the pack (later) */
 	p_ptr->notice |= (PN_COMBINE | PN_REORDER);
@@ -4965,9 +5030,37 @@ void do_cmd_activate(void)
 }
 
 
+static void get_activation_desc(char *buf, int spl)
+{
+	spell_type *spell = spell_at(spl);
+	char turns[32];
+
+	dice_print(&spell->activation_duration, turns);
+
+	assert(spell->description != NULL);
+	assert(spell->description->s != NULL);
+
+	sprintf(buf, "%s every %s turns",
+		spell->description->s,
+		turns);
+}
+
+static int get_activation_timeout(int spl)
+{
+	spell_type *spell = spell_at(spl);
+	return dice_roll(&spell->activation_duration);
+}
+
+static void activate_activation(long s, int item)
+{
+	spell_type *spell = spell_at(s);
+	assert(spell->effect_func != NULL);
+	spell->effect_func(item);
+}
 
 const char *activation_aux(object_type * o_ptr, bool_ doit, int item)
 {
+	static char buf[256];
 	int plev = get_skill(SKILL_DEVICE);
 
 	int i = 0, ii = 0, ij = 0, k, dir, dummy = 0;
@@ -5009,12 +5102,13 @@ const char *activation_aux(object_type * o_ptr, bool_ doit, int item)
 	{
 		if (doit)
 		{
-			call_lua("activate_activation", "(d,d)", "", -spell, item);
-			o_ptr->timeout = exec_lua(format("return get_activation_timeout(%d)", -spell));
+			activate_activation(-spell, item);
+			o_ptr->timeout = get_activation_timeout(-spell);
 		}
 		else
 		{
-			return string_exec_lua(format("return get_activation_desc(%d)", -spell));
+			get_activation_desc(buf, -spell);
+			return buf;
 		}
 	}
 	else
@@ -7194,7 +7288,7 @@ const char *activation_aux(object_type * o_ptr, bool_ doit, int item)
 		case ACT_MUT:
 			{
 				if (!doit) return "gain corruption every 10 turns";
-				gain_random_corruption(0);
+				gain_random_corruption();
 				/* Timeout is set before return */
 
 				break;

@@ -5,16 +5,29 @@ CMAKE_MINIMUM_REQUIRED (VERSION 2.6)
 # We want a readable feature summary.
 INCLUDE(FeatureSummary)
 
+# pkg-config support
+INCLUDE(FindPkgConfig)
+
 # Default flags.
 IF(CMAKE_COMPILER_IS_GNUCC)
   # Let's set sensible options.
-  SET(CMAKE_C_FLAGS         "${CMAKE_C_FLAGS} -pipe -Wall -Wno-unused-value")
+  SET(CMAKE_C_FLAGS         "${CMAKE_C_FLAGS} -pipe -Wall -Wno-unused-value -Wno-unused-variable")
   SET(CMAKE_C_FLAGS_RELEASE "-O2")
   SET(CMAKE_C_FLAGS_DEBUG   "-O0 -g")
 ENDIF()
 
 # Add definitions.
 ADD_DEFINITIONS(-DUSE_PRECISE_CMOVIE)
+
+#
+# JSON support
+#
+PKG_CHECK_MODULES(JANSSON REQUIRED jansson)
+IF(JANSSON_FOUND)
+  ADD_DEFINITIONS(${JANSSON_CFLAGS})
+  INCLUDE_DIRECTORIES(${JANSSON_INCLUDE_DIRS})
+  SET(LIBS ${LIBS} ${JANSSON_LIBRARIES})
+ENDIF()
 
 #
 # X11 support (OPTIONAL)

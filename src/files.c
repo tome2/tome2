@@ -1595,6 +1595,48 @@ void player_flags(u32b *f1, u32b *f2, u32b *f3, u32b *f4, u32b *f5, u32b *esp)
 		if (p_ptr->grace > 10000) (*f1) |= TR1_STR;
 	}
 
+	GOD(GOD_AULE)
+	{
+		if (p_ptr->grace > 5000)
+		{
+			(*f2) |= TR2_RES_FIRE;
+		}
+	}
+
+	GOD(GOD_MANDOS)
+	{
+		(*f2) |= TR2_RES_NETHER;
+
+		if ((p_ptr->grace > 10000) &&
+		    (p_ptr->praying == TRUE))
+		{
+			(*f3) |= TR3_NO_TELE;
+		}
+
+		if ((p_ptr->grace > 20000) &&
+		    (p_ptr->praying == TRUE))
+		{
+			(*f4) |= TR4_IM_NETHER;
+		}
+	}
+
+	GOD(GOD_ULMO)
+	{
+		(*f5) |= TR5_WATER_BREATH;
+
+		if ((p_ptr->grace > 1000) &&
+		    (p_ptr->praying == TRUE))
+		{
+			(*f2) |= TR2_RES_POIS;
+		}
+
+		if ((p_ptr->grace > 15000) &&
+		    (p_ptr->praying == TRUE))
+		{
+			(*f5) |= TR5_MAGIC_BREATH;
+		}
+	}
+
 	/* Classes */
 	for (i = 1; i <= p_ptr->lev; i++)
 	{
@@ -2576,7 +2618,6 @@ errr file_character(cptr name, bool_ full)
 
 	/* List the patches */
 	hook_file = fff;
-	exec_lua("patchs_list()");
 
 	fprintf(fff, "\n\n  [Miscellaneous information]\n");
 	if (joke_monsters)
@@ -2644,7 +2685,7 @@ errr file_character(cptr name, bool_ full)
 
 		if (p_ptr->tim_mimic)
 		{
-			call_lua("get_mimic_info", "(d,s)", "s", p_ptr->mimic_form, "name", &mimic);
+			mimic = get_mimic_name(p_ptr->mimic_form);
 			fprintf(fff, "\n You %s disguised as a %s.", (death ? "were" : "are"), mimic);
 		}
 	}
@@ -2736,11 +2777,7 @@ errr file_character(cptr name, bool_ full)
 	file_character_print_grid(fff, FALSE, FALSE);
 
 	/* Dump corruptions */
-	if (got_corruptions())
-	{
-		fprintf(fff, "\n Corruption list:\n");
-		dump_corruptions(fff, FALSE);
-	}
+	dump_corruptions(fff, FALSE, TRUE);
 
 	/* Dump skills */
 	dump_skills(fff);
@@ -3486,9 +3523,9 @@ bool_ txt_to_html(cptr head, cptr foot, cptr base, cptr ext, bool_ force, bool_ 
 	/* Char array type of hyperlink info */
 	hyperlink_type *h_ptr;
 
-	cptr file_ext;
-	cptr link_prefix;
-	cptr link_suffix;
+	cptr file_ext = "html";
+	cptr link_prefix = "";
+	cptr link_suffix = "";
 
 	/* Pointer to general buffer in the above */
 	char *buf;
@@ -3504,14 +3541,6 @@ bool_ txt_to_html(cptr head, cptr foot, cptr base, cptr ext, bool_ force, bool_ 
 	{
 		h_ptr->link_x[i] = -1;
 	}
-
-	/* Parse it(yeah lua is neat :) */
-	tome_dofile_anywhere(ANGBAND_DIR_HELP, "def.aux", TRUE);
-
-	/* Ok now get the parameters */
-	file_ext = string_exec_lua("return file_ext");
-	link_prefix = string_exec_lua("return link_prefix");
-	link_suffix = string_exec_lua("return link_suffix");
 
 	sprintf(buf_name, "%s.%s", base, file_ext);
 
@@ -4291,7 +4320,7 @@ long total_points(void)
 	temp += p_ptr->au / 5;
 
 	/* Completing quest increase score */
-	for (i = 0; i < max_q_idx; i++)
+	for (i = 0; i < MAX_Q_IDX; i++)
 	{
 		if (quest[i].status >= QUEST_STATUS_COMPLETED)
 		{

@@ -11,9 +11,7 @@
  */
 
 #include "angband.h"
-#include "lua/lua.h"
-#include "tolua.h"
-extern lua_State* L;
+#include <assert.h>
 
 #define TY_CURSE_CHANCE 100
 #define DG_CURSE_CHANCE 50
@@ -799,30 +797,10 @@ bool_ decays(object_type *o_ptr)
 
 static int process_lasting_spell(s16b music)
 {
-	int oldtop, use_mana;
+	spell_type *spell = spell_at(-music);
 
-	if (music > 0) return FALSE;
-
-	oldtop = lua_gettop(L);
-
-	music = -music;
-
-	/* Push the function */
-	lua_getglobal(L, "exec_lasting_spell");
-
-	/* Push the spell */
-	tolua_pushnumber(L, music);
-
-	/* Call the function */
-	if (lua_call(L, 1, 1))
-	{
-		cmsg_format(TERM_VIOLET, "ERROR in lua_call while calling lasting spell");
-		return 0;
-	}
-
-	use_mana = tolua_getnumber(L, -(lua_gettop(L) - oldtop), 0);
-	lua_settop(L, oldtop);
-	return use_mana;
+	assert(spell->lasting_func != NULL);
+	return spell->lasting_func();
 }
 
 static void gere_class_special()
@@ -948,8 +926,8 @@ static void check_music()
 	if (p_ptr->csp < use_mana)
 	{
 		msg_print("You stop your spell.");
-		p_ptr->music_extra = MUSIC_NONE;
-		p_ptr->music_extra2 = MUSIC_NONE;
+		p_ptr->music_extra = 0;
+		p_ptr->music_extra2 = 0;
 	}
 	else
 	{
@@ -1016,6 +994,271 @@ bool_ is_recall = FALSE;
 
 
 /*
+ * Hook for corruptions
+ */
+static void process_world_corruptions()
+{
+	if (player_has_corruption(CORRUPT_RANDOM_TELEPORT))
+	{
+		if (rand_int(300) == 1)
+		{
+			if (magik(70))
+			{
+				if (get_check("Teleport?"))
+				{
+					teleport_player(50);
+				}
+				else
+				{
+					disturb(0, 0);
+					msg_print("Your corruption takes over you, you teleport!");
+					teleport_player(50);
+				}
+			}
+		}
+	}
+
+	if (player_has_corruption(CORRUPT_ANTI_TELEPORT))
+	{
+		if (p_ptr->corrupt_anti_teleport_stopped)
+		{
+			int amt = p_ptr->msp + p_ptr->csp;
+			amt = amt / 100;
+			if (amt < 1) {
+				amt = 1;
+			}
+			increase_mana(-amt);
+			if (p_ptr->csp == 0)
+			{
+				p_ptr->corrupt_anti_teleport_stopped = FALSE;
+				msg_print("You stop controlling your corruption.");
+				p_ptr->update = p_ptr->update | PU_BONUS;
+			}
+		}
+	}
+}
+
+
+/*
+ * Shim for accessing Lua variable.
+ */
+static bool_ grace_delay_trigger()
+{
+	p_ptr->grace_delay++;
+
+	if (p_ptr->grace_delay >= 15)
+	{
+		/* reset */
+		p_ptr->grace_delay = 0;
+		/* triggered */
+		return TRUE;
+	}
+	else
+	{
+		/* not triggered */
+		return FALSE;
+	}
+}
+
+/*
+ * Hook for gods
+ */
+static void process_world_gods()
+{
+	const char *race_name = rp_ptr->title + rp_name;
+	const char *subrace_name = rmp_ptr->title + rmp_name;
+
+	GOD(GOD_VARDA)
+	{
+		if (grace_delay_trigger())
+		{
+			/* Piety increases if in light. */
+			if (cave[p_ptr->py][p_ptr->px].info & CAVE_GLOW)
+			{
+				inc_piety(GOD_ALL, 2);
+			}
+
+			if (streq(race_name, "Orc") ||
+			    streq(race_name, "Troll") ||
+			    streq(race_name, "Dragon") ||
+			    streq(race_name, "Demon"))
+			{
+				/* Varda hates evil races */
+				inc_piety(GOD_ALL, -2);
+			} else {
+				/* ... and everyone slightly less */
+				inc_piety(GOD_ALL, -1);
+			}
+
+			/* Prayer uses piety */
+			if (p_ptr->praying)
+			{
+				inc_piety(GOD_ALL, -1);
+			}
+		}
+	}
+
+	GOD(GOD_ULMO)
+	{
+		if (grace_delay_trigger())
+		{
+			int i;
+			/* Ulmo likes the Edain (except Easterlings) */
+			if (streq(race_name, "Human") ||
+			    streq(race_name, "Dunadan") ||
+			    streq(race_name, "Druadan") ||
+			    streq(race_name, "RohanKnight"))
+			{
+				inc_piety(GOD_ALL, 2);
+			}
+			else if (streq(race_name, "Easterling") ||
+				 streq(race_name, "Demon") ||
+				 streq(race_name, "Orc"))
+			{
+				/* hated races */
+				inc_piety(GOD_ALL, -2);
+			}
+			else
+			{
+				inc_piety(GOD_ALL, 1);
+			}
+
+			if (p_ptr->praying)
+			{
+				inc_piety(GOD_ALL, -1);
+			}
+
+			/* Gain 1 point for each trident in inventory */
+			for (i = 0; i < INVEN_TOTAL; i++)
+			{
+				if ((p_ptr->inventory[i].tval == TV_POLEARM) &&
+				    (p_ptr->inventory[i].sval == SV_TRIDENT))
+				{
+					inc_piety(GOD_ALL, 1);
+				}
+			}
+		}
+	}
+
+	GOD(GOD_AULE)
+	{
+		if (grace_delay_trigger())
+		{
+			int i;
+
+			/* Aule likes Dwarves and Dark Elves (Eol's
+			 * influence here) */
+			if  (!(streq(race_name, "Dwarf") ||
+			       streq(race_name, "Petty-dwarf") ||
+			       streq(race_name, "Gnome") ||
+			       streq(race_name, "Dark-Elf")))
+			{
+				inc_piety(GOD_ALL, -1);
+			}
+
+			/* Search inventory for axe or hammer - Gain 1
+			 * point of grace for each hammer or axe */
+			for (i = 0; i < INVEN_TOTAL; i++)
+			{
+				int tval = p_ptr->inventory[i].tval;
+				int sval = p_ptr->inventory[i].sval;
+
+				switch (tval)
+				{
+				case TV_AXE:
+					inc_piety(GOD_ALL, 1);
+					break;
+
+				case TV_HAFTED:
+					if ((sval == SV_WAR_HAMMER) ||
+					    (sval == SV_LUCERN_HAMMER) ||
+					    (sval == SV_GREAT_HAMMER))
+					{
+						inc_piety(GOD_ALL, 1);
+					}
+					break;
+				}
+			}
+
+			/* Praying may grant you a free stone skin
+			 * once in a while */
+			if (p_ptr->praying)
+			{
+				int chance;
+				s32b grace;
+
+				inc_piety(GOD_ALL, -2);
+				grace = p_ptr->grace; /* shorthand */
+
+				chance = 1;
+				if (grace >= 50000)
+				{
+					chance = 50000;
+				}
+				else
+				{
+					chance = 50000 - grace;
+				}
+
+				if (randint(100000) <= 100000 / chance)
+				{
+					s16b type = 0;
+
+					if (grace >= 10000)
+					{
+						type = SHIELD_COUNTER;
+					}
+
+					set_shield(
+						randint(10) + 10 + (grace / 100),
+						10 + (grace / 100),
+						type,
+						2 + (grace / 200),
+						3 + (grace / 400));
+
+					msg_print("Aule casts Stone Skin on you.");
+				}
+			}
+		}
+	}
+
+	GOD(GOD_MANDOS)
+	{
+		if (grace_delay_trigger())
+		{
+			/* He loves astral beings  */
+			if (streq(subrace_name, "LostSoul"))
+			{
+				inc_piety(GOD_ALL, 1);
+			}
+
+			/* He likes High Elves only, though, as races */
+			if (!streq(race_name, "High-Elf"))
+			{
+				inc_piety(GOD_ALL, -1);
+			}
+
+			/* Really hates vampires and demons */
+			if (streq(subrace_name, "Vampire") ||
+			    streq(race_name, "Demon"))
+			{
+				inc_piety(GOD_ALL, -10);
+			}
+			else
+			{
+				inc_piety(GOD_ALL, 2);
+			}
+			/* he really doesn't like to be disturbed */
+			if (p_ptr->praying)
+			{
+				inc_piety(GOD_ALL, -5);
+			}
+		}
+	}
+
+}
+
+/*
  * Handle certain things once every 10 game turns
  *
  * Note that a single movement in the overhead wilderness mode
@@ -1058,8 +1301,11 @@ static void process_world(void)
 	 */
 	if (dun_level || (!p_ptr->wild_mode))
 	{
-		/* Let the script live! */
-		process_hooks(HOOK_PROCESS_WORLD, "()");
+		/* Handle corruptions */
+		process_world_corruptions();
+
+		/* Handle gods */
+		process_world_gods();
 
 		/* Handle the player song */
 		check_music();
@@ -1074,7 +1320,8 @@ static void process_world(void)
 		if (!t_ptr->countdown)
 		{
 			t_ptr->countdown = t_ptr->delay;
-			call_lua(t_ptr->callback, "()", "");
+			assert(t_ptr->callback != NULL);
+			t_ptr->callback();
 		}
 	}
 
@@ -1874,6 +2121,12 @@ static void process_world(void)
 	if (p_ptr->tim_magic_breath)
 	{
 		(void)set_tim_breath(p_ptr->tim_magic_breath - 1, TRUE);
+	}
+
+	/* Timed precognition */
+	if (p_ptr->tim_precognition > 0)
+	{
+		set_tim_precognition(p_ptr->tim_precognition - 1);
 	}
 
 	/* Timed regen */
@@ -5064,6 +5317,11 @@ static void dungeon(void)
 		/* Process the appropriate hooks */
 		process_hooks(HOOK_END_TURN, "(d)", is_quest(dun_level));
 
+		{
+			hook_end_turn_in in = { is_quest(dun_level) };
+			process_hooks_new(HOOK_END_TURN, &in, NULL);
+		}
+
 		/* Make it pulsate and live !!!! */
 		if ((dungeon_flags1 & DF1_EVOLVE) && dun_level)
 		{
@@ -5158,7 +5416,11 @@ static void load_all_pref_files(void)
 	process_pref_file(buf);
 
 	/* Process player specific automatizer sets */
-	tome_dofile_anywhere(ANGBAND_DIR_USER, format("%s.atm", player_name), FALSE);
+	/* TODO: Disabled temporarily because it causes duplicate
+	 * rules on save and subsequent game load. */
+	/* sprintf(buf2, "%s.atm", player_name); */
+	/* path_build(buf, sizeof(buf), ANGBAND_DIR_USER, buf2); */
+	/* automatizer_init(buf); */
 }
 
 /*
@@ -5296,23 +5558,8 @@ void play_game(bool_ new_game)
 	/* Roll new character */
 	if (new_game)
 	{
-		s32b ret;
-
-		/* Are we authorized to create new chars? */
-		call_lua("get_module_info", "(s)", "d", "allow_birth", &ret);
-
-		if (!ret)
-		{
-			msg_box("Sorry, this module does not allow character creation.", -1, -1);
-
-			/* Close stuff */
-			close_game();
-
-			/* Quit */
-			quit(NULL);
-		}
-
-		process_hooks(HOOK_INIT, "()");
+		/* Show intro */
+		modules[game_module_idx].intro();
 
 		/* The dungeon is not ready */
 		character_dungeon = FALSE;
@@ -5383,7 +5630,8 @@ void play_game(bool_ new_game)
 
 	/* Initialize hooks */
 	init_hooks();
-	ingame_help(p_ptr->help.enabled);
+	init_hooks_help();
+	init_hooks_module();
 
 	/* React to changes */
 	Term_xtra(TERM_XTRA_REACT, 0);
@@ -5406,6 +5654,7 @@ void play_game(bool_ new_game)
 
 	/* Ok tell the scripts that the game is about to start */
 	process_hooks(HOOK_GAME_START, "()");
+	process_hooks_new(HOOK_GAME_START, NULL, NULL);
 
 	/* Character is now "complete" */
 	character_generated = TRUE;

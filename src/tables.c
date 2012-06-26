@@ -2739,9 +2739,10 @@ cptr deity_standing[11] =
  * Only the first four lines are printed at birth. 
  */
 
-deity_type deity_info_init[MAX_GODS_INIT] =
+deity_type deity_info[MAX_GODS] =
 {
 	{
+		{ MODULE_TOME, MODULE_THEME, -1, },
 		"Nobody",
 		{
 			"Atheist",
@@ -2757,6 +2758,7 @@ deity_type deity_info_init[MAX_GODS_INIT] =
 		},
 	},
 	{
+		{ MODULE_TOME, MODULE_THEME, -1, },
 		"Eru Iluvatar",
 		{
 			"He is the supreme god, he created the world, and most of its inhabitants.",
@@ -2772,6 +2774,7 @@ deity_type deity_info_init[MAX_GODS_INIT] =
 		},
 	},
 	{
+		{ MODULE_TOME, MODULE_THEME, -1, },
 		"Manwe Sulimo",
 		{
 			"He is the king of the Valar, most powerful of them after Melkor.",
@@ -2787,6 +2790,7 @@ deity_type deity_info_init[MAX_GODS_INIT] =
 		},
 	},
 	{
+		{ MODULE_TOME, MODULE_THEME, -1, },
 		"Tulkas",
 		{
 			"He is the last of the Valar that came to the world, and the fiercest fighter.",
@@ -2802,6 +2806,7 @@ deity_type deity_info_init[MAX_GODS_INIT] =
 		},
 	},
 	{
+		{ MODULE_TOME, MODULE_THEME, -1, },
 		"Melkor Bauglir",
 		{
 			"He is the most powerful of the Valar. He became corrupted and he's now ",
@@ -2817,10 +2822,75 @@ deity_type deity_info_init[MAX_GODS_INIT] =
 		},
 	},
 	{
+		{ MODULE_TOME, MODULE_THEME, -1, },
 		"Yavanna Kementari",
 		{
 			"She is the Vala of nature, protectress of the great forests of "
 			"Middle-earth.",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+		},
+	},
+	{
+		{ MODULE_THEME, -1, },
+		"Aule the Smith",
+		{
+			"Aule is a smith, and the creator of the Dwarves.",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+		},
+	},
+	{
+		{ MODULE_THEME, -1, },
+		"Varda Elentari",
+		{
+			"The Queen of the Stars. In light is her power and joy.",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+		},
+	},
+	{
+		{ MODULE_THEME, -1, },
+		"Ulmo",
+		{
+			"Ulmo is called Lord of Waters, he rules all that is water"
+			"on Arda.",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+		},
+	},
+	{
+		{ MODULE_THEME, -1, },
+		"Mandos",
+		{
+			"The Doomsman of the Valar and keeper of the slain.",
 			"",
 			"",
 			"",
@@ -3135,7 +3205,7 @@ flags_group flags_groups[MAX_FLAG_GROUP] =
 };
 
 /* Powers */
-power_type powers_type_init[POWER_MAX_INIT] =
+power_type powers_type[POWER_MAX] =
 {
 	{
 		"spit acid",
@@ -3571,15 +3641,35 @@ power_type powers_type_init[POWER_MAX_INIT] =
 		"You no longer feel the fire of Udun in you.",
 		35, 80, A_WIS, 25,
 	},
+	{
+		"invisibility",
+		"You are able melt into the shadows to become invisible.",
+		"You suddenly become able to melt into the shadows.",
+		"You lose your shadow-melting ability.",
+		30, 10, A_DEX, 20,
+	},
+	{
+		"web",
+		"You are able throw a thick and very resistant spider web.",
+		"You suddenly become able to weave webs.",
+		"You lose your web-weaving capability.",
+		25, 30, A_DEX, 20,
+	},
+	{
+		"control space/time continuum",
+		"You are able to control the space/time continuum.",
+		"You become able to control the space/time continuum.",
+		"You are no more able to control the space/time continuum.",
+		1, 10, A_WIS, 10,
+	},
 };
 
 /*
  * The Quests
  */
-quest_type quest_init_tome[MAX_Q_IDX_INIT] =
+quest_type quest[MAX_Q_IDX] =
 {
 	{
-		FALSE,
 		FALSE,
 		"",
 		{
@@ -3598,13 +3688,11 @@ quest_type quest_init_tome[MAX_Q_IDX_INIT] =
 		0,
 
 		NULL,
-		HOOK_TYPE_C,
 		quest_null_hook,
 		{0, 0},
 		NULL,
 	},
 	{
-		FALSE,
 		FALSE,
 		"Dol Guldur",
 		{
@@ -3623,13 +3711,11 @@ quest_type quest_init_tome[MAX_Q_IDX_INIT] =
 		70,
 	
 		&plots[PLOT_MAIN],
-		HOOK_TYPE_C,
 		quest_necro_init_hook,
 		{0, 0},
 		NULL,
 	},
 	{
-		FALSE,
 		FALSE,
 		"Sauron",
 		{
@@ -3648,13 +3734,11 @@ quest_type quest_init_tome[MAX_Q_IDX_INIT] =
 		99,
 	
 		&plots[PLOT_MAIN],
-		HOOK_TYPE_C,
 		quest_sauron_init_hook,
 		{0, 0},
 		NULL,
 	},
 	{
-		FALSE,
 		FALSE,
 		"Morgoth",
 		{
@@ -3673,7 +3757,6 @@ quest_type quest_init_tome[MAX_Q_IDX_INIT] =
 		100,
 	
 		&plots[PLOT_MAIN],
-		HOOK_TYPE_C,
 		quest_morgoth_init_hook,
 		{0, 0},
 		NULL,
@@ -3681,7 +3764,6 @@ quest_type quest_init_tome[MAX_Q_IDX_INIT] =
 	
 	/* Bree plot */
 	{
-		FALSE,
 		FALSE,
 		"Thieves!",
 		{
@@ -3700,7 +3782,6 @@ quest_type quest_init_tome[MAX_Q_IDX_INIT] =
 		5,
 	
 		&plots[PLOT_BREE],
-		HOOK_TYPE_C,
 		quest_thieves_init_hook,
 		{0, 0},
 		NULL,
@@ -3708,7 +3789,6 @@ quest_type quest_init_tome[MAX_Q_IDX_INIT] =
 	
 	{
 		FALSE,
-		TRUE,
 		"Random Quest",
 		{
 			"",
@@ -3726,14 +3806,12 @@ quest_type quest_init_tome[MAX_Q_IDX_INIT] =
 		5,
 	
 		NULL,
-		HOOK_TYPE_C,
 		quest_random_init_hook,
 		{0, 0},
 		quest_random_describe,
 	},
 	
 	{
-		FALSE,
 		FALSE,
 		"Lost Hobbit",
 		{
@@ -3752,14 +3830,12 @@ quest_type quest_init_tome[MAX_Q_IDX_INIT] =
 		25,
 	
 		&plots[PLOT_OTHER],
-		HOOK_TYPE_C,
 		quest_hobbit_init_hook,
 		{0, 0},
 		NULL,
 	},
 	
 	{
-		FALSE,
 		FALSE,
 		"The Dark Horseman",
 		{
@@ -3778,14 +3854,12 @@ quest_type quest_init_tome[MAX_Q_IDX_INIT] =
 		40,
 	
 		&plots[PLOT_BREE],
-		HOOK_TYPE_C,
 		quest_nazgul_init_hook,
 		{0, 0},
 		NULL,
 	},
 	
 	{
-		FALSE,
 		FALSE,
 		"The Trolls Glade",
 		{
@@ -3804,14 +3878,12 @@ quest_type quest_init_tome[MAX_Q_IDX_INIT] =
 		30,
 	
 		&plots[PLOT_BREE],
-		HOOK_TYPE_C,
 		quest_troll_init_hook,
 		{FALSE, 0},
 		NULL,
 	},
 	
 	{
-		FALSE,
 		FALSE,
 		"The Wight Grave",
 		{
@@ -3830,7 +3902,6 @@ quest_type quest_init_tome[MAX_Q_IDX_INIT] =
 		30,
 	
 		&plots[PLOT_BREE],
-		HOOK_TYPE_C,
 		quest_wight_init_hook,
 		{FALSE, 0},
 		NULL,
@@ -3838,7 +3909,6 @@ quest_type quest_init_tome[MAX_Q_IDX_INIT] =
 	
 	/* Lorien plot */
 	{
-		FALSE,
 		FALSE,
 		"Spiders of Mirkwood",
 		{
@@ -3857,13 +3927,11 @@ quest_type quest_init_tome[MAX_Q_IDX_INIT] =
 		25,
 	
 		&plots[PLOT_LORIEN],
-		HOOK_TYPE_C,
 		quest_spider_init_hook,
 		{0, 0},
 		NULL,
 	},
 	{
-		FALSE,
 		FALSE,
 		"Poisoned Water",
 		{
@@ -3882,14 +3950,12 @@ quest_type quest_init_tome[MAX_Q_IDX_INIT] =
 		30,
 	
 		&plots[PLOT_LORIEN],
-		HOOK_TYPE_C,
 		quest_poison_init_hook,
 		{0, 0},
 		NULL,
 	},
 	/* Other quests */
 	{
-		FALSE,
 		FALSE,
 		"The Broken Sword",
 		{
@@ -3908,14 +3974,12 @@ quest_type quest_init_tome[MAX_Q_IDX_INIT] =
 		20,
 	
 		&plots[PLOT_OTHER],
-		HOOK_TYPE_C,
 		quest_narsil_init_hook,
 		{0, 0},
 		NULL,
 	},
 	/* Gondolin plot */
 	{
-		FALSE,
 		FALSE,
 		"Eol the Dark Elf",
 		{
@@ -3934,13 +3998,11 @@ quest_type quest_init_tome[MAX_Q_IDX_INIT] =
 		30,
 	
 		&plots[PLOT_GONDOLIN],
-		HOOK_TYPE_C,
 		quest_eol_init_hook,
 		{0, 0},
 		NULL,
 	},
 	{
-		FALSE,
 		FALSE,
 		"Nirnaeth Arnoediad",
 		{
@@ -3959,13 +4021,11 @@ quest_type quest_init_tome[MAX_Q_IDX_INIT] =
 		37,
 	
 		&plots[PLOT_GONDOLIN],
-		HOOK_TYPE_C,
 		quest_nirnaeth_init_hook,
 		{0, 0},
 		NULL,
 	},
 	{
-		FALSE,
 		FALSE,
 		"Invasion of Gondolin",
 		{
@@ -3984,14 +4044,12 @@ quest_type quest_init_tome[MAX_Q_IDX_INIT] =
 		80,
 	
 		&plots[PLOT_GONDOLIN],
-		HOOK_TYPE_C,
 		quest_invasion_init_hook,
 		{0, 0},
 		NULL,
 	},
 	/* Minas Anor Plot*/
 	{
-		FALSE,
 		FALSE,
 		"The Last Alliance",
 		{
@@ -4010,13 +4068,11 @@ quest_type quest_init_tome[MAX_Q_IDX_INIT] =
 		80,
 	
 		&plots[PLOT_MINAS],
-		HOOK_TYPE_C,
 		quest_between_init_hook,
 		{0, 0},
 		NULL,
 	},
 	{
-		FALSE,
 		FALSE,
 		"The One Ring",
 		{
@@ -4035,14 +4091,12 @@ quest_type quest_init_tome[MAX_Q_IDX_INIT] =
 		99,
 	
 		&plots[PLOT_MAIN],
-		HOOK_TYPE_C,
 		quest_one_init_hook,
 		{0, 0},
 		NULL,
 	},
 	
 	{
-		FALSE,
 		FALSE,
 		"Mushroom supplies",
 		{
@@ -4061,14 +4115,12 @@ quest_type quest_init_tome[MAX_Q_IDX_INIT] =
 		3,
 	
 		&plots[PLOT_OTHER],
-		HOOK_TYPE_C,
 		quest_shroom_init_hook,
 		{0, 0},
 		NULL,
 	},
 	
 	{
-		FALSE,
 		FALSE,
 		"The prisoner of Dol Guldur",
 		{
@@ -4087,7 +4139,6 @@ quest_type quest_init_tome[MAX_Q_IDX_INIT] =
 		60,
 	
 		&plots[PLOT_OTHER],
-		HOOK_TYPE_C,
 		quest_thrain_init_hook,
 		{0, 0},
 		NULL,
@@ -4095,7 +4146,6 @@ quest_type quest_init_tome[MAX_Q_IDX_INIT] =
 	
 	/* The 2 ultra endings go here */
 	{
-		FALSE,
 		FALSE,
 		"Falling Toward Apotheosis",
 		{
@@ -4114,13 +4164,11 @@ quest_type quest_init_tome[MAX_Q_IDX_INIT] =
 		150,
 	
 		&plots[PLOT_MAIN],
-		HOOK_TYPE_C,
 		quest_ultra_good_init_hook,
 		{0, 0},
 		NULL,
 	},
 	{
-		FALSE,
 		FALSE,
 		"Falling Toward Apotheosis",
 		{
@@ -4139,14 +4187,12 @@ quest_type quest_init_tome[MAX_Q_IDX_INIT] =
 		150,
 	
 		&plots[PLOT_MAIN],
-		HOOK_TYPE_C,
 		quest_ultra_evil_init_hook,
 		{0, 0},
 		NULL,
 	},
 	/* More Lorien */
 	{
-		FALSE,
 		FALSE,
 		"Wolves!",
 		{
@@ -4165,14 +4211,12 @@ quest_type quest_init_tome[MAX_Q_IDX_INIT] =
 		15,
 	
 		&plots[PLOT_LORIEN],
-		HOOK_TYPE_C,
 		quest_wolves_init_hook,
 		{0, 0},
 		NULL,
 	},
 	/* More Gondolin */
 	{
-		FALSE,
 		FALSE,
 		"Dragons!",
 		{
@@ -4191,14 +4235,12 @@ quest_type quest_init_tome[MAX_Q_IDX_INIT] =
 		25,
 	
 		&plots[PLOT_GONDOLIN],
-		HOOK_TYPE_C,
 		quest_dragons_init_hook,
 		{0, 0},
 		NULL,
 	},
 	/* More Minas Anor */
 	{
-		FALSE,
 		FALSE,
 		"Haunted House!",
 		{
@@ -4217,14 +4259,12 @@ quest_type quest_init_tome[MAX_Q_IDX_INIT] =
 		45,
 	
 		&plots[PLOT_MINAS],
-		HOOK_TYPE_C,
 		quest_haunted_init_hook,
 		{0, 0},
 		NULL,
 	},
 	/* Khazad-Dum Plot*/
 	{
-		FALSE,
 		FALSE,
 		"Evil!",
 		{
@@ -4243,10 +4283,74 @@ quest_type quest_init_tome[MAX_Q_IDX_INIT] =
 		60,
 	
 		&plots[PLOT_KHAZAD],
-		HOOK_TYPE_C,
 		quest_evil_init_hook,
 		{0, 0},
 		NULL,
+	},
+	/* Bounty */
+	{
+		FALSE,
+		"Bounty quest",
+		{
+			"", /* dynamic desc */
+		},
+		QUEST_STATUS_UNTAKEN,
+		-1,
+		NULL,
+		quest_bounty_init_hook,
+		{0, 0, 0, 0},
+		quest_bounty_describe,
+	},
+	/* Fireproofing */
+	{
+		FALSE,
+		"Old Mages quest",
+		{
+			"", /* dynamic desc */
+		},
+		QUEST_STATUS_UNTAKEN,
+		20,
+		NULL,
+		quest_fireproof_init_hook,
+		{0, 0, 0, 0},
+		quest_fireproof_describe,
+	},
+	/* Library */
+	{
+		FALSE,
+		"Library quest",
+		{
+			"", /* dynamic desc */
+		},
+		QUEST_STATUS_UNTAKEN,
+		35,
+		NULL,
+		quest_library_init_hook,
+		{ -1, -1, -1, -1 },
+		quest_library_describe,
+	},
+	/* God quest */
+	{
+		FALSE,
+		"God quest",
+		{
+			"", /* dynamic desc */
+		},
+		QUEST_STATUS_UNTAKEN,
+		-1,
+		NULL,
+		quest_god_init_hook,
+		{ 0 /* quests_given */,
+		  0 /* relics_found */,
+		  1 /* dun_mindepth */,
+		  4 /* dun_maxdepth */,
+		  0 /* dun_minplev */,
+		  0 /* relic_gen_tries */,
+		  FALSE /* relic_generated */,
+		  1 /* dung_x */,
+		  1 /* dung_y */,
+		},
+		quest_god_describe,
 	},
 };
 
@@ -4639,6 +4743,14 @@ between_exit between_exits[MAX_BETWEEN_EXITS] =
 		10, 35,
 		0, 0
 	},
+	/* Theme: Minas Tirith -> Gondolin link */
+	{
+		0,
+		FALSE,
+		3, 11,
+		119, 25,
+		0, 0
+	},
 };
 
 /*
@@ -4790,3 +4902,51 @@ gf_name_type gf_names[] =
 	{ GF_ATTACK, "projected melee attacks" },
 	{ -1, NULL },
 };
+
+/**
+ * Modules
+ */
+module_type modules[MAX_MODULES] =
+{
+	{ 
+		{ "ToME",
+		  { 2, 4, 0 },
+		  { "DarkGod", "darkgod@t-o-m-e.net" },
+		  "The Tales of Middle-earth, the standard and official game.\n"
+		  "You are set on a quest to investigate the old tower of Dol Guldur.\n"
+		  "But who knows what will happen...",
+		  "ToME",
+		  NULL /* default dir */,
+		},
+		/* Randarts: */
+		{ 30, 20, 20 },
+		/* Max player level: */
+		50,
+		/* Skills: */
+		{ 6, 4, },
+		/* Intro function */
+		tome_intro,
+	},
+
+	{
+		{ "Theme",
+		  { 1, 2, 0 },
+		  { "furiosity", "furiosity@gmail.com" },
+		  "A module that goes back to Tolkien roots, though by no means canonical.\n"
+		  "A new wilderness map, new monsters, objects, artifacts, uniques, ego items,\n"
+		  "terrain features, gods, races, subraces, and classes. Have fun. :-)",
+		  "Theme",
+		  "theme",
+		},
+		/* Randarts: */
+		{ 30, 30, 30 },
+		/* Max player level: */
+		50,
+		/* Skill overage: */
+		{ 6, 5, },
+		/* Intro function */
+		theme_intro,
+	}
+
+};
+

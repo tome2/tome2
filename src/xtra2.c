@@ -12,6 +12,7 @@
  */
 
 #include "angband.h"
+#include <assert.h>
 
 /*
  * Invoke The Rush
@@ -237,6 +238,17 @@ bool_ set_tim_breath(int v, bool_ magical)
 			TERM_WHITE, "Water seems to fill your lungs.",
 			TERM_WHITE, "The water filling your lungs evaporates.");
 	}
+}
+
+/*
+ * Set timered precognition
+ */
+bool_ set_tim_precognition(int v)
+{
+	return set_simple_field(
+		&p_ptr->tim_precognition, v,
+		TERM_WHITE, "You feel able to predict the future.",
+		TERM_WHITE, "You feel less able to predict the future.");
 }
 
 /*
@@ -2037,11 +2049,8 @@ void check_experience(void)
 
 		if (p_ptr->skill_last_level < p_ptr->lev)
 		{
-			s32b pts;
-			call_lua("exec_module_info", "(s)", "d", "skill_per_level", &pts);
-
 			p_ptr->skill_last_level = p_ptr->lev;
-			p_ptr->skill_points += pts;
+			p_ptr->skill_points += modules[game_module_idx].skills.skill_per_level;
 			cmsg_format(TERM_L_GREEN, "You can increase %d more skills.", p_ptr->skill_points);
 			p_ptr->redraw |= PR_STUDY;
 		}
@@ -2090,7 +2099,13 @@ void check_experience(void)
 
 	/* Hook it! */
 	process_hooks(HOOK_PLAYER_LEVEL, "(d)", gained);
+
+	{
+		hook_player_level_in in = { gained };
+		process_hooks_new(HOOK_PLAYER_LEVEL, &in, NULL);
+	}
 }
+
 /*
  * Advance experience levels and print experience
  */
@@ -2329,6 +2344,209 @@ void place_corpse(monster_type *m_ptr)
 
 
 /*
+ * Check if monster race is in a given list. The list
+ * must be NULL-terminated.
+ */
+static bool_ monster_race_in_list_p(monster_type *m_ptr, cptr races[])
+{
+	int i=0;
+	for (i=0; races[i] != NULL; i++)
+	{
+		if (m_ptr->r_idx == test_monster_name(races[i])) {
+			return TRUE;
+		}
+	}
+	/* Not found */
+	return FALSE;
+}
+
+/*
+ * Handle the "death" of a monster (Gods)
+ */
+static void monster_death_gods(int m_idx, monster_type *m_ptr)
+{
+	if (p_ptr->pgod == GOD_AULE)
+	{
+		/* TODO: This should really be a racial flag
+		   which can be added to the r_info file. */
+		cptr DWARVES[] = {
+			"Petty-dwarf",
+			"Petty-dwarf mage",
+			"Dark dwarven warrior",
+			"Dark dwarven smith",
+			"Dark dwarven lord",
+			"Dark dwarven priest",
+			"Dwarven warrior",
+			NULL,
+		};
+		cptr UNIQUE_DWARVES[] = {
+			"Nar, the Dwarf",
+			"Naugladur, Lord of Nogrod",
+			"Telchar the Smith",
+			"Fundin Bluecloak",
+			"Khim, Son of Mim",
+			"Ibun, Son of Mim",
+			"Mim, Betrayer of Turin",
+			NULL,
+		};
+
+		/* Aule dislikes the killing of dwarves */
+		if (monster_race_in_list_p(m_ptr, DWARVES))
+		{
+			inc_piety(GOD_ALL, -20);
+		}
+
+		/* ... and UNIQUE dwarves */
+		if (monster_race_in_list_p(m_ptr, UNIQUE_DWARVES))
+		{
+			inc_piety(GOD_ALL, -500);
+		}
+	}
+
+	if (p_ptr->pgod == GOD_ULMO)
+	{
+		/* He doesn't like it if you kill these monsters */
+		cptr MINOR_RACES[] = {
+			"Swordfish",
+			"Barracuda",
+			"Globefish",
+			"Aquatic bear",
+			"Pike",
+			"Electric eel",
+			"Giant crayfish",
+			"Mermaid",
+			"Leviathan",
+			"Box jellyfish",
+			"Giant piranha",
+			"Piranha",
+			"Ocean naga",
+			"Whale",
+			"Octopus",
+			"Giant octopus",
+			"Drowned soul",
+			"Tiger shark",
+			"Hammerhead shark",
+			"Great white shark",
+			"White shark",
+			"Stargazer",
+			"Flounder",
+			"Giant turtle",
+			"Killer whale",
+			"Water naga",
+			"Behemoth",
+			NULL,
+		};
+		/* These monsters earn higher penalties */
+		cptr MAJOR_RACES[] = {
+			"Seahorse",
+			"Aquatic elven warrior",
+			"Aquatic elven mage",
+			"Wavelord",
+			"The Watcher in the Water",
+			NULL,
+		};
+
+		if (monster_race_in_list_p(m_ptr, MINOR_RACES))
+		{
+			inc_piety(GOD_ALL, -20);
+		}
+
+		if (monster_race_in_list_p(m_ptr, MAJOR_RACES))
+		{
+			inc_piety(GOD_ALL, -500);
+		}
+	}
+
+	if (p_ptr->pgod == GOD_MANDOS)
+	{
+		cptr MINOR_BONUS_RACES[] = {
+			"Vampire",
+			"Master vampire",
+			"Oriental vampire",
+			"Vampire lord",
+			"Vampire orc",
+			"Vampire yeek",
+			"Vampire ogre",
+			"Vampire troll",
+			"Vampire dwarf",
+			"Vampire gnome",
+			"Elder vampire",
+			NULL,
+		};
+		cptr MAJOR_BONUS_RACES[] = {
+			"Vampire elf",
+			"Thuringwethil, the Vampire Messenger",
+			NULL,
+		};
+		cptr MINOR_PENALTY[] = {
+			"Dark elf",
+			"Dark elven druid",
+			"Eol, the Dark Elf",
+			"Maeglin, the Traitor of Gondolin",
+			"Dark elven mage",
+			"Dark elven warrior",
+			"Dark elven priest",
+			"Dark elven lord",
+			"Dark elven warlock",
+			"Dark elven sorcerer",
+			NULL,
+		};
+		cptr MEDIUM_PENALTY[] = {
+			"Glorfindel of Rivendell",
+			"Finrod Felagund",
+			"Thranduil, King of the Wood Elves",
+			"Aquatic elven warrior",
+			"Aquatic elven mage",
+			"High-elven ranger",
+			"Elven archer",
+			NULL,
+		};
+		cptr MAJOR_PENALTY[] = {
+			"Child spirit",
+			"Young spirit",
+			"Mature spirit",
+			"Experienced spirit",
+			"Wise spirit",
+			NULL,
+		};
+
+		if (monster_race_in_list_p(m_ptr, MINOR_BONUS_RACES))
+		{
+			/* He really likes it if you kill Vampires
+			 * (but not the adventurer kind :P) */
+			inc_piety(GOD_ALL, 50);
+		}
+
+		if (monster_race_in_list_p(m_ptr, MAJOR_BONUS_RACES))
+		{
+			/* He *loves* it if you kill vampire Elves. He
+			 * will also thank you extra kindly if you
+			 * kill Thuringwethil */
+			inc_piety(GOD_ALL, 200);
+		}
+
+		if (monster_race_in_list_p(m_ptr, MINOR_PENALTY))
+		{
+			/* He doesn't like it if you kill normal Elves
+			 * (means more work for him :P) */
+			inc_piety(GOD_ALL, -20);
+		}
+
+		if (monster_race_in_list_p(m_ptr, MEDIUM_PENALTY))
+		{
+			/* He hates it if you kill coaligned Elves */
+			inc_piety(GOD_ALL, -200);
+		}
+
+		if (monster_race_in_list_p(m_ptr, MAJOR_PENALTY))
+		{
+			/* He *hates* it if you kill the coaligned Spirits */
+			inc_piety(GOD_ALL, -1000);
+		}
+	}
+}
+
+/*
  * Handle the "death" of a monster.
  *
  * Disperse treasures centered at the monster location based on the
@@ -2370,6 +2588,9 @@ void monster_death(int m_idx)
 
 	/* Process the appropriate hooks */
 	process_hooks(HOOK_MONSTER_DEATH, "(d)", m_idx);
+
+	/* Per-god processing */
+	monster_death_gods(m_idx, m_ptr);
 
 	/* If companion dies, take note */
 	if (m_ptr->status == MSTATUS_COMPANION) p_ptr->companion_killed++;
@@ -5150,7 +5371,7 @@ void gain_level_reward(int chosen_reward)
 	{
 		msg_format("%^s rewards you with a corruption!",
 		           chaos_patrons[p_ptr->chaos_patron]);
-		(void)gain_random_corruption(0);
+		gain_random_corruption();
 		return;
 	}
 
@@ -5603,25 +5824,6 @@ bool_ tgt_pt(int *x, int *y)
 	return success;
 }
 
-
-bool_ gain_random_corruption(int choose_mut)
-{
-	exec_lua("gain_corruption()");
-	return (FALSE);
-}
-
-bool_ lose_corruption(int choose_mut)
-{
-	exec_lua("lose_corruption()");
-	return (FALSE);
-}
-
-bool_ lose_all_corruptions(void)
-{
-	exec_lua("lose_all_corruptions()");
-	return (FALSE);
-}
-
 bool_ get_hack_dir(int *dp)
 {
 	int dir;
@@ -5716,51 +5918,6 @@ bool_ get_hack_dir(int *dp)
 
 	/* A "valid" direction was entered */
 	return (TRUE);
-}
-
-/*
- * Do we have at least one corruption?
- */
-bool_ got_corruptions()
-{
-	int i, max;
-
-	max = exec_lua("return __corruptions_max");
-
-	for (i = 0; i < max; i++)
-	{
-		if (exec_lua(format("if test_depend_corrupt(%d) == TRUE then return TRUE else return FALSE end", i)))
-		{
-			return TRUE;
-		}
-	}
-	return FALSE;
-}
-
-/*
- * Dump the corruption list
- */
-void dump_corruptions(FILE *fff, bool_ color)
-{
-	int i, max;
-
-	if (!fff) return;
-
-	max = exec_lua("return __corruptions_max");
-
-	for (i = 0; i < max; i++)
-	{
-		if (exec_lua(format("if test_depend_corrupt(%d) == TRUE then return TRUE else return FALSE end", i)))
-		{
-			int c = exec_lua(format("return __corruptions[%d].color", i));
-
-			if (color)
-				fprintf(fff, "#####%c%s:\n", conv_color[c], string_exec_lua(format("return __corruptions[%d].name", i)));
-			else
-				fprintf(fff, "%s:\n", string_exec_lua(format("return __corruptions[%d].name", i)));
-			fprintf(fff, "%s\n", string_exec_lua(format("return __corruptions[%d].desc", i)));
-		}
-	}
 }
 
 /*
@@ -6057,33 +6214,15 @@ void corrupt_corrupted(void)
 {
 	if (magik(45))
 	{
-		lose_corruption(0);
+		lose_corruption();
 	}
 	else
 	{
-		gain_random_corruption(0);
+		gain_random_corruption();
 	}
 
 	/* We are done. */
 	return;
-}
-
-/*
- * Change to an other class
- */
-void switch_class(int sclass)
-{
-	p_ptr->pclass = sclass;
-	cp_ptr = &class_info[p_ptr->pclass];
-}
-
-/*
- * Change to an other subclass
- */
-void switch_subclass(int sclass)
-{
-	p_ptr->pspec = sclass;
-	spp_ptr = &class_info[p_ptr->pclass].spec[p_ptr->pspec];
 }
 
 /*
@@ -6144,15 +6283,4 @@ void do_rebirth()
 	handle_stuff();
 
 	lite_spot(p_ptr->py, p_ptr->px);
-}
-
-/*
- * Quick mimic name to index function
- */
-int resolve_mimic_name(cptr name)
-{
-	s32b idx;
-
-	call_lua("resolve_mimic_name", "(s)", "d", name, &idx);
-	return idx;
 }

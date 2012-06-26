@@ -46,6 +46,23 @@
  */
 
 
+/*
+ * String list.
+ */
+typedef struct string_list string_list;
+struct string_list {
+	/* The string list owns the string */
+	cptr s;
+	/* Next */
+	string_list *next;
+};
+
+int compare_string_list(string_list *a, string_list *b);
+SGLIB_DEFINE_LIST_PROTOTYPES(string_list, compare_string, next);
+
+void string_list_init(string_list *sl, cptr s); /* Initialize element; copies string */
+void string_list_destroy(string_list *sl);      /* Destroy element */
+void string_list_append(string_list **slist, cptr s); /* Append string */
 
 
 
@@ -1398,9 +1415,8 @@ struct meta_class_type
 typedef struct help_info help_info;
 struct help_info
 {
-	bool_ enabled;           /* ingame help enabled */
-
-	u32b help1;             /* help flags 1 */
+	bool_ enabled;              /* ingame help enabled */
+	bool_ activated[HELP_MAX];  /* help item #i activated? */
 };
 
 
@@ -1489,6 +1505,7 @@ struct player_type
 	u16b csane_frac;              /* Cur sanity frac */
 
 	s32b grace;                     /* Your God's appreciation factor. */
+	s32b grace_delay;               /* Delay factor for granting piety. */
 	byte pgod;                      /* Your God. */
 	bool_ praying;                   /* Praying to your god. */
 	s16b melkor_sacrifice;          /* How much hp has been sacrified for damage */
@@ -1586,6 +1603,7 @@ struct player_type
 	s16b absorb_soul;   /* Timed soul absordtion */
 	s16b tim_magic_breath;      /* Magical breathing -- can breath anywhere */
 	s16b tim_water_breath;      /* Water breathing -- can breath underwater */
+	s16b tim_precognition;      /* Timed precognition */
 
 	s16b immov_cntr;    /* Timed -- Last ``immovable'' command. */
 
@@ -1807,7 +1825,8 @@ struct player_type
 	u32b xtra_esp;
 
 	/* Corruptions */
-	bool_ *corruptions;
+	bool_ corruptions[CORRUPTIONS_MAX];
+        bool_ corrupt_anti_teleport_stopped;
 
 	/*** Pet commands ***/
 	byte pet_follow_distance; /* Length of the imaginary "leash" for pets */
@@ -1826,8 +1845,8 @@ struct player_type
 	bool_ astral;              /* We started at the bottom ? */
 
 	/* Powers */
-	bool_ *powers;     /* Actual powers */
-	bool_ powers_mod[POWER_MAX_INIT]; /* Intrinsinc powers */
+	bool_ powers[POWER_MAX];     /* Actual powers */
+	bool_ powers_mod[POWER_MAX]; /* Intrinsinc powers */
 
 	/* Skills */
 	s16b skill_points;
@@ -1835,8 +1854,17 @@ struct player_type
 	s16b melee_style;       /* How are  */
 	s16b use_piercing_shots; /* for archery */
 
+	/* Dripping Tread spell timer */
+	s16b dripping_tread;
+
 	/* Help */
 	help_info help;
+
+	/* Inertia control */
+	s32b inertia_controlled_spell;
+
+	/* For automatic stat-gain */
+	s16b last_rewarded_level;
 
 	/*** Temporary fields ***/
 
@@ -1985,6 +2013,7 @@ struct artifact_select_flag {
 typedef struct deity_type deity_type;
 struct deity_type
 {
+	int  modules[3]; /* terminated with -1 */
 	cptr name;
 	char desc[10][80];
 };
@@ -2228,6 +2257,69 @@ struct power_type
 /* Hooks */
 typedef bool_ (*hook_type)(char *fmt);
 
+typedef struct hook_move_in hook_move_in;
+struct hook_move_in {
+	int y;
+	int x;
+};
+
+typedef struct hook_get_in hook_get_in;
+struct hook_get_in {
+	object_type *o_ptr;
+	int o_idx;
+};
+
+typedef struct hook_end_turn_in hook_end_turn_in;
+struct hook_end_turn_in {
+	bool_ is_quest;
+};
+
+typedef struct hook_player_level_in hook_player_level_in;
+struct hook_player_level_in {
+	int gained_levels;
+};
+
+typedef enum { IDENT_NORMAL, IDENT_FULL } identify_mode;
+
+typedef struct hook_identify_in hook_identify_in;
+struct hook_identify_in {
+	object_type *o_ptr;
+	identify_mode mode;
+};
+
+typedef struct hook_give_in hook_give_in;
+struct hook_give_in {
+	int m_idx;
+	int item;
+};
+
+typedef struct hook_eat_in hook_eat_in;
+struct hook_eat_in {
+	object_type *o_ptr;
+};
+
+typedef struct hook_eat_out hook_eat_out;
+struct hook_eat_out {
+	bool_ ident;
+};
+
+typedef enum { STAIRS_UP, STAIRS_DOWN } stairs_direction;
+
+typedef struct hook_stair_in hook_stair_in;
+struct hook_stair_in {
+	stairs_direction direction;
+};
+
+typedef struct hook_stair_out hook_stair_out;
+struct hook_stair_out {
+	bool_ allow;
+};
+
+typedef struct hook_new_monster_end_in hook_new_monster_end_in;
+struct hook_new_monster_end_in {
+	monster_type *m_ptr;
+};
+
 /*
  * Structure for the "quests"
  */
@@ -2236,8 +2328,6 @@ typedef struct quest_type quest_type;
 struct quest_type
 {
 	bool_ silent;
-
-	bool_ dynamic_desc;      /* Do we need to ask a function to get the description ? */
 
 	char name[40];          /* Quest name */
 
@@ -2249,11 +2339,9 @@ struct quest_type
 
 	s16b *plot;             /* Which plot does it belongs to? */
 
-	byte type;              /* Lua or C ? */
-
 	bool_ (*init)(int q);    /* Function that takes care of generating hardcoded quests */
 
-	s32b data[4];           /* Various datas used by the quests */
+	s32b data[9];          /* Various datas used by the quests */
 
 	bool_ (*gen_desc)(FILE *fff); /* Function for generating description. */
 };
@@ -2340,6 +2428,8 @@ typedef struct hooks_chain hooks_chain;
 struct hooks_chain
 {
 	hook_type hook;
+	bool_ (*hook_f)(void *, void *, void *);
+	void *hook_data;
 	char name[40];
 	char script[40];
 	byte type;
@@ -2408,6 +2498,45 @@ struct cli_comm
 };
 
 /*
+ * Range
+ */
+typedef struct range_type range_type;
+struct range_type
+{
+	s32b min;
+	s32b max;
+};
+
+/*
+ * Dice
+ */
+typedef struct dice_type dice_type;
+struct dice_type
+{
+	long base;  /* Base value to which roll is added. */
+	long num;   /* Number of dice */
+	long sides; /* Sides per dice */
+};
+
+/*
+ * Device allocation for skill
+ */
+typedef struct device_allocation device_allocation;
+struct device_allocation
+{
+	byte tval;
+	s32b rarity;
+	range_type base_level;
+	range_type max_level;
+	/* Next device allocation in the list */
+	device_allocation *next;
+};
+
+int compare_device_allocation(device_allocation *a, device_allocation *b);
+SGLIB_DEFINE_LIST_PROTOTYPES(device_allocation, compare_device_allocation, next);
+
+
+/*
  * Skills !
  */
 typedef struct skill_type skill_type;
@@ -2442,6 +2571,31 @@ struct skill_type
 
 
 /*
+ * School index list.
+ */
+typedef struct school_idx school_idx;
+struct school_idx {
+	s32b i; /* School index */
+	school_idx *next; /* for list */
+};
+
+
+/*
+ * Casting type
+ */
+typedef enum { USE_SPELL_POINTS, USE_PIETY } casting_type;
+
+
+/*
+ * Spell effect function result
+ */
+typedef enum {
+	NO_CAST,             /* Spell not cast; user aborted */
+	CAST_OBVIOUS,        /* Cast; caster discovers effect (devices) */
+	CAST_HIDDEN          /* Cast; caster does NOT discover effect (devices) */
+} casting_result;
+
+/*
  * The spell function must provide the desc
  */
 typedef struct spell_type spell_type;
@@ -2449,10 +2603,50 @@ struct spell_type
 {
 	cptr name;                      /* Name */
 	byte skill_level;               /* Required level (to learn) */
-	byte mana;			/* Required mana at lvl 1 */
-	byte mana_max;			/* Required mana at max lvl */
-	s16b fail;			/* Minimum chance of failure */
-	s16b level;                     /* Spell level(0 = not learnt) */
+	string_list *description;       /* List of strings */
+
+	casting_result (*effect_func)(int o_idx);  /* Spell effect function */
+	char* (*info_func)();           /* Information function */
+	int (*lasting_func)();         /* Lasting effect function */
+	bool_ (*depend_func)();         /* Check dependencies */
+
+	s16b minimum_pval;              /* Minimum required pval for item-based spells */
+
+	casting_type casting_type;      /* Type of casting required */
+	s16b         casting_stat;      /* Stat used for casting */
+
+	bool_        castable_while_blind;
+	bool_        castable_while_confused;
+
+	dice_type          device_charges;      /* Number of charges for devices */
+	device_allocation *device_allocation;	/* Allocation table for devices */
+
+	s16b         random_type;       /* Type of random items in which skill may appear */
+
+	s32b         failure_rate;      /* Failure rate */
+
+	s32b         inertia_difficulty; /* Mana cost when used in Inertia Control */
+	s32b         inertia_delay;      /* Delay between castings */
+
+	range_type   mana_range;
+
+	dice_type    activation_duration; /* Duration for activation (if any) */
+
+	school_idx *schools;
+};
+
+typedef struct school_provider school_provider;
+struct school_provider
+{
+	byte deity_idx; /* Deity which provides school levels */
+
+	s16b skill_idx; /* Skill used for determining the boost */
+
+	long mul; /* Multiplier */
+
+	long div; /* Divisor */
+
+	school_provider *next; /* Next provider in list */
 };
 
 typedef struct school_type school_type;
@@ -2460,6 +2654,34 @@ struct school_type
 {
 	cptr name;                      /* Name */
 	s16b skill;                     /* Skill used for that school */
+	bool_ spell_power;              /* Does spell power affect spells in this school? */
+	bool_ sorcery;                  /* Does Sorcery affect this school? */
+
+	int deity_idx;     /* Deity; if <=0, no deity required */
+	deity_type *deity; /* Direct pointer to deity */
+
+	int (*bonus_levels)(); /* Calculate number of bonus levels */
+
+	bool_ (*depends_satisfied)(); /* Are dependendies satisfied? */
+
+	school_provider *providers; /* List of secondary providers of this school */
+};
+
+/*
+ * Spell index list.
+ */
+typedef struct spell_idx_list spell_idx_list;
+struct spell_idx_list {
+	s32b i; /* Spell index */
+	spell_idx_list *next; /* for list */
+};
+
+/*
+ * School book.
+ */
+typedef struct school_book_type school_book_type;
+struct school_book_type {
+	spell_idx_list *spell_idx_list;
 };
 
 /*
@@ -2485,7 +2707,7 @@ struct timer_type
 	s32b delay;             /* Delay between activations */
 	s32b countdown;         /* The current number of turns passed, when it reaches delay it fires */
 
-	cptr callback;          /* The lua function to call upon firing(no C callback yet .. maybe) */
+	void (*callback)();   /* The C function to call upon firing */
 };
 
 /*
@@ -2519,4 +2741,113 @@ struct ability_type
 	s16b stat[6];                		/* List of prereq stats */
 	s16b need_abilities[10];              	/* List of prereq abilities(10 max) */
 	s16b forbid_abilities[10];		/* List of forbidden abilities(10 max) */
+};
+
+/**
+ * Module metadata
+ */
+typedef struct module_meta_type module_meta_type;
+struct module_meta_type
+{
+	/* Module name */
+	cptr name;
+	
+	/* Module version number */
+	struct {
+		s32b major;
+		s32b minor;
+		s32b patch;
+	} version;
+	
+        /* Module author */
+	struct {
+		cptr name;
+		cptr email;
+	} author;
+	
+	/* Module description */
+	cptr desc;
+
+	/* Save file tag */
+	cptr save_file_tag;
+
+	/* Module directory */
+	cptr module_dir;
+};
+
+/**
+ * Modules
+ */
+typedef struct module_type module_type;
+struct module_type
+{
+	/* Metadata about the module: author, description, etc. */
+	module_meta_type meta;
+
+	/* Random artifact generation chances */
+	struct {
+		s32b weapon_chance;
+		s32b armor_chance;
+		s32b jewelry_chance;
+	} randarts;
+
+	/* Max player level. */
+	int max_plev;
+
+	/* Skills */
+	struct {
+		/* Skill points per level */
+		s32b skill_per_level;
+		/* Maximum "overage" for skill points, i.e. how many skill
+		   points you can go above your current level. */
+		s32b max_skill_overage;
+	} skills;
+
+	/* Function to show introduction to module */
+	void (*intro)();
+};
+
+/**
+ * Corruptions
+ */
+typedef struct corruption_type corruption_type;
+struct corruption_type
+{
+	int  modules[3]; /* Modules where this corruption is available; terminated with -1 entry */
+	byte color;
+	cptr group;
+	cptr name;
+	cptr get_text;
+	cptr lose_text; /* If NULL, the corruption is NOT removable by any means */
+	cptr desc;
+	s16b depends[5]; /* terminated by a -1 entry */
+	s16b opposes[5]; /* terminated by a -1 entry */
+	void (*gain_callback)(); /* callback to invoke when gained */
+	s16b power;              /* index of granted power if >= 0, ignored otherwise */
+};
+
+/**
+ * Mimicry forms
+ */
+typedef struct mimic_duration_type mimic_duration_type;
+struct mimic_duration_type
+{
+	s16b min;
+	s16b max;
+};
+
+typedef struct mimic_form_type mimic_form_type;
+struct mimic_form_type
+{
+	int modules[3]; /* Modules where this mimicry form is available; terminated with a -1 entry */
+	cptr name;     /* Name of mimicry form */
+	cptr obj_name; /* Object mimicry form name */
+	cptr desc;     /* Description */
+	cptr realm;    /* Realm of mimicry */
+	bool_ limit;   /* If true, the form is not available except through special means */
+	byte level;
+	byte rarity;
+	mimic_duration_type duration;
+	s32b (*calc)();  /* Callback to calculate bonuses; return number of blows to add */
+	void (*power)(); /* Callback to calculate powers */
 };

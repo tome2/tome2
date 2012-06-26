@@ -2047,12 +2047,12 @@ errr init_player_info_txt(FILE *fp, char *buf)
 			s = buf + 4;
 
 			/* Find it in the list */
-			for (i = 0; i < power_max; i++)
+			for (i = 0; i < POWER_MAX; i++)
 			{
 				if (!stricmp(s, powers_type[i].name)) break;
 			}
 
-			if (i == power_max) return (6);
+			if (i == POWER_MAX) return (6);
 
 			rp_ptr->powers[powers++] = i;
 
@@ -2425,12 +2425,12 @@ errr init_player_info_txt(FILE *fp, char *buf)
 			s = buf + 4;
 
 			/* Find it in the list */
-			for (i = 0; i < power_max; i++)
+			for (i = 0; i < POWER_MAX; i++)
 			{
 				if (!stricmp(s, powers_type[i].name)) break;
 			}
 
-			if (i == power_max) return (6);
+			if (i == POWER_MAX) return (6);
 
 			rmp_ptr->powers[powers++] = i;
 
@@ -2948,12 +2948,12 @@ errr init_player_info_txt(FILE *fp, char *buf)
 			s = buf + 4;
 
 			/* Find it in the list */
-			for (i = 0; i < power_max; i++)
+			for (i = 0; i < POWER_MAX; i++)
 			{
 				if (!stricmp(s, powers_type[i].name)) break;
 			}
 
-			if (i == power_max) return (6);
+			if (i == POWER_MAX) return (6);
 
 			c_ptr->powers[powers++] = i;
 
@@ -4352,12 +4352,12 @@ errr init_k_info_txt(FILE *fp, char *buf)
 			s = buf + 2;
 
 			/* Find it in the list */
-			for (i = 0; i < power_max; i++)
+			for (i = 0; i < POWER_MAX; i++)
 			{
 				if (!stricmp(s, powers_type[i].name)) break;
 			}
 
-			if (i == power_max) return (6);
+			if (i == POWER_MAX) return (6);
 
 			k_ptr->power = i;
 
@@ -5238,12 +5238,12 @@ errr init_a_info_txt(FILE *fp, char *buf)
 			s = buf + 2;
 
 			/* Find it in the list */
-			for (i = 0; i < power_max; i++)
+			for (i = 0; i < POWER_MAX; i++)
 			{
 				if (!stricmp(s, powers_type[i].name)) break;
 			}
 
-			if (i == power_max) return (6);
+			if (i == POWER_MAX) return (6);
 
 			a_ptr->power = i;
 
@@ -6763,12 +6763,12 @@ errr init_e_info_txt(FILE *fp, char *buf)
 			s = buf + 2;
 
 			/* Find it in the list */
-			for (i = 0; i < power_max; i++)
+			for (i = 0; i < POWER_MAX; i++)
 			{
 				if (!stricmp(s, powers_type[i].name)) break;
 			}
 
-			if (i == power_max) return (6);
+			if (i == POWER_MAX) return (6);
 
 			e_ptr->power = i;
 
@@ -7252,12 +7252,12 @@ errr init_ra_info_txt(FILE *fp, char *buf)
 			s = buf + 2;
 
 			/* Find it in the list */
-			for (i = 0; i < power_max; i++)
+			for (i = 0; i < POWER_MAX; i++)
 			{
 				if (!stricmp(s, powers_type[i].name)) break;
 			}
 
-			if (i == power_max) return (6);
+			if (i == POWER_MAX) return (6);
 
 			ra_ptr->power = i;
 
@@ -10812,7 +10812,7 @@ static errr process_dungeon_file_aux(char *buf, int *yval, int *xval, int xvalst
 					i = strlen(zz[8]) - 1;
 					if (zz[8][i] == '"') zz[8][i] = '\0';
 					letter[index].special = 0;
-					for (i = 0; i < max_q_idx; i++)
+					for (i = 0; i < MAX_Q_IDX; i++)
 					{
 						if (!strcmp(&zz[8][1], quest[i].name))
 						{
@@ -11659,7 +11659,7 @@ static cptr process_dungeon_file_expr(char **sp, char *fp)
 					for (i = 0; (c[i] != '"') && (c[i] != '\0'); i++);
 					if (c[i] == '"') c[i] = '\0';
 					strcpy(pref_tmp_value, "-1");
-					for (i = 0; i < max_q_idx; i++)
+					for (i = 0; i < MAX_Q_IDX; i++)
 					{
 						if (streq(c, quest[i].name))
 						{
