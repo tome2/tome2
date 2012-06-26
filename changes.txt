@@ -1,8 +1,37 @@
 T.o.M.E 2.3.10 (ah)
 
+User Interface:
+
+- Always display list of selectable objects, i.e. remove the option of
+  pressing '*' to hide list.
+- GTK2: Allow running with Shift + arrow keys. (Thanks to Lord
+  Estraven.)
+- SDL fixes. (Thanks to Lord Estraven.)
+- System-wide character scores were removed. Use the ladder at
+  http://angband.oook.cz instead.
+- Panic saves are no longer created. Saving state when memory is
+  likely corrupted seems like a bad idea.
+- Remove long-obsolete front-ends.
+- Unix: Removed pointless and error-prone signal handling aimed at
+  preventing cheating.
+- Removed gamma correction.
+
 Game:
 
-- setuid operation is REMOVED; do NOT install ToME as setuid!
+- Killerbunnies: Character dump now lists companions.
+- Killerbunnies: Fix dodge messages.
+- Imported Theme 1.2.0 since this excellent module by Furiosity seems
+  to not be downloadable any more.
+- Further Thaumaturgy tweaks by Lord Estraven
+
+Build:
+
+- Setuid support REMOVED; do NOT install ToME as setuid!
+- Fixes for system installation. Thanks to 'darwin' for reporting.
+- Fix linking problem with the 'curses' front-end.
+- Add DEBUG.txt file for information on enabling debugging in builds.
+
+
 
 T.o.M.E 2.3.9 (ah)
 
