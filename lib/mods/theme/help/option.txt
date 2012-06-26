@@ -161,11 +161,6 @@ off at will during the course of the game.
 #####GShow graphics in stores   [show_store_graph]
     Display the graphics of objects in the store list.
 
-#####GShow details in certain sub-windows    [show_details]
-    Indicate extra details in special windows, currently used to activate
-    the display of death counts and monster descriptions when recalling
-    details about a monster.
-
 #####GAudible bell (on errors, etc)    [ring_bell]
     Attempt to make a "bell" noise when various errors occur.
 

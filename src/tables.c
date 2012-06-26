@@ -1394,9 +1394,6 @@ option_type option_info[] =
 	{ &show_store_graph, TRUE, 1, 15,
 	  "show_store_graph", "Show graphics in stores" },
 
-	{ &show_details, TRUE, 1, 17,
-	  "show_details", "Show details in certain sub-windows" },
-
 	{ &ring_bell, FALSE, 1, 18,
 	  "ring_bell", "Audible bell (on errors, etc)" },
 	/* Changed to default to FALSE -- it's so extremely annoying!!! -TY */

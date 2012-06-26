@@ -242,14 +242,8 @@ static void roff_aux(int r_idx, int ego, int remem)
 	}
 
 
-	/* Require a flag to show kills */
-	if (!(show_details))
-	{
-		/* nothing */
-	}
-
 	/* Treat uniques differently */
-	else if (flags1 & (RF1_UNIQUE))
+	if (flags1 & (RF1_UNIQUE))
 	{
 		/* Hack -- Determine if the unique is "dead" */
 		bool_ dead = (r_ptr->max_num == 0) ? TRUE : FALSE;
@@ -339,7 +333,6 @@ static void roff_aux(int r_idx, int ego, int remem)
 
 
 	/* Descriptions */
-	if (show_details)
 	{
 		char buf[2048];
 
