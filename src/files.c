@@ -5306,7 +5306,6 @@ static errr top_twenty(void)
 	/* Clear screen */
 	Term_clear();
 
-#ifndef SCORE_WIZARDS
 	/* Wizard-mode pre-empts scoring */
 	if (noscore & 0x000F)
 	{
@@ -5315,9 +5314,7 @@ static errr top_twenty(void)
 		display_scores_aux(highscore_fd, 0, 10, -1, NULL);
 		goto out;
 	}
-#endif
 
-#ifndef SCORE_BORGS
 	/* Borg-mode pre-empts scoring */
 	if (noscore & 0x00F0)
 	{
@@ -5326,9 +5323,7 @@ static errr top_twenty(void)
 		display_scores_aux(highscore_fd, 0, 10, -1, NULL);
 		goto out;
 	}
-#endif
 
-#ifndef SCORE_CHEATERS
 	/* Cheaters are not scored */
 	if (noscore & 0xFF00)
 	{
@@ -5337,7 +5332,6 @@ static errr top_twenty(void)
 		display_scores_aux(highscore_fd, 0, 10, -1, NULL);
 		goto out;
 	}
-#endif
 
 	/* Interupted */
 	if (!total_winner && streq(died_from, "Interrupting"))
