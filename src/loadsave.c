@@ -678,6 +678,7 @@ static bool_ do_extra(int flag)
 	do_u32b(&dummy32u, flag);    /* Load-compatibility with old savefiles. */
 
 	/* Special stuff */
+	do_u16b(&tmp16b, flag);      /* Dummy */
 	do_u16b(&total_winner, flag);
 	do_u16b(&has_won, flag);
 	do_u16b(&noscore, flag);
