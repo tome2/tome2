@@ -5377,13 +5377,8 @@ static errr top_twenty(void)
 	sprintf(the_score.turns, "%9lu", (long)turn - (START_DAY * 10L));
 	the_score.turns[9] = '\0';
 
-#ifdef HIGHSCORE_DATE_HACK
-	/* Save the date in a hacked up form (9 chars) */
-	sprintf(the_score.day, "%-.6s %-.2s", ctime(&ct) + 4, ctime(&ct) + 22);
-#else
 	/* Save the date in standard form (8 chars) */
 	strftime(the_score.day, 9, "%m/%d/%y", localtime(&ct));
-#endif
 
 	/* Save the player name (15 chars) */
 	sprintf(the_score.who, "%-.15s", player_name);
