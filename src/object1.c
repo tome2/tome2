@@ -4528,8 +4528,8 @@ void show_inven_aux(bool_ mirror, bool_ everything)
 	/* Maximum space allowed for descriptions */
 	lim = 79 - 3;
 
-	/* Require space for weight (if needed) */
-	if (show_weights) lim -= 9;
+	/* Space for weight */
+	lim -= 9;
 
 	/* Require space for icon */
 	if (show_inven_graph) lim -= 2;
@@ -4578,7 +4578,7 @@ void show_inven_aux(bool_ mirror, bool_ everything)
 		l = strlen(out_desc[k]) + 5;
 
 		/* Be sure to account for the weight */
-		if (show_weights) l += 9;
+		l += 9;
 
 		/* Account for icon if displayed */
 		if (show_inven_graph) l += 2;
@@ -4632,11 +4632,10 @@ void show_inven_aux(bool_ mirror, bool_ everything)
 		c_put_str(out_color[j], out_desc[j], row + j,
 		          show_inven_graph ? (col + 5) : (col + 3));
 
-		/* Display the weight if needed */
-		if (show_weights)
+		/* Display the weight */
 		{
 			int wgt = o_ptr->weight * o_ptr->number;
-			(void)sprintf(tmp_val, "%3d.%1d lb", wgt / 10, wgt % 10);
+			sprintf(tmp_val, "%3d.%1d lb", wgt / 10, wgt % 10);
 			put_str(tmp_val, row + j, wid - 9);
 		}
 	}
@@ -4706,8 +4705,8 @@ void show_equip_aux(bool_ mirror, bool_ everything)
 	/* Require space for labels (if needed) */
 	if (show_labels) lim -= (14 + 2);
 
-	/* Require space for weight (if needed) */
-	if (show_weights) lim -= 9;
+	/* Require space for weight */
+	lim -= 9;
 
 	if (show_equip_graph) lim -= 2;
 
@@ -4807,8 +4806,8 @@ void show_equip_aux(bool_ mirror, bool_ everything)
 		/* Increase length for labels (if needed) */
 		if (show_labels) l += (14 + 2);
 
-		/* Increase length for weight (if needed) */
-		if (show_weights) l += 9;
+		/* Increase length for weight */
+		l += 9;
 
 		if (show_equip_graph) l += 2;
 
@@ -4874,11 +4873,10 @@ void show_equip_aux(bool_ mirror, bool_ everything)
 			c_put_str(out_color[j], out_desc[j], row + j, show_equip_graph ? col + 5 : col + 3);
 		}
 
-		/* Display the weight if needed */
-		if (show_weights)
+		/* Display the weight */
 		{
 			int wgt = o_ptr->weight * o_ptr->number;
-			(void)sprintf(tmp_val, "%3d.%d lb", wgt / 10, wgt % 10);
+			sprintf(tmp_val, "%3d.%d lb", wgt / 10, wgt % 10);
 			put_str(tmp_val, row + j, wid - 9);
 		}
 	}
@@ -5171,8 +5169,8 @@ void show_floor(int y, int x)
 	/* Maximum space allowed for descriptions */
 	lim = 79 - 3;
 
-	/* Require space for weight (if needed) */
-	if (show_weights) lim -= 9;
+	/* Require space for weight */
+	lim -= 9;
 
 	/* Scan for objects in the grid, using item_tester_okay() */
 	(void) scan_floor(floor_list, &floor_num, y, x, 0x01);
@@ -5200,8 +5198,8 @@ void show_floor(int y, int x)
 		/* Find the predicted "line length" */
 		l = strlen(out_desc[k]) + 5;
 
-		/* Be sure to account for the weight */
-		if (show_weights) l += 9;
+		/* Account for the weight */
+		l += 9;
 
 		/* Maintain the maximum length */
 		if (l > len) len = l;
@@ -5235,7 +5233,6 @@ void show_floor(int y, int x)
 		c_put_str(out_color[j], out_desc[j], j + 1, col + 3);
 
 		/* Display the weight if needed */
-		if (show_weights)
 		{
 			int wgt = o_ptr->weight * o_ptr->number;
 			sprintf(tmp_val, "%3d.%1d lb", wgt / 10, wgt % 10);

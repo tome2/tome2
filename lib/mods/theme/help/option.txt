@@ -150,11 +150,6 @@ off at will during the course of the game.
     flavoured object descriptions": a separate option for them has been added
     under "ToME Options".
 
-#####GShow weights in object lists    [show_weights]
-    Display the weight of objects in the inventory and equipment lists,
-    and in stores, and in any special window which is displaying any of
-    these lists.
-
 #####GShow graphics in inventory list   [show_inven_graph]
     Display the graphics of objects in the inventory list, and in any special
     window which is displaying the inventory list.

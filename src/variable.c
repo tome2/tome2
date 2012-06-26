@@ -211,7 +211,6 @@ bool_ stack_force_notes; 		/* Merge inscriptions when stacking */
 bool_ stack_force_costs; 		/* Merge discounts when stacking */
 
 bool_ show_labels; 			/* Show labels in object listings */
-bool_ show_weights; 			/* Show weights in object listings */
 bool_ show_choices; 			/* Show choices in certain sub-windows */
 bool_ show_details; 			/* Show details in certain sub-windows */
 

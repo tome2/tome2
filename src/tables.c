@@ -1385,9 +1385,6 @@ option_type option_info[] =
 	{ &show_labels, TRUE, 1, 11,
 	  "show_labels", "Show labels in object listings" },
 
-	{ &show_weights, TRUE, 1, 12,
-	  "show_weights", "Show weights in object listings" },
-
 	{ &show_inven_graph, TRUE, 1, 13,
 	  "show_inven_graph", "Show graphics in inventory list" },
 

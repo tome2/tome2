@@ -1669,8 +1669,8 @@ static void display_entry(int pos)
 	{
 		maxwid = 75;
 
-		/* Leave room for weights, if necessary -DRS- */
-		if (show_weights) maxwid -= 10;
+		/* Leave room for weights */
+		maxwid -= 10;
 
 		/* Describe the object */
 		object_desc(o_name, o_ptr, TRUE, 3);
@@ -1678,7 +1678,6 @@ static void display_entry(int pos)
 		c_put_str(tval_to_attr[o_ptr->tval], o_name, i + 6, cur_col);
 
 		/* Show weights */
-		if (show_weights)
 		{
 			/* Only show the weight of an individual item */
 			int wgt = o_ptr->weight;
@@ -1695,8 +1694,8 @@ static void display_entry(int pos)
 		/* Must leave room for the "price" */
 		maxwid = 65;
 
-		/* Leave room for weights, if necessary -DRS- */
-		if (show_weights) maxwid -= 7;
+		/* Leave room for weights */
+		maxwid -= 7;
 
 		/* Describe the object (fully) */
 		object_desc_store(o_name, o_ptr, TRUE, 3);
@@ -1704,7 +1703,6 @@ static void display_entry(int pos)
 		c_put_str(tval_to_attr[o_ptr->tval], o_name, i + 6, cur_col);
 
 		/* Show weights */
-		if (show_weights)
 		{
 			/* Only show the weight of an individual item */
 			int wgt = o_ptr->weight;
@@ -1830,10 +1828,7 @@ void display_store(void)
 		put_str("Item Description", 5, 3);
 
 		/* If showing weights, show label */
-		if (show_weights)
-		{
-			put_str("Weight", 5, 70);
-		}
+		put_str("Weight", 5, 70);
 	}
 
 	else if (st_info[st_ptr->st_idx].flags1 & SF1_MUSEUM)
@@ -1848,10 +1843,7 @@ void display_store(void)
 		put_str("Item Description", 5, 3);
 
 		/* If showing weights, show label */
-		if (show_weights)
-		{
-			put_str("Weight", 5, 70);
-		}
+		put_str("Weight", 5, 70);
 	}
 
 	/* Normal stores */
@@ -1872,10 +1864,7 @@ void display_store(void)
 		put_str("Item Description", 5, 3);
 
 		/* If showing weights, show label */
-		if (show_weights)
-		{
-			put_str("Weight", 5, 60);
-		}
+		put_str("Weight", 5, 60);
 
 		/* Label the asking price (in stores) */
 		put_str("Price", 5, 72);

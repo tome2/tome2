@@ -4817,8 +4817,8 @@ byte show_monster_inven(int m_idx, int *monst_list)
 	/* Maximum space allowed for descriptions */
 	lim = 79 - 3;
 
-	/* Require space for weight (if needed) */
-	if (show_weights) lim -= 9;
+	/* Require space for weight */
+	lim -= 9;
 
 	/* Scan for objects on the monster */
 	(void)scan_monst(monst_list, &monst_num, m_idx);
@@ -4846,8 +4846,8 @@ byte show_monster_inven(int m_idx, int *monst_list)
 		/* Find the predicted "line length" */
 		l = strlen(out_desc[k]) + 5;
 
-		/* Be sure to account for the weight */
-		if (show_weights) l += 9;
+		/* Account for the weight */
+		l += 9;
 
 		/* Maintain the maximum length */
 		if (l > len) len = l;
@@ -4881,7 +4881,6 @@ byte show_monster_inven(int m_idx, int *monst_list)
 		c_put_str(out_color[j], out_desc[j], j + 1, col + 3);
 
 		/* Display the weight if needed */
-		if (show_weights)
 		{
 			int wgt = o_ptr->weight * o_ptr->number;
 			strnfmt(tmp_val, 80, "%3d.%1d lb", wgt / 10, wgt % 10);
