@@ -173,7 +173,10 @@ bool_ quest_hobbit_init_hook(int q_idx)
 	{
 		cquest.data[0] = rand_range(26, 34);
 		cquest.data[1] = turn;
-		if (wizard) message_add(MESSAGE_MSG, format("Hobbit level %d", cquest.data[0]), TERM_BLUE);
+		if (wizard)
+		{
+			message_add(format("Hobbit level %d", cquest.data[0]), TERM_BLUE);
+		}
 	}
 
 	if ((cquest.status >= QUEST_STATUS_TAKEN) && (cquest.status < QUEST_STATUS_FINISHED))

@@ -2249,7 +2249,7 @@ void cmsg_print(byte color, cptr msg)
 
 
 	/* Memorize the message */
-	if (character_generated) message_add(MESSAGE_MSG, msg, color);
+	if (character_generated) message_add(msg, color);
 
 	/* Handle "auto_more" */
 	if (auto_more)
@@ -3978,7 +3978,10 @@ bool_ prefix(cptr s, cptr t)
 	/* Paranoia */
 	if (!s || !t)
 	{
-		if (alert_failure) message_add(MESSAGE_MSG, "prefix() called with null argument!", TERM_RED);
+		if (alert_failure)
+		{
+			message_add("prefix() called with null argument!", TERM_RED);
+		}
 		return FALSE;
 	}
 

@@ -220,7 +220,7 @@ bool_ quest_poison_init_hook(int q_idx)
 	{
 		cquest.data[1] = TRUE;
 		cquest.data[0] = rand_int(4);
-		if (wizard) message_add(MESSAGE_MSG, format("Wilderness poison %d, %d", wild_locs[cquest.data[0]][0], wild_locs[cquest.data[0]][1]), TERM_BLUE);
+		if (wizard) message_add(format("Wilderness poison %d, %d", wild_locs[cquest.data[0]][0], wild_locs[cquest.data[0]][1]), TERM_BLUE);
 	}
 
 	if ((cquest.status >= QUEST_STATUS_TAKEN) && (cquest.status < QUEST_STATUS_FINISHED))

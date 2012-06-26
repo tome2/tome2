@@ -958,7 +958,7 @@ void monster_msg(cptr fmt, ...)
 		msg_print(buf);
 	else
 	{
-		message_add(MESSAGE_MSG, buf, TERM_WHITE);
+		message_add(buf, TERM_WHITE);
 		p_ptr->window |= PW_MESSAGE;
 	}
 }
@@ -983,7 +983,7 @@ void cmonster_msg(char a, cptr fmt, ...)
 		cmsg_print(a, buf);
 	else
 	{
-		message_add(MESSAGE_MSG, buf, a);
+		message_add(buf, a);
 		p_ptr->window |= PW_MESSAGE;
 	}
 }

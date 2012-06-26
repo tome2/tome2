@@ -2123,27 +2123,28 @@ static void do_messages(int flag)   /* FIXME! We should be able to unify this be
 	/* Read the messages */
 	if (flag == LS_LOAD)
 	{
+		byte tmp8u = 0;
 		for (i = 0; i < num; i++)
 		{
 			/* Read the message */
 			do_string(buf, 128, LS_LOAD);
 			do_byte(&color, flag);
-			do_byte(&type, flag);
+			do_byte(&tmp8u, flag);
 
 			/* Save the message */
-			message_add(type, buf, color);
+			message_add(buf, color);
 		}
 	}
 	if (flag == LS_SAVE)
 	{
 		byte holder;
+		byte zero = 0;
 		for (i = num - 1; i >= 0; i--)
 		{
 			do_string((char *)message_str((s16b)i), 0, LS_SAVE);
 			holder = message_color((s16b)i);
 			do_byte(&holder, flag);
-			holder = message_type((s16b)i);
-			do_byte(&holder, flag);
+			do_byte(&zero, flag);
 		}
 	}
 }

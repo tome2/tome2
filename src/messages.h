@@ -3,14 +3,11 @@
 
 #include "h-type.h"
 
-#define MESSAGE_NONE    0
-#define MESSAGE_MSG     1
-
 void message_init();
 s16b message_num();
 cptr message_str(int age);
 byte message_color(int age);
 byte message_type(int age);
-void message_add(byte type, cptr msg, byte color);
+void message_add(cptr msg, byte color);
 
 #endif

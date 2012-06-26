@@ -1427,7 +1427,10 @@ static void gen_random_quests(int n)
 		/* Arg could not find anything ??? */
 		if (!tries)
 		{
-			if (wizard) message_add(MESSAGE_MSG, format("Could not find quest monster on lvl %d", rl), TERM_RED);
+			if (wizard)
+			{
+				message_add(format("Could not find quest monster on lvl %d", rl), TERM_RED);
+			}
 			q_ptr->type = 0;
 		}
 		else
@@ -1439,9 +1442,11 @@ static void gen_random_quests(int n)
 
 			q_ptr->done = FALSE;
 
-			if (wizard) message_add(MESSAGE_MSG,
-				                        format("Quest for %d on lvl %d",
-				                               q_ptr->r_idx, rl), TERM_RED);
+			if (wizard)
+			{
+				message_add(format("Quest for %d on lvl %d",
+						   q_ptr->r_idx, rl), TERM_RED);
+			}
 		}
 
 		lvl += step;
@@ -3508,11 +3513,11 @@ void player_birth(void)
 	}
 
 	/* Note player birth in the message recall */
-	message_add(MESSAGE_MSG, " ", TERM_L_BLUE);
-	message_add(MESSAGE_MSG, "  ", TERM_L_BLUE);
-	message_add(MESSAGE_MSG, "====================", TERM_L_BLUE);
-	message_add(MESSAGE_MSG, "  ", TERM_L_BLUE);
-	message_add(MESSAGE_MSG, " ", TERM_L_BLUE);
+	message_add(" ", TERM_L_BLUE);
+	message_add("  ", TERM_L_BLUE);
+	message_add("====================", TERM_L_BLUE);
+	message_add("  ", TERM_L_BLUE);
+	message_add(" ", TERM_L_BLUE);
 
 	/* Hack -- outfit the player */
 	player_outfit();
@@ -3557,7 +3562,10 @@ void player_birth(void)
 			}
 			d_ptr->t_level[num] = lev;
 
-			if (wizard) message_add(MESSAGE_MSG, format("Random dungeon town: d_idx:%d, lev:%d", i, lev), TERM_WHITE);
+			if (wizard)
+			{
+				message_add(format("Random dungeon town: d_idx:%d, lev:%d", i, lev), TERM_WHITE);
+			}
 
 			/* Create the town */
 			init_town(d_ptr->t_idx[num], d_ptr->t_level[num]);

@@ -212,7 +212,10 @@ bool_ quest_thrain_init_hook(int q)
 	if (!cquest.data[0])
 	{
 		cquest.data[0] = rand_range(d_info[DUNGEON_DOL_GULDUR].mindepth + 1, d_info[DUNGEON_DOL_GULDUR].maxdepth - 1);
-		if (wizard) message_add(MESSAGE_MSG, format("Thrain lvl %d", cquest.data[0]), TERM_BLUE);
+		if (wizard)
+		{
+			message_add(format("Thrain lvl %d", cquest.data[0]), TERM_BLUE);
+		}
 	}
 	if ((cquest.status >= QUEST_STATUS_TAKEN) && (cquest.status < QUEST_STATUS_FINISHED))
 	{

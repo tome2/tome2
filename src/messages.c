@@ -49,11 +49,6 @@ static u16b *message__ptr;
 static byte *message__color;
 
 /*
- * The array of type, by index [MESSAGE_MAX]
- */
-static byte *message__type;
-
-/*
  * The array of message counts, by index [MESSAGE_MAX]
  */
 static u16b *message__count;
@@ -90,7 +85,6 @@ void message_init()
 	/* Message variables */
 	C_MAKE(message__ptr, MESSAGE_MAX, u16b);
 	C_MAKE(message__color, MESSAGE_MAX, byte);
-	C_MAKE(message__type, MESSAGE_MAX, byte);
 	C_MAKE(message__count, MESSAGE_MAX, u16b);
 	C_MAKE(message__buf, MESSAGE_BUF, char);
 
@@ -175,33 +169,11 @@ byte message_color(int age)
 	return (color);
 }
 
-/*
- * Recall the type of a saved message
- */
-byte message_type(int age)
-{
-	s16b x;
-	byte type;
-
-	/* Forgotten messages have no text */
-	if ((age < 0) || (age >= message_num())) return (MESSAGE_NONE);
-
-	/* Acquire the "logical" index */
-	x = (message__next + MESSAGE_MAX - (age + 1)) % MESSAGE_MAX;
-
-	/* Get the "offset" for the message */
-	type = message__type[x];
-
-	/* Return the message text */
-	return (type);
-}
-
-
 
 /*
 * Add a new message, with great efficiency
 */
-void message_add(byte type, cptr str, byte color)
+void message_add(cptr str, byte color)
 {
 	int i, k, x, n;
 	cptr s;
@@ -286,7 +258,6 @@ void message_add(byte type, cptr str, byte color)
 		/* Assign the starting address */
 		message__ptr[x] = message__ptr[i];
 		message__color[x] = color;
-		message__type[x] = type;
 		message__count[x] = 1;
 
 		/* Success */
@@ -376,7 +347,6 @@ void message_add(byte type, cptr str, byte color)
 	/* Assign the starting address */
 	message__ptr[x] = message__head;
 	message__color[x] = color;
-	message__type[x] = type;
 	message__count[x] = 1;
 
 	/* Append the new part of the message */
