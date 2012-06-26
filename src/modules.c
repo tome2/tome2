@@ -32,7 +32,6 @@ void module_reset_dir(cptr dir, cptr new_path)
 	cptr *d = 0;
 	char buf[1025];
 
-	if (!strcmp(dir, "apex")) d = &ANGBAND_DIR_APEX;
 	if (!strcmp(dir, "core")) d = &ANGBAND_DIR_CORE;
 	if (!strcmp(dir, "dngn")) d = &ANGBAND_DIR_DNGN;
 	if (!strcmp(dir, "data")) d = &ANGBAND_DIR_DATA;
@@ -48,9 +47,6 @@ void module_reset_dir(cptr dir, cptr new_path)
 	if (!strcmp(dir, "note")) d = &ANGBAND_DIR_NOTE;
 	if (!strcmp(dir, "cmov")) d = &ANGBAND_DIR_CMOV;
 	if (
-#ifdef PRIVATE_USER_PATH_APEX
-	    !strcmp(dir, "apex") ||
-#endif
 	    !strcmp(dir, "user") ||
 	    !strcmp(dir, "note") ||
 	    !strcmp(dir, "cmov"))
@@ -158,7 +154,6 @@ static void init_module(module_type *module_ptr)
 	/* Set up module directories? */
 	cptr dir = module_ptr->meta.module_dir;
 	if (dir) {
-		module_reset_dir("apex", dir);
 		module_reset_dir("core", dir);
 		module_reset_dir("data", dir);
 		module_reset_dir("dngn", dir);

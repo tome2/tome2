@@ -531,9 +531,6 @@ static bool_ check_create_user_dir(void)
 #ifdef PRIVATE_USER_PATH_DATA
 	char datapath[1024];
 #endif
-#ifdef PRIVATE_USER_PATH_APEX
-	char apexpath[1024];
-#endif
 
 	/* Get an absolute path from the filename */
 	path_parse(dirpath, 1024, PRIVATE_USER_PATH);
@@ -545,19 +542,12 @@ static bool_ check_create_user_dir(void)
 	strcpy(datapath, versionpath);
 	strcat(datapath, "/data");
 #endif
-#ifdef PRIVATE_USER_PATH_APEX
-	strcpy(apexpath, versionpath);
-	strcat(apexpath, "/apex");
-#endif
 
 	return /* don't forget, the dirpath muts come first */
 	       private_check_user_directory(dirpath) &&
 	       private_check_user_directory(versionpath) &&
 #ifdef PRIVATE_USER_PATH_DATA
 	       private_check_user_directory(datapath) &&
-#endif
-#ifdef PRIVATE_USER_PATH_APEX
-	       private_check_user_directory(apexpath) &&
 #endif
 	       private_check_user_directory(savepath);
 }
@@ -4825,8 +4815,7 @@ static void menu(long mc)
 					}
 
 					/* Build the pathname of the score file */
-					path_build(buf, sizeof(buf), ANGBAND_DIR_APEX,
-					           "scores.raw");
+					path_build(buf, sizeof(buf), ANGBAND_DIR_USER, "scores.raw");
 
 					/* Hack - open the score file for reading */
 					highscore_fd = fd_open(buf, O_RDONLY);

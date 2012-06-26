@@ -74,7 +74,6 @@ void init_file_paths(char *path)
 	string_free(ANGBAND_DIR);
 
 	/* Free the sub-paths */
-	string_free(ANGBAND_DIR_APEX);
 	string_free(ANGBAND_DIR_CORE);
 	string_free(ANGBAND_DIR_DNGN);
 	string_free(ANGBAND_DIR_DATA);
@@ -124,10 +123,6 @@ void init_file_paths(char *path)
 
 
 	/*** Build the sub-directory names ***/
-
-	/* Build a path name */
-	strcpy(tail, "apex");
-	ANGBAND_DIR_APEX = string_make(path);
 
 	/* Build a path name */
 	strcpy(tail, "core");
@@ -185,9 +180,6 @@ void init_file_paths(char *path)
 		ANGBAND_DIR_CMOV = string_make(user_path);
 #ifdef PRIVATE_USER_PATH_MODULES
 		ANGBAND_DIR_MODULES = string_make(user_path);
-#endif
-#ifdef PRIVATE_USER_PATH_APEX
-		ANGBAND_DIR_APEX = string_make(user_path);
 #endif
 #ifdef PRIVATE_USER_PATH_DATA
 		{
@@ -2608,7 +2600,7 @@ void init_angband(void)
 	/*** Verify (or create) the "high score" file ***/
 
 	/* Build the filename */
-	path_build(buf, 1024, ANGBAND_DIR_APEX, "scores.raw");
+	path_build(buf, 1024, ANGBAND_DIR_USER, "scores.raw");
 
 	/* Attempt to open the high score file */
 	fd = fd_open(buf, O_RDONLY);

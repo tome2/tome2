@@ -445,7 +445,6 @@ extern cptr ANGBAND_SYS;
 extern cptr ANGBAND_KEYBOARD;
 extern cptr ANGBAND_GRAF;
 extern cptr ANGBAND_DIR;
-extern cptr ANGBAND_DIR_APEX;
 extern cptr ANGBAND_DIR_CORE;
 extern cptr ANGBAND_DIR_DNGN;
 extern cptr ANGBAND_DIR_DATA;

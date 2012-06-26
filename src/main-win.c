@@ -2952,7 +2952,7 @@ ofn.lStructSize = sizeof(OPENFILENAME);
 			}
 
 			/* Build the pathname of the score file */
-			path_build(buf, sizeof(buf), ANGBAND_DIR_APEX, "scores.raw");
+			path_build(buf, sizeof(buf), ANGBAND_DIR_USER, "scores.raw");
 
 			/* Hack - open the score file for reading */
 			highscore_fd = fd_open(buf, O_RDONLY);
@@ -4136,7 +4136,6 @@ static void init_stuff(void)
 
 	/*** Validate the paths to ensure we have a working install ***/
 
-	validate_dir(ANGBAND_DIR_APEX);
 	validate_dir(ANGBAND_DIR_DATA);
 	validate_dir(ANGBAND_DIR_EDIT);
 	validate_dir(ANGBAND_DIR_FILE);

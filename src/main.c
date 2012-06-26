@@ -163,13 +163,6 @@ static void change_path(cptr info)
 	/* Analyze */
 	switch (tolower(info[0]))
 	{
-	case 'a':
-		{
-			string_free(ANGBAND_DIR_APEX);
-			ANGBAND_DIR_APEX = string_make(s + 1);
-			break;
-		}
-
 	case 'f':
 		{
 			string_free(ANGBAND_DIR_FILE);

@@ -943,12 +943,6 @@ cptr ANGBAND_GRAF = "old";
 cptr ANGBAND_DIR;
 
 /*
- * High score files (binary)
- * These files may be portable between platforms
- */
-cptr ANGBAND_DIR_APEX;
-
-/*
  * Core lua system
  * These files are portable between platforms
  */
