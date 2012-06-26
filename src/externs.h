@@ -188,7 +188,6 @@ extern bool_ is_autosave;
 extern int artifact_bias;
 extern FILE *text_out_file;
 extern void (*text_out_hook)(byte a, cptr str);
-extern int text_out_wrap;
 extern int text_out_indent;
 extern bool_ show_inven_graph;
 extern bool_ show_store_graph;

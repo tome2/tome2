@@ -2440,11 +2440,8 @@ void text_out_to_screen(byte a, cptr str)
 	/* Obtain the cursor */
 	(void)Term_locate(&x, &y);
 
-	/* Use special wrapping boundary? */
-	if ((text_out_wrap > 0) && (text_out_wrap < wid))
-		wrap = text_out_wrap;
-	else
-		wrap = wid;
+	/* Wrapping boundary */
+	wrap = wid;
 
 	/* Process the string */
 	for (s = str; *s; s++)
@@ -2531,8 +2528,7 @@ void text_out_to_screen(byte a, cptr str)
  * Hook function for text_out(). Make sure that text_out_file points
  * to an open text-file.
  *
- * Long lines will be wrapped at text_out_wrap, or at column 75 if that
- * is not set; or at a newline character.
+ * Long lines will be wrapped at column 75 ; or at a newline character.
  *
  * You must be careful to end all file output with a newline character
  * to "flush" the stored line position.
@@ -2543,7 +2539,7 @@ void text_out_to_file(byte a, cptr str)
 	static int pos = 0;
 
 	/* Wrap width */
-	int wrap = (text_out_wrap ? text_out_wrap : 75);
+	int wrap = 75;
 
 	/* Current location within "str" */
 	cptr s = str;

@@ -185,13 +185,6 @@ void (*text_out_hook)(byte a, cptr str) = text_out_to_screen;
 
 
 /*
- * Hack -- Where to wrap the text when using text_out().  Use the default
- * value (for example the screen width) when 'text_out_wrap' is 0.
- */
-int text_out_wrap = 0;
-
-
-/*
  * Hack -- Indentation for the text when using text_out().
  */
 int text_out_indent = 0;
