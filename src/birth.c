@@ -1911,7 +1911,6 @@ static bool_ player_birth_aux_ask()
 			/* Extra info */
 			Term_putstr(5, 16, -1, TERM_WHITE,
 			            "Your 'race' determines various intrinsic factors and bonuses.");
-			hack_corruption = FALSE;
 
 			/* Dump races */
 			sel = 0;

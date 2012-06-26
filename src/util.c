@@ -1929,9 +1929,6 @@ char inkey(void)
 			/* Mega-Hack -- reset saved flag */
 			character_saved = FALSE;
 
-			/* Mega-Hack -- reset signal counter */
-			signal_count = 0;
-
 			/* Only once */
 			done = TRUE;
 		}

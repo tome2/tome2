@@ -2271,11 +2271,6 @@ static void process_world(void)
 		(void)set_tim_invis(p_ptr->tim_invis - 1);
 	}
 
-	if (multi_rew)
-	{
-		multi_rew = FALSE;
-	}
-
 	/* Timed esp */
 	if (p_ptr->tim_esp)
 	{
@@ -4554,13 +4549,6 @@ void process_player(void)
 
 	/*** Apply energy ***/
 
-	if (hack_corruption)
-	{
-		msg_print("You feel different!");
-		(void)gain_random_corruption(0);
-		hack_corruption = FALSE;
-	}
-
 	/* Obtain current speed */
 	speed_use = p_ptr->pspeed;
 
@@ -5435,8 +5423,6 @@ void play_game(bool_ new_game)
 	int i, tmp_dun;
 
 	bool_ cheat_death = FALSE;
-
-	hack_corruption = FALSE;
 
 	/* Hack -- Character is "icky" */
 	character_icky = TRUE;

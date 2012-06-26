@@ -132,8 +132,6 @@ u16b has_won;               /* Semi-Hack -- Game has been won */
 
 u16b noscore; 			/* Track various "cheating" conditions */
 
-s16b signal_count; 		/* Hack -- Count interupts */
-
 bool_ inkey_base; 		/* See the "inkey()" function */
 bool_ inkey_xtra; 		/* See the "inkey()" function */
 bool_ inkey_scan; 		/* See the "inkey()" function */
@@ -149,9 +147,7 @@ bool_ shimmer_objects;            /* Hack -- optimize multi-hued objects */
 bool_ repair_monsters; 	/* Hack -- optimize detect monsters */
 bool_ repair_objects; 	/* Hack -- optimize detect objects */
 
-s16b inven_nxt; 			/* Hack -- unused */
 bool_ hack_mind;
-bool_ hack_corruption;
 int artifact_bias;
 bool_ is_autosave = FALSE;
 
@@ -166,7 +162,6 @@ s16b m_cnt = 0; 			/* Number of live monsters */
 
 s16b hack_m_idx = 0; 	/* Hack -- see "process_monsters()" */
 s16b hack_m_idx_ii = 0;
-bool_ multi_rew = FALSE;
 char summon_kin_type;    /* Hack, by Julian Lighton: summon 'relatives' */
 
 int total_friends = 0;
