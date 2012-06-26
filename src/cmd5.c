@@ -852,7 +852,7 @@ int use_symbiotic_power(int r_idx, bool_ great, bool_ only_number, bool_ no_cost
 
 	int powers[96];
 
-	bool_ flag, redraw;
+	bool_ flag;
 
 	int ask, plev = p_ptr->lev;
 
@@ -915,99 +915,80 @@ int use_symbiotic_power(int r_idx, bool_ great, bool_ only_number, bool_ no_cost
 	/* Nothing chosen yet */
 	flag = FALSE;
 
-	/* No redraw yet */
-	redraw = FALSE;
-
 	/* Get the last label */
 	label = (num <= 26) ? I2A(num - 1) : I2D(num - 1 - 26);
 
 	/* Build a prompt (accept all spells) */
 	/* Mega Hack -- if no_cost is false, we're actually a Possessor -dsb */
 	strnfmt(out_val, 78,
-	        "(Powers a-%c, *=List, ESC=exit) Use which power of your %s? ",
+	        "(Powers a-%c, ESC=exit) Use which power of your %s? ",
 	        label, (no_cost ? "symbiote" : "body"));
 
+	/* Save the screen */
+	character_icky = TRUE;
+	Term_save();
+
 	/* Get a spell from the user */
-	while (!flag && get_com(out_val, &choice))
+	while (!flag)
 	{
-		/* Request redraw */
-		if ((choice == ' ') || (choice == '*') || (choice == '?'))
+		/* Show the list */
 		{
-			/* Show the list */
-			if (!redraw)
+			byte y = 1, x = 0;
+			int ctr = 0;
+			char dummy[80];
+
+			strcpy(dummy, "");
+
+			prt ("", y++, x);
+
+			while (ctr < num)
 			{
-				byte y = 1, x = 0;
-				int ctr = 0;
-				char dummy[80];
+				monster_power *mp_ptr = &monster_powers[powers[ctr]];
+				int mana = mp_ptr->mana / 10;
 
-				strcpy(dummy, "");
+				if (mana > p_ptr->msp) mana = p_ptr->msp;
 
-				/* Show list */
-				redraw = TRUE;
+				if (!mana) mana = 1;
 
-				/* Save the screen */
-				character_icky = TRUE;
-				Term_save();
+				label = (ctr < 26) ? I2A(ctr) : I2D(ctr - 26);
 
-				prt ("", y++, x);
-
-				while (ctr < num)
+				if (!no_cost)
 				{
-					monster_power *mp_ptr = &monster_powers[powers[ctr]];
-					int mana = mp_ptr->mana / 10;
-
-					if (mana > p_ptr->msp) mana = p_ptr->msp;
-
-					if (!mana) mana = 1;
-
-					label = (ctr < 26) ? I2A(ctr) : I2D(ctr - 26);
-
-					if (!no_cost)
-					{
-						strnfmt(dummy, 80, " %c) %2d %s",
-						        label, mana, mp_ptr->name);
-					}
-					else
-					{
-						strnfmt(dummy, 80, " %c) %s",
-						        label, mp_ptr->name);
-					}
-
-					if (ctr < 17)
-					{
-						prt(dummy, y + ctr, x);
-					}
-					else
-					{
-						prt(dummy, y + ctr - 17, x + 40);
-					}
-
-					ctr++;
+					strnfmt(dummy, 80, " %c) %2d %s",
+						label, mana, mp_ptr->name);
+				}
+				else
+				{
+					strnfmt(dummy, 80, " %c) %s",
+						label, mp_ptr->name);
 				}
 
 				if (ctr < 17)
 				{
-					prt ("", y + ctr, x);
+					prt(dummy, y + ctr, x);
 				}
 				else
 				{
-					prt ("", y + 17, x);
+					prt(dummy, y + ctr - 17, x + 40);
 				}
+
+				ctr++;
 			}
 
-			/* Hide the list */
+			if (ctr < 17)
+			{
+				prt ("", y + ctr, x);
+			}
 			else
 			{
-				/* Hide list */
-				redraw = FALSE;
-
-				/* Restore the screen */
-				Term_load();
-				character_icky = FALSE;
+				prt ("", y + 17, x);
 			}
+		}
 
-			/* Redo asking */
-			continue;
+		if (!get_com(out_val, &choice))
+		{
+			flag = FALSE;
+			break;
 		}
 
 		if (choice == '\r' && num == 1)
@@ -1061,11 +1042,8 @@ int use_symbiotic_power(int r_idx, bool_ great, bool_ only_number, bool_ no_cost
 	}
 
 	/* Restore the screen */
-	if (redraw)
-	{
-		Term_load();
-		character_icky = FALSE;
-	}
+	Term_load();
+	character_icky = FALSE;
 
 	/* Abort if needed */
 	if (!flag)
