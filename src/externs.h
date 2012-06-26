@@ -113,7 +113,6 @@ extern u32b sf_when;
 extern u16b sf_lives;
 extern u16b sf_saves;
 extern u32b vernum; /* Version flag */
-extern bool_ arg_fiddle;
 extern bool_ arg_wizard;
 extern bool_ arg_sound;
 extern bool_ arg_graphics;

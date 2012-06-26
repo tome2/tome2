@@ -3992,7 +3992,6 @@ static void handle_open_when_ready(void)
 # define SUBMENU_TILEWIDTH 145
 #define ITEM_TILEHEIGHT 4
 # define SUBMENU_TILEHEIGHT 146
-#define ITEM_FIDDLE	6
 #define ITEM_WIZARD	7
 
 
@@ -4630,10 +4629,6 @@ static void setup_menus(void)
 		}
 	}
 
-	/* Item "arg_fiddle" */
-	EnableMenuItem(m, ITEM_FIDDLE);
-	CheckMenuItem(m, ITEM_FIDDLE, arg_fiddle);
-
 	/* Item "arg_wizard" */
 	EnableMenuItem(m, ITEM_WIZARD);
 	CheckMenuItem(m, ITEM_WIZARD, arg_wizard);
@@ -5035,13 +5030,6 @@ static void menu(long mc)
 
 					/* React to changes */
 					Term_xtra(TERM_XTRA_REACT, 0);
-
-					break;
-				}
-
-			case ITEM_FIDDLE:
-				{
-					arg_fiddle = !arg_fiddle;
 
 					break;
 				}

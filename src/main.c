@@ -307,13 +307,6 @@ int main(int argc, char *argv[])
 				break;
 			}
 
-		case 'F':
-		case 'f':
-			{
-				arg_fiddle = TRUE;
-				break;
-			}
-
 		case 'W':
 		case 'w':
 			{
@@ -439,7 +432,6 @@ usage:
 				puts("Usage: tome [options] [-- subopts]");
 				puts("  -h                 This help");
 				puts("  -n                 Start a new character");
-				puts("  -f                 Request fiddle mode");
 				puts("  -w                 Request wizard mode");
 				puts("  -v                 Request sound mode");
 				puts("  -g                 Request graphics mode");

@@ -2609,18 +2609,15 @@ static bool_ do_savefile_aux(int flag)
 
 	/* Read RNG state */
 	do_randomizer(flag);
-	if ((flag == LS_LOAD) && (arg_fiddle)) note("Loaded Randomizer Info");
 
 	/* Automatizer state */
 	do_byte((byte*)&automatizer_enabled, flag);
 
 	/* Then the options */
 	do_options(flag);
-	if ((flag == LS_LOAD) && (arg_fiddle)) note("Loaded Option Flags");
 
 	/* Then the "messages" */
 	do_messages(flag);
-	if ((flag == LS_LOAD) && (arg_fiddle)) note("Loaded Messages");
 
 	/* Monster Memory */
 	if (flag == LS_SAVE) tmp16u = max_r_idx;
@@ -2640,7 +2637,6 @@ static bool_ do_savefile_aux(int flag)
 		do_lore(i, flag);
 	}
 
-	if ((flag == LS_LOAD) && (arg_fiddle)) note("Loaded Monster Memory");
 	/* Object Memory */
 	if (flag == LS_SAVE) tmp16u = max_k_idx;
 	do_u16b(&tmp16u, flag);
@@ -2654,7 +2650,6 @@ static bool_ do_savefile_aux(int flag)
 
 	/* Read the object memory */
 	for (i = 0; i < tmp16u; i++) do_xtra(i, flag);
-	if ((flag == LS_LOAD) && (arg_fiddle)) note("Loaded Object Memory");
 	if (flag == LS_LOAD) junkinit();
 
 	{
@@ -2790,7 +2785,6 @@ static bool_ do_savefile_aux(int flag)
 			}
 		}
 	}
-	if ((flag == LS_LOAD) && (arg_fiddle)) note("Loaded Quests");
 
 	/* Load the random artifacts. */
 	if (flag == LS_SAVE) tmp16u = MAX_RANDARTS;
@@ -2828,7 +2822,6 @@ static bool_ do_savefile_aux(int flag)
 	{
 		do_byte(&(&a_info[i])->cur_num, flag);
 	}
-	if ((flag == LS_LOAD) && arg_fiddle) note("Loaded Artifacts");
 
 	/* Fates */
 	if (flag == LS_SAVE) tmp16u = MAX_FATES;
@@ -2846,7 +2839,6 @@ static bool_ do_savefile_aux(int flag)
 	{
 		do_fate(i, flag);
 	}
-	if ((flag == LS_LOAD) && arg_fiddle) note("Loaded Fates");
 
 	/* Load the Traps */
 	if (flag == LS_SAVE) tmp16u = max_t_idx;
@@ -2864,7 +2856,6 @@ static bool_ do_savefile_aux(int flag)
 	{
 		do_byte((byte*)&t_info[i].ident, flag);
 	}
-	if ((flag == LS_LOAD) && (arg_fiddle)) note("Loaded Traps");
 
 	/* inscription knowledge */
 	if (flag == LS_SAVE) tmp16u = MAX_INSCRIPTIONS;
@@ -2880,13 +2871,11 @@ static bool_ do_savefile_aux(int flag)
 	/* Read the inscription flag */
 	for (i = 0; i < tmp16u; i++)
 		do_byte((byte*)&inscription_info[i].know, flag);
-	if ((flag == LS_LOAD) && arg_fiddle) note("Loaded Inscriptions");
 
 
 	/* Read the extra stuff */
 	if (!do_extra(flag))
 		return FALSE;
-	if ((flag == LS_LOAD) && arg_fiddle) note("Loaded extra information");
 
 
 	/* player_hp array */
