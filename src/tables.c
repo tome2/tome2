@@ -1382,9 +1382,6 @@ option_type option_info[] =
 	{ &stack_force_costs, FALSE, 1, 10,
 	  "stack_force_costs", "Merge discounts when stacking" },
 
-	{ &show_labels, TRUE, 1, 11,
-	  "show_labels", "Show labels in object listings" },
-
 	{ &show_inven_graph, TRUE, 1, 13,
 	  "show_inven_graph", "Show graphics in inventory list" },
 

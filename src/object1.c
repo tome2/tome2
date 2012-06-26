@@ -4702,8 +4702,8 @@ void show_equip_aux(bool_ mirror, bool_ everything)
 	/* Maximum space allowed for descriptions */
 	lim = 79 - 3;
 
-	/* Require space for labels (if needed) */
-	if (show_labels) lim -= (14 + 2);
+	/* Require space for labels */
+	lim -= (14 + 2);
 
 	/* Require space for weight */
 	lim -= 9;
@@ -4804,7 +4804,7 @@ void show_equip_aux(bool_ mirror, bool_ everything)
 		l = strlen(out_desc[k]) + (2 + 3);
 
 		/* Increase length for labels (if needed) */
-		if (show_labels) l += (14 + 2);
+		l += (14 + 2);
 
 		/* Increase length for weight */
 		l += 9;
@@ -4856,7 +4856,6 @@ void show_equip_aux(bool_ mirror, bool_ everything)
 		}
 
 		/* Use labels */
-		if (show_labels)
 		{
 			/* Mention the use */
 			(void)sprintf(tmp_val, "%-14s: ", mention_use(out_rindex[j]));
@@ -4864,13 +4863,6 @@ void show_equip_aux(bool_ mirror, bool_ everything)
 
 			/* Display the entry itself */
 			c_put_str(out_color[j], out_desc[j], row + j, show_equip_graph ? col + 21 : col + 19);
-		}
-
-		/* No labels */
-		else
-		{
-			/* Display the entry itself */
-			c_put_str(out_color[j], out_desc[j], row + j, show_equip_graph ? col + 5 : col + 3);
 		}
 
 		/* Display the weight */

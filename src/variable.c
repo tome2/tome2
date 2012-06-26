@@ -210,7 +210,6 @@ bool_ depth_in_feet;              /* Show dungeon level in feet */
 bool_ stack_force_notes; 		/* Merge inscriptions when stacking */
 bool_ stack_force_costs; 		/* Merge discounts when stacking */
 
-bool_ show_labels; 			/* Show labels in object listings */
 bool_ ring_bell; 				/* Ring the bell (on errors, etc) */
 
 bool_ show_inven_graph; 		/* Show graphics in inventory */

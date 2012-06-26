@@ -140,16 +140,6 @@ off at will during the course of the game.
     discounts.  The resulting stack keeps the largest discount.  This option
     may cause you to lose "value", but will give you optimal pack usage.
 
-#####GShow labels in object lists    [show_labels]
-    Display the "labels" for objects in the equipment list, and in any
-    special window which is displaying the equipment.  These labels
-    indicate what the player is using the object for, such as "wielding"
-    or "wearing" (in a given location).  After you have played for a while,
-    this information is no longer useful, and can be annoying.
-    Note that in ToME this option no longer controls the "plain
-    flavoured object descriptions": a separate option for them has been added
-    under "ToME Options".
-
 #####GShow graphics in inventory list   [show_inven_graph]
     Display the graphics of objects in the inventory list, and in any special
     window which is displaying the inventory list.
