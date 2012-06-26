@@ -467,8 +467,6 @@ extern void (*ang_sort_swap)(vptr u, vptr v, int a, int b);
 extern bool_ (*get_mon_num_hook)(int r_idx);
 extern bool_ (*get_mon_num2_hook)(int r_idx);
 extern bool_ (*get_obj_num_hook)(int k_idx);
-extern bool_ monk_armour_aux;
-extern bool_ monk_notify_aux;
 extern u16b max_wild_x;
 extern u16b max_wild_y;
 extern wilderness_map **wild_map;

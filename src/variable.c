@@ -1071,10 +1071,6 @@ bool_ (*get_mon_num2_hook)(int r_idx);
 bool_ (*get_obj_num_hook)(int k_idx);
 
 
-/* Hack, monk armour */
-bool_ monk_armour_aux;
-bool_ monk_notify_aux;
-
 bool_ easy_open = TRUE;
 bool_ easy_disarm = TRUE;
 bool_ easy_tunnel = FALSE;

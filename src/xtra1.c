@@ -2821,6 +2821,7 @@ void apply_flags(u32b f1, u32b f2, u32b f3, u32b f4, u32b f5, u32b esp, s16b pva
  */
 void calc_bonuses(bool_ silent)
 {
+	static bool_ monk_notify_aux = FALSE;
 	int i, j, hold;
 	int old_speed;
 	u32b old_telepathy;
@@ -2829,6 +2830,7 @@ void calc_bonuses(bool_ silent)
 	int old_dis_to_a;
 	object_type *o_ptr;
 	u32b f1, f2, f3, f4, f5, esp;
+	bool_ monk_armour_aux;
 
 
 	/* Save the old speed */
