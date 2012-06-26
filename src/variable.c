@@ -198,12 +198,6 @@ int text_out_indent = 0;
 
 
 /*
- * The "highscore" file descriptor, if available.
- */
-int highscore_fd = -1;
-
-
-/*
  * Software options (set via the '=' command).  See "tables.c"
  */
 

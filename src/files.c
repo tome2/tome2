@@ -4753,7 +4753,7 @@ struct high_score
 /*
  * Seek score 'i' in the highscore file
  */
-static int highscore_seek(int i)
+static int highscore_seek(int highscore_fd, int i)
 {
 	/* Seek for the requested record */
 	return (fd_seek(highscore_fd, (huge)(i) * sizeof(high_score)));
@@ -4763,7 +4763,7 @@ static int highscore_seek(int i)
 /*
  * Read one score from the highscore file
  */
-static errr highscore_read(high_score *score)
+static errr highscore_read(int highscore_fd, high_score *score)
 {
 	/* Read the record, note failure */
 	return (fd_read(highscore_fd, (char*)(score), sizeof(high_score)));
@@ -4773,7 +4773,7 @@ static errr highscore_read(high_score *score)
 /*
  * Write one score to the highscore file
  */
-static int highscore_write(high_score *score)
+static int highscore_write(int highscore_fd, high_score *score)
 {
 	/* Write the record, note failure */
 	return (fd_write(highscore_fd, (char*)(score), sizeof(high_score)));
@@ -4786,7 +4786,7 @@ static int highscore_write(high_score *score)
  * Just determine where a new score *would* be placed
  * Return the location (0 is best) or -1 on failure
  */
-static int highscore_where(high_score *score)
+static int highscore_where(int highscore_fd, high_score *score)
 {
 	int i;
 
@@ -4796,12 +4796,12 @@ static int highscore_where(high_score *score)
 	if (highscore_fd < 0) return ( -1);
 
 	/* Go to the start of the highscore file */
-	if (highscore_seek(0)) return ( -1);
+	if (highscore_seek(highscore_fd, 0)) return ( -1);
 
 	/* Read until we get to a higher score */
 	for (i = 0; i < MAX_HISCORES; i++)
 	{
-		if (highscore_read(&the_score)) return (i);
+		if (highscore_read(highscore_fd, &the_score)) return (i);
 		if (strcmp(the_score.pts, score->pts) < 0) return (i);
 	}
 
@@ -4814,7 +4814,7 @@ static int highscore_where(high_score *score)
  * Actually place an entry into the high score file
  * Return the location (0 is best) or -1 on "failure"
  */
-static int highscore_add(high_score *score)
+static int highscore_add(int highscore_fd, high_score *score)
 {
 	int i, slot;
 	bool_ done = FALSE;
@@ -4826,7 +4826,7 @@ static int highscore_add(high_score *score)
 	if (highscore_fd < 0) return ( -1);
 
 	/* Determine where the score should go */
-	slot = highscore_where(score);
+	slot = highscore_where(highscore_fd, score);
 
 	/* Hack -- Not on the list */
 	if (slot < 0) return ( -1);
@@ -4838,12 +4838,12 @@ static int highscore_add(high_score *score)
 	for (i = slot; !done && (i < MAX_HISCORES); i++)
 	{
 		/* Read the old guy, note errors */
-		if (highscore_seek(i)) return ( -1);
-		if (highscore_read(&tmpscore)) done = TRUE;
+		if (highscore_seek(highscore_fd, i)) return ( -1);
+		if (highscore_read(highscore_fd, &tmpscore)) done = TRUE;
 
 		/* Back up and dump the score we were holding */
-		if (highscore_seek(i)) return ( -1);
-		if (highscore_write(&the_score)) return ( -1);
+		if (highscore_seek(highscore_fd, i)) return ( -1);
+		if (highscore_write(highscore_fd, &the_score)) return ( -1);
 
 		/* Hack -- Save the old score, for the next pass */
 		the_score = tmpscore;
@@ -4862,7 +4862,7 @@ static int highscore_add(high_score *score)
  *
  * Mega-Hack -- allow "fake" entry at the given position.
  */
-static void display_scores_aux(int from, int to, int note, high_score *score)
+static void display_scores_aux(int highscore_fd, int from, int to, int note, high_score *score)
 {
 	int i, j, k, n, place;
 	byte attr;
@@ -4882,12 +4882,12 @@ static void display_scores_aux(int from, int to, int note, high_score *score)
 
 
 	/* Seek to the beginning */
-	if (highscore_seek(0)) return;
+	if (highscore_seek(highscore_fd, 0)) return;
 
 	/* Hack -- Count the high scores */
 	for (i = 0; i < MAX_HISCORES; i++)
 	{
-		if (highscore_read(&the_score)) break;
+		if (highscore_read(highscore_fd, &the_score)) break;
 	}
 
 	/* Hack -- allow "fake" entry to be last */
@@ -4940,8 +4940,8 @@ static void display_scores_aux(int from, int to, int note, high_score *score)
 			else
 			{
 				/* Read the proper record */
-				if (highscore_seek(j)) break;
-				if (highscore_read(&the_score)) break;
+				if (highscore_seek(highscore_fd, j)) break;
+				if (highscore_read(highscore_fd, &the_score)) break;
 			}
 
 			/* Extract the race/class */
@@ -5034,6 +5034,7 @@ static void display_scores_aux(int from, int to, int note, high_score *score)
 void display_scores(int from, int to)
 {
 	char buf[1024];
+	int highscore_fd;
 
 	/* Build the filename */
 	path_build(buf, 1024, ANGBAND_DIR_USER, "scores.raw");
@@ -5048,13 +5049,10 @@ void display_scores(int from, int to)
 	Term_clear();
 
 	/* Display the scores */
-	display_scores_aux(from, to, -1, NULL);
+	display_scores_aux(highscore_fd, from, to, -1, NULL);
 
 	/* Shut the high score file */
-	(void)fd_close(highscore_fd);
-
-	/* Forget the high score fd */
-	highscore_fd = -1;
+	fd_close(highscore_fd);
 
 	/* Quit */
 	quit(NULL);
@@ -5072,6 +5070,7 @@ void show_highclass(int building)
 	int pr, pc, clev, al;
 	high_score the_score;
 	char buf[1024], out_val[256];
+	int highscore_fd;
 
 	switch (building)
 	{
@@ -5120,10 +5119,10 @@ void show_highclass(int building)
 		return;
 	}
 
-	if (highscore_seek(0)) return;
+	if (highscore_seek(highscore_fd, 0)) return;
 
 	for (i = 0; i < MAX_HISCORES; i++)
-		if (highscore_read(&the_score)) break;
+		if (highscore_read(highscore_fd, &the_score)) break;
 
 	m = 0;
 	j = 0;
@@ -5131,8 +5130,8 @@ void show_highclass(int building)
 
 	while ((m < 9) || (j < MAX_HISCORES))
 	{
-		if (highscore_seek(j)) break;
-		if (highscore_read(&the_score)) break;
+		if (highscore_seek(highscore_fd, j)) break;
+		if (highscore_read(highscore_fd, &the_score)) break;
 		pr = atoi(the_score.p_r);
 		pc = atoi(the_score.p_c);
 		clev = atoi(the_score.cur_lev);
@@ -5172,8 +5171,8 @@ void show_highclass(int building)
 		}
 	}
 
-	(void)fd_close(highscore_fd);
-	highscore_fd = -1;
+	fd_close(highscore_fd);
+
 	msg_print("Hit any key to continue");
 	msg_print(NULL);
 	for (j = 5; j < 18; j++)
@@ -5191,6 +5190,7 @@ void race_score(int race_num)
 	int pr, clev, lastlev;
 	high_score the_score;
 	char buf[1024], out_val[256], tmp_str[80];
+	int highscore_fd;
 
 	lastlev = 0;
 
@@ -5211,11 +5211,11 @@ void race_score(int race_num)
 		return;
 	}
 
-	if (highscore_seek(0)) return;
+	if (highscore_seek(highscore_fd, 0)) return;
 
 	for (i = 0; i < MAX_HISCORES; i++)
 	{
-		if (highscore_read(&the_score)) break;
+		if (highscore_read(highscore_fd, &the_score)) break;
 	}
 
 	m = 0;
@@ -5223,8 +5223,8 @@ void race_score(int race_num)
 
 	while ((m < 10) && (j < i))
 	{
-		if (highscore_seek(j)) break;
-		if (highscore_read(&the_score)) break;
+		if (highscore_seek(highscore_fd, j)) break;
+		if (highscore_read(highscore_fd, &the_score)) break;
 		pr = atoi(the_score.p_r);
 		clev = atoi(the_score.cur_lev);
 		if (pr == race_num)
@@ -5247,8 +5247,7 @@ void race_score(int race_num)
 		prt(out_val, (m + 8), 0);
 	}
 
-	(void)fd_close(highscore_fd);
-	highscore_fd = -1;
+	fd_close(highscore_fd);
 }
 
 
@@ -5287,17 +5286,25 @@ static errr top_twenty(void)
 
 	time_t ct = time((time_t*)0);
 
+	char buf[1024];
 
-	/* Clear screen */
-	Term_clear();
+	int highscore_fd = 0;
 
-	/* No score file */
+	/* Build the filename */
+	path_build(buf, sizeof(buf), ANGBAND_DIR_USER, "scores.raw");
+
+	/* Open the highscore file, for reading/writing */
+	highscore_fd = fd_open(buf, O_RDWR);
+
 	if (highscore_fd < 0)
 	{
 		msg_print("Score file unavailable.");
 		msg_print(NULL);
-		return (0);
+		goto out;
 	}
+
+	/* Clear screen */
+	Term_clear();
 
 #ifndef SCORE_WIZARDS
 	/* Wizard-mode pre-empts scoring */
@@ -5305,8 +5312,8 @@ static errr top_twenty(void)
 	{
 		msg_print("Score not registered for wizards.");
 		msg_print(NULL);
-		display_scores_aux(0, 10, -1, NULL);
-		return (0);
+		display_scores_aux(highscore_fd, 0, 10, -1, NULL);
+		goto out;
 	}
 #endif
 
@@ -5316,8 +5323,8 @@ static errr top_twenty(void)
 	{
 		msg_print("Score not registered for borgs.");
 		msg_print(NULL);
-		display_scores_aux(0, 10, -1, NULL);
-		return (0);
+		display_scores_aux(highscore_fd, 0, 10, -1, NULL);
+		goto out;
 	}
 #endif
 
@@ -5327,8 +5334,8 @@ static errr top_twenty(void)
 	{
 		msg_print("Score not registered for cheaters.");
 		msg_print(NULL);
-		display_scores_aux(0, 10, -1, NULL);
-		return (0);
+		display_scores_aux(highscore_fd, 0, 10, -1, NULL);
+		goto out;
 	}
 #endif
 
@@ -5337,8 +5344,8 @@ static errr top_twenty(void)
 	{
 		msg_print("Score not registered due to interruption.");
 		msg_print(NULL);
-		display_scores_aux(0, 10, -1, NULL);
-		return (0);
+		display_scores_aux(highscore_fd, 0, 10, -1, NULL);
+		goto out;
 	}
 
 	/* Quitter */
@@ -5346,8 +5353,8 @@ static errr top_twenty(void)
 	{
 		msg_print("Score not registered due to quitting.");
 		msg_print(NULL);
-		display_scores_aux(0, 10, -1, NULL);
-		return (0);
+		display_scores_aux(highscore_fd, 0, 10, -1, NULL);
+		goto out;
 	}
 
 
@@ -5404,29 +5411,29 @@ static errr top_twenty(void)
 	sprintf(the_score.how, "%-.31s", died_from);
 
 
-	/* Lock (for writing) the highscore file, or fail */
-	if (fd_lock(highscore_fd, F_WRLCK)) return (1);
-
 	/* Add a new entry to the score list, see where it went */
-	j = highscore_add(&the_score);
-
-	/* Unlock the highscore file, or fail */
-	if (fd_lock(highscore_fd, F_UNLCK)) return (1);
+	j = highscore_add(highscore_fd, &the_score);
 
 
 	/* Hack -- Display the top fifteen scores */
 	if (j < 10)
 	{
-		display_scores_aux(0, 15, j, NULL);
+		display_scores_aux(highscore_fd, 0, 15, j, NULL);
 	}
 
 	/* Display the scores surrounding the player */
 	else
 	{
-		display_scores_aux(0, 5, j, NULL);
-		display_scores_aux(j - 2, j + 7, j, NULL);
+		display_scores_aux(highscore_fd, 0, 5, j, NULL);
+		display_scores_aux(highscore_fd, j - 2, j + 7, j, NULL);
 	}
 
+
+out:
+	if (highscore_fd >= 0)
+	{
+		fd_close(highscore_fd);
+	}
 
 	/* Success */
 	return (0);
@@ -5442,15 +5449,22 @@ errr predict_score(void)
 
 	high_score the_score;
 
+	char buf[1024];
 
-	/* No score file */
+	int highscore_fd = 0;
+
+	/* Build the filename */
+	path_build(buf, sizeof(buf), ANGBAND_DIR_USER, "scores.raw");
+
+	/* Open the highscore file */
+	highscore_fd = fd_open(buf, O_RDONLY);
+
 	if (highscore_fd < 0)
 	{
 		msg_print("Score file unavailable.");
 		msg_print(NULL);
-		return (0);
+		goto out;
 	}
-
 
 	/* Save the version */
 	sprintf(the_score.what, "%ld.%ld.%ld",
@@ -5498,27 +5512,90 @@ errr predict_score(void)
 
 
 	/* See where the entry would be placed */
-	j = highscore_where(&the_score);
+	j = highscore_where(highscore_fd, &the_score);
 
 
 	/* Hack -- Display the top fifteen scores */
 	if (j < 10)
 	{
-		display_scores_aux(0, 15, j, &the_score);
+		display_scores_aux(highscore_fd, 0, 15, j, &the_score);
 	}
 
 	/* Display some "useful" scores */
 	else
 	{
-		display_scores_aux(0, 5, -1, NULL);
-		display_scores_aux(j - 2, j + 7, j, &the_score);
+		display_scores_aux(highscore_fd, 0, 5, -1, NULL);
+		display_scores_aux(highscore_fd, j - 2, j + 7, j, &the_score);
 	}
 
+out:
+	if (highscore_fd >= 0)
+	{
+		fd_close(highscore_fd);
+	}
 
 	/* Success */
 	return (0);
 }
 
+
+void predict_score_gui(bool_ *initialized_p, bool_ *game_in_progress_p)
+{
+	char buf[1024];
+	int highscore_fd;
+
+	/* Paranoia */
+	if (!(*initialized_p) || character_icky ||
+	    !(*game_in_progress_p) || !character_generated)
+	{
+		/* Can't happen but just in case */
+		plog("You may not do that right now.");
+		return;
+	}
+
+	/* Build the pathname of the score file */
+	path_build(buf, sizeof(buf), ANGBAND_DIR_USER, "scores.raw");
+
+	/* Hack - open the score file for reading */
+	highscore_fd = fd_open(buf, O_RDONLY);
+
+	/* Paranoia - No score file */
+	if (highscore_fd < 0)
+	{
+		msg_print("Score file is not available.");
+		return;
+	}
+
+	/* Mega-Hack - prevent various functions XXX XXX XXX */
+	*initialized_p = FALSE;
+
+	/* Save screen */
+	screen_save();
+
+	/* Clear screen */
+	Term_clear();
+
+	/* Prepare scores */
+	if ((*game_in_progress_p) && character_generated)
+	{
+		predict_score();
+	}
+
+	/* Close the high score file */
+	(void)fd_close(highscore_fd);
+
+	/* Forget the fd */
+	highscore_fd = -1;
+
+	/* Restore screen */
+	screen_load();
+
+	/* Hack - Flush it */
+	Term_fresh();
+
+	/* Mega-Hack - We are ready again */
+	*initialized_p = TRUE;
+}
 
 
 /*
@@ -5635,12 +5712,6 @@ void close_game(void)
 	character_icky = TRUE;
 
 
-	/* Build the filename */
-	path_build(buf, 1024, ANGBAND_DIR_USER, "scores.raw");
-
-	/* Open the high score file, for reading/writing */
-	highscore_fd = fd_open(buf, O_RDWR);
-
 	/* Handle death */
 	if (death)
 	{
@@ -5712,12 +5783,6 @@ void close_game(void)
 		if (inkey() != ESCAPE) predict_score();
 	}
 
-
-	/* Shut the high score file */
-	(void)fd_close(highscore_fd);
-
-	/* Forget the high score fd */
-	highscore_fd = -1;
 
 	/* Allow suspending now */
 	signals_handle_tstp();

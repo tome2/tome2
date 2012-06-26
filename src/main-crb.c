@@ -4802,71 +4802,7 @@ static void menu(long mc)
 				/* Show score */
 			case ITEM_SCORE:
 				{
-					char buf[1024];
-
-					/* Paranoia */
-					if (!initialized || character_icky ||
-					                !game_in_progress || !character_generated)
-					{
-						/* Can't happen but just in case */
-						plog("You may not do that right now.");
-
-						break;
-					}
-
-					/* Build the pathname of the score file */
-					path_build(buf, sizeof(buf), ANGBAND_DIR_USER, "scores.raw");
-
-					/* Hack - open the score file for reading */
-					highscore_fd = fd_open(buf, O_RDONLY);
-
-					/* Paranoia - No score file */
-					if (highscore_fd < 0)
-					{
-						msg_print("Score file is not available.");
-
-						break;
-					}
-
-					/* Mega-Hack - prevent various functions XXX XXX XXX */
-					initialized = FALSE;
-
-					/* Save screen */
-					screen_save();
-
-					/* Clear screen */
-					Term_clear();
-
-					/* Prepare scores */
-					if (game_in_progress && character_generated)
-					{
-						predict_score();
-					}
-
-#if 0 /* I don't like this - pelpel */
-
-					/* Mega-Hack - No current player XXX XXX XXX XXX */
-					else
-					{
-						display_scores_aux(0, MAX_HISCORES, -1, NULL);
-					}
-
-#endif
-
-					/* Close the high score file */
-					(void)fd_close(highscore_fd);
-
-					/* Forget the fd */
-					highscore_fd = -1;
-
-					/* Restore screen */
-					screen_load();
-
-					/* Hack - Flush it */
-					Term_fresh();
-
-					/* Mega-Hack - We are ready again */
-					initialized = TRUE;
+					predict_score_gui(&initialized, &game_in_progress);
 
 					/* Done */
 					break;
