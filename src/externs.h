@@ -828,7 +828,6 @@ extern void necro_info(char *p, int power);
 extern void mindcraft_info(char *p, int power);
 extern void symbiotic_info(char *p, int power);
 extern void mimic_info(char *p, int power);
-extern random_spell* select_spell(bool_ quick);
 extern void cast_magic_spell(int spell, byte level);
 extern void do_cmd_summoner(void);
 extern void do_cmd_mindcraft(void);

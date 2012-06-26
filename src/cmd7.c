@@ -4390,7 +4390,7 @@ static void print_spell_batch(int batch, int max)
 /*
  * List ten random spells and ask to pick one.
  */
-static random_spell* select_spell_from_batch(int batch, bool_ quick)
+static random_spell* select_spell_from_batch(int batch)
 {
 	char tmp[160];
 
@@ -4414,18 +4414,16 @@ static random_spell* select_spell_from_batch(int batch, bool_ quick)
 		mut_max = spell_num - batch * 10;
 	}
 
-	strnfmt(tmp, 160, "(a-%c, * to list, A-%cto browse, / to rename, - to comment) Select a power: ",
+	strnfmt(tmp, 160, "(a-%c, A-%cto browse, / to rename, - to comment) Select a power: ",
 	        I2A(mut_max - 1), I2A(mut_max - 1) - 'a' + 'A');
 
 	prt(tmp, 0, 0);
 
-	if (quick)
-	{
-		print_spell_batch(batch, mut_max);
-	}
-
 	while (1)
 	{
+		/* Print power list */
+		print_spell_batch(batch, mut_max);
+
 		/* Get a command */
 		which = inkey();
 
@@ -4438,16 +4436,6 @@ static random_spell* select_spell_from_batch(int batch, bool_ quick)
 			/* Leave the command loop */
 			break;
 
-		}
-
-		/* List */
-		if (which == '*' || which == '?' || which == ' ')
-		{
-			/* Print power list */
-			print_spell_batch(batch, mut_max);
-
-			/* Wait for next command */
-			continue;
 		}
 
 		/* Accept default */
@@ -4552,7 +4540,7 @@ static random_spell* select_spell_from_batch(int batch, bool_ quick)
 /*
  * Pick a random spell from a menu
  */
-random_spell* select_spell(bool_ quick)
+static random_spell* select_spell()
 {
 	char tmp[160];
 
@@ -4593,6 +4581,8 @@ random_spell* select_spell(bool_ quick)
 
 		if (which == ESCAPE)
 		{
+			Term_load();
+
 			ret = NULL;
 
 			break;
@@ -4602,7 +4592,9 @@ random_spell* select_spell(bool_ quick)
 		{
 			if (batch_max == 0)
 			{
-				ret = select_spell_from_batch(0, quick);
+				Term_load();
+
+				ret = select_spell_from_batch(0);
 
 				break;
 			}
@@ -4613,7 +4605,9 @@ random_spell* select_spell(bool_ quick)
 		which = tolower(which);
 		if (isalpha(which) && (A2I(which) <= batch_max))
 		{
-			ret = select_spell_from_batch(A2I(which), quick);
+			Term_load();
+
+			ret = select_spell_from_batch(A2I(which));
 
 			break;
 		}
@@ -4622,9 +4616,6 @@ random_spell* select_spell(bool_ quick)
 			bell();
 		}
 	}
-
-	/* Restore the screen */
-	Term_load();
 
 	/* Leave "icky" mode */
 	character_icky = FALSE;
@@ -4659,7 +4650,7 @@ void do_cmd_powermage(void)
 	}
 
 
-	s_ptr = select_spell(FALSE);
+	s_ptr = select_spell();
 
 	if (s_ptr == NULL) return;
 
