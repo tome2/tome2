@@ -4727,7 +4727,7 @@ struct high_score
 
 	char who[16];                 /* Player Name (string) */
 
-	char uid[8];                 /* Player UID (number) */
+	char unused_1[8]; /* Kept for compatibility only */
 
 	char sex[2];                 /* Player Sex (string) */
 	char p_r[3];                 /* Player Race (number) */
@@ -4918,7 +4918,7 @@ static void display_scores_aux(int highscore_fd, int from, int to, int note, hig
 		{
 			int pcs, pr, ps, pc, clev, mlev, cdun, mdun;
 
-			cptr user, gold, when, aged;
+			cptr gold, when, aged;
 
 			int in_arena, in_quest;
 
@@ -4960,7 +4960,6 @@ static void display_scores_aux(int highscore_fd, int from, int to, int note, hig
 			in_quest = atoi(the_score.inside_quest);
 
 			/* Hack -- extract the gold and such */
-			for (user = the_score.uid; isspace(*user); user++) /* loop */;
 			for (when = the_score.day; isspace(*when); when++) /* loop */;
 			for (gold = the_score.gold; isspace(*gold); gold++) /* loop */;
 			for (aged = the_score.turns; isspace(*aged); aged++) /* loop */;
@@ -5008,8 +5007,8 @@ static void display_scores_aux(int highscore_fd, int from, int to, int note, hig
 
 			/* And still another line of info */
 			sprintf(out_val,
-			        "               (User %s, Date %s, Gold %s, Turn %s).",
-			        user, when, gold, aged);
+			        "               (Date %s, Gold %s, Turn %s).",
+			        when, gold, aged);
 			c_put_str(attr, out_val, n*4 + 4, 0);
 		}
 
@@ -5378,7 +5377,6 @@ static errr top_twenty(void)
 	sprintf(the_score.who, "%-.15s", player_name);
 
 	/* Save the player info XXX XXX XXX */
-	sprintf(the_score.uid, "%7u", player_uid);
 	sprintf(the_score.sex, "%c", (p_ptr->psex ? 'm' : 'f'));
 	sprintf(the_score.p_r, "%2d", p_ptr->prace);
 	sprintf(the_score.p_s, "%2d", p_ptr->pracem);
@@ -5455,6 +5453,9 @@ errr predict_score(void)
 		goto out;
 	}
 
+	/* Clear the record */
+	WIPE(&the_score, high_score);
+
 	/* Save the version */
 	sprintf(the_score.what, "%ld.%ld.%ld",
 	        (long int) VERSION_MAJOR, (long int) VERSION_MINOR, (long int) VERSION_PATCH);
@@ -5478,7 +5479,6 @@ errr predict_score(void)
 	sprintf(the_score.who, "%-.15s", player_name);
 
 	/* Save the player info XXX XXX XXX */
-	sprintf(the_score.uid, "%7u", player_uid);
 	sprintf(the_score.sex, "%c", (p_ptr->psex ? 'm' : 'f'));
 	sprintf(the_score.p_r, "%2d", p_ptr->prace);
 	sprintf(the_score.p_s, "%2d", p_ptr->pracem);

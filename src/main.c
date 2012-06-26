@@ -248,6 +248,8 @@ int main(int argc, char *argv[])
 
 	bool_ args = TRUE;
 
+	int player_uid;
+
 #ifdef CHECK_MEMORY_LEAKS
 	GC_find_leak = 1;
 #endif /* CHECK_MEMORY_LEAKS */
