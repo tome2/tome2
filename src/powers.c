@@ -1262,13 +1262,13 @@ static void power_activate(int power)
 /*
  * Print a batch of power.
  */
-static void print_power_batch(int *p, int start, int max, bool_ mode)
+static void print_power_batch(int *p, int start, int max)
 {
 	char buff[80];
 	power_type* spell;
 	int i = start, j = 0;
 
-	if (mode) prt(format("         %-31s Level Mana Fail", "Name"), 1, 20);
+	prt(format("         %-31s Level Mana Fail", "Name"), 1, 20);
 
 	for (i = start; i < (start + 20); i++)
 	{
@@ -1279,10 +1279,10 @@ static void print_power_batch(int *p, int start, int max, bool_ mode)
 		sprintf(buff, "  %c-%3d) %-30s  %5d %4d %s@%d", I2A(j), p[i] + 1, spell->name,
 		        spell->level, spell->cost, stat_names[spell->stat], spell->diff);
 
-		if (mode) prt(buff, 2 + j, 20);
+		prt(buff, 2 + j, 20);
 		j++;
 	}
-	if (mode) prt("", 2 + j, 20);
+	prt("", 2 + j, 20);
 	prt(format("Select a power (a-%c), +/- to scroll:", I2A(j - 1)), 0, 0);
 }
 
@@ -1296,7 +1296,6 @@ static power_type* select_power(int *x_idx)
 	char which;
 	int max = 0, i, start = 0;
 	power_type* ret;
-	bool_ mode = FALSE;
 	int p[POWER_MAX];
 
 	/* Count the max */
@@ -1322,7 +1321,7 @@ static power_type* select_power(int *x_idx)
 
 		while (1)
 		{
-			print_power_batch(p, start, max, mode);
+			print_power_batch(p, start, max);
 			which = inkey();
 
 			if (which == ESCAPE)
@@ -1330,12 +1329,6 @@ static power_type* select_power(int *x_idx)
 				*x_idx = -1;
 				ret = NULL;
 				break;
-			}
-			else if (which == '*' || which == '?' || which == ' ')
-			{
-				mode = (mode) ? FALSE : TRUE;
-				Term_load();
-				character_icky = FALSE;
 			}
 			else if (which == '+')
 			{
