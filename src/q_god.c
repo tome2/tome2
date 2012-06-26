@@ -1,5 +1,8 @@
 #include "angband.h"
+
 #include <assert.h>
+
+#include "quark.h"
 
 #define cquest (quest[QUEST_GOD])
 #define cquest_quests_given (cquest.data[0])

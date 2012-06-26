@@ -7,6 +7,7 @@
 #include "angband.h"
 
 #include "messages.h"
+#include "quark.h"
 
 static void do_byte(byte *, int);
 static void do_bool(bool_ *, int);

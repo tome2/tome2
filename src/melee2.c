@@ -16,7 +16,9 @@
 */
 
 #include "angband.h"
+
 #include "messages.h"
+#include "quark.h"
 
 #define SPEAK_CHANCE 8
 #define GRINDNOISE 20

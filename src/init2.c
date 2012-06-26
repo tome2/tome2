@@ -7,6 +7,7 @@
 #include <assert.h>
 
 #include "messages.h"
+#include "quark.h"
 
 /*
  * This file is used to initialise various variables and arrays for the
@@ -1948,8 +1949,8 @@ static errr init_misc(void)
 
 	/*** Prepare the various "bizarre" arrays ***/
 
-	/* Quark variables */
-	C_MAKE(quark__str, QUARK_MAX, cptr);
+	/* Initialize quark subsystem */
+	quark_init();
 
 	/* Initialize messages subsystem */
 	message_init();

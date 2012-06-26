@@ -15,6 +15,7 @@ SET(SRCS
   generate.c gen_maze.c gen_evol.c wild.c levels.c store.c bldg.c
   cmovie.c
   wizard2.c init2.c birth.c wizard1.c init1.c main.c 
+  quark.c
   # Lua bits:
   lua_bind.c script.c
 )

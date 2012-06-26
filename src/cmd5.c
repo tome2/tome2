@@ -15,6 +15,8 @@
 
 #include <assert.h>
 
+#include "quark.h"
+
 /* Maximum number of tries for teleporting */
 #define MAX_TRIES 300
 

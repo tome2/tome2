@@ -11,6 +11,9 @@
  */
 
 #include "angband.h"
+
+#include "quark.h"
+
 #define MAX_VAMPIRIC_DRAIN 100
 
 

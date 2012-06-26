@@ -15,6 +15,7 @@
 #include <assert.h>
 
 #include "messages.h"
+#include "quark.h"
 
 /* #define DEBUG_HOOK */
 

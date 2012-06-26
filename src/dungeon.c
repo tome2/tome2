@@ -11,7 +11,10 @@
  */
 
 #include "angband.h"
+
 #include <assert.h>
+
+#include "quark.h"
 
 #define TY_CURSE_CHANCE 100
 #define DG_CURSE_CHANCE 50

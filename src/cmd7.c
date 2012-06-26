@@ -13,6 +13,7 @@
 
 #include "angband.h"
 
+#include "quark.h"
 
 /*
  * Describe class powers of Mindcrafters

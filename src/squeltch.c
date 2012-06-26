@@ -11,7 +11,10 @@
  */
 
 #include "angband.h"
+
 #include <jansson.h>
+
+#include "quark.h"
 
 #define RULES_MAX 4096
 #define STACK_MAX 1024

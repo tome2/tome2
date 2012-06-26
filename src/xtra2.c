@@ -12,7 +12,10 @@
  */
 
 #include "angband.h"
+
 #include <assert.h>
+
+#include "quark.h"
 
 /*
  * Invoke The Rush

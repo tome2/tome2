@@ -12,6 +12,8 @@
 
 #include "angband.h"
 
+#include "quark.h"
+
 #define STORE_GENERAL_STORE "General Store"
 #define STORE_ARMOURY "Armoury"
 #define STORE_WEAPONSMITH "Weaponsmith"

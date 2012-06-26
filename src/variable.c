@@ -483,17 +483,6 @@ char *macro__buf;
 
 
 /*
- * The number of quarks
- */
-s16b quark__num;
-
-/*
- * The pointers to the quarks [QUARK_MAX]
- */
-cptr *quark__str;
-
-
-/*
  * The array of normal options
  */
 u32b option_flag[8];

@@ -12,6 +12,8 @@
 
 #include "angband.h"
 
+#include "quark.h"
+
 /*
  * Note: return value indicates the amount of mana to use
  */

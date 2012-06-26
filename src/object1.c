@@ -12,6 +12,7 @@
 
 #include "angband.h"
 
+#include "quark.h"
 
 /*
  * Hack -- note that "TERM_MULTI" is now just "TERM_VIOLET".
