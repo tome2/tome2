@@ -1394,9 +1394,6 @@ option_type option_info[] =
 	{ &show_store_graph, TRUE, 1, 15,
 	  "show_store_graph", "Show graphics in stores" },
 
-	{ &show_choices, TRUE, 1, 16,
-	  "show_choices", "Show choices in certain sub-windows" },
-
 	{ &show_details, TRUE, 1, 17,
 	  "show_details", "Show details in certain sub-windows" },
 

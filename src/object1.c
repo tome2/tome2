@@ -5428,7 +5428,6 @@ bool_ get_item_floor(int *cp, cptr pmt, cptr str, int mode)
 	while (!done)
 	{
 		/* Show choices */
-		if (show_choices)
 		{
 			int ni = 0;
 			int ne = 0;
@@ -5911,7 +5910,6 @@ bool_ get_item_floor(int *cp, cptr pmt, cptr str, int mode)
 	}
 
 	/* Clean up */
-	if (show_choices)
 	{
 		/* Toggle again if needed */
 		if (toggle) toggle_inven_equip();

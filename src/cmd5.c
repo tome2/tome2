@@ -2204,11 +2204,7 @@ s32b get_school_spell(cptr do_what, s16b force_book)
 	flag = FALSE;
 
 	/* Show choices */
-	if (show_choices)
-	{
-		/* Window stuff */
-		window_stuff();
-	}
+	window_stuff();
 
 	/* No spell to cast by default */
 	spell = -1;
@@ -2332,11 +2328,7 @@ s32b get_school_spell(cptr do_what, s16b force_book)
 
 
 	/* Show choices */
-	if (show_choices)
-	{
-		/* Window stuff */
-		window_stuff();
-	}
+	window_stuff();
 
 
 	/* Abort if needed */
@@ -2383,11 +2375,7 @@ void browse_school_spell(int book, int pval, object_type *o_ptr)
 	char out_val[160];
 
 	/* Show choices */
-	if (show_choices)
-	{
-		/* Window stuff */
-		window_stuff();
-	}
+	window_stuff();
 
 	num = school_book_length(book);
 
@@ -2438,11 +2426,7 @@ void browse_school_spell(int book, int pval, object_type *o_ptr)
 	character_icky = FALSE;
 
 	/* Show choices */
-	if (show_choices)
-	{
-		/* Window stuff */
-		window_stuff();
-	}
+	window_stuff();
 }
 
 /* Can it contains a schooled spell ? */
