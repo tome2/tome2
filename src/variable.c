@@ -494,52 +494,6 @@ cptr *quark__str;
 
 
 /*
- * The next "free" index to use
- */
-u16b message__next;
-
-/*
- * The index of the oldest message (none yet)
- */
-u16b message__last;
-
-/*
- * The next "free" offset
- */
-u16b message__head;
-
-/*
- * The offset to the oldest used char (none yet)
- */
-u16b message__tail;
-
-/*
- * The array of offsets, by index [MESSAGE_MAX]
- */
-u16b *message__ptr;
-
-/*
- * The array of colors, by index [MESSAGE_MAX]
- */
-byte *message__color;
-
-/*
- * The array of type, by index [MESSAGE_MAX]
- */
-byte *message__type;
-
-/*
- * The array of message counts, by index [MESSAGE_MAX]
- */
-u16b *message__count;
-
-/*
- * The array of chars, by offset [MESSAGE_BUF]
- */
-char *message__buf;
-
-
-/*
  * The array of normal options
  */
 u32b option_flag[8];

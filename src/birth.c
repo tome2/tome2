@@ -12,6 +12,8 @@
 
 #include "angband.h"
 
+#include "messages.h"
+
 /*
  * How often the autoroller will update the display and pause
  * to check for user interuptions.

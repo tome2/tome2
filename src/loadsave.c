@@ -6,6 +6,8 @@
 
 #include "angband.h"
 
+#include "messages.h"
+
 static void do_byte(byte *, int);
 static void do_bool(bool_ *, int);
 static void do_u16b(u16b *, int);

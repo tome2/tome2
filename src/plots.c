@@ -11,7 +11,10 @@
  */
 
 #include "angband.h"
+
 #include <assert.h>
+
+#include "messages.h"
 
 /* #define DEBUG_HOOK */
 

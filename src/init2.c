@@ -6,6 +6,8 @@
 
 #include <assert.h>
 
+#include "messages.h"
+
 /*
  * This file is used to initialise various variables and arrays for the
  * Angband game.  Note the use of "fd_read()" and "fd_write()" to bypass
@@ -1949,15 +1951,8 @@ static errr init_misc(void)
 	/* Quark variables */
 	C_MAKE(quark__str, QUARK_MAX, cptr);
 
-	/* Message variables */
-	C_MAKE(message__ptr, MESSAGE_MAX, u16b);
-	C_MAKE(message__color, MESSAGE_MAX, byte);
-	C_MAKE(message__type, MESSAGE_MAX, byte);
-	C_MAKE(message__count, MESSAGE_MAX, u16b);
-	C_MAKE(message__buf, MESSAGE_BUF, char);
-
-	/* Hack -- No messages yet */
-	message__tail = MESSAGE_BUF;
+	/* Initialize messages subsystem */
+	message_init();
 
 	/* Initialize game */
 	process_hooks(HOOK_INIT_GAME, "(s)", "begin");

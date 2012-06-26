@@ -12,6 +12,7 @@
 
 #include "angband.h"
 
+#include "messages.h"
 
 /*
  * Hack -- redraw the screen

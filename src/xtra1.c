@@ -12,6 +12,7 @@
 
 #include "angband.h"
 
+#include "messages.h"
 
 /*
  * Converts stat num into a six-char (right justified) string

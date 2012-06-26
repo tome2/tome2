@@ -2,7 +2,7 @@ SET(SRCS
   main-gcu.c main-x11.c main-xaw.c main-sdl.c main-gtk2.c
   z-rand.c z-util.c z-form.c z-virt.c z-term.c
   variable.c tables.c plots.c util.c cave.c dungeon.c 
-  melee1.c melee2.c modules.c 
+  melee1.c melee2.c messages.c modules.c
   q_god.c
   object1.c object2.c randart.c squeltch.c traps.c 
   monster1.c monster2.c monster3.c

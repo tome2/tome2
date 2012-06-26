@@ -304,23 +304,6 @@
 	/* Was 512... 256 quarks added for random artifacts */
 
 /*
- * OPTION: Maximum number of messages to remember (see "io.c")
- * Default: assume maximal memorization of 2048 total messages
- */
-#define MESSAGE_MAX     2048
-
-#define MESSAGE_NONE    0
-#define MESSAGE_MSG     1
-
-/*
- * OPTION: Maximum space for the message text buffer (see "io.c")
- * Default: assume that each of the 2048 messages is repeated an
- * average of three times, and has an average length of 48
- */
-#define MESSAGE_BUF     32768
-
-
-/*
  * Maximum value storable in a "byte" (hard-coded)
  */
 #define MAX_UCHAR       255
