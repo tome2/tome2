@@ -2246,28 +2246,14 @@ void object_desc(char *buf, object_type *o_ptr, int pref, int mode)
 	if ((f1 & TR1_MANA) && (known) && (o_ptr->pval > 0))
 	{
 		t = object_desc_chr(t, '(');
-		if (munchkin_multipliers)
-		{
-			t = object_desc_num(t, 100 * o_ptr->pval / 5);
-		}
-		else
-		{
-			t = object_desc_num(t, 100 * o_ptr->pval / 10);
-		}
+		t = object_desc_num(t, 100 * o_ptr->pval / 5);
 		t = object_desc_str(t, "%)");
 	}
 
 	if ((known) && (f2 & TR2_LIFE) ) /* Can disp neg now -- Improv */
 	{
 		t = object_desc_chr(t, '(');
-		if (munchkin_multipliers)
-		{
-			t = object_desc_num(t, 100 * o_ptr->pval / 5);
-		}
-		else
-		{
-			t = object_desc_num(t, 100 * o_ptr->pval / 10);
-		}
+		t = object_desc_num(t, 100 * o_ptr->pval / 5);
 		t = object_desc_str(t, "%)");
 	}
 
@@ -3157,7 +3143,7 @@ bool_ object_out_desc(object_type *o_ptr, FILE *fff, bool_ trim_down, bool_ wait
 			}
 
 			text_out(" by ");
-			percent = 100 * o_ptr->pval / ( munchkin_multipliers ? 5 : 10 );
+			percent = 100 * o_ptr->pval / 5;
 
 
 			if (o_ptr->pval > 0)

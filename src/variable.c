@@ -1319,11 +1319,6 @@ bool_ fast_autoroller;
 bool_ joke_monsters;
 
 /*
- * How will mana staf & weapons of life act
- */
-bool_ munchkin_multipliers = TRUE;
-
-/*
  * Center view
  */
 bool_ center_player = FALSE;

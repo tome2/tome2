@@ -526,7 +526,6 @@ extern bool_ *a_allow_special;
 extern bool_ rand_birth;
 extern bool_ fast_autoroller;
 extern bool_ joke_monsters;
-extern bool_ munchkin_multipliers;
 extern bool_ center_player;
 extern s16b plots[MAX_PLOTS];
 extern random_quest random_quests[MAX_RANDOM_QUEST];

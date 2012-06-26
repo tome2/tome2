@@ -1747,13 +1747,9 @@ static void calc_mana(void)
 	}
 
 	/* Augment mana */
-	if (munchkin_multipliers)
+	if (p_ptr->to_m)
 	{
-		if (p_ptr->to_m) msp += msp * p_ptr->to_m / 5;
-	}
-	else
-	{
-		if (p_ptr->to_m) msp += msp * p_ptr->to_m / 10;
+		msp += msp * p_ptr->to_m / 5;
 	}
 
 	/* Assume player not encumbered by armor */
@@ -1903,14 +1899,8 @@ void calc_hitpoints(void)
 	if (p_ptr->shero) mhp += 30;
 
 	/* Augment Hitpoint */
-	if (munchkin_multipliers)
-	{
-		mhp += mhp * p_ptr->to_l / 5;
-	}
-	else
-	{
-		mhp += mhp * p_ptr->to_l / 10;
-	}
+	mhp += mhp * p_ptr->to_l / 5;
+
 	if (mhp < 1) mhp = 1;
 
 	if (p_ptr->body_monster)
