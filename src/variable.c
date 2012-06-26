@@ -1279,9 +1279,6 @@ s16b doppleganger;
 /* To allow wilderness encounters */
 bool_ generate_encounter;
 
-/* Permanent dungeons ? */
-bool_ permanent_levels;
-
 /* Autoroler */
 bool_ autoroll;
 
