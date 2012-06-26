@@ -1,7 +1,7 @@
 add_module
 {
 	["name"]    = "ToME",
-	["version"] = { 2, 3, 10 },
+	["version"] = { 2, 3, 11 },
 	["author"]  = { "DarkGod", "darkgod@t-o-m-e.net" },
 	["desc"] = {
 		"The Tales of Middle-earth, the standard and official game.",
