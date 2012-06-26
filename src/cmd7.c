@@ -6058,8 +6058,7 @@ static void print_runespell_batch(int batch, int max)
  * List ten random spells and ask to pick one.
  */
 
-static rune_spell* select_runespell_from_batch(int batch, bool_ quick,
-                int *s_idx)
+static rune_spell* select_runespell_from_batch(int batch, int *s_idx)
 {
 	char tmp[160];
 
@@ -6073,7 +6072,6 @@ static rune_spell* select_runespell_from_batch(int batch, bool_ quick,
 
 
 	character_icky = TRUE;
-	Term_save();
 
 	if (rune_num < (batch + 1) * 10)
 	{
@@ -6085,14 +6083,15 @@ static rune_spell* select_runespell_from_batch(int batch, bool_ quick,
 
 	prt(tmp, 0, 0);
 
-	if (quick)
-	{
-		print_runespell_batch(batch, mut_max);
-	}
-
 	while (1)
 	{
+		Term_save();
+
+		print_runespell_batch(batch, mut_max);
+
 		which = inkey();
+
+		Term_load();
 
 		if (which == ESCAPE)
 		{
@@ -6146,7 +6145,6 @@ static rune_spell* select_runespell_from_batch(int batch, bool_ quick,
 		}
 	}
 
-	Term_load();
 	character_icky = FALSE;
 
 	return (ret);
@@ -6157,7 +6155,7 @@ static rune_spell* select_runespell_from_batch(int batch, bool_ quick,
  * Pick a random spell from a menu
  */
 
-rune_spell* select_runespell(bool_ quick, int *s_idx)
+rune_spell* select_runespell(int *s_idx)
 {
 	char tmp[160];
 
@@ -6192,7 +6190,7 @@ rune_spell* select_runespell(bool_ quick, int *s_idx)
 		{
 			Term_load();
 			character_icky = FALSE;
-			return (select_runespell_from_batch(0, quick, s_idx));
+			return (select_runespell_from_batch(0, s_idx));
 
 		}
 		else
@@ -6202,7 +6200,7 @@ rune_spell* select_runespell(bool_ quick, int *s_idx)
 			{
 				Term_load();
 				character_icky = FALSE;
-				return (select_runespell_from_batch(A2I(which), quick, s_idx));
+				return (select_runespell_from_batch(A2I(which), s_idx));
 			}
 			else
 			{
@@ -6252,7 +6250,7 @@ void do_cmd_rune_cast()
 		return;
 	}
 
-	s_ptr = select_runespell(FALSE, &s_idx);
+	s_ptr = select_runespell(&s_idx);
 
 	if (s_ptr == NULL) return;
 
@@ -6524,7 +6522,7 @@ void do_cmd_rune_del()
 		return;
 	}
 
-	s_ptr = select_runespell(FALSE, &s_idx);
+	s_ptr = select_runespell(&s_idx);
 
 	if (s_ptr == NULL) return;
 
