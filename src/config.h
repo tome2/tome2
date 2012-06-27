@@ -144,17 +144,6 @@
 
 
 
-/*
- * OPTION: Allow use of extended spell info	-DRS-
- */
-#define DRS_SHOW_SPELL_INFO
-
-/*
- * OPTION: Allow use of the monster health bar	-DRS-
- */
-#define DRS_SHOW_HEALTH_BAR
-
-
 
 /*
  * OPTION: Allow the use of "sound" in various places.
