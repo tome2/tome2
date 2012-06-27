@@ -66,14 +66,6 @@
 /*
  * Some examples
  */
-#ifdef GUMBAND
-# define ANG293_COMPAT	/* Requires V2.9.3 compatibility code */
-# define ANG291_COMPAT	/* Requires V2.9.1 compatibility code */
-# define ANG281_RESET_VISUALS	/* The old style reset_visuals() */
-# define OLD_SAVEFILE_CODE /* See also SAVEFILE_MUTABLE in files.c */
-# define NO_REDRAW_SECTION	/* Doesn't have Term_redraw_section() */
-#endif /* GUMBAND */
-
 #ifdef OANGBAND
 # define ANG293_COMPAT	/* Requires V2.9.3 compatibility code */
 # define ZANG_SAVE_GAME	/* do_cmd_save_game with auto_save parameter */
