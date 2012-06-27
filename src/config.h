@@ -250,9 +250,6 @@
 /* For testing the vaults */
 /* # define FORCE_V_IDX 20 */
 
-/* Testing upkeep */
-/* # define TRACK_FRIENDS */
-
 /*
  * Using the fast autoroller can be considered as cheating
  */

@@ -1836,25 +1836,12 @@ static void process_world(void)
 		if (has_ability(AB_PERFECT_CASTING))
 			upkeep_divider = 15;
 
-#ifdef TRACK_FRIENDS
-
-		if (wizard) msg_format("Total friends: %d.", total_friends);
-
-#endif /* TRACK_FRIENDS */
-
 		if (total_friends > 1 + (p_ptr->lev / (upkeep_divider)))
 		{
 			upkeep_factor = (total_friend_levels);
 
 			if (upkeep_factor > 100) upkeep_factor = 100;
 			else if (upkeep_factor < 10) upkeep_factor = 10;
-
-#ifdef TRACK_FRIENDS
-
-			if (wizard) msg_format("Levels %d, upkeep %d", total_friend_levels,
-				                       upkeep_factor);
-
-#endif /* TRACK_FRIENDS */
 		}
 	}
 
@@ -1865,15 +1852,6 @@ static void process_world(void)
 		{
 			s16b upkeep_regen = (((100 - upkeep_factor) * regen_amount) / 100);
 			regenmana(upkeep_regen);
-
-#ifdef TRACK_FRIENDS
-
-			if (wizard)
-			{
-				msg_format("Regen: %d/%d", upkeep_regen, regen_amount);
-			}
-
-#endif /* TRACK_FRIENDS */
 		}
 		else
 		{
