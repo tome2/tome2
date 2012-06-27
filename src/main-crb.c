@@ -560,7 +560,6 @@ static bool_ check_create_user_dir(void)
  * more work.  New S one is too idiosyncratic...)
  * #define ANG281_RESET_VISUALS (Cth, Gum, T.o.M.E., Z)
  * #define SAVEFILE_SCREEN (T.o.M.E.)
- * #define ZANG_AUTO_SAVE (O and Z)
  * #define HAS_SCORE_MENU (V and T.o.M.E.)
  * #define ANGBAND_CREATOR four letter code for your variant, if any.
  * or use the default one.
@@ -4783,11 +4782,7 @@ static void menu(long mc)
 					msg_flag = FALSE;
 
 					/* Hack -- Save the game */
-#ifndef ZANG_AUTO_SAVE
 					do_cmd_save_game();
-#else
-					do_cmd_save_game(FALSE);
-#endif /* !ZANG_AUTO_SAVE */
 
 					break;
 				}
@@ -4815,11 +4810,7 @@ static void menu(long mc)
 						msg_flag = FALSE;
 
 						/* Save the game */
-#ifndef ZANG_AUTO_SAVE
 						do_cmd_save_game();
-#else
-						do_cmd_save_game(FALSE);
-#endif /* !ZANG_AUTO_SAVE */
 					}
 
 					/* Quit */
@@ -5322,11 +5313,7 @@ static void quit_calmly(void)
 		msg_flag = FALSE;
 
 		/* Save the game */
-#ifndef ZANG_AUTO_SAVE
 		do_cmd_save_game();
-#else
-		do_cmd_save_game(FALSE);
-#endif /* !ZANG_AUTO_SAVE */
 
 		/* Quit */
 		quit(NULL);

@@ -3070,13 +3070,7 @@ static void save_game_gtk(void)
 	msg_flag = FALSE;
 
 	/* Save the game */
-#ifdef ZANG_SAVE_GAME
-	/* Also for OAngband - the parameter tells if it's autosave */
-	do_cmd_save_game(FALSE);
-#else
-/* Everything else */
 	do_cmd_save_game();
-#endif /* ZANG_SAVE_GAME */
 }
 
 
