@@ -4821,12 +4821,8 @@ errr init_gtk2(int argc, char **argv)
 	/* Initialize */
 	init_angband();
 
-#ifndef OLD_SAVEFILE_CODE
-
 	/* Hack - because this port has New/Open menus XXX */
 	savefile[0] = '\0';
-
-#endif /* !OLD_SAVEFILE_CODE */
 
 	/* Prompt the user */
 	prt("[Choose 'New' or 'Open' from the 'File' menu]", 23, 17);
