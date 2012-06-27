@@ -523,19 +523,6 @@ usage:
 	quit_aux = quit_hook;
 
 
-#ifdef USE_GLU
-	/* Attempt to use the "main-glu.c" support */
-	if (!done && (!mstr || (streq(mstr, "glu"))))
-	{
-		extern errr init_glu(int, char**);
-		if (0 == init_glu(argc, argv))
-		{
-			ANGBAND_SYS = "glu";
-			done = TRUE;
-		}
-	}
-#endif
-
 #ifdef USE_GTK2
 	/* Attempt to use the "main-gtk2.c" support */
 	if (!done && (!mstr || (streq(mstr, "gtk2"))))
@@ -596,19 +583,6 @@ usage:
 		if (0 == init_gcu(argc, argv))
 		{
 			ANGBAND_SYS = "gcu";
-			done = TRUE;
-		}
-	}
-#endif
-
-#ifdef USE_GLU
-	/* Attempt to use the "main-glu.c" support */
-	if (!done && (!mstr || (streq(mstr, "glu"))))
-	{
-		extern errr init_glu(int, char**);
-		if (0 == init_glu(argc, argv))
-		{
-			ANGBAND_SYS = "glu";
 			done = TRUE;
 		}
 	}
