@@ -17,8 +17,6 @@
 #include "messages.h"
 #include "quark.h"
 
-/* #define DEBUG_HOOK */
-
 /******** Hooks stuff *********/
 FILE *hook_file;
 
@@ -98,10 +96,6 @@ hooks_chain* add_hook(int h_idx, hook_type hook, cptr name)
 		MAKE(new_, hooks_chain);
 		new_->hook = hook;
 		sprintf(new_->name, "%s", name);
-#ifdef DEBUG_HOOK
-		if (wizard) cmsg_format(TERM_VIOLET, "HOOK ADD: %s", name);
-		if (take_notes) add_note(format("HOOK ADD: %s", name), 'D');
-#endif
 		new_->next = hooks_heads[h_idx];
 		hooks_heads[h_idx] = new_;
 		return (new_);
@@ -134,19 +128,11 @@ void del_hook(int h_idx, hook_type hook)
 	{
 		if (p == NULL)
 		{
-#ifdef DEBUG_HOOK
-			if (wizard) cmsg_format(TERM_VIOLET, "HOOK DEL: %s", c->name);
-			if (take_notes) add_note(format("HOOK DEL: %s", c->name), 'D');
-#endif
 			hooks_heads[h_idx] = c->next;
 			FREE(c, hooks_chain);
 		}
 		else
 		{
-#ifdef DEBUG_HOOK
-			if (wizard) cmsg_format(TERM_VIOLET, "HOOK DEL: %s", c->name);
-			if (take_notes) add_note(format("HOOK DEL: %s", c->name), 'D');
-#endif
 			p->next = c->next;
 			FREE(c, hooks_chain);
 		}
@@ -169,19 +155,11 @@ void del_hook_name(int h_idx, cptr name)
 	{
 		if (p == NULL)
 		{
-#ifdef DEBUG_HOOK
-			if (wizard) cmsg_format(TERM_VIOLET, "HOOK DEL: %s", c->name);
-			if (take_notes) add_note(format("HOOK DEL: %s", c->name), 'D');
-#endif
 			hooks_heads[h_idx] = c->next;
 			FREE(c, hooks_chain);
 		}
 		else
 		{
-#ifdef DEBUG_HOOK
-			if (wizard) cmsg_format(TERM_VIOLET, "HOOK DEL: %s", c->name);
-			if (take_notes) add_note(format("HOOK DEL: %s", c->name), 'D');
-#endif
 			p->next = c->next;
 			FREE(c, hooks_chain);
 		}
@@ -238,10 +216,6 @@ static bool_ vprocess_hooks_return (int h_idx, char *ret, char *fmt, va_list *ap
 
 	while (c != NULL)
 	{
-#ifdef DEBUG_HOOK
-		if (wizard) cmsg_format(TERM_VIOLET, "HOOK: %s", c->name);
-		if (take_notes) add_note(format("HOOK PROCESS: %s", c->name), 'D');
-#endif
 		if (c->type == HOOK_TYPE_C)
 		{
 			int i = 0, nb = 0;
