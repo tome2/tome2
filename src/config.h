@@ -113,12 +113,6 @@
 
 
 /*
- * OPTION: Allow characteres to be "auto-rolled"
- */
-#define ALLOW_AUTOROLLER
-
-
-/*
  * OPTION: Handle signals
  */
 #define HANDLE_SIGNALS

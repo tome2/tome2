@@ -2831,8 +2831,6 @@ static bool_ player_birth_aux_auto()
 	char inp[80];
 
 
-#ifdef ALLOW_AUTOROLLER
-
 	/* Initialize */
 	if (autoroll)
 	{
@@ -2932,8 +2930,6 @@ static bool_ player_birth_aux_auto()
 			stat_limit[i] = (v > 0) ? v : 0;
 		}
 	}
-
-#endif /* ALLOW_AUTOROLLER */
 
 	/* Roll */
 	while (TRUE)
