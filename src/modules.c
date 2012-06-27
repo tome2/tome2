@@ -58,6 +58,11 @@ void module_reset_dir(cptr dir, cptr new_path)
 		strnfmt(buf, 1024, "%s%s%s", user_path, PATH_SEP, new_path);
 		string_free(*d);
 		*d = string_make(buf);
+		// Make it if needed */
+		if (!private_check_user_directory(*d))
+		{
+			quit(format("Unable to create module dir %s\n", *d));
+		}
 	}
 #ifdef PRIVATE_USER_PATH_DATA
 	else if (!strcmp(dir, "data"))
