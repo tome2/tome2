@@ -4680,15 +4680,10 @@ bool_ make_attack_spell(int m_idx)
 static int mon_will_run(int m_idx)
 {
 	monster_type *m_ptr = &m_list[m_idx];
-
-#ifdef ALLOW_TERROR
-
 	u16b p_lev, m_lev;
 	u16b p_chp, p_mhp;
 	u16b m_chp, m_mhp;
 	u32b p_val, m_val;
-
-#endif
 
 	/* Keep monsters from running too far away */
 	if (m_ptr->cdis > MAX_SIGHT + 5) return (FALSE);
@@ -4698,8 +4693,6 @@ static int mon_will_run(int m_idx)
 
 	/* All "afraid" monsters will run away */
 	if (m_ptr->monfear) return (TRUE);
-
-#ifdef ALLOW_TERROR
 
 	/* Nearby monsters will not become terrified */
 	if (m_ptr->cdis <= 5) return (FALSE);
@@ -4728,8 +4721,6 @@ static int mon_will_run(int m_idx)
 
 	/* Strong players scare strong monsters */
 	if (p_val * m_mhp > m_val * p_mhp) return (TRUE);
-
-#endif
 
 	/* Assume no terror */
 	return (FALSE);

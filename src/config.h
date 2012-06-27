@@ -119,12 +119,6 @@
 
 
 /*
- * OPTION: Allow monsters to "flee" from strong players
- */
-#define ALLOW_TERROR
-
-
-/*
  * OPTION: Handle signals
  */
 #define HANDLE_SIGNALS
