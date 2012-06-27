@@ -3473,15 +3473,6 @@ static void process_command(void)
 			break;
 		}
 
-#ifdef ALLOW_QUITTING
-
-	case KTRL('L'):
-		{
-			quit("CHEATER");
-			break;
-		}
-
-#endif
 
 
 		/*** Wizard Commands ***/

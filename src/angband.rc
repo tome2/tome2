@@ -1,10 +1,5 @@
 /* File: angband.rc */
 
-/*
- * If the windows command to compile this file understands #ifdef's, please
- * say #ifdef ALLOW_QUITTING to select from "A&bort" and "Sh&ow scores"
- */
-
 ANGBAND MENU
 {
  POPUP "&File"
@@ -12,7 +7,6 @@ ANGBAND MENU
   MENUITEM "&Save", 110
   MENUITEM SEPARATOR
   MENUITEM "S&how score", 120
-  /*MENUITEM "A&bort", 120*/
   MENUITEM "E&xit", 121
  }
 

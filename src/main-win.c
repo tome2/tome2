@@ -101,11 +101,7 @@
 #define IDM_FILE_NEW			100
 #define IDM_FILE_OPEN			101
 #define IDM_FILE_SAVE			110
-#ifdef ALLOW_QUITTING
-# define IDM_FILE_ABORT	120
-#else
-# define IDM_FILE_SCORE	120
-#endif
+#define IDM_FILE_SCORE	120
 #define IDM_FILE_EXIT			121
 
 #define IDM_WINDOW_VIS_0		200
@@ -2465,13 +2461,8 @@ static void setup_menus(void)
 	               MF_BYCOMMAND | MF_DISABLED | MF_GRAYED);
 	EnableMenuItem(hm, IDM_FILE_SAVE,
 	               MF_BYCOMMAND | MF_DISABLED | MF_GRAYED);
-#ifdef ALLOW_QUITTING
-	EnableMenuItem(hm, IDM_FILE_ABORT,
-	               MF_BYCOMMAND | MF_DISABLED | MF_GRAYED);
-#else
 	EnableMenuItem(hm, IDM_FILE_SCORE,
 	               MF_BYCOMMAND | MF_DISABLED | MF_GRAYED);
-#endif /* ALLOW_QUITTING */
 	EnableMenuItem(hm, IDM_FILE_EXIT,
 	               MF_BYCOMMAND | MF_DISABLED | MF_GRAYED);
 
@@ -2495,22 +2486,12 @@ static void setup_menus(void)
 		               MF_BYCOMMAND | MF_ENABLED);
 	}
 
-#ifdef ALLOW_QUITTING
-
-	/* Menu "File", Item "Abort" */
-	EnableMenuItem(hm, IDM_FILE_ABORT,
-	               MF_BYCOMMAND | MF_ENABLED);
-
-#else
-
 	/* Menu "File", Item "Score" */
 	if (initialized && character_generated && !character_icky)
 	{
 		EnableMenuItem(hm, IDM_FILE_SCORE,
 		               MF_BYCOMMAND | MF_ENABLED);
 	}
-
-#endif
 
 	/* Menu "File", Item "Exit" */
 	EnableMenuItem(hm, IDM_FILE_EXIT,
@@ -2832,27 +2813,6 @@ ofn.lStructSize = sizeof(OPENFILENAME);
 			break;
 		}
 
-#ifdef ALLOW_QUITTING
-
-		/* Abort */
-	case IDM_FILE_ABORT:
-		{
-			if (game_in_progress && character_generated)
-			{
-				/* XXX XXX XXX */
-				if (MessageBox(data[0].w,
-				                "Your character will be not saved!", "Warning",
-				                MB_ICONEXCLAMATION | MB_OKCANCEL) == IDCANCEL)
-				{
-					break;
-				}
-			}
-			quit(NULL);
-			break;
-		}
-
-#else
-
 		/* Score */
 	case IDM_FILE_SCORE:
 		{
@@ -2861,8 +2821,6 @@ ofn.lStructSize = sizeof(OPENFILENAME);
 			/* Done */
 			break;
 		}
-
-#endif
 
 	case IDM_WINDOW_VIS_0:
 		{

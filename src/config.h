@@ -251,12 +251,6 @@
 /* # define FORCE_V_IDX 20 */
 
 /*
- * Enable the CTRL + L command to quit without saving
- * Only use for debugging purpose, otherwise you are a CHEATER
- */
-/* #define ALLOW_QUITTING */
-
-/*
  * Allow makefiles to override the default file mode
  */
 #ifndef FILE_MODE
