@@ -3027,12 +3027,6 @@ static bool_ player_birth_aux_auto()
 				/* Make sure they see everything */
 				Term_fresh();
 
-#ifndef USE_FAST_AUTOROLLER
-
-				/* Delay 1/10 second */
-				if (fast_autoroller && flag) Term_xtra(TERM_XTRA_DELAY, 100);
-
-#endif
 				/* Do not wait for a key */
 				inkey_scan = TRUE;
 

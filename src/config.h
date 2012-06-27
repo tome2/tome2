@@ -251,11 +251,6 @@
 /* # define FORCE_V_IDX 20 */
 
 /*
- * Using the fast autoroller can be considered as cheating
- */
-#define USE_FAST_AUTOROLLER
-
-/*
  * Enable the CTRL + L command to quit without saving
  * Only use for debugging purpose, otherwise you are a CHEATER
  */
