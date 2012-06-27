@@ -63,14 +63,6 @@
 # define USE_DOUBLE_TILES	/* Mogami's bigtile patch */
 #endif /* TOME */
 
-/*
- * Some examples
- */
-#ifdef OANGBAND
-# define ANG293_COMPAT	/* Requires V2.9.3 compatibility code */
-# define ZANG_SAVE_GAME	/* do_cmd_save_game with auto_save parameter */
-#endif /* OANGBAND */
-
 
 #ifdef USE_GTK2
 
