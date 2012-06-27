@@ -250,9 +250,6 @@ int main(int argc, char *argv[])
 
 	int player_uid;
 
-#ifdef CHECK_MEMORY_LEAKS
-	GC_find_leak = 1;
-#endif /* CHECK_MEMORY_LEAKS */
 
 
 	/* Save the "program name" XXX XXX XXX */
@@ -606,10 +603,6 @@ usage:
 
 	/* Play the game */
 	play_game(new_game);
-
-#ifdef CHECK_MEMORY_LEAKS
-	CHECK_LEAKS();
-#endif
 
 	/* Quit */
 	quit(NULL);

@@ -17,10 +17,6 @@ extern "C" {
 
 #include "h-basic.h"
 
-#ifdef CHECK_MEMORY_LEAKS
-#include <leak_detector.h>
-#endif
-
 /*
  * Memory management routines.
  *
