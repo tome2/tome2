@@ -3452,59 +3452,8 @@ bool_ mon_take_hit(int m_idx, int dam, bool_ *fear, cptr note)
 		return (TRUE);
 	}
 
-
-#ifdef ALLOW_FEAR
-
-	/* Mega-Hack -- Pain cancels fear */
-	if (m_ptr->monfear && (dam > 0))
-	{
-		int tmp = randint(dam);
-
-		/* Cure a little fear */
-		if (tmp < m_ptr->monfear)
-		{
-			/* Reduce fear */
-			m_ptr->monfear -= tmp;
-		}
-
-		/* Cure all the fear */
-		else
-		{
-			/* Cure fear */
-			m_ptr->monfear = 0;
-
-			/* No more fear */
-			(*fear) = FALSE;
-		}
-	}
-
-	/* Sometimes a monster gets scared by damage */
-	if (!m_ptr->monfear && !(r_ptr->flags3 & (RF3_NO_FEAR)))
-	{
-		int percentage;
-
-		/* Percentage of fully healthy */
-		percentage = (100L * m_ptr->hp) / m_ptr->maxhp;
-
-		/*
-		 * Run (sometimes) if at 10% or less of max hit points,
-		 * or (usually) when hit for half its current hit points
-		 */
-		if (((percentage <= 10) && (rand_int(10) < percentage)) ||
-		                ((dam >= m_ptr->hp) && (rand_int(100) < 80)))
-		{
-			/* Hack -- note fear */
-			(*fear) = TRUE;
-
-			/* XXX XXX XXX Hack -- Add some timed fear */
-			m_ptr->monfear = (randint(10) +
-			                  (((dam >= m_ptr->hp) && (percentage > 7)) ?
-			                   20 : ((11 - percentage) * 5)));
-		}
-	}
-
-#endif
-
+	/* Apply fear */
+	mon_handle_fear(m_ptr, dam, fear);
 
 	/* Not dead yet */
 	return (FALSE);

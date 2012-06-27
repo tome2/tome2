@@ -166,7 +166,21 @@ bool_ mon_take_hit_mon(int s_idx, int m_idx, int dam, bool_ *fear, cptr note)
 
 	}
 
-#ifdef ALLOW_FEAR
+	/* Apply fear */
+	mon_handle_fear(m_ptr, dam, fear);
+
+	/* Not dead yet */
+	return (FALSE);
+}
+
+
+void mon_handle_fear(monster_type *m_ptr, int dam, bool_ *fear)
+{
+	monster_race *r_ptr = NULL;
+
+	assert(m_ptr != NULL);
+
+	r_ptr = race_inf(m_ptr);
 
 	/* Mega-Hack -- Pain cancels fear */
 	if (m_ptr->monfear && (dam > 0))
@@ -200,9 +214,9 @@ bool_ mon_take_hit_mon(int s_idx, int m_idx, int dam, bool_ *fear, cptr note)
 		percentage = (100L * m_ptr->hp) / m_ptr->maxhp;
 
 		/*
-		* Run (sometimes) if at 10% or less of max hit points,
-		* or (usually) when hit for half its current hit points
-		*/
+		 * Run (sometimes) if at 10% or less of max hit points,
+		 * or (usually) when hit for half its current hit points
+		 */
 		if (((percentage <= 10) && (rand_int(10) < percentage)) ||
 		                ((dam >= m_ptr->hp) && (rand_int(100) < 80)))
 		{
@@ -215,15 +229,7 @@ bool_ mon_take_hit_mon(int s_idx, int m_idx, int dam, bool_ *fear, cptr note)
 			                   20 : ((11 - percentage) * 5)));
 		}
 	}
-
-#endif /* ALLOW_FEAR */
-
-	/* Not dead yet */
-	return (FALSE);
 }
-
-
-
 
 
 /*

@@ -119,11 +119,6 @@
 
 
 /*
- * OPTION: Allow monsters to "flee" when hit hard
- */
-#define ALLOW_FEAR
-
-/*
  * OPTION: Allow monsters to "flee" from strong players
  */
 #define ALLOW_TERROR
