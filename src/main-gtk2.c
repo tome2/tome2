@@ -66,11 +66,6 @@
 /*
  * Some examples
  */
-#ifdef ANGBAND300
-# define can_save TRUE	/* Mimick the short-lived flag */
-# define C_FREE(P, N, T)	FREE(P)	/* Emulate the long-lived macro */
-#endif /* ANGBAND300 */
-
 #ifdef GUMBAND
 # define ANG293_COMPAT	/* Requires V2.9.3 compatibility code */
 # define ANG291_COMPAT	/* Requires V2.9.1 compatibility code */
@@ -350,11 +345,7 @@ static bool_ use_transparency = TRUE;
 /*
  * Hook to "release" memory
  */
-#ifdef ANGBAND300
-static vptr hook_rnfree(vptr v)
-#else
 static vptr hook_rnfree(vptr v, huge size)
-#endif /* ANGBAND300 */
 {
 	/* Dispose */
 	g_free(v);
@@ -4700,26 +4691,6 @@ static void hook_quit(cptr str)
 	/* Terminate the program */
 	gtk_exit(0);
 }
-
-
-#ifdef ANGBAND300
-
-/*
- * Help message for this port
- */
-const char help_gtk[] =
-        "GTK for X11, subopts -n<windows>\n"
-        "           -b(acking store off)\n"
-#ifdef USE_GRAPHICS
-        "           -g(raphics) -o(ld graphics) -s(moothscaling off) \n"
-        "           -t(ransparency on)\n"
-# ifdef USE_DOUBLE_TILES
-        "           -w(ide tiles)\n"
-# endif  /* USE_DOUBLE_TILES */
-#endif /* USE_GRAPHICS */
-        "           and standard GTK options";
-
-#endif /* ANGBAND300 */
 
 
 /*
