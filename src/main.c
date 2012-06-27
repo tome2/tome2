@@ -536,19 +536,6 @@ usage:
 	}
 #endif
 
-#ifdef USE_GTK
-	/* Attempt to use the "main-gtk.c" support */
-	if (!done && (!mstr || (streq(mstr, "gtk"))))
-	{
-		extern errr init_gtk(int, char**);
-		if (0 == init_gtk(argc, argv))
-		{
-			ANGBAND_SYS = "gtk";
-			done = TRUE;
-		}
-	}
-#endif
-
 #ifdef USE_XAW
 	/* Attempt to use the "main-xaw.c" support */
 	if (!done && (!mstr || (streq(mstr, "xaw"))))
