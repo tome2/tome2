@@ -486,10 +486,6 @@ usage:
 				puts("  -- -b              Requests big screen");
 #endif /* USE_GCU */
 
-#ifdef USE_SLA
-				puts("  -msla              To use SLang");
-#endif /* USE_SLA */
-
 #ifdef USE_SDL
 				puts("  -msdl              To use SDL");
 				puts("  --                 Sub options");
@@ -617,21 +613,6 @@ usage:
 		}
 	}
 #endif
-
-
-#ifdef USE_SLA
-	/* Attempt to use the "main-sla.c" support */
-	if (!done && (!mstr || (streq(mstr, "sla"))))
-	{
-		extern errr init_sla(void);
-		if (0 == init_sla())
-		{
-			ANGBAND_SYS = "sla";
-			done = TRUE;
-		}
-	}
-#endif
-
 
 #ifdef USE_SDL
 	/* Attempt to use the "main-sdl.c" support */
