@@ -242,9 +242,6 @@
 
 /* ToME options: */
 
-/* Should the player know his / her starting life rate? */
-/* #define SHOW_LIFE_RATE */
-
 /* Allow hordes of 'similar' monsters */
 #define MONSTER_HORDES
 

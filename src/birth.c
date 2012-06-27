@@ -465,12 +465,6 @@ static void get_extra(void)
 {
 	int i, j, min_value, max_value;
 
-#ifdef SHOW_LIFE_RATE
-
-	int percent;
-
-#endif
-
 
 	/* Level one */
 	p_ptr->max_plv = p_ptr->lev = 1;
@@ -523,16 +517,6 @@ static void get_extra(void)
 
 	p_ptr->tactic = 4;
 	p_ptr->movement = 4;
-
-#ifdef SHOW_LIFE_RATE
-
-	percent = (int)(((long)player_hp[PY_MAX_LEVEL - 1] * 200L) /
-	                (p_ptr->hitdie + ((PY_MAX_LEVEL - 1) * p_ptr->hitdie)));
-
-	msg_format("Current Life Rating is %d/100.", percent);
-	msg_print(NULL);
-
-#endif /* SHOW_LIFE_RATE */
 }
 
 
