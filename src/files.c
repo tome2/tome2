@@ -4066,13 +4066,6 @@ void process_player_name(bool_ sf)
 	if (!player_base[0]) strcpy(player_base, "PLAYER");
 
 
-#ifdef SAVEFILE_MUTABLE
-
-	/* Accept */
-	sf = TRUE;
-
-#endif
-
 	/* Change the savefile name */
 	if (sf)
 	{

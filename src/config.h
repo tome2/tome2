@@ -204,20 +204,6 @@
 #define PRIVATE_USER_PATH "~/.tome"
 #endif
 
-/*
- * OPTION: For some brain-dead computers with no command line interface,
- * namely Macintosh, there has to be some way of "naming" your savefiles.
- * The current "Macintosh" hack is to make it so whenever the character
- * name changes, the savefile is renamed accordingly.  But on normal
- * machines, once you manage to "load" a savefile, it stays that way.
- * Macintosh is particularly weird because you can load savefiles that
- * are not contained in the "lib:save:" folder, and if you change the
- * player's name, it will then save the savefile elsewhere.
- */
-#if defined(MACINTOSH) || defined(WINDOWS)
-/* #define SAVEFILE_MUTABLE */
-#endif
-
 
 /*
  * OPTION: Person to bother if something goes wrong.
