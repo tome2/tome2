@@ -2940,8 +2940,6 @@ bool_ place_monster(int y, int x, bool_ slp, bool_ grp)
 }
 
 
-#ifdef MONSTER_HORDES
-
 bool_ alloc_horde(int y, int x)
 {
 	int r_idx = 0;
@@ -2999,8 +2997,6 @@ bool_ alloc_horde(int y, int x)
 	return TRUE;
 }
 
-#endif /* MONSTER_HORDES */
-
 /*
  * Attempt to allocate a random monster in the dungeon.
  *
@@ -3040,7 +3036,6 @@ bool_ alloc_monster(int dis, bool_ slp)
 	}
 
 
-#ifdef MONSTER_HORDES
 	if (randint(5000) <= dun_level)
 	{
 		if (alloc_horde(y, x))
@@ -3051,14 +3046,11 @@ bool_ alloc_monster(int dis, bool_ slp)
 	}
 	else
 	{
-#endif /* MONSTER_HORDES */
 
 		/* Attempt to place the monster, allow groups */
 		if (place_monster(y, x, slp, TRUE)) return (TRUE);
 
-#ifdef MONSTER_HORDES
 	}
-#endif /* MONSTER_HORDES */
 
 	/* Nope */
 	return (FALSE);

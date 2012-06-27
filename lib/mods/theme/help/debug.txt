@@ -138,8 +138,7 @@ maximal legal value.
         Change your life rating.
 ~~~~~16
 [[[[[GHostile monster creation (H)]
-        Summons a Pack of Creatures of the same kind. Will only work
-        if MONSTER_HORDES has been defined at compile time.
+        Summons a Pack of Creatures of the same kind.
 ~~~~~17
 [[[[[GIdentify (i)]
         Like a Scroll of Identify.

@@ -226,11 +226,6 @@
 
 
 
-/* ToME options: */
-
-/* Allow hordes of 'similar' monsters */
-#define MONSTER_HORDES
-
 /* Wizard mode testing options: */
 
 /* For testing the vaults */

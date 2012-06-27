@@ -184,8 +184,6 @@ static void wiz_create_named_art()
 	msg_print("Allocated.");
 }
 
-#ifdef MONSTER_HORDES
-
 /* Summon a horde of monsters */
 static void do_cmd_summon_horde()
 {
@@ -200,8 +198,6 @@ static void do_cmd_summon_horde()
 
 	(void)alloc_horde(wy, wx);
 }
-
-#endif /* MONSTER_HORDES */
 
 
 /*
@@ -1706,10 +1702,8 @@ void do_cmd_debug(void)
 	case 'h':
 		do_cmd_rerate(); break;
 
-#ifdef MONSTER_HORDES
 	case 'H':
 		do_cmd_summon_horde(); break;
-#endif /* MONSTER_HORDES */
 
 		/* Identify */
 	case 'i':
