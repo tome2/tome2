@@ -3798,31 +3798,12 @@ void update_view(void)
 							int yy = (y < p_ptr->py) ? (y + 1) : (y > p_ptr->py) ? (y - 1) : y;
 							int xx = (x < p_ptr->px) ? (x + 1) : (x > p_ptr->px) ? (x - 1) : x;
 
-#ifdef UPDATE_VIEW_COMPLEX_WALL_ILLUMINATION
-
-							/* Check for "complex" illumination */
-							if ((!(cave[yy][xx].info & (CAVE_WALL)) &&
-							                (cave[yy][xx].info & (CAVE_GLOW))) ||
-							                (!(cave[y][xx].info & (CAVE_WALL)) &&
-							                 (cave[y][xx].info & (CAVE_GLOW))) ||
-							                (!(cave[yy][x].info & (CAVE_WALL)) &&
-							                 (cave[yy][x].info & (CAVE_GLOW))))
-							{
-								/* Mark as seen */
-								info |= (CAVE_SEEN);
-							}
-
-#else /* UPDATE_VIEW_COMPLEX_WALL_ILLUMINATION */
-
 							/* Check for "simple" illumination */
 							if (cave[yy][xx].info & (CAVE_GLOW))
 							{
 								/* Mark as seen */
 								info |= (CAVE_SEEN);
 							}
-
-#endif /* UPDATE_VIEW_COMPLEX_WALL_ILLUMINATION */
-
 						}
 
 						/* Save cave info */
