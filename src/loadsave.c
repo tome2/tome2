@@ -1105,19 +1105,7 @@ static void do_u16b(u16b *v, int flag)
 
 static void do_s16b(s16b *ip, int flag)
 {
-	if (flag == LS_LOAD)
-	{
-		do_u16b((u16b *)ip, flag);
-		return;
-	}
-	if (flag == LS_SAVE)
-	{
-		do_u16b((u16b *)ip, flag);
-		return;
-	}
-	/* Blah blah, never should reach here, die */
-	printf("FATAL: do_s16b passed %d\n", flag);
-	exit(0);
+	do_u16b((u16b *)ip, flag);
 }
 
 static void do_u32b(u32b *ip, int flag)
@@ -1146,19 +1134,7 @@ static void do_u32b(u32b *ip, int flag)
 
 static void do_s32b(s32b *ip, int flag)
 {
-	if (flag == LS_LOAD)
-	{
-		do_u32b((u32b *)ip, flag);
-		return;
-	}
-	if (flag == LS_SAVE)
-	{
-		do_u32b((u32b *)ip, flag);
-		return;
-	}
-	/* Raus! Schnell! */
-	printf("FATAL: do_s32b passed %d\n", flag);
-	exit(0);
+	do_u32b((u32b *)ip, flag);
 }
 
 static void do_string(char *str, int max, int flag)
