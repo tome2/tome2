@@ -48,11 +48,8 @@
  * you *should* use it :-)
  *
  */
-#define TOME
 
-#ifdef TOME
-# define USE_DOUBLE_TILES	/* Mogami's bigtile patch */
-#endif /* TOME */
+#define USE_DOUBLE_TILES	/* Mogami's bigtile patch */
 
 
 #ifdef USE_GTK2
@@ -3314,10 +3311,8 @@ static void change_wide_tile_mode_event_handler(
 	/* Toggle "use_bigtile" */
 	use_bigtile = !use_bigtile;
 
-#ifdef TOME
 	/* T.o.M.E. requires this as well */
 	arg_bigtile = use_bigtile;
-#endif /* TOME */
 
 	/* Double the width of tiles (only for the main window) */
 	if (use_bigtile)
@@ -4545,10 +4540,7 @@ errr init_gtk2(int argc, char **argv)
 		if (streq(argv[i], "-w"))
 		{
 			use_bigtile = TRUE;
-# ifdef TOME
-			/* T.o.M.E. uses older version of the patch */
 			arg_bigtile = TRUE;
-# endif  /* TOME */
 			continue;
 		}
 
