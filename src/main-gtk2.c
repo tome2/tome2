@@ -51,7 +51,6 @@
 #define TOME
 
 #ifdef TOME
-# define ANG291_COMPAT	/* Requires V2.9.1 compatibility code */
 # define SAVEFILE_SCREEN	/* New/Open integrated into the game */
 # define USE_DOUBLE_TILES	/* Mogami's bigtile patch */
 #endif /* TOME */
@@ -289,8 +288,6 @@ static void cleanup_angband(void)
 #define can_save TRUE
 
 
-#ifdef ANG291_COMPAT
-
 /*
  * The standard game uses this to implement lighting effects
  * for 16x16 tiles in cave.c...
@@ -299,8 +296,6 @@ static void cleanup_angband(void)
  * we can set this to TRUE even if we are using the 8x8 tileset.
  */
 static bool_ use_transparency = TRUE;
-
-#endif /* ANG291_COMPAT */
 
 
 
