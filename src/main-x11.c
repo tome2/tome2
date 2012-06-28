@@ -1317,13 +1317,6 @@ static errr Infofnt_prepare(XFontStruct *info)
 		ifnt->twid = ifnt->wid;
 
 
-#ifdef OBSOLETE_SIZING_METHOD
-	/* Extract default sizing info */
-	ifnt->asc = cs->ascent;
-	ifnt->hgt = (cs->ascent + cs->descent);
-	ifnt->wid = cs->width;
-#endif
-
 	/* Success */
 	return (0);
 }
