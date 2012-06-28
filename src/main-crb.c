@@ -555,7 +555,6 @@ static bool_ check_create_user_dir(void)
  *
  * #define ALLOW_BIG_SCREEN (V, Ey, O, T.o.M.E., and Z.  Dr's big screen needs
  * more work.  New S one is too idiosyncratic...)
- * #define ANG281_RESET_VISUALS (Cth, Gum, T.o.M.E., Z)
  * #define SAVEFILE_SCREEN (T.o.M.E.)
  * #define HAS_SCORE_MENU (V and T.o.M.E.)
  * #define ANGBAND_CREATOR four letter code for your variant, if any.
@@ -568,7 +567,6 @@ static bool_ check_create_user_dir(void)
 
 #define USE_DOUBLE_TILES
 #define SAVEFILE_SCREEN
-#define ANG281_RESET_VISUALS
 #define ALLOW_BIG_SCREEN
 #define HAS_SCORE_MENU
 #define ANGBAND_CREATOR 'PrnA'
@@ -2460,11 +2458,7 @@ static errr Term_xtra_mac_react(void)
 		term_data_resize(td);
 
 		/* Reset visuals */
-#ifndef ANG281_RESET_VISUALS
-		reset_visuals(TRUE);
-#else
 		reset_visuals();
-#endif /* !ANG281_RESET_VISUALS */
 	}
 
 	/* Success */

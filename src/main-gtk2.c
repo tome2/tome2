@@ -45,7 +45,7 @@
  * with FREE/KILL, which takes one pointer parameter.
  *
  * [Z]-based variants (Gum and Cth, for example) usually need
- * ANG293_COMPAT, ANG291_COMPAT and ANG281_RESET_VISUALS.
+ * ANG293_COMPAT, ANG291_COMPAT.
  *
  * [O] needs ANG293_COMPAT and ZANG_SAVE_GAME.
  *
@@ -58,7 +58,6 @@
 #ifdef TOME
 # define ANG293_COMPAT	/* Requires V2.9.3 compatibility code */
 # define ANG291_COMPAT	/* Requires V2.9.1 compatibility code */
-# define ANG281_RESET_VISUALS	/* The old style reset_visuals() */
 # define SAVEFILE_SCREEN	/* New/Open integrated into the game */
 # define USE_DOUBLE_TILES	/* Mogami's bigtile patch */
 #endif /* TOME */
@@ -2254,11 +2253,7 @@ static void init_graphics(void)
 	smooth_rescaling = smooth_rescaling_request;
 
 	/* Reset visuals */
-#ifndef ANG281_RESET_VISUALS
-	reset_visuals(TRUE);
-#else
 	reset_visuals();
-#endif /* !ANG281_RESET_VISUALS */
 }
 
 #endif /* USE_GRAPHICS */
