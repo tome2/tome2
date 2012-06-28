@@ -16,16 +16,6 @@
 
 
 /*
- * Allow debugging messages to track memory usage.
- */
-#ifdef VERBOSE_RALLOC
-static long virt_make = 0;
-static long virt_kill = 0;
-static long virt_size = 0;
-#endif
-
-
-/*
  * Optional auxiliary "rnfree" function
  */
 vptr (*rnfree_aux)(vptr, huge) = NULL;
@@ -37,22 +27,6 @@ vptr rnfree(vptr p, huge len)
 {
 	/* Easy to free zero bytes */
 	if (len == 0) return (NULL);
-
-#ifdef VERBOSE_RALLOC
-
-	/* Decrease memory count */
-	virt_kill += len;
-
-	/* Message */
-	if (len > virt_size)
-	{
-		char buf[80];
-		sprintf(buf, "Kill (%ld): %ld - %ld = %ld.",
-		        len, virt_make, virt_kill, virt_make - virt_kill);
-		plog(buf);
-	}
-
-#endif
 
 	/* Use the "aux" function */
 	if (rnfree_aux) return ((*rnfree_aux)(p, len));
@@ -104,22 +78,6 @@ vptr ralloc(huge len)
 
 	/* Allow allocation of "zero bytes" */
 	if (len == 0) return ((vptr)(NULL));
-
-#ifdef VERBOSE_RALLOC
-
-	/* Count allocated memory */
-	virt_make += len;
-
-	/* Log important allocations */
-	if (len > virt_size)
-	{
-		char buf[80];
-		sprintf(buf, "Make (%ld): %ld - %ld = %ld.",
-		        len, virt_make, virt_kill, virt_make - virt_kill);
-		plog(buf);
-	}
-
-#endif
 
 	/* Use the aux function if set */
 	if (ralloc_aux) mem = (*ralloc_aux)(len);
