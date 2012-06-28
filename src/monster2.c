@@ -3434,10 +3434,6 @@ bool_ summon_specific(int y1, int x1, int lev, int type)
 	r_idx = get_mon_num((dun_level + lev) / 2 + 5);
 	summon_hack = FALSE;
 
-#ifdef R_IDX_TESTING_HACK
-	r_idx = 356;
-#endif
-
 	/* Reset restriction */
 	get_mon_num_hook = old_get_mon_num_hook;
 
@@ -3517,10 +3513,6 @@ bool_ summon_specific_friendly(int y1, int x1, int lev, int type, bool_ Group_ok
 
 	/* Pick a monster, using the level calculation */
 	r_idx = get_mon_num((dun_level + lev) / 2 + 5);
-
-#ifdef R_IDX_TESTING_HACK
-	r_idx = 356;
-#endif
 
 	/* Reset restriction */
 	get_mon_num_hook = old_get_mon_num_hook;
