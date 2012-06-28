@@ -232,9 +232,6 @@
  * DEFINES = -DMACH_O_CARBON -DANGBAND30X
  * LIBS = -framework CoreFoundation -framework QuickTime -framework Carbon
  *
- * -DANGBAND30X only affects main-crb.c. This is because I'm also compiling
- * a couple of variants, and this arrangement makes my life easier.
- *
  * Never, ever #define MACINTOSH.  It'll wreck havoc in system interface
  * (mostly because of totally different pathname convention).
  *
@@ -569,20 +566,12 @@ static bool_ check_create_user_dir(void)
  * that has some interesting features.
  */
 
-/* Some porting examples */
-#ifdef ANGBAND30X
-# define USE_DOUBLE_TILES
-# define ALLOW_BIG_SCREEN
-# define HAS_SCORE_MENU
-# define NEW_ZVIRT_HOOKS
-#endif /* ANGBAND30X */
-
-# define USE_DOUBLE_TILES
-# define SAVEFILE_SCREEN
-# define ANG281_RESET_VISUALS
-# define ALLOW_BIG_SCREEN
-# define HAS_SCORE_MENU
-# define ANGBAND_CREATOR 'PrnA'
+#define USE_DOUBLE_TILES
+#define SAVEFILE_SCREEN
+#define ANG281_RESET_VISUALS
+#define ALLOW_BIG_SCREEN
+#define HAS_SCORE_MENU
+#define ANGBAND_CREATOR 'PrnA'
 
 /* Default creator signature */
 #ifndef ANGBAND_CREATOR
@@ -5800,11 +5789,7 @@ static void *lifeboat = NULL;
 /*
  * Hook to "release" memory
  */
-#ifdef NEW_ZVIRT_HOOKS /* [V] removed the unused 'size' argument. */
-static void *hook_rnfree(void *v)
-#else
 static void *hook_rnfree(void *v, size_t size)
-#endif /* NEW_ZVIRT_HOOKS */
 {
 
 #ifdef USE_MALLOC
