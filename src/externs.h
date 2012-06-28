@@ -2331,21 +2331,11 @@ extern int find_module(cptr name);
 
 /* lua_bind.c */
 extern s16b can_spell_random(s16b spell_idx);
-extern magic_power *grab_magic_power(magic_power *m_ptr, int num);
 extern bool_ get_magic_power(int *sn, magic_power *powers, int max_powers, void (*power_info)(char *p, int power), int plev, int cast_stat);
-
-extern object_type *new_object(void);
-extern void end_object(object_type *o_ptr);
-extern void lua_set_item_tester(int tval, char *fct);
-extern char *lua_object_desc(object_type *o_ptr, int pref, int mode);
 
 extern s16b    add_new_power(cptr name, cptr desc, cptr gain, cptr lose, byte level, byte cost, byte stat, byte diff);
 
 extern void find_position(int y, int x, int *yy, int *xx);
-
-extern s16b    add_new_gods(char *name);
-
-extern bool_    get_com_lua(cptr promtp, int *com);
 
 extern s32b lua_get_level(spell_type *spell, s32b lvl, s32b max, s32b min, s32b bonus);
 extern s32b get_level_device(s32b s, s32b max, s32b min);
@@ -2360,24 +2350,16 @@ extern s32b lua_spell_device_chance(s32b chance, int level, int base_level);
 extern s32b get_level_max_stick;
 extern s32b get_level_use_stick;
 
-extern cave_type *lua_get_cave(int y, int x);
 extern void set_target(int y, int x);
 extern void get_target(int dir, int *y, int *x);
 
 extern void get_map_size(char *name, int *ysize, int *xsize);
 extern void load_map(char *name, int *y, int *x);
-extern bool_ alloc_room(int by0, int bx0, int ysize, int xsize, int *y1, int *x1, int *y2, int *x2);
-
-extern void lua_print_hook(cptr str);
 
 extern int lua_get_new_bounty_monster(int lev);
 
 extern char *lua_input_box(cptr title, int max);
 extern char lua_msg_box(cptr title);
-
-extern list_type *lua_create_list(int size);
-extern void lua_delete_list(list_type *, int size);
-extern void lua_add_to_list(list_type *, int idx, cptr str);
 
 extern void increase_mana(int delta);
 

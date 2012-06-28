@@ -2711,15 +2711,6 @@ struct timer_type
 };
 
 /*
- * This is for lua functions that need to pass table to c functions
- */
-typedef struct list_type list_type;
-struct list_type
-{
-	cptr *list;
-};
-
-/*
  * Abilities
  */
 typedef struct ability_type ability_type;

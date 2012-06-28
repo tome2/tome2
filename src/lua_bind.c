@@ -18,34 +18,6 @@ s16b can_spell_random(s16b spell_idx)
 	return spell_at(spell_idx)->random_type;
 }
 
-magic_power *grab_magic_power(magic_power *m_ptr, int num)
-{
-	return (&m_ptr[num]);
-}
-
-/*
- * Create objects
- */
-object_type *new_object()
-{
-	object_type *o_ptr;
-	MAKE(o_ptr, object_type);
-	return (o_ptr);
-}
-
-void end_object(object_type *o_ptr)
-{
-	FREE(o_ptr, object_type);
-}
-
-char *lua_object_desc(object_type *o_ptr, int pref, int mode)
-{
-	static char buf[150];
-
-	object_desc(buf, o_ptr, pref, mode);
-	return (buf);
-}
-
 /*
  * Monsters
  */
@@ -64,19 +36,6 @@ void find_position(int y, int x, int *yy, int *xx)
 /*
  * Misc
  */
-bool_ get_com_lua(cptr prompt, int *com)
-{
-	char c;
-
-	if (!get_com(prompt, &c)) return (FALSE);
-	*com = c;
-	return (TRUE);
-}
-
-school_type *grab_school_type(s16b num)
-{
-	return (&schools[num]);
-}
 
 /* Change this fct if I want to switch to learnable spells */
 s32b lua_get_level(spell_type *spell, s32b lvl, s32b max, s32b min, s32b bonus)
@@ -217,12 +176,6 @@ s32b lua_spell_device_chance(s32b chance, int level, int base_level)
 	return clamp_failure_chance(chance, minfail);
 }
 
-/* Cave */
-cave_type *lua_get_cave(int y, int x)
-{
-	return (&(cave[y][x]));
-}
-
 void set_target(int y, int x)
 {
 	target_who = -1;
@@ -268,41 +221,6 @@ void load_map(char *name, int *y, int *x)
 	init_flags = INIT_CREATE_DUNGEON;
 	process_dungeon_file(name, y, x, cur_hgt, cur_wid, TRUE, TRUE);
 }
-
-bool_ alloc_room(int by0, int bx0, int ysize, int xsize, int *y1, int *x1, int *y2, int *x2)
-{
-	int xval, yval, x, y;
-
-	/* Try to allocate space for room.  If fails, exit */
-	if (!room_alloc(xsize + 2, ysize + 2, FALSE, by0, bx0, &xval, &yval)) return FALSE;
-
-	/* Get corner values */
-	*y1 = yval - ysize / 2;
-	*x1 = xval - xsize / 2;
-	*y2 = yval + (ysize) / 2;
-	*x2 = xval + (xsize) / 2;
-
-	/* Place a full floor under the room */
-	for (y = *y1 - 1; y <= *y2 + 1; y++)
-	{
-		for (x = *x1 - 1; x <= *x2 + 1; x++)
-		{
-			cave_type *c_ptr = &cave[y][x];
-			cave_set_feat(y, x, floor_type[rand_int(100)]);
-			c_ptr->info |= (CAVE_ROOM);
-			c_ptr->info |= (CAVE_GLOW);
-		}
-	}
-	return TRUE;
-}
-
-
-/* Files */
-void lua_print_hook(cptr str)
-{
-	fprintf(hook_file, "%s", str);
-}
-
 
 /*
  * Finds a good random bounty monster
