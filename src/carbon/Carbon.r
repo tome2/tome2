@@ -258,16 +258,6 @@ resource 'MENU' (129, preload)
 
 	/* its contents */
 	{
-#if 0
-		/* item #1 */
-		"New", noicon, "N", nomark, plain;
-
-		/* item #2 */
-		"Open", noicon, "O", nomark, plain;
-
-		/* item #3 */
-		"Import", noicon, "I", nomark, plain;
-#endif
 		/* item #1 (was #4) */
 		"Close", noicon, "W", nomark, plain;
 

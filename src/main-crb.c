@@ -3119,13 +3119,6 @@ static void term_data_link(int i)
 	td->t->text_hook = Term_text_mac;
 	td->t->pict_hook = Term_pict_mac;
 
-#if 0
-
-	/* Doesn't make big difference? */
-	td->t->never_bored = TRUE;
-
-#endif
-
 	/* Link the local structure */
 	td->t->data = (void *)(td);
 
@@ -3444,25 +3437,6 @@ static void cf_load_prefs()
 		/* Ignore the rest */
 		return;
 	}
-
-#if 0
-
-	/* Check version */
-	if ((pref_major != PREF_VER_MAJOR) ||
-	                (pref_minor != PREF_VER_MINOR) ||
-	                (pref_patch != PREF_VER_PATCH) ||
-	                (pref_extra != PREF_VER_EXTRA))
-	{
-		/* Message */
-		mac_warning(
-		        format("Ignoring %d.%d.%d.%d preferences.",
-		               pref_major, pref_minor, pref_patch, pref_extra));
-
-		/* Ignore */
-		return;
-	}
-
-#endif
 
 	/* Gfx settings */
 	{
@@ -5161,19 +5135,6 @@ static bool_ CheckEvents(bool_ wait)
 	switch (event.what)
 	{
 
-#if 0
-
-	case activateEvt:
-		{
-			w = (WindowPtr)event.message;
-
-			activate(w);
-
-			break;
-		}
-
-#endif
-
 	case updateEvt:
 		{
 			/* Extract the window */
@@ -5494,13 +5455,6 @@ static bool_ CheckEvents(bool_ wait)
 			/* Handle "quit_when_ready" */
 			if (quit_when_ready)
 			{
-#if 0 /* Doesn't work with Aqua well */
-				/* Forget */
-				quit_when_ready = FALSE;
-
-				/* Do the menu key */
-				menu(MenuKey('q'));
-#endif
 				/* Turn off the menus */
 				HiliteMenu(0);
 			}
@@ -5766,18 +5720,9 @@ static void init_stuff(void)
 		/* Display location */
 		dialogOptions.location = topleft;
 
-#if 0
-
-		/* Load the message for the missing folder from the resource fork */
-		/* GetIndString(dialogOptions.message, 128, 1); */
-
-#else
-
 		/* Set the message for the missing folder XXX XXX */
 		strcpy(dialogOptions.message + 1, "Please select the \"lib\" folder");
 		dialogOptions.message[0] = strlen(dialogOptions.message + 1);
-
-#endif
 
 		/* Wait for the user to choose a folder */
 		err = NavChooseFolder(

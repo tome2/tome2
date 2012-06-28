@@ -852,14 +852,6 @@ static void Redisplay(AngbandWidget wnew, XEvent *xev, Region region)
 
 	/* Activate the old term */
 	Term_activate(&old_td->t);
-
-
-#if 0
-	if (XtHasCallbacks((Widget)widget, XtNredrawCallback) == XtCallbackHasSome)
-	{
-		XtCallCallbacks((Widget)widget, XtNredrawCallback, NULL);
-	}
-#endif /* 0 */
 }
 
 

@@ -169,36 +169,6 @@ if ((td)->backing_store) gdk_draw_pixmap( \
 (hgt) * (td)->font_hgt)
 
 
-#if 0
-
-/* Compile time option version */
-
-# ifdef USE_BACKING_STORE
-
-# define TERM_DATA_DRAWABLE(td) (td)->backing_store
-
-# define TERM_DATA_REFRESH(td, x, y, wid, hgt) \
-gdk_draw_pixmap( \
-(td)->drawing_area->window, \
-(td)->gc, \
-(td)->backing_store, \
-(x) * (td)->font_wid, \
-(y) * (td)->font_hgt, \
-(x) * (td)->font_wid, \
-(y) * (td)->font_hgt, \
-(wid) * (td)->font_wid, \
-(hgt) * (td)->font_hgt)
-
-# else /* USE_BACKING_STORE */
-
-# define TERM_DATA_DRAWABLE(td) (td)->drawing_area->window
-# define TERM_DATA_REFRESH(td, x, y, wid, hgt)
-
-# endif  /* USE_BACKING_STORE */
-
-#endif /* 0 */
-
-
 /*
  * An array of "term_data" structures, one for each "sub-window"
  */
@@ -496,41 +466,6 @@ static void gdk_rgb_image_destroy(
 	/* Free the structure */
 	g_free(im);
 }
-
-
-#if 0
-
-/*
- * Unref a GdkRGBImage
- */
-static void gdk_rgb_image_unref(
-        GdkRGBImage *im)
-{
-	/* Paranoia */
-	g_return_if_fail(im != NULL);
-
-	/* Decrease reference count by 1 */
-	im->ref_count--;
-
-	/* Free if nobody's using it */
-	if (im->ref_count <= 0) gdk_rgb_image_destroy(im);
-}
-
-
-/*
- * Reference a GdkRGBImage
- */
-static void gdk_rgb_image_ref(
-        GdkRGBImage *im)
-{
-	/* Paranoia */
-	g_return_if_fail(im != NULL);
-
-	/* Increase reference count by 1 */
-	im->ref_count++;
-}
-
-#endif /* 0 */
 
 
 /*
@@ -1105,36 +1040,6 @@ static void copy_pixels(
 		*dst++ = src[3 * xoffsets[i] + 2];
 	}
 }
-
-
-#if 0
-
-/* 32-bit version: it might be useful in the future */
-static void copy_pixels(
-        int wid,
-        int y,
-        int offset,
-        int *xoffsets,
-        GdkRGBImage *old_image,
-        GdkRGBImage *new_image)
-{
-	int i;
-
-	/* Get source and destination */
-	byte *src = &old_image->image[offset * old_image->width * 4];
-	byte *dst = &new_image->image[y * new_image->width * 4];
-
-	/* Copy to the image */
-	for (i = 0; i < wid; i++)
-	{
-		*dst++ = src[4 * xoffsets[i]];
-		*dst++ = src[4 * xoffsets[i] + 1];
-		*dst++ = src[4 * xoffsets[i] + 2];
-		*dst++ = src[4 * xoffsets[i] + 3];
-	}
-}
-
-#endif
 
 
 /*

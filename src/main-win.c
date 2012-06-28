@@ -1444,28 +1444,6 @@ static void term_data_redraw(term_data *td)
 /*** Function hooks needed by "Term" ***/
 
 
-#if 0
-
-/*
- * Initialize a new Term
- */
-static void Term_init_win(term *t)
-{
-	/* XXX Unused */
-}
-
-
-/*
- * Nuke an old Term
- */
-static void Term_nuke_win(term *t)
-{
-	/* XXX Unused */
-}
-
-#endif
-
-
 /*
  * Interact with the User
  */
@@ -2246,12 +2224,6 @@ static void term_data_link(term_data *td)
 	/* Erase with "white space" */
 	t->attr_blank = TERM_WHITE;
 	t->char_blank = ' ';
-
-#if 0
-	/* Prepare the init/nuke hooks */
-	t->init_hook = Term_init_win;
-	t->nuke_hook = Term_nuke_win;
-#endif
 
 	/* Prepare the template hooks */
 	t->user_hook = Term_user_win;
@@ -3725,15 +3697,6 @@ WPARAM wParam, LPARAM lParam)
 			SetCursor(NULL);
 			return 0;
 		}
-
-#if 0
-	case WM_ACTIVATE:
-		{
-			if (LOWORD(wParam) == WA_INACTIVE) break;
-
-			/* else fall through */
-		}
-#endif
 
 	case WM_LBUTTONDOWN:
 	case WM_MBUTTONDOWN:
