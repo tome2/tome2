@@ -1028,8 +1028,6 @@ int object_power(object_type *o_ptr)
  */
 void object_flags_known(object_type *o_ptr, u32b *f1, u32b *f2, u32b *f3, u32b *f4, u32b *f5, u32b *esp)
 {
-	bool_ spoil = FALSE;
-
 	object_kind *k_ptr = &k_info[o_ptr->k_idx];
 
 	/* Clear */
@@ -1053,23 +1051,13 @@ void object_flags_known(object_type *o_ptr, u32b *f1, u32b *f2, u32b *f3, u32b *
 	(*f5) |= k_ptr->oflags5;
 	(*esp) |= k_ptr->oesp;
 
-#ifdef SPOIL_ARTIFACTS
-	/* Full knowledge for some artifacts */
-	if (artifact_p(o_ptr) || o_ptr->art_name) spoil = TRUE;
-#endif /* SPOIL_ARTIFACTS */
-
-#ifdef SPOIL_EGO_ITEMS
-	/* Full knowledge for some ego-items */
-	if (ego_item_p(o_ptr)) spoil = TRUE;
-#endif /* SPOIL_EGO_ITEMS */
-
 	/* Artifact */
 	if (o_ptr->name1)
 	{
 		artifact_type *a_ptr = &a_info[o_ptr->name1];
 
 		/* Need full knowledge or spoilers */
-		if (spoil || (o_ptr->ident & IDENT_MENTAL))
+		if ((o_ptr->ident & IDENT_MENTAL))
 		{
 			(*f1) = a_ptr->flags1;
 			(*f2) = a_ptr->flags2;
@@ -1098,7 +1086,7 @@ void object_flags_known(object_type *o_ptr, u32b *f1, u32b *f2, u32b *f3, u32b *
 	if (o_ptr->art_flags1 || o_ptr->art_flags2 || o_ptr->art_flags3 || o_ptr->art_flags4 || o_ptr->art_flags5 || o_ptr->art_esp)
 	{
 		/* Need full knowledge or spoilers */
-		if (spoil || (o_ptr->ident & IDENT_MENTAL))
+		if ((o_ptr->ident & IDENT_MENTAL))
 		{
 			(*f1) |= o_ptr->art_flags1;
 			(*f2) |= o_ptr->art_flags2;
