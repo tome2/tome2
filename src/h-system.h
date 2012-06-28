@@ -18,18 +18,14 @@
 #include <ctype.h>
 #include <errno.h>
 
-#if defined(NeXT)
-# include <libc.h>
-#else
-# include <stdlib.h>
-#endif
+#include <stdlib.h>
 
 
 #ifdef SET_UID
 
 # include <sys/types.h>
 
-# if defined(Pyramid) || defined(NeXT) || defined(SUNOS) || \
+# if defined(Pyramid) || defined(SUNOS) || \
      defined(NCR3K) || defined(SUNOS) || defined(ibm032) || \
      defined(__osf__) || defined(ISC) || defined(SGI) || \
      defined(linux)
@@ -65,7 +61,7 @@
 #endif
 
 
-#if !defined(NeXT) && !defined(__MWERKS__)
+#if !defined(__MWERKS__)
 # include <fcntl.h>
 #endif
 

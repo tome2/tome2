@@ -198,44 +198,6 @@ void init_file_paths(char *path)
 	/* Build a path name */
 	strcpy(tail, "xtra");
 	ANGBAND_DIR_XTRA = string_make(path);
-
-#ifdef NeXT
-
-	/* Allow "fat binary" usage with NeXT */
-	if (TRUE)
-	{
-		cptr next = NULL;
-
-# if defined(m68k)
-		next = "m68k";
-# endif
-
-# if defined(i386)
-		next = "i386";
-# endif
-
-# if defined(sparc)
-		next = "sparc";
-# endif
-
-# if defined(hppa)
-		next = "hppa";
-# endif
-
-		/* Use special directory */
-		if (next)
-		{
-			/* Forget the old path name */
-			string_free(ANGBAND_DIR_DATA);
-
-			/* Build a new path name */
-			sprintf(tail, "data-%s", next);
-			ANGBAND_DIR_DATA = string_make(path);
-		}
-	}
-
-#endif /* NeXT */
-
 }
 
 
