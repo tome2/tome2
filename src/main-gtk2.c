@@ -44,11 +44,6 @@
  * z-virt macro names. Find C_FREE/C_KILL and replace them
  * with FREE/KILL, which takes one pointer parameter.
  *
- * [Z]-based variants (Gum and Cth, for example) usually need
- * ANG293_COMPAT, ANG291_COMPAT.
- *
- * [O] needs ANG293_COMPAT and ZANG_SAVE_GAME.
- *
  * ZAngband has its own enhanced main-gtk.c as mentioned above, and
  * you *should* use it :-)
  *
@@ -56,7 +51,6 @@
 #define TOME
 
 #ifdef TOME
-# define ANG293_COMPAT	/* Requires V2.9.3 compatibility code */
 # define ANG291_COMPAT	/* Requires V2.9.1 compatibility code */
 # define SAVEFILE_SCREEN	/* New/Open integrated into the game */
 # define USE_DOUBLE_TILES	/* Mogami's bigtile patch */
@@ -82,14 +76,6 @@
 #ifndef NAME_MAX
 #define	NAME_MAX	_POSIX_NAME_MAX
 #endif
-
-
-/*
- * Include some helpful X11 code.
- */
-#ifndef ANG293_COMPAT
-# include "maid-x11.h"
-#endif /* !ANG293_COMPAT */
 
 
 /*
@@ -255,8 +241,6 @@ static bool_ use_backing_store = TRUE;
 
 /**** Vanilla compatibility functions ****/
 
-#ifdef ANG293_COMPAT
-
 /*
  * Look up some environment variables to find font name for each window.
  */
@@ -303,8 +287,6 @@ static void cleanup_angband(void)
  * New global flag to indicate if it's safe to save now
  */
 #define can_save TRUE
-
-#endif /* ANG293_COMPAT */
 
 
 #ifdef ANG291_COMPAT
