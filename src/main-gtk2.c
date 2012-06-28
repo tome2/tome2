@@ -51,7 +51,6 @@
 #define TOME
 
 #ifdef TOME
-# define SAVEFILE_SCREEN	/* New/Open integrated into the game */
 # define USE_DOUBLE_TILES	/* Mogami's bigtile patch */
 #endif /* TOME */
 
@@ -269,18 +268,6 @@ static cptr get_default_font(int term)
 	return (font_name);
 }
 
-
-# ifndef SAVEFILE_SCREEN
-
-/*
- * In [V]2.9.3, this frees all dynamically allocated memory
- */
-static void cleanup_angband(void)
-{
-	/* XXX XXX XXX */
-}
-
-# endif  /* !SAVEFILE_SCREEN */
 
 /*
  * New global flag to indicate if it's safe to save now
@@ -3149,41 +3136,6 @@ static void destroy_sub_event_handler(
 }
 
 
-#ifndef SAVEFILE_SCREEN
-
-/*
- * Process File-New menu command
- */
-static void new_event_handler(
-        gpointer user_data,
-		guint user_action,
-        GtkWidget *was_clicked)
-{
-	if (game_in_progress)
-	{
-		plog("You can't start a new game while you're still playing!");
-		return;
-	}
-
-	/* The game is in progress */
-	game_in_progress = TRUE;
-
-	/* Flush input */
-	Term_flush();
-
-	/* Play game */
-	play_game(TRUE);
-
-	/* Houseclearing */
-	cleanup_angband();
-
-	/* Done */
-	quit(NULL);
-}
-
-#endif /* !SAVEFILE_SCREEN */
-
-
 /*
  * Load fond specified by an XLFD fontname and
  * set up related term_data members
@@ -3414,92 +3366,6 @@ static void change_trans_mode_event_handler(
 }
 
 #endif /* USE_GRAPHICS */
-
-
-#ifndef SAVEFILE_SCREEN
-
-/*
- * Caution: Modal or not, callbacks are called by gtk_main(),
- * so this is the right place to start a game.
- */
-static void file_ok_callback(
-        GtkWidget *widget,
-        GtkWidget *file_selector)
-{
-	strcpy(savefile,
-	       gtk_file_selection_get_filename(GTK_FILE_SELECTION(file_selector)));
-
-	gtk_widget_destroy(file_selector);
-
-	/* game is in progress */
-	game_in_progress = TRUE;
-
-	/* Flush input */
-	Term_flush();
-
-	/* Play game */
-	play_game(FALSE);
-
-	/* Free memory allocated by game */
-	cleanup_angband();
-
-	/* Done */
-	quit(NULL);
-}
-
-
-/*
- * Process File-Open menu command
- */
-static void open_event_handler(
-        gpointer user_data,
-		guint user_action,
-        GtkWidget *was_clicked)
-{
-	GtkWidget *file_selector;
-	char buf[1024];
-
-
-	if (game_in_progress)
-	{
-		plog("You can't open a new game while you're still playing!");
-		return;
-	}
-
-	/* Prepare the savefile path */
-	path_build(buf, 1024, ANGBAND_DIR_SAVE, "*");
-
-	file_selector = gtk_file_selection_new("Select a savefile");
-	gtk_file_selection_set_filename(
-	        GTK_FILE_SELECTION(file_selector),
-	        buf);
-	gtk_signal_connect(
-	        GTK_OBJECT(GTK_FILE_SELECTION(file_selector)->ok_button),
-	        "clicked",
-	        file_ok_callback,
-	        (gpointer)file_selector);
-
-	/*
-	 * Ensure that the dialog box is destroyed when the user
-	 * clicks a button.
-	 */
-	gtk_signal_connect_object(
-	        GTK_OBJECT(GTK_FILE_SELECTION(file_selector)->ok_button),
-	        "clicked",
-	        GTK_SIGNAL_FUNC(gtk_widget_destroy),
-	        (gpointer)file_selector);
-
-	gtk_signal_connect_object(
-	        GTK_OBJECT(GTK_FILE_SELECTION(file_selector)->cancel_button),
-	        "clicked",
-	        GTK_SIGNAL_FUNC(gtk_widget_destroy),
-	        (gpointer)file_selector);
-
-	gtk_window_set_modal(GTK_WINDOW(file_selector), TRUE);
-	gtk_widget_show(GTK_WIDGET(file_selector));
-}
-
-#endif /* !SAVEFILE_SCREEN */
 
 
 /*
@@ -3935,14 +3801,6 @@ static GtkItemFactoryEntry main_menu_items[] =
 	{ "/File", NULL,
 	  NULL, 0, "<Branch>", NULL
 	},
-#ifndef SAVEFILE_SCREEN
-	{ "/File/New", "<mod1>N",
-	  new_event_handler, 0, NULL, NULL },
-	{ "/File/Open", "<mod1>O",
-	  open_event_handler, 0, NULL, NULL },
-	{ "/File/sep1", NULL,
-	  NULL, 0, "<Separator>", NULL },
-#endif /* !SAVEFILE_SCREEN */
 	{ "/File/Save", "<mod1>S",
 	  save_event_handler, 0, NULL, NULL },
 	{ "/File/Quit", "<mod1>Q",
@@ -4222,17 +4080,7 @@ static void file_menu_update_handler(
         GtkWidget *widget,
         gpointer user_data)
 {
-#ifndef SAVEFILE_SCREEN
-	bool_ game_start_ok;
-#endif /* !SAVEFILE_SCREEN */
 	bool_ save_ok, quit_ok;
-
-#ifndef SAVEFILE_SCREEN
-
-	/* Can we start a game now? */
-	game_start_ok = !game_in_progress;
-
-#endif /* !SAVEFILE_SCREEN */
 
 	/* Cave we save/quit now? */
 	if (!character_generated || !game_in_progress)
@@ -4247,10 +4095,6 @@ static void file_menu_update_handler(
 	}
 
 	/* Enable / disable menu items according to those conditions */
-#ifndef SAVEFILE_SCREEN
-	enable_menu_item("<Angband>/File/New", game_start_ok);
-	enable_menu_item("<Angband>/File/Open", game_start_ok);
-#endif /* !SAVEFILE_SCREEN */
 	enable_menu_item("<Angband>/File/Save", save_ok);
 	enable_menu_item("<Angband>/File/Quit", quit_ok);
 }
@@ -4776,47 +4620,11 @@ errr init_gtk2(int argc, char **argv)
 	/* Activate the "Angband" window screen */
 	Term_activate(&data[0].t);
 
-#ifndef SAVEFILE_SCREEN
-
-	/* Set the system suffix */
-	ANGBAND_SYS = "gtk";
-
-	/* Catch nasty signals */
-	signals_init();
-
-	/* Initialize */
-	init_angband();
-
-	/* Hack - because this port has New/Open menus XXX */
-	savefile[0] = '\0';
-
-	/* Prompt the user */
-	prt("[Choose 'New' or 'Open' from the 'File' menu]", 23, 17);
-	Term_fresh();
-
-	/* Activate more hook */
-	plog_aux = hook_plog;
-
-
-	/* Processing loop */
-	gtk_main();
-
-
-	/* Free allocated memory */
-	cleanup_angband();
-
-	/* Stop now */
-	quit(NULL);
-
-#else /* !SAVEFILE_SCREEN */
-
 	/* Activate more hook */
 	plog_aux = hook_plog;
 
 	/* It's too early to set this, but cannot do so elsewhere XXX XXX */
 	game_in_progress = TRUE;
-
-#endif /* !SAVEFILE_SCREEN */
 
 	/* Success */
 	return (0);

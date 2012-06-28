@@ -139,8 +139,6 @@
  *
  *   MBAR 128 = array of MENU id's (128, 129, 130, 131, 132, 133, 134)
  *   MENU 128 = apple (about, -, ...)
- *   MENU 129 = File (new, open, close, save, -, score, quit)
- *     (If SAVEFILE_SCREEN is defined)
  *   MENU 129 = File (close, save, -, score, quit)
  *   MENU 130 = Edit (undo, -, cut, copy, paste, clear)
  *   MENU 131 = Font (bold, wide, -)
@@ -555,7 +553,6 @@ static bool_ check_create_user_dir(void)
  *
  * #define ALLOW_BIG_SCREEN (V, Ey, O, T.o.M.E., and Z.  Dr's big screen needs
  * more work.  New S one is too idiosyncratic...)
- * #define SAVEFILE_SCREEN (T.o.M.E.)
  * #define HAS_SCORE_MENU (V and T.o.M.E.)
  * #define ANGBAND_CREATOR four letter code for your variant, if any.
  * or use the default one.
@@ -566,7 +563,6 @@ static bool_ check_create_user_dir(void)
  */
 
 #define USE_DOUBLE_TILES
-#define SAVEFILE_SCREEN
 #define ALLOW_BIG_SCREEN
 #define HAS_SCORE_MENU
 #define ANGBAND_CREATOR 'PrnA'
@@ -3667,195 +3663,6 @@ static void save_pref_file(void)
 }
 
 
-
-
-#ifndef SAVEFILE_SCREEN
-
-/*
- * Prepare savefile dialogue and set the variable
- * savefile accordingly. Returns true if it succeeds, false (or
- * aborts) otherwise. If all is false, only allow files whose type
- * is 'SAVE'.
- * Originally written by Peter Ammon
- */
-static bool_ select_savefile(bool_ all)
-{
-	OSErr err;
-	FSSpec theFolderSpec;
-	FSSpec savedGameSpec;
-	NavDialogOptions dialogOptions;
-	NavReplyRecord reply;
-	/* Used only when 'all' is true */
-	NavTypeList types = {ANGBAND_CREATOR, 1, 1, {'SAVE'}};
-	NavTypeListHandle myTypeList;
-	AEDesc defaultLocation;
-
-#ifdef MACH_O_CARBON
-
-	/* Find the save folder */
-	err = path_to_spec(ANGBAND_DIR_SAVE, &theFolderSpec);
-
-#else
-
-	/* Find :lib:save: folder */
-	err = FSMakeFSSpec(
-	              app_vol,
-	              app_dir,
-	              "\p:lib:save:",
-	              &theFolderSpec);
-
-#endif
-
-	/* Oops */
-	if (err != noErr) quit("Unable to find the folder :lib:save:");
-
-	/* Get default Navigator dialog options */
-	err = NavGetDefaultDialogOptions(&dialogOptions);
-
-	/* Clear preview option */
-	dialogOptions.dialogOptionFlags &= ~kNavAllowPreviews;
-
-	/* Disable multiple file selection */
-	dialogOptions.dialogOptionFlags &= ~kNavAllowMultipleFiles;
-
-	/* Make descriptor for default location */
-	err = AECreateDesc(
-	              typeFSS,
-	              &theFolderSpec,
-	              sizeof(FSSpec),
-	              &defaultLocation);
-
-	/* Oops */
-	if (err != noErr) quit("Unable to allocate descriptor");
-
-	/* We are indifferent to signature and file types */
-	if (all)
-	{
-		myTypeList = (NavTypeListHandle)nil;
-	}
-
-	/* Set up type handle */
-	else
-	{
-		err = PtrToHand(&types, (Handle *) & myTypeList, sizeof(NavTypeList));
-
-		/* Oops */
-		if (err != noErr) quit("Error in PtrToHand. Try enlarging heap");
-
-	}
-
-	/* Call NavGetFile() with the types list */
-	err = NavChooseFile(
-	              &defaultLocation,
-	              &reply,
-	              &dialogOptions,
-	              nil,
-	              nil,
-	              nil,
-	              myTypeList,
-	              nil);
-
-	/* Free type list */
-	DisposeHandle((Handle)myTypeList);
-
-	/* Invalid response -- allow the user to cancel */
-	if (!reply.validRecord) return (FALSE);
-
-	/* Retrieve FSSpec from the reply */
-	if (err == noErr)
-	{
-		AEKeyword theKeyword;
-		DescType actualType;
-		Size actualSize;
-
-		/* Get a pointer to selected file */
-		(void)AEGetNthPtr(
-		        &reply.selection,
-		        1,
-		        typeFSS,
-		        &theKeyword,
-		        &actualType,
-		        &savedGameSpec,
-		        sizeof(FSSpec),
-		        &actualSize);
-
-		/* Dispose NavReplyRecord, resources and descriptors */
-		(void)NavDisposeReply(&reply);
-	}
-
-	/* Dispose location info */
-	AEDisposeDesc(&defaultLocation);
-
-#ifdef MACH_O_CARBON
-
-	/* Convert FSSpec to pathname and store it in variable savefile */
-	(void)spec_to_path(&savedGameSpec, savefile, sizeof(savefile));
-
-#else
-
-	/* Convert FSSpec to pathname and store it in variable savefile */
-	refnum_to_name(
-	        savefile,
-	        savedGameSpec.parID,
-	        savedGameSpec.vRefNum,
-	        (char *)savedGameSpec.name);
-
-#endif
-
-	/* Success */
-	return (TRUE);
-}
-
-
-/*
- * Handle menu: "File" + "New"
- */
-static void do_menu_file_new(void)
-{
-	/* Hack */
-	HiliteMenu(0);
-
-	/* Game is in progress */
-	game_in_progress = 1;
-
-	/* Flush input */
-	Term_flush();
-
-	/* Play a game */
-	play_game(TRUE);
-
-	/* Hack -- quit */
-	quit(NULL);
-}
-
-
-/*
- * Handle menu: "File" + "Open" /  "Import"
- */
-static void do_menu_file_open(bool_ all)
-{
-	/* Let the player to choose savefile */
-	if (!select_savefile(all)) return;
-
-	/* Hack */
-	HiliteMenu(0);
-
-	/* Game is in progress */
-	game_in_progress = 1;
-
-	/* Flush input */
-	flush();
-
-	/* Play a game */
-	play_game(FALSE);
-
-	/* Hack -- quit */
-	quit(NULL);
-}
-
-#endif /* !SAVEFILE_SCREEN */
-
-
 /*
  * Handle the "open_when_ready" flag
  */
@@ -3876,12 +3683,8 @@ static void handle_open_when_ready(void)
 		/* Flush input */
 		flush();
 
-#ifdef SAVEFILE_SCREEN
-
 		/* User double-clicked savefile; no savefile screen */
 		no_begin_screen = TRUE;
-
-#endif /* SAVEFILE_SCREEN */
 
 		/* Play a game */
 		play_game(FALSE);
@@ -3900,8 +3703,6 @@ static void handle_open_when_ready(void)
  * The standard menus are:
  *
  *   Apple (128) =   { About, -, ... }
- *   File (129) =    { New,Open,Import,Close,Save,-,Score,Quit }
- *     (If SAVEFILE_SCREEN is defined, this becomes)
  *   File (129) =    { Close,Save,-,Score,Quit }
  *   Edit (130) =    { Cut, Copy, Paste, Clear }   (?)
  *   Font (131) =    { Bold, Extend, -, Monaco, ..., -, ... }
@@ -3918,28 +3719,14 @@ static void handle_open_when_ready(void)
 
 /* File menu */
 #define MENU_FILE	129
-#ifndef SAVEFILE_SCREEN
-# define ITEM_NEW	1
-# define ITEM_OPEN	2
-# define ITEM_IMPORT	3
-# define ITEM_CLOSE	4
-# define ITEM_SAVE	5
-# ifdef HAS_SCORE_MENU
-# define ITEM_SCORE 7
-# define ITEM_QUIT	8
-# else
-# define ITEM_QUIT	7
-# endif  /* HAS_SCORE_MENU */
-#else /* !SAVEFILE_SCREEN - in-game savefile menu */
-# define ITEM_CLOSE	1
-# define ITEM_SAVE	2
-# ifdef HAS_SCORE_MENU
-# define ITEM_SCORE 4
-# define ITEM_QUIT	5
-# else
-# define ITEM_QUIT	4
-# endif  /* HAS_SCORE_MENU */
-#endif /* !SAVEFILE_SCREEN */
+#define ITEM_CLOSE	1
+#define ITEM_SAVE	2
+#ifdef HAS_SCORE_MENU
+#define ITEM_SCORE	4
+#define ITEM_QUIT	5
+#else
+#define ITEM_QUIT	4
+#endif  /* HAS_SCORE_MENU */
 
 /* Edit menu */
 #define MENU_EDIT	130
@@ -4307,18 +4094,6 @@ static void setup_menus(void)
 		DisableMenuItem(m, i);
 		CheckMenuItem(m, i, FALSE);
 	}
-
-#ifndef SAVEFILE_SCREEN
-
-	/* Enable "new"/"open..."/"import..." */
-	if (initialized && !game_in_progress)
-	{
-		EnableMenuItem(m, ITEM_NEW);
-		EnableMenuItem(m, ITEM_OPEN);
-		EnableMenuItem(m, ITEM_IMPORT);
-	}
-
-#endif /* !SAVEFILE_SCREEN */
 
 	/* Enable "close" */
 	if (initialized)
@@ -4712,30 +4487,6 @@ static void menu(long mc)
 		{
 			switch (selection)
 			{
-#ifndef SAVEFILE_SCREEN
-
-				/* New */
-			case ITEM_NEW:
-				{
-					do_menu_file_new();
-					break;
-				}
-
-				/* Open... */
-			case ITEM_OPEN:
-				{
-					do_menu_file_open(FALSE);
-					break;
-				}
-
-				/* Import... */
-			case ITEM_IMPORT:
-				{
-					do_menu_file_open(TRUE);
-					break;
-				}
-
-#endif /* !SAVEFILE_SCREEN */
 
 				/* Close */
 			case ITEM_CLOSE:
@@ -6244,19 +5995,6 @@ int main(void)
 	/* Handle "open_when_ready" */
 	handle_open_when_ready();
 
-#ifndef SAVEFILE_SCREEN
-
-	/* Prompt the user - You may have to change this for some variants */
-	prt("[Choose 'New' or 'Open' from the 'File' menu]", 23, 15);
-
-	/* Flush the prompt */
-	Term_fresh();
-
-	/* Hack -- Process Events Forever */
-	while (TRUE) CheckEvents(TRUE);
-
-#else
-
 	/* Game is in progress */
 	game_in_progress = 1;
 
@@ -6274,7 +6012,6 @@ int main(void)
 
 	/* Since it's a int function */
 	return (0);
-#endif /* !SAVEFILE_SCREEN */
 }
 
 #endif /* MACINTOSH || MACH_O_CARBON */
