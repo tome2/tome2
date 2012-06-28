@@ -3,6 +3,11 @@
 #ifndef INCLUDED_H_TYPE_H
 #define INCLUDED_H_TYPE_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 /*
  * Basic "types".
  *
@@ -179,6 +184,10 @@ typedef uint	(*func_hsh)(vptr, uint);
 typedef vptr	(*func_key)(vptr);
 
 
+
+#ifdef __cplusplus
+} // extern "C"
+#endif
 
 #endif
 
