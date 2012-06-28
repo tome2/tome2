@@ -122,11 +122,6 @@
  */
 #include "maid-x11.c"
 
-/*
- * Hack -- avoid some compiler warnings
- */
-#define IGNORE_UNUSED_FUNCTIONS
-
 
 /*
  * Notes on Colors:
@@ -406,14 +401,8 @@ Infowin_init_dad(D,X,Y,W,H,B,Metadpy->fg,Metadpy->bg)
 #define Infoclr_init_ppo(F,B,O,M) \
 Infoclr_init_data(F,B,O,M)
 
-#define Infoclr_init_cco(F,B,O,M) \
-Infoclr_init_ppo(Infoclr_Pixell(F),Infoclr_Pixell(B),O,M)
-
 #define Infoclr_init_ppn(F,B,O,M) \
 Infoclr_init_ppo(F,B,Infoclr_Opcode(O),M)
-
-#define Infoclr_init_ccn(F,B,O,M) \
-Infoclr_init_cco(F,B,Infoclr_Opcode(O),M)
 
 
 /* Set the current infofnt */
@@ -615,36 +604,6 @@ static errr Metadpy_init_2(Display *dpy, cptr name)
 }
 
 
-#ifndef IGNORE_UNUSED_FUNCTIONS
-
-/*
- * Nuke the current metadpy
- */
-static errr Metadpy_nuke(void)
-{
-	metadpy *m = Metadpy;
-
-
-	/* If required, Free the Display */
-	if (m->nuke)
-	{
-		/* Close the Display */
-		XCloseDisplay(m->dpy);
-
-		/* Forget the Display */
-		m->dpy = (Display*)(NULL);
-
-		/* Do not nuke it again */
-		m->nuke = 0;
-	}
-
-	/* Return Success */
-	return (0);
-}
-
-#endif /* IGNORE_UNUSED_FUNCTIONS */
-
-
 /*
  * General Flush/ Sync/ Discard routine
  */
@@ -690,45 +649,6 @@ static errr Infowin_set_name(cptr name)
 }
 
 
-#ifndef IGNORE_UNUSED_FUNCTIONS
-
-/*
- * Set the icon name of Infowin
- */
-static errr Infowin_set_icon_name(cptr name)
-{
-	Status st;
-	XTextProperty tp;
-	char buf[128];
-	char *bp = buf;
-	strcpy(buf, name);
-	st = XStringListToTextProperty(&bp, 1, &tp);
-	if (st) XSetWMIconName(Metadpy->dpy, Infowin->win, &tp);
-	return (0);
-}
-
-
-/*
- * Nuke Infowin
- */
-static errr Infowin_nuke(void)
-{
-	infowin *iwin = Infowin;
-
-	/* Nuke if requested */
-	if (iwin->nuke)
-	{
-		/* Destory the old window */
-		XDestroyWindow(Metadpy->dpy, iwin->win);
-	}
-
-	/* Success */
-	return (0);
-}
-
-#endif /* IGNORE_UNUSED_FUNCTIONS */
-
-
 /*
  * Prepare a new 'infowin'.
  */
@@ -767,26 +687,6 @@ static errr Infowin_prepare(Window xid)
 	/* Success */
 	return (0);
 }
-
-
-#ifndef IGNORE_UNUSED_FUNCTIONS
-
-/*
- * Initialize a new 'infowin'.
- */
-static errr Infowin_init_real(Window xid)
-{
-	/* Wipe it clean */
-	(void)WIPE(Infowin, infowin);
-
-	/* Start out non-nukable */
-	Infowin->nuke = 0;
-
-	/* Attempt to Prepare ourself */
-	return (Infowin_prepare(xid));
-}
-
-#endif /* IGNORE_UNUSED_FUNCTIONS */
 
 
 /*
@@ -880,23 +780,6 @@ static errr Infowin_map(void)
 }
 
 
-#ifndef IGNORE_UNUSED_FUNCTIONS
-
-/*
- * Request that Infowin be unmapped
- */
-static errr Infowin_unmap(void)
-{
-	/* Execute the Un-Mapping */
-	XUnmapWindow(Metadpy->dpy, Infowin->win);
-
-	/* Success */
-	return (0);
-}
-
-#endif /* IGNORE_UNUSED_FUNCTIONS */
-
-
 /*
  * Request that Infowin be raised
  */
@@ -908,23 +791,6 @@ static errr Infowin_raise(void)
 	/* Success */
 	return (0);
 }
-
-
-#ifndef IGNORE_UNUSED_FUNCTIONS
-
-/*
- * Request that Infowin be lowered
- */
-static errr Infowin_lower(void)
-{
-	/* Lower towards invisibility */
-	XLowerWindow(Metadpy->dpy, Infowin->win);
-
-	/* Success */
-	return (0);
-}
-
-#endif /* IGNORE_UNUSED_FUNCTIONS */
 
 
 /*
@@ -940,23 +806,6 @@ static errr Infowin_impell(int x, int y)
 }
 
 
-#ifndef IGNORE_UNUSED_FUNCTIONS
-
-/*
- * Move and Resize an infowin
- */
-static errr Infowin_locate(int x, int y, int w, int h)
-{
-	/* Execute the request */
-	XMoveResizeWindow(Metadpy->dpy, Infowin->win, x, y, w, h);
-
-	/* Success */
-	return (0);
-}
-
-#endif /* IGNORE_UNUSED_FUNCTIONS */
-
-
 /*
  * Visually clear Infowin
  */
@@ -968,24 +817,6 @@ static errr Infowin_wipe(void)
 	/* Success */
 	return (0);
 }
-
-
-#ifndef IGNORE_UNUSED_FUNCTIONS
-
-/*
- * Visually Paint Infowin with the current color
- */
-static errr Infowin_fill(void)
-{
-	/* Execute the request */
-	XFillRectangle(Metadpy->dpy, Infowin->win, Infoclr->gc,
-	               0, 0, Infowin->w, Infowin->h);
-
-	/* Success */
-	return (0);
-}
-
-#endif /* IGNORE_UNUSED_FUNCTIONS */
 
 
 /*
@@ -1048,109 +879,6 @@ static int Infoclr_Opcode(cptr str)
 	/* The code was not found, return -1 */
 	return ( -1);
 }
-
-
-#ifndef IGNORE_UNUSED_FUNCTIONS
-
-/*
- * Request a Pixell by name.  Note: uses 'Metadpy'.
- *
- * Inputs:
- *      name: The name of the color to try to load (see below)
- *
- * Output:
- *	The Pixell value that metched the given name
- *	'Metadpy->fg' if the name was unparseable
- *
- * Valid forms for 'name':
- *	'fg', 'bg', 'zg', '<name>' and '#<code>'
- */
-static Pixell Infoclr_Pixell(cptr name)
-{
-	XColor scrn;
-
-	/* Attempt to Parse the name */
-	if (name && name[0])
-	{
-		/* The 'bg' color is available */
-		if (streq(name, "bg")) return (Metadpy->bg);
-
-		/* The 'fg' color is available */
-		if (streq(name, "fg")) return (Metadpy->fg);
-
-		/* The 'zg' color is available */
-		if (streq(name, "zg")) return (Metadpy->zg);
-
-		/* The 'white' color is available */
-		if (streq(name, "white")) return (Metadpy->white);
-
-		/* The 'black' color is available */
-		if (streq(name, "black")) return (Metadpy->black);
-
-		/* Attempt to parse 'name' into 'scrn' */
-		if (!(XParseColor(Metadpy->dpy, Metadpy->cmap, name, &scrn)))
-		{
-			plog_fmt("Warning: Couldn't parse color '%s'\n", name);
-		}
-
-		/* Attempt to Allocate the Parsed color */
-		if (!(XAllocColor(Metadpy->dpy, Metadpy->cmap, &scrn)))
-		{
-			plog_fmt("Warning: Couldn't allocate color '%s'\n", name);
-		}
-
-		/* The Pixel was Allocated correctly */
-		else return (scrn.pixel);
-	}
-
-	/* Warn about the Default being Used */
-	plog_fmt("Warning: Using 'fg' for unknown color '%s'\n", name);
-
-	/* Default to the 'Foreground' color */
-	return (Metadpy->fg);
-}
-
-
-/*
- * Initialize a new 'infoclr' with a real GC.
- */
-static errr Infoclr_init_1(GC gc)
-{
-	infoclr *iclr = Infoclr;
-
-	/* Wipe the iclr clean */
-	(void)WIPE(iclr, infoclr);
-
-	/* Assign the GC */
-	iclr->gc = gc;
-
-	/* Success */
-	return (0);
-}
-
-
-/*
- * Nuke an old 'infoclr'.
- */
-static errr Infoclr_nuke(void)
-{
-	infoclr *iclr = Infoclr;
-
-	/* Deal with 'GC' */
-	if (iclr->nuke)
-	{
-		/* Free the GC */
-		XFreeGC(Metadpy->dpy, iclr->gc);
-	}
-
-	/* Forget the current */
-	Infoclr = (infoclr*)(NULL);
-
-	/* Success */
-	return (0);
-}
-
-#endif /* IGNORE_UNUSED_FUNCTIONS */
 
 
 /*
@@ -1262,36 +990,6 @@ static errr Infoclr_change_fg(Pixell fg)
 
 
 
-#ifndef IGNORE_UNUSED_FUNCTIONS
-
-/*
- * Nuke an old 'infofnt'.
- */
-static errr Infofnt_nuke(void)
-{
-	infofnt *ifnt = Infofnt;
-
-	/* Deal with 'name' */
-	if (ifnt->name)
-	{
-		/* Free the name */
-		string_free(ifnt->name);
-	}
-
-	/* Nuke info if needed */
-	if (ifnt->nuke)
-	{
-		/* Free the font */
-		XFreeFont(Metadpy->dpy, ifnt->info);
-	}
-
-	/* Success */
-	return (0);
-}
-
-#endif /* IGNORE_UNUSED_FUNCTIONS */
-
-
 /*
  * Prepare a new 'infofnt'
  */
@@ -1320,26 +1018,6 @@ static errr Infofnt_prepare(XFontStruct *info)
 	/* Success */
 	return (0);
 }
-
-
-#ifndef IGNORE_UNUSED_FUNCTIONS
-
-/*
- * Initialize a new 'infofnt'.
- */
-static errr Infofnt_init_real(XFontStruct *info)
-{
-	/* Wipe the thing */
-	(void)WIPE(Infofnt, infofnt);
-
-	/* No nuking */
-	Infofnt->nuke = 0;
-
-	/* Attempt to prepare it */
-	return (Infofnt_prepare(info));
-}
-
-#endif /* IGNORE_UNUSED_FUNCTIONS */
 
 
 /*
