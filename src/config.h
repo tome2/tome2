@@ -220,11 +220,6 @@
 
 
 
-/* Wizard mode testing options: */
-
-/* For testing the vaults */
-/* # define FORCE_V_IDX 20 */
-
 /*
  * Allow makefiles to override the default file mode
  */

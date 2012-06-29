@@ -3813,10 +3813,6 @@ static void build_type7(int by0, int bx0)
 	}
 
 
-#ifdef FORCE_V_IDX
-	v_ptr = &v_info[FORCE_V_IDX];
-#endif
-
 	/* Message */
 	if (cheat_room || p_ptr->precognition) msg_print("Lesser Vault");
 
@@ -3872,10 +3868,6 @@ static void build_type8(int by0, int bx0)
 		return;
 	}
 
-
-#ifdef FORCE_V_IDX
-	v_ptr = &v_info[FORCE_V_IDX];
-#endif
 
 	/* Message */
 	if (cheat_room || p_ptr->precognition) msg_print("Greater Vault");
@@ -6859,10 +6851,7 @@ bool_ level_generate_dungeon()
 			/* Attempt a very unusual room */ /* test hack */
 			if (ironman_rooms || (rand_int(DUN_UNUSUAL) < dun_level))
 			{
-#ifdef FORCE_V_IDX
-				if (room_build(y, x, 8)) continue;
-#else
-/* Type 8 -- Greater vault (10%) */
+				/* Type 8 -- Greater vault (10%) */
 				if (k < 10)
 				{
 					if (max_vault_ok > 1)
@@ -6897,7 +6886,6 @@ bool_ level_generate_dungeon()
 
 				/* Type 11 -- Random vault (5%) */
 				if ((k < 60) && room_build(y, x, 11)) continue;
-#endif
 			}
 
 			/* Type 4 -- Large room (25%) */
