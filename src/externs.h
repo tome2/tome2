@@ -2344,8 +2344,6 @@ extern s32b get_power(s32b s);
 extern s32b spell_chance(s32b s);
 extern s32b get_level(s32b s, s32b max, s32b min);
 extern void get_level_school(s32b s, s32b max, s32b min, s32b *level, bool_ *na);
-extern s32b lua_spell_chance(s32b chance, int level, int skill_level, int mana, int cur_mana, int stat);
-extern s32b lua_spell_device_chance(s32b chance, int level, int base_level);
 
 extern s32b get_level_max_stick;
 extern s32b get_level_use_stick;

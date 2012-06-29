@@ -107,10 +107,56 @@ s32b spell_chance(s32b s)
 	int level = get_level(s, 50, 1);
 
 	/* Extract the base spell failure rate */
-	if (get_level_use_stick > -1) {
-		return lua_spell_device_chance(s_ptr->failure_rate, level, s_ptr->skill_level);
-	} else {
-		return lua_spell_chance(s_ptr->failure_rate, level, s_ptr->skill_level, get_mana(s), get_power(s), s_ptr->casting_stat);
+	if (get_level_use_stick > -1)
+	{
+		int minfail;
+		s32b chance = s_ptr->failure_rate;
+
+		/* Reduce failure rate by "effective" level adjustment */
+		chance -= (level - 1);
+
+		/* Extract the minimum failure rate */
+		minfail = 15 - get_skill_scale(SKILL_DEVICE, 25);
+
+		/* Return the chance */
+		return clamp_failure_chance(chance, minfail);
+	}
+	else
+	{
+		s32b chance = s_ptr->failure_rate;
+		int mana = get_mana(s);
+		int cur_mana = get_power(s);
+		int stat = s_ptr->casting_stat;
+		int stat_ind = p_ptr->stat_ind[stat];
+		int minfail;
+
+		/* Reduce failure rate by "effective" level adjustment */
+		chance -= 3 * (level - 1);
+
+		/* Reduce failure rate by INT/WIS adjustment */
+		chance -= 3 * (adj_mag_stat[stat_ind] - 1);
+
+		/* Not enough mana to cast */
+		if (chance < 0) chance = 0;
+		if (mana > cur_mana)
+		{
+			chance += 15 * (mana - cur_mana);
+		}
+
+		/* Extract the minimum failure rate */
+		minfail = adj_mag_fail[stat_ind];
+
+		/* Must have Perfect Casting to get below 5% */
+		if (!(has_ability(AB_PERFECT_CASTING)))
+		{
+			if (minfail < 5) minfail = 5;
+		}
+
+		/* Hack -- Priest prayer penalty for "edged" weapons  -DGK */
+		if ((forbid_non_blessed()) && (p_ptr->icky_wield)) chance += 25;
+
+		/* Return the chance */
+		return clamp_failure_chance(chance, minfail);
 	}
 }
 
@@ -125,55 +171,6 @@ s32b get_level(s32b s, s32b max, s32b min)
 		get_level_school(s, max, min, &level, &notused);
 		return level;
 	}
-}
-
-
-s32b lua_spell_chance(s32b chance, int level, int skill_level, int mana, int cur_mana, int stat)
-{
-	int minfail;
-	/* Reduce failure rate by "effective" level adjustment */
-	chance -= 3 * (level - 1);
-
-	/* Reduce failure rate by INT/WIS adjustment */
-	chance -= 3 * (adj_mag_stat[p_ptr->stat_ind[stat]] - 1);
-
-	/* Not enough mana to cast */
-	if (chance < 0) chance = 0;
-	if (mana > cur_mana)
-	{
-		chance += 15 * (mana - cur_mana);
-	}
-
-	/* Extract the minimum failure rate */
-	minfail = adj_mag_fail[p_ptr->stat_ind[stat]];
-
-	/*
-	        * Non mage characters never get too good
-	 */
-	if (!(has_ability(AB_PERFECT_CASTING)))
-	{
-		if (minfail < 5) minfail = 5;
-	}
-
-	/* Hack -- Priest prayer penalty for "edged" weapons  -DGK */
-	if ((forbid_non_blessed()) && (p_ptr->icky_wield)) chance += 25;
-
-	/* Return the chance */
-	return clamp_failure_chance(chance, minfail);
-}
-
-s32b lua_spell_device_chance(s32b chance, int level, int base_level)
-{
-	int minfail;
-
-	/* Reduce failure rate by "effective" level adjustment */
-	chance -= (level - 1);
-
-	/* Extract the minimum failure rate */
-	minfail = 15 - get_skill_scale(SKILL_DEVICE, 25);
-
-	/* Return the chance */
-	return clamp_failure_chance(chance, minfail);
 }
 
 void set_target(int y, int x)
