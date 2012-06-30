@@ -5521,9 +5521,6 @@ void wipe_saved()
  */
 void close_game(void)
 {
-	char buf[1024];
-
-
 	/* Handle stuff */
 	handle_stuff();
 

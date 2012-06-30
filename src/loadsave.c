@@ -2088,7 +2088,7 @@ static void do_messages(int flag)   /* FIXME! We should be able to unify this be
 {
 	int i;
 	char buf[128];
-	byte color, type;
+	byte color;
 
 	s16b num;
 
