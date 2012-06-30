@@ -542,7 +542,7 @@ extern int max_bg_idx;
 extern s32b extra_savefile_parts;
 extern bool_ player_char_health;
 extern s16b school_spells_count;
-extern spell_type school_spells[SCHOOL_SPELLS_MAX];
+extern spell_type *school_spells[SCHOOL_SPELLS_MAX];
 extern s16b schools_count;
 extern school_type schools[SCHOOLS_MAX];
 extern int project_time;
@@ -1894,7 +1894,6 @@ char           *varda_star_kindler_info();
 /* spells4.c */
 
 SGLIB_DEFINE_LIST_PROTOTYPES(spell_idx_list, compare_spell_idx, next);
-SGLIB_DEFINE_LIST_PROTOTYPES(school_idx, compare_school_idx, next);
 
 extern s32b SCHOOL_AIR;
 extern s32b SCHOOL_AULE;
@@ -1922,10 +1921,6 @@ extern s32b SCHOOL_VARDA;
 extern s32b SCHOOL_WATER;
 extern s32b SCHOOL_YAVANNA;
 
-void school_idx_init(school_idx *e, s32b i);
-school_idx *school_idx_new(s32b i);
-void school_idx_add_new(school_idx **list, s32b i);
-
 void print_spell_desc(int s, int y);
 void init_school_books();
 school_book_type *school_books_at(int sval);
@@ -1938,7 +1933,6 @@ int spell_x(int sval, int pval, int i);
 bool_ school_book_contains_spell(int sval, s32b spell_idx);
 void lua_cast_school_spell(s32b spell_idx, bool_ no_cost);
 
-void spell_description_add_line(s32b spell_idx, cptr line);
 void device_allocation_init(device_allocation *device_allocation, byte tval);
 device_allocation *device_allocation_new(byte tval);
 
@@ -1952,7 +1946,6 @@ void dice_print(dice_type *dice, char *buf);
 void school_spells_init();
 spell_type *spell_at(s32b index);
 s16b get_random_spell(s16b random_type, int lev);
-bool_ check_spell_depends(spell_type *spell);
 
 /* spells6.c */
 
@@ -2330,7 +2323,6 @@ extern int find_module(cptr name);
 
 
 /* lua_bind.c */
-extern s16b can_spell_random(s16b spell_idx);
 extern bool_ get_magic_power(int *sn, magic_power *powers, int max_powers, void (*power_info)(char *p, int power), int plev, int cast_stat);
 
 extern s16b    add_new_power(cptr name, cptr desc, cptr gain, cptr lose, byte level, byte cost, byte stat, byte diff);
@@ -2365,8 +2357,6 @@ extern timer_type *TIMER_AGGRAVATE_EVIL;
 
 void timer_aggravate_evil_enable();
 void timer_aggravate_evil_callback();
-
-cptr get_spell_info(s32b s);
 
 /* skills.c */
 extern void dump_skills(FILE *fff);

@@ -2,6 +2,8 @@
 
 #include <assert.h>
 
+#include "spell_type.h"
+
 school_book_type school_books[SCHOOL_BOOKS_SIZE];
 
 s32b SCHOOL_AIR;
@@ -37,52 +39,9 @@ static int compare_spell_idx(spell_idx_list *a, spell_idx_list *b)
 
 SGLIB_DEFINE_LIST_FUNCTIONS(spell_idx_list, compare_spell_idx, next);
 
-static int compare_school_idx(school_idx *a, school_idx *b)
-{
-	return SGLIB_NUMERIC_COMPARATOR(a->i, b->i);
-}
-
-SGLIB_DEFINE_LIST_FUNCTIONS(school_idx, compare_school_idx, next);
-
-void school_idx_init(school_idx *e, s32b i)
-{
-	assert(e != NULL);
-
-	e->i = i;
-	e->next = NULL;
-}
-
-school_idx *school_idx_new(s32b i)
-{
-	school_idx *e = malloc(sizeof(school_idx));
-	assert(e != NULL);
-
-	school_idx_init(e, i);
-
-	return e;
-}
-
-void school_idx_add_new(school_idx **list, s32b i)
-{
-	school_idx *e = school_idx_new(i);
-	assert(e != NULL);
-
-	sglib_school_idx_add(list, e);
-}
-
 static bool_ uses_piety_to_cast(int s)
 {
-	return spell_at(s)->casting_type == USE_PIETY;
-}
-
-static bool_ castable_while_blind(int s)
-{
-	return spell_at(s)->castable_while_blind;
-}
-
-static bool_ castable_while_confused(int s)
-{
-	return spell_at(s)->castable_while_confused;
+	return spell_type_uses_piety_to_cast(spell_at(s));
 }
 
 /** Describe what type of energy the spell uses for casting */
@@ -110,31 +69,36 @@ s32b get_power(s32b s)
 	return uses_piety_to_cast(s) ? p_ptr->grace : p_ptr->csp;
 }
 
+static void print_spell_desc_callback(void *data, cptr text)
+{
+	int *y = (int *) data;
+
+	c_prt(TERM_L_BLUE, text, *y, 0);
+	(*y) += 1;
+}
+
 /* Output the describtion when it is used as a spell */
 void print_spell_desc(int s, int y)
 {
-	string_list *sl;
-	struct sglib_string_list_iterator it;
+	spell_type *spell = spell_at(s);
 
-	for (sl = sglib_string_list_it_init(&it, school_spells[s].description);
-	     sl != NULL;
-	     sl = sglib_string_list_it_next(&it))
-	{
-		c_prt(TERM_L_BLUE, sl->s, y, 0);
-		y++;
-	}
+	spell_type_description_foreach(spell,
+				       print_spell_desc_callback,
+				       &y);
 
-	if (uses_piety_to_cast(s))
+	if (spell_type_uses_piety_to_cast(spell))
 	{
 		c_prt(TERM_L_WHITE, "It uses piety to cast.", y, 0);
 		y++;
 	}
-	if (castable_while_blind(s))
+
+	if (spell_type_castable_while_blind(spell))
 	{
 		c_prt(TERM_ORANGE, "It is castable even while blinded.", y, 0);
 		y++;
 	}
-	if (castable_while_confused(s))
+
+	if (spell_type_castable_while_confused(spell))
 	{
 		c_prt(TERM_ORANGE, "It is castable even while confused.", y, 0);
 		y++;
@@ -478,30 +442,30 @@ void random_book_setup(s16b sval, s32b spell_idx)
 	}
 }
 
+static bool_ spell_school_name_callback(void *data, s32b sch)
+{
+	school_type *school = school_at(sch);
+	char *buf = (char *) data;
+
+	/* Add separator? */
+	if (buf[0] != '\0')
+	{
+		strcat(buf, "/");
+	}
+
+	/* Add school name */
+	strcat(buf, school->name);
+
+	/* Keep going */
+	return TRUE;
+}
+
 static void spell_school_name(char *buf, spell_type *spell)
 {
-	school_idx *school_idx = NULL;
-	struct sglib_school_idx_iterator sit;
-	bool_ first = TRUE;
-
 	buf[0] = '\0';
-
-	for (school_idx = sglib_school_idx_it_init(&sit, spell->schools);
-	     school_idx != NULL;
-	     school_idx = sglib_school_idx_it_next(&sit))
-	{
-		int sch = school_idx->i;
-		school_type *school = school_at(sch);
-		/* Add separator? */
-		if (!first)
-		{
-			strcat(buf, "/");
-		}
-		first = FALSE;
-
-		/* Add school name */
-		strcat(buf, school->name);
-	}
+	spell_type_school_foreach(spell,
+				  spell_school_name_callback,
+				  buf);
 }
 
 int print_spell(cptr label_, byte color, int y, s32b s)
@@ -510,7 +474,7 @@ int print_spell(cptr label_, byte color, int y, s32b s)
 	bool_ na;
 	spell_type *spell = spell_at(s);
 	char sch_str[128];
-	cptr spell_info = get_spell_info(s);
+	cptr spell_info = spell_type_info(spell);
 	cptr label = (label_ == NULL) ? "" : label_;
 	char level_str[8] = "n/a";
 	char buf[128];
@@ -525,7 +489,7 @@ int print_spell(cptr label_, byte color, int y, s32b s)
 
 	sprintf(buf, "%s%-20s%-16s   %s %4d %3d%% %s",
 		label,
-		school_spells[s].name,
+		spell_type_name(spell_at(s)),
 		sch_str,
 		level_str,
 		get_mana(s),
@@ -575,16 +539,10 @@ int print_book(s16b sval, s32b pval, object_type *obj)
 	return y;
 }
 
-static bool_ call_spell_function(s32b s)
-{
-	spell_type *spell = spell_at(s);
-	assert(spell->effect_func != NULL);
-	return (spell->effect_func(-1) != NO_CAST);
-}
-
 void lua_cast_school_spell(s32b s, bool_ no_cost)
 {
 	bool_ use = FALSE;
+	spell_type *spell = spell_at(s);
 
 	/* No magic? */
 	if (p_ptr->antimagic > 0)
@@ -604,14 +562,16 @@ void lua_cast_school_spell(s32b s, bool_ no_cost)
 	if (!no_cost)
 	{
 	 	/* Require lite */
-		if (!castable_while_blind(s) && ((p_ptr->blind > 0) || no_lite()))
+		if (!spell_type_castable_while_blind(spell) &&
+		    ((p_ptr->blind > 0) || no_lite()))
 		{
 			msg_print("You cannot see!");
 			return;
 		}
 
 		/* Not when confused */
-		if (!castable_while_confused(s) && (p_ptr->confused > 0))
+		if (!spell_type_castable_while_confused(spell) &&
+		    (p_ptr->confused > 0))
 		{
 			msg_print("You are too confused!");
 			return;
@@ -634,7 +594,7 @@ void lua_cast_school_spell(s32b s, bool_ no_cost)
 		/* Invoke the spell effect */
 		if (!magik(spell_chance(s)))
 		{
-			use = call_spell_function(s);
+			use = (spell_type_produce_effect(spell, -1) != NO_CAST);
 		}
 		else
 		{
@@ -652,7 +612,7 @@ void lua_cast_school_spell(s32b s, bool_ no_cost)
 	}
 	else
 	{
-		call_spell_function(s);
+		spell_type_produce_effect(spell, -1);
 	}
 
 	/* Use the mana/piety */
@@ -668,11 +628,6 @@ void lua_cast_school_spell(s32b s, bool_ no_cost)
 	/* Refresh player */
 	p_ptr->redraw |= PR_MANA;
 	p_ptr->window |= PW_PLAYER;
-}
-
-void spell_description_add_line(s32b spell_idx, cptr line)
-{
-	string_list_append(&school_spells[spell_idx].description, line);
 }
 
 void device_allocation_init(device_allocation *device_allocation, byte tval)

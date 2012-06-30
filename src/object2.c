@@ -12,6 +12,8 @@
 
 #include "angband.h"
 
+#include "spell_type.h"
+
 /*
  * Calculate the player's total inventory weight.
  */
@@ -1200,7 +1202,7 @@ s32b object_value_real(object_type *o_ptr)
 	if (f5 & TR5_SPELL_CONTAIN)
 	{
 		if (o_ptr->pval2 != -1)
-			value += 5000 + 500 * school_spells[o_ptr->pval2].skill_level;
+			value += 5000 + 500 * spell_type_skill_level(spell_at(o_ptr->pval2));
 		else
 			value += 5000;
 	}
@@ -1282,7 +1284,7 @@ s32b object_value_real(object_type *o_ptr)
 	case TV_WAND:
 		{
 			/* Par for the spell */
-			value *= school_spells[o_ptr->pval2].skill_level;
+			value *= spell_type_skill_level(spell_at(o_ptr->pval2));
 			/* Take the average of the base and max spell levels */
 			value *= (((o_ptr->pval3 >> 16) & 0xFFFF) + (o_ptr->pval3 & 0xFFFF)) / 2;
 			/* Hack */
@@ -1297,7 +1299,7 @@ s32b object_value_real(object_type *o_ptr)
 	case TV_STAFF:
 		{
 			/* Par for the spell */
-			value *= school_spells[o_ptr->pval2].skill_level;
+			value *= spell_type_skill_level(spell_at(o_ptr->pval2));
 			/* Take the average of the base and max spell levels */
 			value *= (((o_ptr->pval3 >> 16) & 0xFFFF) + (o_ptr->pval3 & 0xFFFF)) / 2;
 			/* Hack */
@@ -1314,7 +1316,7 @@ s32b object_value_real(object_type *o_ptr)
 			if (o_ptr->sval == 255)
 			{
 				/* Pay extra for the spell */
-				value = value * school_spells[o_ptr->pval].skill_level;
+				value = value * spell_type_skill_level(spell_at(o_ptr->pval));
 			}
 			/* Done */
 			break;
@@ -2536,7 +2538,7 @@ static bool_ make_ego_item(object_type *o_ptr, bool_ good)
 void charge_stick(object_type *o_ptr)
 {
 	spell_type *spell = spell_at(o_ptr->pval2);
-	o_ptr->pval = dice_roll(&spell->device_charges);
+	o_ptr->pval = spell_type_roll_charges(spell);
 }
 
 /*
@@ -3225,28 +3227,6 @@ static void a_m_aux_3(object_type *o_ptr, int level, int power)
 	}
 }
 
-
-/*
- * Get device allocation for a given spell and tval
- */
-static device_allocation *get_device_allocation(spell_type *spell, byte tval)
-{
-	struct sglib_device_allocation_iterator it;
-	device_allocation *device_allocation;
-
-	for (device_allocation = sglib_device_allocation_it_init(&it, spell->device_allocation);
-	     device_allocation != NULL;
-	     device_allocation = sglib_device_allocation_it_next(&it))
-	{
-		if (device_allocation->tval == tval)
-		{
-			return device_allocation;
-		}
-	}
-
-	return NULL;
-}
-
 /*
  * Get a spell for a given stick(wand, staff, rod)
  */
@@ -3258,10 +3238,10 @@ long get_random_stick(byte tval, int level)
 	{
 		long spell_idx = rand_int(school_spells_count);
 		spell_type *spell = spell_at(spell_idx);
-		device_allocation *device_allocation = get_device_allocation(spell, tval);
+		device_allocation *device_allocation = spell_type_device_allocation(spell, tval);
 
 		if ((device_allocation != NULL) &&
-		    (rand_int(spell->skill_level * 3) < level) &&
+		    (rand_int(spell_type_skill_level(spell) * 3) < level) &&
 		    (magik(100 - device_allocation->rarity)))
 		{
 			return spell_idx;
@@ -3299,7 +3279,8 @@ static int randomized_level_in_range(range_type *range, int level)
 static int get_stick_base_level(byte tval, int level, int spl)
 {
 	spell_type *spell = spell_at(spl);
-	device_allocation *device_allocation = get_device_allocation(spell, tval);
+	device_allocation *device_allocation = spell_type_device_allocation(spell, tval);
+	assert(device_allocation != NULL);
 	return randomized_level_in_range(&device_allocation->base_level, level);
 }
 
@@ -3309,7 +3290,8 @@ static int get_stick_base_level(byte tval, int level, int spl)
 static int get_stick_max_level(byte tval, int level, int spl)
 {
 	spell_type *spell = spell_at(spl);
-	device_allocation *device_allocation = get_device_allocation(spell, tval);
+	device_allocation *device_allocation = spell_type_device_allocation(spell, tval);
+	assert(device_allocation != NULL);
 	return randomized_level_in_range(&device_allocation->max_level, level);
 }
 

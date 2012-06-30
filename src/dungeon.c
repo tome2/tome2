@@ -15,6 +15,7 @@
 #include <assert.h>
 
 #include "quark.h"
+#include "spell_type.h"
 
 #define TY_CURSE_CHANCE 100
 #define DG_CURSE_CHANCE 50
@@ -801,9 +802,7 @@ bool_ decays(object_type *o_ptr)
 static int process_lasting_spell(s16b music)
 {
 	spell_type *spell = spell_at(-music);
-
-	assert(spell->lasting_func != NULL);
-	return spell->lasting_func();
+	return spell_type_produce_effect_lasting(spell);
 }
 
 static void gere_class_special()

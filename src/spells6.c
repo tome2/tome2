@@ -2,6 +2,8 @@
 
 #include <assert.h>
 
+#include "spell_type.h"
+
 static int compare_school_provider(school_provider *a, school_provider *b)
 {
 	return SGLIB_NUMERIC_COMPARATOR(a->deity_idx, b->deity_idx);
@@ -150,122 +152,132 @@ long get_provided_levels(school_type *school)
 	return 0;
 }
 
+typedef struct get_level_school_callback_data get_level_school_callback_data;
+struct get_level_school_callback_data {
+	bool_ allow_spell_power;
+	long bonus;
+	long lvl;
+	long num;
+};
+
+static bool_ get_level_school_callback(void *data_, int school_idx)
+{
+	get_level_school_callback_data *data = data_;
+	school_type *school = school_at(school_idx);
+	long r = 0, s = 0, p = 0, ok = 0;
+
+	/* Does it require we worship a specific god? */
+	if ((school->deity_idx > 0) &&
+	    (school->deity_idx != p_ptr->pgod))
+	{
+		return FALSE;
+	}
+
+	/* Take the basic skill value */
+	r = s_info[school->skill].value;
+
+	/* Do we pass tests? */
+	if ((school->depends_satisfied != NULL) &&
+	    (!school->depends_satisfied()))
+	{
+		return FALSE;
+	}
+
+	/* Include effects of Sorcery (if applicable) */
+	if (school->sorcery)
+	{
+		s = s_info[SKILL_SORCERY].value;
+	}
+
+	/* Include effects of Spell Power? Every school must
+	 * allow use of Spell Power for it to apply. */
+	if (!school->spell_power)
+	{
+		data->allow_spell_power = FALSE;
+	}
+
+	/* Calculate effects of provided levels */
+	p = get_provided_levels(school);
+
+	/* Find the highest of Skill, Sorcery and Provided levels. */
+	ok = r;
+	if (ok < s)
+	{
+		ok = s;
+	}
+	if (ok < p)
+	{
+		ok = p;
+	}
+
+	/* Do we need to add a special bonus? */
+	if (school->bonus_levels != NULL)
+	{
+		data->bonus += (school->bonus_levels() * (SKILL_STEP / 10));
+	}
+
+	/* All schools must be non-zero to be able to use it. */
+	if (ok <= 0)
+	{
+		return FALSE;
+	}
+
+	/* Apply it */
+	data->lvl += ok;
+	data->num += 1;
+
+	/* Keep going */
+	return TRUE;
+}
+
 void get_level_school(s32b spell_idx, s32b max, s32b min, s32b *level, bool_ *na)
 {
 	spell_type *spell = spell_at(spell_idx);
-	school_idx *school_idx = NULL;
-	struct sglib_school_idx_iterator sit;
-	bool_ allow_spell_power = TRUE;
-	long lvl, num, bonus;
 
 	assert(level != NULL);
 	assert(na != NULL);
 
-	lvl = 0;
-	num = 0;
-	bonus = 0;
-
 	/* Do we pass tests? */
-	if (!check_spell_depends(spell))
+	if (!spell_type_dependencies_satisfied(spell))
 	{
 		*level = min;
 		*na = TRUE;
 		return;
 	}
 
+	/* Set up initial state */
+	get_level_school_callback_data data;
+	data.allow_spell_power = TRUE;
+	data.bonus = 0;
+	data.lvl = 0;
+	data.num = 0;
+	
 	/* Go through all the spell's schools. */
-	for (school_idx = sglib_school_idx_it_init(&sit, spell->schools);
-	     school_idx != NULL;
-	     school_idx = sglib_school_idx_it_next(&sit))
+	if (!spell_type_school_foreach(spell, get_level_school_callback, &data))
 	{
-		school_type *school = school_at(school_idx->i);
-		long r = 0, s = 0, p = 0, ok = 0;
-
-		/* Does it require we worship a specific god? */
-		if ((school->deity_idx > 0) &&
-		    (school->deity_idx != p_ptr->pgod))
-		{
-			*level = min;
-			*na = TRUE;
-			return;
-		}
-
-		/* Take the basic skill value */
-		r = s_info[school->skill].value;
-
-		/* Do we pass tests? */
-		if ((school->depends_satisfied != NULL) &&
-		    (!school->depends_satisfied()))
-		{
-			*level = min;
-			*na = TRUE;
-			return;
-		}
-
-		/* Include effects of Sorcery (if applicable) */
-		if (school->sorcery)
-		{
-			s = s_info[SKILL_SORCERY].value;
-		}
-
-		/* Include effects of Spell Power? Every school must
-		 * allow use of Spell Power for it to apply. */
-		if (!school->spell_power)
-		{
-			allow_spell_power = FALSE;
-		}
-
-		/* Calculate effects of provided levels */
-		p = get_provided_levels(school);
-
-		/* Find the highest of Skill, Sorcery and Provided levels. */
-		ok = r;
-		if (ok < s)
-		{
-			ok = s;
-		}
-		if (ok < p)
-		{
-			ok = p;
-		}
-
-		/* Do we need to add a special bonus? */
-		if (school->bonus_levels != NULL)
-		{
-			bonus += (school->bonus_levels() * (SKILL_STEP / 10));
-		}
-
-		/* All schools must be non-zero to be able to use it. */
-		if (ok <= 0)
-		{
-			*level = min;
-			*na = TRUE;
-			return;
-		}
-
-		/* Apply it */
-		lvl = lvl + ok;
-		num = num + 1;
+		*level = min;
+		*na = TRUE;
+		return;
 	}
 
 	/* Add the Spellpower skill as a bonus on top */
-	if (allow_spell_power)
+	if (data.allow_spell_power)
 	{
-		bonus += (get_skill_scale(SKILL_SPELL, 20) * (SKILL_STEP / 10));
+		data.bonus += (get_skill_scale(SKILL_SPELL, 20) * (SKILL_STEP / 10));
 	}
 
 	/* Add bonus from objects */
-	bonus += (p_ptr->to_s * (SKILL_STEP / 10));
+	data.bonus += (p_ptr->to_s * (SKILL_STEP / 10));
 
 	/* We divide by 10 because otherwise we can overflow a s32b
 	 * and we can use a u32b because the value can be negative.
 	 * The loss of information should be negligible since 1 skill
 	 * point is 1000 internally. */
-	lvl = (lvl / num) / 10;
-	lvl = lua_get_level(spell, lvl, max, min, bonus);
+	data.lvl = (data.lvl / data.num) / 10;
+	data.lvl = lua_get_level(spell, data.lvl, max, min, data.bonus);
 
 	/* Result */
-	*level = lvl;
+	*level = data.lvl;
 	*na = FALSE;
 }
 

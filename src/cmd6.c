@@ -12,6 +12,7 @@
 
 #include "angband.h"
 
+#include "spell_type.h"
 
 /*
  * Forward declare
@@ -3666,9 +3667,8 @@ static void activate_stick(s16b s, bool_ *obvious, bool_ *use_charge)
 
 	assert(obvious != NULL);
 	assert(use_charge != NULL);
-	assert(spell->effect_func != NULL);
 
-	ret = spell->effect_func(-1);
+	ret = spell_type_produce_effect(spell, -1);
 
 	switch (ret)
 	{
@@ -5029,35 +5029,6 @@ void do_cmd_activate(void)
 	msg_print("Oops.  That object cannot be activated.");
 }
 
-
-static void get_activation_desc(char *buf, int spl)
-{
-	spell_type *spell = spell_at(spl);
-	char turns[32];
-
-	dice_print(&spell->activation_duration, turns);
-
-	assert(spell->description != NULL);
-	assert(spell->description->s != NULL);
-
-	sprintf(buf, "%s every %s turns",
-		spell->description->s,
-		turns);
-}
-
-static int get_activation_timeout(int spl)
-{
-	spell_type *spell = spell_at(spl);
-	return dice_roll(&spell->activation_duration);
-}
-
-static void activate_activation(long s, int item)
-{
-	spell_type *spell = spell_at(s);
-	assert(spell->effect_func != NULL);
-	spell->effect_func(item);
-}
-
 const char *activation_aux(object_type * o_ptr, bool_ doit, int item)
 {
 	static char buf[256];
@@ -5100,14 +5071,15 @@ const char *activation_aux(object_type * o_ptr, bool_ doit, int item)
 	/* Negative means a unified spell index */
 	if (spell < 0)
 	{
+		struct spell_type *spell_ptr = spell_at(-spell);
 		if (doit)
 		{
-			activate_activation(-spell, item);
-			o_ptr->timeout = get_activation_timeout(-spell);
+			spell_type_produce_effect(spell_ptr, item);
+			o_ptr->timeout = spell_type_activation_roll_timeout(spell_ptr);
 		}
 		else
 		{
-			get_activation_desc(buf, -spell);
+			spell_type_activation_description(spell_ptr, buf);
 			return buf;
 		}
 	}

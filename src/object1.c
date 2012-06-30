@@ -13,6 +13,7 @@
 #include "angband.h"
 
 #include "quark.h"
+#include "spell_type.h"
 
 /*
  * Hack -- note that "TERM_MULTI" is now just "TERM_VIOLET".
@@ -1662,7 +1663,10 @@ void object_desc(char *buf, object_type *o_ptr, int pref, int mode)
 	case TV_BOOK:
 		{
 			basenm = k_name + k_ptr->name;
-			if (o_ptr->sval == 255) modstr = school_spells[o_ptr->pval].name;
+			if (o_ptr->sval == 255)
+			{
+				modstr = spell_type_name(spell_at(o_ptr->pval));
+			}
 			break;
 		}
 
@@ -1941,7 +1945,7 @@ void object_desc(char *buf, object_type *o_ptr, int pref, int mode)
 
 		if (((o_ptr->tval == TV_WAND) || (o_ptr->tval == TV_STAFF)))
 		{
-			t = object_desc_str(t, school_spells[o_ptr->pval2].name);
+			t = object_desc_str(t, spell_type_name(spell_at(o_ptr->pval2)));
 			if (mode >= 1)
 			{
 				s32b bonus = o_ptr->pval3 & 0xFFFF;
@@ -2021,7 +2025,7 @@ void object_desc(char *buf, object_type *o_ptr, int pref, int mode)
 	/* It contains a spell */
 	if ((known) && (f5 & TR5_SPELL_CONTAIN) && (o_ptr->pval2 != -1))
 	{
-		t = object_desc_str(t, format(" [%s]", school_spells[o_ptr->pval2].name));
+		t = object_desc_str(t, format(" [%s]", spell_type_name(spell_at(o_ptr->pval2))));
 	}
 
 	/* Add symbiote hp here, after the "fake-artifact" name. --dsb */
@@ -2799,20 +2803,12 @@ void display_ammo_damage(object_type *o_ptr)
 }
 
 /*
- * Describe the device spell
+ * Output spell description
  */
-static void print_device_desc(int s)
+static void print_device_desc_callback(void *data, cptr text)
 {
-	string_list *sl;
-	struct sglib_string_list_iterator it;
-
-	for (sl = sglib_string_list_it_init(&it, school_spells[s].description);
-	     sl != NULL;
-	     sl = sglib_string_list_it_next(&it))
-	{
-		text_out("\n");
-		text_out(sl->s);
-	}
+	text_out("\n");
+	text_out(text);
 }
 
 /*
@@ -2828,22 +2824,24 @@ void describe_device(object_type *o_ptr)
 		/* Enter device mode  */
 		set_stick_mode(o_ptr);
 
-		text_out("\nSpell description:");
-		print_device_desc(o_ptr->pval2);
+		text_out("\nSpell description:\n");
+		spell_type_description_foreach(spell_at(o_ptr->pval2),
+					       print_device_desc_callback,
+					       NULL);
 
 		text_out("\nSpell level: ");
 		sprintf(buf, FMTs32b, get_level(o_ptr->pval2, 50, 0));
 		text_out_c(TERM_L_BLUE, buf);
 
 		text_out("\nMinimum Magic Device level to increase spell level: ");
-		text_out_c(TERM_L_BLUE, format("%d", school_spells[o_ptr->pval2].skill_level));
+		text_out_c(TERM_L_BLUE, format("%d", spell_type_skill_level(spell_at(o_ptr->pval2))));
 
 		text_out("\nSpell fail: ");
 		sprintf(buf, FMTs32b, spell_chance(o_ptr->pval2));
 		text_out_c(TERM_GREEN, buf);
 
 		text_out("\nSpell info: ");
-		text_out_c(TERM_YELLOW, get_spell_info(o_ptr->pval2));
+		text_out_c(TERM_YELLOW, spell_type_info(spell_at(o_ptr->pval2)));
 
 		/* Leave device mode  */
 		unset_stick_mode();

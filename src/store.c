@@ -12,6 +12,7 @@
 
 #include "angband.h"
 
+#include "spell_type.h"
 #include "quark.h"
 
 #define STORE_GENERAL_STORE "General Store"
@@ -834,7 +835,7 @@ static bool_ store_will_buy(object_type *o_ptr)
 
 		if ((o_ptr->tval == TV_BOOK) &&
 		    (o_ptr->sval == BOOK_RANDOM) &&
-		    (can_spell_random(o_ptr->pval) == SKILL_SPIRITUALITY))
+		    (spell_type_random_type(spell_at(o_ptr->pval)) == SKILL_SPIRITUALITY))
 		{
 			return TRUE;
 		}
@@ -892,7 +893,7 @@ static bool_ store_will_buy(object_type *o_ptr)
 
 		if ((o_ptr->tval == TV_BOOK) &&
 		    (o_ptr->sval == BOOK_RANDOM) &&
-		    (can_spell_random(o_ptr->pval) == SKILL_MAGIC))
+		    (spell_type_random_type(spell_at(o_ptr->pval)) == SKILL_MAGIC))
 		{
 			return TRUE;
 		}

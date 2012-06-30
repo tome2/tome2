@@ -2,6 +2,8 @@
 
 #include <assert.h>
 
+#include "spell_type.h"
+
 s32b NOXIOUSCLOUD = -1; /* Identifier */
 s32b AIRWINGS = -1; /* Identifier */
 s32b INVISIBILITY;
@@ -2357,7 +2359,7 @@ casting_result meta_spellbinder(int item)
 		msg_print("With the spells: ");
 		for (i = 0; i < p_ptr->spellbinder_num; i++)
 		{ 
-			msg_print(school_spells[p_ptr->spellbinder[i]].name);
+			msg_print(spell_type_name(spell_at(p_ptr->spellbinder[i])));
 		}
 
 		/* Doesn't cost anything */
@@ -2400,7 +2402,7 @@ casting_result meta_spellbinder(int item)
 				p_ptr->spellbinder_num = 0;
 				return CAST_OBVIOUS;
 			} else {
-				if (school_spells[s].skill_level > 7 + get_level_s(SPELLBINDER, 35))
+				if (spell_type_skill_level(spell_at(s)) > 7 + get_level_s(SPELLBINDER, 35))
 				{
 					msg_format("You are only allowed spells with a base level of " FMTs32b ".", (7 + get_level_s(SPELLBINDER, 35)));
 					return CAST_OBVIOUS;
@@ -2503,7 +2505,7 @@ void meta_inertia_control_hook_birth_objects()
 
 casting_result meta_inertia_control(int item)
 {
-	s32b s;
+	s32b s, difficulty, delay;
 	spell_type *spell;
 
 	if (p_ptr->inertia_controlled_spell != -1)
@@ -2522,27 +2524,26 @@ casting_result meta_inertia_control(int item)
 
 	spell = spell_at(s);
 
-	if ((spell->inertia_difficulty < 0) ||
-	    (spell->inertia_delay < 0))
+	if (!spell_type_inertia(spell, &difficulty, &delay))
 	{
 		msg_print("This spell inertia flow can not be controlled.");
 		stop_inertia_controlled_spell();
 		return NO_CAST;
 	}
 
-	if (spell->inertia_difficulty > get_level_s(INERTIA_CONTROL, 10))
+	if (difficulty > get_level_s(INERTIA_CONTROL, 10))
 	{
-		msg_format("This spell inertia flow(%d) is too strong to be controlled by your current spell.", spell->inertia_difficulty);
+		msg_format("This spell inertia flow(" FMTs32b ") is too strong to be controlled by your current spell.", difficulty);
 		stop_inertia_controlled_spell();
 		return NO_CAST;
 	}
 
 	p_ptr->inertia_controlled_spell = s;
 	TIMER_INERTIA_CONTROL->enabled = TRUE;
-	TIMER_INERTIA_CONTROL->delay = spell->inertia_delay;
-	TIMER_INERTIA_CONTROL->countdown = TIMER_INERTIA_CONTROL->delay;
+	TIMER_INERTIA_CONTROL->delay = delay;
+	TIMER_INERTIA_CONTROL->countdown = delay;
 	p_ptr->update |= PU_MANA;
-	msg_format("Inertia flow controlling spell %s.", school_spells[s].name);
+	msg_format("Inertia flow controlling spell %s.", spell_type_name(spell_at(s)));
 	return CAST_OBVIOUS;
 }
 
@@ -2938,6 +2939,20 @@ char *tulkas_whirlwind_info()
 	return "";
 }
 
+static bool_ check_school_is_udun(void *data, s32b school_idx)
+{
+	int *count = (int *) data;
+
+	if ((school_idx == SCHOOL_UDUN) ||
+	    (school_idx == SCHOOL_MELKOR))
+	{
+		(*count)++;
+	}
+
+	/* Keep going */
+	return TRUE;
+}
+
 /* Return the number of Udun/Melkor spells in a given book */
 int udun_in_book(s32b sval, s32b pval)
 {
@@ -2957,20 +2972,7 @@ int udun_in_book(s32b sval, s32b pval)
 	     spell_idx = sglib_spell_idx_list_it_next(&it))
 	{
 		spell_type *spell = spell_at(spell_idx->i);
-		school_idx *school_idx = NULL;
-		struct sglib_school_idx_iterator sit;
-
-		for (school_idx = sglib_school_idx_it_init(&sit, spell->schools);
-		     school_idx != NULL;
-		     school_idx = sglib_school_idx_it_next(&sit))
-		{
-			int sch = school_idx->i;
-			if ((sch == SCHOOL_UDUN) ||
-			    (sch == SCHOOL_MELKOR))
-			{
-				count++;
-			}
-		}
+		spell_type_school_foreach(spell, check_school_is_udun, &count);
 	}
 
 	return count;
@@ -2996,7 +2998,7 @@ int levels_in_book(s32b sval, s32b pval)
 		s32b s = spell_idx->i;
 		spell_type *spell = spell_at(s);
 
-		levels += spell->skill_level;
+		levels += spell_type_skill_level(spell);
 	}
 
 	return levels;

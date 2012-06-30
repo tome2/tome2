@@ -11,12 +11,10 @@
  */
 
 #include "angband.h"
+
 #include <assert.h>
 
-s16b can_spell_random(s16b spell_idx)
-{
-	return spell_at(spell_idx)->random_type;
-}
+#include "spell_type.h"
 
 /*
  * Monsters
@@ -42,7 +40,7 @@ s32b lua_get_level(spell_type *spell, s32b lvl, s32b max, s32b min, s32b bonus)
 {
 	s32b tmp;
 
-	tmp = lvl - ((spell->skill_level - 1) * (SKILL_STEP / 10));
+	tmp = lvl - ((spell_type_skill_level(spell) - 1) * (SKILL_STEP / 10));
 
 	if (tmp >= (SKILL_STEP / 10)) /* We require at least one spell level */
 		tmp += bonus;
@@ -80,9 +78,9 @@ s32b get_level_device(s32b s, s32b max, s32b min)
 	lvl = lvl + (get_level_use_stick * SKILL_STEP);
 
 	/* Sticks are limited */
-	if (lvl - ((spell->skill_level + 1) * SKILL_STEP) >= get_level_max_stick * SKILL_STEP)
+	if (lvl - ((spell_type_skill_level(spell) + 1) * SKILL_STEP) >= get_level_max_stick * SKILL_STEP)
 	{
-		lvl = (get_level_max_stick + spell->skill_level - 1) * SKILL_STEP;
+		lvl = (get_level_max_stick + spell_type_skill_level(spell) - 1) * SKILL_STEP;
 	}
 
 	/* / 10 because otherwise we can overflow a s32b and we can use a u32b because the value can be negative
@@ -97,20 +95,22 @@ s32b get_level_device(s32b s, s32b max, s32b min)
 int get_mana(s32b s)
 {
 	spell_type *spell = spell_at(s);
-	return get_level(s, spell->mana_range.max, spell->mana_range.min);
+	range_type mana_range;
+	spell_type_mana_range(spell, &mana_range);
+	return get_level(s, mana_range.max, mana_range.min);
 }
 
 /** Returns spell chance of failure for spell */
 s32b spell_chance(s32b s)
 {
-        spell_type *s_ptr = &school_spells[s];
+        spell_type *s_ptr = spell_at(s);
 	int level = get_level(s, 50, 1);
 
 	/* Extract the base spell failure rate */
 	if (get_level_use_stick > -1)
 	{
 		int minfail;
-		s32b chance = s_ptr->failure_rate;
+		s32b chance = spell_type_failure_rate(s_ptr);
 
 		/* Reduce failure rate by "effective" level adjustment */
 		chance -= (level - 1);
@@ -123,10 +123,10 @@ s32b spell_chance(s32b s)
 	}
 	else
 	{
-		s32b chance = s_ptr->failure_rate;
+		s32b chance = spell_type_failure_rate(s_ptr);
 		int mana = get_mana(s);
 		int cur_mana = get_power(s);
-		int stat = s_ptr->casting_stat;
+		int stat = spell_type_casting_stat(s_ptr);
 		int stat_ind = p_ptr->stat_ind[stat];
 		int minfail;
 
@@ -339,12 +339,4 @@ void timer_aggravate_evil_callback()
 	{
 		dispel_evil(0);
 	}
-}
-
-cptr get_spell_info(s32b s)
-{
-	spell_type *spell = spell_at(s);
-
-	assert(spell->info_func != NULL);
-	return spell->info_func();
 }

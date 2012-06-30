@@ -15,6 +15,7 @@
 
 #include <assert.h>
 
+#include "spell_type.h"
 #include "quark.h"
 
 /* Maximum number of tries for teleporting */
@@ -2135,7 +2136,7 @@ bool_ is_ok_spell(s32b spell_idx, object_type *o_ptr)
 		return FALSE;
 	}
 
-	if (o_ptr->pval < spell->minimum_pval)
+	if (o_ptr->pval < spell_type_minimum_pval(spell))
 	{
 		return FALSE;
 	}
@@ -2454,7 +2455,7 @@ void do_cmd_copy_spell()
 	if (spell == -1) return;
 
 	/* Spells that cannot be randomly created cannot be copied */
-	if (can_spell_random(spell) <= 0)
+	if (spell_type_random_type(spell_at(spell)) <= 0)
 	{
 		msg_print("This spell cannot be copied.");
 		return;

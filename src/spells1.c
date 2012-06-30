@@ -12,6 +12,8 @@
 
 #include "angband.h"
 
+#include "spell_type.h"
+
 /* 1/x chance of reducing stats (for elemental attacks) */
 #define HURT_CHANCE 32
 
@@ -1258,7 +1260,7 @@ void spellbinder_trigger()
 	cmsg_print(TERM_L_GREEN, "The spellbinder is triggered!");
 	for (i = 0; i < p_ptr->spellbinder_num; i++)
 	{
-		msg_format("Triggering spell %s.", school_spells[p_ptr->spellbinder[i]].name);
+		msg_format("Triggering spell %s.", spell_type_name(spell_at(p_ptr->spellbinder[i])));
 		lua_cast_school_spell(p_ptr->spellbinder[i], TRUE);
 	}
 	p_ptr->spellbinder_num = 0;
