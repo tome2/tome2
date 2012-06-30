@@ -1,6 +1,6 @@
 # Project definition.
 PROJECT (tome2)
-CMAKE_MINIMUM_REQUIRED (VERSION 2.6)
+CMAKE_MINIMUM_REQUIRED (VERSION 2.8)
 
 # We want a readable feature summary.
 INCLUDE(FeatureSummary)
@@ -8,12 +8,31 @@ INCLUDE(FeatureSummary)
 # pkg-config support
 INCLUDE(FindPkgConfig)
 
-# Default flags.
+#
+# GCC/G++ flags
+#
 IF(CMAKE_COMPILER_IS_GNUCC)
   # Let's set sensible options.
-  SET(CMAKE_C_FLAGS         "${CMAKE_C_FLAGS} -pipe -Wall -Wno-unused-value -Wno-unused-variable")
+  SET(CMAKE_C_FLAGS         "${CMAKE_C_FLAGS} -pipe -Wall -Wno-unused-value")
   SET(CMAKE_C_FLAGS_RELEASE "-O2")
   SET(CMAKE_C_FLAGS_DEBUG   "-O0 -g")
+  SET(CMAKE_CXX_FLAGS       "${CMAKE_CXX_FLAGS} -pipe -Wall -Wno-unused-value --std=c++11 -D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC")
+  SET(CMAKE_CXX_FLAGS_RELEASE "-O2")
+  SET(CMAKE_CXX_FLAGS_DEBUG   "-O0 -g")
+ENDIF()
+
+#
+# Clang flags
+#
+IF("${CMAKE_C_COMPILER_ID}" STREQUAL "Clang")
+  SET(CMAKE_C_FLAGS         "${CMAKE_C_FLAGS} -pipe -Wall -Wno-unused-value")
+  SET(CMAKE_C_FLAGS_RELEASE "-O2")
+  SET(CMAKE_C_FLAGS_DEBUG   "-O0 -g")
+ENDIF()
+IF("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+  SET(CMAKE_CXX_FLAGS       "${CMAKE_CXX_FLAGS} -pipe -Wall -Wno-unused-value --std=c++11 -D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC")
+  SET(CMAKE_CXX_FLAGS_RELEASE "-O2")
+  SET(CMAKE_CXX_FLAGS_DEBUG   "-O0 -g")
 ENDIF()
 
 # Add definitions.
