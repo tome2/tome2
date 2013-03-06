@@ -1327,7 +1327,7 @@ static void incarnate_monster_attack(s16b m_idx, bool_ *fear, bool_ *mdeath,
 		visible = TRUE;
 
 		/* Extract the attack "power" */
-		effect = get_attack_power(effect);
+		power = get_attack_power(effect);
 
 		/* Monster hits */
 		if (!effect || check_hit2(power, rlev, ac))
