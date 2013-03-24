@@ -1,4 +1,6 @@
-#undef cquest
+#include "q_narsil.h"
+
+
 #define cquest (quest[QUEST_NARSIL])
 
 bool_ quest_narsil_move_hook(char *fmt)

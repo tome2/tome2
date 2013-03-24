@@ -15,6 +15,7 @@
 #include "q_fireprof.h"
 #include "q_bounty.h"
 #include "q_thrain.h"
+#include "q_narsil.h"
 
 
 

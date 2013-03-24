@@ -394,6 +394,3 @@ bool_ quest_null_hook(int q)
 
 /************************* Khazad-dum plot ************************/
 #include "q_evil.c"
-
-/*************************** Other plot ***************************/
-#include "q_narsil.c"
