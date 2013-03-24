@@ -19,4 +19,3 @@ extern bool_ quest_ultra_evil_init_hook(int q_idx);
 
 /******* Plot Bree *********/
 extern bool_ quest_thieves_init_hook(int q_idx);
-extern bool_ quest_hobbit_init_hook(int q_idx);

@@ -31,6 +31,7 @@
 #include "q_nazgul.h"
 #include "q_wight.h"
 #include "q_troll.h"
+#include "q_hobbit.h"
 
 
 

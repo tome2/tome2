@@ -1,4 +1,6 @@
-#undef cquest
+#include "q_hobbit.h"
+#include "messages.h"
+
 #define cquest (quest[QUEST_HOBBIT])
 
 bool_ quest_hobbit_town_gen_hook(char *fmt)
