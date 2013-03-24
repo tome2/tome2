@@ -1,4 +1,5 @@
-#undef cquest
+#include "q_nazgul.h"
+
 #define cquest (quest[QUEST_NAZGUL])
 
 bool_ quest_nazgul_gen_hook(char *fmt)

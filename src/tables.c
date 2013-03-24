@@ -28,6 +28,7 @@
 #include "q_spider.h"
 #include "q_wolves.h"
 #include "q_shroom.h"
+#include "q_nazgul.h"
 
 
 
