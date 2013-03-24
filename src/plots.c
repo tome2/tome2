@@ -380,4 +380,3 @@ bool_ quest_null_hook(int q)
 /*************************** Lorien plot **************************/
 #include "q_wolves.c"
 #include "q_spider.c"
-#include "q_poison.c"

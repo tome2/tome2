@@ -24,6 +24,7 @@
 #include "q_eol.h"
 #include "q_god.h"
 #include "q_dragons.h"
+#include "q_poison.h"
 
 
 

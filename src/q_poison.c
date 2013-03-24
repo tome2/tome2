@@ -1,4 +1,7 @@
-#undef cquest
+#include "q_poison.h"
+#include "quark.h"
+#include "messages.h"
+
 #define cquest (quest[QUEST_POISON])
 
 static int wild_locs[4][2] =
