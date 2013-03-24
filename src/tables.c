@@ -33,6 +33,7 @@
 #include "q_troll.h"
 #include "q_hobbit.h"
 #include "q_thief.h"
+#include "q_ultrae.h"
 
 
 
