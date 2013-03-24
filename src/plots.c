@@ -386,4 +386,3 @@ bool_ quest_null_hook(int q)
 #include "q_dragons.c"
 #include "q_eol.c"
 #include "q_nirna.c"
-#include "q_invas.c"

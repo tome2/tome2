@@ -1,4 +1,5 @@
-#undef cquest
+#include "q_invas.h"
+
 #define cquest (quest[QUEST_INVASION])
 
 bool_ quest_invasion_gen_hook(char *fmt)
