@@ -27,4 +27,3 @@ extern bool_ quest_shroom_init_hook(int q_idx);
 
 /******* Plot Lorien *********/
 extern bool_ quest_wolves_init_hook(int q_idx);
-extern bool_ quest_spider_init_hook(int q_idx);

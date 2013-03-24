@@ -1,4 +1,5 @@
-#undef cquest
+#include "q_spider.h"
+
 #define cquest (quest[QUEST_SPIDER])
 
 bool_ quest_spider_gen_hook(char *fmt)
