@@ -368,6 +368,3 @@ bool_ quest_null_hook(int q)
 #include "q_one.c"
 #include "q_ultrag.c"
 #include "q_ultrae.c"
-
-/**************************** Bree plot ***************************/
-#include "q_thief.c"

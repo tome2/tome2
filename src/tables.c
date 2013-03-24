@@ -32,6 +32,7 @@
 #include "q_wight.h"
 #include "q_troll.h"
 #include "q_hobbit.h"
+#include "q_thief.h"
 
 
 
