@@ -1,4 +1,5 @@
-#undef cquest
+#include "q_troll.h"
+
 #define cquest (quest[QUEST_TROLL])
 
 bool_ quest_troll_gen_hook(char *fmt)

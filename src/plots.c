@@ -372,4 +372,3 @@ bool_ quest_null_hook(int q)
 /**************************** Bree plot ***************************/
 #include "q_thief.c"
 #include "q_hobbit.c"
-#include "q_troll.c"
