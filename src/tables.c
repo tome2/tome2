@@ -29,6 +29,7 @@
 #include "q_wolves.h"
 #include "q_shroom.h"
 #include "q_nazgul.h"
+#include "q_wight.h"
 
 
 

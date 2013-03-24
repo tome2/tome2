@@ -1,4 +1,6 @@
-#undef cquest
+#include "q_wight.h"
+#include "quark.h"
+
 #define cquest (quest[QUEST_WIGHT])
 
 bool_ quest_wight_gen_hook(char *fmt)
