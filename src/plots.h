@@ -45,7 +45,6 @@ extern bool_ quest_evil_init_hook(int q_idx);
 
 /******* Plot Other *********/
 extern bool_ quest_narsil_init_hook(int q_idx);
-extern bool_ quest_thrain_init_hook(int q_idx);
 
 /******* Plot God Quest **************/
 extern bool_ quest_god_describe(FILE *);

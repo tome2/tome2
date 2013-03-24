@@ -1,4 +1,7 @@
-#undef cquest
+#include "q_thrain.h"
+#include "quark.h"
+#include "messages.h"
+
 #define cquest (quest[QUEST_THRAIN])
 
 bool_ quest_thrain_death_hook(char *fmt)
