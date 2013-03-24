@@ -119,17 +119,19 @@ static bool_ fireproof_enough_points(object_type *o_ptr, int *stack)
 	
 	/* check for item type and multiply number in the stack by the
 	 * amount of points per item of that type */
-	if (o_ptr->tval == TV_BOOK)
+	switch (o_ptr->tval)
 	{
+	case TV_BOOK:
 		item_value = FIREPROOF_BOOK_POINTS * (*stack);
-	}
-	else if (o_ptr->tval == TV_STAFF)
-	{
+		break;
+	case TV_STAFF:
 		item_value = FIREPROOF_STAFF_POINTS * (*stack);
-	}
-	else if (o_ptr->tval == TV_SCROLL)
-	{
+		break;
+	case TV_SCROLL:
 		item_value = FIREPROOF_SCROLL_POINTS * (*stack);
+		break;
+	default:
+		assert(FALSE);
 	}
 
 	/* do we have enough points? */
