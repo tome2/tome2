@@ -376,6 +376,3 @@ bool_ quest_null_hook(int q)
 #include "q_wight.c"
 #include "q_nazgul.c"
 #include "q_shroom.c"
-
-/*************************** Lorien plot **************************/
-#include "q_wolves.c"

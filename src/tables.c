@@ -26,6 +26,7 @@
 #include "q_dragons.h"
 #include "q_poison.h"
 #include "q_spider.h"
+#include "q_wolves.h"
 
 
 

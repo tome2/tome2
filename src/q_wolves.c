@@ -1,4 +1,5 @@
-#undef cquest
+#include "q_wolves.h"
+
 #define cquest (quest[QUEST_WOLVES])
 
 bool_ quest_wolves_gen_hook(char *fmt)
