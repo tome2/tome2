@@ -11,6 +11,7 @@
  */
 
 #include "angband.h"
+#include "q_library.h"
 
 
 

@@ -1,4 +1,6 @@
-#undef cquest
+#include "q_library.h"
+#include "quark.h"
+
 #define cquest (quest[QUEST_LIBRARY])
 
 #define print_hook(fmt,...) do { fprintf(hook_file, fmt, ##__VA_ARGS__); } while (0)
