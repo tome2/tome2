@@ -1,4 +1,5 @@
-#undef cquest
+#include "q_betwen.h"
+
 #define cquest (quest[QUEST_BETWEEN])
 
 bool_ quest_between_move_hook(char *fmt)

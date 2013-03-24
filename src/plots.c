@@ -390,4 +390,3 @@ bool_ quest_null_hook(int q)
 
 /************************* Minas Anor plot ************************/
 #include "q_haunted.c"
-#include "q_betwen.c"
