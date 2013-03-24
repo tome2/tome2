@@ -14,4 +14,3 @@ extern bool_ quest_necro_init_hook(int q_idx);
 extern bool_ quest_one_init_hook(int q_idx);
 extern bool_ quest_sauron_init_hook(int q_idx);
 extern bool_ quest_morgoth_init_hook(int q_idx);
-extern bool_ quest_ultra_good_init_hook(int q_idx);

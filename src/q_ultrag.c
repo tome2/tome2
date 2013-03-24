@@ -1,8 +1,5 @@
-/*
- * Here takes place the Good ultra ending
- */
+#include "q_ultrag.h"
 
-#undef cquest
 #define cquest (quest[QUEST_ULTRA_GOOD])
 
 bool_ quest_ultra_good_move_hook(char *fmt)
