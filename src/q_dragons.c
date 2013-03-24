@@ -1,4 +1,5 @@
-#undef cquest
+#include "q_dragons.h"
+
 #define cquest (quest[QUEST_DRAGONS])
 
 bool_ quest_dragons_gen_hook(char *fmt)

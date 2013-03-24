@@ -381,6 +381,3 @@ bool_ quest_null_hook(int q)
 #include "q_wolves.c"
 #include "q_spider.c"
 #include "q_poison.c"
-
-/************************** Gondolin plot *************************/
-#include "q_dragons.c"

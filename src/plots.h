@@ -29,6 +29,3 @@ extern bool_ quest_shroom_init_hook(int q_idx);
 extern bool_ quest_wolves_init_hook(int q_idx);
 extern bool_ quest_spider_init_hook(int q_idx);
 extern bool_ quest_poison_init_hook(int q_idx);
-
-/******* Plot Gondolin *********/
-extern bool_ quest_dragons_init_hook(int q_idx);

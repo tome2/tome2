@@ -12,7 +12,7 @@ SET(SRCS
   melee1.c melee2.c messages.c modules.c
   q_god.c q_library.c q_fireprof.c q_bounty.c q_thrain.c
   q_narsil.c q_evil.c q_betwen.c q_haunted.c q_invas.c
-  q_nirna.c q_eol.c q_god.c
+  q_nirna.c q_eol.c q_god.c q_dragons.c
   object1.c object2.c randart.c squeltch.cc traps.c
   monster1.c monster2.c monster3.c
   xtra1.c xtra2.c skills.c powers.c gods.c
