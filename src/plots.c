@@ -14,9 +14,6 @@
 
 #include <assert.h>
 
-#include "messages.h"
-#include "quark.h"
-
 /******** Hooks stuff *********/
 FILE *hook_file;
 
