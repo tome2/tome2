@@ -1,4 +1,5 @@
-#undef cquest
+#include "q_bounty.h"
+
 #define cquest (quest[QUEST_BOUNTY])
 
 #define bounty_quest_monster (cquest.data[0])
