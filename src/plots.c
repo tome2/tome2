@@ -349,6 +349,3 @@ bool_ quest_null_hook(int q)
 	/* Do nothing */
 	return (FALSE);
 }
-
-/************************** Random Quests *************************/
-#include "q_rand.c"

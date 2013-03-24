@@ -4,6 +4,7 @@
 
 
 #include "angband.h"
+#include "q_rand.h"
 
 
 /*

@@ -1,3 +1,5 @@
+#include "q_rand.h"
+
 static int randquest_hero[] = { 20, 13, 15, 16, 9, 17, 18, 8, -1 };
 
 bool_ is_randhero(int level)

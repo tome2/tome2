@@ -11,8 +11,8 @@
  */
 
 #include "angband.h"
-
 #include "messages.h"
+#include "q_rand.h"
 
 /*
  * How often the autoroller will update the display and pause
