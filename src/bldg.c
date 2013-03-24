@@ -15,6 +15,7 @@
 
 #include "angband.h"
 #include "q_library.h"
+#include "q_fireprof.h"
 
 /* hack as in leave_store in store.c */
 static bool_ leave_bldg = FALSE;

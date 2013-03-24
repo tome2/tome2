@@ -12,6 +12,7 @@
 
 #include "angband.h"
 #include "q_library.h"
+#include "q_fireprof.h"
 
 
 

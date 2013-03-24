@@ -573,6 +573,8 @@ extern void add_hook_script(int h_idx, char *script, cptr name);
 extern void del_hook(int h_idx, hook_type hook);
 extern void del_hook_name(int h_idx, cptr name);
 extern s32b get_next_arg(char *fmt);
+extern char* get_next_arg_str(char *fmt);
+extern object_type *get_next_arg_obj();
 extern int process_hooks_restart;
 extern hook_return process_hooks_return[20];
 extern bool_ process_hooks_ret(int h_idx, char *ret, char *fmt, ...);

@@ -10,7 +10,7 @@ SET(SRCS
   z-rand.c z-util.c z-form.c z-virt.c z-term.c
   variable.c tables.c plots.c util.c cave.c dungeon.c 
   melee1.c melee2.c messages.c modules.c
-  q_god.c q_library.c
+  q_god.c q_library.c q_fireprof.c
   object1.c object2.c randart.c squeltch.cc traps.c
   monster1.c monster2.c monster3.c
   xtra1.c xtra2.c skills.c powers.c gods.c

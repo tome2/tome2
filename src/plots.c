@@ -205,6 +205,12 @@ char* get_next_arg_str(char *fmt)
 		}
 	}
 }
+object_type* get_next_arg_obj() {
+	object_type *o_ptr = param_pile[get_next_arg_pile_pos++].o_ptr;
+	assert(o_ptr != NULL);
+	return o_ptr;
+}
+
 
 /* Actually process the hooks */
 int process_hooks_restart = FALSE;
@@ -395,6 +401,3 @@ bool_ quest_null_hook(int q)
 
 /*************************** Bounty Quest *************************/
 #include "q_bounty.c"
-
-/************************* Fireproofing Quest *********************/
-#include "q_fireprof.c"

@@ -1,4 +1,6 @@
-#undef cquest
+#include "q_fireprof.h"
+#include "quark.h"
+
 #define cquest (quest[QUEST_FIREPROOF])
 
 #define print_hook(fmt,...) do { fprintf(hook_file, fmt, ##__VA_ARGS__); } while (0)
@@ -379,8 +381,7 @@ void quest_fireproof_building(bool_ *paid, bool_ *recreate)
 
 static bool_ fireproof_get_hook(char *fmt)
 {
-	object_type *o_ptr = param_pile[0].o_ptr;
-	assert(o_ptr != NULL);
+	object_type *o_ptr = get_next_arg_obj();
 
 	/* check that player is in the quest, haven't picked up the
 	 * item already, and check that it's the real item and not another one
