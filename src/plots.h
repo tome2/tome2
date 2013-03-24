@@ -40,9 +40,6 @@ extern bool_ quest_invasion_init_hook(int q_idx);
 extern bool_ quest_haunted_init_hook(int q_idx);
 extern bool_ quest_between_init_hook(int q_idx);
 
-/******* Plot Khazad-dum *********/
-extern bool_ quest_evil_init_hook(int q_idx);
-
 /******* Plot God Quest **************/
 extern bool_ quest_god_describe(FILE *);
 extern bool_ quest_god_init_hook(int q);

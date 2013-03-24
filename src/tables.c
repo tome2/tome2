@@ -16,6 +16,7 @@
 #include "q_bounty.h"
 #include "q_thrain.h"
 #include "q_narsil.h"
+#include "q_evil.h"
 
 
 
