@@ -1,4 +1,5 @@
-#undef cquest
+#include "q_eol.h"
+
 #define cquest (quest[QUEST_EOL])
 
 bool_ quest_eol_gen_hook(char *fmt)

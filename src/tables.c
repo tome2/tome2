@@ -21,6 +21,8 @@
 #include "q_haunted.h"
 #include "q_invas.h"
 #include "q_nirna.h"
+#include "q_eol.h"
+#include "q_god.h"
 
 
 

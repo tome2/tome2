@@ -384,4 +384,3 @@ bool_ quest_null_hook(int q)
 
 /************************** Gondolin plot *************************/
 #include "q_dragons.c"
-#include "q_eol.c"

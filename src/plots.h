@@ -32,8 +32,3 @@ extern bool_ quest_poison_init_hook(int q_idx);
 
 /******* Plot Gondolin *********/
 extern bool_ quest_dragons_init_hook(int q_idx);
-extern bool_ quest_eol_init_hook(int q_idx);
-
-/******* Plot God Quest **************/
-extern bool_ quest_god_describe(FILE *);
-extern bool_ quest_god_init_hook(int q);
