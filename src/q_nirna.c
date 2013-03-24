@@ -1,4 +1,5 @@
-#undef cquest
+#include "q_nirna.h"
+
 #define cquest (quest[QUEST_NIRNAETH])
 
 bool_ quest_nirnaeth_gen_hook(char *fmt)

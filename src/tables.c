@@ -20,6 +20,7 @@
 #include "q_betwen.h"
 #include "q_haunted.h"
 #include "q_invas.h"
+#include "q_nirna.h"
 
 
 
