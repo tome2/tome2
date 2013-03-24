@@ -1,3 +1,15 @@
+#include "q_main.h"
+
+static void quest_describe(int q_idx)
+{
+	int i = 0;
+
+	while ((i < 10) && (quest[q_idx].desc[i][0] != '\0'))
+	{
+		cmsg_print(TERM_YELLOW, quest[q_idx].desc[i++]);
+	}
+}
+
 bool_ quest_main_monsters_hook(char *fmt)
 {
 	s32b r_idx;

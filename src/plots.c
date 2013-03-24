@@ -343,16 +343,6 @@ bool_ process_hooks_new(int h_idx, void *in, void *out)
 
 /******** Plots & Quest stuff ********/
 
-static void quest_describe(int q_idx)
-{
-	int i = 0;
-
-	while ((i < 10) && (quest[q_idx].desc[i][0] != '\0'))
-	{
-		cmsg_print(TERM_YELLOW, quest[q_idx].desc[i++]);
-	}
-}
-
 /* Catch-all quest hook */
 bool_ quest_null_hook(int q)
 {
@@ -362,7 +352,3 @@ bool_ quest_null_hook(int q)
 
 /************************** Random Quests *************************/
 #include "q_rand.c"
-
-/**************************** Main plot ***************************/
-#include "q_main.c"
-
