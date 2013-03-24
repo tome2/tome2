@@ -36,9 +36,6 @@ extern bool_ quest_eol_init_hook(int q_idx);
 extern bool_ quest_nirnaeth_init_hook(int q_idx);
 extern bool_ quest_invasion_init_hook(int q_idx);
 
-/******* Plot Minas Anor *********/
-extern bool_ quest_haunted_init_hook(int q_idx);
-
 /******* Plot God Quest **************/
 extern bool_ quest_god_describe(FILE *);
 extern bool_ quest_god_init_hook(int q);

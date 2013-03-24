@@ -18,6 +18,7 @@
 #include "q_narsil.h"
 #include "q_evil.h"
 #include "q_betwen.h"
+#include "q_haunted.h"
 
 
 

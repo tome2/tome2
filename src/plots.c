@@ -387,6 +387,3 @@ bool_ quest_null_hook(int q)
 #include "q_eol.c"
 #include "q_nirna.c"
 #include "q_invas.c"
-
-/************************* Minas Anor plot ************************/
-#include "q_haunted.c"

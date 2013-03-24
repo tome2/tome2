@@ -1,4 +1,5 @@
-#undef cquest
+#include "q_haunted.h"
+
 #define cquest (quest[QUEST_HAUNTED])
 
 bool_ quest_haunted_gen_hook(char *fmt)
