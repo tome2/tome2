@@ -375,4 +375,3 @@ bool_ quest_null_hook(int q)
 #include "q_troll.c"
 #include "q_wight.c"
 #include "q_nazgul.c"
-#include "q_shroom.c"

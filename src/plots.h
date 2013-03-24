@@ -23,4 +23,3 @@ extern bool_ quest_hobbit_init_hook(int q_idx);
 extern bool_ quest_troll_init_hook(int q_idx);
 extern bool_ quest_wight_init_hook(int q_idx);
 extern bool_ quest_nazgul_init_hook(int q_idx);
-extern bool_ quest_shroom_init_hook(int q_idx);

@@ -1,4 +1,6 @@
-#undef cquest
+#include "q_shroom.h"
+#include "messages.h"
+
 #define cquest (quest[QUEST_SHROOM])
 
 bool_ quest_shroom_speak_hook(char *fmt);
