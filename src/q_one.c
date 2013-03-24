@@ -1,4 +1,5 @@
-#undef cquest
+#include "q_one.h"
+
 #define cquest (quest[QUEST_ONE])
 
 bool_ quest_one_move_hook(char *fmt)

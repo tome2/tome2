@@ -365,5 +365,4 @@ bool_ quest_null_hook(int q)
 
 /**************************** Main plot ***************************/
 #include "q_main.c"
-#include "q_one.c"
 

@@ -15,6 +15,7 @@ SET(SRCS
   q_nirna.c q_eol.c q_god.c q_dragons.c q_poison.c
   q_spider.c q_wolves.c q_shroom.c q_nazgul.c q_wight.c
   q_troll.c q_hobbit.c q_thief.c q_ultrae.c q_ultrag.c
+  q_one.c
   object1.c object2.c randart.c squeltch.cc traps.c
   monster1.c monster2.c monster3.c
   xtra1.c xtra2.c skills.c powers.c gods.c
