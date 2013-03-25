@@ -4899,15 +4899,10 @@ void object_track(object_type *o_ptr)
  *
  * The first arg indicates a major disturbance, which affects search.
  *
- * The second arg is currently unused, but could induce output flush.
- *
  * All disturbance cancels repeated commands, resting, and running.
  */
-void disturb(int stop_search, int unused_flag)
+void disturb(int stop_search)
 {
-	/* Unused */
-	unused_flag = unused_flag;
-
 	/* Cancel auto-commands */
 	/* command_new = 0; */
 

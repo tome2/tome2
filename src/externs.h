@@ -614,7 +614,7 @@ extern void scatter(int *yp, int *xp, int y, int x, int d);
 extern void health_track(int m_idx);
 extern void monster_race_track(int r_idx, int ego);
 extern void object_track(object_type *o_ptr);
-extern void disturb(int stop_search, int flush_output);
+extern void disturb(int stop_search);
 extern int is_quest(int level);
 extern int random_quest_number(void);
 extern int new_effect(int type, int dam, int time, int cy, int cx, int rad, s32b flags);

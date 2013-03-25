@@ -1974,7 +1974,7 @@ void player_activate_door_trap(s16b y, s16b x)
 	                !(f_info[c_ptr->feat].flags1 & FF1_DOOR)) return;
 
 	/* Disturb */
-	disturb(0, 0);
+	disturb(0);
 
 	/* Message */
 	msg_print("You found a trap!");

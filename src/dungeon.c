@@ -1013,7 +1013,7 @@ static void process_world_corruptions()
 				}
 				else
 				{
-					disturb(0, 0);
+					disturb(0);
 					msg_print("Your corruption takes over you, you teleport!");
 					teleport_player(50);
 				}
@@ -1800,7 +1800,7 @@ static void process_world(void)
 			{
 				/* Message */
 				msg_print("You faint from the lack of food.");
-				disturb(1, 0);
+				disturb(1);
 
 				/* Hack -- faint (bypass free action) */
 				(void)set_paralyzed(1 + rand_int(5));
@@ -2443,7 +2443,7 @@ static void process_world(void)
 				att &= ~(CLASS_LEGS);
 				att &= ~(CLASS_WALL);
 
-				if (disturb_state) disturb(0, 0);
+				if (disturb_state) disturb(0);
 			}
 
 			p_ptr->update |= (PU_BODY);
@@ -2780,7 +2780,7 @@ static void process_world(void)
 		if (!be_silent)
 		{
 			cmsg_print(TERM_L_DARK, "The Black Breath saps your soul!");
-			disturb(0, 0);
+			disturb(0);
 		}
 	}
 
@@ -2819,14 +2819,14 @@ static void process_world(void)
 			/* The light is now out */
 			else if (o_ptr->timeout < 1)
 			{
-				disturb(0, 0);
+				disturb(0);
 				cmsg_print(TERM_YELLOW, "Your light has gone out!");
 			}
 
 			/* The light is getting dim */
 			else if ((o_ptr->timeout < 100) && (o_ptr->timeout % 10 == 0))
 			{
-				if (disturb_minor) disturb(0, 0);
+				if (disturb_minor) disturb(0);
 				cmsg_print(TERM_YELLOW, "Your light is growing faint.");
 			}
 		}
@@ -2869,7 +2869,7 @@ static void process_world(void)
 		if (p_ptr->csp < 0)
 		{
 			p_ptr->csp = 0;
-			disturb(0, 0);
+			disturb(0);
 		}
 
 		/* Redraw */
@@ -2888,7 +2888,7 @@ static void process_world(void)
 		if (p_ptr->csp < 0)
 		{
 			p_ptr->csp = 0;
-			disturb(0, 0);
+			disturb(0);
 
 			p_ptr->maintain_sum = 0;
 		}
@@ -2915,7 +2915,7 @@ static void process_world(void)
 
 		if (p_ptr->chp == 0)
 		{
-			disturb(0, 0);
+			disturb(0);
 		}
 
 		/* Redraw */
@@ -2976,7 +2976,7 @@ static void process_world(void)
 		{
 			if ((o_ptr->ident & IDENT_CURSED) && !p_ptr->anti_tele)
 			{
-				disturb(0, 0);
+				disturb(0);
 
 				/* Teleport player */
 				teleport_player(40);
@@ -2991,7 +2991,7 @@ static void process_world(void)
 				}
 				else if (get_check("Teleport? "))
 				{
-					disturb(0, 0);
+					disturb(0);
 					teleport_player(50);
 				}
 			}
@@ -3330,7 +3330,7 @@ static void process_world(void)
 			if (p_ptr->word_recall == 0)
 			{
 				/* Disturbing! */
-				disturb(0, 0);
+				disturb(0);
 
 				/* Determine the level */
 				if (p_ptr->inside_quest)
@@ -4554,7 +4554,7 @@ void process_player(void)
 			/* Stop resting */
 			if ((p_ptr->chp == p_ptr->mhp) && (p_ptr->csp >= p_ptr->msp))
 			{
-				disturb(0, 0);
+				disturb(0);
 			}
 		}
 
@@ -4585,7 +4585,7 @@ void process_player(void)
 
 			if (stop)
 			{
-				disturb(0, 0);
+				disturb(0);
 			}
 			p_ptr->redraw |= (PR_STATE);
 		}
@@ -4607,7 +4607,7 @@ void process_player(void)
 				flush();
 
 				/* Disturb */
-				disturb(0, 0);
+				disturb(0);
 
 				/* Hack -- Show a Message */
 				msg_print("Cancelled.");
@@ -4657,7 +4657,7 @@ void process_player(void)
 			o_ptr = &p_ptr->inventory[item];
 
 			/* Disturbing */
-			disturb(0, 0);
+			disturb(0);
 
 			/* Warning */
 			msg_print("Your pack overflows!");
@@ -5003,7 +5003,7 @@ static void dungeon(void)
 
 
 	/* Disturb */
-	disturb(1, 0);
+	disturb(1);
 
 	/* Track maximum player level */
 	if (p_ptr->max_plv < p_ptr->lev)

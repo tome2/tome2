@@ -563,7 +563,7 @@ void search(void)
 					msg_print("You have found a trap.");
 
 					/* Disturb */
-					disturb(0, 0);
+					disturb(0);
 				}
 
 				/* Secret door */
@@ -578,7 +578,7 @@ void search(void)
 					lite_spot(y, x);
 
 					/* Disturb */
-					disturb(0, 0);
+					disturb(0);
 				}
 
 				/* Scan all objects in the grid */
@@ -609,7 +609,7 @@ void search(void)
 						object_known(o_ptr);
 
 						/* Notice it */
-						disturb(0, 0);
+						disturb(0);
 					}
 				}
 			}
@@ -645,7 +645,7 @@ static void hit_trap(void)
 
 
 	/* Disturb the player */
-	disturb(0, 0);
+	disturb(0);
 
 	/* Get the cave grid */
 	c_ptr = &cave[p_ptr->py][p_ptr->px];
@@ -815,7 +815,7 @@ static void carried_monster_attack(s16b m_idx, bool_ *fear, bool_ *mdeath,
 		if (!effect || check_hit2(power, rlev, ac))
 		{
 			/* Always disturbing */
-			disturb(1, 0);
+			disturb(1);
 
 			/* Describe the attack method */
 			switch (method)
@@ -1208,7 +1208,7 @@ static void carried_monster_attack(s16b m_idx, bool_ *fear, bool_ *mdeath,
 			case RBM_CHARGE:
 				{
 					/* Disturb */
-					disturb(1, 0);
+					disturb(1);
 
 					/* Message */
 					msg_format("%s misses %s.", sym_name, t_name);
@@ -1334,7 +1334,7 @@ static void incarnate_monster_attack(s16b m_idx, bool_ *fear, bool_ *mdeath,
 		if (!effect || check_hit2(power, rlev, ac))
 		{
 			/* Always disturbing */
-			disturb(1, 0);
+			disturb(1);
 
 			/* Describe the attack method */
 			switch (method)
@@ -1727,7 +1727,7 @@ static void incarnate_monster_attack(s16b m_idx, bool_ *fear, bool_ *mdeath,
 			case RBM_CHARGE:
 				{
 					/* Disturb */
-					disturb(1, 0);
+					disturb(1);
 
 					/* Message */
 					msg_format("You miss %s.", t_name);
@@ -2187,7 +2187,7 @@ void py_attack(int y, int x, int max_blow)
 	int weap;
 
 	/* Disturb the player */
-	disturb(0, 0);
+	disturb(0);
 
 	if (r_info[p_ptr->body_monster].flags1 & RF1_NEVER_BLOW)
 	{
@@ -3210,7 +3210,7 @@ void move_player_aux(int dir, int do_pickup, int run, bool_ disarm)
 		oktomove = FALSE;
 
 		/* Disturb the player */
-		disturb(0, 0);
+		disturb(0);
 
 		if (p_ptr->prob_travel)
 		{
@@ -3327,7 +3327,7 @@ void move_player_aux(int dir, int do_pickup, int run, bool_ disarm)
 			energy_use = 0;
 		}
 
-		disturb(0, 0); 			/* To avoid a loop with running */
+		disturb(0); 			/* To avoid a loop with running */
 
 		oktomove = FALSE;
 	}
@@ -3350,7 +3350,7 @@ void move_player_aux(int dir, int do_pickup, int run, bool_ disarm)
 		if (old_dtrap && !new_dtrap)
 		{
 			/* Disturb player */
-			disturb(0, 0);
+			disturb(0);
 
 			/* but don't take a turn */
 			energy_use = 0;
@@ -3459,7 +3459,7 @@ void move_player_aux(int dir, int do_pickup, int run, bool_ disarm)
 		if (c_ptr->feat == FEAT_SHOP)
 		{
 			/* Disturb */
-			disturb(0, 0);
+			disturb(0);
 
 			/* Hack -- Enter store */
 			command_new = '_';
@@ -3482,7 +3482,7 @@ void move_player_aux(int dir, int do_pickup, int run, bool_ disarm)
 		                !(f_info[cave[y][x].feat].flags1 & FF1_DOOR))
 		{
 			/* Disturb */
-			disturb(0, 0);
+			disturb(0);
 
 			if (!(c_ptr->info & (CAVE_TRDT)))
 			{
@@ -3501,7 +3501,7 @@ void move_player_aux(int dir, int do_pickup, int run, bool_ disarm)
 		else if (c_ptr->inscription)
 		{
 			/* Disturb */
-			disturb(0, 0);
+			disturb(0);
 
 			msg_format("There is an inscription here: %s",
 			           inscription_info[c_ptr->inscription].text);
@@ -4284,7 +4284,7 @@ void run_step(int dir)
 			msg_print("You cannot run in that direction.");
 
 			/* Disturb */
-			disturb(0, 0);
+			disturb(0);
 
 			/* Done */
 			return;
@@ -4304,7 +4304,7 @@ void run_step(int dir)
 		if (run_test())
 		{
 			/* Disturb */
-			disturb(0, 0);
+			disturb(0);
 
 			/* Done */
 			return;
@@ -4336,7 +4336,7 @@ void step_effects(int y, int x, int do_pickup)
 	if (cave[y][x].feat == FEAT_SHOP)
 	{
 		/* Disturb */
-		disturb(0, 0);
+		disturb(0);
 
 		/* Hack -- Enter store */
 		command_new = KTRL('V');
@@ -4346,7 +4346,7 @@ void step_effects(int y, int x, int do_pickup)
 	else if (cave[y][x].t_idx != 0)
 	{
 		/* Disturb */
-		disturb(0, 0);
+		disturb(0);
 
 		if (!(cave[y][x].info & CAVE_TRDT))
 		{

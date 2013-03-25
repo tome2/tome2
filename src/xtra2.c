@@ -119,7 +119,7 @@ bool_ set_parasite(int v, int r)
 	if (!notice) return (FALSE);
 
 	/* Disturb */
-	if (disturb_state) disturb(0, 0);
+	if (disturb_state) disturb(0);
 
 	/* Recalculate bonuses */
 	p_ptr->update |= (PU_BONUS);
@@ -173,7 +173,7 @@ static bool_ set_simple_field(
 
 	/* Disturb */
 	if (disturb_state)
-		disturb(0, 0);
+		disturb(0);
 
 	/* Recalculate bonuses */
 	p_ptr->update |= (PU_BONUS);
@@ -520,7 +520,7 @@ bool_ set_mimic(int v, int p, int level)
 	if (!notice) return (FALSE);
 
 	/* Disturb */
-	if (disturb_state) disturb(0, 0);
+	if (disturb_state) disturb(0);
 
 	/* Redraw title */
 	p_ptr->redraw |= (PR_TITLE);
@@ -817,7 +817,7 @@ bool_ set_fast(int v, int p)
 	if (!notice) return (FALSE);
 
 	/* Disturb */
-	if (disturb_state) disturb(0, 0);
+	if (disturb_state) disturb(0);
 
 	/* Recalculate bonuses */
 	p_ptr->update |= (PU_BONUS);
@@ -1179,7 +1179,7 @@ bool_ set_tim_thunder(int v, int p1, int p2)
 	if (!notice) return (FALSE);
 
 	/* Disturb */
-	if (disturb_state) disturb(0, 0);
+	if (disturb_state) disturb(0);
 
 	/* Recalculate bonuses */
 	p_ptr->update |= (PU_BONUS);
@@ -1406,7 +1406,7 @@ bool_ set_tim_regen(int v, int p)
 	if (!notice) return (FALSE);
 
 	/* Disturb */
-	if (disturb_state) disturb(0, 0);
+	if (disturb_state) disturb(0);
 
 	/* Handle stuff */
 	handle_stuff();
@@ -1546,7 +1546,7 @@ bool_ set_stun(int v)
 			/* None */
 		case 0:
 			msg_print("You are no longer stunned.");
-			if (disturb_state) disturb(0, 0);
+			if (disturb_state) disturb(0);
 			break;
 		}
 
@@ -1561,7 +1561,7 @@ bool_ set_stun(int v)
 	if (!notice) return (FALSE);
 
 	/* Disturb */
-	if (disturb_state) disturb(0, 0);
+	if (disturb_state) disturb(0);
 
 	/* Recalculate bonuses */
 	p_ptr->update |= (PU_BONUS);
@@ -1754,7 +1754,7 @@ bool_ set_cut(int v)
 			/* None */
 		case 0:
 			msg_print("You are no longer bleeding.");
-			if (disturb_state) disturb(0, 0);
+			if (disturb_state) disturb(0);
 			break;
 		}
 
@@ -1769,7 +1769,7 @@ bool_ set_cut(int v)
 	if (!notice) return (FALSE);
 
 	/* Disturb */
-	if (disturb_state) disturb(0, 0);
+	if (disturb_state) disturb(0);
 
 	/* Recalculate bonuses */
 	p_ptr->update |= (PU_BONUS);
@@ -1983,7 +1983,7 @@ bool_ set_food(int v)
 	if (!notice) return (FALSE);
 
 	/* Disturb */
-	if (disturb_state) disturb(0, 0);
+	if (disturb_state) disturb(0);
 
 	/* Recalculate bonuses */
 	p_ptr->update |= (PU_BONUS);
@@ -3690,7 +3690,7 @@ void verify_panel(void)
 	panel_col_min = pcol_min;
 
 	/* Hack -- optional disturb on "panel change" */
-	if (disturb_panel && !center_player) disturb(0, 0);
+	if (disturb_panel && !center_player) disturb(0);
 
 	/* Recalculate the boundaries */
 	panel_bounds();

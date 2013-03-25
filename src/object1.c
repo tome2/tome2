@@ -6253,7 +6253,7 @@ void py_pickup_floor(int pickup)
 		next_o_idx = o_ptr->next_o_idx;
 
 		/* Hack -- disturb */
-		disturb(0, 0);
+		disturb(0);
 
 		/* Pick up gold */
 		if (o_ptr->tval == TV_GOLD)

@@ -1884,7 +1884,7 @@ void update_mon(int m_idx, bool_ full)
 			/* Disturb on appearance */
 			if (disturb_move)
 			{
-				if (disturb_pets || (is_friend(m_ptr) <= 0)) disturb(1, 0);
+				if (disturb_pets || (is_friend(m_ptr) <= 0)) disturb(1);
 			}
 		}
 
@@ -1924,7 +1924,7 @@ void update_mon(int m_idx, bool_ full)
 			/* Disturb on disappearance*/
 			if (disturb_move)
 			{
-				if (disturb_pets || (is_friend(m_ptr) <= 0)) disturb(1, 0);
+				if (disturb_pets || (is_friend(m_ptr) <= 0)) disturb(1);
 			}
 		}
 	}
@@ -1951,7 +1951,7 @@ void update_mon(int m_idx, bool_ full)
 			/* Disturb on appearance */
 			if (disturb_near)
 			{
-				if (disturb_pets || (is_friend(m_ptr) <= 0)) disturb(1, 0);
+				if (disturb_pets || (is_friend(m_ptr) <= 0)) disturb(1);
 			}
 
 		}
@@ -1972,7 +1972,7 @@ void update_mon(int m_idx, bool_ full)
 			/* Disturb on disappearance */
 			if (disturb_near)
 			{
-				if (disturb_pets || (is_friend(m_ptr) <= 0)) disturb(1, 0);
+				if (disturb_pets || (is_friend(m_ptr) <= 0)) disturb(1);
 			}
 		}
 	}
