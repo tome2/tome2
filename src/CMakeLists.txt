@@ -24,7 +24,7 @@ SET(SRCS
   corrupt.c joke.c mimic.c
   status.c files.c notes.c loadsave.c string_list.c
   cmd1.c cmd2.c cmd3.c cmd4.c cmd5.c cmd6.c cmd7.c
-  help.c hiscore.c range.c
+  help.c hiscore.c range.c dice.c
   generate.c gen_maze.c gen_evol.c wild.c levels.c store.c bldg.c
   cmovie.c
   wizard2.c init2.c birth.c wizard1.c init1.c main.c 

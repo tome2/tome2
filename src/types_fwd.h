@@ -81,7 +81,6 @@ struct hooks_chain;
 struct hist_type;
 struct set_type;
 struct cli_comm;
-struct dice_type;
 struct skill_type;
 struct school_idx;
 struct spell_type;

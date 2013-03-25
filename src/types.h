@@ -2469,17 +2469,6 @@ struct cli_comm
 };
 
 /*
- * Dice
- */
-typedef struct dice_type dice_type;
-struct dice_type
-{
-	long base;  /* Base value to which roll is added. */
-	long num;   /* Number of dice */
-	long sides; /* Sides per dice */
-};
-
-/*
  * Skills !
  */
 typedef struct skill_type skill_type;

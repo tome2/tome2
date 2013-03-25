@@ -2,6 +2,7 @@
 #include "string_list.h"
 #include "range.h"
 #include "device_allocation.h"
+#include "dice.h"
 
 #include "angband.h"
 

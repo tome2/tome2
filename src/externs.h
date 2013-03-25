@@ -1920,12 +1920,6 @@ int spell_x(int sval, int pval, int i);
 bool_ school_book_contains_spell(int sval, s32b spell_idx);
 void lua_cast_school_spell(s32b spell_idx, bool_ no_cost);
 
-void dice_init(dice_type *dice, long base, long num, long sides);
-bool_ dice_parse(dice_type *dice, cptr s);
-void dice_parse_checked(dice_type *dice, cptr s);
-long dice_roll(dice_type *dice);
-void dice_print(dice_type *dice, char *buf);
-
 /* spells5.c */
 void school_spells_init();
 spell_type *spell_at(s32b index);
