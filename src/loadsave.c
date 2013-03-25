@@ -1554,17 +1554,6 @@ static void do_monster(monster_type *m_ptr, int flag)
 		do_byte(&m_ptr->blow[i].d_side, flag);
 	}
 
-	/* Mind */
-	tmp = (m_ptr->mind) ? TRUE : FALSE;
-	do_byte((byte*)&tmp, flag);
-	if (tmp)
-	{
-		if (flag == LS_LOAD)
-		{
-			MAKE(m_ptr->mind, monster_mind);
-		}
-	}
-
 	/* Special race */
 	tmp = (m_ptr->sr_ptr) ? TRUE : FALSE;
 	do_byte((byte*)&tmp, flag);

@@ -495,8 +495,6 @@ void delete_monster_idx(int i)
 	/* Delete mind & special race if needed */
 	if (m_ptr->sr_ptr)
 		KILL(m_ptr->sr_ptr, monster_race);
-	if (m_ptr->mind)
-		KILL(m_ptr->mind, monster_mind);
 
 	/* Wipe the Monster */
 	m_ptr = WIPE(m_ptr, monster_type);
@@ -619,8 +617,6 @@ static void compact_monsters_aux(int i1, int i2)
 	/* Delete mind & special race if needed */
 	if (m_list[i1].sr_ptr)
 		KILL(m_list[i1].sr_ptr, monster_race);
-	if (m_list[i1].mind)
-		KILL(m_list[i1].mind, monster_mind);
 
 	/* Wipe the hole */
 	m_ptr = WIPE(&m_list[i1], monster_type);
@@ -743,8 +739,6 @@ void wipe_m_list(void)
 		/* Delete mind & special race if needed */
 		if (m_ptr->sr_ptr)
 			KILL(m_ptr->sr_ptr, monster_race);
-		if (m_ptr->mind)
-			KILL(m_ptr->mind, monster_mind);
 
 
 		/* Wipe the Monster */
@@ -2360,7 +2354,6 @@ s16b place_monster_one(int y, int x, int r_idx, int ego, bool_ slp, int status)
 
 	/* No special, no mind */
 	m_ptr->sr_ptr = place_monster_one_race;
-	m_ptr->mind = NULL;
 
 	/* Place the monster at the location */
 	m_ptr->fy = y;

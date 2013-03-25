@@ -836,22 +836,6 @@ struct object_type
 
 
 /*
- * Monster mind, use for skills and such
- */
-typedef struct monster_mind monster_mind;
-struct monster_mind
-{
-	/*
-	 * Without this, bcc can't compile because it does not
-	 * allow empty structure.  Remove this when you add some
-	 * variables to this structure.  -- Kusunose
-	 */
-	byte dummy;
-};
-
-
-
-/*
  * Monster information, for a specific monster.
  *
  * Note: fy, fx constrain dungeon size to 256x256
@@ -910,8 +894,6 @@ struct monster_type
 	s16b possessor;                 /* Is it under the control of a possessor ? */
 
 	monster_race *sr_ptr;           /* Does it have a specific race(not in r_info) */
-
-	monster_mind *mind;             /* Does it have a mind? */
 };
 
 
