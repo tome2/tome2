@@ -2214,10 +2214,10 @@ struct flags_group
 typedef struct power_type power_type;
 struct power_type
 {
-	char *name;              /* Name */
-	char *desc_text;         /* Text describing power */
-	char *gain_text;         /* Text displayed on gaining the power */
-	char *lose_text;         /* Text displayed on losing the power */
+	const char *name;              /* Name */
+	const char *desc_text;         /* Text describing power */
+	const char *gain_text;         /* Text displayed on gaining the power */
+	const char *lose_text;         /* Text displayed on losing the power */
 
 	byte level;             /* Min level */
 	byte cost;              /* Mana/Life cost */
