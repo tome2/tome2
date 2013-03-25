@@ -1,5 +1,4 @@
-#ifndef H_e7e01ebf_e19f_439d_b88d_cad51446a7a0
-#define H_e7e01ebf_e19f_439d_b88d_cad51446a7a0
+#pragma once
 
 #include "spell_type_fwd.h"
 
@@ -93,6 +92,4 @@ bool_ spell_type_dependencies_satisfied(spell_type *spell);
 
 #ifdef __cplusplus
 } // extern "C"
-#endif
-
 #endif

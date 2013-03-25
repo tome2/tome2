@@ -1,5 +1,4 @@
-#ifndef H_ce003b12_cf58_444f_a927_5451f6dd8af1
-#define H_ce003b12_cf58_444f_a927_5451f6dd8af1
+#pragma once
 
 #ifdef __cplusplus
 extern "C" {
@@ -22,6 +21,4 @@ struct spell_type;
 
 #ifdef __cplusplus
 } // extern "C"
-#endif
-
 #endif
