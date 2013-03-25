@@ -1,10 +1,11 @@
 #include "q_thrain.h"
 #include "quark.h"
 #include "messages.h"
+#include "hooks.h"
 
 #define cquest (quest[QUEST_THRAIN])
 
-bool_ quest_thrain_death_hook(char *fmt)
+static bool_ quest_thrain_death_hook(const char *fmt)
 {
 	s32b m_idx;
 	int r, x, y;
@@ -90,7 +91,7 @@ bool_ quest_thrain_death_hook(char *fmt)
 	return (FALSE);
 }
 
-bool_ quest_thrain_gen_hook(char *fmt)
+static bool_ quest_thrain_gen_hook(const char *fmt)
 {
 	s32b x, y, bx0, by0;
 	int xstart;
@@ -161,7 +162,8 @@ bool_ quest_thrain_gen_hook(char *fmt)
 
 	return (TRUE);
 }
-bool_ quest_thrain_feeling_hook(char *fmt)
+
+static bool_ quest_thrain_feeling_hook(const char *fmt)
 {
 	if (dungeon_type != DUNGEON_DOL_GULDUR) return (FALSE);
 	if (cquest.data[0] != dun_level) return (FALSE);
@@ -173,7 +175,8 @@ bool_ quest_thrain_feeling_hook(char *fmt)
 
 	return (FALSE);
 }
-bool_ quest_thrain_move_hook(char *fmt)
+
+static bool_ quest_thrain_move_hook(const char *fmt)
 {
 	s32b y;
 	s32b x;
@@ -204,12 +207,14 @@ bool_ quest_thrain_move_hook(char *fmt)
 
 	return (FALSE);
 }
-bool_ quest_thrain_turn_hook(char *fmt)
+
+static bool_ quest_thrain_turn_hook(const char *fmt)
 {
 	cquest.data[1] = 0;
 	cquest.data[2] = 0;
 	return (FALSE);
 }
+
 bool_ quest_thrain_init_hook(int q)
 {
 	if (!cquest.data[0])

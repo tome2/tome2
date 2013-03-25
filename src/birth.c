@@ -12,6 +12,7 @@
 
 #include "angband.h"
 #include "messages.h"
+#include "hooks.h"
 #include "q_rand.h"
 
 /*

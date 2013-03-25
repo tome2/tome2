@@ -1,6 +1,7 @@
 #include "q_poison.h"
 #include "quark.h"
 #include "messages.h"
+#include "hooks.h"
 
 #define cquest (quest[QUEST_POISON])
 
@@ -24,7 +25,7 @@ static bool_ create_molds_hook(int r_idx)
 	else return FALSE;
 }
 
-bool_ quest_poison_gen_hook(char *fmt)
+static bool_ quest_poison_gen_hook(const char *fmt)
 {
 	int cy = 1, cx = 1, x, y, tries = 10000, r_idx;
 	bool_ (*old_get_mon_num_hook)(int r_idx);
@@ -101,7 +102,8 @@ bool_ quest_poison_gen_hook(char *fmt)
 
 	return FALSE;
 }
-bool_ quest_poison_finish_hook(char *fmt)
+
+static bool_ quest_poison_finish_hook(const char *fmt)
 {
 	object_type forge, *q_ptr;
 	s32b q_idx;
@@ -132,7 +134,8 @@ bool_ quest_poison_finish_hook(char *fmt)
 
 	return TRUE;
 }
-bool_ quest_poison_dump_hook(char *fmt)
+
+static bool_ quest_poison_dump_hook(const char *fmt)
 {
 	if (cquest.status >= QUEST_STATUS_COMPLETED)
 	{
@@ -140,7 +143,8 @@ bool_ quest_poison_dump_hook(char *fmt)
 	}
 	return (FALSE);
 }
-bool_ quest_poison_quest_hook(char *fmt)
+
+static bool_ quest_poison_quest_hook(const char *fmt)
 {
 	object_type forge, *q_ptr;
 	s32b q_idx;
@@ -163,7 +167,8 @@ bool_ quest_poison_quest_hook(char *fmt)
 
 	return FALSE;
 }
-bool_ quest_poison_drop_hook(char *fmt)
+
+static bool_ quest_poison_drop_hook(const char *fmt)
 {
 	s32b mcnt = 0, i, x, y, o_idx;
 	object_type *o_ptr;
@@ -216,6 +221,7 @@ bool_ quest_poison_drop_hook(char *fmt)
 	}
 	return FALSE;
 }
+
 bool_ quest_poison_init_hook(int q_idx)
 {
 	/* Get a place to place the poison */

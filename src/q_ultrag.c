@@ -1,8 +1,9 @@
 #include "q_ultrag.h"
+#include "hooks.h"
 
 #define cquest (quest[QUEST_ULTRA_GOOD])
 
-bool_ quest_ultra_good_move_hook(char *fmt)
+static bool_ quest_ultra_good_move_hook(const char *fmt)
 {
 	s32b y, x;
 	cave_type *c_ptr;
@@ -74,7 +75,7 @@ bool_ quest_ultra_good_move_hook(char *fmt)
 	return FALSE;
 }
 
-bool_ quest_ultra_good_stair_hook(char *fmt)
+static bool_ quest_ultra_good_stair_hook(const char *fmt)
 {
 	cptr dir;
 
@@ -137,7 +138,7 @@ bool_ quest_ultra_good_stair_hook(char *fmt)
 	return FALSE;
 }
 
-bool_ quest_ultra_good_recall_hook(char *fmt)
+static bool_ quest_ultra_good_recall_hook(const char *fmt)
 {
 	if ((dungeon_type != DUNGEON_VOID) && (dungeon_type != DUNGEON_NETHER_REALM))
 		return FALSE;
@@ -146,7 +147,7 @@ bool_ quest_ultra_good_recall_hook(char *fmt)
 	return TRUE;
 }
 
-bool_ quest_ultra_good_death_hook(char *fmt)
+static bool_ quest_ultra_good_death_hook(const char *fmt)
 {
 	s32b m_idx = get_next_arg(fmt);
 
@@ -232,7 +233,8 @@ bool_ quest_ultra_good_death_hook(char *fmt)
 	}
 	return (FALSE);
 }
-bool_ quest_ultra_good_dump_hook(char *fmt)
+
+static bool_ quest_ultra_good_dump_hook(const char *fmt)
 {
 	if (quest[QUEST_ULTRA_GOOD].status >= QUEST_STATUS_TAKEN)
 	{

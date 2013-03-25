@@ -1,5 +1,6 @@
 #include "q_god.h"
 #include "quark.h"
+#include "hooks.h"
 
 #include <assert.h>
 
@@ -864,7 +865,7 @@ static void quest_god_set_god_dungeon_attributes_mandos()
 	d_info[DUNGEON_GOD].rules[0].mflags3 = RF3_UNDEAD | RF3_EVIL;
 }
 
-static bool_ quest_god_level_end_gen_hook(char *fmt)
+static bool_ quest_god_level_end_gen_hook(const char *fmt)
 {
 	/* Check for dungeon */
 	if ((dungeon_type != DUNGEON_GOD) ||
@@ -921,7 +922,7 @@ static bool_ quest_god_level_end_gen_hook(char *fmt)
 	return FALSE;
 }
 
-static bool_ quest_god_player_level_hook(char *fmt)
+static bool_ quest_god_player_level_hook(const char *fmt)
 {
 	s32b gained = get_next_arg(fmt);
 
@@ -981,7 +982,7 @@ static bool_ quest_god_player_level_hook(char *fmt)
 	return FALSE;
 }
 
-static bool_ quest_god_get_hook(char *fmt)
+static bool_ quest_god_get_hook(const char *fmt)
 {
 	s32b item;
 	object_type *o_ptr = NULL;
@@ -1039,7 +1040,7 @@ static bool_ quest_god_get_hook(char *fmt)
 	return FALSE;
 }
 
-static bool_ quest_god_char_dump_hook(char *fmt)
+static bool_ quest_god_char_dump_hook(const char *fmt)
 {
 	if (cquest_quests_given > 0)
 	{
@@ -1140,26 +1141,26 @@ static void quest_god_dungeon_setup(int d_idx)
 	set_god_dungeon_attributes();
 }
 
-static bool_ quest_god_enter_dungeon_hook(char *fmt)
+static bool_ quest_god_enter_dungeon_hook(const char *fmt)
 {
 	s32b d_idx = get_next_arg(fmt);
 	quest_god_dungeon_setup(d_idx);
 	return FALSE;
 }
 
-static bool_ quest_god_gen_level_begin_hook(char *fmt)
+static bool_ quest_god_gen_level_begin_hook(const char *fmt)
 {
 	quest_god_dungeon_setup(dungeon_type);
 	return FALSE;
 }
 
-static bool_ quest_god_stair_hook(char *fmt)
+static bool_ quest_god_stair_hook(const char *fmt)
 {
 	quest_god_dungeon_setup(dungeon_type);
 	return FALSE;
 }
 
-static bool_ quest_god_birth_objects_hook(char *fmt)
+static bool_ quest_god_birth_objects_hook(const char *fmt)
 {
 	cquest_quests_given = 0;
 	cquest_relics_found = 0;

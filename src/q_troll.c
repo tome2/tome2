@@ -1,8 +1,9 @@
 #include "q_troll.h"
+#include "hooks.h"
 
 #define cquest (quest[QUEST_TROLL])
 
-bool_ quest_troll_gen_hook(char *fmt)
+static bool_ quest_troll_gen_hook(const char *fmt)
 {
 	int x, y;
 	int xstart = 2;
@@ -94,7 +95,8 @@ bool_ quest_troll_gen_hook(char *fmt)
 	cquest.data[0] = FALSE;
 	return TRUE;
 }
-bool_ quest_troll_finish_hook(char *fmt)
+
+static bool_ quest_troll_finish_hook(const char *fmt)
 {
 	s32b q_idx;
 
@@ -114,7 +116,8 @@ bool_ quest_troll_finish_hook(char *fmt)
 
 	return TRUE;
 }
-bool_ quest_troll_death_hook(char *fmt)
+
+static bool_ quest_troll_death_hook(const char *fmt)
 {
 	int x, y, xstart = 2, ystart = 2;
 	s32b r_idx, m_idx;
@@ -167,6 +170,7 @@ bool_ quest_troll_death_hook(char *fmt)
 
 	return FALSE;
 }
+
 bool_ quest_troll_init_hook(int q_idx)
 {
 	if ((cquest.status >= QUEST_STATUS_TAKEN) && (cquest.status < QUEST_STATUS_FINISHED))

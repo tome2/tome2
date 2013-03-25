@@ -11,6 +11,7 @@
  */
 
 #include "angband.h"
+#include "hooks.h"
 
 void do_cmd_wizard_body(s16b);
 extern void status_main(void);

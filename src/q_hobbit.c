@@ -1,9 +1,10 @@
 #include "q_hobbit.h"
 #include "messages.h"
+#include "hooks.h"
 
 #define cquest (quest[QUEST_HOBBIT])
 
-bool_ quest_hobbit_town_gen_hook(char *fmt)
+static bool_ quest_hobbit_town_gen_hook(const char *fmt)
 {
 	int x = 1, y = 1, tries = 10000;
 	s32b small;
@@ -35,7 +36,8 @@ bool_ quest_hobbit_town_gen_hook(char *fmt)
 
 	return FALSE;
 }
-bool_ quest_hobbit_gen_hook(char *fmt)
+
+static bool_ quest_hobbit_gen_hook(const char *fmt)
 {
 	int x = 1, y = 1, tries = 10000;
 
@@ -62,7 +64,8 @@ bool_ quest_hobbit_gen_hook(char *fmt)
 
 	return FALSE;
 }
-bool_ quest_hobbit_give_hook(char *fmt)
+
+static bool_ quest_hobbit_give_hook(const char *fmt)
 {
 	object_type *o_ptr;
 	monster_type *m_ptr;
@@ -92,7 +95,8 @@ bool_ quest_hobbit_give_hook(char *fmt)
 
 	return TRUE;
 }
-bool_ quest_hobbit_speak_hook(char *fmt)
+
+static bool_ quest_hobbit_speak_hook(const char *fmt)
 {
 	s32b m_idx = get_next_arg(fmt);
 
@@ -108,7 +112,8 @@ bool_ quest_hobbit_speak_hook(char *fmt)
 	}
 	return (TRUE);
 }
-bool_ quest_hobbit_chat_hook(char *fmt)
+
+static bool_ quest_hobbit_chat_hook(const char *fmt)
 {
 	monster_type *m_ptr;
 	s32b m_idx;
@@ -160,7 +165,8 @@ bool_ quest_hobbit_chat_hook(char *fmt)
 
 	return TRUE;
 }
-bool_ quest_hobbit_dump_hook(char *fmt)
+
+static bool_ quest_hobbit_dump_hook(const char *fmt)
 {
 	if (cquest.status >= QUEST_STATUS_COMPLETED)
 	{
@@ -168,6 +174,7 @@ bool_ quest_hobbit_dump_hook(char *fmt)
 	}
 	return (FALSE);
 }
+
 bool_ quest_hobbit_init_hook(int q_idx)
 {
 	/* Get a level to place the hobbit */

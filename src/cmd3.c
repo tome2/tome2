@@ -13,6 +13,7 @@
 #include "angband.h"
 
 #include "quark.h"
+#include "hooks.h"
 
 /*
  * Display p_ptr->inventory

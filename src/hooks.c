@@ -1,7 +1,3 @@
-/* File: plots.c */
-
-/* Purpose: plots & quests */
-
 /*
  * Copyright (c) 2001 James E. Wilson, Robert A. Koeneke, DarkGod
  *
@@ -9,9 +5,8 @@
  * not for profit purposes provided that this copyright and statement are
  * included in all such copies.
  */
-
+#include "hooks.h"
 #include "angband.h"
-
 #include <assert.h>
 
 /******** Hooks stuff *********/
@@ -42,38 +37,6 @@ void init_hooks()
 			quest[i].init(i);
 		}
 	}
-}
-
-void dump_hooks(int h_idx)
-{
-	int min = 0, max = MAX_HOOKS, i;
-
-	if (h_idx != -1)
-	{
-		min = h_idx;
-		max = h_idx + 1;
-	}
-
-	for (i = min; i < max; i++)
-	{
-		hooks_chain *c = hooks_heads[i];
-
-		/* Find it */
-		while (c != NULL)
-		{
-			msg_format("%s(%s)", c->name, (c->type == HOOK_TYPE_C) ? "C" : "Lua");
-
-			c = c->next;
-		}
-	}
-}
-
-/* Check a hook */
-bool_ check_hook(int h_idx)
-{
-	hooks_chain *c = hooks_heads[h_idx];
-
-	return (c != NULL);
 }
 
 /* Add a hook */
@@ -136,38 +99,11 @@ void del_hook(int h_idx, hook_type hook)
 	}
 }
 
-void del_hook_name(int h_idx, cptr name)
-{
-	hooks_chain *c = hooks_heads[h_idx], *p = NULL;
-
-	/* Find it */
-	while ((c != NULL) && (strcmp(c->name, name)))
-	{
-		p = c;
-		c = c->next;
-	}
-
-	/* Remove it */
-	if (c != NULL)
-	{
-		if (p == NULL)
-		{
-			hooks_heads[h_idx] = c->next;
-			FREE(c, hooks_chain);
-		}
-		else
-		{
-			p->next = c->next;
-			FREE(c, hooks_chain);
-		}
-	}
-}
-
 /* get the next argument */
 static hook_return param_pile[MAX_ARGS];
 static int get_next_arg_pos = 0;
 static int get_next_arg_pile_pos = 0;
-s32b get_next_arg(char *fmt)
+s32b get_next_arg(const char *fmt)
 {
 	while (TRUE)
 	{
@@ -185,7 +121,7 @@ s32b get_next_arg(char *fmt)
 		}
 	}
 }
-char* get_next_arg_str(char *fmt)
+char* get_next_arg_str(const char *fmt)
 {
 	while (TRUE)
 	{
@@ -336,13 +272,4 @@ bool_ process_hooks_new(int h_idx, void *in, void *out)
 	}
 
 	return FALSE;
-}
-
-/******** Plots & Quest stuff ********/
-
-/* Catch-all quest hook */
-bool_ quest_null_hook(int q)
-{
-	/* Do nothing */
-	return (FALSE);
 }

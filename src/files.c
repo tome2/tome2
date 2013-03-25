@@ -13,6 +13,7 @@
 #include "angband.h"
 
 #include "hiscore.h"
+#include "hooks.h"
 
 
 /*

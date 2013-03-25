@@ -1,8 +1,9 @@
 #include "q_spider.h"
+#include "hooks.h"
 
 #define cquest (quest[QUEST_SPIDER])
 
-bool_ quest_spider_gen_hook(char *fmt)
+static bool_ quest_spider_gen_hook(const char *fmt)
 {
 	int x, y;
 	int xstart = 2;
@@ -31,7 +32,8 @@ bool_ quest_spider_gen_hook(char *fmt)
 
 	return TRUE;
 }
-bool_ quest_spider_death_hook(char *fmt)
+
+static bool_ quest_spider_death_hook(const char *fmt)
 {
 	int i, mcnt = 0;
 
@@ -67,7 +69,8 @@ bool_ quest_spider_death_hook(char *fmt)
 
 	return (FALSE);
 }
-bool_ quest_spider_finish_hook(char *fmt)
+
+static bool_ quest_spider_finish_hook(const char *fmt)
 {
 	object_type forge, *q_ptr;
 	s32b q_idx;
@@ -97,6 +100,7 @@ bool_ quest_spider_finish_hook(char *fmt)
 
 	return TRUE;
 }
+
 bool_ quest_spider_init_hook(int q_idx)
 {
 	if ((cquest.status >= QUEST_STATUS_TAKEN) && (cquest.status < QUEST_STATUS_FINISHED))

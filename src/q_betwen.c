@@ -1,8 +1,9 @@
 #include "q_betwen.h"
+#include "hooks.h"
 
 #define cquest (quest[QUEST_BETWEEN])
 
-bool_ quest_between_move_hook(char *fmt)
+static bool_ quest_between_move_hook(const char *fmt)
 {
 	s32b y;
 	s32b x;
@@ -50,7 +51,8 @@ bool_ quest_between_move_hook(char *fmt)
 
 	return FALSE;
 }
-bool_ quest_between_gen_hook(char *fmt)
+
+static bool_ quest_between_gen_hook(const char *fmt)
 {
 	int x, y;
 	int xstart = 2;
@@ -84,7 +86,8 @@ bool_ quest_between_gen_hook(char *fmt)
 
 	return TRUE;
 }
-bool_ quest_between_finish_hook(char *fmt)
+
+static bool_ quest_between_finish_hook(const char *fmt)
 {
 	s32b q_idx;
 	object_type forge, *q_ptr;
@@ -122,7 +125,8 @@ bool_ quest_between_finish_hook(char *fmt)
 
 	return TRUE;
 }
-bool_ quest_between_death_hook(char *fmt)
+
+static bool_ quest_between_death_hook(const char *fmt)
 {
 	int i, mcnt = 0;
 
@@ -151,7 +155,8 @@ bool_ quest_between_death_hook(char *fmt)
 
 	return FALSE;
 }
-bool_ quest_between_dump_hook(char *fmt)
+
+static bool_ quest_between_dump_hook(const char *fmt)
 {
 	if (cquest.status >= QUEST_STATUS_COMPLETED)
 	{
@@ -160,7 +165,8 @@ bool_ quest_between_dump_hook(char *fmt)
 	}
 	return (FALSE);
 }
-bool_ quest_between_forbid_hook(char *fmt)
+
+static bool_ quest_between_forbid_hook(const char *fmt)
 {
 	s32b q_idx;
 	q_idx = get_next_arg(fmt);
@@ -174,6 +180,7 @@ bool_ quest_between_forbid_hook(char *fmt)
 	}
 	return (FALSE);
 }
+
 bool_ quest_between_init_hook(int q)
 {
 	if ((cquest.status >= QUEST_STATUS_TAKEN) && (cquest.status < QUEST_STATUS_FINISHED))

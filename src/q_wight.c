@@ -1,9 +1,10 @@
 #include "q_wight.h"
 #include "quark.h"
+#include "hooks.h"
 
 #define cquest (quest[QUEST_WIGHT])
 
-bool_ quest_wight_gen_hook(char *fmt)
+static bool_ quest_wight_gen_hook(const char *fmt)
 {
 	int x, y;
 	int xstart = 2;
@@ -103,7 +104,8 @@ bool_ quest_wight_gen_hook(char *fmt)
 
 	return TRUE;
 }
-bool_ quest_wight_death_hook(char *fmt)
+
+static bool_ quest_wight_death_hook(const char *fmt)
 {
 	s32b r_idx, m_idx;
 
@@ -127,7 +129,8 @@ bool_ quest_wight_death_hook(char *fmt)
 
 	return (FALSE);
 }
-bool_ quest_wight_finish_hook(char *fmt)
+
+static bool_ quest_wight_finish_hook(const char *fmt)
 {
 	s32b q_idx;
 	q_idx = get_next_arg(fmt);
@@ -146,6 +149,7 @@ bool_ quest_wight_finish_hook(char *fmt)
 
 	return TRUE;
 }
+
 bool_ quest_wight_init_hook(int q_idx)
 {
 	if ((cquest.status >= QUEST_STATUS_TAKEN) && (cquest.status < QUEST_STATUS_FINISHED))

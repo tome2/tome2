@@ -15,6 +15,7 @@
 #include <assert.h>
 
 #include "quark.h"
+#include "hooks.h"
 #include "spell_type.h"
 
 #define TY_CURSE_CHANCE 100

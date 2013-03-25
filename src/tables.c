@@ -3493,7 +3493,7 @@ quest_type quest[MAX_Q_IDX] =
 		0,
 
 		NULL,
-		quest_null_hook,
+		NULL,
 		{0, 0},
 		NULL,
 	},

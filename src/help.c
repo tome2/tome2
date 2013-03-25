@@ -12,6 +12,7 @@
  */
 
 #include "angband.h"
+#include "hooks.h"
 
 #define DESC_MAX 14
 #define TRIGGERED_HELP_MAX 19

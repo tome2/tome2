@@ -14,6 +14,7 @@
 
 #include "quark.h"
 #include "spell_type.h"
+#include "hooks.h"
 
 /*
  * Hack -- note that "TERM_MULTI" is now just "TERM_VIOLET".

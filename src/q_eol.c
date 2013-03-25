@@ -1,8 +1,9 @@
 #include "q_eol.h"
+#include "hooks.h"
 
 #define cquest (quest[QUEST_EOL])
 
-bool_ quest_eol_gen_hook(char *fmt)
+static bool_ quest_eol_gen_hook(const char *fmt)
 {
 	int x, y;
 	bool_ done = FALSE;
@@ -82,7 +83,8 @@ bool_ quest_eol_gen_hook(char *fmt)
 
 	return TRUE;
 }
-bool_ quest_eol_finish_hook(char *fmt)
+
+static bool_ quest_eol_finish_hook(const char *fmt)
 {
 	object_type forge, *q_ptr;
 	s32b q_idx;
@@ -114,7 +116,8 @@ bool_ quest_eol_finish_hook(char *fmt)
 
 	return TRUE;
 }
-bool_ quest_eol_fail_hook(char *fmt)
+
+static bool_ quest_eol_fail_hook(const char *fmt)
 {
 	s32b q_idx;
 
@@ -132,7 +135,8 @@ bool_ quest_eol_fail_hook(char *fmt)
 
 	return TRUE;
 }
-bool_ quest_eol_death_hook(char *fmt)
+
+static bool_ quest_eol_death_hook(const char *fmt)
 {
 	s32b r_idx, m_idx;
 
@@ -152,7 +156,8 @@ bool_ quest_eol_death_hook(char *fmt)
 
 	return FALSE;
 }
-bool_ quest_eol_stair_hook(char *fmt)
+
+static bool_ quest_eol_stair_hook(const char *fmt)
 {
 	monster_race *r_ptr = &r_info[test_monster_name("Eol, the Dark Elf")];
 	cptr down;
@@ -182,6 +187,7 @@ bool_ quest_eol_stair_hook(char *fmt)
 
 	return FALSE;
 }
+
 bool_ quest_eol_init_hook(int q)
 {
 	if ((cquest.status >= QUEST_STATUS_TAKEN) && (cquest.status < QUEST_STATUS_FINISHED))

@@ -1,5 +1,6 @@
 #include "q_fireprof.h"
 #include "quark.h"
+#include "hooks.h"
 
 #define cquest (quest[QUEST_FIREPROOF])
 
@@ -379,7 +380,7 @@ void quest_fireproof_building(bool_ *paid, bool_ *recreate)
 	}
 }
 
-static bool_ fireproof_get_hook(char *fmt)
+static bool_ fireproof_get_hook(const char *fmt)
 {
 	object_type *o_ptr = get_next_arg_obj();
 
@@ -398,7 +399,7 @@ static bool_ fireproof_get_hook(char *fmt)
 	return FALSE;
 }
 
-static bool_ fireproof_stair_hook(char *fmt)
+static bool_ fireproof_stair_hook(const char *fmt)
 {
 	/* only ask this if player about to go up stairs of quest and
 	 * hasn't retrieved item */
@@ -480,7 +481,7 @@ bool_ quest_fireproof_describe(FILE *hook_file)
 	return TRUE;
 }
 
-static bool_ fireproof_gen_hook(char *fmt)
+static bool_ fireproof_gen_hook(const char *fmt)
 {
 	fireproof_settings const *settings = fireproof_get_settings();
 

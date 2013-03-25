@@ -8,6 +8,7 @@
 
 #include "messages.h"
 #include "quark.h"
+#include "hooks.h"
 
 /*
  * This file is used to initialise various variables and arrays for the

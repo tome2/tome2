@@ -11,6 +11,7 @@
  */
 
 #include "angband.h"
+#include "hooks.h"
 
 #define WEIRD_LUCK      12
 #define BIAS_LUCK       20

@@ -11,6 +11,7 @@
  */
 
 #include "angband.h"
+#include "hooks.h"
 
 #define MAX_HORROR 20
 #define MAX_FUNNY 22

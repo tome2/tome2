@@ -1,8 +1,9 @@
 #include "q_haunted.h"
+#include "hooks.h"
 
 #define cquest (quest[QUEST_HAUNTED])
 
-bool_ quest_haunted_gen_hook(char *fmt)
+static bool_ quest_haunted_gen_hook(const char *fmt)
 {
 	int x, y, i, m_idx;
 	int xstart = 2;
@@ -87,7 +88,7 @@ bool_ quest_haunted_gen_hook(char *fmt)
 	return TRUE;
 }
 
-bool_ quest_haunted_death_hook(char *fmt)
+static bool_ quest_haunted_death_hook(const char *fmt)
 {
 	int i, mcnt = 0;
 
@@ -119,7 +120,7 @@ bool_ quest_haunted_death_hook(char *fmt)
 	return FALSE;
 }
 
-bool_ quest_haunted_finish_hook(char *fmt)
+static bool_ quest_haunted_finish_hook(const char *fmt)
 {
 	s32b q_idx;
 

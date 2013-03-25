@@ -14,6 +14,7 @@
 
 #include "spell_type.h"
 #include "device_allocation.h"
+#include "hooks.h"
 
 
 /*

@@ -16,6 +16,7 @@
 #include <assert.h>
 
 #include "quark.h"
+#include "hooks.h"
 
 /*
  * Invoke The Rush

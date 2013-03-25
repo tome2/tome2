@@ -1,8 +1,9 @@
 #include "q_thief.h"
+#include "hooks.h"
 
 #define cquest (quest[QUEST_THIEVES])
 
-bool_ quest_thieves_gen_hook(char *fmt)
+static bool_ quest_thieves_gen_hook(const char *fmt)
 {
 	int x, y;
 	int xstart = 2;
@@ -62,7 +63,8 @@ bool_ quest_thieves_gen_hook(char *fmt)
 
 	return TRUE;
 }
-bool_ quest_thieves_hook(char *fmt)
+
+static bool_ quest_thieves_hook(const char *fmt)
 {
 	int i, mcnt = 0;
 
@@ -114,7 +116,8 @@ bool_ quest_thieves_hook(char *fmt)
 	}
 	return FALSE;
 }
-bool_ quest_thieves_finish_hook(char *fmt)
+
+static bool_ quest_thieves_finish_hook(const char *fmt)
 {
 	s32b q_idx;
 
@@ -147,7 +150,7 @@ bool_ quest_thieves_finish_hook(char *fmt)
 	return TRUE;
 }
 
-bool_ quest_thieves_feeling_hook(char *fmt)
+static bool_ quest_thieves_feeling_hook(const char *fmt)
 {
 	if (p_ptr->inside_quest != QUEST_THIEVES) return FALSE;
 

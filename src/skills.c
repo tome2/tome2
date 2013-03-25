@@ -13,6 +13,7 @@
 #include "angband.h"
 
 #include <math.h>
+#include "hooks.h"
 
 /*
  * Advance the skill point of the skill specified by i and

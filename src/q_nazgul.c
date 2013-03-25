@@ -1,8 +1,9 @@
 #include "q_nazgul.h"
+#include "hooks.h"
 
 #define cquest (quest[QUEST_NAZGUL])
 
-bool_ quest_nazgul_gen_hook(char *fmt)
+static bool_ quest_nazgul_gen_hook(const char *fmt)
 {
 	int m_idx, x = 1, y = 1, tries = 10000;
 	s32b small;
@@ -34,7 +35,8 @@ bool_ quest_nazgul_gen_hook(char *fmt)
 
 	return FALSE;
 }
-bool_ quest_nazgul_finish_hook(char *fmt)
+
+static bool_ quest_nazgul_finish_hook(const char *fmt)
 {
 	object_type forge, *q_ptr;
 	s32b q_idx;
@@ -64,7 +66,8 @@ bool_ quest_nazgul_finish_hook(char *fmt)
 
 	return TRUE;
 }
-bool_ quest_nazgul_dump_hook(char *fmt)
+
+static bool_ quest_nazgul_dump_hook(const char *fmt)
 {
 	if (cquest.status >= QUEST_STATUS_COMPLETED)
 	{
@@ -72,7 +75,8 @@ bool_ quest_nazgul_dump_hook(char *fmt)
 	}
 	return (FALSE);
 }
-bool_ quest_nazgul_forbid_hook(char *fmt)
+
+static bool_ quest_nazgul_forbid_hook(const char *fmt)
 {
 	s32b q_idx;
 	q_idx = get_next_arg(fmt);
@@ -86,7 +90,8 @@ bool_ quest_nazgul_forbid_hook(char *fmt)
 	}
 	return (FALSE);
 }
-bool_ quest_nazgul_death_hook(char *fmt)
+
+static bool_ quest_nazgul_death_hook(const char *fmt)
 {
 	s32b r_idx, m_idx;
 
@@ -103,6 +108,7 @@ bool_ quest_nazgul_death_hook(char *fmt)
 
 	return (FALSE);
 }
+
 bool_ quest_nazgul_init_hook(int q_idx)
 {
 	if ((cquest.status >= QUEST_STATUS_TAKEN) && (cquest.status < QUEST_STATUS_FINISHED))

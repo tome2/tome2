@@ -1,8 +1,9 @@
 #include "q_invas.h"
+#include "hooks.h"
 
 #define cquest (quest[QUEST_INVASION])
 
-bool_ quest_invasion_gen_hook(char *fmt)
+static bool_ quest_invasion_gen_hook(const char *fmt)
 {
 	int x, y;
 	int xstart = 2;
@@ -44,7 +45,8 @@ bool_ quest_invasion_gen_hook(char *fmt)
 
 	return TRUE;
 }
-bool_ quest_invasion_ai_hook(char *fmt)
+
+static bool_ quest_invasion_ai_hook(const char *fmt)
 {
 	monster_type *m_ptr;
 	s32b m_idx;
@@ -83,7 +85,8 @@ bool_ quest_invasion_ai_hook(char *fmt)
 
 	return (FALSE);
 }
-bool_ quest_invasion_turn_hook(char *fmt)
+
+static bool_ quest_invasion_turn_hook(const char *fmt)
 {
 	if (cquest.status != QUEST_STATUS_UNTAKEN) return (FALSE);
 	if (p_ptr->lev < 45) return (FALSE);
@@ -107,7 +110,8 @@ bool_ quest_invasion_turn_hook(char *fmt)
 	process_hooks_restart = TRUE;
 	return (FALSE);
 }
-bool_ quest_invasion_dump_hook(char *fmt)
+
+static bool_ quest_invasion_dump_hook(const char *fmt)
 {
 	if (cquest.status == QUEST_STATUS_FAILED)
 	{
@@ -119,7 +123,8 @@ bool_ quest_invasion_dump_hook(char *fmt)
 	}
 	return (FALSE);
 }
-bool_ quest_invasion_death_hook(char *fmt)
+
+static bool_ quest_invasion_death_hook(const char *fmt)
 {
 	s32b r_idx, m_idx;
 
@@ -139,7 +144,8 @@ bool_ quest_invasion_death_hook(char *fmt)
 
 	return FALSE;
 }
-bool_ quest_invasion_stair_hook(char *fmt)
+
+static bool_ quest_invasion_stair_hook(const char *fmt)
 {
 	cptr down;
 
@@ -182,6 +188,7 @@ bool_ quest_invasion_stair_hook(char *fmt)
 
 	return TRUE;
 }
+
 bool_ quest_invasion_init_hook(int q_idx)
 {
 	add_hook(HOOK_END_TURN, quest_invasion_turn_hook, "invasion_turn");

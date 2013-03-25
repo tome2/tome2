@@ -11,6 +11,8 @@
  */
 
 #include "angband.h"
+#include "hooks.h"
+
 #define SAFE_MAX_ATTEMPTS 5000
 
 /*

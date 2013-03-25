@@ -1,4 +1,5 @@
 #include "q_rand.h"
+#include "hooks.h"
 
 static int randquest_hero[] = { 20, 13, 15, 16, 9, 17, 18, 8, -1 };
 
@@ -215,7 +216,7 @@ static void hero_death(s32b m_idx, s32b r_idx)
 	}
 }
 
-static bool_ quest_random_death_hook(char *fmt)
+static bool_ quest_random_death_hook(const char *fmt)
 {
 	int r_idx;
 	s32b m_idx;
@@ -245,14 +246,14 @@ static bool_ quest_random_death_hook(char *fmt)
 	return (FALSE);
 }
 
-static bool_ quest_random_turn_hook(char *fmt)
+static bool_ quest_random_turn_hook(const char *fmt)
 {
 	quest[QUEST_RANDOM].data[0] = 0;
 	quest[QUEST_RANDOM].data[1] = 0;
 	return (FALSE);
 }
 
-static bool_ quest_random_feeling_hook(char *fmt)
+static bool_ quest_random_feeling_hook(const char *fmt)
 {
 	if (!(dungeon_flags1 & DF1_PRINCIPAL)) return (FALSE);
 	if ((dun_level < 1) || (dun_level >= MAX_RANDOM_QUEST)) return (FALSE);
@@ -271,7 +272,7 @@ static bool_ quest_random_feeling_hook(char *fmt)
 	return (FALSE);
 }
 
-static bool_ quest_random_gen_hero_hook(char *fmt)
+static bool_ quest_random_gen_hero_hook(const char *fmt)
 {
 	int i;
 
@@ -302,7 +303,7 @@ static bool_ quest_random_gen_hero_hook(char *fmt)
 	return (FALSE);
 }
 
-static bool_ quest_random_gen_hook(char *fmt)
+static bool_ quest_random_gen_hook(const char *fmt)
 {
 	s32b x, y, bx0, by0;
 	int xstart;
@@ -385,7 +386,7 @@ static bool_ quest_random_gen_hook(char *fmt)
 	return (TRUE);
 }
 
-static bool_ quest_random_dump_hook(char *fmt)
+static bool_ quest_random_dump_hook(const char *fmt)
 {
 	static char *number[] = 
 	{ "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten" };

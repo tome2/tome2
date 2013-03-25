@@ -1,7 +1,3 @@
-/* File: modules.c */
-
-/* Purpose: T-engine modules */
-
 /*
  * Copyright (c) 2003 DarkGod
  *
@@ -11,6 +7,7 @@
  */
 
 #include "angband.h"
+#include "hooks.h"
 
 static void module_reset_dir_aux(cptr *dir, cptr new_path)
 {

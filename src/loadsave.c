@@ -8,6 +8,7 @@
 
 #include "messages.h"
 #include "quark.h"
+#include "hooks.h"
 
 static void do_byte(byte *, int);
 static void do_bool(bool_ *, int);
@@ -2715,7 +2716,7 @@ static bool_ do_savefile_aux(int flag)
 			}
 
 			/* Init the hooks */
-			if (flag == LS_LOAD)
+			if ((flag == LS_LOAD) && (quest[i].init != NULL))
 			{
 				quest[i].init(i);
 			}

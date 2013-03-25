@@ -57,7 +57,6 @@ extern "C" {
 #include "types.h"
 #include "spell_type_fwd.h"
 #include "externs.h"
-#include "plots.h"
 
 /***** Some copyright messages follow below *****/
 

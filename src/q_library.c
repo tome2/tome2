@@ -1,5 +1,6 @@
 #include "q_library.h"
 #include "quark.h"
+#include "hooks.h"
 
 #define cquest (quest[QUEST_LIBRARY])
 
@@ -375,7 +376,7 @@ static bool_ quest_library_stair_hook()
 	}
 }
 
-static bool_ quest_library_monster_death_hook(char *fmt)
+static bool_ quest_library_monster_death_hook(const char *fmt)
 {
 	int i, count = -1;
 

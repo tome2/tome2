@@ -19,6 +19,7 @@
 
 #include "messages.h"
 #include "quark.h"
+#include "hooks.h"
 
 #define SPEAK_CHANCE 8
 #define GRINDNOISE 20

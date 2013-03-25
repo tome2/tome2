@@ -1,11 +1,12 @@
 #include "q_shroom.h"
 #include "messages.h"
+#include "hooks.h"
 
 #define cquest (quest[QUEST_SHROOM])
 
-bool_ quest_shroom_speak_hook(char *fmt);
+static bool_ quest_shroom_speak_hook(const char *fmt);
 
-bool_ quest_shroom_town_gen_hook(char *fmt)
+static bool_ quest_shroom_town_gen_hook(const char *fmt)
 {
 	int m_idx, x = 1, y = 1, tries = 10000;
 	s32b small;
@@ -83,7 +84,8 @@ bool_ quest_shroom_town_gen_hook(char *fmt)
 
 	return FALSE;
 }
-bool_ quest_shroom_death_hook(char *fmt)
+
+static bool_ quest_shroom_death_hook(const char *fmt)
 {
 	s32b r_idx, m_idx;
 
@@ -101,7 +103,8 @@ bool_ quest_shroom_death_hook(char *fmt)
 
 	return FALSE;
 }
-bool_ quest_shroom_give_hook(char *fmt)
+
+static bool_ quest_shroom_give_hook(const char *fmt)
 {
 	object_type *o_ptr;
 	monster_type *m_ptr;
@@ -185,7 +188,8 @@ bool_ quest_shroom_give_hook(char *fmt)
 
 	return TRUE;
 }
-bool_ quest_shroom_speak_hook(char *fmt)
+
+static bool_ quest_shroom_speak_hook(const char *fmt)
 {
 	s32b m_idx = get_next_arg(fmt);
 
@@ -222,7 +226,8 @@ bool_ quest_shroom_speak_hook(char *fmt)
 	}
 	return (TRUE);
 }
-bool_ quest_shroom_chat_hook(char *fmt)
+
+static bool_ quest_shroom_chat_hook(const char *fmt)
 {
 	monster_type *m_ptr;
 	s32b m_idx;
@@ -267,6 +272,7 @@ bool_ quest_shroom_chat_hook(char *fmt)
 
 	return TRUE;
 }
+
 bool_ quest_shroom_init_hook(int q_idx)
 {
 	/* Get a number of 'shrooms */

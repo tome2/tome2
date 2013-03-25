@@ -13,6 +13,7 @@
 #include "angband.h"
 
 #include "spell_type.h"
+#include "hooks.h"
 
 /*
  * Forward declare

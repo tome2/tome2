@@ -1,9 +1,9 @@
 #include "q_narsil.h"
-
+#include "hooks.h"
 
 #define cquest (quest[QUEST_NARSIL])
 
-bool_ quest_narsil_move_hook(char *fmt)
+static bool_ quest_narsil_move_hook(const char *fmt)
 {
 	s32b y, x;
 	cave_type *c_ptr;
@@ -58,7 +58,8 @@ bool_ quest_narsil_move_hook(char *fmt)
 
 	return TRUE;
 }
-bool_ quest_narsil_dump_hook(char *fmt)
+
+static bool_ quest_narsil_dump_hook(const char *fmt)
 {
 	if (cquest.status >= QUEST_STATUS_COMPLETED)
 	{
@@ -66,7 +67,8 @@ bool_ quest_narsil_dump_hook(char *fmt)
 	}
 	return (FALSE);
 }
-bool_ quest_narsil_identify_hook(char *fmt)
+
+static bool_ quest_narsil_identify_hook(const char *fmt)
 {
 	if (cquest.status == QUEST_STATUS_UNTAKEN)
 	{
@@ -98,6 +100,7 @@ bool_ quest_narsil_identify_hook(char *fmt)
 
 	return (FALSE);
 }
+
 bool_ quest_narsil_init_hook(int q_idx)
 {
 	if ((cquest.status >= QUEST_STATUS_TAKEN) && (cquest.status < QUEST_STATUS_FINISHED))

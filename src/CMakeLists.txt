@@ -8,7 +8,7 @@ ADD_SUBDIRECTORY (squelch)
 SET(SRCS
   main-gcu.c main-x11.c main-xaw.c main-sdl.c main-gtk2.c
   z-rand.c z-util.c z-form.c z-virt.c z-term.c
-  variable.c tables.c plots.c util.c cave.c dungeon.c 
+  variable.c tables.c hooks.c util.c cave.c dungeon.c
   melee1.c melee2.c messages.c modules.c
   q_god.c q_library.c q_fireprof.c q_bounty.c q_thrain.c
   q_narsil.c q_evil.c q_betwen.c q_haunted.c q_invas.c

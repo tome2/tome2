@@ -11,6 +11,7 @@
  */
 
 #include "angband.h"
+#include "hooks.h"
 
 void do_cmd_immovable_special(void);
 

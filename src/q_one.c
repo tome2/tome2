@@ -1,8 +1,9 @@
 #include "q_one.h"
+#include "hooks.h"
 
 #define cquest (quest[QUEST_ONE])
 
-bool_ quest_one_move_hook(char *fmt)
+static bool_ quest_one_move_hook(const char *fmt)
 {
 	s32b y, x;
 	cave_type *c_ptr;
@@ -67,7 +68,8 @@ bool_ quest_one_move_hook(char *fmt)
 
 	return FALSE;
 }
-bool_ quest_one_drop_hook(char *fmt)
+
+static bool_ quest_one_drop_hook(const char *fmt)
 {
 	s32b o_idx;
 	object_type *o_ptr;
@@ -97,7 +99,8 @@ bool_ quest_one_drop_hook(char *fmt)
 
 	return TRUE;
 }
-bool_ quest_one_wield_hook(char *fmt)
+
+static bool_ quest_one_wield_hook(const char *fmt)
 {
 	s32b o_idx;
 	object_type *o_ptr;
@@ -154,7 +157,8 @@ bool_ quest_one_wield_hook(char *fmt)
 
 	return FALSE;
 }
-bool_ quest_one_hp_hook(char *fmt)
+
+static bool_ quest_one_hp_hook(const char *fmt)
 {
 	if (cquest.status == QUEST_STATUS_FAILED_DONE)
 	{
@@ -171,7 +175,8 @@ bool_ quest_one_hp_hook(char *fmt)
 	}
 	return (FALSE);
 }
-bool_ quest_one_die_hook(char *fmt)
+
+static bool_ quest_one_die_hook(const char *fmt)
 {
 	if (cquest.status == QUEST_STATUS_FAILED_DONE)
 	{
@@ -190,7 +195,8 @@ bool_ quest_one_die_hook(char *fmt)
 	}
 	return (FALSE);
 }
-bool_ quest_one_identify_hook(char *fmt)
+
+static bool_ quest_one_identify_hook(const char *fmt)
 {
 	s32b item;
 
@@ -212,7 +218,8 @@ bool_ quest_one_identify_hook(char *fmt)
 
 	return (FALSE);
 }
-bool_ quest_one_death_hook(char *fmt)
+
+static bool_ quest_one_death_hook(const char *fmt)
 {
 	s32b r_idx, m_idx;
 	bool_ ok = FALSE;
@@ -292,7 +299,8 @@ bool_ quest_one_death_hook(char *fmt)
 
 	return (FALSE);
 }
-bool_ quest_one_dump_hook(char *fmt)
+
+static bool_ quest_one_dump_hook(const char *fmt)
 {
 	if (cquest.status == QUEST_STATUS_FINISHED)
 	{
@@ -304,7 +312,8 @@ bool_ quest_one_dump_hook(char *fmt)
 	}
 	return (FALSE);
 }
-bool_ quest_one_gen_hook(char *fmt)
+
+static bool_ quest_one_gen_hook(const char *fmt)
 {
 	s32b x, y, tries = 10000;
 
@@ -334,6 +343,7 @@ bool_ quest_one_gen_hook(char *fmt)
 
 	return (FALSE);
 }
+
 bool_ quest_one_init_hook(int q_idx)
 {
 	if ((cquest.status >= QUEST_STATUS_TAKEN) && (cquest.status < QUEST_STATUS_FINISHED))
