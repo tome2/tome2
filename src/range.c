@@ -1,4 +1,4 @@
-#include <angband.h>
+#include "range.h"
 
 void range_init(range_type *range, s32b min, s32b max)
 {

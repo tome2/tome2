@@ -1,4 +1,7 @@
 #include "spell_type.h"
+#include "string_list.h"
+#include "range.h"
+#include "device_allocation.h"
 
 #include "angband.h"
 

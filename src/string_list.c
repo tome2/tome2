@@ -1,4 +1,4 @@
-#include "angband.h"
+#include "string_list.h"
 
 int compare_string_list(string_list *a, string_list *b)
 {

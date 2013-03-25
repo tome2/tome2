@@ -13,6 +13,8 @@
 #include "angband.h"
 
 #include "spell_type.h"
+#include "device_allocation.h"
+
 
 /*
  * Calculate the player's total inventory weight.

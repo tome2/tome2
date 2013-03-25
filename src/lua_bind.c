@@ -15,6 +15,7 @@
 #include <assert.h>
 
 #include "spell_type.h"
+#include "range.h"
 
 /*
  * Monsters

@@ -4,6 +4,8 @@
 
 #include "h-type.h"
 #include "types_fwd.h"
+#include "device_allocation_fwd.h"
+#include "range_fwd.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -64,7 +66,7 @@ void spell_type_describe(spell_type *spell, cptr line);
 void spell_type_add_school(spell_type *spell, s32b school_idx);
 
 void spell_type_set_device_charges(spell_type *spell, cptr charges_s);
-void spell_type_add_device_allocation(spell_type *spell, struct device_allocation *a);
+void spell_type_add_device_allocation(spell_type *spell, device_allocation *a);
 
 spell_type *spell_type_new(cptr name);
 

@@ -1920,9 +1920,6 @@ int spell_x(int sval, int pval, int i);
 bool_ school_book_contains_spell(int sval, s32b spell_idx);
 void lua_cast_school_spell(s32b spell_idx, bool_ no_cost);
 
-void device_allocation_init(device_allocation *device_allocation, byte tval);
-device_allocation *device_allocation_new(byte tval);
-
 void dice_init(dice_type *dice, long base, long num, long sides);
 bool_ dice_parse(dice_type *dice, cptr s);
 void dice_parse_checked(dice_type *dice, cptr s);
@@ -1942,9 +1939,6 @@ void schools_init();
 school_type *school_at(int index);
 
 void mana_school_calc_mana(int *msp);
-
-/* range.c */
-extern void range_init(range_type *range, s32b min, s32b max);
 
 /* randart.c */
 extern int get_activation_power(void);

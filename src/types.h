@@ -48,25 +48,6 @@
  */
 
 
-/*
- * String list.
- */
-typedef struct string_list string_list;
-struct string_list {
-	/* The string list owns the string */
-	cptr s;
-	/* Next */
-	string_list *next;
-};
-
-int compare_string_list(string_list *a, string_list *b);
-SGLIB_DEFINE_LIST_PROTOTYPES(string_list, compare_string, next);
-
-void string_list_init(string_list *sl, cptr s); /* Initialize element; copies string */
-void string_list_destroy(string_list *sl);      /* Destroy element */
-void string_list_append(string_list **slist, cptr s); /* Append string */
-
-
 
 /*
  * Template file header information (see "init.c").  16 bytes.
@@ -2488,16 +2469,6 @@ struct cli_comm
 };
 
 /*
- * Range
- */
-typedef struct range_type range_type;
-struct range_type
-{
-	s32b min;
-	s32b max;
-};
-
-/*
  * Dice
  */
 typedef struct dice_type dice_type;
@@ -2507,24 +2478,6 @@ struct dice_type
 	long num;   /* Number of dice */
 	long sides; /* Sides per dice */
 };
-
-/*
- * Device allocation for skill
- */
-typedef struct device_allocation device_allocation;
-struct device_allocation
-{
-	byte tval;
-	s32b rarity;
-	range_type base_level;
-	range_type max_level;
-	/* Next device allocation in the list */
-	device_allocation *next;
-};
-
-int compare_device_allocation(device_allocation *a, device_allocation *b);
-SGLIB_DEFINE_LIST_PROTOTYPES(device_allocation, compare_device_allocation, next);
-
 
 /*
  * Skills !

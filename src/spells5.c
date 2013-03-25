@@ -3,6 +3,8 @@
 #include <assert.h>
 
 #include "spell_type.h"
+#include "device_allocation.h"
+
 
 static spell_type *spell_new(s32b *index, cptr id, cptr name)
 {
