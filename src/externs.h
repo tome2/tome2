@@ -316,7 +316,7 @@ extern term *angband_term[ANGBAND_TERM_MAX];
 extern char angband_term_name[ANGBAND_TERM_MAX][80];
 extern byte angband_color_table[256][4];
 extern char angband_sound_name[SOUND_MAX][16];
-extern cave_type *cave[MAX_HGT];
+extern cave_type **cave;
 extern object_type *o_list;
 extern monster_type *m_list;
 extern monster_type *km_list;
@@ -1902,8 +1902,6 @@ s16b get_random_spell(s16b random_type, int lev);
 
 /* spells6.c */
 
-SGLIB_DEFINE_LIST_PROTOTYPES(school_provider, compare_school_provider, next);
-
 void schools_init();
 school_type *school_at(int index);
 
@@ -1945,7 +1943,6 @@ extern s32b rescale(s32b x, s32b max, s32b new_max);
 extern bool_ input_box(cptr text, int y, int x, char *buf, int max);
 extern void draw_box(int y, int x, int h, int w);
 extern void display_list(int y, int x, int h, int w, cptr title, cptr *list, int max, int begin, int sel, byte sel_color);
-extern int ask_menu(cptr ask, char **items, int max);
 extern cptr get_player_race_name(int pr, int ps);
 extern cptr get_month_name(int month, bool_ full, bool_ compact);
 extern cptr get_day(int day);
@@ -2324,7 +2321,7 @@ extern s16b get_skill_scale(int skill, u32b scale);
 extern void do_cmd_skill(void);
 extern void do_cmd_activate_skill(void);
 extern s16b melee_skills[MAX_MELEE];
-extern char *melee_names[MAX_MELEE];
+extern const char *melee_names[MAX_MELEE];
 extern s16b get_melee_skills(void);
 extern s16b get_melee_skill(void);
 extern bool_ forbid_gloves(void);

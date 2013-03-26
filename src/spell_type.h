@@ -14,12 +14,12 @@ extern "C" {
 /*
  * Casting type
  */
-typedef enum { USE_SPELL_POINTS, USE_PIETY } casting_type;
+enum casting_type { USE_SPELL_POINTS, USE_PIETY };
 
 /*
  * Does the spell appear on spell random books?
  */
-typedef enum { RANDOM, NO_RANDOM } random_type;
+enum random_type { RANDOM, NO_RANDOM };
 
 /*
  * Spell functions

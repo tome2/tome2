@@ -8,29 +8,29 @@ ADD_SUBDIRECTORY (squelch)
 SET(SRCS
   main-gcu.c main-x11.c main-xaw.c main-sdl.c main-gtk2.c
   z-rand.c z-util.c z-form.c z-virt.c z-term.c
-  variable.c tables.c hooks.c util.c cave.c dungeon.c
-  melee1.c melee2.c messages.c modules.c
-  q_god.c q_library.c q_fireprof.c q_bounty.c q_thrain.c
-  q_narsil.c q_evil.c q_betwen.c q_haunted.c q_invas.c
-  q_nirna.c q_eol.c q_god.c q_dragons.c q_poison.c
-  q_spider.c q_wolves.c q_shroom.c q_nazgul.c q_wight.c
-  q_troll.c q_hobbit.c q_thief.c q_ultrae.c q_ultrag.c
-  q_one.c q_main.c q_rand.c
-  object1.c object2.c randart.c squeltch.cc traps.c
-  monster1.c monster2.c monster3.c
-  xtra1.c xtra2.c skills.c powers.c gods.c
-  spells1.c spells2.c spells3.c spells4.c spells5.c spells6.c
-  spell_type.c device_allocation.c
-  corrupt.c joke.c mimic.c
-  status.c files.c notes.c loadsave.c string_list.c
-  cmd1.c cmd2.c cmd3.c cmd4.c cmd5.c cmd6.c cmd7.c
-  help.c hiscore.c range.c dice.c
-  generate.c gen_maze.c gen_evol.c wild.c levels.c store.c bldg.c
-  cmovie.c
-  wizard2.c init2.c birth.c wizard1.c init1.c main.c 
-  quark.c
+  variable.cc tables.cc hooks.cc util.cc cave.cc dungeon.cc
+  melee1.cc melee2.cc messages.cc modules.cc
+  q_god.cc q_library.cc q_fireprof.cc q_bounty.cc q_thrain.cc
+  q_narsil.cc q_evil.cc q_betwen.cc q_haunted.cc q_invas.cc
+  q_nirna.cc q_eol.cc q_god.cc q_dragons.cc q_poison.cc
+  q_spider.cc q_wolves.cc q_shroom.cc q_nazgul.cc q_wight.cc
+  q_troll.cc q_hobbit.cc q_thief.cc q_ultrae.cc q_ultrag.cc
+  q_one.cc q_main.cc q_rand.cc
+  object1.cc object2.cc randart.cc squeltch.cc traps.cc
+  monster1.cc monster2.cc monster3.cc
+  xtra1.cc xtra2.cc skills.cc powers.cc gods.cc
+  spells1.cc spells2.cc spells3.cc spells4.cc spells5.cc spells6.cc
+  spell_type.cc device_allocation.cc
+  corrupt.cc joke.cc mimic.cc
+  status.cc files.cc notes.cc loadsave.cc string_list.cc
+  cmd1.cc cmd2.cc cmd3.cc cmd4.cc cmd5.cc cmd6.cc cmd7.cc
+  help.cc hiscore.cc range.cc dice.cc
+  generate.cc gen_maze.cc gen_evol.cc wild.cc levels.cc store.cc bldg.cc
+  cmovie.cc
+  wizard1.cc wizard2.cc init1.cc init2.cc birth.cc main.c
+  quark.cc
   # Lua bits:
-  lua_bind.c script.c
+  lua_bind.cc script.cc
 )
 
 # Need a few additional source files for Windows.

@@ -68,10 +68,6 @@ extern "C" {
 	(memset((char*)(P),0,SIZE(T)))
 
 
-/* Load an array of type T[N], at location P1, from another, at location P2 */
-#define C_COPY(P1,P2,N,T) \
-	(memcpy((char*)(P1),(char*)(P2),C_SIZE(N,T)))
-
 /* Load a thing of type T, at location P1, from another, at location P2 */
 #define COPY(P1,P2,T) \
 	(memcpy((char*)(P1),(char*)(P2),SIZE(T)))

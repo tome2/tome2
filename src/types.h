@@ -2475,20 +2475,6 @@ struct skill_type
 	u32b flags1;                            /* Skill flags */
 };
 
-typedef struct school_provider school_provider;
-struct school_provider
-{
-	byte deity_idx; /* Deity which provides school levels */
-
-	s16b skill_idx; /* Skill used for determining the boost */
-
-	long mul; /* Multiplier */
-
-	long div; /* Divisor */
-
-	school_provider *next; /* Next provider in list */
-};
-
 typedef struct school_type school_type;
 struct school_type
 {
@@ -2504,7 +2490,7 @@ struct school_type
 
 	bool_ (*depends_satisfied)(); /* Are dependendies satisfied? */
 
-	school_provider *providers; /* List of secondary providers of this school */
+	struct school_provider *providers; /* List of secondary providers of this school */
 };
 
 /*
