@@ -1005,7 +1005,6 @@ extern void message_pain(int m_idx, int dam);
 extern void update_smart_learn(int m_idx, int what);
 extern bool_ summon_specific_friendly(int y1, int x1, int lev, int type, bool_ Group_ok);
 extern bool_ place_monster_one_no_drop;
-extern monster_race *place_monster_one_race;
 extern s16b place_monster_one(int y, int x, int r_idx, int ego, bool_ slp, int status);
 extern s16b player_place(int y, int x);
 extern void monster_drop_carried_objects(monster_type *m_ptr);

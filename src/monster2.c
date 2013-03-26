@@ -2106,7 +2106,6 @@ bool_ kind_is_randart(int k_idx)
 bool_ bypass_r_ptr_max_num = FALSE;
 int place_monster_result = 0;
 bool_ place_monster_one_no_drop = FALSE;
-monster_race *place_monster_one_race = NULL;
 s16b place_monster_one(int y, int x, int r_idx, int ego, bool_ slp, int status)
 {
 	int i;
@@ -2122,23 +2121,15 @@ s16b place_monster_one(int y, int x, int r_idx, int ego, bool_ slp, int status)
 
 	cptr name = (r_name + r_ptr->name);
 
-	/* Grab the special race if needed */
-	if (place_monster_one_race)
-	{
-		r_ptr = place_monster_one_race;
-	}
-
 	/* DO NOT PLACE A MONSTER IN THE SMALL SCALE WILDERNESS !!! */
 	if (p_ptr->wild_mode)
 	{
-		if (place_monster_one_race) KILL(place_monster_one_race, monster_race);
 		return 0;
 	}
 
 	/* Verify location */
 	if (!in_bounds(y, x))
 	{
-		if (place_monster_one_race) KILL(place_monster_one_race, monster_race);
 		return 0;
 	}
 
@@ -2146,7 +2137,6 @@ s16b place_monster_one(int y, int x, int r_idx, int ego, bool_ slp, int status)
 	if (!cave_empty_bold(y, x))
 	{
 		if (wizard) cmsg_format(TERM_L_RED, "WARNING: Refused monster(%d): EMPTY BOLD", r_idx);
-		if (place_monster_one_race) KILL(place_monster_one_race, monster_race);
 		return 0;
 	}
 
@@ -2154,26 +2144,22 @@ s16b place_monster_one(int y, int x, int r_idx, int ego, bool_ slp, int status)
 	if ((cave[y][x].info & CAVE_FREE) && (!m_allow_special[r_idx]))
 	{
 		if (wizard) cmsg_format(TERM_L_RED, "WARNING: Refused monster(%d): CAVE_FREE", r_idx);
-		if (place_monster_one_race) KILL(place_monster_one_race, monster_race);
 		return 0;
 	}
 
 	/* Hack -- no creation on glyph of warding */
 	if (cave[y][x].feat == FEAT_GLYPH)
 	{
-		if (place_monster_one_race) KILL(place_monster_one_race, monster_race);
 		return 0;
 	}
 	if (cave[y][x].feat == FEAT_MINOR_GLYPH)
 	{
-		if (place_monster_one_race) KILL(place_monster_one_race, monster_race);
 		return 0;
 	}
 
 	/* Nor on the between */
 	if (cave[y][x].feat == FEAT_BETWEEN)
 	{
-		if (place_monster_one_race) KILL(place_monster_one_race, monster_race);
 		return 0;
 	}
 
@@ -2181,7 +2167,6 @@ s16b place_monster_one(int y, int x, int r_idx, int ego, bool_ slp, int status)
 	if ((cave[y][x].feat >= FEAT_ALTAR_HEAD)
 	                && (cave[y][x].feat <= FEAT_ALTAR_TAIL))
 	{
-		if (place_monster_one_race) KILL(place_monster_one_race, monster_race);
 		return 0;
 	}
 
@@ -2189,53 +2174,40 @@ s16b place_monster_one(int y, int x, int r_idx, int ego, bool_ slp, int status)
 	if ((cave[y][x].feat >= FEAT_PATTERN_START)
 	                && (cave[y][x].feat <= FEAT_PATTERN_XTRA2))
 	{
-		if (place_monster_one_race) KILL(place_monster_one_race, monster_race);
 		return 0;
 	}
 
 	/* Paranoia */
 	if (!r_idx)
 	{
-		if (place_monster_one_race) KILL(place_monster_one_race, monster_race);
 		return 0;
 	}
 
 	/* Paranoia */
 	if (!r_ptr->name)
 	{
-		if (place_monster_one_race) KILL(place_monster_one_race, monster_race);
 		return 0;
 	}
 
 	/* Are we allowed to continue ? */
 	if (process_hooks(HOOK_NEW_MONSTER, "(d)", r_idx))
 	{
-		if (place_monster_one_race) KILL(place_monster_one_race, monster_race);
 		return 0;
 	}
 
 	/* Ego Uniques are NOT to be created */
 	if ((r_ptr->flags1 & RF1_UNIQUE) && ego)
 	{
-		if (place_monster_one_race) KILL(place_monster_one_race, monster_race);
 		return 0;
 	}
 
 	/* Now could we generate an Ego Monster */
 	/* Grab the special race if needed */
-	if (place_monster_one_race)
-	{
-		r_ptr = place_monster_one_race;
-	}
-	else
-	{
-		r_ptr = race_info_idx(r_idx, ego);
-	}
+	r_ptr = race_info_idx(r_idx, ego);
 
 	if (!monster_can_cross_terrain(cave[y][x].feat, r_ptr))
 	{
 		if (wizard) cmsg_print(TERM_L_RED, "WARNING: Refused monster: cannot cross terrain");
-		if (place_monster_one_race) KILL(place_monster_one_race, monster_race);
 		return 0;
 	}
 
@@ -2243,7 +2215,6 @@ s16b place_monster_one(int y, int x, int r_idx, int ego, bool_ slp, int status)
 	if ((r_ptr->flags9 & RF9_SPECIAL_GENE) && (!m_allow_special[r_idx]))
 	{
 		if (wizard) cmsg_format(TERM_L_RED, "WARNING: Refused monster(%d): SPECIAL_GENE", r_idx);
-		if (place_monster_one_race) KILL(place_monster_one_race, monster_race);
 		return 0;
 	}
 
@@ -2251,7 +2222,6 @@ s16b place_monster_one(int y, int x, int r_idx, int ego, bool_ slp, int status)
 	if ((r_ptr->flags7 & RF7_SPIRIT) && (dungeon_type != DUNGEON_VOID))
 	{
 		if (wizard) cmsg_format(TERM_L_RED, "WARNING: Refused monster(%d): SPIRIT in non VOID", r_idx);
-		if (place_monster_one_race) KILL(place_monster_one_race, monster_race);
 		return 0;
 	}
 
@@ -2259,7 +2229,6 @@ s16b place_monster_one(int y, int x, int r_idx, int ego, bool_ slp, int status)
 	if (r_ptr->flags9 & RF9_NEVER_GENE)
 	{
 		if (wizard) cmsg_print(TERM_L_RED, "WARNING: Refused monster: NEVER_GENE");
-		if (place_monster_one_race) KILL(place_monster_one_race, monster_race);
 		return 0;
 	}
 
@@ -2268,7 +2237,6 @@ s16b place_monster_one(int y, int x, int r_idx, int ego, bool_ slp, int status)
 	{
 		/* Cannot create */
 		if (wizard) cmsg_format(TERM_L_RED, "WARNING: Refused monster %d: unique not unique", r_idx);
-		if (place_monster_one_race) KILL(place_monster_one_race, monster_race);
 		return 0;
 	}
 
@@ -2276,7 +2244,6 @@ s16b place_monster_one(int y, int x, int r_idx, int ego, bool_ slp, int status)
 	if (r_ptr->on_saved)
 	{
 		if (wizard) cmsg_print(TERM_L_RED, "WARNING: Refused monster: unique already on saved level");
-		if (place_monster_one_race) KILL(place_monster_one_race, monster_race);
 		return 0;
 	}
 
@@ -2285,7 +2252,6 @@ s16b place_monster_one(int y, int x, int r_idx, int ego, bool_ slp, int status)
 	{
 		/* Cannot create */
 		if (wizard) cmsg_format(TERM_L_RED, "WARNING: Refused monster %d: cur_num >= max_num", r_idx);
-		if (place_monster_one_race) KILL(place_monster_one_race, monster_race);
 		return 0;
 	}
 
@@ -2294,7 +2260,6 @@ s16b place_monster_one(int y, int x, int r_idx, int ego, bool_ slp, int status)
 	{
 		/* Cannot create */
 		if (wizard) cmsg_print(TERM_L_RED, "WARNING: FORCE_DEPTH");
-		if (place_monster_one_race) KILL(place_monster_one_race, monster_race);
 		return 0;
 	}
 
@@ -2340,7 +2305,6 @@ s16b place_monster_one(int y, int x, int r_idx, int ego, bool_ slp, int status)
 	/* Mega-Hack -- catch "failure" */
 	if (!c_ptr->m_idx)
 	{
-		if (place_monster_one_race) KILL(place_monster_one_race, monster_race);
 		return 0;
 	}
 
@@ -2353,7 +2317,7 @@ s16b place_monster_one(int y, int x, int r_idx, int ego, bool_ slp, int status)
 	m_ptr->ego = ego;
 
 	/* No special, no mind */
-	m_ptr->sr_ptr = place_monster_one_race;
+	m_ptr->sr_ptr = NULL;
 
 	/* Place the monster at the location */
 	m_ptr->fy = y;
@@ -2648,8 +2612,6 @@ s16b place_monster_one(int y, int x, int r_idx, int ego, bool_ slp, int status)
 	{
 		r_ptr->on_saved = TRUE;
 	}
-
-	place_monster_one_race = NULL;
 
 	/* Processs hooks */
 	{
