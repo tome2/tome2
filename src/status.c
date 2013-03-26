@@ -17,12 +17,12 @@
 
 #include "angband.h"
 
-static void row_trival(char*, s16b, u32b, s16b, u32b, int, u32b[INVEN_TOTAL - INVEN_WIELD + 2][7]);
-static void row_bival(char*, s16b, u32b, int, u32b[INVEN_TOTAL - INVEN_WIELD + 2][7]);
-static void row_npval(char*, s16b, u32b, int, u32b[INVEN_TOTAL - INVEN_WIELD + 2][7]);
-static void statline(char*, int, u32b, int, u32b[INVEN_TOTAL - INVEN_WIELD + 2][7]);
+static void row_trival(const char*, s16b, u32b, s16b, u32b, int, u32b[INVEN_TOTAL - INVEN_WIELD + 2][7]);
+static void row_bival(const char*, s16b, u32b, int, u32b[INVEN_TOTAL - INVEN_WIELD + 2][7]);
+static void row_npval(const char*, s16b, u32b, int, u32b[INVEN_TOTAL - INVEN_WIELD + 2][7]);
+static void statline(const char*, int, u32b, int, u32b[INVEN_TOTAL - INVEN_WIELD + 2][7]);
 static void row_hd_bon(int, int, u32b[INVEN_TOTAL - INVEN_WIELD + 2][7]);
-static void row_count(char*, s16b, u32b, int, s16b, u32b, int, s16b, u32b, int, s16b, u32b, int, int, u32b[INVEN_TOTAL - INVEN_WIELD + 2][7]);
+static void row_count(const char*, s16b, u32b, int, s16b, u32b, int, s16b, u32b, int, s16b, u32b, int, int, u32b[INVEN_TOTAL - INVEN_WIELD + 2][7]);
 static int row_x_start = 0;
 
 static void status_count(s32b val1, int v1, s32b val2, int v2, s32b val3, int v3, s32b val4, int v4, byte ypos, byte xpos);
@@ -525,7 +525,7 @@ static void status_count(s32b val1, int v1, s32b val2, int v2, s32b val3, int v3
 	status_numeric(v, ypos, xpos);
 }
 
-static void row_count(char* statname, s16b row1, u32b flag1, int v1, s16b row2, u32b flag2, int v2, s16b row3, u32b flag3, int v3, s16b row4, u32b flag4, int v4, int yo, u32b flag_arr[INVEN_TOTAL - INVEN_WIELD + 2][7])
+static void row_count(const char* statname, s16b row1, u32b flag1, int v1, s16b row2, u32b flag2, int v2, s16b row3, u32b flag3, int v3, s16b row4, u32b flag4, int v4, int yo, u32b flag_arr[INVEN_TOTAL - INVEN_WIELD + 2][7])
 {
 	int i;
 	int x = row_x_start;
@@ -542,7 +542,7 @@ static void row_count(char* statname, s16b row1, u32b flag1, int v1, s16b row2, 
 	}
 }
 
-static void row_trival(char* statname, s16b row, u32b flag, s16b row2, u32b flag2, int yo, u32b flag_arr[INVEN_TOTAL - INVEN_WIELD + 2][7])
+static void row_trival(const char* statname, s16b row, u32b flag, s16b row2, u32b flag2, int yo, u32b flag_arr[INVEN_TOTAL - INVEN_WIELD + 2][7])
 {
 	int i;
 	int x = row_x_start;
@@ -560,7 +560,7 @@ static void row_trival(char* statname, s16b row, u32b flag, s16b row2, u32b flag
 	}
 }
 
-static void row_bival(char* statname, s16b row, u32b flag, int yo, u32b flag_arr[INVEN_TOTAL - INVEN_WIELD + 2][7])
+static void row_bival(const char* statname, s16b row, u32b flag, int yo, u32b flag_arr[INVEN_TOTAL - INVEN_WIELD + 2][7])
 {
 	int i;
 	int x = row_x_start;
@@ -575,7 +575,7 @@ static void row_bival(char* statname, s16b row, u32b flag, int yo, u32b flag_arr
 	}
 }
 
-static void row_npval(char* statname, s16b row, u32b flag, int yo, u32b flag_arr[INVEN_TOTAL - INVEN_WIELD + 2][7])
+static void row_npval(const char* statname, s16b row, u32b flag, int yo, u32b flag_arr[INVEN_TOTAL - INVEN_WIELD + 2][7])
 /* Displays nicely a pval-based status row */
 {
 	int i;
@@ -604,7 +604,7 @@ static void row_npval(char* statname, s16b row, u32b flag, int yo, u32b flag_arr
 	}
 }
 
-static void statline(char* statname, int statidx, u32b flag, int yo, u32b flag_arr[INVEN_TOTAL - INVEN_WIELD + 2][7])
+static void statline(const char* statname, int statidx, u32b flag, int yo, u32b flag_arr[INVEN_TOTAL - INVEN_WIELD + 2][7])
 /* Displays a status row for a primary stat */
 {
 	int i;

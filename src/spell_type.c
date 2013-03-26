@@ -18,7 +18,7 @@ struct spell_type
 	string_list *description;       /* List of strings */
 
 	casting_result (*effect_func)(int o_idx);  /* Spell effect function */
-	char* (*info_func)();           /* Information function */
+	const char* (*info_func)();           /* Information function */
 	int (*lasting_func)();         /* Lasting effect function */
 	bool_ (*depend_func)();         /* Check dependencies */
 
@@ -91,7 +91,7 @@ void spell_type_set_inertia(spell_type *spell, s32b difficulty, s32b delay)
 
 void spell_type_init_music(spell_type *spell,
 			   s16b minimum_pval,
-			   char* (*info_func)(),
+			   const char* (*info_func)(),
 			   casting_result (*effect_func)(int o_idx))
 {
 	assert(spell != NULL);
@@ -111,7 +111,7 @@ void spell_type_init_music(spell_type *spell,
 
 void spell_type_init_music_lasting(spell_type *spell,
 				   s16b minimum_pval,
-				   char* (*info_func)(),
+				   const char* (*info_func)(),
 				   casting_result (*effect_func)(int o_idx),
 				   int (*lasting_func)())
 {
@@ -127,7 +127,7 @@ void spell_type_init_music_lasting(spell_type *spell,
 void spell_type_init_mage(spell_type *spell,
 			  random_type random_type,
 			  s32b school_idx,
-			  char* (*info_func)(),
+			  const char* (*info_func)(),
 			  casting_result (*effect_func)(int o_idx))
 {
 	assert(spell != NULL);
@@ -157,7 +157,7 @@ void spell_type_init_mage(spell_type *spell,
 
 void spell_type_init_priest(spell_type *spell,
 			    s32b school_idx,
-			    char* (*info_func)(),
+			    const char* (*info_func)(),
 			    casting_result (*effect_func)(int o_idx))
 {
 	assert(spell != NULL);
@@ -173,7 +173,7 @@ void spell_type_init_priest(spell_type *spell,
 }
 
 void spell_type_init_device(spell_type *spell,
-			    char* (*info_func)(),
+			    const char* (*info_func)(),
 			    casting_result (*effect_func)(int o_idx))
 {
 	assert(spell != NULL);
@@ -186,7 +186,7 @@ void spell_type_init_device(spell_type *spell,
 }
 
 void spell_type_init_demonology(spell_type *spell,
-				char* (*info_func)(),
+				const char* (*info_func)(),
 				casting_result (*effect_func)(int o_idx))
 {
 	spell_type_init_mage(spell,
@@ -197,7 +197,7 @@ void spell_type_init_demonology(spell_type *spell,
 }
 
 void spell_type_init_geomancy(spell_type *spell,
-			      char* (*info_func)(),
+			      const char* (*info_func)(),
 			      casting_result (*effect_func)(int o_idx),
 			      bool_ (*depend_func)())
 {

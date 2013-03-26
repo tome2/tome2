@@ -149,8 +149,8 @@ static byte get_relic_num()
 	assert(FALSE);
 }
 
-static void get_home_coordinates(int *home1_y, int *home1_x, char **home1,
-				 int *home2_y, int *home2_x, char **home2)
+static void get_home_coordinates(int *home1_y, int *home1_x, const char **home1,
+				 int *home2_y, int *home2_x, const char **home2)
 {
 	/* Which are the waypoints? */
 	if (p_ptr->pgod != GOD_MELKOR)
@@ -223,8 +223,8 @@ static void print_directions(bool_ feel_it, void (*pfunc)(cptr, void *), void *p
 {
 	int home1_y, home1_x;
 	int home2_y, home2_x;
-	char *home1 = NULL;
-	char *home2 = NULL;
+	const char *home1 = NULL;
+	const char *home2 = NULL;
 	char *home1_axis = NULL;
 	char *home2_axis = NULL;
 	cptr home1_distance = NULL;

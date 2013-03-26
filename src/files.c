@@ -1030,7 +1030,7 @@ static void prt_lnum(cptr header, s32b num, int row, int col, byte color)
  * Print number with header at given row, column
  */
 static void prt_num(cptr header, int num, int row, int col, byte color,
-                    char *space)
+                    cptr space)
 {
 	int len = strlen(header);
 	char out_val[32];
@@ -5670,7 +5670,7 @@ errr get_rnd_line(const char *file_name, char *output)
  *
  * Caution: 'linbuf' should be at least 80 byte long.
  */
-char *get_line(char* fname, cptr fdir, char *linbuf, int line)
+char *get_line(const char* fname, cptr fdir, char *linbuf, int line)
 {
 	FILE* fp;
 	int i;
@@ -5718,7 +5718,7 @@ char *get_line(char* fname, cptr fdir, char *linbuf, int line)
  * understand such complexities -- and added extra error checkings
  * and made sure fd is always closed -- pelpel
  */
-errr get_xtra_line(char *file_name, monster_type *m_ptr, char *output)
+errr get_xtra_line(const char *file_name, monster_type *m_ptr, char *output)
 {
 	FILE *fp;
 	char buf[1024];

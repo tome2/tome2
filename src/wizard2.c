@@ -887,7 +887,7 @@ static void wiz_statistics(object_type *o_ptr)
 	long i, matches, better, worse, other;
 
 	char ch;
-	char *quality;
+	const char *quality;
 
 	bool_ good, great;
 

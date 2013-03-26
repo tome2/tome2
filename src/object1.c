@@ -2882,7 +2882,7 @@ bool_ object_out_desc(object_type *o_ptr, FILE *fff, bool_ trim_down, bool_ wait
 {
 	u32b f1, f2, f3, f4, f5, esp;
 
-	char *txt;
+	const char *txt;
 
 	cptr vp[64];
 	byte vc[64];

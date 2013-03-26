@@ -58,7 +58,7 @@ static s32b auto_round;
 static s32b last_round;
 
 /* Human */
-static char *human_syllable1[] =
+static const char *human_syllable1[] =
 {
 	"Ab", "Ac", "Ad", "Af", "Agr", "Ast", "As", "Al", "Adw", "Adr", "Ar",
 	"B", "Br", "C", "Cr", "Ch", "Cad", "D", "Dr", "Dw", "Ed", "Eth", "Et",
@@ -68,7 +68,7 @@ static char *human_syllable1[] =
 	"Tr", "Th", "V", "Y", "Z", "W", "Wic",
 };
 
-static char *human_syllable2[] =
+static const char *human_syllable2[] =
 {
 	"a", "ae", "au", "ao", "are", "ale", "ali", "ay", "ardo", "e", "ei",
 	"ea", "eri", "era", "ela", "eli", "enda", "erra", "i", "ia", "ie",
@@ -76,7 +76,7 @@ static char *human_syllable2[] =
 	"ore", "u", "y",
 };
 
-static char *human_syllable3[] =
+static const char *human_syllable3[] =
 {
 	"a", "and", "b", "bwyn", "baen", "bard", "c", "ctred", "cred", "ch",
 	"can", "d", "dan", "don", "der", "dric", "dfrid", "dus", "f", "g",
@@ -95,7 +95,7 @@ static char *human_syllable3[] =
  */
 static void create_random_name(int race, char *name)
 {
-	char *syl1, *syl2, *syl3;
+	const char *syl1, *syl2, *syl3;
 
 	int idx;
 

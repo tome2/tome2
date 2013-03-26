@@ -219,7 +219,7 @@ casting_result air_noxious_cloud(int item)
 	return CAST_OBVIOUS;
 }
 
-char *air_noxious_cloud_info()
+const char *air_noxious_cloud_info()
 {
 	static char buf[128];
 	sprintf(buf,
@@ -249,7 +249,7 @@ casting_result air_wings_of_winds(int item)
 	return CAST_HIDDEN;
 }
 
-char *air_wings_of_winds_info()
+const char *air_wings_of_winds_info()
 {
 	static char buf[128];
 	sprintf(buf, "dur " FMTs32b "+d10", (5 + get_level_s(AIRWINGS, 25)));
@@ -266,7 +266,7 @@ casting_result air_invisibility(int item)
 	return CAST_HIDDEN;
 }
 
-char *air_invisibility_info()
+const char *air_invisibility_info()
 {
 	static char buf[128];
 	sprintf(buf, "dur " FMTs32b "+d20 power " FMTs32b,
@@ -293,7 +293,7 @@ casting_result air_poison_blood(int item)
 	return result;
 }
 
-char *air_poison_blood_info()
+const char *air_poison_blood_info()
 {
 	static char buf[128];
 	sprintf(buf,
@@ -312,7 +312,7 @@ casting_result air_thunderstorm(int item)
 	return CAST_HIDDEN;
 }
 
-char *air_thunderstorm_info()
+const char *air_thunderstorm_info()
 {
 	static char buf[128];
 	sprintf(buf,
@@ -329,7 +329,7 @@ casting_result air_sterilize(int item)
 	return CAST_OBVIOUS;
 }
 
-char *air_sterilize_info()
+const char *air_sterilize_info()
 {
 	static char buf[128];
 	sprintf(buf,
@@ -356,7 +356,7 @@ casting_result convey_blink(int item)
 	}
 }
 
-char *convey_blink_info()
+const char *convey_blink_info()
 {
 	static char buf[128];
 	sprintf(buf,
@@ -378,7 +378,7 @@ casting_result convey_disarm(int item)
 	return result;
 }
 
-char *convey_disarm_info()
+const char *convey_disarm_info()
 {
 	return "";
 }
@@ -390,7 +390,7 @@ casting_result convey_teleport(int item)
 	return CAST_OBVIOUS;
 }
 
-char *convey_teleport_info()
+const char *convey_teleport_info()
 {
 	static char buf[128];
 	sprintf(buf,
@@ -426,7 +426,7 @@ casting_result convey_teleport_away(int item)
 	}
 }
 
-char *convey_teleport_away_info()
+const char *convey_teleport_away_info()
 {
 	return "";
 }
@@ -495,7 +495,7 @@ casting_result convey_recall(int item)
 	}
 }
 
-char *convey_recall_info()
+const char *convey_recall_info()
 {
 	static char buf[128];
 	int d = recall_get_d();
@@ -512,7 +512,7 @@ casting_result convey_probability_travel(int item)
 	return cast(set_prob_travel(randint(20) + get_level_s(PROBABILITY_TRAVEL, 60)));
 }
 
-char *convey_probability_travel_info()
+const char *convey_probability_travel_info()
 {
 	static char buf[128];
 	sprintf(buf,
@@ -544,7 +544,7 @@ casting_result demonology_demon_blade(int item)
 				PROJECT_STOP | PROJECT_KILL));
 }
 
-char  *demonology_demon_blade_info()
+const char *demonology_demon_blade_info()
 {
 	static char buf[128];
 	sprintf(buf,
@@ -595,7 +595,7 @@ casting_result demonology_demon_madness(int item)
 	return result;
 }
 
-char  *demonology_demon_madness_info()
+const char *demonology_demon_madness_info()
 {
 	static char buf[128];
 	sprintf(buf,
@@ -621,7 +621,7 @@ casting_result demonology_demon_field(int item)
 			       30 + get_level_s(DEMON_FIELD, 100)));
 }
 
-char  *demonology_demon_field_info()
+const char *demonology_demon_field_info()
 {
 	static char buf[128];
 	sprintf(buf,
@@ -640,7 +640,7 @@ casting_result demonology_doom_shield(int item)
 			       10 + get_level_s(DOOM_SHIELD, 15)));
 }
 
-char  *demonology_doom_shield_info()
+const char *demonology_doom_shield_info()
 {
 	static char buf[128];
 	sprintf(buf,
@@ -708,7 +708,7 @@ casting_result demonology_unholy_word(int item)
 	}
 }
 
-char  *demonology_unholy_word_info()
+const char *demonology_unholy_word_info()
 {
 	static char buf[128];
 	sprintf(buf,
@@ -722,7 +722,7 @@ casting_result demonology_demon_cloak(int item)
 	return cast(set_tim_reflect(randint(5) + 5 + get_level(DEMON_CLOAK, 15, 0)));
 }
 
-char  *demonology_demon_cloak_info()
+const char *demonology_demon_cloak_info()
 {
 	static char buf[128];
 	sprintf(buf,
@@ -762,7 +762,7 @@ casting_result demonology_summon_demon(int item)
 	}
 }
 
-char  *demonology_summon_demon_info()
+const char *demonology_summon_demon_info()
 {
 	static char buf[128];
 	sprintf(buf,
@@ -813,7 +813,7 @@ casting_result demonology_discharge_minion(int item)
 	}
 }
 
-char  *demonology_discharge_minion_info()
+const char *demonology_discharge_minion_info()
 {
 	static char buf[128];
 	sprintf(buf,
@@ -834,7 +834,7 @@ casting_result demonology_control_demon(int item)
 	return cast(fire_ball(GF_CONTROL_DEMON, dir, 50 + get_level_s(CONTROL_DEMON, 250), 0));
 }
 
-char  *demonology_control_demon_info()
+const char *demonology_control_demon_info()
 {
 	static char buf[128];
 	sprintf(buf,
@@ -856,7 +856,7 @@ casting_result divination_greater_identify(int item)
 	return CAST_OBVIOUS;
 }
 
-char  *divination_greater_identify_info()
+const char *divination_greater_identify_info()
 {
 	return "";
 }
@@ -887,7 +887,7 @@ casting_result divination_identify(int item)
 	}
 }
 
-char  *divination_identify_info()
+const char *divination_identify_info()
 {
 	static char buf[128];
 
@@ -916,7 +916,7 @@ casting_result divination_vision(int item)
 
 }
 
-char  *divination_vision_info()
+const char *divination_vision_info()
 {
 	return "";
 }
@@ -934,7 +934,7 @@ casting_result divination_sense_hidden(int item)
 	return result;
 }
 
-char  *divination_sense_hidden_info()
+const char *divination_sense_hidden_info()
 {
 	static char buf[128];
 
@@ -963,7 +963,7 @@ casting_result divination_reveal_ways(int item)
 	return result;
 }
 
-char  *divination_reveal_ways_info()
+const char *divination_reveal_ways_info()
 {
 	static char buf[128];
 	sprintf(buf,
@@ -984,7 +984,7 @@ casting_result divination_sense_monsters(int item)
 	return result;
 }
 
-char  *divination_sense_monsters_info()
+const char *divination_sense_monsters_info()
 {
 	static char buf[128];
 
@@ -1022,7 +1022,7 @@ casting_result earth_stone_skin(int item)
 			       3 + get_level_s(STONESKIN, 5)));
 }
 
-char  *earth_stone_skin_info()
+const char *earth_stone_skin_info()
 {
 	static char buf[128];
 
@@ -1057,7 +1057,7 @@ casting_result earth_dig(int item)
 	return cast(wall_to_mud(dir));
 }
 
-char  *earth_dig_info()
+const char *earth_dig_info()
 {
 	return "";
 }
@@ -1083,7 +1083,7 @@ casting_result earth_stone_prison(int item)
 	return CAST_OBVIOUS;
 }
 
-char  *earth_stone_prison_info()
+const char *earth_stone_prison_info()
 {
 	return "";
 }
@@ -1108,7 +1108,7 @@ casting_result earth_strike(int item)
 	}
 }
 
-char  *earth_strike_info()
+const char *earth_strike_info()
 {
 	static char buf[128];
 	int dmg = 50 + get_level_s(STRIKE, 50);
@@ -1145,7 +1145,7 @@ casting_result earth_shake(int item)
 	return CAST_OBVIOUS;
 }
 
-char  *earth_shake_info()
+const char *earth_shake_info()
 {
 	static char buf[128];
 	sprintf(buf, "rad " FMTs32b, (4 + get_level_s(SHAKE, 10)));
@@ -1177,7 +1177,7 @@ casting_result eru_see_the_music(int item)
 	return result;
 }
 
-char  *eru_see_the_music_info()
+const char *eru_see_the_music_info()
 {
 	static char buf[128];
 	sprintf(buf,
@@ -1207,7 +1207,7 @@ casting_result eru_listen_to_the_music(int item)
 	return result;
 }
 
-char  *eru_listen_to_the_music_info()
+const char *eru_listen_to_the_music_info()
 {
 	return "";
 }
@@ -1225,7 +1225,7 @@ casting_result eru_know_the_music(int item)
 	}
 }
 
-char  *eru_know_the_music_info()
+const char *eru_know_the_music_info()
 {
 	return "";
 }
@@ -1235,7 +1235,7 @@ casting_result eru_lay_of_protection(int item)
 	return cast(fire_ball(GF_MAKE_GLYPH, 0, 1, 1 + get_level(ERU_PROT, 2, 0)));
 }
 
-char  *eru_lay_of_protection_info()
+const char *eru_lay_of_protection_info()
 {
 	static char buf[128];
 	sprintf(buf,
@@ -1271,7 +1271,7 @@ casting_result fire_globe_of_light(int item)
 	return result;
 }
 
-char  *fire_globe_of_light_info()
+const char *fire_globe_of_light_info()
 {
 	static char buf[128];
 
@@ -1309,7 +1309,7 @@ casting_result fire_fireflash(int item)
 			      2 + get_level_s(FIREFLASH, 5)));
 }
 
-char  *fire_fireflash_info()
+const char *fire_fireflash_info()
 {
 	static char buf[128];
 	sprintf(buf,
@@ -1334,7 +1334,7 @@ casting_result fire_fiery_shield(int item)
 			       5 + get_level_s(FIERYAURA, 7)));
 }
 
-char  *fire_fiery_shield_info()
+const char *fire_fiery_shield_info()
 {
 	static char buf[128];
   	sprintf(buf,
@@ -1365,7 +1365,7 @@ casting_result fire_firewall(int item)
 	return CAST_OBVIOUS;
 }
 
-char  *fire_firewall_info()
+const char *fire_firewall_info()
 {
 	static char buf[128];
 	sprintf(buf,
@@ -1422,7 +1422,7 @@ casting_result fire_golem(int ignored)
 	return CAST_OBVIOUS;
 }
 
-char  *fire_golem_info()
+const char *fire_golem_info()
 {
 	static char buf[128];
 	sprintf(buf,
@@ -1451,7 +1451,7 @@ casting_result geomancy_call_the_elements(int item)
 	return CAST_OBVIOUS;
 }
 
-char *geomancy_call_the_elements_info()
+const char *geomancy_call_the_elements_info()
 {
 	static char buf[128];
 	sprintf(buf,
@@ -1466,7 +1466,7 @@ casting_result geomancy_channel_elements(int item)
 	return CAST_OBVIOUS;
 }
 
-char *geomancy_channel_elements_info()
+const char *geomancy_channel_elements_info()
 {
 	return "";
 }
@@ -1576,7 +1576,7 @@ casting_result geomancy_elemental_wave(int item)
 	}
 }
 
-char *geomancy_elemental_wave_info()
+const char *geomancy_elemental_wave_info()
 {
 	return "";
 }
@@ -1627,7 +1627,7 @@ casting_result geomancy_vaporize(int item)
 	}
 }
 
-char *geomancy_vaporize_info()
+const char *geomancy_vaporize_info()
 {
 	static char buf[128];
 	sprintf(buf,
@@ -1657,7 +1657,7 @@ casting_result geomancy_geolysis(int item)
 	return CAST_OBVIOUS;
 }
 
-char *geomancy_geolysis_info()
+const char *geomancy_geolysis_info()
 {
 	static char buf[128];
 	sprintf(buf,
@@ -1687,7 +1687,7 @@ casting_result geomancy_dripping_tread(int item)
 	return CAST_OBVIOUS;
 }
 
-char *geomancy_dripping_tread_info()
+const char *geomancy_dripping_tread_info()
 {
 	static char buf[128];
 	sprintf(buf, 
@@ -1717,7 +1717,7 @@ casting_result geomancy_grow_barrier(int item)
 	return CAST_OBVIOUS;
 }
 
-char *geomancy_grow_barrier_info()
+const char *geomancy_grow_barrier_info()
 {
 	return "";
 }
@@ -1852,7 +1852,7 @@ casting_result geomancy_elemental_minion(int item)
 	}
 }
 
-char *geomancy_elemental_minion_info()
+const char *geomancy_elemental_minion_info()
 {
 	static char buf[128];
 	sprintf(buf,
@@ -1882,7 +1882,7 @@ casting_result mana_manathrust(int item)
 	return cast(fire_bolt(GF_MANA, dir, damroll(num, sides)));
 }
 
-char *mana_manathrust_info()
+const char *mana_manathrust_info()
 {
 	s16b num = 0;
 	s16b sides = 0;
@@ -1917,7 +1917,7 @@ casting_result mana_remove_curses(int item)
 	return result;
 }
 
-char *mana_remove_curses_info()
+const char *mana_remove_curses_info()
 {
 	return "";
 }
@@ -1949,7 +1949,7 @@ casting_result mana_elemental_shield(int item)
 	return res;
 }
 
-char *mana_elemental_shield_info()
+const char *mana_elemental_shield_info()
 {
 	static char buf[128];
 	sprintf(buf,
@@ -1975,7 +1975,7 @@ casting_result mana_disruption_shield(int item)
 	return NO_CAST;
 }
 
-char *mana_disruption_shield_info()
+const char *mana_disruption_shield_info()
 {
 	static char buf[128];
 	sprintf(buf,
@@ -2010,7 +2010,7 @@ casting_result manwe_wind_shield(int item)
 	return res;
 }
 
-char  *manwe_wind_shield_info()
+const char *manwe_wind_shield_info()
 {
 	static char buf[128];
 
@@ -2047,7 +2047,7 @@ casting_result manwe_avatar(int item)
 			      p_ptr->lev));
 }
 
-char  *manwe_avatar_info()
+const char *manwe_avatar_info()
 {
 	static char buf[128];
 	sprintf(buf,
@@ -2081,7 +2081,7 @@ casting_result manwe_blessing(int item)
 	return res;
 }
 
-char  *manwe_blessing_info()
+const char *manwe_blessing_info()
 {
 	static char buf[128];
 	sprintf(buf,
@@ -2110,7 +2110,7 @@ casting_result manwe_call(int item)
 	return NO_CAST;
 }
 
-char  *manwe_call_info()
+const char *manwe_call_info()
 {
 	static char buf[128];
 	sprintf(buf,
@@ -2230,7 +2230,7 @@ casting_result melkor_curse(int item)
 	}
 }
 
-char  *melkor_curse_info()
+const char *melkor_curse_info()
 {
 	return "";
 }
@@ -2243,7 +2243,7 @@ casting_result melkor_corpse_explosion(int item)
 			      2 + get_level_s(MELKOR_CORPSE_EXPLOSION, 5)));
 }
 
-char  *melkor_corpse_explosion_info()
+const char *melkor_corpse_explosion_info()
 {
 	static char buf[128];
 	sprintf(buf,
@@ -2293,7 +2293,7 @@ casting_result melkor_mind_steal(int item)
 	}
 }
 
-char  *melkor_mind_steal_info()
+const char *melkor_mind_steal_info()
 {
 	static char buf[128];
 	sprintf(buf,
@@ -2307,7 +2307,7 @@ casting_result meta_recharge(int item)
 	return cast(recharge(60 + get_level_s(RECHARGE, 140)));
 }
 
-char *meta_recharge_info()
+const char *meta_recharge_info()
 {
 	static char buf[128];
 	sprintf(buf,
@@ -2419,7 +2419,7 @@ casting_result meta_spellbinder(int item)
 	}
 }
 
-char *meta_spellbinder_info()
+const char *meta_spellbinder_info()
 {
 	static char buf[128];
 	sprintf(buf,
@@ -2465,7 +2465,7 @@ casting_result meta_disperse_magic(int item)
 	return res;
 }
 
-char *meta_disperse_magic_info()
+const char *meta_disperse_magic_info()
 {
 	return "";
 }
@@ -2484,7 +2484,7 @@ casting_result meta_tracker(int item)
 	return CAST_OBVIOUS;
 }
 
-char *meta_tracker_info()
+const char *meta_tracker_info()
 {
 	return "";
 }
@@ -2547,7 +2547,7 @@ casting_result meta_inertia_control(int item)
 	return CAST_OBVIOUS;
 }
 
-char *meta_inertia_control_info()
+const char *meta_inertia_control_info()
 {
 	static char buf[128];
 	sprintf(buf,
@@ -2619,7 +2619,7 @@ casting_result mind_charm(int item)
 	}
 }
 
-char *mind_charm_info()
+const char *mind_charm_info()
 {
 	static char buf[128];
 	sprintf(buf,
@@ -2661,7 +2661,7 @@ casting_result mind_confuse(int item)
 	}
 }
 
-char *mind_confuse_info()
+const char *mind_confuse_info()
 {
 	static char buf[128];
 	sprintf(buf,
@@ -2694,7 +2694,7 @@ casting_result mind_armor_of_fear(int item)
 			       mind_armor_of_fear_power_dice()));
 }
 
-char  *mind_armor_of_fear_info()
+const char *mind_armor_of_fear_info()
 {
 	static char buf[128];
 	sprintf(buf,
@@ -2729,7 +2729,7 @@ casting_result mind_stun(int item)
 	}
 }
 
-char  *mind_stun_info()
+const char *mind_stun_info()
 {
 	static char buf[128];
 	sprintf(buf,
@@ -2778,7 +2778,7 @@ casting_result tempo_magelock(int item)
 	}
 }
 
-char *tempo_magelock_info()
+const char *tempo_magelock_info()
 {
 	return "";
 }
@@ -2809,7 +2809,7 @@ casting_result tempo_slow_monster(int item)
 	}
 }
 
-char *tempo_slow_monster_info()
+const char *tempo_slow_monster_info()
 {
 	static char buf[128];
 	s32b pwr = tempo_slow_monster_power();
@@ -2845,7 +2845,7 @@ casting_result tempo_essence_of_speed(int item)
 	return NO_CAST;
 }
 
-char *tempo_essence_of_speed_info()
+const char *tempo_essence_of_speed_info()
 {
 	static char buf[128];
 	sprintf(buf,
@@ -2876,7 +2876,7 @@ casting_result tempo_banishment(int item)
 	return result;
 }
 
-char *tempo_banishment_info()
+const char *tempo_banishment_info()
 {
 	static char buf[128];
 	sprintf(buf,
@@ -2899,7 +2899,7 @@ casting_result tulkas_divine_aim(int item)
 	return result;
 }
 
-char *tulkas_divine_aim_info()
+const char *tulkas_divine_aim_info()
 {
 	static char buf[128];
 	sprintf(buf,
@@ -2920,7 +2920,7 @@ casting_result tulkas_wave_of_power(int item)
 	return cast(fire_bolt(GF_ATTACK, dir, get_level_s(TULKAS_WAVE, p_ptr->num_blow)));
 }
 
-char *tulkas_wave_of_power_info()
+const char *tulkas_wave_of_power_info()
 {
 	static char buf[128];
 	sprintf(buf,
@@ -2934,7 +2934,7 @@ casting_result tulkas_whirlwind(int item)
 	return cast(fire_ball(GF_ATTACK, 0, 1, 1));
 }
 
-char *tulkas_whirlwind_info()
+const char *tulkas_whirlwind_info()
 {
 	return "";
 }
@@ -3068,7 +3068,7 @@ casting_result udun_drain(int ignored)
 	return CAST_OBVIOUS;
 }
 
-char *udun_drain_info()
+const char *udun_drain_info()
 {
 	return "";
 }
@@ -3094,7 +3094,7 @@ casting_result udun_genocide(int item)
 	return CAST_OBVIOUS;
 }
 
-char *udun_genocide_info()
+const char *udun_genocide_info()
 {
 	return "";
 }
@@ -3109,7 +3109,7 @@ casting_result udun_wraithform(int item)
 	return cast(set_shadow(randint(30) + udun_wraithform_base_duration()));
 }
 
-char *udun_wraithform_info()
+const char *udun_wraithform_info()
 {
 	static char buf[128];
 	sprintf(buf,
@@ -3130,7 +3130,7 @@ casting_result udun_flame_of_udun(int item)
 			      get_level_s(FLAMEOFUDUN, 50)));
 }
 
-char *udun_flame_of_udun_info()
+const char *udun_flame_of_udun_info()
 {
 	static char buf[128];
 	sprintf(buf,
@@ -3160,7 +3160,7 @@ casting_result water_tidal_wave(int item)
 	return CAST_OBVIOUS;
 }
 
-char *water_tidal_wave_info()
+const char *water_tidal_wave_info()
 {
 	static char buf[128];
 	sprintf(buf,
@@ -3204,7 +3204,7 @@ casting_result water_ice_storm(int item)
 	return CAST_OBVIOUS;
 }
 
-char *water_ice_storm_info()
+const char *water_ice_storm_info()
 {
 	static char buf[128];
 	sprintf(buf,
@@ -3237,7 +3237,7 @@ casting_result water_ent_potion(int item)
 	return CAST_OBVIOUS;
 }
 
-char *water_ent_potion_info()
+const char *water_ent_potion_info()
 {
 	if (get_level_s(ENTPOTION, 50) >= 12)
 	{
@@ -3278,7 +3278,7 @@ casting_result water_vapor(int item)
 	return CAST_OBVIOUS;
 }
 
-char *water_vapor_info()
+const char *water_vapor_info()
 {
 	static char buf[128];
 	sprintf(buf,
@@ -3314,7 +3314,7 @@ casting_result water_geyser(int item)
 				      damroll(dice, sides)));
 }
 
-char *water_geyser_info()
+const char *water_geyser_info()
 {
 	static char buf[128];
 	int dice, sides;
@@ -3353,7 +3353,7 @@ casting_result yavanna_charm_animal(int item)
 			      charm_animal_radius()));
 }
 
-char *yavanna_charm_animal_info()
+const char *yavanna_charm_animal_info()
 {
 	static char buf[128];
 	sprintf(buf,
@@ -3374,7 +3374,7 @@ casting_result yavanna_grow_grass(int item)
 	return CAST_OBVIOUS;
 }
 
-char *yavanna_grow_grass_info()
+const char *yavanna_grow_grass_info()
 {
 	static char buf[128];
 	sprintf(buf,
@@ -3405,7 +3405,7 @@ casting_result yavanna_tree_roots(int item)
 			      tree_roots_damage()));
 }
 
-char *yavanna_tree_roots_info()
+const char *yavanna_tree_roots_info()
 {
 	static char buf[128];
 	sprintf(buf,
@@ -3442,7 +3442,7 @@ casting_result yavanna_water_bite(int item)
 				PROJECT_STOP | PROJECT_KILL));
 }
 
-char *yavanna_water_bite_info()
+const char *yavanna_water_bite_info()
 {
 	static char buf[128];
 	sprintf(buf,
@@ -3501,7 +3501,7 @@ casting_result yavanna_uproot(int item)
 	}
 }
 
-char *yavanna_uproot_info()
+const char *yavanna_uproot_info()
 {
 	static char buf[128];
 	sprintf(buf,
@@ -3521,7 +3521,7 @@ casting_result nature_grow_trees(int item)
 	return CAST_OBVIOUS;
 }
 
-char *nature_grow_trees_info()
+const char *nature_grow_trees_info()
 {
 	static char buf[128];
 	sprintf(buf,
@@ -3545,7 +3545,7 @@ casting_result nature_healing(int item)
 	return cast(hp_player(nature_healing_hp()));
 }
 
-char *nature_healing_info()
+const char *nature_healing_info()
 {
 	static char buf[128];
 	sprintf(buf,
@@ -3582,7 +3582,7 @@ casting_result nature_recovery(int item)
 	return result;
 }
 
-char *nature_recovery_info()
+const char *nature_recovery_info()
 {
 	return "";
 }
@@ -3607,7 +3607,7 @@ casting_result nature_regeneration(int item)
 	return NO_CAST;
 }
 
-char *nature_regeneration_info()
+const char *nature_regeneration_info()
 {
 	static char buf[128];
 	sprintf(buf,
@@ -3632,7 +3632,7 @@ casting_result nature_summon_animal(int item)
 					     TRUE));
 }
 
-char *nature_summon_animal_info()
+const char *nature_summon_animal_info()
 {
 	static char buf[128];
 	sprintf(buf,
@@ -3653,7 +3653,7 @@ casting_result nature_grow_athelas(int item)
 	return CAST_HIDDEN;
 }
 
-char *nature_grow_athelas_info()
+const char *nature_grow_athelas_info()
 {
 	return "";
 }
@@ -3675,7 +3675,7 @@ casting_result device_heal_monster(int item)
 	return cast(fire_ball(GF_OLD_HEAL, dir, device_heal_monster_hp(), 0));
 }
 
-char  *device_heal_monster_info()
+const char *device_heal_monster_info()
 {
 	static char buf[128];
 	sprintf(buf,
@@ -3696,7 +3696,7 @@ casting_result device_haste_monster(int item)
 	return cast(fire_ball(GF_OLD_SPEED, dir, 1, 0));
 }
 
-char  *device_haste_monster_info()
+const char *device_haste_monster_info()
 {
 	return "speed +10";
 }
@@ -3707,7 +3707,7 @@ casting_result device_wish(int item)
 	return CAST_OBVIOUS;
 }
 
-char  *device_wish_info()
+const char *device_wish_info()
 {
 	return "";
 }
@@ -3725,7 +3725,7 @@ casting_result device_summon_monster(int item)
 	return result;
 }
 
-char  *device_summon_monster_info()
+const char *device_summon_monster_info()
 {
 	return "";
 }
@@ -3741,7 +3741,7 @@ casting_result device_mana(int item)
 	return CAST_OBVIOUS;
 }
 
-char  *device_mana_info()
+const char *device_mana_info()
 {
 	static char buf[128];
 	sprintf(buf,
@@ -3755,7 +3755,7 @@ casting_result device_nothing(int item)
 	return CAST_HIDDEN;
 }
 
-char  *device_nothing_info()
+const char *device_nothing_info()
 {
 	return "";
 }
@@ -3769,7 +3769,7 @@ casting_result device_lebohaum(int item)
 	return CAST_OBVIOUS;
 }
 
-char  *device_lebohaum_info()
+const char *device_lebohaum_info()
 {
 	return "";
 }
@@ -3786,7 +3786,7 @@ casting_result device_maggot(int item)
 	return cast(fire_ball(GF_TURN_ALL, dir, 40, 2));
 }
 
-char  *device_maggot_info()
+const char *device_maggot_info()
 {
 	return "power 40 rad 2";
 }
@@ -3801,7 +3801,7 @@ casting_result device_holy_fire(int item)
 	return cast(project_hack(GF_HOLY_FIRE, holy_fire_damage()));
 }
 
-char  *device_holy_fire_info()
+const char *device_holy_fire_info()
 {
 	static char buf[128];
 	sprintf(buf,
@@ -3892,7 +3892,7 @@ casting_result device_eternal_flame(int flame_item)
 	return CAST_OBVIOUS;
 }
 
-char  *device_eternal_flame_info()
+const char *device_eternal_flame_info()
 {
 	return "";
 }
@@ -3914,7 +3914,7 @@ casting_result device_durandil(int item)
 	return CAST_OBVIOUS;
 }
 
-char  *device_durandil_info()
+const char *device_durandil_info()
 {
 	return "";
 }
@@ -3957,7 +3957,7 @@ casting_result device_thunderlords(int item)
 	}
 }
 
-char  *device_thunderlords_info()
+const char *device_thunderlords_info()
 {
 	return "";
 }
@@ -3996,7 +3996,7 @@ casting_result device_radagast(int item)
 	return CAST_OBVIOUS;
 }
 
-char  *device_radagast_info()
+const char *device_radagast_info()
 {
 	return "";
 }
@@ -4008,7 +4008,7 @@ casting_result device_valaroma(int item)
 	return CAST_HIDDEN;
 }
 
-char  *device_valaroma_info()
+const char *device_valaroma_info()
 {
 	return "";
 }
@@ -4024,7 +4024,7 @@ casting_result music_stop_singing_spell(int item)
 	return CAST_OBVIOUS;
 }
 
-char *music_stop_singing_info()
+const char *music_stop_singing_info()
 {
 	return "";
 }
@@ -4046,7 +4046,7 @@ casting_result music_holding_pattern_spell(int item)
 	return CAST_OBVIOUS;
 }
 
-char *music_holding_pattern_info()
+const char *music_holding_pattern_info()
 {
 	static char buf[128];
 	sprintf(buf,
@@ -4072,7 +4072,7 @@ casting_result music_illusion_pattern_spell(int item)
 	return CAST_OBVIOUS;
 }
 
-char *music_illusion_pattern_info()
+const char *music_illusion_pattern_info()
 {
 	static char buf[128];
 	sprintf(buf,
@@ -4098,7 +4098,7 @@ casting_result music_stun_pattern_spell(int item)
 	return CAST_OBVIOUS;
 }
 
-char *music_stun_pattern_info()
+const char *music_stun_pattern_info()
 {
 	static char buf[128];
 	sprintf(buf,
@@ -4119,7 +4119,7 @@ casting_result music_song_of_the_sun_spell(int item)
 	return CAST_OBVIOUS;
 }
 
-char *music_song_of_the_sun_info()
+const char *music_song_of_the_sun_info()
 {
 	return "";
 }
@@ -4141,7 +4141,7 @@ casting_result music_flow_of_life_spell(int item)
 	return CAST_OBVIOUS;
 }
 
-char *music_flow_of_life_info()
+const char *music_flow_of_life_info()
 {
 	static char buf[128];
 	sprintf(buf,
@@ -4174,7 +4174,7 @@ casting_result music_heroic_ballad_spell(int item)
 	return CAST_OBVIOUS;
 }
 
-char *music_heroic_ballad_info()
+const char *music_heroic_ballad_info()
 {
 	return "";
 }
@@ -4195,7 +4195,7 @@ casting_result music_hobbit_melodies_spell(int item)
 	return CAST_OBVIOUS;
 }
 
-char *music_hobbit_melodies_info()
+const char *music_hobbit_melodies_info()
 {
 	static char buf[128];
 	if (get_level_s(MUSIC_TIME, 50) >= 15)
@@ -4228,7 +4228,7 @@ casting_result music_clairaudience_spell(int item)
 	return CAST_OBVIOUS;
 }
 
-char *music_clairaudience_info()
+const char *music_clairaudience_info()
 {
 	static char buf[128];
 
@@ -4253,7 +4253,7 @@ casting_result music_blow_spell(int item)
 	return CAST_OBVIOUS;
 }
 
-char *music_blow_info()
+const char *music_blow_info()
 {
 	static char buf[128];
 	sprintf(buf,
@@ -4273,7 +4273,7 @@ casting_result music_gush_of_wind_spell(int item)
 	return CAST_OBVIOUS;
 }
 
-char *music_gush_of_wind_info()
+const char *music_gush_of_wind_info()
 {
 	static char buf[128];
 	sprintf(buf,
@@ -4289,7 +4289,7 @@ casting_result music_horns_of_ylmir_spell(int item)
 	return CAST_OBVIOUS;
 }
 
-char *music_horns_of_ylmir_info()
+const char *music_horns_of_ylmir_info()
 {
 	static char buf[128];
 	sprintf(buf,
@@ -4304,7 +4304,7 @@ casting_result music_ambarkanta_spell(int item)
 	return CAST_OBVIOUS;
 }
 
-char *music_ambarkanta_info()
+const char *music_ambarkanta_info()
 {
 	return "";
 }
@@ -4332,7 +4332,7 @@ casting_result aule_firebrand_spell(int item)
 				PROJECT_STOP | PROJECT_KILL));
 }
 
-char  *aule_firebrand_info()
+const char *aule_firebrand_info()
 {
 	s32b level = get_level_s(AULE_FIREBRAND, 50);
 	static char buf[128];
@@ -4404,7 +4404,7 @@ casting_result aule_enchant_weapon_spell(int ignored)
 	return CAST_OBVIOUS;
 }
 
-char  *aule_enchant_weapon_info()
+const char *aule_enchant_weapon_info()
 {
 	static char buf[128];
 	sprintf(buf,
@@ -4478,7 +4478,7 @@ casting_result aule_enchant_armour_spell(int ignored)
 	return CAST_OBVIOUS;
 }
 
-char  *aule_enchant_armour_info()
+const char *aule_enchant_armour_info()
 {
 	static char buf[128];
 	sprintf(buf,
@@ -4507,7 +4507,7 @@ casting_result aule_child_spell(int item)
 	}
 }
 
-char  *aule_child_info()
+const char *aule_child_info()
 {
 	static char buf[128];
 	sprintf(buf,
@@ -4533,7 +4533,7 @@ casting_result mandos_tears_of_luthien_spell(int item)
 	return result;
 }
 
-char  *mandos_tears_of_luthien_info()
+const char *mandos_tears_of_luthien_info()
 {
 	static char buf[128];
 	sprintf(buf,
@@ -4565,7 +4565,7 @@ casting_result mandos_spirit_of_the_feanturi_spell(int item)
 	return result;
 }
 
-char  *mandos_spirit_of_the_feanturi_info()
+const char *mandos_spirit_of_the_feanturi_info()
 {
 	static char buf[128];
 	s32b level = get_level_s(MANDOS_SPIRIT_FEANTURI, 50) ;
@@ -4590,7 +4590,7 @@ casting_result mandos_tale_of_doom_spell(int item)
 	return cast(set_tim_precognition(tale_of_doom_duration()));
 }
 
-char  *mandos_tale_of_doom_info()
+const char *mandos_tale_of_doom_info()
 {
 	static char buf[128];
 	sprintf(buf,
@@ -4628,7 +4628,7 @@ casting_result mandos_call_to_the_halls_spell(int item)
 #undef N_SUMMONS
 }
 
-char  *mandos_call_to_the_halls_info()
+const char *mandos_call_to_the_halls_info()
 {
 	static char buf[128];
 	sprintf(buf,
@@ -4659,7 +4659,7 @@ casting_result ulmo_song_of_belegaer_spell(int item)
 				      damroll(dice, sides)));
 }
 
-char *ulmo_song_of_belegaer_info()
+const char *ulmo_song_of_belegaer_info()
 {
 	static char buf[128];
 	int dice, sides;
@@ -4705,7 +4705,7 @@ casting_result ulmo_draught_of_ulmonan_spell(int item)
 	return result;
 }
 
-char *ulmo_draught_of_ulmonan_info()
+const char *ulmo_draught_of_ulmonan_info()
 {
 	static char buf[128];
 	sprintf(buf,
@@ -4745,7 +4745,7 @@ casting_result ulmo_call_of_the_ulumuri_spell(int item)
 #undef N_SUMMONS
 }
 
-char *ulmo_call_of_the_ulumuri_info()
+const char *ulmo_call_of_the_ulumuri_info()
 {
 	static char buf[128];
 	sprintf(buf,
@@ -4785,7 +4785,7 @@ casting_result ulmo_wrath_of_ulmo_spell(int item)
 	return CAST_OBVIOUS;
 }
 
-char *ulmo_wrath_of_ulmo_info()
+const char *ulmo_wrath_of_ulmo_info()
 {
 	static char buf[128];
 	sprintf(buf,
@@ -4831,7 +4831,7 @@ casting_result varda_light_of_valinor_spell(int item)
 	return result;
 }
 
-char *varda_light_of_valinor_info()
+const char *varda_light_of_valinor_info()
 {
 	static char buf[128];
 	if (get_level_s(VARDA_LIGHT_VALINOR, 50) >= 15)
@@ -4862,7 +4862,7 @@ casting_result varda_call_of_almaren_spell(int item)
 	return CAST_OBVIOUS;
 }
 
-char *varda_call_of_almaren_info()
+const char *varda_call_of_almaren_info()
 {
 	return "";
 }
@@ -4879,7 +4879,7 @@ casting_result varda_evenstar_spell(int item)
 	return CAST_OBVIOUS;
 }
 
-char *varda_evenstar_info()
+const char *varda_evenstar_info()
 {
 	return "";
 }
@@ -4914,7 +4914,7 @@ casting_result varda_star_kindler_spell(int item)
 	return CAST_OBVIOUS;
 }
 
-char *varda_star_kindler_info()
+const char *varda_star_kindler_info()
 {
 	static char buf[128];
 	sprintf(buf,

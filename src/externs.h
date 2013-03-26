@@ -859,11 +859,11 @@ extern errr predict_score(void);
 extern void predict_score_gui(bool_ *initialized, bool_ *game_in_progress);
 extern void close_game(void);
 extern errr get_rnd_line(const char * file_name, char * output);
-extern char *get_line(char* fname, cptr fdir, char *linbuf, int line);
+extern char *get_line(const char* fname, cptr fdir, char *linbuf, int line);
 extern void do_cmd_knowledge_corruptions(void);
 extern void race_legends(void);
 extern void show_highclass(int building);
-extern errr get_xtra_line(char * file_name, monster_type *m_ptr, char * output);
+extern errr get_xtra_line(const char * file_name, monster_type *m_ptr, char * output);
 
 /* gen_maze.c */
 extern bool_ level_generate_maze();
@@ -1362,17 +1362,17 @@ extern s32b THUNDERSTORM;
 extern s32b STERILIZE;
 
 casting_result  air_noxious_cloud(int);
-char           *air_noxious_cloud_info();
+const char     *air_noxious_cloud_info();
 casting_result  air_wings_of_winds(int);
-char           *air_wings_of_winds_info();
+const char     *air_wings_of_winds_info();
 casting_result  air_invisibility(int);
-char           *air_invisibility_info();
+const char     *air_invisibility_info();
 casting_result  air_poison_blood(int);
-char           *air_poison_blood_info();
+const char     *air_poison_blood_info();
 casting_result  air_thunderstorm(int);
-char           *air_thunderstorm_info();
+const char     *air_thunderstorm_info();
 casting_result  air_sterilize(int);
-char           *air_sterilize_info();
+const char     *air_sterilize_info();
 
 extern s32b BLINK;
 extern s32b DISARM;
@@ -1382,17 +1382,17 @@ extern s32b RECALL;
 extern s32b PROBABILITY_TRAVEL;
 
 casting_result  convey_blink(int);
-char           *convey_blink_info();
+const char     *convey_blink_info();
 casting_result  convey_disarm(int);
-char           *convey_disarm_info();
+const char     *convey_disarm_info();
 casting_result  convey_teleport(int);
-char           *convey_teleport_info();
+const char     *convey_teleport_info();
 casting_result  convey_teleport_away(int);
-char           *convey_teleport_away_info();
+const char     *convey_teleport_away_info();
 casting_result  convey_recall(int);
-char           *convey_recall_info();
+const char     *convey_recall_info();
 casting_result  convey_probability_travel(int);
-char           *convey_probability_travel_info();
+const char     *convey_probability_travel_info();
 
 extern s32b DEMON_BLADE;
 extern s32b DEMON_MADNESS;
@@ -1405,23 +1405,23 @@ extern s32b DISCHARGE_MINION;
 extern s32b CONTROL_DEMON;
 
 casting_result  demonology_demon_blade(int);
-char           *demonology_demon_blade_info();
+const char     *demonology_demon_blade_info();
 casting_result  demonology_demon_madness(int);
-char           *demonology_demon_madness_info();
+const char     *demonology_demon_madness_info();
 casting_result  demonology_demon_field(int);
-char           *demonology_demon_field_info();
+const char     *demonology_demon_field_info();
 casting_result  demonology_doom_shield(int);
-char           *demonology_doom_shield_info();
+const char     *demonology_doom_shield_info();
 casting_result  demonology_unholy_word(int);
-char           *demonology_unholy_word_info();
+const char     *demonology_unholy_word_info();
 casting_result  demonology_demon_cloak(int);
-char           *demonology_demon_cloak_info();
+const char     *demonology_demon_cloak_info();
 casting_result  demonology_summon_demon(int);
-char           *demonology_summon_demon_info();
+const char     *demonology_summon_demon_info();
 casting_result  demonology_discharge_minion(int);
-char           *demonology_discharge_minion_info();
+const char     *demonology_discharge_minion_info();
 casting_result  demonology_control_demon(int);
-char           *demonology_control_demon_info();
+const char     *demonology_control_demon_info();
 
 extern s32b STARIDENTIFY;
 extern s32b IDENTIFY;
@@ -1431,17 +1431,17 @@ extern s32b REVEALWAYS;
 extern s32b SENSEMONSTERS;
 
 casting_result  divination_greater_identify(int);
-char           *divination_greater_identify_info();
+const char     *divination_greater_identify_info();
 casting_result  divination_identify(int);
-char           *divination_identify_info();
+const char     *divination_identify_info();
 casting_result  divination_vision(int);
-char           *divination_vision_info();
+const char     *divination_vision_info();
 casting_result  divination_sense_hidden(int);
-char           *divination_sense_hidden_info();
+const char     *divination_sense_hidden_info();
 casting_result  divination_reveal_ways(int);
-char           *divination_reveal_ways_info();
+const char     *divination_reveal_ways_info();
 casting_result  divination_sense_monsters(int);
-char           *divination_sense_monsters_info();
+const char     *divination_sense_monsters_info();
 
 extern s32b STONESKIN;
 extern s32b DIG;
@@ -1450,15 +1450,15 @@ extern s32b STRIKE;
 extern s32b SHAKE;
 
 casting_result  earth_stone_skin(int);
-char           *earth_stone_skin_info();
+const char     *earth_stone_skin_info();
 casting_result  earth_dig(int);
-char           *earth_dig_info();
+const char     *earth_dig_info();
 casting_result  earth_stone_prison(int);
-char           *earth_stone_prison_info();
+const char     *earth_stone_prison_info();
 casting_result  earth_strike(int);
-char           *earth_strike_info();
+const char     *earth_strike_info();
 casting_result  earth_shake(int);
-char           *earth_shake_info();
+const char     *earth_shake_info();
 
 extern s32b ERU_SEE;
 extern s32b ERU_LISTEN;
@@ -1466,13 +1466,13 @@ extern s32b ERU_UNDERSTAND;
 extern s32b ERU_PROT;
 
 casting_result  eru_see_the_music(int);
-char           *eru_see_the_music_info();
+const char     *eru_see_the_music_info();
 casting_result  eru_listen_to_the_music(int);
-char           *eru_listen_to_the_music_info();
+const char     *eru_listen_to_the_music_info();
 casting_result  eru_know_the_music(int);
-char           *eru_know_the_music_info();
+const char     *eru_know_the_music_info();
 casting_result  eru_lay_of_protection(int);
-char           *eru_lay_of_protection_info();
+const char     *eru_lay_of_protection_info();
 
 extern s32b GLOBELIGHT;
 extern s32b FIREFLASH;
@@ -1481,15 +1481,15 @@ extern s32b FIREWALL;
 extern s32b FIREGOLEM;
 
 casting_result  fire_globe_of_light(int);
-char           *fire_globe_of_light_info();
+const char     *fire_globe_of_light_info();
 casting_result  fire_fireflash(int);
-char           *fire_fireflash_info();
+const char     *fire_fireflash_info();
 casting_result  fire_fiery_shield(int);
-char           *fire_fiery_shield_info();
+const char     *fire_fiery_shield_info();
 casting_result  fire_firewall(int);
-char           *fire_firewall_info();
+const char     *fire_firewall_info();
 casting_result  fire_golem(int);
-char           *fire_golem_info();
+const char     *fire_golem_info();
 
 extern s32b CALL_THE_ELEMENTS;
 extern s32b CHANNEL_ELEMENTS;
@@ -1501,25 +1501,25 @@ extern s32b GROW_BARRIER;
 extern s32b ELEMENTAL_MINION;
 
 casting_result  geomancy_call_the_elements(int);
-char           *geomancy_call_the_elements_info();
+const char     *geomancy_call_the_elements_info();
 casting_result  geomancy_channel_elements(int);
-char           *geomancy_channel_elements_info();
+const char     *geomancy_channel_elements_info();
 casting_result  geomancy_elemental_wave(int);
-char           *geomancy_elemental_wave_info();
+const char     *geomancy_elemental_wave_info();
 casting_result  geomancy_vaporize(int);
-char           *geomancy_vaporize_info();
+const char     *geomancy_vaporize_info();
 bool_           geomancy_vaporize_depends();
 casting_result  geomancy_geolysis(int);
-char           *geomancy_geolysis_info();
+const char     *geomancy_geolysis_info();
 bool_           geomancy_geolysis_depends();
 casting_result  geomancy_dripping_tread(int);
-char           *geomancy_dripping_tread_info();
+const char     *geomancy_dripping_tread_info();
 bool_           geomancy_dripping_tread_depends();
 casting_result  geomancy_grow_barrier(int);
-char           *geomancy_grow_barrier_info();
+const char     *geomancy_grow_barrier_info();
 bool_           geomancy_grow_barrier_depends();
 casting_result  geomancy_elemental_minion(int);
-char           *geomancy_elemental_minion_info();
+const char     *geomancy_elemental_minion_info();
 
 extern s32b MANATHRUST;
 extern s32b DELCURSES;
@@ -1527,13 +1527,13 @@ extern s32b RESISTS;
 extern s32b MANASHIELD;
 
 casting_result  mana_manathrust(int);
-char           *mana_manathrust_info();
+const char     *mana_manathrust_info();
 casting_result  mana_remove_curses(int);
-char           *mana_remove_curses_info();
+const char     *mana_remove_curses_info();
 casting_result  mana_elemental_shield(int);
-char           *mana_elemental_shield_info();
+const char     *mana_elemental_shield_info();
 casting_result  mana_disruption_shield(int);
-char           *mana_disruption_shield_info();
+const char     *mana_disruption_shield_info();
 
 extern s32b MANWE_SHIELD;
 extern s32b MANWE_AVATAR;
@@ -1541,13 +1541,13 @@ extern s32b MANWE_BLESS;
 extern s32b MANWE_CALL;
 
 casting_result  manwe_wind_shield(int);
-char           *manwe_wind_shield_info();
+const char     *manwe_wind_shield_info();
 casting_result  manwe_avatar(int);
-char           *manwe_avatar_info();
+const char     *manwe_avatar_info();
 casting_result  manwe_blessing(int);
-char           *manwe_blessing_info();
+const char     *manwe_blessing_info();
 casting_result  manwe_call(int);
-char           *manwe_call_info();
+const char     *manwe_call_info();
 
 extern s32b MELKOR_CURSE;
 extern s32b MELKOR_CORPSE_EXPLOSION;
@@ -1556,11 +1556,11 @@ extern s32b MELKOR_MIND_STEAL;
 void do_melkor_curse(int m_idx);
 
 casting_result  melkor_curse(int);
-char           *melkor_curse_info();
+const char     *melkor_curse_info();
 casting_result  melkor_corpse_explosion(int);
-char           *melkor_corpse_explosion_info();
+const char     *melkor_corpse_explosion_info();
 casting_result  melkor_mind_steal(int);
-char           *melkor_mind_steal_info();
+const char     *melkor_mind_steal_info();
 
 extern s32b RECHARGE;
 extern s32b SPELLBINDER;
@@ -1570,15 +1570,15 @@ extern s32b INERTIA_CONTROL;
 extern timer_type *TIMER_INERTIA_CONTROL;
 
 casting_result  meta_recharge(int);
-char           *meta_recharge_info();
+const char     *meta_recharge_info();
 casting_result  meta_spellbinder(int);
-char           *meta_spellbinder_info();
+const char     *meta_spellbinder_info();
 casting_result  meta_disperse_magic(int);
-char           *meta_disperse_magic_info();
+const char     *meta_disperse_magic_info();
 casting_result  meta_tracker(int);
-char           *meta_tracker_info();
+const char     *meta_tracker_info();
 casting_result  meta_inertia_control(int);
-char           *meta_inertia_control_info();
+const char     *meta_inertia_control_info();
 
 void meta_inertia_control_timer_callback();
 void meta_inertia_control_calc_mana(int *msp);
@@ -1590,13 +1590,13 @@ extern s32b ARMOROFFEAR;
 extern s32b STUN;
 
 casting_result mind_charm(int);
-char  *mind_charm_info();
+const char    *mind_charm_info();
 casting_result mind_confuse(int);
-char  *mind_confuse_info();
+const char    *mind_confuse_info();
 casting_result mind_armor_of_fear(int);
-char  *mind_armor_of_fear_info();
+const char    *mind_armor_of_fear_info();
 casting_result mind_stun(int);
-char  *mind_stun_info();
+const char    *mind_stun_info();
 
 extern s32b MAGELOCK;
 extern s32b SLOWMONSTER;
@@ -1604,24 +1604,24 @@ extern s32b ESSENCESPEED;
 extern s32b BANISHMENT;
 
 casting_result  tempo_magelock(int);
-char           *tempo_magelock_info();
+const char     *tempo_magelock_info();
 casting_result  tempo_slow_monster(int);
-char           *tempo_slow_monster_info();
+const char     *tempo_slow_monster_info();
 casting_result  tempo_essence_of_speed(int);
-char           *tempo_essence_of_speed_info();
+const char     *tempo_essence_of_speed_info();
 casting_result  tempo_banishment(int);
-char           *tempo_banishment_info();
+const char     *tempo_banishment_info();
 
 extern s32b TULKAS_AIM;
 extern s32b TULKAS_WAVE;
 extern s32b TULKAS_SPIN;
 
 casting_result  tulkas_divine_aim(int);
-char           *tulkas_divine_aim_info();
+const char     *tulkas_divine_aim_info();
 casting_result  tulkas_wave_of_power(int);
-char           *tulkas_wave_of_power_info();
+const char     *tulkas_wave_of_power_info();
 casting_result  tulkas_whirlwind(int);
-char           *tulkas_whirlwind_info();
+const char     *tulkas_whirlwind_info();
 
 extern s32b DRAIN;
 extern s32b GENOCIDE;
@@ -1632,13 +1632,13 @@ int udun_in_book(s32b sval, s32b pval);
 int levels_in_book(s32b sval, s32b pval);
 
 casting_result  udun_drain(int);
-char           *udun_drain_info();
+const char     *udun_drain_info();
 casting_result  udun_genocide(int);
-char           *udun_genocide_info();
+const char     *udun_genocide_info();
 casting_result  udun_wraithform(int);
-char           *udun_wraithform_info();
+const char     *udun_wraithform_info();
 casting_result  udun_flame_of_udun(int);
-char           *udun_flame_of_udun_info();
+const char     *udun_flame_of_udun_info();
 
 extern s32b TIDALWAVE;
 extern s32b ICESTORM;
@@ -1647,15 +1647,15 @@ extern s32b VAPOR;
 extern s32b GEYSER;
 
 casting_result  water_tidal_wave(int);
-char           *water_tidal_wave_info();
+const char     *water_tidal_wave_info();
 casting_result  water_ice_storm(int);
-char           *water_ice_storm_info();
+const char     *water_ice_storm_info();
 casting_result  water_ent_potion(int);
-char           *water_ent_potion_info();
+const char     *water_ent_potion_info();
 casting_result  water_vapor(int);
-char           *water_vapor_info();
+const char     *water_vapor_info();
 casting_result  water_geyser(int);
-char           *water_geyser_info();
+const char     *water_geyser_info();
 
 extern s32b YAVANNA_CHARM_ANIMAL;
 extern s32b YAVANNA_GROW_GRASS;
@@ -1664,15 +1664,15 @@ extern s32b YAVANNA_WATER_BITE;
 extern s32b YAVANNA_UPROOT;
 
 casting_result  yavanna_charm_animal(int);
-char           *yavanna_charm_animal_info();
+const char     *yavanna_charm_animal_info();
 casting_result  yavanna_grow_grass(int);
-char           *yavanna_grow_grass_info();
+const char     *yavanna_grow_grass_info();
 casting_result  yavanna_tree_roots(int);
-char           *yavanna_tree_roots_info();
+const char     *yavanna_tree_roots_info();
 casting_result  yavanna_water_bite(int);
-char           *yavanna_water_bite_info();
+const char     *yavanna_water_bite_info();
 casting_result  yavanna_uproot(int);
-char           *yavanna_uproot_info();
+const char     *yavanna_uproot_info();
 
 extern s32b GROWTREE;
 extern s32b HEALING;
@@ -1682,17 +1682,17 @@ extern s32b SUMMONANNIMAL;
 extern s32b GROW_ATHELAS;
 
 casting_result  nature_grow_trees(int);
-char           *nature_grow_trees_info();
+const char     *nature_grow_trees_info();
 casting_result  nature_healing(int);
-char           *nature_healing_info();
+const char     *nature_healing_info();
 casting_result  nature_recovery(int);
-char           *nature_recovery_info();
+const char     *nature_recovery_info();
 casting_result  nature_regeneration(int);
-char           *nature_regeneration_info();
+const char     *nature_regeneration_info();
 casting_result  nature_summon_animal(int);
-char           *nature_summon_animal_info();
+const char     *nature_summon_animal_info();
 casting_result  nature_grow_athelas(int);
-char           *nature_grow_athelas_info();
+const char     *nature_grow_athelas_info();
 
 extern s32b DEVICE_HEAL_MONSTER;
 extern s32b DEVICE_SPEED_MONSTER;
@@ -1710,33 +1710,33 @@ extern s32b DEVICE_RADAGAST;
 extern s32b DEVICE_VALAROMA;
 
 casting_result  device_heal_monster(int);
-char           *device_heal_monster_info();
+const char     *device_heal_monster_info();
 casting_result  device_haste_monster(int);
-char           *device_haste_monster_info();
+const char     *device_haste_monster_info();
 casting_result  device_wish(int);
-char           *device_wish_info();
+const char     *device_wish_info();
 casting_result  device_summon_monster(int);
-char           *device_summon_monster_info();
+const char     *device_summon_monster_info();
 casting_result  device_mana(int);
-char           *device_mana_info();
+const char     *device_mana_info();
 casting_result  device_nothing(int);
-char           *device_nothing_info();
+const char     *device_nothing_info();
 casting_result  device_lebohaum(int);
-char           *device_lebohaum_info();
+const char     *device_lebohaum_info();
 casting_result  device_maggot(int);
-char           *device_maggot_info();
+const char     *device_maggot_info();
 casting_result  device_holy_fire(int);
-char           *device_holy_fire_info();
+const char     *device_holy_fire_info();
 casting_result  device_eternal_flame(int);
-char           *device_eternal_flame_info();
+const char     *device_eternal_flame_info();
 casting_result  device_durandil(int);
-char           *device_durandil_info();
+const char     *device_durandil_info();
 casting_result  device_thunderlords(int);
-char           *device_thunderlords_info();
+const char     *device_thunderlords_info();
 casting_result  device_radagast(int);
-char           *device_radagast_info();
+const char     *device_radagast_info();
 casting_result  device_valaroma(int);
-char           *device_valaroma_info();
+const char     *device_valaroma_info();
 
 extern s32b MUSIC_STOP;
 extern s32b MUSIC_HOLD;
@@ -1753,51 +1753,51 @@ extern s32b MUSIC_YLMIR;
 extern s32b MUSIC_AMBARKANTA;
 
 casting_result  music_stop_singing_spell(int);
-char           *music_stop_singing_info();
+const char     *music_stop_singing_info();
 
 int             music_holding_pattern_lasting();
 casting_result  music_holding_pattern_spell(int);
-char           *music_holding_pattern_info();
+const char     *music_holding_pattern_info();
 
 int             music_illusion_pattern_lasting();
 casting_result  music_illusion_pattern_spell(int);
-char           *music_illusion_pattern_info();
+const char     *music_illusion_pattern_info();
 
 int             music_stun_pattern_lasting();
 casting_result  music_stun_pattern_spell(int);
-char           *music_stun_pattern_info();
+const char     *music_stun_pattern_info();
 
 int             music_song_of_the_sun_lasting();
 casting_result  music_song_of_the_sun_spell(int);
-char           *music_song_of_the_sun_info();
+const char     *music_song_of_the_sun_info();
 
 int             music_flow_of_life_lasting();
 casting_result  music_flow_of_life_spell(int);
-char           *music_flow_of_life_info();
+const char     *music_flow_of_life_info();
 
 int             music_heroic_ballad_lasting();
 casting_result  music_heroic_ballad_spell(int);
-char           *music_heroic_ballad_info();
+const char     *music_heroic_ballad_info();
 
 int             music_hobbit_melodies_lasting();
 casting_result  music_hobbit_melodies_spell(int);
-char           *music_hobbit_melodies_info();
+const char     *music_hobbit_melodies_info();
 
 int             music_clairaudience_lasting();
 casting_result  music_clairaudience_spell(int);
-char           *music_clairaudience_info();
+const char     *music_clairaudience_info();
 
 casting_result  music_blow_spell(int);
-char           *music_blow_info();
+const char     *music_blow_info();
 
 casting_result  music_gush_of_wind_spell(int);
-char           *music_gush_of_wind_info();
+const char     *music_gush_of_wind_info();
 
 casting_result  music_horns_of_ylmir_spell(int);
-char           *music_horns_of_ylmir_info();
+const char     *music_horns_of_ylmir_info();
 
 casting_result  music_ambarkanta_spell(int);
-char           *music_ambarkanta_info();
+const char     *music_ambarkanta_info();
 
 extern s32b AULE_FIREBRAND;
 extern s32b AULE_ENCHANT_WEAPON;
@@ -1805,13 +1805,13 @@ extern s32b AULE_ENCHANT_ARMOUR;
 extern s32b AULE_CHILD;
 
 casting_result  aule_firebrand_spell(int);
-char           *aule_firebrand_info();
+const char     *aule_firebrand_info();
 casting_result  aule_enchant_weapon_spell(int);
-char           *aule_enchant_weapon_info();
+const char     *aule_enchant_weapon_info();
 casting_result  aule_enchant_armour_spell(int);
-char           *aule_enchant_armour_info();
+const char     *aule_enchant_armour_info();
 casting_result  aule_child_spell(int);
-char           *aule_child_info();
+const char     *aule_child_info();
 
 extern s32b MANDOS_TEARS_LUTHIEN;
 extern s32b MANDOS_SPIRIT_FEANTURI;
@@ -1819,13 +1819,13 @@ extern s32b MANDOS_TALE_DOOM;
 extern s32b MANDOS_CALL_HALLS;
 
 casting_result  mandos_tears_of_luthien_spell(int);
-char           *mandos_tears_of_luthien_info();
+const char     *mandos_tears_of_luthien_info();
 casting_result  mandos_spirit_of_the_feanturi_spell(int);
-char           *mandos_spirit_of_the_feanturi_info();
+const char     *mandos_spirit_of_the_feanturi_info();
 casting_result  mandos_tale_of_doom_spell(int);
-char           *mandos_tale_of_doom_info();
+const char     *mandos_tale_of_doom_info();
 casting_result  mandos_call_to_the_halls_spell(int);
-char           *mandos_call_to_the_halls_info();
+const char     *mandos_call_to_the_halls_info();
 
 extern s32b ULMO_BELEGAER;
 extern s32b ULMO_DRAUGHT_ULMONAN;
@@ -1833,13 +1833,13 @@ extern s32b ULMO_CALL_ULUMURI;
 extern s32b ULMO_WRATH;
 
 casting_result  ulmo_song_of_belegaer_spell(int);
-char           *ulmo_song_of_belegaer_info();
+const char     *ulmo_song_of_belegaer_info();
 casting_result  ulmo_draught_of_ulmonan_spell(int);
-char           *ulmo_draught_of_ulmonan_info();
+const char     *ulmo_draught_of_ulmonan_info();
 casting_result  ulmo_call_of_the_ulumuri_spell(int);
-char           *ulmo_call_of_the_ulumuri_info();
+const char     *ulmo_call_of_the_ulumuri_info();
 casting_result  ulmo_wrath_of_ulmo_spell(int);
-char           *ulmo_wrath_of_ulmo_info();
+const char     *ulmo_wrath_of_ulmo_info();
 
 extern s32b VARDA_LIGHT_VALINOR;
 extern s32b VARDA_CALL_ALMAREN;
@@ -1847,13 +1847,13 @@ extern s32b VARDA_EVENSTAR;
 extern s32b VARDA_STARKINDLER;
 
 casting_result  varda_light_of_valinor_spell(int);
-char           *varda_light_of_valinor_info();
+const char     *varda_light_of_valinor_info();
 casting_result  varda_call_of_almaren_spell(int);
-char           *varda_call_of_almaren_info();
+const char     *varda_call_of_almaren_info();
 casting_result  varda_evenstar_spell(int);
-char           *varda_evenstar_info();
+const char     *varda_evenstar_info();
 casting_result  varda_star_kindler_spell(int);
-char           *varda_star_kindler_info();
+const char     *varda_star_kindler_info();
 
 /* spells4.c */
 
@@ -2302,8 +2302,8 @@ extern s32b get_level_use_stick;
 extern void set_target(int y, int x);
 extern void get_target(int dir, int *y, int *x);
 
-extern void get_map_size(char *name, int *ysize, int *xsize);
-extern void load_map(char *name, int *y, int *x);
+extern void get_map_size(const char *name, int *ysize, int *xsize);
+extern void load_map(const char *name, int *y, int *x);
 
 extern int lua_get_new_bounty_monster(int lev);
 

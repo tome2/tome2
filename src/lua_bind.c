@@ -213,7 +213,7 @@ void get_target(int dir, int *y, int *x)
 }
 
 /* Level gen */
-void get_map_size(char *name, int *ysize, int *xsize)
+void get_map_size(const char *name, int *ysize, int *xsize)
 {
 	*xsize = 0;
 	*ysize = 0;
@@ -221,7 +221,7 @@ void get_map_size(char *name, int *ysize, int *xsize)
 	process_dungeon_file(name, ysize, xsize, cur_hgt, cur_wid, TRUE, TRUE);
 }
 
-void load_map(char *name, int *y, int *x)
+void load_map(const char *name, int *y, int *x)
 {
 	/* Set the correct monster hook */
 	set_mon_num_hook();
@@ -307,7 +307,7 @@ char *lua_input_box(cptr title, int max)
 	strcpy(buf, "");
 	Term_get_size(&wid, &hgt);
 	if (!input_box(title, hgt / 2, wid / 2, buf, (max > 79) ? 79 : max))
-		return "";
+		return buf;
 	return buf;
 }
 
