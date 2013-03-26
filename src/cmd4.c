@@ -3820,7 +3820,7 @@ static void do_cmd_knowledge_kill_count(void)
 		}
 		else
 		{
-                  fprintf(fff, "You have defeated %ld enemies.\n\n", (long int) Total);
+                  fprintf(fff, "You have defeated " FMTs32b " enemies.\n\n", Total);
 		}
 	}
 
@@ -3874,7 +3874,7 @@ static void do_cmd_knowledge_kill_count(void)
 	}
 
 	fprintf(fff, "----------------------------------------------\n");
-	fprintf(fff, "   Total: %ld creature%s killed.\n", (long int) Total, (Total == 1 ? "" : "s"));
+	fprintf(fff, "   Total: " FMTs32b " creature%s killed.\n", Total, (Total == 1 ? "" : "s"));
 
 	/* Close the file */
 	my_fclose(fff);

@@ -1619,7 +1619,7 @@ void display_store(void)
 		put_str(buf, 3, 10);
 
 		/* Show the max price in the store (above prices) */
-		strnfmt(buf, 80, "%s (%ld)", store_name, (long)(ot_ptr->max_cost));
+		strnfmt(buf, 80, "%s (" FMTs16b ")", store_name, ot_ptr->max_cost);
 		prt(buf, 3, 50);
 
 		/* Label the item descriptions */
@@ -2273,7 +2273,7 @@ void store_purchase(void)
 				object_desc(o_name, j_ptr, TRUE, 3);
 
 				/* Message */
-				msg_format("You bought %s for %ld gold.", o_name, (long)price);
+				msg_format("You bought %s for " FMTs32b " gold.", o_name, price);
 
 				/* Erase the inscription */
 				j_ptr->note = 0;
@@ -2605,7 +2605,7 @@ void store_sell(void)
 			object_desc(o_name, q_ptr, TRUE, 3);
 
 			/* Describe the result (in message buffer) */
-			msg_format("You sold %s for %ld gold.", o_name, (long)price);
+			msg_format("You sold %s for " FMTs32b " gold.", o_name, price);
 
 			/* Analyze the prices (and comment verbally) */
 			purchase_analyze(price, value, dummy);

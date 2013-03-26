@@ -1229,10 +1229,10 @@ int show_flags(byte group, int pval)
 			        (items < 26) ? I2A(items) : ('0' + items - 26),
 			        al_name + a_select_flags[i].desc);
 			if ( wizard || alchemist_has_stone())
-				sprintf(ttt, "%c) %s (exp %ld)",
+				sprintf(ttt, "%c) %s (exp " FMTu32b ")",
 				        (items < 26) ? I2A(items) : ('0' + items - 26),
 				        al_name + a_select_flags[i].desc,
-				        (long int) a_select_flags[i].xp);
+				        a_select_flags[i].xp);
 
 			/* Note: Somebody is VERY clever, and it wasn't me. Text printed as
 			 * TERM_DARK is actually printed as TERM_BLUE *SPACES* to prevent the

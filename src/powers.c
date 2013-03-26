@@ -226,7 +226,7 @@ static void power_activate(int power)
 					else o_ptr = &o_list[0 - idx];
 
 					/* Appraise it */
-					sprintf(value, "%i au", (int)object_value(o_ptr));
+					sprintf(value, FMTs32b " au", object_value(o_ptr));
 
 					/* Inscribe the value */
 					/* Get the original inscription */
