@@ -297,7 +297,7 @@ static void library_quest_fill_book()
 	screen_load();
 }
 
-static bool_ quest_library_gen_hook()
+static bool_ quest_library_gen_hook(const char *fmt)
 {
 	/* Only if player doing this quest */
 	if (p_ptr->inside_quest != QUEST_LIBRARY)
@@ -340,7 +340,7 @@ static bool_ quest_library_gen_hook()
 	return TRUE;
 }
 
-static bool_ quest_library_stair_hook()
+static bool_ quest_library_stair_hook(const char *fmt)
 {
 	bool_ ret;
 
