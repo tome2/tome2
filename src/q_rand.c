@@ -388,7 +388,7 @@ static bool_ quest_random_gen_hook(const char *fmt)
 
 static bool_ quest_random_dump_hook(const char *fmt)
 {
-	static char *number[] = 
+	static const char *number[] =
 	{ "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten" };
 	int i, valid = 0, lscnt = 0, pcnt = 0;
 
