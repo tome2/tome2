@@ -248,10 +248,12 @@ extern "C" {
 /*
  * Linux has "stricmp()" with a different name
  */
+/*
 #if defined(linux)
 # define HAS_STRICMP
 # define stricmp strcasecmp
 #endif
+*/
 
 
 /*
