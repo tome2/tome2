@@ -5593,7 +5593,7 @@ void close_game(void)
 /*
  * Grab a randomly selected line in lib/file/file_name
  */
-errr get_rnd_line(char *file_name, char *output)
+errr get_rnd_line(const char *file_name, char *output)
 {
 	FILE *fp;
 

@@ -148,7 +148,7 @@ object_type* get_next_arg_obj() {
 /* Actually process the hooks */
 int process_hooks_restart = FALSE;
 hook_return process_hooks_return[20];
-static bool_ vprocess_hooks_return (int h_idx, char *ret, char *fmt, va_list *ap)
+static bool_ vprocess_hooks_return (int h_idx, const char *ret, const char *fmt, va_list *ap)
 {
 	hooks_chain *c = hooks_heads[h_idx];
 	va_list real_ap;
@@ -217,7 +217,7 @@ static bool_ vprocess_hooks_return (int h_idx, char *ret, char *fmt, va_list *ap
 	return FALSE;
 }
 
-bool_ process_hooks_ret(int h_idx, char *ret, char *fmt, ...)
+bool_ process_hooks_ret(int h_idx, const char *ret, const char *fmt, ...)
 {
 	va_list ap;
 	bool_ r;
@@ -228,7 +228,7 @@ bool_ process_hooks_ret(int h_idx, char *ret, char *fmt, ...)
 	return (r);
 }
 
-bool_ process_hooks(int h_idx, char *fmt, ...)
+bool_ process_hooks(int h_idx, const char *fmt, ...)
 {
 	va_list ap;
 	bool_ ret;

@@ -2,6 +2,10 @@
 
 #include "angband.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 extern FILE *hook_file;
 extern void wipe_hooks(void);
 extern void init_hooks(void);
@@ -13,6 +17,10 @@ extern char* get_next_arg_str(const char *fmt);
 extern object_type *get_next_arg_obj();
 extern int process_hooks_restart;
 extern hook_return process_hooks_return[20];
-extern bool_ process_hooks_ret(int h_idx, char *ret, char *fmt, ...);
-extern bool_ process_hooks(int h_idx, char *fmt, ...);
+extern bool_ process_hooks_ret(int h_idx, const char *ret, const char *fmt, ...);
+extern bool_ process_hooks(int h_idx, const char *fmt, ...);
 extern bool_ process_hooks_new(int h_idx, void *in, void *out);
+
+#ifdef __cplusplus
+} // extern "C"
+#endif

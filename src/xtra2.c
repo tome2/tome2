@@ -5472,7 +5472,7 @@ void set_grace(s32b v)
 	handle_stuff();
 }
 
-bool_ test_object_wish(char *name, object_type *o_ptr, object_type *forge, char *what)
+bool_ test_object_wish(char *name, object_type *o_ptr, object_type *forge, const char *what)
 {
 	int i, j, jb, save_aware;
 	char buf[200];
