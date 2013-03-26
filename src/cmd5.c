@@ -326,7 +326,7 @@ void do_poly_self(void)
 	while ((power > rand_int(15)) && (rand_int(3) == 0))
 	{
 		power -= 7;
-		(void) gain_random_corruption(0);
+		gain_random_corruption();
 	}
 
 	if (power > rand_int(5))
