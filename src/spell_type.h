@@ -2,7 +2,7 @@
 
 #include "spell_type_fwd.h"
 
-#include "h-type.h"
+#include "h-basic.h"
 #include "types_fwd.h"
 #include "device_allocation_fwd.h"
 #include "range_fwd.h"

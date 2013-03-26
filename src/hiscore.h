@@ -1,7 +1,6 @@
-#ifndef H_267bf1c1_eada_4b18_9558_d96330fa7258
-#define H_267bf1c1_eada_4b18_9558_d96330fa7258
+#pragma once
 
-#include "h-type.h"
+#include "h-basic.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -84,6 +83,4 @@ int highscore_add(int highscore_fd, high_score *score);
 
 #ifdef __cplusplus
 } // extern "C"
-#endif
-
 #endif

@@ -1,7 +1,6 @@
-#ifndef H_eeb941c7_1a44_405a_8db3_ba14732c5b94
-#define H_eeb941c7_1a44_405a_8db3_ba14732c5b94
+#pragma once
 
-#include "h-type.h"
+#include "h-basic.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -13,6 +12,4 @@ s16b quark_add(cptr str);
 
 #ifdef __cplusplus
 } // extern "C"
-#endif
-
 #endif
