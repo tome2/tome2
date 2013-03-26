@@ -1,7 +1,8 @@
-/* File: h-config.h */
+#pragma once
 
-#ifndef INCLUDED_H_CONFIG_H
-#define INCLUDED_H_CONFIG_H
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 /*
  * Choose the hardware, operating system, and compiler.
@@ -271,4 +272,6 @@
 # endif
 #endif
 
+#ifdef __cplusplus
+} // extern "C"
 #endif
