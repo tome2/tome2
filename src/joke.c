@@ -1,10 +1,10 @@
 #include "angband.h"
 
-static void gen_joke_place_monster(r_idx)
+static void gen_joke_place_monster(int r_idx)
 {
-	int try;
+	int try_;
 
-	for (try = 0; try < 1000; try++)
+	for (try_ = 0; try_ < 1000; try_++)
 	{
 		int x = randint(cur_hgt - 4) + 2;
 		int y = randint(cur_wid - 4) + 2;
