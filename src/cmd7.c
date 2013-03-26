@@ -2784,7 +2784,7 @@ void alchemist_display_recipe(int tval, int sval, int ego)
 char selectchar[] = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*():;,.<=>[]{}/=?+'~";
 byte selectitem[256];
 
-void strip_and_print(char *str, int color, int num)
+void strip_and_print(const char *str, int color, int num)
 {
 	int row = 2 + (num % 20), col = 40 * (num / 20);
 	int ch, max_len = 0;
@@ -3132,7 +3132,7 @@ int alchemist_recipe_select(int *tval, int sval, int ego, bool_ recipe)
 	int choice[60];
 	int validc[60];
 
-	char *string;
+	const char *string;
 
 
 	/* Save and clear the screen */
@@ -4789,8 +4789,8 @@ void brand_ammo(int brand_type, int bolts_only)
 	if ((a < INVEN_PACK) && (rand_int(100) < 50))
 	{
 		object_type *o_ptr = &p_ptr->inventory[a];
-		char *ammo_name;
-		char *aura_name;
+		const char *ammo_name;
+		const char *aura_name;
 		char msg[48];
 		int aura_type, r;
 
