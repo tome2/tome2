@@ -37,9 +37,14 @@ void increase_skill(int i, s16b *invest)
 	if (((s_info[i].value + s_info[i].mod) / SKILL_STEP) >= (p_ptr->lev + max_skill_overage + 1))
 	{
 		int hgt, wid;
+		char buf[256];
+
+		sprintf(buf,
+			"Cannot raise a skill value above " FMTs32b " + player level.",
+			max_skill_overage);
 
 		Term_get_size(&wid, &hgt);
-		msg_box(format("Cannot raise a skill value above %i + player level.", max_skill_overage), (int)(hgt / 2), (int)(wid / 2));
+		msg_box(buf, hgt / 2, wid / 2);
 		return;
 	}
 
@@ -576,7 +581,7 @@ void do_cmd_skill()
 		flush();
 
 		/* Ask we can commit the change */
-		if (msg_box("Save and use these skill values? (y/n)", (int)(hgt / 2), (int)(wid / 2)) != 'y')
+		if (msg_box("Save and use these skill values? (y/n)", hgt / 2, wid / 2) != 'y')
 		{
 			/* User declines -- restore the skill values before exiting */
 
@@ -1566,7 +1571,7 @@ void gain_ability(int ab)
 
 	if (!can_learn_ability(ab))
 	{
-		msg_box("You cannot learn this ability.", (int)(hgt / 2), (int)(wid / 2));
+		msg_box("You cannot learn this ability.", hgt / 2, wid / 2);
 		return;
 	}
 
@@ -1574,7 +1579,7 @@ void gain_ability(int ab)
 	flush();
 
 	/* Ask we can commit the change */
-	if (msg_box("Learn this ability(this is permanent)? (y/n)", (int)(hgt / 2), (int)(wid / 2)) != 'y')
+	if (msg_box("Learn this ability(this is permanent)? (y/n)", hgt / 2, wid / 2) != 'y')
 	{
 		return;
 	}

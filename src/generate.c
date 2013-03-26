@@ -1006,7 +1006,7 @@ static void place_random_door(int y, int x)
 	else
 	{
 		/* Create jammed door */
-		cave_set_feat(y, x, FEAT_DOOR_HEAD + 0x08 + (byte)rand_int(8));
+		cave_set_feat(y, x, FEAT_DOOR_HEAD + 0x08 + rand_int(8));
 	}
 }
 

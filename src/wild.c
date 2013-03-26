@@ -191,10 +191,10 @@ int generate_area(int y, int x, bool_ border, bool_ corner, bool_ refresh)
 		 * ToDo: calculate the medium height of the adjacent
 		 * terrains for every corner.
 		 */
-		cave_set_feat(1, 1, (byte)rand_int(MAX_WILD_TERRAIN));
-		cave_set_feat(MAX_HGT - 2, 1, (byte)rand_int(MAX_WILD_TERRAIN));
-		cave_set_feat(1, MAX_WID - 2, (byte)rand_int(MAX_WILD_TERRAIN));
-		cave_set_feat(MAX_HGT - 2, MAX_WID - 2, (byte)rand_int(MAX_WILD_TERRAIN));
+		cave_set_feat(1, 1, rand_int(MAX_WILD_TERRAIN));
+		cave_set_feat(MAX_HGT - 2, 1, rand_int(MAX_WILD_TERRAIN));
+		cave_set_feat(1, MAX_WID - 2, rand_int(MAX_WILD_TERRAIN));
+		cave_set_feat(MAX_HGT - 2, MAX_WID - 2, rand_int(MAX_WILD_TERRAIN));
 
 		if (!corner)
 		{

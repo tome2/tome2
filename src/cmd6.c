@@ -4677,7 +4677,7 @@ int ring_of_power()
 		/* Rewrite this -- pelpel */
 		if (summon_specific_friendly(p_ptr->py, p_ptr->px, ((plev * 3) / 2),
 		                             (plev > 47 ? SUMMON_HI_UNDEAD_NO_UNIQUES : SUMMON_UNDEAD),
-		                             (bool_)(((plev > 24) && (randint(3) == 1)) ? TRUE : FALSE)))
+		                             (((plev > 24) && (randint(3) == 1)) ? TRUE : FALSE)))
 		{
 			msg_print("Cold winds begin to blow around you, "
 			          "carrying with them the stench of decay...");
@@ -5677,7 +5677,7 @@ const char *activation_aux(object_type * o_ptr, bool_ doit, int item)
 				else
 				{
 					if (summon_specific_friendly(p_ptr->py, p_ptr->px, ((plev * 3) / 2),
-					                             SUMMON_THUNDERLORD, (bool_)(plev == 50 ? TRUE : FALSE)))
+					                             SUMMON_THUNDERLORD, (plev == 50 ? TRUE : FALSE)))
 					{
 						msg_print("A Thunderlord comes from thin air!");
 						msg_print("'I will help you in your difficult task.'");
@@ -6372,7 +6372,7 @@ const char *activation_aux(object_type * o_ptr, bool_ doit, int item)
 				else
 				{
 					if (summon_specific_friendly(p_ptr->py, p_ptr->px, ((plev * 3) / 2),
-					                             SUMMON_ELEMENTAL, (bool_)(plev == 50 ? TRUE : FALSE)))
+					                             SUMMON_ELEMENTAL, (plev == 50 ? TRUE : FALSE)))
 					{
 						msg_print("An elemental materialises...");
 						msg_print("It seems obedient to you.");
@@ -6398,7 +6398,7 @@ const char *activation_aux(object_type * o_ptr, bool_ doit, int item)
 				else
 				{
 					if (summon_specific_friendly(p_ptr->py, p_ptr->px, ((plev * 3) / 2),
-					                             SUMMON_DEMON, (bool_)(plev == 50 ? TRUE : FALSE)))
+					                             SUMMON_DEMON, (plev == 50 ? TRUE : FALSE)))
 					{
 						msg_print("The area fills with a stench of sulphur and brimstone.");
 						msg_print("'What is thy bidding... Master?'");
@@ -6426,7 +6426,7 @@ const char *activation_aux(object_type * o_ptr, bool_ doit, int item)
 				{
 					if (summon_specific_friendly(p_ptr->py, p_ptr->px, ((plev * 3) / 2),
 					                             (plev > 47 ? SUMMON_HI_UNDEAD_NO_UNIQUES : SUMMON_UNDEAD),
-					                             (bool_)(((plev > 24) && (randint(3) == 1)) ? TRUE : FALSE)))
+					                             (((plev > 24) && (randint(3) == 1)) ? TRUE : FALSE)))
 					{
 						msg_print("Cold winds begin to blow around you, carrying with them the stench of decay...");
 						msg_print("Ancient, long-dead forms arise from the ground to serve you!");

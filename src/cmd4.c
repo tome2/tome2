@@ -2368,10 +2368,10 @@ void do_cmd_visuals(void)
 				/* Analyze */
 				if (i == 'n') r = (r + max_r_idx + 1) % max_r_idx;
 				if (i == 'N') r = (r + max_r_idx - 1) % max_r_idx;
-				if (i == 'a') r_ptr->x_attr = (byte)(ca + 1);
-				if (i == 'A') r_ptr->x_attr = (byte)(ca - 1);
-				if (i == 'c') r_ptr->x_char = (byte)(cc + 1);
-				if (i == 'C') r_ptr->x_char = (byte)(cc - 1);
+				if (i == 'a') r_ptr->x_attr = (ca + 1);
+				if (i == 'A') r_ptr->x_attr = (ca - 1);
+				if (i == 'c') r_ptr->x_char = (cc + 1);
+				if (i == 'C') r_ptr->x_char = (cc - 1);
 			}
 		}
 
@@ -2388,10 +2388,10 @@ void do_cmd_visuals(void)
 			{
 				object_kind *k_ptr = &k_info[k];
 
-				byte da = (byte)k_ptr->d_attr;
-				char dc = (byte)k_ptr->d_char;
-				byte ca = (byte)k_ptr->x_attr;
-				char cc = (byte)k_ptr->x_char;
+				byte da = k_ptr->d_attr;
+				char dc = k_ptr->d_char;
+				byte ca = k_ptr->x_attr;
+				char cc = k_ptr->x_char;
 
 				/* Label the object */
 				Term_putstr(5, 17, -1, TERM_WHITE,
@@ -2437,10 +2437,10 @@ void do_cmd_visuals(void)
 				/* Analyze */
 				if (i == 'n') k = (k + max_k_idx + 1) % max_k_idx;
 				if (i == 'N') k = (k + max_k_idx - 1) % max_k_idx;
-				if (i == 'a') k_info[k].x_attr = (byte)(ca + 1);
-				if (i == 'A') k_info[k].x_attr = (byte)(ca - 1);
-				if (i == 'c') k_info[k].x_char = (byte)(cc + 1);
-				if (i == 'C') k_info[k].x_char = (byte)(cc - 1);
+				if (i == 'a') k_info[k].x_attr = (ca + 1);
+				if (i == 'A') k_info[k].x_attr = (ca - 1);
+				if (i == 'c') k_info[k].x_char = (cc + 1);
+				if (i == 'C') k_info[k].x_char = (cc - 1);
 			}
 		}
 
@@ -2457,10 +2457,10 @@ void do_cmd_visuals(void)
 			{
 				feature_type *f_ptr = &f_info[f];
 
-				byte da = (byte)f_ptr->d_attr;
-				char dc = (byte)f_ptr->d_char;
-				byte ca = (byte)f_ptr->x_attr;
-				char cc = (byte)f_ptr->x_char;
+				byte da = f_ptr->d_attr;
+				char dc = f_ptr->d_char;
+				byte ca = f_ptr->x_attr;
+				char cc = f_ptr->x_char;
 
 				/* Label the object */
 				Term_putstr(5, 17, -1, TERM_WHITE,
@@ -2506,10 +2506,10 @@ void do_cmd_visuals(void)
 				/* Analyze */
 				if (i == 'n') f = (f + max_f_idx + 1) % max_f_idx;
 				if (i == 'N') f = (f + max_f_idx - 1) % max_f_idx;
-				if (i == 'a') f_info[f].x_attr = (byte)(ca + 1);
-				if (i == 'A') f_info[f].x_attr = (byte)(ca - 1);
-				if (i == 'c') f_info[f].x_char = (byte)(cc + 1);
-				if (i == 'C') f_info[f].x_char = (byte)(cc - 1);
+				if (i == 'a') f_info[f].x_attr = (ca + 1);
+				if (i == 'A') f_info[f].x_attr = (ca - 1);
+				if (i == 'c') f_info[f].x_char = (cc + 1);
+				if (i == 'C') f_info[f].x_char = (cc - 1);
 				if (i == 'd')
 				{
 					f_info[f].x_char = f_ptr->d_char;
@@ -2734,16 +2734,16 @@ void do_cmd_colors(void)
 				if (i == ESCAPE) break;
 
 				/* Analyze */
-				if (i == 'n') a = (byte)(a + 1);
-				if (i == 'N') a = (byte)(a - 1);
-				if (i == 'k') angband_color_table[a][0] = (byte)(angband_color_table[a][0] + 1);
-				if (i == 'K') angband_color_table[a][0] = (byte)(angband_color_table[a][0] - 1);
-				if (i == 'r') angband_color_table[a][1] = (byte)(angband_color_table[a][1] + 1);
-				if (i == 'R') angband_color_table[a][1] = (byte)(angband_color_table[a][1] - 1);
-				if (i == 'g') angband_color_table[a][2] = (byte)(angband_color_table[a][2] + 1);
-				if (i == 'G') angband_color_table[a][2] = (byte)(angband_color_table[a][2] - 1);
-				if (i == 'b') angband_color_table[a][3] = (byte)(angband_color_table[a][3] + 1);
-				if (i == 'B') angband_color_table[a][3] = (byte)(angband_color_table[a][3] - 1);
+				if (i == 'n') a = (a + 1);
+				if (i == 'N') a = (a - 1);
+				if (i == 'k') angband_color_table[a][0] = (angband_color_table[a][0] + 1);
+				if (i == 'K') angband_color_table[a][0] = (angband_color_table[a][0] - 1);
+				if (i == 'r') angband_color_table[a][1] = (angband_color_table[a][1] + 1);
+				if (i == 'R') angband_color_table[a][1] = (angband_color_table[a][1] - 1);
+				if (i == 'g') angband_color_table[a][2] = (angband_color_table[a][2] + 1);
+				if (i == 'G') angband_color_table[a][2] = (angband_color_table[a][2] - 1);
+				if (i == 'b') angband_color_table[a][3] = (angband_color_table[a][3] + 1);
+				if (i == 'B') angband_color_table[a][3] = (angband_color_table[a][3] - 1);
 
 				/* Hack -- react to changes */
 				Term_xtra(TERM_XTRA_REACT, 0);
