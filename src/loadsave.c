@@ -1509,7 +1509,6 @@ static void do_item(object_type *o_ptr, int flag)
 static void do_monster(monster_type *m_ptr, int flag)
 {
 	int i;
-	bool_ tmp;
 
 	/* Read the monster race */
 	do_s16b(&m_ptr->r_idx, flag);
@@ -1552,69 +1551,6 @@ static void do_monster(monster_type *m_ptr, int flag)
 		do_byte(&m_ptr->blow[i].effect, flag);
 		do_byte(&m_ptr->blow[i].d_dice, flag);
 		do_byte(&m_ptr->blow[i].d_side, flag);
-	}
-
-	/* Special race */
-	tmp = (m_ptr->sr_ptr) ? TRUE : FALSE;
-	do_byte((byte*)&tmp, flag);
-	if (tmp)
-	{
-		if (flag == LS_LOAD)
-		{
-			MAKE(m_ptr->sr_ptr, monster_race);
-		}
-		do_u32b(&m_ptr->sr_ptr->name, flag);
-		do_u32b(&m_ptr->sr_ptr->text, flag);
-
-		do_u16b(&m_ptr->sr_ptr->hdice, flag);
-		do_u16b(&m_ptr->sr_ptr->hside, flag);
-
-		do_s16b(&m_ptr->sr_ptr->ac, flag);
-
-		do_s16b(&m_ptr->sr_ptr->sleep, flag);
-		do_byte(&m_ptr->sr_ptr->aaf, flag);
-		do_byte(&m_ptr->sr_ptr->speed, flag);
-
-		do_s32b(&m_ptr->sr_ptr->mexp, flag);
-
-		do_s32b(&m_ptr->sr_ptr->weight, flag);
-
-		do_byte(&m_ptr->sr_ptr->freq_inate, flag);
-		do_byte(&m_ptr->sr_ptr->freq_spell, flag);
-
-		do_u32b(&m_ptr->sr_ptr->flags1, flag);
-		do_u32b(&m_ptr->sr_ptr->flags2, flag);
-		do_u32b(&m_ptr->sr_ptr->flags3, flag);
-		do_u32b(&m_ptr->sr_ptr->flags4, flag);
-		do_u32b(&m_ptr->sr_ptr->flags5, flag);
-		do_u32b(&m_ptr->sr_ptr->flags6, flag);
-		do_u32b(&m_ptr->sr_ptr->flags7, flag);
-		do_u32b(&m_ptr->sr_ptr->flags8, flag);
-		do_u32b(&m_ptr->sr_ptr->flags9, flag);
-
-		/* Attacks */
-		for (i = 0; i < 4; i++)
-		{
-			do_byte(&m_ptr->sr_ptr->blow[i].method, flag);
-			do_byte(&m_ptr->sr_ptr->blow[i].effect, flag);
-			do_byte(&m_ptr->sr_ptr->blow[i].d_dice, flag);
-			do_byte(&m_ptr->sr_ptr->blow[i].d_side, flag);
-		}
-
-		for (i = 0; i < BODY_MAX; i++)
-			do_byte(&m_ptr->sr_ptr->body_parts[i], flag);
-
-		do_byte(&m_ptr->sr_ptr->level, flag);
-		do_byte(&m_ptr->sr_ptr->rarity, flag);
-
-		do_byte((byte*)&m_ptr->sr_ptr->d_char, flag);
-		do_byte(&m_ptr->sr_ptr->d_attr, flag);
-
-		do_byte((byte*)&m_ptr->sr_ptr->x_char, flag);
-		do_byte(&m_ptr->sr_ptr->x_attr, flag);
-
-		do_s16b(&m_ptr->sr_ptr->max_num, flag);
-		do_byte(&m_ptr->sr_ptr->cur_num, flag);
 	}
 }
 

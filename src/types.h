@@ -892,8 +892,6 @@ struct monster_type
 	s16b target;                    /* Monster target */
 
 	s16b possessor;                 /* Is it under the control of a possessor ? */
-
-	monster_race *sr_ptr;           /* Does it have a specific race(not in r_info) */
 };
 
 

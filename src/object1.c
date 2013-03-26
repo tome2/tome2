@@ -1615,7 +1615,6 @@ void object_desc(char *buf, object_type *o_ptr, int pref, int mode)
 			char name[80];
 			monster_type monster;
 
-			monster.sr_ptr = 0;
 			monster.r_idx = o_ptr->pval;
 			monster.ego = o_ptr->pval2;
 			monster.ml = TRUE;

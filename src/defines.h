@@ -4180,7 +4180,7 @@
 
 #define MEGO_CHANCE             18      /* % chances of getting ego monsters */
 
-#define race_inf(m_ptr) (((m_ptr)->sr_ptr) ? (m_ptr)->sr_ptr : race_info_idx((m_ptr)->r_idx, (m_ptr)->ego))
+#define race_inf(m_ptr) (race_info_idx((m_ptr)->r_idx, (m_ptr)->ego))
 
 /* Object generation */
 #define OBJ_GENE_TREASURE       20
