@@ -13,9 +13,6 @@
 #include "angband.h"
 #include "hooks.h"
 
-void do_cmd_wizard_body(s16b);
-extern void status_main(void);
-
 /*
  * Adds a lvl to a monster
  */
@@ -1579,24 +1576,10 @@ extern void do_cmd_wiz_body(s16b bidx)
 
 
 /*
- * External function
- */
-extern void do_cmd_spoilers(void);
-
-
-
-/*
- * Hack -- declare external function
- */
-extern void do_cmd_debug(void);
-
-
-
-/*
  * Ask for and parse a "debug command"
  * The "command_arg" may have been set.
  */
-void do_cmd_debug(void)
+void do_cmd_debug()
 {
 	int x, y;
 	char cmd;

@@ -2173,9 +2173,13 @@ extern int get_fbranch(void);
 extern int get_flevel(void);
 extern bool_ get_dungeon_save(char *buf);
 
+/* wizard1.c */
+extern void do_cmd_spoilers();
+
 /* wizard2.c */
 extern void do_cmd_wiz_cure_all(void);
 extern void do_cmd_wiz_named_friendly(int r_idx, bool_ slp);
+extern void do_cmd_debug();
 extern tval_desc2 tvals[];
 
 /* notes.c */
@@ -2262,6 +2266,9 @@ extern bool_ easy_floor;
 
 /* script.c */
 extern void init_lua_init(void);
+
+/* status.c */
+extern void status_main();
 
 /* modules.c */
 extern void module_reset_dir(cptr dir, cptr new_path);

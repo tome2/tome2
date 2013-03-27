@@ -3435,12 +3435,6 @@ static bool_ enter_debug_mode(void)
 
 
 /*
- * Hack -- Declare the Debug Routines
- */
-extern void do_cmd_debug(void);
-
-
-/*
  * Parse and execute the current command
  * Give "Warning" on illegal commands.
  *

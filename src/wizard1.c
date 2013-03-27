@@ -2652,16 +2652,10 @@ static void spoil_spells(cptr fname)
 }
 
 
-
-/*
- * Forward declare
- */
-extern void do_cmd_spoilers(void);
-
 /*
  * Create Spoiler files -BEN-
  */
-void do_cmd_spoilers(void)
+void do_cmd_spoilers()
 {
 	int i;
 

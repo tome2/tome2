@@ -34,7 +34,6 @@ static void status_companion(void);
 void status_sight(void);
 void status_attr(void);
 void status_combat(void);
-void status_main(void);
 void status_move(void);
 void status_item(void);
 void az_line(int, u32b[INVEN_TOTAL - INVEN_WIELD + 2][7]);
@@ -373,7 +372,7 @@ void status_res(void)
 	}
 }
 
-void status_main(void)
+void status_main()
 {
 	int do_quit = 0;
 	char c;
