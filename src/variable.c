@@ -859,15 +859,6 @@ char *ba_name;
 header *ow_head;
 owner_type *ow_info;
 char *ow_name;
-/* char *ow_text; */
-
-/*
- * The dungeon types arrays
- */
-header *d_head;
-dungeon_info_type *d_info;
-char *d_name;
-char *d_text;
 
 /*
  * Hack -- The special Angband "System Suffix"
@@ -1345,11 +1336,6 @@ int max_bg_idx;
  * Variable savefile stuff
  */
 s32b extra_savefile_parts = 0;
-
-/*
- * Quests
- */
-quest_type quest[MAX_Q_IDX];
 
 /*
  * Display the player as a special symbol when in bad health ?
