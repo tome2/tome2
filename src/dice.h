@@ -2,6 +2,10 @@
 
 #include "dice_fwd.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /**
  * Dice
  */
@@ -11,3 +15,7 @@ struct dice_type
 	long num;   /* Number of dice */
 	long sides; /* Sides per dice */
 };
+
+#ifdef __cplusplus
+} // extern "C"
+#endif

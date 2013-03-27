@@ -2,6 +2,10 @@
 
 #include "angband.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef struct dice_type dice_type;
 struct dice_type;
 
@@ -10,3 +14,7 @@ bool_ dice_parse(dice_type *dice, cptr s);
 void dice_parse_checked(dice_type *dice, cptr s);
 long dice_roll(dice_type *dice);
 void dice_print(dice_type *dice, char *buf);
+
+#ifdef __cplusplus
+} // extern "C"
+#endif
