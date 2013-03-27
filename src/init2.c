@@ -225,14 +225,6 @@ s16b error_line;
 
 
 /*
- * Hack -- help initialise the fake "name" and "text" arrays when
- * parsing an "ascii" template file.
- */
-u32b fake_name_size;
-u32b fake_text_size;
-
-
-/*
  * Standard error message text
  */
 static cptr err_str[9] =
@@ -288,16 +280,12 @@ static errr init_f_info(void)
 
 	/*** Make the fake arrays ***/
 
-	/* Fake the size of "f_name" and "f_text" */
-	fake_name_size = FAKE_NAME_SIZE;
-	fake_text_size = FAKE_TEXT_SIZE;
-
 	/* Allocate the "f_info" array */
 	C_MAKE(f_info, f_head->info_num, feature_type);
 
 	/* Hack -- make "fake" arrays */
-	C_MAKE(f_name, fake_name_size, char);
-	C_MAKE(f_text, fake_text_size, char);
+	C_MAKE(f_name, FAKE_NAME_SIZE, char);
+	C_MAKE(f_text, FAKE_TEXT_SIZE, char);
 
 
 	/*** Load the ascii template file ***/
@@ -372,16 +360,12 @@ static errr init_k_info(void)
 
 	/*** Make the fake arrays ***/
 
-	/* Fake the size of "k_name" and "k_text" */
-	fake_name_size = FAKE_NAME_SIZE;
-	fake_text_size = FAKE_TEXT_SIZE;
-
 	/* Allocate the "k_info" array */
 	C_MAKE(k_info, k_head->info_num, object_kind);
 
 	/* Hack -- make "fake" arrays */
-	C_MAKE(k_name, fake_name_size, char);
-	C_MAKE(k_text, fake_text_size, char);
+	C_MAKE(k_name, FAKE_NAME_SIZE, char);
+	C_MAKE(k_text, FAKE_TEXT_SIZE, char);
 
 
 	/*** Load the ascii template file ***/
@@ -456,16 +440,12 @@ static errr init_set_info(void)
 
 	/*** Make the fake arrays ***/
 
-	/* Fake the size of "set_name" and "set_text" */
-	fake_name_size = FAKE_NAME_SIZE;
-	fake_text_size = FAKE_TEXT_SIZE;
-
 	/* Allocate the "set_info" array */
 	C_MAKE(set_info, set_head->info_num, set_type);
 
 	/* Hack -- make "fake" arrays */
-	C_MAKE(set_name, fake_name_size, char);
-	C_MAKE(set_text, fake_text_size, char);
+	C_MAKE(set_name, FAKE_NAME_SIZE, char);
+	C_MAKE(set_text, FAKE_TEXT_SIZE, char);
 
 
 	/*** Load the ascii template file ***/
@@ -539,16 +519,12 @@ static errr init_a_info(void)
 
 	/*** Make the fake arrays ***/
 
-	/* Fake the size of "a_name" and "a_text" */
-	fake_name_size = FAKE_NAME_SIZE;
-	fake_text_size = FAKE_TEXT_SIZE;
-
 	/* Allocate the "a_info" array */
 	C_MAKE(a_info, a_head->info_num, artifact_type);
 
 	/* Hack -- make "fake" arrays */
-	C_MAKE(a_name, fake_name_size, char);
-	C_MAKE(a_text, fake_text_size, char);
+	C_MAKE(a_name, FAKE_NAME_SIZE, char);
+	C_MAKE(a_text, FAKE_TEXT_SIZE, char);
 
 
 	/*** Load the ascii template file ***/
@@ -622,16 +598,12 @@ static errr init_s_info(void)
 
 	/*** Make the fake arrays ***/
 
-	/* Fake the size of "a_name" and "a_text" */
-	fake_name_size = FAKE_NAME_SIZE;
-	fake_text_size = FAKE_TEXT_SIZE;
-
 	/* Allocate the "s_info" array */
 	C_MAKE(s_info, s_head->info_num, skill_type);
 
 	/* Hack -- make "fake" arrays */
-	C_MAKE(s_name, fake_name_size, char);
-	C_MAKE(s_text, fake_text_size, char);
+	C_MAKE(s_name, FAKE_NAME_SIZE, char);
+	C_MAKE(s_text, FAKE_TEXT_SIZE, char);
 
 	/*** Load the ascii template file ***/
 
@@ -704,16 +676,12 @@ static errr init_ab_info(void)
 
 	/*** Make the fake arrays ***/
 
-	/* Fake the size of "a_name" and "a_text" */
-	fake_name_size = FAKE_NAME_SIZE;
-	fake_text_size = FAKE_TEXT_SIZE;
-
 	/* Allocate the "ab_info" array */
 	C_MAKE(ab_info, ab_head->info_num, ability_type);
 
 	/* Hack -- make "fake" arrays */
-	C_MAKE(ab_name, fake_name_size, char);
-	C_MAKE(ab_text, fake_text_size, char);
+	C_MAKE(ab_name, FAKE_NAME_SIZE, char);
+	C_MAKE(ab_text, FAKE_TEXT_SIZE, char);
 
 	/*** Load the ascii template file ***/
 
@@ -787,16 +755,12 @@ static errr init_e_info(void)
 
 	/*** Make the fake arrays ***/
 
-	/* Fake the size of "e_name" and "e_text" */
-	fake_name_size = FAKE_NAME_SIZE;
-	fake_text_size = FAKE_TEXT_SIZE;
-
 	/* Allocate the "e_info" array */
 	C_MAKE(e_info, e_head->info_num, ego_item_type);
 
 	/* Hack -- make "fake" arrays */
-	C_MAKE(e_name, fake_name_size, char);
-	C_MAKE(e_text, fake_text_size, char);
+	C_MAKE(e_name, FAKE_NAME_SIZE, char);
+	C_MAKE(e_text, FAKE_TEXT_SIZE, char);
 
 
 	/*** Load the ascii template file ***/
@@ -870,10 +834,6 @@ static errr init_ra_info(void)
 
 	/*** Make the fake arrays ***/
 
-	/* Fake the size of "ra_name" and "ra_text" */
-	fake_name_size = FAKE_NAME_SIZE;
-	fake_text_size = FAKE_TEXT_SIZE;
-
 	/* Allocate the "ra_info" array */
 	C_MAKE(ra_info, ra_head->info_num, randart_part_type);
 
@@ -945,16 +905,12 @@ static errr init_r_info(void)
 
 	/*** Make the fake arrays ***/
 
-	/* Assume the size of "r_name" and "r_text" */
-	fake_name_size = FAKE_NAME_SIZE;
-	fake_text_size = FAKE_TEXT_SIZE;
-
 	/* Allocate the "r_info" array */
 	C_MAKE(r_info, r_head->info_num, monster_race);
 
 	/* Hack -- make "fake" arrays */
-	C_MAKE(r_name, fake_name_size, char);
-	C_MAKE(r_text, fake_text_size, char);
+	C_MAKE(r_name, FAKE_NAME_SIZE, char);
+	C_MAKE(r_text, FAKE_TEXT_SIZE, char);
 
 
 	/*** Load the ascii template file ***/
@@ -1028,14 +984,11 @@ static errr init_re_info(void)
 
 	/*** Make the fake arrays ***/
 
-	/* Assume the size of "re_name" */
-	fake_name_size = FAKE_NAME_SIZE;
-
 	/* Allocate the "re_info" array */
 	C_MAKE(re_info, re_head->info_num, monster_ego);
 
 	/* Hack -- make "fake" arrays */
-	C_MAKE(re_name, fake_name_size, char);
+	C_MAKE(re_name, FAKE_NAME_SIZE, char);
 
 
 	/*** Load the ascii template file ***/
@@ -1108,16 +1061,12 @@ static errr init_d_info(void)
 
 	/*** Make the fake arrays ***/
 
-	/* Assume the size of "d_name" and "d_text" */
-	fake_name_size = FAKE_NAME_SIZE;
-	fake_text_size = FAKE_TEXT_SIZE;
-
 	/* Allocate the "d_info" array */
 	C_MAKE(d_info, d_head->info_num, dungeon_info_type);
 
 	/* Hack -- make "fake" arrays */
-	C_MAKE(d_name, fake_name_size, char);
-	C_MAKE(d_text, fake_text_size, char);
+	C_MAKE(d_name, FAKE_NAME_SIZE, char);
+	C_MAKE(d_text, FAKE_TEXT_SIZE, char);
 
 
 	/*** Load the ascii template file ***/
@@ -1211,30 +1160,26 @@ static errr init_player_info(void)
 
 	/*** Make the fake arrays ***/
 
-	/* Assume the size of "rp_name" and "rp_text" */
-	fake_name_size = FAKE_NAME_SIZE;
-	fake_text_size = FAKE_TEXT_SIZE;
-
 	/* Allocate the "rp_info" array */
 	C_MAKE(race_info, rp_head->info_num, player_race);
 
 	/* Hack -- make "fake" arrays */
-	C_MAKE(rp_name, fake_name_size, char);
-	C_MAKE(rp_text, fake_text_size, char);
+	C_MAKE(rp_name, FAKE_NAME_SIZE, char);
+	C_MAKE(rp_text, FAKE_TEXT_SIZE, char);
 
 	/* Allocate the "rmp_info" array */
 	C_MAKE(race_mod_info, rmp_head->info_num, player_race_mod);
 
 	/* Hack -- make "fake" arrays */
-	C_MAKE(rmp_name, fake_name_size, char);
-	C_MAKE(rmp_text, fake_text_size, char);
+	C_MAKE(rmp_name, FAKE_NAME_SIZE, char);
+	C_MAKE(rmp_text, FAKE_TEXT_SIZE, char);
 
 	/* Allocate the "c_info" array */
 	C_MAKE(class_info, c_head->info_num, player_class);
 
 	/* Hack -- make "fake" arrays */
-	C_MAKE(c_name, fake_name_size, char);
-	C_MAKE(c_text, fake_text_size, char);
+	C_MAKE(c_name, FAKE_NAME_SIZE, char);
+	C_MAKE(c_text, FAKE_TEXT_SIZE, char);
 
 	/* Allocate the "bg" array */
 	C_MAKE(bg, max_bg_idx, hist_type);
@@ -1320,14 +1265,11 @@ static errr init_st_info(void)
 
 	/*** Make the fake arrays ***/
 
-	/* Assume the size of "st_name" and "st_text" */
-	fake_name_size = FAKE_NAME_SIZE;
-
 	/* Allocate the "st_info" array */
 	C_MAKE(st_info, st_head->info_num, store_info_type);
 
 	/* Hack -- make "fake" arrays */
-	C_MAKE(st_name, fake_name_size, char);
+	C_MAKE(st_name, FAKE_NAME_SIZE, char);
 
 
 	/*** Load the ascii template file ***/
@@ -1399,14 +1341,11 @@ static errr init_ow_info(void)
 
 	/*** Make the fake arrays ***/
 
-	/* Assume the size of "ow_name" and "ow_text" */
-	fake_name_size = FAKE_NAME_SIZE;
-
 	/* Allocate the "ow_info" array */
 	C_MAKE(ow_info, ow_head->info_num, owner_type);
 
 	/* Hack -- make "fake" arrays */
-	C_MAKE(ow_name, fake_name_size, char);
+	C_MAKE(ow_name, FAKE_NAME_SIZE, char);
 
 
 	/*** Load the ascii template file ***/
@@ -1478,14 +1417,11 @@ static errr init_ba_info(void)
 
 	/*** Make the fake arrays ***/
 
-	/* Assume the size of "ba_name" and "ba_text" */
-	fake_name_size = FAKE_NAME_SIZE;
-
 	/* Allocate the "ba_info" array */
 	C_MAKE(ba_info, ba_head->info_num, store_action_type);
 
 	/* Hack -- make "fake" arrays */
-	C_MAKE(ba_name, fake_name_size, char);
+	C_MAKE(ba_name, FAKE_NAME_SIZE, char);
 
 
 	/*** Load the ascii template file ***/
@@ -1557,16 +1493,12 @@ static errr init_wf_info(void)
 
 	/*** Make the fake arrays ***/
 
-	/* Assume the size of "wf_name" and "wf_text" */
-	fake_name_size = FAKE_NAME_SIZE;
-	fake_text_size = FAKE_TEXT_SIZE;
-
 	/* Allocate the "r_info" array */
 	C_MAKE(wf_info, wf_head->info_num, wilderness_type_info);
 
 	/* Hack -- make "fake" arrays */
-	C_MAKE(wf_name, fake_name_size, char);
-	C_MAKE(wf_text, fake_text_size, char);
+	C_MAKE(wf_name, FAKE_NAME_SIZE, char);
+	C_MAKE(wf_text, FAKE_TEXT_SIZE, char);
 
 
 	/*** Load the ascii template file ***/
@@ -1640,16 +1572,12 @@ static errr init_t_info(void)
 
 	/*** Make the fake arrays ***/
 
-	/* Fake the size of "t_name" and "t_text" */
-	fake_name_size = FAKE_NAME_SIZE;
-	fake_text_size = FAKE_TEXT_SIZE;
-
 	/* Allocate the "t_info" array */
 	C_MAKE(t_info, t_head->info_num, trap_type);
 
 	/* Hack -- make "fake" arrays */
-	C_MAKE(t_name, fake_name_size, char);
-	C_MAKE(t_text, fake_text_size, char);
+	C_MAKE(t_name, FAKE_NAME_SIZE, char);
+	C_MAKE(t_text, FAKE_TEXT_SIZE, char);
 
 
 	/*** Load the ascii template file ***/
@@ -1721,9 +1649,6 @@ errr init_al_info(void)
 
 
 
-	fake_text_size = FAKE_TEXT_SIZE;
-	fake_name_size = FAKE_NAME_SIZE;
-
 	/* Allocate the "al_info" array */
 	C_MAKE(alchemist_recipes, al_head->info_num, alchemist_recipe);
 
@@ -1733,11 +1658,11 @@ errr init_al_info(void)
 	   than 32*5*sizeof(artifact_select_flag) = 10 int and 5 bytes
 	   which is the maximum size of the a_select_flags array
 	   */
-	C_MAKE(al_name, fake_name_size, char);
+	C_MAKE(al_name, FAKE_NAME_SIZE, char);
 
 	{
 		char *hack;
-		C_MAKE(hack, fake_text_size, char);
+		C_MAKE(hack, FAKE_TEXT_SIZE, char);
 		a_select_flags = (artifact_select_flag *) hack;
 	}
 
@@ -1812,16 +1737,12 @@ errr init_v_info(void)
 
 	/*** Make the fake arrays ***/
 
-	/* Fake the size of "v_name" and "v_text" */
-	fake_name_size = FAKE_NAME_SIZE;
-	fake_text_size = FAKE_TEXT_SIZE;
-
 	/* Allocate the "k_info" array */
 	C_MAKE(v_info, v_head->info_num, vault_type);
 
 	/* Hack -- make "fake" arrays */
-	C_MAKE(v_name, fake_name_size, char);
-	C_MAKE(v_text, fake_text_size, char);
+	C_MAKE(v_name, FAKE_NAME_SIZE, char);
+	C_MAKE(v_text, FAKE_TEXT_SIZE, char);
 
 
 	/*** Load the ascii template file ***/

@@ -929,8 +929,6 @@ extern void init_angband(void);
 extern errr init_buildings(void);
 extern s16b error_idx;
 extern s16b error_line;
-extern u32b fake_name_size;
-extern u32b fake_text_size;
 
 /* joke.c */
 extern bool_ gen_joke_monsters(void *data, void *in, void *out);

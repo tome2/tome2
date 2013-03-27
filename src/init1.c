@@ -1934,7 +1934,7 @@ errr init_player_info_txt(FILE *fp, char *buf)
 			rp_ptr = &race_info[i];
 
 			/* Hack -- Verify space */
-			if (rp_head->name_size + strlen(s) + 8 > fake_name_size) return (7);
+			if (rp_head->name_size + strlen(s) + 8 > FAKE_NAME_SIZE) return (7);
 
 			/* Advance and Save the name index */
 			if (!rp_ptr->title) rp_ptr->title = ++rp_head->name_size;
@@ -1963,7 +1963,7 @@ errr init_player_info_txt(FILE *fp, char *buf)
 			s = buf + 4;
 
 			/* Hack -- Verify space */
-			if (rp_head->text_size + strlen(s) + 8 > fake_text_size) return (7);
+			if (rp_head->text_size + strlen(s) + 8 > FAKE_TEXT_SIZE) return (7);
 
 			/* Advance and Save the text index */
 			if (!rp_ptr->desc)
@@ -2308,7 +2308,7 @@ errr init_player_info_txt(FILE *fp, char *buf)
 			rmp_ptr = &race_mod_info[i];
 
 			/* Hack -- Verify space */
-			if (rmp_head->name_size + strlen(s) + 8 > fake_name_size) return (7);
+			if (rmp_head->name_size + strlen(s) + 8 > FAKE_NAME_SIZE) return (7);
 
 			/* Advance and Save the name index */
 			if (!rmp_ptr->title) rmp_ptr->title = ++rmp_head->name_size;
@@ -2340,7 +2340,7 @@ errr init_player_info_txt(FILE *fp, char *buf)
 			else rmp_ptr->place = FALSE;
 
 			/* Hack -- Verify space */
-			if (rmp_head->text_size + strlen(s) + 8 > fake_text_size) return (7);
+			if (rmp_head->text_size + strlen(s) + 8 > FAKE_TEXT_SIZE) return (7);
 
 			/* Advance and Save the text index */
 			if (!rmp_ptr->desc)
@@ -2722,7 +2722,7 @@ errr init_player_info_txt(FILE *fp, char *buf)
 			c_ptr = &class_info[i];
 
 			/* Hack -- Verify space */
-			if (c_head->name_size + strlen(s) + 8 > fake_name_size) return (7);
+			if (c_head->name_size + strlen(s) + 8 > FAKE_NAME_SIZE) return (7);
 
 			/* Advance and Save the name index */
 			if (!c_ptr->title) c_ptr->title = ++c_head->name_size;
@@ -2756,7 +2756,7 @@ errr init_player_info_txt(FILE *fp, char *buf)
 			s = buf + 6;
 
 			/* Hack -- Verify space */
-			if (c_head->text_size + strlen(s) + 8 > fake_text_size) return (7);
+			if (c_head->text_size + strlen(s) + 8 > FAKE_TEXT_SIZE) return (7);
 
 			switch (buf[4])
 			{
@@ -3133,7 +3133,7 @@ errr init_player_info_txt(FILE *fp, char *buf)
 				s_ptr = &c_ptr->spec[spec_idx];
 
 				/* Hack -- Verify space */
-				if (c_head->name_size + strlen(s) + 8 > fake_name_size) return (7);
+				if (c_head->name_size + strlen(s) + 8 > FAKE_NAME_SIZE) return (7);
 
 				/* Advance and Save the name index */
 				if (!s_ptr->title) s_ptr->title = ++c_head->name_size;
@@ -3160,7 +3160,7 @@ errr init_player_info_txt(FILE *fp, char *buf)
 				s = buf + 6;
 
 				/* Hack -- Verify space */
-				if (c_head->text_size + strlen(s) + 8 > fake_text_size) return (7);
+				if (c_head->text_size + strlen(s) + 8 > FAKE_TEXT_SIZE) return (7);
 
 				/* Advance and Save the text index */
 				if (!s_ptr->desc)
@@ -3501,7 +3501,7 @@ errr init_v_info_txt(FILE *fp, char *buf, bool_ start)
 			v_ptr = &v_info[i];
 
 			/* Hack -- Verify space */
-			if (v_head->name_size + strlen(s) + 8 > fake_name_size) return (7);
+			if (v_head->name_size + strlen(s) + 8 > FAKE_NAME_SIZE) return (7);
 
 			/* Advance and Save the name index */
 			if (!v_ptr->name) v_ptr->name = ++v_head->name_size;
@@ -3526,7 +3526,7 @@ errr init_v_info_txt(FILE *fp, char *buf, bool_ start)
 			s = buf + 2;
 
 			/* Hack -- Verify space */
-			if (v_head->text_size + strlen(s) + 8 > fake_text_size) return (7);
+			if (v_head->text_size + strlen(s) + 8 > FAKE_TEXT_SIZE) return (7);
 
 			/* Advance and Save the text index */
 			if (!v_ptr->text) v_ptr->text = ++v_head->text_size;
@@ -3755,7 +3755,7 @@ errr init_f_info_txt(FILE *fp, char *buf)
 			f_ptr = &f_info[i];
 
 			/* Hack -- Verify space */
-			if (f_head->name_size + strlen(s) + 8 > fake_name_size) return (7);
+			if (f_head->name_size + strlen(s) + 8 > FAKE_NAME_SIZE) return (7);
 
 			/* Advance and Save the name index */
 			if (!f_ptr->name) f_ptr->name = ++f_head->name_size;
@@ -3788,7 +3788,7 @@ errr init_f_info_txt(FILE *fp, char *buf)
 			s = buf + 4;
 
 			/* Hack -- Verify space */
-			if (f_head->text_size + strlen(s) + 8 > fake_text_size) return (7);
+			if (f_head->text_size + strlen(s) + 8 > FAKE_TEXT_SIZE) return (7);
 
 			switch (buf[2])
 			{
@@ -4188,7 +4188,7 @@ errr init_k_info_txt(FILE *fp, char *buf)
 			k_ptr = &k_info[i];
 
 			/* Hack -- Verify space */
-			if (k_head->name_size + strlen(s) + 8 > fake_name_size) return (7);
+			if (k_head->name_size + strlen(s) + 8 > FAKE_NAME_SIZE) return (7);
 
 			/* Advance and Save the name index */
 			if (!k_ptr->name) k_ptr->name = ++k_head->name_size;
@@ -4217,7 +4217,7 @@ errr init_k_info_txt(FILE *fp, char *buf)
 			s = buf + 2;
 
 			/* Hack -- Verify space */
-			if (k_head->text_size + strlen(s) + 8 > fake_text_size) return (7);
+			if (k_head->text_size + strlen(s) + 8 > FAKE_TEXT_SIZE) return (7);
 
 			/* Advance and Save the text index */
 			if (!k_ptr->text) k_ptr->text = ++k_head->text_size;
@@ -4821,7 +4821,7 @@ errr init_al_info_txt(FILE *fp, char *buf)
 			s = buf + 2;
 
 			/* Hack -- Verify space */
-			if (al_head->name_size + strlen(s) + 8 > fake_name_size) return (7);
+			if (al_head->name_size + strlen(s) + 8 > FAKE_NAME_SIZE) return (7);
 
 			/* Advance and Save the name index */
 			a_ptr->item_descp = ++al_head->name_size;
@@ -4843,7 +4843,7 @@ errr init_al_info_txt(FILE *fp, char *buf)
 			s = buf + 2;
 
 			/* Hack -- Verify space */
-			if (al_head->name_size + strlen(s) + 8 > fake_name_size) return (7);
+			if (al_head->name_size + strlen(s) + 8 > FAKE_NAME_SIZE) return (7);
 
 			/* Advance and Save the name index */
 			a_ptr->desc = ++al_head->name_size;
@@ -4865,7 +4865,7 @@ errr init_al_info_txt(FILE *fp, char *buf)
 			s = buf + 2;
 
 			/* Hack -- Verify space */
-			if (al_head->name_size + strlen(s) + 8 > fake_name_size) return (7);
+			if (al_head->name_size + strlen(s) + 8 > FAKE_NAME_SIZE) return (7);
 
 			if (a_ptr->item_desc)
 				return (7);
@@ -5098,7 +5098,7 @@ errr init_a_info_txt(FILE *fp, char *buf)
 			a_ptr = &a_info[i];
 
 			/* Hack -- Verify space */
-			if (a_head->name_size + strlen(s) + 8 > fake_name_size) return (7);
+			if (a_head->name_size + strlen(s) + 8 > FAKE_NAME_SIZE) return (7);
 
 			/* Advance and Save the name index */
 			if (!a_ptr->name) a_ptr->name = ++a_head->name_size;
@@ -5140,7 +5140,7 @@ errr init_a_info_txt(FILE *fp, char *buf)
 			s = buf + 2;
 
 			/* Hack -- Verify space */
-			if (a_head->text_size + strlen(s) + 8 > fake_text_size) return (7);
+			if (a_head->text_size + strlen(s) + 8 > FAKE_TEXT_SIZE) return (7);
 
 			/* Advance and Save the text index */
 			if (!a_ptr->text) a_ptr->text = ++a_head->text_size;
@@ -5440,7 +5440,7 @@ errr init_set_info_txt(FILE *fp, char *buf)
 			set_ptr = &set_info[i];
 
 			/* Hack -- Verify space */
-			if (set_head->name_size + strlen(s) + 8 > fake_name_size) return (7);
+			if (set_head->name_size + strlen(s) + 8 > FAKE_NAME_SIZE) return (7);
 
 			/* Advance and Save the name index */
 			if (!set_ptr->name) set_ptr->name = ++set_head->name_size;
@@ -5484,7 +5484,7 @@ errr init_set_info_txt(FILE *fp, char *buf)
 			s = buf + 2;
 
 			/* Hack -- Verify space */
-			if (set_head->text_size + strlen(s) + 8 > fake_text_size) return (7);
+			if (set_head->text_size + strlen(s) + 8 > FAKE_TEXT_SIZE) return (7);
 
 			/* Advance and Save the text index */
 			if (!set_ptr->desc) set_ptr->desc = ++set_head->text_size;
@@ -5789,7 +5789,7 @@ errr init_s_info_txt(FILE *fp, char *buf)
 			s_ptr = &s_info[i];
 
 			/* Hack -- Verify space */
-			if (s_head->name_size + strlen(s) + 8 > fake_name_size) return (7);
+			if (s_head->name_size + strlen(s) + 8 > FAKE_NAME_SIZE) return (7);
 
 			/* Advance and Save the name index */
 			if (!s_ptr->name) s_ptr->name = ++s_head->name_size;
@@ -5823,7 +5823,7 @@ errr init_s_info_txt(FILE *fp, char *buf)
 			s = buf + 2;
 
 			/* Hack -- Verify space */
-			if (s_head->text_size + strlen(s) + 8 > fake_text_size) return (7);
+			if (s_head->text_size + strlen(s) + 8 > FAKE_TEXT_SIZE) return (7);
 
 			/* Advance and Save the text index */
 			if (!s_ptr->desc)
@@ -5862,7 +5862,7 @@ errr init_s_info_txt(FILE *fp, char *buf)
 			txt++;
 
 			/* Hack -- Verify space */
-			if (s_head->text_size + strlen(txt) + 8 > fake_text_size) return (7);
+			if (s_head->text_size + strlen(txt) + 8 > FAKE_TEXT_SIZE) return (7);
 
 			/* Advance and Save the text index */
 			if (!s_ptr->action_desc) s_ptr->action_desc = ++s_head->text_size;
@@ -6051,7 +6051,7 @@ errr init_ab_info_txt(FILE *fp, char *buf)
 			ab_ptr = &ab_info[i];
 
 			/* Hack -- Verify space */
-			if (ab_head->name_size + strlen(s) + 8 > fake_name_size) return (7);
+			if (ab_head->name_size + strlen(s) + 8 > FAKE_NAME_SIZE) return (7);
 
 			/* Advance and Save the name index */
 			if (!ab_ptr->name) ab_ptr->name = ++ab_head->name_size;
@@ -6090,7 +6090,7 @@ errr init_ab_info_txt(FILE *fp, char *buf)
 			s = buf + 2;
 
 			/* Hack -- Verify space */
-			if (ab_head->text_size + strlen(s) + 8 > fake_text_size) return (7);
+			if (ab_head->text_size + strlen(s) + 8 > FAKE_TEXT_SIZE) return (7);
 
 			/* Advance and Save the text index */
 			if (!ab_ptr->desc)
@@ -6129,7 +6129,7 @@ errr init_ab_info_txt(FILE *fp, char *buf)
 			txt++;
 
 			/* Hack -- Verify space */
-			if (ab_head->text_size + strlen(txt) + 8 > fake_text_size) return (7);
+			if (ab_head->text_size + strlen(txt) + 8 > FAKE_TEXT_SIZE) return (7);
 
 			/* Advance and Save the text index */
 			if (!ab_ptr->action_desc) ab_ptr->action_desc = ++ab_head->text_size;
@@ -6616,7 +6616,7 @@ errr init_e_info_txt(FILE *fp, char *buf)
 			e_ptr = &e_info[i];
 
 			/* Hack -- Verify space */
-			if (e_head->name_size + strlen(s) + 8 > fake_name_size) return (7);
+			if (e_head->name_size + strlen(s) + 8 > FAKE_NAME_SIZE) return (7);
 
 			/* Advance and Save the name index */
 			if (!e_ptr->name) e_ptr->name = ++e_head->name_size;
@@ -7549,7 +7549,7 @@ errr init_r_info_txt(FILE *fp, char *buf)
 			r_ptr = &r_info[i];
 
 			/* Hack -- Verify space */
-			if (r_head->name_size + strlen(s) + 8 > fake_name_size) return (7);
+			if (r_head->name_size + strlen(s) + 8 > FAKE_NAME_SIZE) return (7);
 
 			/* Advance and Save the name index */
 			if (!r_ptr->name) r_ptr->name = ++r_head->name_size;
@@ -7582,7 +7582,7 @@ errr init_r_info_txt(FILE *fp, char *buf)
 			s = buf + 2;
 
 			/* Hack -- Verify space */
-			if (r_head->text_size + strlen(s) + 8 > fake_text_size) return (7);
+			if (r_head->text_size + strlen(s) + 8 > FAKE_TEXT_SIZE) return (7);
 
 			/* Advance and Save the text index */
 			if (!r_ptr->text) r_ptr->text = ++r_head->text_size;
@@ -8192,7 +8192,7 @@ errr init_re_info_txt(FILE *fp, char *buf)
 			re_ptr = &re_info[i];
 
 			/* Hack -- Verify space */
-			if (re_head->name_size + strlen(s) + 8 > fake_name_size) return (7);
+			if (re_head->name_size + strlen(s) + 8 > FAKE_NAME_SIZE) return (7);
 
 			/* Advance and Save the name index */
 			if (!re_ptr->name) re_ptr->name = ++re_head->name_size;
@@ -8733,7 +8733,7 @@ errr init_t_info_txt(FILE *fp, char *buf)
 			t_ptr = &t_info[i];
 
 			/* Hack -- Verify space */
-			if (t_head->name_size + strlen(s) + 8 > fake_name_size) return (7);
+			if (t_head->name_size + strlen(s) + 8 > FAKE_NAME_SIZE) return (7);
 
 			/* Advance and Save the name index */
 			if (!t_ptr->name) t_ptr->name = ++t_head->name_size;
@@ -8787,7 +8787,7 @@ errr init_t_info_txt(FILE *fp, char *buf)
 			s = buf + 2;
 
 			/* Hack -- Verify space */
-			if (t_head->text_size + strlen(s) + 8 > fake_text_size) return (7);
+			if (t_head->text_size + strlen(s) + 8 > FAKE_TEXT_SIZE) return (7);
 
 			/* Advance and Save the text index */
 			if (!t_ptr->text) t_ptr->text = ++t_head->text_size;
@@ -9106,7 +9106,7 @@ errr init_d_info_txt(FILE *fp, char *buf)
 			d_ptr = &d_info[i];
 
 			/* Hack -- Verify space */
-			if (d_head->name_size + strlen(s) + 8 > fake_name_size) return (7);
+			if (d_head->name_size + strlen(s) + 8 > FAKE_NAME_SIZE) return (7);
 
 			/* Advance and Save the name index */
 			if (!d_ptr->name) d_ptr->name = ++d_head->name_size;
@@ -9165,7 +9165,7 @@ errr init_d_info_txt(FILE *fp, char *buf)
 			s = buf + 6;
 
 			/* Hack -- Verify space */
-			if (d_head->text_size + strlen(s) + 8 > fake_text_size) return (7);
+			if (d_head->text_size + strlen(s) + 8 > FAKE_TEXT_SIZE) return (7);
 
 			/* Advance and Save the text index */
 			if (!d_ptr->text) d_ptr->text = ++d_head->text_size;
@@ -9751,7 +9751,7 @@ errr init_st_info_txt(FILE *fp, char *buf)
 			st_ptr = &st_info[i];
 
 			/* Hack -- Verify space */
-			if (st_head->name_size + strlen(s) + 8 > fake_name_size) return (7);
+			if (st_head->name_size + strlen(s) + 8 > FAKE_NAME_SIZE) return (7);
 
 			/* Advance and Save the name index */
 			if (!st_ptr->name) st_ptr->name = ++st_head->name_size;
@@ -10040,7 +10040,7 @@ errr init_ba_info_txt(FILE *fp, char *buf)
 			ba_ptr = &ba_info[i];
 
 			/* Hack -- Verify space */
-			if (ba_head->name_size + strlen(s) + 8 > fake_name_size) return (7);
+			if (ba_head->name_size + strlen(s) + 8 > FAKE_NAME_SIZE) return (7);
 
 			/* Advance and Save the name index */
 			if (!ba_ptr->name) ba_ptr->name = ++ba_head->name_size;
@@ -10210,7 +10210,7 @@ errr init_ow_info_txt(FILE *fp, char *buf)
 			ow_ptr = &ow_info[i];
 
 			/* Hack -- Verify space */
-			if (ow_head->name_size + strlen(s) + 8 > fake_name_size) return (7);
+			if (ow_head->name_size + strlen(s) + 8 > FAKE_NAME_SIZE) return (7);
 
 			/* Advance and Save the name index */
 			if (!ow_ptr->name) ow_ptr->name = ++ow_head->name_size;
@@ -10454,7 +10454,7 @@ errr init_wf_info_txt(FILE *fp, char *buf)
 			wf_ptr = &wf_info[i];
 
 			/* Hack -- Verify space */
-			if (wf_head->name_size + strlen(s) + 8 > fake_name_size) return (7);
+			if (wf_head->name_size + strlen(s) + 8 > FAKE_NAME_SIZE) return (7);
 
 			/* Advance and Save the name index */
 			if (!wf_ptr->name) wf_ptr->name = ++wf_head->name_size;
@@ -10479,7 +10479,7 @@ errr init_wf_info_txt(FILE *fp, char *buf)
 			s = buf + 2;
 
 			/* Hack -- Verify space */
-			if (wf_head->text_size + strlen(s) + 8 > fake_text_size) return (7);
+			if (wf_head->text_size + strlen(s) + 8 > FAKE_TEXT_SIZE) return (7);
 
 			/* Advance and Save the text index */
 			if (!wf_ptr->text) wf_ptr->text = ++wf_head->text_size;
