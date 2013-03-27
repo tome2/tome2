@@ -34,7 +34,7 @@ static void morejunk(void);
 static bool_ do_inventory(int);
 static bool_ do_dungeon(int, bool_);
 static void do_grid(int);
-static void my_sentinel(char *, u16b, int);
+static void my_sentinel(const char *, u16b, int);
 
 static void do_ver_s16b(s16b *, u32b, s16b, int);
 
@@ -1138,39 +1138,49 @@ static void do_s32b(s32b *ip, int flag)
 	do_u32b((u32b *)ip, flag);
 }
 
+static void save_string(const char *str)
+{
+	while (*str)
+	{
+		do_byte((byte*)str, LS_SAVE);
+		str++;
+	}
+	do_byte((byte*)str, LS_SAVE);
+}
+
+static void load_string(char *str, int max)
+{
+	int i;
+
+	/* Read the string */
+	for (i = 0; TRUE; i++)
+	{
+		byte tmp8u;
+
+		/* Read a byte */
+		do_byte(&tmp8u, LS_LOAD);
+
+		/* Collect string while legal */
+		if (i < max) str[i] = tmp8u;
+
+		/* End of string */
+		if (!tmp8u) break;
+	}
+	/* Terminate */
+	str[max - 1] = '\0';
+}
+
 static void do_string(char *str, int max, int flag)
 /* Max is ignored for writing */
 {
 	if (flag == LS_LOAD)
 	{
-		int i;
-
-		/* Read the string */
-		for (i = 0; TRUE; i++)
-		{
-			byte tmp8u;
-
-			/* Read a byte */
-			do_byte(&tmp8u, LS_LOAD);
-
-			/* Collect string while legal */
-			if (i < max) str[i] = tmp8u;
-
-			/* End of string */
-			if (!tmp8u) break;
-		}
-		/* Terminate */
-		str[max - 1] = '\0';
+		load_string(str, max);
 		return;
 	}
 	if (flag == LS_SAVE)
 	{
-		while (*str)
-		{
-			do_byte((byte*)str, flag);
-			str++;
-		}
-		do_byte((byte*)str, flag); 		/* Output a terminator */
+		save_string(str);
 		return;
 	}
 	printf("FATAL: do_string passed flag %d\n", flag);
@@ -1377,31 +1387,36 @@ static void do_item(object_type *o_ptr, int flag)
 	{
 		char buf[128];
 		/* Inscription */
-		do_string(buf, 128, LS_LOAD);
-		/* Save the inscription */
-		if (buf[0]) o_ptr->note = quark_add(buf);
-
-		do_string(buf, 128, LS_LOAD);
-		if (buf[0]) o_ptr->art_name = quark_add(buf);
+		load_string(buf, 128);
+		if (buf[0])
+		{
+			o_ptr->note = quark_add(buf);
+		}
+		/* Artifact name */
+		load_string(buf, 128);
+		if (buf[0])
+		{
+			o_ptr->art_name = quark_add(buf);
+		}
 	}
 	if (flag == LS_SAVE)
 	{
 		/* Save the inscription (if any) */
 		if (o_ptr->note)
 		{
-			do_string((char *)quark_str(o_ptr->note), 0, LS_SAVE);
+			save_string(quark_str(o_ptr->note));
 		}
 		else
 		{
-			do_string("", 0, LS_SAVE);
+			save_string("");
 		}
 		if (o_ptr->art_name)
 		{
-			do_string((char *)quark_str(o_ptr->art_name), 0, LS_SAVE);
+			save_string(quark_str(o_ptr->art_name));
 		}
 		else
 		{
-			do_string("", 0, LS_SAVE);
+			save_string("");
 		}
 	}
 
@@ -3137,7 +3152,7 @@ static void do_grid(int flag)
 	}
 }
 
-static void my_sentinel(char *place, u16b value, int flag)
+static void my_sentinel(const char *place, u16b value, int flag)
 /* This function lets us know exactly where a savefile is
    broken by reading/writing conveniently a sentinel at this
    spot */

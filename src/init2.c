@@ -2398,7 +2398,7 @@ void init_angband(void)
 
 	FILE *fp;
 
-	char *news_file;
+	const char *news_file;
 
 	char buf[1024];
 
