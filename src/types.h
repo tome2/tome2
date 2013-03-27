@@ -2220,11 +2220,6 @@ struct hook_get_in {
 	int o_idx;
 };
 
-typedef struct hook_end_turn_in hook_end_turn_in;
-struct hook_end_turn_in {
-	bool_ is_quest;
-};
-
 typedef struct hook_player_level_in hook_player_level_in;
 struct hook_player_level_in {
 	int gained_levels;
@@ -2382,7 +2377,6 @@ struct hooks_chain
 	bool_ (*hook_f)(void *, void *, void *);
 	void *hook_data;
 	char name[40];
-	char script[40];
 	byte type;
 	hooks_chain *next;
 };

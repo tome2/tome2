@@ -1508,22 +1508,6 @@ errr macro_add(cptr pat, cptr act)
 
 
 /*
-* Initialize the "macro" package
-*/
-errr macro_init(void)
-{
-	/* Macro patterns */
-	C_MAKE(macro__pat, MACRO_MAX, cptr);
-
-	/* Macro actions */
-	C_MAKE(macro__act, MACRO_MAX, cptr);
-
-	/* Success */
-	return (0);
-}
-
-
-/*
 * Local "need flush" variable
 */
 static bool_ flush_later = FALSE;
