@@ -3893,7 +3893,7 @@ void do_cmd_aim_wand(void)
 {
 	bool_ obvious, use_charge;
 
-	int item, ident, chance, sval;
+	int item, ident, chance;
 
 	object_type *o_ptr;
 
@@ -3981,9 +3981,6 @@ void do_cmd_aim_wand(void)
 	/* Sound */
 	sound(SOUND_ZAP);
 
-
-	/* XXX Hack -- Extract the "sval" effect */
-	sval = o_ptr->sval;
 
 	/* Analyze the wand */
 	activate_stick(o_ptr->pval2, &obvious, &use_charge);
