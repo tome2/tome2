@@ -134,17 +134,6 @@ off at will during the course of the game.
     discounts.  The resulting stack keeps the largest discount.  This option
     may cause you to lose "value", but will give you optimal pack usage.
 
-#####GShow graphics in inventory list   [show_inven_graph]
-    Display the graphics of objects in the inventory list, and in any special
-    window which is displaying the inventory list.
-
-#####GShow graphics in equipment list   [show_equip_graph]
-    Display the graphics of objects in the equipment list, and in any special
-    window which is displaying the equipment list.
-
-#####GShow graphics in stores   [show_store_graph]
-    Display the graphics of objects in the store list.
-
 #####GAudible bell (on errors, etc)    [ring_bell]
     Attempt to make a "bell" noise when various errors occur.
 

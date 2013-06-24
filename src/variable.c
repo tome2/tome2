@@ -199,11 +199,6 @@ bool_ stack_force_costs; 		/* Merge discounts when stacking */
 
 bool_ ring_bell; 				/* Ring the bell (on errors, etc) */
 
-bool_ show_inven_graph; 		/* Show graphics in inventory */
-bool_ show_equip_graph; 		/* Show graphics in equip list */
-bool_ show_store_graph; 		/* Show graphics in store */
-
-
 
 /* Option Set 2 -- Disturbance */
 

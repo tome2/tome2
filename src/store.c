@@ -1647,7 +1647,6 @@ static void display_entry(int pos)
 
 
 	cur_col = 3;
-	if (show_store_graph)
 	{
 		byte a = object_attr(o_ptr);
 		char c = object_char(o_ptr);

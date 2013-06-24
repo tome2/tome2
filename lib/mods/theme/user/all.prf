@@ -41,15 +41,6 @@ Y:show_labels
 # Option 'Show weights in object listings'
 Y:show_weights
 
-# Option 'Show graphics in inventory list'
-Y:show_inven_graph
-
-# Option 'Show graphics in equipment list'
-Y:show_equip_graph
-
-# Option 'Show graphics in stores'
-Y:show_store_graph
-
 # Option 'Show choices in certain sub-windows'
 Y:show_choices
 

@@ -4503,8 +4503,8 @@ void show_inven_aux(bool_ mirror, bool_ everything)
 	/* Space for weight */
 	lim -= 9;
 
-	/* Require space for icon */
-	if (show_inven_graph) lim -= 2;
+	/* Space for icon */
+	lim -= 2;
 
 	/* Find the "final" slot */
 	for (i = 0; i < INVEN_PACK; i++)
@@ -4552,8 +4552,8 @@ void show_inven_aux(bool_ mirror, bool_ everything)
 		/* Be sure to account for the weight */
 		l += 9;
 
-		/* Account for icon if displayed */
-		if (show_inven_graph) l += 2;
+		/* Account for icon */
+		l += 2;
 
 		/* Maintain the maximum length */
 		if (l > len) len = l;
@@ -4588,8 +4588,7 @@ void show_inven_aux(bool_ mirror, bool_ everything)
 		/* Clear the line with the (possibly indented) index */
 		c_put_str(get_item_letter_color(o_ptr), tmp_val, row + j, col);
 
-		/* Display graphics for object, if desired */
-		if (show_inven_graph)
+		/* Display graphics for object */
 		{
 			byte a = object_attr(o_ptr);
 			char c = object_char(o_ptr);
@@ -4599,10 +4598,9 @@ void show_inven_aux(bool_ mirror, bool_ everything)
 			Term_draw(col + 3, row + j, a, c);
 		}
 
-
 		/* Display the entry itself */
 		c_put_str(out_color[j], out_desc[j], row + j,
-		          show_inven_graph ? (col + 5) : (col + 3));
+		          col + 5);
 
 		/* Display the weight */
 		{
@@ -4680,7 +4678,8 @@ void show_equip_aux(bool_ mirror, bool_ everything)
 	/* Require space for weight */
 	lim -= 9;
 
-	if (show_equip_graph) lim -= 2;
+	/* Require space for icon */
+	lim -= 2;
 
 	/* Scan the equipment list */
 	idx = 0;
@@ -4781,7 +4780,8 @@ void show_equip_aux(bool_ mirror, bool_ everything)
 		/* Increase length for weight */
 		l += 9;
 
-		if (show_equip_graph) l += 2;
+		/* Icon */
+		l += 2;
 
 		/* Maintain the max-length */
 		if (l > len) len = l;
@@ -4817,7 +4817,7 @@ void show_equip_aux(bool_ mirror, bool_ everything)
 		/* Clear the line with the (possibly indented) index */
 		c_put_str(get_item_letter_color(o_ptr), tmp_val, row + j, col);
 
-		if (show_equip_graph)
+		/* Show icon */
 		{
 			byte a = object_attr(o_ptr);
 			char c = object_char(o_ptr);
@@ -4831,10 +4831,10 @@ void show_equip_aux(bool_ mirror, bool_ everything)
 		{
 			/* Mention the use */
 			(void)sprintf(tmp_val, "%-14s: ", mention_use(out_rindex[j]));
-			put_str(tmp_val, row + j, show_equip_graph ? col + 5 : col + 3);
+			put_str(tmp_val, row + j, col + 5);
 
 			/* Display the entry itself */
-			c_put_str(out_color[j], out_desc[j], row + j, show_equip_graph ? col + 21 : col + 19);
+			c_put_str(out_color[j], out_desc[j], row + j, col + 21);
 		}
 
 		/* Display the weight */
