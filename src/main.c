@@ -589,9 +589,6 @@ usage:
 	if (!done) quit("Unable to prepare any 'display module'!");
 
 
-	/* Catch nasty signals */
-	signals_init();
-
 	/* Initialize */
 	init_angband();
 

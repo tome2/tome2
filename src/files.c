@@ -4236,9 +4236,6 @@ void do_cmd_save_game(void)
 	/* The player is not dead */
 	(void)strcpy(died_from, "(saved)");
 
-	/* Forbid suspend */
-	signals_ignore_tstp();
-
 	/* Save the player */
 	if (save_player())
 	{
@@ -4252,9 +4249,6 @@ void do_cmd_save_game(void)
 	}
 
 	remove_cave_view(FALSE);
-
-	/* Allow suspend again */
-	signals_handle_tstp();
 
 	/* Refresh */
 	Term_fresh();
@@ -5114,8 +5108,6 @@ void race_legends(void)
 /*
  * Enters a players name on a hi-score table, if "legal", and in any
  * case, displays some relevant portion of the high score list.
- *
- * Assumes "signals_ignore_tstp()" has been called.
  */
 static errr top_twenty(void)
 {
@@ -5531,9 +5523,6 @@ void close_game(void)
 	flush();
 
 
-	/* No suspending now */
-	signals_ignore_tstp();
-
 	/* Hack -- Character is now "icky" */
 	character_icky = TRUE;
 
@@ -5608,10 +5597,6 @@ void close_game(void)
 		/* Predict score (or ESCAPE) */
 		if (inkey() != ESCAPE) predict_score();
 	}
-
-
-	/* Allow suspending now */
-	signals_handle_tstp();
 }
 
 
@@ -5865,114 +5850,3 @@ errr get_xtra_line(char *file_name, monster_type *m_ptr, char *output)
 	/* Success */
 	return (0);
 }
-
-
-#ifdef HANDLE_SIGNALS
-
-
-#include <signal.h>
-
-
-/*
- * Handle signals -- suspend
- *
- * Actually suspend the game, and then resume cleanly
- */
-static void handle_signal_suspend(int sig)
-{
-	/* Disable handler */
-	(void)signal(sig, SIG_IGN);
-
-#ifdef SIGSTOP
-
-	/* Flush output */
-	Term_fresh();
-
-	/* Suspend the "Term" */
-	Term_xtra(TERM_XTRA_ALIVE, 0);
-
-	/* Suspend ourself */
-	(void)kill(0, SIGSTOP);
-
-	/* Resume the "Term" */
-	Term_xtra(TERM_XTRA_ALIVE, 1);
-
-	/* Redraw the term */
-	Term_redraw();
-
-	/* Flush the term */
-	Term_fresh();
-
-#endif
-
-	/* Restore handler */
-	(void)signal(sig, handle_signal_suspend);
-}
-
-
-/*
- * Ignore SIGTSTP signals (keyboard suspend)
- */
-void signals_ignore_tstp(void)
-{
-
-#ifdef SIGTSTP
-	(void)signal(SIGTSTP, SIG_IGN);
-#endif
-
-}
-
-/*
- * Handle SIGTSTP signals (keyboard suspend)
- */
-void signals_handle_tstp(void)
-{
-
-#ifdef SIGTSTP
-	(void)signal(SIGTSTP, handle_signal_suspend);
-#endif
-
-}
-
-
-/*
- * Prepare to handle the relevant signals
- */
-void signals_init(void)
-{
-
-#ifdef SIGHUP
-	(void)signal(SIGHUP, SIG_IGN);
-#endif
-
-
-#ifdef SIGTSTP
-	(void)signal(SIGTSTP, handle_signal_suspend);
-#endif
-
-}
-
-
-#else        /* HANDLE_SIGNALS */
-
-
-/*
-* Do nothing
-*/
-void signals_ignore_tstp(void)
-{}
-
-/*
-* Do nothing
-*/
-void signals_handle_tstp(void)
-{}
-
-/*
-* Do nothing
-*/
-void signals_init(void)
-{}
-
-
-#endif        /* HANDLE_SIGNALS */

@@ -44,13 +44,6 @@
 
 
 /*
- * OPTION: define "SPECIAL_BSD" for using certain versions of UNIX
- * that use the 4.4BSD Lite version of Curses in "main-gcu.c"
- */
-/* #define SPECIAL_BSD */
-
-
-/*
  * OPTION: Use the POSIX "termios" methods in "main-gcu.c"
  */
 /* #define USE_TPOSIX */
@@ -112,11 +105,6 @@
 #endif
 
 
-/*
- * OPTION: Handle signals
- */
-#define HANDLE_SIGNALS
-
 
 
 
@@ -138,27 +126,6 @@
  */
 #define USE_GRAPHICS
 
-
-/*
- * OPTION: Hack -- Macintosh stuff
- */
-#ifdef MACINTOSH
-
-/* Do not handle signals */
-# undef HANDLE_SIGNALS
-
-#endif
-
-
-/*
- * OPTION: Hack -- Windows stuff
- */
-#ifdef WINDOWS
-
-/* Do not handle signals */
-# undef HANDLE_SIGNALS
-
-#endif
 
 
 /*
