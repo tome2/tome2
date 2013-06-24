@@ -1326,11 +1326,6 @@ random_quest random_quests[MAX_RANDOM_QUEST];
 bool_ exp_need;
 
 /*
- * Auto load old colors;
- */
-bool_ autoload_old_colors;
-
-/*
  * Fated ?
  */
 bool_ fate_option;

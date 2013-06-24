@@ -1583,9 +1583,6 @@ option_type option_info[] =
 	{ &exp_need, FALSE, 5, 2,
 	  "exp_need", "Show the experience needed for next level" },
 
-	{ &autoload_old_colors, FALSE, 5, 3,
-	  "old_colors", "Use the old(Z) coloring scheme(reload the game)" },
-
 	{ &auto_more, FALSE, 5, 4,
 	  "auto_more", "Automatically clear '-more-' prompts" },
 

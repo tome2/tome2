@@ -5623,13 +5623,6 @@ void play_game(bool_ new_game)
 	/* Hack -- Enforce "delayed death" */
 	if (p_ptr->chp < 0) death = TRUE;
 
-	/* Should we use old colors */
-	if (autoload_old_colors)
-	{
-		process_pref_file("422color.prf");
-	}
-
-
 	/* Process */
 	while (TRUE)
 	{
