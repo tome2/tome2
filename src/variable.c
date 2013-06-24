@@ -1296,11 +1296,6 @@ bool_ *a_allow_special;
 bool_ rand_birth;
 
 /*
- * Fast autoroller
- */
-bool_ fast_autoroller;
-
-/*
  * Which monsters are allowed ?
  */
 bool_ joke_monsters;

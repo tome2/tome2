@@ -64,12 +64,6 @@ can also be viewed from the option menu while playing, but not changed then.
     Used in conjunction with the take_notes option, this option makes a note
     each time you gain a level, kill a unique, find an artifact, etc.
 
-#####GFast autoroller (NOT on multiuser systems)    [fast_autoroller]
-    The normal autoroller has a built-in delay that helps prevent it from
-    overloading a system. This option reduces that delay, allowing characters
-    to be rolled in a much shorter time, but should not be used on multiuser
-    systems.
-
 #####GAllow use of some 'joke' monsters    [joke_monsters]
     Allows monsters flagged as being some of DarkGod's jokes to be generated.
 
