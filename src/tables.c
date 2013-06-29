@@ -1355,9 +1355,6 @@ option_type option_info[] =
 	{ &quick_messages, TRUE, 1, 1,
 	  "quick_messages", "Activate quick messages" },
 
-	{ &other_query_flag, FALSE, 1, 2,
-	  "other_query_flag", "Prompt for various information" },
-
 	{ &carry_query_flag, FALSE, 1, 3,
 	  "carry_query_flag", "Prompt before picking things up" },
 

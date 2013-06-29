@@ -8,9 +8,6 @@ X:rogue_like_commands
 # Option 'Activate quick messages'
 Y:quick_messages
 
-# Option 'Prompt for various information'
-X:other_query_flag
-
 # Option 'Prompt before picking things up'
 X:carry_query_flag
 

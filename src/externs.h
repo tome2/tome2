@@ -187,7 +187,6 @@ extern void (*text_out_hook)(byte a, cptr str);
 extern int text_out_indent;
 extern bool_ rogue_like_commands;
 extern bool_ quick_messages;
-extern bool_ other_query_flag;
 extern bool_ carry_query_flag;
 extern bool_ always_pickup;
 extern bool_ prompt_pickup_heavy;

@@ -92,9 +92,6 @@ off at will during the course of the game.
     (useful for monster farming).  Allows most keys to mean "no" to any
     "[y/n]" prompt.
 
-#####GPrompt for various information    [other_query_flag]
-    No longer used.
-
 #####GPrompt before picking things up    [carry_query_flag]
     Forces the game to ask you for confirmation when you do something that
     would normally cause an item to be picked up.

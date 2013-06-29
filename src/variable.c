@@ -186,7 +186,6 @@ int text_out_indent = 0;
 
 bool_ rogue_like_commands; 	/* Rogue-like commands */
 bool_ quick_messages; 		/* Activate quick messages */
-bool_ other_query_flag; 		/* Prompt for various information */
 bool_ carry_query_flag; 		/* Prompt before picking things up */
 bool_ use_old_target; 		/* Use old target by default */
 bool_ always_pickup;              /* Pick things up by default */
