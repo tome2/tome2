@@ -147,50 +147,9 @@
  */
 #define MAX_SEXES            3
 
-/* The number of "patrons" available (for Chaos Warriors) */
-#define MAX_PATRON          16
-
 /* Number of Random Artifacts */
 #define MAX_RANDARTS 84
 #define MAX_T_ACT    51
-
-/* Chaos Warrior: Reward types: */
-#define REW_POLY_SLF    0
-#define REW_GAIN_EXP    1
-#define REW_LOSE_EXP    2
-#define REW_GOOD_OBJ    3
-#define REW_GREA_OBJ    4
-#define REW_CHAOS_WP    5
-#define REW_GOOD_OBS    6
-#define REW_GREA_OBS    7
-#define REW_TY_CURSE    8
-#define REW_SUMMON_M    9
-#define REW_H_SUMMON    10
-#define REW_DO_HAVOC    11
-#define REW_GAIN_ABL    12
-#define REW_LOSE_ABL    13
-#define REW_RUIN_ABL    14
-#define REW_AUGM_ABL    15
-#define REW_POLY_WND    16
-#define REW_HEAL_FUL    17
-#define REW_HURT_LOT    18
-#define REW_CURSE_WP    19
-#define REW_CURSE_AR    20
-#define REW_PISS_OFF    21
-#define REW_WRATH       22
-#define REW_DESTRUCT    23
-#define REW_GENOCIDE    24
-#define REW_MASS_GEN    25
-#define REW_DISPEL_C    26
-#define REW_UNUSED_1    27
-#define REW_UNUSED_2    28
-#define REW_UNUSED_3    29
-#define REW_UNUSED_4    30
-#define REW_UNUSED_5    31
-#define REW_IGNORE      32
-#define REW_SER_UNDE    33
-#define REW_SER_DEMO    34
-#define REW_SER_MONS    35
 
 
 /* bear barehanded attacks      ... */

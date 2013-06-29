@@ -585,7 +585,7 @@ static bool_ do_extra(int flag)
 	do_s32b(&p_ptr->inertia_controlled_spell, flag);
 	do_s16b(&p_ptr->last_rewarded_level, flag);
 
-	do_s16b(&p_ptr->chaos_patron, flag);
+	do_s16b(&tmp16s, flag); /* compat */
 
 	if (flag == LS_SAVE) { tmp16s = CORRUPTIONS_MAX; }
 	do_s16b(&tmp16s, flag);

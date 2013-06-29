@@ -185,9 +185,6 @@ static void save_prev_data(void)
 	}
 	previous_char.luck = p_ptr->luck_base;
 
-	/* Save the chaos patron */
-	previous_char.chaos_patron = p_ptr->chaos_patron;
-
 	/* Save the weapon specialty */
 	previous_char.weapon = 0;
 
@@ -225,9 +222,6 @@ static void load_prev_data(bool_ save)
 	}
 	temp.luck = p_ptr->luck_base;
 
-	/* Save the chaos patron */
-	temp.chaos_patron = p_ptr->chaos_patron;
-
 	/* Save the weapon specialty */
 	temp.weapon = 0;
 
@@ -255,9 +249,6 @@ static void load_prev_data(bool_ save)
 	}
 	p_ptr->luck_base = previous_char.luck;
 	p_ptr->luck_max = previous_char.luck;
-
-	/* Load the chaos patron */
-	p_ptr->chaos_patron = previous_char.chaos_patron;
 
 	/* Load the history */
 	for (i = 0; i < 4; i++)
@@ -2673,9 +2664,6 @@ static bool_ player_birth_aux_point(void)
 	/*** Generate ***/
 	process_hooks(HOOK_BIRTH, "()");
 
-	/* Hack -- get a chaos patron even if you are not a chaos warrior */
-	p_ptr->chaos_patron = (randint(MAX_PATRON)) - 1;
-
 	/* Get luck */
 	p_ptr->luck_base = rp_ptr->luck + rmp_ptr->luck + rand_range( -5, 5);
 	p_ptr->luck_max = p_ptr->luck_base;
@@ -3054,9 +3042,6 @@ static bool_ player_birth_aux_auto()
 
 		/*** Generate ***/
 		process_hooks(HOOK_BIRTH, "()");
-
-		/* Hack -- get a chaos patron even if you are not a chaos warrior */
-		p_ptr->chaos_patron = (randint(MAX_PATRON)) - 1;
 
 		/* Input loop */
 		while (TRUE)

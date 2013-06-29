@@ -1607,8 +1607,6 @@ struct player_type
 
 	s16b immov_cntr;    /* Timed -- Last ``immovable'' command. */
 
-	s16b chaos_patron;
-
 	s16b recall_dungeon;    /* Recall in which dungeon */
 	s16b word_recall;	/* Word of recall counter */
 

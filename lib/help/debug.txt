@@ -29,7 +29,7 @@ will not be scored if you use debug commands.
  *****debug.txt*29[o  Edit object attributes]               O  (unused)
  *****debug.txt*31[p  Phase door]                           P  (unused)
  *****debug.txt*33[q  Get a quest]                          Q  (unused)
- *****debug.txt*35[r  Gain reward]                          *****debug.txt*36[R  Create a trap]
+ r  (unused)                             *****debug.txt*36[R  Create a trap]
  *****debug.txt*37[s  Summon monster]                       *****debug.txt*38[S  Change the feature of the map]
  *****debug.txt*39[t  Teleport]                             *****debug.txt*40[T  Teleport to a town]
  *****debug.txt*41[u  Complete map]                         *****debug.txt*42[U  Become undead]
