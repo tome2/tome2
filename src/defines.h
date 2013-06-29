@@ -41,11 +41,9 @@
 #define IS_CVS          " (ah, git)"
 #endif
 
-#define USER_PATH_VERSION "/2.3"
+#define USER_PATH_VERSION "/2.4"
 
-#define ANGBAND_2_8_1
-
-#define SAVEFILE_VERSION 104
+#define SAVEFILE_VERSION 105
 
 /*
  * This value is not currently used
