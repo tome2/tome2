@@ -5533,11 +5533,8 @@ void close_game(void)
 		/* Handle retirement */
 		if (total_winner)
 		{
-			/* Write a note, if that option is on */
-			if (take_notes)
-			{
-				add_note_type(NOTE_WINNER);
-			}
+			/* Make a note */
+			add_note_type(NOTE_WINNER);
 
 			kingly();
 		}
@@ -5554,8 +5551,7 @@ void close_game(void)
 		/* Show more info */
 		show_info();
 
-		/* Write a note */
-		if (take_notes)
+		/* Make a note */
 		{
 			char long_day[30];
 			char buf[80];
@@ -5585,11 +5581,8 @@ void close_game(void)
 		/* Save the game */
 		do_cmd_save_game();
 
-		/* If note-taking enabled, write session end to notes file */
-		if (take_notes)
-		{
-			add_note_type(NOTE_SAVE_GAME);
-		}
+		/* Make a note pf session end */
+		add_note_type(NOTE_SAVE_GAME);
 
 		/* Prompt for scores XXX XXX XXX */
 		prt("Press Return (or Escape).", 0, 40);

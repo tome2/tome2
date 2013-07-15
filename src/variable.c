@@ -1272,9 +1272,6 @@ bool_ maximize, preserve, special_lvls, ironman_rooms;
  * selections */
 bool_ inventory_no_move;
 
-/* Notes patch */
-bool_ take_notes, auto_notes;
-
 /*
  * Such an ugly hack ...
  */

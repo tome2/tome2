@@ -56,14 +56,6 @@ can also be viewed from the option menu while playing, but not changed then.
     but extremely deadly - imagine that Greater Checkerboard Vault with Lokkak
     on dungeon level 1!
 
-#####GAllow notes to be written to a file    [take_notes]
-    Allows any player-written notes (with the "|" command) to be written to
-    a file and kept (instead of being put in the message list).
-
-#####GAutomatically note important events    [auto_notes]
-    Used in conjunction with the take_notes option, this option makes a note
-    each time you gain a level, kill a unique, find an artifact, etc.
-
 #####GAllow use of some 'joke' monsters    [joke_monsters]
     Allows monsters flagged as being some of DarkGod's jokes to be generated.
 

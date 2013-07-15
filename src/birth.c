@@ -3466,10 +3466,7 @@ void player_birth(void)
 	select_default_melee();
 
 	/* Make a note file if that option is set */
-	if (take_notes)
-	{
-		add_note_type(NOTE_BIRTH);
-	}
+	add_note_type(NOTE_BIRTH);
 
 	/* Note player birth in the message recall */
 	message_add(" ", TERM_L_BLUE);

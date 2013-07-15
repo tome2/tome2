@@ -4253,6 +4253,29 @@ static bool_ item_tester_hook_unknown(object_type *o_ptr)
 }
 
 
+
+
+/*
+ * Make note of found artifacts.
+ */
+static void note_found_object(object_type *o_ptr)
+{
+	char note[150];
+	char item_name[80];
+
+	if (artifact_p(o_ptr) || o_ptr->name1)
+	{
+		object_desc(item_name, o_ptr, FALSE, 0);
+
+		/* Build note and write */
+		sprintf(note, "Found The %s", item_name);
+		add_note(note, 'A');
+	}
+}
+
+
+
+
 /*
  * Identify an object in the inventory (or on the floor)
  * This routine does *not* automatically combine objects.
@@ -4310,17 +4333,9 @@ bool_ ident_spell(void)
 		           o_name);
 	}
 
-	/* If the item was an artifact, and if the auto-note is selected, write a message. */
-	if (take_notes && auto_notes && (artifact_p(o_ptr) || o_ptr->name1))
-	{
-		char note[150];
-		char item_name[80];
-		object_desc(item_name, o_ptr, FALSE, 0);
+	/* Make note of found artifacts */
+	note_found_object(o_ptr);
 
-		/* Build note and write */
-		sprintf(note, "Found The %s", item_name);
-		add_note(note, 'A');
-	}
 	/* Process the appropriate hooks */
 	identify_hooks(item, o_ptr, IDENT_NORMAL);
 
@@ -4346,17 +4361,9 @@ bool_ ident_all(void)
 		object_aware(o_ptr);
 		object_known(o_ptr);
 
-		/* If the item was an artifact, and if the auto-note is selected, write a message. */
-		if (take_notes && auto_notes && (artifact_p(o_ptr) || o_ptr->name1))
-		{
-			char note[150];
-			char item_name[80];
-			object_desc(item_name, o_ptr, FALSE, 0);
+		/* Make note of found artifacts */
+		note_found_object(o_ptr);
 
-			/* Build note and write */
-			sprintf(note, "Found The %s", item_name);
-			add_note(note, 'A');
-		}
 		/* Process the appropriate hooks */
 		identify_hooks(-i, o_ptr, IDENT_NORMAL);
 	}
@@ -4428,17 +4435,8 @@ bool_ identify_fully(void)
 		           o_name);
 	}
 
-	/* If the item was an artifact, and if the auto-note is selected, write a message. */
-	if (take_notes && auto_notes && (artifact_p(o_ptr) || o_ptr->name1))
-	{
-		char note[150];
-		char item_name[80];
-		object_desc(item_name, o_ptr, FALSE, 0);
-
-		/* Build note and write */
-		sprintf(note, "Found The %s", item_name);
-		add_note(note, 'A');
-	}
+	/* Make note of found artifacts */
+	note_found_object(o_ptr);
 
 	/* Describe it fully */
 	object_out_desc(o_ptr, NULL, FALSE, TRUE);

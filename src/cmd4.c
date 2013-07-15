@@ -2788,16 +2788,8 @@ void do_cmd_note(void)
 	/* Ignore empty notes */
 	if (!buf[0] || (buf[0] == ' ')) return;
 
-	if (take_notes)
-	{
-		/* Add note to file */
-		add_note(buf, ' ');
-	}
-	else
-	{
-		/* Add note to message recall */
-		msg_format("Note: %s", buf);
-	}
+	/* Add note to file */
+	add_note(buf, ' ');
 }
 
 
@@ -4270,7 +4262,7 @@ void do_cmd_knowledge(void)
 		prt("(9) Display current fates", 12, 5);
 		prt("(0) Display known traps", 13, 5);
 		prt("(A) Display known dungeon towns", 14, 5);
-		if (take_notes) prt("(B) Display notes", 15, 5);
+		prt("(B) Display notes", 15, 5);
 
 		/* Prompt */
 		prt("Command: ", 17, 0);
@@ -4376,8 +4368,7 @@ void do_cmd_knowledge(void)
 		case 'B':
 		case 'b':
 			{
-				if (take_notes) do_cmd_knowledge_notes();
-				else bell();
+				do_cmd_knowledge_notes();
 
 				break;
 			}

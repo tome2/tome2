@@ -1598,12 +1598,6 @@ option_type option_info[] =
 	{ &ironman_rooms, FALSE, 6, 6,
 	  "ironman_rooms", "Always generate very unusual rooms" },
 
-	{ &take_notes, TRUE, 6, 7,
-	  "take_notes", "Allow notes to be written to a file" },
-
-	{ &auto_notes, TRUE, 6, 8,
-	  "auto_notes", "Automatically note important events" },
-
 	{ &joke_monsters, FALSE, 6, 14,
 	  "joke_monsters", "Allow use of some 'joke' monsters" },
 

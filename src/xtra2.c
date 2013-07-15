@@ -2089,11 +2089,7 @@ void check_experience(void)
 		/* Gain this level's abilities */
 		apply_level_abilities(p_ptr->lev);
 
-		/* If auto-note taking enabled, write a note to the file.
-		 * Only write this note when the level is gained for the first
-		 * time.
-		 */
-		if (take_notes && auto_notes)
+		/* Note level gain */
 		{
 			char note[80];
 
@@ -3437,8 +3433,8 @@ bool_ mon_take_hit(int m_idx, int dam, bool_ *fear, cptr note)
 			}
 		}
 
-		/* If the player kills a Unique, and the notes options are on, write a note */
-		if ((r_ptr->flags1 & RF1_UNIQUE) && take_notes && auto_notes)
+		/* Make note of unique kills */
+		if (r_ptr->flags1 & RF1_UNIQUE)
 		{
 			char note[80];
 

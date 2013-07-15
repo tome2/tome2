@@ -997,10 +997,8 @@ for a quantity will convert any "letters" into the maximal legal value.
 ~~~~~69
 [[[[[GTake notes (:)]
         This command allows you to take notes, which will then appear in your
-        note file, if the birth-option "take_notes" was set (the default), or
-        in your message list (prefixed with "Note:"), if the option was not set.
-        The note file can be displayed through the "Display Current Knowledge"
-        command (~ or |). This command takes no time.
+        note file. The note file can be displayed through the "Display Current
+        Knowledge" command (~ or |). This command takes no time.
 ~~~~~123|Commands|Game status
 #####R--- Game Status Commands ---
 ~~~~~6
@@ -1054,9 +1052,8 @@ for a quantity will convert any "letters" into the maximal legal value.
         Display known dungeon towns
         
         Display notes
-        If the option "take_notes" is set shows you your notes file, where all
-        remarkable events are noted. You can add notes yourself by using the
-        "Take notes" command (:).
+        Shows you your notes file, where all remarkable events are noted.
+        You can add notes yourself by using the "Take notes" command (:).
         
 ~~~~~70
 [[[[[GTime of the day (^T)]

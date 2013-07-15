@@ -5597,7 +5597,7 @@ void play_game(bool_ new_game)
 	};
 
 	/* Hack - if note file exists, load it */
-	if (!new_game && take_notes)
+	if (!new_game)
 	{
 		add_note_type(NOTE_ENTER_DUNGEON);
 	}

@@ -510,7 +510,6 @@ extern bool_ autoroll;
 extern bool_ point_based;
 extern bool_ maximize, preserve, special_lvls, ironman_rooms;
 extern bool_ inventory_no_move;
-extern bool_ take_notes, auto_notes;
 extern bool_ *m_allow_special;
 extern bool_ *k_allow_special;
 extern bool_ *a_allow_special;
