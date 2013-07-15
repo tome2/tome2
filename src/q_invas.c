@@ -84,8 +84,6 @@ bool_ quest_invasion_ai_hook(char *fmt)
 }
 bool_ quest_invasion_turn_hook(char *fmt)
 {
-	bool_ old_quick_messages = quick_messages;
-
 	if (cquest.status != QUEST_STATUS_UNTAKEN) return (FALSE);
 	if (p_ptr->lev < 45) return (FALSE);
 
@@ -96,15 +94,12 @@ bool_ quest_invasion_turn_hook(char *fmt)
 	if (p_ptr->astral) return ( FALSE);
 
 	/* Ok give the quest */
-	quick_messages = FALSE;
 	cmsg_print(TERM_YELLOW, "A Thunderlord appears in front of you and says:");
 	cmsg_print(TERM_YELLOW, "'Hello, noble hero. I am Liron, rider of Tolan. Turgon, King of Gondolin sent me.'");
 	cmsg_print(TERM_YELLOW, "'Gondolin is being invaded; he needs your help now or everything will be lost.'");
 	cmsg_print(TERM_YELLOW, "'Please come quickly!'");
 
 	cquest.status = QUEST_STATUS_TAKEN;
-
-	quick_messages = old_quick_messages;
 
 	quest_invasion_init_hook(QUEST_INVASION);
 	del_hook(HOOK_END_TURN, quest_invasion_turn_hook);
