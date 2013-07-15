@@ -674,7 +674,10 @@ void init_hooks_help()
  */
 static void show_context_help(context_help_type *context_help)
 {
-	assert(context_help != NULL);
+	if (context_help == NULL)
+	{
+		return;
+	}
 
 	screen_save();
 
