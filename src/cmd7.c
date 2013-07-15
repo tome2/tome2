@@ -110,6 +110,73 @@ void mimic_info(char *p, int power)
 	}
 }
 
+/**
+ * Show magic powers that user can choose from
+ */
+static void display_magic_powers(
+	magic_power *powers,
+	int max_powers,
+	void (*power_info)(char *p, int power),
+	int plev,
+	int cast_stat,
+	int y,
+	int x)
+{
+	char psi_desc[80];
+	magic_power spell;
+	int i;
+	int chance = 0;
+	int minfail = 0;
+	char comment[80];
+
+	/* Display a list of spells */
+	prt("", 1, x);
+	prt("", y, x);
+	put_str("Name", y, x + 5);
+	put_str("Lv Mana Fail Info", y, x + 35);
+
+	/* Dump the spells */
+	for (i = 0; i < max_powers; i++)
+	{
+		/* Access the spell */
+		spell = powers[i];
+		if (spell.min_lev > plev)
+		{
+			break;
+		}
+
+		chance = spell.fail;
+		/* Reduce failure rate by "effective" level adjustment */
+		chance -= 3 * (plev - spell.min_lev);
+
+		/* Reduce failure rate by INT/WIS adjustment */
+		chance -= 3 * (adj_mag_stat[p_ptr->stat_ind[cast_stat]] - 1);
+
+		/* Not enough mana to cast */
+		if (spell.mana_cost > p_ptr->csp)
+		{
+			chance += 5 * (spell.mana_cost - p_ptr->csp);
+		}
+
+		/* Extract the minimum failure rate */
+		minfail = adj_mag_fail[p_ptr->stat_ind[cast_stat]];
+
+		/* Failure rate */
+		chance = clamp_failure_chance(chance, minfail);
+
+		/* Get info */
+		power_info(comment, i);
+
+		/* Dump the spell --(-- */
+		strnfmt(psi_desc, 80, "  %c) %-30s%2d %4d %3d%%%s",
+			I2A(i), spell.name,
+			spell.min_lev, spell.mana_cost, chance, comment);
+		prt(psi_desc, y + i + 1, x);
+	}
+
+	/* Clear the bottom line */
+	prt("", y + i + 1, x);
+}
 
 /*
  * Allow user to choose a magic power.
@@ -125,7 +192,7 @@ void mimic_info(char *p, int power)
  * when you run it. It's probably easy to fix but I haven't tried,
  * sorry.
  */
-bool_ get_magic_power(int *sn, magic_power *powers, int max_powers,
+static bool_ get_magic_power(int *sn, magic_power *powers, int max_powers,
                      void (*power_info)(char *p, int power), int plev, int cast_stat)
 {
 	int i;
@@ -136,23 +203,17 @@ bool_ get_magic_power(int *sn, magic_power *powers, int max_powers,
 
 	int x = 18;
 
-	int minfail = 0;
-
-	int chance = 0;
-
 	int info;
 
 	char choice;
 
 	char out_val[160];
 
-	char comment[80];
-
 	cptr p = "power";
 
 	magic_power spell;
 
-	bool_ flag, redraw;
+	bool_ flag;
 
 
 	/* Assume cancelled */
@@ -172,9 +233,6 @@ bool_ get_magic_power(int *sn, magic_power *powers, int max_powers,
 	/* Nothing chosen yet */
 	flag = FALSE;
 
-	/* No redraw yet */
-	redraw = FALSE;
-
 	/* Count number of powers that satisfies minimum plev requirement */
 	for (i = 0; i < max_powers; i++)
 	{
@@ -185,88 +243,19 @@ bool_ get_magic_power(int *sn, magic_power *powers, int max_powers,
 	}
 
 	/* Build a prompt (accept all spells) */
-	strnfmt(out_val, 78, "(%^ss %c-%c, *=List, ESC=exit, %c-%c=Info) Use which %s? ",
+	strnfmt(out_val, 78, "(%^ss %c-%c, ESC=exit, %c-%c=Info) Use which %s? ",
 	        p, I2A(0), I2A(num - 1), toupper(I2A(0)), toupper(I2A(num - 1)), p);
 
 	/* Save the screen */
 	character_icky = TRUE;
 	Term_save();
 
+	/* Show the list */
+	display_magic_powers(powers, max_powers, power_info, plev, cast_stat, y, x);
+
 	/* Get a spell from the user */
 	while (!flag && get_com(out_val, &choice))
 	{
-		/* Request redraw */
-		if ((choice == ' ') || (choice == '*') || (choice == '?'))
-		{
-			/* Show the list */
-			if (!redraw)
-			{
-				char psi_desc[80];
-
-				/* Show list */
-				redraw = TRUE;
-
-				/* Display a list of spells */
-				prt("", 1, x);
-				prt("", y, x);
-				put_str("Name", y, x + 5);
-				put_str("Lv Mana Fail Info", y, x + 35);
-
-				/* Dump the spells */
-				for (i = 0; i < max_powers; i++)
-				{
-					/* Access the spell */
-					spell = powers[i];
-					if (spell.min_lev > plev) break;
-
-					chance = spell.fail;
-					/* Reduce failure rate by "effective" level adjustment */
-					chance -= 3 * (plev - spell.min_lev);
-
-					/* Reduce failure rate by INT/WIS adjustment */
-					chance -= 3 * (adj_mag_stat[p_ptr->stat_ind[cast_stat]] - 1);
-
-					/* Not enough mana to cast */
-					if (spell.mana_cost > p_ptr->csp)
-					{
-						chance += 5 * (spell.mana_cost - p_ptr->csp);
-					}
-
-					/* Extract the minimum failure rate */
-					minfail = adj_mag_fail[p_ptr->stat_ind[cast_stat]];
-
-					/* Failure rate */
-					chance = clamp_failure_chance(chance, minfail);
-
-					/* Get info */
-					power_info(comment, i);
-
-					/* Dump the spell --(-- */
-					strnfmt(psi_desc, 80, "  %c) %-30s%2d %4d %3d%%%s",
-					        I2A(i), spell.name,
-					        spell.min_lev, spell.mana_cost, chance, comment);
-					prt(psi_desc, y + i + 1, x);
-				}
-
-				/* Clear the bottom line */
-				prt("", y + i + 1, x);
-			}
-
-			/* Hide the list */
-			else
-			{
-				/* Hide list */
-				redraw = FALSE;
-
-				/* Restore the screen */
-				Term_load();
-				character_icky = FALSE;
-			}
-
-			/* Redo asking */
-			continue;
-		}
-
 		/* Note verify */
 		info = (isupper(choice));
 
@@ -295,6 +284,9 @@ bool_ get_magic_power(int *sn, magic_power *powers, int max_powers,
 			inkey();
 			Term_load();
 			character_icky = FALSE;
+
+			/* Redisplay choices */
+			display_magic_powers(powers, max_powers, power_info, plev, cast_stat, y, x);
 			continue;
 		}
 
@@ -303,10 +295,7 @@ bool_ get_magic_power(int *sn, magic_power *powers, int max_powers,
 	}
 
 	/* Restore the screen */
-	if (redraw)
-	{
-		Term_load();
-	}
+	Term_load();
 	character_icky = FALSE;
 
 	/* Abort if needed */

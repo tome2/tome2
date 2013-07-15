@@ -2309,7 +2309,6 @@ extern int find_module(cptr name);
 
 
 /* lua_bind.c */
-extern bool_ get_magic_power(int *sn, magic_power *powers, int max_powers, void (*power_info)(char *p, int power), int plev, int cast_stat);
 
 extern s16b    add_new_power(cptr name, cptr desc, cptr gain, cptr lose, byte level, byte cost, byte stat, byte diff);
 
