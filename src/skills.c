@@ -12,6 +12,7 @@
 
 #include "angband.h"
 
+#include <math.h>
 
 /*
  * Advance the skill point of the skill specified by i and
@@ -1238,84 +1239,164 @@ void init_skill(s32b value, s32b mod, int i)
 		s_info[i].hidden = FALSE;
 }
 
+/*
+ * Perform weighted random selection without replacement according to
+ * the algorithm given in "Weighted Random Sampling" (2005, Eframidis,
+ * Spirakis)
+ *
+ * @param n is the total number of items to choose from.
+ * @param k is the total number of items to choose.
+ * @param weights is the array of weights.
+ * @param indexes is the output array containing the chosen permutation.
+ *     The first k values will be set to a value in [0, n[ according to
+ *     which item was chosen.
+ */
+static void wrs_without_replacement(size_t n, size_t k, s32b unscaled_weights[], size_t indexes[])
+{
+	size_t i;
+	s32b scale;
+	double *weights = NULL;
+	double *keys = NULL;
+	size_t *permutation = NULL;
+
+	assert(k <= n);
+
+	/* Allocate working memory */
+	keys = C_RNEW(n, double);
+	weights = C_RNEW(n, double);
+	permutation = C_RNEW(n, double);
+
+	/* Calculate the scale of the weights. */
+	scale = 0;
+	for (i = 0; i < n; i++)
+	{
+		scale += unscaled_weights[i];
+	}
+
+	/* Rescale weights into unit interval for numerical stability */
+	for (i = 0; i < n; i++) {
+		weights[i] =
+			((double) unscaled_weights[i]) /
+			((double) scale);
+	}
+
+	/* Generate the keys to use for selection. This is where the
+	 magic happens. */
+	for (i = 0; i < n; i++) {
+		double u = ((double) rand_int(100000)) / ((double) 100000);
+		keys[i] = pow(u, 1/weights[i]);
+	}
+
+	/* Generate the initial permutation */
+	for (i = 0; i < n; i++) {
+		permutation[i] = i;
+	}
+
+	/* Select the k indexes with the largest keys */
+	for (i = 0; i < k; i++) {
+		/* Find maximal value and its index */
+		int max_idx = i;
+		double max_value = keys[max_idx];
+		size_t j;
+		for (j = i+1; j < n; j++) {
+			if (keys[j] > max_value) {
+				max_idx = j;
+				max_value = keys[j];
+			}
+		}
+
+		/* Swap into k'th position */
+		if (max_idx != i) {
+			double tmp_key;
+			size_t tmp_idx;
+			/* Swap keys */
+			tmp_key = keys[i];
+			keys[i] = keys[max_idx];
+			keys[max_idx] = tmp_key;
+			/* Swap indexes in permutation */
+			tmp_idx = permutation[i];
+			permutation[i] = permutation[max_idx];
+			permutation[max_idx] = tmp_idx;
+		}
+
+		/* Output the k'th choice. */
+		indexes[i] = permutation[i];
+	}
+
+	/* Clean up */
+	C_FREE(keys, n, double);
+	C_FREE(weights, n, double);
+	C_FREE(permutation, n, size_t);
+}
+
 void do_get_new_skill()
 {
 	char *items[LOST_SWORD_NSKILLS];
 	int skl[LOST_SWORD_NSKILLS];
 	s32b val[LOST_SWORD_NSKILLS], mod[LOST_SWORD_NSKILLS];
-	bool_ used[MAX_SKILLS];
 	int available_skills[MAX_SKILLS];
-	int max = 0, max_a = 0, res, i;
+	int max_a = 0, res, i;
+	size_t indexes[LOST_SWORD_NSKILLS];
+	s32b weights[MAX_SKILLS];
 
 	/* Check if some skills didn't influence other stuff */
 	recalc_skills(TRUE);
 
 	/* Grab the ones we can gain */
-	max = 0;
+	max_a = 0;
 	for (i = 0; i < max_s_idx; i++)
 	{
-		if (s_info[i].flags1 & SKF1_RANDOM_GAIN)
-			available_skills[max++] = i;
-	}
-	available_skills[max++] = -1;
-
-	/* Init */
-	for (max = 0; max < MAX_SKILLS; max++)
-	{
-		used[max] = FALSE;
-	}
-
-	/* Count the number of available skills */
-	while (available_skills[max_a] != -1) max_a++;
-
-	/* Get LOST_SWORD_NSKILLS skills */
-	for (max = 0; max < LOST_SWORD_NSKILLS; max++)
-	{
-		int i;
-		skill_type *s_ptr;
-
-		/* Get an non used skill */
-		do
-		{
-			i = rand_int(max_a);
-
-			/* Does it pass the check? */
-			if (!magik(s_info[available_skills[i]].random_gain_chance))
-				continue;
+		if (s_info[i].flags1 & SKF1_RANDOM_GAIN) {
+			available_skills[max_a] = i;
+			max_a++;
 		}
-		while (used[available_skills[i]]);
+	}
 
-		s_ptr = &s_info[available_skills[i]];
-		used[available_skills[i]] = TRUE;
+	/* Perform the selection */
+	for (i = 0; i < max_a; i++) {
+		weights[i] = s_info[available_skills[i]].random_gain_chance;
+	}
+
+	wrs_without_replacement(max_a, LOST_SWORD_NSKILLS, weights, indexes);
+
+	/* Extract the information needed from the skills */
+	for (i = 0; i < LOST_SWORD_NSKILLS; i++)
+	{
+		s32b s_idx = available_skills[indexes[i]];
+		skill_type *s_ptr = &s_info[s_idx];
 
 		if (s_ptr->mod)
 		{
 			if (s_ptr->mod < 300)
 			{
-				val[max] = 1000;
-				mod[max] = 300 - s_ptr->mod;
+				val[i] = 1000;
+				mod[i] = 300 - s_ptr->mod;
 			}
 			else if (s_ptr->mod < 500)
 			{
-				val[max] = s_ptr->mod * 1;
-				mod[max] = 100;
-				if (mod[max] + s_ptr->mod > 500)
-					mod[max] = 500 - s_ptr->mod;
+				val[i] = s_ptr->mod * 1;
+				mod[i] = 100;
+				if (mod[i] + s_ptr->mod > 500)
+					mod[i] = 500 - s_ptr->mod;
 			}
 			else
 			{
-				val[max] = s_ptr->mod * 3;
-				mod[max] = 0;
+				val[i] = s_ptr->mod * 3;
+				mod[i] = 0;
 			}
 		}
 		else
 		{
-			mod[max] = 300;
-			val[max] = 1000;
+			mod[i] = 300;
+			val[i] = 1000;
 		}
-		if (s_ptr->value + val[max] > SKILL_MAX) val[max] = SKILL_MAX - s_ptr->value;
-		skl[max] = available_skills[i];
-		items[max] = (char *)string_make(format("%-40s: +%02ld.%03ld value, +%01d.%03d modifier", s_ptr->name + s_name, val[max] / SKILL_STEP, val[max] % SKILL_STEP, mod[max] / SKILL_STEP, mod[max] % SKILL_STEP));
+
+		if (s_ptr->value + val[i] > SKILL_MAX) {
+			val[i] = SKILL_MAX - s_ptr->value;
+		}
+
+		skl[i] = s_idx;
+		items[i] = (char *)string_make(format("%-40s: +%02ld.%03ld value, +%01d.%03d modifier", s_ptr->name + s_name, val[i] / SKILL_STEP, val[i] % SKILL_STEP, mod[i] / SKILL_STEP, mod[i] % SKILL_STEP));
 	}
 
 	while (TRUE)
@@ -1382,9 +1463,9 @@ void do_get_new_skill()
 	}
 
 	/* Free them ! */
-	for (max = 0; max < LOST_SWORD_NSKILLS; max++)
+	for (i = 0; i < LOST_SWORD_NSKILLS; i++)
 	{
-		string_free(items[max]);
+		string_free(items[i]);
 	}
 
 	/* Check if some skills didn't influence other stuff */
