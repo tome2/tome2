@@ -38,6 +38,9 @@ ENDIF()
 # Add definitions.
 ADD_DEFINITIONS(-DUSE_PRECISE_CMOVIE)
 
+# Add standard math library
+SET(LIBS ${LIBS} m)
+
 #
 # JSON support
 #
