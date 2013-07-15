@@ -2280,10 +2280,8 @@ static bool_ quaff_potion(int tval, int sval, int pval, int pval2)
 			{
 				if (p_ptr->exp < PY_MAX_EXP)
 				{
-					s32b ee = (p_ptr->exp / 2) + 10;
-					if (ee > 100000L) ee = 100000L;
 					msg_print("You feel more experienced.");
-					gain_exp(ee);
+					gain_exp(100000L);
 					ident = TRUE;
 				}
 
