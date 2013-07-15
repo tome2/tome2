@@ -223,7 +223,6 @@ bool_ empty_levels; 		/* Allow empty 'arena' levels */
 bool_ always_small_level;         /* Small levels */
 bool_ player_symbols; 		/* Use varying symbols for the player char */
 bool_ plain_descriptions; 	/* Plain object descriptions */
-bool_ stupid_monsters; 		/* Monsters use old AI */
 bool_ auto_destroy; 		/* Known worthless items are destroyed without confirmation */
 bool_ confirm_stairs; 		/* Prompt before staircases... */
 bool_ wear_confirm; 		/* Confirm before putting on known cursed items */

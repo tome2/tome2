@@ -2675,9 +2675,6 @@ errr file_character(cptr name, bool_ full)
 	if (PRACE_FLAGS(PR1_EXPERIMENTAL))
 		fprintf(fff, "\n You have done something experimental.");
 
-	if (stupid_monsters)
-		fprintf(fff, "\n Your opponents are behaving stupidly.");
-
 	{
 		char desc[80];
 		cptr mimic;
@@ -4286,7 +4283,6 @@ long total_points(void)
 	if (p_ptr->preserve) mult -= 1;  /* Penalize preserve, maximize modes */
 	if (p_ptr->maximize) mult -= 1;
 	if (auto_scum) mult -= 4;
-	if (stupid_monsters) mult -= 10;
 	if (small_levels) mult += ((always_small_level) ? 4 : 10);
 	if (empty_levels) mult += 2;
 	if (smart_learn) mult += 4;

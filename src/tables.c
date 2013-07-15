@@ -1498,9 +1498,6 @@ option_type option_info[] =
 	{ &smart_cheat, FALSE, 3, 15,
 	  "smart_cheat", "Monsters exploit players weaknesses" },
 
-	{ &stupid_monsters, FALSE, 3, 16,
-	  "stupid_monsters", "Monsters behave stupidly" },
-
 	{ &small_levels, TRUE, 3, 17,
 	  "small_levels", "Allow unusually small dungeon levels" },
 

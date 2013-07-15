@@ -164,9 +164,6 @@ X:smart_learn
 # Option 'Monsters exploit players weaknesses'
 X:smart_cheat
 
-# Option 'Monsters behave stupidly'
-X:stupid_monsters
-
 # Option 'Allow unusually small dungeon levels'
 Y:small_levels
 

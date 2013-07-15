@@ -2997,18 +2997,11 @@ bool_ make_attack_spell(int m_idx)
 	/* Not allowed to cast spells */
 	if (!chance) return (FALSE);
 
-	if (stupid_monsters)
-	{
-		/* Only do spells occasionally */
-		if (rand_int(100) >= chance) return (FALSE);
-	}
-	else
-	{
-		if (rand_int(100) >= chance) return (FALSE);
+	/* Only do spells occasionally */
+	if (rand_int(100) >= chance) return (FALSE);
 
-		/* Sometimes forbid inate attacks (breaths) */
-		if (rand_int(100) >= (chance * 2)) no_inate = TRUE;
-	}
+	/* Sometimes forbid inate attacks (breaths) */
+	if (rand_int(100) >= (chance * 2)) no_inate = TRUE;
 
 	/* XXX XXX XXX Handle "track_target" option (?) */
 
@@ -3031,11 +3024,8 @@ bool_ make_attack_spell(int m_idx)
 	f5 = r_ptr->flags5;
 	f6 = r_ptr->flags6;
 
-	if (!stupid_monsters)
-	{
-		/* Forbid inate attacks sometimes */
-		if (no_inate) f4 = 0L;
-	}
+	/* Forbid inate attacks sometimes */
+	if (no_inate) f4 = 0L;
 
 	/* Hack -- allow "desperate" spells */
 	if ((r_ptr->flags2 & (RF2_SMART)) &&
@@ -3057,35 +3047,32 @@ bool_ make_attack_spell(int m_idx)
 	/* No spells left */
 	if (!f4 && !f5 && !f6) return (FALSE);
 
-	if (!stupid_monsters)
+	/* Check for a clean bolt shot */
+	if ((f4&(RF4_BOLT_MASK) || f5 & (RF5_BOLT_MASK) ||
+	     f6&(RF6_BOLT_MASK)) &&
+	    !(r_ptr->flags2 & (RF2_STUPID)) &&
+	    !clean_shot(m_ptr->fy, m_ptr->fx, y, x))
 	{
-		/* Check for a clean bolt shot */
-		if ((f4&(RF4_BOLT_MASK) || f5 & (RF5_BOLT_MASK) ||
-		                f6&(RF6_BOLT_MASK)) &&
-		                !(r_ptr->flags2 & (RF2_STUPID)) &&
-		                !clean_shot(m_ptr->fy, m_ptr->fx, y, x))
-		{
-			/* Remove spells that will only hurt friends */
-			f4 &= ~(RF4_BOLT_MASK);
-			f5 &= ~(RF5_BOLT_MASK);
-			f6 &= ~(RF6_BOLT_MASK);
-		}
-
-		/* Check for a possible summon */
-		if ((f4 & (RF4_SUMMON_MASK) || f5 & (RF5_SUMMON_MASK) ||
-		                f6 & (RF6_SUMMON_MASK)) &&
-		                !(r_ptr->flags2 & (RF2_STUPID)) &&
-		                !(summon_possible(y, x)))
-		{
-			/* Remove summoning spells */
-			f4 &= ~(RF4_SUMMON_MASK);
-			f5 &= ~(RF5_SUMMON_MASK);
-			f6 &= ~(RF6_SUMMON_MASK);
-		}
-
-		/* No spells left */
-		if (!f4 && !f5 && !f6) return (FALSE);
+		/* Remove spells that will only hurt friends */
+		f4 &= ~(RF4_BOLT_MASK);
+		f5 &= ~(RF5_BOLT_MASK);
+		f6 &= ~(RF6_BOLT_MASK);
 	}
+
+	/* Check for a possible summon */
+	if ((f4 & (RF4_SUMMON_MASK) || f5 & (RF5_SUMMON_MASK) ||
+	     f6 & (RF6_SUMMON_MASK)) &&
+	    !(r_ptr->flags2 & (RF2_STUPID)) &&
+	    !(summon_possible(y, x)))
+	{
+		/* Remove summoning spells */
+		f4 &= ~(RF4_SUMMON_MASK);
+		f5 &= ~(RF5_SUMMON_MASK);
+		f6 &= ~(RF6_SUMMON_MASK);
+	}
+
+	/* No spells left */
+	if (!f4 && !f5 && !f6) return (FALSE);
 
 	/* Extract the "inate" spells */
 	for (k = 0; k < 32; k++)
@@ -3117,32 +3104,25 @@ bool_ make_attack_spell(int m_idx)
 	/* Get the monster name (or "it") */
 	monster_desc(m_name, m_ptr, 0x00);
 
-	if (stupid_monsters)
+	/* Choose a spell to cast */
+	thrown_spell = choose_attack_spell(m_idx, spell, num);
+
+	/* Abort if no spell was chosen */
+	if (!thrown_spell) return (FALSE);
+
+	/* Calculate spell failure rate */
+	failrate = 25 - (rlev + 3) / 4;
+
+	/* Hack -- Stupid monsters will never fail (for jellies and such) */
+	if (r_ptr->flags2 & (RF2_STUPID)) failrate = 0;
+
+	/* Check for spell failure (inate attacks never fail) */
+	if ((thrown_spell >= 128) && (rand_int(100) < failrate))
 	{
-		/* Choose a spell to cast */
-		thrown_spell = spell[rand_int(num)];
-	}
-	else
-	{
-		thrown_spell = choose_attack_spell(m_idx, spell, num);
+		/* Message */
+		msg_format("%^s tries to cast a spell, but fails.", m_name);
 
-		/* Abort if no spell was chosen */
-		if (!thrown_spell) return (FALSE);
-
-		/* Calculate spell failure rate */
-		failrate = 25 - (rlev + 3) / 4;
-
-		/* Hack -- Stupid monsters will never fail (for jellies and such) */
-		if (r_ptr->flags2 & (RF2_STUPID)) failrate = 0;
-
-		/* Check for spell failure (inate attacks never fail) */
-		if ((thrown_spell >= 128) && (rand_int(100) < failrate))
-		{
-			/* Message */
-			msg_format("%^s tries to cast a spell, but fails.", m_name);
-
-			return (TRUE);
-		}
+		return (TRUE);
 	}
 
 	/* Can the player disrupt its puny attempts? */
@@ -5170,7 +5150,7 @@ static bool_ get_moves(int m_idx, int *mm)
 		}
 	}
 
-	if (!stupid_monsters && (is_friend(m_ptr) < 0))
+	if (is_friend(m_ptr) < 0)
 	{
 		int tx = x2, ty = y2;
 
@@ -5243,7 +5223,7 @@ static bool_ get_moves(int m_idx, int *mm)
 	}
 
 	/* Apply fear if possible and necessary */
-	if ((stupid_monsters) || (is_friend(m_ptr) > 0))
+	if (is_friend(m_ptr) > 0)
 	{
 		if (mon_will_run(m_idx))
 		{
@@ -5275,11 +5255,8 @@ static bool_ get_moves(int m_idx, int *mm)
 	}
 
 
-	if (!stupid_monsters)
-	{
-		/* Check for no move */
-		if (!x && !y) return (FALSE);
-	}
+	/* Check for no move */
+	if (!x && !y) return (FALSE);
 
 	/* Extract the "absolute distances" */
 	ax = ABS(x);
@@ -6523,16 +6500,8 @@ static void process_monster(int m_idx, bool_ is_frien)
 	/* Normal movement */
 	else
 	{
-		if (stupid_monsters)
-		{
-			/* Logical moves */
-			get_moves(m_idx, mm);
-		}
-		else
-		{
-			/* Logical moves, may do nothing */
-			if (!get_moves(m_idx, mm)) return;
-		}
+		/* Logical moves, may do nothing */
+		if (!get_moves(m_idx, mm)) return;
 	}
 
 	/* Paranoia -- quest code could delete it */
@@ -7233,7 +7202,7 @@ static void process_monster(int m_idx, bool_ is_frien)
 
 
 	/* If we haven't done anything, try casting a spell again */
-	if (!do_turn && !do_move && !m_ptr->monfear && !stupid_monsters &&
+	if (!do_turn && !do_move && !m_ptr->monfear &&
 	                (is_friend(m_ptr) < 0))
 	{
 		/* Cast spell */

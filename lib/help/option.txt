@@ -344,17 +344,6 @@ off at will during the course of the game.
     first having to observe such an attack upon you, and to use this
     information to choose the best attacks.
 
-#####GMonsters behave stupidly    [stupid_monsters]
-    ToME incorporates Keldon Jones' improved monster Artificial
-    Intelligence patch. While this patch most certainly makes monsters
-    behave more realistically, they will also be more deadly with the
-    improved AI. If you are a sissy, set this option to get the old,
-    really stupid monster AI.
-    Note that the new AI is a bit processing power expensive. If you have
-    an old computer (386sx) and ToME is running too slowly, you could
-    try turning stupid_monsters on. Or dumpster-dive for a Pentium so you can
-    run ToME. :-)
-
 #####GAllow unusually small dungeon levels    [small_levels]
     This option enables the creation of levels of varying sizes. Levels
     that are as small as one "screen" (80x24) are possible, and they can be

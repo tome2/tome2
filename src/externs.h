@@ -222,7 +222,6 @@ extern bool_ view_bright_lite;
 extern bool_ view_granite_lite;
 extern bool_ view_special_lite;
 extern bool_ plain_descriptions;
-extern bool_ stupid_monsters;
 extern bool_ auto_destroy;
 extern bool_ wear_confirm;
 extern bool_ confirm_stairs;
