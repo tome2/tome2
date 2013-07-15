@@ -3771,7 +3771,7 @@ bool_ make_attack_spell(int m_idx)
 					}
 					if (!p_ptr->free_act)
 					{
-						(void)set_paralyzed(p_ptr->paralyzed + rand_int(4) + 4);
+						(void)set_paralyzed(rand_int(4) + 4);
 					}
 					(void)set_slow(p_ptr->slow + rand_int(4) + 4);
 
@@ -4095,7 +4095,7 @@ bool_ make_attack_spell(int m_idx)
 				}
 				else
 				{
-					(void)set_paralyzed(p_ptr->paralyzed + rand_int(4) + 4);
+					(void)set_paralyzed(rand_int(4) + 4);
 				}
 				update_smart_learn(m_idx, DRS_FREE);
 				break;

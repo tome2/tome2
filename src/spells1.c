@@ -5348,7 +5348,7 @@ bool_ project_m(int who, int r, int y, int x, int dam, int typ)
 								}
 							default:
 								if (!p_ptr->free_act)
-									(void)set_paralyzed(p_ptr->paralyzed + randint(dam));
+									(void)set_paralyzed(randint(dam));
 								break;
 							}
 						}
@@ -7954,7 +7954,7 @@ static bool_ project_p(int who, int r, int y, int x, int dam, int typ, int a_rad
 		{
 			if (p_ptr->free_act) break;
 			if (fuzzy) msg_print("You fall asleep!");
-			set_paralyzed(p_ptr->paralyzed + dam);
+			set_paralyzed(dam);
 			dam = 0;
 			break;
 		}
@@ -8023,7 +8023,7 @@ static bool_ project_p(int who, int r, int y, int x, int dam, int typ, int a_rad
 	case GF_STASIS:
 		{
 			if (fuzzy) msg_print("You are hit by something paralyzing!");
-			set_paralyzed(p_ptr->paralyzed + dam);
+			set_paralyzed(dam);
 			break;
 		}
 

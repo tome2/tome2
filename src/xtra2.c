@@ -676,11 +676,14 @@ bool_ set_afraid(int v)
 
 
 /*
- * Set "p_ptr->paralyzed", notice observable changes
+ * Mechanics for setting the "paralyzed" field.
  */
-bool_ set_paralyzed(int v)
+static bool_ set_paralyzed_aux(int v)
 {
-	bool_ notice = set_simple_field(
+	bool_ notice;
+
+	/* Normal processing */
+	notice = set_simple_field(
 		&p_ptr->paralyzed, v,
 		TERM_WHITE, "You are paralyzed!",
 		TERM_WHITE, "You can move again.");
@@ -696,6 +699,32 @@ bool_ set_paralyzed(int v)
 
 	/* Result */
 	return notice;
+}
+
+/*
+ * Set "p_ptr->paralyzed", notice observable changes
+ */
+bool_ set_paralyzed(int v)
+{
+	/* Paralysis effects do not accumulate -- this is to
+	   prevent the uninteresting insta-death effect, but
+	   still leave paralyzers highly dangerous if they're
+	   faster than the player. */
+
+	if (p_ptr->paralyzed > 0) {
+		return FALSE;
+	}
+
+	/* Normal processing */
+	return set_paralyzed_aux(v);
+}
+
+/*
+ * Decrement "p_ptr->paralyzed", notice observable changes
+ */
+void dec_paralyzed()
+{
+	set_paralyzed_aux(p_ptr->paralyzed - 1);
 }
 
 

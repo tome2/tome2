@@ -783,7 +783,7 @@ bool_ carried_make_attack_normal(int r_idx)
 					}
 					else
 					{
-						if (set_paralyzed(p_ptr->paralyzed + 3 + randint(rlev)))
+						if (set_paralyzed(3 + randint(rlev)))
 						{
 							obvious = TRUE;
 						}
@@ -2418,7 +2418,7 @@ bool_ make_attack_normal(int m_idx, byte divis)
 					}
 					else
 					{
-						if (set_paralyzed(p_ptr->paralyzed + 3 + randint(rlev)))
+						if (set_paralyzed(3 + randint(rlev)))
 						{
 							obvious = TRUE;
 						}

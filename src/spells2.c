@@ -7083,9 +7083,9 @@ case 13: case 14: case 15: case 19: case 20:
 			{
 				msg_print("You feel like a statue!");
 				if (p_ptr->free_act)
-					set_paralyzed (p_ptr->paralyzed + randint(3));
+					set_paralyzed(randint(3));
 				else
-					set_paralyzed (p_ptr->paralyzed + randint(13));
+					set_paralyzed(randint(13));
 				stop_ty = TRUE;
 			}
 			if (randint(6) != 1) break;
@@ -7175,9 +7175,9 @@ void activate_dg_curse(void)
 			{
 				msg_print("You feel like a statue!");
 				if (p_ptr->free_act)
-					set_paralyzed (p_ptr->paralyzed + randint(3));
+					set_paralyzed(randint(3));
 				else
-					set_paralyzed (p_ptr->paralyzed + randint(13));
+					set_paralyzed(randint(13));
 				stop_dg = TRUE;
 			}
 			if (randint(7) != 1) break;

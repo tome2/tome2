@@ -2339,7 +2339,7 @@ static bool_ do_cmd_bash_aux(int y, int x, int dir)
 		msg_print("You are off-balance.");
 
 		/* Hack -- Lose balance ala paralysis */
-		(void)set_paralyzed(p_ptr->paralyzed + 2 + rand_int(2));
+		(void)set_paralyzed(2 + rand_int(2));
 	}
 
 	/* Result */

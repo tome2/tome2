@@ -2130,6 +2130,7 @@ extern bool_ set_confused(int v);
 extern bool_ set_poisoned(int v);
 extern bool_ set_afraid(int v);
 extern bool_ set_paralyzed(int v);
+extern void dec_paralyzed();
 extern bool_ set_image(int v);
 extern bool_ set_fast(int v, int p);
 extern bool_ set_light_speed(int v);

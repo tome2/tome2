@@ -1802,7 +1802,7 @@ static void process_world(void)
 				disturb(1, 0);
 
 				/* Hack -- faint (bypass free action) */
-				(void)set_paralyzed(p_ptr->paralyzed + 1 + rand_int(5));
+				(void)set_paralyzed(1 + rand_int(5));
 			}
 		}
 	}
@@ -2266,7 +2266,7 @@ static void process_world(void)
 	/* Paralysis */
 	if (p_ptr->paralyzed)
 	{
-		(void)set_paralyzed(p_ptr->paralyzed - 1);
+		dec_paralyzed();
 	}
 
 	/* Confusion */

@@ -1633,7 +1633,7 @@ void sanity_blast(monster_type * m_ptr, bool_ necro)
 		}
 		if (!p_ptr->free_act)
 		{
-			(void)set_paralyzed(p_ptr->paralyzed + rand_int(4) + 4);
+			(void)set_paralyzed(rand_int(4) + 4);
 		}
 		while (rand_int(100) > p_ptr->skill_sav)
 			(void)do_dec_stat(A_INT, STAT_DEC_NORMAL);

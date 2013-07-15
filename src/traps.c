@@ -617,7 +617,7 @@ bool_ player_activate_trap_type(s16b y, s16b x, object_type *i_ptr, s16b item)
 			if (!p_ptr->free_act)
 			{
 				msg_print("You touch a poisoned part and can't move.");
-				(void)set_paralyzed(p_ptr->paralyzed + rand_int(10) + 10);
+				(void)set_paralyzed(rand_int(10) + 10);
 				ident = TRUE;
 			}
 			else
@@ -706,7 +706,7 @@ bool_ player_activate_trap_type(s16b y, s16b x, object_type *i_ptr, s16b item)
 
 			if (!p_ptr->free_act)
 			{
-				(void)set_paralyzed(p_ptr->paralyzed + rand_int(dun_level) + 6);
+				(void)set_paralyzed(rand_int(dun_level) + 6);
 			}
 			ident = TRUE;
 			break;

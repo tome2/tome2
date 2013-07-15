@@ -285,7 +285,7 @@ static void corpse_effect(object_type *o_ptr, bool_ cutting)
 				{
 					if (!p_ptr->free_act)
 					{
-						set_paralyzed(p_ptr->paralyzed + dam + idam + 10);
+						set_paralyzed(dam + idam + 10);
 					}
 
 					break;
@@ -1060,7 +1060,7 @@ void do_cmd_eat_food(void)
 			{
 				if (!p_ptr->free_act)
 				{
-					if (set_paralyzed(p_ptr->paralyzed + rand_int(10) + 10))
+					if (set_paralyzed(rand_int(10) + 10))
 					{
 						ident = TRUE;
 					}
@@ -1779,7 +1779,7 @@ static bool_ quaff_potion(int tval, int sval, int pval, int pval2)
 				msg_print("The potion makes you vomit!");
 				(void)set_food(PY_FOOD_STARVE - 1);
 				(void)set_poisoned(0);
-				(void)set_paralyzed(p_ptr->paralyzed + 4);
+				(void)set_paralyzed(4);
 				ident = TRUE;
 
 				break;
@@ -1846,7 +1846,7 @@ static bool_ quaff_potion(int tval, int sval, int pval, int pval2)
 			{
 				if (!p_ptr->free_act)
 				{
-					if (set_paralyzed(p_ptr->paralyzed + rand_int(4) + 4))
+					if (set_paralyzed(rand_int(4) + 4))
 					{
 						ident = TRUE;
 					}
@@ -5383,8 +5383,7 @@ const char *activation_aux(object_type * o_ptr, bool_ doit, int item)
 						msg_print("You are too weak to control the stone!");
 
 						/* Hack -- Bypass free action */
-						(void)set_paralyzed(p_ptr->paralyzed +
-						                    randint(5 * oops + 1));
+						(void)set_paralyzed(randint(5 * oops + 1));
 
 						/* Confusing. */
 						(void)set_confused(p_ptr->confused +
@@ -6999,7 +6998,7 @@ const char *activation_aux(object_type * o_ptr, bool_ doit, int item)
 		case ACT_PARALYZE:
 			{
 				if (!doit) return "paralyze";
-				set_paralyzed(p_ptr->paralyzed + 20 + randint(10));
+				set_paralyzed(20 + randint(10));
 
 				/* Timeout is set before return */
 
