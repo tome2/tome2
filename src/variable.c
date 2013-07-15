@@ -232,8 +232,6 @@ bool_ disturb_pets; 		/* Pets moving nearby disturb us */
 
 /* Option Set 3 -- Game-Play */
 
-bool_ auto_haggle; 			/* Auto-haggle in stores */
-
 bool_ auto_scum; 				/* Auto-scum for good levels */
 
 bool_ stack_allow_items; 		/* Allow weapons and armor to stack */

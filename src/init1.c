@@ -10250,18 +10250,15 @@ errr init_ow_info_txt(FILE *fp, char *buf)
 		/* Process 'I' for "Info" (multiple lines line only) */
 		if (buf[0] == 'I')
 		{
-			int cost, max_inf, min_inf, haggle, insult;
+			int cost, inf;
 
 			/* Scan for the values */
-			if (5 != sscanf(buf + 2, "%d:%d:%d:%d:%d",
-			                &cost, &max_inf, &min_inf, &haggle, &insult)) return (1);
+			if (2 != sscanf(buf + 2, "%d:%d",
+			                &cost, &inf)) return (1);
 
 			/* Save the values */
 			ow_ptr->max_cost = cost;
-			ow_ptr->max_inflate = max_inf;
-			ow_ptr->min_inflate = min_inf;
-			ow_ptr->haggle_per = haggle;
-			ow_ptr->insult_max = insult;
+			ow_ptr->inflation = inf;
 
 			/* Next... */
 			continue;

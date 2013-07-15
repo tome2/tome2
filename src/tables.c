@@ -1453,9 +1453,6 @@ option_type option_info[] =
 
 	/*** Game-Play ***/
 
-	{ &auto_haggle, TRUE, 3, 0,
-	  "auto_haggle", "Auto-haggle in stores" },
-
 	{ &auto_scum, TRUE, 3, 1,
 	  "auto_scum", "Auto-scum for good levels" },
 

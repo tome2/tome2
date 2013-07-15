@@ -1001,15 +1001,10 @@ struct owner_type
 
 	s16b max_cost;                  /* Purse limit */
 
-	byte max_inflate;               /* Inflation (max) */
-	byte min_inflate;               /* Inflation (min) */
+	s16b inflation;                 /* Inflation */
 
-	byte haggle_per;                /* Haggle unit */
-
-	byte insult_max;                /* Insult limit */
-
-	u32b races[2][2];                  /* Liked/hated races */
-	u32b classes[2][2];                /* Liked/hated classes */
+	u32b races[2][2];               /* Liked/hated races */
+	u32b classes[2][2];             /* Liked/hated classes */
 
 	s16b costs[3];                  /* Costs for liked people */
 };
@@ -1028,11 +1023,6 @@ struct store_type
 	u16b st_idx;
 
 	u16b owner;                     /* Owner index */
-
-	s16b insult_cur;		/* Insult counter */
-
-	s16b good_buy;			/* Number of "good" buys */
-	s16b bad_buy;			/* Number of "bad" buys */
 
 	s32b store_open;		/* Closed until this turn */
 

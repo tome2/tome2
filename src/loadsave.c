@@ -1713,15 +1713,11 @@ static bool_ do_store(store_type *str, int flag)
 
 	/* Some basic info */
 	do_s32b(&str->store_open, flag);
-	do_s16b(&str->insult_cur, flag);
 	do_u16b(&str->owner, flag);
 	if (flag == LS_SAVE) num = str->stock_num;
 
 	/* Could be cleaner, done this way for benefit of the for loop later on */
 	do_byte(&num, flag);
-
-	do_s16b(&str->good_buy, flag);
-	do_s16b(&str->bad_buy, flag);
 
 	/* Last visit */
 	do_s32b(&str->last_visit, flag);
