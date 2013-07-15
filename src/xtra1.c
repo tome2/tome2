@@ -1005,7 +1005,13 @@ static void health_redraw(void)
 		Term_putstr(COL_INFO, ROW_INFO, 12, TERM_WHITE, "[----------]");
 
 		/* Dump the current "health" (use '*' symbols) */
-		Term_putstr(COL_INFO + 1, ROW_INFO, len, attr, "**********");
+		if (m_ptr->stunned) {
+			Term_putstr(COL_INFO + 1, ROW_INFO, len, attr, "ssssssssss");
+		} else if (m_ptr->confused) {
+			Term_putstr(COL_INFO + 1, ROW_INFO, len, attr, "cccccccccc");
+		} else {
+			Term_putstr(COL_INFO + 1, ROW_INFO, len, attr, "**********");
+		}
 	}
 }
 
