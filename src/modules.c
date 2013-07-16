@@ -707,7 +707,7 @@ static bool_ orthanc_stair(void *data, void *in_, void *out_)
 /*
  * Movement from Theme
  */
-bool_ theme_push_past(void *data, void *in_, void *out_)
+static bool_ theme_push_past(void *data, void *in_, void *out_)
 {
 	hook_move_in *p = (hook_move_in *) in_;
 	cave_type *c_ptr = &cave[p->y][p->x];
