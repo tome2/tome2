@@ -1375,6 +1375,16 @@ static void gen_random_quests(int n)
 			/* Accept only monsters that are not good */
 			if (r_ptr->flags3 & RF3_GOOD) continue;
 
+			/* If module says a monster race is friendly, then skip */
+			if (modules[game_module_idx].race_status != NULL)
+			{
+				s16b *status = (*modules[game_module_idx].race_status)(q_ptr->r_idx);
+				if ((status != NULL) && (*status >= 0))
+				{
+					continue;
+				}
+			}
+
 			/* Assume no explosion attacks */
 			ok = TRUE;
 

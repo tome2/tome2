@@ -4704,6 +4704,8 @@ module_type modules[MAX_MODULES] =
 		{ 6, 4, },
 		/* Intro function */
 		tome_intro,
+		/* Race status function: ToME requires no special handling */
+		NULL
 	},
 
 	{
@@ -4724,6 +4726,8 @@ module_type modules[MAX_MODULES] =
 		{ 6, 5, },
 		/* Intro function */
 		theme_intro,
+		/* Race status function */
+		theme_race_status
 	}
 
 };

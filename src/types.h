@@ -2718,6 +2718,11 @@ struct module_type
 
 	/* Function to show introduction to module */
 	void (*intro)();
+
+	/* Function to compute race status, i.e. whether monsters
+	   are friendly/neutral towards the player. Returns NULL
+	   to indicate that no override happens. */
+	s16b *(*race_status)(int r_idx);
 };
 
 /**

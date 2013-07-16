@@ -770,7 +770,7 @@ static bool_ race_in_list(int r_idx, int race_idxs[])
 /*
  * Monster racial alignment from Theme.
  */
-static s16b *compute_monster_status(int r_idx)
+s16b *theme_race_status(int r_idx)
 {
 	static s16b FRIEND_ = MSTATUS_FRIEND;
 	static s16b *FRIEND = &FRIEND_;
@@ -1107,7 +1107,7 @@ static bool_ theme_level_end_gen(void *data, void *in, void *out)
 	{
 		monster_type *m_ptr = &m_list[i];
 		int r_idx = m_ptr->r_idx;
-		s16b *status = compute_monster_status(r_idx);
+		s16b *status = theme_race_status(r_idx);
 		if (status)
 		{
 			m_ptr->status = *status;
@@ -1120,7 +1120,7 @@ static bool_ theme_level_end_gen(void *data, void *in, void *out)
 static bool_ theme_new_monster_end(void *data, void *in_, void *out)
 {
 	hook_new_monster_end_in *in = (hook_new_monster_end_in *) in_;
-	s16b *status = compute_monster_status(in->m_ptr->r_idx);
+	s16b *status = theme_race_status(in->m_ptr->r_idx);
 
 	if (status)
 	{
