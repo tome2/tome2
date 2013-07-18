@@ -1070,15 +1070,7 @@ create a macro for a function key.
 #####G5.2 How can I automatically inscribe items when I pick them up?
 #####G----------------------------------------------------------------------
 
-You need to turn on the "Merge inscriptions when stacking" option.
-If you are already carrying the same item with an inscription, a new
-one will be added to the stack. Note that this WON'T merge discounts.
-Although discounts display like inscriptions, they are different.
-
-1) =   Options
-2) 1   User interface options
-3)     "Merge inscriptions when stacking" (stack_force_notes)
-       move down to this line and change to "yes".
+(Content removed because it was obsolete. Inscribe-on-pickup is now the default.)
 
 #####G----------------------------------------------------------------------
 #####G5.3 Can I use macros inside other macros?

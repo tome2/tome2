@@ -26,12 +26,6 @@ Y:always_repeat
 # Option 'Show dungeon level in feet'
 X:depth_in_feet
 
-# Option 'Merge inscriptions when stacking'
-Y:stack_force_notes
-
-# Option 'Merge discounts when stacking'
-Y:stack_force_costs
-
 # Option 'Show labels in object listings'
 Y:show_labels
 
@@ -121,12 +115,6 @@ Y:auto_haggle
 
 # Option 'Auto-scum for good levels'
 Y:auto_scum
-
-# Option 'Allow weapons and armour to stack'
-Y:stack_allow_items
-
-# Option 'Allow wands/staffs/rods to stack'
-Y:stack_allow_wands
 
 # Option 'Expand the power of the look command'
 Y:expand_look

@@ -1400,12 +1400,6 @@ option_type option_info[] =
 	{ &depth_in_feet, FALSE, 1, 8,
 	  "depth_in_feet", "Show dungeon level in feet" },
 
-	{ &stack_force_notes, TRUE, 1, 9,
-	  "stack_force_notes", "Merge inscriptions when stacking" },
-
-	{ &stack_force_costs, FALSE, 1, 10,
-	  "stack_force_costs", "Merge discounts when stacking" },
-
 	{ &ring_bell, FALSE, 1, 18,
 	  "ring_bell", "Audible bell (on errors, etc)" },
 	/* Changed to default to FALSE -- it's so extremely annoying!!! -TY */
@@ -1482,12 +1476,6 @@ option_type option_info[] =
 
 	{ &auto_scum, TRUE, 3, 1,
 	  "auto_scum", "Auto-scum for good levels" },
-
-	{ &stack_allow_items, TRUE, 3, 2,
-	  "stack_allow_items", "Allow weapons and armour to stack" },
-
-	{ &stack_allow_wands, TRUE, 3, 3,
-	  "stack_allow_wands", "Allow wands/staffs/rods to stack" },
 
 	{ &expand_look, FALSE, 3, 4,
 	  "expand_look", "Expand the power of the look command" },

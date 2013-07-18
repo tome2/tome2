@@ -193,9 +193,6 @@ bool_ prompt_pickup_heavy;        /* Don't pick up the corpses */
 bool_ always_repeat;              /* Repeat obvious commands */
 bool_ depth_in_feet;              /* Show dungeon level in feet */
 
-bool_ stack_force_notes; 		/* Merge inscriptions when stacking */
-bool_ stack_force_costs; 		/* Merge discounts when stacking */
-
 bool_ ring_bell; 				/* Ring the bell (on errors, etc) */
 
 
@@ -232,9 +229,6 @@ bool_ disturb_pets; 		/* Pets moving nearby disturb us */
 /* Option Set 3 -- Game-Play */
 
 bool_ auto_scum; 				/* Auto-scum for good levels */
-
-bool_ stack_allow_items; 		/* Allow weapons and armor to stack */
-bool_ stack_allow_wands; 		/* Allow wands/staffs/rods to stack */
 
 bool_ expand_look; 			/* Expand the power of the look command */
 bool_ expand_list; 			/* Expand the power of the list commands */

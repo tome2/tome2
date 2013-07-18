@@ -113,16 +113,6 @@ off at will during the course of the game.
     Display the dungeon depth in "feet" instead of as a level number (one
     level is equivalent to 50'). This also affects the monster memory display.
 
-#####GMerge inscriptions when stacking    [stack_force_notes]
-    Force otherwise identical objects to merge, even if one has an empty
-    inscription and the other does not.  The resulting stack keeps the
-    non-empty inscription.
-
-#####GMerge discounts when stacking    [stack_force_costs]
-    Force otherwise identical objects to merge, even if they have different
-    discounts.  The resulting stack keeps the largest discount.  This option
-    may cause you to lose "value", but will give you optimal pack usage.
-
 #####GAudible bell (on errors, etc)    [ring_bell]
     Attempt to make a "bell" noise when various errors occur.
 
@@ -256,18 +246,6 @@ off at will during the course of the game.
     especially deep in the dungeon.  The minimum "goodness" of the level
     is based on the dungeon level, so the deeper you go, the better the
     level will be.
-
-#####GAllow weapons and armor to stack    [stack_allow_items]
-    Allow identical weapons and armor to be combined into a stack.  This
-    also allows unidentified, but identical, ammo to be combined, which
-    may result in the auto-identification of some of the ammo, but which
-    makes it a lot easier to actually use unidentified ammo.
-
-#####GAllow wands/staffs/rods to stack    [stack_allow_wands]
-    Allow identical wands/staffs/rods to be combined into a stack.  This
-    may force the items to be unstacked to use them, which may result
-    in overflow of the pack.  Also, the entire stack can be recharged
-    (and possibly destroyed) at the same time.
 
 #####GExpand the power of the look command    [expand_look]
     Expand the "l"ook command to allow the user to look at grids which
