@@ -451,7 +451,7 @@ static errr Term_xtra_gcu_alive(int v)
 		keymap_norm();
 
 		/* Restore modes */
-		nocbreak();
+		noraw();
 		echo();
 		nl();
 
@@ -482,7 +482,7 @@ static errr Term_xtra_gcu_alive(int v)
 		/* (void)wrefresh(curscr); */
 
 		/* Restore the settings */
-		cbreak();
+		raw();
 		noecho();
 		nonl();
 
@@ -1114,7 +1114,7 @@ errr init_gcu(int argc, char **argv)
 #endif
 
 	/* Prepare */
-	cbreak();
+	raw();
 	noecho();
 	nonl();
 
