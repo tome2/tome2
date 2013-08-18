@@ -885,7 +885,7 @@ static bool_ condition_eval(condition_type *c, object_type *o_ptr)
 		sprintf(buf1, "%s", spp_ptr->title + c_name);
 		strlower(buf1);
 
-		sprintf(buf2, "%s", c->race);
+		sprintf(buf2, "%s", c->klass);
 		strlower(buf2);
 
 		return streq(buf1, buf2);
