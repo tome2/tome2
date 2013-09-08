@@ -351,6 +351,11 @@
 #define NASTY_MON       50              /* 1/chance of inflated monster level */
 
 
+/*
+ * Size of allocation table for objects
+ */
+#define ALLOCATION_MAX 8
+
 
 /*
  * Refueling constants

@@ -4393,6 +4393,11 @@ errr init_k_info_txt(FILE *fp, char *buf)
 			/* XXX XXX XXX Simply read each number following a colon */
 			for (i = 0, s = buf + 1; s && (s[0] == ':') && s[1]; ++i)
 			{
+				if (i >= ALLOCATION_MAX) {
+					msg_print("Too many allocation entries.");
+					return 1;
+				}
+
 				/* Default chance */
 				k_ptr->chance[i] = 1;
 
@@ -4409,7 +4414,9 @@ errr init_k_info_txt(FILE *fp, char *buf)
 				if (t && (!s || t < s))
 				{
 					int chance = atoi(t + 1);
-					if (chance > 0) k_ptr->chance[i] = chance;
+					if (chance > 0) {
+						k_ptr->chance[i] = chance;
+					}
 				}
 			}
 

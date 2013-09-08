@@ -597,7 +597,7 @@ u16b max_real_towns;
 town_type *town_info;
 
 /*
- * The size of "alloc_kind_table" (at most max_k_idx * 4)
+ * The size of "alloc_kind_table" (at most max_k_idx * ALLOCATIONS_MAX)
  */
 s16b alloc_kind_size;
 
