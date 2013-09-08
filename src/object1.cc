@@ -6149,10 +6149,6 @@ void object_pickup(int this_o_idx)
 	/* Pick up object */
 	else
 	{
-		/* Tell the scripts */
-		if (process_hooks(HOOK_GET, "(O,d)", o_ptr, this_o_idx))
-			return;
-
 		/* Hooks */
 		{
 			hook_get_in in = { o_ptr, this_o_idx };
