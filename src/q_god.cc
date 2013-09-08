@@ -982,16 +982,13 @@ static bool_ quest_god_player_level_hook(const char *fmt)
 	return FALSE;
 }
 
-static bool_ quest_god_get_hook(const char *fmt)
+static bool_ quest_god_get_hook(void *, void *in_, void *)
 {
-	s32b item;
-	object_type *o_ptr = NULL;
+	hook_get_in *in = static_cast<hook_get_in *>(in_);
 
-	get_next_arg("d"); /* ignore first arg */
-	item = get_next_arg("d");
+	s32b item = -in->o_idx; /* Note the negation */
 
-	item = -item; /* Workaround */
-	o_ptr = get_object(item);
+	object_type *o_ptr = get_object(item);
 
 	/* -- Is it the relic, and check to make sure the relic hasn't already been identified */
 	if ((cquest.status == QUEST_STATUS_TAKEN) &&
@@ -1179,13 +1176,13 @@ bool_ quest_god_init_hook(int q)
 	if ((cquest.status >= QUEST_STATUS_UNTAKEN) &&
 	    (cquest.status < QUEST_STATUS_FINISHED))
 	{
-		add_hook(HOOK_LEVEL_END_GEN,   quest_god_level_end_gen_hook,   "q_god_level_end_gen");
-		add_hook(HOOK_ENTER_DUNGEON,   quest_god_enter_dungeon_hook,   "q_god_enter_dungeon");
-		add_hook(HOOK_GEN_LEVEL_BEGIN, quest_god_gen_level_begin_hook, "q_god_gen_level_begin");
-		add_hook(HOOK_STAIR,           quest_god_stair_hook,           "q_god_hook_stair");
-		add_hook(HOOK_GET,             quest_god_get_hook,             "q_god_get");
-		add_hook(HOOK_CHAR_DUMP,       quest_god_char_dump_hook,       "q_god_char_dump");
-		add_hook(HOOK_PLAYER_LEVEL,    quest_god_player_level_hook,    "q_god_player_level");
+		add_hook    (HOOK_LEVEL_END_GEN,   quest_god_level_end_gen_hook,   "q_god_level_end_gen");
+		add_hook    (HOOK_ENTER_DUNGEON,   quest_god_enter_dungeon_hook,   "q_god_enter_dungeon");
+		add_hook    (HOOK_GEN_LEVEL_BEGIN, quest_god_gen_level_begin_hook, "q_god_gen_level_begin");
+		add_hook    (HOOK_STAIR,           quest_god_stair_hook,           "q_god_hook_stair");
+		add_hook_new(HOOK_GET,             quest_god_get_hook,             "q_god_get", NULL);
+		add_hook    (HOOK_CHAR_DUMP,       quest_god_char_dump_hook,       "q_god_char_dump");
+		add_hook    (HOOK_PLAYER_LEVEL,    quest_god_player_level_hook,    "q_god_player_level");
 	}
 
 	/* Need this to re-initialize at birth; the quest data is
