@@ -358,6 +358,12 @@
 
 
 /*
+ * Size of flag rarity tables
+ */
+#define FLAG_RARITY_MAX 6
+
+
+/*
  * Refueling constants
  */
 #define FUEL_TORCH      5000    /* Maximum amount of fuel in a torch */

@@ -6316,6 +6316,7 @@ errr init_ab_info_txt(FILE *fp, char *buf)
 static bool_ grab_one_ego_item_flag(ego_item_type *e_ptr, cptr what, int n, bool_ obvious)
 {
 	int i;
+	assert(n < FLAG_RARITY_MAX);
 
 	/* Check flags1 */
 	for (i = 0; i < 32; i++)
@@ -6643,7 +6644,7 @@ errr init_e_info_txt(FILE *fp, char *buf)
 			{
 				e_ptr->tval[j] = 255;
 			}
-			for (j = 0; j < 5; j++)
+			for (j = 0; j < FLAG_RARITY_MAX; j++)
 			{
 				e_ptr->rar[j] = 0;
 				e_ptr->flags1[j] = 0;
@@ -6652,6 +6653,13 @@ errr init_e_info_txt(FILE *fp, char *buf)
 				e_ptr->flags4[j] = 0;
 				e_ptr->flags5[j] = 0;
 				e_ptr->esp[j] = 0;
+				e_ptr->oflags1[j] = 0;
+				e_ptr->oflags2[j] = 0;
+				e_ptr->oflags3[j] = 0;
+				e_ptr->oflags4[j] = 0;
+				e_ptr->oflags5[j] = 0;
+				e_ptr->oesp[j] = 0;
+				e_ptr->fego[j] = 0;
 			}
 
 			/* Next... */
@@ -6689,13 +6697,15 @@ errr init_e_info_txt(FILE *fp, char *buf)
 		{
 			int rar;
 
-			if (cur_r == 5) return 1;
+			cur_r++;
+
+			if (cur_r >= FLAG_RARITY_MAX) {
+				return 1;
+			}
 
 			/* Scan for the values */
 			if (1 != sscanf(buf + 2, "%d",
 			                &rar)) return (1);
-
-			cur_r++;
 
 			/* Save the values */
 			e_ptr->rar[cur_r] = rar;

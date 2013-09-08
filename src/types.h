@@ -318,20 +318,20 @@ struct ego_item_type
 
 	s32b cost;			/* Ego-item "cost" */
 
-	byte rar[5];
-	u32b flags1[5];            /* Ego-Item Flags, set 1 */
-	u32b flags2[5];            /* Ego-Item Flags, set 2 */
-	u32b flags3[5];            /* Ego-Item Flags, set 3 */
-	u32b flags4[5];            /* Ego-Item Flags, set 4 */
-	u32b flags5[5];            /* Ego-Item Flags, set 5 */
-	u32b esp[5];                       /* ESP flags */
-	u32b oflags1[5];           /* Ego-Item Obvious Flags, set 1 */
-	u32b oflags2[5];           /* Ego-Item Obvious Flags, set 2 */
-	u32b oflags3[5];           /* Ego-Item Obvious Flags, set 3 */
-	u32b oflags4[5];           /* Ego-Item Obvious Flags, set 4 */
-	u32b oflags5[5];           /* Ego-Item Obvious Flags, set 5 */
-	u32b oesp[5];              /* Obvious ESP flags */
-	u32b fego[5];              /* ego flags */
+	byte rar[FLAG_RARITY_MAX];
+	u32b flags1[FLAG_RARITY_MAX];            /* Ego-Item Flags, set 1 */
+	u32b flags2[FLAG_RARITY_MAX];            /* Ego-Item Flags, set 2 */
+	u32b flags3[FLAG_RARITY_MAX];            /* Ego-Item Flags, set 3 */
+	u32b flags4[FLAG_RARITY_MAX];            /* Ego-Item Flags, set 4 */
+	u32b flags5[FLAG_RARITY_MAX];            /* Ego-Item Flags, set 5 */
+	u32b esp[FLAG_RARITY_MAX];                       /* ESP flags */
+	u32b oflags1[FLAG_RARITY_MAX];           /* Ego-Item Obvious Flags, set 1 */
+	u32b oflags2[FLAG_RARITY_MAX];           /* Ego-Item Obvious Flags, set 2 */
+	u32b oflags3[FLAG_RARITY_MAX];           /* Ego-Item Obvious Flags, set 3 */
+	u32b oflags4[FLAG_RARITY_MAX];           /* Ego-Item Obvious Flags, set 4 */
+	u32b oflags5[FLAG_RARITY_MAX];           /* Ego-Item Obvious Flags, set 5 */
+	u32b oesp[FLAG_RARITY_MAX];              /* Obvious ESP flags */
+	u32b fego[FLAG_RARITY_MAX];              /* ego flags */
 
 	u32b need_flags1;            /* Ego-Item Flags, set 1 */
 	u32b need_flags2;            /* Ego-Item Flags, set 2 */

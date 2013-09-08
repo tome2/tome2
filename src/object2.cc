@@ -4277,7 +4277,7 @@ try_an_other_ego:
 		e_ptr = &e_info[e_idx];
 
 		/* Hack -- extra powers */
-		for (j = 0; j < 5; j++)
+		for (j = 0; j < FLAG_RARITY_MAX; j++)
 		{
 			/* Rarity check */
 			if (magik(e_ptr->rar[j]))
