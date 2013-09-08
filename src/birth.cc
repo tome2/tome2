@@ -810,6 +810,9 @@ static void player_wipe(void)
 	/* Hack -- zero the struct */
 	WIPE(p_ptr, player_type);
 
+	/* Level 1 is the first level */
+	p_ptr->lev = 1;
+
 	/* Not dead yet */
 	p_ptr->lives = 0;
 

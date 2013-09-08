@@ -1872,6 +1872,8 @@ void calc_hitpoints(void)
 	bonus = ((int)(adj_con_mhp[p_ptr->stat_ind[A_CON]]) - 128);
 
 	/* Calculate hitpoints */
+	assert(p_ptr->lev - 1 >= 0);
+	assert(p_ptr->lev - 1 < PY_MAX_LEVEL);
 	mhp = player_hp[p_ptr->lev - 1] + (bonus * p_ptr->lev / 2);
 
 	/* Always have at least one hitpoint per level */
