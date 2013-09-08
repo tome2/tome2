@@ -118,6 +118,12 @@ s16b modify_stat_value(int value, int amount)
 		}
 	}
 
+	/* Clip to permissible range */
+	if (value < 3)
+	{
+		value = 3;
+	}
+
 	/* Return new value */
 	return (value);
 }
