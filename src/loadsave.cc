@@ -145,6 +145,8 @@ static void do_subrace(int flag)
 	int i;
 	char buf[81];
 
+	buf[80] = '\0'; // Make sure string is always NUL terminated
+
 	if (flag == LS_SAVE)
 		strncpy(buf, sr_ptr->title + rmp_name, 80);
 	do_string(buf, 80, flag);
