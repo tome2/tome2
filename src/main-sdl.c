@@ -35,13 +35,19 @@
 /*************************************************
  GLOBAL SDL-ToME PROPERTIES
  *************************************************/
+ 
+/* Default window properties - used if none are available
+from other places*/
+#define DEF_SCREEN_WIDTH  800
+#define DEF_SCREEN_HEIGHT 600
+#define DEF_SCREEN_BPP     16
 
 /*Main window properties that may be loaded at runtime from
 a preference file or environmental variables. However,
 default values (defined above) can be used. */
-static int arg_width = 0;
-static int arg_height = 0;
-static int arg_bpp = 16;
+static int arg_width = DEF_SCREEN_WIDTH;
+static int arg_height = DEF_SCREEN_HEIGHT;
+static int arg_bpp = DEF_SCREEN_BPP;
 
 /**************/
 
@@ -2131,26 +2137,6 @@ errr init_sdl(int argc, char **argv)
 	else
 		videoFlags = SDL_SWSURFACE;
 
-	/* Now ready the fonts! */
-
-	DB("initializing SDL_ttf");
-	if(TTF_Init()==-1) {
-		printf("TTF_Init: %s\n", TTF_GetError());
-		sdl_quit("Bah");
-	}
-
-	DB("loading font...");
-
-	/* load and render the font */
-	loadAndRenderFont(arg_font_name,arg_font_size);
-	
-	/* Make the window a nice default size if none is specified */
-	if (arg_width < 1 || arg_height < 1)
-	{
-		arg_width = 80 * t_width;
-		arg_height = 24 * t_height;
-	}
-	
 	/* now set the video mode that has been configured */
 	screen = SDL_SetVideoMode( arg_width, arg_height, arg_bpp, videoFlags );
 
@@ -2168,6 +2154,19 @@ errr init_sdl(int argc, char **argv)
 		SDL_WM_ToggleFullScreen(screen);
 	
 	DB("SDL Window Created!");
+
+	/* Now ready the fonts! */
+
+	DB("initializing SDL_ttf");
+	if(TTF_Init()==-1) {
+		printf("TTF_Init: %s\n", TTF_GetError());
+		sdl_quit("Bah");
+	}
+
+	DB("loading font...");
+
+	/* load and render the font */
+	loadAndRenderFont(arg_font_name,arg_font_size);
 
 	/* Graphics! ----
 	If graphics are selected, then load graphical tiles! */
