@@ -502,9 +502,7 @@ void handleEvent(SDL_Event *event)
 			/* handle quit requests */
 			DB("Emergency Blit");
 			redrawAllTerminals();
-			save_player();
-			save_dungeon();
-			sdl_quit("Quitting!\n");
+			/*sdl_quit("Quitting!\n");*/
 			break;
 		}
 	default:
