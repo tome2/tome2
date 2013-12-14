@@ -1241,7 +1241,7 @@ void init_skill(s32b value, s32b mod, int i)
 
 /*
  * Perform weighted random shuffle according to the algorithm given in
- * "Weighted Random Sampling" (2005, Eframidis, Spirakis).
+ * "Weighted Random Sampling" (2005, Efraimidis, Spirakis).
  *
  * @param weights is the vector of weights.
  * @return an output vector of the same size as the input weights vector containing,
