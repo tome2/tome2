@@ -4568,11 +4568,8 @@ void process_player(void)
 		/* Check for "player abort" (semi-efficiently for resting) */
 		if (running || command_rep || (resting && !(resting & 0x0F)))
 		{
-			/* Do not wait */
-			inkey_scan = TRUE;
-
 			/* Check for a key */
-			if (inkey())
+			if (inkey_scan())
 			{
 				/* Flush input */
 				flush();

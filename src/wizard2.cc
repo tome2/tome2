@@ -968,11 +968,8 @@ static void wiz_statistics(object_type *o_ptr)
 			/* Output every few rolls */
 			if ((i < 100) || (i % 100 == 0))
 			{
-				/* Do not wait */
-				inkey_scan = TRUE;
-
 				/* Allow interupt */
-				if (inkey())
+				if (inkey_scan())
 				{
 					/* Flush */
 					flush();

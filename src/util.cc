@@ -1661,6 +1661,8 @@ static char inkey_aux(void)
 */
 static cptr inkey_next = NULL;
 
+bool_ inkey_flag = FALSE;
+
 
 /*
 * Get a keypress from the user.
@@ -1670,11 +1672,6 @@ static cptr inkey_next = NULL;
 * on this function, and which are always reset to FALSE by this function
 * before this function returns.  Thus they function just like normal
 * parameters, except that most calls to this function can ignore them.
-*
-* If "inkey_xtra" is TRUE, then all pending keypresses will be flushed,
-* and any macro processing in progress will be aborted.  This flag is
-* set by the "flush()" function, which does not actually flush anything
-* itself, but rather, triggers delayed input flushing via "inkey_xtra".
 *
 * If "inkey_scan" is TRUE, then we will immediately return "zero" if no
 * keypress is available, instead of waiting for a keypress.
@@ -1721,7 +1718,7 @@ static cptr inkey_next = NULL;
 *
 * Hack -- Note the use of "inkey_next" to allow "keymaps" to be processed.
 */
-char inkey(void)
+static char inkey_real(bool_ inkey_scan)
 {
 	int v;
 
@@ -1734,13 +1731,13 @@ char inkey(void)
 	term *old = Term;
 
 	/* Hack -- Use the "inkey_next" pointer */
-	if (inkey_next && *inkey_next && !inkey_xtra)
+	if (inkey_next && *inkey_next)
 	{
 		/* Get next character, and advance */
 		ch = *inkey_next++;
 
 		/* Cancel the various "global parameters" */
-		inkey_base = inkey_xtra = inkey_flag = inkey_scan = FALSE;
+		inkey_base = inkey_flag = inkey_scan = FALSE;
 
 		/* Accept result */
 		macro_recorder_add(ch);
@@ -1749,20 +1746,6 @@ char inkey(void)
 
 	/* Forget pointer */
 	inkey_next = NULL;
-
-
-	/* Hack -- handle delayed "flush()" */
-	if (inkey_xtra)
-	{
-		/* End "macro action" */
-		parse_macro = FALSE;
-
-		/* End "macro trigger" */
-		parse_under = FALSE;
-
-		/* Forget old keypresses */
-		Term_flush();
-	}
 
 
 	/* Access cursor state */
@@ -1927,12 +1910,20 @@ char inkey(void)
 
 
 	/* Cancel the various "global parameters" */
-	inkey_base = inkey_xtra = inkey_flag = inkey_scan = FALSE;
+	inkey_base = inkey_flag = FALSE;
 
 
 	/* Return the keypress */
 	macro_recorder_add(ch);
 	return (ch);
+}
+
+char inkey(void) {
+	return inkey_real(FALSE);
+}
+
+char inkey_scan() {
+	return inkey_real(TRUE);
 }
 
 /*

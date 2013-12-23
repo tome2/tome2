@@ -1571,11 +1571,8 @@ static void do_cmd_macro_aux(char *buf, bool_ macro_screen)
 		/* Do not process macros */
 		inkey_base = TRUE;
 
-		/* Do not wait for keys */
-		inkey_scan = TRUE;
-
 		/* Attempt to read a key */
-		i = inkey();
+		i = inkey_scan();
 	}
 
 	/* Terminate */

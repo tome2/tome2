@@ -2879,11 +2879,8 @@ static bool_ player_birth_aux_auto()
 				/* Make sure they see everything */
 				Term_fresh();
 
-				/* Do not wait for a key */
-				inkey_scan = TRUE;
-
 				/* Check for a keypress */
-				if (inkey()) break;
+				if (inkey_scan()) break;
 			}
 		}
 

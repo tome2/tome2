@@ -246,7 +246,6 @@ static void library_quest_fill_book()
 
 		library_quest_print_spells(first, current);
 
-		inkey_scan = FALSE;
 		ch = inkey();
 		dir = get_keymap_dir(ch);
 

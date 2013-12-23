@@ -317,8 +317,7 @@ static bool_ dleft(byte c, cptr str, int y, int o)
 				Term_redraw_section(a - 1, y, a, y);
 				a = a + 1;
 
-				inkey_scan = TRUE;
-				if (inkey()) {
+				if (inkey_scan()) {
 					return TRUE;
 				}
 			}
@@ -351,8 +350,7 @@ static bool_ dright(byte c, cptr str, int y, int o)
 				Term_redraw_section(a, y, a + 1, y);
 				a = a - 1;
 
-				inkey_scan = TRUE;
-				if (inkey()) {
+				if (inkey_scan()) {
 					return TRUE;
 				}
 			}
@@ -394,7 +392,6 @@ static bool_ show_intro(intro_text intro_texts[])
 
 	/* Wait for key */
 	Term_putch(0, 0, TERM_DARK, 32);
-	inkey_scan = FALSE;
 	inkey();
 
 	/* Continue */

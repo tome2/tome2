@@ -112,9 +112,6 @@ u16b has_won;               /* Semi-Hack -- Game has been won */
 u16b noscore; 			/* Track various "cheating" conditions */
 
 bool_ inkey_base; 		/* See the "inkey()" function */
-bool_ inkey_xtra; 		/* See the "inkey()" function */
-bool_ inkey_scan; 		/* See the "inkey()" function */
-bool_ inkey_flag; 		/* See the "inkey()" function */
 
 s16b coin_type; 			/* Hack -- force coin type */
 
