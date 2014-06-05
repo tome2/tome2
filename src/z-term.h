@@ -116,8 +116,6 @@ struct term_win
  *	- Hook for init-ing the term
  *	- Hook for nuke-ing the term
  *
- *	- Hook for user actions
- *
  *	- Hook for extra actions
  *
  *	- Hook for placing the cursor
