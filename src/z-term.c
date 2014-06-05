@@ -160,8 +160,7 @@
  * The new formalism includes a "displayed" screen image (old) which
  * is actually seen by the user, a "requested" screen image (scr)
  * which is being prepared for display, a "memorized" screen image
- * (mem) which is used to save and restore screen images, and a
- * "temporary" screen image (tmp) which is currently unused.
+ * (mem) which is used to save and restore screen images.
  *
  *
  * Several "flags" are available in each "term" to allow the underlying
@@ -2287,50 +2286,6 @@ errr Term_load_from(term_win *save, bool_ final)
 }
 
 /*
- * Exchange the "requested" screen with the "tmp" screen
- */
-errr Term_exchange(void)
-{
-	int y;
-
-	int w = Term->wid;
-	int h = Term->hgt;
-
-	term_win *exchanger;
-
-
-	/* Create */
-	if (!Term->tmp)
-	{
-		/* Allocate window */
-		Term->tmp = safe_calloc(1, sizeof(struct term_win));
-
-		/* Initialize window */
-		term_win_init(Term->tmp, w, h);
-	}
-
-	/* Swap */
-	exchanger = Term->scr;
-	Term->scr = Term->tmp;
-	Term->tmp = exchanger;
-
-	/* Assume change */
-	for (y = 0; y < h; y++)
-	{
-		/* Assume change */
-		Term->x1[y] = 0;
-		Term->x2[y] = w - 1;
-	}
-
-	/* Assume change */
-	Term->y1 = 0;
-	Term->y2 = h - 1;
-
-	/* Success */
-	return (0);
-}
-
-/*
  * React to a new physical window size.
  */
 errr Term_resize(int w, int h)
@@ -2345,7 +2300,6 @@ errr Term_resize(int w, int h)
 	term_win *hold_old;
 	term_win *hold_scr;
 	term_win *hold_mem;
-	term_win *hold_tmp;
 
 	/* Resizing is forbidden */
 	if (Term->fixed_shape) return ( -1);
@@ -2374,9 +2328,6 @@ errr Term_resize(int w, int h)
 
 	/* Save old window */
 	hold_mem = Term->mem;
-
-	/* Save old window */
-	hold_tmp = Term->tmp;
 
 	/* Create new scanners */
 	Term->x1 = safe_calloc(h, sizeof(byte));
@@ -2411,19 +2362,6 @@ errr Term_resize(int w, int h)
 
 		/* Save the contents */
 		term_win_copy(Term->mem, hold_mem, wid, hgt);
-	}
-
-	/* If needed */
-	if (hold_tmp)
-	{
-		/* Create new window */
-		Term->tmp = safe_calloc(1, sizeof(struct term_win));
-
-		/* Initialize new window */
-		term_win_init(Term->tmp, w, h);
-
-		/* Save the contents */
-		term_win_copy(Term->tmp, hold_tmp, wid, hgt);
 	}
 
 	/* Free some arrays */
@@ -2467,21 +2405,6 @@ errr Term_resize(int w, int h)
 		/* Illegal cursor */
 		if (Term->mem->cx >= w) Term->mem->cu = 1;
 		if (Term->mem->cy >= h) Term->mem->cu = 1;
-	}
-
-	/* If needed */
-	if (hold_tmp)
-	{
-		/* Nuke */
-		term_win_nuke(hold_tmp, Term->wid, Term->hgt);
-
-		/* Kill */
-		free(hold_tmp);
-		hold_tmp = NULL;
-
-		/* Illegal cursor */
-		if (Term->tmp->cx >= w) Term->tmp->cu = 1;
-		if (Term->tmp->cy >= h) Term->tmp->cu = 1;
 	}
 
 	/* Save new size */
@@ -2602,17 +2525,6 @@ errr term_nuke(term *t)
 		/* Kill "memorized" */
 		free(t->mem);
 		t->mem = NULL;
-	}
-
-	/* If needed */
-	if (t->tmp)
-	{
-		/* Nuke "temporary" */
-		term_win_nuke(t->tmp, w, h);
-
-		/* Kill "temporary" */
-		free(t->tmp);
-		t->tmp = NULL;
 	}
 
 	/* Free some arrays */

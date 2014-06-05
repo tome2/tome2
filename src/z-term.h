@@ -187,7 +187,6 @@ struct term
 	term_win *old;
 	term_win *scr;
 
-	term_win *tmp;
 	term_win *mem;
 
 	void (*init_hook)(term *t);
@@ -291,8 +290,6 @@ extern errr Term_save(void);
 extern term_win* Term_save_to(void);
 extern errr Term_load(void);
 extern errr Term_load_from(term_win *save, bool_ final);
-
-extern errr Term_exchange(void);
 
 extern errr Term_resize(int w, int h);
 
