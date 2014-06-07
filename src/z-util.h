@@ -51,18 +51,6 @@ extern void (*core_aux)(cptr);
 
 /**** Available Functions ****/
 
-/* Function that does nothing */
-extern void func_nothing(void);
-
-/* Functions that return basic "errr" codes */
-extern errr func_success(void);
-extern errr func_problem(void);
-extern errr func_failure(void);
-
-/* Functions that return bools */
-extern bool_ func_true(void);
-extern bool_ func_false(void);
-
 
 /* Test equality, prefix, suffix */
 extern bool_ streq(cptr s, cptr t);

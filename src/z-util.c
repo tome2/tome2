@@ -67,63 +67,6 @@ cptr argv0 = NULL;
 
 
 /*
- * A routine that does nothing
- */
-void func_nothing(void)
-{
-	/* Do nothing */
-}
-
-
-/*
- * A routine that always returns "success"
- */
-errr func_success(void)
-{
-	return (0);
-}
-
-
-/*
- * A routine that always returns a simple "problem code"
- */
-errr func_problem(void)
-{
-	return (1);
-}
-
-
-/*
- * A routine that always returns a simple "failure code"
- */
-errr func_failure(void)
-{
-	return ( -1);
-}
-
-
-
-/*
- * A routine that always returns "true"
- */
-bool_ func_true(void)
-{
-	return (1);
-}
-
-
-/*
- * A routine that always returns "false"
- */
-bool_ func_false(void)
-{
-	return (0);
-}
-
-
-
-
-/*
  * Determine if string "t" is equal to string "t"
  */
 bool_ streq(cptr a, cptr b)
