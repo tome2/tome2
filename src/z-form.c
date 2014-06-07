@@ -17,10 +17,10 @@
  * (using only the first "max length" bytes), and return the "length"
  * of the resulting string, not including the (mandatory) terminator.
  *
- * The format strings allow the basic "sprintf()" format sequences, though
- * some of them are processed slightly more carefully or portably, as well
- * as a few "special" sequences, including the "%r" and "%v" sequences, and
- * the "capilitization" sequences of "%C", "%S", and "%V".
+ * The format strings allow the basic "sprintf()" format sequences,
+ * though some of them are processed slightly more carefully or
+ * portably, as well as a few "special" sequences, including the
+ * "capilitization" sequences of "%C", "%S", and "%V".
  *
  * Note that some "limitations" are enforced by the current implementation,
  * for example, no "format sequence" can exceed 100 characters, including any
@@ -99,13 +99,6 @@
  *
  * Format("%V", vptr v)
  *   Note -- possibly significant mode flag
- * Format("%v", vptr v)
- *   Append the object "v", using the current "user defined print routine".
- *   User specified modifiers, often ignored.
- *
- * Format("%r", vstrnfmt_aux_func *fp)
- *   Set the "user defined print routine" (vstrnfmt_aux) to "fp".
- *   No legal modifiers.
  *
  *
  * For examples below, assume "int n = 0; int m = 100; char buf[100];",
@@ -126,51 +119,11 @@
  * For example: "s = buf; n = vstrnfmt(s+n, 100-n, ...); ..." will allow
  * multiple bounded "appends" to "buf", with constant access to "strlen(buf)".
  *
- * For example: "format("The %r%v was destroyed!", obj_desc, obj);"
- * (where "obj_desc(buf, max, fmt, obj)" will "append" a "description"
- * of the given object to the given buffer, and return the total length)
- * will return a "useful message" about the object "obj", for example,
- * "The Large Shield was destroyed!".
- *
  * For example: "format("%^-.*s", i, txt)" will produce a string containing
  * the first "i" characters of "txt", left justified, with the first non-space
  * character capitilized, if reasonable.
  */
 
-
-
-
-
-/*
- * The "type" of the "user defined print routine" pointer
- */
-typedef uint (*vstrnfmt_aux_func)(char *buf, uint max, cptr fmt, vptr arg);
-
-/*
- * The "default" user defined print routine.  Ignore the "fmt" string.
- */
-static uint vstrnfmt_aux_dflt(char *buf, uint max, cptr fmt, vptr arg)
-{
-	uint len;
-	char tmp[32];
-
-	/* XXX XXX */
-	fmt = fmt ? fmt : 0;
-
-	/* Pointer display */
-	sprintf(tmp, "<<%p>>", arg);
-	len = strlen(tmp);
-	if (len >= max) len = max - 1;
-	tmp[len] = '\0';
-	strcpy(buf, tmp);
-	return (len);
-}
-
-/*
- * The "current" user defined print routine.  It can be changed
- * dynamically by sending the proper "%r" sequence to "vstrnfmt()"
- */
-static vstrnfmt_aux_func vstrnfmt_aux = vstrnfmt_aux_dflt;
 
 
 
@@ -310,19 +263,6 @@ uint vstrnfmt(char *buf, uint max, cptr fmt, va_list vp)
 			(*arg) = n;
 
 			/* Skip the "n" */
-			s++;
-
-			/* Continue */
-			continue;
-		}
-
-		/* Hack -- Pre-process "%r" */
-		if (*s == 'r')
-		{
-			/* Extract the next argument, and save it (globally) */
-			vstrnfmt_aux = va_arg(vp, vstrnfmt_aux_func);
-
-			/* Skip the "r" */
 			s++;
 
 			/* Continue */
@@ -575,23 +515,6 @@ uint vstrnfmt(char *buf, uint max, cptr fmt, va_list vp)
 				/* Done */
 				break;
 			}
-
-			/* User defined data */
-		case 'V':
-		case 'v':
-			{
-				vptr arg;
-
-				/* Access next argument */
-				arg = va_arg(vp, vptr);
-
-				/* Format the "user data" */
-				(void)vstrnfmt_aux(tmp, 1000, aux, arg);
-
-				/* Done */
-				break;
-			}
-
 
 			/* Oops */
 		default:
