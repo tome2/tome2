@@ -531,19 +531,7 @@ uint vstrnfmt(char *buf, uint max, cptr fmt, va_list vp)
 		/* Mega-Hack -- handle "capitilization" */
 		if (do_xtra)
 		{
-			/* Now append "tmp" to "buf" */
-			for (q = 0; tmp[q]; q++)
-			{
-				/* Notice first non-space */
-				if (!isspace(tmp[q]))
-				{
-					/* Capitalize if possible */
-					if (islower(tmp[q])) tmp[q] = toupper(tmp[q]);
-
-					/* Done */
-					break;
-				}
-			}
+			capitalize(tmp);
 		}
 
 		/* Now append "tmp" to "buf" */

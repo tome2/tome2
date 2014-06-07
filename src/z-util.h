@@ -70,6 +70,9 @@ extern bool_ prefix(cptr s, cptr t);
 extern bool_ suffix(cptr s, cptr t);
 
 
+/* Capitalize the first letter of string. Ignores whitespace at the start of string. */
+extern void capitalize(char *s);
+
 /* Print an error message */
 extern void plog(cptr str);
 

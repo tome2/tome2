@@ -962,12 +962,20 @@ void monster_msg(cptr fmt, ...)
 	/* End the Varargs Stuff */
 	va_end(vp);
 
+	/* Print */
+	monster_msg_simple(buf);
+}
+
+void monster_msg_simple(cptr s)
+{
 	/* Display */
 	if (disturb_other)
-		msg_print(buf);
+	{
+		msg_print(s);
+	}
 	else
 	{
-		message_add(buf, TERM_WHITE);
+		message_add(s, TERM_WHITE);
 		p_ptr->window |= PW_MESSAGE;
 	}
 }

@@ -4,6 +4,7 @@
 
 #include "z-util.h"
 
+#include <assert.h>
 
 
 /*
@@ -150,6 +151,27 @@ bool_ suffix(cptr s, cptr t)
 }
 
 
+/**
+ * Captialize letter
+ */
+void capitalize(char *s)
+{
+	char *p = s;
+	assert(s != NULL);
+
+	for (; *p; p++)
+	{
+		if (!isspace(*p))
+		{
+			if (islower(*p))
+			{
+				*p = toupper(*p);
+			}
+			/* Done */
+			break;
+		}
+	}
+}
 
 
 /*

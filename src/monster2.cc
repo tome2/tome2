@@ -13,6 +13,8 @@
 #include "angband.h"
 #include "hooks.h"
 
+#include <string>
+
 #define MAX_HORROR 20
 #define MAX_FUNNY 22
 #define MAX_COMMENT 5
@@ -3682,25 +3684,21 @@ bool_ multiply_monster(int m_idx, bool_ charm, bool_ clone)
  * Technically should attempt to treat "Beholder"'s as jelly's
  */
 bool_ hack_message_pain_may_silent = FALSE;
-void message_pain_hook(cptr fmt, ...)
+void message_pain_hook(cptr message, cptr name)
 {
-	va_list vp;
-
-	char buf[1024];
-
-	/* Begin the Varargs Stuff */
-	va_start(vp, fmt);
-
-	/* Format the args, save the length */
-	(void)vstrnfmt(buf, 1024, fmt, vp);
-
-	/* End the Varargs Stuff */
-	va_end(vp);
+	std::string buf;
+	buf += name;
+	buf += " ";
+	buf += message;
 
 	if (hack_message_pain_may_silent)
-		monster_msg(buf);
+	{
+		monster_msg_simple(buf.c_str());
+	}
 	else
-		msg_print(buf);
+	{
+		msg_print(buf.c_str());
+	}
 }
 
 void message_pain(int m_idx, int dam)
@@ -3713,11 +3711,12 @@ void message_pain(int m_idx, int dam)
 
 	/* Get the monster name */
 	monster_desc(m_name, m_ptr, 0);
+	capitalize(m_name);
 
 	/* Notice non-damage */
 	if (dam == 0)
 	{
-		message_pain_hook("%^s is unharmed.", m_name);
+		message_pain_hook("is unharmed.", m_name);
 		return;
 	}
 
@@ -3732,76 +3731,76 @@ void message_pain(int m_idx, int dam)
 	if (strchr("jmvQ", r_ptr->d_char))
 	{
 		if (percentage > 95)
-			message_pain_hook("%^s barely notices.", m_name);
+			message_pain_hook("barely notices.", m_name);
 		else if (percentage > 75)
-			message_pain_hook("%^s flinches.", m_name);
+			message_pain_hook("flinches.", m_name);
 		else if (percentage > 50)
-			message_pain_hook("%^s squelches.", m_name);
+			message_pain_hook("squelches.", m_name);
 		else if (percentage > 35)
-			message_pain_hook("%^s quivers in pain.", m_name);
+			message_pain_hook("quivers in pain.", m_name);
 		else if (percentage > 20)
-			message_pain_hook("%^s writhes about.", m_name);
+			message_pain_hook("writhes about.", m_name);
 		else if (percentage > 10)
-			message_pain_hook("%^s writhes in agony.", m_name);
+			message_pain_hook("writhes in agony.", m_name);
 		else
-			message_pain_hook("%^s jerks limply.", m_name);
+			message_pain_hook("jerks limply.", m_name);
 	}
 
 	/* Dogs and Hounds */
 	else if (strchr("CZ", r_ptr->d_char))
 	{
 		if (percentage > 95)
-			message_pain_hook("%^s shrugs off the attack.", m_name);
+			message_pain_hook("shrugs off the attack.", m_name);
 		else if (percentage > 75)
-			message_pain_hook("%^s snarls with pain.", m_name);
+			message_pain_hook("snarls with pain.", m_name);
 		else if (percentage > 50)
-			message_pain_hook("%^s yelps in pain.", m_name);
+			message_pain_hook("yelps in pain.", m_name);
 		else if (percentage > 35)
-			message_pain_hook("%^s howls in pain.", m_name);
+			message_pain_hook("howls in pain.", m_name);
 		else if (percentage > 20)
-			message_pain_hook("%^s howls in agony.", m_name);
+			message_pain_hook("howls in agony.", m_name);
 		else if (percentage > 10)
-			message_pain_hook("%^s writhes in agony.", m_name);
+			message_pain_hook("writhes in agony.", m_name);
 		else
-			message_pain_hook("%^s yelps feebly.", m_name);
+			message_pain_hook("yelps feebly.", m_name);
 	}
 
 	/* One type of monsters (ignore,squeal,shriek) */
 	else if (strchr("FIKMRSXabclqrst", r_ptr->d_char))
 	{
 		if (percentage > 95)
-			message_pain_hook("%^s ignores the attack.", m_name);
+			message_pain_hook("ignores the attack.", m_name);
 		else if (percentage > 75)
-			message_pain_hook("%^s grunts with pain.", m_name);
+			message_pain_hook("grunts with pain.", m_name);
 		else if (percentage > 50)
-			message_pain_hook("%^s squeals in pain.", m_name);
+			message_pain_hook("squeals in pain.", m_name);
 		else if (percentage > 35)
-			message_pain_hook("%^s shrieks in pain.", m_name);
+			message_pain_hook("shrieks in pain.", m_name);
 		else if (percentage > 20)
-			message_pain_hook("%^s shrieks in agony.", m_name);
+			message_pain_hook("shrieks in agony.", m_name);
 		else if (percentage > 10)
-			message_pain_hook("%^s writhes in agony.", m_name);
+			message_pain_hook("writhes in agony.", m_name);
 		else
-			message_pain_hook("%^s cries out feebly.", m_name);
+			message_pain_hook("cries out feebly.", m_name);
 	}
 
 	/* Another type of monsters (shrug,cry,scream) */
 	else
 	{
 		if (percentage > 95)
-			message_pain_hook("%^s shrugs off the attack.", m_name);
+			message_pain_hook("shrugs off the attack.", m_name);
 		else if (percentage > 75)
-			message_pain_hook("%^s grunts with pain.", m_name);
+			message_pain_hook("grunts with pain.", m_name);
 		else if (percentage > 50)
-			message_pain_hook("%^s cries out in pain.", m_name);
+			message_pain_hook("cries out in pain.", m_name);
 		else if (percentage > 35)
-			message_pain_hook("%^s screams in pain.", m_name);
+			message_pain_hook("screams in pain.", m_name);
 		else if (percentage > 20)
-			message_pain_hook("%^s screams in agony.", m_name);
+			message_pain_hook("screams in agony.", m_name);
 		else if (percentage > 10)
-			message_pain_hook("%^s writhes in agony.", m_name);
+			message_pain_hook("writhes in agony.", m_name);
 		else
-			message_pain_hook("%^s cries out feebly.", m_name);
+			message_pain_hook("cries out feebly.", m_name);
 	}
 }
 
