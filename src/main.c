@@ -107,92 +107,6 @@ static bool_ check_create_user_dir(void)
 
 
 /*
- * Handle a "-d<what>=<path>" option
- *
- * The "<what>" can be any string starting with the same letter as the
- * name of a subdirectory of the "lib" folder (i.e. "i" or "info").
- *
- * The "<path>" can be any legal path for the given system, and should
- * not end in any special path separator (i.e. "/tmp" or "~/.ang-info").
- */
-static void change_path(cptr info)
-{
-	cptr s;
-
-	/* Find equal sign */
-	s = strchr(info, '=');
-
-	/* Verify equal sign */
-	if (!s) quit_fmt("Try '-d<what>=<path>' not '-d%s'", info);
-
-	/* Analyze */
-	switch (tolower(info[0]))
-	{
-	case 'f':
-		{
-			free(ANGBAND_DIR_FILE);
-			ANGBAND_DIR_FILE = strdup(s + 1);
-			break;
-		}
-
-	case 'h':
-		{
-			free(ANGBAND_DIR_HELP);
-			ANGBAND_DIR_HELP = strdup(s + 1);
-			break;
-		}
-
-	case 'i':
-		{
-			free(ANGBAND_DIR_INFO);
-			ANGBAND_DIR_INFO = strdup(s + 1);
-			break;
-		}
-
-	case 'u':
-		{
-			free(ANGBAND_DIR_USER);
-			ANGBAND_DIR_USER = strdup(s + 1);
-			break;
-		}
-
-	case 'x':
-		{
-			free(ANGBAND_DIR_XTRA);
-			ANGBAND_DIR_XTRA = strdup(s + 1);
-			break;
-		}
-
-	case 'd':
-		{
-			free(ANGBAND_DIR_DATA);
-			ANGBAND_DIR_DATA = strdup(s + 1);
-			break;
-		}
-
-	case 'e':
-		{
-			free(ANGBAND_DIR_EDIT);
-			ANGBAND_DIR_EDIT = strdup(s + 1);
-			break;
-		}
-
-	case 's':
-		{
-			free(ANGBAND_DIR_SAVE);
-			ANGBAND_DIR_SAVE = strdup(s + 1);
-			break;
-		}
-
-	default:
-		{
-			quit_fmt("Bad semantics in '-d%s'", info);
-		}
-	}
-}
-
-
-/*
  * Simple "main" function for multiple platforms.
  *
  * Note the special "--" option which terminates the processing of
@@ -340,13 +254,6 @@ int main(int argc, char *argv[])
 				return 0;
 			}
 
-		case 'd':
-		case 'D':
-			{
-				change_path(&argv[i][2]);
-				break;
-			}
-
 		case '-':
 			{
 				if (argv[i][2] == 'h' && !strcmp((argv[i] + 2), "help"))
@@ -380,7 +287,6 @@ usage:
 				puts("  -u<who>            Use your <who> savefile");
 				puts("  -M<which>            Use the <which> module");
 				puts("  -m<sys>            Force 'main-<sys>.c' usage");
-				puts("  -d<def>            Define a 'lib' dir sub-path");
 
 #ifdef USE_GTK2
 				puts("  -mgtk2             To use GTK2");
