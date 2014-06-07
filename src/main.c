@@ -121,8 +121,6 @@ int main(int argc, char *argv[])
 
 	bool_ new_game = FALSE;
 
-	int show_score = 0;
-
 	cptr mstr = NULL;
 
 	bool_ args = TRUE;
@@ -193,14 +191,6 @@ int main(int argc, char *argv[])
 		case 'o':
 			{
 				arg_force_original = TRUE;
-				break;
-			}
-
-		case 'S':
-		case 's':
-			{
-				show_score = atoi(&argv[i][2]);
-				if (show_score <= 0) show_score = 10;
 				break;
 			}
 
@@ -283,7 +273,6 @@ usage:
 				puts("  -o                 Request original keyset");
 				puts("  -r                 Request rogue-like keyset");
 				puts("  -H <list of files> Convert helpfile to html");
-				puts("  -s<num>            Show <num> high scores");
 				puts("  -u<who>            Use your <who> savefile");
 				puts("  -M<which>            Use the <which> module");
 				puts("  -m<sys>            Force 'main-<sys>.c' usage");
@@ -420,9 +409,6 @@ usage:
 
 	/* Initialize */
 	init_angband();
-
-	/* Hack -- If requested, display scores and quit */
-	if (show_score > 0) display_scores(0, show_score);
 
 	/* Wait for response */
 	pause_line(23);
