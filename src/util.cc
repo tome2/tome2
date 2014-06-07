@@ -3929,26 +3929,6 @@ timer_type *new_timer(void (*callback)(), s32b delay)
 	return t_ptr;
 }
 
-void del_timer(timer_type *t_ptr)
-{
-	timer_type *i, *old;
-
-	old = NULL;
-	for (i = gl_timers; (i != NULL) && (i != t_ptr); old = i, i = i->next)
-		;
-	if (i)
-	{
-		if (old == NULL)
-			gl_timers = t_ptr->next;
-		else
-			old->next = t_ptr->next;
-
-		FREE(t_ptr, timer_type);
-	}
-	else
-		cmsg_print(TERM_VIOLET, "Unknown timer!");
-}
-
 int get_keymap_mode()
 {
 	if (rogue_like_commands)

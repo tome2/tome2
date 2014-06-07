@@ -1999,7 +1999,6 @@ extern int test_mego_name(cptr name);
 extern int test_item_name(cptr name);
 extern char msg_box(cptr text, int y, int x);
 extern timer_type *new_timer(void (*callback)(), s32b delay);
-extern void del_timer(timer_type *t_ptr);
 extern int get_keymap_mode();
 
 /* main.c */
