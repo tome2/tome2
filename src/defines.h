@@ -4407,7 +4407,6 @@
 #define HOOK_STORE_STOCK        47
 #define HOOK_GEN_LEVEL_BEGIN    49
 #define HOOK_GET                50
-#define HOOK_REDRAW             51
 #define HOOK_RECALC_SKILLS      52
 #define HOOK_ENTER_DUNGEON      53
 #define HOOK_FIRE               54

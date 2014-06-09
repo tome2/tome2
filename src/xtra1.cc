@@ -4272,10 +4272,6 @@ void redraw_stuff(void)
 	if (character_icky) return;
 
 
-	/* Should we tell lua to redisplay too ? */
-	process_hooks(HOOK_REDRAW, "()");
-
-
 	/* Hack -- clear the screen */
 	if (p_ptr->redraw & (PR_WIPE))
 	{
