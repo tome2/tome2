@@ -4085,14 +4085,6 @@
 #define NOTE_SAVE_GAME		3
 #define NOTE_ENTER_DUNGEON	4
 
-/*
- * Player monsters & ghost defines
- * NO MORE USED but for savefile compatibility
- */
-#define GHOST_R_IDX_HEAD        967
-#define GHOST_R_IDX_TAIL        977
-#define MAX_GHOSTS              (GHOST_R_IDX_TAIL - GHOST_R_IDX_HEAD)
-
 /* Stores/buildings defines */
 #define STORE_HATED     0
 #define STORE_LIKED     1
