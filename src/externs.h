@@ -443,7 +443,6 @@ extern cptr ANGBAND_DIR_PATCH;
 extern cptr ANGBAND_DIR_PREF;
 extern cptr ANGBAND_DIR_USER;
 extern cptr ANGBAND_DIR_XTRA;
-extern cptr ANGBAND_DIR_CMOV;
 extern char pref_tmp_value[8];
 extern bool_ item_tester_full;
 extern byte item_tester_tval;

@@ -93,7 +93,6 @@ void init_file_paths(char *path)
 	string_free(ANGBAND_DIR_PATCH);
 	string_free(ANGBAND_DIR_USER);
 	string_free(ANGBAND_DIR_XTRA);
-	string_free(ANGBAND_DIR_CMOV);
 
 
 	/*** Prepare the "path" ***/
@@ -181,7 +180,6 @@ void init_file_paths(char *path)
 		strcat(user_path, USER_PATH_VERSION);
 		ANGBAND_DIR_USER = string_make(user_path);
 		ANGBAND_DIR_NOTE = string_make(user_path);
-		ANGBAND_DIR_CMOV = string_make(user_path);
 #ifdef PRIVATE_USER_PATH_MODULES
 		ANGBAND_DIR_MODULES = string_make(user_path);
 #endif

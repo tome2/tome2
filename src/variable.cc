@@ -970,13 +970,6 @@ cptr ANGBAND_DIR_USER;
 cptr ANGBAND_DIR_XTRA;
 
 /*
- * Cmovie files of entire games (ascii)
- * Apart from possible newline things, likely portable btw platforms
- */
-
-cptr ANGBAND_DIR_CMOV;
-
-/*
  * Some variables values are created on the fly XXX XXX
  */
 

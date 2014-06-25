@@ -42,7 +42,6 @@ void module_reset_dir(cptr dir, cptr new_path)
 	if (!strcmp(dir, "xtra")) d = &ANGBAND_DIR_XTRA;
 	if (!strcmp(dir, "user")) d = &ANGBAND_DIR_USER;
 	if (!strcmp(dir, "note")) d = &ANGBAND_DIR_NOTE;
-	if (!strcmp(dir, "cmov")) d = &ANGBAND_DIR_CMOV;
 	if (
 	    !strcmp(dir, "user") ||
 	    !strcmp(dir, "note") ||
