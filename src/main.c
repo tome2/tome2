@@ -256,10 +256,6 @@ int main(int argc, char *argv[])
 	argv0 = argv[0];
 
 
-	/* Default permissions on files */
-	(void)umask(022);
-
-
 	/* Get the file paths */
 	init_stuff();
 
