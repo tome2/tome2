@@ -47,7 +47,7 @@
 # include <unix.h>
 #endif
 
-#if defined(WINDOWS) || defined(MSDOS)
+#if defined(WINDOWS)
 # include <io.h>
 #endif
 

@@ -122,15 +122,6 @@ extern "C" {
 #endif
 
 /*
- * Extract the "MSDOS" flag from the compiler
- */
-#ifdef __MSDOS__
-# ifndef MSDOS
-#  define MSDOS
-# endif
-#endif
-
-/*
  * Extract the "WINDOWS" flag from the compiler
  */
 #if defined(_Windows) || defined(__WINDOWS__) || \
@@ -165,8 +156,7 @@ extern "C" {
  * Basically, SET_UID should *only* be set for "Unix" machines,
  * or for the "Atari" platform which is Unix-like, apparently
  */
-#if !defined(MACINTOSH) && !defined(WINDOWS) && \
-    !defined(MSDOS)
+#if !defined(MACINTOSH) && !defined(WINDOWS)
 # define SET_UID
 #endif
 
@@ -205,10 +195,6 @@ extern "C" {
 # undef PATH_SEP
 # define PATH_SEP "\\"
 #endif
-#if defined(MSDOS) || defined(OS2)
-# undef PATH_SEP
-# define PATH_SEP "\\"
-#endif
 #ifdef __GO32__
 # undef PATH_SEP
 # define PATH_SEP "/"
@@ -218,7 +204,7 @@ extern "C" {
 /*
  * The Macintosh allows the use of a "file type" when creating a file
  */
-#if defined(MACINTOSH) && !defined(applec) || defined(MACH_O_CARBON)
+#if defined(MACINTOSH) && !defined(applec)
 # define FILE_TYPE_TEXT 'TEXT'
 # define FILE_TYPE_DATA 'DATA'
 # define FILE_TYPE_SAVE 'SAVE'
@@ -231,7 +217,7 @@ extern "C" {
 /*
  * OPTION: Hack -- Make sure "strchr()" and "strrchr()" will work
  */
-#if defined(SYS_III) || defined(SYS_V) || defined(MSDOS)
+#if defined(SYS_III) || defined(SYS_V)
 # if !defined(__TURBOC__) && !defined(__WATCOMC__)
 #  define strchr index
 #  define strrchr rindex

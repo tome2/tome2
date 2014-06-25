@@ -4022,7 +4022,7 @@ void process_player_name(bool_ sf)
 #endif
 
 
-#if defined(WINDOWS) || defined(MSDOS)
+#if defined(WINDOWS)
 
 	/* Hack -- max length */
 	if (k > 8) k = 8;
