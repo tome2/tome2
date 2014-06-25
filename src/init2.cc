@@ -180,17 +180,6 @@ void init_file_paths(char *path)
 		strcat(user_path, USER_PATH_VERSION);
 		ANGBAND_DIR_USER = string_make(user_path);
 		ANGBAND_DIR_NOTE = string_make(user_path);
-#ifdef PRIVATE_USER_PATH_MODULES
-		ANGBAND_DIR_MODULES = string_make(user_path);
-#endif
-#ifdef PRIVATE_USER_PATH_DATA
-		{
-		char user_path_data[1024];
-		strcpy(user_path_data, user_path);
-		strcat(user_path_data, "/data");
-		ANGBAND_DIR_DATA = string_make(user_path_data);
-		}
-#endif
 
 		/* Savefiles are in user directory */
 		strcat(user_path, "/save");

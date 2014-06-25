@@ -60,12 +60,6 @@ void module_reset_dir(cptr dir, cptr new_path)
 			quit(format("Unable to create module dir %s\n", *d));
 		}
 	}
-#ifdef PRIVATE_USER_PATH_DATA
-	else if (!strcmp(dir, "data"))
-	{
-		module_reset_dir_aux(&ANGBAND_DIR_DATA, new_path);
-	}
-#endif
 	else if (!strcmp(dir, "save"))
 	{
 		module_reset_dir_aux(&ANGBAND_DIR_SAVE, new_path);

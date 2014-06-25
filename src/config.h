@@ -157,13 +157,7 @@
 /*
  * Where to put the user's files.
  */
-#if defined(MACH_O_CARBON)
-#define PRIVATE_USER_PATH "~/Library/Application Support/ToME"
-#define PRIVATE_USER_PATH_DATA
-#define PRIVATE_USER_PATH_MODULES
-#else
 #define PRIVATE_USER_PATH "~/.tome"
-#endif
 
 
 /*

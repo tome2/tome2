@@ -2210,12 +2210,6 @@ extern int usleep(huge usecs);
 /* extern void main(void); */
 #endif
 
-#ifdef MACH_O_CARBON
-/* main-crb.c */
-extern int fsetfileinfo(char *path, u32b fcreator, u32b ftype);
-extern u32b _fcreator;
-extern u32b _ftype;
-#endif /* MACH_O_CARBON */
 
 #ifdef WINDOWS
 /* main-win.c */

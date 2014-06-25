@@ -334,7 +334,6 @@ errr path_build(char *buf, int max, cptr path, cptr file)
 */
 FILE *my_fopen(cptr file, cptr mode)
 {
-#ifndef MACH_O_CARBON
 
 	char buf[1024];
 
@@ -344,24 +343,6 @@ FILE *my_fopen(cptr file, cptr mode)
 	/* Attempt to fopen the file anyway */
 	return (fopen(buf, mode));
 
-#else /* MACH_O_CARBON */
-
-char buf[1024];
-FILE *s;
-
-/* Hack -- Try to parse the path */
-if (path_parse(buf, 1024, file)) return (NULL);
-
-/* Attempt to fopen the file anyway */
-s = fopen(buf, mode);
-
-/* Set creator and type if the file is successfully opened */
-if (s) fsetfileinfo(buf, _fcreator, _ftype);
-
-/*  Done */
-return (s);
-
-#endif /* MACH_O_CARBON */
 }
 
 
@@ -574,27 +555,10 @@ int fd_make(cptr file, int mode)
 	/* Hack -- Try to parse the path */
 	if (path_parse(buf, 1024, file)) return ( -1);
 
-#ifdef MACH_O_CARBON
-
-{
-int fdes;
-
-/* Create the file, fail if exists, write-only, binary */
-fdes = open(buf, O_CREAT | O_EXCL | O_WRONLY | O_BINARY, mode);
-
-/* Set creator and type if the file is successfully opened */
-if (fdes >= 0) fsetfileinfo(buf, _fcreator, _ftype);
-
-/* Return the descriptor */
-return (fdes);
-}
-
-#else /* MACH_O_CARBON */
 
 /* Create the file, fail if exists, write-only, binary */
 return (open(buf, O_CREAT | O_EXCL | O_WRONLY | O_BINARY, mode));
 
-#endif /* MACH_O_CARBON */
 
 }
 
@@ -611,27 +575,10 @@ int fd_open(cptr file, int flags)
 	/* Hack -- Try to parse the path */
 	if (path_parse(buf, 1024, file)) return ( -1);
 
-#ifdef MACH_O_CARBON
-
-	{
-		int fdes;
-
-		/* Attempt to open the file */
-		fdes = open(buf, flags | O_BINARY, 0);
-
-		/* Set creator and type if the file is successfully opened */
-		if (fdes >= 0) fsetfileinfo(buf, _fcreator, _ftype);
-
-		/* Return the descriptor */
-		return (fdes);
-	}
-
-#else /* MACH_O_CARBON */
 
 /* Attempt to open the file */
 return (open(buf, flags | O_BINARY, 0));
 
-#endif /* MACH_O_CARBON */
 }
 
 
