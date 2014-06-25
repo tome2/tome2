@@ -1,7 +1,4 @@
-/* File: z-rand.h */
-
-#ifndef INCLUDED_Z_RAND_H
-#define INCLUDED_Z_RAND_H
+#pragma once
 
 #ifdef __cplusplus
 extern "C" {
@@ -90,7 +87,4 @@ extern s32b maxroll(s16b num, s16b sides);
 
 #ifdef __cplusplus
 } /* extern "C" */
-#endif
-
-
 #endif

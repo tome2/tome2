@@ -1,7 +1,4 @@
-/* File z-util.h */
-
-#ifndef INCLUDED_Z_UTIL_H
-#define INCLUDED_Z_UTIL_H
+#pragma once
 
 #ifdef __cplusplus
 extern "C" {
@@ -86,6 +83,4 @@ extern void core(cptr str);
 
 #ifdef __cplusplus
 } /* extern "C" */
-#endif
-
 #endif
