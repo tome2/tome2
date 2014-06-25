@@ -1519,7 +1519,7 @@ void map_info(int y, int x, byte *ap, char *cp, byte *tap, char *tcp,
 
 
 /*
- * Special version of map_info, for use by cmovie and HTML converter
+ * Special version of map_info, for use by HTML converter
  * to obtain pure-ASCII image of dungeon map
  */
 void map_info_default(int y, int x, byte *ap, char *cp)

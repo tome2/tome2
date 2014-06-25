@@ -17,8 +17,6 @@ extern "C" {
 
 #include "h-basic.h"
 
-#define IN_MAINWINDOW (Term == term_screen)
-
 /*
  * A term_win is a "window" for a Term
  *
@@ -280,10 +278,6 @@ struct term
 /**** Available Variables ****/
 
 extern term *Term;
-extern FILE *movfile;
-extern int do_movies;
-extern int last_paused;
-
 
 /**** Available Functions ****/
 

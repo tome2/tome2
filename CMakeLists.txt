@@ -35,9 +35,6 @@ IF("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
   SET(CMAKE_CXX_FLAGS_DEBUG   "-O0 -g")
 ENDIF()
 
-# Add definitions.
-ADD_DEFINITIONS(-DUSE_PRECISE_CMOVIE)
-
 # Add standard math library
 SET(LIBS ${LIBS} m)
 

@@ -4394,22 +4394,6 @@ static void process_command(void)
 			break;
 		}
 
-		/* Activate cmovie */
-	case '|':
-		{
-			/* Stop ? */
-			if (do_movies == 1)
-			{
-				do_stop_cmovie();
-				msg_print("Cmovie recording stopped.");
-			}
-			else
-			{
-				do_start_cmovie();
-			}
-			break;
-		}
-
 		/* Extended command */
 	case '#':
 		{

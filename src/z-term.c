@@ -271,19 +271,6 @@
  */
 term *Term = NULL;
 
-/* File handler for saving movies */
-FILE *movfile = NULL;
-int do_movies = 0;  /* Later set this as a global */
-/* set to 1 if you want movies made */
-time_t lastc;
-int last_paused = 0;
-int cmovie_get_msecond(void);
-
-/* Record cmovies with millisecond frame rate */
-long cmov_last_time_msec;
-long cmov_delta_time_msec;
-
-
 /*** Local routines ***/
 
 
@@ -1307,16 +1294,6 @@ errr Term_fresh(void)
 		byte na = Term->attr_blank;
 		char nc = Term->char_blank;
 
-		if ((do_movies == 1) && IN_MAINWINDOW)
-		{
-			if (!cmovie_get_msecond())
-			{
-				fprintf(movfile, "S:%ld:\n", cmov_delta_time_msec);
-			}
-			fprintf(movfile, "C:\n");
-			last_paused = 0;
-		}
-
 		/* Physically erase the entire window */
 		Term_xtra(TERM_XTRA_CLEAR, 0);
 
@@ -1460,13 +1437,6 @@ errr Term_fresh(void)
 			/* Flush each "modified" row */
 			if (x1 <= x2)
 			{
-				if ((do_movies == 1) && IN_MAINWINDOW)
-				{
-					/* Most magic happens here */
-					cmovie_record_line(y);
-					last_paused = 0;
-				}
-
 				/* Always use "Term_pict()" */
 				if (Term->always_pict)
 				{
@@ -1930,17 +1900,6 @@ errr Term_clear(void)
  */
 errr Term_redraw(void)
 {
-	/* Pat */
-	if ((do_movies == 1) && IN_MAINWINDOW)
-	{
-		if (!cmovie_get_msecond())
-		{
-			fprintf(movfile, "S:%ld:\n", cmov_delta_time_msec);
-		}
-		last_paused = 1;
-	}
-	/* Endpat */
-
 	/* Force "total erase" */
 	Term->total_erase = TRUE;
 
@@ -2155,14 +2114,6 @@ errr Term_inkey(char *ch, bool_ wait, bool_ take)
 		/* Process random events */
 		Term_xtra(TERM_XTRA_BORED, 0);
 	}
-
-	/* PatN */
-	if ((do_movies == 1) && (last_paused == 0) && (!cmovie_get_msecond()))
-	{
-		fprintf(movfile, "S:%ld:\n", cmov_delta_time_msec);
-		last_paused = 1;
-	}
-	/* PatNEnd */
 
 	/* Wait */
 	if (wait)
@@ -2734,43 +2685,4 @@ errr term_init(term *t, int w, int h, int k)
 
 	/* Success */
 	return (0);
-}
-
-/*
- * Determine if we are called in the same second as the last time?
- * This *ASSUMES* that time_t is seconds past something. Is this portable?
- */
-int cmovie_get_msecond(void)
-{
-#ifndef USE_PRECISE_CMOVIE
-	/* Not very precise, but portable */
-	time_t thisc;
-
-	thisc = time(NULL);
-
-	cmov_delta_time_msec = 300;
-
-	if (thisc == lastc)
-	{
-		return 1;
-	}
-	return 0;
-#else /* Very precise but needs main-foo.c to define TERM_XTRA_GET_DELAY */
-Term_xtra(TERM_XTRA_GET_DELAY, 0);
-
-	cmov_delta_time_msec = Term_xtra_long - cmov_last_time_msec;
-	cmov_last_time_msec = Term_xtra_long;
-	return 0;
-#endif
-}
-
-void cmovie_init_second()
-{
-#ifndef USE_PRECISE_CMOVIE
-	/* Not very precise, but portable */
-	cmov_last_time_msec = 0;
-#else /* Precise but need main-foo.c to have TERM_XTRA_GET_DELAY */
-	Term_xtra(TERM_XTRA_GET_DELAY, 0);
-	cmov_last_time_msec = Term_xtra_long;
-#endif
 }

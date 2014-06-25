@@ -1791,9 +1791,6 @@ static cptr inkey_next = NULL;
 * "signal_count" variable, and of the "character_saved" variable.
 *
 * Hack -- Note the use of "inkey_next" to allow "keymaps" to be processed.
-*
-* Mega-Hack -- Note the use of "inkey_hack" to allow the "Borg" to steal
-* control of the keyboard from the user.
 */
 char inkey(void)
 {
@@ -1943,13 +1940,8 @@ char inkey(void)
 			/* Strip this key */
 			ch = 0;
 
-			if (!do_movies)
-				/* Do an html dump */
-				do_cmd_html_dump();
-			else
-				/* Do a text box in the cmovie */
-				do_cmovie_insert();
-
+			/* Do an html dump */
+			do_cmd_html_dump();
 
 			/* Continue */
 			continue;

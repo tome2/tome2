@@ -616,14 +616,7 @@ extern int random_quest_number(void);
 extern int new_effect(int type, int dam, int time, int cy, int cx, int rad, s32b flags);
 
 /* cmovie.c */
-extern void cmovie_init_second(void);
-extern s16b do_play_cmovie(cptr cmov_file);
-extern void do_record_cmovie(cptr cmovie);
-extern void do_stop_cmovie(void);
-extern void do_start_cmovie(void);
 extern void cmovie_clean_line(int y, char *abuf, char *cbuf);
-extern void cmovie_record_line(int y);
-extern void do_cmovie_insert(void);
 
 /* cmd1.c */
 extern void attack_special(monster_type *m_ptr, s32b special, int dam);
