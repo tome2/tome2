@@ -913,6 +913,7 @@ extern void reinit_quests(s16b new_size);
 extern void create_stores_stock(int t);
 extern errr init_v_info(void);
 extern void init_file_paths(char *path);
+extern void init_file_paths_with_env();
 extern void init_angband(void);
 extern errr init_buildings(void);
 extern s16b error_idx;
