@@ -615,45 +615,6 @@
 #define ROW_MH                  19
 #define COL_MH                  0       /* "MH xxxxx/xxxxx" */
 
-#define ROW_INFO                (Term->hgt - 4)
-#define COL_INFO                0       /* "xxxxxxxxxxxx" */
-
-#define ROW_CUT                 (Term->hgt - 3)
-#define COL_CUT                 0       /* <cut> */
-
-#define ROW_STUN                (Term->hgt - 2)
-#define COL_STUN                0       /* <stun> */
-
-#define ROW_HUNGRY              (Term->hgt - 1)
-#define COL_HUNGRY              0       /* "Weak" / "Hungry" / "Full" / "Gorged" */
-
-#define ROW_BLIND               (Term->hgt - 1)
-#define COL_BLIND               7       /* "Blind" */
-
-#define ROW_CONFUSED            (Term->hgt - 1)
-#define COL_CONFUSED            13      /* "Conf" */
-
-#define ROW_AFRAID              (Term->hgt - 1)
-#define COL_AFRAID              18      /* "Afraid" */
-
-#define ROW_POISONED            (Term->hgt - 1)
-#define COL_POISONED            25      /* "Poison" */
-
-#define ROW_DTRAP               (Term->hgt - 1)
-#define COL_DTRAP               32      /* "DTrap" */
-
-#define ROW_STATE               (Term->hgt - 1)
-#define COL_STATE               38      /* <state> */
-
-#define ROW_SPEED               (Term->hgt - 1)
-#define COL_SPEED               49      /* "Slow (-NN)" or "Fast (+NN)" */
-
-#define ROW_STUDY               (Term->hgt - 1)
-#define COL_STUDY               60      /* "Study" */
-
-#define ROW_DEPTH               (Term->hgt - 1)
-#define COL_DEPTH               (Term->wid - 14) /* "Lev NNN" / "NNNN ft" */
-
 
 
 /*** Terrain Feature Indexes (see "lib/edit/f_info.txt") ***/
@@ -2233,38 +2194,9 @@
 /*
  * Bit flags for the "p_ptr->redraw" variable
  */
-#define PR_MISC         0x00000001L     /* Display Race/Class */
-#define PR_TITLE        0x00000002L     /* Display Title */
-#define PR_LEV          0x00000004L     /* Display Level */
-#define PR_EXP          0x00000008L     /* Display Experience */
-#define PR_STATS        0x00000010L     /* Display Stats */
-#define PR_ARMOR        0x00000020L     /* Display Armor */
-#define PR_HP           0x00000040L     /* Display Hitpoints */
-#define PR_MANA         0x00000080L     /* Display Mana */
-#define PR_GOLD         0x00000100L     /* Display Gold */
-#define PR_DEPTH        0x00000200L     /* Display Depth */
-/****/
-#define PR_HEALTH       0x00000800L     /* Display Health Bar */
-#define PR_CUT          0x00001000L     /* Display Extra (Cut) */
-#define PR_STUN         0x00002000L     /* Display Extra (Stun) */
-#define PR_HUNGER       0x00004000L     /* Display Extra (Hunger) */
-#define PR_PIETY        0x00008000L     /* Display Piety */
-#define PR_BLIND        0x00010000L     /* Display Extra (Blind) */
-#define PR_CONFUSED     0x00020000L     /* Display Extra (Confused) */
-#define PR_AFRAID       0x00040000L     /* Display Extra (Afraid) */
-#define PR_POISONED     0x00080000L     /* Display Extra (Poisoned) */
-#define PR_STATE        0x00100000L     /* Display Extra (State) */
-#define PR_SPEED        0x00200000L     /* Display Extra (Speed) */
-#define PR_STUDY        0x00400000L     /* Display Extra (Study) */
-#define PR_SANITY       0x00800000L     /* Display Sanity */
-#define PR_EXTRA        0x01000000L     /* Display Extra Info */
-#define PR_BASIC        0x02000000L     /* Display Basic Info */
+#define PR_FRAME        0x02000000L     /* Display Basic Info */
 #define PR_MAP          0x04000000L     /* Display Map */
 #define PR_WIPE         0x08000000L     /* Hack -- Total Redraw */
-#define PR_MH           0x10000000L     /* Display Monster hitpoints */
-#define PR_DTRAP        0x20000000L     /* Display Extra (DTrap) */
-/* xxx */
-/* xxx */
 
 /*
  * Bit flags for the "p_ptr->window" variable (etc)

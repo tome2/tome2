@@ -45,7 +45,7 @@ static bool_ quest_morgoth_hook(const char *fmt)
 		quest[QUEST_MORGOTH].status = QUEST_STATUS_FINISHED;
 
 		/* Redraw the "title" */
-		p_ptr->redraw |= (PR_TITLE);
+		p_ptr->redraw |= (PR_FRAME);
 
 		/* Congratulations */
 		if (quest[QUEST_ONE].status == QUEST_STATUS_FINISHED)

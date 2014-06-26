@@ -550,7 +550,7 @@ void do_cmd_search(void)
 		command_rep = command_arg - 1;
 
 		/* Redraw the state */
-		p_ptr->redraw |= (PR_STATE);
+		p_ptr->redraw |= (PR_FRAME);
 
 		/* Cancel the arg */
 		command_arg = 0;
@@ -569,31 +569,9 @@ void do_cmd_search(void)
  */
 void do_cmd_toggle_search(void)
 {
-	/* Stop searching */
-	if (p_ptr->searching)
-	{
-		/* Clear the searching flag */
-		p_ptr->searching = FALSE;
-
-		/* Recalculate bonuses */
-		p_ptr->update |= (PU_BONUS);
-
-		/* Redraw the state */
-		p_ptr->redraw |= (PR_STATE);
-	}
-
-	/* Start searching */
-	else
-	{
-		/* Set the searching flag */
-		p_ptr->searching = TRUE;
-
-		/* Update stuff */
-		p_ptr->update |= (PU_BONUS);
-
-		/* Redraw stuff */
-		p_ptr->redraw |= (PR_STATE | PR_SPEED);
-	}
+	p_ptr->update |= (PU_BONUS);
+	p_ptr->redraw |= (PR_FRAME);
+	p_ptr->searching = !p_ptr->searching;
 }
 
 
@@ -1166,7 +1144,7 @@ void do_cmd_open(void)
 		command_rep = command_arg - 1;
 
 		/* Redraw the state */
-		p_ptr->redraw |= (PR_STATE);
+		p_ptr->redraw |= (PR_FRAME);
 
 		/* Cancel the arg */
 		command_arg = 0;
@@ -1333,7 +1311,7 @@ void do_cmd_close(void)
 		command_rep = command_arg - 1;
 
 		/* Redraw the state */
-		p_ptr->redraw |= (PR_STATE);
+		p_ptr->redraw |= (PR_FRAME);
 
 		/* Cancel the arg */
 		command_arg = 0;
@@ -1769,7 +1747,7 @@ void do_cmd_tunnel(void)
 		command_rep = command_arg - 1;
 
 		/* Redraw the state */
-		p_ptr->redraw |= (PR_STATE);
+		p_ptr->redraw |= (PR_FRAME);
 
 		/* Cancel the arg */
 		command_arg = 0;
@@ -2176,7 +2154,7 @@ void do_cmd_disarm(void)
 		command_rep = command_arg - 1;
 
 		/* Redraw the state */
-		p_ptr->redraw |= (PR_STATE);
+		p_ptr->redraw |= (PR_FRAME);
 
 		/* Cancel the arg */
 		command_arg = 0;
@@ -2387,7 +2365,7 @@ void do_cmd_bash(void)
 		command_rep = command_arg - 1;
 
 		/* Redraw the state */
-		p_ptr->redraw |= (PR_STATE);
+		p_ptr->redraw |= (PR_FRAME);
 
 		/* Cancel the arg */
 		command_arg = 0;
@@ -2475,7 +2453,7 @@ void do_cmd_alter(void)
 		command_rep = command_arg - 1;
 
 		/* Redraw the state */
-		p_ptr->redraw |= (PR_STATE);
+		p_ptr->redraw |= (PR_FRAME);
 
 		/* Cancel the arg */
 		command_arg = 0;
@@ -2657,7 +2635,7 @@ static void do_cmd_walk_jump(int pickup, bool_ disarm)
 		command_rep = command_arg - 1;
 
 		/* Redraw the state */
-		p_ptr->redraw |= (PR_STATE);
+		p_ptr->redraw |= (PR_FRAME);
 
 		/* Cancel the arg */
 		command_arg = 0;
@@ -2779,7 +2757,7 @@ void do_cmd_stay(int pickup)
 		command_rep = command_arg - 1;
 
 		/* Redraw the state */
-		p_ptr->redraw |= (PR_STATE);
+		p_ptr->redraw |= (PR_FRAME);
 
 		/* Cancel the arg */
 		command_arg = 0;
@@ -2901,7 +2879,7 @@ void do_cmd_rest(void)
 	p_ptr->update |= (PU_BONUS);
 
 	/* Redraw the state */
-	p_ptr->redraw |= (PR_STATE);
+	p_ptr->redraw |= (PR_FRAME);
 
 	/* Handle stuff */
 	handle_stuff();
@@ -4231,7 +4209,7 @@ void do_cmd_unwalk()
 		command_rep = command_arg - 1;
 
 		/* Redraw the state */
-		p_ptr->redraw |= (PR_STATE);
+		p_ptr->redraw |= (PR_FRAME);
 
 		/* Cancel the arg */
 		command_arg = 0;
@@ -4573,13 +4551,13 @@ void do_cmd_immovable_special(void)
 		if (lose_sp)
 		{
 			p_ptr->csp -= lose_sp;
-			p_ptr->redraw |= (PR_MANA);
+			p_ptr->redraw |= (PR_FRAME);
 		}
 
 		if (lose_hp)
 		{
 			p_ptr->chp -= lose_hp;
-			p_ptr->redraw |= (PR_HP);
+			p_ptr->redraw |= (PR_FRAME);
 		}
 
 		energy_use = 100;
@@ -5071,7 +5049,7 @@ void do_cmd_steal()
 			p_ptr->au += o_list[item].pval;
 
 			/* Redraw gold */
-			p_ptr->redraw |= (PR_GOLD);
+			p_ptr->redraw |= (PR_FRAME);
 
 			/* Window stuff */
 			p_ptr->window |= (PW_PLAYER);

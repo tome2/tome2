@@ -2127,7 +2127,7 @@ static bool_ quaff_potion(int tval, int sval, int pval, int pval2)
 					p_ptr->csp = p_ptr->msp;
 					p_ptr->csp_frac = 0;
 					msg_print("Your feel your head clear.");
-					p_ptr->redraw |= (PR_MANA);
+					p_ptr->redraw |= (PR_FRAME);
 					p_ptr->window |= (PW_PLAYER);
 					ident = TRUE;
 				}
@@ -2401,7 +2401,7 @@ static bool_ quaff_potion(int tval, int sval, int pval, int pval2)
 					set_mimic(time, pval2, (p_ptr->lev * 2) / 3);
 
 					/* Redraw title */
-					p_ptr->redraw |= (PR_TITLE);
+					p_ptr->redraw |= (PR_FRAME);
 
 					/* Recalculate bonuses */
 					p_ptr->update |= (PU_BONUS);
@@ -5392,7 +5392,7 @@ const char *activation_aux(object_type * o_ptr, bool_ doit, int item)
 					}
 
 					/* Redraw mana */
-					p_ptr->redraw |= (PR_MANA);
+					p_ptr->redraw |= (PR_FRAME);
 				}
 
 				take_hit(damroll(1, 12), "perilous secrets");
@@ -5654,7 +5654,7 @@ const char *activation_aux(object_type * o_ptr, bool_ doit, int item)
 					p_ptr->csp = p_ptr->msp;
 					p_ptr->csp_frac = 0;
 					msg_print("Your feel your head clear.");
-					p_ptr->redraw |= (PR_MANA);
+					p_ptr->redraw |= (PR_FRAME);
 					p_ptr->window |= (PW_PLAYER);
 				}
 

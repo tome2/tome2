@@ -571,7 +571,7 @@ void teleport_player(int dis)
 	p_ptr->update |= (PU_DISTANCE);
 
 	/* Redraw trap detection status */
-	p_ptr->redraw |= (PR_DTRAP);
+	p_ptr->redraw |= (PR_FRAME);
 
 	/* Window stuff */
 	p_ptr->window |= (PW_OVERHEAD);
@@ -801,7 +801,7 @@ void teleport_player_to(int ny, int nx)
 	p_ptr->update |= (PU_DISTANCE);
 
 	/* Redraw trap detection status */
-	p_ptr->redraw |= (PR_DTRAP);
+	p_ptr->redraw |= (PR_FRAME);
 
 	/* Window stuff */
 	p_ptr->window |= (PW_OVERHEAD);
@@ -937,7 +937,7 @@ void recall_player(int d, int f)
 		p_ptr->word_recall = 0;
 		msg_print("A tension leaves the air around you...");
 	}
-	p_ptr->redraw |= (PR_DEPTH);
+	p_ptr->redraw |= (PR_FRAME);
 }
 
 
@@ -1325,7 +1325,7 @@ void take_hit(int damage, cptr hit_from)
 		}
 
 		/* Display the mana */
-		p_ptr->redraw |= (PR_MANA);
+		p_ptr->redraw |= (PR_FRAME);
 	}
 
 	/* Hurt the wielded monster if any */
@@ -1341,7 +1341,7 @@ void take_hit(int damage, cptr hit_from)
 			inc_stack_size_ex(INVEN_CARRY, -1, OPTIMIZE, NO_DESCRIBE);
 			damage -= o_ptr->pval2;
 			o_ptr->pval2 = 0;
-			p_ptr->redraw |= PR_MH;
+			p_ptr->redraw |= PR_FRAME;
 		}
 		else
 		{
@@ -1353,14 +1353,14 @@ void take_hit(int damage, cptr hit_from)
 		carried_monster_hit = FALSE;
 
 		/* Display the monster hitpoints */
-		p_ptr->redraw |= (PR_MH);
+		p_ptr->redraw |= (PR_FRAME);
 	}
 
 	/* Hurt the player */
 	if (!monster_take) p_ptr->chp -= damage;
 
 	/* Display the hitpoints */
-	p_ptr->redraw |= (PR_HP);
+	p_ptr->redraw |= (PR_FRAME);
 
 	/* Window stuff */
 	p_ptr->window |= (PW_PLAYER);
@@ -1430,7 +1430,7 @@ void take_hit(int damage, cptr hit_from)
 			do_cmd_wiz_cure_all();
 
 			/* Display the hitpoints */
-			p_ptr->redraw |= (PR_HP);
+			p_ptr->redraw |= (PR_FRAME);
 
 			/* Window stuff */
 			p_ptr->window |= (PW_PLAYER);
@@ -1534,7 +1534,7 @@ void take_sanity_hit(int damage, cptr hit_from)
 	p_ptr->csane -= damage;
 
 	/* Display the hitpoints */
-	p_ptr->redraw |= (PR_SANITY);
+	p_ptr->redraw |= (PR_FRAME);
 
 	/* Window stuff */
 	p_ptr->window |= (PW_PLAYER);
@@ -5419,7 +5419,7 @@ bool_ project_m(int who, int r, int y, int x, int dam, int typ)
 						monster_desc(killer, m_ptr, 0x88);
 						msg_print("Your psychic energy is drained!");
 						p_ptr->csp = MAX(0, p_ptr->csp - damroll(5, dam) / 2);
-						p_ptr->redraw |= PR_MANA;
+						p_ptr->redraw |= PR_FRAME;
 						take_hit(dam, killer);   /* has already been /3 */
 					}
 					dam = 0;
@@ -5432,7 +5432,7 @@ bool_ project_m(int who, int r, int y, int x, int dam, int typ)
 				           m_name, (seen ? "'s" : "s"));
 				b = MIN(p_ptr->msp, p_ptr->csp + b);
 				p_ptr->csp = b;
-				p_ptr->redraw |= PR_MANA;
+				p_ptr->redraw |= PR_FRAME;
 			}
 
 			note_dies = " collapses, a mindless husk.";
@@ -5711,7 +5711,7 @@ bool_ project_m(int who, int r, int y, int x, int dam, int typ)
 			if (m_ptr->hp > m_ptr->maxhp) m_ptr->hp = m_ptr->maxhp;
 
 			/* Redraw (later) if needed */
-			if (health_who == c_ptr->m_idx) p_ptr->redraw |= (PR_HEALTH);
+			if (health_who == c_ptr->m_idx) p_ptr->redraw |= (PR_FRAME);
 
 			/* Message */
 			note = " looks healthier.";
@@ -6725,7 +6725,7 @@ bool_ project_m(int who, int r, int y, int x, int dam, int typ)
 			if (m_ptr->hp > m_ptr->maxhp) m_ptr->hp = m_ptr->maxhp;
 
 			/* Redraw (later) if needed */
-			if (health_who == c_ptr->m_idx) p_ptr->redraw |= (PR_HEALTH);
+			if (health_who == c_ptr->m_idx) p_ptr->redraw |= (PR_FRAME);
 
 			/* Message */
 			note = " looks healthier.";

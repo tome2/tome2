@@ -83,7 +83,7 @@ bool_ power_chance(power_type *x_ptr)
 	energy_use = 100;
 
 	/* Redraw mana and hp */
-	p_ptr->redraw |= (PR_HP | PR_MANA);
+	p_ptr->redraw |= (PR_FRAME);
 
 	/* Window stuff */
 	p_ptr->window |= (PW_PLAYER);
@@ -1258,7 +1258,7 @@ static void power_activate(int power)
 		break;
 	}
 
-	p_ptr->redraw |= (PR_HP | PR_MANA);
+	p_ptr->redraw |= (PR_FRAME);
 	p_ptr->window |= (PW_PLAYER);
 }
 

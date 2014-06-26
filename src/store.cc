@@ -3410,7 +3410,7 @@ void do_cmd_store(void)
 	p_ptr->update |= (PU_MONSTERS);
 
 	/* Redraw entire screen */
-	p_ptr->redraw |= (PR_BASIC | PR_EXTRA);
+	p_ptr->redraw |= (PR_FRAME);
 
 	/* Redraw map */
 	p_ptr->redraw |= (PR_MAP);
@@ -3863,7 +3863,7 @@ void do_cmd_home_trump(void)
 	p_ptr->update |= (PU_MONSTERS);
 
 	/* Redraw entire screen */
-	p_ptr->redraw |= (PR_BASIC | PR_EXTRA);
+	p_ptr->redraw |= (PR_FRAME);
 
 	/* Redraw map */
 	p_ptr->redraw |= (PR_MAP);
@@ -3887,7 +3887,7 @@ static void pay_for_requested_item(int value, object_type *q_ptr)
 				msg_print("The item has arrived in the Black Market.");
 				p_ptr->au -= value;
 
-				p_ptr->redraw |= PR_GOLD;
+				p_ptr->redraw |= PR_FRAME;
 			}
 			else
 				msg_print("There isn't enough room for it.");

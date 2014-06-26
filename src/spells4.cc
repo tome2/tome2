@@ -626,6 +626,6 @@ void lua_cast_school_spell(s32b s, bool_ no_cost)
 	}
 
 	/* Refresh player */
-	p_ptr->redraw |= PR_MANA;
+	p_ptr->redraw |= PR_FRAME;
 	p_ptr->window |= PW_PLAYER;
 }

@@ -39,7 +39,7 @@ bool_ mon_take_hit_mon(int s_idx, int m_idx, int dam, bool_ *fear, cptr note)
 	s32b div, new_exp, new_exp_frac;
 
 	/* Redraw (later) if needed */
-	if (health_who == m_idx) p_ptr->redraw |= (PR_HEALTH);
+	if (health_who == m_idx) p_ptr->redraw |= (PR_FRAME);
 
 	/* Some mosnters are immune to death */
 	if (r_ptr->flags7 & RF7_NO_DEATH) return FALSE;
@@ -1702,7 +1702,7 @@ static bool_ monst_spell_monst(int m_idx)
 						if (m_ptr->hp > m_ptr->maxhp) m_ptr->hp = m_ptr->maxhp;
 
 						/* Redraw (later) if needed */
-						if (health_who == m_idx) p_ptr->redraw |= (PR_HEALTH);
+						if (health_who == m_idx) p_ptr->redraw |= (PR_FRAME);
 
 						/* Special message */
 						if (seen)
@@ -2241,7 +2241,7 @@ static bool_ monst_spell_monst(int m_idx)
 				}
 
 				/* Redraw (later) if needed */
-				if (health_who == m_idx) p_ptr->redraw |= (PR_HEALTH);
+				if (health_who == m_idx) p_ptr->redraw |= (PR_FRAME);
 
 				/* Cancel fear */
 				if (m_ptr->monfear)
@@ -3665,7 +3665,7 @@ bool_ make_attack_spell(int m_idx)
 					}
 
 					/* Redraw mana */
-					p_ptr->redraw |= (PR_MANA);
+					p_ptr->redraw |= (PR_FRAME);
 
 					/* Window stuff */
 					p_ptr->window |= (PW_PLAYER);
@@ -3678,7 +3678,7 @@ bool_ make_attack_spell(int m_idx)
 						if (m_ptr->hp > m_ptr->maxhp) m_ptr->hp = m_ptr->maxhp;
 
 						/* Redraw (later) if needed */
-						if (health_who == m_idx) p_ptr->redraw |= (PR_HEALTH);
+						if (health_who == m_idx) p_ptr->redraw |= (PR_FRAME);
 
 						/* Special message */
 						if (seen)
@@ -4193,7 +4193,7 @@ bool_ make_attack_spell(int m_idx)
 				}
 
 				/* Redraw (later) if needed */
-				if (health_who == m_idx) p_ptr->redraw |= (PR_HEALTH);
+				if (health_who == m_idx) p_ptr->redraw |= (PR_FRAME);
 
 				/* Cancel fear */
 				if (m_ptr->monfear)
@@ -6146,7 +6146,7 @@ static void process_monster(int m_idx, bool_ is_frien)
 				msg_format("%^s is no longer bleeding.", m_name);
 
 				/* Hack -- Update the health bar */
-				if (health_who == m_idx) p_ptr->redraw |= (PR_HEALTH);
+				if (health_who == m_idx) p_ptr->redraw |= (PR_FRAME);
 			}
 		}
 	}
@@ -6185,7 +6185,7 @@ static void process_monster(int m_idx, bool_ is_frien)
 				msg_format("%^s is no longer poisoned.", m_name);
 
 				/* Hack -- Update the health bar */
-				if (health_who == m_idx) p_ptr->redraw |= (PR_HEALTH);
+				if (health_who == m_idx) p_ptr->redraw |= (PR_FRAME);
 			}
 		}
 	}

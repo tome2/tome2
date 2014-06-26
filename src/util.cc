@@ -1495,7 +1495,10 @@ void bell(void)
 	Term_fresh();
 
 	/* Make a bell noise (if allowed) */
-	if (ring_bell) Term_xtra(TERM_XTRA_NOISE, 0);
+	if (ring_bell)
+	{
+		Term_bell();
+	}
 
 	/* Flush the input (later!) */
 	flush();
@@ -2037,13 +2040,14 @@ void cmsg_print(byte color, cptr msg)
 	static int p = 0;
 
 	int n;
+	int wid;
 
 	char *t;
 
 	char buf[1024];
 
-	int lim = Term->wid - 8;
-
+	Term_get_size(&wid, nullptr);
+	int lim = wid - 8;
 
 	/* Hack -- Reset */
 	if (!msg_flag) p = 0;
@@ -2559,9 +2563,11 @@ void text_out_c(byte a, cptr str)
 void clear_from(int row)
 {
 	int y;
+	int hgt;
+	Term_get_size(nullptr, &hgt);
 
 	/* Erase requested rows */
-	for (y = row; y < Term->hgt; y++)
+	for (y = row; y < hgt; y++)
 	{
 		/* Erase part of the screen */
 		Term_erase(0, y, 255);

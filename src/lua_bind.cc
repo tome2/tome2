@@ -324,7 +324,7 @@ char lua_msg_box(cptr title)
 void increase_mana(int delta)
 {
 	p_ptr->csp += delta;
-	p_ptr->redraw |= PR_MANA;
+	p_ptr->redraw |= PR_FRAME;
 
 	if (p_ptr->csp < 0)
 	{

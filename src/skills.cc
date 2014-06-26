@@ -402,7 +402,7 @@ void recalc_skills(bool_ init)
 		                  PU_SANITY | PU_BODY);
 
 		/* Redraw various info */
-		p_ptr->redraw |= (PR_WIPE | PR_BASIC | PR_EXTRA | PR_MAP);
+		p_ptr->redraw |= (PR_WIPE | PR_FRAME | PR_MAP);
 	}
 }
 
@@ -732,7 +732,7 @@ static void choose_melee()
 	p_ptr->update |= (PU_HP);
 
 	/* Redraw monster hitpoint */
-	p_ptr->redraw |= (PR_MH);
+	p_ptr->redraw |= (PR_FRAME);
 
 	Term_load();
 	character_icky = FALSE;
@@ -1755,7 +1755,7 @@ void do_cmd_ability()
 	                  PU_SANITY | PU_BODY);
 
 	/* Redraw various info */
-	p_ptr->redraw |= (PR_WIPE | PR_BASIC | PR_EXTRA | PR_MAP);
+	p_ptr->redraw |= (PR_WIPE | PR_FRAME | PR_MAP);
 }
 
 /*

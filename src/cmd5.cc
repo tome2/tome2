@@ -287,7 +287,7 @@ void do_poly_self(void)
 		check_experience();
 		p_ptr->max_plv = p_ptr->lev;
 
-		p_ptr->redraw |= (PR_BASIC);
+		p_ptr->redraw |= (PR_FRAME);
 
 		p_ptr->update |= (PU_BONUS);
 
@@ -2057,7 +2057,7 @@ int use_symbiotic_power(int r_idx, bool_ great, bool_ only_number, bool_ no_cost
 	}
 
 	/* Redraw mana */
-	p_ptr->redraw |= (PR_MANA);
+	p_ptr->redraw |= (PR_FRAME);
 
 	/* Window stuff */
 	p_ptr->window |= (PW_PLAYER);

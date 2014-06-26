@@ -715,7 +715,7 @@ void do_cmd_mindcraft(void)
 	}
 
 	/* Redraw mana */
-	p_ptr->redraw |= (PR_MANA);
+	p_ptr->redraw |= (PR_FRAME);
 
 	/* Window stuff */
 	p_ptr->window |= (PW_PLAYER);
@@ -811,7 +811,7 @@ void do_cmd_mimic_lore()
 
 
 	/* Redraw title */
-	p_ptr->redraw |= (PR_TITLE);
+	p_ptr->redraw |= (PR_FRAME);
 
 	/* Recalculate bonuses */
 	p_ptr->update |= (PU_BONUS);
@@ -1124,7 +1124,7 @@ void do_cmd_mimic(void)
 	}
 
 	/* Redraw mana */
-	p_ptr->redraw |= (PR_MANA);
+	p_ptr->redraw |= (PR_FRAME);
 
 	/* Window stuff */
 	p_ptr->window |= (PW_PLAYER);
@@ -3901,7 +3901,7 @@ void do_cmd_alchemist(void)
 
 			/* Redraw gold */
 			p_ptr->au -= i;
-			p_ptr->redraw |= (PR_GOLD);
+			p_ptr->redraw |= (PR_FRAME);
 		}
 
 		/* Set fully identified
@@ -3937,7 +3937,7 @@ void do_cmd_alchemist(void)
 
 			msg_format("Your attempt backfires! Your %s explodes!", o_name);
 			take_hit(damroll(3, level - askill ) , "Alchemical Explosion");
-			p_ptr->redraw |= (PR_HP);
+			p_ptr->redraw |= (PR_FRAME);
 		}
 
 		/* Combine / Reorder the pack (later) */
@@ -4299,7 +4299,7 @@ void do_cmd_pray(void)
 		p_ptr->update |= (PU_BONUS | PU_HP | PU_MANA | PU_SPELLS | PU_POWERS |
 		                  PU_SANITY | PU_BODY);
 
-		p_ptr->redraw |= PR_PIETY | PR_WIPE | PR_BASIC | PR_EXTRA | PR_MAP;
+		p_ptr->redraw |= PR_WIPE | PR_FRAME | PR_MAP;
 		energy_use = 100;
 	}
 }
@@ -4687,7 +4687,7 @@ void do_cmd_powermage(void)
 
 		/* Window stuff */
 		p_ptr->window |= (PW_PLAYER);
-		p_ptr->redraw |= (PR_MANA);
+		p_ptr->redraw |= (PR_FRAME);
 
 		return;
 	}
@@ -4757,7 +4757,7 @@ void do_cmd_powermage(void)
 
 	/* Window stuff */
 	p_ptr->window |= (PW_PLAYER);
-	p_ptr->redraw |= (PR_MANA);
+	p_ptr->redraw |= (PR_FRAME);
 }
 
 
@@ -4944,7 +4944,7 @@ void do_cmd_possessor()
 				p_ptr->chp = 1;
 
 				/* Display the hitpoints */
-				p_ptr->redraw |= (PR_HP);
+				p_ptr->redraw |= (PR_FRAME);
 			}
 		}
 	}
@@ -5338,7 +5338,7 @@ void do_cmd_necromancer(void)
 				p_ptr->chp_frac = 0;
 
 				/* Display the hitpoints */
-				p_ptr->redraw |= (PR_HP);
+				p_ptr->redraw |= (PR_FRAME);
 
 				/* Window stuff */
 				p_ptr->window |= (PW_PLAYER);
@@ -5472,7 +5472,7 @@ void do_cmd_necromancer(void)
 					p_ptr->chp_frac = 0;
 
 					/* Display the hitpoints */
-					p_ptr->redraw |= (PR_HP);
+					p_ptr->redraw |= (PR_FRAME);
 
 					/* Window stuff */
 					p_ptr->window |= (PW_PLAYER);
@@ -5530,7 +5530,7 @@ void do_cmd_necromancer(void)
 	}
 
 	/* Redraw mana */
-	p_ptr->redraw |= (PR_MANA);
+	p_ptr->redraw |= (PR_FRAME);
 
 	/* Window stuff */
 	p_ptr->window |= (PW_PLAYER);
@@ -5762,7 +5762,7 @@ int rune_exec(rune_spell *spell, int cost)
 
 		/* Window stuff */
 		p_ptr->window |= (PW_PLAYER);
-		p_ptr->redraw |= (PR_MANA);
+		p_ptr->redraw |= (PR_FRAME);
 		return (mana_used);
 	}
 
@@ -5854,7 +5854,7 @@ int rune_exec(rune_spell *spell, int cost)
 
 	/* Window stuff */
 	p_ptr->window |= (PW_PLAYER);
-	p_ptr->redraw |= (PR_MANA);
+	p_ptr->redraw |= (PR_FRAME);
 
 	return (mana_used);
 }
@@ -6004,7 +6004,7 @@ void do_cmd_rune(void)
 
 	/* Window stuff */
 	p_ptr->window |= (PW_PLAYER);
-	p_ptr->redraw |= (PR_MANA);
+	p_ptr->redraw |= (PR_FRAME);
 }
 
 
@@ -6264,7 +6264,7 @@ void do_cmd_rune_cast()
 
 	/* Window stuff */
 	p_ptr->window |= (PW_PLAYER);
-	p_ptr->redraw |= (PR_MANA);
+	p_ptr->redraw |= (PR_FRAME);
 }
 
 
@@ -6343,7 +6343,7 @@ void do_cmd_runestone()
 
 	/* Window stuff */
 	p_ptr->window |= (PW_PLAYER);
-	p_ptr->redraw |= (PR_MANA);
+	p_ptr->redraw |= (PR_FRAME);
 }
 
 
@@ -6387,7 +6387,7 @@ void do_cmd_rune_add_mem()
 
 	/* Window stuff */
 	p_ptr->window |= (PW_PLAYER);
-	p_ptr->redraw |= (PR_MANA);
+	p_ptr->redraw |= (PR_FRAME);
 }
 
 
@@ -6490,7 +6490,7 @@ void do_cmd_rune_carve()
 
 	/* Window stuff */
 	p_ptr->window |= (PW_PLAYER);
-	p_ptr->redraw |= (PR_MANA);
+	p_ptr->redraw |= (PR_FRAME);
 }
 
 
@@ -6532,7 +6532,7 @@ void do_cmd_rune_del()
 
 	/* Window stuff */
 	p_ptr->window |= (PW_PLAYER);
-	p_ptr->redraw |= (PR_MANA);
+	p_ptr->redraw |= (PR_FRAME);
 }
 
 
@@ -7415,14 +7415,11 @@ void do_cmd_symbiotic(void)
 				p_ptr->chp = (percent1 * p_ptr->mhp) / 100;
 				o_ptr->pval2 = (percent1 * o_ptr->pval3) / 100;
 
-				/* Redraw */
-				p_ptr->redraw |= (PR_HP);
-
 				/* Window stuff */
 				p_ptr->window |= (PW_PLAYER);
 
 				/* Display the monster hitpoints */
-				p_ptr->redraw |= (PR_MH);
+				p_ptr->redraw |= (PR_FRAME);
 
 				break;
 			}
@@ -7460,7 +7457,7 @@ void do_cmd_symbiotic(void)
 				msg_format("%s is healed.", symbiote_name(TRUE));
 
 				/* Display the monster hitpoints */
-				p_ptr->redraw |= (PR_MH);
+				p_ptr->redraw |= (PR_FRAME);
 
 				break;
 			}
@@ -7557,7 +7554,7 @@ void do_cmd_symbiotic(void)
 	}
 
 	/* Redraw mana */
-	p_ptr->redraw |= (PR_MANA);
+	p_ptr->redraw |= (PR_FRAME);
 
 	/* Window stuff */
 	p_ptr->window |= (PW_PLAYER);

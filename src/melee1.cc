@@ -1955,7 +1955,7 @@ bool_ make_attack_normal(int m_idx, byte divis)
 							if (m_ptr->hp > m_ptr->maxhp) m_ptr->hp = m_ptr->maxhp;
 
 							/* Redraw (later) if needed */
-							if (health_who == m_idx) p_ptr->redraw |= (PR_HEALTH);
+							if (health_who == m_idx) p_ptr->redraw |= (PR_FRAME);
 
 							/* Uncharge */
 							o_ptr->pval = 0;
@@ -2036,7 +2036,7 @@ bool_ make_attack_normal(int m_idx, byte divis)
 						}
 
 						/* Redraw gold */
-						p_ptr->redraw |= (PR_GOLD);
+						p_ptr->redraw |= (PR_FRAME);
 
 						/* Window stuff */
 						p_ptr->window |= (PW_PLAYER);

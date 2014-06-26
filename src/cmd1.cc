@@ -3405,13 +3405,13 @@ void move_player_aux(int dir, int do_pickup, int run, bool_ disarm)
 		{
 			cmsg_print(TERM_VIOLET, "You leave a trap detected zone.");
 			if (running) msg_print(NULL);
-			p_ptr->redraw |= (PR_DTRAP);
+			p_ptr->redraw |= (PR_FRAME);
 		}
 		else if (!old_dtrap && new_dtrap)
 		{
 			cmsg_print(TERM_L_BLUE, "You enter a trap detected zone.");
 			if (running) msg_print(NULL);
-			p_ptr->redraw |= (PR_DTRAP);
+			p_ptr->redraw |= (PR_FRAME);
 		}
 
 		/* Update stuff */

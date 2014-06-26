@@ -2225,7 +2225,7 @@ void do_cmd_bldg(void)
 	p_ptr->update |= (PU_VIEW | PU_MON_LITE | PU_MONSTERS | PU_BONUS);
 
 	/* Redraw entire screen */
-	p_ptr->redraw |= (PR_BASIC | PR_EXTRA | PR_MAP);
+	p_ptr->redraw |= (PR_FRAME | PR_MAP);
 
 	/* Window stuff */
 	p_ptr->window |= (PW_OVERHEAD);

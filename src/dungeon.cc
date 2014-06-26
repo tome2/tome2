@@ -633,7 +633,7 @@ static void regenhp(int percent)
 		if (old_chp != p_ptr->chp)
 		{
 			/* Redraw */
-			p_ptr->redraw |= (PR_HP);
+			p_ptr->redraw |= (PR_FRAME);
 
 			/* Window stuff */
 			p_ptr->window |= (PW_PLAYER);
@@ -690,7 +690,7 @@ static void regenmana(int percent)
 	if (old_csp != p_ptr->csp)
 	{
 		/* Redraw */
-		p_ptr->redraw |= (PR_MANA);
+		p_ptr->redraw |= (PR_FRAME);
 
 		/* Window stuff */
 		p_ptr->window |= (PW_PLAYER);
@@ -738,7 +738,7 @@ static void regen_monsters(void)
 			if (o_ptr->pval2 > o_ptr->pval3) o_ptr->pval2 = o_ptr->pval3;
 
 			/* Redraw (later) */
-			p_ptr->redraw |= (PR_MH);
+			p_ptr->redraw |= (PR_FRAME);
 		}
 	}
 
@@ -775,7 +775,7 @@ static void regen_monsters(void)
 			if (m_ptr->hp > m_ptr->maxhp) m_ptr->hp = m_ptr->maxhp;
 
 			/* Redraw (later) if needed */
-			if (health_who == i) p_ptr->redraw |= (PR_HEALTH);
+			if (health_who == i) p_ptr->redraw |= (PR_FRAME);
 		}
 	}
 }
@@ -937,7 +937,7 @@ static void check_music()
 		p_ptr->csp -= use_mana;
 
 		/* Redraw mana */
-		p_ptr->redraw |= (PR_MANA);
+		p_ptr->redraw |= (PR_FRAME);
 
 		/* Window stuff */
 		p_ptr->window |= (PW_PLAYER);
@@ -1998,7 +1998,7 @@ static void process_world(void)
 		p_ptr->chp--;
 
 		/* Display the hitpoints */
-		p_ptr->redraw |= (PR_HP);
+		p_ptr->redraw |= (PR_FRAME);
 
 		/* Window stuff */
 		p_ptr->window |= (PW_PLAYER);
@@ -2873,7 +2873,7 @@ static void process_world(void)
 		}
 
 		/* Redraw */
-		p_ptr->redraw |= (PR_MANA);
+		p_ptr->redraw |= (PR_FRAME);
 
 		/* Window stuff */
 		p_ptr->window |= (PW_PLAYER);
@@ -2899,7 +2899,7 @@ static void process_world(void)
 		}
 
 		/* Redraw */
-		p_ptr->redraw |= (PR_MANA);
+		p_ptr->redraw |= (PR_FRAME);
 
 		/* Window stuff */
 		p_ptr->window |= (PW_PLAYER);
@@ -2919,7 +2919,7 @@ static void process_world(void)
 		}
 
 		/* Redraw */
-		p_ptr->redraw |= (PR_HP);
+		p_ptr->redraw |= (PR_FRAME);
 
 		/* Window stuff */
 		p_ptr->window |= (PW_PLAYER);
@@ -3489,7 +3489,7 @@ static void process_command(void)
 			p_ptr->update |= (PU_MONSTERS);
 
 			/* Redraw "title" */
-			p_ptr->redraw |= (PR_TITLE);
+			p_ptr->redraw |= (PR_FRAME);
 
 			break;
 		}
@@ -3521,7 +3521,7 @@ static void process_command(void)
 		{
 			if (p_ptr->control) break;
 			if (!p_ptr->wild_mode) do_cmd_takeoff();
-			p_ptr->redraw |= (PR_MH);
+			p_ptr->redraw |= (PR_FRAME);
 			break;
 		}
 
@@ -4565,7 +4565,7 @@ void process_player(void)
 			{
 				disturb(0);
 			}
-			p_ptr->redraw |= (PR_STATE);
+			p_ptr->redraw |= (PR_FRAME);
 		}
 	}
 
@@ -4687,7 +4687,7 @@ void process_player(void)
 				resting--;
 
 				/* Redraw the state */
-				p_ptr->redraw |= (PR_STATE);
+				p_ptr->redraw |= (PR_FRAME);
 			}
 
 			p_ptr->did_nothing = TRUE;
@@ -4718,7 +4718,7 @@ void process_player(void)
 			command_rep--;
 
 			/* Redraw the state */
-			p_ptr->redraw |= (PR_STATE);
+			p_ptr->redraw |= (PR_FRAME);
 
 			/* Redraw stuff */
 			redraw_stuff();
@@ -5072,7 +5072,7 @@ static void dungeon(void)
 	p_ptr->window |= (PW_MONSTER);
 
 	/* Redraw dungeon */
-	p_ptr->redraw |= (PR_WIPE | PR_BASIC | PR_EXTRA);
+	p_ptr->redraw |= (PR_WIPE | PR_FRAME);
 
 	/* Redraw map */
 	p_ptr->redraw |= (PR_MAP);

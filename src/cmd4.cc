@@ -66,7 +66,7 @@ void do_cmd_redraw(void)
 	p_ptr->update |= (PU_MONSTERS);
 
 	/* Redraw everything */
-	p_ptr->redraw |= (PR_WIPE | PR_BASIC | PR_EXTRA | PR_MAP);
+	p_ptr->redraw |= (PR_WIPE | PR_FRAME | PR_MAP);
 
 	/* Window stuff */
 	p_ptr->window |= (PW_INVEN | PW_EQUIP | PW_PLAYER | PW_M_LIST);
@@ -215,7 +215,7 @@ void do_cmd_change_name(void)
 
 
 	/* Redraw everything */
-	p_ptr->redraw |= (PR_WIPE | PR_BASIC | PR_EXTRA | PR_MAP);
+	p_ptr->redraw |= (PR_WIPE | PR_FRAME | PR_MAP);
 
 	handle_stuff();
 }

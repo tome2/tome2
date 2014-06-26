@@ -60,7 +60,7 @@ static bool_ quest_nirnaeth_finish_hook(const char *fmt)
 		p_ptr->au += 200000;
 
 		/* Redraw gold */
-		p_ptr->redraw |= (PR_GOLD);
+		p_ptr->redraw |= (PR_FRAME);
 
 		/* Window stuff */
 		p_ptr->window |= (PW_PLAYER);

@@ -429,7 +429,7 @@ void status_main()
 	}
 	Term_load();
 	character_icky = FALSE;
-	p_ptr->redraw |= (PR_WIPE | PR_BASIC | PR_EXTRA | PR_MAP);
+	p_ptr->redraw |= (PR_WIPE | PR_FRAME | PR_MAP);
 	handle_stuff();
 }
 

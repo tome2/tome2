@@ -446,7 +446,7 @@ void do_cmd_wield(void)
 	p_ptr->update |= (PU_MANA | PU_SPELLS);
 
 	/* Redraw monster hitpoint */
-	p_ptr->redraw |= (PR_MH);
+	p_ptr->redraw |= (PR_FRAME);
 
 	p_ptr->window |= (PW_INVEN | PW_EQUIP | PW_PLAYER);
 }
@@ -496,7 +496,7 @@ void do_cmd_takeoff(void)
 	/* Recalculate hitpoint */
 	p_ptr->update |= (PU_HP);
 
-	p_ptr->redraw |= (PR_MH);
+	p_ptr->redraw |= (PR_FRAME);
 }
 
 

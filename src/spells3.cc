@@ -2142,7 +2142,7 @@ void do_melkor_curse(int m_idx)
 			m_ptr->hp = m_ptr->maxhp;
 		}
 
-		p_ptr->redraw |= PR_HEALTH;
+		p_ptr->redraw |= PR_FRAME;
 	}
 
 	if (get_level_s(MELKOR_CURSE, 50) >= 25)

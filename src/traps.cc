@@ -346,7 +346,7 @@ static bool_ player_handle_trap_of_walls(void)
 	p_ptr->update |= (PU_DISTANCE);
 
 	/* Update the health bar */
-	p_ptr->redraw |= (PR_HEALTH);
+	p_ptr->redraw |= (PR_FRAME);
 
 	/* Redraw map */
 	p_ptr->redraw |= (PR_MAP);
@@ -868,7 +868,7 @@ bool_ player_activate_trap_type(s16b y, s16b x, object_type *i_ptr, s16b item)
 			{
 				p_ptr->csp = 0;
 				p_ptr->csp_frac = 0;
-				p_ptr->redraw |= (PR_MANA);
+				p_ptr->redraw |= (PR_FRAME);
 				msg_print("You sense a great loss.");
 				ident = TRUE;
 			}
@@ -910,7 +910,7 @@ bool_ player_activate_trap_type(s16b y, s16b x, object_type *i_ptr, s16b item)
 				msg_print("All of your coins were stolen!");
 				ident = TRUE;
 			}
-			p_ptr->redraw |= (PR_GOLD);
+			p_ptr->redraw |= (PR_FRAME);
 			break;
 		}
 

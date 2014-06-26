@@ -523,7 +523,7 @@ bool_ set_mimic(int v, int p, int level)
 	if (disturb_state) disturb(0);
 
 	/* Redraw title */
-	p_ptr->redraw |= (PR_TITLE);
+	p_ptr->redraw |= (PR_FRAME);
 
 	/* Recalculate bonuses */
 	p_ptr->update |= (PU_BODY | PU_BONUS | PU_SANITY);
@@ -556,7 +556,7 @@ bool_ set_blind(int v)
 		p_ptr->redraw |= (PR_MAP);
 
 		/* Redraw the "blind" */
-		p_ptr->redraw |= (PR_BLIND);
+		p_ptr->redraw |= (PR_FRAME);
 
 		/* Window stuff */
 		p_ptr->window |= (PW_OVERHEAD);
@@ -617,7 +617,7 @@ bool_ set_confused(int v)
 	if (notice)
 	{
 		/* Redraw the "confused" */
-		p_ptr->redraw |= (PR_CONFUSED);
+		p_ptr->redraw |= (PR_FRAME);
 
 		/* Handle stuff */
 		handle_stuff();
@@ -641,7 +641,7 @@ bool_ set_poisoned(int v)
 	if (notice)
 	{
 		/* Redraw the "poisoned" */
-		p_ptr->redraw |= (PR_POISONED);
+		p_ptr->redraw |= (PR_FRAME);
 
 		/* Handle stuff */
 		handle_stuff();
@@ -665,7 +665,7 @@ bool_ set_afraid(int v)
 	if (notice)
 	{
 		/* Redraw the "afraid" */
-		p_ptr->redraw |= (PR_AFRAID);
+		p_ptr->redraw |= (PR_FRAME);
 
 		/* Handle stuff */
 		handle_stuff();
@@ -692,7 +692,7 @@ static bool_ set_paralyzed_aux(int v)
 	if (notice)
 	{
 		/* Redraw the state */
-		p_ptr->redraw |= (PR_STATE);
+		p_ptr->redraw |= (PR_FRAME);
 
 		/* Handle stuff */
 		handle_stuff();
@@ -1567,7 +1567,7 @@ bool_ set_stun(int v)
 	p_ptr->update |= (PU_BONUS);
 
 	/* Redraw the "stun" */
-	p_ptr->redraw |= (PR_STUN);
+	p_ptr->redraw |= (PR_FRAME);
 
 	/* Handle stuff */
 	handle_stuff();
@@ -1775,7 +1775,7 @@ bool_ set_cut(int v)
 	p_ptr->update |= (PU_BONUS);
 
 	/* Redraw the "cut" */
-	p_ptr->redraw |= (PR_CUT);
+	p_ptr->redraw |= (PR_FRAME);
 
 	/* Handle stuff */
 	handle_stuff();
@@ -1989,7 +1989,7 @@ bool_ set_food(int v)
 	p_ptr->update |= (PU_BONUS);
 
 	/* Redraw hunger */
-	p_ptr->redraw |= (PR_HUNGER);
+	p_ptr->redraw |= (PR_FRAME);
 
 	/* Handle stuff */
 	handle_stuff();
@@ -2024,7 +2024,7 @@ void check_experience(void)
 	if (p_ptr->exp > p_ptr->max_exp) p_ptr->max_exp = p_ptr->exp;
 
 	/* Redraw experience */
-	p_ptr->redraw |= (PR_EXP);
+	p_ptr->redraw |= (PR_FRAME);
 
 	/* Handle stuff */
 	handle_stuff();
@@ -2043,7 +2043,7 @@ void check_experience(void)
 		p_ptr->update |= (PU_BONUS | PU_HP | PU_MANA | PU_SPELLS | PU_SANITY);
 
 		/* Redraw some stuff */
-		p_ptr->redraw |= (PR_LEV | PR_TITLE | PR_EXP);
+		p_ptr->redraw |= (PR_FRAME);
 
 		/* Window stuff */
 		p_ptr->window |= (PW_PLAYER);
@@ -2084,7 +2084,7 @@ void check_experience(void)
 			p_ptr->skill_last_level = p_ptr->lev;
 			p_ptr->skill_points += modules[game_module_idx].skills.skill_per_level;
 			cmsg_format(TERM_L_GREEN, "You can increase %d more skills.", p_ptr->skill_points);
-			p_ptr->redraw |= PR_STUDY;
+			p_ptr->redraw |= PR_FRAME;
 		}
 
 		/* Gain this level's abilities */
@@ -2103,7 +2103,7 @@ void check_experience(void)
 		p_ptr->update |= (PU_BONUS | PU_HP | PU_MANA | PU_SPELLS | PU_SANITY);
 
 		/* Redraw some stuff */
-		p_ptr->redraw |= (PR_LEV | PR_TITLE | PR_EXP);
+		p_ptr->redraw |= (PR_FRAME);
 
 		/* Window stuff */
 		p_ptr->window |= (PW_PLAYER);
@@ -2629,7 +2629,7 @@ void monster_death(int m_idx)
 
 			/* Display the hitpoints */
 			p_ptr->update |= (PU_HP);
-			p_ptr->redraw |= (PR_HP);
+			p_ptr->redraw |= (PR_FRAME);
 
 			/* Window stuff */
 			p_ptr->window |= (PW_PLAYER);
@@ -3206,7 +3206,7 @@ bool_ mon_take_hit(int m_idx, int dam, bool_ *fear, cptr note)
 
 
 	/* Redraw (later) if needed */
-	if (health_who == m_idx) p_ptr->redraw |= (PR_HEALTH);
+	if (health_who == m_idx) p_ptr->redraw |= (PR_FRAME);
 
 	/* Some mosnters are immune to death */
 	if (r_ptr->flags7 & RF7_NO_DEATH) return FALSE;
@@ -3742,7 +3742,7 @@ void resize_map(void)
 	p_ptr->update |= (PU_UN_VIEW | PU_VIEW | PU_MONSTERS | PU_MON_LITE);
 
 	/* Redraw everything */
-	p_ptr->redraw |= (PR_WIPE | PR_BASIC | PR_EXTRA | PR_MAP);
+	p_ptr->redraw |= (PR_WIPE | PR_FRAME | PR_MAP);
 
 	/* Hack -- update */
 	handle_stuff();
@@ -5468,7 +5468,7 @@ void set_grace(s32b v)
 	if (v > 300000) v = 300000;
 	p_ptr->grace = v;
 	p_ptr->update |= PU_BONUS;
-	p_ptr->redraw |= (PR_PIETY);
+	p_ptr->redraw |= (PR_FRAME);
 	handle_stuff();
 }
 
@@ -5817,7 +5817,7 @@ void do_rebirth()
 	p_ptr->max_plv = p_ptr->lev;
 
 	/* Redraw/calc stuff */
-	p_ptr->redraw |= (PR_BASIC);
+	p_ptr->redraw |= (PR_FRAME);
 	p_ptr->update |= (PU_BONUS);
 	handle_stuff();
 

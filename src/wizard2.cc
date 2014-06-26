@@ -111,7 +111,7 @@ void do_cmd_rerate(void)
 
 	/* Update and redraw hitpoints */
 	p_ptr->update |= (PU_HP);
-	p_ptr->redraw |= (PR_HP);
+	p_ptr->redraw |= (PR_FRAME);
 
 	/* Window stuff */
 	p_ptr->window |= (PW_PLAYER);
@@ -1781,7 +1781,7 @@ void do_cmd_debug()
 
 			/* Display the hitpoints */
 			p_ptr->update |= (PU_HP);
-			p_ptr->redraw |= (PR_HP);
+			p_ptr->redraw |= (PR_FRAME);
 
 			/* Window stuff */
 			p_ptr->window |= (PW_PLAYER);
@@ -1850,7 +1850,7 @@ void do_cmd_debug()
 		p_ptr->tim_mimic = 100;
 		p_ptr->mimic_form = command_arg;
 		/* Redraw title */
-		p_ptr->redraw |= (PR_TITLE);
+		p_ptr->redraw |= (PR_FRAME);
 		/* Recalculate bonuses */
 		p_ptr->update |= (PU_BONUS);
 		break;

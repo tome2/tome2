@@ -114,7 +114,7 @@ bool_ hp_player(int num)
 		}
 
 		/* Redraw */
-		p_ptr->redraw |= (PR_HP);
+		p_ptr->redraw |= (PR_FRAME);
 
 		/* Window stuff */
 		p_ptr->window |= (PW_PLAYER);
@@ -686,7 +686,7 @@ bool_ alchemy(void) /* Turns an object into gold, gain some of its value in a sh
 		p_ptr->au += price;
 
 		/* Redraw gold */
-		p_ptr->redraw |= (PR_GOLD);
+		p_ptr->redraw |= (PR_FRAME);
 
 		/* Window stuff */
 		p_ptr->window |= (PW_PLAYER);
@@ -2016,7 +2016,7 @@ bool_ detect_traps(int rad)
 	 * item is used and return FALSE there are none,
 	 * followed by current implementation --pelpel
 	 */
-	p_ptr->redraw |= (PR_DTRAP);
+	p_ptr->redraw |= (PR_FRAME);
 
 	/* Result -- see my comment above -- pelpel */
 	/* return (detect); */
@@ -5171,7 +5171,7 @@ bool_ genocide_aux(bool_ player_cast, char typ)
 		move_cursor_relative(p_ptr->py, p_ptr->px);
 
 		/* Redraw */
-		p_ptr->redraw |= (PR_HP);
+		p_ptr->redraw |= (PR_FRAME);
 
 		/* Window stuff */
 		p_ptr->window |= (PW_PLAYER);
@@ -5296,7 +5296,7 @@ bool_ mass_genocide(bool_ player_cast)
 		move_cursor_relative(p_ptr->py, p_ptr->px);
 
 		/* Redraw */
-		p_ptr->redraw |= (PR_HP);
+		p_ptr->redraw |= (PR_FRAME);
 
 		/* Window stuff */
 		p_ptr->window |= (PW_PLAYER);
@@ -6014,7 +6014,7 @@ void earthquake(int cy, int cx, int r)
 	p_ptr->update |= (PU_DISTANCE);
 
 	/* Update the health bar */
-	p_ptr->redraw |= (PR_HEALTH);
+	p_ptr->redraw |= (PR_FRAME);
 
 	/* Redraw map */
 	p_ptr->redraw |= (PR_MAP);
@@ -6573,7 +6573,7 @@ void teleport_swap(int dir)
 			p_ptr->update |= (PU_DISTANCE);
 
 			/* Redraw trap detection status */
-			p_ptr->redraw |= (PR_DTRAP);
+			p_ptr->redraw |= (PR_FRAME);
 
 			/* Window stuff */
 			p_ptr->window |= (PW_OVERHEAD);
@@ -6626,7 +6626,7 @@ void swap_position(int lty, int ltx)
 		p_ptr->update |= (PU_DISTANCE);
 
 		/* Redraw trap detection status */
-		p_ptr->redraw |= (PR_DTRAP);
+		p_ptr->redraw |= (PR_FRAME);
 
 		/* Window stuff */
 		p_ptr->window |= (PW_OVERHEAD);
@@ -6675,7 +6675,7 @@ void swap_position(int lty, int ltx)
 		p_ptr->update |= (PU_DISTANCE);
 
 		/* Redraw trap detection status */
-		p_ptr->redraw |= (PR_DTRAP);
+		p_ptr->redraw |= (PR_FRAME);
 
 		/* Window stuff */
 		p_ptr->window |= (PW_OVERHEAD);
@@ -7719,7 +7719,7 @@ bool_ heal_insanity(int val)
 			p_ptr->csane_frac = 0;
 		}
 
-		p_ptr->redraw |= PR_SANITY;
+		p_ptr->redraw |= (PR_FRAME);
 		p_ptr->window |= (PW_PLAYER);
 
 		if (val < 5)
@@ -7829,7 +7829,7 @@ bool_ passwall(int dir, bool_ safe)
 	p_ptr->update |= (PU_DISTANCE);
 
 	/* Redraw trap detection status */
-	p_ptr->redraw |= (PR_DTRAP);
+	p_ptr->redraw |= (PR_FRAME);
 
 	/* Window stuff */
 	p_ptr->window |= (PW_OVERHEAD);

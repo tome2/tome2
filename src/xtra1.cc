@@ -497,7 +497,7 @@ static void prt_sp(void)
 /*
  * Prints depth in stat area
  */
-static void prt_depth(void)
+static void prt_depth(int row, int col)
 {
 	char depths[32];
 	dungeon_info_type *d_ptr = &d_info[dungeon_type];
@@ -570,132 +570,9 @@ static void prt_depth(void)
 
 	/* Right-Adjust the "depth", and clear old values */
 	if (p_ptr->word_recall)
-		c_prt(TERM_ORANGE, format("%13s", depths), ROW_DEPTH, COL_DEPTH);
+		c_prt(TERM_ORANGE, format("%13s", depths), row, col);
 	else
-		prt(format("%13s", depths), ROW_DEPTH, COL_DEPTH);
-}
-
-
-/*
- * Prints status of hunger
- */
-static void prt_hunger(void)
-{
-	/* Fainting / Starving */
-	if (p_ptr->food < PY_FOOD_FAINT)
-	{
-		c_put_str(TERM_RED, "Weak  ", ROW_HUNGRY, COL_HUNGRY);
-	}
-
-	/* Weak */
-	else if (p_ptr->food < PY_FOOD_WEAK)
-	{
-		c_put_str(TERM_ORANGE, "Weak  ", ROW_HUNGRY, COL_HUNGRY);
-	}
-
-	/* Hungry */
-	else if (p_ptr->food < PY_FOOD_ALERT)
-	{
-		c_put_str(TERM_YELLOW, "Hungry", ROW_HUNGRY, COL_HUNGRY);
-	}
-
-	/* Normal */
-	else if (p_ptr->food < PY_FOOD_FULL)
-	{
-		c_put_str(TERM_L_GREEN, "      ", ROW_HUNGRY, COL_HUNGRY);
-	}
-
-	/* Full */
-	else if (p_ptr->food < PY_FOOD_MAX)
-	{
-		c_put_str(TERM_L_GREEN, "Full  ", ROW_HUNGRY, COL_HUNGRY);
-	}
-
-	/* Gorged */
-	else
-	{
-		c_put_str(TERM_GREEN, "Gorged", ROW_HUNGRY, COL_HUNGRY);
-	}
-}
-
-
-/*
- * Prints Blind status
- */
-static void prt_blind(void)
-{
-	if (p_ptr->blind)
-	{
-		c_put_str(TERM_ORANGE, "Blind", ROW_BLIND, COL_BLIND);
-	}
-	else
-	{
-		put_str("     ", ROW_BLIND, COL_BLIND);
-	}
-}
-
-
-/*
- * Prints Confusion status
- */
-static void prt_confused(void)
-{
-	if (p_ptr->confused)
-	{
-		c_put_str(TERM_ORANGE, "Conf", ROW_CONFUSED, COL_CONFUSED);
-	}
-	else
-	{
-		put_str("    ", ROW_CONFUSED, COL_CONFUSED);
-	}
-}
-
-
-/*
- * Prints Fear status
- */
-static void prt_afraid(void)
-{
-	if (p_ptr->afraid)
-	{
-		c_put_str(TERM_ORANGE, "Afraid", ROW_AFRAID, COL_AFRAID);
-	}
-	else
-	{
-		put_str("      ", ROW_AFRAID, COL_AFRAID);
-	}
-}
-
-
-/*
- * Prints Poisoned status
- */
-static void prt_poisoned(void)
-{
-	if (p_ptr->poisoned)
-	{
-		c_put_str(TERM_ORANGE, "Poison", ROW_POISONED, COL_POISONED);
-	}
-	else
-	{
-		put_str("      ", ROW_POISONED, COL_POISONED);
-	}
-}
-
-
-/*
- * Prints trap detection status
- */
-static void prt_dtrap(void)
-{
-	if (cave[p_ptr->py][p_ptr->px].info & CAVE_DETECT)
-	{
-		c_put_str(TERM_L_GREEN, "DTrap", ROW_DTRAP, COL_DTRAP);
-	}
-	else
-	{
-		put_str("     ", ROW_DTRAP, COL_DTRAP);
-	}
+		prt(format("%13s", depths), row, col);
 }
 
 
@@ -706,7 +583,7 @@ static void prt_dtrap(void)
  * This function was a major bottleneck when resting, so a lot of
  * the text formatting code was optimized in place below.
  */
-static void prt_state(void)
+static void prt_state(int row, int col)
 {
 	byte attr = TERM_WHITE;
 
@@ -811,14 +688,14 @@ static void prt_state(void)
 	}
 
 	/* Display the info (or blanks) */
-	c_put_str(attr, text, ROW_STATE, COL_STATE);
+	c_put_str(attr, text, row, col);
 }
 
 
 /*
  * Prints the speed of a character.			-CJS-
  */
-static void prt_speed(void)
+static void prt_speed(int row, int col)
 {
 	int i = p_ptr->pspeed;
 
@@ -843,58 +720,167 @@ static void prt_speed(void)
 	}
 
 	/* Display the speed */
-	c_put_str(attr, format("%-10s", buf), ROW_SPEED, COL_SPEED);
+	c_put_str(attr, format("%-10s", buf), row, col);
 }
 
 
-static void prt_study(void)
+
+/*
+ * Prints status line
+ */
+static void prt_status_line(void)
 {
-	if (p_ptr->skill_points)
+	int wid, hgt;
+	Term_get_size(&wid, &hgt);
+	int row = hgt - 1;
+
+	/* Fainting / Starving */
+	int col = 0;
+	if (p_ptr->food < PY_FOOD_FAINT)
 	{
-		put_str("Skill", ROW_STUDY, COL_STUDY);
+		c_put_str(TERM_RED, "Weak  ", row, col);
+	}
+	else if (p_ptr->food < PY_FOOD_WEAK)
+	{
+		c_put_str(TERM_ORANGE, "Weak  ", row, col);
+	}
+	else if (p_ptr->food < PY_FOOD_ALERT)
+	{
+		c_put_str(TERM_YELLOW, "Hungry", row, col);
+	}
+	else if (p_ptr->food < PY_FOOD_FULL)
+	{
+		c_put_str(TERM_L_GREEN, "      ", row, col);
+	}
+	else if (p_ptr->food < PY_FOOD_MAX)
+	{
+		c_put_str(TERM_L_GREEN, "Full  ", row, col);
 	}
 	else
 	{
-		put_str("     ", ROW_STUDY, COL_STUDY);
+		c_put_str(TERM_GREEN, "Gorged", row, col);
 	}
+
+	/* Blind */
+	col = 7;
+	if (p_ptr->blind)
+	{
+		c_put_str(TERM_ORANGE, "Blind", row, col);
+	}
+	else
+	{
+		put_str("     ", row, col);
+	}
+
+	/* Confusion */
+	col = 13;
+	if (p_ptr->confused)
+	{
+		c_put_str(TERM_ORANGE, "Conf", row, col);
+	}
+	else
+	{
+		put_str("    ", row, col);
+	}
+
+	/* Fear */
+        col = 18;
+	if (p_ptr->afraid)
+	{
+		c_put_str(TERM_ORANGE, "Afraid", row, col);
+	}
+	else
+	{
+		put_str("      ", row, col);
+	}
+
+	/* Poison */
+	col = 25;
+	if (p_ptr->poisoned)
+	{
+		c_put_str(TERM_ORANGE, "Poison", row, col);
+	}
+	else
+	{
+		put_str("      ", row, col);
+	}
+
+	/* Dtrap */
+	col = 32;
+	if (cave[p_ptr->py][p_ptr->px].info & CAVE_DETECT)
+	{
+		c_put_str(TERM_L_GREEN, "DTrap", row, col);
+	}
+	else
+	{
+		put_str("     ", row, col);
+	}
+
+	/* State */
+	col = 38;
+	prt_state(row, col);
+
+	/* Speed */
+	col = 49;
+	prt_speed(row, col);
+
+	/* "Study" */
+	col = 60;
+	if (p_ptr->skill_points)
+	{
+		put_str("Skill", row, col);
+	}
+	else
+	{
+		put_str("     ", row, col);
+	}
+
+	/* Depth */
+	col = wid - 14;
+	prt_depth(row, col);
 }
+
 
 
 static void prt_cut(void)
 {
 	int c = p_ptr->cut;
+	int hgt;
+	Term_get_size(nullptr, &hgt);
+	int row = hgt - 3;
+	int col = 0;
 
 	if (c > 1000)
 	{
-		c_put_str(TERM_L_RED, "Mortal wound", ROW_CUT, COL_CUT);
+		c_put_str(TERM_L_RED, "Mortal wound", row, col);
 	}
 	else if (c > 200)
 	{
-		c_put_str(TERM_RED, "Deep gash   ", ROW_CUT, COL_CUT);
+		c_put_str(TERM_RED, "Deep gash   ", row, col);
 	}
 	else if (c > 100)
 	{
-		c_put_str(TERM_RED, "Severe cut  ", ROW_CUT, COL_CUT);
+		c_put_str(TERM_RED, "Severe cut  ", row, col);
 	}
 	else if (c > 50)
 	{
-		c_put_str(TERM_ORANGE, "Nasty cut   ", ROW_CUT, COL_CUT);
+		c_put_str(TERM_ORANGE, "Nasty cut   ", row, col);
 	}
 	else if (c > 25)
 	{
-		c_put_str(TERM_ORANGE, "Bad cut     ", ROW_CUT, COL_CUT);
+		c_put_str(TERM_ORANGE, "Bad cut     ", row, col);
 	}
 	else if (c > 10)
 	{
-		c_put_str(TERM_YELLOW, "Light cut   ", ROW_CUT, COL_CUT);
+		c_put_str(TERM_YELLOW, "Light cut   ", row, col);
 	}
 	else if (c)
 	{
-		c_put_str(TERM_YELLOW, "Graze       ", ROW_CUT, COL_CUT);
+		c_put_str(TERM_YELLOW, "Graze       ", row, col);
 	}
 	else
 	{
-		put_str("            ", ROW_CUT, COL_CUT);
+		put_str("            ", row, col);
 	}
 }
 
@@ -903,22 +889,26 @@ static void prt_cut(void)
 static void prt_stun(void)
 {
 	int s = p_ptr->stun;
+	int hgt;
+	Term_get_size(nullptr, &hgt);
+	int row = hgt - 2;
+	int col = 0;
 
 	if (s > 100)
 	{
-		c_put_str(TERM_RED, "Knocked out ", ROW_STUN, COL_STUN);
+		c_put_str(TERM_RED, "Knocked out ", row, col);
 	}
 	else if (s > 50)
 	{
-		c_put_str(TERM_ORANGE, "Heavy stun  ", ROW_STUN, COL_STUN);
+		c_put_str(TERM_ORANGE, "Heavy stun  ", row, col);
 	}
 	else if (s)
 	{
-		c_put_str(TERM_ORANGE, "Stun        ", ROW_STUN, COL_STUN);
+		c_put_str(TERM_ORANGE, "Stun        ", row, col);
 	}
 	else
 	{
-		put_str("            ", ROW_STUN, COL_STUN);
+		put_str("            ", row, col);
 	}
 }
 
@@ -940,32 +930,37 @@ static void prt_stun(void)
  */
 static void health_redraw(void)
 {
+	int hgt;
+	Term_get_size(nullptr, &hgt);
+	int col = 0;
+	int row = hgt - 4;
+
 	/* Not tracking */
 	if (!health_who)
 	{
 		/* Erase the health bar */
-		Term_erase(COL_INFO, ROW_INFO, 12);
+		Term_erase(col, row, 12);
 	}
 
 	/* Tracking an unseen monster */
 	else if (!m_list[health_who].ml)
 	{
 		/* Indicate that the monster health is "unknown" */
-		Term_putstr(COL_INFO, ROW_INFO, 12, TERM_WHITE, "[----------]");
+		Term_putstr(col, row, 12, TERM_WHITE, "[----------]");
 	}
 
 	/* Tracking a hallucinatory monster */
 	else if (p_ptr->image)
 	{
 		/* Indicate that the monster health is "unknown" */
-		Term_putstr(COL_INFO, ROW_INFO, 12, TERM_WHITE, "[----------]");
+		Term_putstr(col, row, 12, TERM_WHITE, "[----------]");
 	}
 
 	/* Tracking a dead monster (???) */
 	else if (!m_list[health_who].hp < 0)
 	{
 		/* Indicate that the monster health is "unknown" */
-		Term_putstr(COL_INFO, ROW_INFO, 12, TERM_WHITE, "[----------]");
+		Term_putstr(col, row, 12, TERM_WHITE, "[----------]");
 	}
 
 	/* Tracking a visible monster */
@@ -1009,15 +1004,15 @@ static void health_redraw(void)
 		len = (pct < 10) ? 1 : (pct < 90) ? (pct / 10 + 1) : 10;
 
 		/* Default to "unknown" */
-		Term_putstr(COL_INFO, ROW_INFO, 12, TERM_WHITE, "[----------]");
+		Term_putstr(col, row, 12, TERM_WHITE, "[----------]");
 
 		/* Dump the current "health" (use '*' symbols) */
 		if (m_ptr->stunned) {
-			Term_putstr(COL_INFO + 1, ROW_INFO, len, attr, "ssssssssss");
+			Term_putstr(col + 1, row, len, attr, "ssssssssss");
 		} else if (m_ptr->confused) {
-			Term_putstr(COL_INFO + 1, ROW_INFO, len, attr, "cccccccccc");
+			Term_putstr(col + 1, row, len, attr, "cccccccccc");
 		} else {
-			Term_putstr(COL_INFO + 1, ROW_INFO, len, attr, "**********");
+			Term_putstr(col + 1, row, len, attr, "**********");
 		}
 	}
 }
@@ -1027,7 +1022,7 @@ static void health_redraw(void)
 /*
  * Display basic info (mostly left of map)
  */
-static void prt_frame_basic(void)
+static void prt_frame(void)
 {
 	int i;
 
@@ -1066,41 +1061,15 @@ static void prt_frame_basic(void)
 	/* Gold */
 	prt_gold();
 
-	/* Current depth */
-	prt_depth();
-
-	/* Special */
-	health_redraw();
-}
-
-
-/*
- * Display extra info (mostly below map)
- */
-static void prt_frame_extra(void)
-{
 	/* Cut/Stun */
 	prt_cut();
 	prt_stun();
 
-	/* Food */
-	prt_hunger();
+	/* Current depth */
+	prt_status_line();
 
-	/* Various */
-	prt_blind();
-	prt_confused();
-	prt_afraid();
-	prt_poisoned();
-	prt_dtrap();
-
-	/* State */
-	prt_state();
-
-	/* Speed */
-	prt_speed();
-
-	/* Study spells */
-	prt_study();
+	/* Special */
+	health_redraw();
 }
 
 
@@ -1666,7 +1635,7 @@ void calc_sanity(void)
 			p_ptr->csane_frac = 0;
 		}
 
-		p_ptr->redraw |= (PR_SANITY);
+		p_ptr->redraw |= (PR_FRAME);
 		p_ptr->window |= (PW_PLAYER);
 	}
 }
@@ -1818,7 +1787,7 @@ static void calc_mana(void)
 		}
 
 		/* Display mana later */
-		p_ptr->redraw |= (PR_MANA);
+		p_ptr->redraw |= (PR_FRAME);
 
 		/* Window stuff */
 		p_ptr->window |= (PW_PLAYER);
@@ -1964,7 +1933,7 @@ void calc_hitpoints(void)
 		p_ptr->mhp = mhp;
 
 		/* Display hitpoints (later) */
-		p_ptr->redraw |= (PR_HP);
+		p_ptr->redraw |= (PR_FRAME);
 
 		/* Window stuff */
 		p_ptr->window |= (PW_PLAYER);
@@ -3226,7 +3195,7 @@ void calc_bonuses(bool_ silent)
 			p_ptr->stat_top[i] = top;
 
 			/* Redisplay the stats later */
-			p_ptr->redraw |= (PR_STATS);
+			p_ptr->redraw |= (PR_FRAME);
 
 			/* Window stuff */
 			p_ptr->window |= (PW_PLAYER);
@@ -3242,7 +3211,7 @@ void calc_bonuses(bool_ silent)
 			p_ptr->stat_use[i] = use;
 
 			/* Redisplay the stats later */
-			p_ptr->redraw |= (PR_STATS);
+			p_ptr->redraw |= (PR_FRAME);
 
 			/* Window stuff */
 			p_ptr->window |= (PW_PLAYER);
@@ -3598,7 +3567,7 @@ void calc_bonuses(bool_ silent)
 		p_ptr->pspeed = 110;
 
 	/* Display the speed (if needed) */
-	if (p_ptr->pspeed != old_speed) p_ptr->redraw |= (PR_SPEED);
+	if (p_ptr->pspeed != old_speed) p_ptr->redraw |= (PR_FRAME);
 
 
 	/* Actual Modifier Bonuses (Un-inflate stat bonuses) */
@@ -3617,7 +3586,7 @@ void calc_bonuses(bool_ silent)
 	if ((p_ptr->dis_ac != old_dis_ac) || (p_ptr->dis_to_a != old_dis_to_a))
 	{
 		/* Redraw */
-		p_ptr->redraw |= (PR_ARMOR);
+		p_ptr->redraw |= (PR_FRAME);
 
 		/* Window stuff */
 		p_ptr->window |= (PW_PLAYER);
@@ -4323,182 +4292,10 @@ void redraw_stuff(void)
 	}
 
 
-	if (p_ptr->redraw & (PR_BASIC))
+	if (p_ptr->redraw & (PR_FRAME))
 	{
-		p_ptr->redraw &= ~(PR_BASIC);
-		p_ptr->redraw &= ~(PR_MISC | PR_TITLE | PR_STATS);
-		p_ptr->redraw &= ~(PR_LEV | PR_EXP | PR_GOLD);
-		p_ptr->redraw &= ~(PR_ARMOR | PR_HP | PR_MANA | PR_PIETY | PR_MH);
-		p_ptr->redraw &= ~(PR_DEPTH | PR_HEALTH);
-		prt_frame_basic();
-	}
-
-	if (p_ptr->redraw & (PR_MISC))
-	{
-		p_ptr->redraw &= ~(PR_MISC);
-		prt_field(rp_ptr->title + rp_name, ROW_RACE, COL_RACE);
-		prt_field(spp_ptr->title + c_name, ROW_CLASS, COL_CLASS);
-	}
-
-	if (p_ptr->redraw & (PR_TITLE))
-	{
-		p_ptr->redraw &= ~(PR_TITLE);
-		prt_title();
-	}
-
-	if (p_ptr->redraw & (PR_LEV))
-	{
-		p_ptr->redraw &= ~(PR_LEV);
-		prt_level();
-	}
-
-	if (p_ptr->redraw & (PR_EXP))
-	{
-		p_ptr->redraw &= ~(PR_EXP);
-		prt_exp();
-	}
-
-	if (p_ptr->redraw & (PR_STATS))
-	{
-		p_ptr->redraw &= ~(PR_STATS);
-		prt_stat(A_STR);
-		prt_stat(A_INT);
-		prt_stat(A_WIS);
-		prt_stat(A_DEX);
-		prt_stat(A_CON);
-		prt_stat(A_CHR);
-	}
-
-	if (p_ptr->redraw & (PR_ARMOR))
-	{
-		p_ptr->redraw &= ~(PR_ARMOR);
-		prt_ac();
-	}
-
-	if (p_ptr->redraw & (PR_HP))
-	{
-		p_ptr->redraw &= ~(PR_HP);
-		prt_hp();
-	}
-
-	if (p_ptr->redraw & (PR_MANA))
-	{
-		p_ptr->redraw &= ~(PR_MANA);
-		prt_sp();
-	}
-
-	if (p_ptr->redraw & (PR_PIETY))
-	{
-		p_ptr->redraw &= ~(PR_PIETY);
-		prt_piety();
-	}
-
-	if (p_ptr->redraw & (PR_MH))
-	{
-		p_ptr->redraw &= ~(PR_MH);
-		prt_mh();
-	}
-
-	if (p_ptr->redraw & (PR_GOLD))
-	{
-		p_ptr->redraw &= ~(PR_GOLD);
-		prt_gold();
-	}
-
-	if (p_ptr->redraw & (PR_DEPTH))
-	{
-		p_ptr->redraw &= ~(PR_DEPTH);
-		prt_depth();
-	}
-
-	if (p_ptr->redraw & (PR_HEALTH))
-	{
-		p_ptr->redraw &= ~(PR_HEALTH);
-		health_redraw();
-	}
-
-
-	if (p_ptr->redraw & (PR_EXTRA))
-	{
-		p_ptr->redraw &= ~(PR_EXTRA);
-		p_ptr->redraw &= ~(PR_CUT | PR_STUN);
-		p_ptr->redraw &= ~(PR_HUNGER);
-		p_ptr->redraw &= ~(PR_BLIND | PR_CONFUSED);
-		p_ptr->redraw &= ~(PR_AFRAID | PR_POISONED);
-		p_ptr->redraw &= ~(PR_STATE | PR_SPEED | PR_STUDY | PR_SANITY);
-		prt_frame_extra();
-	}
-
-	if (p_ptr->redraw & (PR_CUT))
-	{
-		p_ptr->redraw &= ~(PR_CUT);
-		prt_cut();
-	}
-
-	if (p_ptr->redraw & (PR_STUN))
-	{
-		p_ptr->redraw &= ~(PR_STUN);
-		prt_stun();
-	}
-
-	if (p_ptr->redraw & (PR_HUNGER))
-	{
-		p_ptr->redraw &= ~(PR_HUNGER);
-		prt_hunger();
-	}
-
-	if (p_ptr->redraw & (PR_BLIND))
-	{
-		p_ptr->redraw &= ~(PR_BLIND);
-		prt_blind();
-	}
-
-	if (p_ptr->redraw & (PR_CONFUSED))
-	{
-		p_ptr->redraw &= ~(PR_CONFUSED);
-		prt_confused();
-	}
-
-	if (p_ptr->redraw & (PR_AFRAID))
-	{
-		p_ptr->redraw &= ~(PR_AFRAID);
-		prt_afraid();
-	}
-
-	if (p_ptr->redraw & (PR_POISONED))
-	{
-		p_ptr->redraw &= ~(PR_POISONED);
-		prt_poisoned();
-	}
-
-	if (p_ptr->redraw & (PR_DTRAP))
-	{
-		p_ptr->redraw &= ~(PR_DTRAP);
-		prt_dtrap();
-	}
-
-	if (p_ptr->redraw & (PR_STATE))
-	{
-		p_ptr->redraw &= ~(PR_STATE);
-		prt_state();
-	}
-
-	if (p_ptr->redraw & (PR_SPEED))
-	{
-		p_ptr->redraw &= ~(PR_SPEED);
-		prt_speed();
-	}
-
-	if (p_ptr->redraw & (PR_STUDY))
-	{
-		p_ptr->redraw &= ~(PR_STUDY);
-		prt_study();
-	}
-
-	if (p_ptr->redraw & (PR_SANITY))
-	{
-		p_ptr->redraw &= ~(PR_SANITY);
-		prt_sane();
+		p_ptr->redraw &= ~(PR_FRAME);
+		prt_frame();
 	}
 }
 

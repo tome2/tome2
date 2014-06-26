@@ -1951,6 +1951,10 @@ errr Term_redraw_section(int x1, int y1, int x2, int y2)
 }
 
 
+void Term_bell()
+{
+	Term_xtra(TERM_XTRA_NOISE, 0);
+}
 
 /*** Access routines ***/
 
@@ -1974,8 +1978,15 @@ errr Term_get_cursor(int *v)
 errr Term_get_size(int *w, int *h)
 {
 	/* Access the cursor */
-	(*w) = Term->wid;
-	(*h) = Term->hgt;
+	if (w)
+	{
+		(*w) = Term->wid;
+	}
+
+	if (h)
+	{
+		(*h) = Term->hgt;
+	}
 
 	/* Success */
 	return (0);

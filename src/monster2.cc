@@ -1862,7 +1862,7 @@ void update_mon(int m_idx, bool_ full)
 			lite_spot(fy, fx);
 
 			/* Update health bar as needed */
-			if (health_who == m_idx) p_ptr->redraw |= (PR_HEALTH);
+			if (health_who == m_idx) p_ptr->redraw |= (PR_FRAME);
 
 			/* Update monster list window */
 			p_ptr->window |= (PW_M_LIST);
@@ -1905,7 +1905,7 @@ void update_mon(int m_idx, bool_ full)
 			lite_spot(fy, fx);
 
 			/* Update health bar as needed */
-			if (health_who == m_idx) p_ptr->redraw |= (PR_HEALTH);
+			if (health_who == m_idx) p_ptr->redraw |= (PR_FRAME);
 
 			/* Update monster list window */
 			p_ptr->window |= (PW_M_LIST);

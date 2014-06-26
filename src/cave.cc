@@ -4790,7 +4790,7 @@ void health_track(int m_idx)
 	health_who = m_idx;
 
 	/* Redraw (later) */
-	p_ptr->redraw |= (PR_HEALTH);
+	p_ptr->redraw |= (PR_FRAME);
 }
 
 
@@ -4843,7 +4843,7 @@ void disturb(int stop_search)
 		command_rep = 0;
 
 		/* Redraw the state (later) */
-		p_ptr->redraw |= (PR_STATE);
+		p_ptr->redraw |= (PR_FRAME);
 	}
 
 	/* Cancel Resting */
@@ -4853,7 +4853,7 @@ void disturb(int stop_search)
 		resting = 0;
 
 		/* Redraw the state (later) */
-		p_ptr->redraw |= (PR_STATE);
+		p_ptr->redraw |= (PR_FRAME);
 	}
 
 	/* Cancel running */
@@ -4876,7 +4876,7 @@ void disturb(int stop_search)
 		p_ptr->update |= (PU_BONUS);
 
 		/* Redraw the state */
-		p_ptr->redraw |= (PR_STATE);
+		p_ptr->redraw |= (PR_FRAME);
 	}
 
 	/* Flush the input if requested */

@@ -750,7 +750,7 @@ static bool_ player_allow_corruption(int corruption_idx)
 static void player_set_corruption(int c, bool_ set)
 {
 	p_ptr->corruptions[c] = set;
-	p_ptr->redraw = p_ptr->redraw | PR_BASIC;
+	p_ptr->redraw = p_ptr->redraw | PR_FRAME;
 	p_ptr->update = p_ptr->update | PU_BONUS | PU_TORCH | PU_BODY | PU_POWERS;
 
 }

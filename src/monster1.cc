@@ -1616,9 +1616,11 @@ void monster_description_out(int r_idx, int ego)
 void display_roff(int r_idx, int ego)
 {
 	int y;
+	int hgt;
+	Term_get_size(nullptr, &hgt);
 
 	/* Erase the window */
-	for (y = 0; y < Term->hgt; y++)
+	for (y = 0; y < hgt; y++)
 	{
 		/* Erase the line */
 		Term_erase(0, y, 255);

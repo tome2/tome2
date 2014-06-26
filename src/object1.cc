@@ -4613,8 +4613,10 @@ void show_inven_aux(bool_ mirror, bool_ everything)
 	/* Shadow windows */
 	if (mirror)
 	{
+		int hgt;
+		Term_get_size(nullptr, &hgt);
 		/* Erase the rest of the window */
-		for (j = row + k; j < Term->hgt; j++)
+		for (j = row + k; j < hgt; j++)
 		{
 			/* Erase the line */
 			Term_erase(0, j, 255);
@@ -4849,8 +4851,10 @@ void show_equip_aux(bool_ mirror, bool_ everything)
 	/* Shadow windows */
 	if (mirror)
 	{
+		int hgt;
+		Term_get_size(nullptr, &hgt);
 		/* Erase the rest of the window */
-		for (j = row + k; j < Term->hgt; j++)
+		for (j = row + k; j < hgt; j++)
 		{
 			/* Erase the line */
 			Term_erase(0, j, 255);
@@ -6029,7 +6033,7 @@ int wear_ammo(object_type *o_ptr)
 	p_ptr->update |= (PU_MANA);
 
 	/* Redraw monster hitpoint */
-	p_ptr->redraw |= (PR_MH);
+	p_ptr->redraw |= (PR_FRAME);
 
 	/* Window stuff */
 	p_ptr->window |= (PW_INVEN | PW_EQUIP | PW_PLAYER);
@@ -6263,7 +6267,7 @@ void py_pickup_floor(int pickup)
 			p_ptr->au += o_ptr->pval;
 
 			/* Redraw gold */
-			p_ptr->redraw |= (PR_GOLD);
+			p_ptr->redraw |= (PR_FRAME);
 
 			/* Window stuff */
 			p_ptr->window |= (PW_PLAYER);

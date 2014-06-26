@@ -162,7 +162,7 @@ static bool_ quest_ultra_good_death_hook(const char *fmt)
 		quest[QUEST_ULTRA_GOOD].status = QUEST_STATUS_FINISHED;
 
 		/* Redraw the "title" */
-		p_ptr->redraw |= (PR_TITLE);
+		p_ptr->redraw |= (PR_FRAME);
 
 		/* Congratulations */
 		cmsg_print(TERM_L_GREEN, "****** CONGRATULATIONS ******");
