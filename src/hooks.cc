@@ -162,7 +162,7 @@ static bool_ vprocess_hooks_return (int h_idx, const char *ret, const char *fmt,
 
 			/* Push all args in the pile */
 			i = 0;
-			COPY(&real_ap, ap, va_list);
+			memcpy(&real_ap, ap, sizeof(va_list));
 			while (fmt[i])
 			{
 				switch (fmt[i])

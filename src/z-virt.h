@@ -68,11 +68,6 @@ extern "C" {
 	(memset((char*)(P),0,SIZE(T)))
 
 
-/* Load a thing of type T, at location P1, from another, at location P2 */
-#define COPY(P1,P2,T) \
-	(memcpy((char*)(P1),(char*)(P2),SIZE(T)))
-
-
 /* Free an array of N things of type T at P, return NULL */
 #define C_FREE(P,N,T) \
 	(rnfree(P,C_SIZE(N,T)))

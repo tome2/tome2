@@ -5777,8 +5777,7 @@ void switch_subrace(int racem, bool_ copy_old)
 		s32b old_title = race_mod_info[SUBRACE_SAVE].title;
 		s32b old_desc = race_mod_info[SUBRACE_SAVE].desc;
 
-		COPY(&race_mod_info[SUBRACE_SAVE], &race_mod_info[p_ptr->pracem], player_race_mod);
-
+		race_mod_info[SUBRACE_SAVE] = race_mod_info[p_ptr->pracem];
 		race_mod_info[SUBRACE_SAVE].title = old_title;
 		race_mod_info[SUBRACE_SAVE].desc = old_desc;
 		strcpy(race_mod_info[SUBRACE_SAVE].title + rmp_name, race_mod_info[p_ptr->pracem].title + rmp_name);

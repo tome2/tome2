@@ -242,7 +242,7 @@ monster_race* race_info_idx(int r_idx, int ego)
 	if (!ego) return r_ptr;
 
 	/* Copy the base monster */
-	COPY(nr_ptr, r_ptr, monster_race);
+	*nr_ptr = *r_ptr;
 
 	/* Adjust the values */
 	for (i = 0; i < 4; i++)
@@ -610,7 +610,7 @@ static void compact_monsters_aux(int i1, int i2)
 	}
 
 	/* Structure copy */
-	COPY(&m_list[i2], &m_list[i1], monster_type);
+	m_list[i2] = m_list[i1];
 
 	/* Wipe the hole */
 	memset(&m_list[i1], 0, sizeof(monster_type));
