@@ -65,17 +65,7 @@ struct term_win
 /*
  * An actual "term" structure
  *
- *	- Extra "user" info (used by application)
- *
  *	- Extra "data" info (used by implementation)
- *
- *
- *	- Flag "user_flag"
- *	  An extra "user" flag (used by application)
- *
- *
- *	- Flag "data_flag"
- *	  An extra "data" flag (used by implementation)
  *
  *
  *	- Flag "active_flag"
@@ -104,9 +94,6 @@ struct term_win
  *
  *	- Flag "always_text"
  *	  Use the "Term_text()" routine for invisible text
- *
- *	- Flag "unused_flag"
- *	  Reserved for future use
  *
  *	- Flag "never_bored"
  *	  Never call the "TERM_XTRA_BORED" action
@@ -166,13 +153,7 @@ typedef struct term term;
 
 struct term
 {
-	vptr user;
-
 	vptr data;
-
-	bool_ user_flag;
-
-	bool_ data_flag;
 
 	bool_ active_flag;
 	bool_ mapped_flag;
@@ -183,7 +164,6 @@ struct term
 	bool_ always_pict;
 	bool_ higher_pict;
 	bool_ always_text;
-	bool_ unused_flag;
 	bool_ never_bored;
 	bool_ never_frosh;
 
@@ -191,10 +171,8 @@ struct term
 	char char_blank;
 
 	char *key_queue;
-
 	u16b key_head;
 	u16b key_tail;
-	u16b key_xtra;
 	u16b key_size;
 
 	byte wid;
