@@ -1445,16 +1445,6 @@ static void term_data_redraw(term_data *td)
 
 
 /*
- * Interact with the User
- */
-static errr Term_user_win(int n)
-{
-	/* Success */
-	return (0);
-}
-
-
-/*
  * React to global changes
  */
 static errr Term_xtra_win_react(void)
@@ -2202,7 +2192,6 @@ static void term_data_link(term_data *td)
 	t->char_blank = ' ';
 
 	/* Prepare the template hooks */
-	t->user_hook = Term_user_win;
 	t->xtra_hook = Term_xtra_win;
 	t->curs_hook = Term_curs_win;
 	t->wipe_hook = Term_wipe_win;

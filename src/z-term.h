@@ -215,8 +215,6 @@ struct term
 	void (*init_hook)(term *t);
 	void (*nuke_hook)(term *t);
 
-	errr (*user_hook)(int n);
-
 	errr (*xtra_hook)(int n, int v);
 
 	errr (*curs_hook)(int x, int y);
@@ -280,7 +278,6 @@ extern term *Term;
 
 /**** Available Functions ****/
 
-extern errr Term_user(int n);
 extern errr Term_xtra(int n, int v);
 extern long Term_xtra_long;
 

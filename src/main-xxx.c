@@ -185,28 +185,6 @@ static void Term_nuke_xxx(term *t)
 
 
 /*
- * Do a "user action" on the current "term"
- *
- * This function allows the visual module to do implementation defined
- * things when the user activates the "system defined command" command.
- *
- * This function is normally not used.
- *
- * In general, this function should return zero if the action is successfully
- * handled, and non-zero if the action is unknown or incorrectly handled.
- */
-static errr Term_user_xxx(int n)
-{
-	term_data *td = (term_data*)(Term->data);
-
-	/* XXX XXX XXX */
-
-	/* Unknown */
-	return (1);
-}
-
-
-/*
  * Do a "special thing" to the current "term"
  *
  * This function must react to a large number of possible arguments, each
@@ -654,7 +632,6 @@ static void term_data_link(int i)
 	td->t->nuke_hook = Term_nuke_xxx;
 
 	/* Prepare the template hooks */
-	td->t->user_hook = Term_user_xxx;
 	td->t->xtra_hook = Term_xtra_xxx;
 	td->t->curs_hook = Term_curs_xxx;
 	td->t->wipe_hook = Term_wipe_xxx;
