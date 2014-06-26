@@ -928,12 +928,6 @@ cptr ANGBAND_DIR_INFO;
 cptr ANGBAND_DIR_MODULES;
 
 /*
- * Patches, contains one subdir per patch with a patch.lua file
- * in it and a patch_init() function in it
- */
-cptr ANGBAND_DIR_PATCH;
-
-/*
  * Textual template files for the plot files (ascii)
  * These files are portable between platforms
  */
@@ -944,12 +938,6 @@ cptr ANGBAND_DIR_NOTE;
  * These files are portable between platforms
  */
 cptr ANGBAND_DIR_SAVE;
-
-/*
- * Scripts.
- * These files are portable between platforms
- */
-cptr ANGBAND_DIR_SCPT;
 
 /*
  * Default "preference" files (ascii)

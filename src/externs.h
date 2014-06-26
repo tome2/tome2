@@ -438,8 +438,6 @@ extern cptr ANGBAND_DIR_INFO;
 extern cptr ANGBAND_DIR_MODULES;
 extern cptr ANGBAND_DIR_NOTE;
 extern cptr ANGBAND_DIR_SAVE;
-extern cptr ANGBAND_DIR_SCPT;
-extern cptr ANGBAND_DIR_PATCH;
 extern cptr ANGBAND_DIR_PREF;
 extern cptr ANGBAND_DIR_USER;
 extern cptr ANGBAND_DIR_XTRA;
@@ -2243,7 +2241,6 @@ extern void init_lua_init(void);
 extern void status_main();
 
 /* modules.c */
-extern void module_reset_dir(cptr dir, cptr new_path);
 extern cptr force_module;
 extern bool_ select_module(void);
 extern bool_ module_savefile_loadable(cptr savefile_mod);

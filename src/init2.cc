@@ -88,9 +88,7 @@ void init_file_paths(char *path)
 	string_free(ANGBAND_DIR_MODULES);
 	string_free(ANGBAND_DIR_NOTE);
 	string_free(ANGBAND_DIR_SAVE);
-	string_free(ANGBAND_DIR_SCPT);
 	string_free(ANGBAND_DIR_PREF);
-	string_free(ANGBAND_DIR_PATCH);
 	string_free(ANGBAND_DIR_USER);
 	string_free(ANGBAND_DIR_XTRA);
 
@@ -158,14 +156,6 @@ void init_file_paths(char *path)
 	/* Build a path name */
 	strcpy(tail, "mods");
 	ANGBAND_DIR_MODULES = string_make(path);
-
-	/* Build a path name */
-	strcpy(tail, "patch");
-	ANGBAND_DIR_PATCH = string_make(path);
-
-	/* Build a path name */
-	strcpy(tail, "scpt");
-	ANGBAND_DIR_SCPT = string_make(path);
 
 	/* Build a path name */
 	strcpy(tail, "pref");

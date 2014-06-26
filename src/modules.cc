@@ -24,7 +24,7 @@ static void module_reset_dir_aux(cptr *dir, cptr new_path)
 		quit(format("Unable to create module dir %s\n", *dir));
 }
 
-void module_reset_dir(cptr dir, cptr new_path)
+static void module_reset_dir(cptr dir, cptr new_path)
 {
 	cptr *d = 0;
 	char buf[1025];
@@ -36,8 +36,6 @@ void module_reset_dir(cptr dir, cptr new_path)
 	if (!strcmp(dir, "file")) d = &ANGBAND_DIR_FILE;
 	if (!strcmp(dir, "help")) d = &ANGBAND_DIR_HELP;
 	if (!strcmp(dir, "info")) d = &ANGBAND_DIR_INFO;
-	if (!strcmp(dir, "scpt")) d = &ANGBAND_DIR_SCPT;
-	if (!strcmp(dir, "patch")) d = &ANGBAND_DIR_PATCH;
 	if (!strcmp(dir, "pref")) d = &ANGBAND_DIR_PREF;
 	if (!strcmp(dir, "xtra")) d = &ANGBAND_DIR_XTRA;
 	if (!strcmp(dir, "user")) d = &ANGBAND_DIR_USER;
@@ -157,7 +155,6 @@ static void init_module(module_type *module_ptr)
 		module_reset_dir("help", dir);
 		module_reset_dir("note", dir);
 		module_reset_dir("save", dir);
-		module_reset_dir("scpt", dir);
 		module_reset_dir("user", dir);
 		module_reset_dir("pref", dir);
 	}
