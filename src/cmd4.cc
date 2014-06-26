@@ -3029,127 +3029,106 @@ void do_cmd_load_screen(void)
 
 
 /*
- * Redefinable "save_screen" action
- */
-void (*screendump_aux)(void) = NULL;
-
-
-
-
-
-
-/*
  * Hack -- save a screen dump to a file
  */
 void do_cmd_save_screen(void)
 {
-	/* Do we use a special screendump function ? */
-	if (screendump_aux)
+	int y, x;
+	int wid, hgt;
+
+	byte a = 0;
+	char c = ' ';
+
+	FILE *fff;
+
+	char buf[1024];
+
+
+	/* Build the filename */
+	path_build(buf, 1024, ANGBAND_DIR_USER, "dump.txt");
+
+	/* File type is "TEXT" */
+	FILE_TYPE(FILE_TYPE_TEXT);
+
+	/* Append to the file */
+	fff = my_fopen(buf, "w");
+
+	/* Oops */
+	if (!fff) return;
+
+
+	/* Retrieve the current screen size */
+	Term_get_size(&wid, &hgt);
+
+	/* Enter "icky" mode */
+	character_icky = TRUE;
+
+	/* Save the screen */
+	Term_save();
+
+
+	/* Dump the screen */
+	for (y = 0; y < hgt; y++)
 	{
-		/* Dump the screen to a graphics file */
-		(*screendump_aux)();
-	}
-
-	/* Dump the screen as text */
-	else
-	{
-		int y, x;
-		int wid, hgt;
-
-		byte a = 0;
-		char c = ' ';
-
-		FILE *fff;
-
-		char buf[1024];
-
-
-		/* Build the filename */
-		path_build(buf, 1024, ANGBAND_DIR_USER, "dump.txt");
-
-		/* File type is "TEXT" */
-		FILE_TYPE(FILE_TYPE_TEXT);
-
-		/* Append to the file */
-		fff = my_fopen(buf, "w");
-
-		/* Oops */
-		if (!fff) return;
-
-
-		/* Retrieve the current screen size */
-		Term_get_size(&wid, &hgt);
-
-		/* Enter "icky" mode */
-		character_icky = TRUE;
-
-		/* Save the screen */
-		Term_save();
-
-
-		/* Dump the screen */
-		for (y = 0; y < hgt; y++)
+		/* Dump each row */
+		for (x = 0; x < wid; x++)
 		{
-			/* Dump each row */
-			for (x = 0; x < wid; x++)
-			{
-				/* Get the attr/char */
-				(void)(Term_what(x, y, &a, &c));
+			/* Get the attr/char */
+			(void)(Term_what(x, y, &a, &c));
 
-				/* Dump it */
-				buf[x] = c;
-			}
-
-			/* Terminate */
-			buf[x] = '\0';
-
-			/* End the row */
-			fprintf(fff, "%s\n", buf);
+			/* Dump it */
+			buf[x] = c;
 		}
 
-		/* Skip a line */
-		fprintf(fff, "\n");
+		/* Terminate */
+		buf[x] = '\0';
+
+		/* End the row */
+		fprintf(fff, "%s\n", buf);
+	}
+
+	/* Skip a line */
+	fprintf(fff, "\n");
 
 
-		/* Dump the screen */
-		for (y = 0; y < hgt; y++)
+	/* Dump the screen */
+	for (y = 0; y < hgt; y++)
+	{
+		/* Dump each row */
+		for (x = 0; x < wid; x++)
 		{
-			/* Dump each row */
-			for (x = 0; x < wid; x++)
-			{
-				/* Get the attr/char */
-				(void)(Term_what(x, y, &a, &c));
+			/* Get the attr/char */
+			(void)(Term_what(x, y, &a, &c));
 
-				/* Dump it */
-				buf[x] = hack[a & 0x0F];
-			}
-
-			/* Terminate */
-			buf[x] = '\0';
-
-			/* End the row */
-			fprintf(fff, "%s\n", buf);
+			/* Dump it */
+			buf[x] = hack[a & 0x0F];
 		}
 
-		/* Skip a line */
-		fprintf(fff, "\n");
+		/* Terminate */
+		buf[x] = '\0';
 
-
-		/* Close it */
-		my_fclose(fff);
-
-
-		/* Message */
-		msg_print("Screen dump saved.");
-		msg_print(NULL);
-
-
-		/* Restore the screen */
-		Term_load();
-
-		/* Leave "icky" mode */
-		character_icky = FALSE;
+		/* End the row */
+		fprintf(fff, "%s\n", buf);
 	}
+
+	/* Skip a line */
+	fprintf(fff, "\n");
+
+
+	/* Close it */
+	my_fclose(fff);
+
+
+	/* Message */
+	msg_print("Screen dump saved.");
+	msg_print(NULL);
+
+
+	/* Restore the screen */
+	Term_load();
+
+	/* Leave "icky" mode */
+	character_icky = FALSE;
 }
 
 
