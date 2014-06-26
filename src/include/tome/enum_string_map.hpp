@@ -1,5 +1,4 @@
-#ifndef H_ae6d0de3_c72e_4e67_9da2_975283fbd009
-#define H_ae6d0de3_c72e_4e67_9da2_975283fbd009
+#pragma once
 
 #include <boost/bimap.hpp>
 #include <boost/noncopyable.hpp>
@@ -54,5 +53,3 @@ public:
 		return true;
 	}
 };
-
-#endif

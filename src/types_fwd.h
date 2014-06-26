@@ -1,5 +1,4 @@
-#ifndef H_8f0f494f_532d_4cfc_9578_bd4c6cff5953
-#define H_8f0f494f_532d_4cfc_9578_bd4c6cff5953
+#pragma once
 
 #ifdef __cplusplus
 extern "C" {
@@ -100,6 +99,4 @@ struct mimic_form_type;
 
 #ifdef __cplusplus
 }
-#endif
-
 #endif
