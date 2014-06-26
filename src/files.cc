@@ -4867,7 +4867,7 @@ void display_scores(int from, int to)
 void show_highclass(int building)
 {
 
-	register int i = 0, j, m = 0;
+	int i = 0, j, m = 0;
 	int pr, pc, clev, al;
 	high_score the_score;
 	char buf[1024], out_val[256];
@@ -4987,7 +4987,7 @@ void show_highclass(int building)
  */
 void race_score(int race_num)
 {
-	register int i = 0, j, m = 0;
+	int i = 0, j, m = 0;
 	int pr, clev, lastlev;
 	high_score the_score;
 	char buf[1024], out_val[256], tmp_str[80];

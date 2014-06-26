@@ -8074,7 +8074,7 @@ static bool_ cave_gen(void)
 static void build_arena(void)
 {
 	int yval, y_height, y_depth, xval, x_left, x_right;
-	register int i, j;
+	int i, j;
 
 	yval = SCREEN_HGT / 2;
 	xval = SCREEN_WID / 2;
