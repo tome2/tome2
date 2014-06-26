@@ -432,9 +432,6 @@ errr Term_user(int n)
  * And *hacky* get a return code
  */
 long Term_xtra_long;
-char scansubdir_dir[1024];
-int scansubdir_max = 0;
-cptr scansubdir_result[255];
 errr Term_xtra(int n, int v)
 {
 	/* Verify the hook */

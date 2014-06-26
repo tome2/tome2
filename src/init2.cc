@@ -1639,12 +1639,6 @@ static void init_basic()
 
 	/* Extended trigger macros */
 	cli_info = make_array<cli_comm>(CLI_MAX);
-
-	/* Wipe the directory list */
-	for (i = 0; i < 255; i++)
-	{
-		scansubdir_result[i] = NULL;
-	}
 }
 
 

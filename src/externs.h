@@ -1927,7 +1927,6 @@ extern void enter_quest(void);
 extern void select_bounties(void);
 
 /* util.c */
-extern void scansubdir(cptr dir);
 extern s32b rescale(s32b x, s32b max, s32b new_max);
 extern bool_ input_box(cptr text, int y, int x, char *buf, int max);
 extern void draw_box(int y, int x, int h, int w);

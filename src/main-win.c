@@ -1824,30 +1824,6 @@ static errr Term_xtra_win(int n, int v)
 			return 0;
 		}
 
-		/*
-		 * Scans for subdirectories in a directory "scansubdir_dir"
-		 * and place teh result in "scansubdir_result/scansubdir_max"
-		 */
-	case TERM_XTRA_SCANSUBDIR:
-		{
-			BOOL ok;
-			HANDLE h;
-			WIN32_FIND_DATA fd;
-			for (h = FindFirstFile(format("%s\\*", scansubdir_dir), &fd), ok = 1;
-			                h != INVALID_HANDLE_VALUE && ok;
-			                ok = FindNextFile(h, &fd))
-			{
-				if ((fd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) && (strcmp(fd.cFileName, ".")) && (strcmp(fd.cFileName, "..")))
-				{
-					string_free(scansubdir_result[scansubdir_max]);
-					scansubdir_result[scansubdir_max] = string_make(fd.cFileName);
-					scansubdir_max++;
-				}
-			}
-
-			return 0;
-		}
-
 		/* Rename main window */
 	case TERM_XTRA_RENAME_MAIN_WIN:
 		SetWindowText(get_main_hwnd(), angband_term_name[0]); return (0);

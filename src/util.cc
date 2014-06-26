@@ -3901,13 +3901,6 @@ s32b rescale(s32b x, s32b max, s32b new_max)
 	return (x * new_max) / max;
 }
 
-/* Nicer wrapper around TERM_XTRA_SCANSUBDIR */
-void scansubdir(cptr dir)
-{
-	strnfmt(scansubdir_dir, 1024, "%s", dir);
-	Term_xtra(TERM_XTRA_SCANSUBDIR, 0);
-}
-
 /*
  * Timers
  */
