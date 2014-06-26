@@ -5,8 +5,8 @@
 #include "z-form.h"
 
 #include "z-util.h"
-#include "z-virt.h"
 
+#include <stdlib.h>
 
 /*
  * Here is some information about the routines in this file.
@@ -561,13 +561,17 @@ uint vstrnfmt(char *buf, uint max, cptr fmt, va_list vp)
 static char *vformat(cptr fmt, va_list vp)
 {
 	static char *format_buf = NULL;
-	static huge format_len = 0;
+	static size_t format_len = 0;
 
 	/* Initial allocation */
 	if (!format_buf)
 	{
 		format_len = 1024;
-		C_MAKE(format_buf, format_len, char);
+		format_buf = calloc(format_len, sizeof(char));
+		if (format_buf == NULL)
+		{
+			abort(); // Nothing sensible we can do
+		}
 	}
 
 	/* Null format yields last result */
@@ -585,9 +589,13 @@ static char *vformat(cptr fmt, va_list vp)
 		if (len < format_len - 1) break;
 
 		/* Grow the buffer */
-		C_KILL(format_buf, format_len, char);
+		free(format_buf);
 		format_len = format_len * 2;
-		C_MAKE(format_buf, format_len, char);
+		format_buf = calloc(format_len, sizeof(char));
+		if (format_buf == NULL)
+		{
+			abort(); // Nothing sensible we can do
+		}
 	}
 
 	/* Return the new buffer */
