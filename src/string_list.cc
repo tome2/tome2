@@ -19,7 +19,12 @@ void string_list_init(string_list *sl, cptr s)
 {
 	assert(sl != NULL);
 
-	sl->s = string_make(s);
+	sl->s = nullptr;
+	if (s)
+	{
+		sl->s = strdup(s);
+	}
+
 	sl->next = NULL;
 }
 
@@ -31,10 +36,8 @@ void string_list_destroy(string_list *sl)
 	assert(sl != NULL);
 
 	/* Free contained string */
-	if (sl->s) {
-		string_free(sl->s);
-		sl->s = NULL;
-	}
+	free(sl->s);
+	sl->s = NULL;
 
 	/* We do NOT free the rest of the list. */
 	sl->next = NULL;

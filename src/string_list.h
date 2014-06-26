@@ -13,7 +13,7 @@ extern "C" {
 typedef struct string_list string_list;
 struct string_list {
 	/* The string list owns the string */
-	cptr s;
+	char *s;
 	/* Next */
 	string_list *next;
 };

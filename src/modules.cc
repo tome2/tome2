@@ -9,15 +9,15 @@
 #include "angband.h"
 #include "hooks.h"
 
-static void module_reset_dir_aux(cptr *dir, cptr new_path)
+static void module_reset_dir_aux(char **dir, cptr new_path)
 {
 	char buf[1024];
 
 	/* Build the new path */
 	strnfmt(buf, sizeof (buf), "%s%s%s", *dir, PATH_SEP, new_path);
 
-	string_free(*dir);
-	*dir = string_make(buf);
+	free(*dir);
+	*dir = strdup(buf);
 
 	/* Make it if needed */
 	if (!private_check_user_directory(*dir))
@@ -26,7 +26,7 @@ static void module_reset_dir_aux(cptr *dir, cptr new_path)
 
 static void module_reset_dir(cptr dir, cptr new_path)
 {
-	cptr *d = 0;
+	char **d = 0;
 	char buf[1025];
 
 	if (!strcmp(dir, "core")) d = &ANGBAND_DIR_CORE;
@@ -40,18 +40,20 @@ static void module_reset_dir(cptr dir, cptr new_path)
 	if (!strcmp(dir, "xtra")) d = &ANGBAND_DIR_XTRA;
 	if (!strcmp(dir, "user")) d = &ANGBAND_DIR_USER;
 	if (!strcmp(dir, "note")) d = &ANGBAND_DIR_NOTE;
+
 	if (
 	    !strcmp(dir, "user") ||
-	    !strcmp(dir, "note") ||
-	    !strcmp(dir, "cmov"))
+	    !strcmp(dir, "note"))
 	{
 		char user_path[1024];
 		/* copied from init_file_paths */
 		path_parse(user_path, 1024, PRIVATE_USER_PATH);
 		strcat(user_path, USER_PATH_VERSION);
 		strnfmt(buf, 1024, "%s%s%s", user_path, PATH_SEP, new_path);
-		string_free(*d);
-		*d = string_make(buf);
+
+		free(*d);
+		*d = strdup(buf);
+
 		// Make it if needed */
 		if (!private_check_user_directory(*d))
 		{
@@ -67,8 +69,8 @@ static void module_reset_dir(cptr dir, cptr new_path)
 		/* Build the new path */
 		strnfmt(buf, 1024, "%s%s%s%s%s", ANGBAND_DIR_MODULES, PATH_SEP, new_path, PATH_SEP, dir);
 
-		string_free(*d);
-		*d = string_make(buf);
+		free(*d);
+		*d = strdup(buf);
 	}
 }
 
@@ -207,7 +209,8 @@ bool_ select_module()
 	{
 		/* Process the module */
 		init_module(&modules[sel]);
-		game_module = string_make(modules[sel].meta.name);
+
+		game_module = modules[sel].meta.name;
 
 		activate_module(sel);
 
@@ -277,7 +280,8 @@ bool_ select_module()
 
 			/* Process the module */
 			init_module(&modules[x]);
-			game_module = string_make(modules[x].meta.name);
+
+			game_module = modules[x].meta.name;
 
 			activate_module(x);
 

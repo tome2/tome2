@@ -130,57 +130,57 @@ static void change_path(cptr info)
 	{
 	case 'f':
 		{
-			string_free(ANGBAND_DIR_FILE);
-			ANGBAND_DIR_FILE = string_make(s + 1);
+			free(ANGBAND_DIR_FILE);
+			ANGBAND_DIR_FILE = strdup(s + 1);
 			break;
 		}
 
 	case 'h':
 		{
-			string_free(ANGBAND_DIR_HELP);
-			ANGBAND_DIR_HELP = string_make(s + 1);
+			free(ANGBAND_DIR_HELP);
+			ANGBAND_DIR_HELP = strdup(s + 1);
 			break;
 		}
 
 	case 'i':
 		{
-			string_free(ANGBAND_DIR_INFO);
-			ANGBAND_DIR_INFO = string_make(s + 1);
+			free(ANGBAND_DIR_INFO);
+			ANGBAND_DIR_INFO = strdup(s + 1);
 			break;
 		}
 
 	case 'u':
 		{
-			string_free(ANGBAND_DIR_USER);
-			ANGBAND_DIR_USER = string_make(s + 1);
+			free(ANGBAND_DIR_USER);
+			ANGBAND_DIR_USER = strdup(s + 1);
 			break;
 		}
 
 	case 'x':
 		{
-			string_free(ANGBAND_DIR_XTRA);
-			ANGBAND_DIR_XTRA = string_make(s + 1);
+			free(ANGBAND_DIR_XTRA);
+			ANGBAND_DIR_XTRA = strdup(s + 1);
 			break;
 		}
 
 	case 'd':
 		{
-			string_free(ANGBAND_DIR_DATA);
-			ANGBAND_DIR_DATA = string_make(s + 1);
+			free(ANGBAND_DIR_DATA);
+			ANGBAND_DIR_DATA = strdup(s + 1);
 			break;
 		}
 
 	case 'e':
 		{
-			string_free(ANGBAND_DIR_EDIT);
-			ANGBAND_DIR_EDIT = string_make(s + 1);
+			free(ANGBAND_DIR_EDIT);
+			ANGBAND_DIR_EDIT = strdup(s + 1);
 			break;
 		}
 
 	case 's':
 		{
-			string_free(ANGBAND_DIR_SAVE);
-			ANGBAND_DIR_SAVE = string_make(s + 1);
+			free(ANGBAND_DIR_SAVE);
+			ANGBAND_DIR_SAVE = strdup(s + 1);
 			break;
 		}
 
@@ -328,7 +328,7 @@ int main(int argc, char *argv[])
 		case 'M':
 			{
 				if (!argv[i][2]) goto usage;
-				force_module = string_make(&argv[i][2]);
+				force_module = &argv[i][2];
 				break;
 			}
 

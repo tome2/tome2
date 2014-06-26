@@ -1408,7 +1408,7 @@ errr macro_add(cptr pat, cptr act)
 	if (n >= 0)
 	{
 		/* Free the old macro action */
-		string_free(macro__act[n]);
+		free(macro__act[n]);
 	}
 
 	/* Create a new macro */
@@ -1418,11 +1418,11 @@ errr macro_add(cptr pat, cptr act)
 		n = macro__num++;
 
 		/* Save the pattern */
-		macro__pat[n] = string_make(pat);
+		macro__pat[n] = strdup(pat);
 	}
 
 	/* Save the action */
-	macro__act[n] = string_make(act);
+	macro__act[n] = strdup(act);
 
 	/* Efficiency */
 	macro__use[(byte)(pat[0])] = TRUE;

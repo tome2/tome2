@@ -413,12 +413,12 @@ s16b macro__num;
 /*
  * Array of macro patterns [MACRO_MAX]
  */
-cptr *macro__pat;
+char **macro__pat;
 
 /*
  * Array of macro actions [MACRO_MAX]
  */
-cptr *macro__act;
+char **macro__act;
 
 /*
  * Array of macro types [MACRO_MAX]
@@ -643,7 +643,7 @@ char tval_to_char[128];
 /*
  * Keymaps for each "mode" associated with each keypress.
  */
-cptr keymap_act[KEYMAP_MODES][256];
+char *keymap_act[KEYMAP_MODES][256];
 
 
 
@@ -878,84 +878,84 @@ cptr ANGBAND_GRAF = "old";
  * Path name: The main "lib" directory
  * This variable is not actually used anywhere in the code
  */
-cptr ANGBAND_DIR;
+char *ANGBAND_DIR;
 
 /*
  * Core lua system
  * These files are portable between platforms
  */
-cptr ANGBAND_DIR_CORE;
+char *ANGBAND_DIR_CORE;
 
 /*
  * Textual dungeon level definition files
  * These files are portable between platforms
  */
-cptr ANGBAND_DIR_DNGN;
+char *ANGBAND_DIR_DNGN;
 
 /*
  * Binary image files for the "*_info" arrays (binary)
  * These files are not portable between platforms
  */
-cptr ANGBAND_DIR_DATA;
+char *ANGBAND_DIR_DATA;
 
 /*
  * Textual template files for the "*_info" arrays (ascii)
  * These files are portable between platforms
  */
-cptr ANGBAND_DIR_EDIT;
+char *ANGBAND_DIR_EDIT;
 
 /*
  * Various extra files (ascii)
  * These files may be portable between platforms
  */
-cptr ANGBAND_DIR_FILE;
+char *ANGBAND_DIR_FILE;
 
 /*
  * Help files (normal) for the online help (ascii)
  * These files are portable between platforms
  */
-cptr ANGBAND_DIR_HELP;
+char *ANGBAND_DIR_HELP;
 
 /*
  * Help files (spoilers) for the online help (ascii)
  * These files are portable between platforms
  */
-cptr ANGBAND_DIR_INFO;
+char *ANGBAND_DIR_INFO;
 
 /*
  * Modules, those subdirectories are half-mirrors of lib/
  */
-cptr ANGBAND_DIR_MODULES;
+char *ANGBAND_DIR_MODULES;
 
 /*
  * Textual template files for the plot files (ascii)
  * These files are portable between platforms
  */
-cptr ANGBAND_DIR_NOTE;
+char *ANGBAND_DIR_NOTE;
 
 /*
  * Savefiles for current characters (binary)
  * These files are portable between platforms
  */
-cptr ANGBAND_DIR_SAVE;
+char *ANGBAND_DIR_SAVE;
 
 /*
  * Default "preference" files (ascii)
  * These files are rarely portable between platforms
  */
-cptr ANGBAND_DIR_PREF;
+char *ANGBAND_DIR_PREF;
 
 /*
  * User "preference" files (ascii)
  * These files are rarely portable between platforms
  */
-cptr ANGBAND_DIR_USER;
+char *ANGBAND_DIR_USER;
 
 /*
  * Various extra files (binary)
  * These files are rarely portable between platforms
  */
-cptr ANGBAND_DIR_XTRA;
+char *ANGBAND_DIR_XTRA;
 
 /*
  * Some variables values are created on the fly XXX XXX

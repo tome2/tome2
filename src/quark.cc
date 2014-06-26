@@ -49,6 +49,8 @@ void quark_init()
 */
 s16b quark_add(cptr str)
 {
+	assert(str != nullptr);
+
 	int i;
 
 	/* Look for an existing quark */
@@ -65,7 +67,7 @@ s16b quark_add(cptr str)
 	quark__num = i + 1;
 
 	/* Add a new quark */
-	quark__str[i] = string_make(str);
+	quark__str[i] = strdup(str);
 
 	/* Return the index */
 	return (i);

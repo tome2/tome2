@@ -2072,16 +2072,19 @@ void cli_add(cptr active, cptr trigger, cptr descr)
 			}
 			if (*t == '\0') break;
 		}
-		cli_ptr->comm = string_make(temp);
+		cli_ptr->comm = strdup(temp);
 	}
 	else
 	{
-		cli_ptr->comm = string_make(trigger);
+		cli_ptr->comm = strdup(trigger);
 	}
 
 	/* First try copying everything across. */
 	cli_ptr->key = num;
-	cli_ptr->descrip = string_make(descr);
+	cli_ptr->descrip = nullptr;
+	if (descr) {
+		cli_ptr->descrip = strdup(descr);
+	}
 
 	/* Take description for the previous record if appropriate. */
 	if ((cli_total > 0) && (old_ptr->key == cli_ptr->key) && (cli_ptr->descrip == 0))

@@ -295,9 +295,11 @@ static level_generator_type *level_generators = NULL;
  */
 void add_level_generator(cptr name, bool_ (*generator)(), bool_ stairs, bool_ monsters, bool_ objects, bool_ miscs)
 {
+	assert(name != nullptr);
+
 	level_generator_type *g = new level_generator_type;
 
-	g->name = string_make(name);
+	g->name = strdup(name);
 	g->generator = generator;
 
 	g->default_stairs = stairs;

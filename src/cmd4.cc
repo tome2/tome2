@@ -2004,11 +2004,9 @@ void do_cmd_macros(void)
 				/* Convert to ascii */
 				text_to_ascii(macro__buf, tmp);
 
-				/* Free old keymap */
-				string_free(keymap_act[mode][(byte)(buf[0])]);
-
 				/* Make new keymap */
-				keymap_act[mode][(byte)(buf[0])] = string_make(macro__buf);
+				free(keymap_act[mode][(byte)(buf[0])]);
+				keymap_act[mode][(byte)(buf[0])] = strdup(macro__buf);
 
 				/* Prompt */
 				msg_print("Added a keymap.");
@@ -2027,10 +2025,8 @@ void do_cmd_macros(void)
 			/* Get a keymap trigger */
 			do_cmd_macro_aux_keymap(buf);
 
-			/* Free old keymap */
-			string_free(keymap_act[mode][(byte)(buf[0])]);
-
 			/* Make new keymap */
+			free(keymap_act[mode][(byte)(buf[0])]);
 			keymap_act[mode][(byte)(buf[0])] = NULL;
 
 			/* Prompt */

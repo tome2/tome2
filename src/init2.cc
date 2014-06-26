@@ -72,25 +72,27 @@ void init_file_paths(char *path)
 	char *tail;
 	int   pathlen;
 
+	assert(path != nullptr);
+
 	/*** Free everything ***/
 
 	/* Free the main path */
-	string_free(ANGBAND_DIR);
+	free(ANGBAND_DIR);
 
 	/* Free the sub-paths */
-	string_free(ANGBAND_DIR_CORE);
-	string_free(ANGBAND_DIR_DNGN);
-	string_free(ANGBAND_DIR_DATA);
-	string_free(ANGBAND_DIR_EDIT);
-	string_free(ANGBAND_DIR_FILE);
-	string_free(ANGBAND_DIR_HELP);
-	string_free(ANGBAND_DIR_INFO);
-	string_free(ANGBAND_DIR_MODULES);
-	string_free(ANGBAND_DIR_NOTE);
-	string_free(ANGBAND_DIR_SAVE);
-	string_free(ANGBAND_DIR_PREF);
-	string_free(ANGBAND_DIR_USER);
-	string_free(ANGBAND_DIR_XTRA);
+	free(ANGBAND_DIR_CORE);
+	free(ANGBAND_DIR_DNGN);
+	free(ANGBAND_DIR_DATA);
+	free(ANGBAND_DIR_EDIT);
+	free(ANGBAND_DIR_FILE);
+	free(ANGBAND_DIR_HELP);
+	free(ANGBAND_DIR_INFO);
+	free(ANGBAND_DIR_MODULES);
+	free(ANGBAND_DIR_NOTE);
+	free(ANGBAND_DIR_SAVE);
+	free(ANGBAND_DIR_PREF);
+	free(ANGBAND_DIR_USER);
+	free(ANGBAND_DIR_XTRA);
 
 
 	/*** Prepare the "path" ***/
@@ -105,17 +107,17 @@ void init_file_paths(char *path)
 		if (strcmp(path + pathlen - seplen, PATH_SEP) == 0)
 		{
 			path[pathlen - seplen] = '\0';
-			ANGBAND_DIR = string_make(path);
+			ANGBAND_DIR = strdup(path);
 			path[pathlen - seplen] = *PATH_SEP;
 		}
 		else
 		{
-			ANGBAND_DIR = string_make(path);
+			ANGBAND_DIR = strdup(path);
 		}
 	}
 	else
 	{
-		ANGBAND_DIR = string_make(path);
+		ANGBAND_DIR = strdup(path);
 	}
 
 	/* Prepare to append to the Base Path */
@@ -127,39 +129,39 @@ void init_file_paths(char *path)
 
 	/* Build a path name */
 	strcpy(tail, "core");
-	ANGBAND_DIR_CORE = string_make(path);
+	ANGBAND_DIR_CORE = strdup(path);
 
 	/* Build a path name */
 	strcpy(tail, "dngn");
-	ANGBAND_DIR_DNGN = string_make(path);
+	ANGBAND_DIR_DNGN = strdup(path);
 
 	/* Build a path name */
 	strcpy(tail, "data");
-	ANGBAND_DIR_DATA = string_make(path);
+	ANGBAND_DIR_DATA = strdup(path);
 
 	/* Build a path name */
 	strcpy(tail, "edit");
-	ANGBAND_DIR_EDIT = string_make(path);
+	ANGBAND_DIR_EDIT = strdup(path);
 
 	/* Build a path name */
 	strcpy(tail, "file");
-	ANGBAND_DIR_FILE = string_make(path);
+	ANGBAND_DIR_FILE = strdup(path);
 
 	/* Build a path name */
 	strcpy(tail, "help");
-	ANGBAND_DIR_HELP = string_make(path);
+	ANGBAND_DIR_HELP = strdup(path);
 
 	/* Build a path name */
 	strcpy(tail, "info");
-	ANGBAND_DIR_INFO = string_make(path);
+	ANGBAND_DIR_INFO = strdup(path);
 
 	/* Build a path name */
 	strcpy(tail, "mods");
-	ANGBAND_DIR_MODULES = string_make(path);
+	ANGBAND_DIR_MODULES = strdup(path);
 
 	/* Build a path name */
 	strcpy(tail, "pref");
-	ANGBAND_DIR_PREF = string_make(path);
+	ANGBAND_DIR_PREF = strdup(path);
 
 	/* synchronize with module_reset_dir */
 	{
@@ -168,17 +170,17 @@ void init_file_paths(char *path)
 		/* Get an absolute path from the file name */
 		path_parse(user_path, 1024, PRIVATE_USER_PATH);
 		strcat(user_path, USER_PATH_VERSION);
-		ANGBAND_DIR_USER = string_make(user_path);
-		ANGBAND_DIR_NOTE = string_make(user_path);
+		ANGBAND_DIR_USER = strdup(user_path);
+		ANGBAND_DIR_NOTE = strdup(user_path);
 
 		/* Savefiles are in user directory */
 		strcat(user_path, "/save");
-		ANGBAND_DIR_SAVE = string_make(user_path);
+		ANGBAND_DIR_SAVE = strdup(user_path);
 	}
 
 	/* Build a path name */
 	strcpy(tail, "xtra");
-	ANGBAND_DIR_XTRA = string_make(path);
+	ANGBAND_DIR_XTRA = strdup(path);
 }
 
 
@@ -1617,11 +1619,9 @@ errr init_v_info(void)
  */
 static void init_basic()
 {
-	int i;
-
 	/* Macro variables */
-	macro__pat = make_array<cptr>(MACRO_MAX);
-	macro__act = make_array<cptr>(MACRO_MAX);
+	macro__pat = make_array<char *>(MACRO_MAX);
+	macro__act = make_array<char *>(MACRO_MAX);
 	macro__cmd = make_array<bool_>(MACRO_MAX);
 
 	/* Macro action buffer */

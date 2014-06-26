@@ -75,7 +75,6 @@
 
 #include "angband.h"
 
-
 #ifdef WINDOWS
 
 
@@ -936,7 +935,7 @@ static void load_prefs_aux(term_data *td, cptr sec_name)
 	td->bizarre = (GetPrivateProfileInt(sec_name, "Bizarre", td->bizarre, ini_file) != 0);
 
 	/* Analyze font, save desired font name */
-	td->font_want = string_make(analyze_font(tmp, &wid, &hgt));
+	td->font_want = strdup(analyze_font(tmp, &wid, &hgt));
 
 	/* Tile size */
 	td->tile_wid = GetPrivateProfileInt(sec_name, "TileWid", wid, ini_file);
@@ -1030,7 +1029,8 @@ static int new_palette(void)
 	if (hBmPal)
 	{
 		lppeSize = 256 * sizeof(PALETTEENTRY);
-		lppe = (LPPALETTEENTRY)ralloc(lppeSize);
+		lppe = (LPPALETTEENTRY) safe_calloc(1, lppeSize);
+
 		nEntries = GetPaletteEntries(hBmPal, 0, 255, lppe);
 		if ((nEntries == 0) || (nEntries > 220))
 		{
@@ -1038,7 +1038,8 @@ static int new_palette(void)
 			plog_fmt("Unusable bitmap palette (%d entries)", nEntries);
 
 			/* Cleanup */
-			rnfree(lppe, lppeSize);
+			free(lppe);
+			lppe = NULL;
 
 			/* Fail */
 			return (FALSE);
@@ -1051,7 +1052,7 @@ static int new_palette(void)
 	pLogPalSize = sizeof(LOGPALETTE) + (nEntries + 16) * sizeof(PALETTEENTRY);
 
 	/* Allocate palette */
-	pLogPal = (LPLOGPALETTE)ralloc(pLogPalSize);
+	pLogPal = (LPLOGPALETTE) safe_calloc(1, pLogPalSize);
 
 	/* Version */
 	pLogPal->palVersion = 0x300;
@@ -1083,14 +1084,19 @@ static int new_palette(void)
 	}
 
 	/* Free something */
-	if (lppe) rnfree(lppe, lppeSize);
+	if (lppe)
+	{
+		free(lppe);
+		lppe = NULL;
+	}
 
 	/* Create a new palette, or fail */
 	hNewPal = CreatePalette(pLogPal);
 	if (!hNewPal) quit("Cannot create palette!");
 
 	/* Free the palette */
-	rnfree(pLogPal, pLogPalSize);
+	free(pLogPal);
+	pLogPal = NULL;
 
 	/* Main window */
 	td = &data[0];
@@ -1225,7 +1231,7 @@ static bool_ init_sound()
 			path_build(buf, 1024, ANGBAND_DIR_XTRA_SOUND, wav);
 
 			/* Save the sound filename, if it exists */
-			if (check_file(buf)) sound_file[i] = string_make(buf);
+			if (check_file(buf)) sound_file[i] = strdup(buf);
 		}
 
 		/* Sound available */
@@ -1301,9 +1307,7 @@ static errr term_force_font(term_data *td, cptr path)
 		if (!used) RemoveFontResource(td->font_file);
 
 		/* Free the old name */
-		string_free(td->font_file);
-
-		/* Forget it */
+		free(td->font_file);
 		td->font_file = NULL;
 	}
 
@@ -1328,7 +1332,7 @@ static errr term_force_font(term_data *td, cptr path)
 	if (!AddFontResource(buf)) return (1);
 
 	/* Save new font name */
-	td->font_file = string_make(base);
+	td->font_file = strdup(base);
 
 	/* Remove the "suffix" */
 	base[strlen(base) - 4] = '\0';
@@ -3798,7 +3802,11 @@ static void hook_quit(cptr str)
 	for (i = MAX_TERM_DATA - 1; i >= 0; --i)
 	{
 		term_force_font(&data[i], NULL);
-		if (data[i].font_want) string_free(data[i].font_want);
+		if (data[i].font_want)
+		{
+			free(data[i].font_want);
+			data[i].font_want = NULL;
+		}
 		if (data[i].w) DestroyWindow(data[i].w);
 		data[i].w = 0;
 	}
@@ -3837,7 +3845,7 @@ static void init_stuff(void)
 	strcpy(path + strlen(path) - 4, ".INI");
 
 	/* Save the the name of the ini-file */
-	ini_file = string_make(path);
+	ini_file = strdup(path);
 
 	/* Validate the ini-file */
 	validate_file(ini_file);
@@ -3870,7 +3878,7 @@ static void init_stuff(void)
 	path_build(path, 1024, ANGBAND_DIR_XTRA, "font");
 
 	/* Allocate the path */
-	ANGBAND_DIR_XTRA_FONT = string_make(path);
+	ANGBAND_DIR_XTRA_FONT = strdup(path);
 
 
 	/*** Validate the paths to ensure we have a working install ***/
@@ -3901,7 +3909,7 @@ static void init_stuff(void)
 	path_build(path, 1024, ANGBAND_DIR_XTRA, "graf");
 
 	/* Allocate the path */
-	ANGBAND_DIR_XTRA_GRAF = string_make(path);
+	ANGBAND_DIR_XTRA_GRAF = strdup(path);
 
 	/* Validate the "graf" directory */
 	validate_dir(ANGBAND_DIR_XTRA_GRAF);
@@ -3921,7 +3929,7 @@ static void init_stuff(void)
 	path_build(path, 1024, ANGBAND_DIR_XTRA, "sound");
 
 	/* Allocate the path */
-	ANGBAND_DIR_XTRA_SOUND = string_make(path);
+	ANGBAND_DIR_XTRA_SOUND = strdup(path);
 
 	/* Validate the "sound" directory */
 	validate_dir(ANGBAND_DIR_XTRA_SOUND);
@@ -3933,7 +3941,7 @@ static void init_stuff(void)
 	path_build(path, 1024, ANGBAND_DIR_XTRA, "help");
 
 	/* Allocate the path */
-	ANGBAND_DIR_XTRA_HELP = string_make(path);
+	ANGBAND_DIR_XTRA_HELP = strdup(path);
 
 	/* Validate the "help" directory */
 	/* validate_dir(ANGBAND_DIR_XTRA_HELP); */

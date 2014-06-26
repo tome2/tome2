@@ -432,9 +432,9 @@ errr process_pref_file_aux(char *buf)
 		if (!tmp[0] || tmp[1]) return (1);
 		i = (byte)(tmp[0]);
 
-		string_free(keymap_act[mode][i]);
+		free(keymap_act[mode][i]);
 
-		keymap_act[mode][i] = string_make(macro__buf);
+		keymap_act[mode][i] = strdup(macro__buf);
 
 		return (0);
 	}

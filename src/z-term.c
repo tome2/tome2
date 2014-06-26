@@ -269,28 +269,43 @@ term *Term = NULL;
 static errr term_win_nuke(term_win *s, int w, int h)
 {
 	/* Free the window access arrays */
-	C_KILL(s->a, h, byte*);
-	C_KILL(s->c, h, char*);
+	free(s->a);
+	s->a = NULL;
+
+	free(s->c);
+	s->c = NULL;
 
 	/* Free the window content arrays */
-	C_KILL(s->va, h * w, byte);
-	C_KILL(s->vc, h * w, char);
+	free(s->va);
+	s->va = NULL;
+
+	free(s->vc);
+	s->vc = NULL;
 
 	/* Free the terrain access arrays */
-	C_KILL(s->ta, h, byte*);
-	C_KILL(s->tc, h, char*);
+	free(s->ta);
+	s->ta = NULL;
+
+	free(s->tc);
+	s->tc = NULL;
 
 	/* Free the terrain content arrays */
-	C_KILL(s->vta, h * w, byte);
-	C_KILL(s->vtc, h * w, char);
+	free(s->vta);
+	s->vta = NULL;
+	free(s->vtc);
+	s->vtc = NULL;
 
 	/* Free the ego graphics access arrays */
-	C_KILL(s->ea, h, byte*);
-	C_KILL(s->ec, h, char*);
+	free(s->ea);
+	s->ea = NULL;
+	free(s->ec);
+	s->ec = NULL;
 
 	/* Free the ego graphics content arrays */
-	C_KILL(s->vea, h * w, byte);
-	C_KILL(s->vec, h * w, char);
+	free(s->vea);
+	s->vea = NULL;
+	free(s->vec);
+	s->vec = NULL;
 
 	/* Success */
 	return (0);
@@ -305,28 +320,28 @@ static errr term_win_init(term_win *s, int w, int h)
 	int y;
 
 	/* Make the window access arrays */
-	C_MAKE(s->a, h, byte*);
-	C_MAKE(s->c, h, char*);
+	s->a = safe_calloc(h, sizeof(byte*));
+	s->c = safe_calloc(h, sizeof(char*));
 
 	/* Make the window content arrays */
-	C_MAKE(s->va, h * w, byte);
-	C_MAKE(s->vc, h * w, char);
+	s->va = safe_calloc(h * w, sizeof(byte));
+	s->vc = safe_calloc(h * w, sizeof(char));
 
 	/* Make the terrain access arrays */
-	C_MAKE(s->ta, h, byte*);
-	C_MAKE(s->tc, h, char*);
+	s->ta = safe_calloc(h, sizeof(byte*));
+	s->tc = safe_calloc(h, sizeof(char*));
 
 	/* Make the terrain content arrays */
-	C_MAKE(s->vta, h * w, byte);
-	C_MAKE(s->vtc, h * w, char);
+	s->vta = safe_calloc(h * w, sizeof(byte));
+	s->vtc = safe_calloc(h * w, sizeof(char));
 
 	/* Make the ego graphics access arrays */
-	C_MAKE(s->ea, h, byte*);
-	C_MAKE(s->ec, h, char*);
+	s->ea = safe_calloc(h, sizeof(byte*));
+	s->ec = safe_calloc(h, sizeof(char*));
 
 	/* Make the ego graphics content arrays */
-	C_MAKE(s->vea, h * w, byte);
-	C_MAKE(s->vec, h * w, char);
+	s->vea = safe_calloc(h * w, sizeof(byte));
+	s->vec = safe_calloc(h * w, sizeof(char));
 
 
 	/* Prepare the window access arrays */
@@ -2154,7 +2169,7 @@ errr Term_save(void)
 	if (!Term->mem)
 	{
 		/* Allocate window */
-		MAKE(Term->mem, term_win);
+		Term->mem = safe_calloc(1, sizeof(struct term_win));
 
 		/* Initialize window */
 		term_win_init(Term->mem, w, h);
@@ -2177,7 +2192,7 @@ term_win* Term_save_to(void)
 	term_win *save;
 
 	/* Allocate window */
-	MAKE(save, term_win);
+	save = safe_calloc(1, sizeof(struct term_win));
 
 	/* Initialize window */
 	term_win_init(save, w, h);
@@ -2205,7 +2220,7 @@ errr Term_load(void)
 	if (!Term->mem)
 	{
 		/* Allocate window */
-		MAKE(Term->mem, term_win);
+		Term->mem = safe_calloc(1, sizeof(struct term_win));
 
 		/* Initialize window */
 		term_win_init(Term->mem, w, h);
@@ -2263,7 +2278,9 @@ errr Term_load_from(term_win *save, bool_ final)
 
 	/* Free is requested */
 	if (final)
-		FREE(save, term_win);
+	{
+		free(save);
+	}
 
 	/* Success */
 	return (0);
@@ -2286,7 +2303,7 @@ errr Term_exchange(void)
 	if (!Term->tmp)
 	{
 		/* Allocate window */
-		MAKE(Term->tmp, term_win);
+		Term->tmp = safe_calloc(1, sizeof(struct term_win));
 
 		/* Initialize window */
 		term_win_init(Term->tmp, w, h);
@@ -2362,11 +2379,11 @@ errr Term_resize(int w, int h)
 	hold_tmp = Term->tmp;
 
 	/* Create new scanners */
-	C_MAKE(Term->x1, h, byte);
-	C_MAKE(Term->x2, h, byte);
+	Term->x1 = safe_calloc(h, sizeof(byte));
+	Term->x2 = safe_calloc(h, sizeof(byte));
 
 	/* Create new window */
-	MAKE(Term->old, term_win);
+	Term->old = safe_calloc(1, sizeof(struct term_win));
 
 	/* Initialize new window */
 	term_win_init(Term->old, w, h);
@@ -2375,7 +2392,7 @@ errr Term_resize(int w, int h)
 	term_win_copy(Term->old, hold_old, wid, hgt);
 
 	/* Create new window */
-	MAKE(Term->scr, term_win);
+	Term->scr = safe_calloc(1, sizeof(struct term_win));
 
 	/* Initialize new window */
 	term_win_init(Term->scr, w, h);
@@ -2387,7 +2404,7 @@ errr Term_resize(int w, int h)
 	if (hold_mem)
 	{
 		/* Create new window */
-		MAKE(Term->mem, term_win);
+		Term->mem = safe_calloc(1, sizeof(struct term_win));
 
 		/* Initialize new window */
 		term_win_init(Term->mem, w, h);
@@ -2400,7 +2417,7 @@ errr Term_resize(int w, int h)
 	if (hold_tmp)
 	{
 		/* Create new window */
-		MAKE(Term->tmp, term_win);
+		Term->tmp = safe_calloc(1, sizeof(struct term_win));
 
 		/* Initialize new window */
 		term_win_init(Term->tmp, w, h);
@@ -2410,14 +2427,17 @@ errr Term_resize(int w, int h)
 	}
 
 	/* Free some arrays */
-	C_KILL(hold_x1, Term->hgt, byte);
-	C_KILL(hold_x2, Term->hgt, byte);
+	free(hold_x1);
+	hold_x1 = NULL;
+	free(hold_x2);
+	hold_x2 = NULL;
 
 	/* Nuke */
 	term_win_nuke(hold_old, Term->wid, Term->hgt);
 
 	/* Kill */
-	KILL(hold_old, term_win);
+	free(hold_old);
+	hold_old = NULL;
 
 	/* Illegal cursor */
 	if (Term->old->cx >= w) Term->old->cu = 1;
@@ -2427,7 +2447,8 @@ errr Term_resize(int w, int h)
 	term_win_nuke(hold_scr, Term->wid, Term->hgt);
 
 	/* Kill */
-	KILL(hold_scr, term_win);
+	free(hold_scr);
+	hold_scr = NULL;
 
 	/* Illegal cursor */
 	if (Term->scr->cx >= w) Term->scr->cu = 1;
@@ -2440,7 +2461,8 @@ errr Term_resize(int w, int h)
 		term_win_nuke(hold_mem, Term->wid, Term->hgt);
 
 		/* Kill */
-		KILL(hold_mem, term_win);
+		free(hold_mem);
+		hold_mem = NULL;
 
 		/* Illegal cursor */
 		if (Term->mem->cx >= w) Term->mem->cu = 1;
@@ -2454,7 +2476,8 @@ errr Term_resize(int w, int h)
 		term_win_nuke(hold_tmp, Term->wid, Term->hgt);
 
 		/* Kill */
-		KILL(hold_tmp, term_win);
+		free(hold_tmp);
+		hold_tmp = NULL;
 
 		/* Illegal cursor */
 		if (Term->tmp->cx >= w) Term->tmp->cu = 1;
@@ -2560,13 +2583,15 @@ errr term_nuke(term *t)
 	term_win_nuke(t->old, w, h);
 
 	/* Kill "displayed" */
-	KILL(t->old, term_win);
+	free(t->old);
+	t->old = NULL;
 
 	/* Nuke "requested" */
 	term_win_nuke(t->scr, w, h);
 
 	/* Kill "requested" */
-	KILL(t->scr, term_win);
+	free(t->scr);
+	t->scr = NULL;
 
 	/* If needed */
 	if (t->mem)
@@ -2575,7 +2600,8 @@ errr term_nuke(term *t)
 		term_win_nuke(t->mem, w, h);
 
 		/* Kill "memorized" */
-		KILL(t->mem, term_win);
+		free(t->mem);
+		t->mem = NULL;
 	}
 
 	/* If needed */
@@ -2585,15 +2611,19 @@ errr term_nuke(term *t)
 		term_win_nuke(t->tmp, w, h);
 
 		/* Kill "temporary" */
-		KILL(t->tmp, term_win);
+		free(t->tmp);
+		t->tmp = NULL;
 	}
 
 	/* Free some arrays */
-	C_KILL(t->x1, h, byte);
-	C_KILL(t->x2, h, byte);
+	free(t->x1);
+	t->x1 = NULL;
+	free(t->x2);
+	t->x2 = NULL;
 
 	/* Free the input queue */
-	C_KILL(t->key_queue, t->key_size, char);
+	free(t->key_queue);
+	t->key_queue = NULL;
 
 	/* Success */
 	return (0);
@@ -2621,7 +2651,7 @@ errr term_init(term *t, int w, int h, int k)
 	t->key_size = k;
 
 	/* Allocate the input queue */
-	C_MAKE(t->key_queue, t->key_size, char);
+	t->key_queue = safe_calloc(t->key_size, sizeof(char));
 
 
 	/* Save the size */
@@ -2629,19 +2659,19 @@ errr term_init(term *t, int w, int h, int k)
 	t->hgt = h;
 
 	/* Allocate change arrays */
-	C_MAKE(t->x1, h, byte);
-	C_MAKE(t->x2, h, byte);
+	t->x1 = safe_calloc(h, sizeof(byte));
+	t->x2 = safe_calloc(h, sizeof(byte));
 
 
 	/* Allocate "displayed" */
-	MAKE(t->old, term_win);
+	t->old = safe_calloc(1, sizeof(struct term_win));
 
 	/* Initialize "displayed" */
 	term_win_init(t->old, w, h);
 
 
 	/* Allocate "requested" */
-	MAKE(t->scr, term_win);
+	t->scr = safe_calloc(1, sizeof(struct term_win));
 
 	/* Initialize "requested" */
 	term_win_init(t->scr, w, h);

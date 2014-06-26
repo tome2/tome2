@@ -1059,7 +1059,7 @@ static errr Infofnt_init_data(cptr name)
 	}
 
 	/* Save a copy of the font name */
-	Infofnt->name = string_make(name);
+	Infofnt->name = strdup(name);
 
 	/* Mark it as nukable */
 	Infofnt->nuke = 1;
@@ -2494,7 +2494,7 @@ static errr term_data_init(term_data *td, int i)
 
 
 	/* Prepare the standard font */
-	MAKE(td->fnt, infofnt);
+	td->fnt = safe_calloc(1, sizeof(struct infofnt));
 	Infofnt_set(td->fnt);
 	Infofnt_init_data(font);
 
@@ -2506,7 +2506,7 @@ static errr term_data_init(term_data *td, int i)
 	hgt = rows * td->fnt->hgt + (oy + oy);
 
 	/* Create a top-window */
-	MAKE(td->win, infowin);
+	td->win = safe_calloc(1, sizeof(struct infowin));
 	Infowin_set(td->win);
 	Infowin_init_top(x, y, wid, hgt, 0,
 	                 Metadpy->fg, Metadpy->bg);
@@ -2684,7 +2684,7 @@ errr init_x11(int argc, char *argv[])
 
 
 	/* Prepare cursor color */
-	MAKE(xor, infoclr);
+	xor = safe_calloc(1, sizeof(struct infoclr));
 	Infoclr_set(xor);
 	Infoclr_init_ppn(Metadpy->fg, Metadpy->bg, "xor", 0);
 
@@ -2694,8 +2694,7 @@ errr init_x11(int argc, char *argv[])
 	{
 		Pixell pixel;
 
-		MAKE(clr[i], infoclr);
-
+		clr[i] = safe_calloc(1, sizeof(struct infoclr));
 		Infoclr_set(clr[i]);
 
 		/* Acquire Angband colors */

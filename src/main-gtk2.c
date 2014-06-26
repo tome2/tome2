@@ -35,18 +35,6 @@
 
 /*
  * Activate variant-specific features
- *
- * Angband 2.9.3 and close variants don't require any.
- *
- * Angband 2.9.4 alpha and later removed the short-lived
- * can_save flag, so please #define can_save TRUE, or remove
- * all the references to it. They also changed long-lived
- * z-virt macro names. Find C_FREE/C_KILL and replace them
- * with FREE/KILL, which takes one pointer parameter.
- *
- * ZAngband has its own enhanced main-gtk.c as mentioned above, and
- * you *should* use it :-)
- *
  */
 
 #define USE_DOUBLE_TILES	/* Mogami's bigtile patch */
@@ -146,7 +134,7 @@ struct term_data
 
 #endif /* USE_GRAPHICS */
 
-	cptr name;
+	char *name;
 };
 
 
@@ -254,32 +242,6 @@ static bool_ use_transparency = TRUE;
 
 
 
-/**** Low level routines - memory allocation ****/
-
-/*
- * Hook to "release" memory
- */
-static vptr hook_rnfree(vptr v, huge size)
-{
-	/* Dispose */
-	g_free(v);
-
-	/* Success */
-	return (NULL);
-}
-
-
-/*
- * Hook to "allocate" memory
- */
-static vptr hook_ralloc(huge size)
-{
-	/* Make a new pointer */
-	return (g_malloc(size));
-}
-
-
-
 /**** Low level routines - colours and graphics ****/
 
 
@@ -370,7 +332,7 @@ static int tile_cols;
 /*
  * Directory name(s)
  */
-static cptr ANGBAND_DIR_XTRA_GRAF;
+static char *ANGBAND_DIR_XTRA_GRAF;
 
 
 /*
@@ -1088,7 +1050,7 @@ static GdkRGBImage *resize_tiles_fast(
 	 */
 
 	/* Set up x offset table */
-	C_MAKE(xoffsets, new_wid, int);
+	xoffsets = safe_calloc(new_wid, sizeof(int));
 
 	/* Initialize line parameters */
 	add = old_wid / new_wid;
@@ -1147,7 +1109,7 @@ static GdkRGBImage *resize_tiles_fast(
 	}
 
 	/* Free offset table */
-	C_FREE(xoffsets, new_wid, int);
+	free(xoffsets);
 
 	return (new_image);
 }
@@ -1346,7 +1308,7 @@ static GdkRGBImage *load_xpm(cptr filename)
 	}
 
 	/* Allocate palette */
-	C_MAKE(pal, colours, pal_type);
+	pal = safe_calloc(colours, sizeof(pal_type));
 
 	/* Initialise hash table */
 	for (i = 0; i < HASH_SIZE; i++) head[i] = NULL;
@@ -1447,7 +1409,7 @@ static GdkRGBImage *load_xpm(cptr filename)
 	buflen = width * chars + 1;
 
 	/* Allocate line buffer */
-	C_MAKE(lin, buflen, char);
+	lin = safe_calloc(buflen, sizeof(char));
 
 	/* For each row */
 	for (i = 0; i < height; i++)
@@ -1512,10 +1474,10 @@ static GdkRGBImage *load_xpm(cptr filename)
 	my_fclose(f);
 
 	/* Free line buffer */
-	C_FREE(lin, buflen, char);
+	free(lin);
 
 	/* Free palette */
-	C_FREE(pal, colours, pal_type);
+	free(pal);
 
 	/* Return result */
 	return (img);
@@ -1529,10 +1491,10 @@ oops:
 	if (img) gdk_rgb_image_destroy(img);
 
 	/* Free line buffer */
-	if (lin) C_FREE(lin, buflen, char);
+	if (lin) free(lin);
 
 	/* Free palette */
-	if (pal) C_FREE(pal, colours, pal_type);
+	if (pal) free(pal);
 
 	/* Failure */
 	return (NULL);
@@ -2139,7 +2101,7 @@ static void Term_nuke_gtk(term *t)
 
 
 	/* Free name */
-	if (td->name) string_free(td->name);
+	if (td->name) free(td->name);
 
 	/* Forget it */
 	td->name = NULL;
@@ -3620,7 +3582,8 @@ static errr term_data_init(term_data *td, int i)
 	term_init(t, td->cols, td->rows, 1024);
 
 	/* Store the name of the term */
-	td->name = string_make(angband_term_name[i]);
+	assert(angband_term_name[i] != NULL);
+	td->name = strdup(angband_term_name[i]);
 
 	/* Instance names should start with a lowercase letter XXX */
 	for (p = (char *)td->name; *p; p++) *p = tolower(*p);
@@ -3808,13 +3771,13 @@ static void setup_menu_paths(void)
 		strnfmt(buf, 64, "/Terms/%s", angband_term_name[i]);
 
 		/* XXX XXX Store it in the menu definition */
-		term_entry[i].path = (gchar*)string_make(buf);
+		term_entry[i].path = (gchar*) strdup(buf);
 
 		/* XXX XXX Build the real path name to the entry */
 		strnfmt(buf, 64, "/Options/Font/%s", angband_term_name[i]);
 
 		/* XXX XXX Store it in the menu definition */
-		font_entry[i].path = (gchar*)string_make(buf);
+		font_entry[i].path = (gchar*) strdup(buf);
 	}
 }
 
@@ -3860,10 +3823,10 @@ static void free_menu_paths(void)
 	for (i = 0; i < MAX_TERM_DATA; i++)
 	{
 		/* XXX XXX Free Term menu path */
-		if (term_entry[i].path) string_free((cptr)term_entry[i].path);
+		if (term_entry[i].path) free(term_entry[i].path);
 
 		/* XXX XXX Free Font menu path */
-		if (font_entry[i].path) string_free((cptr)font_entry[i].path);
+		if (font_entry[i].path) free(font_entry[i].path);
 	}
 }
 
@@ -4348,7 +4311,7 @@ static void hook_quit(cptr str)
 # ifdef USE_GRAPHICS
 
 	/* Free pathname string */
-	if (ANGBAND_DIR_XTRA_GRAF) string_free(ANGBAND_DIR_XTRA_GRAF);
+	if (ANGBAND_DIR_XTRA_GRAF) free(ANGBAND_DIR_XTRA_GRAF);
 
 # endif  /* USE_GRAPHICS */
 
@@ -4369,8 +4332,6 @@ errr init_gtk2(int argc, char **argv)
 	gtk_init(&argc, &argv);
 
 	/* Activate hooks - Use gtk/glib interface throughout */
-	ralloc_aux = hook_ralloc;
-	rnfree_aux = hook_rnfree;
 	quit_aux = hook_quit;
 	core_aux = hook_quit;
 
@@ -4451,7 +4412,7 @@ errr init_gtk2(int argc, char **argv)
 		path_build(path, 1024, ANGBAND_DIR_XTRA, "graf");
 
 		/* Allocate the path */
-		ANGBAND_DIR_XTRA_GRAF = string_make(path);
+		ANGBAND_DIR_XTRA_GRAF = strdup(path);
 	}
 
 #endif /* USE_GRAPHICS */
