@@ -5152,7 +5152,7 @@ static errr top_twenty(void)
 
 
 	/* Clear the record */
-	WIPE(&the_score, high_score);
+	memset(&the_score, 0, sizeof(high_score));
 
 	/* Save the version */
 	sprintf(the_score.what, "%ld.%ld.%ld",
@@ -5254,7 +5254,7 @@ errr predict_score(void)
 	}
 
 	/* Clear the record */
-	WIPE(&the_score, high_score);
+	memset(&the_score, 0, sizeof(high_score));
 
 	/* Save the version */
 	sprintf(the_score.what, "%ld.%ld.%ld",

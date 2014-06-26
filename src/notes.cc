@@ -89,7 +89,7 @@ void add_note(char *note, char code)
 	char depths[32];
 
 	/* Get the first 60 chars - so do not have an overflow */
-	C_WIPE(buf, 100, char);
+	memset(buf, 0, sizeof(buf));
 	strncpy(buf, note, 60);
 
 	/* Get date and time */

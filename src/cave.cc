@@ -3234,7 +3234,7 @@ errr vinfo_init(void)
 
 	/* Make hack */
 	vinfo_hack hack;
-	WIPE(&hack, vinfo_hack);
+	memset(&hack, 0, sizeof(vinfo_hack));
 
 	/* Analyze grids */
 	for (y = 0; y <= MAX_SIGHT; ++y)

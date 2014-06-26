@@ -707,7 +707,7 @@ static errr Infowin_init_data(Window dad, int x, int y, int w, int h,
 	Window xid;
 
 	/* Wipe it clean */
-	(void)WIPE(Infowin, infowin);
+	memset(Infowin, 0, sizeof(struct infowin));
 
 
 	/*** Error Check XXX ***/
@@ -942,7 +942,7 @@ static errr Infoclr_init_data(Pixell fg, Pixell bg, int op, int stip)
 	/*** Initialize ***/
 
 	/* Wipe the iclr clean */
-	(void)WIPE(iclr, infoclr);
+	memset(iclr, 0, sizeof(struct infoclr));
 
 	/* Assign the GC */
 	iclr->gc = gc;
@@ -1046,7 +1046,7 @@ static errr Infofnt_init_data(cptr name)
 	/*** Init the font ***/
 
 	/* Wipe the thing */
-	(void)WIPE(Infofnt, infofnt);
+	memset(Infofnt, 0, sizeof(struct infofnt));
 
 	/* Attempt to prepare it */
 	if (Infofnt_prepare(info))

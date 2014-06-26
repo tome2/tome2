@@ -534,7 +534,7 @@ void wipe_o_list(void)
 		}
 
 		/* Wipe the object */
-		WIPE(o_ptr, object_type);
+		memset(o_ptr, 0, sizeof(object_type));
 	}
 
 	/* Reset "o_max" */
@@ -1898,7 +1898,7 @@ s16b lookup_kind(int tval, int sval)
 void object_wipe(object_type *o_ptr)
 {
 	/* Wipe the structure */
-	WIPE(o_ptr, object_type);
+	memset(o_ptr, 0, sizeof(object_type));
 }
 
 
@@ -1920,7 +1920,7 @@ void object_prep(object_type *o_ptr, int k_idx)
 	object_kind *k_ptr = &k_info[k_idx];
 
 	/* Clear the record */
-	WIPE(o_ptr, object_type);
+	memset(o_ptr, 0, sizeof(object_type));
 
 	/* Save the kind index */
 	o_ptr->k_idx = k_idx;

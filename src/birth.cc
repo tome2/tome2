@@ -808,7 +808,8 @@ static void player_wipe(void)
 	wipe_saved();
 
 	/* Hack -- zero the struct */
-	WIPE(p_ptr, player_type);
+	static_assert(std::is_pod<player_type>::value, "Cannot memset non-POD type");
+	memset(p_ptr, 0, sizeof(player_type));
 
 	/* Level 1 is the first level */
 	p_ptr->lev = 1;

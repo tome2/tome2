@@ -1913,10 +1913,10 @@ static errr init_alloc(void)
 	/*** Analyze object allocation info ***/
 
 	/* Clear the "aux" array */
-	C_WIPE(&aux, MAX_DEPTH_MONSTER, s16b);
+	memset(aux, 0, MAX_DEPTH_MONSTER * sizeof(s16b));
 
 	/* Clear the "num" array */
-	C_WIPE(&num, MAX_DEPTH_MONSTER, s16b);
+	memset(num, 0, MAX_DEPTH_MONSTER * sizeof(s16b));
 
 	/* Size of "alloc_kind_table" */
 	alloc_kind_size = 0;
@@ -2002,10 +2002,10 @@ static errr init_alloc(void)
 	/*** Analyze monster allocation info ***/
 
 	/* Clear the "aux" array */
-	C_WIPE(&aux, MAX_DEPTH_MONSTER, s16b);
+	memset(aux, 0, MAX_DEPTH_MONSTER * sizeof(s16b));
 
 	/* Clear the "num" array */
-	C_WIPE(&num, MAX_DEPTH_MONSTER, s16b);
+	memset(num, 0, MAX_DEPTH_MONSTER * sizeof(s16b));
 
 	/* Size of "alloc_race_table" */
 	alloc_race_size = 0;
