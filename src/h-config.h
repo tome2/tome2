@@ -242,12 +242,6 @@ extern "C" {
 */
 
 
-/*
- * OPTION: Define "HAS_MEMSET" only if "memset()" exists.
- * Note that the "memset()" routines are used in "z-virt.h"
- */
-#define HAS_MEMSET
-
 
 /*
  * OPTION: Define "HAS_USLEEP" only if "usleep()" exists.
