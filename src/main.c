@@ -217,10 +217,6 @@ int main(int argc, char *argv[])
 
 
 
-	/* Save the "program name" XXX XXX XXX */
-	argv0 = argv[0];
-
-
 	/* Get the file paths */
 	init_file_paths_with_env();
 

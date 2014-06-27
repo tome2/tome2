@@ -8,39 +8,8 @@ extern "C" {
 
 
 /*
- * Extremely basic stuff, like global temp and constant variables.
- * Also, some very useful low level functions, such as "streq()".
- * All variables and functions in this file are "addressable".
+ * Extremely basic stuff, like "streq()".
  */
-
-
-/**** Available variables ****/
-
-/* Temporary Vars */
-extern char char_tmp;
-extern byte byte_tmp;
-extern sint sint_tmp;
-extern uint uint_tmp;
-extern long long_tmp;
-extern huge huge_tmp;
-extern errr errr_tmp;
-
-/* Temporary Pointers */
-extern cptr cptr_tmp;
-extern vptr vptr_tmp;
-
-
-/* Constant pointers (NULL) */
-extern cptr cptr_null;
-extern vptr vptr_null;
-
-
-/* A bizarre vptr that always points at itself */
-extern vptr vptr_self;
-
-
-/* A cptr to the name of the program */
-extern cptr argv0;
 
 
 /* Aux functions */

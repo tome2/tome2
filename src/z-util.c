@@ -8,65 +8,6 @@
 
 
 /*
- * Global variables for temporary use
- */
-char char_tmp = 0;
-byte byte_tmp = 0;
-sint sint_tmp = 0;
-uint uint_tmp = 0;
-long long_tmp = 0;
-huge huge_tmp = 0;
-errr errr_tmp = 0;
-
-
-/*
- * Global pointers for temporary use
- */
-cptr cptr_tmp = NULL;
-vptr vptr_tmp = NULL;
-
-
-
-
-/*
- * Constant bool meaning true
- */
-bool_ bool_true = 1;
-
-/*
- * Constant bool meaning false
- */
-bool_ bool_false = 0;
-
-
-/*
- * Global NULL cptr
- */
-cptr cptr_null = NULL;
-
-
-/*
- * Global NULL vptr
- */
-vptr vptr_null = NULL;
-
-
-
-/*
- * Global SELF vptr
- */
-vptr vptr_self = (vptr)(&vptr_self);
-
-
-
-/*
- * Convenient storage of the program name
- */
-cptr argv0 = NULL;
-
-
-
-/*
  * Determine if string "t" is equal to string "t"
  */
 bool_ streq(cptr a, cptr b)
@@ -132,7 +73,7 @@ void plog(cptr str)
 	if (plog_aux) (*plog_aux)(str);
 
 	/* Just do a labeled fprintf to stderr */
-	else (void)(fprintf(stderr, "%s: %s\n", argv0 ? argv0 : "???", str));
+	else (void)(fprintf(stderr, "%s\n", str));
 }
 
 
