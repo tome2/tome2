@@ -268,13 +268,6 @@ int main(int argc, char *argv[])
 				break;
 			}
 
-		case 'V':
-		case 'v':
-			{
-				arg_sound = TRUE;
-				break;
-			}
-
 		case 'G':
 		case 'g':
 			{
@@ -387,7 +380,6 @@ usage:
 				puts("  -h                 This help");
 				puts("  -n                 Start a new character");
 				puts("  -w                 Request wizard mode");
-				puts("  -v                 Request sound mode");
 				puts("  -g                 Request graphics mode");
 				puts("  -o                 Request original keyset");
 				puts("  -r                 Request rogue-like keyset");

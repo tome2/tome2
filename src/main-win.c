@@ -40,10 +40,7 @@
  * be placed into "src/", and the "8X8.BMP" bitmap file must be placed
  * into "lib/xtra/graf".  In any case, some "*.fon" files (including
  * "8X13.FON" if nothing else) must be placed into "lib/xtra/font/".
- * If "USE_SOUND" is defined, then some special library (for example,
- * "winmm.lib") may need to be linked in, and desired "*.WAV" sound
- * files must be placed into "lib/xtra/sound/".  All of these extra
- * files can be found in the "ext-win" archive.
+ * All of these extra files can be found in the "ext-win" archive.
  *
  *
  * The "Term_xtra_win_clear()" function should probably do a low-level
@@ -169,7 +166,6 @@
 #define IDM_OPTIONS_OLD_GRAPHICS	400
 #define IDM_OPTIONS_NEW_GRAPHICS	401
 #define IDM_OPTIONS_ASCII_GRAPHICS  403
-#define IDM_OPTIONS_SOUND		402
 #define IDM_OPTIONS_BIGTILE		409
 #define IDM_OPTIONS_UNUSED		410
 #define IDM_OPTIONS_SAVER		411
@@ -462,19 +458,6 @@ static DIBINIT infMask;
 #endif /* USE_GRAPHICS */
 
 
-#ifdef USE_SOUND
-
-/*
- * Flag set once "sound" has been initialized
- */
-static bool_ can_use_sound = FALSE;
-
-/*
- * An array of sound file names
- */
-static cptr sound_file[SOUND_MAX];
-
-#endif /* USE_SOUND */
 
 
 /*
@@ -497,7 +480,6 @@ static cptr AngList = "AngList";
  */
 static cptr ANGBAND_DIR_XTRA_FONT;
 static cptr ANGBAND_DIR_XTRA_GRAF;
-static cptr ANGBAND_DIR_XTRA_SOUND;
 static cptr ANGBAND_DIR_XTRA_HELP;
 
 
@@ -900,10 +882,6 @@ static void save_prefs(void)
 	strcpy(buf, arg_bigtile ? "1" : "0");
 	WritePrivateProfileString("Angband", "Bigtile", buf, ini_file);
 
-	/* Save the "arg_sound" flag */
-	strcpy(buf, arg_sound ? "1" : "0");
-	WritePrivateProfileString("Angband", "Sound", buf, ini_file);
-
 	/* Save window prefs */
 	for (i = 0; i < MAX_TERM_DATA; ++i)
 	{
@@ -966,9 +944,6 @@ static void load_prefs(void)
 	/* Extract the "arg_bigtile" flag */
 	arg_bigtile = GetPrivateProfileInt("Angband", "Bigtile", FALSE, ini_file);
 	use_bigtile = arg_bigtile;
-
-	/* Extract the "arg_sound" flag */
-	arg_sound = (GetPrivateProfileInt("Angband", "Sound", 0, ini_file) != 0);
 
 	/* Load window prefs */
 	for (i = 0; i < MAX_TERM_DATA; ++i)
@@ -1205,41 +1180,6 @@ static bool_ init_graphics()
 
 	/* Result */
 	return (can_use_graphics);
-}
-
-
-/*
- * Initialize sound
- */
-static bool_ init_sound()
-{
-	/* Initialize once */
-	if (!can_use_sound)
-	{
-		int i;
-
-		char wav[128];
-		char buf[1024];
-
-		/* Prepare the sounds */
-		for (i = 1; i < SOUND_MAX; i++)
-		{
-			/* Extract name of sound file */
-			sprintf(wav, "%s.wav", angband_sound_name[i]);
-
-			/* Access the sound */
-			path_build(buf, 1024, ANGBAND_DIR_XTRA_SOUND, wav);
-
-			/* Save the sound filename, if it exists */
-			if (check_file(buf)) sound_file[i] = strdup(buf);
-		}
-
-		/* Sound available */
-		can_use_sound = TRUE;
-	}
-
-	/* Result */
-	return (can_use_sound);
 }
 
 
@@ -1503,26 +1443,6 @@ static errr Term_xtra_win_react(void)
 	}
 
 
-#ifdef USE_SOUND
-
-	/* Handle "arg_sound" */
-	if (use_sound != arg_sound)
-	{
-		/* Initialize (if needed) */
-		if (arg_sound && !init_sound())
-		{
-			/* Warning */
-			plog("Cannot initialize sound!");
-
-			/* Cannot enable */
-			arg_sound = FALSE;
-		}
-
-		/* Change setting */
-		use_sound = arg_sound;
-	}
-
-#endif
 
 
 #ifdef USE_GRAPHICS
@@ -1674,41 +1594,6 @@ static errr Term_xtra_win_noise(void)
 
 
 /*
- * Hack -- make a sound
- */
-static errr Term_xtra_win_sound(int v)
-{
-	/* Sound disabled */
-	if (!use_sound) return (1);
-
-	/* Illegal sound */
-	if ((v < 0) || (v >= SOUND_MAX)) return (1);
-
-	/* Unknown sound */
-	if (!sound_file[v]) return (1);
-
-#ifdef USE_SOUND
-
-#ifdef WIN32
-
-	/* Play the sound, catch errors */
-	return (PlaySound(sound_file[v], 0, SND_FILENAME | SND_ASYNC));
-
-#else /* WIN32 */
-
-/* Play the sound, catch errors */
-	return (sndPlaySound(sound_file[v], SND_ASYNC));
-
-#endif /* WIN32 */
-
-#endif /* USE_SOUND */
-
-	/* Oops */
-	return (1);
-}
-
-
-/*
  * Delay for "x" milliseconds
  */
 static int Term_xtra_win_delay(int v)
@@ -1764,12 +1649,6 @@ static errr Term_xtra_win(int n, int v)
 	case TERM_XTRA_NOISE:
 		{
 			return (Term_xtra_win_noise());
-		}
-
-		/* Make a special sound */
-	case TERM_XTRA_SOUND:
-		{
-			return (Term_xtra_win_sound(v));
 		}
 
 		/* Process random events */
@@ -2547,8 +2426,6 @@ static void setup_menus(void)
 	               MF_BYCOMMAND | MF_DISABLED | MF_GRAYED);
 	EnableMenuItem(hm, IDM_OPTIONS_BIGTILE,
 	               MF_BYCOMMAND | MF_DISABLED | MF_GRAYED);
-	EnableMenuItem(hm, IDM_OPTIONS_SOUND,
-	               MF_BYCOMMAND | MF_DISABLED | MF_GRAYED);
 	EnableMenuItem(hm, IDM_OPTIONS_UNUSED,
 	               MF_BYCOMMAND | MF_DISABLED | MF_GRAYED);
 	EnableMenuItem(hm, IDM_OPTIONS_SAVER,
@@ -2563,8 +2440,6 @@ static void setup_menus(void)
 	              (arg_graphics == 0 ? MF_CHECKED : MF_UNCHECKED));
 	CheckMenuItem(hm, IDM_OPTIONS_BIGTILE,
 	              (arg_bigtile ? MF_CHECKED : MF_UNCHECKED));
-	CheckMenuItem(hm, IDM_OPTIONS_SOUND,
-	              (arg_sound ? MF_CHECKED : MF_UNCHECKED));
 	CheckMenuItem(hm, IDM_OPTIONS_UNUSED,
 	              (0 ? MF_CHECKED : MF_UNCHECKED));
 	CheckMenuItem(hm, IDM_OPTIONS_SAVER,
@@ -2581,10 +2456,6 @@ static void setup_menus(void)
 	EnableMenuItem(hm, IDM_OPTIONS_BIGTILE, MF_ENABLED);
 #endif
 
-#ifdef USE_SOUND
-	/* Menu "Options", Item "Sound" */
-	EnableMenuItem(hm, IDM_OPTIONS_SOUND, MF_ENABLED);
-#endif
 
 #ifdef USE_SAVER
 	/* Menu "Options", Item "ScreenSaver" */
@@ -3029,27 +2900,6 @@ ofn.lStructSize = sizeof(OPENFILENAME);
 
 			/* Redraw later */
 			InvalidateRect(td->w, NULL, TRUE);
-
-			break;
-		}
-
-	case IDM_OPTIONS_SOUND:
-		{
-			/* Paranoia */
-			if (!inkey_flag)
-			{
-				plog("You may not do that right now.");
-				break;
-			}
-
-			/* Toggle "arg_sound" */
-			arg_sound = !arg_sound;
-
-			/* React to changes */
-			Term_xtra_win_react();
-
-			/* Hack -- Force redraw */
-			Term_key_push(KTRL('R'));
 
 			break;
 		}
@@ -3923,18 +3773,6 @@ static void init_stuff(void)
 #endif
 
 
-#ifdef USE_SOUND
-
-	/* Build the "sound" path */
-	path_build(path, 1024, ANGBAND_DIR_XTRA, "sound");
-
-	/* Allocate the path */
-	ANGBAND_DIR_XTRA_SOUND = strdup(path);
-
-	/* Validate the "sound" directory */
-	validate_dir(ANGBAND_DIR_XTRA_SOUND);
-
-#endif
 
 
 	/* Build the "help" path */

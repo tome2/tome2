@@ -1492,11 +1492,8 @@ void bell(void)
 */
 void sound(int val)
 {
-	/* No sound */
-	if (!use_sound) return;
-
-	/* Make a sound (if allowed) */
-	Term_xtra(TERM_XTRA_SOUND, val);
+	/* Ignore; sound not currently supported. */
+	return;
 }
 
 

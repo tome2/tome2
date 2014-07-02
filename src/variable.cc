@@ -49,7 +49,6 @@ u16b sf_saves; 			/* Number of "saves" during this life */
  * Run-time aruments
  */
 bool_ arg_wizard; 			/* Command arg -- Request wizard mode */
-bool_ arg_sound; 				/* Command arg -- Request special sounds */
 bool_ arg_graphics; 			/* Command arg -- Request graphics mode */
 bool_ arg_force_original; 	/* Command arg -- Request original keyset */
 bool_ arg_force_roguelike; 	/* Command arg -- Request roguelike keyset */
@@ -109,7 +108,6 @@ s32b old_turn; 			/* Turn when level began (feelings) */
 
 bool_ wizard; 			/* Is the player currently in Wizard mode? */
 
-bool_ use_sound; 			/* The "sound" mode is enabled */
 bool_ use_graphics; 		/* The "graphics" mode is enabled */
 bool_ use_bigtile = FALSE;
 byte graphics_mode; 		/* Current graphics mode */

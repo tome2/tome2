@@ -111,7 +111,6 @@ extern u16b sf_lives;
 extern u16b sf_saves;
 extern u32b vernum; /* Version flag */
 extern bool_ arg_wizard;
-extern bool_ arg_sound;
 extern bool_ arg_graphics;
 extern bool_ arg_force_original;
 extern bool_ arg_force_roguelike;
@@ -150,7 +149,6 @@ extern s16b monster_level;
 extern s32b turn;
 extern s32b old_turn;
 extern bool_ wizard;
-extern bool_ use_sound;
 extern bool_ use_graphics;
 extern bool_ use_bigtile;
 extern byte graphics_mode;
