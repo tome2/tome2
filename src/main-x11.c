@@ -1009,11 +1009,7 @@ static errr Infofnt_prepare(XFontStruct *info)
 	ifnt->asc = info->ascent;
 	ifnt->hgt = info->ascent + info->descent;
 	ifnt->wid = cs->width;
-	if (use_bigtile)
-		ifnt->twid = 2 * ifnt->wid;
-	else
-		ifnt->twid = ifnt->wid;
-
+	ifnt->twid = ifnt->wid;
 
 	/* Success */
 	return (0);
@@ -1214,14 +1210,6 @@ struct term_data
 
 	infowin *win;
 
-#ifdef USE_GRAPHICS
-
-	XImage *tiles;
-
-	/* Tempory storage for overlaying tiles. */
-	XImage *TmpImage;
-
-#endif
 
 };
 
@@ -2143,11 +2131,8 @@ static errr Term_curs_x11(int x, int y)
 	/* Draw the cursor */
 	Infoclr_set(xor);
 
-	if (use_bigtile && x + 1 < Term->wid && Term->old->a[y][x + 1] == 255)
-		Infofnt_text_non(x, y, "  ", 2);
-	else
-		/* Hilite the cursor character */
-		Infofnt_text_non(x, y, " ", 1);
+	/* Hilite the cursor character */
+	Infofnt_text_non(x, y, " ", 1);
 
 	/* Redraw the selection if any, as it may have been obscured. (later) */
 	s_ptr->drawn = FALSE;
@@ -2192,170 +2177,6 @@ static errr Term_text_x11(int x, int y, int n, byte a, cptr s)
 }
 
 
-#ifdef USE_GRAPHICS
-
-/*
- * Draw some graphical characters.
- */
-static errr Term_pict_x11(int x, int y, int n, const byte *ap, const char *cp,
-                          const byte *tap, const char *tcp, const byte *eap, const char *ecp)
-{
-	int i, x1, y1;
-
-	byte a;
-	char c;
-
-	byte ta;
-	char tc;
-	int x2, y2;
-
-	byte ea;
-	char ec;
-	int x3, y3;
-	bool_ has_overlay;
-
-	int k, l;
-
-	unsigned long pixel, blank;
-
-	term_data *td = (term_data*)(Term->data);
-
-	y *= Infofnt->hgt;
-	x *= Infofnt->wid;
-
-	/* Add in affect of window boundaries */
-	y += Infowin->oy;
-	x += Infowin->ox;
-
-	for (i = 0; i < n; ++i, x += td->fnt->wid)
-	{
-		a = *ap++;
-		c = *cp++;
-
-		/* For extra speed - cache these values */
-		x1 = (c & 0x7F) * td->fnt->twid;
-		y1 = (a & 0x7F) * td->fnt->hgt;
-
-		ta = *tap++;
-		tc = *tcp++;
-
-		/* For extra speed - cache these values */
-		x2 = (tc & 0x7F) * td->fnt->twid;
-		y2 = (ta & 0x7F) * td->fnt->hgt;
-
-		ea = *eap++;
-		ec = *ecp++;
-		has_overlay = (ea && ec);
-
-		/* For extra speed - cache these values too */
-		x3 = (ec & 0x7F) * td->fnt->twid;
-		y3 = (ea & 0x7F) * td->fnt->hgt;
-
-		/* Optimise the common case */
-		if ((x1 == x2) && (y1 == y2))
-		{
-			/* Draw object / terrain */
-			if (!has_overlay)
-			{
-				XPutImage(Metadpy->dpy, td->win->win,
-				          clr[0]->gc,
-				          td->tiles,
-				          x1, y1,
-				          x, y,
-				          td->fnt->twid, td->fnt->hgt);
-			}
-
-			/* There's a terrain overlay */
-			else
-			{
-				/* Mega Hack^2 - assume the top left corner is "black" */
-				blank = XGetPixel(td->tiles, 0, td->fnt->hgt * 6);
-				for (k = 0; k < td->fnt->twid; k++)
-				{
-					for (l = 0; l < td->fnt->hgt; l++)
-					{
-						/* If mask set in overlay... */
-						if ((pixel = XGetPixel(td->tiles, x3 + k, y3 + l)) == blank)
-						{
-							/* Output from the terrain */
-							pixel = XGetPixel(td->tiles, x1 + k, y1 + l);
-						}
-
-						/* Store into the temp storage. */
-						XPutPixel(td->TmpImage, k, l, pixel);
-					}
-				}
-
-				/* Draw to screen */
-				XPutImage(Metadpy->dpy, td->win->win,
-				          clr[0]->gc,
-				          td->TmpImage,
-				          0, 0, x, y,
-				          td->fnt->twid, td->fnt->hgt);
-			}
-
-		}
-		else
-		{
-
-			/* Mega Hack^2 - assume the top left corner is "black" */
-			blank = XGetPixel(td->tiles, 0, td->fnt->hgt * 6);
-
-			for (k = 0; k < td->fnt->twid; k++)
-			{
-				for (l = 0; l < td->fnt->hgt; l++)
-				{
-					/* Overlay */
-					if (has_overlay)
-					{
-						pixel = XGetPixel(td->tiles, x3 + k, y3 + l);
-					}
-
-					/* Hack -- No overlay */
-					else
-					{
-						pixel = blank;
-					}
-
-					/* If it's blank... */
-					if (pixel == blank)
-					{
-						/* Look at mon/obj */
-						pixel = XGetPixel(td->tiles, x1 + k, y1 + l);
-					}
-
-					/* If it's blank too, use terrain */
-					if (pixel == blank)
-					{
-						pixel = XGetPixel(td->tiles, x2 + k, y2 + l);
-					}
-
-					/* Store into the temp storage. */
-					XPutPixel(td->TmpImage, k, l, pixel);
-				}
-			}
-
-
-
-			/* Draw to screen */
-			XPutImage(Metadpy->dpy, td->win->win,
-			          clr[0]->gc,
-			          td->TmpImage,
-			          0, 0, x, y,
-			          td->fnt->twid, td->fnt->hgt);
-		}
-
-		x += td->fnt->wid;
-	}
-
-	/* Redraw the selection if any, as it may have been obscured. (later) */
-	s_ptr->drawn = FALSE;
-
-	/* Success */
-	return (0);
-}
-
-#endif /* USE_GRAPHICS */
 
 
 
@@ -2623,17 +2444,6 @@ errr init_x11(int argc, char *argv[])
 
 	int num_term = 1;
 
-#ifdef USE_GRAPHICS
-
-	char filename[1024];
-
-	int pict_wid = 0;
-	int pict_hgt = 0;
-	bool_ force_old_graphics = FALSE;
-
-	char *TmpData;
-
-#endif /* USE_GRAPHICS */
 
 
 	/* Parse args */
@@ -2645,27 +2455,6 @@ errr init_x11(int argc, char *argv[])
 			continue;
 		}
 
-#ifdef USE_GRAPHICS
-
-		if (prefix(argv[i], "-s"))
-		{
-			smoothRescaling = FALSE;
-			continue;
-		}
-
-		if (prefix(argv[i], "-o"))
-		{
-			force_old_graphics = TRUE;
-			continue;
-		}
-
-		if (prefix(argv[i], "-b"))
-		{
-			arg_bigtile = use_bigtile = TRUE;
-			continue;
-		}
-
-#endif /* USE_GRAPHICS */
 
 		if (prefix(argv[i], "-n"))
 		{
@@ -2741,102 +2530,6 @@ errr init_x11(int argc, char *argv[])
 	Term_activate(&data[0].t);
 
 
-#ifdef USE_GRAPHICS
-
-	/* Try graphics */
-	if (arg_graphics)
-	{
-		/* Try the "16x16.bmp" file */
-		path_build(filename, 1024, ANGBAND_DIR_XTRA, "graf/16x16.bmp");
-
-		/* Use the "16x16.bmp" file if it exists */
-		if (!force_old_graphics &&
-		                (0 == fd_close(fd_open(filename, O_RDONLY))))
-		{
-			/* Use graphics */
-			use_graphics = TRUE;
-
-			pict_wid = pict_hgt = 16;
-
-			ANGBAND_GRAF = "new";
-		}
-		else
-		{
-			/* Try the "8x8.bmp" file */
-			path_build(filename, 1024, ANGBAND_DIR_XTRA, "graf/8x8.bmp");
-
-			/* Use the "8x8.bmp" file if it exists */
-			if (0 == fd_close(fd_open(filename, O_RDONLY)))
-			{
-				/* Use graphics */
-				use_graphics = TRUE;
-
-				pict_wid = pict_hgt = 8;
-
-				ANGBAND_GRAF = "old";
-			}
-		}
-	}
-
-	/* Load graphics */
-	if (use_graphics)
-	{
-		Display *dpy = Metadpy->dpy;
-
-		XImage *tiles_raw;
-
-		/* Load the graphical tiles */
-		tiles_raw = ReadBMP(dpy, filename);
-
-		/* Initialize the windows */
-		for (i = 0; i < num_term; i++)
-		{
-			term_data *td = &data[i];
-
-			term *t = &td->t;
-
-			/* Graphics hook */
-			t->pict_hook = Term_pict_x11;
-
-			/* Use graphics sometimes */
-			t->higher_pict = TRUE;
-
-			/* Resize tiles */
-			td->tiles =
-			        ResizeImage(dpy, tiles_raw,
-			                    pict_wid, pict_hgt,
-			                    td->fnt->twid, td->fnt->hgt);
-		}
-
-		/* Initialize the transparency masks */
-		for (i = 0; i < num_term; i++)
-		{
-			term_data *td = &data[i];
-			int ii, jj;
-			int depth = DefaultDepth(dpy, DefaultScreen(dpy));
-			Visual *visual = DefaultVisual(dpy, DefaultScreen(dpy));
-			int total;
-
-
-			/* Determine total bytes needed for image */
-			ii = 1;
-			jj = (depth - 1) >> 2;
-			while (jj >>= 1) ii <<= 1;
-			total = td->fnt->twid * td->fnt->hgt * ii;
-
-
-			TmpData = (char *)malloc(total);
-
-			td->TmpImage = XCreateImage(dpy, visual, depth,
-			                            ZPixmap, 0, TmpData,
-			                            td->fnt->twid, td->fnt->hgt, 8, 0);
-
-		}
-
-		/* Free tiles_raw? XXX XXX */
-	}
-
-#endif /* USE_GRAPHICS */
 
 
 	/* Success */

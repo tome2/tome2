@@ -4756,7 +4756,7 @@ void process_player(void)
 
 
 			/* Shimmer monsters if needed */
-			if (!avoid_other && !use_graphics && shimmer_monsters)
+			if (!avoid_other && shimmer_monsters)
 			{
 				/* Clear the flag */
 				shimmer_monsters = FALSE;
@@ -4788,8 +4788,7 @@ void process_player(void)
 			}
 
 			/* Shimmer objects if needed and requested */
-			if (!avoid_other && !avoid_shimmer && !use_graphics &&
-			                shimmer_objects)
+			if (!avoid_other && !avoid_shimmer && shimmer_objects)
 			{
 				/* Clear the flag */
 				shimmer_objects = FALSE;
@@ -4825,7 +4824,7 @@ void process_player(void)
 			 * fast, and that's why shimmering has been limited to small
 			 * number of monsters -- pelpel
 			 */
-			if (!avoid_other && !avoid_shimmer && !use_graphics &&
+			if (!avoid_other && !avoid_shimmer &&
 			                !resting && !running)
 			{
 				for (j = panel_row_min; j <= panel_row_max; j++)

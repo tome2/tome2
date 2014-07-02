@@ -46,18 +46,6 @@ struct term_win
 	byte *va;
 	char *vc;
 
-	byte **ta;
-	char **tc;
-
-	byte *vta;
-	char *vtc;
-
-	byte **ea;
-	char **ec;
-
-	byte *vea;
-	char *vec;
-
 };
 
 
@@ -85,12 +73,6 @@ struct term_win
  *
  *	- Flag "soft_cursor"
  *	  This "term" uses a "software" cursor
- *
- *	- Flag "always_pict"
- *	  Use the "Term_pict()" routine for all text
- *
- *	- Flag "higher_pict"
- *	  Use the "Term_pict()" routine for special text
  *
  *	- Flag "always_text"
  *	  Use the "Term_text()" routine for invisible text
@@ -161,8 +143,6 @@ struct term
 	bool_ fixed_shape;
 	bool_ icky_corner;
 	bool_ soft_cursor;
-	bool_ always_pict;
-	bool_ higher_pict;
 	bool_ always_text;
 	bool_ never_bored;
 	bool_ never_frosh;
@@ -201,8 +181,6 @@ struct term
 	errr (*text_hook)(int x, int y, int n, byte a, cptr s);
 
 	void (*resize_hook)(void);
-
-	errr (*pict_hook)(int x, int y, int n, const byte *ap, const char *cp, const byte *tap, const char *tcp, const byte *eap, const char *ecp);
 
 };
 
@@ -256,8 +234,7 @@ extern term *Term;
 extern errr Term_xtra(int n, int v);
 extern long Term_xtra_long;
 
-extern void Term_queue_char(int x, int y, byte a, char c, byte ta, char tc, byte ea, char ec);
-extern void Term_queue_line(int x, int y, int n, byte *a, char *c, byte *ta, char *tc, byte *ea, char *ec);
+extern void Term_queue_char(int x, int y, byte a, char c);
 extern void Term_queue_chars(int x, int y, int n, byte a, cptr s);
 
 extern errr Term_fresh(void);

@@ -58,21 +58,6 @@ static char arg_font_name[64] = DEF_FONT_FILE;
 
 /**************/
 
-/* Graphics setting - signifies what graphics to use. Valid ints
-are available with given defines */
-
-/* No graphics - use only colored text */
-#define NO_GRAPHICS		0
-/* "Old" graphics - use 8x8.bmp to extract graphics tiles */
-#define GRAPHICS_8x8	8
-/* "New" graphics - use 16x16.bmp as tiles and apply mask.bmp for transparency*/
-#define GRAPHICS_16x16	16
-
-static int arg_graphics_type = NO_GRAPHICS;
-
-
-/**************/
-
 /* The number of term_data structures to set aside mem for */
 #define MAX_CONSOLE_COUNT 8
 
@@ -88,10 +73,6 @@ border */
 #define BORDER_THICKNESS 1
 
 /**************/
-
-/* some miscellaneous settings which have not been dealt
-with yet */
-static bool_ arg_double_width = FALSE;
 
 /* flag signifying whether the game is in full screen */
 static bool_ arg_full_screen = FALSE;
@@ -1830,8 +1811,6 @@ static errr term_data_init(term_data *td, int i)
 	t->soft_cursor = TRUE;
 
 	/* Picture routine flags */
-	t->always_pict = FALSE;
-	t->higher_pict = FALSE;
 	t->always_text = FALSE;
 
 	/* Erase with "white space" */
@@ -2034,25 +2013,6 @@ errr init_sdl(int argc, char **argv)
 				return -1;
 			}
 		}
-		/* see if new graphics are requested...*/
-		else if (0 == strcmp(argv[i], "-g"))
-		{
-			printf("New graphics (16x16) enabled!\n");
-			arg_graphics_type = GRAPHICS_16x16;
-		}
-		/* see if old graphics are requested...*/
-		else if (0 == strcmp(argv[i], "-o"))
-		{
-			printf("Old graphics (8x8) enabled!\n");
-			arg_graphics_type = GRAPHICS_8x8;
-		}
-		
-		/* see if double width tiles are requested */
-		else if (0 == strcmp(argv[i], "-b"))
-		{
-			/* do nothing for now */
-			/* arg_double_width = TRUE; */
-		}
 		/* switch into full-screen at startup */
 		else if (0 == strcmp(argv[i], "-fs"))
 		{
@@ -2156,13 +2116,6 @@ errr init_sdl(int argc, char **argv)
 	
 	DB("SDL Window Created!");
 
-	/* Graphics! ----
-	If graphics are selected, then load graphical tiles! */
-	if (arg_graphics_type != NO_GRAPHICS)
-	{
-		/* load graphics tiles */
-	}
-	
 	/* Initialize the working surface and crayon surface used for rendering
 	 text in different colors. */
 

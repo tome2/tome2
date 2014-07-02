@@ -268,13 +268,6 @@ int main(int argc, char *argv[])
 				break;
 			}
 
-		case 'G':
-		case 'g':
-			{
-				arg_graphics = TRUE;
-				break;
-			}
-
 		case 'R':
 		case 'r':
 			{
@@ -380,7 +373,6 @@ usage:
 				puts("  -h                 This help");
 				puts("  -n                 Start a new character");
 				puts("  -w                 Request wizard mode");
-				puts("  -g                 Request graphics mode");
 				puts("  -o                 Request original keyset");
 				puts("  -r                 Request rogue-like keyset");
 				puts("  -H <list of files> Convert helpfile to html");
@@ -395,12 +387,6 @@ usage:
 				puts("  --                 Sub options");
 				puts("  -- -n#             Number of terms to use");
 				puts("  -- -b              Turn off software backing store");
-# ifdef USE_GRAPHICS
-				puts("  -- -s              Turn off smoothscaling graphics");
-				puts("  -- -o              Requests \"old\" graphics");
-				puts("  -- -g              Requests \"new\" graphics");
-				puts("  -- -t              Enable transparency effect");
-# endif  /* USE_GRAPHICS */
 #endif /* USE_GTK2 */
 
 #ifdef USE_XAW
@@ -408,10 +394,6 @@ usage:
 				puts("  --                 Sub options");
 				puts("  -- -n#             Number of terms to use");
 				puts("  -- -d<name>        Display to use");
-# ifdef USE_GRAPHICS
-				puts("  -- -s              Turn off smoothscaling graphics");
-				puts("  -- -o              Requests \"old\" graphics");
-# endif  /* USE_GRAPHICS */
 #endif /* USE_XAW */
 
 #ifdef USE_X11
@@ -419,11 +401,6 @@ usage:
 				puts("  --                 Sub options");
 				puts("  -- -n#             Number of terms to use");
 				puts("  -- -d<name>        Display to use");
-# ifdef USE_GRAPHICS
-				puts("  -- -s              Turn off smoothscaling graphics");
-				puts("  -- -o              Requests \"old\" graphics");
-				puts("  -- -b              Requests double-width tiles");
-# endif  /* USE_GRAPHICS */
 #endif /* USE_X11 */
 
 #ifdef USE_GCU
@@ -436,9 +413,6 @@ usage:
 				puts("  -msdl              To use SDL");
 				puts("  --                 Sub options");
 				puts("  -- -n #            Number of virtual consoles to use");
-				puts("  -- -g              Request new graphics (16x16)");
-				puts("  -- -o              Request old graphics (8x8)");
-				puts("  -- -b              Requests double-width tiles");
 				puts("  -- -w #            Request screen width in pixels");
 				puts("  -- -h #            Request screen height in pixels");
 				puts("  -- -bpp #          Request screen color depth in bits");

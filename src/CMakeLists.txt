@@ -35,7 +35,7 @@ SET(SRCS
 
 # Need a few additional source files for Windows.
 if(WIN32)
-  SET(SRCS ${SRCS} main-win.c readdib.c)
+  SET(SRCS ${SRCS} main-win.c)
   # Resource files require a little workaround.
   if(MINGW)
     # Workaround for resource compilation for mingw on CMake.

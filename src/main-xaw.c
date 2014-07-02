@@ -190,15 +190,6 @@ struct AngbandPart
 
 	XtCallbackList redraw_callbacks;
 
-#ifdef USE_GRAPHICS
-
-	/* Tiles */
-	XImage *tiles;
-
-	/* Tempory storage for overlaying tiles. */
-	XImage *TmpImage;
-
-#endif /* USE_GRAPHICS */
 
 	/* Private state */
 	XFontStruct *fnt;
@@ -437,177 +428,6 @@ static void AngbandOutputText(AngbandWidget widget, int x, int y,
 }
 
 
-#ifdef USE_GRAPHICS
-
-/*
- * Draw some graphical characters.
- */
-static void AngbandOutputPict(AngbandWidget widget, int x, int y, int n,
-                              const byte *ap, const char *cp, const byte *tap, const char *tcp,
-                              const byte *eap, const char *ecp)
-{
-	int i, x1, y1;
-
-	byte a;
-	char c;
-
-	byte ta;
-	char tc;
-
-	int x2, y2;
-
-	byte ea;
-	char ec;
-
-	int x3, y3;
-	bool_ has_overlay;
-
-	int k, l;
-	unsigned long pixel, blank;
-
-	/* Figure out where to place the text */
-	y = (y * widget->angband.fontheight + widget->angband.internal_border);
-	x = (x * widget->angband.fontwidth + widget->angband.internal_border);
-
-	for (i = 0; i < n; ++i)
-	{
-		a = *ap++;
-		c = *cp++;
-
-		/* For extra speed - cache these values */
-		x1 = (c & 0x7F) * widget->angband.fontwidth;
-		y1 = (a & 0x7F) * widget->angband.fontheight;
-
-		ta = *tap++;
-		tc = *tcp++;
-
-		/* For extra speed - cache these values */
-		x2 = (tc & 0x7F) * widget->angband.fontwidth;
-		y2 = (ta & 0x7F) * widget->angband.fontheight;
-
-		ea = *eap++;
-		ec = *ecp++;
-		has_overlay = (ea && ec);
-
-		/* For extra speed -- cache these values */
-		x3 = (ec & 0x7F) * widget->angband.fontwidth;
-		y3 = (ea & 0x7F) * widget->angband.fontheight;
-
-		/* Optimise the common case */
-		if ((x1 == x2) && (y1 == y2))
-		{
-
-			/* No overlay */
-			if (!has_overlay)
-			{
-				/* Draw object / terrain */
-				XPutImage(XtDisplay(widget), XtWindow(widget),
-				          widget->angband.gc[0],
-				          widget->angband.tiles,
-				          x1, y1,
-				          x, y,
-				          widget->angband.fontwidth,
-				          widget->angband.fontheight);
-			}
-
-			/* Terrain overlay */
-			else
-			{
-				/* Mega Hack^2 - assume the top left corner is "black" */
-				blank = XGetPixel(widget->angband.tiles,
-				                  0, widget->angband.fontheight * 6);
-
-				for (k = 0; k < widget->angband.fontwidth; k++)
-				{
-					for (l = 0; l < widget->angband.fontheight; l++)
-					{
-						/* If mask set... */
-						if ((pixel = XGetPixel(widget->angband.tiles,
-						                       x3 + k, y3 + l)) == blank)
-						{
-							/* Output from the terrain */
-							pixel = XGetPixel(widget->angband.tiles,
-							                  x1 + k, y1 + l);
-						}
-
-						/* Store into the temp storage */
-						XPutPixel(widget->angband.TmpImage,
-						          k, l, pixel);
-					}
-				}
-
-				/* Draw terrain + overlay */
-				XPutImage(XtDisplay(widget), XtWindow(widget),
-				          widget->angband.gc[0],
-				          widget->angband.TmpImage,
-				          0, 0,
-				          x, y,
-				          widget->angband.fontwidth,
-				          widget->angband.fontheight);
-			}
-
-		}
-		else
-		{
-			/* Mega Hack^2 - assume the top left corner is "black" */
-			blank = XGetPixel(widget->angband.tiles,
-			                  0, widget->angband.fontheight * 6);
-
-		for (k = 0; k < widget->angband.fontwidth; k++)
-		{
-			for (l = 0; l < widget->angband.fontheight; l++)
-			{
-				/* Get overlay pixel */
-				if (has_overlay)
-				{
-					pixel = XGetPixel(widget->angband.tiles,
-					                  x3 + k, y3 + l);
-				}
-
-				/* Hack -- no overlay */
-				else
-				{
-					pixel = blank;
-				}
-
-				/* If it's blank */
-				if (pixel == blank)
-				{
-					/* Use obj/mon */
-					pixel = XGetPixel(widget->angband.tiles,
-					                  x1 + k, y1 + l);
-				}
-
-				/* Use terrain if it's blank too */
-				if (pixel == blank)
-				{
-					pixel = XGetPixel(widget->angband.tiles,
-					                  x2 + k, y2 + l);
-				}
-
-				/* Store into the temp storage. */
-				XPutPixel(widget->angband.TmpImage,
-				          k, l, pixel);
-			}
-		}
-
-			/* Draw to screen */
-
-			/* Draw object / terrain */
-			XPutImage(XtDisplay(widget), XtWindow(widget),
-			          widget->angband.gc[0],
-			          widget->angband.TmpImage,
-			          0, 0,
-			          x, y,
-			          widget->angband.fontwidth,
-			          widget->angband.fontheight);
-		}
-
-		x += widget->angband.fontwidth;
-	}
-}
-
-#endif /* USE_GRAPHICS */
 
 /*
  * Private procedures
@@ -1510,24 +1330,6 @@ static errr Term_text_xaw(int x, int y, int n, byte a, cptr s)
 }
 
 
-#ifdef USE_GRAPHICS
-
-/*
- * Draw some graphical characters.
- */
-static errr Term_pict_xaw(int x, int y, int n, const byte *ap, const char *cp,
-                          const byte *tap, const char *tcp, const byte *eap, const char *ecp)
-{
-	term_data *td = (term_data*)(Term->data);
-
-	/* Draw the pictures */
-	AngbandOutputPict(td->widget, x, y, n, ap, cp, tap, tcp, eap, ecp);
-
-	/* Success */
-	return (0);
-}
-
-#endif /* USE_GRAPHICS */
 
 
 /*
@@ -1647,17 +1449,6 @@ errr init_xaw(int argc, char *argv[])
 	cptr dpy_name = "";
 
 
-#ifdef USE_GRAPHICS
-
-	char filename[1024];
-
-	int pict_wid = 0;
-	int pict_hgt = 0;
-	bool_ force_old_graphics = FALSE;
-
-	char *TmpData;
-
-#endif /* USE_GRAPHICS */
 
 	/* Parse args */
 	for (i = 1; i < argc; i++)
@@ -1668,21 +1459,6 @@ errr init_xaw(int argc, char *argv[])
 			continue;
 		}
 
-#ifdef USE_GRAPHICS
-
-		if (prefix(argv[i], "-s"))
-		{
-			smoothRescaling = FALSE;
-			continue;
-		}
-
-		if (prefix(argv[i], "-o"))
-		{
-			force_old_graphics = TRUE;
-			continue;
-		}
-
-#endif /* USE_GRAPHICS */
 
 		if (prefix(argv[i], "-n"))
 		{
@@ -1739,108 +1515,6 @@ errr init_xaw(int argc, char *argv[])
 	term_raise(&data[0]);
 
 
-#ifdef USE_GRAPHICS
-
-	/* Try graphics */
-	if (arg_graphics)
-	{
-		/* Try the "16x16.bmp" file */
-		path_build(filename, 1024, ANGBAND_DIR_XTRA, "graf/16x16.bmp");
-
-		/* Use the "16x16.bmp" file if it exists */
-		if (!force_old_graphics &&
-		                (0 == fd_close(fd_open(filename, O_RDONLY))))
-		{
-			/* Use graphics */
-			use_graphics = TRUE;
-
-			pict_wid = pict_hgt = 16;
-
-			ANGBAND_GRAF = "new";
-		}
-		else
-		{
-			/* Try the "8x8.bmp" file */
-			path_build(filename, 1024, ANGBAND_DIR_XTRA, "graf/8x8.bmp");
-
-			/* Use the "8x8.bmp" file if it exists */
-			if (0 == fd_close(fd_open(filename, O_RDONLY)))
-			{
-				/* Use graphics */
-				use_graphics = TRUE;
-
-				pict_wid = pict_hgt = 8;
-
-				ANGBAND_GRAF = "old";
-			}
-		}
-	}
-
-	/* Load graphics */
-	if (use_graphics)
-	{
-		/* Hack -- Get the Display */
-		term_data *td = &data[0];
-		Widget widget = (Widget)(td->widget);
-		Display *dpy = XtDisplay(widget);
-
-		XImage *tiles_raw;
-
-		/* Load the graphical tiles */
-		tiles_raw = ReadBMP(dpy, filename);
-
-		/* Initialize the windows */
-		for (i = 0; i < num_term; i++)
-		{
-			term_data *td = &data[i];
-
-			term *t = &td->t;
-
-			t->pict_hook = Term_pict_xaw;
-
-			t->higher_pict = TRUE;
-
-			/* Resize tiles */
-			td->widget->angband.tiles =
-			        ResizeImage(dpy, tiles_raw,
-			                    pict_wid, pict_hgt,
-			                    td->widget->angband.fontwidth,
-			                    td->widget->angband.fontheight);
-		}
-
-		/* Initialize the transparency temp storage*/
-		for (i = 0; i < num_term; i++)
-		{
-			term_data *td = &data[i];
-			int ii, jj;
-			int depth = DefaultDepth(dpy, DefaultScreen(dpy));
-			Visual *visual = DefaultVisual(dpy, DefaultScreen(dpy));
-			int total;
-
-
-			/* Determine total bytes needed for image */
-			ii = 1;
-			jj = (depth - 1) >> 2;
-			while (jj >>= 1) ii <<= 1;
-			total = td->widget->angband.fontwidth *
-			        td->widget->angband.fontheight * ii;
-
-
-			TmpData = (char *)malloc(total);
-
-			td->widget->angband.TmpImage = XCreateImage(dpy,
-			                               visual, depth,
-			                               ZPixmap, 0, TmpData,
-			                               td->widget->angband.fontwidth,
-			                               td->widget->angband.fontheight, 8, 0);
-
-		}
-
-
-		/* Free tiles_raw? XXX XXX */
-	}
-
-#endif /* USE_GRAPHICS */
 
 	/* Success */
 	return (0);

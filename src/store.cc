@@ -1451,12 +1451,6 @@ static void display_entry(int pos)
 		if (!o_ptr->k_idx) c = ' ';
 
 		Term_draw(cur_col, i + 6, a, c);
-		if (use_bigtile)
-		{
-			cur_col++;
-			if (a & 0x80)
-				Term_draw(cur_col, i + 6, 255, 255);
-		}
 		cur_col += 2;
 	}
 

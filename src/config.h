@@ -117,13 +117,6 @@
 
 
 /*
- * OPTION: Allow the use of "graphics" in various places
- */
-#define USE_GRAPHICS
-
-
-
-/*
  * OPTION: Set the "default" path to the angband "lib" directory.
  *
  * See "main.c" for usage, and note that this value is only used on

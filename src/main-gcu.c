@@ -834,41 +834,6 @@ static errr Term_text_gcu(int x, int y, int n, byte a, cptr s)
 	/* Draw each character */
 	for (i = 0; i < n; i++)
 	{
-#ifdef USE_GRAPHICS
-		/* Special character */
-		if (use_graphics && (s[i] & 0x80))
-		{
-			/* Determine picture to use */
-			switch (s[i] & 0x7F)
-			{
-
-#ifdef ACS_CKBOARD
-				/* Wall */
-			case '#':
-				pic = ACS_CKBOARD;
-				break;
-#endif /* ACS_CKBOARD */
-
-#ifdef ACS_BOARD
-				/* Mineral vein */
-			case '%':
-				pic = ACS_BOARD;
-				break;
-#endif /* ACS_BOARD */
-
-				/* XXX */
-			default:
-				pic = '?';
-				break;
-			}
-
-			/* Draw the picture */
-			waddch(td->win, pic);
-
-			/* Next character */
-			continue;
-		}
-#endif
 
 		/* Draw a normal character */
 		waddch(td->win, (byte)s[i]);
@@ -992,12 +957,6 @@ errr init_gcu(int argc, char **argv)
 	}
 
 
-#ifdef USE_GRAPHICS
-
-	/* Set graphics flag */
-	use_graphics = arg_graphics;
-
-#endif
 
 #ifdef A_COLOR
 

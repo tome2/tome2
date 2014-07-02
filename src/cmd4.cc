@@ -2336,26 +2336,12 @@ void do_cmd_visuals(void)
 				            format("Default attr/char = %3u / %3u", da, (dc & 0xFF)));
 				Term_putstr(40, 19, -1, TERM_WHITE, "<< ? >>");
 				Term_putch(43, 19, da, dc);
-				if (use_bigtile)
-				{
-					if (da & 0x80)
-						Term_putch(44, 19, 255, 255);
-					else
-						Term_putch(44, 19, 0, ' ');
-				}
 
 				/* Label the Current values */
 				Term_putstr(10, 20, -1, TERM_WHITE,
 				            format("Current attr/char = %3u / %3u", ca, (cc & 0xFF)));
 				Term_putstr(40, 20, -1, TERM_WHITE, "<< ? >>");
 				Term_putch(43, 20, ca, cc);
-				if (use_bigtile)
-				{
-					if (ca & 0x80)
-						Term_putch(44, 20, 255, 255);
-					else
-						Term_putch(44, 20, 0, ' ');
-				}
 
 				/* Prompt */
 				Term_putstr(0, 22, -1, TERM_WHITE,
@@ -2405,26 +2391,12 @@ void do_cmd_visuals(void)
 				            format("Default attr/char = %3u / %3u", da, (dc & 0xFF)));
 				Term_putstr(40, 19, -1, TERM_WHITE, "<< ? >>");
 				Term_putch(43, 19, da, dc);
-				if (use_bigtile)
-				{
-					if (da & 0x80)
-						Term_putch(44, 19, 255, 255);
-					else
-						Term_putch(44, 19, 0, ' ');
-				}
 
 				/* Label the Current values */
 				Term_putstr(10, 20, -1, TERM_WHITE,
 				            format("Current attr/char = %3u / %3u", ca, (cc & 0xFF)));
 				Term_putstr(40, 20, -1, TERM_WHITE, "<< ? >>");
 				Term_putch(43, 20, ca, cc);
-				if (use_bigtile)
-				{
-					if (ca & 0x80)
-						Term_putch(44, 20, 255, 255);
-					else
-						Term_putch(44, 20, 0, ' ');
-				}
 
 				/* Prompt */
 				Term_putstr(0, 22, -1, TERM_WHITE,
@@ -2474,26 +2446,12 @@ void do_cmd_visuals(void)
 				            format("Default attr/char = %3u / %3u", da, (dc & 0xFF)));
 				Term_putstr(40, 19, -1, TERM_WHITE, "<< ? >>");
 				Term_putch(43, 19, da, dc);
-				if (use_bigtile)
-				{
-					if (da & 0x80)
-						Term_putch(44, 19, 255, 255);
-					else
-						Term_putch(44, 19, 0, ' ');
-				}
 
 				/* Label the Current values */
 				Term_putstr(10, 20, -1, TERM_WHITE,
 				            format("Current attr/char = %3u / %3u", ca, (cc & 0xFF)));
 				Term_putstr(40, 20, -1, TERM_WHITE, "<< ? >>");
 				Term_putch(43, 20, ca, cc);
-				if (use_bigtile)
-				{
-					if (ca & 0x80)
-						Term_putch(44, 20, 255, 255);
-					else
-						Term_putch(44, 20, 0, ' ');
-				}
 
 				/* Prompt */
 				Term_putstr(0, 22, -1, TERM_WHITE,
@@ -3491,37 +3449,17 @@ static void do_cmd_knowledge_uniques(void)
 				/* Print a message */
 				if (dead)
 				{
-					/* Don't print the unique's ASCII symbol
-					 * if use_graphics is on. */
-					if (use_graphics)
-					{
-						fprintf(fff, "[[[[[R%-70s is dead]\n",
-					        	(r_name + r_ptr->name));
-					}
-					else
-					{
-						fprintf(fff, "[[[[[%c%c] [[[[[R%-68s is dead]\n",
-							conv_color[r_ptr->d_attr],
-							r_ptr->d_char,
-					        	(r_name + r_ptr->name));
-					}
+					fprintf(fff, "[[[[[%c%c] [[[[[R%-68s is dead]\n",
+						conv_color[r_ptr->d_attr],
+						r_ptr->d_char,
+						(r_name + r_ptr->name));
 				}
 				else
 				{
-					/* Don't print the unique's ASCII symbol
-					 * if use_graphics is on. */
-					if (use_graphics)
-					{
-						fprintf(fff, "[[[[[w%-70s is alive]\n",
-					        	(r_name + r_ptr->name));
-					}
-					else
-					{
-						fprintf(fff, "[[[[[%c%c] [[[[[w%-68s is alive]\n",
-							conv_color[r_ptr->d_attr],
-							r_ptr->d_char,
-					        	(r_name + r_ptr->name));
-					}
+					fprintf(fff, "[[[[[%c%c] [[[[[w%-68s is alive]\n",
+						conv_color[r_ptr->d_attr],
+						r_ptr->d_char,
+						(r_name + r_ptr->name));
 				}
 			}
 		}

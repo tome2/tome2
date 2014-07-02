@@ -514,42 +514,6 @@ static errr Term_text_xxx(int x, int y, int n, byte a, const char *cp)
 }
 
 
-/*
- * Draw some attr/char pairs on the screen
- *
- * This routine should display the given "n" attr/char pairs at
- * the given location (x,y).  This function is only used if one
- * of the flags "always_pict" or "higher_pict" is defined.
- *
- * You must be sure that the attr/char pairs, when displayed, will
- * erase anything (including any visual cursor) that used to be at
- * the given location.  On many machines this is automatic, but on
- * others, you must first call "Term_wipe_xxx(x, y, 1)".
- *
- * With the "higher_pict" flag, this function can be used to allow
- * the display of "pseudo-graphic" pictures, for example, by using
- * the attr/char pair as an encoded index into a pixmap of special
- * "pictures".
- *
- * With the "always_pict" flag, this function can be used to force
- * every attr/char pair to be drawn by this function, which can be
- * very useful if this file can optimize its own display calls.
- *
- * This function is often associated with the "arg_graphics" flag.
- *
- * This function is only used if one of the "higher_pict" and/or
- * "always_pict" flags are set.
- */
-static errr Term_pict_xxx(int x, int y, int n, const byte *ap, const char *cp)
-{
-	term_data *td = (term_data*)(Term->data);
-
-	/* XXX XXX XXX */
-
-	/* Success */
-	return (0);
-}
-
 
 
 /*** Internal Functions ***/
@@ -621,7 +585,6 @@ static void term_data_link(int i)
 	td->t->curs_hook = Term_curs_xxx;
 	td->t->wipe_hook = Term_wipe_xxx;
 	td->t->text_hook = Term_text_xxx;
-	td->t->pict_hook = Term_pict_xxx;
 
 	/* Remember where we came from */
 	td->t->data = (vptr)(td);

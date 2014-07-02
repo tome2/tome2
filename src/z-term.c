@@ -86,13 +86,9 @@
  *
  * This package allows each "grid" in each window to hold an attr/char
  * pair, with each ranging from 0 to 255, and makes very few assumptions
- * about the meaning of any attr/char values.  Normally, we assume that
- * "attr 0" is "black", with the semantics that "black" text should be
- * sent to "Term_wipe()" instead of "Term_text()", but this sematics is
- * modified if either the "always_pict" or the "always_text" flags are
- * set.  We assume that "char 0" is "dangerous", since placing such a
- * "char" in the middle of a string "terminates" the string, and usually
- * we prevent its use.
+ * about the meaning of any attr/char values.  We assume that "attr 0" is
+ * "black", with the semantics that "black" text should be
+ * sent to "Term_wipe()" instead of "Term_text()".
  *
  * Finally, we use a special attr/char pair, defaulting to "attr 0" and
  * "char 32", also known as "black space", when we "erase" or "clear"
@@ -187,7 +183,6 @@
  *   Term->curs_hook = Draw (or Move) the cursor
  *   Term->wipe_hook = Draw some blank spaces
  *   Term->text_hook = Draw some text in the window
- *   Term->pict_hook = Draw some attr/chars in the window
  *
  * The "Term->xtra_hook" hook provides a variety of different functions,
  * based on the first parameter (which should be taken from the various
@@ -205,26 +200,13 @@
  * The "Term->wipe_hook" hook provides this package with a simple way
  * to "erase", starting at "x,y", the next "n" grids.  This hook assumes
  * that the input is valid.  This hook is required, unless the setting
- * of the "always_pict" or "always_text" flags makes it optional.
+ * of the "always_text" flag makes it optional.
  *
  * The "Term->text_hook" hook provides this package with a simple way
  * to "draw", starting at "x,y", the "n" chars contained in "cp", using
  * the attr "a".  This hook assumes that the input is valid, and that
  * "n" is between 1 and 256 inclusive, but it should NOT assume that
- * the contents of "cp" are null-terminated.  This hook is required,
- * unless the setting of the "always_pict" flag makes it optional.
- *
- * The "Term->pict_hook" hook provides this package with a simple way
- * to "draw", starting at "x,y", the "n" attr/char pairs contained in
- * the arrays "ap" and "cp".  This hook assumes that the input is valid,
- * and that "n" is between 1 and 256 inclusive, but it should NOT assume
- * that the contents of "cp" are null-terminated.  This hook is optional,
- * unless the setting of the "always_pict" or "higher_pict" flags make
- * it required.  Note that recently, this hook was changed from taking
- * a byte "a" and a char "c" to taking a length "n", an array of bytes
- * "ap" and an array of chars "cp".  Old implementations of this hook
- * should now iterate over all "n" attr/char pairs.
- *
+ * the contents of "cp" are null-terminated.
  *
  * The game "Angband" uses a set of files called "main-xxx.c", for
  * various "xxx" suffixes.  Most of these contain a function called
@@ -281,31 +263,6 @@ static errr term_win_nuke(term_win *s, int w, int h)
 	free(s->vc);
 	s->vc = NULL;
 
-	/* Free the terrain access arrays */
-	free(s->ta);
-	s->ta = NULL;
-
-	free(s->tc);
-	s->tc = NULL;
-
-	/* Free the terrain content arrays */
-	free(s->vta);
-	s->vta = NULL;
-	free(s->vtc);
-	s->vtc = NULL;
-
-	/* Free the ego graphics access arrays */
-	free(s->ea);
-	s->ea = NULL;
-	free(s->ec);
-	s->ec = NULL;
-
-	/* Free the ego graphics content arrays */
-	free(s->vea);
-	s->vea = NULL;
-	free(s->vec);
-	s->vec = NULL;
-
 	/* Success */
 	return (0);
 }
@@ -326,35 +283,11 @@ static errr term_win_init(term_win *s, int w, int h)
 	s->va = safe_calloc(h * w, sizeof(byte));
 	s->vc = safe_calloc(h * w, sizeof(char));
 
-	/* Make the terrain access arrays */
-	s->ta = safe_calloc(h, sizeof(byte*));
-	s->tc = safe_calloc(h, sizeof(char*));
-
-	/* Make the terrain content arrays */
-	s->vta = safe_calloc(h * w, sizeof(byte));
-	s->vtc = safe_calloc(h * w, sizeof(char));
-
-	/* Make the ego graphics access arrays */
-	s->ea = safe_calloc(h, sizeof(byte*));
-	s->ec = safe_calloc(h, sizeof(char*));
-
-	/* Make the ego graphics content arrays */
-	s->vea = safe_calloc(h * w, sizeof(byte));
-	s->vec = safe_calloc(h * w, sizeof(char));
-
-
 	/* Prepare the window access arrays */
 	for (y = 0; y < h; y++)
 	{
 		s->a[y] = s->va + w * y;
 		s->c[y] = s->vc + w * y;
-
-		s->ta[y] = s->vta + w * y;
-		s->tc[y] = s->vtc + w * y;
-
-		s->ea[y] = s->vea + w * y;
-		s->ec[y] = s->vec + w * y;
-
 	}
 
 	/* Success */
@@ -378,28 +311,10 @@ static errr term_win_copy(term_win *s, term_win *f, int w, int h)
 		byte *s_aa = s->a[y];
 		char *s_cc = s->c[y];
 
-		byte *f_taa = f->ta[y];
-		char *f_tcc = f->tc[y];
-
-		byte *s_taa = s->ta[y];
-		char *s_tcc = s->tc[y];
-
-		byte *f_eaa = f->ea[y];
-		char *f_ecc = f->ec[y];
-
-		byte *s_eaa = s->ea[y];
-		char *s_ecc = s->ec[y];
-
 		for (x = 0; x < w; x++)
 		{
 			*s_aa++ = *f_aa++;
 			*s_cc++ = *f_cc++;
-
-			*s_taa++ = *f_taa++;
-			*s_tcc++ = *f_tcc++;
-
-			*s_eaa++ = *f_eaa++;
-			*s_ecc++ = *f_ecc++;
 		}
 	}
 
@@ -473,18 +388,6 @@ static errr Term_text_hack(int x, int y, int n, byte a, const char *cp)
 	return ( -1);
 }
 
-/*
- * Hack -- fake hook for "Term_pict()" (see above)
- */
-static errr Term_pict_hack(int x, int y, int n, const byte *ap, const char *cp, const byte *tap, const char *tcp, const byte *eap, const char *ecp)
-{
-	/* Compiler silliness */
-	if (x || y || n || ap || cp || tap || tcp || eap || ecp) return ( -2);
-
-	/* Oops */
-	return ( -1);
-}
-
 
 
 /*** Efficient routines ***/
@@ -495,33 +398,19 @@ static errr Term_pict_hack(int x, int y, int n, const byte *ap, const char *cp, 
  *
  * Assumes given location and values are valid.
  */
-void Term_queue_char(int x, int y, byte a, char c, byte ta, char tc, byte ea, char ec)
+void Term_queue_char(int x, int y, byte a, char c)
 {
 	term_win *scrn = Term->scr;
 
 	byte *scr_aa = &scrn->a[y][x];
 	char *scr_cc = &scrn->c[y][x];
 
-	byte *scr_taa = &scrn->ta[y][x];
-	char *scr_tcc = &scrn->tc[y][x];
-
-	byte *scr_eaa = &scrn->ea[y][x];
-	char *scr_ecc = &scrn->ec[y][x];
-
 	/* Hack -- Ignore non-changes */
-	if ((*scr_aa == a) && (*scr_cc == c) &&
-	                (*scr_taa == ta) && (*scr_tcc == tc) &&
-	                (*scr_eaa == ea) && (*scr_ecc == ec)) return;
+	if ((*scr_aa == a) && (*scr_cc == c)) return;
 
 	/* Save the "literal" information */
 	*scr_aa = a;
 	*scr_cc = c;
-
-	*scr_taa = ta;
-	*scr_tcc = tc;
-
-	*scr_eaa = ea;
-	*scr_ecc = ec;
 
 	/* Check for new min/max row info */
 	if (y < Term->y1) Term->y1 = y;
@@ -530,89 +419,6 @@ void Term_queue_char(int x, int y, byte a, char c, byte ta, char tc, byte ea, ch
 	/* Check for new min/max col info for this row */
 	if (x < Term->x1[y]) Term->x1[y] = x;
 	if (x > Term->x2[y]) Term->x2[y] = x;
-}
-
-
-/*
- * Mentally draw a string of attr/chars at a given location
- *
- * Assumes given location and values are valid.
- *
- * This function is designed to be fast, with no consistancy checking.
- * It is used to update the map in the game.
- */
-void Term_queue_line(int x, int y, int n, byte *a, char *c, byte *ta, char *tc, byte *ea, char *ec)
-{
-	term_win *scrn = Term->scr;
-
-	int x1 = -1;
-	int x2 = -1;
-
-	byte *scr_aa = &scrn->a[y][x];
-	char *scr_cc = &scrn->c[y][x];
-
-	byte *scr_taa = &scrn->ta[y][x];
-	char *scr_tcc = &scrn->tc[y][x];
-
-	byte *scr_eaa = &scrn->ea[y][x];
-	char *scr_ecc = &scrn->ec[y][x];
-
-	while (n--)
-	{
-
-		/* Hack -- Ignore non-changes */
-		if ((*scr_aa == *a) && (*scr_cc == *c) &&
-		                (*scr_taa == *ta) && (*scr_tcc == *tc) &&
-		                (*scr_eaa == *ea) && (*scr_ecc == *ec))
-		{
-			x++;
-			a++;
-			c++;
-			ta++;
-			tc++;
-			ea++;
-			ec++;
-			scr_aa++;
-			scr_cc++;
-			scr_taa++;
-			scr_tcc++;
-			scr_eaa++;
-			scr_ecc++;
-			continue;
-		}
-
-		/* Save the "literal" information */
-		*scr_taa++ = *ta++;
-		*scr_tcc++ = *tc++;
-
-		/* Save the "literal" information */
-		*scr_eaa++ = *ea++;
-		*scr_ecc++ = *ec++;
-
-		/* Save the "literal" information */
-		*scr_aa++ = *a++;
-		*scr_cc++ = *c++;
-
-		/* Track minimum changed column */
-		if (x1 < 0) x1 = x;
-
-		/* Track maximum changed column */
-		x2 = x;
-
-		x++;
-	}
-
-	/* Expand the "change area" as needed */
-	if (x1 >= 0)
-	{
-		/* Check for new min/max row info */
-		if (y < Term->y1) Term->y1 = y;
-		if (y > Term->y2) Term->y2 = y;
-
-		/* Check for new min/max col info in this row */
-		if (x1 < Term->x1[y]) Term->x1[y] = x1;
-		if (x2 > Term->x2[y]) Term->x2[y] = x2;
-	}
 }
 
 
@@ -632,39 +438,18 @@ void Term_queue_chars(int x, int y, int n, byte a, cptr s)
 	byte *scr_aa = Term->scr->a[y];
 	char *scr_cc = Term->scr->c[y];
 
-	byte *scr_taa = Term->scr->ta[y];
-	char *scr_tcc = Term->scr->tc[y];
-
-	byte *scr_eaa = Term->scr->ea[y];
-	char *scr_ecc = Term->scr->ec[y];
-
 	/* Queue the attr/chars */
 	for ( ; n; x++, s++, n--)
 	{
 		int oa = scr_aa[x];
 		int oc = scr_cc[x];
 
-		int ota = scr_taa[x];
-		int otc = scr_tcc[x];
-
-		int oea = scr_eaa[x];
-		int oec = scr_ecc[x];
-
 		/* Hack -- Ignore non-changes */
-		if ((oa == a) && (oc == *s) &&
-		                (ota == 0) && (otc == 0) &&
-		                (oea == 0) && (oec == 0)) continue;
-
+		if ((oa == a) && (oc == *s)) continue;
 
 		/* Save the "literal" information */
 		scr_aa[x] = a;
 		scr_cc[x] = *s;
-
-		scr_taa[x] = 0;
-		scr_tcc[x] = 0;
-
-		scr_taa[x] = 0;
-		scr_tcc[x] = 0;
 
 		/* Note the "range" of window updates */
 		if (x1 < 0) x1 = x;
@@ -684,321 +469,6 @@ void Term_queue_chars(int x, int y, int n, byte a, cptr s)
 	}
 }
 
-
-
-/*** Refresh routines ***/
-
-
-/*
- * Flush a row of the current window (see "Term_fresh")
- *
- * Display text using "Term_pict()"
- */
-static void Term_fresh_row_pict(int y, int x1, int x2)
-{
-	int x;
-
-	byte *old_aa = Term->old->a[y];
-	char *old_cc = Term->old->c[y];
-
-	byte *scr_aa = Term->scr->a[y];
-	char *scr_cc = Term->scr->c[y];
-
-	byte *old_taa = Term->old->ta[y];
-	char *old_tcc = Term->old->tc[y];
-
-	byte *scr_taa = Term->scr->ta[y];
-	char *scr_tcc = Term->scr->tc[y];
-
-	byte ota;
-	char otc;
-
-	byte nta;
-	char ntc;
-
-	byte *old_eaa = Term->old->ea[y];
-	char *old_ecc = Term->old->ec[y];
-
-	byte *scr_eaa = Term->scr->ea[y];
-	char *scr_ecc = Term->scr->ec[y];
-
-	byte oea;
-	char oec;
-
-	byte nea;
-	char nec;
-
-
-
-	/* Pending length */
-	int fn = 0;
-
-	/* Pending start */
-	int fx = 0;
-
-	byte oa;
-	char oc;
-
-	byte na;
-	char nc;
-
-	/* Scan "modified" columns */
-	for (x = x1; x <= x2; x++)
-	{
-		/* See what is currently here */
-		oa = old_aa[x];
-		oc = old_cc[x];
-
-		/* See what is desired there */
-		na = scr_aa[x];
-		nc = scr_cc[x];
-
-		ota = old_taa[x];
-		otc = old_tcc[x];
-
-		nta = scr_taa[x];
-		ntc = scr_tcc[x];
-
-		oea = old_eaa[x];
-		oec = old_ecc[x];
-
-		nea = scr_eaa[x];
-		nec = scr_ecc[x];
-
-		/* Handle unchanged grids */
-		if ((na == oa) && (nc == oc) &&
-		                (nta == ota) && (ntc == otc) &&
-		                (nea == oea) && (nec == oec))
-		{
-			/* Flush */
-			if (fn)
-			{
-				/* Draw pending attr/char pairs */
-				(void)((*Term->pict_hook)(fx, y, fn,
-				                          &scr_aa[fx], &scr_cc[fx],
-				                          &scr_taa[fx], &scr_tcc[fx],
-				                          &scr_eaa[fx], &scr_ecc[fx]));
-
-				/* Forget */
-				fn = 0;
-			}
-
-			/* Skip */
-			continue;
-		}
-		/* Save new contents */
-		old_aa[x] = na;
-		old_cc[x] = nc;
-
-		old_taa[x] = nta;
-		old_tcc[x] = ntc;
-
-		old_eaa[x] = nea;
-		old_ecc[x] = nec;
-
-		/* Restart and Advance */
-		if (fn++ == 0) fx = x;
-	}
-
-	/* Flush */
-	if (fn)
-	{
-		/* Draw pending attr/char pairs */
-		(void)((*Term->pict_hook)(fx, y, fn,
-		                          &scr_aa[fx], &scr_cc[fx],
-		                          &scr_taa[fx], &scr_tcc[fx],
-		                          &scr_eaa[fx], &scr_ecc[fx]));
-	}
-}
-
-
-
-/*
- * Flush a row of the current window (see "Term_fresh")
- *
- * Display text using "Term_text()" and "Term_wipe()",
- * but use "Term_pict()" for high-bit attr/char pairs
- */
-static void Term_fresh_row_both(int y, int x1, int x2)
-{
-	int x;
-
-	byte *old_aa = Term->old->a[y];
-	char *old_cc = Term->old->c[y];
-
-	byte *scr_aa = Term->scr->a[y];
-	char *scr_cc = Term->scr->c[y];
-
-	byte *old_taa = Term->old->ta[y];
-	char *old_tcc = Term->old->tc[y];
-	byte *scr_taa = Term->scr->ta[y];
-	char *scr_tcc = Term->scr->tc[y];
-
-	byte ota;
-	char otc;
-	byte nta;
-	char ntc;
-
-	byte *old_eaa = Term->old->ea[y];
-	char *old_ecc = Term->old->ec[y];
-	byte *scr_eaa = Term->scr->ea[y];
-	char *scr_ecc = Term->scr->ec[y];
-
-	byte oea;
-	char oec;
-	byte nea;
-	char nec;
-
-	/* The "always_text" flag */
-	int always_text = Term->always_text;
-
-	/* Pending length */
-	int fn = 0;
-
-	/* Pending start */
-	int fx = 0;
-
-	/* Pending attr */
-	byte fa = Term->attr_blank;
-
-	byte oa;
-	char oc;
-
-	byte na;
-	char nc;
-
-	/* Scan "modified" columns */
-	for (x = x1; x <= x2; x++)
-	{
-		/* See what is currently here */
-		oa = old_aa[x];
-		oc = old_cc[x];
-
-		/* See what is desired there */
-		na = scr_aa[x];
-		nc = scr_cc[x];
-
-		ota = old_taa[x];
-		otc = old_tcc[x];
-
-		nta = scr_taa[x];
-		ntc = scr_tcc[x];
-
-		oea = old_eaa[x];
-		oec = old_ecc[x];
-
-		nea = scr_eaa[x];
-		nec = scr_ecc[x];
-
-		/* Handle unchanged grids */
-		if ((na == oa) && (nc == oc) &&
-		                (nta == ota) && (ntc == otc) &&
-		                (nea == oea) && (nec == oec))
-		{
-			/* Flush */
-			if (fn)
-			{
-				/* Draw pending chars (normal) */
-				if (fa || always_text)
-				{
-					(void)((*Term->text_hook)(fx, y, fn, fa, &scr_cc[fx]));
-				}
-				/* Draw pending chars (black) */
-				else
-				{
-					(void)((*Term->wipe_hook)(fx, y, fn));
-				}
-				/* Forget */
-				fn = 0;
-			}
-
-			/* Skip */
-			continue;
-		}
-
-		/* Save new contents */
-		old_aa[x] = na;
-		old_cc[x] = nc;
-
-		old_taa[x] = nta;
-		old_tcc[x] = ntc;
-
-		old_eaa[x] = nea;
-		old_ecc[x] = nec;
-
-		/* 2nd byte of bigtile */
-		if (na == 255) continue;
-
-		/* Handle high-bit attr/chars */
-		if (na & 0x80)
-		{
-			/* Flush */
-			if (fn)
-			{
-				/* Draw pending chars (normal) */
-				if (fa || always_text)
-				{
-					(void)((*Term->text_hook)(fx, y, fn, fa, &scr_cc[fx]));
-				}
-				/* Draw pending chars (black) */
-				else
-				{
-					(void)((*Term->wipe_hook)(fx, y, fn));
-				}
-				/* Forget */
-				fn = 0;
-			}
-
-			/* Hack -- Draw the special attr/char pair */
-			(void)((*Term->pict_hook)(x, y, 1, &na, &nc, &nta, &ntc, &nea, &nec));
-
-			/* Skip */
-			continue;
-		}
-
-		/* Notice new color */
-		if (fa != na)
-		{
-			/* Flush */
-			if (fn)
-			{
-				/* Draw the pending chars */
-				if (fa || always_text)
-				{
-					(void)((*Term->text_hook)(fx, y, fn, fa, &scr_cc[fx]));
-				}
-				/* Hack -- Erase "leading" spaces */
-				else
-				{
-					(void)((*Term->wipe_hook)(fx, y, fn));
-				}
-				/* Forget */
-				fn = 0;
-			}
-
-			/* Save the new color */
-			fa = na;
-		}
-
-		/* Restart and Advance */
-		if (fn++ == 0) fx = x;
-	}
-
-	/* Flush */
-	if (fn)
-	{
-		/* Draw pending chars (normal) */
-		if (fa || always_text)
-		{
-			(void)((*Term->text_hook)(fx, y, fn, fa, &scr_cc[fx]));
-		}
-		/* Draw pending chars (black) */
-		else
-		{
-			(void)((*Term->wipe_hook)(fx, y, fn));
-		}
-	}
-}
 
 
 /*
@@ -1152,16 +622,6 @@ static void Term_fresh_row_text(int y, int x1, int x2)
  * flag is set, and "Term_xtra(TERM_XTRA_FRESH,0)" will be called after
  * all of the rows have been "flushed".
  *
- * Note the use of three different functions to handle the actual flush,
- * based on the settings of the "Term->always_pict" and "Term->higher_pict"
- * flags (see below).
- *
- * The three helper functions (above) work by collecting similar adjacent
- * grids into stripes, and then sending each stripe to "Term->pict_hook",
- * "Term->text_hook", or "Term->wipe_hook", based on the settings of the
- * "Term->always_pict" and "Term->higher_pict" flags, which select which
- * of the helper functions to call to flush each row.
- *
  * The helper functions currently "skip" any grids which already contain
  * the desired contents.  This may or may not be the best method, especially
  * when the desired content fits nicely into the current stripe.  For example,
@@ -1184,18 +644,6 @@ static void Term_fresh_row_text(int y, int x1, int x2)
  * and situations in which two grids in the same row are changed, but
  * the grids between them are unchanged.
  *
- * If the "Term->always_pict" flag is set, then "Term_fresh_row_pict()"
- * will be used instead of "Term_fresh_row_text()".  This allows all the
- * modified grids to be collected into stripes of attr/char pairs, which
- * are then sent to the "Term->pict_hook" hook, which can draw these pairs
- * in whatever way it would like.
- *
- * If the "Term->higher_pict" flag is set, then "Term_fresh_row_both()"
- * will be used instead of "Term_fresh_row_text()".  This allows all the
- * "special" attr/char pairs (in which both the attr and char have the
- * high-bit set) to be sent (one pair at a time) to the "Term->pict_hook"
- * hook, which can draw these pairs in whatever way it would like.
- *
  * Normally, the "Term_wipe()" function is used only to display "blanks"
  * that were induced by "Term_clear()" or "Term_erase()", and then only
  * if the "attr_blank" and "char_blank" fields have not been redefined
@@ -1207,10 +655,6 @@ static void Term_fresh_row_text(int y, int x1, int x2)
  * "Term_wipe()" function hook entirely, and force all text, even text
  * drawn in the color "black", to be explicitly drawn.  This is useful
  * for machines which implement "Term_wipe()" by just drawing spaces.
- *
- * Note that the "Term->always_pict" flag will disable the use of the
- * "Term_wipe()" function entirely, and force everything, even text
- * drawn in the attr "black", to be explicitly drawn.
  *
  * Note that if no "black" text is ever drawn, and if "attr_blank" is
  * not "zero", then the "Term_wipe" hook will never be used, even if
@@ -1273,7 +717,6 @@ errr Term_fresh(void)
 	if (!Term->curs_hook) Term->curs_hook = Term_curs_hack;
 	if (!Term->wipe_hook) Term->wipe_hook = Term_wipe_hack;
 	if (!Term->text_hook) Term->text_hook = Term_text_hack;
-	if (!Term->pict_hook) Term->pict_hook = Term_pict_hack;
 
 
 	/* Handle "total erase" */
@@ -1294,25 +737,12 @@ errr Term_fresh(void)
 			byte *aa = old->a[y];
 			char *cc = old->c[y];
 
-			byte *taa = old->ta[y];
-			char *tcc = old->tc[y];
-
-			byte *eaa = old->ea[y];
-			char *ecc = old->ec[y];
-
-
 			/* Wipe each column */
 			for (x = 0; x < w; x++)
 			{
 				/* Wipe each grid */
 				*aa++ = na;
 				*cc++ = nc;
-
-				*taa++ = na;
-				*tcc++ = nc;
-
-				*eaa++ = na;
-				*ecc++ = nc;
 			}
 		}
 
@@ -1347,32 +777,8 @@ errr Term_fresh(void)
 			byte oa = old_aa[tx];
 			char oc = old_cc[tx];
 
-			byte *old_taa = old->ta[ty];
-			char *old_tcc = old->tc[ty];
-
-			byte ota = old_taa[tx];
-			char otc = old_tcc[tx];
-
-			byte *old_eaa = old->ea[ty];
-			char *old_ecc = old->ec[ty];
-
-			byte oea = old_eaa[tx];
-			char oec = old_ecc[tx];
-
-			/* Hack -- use "Term_pict()" always */
-			if (Term->always_pict)
-			{
-				(void)((*Term->pict_hook)(tx, ty, 1, &oa, &oc, &ota, &otc, &oea, &oec));
-			}
-
-			/* Hack -- use "Term_pict()" sometimes */
-			else if (Term->higher_pict && (oa & 0x80))
-			{
-				(void)((*Term->pict_hook)(tx, ty, 1, &oa, &oc, &ota, &otc, &oea, &oec));
-			}
-
 			/* Hack -- restore the actual character */
-			else if (oa || Term->always_text)
+			if (oa || Term->always_text)
 			{
 				(void)((*Term->text_hook)(tx, ty, 1, oa, &oc));
 			}
@@ -1425,26 +831,8 @@ errr Term_fresh(void)
 			/* Flush each "modified" row */
 			if (x1 <= x2)
 			{
-				/* Always use "Term_pict()" */
-				if (Term->always_pict)
-				{
-					/* Flush the row */
-					Term_fresh_row_pict(y, x1, x2);
-				}
-
-				/* Sometimes use "Term_pict()" */
-				else if (Term->higher_pict)
-				{
-					/* Flush the row */
-					Term_fresh_row_both(y, x1, x2);
-				}
-
-				/* Never use "Term_pict()" */
-				else
-				{
-					/* Flush the row */
-					Term_fresh_row_text(y, x1, x2);
-				}
+				/* Flush the row */
+				Term_fresh_row_text(y, x1, x2);
 
 				/* This row is all done */
 				Term->x1[y] = w;
@@ -1587,7 +975,7 @@ errr Term_draw(int x, int y, byte a, char c)
 	if (!c) return ( -2);
 
 	/* Queue it for later */
-	Term_queue_char(x, y, a, c, 0, 0, 0, 0);
+	Term_queue_char(x, y, a, c);
 
 	/* Success */
 	return (0);
@@ -1621,7 +1009,7 @@ errr Term_addch(byte a, char c)
 	if (!c) return ( -2);
 
 	/* Queue the given character for display */
-	Term_queue_char(Term->scr->cx, Term->scr->cy, a, c, 0, 0, 0, 0);
+	Term_queue_char(Term->scr->cx, Term->scr->cy, a, c);
 
 	/* Advance the cursor */
 	Term->scr->cx++;
@@ -1746,12 +1134,6 @@ errr Term_erase(int x, int y, int n)
 	byte *scr_aa;
 	char *scr_cc;
 
-	byte *scr_taa;
-	char *scr_tcc;
-
-	byte *scr_eaa;
-	char *scr_ecc;
-
 	/* Place cursor */
 	if (Term_gotoxy(x, y)) return ( -1);
 
@@ -1761,12 +1143,6 @@ errr Term_erase(int x, int y, int n)
 	/* Fast access */
 	scr_aa = Term->scr->a[y];
 	scr_cc = Term->scr->c[y];
-
-	scr_taa = Term->scr->ta[y];
-	scr_tcc = Term->scr->tc[y];
-
-	scr_eaa = Term->scr->ea[y];
-	scr_ecc = Term->scr->ec[y];
 
 	if (n > 0 && (byte)scr_cc[x] == 255 && scr_aa[x] == 255)
 	{
@@ -1786,12 +1162,6 @@ errr Term_erase(int x, int y, int n)
 		/* Save the "literal" information */
 		scr_aa[x] = na;
 		scr_cc[x] = nc;
-
-		scr_taa[x] = 0;
-		scr_tcc[x] = 0;
-
-		scr_eaa[x] = 0;
-		scr_ecc[x] = 0;
 
 		/* Track minimum changed column */
 		if (x1 < 0) x1 = x;
@@ -1844,23 +1214,11 @@ errr Term_clear(void)
 		byte *scr_aa = Term->scr->a[y];
 		char *scr_cc = Term->scr->c[y];
 
-		byte *scr_taa = Term->scr->ta[y];
-		char *scr_tcc = Term->scr->tc[y];
-
-		byte *scr_eaa = Term->scr->ea[y];
-		char *scr_ecc = Term->scr->ec[y];
-
 		/* Wipe each column */
 		for (x = 0; x < w; x++)
 		{
 			scr_aa[x] = na;
 			scr_cc[x] = nc;
-
-			scr_taa[x] = 0;
-			scr_tcc[x] = 0;
-
-			scr_eaa[x] = 0;
-			scr_ecc[x] = 0;
 		}
 
 		/* This row has changed */
@@ -2309,8 +1667,7 @@ errr Term_resize(int w, int h)
 
 
 	/* Ignore non-changes */
-	if ((Term->wid == w) && (Term->hgt == h) && (arg_bigtile == use_bigtile)) return (1);
-	use_bigtile = arg_bigtile;
+	if ((Term->wid == w) && (Term->hgt == h)) return (1);
 
 	/* Minimum dimensions */
 	wid = MIN(Term->wid, w);

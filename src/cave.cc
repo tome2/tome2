@@ -382,9 +382,9 @@ bool_ cave_valid_bold(int y, int x)
 
 
 /*
- * Hack -- Legal monster codes
+ * Hack -- Legal monster codes FIXME: Remove?
  */
-static cptr image_monster_hack = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+// static cptr image_monster_hack = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 /*
  * Hack -- Legal monster codes for IBM pseudo-graphics
@@ -401,25 +401,26 @@ static void image_monster(byte *ap, char *cp)
 {
 	int n;
 
-	switch (graphics_mode)
-	{
+	// switch (graphics_mode)
+	// {
 		/* Text mode */
-	case GRAPHICS_NONE:
-		{
-			n = strlen(image_monster_hack);
+	// case GRAPHICS_NONE:
+	// 	{
+	// 		n = strlen(image_monster_hack);
 
-			/* Random symbol from set above */
-			*cp = (image_monster_hack[rand_int(n)]);
+	// 		/* Random symbol from set above */
+	// 		*cp = (image_monster_hack[rand_int(n)]);
 
-			/* Random color */
-			*ap = randint(15);
+	// 		/* Random color */
+	// 		*ap = randint(15);
 
-			break;
-		}
+	// 		break;
+	// 	}
 
-		/* Normal graphics */
-	default:
-		{
+	// 	/* Normal graphics */
+	// default:
+	// 	{
+	// FIXME: Why wouldn't this work for text mode too? And 2) this assumes that all indexes in r_info are valid... is that assumption OK?
 			/* Avoid player ghost */
 			n = randint(max_r_idx);
 
@@ -427,18 +428,18 @@ static void image_monster(byte *ap, char *cp)
 
 			*ap = r_info[n].x_attr;
 
-			break;
-		}
-	}
+		// 	break;
+		// }
+	// }
 }
 
 
 
 
 /*
- * Hack -- Legal object codes
+ * Hack -- Legal object codes FIXME: Remove?
  */
-static cptr image_object_hack = "?/|\\\"!$()_-=[]{},~";
+// static cptr image_object_hack = "?/|\\\"!$()_-=[]{},~";
 
 /*
  * Hardcoded IBM pseudo-graphics code points have been removed
@@ -452,34 +453,35 @@ static void image_object(byte *ap, char *cp)
 {
 	int n;
 
-	switch (graphics_mode)
-	{
-		/* Text mode */
-	case GRAPHICS_NONE:
-		{
-			n = strlen(image_object_hack);
+	// switch (graphics_mode)
+	// {
+	// 	/* Text mode */
+	// case GRAPHICS_NONE:
+	// 	{
+	// 		n = strlen(image_object_hack);
 
-			/* Random symbol from set above */
-			*cp = (image_object_hack[rand_int(n)]);
+	// 		/* Random symbol from set above */
+	// 		*cp = (image_object_hack[rand_int(n)]);
 
-			/* Random color */
-			*ap = randint(15);
+	// 		/* Random color */
+	// 		*ap = randint(15);
 
-			/* Done */
-			break;
-		}
+	// 		/* Done */
+	// 		break;
+	// 	}
 
-		/* Normal graphics */
-	default:
-		{
+	// 	/* Normal graphics */
+	// default:
+	// 	{
+	// FIXME: Why wouldn't this work for text mode too? And 2) this assumes that all k_info indexes are valid... is that assumption correct?!?
 			n = randint(max_k_idx - 1);
 
 			*cp = k_info[n].x_char;
 			*ap = k_info[n].x_attr;
 
-			break;
-		}
-	}
+	// 		break;
+	// 	}
+	// }
 }
 
 
@@ -502,16 +504,8 @@ static void image_random(byte *ap, char *cp)
 }
 
 
-/*
- * The 16x16 tile of the terrain supports lighting
- */
-static bool_ feat_supports_lighting(byte feat)
-{
-	return (f_info[feat].flags1 & FF1_SUPPORT_LIGHT) != 0;
-}
 
-
-char get_shimmer_color()
+static char get_shimmer_color()
 {
 	switch (randint(7))
 	{
@@ -860,8 +854,7 @@ static byte darker_attrs[16] =
 };
 
 
-void map_info(int y, int x, byte *ap, char *cp, byte *tap, char *tcp,
-              byte *eap, char *ecp)
+static void map_info(int y, int x, byte *ap, char *cp)
 {
 	cave_type *c_ptr;
 
@@ -878,28 +871,6 @@ void map_info(int y, int x, byte *ap, char *cp, byte *tap, char *tcp,
 	byte a;
 
 	byte c;
-
-	/*
-	 * This means that a port supports graphics overlay as well as lighting
-	 * effects. See the step 3 below for the detailed information about
-	 * lighting. Basically, it requires "darker" tiles for those terrain
-	 * features with SUPPORT_LIGHT flag set, and they must be arranged
-	 * this way:
-	 *     col  col+1  col+2
-	 * row base darker brighter
-	 */
-	bool_ graf_new = ((graphics_mode == GRAPHICS_ISO) ||
-	                 (graphics_mode == GRAPHICS_NEW));
-
-	/*
-	 * I never understand why some coders like shimmering so much.
-	 * It just serves to hurt my eyes, IMHO.  If one feels like to show off,
-	 * go for better graphics support... Anyway this means a port allows
-	 * changing attr independently from its char -- pelpel
-	 */
-	bool_ attr_mutable = (!use_graphics ||
-	                     (graphics_mode == GRAPHICS_IBM));
-
 
 	/**** Preparation ****/
 
@@ -929,11 +900,6 @@ void map_info(int y, int x, byte *ap, char *cp, byte *tap, char *tcp,
 	f_ptr = &f_info[feat];
 
 
-	/* Reset attr/char */
-	*eap = 0;
-	*ecp = 0;
-
-
 	/**** Layer 1 -- Terrain feature ****/
 
 	/* Only memorised or visible grids are displayed */
@@ -959,8 +925,7 @@ void map_info(int y, int x, byte *ap, char *cp, byte *tap, char *tcp,
 		}
 
 		/* Mega-Hack 2 -- stair to dungeon branch are purple */
-		if (c_ptr->special && attr_mutable &&
-		                ((feat == FEAT_MORE) || (feat == FEAT_LESS)))
+		if (c_ptr->special && ((feat == FEAT_MORE) || (feat == FEAT_LESS)))
 		{
 			a = TERM_VIOLET;
 		}
@@ -971,65 +936,37 @@ void map_info(int y, int x, byte *ap, char *cp, byte *tap, char *tcp,
 			/* Trap index */
 			t_idx = c_ptr->t_idx;
 
-			if (use_graphics &&
-			                (t_info[t_idx].g_attr != 0) &&
-			                (t_info[t_idx].g_char != 0))
+			/*
+			 * If trap is set on a floor grid that is not
+			 * one of "interesting" features, use a special
+			 * symbol to display it. Check for doors is no longer
+			 * necessary because they have REMEMBER flag now.
+			 *
+			 * Cave macros cannot be used safely here, because of
+			 * c_ptr->mimic XXX XXX
+			 */
+			if ((f_ptr->flags1 & (FF1_FLOOR | FF1_REMEMBER)) == FF1_FLOOR)
 			{
-
-				if (graf_new)
-				{
-					*eap = t_info[t_idx].g_attr;
-					*ecp = t_info[t_idx].g_char;
-				}
-				else
-				{
-					a = t_info[t_idx].g_attr;
-					c = t_info[t_idx].g_char;
-				}
-
+				c = f_info[FEAT_TRAP].x_char;
 			}
-			else
+
+			/* Add attr XXX XXX XXX */
+			a = t_info[t_idx].color;
+
+			/* Get a new color with a strange formula :) XXX XXX XXX */
+			if (t_info[t_idx].flags & FTRAP_CHANGE)
 			{
-				/*
-				 * If trap is set on a floor grid that is not
-				 * one of "interesting" features, use a special
-				 * symbol to display it. Check for doors is no longer
-				 * necessary because they have REMEMBER flag now.
-				 *
-				 * Cave macros cannot be used safely here, because of
-				 * c_ptr->mimic XXX XXX
-				 */
-				if (!attr_mutable)
-				{
-					a = f_info[FEAT_TRAP].x_attr;
-					c = f_info[FEAT_TRAP].x_char;
-				}
-				else
-				{
-					if ((f_ptr->flags1 & (FF1_FLOOR | FF1_REMEMBER)) == FF1_FLOOR)
-					{
-						c = f_info[FEAT_TRAP].x_char;
-					}
+				s32b tmp;
 
-					/* Add attr XXX XXX XXX */
-					a = t_info[t_idx].color;
+				tmp = dun_level + dungeon_type + feat;
 
-					/* Get a new color with a strange formula :) XXX XXX XXX */
-					if (t_info[t_idx].flags & FTRAP_CHANGE)
-					{
-						s32b tmp;
-
-						tmp = dun_level + dungeon_type + feat;
-
-						a = tmp % 16;
-					}
-				}
+				a = tmp % 16;
 			}
 		}
 
 
 		/**** Step 2 -- Apply special random effects ****/
-		if (!avoid_other && !avoid_shimmer && attr_mutable)
+		if (!avoid_other && !avoid_shimmer)
 		{
 			/* Special terrain effect */
 			if (c_ptr->effect)
@@ -1063,8 +1000,7 @@ void map_info(int y, int x, byte *ap, char *cp, byte *tap, char *tcp,
 		if (view_special_lite &&
 		                ((f_ptr->flags1 & (FF1_FLOOR | FF1_REMEMBER)) == FF1_FLOOR))
 		{
-			if (!p_ptr->wild_mode && !(info & (CAVE_TRDT)) &&
-			                (attr_mutable || (graf_new && feat_supports_lighting(feat))))
+			if (!p_ptr->wild_mode && !(info & (CAVE_TRDT)))
 			{
 				/* Handle "seen" grids */
 				if (info & (CAVE_SEEN))
@@ -1072,62 +1008,30 @@ void map_info(int y, int x, byte *ap, char *cp, byte *tap, char *tcp,
 					/* Only lit by "torch" light */
 					if (view_yellow_lite && !(info & (CAVE_GLOW)))
 					{
-						if (graf_new)
-						{
-							/* Use a brightly lit tile */
-							c += 2;
-						}
-						else
-						{
-							/* Use "yellow" */
-							a = TERM_YELLOW;
-						}
+						/* Use "yellow" */
+						a = TERM_YELLOW;
 					}
 				}
 
 				/* Handle "blind" */
 				else if (p_ptr->blind)
 				{
-					if (graf_new)
-					{
-						/* Use a dark tile */
-						c++;
-					}
-					else
-					{
-						/* Use darker colour */
-						a = darker_attrs[a & 0xF];
-					}
+					/* Use darker colour */
+					a = darker_attrs[a & 0xF];
 				}
 
 				/* Handle "dark" grids */
 				else if (!(info & (CAVE_GLOW)))
 				{
-					if (graf_new)
-					{
-						/* Use a dark tile */
-						c++;
-					}
-					else
-					{
-						/* Use darkest colour */
-						a = TERM_L_DARK;
-					}
+					/* Use darkest colour */
+					a = TERM_L_DARK;
 				}
 
 				/* "Out-of-sight" glowing grids -- handle "view_bright_lite" */
 				else if (view_bright_lite)
 				{
-					if (graf_new)
-					{
-						/* Use a dark tile */
-						c++;
-					}
-					else
-					{
-						/* Use darker colour */
-						a = dark_attrs[a & 0xF];
-					}
+					/* Use darker colour */
+					a = dark_attrs[a & 0xF];
 				}
 			}
 		}
@@ -1136,8 +1040,7 @@ void map_info(int y, int x, byte *ap, char *cp, byte *tap, char *tcp,
 		else if (view_granite_lite &&
 		                (f_ptr->flags1 & (FF1_NO_VISION | FF1_DOOR)))
 		{
-			if (!p_ptr->wild_mode && !(info & (CAVE_TRDT)) &&
-			                (attr_mutable || (graf_new && feat_supports_lighting(feat))))
+			if (!p_ptr->wild_mode && !(info & (CAVE_TRDT)))
 			{
 				/* Handle "seen" grids */
 				if (info & (CAVE_SEEN))
@@ -1148,44 +1051,20 @@ void map_info(int y, int x, byte *ap, char *cp, byte *tap, char *tcp,
 				/* Handle "blind" */
 				else if (p_ptr->blind)
 				{
-					if (graf_new)
-					{
-						/* Use a dark tile */
-						c++;
-					}
-					else
-					{
-						/* Use darker colour */
-						a = darker_attrs[a & 0xF];
-					}
+					/* Use darker colour */
+					a = darker_attrs[a & 0xF];
 				}
 
 				/* Handle "view_bright_lite" */
 				else if (view_bright_lite)
 				{
-					if (graf_new)
-					{
-						/* Use a dark tile */
-						c++;
-					}
-					else
-					{
-						/* Use darker colour */
-						a = dark_attrs[a & 0xF];
-					}
+					/* Use darker colour */
+					a = dark_attrs[a & 0xF];
 				}
 
 				else
 				{
-					if (graf_new)
-					{
-						/* Use a brightly lit tile */
-						c += 2;
-					}
-					else
-					{
-						/* Use normal colour */
-					}
+					/* Use normal colour */
 				}
 			}
 		}
@@ -1214,10 +1093,6 @@ void map_info(int y, int x, byte *ap, char *cp, byte *tap, char *tcp,
 		/* Hallucinate */
 		image_random(ap, cp);
 	}
-
-	/* Save the terrain info for the transparency effects */
-	*tap = a;
-	*tcp = c;
 
 	/* Save the info */
 	*ap = a;
@@ -1248,8 +1123,7 @@ void map_info(int y, int x, byte *ap, char *cp, byte *tap, char *tcp,
 				*ap = object_attr(o_ptr);
 
 				/* Multi-hued attr */
-				if (!avoid_other && attr_mutable &&
-				                (k_info[o_ptr->k_idx].flags5 & TR5_ATTR_MULTI))
+				if (!avoid_other && (k_info[o_ptr->k_idx].flags5 & TR5_ATTR_MULTI))
 				{
 					*ap = get_shimmer_color();
 				}
@@ -1288,8 +1162,7 @@ void map_info(int y, int x, byte *ap, char *cp, byte *tap, char *tcp,
 				*ap = object_attr(o_ptr);
 
 				/* Multi-hued attr */
-				if (!avoid_other && attr_mutable &&
-				                (k_info[o_ptr->k_idx].flags5 & TR5_ATTR_MULTI))
+				if (!avoid_other && (k_info[o_ptr->k_idx].flags5 & TR5_ATTR_MULTI))
 				{
 					*ap = get_shimmer_color();
 				}
@@ -1305,44 +1178,12 @@ void map_info(int y, int x, byte *ap, char *cp, byte *tap, char *tcp,
 			{
 				monster_race *r_ptr = race_inf(m_ptr);
 
-				/* Reset attr/char */
-				*eap = 0;
-				*ecp = 0;
-
-				if (use_graphics)
-				{
-
-					if (graf_new)
-					{
-						monster_ego *re_ptr = &re_info[m_ptr->ego];
-
-						/* Desired attr */
-						*eap = re_ptr->g_attr;
-
-						/* Desired char */
-						*ecp = re_ptr->g_char;
-					}
-
-					/* Use base monster */
-					r_ptr = &r_info[m_ptr->r_idx];
-				}
-
 				/* Desired attr/char */
 				c = r_ptr->x_char;
 				a = r_ptr->x_attr;
 
 				/* Ignore weird codes */
 				if (avoid_other)
-				{
-					/* Use char */
-					*cp = c;
-
-					/* Use attr */
-					*ap = a;
-				}
-
-				/* Special attr/char codes */
-				else if (!attr_mutable)
 				{
 					/* Use char */
 					*cp = c;
@@ -1430,12 +1271,8 @@ void map_info(int y, int x, byte *ap, char *cp, byte *tap, char *tcp,
 	{
 		monster_race *r_ptr = &r_info[p_ptr->body_monster];
 
-		/* Reset attr/char */
-		*eap = 0;
-		*ecp = 0;
-
 		/* Get the "player" attr */
-		if (!avoid_other && attr_mutable && (r_ptr->flags1 & RF1_ATTR_MULTI))
+		if (!avoid_other && (r_ptr->flags1 & RF1_ATTR_MULTI))
 		{
 			a = get_shimmer_color();
 		}
@@ -1447,67 +1284,16 @@ void map_info(int y, int x, byte *ap, char *cp, byte *tap, char *tcp,
 		/* Get the "player" char */
 		c = r_ptr->x_char;
 
-
-		/* Mega-Hack -- Apply modifications to player graphics XXX XXX XXX */
-		switch (graphics_mode)
+		/* Show player health char instead? */
+		if (player_char_health)
 		{
-		case GRAPHICS_NONE:
-		case GRAPHICS_IBM:
+			int percent = p_ptr->chp * 10 / p_ptr->mhp;
+
+			if (percent < 7)
 			{
-				if (player_char_health)
-				{
-					int percent = p_ptr->chp * 10 / p_ptr->mhp;
-
-					if (percent < 7)
-					{
-						c = I2D(percent);
-						if (percent < 3) a = TERM_L_RED;
-					}
-				}
-
-				break;
+				c = I2D(percent);
+				if (percent < 3) a = TERM_L_RED;
 			}
-
-		case GRAPHICS_OLD:
-			{
-				if (player_symbols)
-				{
-					a = BMP_FIRST_PC_CLASS + p_ptr->pclass;
-					c = BMP_FIRST_PC_RACE + p_ptr->prace;
-				}
-
-				break;
-			}
-
-		case GRAPHICS_ISO:
-		case GRAPHICS_NEW:
-			{
-				if (p_ptr->pracem)
-				{
-					player_race_mod *rmp_ptr = &race_mod_info[p_ptr->pracem];
-
-					/* Desired attr */
-					*eap = rmp_ptr->g_attr;
-
-					/* Desired char */
-					*ecp = rmp_ptr->g_char;
-				}
-
-				/* +AKH 20020421 - Health dispay for graphics, too */
-				if (player_char_health && (graphics_mode == GRAPHICS_NEW))
-				{
-					int percent = p_ptr->chp * 14 / p_ptr->mhp;
-
-					if (percent < 10)
-					{
-						*eap = 10;
-						*ecp = 32 + 14 - percent;
-					}
-				}
-
-				break;
-			}
-
 		}
 
 		/* Save the info */
@@ -1539,14 +1325,6 @@ void map_info_default(int y, int x, byte *ap, char *cp)
 	byte a;
 
 	byte c;
-
-	bool_ use_graphics_hack = use_graphics;
-	byte graphics_mode_hack = graphics_mode;
-
-
-	/* Temporarily disable graphics mode -- for some random effects XXX */
-	use_graphics = FALSE;
-	graphics_mode = GRAPHICS_NONE;
 
 	/**** Preparation ****/
 
@@ -1835,8 +1613,7 @@ void map_info_default(int y, int x, byte *ap, char *cp)
 				*ap = object_attr_default(o_ptr);
 
 				/* Multi-hued attr */
-				if (!avoid_other && !use_graphics &&
-				                (k_info[o_ptr->k_idx].flags5 & TR5_ATTR_MULTI))
+				if (!avoid_other && (k_info[o_ptr->k_idx].flags5 & TR5_ATTR_MULTI))
 				{
 					*ap = get_shimmer_color();
 				}
@@ -1962,10 +1739,6 @@ void map_info_default(int y, int x, byte *ap, char *cp)
 		*cp = c;
 
 	}
-
-	/* XXX Restore the graphics mode */
-	use_graphics = use_graphics_hack;
-	graphics_mode = graphics_mode_hack;
 }
 
 
@@ -1975,7 +1748,6 @@ void map_info_default(int y, int x, byte *ap, char *cp)
 static int panel_col_of(int col)
 {
 	col -= panel_col_min;
-	if (use_bigtile) col *= 2;
 	return col + COL_MAP;
 }
 
@@ -2005,24 +1777,6 @@ void print_rel(char c, byte a, int y, int x)
 
 	/* Draw the char using the attr */
 	Term_draw(panel_col_of(x), y - panel_row_prt, a, c);
-
-	if (use_bigtile)
-	{
-		char c2;
-		byte a2;
-
-		if (a & 0x80)
-		{
-			a2 = 255;
-			c2 = 255;
-		}
-		else
-		{
-			a2 = TERM_WHITE;
-			c2 = ' ';
-		}
-		Term_draw(panel_col_of(x) + 1, y - panel_row_prt, a2, c2);
-	}
 }
 
 
@@ -2140,39 +1894,17 @@ void note_spot(int y, int x)
  */
 void lite_spot(int y, int x)
 {
-	byte a, a2;
-	byte c, c2;
-
-	byte ta;
-	char tc;
-
-	byte ea;
-	char ec;
-
+	byte a;
+	char c;
 
 	/* Redraw if on screen */
 	if (panel_contains(y, x))
 	{
 		/* Examine the grid */
-		map_info(y, x, &a, (char*)&c, &ta, &tc, &ea, &ec);
+		map_info(y, x, &a, &c);
 
 		/* Hack -- Queue it */
-		Term_queue_char(panel_col_of(x), y - panel_row_prt, a, c, ta, tc, ea, ec);
-		if (use_bigtile)
-		{
-			if (a & 0x80)
-			{
-				a2 = 255;
-				c2 = 255;
-			}
-			else
-			{
-				a2 = TERM_WHITE;
-				c2 = ' ';
-			}
-			Term_queue_char(panel_col_of(x) + 1, y - panel_row_prt, a2, c2, 0, 0, 0, 0);
-		}
-
+		Term_queue_char(panel_col_of(x), y - panel_row_prt, a, c);
 	}
 }
 
@@ -2204,33 +1936,14 @@ void prt_map(void)
 		/* Scan the columns of row "y" */
 		for (x = panel_col_min; x <= panel_col_max; x++)
 		{
-			byte a, a2;
-			char c, c2;
-
-			byte ta;
-			char tc;
-			byte ea;
-			char ec;
+			byte a;
+			char c;
 
 			/* Determine what is there */
-			map_info(y, x, &a, &c, &ta, &tc, &ea, &ec);
+			map_info(y, x, &a, &c);
 
 			/* Efficiency -- Redraw that grid of the map */
-			Term_queue_char(panel_col_of(x), y - panel_row_prt, a, c, ta, tc, ea, ec);
-			if (use_bigtile)
-			{
-				if (a & 0x80)
-				{
-					a2 = 255;
-					c2 = 255;
-				}
-				else
-				{
-					a2 = TERM_WHITE;
-					c2 = ' ';
-				}
-				Term_queue_char(panel_col_of(x) + 1, y - panel_row_prt, a2, c2, 0, 0, 0, 0);
-			}
+			Term_queue_char(panel_col_of(x), y - panel_row_prt, a, c);
 		}
 	}
 
@@ -2395,9 +2108,6 @@ void display_map(int *cy, int *cx)
 	/* Obtain current size of the Angband window */
 	Term_get_size(&wid, &hgt);
 
-	/* Use two characters as one tile in Bigtile mode */
-	if (use_bigtile) wid /= 2;
-
 	/*
 	 * Calculate the size of the dungeon map area
 	 */
@@ -2458,7 +2168,7 @@ void display_map(int *cy, int *cx)
 			x = i * xfactor / xrat + 1;
 
 			/* Extract the current attr/char at that map location */
-			map_info(j, i, &ta, &tc, &ta, &tc, &ta, &tc);
+			map_info(j, i, &ta, &tc);
 
 			/* Extract the priority of that attr/char */
 			tp = priority(ta, tc);
@@ -2510,40 +2220,12 @@ void display_map(int *cy, int *cx)
 
 			/* Add the character */
 			Term_addch(ta, tc);
-
-			/* Double width tile mode requires filler */
-			if (use_bigtile)
-			{
-				byte a2;
-				char c2;
-
-				if (ta & 0x80)
-				{
-					/* Mega-Hack */
-					a2 = 255;
-					c2 = 255;
-				}
-				else
-				{
-					a2 = TERM_WHITE;
-					c2 = ' ';
-				}
-
-				Term_addch(a2, c2);
-			}
 		}
 	}
 
 	/* Player location in dungeon */
 	*cy = p_ptr->py * yfactor / yrat + ROW_MAP;
-	if (!use_bigtile)
-	{
-		*cx = p_ptr->px * xfactor / xrat + COL_MAP;
-	}
-	else
-	{
-		*cx = (p_ptr->px * xfactor / xrat + 1) * 2 - 1 + COL_MAP;
-	}
+	*cx = p_ptr->px * xfactor / xrat + COL_MAP;
 
 	/* Restore lighting effects */
 	view_special_lite = old_view_special_lite;

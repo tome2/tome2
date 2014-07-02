@@ -681,7 +681,7 @@ void flavor_init(void)
  * flag.  This is useful for switching "graphics" on/off.
  *
  * The features, objects, and monsters, should all be encoded in the
- * relevant "font.pref" and/or "graf.prf" files.  XXX XXX XXX
+ * relevant "font.pref".  XXX XXX XXX
  *
  * The "prefs" parameter is no longer meaningful.  XXX XXX XXX
  */
@@ -760,65 +760,8 @@ void reset_visuals(void)
 	}
 
 
-	if (use_graphics)
-	{
-		/* Process "graf.prf" */
-		process_pref_file("graf.prf");
-
-		/*
-		 * Hack -- remember graphics mode as an integer value,
-		 * for faster processing of map_info()
-		 */
-
-		/* IBM-PC pseudo-graphics -- not maintained, but the code is there */
-		if (streq(ANGBAND_SYS, "ibm"))
-		{
-			graphics_mode = GRAPHICS_IBM;
-		}
-
-		/*
-		 * Isometric view. Also assumes all the attributes of the "new"
-		 * graphics.
-		 */
-		else if (streq(ANGBAND_GRAF, "iso"))
-		{
-			graphics_mode = GRAPHICS_ISO;
-		}
-
-		/*
-		 * "New" graphics -- supports graphics overlay for traps, ego monsters
-		 * and player subraces, and has tiles for lighting effects (row + 1
-		 * and row + 2 for "darker" versions of terrain features)
-		 */
-		else if (streq(ANGBAND_GRAF, "new"))
-		{
-			graphics_mode = GRAPHICS_NEW;
-		}
-
-		/*
-		 * "Old" graphics -- doesn't support graphics overlay and lighting
-		 * effects
-		 */
-		else if (streq(ANGBAND_GRAF, "old"))
-		{
-			graphics_mode = GRAPHICS_OLD;
-		}
-
-		/* ??? */
-		else
-		{
-			graphics_mode = GRAPHICS_UNKNOWN;
-		}
-	}
-
 	/* Normal symbols */
-	else
-	{
-		/* Process "font.prf" */
-		process_pref_file("font.prf");
-
-		graphics_mode = GRAPHICS_NONE;
-	}
+	process_pref_file("font.prf");
 }
 
 

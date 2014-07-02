@@ -36,11 +36,8 @@
  *
  * Compiling this file, and using the resulting executable, requires
  * several extra files not distributed with the standard Angband code.
- * If "USE_GRAPHICS" is defined, then "readdib.h" and "readdib.c" must
- * be placed into "src/", and the "8X8.BMP" bitmap file must be placed
- * into "lib/xtra/graf".  In any case, some "*.fon" files (including
- * "8X13.FON" if nothing else) must be placed into "lib/xtra/font/".
- * All of these extra files can be found in the "ext-win" archive.
+ * In any case, some "*.fon" files (including "8X13.FON" if nothing
+ * else) must be placed into "lib/xtra/font/".
  *
  *
  * The "Term_xtra_win_clear()" function should probably do a low-level
@@ -163,10 +160,6 @@
 #define IDM_WINDOW_D_HGT_6		276
 #define IDM_WINDOW_D_HGT_7		277
 
-#define IDM_OPTIONS_OLD_GRAPHICS	400
-#define IDM_OPTIONS_NEW_GRAPHICS	401
-#define IDM_OPTIONS_ASCII_GRAPHICS  403
-#define IDM_OPTIONS_BIGTILE		409
 #define IDM_OPTIONS_UNUSED		410
 #define IDM_OPTIONS_SAVER		411
 
@@ -245,9 +238,6 @@
 /*
  * Include the support for loading bitmaps
  */
-#ifdef USE_GRAPHICS
-# include "readdib.h"
-#endif
 
 /*
  * Hack -- Fake declarations from "dos.h" XXX XXX XXX
@@ -438,24 +428,6 @@ static HWND hwndSaver;
 #endif /* USE_SAVER */
 
 
-#ifdef USE_GRAPHICS
-
-/*
- * Flag set once "graphics" has been initialized
- */
-static bool_ can_use_graphics = FALSE;
-
-/*
- * The global bitmap
- */
-static DIBINIT infGraph;
-
-/*
- * The global bitmap mask
- */
-static DIBINIT infMask;
-
-#endif /* USE_GRAPHICS */
 
 
 
@@ -874,14 +846,6 @@ static void save_prefs(void)
 
 	char buf[128];
 
-	/* Save the "arg_graphics" flag */
-	sprintf(buf, "%d", arg_graphics);
-	WritePrivateProfileString("Angband", "Graphics", buf, ini_file);
-
-	/* Save the "arg_bigtile" flag */
-	strcpy(buf, arg_bigtile ? "1" : "0");
-	WritePrivateProfileString("Angband", "Bigtile", buf, ini_file);
-
 	/* Save window prefs */
 	for (i = 0; i < MAX_TERM_DATA; ++i)
 	{
@@ -938,13 +902,6 @@ static void load_prefs(void)
 
 	char buf[1024];
 
-	/* Extract the "arg_graphics" flag */
-	arg_graphics = GetPrivateProfileInt("Angband", "Graphics", 0, ini_file);
-
-	/* Extract the "arg_bigtile" flag */
-	arg_bigtile = GetPrivateProfileInt("Angband", "Bigtile", FALSE, ini_file);
-	use_bigtile = arg_bigtile;
-
 	/* Load window prefs */
 	for (i = 0; i < MAX_TERM_DATA; ++i)
 	{
@@ -995,33 +952,6 @@ static int new_palette(void)
 	lppe = NULL;
 	nEntries = 0;
 
-#ifdef USE_GRAPHICS
-
-	/* Check the bitmap palette */
-	hBmPal = infGraph.hPalette;
-
-	/* Use the bitmap */
-	if (hBmPal)
-	{
-		lppeSize = 256 * sizeof(PALETTEENTRY);
-		lppe = (LPPALETTEENTRY) safe_calloc(1, lppeSize);
-
-		nEntries = GetPaletteEntries(hBmPal, 0, 255, lppe);
-		if ((nEntries == 0) || (nEntries > 220))
-		{
-			/* Warn the user */
-			plog_fmt("Unusable bitmap palette (%d entries)", nEntries);
-
-			/* Cleanup */
-			free(lppe);
-			lppe = NULL;
-
-			/* Fail */
-			return (FALSE);
-		}
-	}
-
-#endif
 
 	/* Size of palette */
 	pLogPalSize = sizeof(LOGPALETTE) + (nEntries + 16) * sizeof(PALETTEENTRY);
@@ -1101,85 +1031,6 @@ static int new_palette(void)
 
 	/* Success */
 	return (TRUE);
-}
-
-
-/*
- * Initialize graphics
- */
-static bool_ init_graphics()
-{
-	/* Initialize once */
-	/*if (can_use_graphics != arg_graphics) */
-	{
-		char buf[1024];
-		int wid, hgt;
-		cptr name;
-
-		/* Unused */
-		PALETTEENTRY entry =
-		        {
-		                0, 0, 0, 0
-		        };
-		(void)entry;
-
-		if (arg_graphics == 2)
-		{
-			wid = 16;
-			hgt = 16;
-
-			name = "16X16.BMP";
-
-			ANGBAND_GRAF = "new";
-		}
-		else
-		{
-			wid = 8;
-			hgt = 8;
-
-			name = "8X8.BMP";
-			ANGBAND_GRAF = "old";
-		}
-
-		/* Access the bitmap file */
-		path_build(buf, 1024, ANGBAND_DIR_XTRA_GRAF, name);
-
-		/* Load the bitmap or quit */
-		if (!ReadDIB(data[0].w, buf, &infGraph))
-		{
-			plog_fmt("Cannot read bitmap file '%s'", name);
-			return (FALSE);
-		}
-
-		/* Save the new sizes */
-		infGraph.CellWidth = wid;
-		infGraph.CellHeight = hgt;
-
-
-		path_build(buf, 1024, ANGBAND_DIR_XTRA_GRAF, "mask.bmp");
-		/* Load the bitmap or quit */
-		if (!ReadDIB(data[0].w, buf, &infMask))
-		{
-			plog_fmt("Cannot read bitmap file '%s'", name);
-			return (FALSE);
-		}
-
-		/* Activate a palette */
-		if (!new_palette())
-		{
-			/* Free bitmap XXX XXX XXX */
-
-			/* Oops */
-			plog("Cannot activate palette!");
-			return (FALSE);
-		}
-
-		/* Graphics available */
-		can_use_graphics = arg_graphics;
-	}
-
-	/* Result */
-	return (can_use_graphics);
 }
 
 
@@ -1445,29 +1296,6 @@ static errr Term_xtra_win_react(void)
 
 
 
-#ifdef USE_GRAPHICS
-
-	/* Handle "arg_graphics" */
-	if (use_graphics != arg_graphics)
-	{
-		/* Initialize (if needed) */
-		if (arg_graphics && !init_graphics())
-		{
-			/* Warning */
-			plog("Cannot initialize graphics!");
-
-			/* Cannot enable */
-			arg_graphics = FALSE;
-		}
-
-		/* Change setting */
-		use_graphics = arg_graphics;
-
-		/* Reset visuals */
-		reset_visuals();
-	}
-
-#endif /* USE_GRAPHICS */
 
 
 	/* Clean up windows */
@@ -1726,9 +1554,6 @@ static errr Term_curs_win(int x, int y)
 	rc.top = y * td->tile_hgt + td->size_oh1;
 	rc.bottom = rc.top + td->tile_hgt;
 
-	if (use_bigtile && x + 1 < Term->wid && Term->old->a[y][x + 1] == 255)
-		rc.right += td->tile_wid;
-
 	/* Cursor is done as a yellow "box" */
 	hdc = GetDC(data[0].w);
 	FrameRect(hdc, &rc, hbrYellow);
@@ -1859,197 +1684,6 @@ static errr Term_text_win(int x, int y, int n, byte a, const char *s)
 }
 
 
-/*
- * Low level graphics.  Assumes valid input.
- *
- * Draw an array of "special" attr/char pairs at the given location.
- *
- * We use the "Term_pict_win()" function for "graphic" data, which are
- * encoded by setting the "high-bits" of both the "attr" and the "char"
- * data.  We use the "attr" to represent the "row" of the main bitmap,
- * and the "char" to represent the "col" of the main bitmap.  The use
- * of this function is induced by the "higher_pict" flag.
- *
- * If "graphics" is not available, we simply "wipe" the given grids.
- */
-static errr Term_pict_win(int x, int y, int n, const byte *ap, const char *cp, const byte *tap, const char *tcp, const byte *eap, const char *ecp)
-{
-	term_data *td = (term_data*)(Term->data);
-
-#ifdef USE_GRAPHICS
-
-	int i;
-	int x1, y1, w1, h1;
-	int x2, y2, w2, h2, tw2;
-
-	int x3, y3;
-
-	HDC hdcMask = NULL;
-
-	int x4, y4;
-
-	HDC hdc;
-	HDC hdcSrc;
-	HBITMAP hbmSrcOld;
-
-	/* Paranoia */
-	if (!use_graphics)
-	{
-		/* Erase the grids */
-		return (Term_wipe_win(x, y, n));
-	}
-
-	/* Size of bitmap cell */
-	w1 = infGraph.CellWidth;
-	h1 = infGraph.CellHeight;
-
-	/* Size of window cell */
-	w2 = td->tile_wid;
-	h2 = td->tile_hgt;
-	tw2 = w2;
-
-	/* big tile mode */
-	if (use_bigtile) tw2 *= 2;
-
-	/* Location of window cell */
-	x2 = x * w2 + td->size_ow1;
-	y2 = y * h2 + td->size_oh1;
-
-	/* Info */
-	hdc = GetDC(td->w);
-
-	/* More info */
-	hdcSrc = CreateCompatibleDC(hdc);
-	hbmSrcOld = SelectObject(hdcSrc, infGraph.hBitmap);
-
-	if (arg_graphics == 2)
-	{
-		hdcMask = CreateCompatibleDC(hdc);
-		SelectObject(hdcMask, infMask.hBitmap);
-	}
-
-	/* Draw attr/char pairs */
-	for (i = 0; i < n; i++, x2 += w2)
-	{
-		byte a = ap[i];
-		char c = cp[i];
-
-		/* Extract picture */
-		int row = (a & 0x7F);
-		int col = (c & 0x7F);
-
-		/* Location of bitmap cell */
-		x1 = col * w1;
-		y1 = row * h1;
-
-		if (arg_graphics == 2)
-		{
-			x3 = (tcp[i] & 0x7F) * w1;
-			y3 = (tap[i] & 0x7F) * h1;
-
-			/* Perfect size */
-			if ((w1 == tw2) && (h1 == h2))
-			{
-				/* Copy the terrain picture from the bitmap to the window */
-				BitBlt(hdc, x2, y2, tw2, h2, hdcSrc, x3, y3, SRCCOPY);
-
-				/* Mask out the tile */
-				BitBlt(hdc, x2, y2, tw2, h2, hdcMask, x1, y1, SRCAND);
-
-				/* Draw the tile */
-				BitBlt(hdc, x2, y2, tw2, h2, hdcSrc, x1, y1, SRCPAINT);
-
-				if (ecp[i] != 0 && eap[i] != 0)
-				{
-					x4 = (ecp[i] & 0x7F) * w1;
-					y4 = (eap[i] & 0x7F) * h1;
-
-					/* Mask out the tile */
-					BitBlt(hdc, x2, y2, tw2, h2, hdcMask, x4, y4, SRCAND);
-
-					/* Draw the tile */
-					BitBlt(hdc, x2, y2, tw2, h2, hdcSrc, x4, y4, SRCPAINT);
-				}
-			}
-
-			/* Need to stretch */
-			else
-			{
-				/* Set the correct mode for stretching the tiles */
-				SetStretchBltMode(hdc, COLORONCOLOR);
-
-				/* Copy the terrain picture from the bitmap to the window */
-				StretchBlt(hdc, x2, y2, tw2, h2, hdcSrc, x3, y3, w1, h1, SRCCOPY);
-
-				/* Only draw if terrain and overlay are different */
-				if ((x1 != x3) || (y1 != y3))
-				{
-					/* Mask out the tile */
-					StretchBlt(hdc, x2, y2, tw2, h2, hdcMask, x1, y1, w1, h1, SRCAND);
-
-					/* Draw the tile */
-					StretchBlt(hdc, x2, y2, tw2, h2, hdcSrc, x1, y1, w1, h1, SRCPAINT);
-				}
-
-				if (ecp[i] != 0 && eap[i] != 0)
-				{
-					x4 = (ecp[i] & 0x7F) * w1;
-					y4 = (eap[i] & 0x7F) * h1;
-
-					/* Mask out the tile */
-					StretchBlt(hdc, x2, y2, tw2, h2, hdcMask, x4, y4, w1, h1, SRCAND);
-
-					/* Draw the tile */
-					StretchBlt(hdc, x2, y2, tw2, h2, hdcSrc, x4, y4, w1, h1, SRCPAINT);
-				}
-			}
-		}
-		else
-		{
-			/* Perfect size */
-			if ((w1 == tw2) && (h1 == h2))
-			{
-				/* Copy the picture from the bitmap to the window */
-				BitBlt(hdc, x2, y2, tw2, h2, hdcSrc, x1, y1, SRCCOPY);
-			}
-
-			/* Need to stretch */
-			else
-			{
-				/* Set the correct mode for stretching the tiles */
-				SetStretchBltMode(hdc, COLORONCOLOR);
-
-				/* Copy the picture from the bitmap to the window */
-				StretchBlt(hdc, x2, y2, tw2, h2, hdcSrc, x1, y1, w1, h1, SRCCOPY);
-			}
-		}
-	}
-
-	/* Release */
-	SelectObject(hdcSrc, hbmSrcOld);
-	DeleteDC(hdcSrc);
-
-	if (arg_graphics == 2)
-	{
-		/* Release */
-		SelectObject(hdcMask, hbmSrcOld);
-		DeleteDC(hdcMask);
-	}
-
-	/* Release */
-	ReleaseDC(td->w, hdc);
-
-#else /* USE_GRAPHICS */
-
-	/* Just erase this grid */
-	return (Term_wipe_win(x, y, n));
-
-#endif /* USE_GRAPHICS */
-
-	/* Success */
-	return 0;
-}
-
 
 /*** Other routines ***/
 
@@ -2067,9 +1701,6 @@ static void term_data_link(term_data *td)
 	/* Use a "software" cursor */
 	t->soft_cursor = TRUE;
 
-	/* Use "Term_pict" for "graphic" data */
-	t->higher_pict = TRUE;
-
 	/* Erase with "white space" */
 	t->attr_blank = TERM_WHITE;
 	t->char_blank = ' ';
@@ -2079,7 +1710,6 @@ static void term_data_link(term_data *td)
 	t->curs_hook = Term_curs_win;
 	t->wipe_hook = Term_wipe_win;
 	t->text_hook = Term_text_win;
-	t->pict_hook = Term_pict_win;
 
 	/* Remember where we came from */
 	t->data = (vptr)(td);
@@ -2418,43 +2048,17 @@ static void setup_menus(void)
 	}
 
 	/* Menu "Options", disable all */
-	EnableMenuItem(hm, IDM_OPTIONS_OLD_GRAPHICS,
-	               MF_BYCOMMAND | MF_DISABLED | MF_GRAYED);
-	EnableMenuItem(hm, IDM_OPTIONS_NEW_GRAPHICS,
-	               MF_BYCOMMAND | MF_DISABLED | MF_GRAYED);
-	EnableMenuItem(hm, IDM_OPTIONS_ASCII_GRAPHICS,
-	               MF_BYCOMMAND | MF_DISABLED | MF_GRAYED);
-	EnableMenuItem(hm, IDM_OPTIONS_BIGTILE,
-	               MF_BYCOMMAND | MF_DISABLED | MF_GRAYED);
 	EnableMenuItem(hm, IDM_OPTIONS_UNUSED,
 	               MF_BYCOMMAND | MF_DISABLED | MF_GRAYED);
 	EnableMenuItem(hm, IDM_OPTIONS_SAVER,
 	               MF_BYCOMMAND | MF_DISABLED | MF_GRAYED);
 
 	/* Menu "Options", update all */
-	CheckMenuItem(hm, IDM_OPTIONS_OLD_GRAPHICS,
-	              (arg_graphics == 1 ? MF_CHECKED : MF_UNCHECKED));
-	CheckMenuItem(hm, IDM_OPTIONS_NEW_GRAPHICS,
-	              (arg_graphics == 2 ? MF_CHECKED : MF_UNCHECKED));
-	CheckMenuItem(hm, IDM_OPTIONS_ASCII_GRAPHICS,
-	              (arg_graphics == 0 ? MF_CHECKED : MF_UNCHECKED));
-	CheckMenuItem(hm, IDM_OPTIONS_BIGTILE,
-	              (arg_bigtile ? MF_CHECKED : MF_UNCHECKED));
 	CheckMenuItem(hm, IDM_OPTIONS_UNUSED,
 	              (0 ? MF_CHECKED : MF_UNCHECKED));
 	CheckMenuItem(hm, IDM_OPTIONS_SAVER,
 	              (hwndSaver ? MF_CHECKED : MF_UNCHECKED));
 
-#ifdef USE_GRAPHICS
-	/* Menu "Options", Item "Graphics" */
-	EnableMenuItem(hm, IDM_OPTIONS_OLD_GRAPHICS, MF_ENABLED);
-	/* Menu "Options", Item "Graphics" */
-	EnableMenuItem(hm, IDM_OPTIONS_NEW_GRAPHICS, MF_ENABLED);
-	/* Menu "Options", Item "Graphics" */
-	EnableMenuItem(hm, IDM_OPTIONS_ASCII_GRAPHICS, MF_ENABLED);
-	/* Menu "Options", Item "Graphics" */
-	EnableMenuItem(hm, IDM_OPTIONS_BIGTILE, MF_ENABLED);
-#endif
 
 
 #ifdef USE_SAVER
@@ -2813,93 +2417,6 @@ ofn.lStructSize = sizeof(OPENFILENAME);
 			term_getsize(td);
 
 			term_window_resize(td);
-
-			break;
-		}
-
-	case IDM_OPTIONS_OLD_GRAPHICS:
-		{
-			/* Paranoia */
-			if (!inkey_flag)
-			{
-				plog("You may not do that right now.");
-				break;
-			}
-
-			/* Set "arg_graphics" */
-			arg_graphics = 1;
-
-			/* React to changes */
-			Term_xtra_win_react();
-
-			/* Hack -- Force redraw */
-			Term_key_push(KTRL('R'));
-
-			break;
-		}
-
-	case IDM_OPTIONS_NEW_GRAPHICS:
-		{
-			/* Paranoia */
-			if (!inkey_flag)
-			{
-				plog("You may not do that right now.");
-				break;
-			}
-
-			/* Set "arg_graphics" */
-			arg_graphics = 2;
-
-			/* React to changes */
-			Term_xtra_win_react();
-
-			/* Hack -- Force redraw */
-			Term_key_push(KTRL('R'));
-
-			break;
-		}
-	case IDM_OPTIONS_ASCII_GRAPHICS:
-		{
-			/* Paranoia */
-			if (!inkey_flag)
-			{
-				plog("You may not do that right now.");
-				break;
-			}
-
-			/* Set "ASCII Graphics" */
-			arg_graphics = 0;
-			/* React to Changes */
-			Term_xtra_win_react();
-
-			/* Hack -- Force redraw */
-			Term_key_push(KTRL('R'));
-
-			break;
-		}
-
-	case IDM_OPTIONS_BIGTILE:
-		{
-			term_data *td = &data[0];
-
-			/* Paranoia */
-			if (!inkey_flag)
-			{
-				plog("You may not do that right now.");
-				break;
-			}
-
-			/* Toggle "arg_sound" */
-			arg_bigtile = !arg_bigtile;
-
-			/* Activate */
-			Term_activate(&td->t);
-
-			/* Resize the term */
-			Term_resize(td->cols, td->rows);
-
-			/* Redraw later */
-			InvalidateRect(td->w, NULL, TRUE);
 
 			break;
 		}
@@ -3753,24 +3270,6 @@ static void init_stuff(void)
 	validate_file(path);
 
 
-#ifdef USE_GRAPHICS
-
-	/* Build the "graf" path */
-	path_build(path, 1024, ANGBAND_DIR_XTRA, "graf");
-
-	/* Allocate the path */
-	ANGBAND_DIR_XTRA_GRAF = strdup(path);
-
-	/* Validate the "graf" directory */
-	validate_dir(ANGBAND_DIR_XTRA_GRAF);
-
-	/* Build the filename */
-	path_build(path, 1024, ANGBAND_DIR_XTRA_GRAF, "8X8.BMP");
-
-	/* Hack -- Validate the basic graf */
-	validate_file(path);
-
-#endif
 
 
 

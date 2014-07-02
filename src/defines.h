@@ -3768,21 +3768,6 @@
 #define TERM_L_UMBER            15  /* 'U' */   /* 3,2,1 */
 
 
-/*** Graphics constants ***/
-
-/*
- * Possible values of graphics_mode
- * Good only when use_graphics is set to TRUE
- * Set by reset_visuals() and used by map_info()
- */
-#define GRAPHICS_NONE    0
-#define GRAPHICS_UNKNOWN 1
-#define GRAPHICS_IBM     2
-#define GRAPHICS_OLD     3
-#define GRAPHICS_NEW     4
-#define GRAPHICS_ISO     5
-
-
 /*** Sound constants ***/
 
 
