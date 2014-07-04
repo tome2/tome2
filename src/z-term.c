@@ -617,9 +617,7 @@ static void Term_fresh_row_text(int y, int x1, int x2)
  * Note that "Term_xtra(TERM_XTRA_CLEAR,0)" must erase the entire screen,
  * including the cursor, if needed, and may place the cursor anywhere.
  *
- * Note that "Term_xtra(TERM_XTRA_FROSH,y)" will be always be called
- * after any row "y" has been "flushed", unless the "Term->never_frosh"
- * flag is set, and "Term_xtra(TERM_XTRA_FRESH,0)" will be called after
+ * Note that "Term_xtra(TERM_XTRA_FRESH,0)" will be called after
  * all of the rows have been "flushed".
  *
  * The helper functions currently "skip" any grids which already contain
@@ -837,9 +835,6 @@ errr Term_fresh(void)
 				/* This row is all done */
 				Term->x1[y] = w;
 				Term->x2[y] = 0;
-
-				/* Hack -- Flush that row (if allowed) */
-				if (!Term->never_frosh) Term_xtra(TERM_XTRA_FROSH, y);
 			}
 		}
 

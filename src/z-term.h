@@ -80,8 +80,6 @@ struct term_win
  *	- Flag "never_bored"
  *	  Never call the "TERM_XTRA_BORED" action
  *
- *	- Flag "never_frosh"
- *	  Never call the "TERM_XTRA_FROSH" action
  *
  *
  *	- Value "attr_blank"
@@ -145,7 +143,6 @@ struct term
 	bool_ soft_cursor;
 	bool_ always_text;
 	bool_ never_bored;
-	bool_ never_frosh;
 
 	byte attr_blank;
 	char char_blank;
@@ -202,7 +199,6 @@ struct term
  *
  * The "TERM_XTRA_EVENT" action uses "v" to "wait" for an event
  * The "TERM_XTRA_SHAPE" action uses "v" to "show" the cursor
- * The "TERM_XTRA_FROSH" action uses "v" for the index of the row
  * The "TERM_XTRA_ALIVE" action uses "v" to "activate" (or "close")
  * The "TERM_XTRA_LEVEL" action uses "v" to "resume" (or "suspend")
  * The "TERM_XTRA_DELAY" action uses "v" as a "millisecond" value
@@ -213,7 +209,6 @@ struct term
 #define TERM_XTRA_FLUSH 2	/* Flush all pending events */
 #define TERM_XTRA_CLEAR 3	/* Clear the entire window */
 #define TERM_XTRA_SHAPE 4	/* Set cursor shape (optional) */
-#define TERM_XTRA_FROSH 5	/* Flush one row (optional) */
 #define TERM_XTRA_FRESH 6	/* Flush all rows (optional) */
 #define TERM_XTRA_NOISE 7	/* Make a noise (optional) */
 #define TERM_XTRA_BORED 9	/* Handle stuff when bored (optional) */

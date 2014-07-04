@@ -275,23 +275,6 @@ static errr Term_xtra_xxx(int n, int v)
 			return (0);
 		}
 
-	case TERM_XTRA_FROSH:
-		{
-			/*
-			 * Flush a row of output XXX XXX XXX
-			 *
-			 * This action should make sure that row "v" of the "output"
-			 * to the window will actually appear on the window.
-			 *
-			 * This action is optional, assuming that "Term_text_xxx()"
-			 * (and similar functions) draw directly to the screen, or
-			 * that the "TERM_XTRA_FRESH" entry below takes care of any
-			 * necessary flushing issues.
-			 */
-
-			return (0);
-		}
-
 	case TERM_XTRA_FRESH:
 		{
 			/*
@@ -301,9 +284,7 @@ static errr Term_xtra_xxx(int n, int v)
 			 * window will actually appear on the window.
 			 *
 			 * This action is optional, assuming that "Term_text_xxx()"
-			 * (and similar functions) draw directly to the screen, or
-			 * that the "TERM_XTRA_FROSH" entry above takes care of any
-			 * necessary flushing issues.
+			 * (and similar functions) draw directly to the screen.
 			 */
 
 			return (0);
@@ -567,10 +548,6 @@ static void term_data_link(int i)
 	/* Ignore the "TERM_XTRA_BORED" action XXX XXX XXX */
 	/* This may make things slightly more efficient. */
 	/* td->t->never_bored = TRUE; */
-
-	/* Ignore the "TERM_XTRA_FROSH" action XXX XXX XXX */
-	/* This may make things slightly more efficient. */
-	/* td->t->never_frosh = TRUE; */
 
 	/* Erase with "white space" XXX XXX XXX */
 	/* td->t->attr_blank = TERM_WHITE; */
