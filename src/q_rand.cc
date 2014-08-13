@@ -26,6 +26,8 @@ void initialize_random_quests(int n)
 	/* Zero out everything first */
 	for (i = 0; i < MAX_RANDOM_QUEST; i++) random_quests[i].type = 0;
 
+	if (n == 0) return;
+
 	/* Factor dlev value by 1000 to keep precision */
 	step = (98 * 1000) / n;
 
