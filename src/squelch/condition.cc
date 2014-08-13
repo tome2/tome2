@@ -1022,11 +1022,11 @@ void InventoryCondition::write_tree(TreePrinter *p, Cursor *c, byte ecol, byte b
 	p->write(ecol, "Something in your ");
 	p->write(bcol, "inventory");
 	p->write(ecol, " matches the following:");
+	p->write(TERM_WHITE, "\n");
 	if (m_subcondition)
 	{
 		m_subcondition->display(p, c);
 	}
-	p->write(TERM_WHITE, "\n");
 }
 
 bool EquipmentCondition::is_match(object_type *) const
@@ -1058,11 +1058,11 @@ void EquipmentCondition::write_tree(TreePrinter *p, Cursor *c, byte ecol, byte b
 	p->write(ecol, "Something in your ");
 	p->write(bcol, "equipment");
 	p->write(ecol, " matches the following:");
+	p->write(TERM_WHITE, "\n");
 	if (m_subcondition)
 	{
 		m_subcondition->display(p, c);
 	}
-	p->write(TERM_WHITE, "\n");
 }
 
 } // namespace
