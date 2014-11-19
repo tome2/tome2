@@ -1515,16 +1515,6 @@ static errr Term_xtra_win(int n, int v)
 			return (Term_xtra_win_delay(v));
 		}
 
-		/* Get the current time in milliseconds */
-	case TERM_XTRA_GET_DELAY:
-		{
-			DWORD t;
-
-			t = GetTickCount();
-			Term_xtra_long = t;
-			return 0;
-		}
-
 		/* Rename main window */
 	case TERM_XTRA_RENAME_MAIN_WIN:
 		SetWindowText(get_main_hwnd(), angband_term_name[0]); return (0);

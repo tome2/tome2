@@ -748,18 +748,6 @@ static errr Term_xtra_gcu(int n, int v)
 		usleep(1000 * v);
 		return (0);
 
-		/* Get Delay of some milliseconds */
-	case TERM_XTRA_GET_DELAY:
-		{
-			int ret;
-			struct timeval tv;
-
-			ret = gettimeofday(&tv, NULL);
-			Term_xtra_long = (tv.tv_sec * 1000) + (tv.tv_usec / 1000);
-
-			return ret;
-		}
-
 		/* React to events */
 	case TERM_XTRA_REACT:
 		Term_xtra_gcu_react();

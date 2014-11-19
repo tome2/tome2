@@ -526,18 +526,6 @@ static errr Term_xtra_gtk(int n, int v)
 			return (0);
 		}
 
-		/* Get Delay of some milliseconds */
-	case TERM_XTRA_GET_DELAY:
-		{
-			int ret;
-			struct timeval tv;
-
-			ret = gettimeofday(&tv, NULL);
-			Term_xtra_long = (tv.tv_sec * 1000) + (tv.tv_usec / 1000);
-
-			return ret;
-		}
-
 		/* Rename main window */
 	case TERM_XTRA_RENAME_MAIN_WIN: gtk_window_set_title(GTK_WINDOW(data[0].window), angband_term_name[0]); return (0);
 

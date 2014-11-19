@@ -680,21 +680,6 @@ static errr Term_xtra_sdl(int n, int v)
 			return (1);
 		}
 
-	case TERM_XTRA_GET_DELAY:
-		{
-			/*
-			 * Get Delay of some milliseconds XXX XXX XXX
-			 * place the result in Term_xtra_long
-			 *
-			 * This action is useful for proper "timing" of certain
-			 * visual effects, such as recording cmovies.
-			 *
-			 * This action is optional, but cmovies wont perform
-			 * good without it
-			 */
-
-			return (1);
-		}
 	}
 
 	/* Unknown or Unhandled action */

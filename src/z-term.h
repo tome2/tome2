@@ -216,7 +216,6 @@ struct term
 #define TERM_XTRA_ALIVE 11	/* Change the "hard" level (optional) */
 #define TERM_XTRA_LEVEL 12	/* Change the "soft" level (optional) */
 #define TERM_XTRA_DELAY 13	/* Delay some milliseconds (optional) */
-#define TERM_XTRA_GET_DELAY 14	/* Get the cuyrrent time in milliseconds (optional) */
 #define TERM_XTRA_RENAME_MAIN_WIN 16 /* Rename the main game window */
 
 
@@ -227,7 +226,6 @@ extern term *Term;
 /**** Available Functions ****/
 
 extern errr Term_xtra(int n, int v);
-extern long Term_xtra_long;
 
 extern void Term_queue_char(int x, int y, byte a, char c);
 extern void Term_queue_chars(int x, int y, int n, byte a, cptr s);

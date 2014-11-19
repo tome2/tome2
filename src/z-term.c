@@ -337,7 +337,6 @@ static errr term_win_copy(term_win *s, term_win *f, int w, int h)
  * Execute the "Term->xtra_hook" hook, if available (see above).
  * And *hacky* get a return code
  */
-long Term_xtra_long;
 errr Term_xtra(int n, int v)
 {
 	/* Verify the hook */
