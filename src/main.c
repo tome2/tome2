@@ -118,6 +118,16 @@ static void init_save_dir(void)
 }
 
 
+static void init_player_name()
+{
+	/* Get the user id (?) */
+	int player_uid = getuid();
+
+	/* Acquire the "user name" as a default player name */
+	user_name(player_name, player_uid);
+}
+
+
 
 /*
  * Simple "main" function for multiple platforms.
@@ -138,19 +148,11 @@ int main(int argc, char *argv[])
 
 	bool_ args = TRUE;
 
-	int player_uid;
-
-
-
 	/* Get the file paths */
 	init_file_paths_with_env();
 
-
-	/* Get the user id (?) */
-	player_uid = getuid();
-
-	/* Acquire the "user name" as a default player name */
-	user_name(player_name, player_uid);
+	/* Initialize the player name */
+	init_player_name();
 
 	/* Make sure save directory exists */
 	init_save_dir();
