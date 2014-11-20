@@ -88,7 +88,7 @@ bool_ private_check_user_directory(cptr dirpath)
  * home directory or try to create it if it doesn't exist.
  * Returns FALSE if all the attempts fail.
  */
-static bool_ check_create_user_dir(void)
+static void init_save_dir(void)
 {
 	char dirpath[1024];
 	char versionpath[1024];
@@ -101,7 +101,20 @@ static bool_ check_create_user_dir(void)
 	strcpy(savepath, versionpath);
 	strcat(savepath, "/save");
 
-	return private_check_user_directory(dirpath) && private_check_user_directory(versionpath) && private_check_user_directory(savepath);
+	if (!private_check_user_directory(dirpath))
+	{
+		quit_fmt("Cannot create directory '%s'", dirpath);
+	}
+
+	if (!private_check_user_directory(versionpath))
+	{
+		quit_fmt("Cannot create directory '%s'", versionpath);
+	}
+
+	if (!private_check_user_directory(savepath))
+	{
+		quit_fmt("Cannot create directory '%s'", savepath);
+	}
 }
 
 
@@ -139,22 +152,8 @@ int main(int argc, char *argv[])
 	/* Acquire the "user name" as a default player name */
 	user_name(player_name, player_uid);
 
-
-	/*
-	 * On multiuser systems, users' private directories are
-	 * used to store pref files, chardumps etc.
-	 */
-	{
-		bool_ ret;
-
-		/* Create a directory for the user's files */
-		ret = check_create_user_dir();
-
-		/* Oops */
-		if (ret == FALSE) quit("Cannot create directory " PRIVATE_USER_PATH);
-	}
-
-
+	/* Make sure save directory exists */
+	init_save_dir();
 
 
 	/* Process the command line arguments */
