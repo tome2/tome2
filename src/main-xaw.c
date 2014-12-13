@@ -1456,7 +1456,7 @@ errr init_xaw(int argc, char *argv[])
 			continue;
 		}
 
-		plog_fmt("Ignoring option: %s", argv[i]);
+		fprintf(stderr, "Ignoring option: %s", argv[i]);
 	}
 
 

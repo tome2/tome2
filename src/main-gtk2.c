@@ -1946,7 +1946,7 @@ errr init_gtk2(int argc, char **argv)
 
 
 		/* None of the above */
-		plog_fmt("Ignoring option: %s", argv[i]);
+		fprintf(stderr, "Ignoring option: %s", argv[i]);
 	}
 
 

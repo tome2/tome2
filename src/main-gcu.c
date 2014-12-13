@@ -918,7 +918,7 @@ errr init_gcu(int argc, char **argv)
 			continue;
 		}
 
-		plog_fmt("Ignoring option: %s", argv[i]);
+		fprintf(stderr, "Ignoring option: %s", argv[i]);
 	}
 
 

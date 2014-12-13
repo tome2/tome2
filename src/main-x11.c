@@ -2452,7 +2452,7 @@ errr init_x11(int argc, char *argv[])
 			continue;
 		}
 
-		plog_fmt("Ignoring option: %s", argv[i]);
+		fprintf(stderr, "Ignoring option: %s", argv[i]);
 	}
 
 

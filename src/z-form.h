@@ -32,9 +32,6 @@ extern uint strfmt(char *buf, cptr fmt, ...);
 /* Simple interface to "vformat()" */
 extern char *format(cptr fmt, ...);
 
-/* Vararg interface to "plog()", using "format()" */
-extern void plog_fmt(cptr fmt, ...);
-
 /* Vararg interface to "quit()", using "format()" */
 extern void quit_fmt(cptr fmt, ...);
 

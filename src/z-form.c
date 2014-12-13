@@ -681,29 +681,6 @@ char *format(cptr fmt, ...)
 
 
 /*
- * Vararg interface to plog()
- */
-void plog_fmt(cptr fmt, ...)
-{
-	char *res;
-	va_list vp;
-
-	/* Begin the Varargs Stuff */
-	va_start(vp, fmt);
-
-	/* Format the args */
-	res = vformat(fmt, vp);
-
-	/* End the Varargs Stuff */
-	va_end(vp);
-
-	/* Call plog */
-	plog(res);
-}
-
-
-
-/*
  * Vararg interface to quit()
  */
 void quit_fmt(cptr fmt, ...)
