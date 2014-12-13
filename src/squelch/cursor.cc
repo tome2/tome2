@@ -32,6 +32,9 @@ Condition *Cursor::current()
 
 void Cursor::move_right()
 {
+	if (m_conditions.empty()) {
+		return;
+	}
 	// Go right if the currently selected condition has children.
 	std::shared_ptr<Condition> c = current()->first_child();
 	if (c)
