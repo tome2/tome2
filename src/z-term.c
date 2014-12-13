@@ -14,7 +14,6 @@
 
 #include "z-term.h"
 
-#include "z-virt.h"
 
 
 /*
@@ -243,6 +242,19 @@ term *Term = NULL;
 
 /*** Local routines ***/
 
+
+/*
+ * Calloc wrapper which aborts if NULL is returned by calloc
+ */
+static void *safe_calloc(size_t nmemb, size_t size)
+{
+	void *p = calloc(nmemb, size);
+	if ((nmemb > 0) && (p == NULL))
+	{
+		abort();
+	}
+	return p;
+}
 
 /*
  * Nuke a term_win (see below)

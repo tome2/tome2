@@ -2303,7 +2303,11 @@ static errr term_data_init(term_data *td, int i)
 
 
 	/* Prepare the standard font */
-	td->fnt = safe_calloc(1, sizeof(struct infofnt));
+	td->fnt = calloc(1, sizeof(struct infofnt));
+	if (td->fnt == NULL)
+	{
+		abort();
+	}
 	Infofnt_set(td->fnt);
 	Infofnt_init_data(font);
 
@@ -2315,7 +2319,11 @@ static errr term_data_init(term_data *td, int i)
 	hgt = rows * td->fnt->hgt + (oy + oy);
 
 	/* Create a top-window */
-	td->win = safe_calloc(1, sizeof(struct infowin));
+	td->win = calloc(1, sizeof(struct infowin));
+	if (td->win == NULL)
+	{
+		abort();
+	}
 	Infowin_set(td->win);
 	Infowin_init_top(x, y, wid, hgt, 0,
 	                 Metadpy->fg, Metadpy->bg);
@@ -2461,7 +2469,11 @@ errr init_x11(int argc, char *argv[])
 
 
 	/* Prepare cursor color */
-	xor = safe_calloc(1, sizeof(struct infoclr));
+	xor = calloc(1, sizeof(struct infoclr));
+	if (xor == NULL)
+	{
+		abort();
+	}
 	Infoclr_set(xor);
 	Infoclr_init_ppn(Metadpy->fg, Metadpy->bg, "xor", 0);
 
@@ -2471,7 +2483,11 @@ errr init_x11(int argc, char *argv[])
 	{
 		Pixell pixel;
 
-		clr[i] = safe_calloc(1, sizeof(struct infoclr));
+		clr[i] = calloc(1, sizeof(struct infoclr));
+		if (clr[i] == NULL)
+		{
+			abort();
+		}
 		Infoclr_set(clr[i]);
 
 		/* Acquire Angband colors */

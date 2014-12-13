@@ -14,7 +14,7 @@ extern "C" {
  * See "z-form.c" for more detailed information about the routines,
  * including a list of the legal "format sequences".
  *
- * This file makes use of both "z-util.c" and "z-virt.c"
+ * This file makes use "z-util.c"
  */
 
 

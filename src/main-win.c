@@ -954,7 +954,11 @@ static int new_palette(void)
 	pLogPalSize = sizeof(LOGPALETTE) + (nEntries + 16) * sizeof(PALETTEENTRY);
 
 	/* Allocate palette */
-	pLogPal = (LPLOGPALETTE) safe_calloc(1, pLogPalSize);
+	pLogPal = (LPLOGPALETTE) calloc(1, pLogPalSize);
+	if (pLogPal == NULL)
+	{
+		abort();
+	}
 
 	/* Version */
 	pLogPal->palVersion = 0x300;

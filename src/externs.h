@@ -4,7 +4,7 @@
 
 /*
  * Note that some files have their own header files
- * (z-virt.h, z-util.h, z-form.h, term.h, random.h)
+ * (z-util.h, z-form.h, term.h, random.h)
  */
 
 /*
