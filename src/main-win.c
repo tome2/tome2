@@ -163,9 +163,6 @@
 #define IDM_OPTIONS_UNUSED		410
 #define IDM_OPTIONS_SAVER		411
 
-#define IDM_HELP_GENERAL		901
-#define IDM_HELP_SPOILERS		902
-
 
 /*
  * This may need to be removed for some compilers XXX XXX XXX
@@ -2452,42 +2449,6 @@ ofn.lStructSize = sizeof(OPENFILENAME);
 
 #endif
 
-	case IDM_HELP_GENERAL:
-		{
-			char buf[1024];
-			char tmp[1024];
-			path_build(tmp, 1024, ANGBAND_DIR_XTRA_HELP, "angband.hlp");
-			if (check_file(tmp))
-			{
-				sprintf(buf, "winhelp.exe %s", tmp);
-				WinExec(buf, SW_NORMAL);
-			}
-			else
-			{
-				plog_fmt("Cannot find help file: %s", tmp);
-				plog("Use the online help files instead.");
-			}
-			break;
-		}
-
-	case IDM_HELP_SPOILERS:
-		{
-			char buf[1024];
-			char tmp[1024];
-			path_build(tmp, 1024, ANGBAND_DIR_XTRA_HELP, "spoilers.hlp");
-			if (check_file(tmp))
-			{
-				sprintf(buf, "winhelp.exe %s", tmp);
-				WinExec(buf, SW_NORMAL);
-			}
-			else
-			{
-				plog_fmt("Cannot find help file: %s", tmp);
-				plog("Use the online help files instead.");
-			}
-			break;
-		}
-	}
 }
 
 

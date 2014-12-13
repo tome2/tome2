@@ -105,11 +105,6 @@ ANGBAND MENU
   MENUITEM "Activate Screensaver", 411
  }
 
- POPUP "&Help"
- {
-  MENUITEM "&General", 901
-  MENUITEM "&Spoilers", 902
- }
 }
 
 ANGBAND ICON "angband.ico"
