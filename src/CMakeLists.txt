@@ -6,7 +6,7 @@ ADD_SUBDIRECTORY (squelch)
 
 # Sources
 SET(SRCS
-  main-gcu.c main-x11.c main-xaw.c main-sdl.c main-gtk2.c
+  main-gcu.c main-x11.c main-sdl.c main-gtk2.c
   z-rand.c z-util.c z-form.c z-term.c
   variable.cc tables.cc hooks.cc util.cc cave.cc dungeon.cc
   melee1.cc melee2.cc messages.cc modules.cc

@@ -285,13 +285,6 @@ usage:
 				puts("  -- -b              Turn off software backing store");
 #endif /* USE_GTK2 */
 
-#ifdef USE_XAW
-				puts("  -mxaw              To use XAW");
-				puts("  --                 Sub options");
-				puts("  -- -n#             Number of terms to use");
-				puts("  -- -d<name>        Display to use");
-#endif /* USE_XAW */
-
 #ifdef USE_X11
 				puts("  -mx11              To use X11");
 				puts("  --                 Sub options");
@@ -347,19 +340,6 @@ usage:
 		if (0 == init_gtk2(argc, argv))
 		{
 			ANGBAND_SYS = "gtk2";
-			done = TRUE;
-		}
-	}
-#endif
-
-#ifdef USE_XAW
-	/* Attempt to use the "main-xaw.c" support */
-	if (!done && (!mstr || (streq(mstr, "xaw"))))
-	{
-		extern errr init_xaw(int, char**);
-		if (0 == init_xaw(argc, argv))
-		{
-			ANGBAND_SYS = "xaw";
 			done = TRUE;
 		}
 	}

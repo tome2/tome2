@@ -30,8 +30,7 @@
  * OPTION: See the Makefile(s), where several options may be declared.
  *
  * Some popular options include "USE_GCU" (allow use with Unix "curses"),
- * "USE_X11" (allow basic use with Unix X11) and "USE_XAW" (allow use with
- * Unix X11 plus the Athena Widget set).
+ * and "USE_X11" (allow basic use with Unix X11).
  *
  * The old "USE_NCU" option has been replaced with "USE_GCU".
  *
