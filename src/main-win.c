@@ -3290,7 +3290,6 @@ int FAR PASCAL WinMain(HINSTANCE hInst, HINSTANCE hPrevInst,
 	/* Temporary hooks */
 	plog_aux = hack_plog;
 	quit_aux = hack_quit;
-	core_aux = hack_quit;
 
 	/* Prepare the filepaths */
 	init_stuff();

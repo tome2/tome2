@@ -1923,7 +1923,6 @@ errr init_gtk2(int argc, char **argv)
 
 	/* Activate hooks - Use gtk/glib interface throughout */
 	quit_aux = hook_quit;
-	core_aux = hook_quit;
 
 	/* Parse args */
 	for (i = 1; i < argc; i++)

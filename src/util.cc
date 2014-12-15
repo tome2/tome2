@@ -61,8 +61,9 @@ int	*no_fds = NULL;
 
 
 	/* Paranoia -- No excessive sleeping */
-	if (usecs > 4000000L) core("Illegal usleep() call");
-
+	if (usecs > 4000000L) {
+		usecs = 4000000L;
+	}
 
 	/* Wait for it */
 	Timer.tv_sec = (usecs / 1000000L);
