@@ -89,10 +89,6 @@ extern "C" {
 # undef PATH_SEP
 # define PATH_SEP "\\"
 #endif
-#ifdef __GO32__
-# undef PATH_SEP
-# define PATH_SEP "/"
-#endif
 
 
 /*
