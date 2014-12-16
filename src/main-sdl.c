@@ -661,25 +661,6 @@ static errr Term_xtra_sdl(int n, int v)
 			return (1);
 		}
 
-	case TERM_XTRA_DELAY:
-		{
-			/*
-			 * Delay for some milliseconds XXX XXX XXX
-			 *
-			 * This action is useful for proper "timing" of certain
-			 * visual effects, such as breath attacks.
-			 *
-			 * This action is optional, but may be required by this file,
-			 * especially if special "macro sequences" must be supported.
-			 */
-
-			/* I think that this command is system independent... */
-			/*sleep(v/1000);*/
-			/* main-x11 uses usleep(1000*v); */
-			/* main-win uses Sleep(v); */
-			return (1);
-		}
-
 	}
 
 	/* Unknown or Unhandled action */

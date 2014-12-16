@@ -104,14 +104,6 @@ extern "C" {
 #endif
 
 
-/*
- * OPTION: Define "HAS_USLEEP" only if "usleep()" exists.
- * Note that this is only relevant for "SET_UID" machines
- */
-#ifdef SET_UID
-#  define HAS_USLEEP
-#endif
-
 #ifdef __cplusplus
 } // extern "C"
 #endif

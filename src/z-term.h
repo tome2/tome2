@@ -199,7 +199,6 @@ struct term
  * The "TERM_XTRA_SHAPE" action uses "v" to "show" the cursor
  * The "TERM_XTRA_ALIVE" action uses "v" to "activate" (or "close")
  * The "TERM_XTRA_LEVEL" action uses "v" to "resume" (or "suspend")
- * The "TERM_XTRA_DELAY" action uses "v" as a "millisecond" value
  *
  * The other actions do not need a "v" code, so "zero" is used.
  */
@@ -213,7 +212,6 @@ struct term
 #define TERM_XTRA_REACT 10	/* React to global changes (optional) */
 #define TERM_XTRA_ALIVE 11	/* Change the "hard" level (optional) */
 #define TERM_XTRA_LEVEL 12	/* Change the "soft" level (optional) */
-#define TERM_XTRA_DELAY 13	/* Delay some milliseconds (optional) */
 #define TERM_XTRA_RENAME_MAIN_WIN 16 /* Rename the main game window */
 
 

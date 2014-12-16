@@ -2178,11 +2178,6 @@ extern void automatizer_load(cptr file_name);
 extern void user_name(char *buf, int id);
 #endif
 
-#ifndef HAS_USLEEP
-/* util.c */
-extern int usleep(huge usecs);
-#endif
-
 /* util.c */
 extern void repeat_push(int what);
 extern bool_ repeat_pull(int *what);

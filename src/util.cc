@@ -8,58 +8,12 @@
 #include "quark.h"
 
 #include <boost/algorithm/string/predicate.hpp>
+#include <chrono>
+#include <thread>
 
 using boost::algorithm::iequals;
-
-
-#ifdef SET_UID
-
-# ifndef HAS_USLEEP
-
-/*
-* For those systems that don't have "usleep()" but need it.
-*
-* Fake "usleep()" function grabbed from the inl netrek server -cba
-*/
-int usleep(huge usecs)
-{
-	struct timeval Timer;
-
-	int nfds = 0;
-
-#ifdef FD_SET
-	fd_set	*no_fds = NULL;
-#else
-int	*no_fds = NULL;
-#endif
-
-
-	/* Was: int readfds, writefds, exceptfds; */
-	/* Was: readfds = writefds = exceptfds = 0; */
-
-
-	/* Paranoia -- No excessive sleeping */
-	if (usecs > 4000000L) {
-		usecs = 4000000L;
-	}
-
-	/* Wait for it */
-	Timer.tv_sec = (usecs / 1000000L);
-	Timer.tv_usec = (usecs % 1000000L);
-
-	/* Wait for it */
-	if (select(nfds, no_fds, no_fds, no_fds, &Timer) < 0)
-	{
-		/* Hack -- ignore interrupts */
-		if (errno != EINTR) return -1;
-	}
-
-	/* Success */
-	return 0;
-}
-
-# endif
-
+using std::this_thread::sleep_for;
+using std::chrono::milliseconds;
 
 /*
 * Find a default user name from the system.
@@ -82,9 +36,6 @@ void user_name(char *buf, int id)
 	/* Oops.  Hack -- default to "PLAYER" */
 	strcpy(buf, "PLAYER");
 }
-
-#endif /* SET_UID */
-
 
 
 
@@ -1458,7 +1409,7 @@ static char inkey_aux(void)
 			if (w >= 100) break;
 
 			/* Delay */
-			Term_xtra(TERM_XTRA_DELAY, w);
+			sleep_for(milliseconds(w));
 		}
 	}
 
@@ -1706,7 +1657,7 @@ static char inkey_real(bool_ inkey_scan)
 					if (w >= 100) break;
 
 					/* Delay */
-					Term_xtra(TERM_XTRA_DELAY, w);
+					sleep_for(milliseconds(w));
 				}
 			}
 

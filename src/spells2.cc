@@ -13,7 +13,12 @@
 #include "angband.h"
 #include "hooks.h"
 
+#include <chrono>
+#include <thread>
 #include <vector>
+
+using std::this_thread::sleep_for;
+using std::chrono::milliseconds;
 
 #define WEIRD_LUCK      12
 #define BIAS_LUCK       20
@@ -5080,7 +5085,7 @@ bool_ invoke(int dam, int typee)
 		Term_fresh();
 
 		/* Delay */
-		Term_xtra(TERM_XTRA_DELAY, msec);
+		sleep_for(milliseconds(msec));
 
 		/* Take note */
 		result = TRUE;
@@ -5156,7 +5161,7 @@ bool_ genocide_aux(bool_ player_cast, char typ)
 		Term_fresh();
 
 		/* Delay */
-		Term_xtra(TERM_XTRA_DELAY, msec);
+		sleep_for(milliseconds(msec));
 
 		/* Take note */
 		result = TRUE;
@@ -5281,7 +5286,7 @@ bool_ mass_genocide(bool_ player_cast)
 		Term_fresh();
 
 		/* Delay */
-		Term_xtra(TERM_XTRA_DELAY, msec);
+		sleep_for(milliseconds(msec));
 
 		/* Note effect */
 		result = TRUE;

@@ -675,11 +675,6 @@ static errr Term_xtra_gcu(int n, int v)
 		while (!Term_xtra_gcu_event(FALSE));
 		return (0);
 
-		/* Delay */
-	case TERM_XTRA_DELAY:
-		usleep(1000 * v);
-		return (0);
-
 		/* React to events */
 	case TERM_XTRA_REACT:
 		Term_xtra_gcu_react();

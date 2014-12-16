@@ -9,6 +9,12 @@
 #include "angband.h"
 #include "hooks.h"
 
+#include <chrono>
+#include <thread>
+
+using std::this_thread::sleep_for;
+using std::chrono::milliseconds;
+
 static void module_reset_dir_aux(char **dir, cptr new_path)
 {
 	char buf[1024];
@@ -311,7 +317,7 @@ static bool_ dleft(byte c, cptr str, int y, int o)
 				time = time + 1;
 				if (time >= 4)
 				{
-					Term_xtra(TERM_XTRA_DELAY, 1);
+					sleep_for(milliseconds(1));
 					time = 0;
 				}
 				Term_redraw_section(a - 1, y, a, y);
@@ -344,7 +350,7 @@ static bool_ dright(byte c, cptr str, int y, int o)
 				Term_putch(a, y, c, str[i-1]);
 				time = time + 1;
 				if (time >= 4) {
-					Term_xtra(TERM_XTRA_DELAY, 1);
+					sleep_for(milliseconds(1));
 					time = 0;
 				}
 				Term_redraw_section(a, y, a + 1, y);

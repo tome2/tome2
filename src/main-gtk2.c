@@ -511,16 +511,6 @@ static errr Term_xtra_gtk(int n, int v)
 	case TERM_XTRA_CLEAR:
 		return (Term_clear_gtk());
 
-		/* Delay for some milliseconds */
-	case TERM_XTRA_DELAY:
-		{
-			/* sleep for v milliseconds */
-			usleep(v * 1000);
-
-			/* Done */
-			return (0);
-		}
-
 		/* Rename main window */
 	case TERM_XTRA_RENAME_MAIN_WIN: gtk_window_set_title(GTK_WINDOW(data[0].window), angband_term_name[0]); return (0);
 

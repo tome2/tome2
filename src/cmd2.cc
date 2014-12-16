@@ -13,6 +13,12 @@
 #include "angband.h"
 #include "hooks.h"
 
+#include <chrono>
+#include <thread>
+
+using std::this_thread::sleep_for;
+using std::chrono::milliseconds;
+
 void do_cmd_immovable_special(void);
 
 /*
@@ -3240,7 +3246,7 @@ void do_cmd_fire(void)
 				print_rel(missile_char, missile_attr, y, x);
 				move_cursor_relative(y, x);
 				Term_fresh();
-				Term_xtra(TERM_XTRA_DELAY, msec);
+				sleep_for(milliseconds(msec));
 				lite_spot(y, x);
 				Term_fresh();
 			}
@@ -3249,7 +3255,7 @@ void do_cmd_fire(void)
 			else
 			{
 				/* Pause anyway, for consistancy */
-				Term_xtra(TERM_XTRA_DELAY, msec);
+				sleep_for(milliseconds(msec));
 			}
 
 
@@ -3656,7 +3662,7 @@ void do_cmd_throw(void)
 			print_rel(missile_char, missile_attr, y, x);
 			move_cursor_relative(y, x);
 			Term_fresh();
-			Term_xtra(TERM_XTRA_DELAY, msec);
+			sleep_for(milliseconds(msec));
 			lite_spot(y, x);
 			Term_fresh();
 		}
@@ -3665,7 +3671,7 @@ void do_cmd_throw(void)
 		else
 		{
 			/* Pause anyway, for consistancy */
-			Term_xtra(TERM_XTRA_DELAY, msec);
+			sleep_for(milliseconds(msec));
 		}
 
 
@@ -3983,7 +3989,7 @@ void do_cmd_boomerang(void)
 			print_rel(missile_char, missile_attr, y, x);
 			move_cursor_relative(y, x);
 			Term_fresh();
-			Term_xtra(TERM_XTRA_DELAY, msec);
+			sleep_for(milliseconds(msec));
 			lite_spot(y, x);
 			Term_fresh();
 		}
@@ -3992,7 +3998,7 @@ void do_cmd_boomerang(void)
 		else
 		{
 			/* Pause anyway, for consistancy */
-			Term_xtra(TERM_XTRA_DELAY, msec);
+			sleep_for(milliseconds(msec));
 		}
 
 
@@ -4159,7 +4165,7 @@ void do_cmd_boomerang(void)
 			print_rel(missile_char, missile_attr, y, x);
 			move_cursor_relative(y, x);
 			Term_fresh();
-			Term_xtra(TERM_XTRA_DELAY, msec);
+			sleep_for(milliseconds(msec));
 			lite_spot(y, x);
 			Term_fresh();
 		}
@@ -4168,7 +4174,7 @@ void do_cmd_boomerang(void)
 		else
 		{
 			/* Pause anyway, for consistancy */
-			Term_xtra(TERM_XTRA_DELAY, msec);
+			sleep_for(milliseconds(msec));
 		}
 	}
 }

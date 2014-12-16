@@ -11,8 +11,13 @@
  */
 
 #include "angband.h"
-
 #include "spell_type.h"
+
+#include <chrono>
+#include <thread>
+
+using std::this_thread::sleep_for;
+using std::chrono::milliseconds;
 
 /* 1/x chance of reducing stats (for elemental attacks) */
 #define HURT_CHANCE 32
@@ -8436,7 +8441,7 @@ bool_ project(int who, int rad, int y, int x, int dam, int typ, int flg)
 				print_rel(c, a, y, x);
 				move_cursor_relative(y, x);
 				if (fresh_before) Term_fresh();
-				Term_xtra(TERM_XTRA_DELAY, msec);
+				sleep_for(milliseconds(msec));
 				lite_spot(y, x);
 				if (fresh_before) Term_fresh();
 
@@ -8462,7 +8467,7 @@ bool_ project(int who, int rad, int y, int x, int dam, int typ, int flg)
 			else if (visual)
 			{
 				/* Delay for consistency */
-				Term_xtra(TERM_XTRA_DELAY, msec);
+				sleep_for(milliseconds(msec));
 			}
 		}
 	}
@@ -8580,7 +8585,7 @@ bool_ project(int who, int rad, int y, int x, int dam, int typ, int flg)
 			/* Delay (efficiently) */
 			if (visual || drawn)
 			{
-				Term_xtra(TERM_XTRA_DELAY, msec);
+				sleep_for(milliseconds(msec));
 			}
 		}
 
