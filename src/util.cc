@@ -84,13 +84,6 @@ int	*no_fds = NULL;
 
 
 /*
-* Hack -- External functions
-*/
-extern struct passwd *getpwuid();
-extern struct passwd *getpwnam();
-
-
-/*
 * Find a default user name from the system.
 */
 void user_name(char *buf, int id)
