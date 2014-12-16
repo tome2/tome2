@@ -3841,6 +3841,18 @@ cptr look_mon_desc(int m_idx)
 
 
 /*
+ * Current "comp" function for ang_sort()
+ */
+static bool_ (*ang_sort_comp)(vptr u, vptr v, int a, int b) = nullptr;
+
+/*
+ * Current "swap" function for ang_sort()
+ */
+static void (*ang_sort_swap)(vptr u, vptr v, int a, int b) = nullptr;
+
+
+
+/*
  * Angband sorting algorithm -- quick sort in place
  *
  * Note that the details of the data we are sorting is hidden,
@@ -3848,7 +3860,7 @@ cptr look_mon_desc(int m_idx)
  * function hooks to interact with the data, which is given as
  * two pointers, and which may have any user-defined form.
  */
-void ang_sort_aux(vptr u, vptr v, int p, int q)
+static void ang_sort_aux(vptr u, vptr v, int p, int q)
 {
 	int z, a, b;
 
@@ -3897,7 +3909,7 @@ void ang_sort_aux(vptr u, vptr v, int p, int q)
  * function hooks to interact with the data, which is given as
  * two pointers, and which may have any user-defined form.
  */
-void ang_sort(vptr u, vptr v, int n)
+static void ang_sort(vptr u, vptr v, int n)
 {
 	/* Sort the array */
 	ang_sort_aux(u, v, 0, n - 1);
