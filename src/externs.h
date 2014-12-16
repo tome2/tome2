@@ -2188,22 +2188,6 @@ extern int stricmp(cptr a, cptr b);
 extern int usleep(huge usecs);
 #endif
 
-#ifdef MACINTOSH
-/* main-mac.c */
-/* extern void main(void); */
-#endif
-
-
-#ifdef WINDOWS
-/* main-win.c */
-/* extern int FAR PASCAL WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, ...); */
-#endif
-
-#if !defined(WINDOWS) && !defined(MACINTOSH)
-/* files.c */
-extern bool_ chg_to_txt(cptr base, cptr newname);
-#endif /* !WINDOWS && !MACINTOSH */
-
 /* util.c */
 extern void repeat_push(int what);
 extern bool_ repeat_pull(int *what);
