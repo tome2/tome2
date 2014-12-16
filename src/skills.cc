@@ -16,12 +16,14 @@
 #include "util.hpp"
 
 #include <algorithm>
+#include <boost/algorithm/string/predicate.hpp>
 #include <cassert>
 #include <cmath>
 #include <memory>
 #include <vector>
 #include <tuple>
 
+using boost::algorithm::iequals;
 
 /*
  * Advance the skill point of the skill specified by i and
@@ -119,7 +121,7 @@ s16b find_skill_i(cptr name)
 	{
 		/* The name matches */
 		if (s_info[i].name > 0) {
-			if (0 == stricmp(s_info[i].name + s_name, name)) return (i);
+			if (iequals(s_info[i].name + s_name, name)) return (i);
 		}
 	}
 

@@ -4,6 +4,10 @@
 
 #include "angband.h"
 
+#include <boost/algorithm/string/predicate.hpp>
+
+using boost::algorithm::iequals;
+
 
 /*
  * This file is used to initialize various variables and arrays for the
@@ -2049,7 +2053,7 @@ errr init_player_info_txt(FILE *fp, char *buf)
 			/* Find it in the list */
 			for (i = 0; i < POWER_MAX; i++)
 			{
-				if (!stricmp(s, powers_type[i].name)) break;
+				if (iequals(s, powers_type[i].name)) break;
 			}
 
 			if (i == POWER_MAX) return (6);
@@ -2427,7 +2431,7 @@ errr init_player_info_txt(FILE *fp, char *buf)
 			/* Find it in the list */
 			for (i = 0; i < POWER_MAX; i++)
 			{
-				if (!stricmp(s, powers_type[i].name)) break;
+				if (iequals(s, powers_type[i].name)) break;
 			}
 
 			if (i == POWER_MAX) return (6);
@@ -2950,7 +2954,7 @@ errr init_player_info_txt(FILE *fp, char *buf)
 			/* Find it in the list */
 			for (i = 0; i < POWER_MAX; i++)
 			{
-				if (!stricmp(s, powers_type[i].name)) break;
+				if (iequals(s, powers_type[i].name)) break;
 			}
 
 			if (i == POWER_MAX) return (6);
@@ -3373,7 +3377,7 @@ errr init_player_info_txt(FILE *fp, char *buf)
 			/* Find it in the list */
 			for (i = 0; i < max_c_idx; i++)
 			{
-				if (!stricmp(s, class_info[i].title + c_name)) break;
+				if (iequals(s, class_info[i].title + c_name)) break;
 			}
 
 			if (i == max_c_idx) return (6);
@@ -4354,7 +4358,7 @@ errr init_k_info_txt(FILE *fp, char *buf)
 			/* Find it in the list */
 			for (i = 0; i < POWER_MAX; i++)
 			{
-				if (!stricmp(s, powers_type[i].name)) break;
+				if (iequals(s, powers_type[i].name)) break;
 			}
 
 			if (i == POWER_MAX) return (6);
@@ -5247,7 +5251,7 @@ errr init_a_info_txt(FILE *fp, char *buf)
 			/* Find it in the list */
 			for (i = 0; i < POWER_MAX; i++)
 			{
-				if (!stricmp(s, powers_type[i].name)) break;
+				if (iequals(s, powers_type[i].name)) break;
 			}
 
 			if (i == POWER_MAX) return (6);
@@ -6782,7 +6786,7 @@ errr init_e_info_txt(FILE *fp, char *buf)
 			/* Find it in the list */
 			for (i = 0; i < POWER_MAX; i++)
 			{
-				if (!stricmp(s, powers_type[i].name)) break;
+				if (iequals(s, powers_type[i].name)) break;
 			}
 
 			if (i == POWER_MAX) return (6);
@@ -7271,7 +7275,7 @@ errr init_ra_info_txt(FILE *fp, char *buf)
 			/* Find it in the list */
 			for (i = 0; i < POWER_MAX; i++)
 			{
-				if (!stricmp(s, powers_type[i].name)) break;
+				if (iequals(s, powers_type[i].name)) break;
 			}
 
 			if (i == POWER_MAX) return (6);

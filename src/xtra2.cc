@@ -18,6 +18,10 @@
 #include "quark.h"
 #include "hooks.h"
 
+#include <boost/algorithm/string/predicate.hpp>
+
+using boost::algorithm::iequals;
+
 /*
  * Invoke The Rush
  */
@@ -5572,7 +5576,7 @@ bool_ test_object_wish(char *name, object_type *o_ptr, object_type *forge, const
 					object_desc(buf, o_ptr, FALSE, 0);
 					strlower(buf);
 
-					if (!stricmp(buf, name))
+					if (iequals(buf, name))
 					{
 						/* Don't search any more */
 						return TRUE;
@@ -5720,7 +5724,7 @@ void make_wish(void)
 				}
 				strlower(buf);
 
-				if (!stricmp(mname, buf))
+				if (iequals(mname, buf))
 				{
 					int wy = p_ptr->py, wx = p_ptr->px;
 					int attempts = 100;

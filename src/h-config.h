@@ -105,24 +105,6 @@ extern "C" {
 
 
 /*
- * OPTION: Define "HAS_STRICMP" only if "stricmp()" exists.
- * Note that "stricmp()" is not actually used by Angband.
- */
-/* #define HAS_STRICMP */
-
-/*
- * Linux has "stricmp()" with a different name
- */
-/*
-#if defined(linux)
-# define HAS_STRICMP
-# define stricmp strcasecmp
-#endif
-*/
-
-
-
-/*
  * OPTION: Define "HAS_USLEEP" only if "usleep()" exists.
  * Note that this is only relevant for "SET_UID" machines
  */

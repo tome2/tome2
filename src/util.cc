@@ -7,31 +7,9 @@
 #include "messages.h"
 #include "quark.h"
 
+#include <boost/algorithm/string/predicate.hpp>
 
-#ifndef HAS_STRICMP
-
-/*
-* For those systems that don't have "stricmp()"
-*
-* Compare the two strings "a" and "b" ala "strcmp()" ignoring case.
-*/
-int stricmp(cptr a, cptr b)
-{
-	cptr s1, s2;
-	char z1, z2;
-
-	/* Scan the strings */
-	for (s1 = a, s2 = b; TRUE; s1++, s2++)
-	{
-		z1 = FORCEUPPER(*s1);
-		z2 = FORCEUPPER(*s2);
-		if (z1 < z2) return ( -1);
-		if (z1 > z2) return (1);
-		if (!z1) return (0);
-	}
-}
-
-#endif
+using boost::algorithm::iequals;
 
 
 #ifdef SET_UID
@@ -758,40 +736,6 @@ static int dehex(char c)
 }
 
 
-static int my_stricmp(cptr a, cptr b)
-{
-	cptr s1, s2;
-	char z1, z2;
-
-	/* Scan the strings */
-	for (s1 = a, s2 = b; TRUE; s1++, s2++)
-	{
-		z1 = FORCEUPPER(*s1);
-		z2 = FORCEUPPER(*s2);
-		if (z1 < z2) return ( -1);
-		if (z1 > z2) return (1);
-		if (!z1) return (0);
-	}
-}
-
-static int my_strnicmp(cptr a, cptr b, int n)
-{
-	cptr s1, s2;
-	char z1, z2;
-
-	/* Scan the strings */
-	for (s1 = a, s2 = b; n > 0; s1++, s2++, n--)
-	{
-		z1 = FORCEUPPER(*s1);
-		z2 = FORCEUPPER(*s2);
-		if (z1 < z2) return ( -1);
-		if (z1 > z2) return (1);
-		if (!z1) return (0);
-	}
-	return 0;
-}
-
-
 static void trigger_text_to_ascii(char **bufptr, cptr *strptr)
 {
 	char *s = *bufptr;
@@ -815,8 +759,7 @@ static void trigger_text_to_ascii(char **bufptr, cptr *strptr)
 		for (i = 0; macro_modifier_chr[i]; i++)
 		{
 			len = strlen(macro_modifier_name[i]);
-
-			if (!my_strnicmp(str, macro_modifier_name[i], len))
+			if (iequals(str, macro_modifier_name[i]))
 				break;
 		}
 		if (!macro_modifier_chr[i]) break;
@@ -828,7 +771,7 @@ static void trigger_text_to_ascii(char **bufptr, cptr *strptr)
 	for (i = 0; i < max_macrotrigger; i++)
 	{
 		len = strlen(macro_trigger_name[i]);
-		if (!my_strnicmp(str, macro_trigger_name[i], len) && ']' == str[len])
+		if (iequals(str, macro_trigger_name[i]) && ']' == str[len])
 		{
 			/* a trigger name found */
 			break;
@@ -1060,8 +1003,8 @@ bool_ trigger_ascii_to_text(char **bufptr, cptr *strptr)
 
 	for (i = 0; i < max_macrotrigger; i++)
 	{
-		if (!my_stricmp(key_code, macro_trigger_keycode[0][i])
-		                || !my_stricmp(key_code, macro_trigger_keycode[1][i]))
+		if (iequals(key_code, macro_trigger_keycode[0][i])
+		                || iequals(key_code, macro_trigger_keycode[1][i]))
 			break;
 	}
 	if (i == max_macrotrigger)
@@ -3480,7 +3423,7 @@ int test_monster_name(cptr name)
 	{
 		monster_race *r_ptr = &r_info[i];
 		cptr mon_name = r_name + r_ptr->name;
-		if (stricmp(name, mon_name) == 0) return (i);
+		if (iequals(name, mon_name)) return (i);
 	}
 	return (0);
 }
@@ -3493,7 +3436,7 @@ int test_mego_name(cptr name)
 	{
 		monster_ego *re_ptr = &re_info[i];
 		cptr mon_name = re_name + re_ptr->name;
-		if (stricmp(name, mon_name) == 0) return (i);
+		if (iequals(name, mon_name)) return (i);
 	}
 	return (0);
 }
@@ -3514,7 +3457,7 @@ int test_item_name(cptr name)
 		object_kind *k_ptr = &k_info[i];
 		cptr obj_name = k_name + k_ptr->name;
 		/* If name matches, give us the number */
-		if (stricmp(name, obj_name) == 0) return (i);
+		if (iequals(name, obj_name)) return (i);
 	}
 	return (0);
 }
