@@ -52,11 +52,6 @@
 #include <unistd.h>
 #include <dirent.h>
 
-/* /me pffts Solaris */
-#ifndef NAME_MAX
-#define	NAME_MAX	_POSIX_NAME_MAX
-#endif
-
 
 /*
  * Number of pixels inserted between the menu bar and the main screen

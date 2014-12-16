@@ -1936,7 +1936,6 @@ extern errr fd_move(cptr file, cptr what);
 extern errr fd_copy(cptr file, cptr what);
 extern int fd_make(cptr file, int mode);
 extern int fd_open(cptr file, int flags);
-extern errr fd_lock(int fd, int what);
 extern errr fd_seek(int fd, huge n);
 extern errr fd_read(int fd, char *buf, huge n);
 extern errr fd_write(int fd, cptr buf, huge n);

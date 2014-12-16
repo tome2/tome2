@@ -82,7 +82,7 @@
 # if defined(_POSIX_VERSION)
 # define USE_TPOSIX
 # else
-# if defined(USG) || defined(linux) || defined(SOLARIS)
+# if defined(linux)
 # define USE_TERMIO
 # else
 # define USE_TCHARS
@@ -121,11 +121,6 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include <dirent.h>
-
-/* /me pffts Solaris */
-#ifndef NAME_MAX
-#define	NAME_MAX	_POSIX_NAME_MAX
-#endif
 
 
 
@@ -561,60 +556,6 @@ static void Term_nuke_gcu(term *t)
 }
 
 
-
-
-#ifdef USE_GETCH
-
-/*
- * Process events, with optional wait
- */
-static errr Term_xtra_gcu_event(int v)
-{
-	int i, k;
-
-	/* Wait */
-	if (v)
-	{
-		/* Paranoia -- Wait for it */
-		nodelay(stdscr, FALSE);
-
-		/* Get a keypress */
-		i = getch();
-
-		/* Mega-Hack -- allow graceful "suspend" */
-		for (k = 0; (k < 10) && (i == ERR); k++) i = getch();
-
-		/* Broken input is special */
-		if (i == ERR) abort();
-		if (i == EOF) abort();
-	}
-
-	/* Do not wait */
-	else
-	{
-		/* Do not wait for it */
-		nodelay(stdscr, TRUE);
-
-		/* Check for keypresses */
-		i = getch();
-
-		/* Wait for it next time */
-		nodelay(stdscr, FALSE);
-
-		/* None ready */
-		if (i == ERR) return (1);
-		if (i == EOF) return (1);
-	}
-
-	/* Enqueue the keypress */
-	Term_keypress(i);
-
-	/* Success */
-	return (0);
-}
-
-#else	/* USE_GETCH */
-
 /*
 * Process events (with optional wait)
 */
@@ -663,7 +604,6 @@ static errr Term_xtra_gcu_event(int v)
 	return (0);
 }
 
-#endif	/* USE_GETCH */
 
 /*
  * React to changes
@@ -721,14 +661,6 @@ static errr Term_xtra_gcu(int n, int v)
 		(void)wrefresh(td->win);
 		return (0);
 
-#ifdef USE_CURS_SET
-
-		/* Change the cursor visibility */
-	case TERM_XTRA_SHAPE:
-		curs_set(v);
-		return (0);
-
-#endif
 
 		/* Suspend/Resume curses */
 	case TERM_XTRA_ALIVE:
@@ -926,13 +858,8 @@ errr init_gcu(int argc, char **argv)
 	keymap_norm_prepare();
 
 
-#if defined(USG)
-	/* Initialize for USG Unix */
-	if (initscr() == NULL) return ( -1);
-#else
 /* Initialize for other systems */
 	if (initscr() == (WINDOW*)ERR) return ( -1);
-#endif
 
 	/* Activate hooks */
 	quit_aux = hook_quit;
@@ -1022,12 +949,6 @@ errr init_gcu(int argc, char **argv)
 
 	/*** Low level preparation ***/
 
-#ifdef USE_GETCH
-
-	/* Paranoia -- Assume no waiting */
-	nodelay(stdscr, FALSE);
-
-#endif
 
 	/* Prepare */
 	raw();

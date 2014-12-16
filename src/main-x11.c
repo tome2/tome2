@@ -112,11 +112,6 @@
 
 #include <sys/time.h>
 
-/* /me pffts Solaris */
-#ifndef NAME_MAX
-#define	NAME_MAX	_POSIX_NAME_MAX
-#endif
-
 
 /*
  * This file is designed to be "included" by "main-x11.c" or "main-xaw.c",

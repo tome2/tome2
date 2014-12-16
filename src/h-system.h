@@ -25,16 +25,11 @@
 
 # include <sys/types.h>
 
-# if defined(Pyramid) || defined(SUNOS) || \
-     defined(NCR3K) || defined(SUNOS) || defined(ibm032) || \
-     defined(__osf__) || defined(ISC) || defined(SGI) || \
-     defined(linux)
+# if defined(linux)
 #  include <sys/time.h>
 # endif
 
-# if !defined(SGI) && !defined(ULTRIX)
 #  include <sys/timeb.h>
-# endif
 
 #endif
 
@@ -51,27 +46,18 @@
 # include <io.h>
 #endif
 
-#if !defined(MACINTOSH) && \
-    !defined(__MWERKS__)
-# if defined(__TURBOC__) || defined(__WATCOMC__)
-#  include <mem.h>
-# else
+#if !defined(MACINTOSH)
 #  include <memory.h>
-# endif
 #endif
 
 
-#if !defined(__MWERKS__)
 # include <fcntl.h>
-#endif
 
 
 #ifdef SET_UID
 
-# ifndef USG
 #  include <sys/param.h>
 #  include <sys/file.h>
-# endif
 
 # ifdef linux
 #  include <sys/file.h>
@@ -83,23 +69,12 @@
 
 # include <sys/stat.h>
 
-# if defined(SOLARIS)
-#  include <netdb.h>
-# endif
 
 #endif
-
-#ifdef __DJGPP__
-#include <unistd.h>
-#endif /* __DJGPP__ */
 
 #ifdef SET_UID
 
-#ifdef USG
-# include <string.h>
-#else
 # include <strings.h>
-#endif
 
 #else
 
