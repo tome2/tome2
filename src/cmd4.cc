@@ -11,10 +11,10 @@
  */
 
 #include "angband.h"
-
 #include "messages.h"
 #include "hooks.h"
 
+#include <cassert>
 #include <memory>
 #include <string>
 #include <vector>

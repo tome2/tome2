@@ -1831,8 +1831,6 @@ const char     *varda_star_kindler_info();
 
 /* spells4.c */
 
-SGLIB_DEFINE_LIST_PROTOTYPES(spell_idx_list, compare_spell_idx, next);
-
 extern s32b SCHOOL_AIR;
 extern s32b SCHOOL_AULE;
 extern s32b SCHOOL_CONVEYANCE;

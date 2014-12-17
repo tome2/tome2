@@ -1,6 +1,7 @@
 #include "quark.h"
-
 #include "angband.h"
+
+#include <cassert>
 
 /*
  * The number of quarks

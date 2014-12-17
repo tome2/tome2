@@ -22,7 +22,7 @@ SET(SRCS
   spells1.cc spells2.cc spells3.cc spells4.cc spells5.cc spells6.cc
   spell_type.cc device_allocation.cc
   corrupt.cc joke.cc mimic.cc
-  status.cc files.cc notes.cc loadsave.cc string_list.cc
+  status.cc files.cc notes.cc loadsave.cc
   cmd1.cc cmd2.cc cmd3.cc cmd4.cc cmd5.cc cmd6.cc cmd7.cc
   help.cc hiscore.cc range.cc dice.cc
   generate.cc gen_maze.cc gen_evol.cc wild.cc levels.cc store.cc bldg.cc

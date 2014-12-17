@@ -11,9 +11,10 @@
  */
 
 #include "angband.h"
-
 #include "spell_type.h"
 #include "hooks.h"
+
+#include <cassert>
 
 /*
  * Forward declare

@@ -1,6 +1,7 @@
 /* File: types.h */
 
 #include "types_fwd.h"
+#include "spell_idx_list_fwd.h"
 
 /* Purpose: global type declarations */
 
@@ -2466,16 +2467,7 @@ struct school_type
 
 	bool_ (*depends_satisfied)(); /* Are dependendies satisfied? */
 
-	struct school_provider *providers; /* List of secondary providers of this school */
-};
-
-/*
- * Spell index list.
- */
-typedef struct spell_idx_list spell_idx_list;
-struct spell_idx_list {
-	s32b i; /* Spell index */
-	spell_idx_list *next; /* for list */
+	struct school_provider_list *providers; /* List of secondary providers of this school */
 };
 
 /*
@@ -2483,7 +2475,7 @@ struct spell_idx_list {
  */
 typedef struct school_book_type school_book_type;
 struct school_book_type {
-	spell_idx_list *spell_idx_list;
+	struct spell_idx_list *spell_idx_list;
 };
 
 /*

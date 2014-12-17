@@ -3,6 +3,7 @@
 #include <assert.h>
 
 #include "spell_type.h"
+#include "spell_idx_list.hpp"
 
 #include <vector>
 
@@ -2960,8 +2961,6 @@ int udun_in_book(s32b sval, s32b pval)
 {
 	int count = 0;
 	school_book_type *school_book;
-	spell_idx_list *spell_idx = NULL;
-	struct sglib_spell_idx_list_iterator it;
 
 	random_book_setup(sval, pval);
 
@@ -2969,11 +2968,8 @@ int udun_in_book(s32b sval, s32b pval)
 	school_book = school_books_at(sval);
 
 	/* Go through spells */
-	for (spell_idx = sglib_spell_idx_list_it_init(&it, school_book->spell_idx_list);
-	     spell_idx != NULL;
-	     spell_idx = sglib_spell_idx_list_it_next(&it))
-	{
-		spell_type *spell = spell_at(spell_idx->i);
+	for (auto spell_idx : school_book->spell_idx_list->v) {
+		spell_type *spell = spell_at(spell_idx);
 		spell_type_school_foreach(spell, check_school_is_udun, &count);
 	}
 
@@ -2983,23 +2979,16 @@ int udun_in_book(s32b sval, s32b pval)
 int levels_in_book(s32b sval, s32b pval)
 {
 	int levels = 0;
-	school_book_type *school_book;
-	spell_idx_list *spell_idx = NULL;
-	struct sglib_spell_idx_list_iterator it;
 
 	random_book_setup(sval, pval);
 
 	/* Get the school book */
-	school_book = school_books_at(sval);
+	school_book_type *school_book = school_books_at(sval);
 
 	/* Parse all spells */
-	for (spell_idx = sglib_spell_idx_list_it_init(&it, school_book->spell_idx_list);
-	     spell_idx != NULL;
-	     spell_idx = sglib_spell_idx_list_it_next(&it))
+	for (auto spell_idx : school_book->spell_idx_list->v)
 	{
-		s32b s = spell_idx->i;
-		spell_type *spell = spell_at(s);
-
+		spell_type *spell = spell_at(spell_idx);
 		levels += spell_type_skill_level(spell);
 	}
 

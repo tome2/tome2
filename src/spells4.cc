@@ -3,6 +3,8 @@
 #include <assert.h>
 
 #include "spell_type.h"
+#include "spell_idx_list.hpp"
+#include <algorithm>
 
 school_book_type school_books[SCHOOL_BOOKS_SIZE];
 
@@ -31,13 +33,6 @@ s32b SCHOOL_ULMO;
 s32b SCHOOL_VARDA;
 s32b SCHOOL_WATER;
 s32b SCHOOL_YAVANNA;
-
-static int compare_spell_idx(spell_idx_list *a, spell_idx_list *b)
-{
-	return SGLIB_NUMERIC_COMPARATOR(a->i, b->i);
-}
-
-SGLIB_DEFINE_LIST_FUNCTIONS(spell_idx_list, compare_spell_idx, next);
 
 static bool_ uses_piety_to_cast(int s)
 {
@@ -114,32 +109,14 @@ school_book_type *school_books_at(int i)
 
 static void school_book_init(school_book_type *school_book)
 {
-	school_book->spell_idx_list = NULL;
-}
-
-static void spell_idx_init(spell_idx_list *p, s32b spell_idx)
-{
-	assert(p != NULL);
-
-	p->i = spell_idx;
-	p->next = NULL;
-}
-
-static spell_idx_list *new_spell_idx(void *ctx, s32b spell_idx)
-{
-	spell_idx_list *e = new spell_idx_list;
-	spell_idx_init(e, spell_idx);
-	return e;
+	school_book->spell_idx_list = new spell_idx_list(); // FIXME: This whole thing should really be in the ctor?!?
 }
 
 void school_book_add_spell(school_book_type *school_book, s32b spell_idx)
 {
-	spell_idx_list *e;
-
-	assert(school_book != NULL);
-
-	e = new_spell_idx(school_book, spell_idx);
-	sglib_spell_idx_list_add(&school_book->spell_idx_list, e);
+	assert(school_book != nullptr);
+	assert(school_book->spell_idx_list != nullptr);
+	school_book->spell_idx_list->v.push_back(spell_idx);
 }
 
 int school_book_length(int sval)
@@ -151,8 +128,7 @@ int school_book_length(int sval)
 		return 1;
 	}
 
-	/* Parse all spells */
-	return sglib_spell_idx_list_len(school_book->spell_idx_list);
+	return school_book->spell_idx_list->v.size();
 }
 
 int spell_x(int sval, int pval, int i)
@@ -165,36 +141,19 @@ int spell_x(int sval, int pval, int i)
 	}
 	else
 	{
-		school_book_type *school_book;
-		spell_idx_list *spell_idx = NULL;
-		struct sglib_spell_idx_list_iterator it;
-
-		school_book = school_books_at(sval);
-
-		for (spell_idx = sglib_spell_idx_list_it_init(&it, school_book->spell_idx_list);
-		     (spell_idx != NULL) && (i > 0);
-		     spell_idx = sglib_spell_idx_list_it_next(&it))
-		{
-			i--;
-		}
-
-		assert(spell_idx != NULL); /* Went off the end of the list? */
-
-		return spell_idx->i;
+		school_book_type *school_book = school_books_at(sval);
+		return school_book->spell_idx_list->v.at(i);
 	}
 }
 
 bool_ school_book_contains_spell(int sval, s32b spell_idx)
 {
-	school_book_type *school_book = NULL;
-	spell_idx_list e;
-
 	random_book_setup(sval, spell_idx);
-
-	school_book = school_books_at(sval);
-
-	spell_idx_init(&e, spell_idx);
-	return NULL != sglib_spell_idx_list_find_member(school_book->spell_idx_list, &e);
+	school_book_type *school_book = school_books_at(sval);
+	return (school_book->spell_idx_list->v.end() !=  // FIXME: Oh, the horror! Is there really no shortcut?!?
+			std::find(school_book->spell_idx_list->v.begin(),
+				school_book->spell_idx_list->v.end(),
+				spell_idx));
 }
 
 void push_spell(int book_idx, s32b spell_idx)
@@ -436,9 +395,7 @@ void random_book_setup(s16b sval, s32b spell_idx)
 	if (sval == BOOK_RANDOM)
 	{
 		school_book_type *school_book = school_books_at(sval);
-
-		assert(school_book->spell_idx_list != NULL);
-		school_book->spell_idx_list->i = spell_idx;
+		school_book->spell_idx_list->v.at(0) = spell_idx;
 	}
 }
 
@@ -505,8 +462,6 @@ int print_book(s16b sval, s32b pval, object_type *obj)
 	int y = 2;
 	int i;
 	school_book_type *school_book;
-	spell_idx_list *spell_idx;
-	struct sglib_spell_idx_list_iterator it;
 
 	random_book_setup(sval, pval);
 
@@ -514,24 +469,21 @@ int print_book(s16b sval, s32b pval, object_type *obj)
 
 	/* Parse all spells */
 	i = 0;
-	for (spell_idx = sglib_spell_idx_list_it_init(&it, school_book->spell_idx_list);
-	     spell_idx != NULL;
-	     spell_idx = sglib_spell_idx_list_it_next(&it))
+	for (auto spell_idx : school_book->spell_idx_list->v)
 	{
-		s32b s = spell_idx->i;
 		byte color = TERM_L_DARK;
 		bool_ is_ok;
 		char label[8];
 
-		is_ok = is_ok_spell(s, obj);
+		is_ok = is_ok_spell(spell_idx, obj);
 		if (is_ok)
 		{
-			color = (get_mana(s) > get_power(s)) ? TERM_ORANGE : TERM_L_GREEN;
+			color = (get_mana(spell_idx) > get_power(spell_idx)) ? TERM_ORANGE : TERM_L_GREEN;
 		}
 
 		sprintf(label, "%c) ", 'a' + i);
 
-		y = print_spell(label, color, y, s);
+		y = print_spell(label, color, y, spell_idx);
 		i++;
 	}
 

@@ -25,7 +25,6 @@ enum random_type { RANDOM, NO_RANDOM };
  * Spell functions
  */
 
-void spell_type_init(spell_type *spell, cptr name);
 void spell_type_init_music(spell_type *spell,
 			   s16b minimum_pval,
 			   const char* (*info_func)(),

@@ -11,11 +11,11 @@
  */
 
 #include "angband.h"
-
 #include "spell_type.h"
 #include "device_allocation.h"
 #include "hooks.h"
 
+#include <cassert>
 #include <vector>
 
 /*

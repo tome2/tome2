@@ -44,12 +44,6 @@ extern "C" {
 
 
 /*
- * SGLIB
- */
-#include "sglib.h"
-
-
-/*
  * Now, include the define's, the type's, and the extern's
  */
 #include "defines.h"

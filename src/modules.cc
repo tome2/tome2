@@ -9,6 +9,7 @@
 #include "angband.h"
 #include "hooks.h"
 
+#include <cassert>
 #include <chrono>
 #include <thread>
 

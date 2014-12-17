@@ -10,6 +10,7 @@
 #include "quark.h"
 #include "hooks.h"
 
+#include <cassert>
 #include <memory>
 
 static void do_byte(byte *, int);

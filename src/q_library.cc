@@ -2,6 +2,8 @@
 #include "quark.h"
 #include "hooks.h"
 
+#include <cassert>
+
 #define cquest (quest[QUEST_LIBRARY])
 
 #define print_hook(fmt,...) do { fprintf(hook_file, fmt, ##__VA_ARGS__); } while (0)

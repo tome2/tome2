@@ -12,6 +12,8 @@
 
 #include "angband.h"
 
+#include <cassert>
+
 /*
  * Add amt piety is god is god
  */

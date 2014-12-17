@@ -1,5 +1,7 @@
 #include "range.h"
 
+#include <cassert>
+
 void range_init(range_type *range, s32b min, s32b max)
 {
 	assert(range != NULL);

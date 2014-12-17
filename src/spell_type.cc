@@ -1,11 +1,13 @@
 #include "spell_type.h"
-#include "string_list.h"
 #include "range.h"
 #include "device_allocation.h"
 #include "dice.h"
 
 #include "angband.h"
 
+#include <cassert>
+#include <vector>
+#include <string>
 #include <type_traits>
 
 #define SCHOOL_IDXS_MAX 3
@@ -15,9 +17,10 @@
  */
 struct spell_type
 {
+	// FIXME: most of this stuff shouldn't be public
 	cptr name;                      /* Name */
 	byte skill_level;               /* Required level (to learn) */
-	string_list *description;       /* List of strings */
+	std::vector<std::string> m_description;       /* List of strings */
 
 	casting_result (*effect_func)(int o_idx);  /* Spell effect function */
 	const char* (*info_func)();           /* Information function */
@@ -33,7 +36,7 @@ struct spell_type
 	bool_        castable_while_confused;
 
 	dice_type          device_charges;      /* Number of charges for devices */
-	struct device_allocation *device_allocation;	/* Allocation table for devices */
+	std::vector<device_allocation *> m_device_allocation;	/* Allocation table for devices */ /* FIXME: shouldn't really be pointer-to, but... */
 
 	s16b         random_type;       /* Type of random items in which skill may appear */
 
@@ -48,6 +51,36 @@ struct spell_type
 
 	int school_idxs_count;
 	s32b school_idxs[3];
+
+public:
+
+	// FIXME: forbi copy-ctor + move + etc?
+
+	spell_type(cptr _name):
+		name(_name),
+		skill_level(0),
+		m_description(),
+		effect_func(nullptr),
+		info_func(nullptr),
+		lasting_func(nullptr),
+		depend_func(nullptr),
+		minimum_pval(0),
+		casting_type(USE_SPELL_POINTS /* FIXME: ??? */),
+		casting_stat(0),
+		castable_while_blind(FALSE),
+		castable_while_confused(FALSE),
+		device_charges({ 0, 0, 0 }),
+		m_device_allocation(),
+		random_type(-1),
+		failure_rate(0),
+		inertia_difficulty(-1),
+		inertia_delay(-1),
+		mana_range({ -1, -1 }),
+		activation_timeout({ 0, 0, 0 }),
+		school_idxs_count(0),
+		school_idxs({ -1, -1, -1 }) {
+	}
+
 };
 
 static void school_idx_add_new(spell_type *spell, s32b i)
@@ -57,32 +90,6 @@ static void school_idx_add_new(spell_type *spell, s32b i)
 
 	spell->school_idxs[spell->school_idxs_count] = i;
 	spell->school_idxs_count++;
-}
-
-void spell_type_init(spell_type *spell, cptr name)
-{
-	assert(spell != NULL);
-
-	static_assert(std::is_pod<spell_type>::value, "Cannot memset non-POD type");
-	memset(spell, 0, sizeof(spell_type));
-
-	spell->name = name;
-	spell->description = NULL;
-	spell->effect_func = NULL;
-	spell->info_func = NULL;
-	spell->lasting_func = NULL;
-	spell->depend_func = NULL;
-
-	spell->device_allocation = NULL;
-
-	spell->school_idxs_count = 0;
-
-	spell->random_type = -1;
-
-	spell->castable_while_blind = FALSE;
-	spell->castable_while_confused = FALSE;
-
-	spell_type_set_inertia(spell, -1, -1);
 }
 
 void spell_type_set_inertia(spell_type *spell, s32b difficulty, s32b delay)
@@ -253,7 +260,7 @@ void spell_type_describe(spell_type *spell, cptr line)
 {
 	assert(spell != NULL);
 
-	string_list_append(&spell->description, line);
+	spell->m_description.push_back(std::string(line));
 }
 
 void spell_type_add_school(spell_type *spell, s32b school_idx)
@@ -272,15 +279,13 @@ void spell_type_add_device_allocation(spell_type *spell, struct device_allocatio
 {
 	assert(spell != NULL);
 	assert(a != NULL);
-
-	sglib_device_allocation_add(&spell->device_allocation, a);
+	spell->m_device_allocation.push_back(a);
 }
 
 spell_type *spell_type_new(cptr name)
 {
-	spell_type *spell = new spell_type;
+	spell_type *spell = new spell_type(name);
 	assert(spell != NULL);
-	spell_type_init(spell, name);
 	return spell;
 }
 
@@ -312,16 +317,10 @@ int spell_type_skill_level(spell_type *spell)
 
 void spell_type_description_foreach(spell_type *spell, void (*callback)(void *data, cptr text), void *data)
 {
-	string_list *sl;
-	struct sglib_string_list_iterator it;
-
 	assert(callback != NULL);
-
-	for (sl = sglib_string_list_it_init(&it, spell->description);
-	     sl != NULL;
-	     sl = sglib_string_list_it_next(&it))
+	for (auto line: spell->m_description)
 	{
-		callback(data, sl->s);
+		callback(data, line.c_str()); // FIXME: inefficient and dangerous!
 	}
 }
 
@@ -336,10 +335,9 @@ void spell_type_activation_description(spell_type *spell, char *buf)
 
 	dice_print(&spell->activation_timeout, turns);
 
-	assert(spell->description != NULL);
-	assert(spell->description->s != NULL);
+	assert(spell->m_description.size() > 0);
 
-	sprintf(buf, "%s every %s turns", spell->description->s, turns);
+	sprintf(buf, "%s every %s turns", spell->m_description.at(0).c_str() /* FIXME: ugh */, turns);
 }
 
 int spell_type_activation_roll_timeout(spell_type *spell)
@@ -349,16 +347,11 @@ int spell_type_activation_roll_timeout(spell_type *spell)
 
 device_allocation *spell_type_device_allocation(spell_type *spell, byte tval)
 {
-	struct sglib_device_allocation_iterator it;
-	device_allocation *device_allocation;
-
-	for (device_allocation = sglib_device_allocation_it_init(&it, spell->device_allocation);
-	     device_allocation != NULL;
-	     device_allocation = sglib_device_allocation_it_next(&it))
+	for (auto device_allocation_ptr: spell->m_device_allocation)
 	{
-		if (device_allocation->tval == tval)
+		if (device_allocation_ptr->tval == tval)
 		{
-			return device_allocation;
+			return device_allocation_ptr;
 		}
 	}
 

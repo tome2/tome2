@@ -13,6 +13,7 @@
 #include "angband.h"
 #include "hooks.h"
 
+#include <cassert>
 #include <memory>
 #include <vector>
 

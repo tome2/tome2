@@ -1,13 +1,12 @@
 #include <angband.h>
-
 #include <assert.h>
-
 #include "spell_type.h"
 
+#include <vector>
 
-typedef struct school_provider school_provider;
 struct school_provider
 {
+	// FIXME: make school_provider_new a ctor instead...
 	byte deity_idx; /* Deity which provides school levels */
 
 	s16b skill_idx; /* Skill used for determining the boost */
@@ -15,26 +14,20 @@ struct school_provider
 	long mul; /* Multiplier */
 
 	long div; /* Divisor */
-
-	school_provider *next; /* Next provider in list */
 };
 
-static int compare_school_provider(school_provider *a, school_provider *b)
-{
-	return SGLIB_NUMERIC_COMPARATOR(a->deity_idx, b->deity_idx);
-}
+struct school_provider_list {
+public: // FIXME: because of lack of definition...
+	std::vector<school_provider> v;
+};
 
-SGLIB_DEFINE_LIST_PROTOTYPES(school_provider, compare_school_provider, next);
-SGLIB_DEFINE_LIST_FUNCTIONS(school_provider, compare_school_provider, next);
-
-static school_provider *school_provider_new(byte deity_idx, long mul, long div)
+static school_provider school_provider_new(byte deity_idx, long mul, long div)
 {
-	school_provider *p = new school_provider;
-	p->deity_idx = deity_idx;
-	p->skill_idx = SKILL_PRAY;
-	p->mul = mul;
-	p->div = div;
-	p->next = NULL;
+	school_provider p;
+	p.deity_idx = deity_idx;
+	p.skill_idx = SKILL_PRAY;
+	p.mul = mul;
+	p.div = div;
 	return p;
 }
 
@@ -111,8 +104,11 @@ static void school_god(school_type *school, byte god, int mul, int div)
 	/* Ignore gods which aren't enabled for this module. */
 	if (god_enabled(deity))
 	{
-		school_provider *school_provider = school_provider_new(god, mul, div);
-		sglib_school_provider_add(&school->providers, school_provider);
+		if (school->providers == NULL) {
+			school->providers = new school_provider_list();
+		}
+
+		school->providers->v.push_back(school_provider_new(god, mul, div));
 	}
 }
 
@@ -146,15 +142,12 @@ static bool_ geomancy_depends_satisfied()
 long get_provided_levels(school_type *school)
 {
 	school_provider *school_provider = NULL;
-	struct sglib_school_provider_iterator school_provider_it;
 
-	for (school_provider = sglib_school_provider_it_init(&school_provider_it, school->providers);
-	     school_provider != NULL;
-	     school_provider = sglib_school_provider_it_next(&school_provider_it))
+	for (auto school_provider: school->providers->v)
 	{
-		if (school_provider->deity_idx == p_ptr->pgod)
+		if (school_provider.deity_idx == p_ptr->pgod)
 		{
-			return (s_info[school_provider->skill_idx].value * school_provider->mul) / school_provider->div;
+			return (s_info[school_provider.skill_idx].value * school_provider.mul) / school_provider.div;
 		}
 	}
 

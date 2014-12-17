@@ -11,10 +11,11 @@
  */
 
 #include "angband.h"
-
 #include "spell_type.h"
 #include "quark.h"
 #include "hooks.h"
+
+#include <cassert>
 
 #define STORE_GENERAL_STORE "General Store"
 #define STORE_ARMOURY "Armoury"

@@ -6,6 +6,7 @@
 #include "angband.h"
 #include "q_rand.h"
 
+#include <cassert>
 #include <vector>
 #include <iterator>
 #include <algorithm>
