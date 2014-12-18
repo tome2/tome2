@@ -4,7 +4,7 @@
 
 #define cquest (quest[QUEST_SHROOM])
 
-static bool_ quest_shroom_speak_hook(const char *fmt);
+static bool_ quest_shroom_speak_hook(void *, void *in_, void *);
 
 static bool_ quest_shroom_town_gen_hook(const char *fmt)
 {
@@ -129,7 +129,7 @@ static bool_ quest_shroom_give_hook(void *, void *in_, void *)
 		delete_monster_idx(m_idx);
 
 		del_hook_new(HOOK_GIVE, quest_shroom_give_hook);
-		del_hook    (HOOK_CHAT, quest_shroom_speak_hook);
+		del_hook_new(HOOK_CHAT, quest_shroom_speak_hook);
 		del_hook    (HOOK_WILD_GEN, quest_shroom_town_gen_hook);
 		process_hooks_restart = TRUE;
 		return TRUE;
@@ -189,40 +189,43 @@ static bool_ quest_shroom_give_hook(void *, void *in_, void *)
 	return TRUE;
 }
 
-static bool_ quest_shroom_speak_hook(const char *fmt)
+static void check_dogs_alive(s32b m_idx)
 {
-	s32b m_idx = get_next_arg(fmt);
+	if ((r_info[test_monster_name("Grip, Farmer Maggot's dog")].max_num == 0) ||
+	    (r_info[test_monster_name("Wolf, Farmer Maggot's dog")].max_num == 0) ||
+	    (r_info[test_monster_name("Fang, Farmer Maggot's dog")].max_num == 0))
+	{
+		cquest.status = QUEST_STATUS_FAILED_DONE;
+		msg_print("My puppy!  My poor, defenceless puppy...");
+		msg_print("YOU MURDERER!  Out of my sight!");
+		delete_monster_idx(m_idx);
+
+		del_hook_new(HOOK_GIVE, quest_shroom_give_hook);
+		del_hook_new(HOOK_CHAT, quest_shroom_speak_hook);
+		del_hook    (HOOK_WILD_GEN, quest_shroom_town_gen_hook);
+		process_hooks_restart = TRUE;
+	}
+	else
+	{
+		msg_format("You still have %d mushrooms to bring back!", cquest.data[1] - cquest.data[0]);
+	}
+}
+
+static bool_ quest_shroom_speak_hook(void *, void *in_, void *)
+{
+	struct hook_mon_speak_in *in = static_cast<struct hook_mon_speak_in *>(in_);
+	s32b m_idx = in->m_idx;
 
 	if (m_list[m_idx].r_idx != test_monster_name("Farmer Maggot")) return (FALSE);
 
 	if (cquest.status == QUEST_STATUS_UNTAKEN)
 	{
-		cptr m_name;
-
-		m_name = get_next_arg_str(fmt);
-
-		msg_format("%^s asks your help.", m_name);
+		msg_format("%^s asks your help.", in->m_name);
 		process_hooks_new(HOOK_MON_ASK_HELP, NULL, NULL);
 	}
 	else
 	{
-		/* If one is dead .. its bad */
-		if ((r_info[test_monster_name("Grip, Farmer Maggot's dog")].max_num == 0) ||
-		                (r_info[test_monster_name("Wolf, Farmer Maggot's dog")].max_num == 0) ||
-		                (r_info[test_monster_name("Fang, Farmer Maggot's dog")].max_num == 0))
-		{
-			cquest.status = QUEST_STATUS_FAILED_DONE;
-			msg_print("My puppy!  My poor, defenceless puppy...");
-			msg_print("YOU MURDERER!  Out of my sight!");
-			delete_monster_idx(m_idx);
-
-			del_hook_new(HOOK_GIVE, quest_shroom_give_hook);
-			del_hook    (HOOK_CHAT, quest_shroom_speak_hook);
-			del_hook    (HOOK_WILD_GEN, quest_shroom_town_gen_hook);
-			process_hooks_restart = TRUE;
-			return TRUE;
-		}
-		msg_format("You still have %d mushrooms to bring back!", cquest.data[1] - cquest.data[0]);
+		check_dogs_alive(m_idx);
 	}
 	return (TRUE);
 }
@@ -251,23 +254,7 @@ static bool_ quest_shroom_chat_hook(const char *fmt)
 	}
 	else
 	{
-		/* If one is dead .. its bad */
-		if ((r_info[test_monster_name("Grip, Farmer Maggot's dog")].max_num == 0) ||
-		                (r_info[test_monster_name("Wolf, Farmer Maggot's dog")].max_num == 0) ||
-		                (r_info[test_monster_name("Fang, Farmer Maggot's dog")].max_num == 0))
-		{
-			cquest.status = QUEST_STATUS_FAILED_DONE;
-			msg_print("My puppy!  My poor, defenceless puppy...");
-			msg_print("YOU MURDERER!  Out of my sight!");
-			delete_monster_idx(m_idx);
-
-			del_hook_new(HOOK_GIVE, quest_shroom_give_hook);
-			del_hook    (HOOK_CHAT, quest_shroom_speak_hook);
-			del_hook    (HOOK_WILD_GEN, quest_shroom_town_gen_hook);
-			process_hooks_restart = TRUE;
-			return TRUE;
-		}
-		msg_format("You still have %d mushrooms to bring back!", cquest.data[1] - cquest.data[0]);
+		check_dogs_alive(m_idx);
 	}
 
 	return TRUE;
@@ -292,13 +279,13 @@ bool_ quest_shroom_init_hook(int q_idx)
 		add_hook_new(HOOK_GIVE,          quest_shroom_give_hook,     "shroom_give", NULL);
 		add_hook    (HOOK_WILD_GEN,      quest_shroom_town_gen_hook, "shroom_town_gen");
 		add_hook    (HOOK_CHAT,          quest_shroom_chat_hook,     "shroom_chat");
-		add_hook    (HOOK_MON_SPEAK,     quest_shroom_speak_hook,    "shroom_speak");
+		add_hook_new(HOOK_MON_SPEAK,     quest_shroom_speak_hook,    "shroom_speak", NULL);
 	}
 	if (cquest.status == QUEST_STATUS_UNTAKEN)
 	{
-		add_hook(HOOK_MON_SPEAK, quest_shroom_speak_hook, "shroom_speak");
-		add_hook(HOOK_WILD_GEN, quest_shroom_town_gen_hook, "shroom_town_gen");
-		add_hook(HOOK_CHAT, quest_shroom_chat_hook, "shroom_chat");
+		add_hook_new(HOOK_MON_SPEAK, quest_shroom_speak_hook,    "shroom_speak", NULL);
+		add_hook    (HOOK_WILD_GEN,  quest_shroom_town_gen_hook, "shroom_town_gen");
+		add_hook    (HOOK_CHAT,      quest_shroom_chat_hook,     "shroom_chat");
 	}
 	return (FALSE);
 }

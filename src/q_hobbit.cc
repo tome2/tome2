@@ -95,19 +95,16 @@ static bool_ quest_hobbit_give_hook(void *, void *in_, void *)
 	return TRUE;
 }
 
-static bool_ quest_hobbit_speak_hook(const char *fmt)
+static bool_ quest_hobbit_speak_hook(void *, void *in_, void *)
 {
-	s32b m_idx = get_next_arg(fmt);
+	struct hook_mon_speak_in *in = static_cast<struct hook_mon_speak_in *>(in_);
+	s32b m_idx = in->m_idx;
 
 	if (m_list[m_idx].r_idx != test_monster_name("Melinda Proudfoot")) return (FALSE);
 
 	if (cquest.status < QUEST_STATUS_COMPLETED)
 	{
-		cptr m_name;
-
-		m_name = get_next_arg_str(fmt);
-
-		msg_format("%^s begs for your help.", m_name);
+		msg_format("%^s begs for your help.", in->m_name);
 	}
 	return (TRUE);
 }
@@ -151,7 +148,7 @@ static bool_ quest_hobbit_chat_hook(const char *fmt)
 
 		cquest.status = QUEST_STATUS_FINISHED;
 
-		del_hook(HOOK_MON_SPEAK, quest_hobbit_speak_hook);
+		del_hook_new(HOOK_MON_SPEAK, quest_hobbit_speak_hook);
 		process_hooks_restart = TRUE;
 		delete_monster_idx(m_idx);
 
@@ -189,17 +186,17 @@ bool_ quest_hobbit_init_hook(int q_idx)
 
 	if ((cquest.status >= QUEST_STATUS_TAKEN) && (cquest.status < QUEST_STATUS_FINISHED))
 	{
-		add_hook_new(HOOK_GIVE, quest_hobbit_give_hook, "hobbit_give", NULL);
-		add_hook    (HOOK_GEN_LEVEL, quest_hobbit_gen_hook, "hobbit_gen");
-		add_hook    (HOOK_WILD_GEN, quest_hobbit_town_gen_hook, "hobbit_town_gen");
-		add_hook    (HOOK_CHAT, quest_hobbit_chat_hook, "hobbit_chat");
-		add_hook    (HOOK_MON_SPEAK, quest_hobbit_speak_hook, "hobbit_speak");
+		add_hook_new(HOOK_GIVE,      quest_hobbit_give_hook,     "hobbit_give", NULL);
+		add_hook    (HOOK_GEN_LEVEL, quest_hobbit_gen_hook,      "hobbit_gen");
+		add_hook    (HOOK_WILD_GEN,  quest_hobbit_town_gen_hook, "hobbit_town_gen");
+		add_hook    (HOOK_CHAT,      quest_hobbit_chat_hook,     "hobbit_chat");
+		add_hook_new(HOOK_MON_SPEAK, quest_hobbit_speak_hook,    "hobbit_speak", NULL);
 	}
 	if (cquest.status == QUEST_STATUS_UNTAKEN)
 	{
-		add_hook(HOOK_MON_SPEAK, quest_hobbit_speak_hook, "hobbit_speak");
-		add_hook(HOOK_WILD_GEN, quest_hobbit_town_gen_hook, "hobbit_town_gen");
-		add_hook(HOOK_CHAT, quest_hobbit_chat_hook, "hobbit_chat");
+		add_hook_new(HOOK_MON_SPEAK, quest_hobbit_speak_hook,    "hobbit_speak", NULL);
+		add_hook    (HOOK_WILD_GEN,  quest_hobbit_town_gen_hook, "hobbit_town_gen");
+		add_hook    (HOOK_CHAT,      quest_hobbit_chat_hook,     "hobbit_chat");
 	}
 	add_hook(HOOK_CHAR_DUMP, quest_hobbit_dump_hook, "hobbit_dump");
 	return (FALSE);

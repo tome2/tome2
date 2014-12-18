@@ -6423,7 +6423,8 @@ static void process_monster(int m_idx, bool_ is_frien)
 				/* Try for the unique's lines in "monspeak.txt" first. */
 				/* 0 is SUCCESS, of course....                         */
 
-				if (!process_hooks(HOOK_MON_SPEAK, "(d,s)", m_idx, m_name))
+				struct hook_mon_speak_in in = { m_idx, m_name };
+				if (!process_hooks_new(HOOK_MON_SPEAK, &in, NULL))
 				{
 					if (get_xtra_line("monspeak.txt", m_ptr, monmessage) != 0)
 					{

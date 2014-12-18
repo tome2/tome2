@@ -2216,6 +2216,12 @@ struct hook_give_in {
 	int item;
 };
 
+typedef struct hook_mon_speak_in hook_mon_speak_in;
+struct hook_mon_speak_in {
+	s32b m_idx;
+	cptr m_name;
+};
+
 typedef struct hook_eat_in hook_eat_in;
 struct hook_eat_in {
 	object_type *o_ptr;
