@@ -171,13 +171,12 @@ static bool_ quest_poison_quest_hook(const char *fmt)
 	return FALSE;
 }
 
-static bool_ quest_poison_drop_hook(const char *fmt)
+static bool_ quest_poison_drop_hook(void *, void *in_, void *)
 {
-	s32b mcnt = 0, i, x, y, o_idx;
-	object_type *o_ptr;
-
-	o_idx = get_next_arg(fmt);
-	o_ptr = &p_ptr->inventory[o_idx];
+	struct hook_drop_in *in = static_cast<struct hook_drop_in *>(in_);
+	s32b mcnt = 0, i, x, y;
+	s32b o_idx = in->o_idx;
+	object_type *o_ptr = &p_ptr->inventory[o_idx];
 
 	if (cquest.status != QUEST_STATUS_TAKEN) return FALSE;
 	if (p_ptr->wilderness_y != wild_locs[cquest.data[0]][0]) return FALSE;
@@ -212,7 +211,7 @@ static bool_ quest_poison_drop_hook(const char *fmt)
 
 		cquest.status = QUEST_STATUS_COMPLETED;
 
-		del_hook(HOOK_DROP, quest_poison_drop_hook);
+		del_hook_new(HOOK_DROP, quest_poison_drop_hook);
 		process_hooks_restart = TRUE;
 
 		return FALSE;
@@ -237,7 +236,7 @@ bool_ quest_poison_init_hook(int q_idx)
 
 	if ((cquest.status >= QUEST_STATUS_TAKEN) && (cquest.status < QUEST_STATUS_FINISHED))
 	{
-		add_hook    (HOOK_DROP,         quest_poison_drop_hook,   "poison_drop");
+		add_hook_new(HOOK_DROP,         quest_poison_drop_hook,   "poison_drop", NULL);
 		add_hook_new(HOOK_WILD_GEN,     quest_poison_gen_hook,    "poison_gen", NULL);
 		add_hook    (HOOK_QUEST_FINISH, quest_poison_finish_hook, "poison_finish");
 	}

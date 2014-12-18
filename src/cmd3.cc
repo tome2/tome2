@@ -525,7 +525,8 @@ void do_cmd_drop(void)
 	object_flags(o_ptr, &f1, &f2, &f3, &f4, &f5, &esp);
 
 	/* Can we drop */
-	if (process_hooks(HOOK_DROP, "(d)", item)) return;
+	struct hook_drop_in in = { item };
+	if (process_hooks_new(HOOK_DROP, &in, NULL)) return;
 
 	/* Hack -- Cannot remove cursed items */
 	if (cursed_p(o_ptr))

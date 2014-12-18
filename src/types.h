@@ -2237,6 +2237,11 @@ struct hook_chardump_in {
 	FILE *file;
 };
 
+typedef struct hook_drop_in hook_drop_in;
+struct hook_drop_in {
+	int o_idx;
+};
+
 typedef struct hook_eat_in hook_eat_in;
 struct hook_eat_in {
 	object_type *o_ptr;
