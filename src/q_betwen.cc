@@ -3,14 +3,13 @@
 
 #define cquest (quest[QUEST_BETWEEN])
 
-static bool_ quest_between_move_hook(const char *fmt)
+static bool_ quest_between_move_hook(void *, void *in_, void *)
 {
-	s32b y;
-	s32b x;
+	struct hook_move_in *in = static_cast<struct hook_move_in *>(in_);
+	s32b y = in->y;
+	s32b x = in->x;
 	cave_type *c_ptr;
 
-	y = get_next_arg(fmt);
-	x = get_next_arg(fmt);
 	c_ptr = &cave[y][x];
 
 	if (cquest.status != QUEST_STATUS_TAKEN) return FALSE;
@@ -188,10 +187,10 @@ bool_ quest_between_init_hook(int q)
 {
 	if ((cquest.status >= QUEST_STATUS_TAKEN) && (cquest.status < QUEST_STATUS_FINISHED))
 	{
-		add_hook(HOOK_MOVE, quest_between_move_hook, "between_move");
-		add_hook(HOOK_GEN_QUEST, quest_between_gen_hook, "between_gen");
-		add_hook(HOOK_QUEST_FINISH, quest_between_finish_hook, "between_finish");
-		add_hook(HOOK_MONSTER_DEATH, quest_between_death_hook, "between_death");
+		add_hook_new(HOOK_MOVE, quest_between_move_hook, "between_move", NULL);
+		add_hook    (HOOK_GEN_QUEST, quest_between_gen_hook, "between_gen");
+		add_hook    (HOOK_QUEST_FINISH, quest_between_finish_hook, "between_finish");
+		add_hook    (HOOK_MONSTER_DEATH, quest_between_death_hook, "between_death");
 	}
 	add_hook_new(HOOK_CHAR_DUMP,  quest_between_dump_hook,   "between_dump", NULL);
 	add_hook    (HOOK_INIT_QUEST, quest_between_forbid_hook, "between_forbid");

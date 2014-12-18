@@ -3100,8 +3100,6 @@ void move_player_aux(int dir, int do_pickup, int run, bool_ disarm)
 	}
 
 	/* Some hooks */
-	if (process_hooks(HOOK_MOVE, "(d,d)", y, x)) return;
-
 	{
 		hook_move_in in = { y, x };
 		if (process_hooks_new(HOOK_MOVE, &in, NULL)) {

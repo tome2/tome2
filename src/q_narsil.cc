@@ -3,16 +3,14 @@
 
 #define cquest (quest[QUEST_NARSIL])
 
-static bool_ quest_narsil_move_hook(const char *fmt)
+static bool_ quest_narsil_move_hook(void *, void *in_, void *)
 {
-	s32b y, x;
-	cave_type *c_ptr;
+	struct hook_move_in *in = static_cast<struct hook_move_in *>(in_);
+	s32b y = in->y;
+	s32b x = in->x;
+	cave_type *c_ptr = &cave[y][x];
 	int i;
 	object_type *o_ptr;
-
-	y = get_next_arg(fmt);
-	x = get_next_arg(fmt);
-	c_ptr = &cave[y][x];
 
 	if (cquest.status != QUEST_STATUS_TAKEN) return FALSE;
 
@@ -53,7 +51,7 @@ static bool_ quest_narsil_move_hook(const char *fmt)
 	/* Continue the plot */
 	cquest.status = QUEST_STATUS_FINISHED;
 
-	del_hook(HOOK_MOVE, quest_narsil_move_hook);
+	del_hook_new(HOOK_MOVE, quest_narsil_move_hook);
 	process_hooks_restart = TRUE;
 
 	return TRUE;
@@ -95,7 +93,7 @@ static bool_ quest_narsil_identify_hook(const char *fmt)
 				}
 			}
 
-			add_hook(HOOK_MOVE, quest_narsil_move_hook, "narsil_move");
+			add_hook_new(HOOK_MOVE, quest_narsil_move_hook, "narsil_move", NULL);
 			del_hook(HOOK_IDENTIFY, quest_narsil_identify_hook);
 			process_hooks_restart = TRUE;
 		}
@@ -108,7 +106,7 @@ bool_ quest_narsil_init_hook(int q_idx)
 {
 	if ((cquest.status >= QUEST_STATUS_TAKEN) && (cquest.status < QUEST_STATUS_FINISHED))
 	{
-		add_hook(HOOK_MOVE, quest_narsil_move_hook, "narsil_move");
+		add_hook_new(HOOK_MOVE, quest_narsil_move_hook, "narsil_move", NULL);
 	}
 	if (cquest.status == QUEST_STATUS_UNTAKEN) add_hook(HOOK_IDENTIFY, quest_narsil_identify_hook, "narsil_id");
 	add_hook_new(HOOK_CHAR_DUMP, quest_narsil_dump_hook, "narsil_dump", NULL);

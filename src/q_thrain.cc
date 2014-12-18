@@ -176,15 +176,12 @@ static bool_ quest_thrain_feeling_hook(const char *fmt)
 	return (FALSE);
 }
 
-static bool_ quest_thrain_move_hook(const char *fmt)
+static bool_ quest_thrain_move_hook(void *, void *in_, void *)
 {
-	s32b y;
-	s32b x;
-	cave_type *c_ptr;
-
-	y = get_next_arg(fmt);
-	x = get_next_arg(fmt);
-	c_ptr = &cave[y][x];
+	struct hook_move_in *in = static_cast<struct hook_move_in *>(in_);
+	s32b y = in->y;
+	s32b x = in->x;
+	cave_type *c_ptr = &cave[y][x];
 
 	if (dungeon_type != DUNGEON_DOL_GULDUR) return (FALSE);
 	if (cquest.data[0] != dun_level) return (FALSE);
@@ -227,7 +224,7 @@ bool_ quest_thrain_init_hook(int q)
 	}
 	if ((cquest.status >= QUEST_STATUS_TAKEN) && (cquest.status < QUEST_STATUS_FINISHED))
 	{
-		add_hook(HOOK_MOVE, quest_thrain_move_hook, "thrain_move");
+		add_hook_new(HOOK_MOVE, quest_thrain_move_hook, "thrain_move", NULL);
 	}
 	if ((cquest.status >= QUEST_STATUS_UNTAKEN) && (cquest.status < QUEST_STATUS_FINISHED))
 	{

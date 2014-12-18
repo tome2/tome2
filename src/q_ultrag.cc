@@ -3,14 +3,12 @@
 
 #define cquest (quest[QUEST_ULTRA_GOOD])
 
-static bool_ quest_ultra_good_move_hook(const char *fmt)
+static bool_ quest_ultra_good_move_hook(void *, void *in_, void *)
 {
-	s32b y, x;
-	cave_type *c_ptr;
-
-	y = get_next_arg(fmt);
-	x = get_next_arg(fmt);
-	c_ptr = &cave[y][x];
+	struct hook_move_in *in = static_cast<struct hook_move_in *>(in_);
+	s32b y = in->y;
+	s32b x = in->x;
+	cave_type *c_ptr = &cave[y][x];
 
 	if (cquest.status == QUEST_STATUS_UNTAKEN)
 	{
@@ -271,7 +269,7 @@ bool_ quest_ultra_good_init_hook(int q)
 	}
 	if (cquest.status == QUEST_STATUS_UNTAKEN)
 	{
-		add_hook(HOOK_MOVE, quest_ultra_good_move_hook, "ultrag_move");
+		add_hook_new(HOOK_MOVE, quest_ultra_good_move_hook, "ultrag_move", NULL);
 	}
 	add_hook_new(HOOK_CHAR_DUMP, quest_ultra_good_dump_hook, "ultrag_dump", NULL);
 	return (FALSE);
