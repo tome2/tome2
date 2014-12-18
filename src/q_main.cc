@@ -11,10 +11,10 @@ static void quest_describe(int q_idx)
 	}
 }
 
-static bool_ quest_main_monsters_hook(const char *fmt)
+static bool_ quest_main_monsters_hook(void *, void *in_, void *)
 {
-	s32b r_idx;
-	r_idx = get_next_arg(fmt);
+	struct hook_new_monster_in *in = static_cast<struct hook_new_monster_in *>(in_);
+	s32b r_idx = in->r_idx;
 
 	/* Sauron */
 	if (r_idx == 860)
@@ -103,8 +103,8 @@ bool_ quest_morgoth_init_hook(int q_idx)
 	{
 		add_hook(HOOK_MONSTER_DEATH, quest_morgoth_hook, "morgort_death");
 	}
-	add_hook_new(HOOK_CHAR_DUMP,   quest_morgoth_dump_hook,  "morgoth_dump", NULL);
-	add_hook    (HOOK_NEW_MONSTER, quest_main_monsters_hook, "main_new_monster");
+	add_hook_new(HOOK_CHAR_DUMP,   quest_morgoth_dump_hook,  "morgoth_dump",     NULL);
+	add_hook_new(HOOK_NEW_MONSTER, quest_main_monsters_hook, "main_new_monster", NULL);
 	return (FALSE);
 }
 
@@ -157,8 +157,8 @@ bool_ quest_sauron_init_hook(int q_idx)
 	{
 		add_hook(HOOK_MONSTER_DEATH, quest_sauron_hook, "sauron_death");
 	}
-	add_hook(HOOK_NEW_MONSTER, quest_main_monsters_hook, "main_new_monster");
-	add_hook(HOOK_MONSTER_DEATH, quest_sauron_resurect_hook, "sauron_resurect_death");
+	add_hook_new(HOOK_NEW_MONSTER,   quest_main_monsters_hook,   "main_new_monster", NULL);
+	add_hook    (HOOK_MONSTER_DEATH, quest_sauron_resurect_hook, "sauron_resurect_death");
 	return (FALSE);
 }
 
@@ -191,6 +191,6 @@ bool_ quest_necro_init_hook(int q_idx)
 	{
 		add_hook(HOOK_MONSTER_DEATH, quest_necro_hook, "necro_death");
 	}
-	add_hook(HOOK_NEW_MONSTER, quest_main_monsters_hook, "main_new_monster");
+	add_hook_new(HOOK_NEW_MONSTER, quest_main_monsters_hook, "main_new_monster", NULL);
 	return (FALSE);
 }

@@ -2179,9 +2179,12 @@ s16b place_monster_one(int y, int x, int r_idx, int ego, bool_ slp, int status)
 	}
 
 	/* Are we allowed to continue ? */
-	if (process_hooks(HOOK_NEW_MONSTER, "(d)", r_idx))
 	{
-		return 0;
+		struct hook_new_monster_in in = { r_idx };
+		if (process_hooks_new(HOOK_NEW_MONSTER, &in, NULL))
+		{
+			return 0;
+		}
 	}
 
 	/* Ego Uniques are NOT to be created */
