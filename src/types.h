@@ -2227,6 +2227,11 @@ struct hook_chat_in {
 	s32b m_idx;
 };
 
+typedef struct hook_wild_gen_in hook_wild_gen_in;
+struct hook_wild_gen_in {
+	bool_ small;
+};
+
 typedef struct hook_eat_in hook_eat_in;
 struct hook_eat_in {
 	object_type *o_ptr;

@@ -3,12 +3,11 @@
 
 #define cquest (quest[QUEST_NAZGUL])
 
-static bool_ quest_nazgul_gen_hook(const char *fmt)
+static bool_ quest_nazgul_gen_hook(void *, void *in_, void *)
 {
+	struct hook_wild_gen_in *in = static_cast<struct hook_wild_gen_in *>(in_);
 	int m_idx, x = 1, y = 1, tries = 10000;
-	s32b small;
-
-	small = get_next_arg(fmt);
+	bool_ small = in->small;
 
 	if ((cquest.status != QUEST_STATUS_TAKEN) || (small) || (p_ptr->town_num != 1)) return (FALSE);
 
@@ -113,9 +112,9 @@ bool_ quest_nazgul_init_hook(int q_idx)
 {
 	if ((cquest.status >= QUEST_STATUS_TAKEN) && (cquest.status < QUEST_STATUS_FINISHED))
 	{
-		add_hook(HOOK_MONSTER_DEATH, quest_nazgul_death_hook, "nazgul_death");
-		add_hook(HOOK_WILD_GEN, quest_nazgul_gen_hook, "nazgul_gen");
-		add_hook(HOOK_QUEST_FINISH, quest_nazgul_finish_hook, "nazgul_finish");
+		add_hook    (HOOK_MONSTER_DEATH, quest_nazgul_death_hook,  "nazgul_death");
+		add_hook_new(HOOK_WILD_GEN,      quest_nazgul_gen_hook,    "nazgul_gen", NULL);
+		add_hook    (HOOK_QUEST_FINISH,  quest_nazgul_finish_hook, "nazgul_finish");
 	}
 	add_hook(HOOK_CHAR_DUMP, quest_nazgul_dump_hook, "nazgul_dump");
 	add_hook(HOOK_INIT_QUEST, quest_nazgul_forbid_hook, "nazgul_forbid");

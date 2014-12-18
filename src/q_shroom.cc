@@ -7,12 +7,11 @@
 static bool_ quest_shroom_speak_hook(void *, void *, void *);
 static bool_ quest_shroom_chat_hook(void *, void *, void *);
 
-static bool_ quest_shroom_town_gen_hook(const char *fmt)
+static bool_ quest_shroom_town_gen_hook(void *, void *in_, void *)
 {
+	struct hook_wild_gen_in *in = static_cast<struct hook_wild_gen_in *>(in_);
 	int m_idx, x = 1, y = 1, tries = 10000;
-	s32b small;
-
-	small = get_next_arg(fmt);
+	bool_ small = in->small;
 
 	/* Generate the shrooms field */
 	if ((!small) && (p_ptr->wilderness_y == 21) && (p_ptr->wilderness_x == 33))
@@ -131,7 +130,7 @@ static bool_ quest_shroom_give_hook(void *, void *in_, void *)
 
 		del_hook_new(HOOK_GIVE, quest_shroom_give_hook);
 		del_hook_new(HOOK_CHAT, quest_shroom_speak_hook);
-		del_hook    (HOOK_WILD_GEN, quest_shroom_town_gen_hook);
+		del_hook_new(HOOK_WILD_GEN, quest_shroom_town_gen_hook);
 		process_hooks_restart = TRUE;
 		return TRUE;
 	}
@@ -204,7 +203,7 @@ static void check_dogs_alive(s32b m_idx)
 		del_hook_new(HOOK_GIVE, quest_shroom_give_hook);
 		del_hook_new(HOOK_MON_SPEAK, quest_shroom_speak_hook);
 		del_hook_new(HOOK_CHAT, quest_shroom_chat_hook);
-		del_hook    (HOOK_WILD_GEN, quest_shroom_town_gen_hook);
+		del_hook_new(HOOK_WILD_GEN, quest_shroom_town_gen_hook);
 		process_hooks_restart = TRUE;
 	}
 	else
@@ -276,14 +275,14 @@ bool_ quest_shroom_init_hook(int q_idx)
 	{
 		add_hook    (HOOK_MONSTER_DEATH, quest_shroom_death_hook,    "shroom_death");
 		add_hook_new(HOOK_GIVE,          quest_shroom_give_hook,     "shroom_give", NULL);
-		add_hook    (HOOK_WILD_GEN,      quest_shroom_town_gen_hook, "shroom_town_gen");
+		add_hook_new(HOOK_WILD_GEN,      quest_shroom_town_gen_hook, "shroom_town_gen", NULL);
 		add_hook_new(HOOK_CHAT,          quest_shroom_chat_hook,     "shroom_chat", NULL);
 		add_hook_new(HOOK_MON_SPEAK,     quest_shroom_speak_hook,    "shroom_speak", NULL);
 	}
 	if (cquest.status == QUEST_STATUS_UNTAKEN)
 	{
 		add_hook_new(HOOK_MON_SPEAK, quest_shroom_speak_hook,    "shroom_speak", NULL);
-		add_hook    (HOOK_WILD_GEN,  quest_shroom_town_gen_hook, "shroom_town_gen");
+		add_hook_new(HOOK_WILD_GEN,  quest_shroom_town_gen_hook, "shroom_town_gen", NULL);
 		add_hook_new(HOOK_CHAT,      quest_shroom_chat_hook,     "shroom_chat", NULL);
 	}
 	return (FALSE);

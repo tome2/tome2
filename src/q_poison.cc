@@ -25,7 +25,7 @@ static bool_ create_molds_hook(int r_idx)
 	else return FALSE;
 }
 
-static bool_ quest_poison_gen_hook(const char *fmt)
+static bool_ quest_poison_gen_hook(void *, void *, void *)
 {
 	int cy = 1, cx = 1, x, y, tries = 10000, r_idx;
 	bool_ (*old_get_mon_num_hook)(int r_idx);
@@ -234,9 +234,9 @@ bool_ quest_poison_init_hook(int q_idx)
 
 	if ((cquest.status >= QUEST_STATUS_TAKEN) && (cquest.status < QUEST_STATUS_FINISHED))
 	{
-		add_hook(HOOK_DROP, quest_poison_drop_hook, "poison_drop");
-		add_hook(HOOK_WILD_GEN, quest_poison_gen_hook, "poison_gen");
-		add_hook(HOOK_QUEST_FINISH, quest_poison_finish_hook, "poison_finish");
+		add_hook    (HOOK_DROP,         quest_poison_drop_hook,   "poison_drop");
+		add_hook_new(HOOK_WILD_GEN,     quest_poison_gen_hook,    "poison_gen", NULL);
+		add_hook    (HOOK_QUEST_FINISH, quest_poison_finish_hook, "poison_finish");
 	}
 	if (cquest.status < QUEST_STATUS_COMPLETED)
 	{

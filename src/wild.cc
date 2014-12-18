@@ -535,7 +535,8 @@ void wilderness_gen(int refresh)
 		}
 	}
 
-	process_hooks(HOOK_WILD_GEN, "(d)", FALSE);
+	struct hook_wild_gen_in in = { FALSE };
+	process_hooks_new(HOOK_WILD_GEN, &in, NULL);
 }
 
 /*
@@ -603,7 +604,8 @@ void wilderness_gen_small()
 		}
 	}
 
-	process_hooks(HOOK_WILD_GEN, "(d)", TRUE);
+	struct hook_wild_gen_in in = { TRUE };
+	process_hooks_new(HOOK_WILD_GEN, &in, NULL);
 }
 
 /* Show a small radius of wilderness around the player */

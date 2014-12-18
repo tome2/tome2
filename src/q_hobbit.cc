@@ -4,12 +4,11 @@
 
 #define cquest (quest[QUEST_HOBBIT])
 
-static bool_ quest_hobbit_town_gen_hook(const char *fmt)
+static bool_ quest_hobbit_town_gen_hook(void *, void *in_, void *)
 {
+	struct hook_wild_gen_in *in = static_cast<struct hook_wild_gen_in *>(in_);
 	int x = 1, y = 1, tries = 10000;
-	s32b small;
-
-	small = get_next_arg(fmt);
+	bool_ small = in->small;
 
 	if ((turn < (cquest.data[1] + (DAY * 10L))) || (cquest.status > QUEST_STATUS_COMPLETED) || (small) || (p_ptr->town_num != 1)) return (FALSE);
 
@@ -185,17 +184,17 @@ bool_ quest_hobbit_init_hook(int q_idx)
 
 	if ((cquest.status >= QUEST_STATUS_TAKEN) && (cquest.status < QUEST_STATUS_FINISHED))
 	{
-		add_hook_new(HOOK_GIVE,      quest_hobbit_give_hook,     "hobbit_give", NULL);
-		add_hook_new(HOOK_GEN_LEVEL, quest_hobbit_gen_hook,      "hobbit_gen", NULL);
-		add_hook    (HOOK_WILD_GEN,  quest_hobbit_town_gen_hook, "hobbit_town_gen");
-		add_hook_new(HOOK_CHAT,      quest_hobbit_chat_hook,     "hobbit_chat", NULL);
-		add_hook_new(HOOK_MON_SPEAK, quest_hobbit_speak_hook,    "hobbit_speak", NULL);
+		add_hook_new(HOOK_GIVE,      quest_hobbit_give_hook,     "hobbit_give",     NULL);
+		add_hook_new(HOOK_GEN_LEVEL, quest_hobbit_gen_hook,      "hobbit_gen",      NULL);
+		add_hook_new(HOOK_WILD_GEN,  quest_hobbit_town_gen_hook, "hobbit_town_gen", NULL);
+		add_hook_new(HOOK_CHAT,      quest_hobbit_chat_hook,     "hobbit_chat",     NULL);
+		add_hook_new(HOOK_MON_SPEAK, quest_hobbit_speak_hook,    "hobbit_speak",    NULL);
 	}
 	if (cquest.status == QUEST_STATUS_UNTAKEN)
 	{
-		add_hook_new(HOOK_MON_SPEAK, quest_hobbit_speak_hook,    "hobbit_speak", NULL);
-		add_hook    (HOOK_WILD_GEN,  quest_hobbit_town_gen_hook, "hobbit_town_gen");
-		add_hook_new(HOOK_CHAT,      quest_hobbit_chat_hook,     "hobbit_chat", NULL);
+		add_hook_new(HOOK_MON_SPEAK, quest_hobbit_speak_hook,    "hobbit_speak",    NULL);
+		add_hook_new(HOOK_WILD_GEN,  quest_hobbit_town_gen_hook, "hobbit_town_gen", NULL);
+		add_hook_new(HOOK_CHAT,      quest_hobbit_chat_hook,     "hobbit_chat",     NULL);
 	}
 	add_hook(HOOK_CHAR_DUMP, quest_hobbit_dump_hook, "hobbit_dump");
 	return (FALSE);
