@@ -192,18 +192,13 @@ static bool_ quest_one_die_hook(const char *fmt)
 	return (FALSE);
 }
 
-static bool_ quest_one_identify_hook(const char *fmt)
+static bool_ quest_one_identify_hook(void *, void *in_, void *)
 {
-	s32b item;
-
-	item = get_next_arg(fmt);
+	struct hook_identify_in *in = static_cast<struct hook_identify_in *>(in_);
+	object_type *o_ptr = in->o_ptr;
 
 	if (cquest.status == QUEST_STATUS_TAKEN)
 	{
-		object_type *o_ptr;
-
-		o_ptr = get_object(item);
-
 		if ((o_ptr->name1 == ART_POWER) && (!object_known_p(o_ptr)))
 		{
 			cmsg_print(TERM_YELLOW, "You finally found the One Ring, source of Sauron's power, and key to");
@@ -351,7 +346,7 @@ bool_ quest_one_init_hook(int q_idx)
 		add_hook    (HOOK_MONSTER_DEATH, quest_one_death_hook,    "one_death");
 		add_hook_new(HOOK_DROP,          quest_one_drop_hook,     "one_drop", NULL);
 		add_hook    (HOOK_WIELD,         quest_one_wield_hook,    "one_wield");
-		add_hook    (HOOK_IDENTIFY,      quest_one_identify_hook, "one_id");
+		add_hook_new(HOOK_IDENTIFY,      quest_one_identify_hook, "one_id", NULL);
 	}
 	if (cquest.status == QUEST_STATUS_UNTAKEN)
 	{

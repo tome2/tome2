@@ -372,12 +372,8 @@ void identify_hooks(int i, object_type *o_ptr, identify_mode mode)
 	}
 
 	/* Process the appropriate hooks */
-	process_hooks(HOOK_IDENTIFY, "(d,s)", i, mode_s);
-
-	{
-		hook_identify_in in = { o_ptr, mode };
-		process_hooks_new(HOOK_IDENTIFY, &in, NULL);
-	}
+	hook_identify_in in = { o_ptr, mode };
+	process_hooks_new(HOOK_IDENTIFY, &in, NULL);
 }
 
 

@@ -69,23 +69,17 @@ static bool_ quest_narsil_dump_hook(void *, void *in_, void *)
 	return (FALSE);
 }
 
-static bool_ quest_narsil_identify_hook(const char *fmt)
+static bool_ quest_narsil_identify_hook(void *, void *in_, void *)
 {
+	struct hook_identify_in *in = static_cast<struct hook_identify_in *>(in_);
+
 	if (cquest.status == QUEST_STATUS_UNTAKEN)
 	{
-		int i;
-		object_type *o_ptr;
-		s32b item;
-
-		item = get_next_arg(fmt);
-
-		o_ptr = get_object(item);
-
-		if (o_ptr->name1 == ART_NARSIL)
+		if (in->o_ptr->name1 == ART_NARSIL)
 		{
 			cquest.status = QUEST_STATUS_TAKEN;
 
-			for (i = 0; i < 5; i++)
+			for (int i = 0; i < 5; i++)
 			{
 				if (quest[QUEST_NARSIL].desc[i][0] != '\0')
 				{
@@ -94,7 +88,7 @@ static bool_ quest_narsil_identify_hook(const char *fmt)
 			}
 
 			add_hook_new(HOOK_MOVE, quest_narsil_move_hook, "narsil_move", NULL);
-			del_hook(HOOK_IDENTIFY, quest_narsil_identify_hook);
+			del_hook_new(HOOK_IDENTIFY, quest_narsil_identify_hook);
 			process_hooks_restart = TRUE;
 		}
 	}
@@ -108,7 +102,10 @@ bool_ quest_narsil_init_hook(int q_idx)
 	{
 		add_hook_new(HOOK_MOVE, quest_narsil_move_hook, "narsil_move", NULL);
 	}
-	if (cquest.status == QUEST_STATUS_UNTAKEN) add_hook(HOOK_IDENTIFY, quest_narsil_identify_hook, "narsil_id");
+	if (cquest.status == QUEST_STATUS_UNTAKEN)
+	{
+		add_hook_new(HOOK_IDENTIFY, quest_narsil_identify_hook, "narsil_id", NULL);
+	}
 	add_hook_new(HOOK_CHAR_DUMP, quest_narsil_dump_hook, "narsil_dump", NULL);
 	return (FALSE);
 }
