@@ -1238,7 +1238,7 @@ static void player_outfit(void)
 		player_gain_corruption(CORRUPT_VAMPIRE_VAMPIRE);
 	}
 
-	process_hooks(HOOK_BIRTH_OBJECTS, "()");
+	process_hooks_new(HOOK_BIRTH_OBJECTS, NULL, NULL);
 	meta_inertia_control_hook_birth_objects();
 
 	{

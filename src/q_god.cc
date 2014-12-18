@@ -1158,7 +1158,7 @@ static bool_ quest_god_stair_hook(void *, void *, void *)
 	return FALSE;
 }
 
-static bool_ quest_god_birth_objects_hook(const char *fmt)
+static bool_ quest_god_birth_objects_hook(void *, void *, void *)
 {
 	cquest_quests_given = 0;
 	cquest_relics_found = 0;
@@ -1188,7 +1188,7 @@ bool_ quest_god_init_hook(int q)
 
 	/* Need this to re-initialize at birth; the quest data is
 	 * zeroed which isn't quite right. */
-	add_hook(HOOK_BIRTH_OBJECTS, quest_god_birth_objects_hook, "q_god_birth_objects");
+	add_hook_new(HOOK_BIRTH_OBJECTS, quest_god_birth_objects_hook, "q_god_birth_objects", NULL);
 	
 	return FALSE;
 }
