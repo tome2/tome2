@@ -82,14 +82,17 @@ static bool_ quest_morgoth_hook(const char *fmt)
 	return (FALSE);
 }
 
-static bool_ quest_morgoth_dump_hook(const char *fmt)
+static bool_ quest_morgoth_dump_hook(void *, void *in_, void *)
 {
+	struct hook_chardump_in *in = static_cast<struct hook_chardump_in *>(in_);
+	FILE *f = in->file;
+
 	if (quest[QUEST_MORGOTH].status >= QUEST_STATUS_COMPLETED)
 	{
 		if (quest[QUEST_ONE].status == QUEST_STATUS_FINISHED)
-			fprintf(hook_file, "\n You saved Arda and became a famed %s.", sp_ptr->winner);
+			fprintf(f, "\n You saved Arda and became a famed %s.", sp_ptr->winner);
 		else
-			fprintf(hook_file, "\n You became a new force of darkness and enslaved all free people.");
+			fprintf(f, "\n You became a new force of darkness and enslaved all free people.");
 	}
 	return (FALSE);
 }
@@ -100,8 +103,8 @@ bool_ quest_morgoth_init_hook(int q_idx)
 	{
 		add_hook(HOOK_MONSTER_DEATH, quest_morgoth_hook, "morgort_death");
 	}
-	add_hook(HOOK_CHAR_DUMP, quest_morgoth_dump_hook, "morgoth_dump");
-	add_hook(HOOK_NEW_MONSTER, quest_main_monsters_hook, "main_new_monster");
+	add_hook_new(HOOK_CHAR_DUMP,   quest_morgoth_dump_hook,  "morgoth_dump", NULL);
+	add_hook    (HOOK_NEW_MONSTER, quest_main_monsters_hook, "main_new_monster");
 	return (FALSE);
 }
 

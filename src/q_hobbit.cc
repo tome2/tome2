@@ -160,11 +160,14 @@ static bool_ quest_hobbit_chat_hook(void *, void *in_, void *)
 	return TRUE;
 }
 
-static bool_ quest_hobbit_dump_hook(const char *fmt)
+static bool_ quest_hobbit_dump_hook(void *, void *in_, void *)
 {
+	struct hook_chardump_in *in = static_cast<struct hook_chardump_in *>(in_);
+	FILE *f = in->file;
+
 	if (cquest.status >= QUEST_STATUS_COMPLETED)
 	{
-		fprintf(hook_file, "\n You saved a young hobbit from an horrible fate.");
+		fprintf(f, "\n You saved a young hobbit from an horrible fate.");
 	}
 	return (FALSE);
 }
@@ -196,6 +199,6 @@ bool_ quest_hobbit_init_hook(int q_idx)
 		add_hook_new(HOOK_WILD_GEN,  quest_hobbit_town_gen_hook, "hobbit_town_gen", NULL);
 		add_hook_new(HOOK_CHAT,      quest_hobbit_chat_hook,     "hobbit_chat",     NULL);
 	}
-	add_hook(HOOK_CHAR_DUMP, quest_hobbit_dump_hook, "hobbit_dump");
+	add_hook_new(HOOK_CHAR_DUMP, quest_hobbit_dump_hook, "hobbit_dump", NULL);
 	return (FALSE);
 }

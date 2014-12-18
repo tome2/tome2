@@ -541,10 +541,11 @@ static bool_ quest_random_gen_hook(const char *fmt)
 	return (TRUE);
 }
 
-static bool_ quest_random_dump_hook(const char *fmt)
+static bool_ quest_random_dump_hook(void *, void *in_, void *)
 {
-	static const char *number[] =
-	{ "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten" };
+	static const char *number[] = { "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten" };
+	struct hook_chardump_in *in = static_cast<struct hook_chardump_in *>(in_);
+	FILE *f = in->file;
 	int i, valid = 0, lscnt = 0, pcnt = 0;
 
 	for (i = 0; i < MAX_RANDOM_QUEST; i++)
@@ -565,22 +566,22 @@ static bool_ quest_random_dump_hook(const char *fmt)
 	if (valid)
 	{
 		if (pcnt > 10)
-			fprintf(hook_file, "\n You have completed %d princess quests.", pcnt);
+			fprintf(f, "\n You have completed %d princess quests.", pcnt);
 		else if (pcnt > 1)
-			fprintf(hook_file, "\n You have completed %s princess quests.", number[pcnt-2]);
+			fprintf(f, "\n You have completed %s princess quests.", number[pcnt-2]);
 		else if (pcnt == 1)
-			fprintf(hook_file, "\n You have completed one princess quest.");
+			fprintf(f, "\n You have completed one princess quest.");
 		else
-			fprintf(hook_file, "\n You haven't completed a single princess quest.");
+			fprintf(f, "\n You haven't completed a single princess quest.");
 
 		if (lscnt > 10)
-			fprintf(hook_file, "\n You have completed %d lost sword quests.", lscnt);
+			fprintf(f, "\n You have completed %d lost sword quests.", lscnt);
 		else if (lscnt > 1)
-			fprintf(hook_file, "\n You have completed %s lost sword quests.", number[lscnt-2]);
+			fprintf(f, "\n You have completed %s lost sword quests.", number[lscnt-2]);
 		else if (lscnt == 1)
-			fprintf(hook_file, "\n You have completed one lost sword quest.");
+			fprintf(f, "\n You have completed one lost sword quest.");
 		else
-			fprintf(hook_file, "\n You haven't completed a single lost sword quest.");
+			fprintf(f, "\n You haven't completed a single lost sword quest.");
 	}
 
 	return (FALSE);
@@ -617,12 +618,12 @@ bool_ quest_random_describe(FILE *fff)
 
 bool_ quest_random_init_hook(int q_idx)
 {
-	add_hook(HOOK_MONSTER_DEATH, quest_random_death_hook, "rand_death");
-	add_hook(HOOK_NEW_LEVEL, quest_random_turn_hook, "rand_new_lvl");
-	add_hook(HOOK_LEVEL_REGEN, quest_random_turn_hook, "rand_regen_lvl");
-	add_hook(HOOK_LEVEL_END_GEN, quest_random_gen_hero_hook, "rand_gen_hero");
-	add_hook(HOOK_BUILD_ROOM1, quest_random_gen_hook, "rand_gen");
-	add_hook(HOOK_FEELING, quest_random_feeling_hook, "rand_feel");
-	add_hook(HOOK_CHAR_DUMP, quest_random_dump_hook, "rand_dump");
+	add_hook    (HOOK_MONSTER_DEATH, quest_random_death_hook,    "rand_death");
+	add_hook    (HOOK_NEW_LEVEL,     quest_random_turn_hook,     "rand_new_lvl");
+	add_hook    (HOOK_LEVEL_REGEN,   quest_random_turn_hook,     "rand_regen_lvl");
+	add_hook    (HOOK_LEVEL_END_GEN, quest_random_gen_hero_hook, "rand_gen_hero");
+	add_hook    (HOOK_BUILD_ROOM1,   quest_random_gen_hook,      "rand_gen");
+	add_hook    (HOOK_FEELING,       quest_random_feeling_hook,  "rand_feel");
+	add_hook_new(HOOK_CHAR_DUMP,     quest_random_dump_hook,     "rand_dump", NULL);
 	return (FALSE);
 }

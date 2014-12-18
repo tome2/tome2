@@ -59,11 +59,14 @@ static bool_ quest_narsil_move_hook(const char *fmt)
 	return TRUE;
 }
 
-static bool_ quest_narsil_dump_hook(const char *fmt)
+static bool_ quest_narsil_dump_hook(void *, void *in_, void *)
 {
+	struct hook_chardump_in *in = static_cast<struct hook_chardump_in *>(in_);
+	FILE *f = in->file;
+
 	if (cquest.status >= QUEST_STATUS_COMPLETED)
 	{
-		fprintf(hook_file, "\n The sword that was broken is now reforged.");
+		fprintf(f, "\n The sword that was broken is now reforged.");
 	}
 	return (FALSE);
 }
@@ -108,6 +111,6 @@ bool_ quest_narsil_init_hook(int q_idx)
 		add_hook(HOOK_MOVE, quest_narsil_move_hook, "narsil_move");
 	}
 	if (cquest.status == QUEST_STATUS_UNTAKEN) add_hook(HOOK_IDENTIFY, quest_narsil_identify_hook, "narsil_id");
-	add_hook(HOOK_CHAR_DUMP, quest_narsil_dump_hook, "narsil_dump");
+	add_hook_new(HOOK_CHAR_DUMP, quest_narsil_dump_hook, "narsil_dump", NULL);
 	return (FALSE);
 }

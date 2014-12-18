@@ -111,15 +111,18 @@ static bool_ quest_invasion_turn_hook(const char *fmt)
 	return (FALSE);
 }
 
-static bool_ quest_invasion_dump_hook(const char *fmt)
+static bool_ quest_invasion_dump_hook(void *, void *in_, void *)
 {
+	struct hook_chardump_in *in = static_cast<struct hook_chardump_in *>(in_);
+	FILE *f = in->file;
+
 	if (cquest.status == QUEST_STATUS_FAILED)
 	{
-		fprintf(hook_file, "\n You abandoned Gondolin when it most needed you, thus causing its destruction.");
+		fprintf(f, "\n You abandoned Gondolin when it most needed you, thus causing its destruction.");
 	}
 	if ((cquest.status == QUEST_STATUS_FINISHED) || (cquest.status == QUEST_STATUS_REWARDED) || (cquest.status == QUEST_STATUS_COMPLETED))
 	{
-		fprintf(hook_file, "\n You saved Gondolin from destruction.");
+		fprintf(f, "\n You saved Gondolin from destruction.");
 	}
 	return (FALSE);
 }
@@ -191,8 +194,8 @@ static bool_ quest_invasion_stair_hook(const char *fmt)
 
 bool_ quest_invasion_init_hook(int q_idx)
 {
-	add_hook(HOOK_END_TURN, quest_invasion_turn_hook, "invasion_turn");
-	add_hook(HOOK_CHAR_DUMP, quest_invasion_dump_hook, "invasion_dump");
+	add_hook    (HOOK_END_TURN,  quest_invasion_turn_hook, "invasion_turn");
+	add_hook_new(HOOK_CHAR_DUMP, quest_invasion_dump_hook, "invasion_dump", NULL);
 	if ((cquest.status >= QUEST_STATUS_TAKEN) && (cquest.status < QUEST_STATUS_FINISHED))
 	{
 		add_hook(HOOK_MONSTER_AI, quest_invasion_ai_hook, "invasion_ai");

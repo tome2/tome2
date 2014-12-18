@@ -2712,8 +2712,8 @@ errr file_character(cptr name, bool_ full)
                   fprintf(fff, "\n You have defeated %ld enemies.", (long int) Total);
 	}
 
-	hook_file = fff;
-	process_hooks(HOOK_CHAR_DUMP, "()");
+	struct hook_chardump_in in = { fff };
+	process_hooks_new(HOOK_CHAR_DUMP, &in, NULL);
 
 	/* Date */
 	{

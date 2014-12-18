@@ -156,12 +156,15 @@ static bool_ quest_between_death_hook(const char *fmt)
 	return FALSE;
 }
 
-static bool_ quest_between_dump_hook(const char *fmt)
+static bool_ quest_between_dump_hook(void *, void *in_, void *)
 {
+	struct hook_chardump_in *in = static_cast<struct hook_chardump_in *>(in_);
+	FILE *f = in->file;
+
 	if (cquest.status >= QUEST_STATUS_COMPLETED)
 	{
-		fprintf(hook_file, "\n You established a permanent void jumpgates liaison between Minas Anor and Gondolin,");
-		fprintf(hook_file, "\n  thus allowing the last alliance to exist.");
+		fprintf(f, "\n You established a permanent void jumpgates liaison between Minas Anor and Gondolin,");
+		fprintf(f, "\n  thus allowing the last alliance to exist.");
 	}
 	return (FALSE);
 }
@@ -190,7 +193,7 @@ bool_ quest_between_init_hook(int q)
 		add_hook(HOOK_QUEST_FINISH, quest_between_finish_hook, "between_finish");
 		add_hook(HOOK_MONSTER_DEATH, quest_between_death_hook, "between_death");
 	}
-	add_hook(HOOK_CHAR_DUMP, quest_between_dump_hook, "between_dump");
-	add_hook(HOOK_INIT_QUEST, quest_between_forbid_hook, "between_forbid");
+	add_hook_new(HOOK_CHAR_DUMP,  quest_between_dump_hook,   "between_dump", NULL);
+	add_hook    (HOOK_INIT_QUEST, quest_between_forbid_hook, "between_forbid");
 	return (FALSE);
 }

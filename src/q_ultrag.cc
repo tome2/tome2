@@ -234,23 +234,26 @@ static bool_ quest_ultra_good_death_hook(const char *fmt)
 	return (FALSE);
 }
 
-static bool_ quest_ultra_good_dump_hook(const char *fmt)
+static bool_ quest_ultra_good_dump_hook(void *, void *in_, void *)
 {
+	struct hook_chardump_in *in = static_cast<struct hook_chardump_in *>(in_);
+	FILE *f = in->file;
+
 	if (quest[QUEST_ULTRA_GOOD].status >= QUEST_STATUS_TAKEN)
 	{
 		/* Ultra winner ! */
 		if (total_winner == WINNER_ULTRA)
 		{
-			fprintf(hook_file, "\n You destroyed Melkor forever and have been elevated to the status of Vala by Eru Iluvatar.");
-			fprintf(hook_file, "\n Arda will forever be free.");
+			fprintf(f, "\n You destroyed Melkor forever and have been elevated to the status of Vala by Eru Iluvatar.");
+			fprintf(f, "\n Arda will forever be free.");
 		}
 		else
 		{
 			/* Tried and failed */
 			if (death)
 			{
-				fprintf(hook_file, "\n You tried to destroy Melkor forever, but died in the attempt.");
-				fprintf(hook_file, "\n Arda will be quiet, but not free from evil.");
+				fprintf(f, "\n You tried to destroy Melkor forever, but died in the attempt.");
+				fprintf(f, "\n Arda will be quiet, but not free from evil.");
 			}
 		}
 	}
@@ -270,6 +273,6 @@ bool_ quest_ultra_good_init_hook(int q)
 	{
 		add_hook(HOOK_MOVE, quest_ultra_good_move_hook, "ultrag_move");
 	}
-	add_hook(HOOK_CHAR_DUMP, quest_ultra_good_dump_hook, "ultrag_dump");
+	add_hook_new(HOOK_CHAR_DUMP, quest_ultra_good_dump_hook, "ultrag_dump", NULL);
 	return (FALSE);
 }

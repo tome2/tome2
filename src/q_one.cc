@@ -300,15 +300,18 @@ static bool_ quest_one_death_hook(const char *fmt)
 	return (FALSE);
 }
 
-static bool_ quest_one_dump_hook(const char *fmt)
+static bool_ quest_one_dump_hook(void *, void *in_, void *)
 {
+	struct hook_chardump_in *in = static_cast<struct hook_chardump_in *>(in_);
+	FILE *f = in->file;
+
 	if (cquest.status == QUEST_STATUS_FINISHED)
 	{
-		fprintf(hook_file, "\n You destroyed the One Ring, thus weakening Sauron.");
+		fprintf(f, "\n You destroyed the One Ring, thus weakening Sauron.");
 	}
 	if (cquest.status == QUEST_STATUS_FAILED_DONE)
 	{
-		fprintf(hook_file, "\n You fell under the evil influence of the One Ring and decided to wear it.");
+		fprintf(f, "\n You fell under the evil influence of the One Ring and decided to wear it.");
 	}
 	return (FALSE);
 }
@@ -358,8 +361,8 @@ bool_ quest_one_init_hook(int q_idx)
 	{
 		add_hook(HOOK_MOVE, quest_one_move_hook, "one_move");
 	}
-	add_hook(HOOK_CHAR_DUMP, quest_one_dump_hook, "one_dump");
-	add_hook(HOOK_CALC_HP, quest_one_hp_hook, "one_hp");
-	add_hook(HOOK_DIE, quest_one_die_hook, "one_die");
+	add_hook_new(HOOK_CHAR_DUMP, quest_one_dump_hook, "one_dump", NULL);
+	add_hook    (HOOK_CALC_HP,   quest_one_hp_hook,   "one_hp");
+	add_hook    (HOOK_DIE,       quest_one_die_hook,  "one_die");
 	return (FALSE);
 }

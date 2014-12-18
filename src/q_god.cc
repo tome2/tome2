@@ -1037,8 +1037,11 @@ static bool_ quest_god_get_hook(void *, void *in_, void *)
 	return FALSE;
 }
 
-static bool_ quest_god_char_dump_hook(const char *fmt)
+static bool_ quest_god_char_dump_hook(void *, void *in_, void *)
 {
+	struct hook_chardump_in *in = static_cast<struct hook_chardump_in *>(in_);
+	FILE *f = in->file;
+
 	if (cquest_quests_given > 0)
 	{
 		int relics = cquest_relics_found;
@@ -1064,9 +1067,7 @@ static bool_ quest_god_char_dump_hook(const char *fmt)
 			}
 		}
 
-		fprintf(hook_file, "\n You found %s of the relic pieces%s.",
-			relics_text,
-			append_text);
+		fprintf(f, "\n You found %s of the relic pieces%s.", relics_text, append_text);
 	}
 
 	return FALSE;
@@ -1181,7 +1182,7 @@ bool_ quest_god_init_hook(int q)
 		add_hook    (HOOK_GEN_LEVEL_BEGIN, quest_god_gen_level_begin_hook, "q_god_gen_level_begin");
 		add_hook    (HOOK_STAIR,           quest_god_stair_hook,           "q_god_hook_stair");
 		add_hook_new(HOOK_GET,             quest_god_get_hook,             "q_god_get", NULL);
-		add_hook    (HOOK_CHAR_DUMP,       quest_god_char_dump_hook,       "q_god_char_dump");
+		add_hook_new(HOOK_CHAR_DUMP,       quest_god_char_dump_hook,       "q_god_char_dump", NULL);
 		add_hook    (HOOK_PLAYER_LEVEL,    quest_god_player_level_hook,    "q_god_player_level");
 	}
 

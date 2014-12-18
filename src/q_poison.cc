@@ -135,11 +135,14 @@ static bool_ quest_poison_finish_hook(const char *fmt)
 	return TRUE;
 }
 
-static bool_ quest_poison_dump_hook(const char *fmt)
+static bool_ quest_poison_dump_hook(void *, void *in_, void *)
 {
+	hook_chardump_in *in = static_cast<struct hook_chardump_in *>(in_);
+	FILE *f = in->file;
+
 	if (cquest.status >= QUEST_STATUS_COMPLETED)
 	{
-		fprintf(hook_file, "\n You saved the beautiful Mallorns of Lothlorien.");
+		fprintf(f, "\n You saved the beautiful Mallorns of Lothlorien.");
 	}
 	return (FALSE);
 }
@@ -242,6 +245,6 @@ bool_ quest_poison_init_hook(int q_idx)
 	{
 		add_hook(HOOK_INIT_QUEST, quest_poison_quest_hook, "poison_iquest");
 	}
-	add_hook(HOOK_CHAR_DUMP, quest_poison_dump_hook, "poison_dump");
+	add_hook_new(HOOK_CHAR_DUMP, quest_poison_dump_hook, "poison_dump", NULL);
 	return (FALSE);
 }

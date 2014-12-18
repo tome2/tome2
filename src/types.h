@@ -2232,6 +2232,11 @@ struct hook_wild_gen_in {
 	bool_ small;
 };
 
+typedef struct hook_chardump_in hook_chardump_in;
+struct hook_chardump_in {
+	FILE *file;
+};
+
 typedef struct hook_eat_in hook_eat_in;
 struct hook_eat_in {
 	object_type *o_ptr;
