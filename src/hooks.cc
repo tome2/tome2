@@ -100,6 +100,34 @@ void del_hook(int h_idx, hook_type hook)
 	}
 }
 
+void del_hook_new(int h_idx, bool_ (*hook_f)(void *, void *, void *))
+{
+	hooks_chain *c = hooks_heads[h_idx], *p = NULL;
+
+	/* Find it */
+	while ((c != NULL) && (c->hook_f != hook_f))
+	{
+		p = c;
+		c = c->next;
+	}
+
+	/* Remove it */
+	if (c != NULL)
+	{
+		if (p == NULL)
+		{
+			hooks_heads[h_idx] = c->next;
+			delete c;
+		}
+		else
+		{
+			p->next = c->next;
+			delete c;
+		}
+	}
+};
+
+
 /* get the next argument */
 static hook_return param_pile[MAX_ARGS];
 static int get_next_arg_pos = 0;

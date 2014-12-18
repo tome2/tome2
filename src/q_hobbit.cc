@@ -65,14 +65,13 @@ static bool_ quest_hobbit_gen_hook(const char *fmt)
 	return FALSE;
 }
 
-static bool_ quest_hobbit_give_hook(const char *fmt)
+static bool_ quest_hobbit_give_hook(void *, void *in_, void *)
 {
+	struct hook_give_in *in = static_cast<struct hook_give_in *>(in_);
 	object_type *o_ptr;
 	monster_type *m_ptr;
-	s32b m_idx, item;
-
-	m_idx = get_next_arg(fmt);
-	item = get_next_arg(fmt);
+	s32b m_idx = in->m_idx;
+	s32b item = in->item;
 
 	o_ptr = &p_ptr->inventory[item];
 	m_ptr = &m_list[m_idx];
@@ -90,7 +89,7 @@ static bool_ quest_hobbit_give_hook(const char *fmt)
 
 	cquest.status = QUEST_STATUS_COMPLETED;
 
-	del_hook(HOOK_GIVE, quest_hobbit_give_hook);
+	del_hook_new(HOOK_GIVE, quest_hobbit_give_hook);
 	process_hooks_restart = TRUE;
 
 	return TRUE;
@@ -190,11 +189,11 @@ bool_ quest_hobbit_init_hook(int q_idx)
 
 	if ((cquest.status >= QUEST_STATUS_TAKEN) && (cquest.status < QUEST_STATUS_FINISHED))
 	{
-		add_hook(HOOK_GIVE, quest_hobbit_give_hook, "hobbit_give");
-		add_hook(HOOK_GEN_LEVEL, quest_hobbit_gen_hook, "hobbit_gen");
-		add_hook(HOOK_WILD_GEN, quest_hobbit_town_gen_hook, "hobbit_town_gen");
-		add_hook(HOOK_CHAT, quest_hobbit_chat_hook, "hobbit_chat");
-		add_hook(HOOK_MON_SPEAK, quest_hobbit_speak_hook, "hobbit_speak");
+		add_hook_new(HOOK_GIVE, quest_hobbit_give_hook, "hobbit_give", NULL);
+		add_hook    (HOOK_GEN_LEVEL, quest_hobbit_gen_hook, "hobbit_gen");
+		add_hook    (HOOK_WILD_GEN, quest_hobbit_town_gen_hook, "hobbit_town_gen");
+		add_hook    (HOOK_CHAT, quest_hobbit_chat_hook, "hobbit_chat");
+		add_hook    (HOOK_MON_SPEAK, quest_hobbit_speak_hook, "hobbit_speak");
 	}
 	if (cquest.status == QUEST_STATUS_UNTAKEN)
 	{

@@ -104,14 +104,14 @@ static bool_ quest_shroom_death_hook(const char *fmt)
 	return FALSE;
 }
 
-static bool_ quest_shroom_give_hook(const char *fmt)
+static bool_ quest_shroom_give_hook(void *, void *in_, void *)
 {
+	struct hook_give_in *in = static_cast<struct hook_give_in *>(in_);
 	object_type *o_ptr;
 	monster_type *m_ptr;
-	s32b m_idx, item;
 
-	m_idx = get_next_arg(fmt);
-	item = get_next_arg(fmt);
+	s32b m_idx = in->m_idx;
+	s32b item = in->item;
 
 	o_ptr = &p_ptr->inventory[item];
 	m_ptr = &m_list[m_idx];
@@ -128,9 +128,9 @@ static bool_ quest_shroom_give_hook(const char *fmt)
 		msg_print("YOU MURDERER!  Out of my sight!");
 		delete_monster_idx(m_idx);
 
-		del_hook(HOOK_GIVE, quest_shroom_give_hook);
-		del_hook(HOOK_CHAT, quest_shroom_speak_hook);
-		del_hook(HOOK_WILD_GEN, quest_shroom_town_gen_hook);
+		del_hook_new(HOOK_GIVE, quest_shroom_give_hook);
+		del_hook    (HOOK_CHAT, quest_shroom_speak_hook);
+		del_hook    (HOOK_WILD_GEN, quest_shroom_town_gen_hook);
 		process_hooks_restart = TRUE;
 		return TRUE;
 	}
@@ -180,7 +180,7 @@ static bool_ quest_shroom_give_hook(const char *fmt)
 
 		cquest.status = QUEST_STATUS_FINISHED;
 
-		del_hook(HOOK_GIVE, quest_shroom_give_hook);
+		del_hook_new(HOOK_GIVE, quest_shroom_give_hook);
 		process_hooks_restart = TRUE;
 	}
 	else
@@ -216,9 +216,9 @@ static bool_ quest_shroom_speak_hook(const char *fmt)
 			msg_print("YOU MURDERER!  Out of my sight!");
 			delete_monster_idx(m_idx);
 
-			del_hook(HOOK_GIVE, quest_shroom_give_hook);
-			del_hook(HOOK_CHAT, quest_shroom_speak_hook);
-			del_hook(HOOK_WILD_GEN, quest_shroom_town_gen_hook);
+			del_hook_new(HOOK_GIVE, quest_shroom_give_hook);
+			del_hook    (HOOK_CHAT, quest_shroom_speak_hook);
+			del_hook    (HOOK_WILD_GEN, quest_shroom_town_gen_hook);
 			process_hooks_restart = TRUE;
 			return TRUE;
 		}
@@ -261,9 +261,9 @@ static bool_ quest_shroom_chat_hook(const char *fmt)
 			msg_print("YOU MURDERER!  Out of my sight!");
 			delete_monster_idx(m_idx);
 
-			del_hook(HOOK_GIVE, quest_shroom_give_hook);
-			del_hook(HOOK_CHAT, quest_shroom_speak_hook);
-			del_hook(HOOK_WILD_GEN, quest_shroom_town_gen_hook);
+			del_hook_new(HOOK_GIVE, quest_shroom_give_hook);
+			del_hook    (HOOK_CHAT, quest_shroom_speak_hook);
+			del_hook    (HOOK_WILD_GEN, quest_shroom_town_gen_hook);
 			process_hooks_restart = TRUE;
 			return TRUE;
 		}
@@ -288,11 +288,11 @@ bool_ quest_shroom_init_hook(int q_idx)
 
 	if ((cquest.status >= QUEST_STATUS_TAKEN) && (cquest.status < QUEST_STATUS_FINISHED))
 	{
-		add_hook(HOOK_MONSTER_DEATH, quest_shroom_death_hook, "shroom_death");
-		add_hook(HOOK_GIVE, quest_shroom_give_hook, "shroom_give");
-		add_hook(HOOK_WILD_GEN, quest_shroom_town_gen_hook, "shroom_town_gen");
-		add_hook(HOOK_CHAT, quest_shroom_chat_hook, "shroom_chat");
-		add_hook(HOOK_MON_SPEAK, quest_shroom_speak_hook, "shroom_speak");
+		add_hook    (HOOK_MONSTER_DEATH, quest_shroom_death_hook,    "shroom_death");
+		add_hook_new(HOOK_GIVE,          quest_shroom_give_hook,     "shroom_give", NULL);
+		add_hook    (HOOK_WILD_GEN,      quest_shroom_town_gen_hook, "shroom_town_gen");
+		add_hook    (HOOK_CHAT,          quest_shroom_chat_hook,     "shroom_chat");
+		add_hook    (HOOK_MON_SPEAK,     quest_shroom_speak_hook,    "shroom_speak");
 	}
 	if (cquest.status == QUEST_STATUS_UNTAKEN)
 	{
