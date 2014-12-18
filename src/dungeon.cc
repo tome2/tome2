@@ -3727,7 +3727,7 @@ static void process_command(void)
 				msg_print("To flee the ambush you have to reach the edge of the map.");
 			}
 			/* TODO: make the above stuff use this hook */
-			else if (!process_hooks(HOOK_FORBID_TRAVEL, "()"))
+			else if (!process_hooks_new(HOOK_FORBID_TRAVEL, NULL, NULL))
 			{
 				p_ptr->oldpx = p_ptr->px;
 				p_ptr->oldpy = p_ptr->py;

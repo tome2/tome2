@@ -817,7 +817,7 @@ void do_cmd_mimic_lore()
 	p_ptr->update |= (PU_BONUS);
 }
 
-static bool_ mimic_forbid_travel(const char *fmt)
+static bool_ mimic_forbid_travel(void *, void *, void *)
 {
 	u32b value = p_ptr->mimic_extra >> 16;
 	u32b att = p_ptr->mimic_extra & 0xFFFF;
@@ -850,7 +850,7 @@ void do_cmd_mimic(void)
 	static bool_ added_hooks = FALSE;
 	if(!added_hooks)
 	{
-		add_hook(HOOK_FORBID_TRAVEL, mimic_forbid_travel, "mimic_forbid_travel");
+		add_hook_new(HOOK_FORBID_TRAVEL, mimic_forbid_travel, "mimic_forbid_travel", NULL);
 		added_hooks = TRUE;
 	}
 
