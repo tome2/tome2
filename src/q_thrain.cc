@@ -163,7 +163,7 @@ static bool_ quest_thrain_gen_hook(const char *fmt)
 	return (TRUE);
 }
 
-static bool_ quest_thrain_feeling_hook(const char *fmt)
+static bool_ quest_thrain_feeling_hook(void *, void *, void *)
 {
 	if (dungeon_type != DUNGEON_DOL_GULDUR) return (FALSE);
 	if (cquest.data[0] != dun_level) return (FALSE);
@@ -228,11 +228,11 @@ bool_ quest_thrain_init_hook(int q)
 	}
 	if ((cquest.status >= QUEST_STATUS_UNTAKEN) && (cquest.status < QUEST_STATUS_FINISHED))
 	{
-		add_hook(HOOK_LEVEL_REGEN, quest_thrain_turn_hook, "thrain_regen_lvl");
-		add_hook(HOOK_NEW_LEVEL, quest_thrain_turn_hook, "thrain_new_lvl");
-		add_hook(HOOK_BUILD_ROOM1, quest_thrain_gen_hook, "thrain_gen");
-		add_hook(HOOK_FEELING, quest_thrain_feeling_hook, "thrain_feel");
-		add_hook(HOOK_MONSTER_DEATH, quest_thrain_death_hook, "thrain_death");
+		add_hook    (HOOK_LEVEL_REGEN,   quest_thrain_turn_hook,    "thrain_regen_lvl");
+		add_hook    (HOOK_NEW_LEVEL,     quest_thrain_turn_hook,    "thrain_new_lvl");
+		add_hook    (HOOK_BUILD_ROOM1,   quest_thrain_gen_hook,     "thrain_gen");
+		add_hook_new(HOOK_FEELING,       quest_thrain_feeling_hook, "thrain_feel", NULL);
+		add_hook    (HOOK_MONSTER_DEATH, quest_thrain_death_hook,   "thrain_death");
 	}
 	return (FALSE);
 }

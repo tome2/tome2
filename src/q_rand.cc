@@ -408,7 +408,7 @@ static bool_ quest_random_turn_hook(const char *fmt)
 	return (FALSE);
 }
 
-static bool_ quest_random_feeling_hook(const char *fmt)
+static bool_ quest_random_feeling_hook(void *, void *, void *)
 {
 	if (!(dungeon_flags1 & DF1_PRINCIPAL)) return (FALSE);
 	if ((dun_level < 1) || (dun_level >= MAX_RANDOM_QUEST)) return (FALSE);
@@ -623,7 +623,7 @@ bool_ quest_random_init_hook(int q_idx)
 	add_hook    (HOOK_LEVEL_REGEN,   quest_random_turn_hook,     "rand_regen_lvl");
 	add_hook    (HOOK_LEVEL_END_GEN, quest_random_gen_hero_hook, "rand_gen_hero");
 	add_hook    (HOOK_BUILD_ROOM1,   quest_random_gen_hook,      "rand_gen");
-	add_hook    (HOOK_FEELING,       quest_random_feeling_hook,  "rand_feel");
+	add_hook_new(HOOK_FEELING,       quest_random_feeling_hook,  "rand_feel", NULL);
 	add_hook_new(HOOK_CHAR_DUMP,     quest_random_dump_hook,     "rand_dump", NULL);
 	return (FALSE);
 }

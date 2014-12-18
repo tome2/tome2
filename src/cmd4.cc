@@ -2801,7 +2801,7 @@ void do_cmd_feeling(void)
 	}
 
 	/* Hooked feelings ? */
-	if (process_hooks(HOOK_FEELING, "(d)", is_quest(dun_level)))
+	if (process_hooks_new(HOOK_FEELING, NULL, NULL))
 	{
 		return;
 	}

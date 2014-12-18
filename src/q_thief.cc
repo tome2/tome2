@@ -150,14 +150,14 @@ static bool_ quest_thieves_finish_hook(const char *fmt)
 	return TRUE;
 }
 
-static bool_ quest_thieves_feeling_hook(const char *fmt)
+static bool_ quest_thieves_feeling_hook(void *, void *, void *)
 {
 	if (p_ptr->inside_quest != QUEST_THIEVES) return FALSE;
 
 	msg_print("You wake up in a prison cell.");
 	msg_print("All your possessions have been stolen!");
 
-	del_hook(HOOK_FEELING, quest_thieves_feeling_hook);
+	del_hook_new(HOOK_FEELING, quest_thieves_feeling_hook);
 	process_hooks_restart = TRUE;
 
 	return TRUE;
@@ -167,10 +167,10 @@ bool_ quest_thieves_init_hook(int q_idx)
 {
 	if ((cquest.status >= QUEST_STATUS_UNTAKEN) && (cquest.status < QUEST_STATUS_FINISHED))
 	{
-		add_hook(HOOK_END_TURN, quest_thieves_hook, "thieves_end_turn");
-		add_hook(HOOK_QUEST_FINISH, quest_thieves_finish_hook, "thieves_finish");
-		add_hook(HOOK_GEN_QUEST, quest_thieves_gen_hook, "thieves_geb");
-		add_hook(HOOK_FEELING, quest_thieves_feeling_hook, "thieves_feel");
+		add_hook    (HOOK_END_TURN,     quest_thieves_hook,         "thieves_end_turn");
+		add_hook    (HOOK_QUEST_FINISH, quest_thieves_finish_hook,  "thieves_finish");
+		add_hook    (HOOK_GEN_QUEST,    quest_thieves_gen_hook,     "thieves_geb");
+		add_hook_new(HOOK_FEELING,      quest_thieves_feeling_hook, "thieves_feel", NULL);
 	}
 	return (FALSE);
 }
