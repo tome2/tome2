@@ -147,12 +147,11 @@ static bool_ quest_poison_dump_hook(void *, void *in_, void *)
 	return (FALSE);
 }
 
-static bool_ quest_poison_quest_hook(const char *fmt)
+static bool_ quest_poison_quest_hook(void *, void *in_, void *)
 {
+	struct hook_init_quest_in *in = static_cast<struct hook_init_quest_in *>(in_);
+	s32b q_idx = in->q_idx;
 	object_type forge, *q_ptr;
-	s32b q_idx;
-
-	q_idx = get_next_arg(fmt);
 
 	if (q_idx != QUEST_POISON) return FALSE;
 
@@ -165,7 +164,7 @@ static bool_ quest_poison_quest_hook(const char *fmt)
 	q_ptr->note = quark_add("quest");
 	(void)inven_carry(q_ptr, FALSE);
 
-	del_hook(HOOK_INIT_QUEST, quest_poison_quest_hook);
+	del_hook_new(HOOK_INIT_QUEST, quest_poison_quest_hook);
 	process_hooks_restart = TRUE;
 
 	return FALSE;
@@ -242,7 +241,7 @@ bool_ quest_poison_init_hook(int q_idx)
 	}
 	if (cquest.status < QUEST_STATUS_COMPLETED)
 	{
-		add_hook(HOOK_INIT_QUEST, quest_poison_quest_hook, "poison_iquest");
+		add_hook_new(HOOK_INIT_QUEST, quest_poison_quest_hook, "poison_iquest", NULL);
 	}
 	add_hook_new(HOOK_CHAR_DUMP, quest_poison_dump_hook, "poison_dump", NULL);
 	return (FALSE);

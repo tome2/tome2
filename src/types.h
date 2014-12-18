@@ -2264,6 +2264,11 @@ struct hook_stair_out {
 	bool_ allow;
 };
 
+typedef struct hook_init_quest_in hook_init_quest_in;
+struct hook_init_quest_in {
+	int q_idx;
+};
+
 typedef struct hook_new_monster_in hook_new_monster_in;
 struct hook_new_monster_in {
 	s32b r_idx;

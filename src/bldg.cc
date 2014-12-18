@@ -865,7 +865,11 @@ static bool_ castle_quest(int y, int x)
 	/* No quest yet */
 	else if (q_ptr->status == QUEST_STATUS_UNTAKEN)
 	{
-		if (process_hooks(HOOK_INIT_QUEST, "(d)", plots[plot])) return (FALSE);
+		struct hook_init_quest_in in = { plots[plot] };
+		if (process_hooks_new(HOOK_INIT_QUEST, &in, NULL))
+		{
+			return (FALSE);
+		}
 
 		q_ptr->status = QUEST_STATUS_TAKEN;
 

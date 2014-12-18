@@ -78,10 +78,10 @@ static bool_ quest_nazgul_dump_hook(void *, void *in_, void *)
 	return (FALSE);
 }
 
-static bool_ quest_nazgul_forbid_hook(const char *fmt)
+static bool_ quest_nazgul_forbid_hook(void *, void *in_, void *)
 {
-	s32b q_idx;
-	q_idx = get_next_arg(fmt);
+	struct hook_init_quest_in *in = static_cast<struct hook_init_quest_in *>(in_);
+	s32b q_idx = in->q_idx;
 
 	if (q_idx != QUEST_NAZGUL) return (FALSE);
 
@@ -120,6 +120,6 @@ bool_ quest_nazgul_init_hook(int q_idx)
 		add_hook    (HOOK_QUEST_FINISH,  quest_nazgul_finish_hook, "nazgul_finish");
 	}
 	add_hook_new(HOOK_CHAR_DUMP,  quest_nazgul_dump_hook,   "nazgul_dump", NULL);
-	add_hook    (HOOK_INIT_QUEST, quest_nazgul_forbid_hook, "nazgul_forbid");
+	add_hook_new(HOOK_INIT_QUEST, quest_nazgul_forbid_hook, "nazgul_forbid", NULL);
 	return (FALSE);
 }

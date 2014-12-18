@@ -168,10 +168,10 @@ static bool_ quest_between_dump_hook(void *, void *in_, void *)
 	return (FALSE);
 }
 
-static bool_ quest_between_forbid_hook(const char *fmt)
+static bool_ quest_between_forbid_hook(void *, void *in_, void *)
 {
-	s32b q_idx;
-	q_idx = get_next_arg(fmt);
+	hook_init_quest_in *in = static_cast<struct hook_init_quest_in *>(in_);
+	s32b q_idx = in->q_idx;
 
 	if (q_idx != QUEST_BETWEEN) return (FALSE);
 
@@ -192,7 +192,7 @@ bool_ quest_between_init_hook(int q)
 		add_hook    (HOOK_QUEST_FINISH, quest_between_finish_hook, "between_finish");
 		add_hook    (HOOK_MONSTER_DEATH, quest_between_death_hook, "between_death");
 	}
-	add_hook_new(HOOK_CHAR_DUMP,  quest_between_dump_hook,   "between_dump", NULL);
-	add_hook    (HOOK_INIT_QUEST, quest_between_forbid_hook, "between_forbid");
+	add_hook_new(HOOK_CHAR_DUMP,  quest_between_dump_hook,   "between_dump",   NULL);
+	add_hook_new(HOOK_INIT_QUEST, quest_between_forbid_hook, "between_forbid", NULL);
 	return (FALSE);
 }
