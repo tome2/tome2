@@ -3,7 +3,7 @@
 
 #define cquest (quest[QUEST_SPIDER])
 
-static bool_ quest_spider_gen_hook(const char *fmt)
+static bool_ quest_spider_gen_hook(void *, void *, void *)
 {
 	int x, y;
 	int xstart = 2;
@@ -105,9 +105,9 @@ bool_ quest_spider_init_hook(int q_idx)
 {
 	if ((cquest.status >= QUEST_STATUS_TAKEN) && (cquest.status < QUEST_STATUS_FINISHED))
 	{
-		add_hook(HOOK_MONSTER_DEATH, quest_spider_death_hook, "spider_death");
-		add_hook(HOOK_GEN_QUEST, quest_spider_gen_hook, "spider_gen");
-		add_hook(HOOK_QUEST_FINISH, quest_spider_finish_hook, "spider_finish");
+		add_hook    (HOOK_MONSTER_DEATH, quest_spider_death_hook,  "spider_death");
+		add_hook_new(HOOK_GEN_QUEST,     quest_spider_gen_hook,    "spider_gen", NULL);
+		add_hook    (HOOK_QUEST_FINISH,  quest_spider_finish_hook, "spider_finish");
 	}
 	return (FALSE);
 }

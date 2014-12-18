@@ -51,7 +51,7 @@ static bool_ quest_between_move_hook(void *, void *in_, void *)
 	return FALSE;
 }
 
-static bool_ quest_between_gen_hook(const char *fmt)
+static bool_ quest_between_gen_hook(void *, void *, void *)
 {
 	int x, y;
 	int xstart = 2;
@@ -187,10 +187,10 @@ bool_ quest_between_init_hook(int q)
 {
 	if ((cquest.status >= QUEST_STATUS_TAKEN) && (cquest.status < QUEST_STATUS_FINISHED))
 	{
-		add_hook_new(HOOK_MOVE, quest_between_move_hook, "between_move", NULL);
-		add_hook    (HOOK_GEN_QUEST, quest_between_gen_hook, "between_gen");
-		add_hook    (HOOK_QUEST_FINISH, quest_between_finish_hook, "between_finish");
-		add_hook    (HOOK_MONSTER_DEATH, quest_between_death_hook, "between_death");
+		add_hook_new(HOOK_MOVE,          quest_between_move_hook,   "between_move", NULL);
+		add_hook_new(HOOK_GEN_QUEST,     quest_between_gen_hook,    "between_gen", NULL);
+		add_hook    (HOOK_QUEST_FINISH,  quest_between_finish_hook, "between_finish");
+		add_hook    (HOOK_MONSTER_DEATH, quest_between_death_hook,  "between_death");
 	}
 	add_hook_new(HOOK_CHAR_DUMP,  quest_between_dump_hook,   "between_dump",   NULL);
 	add_hook_new(HOOK_INIT_QUEST, quest_between_forbid_hook, "between_forbid", NULL);

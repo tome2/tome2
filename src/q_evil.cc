@@ -3,7 +3,7 @@
 
 #define cquest (quest[QUEST_EVIL])
 
-static bool_ quest_evil_gen_hook(const char *fmt)
+static bool_ quest_evil_gen_hook(void *, void *, void *)
 {
 	int x, y, i;
 	int xstart = 2;
@@ -80,8 +80,8 @@ static bool_ quest_evil_death_hook(const char *fmt)
 		/* TODO: change to COMPLETED and remove NULL when mayor is added */
 		quest[p_ptr->inside_quest].status = QUEST_STATUS_FINISHED;
 		*(quest[p_ptr->inside_quest].plot) = QUEST_NULL;
-		del_hook(HOOK_MONSTER_DEATH, quest_evil_death_hook);
-		del_hook(HOOK_GEN_QUEST, quest_evil_gen_hook);
+		del_hook    (HOOK_MONSTER_DEATH, quest_evil_death_hook);
+		del_hook_new(HOOK_GEN_QUEST,     quest_evil_gen_hook);
 		process_hooks_restart = TRUE;
 
 		cmsg_print(TERM_YELLOW, "Khazad-Dum is safer now.");
@@ -111,9 +111,9 @@ bool_ quest_evil_init_hook(int q_idx)
 {
 	if ((cquest.status >= QUEST_STATUS_UNTAKEN) && (cquest.status < QUEST_STATUS_FINISHED))
 	{
-		add_hook(HOOK_MONSTER_DEATH, quest_evil_death_hook, "evil_monster_death");
-		add_hook(HOOK_QUEST_FINISH, quest_evil_finish_hook, "evil_finish");
-		add_hook(HOOK_GEN_QUEST, quest_evil_gen_hook, "evil_geb");
+		add_hook    (HOOK_MONSTER_DEATH, quest_evil_death_hook,  "evil_monster_death");
+		add_hook    (HOOK_QUEST_FINISH,  quest_evil_finish_hook, "evil_finish");
+		add_hook_new(HOOK_GEN_QUEST,     quest_evil_gen_hook,    "evil_geb", NULL);
 	}
 	return (FALSE);
 }

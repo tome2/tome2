@@ -3,7 +3,7 @@
 
 #define cquest (quest[QUEST_EOL])
 
-static bool_ quest_eol_gen_hook(const char *fmt)
+static bool_ quest_eol_gen_hook(void *, void *, void *)
 {
 	int x, y;
 	bool_ done = FALSE;
@@ -192,7 +192,7 @@ bool_ quest_eol_init_hook(int q)
 	if ((cquest.status >= QUEST_STATUS_TAKEN) && (cquest.status < QUEST_STATUS_FINISHED))
 	{
 		add_hook    (HOOK_MONSTER_DEATH, quest_eol_death_hook,  "eol_death");
-		add_hook    (HOOK_GEN_QUEST,     quest_eol_gen_hook,    "eol_gen");
+		add_hook_new(HOOK_GEN_QUEST,     quest_eol_gen_hook,    "eol_gen", NULL);
 		add_hook_new(HOOK_STAIR,         quest_eol_stair_hook,  "eol_stair", NULL);
 		add_hook    (HOOK_QUEST_FAIL,    quest_eol_fail_hook,   "eol_fail");
 		add_hook    (HOOK_QUEST_FINISH,  quest_eol_finish_hook, "eol_finish");

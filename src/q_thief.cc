@@ -3,7 +3,7 @@
 
 #define cquest (quest[QUEST_THIEVES])
 
-static bool_ quest_thieves_gen_hook(const char *fmt)
+static bool_ quest_thieves_gen_hook(void *, void *, void *)
 {
 	int x, y;
 	int xstart = 2;
@@ -58,7 +58,7 @@ static bool_ quest_thieves_gen_hook(const char *fmt)
 		}
 	}
 
-	del_hook(HOOK_GEN_QUEST, quest_thieves_gen_hook);
+	del_hook_new(HOOK_GEN_QUEST, quest_thieves_gen_hook);
 	process_hooks_restart = TRUE;
 
 	return TRUE;
@@ -169,7 +169,7 @@ bool_ quest_thieves_init_hook(int q_idx)
 	{
 		add_hook    (HOOK_END_TURN,     quest_thieves_hook,         "thieves_end_turn");
 		add_hook    (HOOK_QUEST_FINISH, quest_thieves_finish_hook,  "thieves_finish");
-		add_hook    (HOOK_GEN_QUEST,    quest_thieves_gen_hook,     "thieves_geb");
+		add_hook_new(HOOK_GEN_QUEST,    quest_thieves_gen_hook,     "thieves_geb", NULL);
 		add_hook_new(HOOK_FEELING,      quest_thieves_feeling_hook, "thieves_feel", NULL);
 	}
 	return (FALSE);

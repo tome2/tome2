@@ -3,7 +3,7 @@
 
 #define cquest (quest[QUEST_INVASION])
 
-static bool_ quest_invasion_gen_hook(const char *fmt)
+static bool_ quest_invasion_gen_hook(void *, void *, void *)
 {
 	int x, y;
 	int xstart = 2;
@@ -197,7 +197,7 @@ bool_ quest_invasion_init_hook(int q_idx)
 	if ((cquest.status >= QUEST_STATUS_TAKEN) && (cquest.status < QUEST_STATUS_FINISHED))
 	{
 		add_hook    (HOOK_MONSTER_AI,    quest_invasion_ai_hook,    "invasion_ai");
-		add_hook    (HOOK_GEN_QUEST,     quest_invasion_gen_hook,   "invasion_gen");
+		add_hook_new(HOOK_GEN_QUEST,     quest_invasion_gen_hook,   "invasion_gen", NULL);
 		add_hook    (HOOK_MONSTER_DEATH, quest_invasion_death_hook, "invasion_death");
 		add_hook_new(HOOK_STAIR,         quest_invasion_stair_hook, "invasion_stair", NULL);
 	}

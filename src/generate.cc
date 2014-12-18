@@ -8198,14 +8198,6 @@ static void arena_gen(void)
 
 
 /*
- * Generate a quest level
- */
-static void quest_gen(void)
-{
-	process_hooks(HOOK_GEN_QUEST, "(d)", is_quest(dun_level));
-}
-
-/*
  * Creates a special level
  */
 
@@ -8563,7 +8555,7 @@ void generate_cave(void)
 			/* Quest levels -KMW- */
 			else if (p_ptr->inside_quest)
 			{
-				quest_gen();
+				process_hooks_new(HOOK_GEN_QUEST, NULL, NULL);
 			}
 
 			/* Special levels */
