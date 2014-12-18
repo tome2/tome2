@@ -4402,7 +4402,6 @@
 #define HOOK_BIRTH              68
 #define HOOK_MON_ASK_HELP       69
 #define HOOK_LEARN_ABILITY      70
-#define HOOK_MOVED              71
 #define HOOK_GAME_START         72
 #define HOOK_TAKEOFF            73
 #define HOOK_CALC_WEIGHT        74
