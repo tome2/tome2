@@ -148,17 +148,15 @@ static bool_ quest_invasion_death_hook(const char *fmt)
 	return FALSE;
 }
 
-static bool_ quest_invasion_stair_hook(const char *fmt)
+static bool_ quest_invasion_stair_hook(void *, void *in_, void *)
 {
-	cptr down;
-
-	down = get_next_arg_str(fmt);
+	struct hook_stair_in *in = static_cast<struct hook_stair_in *>(in_);
 
 	if (p_ptr->inside_quest != QUEST_INVASION) return FALSE;
 
 	if (cave[p_ptr->py][p_ptr->px].feat != FEAT_LESS) return TRUE;
 
-	if (!strcmp(down, "up"))
+	if (in->direction == STAIRS_UP)
 	{
 		if (cquest.status == QUEST_STATUS_FAILED)
 		{
@@ -184,7 +182,7 @@ static bool_ quest_invasion_stair_hook(const char *fmt)
 			cquest.status = QUEST_STATUS_FAILED;
 			town_info[2].destroyed = TRUE;
 		}
-		del_hook(HOOK_STAIR, quest_invasion_stair_hook);
+		del_hook_new(HOOK_STAIR, quest_invasion_stair_hook);
 		process_hooks_restart = TRUE;
 		return (FALSE);
 	}
@@ -198,10 +196,10 @@ bool_ quest_invasion_init_hook(int q_idx)
 	add_hook_new(HOOK_CHAR_DUMP, quest_invasion_dump_hook, "invasion_dump", NULL);
 	if ((cquest.status >= QUEST_STATUS_TAKEN) && (cquest.status < QUEST_STATUS_FINISHED))
 	{
-		add_hook(HOOK_MONSTER_AI, quest_invasion_ai_hook, "invasion_ai");
-		add_hook(HOOK_GEN_QUEST, quest_invasion_gen_hook, "invasion_gen");
-		add_hook(HOOK_MONSTER_DEATH, quest_invasion_death_hook, "invasion_death");
-		add_hook(HOOK_STAIR, quest_invasion_stair_hook, "invasion_stair");
+		add_hook    (HOOK_MONSTER_AI,    quest_invasion_ai_hook,    "invasion_ai");
+		add_hook    (HOOK_GEN_QUEST,     quest_invasion_gen_hook,   "invasion_gen");
+		add_hook    (HOOK_MONSTER_DEATH, quest_invasion_death_hook, "invasion_death");
+		add_hook_new(HOOK_STAIR,         quest_invasion_stair_hook, "invasion_stair", NULL);
 	}
 	return (FALSE);
 }

@@ -86,23 +86,10 @@ static bool_ do_cmd_bash_fountain(int y, int x)
  */
 static bool_ stair_hooks(stairs_direction direction)
 {
-	cptr direction_s = (direction == STAIRS_UP) ? "up" : "down";
-
-	/* Old-style hooks */
-	if (process_hooks(HOOK_STAIR, "(s)", direction_s))
-	{
-		return TRUE; /* Prevent movement */
-	}
-
-	/* New-style hooks */
-	{
-		hook_stair_in in = { direction };
-		hook_stair_out out = { TRUE }; /* Allow by default */
-
-		process_hooks_new(HOOK_STAIR, &in, &out);
-
-		return (!out.allow);
-	}
+	hook_stair_in in = { direction };
+	hook_stair_out out = { TRUE }; /* Allow by default */
+	process_hooks_new(HOOK_STAIR, &in, &out);
+	return (!out.allow);
 }
 
 

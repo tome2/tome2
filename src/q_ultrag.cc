@@ -73,30 +73,29 @@ static bool_ quest_ultra_good_move_hook(void *, void *in_, void *)
 	return FALSE;
 }
 
-static bool_ quest_ultra_good_stair_hook(const char *fmt)
+static bool_ quest_ultra_good_stair_hook(void *, void *in_, void *)
 {
-	cptr dir;
-
-	dir = get_next_arg_str(fmt);
+	struct hook_stair_in *in = static_cast<struct hook_stair_in *>(in_);
+	stairs_direction dir = in->direction;
 
 	if (dungeon_type != DUNGEON_VOID)
 		return FALSE;
 
 	/* Cant leave */
-	if ((!strcmp(dir, "up")) && (dun_level == 128))
+	if ((dir == STAIRS_UP) && (dun_level == 128))
 	{
 		cmsg_print(TERM_YELLOW, "The portal to Arda is now closed.");
 		return TRUE;
 	}
 	/* there is no coming back */
-	if ((!strcmp(dir, "up")) && (dun_level == 150))
+	if ((dir == STAIRS_UP) && (dun_level == 150))
 	{
 		cmsg_print(TERM_YELLOW, "The barrier seems to be impenetrable from this side.");
 		cmsg_print(TERM_YELLOW, "You will have to move on.");
 		return TRUE;
 	}
 	/* Cant enter without the flame imperishable */
-	if ((!strcmp(dir, "down")) && (dun_level == 149))
+	if ((dir == STAIRS_DOWN) && (dun_level == 149))
 	{
 		int i;
 		bool_ ultimate = FALSE;
@@ -263,9 +262,9 @@ bool_ quest_ultra_good_init_hook(int q)
 {
 	if ((cquest.status >= QUEST_STATUS_TAKEN) && (cquest.status < QUEST_STATUS_FINISHED))
 	{
-		add_hook(HOOK_STAIR, quest_ultra_good_stair_hook, "ultrag_stair");
-		add_hook(HOOK_RECALL, quest_ultra_good_recall_hook, "ultrag_recall");
-		add_hook(HOOK_MONSTER_DEATH, quest_ultra_good_death_hook, "ultrag_death");
+		add_hook_new(HOOK_STAIR,         quest_ultra_good_stair_hook,  "ultrag_stair", NULL);
+		add_hook    (HOOK_RECALL,        quest_ultra_good_recall_hook, "ultrag_recall");
+		add_hook    (HOOK_MONSTER_DEATH, quest_ultra_good_death_hook,  "ultrag_death");
 	}
 	if (cquest.status == QUEST_STATUS_UNTAKEN)
 	{

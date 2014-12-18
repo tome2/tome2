@@ -401,7 +401,7 @@ static bool_ fireproof_get_hook(const char *fmt)
 	return FALSE;
 }
 
-static bool_ fireproof_stair_hook(const char *fmt)
+static bool_ fireproof_stair_hook(void *, void *, void *)
 {
 	/* only ask this if player about to go up stairs of quest and
 	 * hasn't retrieved item */
@@ -579,9 +579,9 @@ bool_ quest_fireproof_init_hook(int q)
 	if ((cquest.status >= QUEST_STATUS_UNTAKEN) &&
 	    (cquest.status < QUEST_STATUS_FINISHED))
 	{
-		add_hook(HOOK_GEN_QUEST, fireproof_gen_hook  , "fireproof_gen_hook");
-		add_hook(HOOK_GET      , fireproof_get_hook  , "fireproof_get_hook");
-		add_hook(HOOK_STAIR    , fireproof_stair_hook, "fireproof_stair_hook");
+		add_hook    (HOOK_GEN_QUEST, fireproof_gen_hook  , "fireproof_gen_hook");
+		add_hook    (HOOK_GET      , fireproof_get_hook  , "fireproof_get_hook");
+		add_hook_new(HOOK_STAIR    , fireproof_stair_hook, "fireproof_stair_hook", NULL);
 	}
 
 	return FALSE;

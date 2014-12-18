@@ -157,12 +157,10 @@ static bool_ quest_eol_death_hook(const char *fmt)
 	return FALSE;
 }
 
-static bool_ quest_eol_stair_hook(const char *fmt)
+static bool_ quest_eol_stair_hook(void *, void *in_, void *)
 {
+	struct hook_stair_in *in = static_cast<struct hook_stair_in *>(in_);
 	monster_race *r_ptr = &r_info[test_monster_name("Eol, the Dark Elf")];
-	cptr down;
-
-	down = get_next_arg_str(fmt);
 
 	if (p_ptr->inside_quest != QUEST_EOL) return FALSE;
 
@@ -170,7 +168,7 @@ static bool_ quest_eol_stair_hook(const char *fmt)
 
 	if (r_ptr->max_num)
 	{
-		if (!strcmp(down, "up"))
+		if (in->direction == STAIRS_UP)
 		{
 			/* Flush input */
 			flush();
@@ -179,7 +177,8 @@ static bool_ quest_eol_stair_hook(const char *fmt)
 
 			cmsg_print(TERM_YELLOW, "You flee away from Eol...");
 			cquest.status = QUEST_STATUS_FAILED;
-			del_hook(HOOK_STAIR, quest_eol_stair_hook);
+
+			del_hook_new(HOOK_STAIR, quest_eol_stair_hook);
 			process_hooks_restart = TRUE;
 			return (FALSE);
 		}
@@ -192,11 +191,11 @@ bool_ quest_eol_init_hook(int q)
 {
 	if ((cquest.status >= QUEST_STATUS_TAKEN) && (cquest.status < QUEST_STATUS_FINISHED))
 	{
-		add_hook(HOOK_MONSTER_DEATH, quest_eol_death_hook, "eol_death");
-		add_hook(HOOK_GEN_QUEST, quest_eol_gen_hook, "eol_gen");
-		add_hook(HOOK_STAIR, quest_eol_stair_hook, "eol_stair");
-		add_hook(HOOK_QUEST_FAIL, quest_eol_fail_hook, "eol_fail");
-		add_hook(HOOK_QUEST_FINISH, quest_eol_finish_hook, "eol_finish");
+		add_hook    (HOOK_MONSTER_DEATH, quest_eol_death_hook,  "eol_death");
+		add_hook    (HOOK_GEN_QUEST,     quest_eol_gen_hook,    "eol_gen");
+		add_hook_new(HOOK_STAIR,         quest_eol_stair_hook,  "eol_stair", NULL);
+		add_hook    (HOOK_QUEST_FAIL,    quest_eol_fail_hook,   "eol_fail");
+		add_hook    (HOOK_QUEST_FINISH,  quest_eol_finish_hook, "eol_finish");
 	}
 	return (FALSE);
 }
