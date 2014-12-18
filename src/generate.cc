@@ -7619,7 +7619,7 @@ static bool_ cave_gen(void)
 		}
 	}
 
-	process_hooks(HOOK_GEN_LEVEL, "(d)", is_quest(dun_level));
+	process_hooks_new(HOOK_GEN_LEVEL, NULL, NULL);
 
 	/* Basic "amount" */
 	k = (dun_level / 3);

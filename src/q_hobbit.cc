@@ -37,7 +37,7 @@ static bool_ quest_hobbit_town_gen_hook(const char *fmt)
 	return FALSE;
 }
 
-static bool_ quest_hobbit_gen_hook(const char *fmt)
+static bool_ quest_hobbit_gen_hook(void *, void *, void *)
 {
 	int x = 1, y = 1, tries = 10000;
 
@@ -186,7 +186,7 @@ bool_ quest_hobbit_init_hook(int q_idx)
 	if ((cquest.status >= QUEST_STATUS_TAKEN) && (cquest.status < QUEST_STATUS_FINISHED))
 	{
 		add_hook_new(HOOK_GIVE,      quest_hobbit_give_hook,     "hobbit_give", NULL);
-		add_hook    (HOOK_GEN_LEVEL, quest_hobbit_gen_hook,      "hobbit_gen");
+		add_hook_new(HOOK_GEN_LEVEL, quest_hobbit_gen_hook,      "hobbit_gen", NULL);
 		add_hook    (HOOK_WILD_GEN,  quest_hobbit_town_gen_hook, "hobbit_town_gen");
 		add_hook_new(HOOK_CHAT,      quest_hobbit_chat_hook,     "hobbit_chat", NULL);
 		add_hook_new(HOOK_MON_SPEAK, quest_hobbit_speak_hook,    "hobbit_speak", NULL);
