@@ -2222,6 +2222,11 @@ struct hook_mon_speak_in {
 	cptr m_name;
 };
 
+typedef struct hook_chat_in hook_chat_in;
+struct hook_chat_in {
+	s32b m_idx;
+};
+
 typedef struct hook_eat_in hook_eat_in;
 struct hook_eat_in {
 	object_type *o_ptr;

@@ -5154,7 +5154,8 @@ void do_cmd_chat()
 	}
 
 	/* Process hook if there are any */
-	if (!process_hooks(HOOK_CHAT, "(d)", c_ptr->m_idx))
+	struct hook_chat_in in = { c_ptr->m_idx };
+	if (!process_hooks_new(HOOK_CHAT, &in, NULL))
 	{
 		msg_print("The monster does not want to chat.");
 	}

@@ -4,7 +4,8 @@
 
 #define cquest (quest[QUEST_SHROOM])
 
-static bool_ quest_shroom_speak_hook(void *, void *in_, void *);
+static bool_ quest_shroom_speak_hook(void *, void *, void *);
+static bool_ quest_shroom_chat_hook(void *, void *, void *);
 
 static bool_ quest_shroom_town_gen_hook(const char *fmt)
 {
@@ -201,7 +202,8 @@ static void check_dogs_alive(s32b m_idx)
 		delete_monster_idx(m_idx);
 
 		del_hook_new(HOOK_GIVE, quest_shroom_give_hook);
-		del_hook_new(HOOK_CHAT, quest_shroom_speak_hook);
+		del_hook_new(HOOK_MON_SPEAK, quest_shroom_speak_hook);
+		del_hook_new(HOOK_CHAT, quest_shroom_chat_hook);
 		del_hook    (HOOK_WILD_GEN, quest_shroom_town_gen_hook);
 		process_hooks_restart = TRUE;
 	}
@@ -230,14 +232,11 @@ static bool_ quest_shroom_speak_hook(void *, void *in_, void *)
 	return (TRUE);
 }
 
-static bool_ quest_shroom_chat_hook(const char *fmt)
+static bool_ quest_shroom_chat_hook(void *, void *in_, void *)
 {
-	monster_type *m_ptr;
-	s32b m_idx;
-
-	m_idx = get_next_arg(fmt);
-
-	m_ptr = &m_list[m_idx];
+	struct hook_chat_in *in = static_cast<struct hook_chat_in *>(in_);
+	s32b m_idx = in->m_idx;
+	monster_type *m_ptr = &m_list[m_idx];
 
 	if (m_ptr->r_idx != test_monster_name("Farmer Maggot")) return (FALSE);
 
@@ -278,14 +277,14 @@ bool_ quest_shroom_init_hook(int q_idx)
 		add_hook    (HOOK_MONSTER_DEATH, quest_shroom_death_hook,    "shroom_death");
 		add_hook_new(HOOK_GIVE,          quest_shroom_give_hook,     "shroom_give", NULL);
 		add_hook    (HOOK_WILD_GEN,      quest_shroom_town_gen_hook, "shroom_town_gen");
-		add_hook    (HOOK_CHAT,          quest_shroom_chat_hook,     "shroom_chat");
+		add_hook_new(HOOK_CHAT,          quest_shroom_chat_hook,     "shroom_chat", NULL);
 		add_hook_new(HOOK_MON_SPEAK,     quest_shroom_speak_hook,    "shroom_speak", NULL);
 	}
 	if (cquest.status == QUEST_STATUS_UNTAKEN)
 	{
 		add_hook_new(HOOK_MON_SPEAK, quest_shroom_speak_hook,    "shroom_speak", NULL);
 		add_hook    (HOOK_WILD_GEN,  quest_shroom_town_gen_hook, "shroom_town_gen");
-		add_hook    (HOOK_CHAT,      quest_shroom_chat_hook,     "shroom_chat");
+		add_hook_new(HOOK_CHAT,      quest_shroom_chat_hook,     "shroom_chat", NULL);
 	}
 	return (FALSE);
 }
