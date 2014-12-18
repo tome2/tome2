@@ -10,8 +10,6 @@
 #include <assert.h>
 
 /******** Hooks stuff *********/
-FILE *hook_file;
-
 #define MAX_ARGS        50
 
 static hooks_chain *hooks_heads[MAX_HOOKS];

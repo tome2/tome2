@@ -6,7 +6,6 @@
 extern "C" {
 #endif
 
-extern FILE *hook_file;
 extern void wipe_hooks(void);
 extern void init_hooks(void);
 extern hooks_chain* add_hook(int h_idx, hook_type hook, cptr name);

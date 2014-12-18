@@ -2604,8 +2604,6 @@ errr file_character(cptr name, bool_ full)
 	}
 
 	/* List the patches */
-	hook_file = fff;
-
 	fprintf(fff, "\n\n  [Miscellaneous information]\n");
 	if (joke_monsters)
 		fprintf(fff, "\n Joke monsters:        ON");
