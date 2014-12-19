@@ -8302,7 +8302,6 @@ static void finalise_special_level(void)
 	/* No special levels on the surface */
 	if (!dun_level) return;
 
-	process_hooks(HOOK_LEVEL_END_GEN, "()");
 	process_hooks_new(HOOK_LEVEL_END_GEN, NULL, NULL);
 
 	/* Calculate relative depth */

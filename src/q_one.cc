@@ -303,7 +303,7 @@ static bool_ quest_one_dump_hook(void *, void *in_, void *)
 	return (FALSE);
 }
 
-static bool_ quest_one_gen_hook(const char *fmt)
+static bool_ quest_one_gen_hook(void *, void *, void *)
 {
 	s32b x, y, tries = 10000;
 
@@ -338,11 +338,11 @@ bool_ quest_one_init_hook(int q_idx)
 {
 	if ((cquest.status >= QUEST_STATUS_TAKEN) && (cquest.status < QUEST_STATUS_FINISHED))
 	{
-		add_hook    (HOOK_LEVEL_END_GEN, quest_one_gen_hook,      "one_gen");
+		add_hook_new(HOOK_LEVEL_END_GEN, quest_one_gen_hook,      "one_gen",   NULL);
 		add_hook_new(HOOK_MONSTER_DEATH, quest_one_death_hook,    "one_death", NULL);
-		add_hook_new(HOOK_DROP,          quest_one_drop_hook,     "one_drop", NULL);
+		add_hook_new(HOOK_DROP,          quest_one_drop_hook,     "one_drop",  NULL);
 		add_hook_new(HOOK_WIELD,         quest_one_wield_hook,    "one_wield", NULL);
-		add_hook_new(HOOK_IDENTIFY,      quest_one_identify_hook, "one_id", NULL);
+		add_hook_new(HOOK_IDENTIFY,      quest_one_identify_hook, "one_id",    NULL);
 	}
 	if (cquest.status == QUEST_STATUS_UNTAKEN)
 	{

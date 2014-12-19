@@ -425,7 +425,7 @@ static bool_ quest_random_feeling_hook(void *, void *, void *)
 	return (FALSE);
 }
 
-static bool_ quest_random_gen_hero_hook(const char *fmt)
+static bool_ quest_random_gen_hero_hook(void *, void *, void *)
 {
 	int i;
 
@@ -616,12 +616,12 @@ bool_ quest_random_describe(FILE *fff)
 
 bool_ quest_random_init_hook(int q_idx)
 {
-	add_hook_new(HOOK_MONSTER_DEATH, quest_random_death_hook,    "rand_death", NULL);
-	add_hook_new(HOOK_NEW_LEVEL,     quest_random_turn_hook,     "rand_new_lvl", NULL);
+	add_hook_new(HOOK_MONSTER_DEATH, quest_random_death_hook,    "rand_death",     NULL);
+	add_hook_new(HOOK_NEW_LEVEL,     quest_random_turn_hook,     "rand_new_lvl",   NULL);
 	add_hook_new(HOOK_LEVEL_REGEN,   quest_random_turn_hook,     "rand_regen_lvl", NULL);
-	add_hook    (HOOK_LEVEL_END_GEN, quest_random_gen_hero_hook, "rand_gen_hero");
-	add_hook_new(HOOK_BUILD_ROOM1,   quest_random_gen_hook,      "rand_gen", NULL);
-	add_hook_new(HOOK_FEELING,       quest_random_feeling_hook,  "rand_feel", NULL);
-	add_hook_new(HOOK_CHAR_DUMP,     quest_random_dump_hook,     "rand_dump", NULL);
+	add_hook_new(HOOK_LEVEL_END_GEN, quest_random_gen_hero_hook, "rand_gen_hero",  NULL);
+	add_hook_new(HOOK_BUILD_ROOM1,   quest_random_gen_hook,      "rand_gen",       NULL);
+	add_hook_new(HOOK_FEELING,       quest_random_feeling_hook,  "rand_feel",      NULL);
+	add_hook_new(HOOK_CHAR_DUMP,     quest_random_dump_hook,     "rand_dump",      NULL);
 	return (FALSE);
 }
