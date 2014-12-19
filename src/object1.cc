@@ -3935,10 +3935,6 @@ int get_slot(int slot)
  */
 s16b wield_slot_ideal(object_type *o_ptr, bool_ ideal)
 {
-	/* Try for a script first */
-	if (process_hooks_ret(HOOK_WIELD_SLOT, "d", "(O,d)", o_ptr, ideal))
-		return process_hooks_return[0].num;
-
 	/* Theme has restrictions for winged races. */
 	if (game_module_idx == MODULE_THEME)
 	{
