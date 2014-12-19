@@ -5809,7 +5809,7 @@ void play_game(bool_ new_game)
 		if (dun_level) p_ptr->wild_mode = FALSE;
 
 		/* Make a new level */
-		process_hooks(HOOK_NEW_LEVEL, "(d)", is_quest(dun_level));
+		process_hooks_new(HOOK_NEW_LEVEL, NULL, NULL);
 		generate_cave();
 	}
 

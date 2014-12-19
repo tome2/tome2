@@ -8273,7 +8273,7 @@ static void wipe_special_level(void)
 	/* No special levels on the surface */
 	if (!dun_level) return;
 
-	process_hooks(HOOK_LEVEL_REGEN, "()");
+	process_hooks_new(HOOK_LEVEL_REGEN, NULL, NULL);
 
 	/* Calculate relative depth */
 	level = dun_level - d_info[dungeon_type].mindepth;

@@ -204,7 +204,7 @@ static bool_ quest_thrain_move_hook(void *, void *in_, void *)
 	return (FALSE);
 }
 
-static bool_ quest_thrain_turn_hook(const char *fmt)
+static bool_ quest_thrain_turn_hook(void *, void *, void *)
 {
 	cquest.data[1] = 0;
 	cquest.data[2] = 0;
@@ -227,8 +227,8 @@ bool_ quest_thrain_init_hook(int q)
 	}
 	if ((cquest.status >= QUEST_STATUS_UNTAKEN) && (cquest.status < QUEST_STATUS_FINISHED))
 	{
-		add_hook    (HOOK_LEVEL_REGEN,   quest_thrain_turn_hook,    "thrain_regen_lvl");
-		add_hook    (HOOK_NEW_LEVEL,     quest_thrain_turn_hook,    "thrain_new_lvl");
+		add_hook_new(HOOK_LEVEL_REGEN,   quest_thrain_turn_hook,    "thrain_regen_lvl", NULL);
+		add_hook_new(HOOK_NEW_LEVEL,     quest_thrain_turn_hook,    "thrain_new_lvl", NULL);
 		add_hook    (HOOK_BUILD_ROOM1,   quest_thrain_gen_hook,     "thrain_gen");
 		add_hook_new(HOOK_FEELING,       quest_thrain_feeling_hook, "thrain_feel", NULL);
 		add_hook_new(HOOK_MONSTER_DEATH, quest_thrain_death_hook,   "thrain_death", NULL);
