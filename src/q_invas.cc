@@ -86,7 +86,7 @@ static bool_ quest_invasion_ai_hook(const char *fmt)
 	return (FALSE);
 }
 
-static bool_ quest_invasion_turn_hook(const char *fmt)
+static bool_ quest_invasion_turn_hook(void *, void *, void *)
 {
 	if (cquest.status != QUEST_STATUS_UNTAKEN) return (FALSE);
 	if (p_ptr->lev < 45) return (FALSE);
@@ -106,8 +106,9 @@ static bool_ quest_invasion_turn_hook(const char *fmt)
 	cquest.status = QUEST_STATUS_TAKEN;
 
 	quest_invasion_init_hook(QUEST_INVASION);
-	del_hook(HOOK_END_TURN, quest_invasion_turn_hook);
+	del_hook_new(HOOK_END_TURN, quest_invasion_turn_hook);
 	process_hooks_restart = TRUE;
+
 	return (FALSE);
 }
 
@@ -193,7 +194,7 @@ static bool_ quest_invasion_stair_hook(void *, void *in_, void *)
 
 bool_ quest_invasion_init_hook(int q_idx)
 {
-	add_hook    (HOOK_END_TURN,  quest_invasion_turn_hook, "invasion_turn");
+	add_hook_new(HOOK_END_TURN,  quest_invasion_turn_hook, "invasion_turn", NULL);
 	add_hook_new(HOOK_CHAR_DUMP, quest_invasion_dump_hook, "invasion_dump", NULL);
 	if ((cquest.status >= QUEST_STATUS_TAKEN) && (cquest.status < QUEST_STATUS_FINISHED))
 	{

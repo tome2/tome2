@@ -64,7 +64,7 @@ static bool_ quest_thieves_gen_hook(void *, void *, void *)
 	return TRUE;
 }
 
-static bool_ quest_thieves_hook(const char *fmt)
+static bool_ quest_thieves_hook(void *, void *, void *)
 {
 	int i, mcnt = 0;
 
@@ -108,7 +108,8 @@ static bool_ quest_thieves_hook(const char *fmt)
 		cave[23][4].special = 0;
 
 		quest[p_ptr->inside_quest].status = QUEST_STATUS_COMPLETED;
-		del_hook(HOOK_END_TURN, quest_thieves_hook);
+
+		del_hook_new(HOOK_END_TURN, quest_thieves_hook);
 		process_hooks_restart = TRUE;
 
 		cmsg_print(TERM_YELLOW, "You stopped the thieves and saved Bree!");
@@ -167,7 +168,7 @@ bool_ quest_thieves_init_hook(int q_idx)
 {
 	if ((cquest.status >= QUEST_STATUS_UNTAKEN) && (cquest.status < QUEST_STATUS_FINISHED))
 	{
-		add_hook    (HOOK_END_TURN,     quest_thieves_hook,         "thieves_end_turn");
+		add_hook_new(HOOK_END_TURN,     quest_thieves_hook,         "thieves_end_turn", NULL);
 		add_hook    (HOOK_QUEST_FINISH, quest_thieves_finish_hook,  "thieves_finish");
 		add_hook_new(HOOK_GEN_QUEST,    quest_thieves_gen_hook,     "thieves_geb", NULL);
 		add_hook_new(HOOK_FEELING,      quest_thieves_feeling_hook, "thieves_feel", NULL);

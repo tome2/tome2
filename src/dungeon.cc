@@ -5242,7 +5242,7 @@ static void dungeon(void)
 		process_world();
 
 		/* Process the appropriate hooks */
-		process_hooks(HOOK_END_TURN, "(d)", is_quest(dun_level));
+		process_hooks_new(HOOK_END_TURN, NULL, NULL);
 
 		/* Make it pulsate and live !!!! */
 		if ((dungeon_flags1 & DF1_EVOLVE) && dun_level)
