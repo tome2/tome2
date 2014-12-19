@@ -382,9 +382,10 @@ void quest_fireproof_building(bool_ *paid, bool_ *recreate)
 	}
 }
 
-static bool_ fireproof_get_hook(const char *fmt)
+static bool_ fireproof_get_hook(void *, void *in_, void *)
 {
-	object_type *o_ptr = get_next_arg_obj();
+	struct hook_get_in *in = static_cast<struct hook_get_in *>(in_);
+	object_type *o_ptr = in->o_ptr;
 
 	/* check that player is in the quest, haven't picked up the
 	 * item already, and check that it's the real item and not another one
@@ -579,8 +580,8 @@ bool_ quest_fireproof_init_hook(int q)
 	if ((cquest.status >= QUEST_STATUS_UNTAKEN) &&
 	    (cquest.status < QUEST_STATUS_FINISHED))
 	{
-		add_hook_new(HOOK_GEN_QUEST, fireproof_gen_hook  , "fireproof_gen_hook", NULL);
-		add_hook    (HOOK_GET      , fireproof_get_hook  , "fireproof_get_hook");
+		add_hook_new(HOOK_GEN_QUEST, fireproof_gen_hook  , "fireproof_gen_hook",   NULL);
+		add_hook_new(HOOK_GET      , fireproof_get_hook  , "fireproof_get_hook",   NULL);
 		add_hook_new(HOOK_STAIR    , fireproof_stair_hook, "fireproof_stair_hook", NULL);
 	}
 
