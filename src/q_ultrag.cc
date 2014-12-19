@@ -135,7 +135,7 @@ static bool_ quest_ultra_good_stair_hook(void *, void *in_, void *)
 	return FALSE;
 }
 
-static bool_ quest_ultra_good_recall_hook(const char *fmt)
+static bool_ quest_ultra_good_recall_hook(void *, void *, void *)
 {
 	if ((dungeon_type != DUNGEON_VOID) && (dungeon_type != DUNGEON_NETHER_REALM))
 		return FALSE;
@@ -263,9 +263,9 @@ bool_ quest_ultra_good_init_hook(int q)
 {
 	if ((cquest.status >= QUEST_STATUS_TAKEN) && (cquest.status < QUEST_STATUS_FINISHED))
 	{
-		add_hook_new(HOOK_STAIR,         quest_ultra_good_stair_hook,  "ultrag_stair", NULL);
-		add_hook    (HOOK_RECALL,        quest_ultra_good_recall_hook, "ultrag_recall");
-		add_hook_new(HOOK_MONSTER_DEATH, quest_ultra_good_death_hook,  "ultrag_death", NULL);
+		add_hook_new(HOOK_STAIR,         quest_ultra_good_stair_hook,  "ultrag_stair",  NULL);
+		add_hook_new(HOOK_RECALL,        quest_ultra_good_recall_hook, "ultrag_recall", NULL);
+		add_hook_new(HOOK_MONSTER_DEATH, quest_ultra_good_death_hook,  "ultrag_death",  NULL);
 	}
 	if (cquest.status == QUEST_STATUS_UNTAKEN)
 	{

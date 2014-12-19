@@ -3276,7 +3276,7 @@ static void process_world(void)
 	if (p_ptr->word_recall)
 	{
 		/* Can we ? */
-		if (process_hooks(HOOK_RECALL, "()", ""))
+		if (process_hooks_new(HOOK_RECALL, NULL, NULL))
 		{
 			p_ptr->word_recall = 0;
 		}
