@@ -91,7 +91,7 @@ static bool_ quest_dragons_gen_hook(void *, void *, void *)
 	return TRUE;
 }
 
-static bool_ quest_dragons_death_hook(const char *fmt)
+static bool_ quest_dragons_death_hook(void *, void *, void *)
 {
 	int i, mcnt = 0;
 
@@ -113,7 +113,7 @@ static bool_ quest_dragons_death_hook(const char *fmt)
 	if (mcnt <= 1)
 	{
 		quest[p_ptr->inside_quest].status = QUEST_STATUS_COMPLETED;
-		del_hook    (HOOK_MONSTER_DEATH, quest_dragons_death_hook);
+		del_hook_new(HOOK_MONSTER_DEATH, quest_dragons_death_hook);
 		del_hook_new(HOOK_GEN_QUEST,     quest_dragons_gen_hook);
 		process_hooks_restart = TRUE;
 
@@ -144,7 +144,7 @@ bool_ quest_dragons_init_hook(int q_idx)
 {
 	if ((cquest.status >= QUEST_STATUS_UNTAKEN) && (cquest.status < QUEST_STATUS_FINISHED))
 	{
-		add_hook    (HOOK_MONSTER_DEATH, quest_dragons_death_hook,  "dragons_monster_death");
+		add_hook_new(HOOK_MONSTER_DEATH, quest_dragons_death_hook,  "dragons_monster_death", NULL);
 		add_hook    (HOOK_QUEST_FINISH,  quest_dragons_finish_hook, "dragons_finish");
 		add_hook_new(HOOK_GEN_QUEST,     quest_dragons_gen_hook,    "dragons_geb", NULL);
 	}

@@ -377,7 +377,7 @@ static bool_ quest_library_stair_hook(void *, void *, void *)
 	}
 }
 
-static bool_ quest_library_monster_death_hook(const char *fmt)
+static bool_ quest_library_monster_death_hook(void *, void *, void *)
 {
 	int i, count = -1;
 
@@ -494,9 +494,9 @@ bool_ quest_library_init_hook(int q)
 	if ((cquest.status >= QUEST_STATUS_UNTAKEN) &&
 	    (cquest.status < QUEST_STATUS_FINISHED))
 	{
-		add_hook_new(HOOK_GEN_QUEST    , quest_library_gen_hook          , "library_gen_hook", NULL);
-		add_hook_new(HOOK_STAIR        , quest_library_stair_hook        , "library_stair_hook", NULL);
-		add_hook    (HOOK_MONSTER_DEATH, quest_library_monster_death_hook, "library_monster_death_hook");
+		add_hook_new(HOOK_GEN_QUEST    , quest_library_gen_hook          , "library_gen_hook",           NULL);
+		add_hook_new(HOOK_STAIR        , quest_library_stair_hook        , "library_stair_hook",         NULL);
+		add_hook_new(HOOK_MONSTER_DEATH, quest_library_monster_death_hook, "library_monster_death_hook", NULL);
 	}
 
 	/* If quest was rewarded we need to initialize the real player's spellbook. */

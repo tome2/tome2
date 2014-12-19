@@ -2613,7 +2613,10 @@ void monster_death(int m_idx)
 	x = m_ptr->fx;
 
 	/* Process the appropriate hooks */
-	process_hooks(HOOK_MONSTER_DEATH, "(d)", m_idx);
+	{
+		struct hook_monster_death_in in = { m_idx };
+		process_hooks_new(HOOK_MONSTER_DEATH, &in, NULL);
+	}
 
 	/* Per-god processing */
 	monster_death_gods(m_idx, m_ptr);

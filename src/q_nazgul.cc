@@ -93,19 +93,18 @@ static bool_ quest_nazgul_forbid_hook(void *, void *in_, void *)
 	return (FALSE);
 }
 
-static bool_ quest_nazgul_death_hook(const char *fmt)
+static bool_ quest_nazgul_death_hook(void *, void *in_, void *)
 {
-	s32b r_idx, m_idx;
-
-	m_idx = get_next_arg(fmt);
-	r_idx = m_list[m_idx].r_idx;
+	struct hook_monster_death_in *in = static_cast<struct hook_monster_death_in *>(in_);
+	s32b m_idx = in->m_idx;
+	s32b r_idx = m_list[m_idx].r_idx;
 
 	if (cquest.status != QUEST_STATUS_TAKEN) return (FALSE);
 	if (r_idx != test_monster_name("Uvatha the Horseman")) return (FALSE);
 
 	cquest.status = QUEST_STATUS_COMPLETED;
 
-	del_hook(HOOK_MONSTER_DEATH, quest_nazgul_death_hook);
+	del_hook_new(HOOK_MONSTER_DEATH, quest_nazgul_death_hook);
 	process_hooks_restart = TRUE;
 
 	return (FALSE);
@@ -115,7 +114,7 @@ bool_ quest_nazgul_init_hook(int q_idx)
 {
 	if ((cquest.status >= QUEST_STATUS_TAKEN) && (cquest.status < QUEST_STATUS_FINISHED))
 	{
-		add_hook    (HOOK_MONSTER_DEATH, quest_nazgul_death_hook,  "nazgul_death");
+		add_hook_new(HOOK_MONSTER_DEATH, quest_nazgul_death_hook,  "nazgul_death", NULL);
 		add_hook_new(HOOK_WILD_GEN,      quest_nazgul_gen_hook,    "nazgul_gen", NULL);
 		add_hook    (HOOK_QUEST_FINISH,  quest_nazgul_finish_hook, "nazgul_finish");
 	}

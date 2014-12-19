@@ -5,13 +5,12 @@
 
 #define cquest (quest[QUEST_THRAIN])
 
-static bool_ quest_thrain_death_hook(const char *fmt)
+static bool_ quest_thrain_death_hook(void *, void *in_, void *)
 {
-	s32b m_idx;
+	struct hook_monster_death_in *in = static_cast<struct hook_monster_death_in *>(in_);
+	s32b m_idx = in->m_idx;
 	int r, x, y;
 	monster_type *m_ptr;
-
-	m_idx = get_next_arg(fmt);
 
 	if ((cquest.status >= QUEST_STATUS_FINISHED) || (dun_level !=cquest.data[0]) || (dungeon_type != DUNGEON_DOL_GULDUR)) return (FALSE);
 	m_ptr = &m_list[m_idx];
@@ -85,7 +84,7 @@ static bool_ quest_thrain_death_hook(const char *fmt)
 	}
 
 
-	del_hook(HOOK_MONSTER_DEATH, quest_thrain_death_hook);
+	del_hook_new(HOOK_MONSTER_DEATH, quest_thrain_death_hook);
 	process_hooks_restart = TRUE;
 
 	return (FALSE);
@@ -232,7 +231,7 @@ bool_ quest_thrain_init_hook(int q)
 		add_hook    (HOOK_NEW_LEVEL,     quest_thrain_turn_hook,    "thrain_new_lvl");
 		add_hook    (HOOK_BUILD_ROOM1,   quest_thrain_gen_hook,     "thrain_gen");
 		add_hook_new(HOOK_FEELING,       quest_thrain_feeling_hook, "thrain_feel", NULL);
-		add_hook    (HOOK_MONSTER_DEATH, quest_thrain_death_hook,   "thrain_death");
+		add_hook_new(HOOK_MONSTER_DEATH, quest_thrain_death_hook,   "thrain_death", NULL);
 	}
 	return (FALSE);
 }

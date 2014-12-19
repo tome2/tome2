@@ -80,7 +80,7 @@ static bool_ quest_nirnaeth_finish_hook(const char *fmt)
 	return TRUE;
 }
 
-static bool_ quest_nirnaeth_death_hook(const char *fmt)
+static bool_ quest_nirnaeth_death_hook(void *, void *, void *)
 {
 	if (p_ptr->inside_quest != QUEST_NIRNAETH) return FALSE;
 
@@ -107,7 +107,7 @@ bool_ quest_nirnaeth_init_hook(int q_idx)
 {
 	if ((cquest.status >= QUEST_STATUS_TAKEN) && (cquest.status < QUEST_STATUS_FINISHED))
 	{
-		add_hook    (HOOK_MONSTER_DEATH, quest_nirnaeth_death_hook,  "nirnaeth_death");
+		add_hook_new(HOOK_MONSTER_DEATH, quest_nirnaeth_death_hook,  "nirnaeth_death", NULL);
 		add_hook_new(HOOK_GEN_QUEST,     quest_nirnaeth_gen_hook,    "nirnaeth_gen", NULL);
 		add_hook_new(HOOK_STAIR,         quest_nirnaeth_stair_hook,  "nirnaeth_stair", NULL);
 		add_hook    (HOOK_QUEST_FINISH,  quest_nirnaeth_finish_hook, "nirnaeth_finish");

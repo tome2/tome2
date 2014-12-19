@@ -117,15 +117,12 @@ static bool_ quest_troll_finish_hook(const char *fmt)
 	return TRUE;
 }
 
-static bool_ quest_troll_death_hook(const char *fmt)
+static bool_ quest_troll_death_hook(void *, void *in_, void *)
 {
+	struct hook_monster_death_in *in = static_cast<struct hook_monster_death_in *>(in_);
+	s32b m_idx = in->m_idx;
+	s32b r_idx = m_list[m_idx].r_idx;
 	int x, y, xstart = 2, ystart = 2;
-	s32b r_idx, m_idx;
-	;
-
-	m_idx = get_next_arg(fmt);
-
-	r_idx = m_list[m_idx].r_idx;
 
 	if (p_ptr->inside_quest != QUEST_TROLL) return FALSE;
 
@@ -136,7 +133,7 @@ static bool_ quest_troll_death_hook(const char *fmt)
 
 		cmsg_print(TERM_YELLOW, "Without Tom, the trolls won't be able to do much.");
 		cquest.status = QUEST_STATUS_COMPLETED;
-		del_hook(HOOK_MONSTER_DEATH, quest_troll_death_hook);
+		del_hook_new(HOOK_MONSTER_DEATH, quest_troll_death_hook);
 		process_hooks_restart = TRUE;
 		return (FALSE);
 	}
@@ -175,7 +172,7 @@ bool_ quest_troll_init_hook(int q_idx)
 {
 	if ((cquest.status >= QUEST_STATUS_TAKEN) && (cquest.status < QUEST_STATUS_FINISHED))
 	{
-		add_hook    (HOOK_MONSTER_DEATH, quest_troll_death_hook,  "troll_death");
+		add_hook_new(HOOK_MONSTER_DEATH, quest_troll_death_hook,  "troll_death", NULL);
 		add_hook_new(HOOK_GEN_QUEST,     quest_troll_gen_hook,    "troll_gen", NULL);
 		add_hook    (HOOK_QUEST_FINISH,  quest_troll_finish_hook, "troll_finish");
 	}

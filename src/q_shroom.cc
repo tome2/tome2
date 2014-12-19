@@ -85,12 +85,11 @@ static bool_ quest_shroom_town_gen_hook(void *, void *in_, void *)
 	return FALSE;
 }
 
-static bool_ quest_shroom_death_hook(const char *fmt)
+static bool_ quest_shroom_death_hook(void *, void *in_, void *)
 {
-	s32b r_idx, m_idx;
-
-	m_idx = get_next_arg(fmt);
-	r_idx = m_list[m_idx].r_idx;
+	struct hook_monster_death_in *in = static_cast<struct hook_monster_death_in *>(in_);	
+	s32b m_idx = in->m_idx;
+	s32b r_idx = m_list[m_idx].r_idx;
 
 	if (cquest.status > QUEST_STATUS_COMPLETED) return FALSE;
 
@@ -273,17 +272,17 @@ bool_ quest_shroom_init_hook(int q_idx)
 
 	if ((cquest.status >= QUEST_STATUS_TAKEN) && (cquest.status < QUEST_STATUS_FINISHED))
 	{
-		add_hook    (HOOK_MONSTER_DEATH, quest_shroom_death_hook,    "shroom_death");
-		add_hook_new(HOOK_GIVE,          quest_shroom_give_hook,     "shroom_give", NULL);
+		add_hook_new(HOOK_MONSTER_DEATH, quest_shroom_death_hook,    "shroom_death",    NULL);
+		add_hook_new(HOOK_GIVE,          quest_shroom_give_hook,     "shroom_give",     NULL);
 		add_hook_new(HOOK_WILD_GEN,      quest_shroom_town_gen_hook, "shroom_town_gen", NULL);
-		add_hook_new(HOOK_CHAT,          quest_shroom_chat_hook,     "shroom_chat", NULL);
-		add_hook_new(HOOK_MON_SPEAK,     quest_shroom_speak_hook,    "shroom_speak", NULL);
+		add_hook_new(HOOK_CHAT,          quest_shroom_chat_hook,     "shroom_chat",     NULL);
+		add_hook_new(HOOK_MON_SPEAK,     quest_shroom_speak_hook,    "shroom_speak",    NULL);
 	}
 	if (cquest.status == QUEST_STATUS_UNTAKEN)
 	{
-		add_hook_new(HOOK_MON_SPEAK, quest_shroom_speak_hook,    "shroom_speak", NULL);
+		add_hook_new(HOOK_MON_SPEAK, quest_shroom_speak_hook,    "shroom_speak",    NULL);
 		add_hook_new(HOOK_WILD_GEN,  quest_shroom_town_gen_hook, "shroom_town_gen", NULL);
-		add_hook_new(HOOK_CHAT,      quest_shroom_chat_hook,     "shroom_chat", NULL);
+		add_hook_new(HOOK_CHAT,      quest_shroom_chat_hook,     "shroom_chat",     NULL);
 	}
 	return (FALSE);
 }

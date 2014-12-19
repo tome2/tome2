@@ -144,9 +144,10 @@ static bool_ quest_ultra_good_recall_hook(const char *fmt)
 	return TRUE;
 }
 
-static bool_ quest_ultra_good_death_hook(const char *fmt)
+static bool_ quest_ultra_good_death_hook(void *, void *in_, void *)
 {
-	s32b m_idx = get_next_arg(fmt);
+	struct hook_monster_death_in *in = static_cast<struct hook_monster_death_in *>(in_);
+	s32b m_idx = in->m_idx;
 
 	monster_type *m_ptr = &m_list[m_idx];
 
@@ -175,7 +176,7 @@ static bool_ quest_ultra_good_death_hook(const char *fmt)
 		cave_set_feat(p_ptr->py, p_ptr->px, FEAT_MORE);
 
 		/* Remove now used hook */
-		del_hook(HOOK_MONSTER_DEATH, quest_ultra_good_death_hook);
+		del_hook_new(HOOK_MONSTER_DEATH, quest_ultra_good_death_hook);
 		process_hooks_restart = TRUE;
 
 		/* End plot */
@@ -264,7 +265,7 @@ bool_ quest_ultra_good_init_hook(int q)
 	{
 		add_hook_new(HOOK_STAIR,         quest_ultra_good_stair_hook,  "ultrag_stair", NULL);
 		add_hook    (HOOK_RECALL,        quest_ultra_good_recall_hook, "ultrag_recall");
-		add_hook    (HOOK_MONSTER_DEATH, quest_ultra_good_death_hook,  "ultrag_death");
+		add_hook_new(HOOK_MONSTER_DEATH, quest_ultra_good_death_hook,  "ultrag_death", NULL);
 	}
 	if (cquest.status == QUEST_STATUS_UNTAKEN)
 	{

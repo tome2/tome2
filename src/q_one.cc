@@ -210,13 +210,12 @@ static bool_ quest_one_identify_hook(void *, void *in_, void *)
 	return (FALSE);
 }
 
-static bool_ quest_one_death_hook(const char *fmt)
+static bool_ quest_one_death_hook(void *, void *in_, void *)
 {
-	s32b r_idx, m_idx;
+	struct hook_monster_death_in *in = static_cast<struct hook_monster_death_in *>(in_);
+	s32b m_idx = in->m_idx;
+	s32b r_idx = m_list[m_idx].r_idx;
 	bool_ ok = FALSE;
-
-	m_idx = get_next_arg(fmt);
-	r_idx = m_list[m_idx].r_idx;
 
 	if (a_info[ART_POWER].cur_num) return FALSE;
 
@@ -343,7 +342,7 @@ bool_ quest_one_init_hook(int q_idx)
 	if ((cquest.status >= QUEST_STATUS_TAKEN) && (cquest.status < QUEST_STATUS_FINISHED))
 	{
 		add_hook    (HOOK_LEVEL_END_GEN, quest_one_gen_hook,      "one_gen");
-		add_hook    (HOOK_MONSTER_DEATH, quest_one_death_hook,    "one_death");
+		add_hook_new(HOOK_MONSTER_DEATH, quest_one_death_hook,    "one_death", NULL);
 		add_hook_new(HOOK_DROP,          quest_one_drop_hook,     "one_drop", NULL);
 		add_hook    (HOOK_WIELD,         quest_one_wield_hook,    "one_wield");
 		add_hook_new(HOOK_IDENTIFY,      quest_one_identify_hook, "one_id", NULL);

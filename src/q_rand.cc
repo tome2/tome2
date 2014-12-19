@@ -371,13 +371,11 @@ static void hero_death(s32b m_idx, s32b r_idx)
 	}
 }
 
-static bool_ quest_random_death_hook(const char *fmt)
+static bool_ quest_random_death_hook(void *, void *in_, void *)
 {
-	int r_idx;
-	s32b m_idx;
-
-	m_idx = get_next_arg(fmt);
-	r_idx = m_list[m_idx].r_idx;
+	struct hook_monster_death_in *in = static_cast<struct hook_monster_death_in *>(in_);
+	s32b m_idx = in->m_idx;
+	int r_idx = m_list[m_idx].r_idx;
 
 	if (!(dungeon_flags1 & DF1_PRINCIPAL)) return (FALSE);
 	if ((dun_level < 1) || (dun_level >= MAX_RANDOM_QUEST)) return (FALSE);
@@ -618,7 +616,7 @@ bool_ quest_random_describe(FILE *fff)
 
 bool_ quest_random_init_hook(int q_idx)
 {
-	add_hook    (HOOK_MONSTER_DEATH, quest_random_death_hook,    "rand_death");
+	add_hook_new(HOOK_MONSTER_DEATH, quest_random_death_hook,    "rand_death", NULL);
 	add_hook    (HOOK_NEW_LEVEL,     quest_random_turn_hook,     "rand_new_lvl");
 	add_hook    (HOOK_LEVEL_REGEN,   quest_random_turn_hook,     "rand_regen_lvl");
 	add_hook    (HOOK_LEVEL_END_GEN, quest_random_gen_hero_hook, "rand_gen_hero");

@@ -31,7 +31,7 @@ static bool_ quest_main_monsters_hook(void *, void *in_, void *)
 	return FALSE;
 }
 
-static bool_ quest_morgoth_hook(const char *fmt)
+static bool_ quest_morgoth_hook(void *, void *, void *)
 {
 	/* Using test_monster_name() here would be a lot less ugly, but would take much more time */
 	monster_race *r_ptr = &r_info[862];
@@ -69,7 +69,7 @@ static bool_ quest_morgoth_hook(const char *fmt)
 		}
 
 		/* Continue the plot(maybe) */
-		del_hook(HOOK_MONSTER_DEATH, quest_morgoth_hook);
+		del_hook_new(HOOK_MONSTER_DEATH, quest_morgoth_hook);
 		process_hooks_restart = TRUE;
 
 		/* Either ultra good if the one Ring is destroyed, or ultra evil if used */
@@ -101,14 +101,14 @@ bool_ quest_morgoth_init_hook(int q_idx)
 {
 	if ((quest[QUEST_MORGOTH].status >= QUEST_STATUS_TAKEN) && (quest[QUEST_MORGOTH].status < QUEST_STATUS_FINISHED))
 	{
-		add_hook(HOOK_MONSTER_DEATH, quest_morgoth_hook, "morgort_death");
+		add_hook_new(HOOK_MONSTER_DEATH, quest_morgoth_hook, "morgoth_death", NULL);
 	}
 	add_hook_new(HOOK_CHAR_DUMP,   quest_morgoth_dump_hook,  "morgoth_dump",     NULL);
 	add_hook_new(HOOK_NEW_MONSTER, quest_main_monsters_hook, "main_new_monster", NULL);
 	return (FALSE);
 }
 
-static bool_ quest_sauron_hook(const char *fmt)
+static bool_ quest_sauron_hook(void *, void *, void *)
 {
 	/* Using test_monster_name() here would be a lot less ugly, but would take much more time */
 	monster_race *r_ptr = &r_info[860];
@@ -122,8 +122,8 @@ static bool_ quest_sauron_hook(const char *fmt)
 		quest[QUEST_MORGOTH].status = QUEST_STATUS_TAKEN;
 		quest_describe(QUEST_MORGOTH);
 
-		del_hook(HOOK_MONSTER_DEATH, quest_sauron_hook);
-		add_hook(HOOK_MONSTER_DEATH, quest_morgoth_hook, "morgort_death");
+		del_hook_new(HOOK_MONSTER_DEATH, quest_sauron_hook);
+		add_hook_new(HOOK_MONSTER_DEATH, quest_morgoth_hook, "morgort_death", NULL);
 		*(quest[QUEST_SAURON].plot) = QUEST_MORGOTH;
 		quest_morgoth_init_hook(QUEST_MORGOTH);
 
@@ -132,9 +132,10 @@ static bool_ quest_sauron_hook(const char *fmt)
 	return (FALSE);
 }
 
-static bool_ quest_sauron_resurect_hook(const char *fmt)
+static bool_ quest_sauron_resurect_hook(void *, void *in_, void *)
 {
-	s32b m_idx = get_next_arg(fmt);
+	struct hook_monster_death_in *in = static_cast<struct hook_monster_death_in *>(in_);
+	s32b m_idx = in->m_idx;
 	monster_type *m_ptr = &m_list[m_idx];
 	monster_race *r_ptr = &r_info[m_ptr->r_idx];
 
@@ -155,14 +156,14 @@ bool_ quest_sauron_init_hook(int q_idx)
 {
 	if ((quest[QUEST_SAURON].status >= QUEST_STATUS_TAKEN) && (quest[QUEST_SAURON].status < QUEST_STATUS_FINISHED))
 	{
-		add_hook(HOOK_MONSTER_DEATH, quest_sauron_hook, "sauron_death");
+		add_hook_new(HOOK_MONSTER_DEATH, quest_sauron_hook, "sauron_death", NULL);
 	}
-	add_hook_new(HOOK_NEW_MONSTER,   quest_main_monsters_hook,   "main_new_monster", NULL);
-	add_hook    (HOOK_MONSTER_DEATH, quest_sauron_resurect_hook, "sauron_resurect_death");
+	add_hook_new(HOOK_NEW_MONSTER,   quest_main_monsters_hook,   "main_new_monster",      NULL);
+	add_hook_new(HOOK_MONSTER_DEATH, quest_sauron_resurect_hook, "sauron_resurect_death", NULL);
 	return (FALSE);
 }
 
-static bool_ quest_necro_hook(const char *fmt)
+static bool_ quest_necro_hook(void *, void *, void *)
 {
 	/* Using test_monster_name() here would be a lot less ugly, but would take much more time */
 	monster_race *r_ptr = &r_info[819];
@@ -179,7 +180,7 @@ static bool_ quest_necro_hook(const char *fmt)
 		*(quest[QUEST_NECRO].plot) = QUEST_ONE;
 		quest[*(quest[QUEST_NECRO].plot)].init(*(quest[QUEST_NECRO].plot));
 
-		del_hook(HOOK_MONSTER_DEATH, quest_necro_hook);
+		del_hook_new(HOOK_MONSTER_DEATH, quest_necro_hook);
 		process_hooks_restart = TRUE;
 	}
 	return (FALSE);
@@ -189,7 +190,7 @@ bool_ quest_necro_init_hook(int q_idx)
 {
 	if ((quest[QUEST_NECRO].status >= QUEST_STATUS_TAKEN) && (quest[QUEST_NECRO].status < QUEST_STATUS_FINISHED))
 	{
-		add_hook(HOOK_MONSTER_DEATH, quest_necro_hook, "necro_death");
+		add_hook_new(HOOK_MONSTER_DEATH, quest_necro_hook, "necro_death", NULL);
 	}
 	add_hook_new(HOOK_NEW_MONSTER, quest_main_monsters_hook, "main_new_monster", NULL);
 	return (FALSE);
