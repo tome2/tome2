@@ -260,7 +260,13 @@ void do_cmd_wield(void)
 	}
 
 	/* Can we wield */
-	if (process_hooks(HOOK_WIELD, "(d)", item)) return;
+	{
+		struct hook_wield_in in = { o_ptr };
+		if (process_hooks_new(HOOK_WIELD, &in, NULL))
+		{
+			return;
+		}
+	}
 
 	/* Extract the flags */
 	object_flags(o_ptr, &f1, &f2, &f3, &f4, &f5, &esp);

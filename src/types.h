@@ -2242,6 +2242,11 @@ struct hook_chardump_in {
 	FILE *file;
 };
 
+typedef struct hook_wield_in hook_wield_in;
+struct hook_wield_in {
+	object_type *o_ptr;
+};
+
 typedef struct hook_drop_in hook_drop_in;
 struct hook_drop_in {
 	int o_idx;

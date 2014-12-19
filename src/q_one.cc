@@ -96,13 +96,10 @@ static bool_ quest_one_drop_hook(void *, void *in_, void *)
 	return TRUE;
 }
 
-static bool_ quest_one_wield_hook(const char *fmt)
+static bool_ quest_one_wield_hook(void *, void *in_, void *)
 {
-	s32b o_idx;
-	object_type *o_ptr;
-
-	o_idx = get_next_arg(fmt);
-	o_ptr = &p_ptr->inventory[o_idx];
+	struct hook_wield_in *in = static_cast<struct hook_wield_in *>(in_);
+	object_type *o_ptr = in->o_ptr;
 
 	if (cquest.status != QUEST_STATUS_TAKEN) return FALSE;
 
@@ -344,7 +341,7 @@ bool_ quest_one_init_hook(int q_idx)
 		add_hook    (HOOK_LEVEL_END_GEN, quest_one_gen_hook,      "one_gen");
 		add_hook_new(HOOK_MONSTER_DEATH, quest_one_death_hook,    "one_death", NULL);
 		add_hook_new(HOOK_DROP,          quest_one_drop_hook,     "one_drop", NULL);
-		add_hook    (HOOK_WIELD,         quest_one_wield_hook,    "one_wield");
+		add_hook_new(HOOK_WIELD,         quest_one_wield_hook,    "one_wield", NULL);
 		add_hook_new(HOOK_IDENTIFY,      quest_one_identify_hook, "one_id", NULL);
 	}
 	if (cquest.status == QUEST_STATUS_UNTAKEN)
