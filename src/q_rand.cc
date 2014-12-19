@@ -456,9 +456,12 @@ static bool_ quest_random_gen_hero_hook(const char *fmt)
 	return (FALSE);
 }
 
-static bool_ quest_random_gen_hook(const char *fmt)
+static bool_ quest_random_gen_hook(void *, void *in_, void *)
 {
-	s32b x, y, bx0, by0;
+	struct hook_build_room1_in *in = static_cast<struct hook_build_room1_in *>(in_);
+	s32b bx0 = in->x;
+	s32b by0 = in->y;
+	s32b x, y;
 	int xstart;
 	int ystart;
 	int y2, x2, yval, xval;
@@ -471,9 +474,6 @@ static bool_ quest_random_gen_hook(const char *fmt)
 	if (p_ptr->inside_quest) return (FALSE);
 	if (quest[QUEST_RANDOM].data[1]) return (FALSE);
 	if (is_randhero(dun_level)) return (FALSE);
-
-	by0 = get_next_arg(fmt);
-	bx0 = get_next_arg(fmt);
 
 	/* Pick a room size */
 	get_map_size(format("qrand%d.map", random_quests[dun_level].type), &ysize, &xsize);
@@ -620,7 +620,7 @@ bool_ quest_random_init_hook(int q_idx)
 	add_hook_new(HOOK_NEW_LEVEL,     quest_random_turn_hook,     "rand_new_lvl", NULL);
 	add_hook_new(HOOK_LEVEL_REGEN,   quest_random_turn_hook,     "rand_regen_lvl", NULL);
 	add_hook    (HOOK_LEVEL_END_GEN, quest_random_gen_hero_hook, "rand_gen_hero");
-	add_hook    (HOOK_BUILD_ROOM1,   quest_random_gen_hook,      "rand_gen");
+	add_hook_new(HOOK_BUILD_ROOM1,   quest_random_gen_hook,      "rand_gen", NULL);
 	add_hook_new(HOOK_FEELING,       quest_random_feeling_hook,  "rand_feel", NULL);
 	add_hook_new(HOOK_CHAR_DUMP,     quest_random_dump_hook,     "rand_dump", NULL);
 	return (FALSE);

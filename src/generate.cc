@@ -6782,7 +6782,10 @@ bool_ level_generate_dungeon()
 	}
 
 	/* Ugly */
-	process_hooks(HOOK_BUILD_ROOM1, "(d,d)", y, x);
+	{
+		struct hook_build_room1_in in = { y, x };
+		process_hooks_new(HOOK_BUILD_ROOM1, &in, NULL);
+	}
 
 	/* Build some rooms */
 	for (i = 0; i < DUN_ROOMS; i++)

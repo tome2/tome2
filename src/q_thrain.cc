@@ -90,9 +90,12 @@ static bool_ quest_thrain_death_hook(void *, void *in_, void *)
 	return (FALSE);
 }
 
-static bool_ quest_thrain_gen_hook(const char *fmt)
+static bool_ quest_thrain_gen_hook(void *, void *in_, void *)
 {
-	s32b x, y, bx0, by0;
+	struct hook_build_room1_in *in = static_cast<struct hook_build_room1_in *>(in_);
+	s32b bx0 = in->x;
+	s32b by0 = in->y;
+	s32b x, y;
 	int xstart;
 	int ystart;
 	int y2, x2, yval, xval;
@@ -102,9 +105,6 @@ static bool_ quest_thrain_gen_hook(const char *fmt)
 	if (cquest.data[0] != dun_level) return (FALSE);
 	if (cquest.data[1]) return (FALSE);
 	if ((cquest.status < QUEST_STATUS_TAKEN) || (cquest.status >= QUEST_STATUS_FINISHED)) return (FALSE);
-
-	by0 = get_next_arg(fmt);
-	bx0 = get_next_arg(fmt);
 
 	/* Pick a room size */
 	get_map_size("thrain.map", &ysize, &xsize);
@@ -228,10 +228,10 @@ bool_ quest_thrain_init_hook(int q)
 	if ((cquest.status >= QUEST_STATUS_UNTAKEN) && (cquest.status < QUEST_STATUS_FINISHED))
 	{
 		add_hook_new(HOOK_LEVEL_REGEN,   quest_thrain_turn_hook,    "thrain_regen_lvl", NULL);
-		add_hook_new(HOOK_NEW_LEVEL,     quest_thrain_turn_hook,    "thrain_new_lvl", NULL);
-		add_hook    (HOOK_BUILD_ROOM1,   quest_thrain_gen_hook,     "thrain_gen");
-		add_hook_new(HOOK_FEELING,       quest_thrain_feeling_hook, "thrain_feel", NULL);
-		add_hook_new(HOOK_MONSTER_DEATH, quest_thrain_death_hook,   "thrain_death", NULL);
+		add_hook_new(HOOK_NEW_LEVEL,     quest_thrain_turn_hook,    "thrain_new_lvl",   NULL);
+		add_hook_new(HOOK_BUILD_ROOM1,   quest_thrain_gen_hook,     "thrain_gen",       NULL);
+		add_hook_new(HOOK_FEELING,       quest_thrain_feeling_hook, "thrain_feel",      NULL);
+		add_hook_new(HOOK_MONSTER_DEATH, quest_thrain_death_hook,   "thrain_death",     NULL);
 	}
 	return (FALSE);
 }

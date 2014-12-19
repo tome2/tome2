@@ -2237,6 +2237,12 @@ struct hook_wild_gen_in {
 	bool_ small;
 };
 
+typedef struct hook_build_room1_in hook_build_room1_in;
+struct hook_build_room1_in {
+	s32b y;
+	s32b x;
+};
+
 typedef struct hook_chardump_in hook_chardump_in;
 struct hook_chardump_in {
 	FILE *file;
