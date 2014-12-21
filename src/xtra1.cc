@@ -1762,11 +1762,6 @@ static void calc_mana(void)
 	}
 
 	/* Sp mods? */
-	if (process_hooks_ret(HOOK_CALC_MANA, "d", "(d)", msp))
-	{
-		msp = process_hooks_return[0].num;
-	}
-
 	mana_school_calc_mana(&msp);
 	meta_inertia_control_calc_mana(&msp);
 
