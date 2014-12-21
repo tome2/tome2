@@ -1617,18 +1617,8 @@ void object_desc(char *buf, object_type *o_ptr, int pref, int mode)
 		/* Used in the "inventory" routine */
 	default:
 		{
-			if (process_hooks_ret(HOOK_ITEM_NAME, "ss", "(O,s,s)",
-			                      o_ptr, basenm, modstr))
-			{
-				basenm = process_hooks_return[0].str;
-				modstr = process_hooks_return[1].str;
-				break;
-			}
-			else
-			{
-				strcpy(buf, "(nothing)");
-				return;
-			}
+			strcpy(buf, "(nothing)");
+			return;
 		}
 	}
 
