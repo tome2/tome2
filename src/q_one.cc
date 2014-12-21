@@ -169,7 +169,7 @@ static bool_ quest_one_hp_hook(void *, void *in_, void *out_)
 	return (FALSE);
 }
 
-static bool_ quest_one_die_hook(const char *fmt)
+static bool_ quest_one_die_hook(void *, void *, void *)
 {
 	if (cquest.status == QUEST_STATUS_FAILED_DONE)
 	{
@@ -349,7 +349,7 @@ bool_ quest_one_init_hook(int q_idx)
 		add_hook_new(HOOK_MOVE, quest_one_move_hook, "one_move", NULL);
 	}
 	add_hook_new(HOOK_CHAR_DUMP, quest_one_dump_hook, "one_dump", NULL);
-	add_hook_new(HOOK_CALC_HP,   quest_one_hp_hook,   "one_hp", NULL);
-	add_hook    (HOOK_DIE,       quest_one_die_hook,  "one_die");
+	add_hook_new(HOOK_CALC_HP,   quest_one_hp_hook,   "one_hp",   NULL);
+	add_hook_new(HOOK_DIE,       quest_one_die_hook,  "one_die",  NULL);
 	return (FALSE);
 }

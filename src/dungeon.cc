@@ -5686,7 +5686,7 @@ void play_game(bool_ new_game)
 			cheat_death = FALSE;
 
 			/* Can we die ? please let us die ! */
-			if (process_hooks(HOOK_DIE, "()"))
+			if (process_hooks_new(HOOK_DIE, NULL, NULL))
 			{
 				cheat_death = TRUE;
 			}
