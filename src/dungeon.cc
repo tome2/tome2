@@ -3447,9 +3447,6 @@ static void process_command(void)
 	/* Handle repeating the last command */
 	repeat_check();
 
-	/* Process the appropriate hooks */
-	if (process_hooks(HOOK_KEYPRESS, "(d)", command_cmd)) return;
-
 	/* Parse the command */
 	switch (command_cmd)
 	{
