@@ -4388,7 +4388,6 @@
 #define HOOK_MON_ASK_HELP       69
 #define HOOK_GAME_START         72
 #define HOOK_FORBID_TRAVEL      75
-#define HOOK_DEBUG_COMMAND      76
 #define MAX_HOOKS               77
 
 #define HOOK_TYPE_C             0

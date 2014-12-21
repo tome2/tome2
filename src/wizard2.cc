@@ -1884,8 +1884,7 @@ void do_cmd_debug()
 
 		/* Not a Wizard Command */
 	default:
-		if (!process_hooks(HOOK_DEBUG_COMMAND, "(d)", cmd))
-			msg_print("That is not a valid debug command.");
+		msg_print("That is not a valid debug command.");
 		break;
 	}
 }
