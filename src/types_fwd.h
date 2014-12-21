@@ -76,7 +76,6 @@ struct monster_power;
 struct tval_desc;
 struct between_exit;
 struct birther;
-struct hooks_chain;
 struct hist_type;
 struct set_type;
 struct cli_comm;

@@ -7,281 +7,93 @@
  */
 #include "hooks.h"
 #include "angband.h"
+
+#include <algorithm>
 #include <assert.h>
+#include <unordered_map>
+#include <vector>
 
 /******** Hooks stuff *********/
-#define MAX_ARGS        50
 
-static hooks_chain *hooks_heads[MAX_HOOKS];
-
-/* Wipe hooks and init them with quest hooks */
-void wipe_hooks()
+struct hook_data
 {
-	int i;
-
-	for (i = 0; i < MAX_HOOKS; i++)
-	{
-		hooks_heads[i] = NULL;
-	}
-}
-void init_hooks()
-{
-	int i;
-
-	for (i = 0; i < MAX_Q_IDX; i++)
-	{
-		if (quest[i].init != NULL)
-		{
-			quest[i].init(i);
-		}
-	}
-}
-
-/* Add a hook */
-hooks_chain* add_hook(int h_idx, hook_type hook, cptr name)
-{
-	hooks_chain *new_, *c = hooks_heads[h_idx];
-
-	/* Find it */
-	while ((c != NULL) && (strcmp(c->name, name)))
-	{
-		c = c->next;
+private:
+	hook_func_t m_hook_func;
+	void *m_hook_data;
+public:
+	hook_data(hook_func_t hook_func, void *hook_data)
+		: m_hook_func(hook_func)
+		, m_hook_data(hook_data) {
 	}
 
-	/* If not already in the list, add it */
-	if (c == NULL)
-	{
-		new_ = new hooks_chain();
-		memset(new_, 0, sizeof(hooks_chain));
-		new_->hook = hook;
-		sprintf(new_->name, "%s", name);
-		new_->next = hooks_heads[h_idx];
-		hooks_heads[h_idx] = new_;
-		return (new_);
-	}
-	else return (c);
-}
+	hook_data() = delete;
 
-void add_hook_new(int h_idx, bool_ (*hook_f)(void *, void *, void *), cptr name, void *data)
-{
-	hooks_chain *c = add_hook(h_idx, NULL, name);
-	c->hook_f = hook_f;
-	c->hook_data = data;
-	c->type = HOOK_TYPE_NEW;
-}
-
-/* Remove a hook */
-void del_hook(int h_idx, hook_type hook)
-{
-	hooks_chain *c = hooks_heads[h_idx], *p = NULL;
-
-	/* Find it */
-	while ((c != NULL) && (c->hook != hook))
-	{
-		p = c;
-		c = c->next;
+	/**
+	 * Check if the given hook points to the given function.
+	 */
+	bool is(hook_func_t hook_func) const {
+		return m_hook_func == hook_func;
 	}
 
-	/* Remove it */
-	if (c != NULL)
-	{
-		if (p == NULL)
-		{
-			hooks_heads[h_idx] = c->next;
-			delete c;
-		}
-		else
-		{
-			p->next = c->next;
-			delete c;
-		}
-	}
-}
-
-void del_hook_new(int h_idx, bool_ (*hook_f)(void *, void *, void *))
-{
-	hooks_chain *c = hooks_heads[h_idx], *p = NULL;
-
-	/* Find it */
-	while ((c != NULL) && (c->hook_f != hook_f))
-	{
-		p = c;
-		c = c->next;
-	}
-
-	/* Remove it */
-	if (c != NULL)
-	{
-		if (p == NULL)
-		{
-			hooks_heads[h_idx] = c->next;
-			delete c;
-		}
-		else
-		{
-			p->next = c->next;
-			delete c;
-		}
+	/**
+	 * Invoke the hook with the given input and output pointers.
+	 */
+	bool_ invoke(void *in, void *out) const {
+		return m_hook_func(m_hook_data, in, out);
 	}
 };
 
-
-/* get the next argument */
-static hook_return param_pile[MAX_ARGS];
-static int get_next_arg_pos = 0;
-static int get_next_arg_pile_pos = 0;
-s32b get_next_arg(const char *fmt)
+std::unordered_map<size_t, std::vector<hook_data>> &hooks_instance()
 {
-	while (TRUE)
-	{
-		switch (fmt[get_next_arg_pos++])
-		{
-		case 'd':
-		case 'l':
-			return (param_pile[get_next_arg_pile_pos++].num);
-		case ')':
-			get_next_arg_pos--;
-			return 0;
-		case '(':
-		case ',':
-			break;
-		}
-	}
-}
-char* get_next_arg_str(const char *fmt)
-{
-	while (TRUE)
-	{
-		switch (fmt[get_next_arg_pos++])
-		{
-		case 's':
-			return (char*)(param_pile[get_next_arg_pile_pos++].str);
-		case ')':
-			get_next_arg_pos--;
-			return 0;
-		case '(':
-		case ',':
-			break;
-		}
-	}
-}
-object_type* get_next_arg_obj() {
-	object_type *o_ptr = param_pile[get_next_arg_pile_pos++].o_ptr;
-	assert(o_ptr != NULL);
-	return o_ptr;
+	static auto instance = new std::unordered_map<size_t, std::vector<hook_data>>();
+	return *instance;
 }
 
 
-/* Actually process the hooks */
 int process_hooks_restart = FALSE;
-hook_return process_hooks_return[20];
-static bool_ vprocess_hooks_return (int h_idx, const char *ret, const char *fmt, va_list *ap)
+
+static std::vector<hook_data>::iterator find_hook(std::vector<hook_data> &hooks, hook_func_t hook_func)
 {
-	hooks_chain *c = hooks_heads[h_idx];
-	va_list real_ap;
+	return std::find_if(hooks.begin(),
+			    hooks.end(),
+			    [&](const hook_data &hook_data) {
+				    return hook_data.is(hook_func);
+			    });
+}
 
-	while (c != NULL)
-	{
-		if (c->type == HOOK_TYPE_C)
-		{
-			int i = 0, nb = 0;
-
-			/* Push all args in the pile */
-			i = 0;
-			memcpy(&real_ap, ap, sizeof(va_list));
-			while (fmt[i])
-			{
-				switch (fmt[i])
-				{
-				case 'O':
-					param_pile[nb++].o_ptr = va_arg(real_ap, object_type *);
-					break;
-				case 's':
-					param_pile[nb++].str = va_arg(real_ap, char *);
-					break;
-				case 'd':
-				case 'l':
-					param_pile[nb++].num = va_arg(real_ap, s32b);
-					break;
-				case '(':
-				case ')':
-				case ',':
-					break;
-				}
-				i++;
-			}
-
-			get_next_arg_pos = 0;
-			get_next_arg_pile_pos = 0;
-			if (c->hook(fmt))
-			{
-				return TRUE;
-			}
-
-			/* Should we restart ? */
-			if (process_hooks_restart)
-			{
-				c = hooks_heads[h_idx];
-				process_hooks_restart = FALSE;
-			}
-			else
-			{
-				c = c->next;
-			}
-		}
-		else if (c->type == HOOK_TYPE_NEW)
-		{
-			/* Skip; handled in process_hooks_new */
-			c = c->next;
-		}
-		else
-		{
-			msg_format("Unkown hook type %d, name %s", c->type, c->name);
-			c = c->next;
-		}
+void add_hook_new(int h_idx, hook_func_t hook_func, cptr name, void *data)
+{
+	auto &hooks = hooks_instance()[h_idx];
+	// Only insert if not already present.
+	if (find_hook(hooks, hook_func) == hooks.end()) {
+		hooks.emplace_back(hook_func, data);
 	}
-
-	return FALSE;
 }
 
-bool_ process_hooks_ret(int h_idx, const char *ret, const char *fmt, ...)
+void del_hook_new(int h_idx, hook_func_t hook_func)
 {
-	va_list ap;
-	bool_ r;
+	auto &hooks = hooks_instance()[h_idx];
 
-	va_start(ap, fmt);
-	r = vprocess_hooks_return (h_idx, ret, fmt, &ap);
-	va_end(ap);
-	return (r);
-}
-
-bool_ process_hooks(int h_idx, const char *fmt, ...)
-{
-	va_list ap;
-	bool_ ret;
-
-	va_start(ap, fmt);
-	ret = vprocess_hooks_return (h_idx, "", fmt, &ap);
-	va_end(ap);
-	return (ret);
+	/* Find it */
+	auto found_it = find_hook(hooks, hook_func);
+	if (found_it != hooks.end())
+	{
+		hooks.erase(found_it);
+	}
 }
 
 bool_ process_hooks_new(int h_idx, void *in, void *out)
 {
-	hooks_chain *c = hooks_heads[h_idx];
+	auto const &hooks = hooks_instance()[h_idx];
 
-	while (c != NULL)
+	auto hooks_it = hooks.begin();
+	while (hooks_it != hooks.end())
 	{
-		/* Only new-style hooks; skip the rest. */
-		if (c->type != HOOK_TYPE_NEW)
-		{
-			c = c->next;
-			continue;
-		}
+		auto &hook_data = *hooks_it;
 
-		/* Invoke hook function; stop processing if
-		   the hook returns TRUE */
-		if (c->hook_f(c->hook_data, in, out))
+		/* Invoke hook function; stop processing if the hook
+		   returns TRUE */
+		if (hook_data.invoke(in, out))
 		{
 			return TRUE;
 		}
@@ -289,12 +101,12 @@ bool_ process_hooks_new(int h_idx, void *in, void *out)
 		/* Should we restart processing at the beginning? */
 		if (process_hooks_restart)
 		{
-			c = hooks_heads[h_idx];
+			hooks_it = hooks.begin();
 			process_hooks_restart = FALSE;
 		}
 		else
 		{
-			c = c->next;
+			hooks_it++;
 		}
 	}
 

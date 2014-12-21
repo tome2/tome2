@@ -2183,8 +2183,6 @@ struct power_type
 };
 
 /* Hooks */
-typedef bool_ (*hook_type)(const char *fmt);
-
 typedef struct hook_move_in hook_move_in;
 struct hook_move_in {
 	int y;
@@ -2434,26 +2432,6 @@ struct birther
 	char history[4][60];
 
 	bool_ quick_ok;
-};
-
-typedef struct hooks_chain hooks_chain;
-struct hooks_chain
-{
-	hook_type hook;
-	bool_ (*hook_f)(void *, void *, void *);
-	void *hook_data;
-	char name[40];
-	byte type;
-	hooks_chain *next;
-};
-
-typedef union hook_return hook_return;
-union hook_return
-{
-	s32b num;
-	cptr str;
-	object_type *o_ptr;
-	monster_type *m_ptr;
 };
 
 /*

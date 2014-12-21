@@ -15,7 +15,7 @@ SET(SRCS
   q_nirna.cc q_eol.cc q_god.cc q_dragons.cc q_poison.cc
   q_spider.cc q_wolves.cc q_shroom.cc q_nazgul.cc q_wight.cc
   q_troll.cc q_hobbit.cc q_thief.cc q_ultrae.cc q_ultrag.cc
-  q_one.cc q_main.cc q_rand.cc
+  q_one.cc q_main.cc q_rand.cc quest.cc
   object1.cc object2.cc randart.cc squeltch.cc traps.cc
   monster1.cc monster2.cc monster3.cc
   xtra1.cc xtra2.cc skills.cc powers.cc gods.cc

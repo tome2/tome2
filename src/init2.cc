@@ -2338,8 +2338,6 @@ void init_angband(void)
 	note("[Initialising values... (misc)]");
 	if (init_misc()) quit("Cannot initialise misc. values");
 
-	wipe_hooks();
-
 	/* Initialise some other arrays */
 	note("[Initialising scripting... (script)]");
 	init_lua_init();

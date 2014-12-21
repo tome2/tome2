@@ -4388,9 +4388,6 @@
 #define HOOK_FORBID_TRAVEL      75
 #define MAX_HOOKS               77
 
-#define HOOK_TYPE_C             0
-#define HOOK_TYPE_NEW           2
-
 /*
  * Defines for loadsave.c
  * Why 3 and 7? So if it's uninitialized, the code will be able to catch it, as

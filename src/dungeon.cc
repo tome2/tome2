@@ -14,6 +14,7 @@
 
 #include <assert.h>
 
+#include "quest.h"
 #include "quark.h"
 #include "hooks.h"
 #include "spell_type.h"
@@ -5539,7 +5540,7 @@ void play_game(bool_ new_game)
 	if (init_v_info()) quit("Cannot initialize vaults");
 
 	/* Initialize hooks */
-	init_hooks();
+	init_hooks_quests();
 	init_hooks_help();
 	init_hooks_module();
 
