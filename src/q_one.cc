@@ -151,19 +151,19 @@ static bool_ quest_one_wield_hook(void *, void *in_, void *)
 	return FALSE;
 }
 
-static bool_ quest_one_hp_hook(const char *fmt)
+static bool_ quest_one_hp_hook(void *, void *in_, void *out_)
 {
+	struct hook_calculate_hp_in *in = static_cast<struct hook_calculate_hp_in *>(in_);
+	struct hook_calculate_hp_out *out = static_cast<struct hook_calculate_hp_out *>(out_);
+
 	if (cquest.status == QUEST_STATUS_FAILED_DONE)
 	{
-		s32b mhp;
-		int i;
+		s32b mhp = in->mhp;
 
-		mhp = get_next_arg(fmt);
-
-		for (i = 0; i < p_ptr->lives + 1; i++)
+		for (int i = 0; i < p_ptr->lives + 1; i++)
 			mhp = (mhp * 2) / 3;
 
-		process_hooks_return[0].num = mhp;
+		out->mhp = mhp;
 		return (TRUE);
 	}
 	return (FALSE);
@@ -349,7 +349,7 @@ bool_ quest_one_init_hook(int q_idx)
 		add_hook_new(HOOK_MOVE, quest_one_move_hook, "one_move", NULL);
 	}
 	add_hook_new(HOOK_CHAR_DUMP, quest_one_dump_hook, "one_dump", NULL);
-	add_hook    (HOOK_CALC_HP,   quest_one_hp_hook,   "one_hp");
+	add_hook_new(HOOK_CALC_HP,   quest_one_hp_hook,   "one_hp", NULL);
 	add_hook    (HOOK_DIE,       quest_one_die_hook,  "one_die");
 	return (FALSE);
 }

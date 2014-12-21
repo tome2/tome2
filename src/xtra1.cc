@@ -1910,9 +1910,13 @@ void calc_hitpoints(void)
 	}
 
 	/* Hp mods? */
-	if (process_hooks_ret(HOOK_CALC_HP, "d", "(d)", mhp))
 	{
-		mhp = process_hooks_return[0].num;
+		struct hook_calculate_hp_in in = { mhp };
+		struct hook_calculate_hp_out out = { 0 };
+		if (process_hooks_new(HOOK_CALC_HP, &in, &out))
+		{
+			mhp = out.mhp;
+		}
 	}
 
 	/* Never less than 1 */

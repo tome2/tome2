@@ -2239,6 +2239,16 @@ struct hook_monster_ai_out {
 	s32b x;
 };
 
+typedef struct hook_calculate_hp_in hook_calculate_hp_in;
+struct hook_calculate_hp_in {
+	s32b mhp;
+};
+
+typedef struct hook_calculate_hp_out hook_calculate_hp_out;
+struct hook_calculate_hp_out {
+	s32b mhp;
+};
+
 typedef struct hook_chat_in hook_chat_in;
 struct hook_chat_in {
 	s32b m_idx;
