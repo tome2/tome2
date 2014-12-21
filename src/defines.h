@@ -4387,7 +4387,6 @@
 #define HOOK_GET                50
 #define HOOK_RECALC_SKILLS      52
 #define HOOK_ENTER_DUNGEON      53
-#define HOOK_FIRE               54
 #define HOOK_EAT                55
 #define HOOK_DIE                56
 #define HOOK_CALC_HP            57

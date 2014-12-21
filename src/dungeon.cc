@@ -4007,9 +4007,6 @@ static void process_command(void)
 
 			j_ptr = &p_ptr->inventory[INVEN_BOW];
 
-			if (process_hooks(HOOK_FIRE, "(O)", j_ptr))
-				break;
-
 			if (j_ptr->tval == TV_BOOMERANG)
 			{
 				do_cmd_boomerang();
