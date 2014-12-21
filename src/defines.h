@@ -4366,7 +4366,6 @@
 #define HOOK_NEW_MONSTER_END    22
 #define HOOK_AIM                24
 #define HOOK_USE                25
-#define HOOK_ACTIVATE           26
 #define HOOK_CHAT               32
 #define HOOK_MON_SPEAK          33
 #define HOOK_BIRTH_OBJECTS      35

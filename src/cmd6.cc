@@ -4910,12 +4910,6 @@ void do_cmd_activate(void)
 	/* Sound */
 	sound(SOUND_ZAP);
 
-	/* Lua hook ? -- go first to allow lua to override */
-	if (process_hooks(HOOK_ACTIVATE, "(d)", item))
-	{
-		return;
-	}
-
 	/* New mostly unified activation code
 	   This has to be early to allow artifacts to override normal items -- neil */
 
