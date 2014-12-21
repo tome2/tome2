@@ -117,11 +117,10 @@ static bool_ quest_eol_finish_hook(const char *fmt)
 	return TRUE;
 }
 
-static bool_ quest_eol_fail_hook(const char *fmt)
+static bool_ quest_eol_fail_hook(void *, void *in_, void *)
 {
-	s32b q_idx;
-
-	q_idx = get_next_arg(fmt);
+	struct hook_quest_fail_in *in = static_cast<struct hook_quest_fail_in *>(in_);
+	s32b q_idx = in->q_idx;
 
 	if (q_idx != QUEST_EOL) return FALSE;
 
@@ -130,7 +129,7 @@ static bool_ quest_eol_fail_hook(const char *fmt)
 	/* Continue the plot */
 	*(quest[q_idx].plot) = QUEST_NULL;
 
-	del_hook(HOOK_QUEST_FAIL, quest_eol_fail_hook);
+	del_hook_new(HOOK_QUEST_FAIL, quest_eol_fail_hook);
 	process_hooks_restart = TRUE;
 
 	return TRUE;
@@ -195,7 +194,7 @@ bool_ quest_eol_init_hook(int q)
 		add_hook_new(HOOK_MONSTER_DEATH, quest_eol_death_hook,  "eol_death", NULL);
 		add_hook_new(HOOK_GEN_QUEST,     quest_eol_gen_hook,    "eol_gen", NULL);
 		add_hook_new(HOOK_STAIR,         quest_eol_stair_hook,  "eol_stair", NULL);
-		add_hook    (HOOK_QUEST_FAIL,    quest_eol_fail_hook,   "eol_fail");
+		add_hook_new(HOOK_QUEST_FAIL,    quest_eol_fail_hook,   "eol_fail", NULL);
 		add_hook    (HOOK_QUEST_FINISH,  quest_eol_finish_hook, "eol_finish");
 	}
 	return (FALSE);

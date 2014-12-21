@@ -858,7 +858,8 @@ static bool_ castle_quest(int y, int x)
 		/* Mark quest as done (but failed) */
 		q_ptr->status = QUEST_STATUS_FAILED_DONE;
 
-		process_hooks(HOOK_QUEST_FAIL, "(d)", plots[plot]);
+		hook_quest_fail_in in = { plots[plot] };
+		process_hooks_new(HOOK_QUEST_FAIL, &in, NULL);
 
 		return (FALSE);
 	}
