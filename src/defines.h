@@ -4392,7 +4392,6 @@
 #define HOOK_LOAD_END           61
 #define HOOK_RECALL             62
 #define HOOK_BODY_PARTS         65
-#define HOOK_PLAYER_EXP         67
 #define HOOK_BIRTH              68
 #define HOOK_MON_ASK_HELP       69
 #define HOOK_LEARN_ABILITY      70

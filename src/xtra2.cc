@@ -2212,9 +2212,6 @@ void gain_exp(s32b amount)
 	/* Gain some experience */
 	p_ptr->exp += amount / num;
 
-	/* Hook it! */
-	process_hooks(HOOK_PLAYER_EXP, "(d)", amount / num);
-
 	/* Slowly recover from experience drainage */
 	if (p_ptr->exp < p_ptr->max_exp)
 	{
@@ -2237,9 +2234,6 @@ void lose_exp(s32b amount)
 
 	/* Lose some experience */
 	p_ptr->exp -= amount;
-
-	/* Hook it! */
-	process_hooks(HOOK_PLAYER_EXP, "(d)", amount);
 
 	/* Check Experience */
 	check_experience();
