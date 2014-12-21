@@ -2051,9 +2051,6 @@ int weight_limit(void)
 	/* Weight limit based only on strength */
 	i = adj_str_wgt[p_ptr->stat_ind[A_STR]] * 100;
 
-	if (process_hooks_ret(HOOK_CALC_WEIGHT, "d", "(d)", i))
-		i = process_hooks_return[0].num;
-
 	/* Return the result */
 	return (i);
 }

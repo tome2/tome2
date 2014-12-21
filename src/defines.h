@@ -4397,7 +4397,6 @@
 #define HOOK_LEARN_ABILITY      70
 #define HOOK_GAME_START         72
 #define HOOK_TAKEOFF            73
-#define HOOK_CALC_WEIGHT        74
 #define HOOK_FORBID_TRAVEL      75
 #define HOOK_DEBUG_COMMAND      76
 #define MAX_HOOKS               77
