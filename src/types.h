@@ -2254,6 +2254,11 @@ struct hook_chat_in {
 	s32b m_idx;
 };
 
+typedef struct hook_enter_dungeon_in hook_enter_dungeon_in;
+struct hook_enter_dungeon_in {
+	s32b d_idx;
+};
+
 typedef struct hook_wild_gen_in hook_wild_gen_in;
 struct hook_wild_gen_in {
 	bool_ small;

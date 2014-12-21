@@ -1139,10 +1139,10 @@ static void quest_god_dungeon_setup(int d_idx)
 	set_god_dungeon_attributes();
 }
 
-static bool_ quest_god_enter_dungeon_hook(const char *fmt)
+static bool_ quest_god_enter_dungeon_hook(void *, void *in_, void *)
 {
-	s32b d_idx = get_next_arg(fmt);
-	quest_god_dungeon_setup(d_idx);
+	struct hook_enter_dungeon_in *in = static_cast<struct hook_enter_dungeon_in *>(in_);
+	quest_god_dungeon_setup(in->d_idx);
 	return FALSE;
 }
 
@@ -1178,7 +1178,7 @@ bool_ quest_god_init_hook(int q)
 	    (cquest.status < QUEST_STATUS_FINISHED))
 	{
 		add_hook_new(HOOK_LEVEL_END_GEN,   quest_god_level_end_gen_hook,   "q_god_level_end_gen", NULL);
-		add_hook    (HOOK_ENTER_DUNGEON,   quest_god_enter_dungeon_hook,   "q_god_enter_dungeon");
+		add_hook_new(HOOK_ENTER_DUNGEON,   quest_god_enter_dungeon_hook,   "q_god_enter_dungeon", NULL);
 		add_hook    (HOOK_GEN_LEVEL_BEGIN, quest_god_gen_level_begin_hook, "q_god_gen_level_begin");
 		add_hook_new(HOOK_STAIR,           quest_god_stair_hook,           "q_god_hook_stair", NULL);
 		add_hook_new(HOOK_GET,             quest_god_get_hook,             "q_god_get", NULL);

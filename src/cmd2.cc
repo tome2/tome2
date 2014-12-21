@@ -478,10 +478,13 @@ void do_cmd_go_down(void)
 				dungeon_info_type *d_ptr = &d_info[c_ptr->special];
 
 				/* Do the lua scripts refuse ? ;) */
-				if (process_hooks(HOOK_ENTER_DUNGEON, "(d)", c_ptr->special))
 				{
-					dun_level = old_dun;
-					return;
+					struct hook_enter_dungeon_in in = { c_ptr->special };
+					if (process_hooks_new(HOOK_ENTER_DUNGEON, &in, NULL))
+					{
+						dun_level = old_dun;
+						return;
+					}
 				}
 
 				/* Ok go in the new dungeon */
