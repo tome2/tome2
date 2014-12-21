@@ -2300,6 +2300,11 @@ struct hook_quest_fail_in {
 	s16b q_idx;
 };
 
+typedef struct hook_quest_finish_in hook_quest_finish_in;
+struct hook_quest_finish_in {
+	s32b q_idx;
+};
+
 typedef enum { STAIRS_UP, STAIRS_DOWN } stairs_direction;
 
 typedef struct hook_stair_in hook_stair_in;

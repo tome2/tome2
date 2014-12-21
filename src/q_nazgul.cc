@@ -35,12 +35,11 @@ static bool_ quest_nazgul_gen_hook(void *, void *in_, void *)
 	return FALSE;
 }
 
-static bool_ quest_nazgul_finish_hook(const char *fmt)
+static bool_ quest_nazgul_finish_hook(void *, void *in_, void *)
 {
+	struct hook_quest_finish_in *in = static_cast<struct hook_quest_finish_in *>(in_);
+	s32b q_idx = in->q_idx;
 	object_type forge, *q_ptr;
-	s32b q_idx;
-
-	q_idx = get_next_arg(fmt);
 
 	if (q_idx != QUEST_NAZGUL) return FALSE;
 
@@ -60,7 +59,7 @@ static bool_ quest_nazgul_finish_hook(const char *fmt)
 	/* End the plot */
 	*(quest[q_idx].plot) = QUEST_NULL;
 
-	del_hook(HOOK_QUEST_FINISH, quest_nazgul_finish_hook);
+	del_hook_new(HOOK_QUEST_FINISH, quest_nazgul_finish_hook);
 	process_hooks_restart = TRUE;
 
 	return TRUE;
@@ -114,9 +113,9 @@ bool_ quest_nazgul_init_hook(int q_idx)
 {
 	if ((cquest.status >= QUEST_STATUS_TAKEN) && (cquest.status < QUEST_STATUS_FINISHED))
 	{
-		add_hook_new(HOOK_MONSTER_DEATH, quest_nazgul_death_hook,  "nazgul_death", NULL);
-		add_hook_new(HOOK_WILD_GEN,      quest_nazgul_gen_hook,    "nazgul_gen", NULL);
-		add_hook    (HOOK_QUEST_FINISH,  quest_nazgul_finish_hook, "nazgul_finish");
+		add_hook_new(HOOK_MONSTER_DEATH, quest_nazgul_death_hook,  "nazgul_death",  NULL);
+		add_hook_new(HOOK_WILD_GEN,      quest_nazgul_gen_hook,    "nazgul_gen",    NULL);
+		add_hook_new(HOOK_QUEST_FINISH,  quest_nazgul_finish_hook, "nazgul_finish", NULL);
 	}
 	add_hook_new(HOOK_CHAR_DUMP,  quest_nazgul_dump_hook,   "nazgul_dump", NULL);
 	add_hook_new(HOOK_INIT_QUEST, quest_nazgul_forbid_hook, "nazgul_forbid", NULL);

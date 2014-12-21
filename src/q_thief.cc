@@ -118,11 +118,10 @@ static bool_ quest_thieves_hook(void *, void *, void *)
 	return FALSE;
 }
 
-static bool_ quest_thieves_finish_hook(const char *fmt)
+static bool_ quest_thieves_finish_hook(void *, void *in_, void *)
 {
-	s32b q_idx;
-
-	q_idx = get_next_arg(fmt);
+	struct hook_quest_finish_in *in = static_cast<struct hook_quest_finish_in *>(in_);
+	s32b q_idx = in->q_idx;
 
 	if (q_idx != QUEST_THIEVES) return FALSE;
 
@@ -145,7 +144,7 @@ static bool_ quest_thieves_finish_hook(const char *fmt)
 	}
 	quest[*(quest[q_idx].plot)].init(*(quest[q_idx].plot));
 
-	del_hook(HOOK_QUEST_FINISH, quest_thieves_finish_hook);
+	del_hook_new(HOOK_QUEST_FINISH, quest_thieves_finish_hook);
 	process_hooks_restart = TRUE;
 
 	return TRUE;
@@ -169,9 +168,9 @@ bool_ quest_thieves_init_hook(int q_idx)
 	if ((cquest.status >= QUEST_STATUS_UNTAKEN) && (cquest.status < QUEST_STATUS_FINISHED))
 	{
 		add_hook_new(HOOK_END_TURN,     quest_thieves_hook,         "thieves_end_turn", NULL);
-		add_hook    (HOOK_QUEST_FINISH, quest_thieves_finish_hook,  "thieves_finish");
-		add_hook_new(HOOK_GEN_QUEST,    quest_thieves_gen_hook,     "thieves_geb", NULL);
-		add_hook_new(HOOK_FEELING,      quest_thieves_feeling_hook, "thieves_feel", NULL);
+		add_hook_new(HOOK_QUEST_FINISH, quest_thieves_finish_hook,  "thieves_finish",   NULL);
+		add_hook_new(HOOK_GEN_QUEST,    quest_thieves_gen_hook,     "thieves_geb",      NULL);
+		add_hook_new(HOOK_FEELING,      quest_thieves_feeling_hook, "thieves_feel",     NULL);
 	}
 	return (FALSE);
 }

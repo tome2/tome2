@@ -72,12 +72,11 @@ static bool_ quest_spider_death_hook(void *, void *, void *)
 	return (FALSE);
 }
 
-static bool_ quest_spider_finish_hook(const char *fmt)
+static bool_ quest_spider_finish_hook(void *, void *in_, void *)
 {
+	struct hook_quest_finish_in *in = static_cast<struct hook_quest_finish_in *>(in_);
 	object_type forge, *q_ptr;
-	s32b q_idx;
-
-	q_idx = get_next_arg(fmt);
+	s32b q_idx = in->q_idx;
 
 	if (q_idx != QUEST_SPIDER) return FALSE;
 
@@ -97,7 +96,7 @@ static bool_ quest_spider_finish_hook(const char *fmt)
 	*(quest[q_idx].plot) = QUEST_POISON;
 	quest[*(quest[q_idx].plot)].init(*(quest[q_idx].plot));
 
-	del_hook(HOOK_QUEST_FINISH, quest_spider_finish_hook);
+	del_hook_new(HOOK_QUEST_FINISH, quest_spider_finish_hook);
 	process_hooks_restart = TRUE;
 
 	return TRUE;
@@ -107,9 +106,9 @@ bool_ quest_spider_init_hook(int q_idx)
 {
 	if ((cquest.status >= QUEST_STATUS_TAKEN) && (cquest.status < QUEST_STATUS_FINISHED))
 	{
-		add_hook_new(HOOK_MONSTER_DEATH, quest_spider_death_hook,  "spider_death", NULL);
-		add_hook_new(HOOK_GEN_QUEST,     quest_spider_gen_hook,    "spider_gen", NULL);
-		add_hook    (HOOK_QUEST_FINISH,  quest_spider_finish_hook, "spider_finish");
+		add_hook_new(HOOK_MONSTER_DEATH, quest_spider_death_hook,  "spider_death",  NULL);
+		add_hook_new(HOOK_GEN_QUEST,     quest_spider_gen_hook,    "spider_gen",    NULL);
+		add_hook_new(HOOK_QUEST_FINISH,  quest_spider_finish_hook, "spider_finish", NULL);
 	}
 	return (FALSE);
 }

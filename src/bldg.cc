@@ -838,7 +838,8 @@ static bool_ castle_quest(int y, int x)
 		/* Rewarded quest */
 		q_ptr->status = QUEST_STATUS_FINISHED;
 
-		process_hooks(HOOK_QUEST_FINISH, "(d)", plots[plot]);
+		struct hook_quest_finish_in in = { plots[plot] };
+		process_hooks_new(HOOK_QUEST_FINISH, &in, NULL);
 
 		return (TRUE);
 	}

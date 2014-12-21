@@ -103,12 +103,11 @@ static bool_ quest_poison_gen_hook(void *, void *, void *)
 	return FALSE;
 }
 
-static bool_ quest_poison_finish_hook(const char *fmt)
+static bool_ quest_poison_finish_hook(void *, void *in_, void *)
 {
+	struct hook_quest_finish_in *in = static_cast<struct hook_quest_finish_in *>(in_);
+	s32b q_idx = in->q_idx;
 	object_type forge, *q_ptr;
-	s32b q_idx;
-
-	q_idx = get_next_arg(fmt);
 
 	if (q_idx != QUEST_POISON) return FALSE;
 
@@ -129,7 +128,7 @@ static bool_ quest_poison_finish_hook(const char *fmt)
 	/* Continue the plot */
 	*(quest[q_idx].plot) = QUEST_NULL;
 
-	del_hook(HOOK_QUEST_FINISH, quest_poison_finish_hook);
+	del_hook_new(HOOK_QUEST_FINISH, quest_poison_finish_hook);
 	process_hooks_restart = TRUE;
 
 	return TRUE;
@@ -235,9 +234,9 @@ bool_ quest_poison_init_hook(int q_idx)
 
 	if ((cquest.status >= QUEST_STATUS_TAKEN) && (cquest.status < QUEST_STATUS_FINISHED))
 	{
-		add_hook_new(HOOK_DROP,         quest_poison_drop_hook,   "poison_drop", NULL);
-		add_hook_new(HOOK_WILD_GEN,     quest_poison_gen_hook,    "poison_gen", NULL);
-		add_hook    (HOOK_QUEST_FINISH, quest_poison_finish_hook, "poison_finish");
+		add_hook_new(HOOK_DROP,         quest_poison_drop_hook,   "poison_drop",   NULL);
+		add_hook_new(HOOK_WILD_GEN,     quest_poison_gen_hook,    "poison_gen",    NULL);
+		add_hook_new(HOOK_QUEST_FINISH, quest_poison_finish_hook, "poison_finish", NULL);
 	}
 	if (cquest.status < QUEST_STATUS_COMPLETED)
 	{

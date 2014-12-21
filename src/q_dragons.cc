@@ -123,11 +123,10 @@ static bool_ quest_dragons_death_hook(void *, void *, void *)
 	return FALSE;
 }
 
-static bool_ quest_dragons_finish_hook(const char *fmt)
+static bool_ quest_dragons_finish_hook(void *, void *in_, void *)
 {
-	s32b q_idx;
-
-	q_idx = get_next_arg(fmt);
+	struct hook_quest_finish_in *in = static_cast<struct hook_quest_finish_in *>(in_);
+	s32b q_idx = in->q_idx;
 
 	if (q_idx != QUEST_DRAGONS) return FALSE;
 
@@ -145,8 +144,8 @@ bool_ quest_dragons_init_hook(int q_idx)
 	if ((cquest.status >= QUEST_STATUS_UNTAKEN) && (cquest.status < QUEST_STATUS_FINISHED))
 	{
 		add_hook_new(HOOK_MONSTER_DEATH, quest_dragons_death_hook,  "dragons_monster_death", NULL);
-		add_hook    (HOOK_QUEST_FINISH,  quest_dragons_finish_hook, "dragons_finish");
-		add_hook_new(HOOK_GEN_QUEST,     quest_dragons_gen_hook,    "dragons_geb", NULL);
+		add_hook_new(HOOK_QUEST_FINISH,  quest_dragons_finish_hook, "dragons_finish",        NULL);
+		add_hook_new(HOOK_GEN_QUEST,     quest_dragons_gen_hook,    "dragons_geb",           NULL);
 	}
 	return (FALSE);
 }

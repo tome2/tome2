@@ -96,11 +96,10 @@ static bool_ quest_troll_gen_hook(void *, void *, void *)
 	return TRUE;
 }
 
-static bool_ quest_troll_finish_hook(const char *fmt)
+static bool_ quest_troll_finish_hook(void *, void *in_, void *)
 {
-	s32b q_idx;
-
-	q_idx = get_next_arg(fmt);
+	struct hook_quest_finish_in *in = static_cast<struct hook_quest_finish_in *>(in_);
+	s32b q_idx = in->q_idx;
 
 	if (q_idx != QUEST_TROLL) return FALSE;
 
@@ -111,7 +110,7 @@ static bool_ quest_troll_finish_hook(const char *fmt)
 	*(quest[q_idx].plot) = QUEST_NAZGUL;
 	quest[*(quest[q_idx].plot)].init(*(quest[q_idx].plot));
 
-	del_hook(HOOK_QUEST_FINISH, quest_troll_finish_hook);
+	del_hook_new(HOOK_QUEST_FINISH, quest_troll_finish_hook);
 	process_hooks_restart = TRUE;
 
 	return TRUE;
@@ -172,9 +171,9 @@ bool_ quest_troll_init_hook(int q_idx)
 {
 	if ((cquest.status >= QUEST_STATUS_TAKEN) && (cquest.status < QUEST_STATUS_FINISHED))
 	{
-		add_hook_new(HOOK_MONSTER_DEATH, quest_troll_death_hook,  "troll_death", NULL);
-		add_hook_new(HOOK_GEN_QUEST,     quest_troll_gen_hook,    "troll_gen", NULL);
-		add_hook    (HOOK_QUEST_FINISH,  quest_troll_finish_hook, "troll_finish");
+		add_hook_new(HOOK_MONSTER_DEATH, quest_troll_death_hook,  "troll_death",  NULL);
+		add_hook_new(HOOK_GEN_QUEST,     quest_troll_gen_hook,    "troll_gen",    NULL);
+		add_hook_new(HOOK_QUEST_FINISH,  quest_troll_finish_hook, "troll_finish", NULL);
 	}
 	return (FALSE);
 }
