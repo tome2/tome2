@@ -1146,7 +1146,7 @@ static bool_ quest_god_enter_dungeon_hook(void *, void *in_, void *)
 	return FALSE;
 }
 
-static bool_ quest_god_gen_level_begin_hook(const char *fmt)
+static bool_ quest_god_gen_level_begin_hook(void *, void *, void *)
 {
 	quest_god_dungeon_setup(dungeon_type);
 	return FALSE;
@@ -1179,7 +1179,7 @@ bool_ quest_god_init_hook(int q)
 	{
 		add_hook_new(HOOK_LEVEL_END_GEN,   quest_god_level_end_gen_hook,   "q_god_level_end_gen", NULL);
 		add_hook_new(HOOK_ENTER_DUNGEON,   quest_god_enter_dungeon_hook,   "q_god_enter_dungeon", NULL);
-		add_hook    (HOOK_GEN_LEVEL_BEGIN, quest_god_gen_level_begin_hook, "q_god_gen_level_begin");
+		add_hook_new(HOOK_GEN_LEVEL_BEGIN, quest_god_gen_level_begin_hook, "q_god_gen_level_begin", NULL);
 		add_hook_new(HOOK_STAIR,           quest_god_stair_hook,           "q_god_hook_stair", NULL);
 		add_hook_new(HOOK_GET,             quest_god_get_hook,             "q_god_get", NULL);
 		add_hook_new(HOOK_CHAR_DUMP,       quest_god_char_dump_hook,       "q_god_char_dump", NULL);

@@ -8406,7 +8406,7 @@ void generate_cave(void)
 		Rand_value = town_info[town_level].seed;
 	}
 
-	process_hooks(HOOK_GEN_LEVEL_BEGIN, "");
+	process_hooks_new(HOOK_GEN_LEVEL_BEGIN, NULL, NULL);
 
 	/* Try to load a saved level */
 	if (get_dungeon_save(buf))
