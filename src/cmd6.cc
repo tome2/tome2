@@ -968,12 +968,7 @@ void do_cmd_eat_food(void)
 	/* Scripted foods */
 	hook_eat_in in = { o_ptr };
 	hook_eat_out out = { FALSE };
-
-	if (process_hooks_ret(HOOK_EAT, "d", "(O)", o_ptr))
-	{
-		ident = process_hooks_return[0].num;
-	}
-	else if (process_hooks_new(HOOK_EAT, &in, &out))
+	if (process_hooks_new(HOOK_EAT, &in, &out))
 	{
 		ident = out.ident;
 	}
