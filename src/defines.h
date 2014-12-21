@@ -4383,7 +4383,6 @@
 #define HOOK_CALC_MANA          60
 #define HOOK_RECALL             62
 #define HOOK_BODY_PARTS         65
-#define HOOK_BIRTH              68
 #define HOOK_MON_ASK_HELP       69
 #define HOOK_GAME_START         72
 #define HOOK_FORBID_TRAVEL      75

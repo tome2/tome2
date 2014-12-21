@@ -2529,9 +2529,6 @@ static bool_ player_birth_aux_point(void)
 	/* Roll for social class */
 	get_history();
 
-	/*** Generate ***/
-	process_hooks(HOOK_BIRTH, "()");
-
 	/* Get luck */
 	p_ptr->luck_base = rp_ptr->luck + rmp_ptr->luck + rand_range( -5, 5);
 	p_ptr->luck_max = p_ptr->luck_base;
@@ -2904,9 +2901,6 @@ static bool_ player_birth_aux_auto()
 
 		/* Roll for gold */
 		get_money();
-
-		/*** Generate ***/
-		process_hooks(HOOK_BIRTH, "()");
 
 		/* Input loop */
 		while (TRUE)
