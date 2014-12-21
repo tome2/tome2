@@ -2227,6 +2227,18 @@ struct hook_monster_death_in {
 	s32b m_idx;
 };
 
+typedef struct hook_monster_ai_in hook_monster_ai_in;
+struct hook_monster_ai_in {
+	s32b m_idx;
+	monster_type *m_ptr;
+};
+
+typedef struct hook_monster_ai_out hook_monster_ai_out;
+struct hook_monster_ai_out {
+	s32b y;
+	s32b x;
+};
+
 typedef struct hook_chat_in hook_chat_in;
 struct hook_chat_in {
 	s32b m_idx;

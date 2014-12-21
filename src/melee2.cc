@@ -5119,10 +5119,12 @@ static bool_ get_moves(int m_idx, int *mm)
 	/* Let quests redefine AI */
 	if (r_ptr->flags7 & RF7_AI_SPECIAL)
 	{
-		if (process_hooks_ret(HOOK_MONSTER_AI, "dd", "(d)", m_idx))
+		struct hook_monster_ai_in in = { m_idx, &m_list[m_idx] };
+		struct hook_monster_ai_out out = { 0, 0 };
+		if (process_hooks_new(HOOK_MONSTER_AI, &in, &out))
 		{
-			y2 = process_hooks_return[0].num;
-			x2 = process_hooks_return[1].num;
+			y2 = out.y;
+			x2 = out.x;
 		}
 	}
 

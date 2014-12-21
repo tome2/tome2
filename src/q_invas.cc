@@ -46,13 +46,12 @@ static bool_ quest_invasion_gen_hook(void *, void *, void *)
 	return TRUE;
 }
 
-static bool_ quest_invasion_ai_hook(const char *fmt)
+static bool_ quest_invasion_ai_hook(void *, void *in_, void *out_)
 {
-	monster_type *m_ptr;
-	s32b m_idx;
-
-	m_idx = get_next_arg(fmt);
-	m_ptr = &m_list[m_idx];
+	struct hook_monster_ai_in *in = static_cast<struct hook_monster_ai_in *>(in_);
+	struct hook_monster_ai_out *out = static_cast<struct hook_monster_ai_out *>(out_);
+	monster_type *m_ptr = in->m_ptr;
+	s32b m_idx = in->m_idx;
 
 	if (p_ptr->inside_quest != QUEST_INVASION) return FALSE;
 
@@ -77,8 +76,8 @@ static bool_ quest_invasion_ai_hook(const char *fmt)
 		}
 		else
 		{
-			process_hooks_return[0].num = cquest.data[0];
-			process_hooks_return[1].num = cquest.data[1];
+			out->y = cquest.data[0];
+			out->x = cquest.data[1];
 			return (TRUE);
 		}
 	}
@@ -198,8 +197,8 @@ bool_ quest_invasion_init_hook(int q_idx)
 	add_hook_new(HOOK_CHAR_DUMP, quest_invasion_dump_hook, "invasion_dump", NULL);
 	if ((cquest.status >= QUEST_STATUS_TAKEN) && (cquest.status < QUEST_STATUS_FINISHED))
 	{
-		add_hook    (HOOK_MONSTER_AI,    quest_invasion_ai_hook,    "invasion_ai");
-		add_hook_new(HOOK_GEN_QUEST,     quest_invasion_gen_hook,   "invasion_gen", NULL);
+		add_hook_new(HOOK_MONSTER_AI,    quest_invasion_ai_hook,    "invasion_ai",    NULL);
+		add_hook_new(HOOK_GEN_QUEST,     quest_invasion_gen_hook,   "invasion_gen",   NULL);
 		add_hook_new(HOOK_MONSTER_DEATH, quest_invasion_death_hook, "invasion_death", NULL);
 		add_hook_new(HOOK_STAIR,         quest_invasion_stair_hook, "invasion_stair", NULL);
 	}
