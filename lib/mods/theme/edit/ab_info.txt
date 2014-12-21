@@ -22,8 +22,6 @@
 
 # E:excluding ability:excluding ability
 
-# If you need more sophisticated prereqs use the HOOK_LEARN_ABILITY
-
 # Version stamp (required)
 
 # Do not forget to update misc.txt with an entry like the following :

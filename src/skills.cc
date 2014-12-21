@@ -1515,10 +1515,6 @@ bool_ can_learn_ability(int ab)
 		}
 	}
 
-	/* Do the script allow us? */
-	if (process_hooks(HOOK_LEARN_ABILITY, "(d)", ab))
-		return FALSE;
-
 	return TRUE;
 }
 
