@@ -2073,14 +2073,7 @@ bool_ bldg_process_command(store_type *s_ptr, int i)
 	}
 
 	default:
-		{
-			if (process_hooks_ret(HOOK_BUILDING_ACTION, "dd", "(d)", bact))
-			{
-				paid = process_hooks_return[0].num;
-				recreate = process_hooks_return[1].num;
-			}
-			break;
-		}
+		break;
 	}
 
 	if (paid)
