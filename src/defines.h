@@ -4343,7 +4343,6 @@
  * Hooks
  */
 #define HOOK_MONSTER_DEATH      0
-#define HOOK_OPEN               1
 #define HOOK_GEN_QUEST          2
 #define HOOK_END_TURN           3
 #define HOOK_FEELING            4

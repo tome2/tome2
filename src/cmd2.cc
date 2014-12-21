@@ -1195,9 +1195,6 @@ void do_cmd_open(void)
 		}
 	}
 
-	/* Process the appropriate hooks */
-	process_hooks(HOOK_OPEN, "(d)", is_quest(dun_level));
-
 	/* Cancel repeat unless we may continue */
 	if (!more) disturb(0);
 }
@@ -1877,9 +1874,6 @@ bool_ easy_open_door(int y, int x)
 
 			/* Sound */
 			sound(SOUND_OPENDOOR);
-
-			/* Process the appropriate hooks */
-			process_hooks(HOOK_OPEN, "(d)", is_quest(dun_level));
 
 			/* Experience */
 			gain_exp(1);
