@@ -996,14 +996,6 @@ bool_ load_player(void)
 	/* Okay */
 	if (!err)
 	{
-		/* Maybe the scripts want to resurrect char */
-		if (process_hooks_ret(HOOK_LOAD_END, "d", "(d)", death))
-		{
-			character_loaded = process_hooks_return[0].num;
-			death = process_hooks_return[1].num;
-			return TRUE;
-		}
-
 		/* Player is dead */
 		if (death)
 		{
