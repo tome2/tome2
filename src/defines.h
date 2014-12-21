@@ -4373,7 +4373,6 @@
 #define HOOK_MON_SPEAK          33
 #define HOOK_BIRTH_OBJECTS      35
 #define HOOK_INIT_GAME          37
-#define HOOK_ACTIVATE_POWER     38
 #define HOOK_SAVE_GAME          40
 #define HOOK_LOAD_GAME          41
 #define HOOK_LEVEL_REGEN        42

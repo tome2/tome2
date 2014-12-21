@@ -1249,12 +1249,7 @@ static void power_activate(int power)
 		break;
 
 	default:
-
-		if (!process_hooks(HOOK_ACTIVATE_POWER, "(d)", power))
-		{
-			msg_format("Warning power_activate() called with invalid power(%d).", power);
-			energy_use = 0;
-		}
+		abort();
 		break;
 	}
 
