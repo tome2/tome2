@@ -4570,11 +4570,7 @@ void do_cmd_zap_rod(void)
 		}
 
 	default:
-		{
-			process_hooks(HOOK_ZAP, "(d,d)", o_ptr->tval, o_ptr->sval);
-
-			break;
-		}
+		break;
 	}
 
 
