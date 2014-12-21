@@ -2124,8 +2124,6 @@ void check_experience(void)
 	}
 
 	/* Hook it! */
-	process_hooks(HOOK_PLAYER_LEVEL, "(d)", gained);
-
 	{
 		hook_player_level_in in = { gained };
 		process_hooks_new(HOOK_PLAYER_LEVEL, &in, NULL);
