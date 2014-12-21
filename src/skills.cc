@@ -396,7 +396,6 @@ void recalc_skills(bool_ init)
 			abandon_god(GOD_ALL);
 		}
 
-		process_hooks(HOOK_RECALC_SKILLS, "()");
 		process_hooks_new(HOOK_RECALC_SKILLS, NULL, NULL);
 
 		/* Update stuffs */
