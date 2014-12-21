@@ -2515,9 +2515,6 @@ cptr item_activation(object_type *o_ptr, byte num)
 		}
 	}
 
-	if (process_hooks_ret(HOOK_ACTIVATE_DESC, "s", "(O)", o_ptr))
-		return (process_hooks_return[0].str);
-
 	return activation_aux(o_ptr, FALSE, 0);
 }
 
