@@ -1215,16 +1215,9 @@ static void store_create(void)
 	{
 		obj_all_done = FALSE;
 
-		/* Lua can define things to buy */
-		if (process_hooks_ret(HOOK_STORE_STOCK, "O", "(d,s,d)", st_ptr->st_idx, st_info[st_ptr->st_idx].name + st_name, return_level()))
-		{
-			obj_all_done = TRUE;
-			q_ptr = process_hooks_return[0].o_ptr;
-		}
-
 		/* Magic Shop */
-		else if (streq(st_info[st_ptr->st_idx].name + st_name, STORE_MAGIC) &&
-			 magik(20))
+		if (streq(st_info[st_ptr->st_idx].name + st_name, STORE_MAGIC) &&
+		    magik(20))
 		{
 			s16b spell;
 

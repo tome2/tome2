@@ -4375,7 +4375,6 @@
 #define HOOK_LEVEL_REGEN        42
 #define HOOK_LEVEL_END_GEN      43
 #define HOOK_BUILDING_ACTION    44
-#define HOOK_STORE_STOCK        47
 #define HOOK_GEN_LEVEL_BEGIN    49
 #define HOOK_GET                50
 #define HOOK_RECALC_SKILLS      52
