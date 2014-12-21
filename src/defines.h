@@ -4369,7 +4369,6 @@
 #define HOOK_USE                25
 #define HOOK_ACTIVATE           26
 #define HOOK_ZAP                27
-#define HOOK_CALC_POWERS        30
 #define HOOK_CHAT               32
 #define HOOK_MON_SPEAK          33
 #define HOOK_BIRTH_OBJECTS      35

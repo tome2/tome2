@@ -1543,9 +1543,6 @@ static void calc_powers(void)
 	/* Calculate powers granted by corruptions */
 	calc_powers_corruption();
 
-	/* Hooked powers */
-	process_hooks(HOOK_CALC_POWERS, "()");
-
 	/* Add objects powers */
 	for (i = INVEN_WIELD; i < INVEN_TOTAL; i++)
 	{
