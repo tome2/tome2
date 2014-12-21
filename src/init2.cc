@@ -1649,9 +1649,6 @@ static errr init_misc(void)
 	/* Initialize messages subsystem */
 	message_init();
 
-	/* Initialize game */
-	process_hooks(HOOK_INIT_GAME, "(s)", "begin");
-
 	/* Initialise the values */
 	process_dungeon_file("misc.txt", &ystart, &xstart, 0, 0, TRUE, FALSE);
 
@@ -2478,6 +2475,4 @@ void init_angband(void)
 
 	/* Done */
 	note("[Initialisation complete]");
-
-	process_hooks(HOOK_INIT_GAME, "(s)", "end");
 }
