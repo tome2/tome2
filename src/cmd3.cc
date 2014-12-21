@@ -321,19 +321,6 @@ void do_cmd_wield(void)
 		}
 	}
 
-	/* Can we take off existing item */
-	if (slot != INVEN_AMMO)
-	{
-		if (p_ptr->inventory[slot].k_idx)
-			if (process_hooks(HOOK_TAKEOFF, "(d)", slot)) return;
-	}
-	else
-	{
-		if (p_ptr->inventory[slot].k_idx)
-			if (!object_similar(&p_ptr->inventory[slot], o_ptr))
-				if (process_hooks(HOOK_TAKEOFF, "(d)", slot)) return;
-	}
-
 	/* Take a turn */
 	energy_use = 100;
 
@@ -478,9 +465,6 @@ void do_cmd_takeoff(void)
 
 	/* Get the item */
 	o_ptr = get_object(item);
-
-	/* Can we take it off */
-	if (process_hooks(HOOK_TAKEOFF, "(d)", item)) return;
 
 	/* Item is cursed */
 	if (cursed_p(o_ptr) && (!wizard))
