@@ -2598,8 +2598,6 @@ static void a_m_aux_1(object_type *o_ptr, int level, int power)
 	}
 
 	/* Some special cases */
-	if (process_hooks(HOOK_APPLY_MAGIC, "(O,d,d)", o_ptr, level, power))
-		return;
 	switch (o_ptr->tval)
 	{
 	case TV_TRAPKIT:
@@ -2745,8 +2743,6 @@ static void a_m_aux_2(object_type *o_ptr, int level, int power)
 	}
 
 	/* Analyze type */
-	if (process_hooks(HOOK_APPLY_MAGIC, "(O,d,d)", o_ptr, level, power))
-		return;
 	switch (o_ptr->tval)
 	{
 	case TV_CLOAK:
@@ -2828,8 +2824,6 @@ static void a_m_aux_3(object_type *o_ptr, int level, int power)
 	}
 
 	/* Apply magic (good or bad) according to type */
-	if (process_hooks(HOOK_APPLY_MAGIC, "(O,d,d)", o_ptr, level, power))
-		return;
 	switch (o_ptr->tval)
 	{
 	case TV_RING:
@@ -3312,8 +3306,6 @@ static void a_m_aux_4(object_type *o_ptr, int level, int power)
 	}
 
 	/* Apply magic (good or bad) according to type */
-	if (process_hooks(HOOK_APPLY_MAGIC, "(O,d,d)", o_ptr, level, power))
-		return;
 	switch (o_ptr->tval)
 	{
 	case TV_BOOK:
