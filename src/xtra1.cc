@@ -3049,15 +3049,11 @@ void calc_bonuses(bool_ silent)
 	/* The extra flags */
 	apply_flags(p_ptr->xtra_f1, p_ptr->xtra_f2, p_ptr->xtra_f3, p_ptr->xtra_f4, p_ptr->xtra_f5, p_ptr->xtra_esp, 0, 0, 0, 0, 0);
 
-	/* Hack -- apply racial/class stat maxes */
-	if (p_ptr->maximize)
+	/* Apply the racial modifiers */
+	for (i = 0; i < 6; i++)
 	{
-		/* Apply the racial modifiers */
-		for (i = 0; i < 6; i++)
-		{
-			/* Modify the stats for "race" */
-			p_ptr->stat_add[i] += (rp_ptr->r_adj[i] + rmp_ptr->r_adj[i] + cp_ptr->c_adj[i]);
-		}
+		/* Modify the stats for "race" */
+		p_ptr->stat_add[i] += (rp_ptr->r_adj[i] + rmp_ptr->r_adj[i] + cp_ptr->c_adj[i]);
 	}
 
 

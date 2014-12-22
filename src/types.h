@@ -1391,7 +1391,6 @@ struct player_type
 	byte hitdie;		/* Hit dice (sides) */
 	u16b expfact;           /* Experience factor */
 
-	byte maximize;		/* Maximize stats */
 	byte preserve;		/* Preserve artifacts */
 	byte special;           /* Special levels */
 	byte allow_one_death;   /* Blood of life */

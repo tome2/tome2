@@ -489,7 +489,7 @@ extern s16b doppleganger;
 extern bool_ generate_encounter;
 extern bool_ autoroll;
 extern bool_ point_based;
-extern bool_ maximize, preserve, special_lvls, ironman_rooms;
+extern bool_ preserve, special_lvls, ironman_rooms;
 extern bool_ inventory_no_move;
 extern bool_ *m_allow_special;
 extern bool_ *k_allow_special;

@@ -338,21 +338,9 @@ static int adjust_stat(int value, int amount, int auto_roll)
 			{
 				value++;
 			}
-			else if (p_ptr->maximize)
+			else
 			{
 				value += 10;
-			}
-			else if (value < 18 + 70)
-			{
-				value += ((auto_roll ? 15 : randint(15)) + 5);
-			}
-			else if (value < 18 + 90)
-			{
-				value += ((auto_roll ? 6 : randint(6)) + 2);
-			}
-			else if (value < 18 + 100)
-			{
-				value++;
 			}
 		}
 	}
@@ -422,25 +410,11 @@ static void get_stats(void)
 		/* Obtain a "bonus" for "race" and "class" */
 		bonus = rp_ptr->r_adj[i] + rmp_ptr->r_adj[i] + cp_ptr->c_adj[i];
 
-		/* Variable stat maxes */
-		if (p_ptr->maximize)
-		{
-			/* Start fully healed */
-			p_ptr->stat_cur[i] = p_ptr->stat_max[i];
+		/* Start fully healed */
+		p_ptr->stat_cur[i] = p_ptr->stat_max[i];
 
-			/* Efficiency -- Apply the racial/class bonuses */
-			stat_use[i] = modify_stat_value(p_ptr->stat_max[i], bonus);
-		}
-
-		/* Fixed stat maxes */
-		else
-		{
-			/* Apply the bonus to the stat (somewhat randomly) */
-			stat_use[i] = adjust_stat(p_ptr->stat_max[i], bonus, FALSE);
-
-			/* Save the resulting stat maximum */
-			p_ptr->stat_cur[i] = p_ptr->stat_max[i] = stat_use[i];
-		}
+		/* Efficiency -- Apply the racial/class bonuses */
+		stat_use[i] = modify_stat_value(p_ptr->stat_max[i], bonus);
 
 		/* No temporary drain (yet...) */
 		p_ptr->stat_cnt[i] = 0;
@@ -2336,7 +2310,6 @@ static bool_ player_birth_aux_ask()
 	}
 
 	/* Set birth options: maximize, preserve, sepcial levels and astral */
-	p_ptr->maximize = maximize;
 	p_ptr->preserve = preserve;
 	p_ptr->special = special_lvls;
 	p_ptr->astral = (PRACE_FLAG2(PR2_ASTRAL)) ? TRUE : FALSE;
@@ -2542,24 +2515,8 @@ static bool_ player_birth_aux_point(void)
 		/* Process stats */
 		for (i = 0; i < 6; i++)
 		{
-			/* Variable stat maxes */
-			if (p_ptr->maximize)
-			{
-				/* Reset stats */
-				p_ptr->stat_cur[i] = p_ptr->stat_max[i] = stats[i];
-
-			}
-
-			/* Fixed stat maxes */
-			else
-			{
-				/* Obtain a "bonus" for "race" and "class" */
-				int bonus = rp_ptr->r_adj[i] + cp_ptr->c_adj[i];
-
-				/* Apply the racial/class bonuses */
-				p_ptr->stat_cur[i] = p_ptr->stat_max[i] =
-				                             modify_stat_value(stats[i], bonus);
-			}
+			/* Reset stats */
+			p_ptr->stat_cur[i] = p_ptr->stat_max[i] = stats[i];
 
 			/* Total cost */
 			cost += birth_stat_costs[stats[i] - 10];

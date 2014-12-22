@@ -1595,9 +1595,6 @@ option_type option_info[] =
 
 	/*** Birth Options ***/
 
-	{ &maximize, TRUE, 6, 1,
-	  "maximize", "Maximise stats" },
-
 	{ &preserve, TRUE, 6, 2,
 	  "preserve", "Preserve artifacts" },
 
