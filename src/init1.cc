@@ -11420,6 +11420,7 @@ static errr process_dungeon_file_aux(char *buf, int *yval, int *xval, int xvalst
  */
 static cptr process_dungeon_file_expr(char **sp, char *fp)
 {
+	static char pref_tmp_value[8];
 	cptr v;
 
 	char *b;

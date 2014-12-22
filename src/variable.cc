@@ -873,12 +873,6 @@ char *ANGBAND_DIR_USER;
  */
 char *ANGBAND_DIR_XTRA;
 
-/*
- * Some variables values are created on the fly XXX XXX
- */
-
-char pref_tmp_value[8];
-
 
 
 /*

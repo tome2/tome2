@@ -431,7 +431,6 @@ extern char *ANGBAND_DIR_NOTE;
 extern char *ANGBAND_DIR_PREF;
 extern char *ANGBAND_DIR_USER;
 extern char *ANGBAND_DIR_XTRA;
-extern char pref_tmp_value[8];
 extern bool_ item_tester_full;
 extern byte item_tester_tval;
 extern bool_ (*item_tester_hook)(object_type *o_ptr);
