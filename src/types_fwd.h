@@ -28,7 +28,6 @@ struct owner_type;
 struct store_type;
 struct store_info_type;
 struct store_action_type;
-struct magic_type;
 struct player_sex;
 struct player_race;
 struct player_race_mod;

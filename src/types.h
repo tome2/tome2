@@ -1016,19 +1016,6 @@ struct store_action_type
 };
 
 /*
- * the spell function must provide the desc
- */
-typedef struct magic_type magic_type;
-
-struct magic_type
-{
-	byte slevel;		        /* Required level (to learn) */
-	byte smana;			/* Required mana (to cast) */
-	byte sfail;			/* Minimum chance of failure */
-	byte sexp;			/* Encoded experience bonus */
-};
-
-/*
  * Player sex info
  */
 
