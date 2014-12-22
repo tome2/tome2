@@ -302,7 +302,6 @@ extern u32b window_mask[ANGBAND_TERM_MAX];
 extern term *angband_term[ANGBAND_TERM_MAX];
 extern char angband_term_name[ANGBAND_TERM_MAX][80];
 extern byte angband_color_table[256][4];
-extern char angband_sound_name[SOUND_MAX][16];
 extern cave_type **cave;
 extern object_type *o_list;
 extern monster_type *m_list;
