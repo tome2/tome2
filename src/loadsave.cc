@@ -111,6 +111,8 @@ static void do_xtra(int k_idx, int flag)
  */
 void do_quick_start(int flag)
 {
+	s16b tmp16s;
+	u32b tmp32u;
 	int i;
 
 	do_s16b(&previous_char.sex, flag);
@@ -130,8 +132,8 @@ void do_quick_start(int flag)
 	for (i = 0; i < 6; i++) do_s16b(&(previous_char.stat[i]), flag);
 	do_s16b(&previous_char.luck, flag);
 
-	do_s16b(&previous_char.chaos_patron, flag);
-	do_u32b(&previous_char.weapon, flag);
+	do_s16b(&tmp16s, flag);
+	do_u32b(&tmp32u, flag);
 	do_byte((byte*)&previous_char.quick_ok, flag);
 
 	for (i = 0; i < 4; i++) do_string(previous_char.history[i], 60, flag);

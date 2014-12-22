@@ -189,9 +189,6 @@ static void save_prev_data(void)
 	}
 	previous_char.luck = p_ptr->luck_base;
 
-	/* Save the weapon specialty */
-	previous_char.weapon = 0;
-
 	/* Save the history */
 	for (i = 0; i < 4; i++)
 	{
@@ -225,9 +222,6 @@ static void load_prev_data(bool_ save)
 		temp.stat[i] = p_ptr->stat_max[i];
 	}
 	temp.luck = p_ptr->luck_base;
-
-	/* Save the weapon specialty */
-	temp.weapon = 0;
 
 	/* Save the history */
 	for (i = 0; i < 4; i++)
@@ -277,12 +271,6 @@ static void load_prev_data(bool_ save)
 		previous_char.stat[i] = temp.stat[i];
 	}
 	previous_char.luck = temp.luck;
-
-	/* Save the chaos patron */
-	previous_char.chaos_patron = temp.chaos_patron;
-
-	/* Save the weapon specialty */
-	previous_char.weapon = temp.weapon;
 
 	/* Save the history */
 	for (i = 0; i < 4; i++)

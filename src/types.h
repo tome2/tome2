@@ -2411,10 +2411,6 @@ struct birther
 	s16b stat[6];
 	s16b luck;
 
-	s16b chaos_patron;
-
-	u32b weapon;
-
 	char history[4][60];
 
 	bool_ quick_ok;
