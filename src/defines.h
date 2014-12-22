@@ -4386,7 +4386,6 @@
 #define HOOK_MON_ASK_HELP       69
 #define HOOK_GAME_START         72
 #define HOOK_FORBID_TRAVEL      75
-#define MAX_HOOKS               77
 
 /*
  * Defines for loadsave.c
