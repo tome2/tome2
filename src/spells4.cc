@@ -3,6 +3,7 @@
 #include <assert.h>
 
 #include "spell_type.h"
+#include "spell_type.hpp"
 #include "spell_idx_list.hpp"
 #include <algorithm>
 
@@ -64,22 +65,16 @@ s32b get_power(s32b s)
 	return uses_piety_to_cast(s) ? p_ptr->grace : p_ptr->csp;
 }
 
-static void print_spell_desc_callback(void *data, cptr text)
-{
-	int *y = (int *) data;
-
-	c_prt(TERM_L_BLUE, text, *y, 0);
-	(*y) += 1;
-}
-
 /* Output the describtion when it is used as a spell */
 void print_spell_desc(int s, int y)
 {
 	spell_type *spell = spell_at(s);
 
 	spell_type_description_foreach(spell,
-				       print_spell_desc_callback,
-				       &y);
+				       [&y] (std::string const &text) -> void {
+					       c_prt(TERM_L_BLUE, text.c_str(), y, 0);
+					       y += 1;
+				       });
 
 	if (spell_type_uses_piety_to_cast(spell))
 	{

@@ -14,6 +14,7 @@
 
 #include "quark.h"
 #include "spell_type.h"
+#include "spell_type.hpp"
 #include "hooks.h"
 
 /*
@@ -2746,15 +2747,6 @@ void display_ammo_damage(object_type *o_ptr)
 }
 
 /*
- * Output spell description
- */
-static void print_device_desc_callback(void *data, cptr text)
-{
-	text_out("\n");
-	text_out(text);
-}
-
-/*
  * Describe a magic stick powers
  */
 void describe_device(object_type *o_ptr)
@@ -2769,8 +2761,10 @@ void describe_device(object_type *o_ptr)
 
 		text_out("\nSpell description:\n");
 		spell_type_description_foreach(spell_at(o_ptr->pval2),
-					       print_device_desc_callback,
-					       NULL);
+					       [] (std::string const &text) -> void {
+						       text_out("\n");
+						       text_out(text.c_str());
+					       });
 
 		text_out("\nSpell level: ");
 		sprintf(buf, FMTs32b, get_level(o_ptr->pval2, 50, 0));

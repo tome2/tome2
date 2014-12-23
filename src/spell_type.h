@@ -73,7 +73,6 @@ int spell_type_produce_effect_lasting(spell_type *spell);
 casting_result spell_type_produce_effect(spell_type *spell, int o_idx);
 cptr spell_type_name(spell_type *spell);
 int spell_type_skill_level(spell_type *spell);
-void spell_type_description_foreach(spell_type *spell, void (*callback)(void *data, cptr text), void *data);
 long spell_type_roll_charges(spell_type *spell);
 void spell_type_activation_description(spell_type *spell, char *buf);
 int spell_type_activation_roll_timeout(spell_type *spell);

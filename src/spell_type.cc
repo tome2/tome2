@@ -1,4 +1,5 @@
 #include "spell_type.h"
+#include "spell_type.hpp"
 #include "range.h"
 #include "device_allocation.h"
 #include "dice.h"
@@ -312,12 +313,11 @@ int spell_type_skill_level(spell_type *spell)
 	return spell->skill_level;
 }
 
-void spell_type_description_foreach(spell_type *spell, void (*callback)(void *data, cptr text), void *data)
+void spell_type_description_foreach(spell_type *spell, std::function<void (std::string const &text)> callback)
 {
-	assert(callback != NULL);
 	for (auto line: spell->m_description)
 	{
-		callback(data, line.c_str());
+		callback(line);
 	}
 }
 
