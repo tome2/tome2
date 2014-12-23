@@ -177,6 +177,17 @@ s32b get_level_s(int sp, int max)
 	return get_level(sp, max, 1);
 }
 
+static void find_position(int y, int x, int *yy, int *xx)
+{
+	int attempts = 500;
+
+	do
+	{
+		scatter(yy, xx, y, x, 6);
+	}
+	while (!(in_bounds(*yy, *xx) && cave_floor_bold(*yy, *xx)) && --attempts);
+}
+
 static casting_result cast(bool_ effect)
 {
 	return effect ? CAST_OBVIOUS : CAST_HIDDEN;

@@ -2210,8 +2210,6 @@ extern int find_module(cptr name);
 
 extern s16b    add_new_power(cptr name, cptr desc, cptr gain, cptr lose, byte level, byte cost, byte stat, byte diff);
 
-extern void find_position(int y, int x, int *yy, int *xx);
-
 extern s32b lua_get_level(spell_type *spell, s32b lvl, s32b max, s32b min, s32b bonus);
 extern s32b get_level_device(s32b s, s32b max, s32b min);
 extern int get_mana(s32b s);

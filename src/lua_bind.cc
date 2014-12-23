@@ -18,21 +18,6 @@
 #include "range.h"
 
 /*
- * Monsters
- */
-
-void find_position(int y, int x, int *yy, int *xx)
-{
-	int attempts = 500;
-
-	do
-	{
-		scatter(yy, xx, y, x, 6);
-	}
-	while (!(in_bounds(*yy, *xx) && cave_floor_bold(*yy, *xx)) && --attempts);
-}
-
-/*
  * Misc
  */
 
