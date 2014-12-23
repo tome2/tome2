@@ -2615,8 +2615,7 @@ deity_type deity_info[MAX_GODS] =
 		{ MODULE_TOME, MODULE_THEME, -1, },
 		"Yavanna Kementari",
 		{
-			"She is the Vala of nature, protectress of the great forests of "
-			"Middle-earth.",
+			"She is the Vala of nature, protectress of the great forests of Middle-earth.",
 			"",
 			"",
 			"",
@@ -2664,8 +2663,7 @@ deity_type deity_info[MAX_GODS] =
 		{ MODULE_THEME, -1, },
 		"Ulmo",
 		{
-			"Ulmo is called Lord of Waters, he rules all that is water"
-			"on Arda.",
+			"Ulmo is called Lord of Waters, he rules all that is water on Arda.",
 			"",
 			"",
 			"",
