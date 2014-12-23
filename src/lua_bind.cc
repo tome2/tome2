@@ -45,11 +45,9 @@ s32b lua_get_level(spell_type *spell, s32b lvl, s32b max, s32b min, s32b bonus)
 	return lvl;
 }
 
-/** This is the function to use when casting through a stick */
-s32b get_level_device(s32b s, s32b max, s32b min)
+static s32b get_level_device(spell_type *spell, s32b max, s32b min)
 {
 	int lvl;
-	spell_type *spell = spell_at(s);
 
 	/* No max specified ? assume 50 */
 	if (max <= 0) {
@@ -163,7 +161,8 @@ s32b get_level(s32b s, s32b max, s32b min)
 {
 	/** Ahah shall we use Magic device instead ? */
 	if (get_level_use_stick > -1) {
-		return get_level_device(s, max, min);
+		spell_type *spell = spell_at(s);
+		return get_level_device(spell, max, min);
 	} else {
 		s32b level;
 		bool_ notused;

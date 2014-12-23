@@ -2209,7 +2209,6 @@ extern int find_module(cptr name);
 /* lua_bind.c */
 
 extern s32b lua_get_level(spell_type *spell, s32b lvl, s32b max, s32b min, s32b bonus);
-extern s32b get_level_device(s32b s, s32b max, s32b min);
 extern int get_mana(s32b s);
 extern s32b get_power(s32b s);
 extern s32b spell_chance(s32b s);
