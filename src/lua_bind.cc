@@ -172,13 +172,6 @@ s32b get_level(s32b s, s32b max, s32b min)
 	}
 }
 
-void set_target(int y, int x)
-{
-	target_who = -1;
-	target_col = x;
-	target_row = y;
-}
-
 void get_target(int dir, int *y, int *x)
 {
 	int ty, tx;

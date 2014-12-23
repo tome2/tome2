@@ -492,7 +492,11 @@ casting_result convey_recall(int item)
 	}
 	else if (c_ptr->o_idx > 0)
 	{
-		set_target(y, x);
+		// Set the target
+		target_who = -1;
+		target_col = x;
+		target_row = y;
+		// Fetch item
 		if (get_level_s(RECALL, 50) >= 15)
 		{
 			fetch(5, 10 + get_level_s(RECALL, 150), FALSE);
