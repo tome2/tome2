@@ -71,7 +71,7 @@ static void increase_skill(int i, s16b *invest)
  * Descrease the skill point of the skill specified by i and
  * modify related skills
  */
-void decrease_skill(int i, s16b *invest)
+static void decrease_skill(int i, s16b *invest)
 {
 	/* Cannot decrease more */
 	if (!invest[i]) return;
@@ -162,15 +162,9 @@ s16b get_skill_scale(int skill, u32b scale)
 	return (temp / SKILL_MAX);
 }
 
-
-/*
- *
- */
-int get_idx(int i)
+static int get_idx(int i)
 {
-	int j;
-
-	for (j = 1; j < max_s_idx; j++)
+	for (int j = 1; j < max_s_idx; j++)
 	{
 		if (s_info[j].order == i)
 			return (j);
@@ -199,17 +193,11 @@ static bool_ is_known(int s_idx)
 	return FALSE;
 }
 
-/*
- *
- */
-void init_table_aux(int table[MAX_SKILLS][2], int *idx, int father, int lev,
-                    bool_ full)
+static void init_table_aux(int table[MAX_SKILLS][2], int *idx, int father, int lev, bool_ full)
 {
-	int j, i;
-
-	for (j = 1; j < max_s_idx; j++)
+	for (int j = 1; j < max_s_idx; j++)
 	{
-		i = get_idx(j);
+		int i = get_idx(j);
 		if (s_info[i].father != father) continue;
 		if (s_info[i].hidden) continue;
 		if (!is_known(i)) continue;
@@ -221,15 +209,13 @@ void init_table_aux(int table[MAX_SKILLS][2], int *idx, int father, int lev,
 	}
 }
 
-
-void init_table(int table[MAX_SKILLS][2], int *max, bool_ full)
+static void init_table(int table[MAX_SKILLS][2], int *max, bool_ full)
 {
 	*max = 0;
 	init_table_aux(table, max, -1, 0, full);
 }
 
-
-bool_ has_child(int sel)
+static bool_ has_child(int sel)
 {
 	int i;
 
@@ -788,7 +774,7 @@ static void print_skill_batch(const std::vector<std::tuple<cptr, int>> &p, int s
 	prt(format("Select a skill (a-%c), @ to select by name, +/- to scroll:", I2A(j - 1)), 0, 0);
 }
 
-int do_cmd_activate_skill_aux()
+static int do_cmd_activate_skill_aux()
 {
 	char which;
 	int i, start = 0;
@@ -1469,7 +1455,7 @@ bool_ has_ability(int ab)
 }
 
 /* Do we meet the requirements */
-bool_ can_learn_ability(int ab)
+static bool_ can_learn_ability(int ab)
 {
 	ability_type *ab_ptr = &ab_info[ab];
 	int i;
@@ -1518,7 +1504,7 @@ bool_ can_learn_ability(int ab)
 }
 
 /* Learn an ability */
-void gain_ability(int ab)
+static void gain_ability(int ab)
 {
 	int wid, hgt;
 	Term_get_size(&wid, &hgt);
