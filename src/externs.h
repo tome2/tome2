@@ -1120,7 +1120,6 @@ extern s16b m_bonus(int max, int level);
 extern void object_gain_level(object_type *o_ptr);
 extern void gain_flag_group_flag(object_type *o_ptr, bool_ silent);
 extern void gain_flag_group(object_type *o_ptr, bool_ silent);
-extern void get_table_name(char * out_string);
 extern s32b flag_cost(object_type * o_ptr, int plusses);
 
 /* powers.c */

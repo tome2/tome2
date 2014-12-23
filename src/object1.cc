@@ -339,39 +339,6 @@ static bool_ object_flavor(int k_idx)
 }
 
 
-void get_table_name(char *out_string)
-{
-	int testcounter = (randint(3)) + 1;
-
-	strcpy(out_string, "'");
-
-	if (randint(3) == 2)
-	{
-		while (testcounter--)
-			strcat(out_string, syllables[(randint(MAX_SYLLABLES)) - 1]);
-	}
-
-	else
-	{
-		char Syllable[80];
-		testcounter = (randint(2)) + 1;
-		while (testcounter--)
-		{
-			get_rnd_line("elvish.txt", Syllable);
-			strcat(out_string, Syllable);
-		}
-	}
-
-	out_string[1] = toupper(out_string[1]);
-
-	strcat(out_string, "'");
-
-	out_string[18] = '\0';
-
-	return;
-}
-
-
 /*
  * Certain items, if aware, are known instantly
  * This function is used only by "flavor_init()"
