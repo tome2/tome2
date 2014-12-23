@@ -16,6 +16,46 @@
 using std::this_thread::sleep_for;
 using std::chrono::milliseconds;
 
+/*
+ * Check and create if needed the directory dirpath
+ */
+bool_ private_check_user_directory(cptr dirpath)
+{
+	/* Is this used anywhere else in *bands? */
+	struct stat stat_buf;
+
+	int ret;
+
+	/* See if it already exists */
+	ret = stat(dirpath, &stat_buf);
+
+	/* It does */
+	if (ret == 0)
+	{
+		/* Now we see if it's a directory */
+		if ((stat_buf.st_mode & S_IFMT) == S_IFDIR) return (TRUE);
+
+		/*
+		 * Something prevents us from create a directory with
+		 * the same pathname
+		 */
+		return (FALSE);
+	}
+
+	/* No - this maybe the first time. Try to create a directory */
+	else
+	{
+		/* Create the ~/.ToME directory */
+		ret = mkdir(dirpath, 0700);
+
+		/* An error occured */
+		if (ret == -1) return (FALSE);
+
+		/* Success */
+		return (TRUE);
+	}
+}
+
 static void module_reset_dir_aux(char **dir, cptr new_path)
 {
 	char buf[1024];
