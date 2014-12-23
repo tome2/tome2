@@ -357,20 +357,6 @@ bool_ do_inc_stat(int stat)
  */
 void identify_hooks(int i, object_type *o_ptr, identify_mode mode)
 {
-	cptr mode_s = NULL;
-
-	switch (mode)
-	{
-	case IDENT_NORMAL:
-		mode_s = "normal";
-		break;
-	case IDENT_FULL:
-		mode_s = "full";
-		break;
-	default:
-		assert(FALSE);
-	}
-
 	/* Process the appropriate hooks */
 	hook_identify_in in = { o_ptr, mode };
 	process_hooks_new(HOOK_IDENTIFY, &in, NULL);

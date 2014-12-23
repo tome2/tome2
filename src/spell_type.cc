@@ -76,7 +76,7 @@ public:
 		mana_range({ -1, -1 }),
 		activation_timeout({ 0, 0, 0 }),
 		school_idxs_count(0),
-		school_idxs({ -1, -1, -1 }) {
+		school_idxs{ -1, -1, -1 } {
 	}
 
 };

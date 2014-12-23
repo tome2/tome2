@@ -140,8 +140,6 @@ static bool_ geomancy_depends_satisfied()
 
 long get_provided_levels(school_type *school)
 {
-	school_provider *school_provider = NULL;
-
 	for (auto school_provider: school->providers->v)
 	{
 		if (school_provider.deity_idx == p_ptr->pgod)
