@@ -280,7 +280,7 @@ static byte scroll_col[MAX_TITLES];
  * Certain items have a flavor
  * This function is used only by "flavor_init()"
  */
-static bool_ object_flavor(int k_idx)
+static byte object_flavor(int k_idx)
 {
 	object_kind *k_ptr = &k_info[k_idx];
 
