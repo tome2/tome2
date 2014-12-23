@@ -17,7 +17,6 @@
  */
 struct spell_type
 {
-	// FIXME: most of this stuff shouldn't be public
 	cptr name;                      /* Name */
 	byte skill_level;               /* Required level (to learn) */
 	std::vector<std::string> m_description;       /* List of strings */
@@ -36,7 +35,7 @@ struct spell_type
 	bool_        castable_while_confused;
 
 	dice_type          device_charges;      /* Number of charges for devices */
-	std::vector<device_allocation *> m_device_allocation;	/* Allocation table for devices */ /* FIXME: shouldn't really be pointer-to, but... */
+	std::vector<device_allocation *> m_device_allocation;	/* Allocation table for devices */
 
 	s16b         random_type;       /* Type of random items in which skill may appear */
 
@@ -54,8 +53,6 @@ struct spell_type
 
 public:
 
-	// FIXME: forbi copy-ctor + move + etc?
-
 	spell_type(cptr _name):
 		name(_name),
 		skill_level(0),
@@ -65,7 +62,7 @@ public:
 		lasting_func(nullptr),
 		depend_func(nullptr),
 		minimum_pval(0),
-		casting_type(USE_SPELL_POINTS /* FIXME: ??? */),
+		casting_type(USE_SPELL_POINTS),
 		casting_stat(0),
 		castable_while_blind(FALSE),
 		castable_while_confused(FALSE),
@@ -320,7 +317,7 @@ void spell_type_description_foreach(spell_type *spell, void (*callback)(void *da
 	assert(callback != NULL);
 	for (auto line: spell->m_description)
 	{
-		callback(data, line.c_str()); // FIXME: inefficient and dangerous!
+		callback(data, line.c_str());
 	}
 }
 
@@ -337,7 +334,7 @@ void spell_type_activation_description(spell_type *spell, char *buf)
 
 	assert(spell->m_description.size() > 0);
 
-	sprintf(buf, "%s every %s turns", spell->m_description.at(0).c_str() /* FIXME: ugh */, turns);
+	sprintf(buf, "%s every %s turns", spell->m_description.at(0).c_str(), turns);
 }
 
 int spell_type_activation_roll_timeout(spell_type *spell)

@@ -109,7 +109,7 @@ school_book_type *school_books_at(int i)
 
 static void school_book_init(school_book_type *school_book)
 {
-	school_book->spell_idx_list = new spell_idx_list(); // FIXME: This whole thing should really be in the ctor?!?
+	school_book->spell_idx_list = new spell_idx_list();
 }
 
 void school_book_add_spell(school_book_type *school_book, s32b spell_idx)
@@ -150,7 +150,7 @@ bool_ school_book_contains_spell(int sval, s32b spell_idx)
 {
 	random_book_setup(sval, spell_idx);
 	school_book_type *school_book = school_books_at(sval);
-	return (school_book->spell_idx_list->v.end() !=  // FIXME: Oh, the horror! Is there really no shortcut?!?
+	return (school_book->spell_idx_list->v.end() !=
 			std::find(school_book->spell_idx_list->v.begin(),
 				school_book->spell_idx_list->v.end(),
 				spell_idx));

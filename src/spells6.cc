@@ -6,7 +6,6 @@
 
 struct school_provider
 {
-	// FIXME: make school_provider_new a ctor instead...
 	byte deity_idx; /* Deity which provides school levels */
 
 	s16b skill_idx; /* Skill used for determining the boost */
@@ -17,7 +16,7 @@ struct school_provider
 };
 
 struct school_provider_list {
-public: // FIXME: because of lack of definition...
+public:
 	std::vector<school_provider> v;
 };
 
