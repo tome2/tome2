@@ -188,24 +188,6 @@ s32b get_level(s32b s, s32b max, s32b min)
 	}
 }
 
-void get_target(int dir, int *y, int *x)
-{
-	int ty, tx;
-
-	/* Use the given direction */
-	tx = p_ptr->px + (ddx[dir] * 100);
-	ty = p_ptr->py + (ddy[dir] * 100);
-
-	/* Hack -- Use an actual "target" */
-	if ((dir == 5) && target_okay())
-	{
-		tx = target_col;
-		ty = target_row;
-	}
-	*y = ty;
-	*x = tx;
-}
-
 /* Level gen */
 void get_map_size(const char *name, int *ysize, int *xsize)
 {

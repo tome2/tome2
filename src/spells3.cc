@@ -592,8 +592,24 @@ casting_result demonology_demon_madness(int item)
 		type = GF_CHARM;
 	}
 
-	/* Calc the coordinates of arrival */
-	get_target(dir, &y1, &x1);
+	// Calculate the coordinates of arrival
+	{
+		// Use the given direction
+		int tx = p_ptr->px + (ddx[dir] * 100);
+		int ty = p_ptr->py + (ddy[dir] * 100);
+
+		// Hack -- Use an actual "target"
+		if ((dir == 5) && target_okay())
+		{
+			tx = target_col;
+			ty = target_row;
+		}
+
+		y1 = ty;
+		x1 = tx;
+	}
+
+	// Calculate the appropriate place
 	y2 = p_ptr->py - (y1 - p_ptr->py);
 	x2 = p_ptr->px - (x1 - p_ptr->px);
 
