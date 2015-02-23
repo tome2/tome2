@@ -46,7 +46,7 @@ struct spell_type
 
 	range_type   mana_range;
 
-	int school_idxs_count;
+	size_t school_idxs_count;
 	s32b school_idxs[3];
 
 public:
@@ -357,19 +357,14 @@ s16b spell_type_random_type(spell_type *spell)
 	return spell->random_type;
 }
 
-bool_ spell_type_school_foreach(spell_type *spell, bool_ (*callback)(void *data, s32b school_idx), void *data)
+std::vector<s32b> const spell_type_get_schools(spell_type *spell)
 {
-	int i;
-
-	for (i = 0; i < spell->school_idxs_count; i++)
+	std::vector<s32b> school_idxs;
+	for (size_t i = 0; i < spell->school_idxs_count; i++)
 	{
-		if (!callback(data, spell->school_idxs[i]))
-		{
-			return FALSE;
-		}
+		school_idxs.push_back(spell->school_idxs[i]);
 	}
-
-	return TRUE;
+	return school_idxs;
 }
 
 bool_ spell_type_inertia(spell_type *spell, s32b *difficulty, s32b *delay)

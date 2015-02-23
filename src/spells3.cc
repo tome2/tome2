@@ -2884,20 +2884,6 @@ casting_result tulkas_whirlwind()
 	return cast(fire_ball(GF_ATTACK, 0, 1, 1));
 }
 
-static bool_ check_school_is_udun(void *data, s32b school_idx)
-{
-	int *count = (int *) data;
-
-	if ((school_idx == SCHOOL_UDUN) ||
-	    (school_idx == SCHOOL_MELKOR))
-	{
-		(*count)++;
-	}
-
-	/* Keep going */
-	return TRUE;
-}
-
 /* Return the number of Udun/Melkor spells in a given book */
 int udun_in_book(s32b sval, s32b pval)
 {
@@ -2912,7 +2898,14 @@ int udun_in_book(s32b sval, s32b pval)
 	/* Go through spells */
 	for (auto spell_idx : school_book->spell_idx_list->v) {
 		spell_type *spell = spell_at(spell_idx);
-		spell_type_school_foreach(spell, check_school_is_udun, &count);
+		for (auto school_idx : spell_type_get_schools(spell))
+		{
+			if ((school_idx == SCHOOL_UDUN) ||
+			    (school_idx == SCHOOL_MELKOR))
+			{
+				count++;
+			}
+		}
 	}
 
 	return count;

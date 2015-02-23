@@ -1,6 +1,7 @@
 #include "angband.h"
 
 #include <assert.h>
+#include <sstream>
 
 #include "lua_bind.hpp"
 #include "spell_type.hpp"
@@ -396,30 +397,28 @@ void random_book_setup(s16b sval, s32b spell_idx)
 	}
 }
 
-static bool_ spell_school_name_callback(void *data, s32b sch)
+static std::string spell_school_name(spell_type *spell)
 {
-	school_type *school = school_at(sch);
-	char *buf = (char *) data;
+	std::stringstream buf;
+	bool first = true;
 
-	/* Add separator? */
-	if (buf[0] != '\0')
+	for (s32b school_idx : spell_type_get_schools(spell))
 	{
-		strcat(buf, "/");
+		school_type *school = school_at(school_idx);
+		// Add separator?
+		if (first)
+		{
+			first = false; // Skip separator
+		}
+		else
+		{
+			buf << "/";
+		}
+		// Put in the school's name
+		buf << school->name;
 	}
 
-	/* Add school name */
-	strcat(buf, school->name);
-
-	/* Keep going */
-	return TRUE;
-}
-
-static void spell_school_name(char *buf, spell_type *spell)
-{
-	buf[0] = '\0';
-	spell_type_school_foreach(spell,
-				  spell_school_name_callback,
-				  buf);
+	return buf.str();
 }
 
 int print_spell(cptr label_, byte color, int y, s32b s)
@@ -427,14 +426,14 @@ int print_spell(cptr label_, byte color, int y, s32b s)
 	s32b level;
 	bool_ na;
 	spell_type *spell = spell_at(s);
-	char sch_str[128];
 	cptr spell_info = spell_type_info(spell);
 	cptr label = (label_ == NULL) ? "" : label_;
 	char level_str[8] = "n/a";
 	char buf[128];
 
 	get_level_school(spell, 50, -50, &level, &na);
-	spell_school_name(sch_str, spell);
+
+	std::string sch_str(spell_school_name(spell));
 
 	if (!na)
 	{
@@ -444,7 +443,7 @@ int print_spell(cptr label_, byte color, int y, s32b s)
 	sprintf(buf, "%s%-20s%-16s   %s %4d %3d%% %s",
 		label,
 		spell_type_name(spell_at(s)),
-		sch_str,
+		sch_str.c_str(),
 		level_str,
 		get_mana(s),
 		(int) spell_chance_book(s),

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "spell_type_fwd.hpp"
+#include <vector>
 #include <string>
 #include <functional>
 #include "h-basic.h"
@@ -76,7 +77,7 @@ bool_ spell_type_castable_while_blind(spell_type *spell);
 bool_ spell_type_castable_while_confused(spell_type *spell);
 s16b spell_type_minimum_pval(spell_type *spell);
 s16b spell_type_random_type(spell_type *spell);
-bool_ spell_type_school_foreach(spell_type *spell, bool_ (*callback)(void *data, s32b school_idx), void *data);
+std::vector<s32b> const spell_type_get_schools(spell_type *spell);
 bool_ spell_type_inertia(spell_type *spell, s32b *difficulty, s32b *delay);
 s32b spell_type_failure_rate(spell_type *spell);
 s16b spell_type_casting_stat(spell_type *spell);

@@ -152,7 +152,6 @@ long get_provided_levels(school_type *school)
 	return 0;
 }
 
-typedef struct get_level_school_callback_data get_level_school_callback_data;
 struct get_level_school_callback_data {
 	bool_ allow_spell_power;
 	long bonus;
@@ -160,9 +159,8 @@ struct get_level_school_callback_data {
 	long num;
 };
 
-static bool_ get_level_school_callback(void *data_, int school_idx)
+static bool get_level_school_callback(struct get_level_school_callback_data *data, int school_idx)
 {
-	get_level_school_callback_data *data = static_cast<get_level_school_callback_data *>(data_);
 	school_type *school = school_at(school_idx);
 	long r = 0, s = 0, p = 0, ok = 0;
 
@@ -170,7 +168,7 @@ static bool_ get_level_school_callback(void *data_, int school_idx)
 	if ((school->deity_idx > 0) &&
 	    (school->deity_idx != p_ptr->pgod))
 	{
-		return FALSE;
+		return false;
 	}
 
 	/* Take the basic skill value */
@@ -180,7 +178,7 @@ static bool_ get_level_school_callback(void *data_, int school_idx)
 	if ((school->depends_satisfied != NULL) &&
 	    (!school->depends_satisfied()))
 	{
-		return FALSE;
+		return false;
 	}
 
 	/* Include effects of Sorcery (if applicable) */
@@ -219,7 +217,7 @@ static bool_ get_level_school_callback(void *data_, int school_idx)
 	/* All schools must be non-zero to be able to use it. */
 	if (ok <= 0)
 	{
-		return FALSE;
+		return false;
 	}
 
 	/* Apply it */
@@ -227,7 +225,7 @@ static bool_ get_level_school_callback(void *data_, int school_idx)
 	data->num += 1;
 
 	/* Keep going */
-	return TRUE;
+	return true;
 }
 
 void get_level_school(spell_type *spell, s32b max, s32b min, s32b *level, bool_ *na)
@@ -250,12 +248,16 @@ void get_level_school(spell_type *spell, s32b max, s32b min, s32b *level, bool_ 
 	data.lvl = 0;
 	data.num = 0;
 	
-	/* Go through all the spell's schools. */
-	if (!spell_type_school_foreach(spell, get_level_school_callback, &data))
+	// Go through all the spell's schools and count up all the
+	// levels and make sure we can actually cast the spell.
+	for (auto school_idx : spell_type_get_schools(spell))
 	{
-		*level = min;
-		*na = TRUE;
-		return;
+		if (!get_level_school_callback(&data, school_idx))
+		{
+			*level = min;
+			*na = TRUE;
+			return;
+		}
 	}
 
 	/* Add the Spellpower skill as a bonus on top */
