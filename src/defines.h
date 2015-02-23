@@ -121,8 +121,6 @@
 #define CHANCE_TRAP_DOOR  500        /* in 10000 */
 #define CHANCE_TRAP_FLOOR 4          /* in 10000 chance of placing a trap */
 
-#define MAX_BOUNTIES        24
-
 #define MAX_SPELLS          100
 #define MAX_RUNES           100
 
@@ -3873,8 +3871,6 @@
 #define BACT_RECALL                 33
 #define BACT_TELEPORT_LEVEL         34
 #define BACT_MIMIC_NORMAL           37
-#define BACT_VIEW_QUEST_MON         40
-#define BACT_SELL_QUEST_MON         41
 #define BACT_DIVINATION             42
 #define BACT_SELL                   43
 #define BACT_BUY                    44

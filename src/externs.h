@@ -444,7 +444,6 @@ extern random_artifact random_artifacts[MAX_RANDARTS];
 extern s32b RANDART_WEAPON;
 extern s32b RANDART_ARMOR;
 extern s32b RANDART_JEWEL;
-extern s16b bounties[MAX_BOUNTIES][2];
 extern random_spell random_spells[MAX_SPELLS];
 extern s16b spell_num;
 extern rune_spell rune_spells[MAX_RUNES];
@@ -452,7 +451,6 @@ extern s16b rune_num;
 extern fate fates[MAX_FATES];
 extern byte dungeon_type;
 extern s16b *max_dlv;
-extern u32b total_bounties;
 extern s16b doppleganger;
 extern bool_ generate_encounter;
 extern bool_ autoroll;
@@ -1362,7 +1360,6 @@ extern bool_ is_state(store_type *s_ptr, int state);
 extern void do_cmd_bldg(void);
 extern bool_ show_god_info(bool_ ext);
 extern void enter_quest(void);
-extern void select_bounties(void);
 
 /* util.c */
 extern s32b rescale(s32b x, s32b max, s32b new_max);

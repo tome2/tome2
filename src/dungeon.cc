@@ -1346,13 +1346,6 @@ static void process_world(void)
 		            get_month_name(bst(DAY, turn), wizard, FALSE), buf);
 	}
 
-	/* Set back the rewards once a day */
-	if ((turn % (10L * STORE_TURNS)) == 0)
-	{
-		/* Select new bounties. */
-		if (magik(20)) select_bounties();
-	}
-
 	/*** Process the monsters ***/
 
 	/* Check for creature generation. */

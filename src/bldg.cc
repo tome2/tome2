@@ -611,9 +611,6 @@ static bool_ inn_comm(int cmd)
 			p_ptr->oldpx = p_ptr->px;
 			p_ptr->oldpy = p_ptr->py;
 
-			/* Select new bounties. */
-			select_bounties();
-
 			break;
 		}
 
@@ -1080,251 +1077,6 @@ static bool_ research_item(void)
 }
 
 
-/*
- * Show the current quest monster. 
- */
-static void show_quest_monster(void)
-{
-	monster_race* r_ptr = &r_info[bounties[0][0]];
-
-
-	msg_format("Quest monster: %s. "
-	           "Need to turn in %d corpse%s to receive reward.",
-		   r_ptr->name, bounties[0][1],
-	           (bounties[0][1] > 1 ? "s" : ""));
-	msg_print(NULL);
-}
-
-
-/* Filter to match the quest monster's corpse. */
-static bool_ item_tester_hook_quest_monster(object_type* o_ptr)
-{
-	if ((o_ptr->tval == TV_CORPSE) &&
-	                (o_ptr->pval2 == bounties[0][0])) return (TRUE);
-	return (FALSE);
-}
-
-
-/*
- * Hook for bounty monster selection.
- */
-static bool_ mon_hook_bounty(int r_idx)
-{
-	monster_race* r_ptr = &r_info[r_idx];
-
-
-	/* Reject uniques */
-	if (r_ptr->flags1 & RF1_UNIQUE) return (FALSE);
-
-	/* Reject those who cannot leave anything */
-	if (!(r_ptr->flags9 & RF9_DROP_CORPSE) &&
-	                !(r_ptr->flags9 & RF9_DROP_SKELETON)) return (FALSE);
-
-	/* Reject pets */
-	if (r_ptr->flags7 & RF7_PET) return (FALSE);
-
-	/* Reject friendly creatures */
-	if (r_ptr->flags7 & RF7_FRIENDLY) return (FALSE);
-
-	/* The rest are acceptable */
-	return (TRUE);
-}
-
-
-static void select_quest_monster(void)
-{
-	monster_race* r_ptr;
-
-	int amt;
-
-
-	/*
-	 * Set up the hooks -- no bounties on uniques or monsters
-	 * with no corpses
-	 */
-	get_mon_num_hook = mon_hook_bounty;
-	get_mon_num_prep();
-
-	/* Set up the quest monster. */
-	bounties[0][0] = get_mon_num(p_ptr->lev);
-
-	r_ptr = &r_info[bounties[0][0]];
-
-	/*
-	 * Select the number of monsters needed to kill. Groups and
-	 * breeders require more
-	 */
-	amt = randnor(5, 3);
-
-	if (amt < 2) amt = 2;
-
-	if (r_ptr->flags1 & RF1_FRIEND) amt *= 3; amt /= 2;
-	if (r_ptr->flags1 & RF1_FRIENDS) amt *= 2;
-	if (r_ptr->flags4 & RF4_MULTIPLY) amt *= 3;
-
-	if (r_ptr->flags7 & RF7_AQUATIC) amt /= 2;
-
-	bounties[0][1] = amt;
-
-	/* Undo the filters */
-	get_mon_num_hook = NULL;
-	get_mon_num_prep();
-}
-
-
-
-/*
- * Sell a corpse for a reward.
- */
-static void sell_quest_monster(void)
-{
-	object_type* o_ptr;
-
-	int item;
-
-
-	/* Set the hook. */
-	item_tester_hook = item_tester_hook_quest_monster;
-
-	/* Select a corpse to sell. */
-	if (!get_item(&item, "Sell which corpse",
-	                "You have no corpses you can sell.", USE_INVEN)) return;
-
-	o_ptr = &p_ptr->inventory[item];
-
-	bounties[0][1] -= o_ptr->number;
-
-	/* Completed the quest. */
-	if (bounties[0][1] <= 0)
-	{
-		int m;
-		monster_race *r_ptr;
-
-		cmsg_print(TERM_YELLOW, "You have completed your quest!");
-		msg_print(NULL);
-
-		/* Give full knowledge */
-
-		/* Hack -- Maximal info */
-		r_ptr = &r_info[bounties[0][0]];
-
-		msg_print(format("Well done! As a reward I'll teach you everything "
-		                 "about the %s, (check your recall)",
-				 r_ptr->name));
-
-		r_ptr->r_wake = r_ptr->r_ignore = MAX_UCHAR;
-
-		/* Observe "maximal" attacks */
-		for (m = 0; m < 4; m++)
-		{
-			/* Examine "actual" blows */
-			if (r_ptr->blow[m].effect || r_ptr->blow[m].method)
-			{
-				/* Hack -- maximal observations */
-				r_ptr->r_blows[m] = MAX_UCHAR;
-			}
-		}
-
-		/* Hack -- maximal drops */
-		r_ptr->r_drop_gold = r_ptr->r_drop_item =
-		                             (((r_ptr->flags1 & (RF1_DROP_4D2)) ? 8 : 0) +
-		                              ((r_ptr->flags1 & (RF1_DROP_3D2)) ? 6 : 0) +
-		                              ((r_ptr->flags1 & (RF1_DROP_2D2)) ? 4 : 0) +
-		                              ((r_ptr->flags1 & (RF1_DROP_1D2)) ? 2 : 0) +
-		                              ((r_ptr->flags1 & (RF1_DROP_90)) ? 1 : 0) +
-		                              ((r_ptr->flags1 & (RF1_DROP_60)) ? 1 : 0));
-
-		/* Hack -- but only "valid" drops */
-		if (r_ptr->flags1 & (RF1_ONLY_GOLD)) r_ptr->r_drop_item = 0;
-		if (r_ptr->flags1 & (RF1_ONLY_ITEM)) r_ptr->r_drop_gold = 0;
-
-		/* Hack -- observe many spells */
-		r_ptr->r_cast_inate = MAX_UCHAR;
-		r_ptr->r_cast_spell = MAX_UCHAR;
-
-		/* Hack -- know all the flags */
-		r_ptr->r_flags1 = r_ptr->flags1;
-		r_ptr->r_flags2 = r_ptr->flags2;
-		r_ptr->r_flags3 = r_ptr->flags3;
-		r_ptr->r_flags4 = r_ptr->flags4;
-		r_ptr->r_flags5 = r_ptr->flags5;
-		r_ptr->r_flags6 = r_ptr->flags6;
-		r_ptr->r_flags4 = r_ptr->flags7;
-		r_ptr->r_flags5 = r_ptr->flags8;
-		r_ptr->r_flags6 = r_ptr->flags9;
-
-		msg_print(NULL);
-
-		select_quest_monster();
-
-	}
-	else
-	{
-		msg_format("Well done, only %d more to go.", bounties[0][1]);
-		msg_print(NULL);
-	}
-
-	inc_stack_size(item, -1);
-}
-
-
-
-/*
- * Fill the bounty list with monsters.
- */
-void select_bounties(void)
-{
-	int i, j;
-
-
-	select_quest_monster();
-
-	/*
-	 * Set up the hooks -- no bounties on uniques or monsters
-	 * with no corpses
-	 */
-	get_mon_num_hook = mon_hook_bounty;
-	get_mon_num_prep();
-
-	for (i = 1; i < MAX_BOUNTIES; i++)
-	{
-		int lev = i * 5 + randnor(0, 2);
-		monster_race* r_ptr;
-		s16b r_idx;
-		s16b val;
-
-		if (lev < 1) lev = 1;
-
-		if (lev >= MAX_DEPTH) lev = MAX_DEPTH - 1;
-
-		/* We don't want to duplicate entries in the list */
-		while (TRUE)
-		{
-			r_idx = get_mon_num(lev);
-
-			for (j = 0; j < i; j++)
-			{
-				if (bounties[j][0] == r_idx) continue;
-			}
-
-			break;
-		}
-
-		bounties[i][0] = r_idx;
-
-		r_ptr = &r_info[r_idx];
-
-		val = r_ptr->mexp + r_ptr->level * 20 + randnor(0, r_ptr->level * 2);
-
-		if (val < 1) val = 1;
-
-		bounties[i][1] = val;
-	}
-
-	/* Undo the filters. */
-	get_mon_num_hook = NULL;
-	get_mon_num_prep();
-}
 
 /*
  * Execute a building command
@@ -1578,18 +1330,6 @@ bool_ bldg_process_command(store_type *s_ptr, int i)
 			break;
 		}
 
-	case BACT_VIEW_QUEST_MON:
-		{
-			show_quest_monster();
-			break;
-		}
-
-	case BACT_SELL_QUEST_MON:
-		{
-			sell_quest_monster();
-			break;
-		}
-
 	case BACT_DIVINATION:
 		{
 			int i, count = 0;
@@ -1672,6 +1412,7 @@ bool_ bldg_process_command(store_type *s_ptr, int i)
 	}
 
 	default:
+		printf("Unknown building action %d\n", static_cast<int>(bact));
 		break;
 	}
 

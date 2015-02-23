@@ -932,9 +932,6 @@ static void player_wipe(void)
 	p_ptr->body_monster = 0;
 	p_ptr->disembodied = FALSE;
 
-	/* Wipe the bounties */
-	total_bounties = 0;
-
 	/* Wipe xtra hp */
 	p_ptr->hp_mod = 0;
 
@@ -3361,9 +3358,6 @@ void player_birth(void)
 			wild_map[j][i].known = FALSE;
 		}
 	}
-
-	/* Select bounty monsters. */
-	select_bounties();
 }
 
 

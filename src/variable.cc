@@ -1046,12 +1046,6 @@ s32b RANDART_ARMOR;
 s32b RANDART_JEWEL;
 
 /*
- * Current bounties. An array of tuples of two, with the first being the
- * r_idx of the monster, and the second the monster's worth.
- */
-s16b bounties[MAX_BOUNTIES][2];
-
-/*
  * Spell description
  */
 bool_ info_spell = FALSE;
@@ -1087,11 +1081,6 @@ fate fates[MAX_FATES];
  */
 byte dungeon_type;
 s16b *max_dlv;
-
-/*
- * Number of total bounties the player had had.
- */
-u32b total_bounties;
 
 /* The Doppleganger index in m_list */
 s16b doppleganger;

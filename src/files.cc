@@ -4333,8 +4333,6 @@ long total_points(void)
 	}
 	temp += Total * 50;
 
-	temp += total_bounties * 100;
-
 	if (total_winner) temp += 1000000;
 
 

@@ -677,13 +677,14 @@ static bool_ do_extra(int flag)
 	/* The fate */
 	do_byte((byte*)&p_ptr->no_mortal, flag);
 
-	/* The bounties */
-	for (i = 0; i < MAX_BOUNTIES; i++)
-	{
-		do_s16b(&bounties[i][0], flag);
-		do_s16b(&bounties[i][1], flag);
+	/* The bounties -- kept only for load-compatibility with old savefiles. */
+	for (i = 0; i < 24; i++) {
+		tmp16s = 0; do_s16b(&tmp16s, flag);
+		tmp16s = 0; do_s16b(&tmp16s, flag);
 	}
-	do_u32b(&total_bounties, flag);
+	tmp32u = 0; do_u32b(&tmp32u, flag);
+
+	/* Spells */
 	do_s16b(&spell_num, flag);
 	for (i = 0; i < MAX_SPELLS; i++)
 		do_spells(i, flag);
