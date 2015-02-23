@@ -7,6 +7,7 @@
  */
 
 #include "angband.h"
+#include "cmd2.hpp"
 #include "gods.hpp"
 #include "skills.hpp"
 #include "xtra2.hpp"

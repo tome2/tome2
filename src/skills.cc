@@ -8,6 +8,7 @@
 
 #include "angband.h"
 #include "birth.hpp"
+#include "cmd2.hpp"
 #include "gods.hpp"
 #include "help.hpp"
 #include "hooks.h"
