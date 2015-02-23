@@ -3590,35 +3590,15 @@ errr init_f_info_txt(FILE *fp, char *buf)
 
 	/* Not ready yet */
 	bool_ okay = FALSE;
-	u32b default_desc = 0, default_tunnel = 0, default_block = 0;
 
 	/* Current entry */
 	feature_type *f_ptr = NULL;
-
 
 	/* Just before the first record */
 	error_idx = -1;
 
 	/* Just before the first line */
 	error_line = -1;
-
-
-	/* Prepare the "fake" stuff */
-	f_head->name_size = 0;
-	f_head->text_size = 0;
-
-	/* Add some fake descs */
-	default_desc = ++f_head->text_size;
-	strcpy(f_text + f_head->text_size, "a wall blocking your way");
-	f_head->text_size += strlen("a wall blocking your way");
-
-	default_tunnel = ++f_head->text_size;
-	strcpy(f_text + f_head->text_size, "You cannot tunnel through that.");
-	f_head->text_size += strlen("You cannot tunnel through that.");
-
-	default_block = ++f_head->text_size;
-	strcpy(f_text + f_head->text_size, "a wall blocking your way");
-	f_head->text_size += strlen("a wall blocking your way");
 
 	/* Parse */
 	fp_stack_init(fp);
@@ -3681,7 +3661,7 @@ errr init_f_info_txt(FILE *fp, char *buf)
 			if (i <= error_idx) return (4);
 
 			/* Verify information */
-			if (i >= f_head->info_num) return (2);
+			if (i >= max_f_idx) return (2);
 
 			/* Save the index */
 			error_idx = i;
@@ -3689,24 +3669,15 @@ errr init_f_info_txt(FILE *fp, char *buf)
 			/* Point at the "info" */
 			f_ptr = &f_info[i];
 
-			/* Hack -- Verify space */
-			if (f_head->name_size + strlen(s) + 8 > FAKE_NAME_SIZE) return (7);
+			/* Copy name */
+			assert(!f_ptr->name);
+			f_ptr->name = my_strdup(s);
 
-			/* Advance and Save the name index */
-			if (!f_ptr->name) f_ptr->name = ++f_head->name_size;
-
-			/* Append chars to the name */
-			strcpy(f_name + f_head->name_size, s);
-
-			/* Advance the index */
-			f_head->name_size += strlen(s);
-
-			/* Default "mimic" */
+			/* Initialize */
 			f_ptr->mimic = i;
-			f_ptr->text = default_desc;
-			f_ptr->block = default_desc;
-			f_ptr->tunnel = default_tunnel;
-			f_ptr->block = default_block;
+			f_ptr->text = DEFAULT_FEAT_TEXT;
+			f_ptr->tunnel = DEFAULT_FEAT_TUNNEL;
+			f_ptr->block = DEFAULT_FEAT_BLOCK;
 
 			/* Next... */
 			continue;
@@ -3722,33 +3693,23 @@ errr init_f_info_txt(FILE *fp, char *buf)
 			/* Acquire the text */
 			s = buf + 4;
 
-			/* Hack -- Verify space */
-			if (f_head->text_size + strlen(s) + 8 > FAKE_TEXT_SIZE) return (7);
-
 			switch (buf[2])
 			{
 			case '0':
-				/* Advance and Save the text index */
-				f_ptr->text = ++f_head->text_size;
+				assert(f_ptr->text == DEFAULT_FEAT_TEXT);
+				f_ptr->text = my_strdup(s);
 				break;
 			case '1':
-				/* Advance and Save the text index */
-				f_ptr->tunnel = ++f_head->text_size;
+				assert(f_ptr->tunnel == DEFAULT_FEAT_TUNNEL);
+				f_ptr->tunnel = my_strdup(s);
 				break;
 			case '2':
-				/* Advance and Save the text index */
-				f_ptr->block = ++f_head->text_size;
+				assert(f_ptr->block == DEFAULT_FEAT_BLOCK);
+				f_ptr->block = my_strdup(s);
 				break;
 			default:
 				return (6);
-				break;
 			}
-
-			/* Append chars to the name */
-			strcpy(f_text + f_head->text_size, s);
-
-			/* Advance the index */
-			f_head->text_size += strlen(s);
 
 			/* Next... */
 			continue;
@@ -3906,15 +3867,8 @@ errr init_f_info_txt(FILE *fp, char *buf)
 		return (6);
 	}
 
-
-	/* Complete the "name" and "text" sizes */
-	++f_head->name_size;
-	++f_head->text_size;
-
-
 	/* No version yet */
 	if (!okay) return (2);
-
 
 	/* Success */
 	return (0);

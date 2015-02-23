@@ -600,10 +600,7 @@ vault_type *v_info;
 /*
  * The terrain feature arrays
  */
-header *f_head;
 feature_type *f_info;
-char *f_name;
-char *f_text;
 
 /*
  * The object kind arrays
@@ -696,6 +693,13 @@ store_action_type *ba_info;
  * The owner types arrays
  */
 owner_type *ow_info;
+
+/*
+ * Default texts for feature information.
+ */
+cptr DEFAULT_FEAT_TEXT = "a wall blocking your way";
+cptr DEFAULT_FEAT_TUNNEL = "You cannot tunnel through that.";
+cptr DEFAULT_FEAT_BLOCK = DEFAULT_FEAT_TEXT;
 
 /*
  * Hack -- The special Angband "System Suffix"

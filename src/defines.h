@@ -172,13 +172,6 @@
 
 
 /*
- * Size of memory reserved for initialization of some arrays
- */
-#define FAKE_NAME_SIZE  40 * 1024L
-#define FAKE_TEXT_SIZE 120 * 1024L
-
-
-/*
  * Maximum number of high scores in the high score file
  */
 #define MAX_HISCORES    100

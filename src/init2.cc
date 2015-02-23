@@ -257,19 +257,6 @@ static void note(cptr str)
 
 
 /*
- * Make a new header
- */
-static header *make_header(u16b info_num)
-{
-	header *h = new header;
-	h->info_num = info_num;
-	h->name_size = 0;
-	h->text_size = 0;
-	return h;
-}
-
-
-/*
  * Initialise the "f_info" array
  *
  * Note that we let each entry have a unique "name" and "text" string,
@@ -284,20 +271,8 @@ static errr init_f_info(void)
 	/* General buffer */
 	char buf[1024];
 
-
-	/*** Make the header ***/
-	f_head = make_header(max_f_idx);
-
-
-	/*** Make the fake arrays ***/
-
 	/* Allocate the "f_info" array */
-	f_info = make_array<feature_type>(f_head->info_num);
-
-	/* Hack -- make "fake" arrays */
-	f_name = make_array<char>(FAKE_NAME_SIZE);
-	f_text = make_array<char>(FAKE_TEXT_SIZE);
-
+	f_info = make_array<feature_type>(max_f_idx);
 
 	/*** Load the ascii template file ***/
 

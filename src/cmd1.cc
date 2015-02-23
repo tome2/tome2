@@ -3244,7 +3244,7 @@ void move_player_aux(int dir, int do_pickup, int run, bool_ disarm)
 				else
 					feat = f_info[c_ptr->feat].mimic;
 
-				msg_format("You feel %s.", f_text + f_info[feat].block);
+				msg_format("You feel %s.", f_info[feat].block);
 				c_ptr->info |= (CAVE_MARK);
 				lite_spot(y, x);
 			}
@@ -3301,7 +3301,7 @@ void move_player_aux(int dir, int do_pickup, int run, bool_ disarm)
 					else
 						feat = f_info[c_ptr->feat].mimic;
 
-					msg_format("There is %s.", f_text + f_info[feat].block);
+					msg_format("There is %s.", f_info[feat].block);
 
 					if (!(p_ptr->confused || p_ptr->stun || p_ptr->image))
 						energy_use = 0;
@@ -3420,7 +3420,7 @@ void move_player_aux(int dir, int do_pickup, int run, bool_ disarm)
 		if (!run) p_ptr->window |= (PW_OVERHEAD);
 
 		/* Some feature descs */
-		if (f_info[cave[p_ptr->py][p_ptr->px].feat].text > 1)
+		if (f_info[cave[p_ptr->py][p_ptr->px].feat].text != DEFAULT_FEAT_TEXT)
 		{
 			/* Mega-hack for dungeon branches */
 			if ((feat == FEAT_MORE) && c_ptr->special)
@@ -3429,7 +3429,7 @@ void move_player_aux(int dir, int do_pickup, int run, bool_ disarm)
 			}
 			else
 			{
-				msg_print(f_text + f_info[feat].text);
+				msg_print(f_info[feat].text);
 			}
 
 			/* Flush message while running */
@@ -3464,7 +3464,7 @@ void move_player_aux(int dir, int do_pickup, int run, bool_ disarm)
 		else if (cave[y][x].feat >= FEAT_ALTAR_HEAD &&
 		                cave[y][x].feat <= FEAT_ALTAR_TAIL)
 		{
-			cptr name = f_name + f_info[cave[y][x].feat].name;
+			cptr name = f_info[cave[y][x].feat].name;
 			cptr pref = (is_a_vowel(name[0])) ? "an" : "a";
 
 			msg_format("You see %s %s.", pref, name);

@@ -42,28 +42,12 @@
  * clearing of many variables at once.
  *
  * Certain data is saved in multiple places for efficient access, currently,
- * this includes the tval/sval/weight fields in "object_type", various fields
- * in "header_type", and the "m_idx" and "o_idx" fields in "cave_type".  All
- * of these could be removed, but this would, in general, slow down the game
- * and increase the complexity of the code.
+ * this includes the tval/sval/weight fields in "object_type" and the "m_idx"
+ * and "o_idx" fields in "cave_type".  All of these could be removed, but
+ * this would, in general, slow down the game and increase the complexity of
+ * the code.
  */
 
-
-
-/*
- * Template file header information (see "init.c").  16 bytes.
- */
-
-typedef struct header header;
-
-struct header
-{
-	u16b	info_num;		/* Number of "info" records */
-
-	u32b	name_size;		/* Size of the "name" array in bytes */
-
-	u32b	text_size;		/* Size of the "text" array in bytes */
-};
 
 
 /*
@@ -89,10 +73,11 @@ typedef struct feature_type feature_type;
 
 struct feature_type
 {
-	u32b name;              /* Name (offset) */
-	u32b text;              /* Text (offset) */
-	u32b tunnel;            /* Text for tunneling */
-	u32b block;             /* Text for blocking */
+	char *name;             /* Name */
+
+	const char *text;       /* Text. May point to shared read-only memory, DO NOT FREE! */
+	const char *tunnel;     /* Text for tunneling. May point to shared read-only memory, DO NOT FREE! */
+	const char *block;      /* Text for blocking. May point to shared read-only memory, DO NOT FREE! */
 
 	byte mimic;             /* Feature to mimic */
 

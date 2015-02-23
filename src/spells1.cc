@@ -7257,8 +7257,7 @@ static bool_ project_p(int who, int r, int y, int x, int dam, int typ, int a_rad
 	}
 	if (who == -101)
 	{
-		sprintf(killer, "%s",
-		        f_name + f_info[cave[p_ptr->py][p_ptr->px].feat].name);
+		sprintf(killer, "%s", f_info[cave[p_ptr->py][p_ptr->px].feat].name);
 	}
 
 	if (who >= -1)

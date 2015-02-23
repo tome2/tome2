@@ -315,10 +315,7 @@ extern ability_type *ab_info;
 extern skill_type *s_info;
 
 extern vault_type *v_info;
-extern header *f_head;
 extern feature_type *f_info;
-extern char *f_name;
-extern char *f_text;
 extern object_kind *k_info;
 extern artifact_type *a_info;
 extern ego_item_type *e_info;
@@ -338,6 +335,10 @@ extern store_info_type *st_info;
 extern store_action_type *ba_info;
 extern owner_type *ow_info;
 extern set_type *set_info;
+
+extern cptr DEFAULT_FEAT_TEXT;
+extern cptr DEFAULT_FEAT_TUNNEL;
+extern cptr DEFAULT_FEAT_BLOCK;
 
 extern cptr ANGBAND_SYS;
 extern cptr ANGBAND_KEYBOARD;

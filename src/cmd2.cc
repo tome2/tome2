@@ -1382,7 +1382,7 @@ static bool_ do_cmd_tunnel_test(int y, int x)
 	if (!(f_info[cave[y][x].feat].flags1 & FF1_TUNNELABLE))
 	{
 		/* Message */
-		msg_print(f_text + f_info[cave[y][x].feat].tunnel);
+		msg_print(f_info[cave[y][x].feat].tunnel);
 
 		/* Nope */
 		return (FALSE);
@@ -1473,7 +1473,7 @@ bool_ do_cmd_tunnel_aux(int y, int x, int dir)
 	/* Titanium */
 	if (f_ptr->flags1 & FF1_PERMANENT)
 	{
-		msg_print(f_text + f_ptr->tunnel);
+		msg_print(f_ptr->tunnel);
 	}
 
 	else if ((c_ptr->feat == FEAT_TREES) || (c_ptr->feat == FEAT_DEAD_TREE))
@@ -1490,7 +1490,7 @@ bool_ do_cmd_tunnel_aux(int y, int x, int dir)
 		else
 		{
 			/* We may continue chopping */
-			msg_print(f_text + f_ptr->tunnel);
+			msg_print(f_ptr->tunnel);
 			more = TRUE;
 
 			/* Occasional Search XXX XXX */
@@ -1515,7 +1515,7 @@ bool_ do_cmd_tunnel_aux(int y, int x, int dir)
 		else
 		{
 			/* We may continue tunelling */
-			msg_print(f_text + f_ptr->tunnel);
+			msg_print(f_ptr->tunnel);
 			more = TRUE;
 		}
 	}
@@ -1595,7 +1595,7 @@ bool_ do_cmd_tunnel_aux(int y, int x, int dir)
 		else
 		{
 			/* Message, continue digging */
-			msg_print(f_text + f_ptr->tunnel);
+			msg_print(f_ptr->tunnel);
 			more = TRUE;
 		}
 	}
@@ -1629,7 +1629,7 @@ bool_ do_cmd_tunnel_aux(int y, int x, int dir)
 		else
 		{
 			/* Message, keep digging */
-			msg_print(f_text + f_ptr->tunnel);
+			msg_print(f_ptr->tunnel);
 			more = TRUE;
 		}
 	}
@@ -1660,7 +1660,7 @@ bool_ do_cmd_tunnel_aux(int y, int x, int dir)
 				feat = c_ptr->feat;
 
 			/* We may continue tunelling */
-			msg_print(f_text + f_info[feat].tunnel);
+			msg_print(f_info[feat].tunnel);
 			more = TRUE;
 
 			/* Occasional Search XXX XXX */
@@ -1683,7 +1683,7 @@ bool_ do_cmd_tunnel_aux(int y, int x, int dir)
 		else
 		{
 			/* We may continue tunelling */
-			msg_print(f_text + f_ptr->tunnel);
+			msg_print(f_ptr->tunnel);
 			more = TRUE;
 		}
 	}
@@ -2803,7 +2803,7 @@ void do_cmd_rest(void)
 
 		/* Tell the player why */
 		msg_print(format("Resting on a %s is too dangerous!",
-		                 f_name + f_info[cave[p_ptr->py][p_ptr->px].feat].name));
+				 f_info[cave[p_ptr->py][p_ptr->px].feat].name));
 
 		/* Done */
 		return;

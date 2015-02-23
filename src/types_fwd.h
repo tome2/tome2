@@ -4,7 +4,6 @@
 extern "C" {
 #endif
 
-struct header;
 struct obj_theme;
 struct feature_type;
 struct object_kind;

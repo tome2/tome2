@@ -4466,7 +4466,7 @@ static int target_set_aux(int y, int x, int mode, cptr info)
 			}
 			else
 			{
-				name = f_name + f_info[feat].name;
+				name = f_info[feat].name;
 			}
 
 			/* Hack -- handle unknown grids */

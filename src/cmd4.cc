@@ -2288,7 +2288,7 @@ void do_cmd_visuals(void)
 				if (!f_ptr->name) continue;
 
 				/* Dump a comment */
-				fprintf(fff, "# %s\n", (f_name + f_ptr->name));
+				fprintf(fff, "# %s\n", f_ptr->name);
 
 				/* Dump the feature attr/char info */
 				fprintf(fff, "F:%d:0x%02X:0x%02X\n\n", i,
@@ -2436,7 +2436,7 @@ void do_cmd_visuals(void)
 				/* Label the object */
 				Term_putstr(5, 17, -1, TERM_WHITE,
 				            format("Terrain = %d, Name = %-40.40s",
-				                   f, (f_name + f_ptr->name)));
+						   f, f_ptr->name));
 
 				/* Label the Default values */
 				Term_putstr(10, 19, -1, TERM_WHITE,
