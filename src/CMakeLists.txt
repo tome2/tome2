@@ -37,7 +37,10 @@ SET(SRCS_COMMON
 SET(SRCS_PROGRAM main-gcu.c main-x11.c main-sdl.c main-gtk2.c main.c)
 
 # Sources (TEST)
-FILE(GLOB SRCS_TESTS ../tests/**.cc)
+SET(SRCS_TESTS
+  ../tests/get_level_device.cc
+  ../tests/lua_get_level.cc
+  ../tests/harness.cc)
 
 # Need a few additional source files for Windows.
 if(WIN32)
