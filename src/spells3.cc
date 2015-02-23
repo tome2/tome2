@@ -6,6 +6,7 @@
 
 #include "spell_type.hpp"
 #include "spell_idx_list.hpp"
+#include "mimic.hpp"
 
 #include <vector>
 

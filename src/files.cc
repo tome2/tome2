@@ -11,9 +11,9 @@
  */
 
 #include "angband.h"
-
 #include "hiscore.h"
 #include "hooks.h"
+#include "mimic.hpp"
 
 #include <memory>
 #include <unordered_set>

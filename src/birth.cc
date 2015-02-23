@@ -14,6 +14,7 @@
 
 #include "messages.h"
 #include "hooks.h"
+#include "mimic.hpp"
 #include "q_rand.h"
 #include "spells3.hpp"
 

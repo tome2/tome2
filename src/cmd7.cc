@@ -12,9 +12,9 @@
 
 
 #include "angband.h"
-
-#include "quark.h"
 #include "hooks.h"
+#include "mimic.hpp"
+#include "quark.h"
 
 /*
  * Describe class powers of Mindcrafters

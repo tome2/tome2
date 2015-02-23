@@ -76,8 +76,6 @@ struct ability_type;
 struct module_meta_type;
 struct module_type;
 struct corruption_type;
-struct mimic_duration_type;
-struct mimic_form_type;
 
 #ifdef __cplusplus
 }

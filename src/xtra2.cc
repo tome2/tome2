@@ -12,13 +12,12 @@
  */
 
 #include "angband.h"
-
-#include <assert.h>
-
-#include "quark.h"
 #include "hooks.h"
+#include "mimic.hpp"
+#include "quark.h"
 
 #include <type_traits>
+#include <cassert>
 
 #include <boost/algorithm/string/predicate.hpp>
 

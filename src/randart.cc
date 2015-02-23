@@ -11,7 +11,7 @@
  */
 
 #include "angband.h"
-
+#include "mimic.hpp"
 #include "quark.h"
 
 #include <memory>

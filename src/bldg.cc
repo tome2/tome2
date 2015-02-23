@@ -15,6 +15,7 @@
 
 #include "angband.h"
 #include "hooks.h"
+#include "mimic.hpp"
 #include "q_library.h"
 #include "q_fireprof.h"
 #include "q_bounty.h"

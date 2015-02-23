@@ -14,6 +14,7 @@
 #include "messages.h"
 #include "hooks.h"
 #include "spells3.hpp"
+#include "mimic.hpp"
 
 #include <cassert>
 

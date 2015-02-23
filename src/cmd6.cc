@@ -11,10 +11,11 @@
  */
 
 #include "angband.h"
+#include "hooks.h"
 #include "lua_bind.hpp"
+#include "mimic.hpp"
 #include "spell_type.hpp"
 #include "spells5.hpp"
-#include "hooks.h"
 
 #include <cassert>
 

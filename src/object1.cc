@@ -16,6 +16,7 @@
 #include "spell_type.hpp"
 #include "hooks.h"
 #include "spells5.hpp"
+#include "mimic.hpp"
 
 #include <cassert>
 

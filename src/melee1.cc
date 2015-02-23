@@ -11,6 +11,7 @@
  */
 
 #include "angband.h"
+#include "mimic.hpp"
 
 #include <boost/algorithm/string/predicate.hpp>
 

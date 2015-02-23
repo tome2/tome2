@@ -11,9 +11,9 @@
  */
 
 #include "angband.h"
-
-#include "quark.h"
 #include "hooks.h"
+#include "mimic.hpp"
+#include "quark.h"
 #include "spells3.hpp"
 
 #define MAX_VAMPIRIC_DRAIN 100

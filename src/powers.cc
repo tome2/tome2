@@ -11,9 +11,9 @@
  */
 
 #include "angband.h"
-
 #include "quark.h"
 #include "hooks.h"
+#include "mimic.hpp"
 
 /*
  * Note: return value indicates the amount of mana to use

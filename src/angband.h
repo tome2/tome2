@@ -1,9 +1,4 @@
-/* File: angband.h */
-
-/* Main "Angband" header file */
-
-#ifndef INCLUDED_ANGBAND_H
-#define INCLUDED_ANGBAND_H
+#pragma once
 
 /*
  * Copyright (c) 1989 James E. Wilson
@@ -12,7 +7,6 @@
  * not for profit purposes provided that this copyright and statement are
  * included in all such copies.
  */
-
 
 /*
  * C++ guard.
@@ -101,8 +95,3 @@ extern "C" {
 #ifdef __cplusplus
 } /* extern "C" */
 #endif
-
-#endif
-
-
-

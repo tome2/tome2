@@ -12,6 +12,7 @@
 
 #include "angband.h"
 #include "hooks.h"
+#include "mimic.hpp"
 
 #include <algorithm>
 #include <string>

@@ -16,6 +16,7 @@
 #include "hooks.h"
 #include "spells3.hpp"
 #include "spells5.hpp"
+#include "mimic.hpp"
 
 #include <cassert>
 #include <vector>
