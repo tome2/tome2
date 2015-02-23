@@ -3371,7 +3371,7 @@ void do_cmd_read_scroll(void)
 				/* Prevent destruction of quest levels and town */
 				if (!is_quest(dun_level) && dun_level)
 				{
-					destroy_area(p_ptr->py, p_ptr->px, 15, TRUE, FALSE);
+					destroy_area(p_ptr->py, p_ptr->px, 15);
 				}
 				else
 				{
@@ -5227,7 +5227,7 @@ const char *activation_aux(object_type * o_ptr, bool_ doit, int item)
 	case ACT_SKULLCLEAVER:
 		{
 			if (!doit) return "destruction every 200+d200 turns";
-			destroy_area(p_ptr->py, p_ptr->px, 15, TRUE, FALSE);
+			destroy_area(p_ptr->py, p_ptr->px, 15);
 
 			o_ptr->timeout = rand_int(200) + 200;
 

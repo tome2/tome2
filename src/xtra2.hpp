@@ -85,7 +85,6 @@ extern bool_ tgt_pt (int *x, int *y);
 extern void do_poly_self(void);
 extern bool_ curse_weapon(void);
 extern bool_ curse_armor(void);
-extern void random_resistance(object_type * q_ptr, bool_ is_scroll, int specific);
 extern void make_wish(void);
 extern void create_between_gate(int dist, int y, int x);
 
