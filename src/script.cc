@@ -12,6 +12,7 @@
 
 #include "angband.h"
 #include "q_library.h"
+#include "spells5.hpp"
 
 
 void init_lua_init()

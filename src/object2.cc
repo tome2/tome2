@@ -15,6 +15,7 @@
 #include "device_allocation.h"
 #include "hooks.h"
 #include "spells3.hpp"
+#include "spells5.hpp"
 
 #include <cassert>
 #include <vector>
@@ -3214,31 +3215,6 @@ static void a_m_aux_3(object_type *o_ptr, int level, int power)
 }
 
 /*
- * Get a spell for a given stick(wand, staff, rod)
- */
-long get_random_stick(byte tval, int level)
-{
-	int tries;
-
-	for (tries = 0; tries < 1000; tries++)
-	{
-		long spell_idx = rand_int(school_spells_count);
-		spell_type *spell = spell_at(spell_idx);
-		device_allocation *device_allocation = spell_type_device_allocation(spell, tval);
-
-		if ((device_allocation != NULL) &&
-		    (rand_int(spell_type_skill_level(spell) * 3) < level) &&
-		    (magik(100 - device_allocation->rarity)))
-		{
-			return spell_idx;
-		}
-	}
-
-	return -1;
-}
-
-
-/*
  * Randomized level
  */
 static int randomized_level_in_range(range_type *range, int level)
@@ -3418,8 +3394,7 @@ static void a_m_aux_4(object_type *o_ptr, int level, int power)
 			/* Decide the spell, pval == -1 means to bypass spell selection */
 			if (o_ptr->pval != -1)
 			{
-				int spl = get_random_stick(TV_WAND, dun_level);
-
+				auto spl = get_random_stick(TV_WAND, dun_level);
 				if (spl == -1)
 				{
 					spl = MANATHRUST;

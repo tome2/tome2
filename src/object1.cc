@@ -15,6 +15,7 @@
 #include "quark.h"
 #include "spell_type.hpp"
 #include "hooks.h"
+#include "spells5.hpp"
 
 /*
  * Hack -- note that "TERM_MULTI" is now just "TERM_VIOLET".

@@ -6,6 +6,7 @@
 #include "spell_type.hpp"
 #include "spell_idx_list.hpp"
 #include "spells3.hpp"
+#include "spells5.hpp"
 #include <algorithm>
 
 school_book_type school_books[SCHOOL_BOOKS_SIZE];

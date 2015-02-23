@@ -18,6 +18,7 @@
 #include "quark.h"
 #include "hooks.h"
 #include "spell_type.hpp"
+#include "spells5.hpp"
 
 #define TY_CURSE_CHANCE 100
 #define DG_CURSE_CHANCE 50

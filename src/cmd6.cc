@@ -13,6 +13,7 @@
 #include "angband.h"
 #include "lua_bind.hpp"
 #include "spell_type.hpp"
+#include "spells5.hpp"
 #include "hooks.h"
 
 #include <cassert>

@@ -17,6 +17,7 @@
 
 #include "spell_type.hpp"
 #include "quark.h"
+#include "spells5.hpp"
 
 /* Maximum number of tries for teleporting */
 #define MAX_TRIES 300

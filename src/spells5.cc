@@ -1,3 +1,4 @@
+#include "spells5.hpp"
 #include <angband.h>
 
 #include <assert.h>
@@ -6,6 +7,8 @@
 #include "device_allocation.h"
 #include "spells3.hpp"
 
+static s16b school_spells_count = 0;
+static struct spell_type *school_spells[SCHOOL_SPELLS_MAX];
 
 static spell_type *spell_new(s32b *index, cptr name)
 {
@@ -61,6 +64,30 @@ s16b get_random_spell(s16b random_type, int level)
 		    (rand_int(spell_type_skill_level(spell) * 3) < level))
 		{
 			return spl;
+		}
+	}
+
+	return -1;
+}
+
+/*
+ * Get a spell for a device of a given tval (wand or staff).
+ */
+s16b get_random_stick(byte tval, int level)
+{
+	int tries;
+
+	for (tries = 0; tries < 1000; tries++)
+	{
+		long spell_idx = rand_int(school_spells_count);
+		spell_type *spell = spell_at(spell_idx);
+		device_allocation *device_allocation = spell_type_device_allocation(spell, tval);
+
+		if ((device_allocation != NULL) &&
+		    (rand_int(spell_type_skill_level(spell) * 3) < level) &&
+		    (magik(100 - device_allocation->rarity)))
+		{
+			return spell_idx;
 		}
 	}
 

@@ -17,6 +17,7 @@
 #include <functional>
 
 #include "spell_type.hpp"
+#include "spells5.hpp"
 #include "range.h"
 
 /*

@@ -12,6 +12,7 @@
 
 #include "angband.h"
 #include "spell_type.hpp"
+#include "spells5.hpp"
 
 #include <chrono>
 #include <thread>

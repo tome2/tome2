@@ -509,8 +509,6 @@ extern hist_type *bg;
 extern int max_bg_idx;
 extern s32b extra_savefile_parts;
 extern bool_ player_char_health;
-extern s16b school_spells_count;
-extern struct spell_type *school_spells[SCHOOL_SPELLS_MAX];
 extern s16b schools_count;
 extern school_type schools[SCHOOLS_MAX];
 extern int project_time;
@@ -1360,11 +1358,6 @@ int school_book_length(int sval);
 int spell_x(int sval, int pval, int i);
 bool_ school_book_contains_spell(int sval, s32b spell_idx);
 void lua_cast_school_spell(s32b spell_idx, bool_ no_cost);
-
-/* spells5.c */
-void school_spells_init();
-struct spell_type *spell_at(s32b index);
-s16b get_random_spell(s16b random_type, int lev);
 
 /* spells6.c */
 
