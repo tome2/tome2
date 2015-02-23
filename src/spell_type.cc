@@ -54,29 +54,30 @@ struct spell_type
 
 public:
 
-	spell_type(cptr _name):
-		name(_name),
-		skill_level(0),
-		m_description(),
-		effect_func(nullptr),
-		info_func(nullptr),
-		lasting_func(nullptr),
-		depend_func(nullptr),
-		minimum_pval(0),
-		casting_type(USE_SPELL_POINTS),
-		casting_stat(0),
-		castable_while_blind(FALSE),
-		castable_while_confused(FALSE),
-		device_charges({ 0, 0, 0 }),
-		m_device_allocation(),
-		random_type(-1),
-		failure_rate(0),
-		inertia_difficulty(-1),
-		inertia_delay(-1),
-		mana_range({ -1, -1 }),
-		activation_timeout({ 0, 0, 0 }),
-		school_idxs_count(0),
-		school_idxs{ -1, -1, -1 } {
+	spell_type(cptr _name)
+		: name(_name)
+		, skill_level(0)
+		, m_description()
+		, effect_func(nullptr)
+		, info_func(nullptr)
+		, lasting_func(nullptr)
+		, depend_func(nullptr)
+		, minimum_pval(0)
+		, casting_type(USE_SPELL_POINTS)
+		, casting_stat(0)
+		, castable_while_blind(FALSE)
+		, castable_while_confused(FALSE)
+		, device_charges({ 0, 0, 0 })
+		, m_device_allocation()
+		, random_type(-1)
+		, failure_rate(0)
+		, inertia_difficulty(-1)
+		, inertia_delay(-1)
+		, mana_range({ -1, -1 })
+		, activation_timeout({ 0, 0, 0 })
+		, school_idxs_count(0)
+		, school_idxs{ -1, -1, -1 }
+	{
 	}
 
 };
