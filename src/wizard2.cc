@@ -13,6 +13,7 @@
 #include "angband.h"
 #include "corrupt.hpp"
 #include "hooks.h"
+#include "status.hpp"
 
 /*
  * Adds a lvl to a monster

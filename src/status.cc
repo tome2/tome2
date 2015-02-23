@@ -31,18 +31,19 @@ static void status_bival(s32b, byte, byte);
 static void status_numeric(s32b, byte, byte);
 static void status_curses(void);
 static void status_companion(void);
-void status_sight(void);
-void status_attr(void);
-void status_combat(void);
-void status_move(void);
-void status_item(void);
-void az_line(int, u32b[INVEN_TOTAL - INVEN_WIELD + 2][7]);
+static void status_sight(void);
+static void status_attr(void);
+static void status_combat(void);
+static void status_move(void);
+static void status_item(void);
+static void az_line(int, u32b[INVEN_TOTAL - INVEN_WIELD + 2][7]);
+
 #define STATNM_LENGTH 		11
 #define SL_LENGTH 		11
 
 #define INVEN_PLAYER            (INVEN_TOTAL - INVEN_WIELD + 1)
 
-void status_attr(void)
+static void status_attr(void)
 {
 	u32b flag_arr[INVEN_TOTAL - INVEN_WIELD + 2][7];
 	int yo = 0;
@@ -111,7 +112,7 @@ void status_move(void)
 	}
 }
 
-void status_sight(void)
+static void status_sight(void)
 /* Tell player about ESP, infravision, auto-id, see invis, and similar */
 {
 	u32b flag_arr[INVEN_TOTAL - INVEN_WIELD + 2][7];
@@ -162,7 +163,7 @@ void status_sight(void)
 	}
 }
 
-void status_item(void)
+static void status_item(void)
 {
 	u32b flag_arr[INVEN_TOTAL - INVEN_WIELD + 2][7];
 	int yo = 3;
@@ -212,7 +213,7 @@ void status_item(void)
 	}
 }
 
-void status_combat(void)
+static void status_combat(void)
 {
 	u32b flag_arr[INVEN_TOTAL - INVEN_WIELD + 2][7];
 	int yo = 3;
@@ -271,7 +272,7 @@ void status_combat(void)
 	}
 }
 
-void status_curses(void)
+static void status_curses(void)
 {
 	u32b flag_arr[INVEN_TOTAL - INVEN_WIELD + 2][7];
 	int yo = 3;
@@ -321,7 +322,7 @@ void status_curses(void)
 	}
 }
 
-void status_res(void)
+static void status_res(void)
 {
 	u32b flag_arr[INVEN_TOTAL - INVEN_WIELD + 2][7];
 	int yo = 3;
@@ -433,7 +434,7 @@ void status_main()
 	handle_stuff();
 }
 
-void az_line(int xo, u32b flag_arr[INVEN_TOTAL - INVEN_WIELD + 2][7])
+static void az_line(int xo, u32b flag_arr[INVEN_TOTAL - INVEN_WIELD + 2][7])
 {
 	int index = xo;  /* Leave room for description */
 	int i;

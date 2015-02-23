@@ -1573,9 +1573,6 @@ extern bool_ easy_floor;
 /* script.c */
 extern void init_lua_init(void);
 
-/* status.c */
-extern void status_main();
-
 /* modules.cc */
 extern cptr force_module;
 
