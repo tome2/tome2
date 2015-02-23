@@ -11,7 +11,7 @@ INCLUDE(FindPkgConfig)
 #
 # Basic common compiler flags.
 #
-SET(COMMON_COMPILER_FLAGS "-pipe -Wall -Wno-unused-value")
+SET(COMMON_COMPILER_FLAGS "-pipe -Wall -Wno-unused-value -fsanitize=undefined -fsanitize=address")
 
 #
 # GCC/G++ flags
