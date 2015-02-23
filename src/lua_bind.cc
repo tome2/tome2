@@ -74,12 +74,11 @@ s32b lua_get_level(spell_type *spell, s32b lvl, s32b max, s32b min, s32b bonus)
 	return lvl;
 }
 
-static s32b get_level_device_1(s32b s, s32b max, s32b min)
+static s32b get_level_device_1(spell_type *spell, s32b max, s32b min)
 {
 	// Must be in "device" mode.
 	assert(get_level_use_stick > -1);
 	// Delegate
-	auto spell = spell_at(s);
 	auto device_skill = s_info[SKILL_DEVICE].value;
 	return get_level_device(spell, max, min, device_skill);
 }
@@ -113,7 +112,7 @@ int get_mana(s32b s)
 static s32b spell_chance_device(s32b s)
 {
 	spell_type *s_ptr = spell_at(s);
-	int level = get_level_device_1(s, 50, 1);
+	int level = get_level_device_1(s_ptr, 50, 1);
 	int minfail;
 	s32b chance = spell_type_failure_rate(s_ptr);
 
@@ -184,11 +183,11 @@ s32b spell_chance(s32b s)
 
 s32b get_level(s32b s, s32b max, s32b min)
 {
+	auto spell = spell_at(s);
 	/** Ahah shall we use Magic device instead ? */
 	if (get_level_use_stick > -1) {
-		return get_level_device_1(s, max, min);
+		return get_level_device_1(spell, max, min);
 	} else {
-		auto spell = spell_at(s);
 		return get_level_school_1(spell, max, min);
 	}
 }
