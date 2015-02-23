@@ -1529,19 +1529,8 @@ errr init_v_info(void)
 	char buf[1024];
 
 
-	/*** Make the header ***/
-	v_head = make_header(max_v_idx);
-
-
-	/*** Make the fake arrays ***/
-
-	/* Allocate the "k_info" array */
-	v_info = make_array<vault_type>(v_head->info_num);
-
-	/* Hack -- make "fake" arrays */
-	v_name = make_array<char>(FAKE_NAME_SIZE);
-	v_text = make_array<char>(FAKE_TEXT_SIZE);
-
+	/* Allocate the "v_info" array */
+	v_info = make_array<vault_type>(max_v_idx);
 
 	/*** Load the ascii template file ***/
 
@@ -1555,7 +1544,7 @@ errr init_v_info(void)
 	if (!fp) quit("Cannot open 'v_info.txt' file.");
 
 	/* Parse the file */
-	err = init_v_info_txt(fp, buf, TRUE);
+	err = init_v_info_txt(fp, buf);
 
 	/* Close it */
 	my_fclose(fp);

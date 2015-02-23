@@ -597,10 +597,7 @@ artifact_select_flag *a_select_flags;
 /*
  * The vault generation arrays
  */
-header *v_head;
 vault_type *v_info;
-char *v_name;
-char *v_text;
 
 /*
  * The terrain feature arrays

@@ -598,8 +598,7 @@ typedef struct vault_type vault_type;
 
 struct vault_type
 {
-	u32b name;			/* Name (offset) */
-	u32b text;			/* Text (offset) */
+	char *data;			/* Vault data */
 
 	byte typ;			/* Vault type */
 

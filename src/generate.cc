@@ -3833,7 +3833,7 @@ static void build_type7(int by0, int bx0)
 	}
 
 	/* Hack -- Build the vault */
-	build_vault(yval, xval, v_ptr->hgt, v_ptr->wid, v_text + v_ptr->text);
+	build_vault(yval, xval, v_ptr->hgt, v_ptr->wid, v_ptr->data);
 }
 
 
@@ -3889,7 +3889,7 @@ static void build_type8(int by0, int bx0)
 	}
 
 	/* Hack -- Build the vault */
-	build_vault(yval, xval, v_ptr->hgt, v_ptr->wid, v_text + v_ptr->text);
+	build_vault(yval, xval, v_ptr->hgt, v_ptr->wid, v_ptr->data);
 }
 
 /*

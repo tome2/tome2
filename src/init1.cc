@@ -3463,7 +3463,7 @@ errr init_player_info_txt(FILE *fp, char *buf)
 /*
  * Initialize the "v_info" array, by parsing an ascii "template" file
  */
-errr init_v_info_txt(FILE *fp, char *buf, bool_ start)
+errr init_v_info_txt(FILE *fp, char *buf)
 {
 	int i;
 	char *s;
@@ -3474,18 +3474,11 @@ errr init_v_info_txt(FILE *fp, char *buf, bool_ start)
 	/* Current entry */
 	vault_type *v_ptr = NULL;
 
-	if (start)
-	{
-		/* Just before the first record */
-		error_idx = -1;
+	/* Just before the first record */
+	error_idx = -1;
 
-		/* Just before the first line */
-		error_line = -1;
-
-		/* Prepare the "fake" stuff */
-		v_head->name_size = 0;
-		v_head->text_size = 0;
-	}
+	/* Just before the first line */
+	error_line = -1;
 
 	/* Parse */
 	fp_stack_init(fp);
@@ -3549,7 +3542,7 @@ errr init_v_info_txt(FILE *fp, char *buf, bool_ start)
 			if (i <= error_idx) return (4);
 
 			/* Verify information */
-			if (i >= v_head->info_num) return (2);
+			if (i >= max_v_idx) return (2);
 
 			/* Save the index */
 			error_idx = i;
@@ -3557,17 +3550,9 @@ errr init_v_info_txt(FILE *fp, char *buf, bool_ start)
 			/* Point at the "info" */
 			v_ptr = &v_info[i];
 
-			/* Hack -- Verify space */
-			if (v_head->name_size + strlen(s) + 8 > FAKE_NAME_SIZE) return (7);
-
-			/* Advance and Save the name index */
-			if (!v_ptr->name) v_ptr->name = ++v_head->name_size;
-
-			/* Append chars to the name */
-			strcpy(v_name + v_head->name_size, s);
-
-			/* Advance the index */
-			v_head->name_size += strlen(s);
+			/* Initialize data -- we ignore the name, it's not
+			 * used for anything */
+			v_ptr->data = my_strdup("");
 
 			/* Next... */
 			continue;
@@ -3582,17 +3567,8 @@ errr init_v_info_txt(FILE *fp, char *buf, bool_ start)
 			/* Acquire the text */
 			s = buf + 2;
 
-			/* Hack -- Verify space */
-			if (v_head->text_size + strlen(s) + 8 > FAKE_TEXT_SIZE) return (7);
-
-			/* Advance and Save the text index */
-			if (!v_ptr->text) v_ptr->text = ++v_head->text_size;
-
-			/* Append chars to the name */
-			strcpy(v_text + v_head->text_size, s);
-
-			/* Advance the index */
-			v_head->text_size += strlen(s);
+			/* Append data */
+			strappend(&v_ptr->data, s);
 
 			/* Next... */
 			continue;
@@ -3656,14 +3632,6 @@ errr init_v_info_txt(FILE *fp, char *buf, bool_ start)
 
 		/* Oops */
 		return (6);
-	}
-
-
-	/* Complete the "name" and "text" sizes */
-	if (!start)
-	{
-		++v_head->name_size;
-		++v_head->text_size;
 	}
 
 
