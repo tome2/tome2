@@ -108,7 +108,7 @@ static int create_new_rule()
 	Term_get_size(&wid, &hgt);
 
 	sprintf(name, "%s", "No name");
-	if (!input_box("Name?", hgt / 2, wid / 2, name, sizeof(name)+1))
+	if (!input_box("Name?", hgt / 2, wid / 2, name, sizeof(name)))
 	{
 		return -1;
 	}
@@ -160,7 +160,7 @@ static void automatizer_save_rules()
 	Term_get_size(&wid, &hgt);
 
 	sprintf(name, "automat.atm");
-	if (!input_box("Save name?", hgt / 2, wid / 2, name, sizeof(name)+1))
+	if (!input_box("Save name?", hgt / 2, wid / 2, name, sizeof(name)))
 	{
 		return;
 	}
@@ -218,7 +218,7 @@ static void rename_rule(Rule *rule)
 	Term_get_size(&wid, &hgt);
 
 	sprintf(name, "%s", rule->get_name());
-	if (input_box("New name?", hgt / 2, wid / 2, name, sizeof(name)-1))
+	if (input_box("New name?", hgt / 2, wid / 2, name, sizeof(name)))
 	{
 		rule->set_name(name);
 	}
