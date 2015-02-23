@@ -9,6 +9,7 @@
 
 #include "angband.h"
 #include "corrupt.hpp"
+#include "cmd4.hpp"
 #include "gods.hpp"
 #include "help.hpp"
 #include "hooks.h"

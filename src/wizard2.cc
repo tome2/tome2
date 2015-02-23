@@ -1,7 +1,3 @@
-/* File: wizard2.c */
-
-/* Purpose: Wizard commands */
-
 /*
  * Copyright (c) 1989 James E. Wilson, Robert A. Koeneke
  *
@@ -12,6 +8,7 @@
 
 #include "angband.h"
 #include "cave.hpp"
+#include "cmd4.hpp"
 #include "corrupt.hpp"
 #include "hooks.h"
 #include "randart.hpp"

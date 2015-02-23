@@ -5,6 +5,7 @@
  * not for profit purposes provided that this copyright and statement are
  * included in all such copies.
  */
+#include "cmd4.hpp"
 
 #include "angband.h"
 #include "corrupt.hpp"
@@ -733,28 +734,6 @@ static void do_cmd_options_autosave(cptr info)
 			}
 		}
 	}
-}
-
-/* Switch an option by only knowing its name */
-bool_ change_option(cptr name, bool_ value)
-{
-	int i;
-
-	/* Scan the options */
-	for (i = 0; option_info[i].o_desc; i++)
-	{
-		if (!strcmp(option_info[i].o_text, name))
-		{
-			bool_ old = (*option_info[i].o_var);
-
-			(*option_info[i].o_var) = value;
-
-			return old;
-		}
-	}
-
-	cmsg_format(TERM_VIOLET, "Warning, change_option couldn't find option '%s'.", name);
-	return FALSE;
 }
 
 /*
@@ -3474,7 +3453,7 @@ static void do_cmd_knowledge_uniques(void)
 }
 
 
-void plural_aux(char *name)
+static void plural_aux(char *name)
 {
 	int name_len = strlen(name);
 

@@ -11,6 +11,7 @@
 #include "bldg.hpp"
 #include "cave.hpp"
 #include "cmd3.hpp"
+#include "cmd4.hpp"
 #include "hooks.h"
 #include "quark.h"
 #include "spell_type.hpp"

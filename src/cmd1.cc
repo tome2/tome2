@@ -10,6 +10,7 @@
 
 #include "angband.h"
 #include "cave.hpp"
+#include "cmd4.hpp"
 #include "gods.hpp"
 #include "hooks.h"
 #include "mimic.hpp"
