@@ -122,9 +122,6 @@ X:flow_by_sound
 # Option 'Monsters learn from their mistakes'
 X:smart_learn
 
-# Option 'Monsters exploit players weaknesses'
-X:smart_cheat
-
 # Option 'Allow unusually small dungeon levels'
 Y:small_levels
 

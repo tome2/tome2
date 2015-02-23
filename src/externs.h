@@ -216,7 +216,6 @@ extern bool_ expand_list;
 extern bool_ dungeon_align;
 extern bool_ dungeon_stair;
 extern bool_ smart_learn;
-extern bool_ smart_cheat;
 extern bool_ testing_stack;
 extern bool_ testing_carry;
 extern bool_ cheat_peek;

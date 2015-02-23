@@ -4314,7 +4314,6 @@ long total_points(void)
 	if (small_levels) mult += ((always_small_level) ? 4 : 10);
 	if (empty_levels) mult += 2;
 	if (smart_learn) mult += 4;
-	if (smart_cheat) mult += 4;
 
 	if (mult < 2) mult = 2;  /* At least 10% of the original score */
 	/* mult is now between 2 and 40, i.e. 10% and 200% */

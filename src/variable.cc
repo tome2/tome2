@@ -221,7 +221,6 @@ bool_ dungeon_stair; 			/* Generate dungeons with connected stairs */
 bool_ flow_by_sound; 			/* Monsters track new player location */
 
 bool_ smart_learn; 			/* Monsters learn from their mistakes */
-bool_ smart_cheat; 			/* Monsters exploit player weaknesses */
 
 
 /* Option Set 4 -- Efficiency */
