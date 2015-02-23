@@ -354,10 +354,8 @@ extern char *ba_name;
 extern header *ow_head;
 extern owner_type *ow_info;
 extern char *ow_name;
-extern header *set_head;
 extern set_type *set_info;
-extern char *set_name;
-extern char *set_text;
+
 extern cptr ANGBAND_SYS;
 extern cptr ANGBAND_KEYBOARD;
 extern cptr ANGBAND_GRAF;

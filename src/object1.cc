@@ -17,6 +17,8 @@
 #include "hooks.h"
 #include "spells5.hpp"
 
+#include <cassert>
+
 /*
  * Hack -- note that "TERM_MULTI" is now just "TERM_VIOLET".
  * We will have to find a cleaner method for "MULTI_HUED" later.
@@ -2858,9 +2860,7 @@ bool_ object_out_desc(object_type *o_ptr, FILE *fff, bool_ trim_down, bool_ wait
 
 			if (a_ptr->set != -1)
 			{
-				set_type *set_ptr = &set_info[a_ptr->set];
-
-				text_out_c(TERM_GREEN, set_text + set_ptr->desc);
+				text_out_c(TERM_GREEN, set_info[a_ptr->set].desc);
 				text_out("\n");
 			}
 		}
@@ -6514,8 +6514,14 @@ bool_ wield_set(s16b a_idx, s16b set_idx, bool_ silent)
 	{
 		s_ptr->num_use++;
 		s_ptr->arts[i].present = TRUE;
-		if (s_ptr->num_use > s_ptr->num) msg_print("ERROR!! s_ptr->num_use > s_ptr->use");
-		else if ((s_ptr->num_use == s_ptr->num) && (!silent)) cmsg_format(TERM_GREEN, "%s item set completed.", s_ptr->name + set_name);
+		if (s_ptr->num_use > s_ptr->num)
+		{
+			msg_print("ERROR!! s_ptr->num_use > s_ptr->use");
+		}
+		else if ((s_ptr->num_use == s_ptr->num) && (!silent))
+		{
+			cmsg_format(TERM_GREEN, "%s item set completed.", s_ptr->name);
+		}
 		return (TRUE);
 	}
 	return (FALSE);
@@ -6533,10 +6539,15 @@ bool_ takeoff_set(s16b a_idx, s16b set_idx)
 	if (s_ptr->arts[i].present)
 	{
 		s_ptr->arts[i].present = FALSE;
+
+		assert(s_ptr->num_use > 0);
 		s_ptr->num_use--;
 
-		if (s_ptr->num_use == 255) msg_print("ERROR!! s_ptr->num_use < 0");
-		if (s_ptr->num_use == s_ptr->num - 1) cmsg_format(TERM_GREEN, "%s item set not complete anymore.", s_ptr->name + set_name);
+		if (s_ptr->num_use == s_ptr->num - 1)
+		{
+			cmsg_format(TERM_GREEN, "%s item set not complete anymore.", s_ptr->name);
+		}
+
 		return (TRUE);
 	}
 	return (FALSE);

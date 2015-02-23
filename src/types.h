@@ -2405,8 +2405,8 @@ struct hist_type
 typedef struct set_type set_type;
 struct set_type
 {
-	u32b name;                              /* Name */
-	u32b desc;                              /* Desc */
+	const char *name;                       /* Name */
+	char *desc;                             /* Desc */
 
 	byte num;                               /* Number of artifacts used */
 	byte num_use;                           /* Number actually wore */

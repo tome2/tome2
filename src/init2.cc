@@ -414,20 +414,8 @@ static errr init_set_info(void)
 	/* General buffer */
 	char buf[1024];
 
-
-	/*** Make the "header" ***/
-	set_head = make_header(max_set_idx);
-
-
-	/*** Make the fake arrays ***/
-
 	/* Allocate the "set_info" array */
-	set_info = make_array<set_type>(set_head->info_num);
-
-	/* Hack -- make "fake" arrays */
-	set_name = make_array<char>(FAKE_NAME_SIZE);
-	set_text = make_array<char>(FAKE_TEXT_SIZE);
-
+	set_info = make_array<set_type>(max_set_idx);
 
 	/*** Load the ascii template file ***/
 

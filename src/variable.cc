@@ -620,10 +620,7 @@ artifact_type *a_info;
 /*
  * The item set arrays
  */
-header *set_head;
 set_type *set_info;
-char *set_name;
-char *set_text;
 
 /*
  * The ego-item arrays

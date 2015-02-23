@@ -5302,7 +5302,7 @@ errr init_set_info_txt(FILE *fp, char *buf)
 			if (i < error_idx) return (4);
 
 			/* Verify information */
-			if (i >= set_head->info_num) return (2);
+			if (i >= max_set_idx) return (2);
 
 			/* Save the index */
 			error_idx = i;
@@ -5310,19 +5310,11 @@ errr init_set_info_txt(FILE *fp, char *buf)
 			/* Point at the "info" */
 			set_ptr = &set_info[i];
 
-			/* Hack -- Verify space */
-			if (set_head->name_size + strlen(s) + 8 > FAKE_NAME_SIZE) return (7);
+			/* Copy name */
+			assert(!set_ptr->name);
+			set_ptr->name = my_strdup(s);
 
-			/* Advance and Save the name index */
-			if (!set_ptr->name) set_ptr->name = ++set_head->name_size;
-
-			/* Append chars to the name */
-			strcpy(set_name + set_head->name_size, s);
-
-			/* Advance the index */
-			set_head->name_size += strlen(s);
-
-			/* Needed hack */
+			/* Initialize */
 			set_ptr->num = 0;
 			set_ptr->num_use = 0;
 			for (z = 0; z < 6; z++)
@@ -5354,17 +5346,8 @@ errr init_set_info_txt(FILE *fp, char *buf)
 			/* Acquire the text */
 			s = buf + 2;
 
-			/* Hack -- Verify space */
-			if (set_head->text_size + strlen(s) + 8 > FAKE_TEXT_SIZE) return (7);
-
-			/* Advance and Save the text index */
-			if (!set_ptr->desc) set_ptr->desc = ++set_head->text_size;
-
-			/* Append chars to the name */
-			strcpy(set_text + set_head->text_size, s);
-
-			/* Advance the index */
-			set_head->text_size += strlen(s);
+			/* Append chars to the description */
+			strappend(&set_ptr->desc, s);
 
 			/* Next... */
 			continue;
@@ -5438,15 +5421,8 @@ errr init_set_info_txt(FILE *fp, char *buf)
 		return (6);
 	}
 
-
-	/* Complete the "name" and "text" sizes */
-	++set_head->name_size;
-	++set_head->text_size;
-
-
 	/* No version yet */
 	if (!okay) return (2);
-
 
 	/* Success */
 	return (0);
