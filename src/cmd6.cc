@@ -3641,7 +3641,9 @@ void set_stick_mode(object_type *o_ptr)
 {
 	s32b bonus = o_ptr->pval3 & 0xFFFF;
 	s32b max = o_ptr->pval3 >> 16;
-
+	// Ensure that we're not assuming "reentrancy".
+	assert(get_level_use_stick < 0);
+	// Set up the casting mode
 	get_level_use_stick = bonus;
 	get_level_max_stick = max;
 }
@@ -3649,6 +3651,9 @@ void set_stick_mode(object_type *o_ptr)
 /* Remove 'stick mode' */
 void unset_stick_mode()
 {
+	// Ensure that we're not assuming "reentrancy".
+	assert(get_level_use_stick > 0);
+	// Unset the casting mode
 	get_level_use_stick = -1;
 	get_level_max_stick = -1;
 }
@@ -3657,15 +3662,17 @@ void unset_stick_mode()
 /*
  * Activate a device
  */
-static void activate_stick(s16b s, bool_ *obvious, bool_ *use_charge)
+static void activate_stick(object_type *o_ptr, bool_ *obvious, bool_ *use_charge)
 {
-	spell_type *spell = spell_at(s);
+	spell_type *spell = spell_at(o_ptr->pval2);
 	casting_result ret;
 
 	assert(obvious != NULL);
 	assert(use_charge != NULL);
 
+	set_stick_mode(o_ptr);
 	ret = spell_type_produce_effect(spell);
+	unset_stick_mode();
 
 	switch (ret)
 	{
@@ -3734,11 +3741,11 @@ void do_cmd_use_staff(void)
 		return;
 	}
 
-	/* Enter device mode  */
-	set_stick_mode(o_ptr);
-
 	/* Take a turn */
 	energy_use = 100;
+
+	/* Enter device mode  */
+	set_stick_mode(o_ptr);
 
 	/* get the chance */
 	int chance;
@@ -3746,6 +3753,9 @@ void do_cmd_use_staff(void)
 		auto spell = spell_at(o_ptr->pval2);
 		chance = spell_chance_device(spell);
 	}
+
+	/* Leave device mode  */
+	unset_stick_mode();
 
 	/* Extract object flags */
 	object_flags(o_ptr, &f1, &f2, &f3, &f4, &f5, &esp);
@@ -3768,9 +3778,6 @@ void do_cmd_use_staff(void)
 		if (flush_failure) flush();
 		msg_print("You failed to use the staff properly.");
 		sound(SOUND_FAIL);
-
-		/* Leave device mode  */
-		unset_stick_mode();
 		return;
 	}
 
@@ -3780,9 +3787,6 @@ void do_cmd_use_staff(void)
 		if (flush_failure) flush();
 		msg_print("The staff has no charges left.");
 		o_ptr->ident |= (IDENT_EMPTY);
-
-		/* Leave device mode  */
-		unset_stick_mode();
 		return;
 	}
 
@@ -3790,9 +3794,8 @@ void do_cmd_use_staff(void)
 	/* Sound */
 	sound(SOUND_ZAP);
 
-
 	/* Analyze the staff */
-	activate_stick(o_ptr->pval2, &obvious, &use_charge);
+	activate_stick(o_ptr, &obvious, &use_charge);
 
 	/* Combine / Reorder the pack (later) */
 	p_ptr->notice |= (PN_COMBINE | PN_REORDER);
@@ -3808,9 +3811,6 @@ void do_cmd_use_staff(void)
 	/* Hack -- some uses are "free" */
 	if (!use_charge)
 	{
-		/* Leave device mode  */
-		unset_stick_mode();
-
 		return;
 	}
 
@@ -3860,9 +3860,6 @@ void do_cmd_use_staff(void)
 	{
 		floor_item_charges(0 - item);
 	}
-
-	/* Leave device mode  */
-	unset_stick_mode();
 }
 
 
@@ -3942,6 +3939,9 @@ void do_cmd_aim_wand(void)
 		chance = spell_chance_device(spell);
 	}
 
+	/* Leave device mode  */
+	unset_stick_mode();
+
 	/* Extract object flags */
 	object_flags(o_ptr, &f1, &f2, &f3, &f4, &f5, &esp);
 
@@ -3957,9 +3957,6 @@ void do_cmd_aim_wand(void)
 		if (flush_failure) flush();
 		msg_print("You failed to use the wand properly.");
 		sound(SOUND_FAIL);
-
-		/* Leave device mode  */
-		unset_stick_mode();
 		return;
 	}
 
@@ -3969,19 +3966,14 @@ void do_cmd_aim_wand(void)
 		if (flush_failure) flush();
 		msg_print("The wand has no charges left.");
 		o_ptr->ident |= (IDENT_EMPTY);
-
-		/* Leave device mode  */
-		unset_stick_mode();
 		return;
 	}
-
 
 	/* Sound */
 	sound(SOUND_ZAP);
 
-
 	/* Analyze the wand */
-	activate_stick(o_ptr->pval2, &obvious, &use_charge);
+	activate_stick(o_ptr, &obvious, &use_charge);
 
 	/* Combine / Reorder the pack (later) */
 	p_ptr->notice |= (PN_COMBINE | PN_REORDER);
@@ -3992,9 +3984,6 @@ void do_cmd_aim_wand(void)
 	/* Hack -- some uses are "free" */
 	if (!use_charge)
 	{
-		/* Leave device mode  */
-		unset_stick_mode();
-
 		return;
 	}
 
@@ -4022,9 +4011,6 @@ void do_cmd_aim_wand(void)
 	{
 		floor_item_charges(0 - item);
 	}
-
-	/* Leave device mode  */
-	unset_stick_mode();
 }
 
 
