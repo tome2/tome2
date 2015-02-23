@@ -313,10 +313,7 @@ extern artifact_select_flag *a_select_flags;
 
 extern ability_type *ab_info;
 
-extern header *s_head;
 extern skill_type *s_info;
-extern char *s_name;
-extern char *s_text;
 
 extern vault_type *v_info;
 extern header *f_head;

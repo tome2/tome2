@@ -5627,7 +5627,7 @@ errr init_s_info_txt(FILE *fp, char *buf)
 			i = atoi(buf + 2);
 
 			/* Verify information */
-			if (i >= s_head->info_num) return (2);
+			if (i >= max_s_idx) return (2);
 
 			/* Save the index */
 			error_idx = i;
@@ -5635,17 +5635,9 @@ errr init_s_info_txt(FILE *fp, char *buf)
 			/* Point at the "info" */
 			s_ptr = &s_info[i];
 
-			/* Hack -- Verify space */
-			if (s_head->name_size + strlen(s) + 8 > FAKE_NAME_SIZE) return (7);
-
-			/* Advance and Save the name index */
-			if (!s_ptr->name) s_ptr->name = ++s_head->name_size;
-
-			/* Append chars to the name */
-			strcpy(s_name + s_head->name_size, s);
-
-			/* Advance the index */
-			s_head->name_size += strlen(s);
+			/* Copy name */
+			assert(!s_ptr->name);
+			s_ptr->name = my_strdup(s);
 
 			/* Init */
 			s_ptr->action_mkey = 0;
@@ -5669,34 +5661,21 @@ errr init_s_info_txt(FILE *fp, char *buf)
 			/* Acquire the text */
 			s = buf + 2;
 
-			/* Hack -- Verify space */
-			if (s_head->text_size + strlen(s) + 8 > FAKE_TEXT_SIZE) return (7);
-
-			/* Advance and Save the text index */
+			/* Description */
 			if (!s_ptr->desc)
 			{
-				s_ptr->desc = ++s_head->text_size;
-
-				/* Append chars to the name */
-				strcpy(s_text + s_head->text_size, s);
-
-				/* Advance the index */
-				s_head->text_size += strlen(s);
+				s_ptr->desc = my_strdup(s);
 			}
 			else
 			{
-				/* Append chars to the name */
-				strcpy(s_text + s_head->text_size, format("\n%s", s));
-
-				/* Advance the index */
-				s_head->text_size += strlen(s) + 1;
+				strappend(&s_ptr->desc, format("\n%s", s));
 			}
 
 			/* Next... */
 			continue;
 		}
 
-		/* Process 'A' for "Activation Description" */
+		/* Process 'A' for "Activation Description" (one line only) */
 		if (buf[0] == 'A')
 		{
 			char *txt;
@@ -5708,18 +5687,12 @@ errr init_s_info_txt(FILE *fp, char *buf)
 			*txt = '\0';
 			txt++;
 
-			/* Hack -- Verify space */
-			if (s_head->text_size + strlen(txt) + 8 > FAKE_TEXT_SIZE) return (7);
+			/* Copy action description */
+			assert(!s_ptr->action_desc);
+			s_ptr->action_desc = my_strdup(txt);
 
-			/* Advance and Save the text index */
-			if (!s_ptr->action_desc) s_ptr->action_desc = ++s_head->text_size;
-
-			/* Append chars to the name */
-			strcpy(s_text + s_head->text_size, txt);
+			/* Copy mkey index */
 			s_ptr->action_mkey = atoi(s);
-
-			/* Advance the index */
-			s_head->text_size += strlen(txt);
 
 			/* Next... */
 			continue;
@@ -5794,15 +5767,8 @@ errr init_s_info_txt(FILE *fp, char *buf)
 		return (6);
 	}
 
-
-	/* Complete the "name" and "text" sizes */
-	++s_head->name_size;
-	++s_head->text_size;
-
-
 	/* No version yet */
 	if (!okay) return (2);
-
 
 	/* Success */
 	return (0);

@@ -2439,9 +2439,10 @@ struct cli_comm
 typedef struct skill_type skill_type;
 struct skill_type
 {
-	u32b name;                              /* Name */
-	u32b desc;                              /* Description */
-	u32b action_desc;                       /* Action Description */
+	const char *name;                       /* Name */
+	char *desc;                             /* Description */
+
+	const char *action_desc;                /* Action Description */
 
 	s16b action_mkey;                       /* Action do to */
 

@@ -530,19 +530,8 @@ static errr init_s_info(void)
 	/* General buffer */
 	char buf[1024];
 
-
-	/*** Make the "header" ***/
-	s_head = make_header(max_s_idx);
-
-
-	/*** Make the fake arrays ***/
-
 	/* Allocate the "s_info" array */
-	s_info = make_array<skill_type>(s_head->info_num);
-
-	/* Hack -- make "fake" arrays */
-	s_name = make_array<char>(FAKE_NAME_SIZE);
-	s_text = make_array<char>(FAKE_TEXT_SIZE);
+	s_info = make_array<skill_type>(max_s_idx);
 
 	/*** Load the ascii template file ***/
 

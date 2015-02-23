@@ -660,10 +660,7 @@ ability_type *ab_info;
 /*
  * Player skills arrays
  */
-header *s_head;
 skill_type *s_info;
-char *s_name;
-char *s_text;
 
 /*
  * Player race arrays

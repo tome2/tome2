@@ -2566,7 +2566,7 @@ void print_magic_powers( magic_power *powers, int max_powers, void(*power_info)(
 
 	/* Dump the header line */
 	spoiler_blanklines(2);
-	sprintf(buf, "%s", s_info[skill_num].name + s_name);
+	sprintf(buf, "%s", s_info[skill_num].name);
 	spoiler_underline(buf);
 	spoiler_blanklines(1);
 

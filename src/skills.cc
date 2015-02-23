@@ -102,10 +102,9 @@ s16b find_skill(cptr name)
 	/* Scan skill list */
 	for (i = 1; i < max_s_idx; i++)
 	{
-		/* The name matches */
-		if (s_info[i].name > 0)
+		if (s_info[i].name && streq(s_info[i].name, name))
 		{
-			if (streq(s_info[i].name + s_name, name)) return (i);
+			return (i);
 		}
 	}
 
@@ -120,8 +119,9 @@ s16b find_skill_i(cptr name)
 	for (i = 1; i < max_s_idx; i++)
 	{
 		/* The name matches */
-		if (s_info[i].name > 0) {
-			if (iequals(s_info[i].name + s_name, name)) return (i);
+		if (s_info[i].name && iequals(s_info[i].name, name))
+		{
+			return (i);
 		}
 	}
 
@@ -258,11 +258,11 @@ void dump_skills(FILE *fff)
 
 		if (!has_child(i))
 		{
-			strcat(buf, format(" . %s", s_info[i].name + s_name));
+			strcat(buf, format(" . %s", s_info[i].name));
 		}
 		else
 		{
-			strcat(buf, format(" - %s", s_info[i].name + s_name));
+			strcat(buf, format(" - %s", s_info[i].name));
 		}
 
 		fprintf(fff, "%-49s%s%06.3f [%05.3f]",
@@ -292,7 +292,7 @@ void print_skills(int table[MAX_SKILLS][2], int max, int sel, int start)
 	display_message(0, 1, strlen(keys), TERM_WHITE, keys);
 	c_prt((p_ptr->skill_points) ? TERM_L_BLUE : TERM_L_RED,
 	      format("Skill points left: %d", p_ptr->skill_points), 2, 0);
-	print_desc_aux(s_info[table[sel][0]].desc + s_text, 3, 0);
+	print_desc_aux(s_info[table[sel][0]].desc, 3, 0);
 
 	for (j = start; j < start + (hgt - 7); j++)
 	{
@@ -318,17 +318,17 @@ void print_skills(int table[MAX_SKILLS][2], int max, int sel, int start)
 		}
 		if (!has_child(i))
 		{
-			c_prt(color, format("%c.%c%s", deb, end, s_info[i].name + s_name),
+			c_prt(color, format("%c.%c%s", deb, end, s_info[i].name),
 			      j + 7 - start, table[j][1] * 4);
 		}
 		else if (s_info[i].dev)
 		{
-			c_prt(color, format("%c-%c%s", deb, end, s_info[i].name + s_name),
+			c_prt(color, format("%c-%c%s", deb, end, s_info[i].name),
 			      j + 7 - start, table[j][1] * 4);
 		}
 		else
 		{
-			c_prt(color, format("%c+%c%s", deb, end, s_info[i].name + s_name),
+			c_prt(color, format("%c+%c%s", deb, end, s_info[i].name),
 			      j + 7 - start, table[j][1] * 4);
 		}
 		c_prt(color,
@@ -558,7 +558,7 @@ void do_cmd_skill()
 			/* Contextual help */
 			if (c == '?')
 			{
-				help_skill(s_info[table[sel][0]].name + s_name);
+				help_skill(s_info[table[sel][0]].name);
 			}
 
 			/* Handle boundaries and scrolling */
@@ -805,7 +805,7 @@ static int do_cmd_activate_skill_aux()
 			}
 			if (next) continue;
 
-			p.push_back(std::make_tuple(s_text + s_info[i].action_desc,
+			p.push_back(std::make_tuple(s_info[i].action_desc,
 						    s_info[i].action_mkey));
 		}
 	}
@@ -1352,7 +1352,12 @@ void do_get_new_skill()
 		}
 
 		skl[i] = s_idx;
-		items.push_back(format("%-40s: +%02ld.%03ld value, +%01d.%03d modifier", s_ptr->name + s_name, val[i] / SKILL_STEP, val[i] % SKILL_STEP, mod[i] / SKILL_STEP, mod[i] % SKILL_STEP));
+		items.push_back(format("%-40s: +%02ld.%03ld value, +%01d.%03d modifier",
+				       s_ptr->name,
+				       val[i] / SKILL_STEP,
+				       val[i] % SKILL_STEP,
+				       mod[i] / SKILL_STEP,
+				       mod[i] % SKILL_STEP));
 	}
 
 	while (TRUE)
@@ -1395,7 +1400,7 @@ void do_get_new_skill()
 				/* Prepare prompt */
 				msg = format("This skill is mutually exclusive with "
 				             "at least %s, continue?",
-				             s_info[oppose_skill].name + s_name);
+					     s_info[oppose_skill].name);
 
 				/* The player rejected the choice */
 				if (!get_check(msg)) continue;
@@ -1407,12 +1412,12 @@ void do_get_new_skill()
 			if (mod[res])
 			{
 				msg_format("You can now learn the %s skill.",
-				           s_ptr->name + s_name);
+					   s_ptr->name);
 			}
 			else
 			{
 				msg_format("Your knowledge of the %s skill increases.",
-				           s_ptr->name + s_name);
+					   s_ptr->name);
 			}
 			break;
 		}

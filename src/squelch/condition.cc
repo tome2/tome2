@@ -758,10 +758,8 @@ std::shared_ptr<Condition> SkillCondition::from_json(json_t *j)
 
 void SkillCondition::write_tree(TreePrinter *p, Cursor *, uint8_t ecol, uint8_t bcol) const
 {
-	cptr skill_name = s_info[m_skill_idx].name + s_name;
-
 	p->write(ecol, "Your skill in ");
-	p->write(bcol, skill_name);
+	p->write(bcol, s_info[m_skill_idx].name);
 	p->write(ecol, " is from ");
 	p->write(TERM_WHITE, format("%d", (int) m_min));
 	p->write(ecol, " to ");
@@ -772,7 +770,7 @@ void SkillCondition::write_tree(TreePrinter *p, Cursor *, uint8_t ecol, uint8_t 
 void SkillCondition::to_json(json_t *j) const
 {
 	json_object_set_new(j, "name",
-			    json_string(s_info[m_skill_idx].name + s_name));
+			    json_string(s_info[m_skill_idx].name));
 	json_object_set_new(j, "min",
 			    json_integer(m_min));
 	json_object_set_new(j, "max",
