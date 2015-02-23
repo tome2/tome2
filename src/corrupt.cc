@@ -1,5 +1,7 @@
 #include "angband.h"
-#include <assert.h>
+#include "xtra2.hpp"
+
+#include <cassert>
 
 /**
  * Corruptions

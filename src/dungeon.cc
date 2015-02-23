@@ -24,6 +24,7 @@
 #include "squeltch.hpp"
 #include "store.hpp"
 #include "xtra1.hpp"
+#include "xtra2.hpp"
 
 #include <cassert>
 

@@ -9,6 +9,7 @@
 
 #include "angband.h"
 #include "skills.hpp"
+#include "xtra2.hpp"
 
 #include <cassert>
 

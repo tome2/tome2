@@ -1,7 +1,3 @@
-/* File: monster2.c */
-
-/* Purpose: misc code for monsters */
-
 /*
  * Copyright (c) 1989 James E. Wilson, Robert A. Koeneke
  *
@@ -9,12 +5,12 @@
  * not for profit purposes provided that this copyright and statement are
  * included in all such copies.
  */
-
 #include "angband.h"
 #include "hooks.h"
 #include "mimic.hpp"
 #include "randart.hpp"
 #include "xtra1.hpp"
+#include "xtra2.hpp"
 
 #include <algorithm>
 #include <string>

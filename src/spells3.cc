@@ -8,6 +8,7 @@
 #include "spell_idx_list.hpp"
 #include "skills.hpp"
 #include "mimic.hpp"
+#include "xtra2.hpp"
 
 #include <vector>
 

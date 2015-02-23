@@ -16,6 +16,7 @@
 #include "randart.hpp"
 #include "status.hpp"
 #include "xtra1.hpp"
+#include "xtra2.hpp"
 
 /*
  * Adds a lvl to a monster

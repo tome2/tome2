@@ -13,6 +13,7 @@
 #include "spells5.hpp"
 #include "quark.h"
 #include "xtra1.hpp"
+#include "xtra2.hpp"
 
 #include <cassert>
 
@@ -135,7 +136,7 @@ void do_cmd_browse(void)
 	do_cmd_browse_aux(o_ptr);
 }
 
-void do_poly_wounds(void)
+static void do_poly_wounds()
 {
 	/* Changed to always provide at least _some_ healing */
 	s16b wounds = p_ptr->cut;

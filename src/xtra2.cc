@@ -1,8 +1,3 @@
-/* File: xtra2.c */
-/* File: xtra2.c */
-
-/* Purpose: effects of various "objects", targetting and panel handling */
-
 /*
  * Copyright (c) 1989 James E. Wilson, Robert A. Koeneke
  *
@@ -10,6 +5,8 @@
  * not for profit purposes provided that this copyright and statement are
  * included in all such copies.
  */
+
+#include "xtra2.hpp"
 
 #include "angband.h"
 #include "corrupt.hpp"
@@ -5356,7 +5353,7 @@ void set_grace(s32b v)
 	handle_stuff();
 }
 
-bool_ test_object_wish(char *name, object_type *o_ptr, object_type *forge, const char *what)
+static bool_ test_object_wish(char *name, object_type *o_ptr, object_type *forge, const char *what)
 {
 	int i, j, jb, save_aware;
 	char buf[200];
@@ -5474,7 +5471,7 @@ bool_ test_object_wish(char *name, object_type *o_ptr, object_type *forge, const
 	return FALSE;
 }
 
-void clean_wish_name(char *buf, char *name)
+static void clean_wish_name(char *buf, char *name)
 {
 	char *p;
 	int i, j;

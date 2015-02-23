@@ -1,7 +1,3 @@
-/* File: birth.c */
-
-/* Purpose: create a player character */
-
 /*
  * Copyright (c) 1989 James E. Wilson, Robert A. Koeneke
  *
@@ -23,6 +19,7 @@
 #include "spells3.hpp"
 #include "store.hpp"
 #include "xtra1.hpp"
+#include "xtra2.hpp"
 
 #include <string>
 

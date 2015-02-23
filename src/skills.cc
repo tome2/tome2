@@ -1,7 +1,3 @@
-/* File: skills.c */
-
-/* Purpose: player skills */
-
 /*
  * Copyright (c) 2001 DarkGod
  *
@@ -15,6 +11,7 @@
 #include "gods.hpp"
 #include "hooks.h"
 #include "util.hpp"
+#include "xtra2.hpp"
 
 #include <algorithm>
 #include <boost/algorithm/string/predicate.hpp>

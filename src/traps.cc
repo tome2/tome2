@@ -10,6 +10,7 @@
 #include "angband.h"
 #include "gods.hpp"
 #include "xtra1.hpp"
+#include "xtra2.hpp"
 
 bool_ do_player_trap_call_out(void)
 {

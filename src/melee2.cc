@@ -21,6 +21,7 @@
 #include "messages.h"
 #include "quark.h"
 #include "skills.hpp"
+#include "xtra2.hpp"
 
 #include <cassert>
 

@@ -14,6 +14,7 @@
 #include "quark.h"
 #include "hooks.h"
 #include "mimic.hpp"
+#include "xtra2.hpp"
 
 /*
  * Note: return value indicates the amount of mana to use

@@ -9,6 +9,7 @@
 #include "modules.hpp"
 #include "quark.h"
 #include "hooks.h"
+#include "xtra2.hpp"
 
 #include <cassert>
 #include <memory>

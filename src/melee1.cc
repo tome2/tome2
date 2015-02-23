@@ -1,7 +1,3 @@
-/* File: melee1.c */
-
-/* Purpose: Monster attacks */
-
 /*
  * Copyright (c) 1989 James E. Wilson, Robert A. Koeneke
  *
@@ -15,6 +11,7 @@
 #include "skills.hpp"
 #include "store.hpp"
 #include "xtra1.hpp"
+#include "xtra2.hpp"
 
 #include <boost/algorithm/string/predicate.hpp>
 

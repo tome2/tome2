@@ -13,6 +13,7 @@
 #include "spells5.hpp"
 #include "squeltch.hpp"
 #include "xtra1.hpp"
+#include "xtra2.hpp"
 
 #include <chrono>
 #include <thread>
