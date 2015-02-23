@@ -291,12 +291,14 @@ void GroupingCondition::add_child(ConditionFactory const &factory)
 
 void GroupingCondition::remove_child(Condition *condition)
 {
-	std::remove_if(
-		std::begin(m_conditions),
-		std::end(m_conditions),
-		[&] (std::shared_ptr<Condition> p) {
-			return p.get() == condition;
-		});
+	m_conditions.erase(
+		std::remove_if(
+			std::begin(m_conditions),
+			std::end(m_conditions),
+			[&] (std::shared_ptr<Condition> p) {
+				return p.get() == condition;
+			}),
+		std::end(m_conditions));
 }
 
 std::shared_ptr<Condition> GroupingCondition::first_child()
