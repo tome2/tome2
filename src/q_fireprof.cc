@@ -2,6 +2,7 @@
 #include "quark.h"
 #include "hooks.h"
 #include "traps.hpp"
+#include "util.hpp"
 
 #include <cassert>
 

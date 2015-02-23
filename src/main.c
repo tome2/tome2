@@ -9,6 +9,7 @@
  */
 
 #include "angband.h"
+#include "util.h"
 
 
 

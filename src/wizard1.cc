@@ -4,6 +4,8 @@
 
 #include "angband.h"
 #include "cmd7.hpp"
+#include "util.hpp"
+#include "util.h"
 
 #include <vector>
 

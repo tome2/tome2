@@ -10,6 +10,7 @@
 #include "mimic.hpp"
 #include "quark.h"
 #include "spells2.hpp"
+#include "util.hpp"
 
 #include <memory>
 #include <vector>

@@ -24,6 +24,8 @@
 #include "tome/squelch/cursor.hpp"
 #include "tome/squelch/object_status.hpp"
 #include "tome/squelch/automatizer.hpp"
+#include "util.hpp"
+#include "util.h"
 
 using squelch::action_type;
 using squelch::action_mapping;

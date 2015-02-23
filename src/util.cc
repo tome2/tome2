@@ -3,6 +3,7 @@
 /* Purpose: Angband utilities -BEN- */
 
 #include "util.hpp"
+#include "util.h"
 #include "angband.h"
 #include "cmd3.hpp"
 #include "cmd4.hpp"
@@ -3675,12 +3676,6 @@ char msg_box(cptr text, int y, int x)
 	draw_box(y - 1, x - ((strlen(text) + 1) / 2), 2, strlen(text) + 1);
 	c_put_str(TERM_WHITE, text, y, x - ((strlen(text) + 1) / 2) + 1);
 	return inkey();
-}
-
-/* Rescale a value */
-s32b rescale(s32b x, s32b max, s32b new_max)
-{
-	return (x * new_max) / max;
 }
 
 /*

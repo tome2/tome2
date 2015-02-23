@@ -17,6 +17,7 @@
 #include "spells2.hpp"
 #include "spells3.hpp"
 #include "spells5.hpp"
+#include "util.hpp"
 #include "traps.hpp"
 #include "xtra1.hpp"
 

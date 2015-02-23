@@ -3,6 +3,7 @@
 #include "cave.hpp"
 #include "gods.hpp"
 #include "hooks.h"
+#include "util.hpp"
 
 #define cquest (quest[QUEST_SPIDER])
 

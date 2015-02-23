@@ -3,6 +3,8 @@
 #include "hooks.h"
 #include "spells3.hpp"
 #include "spells4.hpp"
+#include "util.hpp"
+#include "util.h"
 
 #include <cassert>
 

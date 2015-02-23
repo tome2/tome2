@@ -11,6 +11,8 @@
  */
 
 #include "angband.h"
+#include "util.hpp"
+#include "util.h"
 
 
 /*

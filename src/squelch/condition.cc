@@ -8,6 +8,7 @@
 #include "angband.h"
 #include "skills.hpp"
 #include "quark.h"
+#include "util.hpp"
 
 namespace squelch {
 

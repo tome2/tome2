@@ -8,6 +8,8 @@
 #include "spells3.hpp"
 #include "squeltch.hpp"
 #include "tome/make_array.hpp"
+#include "util.hpp"
+#include "util.h"
 
 #include <cassert>
 #include <type_traits>

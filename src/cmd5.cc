@@ -18,6 +18,8 @@
 #include "spells2.hpp"
 #include "spells4.hpp"
 #include "spells5.hpp"
+#include "util.hpp"
+#include "util.h"
 #include "quark.h"
 #include "wizard2.hpp"
 #include "xtra1.hpp"

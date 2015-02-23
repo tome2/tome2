@@ -10,6 +10,8 @@
 #include "cmd2.hpp"
 #include "gods.hpp"
 #include "skills.hpp"
+#include "util.hpp"
+#include "util.h"
 #include "xtra2.hpp"
 
 /*

@@ -3,6 +3,8 @@
 #include "angband.h"
 #include "q_rand.h"
 #include "spells1.hpp"
+#include "util.hpp"
+#include "util.h"
 
 #include <cassert>
 #include <vector>

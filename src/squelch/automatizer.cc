@@ -5,6 +5,7 @@
 #include "tome/squelch/cursor.hpp"
 #include "tome/squelch/tree_printer.hpp"
 #include "angband.h"
+#include "util.hpp"
 
 namespace squelch {
 

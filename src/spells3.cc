@@ -3,6 +3,7 @@
 #include "angband.h"
 #include "cave.hpp"
 #include "cmd5.hpp"
+#include "mimic.hpp"
 #include "skills.hpp"
 #include "spell_type.hpp"
 #include "spell_idx_list.hpp"
@@ -10,7 +11,7 @@
 #include "spells2.hpp"
 #include "spells4.hpp"
 #include "spells5.hpp"
-#include "mimic.hpp"
+#include "util.hpp"
 #include "xtra2.hpp"
 
 #include <algorithm>

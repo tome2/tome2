@@ -11,6 +11,7 @@
  */
 
 #include "angband.h"
+#include "util.hpp"
 
 
 int max_macrotrigger = 0;

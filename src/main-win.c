@@ -68,6 +68,7 @@
 
 
 #include "angband.h"
+#include "util.h"
 
 #ifdef WINDOWS
 

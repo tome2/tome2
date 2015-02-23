@@ -20,6 +20,8 @@
 #include "spells5.hpp"
 #include "squeltch.hpp"
 #include "traps.hpp"
+#include "util.hpp"
+#include "util.h"
 #include "xtra1.hpp"
 #include "xtra2.hpp"
 

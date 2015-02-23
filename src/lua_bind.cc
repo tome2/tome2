@@ -14,11 +14,12 @@
 #include "angband.h"
 #include "cmd7.hpp"
 #include "corrupt.hpp"
+#include "range.h"
 #include "skills.hpp"
 #include "spell_type.hpp"
 #include "spells2.hpp"
 #include "spells5.hpp"
-#include "range.h"
+#include "util.hpp"
 
 #include <cassert>
 #include <functional>

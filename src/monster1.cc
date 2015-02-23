@@ -11,7 +11,7 @@
  */
 
 #include "angband.h"
-
+#include "util.hpp"
 
 /*
  * Pronoun arrays, by gender.

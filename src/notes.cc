@@ -8,7 +8,10 @@
  */
 
 #include "notes.hpp"
+
 #include "angband.h"
+#include "util.hpp"
+#include "util.h"
 
 /*
  * Show the notes file on the screen

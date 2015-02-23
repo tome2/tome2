@@ -7,6 +7,7 @@
 #include "../angband.h"
 #include "../modules.hpp"
 #include "../quark.h"
+#include "../util.hpp"
 
 namespace squelch {
 

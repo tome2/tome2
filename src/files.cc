@@ -16,6 +16,8 @@
 #include "notes.hpp"
 #include "skills.hpp"
 #include "spells2.hpp"
+#include "util.hpp"
+#include "util.h"
 #include "xtra1.hpp"
 
 #include <memory>

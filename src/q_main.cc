@@ -1,5 +1,8 @@
 #include "q_main.h"
+
 #include "hooks.h"
+#include "util.hpp"
+
 #include <cassert>
 
 GENERATE_MONSTER_LOOKUP_FN(get_necromancer, "The Necromancer of Dol Guldur")

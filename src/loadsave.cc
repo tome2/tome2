@@ -4,6 +4,8 @@
 #include "modules.hpp"
 #include "quark.h"
 #include "hooks.h"
+#include "util.hpp"
+#include "util.h"
 #include "xtra2.hpp"
 
 #include <cassert>

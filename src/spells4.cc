@@ -9,6 +9,8 @@
 #include "spells3.hpp"
 #include "spells5.hpp"
 #include "spells6.hpp"
+#include "util.hpp"
+#include "util.h"
 
 #include <algorithm>
 #include <cassert>

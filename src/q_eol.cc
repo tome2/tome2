@@ -3,6 +3,7 @@
 #include "cave.hpp"
 #include "hooks.h"
 #include "traps.hpp"
+#include "util.hpp"
 
 #include <cassert>
 

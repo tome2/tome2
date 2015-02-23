@@ -12,6 +12,7 @@
 #include "randart.hpp"
 #include "spells1.hpp"
 #include "traps.hpp"
+#include "util.hpp"
 
 #include <cassert>
 #include <memory>

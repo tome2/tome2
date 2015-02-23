@@ -26,6 +26,8 @@
 #ifdef USE_SDL
 
 #include "angband.h"
+#include "util.h"
+
 #include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_ttf.h>

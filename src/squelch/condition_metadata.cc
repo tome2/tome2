@@ -6,6 +6,8 @@
 #include "tome/squelch/object_status.hpp"
 #include "angband.h"
 #include "skills.hpp"
+#include "util.hpp"
+#include "util.h"
 
 namespace squelch {
 

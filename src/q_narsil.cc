@@ -1,5 +1,7 @@
 #include "q_narsil.h"
+
 #include "hooks.h"
+#include "util.hpp"
 
 #define cquest (quest[QUEST_NARSIL])
 

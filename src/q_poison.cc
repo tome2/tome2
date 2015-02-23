@@ -4,6 +4,7 @@
 #include "quark.h"
 #include "messages.h"
 #include "hooks.h"
+#include "util.hpp"
 
 #define cquest (quest[QUEST_POISON])
 

@@ -1,5 +1,6 @@
 #include "angband.h"
 #include "xtra2.hpp"
+#include "util.hpp"
 
 #include <cassert>
 

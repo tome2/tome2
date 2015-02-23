@@ -40,6 +40,7 @@
 
 
 #include "angband.h"
+#include "util.h"
 
 
 #ifdef USE_GCU

@@ -4,6 +4,8 @@
 #include "skills.hpp"
 #include "spells5.hpp"
 #include "traps.hpp"
+#include "util.hpp"
+#include "util.h"
 
 #include <boost/algorithm/string/predicate.hpp>
 

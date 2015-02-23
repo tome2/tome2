@@ -21,6 +21,8 @@
 #include "spells2.hpp"
 #include "spells3.hpp"
 #include "traps.hpp"
+#include "util.hpp"
+#include "util.h"
 #include "xtra1.hpp"
 #include "xtra2.hpp"
 

@@ -18,6 +18,8 @@
 #include "spells1.hpp"
 #include "spells2.hpp"
 #include "traps.hpp"
+#include "util.hpp"
+#include "util.h"
 #include "xtra1.hpp"
 #include "xtra2.hpp"
 

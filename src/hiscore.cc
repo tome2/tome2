@@ -1,8 +1,9 @@
 #include "hiscore.h"
 
-#include <assert.h>
-
 #include "angband.h"
+#include "util.hpp"
+
+#include <cassert>
 
 int highscore_seek(int highscore_fd, int i)
 {

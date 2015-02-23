@@ -19,6 +19,7 @@
 #include "spells4.hpp"
 #include "traps.hpp"
 #include "util.hpp"
+#include "util.h"
 #include "xtra2.hpp"
 
 #include <algorithm>

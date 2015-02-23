@@ -3,6 +3,7 @@
 #include "cave.hpp"
 #include "quark.h"
 #include "hooks.h"
+#include "util.hpp"
 
 #include <cassert>
 

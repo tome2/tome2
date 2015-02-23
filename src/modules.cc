@@ -11,6 +11,8 @@
 #include "corrupt.hpp"
 #include "hooks.h"
 #include "spells2.hpp"
+#include "util.hpp"
+#include "util.h"
 
 #include <cassert>
 #include <chrono>
