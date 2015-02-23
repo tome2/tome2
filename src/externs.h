@@ -459,15 +459,6 @@ extern deity_type deity_info[MAX_GODS];
 extern timer_type *gl_timers;
 extern const char *get_version_string();
 
-/* help.c */
-extern void init_hooks_help();
-extern void help_race(cptr race);
-extern void help_subrace(cptr subrace);
-extern void help_class(cptr klass);
-extern void help_god(cptr god);
-extern void help_skill(cptr skill);
-extern void help_ability(cptr ability);
-
 /* birth.c */
 extern bool_ no_begin_screen;
 

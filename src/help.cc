@@ -1,7 +1,3 @@
-/* File: help.c */
-
-/* Purpose: ingame help */
-
 /*
  * Copyright (c) 2001 DarkGod
  * Copyright (c) 2012 Bardur Arantsson
@@ -10,6 +6,8 @@
  * not for profit purposes provided that this copyright and statement are
  * included in all such copies.
  */
+
+#include "help.hpp"
 
 #include "angband.h"
 #include "hooks.h"

@@ -9,6 +9,7 @@
 #include "angband.h"
 #include "birth.hpp"
 #include "gods.hpp"
+#include "help.hpp"
 #include "hooks.h"
 #include "util.hpp"
 #include "xtra2.hpp"

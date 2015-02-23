@@ -11,6 +11,7 @@
 #include "cave.hpp"
 #include "corrupt.hpp"
 #include "gods.hpp"
+#include "help.hpp"
 #include "hooks.h"
 #include "modules.hpp"
 #include "notes.hpp"
