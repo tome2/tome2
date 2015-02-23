@@ -802,7 +802,7 @@ static void regen_monsters(void)
  *
  * Should belong to object1.c, renamed to object_decays() -- pelpel
  */
-bool_ decays(object_type *o_ptr)
+static bool_ decays(object_type *o_ptr)
 {
 	u32b f1, f2, f3, f4, f5, esp;
 

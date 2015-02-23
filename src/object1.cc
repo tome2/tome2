@@ -2502,7 +2502,7 @@ cptr item_activation(object_type *o_ptr, byte num)
 }
 
 /* Grab the tval desc */
-bool_ grab_tval_desc(int tval)
+static bool_ grab_tval_desc(int tval)
 {
 	int tv = 0;
 
@@ -3841,7 +3841,7 @@ char index_to_label(int i)
  * Convert a label into the index of an item in the "inven"
  * Return "-1" if the label does not indicate a real item
  */
-s16b label_to_inven(int c)
+static s16b label_to_inven(int c)
 {
 	int i;
 
@@ -3863,7 +3863,7 @@ s16b label_to_inven(int c)
  * Convert a label into the index of a item in the "equip"
  * Return "-1" if the label does not indicate a real item
  */
-s16b label_to_equip(int c)
+static s16b label_to_equip(int c)
 {
 	int i;
 
@@ -4108,7 +4108,7 @@ s16b wield_slot(object_type *o_ptr)
 /*
  * Return a string mentioning how a given item is carried
  */
-cptr mention_use(int i)
+static cptr mention_use(int i)
 {
 	cptr p;
 
@@ -4974,61 +4974,46 @@ static int get_tag(int *cp, char tag)
  * scan_floor --
  *
  * Return a list of o_list[] indexes of items at the given cave
- * location. Valid flags are:
- *
- *            mode & 0x01 -- Item tester
- *            mode & 0x02 -- Marked items only
- *            mode & 0x04 -- Stop after first
+ * location.
  */
-bool_ scan_floor(int *items, int *item_num, int y, int x, int mode)
+static std::vector<int> scan_floor(int y, int x)
 {
 	int this_o_idx, next_o_idx;
-
-	int num = 0;
-
-	(*item_num) = 0;
+	std::vector<int> items;
 
 	/* Sanity */
-	if (!in_bounds(y, x)) return (FALSE);
+	if (!in_bounds(y, x))
+	{
+		return items;
+	}
 
 	/* Scan all objects in the grid */
 	for (this_o_idx = cave[y][x].o_idx; this_o_idx; this_o_idx = next_o_idx)
 	{
-		object_type * o_ptr;
-
 		/* Acquire object */
-		o_ptr = &o_list[this_o_idx];
+		object_type * o_ptr = &o_list[this_o_idx];
 
 		/* Acquire next object */
 		next_o_idx = o_ptr->next_o_idx;
 
 		/* Item tester */
-		if ((mode & 0x01) && !item_tester_okay(o_ptr)) continue;
-
-		/* Marked */
-		if ((mode & 0x02) && !o_ptr->marked) continue;
+		if (!item_tester_okay(o_ptr)) continue;
 
 		/* Accept this item */
-		items[num++] = this_o_idx;
-
-		/* Only one */
-		if (mode & 0x04) break;
+		items.push_back(this_o_idx);
 
 		/* XXX Hack -- Enforce limit */
-		if (num == 23) break;
+		if (items.size() == 23) break;
 	}
 
-	/* Number of items */
-	(*item_num) = num;
-
 	/* Result */
-	return (num != 0);
+	return items;
 }
 
 /*
  * Display a list of the items on the floor at the given location.
  */
-void show_floor(int y, int x)
+static void show_floor(int y, int x)
 {
 	int i, j, k, l;
 	int col, len, lim;
@@ -5043,8 +5028,6 @@ void show_floor(int y, int x)
 	byte out_color[23];
 	char out_desc[23][80];
 
-	int floor_list[23], floor_num;
-
 	/* Default length */
 	len = 79 - 50;
 
@@ -5055,7 +5038,9 @@ void show_floor(int y, int x)
 	lim -= 9;
 
 	/* Scan for objects in the grid, using item_tester_okay() */
-	(void) scan_floor(floor_list, &floor_num, y, x, 0x01);
+	auto const floor_list = scan_floor(y, x);
+	assert(floor_list.size() <= 23);
+	int const floor_num = floor_list.size(); // "int" for warning avoidance
 
 	/* Display the inventory */
 	for (k = 0, i = 0; i < floor_num; i++)
@@ -5131,7 +5116,7 @@ void show_floor(int y, int x)
  * the easy_floor is on.
  */
 bool_ (*get_item_extra_hook)(int *cp);
-bool_ get_item_floor(int *cp, cptr pmt, cptr str, int mode)
+static bool_ get_item_floor(int *cp, cptr pmt, cptr str, int mode)
 {
 	char n1 = 0, n2 = 0, which = ' ';
 
@@ -5156,7 +5141,7 @@ bool_ get_item_floor(int *cp, cptr pmt, cptr str, int mode)
 	char tmp_val[160];
 	char out_val[160];
 
-	int floor_num, floor_list[23], floor_top = 0;
+	int floor_top = 0;
 
 	k = 0;
 
@@ -5246,15 +5231,12 @@ bool_ get_item_floor(int *cp, cptr pmt, cptr str, int mode)
 	while ((e1 <= e2) && (!get_item_okay(e2))) e2--;
 
 
-	/* Count "okay" floor items */
-	floor_num = 0;
-
-	/* Restrict floor usage */
-	if (floor)
-	{
-		/* Scan all objects in the grid */
-		(void) scan_floor(floor_list, &floor_num, p_ptr->py, p_ptr->px, 0x01);
-	}
+	/* Floor items? */
+	auto const floor_list =
+		floor ? std::move(scan_floor(p_ptr->py, p_ptr->px))
+		      : std::vector<int>();
+	assert(floor_list.size() <= 23);
+	int const floor_num = floor_list.size(); // "int" for warning avoidance
 
 	/* Accept inventory */
 	if (i1 <= i2) allow_inven = TRUE;
@@ -5263,7 +5245,7 @@ bool_ get_item_floor(int *cp, cptr pmt, cptr str, int mode)
 	if (e1 <= e2) allow_equip = TRUE;
 
 	/* Accept floor */
-	if (floor_num) allow_floor = TRUE;
+	if (!floor_list.empty()) allow_floor = TRUE;
 
 	/* Require at least one legal choice */
 	if (!allow_inven && !allow_equip && !allow_floor)
@@ -6307,7 +6289,7 @@ void py_pickup_floor(int pickup)
 }
 
 /* Add a flags group */
-void gain_flag_group(object_type *o_ptr, bool_ silent)
+static void gain_flag_group(object_type *o_ptr, bool_ silent)
 {
 	int grp = 0;
 	int tries = 1000;
@@ -6402,7 +6384,7 @@ u32b get_flag(object_type *o_ptr, int grp, int k)
 }
 
 /* Add a flags from a flag group */
-void gain_flag_group_flag(object_type *o_ptr, bool_ silent)
+static void gain_flag_group_flag(object_type *o_ptr, bool_ silent)
 {
 	int grp = 0, k = 0;
 	u32b f = 0;

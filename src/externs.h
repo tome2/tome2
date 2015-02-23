@@ -549,8 +549,6 @@ extern errr process_dungeon_file(cptr name, int *yval, int *xval, int ymax, int 
 
 /* init2.c */
 extern void init_corruptions();
-extern void reinit_gods(s16b new_size);
-extern void reinit_quests(s16b new_size);
 extern void create_stores_stock(int t);
 extern errr init_v_info(void);
 extern void init_file_paths(char *path);
@@ -684,11 +682,8 @@ extern s32b calc_total_weight(void);
 extern void add_random_ego_flag(object_type *o_ptr, int fego, bool_ *limit_blows);
 extern bool_ info_spell;
 extern char spell_txt[50];
-extern bool_ grab_tval_desc(int tval);
 extern void init_match_theme(obj_theme theme);
 extern bool_ kind_is_artifactable(int k_idx);
-extern bool_ kind_is_good(int k_idx);
-extern int kind_is_legal_special;
 extern bool_ kind_is_legal(int k_idx);
 extern bool_ verify(cptr prompt, int item);
 extern void flavor_init(void);
@@ -701,11 +696,8 @@ extern void object_desc(char *buf, object_type *o_ptr, int pref, int mode);
 extern void object_desc_store(char *buf, object_type *o_ptr, int pref, int mode);
 extern bool_ object_out_desc(object_type *o_ptr, FILE *fff, bool_ trim_down, bool_ wait_for_it);
 extern char index_to_label(int i);
-extern s16b label_to_inven(int c);
-extern s16b label_to_equip(int c);
 extern s16b wield_slot_ideal(object_type *o_ptr, bool_ ideal);
 extern s16b wield_slot(object_type *o_ptr);
-extern cptr mention_use(int i);
 extern cptr describe_use(int i);
 extern void inven_item_charges(int item);
 extern void inven_item_describe(int item);
@@ -759,20 +751,14 @@ extern void pick_trap(int y, int x);
 extern cptr item_activation(object_type *o_ptr,byte num);
 extern void combine_pack(void);
 extern void reorder_pack(void);
-extern void display_koff(int k_idx);
 extern void random_artifact_resistance (object_type * o_ptr);
 extern void random_resistance (object_type * o_ptr, bool_ is_scroll, int specific);
 extern s16b floor_carry(int y, int x, object_type *j_ptr);
 extern void pack_decay(int item);
 extern void floor_decay(int item);
-extern bool_ scan_floor(int *items, int *item_num, int y, int x, int mode);
-extern void show_floor(int y, int x);
-extern bool_ get_item_floor(int *cp, cptr pmt, cptr str, int mode);
 extern void py_pickup_floor(int pickup);
 extern s16b m_bonus(int max, int level);
 extern void object_gain_level(object_type *o_ptr);
-extern void gain_flag_group_flag(object_type *o_ptr, bool_ silent);
-extern void gain_flag_group(object_type *o_ptr, bool_ silent);
 extern s32b flag_cost(object_type * o_ptr, int plusses);
 
 /* powers.c */

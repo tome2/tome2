@@ -4592,7 +4592,6 @@ bool_ kind_is_theme(int k_idx)
 /*
  * Determine if an object must not be generated.
  */
-int kind_is_legal_special = -1;
 bool_ kind_is_legal(int k_idx)
 {
 	object_kind *k_ptr = &k_info[k_idx];
@@ -4629,9 +4628,6 @@ bool_ kind_is_legal(int k_idx)
 	/* Used only for the Nazgul rings */
 	if ((k_ptr->tval == TV_RING) && (k_ptr->sval == SV_RING_SPECIAL)) return FALSE;
 
-	/* Are we forced to one tval ? */
-	if ((kind_is_legal_special != -1) && (kind_is_legal_special != k_ptr->tval)) return (FALSE);
-
 	/* Assume legal */
 	return TRUE;
 }
@@ -4640,7 +4636,7 @@ bool_ kind_is_legal(int k_idx)
 /*
  * Hack -- determine if a template is "good"
  */
-bool_ kind_is_good(int k_idx)
+static bool_ kind_is_good(int k_idx)
 {
 	object_kind *k_ptr = &k_info[k_idx];
 
@@ -6327,51 +6323,6 @@ void reorder_pack(void)
 
 	/* Message */
 	if (flag) msg_print("You reorder some items in your pack.");
-}
-
-/*
- * Hack -- display an object kind in the current window
- *
- * Include list of usable spells for readible books
- */
-void display_koff(int k_idx)
-{
-	int y;
-
-	object_type forge;
-	object_type *q_ptr;
-
-	char o_name[80];
-
-
-	/* Erase the window */
-	int hgt;
-	Term_get_size(nullptr, &hgt);
-	for (y = 0; y < hgt; y++)
-	{
-		/* Erase the line */
-		Term_erase(0, y, 255);
-	}
-
-	/* No info */
-	if (!k_idx) return;
-
-
-	/* Get local object */
-	q_ptr = &forge;
-
-	/* Prepare the object */
-	object_wipe(q_ptr);
-
-	/* Prepare the object */
-	object_prep(q_ptr, k_idx);
-
-
-	/* Describe */
-	object_desc_store(o_name, q_ptr, FALSE, 0);
-
-	/* Mention the object name */
-	Term_putstr(0, 0, -1, TERM_WHITE, o_name);
 }
 
 
