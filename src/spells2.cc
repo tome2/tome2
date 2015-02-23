@@ -6850,13 +6850,6 @@ bool_ sleep_monster(int dir)
 }
 
 
-bool_ stasis_monster(int dir)
-{
-	int flg = PROJECT_STOP | PROJECT_KILL;
-	return (project_hook(GF_STASIS, dir, p_ptr->lev, flg));
-}
-
-
 bool_ confuse_monster(int dir, int plev)
 {
 	int flg = PROJECT_STOP | PROJECT_KILL;
@@ -7551,15 +7544,6 @@ bool_ charm_demons(int dam)
 bool_ stun_monsters(int dam)
 {
 	return (project_hack(GF_STUN, dam));
-}
-
-
-/*
- * Stasis monsters
- */
-bool_ stasis_monsters(int dam)
-{
-	return (project_hack(GF_STASIS, dam));
 }
 
 
