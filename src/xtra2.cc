@@ -4417,7 +4417,7 @@ static int target_set_aux(int y, int x, int mode, cptr info)
 			/* Name trap */
 			if (t_info[c_ptr->t_idx].ident)
 			{
-				s4 = format("(%s)", t_name + t_info[c_ptr->t_idx].name);
+				s4 = format("(%s)", t_info[c_ptr->t_idx].name);
 			}
 			else
 			{

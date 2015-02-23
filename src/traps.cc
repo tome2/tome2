@@ -439,12 +439,9 @@ static bool_ player_handle_breath_trap(s16b rad, s16b type, u16b trap)
  */
 static void trap_hit(s16b trap)
 {
-	s16b dam;
 	trap_type *t_ptr = &t_info[trap];
-
-	dam = damroll(t_ptr->dd, t_ptr->ds);
-
-	take_hit(dam, t_name + t_ptr->name);
+	s16b dam = damroll(t_ptr->dd, t_ptr->ds);
+	take_hit(dam, t_ptr->name);
 }
 
 /*
@@ -1988,7 +1985,7 @@ void player_activate_door_trap(s16b y, s16b x)
 	{
 		t_info[c_ptr->t_idx].ident = TRUE;
 		msg_format("You identified that trap as %s.",
-		           t_name + t_info[c_ptr->t_idx].name);
+			   t_info[c_ptr->t_idx].name);
 	}
 }
 

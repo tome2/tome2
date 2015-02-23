@@ -635,10 +635,7 @@ randart_gen_type ra_gen[30];
 
 /* jk */
 /* the trap-arrays */
-header *t_head;
 trap_type *t_info;
-char *t_name;
-char *t_text;
 
 /*
  * The monster race arrays

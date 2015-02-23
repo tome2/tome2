@@ -657,7 +657,7 @@ static void hit_trap(void)
 		{
 			t_info[c_ptr->t_idx].ident = TRUE;
 			msg_format("You identified the trap as %s.",
-			           t_name + t_info[c_ptr->t_idx].name);
+				   t_info[c_ptr->t_idx].name);
 		}
 	}
 }

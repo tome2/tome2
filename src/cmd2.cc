@@ -716,7 +716,7 @@ static void chest_trap(int y, int x, s16b o_idx)
 	{
 		t_info[o_ptr->pval].ident = TRUE;
 		msg_format("You identified the trap as %s.",
-		           t_name + t_info[trap].name);
+			   t_info[trap].name);
 	}
 }
 
@@ -2017,9 +2017,13 @@ bool_ do_cmd_disarm_aux(int y, int x, int dir, int do_pickup)
 
 	/* Access trap name */
 	if (t_info[c_ptr->t_idx].ident)
-		name = (t_name + t_info[c_ptr->t_idx].name);
+	{
+		name = t_info[c_ptr->t_idx].name;
+	}
 	else
+	{
 		name = "unknown trap";
+	}
 
 	/* Get the "disarm" factor */
 	i = p_ptr->skill_dis;

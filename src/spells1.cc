@@ -7276,7 +7276,7 @@ static bool_ project_p(int who, int r, int y, int x, int dam, int typ, int a_rad
 	if (who == -2)
 	{
 		sprintf(killer, "%s",
-			t_name + t_info[cave[p_ptr->py][p_ptr->px].t_idx].name);
+			t_info[cave[p_ptr->py][p_ptr->px].t_idx].name);
 	}
 
 	/* Analyze the damage */

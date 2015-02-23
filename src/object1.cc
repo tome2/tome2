@@ -2002,9 +2002,13 @@ void object_desc(char *buf, object_type *o_ptr, int pref, int mode)
 			/* Describe the traps */
 			t = object_desc_str(t, " (");
 			if (t_info[o_ptr->pval].ident)
-				t = object_desc_str(t, t_name + t_info[o_ptr->pval].name);
+			{
+				t = object_desc_str(t, t_info[o_ptr->pval].name);
+			}
 			else
+			{
 				t = object_desc_str(t, "trapped");
+			}
 			t = object_desc_str(t, ")");
 		}
 	}

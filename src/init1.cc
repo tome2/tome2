@@ -8415,17 +8415,11 @@ errr init_t_info_txt(FILE *fp, char *buf)
 	/* Current entry */
 	trap_type *t_ptr = NULL;
 
-
 	/* Just before the first record */
 	error_idx = -1;
 
 	/* Just before the first line */
 	error_line = -1;
-
-
-	/* Prepare the "fake" stuff */
-	t_head->name_size = 0;
-	t_head->text_size = 0;
 
 	/* Parse */
 	fp_stack_init(fp);
@@ -8488,7 +8482,7 @@ errr init_t_info_txt(FILE *fp, char *buf)
 			if (i <= error_idx) return (4);
 
 			/* Verify information */
-			if (i >= t_head->info_num) return (2);
+			if (i >= max_t_idx) return (2);
 
 			/* Save the index */
 			error_idx = i;
@@ -8496,17 +8490,11 @@ errr init_t_info_txt(FILE *fp, char *buf)
 			/* Point at the "info" */
 			t_ptr = &t_info[i];
 
-			/* Hack -- Verify space */
-			if (t_head->name_size + strlen(s) + 8 > FAKE_NAME_SIZE) return (7);
+			/* Copy name */
+			t_ptr->name = my_strdup(s);
 
-			/* Advance and Save the name index */
-			if (!t_ptr->name) t_ptr->name = ++t_head->name_size;
-
-			/* Append chars to the name */
-			strcpy(t_name + t_head->name_size, s);
-
-			/* Advance the index */
-			t_head->name_size += strlen(s);
+			/* Initialize */
+			t_ptr->text = my_strdup("");
 
 			/* Next... */
 			continue;
@@ -8550,17 +8538,8 @@ errr init_t_info_txt(FILE *fp, char *buf)
 			/* Acquire the text */
 			s = buf + 2;
 
-			/* Hack -- Verify space */
-			if (t_head->text_size + strlen(s) + 8 > FAKE_TEXT_SIZE) return (7);
-
-			/* Advance and Save the text index */
-			if (!t_ptr->text) t_ptr->text = ++t_head->text_size;
-
 			/* Append chars to the name */
-			strcpy(t_text + t_head->text_size, s);
-
-			/* Advance the index */
-			t_head->text_size += strlen(s);
+			strappend(&t_ptr->text, s);
 
 			/* Next... */
 			continue;
@@ -8602,15 +8581,8 @@ errr init_t_info_txt(FILE *fp, char *buf)
 		return (6);
 	}
 
-
-	/* Complete the "name" and "text" sizes */
-	++t_head->name_size;
-	++t_head->text_size;
-
-
 	/* No version yet */
 	if (!okay) return (2);
-
 
 	/* Success */
 	return (0);

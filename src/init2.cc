@@ -1301,20 +1301,8 @@ static errr init_t_info(void)
 	/* General buffer */
 	char buf[1024];
 
-
-	/*** Make the header ***/
-	t_head = make_header(max_t_idx);
-
-
-	/*** Make the fake arrays ***/
-
 	/* Allocate the "t_info" array */
-	t_info = make_array<trap_type>(t_head->info_num);
-
-	/* Hack -- make "fake" arrays */
-	t_name = make_array<char>(FAKE_NAME_SIZE);
-	t_text = make_array<char>(FAKE_TEXT_SIZE);
-
+	t_info = make_array<trap_type>(max_t_idx);
 
 	/*** Load the ascii template file ***/
 

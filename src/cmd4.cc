@@ -3363,7 +3363,7 @@ void do_cmd_knowledge_traps(void)
 		if (!t_ptr->ident) continue;
 
 		/* Hack -- Build the trap name */
-		fprintf(fff, "     %s\n", t_name + t_ptr->name);
+		fprintf(fff, "     %s\n", t_ptr->name);
 	}
 
 	/* Close the file */
