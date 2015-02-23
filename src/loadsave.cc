@@ -1548,7 +1548,7 @@ static void do_monster(monster_type *m_ptr, int flag)
 	do_byte(&m_ptr->speed, flag);
 	do_byte(&m_ptr->level, flag);
 	do_s16b(&m_ptr->ac, flag);
-	do_u32b(&m_ptr->exp, flag);
+	do_s32b(&m_ptr->exp, flag);
 	do_s16b(&m_ptr->target, flag);
 
 	do_s16b(&m_ptr->bleeding, flag);

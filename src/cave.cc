@@ -2148,9 +2148,9 @@ void display_map(int *cy, int *cx)
 		// No priority.
 		mp.push_back(std::vector<byte>(wid + 2, 0));
 	}
-	assert(ma.size() == hgt + 2);
-	assert(mc.size() == hgt + 2);
-	assert(mp.size() == hgt + 2);
+	assert(static_cast<int>(ma.size()) == hgt + 2);
+	assert(static_cast<int>(mc.size()) == hgt + 2);
+	assert(static_cast<int>(mp.size()) == hgt + 2);
 
 	/* Calculate scaling factors */
 	yfactor = ((cur_hgt / hgt < 4) && (cur_hgt > hgt)) ? 10 : 1;

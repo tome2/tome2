@@ -3516,6 +3516,7 @@ int ask_menu(cptr ask, const std::vector<std::string> &items)
 {
 	int ret = -1, i, start = 0;
 	char c;
+	int size = items.size(); // Convert to int to avoid warnings
 
 	/* Enter "icky" mode */
 	character_icky = TRUE;
@@ -3529,7 +3530,7 @@ int ask_menu(cptr ask, const std::vector<std::string> &items)
 		Term_load();
 		Term_save();
 		prt(ask, 0, 0);
-		for (i = start; (i < items.size()) && (i < start + 20); i++)
+		for (i = start; (i < size) && (i < start + 20); i++)
 		{
 			prt(format("%c) %s", I2A(i - start), items[i].c_str()), i - start + 1, 0);
 		}
@@ -3543,7 +3544,7 @@ int ask_menu(cptr ask, const std::vector<std::string> &items)
 		/* Scroll */
 		else if (c == '+')
 		{
-			if (start + 20 < items.size())
+			if (start + 20 < size)
 				start += 20;
 			continue;
 		}
@@ -3560,7 +3561,7 @@ int ask_menu(cptr ask, const std::vector<std::string> &items)
 		else
 		{
 			c = tolower(c);
-			if (A2I(c) + start >= items.size())
+			if (A2I(c) + start >= size)
 			{
 				bell();
 				continue;

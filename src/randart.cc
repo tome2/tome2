@@ -28,20 +28,19 @@
  */
 static bool_ grab_one_power(int *ra_idx, object_type *o_ptr, bool_ good, s16b *max_times)
 {
-	int i = 0, j;
 	bool_ ret = FALSE;
 	u32b f1, f2, f3, f4, f5, esp;
 
-	std::vector<int> ok_ra;
+	std::vector<size_t> ok_ra;
 
 	/* Grab the ok randart */
-	for (i = 0; i < max_ra_idx; i++)
+	for (size_t i = 0; i < max_ra_idx; i++)
 	{
 		randart_part_type *ra_ptr = &ra_info[i];
 		bool_ ok = FALSE;
 
 		/* Must have the correct fields */
-		for (j = 0; j < 20; j++)
+		for (size_t j = 0; j < 20; j++)
 		{
 			if (ra_ptr->tval[j] == o_ptr->tval)
 			{
@@ -77,12 +76,10 @@ static bool_ grab_one_power(int *ra_idx, object_type *o_ptr, bool_ good, s16b *m
 	}
 
 	/* Now test them a few times */
-	for (i = 0; i < ok_ra.size() * 10; i++)
+	for (size_t count = 0; count < ok_ra.size() * 10; count++)
 	{
-		randart_part_type *ra_ptr;
-
-		i = ok_ra[rand_int(ok_ra.size())];
-		ra_ptr = &ra_info[i];
+		size_t i = ok_ra[rand_int(ok_ra.size())];
+		randart_part_type *ra_ptr = &ra_info[i];
 
 		/* XXX XXX Enforce minimum player level (loosely) */
 		if (ra_ptr->level > p_ptr->lev)

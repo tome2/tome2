@@ -431,7 +431,7 @@ std::shared_ptr<Condition> new_condition_interactive()
 		else if (c == '2')
 		{
 			sel++;
-			if (sel >= condition_types.size())
+			if (sel >= static_cast<int>(condition_types.size()))
 			{
 				sel = 0;
 				begin = 0;

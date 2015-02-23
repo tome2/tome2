@@ -752,13 +752,13 @@ void select_default_melee()
 static void print_skill_batch(const std::vector<std::tuple<cptr, int>> &p, int start)
 {
 	char buff[80];
-	int i = start, j = 0;
+	int j = 0;
 
 	prt(format("         %-31s", "Name"), 1, 20);
 
-	for (i = start; i < (start + 20); i++)
+	for (int i = start; i < (start + 20); i++)
 	{
-		if (i >= p.size())
+		if (static_cast<size_t>(i) >= p.size())
 		{
 			break;
 		}
@@ -777,7 +777,7 @@ static void print_skill_batch(const std::vector<std::tuple<cptr, int>> &p, int s
 static int do_cmd_activate_skill_aux()
 {
 	char which;
-	int i, start = 0;
+	int start = 0;
 	int ret;
 
 	std::vector<std::tuple<cptr,int>> p;
@@ -788,7 +788,7 @@ static int do_cmd_activate_skill_aux()
 		p.push_back(std::make_tuple("Change melee mode", 0));
 	}
 
-	for (i = 1; i < max_s_idx; i++)
+	for (size_t i = 1; i < max_s_idx; i++)
 	{
 		if (s_info[i].action_mkey && s_info[i].value && ((!s_info[i].hidden) || (i == SKILL_LEARN)))
 		{
@@ -810,7 +810,7 @@ static int do_cmd_activate_skill_aux()
 		}
 	}
 
-	for (i = 0; i < max_ab_idx; i++)
+	for (size_t i = 0; i < max_ab_idx; i++)
 	{
 		if (ab_info[i].action_mkey && ab_info[i].acquired)
 		{
@@ -854,14 +854,20 @@ static int do_cmd_activate_skill_aux()
 		else if (which == '+')
 		{
 			start += 20;
-			if (start >= p.size()) start -= 20;
+			if (static_cast<size_t>(start) >= p.size())
+			{
+				start -= 20;
+			}
 			Term_load();
 			character_icky = FALSE;
 		}
 		else if (which == '-')
 		{
 			start -= 20;
-			if (start < 0) start += 20;
+			if (start < 0)
+			{
+				start += 20;
+			}
 			Term_load();
 			character_icky = FALSE;
 		}
@@ -874,22 +880,23 @@ static int do_cmd_activate_skill_aux()
 				return FALSE;
 
 			/* Find the skill it is related to */
-			for (i = 0; i < p.size(); i++)
+			size_t i = 0;
+			for (; i < p.size(); i++)
 			{
 				if (!strcmp(buf, std::get<0>(p[i])))
 					break;
 			}
-			if ((i < p.size()))
+
+			if (i < p.size())
 			{
 				ret = std::get<1>(p[i]);
 				break;
 			}
-
 		}
 		else
 		{
 			which = tolower(which);
-			if (start + A2I(which) >= p.size())
+			if (start + A2I(which) >= static_cast<int>(p.size()))
 			{
 				bell();
 				continue;
@@ -1593,7 +1600,8 @@ static void print_abilities(const std::vector<int> &table, int sel, int start)
 		byte color = TERM_WHITE;
 		char deb = ' ', end = ' ';
 
-		if (j >= table.size())
+		assert(j >= 0);
+		if (static_cast<size_t>(j) >= table.size())
 		{
 			break;
 		}
@@ -1679,7 +1687,8 @@ void do_cmd_ability()
 		else if (c == 'n')
 		{
 			sel += (hgt - 7);
-			if (sel >= table.size())
+			assert(sel >= 0);
+			if (static_cast<size_t>(sel) >= table.size())
 			{
 				sel = table.size() - 1;
 			}
@@ -1721,10 +1730,22 @@ void do_cmd_ability()
 			}
 
 			/* Handle boundaries and scrolling */
-			if (sel < 0) sel = table.size() - 1;
-			if (sel >= table.size()) sel = 0;
-			if (sel < start) start = sel;
-			if (sel >= start + (hgt - 7)) start = sel - (hgt - 7) + 1;
+			if (sel < 0)
+			{
+				sel = table.size() - 1;
+			}
+			if (static_cast<size_t>(sel) >= table.size())
+			{
+				sel = 0;
+			}
+			if (sel < start)
+			{
+				start = sel;
+			}
+			if (sel >= start + (hgt - 7))
+			{
+				start = sel - (hgt - 7) + 1;
+			}
 		}
 	}
 

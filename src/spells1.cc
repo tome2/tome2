@@ -8956,6 +8956,10 @@ bool_ potion_smash_effect(int who, int y, int x, int o_sval)
 	(void) project(who, radius, y, x, dam, dt,
 	               (PROJECT_JUMP | PROJECT_ITEM | PROJECT_KILL));
 
+	// Silence warning. We may want to introuce an actual implementation
+	// and I want to preserve the original "ident" values if we do so.
+	(void) ident;
+
 	/* XXX	those potions that explode need to become "known" */
 	return angry;
 }

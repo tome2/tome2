@@ -377,9 +377,9 @@ static bool_ dleft(byte c, cptr str, int y, int o)
 
 static bool_ dright(byte c, cptr str, int y, int o)
 {
-	int x = 39 - (strlen(str) / 2) + o;
-	int i = 1;
-	while (i <= strlen(str))
+	int n = strlen(str); // Conversion to int to avoid warnings
+	int x = 39 - (n / 2) + o;
+	for (int i = 1; i <= n; i++)
 	{
 		int a = 79;
 		int time = 0;
@@ -402,8 +402,6 @@ static bool_ dright(byte c, cptr str, int y, int o)
 				}
 			}
 		}
-
-		i = i + 1;
 	}
 	return FALSE;
 }

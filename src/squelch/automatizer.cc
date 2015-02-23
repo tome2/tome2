@@ -231,9 +231,11 @@ void Automatizer::select_rule(int selected_rule)
 
 	// Adjust selection to conform to bounds.
 	{
+		int rules_size = m_rules.size(); // Convert to int to avoid warnings
+
 		if (m_selected_rule < 0)
 		{
-			m_selected_rule = m_rules.size() - 1;
+			m_selected_rule = rules_size - 1;
 			m_begin = m_selected_rule - hgt + 3;
 			if (m_begin < 0)
 			{
@@ -246,7 +248,7 @@ void Automatizer::select_rule(int selected_rule)
 			m_begin = m_selected_rule;
 		}
 
-		if (m_selected_rule >= m_rules.size())
+		if (m_selected_rule >= rules_size)
 		{
 			m_selected_rule = 0;
 			m_begin = 0;

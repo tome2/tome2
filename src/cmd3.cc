@@ -15,6 +15,7 @@
 #include "quark.h"
 #include "hooks.h"
 
+#include <cassert>
 #include <algorithm>
 #include <memory>
 #include <utility>
@@ -1606,7 +1607,9 @@ void do_cmd_query_symbol(void)
 		/* Move to "prev" monster */
 		if (query == '-')
 		{
-			if (++i == who.size())
+			i++;
+			assert(i >= 0);
+			if (static_cast<size_t>(i) == who.size())
 			{
 				i = 0;
 				if (!expand_list) break;
@@ -1800,7 +1803,9 @@ bool_ research_mon()
 		/* Move to "prev" monster */
 		if (query == '-')
 		{
-			if (++i == who.size())
+			i++;
+			assert(i >= 0);
+			if (static_cast<size_t>(i) == who.size())
 			{
 				i = 0;
 				if (!expand_list) break;

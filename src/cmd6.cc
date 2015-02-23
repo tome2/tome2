@@ -3890,7 +3890,7 @@ void do_cmd_aim_wand(void)
 {
 	bool_ obvious, use_charge;
 
-	int item, ident;
+	int item;
 
 	object_type *o_ptr;
 
@@ -3931,9 +3931,6 @@ void do_cmd_aim_wand(void)
 
 	/* Take a turn */
 	energy_use = 100;
-
-	/* Not identified yet */
-	ident = FALSE;
 
 	/* Enter device mode  */
 	set_stick_mode(o_ptr);

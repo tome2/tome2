@@ -30,6 +30,7 @@
 #include <SDL_image.h>
 #include <SDL_ttf.h>
 
+#include <assert.h>
 #include <math.h>
 
 /*************************************************
@@ -1099,7 +1100,8 @@ static errr Term_text_sdl(int x, int y, int n, byte a, const char *cp)
 			SDL_BlitSurface(worksurf,NULL,td->surf,&base);
 		} else {
 			/* copy the desired character onto working surface */
-			SDL_BlitSurface(text[*cp],NULL,worksurf,NULL);
+			assert(*cp >= 0); // Make sure cast is valid
+			SDL_BlitSurface(text[(size_t)(*cp)],NULL,worksurf,NULL);
 			/* color our crayon surface with the desired color */
 			SDL_FillRect(crayon,NULL,color_data[a&0x0f]);
 			/* apply the color to the character on the working surface */

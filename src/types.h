@@ -840,7 +840,7 @@ struct monster_type
 	byte speed;                     /* Speed (normally 110) */
 	byte level;                     /* Level of creature */
 	s16b ac;                        /* Armour Class */
-	u32b exp;                       /* Experience */
+	s32b exp;                       /* Experience */
 
 	s16b csleep;		/* Inactive counter */
 

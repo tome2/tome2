@@ -2379,16 +2379,15 @@ static bool_ make_artifact(object_type *o_ptr)
  */
 static bool_ make_ego_item(object_type *o_ptr, bool_ good)
 {
-	int i = 0, j;
 	bool_ ret = FALSE;
 	object_kind *k_ptr = &k_info[o_ptr->k_idx];
 
 	if (artifact_p(o_ptr) || o_ptr->name2) return (FALSE);
 
-	std::vector<int> ok_ego;
+	std::vector<size_t> ok_ego;
 
 	/* Grab the ok ego */
-	for (i = 0; i < max_e_idx; i++)
+	for (size_t i = 0; i < max_e_idx; i++)
 	{
 		ego_item_type *e_ptr = &e_info[i];
 		bool_ ok = FALSE;
@@ -2397,7 +2396,7 @@ static bool_ make_ego_item(object_type *o_ptr, bool_ good)
 		if (!e_ptr->name) continue;
 
 		/* Must have the correct fields */
-		for (j = 0; j < 6; j++)
+		for (size_t j = 0; j < 6; j++)
 		{
 			if (e_ptr->tval[j] == o_ptr->tval)
 			{
@@ -2437,12 +2436,10 @@ static bool_ make_ego_item(object_type *o_ptr, bool_ good)
 	}
 
 	/* Now test them a few times */
-	for (i = 0; i < ok_ego.size() * 10; i++)
+	for (size_t i = 0; i < ok_ego.size() * 10; i++)
 	{
-		ego_item_type *e_ptr;
-
-		int j = ok_ego[rand_int(ok_ego.size())];
-		e_ptr = &e_info[j];
+		size_t j = ok_ego[rand_int(ok_ego.size())];
+		ego_item_type *e_ptr = &e_info[j];
 
 		/* XXX XXX Enforce minimum "depth" (loosely) */
 		if (e_ptr->level > dun_level)
@@ -2478,12 +2475,10 @@ static bool_ make_ego_item(object_type *o_ptr, bool_ good)
 	if (magik(7 + luck( -7, 7)) && (!o_ptr->name2b))
 	{
 		/* Now test them a few times */
-		for (i = 0; i < ok_ego.size() * 10; i++)
+		for (size_t i = 0; i < ok_ego.size() * 10; i++)
 		{
-			ego_item_type *e_ptr;
-
-			int j = ok_ego[rand_int(ok_ego.size())];
-			e_ptr = &e_info[j];
+			int j = ok_ego[rand_int(ok_ego.size())]; // Explicit int conversion to avoid warning
+			ego_item_type *e_ptr = &e_info[j];
 
 			/* Cannot be a double ego of the same ego type */
 			if (j == o_ptr->name2) continue;

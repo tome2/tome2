@@ -16,6 +16,7 @@
 
 #include <cassert>
 #include <chrono>
+#include <sstream>
 #include <thread>
 #include <vector>
 
@@ -5331,7 +5332,12 @@ void do_probe(int m_idx)
 			sprintf(t_name, "nothing");
 		msg_format("%^s target is %s.", m_name, t_name);
 
-		msg_format("%^s has %ld exp and needs %d.", m_name, m_ptr->exp, (int) monster_exp(m_ptr->level + 1));
+		{
+			std::ostringstream buf;
+			buf << " has " << m_ptr->exp
+			    << " exp and needs " << monster_exp(m_ptr->level + 1) << ".";
+			msg_format("%^s%s", m_name, buf.str().c_str());
+		}
 	}
 
 	/* Learn all of the non-spell, non-treasure flags */
@@ -7840,10 +7846,9 @@ static void print_dungeon_batch(std::vector<int> const &dungeon_idxs,
 	int i, j;
 	byte attr;
 
-
 	if (mode) prt(format("     %-31s", "Name"), 1, 20);
 
-	for (i = 0, j = start; i < 20 && j < dungeon_idxs.size(); i++, j++)
+	for (i = 0, j = start; i < 20 && j < static_cast<int>(dungeon_idxs.size()); i++, j++)
 	{
 		dungeon_info_type *d_ptr = &d_info[dungeon_idxs[j]];
 
@@ -7869,13 +7874,13 @@ static void print_dungeon_batch(std::vector<int> const &dungeon_idxs,
 int reset_recall_aux()
 {
 	char which;
-	int i, start = 0;
+	int start = 0;
 	int ret;
 	bool_ mode = FALSE;
 
 	// Dungeons available for recall
 	std::vector<int> dungeons;
-	for (i = 1; i < max_d_idx; i++)
+	for (size_t i = 1; i < max_d_idx; i++)
 	{
 		/* skip "blocked" dungeons */
 		if (d_info[i].flags1 & DF1_NO_RECALL) continue;
@@ -7910,7 +7915,11 @@ int reset_recall_aux()
 		else if (which == '+')
 		{
 			start += 20;
-			if (start >= dungeons.size()) start -= 20;
+			assert(start > 0);
+			if (static_cast<size_t>(start) >= dungeons.size())
+			{
+				start -= 20;
+			}
 			Term_load();
 			character_icky = FALSE;
 		}
@@ -7918,7 +7927,10 @@ int reset_recall_aux()
 		else if (which == '-')
 		{
 			start -= 20;
-			if (start < 0) start += 20;
+			if (start < 0)
+			{
+				start += 20;
+			}
 			Term_load();
 			character_icky = FALSE;
 		}
@@ -7931,6 +7943,7 @@ int reset_recall_aux()
 			if (!get_string("Which dungeon? ", buf, 79)) continue;
 
 			/* Find the index corresponding to the name */
+			int i;
 			for (i = 1; i < max_d_idx; i++)
 			{
 				sprintf(buf2, "%s", d_info[i].name + d_name);
@@ -7970,18 +7983,23 @@ int reset_recall_aux()
 		else
 		{
 			which = tolower(which);
-			if (start + A2I(which) >= dungeons.size())
+			int i = start + A2I(which);
+
+			if (i < 0)
 			{
 				bell();
 				continue;
 			}
-			if (start + A2I(which) < 0)
+			else if (static_cast<size_t>(i) >= dungeons.size()) // Cast to avoid compilation warning
 			{
 				bell();
 				continue;
 			}
-			ret = dungeons[start + A2I(which)];
-			break;
+			else
+			{
+				ret = dungeons[i];
+				break;
+			}
 		}
 	}
 

@@ -1312,8 +1312,6 @@ static void spoil_artifact(cptr fname)
  */
 static void spoil_mon_desc(cptr fname)
 {
-	int i = 0;
-
 	char buf[1024];
 
 	char nam[80];
@@ -1356,7 +1354,7 @@ static void spoil_mon_desc(cptr fname)
 
 
 	/* Scan the monsters */
-	for (i = 1; i < max_r_idx; i++)
+	for (size_t i = 1; i < max_r_idx; i++)
 	{
 		monster_race *r_ptr = &r_info[i];
 
@@ -1368,9 +1366,9 @@ static void spoil_mon_desc(cptr fname)
 
 
 	/* Scan again */
-	for (i = 0; i < who.size(); i++)
+	for (auto const who_i : who)
 	{
-		monster_race *r_ptr = &r_info[who[i]];
+		monster_race *r_ptr = &r_info[who_i];
 
 		cptr name = (r_name + r_ptr->name);
 
