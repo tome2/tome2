@@ -679,10 +679,7 @@ meta_class_type *meta_class_info;
 /*
  * The wilderness features arrays
  */
-header *wf_head;
 wilderness_type_info *wf_info;
-char *wf_name;
-char *wf_text;
 int wildc2i[256];
 
 /*

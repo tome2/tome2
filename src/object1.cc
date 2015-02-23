@@ -2777,11 +2777,11 @@ static cptr object_out_desc_where_found(s16b level, s16b dungeon)
 		}
 		else if (wf_info[level].terrain_idx == TERRAIN_TOWN)
 		{
-			sprintf(str, "in the town of %s", wf_info[level].name + wf_name);
+			sprintf(str, "in the town of %s", wf_info[level].name);
 		}
 		else
 		{
-			sprintf(str, "in %s", wf_info[level].text + wf_text);
+			sprintf(str, "in %s", wf_info[level].text);
 		}
 	}
 	else

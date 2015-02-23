@@ -10020,17 +10020,11 @@ errr init_wf_info_txt(FILE *fp, char *buf)
 	/* Current entry */
 	wilderness_type_info *wf_ptr = NULL;
 
-
 	/* Just before the first record */
 	error_idx = -1;
 
 	/* Just before the first line */
 	error_line = -1;
-
-
-	/* Start the "fake" stuff */
-	wf_head->name_size = 0;
-	wf_head->text_size = 0;
 
 	/* Parse */
 	fp_stack_init(fp);
@@ -10093,7 +10087,7 @@ errr init_wf_info_txt(FILE *fp, char *buf)
 			if (i < error_idx) return (4);
 
 			/* Verify information */
-			if (i >= wf_head->info_num) return (2);
+			if (i >= max_wf_idx) return (2);
 
 			/* Save the index */
 			error_idx = i;
@@ -10101,17 +10095,9 @@ errr init_wf_info_txt(FILE *fp, char *buf)
 			/* Point at the "info" */
 			wf_ptr = &wf_info[i];
 
-			/* Hack -- Verify space */
-			if (wf_head->name_size + strlen(s) + 8 > FAKE_NAME_SIZE) return (7);
-
-			/* Advance and Save the name index */
-			if (!wf_ptr->name) wf_ptr->name = ++wf_head->name_size;
-
-			/* Append chars to the name */
-			strcpy(wf_name + wf_head->name_size, s);
-
-			/* Advance the index */
-			wf_head->name_size += strlen(s);
+			/* Copy the name */
+			assert(!wf_ptr->name);
+			wf_ptr->name = my_strdup(s);
 
 			/* Next... */
 			continue;
@@ -10120,23 +10106,15 @@ errr init_wf_info_txt(FILE *fp, char *buf)
 		/* There better be a current wf_ptr */
 		if (!wf_ptr) return (3);
 
-		/* Process 'D' for "Description */
+		/* Process 'D' for "Description (one line only) */
 		if (buf[0] == 'D')
 		{
 			/* Acquire the text */
 			s = buf + 2;
 
-			/* Hack -- Verify space */
-			if (wf_head->text_size + strlen(s) + 8 > FAKE_TEXT_SIZE) return (7);
-
-			/* Advance and Save the text index */
-			if (!wf_ptr->text) wf_ptr->text = ++wf_head->text_size;
-
-			/* Append chars to the name */
-			strcpy(wf_text + wf_head->text_size, s);
-
-			/* Advance the index */
-			wf_head->text_size += strlen(s);
+			/* Copy description */
+			assert(!wf_ptr->text);
+			wf_ptr->text = my_strdup(s);
 
 			/* Next... */
 			continue;
@@ -10221,11 +10199,6 @@ errr init_wf_info_txt(FILE *fp, char *buf)
 		/* Oops */
 		return (6);
 	}
-
-
-	/* Complete the "name" and "text" sizes */
-	++wf_head->name_size;
-	++wf_head->text_size;
 
 	/* No version yet */
 	if (!okay) return (2);

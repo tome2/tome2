@@ -1220,20 +1220,8 @@ static errr init_wf_info(void)
 	/* General buffer */
 	char buf[1024];
 
-
-	/*** Make the header ***/
-	wf_head = make_header(max_wf_idx);
-
-
-	/*** Make the fake arrays ***/
-
-	/* Allocate the "r_info" array */
-	wf_info = make_array<wilderness_type_info>(wf_head->info_num);
-
-	/* Hack -- make "fake" arrays */
-	wf_name = make_array<char>(FAKE_NAME_SIZE);
-	wf_text = make_array<char>(FAKE_TEXT_SIZE);
-
+	/* Allocate the "wf_info" array */
+	wf_info = make_array<wilderness_type_info>(max_wf_idx);
 
 	/*** Load the ascii template file ***/
 

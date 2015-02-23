@@ -2293,11 +2293,11 @@ cptr describe_player_location()
 	}
 	else if (wf_info[feat].terrain_idx == TERRAIN_TOWN)
 	{
-		sprintf(desc, "in the town of %s", wf_info[feat].name + wf_name);
+		sprintf(desc, "in the town of %s", wf_info[feat].name);
 	}
 	else if (wf_info[feat].entrance)
 	{
-		sprintf(desc, "near %s", wf_info[feat].name + wf_name);
+		sprintf(desc, "near %s", wf_info[feat].name);
 	}
 	else
 	{
@@ -2335,10 +2335,14 @@ cptr describe_player_location()
 		}
 
 		if (!landmark)
-			sprintf(desc, "in %s", wf_info[feat].text + wf_text);
+		{
+			sprintf(desc, "in %s", wf_info[feat].text);
+		}
 		else if (pwx == lwx && pwy == lwy)
+		{
 			/* Paranoia; this should have been caught above */
-			sprintf(desc, "near %s", wf_info[feat].name + wf_name);
+			sprintf(desc, "near %s", wf_info[feat].name);
+		}
 		else
 		{
 			/*
@@ -2360,8 +2364,10 @@ cptr describe_player_location()
 			if (dx * 81 < dy * 31) ew = "";
 
 			sprintf(desc, "in %s %s%s of %s",
-			        wf_info[feat].text + wf_text, ns, ew,
-			        wf_info[landmark].name + wf_name);
+				wf_info[feat].text,
+				ns,
+				ew,
+				wf_info[landmark].name);
 		}
 	}
 
@@ -2469,7 +2475,7 @@ void file_character_print_store(FILE *fff, wilderness_type_info *place, int stor
 	if (st_ptr->stock_num)
 	{
 		/* Header with name of the town */
-		fprintf(fff, "  [%s Inventory - %s]\n\n", st_name + st_info[store].name, wf_name + place->name);
+		fprintf(fff, "  [%s Inventory - %s]\n\n", st_name + st_info[store].name, place->name);
 
 		/* Dump all available items */
 		for (i = 0; i < st_ptr->stock_num; i++)

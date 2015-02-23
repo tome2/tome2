@@ -1805,8 +1805,9 @@ typedef struct wilderness_type_info wilderness_type_info;
 
 struct wilderness_type_info
 {
-	u32b    name;                   /* Name (offset) */
-	u32b    text;                   /* Text (offset) */
+	const char *name;               /* Name */
+	const char *text;               /* Text */
+
 	u16b    entrance;               /* Which town is there(<1000 i's a town, >=1000 it a dungeon) */
 	s32b	wild_x;			/* Map coordinates (backed out while parsing map) */
 	s32b	wild_y;

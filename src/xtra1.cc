@@ -515,10 +515,14 @@ static void prt_depth(int row, int col)
 	}
 	else if (!dun_level)
 	{
-		if (wf_info[wild_map[p_ptr->wilderness_y][p_ptr->wilderness_x].feat].name + wf_name)
-			strcpy(depths, wf_info[wild_map[p_ptr->wilderness_y][p_ptr->wilderness_x].feat].name + wf_name);
+		if (wf_info[wild_map[p_ptr->wilderness_y][p_ptr->wilderness_x].feat].name)
+		{
+			strcpy(depths, wf_info[wild_map[p_ptr->wilderness_y][p_ptr->wilderness_x].feat].name);
+		}
 		else
+		{
 			strcpy(depths, "Town/Wild");
+		}
 	}
 	else
 	{

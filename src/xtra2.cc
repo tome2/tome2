@@ -4501,8 +4501,8 @@ static int target_set_aux(int y, int x, int mode, cptr info)
 			{
 				s3 = "";
 				name = format("%s(%s)",
-				              wf_name + wf_info[wild_map[y][x].feat].name,
-				              wf_text + wf_info[wild_map[y][x].feat].text);
+					      wf_info[wild_map[y][x].feat].name,
+					      wf_info[wild_map[y][x].feat].text);
 			}
 
 			if ((feat == FEAT_FOUNTAIN) && (c_ptr->info & CAVE_IDNT))
