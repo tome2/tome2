@@ -7,6 +7,7 @@
 #include <boost/algorithm/string/predicate.hpp>
 
 using boost::algorithm::iequals;
+using boost::algorithm::ends_with;
 
 
 /*
@@ -5111,26 +5112,18 @@ errr init_a_info_txt(FILE *fp, char *buf)
 			/* Verify information */
 			if (i < error_idx) return (4);
 
-			/* Verify information */
-			if (i >= a_head->info_num) return (2);
-
 			/* Save the index */
 			error_idx = i;
 
 			/* Point at the "info" */
 			a_ptr = &a_info[i];
 
-			/* Hack -- Verify space */
-			if (a_head->name_size + strlen(s) + 8 > FAKE_NAME_SIZE) return (7);
+			/* Copy name */
+			assert(!a_ptr->name);
+			a_ptr->name = my_strdup(s);
 
-			/* Advance and Save the name index */
-			if (!a_ptr->name) a_ptr->name = ++a_head->name_size;
-
-			/* Append chars to the name */
-			strcpy(a_name + a_head->name_size, s);
-
-			/* Advance the index */
-			a_head->name_size += strlen(s);
+			/* Ensure empty description */
+			a_ptr->text = my_strdup("");
 
 			/* Ignore everything */
 			a_ptr->flags3 |= (TR3_IGNORE_ACID);
@@ -5162,27 +5155,13 @@ errr init_a_info_txt(FILE *fp, char *buf)
 			/* Acquire the text */
 			s = buf + 2;
 
-			/* Hack -- Verify space */
-			if (a_head->text_size + strlen(s) + 8 > FAKE_TEXT_SIZE) return (7);
-
-			/* Advance and Save the text index */
-			if (!a_ptr->text) a_ptr->text = ++a_head->text_size;
-
-			/* Append a space at the end of the line, if needed */
-			else if (a_text[a_head->text_size - 1] != ' ')
-			{
-				/* Append the space */
-				strcpy(a_text + a_head->text_size, " ");
-
-				/* Advance the index */
-				a_head->text_size += 1;
+			/* Add separator if necessary */
+			if (*a_ptr->text != '\0' && !ends_with(a_ptr->text, " ")) {
+				strappend(&a_ptr->text, " ");
 			}
 
-			/* Append chars to the name */
-			strcpy(a_text + a_head->text_size, s);
-
-			/* Advance the index */
-			a_head->text_size += strlen(s);
+			/* Append to description */
+			strappend(&a_ptr->text, s);
 
 			/* Next... */
 			continue;
@@ -5345,11 +5324,6 @@ errr init_a_info_txt(FILE *fp, char *buf)
 		/* Oops */
 		return (6);
 	}
-
-
-	/* Complete the "name" and "text" sizes */
-	++a_head->name_size;
-	++a_head->text_size;
 
 
 	/* No version yet */

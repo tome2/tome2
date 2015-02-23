@@ -213,8 +213,8 @@ typedef struct artifact_type artifact_type;
 
 struct artifact_type
 {
-	u32b name;			/* Name (offset) */
-	u32b text;			/* Text (offset) */
+	char const *name;		/* Artifact name */
+	char *text;			/* Artifact description */
 
 	byte tval;			/* Artifact type */
 	byte sval;			/* Artifact sub type */

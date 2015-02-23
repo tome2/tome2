@@ -484,20 +484,8 @@ static errr init_a_info(void)
 	/* General buffer */
 	char buf[1024];
 
-
-	/*** Make the "header" ***/
-	a_head = make_header(max_a_idx);
-
-
-	/*** Make the fake arrays ***/
-
 	/* Allocate the "a_info" array */
-	a_info = make_array<artifact_type>(a_head->info_num);
-
-	/* Hack -- make "fake" arrays */
-	a_name = make_array<char>(FAKE_NAME_SIZE);
-	a_text = make_array<char>(FAKE_TEXT_SIZE);
-
+	a_info = make_array<artifact_type>(max_a_idx);
 
 	/*** Load the ascii template file ***/
 

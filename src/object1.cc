@@ -1909,7 +1909,7 @@ void object_desc(char *buf, object_type *o_ptr, int pref, int mode)
 			if (o_ptr->tval != TV_CORPSE)
 			{
 				t = object_desc_chr(t, ' ');
-				t = object_desc_str(t, (a_name + a_ptr->name));
+				t = object_desc_str(t, a_ptr->name);
 			}
 		}
 
@@ -2844,7 +2844,7 @@ bool_ object_out_desc(object_type *o_ptr, FILE *fff, bool_ trim_down, bool_ wait
 		{
 			artifact_type *a_ptr = &a_info[o_ptr->name1];
 
-			text_out_c(TERM_YELLOW, a_text + a_ptr->text);
+			text_out_c(TERM_YELLOW, a_ptr->text);
 			text_out("\n");
 
 			if (a_ptr->set != -1)
