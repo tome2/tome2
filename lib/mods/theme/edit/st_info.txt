@@ -1,13 +1,5 @@
 # File: st_info.txt
 
-# Fixed Potions of Cure Light/Serious Wounds in the Temple, Potions of 
-# Restore Str/Con in the Alchemist
-# Magic Shop - Amulet of Slow Digestion, Wand of Light, Staffs of Enlightenment,
-# Door/Stair Location, Detect Invis/Evil, and Remove Curse
-
-# This file is used to initialize the "lib/raw/st_info.raw" file, which is
-# used to initialize the "store info type" information for the Angband game.
-
 # Do not modify this file unless you know exactly what you are doing,
 # unless you wish to risk possible system crashes and broken savefiles.
 
