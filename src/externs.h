@@ -1579,11 +1579,6 @@ extern bool_ repeat_pull(int *what);
 extern void repeat_check(void);
 extern void get_count(int number, int max);
 
-/* variable.c */
-extern bool_ easy_open;
-extern bool_ easy_tunnel;
-extern bool_ easy_disarm;
-
 /* cmd2.c */
 extern bool_ easy_open_door(int y, int x);
 

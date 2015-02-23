@@ -1105,8 +1105,7 @@ void do_cmd_open(void)
 		return;
 	}
 
-	/* Option: Pick a direction */
-	if (easy_open)
+	/* Pick a direction if there's an obvious target */
 	{
 		int num_doors, num_chests;
 
@@ -1272,8 +1271,7 @@ void do_cmd_close(void)
 	bool_ more = FALSE;
 
 
-	/* Option: Pick a direction */
-	if (easy_open)
+	/* Pick a direction if there's an obvious choice */
 	{
 		int num_doors;
 
@@ -2122,8 +2120,7 @@ void do_cmd_disarm(void)
 	bool_ more = FALSE;
 
 
-	/* Option: Pick a direction */
-	if (easy_disarm)
+	/* Pick a direction if there's an obvious choice */
 	{
 		int num_traps, num_chests;
 

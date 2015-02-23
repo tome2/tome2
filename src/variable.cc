@@ -842,11 +842,9 @@ bool_ (*get_mon_num2_hook)(int r_idx);
  */
 bool_ (*get_obj_num_hook)(int k_idx);
 
-
-bool_ easy_open = TRUE;
-bool_ easy_disarm = TRUE;
-bool_ easy_tunnel = FALSE;
-
+/*
+ * Devices
+ */
 s32b get_level_max_stick = -1;
 s32b get_level_use_stick = -1;
 

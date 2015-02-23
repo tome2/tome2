@@ -3188,13 +3188,6 @@ void move_player_aux(int dir, int do_pickup, int run, bool_ disarm)
 		oktomove = FALSE;
 	}
 
-	/* Disarm a visible trap */
-	else if (easy_disarm && disarm && (c_ptr->info & (CAVE_TRDT)))
-	{
-		(void)do_cmd_disarm_aux(y, x, tmp, do_pickup);
-		return;
-	}
-
 	/* Don't step on known traps. */
 	else if (disarm && (c_ptr->info & (CAVE_TRDT)) && !(p_ptr->confused || p_ptr->stun || p_ptr->image))
 	{
@@ -3256,61 +3249,35 @@ void move_player_aux(int dir, int do_pickup, int run, bool_ disarm)
 			/* Rubble */
 			if (c_ptr->feat == FEAT_RUBBLE)
 			{
-				if (!easy_tunnel)
-				{
-					msg_print("There is rubble blocking your way.");
+				msg_print("There is rubble blocking your way.");
 
-					if (!(p_ptr->confused || p_ptr->stun || p_ptr->image))
-						energy_use = 0;
-					/*
-					 * Well, it makes sense that you lose time bumping into
-					 * a wall _if_ you are confused, stunned or blind; but
-					 * typing mistakes should not cost you a turn...
-					 */
-				}
-				else
-				{
-					do_cmd_tunnel_aux(y, x, dir);
-					return;
-				}
+				if (!(p_ptr->confused || p_ptr->stun || p_ptr->image))
+					energy_use = 0;
+				/*
+				 * Well, it makes sense that you lose time bumping into
+				 * a wall _if_ you are confused, stunned or blind; but
+				 * typing mistakes should not cost you a turn...
+				 */
 			}
 			/* Closed doors */
 			else if ((c_ptr->feat >= FEAT_DOOR_HEAD) && (c_ptr->feat <= FEAT_DOOR_TAIL))
 			{
-				if (easy_open)
-				{
-					if (easy_open_door(y, x)) return;
-				}
-				else
-				{
-					msg_print("There is a closed door blocking your way.");
-
-					if (!(p_ptr->confused || p_ptr->stun || p_ptr->image))
-						energy_use = 0;
-				}
+				if (easy_open_door(y, x)) return;
 			}
 
 			/* Wall (or secret door) */
 			else
 			{
-				if (!easy_tunnel)
-				{
-					int feat;
+				int feat;
 
-					if (c_ptr->mimic) feat = c_ptr->mimic;
-					else
-						feat = f_info[c_ptr->feat].mimic;
-
-					msg_format("There is %s.", f_info[feat].block);
-
-					if (!(p_ptr->confused || p_ptr->stun || p_ptr->image))
-						energy_use = 0;
-				}
+				if (c_ptr->mimic) feat = c_ptr->mimic;
 				else
-				{
-					do_cmd_tunnel_aux(y, x, dir);
-					return;
-				}
+					feat = f_info[c_ptr->feat].mimic;
+
+				msg_format("There is %s.", f_info[feat].block);
+
+				if (!(p_ptr->confused || p_ptr->stun || p_ptr->image))
+					energy_use = 0;
 			}
 		}
 

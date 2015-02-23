@@ -1445,15 +1445,6 @@ option_type option_info[] =
 	{ &disturb_pets, FALSE, 2, 17,
 	  "disturb_pets", "Disturb when visible pets move" },
 
-	{ &easy_open, TRUE, 2, 18,
-	  "easy_open", "Automatically open doors" },
-
-	{ &easy_disarm, TRUE, 2, 19,
-	  "easy_disarm", "Automatically disarm traps" },
-
-	{ &easy_tunnel, FALSE, 2, 20,
-	  "easy_tunnel", "Automatically tunnel walls" },
-
 	/*** Game-Play ***/
 
 	{ &auto_scum, TRUE, 3, 1,
