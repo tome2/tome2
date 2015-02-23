@@ -16,6 +16,7 @@
 #include "spell_type.hpp"
 #include "spells5.hpp"
 #include "squeltch.hpp"
+#include "traps.hpp"
 #include "xtra1.hpp"
 #include "xtra2.hpp"
 

@@ -761,16 +761,6 @@ extern s16b m_bonus(int max, int level);
 extern void object_gain_level(object_type *o_ptr);
 extern s32b flag_cost(object_type * o_ptr, int plusses);
 
-/* traps.c */
-extern bool_ player_activate_trap_type(s16b y, s16b x, object_type *i_ptr, s16b item);
-extern void player_activate_door_trap(s16b y, s16b x);
-extern void place_trap(int y, int x);
-extern void place_trap_leveled(int y, int x, int lev);
-extern void place_trap_object(object_type *o_ptr);
-extern void wiz_place_trap(int y, int x, int idx);
-extern void do_cmd_set_trap(void);
-extern bool_ mon_hit_trap(int);
-
 /* spells1.c */
 extern byte spell_color(int type);
 extern s16b poly_r_idx(int r_idx);

@@ -10,6 +10,7 @@
 #include "cave.hpp"
 #include "hooks.h"
 #include "randart.hpp"
+#include "traps.hpp"
 
 #include <cassert>
 #include <memory>

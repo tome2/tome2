@@ -7,7 +7,7 @@
  * included in all such copies.
  */
 
-#include "angband.h"
+#include "traps.hpp"
 #include "cave.hpp"
 #include "cmd1.hpp"
 #include "cmd2.hpp"

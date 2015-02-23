@@ -1,6 +1,7 @@
 #include "q_fireprof.h"
 #include "quark.h"
 #include "hooks.h"
+#include "traps.hpp"
 
 #include <cassert>
 

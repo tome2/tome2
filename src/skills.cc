@@ -15,6 +15,7 @@
 #include "gods.hpp"
 #include "help.hpp"
 #include "hooks.h"
+#include "traps.hpp"
 #include "util.hpp"
 #include "xtra2.hpp"
 

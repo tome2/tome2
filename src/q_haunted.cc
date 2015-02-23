@@ -2,6 +2,7 @@
 
 #include "cave.hpp"
 #include "hooks.h"
+#include "traps.hpp"
 
 #define cquest (quest[QUEST_HAUNTED])
 

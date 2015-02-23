@@ -15,6 +15,7 @@
 #include "quark.h"
 #include "hooks.h"
 #include "mimic.hpp"
+#include "traps.hpp"
 #include "xtra2.hpp"
 
 /*

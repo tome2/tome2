@@ -3,6 +3,7 @@
 #include "gods.hpp"
 #include "skills.hpp"
 #include "spells5.hpp"
+#include "traps.hpp"
 
 #include <boost/algorithm/string/predicate.hpp>
 
