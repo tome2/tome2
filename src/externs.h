@@ -1281,12 +1281,6 @@ school_type *school_at(int index);
 
 void mana_school_calc_mana(int *msp);
 
-/* bldg.c -KMW- */
-extern bool_ bldg_process_command(store_type *s_ptr, int i);
-extern void show_building(store_type *s_ptr);
-extern bool_ is_state(store_type *s_ptr, int state);
-extern void enter_quest(void);
-
 /* util.c */
 extern s32b rescale(s32b x, s32b max, s32b new_max);
 extern bool_ input_box(cptr text, int y, int x, char *buf, int max);

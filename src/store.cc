@@ -1,7 +1,3 @@
-/* File: store.c */
-
-/* Purpose: Store commands */
-
 /*
  * Copyright (c) 1989 James E. Wilson, Robert A. Koeneke
  *
@@ -11,9 +7,11 @@
  */
 
 #include "store.hpp"
+
+#include "bldg.hpp"
+#include "hooks.h"
 #include "spell_type.hpp"
 #include "quark.h"
-#include "hooks.h"
 #include "skills.hpp"
 #include "spells5.hpp"
 #include "xtra1.hpp"

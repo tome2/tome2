@@ -7,6 +7,7 @@
  */
 
 #include "angband.h"
+#include "bldg.hpp"
 #include "gods.hpp"
 #include "hooks.h"
 #include "skills.hpp"
