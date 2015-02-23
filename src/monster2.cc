@@ -13,11 +13,18 @@
 #include "angband.h"
 #include "hooks.h"
 
+#include <algorithm>
 #include <string>
 
 #define MAX_HORROR 20
 #define MAX_FUNNY 22
 #define MAX_COMMENT 5
+
+s32b monster_exp(s16b level)
+{
+	s32b capped_level = std::min(level, static_cast<s16b>(MONSTER_LEVEL_MAX));
+	return (capped_level * capped_level * capped_level * 6);
+}
 
 /* Monster gain a few levels ? */
 void monster_check_experience(int m_idx, bool_ silent)
@@ -31,7 +38,7 @@ void monster_check_experience(int m_idx, bool_ silent)
 
 	/* Gain levels while possible */
 	while ((m_ptr->level < MONSTER_LEVEL_MAX) &&
-	                (m_ptr->exp >= (u32b)(MONSTER_EXP(m_ptr->level + 1))))
+	                (m_ptr->exp >= monster_exp(m_ptr->level + 1)))
 	{
 		/* Gain a level */
 		m_ptr->level++;
@@ -98,7 +105,7 @@ void monster_set_level(int m_idx, int level)
 
 	if (m_ptr->level < level)
 	{
-		m_ptr->exp = MONSTER_EXP(level);
+		m_ptr->exp = monster_exp(level);
 		monster_check_experience(m_idx, TRUE);
 	}
 }
@@ -2525,7 +2532,7 @@ s16b place_monster_one(int y, int x, int r_idx, int ego, bool_ slp, int status)
 	m_ptr->ac = r_ptr->ac;
 	m_ptr->level = r_ptr->level;
 	m_ptr->speed = r_ptr->speed;
-	m_ptr->exp = MONSTER_EXP(m_ptr->level);
+	m_ptr->exp = monster_exp(m_ptr->level);
 
 	/* Extract the monster base speed */
 	m_ptr->mspeed = m_ptr->speed;

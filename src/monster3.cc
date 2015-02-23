@@ -189,7 +189,7 @@ bool_ ai_possessor(int m_idx, int o_idx)
 	m_ptr->ac = r_ptr->ac;
 	m_ptr->level = r_ptr->level;
 	m_ptr->speed = r_ptr->speed;
-	m_ptr->exp = MONSTER_EXP(m_ptr->level);
+	m_ptr->exp = monster_exp(m_ptr->level);
 
 	/* Extract the monster base speed */
 	m_ptr->mspeed = m_ptr->speed;
@@ -264,7 +264,7 @@ void ai_deincarnate(int m_idx)
 	m_ptr->ac = r_ptr->ac;
 	m_ptr->level = r_ptr->level;
 	m_ptr->speed = r_ptr->speed;
-	m_ptr->exp = MONSTER_EXP(m_ptr->level);
+	m_ptr->exp = monster_exp(m_ptr->level);
 
 	/* Extract the monster base speed */
 	m_ptr->mspeed = m_ptr->speed;

@@ -5331,7 +5331,7 @@ void do_probe(int m_idx)
 			sprintf(t_name, "nothing");
 		msg_format("%^s target is %s.", m_name, t_name);
 
-		msg_format("%^s has %ld exp and needs %ld.", m_name, m_ptr->exp, MONSTER_EXP(m_ptr->level + 1));
+		msg_format("%^s has %ld exp and needs %d.", m_name, m_ptr->exp, (int) monster_exp(m_ptr->level + 1));
 	}
 
 	/* Learn all of the non-spell, non-treasure flags */

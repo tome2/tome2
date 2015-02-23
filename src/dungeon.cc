@@ -1546,7 +1546,7 @@ static void process_world(void)
 					{
 						monster_type *m_ptr = &m_list[m_idx];
 
-						m_ptr->exp = MONSTER_EXP(p_ptr->lev * 2);
+						m_ptr->exp = monster_exp(p_ptr->lev * 2);
 						monster_check_experience(m_idx, TRUE);
 					}
 				}

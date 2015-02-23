@@ -3068,7 +3068,6 @@
 /*** Monster flag values (hard-coded) ***/
 
 #define MONSTER_LEVEL_MAX       150
-#define MONSTER_EXP(level)      ((((level) > MONSTER_LEVEL_MAX)?MONSTER_LEVEL_MAX:(level)) * (((level) > MONSTER_LEVEL_MAX)?MONSTER_LEVEL_MAX:(level)) * (((level) > MONSTER_LEVEL_MAX)?MONSTER_LEVEL_MAX:(level)) * 6)
 
 /*
  * New monster race bit flags

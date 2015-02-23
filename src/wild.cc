@@ -1030,7 +1030,7 @@ static void town_gen_hack(int t_idx, int qy, int qx)
 				monster_type *m_ptr = &m_list[m_idx];
 				if (m_ptr->level < (dun_level / 2))
 				{
-					m_ptr->exp = MONSTER_EXP(m_ptr->level + (dun_level / 2) + randint(dun_level / 2));
+					m_ptr->exp = monster_exp(m_ptr->level + (dun_level / 2) + randint(dun_level / 2));
 					monster_check_experience(m_idx, TRUE);
 				}
 			}
@@ -1158,7 +1158,7 @@ static void town_gen_circle(int t_idx, int qy, int qx)
 				monster_type *m_ptr = &m_list[m_idx];
 				if (m_ptr->level < (dun_level / 2))
 				{
-					m_ptr->exp = MONSTER_EXP(m_ptr->level + (dun_level / 2) + randint(dun_level / 2));
+					m_ptr->exp = monster_exp(m_ptr->level + (dun_level / 2) + randint(dun_level / 2));
 					monster_check_experience(m_idx, TRUE);
 				}
 			}

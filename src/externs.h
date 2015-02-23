@@ -934,6 +934,7 @@ extern void display_roff(int r_idx, int ego);
 extern void monster_description_out(int r_idx, int ego);
 
 /* monster2.c */
+extern s32b monster_exp(s16b level);
 extern void monster_set_level(int m_idx, int level);
 extern s32b modify_aux(s32b a, s32b b, char mod);
 extern void monster_msg(cptr fmt, ...);

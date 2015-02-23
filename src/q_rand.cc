@@ -355,7 +355,7 @@ static void hero_death(s32b m_idx, s32b r_idx)
 			m_allow_special[test_monster_name("Adventurer")] = FALSE;
 			if (m_idx)
 			{
-				m_list[m_idx].exp = MONSTER_EXP(1 + (dun_level * 3 / 2));
+				m_list[m_idx].exp = monster_exp(1 + (dun_level * 3 / 2));
 				m_list[m_idx].status = MSTATUS_COMPANION;
 				monster_check_experience(m_idx, TRUE);
 			}

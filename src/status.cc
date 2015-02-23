@@ -741,7 +741,7 @@ static void status_companion(void)
 			fprintf(fff, "#####BCompanion: %s\n", m_name);
 
 			fprintf(fff, "  Lev/Exp : [[[[[G%d / %ld]\n", m_ptr->level, (long int) m_ptr->exp);
-			if (m_ptr->level < MONSTER_LEVEL_MAX) fprintf(fff, "  Next lvl: [[[[[G%ld]\n", (long int) MONSTER_EXP((s32b)m_ptr->level + 1));
+			if (m_ptr->level < MONSTER_LEVEL_MAX) fprintf(fff, "  Next lvl: [[[[[G%ld]\n", (long int) monster_exp(m_ptr->level + 1));
 			else fprintf(fff, "  Next lvl: [[[[[G****]\n");
 
 			fprintf(fff, "  HP      : [[[[[G%ld / %ld]\n", (long int) m_ptr->hp, (long int) m_ptr->maxhp);

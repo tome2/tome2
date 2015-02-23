@@ -2622,7 +2622,7 @@ bool_ mon_hit_trap_aux_potion(int m_idx, object_type *o_ptr)
 		case SV_POTION_EXPERIENCE:
 			if (m_ptr->level < MONSTER_LEVEL_MAX)
 			{
-				m_ptr->exp = MONSTER_EXP(m_ptr->level + 1);
+				m_ptr->exp = monster_exp(m_ptr->level + 1);
 				monster_check_experience(m_idx, FALSE);
 			}
 			return (FALSE);
