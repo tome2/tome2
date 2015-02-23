@@ -926,7 +926,7 @@ extern s32b modify_aux(s32b a, s32b b, char mod);
 extern void monster_msg(cptr fmt, ...);
 extern void monster_msg_simple(cptr s);
 extern void cmonster_msg(char a, cptr fmt, ...);
-extern bool_ mego_ok(int r_idx, int ego);
+extern bool_ mego_ok(monster_race const *r_ptr, int ego);
 extern void monster_check_experience(int m_idx, bool_ silent);
 extern void monster_gain_exp(int m_idx, u32b exp, bool_ silent);
 extern monster_race* race_info_idx(int r_idx, int ego);

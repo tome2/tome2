@@ -134,10 +134,9 @@ s32b modify_aux(s32b a, s32b b, char mod)
 }
 
 /* Is this ego ok for this monster ? */
-bool_ mego_ok(int r_idx, int ego)
+bool_ mego_ok(monster_race const *r_ptr, int ego)
 {
 	monster_ego *re_ptr = &re_info[ego];
-	monster_race *r_ptr = &r_info[r_idx];
 	bool_ ok = FALSE;
 	int i;
 
@@ -179,7 +178,7 @@ bool_ mego_ok(int r_idx, int ego)
 }
 
 /* Choose an ego type */
-int pick_ego_monster(int r_idx)
+static int pick_ego_monster(monster_race const *r_ptr)
 {
 	/* Assume no ego */
 	int ego = 0, lvl;
@@ -189,7 +188,7 @@ int pick_ego_monster(int r_idx)
 	if ((!(dungeon_flags2 & DF2_ELVEN)) && (!(dungeon_flags2 & DF2_DWARVEN)))
 	{
 		/* No townspeople ego */
-		if (!r_info[r_idx].level) return 0;
+		if (!r_ptr->level) return 0;
 
 		/* First are we allowed to find an ego */
 		if (!magik(MEGO_CHANCE)) return 0;
@@ -202,10 +201,10 @@ int pick_ego_monster(int r_idx)
 			re_ptr = &re_info[ego];
 
 			/*  No hope so far */
-			if (!mego_ok(r_idx, ego)) continue;
+			if (!mego_ok(r_ptr, ego)) continue;
 
 			/* Not too much OoD */
-			lvl = r_info[r_idx].level;
+			lvl = r_ptr->level;
 			MODIFY(lvl, re_ptr->level, 0);
 			lvl -= ((dun_level / 2) + (rand_int(dun_level / 2)));
 			if (lvl < 1) lvl = 1;
@@ -226,7 +225,7 @@ int pick_ego_monster(int r_idx)
 		else if (dungeon_flags2 & DF2_DWARVEN)
 			ego = test_mego_name("Dwarven");
 
-		if (mego_ok(r_idx, ego))
+		if (mego_ok(r_ptr, ego))
 			return ego;
 	}
 
@@ -2705,7 +2704,7 @@ static bool_ place_monster_group(int y, int x, int r_idx, bool_ slp, int status)
 			if (!cave_empty_bold(my, mx)) continue;
 
 			/* Attempt to place another monster */
-			if (place_monster_one(my, mx, r_idx, pick_ego_monster(r_idx), slp, status))
+			if (place_monster_one(my, mx, r_idx, pick_ego_monster(r_ptr), slp, status))
 			{
 				/* Add it to the "hack" set */
 				hack_y[hack_n] = my;
@@ -2784,7 +2783,7 @@ bool_ place_monster_aux(int y, int x, int r_idx, bool_ slp, bool_ grp, int statu
 
 
 	/* Place one monster, or fail */
-	if (!place_monster_one(y, x, r_idx, pick_ego_monster(r_idx), slp, status)) return (FALSE);
+	if (!place_monster_one(y, x, r_idx, pick_ego_monster(r_ptr), slp, status)) return (FALSE);
 
 
 	/* Require the "group" flag */
@@ -2842,7 +2841,7 @@ bool_ place_monster_aux(int y, int x, int r_idx, bool_ slp, bool_ grp, int statu
 			if (!z) break;
 
 			/* Place a single escort */
-			place_monster_one(ny, nx, z, pick_ego_monster(z), slp, status);
+			place_monster_one(ny, nx, z, pick_ego_monster(&r_info[z]), slp, status);
 
 			/* Place a "group" of escorts if needed */
 			if ((r_info[z].flags1 & (RF1_FRIENDS)) ||

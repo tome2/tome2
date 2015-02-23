@@ -5585,7 +5585,7 @@ void make_wish(void)
 
 				if (j && !re_ptr->name) continue;
 
-				if (!mego_ok(i, j)) continue;
+				if (!mego_ok(r_ptr, j)) continue;
 
 				if (j)
 				{
