@@ -6,6 +6,7 @@
  * included in all such copies.
  */
 
+#include "powers.hpp"
 #include "angband.h"
 #include "cave.hpp"
 #include "cmd1.hpp"
@@ -19,7 +20,7 @@
 /*
  * Note: return value indicates the amount of mana to use
  */
-bool_ power_chance(power_type *x_ptr)
+static bool_ power_chance(power_type *x_ptr)
 {
 	bool_ use_hp = FALSE;
 	int diff = x_ptr->diff;

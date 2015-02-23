@@ -22,6 +22,7 @@
 #include "hooks.h"
 #include "modules.hpp"
 #include "notes.hpp"
+#include "powers.hpp"
 #include "quest.h"
 #include "quark.h"
 #include "skills.hpp"
