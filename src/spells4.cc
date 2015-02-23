@@ -543,7 +543,7 @@ void lua_cast_school_spell(s32b s, bool_ no_cost)
 		/* Invoke the spell effect */
 		if (!magik(spell_chance_book(s)))
 		{
-			use = (spell_type_produce_effect(spell, -1) != NO_CAST);
+			use = (spell_type_produce_effect(spell) != NO_CAST);
 		}
 		else
 		{
@@ -561,7 +561,7 @@ void lua_cast_school_spell(s32b s, bool_ no_cost)
 	}
 	else
 	{
-		spell_type_produce_effect(spell, -1);
+		spell_type_produce_effect(spell);
 	}
 
 	/* Use the mana/piety */

@@ -3665,7 +3665,7 @@ static void activate_stick(s16b s, bool_ *obvious, bool_ *use_charge)
 	assert(obvious != NULL);
 	assert(use_charge != NULL);
 
-	ret = spell_type_produce_effect(spell, -1);
+	ret = spell_type_produce_effect(spell);
 
 	switch (ret)
 	{
