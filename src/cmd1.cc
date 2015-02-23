@@ -6,6 +6,8 @@
  * included in all such copies.
  */
 
+#include "cmd1.hpp"
+
 #include "angband.h"
 #include "cave.hpp"
 #include "gods.hpp"
@@ -4286,45 +4288,6 @@ void run_step(int dir)
 	move_player_aux(find_current, always_pickup, 1, TRUE);
 }
 
-
-/*
- * Take care of the various things that can happen when you step
- * into a space. (Objects, traps, and stores.)
- */
-void step_effects(int y, int x, int do_pickup)
-{
-	/* Handle "objects" */
-	py_pickup_floor(do_pickup);
-
-	/* Handle "store doors" */
-	if (cave[y][x].feat == FEAT_SHOP)
-	{
-		/* Disturb */
-		disturb(0);
-
-		/* Hack -- Enter store */
-		command_new = KTRL('V');
-	}
-
-	/* Discover/set off traps */
-	else if (cave[y][x].t_idx != 0)
-	{
-		/* Disturb */
-		disturb(0);
-
-		if (!(cave[y][x].info & CAVE_TRDT))
-		{
-			/* Message */
-			msg_print("You found a trap!");
-
-			/* Pick a trap */
-			pick_trap(y, x);
-		}
-
-		/* Hit the trap */
-		hit_trap();
-	}
-}
 
 /*
  * Issue a pet command

@@ -8,6 +8,7 @@
 
 #include "angband.h"
 #include "cave.hpp"
+#include "cmd1.hpp"
 #include "hooks.h"
 #include "mimic.hpp"
 #include "quark.h"

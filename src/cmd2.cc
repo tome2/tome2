@@ -9,6 +9,7 @@
 #include "angband.h"
 #include "bldg.hpp"
 #include "cave.hpp"
+#include "cmd1.hpp"
 #include "gods.hpp"
 #include "hooks.h"
 #include "skills.hpp"

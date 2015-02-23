@@ -14,6 +14,7 @@
 #include "angband.h"
 
 #include "cave.hpp"
+#include "cmd1.hpp"
 #include "hooks.h"
 #include "messages.h"
 #include "quark.h"

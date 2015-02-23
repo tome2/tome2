@@ -462,28 +462,6 @@ extern const char *get_version_string();
 /* birth.c */
 extern bool_ no_begin_screen;
 
-/* cmd1.c */
-extern void attack_special(monster_type *m_ptr, s32b special, int dam);
-extern bool_ test_hit_fire(int chance, int ac, int vis);
-extern bool_ test_hit_norm(int chance, int ac, int vis);
-extern s16b critical_shot(int weight, int plus, int dam, int skill);
-extern s16b critical_norm(int weight, int plus, int dam, int weapon_tval, bool_ *done_crit);
-extern s16b tot_dam_aux(object_type *o_ptr, int tdam, monster_type *m_ptr, s32b *special);
-extern void search(void);
-extern void carry(int pickup);
-extern void py_attack(int y, int x, int max_blow);
-extern bool_ player_can_enter(byte feature);
-extern void move_player(int dir, int do_pickup, bool_ disarm);
-extern void move_player_aux(int dir, int do_pickup, int run, bool_ disarm);
-extern void run_step(int dir);
-extern void step_effects(int y, int x, int do_pickup);
-extern void do_cmd_pet(void);
-extern bool_ do_cmd_integrate_body(void);
-extern bool_ do_cmd_leave_body(bool_ drop_body);
-extern bool_ execute_inscription(byte i, byte y, byte x);
-extern void do_cmd_engrave(void);
-extern void do_spin(void);
-
 /* cmd2.c */
 extern byte show_monster_inven(int m_idx, int *monst_list);
 extern int breakage_chance(object_type *o_ptr);

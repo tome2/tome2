@@ -9,6 +9,7 @@
 #include "angband.h"
 #include "birth.hpp"
 #include "cave.hpp"
+#include "cmd1.hpp"
 #include "corrupt.hpp"
 #include "gods.hpp"
 #include "help.hpp"

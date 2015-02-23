@@ -9,6 +9,7 @@
 
 #include "angband.h"
 #include "cave.hpp"
+#include "cmd1.hpp"
 #include "gods.hpp"
 #include "xtra1.hpp"
 #include "xtra2.hpp"
