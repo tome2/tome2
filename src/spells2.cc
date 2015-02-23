@@ -11,6 +11,7 @@
 #include "notes.hpp"
 #include "skills.hpp"
 #include "spells3.hpp"
+#include "xtra1.hpp"
 
 #include <cassert>
 #include <chrono>

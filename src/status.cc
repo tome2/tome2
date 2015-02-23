@@ -16,6 +16,7 @@
  */
 
 #include "angband.h"
+#include "xtra1.hpp"
 
 static void row_trival(const char*, s16b, u32b, s16b, u32b, int, u32b[INVEN_TOTAL - INVEN_WIELD + 2][7]);
 static void row_bival(const char*, s16b, u32b, int, u32b[INVEN_TOTAL - INVEN_WIELD + 2][7]);

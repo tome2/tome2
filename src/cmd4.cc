@@ -13,6 +13,7 @@
 #include "notes.hpp"
 #include "skills.hpp"
 #include "squeltch.hpp"
+#include "xtra1.hpp"
 
 #include <cassert>
 #include <memory>

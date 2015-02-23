@@ -19,6 +19,7 @@
 #include "spell_type.hpp"
 #include "spells5.hpp"
 #include "squeltch.hpp"
+#include "xtra1.hpp"
 
 #include <cassert>
 

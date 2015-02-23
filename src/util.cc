@@ -6,6 +6,7 @@
 #include "angband.h"
 #include "messages.h"
 #include "quark.h"
+#include "xtra1.hpp"
 
 #include <boost/algorithm/string/predicate.hpp>
 #include <chrono>

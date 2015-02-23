@@ -12,6 +12,7 @@
 #include "spell_type.hpp"
 #include "spells5.hpp"
 #include "quark.h"
+#include "xtra1.hpp"
 
 #include <cassert>
 

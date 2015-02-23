@@ -1,7 +1,3 @@
-/* File: spells1.c */
-
-/* Purpose: Spell code (part 1) */
-
 /*
  * Copyright (c) 1989 James E. Wilson, Robert A. Koeneke
  *
@@ -16,6 +12,7 @@
 #include "spell_type.hpp"
 #include "spells5.hpp"
 #include "squeltch.hpp"
+#include "xtra1.hpp"
 
 #include <chrono>
 #include <thread>

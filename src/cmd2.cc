@@ -11,6 +11,7 @@
 #include "hooks.h"
 #include "skills.hpp"
 #include "spells3.hpp"
+#include "xtra1.hpp"
 
 #include <chrono>
 #include <thread>

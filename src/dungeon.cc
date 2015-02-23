@@ -23,6 +23,7 @@
 #include "spells5.hpp"
 #include "squeltch.hpp"
 #include "store.hpp"
+#include "xtra1.hpp"
 
 #include <cassert>
 

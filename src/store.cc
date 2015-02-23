@@ -16,6 +16,7 @@
 #include "hooks.h"
 #include "skills.hpp"
 #include "spells5.hpp"
+#include "xtra1.hpp"
 
 #include <cassert>
 

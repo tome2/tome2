@@ -14,6 +14,7 @@
 #include "hooks.h"
 #include "mimic.hpp"
 #include "randart.hpp"
+#include "xtra1.hpp"
 
 #include <algorithm>
 #include <string>

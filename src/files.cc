@@ -13,6 +13,7 @@
 #include "mimic.hpp"
 #include "notes.hpp"
 #include "skills.hpp"
+#include "xtra1.hpp"
 
 #include <memory>
 #include <unordered_set>

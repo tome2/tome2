@@ -20,6 +20,7 @@
 #include "q_fireprof.h"
 #include "q_bounty.h"
 #include "store.hpp"
+#include "xtra1.hpp"
 
 /* hack as in leave_store in store.c */
 static bool_ leave_bldg = FALSE;

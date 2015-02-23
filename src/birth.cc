@@ -22,6 +22,7 @@
 #include "skills.hpp"
 #include "spells3.hpp"
 #include "store.hpp"
+#include "xtra1.hpp"
 
 #include <string>
 

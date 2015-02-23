@@ -16,6 +16,7 @@
 #include "spell_type.hpp"
 #include "spells5.hpp"
 #include "store.hpp"
+#include "xtra1.hpp"
 
 #include <cassert>
 

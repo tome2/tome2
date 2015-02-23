@@ -13,6 +13,7 @@
 #include "quark.h"
 #include "skills.hpp"
 #include "spells3.hpp"
+#include "xtra1.hpp"
 
 #define MAX_VAMPIRIC_DRAIN 100
 

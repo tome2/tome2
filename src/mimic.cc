@@ -1,5 +1,8 @@
 #include "mimic.hpp"
-#include <assert.h>
+
+#include "xtra1.hpp"
+
+#include <cassert>
 
 /**
  * Mimicry forms

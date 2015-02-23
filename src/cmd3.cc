@@ -17,6 +17,7 @@
 #include "quark.h"
 #include "squeltch.hpp"
 #include "store.hpp"
+#include "xtra1.hpp"
 
 #include <cassert>
 #include <algorithm>

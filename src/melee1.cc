@@ -14,6 +14,7 @@
 #include "mimic.hpp"
 #include "skills.hpp"
 #include "store.hpp"
+#include "xtra1.hpp"
 
 #include <boost/algorithm/string/predicate.hpp>
 

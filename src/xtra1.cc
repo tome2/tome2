@@ -1,7 +1,3 @@
-/* File: misc.c */
-
-/* Purpose: misc code */
-
 /*
  * Copyright (c) 1989 James E. Wilson, Robert A. Koeneke
  *
@@ -9,6 +5,8 @@
  * not for profit purposes provided that this copyright and statement are
  * included in all such copies.
  */
+
+#include "xtra1.hpp"
 
 #include "angband.h"
 #include "corrupt.hpp"
@@ -1573,8 +1571,7 @@ static void calc_powers(void)
 /*
  * Calculate the player's sanity
  */
-
-void calc_sanity(void)
+static void calc_sanity()
 {
 	int bonus, msane;
 
@@ -2718,6 +2715,33 @@ void apply_flags(u32b f1, u32b f2, u32b f3, u32b f4, u32b f5, u32b esp, s16b pva
 		p_ptr->water_breath = TRUE;
 	}
 }
+
+
+
+/**
+ * Are barehand fighter's hands empty?
+ */
+static bool_ monk_empty_hands(void)
+{
+	int i;
+	object_type *o_ptr;
+
+	if (p_ptr->melee_style != SKILL_HAND) return FALSE;
+
+	i = 0;
+	while (p_ptr->body_parts[i] == INVEN_WIELD)
+	{
+		o_ptr = &p_ptr->inventory[INVEN_WIELD + i];
+
+		if (o_ptr->k_idx) return FALSE;
+
+		i++;
+	}
+
+	return TRUE;
+}
+
+
 
 /*
  * Calculate the players current "state", taking into account
@@ -4309,26 +4333,6 @@ void handle_stuff(void)
 	if (p_ptr->window) window_stuff();
 }
 
-
-bool_ monk_empty_hands(void)
-{
-	int i;
-	object_type *o_ptr;
-
-	if (p_ptr->melee_style != SKILL_HAND) return FALSE;
-
-	i = 0;
-	while (p_ptr->body_parts[i] == INVEN_WIELD)
-	{
-		o_ptr = &p_ptr->inventory[INVEN_WIELD + i];
-
-		if (o_ptr->k_idx) return FALSE;
-
-		i++;
-	}
-
-	return TRUE;
-}
 
 bool_ monk_heavy_armor(void)
 {
