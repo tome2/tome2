@@ -1002,7 +1002,7 @@ typedef struct store_action_type store_action_type;
 
 struct store_action_type
 {
-	u32b name;                      /* Name (offset) */
+	const char *name;               /* Name */
 
 	s16b costs[3];                  /* Costs for liked people */
 	char letter;                    /* Action letter */

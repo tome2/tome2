@@ -9595,11 +9595,6 @@ errr init_ba_info_txt(FILE *fp, char *buf)
 	/* Just before the first line */
 	error_line = -1;
 
-
-	/* Start the "fake" stuff */
-	ba_head->name_size = 0;
-	ba_head->text_size = 0;
-
 	/* Parse */
 	fp_stack_init(fp);
 	while (0 == my_fgets_dostack(buf, 1024))
@@ -9661,7 +9656,7 @@ errr init_ba_info_txt(FILE *fp, char *buf)
 			if (i < error_idx) return (4);
 
 			/* Verify information */
-			if (i >= ba_head->info_num) return (2);
+			if (i >= max_ba_idx) return (2);
 
 			/* Save the index */
 			error_idx = i;
@@ -9669,17 +9664,9 @@ errr init_ba_info_txt(FILE *fp, char *buf)
 			/* Point at the "info" */
 			ba_ptr = &ba_info[i];
 
-			/* Hack -- Verify space */
-			if (ba_head->name_size + strlen(s) + 8 > FAKE_NAME_SIZE) return (7);
-
-			/* Advance and Save the name index */
-			if (!ba_ptr->name) ba_ptr->name = ++ba_head->name_size;
-
-			/* Append chars to the name */
-			strcpy(ba_name + ba_head->name_size, s);
-
-			/* Advance the index */
-			ba_head->name_size += strlen(s);
+			/* Copy name */
+			assert(!ba_ptr->name);
+			ba_ptr->name = my_strdup(s);
 
 			/* Next... */
 			continue;
@@ -9730,11 +9717,6 @@ errr init_ba_info_txt(FILE *fp, char *buf)
 		/* Oops */
 		return (6);
 	}
-
-
-	/* Complete the "name" and "text" sizes */
-	++ba_head->name_size;
-	++ba_head->text_size;
 
 	/* No version yet */
 	if (!okay) return (2);

@@ -690,10 +690,7 @@ store_info_type *st_info;
 /*
  * The building actions types arrays
  */
-header *ba_head;
 store_action_type *ba_info;
-char *ba_name;
-/* char *ba_text; */
 
 /*
  * The owner types arrays

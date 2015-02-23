@@ -178,7 +178,7 @@ void show_building(store_type *s_ptr)
 			strnfmt(tmp_str, 80, " %c", ba_ptr->letter);
 			c_put_str(TERM_YELLOW, tmp_str, 21 + (i / 2), 17 + (30 * (i % 2)));
 
-			strnfmt(tmp_str, 80, ") %s %s", ba_ptr->name + ba_name, buff);
+			strnfmt(tmp_str, 80, ") %s %s", ba_ptr->name, buff);
 			c_put_str(action_color, tmp_str, 21 + (i / 2), 2 + 17 + (30 * (i % 2)));
 		}
 	}
