@@ -75,7 +75,6 @@ struct timer_type;
 struct ability_type;
 struct module_meta_type;
 struct module_type;
-struct corruption_type;
 
 #ifdef __cplusplus
 }

@@ -707,14 +707,6 @@ extern void do_cmd_symbiotic(void);
 extern s32b sroot(s32b n);
 extern int clamp_failure_chance(int chance, int minfail);
 
-/* corrupt.c */
-extern void gain_random_corruption();
-extern void dump_corruptions(FILE *OutFile, bool_ color, bool_ header);
-extern void lose_corruption();
-extern bool_ player_has_corruption(int corruption_idx);
-extern void player_gain_corruption(int corruption_idx);
-extern s16b get_corruption_power(int corruption_idx);
-
 /* dungeon.c */
 extern byte value_check_aux1(object_type *o_ptr);
 extern byte value_check_aux1_magic(object_type *o_ptr);

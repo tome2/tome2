@@ -11,6 +11,7 @@
  */
 
 #include "angband.h"
+#include "corrupt.hpp"
 #include "hiscore.h"
 #include "hooks.h"
 #include "mimic.hpp"

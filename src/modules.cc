@@ -7,6 +7,7 @@
  */
 
 #include "angband.h"
+#include "corrupt.hpp"
 #include "hooks.h"
 
 #include <cassert>

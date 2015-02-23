@@ -2598,22 +2598,3 @@ struct module_type
 	   to indicate that no override happens. */
 	s16b *(*race_status)(int r_idx);
 };
-
-/**
- * Corruptions
- */
-typedef struct corruption_type corruption_type;
-struct corruption_type
-{
-	int  modules[3]; /* Modules where this corruption is available; terminated with -1 entry */
-	byte color;
-	cptr group;
-	cptr name;
-	cptr get_text;
-	cptr lose_text; /* If NULL, the corruption is NOT removable by any means */
-	cptr desc;
-	s16b depends[5]; /* terminated by a -1 entry */
-	s16b opposes[5]; /* terminated by a -1 entry */
-	void (*gain_callback)(); /* callback to invoke when gained */
-	s16b power;              /* index of granted power if >= 0, ignored otherwise */
-};

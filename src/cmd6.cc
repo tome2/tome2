@@ -11,6 +11,7 @@
  */
 
 #include "angband.h"
+#include "corrupt.hpp"
 #include "hooks.h"
 #include "lua_bind.hpp"
 #include "mimic.hpp"

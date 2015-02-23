@@ -12,13 +12,14 @@
 
 #include "angband.h"
 
-#include <assert.h>
-
+#include "corrupt.hpp"
 #include "quest.h"
 #include "quark.h"
 #include "hooks.h"
 #include "spell_type.hpp"
 #include "spells5.hpp"
+
+#include <cassert>
 
 #define TY_CURSE_CHANCE 100
 #define DG_CURSE_CHANCE 50

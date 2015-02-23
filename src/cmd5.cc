@@ -12,12 +12,12 @@
 
 
 #include "angband.h"
-
-#include <assert.h>
-
+#include "corrupt.hpp"
 #include "spell_type.hpp"
-#include "quark.h"
 #include "spells5.hpp"
+#include "quark.h"
+
+#include <cassert>
 
 /* Maximum number of tries for teleporting */
 #define MAX_TRIES 300

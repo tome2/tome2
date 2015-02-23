@@ -11,7 +11,7 @@
  */
 
 #include "angband.h"
-
+#include "corrupt.hpp"
 #include "messages.h"
 #include "hooks.h"
 #include "mimic.hpp"
