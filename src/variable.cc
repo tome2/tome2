@@ -691,10 +691,7 @@ char *rmp_text;
 /*
  * Player class arrays
  */
-header *c_head;
 player_class *class_info;
-char *c_name;
-char *c_text;
 meta_class_type *meta_class_info;
 
 /*

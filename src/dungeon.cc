@@ -5004,7 +5004,7 @@ static void load_all_pref_files(void)
 	process_pref_file(buf);
 
 	/* Access the "class" pref file */
-	sprintf(buf, "%s.prf", spp_ptr->title + c_name);
+	sprintf(buf, "%s.prf", spp_ptr->title);
 
 	/* Process that file */
 	process_pref_file(buf);

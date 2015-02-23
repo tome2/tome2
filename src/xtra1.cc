@@ -283,7 +283,7 @@ static void prt_title(void)
 	/* Normal */
 	else
 	{
-		p = cp_ptr->titles[(p_ptr->lev - 1) / 5] + c_text;
+		p = cp_ptr->titles[(p_ptr->lev - 1) / 5];
 
 	}
 
@@ -1000,7 +1000,7 @@ static void prt_frame(void)
 
 	/* Race and Class */
 	prt_field(rp_ptr->title + rp_name, ROW_RACE, COL_RACE);
-	prt_field(spp_ptr->title + c_name, ROW_CLASS, COL_CLASS);
+	prt_field(spp_ptr->title, ROW_CLASS, COL_CLASS);
 
 	/* Title */
 	prt_title();

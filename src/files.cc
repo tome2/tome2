@@ -869,7 +869,7 @@ static cptr process_pref_file_expr(char **sp, char *fp)
 			/* Class */
 			else if (streq(b + 1, "CLASS"))
 			{
-				v = spp_ptr->title + c_name;
+				v = spp_ptr->title;
 			}
 
 			/* Player */
@@ -2182,7 +2182,7 @@ void display_player(int mode)
 			c_put_str(TERM_L_BLUE, sp_ptr->title, 3, 9);
 		sprintf(buf, "%s", get_player_race_name(p_ptr->prace, p_ptr->pracem));
 		c_put_str(TERM_L_BLUE, buf, 4, 9);
-		c_put_str(TERM_L_BLUE, spp_ptr->title + c_name, 5, 9);
+		c_put_str(TERM_L_BLUE, spp_ptr->title, 5, 9);
 		c_put_str(TERM_L_BLUE, r_ptr->name, 6, 9);
 		c_put_str(TERM_L_BLUE, deity_info[p_ptr->pgod].name, 7, 9);
 
@@ -4436,7 +4436,7 @@ static void print_tomb(void)
 		/* Normal */
 		else
 		{
-			p = cp_ptr->titles[(p_ptr->lev - 1) / 5] + c_text;
+			p = cp_ptr->titles[(p_ptr->lev - 1) / 5];
 		}
 
 		center_string(buf, player_name);
@@ -4449,7 +4449,7 @@ static void print_tomb(void)
 		put_str(buf, 8, 11);
 
 
-		center_string(buf, spp_ptr->title + c_name);
+		center_string(buf, spp_ptr->title);
 		put_str(buf, 10, 11);
 
 		(void)sprintf(tmp, "Level: %d", (int)p_ptr->lev);
@@ -4764,8 +4764,11 @@ static void display_scores_aux(int highscore_fd, int from, int to, int note, hig
 
 			/* Dump some info */
 			sprintf(out_val, "%3d.%9s  %s the %s %s, Level %d",
-			        place, the_score.pts, the_score.who,
-			        get_player_race_name(pr, ps), class_info[pc].spec[pcs].title + c_name,
+				place,
+				the_score.pts,
+				the_score.who,
+				get_player_race_name(pr, ps),
+				class_info[pc].spec[pcs].title,
 			        clev);
 
 			/* Append a "maximum level" */

@@ -980,11 +980,6 @@ static errr init_player_info(void)
 	/*** Make the header ***/
 	rmp_head = make_header(max_rmp_idx);
 
-
-	/*** Make the header ***/
-	c_head = make_header(max_c_idx);
-
-
 	/*** Make the fake arrays ***/
 
 	/* Allocate the "rp_info" array */
@@ -1002,11 +997,7 @@ static errr init_player_info(void)
 	rmp_text = make_array<char>(FAKE_TEXT_SIZE);
 
 	/* Allocate the "c_info" array */
-	class_info = make_array<player_class>(c_head->info_num);
-
-	/* Hack -- make "fake" arrays */
-	c_name = make_array<char>(FAKE_NAME_SIZE);
-	c_text = make_array<char>(FAKE_TEXT_SIZE);
+	class_info = make_array<player_class>(max_c_idx);
 
 	/* Allocate the "bg" array */
 	bg = make_array<hist_type>(max_bg_idx);

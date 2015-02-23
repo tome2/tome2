@@ -1196,8 +1196,8 @@ typedef struct player_spec player_spec;
 
 struct player_spec
 {
-	s32b title;                     /* Type of class spec */
-	s32b desc;                      /* Small desc of the class spec */
+	const char *title;              /* Type of class spec */
+	char *desc;                     /* Small desc of the class spec */
 
 	char skill_basem[MAX_SKILLS];   /* Mod for value */
 	u32b skill_base[MAX_SKILLS];    /* value */
@@ -1229,11 +1229,12 @@ typedef struct player_class player_class;
 
 struct player_class
 {
-	s32b title;                     /* Type of class */
-	s32b desc;                      /* Small desc of the class */
-	s32b titles[PY_MAX_LEVEL / 5];
+	const char *title;              /* Type of class */
+	char *desc;                     /* Small desc of the class */
+	const char *titles[PY_MAX_LEVEL / 5];
+					/* Titles */
 
-	s16b c_adj[6];		/* Class stat modifier */
+	s16b c_adj[6];	                /* Class stat modifier */
 
 	s16b c_dis;			/* class disarming */
 	s16b c_dev;			/* class magic devices */

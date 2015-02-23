@@ -876,7 +876,7 @@ bool_ player_activate_trap_type(s16b y, s16b x, object_type *i_ptr, s16b item)
 			{
 				/* no sense saying this unless you never have mana */
 				msg_format("Suddenly you feel glad you're a mere %s",
-				           spp_ptr->title + c_name);
+					   spp_ptr->title);
 			}
 			else
 			{
@@ -1885,7 +1885,7 @@ bool_ player_activate_trap_type(s16b y, s16b x, object_type *i_ptr, s16b item)
 		{
 			if (p_ptr->pgod == 0)
 			{
-				msg_format("Suddenly you feel glad you're a mere %s", spp_ptr->title + c_name);
+				msg_format("Suddenly you feel glad you're a mere %s", spp_ptr->title);
 			}
 			else
 			{
@@ -1903,7 +1903,7 @@ bool_ player_activate_trap_type(s16b y, s16b x, object_type *i_ptr, s16b item)
 		{
 			if (p_ptr->pgod == 0)
 			{
-				msg_format("Suddenly you feel glad you're a mere %s", spp_ptr->title + c_name);
+				msg_format("Suddenly you feel glad you're a mere %s", spp_ptr->title);
 			}
 			else
 			{

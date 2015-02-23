@@ -1624,7 +1624,7 @@ static errr grab_one_class_flag(u32b *choice, cptr what)
 	cptr s;
 
 	/* Scan classes flags */
-	for (i = 0; i < max_c_idx && (s = class_info[i].title + c_name); i++)
+	for (i = 0; i < max_c_idx && (s = class_info[i].title); i++)
 	{
 		if (streq(what, s))
 		{
@@ -1855,8 +1855,6 @@ errr init_player_info_txt(FILE *fp, char *buf)
 	rp_head->text_size = 0;
 	rmp_head->name_size = 0;
 	rmp_head->text_size = 0;
-	c_head->name_size = 0;
-	c_head->text_size = 0;
 
 	/* Init general skills */
 	for (z = 0; z < MAX_SKILLS; z++)
@@ -2770,7 +2768,7 @@ errr init_player_info_txt(FILE *fp, char *buf)
 			if (i < error_idx) return (4);
 
 			/* Verify information */
-			if (i >= c_head->info_num) return (2);
+			if (i >= max_c_idx) return (2);
 
 			/* Save the index */
 			error_idx = i;
@@ -2778,18 +2776,11 @@ errr init_player_info_txt(FILE *fp, char *buf)
 			/* Point at the "info" */
 			c_ptr = &class_info[i];
 
-			/* Hack -- Verify space */
-			if (c_head->name_size + strlen(s) + 8 > FAKE_NAME_SIZE) return (7);
+			/* Copy name */
+			assert(!c_ptr->title);
+			c_ptr->title = my_strdup(s);
 
-			/* Advance and Save the name index */
-			if (!c_ptr->title) c_ptr->title = ++c_head->name_size;
-
-			/* Append chars to the name */
-			strcpy(c_name + c_head->name_size, s);
-
-			/* Advance the index */
-			c_head->name_size += strlen(s);
-
+			/* Initialize */
 			c_ptr->powers[0] = c_ptr->powers[1] = c_ptr->powers[2] = c_ptr->powers[3] = -1;
 			powers = 0;
 			lev = 1;
@@ -2812,43 +2803,31 @@ errr init_player_info_txt(FILE *fp, char *buf)
 			/* Acquire the text */
 			s = buf + 6;
 
-			/* Hack -- Verify space */
-			if (c_head->text_size + strlen(s) + 8 > FAKE_TEXT_SIZE) return (7);
-
 			switch (buf[4])
 			{
-			case '0':
-				/* Advance and Save the text index */
+			case '0': /* Class description */
 				if (!c_ptr->desc)
 				{
-					c_ptr->desc = ++c_head->text_size;
 
-					/* Append chars to the name */
-					strcpy(c_text + c_head->text_size, s);
-
-					/* Advance the index */
-					c_head->text_size += strlen(s);
+					c_ptr->desc = my_strdup(s);
 				}
 				else
 				{
-					/* Append chars to the name */
-					strcpy(c_text + c_head->text_size, format("\n%s", s));
-
-					/* Advance the index */
-					c_head->text_size += strlen(s) + 1;
+					strappend(&c_ptr->desc, format("\n%s", s));
 				}
 				break;
-			case '1':
-				/* Advance and Save the text index */
-				c_ptr->titles[tit_idx++] = ++c_head->text_size;
 
-				/* Append chars to the name */
-				strcpy(c_text + c_head->text_size, s);
+			case '1': /* Class title */
+				/* Copy */
+				assert(!c_ptr->titles[tit_idx]);
+				c_ptr->titles[tit_idx] = my_strdup(s);
 
-				/* Advance the index */
-				c_head->text_size += strlen(s);
+				/* Go to next title in array */
+				tit_idx++;
+
 				break;
-			default:
+
+			default: /* Unknown */
 				return (6);
 				break;
 			}
@@ -3189,18 +3168,11 @@ errr init_player_info_txt(FILE *fp, char *buf)
 				/* Point at the "info" */
 				s_ptr = &c_ptr->spec[spec_idx];
 
-				/* Hack -- Verify space */
-				if (c_head->name_size + strlen(s) + 8 > FAKE_NAME_SIZE) return (7);
+				/* Copy title */
+				assert(!s_ptr->title);
+				s_ptr->title = my_strdup(s);
 
-				/* Advance and Save the name index */
-				if (!s_ptr->title) s_ptr->title = ++c_head->name_size;
-
-				/* Append chars to the name */
-				strcpy(c_name + c_head->name_size, s);
-
-				/* Advance the index */
-				c_head->name_size += strlen(s);
-
+				/* Initialize */
 				s_ptr->obj_num = 0;
 				cur_ab = 0;
 				for (z = 0; z < 10; z++)
@@ -3216,27 +3188,13 @@ errr init_player_info_txt(FILE *fp, char *buf)
 				/* Acquire the text */
 				s = buf + 6;
 
-				/* Hack -- Verify space */
-				if (c_head->text_size + strlen(s) + 8 > FAKE_TEXT_SIZE) return (7);
-
-				/* Advance and Save the text index */
 				if (!s_ptr->desc)
 				{
-					s_ptr->desc = ++c_head->text_size;
-
-					/* Append chars to the name */
-					strcpy(c_text + c_head->text_size, s);
-
-					/* Advance the index */
-					c_head->text_size += strlen(s);
+					s_ptr->desc = my_strdup(s);
 				}
 				else
 				{
-					/* Append chars to the name */
-					strcpy(c_text + c_head->text_size, format("\n%s", s));
-
-					/* Advance the index */
-					c_head->text_size += strlen(s) + 1;
+					strappend(&s_ptr->desc, format("\n%s", s));
 				}
 
 				/* Next... */
@@ -3430,7 +3388,10 @@ errr init_player_info_txt(FILE *fp, char *buf)
 			/* Find it in the list */
 			for (i = 0; i < max_c_idx; i++)
 			{
-				if (iequals(s, class_info[i].title + c_name)) break;
+				if (class_info[i].title && iequals(s, class_info[i].title))
+				{
+					break;
+				}
 			}
 
 			if (i == max_c_idx) return (6);
@@ -3450,8 +3411,7 @@ errr init_player_info_txt(FILE *fp, char *buf)
 	++rp_head->text_size;
 	++rmp_head->name_size;
 	++rmp_head->text_size;
-	++c_head->name_size;
-	++c_head->text_size;
+
 	/* No version yet */
 	if (!okay) return (2);
 
@@ -11448,7 +11408,7 @@ static cptr process_dungeon_file_expr(char **sp, char *fp)
 			/* Class */
 			else if (streq(b + 1, "CLASS"))
 			{
-				v = cp_ptr->title + c_name;
+				v = cp_ptr->title;
 			}
 
 			/* Player */

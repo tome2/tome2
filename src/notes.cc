@@ -134,7 +134,10 @@ void add_note_type(int note_number)
 			char player[100];
 
 			/* Build the string containing the player information */
-			sprintf(player, "the %s %s", get_player_race_name(p_ptr->prace, p_ptr->pracem), class_info[p_ptr->pclass].spec[p_ptr->pspec].title + c_name);
+			sprintf(player,
+				"the %s %s",
+				get_player_race_name(p_ptr->prace, p_ptr->pracem),
+				class_info[p_ptr->pclass].spec[p_ptr->pspec].title);
 
 			/* Add in "character start" information */
 			sprintf(buf,

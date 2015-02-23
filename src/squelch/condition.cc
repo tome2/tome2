@@ -581,7 +581,7 @@ void SubraceCondition::to_json(json_t *j) const
 
 bool ClassCondition::is_match(object_type *o_ptr) const
 {
-	return boost::algorithm::iequals(m_class, spp_ptr->title + c_name);
+	return boost::algorithm::iequals(m_class, spp_ptr->title);
 }
 
 std::shared_ptr<Condition> ClassCondition::from_json(json_t *j)

@@ -1048,7 +1048,7 @@ static void player_outfit_spellbook(cptr spell_name)
 static void player_outfit(void)
 {
 	int i;
-	cptr class_name = spp_ptr->title + c_name;
+	cptr class_name = spp_ptr->title;
 	cptr subrace_name = rmp_ptr->title + rmp_name;
 
 	/*
@@ -1253,8 +1253,6 @@ int dump_classes(s16b *classes, int sel, u32b *restrictions)
 
 	char buf[80];
 
-	cptr str;
-
 	/* Clean up */
 	clear_from(12);
 
@@ -1266,7 +1264,6 @@ int dump_classes(s16b *classes, int sel, u32b *restrictions)
 		/* Analyze */
 		p_ptr->pclass = classes[n];
 		cp_ptr = &class_info[p_ptr->pclass];
-		str = cp_ptr->title + c_name;
 
 		if (sel == n)
 		{
@@ -1276,14 +1273,14 @@ int dump_classes(s16b *classes, int sel, u32b *restrictions)
 
 		/* Display */
 		strnfmt(buf, 80, "%c%c%c %s%s", p1,
-		        (n <= 25) ? I2A(n) : I2D(n - 26), p2, str, mod);
+			(n <= 25) ? I2A(n) : I2D(n - 26), p2, cp_ptr->title, mod);
 
 		/* Print some more info */
 		if (sel == n)
 		{
 			std::string desc;
 
-			desc += (cp_ptr->desc + c_text);
+			desc += cp_ptr->desc;
 			if (cp_ptr->flags1 & PR1_EXPERIMENTAL)
 			{
 				desc += "\nEXPERIMENTAL";
@@ -1317,8 +1314,6 @@ int dump_specs(int sel)
 
 	char buf[80];
 
-	cptr str;
-
 	/* Clean up */
 	clear_from(12);
 
@@ -1332,7 +1327,6 @@ int dump_specs(int sel)
 		/* Analyze */
 		p_ptr->pspec = n;
 		spp_ptr = &class_info[p_ptr->pclass].spec[p_ptr->pspec];
-		str = spp_ptr->title + c_name;
 
 		if (sel == n)
 		{
@@ -1341,14 +1335,14 @@ int dump_specs(int sel)
 		}
 
 		/* Display */
-		strnfmt(buf, 80, "%c%c%c %s", p1, I2A(n), p2, str);
+		strnfmt(buf, 80, "%c%c%c %s", p1, I2A(n), p2, spp_ptr->title);
 
 		/* Print some more info */
 		if (sel == n)
 		{
 			std::string desc;
 
-			desc += (spp_ptr->desc + c_text);
+			desc += spp_ptr->desc;
 			if (spp_ptr->flags1 & PR1_EXPERIMENTAL)
 			{
 				desc += "\nEXPERIMENTAL";
@@ -1565,8 +1559,6 @@ static bool_ player_birth_aux_ask()
 
 	u32b restrictions[2];
 
-	cptr str;
-
 	char c;
 
 	char p2 = ')';
@@ -1653,10 +1645,9 @@ static bool_ player_birth_aux_ask()
 			/* Analyze */
 			p_ptr->psex = n;
 			sp_ptr = &sex_info[p_ptr->psex];
-			str = sp_ptr->title;
 
 			/* Display */
-			strnfmt(buf, 200, "%c%c %s", I2A(n), p2, str);
+			strnfmt(buf, 200, "%c%c %s", I2A(n), p2, sp_ptr->title);
 			put_str(buf, 21 + (n / 5), 2 + 15 * (n % 5));
 		}
 
@@ -1689,10 +1680,9 @@ static bool_ player_birth_aux_ask()
 	/* Set sex */
 	p_ptr->psex = k;
 	sp_ptr = &sex_info[p_ptr->psex];
-	str = sp_ptr->title;
 
 	/* Display */
-	c_put_str(TERM_L_BLUE, str, 3, 9);
+	c_put_str(TERM_L_BLUE, sp_ptr->title, 3, 9);
 
 	/* Clean up */
 	clear_from(15);
@@ -1784,10 +1774,9 @@ static bool_ player_birth_aux_ask()
 	/* Set race */
 	p_ptr->prace = k;
 	rp_ptr = &race_info[p_ptr->prace];
-	str = rp_ptr->title + rp_name;
 
 	/* Display */
-	c_put_str(TERM_L_BLUE, str, 4, 9);
+	c_put_str(TERM_L_BLUE, rp_ptr->title + rp_name, 4, 9);
 
 	/* Get a random name */
 	if (!do_quick_start) create_random_name(p_ptr->prace, player_name);
@@ -2010,7 +1999,7 @@ static bool_ player_birth_aux_ask()
 				if ((k >= 0) && (k < n)) break;
 				if (c == '?')
 				{
-					help_class(class_info[class_types[sel]].title + c_name);
+					help_class(class_info[class_types[sel]].title);
 				}
 				else if (c == '=')
 				{
@@ -2092,7 +2081,7 @@ static bool_ player_birth_aux_ask()
 				if ((k >= 0) && (k < n)) break;
 				if (c == '?')
 				{
-					help_class(class_info[p_ptr->pclass].spec[sel].title + c_name);
+					help_class(class_info[p_ptr->pclass].spec[sel].title);
 				}
 				else if (c == '=')
 				{
@@ -2138,10 +2127,9 @@ static bool_ player_birth_aux_ask()
 	}
 	cp_ptr = &class_info[p_ptr->pclass];
 	spp_ptr = &class_info[p_ptr->pclass].spec[p_ptr->pspec];
-	str = spp_ptr->title + c_name;
 
 	/* Display */
-	c_put_str(TERM_L_BLUE, str, 5, 9);
+	c_put_str(TERM_L_BLUE, spp_ptr->title, 5, 9);
 
 	/* Clean up */
 	clear_from(15);
@@ -2736,7 +2724,7 @@ static bool_ player_birth_aux_auto()
 			c_put_str(TERM_L_BLUE, sp_ptr->title, 3, 9);
 			strnfmt(buf, 80, "%s", get_player_race_name(p_ptr->prace, p_ptr->pracem));
 			c_put_str(TERM_L_BLUE, buf, 4, 9);
-			c_put_str(TERM_L_BLUE, spp_ptr->title + c_name, 5, 9);
+			c_put_str(TERM_L_BLUE, spp_ptr->title, 5, 9);
 
 			/* Label stats */
 			put_str("STR:", 2 + A_STR, 61);
@@ -3513,7 +3501,7 @@ void save_savefile_names()
 	fprintf(fff, "%s@%c%s@%s, the %s %s is %s\n", game_module,
 	        (death) ? '0' : '1', player_base, player_name,
 	        get_player_race_name(p_ptr->prace, p_ptr->pracem),
-	        spp_ptr->title + c_name,
+		spp_ptr->title,
 	        (!death) ? "alive" : "dead");
 
 	for (i = 0; i < max; i++)
