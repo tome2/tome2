@@ -3733,17 +3733,20 @@ void do_cmd_use_staff(void)
 		return;
 	}
 
-	/* Enter device mode  */
-	set_stick_mode(o_ptr);
-
 	/* Take a turn */
 	energy_use = 100;
 
 	/* Not identified yet */
 	ident = FALSE;
 
+	/* Enter device mode  */
+	set_stick_mode(o_ptr);
+
 	/* get the chance */
 	chance = spell_chance(o_ptr->pval2);
+
+	/* Leave device mode  */
+	unset_stick_mode();
 
 	/* Extract object flags */
 	object_flags(o_ptr, &f1, &f2, &f3, &f4, &f5, &esp);
@@ -3766,9 +3769,6 @@ void do_cmd_use_staff(void)
 		if (flush_failure) flush();
 		msg_print("You failed to use the staff properly.");
 		sound(SOUND_FAIL);
-
-		/* Leave device mode  */
-		unset_stick_mode();
 		return;
 	}
 
@@ -3778,9 +3778,6 @@ void do_cmd_use_staff(void)
 		if (flush_failure) flush();
 		msg_print("The staff has no charges left.");
 		o_ptr->ident |= (IDENT_EMPTY);
-
-		/* Leave device mode  */
-		unset_stick_mode();
 		return;
 	}
 
@@ -3806,9 +3803,6 @@ void do_cmd_use_staff(void)
 	/* Hack -- some uses are "free" */
 	if (!use_charge)
 	{
-		/* Leave device mode  */
-		unset_stick_mode();
-
 		return;
 	}
 
@@ -3858,9 +3852,6 @@ void do_cmd_use_staff(void)
 	{
 		floor_item_charges(0 - item);
 	}
-
-	/* Leave device mode  */
-	unset_stick_mode();
 }
 
 
@@ -3939,6 +3930,9 @@ void do_cmd_aim_wand(void)
 	/* get the chance */
 	chance = spell_chance(o_ptr->pval2);
 
+	/* Leave device mode  */
+	unset_stick_mode();
+
 	/* Extract object flags */
 	object_flags(o_ptr, &f1, &f2, &f3, &f4, &f5, &esp);
 
@@ -3954,9 +3948,6 @@ void do_cmd_aim_wand(void)
 		if (flush_failure) flush();
 		msg_print("You failed to use the wand properly.");
 		sound(SOUND_FAIL);
-
-		/* Leave device mode  */
-		unset_stick_mode();
 		return;
 	}
 
@@ -3966,16 +3957,11 @@ void do_cmd_aim_wand(void)
 		if (flush_failure) flush();
 		msg_print("The wand has no charges left.");
 		o_ptr->ident |= (IDENT_EMPTY);
-
-		/* Leave device mode  */
-		unset_stick_mode();
 		return;
 	}
 
-
 	/* Sound */
 	sound(SOUND_ZAP);
-
 
 	/* Analyze the wand */
 	activate_stick(o_ptr->pval2, &obvious, &use_charge);
@@ -3989,9 +3975,6 @@ void do_cmd_aim_wand(void)
 	/* Hack -- some uses are "free" */
 	if (!use_charge)
 	{
-		/* Leave device mode  */
-		unset_stick_mode();
-
 		return;
 	}
 
@@ -4019,9 +4002,6 @@ void do_cmd_aim_wand(void)
 	{
 		floor_item_charges(0 - item);
 	}
-
-	/* Leave device mode  */
-	unset_stick_mode();
 }
 
 
