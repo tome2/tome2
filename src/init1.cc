@@ -4382,17 +4382,10 @@ errr init_k_info_txt(FILE *fp, char *buf)
 		/* Process 'a' for Activation */
 		if ( buf[0] == 'a')
 		{
-			if (prefix(buf + 2, "HARDCORE="))
+			k_ptr->activate = get_activation(buf + 2);
+			if (k_ptr->activate == -1)
 			{
-				k_ptr->activate = get_activation(buf + 11);
-				if (k_ptr->activate == -1)
-					return 1;
-			}
-			else if (prefix(buf + 2, "SPELL="))
-			{
-				k_ptr->activate = -find_spell(buf + 8);
-				if (k_ptr->activate == -( -1))
-					return 1;
+				return 1;
 			}
 
 			/* Next... */
@@ -5329,17 +5322,10 @@ errr init_a_info_txt(FILE *fp, char *buf)
 		/* Read activation type. */
 		if (buf[0] == 'a')
 		{
-			if (prefix(buf + 2, "HARDCORE="))
+			a_ptr->activate = get_activation(buf + 2);
+			if (a_ptr->activate == -1)
 			{
-				a_ptr->activate = get_activation(buf + 11);
-				if (a_ptr->activate == -1)
-					return 1;
-			}
-			else if (prefix(buf + 2, "SPELL="))
-			{
-				a_ptr->activate = -find_spell(buf + 8);
-				if (a_ptr->activate == -( -1))
-					return 1;
+				return 1;
 			}
 
 			/* Next... */
@@ -6809,16 +6795,9 @@ errr init_e_info_txt(FILE *fp, char *buf)
 
 		if (buf[0] == 'a')
 		{
-			if (prefix(buf + 2, "HARDCORE="))
+			e_ptr->activate = get_activation(buf + 2);
+			if (e_ptr->activate == -1)
 			{
-				e_ptr->activate = get_activation(buf + 11);
-				if (e_ptr->activate == -1)
-					return 1;
-			}
-			else if (prefix(buf + 2, "SPELL="))
-			{
-				e_ptr->activate = -find_spell(buf + 8);
-				if (e_ptr->activate == -( -1))
 					return 1;
 			}
 
