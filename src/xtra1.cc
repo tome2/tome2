@@ -11,6 +11,7 @@
 #include "angband.h"
 #include "cave.hpp"
 #include "corrupt.hpp"
+#include "cmd7.hpp"
 #include "gods.hpp"
 #include "hooks.h"
 #include "messages.h"

@@ -3,6 +3,7 @@
 /* Purpose: Spoiler generation -BEN- */
 
 #include "angband.h"
+#include "cmd7.hpp"
 
 #include <vector>
 

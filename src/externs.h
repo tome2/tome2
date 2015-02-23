@@ -462,42 +462,6 @@ extern const char *get_version_string();
 /* birth.c */
 extern bool_ no_begin_screen;
 
-/* cmd7.c */
-extern void do_cmd_create_boulder(void);
-extern int rune_exec(rune_spell *spell, int cost);
-extern void necro_info(char *p, int power);
-extern void mindcraft_info(char *p, int power);
-extern void symbiotic_info(char *p, int power);
-extern void mimic_info(char *p, int power);
-extern void cast_magic_spell(int spell, byte level);
-extern void do_cmd_summoner(void);
-extern void do_cmd_mindcraft(void);
-extern void do_cmd_mimic(void);
-extern void use_ability_blade(void);
-extern bool_ alchemist_exists(int tval, int sval, int ego, int artifact);
-extern void rod_tip_extract(object_type *o_ptr);
-extern void do_cmd_toggle_artifact(object_type *o_ptr);
-extern bool_ alchemist_items_check(int tval, int sval, int ego, int tocreate, bool_ message);
-extern void alchemist_display_recipe(int tval, int sval, int ego);
-extern void alchemist_recipe_book(void);
-extern int alchemist_recipe_select(int *tval, int sval, int ego, bool_ recipe);
-extern int alchemist_learn_object(object_type *o_ptr);
-extern void alchemist_gain_level(int lev);
-extern void do_cmd_alchemist(void);
-extern void do_cmd_beastmaster(void);
-extern void do_cmd_powermage(void);
-extern void do_cmd_possessor(void);
-extern void do_cmd_archer(void);
-extern void do_cmd_set_piercing(void);
-extern void do_cmd_necromancer(void);
-extern void do_cmd_unbeliever(void);
-extern void cast_daemon_spell(int spell, byte level);
-extern void do_cmd_unbeliever(void);
-extern void do_cmd_runecrafter(void);
-extern void do_cmd_symbiotic(void);
-extern s32b sroot(s32b n);
-extern int clamp_failure_chance(int chance, int minfail);
-
 /* dungeon.c */
 extern void play_game(bool_ new_game);
 extern void sense_inventory();

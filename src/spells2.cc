@@ -9,6 +9,7 @@
 #include "angband.h"
 #include "cave.hpp"
 #include "cmd1.hpp"
+#include "cmd7.hpp"
 #include "hooks.h"
 #include "notes.hpp"
 #include "skills.hpp"

@@ -2335,7 +2335,7 @@ void do_cmd_create_artifact(object_type *q_ptr)
  * recipes as a createable item. Used to determine if we
  * should extract from it.
  */
-bool_ alchemist_exists(int tval, int sval, int ego, int artifact)
+static bool_ alchemist_exists(int tval, int sval, int ego, int artifact)
 {
 	int al_idx;
 
@@ -2522,7 +2522,7 @@ bool_ item_tester_hook_empower(object_type *o_ptr)
 }
 
 /* Extract a rod tip from a rod */
-void rod_tip_extract(object_type *o_ptr)
+static void rod_tip_extract(object_type *o_ptr)
 {
 	object_type *q_ptr;
 	object_type forge;
@@ -2552,7 +2552,7 @@ void rod_tip_extract(object_type *o_ptr)
 
 
 /* Begin & finish an art */
-void do_cmd_toggle_artifact(object_type *o_ptr)
+static void do_cmd_toggle_artifact(object_type *o_ptr)
 {
 	char o_name[80];
 
@@ -2627,7 +2627,7 @@ void do_cmd_toggle_artifact(object_type *o_ptr)
  * if tocreate=0, will return true if the player has enough
  * in their p_ptr->inventory to empower that item.
  */
-bool_ alchemist_items_check(int tval, int sval, int ego, int tocreate, bool_ message)
+static bool_ alchemist_items_check(int tval, int sval, int ego, int tocreate, bool_ message)
 {
 	int al_idx, j;
 	bool_ exists = FALSE;
@@ -2722,7 +2722,7 @@ bool_ alchemist_items_check(int tval, int sval, int ego, int tocreate, bool_ mes
 /* This function lists all the ingredients
  * needed to create something.
  */
-void alchemist_display_recipe(int tval, int sval, int ego)
+static void alchemist_display_recipe(int tval, int sval, int ego)
 {
 	int al_idx;
 	int row = 1, col = 15;
@@ -2770,14 +2770,6 @@ void alchemist_display_recipe(int tval, int sval, int ego)
 	(void)get_com(format("ingredients needed to create a %s", o_name), &ch);
 
 }
-
-/*
- *
- * The alchemist_recipe_select was copied from
- * wiz_create_itemtype
- * and then changed quite a bit.
- *
- */
 
 /*
  The select array is a simple array of 'use this char to select item x'
@@ -2835,11 +2827,235 @@ void strip_and_print(const char *str, int color, int num)
 	c_prt(color, format("[%c] %s", ch, string), row, col);
 }
 
+/* Display a list of known recipies that can be made with
+ * materials on hand (including the passed tval). Also
+ * calls the recipe_display function, if requested by the
+ * player or there aren't enough essences to make the
+ * requested object.
+ *
+ * Note: sval is ignored if !ego, tval is the only determinant
+ * of what recipies are available otherwise.
+ *
+ * This function needs to be able to scroll a list, because
+ * there are SO MANY potions. :)
+ */
+static int alchemist_recipe_select(int *tval, int sval, int ego, bool_ recipe)
+{
+	int i, mod40 = 0, num, max_num = 0;
+
+	cptr tval_desc2 = "";
+	char ch;
+	bool_ done = FALSE;
+
+	int choice[60];
+	int validc[60];
+
+	const char *string;
+
+
+	/* Save and clear the screen */
+	character_icky = TRUE;
+	Term_save();
+	Term_clear();
+
+	/* Base object type chosen, fill in tval */
+	for ( num = 0 ; num < 40 ; num ++)
+		if (tvals[num].tval == *tval)
+		{
+			tval_desc2 = tvals[num].desc;
+		}
+
+	while (!done)
+	{
+		Term_clear();
+		if (ego)
+		{
+			/* Find matching ego items */
+			for (num = 0, i = 1; (num < 40) && (i < max_e_idx) ; i++)
+			{
+				int j;
+				ego_item_type *e_ptr = &e_info[i];
+
+				/* Skip if unknown ego type */
+				if ( !(alchemist_known_egos[i / 32] & (1 << (i % 32))))
+					continue;
+
+				/* search in permitted tvals/svals for allowed egos */
+				for ( j = 0 ; j < 6 ; j ++ )
+					if ( e_ptr->tval[j] == *tval
+							&& sval >= e_ptr->min_sval[j]
+							&& sval <= e_ptr->max_sval[j])
+					{
+						int color = TERM_GREEN;
+
+						/*Reject if not opposite end of name
+						 prefixes only on postfix egos,
+						 postfixes only on prefix egos.
+						 */
+						if (ego != -1 && e_ptr->before == e_info[ego].before)
+							continue;
+
+						/*Color it red of the alchemist doesn't have the essences to create it*/
+						if (!alchemist_items_check(*tval, 0, i, 0, TRUE))
+							color = TERM_RED;
+
+						/* add this ego to the list*/
+						strip_and_print(e_info[i].name, color, num);
+						validc[num] = color;
+						choice[num++] = i;
+						break;
+					}
+			}
+		}
+		else
+		{
+			char skipped = 0;
+			num = 0;
+			if (mod40 != 0)
+			{
+				strip_and_print("--MORE--", TERM_WHITE, num);
+				validc[num] = TERM_WHITE;
+				choice[num++] = -1;
+			}
+
+			for (i = 1; (num < 39) && (i < max_k_idx); i++)
+			{
+				object_kind *k_ptr = &k_info[i];
+
+				/* Analyze matching items */
+				if (k_ptr->tval == *tval || (k_ptr->tval == TV_POTION2 && *tval == TV_POTION))
+				{
+					char color = TERM_GREEN;
+					/* Hack -- Skip instant artifacts */
+					if (k_ptr->flags3 & (TR3_INSTA_ART)) continue;
+
+					/*Don't display recipes that the alchemist doesn't know about*/
+					if (!k_ptr->know && !wizard) continue;
+
+					/*Skip recipes that are somehow known, but don't exist*/
+					if (!alchemist_exists(k_ptr->tval, k_ptr->sval, 0, 0))
+						continue;
+
+					/* Skip the first 39 if they hit 'more' */
+					if (skipped++ < mod40*39)
+						continue;
+
+					/* Color 'unable to create' items different */
+					if (!alchemist_items_check(k_ptr->tval, k_ptr->sval, 0, 0, TRUE))
+						color = TERM_RED;
+
+					/* Acquire the "name" of object "i" */
+					/* and print it in it's place */
+					strip_and_print(k_ptr->name, color, num);
+
+					/* Remember the object index */
+					validc[num] = color;
+					choice[num++] = i;
+				}
+			}
+			if (num == 39)
+			{
+				strip_and_print("--MORE--", TERM_WHITE, num);
+				validc[num] = TERM_WHITE;
+				choice[num++] = -1;
+			}
+		}
+
+		/* We need to know the maximal possible remembered object_index */
+		max_num = num;
+		string = "What Kind of %s? (* to see recipe) [%c-%c,*]";
+		num = 0xff;
+
+		/* Pretend they're all undoable if we where called to display recipes */
+		if (recipe)
+		{
+			for ( num = 0 ; num < max_num ; num++)
+				if (validc[num] != TERM_WHITE) validc[num] = TERM_RED;
+			string = "show which %s recipe? [%c-%c]";
+		}
+
+		while (num == 0xff || num >= max_num)
+		{
+			ch = selectchar[max_num - 1];
+			/* Choose! */
+			if ( max_num == 0 || !get_com(format(string, tval_desc2, selectchar[0], ch), &ch))
+			{
+				break;
+			}
+
+			/* Extra breaks for recipe */
+			if (recipe && (ch == '\r' || ch == ' ' || ch == ESCAPE ))
+				break;
+
+			/* Analyze choice */
+			num = selectitem[(byte)ch];
+
+			/* Pretend that we don't have enough essences for anything */
+			if (ch == '*' )
+			{
+				for ( num = 0 ; num < max_num ; num++)
+					if (validc[num] != TERM_WHITE) validc[num] = TERM_RED;
+				string = "Show which %s recipe? [%c-%c]";
+			}
+		}
+		if ( num == 0xff || max_num == 0 || num >= max_num)
+			break;
+
+		if ( validc[num] == TERM_WHITE )
+		{
+			if (num == 0)
+				mod40--;
+			else
+				mod40++;
+			if ( mod40 < 0)
+				mod40 = 0;
+			continue;
+		}
+
+		/* If we don't have enough essences, or user asked for recipes */
+		if ( validc[num] != TERM_GREEN )
+		{
+			/* Display the recipe */
+			if (ego)
+				alchemist_display_recipe(*tval, sval, choice[num]);
+			else
+				alchemist_display_recipe(k_info[choice[num]].tval, k_info[choice[num]].sval, 0);
+		}
+		else
+			done = TRUE;
+
+	}/*while(!done)*/
+
+	/* Restore screen contents */
+	Term_load();
+	character_icky = FALSE;
+
+	/* User abort, or no choices */
+	if (max_num == 0 || num == 0xff || num >= max_num)
+	{
+		if (max_num == 0)
+			msg_print("You don't know of anything you can make using that.");
+		return ( -1);
+	}
+	if ( validc[num] != TERM_GREEN )
+		return ( -1);
+
+	/* And return successful */
+	if ( ego )
+		return choice[num];
+
+	/* Set the tval, should be the same unless they selected a potion2 */
+	if (*tval != k_info[choice[num]].tval && *tval != TV_POTION)
+		msg_print("Coding error: tval != TV_POTION");
+	*tval = k_info[choice[num]].tval;
+	return ( k_info[choice[num]].sval );
+}
+
 /* Display a list of recipes that need a particular essence.
  * Note that we display a list of essences first,
  * so in effect, this is the alchemist's recipe book.
  */
-void alchemist_recipe_book(void)
+static void alchemist_recipe_book(void)
 {
 	int num, max_num, i, al_idx, bat, kidx;
 	int choice[61], choice2[61];
@@ -3115,230 +3331,6 @@ void alchemist_recipe_book(void)
 	character_icky = FALSE;
 }
 
-/* Display a list of known recipies that can be made with
- * materials on hand (including the passed tval). Also
- * calls the recipe_display function, if requested by the
- * player or there aren't enough essences to make the
- * requested object.
- *
- * Note: sval is ignored if !ego, tval is the only determinant
- * of what recipies are available otherwise.
- *
- * This function needs to be able to scroll a list, because
- * there are SO MANY potions. :)
- */
-int alchemist_recipe_select(int *tval, int sval, int ego, bool_ recipe)
-{
-	int i, mod40 = 0, num, max_num = 0;
-
-	cptr tval_desc2 = "";
-	char ch;
-	bool_ done = FALSE;
-
-	int choice[60];
-	int validc[60];
-
-	const char *string;
-
-
-	/* Save and clear the screen */
-	character_icky = TRUE;
-	Term_save();
-	Term_clear();
-
-	/* Base object type chosen, fill in tval */
-	for ( num = 0 ; num < 40 ; num ++)
-		if (tvals[num].tval == *tval)
-		{
-			tval_desc2 = tvals[num].desc;
-		}
-
-	while (!done)
-	{
-		Term_clear();
-		if (ego)
-		{
-			/* Find matching ego items */
-			for (num = 0, i = 1; (num < 40) && (i < max_e_idx) ; i++)
-			{
-				int j;
-				ego_item_type *e_ptr = &e_info[i];
-
-				/* Skip if unknown ego type */
-				if ( !(alchemist_known_egos[i / 32] & (1 << (i % 32))))
-					continue;
-
-				/* search in permitted tvals/svals for allowed egos */
-				for ( j = 0 ; j < 6 ; j ++ )
-					if ( e_ptr->tval[j] == *tval
-					                && sval >= e_ptr->min_sval[j]
-					                && sval <= e_ptr->max_sval[j])
-					{
-						int color = TERM_GREEN;
-
-						/*Reject if not opposite end of name
-						 prefixes only on postfix egos,
-						 postfixes only on prefix egos.
-						 */
-						if (ego != -1 && e_ptr->before == e_info[ego].before)
-							continue;
-
-						/*Color it red of the alchemist doesn't have the essences to create it*/
-						if (!alchemist_items_check(*tval, 0, i, 0, TRUE))
-							color = TERM_RED;
-
-						/* add this ego to the list*/
-						strip_and_print(e_info[i].name, color, num);
-						validc[num] = color;
-						choice[num++] = i;
-						break;
-					}
-			}
-		}
-		else
-		{
-			char skipped = 0;
-			num = 0;
-			if (mod40 != 0)
-			{
-				strip_and_print("--MORE--", TERM_WHITE, num);
-				validc[num] = TERM_WHITE;
-				choice[num++] = -1;
-			}
-
-			for (i = 1; (num < 39) && (i < max_k_idx); i++)
-			{
-				object_kind *k_ptr = &k_info[i];
-
-				/* Analyze matching items */
-				if (k_ptr->tval == *tval || (k_ptr->tval == TV_POTION2 && *tval == TV_POTION))
-				{
-					char color = TERM_GREEN;
-					/* Hack -- Skip instant artifacts */
-					if (k_ptr->flags3 & (TR3_INSTA_ART)) continue;
-
-					/*Don't display recipes that the alchemist doesn't know about*/
-					if (!k_ptr->know && !wizard) continue;
-
-					/*Skip recipes that are somehow known, but don't exist*/
-					if (!alchemist_exists(k_ptr->tval, k_ptr->sval, 0, 0))
-						continue;
-
-					/* Skip the first 39 if they hit 'more' */
-					if (skipped++ < mod40*39)
-						continue;
-
-					/* Color 'unable to create' items different */
-					if (!alchemist_items_check(k_ptr->tval, k_ptr->sval, 0, 0, TRUE))
-						color = TERM_RED;
-
-					/* Acquire the "name" of object "i" */
-					/* and print it in it's place */
-					strip_and_print(k_ptr->name, color, num);
-
-					/* Remember the object index */
-					validc[num] = color;
-					choice[num++] = i;
-				}
-			}
-			if (num == 39)
-			{
-				strip_and_print("--MORE--", TERM_WHITE, num);
-				validc[num] = TERM_WHITE;
-				choice[num++] = -1;
-			}
-		}
-
-		/* We need to know the maximal possible remembered object_index */
-		max_num = num;
-		string = "What Kind of %s? (* to see recipe) [%c-%c,*]";
-		num = 0xff;
-
-		/* Pretend they're all undoable if we where called to display recipes */
-		if (recipe)
-		{
-			for ( num = 0 ; num < max_num ; num++)
-				if (validc[num] != TERM_WHITE) validc[num] = TERM_RED;
-			string = "show which %s recipe? [%c-%c]";
-		}
-
-		while (num == 0xff || num >= max_num)
-		{
-			ch = selectchar[max_num - 1];
-			/* Choose! */
-			if ( max_num == 0 || !get_com(format(string, tval_desc2, selectchar[0], ch), &ch))
-			{
-				break;
-			}
-
-			/* Extra breaks for recipe */
-			if (recipe && (ch == '\r' || ch == ' ' || ch == ESCAPE ))
-				break;
-
-			/* Analyze choice */
-			num = selectitem[(byte)ch];
-
-			/* Pretend that we don't have enough essences for anything */
-			if (ch == '*' )
-			{
-				for ( num = 0 ; num < max_num ; num++)
-					if (validc[num] != TERM_WHITE) validc[num] = TERM_RED;
-				string = "Show which %s recipe? [%c-%c]";
-			}
-		}
-		if ( num == 0xff || max_num == 0 || num >= max_num)
-			break;
-
-		if ( validc[num] == TERM_WHITE )
-		{
-			if (num == 0)
-				mod40--;
-			else
-				mod40++;
-			if ( mod40 < 0)
-				mod40 = 0;
-			continue;
-		}
-
-		/* If we don't have enough essences, or user asked for recipes */
-		if ( validc[num] != TERM_GREEN )
-		{
-			/* Display the recipe */
-			if (ego)
-				alchemist_display_recipe(*tval, sval, choice[num]);
-			else
-				alchemist_display_recipe(k_info[choice[num]].tval, k_info[choice[num]].sval, 0);
-		}
-		else
-			done = TRUE;
-
-	}/*while(!done)*/
-
-	/* Restore screen contents */
-	Term_load();
-	character_icky = FALSE;
-
-	/* User abort, or no choices */
-	if (max_num == 0 || num == 0xff || num >= max_num)
-	{
-		if (max_num == 0)
-			msg_print("You don't know of anything you can make using that.");
-		return ( -1);
-	}
-	if ( validc[num] != TERM_GREEN )
-		return ( -1);
-
-	/* And return successful */
-	if ( ego )
-		return choice[num];
-
-	/* Set the tval, should be the same unless they selected a potion2 */
-	if (*tval != k_info[choice[num]].tval && *tval != TV_POTION)
-		msg_print("Coding error: tval != TV_POTION");
-	*tval = k_info[choice[num]].tval;
-	return ( k_info[choice[num]].sval );
-}
-
 /* Set the 'known' flags for all objects with a level <= lev
  * This lets the budding alchemist create basic items.
  */
@@ -3446,7 +3438,7 @@ int alchemist_learn_object(object_type *o_ptr)
 /* Alchemist has gained a level - set the ego flags
  * for all egos <= lev/4.
  */
-void alchemist_gain_level(int lev)
+static void alchemist_gain_level(int lev)
 {
 	object_type forge;
 	object_type *o_ptr = &forge;

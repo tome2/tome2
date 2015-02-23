@@ -12,6 +12,7 @@
 
 #include "lua_bind.hpp"
 #include "angband.h"
+#include "cmd7.hpp"
 #include "corrupt.hpp"
 #include "skills.hpp"
 #include "spell_type.hpp"

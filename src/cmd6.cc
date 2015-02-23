@@ -11,6 +11,7 @@
 #include "angband.h"
 #include "cave.hpp"
 #include "cmd1.hpp"
+#include "cmd7.hpp"
 #include "corrupt.hpp"
 #include "hooks.h"
 #include "lua_bind.hpp"
