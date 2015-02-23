@@ -3833,32 +3833,6 @@ static int flow_n = 0;
 
 
 /*
- * Hack -- forget the "flow" information
- */
-void forget_flow(void)
-{
-	int x, y;
-
-	/* Nothing to forget */
-	if (!flow_n) return;
-
-	/* Check the entire dungeon */
-	for (y = 0; y < cur_hgt; y++)
-	{
-		for (x = 0; x < cur_wid; x++)
-		{
-			/* Forget the old data */
-			cave[y][x].cost = 0;
-			cave[y][x].when = 0;
-		}
-	}
-
-	/* Start over */
-	flow_n = 0;
-}
-
-
-/*
  * Hack -- Allow us to treat the "seen" array as a queue
  */
 static int flow_head = 0;
