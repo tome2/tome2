@@ -827,7 +827,7 @@ static int do_cmd_activate_skill_aux()
 			}
 			if (next) continue;
 
-			p.push_back(std::make_tuple(ab_text + ab_info[i].action_desc,
+			p.push_back(std::make_tuple(ab_info[i].action_desc,
 						    ab_info[i].action_mkey));
 		}
 	}
@@ -1438,9 +1438,9 @@ s16b find_ability(cptr name)
 	/* Scan ability list */
 	for (i = 0; i < max_ab_idx; i++)
 	{
-		/* The name matches */
-		if (ab_info[i].name > 0) {
-			if (streq(ab_info[i].name + ab_name, name)) return (i);
+		if (ab_info[i].name && streq(ab_info[i].name, name))
+		{
+			return (i);
 		}
 	}
 
@@ -1532,8 +1532,7 @@ static void gain_ability(int ab)
 
 static bool compare_abilities(const int ab_idx1, const int ab_idx2)
 {
-	return strcmp(ab_name + ab_info[ab_idx1].name,
-		      ab_name + ab_info[ab_idx2].name) < 0;
+	return strcmp(ab_info[ab_idx1].name, ab_info[ab_idx2].name) < 0;
 }
 
 /*
@@ -1565,7 +1564,7 @@ void dump_abilities(FILE *fff)
 
 		for (int i : table)
 		{
-			fprintf(fff, "\n * %s", ab_info[i].name + ab_name);
+			fprintf(fff, "\n * %s", ab_info[i].name);
 		}
 
 		fprintf(fff, "\n");
@@ -1590,7 +1589,7 @@ static void print_abilities(const std::vector<int> &table, int sel, int start)
 	c_prt((p_ptr->skill_points) ? TERM_L_BLUE : TERM_L_RED,
 	      format("Skill points left: %d", p_ptr->skill_points), 2, 0);
 
-	print_desc_aux(ab_info[table[sel]].desc + ab_text, 3, 0);
+	print_desc_aux(ab_info[table[sel]].desc, 3, 0);
 
 	for (j = start; j < start + (hgt - 7); j++)
 	{
@@ -1620,7 +1619,7 @@ static void print_abilities(const std::vector<int> &table, int sel, int start)
 			end = ']';
 		}
 
-		c_prt(color, format("%c.%c%s", deb, end, ab_info[i].name + ab_name),
+		c_prt(color, format("%c.%c%s", deb, end, ab_info[i].name),
 		      j + 7 - start, 0);
 
 		if (!ab_info[i].acquired)
@@ -1723,7 +1722,7 @@ void do_cmd_ability()
 			/* Contextual help */
 			if (c == '?')
 			{
-				help_ability(ab_info[table[sel]].name + ab_name);
+				help_ability(ab_info[table[sel]].name);
 			}
 
 			/* Handle boundaries and scrolling */
@@ -1769,25 +1768,33 @@ void apply_level_abilities(int level)
 		if (cp_ptr->abilities[i].level == level)
 		{
 			if ((level > 1) && (!ab_info[cp_ptr->abilities[i].ability].acquired))
-				cmsg_format(TERM_L_GREEN, "You have learned the ability '%s'.", ab_name + ab_info[cp_ptr->abilities[i].ability].name);
+			{
+				cmsg_format(TERM_L_GREEN, "You have learned the ability '%s'.", ab_info[cp_ptr->abilities[i].ability].name);
+			}
 			ab_info[cp_ptr->abilities[i].ability].acquired = TRUE;
 		}
 		if (spp_ptr->abilities[i].level == level)
 		{
 			if ((level > 1) && (!ab_info[spp_ptr->abilities[i].ability].acquired))
-				cmsg_format(TERM_L_GREEN, "You have learned the ability '%s'.", ab_name + ab_info[spp_ptr->abilities[i].ability].name);
+			{
+				cmsg_format(TERM_L_GREEN, "You have learned the ability '%s'.", ab_info[spp_ptr->abilities[i].ability].name);
+			}
 			ab_info[spp_ptr->abilities[i].ability].acquired = TRUE;
 		}
 		if (rp_ptr->abilities[i].level == level)
 		{
 			if ((level > 1) && (!ab_info[rp_ptr->abilities[i].ability].acquired))
-				cmsg_format(TERM_L_GREEN, "You have learned the ability '%s'.", ab_name + ab_info[rp_ptr->abilities[i].ability].name);
+			{
+				cmsg_format(TERM_L_GREEN, "You have learned the ability '%s'.", ab_info[rp_ptr->abilities[i].ability].name);
+			}
 			ab_info[rp_ptr->abilities[i].ability].acquired = TRUE;
 		}
 		if (rmp_ptr->abilities[i].level == level)
 		{
 			if ((level > 1) && (!ab_info[rmp_ptr->abilities[i].ability].acquired))
-				cmsg_format(TERM_L_GREEN, "You have learned the ability '%s'.", ab_name + ab_info[rmp_ptr->abilities[i].ability].name);
+			{
+				cmsg_format(TERM_L_GREEN, "You have learned the ability '%s'.", ab_info[rmp_ptr->abilities[i].ability].name);
+			}
 			ab_info[rmp_ptr->abilities[i].ability].acquired = TRUE;
 		}
 	}

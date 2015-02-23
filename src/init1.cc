@@ -6003,7 +6003,7 @@ errr init_ab_info_txt(FILE *fp, char *buf)
 			i = atoi(buf + 2);
 
 			/* Verify information */
-			if (i >= ab_head->info_num) return (2);
+			if (i >= max_ab_idx) return (2);
 
 			/* Save the index */
 			error_idx = i;
@@ -6011,17 +6011,9 @@ errr init_ab_info_txt(FILE *fp, char *buf)
 			/* Point at the "info" */
 			ab_ptr = &ab_info[i];
 
-			/* Hack -- Verify space */
-			if (ab_head->name_size + strlen(s) + 8 > FAKE_NAME_SIZE) return (7);
-
-			/* Advance and Save the name index */
-			if (!ab_ptr->name) ab_ptr->name = ++ab_head->name_size;
-
-			/* Append chars to the name */
-			strcpy(ab_name + ab_head->name_size, s);
-
-			/* Advance the index */
-			ab_head->name_size += strlen(s);
+			/* Copy name */
+			assert(!ab_ptr->name);
+			ab_ptr->name = my_strdup(s);
 
 			/* Init */
 			ab_ptr->action_mkey = 0;
@@ -6050,27 +6042,14 @@ errr init_ab_info_txt(FILE *fp, char *buf)
 			/* Acquire the text */
 			s = buf + 2;
 
-			/* Hack -- Verify space */
-			if (ab_head->text_size + strlen(s) + 8 > FAKE_TEXT_SIZE) return (7);
-
-			/* Advance and Save the text index */
+			/* Append description */
 			if (!ab_ptr->desc)
 			{
-				ab_ptr->desc = ++ab_head->text_size;
-
-				/* Append chars to the name */
-				strcpy(ab_text + ab_head->text_size, s);
-
-				/* Advance the index */
-				ab_head->text_size += strlen(s);
+				ab_ptr->desc = my_strdup(s);
 			}
 			else
 			{
-				/* Append chars to the name */
-				strcpy(ab_text + ab_head->text_size, format("\n%s", s));
-
-				/* Advance the index */
-				ab_head->text_size += strlen(s) + 1;
+				strappend(&ab_ptr->desc, format("\n%s", s));
 			}
 
 			/* Next... */
@@ -6089,18 +6068,12 @@ errr init_ab_info_txt(FILE *fp, char *buf)
 			*txt = '\0';
 			txt++;
 
-			/* Hack -- Verify space */
-			if (ab_head->text_size + strlen(txt) + 8 > FAKE_TEXT_SIZE) return (7);
+			/* Copy name */
+			assert(!ab_ptr->action_desc);
+			ab_ptr->action_desc = my_strdup(txt);
 
-			/* Advance and Save the text index */
-			if (!ab_ptr->action_desc) ab_ptr->action_desc = ++ab_head->text_size;
-
-			/* Append chars to the name */
-			strcpy(ab_text + ab_head->text_size, txt);
+			/* Set mkey */
 			ab_ptr->action_mkey = atoi(s);
-
-			/* Advance the index */
-			ab_head->text_size += strlen(txt);
 
 			/* Next... */
 			continue;
@@ -6249,15 +6222,8 @@ errr init_ab_info_txt(FILE *fp, char *buf)
 		return (6);
 	}
 
-
-	/* Complete the "name" and "text" sizes */
-	++ab_head->name_size;
-	++ab_head->text_size;
-
-
 	/* No version yet */
 	if (!okay) return (2);
-
 
 	/* Success */
 	return (0);

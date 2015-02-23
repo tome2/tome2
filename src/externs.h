@@ -311,10 +311,7 @@ extern header *al_head;
 extern char *al_name;
 extern artifact_select_flag *a_select_flags;
 
-extern header *ab_head;
 extern ability_type *ab_info;
-extern char *ab_name;
-extern char *ab_text;
 
 extern header *s_head;
 extern skill_type *s_info;

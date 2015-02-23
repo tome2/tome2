@@ -905,7 +905,7 @@ std::shared_ptr<Condition> AbilityCondition::from_json(json_t *j)
 
 void AbilityCondition::write_tree(TreePrinter *p, Cursor *, uint8_t ecol, uint8_t bcol) const
 {
-	cptr ability_s = ab_info[m_ability_idx].name + ab_name;
+	cptr ability_s = ab_info[m_ability_idx].name;
 
 	p->write(ecol, "You have the ");
 	p->write(bcol, ability_s);
@@ -915,7 +915,7 @@ void AbilityCondition::write_tree(TreePrinter *p, Cursor *, uint8_t ecol, uint8_
 
 void AbilityCondition::to_json(json_t *j) const
 {
-	cptr ability_s = ab_info[m_ability_idx].name + ab_name;
+	cptr ability_s = ab_info[m_ability_idx].name;
 	json_object_set_new(j, "ability", json_string(ability_s));
 }
 

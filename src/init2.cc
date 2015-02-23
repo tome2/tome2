@@ -610,19 +610,8 @@ static errr init_ab_info(void)
 	/* General buffer */
 	char buf[1024];
 
-
-	/*** Make the "header" ***/
-	ab_head = make_header(max_ab_idx);
-
-
-	/*** Make the fake arrays ***/
-
 	/* Allocate the "ab_info" array */
-	ab_info = make_array<ability_type>(ab_head->info_num);
-
-	/* Hack -- make "fake" arrays */
-	ab_name = make_array<char>(FAKE_NAME_SIZE);
-	ab_text = make_array<char>(FAKE_TEXT_SIZE);
+	ab_info = make_array<ability_type>(max_ab_idx);
 
 	/*** Load the ascii template file ***/
 

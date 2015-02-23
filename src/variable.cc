@@ -662,10 +662,7 @@ dungeon_info_type *d_info;
 /*
  * Player abilities arrays
  */
-header *ab_head;
 ability_type *ab_info;
-char *ab_name;
-char *ab_text;
 
 /*
  * Player skills arrays
