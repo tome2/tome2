@@ -1680,12 +1680,12 @@ bool_ artifact_display_or_use(int pval, int oldpval, bool_ use)
 				if ( missing )
 					c_prt(TERM_RED, format("%d of the required %d essences of %s",
 					                       missing, essence[i],
-					                       k_name + k_info[lookup_kind(TV_BATERIE, i + 1)].name ),
+							       k_info[lookup_kind(TV_BATERIE, i + 1)].name ),
 					      row++, col);
 				else
 					c_prt(TERM_GREEN, format("you have the needed %d essences of %s",
 					                         essence[i],
-					                         k_name + k_info[lookup_kind(TV_BATERIE, i + 1)].name ),
+								 k_info[lookup_kind(TV_BATERIE, i + 1)].name ),
 					      row++, col);
 			}
 
@@ -2737,7 +2737,7 @@ void alchemist_display_recipe(int tval, int sval, int ego)
 			c_prt(TERM_GREEN,
 			      format("     %d essence%s %s         ", qty,
 			             qty > 1 ? "s" : "",
-			             k_name + k_info[lookup_kind(TV_BATERIE, alchemist_recipes[al_idx].sval_essence)].name ),
+				     k_info[lookup_kind(TV_BATERIE, alchemist_recipes[al_idx].sval_essence)].name),
 			      row++, col);
 		}
 
@@ -2910,8 +2910,10 @@ void alchemist_recipe_book(void)
 					}
 				}
 				else
+				{
 					/* add this essence to the list*/
-					strip_and_print(k_name + k_info[kidx].name, TERM_WHITE, num);
+					strip_and_print(k_info[kidx].name, TERM_WHITE, num);
+				}
 
 				choice[num++] = i;
 			}
@@ -3040,7 +3042,7 @@ void alchemist_recipe_book(void)
 								break;
 							}
 						strcat(names, " of ");
-						strcat(names, k_name + k_info[kidx].name);
+						strcat(names, k_info[kidx].name);
 
 					}
 
@@ -3228,7 +3230,7 @@ int alchemist_recipe_select(int *tval, int sval, int ego, bool_ recipe)
 
 					/* Acquire the "name" of object "i" */
 					/* and print it in it's place */
-					strip_and_print(k_name + k_ptr->name, color, num);
+					strip_and_print(k_ptr->name, color, num);
 
 					/* Remember the object index */
 					validc[num] = color;

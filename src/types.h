@@ -128,8 +128,8 @@ typedef struct object_kind object_kind;
 
 struct object_kind
 {
-	u32b name;			/* Name (offset) */
-	u32b text;			/* Text (offset) */
+	const char *name;               /* Name */
+	char *text;                     /* Text */
 
 	byte tval;			/* Object type */
 	byte sval;			/* Object sub type */

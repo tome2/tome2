@@ -4633,7 +4633,6 @@ static int target_set_aux(int y, int x, int mode, cptr info)
 
 			if ((feat == FEAT_FOUNTAIN) && (c_ptr->info & CAVE_IDNT))
 			{
-				object_kind *k_ptr;
 				int tv, sv;
 
 				if (c_ptr->special <= SV_POTION_LAST)
@@ -4647,8 +4646,7 @@ static int target_set_aux(int y, int x, int mode, cptr info)
 					sv = c_ptr->special - SV_POTION_LAST;
 				}
 
-				k_ptr = &k_info[lookup_kind(tv, sv)];
-				info = k_name + k_ptr->name;
+				info = k_info[lookup_kind(tv, sv)].name;
 			}
 
 			/* Display a message */

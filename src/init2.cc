@@ -355,20 +355,8 @@ static errr init_k_info(void)
 	/* General buffer */
 	char buf[1024];
 
-
-	/*** Make the header ***/
-	k_head = make_header(max_k_idx);
-
-
-	/*** Make the fake arrays ***/
-
 	/* Allocate the "k_info" array */
-	k_info = make_array<object_kind>(k_head->info_num);
-
-	/* Hack -- make "fake" arrays */
-	k_name = make_array<char>(FAKE_NAME_SIZE);
-	k_text = make_array<char>(FAKE_TEXT_SIZE);
-
+	k_info = make_array<object_kind>(max_k_idx);
 
 	/*** Load the ascii template file ***/
 

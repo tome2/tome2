@@ -3405,9 +3405,8 @@ int test_item_name(cptr name)
 	for (i = 1; i < max_k_idx; i++)
 	{
 		object_kind *k_ptr = &k_info[i];
-		cptr obj_name = k_name + k_ptr->name;
 		/* If name matches, give us the number */
-		if (iequals(name, obj_name)) return (i);
+		if (k_ptr->name && iequals(name, k_ptr->name)) return (i);
 	}
 	return (0);
 }

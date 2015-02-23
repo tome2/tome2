@@ -1234,7 +1234,7 @@ void object_desc(char *buf, object_type *o_ptr, int pref, int mode)
 	indexx = o_ptr->sval;
 
 	/* Extract default "base" string */
-	basenm = (k_name + k_ptr->name);
+	basenm = k_ptr->name;
 
 	/* Assume no "modifier" string */
 	modstr = "";
@@ -1314,7 +1314,10 @@ void object_desc(char *buf, object_type *o_ptr, int pref, int mode)
 			else
 				basenm = aware ? "& # Amulet~" : "& # Amulet~";
 
-			if (known && !o_ptr->art_name && artifact_p(o_ptr)) basenm = k_ptr->name + k_name;
+			if (known && !o_ptr->art_name && artifact_p(o_ptr))
+			{
+				basenm = k_ptr->name;
+			}
 
 			break;
 		}
@@ -1334,7 +1337,10 @@ void object_desc(char *buf, object_type *o_ptr, int pref, int mode)
 			/* Hack -- The One Ring */
 			if (!aware && (o_ptr->sval == SV_RING_POWER)) modstr = "Plain Gold";
 
-			if (known && !o_ptr->art_name && artifact_p(o_ptr)) basenm = k_ptr->name + k_name;
+			if (known && !o_ptr->art_name && artifact_p(o_ptr))
+			{
+				basenm = k_ptr->name;
+			}
 
 			break;
 		}
@@ -1382,9 +1388,7 @@ void object_desc(char *buf, object_type *o_ptr, int pref, int mode)
 
 	case TV_ROD_MAIN:
 		{
-			object_kind *tip_ptr = &k_info[lookup_kind(TV_ROD, o_ptr->pval)];
-
-			modstr = k_name + tip_ptr->name;
+			modstr = k_info[lookup_kind(TV_ROD, o_ptr->pval)].name;
 			break;
 		}
 
@@ -1573,7 +1577,7 @@ void object_desc(char *buf, object_type *o_ptr, int pref, int mode)
 	case TV_DAEMON_BOOK:
 	case TV_BOOK:
 		{
-			basenm = k_name + k_ptr->name;
+			basenm = k_ptr->name;
 			if (o_ptr->sval == 255)
 			{
 				modstr = spell_type_name(spell_at(o_ptr->pval));
@@ -1590,7 +1594,10 @@ void object_desc(char *buf, object_type *o_ptr, int pref, int mode)
 	}
 
 	/* Mega Hack */
-	if ((!hack_name) && known && (k_ptr->flags5 & TR5_FULL_NAME)) basenm = (k_name + k_ptr->name);
+	if ((!hack_name) && known && (k_ptr->flags5 & TR5_FULL_NAME))
+	{
+		basenm = k_ptr->name;
+	}
 
 
 	/* Start dumping the result */
@@ -1860,7 +1867,9 @@ void object_desc(char *buf, object_type *o_ptr, int pref, int mode)
 			}
 		}
 		else
-			t = object_desc_str(t, (k_name + k_ptr->name));
+		{
+			t = object_desc_str(t, k_ptr->name);
+		}
 	}
 
 	/* Hack -- Append "Artifact" or "Special" names */
@@ -2457,8 +2466,8 @@ cptr item_activation(object_type *o_ptr, byte num)
 			mana = o_ptr->pval2 >> 8;
 		}
 		sprintf(rspell[num], "runespell(%s, %s, %d) every %d turns",
-		        k_info[lookup_kind(TV_RUNE1, gf)].name + k_name,
-		        k_info[lookup_kind(TV_RUNE2, mod)].name + k_name,
+			k_info[lookup_kind(TV_RUNE1, gf)].name,
+			k_info[lookup_kind(TV_RUNE2, mod)].name,
 		        mana, mana * 5);
 		return rspell[num];
 	}
@@ -2827,7 +2836,7 @@ bool_ object_out_desc(object_type *o_ptr, FILE *fff, bool_ trim_down, bool_ wait
 		{
 			object_kind *k_ptr = &k_info[o_ptr->k_idx];
 
-			text_out_c(TERM_ORANGE, k_text + k_ptr->text);
+			text_out_c(TERM_ORANGE, k_ptr->text);
 			text_out("\n");
 		}
 

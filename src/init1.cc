@@ -4155,10 +4155,6 @@ errr init_k_info_txt(FILE *fp, char *buf)
 	error_line = -1;
 
 
-	/* Prepare the "fake" stuff */
-	k_head->name_size = 0;
-	k_head->text_size = 0;
-
 	/* Parse */
 	fp_stack_init(fp);
 	while (0 == my_fgets_dostack(buf, 1024))
@@ -4220,7 +4216,7 @@ errr init_k_info_txt(FILE *fp, char *buf)
 			if (i <= error_idx) return (4);
 
 			/* Verify information */
-			if (i >= k_head->info_num) return (2);
+			if (i >= max_k_idx) return (2);
 
 			/* Save the index */
 			error_idx = i;
@@ -4228,17 +4224,9 @@ errr init_k_info_txt(FILE *fp, char *buf)
 			/* Point at the "info" */
 			k_ptr = &k_info[i];
 
-			/* Hack -- Verify space */
-			if (k_head->name_size + strlen(s) + 8 > FAKE_NAME_SIZE) return (7);
-
 			/* Advance and Save the name index */
-			if (!k_ptr->name) k_ptr->name = ++k_head->name_size;
-
-			/* Append chars to the name */
-			strcpy(k_name + k_head->name_size, s);
-
-			/* Advance the index */
-			k_head->name_size += strlen(s);
+			assert(!k_ptr->name);
+			k_ptr->name = strdup(s);
 
 			/* Needed hack */
 			k_ptr->esp = 0;
@@ -4257,27 +4245,8 @@ errr init_k_info_txt(FILE *fp, char *buf)
 			/* Acquire the text */
 			s = buf + 2;
 
-			/* Hack -- Verify space */
-			if (k_head->text_size + strlen(s) + 8 > FAKE_TEXT_SIZE) return (7);
-
-			/* Advance and Save the text index */
-			if (!k_ptr->text) k_ptr->text = ++k_head->text_size;
-
-			/* Append a space if needed */
-			else if (k_text[k_head->text_size - 1] != ' ')
-			{
-				/* Append chars to the name */
-				strcpy(k_text + k_head->text_size, " ");
-
-				/* Advance the index */
-				k_head->text_size += 1;
-			}
-
-			/* Append chars to the name */
-			strcpy(k_text + k_head->text_size, s);
-
-			/* Advance the index */
-			k_head->text_size += strlen(s);
+			/* Append description */
+			strappend(&k_ptr->text, s);
 
 			/* Next... */
 			continue;
@@ -4536,11 +4505,6 @@ errr init_k_info_txt(FILE *fp, char *buf)
 		/* Oops */
 		return (6);
 	}
-
-
-	/* Complete the "name" and "text" sizes */
-	++k_head->name_size;
-	++k_head->text_size;
 
 
 	/* No version yet */

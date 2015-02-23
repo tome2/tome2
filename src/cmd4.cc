@@ -2234,7 +2234,7 @@ void do_cmd_visuals(void)
 				if (!k_ptr->name) continue;
 
 				/* Dump a comment */
-				fprintf(fff, "# %s\n", (k_name + k_ptr->name));
+				fprintf(fff, "# %s\n", k_ptr->name);
 
 				/* Dump the object attr/char info */
 				fprintf(fff, "K:%d:0x%02X:0x%02X\n\n", i,
@@ -2381,7 +2381,7 @@ void do_cmd_visuals(void)
 				/* Label the object */
 				Term_putstr(5, 17, -1, TERM_WHITE,
 				            format("Object = %d, Name = %-40.40s",
-				                   k, (k_name + k_ptr->name)));
+						   k, k_ptr->name));
 
 				/* Label the Default values */
 				Term_putstr(10, 19, -1, TERM_WHITE,

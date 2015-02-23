@@ -2486,7 +2486,7 @@ static void spoil_bateries(cptr fname)
 			   )
 			{
 				spoil_out(format("    %d essences of %s\n", alchemist_recipes[j].qty,
-				                 k_name + k_info[lookup_kind(TV_BATERIE, alchemist_recipes[j].sval_essence)].name));
+						 k_info[lookup_kind(TV_BATERIE, alchemist_recipes[j].sval_essence)].name));
 			}
 		}
 	}
@@ -2531,7 +2531,7 @@ static void spoil_bateries(cptr fname)
 		}
 		/*	print essence required*/
 		spoil_out(format(" %d %s", ar_ptr->qty,
-		                 k_name + k_info[lookup_kind(TV_BATERIE, ar_ptr->sval_essence)].name));
+				 k_info[lookup_kind(TV_BATERIE, ar_ptr->sval_essence)].name));
 	}
 
 	spoil_out(NULL);
