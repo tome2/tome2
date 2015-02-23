@@ -4243,6 +4243,9 @@ errr init_k_info_txt(FILE *fp, char *buf)
 			assert(!k_ptr->name);
 			k_ptr->name = my_strdup(s);
 
+			/* Ensure empty description */
+			k_ptr->text = my_strdup("");
+
 			/* Needed hack */
 			k_ptr->esp = 0;
 			k_ptr->power = -1;
@@ -7563,6 +7566,9 @@ errr init_r_info_txt(FILE *fp, char *buf)
 			/* Allocate name string. */
 			assert(!r_ptr->name); // Sanity check that we aren't overwriting anything
 			r_ptr->name = my_strdup(s);
+
+			/* Ensure empty description */
+			r_ptr->text = my_strdup("");
 
 			/* HACK -- Those ones HAVE to have a set default value */
 			r_ptr->drops.treasure = OBJ_GENE_TREASURE;
