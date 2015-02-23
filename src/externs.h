@@ -462,28 +462,6 @@ extern const char *get_version_string();
 /* birth.c */
 extern bool_ no_begin_screen;
 
-/* cmd5.c */
-extern bool_ is_magestaff(void);
-extern void calc_magic_bonus(void);
-extern void do_cmd_browse_aux(object_type *o_ptr);
-extern void do_cmd_browse(void);
-extern void do_cmd_pray(void);
-extern void do_cmd_rerate(void);
-extern void corrupt_player(void);
-extern bool_ item_tester_hook_armour(object_type *o_ptr);
-extern void fetch(int dir, int wgt, bool_ require_los);
-extern void do_poly_self(void);
-extern void brand_weapon(int brand_type);
-extern cptr symbiote_name(bool_ capitalize);
-extern int use_symbiotic_power(int r_idx, bool_ great, bool_ only_number, bool_ no_cost);
-extern bool_ is_ok_spell(s32b spell_idx, object_type *o_ptr);
-extern s32b get_school_spell(cptr do_what, s16b force_book);
-extern void do_cmd_copy_spell(void);
-extern void cast_school_spell(void);
-extern void browse_school_spell(int book, int pval, object_type *o_ptr);
-extern int find_spell(const char *name);
-extern bool_ is_school_book(object_type *o_ptr);
-
 /* cmd6.c */
 extern void set_stick_mode(object_type *o_ptr);
 extern void unset_stick_mode(void);
@@ -495,7 +473,6 @@ extern void do_cmd_use_staff(void);
 extern void do_cmd_zap_rod(void);
 extern const char *activation_aux(object_type *o_ptr, bool_ desc, int item);
 extern void do_cmd_activate(void);
-extern void do_cmd_rerate(void);
 extern void do_cmd_cut_corpse(void);
 extern void do_cmd_cure_meat(void);
 extern void do_cmd_drink_fountain(void);

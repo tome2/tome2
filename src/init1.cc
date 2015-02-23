@@ -2,6 +2,7 @@
 #include "cave.hpp"
 #include "gods.hpp"
 #include "skills.hpp"
+#include "spells5.hpp"
 
 #include <boost/algorithm/string/predicate.hpp>
 

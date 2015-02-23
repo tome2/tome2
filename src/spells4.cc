@@ -1,14 +1,15 @@
 #include "angband.h"
 
 #include "cave.hpp"
+#include "cmd5.hpp"
 #include "gods.hpp"
 #include "lua_bind.hpp"
 #include "spell_type.hpp"
 #include "spell_idx_list.hpp"
 #include "spells3.hpp"
 #include "spells5.hpp"
-#include <algorithm>
 
+#include <algorithm>
 #include <cassert>
 #include <sstream>
 

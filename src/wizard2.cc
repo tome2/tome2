@@ -6,6 +6,8 @@
  * included in all such copies.
  */
 
+#include "wizard2.hpp"
+
 #include "angband.h"
 #include "cave.hpp"
 #include "cmd4.hpp"

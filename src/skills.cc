@@ -10,6 +10,7 @@
 #include "birth.hpp"
 #include "cmd2.hpp"
 #include "cmd3.hpp"
+#include "cmd5.hpp"
 #include "gods.hpp"
 #include "help.hpp"
 #include "hooks.h"

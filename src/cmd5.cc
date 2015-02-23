@@ -6,6 +6,8 @@
  * included in all such copies.
  */
 
+#include "cmd5.hpp"
+
 #include "angband.h"
 #include "birth.hpp"
 #include "cave.hpp"
@@ -14,6 +16,7 @@
 #include "spell_type.hpp"
 #include "spells5.hpp"
 #include "quark.h"
+#include "wizard2.hpp"
 #include "xtra1.hpp"
 #include "xtra2.hpp"
 
@@ -22,7 +25,7 @@
 /* Maximum number of tries for teleporting */
 #define MAX_TRIES 300
 
-bool_ is_school_book(object_type *o_ptr)
+static bool_ is_school_book(object_type *o_ptr)
 {
 	if (o_ptr->tval == TV_BOOK)
 	{
@@ -95,6 +98,71 @@ bool_ is_magestaff()
 	/* Not wielding a mage staff */
 	return (FALSE);
 }
+
+
+static void browse_school_spell(int book, int pval, object_type *o_ptr)
+{
+	int i;
+	int num = 0, where = 1;
+	int ask;
+	char choice;
+	char out_val[160];
+
+	/* Show choices */
+	window_stuff();
+
+	num = school_book_length(book);
+
+	/* Build a prompt (accept all spells) */
+	strnfmt(out_val, 78, "(Spells %c-%c, ESC=exit) cast which spell? ",
+		I2A(0), I2A(num - 1));
+
+	/* Save the screen */
+	character_icky = TRUE;
+	Term_save();
+
+	/* Display a list of spells */
+	where = print_book(book, pval, o_ptr);
+
+	/* Get a spell from the user */
+	while (get_com(out_val, &choice))
+	{
+		/* Display a list of spells */
+		where = print_book(book, pval, o_ptr);
+
+		/* Note verify */
+		ask = (isupper(choice));
+
+		/* Lowercase */
+		if (ask) choice = tolower(choice);
+
+		/* Extract request */
+		i = (islower(choice) ? A2I(choice) : -1);
+
+		/* Totally Illegal */
+		if ((i < 0) || (i >= num))
+		{
+			bell();
+			continue;
+		}
+
+		/* Restore the screen */
+		Term_load();
+
+		/* Display a list of spells */
+		where = print_book(book, pval, o_ptr);
+		print_spell_desc(spell_x(book, pval, i), where);
+	}
+
+
+	/* Restore the screen */
+	Term_load();
+	character_icky = FALSE;
+
+	/* Show choices */
+	window_stuff();
+}
+
 
 /*
  * Peruse the spells/prayers in a book
@@ -342,112 +410,6 @@ void do_poly_self(void)
 		corrupt_player();
 		power--;
 	}
-}
-
-
-/*
- * Brand the current weapon
- */
-void brand_weapon(int brand_type)
-{
-	object_type *o_ptr;
-
-	cptr act = NULL;
-
-	char o_name[80];
-
-
-	o_ptr = &p_ptr->inventory[INVEN_WIELD];
-
-	/*
-	 * You can never modify artifacts / ego-items
-	 * You can never modify cursed items
-	 *
-	 * TY: You _can_ modify broken items (if you're silly enough)
-	 */
-	if (!o_ptr->k_idx || artifact_p(o_ptr) || ego_item_p(o_ptr) ||
-	                o_ptr->art_name || cursed_p(o_ptr))
-	{
-		if (flush_failure) flush();
-
-		msg_print("The Branding failed.");
-
-		return;
-	}
-
-
-	/* Save the old name */
-	object_desc(o_name, o_ptr, FALSE, 0);
-
-	switch (brand_type)
-	{
-	case 6:
-		{
-			act = "glows with godly power.";
-			o_ptr->name2 = EGO_BLESS_BLADE;
-			o_ptr->pval = randint(4);
-
-			break;
-		}
-	case 5:
-		{
-			act = "seems very powerful.";
-			o_ptr->name2 = EGO_EARTHQUAKES;
-			o_ptr->pval = randint(3);
-
-			break;
-		}
-	case 4:
-		{
-			act = "seems very unstable now.";
-			o_ptr->name2 = EGO_DRAGON;
-			o_ptr->pval = randint(2);
-
-			break;
-		}
-	case 3:
-		{
-			act = "thirsts for blood!";
-			o_ptr->name2 = EGO_VAMPIRIC;
-
-			break;
-		}
-	case 2:
-		{
-			act = "is coated with poison.";
-			o_ptr->name2 = EGO_BRAND_POIS;
-
-			break;
-		}
-	case 1:
-		{
-			act = "is engulfed in raw chaos!";
-			o_ptr->name2 = EGO_CHAOTIC;
-
-			break;
-		}
-	default:
-		{
-			if (rand_int(100) < 25)
-			{
-				act = "is covered in a fiery shield!";
-				o_ptr->name2 = EGO_BRAND_FIRE;
-			}
-			else
-			{
-				act = "glows deep, icy blue!";
-				o_ptr->name2 = EGO_BRAND_COLD;
-			}
-		}
-	}
-
-	/* Apply the ego */
-	apply_magic(o_ptr, dun_level, FALSE, FALSE, FALSE);
-	o_ptr->discount = 100;
-
-	msg_format("Your %s %s", o_name, act);
-
-	enchant(o_ptr, rand_int(3) + 4, ENCH_TOHIT | ENCH_TODAM);
 }
 
 /*
@@ -2151,69 +2113,6 @@ void cast_school_spell()
 	{
 		lua_cast_school_spell(spell, FALSE);
 	}
-}
-
-void browse_school_spell(int book, int pval, object_type *o_ptr)
-{
-	int i;
-	int num = 0, where = 1;
-	int ask;
-	char choice;
-	char out_val[160];
-
-	/* Show choices */
-	window_stuff();
-
-	num = school_book_length(book);
-
-	/* Build a prompt (accept all spells) */
-	strnfmt(out_val, 78, "(Spells %c-%c, ESC=exit) cast which spell? ",
-	        I2A(0), I2A(num - 1));
-
-	/* Save the screen */
-	character_icky = TRUE;
-	Term_save();
-
-	/* Display a list of spells */
-	where = print_book(book, pval, o_ptr);
-
-	/* Get a spell from the user */
-	while (get_com(out_val, &choice))
-	{
-		/* Display a list of spells */
-		where = print_book(book, pval, o_ptr);
-
-		/* Note verify */
-		ask = (isupper(choice));
-
-		/* Lowercase */
-		if (ask) choice = tolower(choice);
-
-		/* Extract request */
-		i = (islower(choice) ? A2I(choice) : -1);
-
-		/* Totally Illegal */
-		if ((i < 0) || (i >= num))
-		{
-			bell();
-			continue;
-		}
-
-		/* Restore the screen */
-		Term_load();
-
-		/* Display a list of spells */
-		where = print_book(book, pval, o_ptr);
-		print_spell_desc(spell_x(book, pval, i), where);
-	}
-
-
-	/* Restore the screen */
-	Term_load();
-	character_icky = FALSE;
-
-	/* Show choices */
-	window_stuff();
 }
 
 /* Can it contains a schooled spell ? */

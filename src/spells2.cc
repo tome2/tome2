@@ -2892,7 +2892,7 @@ static bool_ item_tester_hook_weapon(object_type *o_ptr)
 /*
  * Hook to specify "armour"
  */
-bool_ item_tester_hook_armour(object_type *o_ptr)
+static bool_ item_tester_hook_armour(object_type *o_ptr)
 {
 	switch (o_ptr->tval)
 	{

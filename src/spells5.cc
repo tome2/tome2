@@ -1,11 +1,11 @@
 #include "spells5.hpp"
-#include <angband.h>
 
-#include <assert.h>
-
+#include "angband.h"
 #include "spell_type.hpp"
 #include "device_allocation.h"
 #include "spells3.hpp"
+
+#include <cassert>
 
 static s16b school_spells_count = 0;
 static struct spell_type *school_spells[SCHOOL_SPELLS_MAX];
