@@ -6569,7 +6569,7 @@ errr init_e_info_txt(FILE *fp, char *buf)
 			if (i < error_idx) return (4);
 
 			/* Verify information */
-			if (i >= e_head->info_num) return (2);
+			if (i >= max_e_idx) return (2);
 
 			/* Save the index */
 			error_idx = i;
@@ -6577,17 +6577,9 @@ errr init_e_info_txt(FILE *fp, char *buf)
 			/* Point at the "info" */
 			e_ptr = &e_info[i];
 
-			/* Hack -- Verify space */
-			if (e_head->name_size + strlen(s) + 8 > FAKE_NAME_SIZE) return (7);
-
-			/* Advance and Save the name index */
-			if (!e_ptr->name) e_ptr->name = ++e_head->name_size;
-
-			/* Append chars to the name */
-			strcpy(e_name + e_head->name_size, s);
-
-			/* Advance the index */
-			e_head->name_size += strlen(s);
+			/* Copy name */
+			assert(!e_ptr->name);
+			e_ptr->name = my_strdup(s);
 
 			/* Needed hack */
 			e_ptr->power = -1;
@@ -6874,11 +6866,6 @@ errr init_e_info_txt(FILE *fp, char *buf)
 		/* Oops */
 		return (6);
 	}
-
-
-	/* Complete the "name" and "text" sizes */
-	++e_head->name_size;
-	++e_head->text_size;
 
 
 	/* No version yet */

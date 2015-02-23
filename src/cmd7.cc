@@ -2759,7 +2759,7 @@ void alchemist_display_recipe(int tval, int sval, int ego)
 	else
 	{
 		/* Display the ego item name */
-		strcpy(o_name, e_name + e_info[ego].name);
+		strcpy(o_name, e_info[ego].name);
 	}
 
 	/* Display a short message about it, and wait for a key. */
@@ -3025,7 +3025,7 @@ void alchemist_recipe_book(void)
 									break;
 								}
 						}
-						strcat(names, e_name + e_ptr->name);
+						strcat(names, e_ptr->name);
 					}
 					else
 					{
@@ -3184,7 +3184,7 @@ int alchemist_recipe_select(int *tval, int sval, int ego, bool_ recipe)
 							color = TERM_RED;
 
 						/* add this ego to the list*/
-						strip_and_print(e_name + e_info[i].name, color, num);
+						strip_and_print(e_info[i].name, color, num);
 						validc[num] = color;
 						choice[num++] = i;
 						break;
@@ -3355,7 +3355,6 @@ void alchemist_learn_all(int lev)
 
 void alchemist_learn_ego(int ego)
 {
-	char *name;
 	int i;
 
 	/* some Paranoia*/
@@ -3363,7 +3362,7 @@ void alchemist_learn_ego(int ego)
 		return;
 
 	/* Get the ego items name */
-	name = e_name + e_info[ego].name;
+	const char *name = e_info[ego].name;
 	while (strchr(name, ' '))
 		name = strchr(name, ' ') + 1;
 
@@ -3372,7 +3371,6 @@ void alchemist_learn_ego(int ego)
 	if (alchemist_exists(0, 0, ego, 0))
 	{
 		alchemist_known_egos[ego / 32] |= (1 << (ego % 32));
-		/* msg_format("You learn about '%s' ego items.",e_name+e_info[ego].name); */
 	}
 	else
 	{
@@ -3388,13 +3386,11 @@ void alchemist_learn_ego(int ego)
 	/* Look through all ego's for matching name */
 	/* Note that the original ego is marked here too */
 	for ( i = 0 ; i < max_e_idx ; i++ )
-		if ( strstr(e_name + e_info[i].name, name) != NULL        /*Last word of name exists in this ego's name*/
+		if ( strstr(e_info[i].name, name) != NULL        /*Last word of name exists in this ego's name*/
 		                && alchemist_exists(0, 0, i, 0)                      /*There exists a recipe for this*/
 		                && !(alchemist_known_egos[i / 32] & (1 << (i % 32)) ) ) /*Not already known*/
-			/*&& (e_name+e_info[i].name)[0])non-blank name*/
 		{
 			alchemist_known_egos[i / 32] |= (1 << (i % 32));
-			/* msg_format("You learn about '%s' ego items.",e_name+e_info[i].name); */
 		}
 
 	return;

@@ -628,10 +628,7 @@ char *set_text;
 /*
  * The ego-item arrays
  */
-header *e_head;
 ego_item_type *e_info;
-char *e_name;
-char *e_text;
 
 /*
  * The randart arrays

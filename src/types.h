@@ -270,8 +270,7 @@ typedef struct ego_item_type ego_item_type;
 
 struct ego_item_type
 {
-	u32b name;			/* Name (offset) */
-	u32b text;			/* Text (offset) */
+	const char *name;		/* Name (offset) */
 
 	bool_ before;                    /* Before or after the object name ? */
 

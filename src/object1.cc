@@ -1620,11 +1620,11 @@ void object_desc(char *buf, object_type *o_ptr, int pref, int mode)
 
 			if (e_ptr->before)
 			{
-				ego = e_ptr->name + e_name;
+				ego = e_ptr->name;
 			}
 			else if (e2_ptr->before)
 			{
-				ego = e2_ptr->name + e_name;
+				ego = e2_ptr->name;
 			}
 		}
 
@@ -1701,12 +1701,12 @@ void object_desc(char *buf, object_type *o_ptr, int pref, int mode)
 
 			if (e_ptr->before)
 			{
-				t = object_desc_str(t, (e_name + e_ptr->name));
+				t = object_desc_str(t, e_ptr->name);
 				t = object_desc_chr(t, ' ');
 			}
 			if (e2_ptr->before)
 			{
-				t = object_desc_str(t, (e_name + e2_ptr->name));
+				t = object_desc_str(t, e2_ptr->name);
 				t = object_desc_chr(t, ' ');
 			}
 		}
@@ -1779,12 +1779,12 @@ void object_desc(char *buf, object_type *o_ptr, int pref, int mode)
 
 			if (e_ptr->before)
 			{
-				t = object_desc_str(t, (e_name + e_ptr->name));
+				t = object_desc_str(t, e_ptr->name);
 				t = object_desc_chr(t, ' ');
 			}
 			if (e2_ptr->before)
 			{
-				t = object_desc_str(t, (e_name + e2_ptr->name));
+				t = object_desc_str(t, e2_ptr->name);
 				t = object_desc_chr(t, ' ');
 			}
 		}
@@ -1825,8 +1825,7 @@ void object_desc(char *buf, object_type *o_ptr, int pref, int mode)
 				if (known && o_ptr->name2)
 				{
 					ego_item_type *e_ptr = &e_info[o_ptr->name2];
-
-					t = object_desc_str(t, (e_name + e_ptr->name));
+					t = object_desc_str(t, e_ptr->name);
 				}
 			}
 
@@ -1922,12 +1921,12 @@ void object_desc(char *buf, object_type *o_ptr, int pref, int mode)
 			if (o_ptr->name2 && !e_ptr->before)
 			{
 				t = object_desc_chr(t, ' ');
-				t = object_desc_str(t, (e_name + e_ptr->name));
+				t = object_desc_str(t, e_ptr->name);
 			}
 			if (o_ptr->name2b && !e2_ptr->before)
 			{
 				t = object_desc_chr(t, ' ');
-				t = object_desc_str(t, (e_name + e2_ptr->name));
+				t = object_desc_str(t, e2_ptr->name);
 			}
 		}
 	}

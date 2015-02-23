@@ -680,20 +680,8 @@ static errr init_e_info(void)
 	/* General buffer */
 	char buf[1024];
 
-
-	/*** Make the "header" ***/
-	e_head = make_header(max_e_idx);
-
-
-	/*** Make the fake arrays ***/
-
 	/* Allocate the "e_info" array */
-	e_info = make_array<ego_item_type>(e_head->info_num);
-
-	/* Hack -- make "fake" arrays */
-	e_name = make_array<char>(FAKE_NAME_SIZE);
-	e_text = make_array<char>(FAKE_TEXT_SIZE);
-
+	e_info = make_array<ego_item_type>(max_e_idx);
 
 	/*** Load the ascii template file ***/
 

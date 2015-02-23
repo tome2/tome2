@@ -2511,7 +2511,7 @@ static void spoil_bateries(cptr fname)
 			/*		print item desc (ego (tval=1)or item)*/
 			if (ar_ptr->tval == 1)
 			{
-				strcpy(o_name, e_name + e_info[ar_ptr->sval].name);
+				strcpy(o_name, e_info[ar_ptr->sval].name);
 			}
 			else
 			{
