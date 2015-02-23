@@ -85,19 +85,29 @@ void squeltch_inventory(void)
 		return;
 	}
 
-	for (int num_iter = 0; num_iter < 100; num_iter++)
+	bool changed = true;
+	for (int num_iter = 0; changed && (num_iter < 100); num_iter++)
 	{
+		// No changes on this iteration.
+		changed = false;
+		// Traverse inventory
 		for (int i = 0; i < INVEN_PACK; i++)
 		{
 			object_type *o_ptr = &p_ptr->inventory[i];
-			if (automatizer->apply_rules(o_ptr, i))
+			if ((o_ptr->k_idx > 0) && automatizer->apply_rules(o_ptr, i))
 			{
-				return;
+				// We have changes
+				changed = true;
+				// Re-traverse inventory
+				break;
 			}
 		}
 	}
-
-	cmsg_format(TERM_VIOLET, "'apply_rules' ran too often.");
+	// If we reached the iteration limit, "changed" will be true
+	if (changed)
+	{
+		cmsg_format(TERM_VIOLET, "'apply_rules' ran too often.");
+	}
 }
 
 static int create_new_rule()

@@ -59,7 +59,7 @@ bool Automatizer::apply_rules(object_type *o_ptr, int item_idx) const
 		}
 	}
 
-	return true;
+	return false;
 }
 
 std::shared_ptr<json_t> Automatizer::to_json() const
