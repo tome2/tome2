@@ -1499,6 +1499,21 @@ static byte monster_ego_modify(char c)
 }
 
 /**
+ * Version of strdup() which just aborts if an allocation
+ * error occurs.
+ */
+static char *my_strdup(const char *s)
+{
+	char *p = strdup(s);
+	if (!p)
+	{
+		abort();
+	}
+	return p;
+}
+
+
+/**
  * Append one string to the end of another, reallocating if
  * necessary.
  */
@@ -1509,7 +1524,7 @@ static void strappend(char **s, char *t)
 	{
 		// Costs an extra allocation which could be avoided
 		// but this leads to simpler code.
-		*s = strdup("");
+		*s = my_strdup("");
 	}
 	// We should really be preserving the original pointer and
 	// do something else in case of failure to realloc(), but
@@ -4226,7 +4241,7 @@ errr init_k_info_txt(FILE *fp, char *buf)
 
 			/* Advance and Save the name index */
 			assert(!k_ptr->name);
-			k_ptr->name = strdup(s);
+			k_ptr->name = my_strdup(s);
 
 			/* Needed hack */
 			k_ptr->esp = 0;
@@ -7547,7 +7562,7 @@ errr init_r_info_txt(FILE *fp, char *buf)
 
 			/* Allocate name string. */
 			assert(!r_ptr->name); // Sanity check that we aren't overwriting anything
-			r_ptr->name = strdup(s);
+			r_ptr->name = my_strdup(s);
 
 			/* HACK -- Those ones HAVE to have a set default value */
 			r_ptr->drops.treasure = OBJ_GENE_TREASURE;
