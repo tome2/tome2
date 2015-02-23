@@ -20,6 +20,7 @@
 #include "notes.hpp"
 #include "q_rand.h"
 #include "skills.hpp"
+#include "spells2.hpp"
 #include "spells3.hpp"
 #include "spells5.hpp"
 #include "store.hpp"

@@ -20,6 +20,7 @@
 #include "q_library.h"
 #include "q_fireprof.h"
 #include "q_bounty.h"
+#include "spells2.hpp"
 #include "store.hpp"
 #include "xtra1.hpp"
 #include "xtra2.hpp"

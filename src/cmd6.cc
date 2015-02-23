@@ -20,6 +20,7 @@
 #include "skills.hpp"
 #include "spell_type.hpp"
 #include "spells1.hpp"
+#include "spells2.hpp"
 #include "spells5.hpp"
 #include "store.hpp"
 #include "wizard2.hpp"

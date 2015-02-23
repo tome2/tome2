@@ -18,6 +18,7 @@
 #include "quark.h"
 #include "skills.hpp"
 #include "spells1.hpp"
+#include "spells2.hpp"
 #include "spells3.hpp"
 #include "traps.hpp"
 #include "xtra1.hpp"

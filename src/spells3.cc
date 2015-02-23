@@ -7,6 +7,7 @@
 #include "spell_type.hpp"
 #include "spell_idx_list.hpp"
 #include "spells1.hpp"
+#include "spells2.hpp"
 #include "spells5.hpp"
 #include "mimic.hpp"
 #include "xtra2.hpp"

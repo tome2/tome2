@@ -15,6 +15,7 @@
 #include "mimic.hpp"
 #include "notes.hpp"
 #include "skills.hpp"
+#include "spells2.hpp"
 #include "xtra1.hpp"
 
 #include <memory>

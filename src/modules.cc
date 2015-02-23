@@ -10,6 +10,7 @@
 #include "birth.hpp"
 #include "corrupt.hpp"
 #include "hooks.h"
+#include "spells2.hpp"
 
 #include <cassert>
 #include <chrono>

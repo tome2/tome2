@@ -16,6 +16,7 @@
 #include "mimic.hpp"
 #include "quark.h"
 #include "spells1.hpp"
+#include "spells2.hpp"
 #include "traps.hpp"
 #include "xtra2.hpp"
 

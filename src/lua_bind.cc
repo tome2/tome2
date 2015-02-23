@@ -16,6 +16,7 @@
 #include "corrupt.hpp"
 #include "skills.hpp"
 #include "spell_type.hpp"
+#include "spells2.hpp"
 #include "spells5.hpp"
 #include "range.h"
 

@@ -12,6 +12,7 @@
 #include "mimic.hpp"
 #include "skills.hpp"
 #include "spells1.hpp"
+#include "spells2.hpp"
 #include "store.hpp"
 #include "xtra1.hpp"
 #include "xtra2.hpp"

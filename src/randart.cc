@@ -9,6 +9,7 @@
 #include "randart.hpp"
 #include "mimic.hpp"
 #include "quark.h"
+#include "spells2.hpp"
 
 #include <memory>
 #include <vector>

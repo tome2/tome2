@@ -14,6 +14,7 @@
 #include "mimic.hpp"
 #include "randart.hpp"
 #include "skills.hpp"
+#include "spells2.hpp"
 #include "spells3.hpp"
 #include "spells5.hpp"
 #include "traps.hpp"

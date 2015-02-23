@@ -6,6 +6,7 @@
  * included in all such copies.
  */
 
+#include "spells2.hpp"
 #include "angband.h"
 #include "cave.hpp"
 #include "cmd1.hpp"

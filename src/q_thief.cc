@@ -2,6 +2,7 @@
 
 #include "cave.hpp"
 #include "hooks.h"
+#include "spells2.hpp"
 
 #define cquest (quest[QUEST_THIEVES])
 
