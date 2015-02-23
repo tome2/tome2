@@ -18,6 +18,7 @@
 #include "mimic.hpp"
 #include "skills.hpp"
 #include "spells3.hpp"
+#include "spells6.hpp"
 #include "xtra2.hpp"
 
 #include <cassert>

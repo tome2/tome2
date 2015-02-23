@@ -14,6 +14,7 @@
 #include "q_library.h"
 #include "spells4.hpp"
 #include "spells5.hpp"
+#include "spells6.hpp"
 
 
 void init_lua_init()

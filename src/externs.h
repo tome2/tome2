@@ -760,13 +760,6 @@ extern s16b m_bonus(int max, int level);
 extern void object_gain_level(object_type *o_ptr);
 extern s32b flag_cost(object_type * o_ptr, int plusses);
 
-/* spells6.c */
-
-void schools_init();
-school_type *school_at(int index);
-
-void mana_school_calc_mana(int *msp);
-
 /* util.c */
 extern s32b rescale(s32b x, s32b max, s32b new_max);
 extern bool_ input_box(cptr text, int y, int x, char *buf, int max);

@@ -1,5 +1,6 @@
-#include "angband.h"
+#include "spells6.hpp"
 
+#include "angband.h"
 #include "gods.hpp"
 #include "skills.hpp"
 #include "spell_type.hpp"

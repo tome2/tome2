@@ -8,6 +8,7 @@
 #include "spell_idx_list.hpp"
 #include "spells3.hpp"
 #include "spells5.hpp"
+#include "spells6.hpp"
 
 #include <algorithm>
 #include <cassert>
