@@ -2676,6 +2676,178 @@ static void do_cmd_walk_jump(int pickup, bool_ disarm)
 
 
 /*
+ * Try to ``walk'' using phase door.
+ */
+static void do_cmd_unwalk()
+{
+	int dir, y, x, feat;
+
+	cave_type *c_ptr;
+
+	bool_ more = FALSE;
+
+
+	if (!get_rep_dir(&dir)) return;
+
+	y = p_ptr->py + ddy[dir];
+	x = p_ptr->px + ddx[dir];
+
+	c_ptr = &cave[y][x];
+	feat = c_ptr->feat;
+
+	/* Must have knowledge to know feature XXX XXX */
+	if (!(c_ptr->info & (CAVE_MARK))) feat = FEAT_NONE;
+
+	/* Take a turn */
+	energy_use = 100;
+	energy_use *= (p_ptr->wild_mode) ? (5 * (MAX_HGT + MAX_WID) / 2) : 1;
+
+
+	/* Allow repeated command */
+	if (command_arg)
+	{
+		/* Set repeat count */
+		command_rep = command_arg - 1;
+
+		/* Redraw the state */
+		p_ptr->redraw |= (PR_FRAME);
+
+		/* Cancel the arg */
+		command_arg = 0;
+	}
+
+
+	/* Attack monsters */
+	if (c_ptr->m_idx > 0)
+	{
+		/* Attack */
+		py_attack(y, x, -1);
+	}
+
+	/* Exit the area */
+	else if ((!dun_level) && (!p_ptr->wild_mode) &&
+			((x == 0) || (x == cur_wid - 1) || (y == 0) || (y == cur_hgt - 1)))
+	{
+		/* Can the player enter the grid? */
+		if (player_can_enter(c_ptr->mimic))
+		{
+			/* Hack: move to new area */
+			if ((y == 0) && (x == 0))
+			{
+				p_ptr->wilderness_y--;
+				p_ptr->wilderness_x--;
+				p_ptr->oldpy = cur_hgt - 2;
+				p_ptr->oldpx = cur_wid - 2;
+				ambush_flag = FALSE;
+			}
+
+			else if ((y == 0) && (x == MAX_WID - 1))
+			{
+				p_ptr->wilderness_y--;
+				p_ptr->wilderness_x++;
+				p_ptr->oldpy = cur_hgt - 2;
+				p_ptr->oldpx = 1;
+				ambush_flag = FALSE;
+			}
+
+			else if ((y == MAX_HGT - 1) && (x == 0))
+			{
+				p_ptr->wilderness_y++;
+				p_ptr->wilderness_x--;
+				p_ptr->oldpy = 1;
+				p_ptr->oldpx = cur_wid - 2;
+				ambush_flag = FALSE;
+			}
+
+			else if ((y == MAX_HGT - 1) && (x == MAX_WID - 1))
+			{
+				p_ptr->wilderness_y++;
+				p_ptr->wilderness_x++;
+				p_ptr->oldpy = 1;
+				p_ptr->oldpx = 1;
+				ambush_flag = FALSE;
+			}
+
+			else if (y == 0)
+			{
+				p_ptr->wilderness_y--;
+				p_ptr->oldpy = cur_hgt - 2;
+				p_ptr->oldpx = x;
+				ambush_flag = FALSE;
+			}
+
+			else if (y == cur_hgt - 1)
+			{
+				p_ptr->wilderness_y++;
+				p_ptr->oldpy = 1;
+				p_ptr->oldpx = x;
+				ambush_flag = FALSE;
+			}
+
+			else if (x == 0)
+			{
+				p_ptr->wilderness_x--;
+				p_ptr->oldpx = cur_wid - 2;
+				p_ptr->oldpy = y;
+				ambush_flag = FALSE;
+			}
+
+			else if (x == cur_wid - 1)
+			{
+				p_ptr->wilderness_x++;
+				p_ptr->oldpx = 1;
+				p_ptr->oldpy = y;
+				ambush_flag = FALSE;
+			}
+
+			p_ptr->leaving = TRUE;
+
+			return;
+		}
+	}
+
+	/* Hack -- Ignore weird terrain types. */
+	else if (!cave_floor_grid(c_ptr))
+	{
+		teleport_player(10);
+	}
+
+	/* Enter quests */
+	else if (((feat >= FEAT_QUEST_ENTER) && (feat <= FEAT_QUEST_UP)) ||
+			((feat >= FEAT_LESS) && (feat <= FEAT_MORE)))
+	{
+		move_player(dir, always_pickup, TRUE);
+		more = FALSE;
+	}
+
+	/* Hack -- Ignore wilderness mofe. */
+	else if (p_ptr->wild_mode)
+	{
+		/* Chance to not blink right */
+		if (magik(15))
+		{
+			do
+			{
+				dir = rand_range(1, 9);
+			}
+			while (dir == 5);
+		}
+
+		move_player(dir, always_pickup, TRUE);
+	}
+
+	/* Walking semantics */
+	else
+	{
+		teleport_player_directed(10, dir);
+	}
+
+	/* Cancel repetition unless we can continue */
+	if (!more) disturb(0);
+}
+
+
+/*
  * Support code for the "Walk" and "Jump" commands
  */
 void do_cmd_walk(int pickup, bool_ disarm)
@@ -4165,178 +4337,6 @@ void do_cmd_boomerang(void)
 			sleep_for(milliseconds(msec));
 		}
 	}
-}
-
-
-/*
- * Try to ``walk'' using phase door.
- */
-void do_cmd_unwalk()
-{
-	int dir, y, x, feat;
-
-	cave_type *c_ptr;
-
-	bool_ more = FALSE;
-
-
-	if (!get_rep_dir(&dir)) return;
-
-	y = p_ptr->py + ddy[dir];
-	x = p_ptr->px + ddx[dir];
-
-	c_ptr = &cave[y][x];
-	feat = c_ptr->feat;
-
-	/* Must have knowledge to know feature XXX XXX */
-	if (!(c_ptr->info & (CAVE_MARK))) feat = FEAT_NONE;
-
-	/* Take a turn */
-	energy_use = 100;
-	energy_use *= (p_ptr->wild_mode) ? (5 * (MAX_HGT + MAX_WID) / 2) : 1;
-
-
-	/* Allow repeated command */
-	if (command_arg)
-	{
-		/* Set repeat count */
-		command_rep = command_arg - 1;
-
-		/* Redraw the state */
-		p_ptr->redraw |= (PR_FRAME);
-
-		/* Cancel the arg */
-		command_arg = 0;
-	}
-
-
-	/* Attack monsters */
-	if (c_ptr->m_idx > 0)
-	{
-		/* Attack */
-		py_attack(y, x, -1);
-	}
-
-	/* Exit the area */
-	else if ((!dun_level) && (!p_ptr->wild_mode) &&
-	                ((x == 0) || (x == cur_wid - 1) || (y == 0) || (y == cur_hgt - 1)))
-	{
-		/* Can the player enter the grid? */
-		if (player_can_enter(c_ptr->mimic))
-		{
-			/* Hack: move to new area */
-			if ((y == 0) && (x == 0))
-			{
-				p_ptr->wilderness_y--;
-				p_ptr->wilderness_x--;
-				p_ptr->oldpy = cur_hgt - 2;
-				p_ptr->oldpx = cur_wid - 2;
-				ambush_flag = FALSE;
-			}
-
-			else if ((y == 0) && (x == MAX_WID - 1))
-			{
-				p_ptr->wilderness_y--;
-				p_ptr->wilderness_x++;
-				p_ptr->oldpy = cur_hgt - 2;
-				p_ptr->oldpx = 1;
-				ambush_flag = FALSE;
-			}
-
-			else if ((y == MAX_HGT - 1) && (x == 0))
-			{
-				p_ptr->wilderness_y++;
-				p_ptr->wilderness_x--;
-				p_ptr->oldpy = 1;
-				p_ptr->oldpx = cur_wid - 2;
-				ambush_flag = FALSE;
-			}
-
-			else if ((y == MAX_HGT - 1) && (x == MAX_WID - 1))
-			{
-				p_ptr->wilderness_y++;
-				p_ptr->wilderness_x++;
-				p_ptr->oldpy = 1;
-				p_ptr->oldpx = 1;
-				ambush_flag = FALSE;
-			}
-
-			else if (y == 0)
-			{
-				p_ptr->wilderness_y--;
-				p_ptr->oldpy = cur_hgt - 2;
-				p_ptr->oldpx = x;
-				ambush_flag = FALSE;
-			}
-
-			else if (y == cur_hgt - 1)
-			{
-				p_ptr->wilderness_y++;
-				p_ptr->oldpy = 1;
-				p_ptr->oldpx = x;
-				ambush_flag = FALSE;
-			}
-
-			else if (x == 0)
-			{
-				p_ptr->wilderness_x--;
-				p_ptr->oldpx = cur_wid - 2;
-				p_ptr->oldpy = y;
-				ambush_flag = FALSE;
-			}
-
-			else if (x == cur_wid - 1)
-			{
-				p_ptr->wilderness_x++;
-				p_ptr->oldpx = 1;
-				p_ptr->oldpy = y;
-				ambush_flag = FALSE;
-			}
-
-			p_ptr->leaving = TRUE;
-
-			return;
-		}
-	}
-
-	/* Hack -- Ignore weird terrain types. */
-	else if (!cave_floor_grid(c_ptr))
-	{
-		teleport_player(10);
-	}
-
-	/* Enter quests */
-	else if (((feat >= FEAT_QUEST_ENTER) && (feat <= FEAT_QUEST_UP)) ||
-	                ((feat >= FEAT_LESS) && (feat <= FEAT_MORE)))
-	{
-		move_player(dir, always_pickup, TRUE);
-		more = FALSE;
-	}
-
-	/* Hack -- Ignore wilderness mofe. */
-	else if (p_ptr->wild_mode)
-	{
-		/* Chance to not blink right */
-		if (magik(15))
-		{
-			do
-			{
-				dir = rand_range(1, 9);
-			}
-			while (dir == 5);
-		}
-
-		move_player(dir, always_pickup, TRUE);
-	}
-
-	/* Walking semantics */
-	else
-	{
-		teleport_player_directed(10, dir);
-	}
-
-	/* Cancel repetition unless we can continue */
-	if (!more) disturb(0);
 }
 
 

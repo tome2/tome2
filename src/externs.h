@@ -487,7 +487,6 @@ extern int get_shooter_mult(object_type *o_ptr);
 extern void do_cmd_fire(void);
 extern void do_cmd_throw(void);
 extern void do_cmd_boomerang(void);
-extern void do_cmd_unwalk(void);
 extern void do_cmd_immovable_special(void);
 extern void fetch(int dir, int wgt, bool_ require_los);
 extern void do_cmd_sacrifice(void);
