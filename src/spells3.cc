@@ -172,7 +172,7 @@ s32b VARDA_CALL_ALMAREN;
 s32b VARDA_EVENSTAR;
 s32b VARDA_STARKINDLER;
 
-s32b get_level_s(int sp, int max)
+static s32b get_level_s(int sp, int max)
 {
 	return get_level(sp, max, 1);
 }

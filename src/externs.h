@@ -1322,8 +1322,6 @@ extern void geomancy_dig(int oy, int ox, int dir, int length);
 extern void channel_the_elements(int y, int x, int level);
 
 /* spells3.c */
-s32b get_level_s(int sp, int max);
-
 extern s32b NOXIOUSCLOUD;
 extern s32b AIRWINGS;
 extern s32b INVISIBILITY;
