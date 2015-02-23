@@ -7,7 +7,7 @@
  */
 
 #include "angband.h"
-
+#include "birth.hpp"
 #include "gods.hpp"
 #include "hooks.h"
 #include "util.hpp"

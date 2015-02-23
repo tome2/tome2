@@ -1,10 +1,5 @@
-/* File: loadsave.c */
-
-/* Purpose: interact with savefiles. This file was made by
-   unifying load2.c and save.c from the old codebase. Doing it
-   this way makes maintenance easier and lets us share code. */
-
 #include "angband.h"
+#include "birth.hpp"
 #include "messages.h"
 #include "modules.hpp"
 #include "quark.h"

@@ -7,6 +7,7 @@
  */
 
 #include "angband.h"
+#include "birth.hpp"
 #include "corrupt.hpp"
 #include "hooks.h"
 

@@ -1,7 +1,3 @@
-/* File: dungeon.c */
-
-/* Purpose: Angband game engine */
-
 /*
  * Copyright (c) 1989 James E. Wilson, Robert A. Koeneke
  *
@@ -11,6 +7,7 @@
  */
 
 #include "angband.h"
+#include "birth.hpp"
 #include "corrupt.hpp"
 #include "gods.hpp"
 #include "hooks.h"

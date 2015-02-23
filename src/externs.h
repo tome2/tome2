@@ -470,13 +470,7 @@ extern void help_skill(cptr skill);
 extern void help_ability(cptr ability);
 
 /* birth.c */
-extern void print_desc_aux(cptr txt, int y, int x);
-extern void save_savefile_names(void);
 extern bool_ no_begin_screen;
-extern bool_ begin_screen(void);
-extern errr init_randart(void);
-extern void get_height_weight(void);
-extern void player_birth(void);
 
 /* cave.c */
 extern int distance(int y1, int x1, int y2, int x2);

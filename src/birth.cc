@@ -5,6 +5,7 @@
  * not for profit purposes provided that this copyright and statement are
  * included in all such copies.
  */
+#include "birth.hpp"
 
 #include "angband.h"
 #include "corrupt.hpp"
@@ -586,7 +587,7 @@ static void get_history(void)
 /*
  * Fill the random_artifacts array with relevant info.
  */
-errr init_randart(void)
+static errr init_randart(void)
 {
 	int i;
 
