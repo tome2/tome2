@@ -4,6 +4,7 @@
 #include "spell_type.hpp"
 #include "device_allocation.h"
 #include "spells3.hpp"
+#include "spells4.hpp"
 
 #include <cassert>
 

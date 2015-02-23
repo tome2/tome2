@@ -1,4 +1,4 @@
-#include "angband.h"
+#include "spells4.hpp"
 
 #include "cave.hpp"
 #include "cmd5.hpp"

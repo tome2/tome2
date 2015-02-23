@@ -2,6 +2,7 @@
 #include "range.h"
 #include "device_allocation.h"
 #include "dice.h"
+#include "spells4.hpp"
 
 #include "angband.h"
 

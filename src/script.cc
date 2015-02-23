@@ -12,6 +12,7 @@
 
 #include "angband.h"
 #include "q_library.h"
+#include "spells4.hpp"
 #include "spells5.hpp"
 
 

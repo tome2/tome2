@@ -16,6 +16,7 @@
 #include "help.hpp"
 #include "hooks.h"
 #include "spells1.hpp"
+#include "spells4.hpp"
 #include "traps.hpp"
 #include "util.hpp"
 #include "xtra2.hpp"

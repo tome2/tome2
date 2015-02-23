@@ -2,6 +2,7 @@
 #include "quark.h"
 #include "hooks.h"
 #include "spells3.hpp"
+#include "spells4.hpp"
 
 #include <cassert>
 

@@ -3,6 +3,7 @@
 #include "gods.hpp"
 #include "skills.hpp"
 #include "spell_type.hpp"
+#include "spells4.hpp"
 
 #include <cassert>
 #include <vector>
