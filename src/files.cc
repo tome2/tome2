@@ -4299,7 +4299,7 @@ void autosave_checkpoint()
 /*
  * Hack -- Calculates the total number of points earned                -JWT-
  */
-long total_points(void)
+static long total_points(void)
 {
 	s16b max_dl = 0, i, k;
 	long temp, Total = 0;
@@ -4877,40 +4877,6 @@ static void display_scores_aux(int highscore_fd, int from, int to, int note, hig
 
 
 /*
- * Hack -- Display the scores in a given range and quit.
- *
- * This function is only called from "main.c" when the user asks
- * to see the "high scores".
- */
-void display_scores(int from, int to)
-{
-	char buf[1024];
-	int highscore_fd;
-
-	/* Build the filename */
-	path_build(buf, 1024, ANGBAND_DIR_USER, "scores.raw");
-
-	/* Open the binary high score file, for reading */
-	highscore_fd = fd_open(buf, O_RDONLY);
-
-	/* Paranoia -- No score file */
-	if (highscore_fd < 0) quit("Score file unavailable.");
-
-	/* Clear screen */
-	Term_clear();
-
-	/* Display the scores */
-	display_scores_aux(highscore_fd, from, to, -1, NULL);
-
-	/* Shut the high score file */
-	fd_close(highscore_fd);
-
-	/* Quit */
-	quit(NULL);
-}
-
-
-/*
  * show_highclass - selectively list highscores based on class
  * -KMW-
  */
@@ -5269,7 +5235,7 @@ out:
 /*
  * Predict the players location, and display it.
  */
-errr predict_score(void)
+static errr predict_score(void)
 {
 	int j;
 

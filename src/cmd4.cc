@@ -3929,7 +3929,7 @@ void do_cmd_knowledge_towns(void)
 /*
  * List corruptions
  */
-void do_cmd_knowledge_corruptions(void)
+static void do_cmd_knowledge_corruptions(void)
 {
 	FILE *fff;
 
