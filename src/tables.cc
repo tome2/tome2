@@ -1501,9 +1501,6 @@ option_type option_info[] =
 	{ &player_symbols, FALSE, 3, 12,
 	  "player_symbols", "Use special symbols for the player char"},
 
-	{ &plain_descriptions, TRUE, 3, 13,
-	  "plain_descriptions", "Plain object descriptions" },
-
 	{ &smart_learn, FALSE, 3, 14,
 	  "smart_learn", "Monsters learn from their mistakes" },
 

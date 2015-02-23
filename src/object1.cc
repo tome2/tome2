@@ -1309,7 +1309,7 @@ void object_desc(char *buf, object_type *o_ptr, int pref, int mode)
 			modstr = amulet_adj[indexx];
 			if (aware) append_name = TRUE;
 
-			if (((plain_descriptions) && (aware)) || o_ptr->ident & IDENT_STOREB)
+			if (aware || o_ptr->ident & IDENT_STOREB)
 				basenm = "& Amulet~";
 			else
 				basenm = aware ? "& # Amulet~" : "& # Amulet~";
@@ -1326,7 +1326,7 @@ void object_desc(char *buf, object_type *o_ptr, int pref, int mode)
 			modstr = ring_adj[indexx];
 			if (aware) append_name = TRUE;
 
-			if (((plain_descriptions) && (aware)) || o_ptr->ident & IDENT_STOREB)
+			if (aware || o_ptr->ident & IDENT_STOREB)
 				basenm = "& Ring~";
 			else
 				basenm = aware ? "& # Ring~" : "& # Ring~";
@@ -1344,7 +1344,7 @@ void object_desc(char *buf, object_type *o_ptr, int pref, int mode)
 			/* Color the object */
 			modstr = staff_adj[o_ptr->pval2 % MAX_WOODS];
 			if (aware) append_name = TRUE;
-			if (((plain_descriptions) && (aware)) || o_ptr->ident & IDENT_STOREB)
+			if (aware || o_ptr->ident & IDENT_STOREB)
 				basenm = "& Staff~";
 			else
 				basenm = "& # Staff~";
@@ -1356,7 +1356,7 @@ void object_desc(char *buf, object_type *o_ptr, int pref, int mode)
 			/* Color the object */
 			modstr = wand_adj[o_ptr->pval2 % MAX_METALS];
 			if (aware) append_name = TRUE;
-			if (((plain_descriptions) && (aware)) || o_ptr->ident & IDENT_STOREB)
+			if (aware || o_ptr->ident & IDENT_STOREB)
 				basenm = "& Wand~";
 			else
 				basenm = "& # Wand~";
@@ -1368,7 +1368,7 @@ void object_desc(char *buf, object_type *o_ptr, int pref, int mode)
 			/* Color the object */
 			modstr = rod_adj[indexx];
 			if (aware) append_name = TRUE;
-			if (((plain_descriptions) && (aware)) || o_ptr->ident & IDENT_STOREB)
+			if (aware || o_ptr->ident & IDENT_STOREB)
 				basenm = "& Rod Tip~";
 			else
 				basenm = aware ? "& # Rod Tip~" : "& # Rod Tip~";
@@ -1393,7 +1393,7 @@ void object_desc(char *buf, object_type *o_ptr, int pref, int mode)
 			/* Color the object */
 			modstr = scroll_adj[indexx];
 			if (aware) append_name = TRUE;
-			if (((plain_descriptions) && (aware)) || o_ptr->ident & IDENT_STOREB)
+			if (aware || o_ptr->ident & IDENT_STOREB)
 				basenm = "& Scroll~";
 			else
 				basenm = aware ? "& Scroll~ titled \"#\"" : "& Scroll~ titled \"#\"";
@@ -1413,7 +1413,7 @@ void object_desc(char *buf, object_type *o_ptr, int pref, int mode)
 			{
 				modstr = get_mimic_name(o_ptr->pval2);
 			}
-			if (((plain_descriptions) && (aware)) || o_ptr->ident & IDENT_STOREB)
+			if (aware || o_ptr->ident & IDENT_STOREB)
 				basenm = "& Potion~";
 			else
 				basenm = aware ? "& # Potion~" : "& # Potion~";
@@ -1428,7 +1428,7 @@ void object_desc(char *buf, object_type *o_ptr, int pref, int mode)
 			/* Color the object */
 			modstr = food_adj[indexx];
 			if (aware) append_name = TRUE;
-			if (((plain_descriptions) && (aware)) || o_ptr->ident & IDENT_STOREB)
+			if (aware || o_ptr->ident & IDENT_STOREB)
 				basenm = "& Mushroom~";
 			else
 				basenm = aware ? "& # Mushroom~" : "& # Mushroom~";

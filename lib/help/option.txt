@@ -303,12 +303,6 @@ off at will during the course of the game.
     symbols. Note that the support for this option may not have been
     compiled in on all platforms.
 
-#####GPlain object descriptions    [plain_descriptions]
-    In ToME, this option disables "full" names for identified flavoured
-    objects; in other words, if this option is not in use, an identified
-    Potion of Speed could be listed (for example) as a Blue Potion of Speed.
-    If you prefer simpler, less verbose descriptions, set this option.
-
 #####GMonsters learn from their mistakes    [smart_learn]
     Allow monsters to learn what spell attacks you are resistant to,
     and to use this information to choose the best attacks.
