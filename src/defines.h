@@ -685,9 +685,6 @@
 
 /* Permanent walls for quests */
 #define FEAT_QUEST1             0x4B
-#define FEAT_QUEST2             0x4C
-#define FEAT_QUEST3             0x4D
-#define FEAT_QUEST4             0x4E
 
 /* Features 0x4F - 0x53 -- unused */
 
@@ -3859,7 +3856,6 @@
 #define BACT_IN_BETWEEN             12
 #define BACT_GAMBLE_RULES           13
 #define BACT_CRAPS                  14
-#define BACT_SPIN_WHEEL             15
 #define BACT_DICE_SLOTS             16
 #define BACT_REST                   17
 #define BACT_FOOD                   18
@@ -3877,8 +3873,6 @@
 #define BACT_RECALL                 33
 #define BACT_TELEPORT_LEVEL         34
 #define BACT_MIMIC_NORMAL           37
-#define BACT_VIEW_BOUNTIES          38
-#define BACT_SELL_CORPSES           39
 #define BACT_VIEW_QUEST_MON         40
 #define BACT_SELL_QUEST_MON         41
 #define BACT_DIVINATION             42
@@ -3886,8 +3880,6 @@
 #define BACT_BUY                    44
 #define BACT_EXAMINE                45
 #define BACT_STEAL                  46
-#define BACT_QUEST2                 47
-#define BACT_QUEST4                 49
 #define BACT_STAR_HEAL              50
 #define BACT_DROP_ITEM              54
 #define BACT_GET_ITEM               55

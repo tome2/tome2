@@ -426,40 +426,6 @@ static bool_ gamble_comm(int cmd)
 					break;
 				}
 
-			case BACT_SPIN_WHEEL:   /* Spin the Wheel Game */
-				{
-					win = FALSE;
-					odds = 10;
-					c_put_str(TERM_GREEN, "Wheel", 5, 2);
-					prt("0  1  2  3  4  5  6  7  8  9", 7, 5);
-					prt("--------------------------------", 8, 3);
-					strcpy(out_val, "");
-					get_string ("Pick a number (1-9): ", out_val, 32);
-					for (p = out_val; *p == ' '; p++);
-					choice = atol(p);
-					if (choice < 0)
-					{
-						msg_print("I'll put you down for 0.");
-						choice = 0;
-					}
-					else if (choice > 9)
-					{
-						msg_print("Ok, I'll put you down for 9.");
-						choice = 9;
-					}
-					msg_print(NULL);
-					roll1 = randint(10) - 1;
-					strnfmt(tmp_str, 80, "The wheel spins to a stop and the winner is %d",
-					        roll1);
-					prt(tmp_str, 13, 3);
-					prt("", 9, 0);
-					prt("*", 9, (3 * roll1 + 5));
-					if (roll1 == choice)
-						win = TRUE;
-
-					break;
-				}
-
 			case BACT_DICE_SLOTS:  /* The Dice Slots */
 				{
 					c_put_str(TERM_GREEN, "Dice Slots", 5, 2);
@@ -1130,61 +1096,6 @@ static void show_quest_monster(void)
 }
 
 
-/*
- * Show the current bounties.
- */
-static void show_bounties(void)
-{
-	int i, j = 6;
-
-	monster_race* r_ptr;
-
-	char buff[80];
-
-
-	clear_bldg(7, 18);
-
-	c_prt(TERM_YELLOW, "Currently active bounties:", 4, 2);
-
-	for (i = 1; i < MAX_BOUNTIES; i++, j++)
-	{
-		r_ptr = &r_info[bounties[i][0]];
-
-		strnfmt(buff, 80, "%-30s (%d gp)", r_ptr->name, bounties[i][1]);
-
-		prt(buff, j, 2);
-
-		if (j >= 17)
-		{
-			msg_print("Press space for more.");
-			msg_print(NULL);
-
-			clear_bldg(7, 18);
-			j = 5;
-		}
-	}
-}
-
-
-/*
- * Filter for corpses that currently have a bounty on them.
- */
-static bool_ item_tester_hook_bounty(object_type* o_ptr)
-{
-	int i;
-
-
-	if (o_ptr->tval == TV_CORPSE)
-	{
-		for (i = 1; i < MAX_BOUNTIES; i++)
-		{
-			if (bounties[i][0] == o_ptr->pval2) return (TRUE);
-		}
-	}
-
-	return (FALSE);
-}
-
 /* Filter to match the quest monster's corpse. */
 static bool_ item_tester_hook_quest_monster(object_type* o_ptr)
 {
@@ -1192,80 +1103,6 @@ static bool_ item_tester_hook_quest_monster(object_type* o_ptr)
 	                (o_ptr->pval2 == bounties[0][0])) return (TRUE);
 	return (FALSE);
 }
-
-
-/*
- * Return the boost in the corpse's value depending on how rare the body
- * part is.
- */
-static int corpse_value_boost(int sval)
-{
-	switch (sval)
-	{
-	case SV_CORPSE_HEAD:
-	case SV_CORPSE_SKULL:
-		{
-			return (1);
-		}
-
-		/* Default to no boost. */
-	default:
-		{
-			return (0);
-		}
-	}
-}
-
-/*
- * Sell a corpse, if there's currently a bounty on it.
- */
-static void sell_corpses(void)
-{
-	object_type* o_ptr;
-
-	int i, boost = 0;
-
-	s16b value;
-
-	int item;
-
-
-	/* Set the hook. */
-	item_tester_hook = item_tester_hook_bounty;
-
-	/* Select a corpse to sell. */
-	if (!get_item(&item, "Sell which corpse",
-	                "You have no corpses you can sell.", USE_INVEN)) return;
-
-	o_ptr = &p_ptr->inventory[item];
-
-	/* Exotic body parts are worth more. */
-	boost = corpse_value_boost(o_ptr->sval);
-
-	/* Try to find a match. */
-	for (i = 1; i < MAX_BOUNTIES; i++)
-	{
-		if (o_ptr->pval2 == bounties[i][0])
-		{
-			value = bounties[i][1] + boost * (r_info[o_ptr->pval2].level);
-
-			msg_format("Sold for %ld gold pieces.", value);
-			msg_print(NULL);
-			p_ptr->au += value;
-
-			/* Increase the number of collected bounties */
-			total_bounties++;
-
-			inc_stack_size(item, -1);
-
-			return;
-		}
-	}
-
-	msg_print("Sorry, but that monster does not have a bounty on it.");
-	msg_print(NULL);
-}
-
 
 
 /*
@@ -1560,8 +1397,6 @@ bool_ bldg_process_command(store_type *s_ptr, int i)
 		}
 
 	case BACT_QUEST1:
-	case BACT_QUEST2:
-	case BACT_QUEST4:
 		{
 			int y = 1, x = 1;
 			bool_ ok = FALSE;
@@ -1602,7 +1437,6 @@ bool_ bldg_process_command(store_type *s_ptr, int i)
 
 	case BACT_IN_BETWEEN:
 	case BACT_CRAPS:
-	case BACT_SPIN_WHEEL:
 	case BACT_DICE_SLOTS:
 	case BACT_GAMBLE_RULES:
 		{
@@ -1744,12 +1578,6 @@ bool_ bldg_process_command(store_type *s_ptr, int i)
 			break;
 		}
 
-	case BACT_VIEW_BOUNTIES:
-		{
-			show_bounties();
-			break;
-		}
-
 	case BACT_VIEW_QUEST_MON:
 		{
 			show_quest_monster();
@@ -1759,12 +1587,6 @@ bool_ bldg_process_command(store_type *s_ptr, int i)
 	case BACT_SELL_QUEST_MON:
 		{
 			sell_quest_monster();
-			break;
-		}
-
-	case BACT_SELL_CORPSES:
-		{
-			sell_corpses();
 			break;
 		}
 
