@@ -1386,7 +1386,6 @@ extern void store_purchase(void);
 extern void store_examine(void);
 extern void store_stole(void);
 extern void store_prt_gold(void);
-extern void store_request_item(void);
 
 /* bldg.c -KMW- */
 extern bool_ bldg_process_command(store_type *s_ptr, int i);

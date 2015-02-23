@@ -100,12 +100,10 @@ void show_building(store_type *s_ptr)
 
 	store_info_type *st_ptr = &st_info[s_ptr->st_idx];
 
-	store_action_type *ba_ptr;
-
 
 	for (i = 0; i < 6; i++)
 	{
-		ba_ptr = &ba_info[st_ptr->actions[i]];
+		store_action_type *ba_ptr = &ba_info[st_ptr->actions[i]];
 
 		if (ba_ptr->letter != '.')
 		{
@@ -1648,22 +1646,6 @@ bool_ bldg_process_command(store_type *s_ptr, int i)
 		return FALSE;
 	}
 
-	/* If player has loan and the time is out, few things work in stores */
-	if (p_ptr->loan && !p_ptr->loan_time)
-	{
-		if ((bact != BACT_SELL) && (bact != BACT_VIEW_BOUNTIES) &&
-		                (bact != BACT_SELL_CORPSES) &&
-		                (bact != BACT_VIEW_QUEST_MON) &&
-		                (bact != BACT_SELL_QUEST_MON) &&
-		                (bact != BACT_EXAMINE) && (bact != BACT_STEAL) &&
-		                (bact != BACT_PAY_BACK_LOAN))
-		{
-			msg_print("You are not allowed to do that until you have paid back your loan.");
-			msg_print(NULL);
-			return FALSE;
-		}
-	}
-
 	/* check gold */
 	if (bcost > p_ptr->au)
 	{
@@ -1960,83 +1942,6 @@ bool_ bldg_process_command(store_type *s_ptr, int i)
 	case BACT_STEAL:
 		{
 			store_stole();
-			break;
-		}
-
-	case BACT_REQUEST_ITEM:
-		{
-			store_request_item();
-			paid = TRUE;
-			break;
-		}
-
-	case BACT_GET_LOAN:
-		{
-			s32b i, req;
-			char prompt[80];
-
-			if (p_ptr->loan)
-			{
-				msg_print("You already have a loan!");
-				break;
-			}
-
-			req = p_ptr->au;
-
-			for (i = 0; i < INVEN_TOTAL; i++)
-				req += object_value_real(&p_ptr->inventory[i]);
-
-			if (req > 100000) req = 100000;
-			if ((req + p_ptr->au) > PY_MAX_GOLD) req = PY_MAX_GOLD - p_ptr->au;
-
-			strnfmt(prompt, sizeof (prompt),
-					"How much would you like to get (0-%ld) ?", req);
-
-			req = get_quantity(prompt, req);
-
-			if (req)
-			{
-				p_ptr->loan += req;
-				p_ptr->au += req;
-				p_ptr->loan_time += req;
-
-				msg_format("You receive %i gold pieces", req);
-
-				paid = TRUE;
-			}
-			else
-				msg_format("You did not request any money!");
-
-			break;
-		}
-
-	case BACT_PAY_BACK_LOAN:
-		{
-			s32b req;
-			char prompt[80];
-
-			if (p_ptr->loan)
-			{
-				msg_format("You have nothing to payback!");
-				break;
-			}
-
-			msg_format("You have a loan of %i.", p_ptr->loan);
-
-			req = ((p_ptr->loan + bcost) > p_ptr->au) ? p_ptr->au - bcost : p_ptr->loan;
-
-			strnfmt(prompt, sizeof (prompt),
-					"How much would you like to pay back (0-%ld) ?", req);
-
-			req = get_quantity(prompt, req);
-
-			p_ptr->loan -= req;
-			p_ptr->au -= req;
-
-			if (!p_ptr->loan) p_ptr->loan_time = 0;
-
-			msg_format("You pay back %i gold pieces", req);
-			paid = TRUE;
 			break;
 		}
 

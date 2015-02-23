@@ -437,8 +437,6 @@ H:Orc | Troll | Half-Ogre | Beorning | Kobold |
 N:68:Kanris(Human)
 I:5000:140
 C:120:100:80
-#L:Merchant
-#H:Rogue
 
 N:69:Barliman Butterbur(Human)
 I:100:120

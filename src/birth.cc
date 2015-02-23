@@ -976,8 +976,6 @@ static void player_wipe(void)
 	/* Initialize allow_one_death */
 	p_ptr->allow_one_death = 0;
 
-	p_ptr->loan = p_ptr->loan_time = 0;
-
 	/* Wipe the power list */
 	for (i = 0; i < POWER_MAX; i++)
 	{

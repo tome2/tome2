@@ -239,6 +239,7 @@ static bool_ do_extra(int flag)
 	byte tmp8u = 0;
 	s16b tmp16s = 0;
 	u32b tmp32u = 0;
+	s32b tmp32s = 0;
 	u16b tmp16b = 0;
 	u32b dummy32u = 0;
 
@@ -587,8 +588,8 @@ static bool_ do_extra(int flag)
 	do_s16b(&p_ptr->disrupt_shield, flag);
 	do_s16b(&p_ptr->parasite, flag);
 	do_s16b(&p_ptr->parasite_r_idx, flag);
-	do_s32b(&p_ptr->loan, flag);
-	do_s32b(&p_ptr->loan_time, flag);
+	do_s32b(&tmp32s, flag);
+	do_s32b(&tmp32s, flag);
 	do_s16b(&p_ptr->absorb_soul, flag);
 	do_s32b(&p_ptr->inertia_controlled_spell, flag);
 	do_s16b(&p_ptr->last_rewarded_level, flag);

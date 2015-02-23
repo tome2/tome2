@@ -3911,9 +3911,6 @@
 #define BACT_QUEST3                 48
 #define BACT_QUEST4                 49
 #define BACT_STAR_HEAL              50
-#define BACT_REQUEST_ITEM           51
-#define BACT_GET_LOAN               52
-#define BACT_PAY_BACK_LOAN          53
 #define BACT_DROP_ITEM              54
 #define BACT_GET_ITEM               55
 #define BACT_FIREPROOF_QUEST        56
@@ -4197,7 +4194,6 @@
 #define PWR_INCARNATE                   54
 #define PWR_MAGIC_MAP                   55
 #define PWR_LAY_TRAP                    56
-#define PWR_MERCHANT                    57
 #define PWR_COMPANION                   58
 #define PWR_BEAR                        59
 #define PWR_DODGE                       60

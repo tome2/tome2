@@ -793,12 +793,6 @@ F:RANDOM | MEDIUM_LEVEL | DEPEND_LEVEL
 F:RARE
 W:24
 
-N:56:Merchants Guild
-A:0:0:56:57:58:0
-O:211:211:211:211
-G:+:g
-W:0
-
 N:57:The Museum
 A:0:0:59:0:3:0
 O:0:0:0:0

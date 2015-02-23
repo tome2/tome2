@@ -1412,8 +1412,3 @@ I:20000:130
 C:110:100:80
 L:Human | RohanKnight | Dunadan | High-Elf
 H:Dragon | Demon | Beorning | Orc | Half-Ogre | Troll  | Easterling
-
-### For the Merchants' Guild ###
-N:211:Worm(Human)
-I:30000:130
-C:110:100:90

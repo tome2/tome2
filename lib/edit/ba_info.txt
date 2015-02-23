@@ -257,18 +257,6 @@ N:55:Get an item
 C:0:0:0
 I:44:0:g:p
 
-N:56:Request an item
-C:0:0:0
-I:51:2:r
-
-N:57:Ask for loan
-C:0:0:0
-I:52:2:a
-
-N:58:Pay back loan
-C:0:0:0
-I:53:2:p
-
 N:59:Donate an item
 C:0:0:0
 I:43:0:d

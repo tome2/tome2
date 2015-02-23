@@ -3395,10 +3395,12 @@ power_type powers_type[POWER_MAX] =
 		1, 1, A_DEX, 1,
 	},
 	{
-		"Merchant abilities",
-		"You can request items and get loans.",
-		"From now on you can use the merchant abilities.",
-		"You can no longer use the merchant abilities.",
+		"notused", /* Merchant abilities; no longer used, but want to
+			    * avoid having to move all potential places where
+			    * we're indexing into this table. */
+		"notused",
+		"notused",
+		"notused",
 		0, 0, 0, 0,
 	},
 	{
