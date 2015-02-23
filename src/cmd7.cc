@@ -1401,7 +1401,7 @@ int calc_rqty(int i, int pval, int oldpval)
  */
 
 
-int check_artifact_items(int pval, int oldpval, int mode)
+static int check_artifact_items(int pval, int oldpval, int mode)
 {
 	int i, j, k, row = 1 , col = 15, rqty, orqty, trqty;
 	bool_ good = TRUE;
