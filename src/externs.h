@@ -716,7 +716,6 @@ extern bool_ is_magestaff(void);
 extern void calc_magic_bonus(void);
 extern void do_cmd_browse_aux(object_type *o_ptr);
 extern void do_cmd_browse(void);
-extern void do_cmd_cast(void);
 extern void do_cmd_pray(void);
 extern void do_cmd_rerate(void);
 extern void corrupt_player(void);
