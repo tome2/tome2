@@ -1180,7 +1180,6 @@ extern void activate_ty_curse(void);
 extern void activate_dg_curse(void);
 extern void activate_hi_summon(void);
 extern void summon_cyber(void);
-extern void wall_breaker(void);
 extern void bless_weapon(void);
 extern bool_ confuse_monsters(int dam);
 extern bool_ charm_monsters(int dam);

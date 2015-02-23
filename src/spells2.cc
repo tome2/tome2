@@ -7315,36 +7315,6 @@ void summon_dragon_riders()
 }
 
 
-void wall_breaker(void)
-{
-	int dummy = 5;
-
-	if (randint(80 + p_ptr->lev) < 70)
-	{
-		do
-		{
-			dummy = randint(9);
-		}
-		while ((dummy == 5) || (dummy == 0));
-
-		wall_to_mud (dummy);
-	}
-	else if (randint(100) > 30)
-	{
-		/* Prevent destruction of quest levels and town */
-		if (!is_quest(dun_level) && dun_level)
-			earthquake(p_ptr->py, p_ptr->px, 1);
-	}
-	else
-	{
-		for (dummy = 1; dummy < 10; dummy++)
-		{
-			if (dummy - 5) wall_to_mud(dummy);
-		}
-	}
-}
-
-
 void bless_weapon(void)
 {
 	int item;
