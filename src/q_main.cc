@@ -1,5 +1,10 @@
 #include "q_main.h"
 #include "hooks.h"
+#include <cassert>
+
+GENERATE_MONSTER_LOOKUP_FN(get_necromancer, "The Necromancer of Dol Guldur")
+GENERATE_MONSTER_LOOKUP_FN(get_sauron, "Sauron, the Sorcerer")
+GENERATE_MONSTER_LOOKUP_FN(get_morgoth, "Morgoth, Lord of Darkness")
 
 static void quest_describe(int q_idx)
 {
@@ -17,24 +22,23 @@ static bool_ quest_main_monsters_hook(void *, void *in_, void *)
 	s32b r_idx = in->r_idx;
 
 	/* Sauron */
-	if (r_idx == 860)
+	if (r_idx == get_sauron())
 	{
 		/* No Sauron until Necromancer dies */
-		if (r_info[819].max_num) return TRUE;
+		if (r_info[get_necromancer()].max_num) return TRUE;
 	}
 	/* Morgoth */
-	else if (r_idx == 862)
+	else if (r_idx == get_morgoth())
 	{
 		/* No Morgoth until Sauron dies */
-		if (r_info[860].max_num) return TRUE;
+		if (r_info[get_sauron()].max_num) return TRUE;
 	}
 	return FALSE;
 }
 
 static bool_ quest_morgoth_hook(void *, void *, void *)
 {
-	/* Using test_monster_name() here would be a lot less ugly, but would take much more time */
-	monster_race *r_ptr = &r_info[862];
+	monster_race *r_ptr = &r_info[get_morgoth()];
 
 	/* Need to kill him */
 	if (!r_ptr->max_num)
@@ -110,8 +114,7 @@ bool_ quest_morgoth_init_hook(int q_idx)
 
 static bool_ quest_sauron_hook(void *, void *, void *)
 {
-	/* Using test_monster_name() here would be a lot less ugly, but would take much more time */
-	monster_race *r_ptr = &r_info[860];
+	monster_race *r_ptr = &r_info[get_sauron()];
 
 	/* Need to kill him */
 	if (!r_ptr->max_num)
@@ -139,12 +142,12 @@ static bool_ quest_sauron_resurect_hook(void *, void *in_, void *)
 	monster_type *m_ptr = &m_list[m_idx];
 	monster_race *r_ptr = &r_info[m_ptr->r_idx];
 
-	if ((r_ptr->flags7 & RF7_NAZGUL) && r_info[860].max_num)
+	if ((r_ptr->flags7 & RF7_NAZGUL) && r_info[get_sauron()].max_num)
 	{
 		msg_format("Somehow you feel %s is not totally destroyed...", (r_ptr->flags1 & RF1_FEMALE ? "she" : "he"));
 		r_ptr->max_num = 1;
 	}
-	else if ((m_ptr->r_idx == 860) && (quest[QUEST_ONE].status < QUEST_STATUS_FINISHED))
+	else if ((m_ptr->r_idx == get_sauron()) && (quest[QUEST_ONE].status < QUEST_STATUS_FINISHED))
 	{
 		msg_print("Sauron will not be permanently defeated until the One Ring is either destroyed or used...");
 		r_ptr->max_num = 1;
@@ -165,8 +168,7 @@ bool_ quest_sauron_init_hook(int q_idx)
 
 static bool_ quest_necro_hook(void *, void *, void *)
 {
-	/* Using test_monster_name() here would be a lot less ugly, but would take much more time */
-	monster_race *r_ptr = &r_info[819];
+	monster_race *r_ptr = &r_info[get_necromancer()];
 
 	/* Need to kill him */
 	if (!r_ptr->max_num)

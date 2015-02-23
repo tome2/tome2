@@ -207,6 +207,10 @@ static casting_result cplus(casting_result old, bool_ effect)
 	}
 }
 
+GENERATE_MONSTER_LOOKUP_FN(get_fire_golem, "Fire golem")
+
+// -------------------------------------------------------------
+
 casting_result air_noxious_cloud()
 {
 	int dir, type;
@@ -1374,8 +1378,6 @@ bool_ item_tester_hook_fire_golem(object_type *o_ptr)
 
 casting_result fire_golem()
 {
-	int item, x, y, m_idx;
-
 	/* Can we reconnect ? */
 	if (do_control_reconnect())
 	{
@@ -1384,6 +1386,7 @@ casting_result fire_golem()
 	}
 
 	item_tester_hook = item_tester_hook_fire_golem;
+	int item;
 	if (!get_item(&item,
 		      "Which light source do you want to use to create the golem?",
 		      "You have no light source for the golem",
@@ -1395,11 +1398,15 @@ casting_result fire_golem()
 	/* Destroy the source object */
 	inc_stack_size(item, -1);
 
-	/* Summon it */
-	m_allow_special[1043 + 1] = TRUE;
+	/* Find a place for it */
+	int x, y;
 	find_position(p_ptr->py, p_ptr->px, &y, &x);
-	m_idx = place_monster_one(y, x, 1043, 0, FALSE, MSTATUS_FRIEND);
-	m_allow_special[1043 + 1] = FALSE;
+
+	/* Summon it */
+	int r_idx = get_fire_golem();
+	m_allow_special[r_idx] = TRUE;
+	int m_idx = place_monster_one(y, x, r_idx, 0, FALSE, MSTATUS_FRIEND);
+	m_allow_special[r_idx] = FALSE;
 
 	/* level it */
 	if (m_idx != 0)

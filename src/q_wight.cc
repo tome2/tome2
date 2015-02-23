@@ -1,8 +1,11 @@
 #include "q_wight.h"
 #include "quark.h"
 #include "hooks.h"
+#include <cassert>
 
 #define cquest (quest[QUEST_WIGHT])
+
+GENERATE_MONSTER_LOOKUP_FN(get_wight_king, "The Wight-King of the Barrow-downs")
 
 static bool_ quest_wight_gen_hook(void *, void *, void *)
 {
@@ -38,9 +41,9 @@ static bool_ quest_wight_gen_hook(void *, void *, void *)
 			{
 				int m_idx = 0;
 
-				m_allow_special[test_monster_name("The Wight-King of the Barrow-downs")] = TRUE;
-				m_idx = place_monster_one(y, x, test_monster_name("The Wight-King of the Barrow-downs"), 0, FALSE, MSTATUS_ENEMY);
-				m_allow_special[test_monster_name("The Wight-King of the Barrow-downs")] = FALSE;
+				m_allow_special[get_wight_king()] = TRUE;
+				m_idx = place_monster_one(y, x, get_wight_king(), 0, FALSE, MSTATUS_ENEMY);
+				m_allow_special[get_wight_king()] = FALSE;
 
 				if (m_idx)
 				{
@@ -113,7 +116,7 @@ static bool_ quest_wight_death_hook(void *, void *in_, void *)
 
 	if (p_ptr->inside_quest != QUEST_WIGHT) return FALSE;
 
-	if (r_idx == test_monster_name("The Wight-King of the Barrow-downs"))
+	if (r_idx == get_wight_king())
 	{
 		cmsg_print(TERM_YELLOW, "Without their King the wights won't be able to do much.");
 

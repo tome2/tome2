@@ -2,8 +2,13 @@
 #include "quark.h"
 #include "messages.h"
 #include "hooks.h"
+#include <cassert>
 
 #define cquest (quest[QUEST_THRAIN])
+
+GENERATE_MONSTER_LOOKUP_FN(get_thrain, "Thrain, the King Under the Mountain")
+GENERATE_MONSTER_LOOKUP_FN(get_dwar, "Dwar, Dog Lord of Waw")
+GENERATE_MONSTER_LOOKUP_FN(get_hoarmurath, "Hoarmurath of Dir")
 
 static bool_ quest_thrain_death_hook(void *, void *in_, void *)
 {
@@ -14,7 +19,7 @@ static bool_ quest_thrain_death_hook(void *, void *in_, void *)
 
 	if ((cquest.status >= QUEST_STATUS_FINISHED) || (dun_level !=cquest.data[0]) || (dungeon_type != DUNGEON_DOL_GULDUR)) return (FALSE);
 	m_ptr = &m_list[m_idx];
-	if ((m_ptr->r_idx != test_monster_name("Dwar, Dog Lord of Waw")) && (m_ptr->r_idx != test_monster_name("Hoarmurath of Dir"))) return (FALSE);
+	if ((m_ptr->r_idx != get_dwar()) && (m_ptr->r_idx != get_hoarmurath())) return (FALSE);
 
 	cquest.data[2]++;
 
@@ -50,7 +55,7 @@ static bool_ quest_thrain_death_hook(void *, void *in_, void *)
 		if (!m_ptr->r_idx) continue;
 
 		/* Is it the princess? */
-		if (m_ptr->r_idx == test_monster_name("Thrain, the King Under the Mountain"))
+		if (m_ptr->r_idx == get_thrain())
 		{
 			int x = m_ptr->fx;
 			int y = m_ptr->fy;
@@ -147,12 +152,11 @@ static bool_ quest_thrain_gen_hook(void *, void *in_, void *)
 			cave[y][x].info |= CAVE_ICKY | CAVE_ROOM | CAVE_FREE;
 			if (cave[y][x].feat == FEAT_MARKER)
 			{
-				int i;
+				m_allow_special[get_thrain()] = TRUE;
+				int i = place_monster_one(y, x, get_thrain(), 0, FALSE, MSTATUS_NEUTRAL);
+				m_allow_special[get_thrain()] = FALSE;
 
-				m_allow_special[test_monster_name("Thrain, the King Under the Mountain")] = TRUE;
-				i = place_monster_one(y, x, test_monster_name("Thrain, the King Under the Mountain"), 0, FALSE, MSTATUS_NEUTRAL);
 				if (i) m_list[i].mflag |= MFLAG_QUEST;
-				m_allow_special[test_monster_name("Thrain, the King Under the Mountain")] = FALSE;
 			}
 		}
 

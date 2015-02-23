@@ -1,8 +1,12 @@
 #include "q_hobbit.h"
 #include "messages.h"
 #include "hooks.h"
+#include <cassert>
 
 #define cquest (quest[QUEST_HOBBIT])
+
+GENERATE_MONSTER_LOOKUP_FN(get_melinda_proudfoot, "Melinda Proudfoot")
+GENERATE_MONSTER_LOOKUP_FN(get_merton_proudfoot, "Merton Proudfoot, the lost hobbit")
 
 static bool_ quest_hobbit_town_gen_hook(void *, void *in_, void *)
 {
@@ -29,9 +33,10 @@ static bool_ quest_hobbit_town_gen_hook(void *, void *in_, void *)
 	}
 
 	/* Place Melinda */
-	m_allow_special[test_monster_name("Melinda Proudfoot")] = TRUE;
-	place_monster_one(y, x, test_monster_name("Melinda Proudfoot"), 0, FALSE, MSTATUS_ENEMY);
-	m_allow_special[test_monster_name("Melinda Proudfoot")] = FALSE;
+	int r_idx = get_melinda_proudfoot();
+	m_allow_special[r_idx] = TRUE;
+	place_monster_one(y, x, r_idx, 0, FALSE, MSTATUS_ENEMY);
+	m_allow_special[r_idx] = FALSE;
 
 	return FALSE;
 }
@@ -57,9 +62,10 @@ static bool_ quest_hobbit_gen_hook(void *, void *, void *)
 	}
 
 	/* Place the hobbit */
-	m_allow_special[test_monster_name("Merton Proudfoot, the lost hobbit")] = TRUE;
-	place_monster_one(y, x, test_monster_name("Merton Proudfoot, the lost hobbit"), 0, FALSE, MSTATUS_FRIEND);
-	m_allow_special[test_monster_name("Merton Proudfoot, the lost hobbit")] = FALSE;
+	int r_idx = get_merton_proudfoot();
+	m_allow_special[r_idx] = TRUE;
+	place_monster_one(y, x, r_idx, 0, FALSE, MSTATUS_FRIEND);
+	m_allow_special[r_idx] = FALSE;
 
 	return FALSE;
 }
@@ -75,7 +81,7 @@ static bool_ quest_hobbit_give_hook(void *, void *in_, void *)
 	o_ptr = &p_ptr->inventory[item];
 	m_ptr = &m_list[m_idx];
 
-	if (m_ptr->r_idx != test_monster_name("Merton Proudfoot, the lost hobbit")) return (FALSE);
+	if (m_ptr->r_idx != get_merton_proudfoot()) return (FALSE);
 
 	if ((o_ptr->tval != TV_SCROLL) || (o_ptr->sval != SV_SCROLL_WORD_OF_RECALL)) return (FALSE);
 
@@ -99,7 +105,10 @@ static bool_ quest_hobbit_speak_hook(void *, void *in_, void *)
 	struct hook_mon_speak_in *in = static_cast<struct hook_mon_speak_in *>(in_);
 	s32b m_idx = in->m_idx;
 
-	if (m_list[m_idx].r_idx != test_monster_name("Melinda Proudfoot")) return (FALSE);
+	if (m_list[m_idx].r_idx != get_melinda_proudfoot())
+	{
+		return (FALSE);
+	}
 
 	if (cquest.status < QUEST_STATUS_COMPLETED)
 	{
@@ -116,7 +125,7 @@ static bool_ quest_hobbit_chat_hook(void *, void *in_, void *)
 
 	m_ptr = &m_list[m_idx];
 
-	if (m_ptr->r_idx != test_monster_name("Melinda Proudfoot")) return (FALSE);
+	if (m_ptr->r_idx != get_melinda_proudfoot()) return (FALSE);
 
 	if (cquest.status < QUEST_STATUS_COMPLETED)
 	{

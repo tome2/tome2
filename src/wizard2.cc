@@ -1497,8 +1497,14 @@ static void do_cmd_wiz_named(int r_idx, bool_ slp)
 
 		/* Place it (allow groups) */
 		m_allow_special[r_idx] = TRUE;
-		if (place_monster_aux(y, x, r_idx, slp, TRUE, MSTATUS_ENEMY)) break;
+		int m_idx = place_monster_aux(y, x, r_idx, slp, TRUE, MSTATUS_ENEMY);
 		m_allow_special[r_idx] = FALSE;
+
+		// If summoning succeeded, we stop.
+		if (m_idx)
+		{
+			break;
+		}
 	}
 }
 
@@ -1519,7 +1525,6 @@ void do_cmd_wiz_named_friendly(int r_idx, bool_ slp)
 	if (r_idx >= max_r_idx) return;
 
 	/* Try 10 times */
-	m_allow_special[r_idx] = TRUE;
 	for (i = 0; i < 10; i++)
 	{
 		int d = 1;
@@ -1531,9 +1536,16 @@ void do_cmd_wiz_named_friendly(int r_idx, bool_ slp)
 		if (!cave_empty_bold(y, x)) continue;
 
 		/* Place it (allow groups) */
-		if (place_monster_aux(y, x, r_idx, slp, TRUE, MSTATUS_PET)) break;
+		m_allow_special[r_idx] = TRUE;
+		int m_idx = place_monster_aux(y, x, r_idx, slp, TRUE, MSTATUS_PET);
+		m_allow_special[r_idx] = FALSE;
+
+		// Stop if we succeeded
+		if (m_idx)
+		{
+			break;
+		}
 	}
-	m_allow_special[r_idx] = FALSE;
 }
 
 

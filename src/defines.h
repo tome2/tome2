@@ -4593,3 +4593,21 @@
 #define BOOK_RANDOM 255
 
 #define SCHOOL_BOOKS_SIZE 256
+
+/**
+ * Macro to generate a memoizing named monster lookup function.
+ *
+ * This is meant as a stopgap measure until a better method
+ * can be implemented.
+ */
+#define GENERATE_MONSTER_LOOKUP_FN(fn, name) \
+	static int fn()\
+	{\
+		static int r_idx = -1;\
+		if (r_idx < 0)\
+		{\
+			r_idx = test_monster_name(name);\
+			assert(r_idx);\
+		}\
+		return r_idx;\
+	}

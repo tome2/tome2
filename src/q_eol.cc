@@ -1,7 +1,10 @@
 #include "q_eol.h"
 #include "hooks.h"
+#include <cassert>
 
 #define cquest (quest[QUEST_EOL])
+
+GENERATE_MONSTER_LOOKUP_FN(get_eol, "Eol, the Dark Elf")
 
 static bool_ quest_eol_gen_hook(void *, void *, void *)
 {
@@ -63,9 +66,13 @@ static bool_ quest_eol_gen_hook(void *, void *, void *)
 			/* Place eol at the other end */
 			if (!m_idx)
 			{
-				m_allow_special[test_monster_name("Eol, the Dark Elf")] = TRUE;
-				m_idx = place_monster_one(y, x, test_monster_name("Eol, the Dark Elf"), 0, FALSE, MSTATUS_ENEMY);
-				m_allow_special[test_monster_name("Eol, the Dark Elf")] = FALSE;
+				// Find Eol's r_info entry
+				int r_idx = get_eol();
+				// "Summon" Eol
+				m_allow_special[r_idx] = TRUE;
+				m_idx = place_monster_one(y, x, r_idx, 0, FALSE, MSTATUS_ENEMY);
+				m_allow_special[r_idx] = FALSE;
+				// Mark with the QUEST flag
 				if (m_idx) m_list[m_idx].mflag |= MFLAG_QUEST;
 			}
 
@@ -142,7 +149,7 @@ static bool_ quest_eol_death_hook(void *, void *in_, void *)
 
 	if (p_ptr->inside_quest != QUEST_EOL) return FALSE;
 
-	if (r_idx == test_monster_name("Eol, the Dark Elf"))
+	if (r_idx == get_eol())
 	{
 		cmsg_print(TERM_YELLOW, "Such a sad end...");
 		cquest.status = QUEST_STATUS_COMPLETED;
@@ -159,7 +166,7 @@ static bool_ quest_eol_death_hook(void *, void *in_, void *)
 static bool_ quest_eol_stair_hook(void *, void *in_, void *)
 {
 	struct hook_stair_in *in = static_cast<struct hook_stair_in *>(in_);
-	monster_race *r_ptr = &r_info[test_monster_name("Eol, the Dark Elf")];
+	monster_race *r_ptr = &r_info[get_eol()];
 
 	if (p_ptr->inside_quest != QUEST_EOL) return FALSE;
 

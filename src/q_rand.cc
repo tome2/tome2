@@ -2,6 +2,7 @@
 #include "hooks.h"
 #include "util.hpp"
 #include "messages.h"
+#include <cassert>
 
 static int randquest_hero[] = { 20, 13, 15, 16, 9, 17, 18, 8, -1 };
 
@@ -17,6 +18,9 @@ static int random_quests_types[MAX_RANDOM_QUESTS_TYPES] =
 
 /* Enforce OoD monsters until this level */
 #define RQ_LEVEL_CAP 49
+
+// Generate lookup function
+GENERATE_MONSTER_LOOKUP_FN(get_adventurer, "Adventurer")
 
 void initialize_random_quests(int n)
 {
@@ -348,11 +352,12 @@ static void hero_death(s32b m_idx, s32b r_idx)
 
 		if (i < 20)
 		{
-			int m_idx;
+			int r_idx = get_adventurer();
 
-			m_allow_special[test_monster_name("Adventurer")] = TRUE;
-			m_idx = place_monster_one(y, x, test_monster_name("Adventurer"), 0, FALSE, MSTATUS_COMPANION);
-			m_allow_special[test_monster_name("Adventurer")] = FALSE;
+			m_allow_special[r_idx] = TRUE;
+			int m_idx = place_monster_one(y, x, r_idx, 0, FALSE, MSTATUS_COMPANION);
+			m_allow_special[r_idx] = FALSE;
+
 			if (m_idx)
 			{
 				m_list[m_idx].exp = monster_exp(1 + (dun_level * 3 / 2));

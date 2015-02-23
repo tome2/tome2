@@ -1,11 +1,17 @@
 #include "q_shroom.h"
 #include "messages.h"
 #include "hooks.h"
+#include <cassert>
 
 #define cquest (quest[QUEST_SHROOM])
 
 static bool_ quest_shroom_speak_hook(void *, void *, void *);
 static bool_ quest_shroom_chat_hook(void *, void *, void *);
+
+GENERATE_MONSTER_LOOKUP_FN(get_grip, "Grip, Farmer Maggot's dog")
+GENERATE_MONSTER_LOOKUP_FN(get_wolf, "Wolf, Farmer Maggot's dog")
+GENERATE_MONSTER_LOOKUP_FN(get_fang, "Fang, Farmer Maggot's dog")
+GENERATE_MONSTER_LOOKUP_FN(get_farmer_maggot, "Farmer Maggot")
 
 static bool_ quest_shroom_town_gen_hook(void *, void *in_, void *)
 {
@@ -36,24 +42,24 @@ static bool_ quest_shroom_town_gen_hook(void *, void *in_, void *)
 		/* Throw in some dogs ;) */
 		y = rand_range((cur_hgt / 2) - 5, (cur_hgt / 2) + 5);
 		x = rand_range((cur_wid / 2) - 7, (cur_wid / 2) + 7);
-		m_allow_special[test_monster_name("Grip, Farmer Maggot's dog")] = TRUE;
-		m_idx = place_monster_one(y, x, test_monster_name("Grip, Farmer Maggot's dog"), 0, FALSE, MSTATUS_ENEMY);
+		m_allow_special[get_grip()] = TRUE;
+		m_idx = place_monster_one(y, x, get_grip(), 0, FALSE, MSTATUS_ENEMY);
 		if (m_idx) m_list[m_idx].mflag |= MFLAG_QUEST;
-		m_allow_special[test_monster_name("Grip, Farmer Maggot's dog")] = FALSE;
+		m_allow_special[get_grip()] = FALSE;
 
 		y = rand_range((cur_hgt / 2) - 5, (cur_hgt / 2) + 5);
 		x = rand_range((cur_wid / 2) - 7, (cur_wid / 2) + 7);
-		m_allow_special[test_monster_name("Wolf, Farmer Maggot's dog")] = TRUE;
-		m_idx = place_monster_one(y, x, test_monster_name("Wolf, Farmer Maggot's dog"), 0, FALSE, MSTATUS_ENEMY);
+		m_allow_special[get_wolf()] = TRUE;
+		m_idx = place_monster_one(y, x, get_wolf(), 0, FALSE, MSTATUS_ENEMY);
 		if (m_idx) m_list[m_idx].mflag |= MFLAG_QUEST;
-		m_allow_special[test_monster_name("Wolf, Farmer Maggot's dog")] = FALSE;
+		m_allow_special[get_wolf()] = FALSE;
 
 		y = rand_range((cur_hgt / 2) - 5, (cur_hgt / 2) + 5);
 		x = rand_range((cur_wid / 2) - 7, (cur_wid / 2) + 7);
-		m_allow_special[test_monster_name("Fang, Farmer Maggot's dog")] = TRUE;
-		m_idx = place_monster_one(y, x, test_monster_name("Fang, Farmer Maggot's dog"), 0, FALSE, MSTATUS_ENEMY);
+		m_allow_special[get_fang()] = TRUE;
+		m_idx = place_monster_one(y, x, get_fang(), 0, FALSE, MSTATUS_ENEMY);
 		if (m_idx) m_list[m_idx].mflag |= MFLAG_QUEST;
-		m_allow_special[test_monster_name("Fang, Farmer Maggot's dog")] = FALSE;
+		m_allow_special[get_fang()] = FALSE;
 
 		msg_print("You hear frenzied barking.");
 	}
@@ -78,9 +84,9 @@ static bool_ quest_shroom_town_gen_hook(void *, void *in_, void *)
 	}
 
 	/* Place Farmer Maggot */
-	m_allow_special[test_monster_name("Farmer Maggot")] = TRUE;
-	place_monster_one(y, x, test_monster_name("Farmer Maggot"), 0, FALSE, MSTATUS_ENEMY);
-	m_allow_special[test_monster_name("Farmer Maggot")] = FALSE;
+	m_allow_special[get_farmer_maggot()] = TRUE;
+	place_monster_one(y, x, get_farmer_maggot(), 0, FALSE, MSTATUS_ENEMY);
+	m_allow_special[get_farmer_maggot()] = FALSE;
 
 	return FALSE;
 }
@@ -93,9 +99,9 @@ static bool_ quest_shroom_death_hook(void *, void *in_, void *)
 
 	if (cquest.status > QUEST_STATUS_COMPLETED) return FALSE;
 
-	if ((r_idx == test_monster_name("Wolf, Farmer Maggot's dog")) ||
-	                (r_idx == test_monster_name("Grip, Farmer Maggot's dog")) ||
-	                (r_idx == test_monster_name("Fang, Farmer Maggot's dog")))
+	if ((r_idx == get_wolf()) ||
+			(r_idx == get_grip()) ||
+			(r_idx == get_fang()))
 	{
 		msg_print("The dog yells a last time and drops dead on the grass.");
 	}
@@ -115,12 +121,12 @@ static bool_ quest_shroom_give_hook(void *, void *in_, void *)
 	o_ptr = &p_ptr->inventory[item];
 	m_ptr = &m_list[m_idx];
 
-	if (m_ptr->r_idx != test_monster_name("Farmer Maggot")) return (FALSE);
+	if (m_ptr->r_idx != get_farmer_maggot()) return (FALSE);
 
 	/* If one is dead .. its bad */
-	if ((r_info[test_monster_name("Grip, Farmer Maggot's dog")].max_num == 0) ||
-	                (r_info[test_monster_name("Wolf, Farmer Maggot's dog")].max_num == 0) ||
-	                (r_info[test_monster_name("Fang, Farmer Maggot's dog")].max_num == 0))
+	if ((r_info[get_grip()].max_num == 0) ||
+			(r_info[get_wolf()].max_num == 0) ||
+			(r_info[get_fang()].max_num == 0))
 	{
 		cquest.status = QUEST_STATUS_FAILED_DONE;
 		msg_print("My puppy!  My poor, defenceless puppy...");
@@ -190,9 +196,9 @@ static bool_ quest_shroom_give_hook(void *, void *in_, void *)
 
 static void check_dogs_alive(s32b m_idx)
 {
-	if ((r_info[test_monster_name("Grip, Farmer Maggot's dog")].max_num == 0) ||
-	    (r_info[test_monster_name("Wolf, Farmer Maggot's dog")].max_num == 0) ||
-	    (r_info[test_monster_name("Fang, Farmer Maggot's dog")].max_num == 0))
+	if ((r_info[get_grip()].max_num == 0) ||
+	    (r_info[get_wolf()].max_num == 0) ||
+	    (r_info[get_fang()].max_num == 0))
 	{
 		cquest.status = QUEST_STATUS_FAILED_DONE;
 		msg_print("My puppy!  My poor, defenceless puppy...");
@@ -216,7 +222,7 @@ static bool_ quest_shroom_speak_hook(void *, void *in_, void *)
 	struct hook_mon_speak_in *in = static_cast<struct hook_mon_speak_in *>(in_);
 	s32b m_idx = in->m_idx;
 
-	if (m_list[m_idx].r_idx != test_monster_name("Farmer Maggot")) return (FALSE);
+	if (m_list[m_idx].r_idx != get_farmer_maggot()) return (FALSE);
 
 	if (cquest.status == QUEST_STATUS_UNTAKEN)
 	{
@@ -236,7 +242,7 @@ static bool_ quest_shroom_chat_hook(void *, void *in_, void *)
 	s32b m_idx = in->m_idx;
 	monster_type *m_ptr = &m_list[m_idx];
 
-	if (m_ptr->r_idx != test_monster_name("Farmer Maggot")) return (FALSE);
+	if (m_ptr->r_idx != get_farmer_maggot()) return (FALSE);
 
 	if (cquest.status == QUEST_STATUS_UNTAKEN)
 	{

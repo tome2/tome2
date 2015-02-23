@@ -1,7 +1,10 @@
 #include "q_nazgul.h"
 #include "hooks.h"
+#include <cassert>
 
 #define cquest (quest[QUEST_NAZGUL])
+
+GENERATE_MONSTER_LOOKUP_FN(get_uvatha, "Uvatha the Horseman")
 
 static bool_ quest_nazgul_gen_hook(void *, void *in_, void *)
 {
@@ -27,10 +30,13 @@ static bool_ quest_nazgul_gen_hook(void *, void *in_, void *)
 	}
 
 	/* Place the nazgul */
-	m_allow_special[test_monster_name("Uvatha the Horseman")] = TRUE;
-	m_idx = place_monster_one(y, x, test_monster_name("Uvatha the Horseman"), 0, FALSE, MSTATUS_ENEMY);
+	int r_idx = get_uvatha();
+
+	m_allow_special[r_idx] = TRUE;
+	m_idx = place_monster_one(y, x, r_idx, 0, FALSE, MSTATUS_ENEMY);
+	m_allow_special[r_idx] = FALSE;
+
 	if (m_idx) m_list[m_idx].mflag |= MFLAG_QUEST;
-	m_allow_special[test_monster_name("Uvatha the Horseman")] = FALSE;
 
 	return FALSE;
 }
@@ -99,7 +105,7 @@ static bool_ quest_nazgul_death_hook(void *, void *in_, void *)
 	s32b r_idx = m_list[m_idx].r_idx;
 
 	if (cquest.status != QUEST_STATUS_TAKEN) return (FALSE);
-	if (r_idx != test_monster_name("Uvatha the Horseman")) return (FALSE);
+	if (r_idx != get_uvatha()) return (FALSE);
 
 	cquest.status = QUEST_STATUS_COMPLETED;
 

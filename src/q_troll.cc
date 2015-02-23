@@ -1,7 +1,12 @@
 #include "q_troll.h"
 #include "hooks.h"
+#include <cassert>
 
 #define cquest (quest[QUEST_TROLL])
+
+GENERATE_MONSTER_LOOKUP_FN(get_tom, "Tom the Stone Troll")
+GENERATE_MONSTER_LOOKUP_FN(get_stone_troll, "Stone troll")
+GENERATE_MONSTER_LOOKUP_FN(get_forest_troll, "Forest troll")
 
 static bool_ quest_troll_gen_hook(void *, void *, void *)
 {
@@ -35,11 +40,9 @@ static bool_ quest_troll_gen_hook(void *, void *, void *)
 		{
 			if (cave[y][x].feat == FEAT_MARKER)
 			{
-				int m_idx;
-
-				m_allow_special[test_monster_name("Tom the Stone Troll")] = TRUE;
-				m_idx = place_monster_one(y, x, test_monster_name("Tom the Stone Troll"), 0, FALSE, MSTATUS_ENEMY);
-				m_allow_special[test_monster_name("Tom the Stone Troll")] = FALSE;
+				m_allow_special[get_tom()] = TRUE;
+				int m_idx = place_monster_one(y, x, get_tom(), 0, FALSE, MSTATUS_ENEMY);
+				m_allow_special[get_tom()] = FALSE;
 
 				if (m_idx)
 				{
@@ -125,7 +128,7 @@ static bool_ quest_troll_death_hook(void *, void *in_, void *)
 
 	if (p_ptr->inside_quest != QUEST_TROLL) return FALSE;
 
-	if (r_idx == test_monster_name("Tom the Stone Troll"))
+	if (r_idx == get_tom())
 	{
 		cave_set_feat(3, 3, FEAT_LESS);
 		cave[3][3].special = 0;
@@ -154,12 +157,10 @@ static bool_ quest_troll_death_hook(void *, void *in_, void *)
 			/* Ahah ! */
 			if (c_ptr->info & CAVE_SPEC)
 			{
-				int r_idx;
-
 				cave_set_feat(y, x, FEAT_GRASS);
 				c_ptr->info &= ~CAVE_SPEC;
 
-				r_idx = (rand_int(2) == 0) ? test_monster_name("Forest troll") : test_monster_name("Stone troll");
+				int r_idx = (rand_int(2) == 0) ? get_forest_troll() : get_stone_troll();
 				place_monster_one(y, x, r_idx, 0, FALSE, MSTATUS_ENEMY);
 			}
 		}
