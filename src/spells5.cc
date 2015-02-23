@@ -4,6 +4,7 @@
 
 #include "spell_type.h"
 #include "device_allocation.h"
+#include "spells3.hpp"
 
 
 static spell_type *spell_new(s32b *index, cptr name)

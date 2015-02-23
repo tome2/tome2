@@ -12,6 +12,7 @@
 
 #include "angband.h"
 #include "hooks.h"
+#include "spells3.hpp"
 
 #include <cassert>
 #include <chrono>

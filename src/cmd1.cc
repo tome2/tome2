@@ -14,6 +14,7 @@
 
 #include "quark.h"
 #include "hooks.h"
+#include "spells3.hpp"
 
 #define MAX_VAMPIRIC_DRAIN 100
 

@@ -1,6 +1,7 @@
 #include "q_library.h"
 #include "quark.h"
 #include "hooks.h"
+#include "spells3.hpp"
 
 #include <cassert>
 

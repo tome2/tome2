@@ -15,6 +15,7 @@
 #include "messages.h"
 #include "hooks.h"
 #include "q_rand.h"
+#include "spells3.hpp"
 
 #include <string>
 

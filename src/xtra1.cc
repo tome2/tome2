@@ -13,6 +13,7 @@
 #include "angband.h"
 #include "messages.h"
 #include "hooks.h"
+#include "spells3.hpp"
 
 #include <cassert>
 
