@@ -1,9 +1,5 @@
 #pragma once
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 /*
  * Spell effect function result
  */
@@ -18,7 +14,3 @@ typedef enum {
  */
 typedef struct spell_type spell_type;
 struct spell_type;
-
-#ifdef __cplusplus
-} // extern "C"
-#endif

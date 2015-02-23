@@ -1,6 +1,6 @@
 #pragma once
 
-#include "spell_type_fwd.h"
+#include "spell_type_fwd.hpp"
 #include "h-basic.h"
 #include "types_fwd.h"
 

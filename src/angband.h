@@ -48,7 +48,6 @@ extern "C" {
  */
 #include "defines.h"
 #include "types.h"
-#include "spell_type_fwd.h"
 #include "externs.h"
 
 /***** Some copyright messages follow below *****/

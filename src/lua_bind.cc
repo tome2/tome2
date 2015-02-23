@@ -16,7 +16,7 @@
 #include <assert.h>
 #include <functional>
 
-#include "spell_type.h"
+#include "spell_type.hpp"
 #include "range.h"
 
 /*

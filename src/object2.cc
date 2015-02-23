@@ -11,7 +11,7 @@
  */
 
 #include "angband.h"
-#include "spell_type.h"
+#include "spell_type.hpp"
 #include "device_allocation.h"
 #include "hooks.h"
 #include "spells3.hpp"

@@ -17,7 +17,7 @@
 #include "quest.h"
 #include "quark.h"
 #include "hooks.h"
-#include "spell_type.h"
+#include "spell_type.hpp"
 
 #define TY_CURSE_CHANCE 100
 #define DG_CURSE_CHANCE 50

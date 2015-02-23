@@ -1,7 +1,7 @@
 #pragma once
 
 #include "h-basic.h"
-#include "spell_type_fwd.h"
+#include "spell_type_fwd.hpp"
 
 /** Calculate spell failure rate for a device, i.e. a wand or staff. */
 extern s32b spell_chance_device(spell_type *spell_ptr);

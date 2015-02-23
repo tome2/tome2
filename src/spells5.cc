@@ -2,7 +2,7 @@
 
 #include <assert.h>
 
-#include "spell_type.h"
+#include "spell_type.hpp"
 #include "device_allocation.h"
 #include "spells3.hpp"
 

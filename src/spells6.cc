@@ -1,6 +1,6 @@
 #include <angband.h>
 #include <assert.h>
-#include "spell_type.h"
+#include "spell_type.hpp"
 
 #include <vector>
 

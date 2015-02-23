@@ -13,7 +13,6 @@
 #include "angband.h"
 #include "lua_bind.hpp"
 #include "quark.h"
-#include "spell_type.h"
 #include "spell_type.hpp"
 #include "hooks.h"
 

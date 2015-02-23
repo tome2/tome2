@@ -15,7 +15,7 @@
 
 #include <assert.h>
 
-#include "spell_type.h"
+#include "spell_type.hpp"
 #include "quark.h"
 
 /* Maximum number of tries for teleporting */
