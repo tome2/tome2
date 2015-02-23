@@ -152,9 +152,6 @@ Y:empty_levels
 # Option 'Reduce lite-radius when running'
 X:view_reduce_lite
 
-# Option 'Reduce view-radius in town'
-X:view_reduce_view
-
 # Option 'Avoid checking for user abort'
 X:avoid_abort
 

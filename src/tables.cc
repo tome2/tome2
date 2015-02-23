@@ -1515,9 +1515,6 @@ option_type option_info[] =
 	{ &view_reduce_lite, FALSE, 4, 0,
 	  "view_reduce_lite", "Reduce lite-radius when running" },
 
-	{ &view_reduce_view, FALSE, 4, 1,
-	  "view_reduce_view", "Reduce view-radius in town" },
-
 	{ &avoid_abort, FALSE, 4, 2,
 	  "avoid_abort", "Avoid checking for user abort" },
 

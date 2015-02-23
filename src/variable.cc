@@ -239,7 +239,6 @@ bool_ smart_cheat; 			/* Monsters exploit player weaknesses */
 /* Option Set 4 -- Efficiency */
 
 bool_ view_reduce_lite; 		/* Reduce lite-radius when running */
-bool_ view_reduce_view; 		/* Reduce view-radius in town */
 
 bool_ avoid_abort; 			/* Avoid checking for user abort */
 bool_ avoid_shimmer; 			/* Avoid processing extra shimmering */

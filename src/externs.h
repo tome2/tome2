@@ -222,7 +222,6 @@ extern bool_ flow_by_sound;
 extern bool_ track_follow;
 extern bool_ track_target;
 extern bool_ view_reduce_lite;
-extern bool_ view_reduce_view;
 extern bool_ auto_scum;
 extern bool_ expand_look;
 extern bool_ expand_list;

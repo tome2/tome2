@@ -140,7 +140,7 @@ off at will during the course of the game.
     monster becomes viewable for the first time, and also whenever any
     viewable monster becomes no longer viewable.  This option ignores
     the existence of telepathy for the purpose of determining whether
-    a monster is viewable.  See also the "view_reduce_view" option.
+    a monster is viewable.
 
 #####GDisturb whenever map panel changes    [disturb_panel]
     This option causes you to be disturbed (stop running) when the screen
@@ -332,9 +332,6 @@ off at will during the course of the game.
     when the player is running, which makes running more efficient (CPU-wise),
     but is extremely annoying.  Certain older versions of Angband used
     this behavior always, so "purists" should turn it on.
-
-#####GReduce view-radius in town    [view_reduce_view]
-    No longer in use.
 
 #####GAvoid checking for user abort    [avoid_abort]
     Avoid checking to see if the user has pressed a key during resting
