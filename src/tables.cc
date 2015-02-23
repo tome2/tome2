@@ -1445,9 +1445,6 @@ option_type option_info[] =
 	{ &last_words, TRUE, 2, 12,
 	  "last_words", "Get last words when the character dies" },
 
-	{ &speak_unique, TRUE, 2, 13,
-	  "speak_unique", "Allow shopkeepers and uniques to speak" },
-
 	{ &auto_destroy, TRUE, 2, 14,
 	  "auto_destroy", "No query to destroy known worthless items" },
 

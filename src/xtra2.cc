@@ -3246,7 +3246,7 @@ bool_ mon_take_hit(int m_idx, int dam, bool_ *fear, cptr note)
 			while (--curses);
 		}
 
-		if (speak_unique && (r_ptr->flags2 & (RF2_CAN_SPEAK)))
+		if (r_ptr->flags2 & (RF2_CAN_SPEAK))
 		{
 			char line_got[80];
 			/* Dump a message */

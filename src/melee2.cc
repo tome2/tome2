@@ -6405,42 +6405,39 @@ static void process_monster(int m_idx, bool_ is_frien)
 		if (ai_multiply(m_idx)) return;
 	}
 
-	if (speak_unique)
+	if (randint(SPEAK_CHANCE) == 1)
 	{
-		if (randint(SPEAK_CHANCE) == 1)
+		if (player_has_los_bold(oy, ox) && (r_ptr->flags2 & RF2_CAN_SPEAK))
 		{
-			if (player_has_los_bold(oy, ox) && (r_ptr->flags2 & RF2_CAN_SPEAK))
+			char m_name[80];
+			char monmessage[80];
+
+			/* Acquire the monster name/poss */
+			if (m_ptr->ml)
+				monster_desc(m_name, m_ptr, 0);
+			else
+				strcpy(m_name, "It");
+
+			/* xtra_line function by Matt Graham--allow uniques to */
+			/* say "unique" things based on their monster index.   */
+			/* Try for the unique's lines in "monspeak.txt" first. */
+			/* 0 is SUCCESS, of course....                         */
+
+			struct hook_mon_speak_in in = { m_idx, m_name };
+			if (!process_hooks_new(HOOK_MON_SPEAK, &in, NULL))
 			{
-				char m_name[80];
-				char monmessage[80];
-
-				/* Acquire the monster name/poss */
-				if (m_ptr->ml)
-					monster_desc(m_name, m_ptr, 0);
-				else
-					strcpy(m_name, "It");
-
-				/* xtra_line function by Matt Graham--allow uniques to */
-				/* say "unique" things based on their monster index.   */
-				/* Try for the unique's lines in "monspeak.txt" first. */
-				/* 0 is SUCCESS, of course....                         */
-
-				struct hook_mon_speak_in in = { m_idx, m_name };
-				if (!process_hooks_new(HOOK_MON_SPEAK, &in, NULL))
+				if (get_xtra_line("monspeak.txt", m_ptr, monmessage) != 0)
 				{
-					if (get_xtra_line("monspeak.txt", m_ptr, monmessage) != 0)
-					{
-						/* Get a message from old defaults if new don't work */
+					/* Get a message from old defaults if new don't work */
 
-						if (is_friend(m_ptr) > 0)
-							get_rnd_line("speakpet.txt", monmessage);
-						else if (m_ptr->monfear)
-							get_rnd_line("monfear.txt", monmessage);
-						else
-							get_rnd_line("bravado.txt", monmessage);
-					}
-					msg_format("%^s %s", m_name, monmessage);
+					if (is_friend(m_ptr) > 0)
+						get_rnd_line("speakpet.txt", monmessage);
+					else if (m_ptr->monfear)
+						get_rnd_line("monfear.txt", monmessage);
+					else
+						get_rnd_line("bravado.txt", monmessage);
 				}
+				msg_format("%^s %s", m_name, monmessage);
 			}
 		}
 	}

@@ -76,7 +76,7 @@ static void say_comment_1(void)
 
 	msg_print(comment_1[rand_int(MAX_COMMENT_1)]);
 
-	if (randint(RUMOR_CHANCE) == 1 && speak_unique)
+	if (randint(RUMOR_CHANCE) == 1)
 	{
 		msg_print("The shopkeeper whispers something into your ear:");
 		get_rnd_line("rumors.txt", rumour);

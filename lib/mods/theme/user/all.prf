@@ -83,9 +83,6 @@ Y:alert_failure
 # Option 'Get last words when the character dies'
 Y:last_words
 
-# Option 'Allow shopkeepers and uniques to speak'
-Y:speak_unique
-
 # Option 'No query to destroy known worthless items'
 Y:auto_destroy
 

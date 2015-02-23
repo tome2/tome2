@@ -180,11 +180,6 @@ off at will during the course of the game.
     dies. If this option is not selected, the "You die." message is displayed
     instead.
 
-#####GAllow shopkeepers and uniques to speak    [speak_unique]
-    If this option is in use, shopkeepers may sometimes whisper rumours to
-    you. Also certain monsters start boasting as they attack you, and when
-    they die, they say their "last words".
-
 #####GNo query to destroy known worthless items    [auto_destroy]
     It can sometimes be annoying that the Destroy command asks for confirmation
     when you are attempting to destroy a Broken sword {cursed}. If this option

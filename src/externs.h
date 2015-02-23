@@ -243,7 +243,6 @@ extern bool_ cheat_xtra;
 extern bool_ cheat_know;
 extern bool_ cheat_live;
 extern bool_ last_words;              /* Zangband options */
-extern bool_ speak_unique;
 extern bool_ small_levels;
 extern bool_ empty_levels;
 extern bool_ always_small_level;

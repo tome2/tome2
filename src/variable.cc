@@ -202,7 +202,6 @@ bool_ disturb_other; 			/* Disturb whenever various things happen */
 bool_ alert_hitpoint; 		/* Alert user to critical hitpoints */
 bool_ alert_failure; 		/* Alert user to various failures */
 bool_ last_words; 		/* Get last words upon dying */
-bool_ speak_unique; 		/* Speaking uniques + shopkeepers */
 bool_ small_levels; 		/* Allow unusually small dungeon levels */
 bool_ empty_levels; 		/* Allow empty 'arena' levels */
 bool_ always_small_level;         /* Small levels */
