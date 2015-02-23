@@ -716,14 +716,8 @@ static errr init_ra_info(void)
 	/* General buffer */
 	char buf[1024];
 
-	/*** Make the "header" ***/
-	ra_head = make_header(max_ra_idx);
-
-
-	/*** Make the fake arrays ***/
-
 	/* Allocate the "ra_info" array */
-	ra_info = make_array<randart_part_type>(ra_head->info_num);
+	ra_info = make_array<randart_part_type>(max_ra_idx);
 
 	/*** Load the ascii template file ***/
 

@@ -326,7 +326,6 @@ extern char *f_text;
 extern object_kind *k_info;
 extern artifact_type *a_info;
 extern ego_item_type *e_info;
-extern header *ra_head;
 extern randart_part_type *ra_info;
 extern randart_gen_type ra_gen[30];
 extern monster_race *r_info;

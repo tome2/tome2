@@ -630,7 +630,6 @@ ego_item_type *e_info;
 /*
  * The randart arrays
  */
-header *ra_head;
 randart_part_type *ra_info;
 randart_gen_type ra_gen[30];
 

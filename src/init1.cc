@@ -6940,7 +6940,7 @@ errr init_ra_info_txt(FILE *fp, char *buf)
 			if (i < error_idx) return (4);
 
 			/* Verify information */
-			if (i >= ra_head->info_num) return (2);
+			if (i >= max_ra_idx) return (2);
 
 			/* Save the index */
 			error_idx = i;
