@@ -8297,9 +8297,13 @@ void channel_the_elements(int y, int x, int level)
 	auto water_type = []() -> int {
 		return (get_skill(SKILL_WATER) >= 18) ? GF_WAVE : GF_WATER;
 	};
+	// Do we use hellfire?
+	auto use_hellfire = []() -> bool {
+		return get_skill(SKILL_FIRE) >= 15;
+	};
 	// Type of fire to use (if any)
-	auto fire_type = []() -> int {
-		return (get_skill(SKILL_FIRE) >= 15) ? GF_HELL_FIRE : GF_FIRE;
+	auto fire_type = [&use_hellfire]() -> int {
+		return use_hellfire() ? GF_HELL_FIRE : GF_FIRE;
 	};
 
 	switch (cave[y][x].feat)
@@ -8378,8 +8382,8 @@ void channel_the_elements(int y, int x, int level)
 	case FEAT_SAND:
 	{
 		int type, dur;
-		
-		type = (get_level(FIERYAURA, 50, 1) >= 8) ? SHIELD_GREAT_FIRE : SHIELD_FIRE;
+
+		type = use_hellfire() ? SHIELD_GREAT_FIRE : SHIELD_FIRE;
 
 		dur = randint(20) + level + get_skill(SKILL_AIR);
 		set_shield(dur, 0, type, 5 + get_skill_scale(SKILL_FIRE, 20), 5 + get_skill_scale(SKILL_FIRE, 14));
