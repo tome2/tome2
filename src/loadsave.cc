@@ -9,6 +9,8 @@
 #include <cassert>
 #include <memory>
 
+static u32b vernum; /* Version flag */
+
 static void do_byte(byte *, int);
 static void do_bool(bool_ *, int);
 static void do_u16b(u16b *, int);

@@ -33,7 +33,6 @@ byte version_patch;
 byte sf_major; 			/* Savefile's "version_major" */
 byte sf_minor; 			/* Savefile's "version_minor" */
 byte sf_patch; 			/* Savefile's "version_patch" */
-u32b vernum;
 
 /*
  * Savefile information

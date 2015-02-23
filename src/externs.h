@@ -104,7 +104,6 @@ extern byte sf_patch;
 extern u32b sf_when;
 extern u16b sf_lives;
 extern u16b sf_saves;
-extern u32b vernum; /* Version flag */
 extern bool_ arg_wizard;
 extern bool_ arg_force_original;
 extern bool_ arg_force_roguelike;
