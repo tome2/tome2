@@ -11,7 +11,7 @@
  */
 
 #include "angband.h"
-
+#include "lua_bind.hpp"
 #include "quark.h"
 #include "spell_type.h"
 #include "spell_type.hpp"
@@ -2728,7 +2728,7 @@ void describe_device(object_type *o_ptr)
 		text_out_c(TERM_L_BLUE, format("%d", spell_type_skill_level(spell_at(o_ptr->pval2))));
 
 		text_out("\nSpell fail: ");
-		sprintf(buf, FMTs32b, spell_chance(o_ptr->pval2));
+		sprintf(buf, FMTs32b, spell_chance_device(o_ptr->pval2));
 		text_out_c(TERM_GREEN, buf);
 
 		text_out("\nSpell info: ");

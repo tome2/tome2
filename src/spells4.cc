@@ -2,6 +2,7 @@
 
 #include <assert.h>
 
+#include "lua_bind.hpp"
 #include "spell_type.h"
 #include "spell_type.hpp"
 #include "spell_idx_list.hpp"
@@ -445,7 +446,7 @@ int print_spell(cptr label_, byte color, int y, s32b s)
 		sch_str,
 		level_str,
 		get_mana(s),
-		(int) spell_chance(s),
+		(int) spell_chance_book(s),
 		spell_info);
 	c_prt(color, buf, y, 0);
 
@@ -539,7 +540,7 @@ void lua_cast_school_spell(s32b s, bool_ no_cost)
 		}
 	
 		/* Invoke the spell effect */
-		if (!magik(spell_chance(s)))
+		if (!magik(spell_chance_book(s)))
 		{
 			use = (spell_type_produce_effect(spell, -1) != NO_CAST);
 		}

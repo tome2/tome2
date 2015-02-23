@@ -11,6 +11,7 @@
  */
 
 #include "angband.h"
+#include "lua_bind.hpp"
 #include "spell_type.h"
 #include "hooks.h"
 
@@ -3743,7 +3744,7 @@ void do_cmd_use_staff(void)
 	set_stick_mode(o_ptr);
 
 	/* get the chance */
-	chance = spell_chance(o_ptr->pval2);
+	chance = spell_chance_device(o_ptr->pval2);
 
 	/* Leave device mode  */
 	unset_stick_mode();
@@ -3928,7 +3929,7 @@ void do_cmd_aim_wand(void)
 	set_stick_mode(o_ptr);
 
 	/* get the chance */
-	chance = spell_chance(o_ptr->pval2);
+	chance = spell_chance_device(o_ptr->pval2);
 
 	/* Leave device mode  */
 	unset_stick_mode();

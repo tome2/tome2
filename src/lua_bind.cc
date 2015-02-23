@@ -10,6 +10,7 @@
  * included in all such copies.
  */
 
+#include "lua_bind.hpp"
 #include "angband.h"
 
 #include <assert.h>
@@ -108,10 +109,9 @@ int get_mana(s32b s)
 	return get_level_school_1(spell, mana_range.max, mana_range.min);
 }
 
-/** Returns spell change of failure for spell cast from a device */
-static s32b spell_chance_device(s32b s)
+/** Returns spell chance of failure for spell cast from a device */
+static s32b spell_chance_device(spell_type *s_ptr)
 {
-	spell_type *s_ptr = spell_at(s);
 	int level = get_level_device_1(s_ptr, 50, 1);
 	int minfail;
 	s32b chance = spell_type_failure_rate(s_ptr);
@@ -167,18 +167,22 @@ static s32b spell_chance_school(s32b s)
 	return clamp_failure_chance(chance, minfail);
 }
 
-/** Returns spell chance of failure for spell */
-s32b spell_chance(s32b s)
+s32b spell_chance_device(s32b s)
 {
-	/* Extract the base spell failure rate */
-	if (get_level_use_stick > -1)
-	{
-		return spell_chance_device(s);
-	}
-	else
-	{
-		return spell_chance_school(s);
-	}
+	// Device parameters initialized?
+	assert(get_level_use_stick > -1);
+
+	// Calculate the chance.
+	auto spell = spell_at(s);
+	return spell_chance_device(spell);
+}
+
+s32b spell_chance_book(s32b s)
+{
+	// Must NOT be a device!
+	assert(get_level_use_stick < 0);
+	// Delegate
+	return spell_chance_school(s);
 }
 
 s32b get_level(s32b s, s32b max, s32b min)
