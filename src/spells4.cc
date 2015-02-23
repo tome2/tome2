@@ -399,7 +399,7 @@ void random_book_setup(s16b sval, s32b spell_idx)
 
 static std::string spell_school_name(spell_type *spell)
 {
-	std::stringstream buf;
+	std::ostringstream buf;
 	bool first = true;
 
 	for (s32b school_idx : spell_type_get_schools(spell))
