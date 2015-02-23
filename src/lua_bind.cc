@@ -45,10 +45,8 @@ s32b lua_get_level(spell_type *spell, s32b lvl, s32b max, s32b min, s32b bonus)
 	return lvl;
 }
 
-static s32b get_level_device(spell_type *spell, s32b max, s32b min)
+static s32b get_level_device(spell_type *spell, s32b max, s32b min, s32b device_skill)
 {
-	int lvl;
-
 	/* No max specified ? assume 50 */
 	if (max <= 0) {
 		max = 50;
@@ -58,8 +56,7 @@ static s32b get_level_device(spell_type *spell, s32b max, s32b min)
 		min = 1;
 	}
 
-	lvl = s_info[SKILL_DEVICE].value;
-	lvl = lvl + (get_level_use_stick * SKILL_STEP);
+	int lvl = device_skill + (get_level_use_stick * SKILL_STEP);
 
 	/* Sticks are limited */
 	if (lvl - ((spell_type_skill_level(spell) + 1) * SKILL_STEP) >= get_level_max_stick * SKILL_STEP)
@@ -81,8 +78,9 @@ static s32b get_level_device_1(s32b s, s32b max, s32b min)
 	// Must be in "device" mode.
 	assert(get_level_use_stick > -1);
 	// Delegate
-	spell_type *spell = spell_at(s);
-	return get_level_device(spell, max, min);
+	auto spell = spell_at(s);
+	auto device_skill = s_info[SKILL_DEVICE].value;
+	return get_level_device(spell, max, min, device_skill);
 }
 
 static s32b get_level_school_1(spell_type *spell, s32b max, s32b min)
