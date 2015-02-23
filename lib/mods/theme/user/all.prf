@@ -23,18 +23,6 @@ Y:prompt_pickup_heavy
 # Option 'Repeat obvious commands'
 Y:always_repeat
 
-# Option 'Show labels in object listings'
-Y:show_labels
-
-# Option 'Show weights in object listings'
-Y:show_weights
-
-# Option 'Show choices in certain sub-windows'
-Y:show_choices
-
-# Option 'Show details in certain sub-windows'
-Y:show_details
-
 # Option 'Audible bell (on errors, etc)'
 X:ring_bell
 
@@ -130,9 +118,6 @@ Y:dungeon_stair
 
 # Option 'Monsters chase current location (v.slow)'
 X:flow_by_sound
-
-# Option 'Use special symbols for the player char'
-X:player_symbols
 
 # Option 'Monsters learn from their mistakes'
 X:smart_learn

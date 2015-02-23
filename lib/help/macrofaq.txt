@@ -975,10 +975,6 @@ These are accessible through the (=) Set options command.
 *****option.txt*2[(hilite_player)] -- causes the player's symbol to be drawn with the
 "cursor" on it. It will be drawn with the same color as the character.
 
-*****option.txt*3[(player_symbols)] -- for graphics mode only, and only works when option
-(use_graphics) is also on. This apparently varies the player graphic
-and its color based on class, race, and sex.
-
 #####G----------------------------------------------------------------------
 #####G4.18 Recharging a rod using a Recharge Item spell
 #####G----------------------------------------------------------------------

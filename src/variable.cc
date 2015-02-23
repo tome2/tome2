@@ -26,7 +26,6 @@ char *macro_trigger_keycode[2][MAX_MACRO_TRIG];
 byte version_major;
 byte version_minor;
 byte version_patch;
-byte version_extra = VERSION_EXTRA;
 
 /*
  * Savefile version
@@ -34,13 +33,11 @@ byte version_extra = VERSION_EXTRA;
 byte sf_major; 			/* Savefile's "version_major" */
 byte sf_minor; 			/* Savefile's "version_minor" */
 byte sf_patch; 			/* Savefile's "version_patch" */
-byte sf_extra; 			/* Savefile's "version_extra" */
 u32b vernum;
 
 /*
  * Savefile information
  */
-u32b sf_xtra; 			/* Operating system info */
 u32b sf_when; 			/* Time when savefile created */
 u16b sf_lives; 			/* Number of past "lives" with this file */
 u16b sf_saves; 			/* Number of "saves" during this life */
@@ -59,7 +56,6 @@ bool_ arg_force_roguelike; 	/* Command arg -- Request roguelike keyset */
 bool_ character_generated; 	/* The character exists */
 bool_ character_dungeon; 		/* The character has a dungeon */
 bool_ character_loaded; 		/* The character was loaded from a savefile */
-bool_ character_saved; 		/* The character was just saved to a savefile */
 
 bool_ character_icky; 		/* The game is in an icky full screen mode */
 bool_ character_xtra; 		/* The game is in an icky startup mode */
@@ -121,7 +117,6 @@ bool_ shimmer_monsters;           /* Hack -- optimize multi-hued monsters */
 bool_ shimmer_objects;            /* Hack -- optimize multi-hued objects */
 
 bool_ repair_monsters; 	/* Hack -- optimize detect monsters */
-bool_ repair_objects; 	/* Hack -- optimize detect objects */
 
 bool_ hack_mind;
 int artifact_bias;
@@ -205,7 +200,6 @@ bool_ last_words; 		/* Get last words upon dying */
 bool_ small_levels; 		/* Allow unusually small dungeon levels */
 bool_ empty_levels; 		/* Allow empty 'arena' levels */
 bool_ always_small_level;         /* Small levels */
-bool_ player_symbols; 		/* Use varying symbols for the player char */
 bool_ confirm_stairs; 		/* Prompt before staircases... */
 bool_ wear_confirm; 		/* Confirm before putting on known cursed items */
 bool_ disturb_pets; 		/* Pets moving nearby disturb us */
@@ -227,9 +221,6 @@ bool_ dungeon_align; 			/* Generate dungeons with aligned rooms */
 bool_ dungeon_stair; 			/* Generate dungeons with connected stairs */
 
 bool_ flow_by_sound; 			/* Monsters track new player location */
-
-bool_ track_follow; 			/* Monsters follow the player */
-bool_ track_target; 			/* Monsters target the player */
 
 bool_ smart_learn; 			/* Monsters learn from their mistakes */
 bool_ smart_cheat; 			/* Monsters exploit player weaknesses */
@@ -295,8 +286,6 @@ s16b feeling; 			/* Most recent feeling */
 s16b rating; 			/* Level's current rating */
 
 bool_ good_item_flag; 		/* True if "Artifact" on this level */
-
-bool_ closing_flag; 		/* Dungeon is closing */
 
 /*
  * Dungeon size info

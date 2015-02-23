@@ -811,9 +811,6 @@ static bool_ save_player_aux(char *name)
 	/* Failure */
 	if (!ok) return (FALSE);
 
-	/* Successful save */
-	character_saved = TRUE;
-
 	/* Success */
 	return (TRUE);
 }
@@ -949,13 +946,15 @@ bool_ load_player(void)
 	/* Process file */
 	if (!err)
 	{
+		byte tmp8u = 0;
+
 		/* Open the file XXX XXX XXX XXX Should use Angband file interface */
 		fff = my_fopen(savefile, "rb");
 /*		fff = fdopen(fd, "r"); */
 
 		/* Read the first four bytes */
 		do_u32b(&vernum, LS_LOAD);
-		do_byte(&sf_extra, LS_LOAD);
+		do_byte(&tmp8u, LS_LOAD); // For comatibility with old savefiles
 
 		/* XXX XXX XXX XXX Should use Angband file interface */
 		my_fclose(fff);
@@ -973,7 +972,6 @@ bool_ load_player(void)
 		sf_major = VERSION_MAJOR;
 		sf_minor = VERSION_MINOR;
 		sf_patch = VERSION_PATCH;
-		sf_extra = VERSION_EXTRA;
 
 		/* Clear screen */
 		Term_clear();
@@ -2521,7 +2519,6 @@ static bool_ do_savefile_aux(int flag)
 	if (flag == LS_SAVE)
 	{
 		sf_when = time((time_t *) 0); 	/* Note when file was saved */
-		sf_xtra = 0L; 			/* What the hell is this? */
 		sf_saves++; 				/* Increment the saves ctr */
 	}
 
@@ -2544,8 +2541,11 @@ static bool_ do_savefile_aux(int flag)
 		do_byte(&tmp8u, flag); 	/* 'encryption' */
 	}
 
-	/* Operating system info? Not really. This is just set to 0L */
-	do_u32b(&sf_xtra, flag);
+	/* Kept only for compatibility; always set to 0 */
+	{
+		u32b tmp32u = 0;
+		do_u32b(&tmp32u, flag);
+	}
 
 	/* Time of last save */
 	do_u32b(&sf_when, flag);

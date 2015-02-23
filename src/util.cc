@@ -1610,9 +1610,6 @@ static char inkey_real(bool_ inkey_scan)
 			/* Hack -- activate main screen */
 			Term_activate(angband_term[0]);
 
-			/* Mega-Hack -- reset saved flag */
-			character_saved = FALSE;
-
 			/* Only once */
 			done = TRUE;
 		}

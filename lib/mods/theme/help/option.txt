@@ -285,12 +285,6 @@ off at will during the course of the game.
     Allow monsters to make paths to the player when they are nearby.  This
     option is extremely slow, but can produce viciously smart monsters.
 ~~~~~3
-#####GUse special symbols for the player char   [player_symbols]
-    If this option has been compiled in, it allows you to display your
-    character using race / class / sex dependent colours and graphical
-    symbols. Note that the support for this option may not have been
-    compiled in on all platforms.
-
 #####GMonsters learn from their mistakes    [smart_learn]
     Allow monsters to learn what spell attacks you are resistant to,
     and to use this information to choose the best attacks.

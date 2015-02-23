@@ -2916,14 +2916,6 @@ void curse_equipment_dg(int chance, int heavy_chance)
  * Perhaps smart monsters should decline to use "bolt" spells if
  * there is a monster in the way, unless they wish to kill it.
  *
- * Note that, to allow the use of the "track_target" option at some
- * later time, certain non-optimal things are done in the code below,
- * including explicit checks against the "direct" variable, which is
- * currently always true by the time it is checked, but which should
- * really be set according to an explicit "projectable()" test, and
- * the use of generic "x,y" locations instead of the player location,
- * with those values being initialized with the player location.
- *
  * It will not be possible to "correctly" handle the case in which a
  * monster attempts to attack a location which is thought to contain
  * the player, but which in fact is nowhere near the player, since this
@@ -2936,12 +2928,6 @@ void curse_equipment_dg(int chance, int heavy_chance)
  * monster actually has line of sight to the player.  Note that a monster
  * could be left in a bizarre situation after the player ducked behind a
  * pillar and then teleported away, for example.
- *
- * Note that certain spell attacks do not use the "project()" function
- * but "simulate" it via the "direct" variable, which is always at least
- * as restrictive as the "project()" function.  This is necessary to
- * prevent "blindness" attacks and such from bending around walls, etc,
- * and to allow the use of the "track_target" option in the future.
  *
  * Note that this function attempts to optimize the use of spells for the
  * cases in which the monster has no spells, or has spells but cannot use
@@ -2973,9 +2959,6 @@ bool_ make_attack_spell(int m_idx)
 
 	/* Assume "normal" target */
 	bool_ normal = TRUE;
-
-	/* Assume "projectable" */
-	bool_ direct = TRUE;
 
 	/* Target location */
 	if (m_ptr->target > -1)
@@ -3013,9 +2996,6 @@ bool_ make_attack_spell(int m_idx)
 
 	/* Sometimes forbid inate attacks (breaths) */
 	if (rand_int(100) >= (chance * 2)) no_inate = TRUE;
-
-	/* XXX XXX XXX Handle "track_target" option (?) */
-
 
 	/* Hack -- require projectable player */
 	if (normal)
@@ -3163,7 +3143,6 @@ bool_ make_attack_spell(int m_idx)
 			/* RF4_SHRIEK */
 		case 96 + 0:
 			{
-				if (!direct) break;
 				disturb(1);
 				msg_format("%^s makes a high pitched shriek.", m_name);
 				aggravate_monsters(m_idx);
@@ -3638,7 +3617,6 @@ bool_ make_attack_spell(int m_idx)
 			/* RF5_DRAIN_MANA */
 		case 128 + 9:
 			{
-				if (!direct) break;
 				if (p_ptr->csp)
 				{
 					int r1;
@@ -3696,7 +3674,6 @@ bool_ make_attack_spell(int m_idx)
 			/* RF5_MIND_BLAST */
 		case 128 + 10:
 			{
-				if (!direct) break;
 				disturb(1);
 				if (!seen)
 				{
@@ -3733,7 +3710,6 @@ bool_ make_attack_spell(int m_idx)
 			/* RF5_BRAIN_SMASH */
 		case 128 + 11:
 			{
-				if (!direct) break;
 				disturb(1);
 				if (!seen)
 				{
@@ -3782,7 +3758,6 @@ bool_ make_attack_spell(int m_idx)
 			/* RF5_CAUSE_1 */
 		case 128 + 12:
 			{
-				if (!direct) break;
 				disturb(1);
 				if (blind) msg_format("%^s mumbles.", m_name);
 				else msg_format("%^s points at you and curses.", m_name);
@@ -3801,7 +3776,6 @@ bool_ make_attack_spell(int m_idx)
 			/* RF5_CAUSE_2 */
 		case 128 + 13:
 			{
-				if (!direct) break;
 				disturb(1);
 				if (blind) msg_format("%^s mumbles.", m_name);
 				else msg_format("%^s points at you and curses horribly.", m_name);
@@ -3820,7 +3794,6 @@ bool_ make_attack_spell(int m_idx)
 			/* RF5_CAUSE_3 */
 		case 128 + 14:
 			{
-				if (!direct) break;
 				disturb(1);
 				if (blind) msg_format("%^s mumbles loudly.", m_name);
 				else msg_format("%^s points at you, incanting terribly!", m_name);
@@ -3839,7 +3812,6 @@ bool_ make_attack_spell(int m_idx)
 			/* RF5_CAUSE_4 */
 		case 128 + 15:
 			{
-				if (!direct) break;
 				disturb(1);
 				if (blind) msg_format("%^s screams the word 'DIE!'", m_name);
 				else msg_format("%^s points at you, screaming the word DIE!", m_name);
@@ -3981,7 +3953,6 @@ bool_ make_attack_spell(int m_idx)
 			/* RF5_SCARE */
 		case 128 + 27:
 			{
-				if (!direct) break;
 				disturb(1);
 				if (blind) msg_format("%^s mumbles, and you hear scary noises.", m_name);
 				else msg_format("%^s casts a fearful illusion.", m_name);
@@ -4004,7 +3975,6 @@ bool_ make_attack_spell(int m_idx)
 			/* RF5_BLIND */
 		case 128 + 28:
 			{
-				if (!direct) break;
 				disturb(1);
 				if (blind) msg_format("%^s mumbles.", m_name);
 				else msg_format("%^s casts a spell, burning your eyes!", m_name);
@@ -4027,7 +3997,6 @@ bool_ make_attack_spell(int m_idx)
 			/* RF5_CONF */
 		case 128 + 29:
 			{
-				if (!direct) break;
 				disturb(1);
 				if (blind) msg_format("%^s mumbles, and you hear puzzling noises.", m_name);
 				else msg_format("%^s creates a mesmerizing illusion.", m_name);
@@ -4050,7 +4019,6 @@ bool_ make_attack_spell(int m_idx)
 			/* RF5_SLOW */
 		case 128 + 30:
 			{
-				if (!direct) break;
 				disturb(1);
 				msg_format("%^s drains power from your muscles!", m_name);
 				if (p_ptr->free_act)
@@ -4072,7 +4040,6 @@ bool_ make_attack_spell(int m_idx)
 			/* RF5_HOLD */
 		case 128 + 31:
 			{
-				if (!direct) break;
 				disturb(1);
 				if (blind) msg_format("%^s mumbles.", m_name);
 				else msg_format("%^s stares deep into your eyes!", m_name);
@@ -4244,7 +4211,6 @@ bool_ make_attack_spell(int m_idx)
 			/* RF6_TELE_TO */
 		case 160 + 6:
 			{
-				if (!direct) break;
 				disturb(1);
 				msg_format("%^s commands you to return.", m_name);
 				teleport_player_to(m_ptr->fy, m_ptr->fx);
@@ -4254,7 +4220,6 @@ bool_ make_attack_spell(int m_idx)
 			/* RF6_TELE_AWAY */
 		case 160 + 7:
 			{
-				if (!direct) break;
 				disturb(1);
 				msg_format("%^s teleports you away.", m_name);
 				teleport_player(100);
@@ -4264,7 +4229,6 @@ bool_ make_attack_spell(int m_idx)
 			/* RF6_TELE_LEVEL */
 		case 160 + 8:
 			{
-				if (!direct) break;
 				disturb(1);
 				if (blind) msg_format("%^s mumbles strangely.", m_name);
 				else msg_format("%^s gestures at your feet.", m_name);
@@ -4287,7 +4251,6 @@ bool_ make_attack_spell(int m_idx)
 			/* RF6_DARKNESS */
 		case 160 + 9:
 			{
-				if (!direct) break;
 				disturb(1);
 				if (blind) msg_format("%^s mumbles.", m_name);
 				else msg_format("%^s gestures in shadow.", m_name);
@@ -4298,7 +4261,6 @@ bool_ make_attack_spell(int m_idx)
 			/* RF6_TRAPS */
 		case 160 + 10:
 			{
-				if (!direct) break;
 				disturb(1);
 				if (blind) msg_format("%^s mumbles, and then cackles evilly.", m_name);
 				else msg_format("%^s casts a spell and cackles evilly.", m_name);
@@ -4309,7 +4271,6 @@ bool_ make_attack_spell(int m_idx)
 			/* RF6_FORGET */
 		case 160 + 11:
 			{
-				if (!direct) break;
 				disturb(1);
 				msg_format("%^s tries to blank your mind.", m_name);
 

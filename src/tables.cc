@@ -1483,9 +1483,6 @@ option_type option_info[] =
 	{ &flow_by_sound, FALSE, 3, 10,
 	  "flow_by_sound", "Monsters chase current location (v.slow)" },
 
-	{ &player_symbols, FALSE, 3, 12,
-	  "player_symbols", "Use special symbols for the player char"},
-
 	{ &smart_learn, FALSE, 3, 14,
 	  "smart_learn", "Monsters learn from their mistakes" },
 

@@ -46,11 +46,6 @@
 #define SAVEFILE_VERSION 105
 
 /*
- * This value is not currently used
- */
-#define VERSION_EXTRA   0
-
-/*
  * Maximum amount of Angband windows.
  */
 #define ANGBAND_TERM_MAX 8

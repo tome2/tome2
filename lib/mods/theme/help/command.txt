@@ -498,12 +498,7 @@ for a quantity will convert any "letters" into the maximal legal value.
         each corresponding to a different location on the body, and each of
         which may contain only a single object at a time, and each of which
         may only contain objects of the proper "type".
-        If the option "show_labels" is set, the slots are labelled as follows:  
-        Wielding (weapon), Shooting (missile launcher or instruments),
-        On finger (ring), Around neck (amulet), Light source (light source),
-        On body (armor), About body (cloak), On arm (shield), On head (helmet),
-        On hands (gloves), On feet (boots), Carrying (symbiote), Quiver (ammo),
-        Using (tool). You must be using an object to receive any of its special
+        You must be using an object to receive any of its special
         powers.
 ~~~~~7
 [[[[[GDrop an item (d)]
