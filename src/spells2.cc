@@ -1192,10 +1192,6 @@ void self_knowledge(FILE *fff)
 	{
 		info[i++] = "You are looking around very carefully.";
 	}
-	if (p_ptr->new_spells)
-	{
-		info[i++] = "You can learn some spells/prayers.";
-	}
 	if (p_ptr->word_recall)
 	{
 		info[i++] = "You will soon be recalled.";

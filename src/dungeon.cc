@@ -808,117 +808,6 @@ static int process_lasting_spell(s16b music)
 	return spell_type_produce_effect_lasting(spell);
 }
 
-static void gere_class_special()
-{
-	switch (p_ptr->druid_extra2)
-	{
-		/* Lay a path of mana on the floor */
-	case CLASS_MANA_PATH:
-		{
-			/* Does the player have enought mana ? */
-			if (p_ptr->csp < (s32b)(p_ptr->druid_extra & 255))
-			{
-				p_ptr->druid_extra = 0;
-				p_ptr->druid_extra2 = CLASS_NONE;
-				msg_print("You stop laying a mana path.");
-			}
-			else
-			{
-				/* Use some mana */
-				p_ptr->csp -= (p_ptr->druid_extra & 255);
-
-				if ((p_ptr->druid_extra >> 8) & CLASS_MANA_PATH_ERASE)
-				{
-					/* Absorb some of the mana of the grid */
-					p_ptr->csp += cave[p_ptr->py][p_ptr->px].mana / 50;
-					if (p_ptr->csp > p_ptr->msp) p_ptr->csp = p_ptr->msp;
-
-					/* Set the new grid mana */
-					cave[p_ptr->py][p_ptr->px].mana = p_ptr->druid_extra & 255;
-				}
-				else
-				{
-					int m = cave[p_ptr->py][p_ptr->px].mana;
-
-					if (m + (p_ptr->druid_extra & 255) > 255)
-					{
-						cave[p_ptr->py][p_ptr->px].mana = 255;
-					}
-					else
-					{
-						cave[p_ptr->py][p_ptr->px].mana += p_ptr->druid_extra & 255;
-					}
-				}
-			}
-
-			break;
-		}
-
-		/* Lay a path of mana on the floor */
-	case CLASS_WINDS_MANA:
-		{
-			/* Does the player have enought mana ? */
-			if (p_ptr->csp < (s32b)(p_ptr->druid_extra & 255))
-			{
-				p_ptr->druid_extra = CLASS_NONE;
-				msg_print("You stop expulsing mana winds.");
-			}
-			else
-			{
-				int dam = 0;
-
-				/* Use some mana */
-				p_ptr->csp -= (p_ptr->druid_extra & 255);
-
-				if ((p_ptr->druid_extra >> 8) & CLASS_MANA_PATH_ERASE)
-				{
-					dam = (p_ptr->druid_extra & 255) + 256;
-				}
-				else
-				{
-					dam = (p_ptr->druid_extra & 255);
-				}
-
-				fire_explosion(p_ptr->py, p_ptr->px, GF_WINDS_MANA, 2, dam);
-			}
-
-			break;
-		}
-
-	case CLASS_CANALIZE_MANA:
-		{
-			if (p_ptr->druid_extra & CLASS_CANALIZE_MANA_EXTRA)
-			{
-				p_ptr->csp += cave[p_ptr->py][p_ptr->px].mana / 10;
-			}
-			else
-			{
-				p_ptr->csp += cave[p_ptr->py][p_ptr->px].mana / 20;
-			}
-
-			if (p_ptr->csp > p_ptr->msp) p_ptr->csp = p_ptr->msp;
-
-			cave[p_ptr->py][p_ptr->px].mana = 0;
-
-			break;
-		}
-
-		/* CLASS_NONE, possibly others? */
-	default:
-		{
-			/* No mana update */
-			return;
-		}
-	}
-
-	/* Redraw mana */
-	p_ptr->update |= (PU_BONUS);
-
-	/* Window stuff */
-	p_ptr->window |= (PW_PLAYER);
-}
-
-
 static void check_music()
 {
 	int use_mana;
@@ -1329,9 +1218,6 @@ static void process_world(void)
 		}
 	}
 
-	/* Handle class special actions */
-	gere_class_special();
-
 	/* Check the fate */
 	if (fate_option && (p_ptr->lev > 10))
 	{
@@ -1537,7 +1423,7 @@ static void process_world(void)
 
 	/* Drown in deep water unless the player have levitation, water walking
 	   water breathing, or magic breathing.*/
-	if (!p_ptr->ffall && !p_ptr->walk_water && !p_ptr->magical_breath &&
+	if (!p_ptr->ffall && !p_ptr->magical_breath &&
 	                !p_ptr->water_breath &&
 	                (cave[p_ptr->py][p_ptr->px].feat == FEAT_DEEP_WATER))
 	{
@@ -1979,22 +1865,10 @@ static void process_world(void)
 		}
 	}
 
-	/* Walk water */
-	if (p_ptr->walk_water)
-	{
-		(void)set_walk_water(p_ptr->walk_water - 1);
-	}
-
 	/* True Strike */
 	if (p_ptr->strike)
 	{
 		(void)set_strike(p_ptr->strike - 1);
-	}
-
-	/* Meditation */
-	if (p_ptr->meditation)
-	{
-		(void)set_meditation(p_ptr->meditation - 1);
 	}
 
 	/* Timed project */
@@ -2055,12 +1929,6 @@ static void process_world(void)
 		(void)set_prob_travel(p_ptr->prob_travel - 1);
 	}
 
-	/* Timed Time Resistance */
-	if (p_ptr->tim_res_time)
-	{
-		(void)set_tim_res_time(p_ptr->tim_res_time - 1);
-	}
-
 	/* Timed Levitation */
 	if (p_ptr->tim_ffall)
 	{
@@ -2117,12 +1985,6 @@ static void process_world(void)
 	if (p_ptr->tim_poison)
 	{
 		(void)set_poison(p_ptr->tim_poison - 1);
-	}
-
-	/* Timed Fire Aura */
-	if (p_ptr->tim_fire_aura)
-	{
-		(void)set_tim_fire_aura(p_ptr->tim_fire_aura - 1);
 	}
 
 	/* Brightness */
@@ -2322,19 +2184,6 @@ static void process_world(void)
 	{
 		(void)set_oppose_nex(p_ptr->oppose_nex - 1);
 	}
-
-	/* Mental Barrier */
-	if (p_ptr->tim_mental_barrier)
-	{
-		(void)set_mental_barrier(p_ptr->tim_mental_barrier - 1);
-	}
-
-	/* The rush */
-	if (p_ptr->rush)
-	{
-		(void)set_rush(p_ptr->rush - 1);
-	}
-
 
 	/* Timed mimicry */
 	if (get_skill(SKILL_MIMICRY))

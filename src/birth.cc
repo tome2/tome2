@@ -938,9 +938,6 @@ static void player_wipe(void)
 	/* Wipe the bounties */
 	total_bounties = 0;
 
-	/* Wipe spells */
-	p_ptr->xtra_spells = 0;
-
 	/* Wipe xtra hp */
 	p_ptr->hp_mod = 0;
 

@@ -565,9 +565,9 @@ static bool_ do_extra(int flag)
 	do_s16b(&p_ptr->tim_wraith, flag);
 	do_s16b(&p_ptr->tim_ffall, flag);
 	do_ver_s16b(&p_ptr->tim_fly, SAVEFILE_VERSION, 0, flag);
-	do_s16b(&p_ptr->tim_fire_aura, flag);
+	do_s16b(&tmp16s, flag);
 	do_ver_s16b(&p_ptr->tim_poison, SAVEFILE_VERSION, 0, flag);
-	do_s16b(&p_ptr->resist_magic, flag);
+	do_s16b(&tmp16s, flag);
 	do_s16b(&p_ptr->tim_invisible, flag);
 	do_s16b(&p_ptr->tim_inv_pow, flag);
 	do_s16b(&p_ptr->tim_mimic, flag);
@@ -576,13 +576,13 @@ static bool_ do_extra(int flag)
 	do_ver_s16b(&p_ptr->tim_regen, SAVEFILE_VERSION, 0, flag);
 	do_ver_s16b(&p_ptr->tim_regen_pow, SAVEFILE_VERSION, 0, flag);
 	do_s16b(&p_ptr->holy, flag);
-	do_s16b(&p_ptr->walk_water, flag);
-	do_s16b(&p_ptr->tim_mental_barrier, flag);
+	do_s16b(&tmp16s, flag);
+	do_s16b(&tmp16s, flag);
 	do_s16b(&p_ptr->immov_cntr, flag);
 	do_s16b(&p_ptr->strike, flag);
-	do_s16b(&p_ptr->meditation, flag);
+	do_s16b(&tmp16s, flag);
 	do_s16b(&p_ptr->tim_reflect, flag);
-	do_s16b(&p_ptr->tim_res_time, flag);
+	do_s16b(&tmp16s, flag);
 	do_s16b(&p_ptr->tim_deadly, flag);
 	do_s16b(&p_ptr->prob_travel, flag);
 	do_s16b(&p_ptr->disrupt_shield, flag);
@@ -624,7 +624,7 @@ static bool_ do_extra(int flag)
 	do_byte(&p_ptr->special, flag);
 	do_byte((byte*)&ambush_flag, flag);
 	do_byte(&p_ptr->allow_one_death, flag);
-	do_s16b(&p_ptr->xtra_spells, flag);
+	do_s16b(&tmp16s, flag);
 
 	do_byte(&tmp8u, flag);
 
@@ -634,21 +634,21 @@ static bool_ do_extra(int flag)
 	/* Auxilliary variables */
 	do_u32b(&p_ptr->mimic_extra, flag);
 	do_u32b(&p_ptr->antimagic_extra, flag);
-	do_u32b(&p_ptr->druid_extra, flag);
-	do_u32b(&p_ptr->druid_extra2, flag);
-	do_u32b(&p_ptr->druid_extra3, flag);
+	do_u32b(&tmp32u, flag);
+	do_u32b(&tmp32u, flag);
+	do_u32b(&tmp32u, flag);
 	do_u32b(&p_ptr->music_extra, flag);
 	do_u32b(&tmp32u, flag);
 	do_u32b(&p_ptr->necro_extra, flag);
 	do_u32b(&p_ptr->necro_extra2, flag);
 
-	do_u32b(&p_ptr->race_extra1, flag);
-	do_u32b(&p_ptr->race_extra2, flag);
-	do_u32b(&p_ptr->race_extra3, flag);
-	do_u32b(&p_ptr->race_extra4, flag);
-	do_u32b(&p_ptr->race_extra5, flag);
-	do_u32b(&p_ptr->race_extra6, flag);
-	do_u32b(&p_ptr->race_extra7, flag);
+	do_u32b(&tmp32u, flag);
+	do_u32b(&tmp32u, flag);
+	do_u32b(&tmp32u, flag);
+	do_u32b(&tmp32u, flag);
+	do_u32b(&tmp32u, flag);
+	do_u32b(&tmp32u, flag);
+	do_u32b(&tmp32u, flag);
 
 	do_u16b(&p_ptr->body_monster, flag);
 	do_byte((byte*)&p_ptr->disembodied, flag);

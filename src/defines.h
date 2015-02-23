@@ -540,7 +540,6 @@
 /* XXX */
 #define MKEY_MINDCRAFT          2
 #define MKEY_ANTIMAGIC          3
-#define MKEY_BLADE              4
 #define MKEY_ALCHEMY            5
 #define MKEY_MIMIC              6
 #define MKEY_NECRO              7
@@ -4038,13 +4037,7 @@
  * Various class dependant defines
  */
 #define CLASS_NONE              0
-#define CLASS_MANA_PATH         1
-#define CLASS_CANALIZE_MANA     2
-#define CLASS_WINDS_MANA        3
 
-#define CLASS_MANA_PATH_ERASE           0x0001
-#define CLASS_FLOOD_LEVEL               0x0002
-#define CLASS_CANALIZE_MANA_EXTRA       0x0004
 #define CLASS_UNDEAD                    0x0008
 #define CLASS_ANTIMAGIC                 0x0010
 #define CLASS_LEGS                      0x0020

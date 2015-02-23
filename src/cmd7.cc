@@ -7092,26 +7092,6 @@ void do_cmd_summoner(void)
 
 
 /*
- * Fighters may invoke The Rush.
- */
-void do_cmd_blade(void)
-{
-	/* Are we already Rushed? */
-	if (p_ptr->rush)
-	{
-		msg_format("You have %d turns of The Rush remaining", p_ptr->rush);
-		return;
-	}
-
-	/* Are you sure? */
-	if (!get_check("Are you sure you want to invoke The Rush?")) return;
-
-	/* Let's Rush! */
-	set_rush(2 + p_ptr->lev / 2 + randint(p_ptr->lev / 2));
-}
-
-
-/*
  * Dodge Chance Feedback.
  */
 void use_ability_blade(void)

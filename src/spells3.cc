@@ -2414,7 +2414,6 @@ casting_result meta_disperse_magic()
 	if (get_level_s(DISPERSEMAGIC, 50) >= 15)
 	{
 		res = cplus(res, set_stun(0));
-		res = cplus(res, set_meditation(0));
 		res = cplus(res, set_cut(0));
 	}
 	if (get_level_s(DISPERSEMAGIC, 50) >= 20)

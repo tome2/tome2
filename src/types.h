@@ -1473,13 +1473,10 @@ struct player_type
 	s16b oppose_ss;         /* Timed -- oppose sound & shards */
 	s16b oppose_nex;        /* Timed -- oppose nexus */
 
-	s16b rush;              /* Rush and Bush */
-
 	s16b tim_esp;       	/* Timed ESP */
 	s16b tim_wraith;    	/* Timed wraithform */
 	s16b tim_ffall;     	/* Timed Levitation */
 	s16b tim_fly;       	/* Timed Levitation */
-	s16b tim_fire_aura; 	/* Timed Fire Aura */
 	s16b tim_poison;    	/* Timed poison hands */
 	s16b tim_thunder;   	/* Timed thunderstorm */
 	s16b tim_thunder_p1;	/* Timed thunderstorm */
@@ -1495,7 +1492,6 @@ struct player_type
 	s16b tim_roots_ac;
 	s16b tim_roots_dam;
 
-	s16b resist_magic;  /* Timed Resist Magic (later) */
 	s16b tim_invisible; /* Timed Invisibility */
 	s16b tim_inv_pow;   /* Power of timed invisibility */
 	s16b tim_mimic;     /* Timed Mimic */
@@ -1503,12 +1499,8 @@ struct player_type
 	s16b tim_regen;     /* Timed extra regen */
 	s16b tim_regen_pow; /* Timed extra regen power */
 	s16b holy;          /* Holy Aura */
-	s16b walk_water;    /* Walk over water as a god */
-	s16b tim_mental_barrier; /* Sustain Int&Wis */
 	s16b strike;        /* True Strike(+25 hit) */
-	s16b meditation;    /* Meditation(+50 mana -25 to hit/to dam) */
 	s16b tim_reflect;   /* Timed Reflection */
-	s16b tim_res_time;  /* Timed Resistance to Time */
 	s16b tim_deadly;    /* Timed deadly blow */
 	s16b prob_travel;   /* Timed probability travel */
 	s16b disrupt_shield;/* Timed disruption shield */
@@ -1530,12 +1522,6 @@ struct player_type
 
 	byte confusing;		/* Glowing hands */
 	byte searching;		/* Currently searching */
-
-	s16b new_spells;	/* Number of spells available */
-
-	s16b old_spells;
-
-	s16b xtra_spells;       /* Number of xtra spell learned(via potion) */
 
 	bool_ old_cumber_armor;
 	bool_ old_cumber_glove;
@@ -1682,28 +1668,15 @@ struct player_type
 
 	byte throw_mult;	/* Multiplier for throw damage */
 
-	byte tval_xtra;		/* Correct xtra tval */
-
 	byte tval_ammo;		/* Correct ammo tval */
 
 	s16b pspeed;		/* Current speed */
 
 	u32b mimic_extra;       /* Mimicry powers use that */
 	u32b antimagic_extra;   /* Antimagic powers */
-	u32b druid_extra;       /* Druid powers */
-	u32b druid_extra2;      /* Druid powers */
-	u32b druid_extra3;      /* Druid powers */
 	u32b music_extra;       /* Music songs */
 	u32b necro_extra;       /* Necro powers */
 	u32b necro_extra2;       /* Necro powers */
-
-	u32b race_extra1;       /* Variable for race */
-	u32b race_extra2;       /* Variable for race */
-	u32b race_extra3;       /* Variable for race */
-	u32b race_extra4;       /* Variable for race */
-	u32b race_extra5;       /* Variable for race */
-	u32b race_extra6;       /* Variable for race */
-	u32b race_extra7;       /* Variable for race */
 
 	s16b dodge_chance;      /* Dodging chance */
 

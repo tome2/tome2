@@ -1003,9 +1003,6 @@ void do_cmd_activate_skill()
 	case MKEY_TELEKINESIS:
 		do_cmd_portable_hole();
 		break;
-	case MKEY_BLADE:
-		do_cmd_blade();
-		break;
 	case MKEY_SUMMON:
 		do_cmd_summoner();
 		break;

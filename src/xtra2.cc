@@ -23,44 +23,6 @@
 using boost::algorithm::iequals;
 
 /*
- * Invoke The Rush
- */
-bool_ set_rush(int v)
-{
-	int j;
-
-	/* Invoke The Bust */
-	if (!v)
-	{
-		p_ptr->rush = 0;
-
-		j = 50 - randint(p_ptr->lev);
-		set_paralyzed(j);
-		set_slow(j + 50 - randint(p_ptr->lev));
-		return TRUE;
-	}
-
-	/* When is The Bust going to happen? */
-	p_ptr->rush = v;
-
-	/* The bonuses of The Rush */
-	set_hero(p_ptr->hero + v);
-	set_tim_deadly(p_ptr->tim_deadly + v);
-	set_strike(p_ptr->strike + v);
-	if (magik(p_ptr->lev / 2))
-	{
-		set_light_speed(p_ptr->lightspeed + v);
-	}
-	else
-	{
-		set_fast(p_ptr->fast + v, 10);
-	}
-	if (magik(p_ptr->lev / 2)) set_tim_esp(p_ptr->tim_esp + v);
-	return TRUE;
-}
-
-
-/*
  * Set "p_ptr->parasite" and "p_ptr->parasite_r_idx"
  * notice observable changes
  */
@@ -370,26 +332,6 @@ bool_ set_tim_fly(int v)
 }
 
 /*
- * Set "p_ptr->meditation"
- */
-bool_ set_meditation(int v)
-{
-	bool_ notice = set_simple_field(
-		&p_ptr->meditation, v,
-		TERM_WHITE, "You start meditating on yourself...",
-		TERM_WHITE, "You stop your self meditation.");
-
-	/* Recalculate bonuses */
-	if (notice)
-	{
-		p_ptr->update |= (PU_MANA);
-	}
-
-	/* Result */
-	return notice;
-}
-
-/*
  * Set "p_ptr->tim_reflect"
  */
 bool_ set_tim_reflect(int v)
@@ -398,28 +340,6 @@ bool_ set_tim_reflect(int v)
 		&p_ptr->tim_reflect, v,
 		TERM_WHITE, "You start reflecting the world around you.",
 		TERM_WHITE, "You stop reflecting.");
-}
-
-/*
- * Set "p_ptr->tim_res_time"
- */
-bool_ set_tim_res_time(int v)
-{
-	return set_simple_field(
-		&p_ptr->tim_res_time, v,
-		TERM_WHITE, "You are now protected against space-time distortions.",
-		TERM_WHITE, "You are no longer protected against space-time distortions.");
-}
-
-/*
- * Set "p_ptr->tim_fire_aura"
- */
-bool_ set_tim_fire_aura(int v)
-{
-	return set_simple_field(
-		&p_ptr->tim_fire_aura, v,
-		TERM_WHITE, "You are enveloped in flames.",
-		TERM_WHITE, "You are no longer enveloped in flames.");
 }
 
 /*
@@ -949,26 +869,6 @@ bool_ set_holy(int v)
 }
 
 /*
- * Set "p_ptr->walk_water", notice observable changes
- */
-bool_ set_walk_water(int v)
-{
-	bool_ notice = set_simple_field(
-		&p_ptr->walk_water, v,
-		TERM_WHITE, "You feel strangely buoyant!",
-		TERM_WHITE, "You feel much less buoyant.");
-
-	if (notice)
-	{
-		/* Handle stuff */
-		handle_stuff();
-	}
-
-	/* Result */
-	return notice;
-}
-
-/*
  * Set "p_ptr->shero", notice observable changes
  */
 bool_ set_shero(int v)
@@ -1245,26 +1145,6 @@ bool_ set_tim_infra(int v)
 	return notice;
 }
 
-
-/*
- * Set "p_ptr->tim_mental_barrier", notice observable changes
- */
-bool_ set_mental_barrier(int v)
-{
-	bool_ notice = set_simple_field(
-		&p_ptr->tim_mental_barrier, v,
-		TERM_WHITE, "Your mind grows stronger!",
-		TERM_WHITE, "Your mind is no longer especially strong.");
-
-	if (notice)
-	{
-		/* Handle stuff */
-		handle_stuff();
-	}
-
-	/* Result */
-	return notice;
-}
 
 /*
  * Set "p_ptr->oppose_acid", notice observable changes

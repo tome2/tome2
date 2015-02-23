@@ -1458,19 +1458,6 @@ static void fix_m_list(void)
 
 
 /*
- * Calculate number of spells player should have, and forget,
- * or remember, spells until that number is properly reflected.
- *
- * Note that this function induces various "status" messages,
- * which must be bypasses until the character is created.
- */
-static void calc_spells(void)
-{
-	p_ptr->new_spells = 0;
-}
-
-
-/*
  * Calculate powers of player given the current set of corruptions.
  */
 static void calc_powers_corruption()
@@ -1724,13 +1711,6 @@ static void calc_mana(void)
 
 		/* Reduce mana */
 		msp -= ((cur_wgt - max_wgt) / 10);
-	}
-
-	/* When meditating your mana is increased ! */
-	if (p_ptr->meditation)
-	{
-		msp += 50;
-		p_ptr->csp += 50;
 	}
 
 	/* Sp mods? */
@@ -2819,9 +2799,6 @@ void calc_bonuses(bool_ silent)
 	/* Starts with single throwing damage */
 	p_ptr->throw_mult = 1;
 
-	/* Reset the "xtra" tval */
-	p_ptr->tval_xtra = 0;
-
 	/* Reset the "ammo" tval */
 	p_ptr->tval_ammo = 0;
 
@@ -3368,25 +3345,10 @@ void calc_bonuses(bool_ silent)
 		p_ptr->dis_to_h += 15;
 	}
 
-	/* Temporary "Meditation" */
-	if (p_ptr->meditation)
-	{
-		p_ptr->to_d -= 25;
-		p_ptr->dis_to_d -= 25;
-		p_ptr->to_h -= 25;
-		p_ptr->dis_to_h -= 25;
-	}
-
 	/* Temporary "Reflection" */
 	if (p_ptr->tim_reflect)
 	{
 		p_ptr->reflect = TRUE;
-	}
-
-	/* Temporary "Time Resistance" */
-	if (p_ptr->tim_res_time)
-	{
-		p_ptr->resist_continuum = TRUE;
 	}
 
 	/* Temporary "Levitation" and "Flying" */
@@ -3397,12 +3359,6 @@ void calc_bonuses(bool_ silent)
 	if (p_ptr->tim_fly)
 	{
 		p_ptr->fly = TRUE;
-	}
-
-	/* Temporary "Fire Aura" */
-	if (p_ptr->tim_fire_aura)
-	{
-		p_ptr->sh_fire = TRUE;
 	}
 
 	/* Oppose Light & Dark */
@@ -3430,13 +3386,6 @@ void calc_bonuses(bool_ silent)
 	if (p_ptr->oppose_nex)
 	{
 		p_ptr->resist_nexus = TRUE;
-	}
-
-	/* Mental barrier */
-	if (p_ptr->tim_mental_barrier)
-	{
-		p_ptr->sustain_int = TRUE;
-		p_ptr->sustain_wis = TRUE;
 	}
 
 	/* Temporary "fast" */
@@ -3526,10 +3475,6 @@ void calc_bonuses(bool_ silent)
 
 	/* Searching slows the player down */
 	if (p_ptr->searching) p_ptr->pspeed -= 10;
-
-	/* In order to get a "nice" mana path druids need to ahve a 0 speed */
-	if ((p_ptr->druid_extra2 == CLASS_MANA_PATH) && (p_ptr->pspeed > 110))
-		p_ptr->pspeed = 110;
 
 	/* Display the speed (if needed) */
 	if (p_ptr->pspeed != old_speed) p_ptr->redraw |= (PR_FRAME);
@@ -4164,7 +4109,6 @@ void update_stuff(void)
 	if (p_ptr->update & (PU_SPELLS))
 	{
 		p_ptr->update &= ~(PU_SPELLS);
-		calc_spells();
 	}
 
 	if (p_ptr->update & (PU_POWERS))
