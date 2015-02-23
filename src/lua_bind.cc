@@ -100,17 +100,21 @@ static s32b get_level_school_1(s32b s, s32b max, s32b min)
 
 int get_mana(s32b s)
 {
+	// Does not make sense in "device" mode.
+	assert(get_level_use_stick == -1);
+	// Extract the spell's mana range.
 	spell_type *spell = spell_at(s);
 	range_type mana_range;
 	spell_type_mana_range(spell, &mana_range);
-	return get_level(s, mana_range.max, mana_range.min);
+	// Scale
+	return get_level_school_1(s, mana_range.max, mana_range.min);
 }
 
 /** Returns spell change of failure for spell cast from a device */
 static s32b spell_chance_device(s32b s)
 {
 	spell_type *s_ptr = spell_at(s);
-	int level = get_level(s, 50, 1);
+	int level = get_level_device_1(s, 50, 1);
 	int minfail;
 	s32b chance = spell_type_failure_rate(s_ptr);
 
@@ -128,7 +132,7 @@ static s32b spell_chance_device(s32b s)
 static s32b spell_chance_school(s32b s)
 {
 	spell_type *s_ptr = spell_at(s);
-	int level = get_level(s, 50, 1);
+	int level = get_level_school_1(s, 50, 1);
 	s32b chance = spell_type_failure_rate(s_ptr);
 	int mana = get_mana(s);
 	int cur_mana = get_power(s);
