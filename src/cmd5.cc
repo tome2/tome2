@@ -2130,17 +2130,21 @@ bool_ is_ok_spell(s32b spell_idx, object_type *o_ptr)
 {
 	spell_type *spell = spell_at(spell_idx);
 	assert(o_ptr != NULL);
-
-	if (get_level(spell_idx, 50, 0) == 0)
+	// Calculate availability based on caster's skill level.
+	s32b level;
+	bool_ na;
+	get_level_school(spell_idx, 50, 0, &level, &na);
+	if (na || (level == 0))
 	{
 		return FALSE;
 	}
-
+	// Are we permitted to cast based on item pval? Only music
+	// spells have non-zero minimum PVAL.
 	if (o_ptr->pval < spell_type_minimum_pval(spell))
 	{
 		return FALSE;
 	}
-
+	// OK, we're permitted to cast it.
 	return TRUE;
 }
 
