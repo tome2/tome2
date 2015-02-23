@@ -431,7 +431,7 @@ int print_spell(cptr label_, byte color, int y, s32b s)
 	char level_str[8] = "n/a";
 	char buf[128];
 
-	get_level_school(s, 50, -50, &level, &na);
+	get_level_school(spell, 50, -50, &level, &na);
 	spell_school_name(sch_str, spell);
 
 	if (!na)

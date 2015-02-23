@@ -2133,7 +2133,7 @@ bool_ is_ok_spell(s32b spell_idx, object_type *o_ptr)
 	// Calculate availability based on caster's skill level.
 	s32b level;
 	bool_ na;
-	get_level_school(spell_idx, 50, 0, &level, &na);
+	get_level_school(spell, 50, 0, &level, &na);
 	if (na || (level == 0))
 	{
 		return FALSE;

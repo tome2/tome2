@@ -229,10 +229,8 @@ static bool_ get_level_school_callback(void *data_, int school_idx)
 	return TRUE;
 }
 
-void get_level_school(s32b spell_idx, s32b max, s32b min, s32b *level, bool_ *na)
+void get_level_school(spell_type *spell, s32b max, s32b min, s32b *level, bool_ *na)
 {
-	spell_type *spell = spell_at(spell_idx);
-
 	assert(level != NULL);
 	assert(na != NULL);
 

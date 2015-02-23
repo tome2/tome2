@@ -85,12 +85,12 @@ static s32b get_level_device_1(s32b s, s32b max, s32b min)
 	return get_level_device(spell, max, min);
 }
 
-static s32b get_level_school_1(s32b s, s32b max, s32b min)
+static s32b get_level_school_1(spell_type *spell, s32b max, s32b min)
 {
 	// Delegate
 	s32b level;
 	bool_ na;
-	get_level_school(s, max, min, &level, &na);
+	get_level_school(spell, max, min, &level, &na);
 	// Note: It is tempting to add an assertion here for "na == FALSE" here,
 	// but there are cases where we haven't actually checked if the spell is
 	// really castable before calling this function (indirectly). Thus we
@@ -107,7 +107,7 @@ int get_mana(s32b s)
 	range_type mana_range;
 	spell_type_mana_range(spell, &mana_range);
 	// Scale
-	return get_level_school_1(s, mana_range.max, mana_range.min);
+	return get_level_school_1(spell, mana_range.max, mana_range.min);
 }
 
 /** Returns spell change of failure for spell cast from a device */
@@ -132,7 +132,7 @@ static s32b spell_chance_device(s32b s)
 static s32b spell_chance_school(s32b s)
 {
 	spell_type *s_ptr = spell_at(s);
-	int level = get_level_school_1(s, 50, 1);
+	int level = get_level_school_1(s_ptr, 50, 1);
 	s32b chance = spell_type_failure_rate(s_ptr);
 	int mana = get_mana(s);
 	int cur_mana = get_power(s);
@@ -189,7 +189,8 @@ s32b get_level(s32b s, s32b max, s32b min)
 	if (get_level_use_stick > -1) {
 		return get_level_device_1(s, max, min);
 	} else {
-		return get_level_school_1(s, max, min);
+		auto spell = spell_at(s);
+		return get_level_school_1(spell, max, min);
 	}
 }
 

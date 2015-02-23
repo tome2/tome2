@@ -2212,7 +2212,7 @@ extern int get_mana(s32b s);
 extern s32b get_power(s32b s);
 extern s32b spell_chance(s32b s);
 extern s32b get_level(s32b s, s32b max, s32b min);
-extern void get_level_school(s32b s, s32b max, s32b min, s32b *level, bool_ *na);
+extern void get_level_school(spell_type *spell, s32b max, s32b min, s32b *level, bool_ *na);
 
 extern s32b get_level_max_stick;
 extern s32b get_level_use_stick;
