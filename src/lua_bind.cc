@@ -109,23 +109,6 @@ int get_mana(s32b s)
 	return get_level_school_1(spell, mana_range.max, mana_range.min);
 }
 
-/** Returns spell chance of failure for spell cast from a device */
-static s32b spell_chance_device(spell_type *s_ptr)
-{
-	int level = get_level_device_1(s_ptr, 50, 1);
-	int minfail;
-	s32b chance = spell_type_failure_rate(s_ptr);
-
-	/* Reduce failure rate by "effective" level adjustment */
-	chance -= (level - 1);
-
-	/* Extract the minimum failure rate */
-	minfail = 15 - get_skill_scale(SKILL_DEVICE, 25);
-
-	/* Return the chance */
-	return clamp_failure_chance(chance, minfail);
-}
-
 /** Returns spell chance of failure for a school spell. */
 static s32b spell_chance_school(s32b s)
 {
@@ -173,8 +156,18 @@ s32b spell_chance_device(s32b s)
 	assert(get_level_use_stick > -1);
 
 	// Calculate the chance.
-	auto spell = spell_at(s);
-	return spell_chance_device(spell);
+	auto spell_ptr = spell_at(s);
+	int level = get_level_device_1(spell_ptr, 50, 1);
+	s32b chance = spell_type_failure_rate(spell_ptr);
+
+	/* Reduce failure rate by "effective" level adjustment */
+	chance -= (level - 1);
+
+	/* Extract the minimum failure rate */
+	int minfail = 15 - get_skill_scale(SKILL_DEVICE, 25);
+
+	/* Return the chance */
+	return clamp_failure_chance(chance, minfail);
 }
 
 s32b spell_chance_book(s32b s)
