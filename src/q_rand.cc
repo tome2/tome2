@@ -37,7 +37,7 @@ void initialize_random_quests(int n)
 
 	for (i = 0; i < n; i++)
 	{
-		monster_race *r_ptr = &r_info[2];
+		monster_race *r_ptr = nullptr;
 
 		int rl = (lvl / 1000) + 1;
 
