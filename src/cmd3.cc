@@ -16,6 +16,7 @@
 #include "hooks.h"
 #include "quark.h"
 #include "squeltch.hpp"
+#include "store.hpp"
 
 #include <cassert>
 #include <algorithm>

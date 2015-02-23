@@ -21,6 +21,7 @@
 #include "q_rand.h"
 #include "skills.hpp"
 #include "spells3.hpp"
+#include "store.hpp"
 
 #include <string>
 

@@ -10,7 +10,7 @@
  * included in all such copies.
  */
 
-#include "angband.h"
+#include "store.hpp"
 #include "spell_type.hpp"
 #include "quark.h"
 #include "hooks.h"
