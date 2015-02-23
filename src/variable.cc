@@ -613,10 +613,7 @@ char *f_text;
 /*
  * The object kind arrays
  */
-header *k_head;
 object_kind *k_info;
-char *k_name;
-char *k_text;
 
 /*
  * The artifact arrays
