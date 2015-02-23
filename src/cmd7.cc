@@ -4857,13 +4857,6 @@ void summon_monster(int sumtype)
 	/* Take a turn */
 	energy_use = 100;
 
-	if (p_ptr->inside_arena)
-	{
-		msg_print("This place seems devoid of life.");
-		msg_print(NULL);
-		return;
-	}
-
 	if (summon_specific_friendly(p_ptr->py, p_ptr->px, dun_level + randint(5), sumtype, TRUE))
 	{
 		msg_print("You summon some help.");

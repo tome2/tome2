@@ -4339,8 +4339,8 @@ void do_cmd_unwalk()
 
 static bool_ tport_vertically(bool_ how)
 {
-	/* arena or quest -KMW- */
-	if ((p_ptr->inside_arena) || (p_ptr->inside_quest))
+	/* quest? */
+	if (p_ptr->inside_quest)
 	{
 		msg_print("There is no effect.");
 		return (FALSE);

@@ -1397,10 +1397,7 @@ struct player_type
 	s16b lev;			/* Level */
 
 	s16b town_num;			/* Current town number */
-	s16b arena_number;		/* monster number in arena -KMW- */
-	s16b inside_arena;		/* Is character inside arena? */
 	s16b inside_quest;		/* Inside quest level */
-	bool_ exit_bldg;			/* Goal obtained in arena? -KMW- */
 
 	s32b wilderness_x;              /* Coordinates in the wilderness */
 	s32b wilderness_y;

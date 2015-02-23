@@ -46,10 +46,10 @@ struct high_score
 	char max_lev[4];                 /* Max Player Level (number) */
 	char max_dun[4];                 /* Max Dungeon Level (number) */
 
-	char arena_number[4];         /* Arena level attained -KMW- */
-	char inside_arena[4];    /* Did the player die in the arena? */
+	char unused_2[4]; /* Kept for compatibility only */
+	char unused_3[4]; /* Kept for compatibility only */
 	char inside_quest[4];    /* Did the player die in a quest? */
-	char exit_bldg[4];         /* Can the player exit arena? Goal obtained? -KMW- */
+	char unused_4[4]; /* Kept for compatibility only */
 
 	char how[32];                 /* Method of death (string) */
 };

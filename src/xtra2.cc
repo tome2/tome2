@@ -2519,14 +2519,6 @@ void monster_death(int m_idx)
 		}
 	}
 
-	/* Handle the possibility of player vanquishing arena combatant -KMW- */
-	if (p_ptr->inside_arena)
-	{
-		p_ptr->exit_bldg = TRUE;
-		msg_print("Victorious! You're on your way to becoming Champion.");
-		p_ptr->arena_number++;
-	}
-
 	/* If the doppleganger die, the variable must be set accordingly */
 	if (r_ptr->flags9 & RF9_DOPPLEGANGER) doppleganger = 0;
 

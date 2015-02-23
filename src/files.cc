@@ -4715,7 +4715,7 @@ static void display_scores_aux(int highscore_fd, int from, int to, int note, hig
 
 			cptr gold, when, aged;
 
-			int in_arena, in_quest;
+			int in_quest;
 
 			/* Hack -- indicate death in yellow */
 			attr = (j == note) ? TERM_YELLOW : TERM_WHITE;
@@ -4751,7 +4751,6 @@ static void display_scores_aux(int highscore_fd, int from, int to, int note, hig
 			cdun = atoi(the_score.cur_dun);
 			mdun = atoi(the_score.max_dun);
 
-			in_arena = atoi(the_score.inside_arena);
 			in_quest = atoi(the_score.inside_quest);
 
 			/* Hack -- extract the gold and such */
@@ -4772,12 +4771,7 @@ static void display_scores_aux(int highscore_fd, int from, int to, int note, hig
 			c_put_str(attr, out_val, n*4 + 2, 0);
 
 			/* Another line of info */
-			if (in_arena)
-			{
-				sprintf(out_val, "               Killed by %s in the Arena",
-				        the_score.how);
-			}
-			else if (in_quest)
+			if (in_quest)
 			{
 				sprintf(out_val, "               Killed by %s while questing",
 				        the_score.how);
@@ -4861,7 +4855,7 @@ void show_highclass(int building)
 {
 
 	int i = 0, j, m = 0;
-	int pr, pc, clev, al;
+	int pr, pc, clev;
 	high_score the_score;
 	char buf[1024], out_val[256];
 	int highscore_fd;
@@ -4929,10 +4923,8 @@ void show_highclass(int building)
 		pr = atoi(the_score.p_r);
 		pc = atoi(the_score.p_c);
 		clev = atoi(the_score.cur_lev);
-		al = atoi(the_score.arena_number);
-		if (((pc == (building - 10)) && (building != 1) && (building != 2)) ||
-		                ((building == 1) && (clev >= PY_MAX_LEVEL)) ||
-		                ((building == 2) && (al > MAX_ARENA_MONS)))
+		if (((pc == (building - 10)) && (building != 1)) ||
+				((building == 1) && (clev >= PY_MAX_LEVEL)))
 		{
 			sprintf(out_val, "%3d) %s the %s (Level %2d)",
 			        (m + 1), the_score.who, rp_name + race_info[pr].title, clev);
@@ -4949,13 +4941,7 @@ void show_highclass(int building)
 		        player_name, rp_name + race_info[p_ptr->prace].title, p_ptr->lev);
 		prt(out_val, (m + 8), 0);
 	}
-	else if ((building == 2) && (p_ptr->arena_number > MAX_ARENA_MONS))
-	{
-		sprintf(out_val, "You) %s the %s (Level %2d)",
-		        player_name, rp_name + race_info[p_ptr->prace].title, p_ptr->lev);
-		prt(out_val, (m + 8), 0);
-	}
-	else if ((building != 1) && (building != 2))
+	else if ((building != 1))
 	{
 		if ((p_ptr->lev > clev) && (p_ptr->pclass == (building - 10)))
 		{
@@ -5182,10 +5168,7 @@ static errr top_twenty(void)
 	sprintf(the_score.max_lev, "%3d", p_ptr->max_plv);
 	sprintf(the_score.max_dun, "%3d", max_dlv[dungeon_type]);
 
-	sprintf(the_score.arena_number, "%3d", p_ptr->arena_number);  /* -KMW- */
-	sprintf(the_score.inside_arena, "%3d", p_ptr->inside_arena);
 	sprintf(the_score.inside_quest, "%3d", p_ptr->inside_quest);
-	sprintf(the_score.exit_bldg, "%3d", p_ptr->exit_bldg);  /* -KMW- */
 
 	/* Save the cause of death (31 chars) */
 	sprintf(the_score.how, "%-.31s", died_from);
@@ -5247,6 +5230,8 @@ errr predict_score(void)
 	}
 
 	/* Clear the record */
+	static_assert(std::is_pod<high_score>::value,
+		      "Cannot memset a non-POD type");
 	memset(&the_score, 0, sizeof(high_score));
 
 	/* Save the version */
@@ -5284,10 +5269,7 @@ errr predict_score(void)
 	sprintf(the_score.max_lev, "%3d", p_ptr->max_plv);
 	sprintf(the_score.max_dun, "%3d", max_dlv[dungeon_type]);
 
-	sprintf(the_score.arena_number, "%3d", p_ptr->arena_number);  /* -KMW- */
-	sprintf(the_score.inside_arena, "%3d", p_ptr->inside_arena);
 	sprintf(the_score.inside_quest, "%3d", p_ptr->inside_quest);
-	sprintf(the_score.exit_bldg, "%3d", p_ptr->exit_bldg);  /* -KMW- */
 
 	/* Hack -- no cause of death */
 	strcpy(the_score.how, "nobody (yet!)");

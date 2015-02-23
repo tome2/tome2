@@ -185,119 +185,6 @@ void show_building(store_type *s_ptr)
 }
 
 
-/* reset timed flags */
-static void reset_tim_flags()
-{
-	p_ptr->fast = 0;             /* Timed -- Fast */
-	p_ptr->slow = 0;             /* Timed -- Slow */
-	p_ptr->blind = 0;            /* Timed -- Blindness */
-	p_ptr->paralyzed = 0;        /* Timed -- Paralysis */
-	p_ptr->confused = 0;         /* Timed -- Confusion */
-	p_ptr->afraid = 0;           /* Timed -- Fear */
-	p_ptr->image = 0;            /* Timed -- Hallucination */
-	p_ptr->poisoned = 0;         /* Timed -- Poisoned */
-	p_ptr->cut = 0;              /* Timed -- Cut */
-	p_ptr->stun = 0;             /* Timed -- Stun */
-
-	p_ptr->protevil = 0;         /* Timed -- Protection */
-	p_ptr->protgood = 0;         /* Timed -- Protection */
-	p_ptr->invuln = 0;           /* Timed -- Invulnerable */
-	p_ptr->hero = 0;             /* Timed -- Heroism */
-	p_ptr->shero = 0;            /* Timed -- Super Heroism */
-	p_ptr->shield = 0;           /* Timed -- Shield Spell */
-	p_ptr->blessed = 0;          /* Timed -- Blessed */
-	p_ptr->tim_invis = 0;        /* Timed -- Invisibility */
-	p_ptr->tim_infra = 0;        /* Timed -- Infra Vision */
-
-	p_ptr->oppose_acid = 0;      /* Timed -- oppose acid */
-	p_ptr->oppose_elec = 0;      /* Timed -- oppose lightning */
-	p_ptr->oppose_fire = 0;      /* Timed -- oppose heat */
-	p_ptr->oppose_cold = 0;      /* Timed -- oppose cold */
-	p_ptr->oppose_pois = 0;      /* Timed -- oppose poison */
-
-	p_ptr->confusing = 0;        /* Touch of Confusion */
-}
-
-
-/*
- * arena commands
- */
-static void arena_comm(int cmd)
-{
-	char tmp_str[80];
-
-	monster_race *r_ptr;
-
-	switch (cmd)
-	{
-	case BACT_ARENA:
-		{
-			if (p_ptr->arena_number == MAX_ARENA_MONS)
-			{
-				clear_bldg(5, 19);
-				prt("               Arena Victor!", 5, 0);
-				prt("Congratulations!  You have defeated all before you.", 7, 0);
-				prt("For that, receive the prize: 10,000 gold pieces", 8, 0);
-				prt("", 10, 0);
-				prt("", 11, 0);
-				p_ptr->au += 10000;
-				msg_print("Press the space bar to continue");
-				msg_print(NULL);
-				p_ptr->arena_number++;
-			}
-			else if (p_ptr->arena_number > MAX_ARENA_MONS)
-			{
-				msg_print("You enter the arena briefly and bask in your glory.");
-				msg_print(NULL);
-			}
-			else
-			{
-				p_ptr->inside_arena = TRUE;
-				p_ptr->exit_bldg = FALSE;
-				reset_tim_flags();
-				p_ptr->leaving = TRUE;
-				p_ptr->oldpx = p_ptr->px;
-				p_ptr->oldpy = p_ptr->py;
-				leave_bldg = TRUE;
-			}
-
-			break;
-		}
-
-	case BACT_POSTER:
-		{
-			if (p_ptr->arena_number == MAX_ARENA_MONS)
-				msg_print("You are victorious. Enter the arena for the ceremony.");
-			else if (p_ptr->arena_number > MAX_ARENA_MONS)
-				msg_print("You have won against all foes.");
-			else
-			{
-				r_ptr = &r_info[arena_monsters[p_ptr->arena_number]];
-				strnfmt(tmp_str, 80, "Do I hear any challenges against: %s", r_ptr->name);
-				msg_print(tmp_str);
-				msg_print(NULL);
-			}
-
-			break;
-		}
-
-	case BACT_ARENA_RULES:
-		{
-			/* Save screen */
-			screen_save();
-
-			/* Peruse the arena help file */
-			(void)show_file("arena.txt", NULL, 0, 0);
-
-			/* Load screen */
-			screen_load();
-
-			break;
-		}
-	}
-}
-
-
 /*
  * display fruit for dice slots
  */
@@ -1674,7 +1561,6 @@ bool_ bldg_process_command(store_type *s_ptr, int i)
 
 	case BACT_QUEST1:
 	case BACT_QUEST2:
-	case BACT_QUEST3:
 	case BACT_QUEST4:
 		{
 			int y = 1, x = 1;
@@ -1709,18 +1595,8 @@ bool_ bldg_process_command(store_type *s_ptr, int i)
 		}
 
 	case BACT_KING_LEGENDS:
-	case BACT_ARENA_LEGENDS:
-	case BACT_LEGENDS:
 		{
 			show_highclass(building_loc);
-			break;
-		}
-
-	case BACT_POSTER:
-	case BACT_ARENA_RULES:
-	case BACT_ARENA:
-		{
-			arena_comm(bact);
 			break;
 		}
 
@@ -2071,7 +1947,6 @@ void do_cmd_bldg(void)
 		if (command == ESCAPE)
 		{
 			leave_bldg = TRUE;
-			p_ptr->inside_arena = FALSE;
 			break;
 		}
 

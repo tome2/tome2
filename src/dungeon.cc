@@ -1357,7 +1357,6 @@ static void process_world(void)
 
 	/* Check for creature generation. */
 	if (!p_ptr->wild_mode &&
-	                !p_ptr->inside_arena &&
 	                !p_ptr->inside_quest &&
 	                (rand_int(d_info[(dun_level) ? dungeon_type : DUNGEON_WILDERNESS].max_m_alloc_chance) == 0))
 	{
@@ -3639,13 +3638,6 @@ static void process_command(void)
 			/* No magic in the overworld map */
 			if (p_ptr->wild_mode) break;
 
-			/* Neither in the Arena */
-			if (p_ptr->inside_arena)
-			{
-				msg_print("The arena absorbs all attempted magic!");
-
-				break;
-			}
 			do_cmd_activate_skill();
 			squeltch_inventory();
 			squeltch_grid();
@@ -3724,13 +3716,6 @@ static void process_command(void)
 			if (p_ptr->control) break;
 			if (p_ptr->wild_mode) break;
 
-			if (p_ptr->inside_arena)
-			{
-				msg_print("The arena absorbs all attempted magic!");
-				msg_print(NULL);
-				break;
-			}
-
 			do_cmd_activate();
 			squeltch_inventory();
 			squeltch_grid();
@@ -3761,13 +3746,6 @@ static void process_command(void)
 			if (p_ptr->control) break;
 			if (p_ptr->wild_mode) break;
 
-			if (p_ptr->inside_arena)
-			{
-				msg_print("You're in the arena now. This is hand-to-hand!");
-				msg_print(NULL);
-				break;
-			}
-
 			j_ptr = &p_ptr->inventory[INVEN_BOW];
 
 			if (j_ptr->tval == TV_BOOMERANG)
@@ -3788,13 +3766,6 @@ static void process_command(void)
 			if (p_ptr->control) break;
 			if (p_ptr->wild_mode) break;
 
-			if (p_ptr->inside_arena)
-			{
-				msg_print("You're in the arena now. This is hand-to-hand!");
-				msg_print(NULL);
-				break;
-			}
-
 			do_cmd_throw();
 			break;
 		}
@@ -3804,13 +3775,6 @@ static void process_command(void)
 		{
 			if (p_ptr->control) break;
 			if (p_ptr->wild_mode) break;
-
-			if (p_ptr->inside_arena)
-			{
-				msg_print("The arena absorbs all attempted magic!");
-				msg_print(NULL);
-				break;
-			}
 
 			do_cmd_aim_wand();
 			squeltch_inventory();
@@ -3824,13 +3788,6 @@ static void process_command(void)
 			if (p_ptr->control) break;
 			if (p_ptr->wild_mode) break;
 
-			if (p_ptr->inside_arena)
-			{
-				msg_print("The arena absorbs all attempted magic!");
-				msg_print(NULL);
-				break;
-			}
-
 			do_cmd_zap_rod();
 			squeltch_inventory();
 			squeltch_grid();
@@ -3842,13 +3799,6 @@ static void process_command(void)
 		{
 			if (p_ptr->control) break;
 			if (p_ptr->wild_mode) break;
-
-			if (p_ptr->inside_arena)
-			{
-				msg_print("The arena absorbs all attempted magic!");
-				msg_print(NULL);
-				break;
-			}
 
 			do_cmd_quaff_potion();
 			squeltch_inventory();
@@ -3883,13 +3833,6 @@ static void process_command(void)
 			if (p_ptr->control) break;
 			if (p_ptr->wild_mode) break;
 
-			if (p_ptr->inside_arena)
-			{
-				msg_print("The arena absorbs all attempted magic!");
-				msg_print(NULL);
-				break;
-			}
-
 			do_cmd_read_scroll();
 			squeltch_inventory();
 			squeltch_grid();
@@ -3902,13 +3845,6 @@ static void process_command(void)
 			if (p_ptr->control) break;
 			if (p_ptr->wild_mode) break;
 
-			if (p_ptr->inside_arena)
-			{
-				msg_print("The arena absorbs all attempted magic!");
-				msg_print(NULL);
-				break;
-			}
-
 			do_cmd_use_staff();
 			squeltch_inventory();
 			squeltch_grid();
@@ -3920,13 +3856,6 @@ static void process_command(void)
 		{
 			if (p_ptr->control) break;
 			if (p_ptr->wild_mode) break;
-
-			if (p_ptr->inside_arena)
-			{
-				msg_print("The arena absorbs all attempted magic!");
-				msg_print(NULL);
-				break;
-			}
 
 			do_cmd_power();
 			squeltch_inventory();
@@ -5247,7 +5176,6 @@ void play_game(bool_ new_game)
 		if (p_ptr->astral) dun_level = 98;
 		else dun_level = 0;
 		p_ptr->inside_quest = 0;
-		p_ptr->inside_arena = 0;
 
 		/* Hack -- enter the world */
 		/* Mega-hack Vampires and Spectres start in the dungeon */
@@ -5546,7 +5474,6 @@ void play_game(bool_ new_game)
 
 				/* New depth -KMW- */
 				/* dun_level = 0; */
-				p_ptr->inside_arena = 0;
 				leaving_quest = 0;
 				p_ptr->inside_quest = 0;
 

@@ -8073,131 +8073,6 @@ static bool_ cave_gen(void)
 }
 
 
-/*
- * Builds the arena after it is entered -KMW-
- */
-static void build_arena(void)
-{
-	int yval, y_height, y_depth, xval, x_left, x_right;
-	int i, j;
-
-	yval = SCREEN_HGT / 2;
-	xval = SCREEN_WID / 2;
-	y_height = yval - 10 + SCREEN_HGT;
-	y_depth = yval + 10 + SCREEN_HGT;
-	x_left = xval - 32 + SCREEN_WID;
-	x_right = xval + 32 + SCREEN_WID;
-
-	for (i = y_height; i <= y_height + 5; i++)
-	{
-		for (j = x_left; j <= x_right; j++)
-		{
-			cave_set_feat(i, j, FEAT_PERM_EXTRA);
-			cave[i][j].info |= (CAVE_GLOW | CAVE_MARK);
-		}
-	}
-	for (i = y_depth; i >= y_depth - 5; i--)
-	{
-		for (j = x_left; j <= x_right; j++)
-		{
-			cave_set_feat(i, j, FEAT_PERM_EXTRA);
-			cave[i][j].info |= (CAVE_GLOW | CAVE_MARK);
-		}
-	}
-	for (j = x_left; j <= x_left + 17; j++)
-	{
-		for (i = y_height; i <= y_depth; i++)
-		{
-			cave_set_feat(i, j, FEAT_PERM_EXTRA);
-			cave[i][j].info |= (CAVE_GLOW | CAVE_MARK);
-		}
-	}
-	for (j = x_right; j >= x_right - 17; j--)
-	{
-		for (i = y_height; i <= y_depth; i++)
-		{
-			cave_set_feat(i, j, FEAT_PERM_EXTRA);
-			cave[i][j].info |= (CAVE_GLOW | CAVE_MARK);
-		}
-	}
-
-	cave_set_feat(y_height + 6, x_left + 18, FEAT_PERM_EXTRA);
-	cave[y_height + 6][x_left + 18].info |= (CAVE_GLOW | CAVE_MARK);
-	cave_set_feat(y_depth - 6, x_left + 18, FEAT_PERM_EXTRA);
-	cave[y_depth - 6][x_left + 18].info |= (CAVE_GLOW | CAVE_MARK);
-	cave_set_feat(y_height + 6, x_right - 18, FEAT_PERM_EXTRA);
-	cave[y_height + 6][x_right - 18].info |= (CAVE_GLOW | CAVE_MARK);
-	cave_set_feat(y_depth - 6, x_right - 18, FEAT_PERM_EXTRA);
-	cave[y_depth - 6][x_right - 18].info |= (CAVE_GLOW | CAVE_MARK);
-
-	i = y_height + 5;
-	j = xval + SCREEN_WID;
-	cave_set_feat(i, j, FEAT_SHOP);
-	cave[i][j].info |= (CAVE_GLOW | CAVE_MARK);
-	player_place(i + 1, j);
-}
-
-
-/*
- * Town logic flow for generation of arena -KMW-
- */
-static void arena_gen(void)
-{
-	int y, x;
-	int qy = SCREEN_HGT;
-	int qx = SCREEN_WID;
-	bool_ daytime;
-
-	/* Day time */
-	if ((turn % (10L * DAY)) < ((10L * DAY) / 2))
-		daytime = TRUE;
-
-	/* Night time */
-	else
-		daytime = FALSE;
-
-	/* Start with solid walls */
-	for (y = 0; y < MAX_HGT; y++)
-	{
-		for (x = 0; x < MAX_WID; x++)
-		{
-			/* Create "solid" perma-wall */
-			cave_set_feat(y, x, FEAT_PERM_SOLID);
-
-			/* Illuminate and memorize the walls */
-			cave[y][x].info |= (CAVE_GLOW | CAVE_MARK);
-		}
-	}
-
-	/* Then place some floors */
-	for (y = qy + 1; y < qy + SCREEN_HGT - 1; y++)
-	{
-		for (x = qx + 1; x < qx + SCREEN_WID - 1; x++)
-		{
-			/* Create empty floor */
-			cave_set_feat(y, x, FEAT_FLOOR);
-
-			/* Darken and forget the floors */
-			cave[y][x].info &= ~(CAVE_GLOW | CAVE_MARK);
-
-			/* Day time */
-			if (daytime)
-			{
-				/* Perma-Lite */
-				cave[y][x].info |= (CAVE_GLOW);
-
-				/* Memorize */
-				if (view_perma_grids) cave[y][x].info |= (CAVE_MARK);
-			}
-		}
-	}
-
-	build_arena();
-
-	place_monster_aux(p_ptr->py + 5, p_ptr->px, arena_monsters[p_ptr->arena_number],
-	                  FALSE, FALSE, MSTATUS_ENEMY);
-}
-
 
 /*
  * Creates a special level
@@ -8546,15 +8421,8 @@ void generate_cave(void)
 			/* No fated level here yet */
 			fate_flag = FALSE;
 
-			/* Build the arena -KMW- */
-			if (p_ptr->inside_arena)
-			{
-				/* Small arena */
-				arena_gen();
-			}
-
 			/* Quest levels -KMW- */
-			else if (p_ptr->inside_quest)
+			if (p_ptr->inside_quest)
 			{
 				process_hooks_new(HOOK_GEN_QUEST, NULL, NULL);
 			}

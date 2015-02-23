@@ -132,11 +132,6 @@
 #define MAX_RUNES           100
 
 /*
- * Arena constants
- */
-#define MAX_ARENA_MONS		29	/* -KMW- */
-
-/*
  * Total number of stores (see "store.c", etc)
  */
 #define STORE_GENERAL   0
@@ -3864,13 +3859,8 @@
 #define BACT_RESEARCH_ITEM           1
 #define BACT_TOWN_HISTORY            2
 #define BACT_RACE_LEGENDS            3
-#define BACT_GREET_KING              4
 #define BACT_KING_LEGENDS            5
 #define BACT_QUEST1                  6
-#define BACT_POSTER                  8
-#define BACT_ARENA_RULES             9
-#define BACT_ARENA                  10
-#define BACT_ARENA_LEGENDS          11
 #define BACT_IN_BETWEEN             12
 #define BACT_GAMBLE_RULES           13
 #define BACT_CRAPS                  14
@@ -3881,21 +3871,16 @@
 #define BACT_RUMORS                 19
 #define BACT_RESEARCH_MONSTER       20
 #define BACT_COMPARE_WEAPONS        21
-#define BACT_LEGENDS                22
 #define BACT_ENCHANT_WEAPON         23
 #define BACT_ENCHANT_ARMOR          24
 #define BACT_RECHARGE               25
 #define BACT_IDENTS                 26
-#define BACT_LEARN                  27
 #define BACT_HEALING                28
 #define BACT_RESTORE                29
 #define BACT_ENCHANT_ARROWS         30
 #define BACT_ENCHANT_BOW            31
-#define BACT_GREET                  32
 #define BACT_RECALL                 33
 #define BACT_TELEPORT_LEVEL         34
-/* XXX */
-/* XXX */
 #define BACT_MIMIC_NORMAL           37
 #define BACT_VIEW_BOUNTIES          38
 #define BACT_SELL_CORPSES           39
@@ -3907,7 +3892,6 @@
 #define BACT_EXAMINE                45
 #define BACT_STEAL                  46
 #define BACT_QUEST2                 47
-#define BACT_QUEST3                 48
 #define BACT_QUEST4                 49
 #define BACT_STAR_HEAL              50
 #define BACT_DROP_ITEM              54

@@ -2823,9 +2823,9 @@ void stair_creation(void)
 	delete_object(p_ptr->py, p_ptr->px);
 
 	/* Create a staircase */
-	if (p_ptr->inside_arena || p_ptr->inside_quest)
+	if (p_ptr->inside_quest)
 	{
-		/* arena or quest */
+		/* quest */
 		msg_print("There is no effect!");
 	}
 	else if (!dun_level)

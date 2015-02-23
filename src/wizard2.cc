@@ -67,7 +67,6 @@ finteletown:
 	p_ptr->wilderness_y = y;
 	p_ptr->wilderness_x = x;
 
-	p_ptr->inside_arena = 0;
 	leaving_quest = p_ptr->inside_quest;
 	p_ptr->inside_quest = 0;
 
@@ -1416,7 +1415,6 @@ static void do_cmd_wiz_jump(void)
 	/* Change level */
 	dun_level = command_arg;
 
-	p_ptr->inside_arena = 0;
 	leaving_quest = p_ptr->inside_quest;
 
 	p_ptr->inside_quest = 0;

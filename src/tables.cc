@@ -1115,15 +1115,6 @@ byte blows_table[12][12] =
 };
 
 
-s16b arena_monsters[MAX_ARENA_MONS] =
-{
-	30, 43, 102, 118, 126, 149, 173,
-	183, 188, 191, 216, 230, 238, 244,
-	255, 262, 293, 297, 321, 349, 372,
-	401, 415, 454, 464, 485, 538, 631,
-	641
-};
-
 
 /*
  * This table allows quick conversion from "speed" to "energy"

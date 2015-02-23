@@ -257,7 +257,7 @@ void teleport_away(int m_idx, int dis)
 			                (cave[ny][nx].feat <= FEAT_PATTERN_XTRA2)) continue;
 
 			/* No teleporting into vaults and such */
-			if (!(p_ptr->inside_quest || p_ptr->inside_arena))
+			if (!(p_ptr->inside_quest))
 				if (cave[ny][nx].info & (CAVE_ICKY)) continue;
 
 			/* This grid looks good */
@@ -824,7 +824,7 @@ void teleport_player_to(int ny, int nx)
 void teleport_player_level(void)
 {
 	/* No effect in arena or quest */
-	if (p_ptr->inside_arena || p_ptr->inside_quest)
+	if (p_ptr->inside_quest)
 	{
 		msg_print("There is no effect.");
 		return;

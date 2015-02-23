@@ -401,10 +401,10 @@ static bool_ do_extra(int flag)
 	do_s16b(&p_ptr->town_num, flag); 	/* -KMW- */
 
 	/* Write arena and rewards information -KMW- */
-	do_s16b(&p_ptr->arena_number, flag);
-	do_s16b(&p_ptr->inside_arena, flag);
+	do_s16b(&tmp16s, flag);
+	do_s16b(&tmp16s, flag);
 	do_s16b(&p_ptr->inside_quest, flag);
-	do_byte((byte*)&p_ptr->exit_bldg, flag);
+	do_byte(&tmp8u, flag);
 
 
 	/* Save/load spellbinder */
@@ -2940,11 +2940,7 @@ errr rd_savefile(void)
 static void junkinit(void)
 {
 	int i, j;
-	p_ptr->arena_number = 0;
-	p_ptr->inside_arena = 0;
 	p_ptr->inside_quest = 0;
-	p_ptr->exit_bldg = TRUE;
-	p_ptr->exit_bldg = TRUE;
 	p_ptr->town_num = 1;
 	p_ptr->wilderness_x = 4;
 	p_ptr->wilderness_y = 4;

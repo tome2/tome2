@@ -501,10 +501,6 @@ static void prt_depth(int row, int col)
 	{
 		strcpy(depths, "             ");
 	}
-	else if (p_ptr->inside_arena)
-	{
-		strcpy(depths, "Arena");
-	}
 	else if (get_dungeon_name(depths))
 	{
 		/* Empty */

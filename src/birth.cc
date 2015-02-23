@@ -430,11 +430,8 @@ static void get_extra(void)
 	/* Experience factor */
 	p_ptr->expfact = rp_ptr->r_exp + rmp_ptr->r_exp + cp_ptr->c_exp;
 
-	/* Initialize arena and rewards information -KMW- */
-	p_ptr->arena_number = 0;
-	p_ptr->inside_arena = 0;
+	/* Initialize quest */
 	p_ptr->inside_quest = 0;
-	p_ptr->exit_bldg = TRUE;  /* only used for arena now -KMW- */
 
 	/* Hitdice */
 	p_ptr->hitdie = rp_ptr->r_mhp + rmp_ptr->r_mhp + cp_ptr->c_mhp;

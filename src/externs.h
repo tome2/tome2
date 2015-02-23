@@ -56,7 +56,6 @@ extern byte adj_dex_safe[];
 extern byte adj_con_fix[];
 extern byte adj_con_mhp[];
 extern byte blows_table[12][12];
-extern s16b arena_monsters[MAX_ARENA_MONS];
 extern byte extract_energy[300];
 extern s32b player_exp[PY_MAX_LEVEL];
 extern player_sex sex_info[MAX_SEXES];
