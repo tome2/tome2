@@ -5112,6 +5112,9 @@ errr init_a_info_txt(FILE *fp, char *buf)
 			/* Verify information */
 			if (i < error_idx) return (4);
 
+			/* Verify information */
+			if (i >= max_a_idx) return (2);
+
 			/* Save the index */
 			error_idx = i;
 
