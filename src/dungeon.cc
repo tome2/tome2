@@ -14,6 +14,7 @@
 #include "cmd3.hpp"
 #include "cmd4.hpp"
 #include "cmd5.hpp"
+#include "cmd6.hpp"
 #include "cmd7.hpp"
 #include "corrupt.hpp"
 #include "gods.hpp"

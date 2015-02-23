@@ -6,6 +6,8 @@
  * included in all such copies.
  */
 
+#include "cmd6.hpp"
+
 #include "angband.h"
 #include "cave.hpp"
 #include "cmd1.hpp"
@@ -2553,84 +2555,9 @@ void do_cmd_quaff_potion(void)
 
 
 /*
- * Drink from a fountain
- */
-void do_cmd_drink_fountain(void)
-{
-	cave_type *c_ptr = &cave[p_ptr->py][p_ptr->px];
-
-	bool_ ident;
-
-	int tval, sval, pval = 0;
-
-	int i;
-
-	char ch;
-
-
-	/* Is the fountain empty? */
-	if (c_ptr->special2 <= 0)
-	{
-		msg_print("The fountain is dried out.");
-		return;
-	}
-
-	/* We quaff or we fill ? */
-	if (!get_com("Do you want to [Q]uaff or [F]ill from the fountain? ", &ch))
-	{
-		return;
-	}
-
-	if ((ch == 'F') || (ch == 'f'))
-	{
-		do_cmd_fill_bottle();
-
-		return;
-	}
-
-	else if ((ch == 'Q') || (ch == 'q'))
-	{
-		if (c_ptr->special <= SV_POTION_LAST)
-		{
-			tval = TV_POTION;
-			sval = c_ptr->special;
-		}
-		else
-		{
-			tval = TV_POTION2;
-			sval = c_ptr->special - SV_POTION_LAST;
-		}
-
-		for (i = 0; i < max_k_idx; i++)
-		{
-			object_kind *k_ptr = &k_info[i];
-
-			if (k_ptr->tval != tval) continue;
-			if (k_ptr->sval != sval) continue;
-
-			pval = k_ptr->pval;
-
-			break;
-		}
-
-		ident = quaff_potion(tval, sval, pval, 0);
-
-		c_ptr->special2--;
-
-		if (c_ptr->special2 <= 0)
-		{
-			cave_set_feat(p_ptr->py, p_ptr->px, FEAT_EMPTY_FOUNTAIN);
-		}
-
-		if (ident) c_ptr->info |= CAVE_IDNT;
-	}
-}
-
-
-/*
  * Fill an empty bottle
  */
-void do_cmd_fill_bottle(void)
+static void do_cmd_fill_bottle(void)
 {
 	cave_type *c_ptr = &cave[p_ptr->py][p_ptr->px];
 
@@ -2709,6 +2636,81 @@ void do_cmd_fill_bottle(void)
 	}
 
 	return;
+}
+
+
+/*
+ * Drink from a fountain
+ */
+void do_cmd_drink_fountain(void)
+{
+	cave_type *c_ptr = &cave[p_ptr->py][p_ptr->px];
+
+	bool_ ident;
+
+	int tval, sval, pval = 0;
+
+	int i;
+
+	char ch;
+
+
+	/* Is the fountain empty? */
+	if (c_ptr->special2 <= 0)
+	{
+		msg_print("The fountain is dried out.");
+		return;
+	}
+
+	/* We quaff or we fill ? */
+	if (!get_com("Do you want to [Q]uaff or [F]ill from the fountain? ", &ch))
+	{
+		return;
+	}
+
+	if ((ch == 'F') || (ch == 'f'))
+	{
+		do_cmd_fill_bottle();
+
+		return;
+	}
+
+	else if ((ch == 'Q') || (ch == 'q'))
+	{
+		if (c_ptr->special <= SV_POTION_LAST)
+		{
+			tval = TV_POTION;
+			sval = c_ptr->special;
+		}
+		else
+		{
+			tval = TV_POTION2;
+			sval = c_ptr->special - SV_POTION_LAST;
+		}
+
+		for (i = 0; i < max_k_idx; i++)
+		{
+			object_kind *k_ptr = &k_info[i];
+
+			if (k_ptr->tval != tval) continue;
+			if (k_ptr->sval != sval) continue;
+
+			pval = k_ptr->pval;
+
+			break;
+		}
+
+		ident = quaff_potion(tval, sval, pval, 0);
+
+		c_ptr->special2--;
+
+		if (c_ptr->special2 <= 0)
+		{
+			cave_set_feat(p_ptr->py, p_ptr->px, FEAT_EMPTY_FOUNTAIN);
+		}
+
+		if (ident) c_ptr->info |= CAVE_IDNT;
+	}
 }
 
 
