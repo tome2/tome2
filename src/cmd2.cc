@@ -1437,7 +1437,7 @@ static bool_ twall(int y, int x, byte feat)
  *
  * Returns TRUE if repeated commands may continue
  */
-bool_ do_cmd_tunnel_aux(int y, int x, int dir)
+static bool_ do_cmd_tunnel_aux(int y, int x, int dir)
 {
 	int skill_req = 0, skill_req_1pct = 0;
 	cave_type *c_ptr = &cave[y][x];
