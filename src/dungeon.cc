@@ -932,7 +932,6 @@ static void check_music()
 	{
 		msg_print("You stop your spell.");
 		p_ptr->music_extra = 0;
-		p_ptr->music_extra2 = 0;
 	}
 	else
 	{

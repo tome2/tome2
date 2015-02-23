@@ -638,7 +638,7 @@ static bool_ do_extra(int flag)
 	do_u32b(&p_ptr->druid_extra2, flag);
 	do_u32b(&p_ptr->druid_extra3, flag);
 	do_u32b(&p_ptr->music_extra, flag);
-	do_u32b(&p_ptr->music_extra2, flag);
+	do_u32b(&tmp32u, flag);
 	do_u32b(&p_ptr->necro_extra, flag);
 	do_u32b(&p_ptr->necro_extra2, flag);
 

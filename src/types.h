@@ -1694,7 +1694,6 @@ struct player_type
 	u32b druid_extra2;      /* Druid powers */
 	u32b druid_extra3;      /* Druid powers */
 	u32b music_extra;       /* Music songs */
-	u32b music_extra2;      /* Music songs */
 	u32b necro_extra;       /* Necro powers */
 	u32b necro_extra2;       /* Necro powers */
 
