@@ -425,28 +425,6 @@ errr fd_move(cptr file, cptr what)
 
 
 /*
-* Hack -- attempt to copy a file
-*/
-errr fd_copy(cptr file, cptr what)
-{
-	char buf[1024];
-	char aux[1024];
-
-	/* Hack -- Try to parse the path */
-	if (path_parse(buf, 1024, file)) return ( -1);
-
-	/* Hack -- Try to parse the path */
-	if (path_parse(aux, 1024, what)) return ( -1);
-
-	/* Copy XXX XXX XXX */
-	/* (void)rename(buf, aux); */
-
-	/* XXX XXX XXX */
-	return (1);
-}
-
-
-/*
 * Hack -- attempt to open a file descriptor (create file)
 *
 * This function should fail if the file already exists

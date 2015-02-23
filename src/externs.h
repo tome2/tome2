@@ -819,14 +819,10 @@ extern bool_ gen_joke_monsters(void *data, void *in, void *out);
 
 /* loadsave.c */
 extern bool_ file_exist(cptr buf);
-extern s16b rd_variable(void);
-extern void wr_variable(s16b *var);
-extern void wr_scripts(void);
 extern bool_ load_dungeon(char *ext);
 extern void save_dungeon(void);
 extern bool_ save_player(void);
 extern bool_ load_player(void);
-extern errr rd_savefile_new(void);
 
 /* melee1.c */
 /* melee2.c */
@@ -1299,7 +1295,6 @@ extern errr my_fputs(FILE *fff, cptr buf, huge n);
 extern errr my_fclose(FILE *fff);
 extern errr fd_kill(cptr file);
 extern errr fd_move(cptr file, cptr what);
-extern errr fd_copy(cptr file, cptr what);
 extern int fd_make(cptr file, int mode);
 extern int fd_open(cptr file, int flags);
 extern errr fd_seek(int fd, huge n);
