@@ -1801,120 +1801,6 @@ void do_cmd_tunnel(void)
 
 
 /*
- * easy_open_door --
- *
- *	If there is a jammed/closed/locked door at the given location,
- *	then attempt to unlock/open it. Return TRUE if an attempt was
- *	made (successful or not), otherwise return FALSE.
- *
- *	The code here should be nearly identical to that in
- *	do_cmd_open_test() and do_cmd_open_aux().
- */
-
-bool_ easy_open_door(int y, int x)
-{
-	int i, j;
-
-	cave_type *c_ptr = &cave[y][x];
-
-	monster_race *r_ptr = &r_info[p_ptr->body_monster];
-
-
-	if ((p_ptr->body_monster != 0) && !(r_ptr->flags2 & RF2_OPEN_DOOR))
-	{
-		msg_print("You cannot open doors.");
-
-		return (FALSE);
-	}
-
-	/* Must be a closed door */
-	if (!((c_ptr->feat >= FEAT_DOOR_HEAD) && (c_ptr->feat <= FEAT_DOOR_TAIL)))
-	{
-		/* Nope */
-		return (FALSE);
-	}
-
-	/* Jammed door */
-	if (c_ptr->feat >= FEAT_DOOR_HEAD + 0x08)
-	{
-		/* Stuck */
-		msg_print("The door appears to be stuck.");
-	}
-
-	/* Locked door */
-	else if (c_ptr->feat >= FEAT_DOOR_HEAD + 0x01)
-	{
-		/* Disarm factor */
-		i = p_ptr->skill_dis;
-
-		/* Penalize some conditions */
-		if (p_ptr->blind || no_lite()) i = i / 10;
-		if (p_ptr->confused || p_ptr->image) i = i / 10;
-
-		/* Extract the lock power */
-		j = c_ptr->feat - FEAT_DOOR_HEAD;
-
-		/* Extract the difficulty XXX XXX XXX */
-		j = i - (j * 4);
-
-		/* Always have a small chance of success */
-		if (j < 2) j = 2;
-
-		/* Success */
-		if (rand_int(100) < j)
-		{
-			/* Message */
-			msg_print("You have picked the lock.");
-
-			/* Set off trap */
-			if (c_ptr->t_idx != 0) player_activate_door_trap(y, x);
-
-			/* Open the door */
-			cave_set_feat(y, x, FEAT_OPEN);
-
-			/* Update some things */
-			p_ptr->update |= (PU_VIEW | PU_MONSTERS | PU_MON_LITE);
-
-			/* Sound */
-			sound(SOUND_OPENDOOR);
-
-			/* Experience */
-			gain_exp(1);
-		}
-
-		/* Failure */
-		else
-		{
-			/* Failure */
-			if (flush_failure) flush();
-
-			/* Message */
-			msg_print("You failed to pick the lock.");
-		}
-	}
-
-	/* Closed door */
-	else
-	{
-		/* Set off trap */
-		if (c_ptr->t_idx != 0) player_activate_door_trap(y, x);
-
-		/* Open the door */
-		cave_set_feat(y, x, FEAT_OPEN);
-
-		/* Update some things */
-		p_ptr->update |= (PU_VIEW | PU_MONSTERS | PU_MON_LITE);
-
-		/* Sound */
-		sound(SOUND_OPENDOOR);
-	}
-
-	/* Result */
-	return (TRUE);
-}
-
-
-/*
  * Perform the basic "disarm" command
  *
  * Assume destination is a visible trap
@@ -2001,7 +1887,7 @@ static bool_ do_cmd_disarm_chest(int y, int x, s16b o_idx)
  *
  * Returns TRUE if repeated commands may continue
  */
-bool_ do_cmd_disarm_aux(int y, int x, int dir, int do_pickup)
+static bool_ do_cmd_disarm_aux(int y, int x, int dir, int do_pickup)
 {
 	int i, j, power;
 

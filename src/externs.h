@@ -1117,13 +1117,6 @@ extern bool_ repeat_pull(int *what);
 extern void repeat_check(void);
 extern void get_count(int number, int max);
 
-/* cmd2.c */
-extern bool_ easy_open_door(int y, int x);
-
-/* cmd2.c */
-extern bool_ do_cmd_disarm_aux(int y, int x, int dir, int do_pickup);
-
-
 /* script.c */
 extern void init_lua_init(void);
 
