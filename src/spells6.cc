@@ -3,6 +3,7 @@
 #include "spell_type.hpp"
 
 #include <vector>
+#include <type_traits>
 
 struct school_provider
 {
@@ -42,8 +43,10 @@ static void school_init(school_type *school, cptr name, s16b skill)
 {
 	assert(school != NULL);
 
+	static_assert(std::is_pod<school_type>::value, "Cannot initialize non-POD using memset!");
 	memset(school, 0, sizeof(school_type));
 
+	school->providers = new school_provider_list();
 	school->name = name;
 	school->skill = skill;
 
@@ -97,16 +100,14 @@ static school_type *god_school_new(s32b *school_idx, byte god)
 
 static void school_god(school_type *school, byte god, int mul, int div)
 {
+	assert(school->providers != nullptr);
+
 	deity_type *deity = god_at(god);
 	assert(deity != NULL);
 
 	/* Ignore gods which aren't enabled for this module. */
 	if (god_enabled(deity))
 	{
-		if (school->providers == NULL) {
-			school->providers = new school_provider_list();
-		}
-
 		school->providers->v.push_back(school_provider_new(god, mul, div));
 	}
 }
