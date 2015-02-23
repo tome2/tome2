@@ -4405,7 +4405,7 @@ static random_spell* select_spell_from_batch(int batch)
 		mut_max = spell_num - batch * 10;
 	}
 
-	strnfmt(tmp, 160, "(a-%c, A-%cto browse, / to rename, - to comment) Select a power: ",
+	strnfmt(tmp, 160, "(a-%c, A-%c to browse, / to rename, - to comment) Select a power: ",
 	        I2A(mut_max - 1), I2A(mut_max - 1) - 'a' + 'A');
 
 	prt(tmp, 0, 0);
