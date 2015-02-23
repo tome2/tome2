@@ -685,10 +685,7 @@ int wildc2i[256];
 /*
  * The store/building types arrays
  */
-header *st_head;
 store_info_type *st_info;
-char *st_name;
-/* char *st_text; */
 
 /*
  * The building actions types arrays

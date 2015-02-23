@@ -3773,12 +3773,12 @@ bool_ object_out_desc(object_type *o_ptr, FILE *fff, bool_ trim_down, bool_ wait
 		else if (o_ptr->found == OBJ_FOUND_STORE)
 		{
 			text_out(format("\nYou bought it from the %s.",
-			                st_info[o_ptr->found_aux1].name + st_name));
+					st_info[o_ptr->found_aux1].name));
 		}
 		else if (o_ptr->found == OBJ_FOUND_STOLEN)
 		{
 			text_out(format("\nYou stole it from the %s.",
-			                st_info[o_ptr->found_aux1].name + st_name));
+					st_info[o_ptr->found_aux1].name));
 		}
 		else if (o_ptr->found == OBJ_FOUND_SELFMADE)
 		{

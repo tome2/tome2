@@ -4462,7 +4462,7 @@ static int target_set_aux(int y, int x, int mode, cptr info)
 			/* Hack -- special handling for building doors */
 			if (feat == FEAT_SHOP)
 			{
-				name = st_name + st_info[c_ptr->special].name;
+				name = st_info[c_ptr->special].name;
 			}
 			else
 			{

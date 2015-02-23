@@ -9324,11 +9324,6 @@ errr init_st_info_txt(FILE *fp, char *buf)
 	/* Just before the first line */
 	error_line = -1;
 
-
-	/* Start the "fake" stuff */
-	st_head->name_size = 0;
-	st_head->text_size = 0;
-
 	/* Parse */
 	fp_stack_init(fp);
 	while (0 == my_fgets_dostack(buf, 1024))
@@ -9390,7 +9385,7 @@ errr init_st_info_txt(FILE *fp, char *buf)
 			if (i < error_idx) return (4);
 
 			/* Verify information */
-			if (i >= st_head->info_num) return (2);
+			if (i >= max_st_idx) return (2);
 
 			/* Save the index */
 			error_idx = i;
@@ -9398,17 +9393,9 @@ errr init_st_info_txt(FILE *fp, char *buf)
 			/* Point at the "info" */
 			st_ptr = &st_info[i];
 
-			/* Hack -- Verify space */
-			if (st_head->name_size + strlen(s) + 8 > FAKE_NAME_SIZE) return (7);
-
-			/* Advance and Save the name index */
-			if (!st_ptr->name) st_ptr->name = ++st_head->name_size;
-
-			/* Append chars to the name */
-			strcpy(st_name + st_head->name_size, s);
-
-			/* Advance the index */
-			st_head->name_size += strlen(s);
+			/* Copy name */
+			assert(!st_ptr->name);
+			st_ptr->name = my_strdup(s);
 
 			/* We are ready for a new set of objects */
 			item_idx = 0;
@@ -9578,11 +9565,6 @@ errr init_st_info_txt(FILE *fp, char *buf)
 		/* Oops */
 		return (6);
 	}
-
-
-	/* Complete the "name" and "text" sizes */
-	++st_head->name_size;
-	++st_head->text_size;
 
 	/* No version yet */
 	if (!okay) return (2);

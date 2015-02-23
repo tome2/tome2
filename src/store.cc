@@ -613,7 +613,7 @@ bool_ is_blessed(object_type *o_ptr)
  */
 static bool_ store_will_buy(object_type *o_ptr)
 {
-	cptr store_name = st_info[st_ptr->st_idx].name + st_name;
+	cptr store_name = st_info[st_ptr->st_idx].name;
 
 	/* Hack -- The Home is simple */
 	if (cur_store_num == 7) return (TRUE);
@@ -1217,7 +1217,7 @@ static void store_create(void)
 		obj_all_done = FALSE;
 
 		/* Magic Shop */
-		if (streq(st_info[st_ptr->st_idx].name + st_name, STORE_MAGIC) &&
+		if (streq(st_info[st_ptr->st_idx].name, STORE_MAGIC) &&
 		    magik(20))
 		{
 			s16b spell;
@@ -1233,7 +1233,7 @@ static void store_create(void)
 		}
 
 		/* Temple */
-		else if (streq(st_info[st_ptr->st_idx].name + st_name, STORE_TEMPLE) &&
+		else if (streq(st_info[st_ptr->st_idx].name, STORE_TEMPLE) &&
 			 magik(20))
 		{
 			s16b spell;
@@ -1584,10 +1584,8 @@ void display_store(void)
 
 	else if (st_info[st_ptr->st_idx].flags1 & SF1_MUSEUM)
 	{
-		cptr store_name = (st_name + st_info[cur_store_num].name);
-
 		/* Show the name of the store */
-		strnfmt(buf, 80, "%s", store_name);
+		strnfmt(buf, 80, "%s", st_info[cur_store_num].name);
 		prt(buf, 3, 30);
 
 		/* Label the item descriptions */
@@ -1600,7 +1598,6 @@ void display_store(void)
 	/* Normal stores */
 	else
 	{
-		cptr store_name = (st_name + st_info[cur_store_num].name);
 		cptr owner_name = (ow_name + ot_ptr->name);
 
 		/* Put the owner name and race */
@@ -1608,7 +1605,9 @@ void display_store(void)
 		put_str(buf, 3, 10);
 
 		/* Show the max price in the store (above prices) */
-		strnfmt(buf, 80, "%s (" FMTs16b ")", store_name, ot_ptr->max_cost);
+		strnfmt(buf, 80, "%s (" FMTs16b ")",
+			st_info[cur_store_num].name,
+			ot_ptr->max_cost);
 		prt(buf, 3, 50);
 
 		/* Label the item descriptions */

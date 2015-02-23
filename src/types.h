@@ -976,7 +976,7 @@ typedef struct store_info_type store_info_type;
 
 struct store_info_type
 {
-	u32b name;                      /* Name (offset) */
+	const char *name;               /* Name */
 
 	s16b table[STORE_CHOICES][2];   /* Table -- Legal item kinds */
 	byte table_num;                 /* Number of items */

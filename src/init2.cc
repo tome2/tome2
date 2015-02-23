@@ -1016,19 +1016,8 @@ static errr init_st_info(void)
 	/* General buffer */
 	char buf[1024];
 
-
-	/*** Make the header ***/
-	st_head = make_header(max_st_idx);
-
-
-	/*** Make the fake arrays ***/
-
 	/* Allocate the "st_info" array */
-	st_info = make_array<store_info_type>(st_head->info_num);
-
-	/* Hack -- make "fake" arrays */
-	st_name = make_array<char>(FAKE_NAME_SIZE);
-
+	st_info = make_array<store_info_type>(max_st_idx);
 
 	/*** Load the ascii template file ***/
 
