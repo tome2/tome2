@@ -1536,11 +1536,11 @@ static void roff_name(int r_idx, int ego)
 	{
 		if (re_info[ego].before)
 		{
-			Term_addstr( -1, TERM_WHITE, format("%s %s", re_name + re_info[ego].name, r_ptr->name));
+			Term_addstr( -1, TERM_WHITE, format("%s %s", re_info[ego].name, r_ptr->name));
 		}
 		else
 		{
-			Term_addstr( -1, TERM_WHITE, format("%s %s", r_ptr->name, re_name + re_info[ego].name));
+			Term_addstr( -1, TERM_WHITE, format("%s %s", r_ptr->name, re_info[ego].name));
 		}
 	}
 	else

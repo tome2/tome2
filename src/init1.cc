@@ -8046,11 +8046,6 @@ errr init_re_info_txt(FILE *fp, char *buf)
 	/* Just before the first line */
 	error_line = -1;
 
-
-	/* Start the "fake" stuff */
-	re_head->name_size = 0;
-	re_head->text_size = 0;
-
 	/* Parse */
 	fp_stack_init(fp);
 	while (0 == my_fgets_dostack(buf, 1024))
@@ -8112,7 +8107,7 @@ errr init_re_info_txt(FILE *fp, char *buf)
 			if (i < error_idx) return (4);
 
 			/* Verify information */
-			if (i >= re_head->info_num) return (2);
+			if (i >= max_re_idx) return (2);
 
 			/* Save the index */
 			error_idx = i;
@@ -8120,17 +8115,9 @@ errr init_re_info_txt(FILE *fp, char *buf)
 			/* Point at the "info" */
 			re_ptr = &re_info[i];
 
-			/* Hack -- Verify space */
-			if (re_head->name_size + strlen(s) + 8 > FAKE_NAME_SIZE) return (7);
-
-			/* Advance and Save the name index */
-			if (!re_ptr->name) re_ptr->name = ++re_head->name_size;
-
-			/* Append chars to the name */
-			strcpy(re_name + re_head->name_size, s);
-
-			/* Advance the index */
-			re_head->name_size += strlen(s);
+			/* Copy name */
+			assert(!re_ptr->name);
+			re_ptr->name = my_strdup(s);
 
 			/* Some inits */
 			blow_num = 0;
@@ -8528,10 +8515,6 @@ errr init_re_info_txt(FILE *fp, char *buf)
 		/* Oops */
 		return (6);
 	}
-
-
-	/* Complete the "name" and "text" sizes */
-	++re_head->name_size;
 
 	/* No version yet */
 	if (!okay) return (2);

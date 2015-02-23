@@ -515,8 +515,8 @@ typedef struct monster_ego monster_ego;
 
 struct monster_ego
 {
-	u32b name;				/* Name (offset) */
-	bool_ before;                            /* Display ego before or after */
+	const char *name;                       /* Name */
+	bool_ before;                           /* Display ego before or after */
 
 	monster_blow blow[4];                   /* Up to four blows per round */
 	byte blowm[4][2];

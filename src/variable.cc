@@ -652,9 +652,7 @@ monster_race *r_info;
 /*
  * The monster ego race arrays
  */
-header *re_head;
 monster_ego *re_info;
-char *re_name;
 
 /*
  * The dungeon types arrays

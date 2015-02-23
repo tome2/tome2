@@ -3382,8 +3382,7 @@ int test_mego_name(cptr name)
 	for (i = 1; i < max_re_idx; i++)
 	{
 		monster_ego *re_ptr = &re_info[i];
-		cptr mon_name = re_name + re_ptr->name;
-		if (iequals(name, mon_name)) return (i);
+		if (re_ptr->name && iequals(name, re_ptr->name)) return (i);
 	}
 	return (0);
 }

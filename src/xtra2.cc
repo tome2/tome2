@@ -5591,11 +5591,11 @@ void make_wish(void)
 				{
 					if (re_ptr->before)
 					{
-						sprintf(buf, "%s %s", re_name + re_ptr->name, r_ptr->name);
+						sprintf(buf, "%s %s", re_ptr->name, r_ptr->name);
 					}
 					else
 					{
-						sprintf(buf, "%s %s", r_ptr->name, re_name + re_ptr->name);
+						sprintf(buf, "%s %s", r_ptr->name, re_ptr->name);
 					}
 				}
 				else

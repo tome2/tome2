@@ -865,19 +865,8 @@ static errr init_re_info(void)
 	/* General buffer */
 	char buf[1024];
 
-
-	/*** Make the header ***/
-	re_head = make_header(max_re_idx);
-
-
-	/*** Make the fake arrays ***/
-
 	/* Allocate the "re_info" array */
-	re_info = make_array<monster_ego>(re_head->info_num);
-
-	/* Hack -- make "fake" arrays */
-	re_name = make_array<char>(FAKE_NAME_SIZE);
-
+	re_info = make_array<monster_ego>(max_re_idx);
 
 	/*** Load the ascii template file ***/
 

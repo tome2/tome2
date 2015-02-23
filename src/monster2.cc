@@ -1224,11 +1224,11 @@ void monster_desc(char *desc, monster_type *m_ptr, int mode)
 	{
 		if (re_info[m_ptr->ego].before)
 		{
-			sprintf(name, "%s %s", re_name + re_info[m_ptr->ego].name, r_ptr->name);
+			sprintf(name, "%s %s", re_info[m_ptr->ego].name, r_ptr->name);
 		}
 		else
 		{
-			sprintf(name, "%s %s", r_ptr->name, re_name + re_info[m_ptr->ego].name);
+			sprintf(name, "%s %s", r_ptr->name, re_info[m_ptr->ego].name);
 		}
 	}
 	else
@@ -1435,11 +1435,11 @@ void monster_race_desc(char *desc, int r_idx, int ego)
 	{
 		if (re_info[ego].before)
 		{
-			sprintf(name, "%s %s", re_name + re_info[ego].name, r_ptr->name);
+			sprintf(name, "%s %s", re_info[ego].name, r_ptr->name);
 		}
 		else
 		{
-			sprintf(name, "%s %s", r_ptr->name, re_name + re_info[ego].name);
+			sprintf(name, "%s %s", r_ptr->name, re_info[ego].name);
 		}
 	}
 	else
