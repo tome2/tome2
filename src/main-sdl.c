@@ -90,7 +90,7 @@ static bool_ window_properties_set = FALSE;
 static SDL_Surface *screen;
 
 /* the video settings for the system */
-static SDL_VideoInfo *videoInfo;
+static const SDL_VideoInfo *videoInfo;
 
 /* a flag to suspend updating of the screen;
 this is in place so that when a large area is being
@@ -1289,7 +1289,6 @@ void moveTerminal(int x, int y)
 void bringToTop(int current)
 {
 	term_data *td;
-	term_data *tc;
 	int n = 0;
 	int i;
 	
@@ -1464,8 +1463,7 @@ void manipulationMode(void)
 	int mouse_x, mouse_y;
 	int value = 0, delta_x = 0, delta_y = 0;
 	int current_term;
-	SDL_Surface backup;
-	
+
 	/* Begin by redrawing the main terminal with its
 	purple border to signify that it is being edited*/
 
@@ -1857,7 +1855,7 @@ This routine processes arguments, opens the SDL
 window, loads fonts, etc. */
 errr init_sdl(int argc, char **argv)
 {
-	int i, surface_type;
+	int i;
 	char filename[PATH_MAX + 1];
 	const char file_sep = '.';
 	/* Flags to pass to SDL_SetVideoMode */

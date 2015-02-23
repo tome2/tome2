@@ -809,9 +809,9 @@ static void player_wipe(void)
 	for (i = 0; i < MAX_Q_IDX; i++)
 	{
 		quest[i].status = QUEST_STATUS_UNTAKEN;
-		for (j = 0; j < sizeof(quest[i].data)/sizeof(quest[i].data[0]); j++)
+		for (auto &quest_data : quest[i].data)
 		{
-			quest[i].data[j] = 0;
+			quest_data = 0;
 		}
 	}
 

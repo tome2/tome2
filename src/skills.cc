@@ -792,11 +792,10 @@ static int do_cmd_activate_skill_aux()
 	{
 		if (s_info[i].action_mkey && s_info[i].value && ((!s_info[i].hidden) || (i == SKILL_LEARN)))
 		{
-			int j;
 			bool_ next = FALSE;
 
 			/* Already got it ? */
-			for (j = 0; j < p.size(); j++)
+			for (size_t j = 0; j < p.size(); j++)
 			{
 				if (s_info[i].action_mkey == std::get<1>(p[j]))
 				{
@@ -815,11 +814,10 @@ static int do_cmd_activate_skill_aux()
 	{
 		if (ab_info[i].action_mkey && ab_info[i].acquired)
 		{
-			int j;
 			bool_ next = FALSE;
 
 			/* Already got it ? */
-			for (j = 0; j < p.size(); j++)
+			for (size_t j = 0; j < p.size(); j++)
 			{
 				if (ab_info[i].action_mkey == std::get<1>(p[j]))
 				{

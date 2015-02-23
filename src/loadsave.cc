@@ -2693,9 +2693,9 @@ static bool_ do_savefile_aux(int flag)
 		for (i = 0; i < MAX_Q_IDX; i++)
 		{
 			do_s16b(&quest[i].status, flag);
-			for (j = 0; j < sizeof(quest[i].data)/sizeof(quest[i].data[0]); j++)
+			for (auto &quest_data : quest[i].data)
 			{
-				do_s32b(&(quest[i].data[j]), flag);
+				do_s32b(&quest_data, flag);
 			}
 
 			/* Init the hooks */

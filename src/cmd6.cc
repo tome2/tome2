@@ -3696,8 +3696,6 @@ static void activate_stick(s16b s, bool_ *obvious, bool_ *use_charge)
  */
 void do_cmd_use_staff(void)
 {
-	int item, ident;
-
 	bool_ obvious, use_charge;
 
 	object_type *o_ptr;
@@ -3723,6 +3721,7 @@ void do_cmd_use_staff(void)
 	/* Get an item */
 	q = "Use which staff? ";
 	s = "You have no staff to use.";
+	int item;
 	if (!get_item(&item, q, s, (USE_INVEN | USE_FLOOR | USE_EXTRA))) return;
 
 	/* Get the item */
@@ -3740,9 +3739,6 @@ void do_cmd_use_staff(void)
 
 	/* Take a turn */
 	energy_use = 100;
-
-	/* Not identified yet */
-	ident = FALSE;
 
 	/* get the chance */
 	int chance;
