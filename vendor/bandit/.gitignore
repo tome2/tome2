@@ -1,0 +1,8 @@
+CMakeCache.txt
+CMakeFiles
+Makefile
+bin
+*.cmake
+builds/
+tags
+cotire

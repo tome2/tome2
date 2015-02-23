@@ -1,12 +1,12 @@
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR})
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/include)
+INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/../vendor/bandit)
 
 # Add subdirectories
 ADD_SUBDIRECTORY (squelch)
 
-# Sources
-SET(SRCS
-  main-gcu.c main-x11.c main-sdl.c main-gtk2.c
+# Sources (common)
+SET(SRCS_COMMON
   z-rand.c z-util.c z-form.c z-term.c
   variable.cc tables.cc hooks.cc util.cc cave.cc dungeon.cc
   melee1.cc melee2.cc messages.cc modules.cc
@@ -27,11 +27,17 @@ SET(SRCS
   help.cc hiscore.cc range.cc dice.cc
   generate.cc gen_maze.cc gen_evol.cc wild.cc levels.cc store.cc bldg.cc
   cmovie.cc
-  wizard1.cc wizard2.cc init1.cc init2.cc birth.cc main.c
+  wizard1.cc wizard2.cc init1.cc init2.cc birth.cc
   quark.cc
   # Lua bits:
   lua_bind.cc script.cc
 )
+
+# Sources (PROGRAM)
+SET(SRCS_PROGRAM main-gcu.c main-x11.c main-sdl.c main-gtk2.c main.c)
+
+# Sources (TEST)
+FILE(GLOB SRCS_TESTS ../tests/**.cc)
 
 # Need a few additional source files for Windows.
 if(WIN32)
@@ -51,8 +57,12 @@ if(WIN32)
 endif(WIN32)
 
 # tome executable
-ADD_EXECUTABLE(tome ${EXECUTABLE_OPTIONS} ${SRCS})
+ADD_EXECUTABLE(tome ${EXECUTABLE_OPTIONS} ${SRCS_COMMON} ${SRCS_PROGRAM})
 TARGET_LINK_LIBRARIES(tome squelch ${LIBS})
+
+# test harness executable
+ADD_EXECUTABLE(harness ${EXECUTABLE_OPTIONS} ${SRCS_COMMON} ${SRCS_TESTS})
+TARGET_LINK_LIBRARIES(harness squelch ${LIBS})
 
 # Installation
 INSTALL(TARGETS tome
