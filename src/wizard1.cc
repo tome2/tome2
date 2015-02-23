@@ -2474,8 +2474,8 @@ static void spoil_bateries(cptr fname)
 		spoil_out(format("%-2d %8d  %-24s %s\n",
 		                 a_select_flags[i].level,
 		                 a_select_flags[i].xp,
-		                 al_name + a_select_flags[i].desc,
-		                 al_name + a_select_flags[i].item_desc));
+				 a_select_flags[i].desc,
+				 a_select_flags[i].item_desc));
 		/*	cycle through all alchemist_recipies*/
 		for ( j = 0 ; j < max_al_idx ; j++ )
 		{

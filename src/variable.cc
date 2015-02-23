@@ -589,9 +589,7 @@ s16b player_hp[PY_MAX_LEVEL];
 /*
  * The alchemy recipe arrays
  */
-header *al_head;
 alchemist_recipe *alchemist_recipes;
-char *al_name;
 artifact_select_flag *a_select_flags;
 
 /*

@@ -1227,11 +1227,11 @@ int show_flags(byte group, int pval)
 		{
 			sprintf(ttt, "%c) %s",
 			        (items < 26) ? I2A(items) : ('0' + items - 26),
-			        al_name + a_select_flags[i].desc);
+				a_select_flags[i].desc);
 			if ( wizard || alchemist_has_stone())
 				sprintf(ttt, "%c) %s (exp " FMTu32b ")",
 				        (items < 26) ? I2A(items) : ('0' + items - 26),
-				        al_name + a_select_flags[i].desc,
+					a_select_flags[i].desc,
 				        a_select_flags[i].xp);
 
 			/* Note: Somebody is VERY clever, and it wasn't me. Text printed as
@@ -1549,9 +1549,9 @@ static int check_artifact_items(int pval, int oldpval, int mode)
 		 */
 		if ( mode == 0 )
 		{
-			char *o_name = al_name + a_select_flags[i].item_desc;
+			char *o_name = a_select_flags[i].item_desc;
 			if (orqty > 1 && a_select_flags[i].pval && a_select_flags[i].item_descp)
-				o_name = al_name + a_select_flags[i].item_descp;
+				o_name = a_select_flags[i].item_descp;
 
 			if ( rqty )
 			{
@@ -1750,7 +1750,7 @@ void display_activation_info(int num)
 		c_prt(TERM_WHITE, "                                    ", 5, 5);
 	c_prt(TERM_WHITE, format("  Level:%d                              ", a_select_flags[i].level), 6, 5);
 	c_prt(TERM_WHITE, format("  Exp  :%d                              ", a_select_flags[i].xp), 7, 5);
-	c_prt(TERM_WHITE, format("  Item :%s                              ", al_name + a_select_flags[i].item_desc), 8, 5);
+	c_prt(TERM_WHITE, format("  Item :%s                              ", a_select_flags[i].item_desc), 8, 5);
 	c_prt(TERM_WHITE, "                                                                  ", 9, 5);
 	c_prt(TERM_WHITE, format("  %s  ", activation_aux(&forge, 0, 0)), 9, 5);
 	c_prt(TERM_WHITE, "                                    ", 10, 5);
@@ -1784,7 +1784,7 @@ void select_an_activation(void)
 		if (a_select_flags[i].group == 88 && a_select_flags[i].level <= lev )
 		{
 			act_ref[max] = -a_select_flags[i].flag;  /* Activation number */
-			act_list[max++] = al_name + a_select_flags[i].desc;  /* Description */
+			act_list[max++] = a_select_flags[i].desc;  /* Description */
 		}
 
 	/* Select from that list, using the util.c function display_list to display the scrolled list */

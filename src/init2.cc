@@ -1347,15 +1347,8 @@ errr init_al_info(void)
 	/* General buffer */
 	char buf[1024];
 
-	/*** Make the header ***/
-	al_head = make_header(max_al_idx);
-
-
-	/* Allocate the "al_info" array */
-	alchemist_recipes = make_array<alchemist_recipe>(al_head->info_num);
-
-	/* Allocate the fake arrays */
-	al_name = make_array<char>(FAKE_NAME_SIZE);
+	/* Allocate the arrays */
+	alchemist_recipes = make_array<alchemist_recipe>(max_al_idx);
 	a_select_flags = make_array<artifact_select_flag>(max_al_idx);
 
 	/*** Load the ascii template file ***/

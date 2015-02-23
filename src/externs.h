@@ -307,8 +307,7 @@ extern alchemist_recipe *alchemist_recipes;
 extern u32b alchemist_known_artifacts[6];
 extern u32b alchemist_gained;
 extern s16b player_hp[PY_MAX_LEVEL];
-extern header *al_head;
-extern char *al_name;
+
 extern artifact_select_flag *a_select_flags;
 
 extern ability_type *ab_info;

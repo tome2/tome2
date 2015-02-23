@@ -4509,10 +4509,6 @@ errr init_al_info_txt(FILE *fp, char *buf)
 	/* Just before the first line */
 	error_line = -1;
 
-	/* Fun! */
-	al_head->name_size = 0;
-	*al_name = 0;
-
 	/* Parse */
 	fp_stack_init(fp);
 	while (0 == my_fgets_dostack(buf, 1024))
@@ -4715,71 +4711,47 @@ errr init_al_info_txt(FILE *fp, char *buf)
 		if (buf[0] == 'p')
 		{
 			/* Reject if doesn't depend on pval */
-
 			if (!a_ptr->pval)
 				return (1);
 
 			/* Acquire the description */
 			s = buf + 2;
 
-			/* Hack -- Verify space */
-			if (al_head->name_size + strlen(s) + 8 > FAKE_NAME_SIZE) return (7);
-
-			/* Advance and Save the name index */
-			a_ptr->item_descp = ++al_head->name_size;
-
-			/* Append chars to the name */
-			strcpy(al_name + al_head->name_size, s);
-
-			/* Advance the index */
-			al_head->name_size += strlen(s);
+			/* Copy plural description */
+			assert(!a_ptr->item_descp);
+			a_ptr->item_descp = my_strdup(s);
 
 			/* Next... */
 			continue;
 		}
 
-		/* Process 'D' for "Description" */
+		/* Process 'D' for "Description" (one line only) */
 		if (buf[0] == 'D')
 		{
 			/* Acquire the description */
 			s = buf + 2;
 
-			/* Hack -- Verify space */
-			if (al_head->name_size + strlen(s) + 8 > FAKE_NAME_SIZE) return (7);
-
-			/* Advance and Save the name index */
-			a_ptr->desc = ++al_head->name_size;
-
-			/* Append chars to the name */
-			strcpy(al_name + al_head->name_size, s);
-
-			/* Advance the index */
-			al_head->name_size += strlen(s);
+			/* Copy description */
+			assert(!a_ptr->desc);
+			a_ptr->desc = my_strdup(s);
 
 			/* Next... */
 			continue;
 		}
 
-		/* Process 'd' for "Item Description" */
+		/* Process 'd' for "Item Description" (one line only) */
 		if (buf[0] == 'd')
 		{
 			/* Acquire the name */
 			s = buf + 2;
 
-			/* Hack -- Verify space */
-			if (al_head->name_size + strlen(s) + 8 > FAKE_NAME_SIZE) return (7);
-
+			/* Reject if we already have a description */
 			if (a_ptr->item_desc)
 				return (7);
 
-			/* Advance and Save the name index */
-			a_ptr->item_desc = ++al_head->name_size;
-
-			/* Append chars to the name */
-			strcpy(al_name + al_head->name_size, s);
-
-			/* Advance the index */
-			al_head->name_size += strlen(s);
+			/* Copy description */
+			assert(!a_ptr->item_desc);
+			a_ptr->item_desc = my_strdup(s);
 
 			/* Next... */
 			continue;
@@ -4791,9 +4763,6 @@ errr init_al_info_txt(FILE *fp, char *buf)
 
 	/* No version yet */
 	if (!okay) return (2);
-
-	/* Hack - set the al_head->text_size to byte size of array */
-	al_head->text_size = (a_idx + 1) * sizeof(artifact_select_flag);
 
 	/* Success */
 	return (0);
