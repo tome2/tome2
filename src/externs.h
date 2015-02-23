@@ -833,7 +833,6 @@ extern int check_hit2(int power, int level, int ac);
 extern int get_attack_power(int effect);
 extern bool_ carried_make_attack_normal(int r_idx);
 extern bool_ make_attack_normal(int m_idx, byte divis);
-extern bool_ make_attack_spell(int m_idx);
 extern void process_monsters(void);
 extern void curse_equipment(int chance, int heavy_chance);
 extern void curse_equipment_dg(int chance, int heavy_chance);
