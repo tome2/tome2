@@ -923,20 +923,8 @@ static errr init_d_info(void)
 	/* General buffer */
 	char buf[1024];
 
-
-	/*** Make the header ***/
-	d_head = make_header(max_d_idx);
-
-
-	/*** Make the fake arrays ***/
-
 	/* Allocate the "d_info" array */
-	d_info = make_array<dungeon_info_type>(d_head->info_num);
-
-	/* Hack -- make "fake" arrays */
-	d_name = make_array<char>(FAKE_NAME_SIZE);
-	d_text = make_array<char>(FAKE_TEXT_SIZE);
-
+	d_info = make_array<dungeon_info_type>(max_d_idx);
 
 	/*** Load the ascii template file ***/
 

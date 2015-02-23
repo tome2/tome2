@@ -8943,11 +8943,6 @@ errr init_d_info_txt(FILE *fp, char *buf)
 	/* Just before the first line */
 	error_line = -1;
 
-
-	/* Start the "fake" stuff */
-	d_head->name_size = 0;
-	d_head->text_size = 0;
-
 	/* Parse */
 	fp_stack_init(fp);
 	while (0 == my_fgets_dostack(buf, 1024))
@@ -9009,7 +9004,7 @@ errr init_d_info_txt(FILE *fp, char *buf)
 			if (i < error_idx) return (4);
 
 			/* Verify information */
-			if (i >= d_head->info_num) return (2);
+			if (i >= max_d_idx) return (2);
 
 			/* Save the index */
 			error_idx = i;
@@ -9017,17 +9012,12 @@ errr init_d_info_txt(FILE *fp, char *buf)
 			/* Point at the "info" */
 			d_ptr = &d_info[i];
 
-			/* Hack -- Verify space */
-			if (d_head->name_size + strlen(s) + 8 > FAKE_NAME_SIZE) return (7);
+			/* Copy name */
+			assert(!d_ptr->name);
+			d_ptr->name = my_strdup(s);
 
-			/* Advance and Save the name index */
-			if (!d_ptr->name) d_ptr->name = ++d_head->name_size;
-
-			/* Append chars to the name */
-			strcpy(d_name + d_head->name_size, s);
-
-			/* Advance the index */
-			d_head->name_size += strlen(s);
+			/* Initialize description */
+			d_ptr->text = my_strdup("");
 
 			/* HACK -- Those ones HAVE to have a set default value */
 			d_ptr->size_x = -1;
@@ -9076,17 +9066,8 @@ errr init_d_info_txt(FILE *fp, char *buf)
 			/* Acquire the text */
 			s = buf + 6;
 
-			/* Hack -- Verify space */
-			if (d_head->text_size + strlen(s) + 8 > FAKE_TEXT_SIZE) return (7);
-
-			/* Advance and Save the text index */
-			if (!d_ptr->text) d_ptr->text = ++d_head->text_size;
-
-			/* Append chars to the name */
-			strcpy(d_text + d_head->text_size, s);
-
-			/* Advance the index */
-			d_head->text_size += strlen(s);
+			/* Append to description */
+			strappend(&d_ptr->text, s);
 
 			/* Next... */
 			continue;
@@ -9499,10 +9480,6 @@ errr init_d_info_txt(FILE *fp, char *buf)
 		return (6);
 	}
 
-
-	/* Complete the "name" and "text" sizes */
-	++d_head->name_size;
-	++d_head->text_size;
 
 	/* No version yet */
 	if (!okay) return (2);

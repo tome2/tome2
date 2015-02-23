@@ -2288,11 +2288,17 @@ cptr describe_player_location()
 	int feat = wild_map[pwy][pwx].feat;
 
 	if (dungeon_type != DUNGEON_WILDERNESS && dun_level > 0)
-		sprintf(desc, "on level %d of %s", dun_level, d_info[dungeon_type].name + d_name);
+	{
+		sprintf(desc, "on level %d of %s", dun_level, d_info[dungeon_type].name);
+	}
 	else if (wf_info[feat].terrain_idx == TERRAIN_TOWN)
+	{
 		sprintf(desc, "in the town of %s", wf_info[feat].name + wf_name);
+	}
 	else if (wf_info[feat].entrance)
+	{
 		sprintf(desc, "near %s", wf_info[feat].name + wf_name);
+	}
 	else
 	{
 		/*
@@ -2642,7 +2648,7 @@ errr file_character(cptr name, bool_ full)
 	{
 		if (max_dlv[y])
 			fprintf(fff, "\n        %s: Level %d (%d')",
-			        d_name + d_info[y].name,
+				d_info[y].name,
 			        max_dlv[y], 50 * (max_dlv[y]));
 	}
 	fprintf(fff, "\n");

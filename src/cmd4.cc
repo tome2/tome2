@@ -3856,7 +3856,7 @@ static void do_cmd_knowledge_dungeons(void)
 			/* Describe the recall depth */
 			fprintf(fff, "       %c%s: Level %d (%d')\n",
 			        (p_ptr->recall_dungeon == y) ? '*' : ' ',
-			        d_name + d_info[y].name,
+				d_info[y].name,
 			        max_dlv[y], 50 * (max_dlv[y]));
 		}
 	}
@@ -3908,7 +3908,7 @@ void do_cmd_knowledge_towns(void)
 
 			/* Describe the dungeon town */
 			fprintf(fff, "        %s: Level %d (%d')\n",
-			        d_name + d_ptr->name,
+				d_ptr->name,
 			        d_ptr->t_level[j],
 			        50 * d_ptr->t_level[j]);
 		}

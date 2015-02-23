@@ -1661,7 +1661,7 @@ void do_cmd_debug()
 		{
 			dungeon_type = command_arg;
 			dun_level = d_info[dungeon_type].mindepth;
-			msg_format("You go into %s", d_text + d_info[dungeon_type].text);
+			msg_format("You go into %s", d_info[dungeon_type].text);
 
 			/* Leaving */
 			p_ptr->leaving = TRUE;

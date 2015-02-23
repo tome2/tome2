@@ -2763,15 +2763,25 @@ static cptr object_out_desc_where_found(s16b level, s16b dungeon)
 	static char str[80];
 
 	if (dungeon == DUNGEON_WILDERNESS)
+	{
 		/* Taking care of older objects */
 		if (level == 0)
+		{
 			sprintf(str, "in the wilderness or in a town");
+		}
 		else if (wf_info[level].terrain_idx == TERRAIN_TOWN)
+		{
 			sprintf(str, "in the town of %s", wf_info[level].name + wf_name);
+		}
 		else
+		{
 			sprintf(str, "in %s", wf_info[level].text + wf_text);
+		}
+	}
 	else
-		sprintf(str, "on level %d of %s", level, d_info[dungeon].name + d_name);
+	{
+		sprintf(str, "on level %d of %s", level, d_info[dungeon].name);
+	}
 
 	return str;
 }

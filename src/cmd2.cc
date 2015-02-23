@@ -507,8 +507,7 @@ void do_cmd_go_down(void)
 					dun_level = d_ptr->mindepth;
 				}
 
-				msg_format("You go into %s",
-				           d_text + d_info[dungeon_type].text);
+				msg_format("You go into %s", d_info[dungeon_type].text);
 			}
 			else
 			{

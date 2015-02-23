@@ -4492,7 +4492,7 @@ static int target_set_aux(int y, int x, int mode, cptr info)
 			if ((feat == FEAT_MORE) && c_ptr->special)
 			{
 				s3 = "";
-				name = d_text + d_info[c_ptr->special].text;
+				name = d_info[c_ptr->special].text;
 			}
 
 			if (p_ptr->wild_mode && (feat == FEAT_TOWN))

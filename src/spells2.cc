@@ -7847,7 +7847,7 @@ static void print_dungeon_batch(std::vector<int> const &dungeon_idxs,
 	{
 		dungeon_info_type *d_ptr = &d_info[dungeon_idxs[j]];
 
-		strnfmt(buf, 80, "  %c) %-30s", I2A(i), d_name + d_ptr->name);
+		strnfmt(buf, 80, "  %c) %-30s", I2A(i), d_ptr->name);
 		if (mode)
 		{
 			if (d_ptr->min_plev > p_ptr->lev)
@@ -7934,14 +7934,14 @@ int reset_recall_aux()
 		{
 			char buf[80], buf2[80];
 
-			strcpy(buf, (d_info[p_ptr->recall_dungeon].name + d_name));
+			strcpy(buf, d_info[p_ptr->recall_dungeon].name);
 			if (!get_string("Which dungeon? ", buf, 79)) continue;
 
 			/* Find the index corresponding to the name */
 			int i;
 			for (i = 1; i < max_d_idx; i++)
 			{
-				sprintf(buf2, "%s", d_info[i].name + d_name);
+				sprintf(buf2, "%s", d_info[i].name);
 
 				/* Lowercase the name */
 				strlower(buf);
@@ -8019,7 +8019,7 @@ bool_ reset_recall(bool_ no_trepas_max_depth)
 	else
 		max = max_dlv[dun];
 	depth = get_quantity(format("Which level in %s(%d-%d)? ",
-	                            d_info[dun].name + d_name,
+				    d_info[dun].name,
 	                            d_info[dun].mindepth, max),
 	                     max);
 

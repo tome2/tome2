@@ -2021,8 +2021,8 @@ struct rule_type
 typedef struct dungeon_info_type dungeon_info_type;
 struct dungeon_info_type
 {
-	u32b name;                      /* Name */
-	u32b text;                      /* Description */
+	const char *name;               /* Name */
+	char *text;                     /* Description */
 	char short_name[3];             /* Short name */
 
 	char generator[30];             /* Name of the level generator */

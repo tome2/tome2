@@ -657,10 +657,7 @@ monster_ego *re_info;
 /*
  * The dungeon types arrays
  */
-header *d_head;
 dungeon_info_type *d_info;
-char *d_name;
-char *d_text;
 
 /*
  * Player abilities arrays
