@@ -518,9 +518,6 @@ extern int is_quest(int level);
 extern int random_quest_number(void);
 extern int new_effect(int type, int dam, int time, int cy, int cx, int rad, s32b flags);
 
-/* cmovie.c */
-extern void cmovie_clean_line(int y, char *abuf, char *cbuf);
-
 /* cmd1.c */
 extern void attack_special(monster_type *m_ptr, s32b special, int dam);
 extern bool_ test_hit_fire(int chance, int ac, int vis);

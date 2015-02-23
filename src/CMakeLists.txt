@@ -26,7 +26,6 @@ SET(SRCS_COMMON
   cmd1.cc cmd2.cc cmd3.cc cmd4.cc cmd5.cc cmd6.cc cmd7.cc
   help.cc hiscore.cc range.cc dice.cc
   generate.cc gen_maze.cc gen_evol.cc wild.cc levels.cc store.cc bldg.cc
-  cmovie.cc
   wizard1.cc wizard2.cc init1.cc init2.cc birth.cc
   quark.cc
   # Lua bits:
