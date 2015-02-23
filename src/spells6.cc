@@ -378,7 +378,7 @@ void schools_init()
 	/* Placeholder schools */
 	{
 		school_new(&SCHOOL_DEVICE, "Device", SKILL_DEVICE);
-		school_new(&SCHOOL_DEVICE, "Music", SKILL_MUSIC);
+		school_new(&SCHOOL_MUSIC, "Music", SKILL_MUSIC);
 	}
 
 }
