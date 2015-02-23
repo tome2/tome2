@@ -336,9 +336,7 @@ extern wilderness_type_info *wf_info;
 extern int wildc2i[256];
 extern store_info_type *st_info;
 extern store_action_type *ba_info;
-extern header *ow_head;
 extern owner_type *ow_info;
-extern char *ow_name;
 extern set_type *set_info;
 
 extern cptr ANGBAND_SYS;

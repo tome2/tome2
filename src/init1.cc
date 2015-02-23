@@ -9740,17 +9740,11 @@ errr init_ow_info_txt(FILE *fp, char *buf)
 	/* Current entry */
 	owner_type *ow_ptr = NULL;
 
-
 	/* Just before the first record */
 	error_idx = -1;
 
 	/* Just before the first line */
 	error_line = -1;
-
-
-	/* Start the "fake" stuff */
-	ow_head->name_size = 0;
-	ow_head->text_size = 0;
 
 	/* Parse */
 	fp_stack_init(fp);
@@ -9813,7 +9807,7 @@ errr init_ow_info_txt(FILE *fp, char *buf)
 			if (i < error_idx) return (4);
 
 			/* Verify information */
-			if (i >= ow_head->info_num) return (2);
+			if (i >= max_ow_idx) return (2);
 
 			/* Save the index */
 			error_idx = i;
@@ -9821,17 +9815,9 @@ errr init_ow_info_txt(FILE *fp, char *buf)
 			/* Point at the "info" */
 			ow_ptr = &ow_info[i];
 
-			/* Hack -- Verify space */
-			if (ow_head->name_size + strlen(s) + 8 > FAKE_NAME_SIZE) return (7);
-
-			/* Advance and Save the name index */
-			if (!ow_ptr->name) ow_ptr->name = ++ow_head->name_size;
-
-			/* Append chars to the name */
-			strcpy(ow_name + ow_head->name_size, s);
-
-			/* Advance the index */
-			ow_head->name_size += strlen(s);
+			/* Copy name */
+			assert(!ow_ptr->name);
+			ow_ptr->name = my_strdup(s);
 
 			/* Next... */
 			continue;
@@ -9932,11 +9918,6 @@ errr init_ow_info_txt(FILE *fp, char *buf)
 		/* Oops */
 		return (6);
 	}
-
-
-	/* Complete the "name" and "text" sizes */
-	++ow_head->name_size;
-	++ow_head->text_size;
 
 	/* No version yet */
 	if (!okay) return (2);

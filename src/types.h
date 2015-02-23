@@ -933,7 +933,7 @@ typedef struct owner_type owner_type;
 
 struct owner_type
 {
-	u32b name;                      /* Name (offset) */
+	const char *name;               /* Name */
 
 	s16b max_cost;                  /* Purse limit */
 

@@ -1598,10 +1598,8 @@ void display_store(void)
 	/* Normal stores */
 	else
 	{
-		cptr owner_name = (ow_name + ot_ptr->name);
-
 		/* Put the owner name and race */
-		strnfmt(buf, 80, "%s", owner_name);
+		strnfmt(buf, 80, "%s", ot_ptr->name);
 		put_str(buf, 3, 10);
 
 		/* Show the max price in the store (above prices) */

@@ -695,9 +695,7 @@ store_action_type *ba_info;
 /*
  * The owner types arrays
  */
-header *ow_head;
 owner_type *ow_info;
-char *ow_name;
 
 /*
  * Hack -- The special Angband "System Suffix"

@@ -1073,19 +1073,8 @@ static errr init_ow_info(void)
 	/* General buffer */
 	char buf[1024];
 
-
-	/*** Make the header ***/
-	ow_head = make_header(max_ow_idx);
-
-
-	/*** Make the fake arrays ***/
-
 	/* Allocate the "ow_info" array */
-	ow_info = make_array<owner_type>(ow_head->info_num);
-
-	/* Hack -- make "fake" arrays */
-	ow_name = make_array<char>(FAKE_NAME_SIZE);
-
+	ow_info = make_array<owner_type>(max_ow_idx);
 
 	/*** Load the ascii template file ***/
 
