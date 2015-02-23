@@ -24,9 +24,9 @@ bool_ gen_joke_monsters(void *data, void *in, void *out)
 		    (dun_level == 72))
 		{
 			int r_idx = test_monster_name("Neil, the Sorceror");
-			m_allow_special[r_idx + 1] = TRUE;
+			m_allow_special[r_idx] = TRUE;
 			gen_joke_place_monster(r_idx);
-			m_allow_special[r_idx + 1] = FALSE;
+			m_allow_special[r_idx] = FALSE;
 		}
 	}
 
