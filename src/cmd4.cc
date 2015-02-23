@@ -1,7 +1,3 @@
-/* File: cmd4.c */
-
-/* Purpose: Interface commands */
-
 /*
  * Copyright (c) 1989 James E. Wilson, Robert A. Koeneke
  *
@@ -12,8 +8,9 @@
 
 #include "angband.h"
 #include "corrupt.hpp"
-#include "messages.h"
 #include "hooks.h"
+#include "messages.h"
+#include "skills.hpp"
 
 #include <cassert>
 #include <memory>

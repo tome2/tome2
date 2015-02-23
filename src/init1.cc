@@ -1,5 +1,6 @@
 #include "angband.h"
 #include "gods.hpp"
+#include "skills.hpp"
 
 #include <boost/algorithm/string/predicate.hpp>
 

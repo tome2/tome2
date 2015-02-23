@@ -1,7 +1,3 @@
-/* File: spells2.c */
-
-/* Purpose: Spell code (part 2) */
-
 /*
  * Copyright (c) 1989 James E. Wilson, Robert A. Koeneke
  *
@@ -12,6 +8,7 @@
 
 #include "angband.h"
 #include "hooks.h"
+#include "skills.hpp"
 #include "spells3.hpp"
 
 #include <cassert>

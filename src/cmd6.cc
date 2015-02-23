@@ -1,7 +1,3 @@
-/* File: cmd6.c */
-
-/* Purpose: Object commands */
-
 /*
  * Copyright (c) 1989 James E. Wilson, Robert A. Koeneke
  *
@@ -15,6 +11,7 @@
 #include "hooks.h"
 #include "lua_bind.hpp"
 #include "mimic.hpp"
+#include "skills.hpp"
 #include "spell_type.hpp"
 #include "spells5.hpp"
 

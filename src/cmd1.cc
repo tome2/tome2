@@ -11,6 +11,7 @@
 #include "hooks.h"
 #include "mimic.hpp"
 #include "quark.h"
+#include "skills.hpp"
 #include "spells3.hpp"
 
 #define MAX_VAMPIRIC_DRAIN 100

@@ -1,5 +1,6 @@
 #include "q_rand.h"
 #include "hooks.h"
+#include "skills.hpp"
 #include "util.hpp"
 #include "messages.h"
 #include <cassert>

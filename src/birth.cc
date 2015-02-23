@@ -18,6 +18,7 @@
 #include "hooks.h"
 #include "mimic.hpp"
 #include "q_rand.h"
+#include "skills.hpp"
 #include "spells3.hpp"
 
 #include <string>

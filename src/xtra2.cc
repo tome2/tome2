@@ -17,6 +17,7 @@
 #include "hooks.h"
 #include "mimic.hpp"
 #include "quark.h"
+#include "skills.hpp"
 
 #include <type_traits>
 #include <cassert>

@@ -1,7 +1,3 @@
-/* File: cmd5.c */
-
-/* Purpose: Class commands */
-
 /*
  * Copyright (c) 1989 James E. Wilson, Robert A. Koeneke
  *
@@ -10,9 +6,9 @@
  * included in all such copies.
  */
 
-
 #include "angband.h"
 #include "corrupt.hpp"
+#include "skills.hpp"
 #include "spell_type.hpp"
 #include "spells5.hpp"
 #include "quark.h"

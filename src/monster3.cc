@@ -8,6 +8,7 @@
 
 #include "angband.h"
 #include "gods.hpp"
+#include "skills.hpp"
 
 /*
  * Is the mon,ster in friendly state(pet, friend, ..)

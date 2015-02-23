@@ -1,7 +1,3 @@
-/* File: files.c */
-
-/* Purpose: code dealing with files (and death) */
-
 /*
  * Copyright (c) 1989 James E. Wilson, Robert A. Koeneke
  *
@@ -15,6 +11,7 @@
 #include "hiscore.h"
 #include "hooks.h"
 #include "mimic.hpp"
+#include "skills.hpp"
 
 #include <memory>
 #include <unordered_set>

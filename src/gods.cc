@@ -6,7 +6,9 @@
  * included in all such copies.
  */
 #include "gods.hpp"
+
 #include "angband.h"
+#include "skills.hpp"
 
 #include <cassert>
 

@@ -14,6 +14,7 @@
 #include "spell_type.hpp"
 #include "quark.h"
 #include "hooks.h"
+#include "skills.hpp"
 #include "spells5.hpp"
 
 #include <cassert>

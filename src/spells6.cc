@@ -1,6 +1,7 @@
 #include "angband.h"
 
 #include "gods.hpp"
+#include "skills.hpp"
 #include "spell_type.hpp"
 
 #include <cassert>

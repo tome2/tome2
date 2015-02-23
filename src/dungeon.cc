@@ -17,6 +17,7 @@
 #include "modules.hpp"
 #include "quest.h"
 #include "quark.h"
+#include "skills.hpp"
 #include "spell_type.hpp"
 #include "spells5.hpp"
 

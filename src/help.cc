@@ -13,6 +13,7 @@
 
 #include "angband.h"
 #include "hooks.h"
+#include "skills.hpp"
 
 #define DESC_MAX 14
 #define TRIGGERED_HELP_MAX 19

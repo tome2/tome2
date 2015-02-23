@@ -6,6 +6,7 @@
 #include "tome/squelch/cursor.hpp"
 #include "tome/squelch/tree_printer.hpp"
 #include "angband.h"
+#include "skills.hpp"
 #include "quark.h"
 
 namespace squelch {

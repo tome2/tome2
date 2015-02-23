@@ -12,6 +12,7 @@
 
 #include "angband.h"
 #include "mimic.hpp"
+#include "skills.hpp"
 
 #include <boost/algorithm/string/predicate.hpp>
 

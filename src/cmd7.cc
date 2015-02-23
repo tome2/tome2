@@ -15,6 +15,7 @@
 #include "hooks.h"
 #include "mimic.hpp"
 #include "quark.h"
+#include "skills.hpp"
 
 /*
  * Describe class powers of Mindcrafters

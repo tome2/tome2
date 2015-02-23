@@ -17,9 +17,10 @@
 
 #include "angband.h"
 
+#include "hooks.h"
 #include "messages.h"
 #include "quark.h"
-#include "hooks.h"
+#include "skills.hpp"
 
 #include <cassert>
 

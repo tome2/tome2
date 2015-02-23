@@ -13,11 +13,12 @@
 #include "lua_bind.hpp"
 #include "angband.h"
 #include "corrupt.hpp"
+#include "skills.hpp"
 #include "spell_type.hpp"
 #include "spells5.hpp"
 #include "range.h"
 
-#include <assert.h>
+#include <cassert>
 #include <functional>
 
 /*

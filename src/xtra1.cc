@@ -13,10 +13,11 @@
 #include "angband.h"
 #include "corrupt.hpp"
 #include "gods.hpp"
-#include "messages.h"
 #include "hooks.h"
-#include "spells3.hpp"
+#include "messages.h"
 #include "mimic.hpp"
+#include "skills.hpp"
+#include "spells3.hpp"
 
 #include <cassert>
 

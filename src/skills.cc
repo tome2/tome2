@@ -608,13 +608,13 @@ void do_cmd_skill()
 /*
  * List of melee skills
  */
-s16b melee_skills[MAX_MELEE] =
+static s16b melee_skills[MAX_MELEE] =
 {
 	SKILL_MASTERY,
 	SKILL_HAND,
 	SKILL_BEAR,
 };
-const char *melee_names[MAX_MELEE] =
+static const char *melee_names[MAX_MELEE] =
 {
 	"Weapon combat",
 	"Barehanded combat",
@@ -633,6 +633,11 @@ s16b get_melee_skill()
 			return (i);
 	}
 	return (0);
+}
+
+cptr get_melee_name()
+{
+	return melee_names[get_melee_skill()];
 }
 
 s16b get_melee_skills()

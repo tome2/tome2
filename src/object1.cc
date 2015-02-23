@@ -11,12 +11,13 @@
  */
 
 #include "angband.h"
-#include "lua_bind.hpp"
-#include "quark.h"
-#include "spell_type.hpp"
 #include "hooks.h"
-#include "spells5.hpp"
+#include "lua_bind.hpp"
 #include "mimic.hpp"
+#include "quark.h"
+#include "skills.hpp"
+#include "spell_type.hpp"
+#include "spells5.hpp"
 
 #include <cassert>
 
@@ -4644,7 +4645,7 @@ void show_equip_aux(bool_ mirror, bool_ everything)
 		if ((p_ptr->body_parts[i - INVEN_WIELD] == INVEN_WIELD) &&
 		                !o_ptr->k_idx)
 		{
-			sprintf(o_name, "(%s)", melee_names[get_melee_skill()]);
+			sprintf(o_name, "(%s)", get_melee_name());
 
 			/* Truncate the description */
 			o_name[lim] = 0;
