@@ -215,8 +215,6 @@ bool_ expand_list; 			/* Expand the power of the list commands */
 bool_ view_perma_grids; 		/* Map remembers all perma-lit grids */
 bool_ view_torch_grids; 		/* Map remembers all torch-lit grids */
 
-bool_ monster_lite; 			/* Allow some monsters to carry light */
-
 bool_ dungeon_align; 			/* Generate dungeons with aligned rooms */
 bool_ dungeon_stair; 			/* Generate dungeons with connected stairs */
 

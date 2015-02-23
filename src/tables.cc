@@ -1463,9 +1463,6 @@ option_type option_info[] =
 	{ &view_torch_grids, FALSE, 3, 7,
 	  "view_torch_grids", "Map remembers all torch-lit grids" },
 
-	{ &monster_lite, TRUE, 3, 19,
-	  "monster_lite", "Allow some monsters to carry light" },
-
 	{ &dungeon_align, TRUE, 3, 8,
 	  "dungeon_align", "Generate dungeons with aligned rooms" },
 

@@ -4188,7 +4188,7 @@ void update_stuff(void)
 	if (p_ptr->update & (PU_MON_LITE))
 	{
 		p_ptr->update &= ~(PU_MON_LITE);
-		if (monster_lite) update_mon_lite();
+		update_mon_lite();
 	}
 }
 

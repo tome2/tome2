@@ -208,7 +208,6 @@ extern bool_ confirm_stairs;
 extern bool_ disturb_pets;
 extern bool_ view_perma_grids;
 extern bool_ view_torch_grids;
-extern bool_ monster_lite;
 extern bool_ flow_by_sound;
 extern bool_ view_reduce_lite;
 extern bool_ auto_scum;
