@@ -51,7 +51,6 @@ void spell_type_init_geomancy(spell_type *spell,
 			      casting_result (*effect_func)(int o_idx),
 			      bool_ (*depend_func)());
 
-void spell_type_set_activation_timeout(spell_type *spell, cptr timeout_s);
 void spell_type_set_inertia(spell_type *spell, s32b difficulty, s32b delay);
 void spell_type_set_difficulty(spell_type *spell, byte skill_level, s32b failure_rate);
 void spell_type_set_mana(spell_type *spell, s32b min, s32b max);
@@ -71,8 +70,6 @@ casting_result spell_type_produce_effect(spell_type *spell, int o_idx);
 cptr spell_type_name(spell_type *spell);
 int spell_type_skill_level(spell_type *spell);
 long spell_type_roll_charges(spell_type *spell);
-void spell_type_activation_description(spell_type *spell, char *buf);
-int spell_type_activation_roll_timeout(spell_type *spell);
 struct device_allocation *spell_type_device_allocation(spell_type *spell, byte tval);
 bool_ spell_type_uses_piety_to_cast(spell_type *spell);
 bool_ spell_type_castable_while_blind(spell_type *spell);

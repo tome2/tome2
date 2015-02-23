@@ -1293,9 +1293,14 @@
 #define ACT_BR_BALANCE          194
 #define ACT_BR_LIGHT            195
 #define ACT_BR_POWER            196
-#define ACT_GROW_MOLD			197
-#define ACT_MUSIC				200
-/* 170 -> unused */
+#define ACT_GROW_MOLD		197
+#define ACT_MUSIC		200
+#define ACT_ETERNAL_FLAME       201
+#define ACT_MAGGOT              202
+#define ACT_LEBOHAUM            203
+#define ACT_DURANDIL            204
+#define ACT_RADAGAST            205 /* Theme */
+#define ACT_VALAROMA            206 /* Theme */
 
 /*** Object "tval" and "sval" codes ***/
 

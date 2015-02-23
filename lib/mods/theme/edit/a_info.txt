@@ -2114,7 +2114,7 @@ W:10:10:5:20000
 P:0:0d0:20:0:0
 F:INFRA | SEARCH | HIDE_TYPE | 
 F:XTRA_SHOTS | SHOW_MODS | ACTIVATE | SPECIAL_GENE
-a:SPELL=Artifact Maggot
+a:HARDCORE=MAGGOT
 D:This ordinary seeming leather sling has been raised to legendary 
 D:status amongst generations of hobbit children.  Farmer Maggot's 
 D:ability to notice and strike any mushroom thief anywhere within 
@@ -2615,7 +2615,7 @@ F:HIDE_TYPE | INFRA | INT | MANA | RES_COLD | RES_ELEC |
 F:RES_FIRE | RES_MORGUL | SEARCH | SEE_INVIS | SHOW_MODS | 
 F:SLAY_ANIMAL | SLAY_EVIL | SPELL | SPELL_CONTAIN | 
 F:STEALTH | WATER_BREATH | WIELD_CAST | WIS
-a:SPELL=Artifact Radagast
+a:HARDCORE=RADAGAST
 Z:grow trees
 D:Rumoured to be a gift from Yavanna to Radagast the Brown, this 
 D:plain-seeming oak staff shields its bearer against the elements 
@@ -2634,7 +2634,7 @@ P:0:3d4:0:0:0
 F:ACTIVATE | BLESSED | CON | ESP_ANIMAL | ESP_EVIL | 
 F:FREE_ACT | HIDE_TYPE | LUCK | RES_CONF | RES_FEAR | 
 F:RES_SOUND | SEARCH | SEE_INVIS | STEALTH
-a:SPELL=Artifact Valaroma
+a:HARDCORE=VALAROMA
 D:This heavenly instrument, wrought from gleaming silver, most 
 D:often appears in the hands of the Valarin huntsman Orome; yet 
 D:he may lend mortal champions the horn from time to time.  Its 

@@ -2698,9 +2698,9 @@ W:127:0:4:0
 A:127/255
 P:0:1d1:0:0:0
 T:39:2
-F:NORM_ART | FULL_NAME | SPECIAL_GENE
+F:NORM_ART | FULL_NAME | SPECIAL_GENE | EASY_USE
 F:ACTIVATE | ACTIVATE_NO_WIELD
-a:SPELL=Artifact Eternal Flame
+a:HARDCORE=ETERNAL_FLAME
 D:An impossibly bright, flickering living flame. It can be used
 D:once to imbue an object with the power of Eru Iluvatar himself.
 

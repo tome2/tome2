@@ -2111,7 +2111,7 @@ W:10:10:5:20000
 P:0:0d0:20:0:0
 F:INFRA | SEARCH | HIDE_TYPE | 
 F:XTRA_SHOTS | SHOW_MODS | ACTIVATE | SPECIAL_GENE
-a:SPELL=Artifact Maggot
+a:HARDCORE=MAGGOT
 D:This ordinary seeming leather sling has been raised to legendary 
 D:status amongst generations of hobbit children.  Farmer Maggot's 
 D:ability to notice and strike any mushroom thief anywhere within 
@@ -2326,8 +2326,8 @@ N:165:'Lebohaum'
 I:32:6:0
 W:20:15:15:25000
 P:20:0d0:0:0:80
-F:ACTIVATE
-a:SPELL=Artifact Lebauhaum
+F:ACTIVATE | EASY_USE
+a:HARDCORE=LEBOHAUM
 D:With the Helm 'Lebohaum' your head is safe!
 
 
@@ -2595,8 +2595,8 @@ I:23:17:3
 W:5:10:130:500
 P:0:2d5:5:6:0
 F:RES_FEAR | LUCK
-F:ACTIVATE | SHOW_MODS
-a:SPELL=Artifact Durandil
+F:ACTIVATE | EASY_USE | SHOW_MODS
+a:HARDCORE=DURANDIL
 D:Don't go adventuring without your Durandil sword!
 
 

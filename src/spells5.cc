@@ -97,28 +97,6 @@ s16b get_random_stick(byte tval, int level)
 static void spells_init_tome()
 {
 	{
-		spell_type *spell = spell_new(&DEVICE_LEBOHAUM, "Artifact Lebauhaum");
-		spell_type_set_activation_timeout(spell, "3");
-		spell_type_describe(spell, "sing a cheerful song");
-		spell_type_set_mana(spell, 0, 0);
-		spell_type_set_difficulty(spell, 1, 0);
-		spell_type_init_device(spell,
-				       no_info,
-				       device_lebohaum);
-	}
-
-	{
-		spell_type *spell = spell_new(&DEVICE_DURANDIL, "Artifact Durandil");
-		spell_type_set_activation_timeout(spell, "3");
-		spell_type_describe(spell, "sing a cheerful song");
-		spell_type_set_mana(spell, 0, 0);
-		spell_type_set_difficulty(spell, 1, 0);
-		spell_type_init_device(spell,
-				       no_info,
-				       device_durandil);
-	}
-
-	{
 		spell_type *spell = spell_new(&DEVICE_THUNDERLORDS, "Artifact Thunderlords");
 		spell_type_describe(spell, "A thunderlord will appear to transport you quickly to the surface.");
 		spell_type_set_mana(spell, 1, 1);
@@ -383,28 +361,6 @@ static void spells_init_theme()
 			range_init(&device_allocation->max_level, 1, 1);
 			spell_type_add_device_allocation(spell, device_allocation);
 		}
-	}
-
-	{
-		spell_type *spell = spell_new(&DEVICE_RADAGAST, "Artifact Radagast");
-		spell_type_set_activation_timeout(spell, "15000");
-		spell_type_describe(spell, "purity and health");
-		spell_type_set_mana(spell, 0, 0);
-		spell_type_set_difficulty(spell, 1, 10);
-		spell_type_init_device(spell,
-				       no_info,
-				       device_radagast);
-	}
-
-	{
-		spell_type *spell = spell_new(&DEVICE_VALAROMA, "Artifact Valaroma");
-		spell_type_set_activation_timeout(spell, "250");
-		spell_type_describe(spell, "banish evil (level x5)");
-		spell_type_set_mana(spell, 0, 0);
-		spell_type_set_difficulty(spell, 1, 25);
-		spell_type_init_device(spell,
-				       no_info,
-				       device_valaroma);
 	}
 }
 
@@ -2222,17 +2178,6 @@ void school_spells_init()
 	}
 
 	{
-		spell_type *spell = spell_new(&DEVICE_MAGGOT, "Artifact Maggot");
-		spell_type_set_activation_timeout(spell, "10+d50");
-		spell_type_describe(spell, "terrify");
-		spell_type_set_mana(spell, 7, 7);
-		spell_type_set_difficulty(spell, 1, 20);
-		spell_type_init_device(spell,
-				       device_maggot_info,
-				       device_maggot);
-	}
-
-	{
 		spell_type *spell = spell_new(&DEVICE_HOLY_FIRE, "Holy Fire of Mithrandir");
 		spell_type_describe(spell, "The Holy Fire created by this staff will deeply(double damage) burn");
 		spell_type_describe(spell, "all that is evil.");
@@ -2251,17 +2196,6 @@ void school_spells_init()
 			range_init(&device_allocation->max_level, 35, 35);
 			spell_type_add_device_allocation(spell, device_allocation);
 		}
-	}
-
-	{
-		spell_type *spell = spell_new(&DEVICE_ETERNAL_FLAME, "Artifact Eternal Flame");
-		spell_type_set_activation_timeout(spell, "0");
-		spell_type_describe(spell, "Imbuing an object with the eternal fire");
-		spell_type_set_mana(spell, 0, 0);
-		spell_type_set_difficulty(spell, 1, 0);
-		spell_type_init_device(spell,
-				       no_info,
-				       device_eternal_flame);
 	}
 
 	{

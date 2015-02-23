@@ -4781,6 +4781,153 @@ bool_ brand_bolts(void)
 
 
 /*
+ * Eternal flame activation
+ */
+
+static int get_eternal_artifact_idx(object_type *o_ptr)
+{
+	if ((o_ptr->tval == TV_SWORD) && (o_ptr->sval == SV_LONG_SWORD)) {
+		return 147;
+	} else if ((o_ptr->tval == TV_MSTAFF) && (o_ptr->sval == SV_MSTAFF)) {
+		return 127;
+	} else if ((o_ptr->tval == TV_BOW) && (o_ptr->sval == SV_HEAVY_XBOW)) {
+		return 152;
+	} else if ((o_ptr->tval == TV_DRAG_ARMOR) && (o_ptr->sval == SV_DRAGON_POWER)) {
+		return 17;
+	}
+
+	if (game_module_idx == MODULE_THEME)
+	{
+		if ((o_ptr->tval == TV_HAFTED) && (o_ptr->sval == SV_LUCERN_HAMMER)) {
+			return 241;
+		} else if ((o_ptr->tval == TV_POLEARM) && (o_ptr->sval == SV_TRIDENT)) {
+			return 242;
+		} else if ((o_ptr->tval == TV_AXE) && (o_ptr->sval == SV_BROAD_AXE)) {
+			return 243;
+		} else if ((o_ptr->tval == TV_BOW) && (o_ptr->sval == SV_LONG_BOW)) {
+			return 245;
+		} else if ((o_ptr->tval == TV_BOOMERANG) && (o_ptr->sval == SV_BOOM_METAL)) {
+			return 247;
+		} else if ((o_ptr->tval == TV_BOW) && (o_ptr->sval == SV_SLING)) {
+			return 246;
+		} else if ((o_ptr->tval == TV_SWORD) && (o_ptr->sval == SV_RAPIER)) {
+			return 244;
+		} else if ((o_ptr->tval == TV_AMULET) && (o_ptr->sval == SV_AMULET_SPELL)) {
+			return 248;
+		}
+	}
+
+	/* Not usable */
+	return -1;
+}
+
+static bool_ eternal_flame_item_tester_hook(object_type *o_ptr)
+{
+	if ((o_ptr->name1 > 0) ||
+	    (o_ptr->name2 > 0))
+	{
+		return FALSE;
+	}
+
+	return (get_eternal_artifact_idx(o_ptr) >= 0);
+}
+
+static bool activate_eternal_flame(int flame_item)
+{
+	int item;
+	int artifact_idx = -1;
+
+	item_tester_hook = eternal_flame_item_tester_hook;
+	if (!get_item(&item,
+		      "Which object do you want to imbue?",
+		      "You have no objects to imbue.",
+		      USE_INVEN))
+	{
+		return false;
+	}
+
+	/* Get the artifact idx */
+	artifact_idx = get_eternal_artifact_idx(get_object(item));
+	assert(artifact_idx >= 0);
+
+	/* Forge the item */
+	object_type *o_ptr = get_object(item);
+	o_ptr->name1 = artifact_idx;
+
+	apply_magic(o_ptr, -1, TRUE, TRUE, TRUE);
+
+	o_ptr->found = OBJ_FOUND_SELFMADE;
+
+	inven_item_increase(flame_item, -1);
+	inven_item_describe(flame_item);
+	inven_item_optimize(flame_item);
+	return true;
+}
+
+
+/**
+ * Farmer Maggot's sling activation.
+ */
+static bool activate_maggot()
+{
+	int dir;
+	if (!get_aim_dir(&dir))
+	{
+		return false;
+	}
+
+	fire_ball(GF_TURN_ALL, dir, 40, 2);
+	return true;
+}
+
+
+/**
+ * 'Radagast' (Theme)
+ */
+static void activate_radagast()
+{
+	cmsg_print(TERM_GREEN, "The staff's power cleanses you completely!");
+	remove_all_curse();
+	do_res_stat(A_STR, TRUE);
+	do_res_stat(A_CON, TRUE);
+	do_res_stat(A_DEX, TRUE);
+	do_res_stat(A_WIS, TRUE);
+	do_res_stat(A_INT, TRUE);
+	do_res_stat(A_CHR, TRUE);
+	restore_level();
+	// clean_corruptions(); TODO: Do we want to implement this?
+	hp_player(5000);
+	heal_insanity(5000);
+	set_poisoned(0);
+	set_blind(0);
+	set_confused(0);
+	set_image(0);
+	set_stun(0);
+	set_cut(0);
+	set_parasite(0, 0);
+
+	if (p_ptr->black_breath)
+	{
+		msg_print("The hold of the Black Breath on you is broken!");
+	}
+	p_ptr->black_breath = FALSE;
+
+	p_ptr->update |= PU_BONUS;
+	p_ptr->window |= PW_PLAYER;
+}
+
+
+/**
+ * 'Valaroma' (Theme)
+ */
+static void activate_valaroma()
+{
+	int power = 5 * p_ptr->lev;
+	banish_evil(power);
+}
+
+
+/*
  * Objects in the p_ptr->inventory can now be activated, and
  * SOME of those may be able to stack (ego wands or something)
  * in any case, we can't know that it's impossible. *BUT* we'll
@@ -5023,7 +5170,6 @@ void do_cmd_activate(void)
 
 const char *activation_aux(object_type * o_ptr, bool_ doit, int item)
 {
-	static char buf[256];
 	int plev = get_skill(SKILL_DEVICE);
 
 	int i = 0, ii = 0, ij = 0, k, dir, dummy = 0;
@@ -5060,22 +5206,9 @@ const char *activation_aux(object_type * o_ptr, bool_ doit, int item)
 	if (!spell)
 		return "Unknown!";
 
-	/* Negative means a unified spell index */
-	if (spell < 0)
-	{
-		struct spell_type *spell_ptr = spell_at(-spell);
-		if (doit)
-		{
-			spell_type_produce_effect(spell_ptr, item);
-			o_ptr->timeout = spell_type_activation_roll_timeout(spell_ptr);
-		}
-		else
-		{
-			spell_type_activation_description(spell_ptr, buf);
-			return buf;
-		}
-	}
-	else
+	/* Activations always have positive numbers */
+	assert(spell > 0);
+
 	{
 		/* Activate for attack */
 		switch (spell)
@@ -7729,11 +7862,82 @@ const char *activation_aux(object_type * o_ptr, bool_ doit, int item)
 				break;
 			}
 		case ACT_MUSIC:
-			/*
-			 fall through to unknown, as music should be
-			 handled by calling procedure.
-			 */
+			/* Should be handled specially by caller, so if we get here something's wrong. */
+			abort();
+		case ACT_ETERNAL_FLAME:
+			{
+				if (!doit) return "imbuing an object with the eternal fire";
 
+				if (!activate_eternal_flame(item))
+				{
+					// Eternal Flame object was NOT destroyed, so let's
+					// set the timeout.
+					o_ptr->timeout = 0;
+				}
+				break;
+			}
+		case ACT_MAGGOT:
+			{
+				if (!doit) return "terrify every 10+d50 turns";
+
+				if (activate_maggot())
+				{
+					o_ptr->timeout = 10 + randint(50);
+				}
+				break;
+			}
+		case ACT_LEBOHAUM:
+			{
+				if (!doit) return "sing a cheerful song every turn";
+
+				msg_print("You hear a little song in your head in some unknown tongue:");
+				msg_print("'Avec le casque Lebohaum y a jamais d'anicroches, je parcours les dongeons,");
+				msg_print("j'en prend plein la caboche. Avec le casque Lebohaum, tout ces monstres a la");
+				msg_print("con, je leur met bien profond: c'est moi le maitre du dongeon!'");
+
+				o_ptr->timeout = 3;
+
+				break;
+			}
+		case ACT_DURANDIL:
+			{
+				if (!doit) return "sing a cheerful song every turn";
+
+				msg_print("You hear a little song in your head in some unknown tongue:");
+				msg_print("'Les epees Durandils sont forgees dans les mines par des nains.");
+				msg_print("Avec ca c'est facile de tuer un troll avec une seule main. Pas besoin");
+				msg_print("de super entrainement nis de niveau 28. Quand tu sors l'instrument");
+				msg_print("c'est l'ennemi qui prend la fuite! Avec ton epee Durandil quand tu");
+				msg_print("parcours les chemins, tu massacre sans peine les brigands et les gobelins,");
+				msg_print("les rats geants, les ogres mutants, les zombies et les liches, tu les");
+				msg_print("decoupe en tranches comme si c'etait des parts de quiches.");
+				msg_print("Les epees Durandil! Les epees Durandil!");
+				msg_print("Quand tu la sort dans un dongeon au moins t'as pas l'air debile.");
+				msg_print("C'est l'arme des bourins qui savent etre subtils.");
+				msg_print("Ne partez pas a l'aventure sans votre epee Durandil!'");
+
+				o_ptr->timeout = 3;
+
+				break;
+			}
+		case ACT_RADAGAST:
+			{
+				if (!doit) return "purity and health every 15000 turns";
+
+				activate_radagast();
+				o_ptr->timeout = 15000;
+
+				break;
+			}
+		case ACT_VALAROMA:
+			{
+				if (!doit) return "banish evil (level x5) every 250 turns";
+
+				activate_valaroma();
+				o_ptr->timeout = 250;
+
+				break;
+			}
 		default:
 			{
 				msg_format("Unknown activation effect: %d.", spell);

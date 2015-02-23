@@ -1398,6 +1398,12 @@ static const char *activation_names[] =
 	"XXX198",
 	"XXX199",
 	"MUSIC",                /*  200*/
+	"ETERNAL_FLAME",        /*  201 */
+	"MAGGOT",               /*  202 */
+	"LEBOHAUM",             /*  203 */
+	"DURANDIL",             /*  204 */
+	"RADAGAST",             /*  205, Theme */
+	"VALAROMA",             /*  206, Theme */
 	""
 };
 
@@ -1670,14 +1676,18 @@ static errr grab_one_player_race_flag(u32b *f1, u32b *f2, cptr what)
 }
 
 /* Get an activation number (good for artifacts, recipes, egos, and object kinds) */
-int get_activation(char *activation)
+static int get_activation(char *activation)
 {
 	int i;
 	for ( i = 0 ; activation_names[i][0] ; i++)
+	{
 		if (!strncmp(activation_names[i], activation, 19))
 		{
 			return i;
 		}
+	}
+
+	msg_format("Unknown activation '%s'.", activation);
 	return -1;
 }
 

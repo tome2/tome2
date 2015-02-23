@@ -46,8 +46,6 @@ struct spell_type
 
 	range_type   mana_range;
 
-	dice_type    activation_timeout; /* Timeout for activation (if any) */
-
 	int school_idxs_count;
 	s32b school_idxs[3];
 
@@ -73,7 +71,6 @@ public:
 		, inertia_difficulty(-1)
 		, inertia_delay(-1)
 		, mana_range({ -1, -1 })
-		, activation_timeout({ 0, 0, 0 })
 		, school_idxs_count(0)
 		, school_idxs{ -1, -1, -1 }
 	{
@@ -218,13 +215,6 @@ void spell_type_init_geomancy(spell_type *spell,
 	spell->depend_func = depend_func;
 }
 
-void spell_type_set_activation_timeout(spell_type *spell, cptr timeout_s)
-{
-	assert(spell != NULL);
-
-	dice_parse_checked(&spell->activation_timeout, timeout_s);
-}
-
 void spell_type_set_difficulty(spell_type *spell, byte skill_level, s32b failure_rate)
 {
 	assert(spell != NULL);
@@ -324,22 +314,6 @@ void spell_type_description_foreach(spell_type *spell, std::function<void (std::
 long spell_type_roll_charges(spell_type *spell)
 {
 	return dice_roll(&spell->device_charges);
-}
-
-void spell_type_activation_description(spell_type *spell, char *buf)
-{
-	char turns[32];
-
-	dice_print(&spell->activation_timeout, turns);
-
-	assert(spell->m_description.size() > 0);
-
-	sprintf(buf, "%s every %s turns", spell->m_description.at(0).c_str(), turns);
-}
-
-int spell_type_activation_roll_timeout(spell_type *spell)
-{
-	return dice_roll(&spell->activation_timeout);
 }
 
 device_allocation *spell_type_device_allocation(spell_type *spell, byte tval)
