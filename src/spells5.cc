@@ -18,6 +18,11 @@ static spell_type *spell_new(s32b *index, cptr name)
 	return spell;
 }
 
+static cptr no_info()
+{
+	return "";
+}
+
 spell_type *spell_at(s32b index)
 {
 	assert(index >= 0);
@@ -70,7 +75,7 @@ static void spells_init_tome()
 		spell_type_set_mana(spell, 0, 0);
 		spell_type_set_difficulty(spell, 1, 0);
 		spell_type_init_device(spell,
-				       device_lebohaum_info,
+				       no_info,
 				       device_lebohaum);
 	}
 
@@ -81,7 +86,7 @@ static void spells_init_tome()
 		spell_type_set_mana(spell, 0, 0);
 		spell_type_set_difficulty(spell, 1, 0);
 		spell_type_init_device(spell,
-				       device_durandil_info,
+				       no_info,
 				       device_durandil);
 	}
 
@@ -91,7 +96,7 @@ static void spells_init_tome()
 		spell_type_set_mana(spell, 1, 1);
 		spell_type_set_difficulty(spell, 1, 20);
 		spell_type_init_device(spell,
-				       device_thunderlords_info,
+				       no_info,
 				       device_thunderlords);
 
 		spell_type_set_device_charges(spell, "3+d3");
@@ -116,7 +121,7 @@ static void spells_init_theme()
 		spell_type_init_mage(spell,
 				     RANDOM,
 				     SCHOOL_NATURE,
-				     nature_grow_athelas_info,
+				     no_info,
 				     nature_grow_athelas);
 
 		spell_type_set_device_charges(spell, "1+d3");
@@ -204,7 +209,7 @@ static void spells_init_theme()
 		spell_type_set_difficulty(spell, 10, 20);
 		spell_type_init_priest(spell,
 				       SCHOOL_VARDA,
-				       varda_call_of_almaren_info,
+				       no_info,
 				       varda_call_of_almaren_spell);
 	}
 
@@ -218,7 +223,7 @@ static void spells_init_theme()
 		spell_type_set_difficulty(spell, 20, 20);
 		spell_type_init_priest(spell,
 				       SCHOOL_VARDA,
-				       varda_evenstar_info,
+				       no_info,
 				       varda_evenstar_spell);
 	}
 
@@ -338,7 +343,7 @@ static void spells_init_theme()
 		spell_type_set_mana(spell, 1, 1);
 		spell_type_set_difficulty(spell, 1, 20);
 		spell_type_init_device(spell,
-				       device_thunderlords_info,
+				       no_info,
 				       device_thunderlords);
 
 		spell_type_set_device_charges(spell, "5+d5");
@@ -359,7 +364,7 @@ static void spells_init_theme()
 		spell_type_set_mana(spell, 0, 0);
 		spell_type_set_difficulty(spell, 1, 10);
 		spell_type_init_device(spell,
-				       device_radagast_info,
+				       no_info,
 				       device_radagast);
 	}
 
@@ -370,7 +375,7 @@ static void spells_init_theme()
 		spell_type_set_mana(spell, 0, 0);
 		spell_type_set_difficulty(spell, 1, 25);
 		spell_type_init_device(spell,
-				       device_valaroma_info,
+				       no_info,
 				       device_valaroma);
 	}
 }
@@ -539,7 +544,7 @@ void school_spells_init()
 		spell_type_init_mage(spell,
 				     RANDOM,
 				     SCHOOL_MANA,
-				     mana_remove_curses_info,
+				     no_info,
 				     mana_remove_curses);
 
 		spell_type_set_device_charges(spell, "3+d8");
@@ -828,7 +833,7 @@ void school_spells_init()
 		spell_type_init_mage(spell,
 				     RANDOM,
 				     SCHOOL_EARTH,
-				     earth_dig_info,
+				     no_info,
 				     earth_dig);
 
 		spell_type_set_device_charges(spell, "15+d5");
@@ -851,7 +856,7 @@ void school_spells_init()
 		spell_type_init_mage(spell,
 				     RANDOM,
 				     SCHOOL_EARTH,
-				     earth_stone_prison_info,
+				     no_info,
 				     earth_stone_prison);
 
 		spell_type_set_device_charges(spell, "5+d3");
@@ -937,7 +942,7 @@ void school_spells_init()
 		spell_type_init_mage(spell,
 				     RANDOM,
 				     SCHOOL_CONVEYANCE,
-				     convey_disarm_info,
+				     no_info,
 				     convey_disarm);
 
 		spell_type_set_device_charges(spell, "10+d15");
@@ -984,7 +989,7 @@ void school_spells_init()
 		spell_type_init_mage(spell,
 				     RANDOM,
 				     SCHOOL_CONVEYANCE,
-				     convey_teleport_away_info,
+				     no_info,
 				     convey_teleport_away);
 
 		spell_type_set_device_charges(spell, "3+d5");
@@ -1085,7 +1090,7 @@ void school_spells_init()
 		spell_type_init_mage(spell,
 				     RANDOM,
 				     SCHOOL_NATURE,
-				     nature_recovery_info,
+				     no_info,
 				     nature_recovery);
 
 		spell_type_set_device_charges(spell, "5+d10");
@@ -1143,7 +1148,7 @@ void school_spells_init()
 		spell_type_init_mage(spell,
 				     RANDOM,
 				     SCHOOL_DIVINATION,
-				     divination_greater_identify_info,
+				     no_info,
 				     divination_greater_identify);
 	}
 
@@ -1182,7 +1187,7 @@ void school_spells_init()
 		spell_type_init_mage(spell,
 				     RANDOM,
 				     SCHOOL_DIVINATION,
-				     divination_vision_info,
+				     no_info,
 				     divination_vision);
 
 		spell_type_set_device_charges(spell, "4+d6");
@@ -1277,7 +1282,7 @@ void school_spells_init()
 		spell_type_init_mage(spell,
 				     RANDOM,
 				     SCHOOL_TEMPORAL,
-				     tempo_magelock_info,
+				     no_info,
 				     tempo_magelock);
 
 		spell_type_set_device_charges(spell, "7+d5");
@@ -1408,7 +1413,7 @@ void school_spells_init()
 		spell_type_init_mage(spell,
 				     RANDOM,
 				     SCHOOL_META,
-				     meta_disperse_magic_info,
+				     no_info,
 				     meta_disperse_magic);
 
 		spell_type_set_device_charges(spell, "5+d5");
@@ -1432,7 +1437,7 @@ void school_spells_init()
 		spell_type_init_mage(spell,
 				     RANDOM,
 				     SCHOOL_META,
-				     meta_tracker_info,
+				     no_info,
 				     meta_tracker);
 	}
 
@@ -1534,7 +1539,7 @@ void school_spells_init()
 		spell_type_init_mage(spell,
 				     RANDOM,
 				     SCHOOL_UDUN,
-				     udun_drain_info,
+				     no_info,
 				     udun_drain);
 	}
 
@@ -1548,7 +1553,7 @@ void school_spells_init()
 		spell_type_init_mage(spell,
 				     RANDOM,
 				     SCHOOL_UDUN,
-				     udun_genocide_info,
+				     no_info,
 				     udun_genocide);
 
 		spell_type_set_device_charges(spell, "2+d2");
@@ -1627,7 +1632,7 @@ void school_spells_init()
 		spell_type_init_mage(spell,
 				     NO_RANDOM,
 				     SCHOOL_GEOMANCY,
-				     geomancy_channel_elements_info,
+				     no_info,
 				     geomancy_channel_elements);
 	}
 
@@ -1642,7 +1647,7 @@ void school_spells_init()
 		spell_type_init_mage(spell,
 				     NO_RANDOM,
 				     SCHOOL_GEOMANCY,
-				     geomancy_elemental_wave_info,
+				     no_info,
 				     geomancy_elemental_wave);
 	}
 
@@ -1695,7 +1700,7 @@ void school_spells_init()
 		spell_type_set_castable_while_blind(spell, TRUE);
 		spell_type_init_geomancy(
 			spell,
-			geomancy_grow_barrier_info,
+			no_info,
 			geomancy_grow_barrier,
 			geomancy_grow_barrier_depends);
 	}
@@ -1743,7 +1748,7 @@ void school_spells_init()
 		spell_type_set_difficulty(spell, 7, 25);
 		spell_type_init_priest(spell,
 				       SCHOOL_ERU,
-				       eru_listen_to_the_music_info,
+				       no_info,
 				       eru_listen_to_the_music);
 	}
 
@@ -1756,7 +1761,7 @@ void school_spells_init()
 		spell_type_set_difficulty(spell, 30, 50);
 		spell_type_init_priest(spell,
 				       SCHOOL_ERU,
-				       eru_know_the_music_info,
+				       no_info,
 				       eru_know_the_music);
 	}
 
@@ -1852,7 +1857,7 @@ void school_spells_init()
 		spell_type_set_difficulty(spell, 10, 45);
 		spell_type_init_priest(spell,
 				       SCHOOL_TULKAS,
-				       tulkas_whirlwind_info,
+				       no_info,
 				       tulkas_whirlwind);
 	}
 
@@ -1867,7 +1872,7 @@ void school_spells_init()
 		spell_type_set_difficulty(spell, 1, 20);
 		spell_type_init_priest(spell,
 				       SCHOOL_MELKOR,
-				       melkor_curse_info,
+				       no_info,
 				       melkor_curse);
 	}
 
@@ -2106,7 +2111,7 @@ void school_spells_init()
 		spell_type_set_mana(spell, 400, 400);
 		spell_type_set_difficulty(spell, 50, 99);
 		spell_type_init_device(spell,
-				       device_wish_info,
+				       no_info,
 				       device_wish);
 
 		spell_type_set_device_charges(spell, "1+d2");
@@ -2126,7 +2131,7 @@ void school_spells_init()
 		spell_type_set_mana(spell, 5, 25);
 		spell_type_set_difficulty(spell, 5, 20);
 		spell_type_init_device(spell,
-				       device_summon_monster_info,
+				       no_info,
 				       device_summon_monster);
 
 		spell_type_set_device_charges(spell, "1+d20");
@@ -2166,7 +2171,7 @@ void school_spells_init()
 		spell_type_set_mana(spell, 0, 0);
 		spell_type_set_difficulty(spell, 1, 0);
 		spell_type_init_device(spell,
-				       device_nothing_info,
+				       no_info,
 				       device_nothing);
 
 		spell_type_set_device_charges(spell, "0+d0");
@@ -2227,7 +2232,7 @@ void school_spells_init()
 		spell_type_set_mana(spell, 0, 0);
 		spell_type_set_difficulty(spell, 1, 0);
 		spell_type_init_device(spell,
-				       device_eternal_flame_info,
+				       no_info,
 				       device_eternal_flame);
 	}
 
@@ -2239,7 +2244,7 @@ void school_spells_init()
 		spell_type_set_castable_while_blind(spell, TRUE);
 		spell_type_init_music(spell,
 				      1,
-				      music_stop_singing_info,
+				      no_info,
 				      music_stop_singing_spell);
 	}
 
@@ -2298,7 +2303,7 @@ void school_spells_init()
 		spell_type_init_music_lasting(
 			spell,
 			1,
-			music_song_of_the_sun_info,
+			no_info,
 			music_song_of_the_sun_spell,
 			music_song_of_the_sun_lasting);
 	}
@@ -2329,7 +2334,7 @@ void school_spells_init()
 		spell_type_init_music_lasting(
 			spell,
 			2,
-			music_heroic_ballad_info,
+			no_info,
 			music_heroic_ballad_spell,
 			music_heroic_ballad_lasting);
 	}
@@ -2406,7 +2411,7 @@ void school_spells_init()
 		spell_type_set_difficulty(spell, 25, 60);
 		spell_type_init_music(spell,
 				      4,
-				      music_ambarkanta_info,
+				      no_info,
 				      music_ambarkanta_spell);
 	}
 

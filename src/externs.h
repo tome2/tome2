@@ -1352,11 +1352,9 @@ extern s32b PROBABILITY_TRAVEL;
 casting_result  convey_blink(int);
 const char     *convey_blink_info();
 casting_result  convey_disarm(int);
-const char     *convey_disarm_info();
 casting_result  convey_teleport(int);
 const char     *convey_teleport_info();
 casting_result  convey_teleport_away(int);
-const char     *convey_teleport_away_info();
 casting_result  convey_recall(int);
 const char     *convey_recall_info();
 casting_result  convey_probability_travel(int);
@@ -1399,11 +1397,9 @@ extern s32b REVEALWAYS;
 extern s32b SENSEMONSTERS;
 
 casting_result  divination_greater_identify(int);
-const char     *divination_greater_identify_info();
 casting_result  divination_identify(int);
 const char     *divination_identify_info();
 casting_result  divination_vision(int);
-const char     *divination_vision_info();
 casting_result  divination_sense_hidden(int);
 const char     *divination_sense_hidden_info();
 casting_result  divination_reveal_ways(int);
@@ -1420,9 +1416,7 @@ extern s32b SHAKE;
 casting_result  earth_stone_skin(int);
 const char     *earth_stone_skin_info();
 casting_result  earth_dig(int);
-const char     *earth_dig_info();
 casting_result  earth_stone_prison(int);
-const char     *earth_stone_prison_info();
 casting_result  earth_strike(int);
 const char     *earth_strike_info();
 casting_result  earth_shake(int);
@@ -1436,9 +1430,7 @@ extern s32b ERU_PROT;
 casting_result  eru_see_the_music(int);
 const char     *eru_see_the_music_info();
 casting_result  eru_listen_to_the_music(int);
-const char     *eru_listen_to_the_music_info();
 casting_result  eru_know_the_music(int);
-const char     *eru_know_the_music_info();
 casting_result  eru_lay_of_protection(int);
 const char     *eru_lay_of_protection_info();
 
@@ -1471,9 +1463,7 @@ extern s32b ELEMENTAL_MINION;
 casting_result  geomancy_call_the_elements(int);
 const char     *geomancy_call_the_elements_info();
 casting_result  geomancy_channel_elements(int);
-const char     *geomancy_channel_elements_info();
 casting_result  geomancy_elemental_wave(int);
-const char     *geomancy_elemental_wave_info();
 casting_result  geomancy_vaporize(int);
 const char     *geomancy_vaporize_info();
 bool_           geomancy_vaporize_depends();
@@ -1484,7 +1474,6 @@ casting_result  geomancy_dripping_tread(int);
 const char     *geomancy_dripping_tread_info();
 bool_           geomancy_dripping_tread_depends();
 casting_result  geomancy_grow_barrier(int);
-const char     *geomancy_grow_barrier_info();
 bool_           geomancy_grow_barrier_depends();
 casting_result  geomancy_elemental_minion(int);
 const char     *geomancy_elemental_minion_info();
@@ -1497,7 +1486,6 @@ extern s32b MANASHIELD;
 casting_result  mana_manathrust(int);
 const char     *mana_manathrust_info();
 casting_result  mana_remove_curses(int);
-const char     *mana_remove_curses_info();
 casting_result  mana_elemental_shield(int);
 const char     *mana_elemental_shield_info();
 casting_result  mana_disruption_shield(int);
@@ -1524,7 +1512,6 @@ extern s32b MELKOR_MIND_STEAL;
 void do_melkor_curse(int m_idx);
 
 casting_result  melkor_curse(int);
-const char     *melkor_curse_info();
 casting_result  melkor_corpse_explosion(int);
 const char     *melkor_corpse_explosion_info();
 casting_result  melkor_mind_steal(int);
@@ -1542,9 +1529,7 @@ const char     *meta_recharge_info();
 casting_result  meta_spellbinder(int);
 const char     *meta_spellbinder_info();
 casting_result  meta_disperse_magic(int);
-const char     *meta_disperse_magic_info();
 casting_result  meta_tracker(int);
-const char     *meta_tracker_info();
 casting_result  meta_inertia_control(int);
 const char     *meta_inertia_control_info();
 
@@ -1572,7 +1557,6 @@ extern s32b ESSENCESPEED;
 extern s32b BANISHMENT;
 
 casting_result  tempo_magelock(int);
-const char     *tempo_magelock_info();
 casting_result  tempo_slow_monster(int);
 const char     *tempo_slow_monster_info();
 casting_result  tempo_essence_of_speed(int);
@@ -1589,7 +1573,6 @@ const char     *tulkas_divine_aim_info();
 casting_result  tulkas_wave_of_power(int);
 const char     *tulkas_wave_of_power_info();
 casting_result  tulkas_whirlwind(int);
-const char     *tulkas_whirlwind_info();
 
 extern s32b DRAIN;
 extern s32b GENOCIDE;
@@ -1600,9 +1583,7 @@ int udun_in_book(s32b sval, s32b pval);
 int levels_in_book(s32b sval, s32b pval);
 
 casting_result  udun_drain(int);
-const char     *udun_drain_info();
 casting_result  udun_genocide(int);
-const char     *udun_genocide_info();
 casting_result  udun_wraithform(int);
 const char     *udun_wraithform_info();
 casting_result  udun_flame_of_udun(int);
@@ -1654,13 +1635,11 @@ const char     *nature_grow_trees_info();
 casting_result  nature_healing(int);
 const char     *nature_healing_info();
 casting_result  nature_recovery(int);
-const char     *nature_recovery_info();
 casting_result  nature_regeneration(int);
 const char     *nature_regeneration_info();
 casting_result  nature_summon_animal(int);
 const char     *nature_summon_animal_info();
 casting_result  nature_grow_athelas(int);
-const char     *nature_grow_athelas_info();
 
 extern s32b DEVICE_HEAL_MONSTER;
 extern s32b DEVICE_SPEED_MONSTER;
@@ -1682,29 +1661,20 @@ const char     *device_heal_monster_info();
 casting_result  device_haste_monster(int);
 const char     *device_haste_monster_info();
 casting_result  device_wish(int);
-const char     *device_wish_info();
 casting_result  device_summon_monster(int);
-const char     *device_summon_monster_info();
 casting_result  device_mana(int);
 const char     *device_mana_info();
 casting_result  device_nothing(int);
-const char     *device_nothing_info();
 casting_result  device_lebohaum(int);
-const char     *device_lebohaum_info();
 casting_result  device_maggot(int);
 const char     *device_maggot_info();
 casting_result  device_holy_fire(int);
 const char     *device_holy_fire_info();
 casting_result  device_eternal_flame(int);
-const char     *device_eternal_flame_info();
 casting_result  device_durandil(int);
-const char     *device_durandil_info();
 casting_result  device_thunderlords(int);
-const char     *device_thunderlords_info();
 casting_result  device_radagast(int);
-const char     *device_radagast_info();
 casting_result  device_valaroma(int);
-const char     *device_valaroma_info();
 
 extern s32b MUSIC_STOP;
 extern s32b MUSIC_HOLD;
@@ -1721,51 +1691,35 @@ extern s32b MUSIC_YLMIR;
 extern s32b MUSIC_AMBARKANTA;
 
 casting_result  music_stop_singing_spell(int);
-const char     *music_stop_singing_info();
-
 int             music_holding_pattern_lasting();
 casting_result  music_holding_pattern_spell(int);
 const char     *music_holding_pattern_info();
-
 int             music_illusion_pattern_lasting();
 casting_result  music_illusion_pattern_spell(int);
 const char     *music_illusion_pattern_info();
-
 int             music_stun_pattern_lasting();
 casting_result  music_stun_pattern_spell(int);
 const char     *music_stun_pattern_info();
-
 int             music_song_of_the_sun_lasting();
 casting_result  music_song_of_the_sun_spell(int);
-const char     *music_song_of_the_sun_info();
-
 int             music_flow_of_life_lasting();
 casting_result  music_flow_of_life_spell(int);
 const char     *music_flow_of_life_info();
-
 int             music_heroic_ballad_lasting();
 casting_result  music_heroic_ballad_spell(int);
-const char     *music_heroic_ballad_info();
-
 int             music_hobbit_melodies_lasting();
 casting_result  music_hobbit_melodies_spell(int);
 const char     *music_hobbit_melodies_info();
-
 int             music_clairaudience_lasting();
 casting_result  music_clairaudience_spell(int);
 const char     *music_clairaudience_info();
-
 casting_result  music_blow_spell(int);
 const char     *music_blow_info();
-
 casting_result  music_gush_of_wind_spell(int);
 const char     *music_gush_of_wind_info();
-
 casting_result  music_horns_of_ylmir_spell(int);
 const char     *music_horns_of_ylmir_info();
-
 casting_result  music_ambarkanta_spell(int);
-const char     *music_ambarkanta_info();
 
 extern s32b AULE_FIREBRAND;
 extern s32b AULE_ENCHANT_WEAPON;
@@ -1817,9 +1771,7 @@ extern s32b VARDA_STARKINDLER;
 casting_result  varda_light_of_valinor_spell(int);
 const char     *varda_light_of_valinor_info();
 casting_result  varda_call_of_almaren_spell(int);
-const char     *varda_call_of_almaren_info();
 casting_result  varda_evenstar_spell(int);
-const char     *varda_evenstar_info();
 casting_result  varda_star_kindler_spell(int);
 const char     *varda_star_kindler_info();
 

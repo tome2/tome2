@@ -392,11 +392,6 @@ casting_result convey_disarm(int item)
 	return result;
 }
 
-const char *convey_disarm_info()
-{
-	return "";
-}
-
 casting_result convey_teleport(int item)
 {
 	p_ptr->energy -= (25 - get_level_s(TELEPORT, 50));
@@ -438,11 +433,6 @@ casting_result convey_teleport_away(int item)
 		}
 		return cast(teleport_monster(dir));
 	}
-}
-
-const char *convey_teleport_away_info()
-{
-	return "";
 }
 
 static int recall_get_d()
@@ -890,11 +880,6 @@ casting_result divination_greater_identify(int item)
 	return CAST_OBVIOUS;
 }
 
-const char *divination_greater_identify_info()
-{
-	return "";
-}
-
 casting_result divination_identify(int item)
 {
 	if (get_level_s(IDENTIFY, 50) >= 27)
@@ -948,11 +933,6 @@ casting_result divination_vision(int item)
 	}
 	return CAST_OBVIOUS;
 
-}
-
-const char *divination_vision_info()
-{
-	return "";
 }
 
 casting_result divination_sense_hidden(int item)
@@ -1091,11 +1071,6 @@ casting_result earth_dig(int item)
 	return cast(wall_to_mud(dir));
 }
 
-const char *earth_dig_info()
-{
-	return "";
-}
-
 casting_result earth_stone_prison(int item)
 {
 	int x,y;
@@ -1115,11 +1090,6 @@ casting_result earth_stone_prison(int item)
 
 	wall_stone(y, x);
 	return CAST_OBVIOUS;
-}
-
-const char *earth_stone_prison_info()
-{
-	return "";
 }
 
 casting_result earth_strike(int item)
@@ -1241,11 +1211,6 @@ casting_result eru_listen_to_the_music(int item)
 	return result;
 }
 
-const char *eru_listen_to_the_music_info()
-{
-	return "";
-}
-
 casting_result eru_know_the_music(int item)
 {
 	if (get_level_s(ERU_UNDERSTAND, 50) >= 10)
@@ -1257,11 +1222,6 @@ casting_result eru_know_the_music(int item)
 	{
 		return cast(identify_fully());
 	}
-}
-
-const char *eru_know_the_music_info()
-{
-	return "";
 }
 
 casting_result eru_lay_of_protection(int item)
@@ -1500,11 +1460,6 @@ casting_result geomancy_channel_elements(int item)
 	return CAST_OBVIOUS;
 }
 
-const char *geomancy_channel_elements_info()
-{
-	return "";
-}
-
 typedef struct eff_type eff_type;
 struct eff_type {
 	s16b feat;
@@ -1608,11 +1563,6 @@ casting_result geomancy_elemental_wave(int item)
 
 		return CAST_OBVIOUS;
 	}
-}
-
-const char *geomancy_elemental_wave_info()
-{
-	return "";
 }
 
 casting_result geomancy_vaporize(int item)
@@ -1749,11 +1699,6 @@ casting_result geomancy_grow_barrier(int item)
 
 	fire_ball(GF_ELEMENTAL_WALL, dir, 1, 1);
 	return CAST_OBVIOUS;
-}
-
-const char *geomancy_grow_barrier_info()
-{
-	return "";
 }
 
 bool_ geomancy_grow_barrier_depends()
@@ -1949,11 +1894,6 @@ casting_result mana_remove_curses(int item)
 	}
 
 	return result;
-}
-
-const char *mana_remove_curses_info()
-{
-	return "";
 }
 
 casting_result mana_elemental_shield(int item)
@@ -2264,11 +2204,6 @@ casting_result melkor_curse(int item)
 	}
 }
 
-const char *melkor_curse_info()
-{
-	return "";
-}
-
 casting_result melkor_corpse_explosion(int item)
 {
 	return cast(fire_ball(GF_CORPSE_EXPL,
@@ -2499,11 +2434,6 @@ casting_result meta_disperse_magic(int item)
 	return res;
 }
 
-const char *meta_disperse_magic_info()
-{
-	return "";
-}
-
 casting_result meta_tracker(int item)
 {
 	if ((last_teleportation_y < 0) ||
@@ -2516,11 +2446,6 @@ casting_result meta_tracker(int item)
 		teleport_player_to(last_teleportation_y, last_teleportation_x);
 	}
 	return CAST_OBVIOUS;
-}
-
-const char *meta_tracker_info()
-{
-	return "";
 }
 
 static void stop_inertia_controlled_spell()
@@ -2812,11 +2737,6 @@ casting_result tempo_magelock(int item)
 	}
 }
 
-const char *tempo_magelock_info()
-{
-	return "";
-}
-
 static s32b tempo_slow_monster_power()
 {
 	return 40 + get_level_s(SLOWMONSTER, 160);
@@ -2968,11 +2888,6 @@ casting_result tulkas_whirlwind(int item)
 	return cast(fire_ball(GF_ATTACK, 0, 1, 1));
 }
 
-const char *tulkas_whirlwind_info()
-{
-	return "";
-}
-
 static bool_ check_school_is_udun(void *data, s32b school_idx)
 {
 	int *count = (int *) data;
@@ -3090,11 +3005,6 @@ casting_result udun_drain(int ignored)
 	return CAST_OBVIOUS;
 }
 
-const char *udun_drain_info()
-{
-	return "";
-}
-
 casting_result udun_genocide(int item)
 {
 	if (get_level_s(GENOCIDE, 50) < 10)
@@ -3114,11 +3024,6 @@ casting_result udun_genocide(int item)
 	}
 
 	return CAST_OBVIOUS;
-}
-
-const char *udun_genocide_info()
-{
-	return "";
 }
 
 static int udun_wraithform_base_duration()
@@ -3604,11 +3509,6 @@ casting_result nature_recovery(int item)
 	return result;
 }
 
-const char *nature_recovery_info()
-{
-	return "";
-}
-
 static int regeneration_base_duration()
 {
 	return 5 + get_level_s(REGENERATION, 50);
@@ -3675,11 +3575,6 @@ casting_result nature_grow_athelas(int item)
 	return CAST_HIDDEN;
 }
 
-const char *nature_grow_athelas_info()
-{
-	return "";
-}
-
 static int device_heal_monster_hp()
 {
 	return 20 + get_level_s(DEVICE_HEAL_MONSTER, 380);
@@ -3729,11 +3624,6 @@ casting_result device_wish(int item)
 	return CAST_OBVIOUS;
 }
 
-const char *device_wish_info()
-{
-	return "";
-}
-
 casting_result device_summon_monster(int item)
 {
 	casting_result result = NO_CAST;
@@ -3745,11 +3635,6 @@ casting_result device_summon_monster(int item)
 	}
 
 	return result;
-}
-
-const char *device_summon_monster_info()
-{
-	return "";
 }
 
 static int device_mana_pct()
@@ -3777,11 +3662,6 @@ casting_result device_nothing(int item)
 	return CAST_HIDDEN;
 }
 
-const char *device_nothing_info()
-{
-	return "";
-}
-
 casting_result device_lebohaum(int item)
 {
 	msg_print("You hear a little song in your head in some unknown tongue:");
@@ -3789,11 +3669,6 @@ casting_result device_lebohaum(int item)
 	msg_print("j'en prend plein la caboche. Avec le casque Lebohaum, tout ces monstres a la");
 	msg_print("con, je leur met bien profond: c'est moi le maitre du dongeon!'");
 	return CAST_OBVIOUS;
-}
-
-const char *device_lebohaum_info()
-{
-	return "";
 }
 
 casting_result device_maggot(int item)
@@ -3914,11 +3789,6 @@ casting_result device_eternal_flame(int flame_item)
 	return CAST_OBVIOUS;
 }
 
-const char *device_eternal_flame_info()
-{
-	return "";
-}
-
 casting_result device_durandil(int item)
 {
 	msg_print("You hear a little song in your head in some unknown tongue:");
@@ -3934,11 +3804,6 @@ casting_result device_durandil(int item)
 	msg_print("C'est l'arme des bourins qui savent etre subtils.");
 	msg_print("Ne partez pas a l'aventure sans votre epee Durandil!'");
 	return CAST_OBVIOUS;
-}
-
-const char *device_durandil_info()
-{
-	return "";
 }
 
 casting_result device_thunderlords(int item)
@@ -3979,11 +3844,6 @@ casting_result device_thunderlords(int item)
 	}
 }
 
-const char *device_thunderlords_info()
-{
-	return "";
-}
-
 casting_result device_radagast(int item)
 {
 	cmsg_print(TERM_GREEN, "The staff's power cleanses you completely!");
@@ -4018,21 +3878,11 @@ casting_result device_radagast(int item)
 	return CAST_OBVIOUS;
 }
 
-const char *device_radagast_info()
-{
-	return "";
-}
-
 casting_result device_valaroma(int item)
 {
 	int power = 5 * p_ptr->lev;
 	banish_evil(power);
 	return CAST_HIDDEN;
-}
-
-const char *device_valaroma_info()
-{
-	return "";
 }
 
 void static start_lasting_spell(int spl)
@@ -4044,11 +3894,6 @@ casting_result music_stop_singing_spell(int item)
 {
 	start_lasting_spell(0);
 	return CAST_OBVIOUS;
-}
-
-const char *music_stop_singing_info()
-{
-	return "";
 }
 
 static int holding_pattern_power()
@@ -4141,11 +3986,6 @@ casting_result music_song_of_the_sun_spell(int item)
 	return CAST_OBVIOUS;
 }
 
-const char *music_song_of_the_sun_info()
-{
-	return "";
-}
-
 int flow_of_life_hp()
 {
 	return 7 + get_level_s(MUSIC_HEAL, 100);
@@ -4194,11 +4034,6 @@ casting_result music_heroic_ballad_spell(int item)
 {
 	start_lasting_spell(MUSIC_HERO);
 	return CAST_OBVIOUS;
-}
-
-const char *music_heroic_ballad_info()
-{
-	return "";
 }
 
 int music_hobbit_melodies_lasting()
@@ -4324,11 +4159,6 @@ casting_result music_ambarkanta_spell(int item)
 {
 	alter_reality();
 	return CAST_OBVIOUS;
-}
-
-const char *music_ambarkanta_info()
-{
-	return "";
 }
 
 casting_result aule_firebrand_spell(int item)
@@ -4880,11 +4710,6 @@ casting_result varda_call_of_almaren_spell(int item)
 	return CAST_OBVIOUS;
 }
 
-const char *varda_call_of_almaren_info()
-{
-	return "";
-}
-
 casting_result varda_evenstar_spell(int item)
 {
 	wiz_lite_extra();
@@ -4895,11 +4720,6 @@ casting_result varda_evenstar_spell(int item)
 	}
 
 	return CAST_OBVIOUS;
-}
-
-const char *varda_evenstar_info()
-{
-	return "";
 }
 
 static int star_kindler_bursts()
