@@ -4623,7 +4623,7 @@ void do_cmd_sacrifice(void)
 	/* Check valididty */
 	if ((on_what < FEAT_ALTAR_HEAD) || (on_what > FEAT_ALTAR_TAIL))
 	{
-		show_god_info(FALSE);
+		show_god_info();
 		return;
 	}
 	else

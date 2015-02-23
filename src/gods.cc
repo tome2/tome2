@@ -100,7 +100,7 @@ void follow_god(int god, bool_ silent)
 /*
  * Show religious info.
  */
-bool_ show_god_info(bool_ ext)
+bool_ show_god_info()
 {
 	int pgod = p_ptr->pgod;
 
