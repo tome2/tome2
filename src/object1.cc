@@ -6289,7 +6289,7 @@ void py_pickup_floor(int pickup)
 }
 
 /* Add a flags group */
-static void gain_flag_group(object_type *o_ptr, bool_ silent)
+static void gain_flag_group(object_type *o_ptr)
 {
 	int grp = 0;
 	int tries = 1000;
@@ -6314,7 +6314,7 @@ static void gain_flag_group(object_type *o_ptr, bool_ silent)
 	o_ptr->pval2 -= flags_groups[grp].price;
 	o_ptr->pval3 |= BIT(grp);
 
-	if (!silent)
+	/* Message */
 	{
 		char o_name[80];
 
@@ -6323,7 +6323,7 @@ static void gain_flag_group(object_type *o_ptr, bool_ silent)
 	}
 }
 
-u32b get_flag(object_type *o_ptr, int grp, int k)
+static u32b get_flag(object_type *o_ptr, int grp, int k)
 {
 	u32b f = 0, flag_set = 0;
 	int tries = 1000;
@@ -6384,7 +6384,7 @@ u32b get_flag(object_type *o_ptr, int grp, int k)
 }
 
 /* Add a flags from a flag group */
-static void gain_flag_group_flag(object_type *o_ptr, bool_ silent)
+static void gain_flag_group_flag(object_type *o_ptr)
 {
 	int grp = 0, k = 0;
 	u32b f = 0;
@@ -6431,7 +6431,7 @@ static void gain_flag_group_flag(object_type *o_ptr, bool_ silent)
 		break;
 	}
 
-	if (!silent)
+	/* Message */
 	{
 		char o_name[80];
 
@@ -6468,13 +6468,13 @@ void object_gain_level(object_type *o_ptr)
 			o_ptr->to_h += 1;
 			o_ptr->pval2++;
 
-			if (magik(NEW_GROUP_CHANCE)) gain_flag_group(o_ptr, FALSE);
+			if (magik(NEW_GROUP_CHANCE)) gain_flag_group(o_ptr);
 		}
 		else
 		{
-			if (!o_ptr->pval3) gain_flag_group(o_ptr, FALSE);
+			if (!o_ptr->pval3) gain_flag_group(o_ptr);
 
-			gain_flag_group_flag(o_ptr, FALSE);
+			gain_flag_group_flag(o_ptr);
 
 			if (!o_ptr->pval) o_ptr->pval = 1;
 			else

@@ -1123,8 +1123,6 @@ extern bool_ easy_open_door(int y, int x);
 /* cmd2.c */
 extern bool_ do_cmd_disarm_aux(int y, int x, int dir, int do_pickup);
 
-extern bool_ easy_floor;
-
 
 /* script.c */
 extern void init_lua_init(void);
