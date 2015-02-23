@@ -13,6 +13,7 @@
 #include "angband.h"
 
 #include <assert.h>
+#include <functional>
 
 #include "spell_type.h"
 #include "range.h"
@@ -45,7 +46,7 @@ s32b lua_get_level(spell_type *spell, s32b lvl, s32b max, s32b min, s32b bonus)
 	return lvl;
 }
 
-static s32b get_level_device(spell_type *spell, s32b max, s32b min, s32b device_skill)
+/* static */ s32b get_level_device(spell_type *spell, s32b max, s32b min, s32b device_skill, std::function<s32b(spell_type *, s32b, s32b, s32b, s32b)> lua_get_level = lua_get_level)
 {
 	/* No max specified ? assume 50 */
 	if (max <= 0) {
