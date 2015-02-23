@@ -1285,7 +1285,6 @@ void mana_school_calc_mana(int *msp);
 extern bool_ bldg_process_command(store_type *s_ptr, int i);
 extern void show_building(store_type *s_ptr);
 extern bool_ is_state(store_type *s_ptr, int state);
-extern void do_cmd_bldg(void);
 extern bool_ show_god_info(bool_ ext);
 extern void enter_quest(void);
 
