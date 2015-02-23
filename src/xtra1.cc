@@ -12,6 +12,7 @@
 
 #include "angband.h"
 #include "corrupt.hpp"
+#include "gods.hpp"
 #include "messages.h"
 #include "hooks.h"
 #include "spells3.hpp"

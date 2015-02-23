@@ -11,12 +11,12 @@
  */
 
 #include "angband.h"
-
 #include "corrupt.hpp"
+#include "gods.hpp"
+#include "hooks.h"
 #include "modules.hpp"
 #include "quest.h"
 #include "quark.h"
-#include "hooks.h"
 #include "spell_type.hpp"
 #include "spells5.hpp"
 

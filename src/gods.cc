@@ -1,7 +1,3 @@
-/* File: gods.c */
-
-/* Purpose: Deities code */
-
 /*
  * Copyright (c) 2002 DarkGod
  *
@@ -9,7 +5,7 @@
  * not for profit purposes provided that this copyright and statement are
  * included in all such copies.
  */
-
+#include "gods.hpp"
 #include "angband.h"
 
 #include <cassert>

@@ -13,6 +13,7 @@
 
 #include "angband.h"
 #include "corrupt.hpp"
+#include "gods.hpp"
 #include "hooks.h"
 #include "mimic.hpp"
 #include "quark.h"

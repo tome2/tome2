@@ -1,8 +1,5 @@
-/* File: init1.c */
-
-/* Purpose: Initialization (part 1) -BEN- */
-
 #include "angband.h"
+#include "gods.hpp"
 
 #include <boost/algorithm/string/predicate.hpp>
 

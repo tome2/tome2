@@ -12,6 +12,7 @@
 
 #include "angband.h"
 
+#include "gods.hpp"
 #include "hooks.h"
 #include "util.hpp"
 

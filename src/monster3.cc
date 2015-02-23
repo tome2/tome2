@@ -1,7 +1,3 @@
-/* File: monster3.c */
-
-/* Purpose: Monsters AI */
-
 /*
  * Copyright (c) 1989 James E. Wilson, Robert A. Koeneke
  *
@@ -11,6 +7,7 @@
  */
 
 #include "angband.h"
+#include "gods.hpp"
 
 /*
  * Is the mon,ster in friendly state(pet, friend, ..)

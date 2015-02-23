@@ -1,7 +1,9 @@
-#include <angband.h>
-#include <assert.h>
+#include "angband.h"
+
+#include "gods.hpp"
 #include "spell_type.hpp"
 
+#include <cassert>
 #include <vector>
 #include <type_traits>
 

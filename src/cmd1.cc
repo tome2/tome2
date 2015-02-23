@@ -1,7 +1,3 @@
-/* File: cmd1.c */
-
-/* Purpose: Movement commands (part 1) */
-
 /*
  * Copyright (c) 1989 James E. Wilson, Robert A. Koeneke
  *
@@ -11,6 +7,7 @@
  */
 
 #include "angband.h"
+#include "gods.hpp"
 #include "hooks.h"
 #include "mimic.hpp"
 #include "quark.h"

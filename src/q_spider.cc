@@ -1,4 +1,6 @@
 #include "q_spider.h"
+
+#include "gods.hpp"
 #include "hooks.h"
 
 #define cquest (quest[QUEST_SPIDER])

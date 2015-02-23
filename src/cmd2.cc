@@ -11,6 +11,7 @@
  */
 
 #include "angband.h"
+#include "gods.hpp"
 #include "hooks.h"
 #include "spells3.hpp"
 

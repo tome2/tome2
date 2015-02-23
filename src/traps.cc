@@ -1,7 +1,3 @@
-/* File: traps.c */
-
-/* Purpose: handle traps */
-
 /* the below copyright probably still applies, but it is heavily changed
  * copied, adapted & re-engineered by JK.
  * Copyright (c) 1989 James E. Wilson, Robert A. Koeneke
@@ -12,6 +8,7 @@
  */
 
 #include "angband.h"
+#include "gods.hpp"
 
 bool_ do_player_trap_call_out(void)
 {

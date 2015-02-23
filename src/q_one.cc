@@ -1,4 +1,6 @@
 #include "q_one.h"
+
+#include "gods.hpp"
 #include "hooks.h"
 
 #define cquest (quest[QUEST_ONE])

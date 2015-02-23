@@ -12,8 +12,9 @@
 
 #include "angband.h"
 
-#include "quark.h"
+#include "gods.hpp"
 #include "hooks.h"
+#include "quark.h"
 
 #include <cassert>
 #include <algorithm>
