@@ -8293,6 +8293,15 @@ void geomancy_dig(int oy, int ox, int dir, int length)
 
 void channel_the_elements(int y, int x, int level)
 {
+	// Type of water to use (if any)
+	auto water_type = []() -> int {
+		return (get_skill(SKILL_WATER) >= 18) ? GF_WAVE : GF_WATER;
+	};
+	// Type of fire to use (if any)
+	auto fire_type = []() -> int {
+		return (get_skill(SKILL_FIRE) >= 15) ? GF_HELL_FIRE : GF_FIRE;
+	};
+
 	switch (cave[y][x].feat)
 	{
 	case FEAT_GRASS:
@@ -8317,18 +8326,16 @@ void channel_the_elements(int y, int x, int level)
 
 	case FEAT_SHAL_WATER:
 	{
-		int dir, type;
+		int dir;
 		if (!get_aim_dir(&dir)) break;
-
-		type = (get_skill(SKILL_WATER) >= 18) ? GF_WAVE : GF_WATER;
 
 		if (get_skill(SKILL_WATER) >= 8)
 		{
-			fire_beam(type, dir, damroll(3, get_skill(SKILL_WATER)));
+			fire_beam(water_type(), dir, damroll(3, get_skill(SKILL_WATER)));
 		}
 		else
 		{
-			fire_bolt(type, dir, damroll(3, get_skill(SKILL_WATER)));
+			fire_bolt(water_type(), dir, damroll(3, get_skill(SKILL_WATER)));
 		}
 
 		break;
@@ -8336,18 +8343,16 @@ void channel_the_elements(int y, int x, int level)
 
 	case FEAT_DEEP_WATER:
 	{
-		int dir, type;
+		int dir;
 		if (!get_aim_dir(&dir)) break;
-
-		type = (get_skill(SKILL_WATER) >= 18) ? GF_WAVE : GF_WATER;
 
 		if (get_skill(SKILL_WATER) >= 8)
 		{
-			fire_beam(type, dir, damroll(5, get_skill(SKILL_WATER)));
+			fire_beam(water_type(), dir, damroll(5, get_skill(SKILL_WATER)));
 		}
 		else
 		{
-			fire_bolt(type, dir, damroll(5, get_skill(SKILL_WATER)));
+			fire_bolt(water_type(), dir, damroll(5, get_skill(SKILL_WATER)));
 		}
 
 		break;
@@ -8388,15 +8393,7 @@ void channel_the_elements(int y, int x, int level)
 		int dir;
 		if (!get_aim_dir(&dir)) break;
 
-		if (get_skill(SKILL_FIRE) >= 15)
-		{
-			fire_bolt(GF_HELL_FIRE, dir, damroll(get_skill_scale(SKILL_FIRE, 30), 15));
-		}
-		else
-		{
-			fire_bolt(GF_FIRE, dir, damroll(get_skill_scale(SKILL_FIRE, 30), 15));
-		}
-
+		fire_bolt(fire_type(), dir, damroll(get_skill_scale(SKILL_FIRE, 30), 15));
 		break;
 	}
 
@@ -8405,15 +8402,7 @@ void channel_the_elements(int y, int x, int level)
 		int dir;
 		if (!get_aim_dir(&dir)) break;
 
-		if (get_skill(SKILL_FIRE) >= 15)
-		{
-			fire_ball(GF_HELL_FIRE, dir, damroll(get_skill_scale(SKILL_FIRE, 30), 15), 3);
-		}
-		else
-		{
-			fire_ball(GF_FIRE, dir, damroll(get_skill_scale(SKILL_FIRE, 30), 15), 3);
-		}
-
+		fire_ball(fire_type(), dir, damroll(get_skill_scale(SKILL_FIRE, 30), 15), 3);
 		break;
 	}
 
