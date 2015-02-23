@@ -1517,7 +1517,7 @@ static char *my_strdup(const char *s)
  * Append one string to the end of another, reallocating if
  * necessary.
  */
-static void strappend(char **s, char *t)
+static void strappend(char **s, const char *t)
 {
 	// Do we need to initialize the destination string?
 	if (*s == nullptr)
