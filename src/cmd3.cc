@@ -617,12 +617,9 @@ void do_cmd_destroy(void)
 	/* Verify unless quantity given */
 	if (!force)
 	{
-		if (!((auto_destroy) && (object_value(o_ptr) < 1)))
-		{
-			/* Make a verification */
-			strnfmt(out_val, 160, "Really destroy %s? ", o_name);
-			if (!get_check(out_val)) return;
-		}
+		/* Make a verification */
+		strnfmt(out_val, 160, "Really destroy %s? ", o_name);
+		if (!get_check(out_val)) return;
 	}
 
 	/* Take no time, just like the automatizer */

@@ -626,12 +626,9 @@ bool_ alchemy(void) /* Turns an object into gold, gain some of its value in a sh
 	/* Verify unless quantity given */
 	if (!force)
 	{
-		if (!((auto_destroy) && (object_value(o_ptr) < 1)))
-		{
-			/* Make a verification */
-			sprintf(out_val, "Really turn %s to gold? ", o_name);
-			if (!get_check(out_val)) return FALSE;
-		}
+		/* Make a verification */
+		sprintf(out_val, "Really turn %s to gold? ", o_name);
+		if (!get_check(out_val)) return FALSE;
 	}
 
 	/* Artifacts cannot be destroyed */

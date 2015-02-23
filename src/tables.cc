@@ -1445,9 +1445,6 @@ option_type option_info[] =
 	{ &last_words, TRUE, 2, 12,
 	  "last_words", "Get last words when the character dies" },
 
-	{ &auto_destroy, TRUE, 2, 14,
-	  "auto_destroy", "No query to destroy known worthless items" },
-
 	{ &wear_confirm, TRUE, 2, 15,
 	  "confirm_wear", "Confirm to wear/wield known cursed items" },
 

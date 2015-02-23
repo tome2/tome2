@@ -211,7 +211,6 @@ extern bool_ view_yellow_lite;
 extern bool_ view_bright_lite;
 extern bool_ view_granite_lite;
 extern bool_ view_special_lite;
-extern bool_ auto_destroy;
 extern bool_ wear_confirm;
 extern bool_ confirm_stairs;
 extern bool_ disturb_pets;

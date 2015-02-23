@@ -518,8 +518,7 @@ for a quantity will convert any "letters" into the maximal legal value.
 [[[[[GDestroy an item (k) or Destroy an item (^D)]
         This destroys an item in your inventory or on the dungeon floor.
         If the selected pile contains multiple objects, you may specify
-        a quantity.  You must always verify this command, unless the item
-        is cursed or worthless and the option "auto_destroy" is set.
+        a quantity.  You must always verify this command.
 ~~~~~42
 [[[[[GWear/Wield equipment (w)]
         To wear or wield an object in your inventory, use this command.

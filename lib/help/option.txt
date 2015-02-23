@@ -180,13 +180,6 @@ off at will during the course of the game.
     dies. If this option is not selected, the "You die." message is displayed
     instead.
 
-#####GNo query to destroy known worthless items    [auto_destroy]
-    It can sometimes be annoying that the Destroy command asks for confirmation
-    when you are attempting to destroy a Broken sword {cursed}. If this option
-    is set, no confirmation will be asked if you attempt to destroy an object
-    which you know to be worthless. Of course, cursed artifacts cannot be
-    destroyed even if this option is set.
-
 #####GConfirm to wear/wield known cursed items    [confirm_wear]
     Some players may occasionally, due to a typing mistake, find themselves
     wearing an item which they knew was cursed. If this option is set, you

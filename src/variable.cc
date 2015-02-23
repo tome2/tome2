@@ -206,7 +206,6 @@ bool_ small_levels; 		/* Allow unusually small dungeon levels */
 bool_ empty_levels; 		/* Allow empty 'arena' levels */
 bool_ always_small_level;         /* Small levels */
 bool_ player_symbols; 		/* Use varying symbols for the player char */
-bool_ auto_destroy; 		/* Known worthless items are destroyed without confirmation */
 bool_ confirm_stairs; 		/* Prompt before staircases... */
 bool_ wear_confirm; 		/* Confirm before putting on known cursed items */
 bool_ disturb_pets; 		/* Pets moving nearby disturb us */

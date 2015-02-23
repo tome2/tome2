@@ -83,9 +83,6 @@ Y:alert_failure
 # Option 'Get last words when the character dies'
 Y:last_words
 
-# Option 'No query to destroy known worthless items'
-Y:auto_destroy
-
 # Option 'Confirm to wear/wield known cursed items'
 Y:confirm_wear
 
