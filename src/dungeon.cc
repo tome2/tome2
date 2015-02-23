@@ -15,6 +15,7 @@
 #include "gods.hpp"
 #include "hooks.h"
 #include "modules.hpp"
+#include "notes.hpp"
 #include "quest.h"
 #include "quark.h"
 #include "skills.hpp"

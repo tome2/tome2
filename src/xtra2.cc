@@ -16,6 +16,7 @@
 #include "gods.hpp"
 #include "hooks.h"
 #include "mimic.hpp"
+#include "notes.hpp"
 #include "quark.h"
 #include "skills.hpp"
 

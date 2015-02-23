@@ -8,6 +8,7 @@
 
 #include "angband.h"
 #include "hooks.h"
+#include "notes.hpp"
 #include "skills.hpp"
 #include "spells3.hpp"
 

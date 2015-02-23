@@ -17,6 +17,7 @@
 #include "modules.hpp"
 #include "hooks.h"
 #include "mimic.hpp"
+#include "notes.hpp"
 #include "q_rand.h"
 #include "skills.hpp"
 #include "spells3.hpp"

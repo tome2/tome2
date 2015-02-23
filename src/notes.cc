@@ -1,7 +1,3 @@
-/* File: notes.c */
-
-/* Purpose: Note taking to a file */
-
 /*
  * Copyright (c) 1989, 1999 James E. Wilson, Robert A. Koeneke,
  * Robert Ruehlmann
@@ -11,6 +7,7 @@
  * included in all such copies.
  */
 
+#include "notes.hpp"
 #include "angband.h"
 
 /*

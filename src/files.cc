@@ -11,6 +11,7 @@
 #include "hiscore.h"
 #include "hooks.h"
 #include "mimic.hpp"
+#include "notes.hpp"
 #include "skills.hpp"
 
 #include <memory>

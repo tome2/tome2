@@ -10,6 +10,7 @@
 #include "corrupt.hpp"
 #include "hooks.h"
 #include "messages.h"
+#include "notes.hpp"
 #include "skills.hpp"
 #include "squeltch.hpp"
 
