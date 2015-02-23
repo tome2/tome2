@@ -12,9 +12,10 @@
 #include "cmd1.hpp"
 #include "cmd2.hpp"
 #include "cmd7.hpp"
-#include "quark.h"
 #include "hooks.h"
 #include "mimic.hpp"
+#include "quark.h"
+#include "spells1.hpp"
 #include "traps.hpp"
 #include "xtra2.hpp"
 

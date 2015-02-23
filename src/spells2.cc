@@ -13,6 +13,7 @@
 #include "hooks.h"
 #include "notes.hpp"
 #include "skills.hpp"
+#include "spells1.hpp"
 #include "spells3.hpp"
 #include "xtra1.hpp"
 #include "xtra2.hpp"
@@ -318,6 +319,72 @@ bool_ do_res_stat(int stat, bool_ full)
 	}
 
 	/* Nothing obvious */
+	return (FALSE);
+}
+
+
+/*
+ * Increases a stat by one randomized level             -RAK-
+ *
+ * Note that this function (used by stat potions) now restores
+ * the stat BEFORE increasing it.
+ */
+static bool_ inc_stat(int stat)
+{
+	int value, gain;
+
+	/* Then augment the current/max stat */
+	value = p_ptr->stat_cur[stat];
+
+	/* Cannot go above 18/100 */
+	if (value < 18 + 100)
+	{
+		/* Gain one (sometimes two) points */
+		if (value < 18)
+		{
+			gain = ((rand_int(100) < 75) ? 1 : 2);
+			value += gain;
+		}
+
+		/* Gain 1/6 to 1/3 of distance to 18/100 */
+		else if (value < 18 + 98)
+		{
+			/* Approximate gain value */
+			gain = (((18 + 100) - value) / 2 + 3) / 2;
+
+			/* Paranoia */
+			if (gain < 1) gain = 1;
+
+			/* Apply the bonus */
+			value += randint(gain) + gain / 2;
+
+			/* Maximal value */
+			if (value > 18 + 99) value = 18 + 99;
+		}
+
+		/* Gain one point at a time */
+		else
+		{
+			value++;
+		}
+
+		/* Save the new value */
+		p_ptr->stat_cur[stat] = value;
+
+		/* Bring up the maximum too */
+		if (value > p_ptr->stat_max[stat])
+		{
+			p_ptr->stat_max[stat] = value;
+		}
+
+		/* Recalculate bonuses */
+		p_ptr->update |= (PU_BONUS);
+
+		/* Success */
+		return (TRUE);
+	}
+
+	/* Nothing to gain */
 	return (FALSE);
 }
 

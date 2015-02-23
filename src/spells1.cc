@@ -6,6 +6,7 @@
  * included in all such copies.
  */
 
+#include "spells1.hpp"
 #include "angband.h"
 #include "cave.hpp"
 #include "cmd1.hpp"
@@ -315,7 +316,7 @@ void teleport_away(int m_idx, int dis)
 /*
  * Teleport monster next to the player
  */
-void teleport_to_player(int m_idx)
+static void teleport_to_player(int m_idx)
 {
 	int ny = 0, nx = 0, oy, ox, d, i, min;
 	int dis = 2;
@@ -2115,75 +2116,6 @@ void cold_dam(int dam, cptr kb_str)
 
 
 
-
-
-/*
- * Increases a stat by one randomized level             -RAK-
- *
- * Note that this function (used by stat potions) now restores
- * the stat BEFORE increasing it.
- */
-bool_ inc_stat(int stat)
-{
-	int value, gain;
-
-	/* Then augment the current/max stat */
-	value = p_ptr->stat_cur[stat];
-
-	/* Cannot go above 18/100 */
-	if (value < 18 + 100)
-	{
-		/* Gain one (sometimes two) points */
-		if (value < 18)
-		{
-			gain = ((rand_int(100) < 75) ? 1 : 2);
-			value += gain;
-		}
-
-		/* Gain 1/6 to 1/3 of distance to 18/100 */
-		else if (value < 18 + 98)
-		{
-			/* Approximate gain value */
-			gain = (((18 + 100) - value) / 2 + 3) / 2;
-
-			/* Paranoia */
-			if (gain < 1) gain = 1;
-
-			/* Apply the bonus */
-			value += randint(gain) + gain / 2;
-
-			/* Maximal value */
-			if (value > 18 + 99) value = 18 + 99;
-		}
-
-		/* Gain one point at a time */
-		else
-		{
-			value++;
-		}
-
-		/* Save the new value */
-		p_ptr->stat_cur[stat] = value;
-
-		/* Bring up the maximum too */
-		if (value > p_ptr->stat_max[stat])
-		{
-			p_ptr->stat_max[stat] = value;
-		}
-
-		/* Recalculate bonuses */
-		p_ptr->update |= (PU_BONUS);
-
-		/* Success */
-		return (TRUE);
-	}
-
-	/* Nothing to gain */
-	return (FALSE);
-}
-
-
-
 /*
  * Decreases a stat by an amount indended to vary from 0 to 100 percent.
  *
@@ -2709,7 +2641,7 @@ int get_mana_path_dir(int y, int x, int oy, int ox, int pdir, int mana)
  * This algorithm is similar to, but slightly different from, the one used
  * by "update_view_los()", and very different from the one used by "los()".
  */
-sint project_path(u16b *gp, int range, int y1, int x1, int y2, int x2, int flg)
+static int project_path(u16b *gp, int range, int y1, int x1, int y2, int x2, int flg)
 {
 	int y, x, mana = 0, dir = 0;
 
@@ -9015,7 +8947,7 @@ static const int attack_types[25] =
  * Describe the attack using normal names.
  */
 
-void describe_attack_fully(int type, char* r)
+static void describe_attack_fully(int type, char* r)
 {
 	switch (type)
 	{

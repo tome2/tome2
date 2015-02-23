@@ -12,6 +12,7 @@
 #include "cmd1.hpp"
 #include "cmd2.hpp"
 #include "gods.hpp"
+#include "spells1.hpp"
 #include "xtra1.hpp"
 #include "xtra2.hpp"
 

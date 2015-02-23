@@ -14,6 +14,7 @@
 #include "corrupt.hpp"
 #include "skills.hpp"
 #include "spell_type.hpp"
+#include "spells1.hpp"
 #include "spells5.hpp"
 #include "quark.h"
 #include "wizard2.hpp"

@@ -2,6 +2,7 @@
 
 #include "angband.h"
 #include "q_rand.h"
+#include "spells1.hpp"
 
 #include <cassert>
 #include <vector>

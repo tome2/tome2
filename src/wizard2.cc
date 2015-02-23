@@ -15,6 +15,7 @@
 #include "hooks.h"
 #include "randart.hpp"
 #include "status.hpp"
+#include "spells1.hpp"
 #include "traps.hpp"
 #include "xtra1.hpp"
 #include "xtra2.hpp"

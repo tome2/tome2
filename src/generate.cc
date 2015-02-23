@@ -10,6 +10,7 @@
 #include "cave.hpp"
 #include "hooks.h"
 #include "randart.hpp"
+#include "spells1.hpp"
 #include "traps.hpp"
 
 #include <cassert>

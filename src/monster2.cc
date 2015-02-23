@@ -10,6 +10,7 @@
 #include "hooks.h"
 #include "mimic.hpp"
 #include "randart.hpp"
+#include "spells1.hpp"
 #include "xtra1.hpp"
 #include "xtra2.hpp"
 
