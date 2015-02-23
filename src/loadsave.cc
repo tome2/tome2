@@ -151,16 +151,24 @@ static void do_subrace(int flag)
 	buf[80] = '\0'; // Make sure string is always NUL terminated
 
 	if (flag == LS_SAVE)
-		strncpy(buf, sr_ptr->title + rmp_name, 80);
+	{
+		strncpy(buf, sr_ptr->title, 80);
+	}
 	do_string(buf, 80, flag);
 	if (flag == LS_LOAD)
-		strncpy(sr_ptr->title + rmp_name, buf, 80);
+	{
+		set_subrace_title(sr_ptr, buf);
+	}
 
 	if (flag == LS_SAVE)
-		strncpy(buf, sr_ptr->desc + rmp_text, 80);
+	{
+		strncpy(buf, sr_ptr->desc, 80);
+	}
 	do_string(buf, 80, flag);
 	if (flag == LS_LOAD)
-		strncpy(sr_ptr->desc + rmp_text, buf, 80);
+	{
+		set_subrace_description(sr_ptr, buf);
+	}
 
 	do_byte((byte*)&sr_ptr->place, flag);
 

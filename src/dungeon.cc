@@ -958,8 +958,8 @@ static bool_ grace_delay_trigger()
  */
 static void process_world_gods()
 {
-	const char *race_name = rp_ptr->title + rp_name;
-	const char *subrace_name = rmp_ptr->title + rmp_name;
+	const char *race_name = rp_ptr->title;
+	const char *subrace_name = rmp_ptr->title;
 
 	GOD(GOD_VARDA)
 	{
@@ -1705,9 +1705,14 @@ static void process_world(void)
 			int dec = 5 - wisdom_scale(3);
 
 			/* Blech what an hideous hack */
-			if (!strcmp(rp_ptr->title + rp_name, "Ent"))
+			if (!strcmp(rp_ptr->title, "Ent"))
+			{
 				dec -= wisdom_scale(2);
-			if (dec < 1) dec = 1;
+			}
+			if (dec < 1)
+			{
+				dec = 1;
+			}
 			inc_piety(GOD_YAVANNA, -dec);
 		}
 	}
@@ -4998,7 +5003,7 @@ static void load_all_pref_files(void)
 
 
 	/* Access the "race" pref file */
-	sprintf(buf, "%s.prf", rp_ptr->title + rp_name);
+	sprintf(buf, "%s.prf", rp_ptr->title);
 
 	/* Process that file */
 	process_pref_file(buf);

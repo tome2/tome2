@@ -334,14 +334,8 @@ extern monster_ego *re_info;
 extern dungeon_info_type *d_info;
 extern player_class *class_info;
 extern meta_class_type *meta_class_info;
-extern header *rp_head;
 extern player_race *race_info;
-extern char *rp_name;
-extern char *rp_text;
-extern header *rmp_head;
 extern player_race_mod *race_mod_info;
-extern char *rmp_name;
-extern char *rmp_text;
 extern header *t_head;
 extern trap_type *t_info;
 extern char *t_name;
@@ -1453,8 +1447,8 @@ extern void dump_fates(FILE *OutFile);
 
 /* xtra2.c */
 extern void do_rebirth(void);
-extern cptr get_subrace_title(int racem);
-extern void set_subrace_title(int racem, cptr name);
+extern void set_subrace_title(player_race_mod *rmp_ptr, cptr name);
+extern void set_subrace_description(player_race_mod *rmp_ptr, cptr desc);
 extern void switch_subrace(int racem, bool_ copy_old);
 extern void drop_from_wild(void);
 extern void clean_wish_name(char *buf, char *name);

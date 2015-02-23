@@ -857,13 +857,13 @@ static cptr process_pref_file_expr(char **sp, char *fp)
 			/* Race */
 			else if (streq(b + 1, "RACE"))
 			{
-				v = rp_ptr->title + rp_name;
+				v = rp_ptr->title;
 			}
 
 			/* Race */
 			else if (streq(b + 1, "RACEMOD"))
 			{
-				v = rmp_ptr->title + rmp_name;
+				v = rmp_ptr->title;
 			}
 
 			/* Class */
@@ -4934,7 +4934,7 @@ void show_highclass(int building)
 				((building == 1) && (clev >= PY_MAX_LEVEL)))
 		{
 			sprintf(out_val, "%3d) %s the %s (Level %2d)",
-			        (m + 1), the_score.who, rp_name + race_info[pr].title, clev);
+				(m + 1), the_score.who, race_info[pr].title, clev);
 			prt(out_val, (m + 7), 0);
 			m++;
 		}
@@ -4945,7 +4945,7 @@ void show_highclass(int building)
 	if ((building == 1) && (p_ptr->lev >= PY_MAX_LEVEL))
 	{
 		sprintf(out_val, "You) %s the %s (Level %2d)",
-		        player_name, rp_name + race_info[p_ptr->prace].title, p_ptr->lev);
+			player_name, race_info[p_ptr->prace].title, p_ptr->lev);
 		prt(out_val, (m + 8), 0);
 	}
 	else if ((building != 1))
@@ -4953,7 +4953,7 @@ void show_highclass(int building)
 		if ((p_ptr->lev > clev) && (p_ptr->pclass == (building - 10)))
 		{
 			sprintf(out_val, "You) %s the %s (Level %2d)",
-			        player_name, rp_name + race_info[p_ptr->prace].title, p_ptr->lev);
+				player_name, race_info[p_ptr->prace].title, p_ptr->lev);
 			prt(out_val, (m + 8), 0);
 		}
 	}
@@ -4982,7 +4982,7 @@ void race_score(int race_num)
 	lastlev = 0;
 
 	/* rr9: TODO - pluralize the race */
-	sprintf(tmp_str, "The Greatest of all the %s", rp_name + race_info[race_num].title);
+	sprintf(tmp_str, "The Greatest of all the %s", race_info[race_num].title);
 	prt(tmp_str, 5, 3);
 
 	/* Build the filename */
@@ -5018,7 +5018,7 @@ void race_score(int race_num)
 		{
 			sprintf(out_val, "%3d) %s the %s (Level %3d)",
 			        (m + 1), the_score.who,
-			        rp_name + race_info[pr].title, clev);
+				race_info[pr].title, clev);
 			prt(out_val, (m + 7), 0);
 			m++;
 			lastlev = clev;
@@ -5030,7 +5030,7 @@ void race_score(int race_num)
 	if ((p_ptr->prace == race_num) && (p_ptr->lev >= lastlev))
 	{
 		sprintf(out_val, "You) %s the %s (Level %3d)",
-		        player_name, rp_name + race_info[p_ptr->prace].title, p_ptr->lev);
+			player_name, race_info[p_ptr->prace].title, p_ptr->lev);
 		prt(out_val, (m + 8), 0);
 	}
 

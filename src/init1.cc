@@ -1645,7 +1645,7 @@ static errr grab_one_race_allow_flag(u32b *choice, cptr what)
 	cptr s;
 
 	/* Scan classes flags */
-	for (i = 0; i < max_rp_idx && (s = race_info[i].title + rp_name); i++)
+	for (i = 0; i < max_rp_idx && (s = race_info[i].title); i++)
 	{
 		if (streq(what, s))
 		{
@@ -1849,13 +1849,6 @@ errr init_player_info_txt(FILE *fp, char *buf)
 	/* Just before the first line */
 	error_line = -1;
 
-
-	/* Start the "fake" stuff */
-	rp_head->name_size = 0;
-	rp_head->text_size = 0;
-	rmp_head->name_size = 0;
-	rmp_head->text_size = 0;
-
 	/* Init general skills */
 	for (z = 0; z < MAX_SKILLS; z++)
 	{
@@ -1926,13 +1919,9 @@ errr init_player_info_txt(FILE *fp, char *buf)
 			bg[idx].next = atoi(zz[3]);
 			bg[idx].bonus = atoi(zz[4]);
 
-			bg[idx].info = ++rp_head->text_size;
-
-			/* Append chars to the name */
-			strcpy(rp_text + rp_head->text_size, zz[5]);
-
-			/* Advance the index */
-			rp_head->text_size += strlen(zz[5]);
+			/* Copy text */
+			assert(!bg[idx].info);
+			bg[idx].info = my_strdup(zz[5]);
 
 			/* Next... */
 			continue;
@@ -1980,7 +1969,7 @@ errr init_player_info_txt(FILE *fp, char *buf)
 			if (i < error_idx) return (4);
 
 			/* Verify information */
-			if (i >= rp_head->info_num) return (2);
+			if (i >= max_rp_idx) return (2);
 
 			/* Save the index */
 			error_idx = i;
@@ -1988,18 +1977,11 @@ errr init_player_info_txt(FILE *fp, char *buf)
 			/* Point at the "info" */
 			rp_ptr = &race_info[i];
 
-			/* Hack -- Verify space */
-			if (rp_head->name_size + strlen(s) + 8 > FAKE_NAME_SIZE) return (7);
+			/* Copy title */
+			assert(!rp_ptr->title);
+			rp_ptr->title = my_strdup(s);
 
-			/* Advance and Save the name index */
-			if (!rp_ptr->title) rp_ptr->title = ++rp_head->name_size;
-
-			/* Append chars to the name */
-			strcpy(rp_name + rp_head->name_size, s);
-
-			/* Advance the index */
-			rp_head->name_size += strlen(s);
-
+			/* Initialize */
 			rp_ptr->powers[0] = rp_ptr->powers[1] = rp_ptr->powers[2] = rp_ptr->powers[3] = -1;
 			powers = 0;
 			lev = 1;
@@ -2017,27 +1999,13 @@ errr init_player_info_txt(FILE *fp, char *buf)
 			/* Acquire the text */
 			s = buf + 4;
 
-			/* Hack -- Verify space */
-			if (rp_head->text_size + strlen(s) + 8 > FAKE_TEXT_SIZE) return (7);
-
-			/* Advance and Save the text index */
 			if (!rp_ptr->desc)
 			{
-				rp_ptr->desc = ++rp_head->text_size;
-
-				/* Append chars to the name */
-				strcpy(rp_text + rp_head->text_size, s);
-
-				/* Advance the index */
-				rp_head->text_size += strlen(s);
+				rp_ptr->desc = my_strdup(s);
 			}
 			else
 			{
-				/* Append chars to the name */
-				strcpy(rp_text + rp_head->text_size, format("\n%s", s));
-
-				/* Advance the index */
-				rp_head->text_size += strlen(s) + 1;
+				strappend(&rp_ptr->desc, format("\n%s", s));
 			}
 
 			/* Next... */
@@ -2354,7 +2322,7 @@ errr init_player_info_txt(FILE *fp, char *buf)
 			if (i < error_idx) return (4);
 
 			/* Verify information */
-			if (i >= rmp_head->info_num) return (2);
+			if (i >= max_rmp_idx) return (2);
 
 			/* Save the index */
 			error_idx = i;
@@ -2362,18 +2330,11 @@ errr init_player_info_txt(FILE *fp, char *buf)
 			/* Point at the "info" */
 			rmp_ptr = &race_mod_info[i];
 
-			/* Hack -- Verify space */
-			if (rmp_head->name_size + strlen(s) + 8 > FAKE_NAME_SIZE) return (7);
+			/* Copy title */
+			assert(!rmp_ptr->title);
+			rmp_ptr->title = my_strdup(s);
 
-			/* Advance and Save the name index */
-			if (!rmp_ptr->title) rmp_ptr->title = ++rmp_head->name_size;
-
-			/* Append chars to the name */
-			strcpy(rmp_name + rmp_head->name_size, s);
-
-			/* Advance the index */
-			rmp_head->name_size += strlen(s);
-
+			/* Initialize */
 			rmp_ptr->powers[0] = rmp_ptr->powers[1] = rmp_ptr->powers[2] = rmp_ptr->powers[3] = -1;
 			powers = 0;
 			lev = 1;
@@ -2391,30 +2352,25 @@ errr init_player_info_txt(FILE *fp, char *buf)
 			/* Acquire the text */
 			s = buf + 6;
 
-			if (buf[4] == 'A') rmp_ptr->place = TRUE;
-			else rmp_ptr->place = FALSE;
+			/* Place */
+			if (buf[4] == 'A')
+			{
+				rmp_ptr->place = TRUE;
+			}
+			else
+			{
+				rmp_ptr->place = FALSE;
+			}
 
-			/* Hack -- Verify space */
-			if (rmp_head->text_size + strlen(s) + 8 > FAKE_TEXT_SIZE) return (7);
-
-			/* Advance and Save the text index */
+			/* Description */
 			if (!rmp_ptr->desc)
 			{
-				rmp_ptr->desc = ++rmp_head->text_size;
-
-				/* Append chars to the name */
-				strcpy(rmp_text + rmp_head->text_size, s);
-
-				/* Advance the index */
-				rmp_head->text_size += strlen(s);
+				rmp_ptr->desc = my_strdup(s);
 			}
 			else
 			{
 				/* Append chars to the name */
-				strcpy(rmp_text + rmp_head->text_size, format("\n%s", s));
-
-				/* Advance the index */
-				rmp_head->text_size += strlen(s) + 1;
+				strappend(&rmp_ptr->desc, format("\n%s", s));
 			}
 
 			/* Next... */
@@ -3405,12 +3361,6 @@ errr init_player_info_txt(FILE *fp, char *buf)
 		/* Oops */
 		return (6);
 	}
-
-	/* Complete the "name" and "text" sizes */
-	++rp_head->name_size;
-	++rp_head->text_size;
-	++rmp_head->name_size;
-	++rmp_head->text_size;
 
 	/* No version yet */
 	if (!okay) return (2);
@@ -11396,13 +11346,13 @@ static cptr process_dungeon_file_expr(char **sp, char *fp)
 			/* Race */
 			else if (streq(b + 1, "RACE"))
 			{
-				v = rp_ptr->title + rp_name;
+				v = rp_ptr->title;
 			}
 
 			/* Race Mod */
 			else if (streq(b + 1, "RACEMOD"))
 			{
-				v = rmp_ptr->title + rmp_name;
+				v = rmp_ptr->title;
 			}
 
 			/* Class */

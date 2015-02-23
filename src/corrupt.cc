@@ -57,18 +57,18 @@ static void player_gain_vampire()
 	player_race_mod *rmp_ptr = &race_mod_info[SUBRACE_SAVE];
 
 	/* Be a Vampire and be proud of it */
-	cptr title = get_subrace_title(SUBRACE_SAVE);
-	if (streq(title, " ") || streq(title, "Vampire"))
+	cptr title = rmp_ptr->title;
+	if (streq(title, "Vampire"))
 	{
 		title = "Vampire";
 		rmp_ptr->place = FALSE;
-		set_subrace_title(SUBRACE_SAVE, title);
+		set_subrace_title(rmp_ptr, title);
 	}
 	else
 	{
 		char buf[512];
 		sprintf(buf, "Vampire %s", title);
-		set_subrace_title(SUBRACE_SAVE, buf);
+		set_subrace_title(rmp_ptr, buf);
 	}
 
 	/* Bonus/and .. not bonus :) */
@@ -668,7 +668,6 @@ bool_ player_has_corruption(int corruption_idx)
 
 static bool_ player_can_gain_corruption(int corruption_idx)
 {
-	cptr r_name = rp_ptr->title + rp_name;
 	bool_ allowed = TRUE; /* Allowed by default */
 
 	assert(corruption_idx >= 0);
@@ -676,7 +675,7 @@ static bool_ player_can_gain_corruption(int corruption_idx)
 	if (corruption_idx == CORRUPT_TROLL_BLOOD)
 	{
 		/* Ok trolls should not get this one. never. */
-		if (streq(r_name, "Troll"))
+		if (streq(rp_ptr->title, "Troll"))
 		{
 			allowed = FALSE;
 		}
@@ -686,7 +685,7 @@ static bool_ player_can_gain_corruption(int corruption_idx)
 
 	if (game_module_idx == MODULE_THEME)
 	{
-		if (streq(r_name, "Maia"))
+		if (streq(rp_ptr->title, "Maia"))
 		{
 			/* We use a whitelist of corruptions for Maiar */
 			bool_ allow = FALSE;

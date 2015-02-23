@@ -511,8 +511,7 @@ void StatusCondition::to_json(json_t *j) const
 
 bool RaceCondition::is_match(object_type *o_ptr) const
 {
-	return boost::algorithm::iequals(m_race,
-					 rp_ptr->title + rp_name);
+	return boost::algorithm::iequals(m_race, rp_ptr->title);
 }
 
 std::shared_ptr<Condition> RaceCondition::from_json(json_t *j)
@@ -546,8 +545,7 @@ void RaceCondition::to_json(json_t *j) const
 
 bool SubraceCondition::is_match(object_type *o_ptr) const
 {
-	return boost::algorithm::iequals(m_subrace,
-					 rmp_ptr->title + rmp_name);
+	return boost::algorithm::iequals(m_subrace, rmp_ptr->title);
 }
 
 std::shared_ptr<Condition> SubraceCondition::from_json(json_t *j)

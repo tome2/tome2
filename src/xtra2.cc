@@ -18,6 +18,8 @@
 #include "quark.h"
 #include "hooks.h"
 
+#include <type_traits>
+
 #include <boost/algorithm/string/predicate.hpp>
 
 using boost::algorithm::iequals;
@@ -5657,27 +5659,47 @@ void switch_subrace(int racem, bool_ copy_old)
 	/* If we switch to the saved subrace, we copy over the old subrace data */
 	if (copy_old && (racem == SUBRACE_SAVE))
 	{
-		s32b old_title = race_mod_info[SUBRACE_SAVE].title;
-		s32b old_desc = race_mod_info[SUBRACE_SAVE].desc;
-
+		// This code is very reliant on the race_mod_info
+		// elements being simple PODs, in particular the
+		// text pointers being *unmanaged* owned pointers.
+		static_assert(std::is_pod<player_race_mod>::value,
+			      "This code needs reworking");
+		// Keep references to owned pointers.
+		auto old_title = race_mod_info[SUBRACE_SAVE].title;
+		auto old_desc = race_mod_info[SUBRACE_SAVE].desc;
+		// Copy everything
 		race_mod_info[SUBRACE_SAVE] = race_mod_info[p_ptr->pracem];
+		// "Undo" copy of title and description (since they're *owned* pointers)
 		race_mod_info[SUBRACE_SAVE].title = old_title;
 		race_mod_info[SUBRACE_SAVE].desc = old_desc;
-		strcpy(race_mod_info[SUBRACE_SAVE].title + rmp_name, race_mod_info[p_ptr->pracem].title + rmp_name);
+		// Replace subrace title with the title currently held by player.
+		set_subrace_title(&race_mod_info[SUBRACE_SAVE], race_mod_info[p_ptr->pracem].title);
 	}
 
 	p_ptr->pracem = racem;
 	rmp_ptr = &race_mod_info[p_ptr->pracem];
 }
 
-cptr get_subrace_title(int racem)
+void set_subrace_title(player_race_mod *rmp_ptr, cptr name)
 {
-	return race_mod_info[racem].title + rmp_name;
+	// Free old title.
+	free(rmp_ptr->title);
+	// Allocate copy of new title.
+	rmp_ptr->title = strdup(name);
+	if (!rmp_ptr->title) {
+		abort();
+	}
 }
 
-void set_subrace_title(int racem, cptr name)
+void set_subrace_description(player_race_mod *rmp_ptr, cptr desc)
 {
-	strcpy(race_mod_info[racem].title + rmp_name, name);
+	// Free old description
+	free(rmp_ptr->desc);
+	// Allocate copy of new description.
+	rmp_ptr->desc = strdup(desc);
+	if (!rmp_ptr->desc) {
+		abort();
+	}
 }
 
 /*

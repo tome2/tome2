@@ -675,18 +675,12 @@ char *s_text;
 /*
  * Player race arrays
  */
-header *rp_head;
 player_race *race_info;
-char *rp_name;
-char *rp_text;
 
 /*
  * Player mod race arrays
  */
-header *rmp_head;
 player_race_mod *race_mod_info;
-char *rmp_name;
-char *rmp_text;
 
 /*
  * Player class arrays

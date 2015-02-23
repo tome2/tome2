@@ -513,7 +513,7 @@ static void get_history(void)
 		while ((chart != bg[i].chart) || (roll > bg[i].roll)) i++;
 
 		/* Acquire the textual history */
-		(void)strcat(buf, bg[i].info + rp_text);
+		(void)strcat(buf, bg[i].info);
 
 		/* Add in the social class */
 		social_class += (int)(bg[i].bonus) - 50;
@@ -1049,7 +1049,7 @@ static void player_outfit(void)
 {
 	int i;
 	cptr class_name = spp_ptr->title;
-	cptr subrace_name = rmp_ptr->title + rmp_name;
+	cptr subrace_name = rmp_ptr->title;
 
 	/*
 	 * Get an adventurer guide describing a bit of the
@@ -1183,7 +1183,7 @@ static void player_outfit(void)
 		identify_pack_fully();
 	}
 
-	if (streq(rmp_ptr->title + rmp_name, "Vampire"))
+	if (streq(rmp_ptr->title, "Vampire"))
 	{
 		player_gain_corruption(CORRUPT_VAMPIRE_TEETH);
 		player_gain_corruption(CORRUPT_VAMPIRE_STRENGTH);
@@ -1373,8 +1373,6 @@ int dump_races(int sel)
 
 	char buf[80];
 
-	cptr str;
-
 	/* Clean up */
 	clear_from(12);
 
@@ -1385,7 +1383,6 @@ int dump_races(int sel)
 		/* Analyze */
 		p_ptr->prace = n;
 		rp_ptr = &race_info[p_ptr->prace];
-		str = rp_ptr->title + rp_name;
 
 		if (sel == n)
 		{
@@ -1394,14 +1391,14 @@ int dump_races(int sel)
 		}
 
 		/* Display */
-		strnfmt(buf, 80, "%c%c%c %s", p1, I2A(n), p2, str);
+		strnfmt(buf, 80, "%c%c%c %s", p1, I2A(n), p2, rp_ptr->title);
 
 		/* Print some more info */
 		if (sel == n)
 		{
 			std::string desc;
 
-			desc += (rp_ptr->desc + rp_text);
+			desc += rp_ptr->desc;
 			if (rp_ptr->flags1 & PR1_EXPERIMENTAL)
 			{
 				desc += "\nEXPERIMENTAL";
@@ -1433,8 +1430,6 @@ int dump_rmods(int sel, int *racem, int max)
 
 	char buf[80];
 
-	cptr str;
-
 	/* Clean up */
 	clear_from(12);
 
@@ -1446,7 +1441,6 @@ int dump_rmods(int sel, int *racem, int max)
 		/* Analyze */
 		p_ptr->pracem = racem[n];
 		rmp_ptr = &race_mod_info[p_ptr->pracem];
-		str = rmp_ptr->title + rmp_name;
 
 		if (sel == n)
 		{
@@ -1456,7 +1450,7 @@ int dump_rmods(int sel, int *racem, int max)
 
 		/* Display */
 		if (racem[n])
-			strnfmt(buf, 80, "%c%c%c %s", p1, I2A(n), p2, str);
+			strnfmt(buf, 80, "%c%c%c %s", p1, I2A(n), p2, rmp_ptr->title);
 		else
 			strnfmt(buf, 80, "%c%c%c Classical", p1, I2A(n), p2);
 
@@ -1465,7 +1459,7 @@ int dump_rmods(int sel, int *racem, int max)
 		{
 			std::string desc;
 
-			desc += (rmp_ptr->desc + rmp_text);
+			desc += rmp_ptr->desc;
 			if (rmp_ptr->flags1 & PR1_EXPERIMENTAL)
 			{
 				desc += "\nEXPERIMENTAL";
@@ -1728,7 +1722,7 @@ static bool_ player_birth_aux_ask()
 				if ((k >= 0) && (k < n)) break;
 				if (c == '?')
 				{
-					help_race(race_info[sel].title + rp_name);
+					help_race(race_info[sel].title);
 				}
 				else if (c == '=')
 				{
@@ -1776,7 +1770,7 @@ static bool_ player_birth_aux_ask()
 	rp_ptr = &race_info[p_ptr->prace];
 
 	/* Display */
-	c_put_str(TERM_L_BLUE, rp_ptr->title + rp_name, 4, 9);
+	c_put_str(TERM_L_BLUE, rp_ptr->title, 4, 9);
 
 	/* Get a random name */
 	if (!do_quick_start) create_random_name(p_ptr->prace, player_name);
@@ -1853,7 +1847,7 @@ static bool_ player_birth_aux_ask()
 					}
 					else if (c == '?')
 					{
-						help_subrace(race_mod_info[racem[sel]].title + rmp_name);
+						help_subrace(race_mod_info[racem[sel]].title);
 					}
 
 					k = (islower(c) ? A2I(c) : -1);

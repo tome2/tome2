@@ -3912,7 +3912,7 @@ s16b wield_slot_ideal(object_type *o_ptr, bool_ ideal)
 	/* Theme has restrictions for winged races. */
 	if (game_module_idx == MODULE_THEME)
 	{
-		cptr race_name = rp_ptr->title + rp_name;
+		cptr race_name = rp_ptr->title;
 
 		if (streq(race_name, "Dragon") ||
 		    streq(race_name, "Eagle"))

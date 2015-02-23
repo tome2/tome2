@@ -1033,12 +1033,12 @@ typedef struct player_race player_race;
 
 struct player_race
 {
-	s32b title;                     /* Type of race */
-	s32b desc;
+	const char *title;              /* Type of race */
+	char *desc;
 
-	s16b r_adj[6];		/* Racial stat bonuses */
+	s16b r_adj[6];                  /* Racial stat bonuses */
 
-	char luck;              /* Luck */
+	char luck;                      /* Luck */
 
 	s16b r_dis;			/* disarming */
 	s16b r_dev;			/* magic devices */
@@ -1109,9 +1109,10 @@ typedef struct player_race_mod player_race_mod;
 
 struct player_race_mod
 {
-	s32b title;                     /* Type of race mod */
-	s32b desc;                      /* Desc */
-	bool_ place;                     /* TRUE = race race modifier, FALSE = Race modifier race */
+	char *title;                    /* Type of race mod */
+	char *desc;                     /* Desc */
+
+	bool_ place;                    /* TRUE = race race modifier, FALSE = Race modifier race */
 
 	s16b r_adj[6];                  /* (+) Racial stat bonuses */
 
@@ -2390,7 +2391,7 @@ typedef struct hist_type hist_type;
  */
 struct hist_type
 {
-	s32b info;                              /* Textual History -- uses rp_text */
+	char *info;                             /* Textual History */
 
 	byte roll;			        /* Frequency of this entry */
 	s16b chart;                             /* Chart index */

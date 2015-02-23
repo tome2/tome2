@@ -972,29 +972,11 @@ static errr init_player_info(void)
 	/* General buffer */
 	char buf[1024];
 
-
-	/*** Make the header ***/
-	rp_head = make_header(max_rp_idx);
-
-
-	/*** Make the header ***/
-	rmp_head = make_header(max_rmp_idx);
-
-	/*** Make the fake arrays ***/
-
 	/* Allocate the "rp_info" array */
-	race_info = make_array<player_race>(rp_head->info_num);
-
-	/* Hack -- make "fake" arrays */
-	rp_name = make_array<char>(FAKE_NAME_SIZE);
-	rp_text = make_array<char>(FAKE_TEXT_SIZE);
+	race_info = make_array<player_race>(max_rp_idx);
 
 	/* Allocate the "rmp_info" array */
-	race_mod_info = make_array<player_race_mod>(rmp_head->info_num);
-
-	/* Hack -- make "fake" arrays */
-	rmp_name = make_array<char>(FAKE_NAME_SIZE);
-	rmp_text = make_array<char>(FAKE_TEXT_SIZE);
+	race_mod_info = make_array<player_race_mod>(max_rmp_idx);
 
 	/* Allocate the "c_info" array */
 	class_info = make_array<player_class>(max_c_idx);

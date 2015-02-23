@@ -266,8 +266,8 @@ void do_poly_self(void)
 		if (effect_msg[0])
 		{
 			msg_format("You turn into a%s %s!",
-			           ((is_a_vowel(rp_name[race_info[new_race].title])) ? "n" : ""),
-			           race_info[new_race].title + rp_name);
+				   ((is_a_vowel(*race_info[new_race].title)) ? "n" : ""),
+				   race_info[new_race].title);
 		}
 		else
 		{

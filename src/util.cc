@@ -3492,12 +3492,18 @@ cptr get_player_race_name(int pr, int ps)
 
 	if (ps)
 	{
-		if (race_mod_info[ps].place) sprintf(buf, "%s %s", race_info[pr].title + rp_name, race_mod_info[ps].title + rmp_name);
-		else sprintf(buf, "%s %s", race_mod_info[ps].title + rmp_name, race_info[pr].title + rp_name);
+		if (race_mod_info[ps].place)
+		{
+			sprintf(buf, "%s %s", race_info[pr].title, race_mod_info[ps].title);
+		}
+		else
+		{
+			sprintf(buf, "%s %s", race_mod_info[ps].title, race_info[pr].title);
+		}
 	}
 	else
 	{
-		sprintf(buf, "%s", race_info[pr].title + rp_name);
+		sprintf(buf, "%s", race_info[pr].title);
 	}
 
 	return (buf);
