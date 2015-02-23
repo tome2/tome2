@@ -4144,7 +4144,7 @@ const char *music_gush_of_wind_info()
 
 casting_result music_horns_of_ylmir_spell(int item)
 {
-	earthquake(p_ptr->py, p_ptr->px, 2 + get_level_s(SHAKE, 10));
+	earthquake(p_ptr->py, p_ptr->px, 2 + get_level_s(MUSIC_YLMIR, 10));
 	return CAST_OBVIOUS;
 }
 
@@ -4153,7 +4153,7 @@ const char *music_horns_of_ylmir_info()
 	static char buf[128];
 	sprintf(buf,
 		"rad " FMTs32b,
-		2 + get_level_s(SHAKE, 10));
+		2 + get_level_s(MUSIC_YLMIR, 10));
 	return buf;
 }
 
