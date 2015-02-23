@@ -2458,7 +2458,7 @@ bool_ askfor_aux(char *buf, int len)
 
 
 	/* Paranoia -- Clip the default entry */
-	buf[len] = '\0';
+	buf[len - 1] = '\0';
 
 
 	/* Display the default answer */

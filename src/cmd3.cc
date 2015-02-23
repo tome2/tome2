@@ -816,7 +816,7 @@ void do_cmd_inscribe(void)
 	}
 
 	/* Get a new inscription (possibly empty) */
-	if (get_string("Inscription: ", out_val, 80))
+	if (get_string("Inscription: ", out_val, sizeof(out_val)))
 	{
 		/* Save the inscription */
 		o_ptr->note = quark_add(out_val);
