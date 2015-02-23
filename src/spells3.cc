@@ -1,5 +1,5 @@
-#include "angband.h"
 #include "spells3.hpp"
+#include "angband.h"
 
 #include <assert.h>
 

@@ -1,5 +1,9 @@
 #pragma once
 
+#include "spell_type_fwd.h"
+#include "h-basic.h"
+#include "types_fwd.h"
+
 extern s32b NOXIOUSCLOUD;
 extern s32b AIRWINGS;
 extern s32b INVISIBILITY;
