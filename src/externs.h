@@ -708,10 +708,6 @@ extern s32b sroot(s32b n);
 extern int clamp_failure_chance(int chance, int minfail);
 
 /* dungeon.c */
-extern byte value_check_aux1(object_type *o_ptr);
-extern byte value_check_aux1_magic(object_type *o_ptr);
-extern byte value_check_aux2(object_type *o_ptr);
-extern byte value_check_aux2_magic(object_type *o_ptr);
 extern void play_game(bool_ new_game);
 extern void sense_inventory();
 

@@ -37,7 +37,7 @@
 /*
  * Return a "feeling" (or NULL) about an item.  Method 1 (Heavy).
  */
-byte value_check_aux1(object_type *o_ptr)
+static byte value_check_aux1(object_type *o_ptr)
 {
 	/* Artifacts */
 	if (artifact_p(o_ptr))
@@ -72,7 +72,7 @@ byte value_check_aux1(object_type *o_ptr)
 	return (SENSE_AVERAGE);
 }
 
-byte value_check_aux1_magic(object_type *o_ptr)
+static byte value_check_aux1_magic(object_type *o_ptr)
 {
 	object_kind *k_ptr = &k_info[o_ptr->k_idx];
 
@@ -139,7 +139,7 @@ byte value_check_aux1_magic(object_type *o_ptr)
 /*
  * Return a "feeling" (or NULL) about an item.  Method 2 (Light).
  */
-byte value_check_aux2(object_type *o_ptr)
+static byte value_check_aux2(object_type *o_ptr)
 {
 	/* Cursed items (all of them) */
 	if (cursed_p(o_ptr)) return (SENSE_CURSED);
@@ -161,7 +161,7 @@ byte value_check_aux2(object_type *o_ptr)
 }
 
 
-byte value_check_aux2_magic(object_type *o_ptr)
+static byte value_check_aux2_magic(object_type *o_ptr)
 {
 	object_kind *k_ptr = &k_info[o_ptr->k_idx];
 
