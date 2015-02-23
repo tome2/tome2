@@ -4,8 +4,9 @@
 #include "tome/squelch/cursor.hpp"
 #include "tome/squelch/condition.hpp"
 #include "tome/squelch/tree_printer.hpp"
-#include "angband.h"
-#include "quark.h"
+#include "../angband.h"
+#include "../modules.hpp"
+#include "../quark.h"
 
 namespace squelch {
 

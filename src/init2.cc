@@ -3,15 +3,14 @@
 /* Purpose: Initialisation (part 2) -BEN- */
 
 #include "angband.h"
-
+#include "modules.hpp"
 #include "messages.h"
 #include "quark.h"
 #include "hooks.h"
 #include "tome/make_array.hpp"
 #include "spells3.hpp"
 
-#include <assert.h>
-
+#include <cassert>
 #include <type_traits>
 
 /*

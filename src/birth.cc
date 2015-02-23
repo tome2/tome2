@@ -13,6 +13,7 @@
 #include "angband.h"
 #include "corrupt.hpp"
 #include "messages.h"
+#include "modules.hpp"
 #include "hooks.h"
 #include "mimic.hpp"
 #include "q_rand.h"

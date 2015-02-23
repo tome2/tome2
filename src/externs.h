@@ -1576,16 +1576,8 @@ extern void init_lua_init(void);
 /* status.c */
 extern void status_main();
 
-/* modules.c */
+/* modules.cc */
 extern cptr force_module;
-extern bool_ select_module(void);
-extern bool_ module_savefile_loadable(cptr savefile_mod);
-extern void tome_intro();
-extern void theme_intro();
-extern s16b *theme_race_status(int r_idx);
-extern void init_hooks_module();
-extern int find_module(cptr name);
-
 
 /* lua_bind.c */
 

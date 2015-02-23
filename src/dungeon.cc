@@ -13,6 +13,7 @@
 #include "angband.h"
 
 #include "corrupt.hpp"
+#include "modules.hpp"
 #include "quest.h"
 #include "quark.h"
 #include "hooks.h"

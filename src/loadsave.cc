@@ -5,8 +5,8 @@
    this way makes maintenance easier and lets us share code. */
 
 #include "angband.h"
-
 #include "messages.h"
+#include "modules.hpp"
 #include "quark.h"
 #include "hooks.h"
 
