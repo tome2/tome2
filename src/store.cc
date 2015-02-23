@@ -597,7 +597,7 @@ static bool_ store_check_num(object_type *o_ptr)
 }
 
 
-bool_ is_blessed(object_type *o_ptr)
+static bool_ is_blessed(object_type *o_ptr)
 {
 	u32b f1, f2, f3, f4, f5, esp;
 	object_flags_known(o_ptr, &f1, &f2, &f3, &f4, &f5, &esp);

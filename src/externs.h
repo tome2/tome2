@@ -1282,7 +1282,6 @@ school_type *school_at(int index);
 void mana_school_calc_mana(int *msp);
 
 /* store.c */
-extern bool_ is_blessed(object_type *o_ptr);
 extern void do_cmd_store(void);
 extern void store_shuffle(int which);
 extern void store_maint(int town_num, int store_num);
