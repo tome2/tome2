@@ -9,6 +9,7 @@
 #include "angband.h"
 #include "cave.hpp"
 #include "corrupt.hpp"
+#include "cmd3.hpp"
 #include "hiscore.h"
 #include "hooks.h"
 #include "mimic.hpp"

@@ -9,6 +9,7 @@
 #include "angband.h"
 #include "cave.hpp"
 #include "cmd1.hpp"
+#include "cmd3.hpp"
 #include "gods.hpp"
 #include "skills.hpp"
 #include "spell_type.hpp"

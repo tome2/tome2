@@ -4,6 +4,7 @@
 
 #include "util.hpp"
 #include "angband.h"
+#include "cmd3.hpp"
 #include "messages.h"
 #include "quark.h"
 #include "xtra1.hpp"

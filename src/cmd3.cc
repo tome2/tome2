@@ -5,6 +5,7 @@
  * not for profit purposes provided that this copyright and statement are
  * included in all such copies.
  */
+#include "cmd3.hpp"
 
 #include "angband.h"
 #include "cave.hpp"

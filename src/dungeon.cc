@@ -11,6 +11,7 @@
 #include "cave.hpp"
 #include "cmd1.hpp"
 #include "cmd2.hpp"
+#include "cmd3.hpp"
 #include "corrupt.hpp"
 #include "gods.hpp"
 #include "help.hpp"
