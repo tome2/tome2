@@ -11,6 +11,7 @@
 #include "hooks.h"
 #include "lua_bind.hpp"
 #include "mimic.hpp"
+#include "randart.hpp"
 #include "skills.hpp"
 #include "spell_type.hpp"
 #include "spells5.hpp"

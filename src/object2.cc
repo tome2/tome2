@@ -14,6 +14,7 @@
 #include "spell_type.hpp"
 #include "device_allocation.h"
 #include "hooks.h"
+#include "randart.hpp"
 #include "skills.hpp"
 #include "spells3.hpp"
 #include "spells5.hpp"

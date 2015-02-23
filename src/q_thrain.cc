@@ -1,7 +1,10 @@
 #include "q_thrain.h"
-#include "quark.h"
-#include "messages.h"
+
 #include "hooks.h"
+#include "quark.h"
+#include "randart.hpp"
+#include "messages.h"
+
 #include <cassert>
 
 #define cquest (quest[QUEST_THRAIN])

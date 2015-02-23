@@ -1,7 +1,3 @@
-/* File: randart.c */
-
-/* Purpose: Randart creation code */
-
 /*
  * Copyright (c) 2001 DarkGod
  *
@@ -10,7 +6,7 @@
  * included in all such copies.
  */
 
-#include "angband.h"
+#include "randart.hpp"
 #include "mimic.hpp"
 #include "quark.h"
 

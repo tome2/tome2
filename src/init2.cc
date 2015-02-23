@@ -7,9 +7,10 @@
 #include "messages.h"
 #include "quark.h"
 #include "hooks.h"
-#include "tome/make_array.hpp"
+#include "randart.hpp"
 #include "spells3.hpp"
 #include "squeltch.hpp"
+#include "tome/make_array.hpp"
 
 #include <cassert>
 #include <type_traits>

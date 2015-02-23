@@ -18,6 +18,7 @@
 #include "mimic.hpp"
 #include "notes.hpp"
 #include "quark.h"
+#include "randart.hpp"
 #include "skills.hpp"
 
 #include <type_traits>

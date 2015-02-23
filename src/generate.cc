@@ -12,6 +12,7 @@
 
 #include "angband.h"
 #include "hooks.h"
+#include "randart.hpp"
 
 #include <cassert>
 #include <memory>

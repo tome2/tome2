@@ -1281,12 +1281,6 @@ school_type *school_at(int index);
 
 void mana_school_calc_mana(int *msp);
 
-/* randart.c */
-extern int get_activation_power(void);
-extern void build_prob(cptr learn);
-extern bool_ create_artifact(object_type *o_ptr, bool_ a_scroll, bool_ get_name);
-extern bool_ artifact_scroll(void);
-
 /* store.c */
 extern bool_ is_blessed(object_type *o_ptr);
 extern void do_cmd_store(void);

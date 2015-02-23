@@ -13,6 +13,7 @@
 #include "angband.h"
 #include "corrupt.hpp"
 #include "hooks.h"
+#include "randart.hpp"
 #include "status.hpp"
 
 /*
