@@ -33,7 +33,7 @@ using std::chrono::milliseconds;
  * since it is usually tested several times...
  */
 
-void summon_dragon_riders();
+static void summon_dragon_riders();
 
 
 /*
@@ -7299,7 +7299,7 @@ void summon_cyber(void)
 	}
 }
 
-void summon_dragon_riders()
+static void summon_dragon_riders()
 {
 	int i;
 	int max_dr = (dun_level / 50) + randint(6);
