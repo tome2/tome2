@@ -76,6 +76,28 @@ static s32b get_level_device(spell_type *spell, s32b max, s32b min)
 	return lvl;
 }
 
+static s32b get_level_device_1(s32b s, s32b max, s32b min)
+{
+	// Must be in "device" mode.
+	assert(get_level_use_stick > -1);
+	// Delegate
+	spell_type *spell = spell_at(s);
+	return get_level_device(spell, max, min);
+}
+
+static s32b get_level_school_1(s32b s, s32b max, s32b min)
+{
+	// Delegate
+	s32b level;
+	bool_ na;
+	get_level_school(s, max, min, &level, &na);
+	// Note: It is tempting to add an assertion here for "na == FALSE" here,
+	// but there are cases where we haven't actually checked if the spell is
+	// really castable before calling this function (indirectly). Thus we
+	// MUST NOT assert anything about "na" as the code currently stands.
+	return level;
+}
+
 int get_mana(s32b s)
 {
 	spell_type *spell = spell_at(s);
@@ -161,13 +183,9 @@ s32b get_level(s32b s, s32b max, s32b min)
 {
 	/** Ahah shall we use Magic device instead ? */
 	if (get_level_use_stick > -1) {
-		spell_type *spell = spell_at(s);
-		return get_level_device(spell, max, min);
+		return get_level_device_1(s, max, min);
 	} else {
-		s32b level;
-		bool_ notused;
-		get_level_school(s, max, min, &level, &notused);
-		return level;
+		return get_level_school_1(s, max, min);
 	}
 }
 
