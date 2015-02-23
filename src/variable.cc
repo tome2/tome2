@@ -670,7 +670,6 @@ char *t_text;
 /*
  * The monster race arrays
  */
-header *r_head;
 monster_race *r_info;
 
 /*

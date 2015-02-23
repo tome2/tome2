@@ -892,8 +892,6 @@ struct alloc_entry
 	byte prob1;		/* Probability, pass 1 */
 	byte prob2;		/* Probability, pass 2 */
 	byte prob3;		/* Probability, pass 3 */
-
-	u16b total;		/* Unused for now */
 };
 
 
