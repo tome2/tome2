@@ -180,7 +180,6 @@ bool_ use_old_target; 		/* Use old target by default */
 bool_ always_pickup;              /* Pick things up by default */
 bool_ prompt_pickup_heavy;        /* Don't pick up the corpses */
 bool_ always_repeat;              /* Repeat obvious commands */
-bool_ depth_in_feet;              /* Show dungeon level in feet */
 
 bool_ ring_bell; 				/* Ring the bell (on errors, etc) */
 

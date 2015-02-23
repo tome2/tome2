@@ -183,7 +183,6 @@ extern bool_ always_pickup;
 extern bool_ prompt_pickup_heavy;
 extern bool_ always_repeat;
 extern bool_ use_old_target;
-extern bool_ depth_in_feet;
 extern bool_ hilite_player;
 extern bool_ ring_bell;
 extern bool_ find_ignore_stairs;

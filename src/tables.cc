@@ -1397,9 +1397,6 @@ option_type option_info[] =
 	{ &always_repeat, TRUE, 1, 7,
 	  "always_repeat", "Repeat obvious commands" },
 
-	{ &depth_in_feet, FALSE, 1, 8,
-	  "depth_in_feet", "Show dungeon level in feet" },
-
 	{ &ring_bell, FALSE, 1, 18,
 	  "ring_bell", "Audible bell (on errors, etc)" },
 	/* Changed to default to FALSE -- it's so extremely annoying!!! -TY */

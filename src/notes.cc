@@ -99,7 +99,6 @@ void add_note(char *note, char code)
 
 	/* Get depth  */
 	if (!dun_level) strcpy(depths, "  Town");
-	else if (depth_in_feet) sprintf(depths, "%4dft", dun_level * 50);
 	else sprintf(depths, "Lev%3d", dun_level);
 
 	/* Make note */

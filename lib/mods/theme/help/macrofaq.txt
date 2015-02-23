@@ -1780,9 +1780,7 @@ options screen.
 rogue_like_commands
 use_old_target
 always_pickup
-depth_in_feet
 alert_hitpoint
-auto_haggle
 auto_scum
 
 #####G----------------------------------------------------------------------

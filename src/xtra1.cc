@@ -524,25 +524,6 @@ static void prt_depth(int row, int col)
 		else
 			strcpy(depths, "Town/Wild");
 	}
-	else if (depth_in_feet)
-	{
-		if (dungeon_flags1 & DF1_TOWER)
-		{
-			(void)strnfmt(depths, 32, "%c%c%c -%d ft",
-			              d_ptr->short_name[0],
-			              d_ptr->short_name[1],
-			              d_ptr->short_name[2],
-			              dun_level * 50);
-		}
-		else
-		{
-			(void)strnfmt(depths, 32, "%c%c%c %d ft",
-			              d_ptr->short_name[0],
-			              d_ptr->short_name[1],
-			              d_ptr->short_name[2],
-			              dun_level * 50);
-		}
-	}
 	else
 	{
 		if (dungeon_flags1 & DF1_TOWER)

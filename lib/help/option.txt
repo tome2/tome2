@@ -109,10 +109,6 @@ off at will during the course of the game.
     a door, tunnel through walls, or disarm traps or chests, that you
     wish to repeat the command 99 times (see *****command.txt*0["command.txt"]).
 
-#####GShow dungeon level in feet    [depth_in_feet]
-    Display the dungeon depth in "feet" instead of as a level number (one
-    level is equivalent to 50'). This also affects the monster memory display.
-
 #####GAudible bell (on errors, etc)    [ring_bell]
     Attempt to make a "bell" noise when various errors occur.
 

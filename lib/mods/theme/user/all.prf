@@ -23,9 +23,6 @@ Y:prompt_pickup_heavy
 # Option 'Repeat obvious commands'
 Y:always_repeat
 
-# Option 'Show dungeon level in feet'
-X:depth_in_feet
-
 # Option 'Show labels in object listings'
 Y:show_labels
 

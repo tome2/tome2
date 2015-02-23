@@ -373,31 +373,17 @@ static void roff_aux(int r_idx, int ego, int remem)
 			text_out(", ");
 		else
 			text_out(format("%^s ", wd_he[msex]));
-		if (depth_in_feet)
+
+		text_out(format("is normally found on level ", wd_he[msex]));
+		if (dun_level < r_ptr->level) /* out of depth monster */
 		{
-			text_out(format("is normally found at depths of ", wd_he[msex]));
-			if (dun_level < r_ptr->level) /* out of depth monster */
-			{
-				text_out_c(TERM_L_RED, format("%d", r_ptr->level * 50));
-			}
-			else
-			{
-				text_out_c(TERM_L_GREEN, format("%d", r_ptr->level * 50));
-			}
-			text_out(" feet");
+			text_out_c(TERM_L_RED, format("%d", r_ptr->level));
 		}
 		else
 		{
-			text_out(format("is normally found on level ", wd_he[msex]));
-			if (dun_level < r_ptr->level) /* out of depth monster */
-			{
-				text_out_c(TERM_L_RED, format("%d", r_ptr->level));
-			}
-			else
-			{
-				text_out_c(TERM_L_GREEN, format("%d", r_ptr->level));
-			}
+			text_out_c(TERM_L_GREEN, format("%d", r_ptr->level));
 		}
+
 		old = TRUE;
 	}
 
