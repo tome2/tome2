@@ -1,4 +1,6 @@
 #include "q_poison.h"
+
+#include "cave.hpp"
 #include "quark.h"
 #include "messages.h"
 #include "hooks.h"

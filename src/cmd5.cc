@@ -8,6 +8,7 @@
 
 #include "angband.h"
 #include "birth.hpp"
+#include "cave.hpp"
 #include "corrupt.hpp"
 #include "skills.hpp"
 #include "spell_type.hpp"

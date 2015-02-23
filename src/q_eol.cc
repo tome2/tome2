@@ -1,5 +1,8 @@
 #include "q_eol.h"
+
+#include "cave.hpp"
 #include "hooks.h"
+
 #include <cassert>
 
 #define cquest (quest[QUEST_EOL])

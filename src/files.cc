@@ -7,6 +7,7 @@
  */
 
 #include "angband.h"
+#include "cave.hpp"
 #include "corrupt.hpp"
 #include "hiscore.h"
 #include "hooks.h"

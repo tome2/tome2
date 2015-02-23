@@ -12,7 +12,7 @@
  */
 
 #include "angband.h"
-
+#include "cave.hpp"
 #include <memory>
 
 /*

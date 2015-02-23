@@ -1,14 +1,10 @@
-/* File: melee2.c */
-
-/* Purpose: Monster spells and movement */
-
 /*
-* Copyright (c) 1989 James E. Wilson, Robert A. Koeneke
-*
-* This software may be copied and distributed for educational, research, and
-* not for profit purposes provided that this copyright and statement are
-* included in all such copies.
-*/
+ * Copyright (c) 1989 James E. Wilson, Robert A. Koeneke
+ *
+ * This software may be copied and distributed for educational, research, and
+ * not for profit purposes provided that this copyright and statement are
+ * included in all such copies.
+ */
 
 /*
 * This file has several additions to it by Keldon Jones (keldon@umr.edu)
@@ -17,6 +13,7 @@
 
 #include "angband.h"
 
+#include "cave.hpp"
 #include "hooks.h"
 #include "messages.h"
 #include "quark.h"

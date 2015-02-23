@@ -1,7 +1,3 @@
-/* File: object2.c */
-
-/* Purpose: Object code, part 2 */
-
 /*
  * Copyright (c) 1989 James E. Wilson, Robert A. Koeneke
  *
@@ -11,6 +7,7 @@
  */
 
 #include "angband.h"
+#include "cave.hpp"
 #include "spell_type.hpp"
 #include "device_allocation.h"
 #include "hooks.h"

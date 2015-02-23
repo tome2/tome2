@@ -1,8 +1,6 @@
 #include "angband.h"
 
-#include <assert.h>
-#include <sstream>
-
+#include "cave.hpp"
 #include "gods.hpp"
 #include "lua_bind.hpp"
 #include "spell_type.hpp"
@@ -10,6 +8,9 @@
 #include "spells3.hpp"
 #include "spells5.hpp"
 #include <algorithm>
+
+#include <cassert>
+#include <sstream>
 
 school_book_type school_books[SCHOOL_BOOKS_SIZE];
 

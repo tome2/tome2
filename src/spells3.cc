@@ -1,15 +1,16 @@
 #include "spells3.hpp"
-#include "spells5.hpp"
+
 #include "angband.h"
-
-#include <assert.h>
-
+#include "cave.hpp"
+#include "skills.hpp"
 #include "spell_type.hpp"
 #include "spell_idx_list.hpp"
-#include "skills.hpp"
+#include "spells5.hpp"
 #include "mimic.hpp"
 #include "xtra2.hpp"
 
+#include <algorithm>
+#include <cassert>
 #include <vector>
 
 s32b NOXIOUSCLOUD = -1; /* Identifier */

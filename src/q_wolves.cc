@@ -1,4 +1,6 @@
 #include "q_wolves.h"
+
+#include "cave.hpp"
 #include "hooks.h"
 
 #define cquest (quest[QUEST_WOLVES])

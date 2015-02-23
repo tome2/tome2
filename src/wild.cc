@@ -1,7 +1,3 @@
-/* File: generate.c */
-
-/* Purpose: Wilderness & Town related things */
-
 /*
  * Copyright (c) 2001 James E. Wilson, Robert A. Koeneke, DarkGod
  *
@@ -11,6 +7,7 @@
  */
 
 #include "angband.h"
+#include "cave.hpp"
 #include "hooks.h"
 
 #include <memory>

@@ -11,6 +11,7 @@
  */
 
 #include "angband.h"
+#include "cave.hpp"
 #include "corrupt.hpp"
 #include "hooks.h"
 #include "randart.hpp"

@@ -7,6 +7,7 @@
  */
 
 #include "angband.h"
+#include "cave.hpp"
 #include "mimic.hpp"
 #include "skills.hpp"
 #include "store.hpp"

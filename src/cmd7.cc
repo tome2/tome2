@@ -1,7 +1,3 @@
-/* File: cmd7.c */
-
-/* Purpose: More Class commands */
-
 /*
  * Copyright (c) 1999 Dark God
  *
@@ -10,8 +6,8 @@
  * included in all such copies.
  */
 
-
 #include "angband.h"
+#include "cave.hpp"
 #include "hooks.h"
 #include "mimic.hpp"
 #include "quark.h"

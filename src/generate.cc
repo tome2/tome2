@@ -1,7 +1,3 @@
-/* File: generate.c */
-
-/* Purpose: Dungeon generation */
-
 /*
  * Copyright (c) 1989 James E. Wilson, Robert A. Koeneke
  *
@@ -11,6 +7,7 @@
  */
 
 #include "angband.h"
+#include "cave.hpp"
 #include "hooks.h"
 #include "randart.hpp"
 

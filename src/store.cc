@@ -9,9 +9,10 @@
 #include "store.hpp"
 
 #include "bldg.hpp"
+#include "cave.hpp"
 #include "hooks.h"
-#include "spell_type.hpp"
 #include "quark.h"
+#include "spell_type.hpp"
 #include "skills.hpp"
 #include "spells5.hpp"
 #include "xtra1.hpp"

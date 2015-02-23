@@ -6,6 +6,7 @@
  * included in all such copies.
  */
 #include "angband.h"
+#include "cave.hpp"
 #include "hooks.h"
 #include "mimic.hpp"
 #include "randart.hpp"

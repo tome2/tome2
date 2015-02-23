@@ -1,8 +1,11 @@
 #include "q_rand.h"
+
+#include "cave.hpp"
 #include "hooks.h"
 #include "skills.hpp"
 #include "util.hpp"
 #include "messages.h"
+
 #include <cassert>
 
 static int randquest_hero[] = { 20, 13, 15, 16, 9, 17, 18, 8, -1 };

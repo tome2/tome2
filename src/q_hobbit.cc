@@ -1,6 +1,9 @@
 #include "q_hobbit.h"
+
+#include "cave.hpp"
 #include "messages.h"
 #include "hooks.h"
+
 #include <cassert>
 
 #define cquest (quest[QUEST_HOBBIT])

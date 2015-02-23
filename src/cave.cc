@@ -1,7 +1,4 @@
-/* File: cave.c */
-
-/* Purpose: low level dungeon routines -BEN- */
-
+#include "cave.hpp"
 
 #include "angband.h"
 #include "q_rand.h"
@@ -4502,6 +4499,28 @@ void disturb(int stop_search)
 }
 
 
+
+/*
+ * Return the index of the random quest on this level
+ * (or zero)
+ */
+static int random_quest_number()
+{
+	if ((dun_level >= 1) && (dun_level < MAX_RANDOM_QUEST) &&
+			(dungeon_flags1 & DF1_PRINCIPAL) &&
+			(random_quests[dun_level].type) &&
+					(!random_quests[dun_level].done) &&
+					(!is_randhero(dun_level)))
+	{
+		return dun_level;
+	}
+
+	/* Nope */
+	return 0;
+}
+
+
+
 /*
  * Hack -- Check if a level is a "quest" level
  */
@@ -4517,26 +4536,6 @@ int is_quest(int level)
 
 	/* Nope */
 	return (0);
-}
-
-
-/*
- * Return the index of the random quest on this level
- * (or zero)
- */
-int random_quest_number()
-{
-	if ((dun_level >= 1) && (dun_level < MAX_RANDOM_QUEST) &&
-	                (dungeon_flags1 & DF1_PRINCIPAL) &&
-	                (random_quests[dun_level].type) &&
-					(!random_quests[dun_level].done) &&
-					(!is_randhero(dun_level)))
-	{
-		return dun_level;
-	}
-
-	/* Nope */
-	return 0;
 }
 
 

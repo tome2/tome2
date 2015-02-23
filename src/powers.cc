@@ -1,7 +1,3 @@
-/* File: powers.c */
-
-/* Purpose: Powers */
-
 /*
  * Copyright (c) 2001 James E. Wilson, Robert A. Koeneke, DarkGod
  *
@@ -11,6 +7,7 @@
  */
 
 #include "angband.h"
+#include "cave.hpp"
 #include "quark.h"
 #include "hooks.h"
 #include "mimic.hpp"

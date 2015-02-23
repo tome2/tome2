@@ -1,6 +1,9 @@
 #include "q_wight.h"
+
+#include "cave.hpp"
 #include "quark.h"
 #include "hooks.h"
+
 #include <cassert>
 
 #define cquest (quest[QUEST_WIGHT])

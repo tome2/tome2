@@ -1,5 +1,6 @@
 #include "q_spider.h"
 
+#include "cave.hpp"
 #include "gods.hpp"
 #include "hooks.h"
 

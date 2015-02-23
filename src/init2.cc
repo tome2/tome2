@@ -1,8 +1,5 @@
-/* File: init2.c */
-
-/* Purpose: Initialisation (part 2) -BEN- */
-
 #include "angband.h"
+#include "cave.hpp"
 #include "modules.hpp"
 #include "messages.h"
 #include "quark.h"

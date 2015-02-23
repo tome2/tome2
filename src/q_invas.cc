@@ -1,4 +1,6 @@
 #include "q_invas.h"
+
+#include "cave.hpp"
 #include "hooks.h"
 
 #define cquest (quest[QUEST_INVASION])

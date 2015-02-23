@@ -1,4 +1,6 @@
 #include "q_evil.h"
+
+#include "cave.hpp"
 #include "hooks.h"
 
 #define cquest (quest[QUEST_EVIL])

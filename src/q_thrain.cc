@@ -1,5 +1,6 @@
 #include "q_thrain.h"
 
+#include "cave.hpp"
 #include "hooks.h"
 #include "quark.h"
 #include "randart.hpp"
