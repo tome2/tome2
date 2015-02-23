@@ -9,6 +9,7 @@
 #include "hooks.h"
 #include "tome/make_array.hpp"
 #include "spells3.hpp"
+#include "squeltch.hpp"
 
 #include <cassert>
 #include <type_traits>

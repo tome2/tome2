@@ -11,6 +11,7 @@
 #include "hooks.h"
 #include "messages.h"
 #include "skills.hpp"
+#include "squeltch.hpp"
 
 #include <cassert>
 #include <memory>

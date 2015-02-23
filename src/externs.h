@@ -1536,15 +1536,6 @@ extern void output_note(char *final_note);
 extern void add_note(char *note, char code);
 extern void add_note_type(int note_number);
 
-/* squeltch.c */
-extern void squeltch_inventory(void);
-extern void squeltch_grid(void);
-extern void do_cmd_automatizer(void);
-extern void automatizer_add_rule(object_type *o_ptr, bool_ destroy);
-extern bool_ automatizer_create;
-extern void automatizer_init();
-extern void automatizer_load(cptr file_name);
-
 
 /*
  * Hack -- conditional (or "bizarre") externs

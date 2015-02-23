@@ -15,6 +15,7 @@
 #include "gods.hpp"
 #include "hooks.h"
 #include "quark.h"
+#include "squeltch.hpp"
 
 #include <cassert>
 #include <algorithm>

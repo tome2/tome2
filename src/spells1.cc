@@ -15,6 +15,7 @@
 #include "skills.hpp"
 #include "spell_type.hpp"
 #include "spells5.hpp"
+#include "squeltch.hpp"
 
 #include <chrono>
 #include <thread>

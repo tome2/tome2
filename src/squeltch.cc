@@ -1,7 +1,3 @@
-/* File: squeltch.c */
-
-/* Purpose: Automatizer */
-
 /*
  * Copyright (c) 2002 DarkGod
  * Copyright (c) 2012 Bardur Arantsson
@@ -11,7 +7,7 @@
  * included in all such copies.
  */
 
-#include "angband.h"
+#include "squeltch.hpp"
 
 #include <jansson.h>
 #include <algorithm>
