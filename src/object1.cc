@@ -1944,16 +1944,15 @@ void object_desc(char *buf, object_type *o_ptr, int pref, int mode)
 	if ((f4 & TR4_LEVELS) && known)
 	{
 		t = object_desc_str(t, " (E:");
-		if (exp_need)
+		if (o_ptr->elevel < PY_MAX_LEVEL)
 		{
-			s32b need;
 			/* Formula from check_experience_obj(). */
-			need = player_exp[o_ptr->elevel - 1] * 5 / 2;
+			s32b need = player_exp[o_ptr->elevel - 1] * 5 / 2;
 			t = object_desc_num(t, need - o_ptr->exp);
 		}
 		else
 		{
-			t = object_desc_num(t, o_ptr->exp);
+			t = object_desc_str(t, "*****");
 		}
 		t = object_desc_str(t, ", L:");
 		t = object_desc_num(t, o_ptr->elevel);

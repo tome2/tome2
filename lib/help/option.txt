@@ -468,11 +468,6 @@ Features which are unique to ToME are collected in this menu.
     for new players.  More experienced players may wish to switch this option
     off.
 
-#####GShow the experience needed for the next level    [exp_need]
-    Setting this option alters the display of experience on the left of
-    the main screen to the experience needed to reach the next character level,
-    instead of the character's current total experience.
-
 #####GUse the old(Z) coloring scheme(reload the game)    [old_colors]
     Setting this option toggles the ASCII game colour display from the
     standard Angband monster colours to the Zangband-based monster colours.

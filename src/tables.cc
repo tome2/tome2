@@ -1577,9 +1577,6 @@ option_type option_info[] =
 	{ &option_ingame_help, TRUE, 5, 1,
 	  "ingame_help", "Ingame contextual help" },
 
-	{ &exp_need, FALSE, 5, 2,
-	  "exp_need", "Show the experience needed for next level" },
-
 	{ &auto_more, FALSE, 5, 4,
 	  "auto_more", "Automatically clear '-more-' prompts" },
 

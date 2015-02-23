@@ -215,9 +215,6 @@ X:center_player
 # Option 'Ingame contextual help'
 X:ingame_help
 
-# Option 'Show the experience needed for next level'
-X:exp_need
-
 # Option 'Use the old(Z) coloring scheme(reload the game)'
 X:old_colors
 

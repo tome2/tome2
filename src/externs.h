@@ -497,7 +497,6 @@ extern bool_ joke_monsters;
 extern bool_ center_player;
 extern s16b plots[MAX_PLOTS];
 extern random_quest random_quests[MAX_RANDOM_QUEST];
-extern bool_ exp_need;
 extern bool_ fate_option;
 extern bool_ *special_lvl[MAX_DUNGEON_DEPTH];
 extern bool_ generate_special_feeling;

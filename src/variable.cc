@@ -1165,11 +1165,6 @@ s16b plots[MAX_PLOTS];
 random_quest random_quests[MAX_RANDOM_QUEST];
 
 /*
- * Show exp left
- */
-bool_ exp_need;
-
-/*
  * Fated ?
  */
 bool_ fate_option;

@@ -320,20 +320,13 @@ static void prt_exp(void)
 {
 	char out_val[32];
 
-	if (!exp_need)
+	if ((p_ptr->lev >= PY_MAX_LEVEL) || (p_ptr->lev >= max_plev))
 	{
-		(void)sprintf(out_val, "%8ld", (long)p_ptr->exp);
+		(void)sprintf(out_val, "********");
 	}
 	else
 	{
-		if ((p_ptr->lev >= PY_MAX_LEVEL) || (p_ptr->lev >= max_plev))
-		{
-			(void)sprintf(out_val, "********");
-		}
-		else
-		{
-			(void)sprintf(out_val, "%8ld", (long)(player_exp[p_ptr->lev - 1] * p_ptr->expfact / 100L) - p_ptr->exp);
-		}
+		(void)sprintf(out_val, "%8ld", (long)(player_exp[p_ptr->lev - 1] * p_ptr->expfact / 100L) - p_ptr->exp);
 	}
 
 	if (p_ptr->exp >= p_ptr->max_exp)
