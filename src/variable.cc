@@ -672,8 +672,6 @@ char *t_text;
  */
 header *r_head;
 monster_race *r_info;
-char *r_name;
-char *r_text;
 
 /*
  * The monster ego race arrays

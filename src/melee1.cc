@@ -12,7 +12,9 @@
 
 #include "angband.h"
 
+#include <boost/algorithm/string/predicate.hpp>
 
+using boost::algorithm::iequals;
 
 /*
  * Critical blow.  All hits that do 95% of total possible damage,
@@ -1648,7 +1650,7 @@ bool_ make_attack_normal(int m_idx, byte divis)
 				{
 					act = "bites you.";
 					do_cut = 1;
-					if (magik(5) && (strstr(r_name + r_ptr->name, "Vampire") || strstr(r_name + r_ptr->name, "vampire")))
+					if (magik(5) && iequals(r_ptr->name, "vampire"))
 						do_vampire = TRUE;
 					touched = TRUE;
 					sound(SOUND_BITE);
@@ -1774,7 +1776,7 @@ bool_ make_attack_normal(int m_idx, byte divis)
 
 			case RBM_MOAN:
 				{
-					if (strstr((r_name + r_ptr->name), "Mathilde, the Science Student"))
+					if (strstr(r_ptr->name, "Mathilde, the Science Student"))
 						act = desc_moan[rand_int(3) + 4];
 					else
 						act = desc_moan[rand_int(4)];
@@ -2141,8 +2143,7 @@ bool_ make_attack_normal(int m_idx, byte divis)
 						}
 						else
 						{
-							if (strstr((r_name + r_ptr->name), "black market")
-							                && randint(2) != 1)
+							if (strstr(r_ptr->name, "black market") && randint(2) != 1)
 							{
 								s16b o_idx;
 

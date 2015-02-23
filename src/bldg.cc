@@ -228,9 +228,6 @@ static void arena_comm(int cmd)
 
 	monster_race *r_ptr;
 
-	cptr name;
-
-
 	switch (cmd)
 	{
 	case BACT_ARENA:
@@ -276,8 +273,7 @@ static void arena_comm(int cmd)
 			else
 			{
 				r_ptr = &r_info[arena_monsters[p_ptr->arena_number]];
-				name = (r_name + r_ptr->name);
-				strnfmt(tmp_str, 80, "Do I hear any challenges against: %s", name);
+				strnfmt(tmp_str, 80, "Do I hear any challenges against: %s", r_ptr->name);
 				msg_print(tmp_str);
 				msg_print(NULL);
 			}
@@ -1241,7 +1237,7 @@ static void show_quest_monster(void)
 
 	msg_format("Quest monster: %s. "
 	           "Need to turn in %d corpse%s to receive reward.",
-	           r_name + r_ptr->name, bounties[0][1],
+		   r_ptr->name, bounties[0][1],
 	           (bounties[0][1] > 1 ? "s" : ""));
 	msg_print(NULL);
 }
@@ -1267,7 +1263,7 @@ static void show_bounties(void)
 	{
 		r_ptr = &r_info[bounties[i][0]];
 
-		strnfmt(buff, 80, "%-30s (%d gp)", r_name + r_ptr->name, bounties[i][1]);
+		strnfmt(buff, 80, "%-30s (%d gp)", r_ptr->name, bounties[i][1]);
 
 		prt(buff, j, 2);
 
@@ -1490,7 +1486,7 @@ static void sell_quest_monster(void)
 
 		msg_print(format("Well done! As a reward I'll teach you everything "
 		                 "about the %s, (check your recall)",
-		                 r_name + r_ptr->name));
+				 r_ptr->name));
 
 		r_ptr->r_wake = r_ptr->r_ignore = MAX_UCHAR;
 

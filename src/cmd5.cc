@@ -823,7 +823,7 @@ cptr symbiote_name(bool_ capitalize)
 		if (r_ptr->flags1 & RF1_UNIQUE)
 		{
 			/* Unique monster; no preceding "your", and ignore our name. */
-			strncpy(buf, r_name + r_ptr->name, sizeof(buf));
+			strncpy(buf, r_ptr->name, sizeof(buf));
 		}
 		else if (o_ptr->note &&
 		                (s = strstr(quark_str(o_ptr->note), "#named ")) != NULL)
@@ -835,7 +835,7 @@ cptr symbiote_name(bool_ capitalize)
 		{
 			/* No special cases, just return "Your <monster type>". */
 			strcpy(buf, "your ");
-			strncpy(buf + 5, r_name + r_ptr->name, sizeof(buf) - 5);
+			strncpy(buf + 5, r_ptr->name, sizeof(buf) - 5);
 		}
 	}
 

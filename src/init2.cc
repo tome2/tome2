@@ -841,19 +841,10 @@ static errr init_r_info(void)
 	char buf[1024];
 
 
-	/*** Make the header ***/
-	r_head = make_header(max_r_idx);
-
-
 	/*** Make the fake arrays ***/
 
 	/* Allocate the "r_info" array */
-	r_info = make_array<monster_race>(r_head->info_num);
-
-	/* Hack -- make "fake" arrays */
-	r_name = make_array<char>(FAKE_NAME_SIZE);
-	r_text = make_array<char>(FAKE_TEXT_SIZE);
-
+	r_info = make_array<monster_race>(max_r_idx);
 
 	/*** Load the ascii template file ***/
 

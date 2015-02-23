@@ -1367,7 +1367,7 @@ static void roff_top(int r_idx)
 	}
 
 	/* Dump the name */
-	Term_addstr( -1, TERM_WHITE, (r_name + r_ptr->name));
+	Term_addstr( -1, TERM_WHITE, r_ptr->name);
 
 	/* Append the "standard" attr/char info */
 	Term_addstr( -1, TERM_WHITE, " ('");
@@ -1484,7 +1484,7 @@ void do_cmd_query_symbol(void)
 		{
 			char mon_name[80];
 
-			strcpy(mon_name, r_name + r_ptr->name);
+			strcpy(mon_name, r_ptr->name);
 			strlower(mon_name);
 
 			if (!strstr(mon_name, temp)) continue;

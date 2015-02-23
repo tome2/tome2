@@ -1497,9 +1497,9 @@ void object_desc(char *buf, object_type *o_ptr, int pref, int mode)
 			monster_race* r_ptr = &r_info[o_ptr->pval2];
 			modstr = basenm;
 			if (r_ptr->flags1 & RF1_UNIQUE)
-				basenm = format("& %s's #~", r_name + r_ptr->name);
+				basenm = format("& %s's #~", r_ptr->name);
 			else
-				basenm = format("& %s #~", r_name + r_ptr->name);
+				basenm = format("& %s #~", r_ptr->name);
 			break;
 		}
 
@@ -1508,7 +1508,7 @@ void object_desc(char *buf, object_type *o_ptr, int pref, int mode)
 			monster_race* r_ptr = &r_info[o_ptr->pval2];
 			modstr = basenm;
 
-			basenm = format("& %s #~", r_name + r_ptr->name);
+			basenm = format("& %s #~", r_ptr->name);
 			break;
 		}
 
@@ -1517,7 +1517,7 @@ void object_desc(char *buf, object_type *o_ptr, int pref, int mode)
 			/* We print hit points further down. --dsb */
 			monster_race* r_ptr = &r_info[o_ptr->pval];
 			modstr = basenm;
-			basenm = format("& %s~", r_name + r_ptr->name);
+			basenm = format("& %s~", r_ptr->name);
 			break;
 		}
 

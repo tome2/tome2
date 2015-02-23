@@ -2250,7 +2250,7 @@ void lose_exp(s32b amount)
  */
 int get_coin_type(monster_race *r_ptr)
 {
-	cptr name = (r_name + r_ptr->name);
+	cptr name = r_ptr->name;
 
 	/* Analyze "coin" monsters */
 	if (r_ptr->d_char == '$')
@@ -2687,7 +2687,7 @@ void monster_death(int m_idx)
 	object_level = (dun_level + m_ptr->level) / 2;
 
 	/* Mega^2-hack -- destroying the Stormbringer gives it us! */
-	if (strstr((r_name + r_ptr->name), "Stormbringer"))
+	if (strstr(r_ptr->name, "Stormbringer"))
 	{
 		/* Get local object */
 		q_ptr = &forge;
@@ -2737,7 +2737,7 @@ void monster_death(int m_idx)
 	 * Mega^3-hack: killing a 'Warrior of the Dawn' is likely to
 	 * spawn another in the fallen one's place!
 	 */
-	else if (strstr((r_name + r_ptr->name), "the Dawn"))
+	else if (strstr(r_ptr->name, "the Dawn"))
 	{
 		if (!(randint(20) == 13))
 		{
@@ -2773,13 +2773,13 @@ void monster_death(int m_idx)
 	}
 
 	/* One more ultra-hack: An Unmaker goes out with a big bang! */
-	else if (strstr((r_name + r_ptr->name), "Unmaker"))
+	else if (strstr(r_ptr->name, "Unmaker"))
 	{
 		int flg = PROJECT_GRID | PROJECT_ITEM | PROJECT_KILL;
 		(void)project(m_idx, 6, y, x, 100, GF_CHAOS, flg);
 	}
 	/* Pink horrors are replaced with 2 Blue horrors */
-	else if (strstr((r_name + r_ptr->name), "ink horror"))
+	else if (strstr(r_ptr->name, "ink horror"))
 	{
 		for (i = 0; i < 2; i++)
 		{
@@ -2806,7 +2806,7 @@ void monster_death(int m_idx)
 	/* Mega-Hack -- drop "winner" treasures */
 	else if (r_ptr->flags1 & (RF1_DROP_CHOSEN))
 	{
-		if (strstr((r_name + r_ptr->name), "Morgoth, Lord of Darkness"))
+		if (strstr(r_ptr->name, "Morgoth, Lord of Darkness"))
 		{
 			/* Get local object */
 			q_ptr = &forge;
@@ -2844,7 +2844,7 @@ void monster_death(int m_idx)
 			/* Drop it in the dungeon */
 			drop_near(q_ptr, -1, y, x);
 		}
-		else if (strstr((r_name + r_ptr->name), "Smeagol"))
+		else if (strstr(r_ptr->name, "Smeagol"))
 		{
 			/* Get local object */
 			q_ptr = &forge;
@@ -2883,7 +2883,7 @@ void monster_death(int m_idx)
 			create_artifact(q_ptr, TRUE, FALSE);
 
 			/* Save the inscription */
-			q_ptr->art_name = quark_add(format("of %s", r_name + r_ptr->name));
+			q_ptr->art_name = quark_add(format("of %s", r_ptr->name));
 
 			q_ptr->found = OBJ_FOUND_MONSTER;
 			q_ptr->found_aux1 = m_ptr->r_idx;
@@ -2900,32 +2900,32 @@ void monster_death(int m_idx)
 			int chance = 0;
 			int I_kind = 0;
 
-			if (strstr((r_name + r_ptr->name), "Marda, rider of the Gold Laronth"))
+			if (strstr(r_ptr->name, "Marda, rider of the Gold Laronth"))
 			{
 				a_idx = ART_MARDA;
 				chance = 50;
 			}
-			else if (strstr((r_name + r_ptr->name), "Saruman of Many Colours"))
+			else if (strstr(r_ptr->name, "Saruman of Many Colours"))
 			{
 				a_idx = ART_PALANTIR;
 				chance = 30;
 			}
-			else if (strstr((r_name + r_ptr->name), "Hagen, son of Alberich"))
+			else if (strstr(r_ptr->name, "Hagen, son of Alberich"))
 			{
 				a_idx = ART_NIMLOTH;
 				chance = 66;
 			}
-			else if (strstr((r_name + r_ptr->name), "Durin's Bane"))
+			else if (strstr(r_ptr->name, "Durin's Bane"))
 			{
 				a_idx = ART_CALRIS;
 				chance = 60;
 			}
-			else if (strstr((r_name + r_ptr->name), "Gothmog, the High Captain of Balrogs"))
+			else if (strstr(r_ptr->name, "Gothmog, the High Captain of Balrogs"))
 			{
 				a_idx = ART_GOTHMOG;
 				chance = 50;
 			}
-			else if (strstr((r_name + r_ptr->name), "Eol, the Dark Elf"))
+			else if (strstr(r_ptr->name, "Eol, the Dark Elf"))
 			{
 				a_idx = ART_ANGUIREL;
 				chance = 50;
@@ -3438,11 +3438,8 @@ bool_ mon_take_hit(int m_idx, int dam, bool_ *fear, cptr note)
 		{
 			char note[80];
 
-			/* Get true name even if blinded/hallucinating */
-			cptr monst = (r_name + r_ptr->name);
-
 			/* Write note */
-			sprintf(note, "Killed %s", monst);
+			sprintf(note, "Killed %s", r_ptr->name);
 
 			add_note(note, 'U');
 		}
@@ -5706,7 +5703,7 @@ void make_wish(void)
 		if (r_ptr->flags9 & RF9_NEVER_GENE) continue;
 		if (r_ptr->flags1 & RF1_UNIQUE) continue;
 
-		sprintf(buf, "%s", r_ptr->name + r_name);
+		sprintf(buf, "%s", r_ptr->name);
 		strlower(buf);
 
 		if (strstr(mname, buf))
@@ -5722,12 +5719,18 @@ void make_wish(void)
 
 				if (j)
 				{
-					if (re_ptr->before) sprintf(buf, "%s %s", re_name + re_ptr->name, r_ptr->name + r_name);
-					else sprintf(buf, "%s %s", r_ptr->name + r_name, re_name + re_ptr->name);
+					if (re_ptr->before)
+					{
+						sprintf(buf, "%s %s", re_name + re_ptr->name, r_ptr->name);
+					}
+					else
+					{
+						sprintf(buf, "%s %s", r_ptr->name, re_name + re_ptr->name);
+					}
 				}
 				else
 				{
-					sprintf(buf, "%s", r_ptr->name + r_name);
+					sprintf(buf, "%s", r_ptr->name);
 				}
 				strlower(buf);
 

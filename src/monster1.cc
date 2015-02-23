@@ -337,7 +337,7 @@ static void roff_aux(int r_idx, int ego, int remem)
 		char buf[2048];
 
 		/* Simple method */
-		strcpy(buf, r_text + r_ptr->text);
+		strcpy(buf, r_ptr->text);
 
 		/* Dump it */
 		text_out(buf);
@@ -1534,12 +1534,18 @@ static void roff_name(int r_idx, int ego)
 	/* Dump the name */
 	if (ego)
 	{
-		if (re_info[ego].before) Term_addstr( -1, TERM_WHITE, format("%s %s", re_name + re_info[ego].name, r_name + r_ptr->name));
-		else Term_addstr( -1, TERM_WHITE, format("%s %s", r_name + r_ptr->name, re_name + re_info[ego].name));
+		if (re_info[ego].before)
+		{
+			Term_addstr( -1, TERM_WHITE, format("%s %s", re_name + re_info[ego].name, r_ptr->name));
+		}
+		else
+		{
+			Term_addstr( -1, TERM_WHITE, format("%s %s", r_ptr->name, re_name + re_info[ego].name));
+		}
 	}
 	else
 	{
-		Term_addstr( -1, TERM_WHITE, r_name + r_ptr->name);
+		Term_addstr( -1, TERM_WHITE, r_ptr->name);
 	}
 
 	/* Append the "standard" attr/char info */

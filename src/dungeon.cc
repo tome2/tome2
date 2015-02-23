@@ -3066,8 +3066,7 @@ static void process_world(void)
 
 					if ((r_ptr->flags9 & RF9_IMPRESED) && can_create_companion())
 					{
-						msg_format("And you have given the imprint to your %s!",
-						           r_name + r_ptr->name);
+						msg_format("And you have given the imprint to your %s!", r_ptr->name);
 						m_ptr->status = MSTATUS_COMPANION;
 					}
 

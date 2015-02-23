@@ -1217,19 +1217,24 @@ void monster_desc(char *desc, monster_type *m_ptr, int mode)
 {
 	cptr res;
 	monster_race *r_ptr = race_inf(m_ptr);
-	cptr b_name = (r_name + r_ptr->name);
 	char silly_name[80], name[100];
 	bool_ seen, pron;
 	int insanity = (p_ptr->msane - p_ptr->csane) * 100 / p_ptr->msane;
 
 	if (m_ptr->ego)
 	{
-		if (re_info[m_ptr->ego].before) sprintf(name, "%s %s", re_name + re_info[m_ptr->ego].name, b_name);
-		else sprintf(name, "%s %s", b_name, re_name + re_info[m_ptr->ego].name);
+		if (re_info[m_ptr->ego].before)
+		{
+			sprintf(name, "%s %s", re_name + re_info[m_ptr->ego].name, r_ptr->name);
+		}
+		else
+		{
+			sprintf(name, "%s %s", r_ptr->name, re_name + re_info[m_ptr->ego].name);
+		}
 	}
 	else
 	{
-		sprintf(name, "%s", b_name);
+		sprintf(name, "%s", r_ptr->name);
 	}
 
 	/*
@@ -1248,7 +1253,7 @@ void monster_desc(char *desc, monster_type *m_ptr, int mode)
 			}
 			while (hallu_race->flags1 & RF1_UNIQUE);
 
-			strcpy(silly_name, (r_name + hallu_race->name));
+			strcpy(silly_name, hallu_race->name);
 		}
 		else
 		{
@@ -1425,17 +1430,22 @@ void monster_desc(char *desc, monster_type *m_ptr, int mode)
 void monster_race_desc(char *desc, int r_idx, int ego)
 {
 	monster_race *r_ptr = &r_info[r_idx];
-	cptr b_name = (r_name + r_ptr->name);
 	char name[80];
 
 	if (ego)
 	{
-		if (re_info[ego].before) sprintf(name, "%s %s", re_name + re_info[ego].name, b_name);
-		else sprintf(name, "%s %s", b_name, re_name + re_info[ego].name);
+		if (re_info[ego].before)
+		{
+			sprintf(name, "%s %s", re_name + re_info[ego].name, r_ptr->name);
+		}
+		else
+		{
+			sprintf(name, "%s %s", r_ptr->name, re_name + re_info[ego].name);
+		}
 	}
 	else
 	{
-		sprintf(name, "%s", b_name);
+		sprintf(name, "%s", r_ptr->name);
 	}
 
 	/* It could be a Unique */
@@ -2115,8 +2125,6 @@ s16b place_monster_one(int y, int x, int r_idx, int ego, bool_ slp, int status)
 
 	monster_race *r_ptr = &r_info[r_idx];
 
-	cptr name = (r_name + r_ptr->name);
-
 	/* DO NOT PLACE A MONSTER IN THE SMALL SCALE WILDERNESS !!! */
 	if (p_ptr->wild_mode)
 	{
@@ -2269,7 +2277,7 @@ s16b place_monster_one(int y, int x, int r_idx, int ego, bool_ slp, int status)
 		if (r_ptr->flags1 & (RF1_UNIQUE))
 		{
 			/* Message for cheaters */
-			if ((cheat_hear) || (p_ptr->precognition)) msg_format("Deep Unique (%s).", name);
+			if ((cheat_hear) || (p_ptr->precognition)) msg_format("Deep Unique (%s).", r_ptr->name);
 
 			/* Boost rating by twice delta-depth */
 			rating += (r_ptr->level - dun_level) * 2;
@@ -2279,7 +2287,7 @@ s16b place_monster_one(int y, int x, int r_idx, int ego, bool_ slp, int status)
 		else
 		{
 			/* Message for cheaters */
-			if ((cheat_hear) || (p_ptr->precognition)) msg_format("Deep Monster (%s).", name);
+			if ((cheat_hear) || (p_ptr->precognition)) msg_format("Deep Monster (%s).", r_ptr->name);
 
 			/* Boost rating by delta-depth */
 			rating += (r_ptr->level - dun_level);
@@ -2290,7 +2298,7 @@ s16b place_monster_one(int y, int x, int r_idx, int ego, bool_ slp, int status)
 	else if (r_ptr->flags1 & (RF1_UNIQUE))
 	{
 		/* Unique monsters induce message */
-		if ((cheat_hear) || (p_ptr->precognition)) msg_format("Unique (%s).", name);
+		if ((cheat_hear) || (p_ptr->precognition)) msg_format("Unique (%s).", r_ptr->name);
 	}
 
 
@@ -3185,7 +3193,7 @@ bool_ summon_specific_okay(int r_idx)
 
 	case SUMMON_DAWN:
 		{
-			okay = ((strstr((r_name + r_ptr->name), "the Dawn")) &&
+			okay = ((strstr(r_ptr->name, "the Dawn")) &&
 			        !(r_ptr->flags1 & (RF1_UNIQUE)));
 			break;
 		}
@@ -3234,14 +3242,14 @@ bool_ summon_specific_okay(int r_idx)
 
 	case SUMMON_PHANTOM:
 		{
-			okay = ((strstr((r_name + r_ptr->name), "Phantom")) &&
+			okay = ((strstr(r_ptr->name, "Phantom")) &&
 			        !(r_ptr->flags1 & (RF1_UNIQUE)));
 			break;
 		}
 
 	case SUMMON_ELEMENTAL:
 		{
-			okay = ((strstr((r_name + r_ptr->name), "lemental")) &&
+			okay = ((strstr(r_ptr->name, "lemental")) &&
 			        !(r_ptr->flags1 & (RF1_UNIQUE)));
 			break;
 		}
@@ -3254,21 +3262,21 @@ bool_ summon_specific_okay(int r_idx)
 
 	case SUMMON_BLUE_HORROR:
 		{
-			okay = ((strstr((r_name + r_ptr->name), "lue horror")) &&
+			okay = ((strstr(r_ptr->name, "lue horror")) &&
 			        !(r_ptr->flags1 & (RF1_UNIQUE)));
 			break;
 		}
 
 	case SUMMON_BUG:
 		{
-			okay = ((strstr((r_name + r_ptr->name), "Software bug")) &&
+			okay = ((strstr(r_ptr->name, "Software bug")) &&
 			        !(r_ptr->flags1 & (RF1_UNIQUE)));
 			break;
 		}
 
 	case SUMMON_RNG:
 		{
-			okay = ((strstr((r_name + r_ptr->name), "Random Number Generator")) &&
+			okay = ((strstr(r_ptr->name, "Random Number Generator")) &&
 			        !(r_ptr->flags1 & (RF1_UNIQUE)));
 			break;
 		}

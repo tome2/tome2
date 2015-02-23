@@ -1370,16 +1370,14 @@ static void spoil_mon_desc(cptr fname)
 	{
 		monster_race *r_ptr = &r_info[who_i];
 
-		cptr name = (r_name + r_ptr->name);
-
 		/* Get the "name" */
 		if (r_ptr->flags1 & (RF1_UNIQUE))
 		{
-			sprintf(nam, "[U] %s", name);
+			sprintf(nam, "[U] %s", r_ptr->name);
 		}
 		else
 		{
-			sprintf(nam, "The %s", name);
+			sprintf(nam, "The %s", r_ptr->name);
 		}
 
 
@@ -1525,7 +1523,7 @@ static void spoil_mon_info(cptr fname)
 		}
 
 		/* Name */
-		sprintf(buf, "%s  (", (r_name + r_ptr->name));   /* ---)--- */
+		sprintf(buf, "%s  (", r_ptr->name);   /* ---)--- */
 		spoil_out(buf);
 
 		/* Color */
@@ -1584,7 +1582,7 @@ static void spoil_mon_info(cptr fname)
 
 
 		/* Describe */
-		spoil_out(r_text + r_ptr->text);
+		spoil_out(r_ptr->text);
 		spoil_out(" ");
 
 

@@ -5110,8 +5110,9 @@ bool_ genocide_aux(bool_ player_cast, char typ)
 		{
 			int wx, wy;
 			int attempts = 500;
+			char buf[256];
 
-			monster_race_desc(r_name, m_ptr->r_idx, 0);
+			monster_race_desc(buf, m_ptr->r_idx, 0);
 
 			do
 			{
@@ -5121,7 +5122,7 @@ bool_ genocide_aux(bool_ player_cast, char typ)
 
 			if (place_monster_aux(wy, wx, m_ptr->r_idx, FALSE, TRUE, MSTATUS_ENEMY))
 			{
-				cmsg_format(TERM_L_BLUE, "The spell seems to produce an ... interesting effect on the %s.", r_name);
+				cmsg_format(TERM_L_BLUE, "The spell seems to produce an ... interesting effect on the %s.", buf);
 			}
 
 			return TRUE;
@@ -5235,8 +5236,9 @@ bool_ mass_genocide(bool_ player_cast)
 		{
 			int wx, wy;
 			int attempts = 500;
+			char buf[256];
 
-			monster_race_desc(r_name, m_ptr->r_idx, 0);
+			monster_race_desc(buf, m_ptr->r_idx, 0);
 
 			do
 			{
@@ -5246,7 +5248,7 @@ bool_ mass_genocide(bool_ player_cast)
 
 			if (place_monster_aux(wy, wx, m_ptr->r_idx, FALSE, TRUE, MSTATUS_ENEMY))
 			{
-				cmsg_format(TERM_L_BLUE, "The spell seems to produce an ... interesting effect on the %s.", r_name);
+				cmsg_format(TERM_L_BLUE, "The spell seems to produce an ... interesting effect on the %s.", buf);
 			}
 
 			return TRUE;

@@ -2738,8 +2738,7 @@ static bool_ vault_aux_chapel(int r_idx)
 	if (r_ptr->flags1 & (RF1_UNIQUE)) return (FALSE);
 
 	/* Require "priest" or Angel */
-	if (!((r_ptr->d_char == 'A') ||
-	                strstr((r_name + r_ptr->name), "riest")))
+	if (!((r_ptr->d_char == 'A') || strstr(r_ptr->name, "riest")))
 	{
 		return (FALSE);
 	}
@@ -3452,7 +3451,7 @@ static void build_type6(int by0, int bx0)
 			for (i = 0; i < 8; i++)
 			{
 				/* Message */
-				msg_print(r_name + r_info[what[i]].name);
+				msg_print(r_info[what[i]].name);
 			}
 		}
 	}

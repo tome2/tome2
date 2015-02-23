@@ -2179,7 +2179,7 @@ void do_cmd_visuals(void)
 				if (!r_ptr->name) continue;
 
 				/* Dump a comment */
-				fprintf(fff, "# %s\n", (r_name + r_ptr->name));
+				fprintf(fff, "# %s\n", r_ptr->name);
 
 				/* Dump the monster attr/char info */
 				fprintf(fff, "R:%d:0x%02X:0x%02X\n\n", i,
@@ -2326,7 +2326,7 @@ void do_cmd_visuals(void)
 				/* Label the object */
 				Term_putstr(5, 17, -1, TERM_WHITE,
 				            format("Monster = %d, Name = %-40.40s",
-				                   r, (r_name + r_ptr->name)));
+						   r, r_ptr->name));
 
 				/* Label the Default values */
 				Term_putstr(10, 19, -1, TERM_WHITE,
@@ -3449,14 +3449,14 @@ static void do_cmd_knowledge_uniques(void)
 					fprintf(fff, "[[[[[%c%c] [[[[[R%-68s is dead]\n",
 						conv_color[r_ptr->d_attr],
 						r_ptr->d_char,
-						(r_name + r_ptr->name));
+						r_ptr->name);
 				}
 				else
 				{
 					fprintf(fff, "[[[[[%c%c] [[[[[w%-68s is alive]\n",
 						conv_color[r_ptr->d_attr],
 						r_ptr->d_char,
-						(r_name + r_ptr->name));
+						r_ptr->name);
 				}
 			}
 		}
@@ -3722,8 +3722,7 @@ static void do_cmd_knowledge_kill_count(void)
 			if (dead)
 			{
 				/* Print a message */
-				fprintf(fff, "     %s\n",
-				        (r_name + r_ptr->name));
+				fprintf(fff, "     %s\n", r_ptr->name);
 				Total++;
 			}
 		}
@@ -3735,19 +3734,19 @@ static void do_cmd_knowledge_kill_count(void)
 			{
 				if (This < 2)
 				{
-					if (strstr(r_name + r_ptr->name, "coins"))
+					if (strstr(r_ptr->name, "coins"))
 					{
-						fprintf(fff, "     1 pile of %s\n", (r_name + r_ptr->name));
+						fprintf(fff, "     1 pile of %s\n", r_ptr->name);
 					}
 					else
 					{
-						fprintf(fff, "     1 %s\n", (r_name + r_ptr->name));
+						fprintf(fff, "     1 %s\n", r_ptr->name);
 					}
 				}
 				else
 				{
 					char to_plural[80];
-					strcpy(to_plural, (r_name + r_ptr->name));
+					strcpy(to_plural, r_ptr->name);
 					plural_aux(to_plural);
 					fprintf(fff, "     %d %s\n", This, to_plural);
 				}

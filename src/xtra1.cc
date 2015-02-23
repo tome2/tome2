@@ -1431,11 +1431,11 @@ static void fix_m_list(void)
 				/* Dump the monster name */
 				if (r_ptr->total_visible == 1)
 				{
-					c_prt(attr, (r_name + r_ptr->name), (num % (h - 1)) + 1, (num / (h - 1) * 26));
+					c_prt(attr, r_ptr->name, (num % (h - 1)) + 1, (num / (h - 1) * 26));
 				}
 				else
 				{
-					c_prt(attr, format("%s (x%d)", r_name + r_ptr->name, r_ptr->total_visible), (num % (h - 1)) + 1, (num / (h - 1)) * 26);
+					c_prt(attr, format("%s (x%d)", r_ptr->name, r_ptr->total_visible), (num % (h - 1)) + 1, (num / (h - 1)) * 26);
 				}
 
 				num++;

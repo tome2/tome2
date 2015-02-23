@@ -3364,7 +3364,6 @@ void strlower(char *buf)
  * must exactly match (look out for commas and the like!), or else 0 is
  * returned. Case doesn't matter. -GSN-
  */
-
 int test_monster_name(cptr name)
 {
 	int i;
@@ -3373,11 +3372,11 @@ int test_monster_name(cptr name)
 	for (i = 1; i < max_r_idx; i++)
 	{
 		monster_race *r_ptr = &r_info[i];
-		cptr mon_name = r_name + r_ptr->name;
-		if (iequals(name, mon_name)) return (i);
+		if (r_ptr->name && iequals(name, r_ptr->name)) return (i);
 	}
 	return (0);
 }
+
 int test_mego_name(cptr name)
 {
 	int i;

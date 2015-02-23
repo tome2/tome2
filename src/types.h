@@ -424,8 +424,8 @@ typedef struct monster_race monster_race;
 
 struct monster_race
 {
-	u32b name;				/* Name (offset) */
-	u32b text;                              /* Text (offset) */
+	const char *name;                       /* Name */
+	char *text;                             /* Text */
 
 	u16b hdice;				/* Creatures hit dice count */
 	u16b hside;				/* Creatures hit dice sides */

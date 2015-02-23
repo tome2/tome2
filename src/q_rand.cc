@@ -418,10 +418,10 @@ static bool_ quest_random_feeling_hook(void *, void *, void *)
 	if (is_randhero(dun_level))
 	{
 		cmsg_format(TERM_YELLOW, "A strange man wrapped in a dark cloak steps out of the shadows:");
-		cmsg_format(TERM_YELLOW, "'Oh, please help me! A horrible %s stole my sword! I'm nothing without it.'", r_info[random_quests[dun_level].r_idx].name + r_name);
+		cmsg_format(TERM_YELLOW, "'Oh, please help me! A horrible %s stole my sword! I'm nothing without it.'", r_info[random_quests[dun_level].r_idx].name);
 	}
 	else
-		cmsg_format(TERM_YELLOW, "You hear someone shouting: 'Leave me alone, stupid %s'", r_info[random_quests[dun_level].r_idx].name + r_name);
+		cmsg_format(TERM_YELLOW, "You hear someone shouting: 'Leave me alone, stupid %s'", r_info[random_quests[dun_level].r_idx].name);
 	return (FALSE);
 }
 
@@ -598,14 +598,12 @@ bool_ quest_random_describe(FILE *fff)
 	{
 		fprintf(fff, "#####yCaptured princess!\n");
 		fprintf(fff, "A princess is being held prisoner and tortured here!\n");
-		fprintf(fff, "Save her from the horrible %s.\n",
-			r_info[random_quests[dun_level].r_idx].name + r_name);
+		fprintf(fff, "Save her from the horrible %s.\n", r_info[random_quests[dun_level].r_idx].name);
 	}
 	else
 	{
 		fprintf(fff, "#####yLost sword!\n");
-		fprintf(fff, "An adventurer lost his sword to a bunch of %s!\n",
-			r_info[random_quests[dun_level].r_idx].name + r_name);
+		fprintf(fff, "An adventurer lost his sword to a bunch of %s!\n", r_info[random_quests[dun_level].r_idx].name);
 		fprintf(fff, "Kill them all to get it back.\n");
 	}
 	fprintf(fff, "Number: %d, Killed: %ld.\n",

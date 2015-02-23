@@ -4354,8 +4354,6 @@ bool_ project_m(int who, int r, int y, int x, int dam, int typ)
 
 	char killer [80];
 
-	cptr name = (r_name + r_ptr->name);
-
 	/* Is the monster "seen"? */
 	bool_ seen;
 
@@ -4827,8 +4825,8 @@ bool_ project_m(int who, int r, int y, int x, int dam, int typ)
 		{
 			if (seen) obvious = TRUE;
 			if ((r_ptr->d_char == 'E') &&
-			                (prefix(name, "W") ||
-			                 (strstr((r_name + r_ptr->name), "Unmaker"))))
+					(prefix(r_ptr->name, "W") ||
+					 (strstr(r_ptr->name, "Unmaker"))))
 			{
 				note = " is immune.";
 				dam = 0;
@@ -4848,8 +4846,8 @@ bool_ project_m(int who, int r, int y, int x, int dam, int typ)
 		{
 			if (seen) obvious = TRUE;
 			if ((r_ptr->d_char == 'E') &&
-			                (prefix(name, "W") ||
-			                 (strstr((r_name + r_ptr->name), "Unmaker"))))
+					(prefix(r_ptr->name, "W") ||
+					 (strstr(r_ptr->name, "Unmaker"))))
 			{
 				note = " is immune.";
 				dam = 0;

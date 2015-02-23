@@ -1498,6 +1498,33 @@ static byte monster_ego_modify(char c)
 	}
 }
 
+/**
+ * Append one string to the end of another, reallocating if
+ * necessary.
+ */
+static void strappend(char **s, char *t)
+{
+	// Do we need to initialize the destination string?
+	if (*s == nullptr)
+	{
+		// Costs an extra allocation which could be avoided
+		// but this leads to simpler code.
+		*s = strdup("");
+	}
+	// We should really be preserving the original pointer and
+	// do something else in case of failure to realloc(), but
+	// instead we just do the lazy thing and call abort() if
+	// reallocation fails. In practice it won't.
+	*s = static_cast<char *>(realloc(*s, strlen(*s) + strlen(t) + 1));
+	if (*s == nullptr)
+	{
+		abort(); // Cannot handle failure to reallocate
+	}
+
+	/* Append 't' to the destination string */
+	strcat(*s, t);
+}
+
 /*
  * Implements fp stacks, for included files
  */
@@ -7485,10 +7512,6 @@ errr init_r_info_txt(FILE *fp, char *buf)
 	error_line = -1;
 
 
-	/* Start the "fake" stuff */
-	r_head->name_size = 0;
-	r_head->text_size = 0;
-
 	/* Parse */
 	fp_stack_init(fp);
 	while (0 == my_fgets_dostack(buf, 1024))
@@ -7550,7 +7573,7 @@ errr init_r_info_txt(FILE *fp, char *buf)
 			if (i < error_idx) return (4);
 
 			/* Verify information */
-			if (i >= r_head->info_num) return (2);
+			if (i >= max_r_idx) return (2);
 
 			/* Save the index */
 			error_idx = i;
@@ -7558,17 +7581,9 @@ errr init_r_info_txt(FILE *fp, char *buf)
 			/* Point at the "info" */
 			r_ptr = &r_info[i];
 
-			/* Hack -- Verify space */
-			if (r_head->name_size + strlen(s) + 8 > FAKE_NAME_SIZE) return (7);
-
-			/* Advance and Save the name index */
-			if (!r_ptr->name) r_ptr->name = ++r_head->name_size;
-
-			/* Append chars to the name */
-			strcpy(r_name + r_head->name_size, s);
-
-			/* Advance the index */
-			r_head->name_size += strlen(s);
+			/* Allocate name string. */
+			assert(!r_ptr->name); // Sanity check that we aren't overwriting anything
+			r_ptr->name = strdup(s);
 
 			/* HACK -- Those ones HAVE to have a set default value */
 			r_ptr->drops.treasure = OBJ_GENE_TREASURE;
@@ -7591,17 +7606,8 @@ errr init_r_info_txt(FILE *fp, char *buf)
 			/* Acquire the text */
 			s = buf + 2;
 
-			/* Hack -- Verify space */
-			if (r_head->text_size + strlen(s) + 8 > FAKE_TEXT_SIZE) return (7);
-
-			/* Advance and Save the text index */
-			if (!r_ptr->text) r_ptr->text = ++r_head->text_size;
-
-			/* Append chars to the name */
-			strcpy(r_text + r_head->text_size, s);
-
-			/* Advance the index */
-			r_head->text_size += strlen(s);
+			/* Append to description */
+			strappend(&r_ptr->text, s);
 
 			/* Next... */
 			continue;
@@ -7853,11 +7859,7 @@ errr init_r_info_txt(FILE *fp, char *buf)
 		return (6);
 	}
 
-
-	/* Complete the "name" and "text" sizes */
-	++r_head->name_size;
-	++r_head->text_size;
-
+	/* Postprocessing */
 	for (i = 1; i < max_r_idx; i++)
 	{
 		/* Invert flag WILD_ONLY <-> RF8_DUNGEON */

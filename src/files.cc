@@ -2183,7 +2183,7 @@ void display_player(int mode)
 		sprintf(buf, "%s", get_player_race_name(p_ptr->prace, p_ptr->pracem));
 		c_put_str(TERM_L_BLUE, buf, 4, 9);
 		c_put_str(TERM_L_BLUE, spp_ptr->title + c_name, 5, 9);
-		c_put_str(TERM_L_BLUE, r_name + r_ptr->name, 6, 9);
+		c_put_str(TERM_L_BLUE, r_ptr->name, 6, 9);
 		c_put_str(TERM_L_BLUE, deity_info[p_ptr->pgod].name, 7, 9);
 
 		/* Age, Height, Weight, Social */
