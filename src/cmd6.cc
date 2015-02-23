@@ -3695,7 +3695,7 @@ static void activate_stick(s16b s, bool_ *obvious, bool_ *use_charge)
  */
 void do_cmd_use_staff(void)
 {
-	int item, ident, chance;
+	int item, ident;
 
 	bool_ obvious, use_charge;
 
@@ -3744,7 +3744,11 @@ void do_cmd_use_staff(void)
 	set_stick_mode(o_ptr);
 
 	/* get the chance */
-	chance = spell_chance_device(o_ptr->pval2);
+	int chance;
+	{
+		auto spell = spell_at(o_ptr->pval2);
+		chance = spell_chance_device(spell);
+	}
 
 	/* Leave device mode  */
 	unset_stick_mode();
@@ -3880,7 +3884,7 @@ void do_cmd_aim_wand(void)
 {
 	bool_ obvious, use_charge;
 
-	int item, ident, chance;
+	int item, ident;
 
 	object_type *o_ptr;
 
@@ -3929,7 +3933,11 @@ void do_cmd_aim_wand(void)
 	set_stick_mode(o_ptr);
 
 	/* get the chance */
-	chance = spell_chance_device(o_ptr->pval2);
+	int chance;
+	{
+		auto spell = spell_at(o_ptr->pval2);
+		chance = spell_chance_device(spell);
+	}
 
 	/* Leave device mode  */
 	unset_stick_mode();

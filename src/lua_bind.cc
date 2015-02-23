@@ -150,13 +150,12 @@ static s32b spell_chance_school(s32b s)
 	return clamp_failure_chance(chance, minfail);
 }
 
-s32b spell_chance_device(s32b s)
+s32b spell_chance_device(spell_type *spell_ptr)
 {
 	// Device parameters initialized?
 	assert(get_level_use_stick > -1);
 
 	// Calculate the chance.
-	auto spell_ptr = spell_at(s);
 	int level = get_level_device_1(spell_ptr, 50, 1);
 	s32b chance = spell_type_failure_rate(spell_ptr);
 

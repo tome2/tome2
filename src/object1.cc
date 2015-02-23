@@ -2713,8 +2713,11 @@ void describe_device(object_type *o_ptr)
 		/* Enter device mode  */
 		set_stick_mode(o_ptr);
 
+		// Spell reference
+		auto spell = spell_at(o_ptr->pval2);
+
 		text_out("\nSpell description:\n");
-		spell_type_description_foreach(spell_at(o_ptr->pval2),
+		spell_type_description_foreach(spell,
 					       [] (std::string const &text) -> void {
 						       text_out("\n");
 						       text_out(text.c_str());
@@ -2725,14 +2728,14 @@ void describe_device(object_type *o_ptr)
 		text_out_c(TERM_L_BLUE, buf);
 
 		text_out("\nMinimum Magic Device level to increase spell level: ");
-		text_out_c(TERM_L_BLUE, format("%d", spell_type_skill_level(spell_at(o_ptr->pval2))));
+		text_out_c(TERM_L_BLUE, format("%d", spell_type_skill_level(spell)));
 
 		text_out("\nSpell fail: ");
-		sprintf(buf, FMTs32b, spell_chance_device(o_ptr->pval2));
+		sprintf(buf, FMTs32b, spell_chance_device(spell));
 		text_out_c(TERM_GREEN, buf);
 
 		text_out("\nSpell info: ");
-		text_out_c(TERM_YELLOW, spell_type_info(spell_at(o_ptr->pval2)));
+		text_out_c(TERM_YELLOW, spell_type_info(spell));
 
 		/* Leave device mode  */
 		unset_stick_mode();
