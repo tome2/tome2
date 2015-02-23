@@ -381,108 +381,69 @@ bool_ cave_valid_bold(int y, int x)
 
 
 
-
 /*
- * Hack -- Legal monster codes FIXME: Remove?
- */
-// static cptr image_monster_hack = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
-/*
- * Hack -- Legal monster codes for IBM pseudo-graphics
- *
- * Dropped. Although this option has long left unmaintained, hardcoding
- * code points makes it impossible to update the font and prf files
- * flexibly. And the normal graphics code still works with it -- pelpel
- */
-
-/*
- * Mega-Hack -- Hallucinatory monster
+ * Generate visual for hallucinatory monster
  */
 static void image_monster(byte *ap, char *cp)
 {
-	int n;
+	// Cached state which keeps a list of all the "live" monster race entries.
+	static std::vector<size_t> *instance = nullptr;
 
-	// switch (graphics_mode)
-	// {
-		/* Text mode */
-	// case GRAPHICS_NONE:
-	// 	{
-	// 		n = strlen(image_monster_hack);
+	// First-time initialization
+	if (!instance)
+	{
+		// Create the list of "live" indexes
+		instance = new std::vector<size_t>();
+		// Start at 1 to avoid 'player'
+		for (size_t i = 1; i < max_r_idx; i++)
+		{
+			if (r_info[i].name)
+			{
+				instance->push_back(i);
+			}
+		}
+	}
 
-	// 		/* Random symbol from set above */
-	// 		*cp = (image_monster_hack[rand_int(n)]);
+	// Sanity check
+	assert(instance != nullptr);
 
-	// 		/* Random color */
-	// 		*ap = randint(15);
-
-	// 		break;
-	// 	}
-
-	// 	/* Normal graphics */
-	// default:
-	// 	{
-	// FIXME: Why wouldn't this work for text mode too? And 2) this assumes that all indexes in r_info are valid... is that assumption OK?
-			/* Avoid player ghost */
-			n = randint(max_r_idx);
-
-			*cp = r_info[n].x_char;
-
-			*ap = r_info[n].x_attr;
-
-		// 	break;
-		// }
-	// }
+	// Select a race at random
+	int n = rand_int(instance->size());
+	*cp = r_info[(*instance)[n]].x_char;
+	*ap = r_info[(*instance)[n]].x_attr;
 }
 
 
-
-
 /*
- * Hack -- Legal object codes FIXME: Remove?
- */
-// static cptr image_object_hack = "?/|\\\"!$()_-=[]{},~";
-
-/*
- * Hardcoded IBM pseudo-graphics code points have been removed
- * for the same reason as stated above -- pelpel
- */
-
-/*
- * Mega-Hack -- Hallucinatory object
+ * Generate visual for hallucinatory object
  */
 static void image_object(byte *ap, char *cp)
 {
-	int n;
+	// Cached state which keeps a list of the "live" object_kind entries.
+	static std::vector<size_t> *instance = nullptr;
 
-	// switch (graphics_mode)
-	// {
-	// 	/* Text mode */
-	// case GRAPHICS_NONE:
-	// 	{
-	// 		n = strlen(image_object_hack);
+	// First-time initialization
+	if (!instance)
+	{
+		// Create the list of "live" indexes
+		instance = new std::vector<size_t>();
+		// Filter all the "live" entries
+		for (size_t i = 0; i < max_k_idx; i++)
+		{
+			if (k_info[i].name)
+			{
+				instance->push_back(i);
+			}
+		}
+	}
 
-	// 		/* Random symbol from set above */
-	// 		*cp = (image_object_hack[rand_int(n)]);
+	// Sanity check
+	assert(instance != nullptr);
 
-	// 		/* Random color */
-	// 		*ap = randint(15);
-
-	// 		/* Done */
-	// 		break;
-	// 	}
-
-	// 	/* Normal graphics */
-	// default:
-	// 	{
-	// FIXME: Why wouldn't this work for text mode too? And 2) this assumes that all k_info indexes are valid... is that assumption correct?!?
-			n = randint(max_k_idx - 1);
-
-			*cp = k_info[n].x_char;
-			*ap = k_info[n].x_attr;
-
-	// 		break;
-	// 	}
-	// }
+	// Select an object kind at random
+	int n = rand_int(instance->size());
+	*cp = k_info[(*instance)[n]].x_char;
+	*ap = k_info[(*instance)[n]].x_attr;
 }
 
 
