@@ -4000,15 +4000,6 @@
 #define HOOK_FORBID_TRAVEL      75
 
 /*
- * Defines for loadsave.c
- * Why 3 and 7? So if it's uninitialized, the code will be able to catch it, as
- * 0 is an invalid flag. Also, having them apart means that it being accidentally
- * modified will also result in an invalid value -- Improv
- */
-#define LS_LOAD 3
-#define LS_SAVE 7
-
-/*
  * In game help
  */
 #define HELP_MAX 64
