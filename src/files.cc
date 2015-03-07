@@ -2682,7 +2682,7 @@ errr file_character(cptr name, bool_ full)
 	if (noscore)
 		fprintf(fff, "\n You have done something illegal.");
 
-	if (PRACE_FLAGS(PR1_EXPERIMENTAL))
+	if (race_flags1_p(PR1_EXPERIMENTAL))
 		fprintf(fff, "\n You have done something experimental.");
 
 	{

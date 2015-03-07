@@ -20,3 +20,5 @@ extern void calc_bonuses(bool_ silent);
 extern void gain_fate(byte fate);
 extern void fate_desc(char *desc, int fate);
 extern void dump_fates(FILE *OutFile);
+extern bool race_flags1_p(u32b flags1_mask);
+extern bool race_flags2_p(u32b flags2_mask);

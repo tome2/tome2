@@ -2890,7 +2890,7 @@ bool_ player_can_enter(byte feature)
 
 
 	/* Player can not walk through "walls" unless in Shadow Form */
-	if (p_ptr->wraith_form || (PRACE_FLAG(PR1_SEMI_WRAITH)))
+	if (p_ptr->wraith_form || (race_flags1_p(PR1_SEMI_WRAITH)))
 		pass_wall = TRUE;
 	else
 		pass_wall = FALSE;

@@ -2,6 +2,7 @@
 #include "init1.hpp"
 #include "util.hpp"
 #include "variable.hpp"
+#include "xtra1.hpp"
 #include "xtra2.hpp"
 
 #include <cassert>
@@ -757,7 +758,7 @@ static bool_ player_allow_corruption(int corruption_idx)
 	/* Vampire teeth is special */
 	if (corruption_idx == CORRUPT_VAMPIRE_TEETH)
 	{
-		if (PRACE_FLAG(PR1_NO_SUBRACE_CHANGE))
+		if (race_flags1_p(PR1_NO_SUBRACE_CHANGE))
 		{
 			return TRUE;
 		}

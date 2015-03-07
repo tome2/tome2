@@ -514,10 +514,6 @@
 #define PR2_ASTRAL              0x00000002L     /* Is it an astral being coming from th halls of mandos ? */
 /* XXX */
 
-#define PRACE_FLAG2(f)          ((rp_ptr->flags2 | rmp_ptr->flags2 | cp_ptr->flags2 | spp_ptr->flags2) & (f))
-#define PRACE_FLAG(f)           ((rp_ptr->flags1 | rmp_ptr->flags1 | cp_ptr->flags1 | spp_ptr->flags1) & (f))
-#define PRACE_FLAGS(f)          PRACE_FLAG(f)
-
 /* XXX */
 #define MKEY_MINDCRAFT          2
 #define MKEY_ANTIMAGIC          3

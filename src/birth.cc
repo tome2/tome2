@@ -2158,7 +2158,7 @@ static bool_ player_birth_aux_ask()
 		p_ptr->pgod = k;
 		set_grace(previous_char.grace);
 	}
-	else if (PRACE_FLAG(PR1_NO_GOD))
+	else if (race_flags1_p(PR1_NO_GOD))
 	{
 		p_ptr->pgod = GOD_NONE;
 	}
@@ -2265,7 +2265,7 @@ static bool_ player_birth_aux_ask()
 		}
 
 		/* A god that like us ? more grace ! */
-		if (PRACE_FLAGS(PR1_GOD_FRIEND))
+		if (race_flags1_p(PR1_GOD_FRIEND))
 		{
 			set_grace(200);
 		}
@@ -2295,7 +2295,7 @@ static bool_ player_birth_aux_ask()
 	/* Set birth options: maximize, preserve, sepcial levels and astral */
 	p_ptr->preserve = preserve;
 	p_ptr->special = special_lvls;
-	p_ptr->astral = (PRACE_FLAG2(PR2_ASTRAL)) ? TRUE : FALSE;
+	p_ptr->astral = (race_flags2_p(PR2_ASTRAL)) ? TRUE : FALSE;
 
 	/*
 	 * A note by pelpel. (remove this please)

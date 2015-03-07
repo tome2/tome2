@@ -4922,7 +4922,7 @@ void do_cmd_steal()
 		}
 
 		/* Rogues gain some xp */
-		if (PRACE_FLAGS(PR1_EASE_STEAL))
+		if (race_flags1_p(PR1_EASE_STEAL))
 		{
 			s32b max_point;
 

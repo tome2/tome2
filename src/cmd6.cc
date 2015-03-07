@@ -1469,7 +1469,7 @@ void do_cmd_eat_food(void)
 	/* Food can feed the player, in a different ways */
 
 	/* Vampires */
-	if ((PRACE_FLAG(PR1_VAMPIRE)) || (p_ptr->mimic_form == resolve_mimic_name("Vampire")))
+	if ((race_flags1_p(PR1_VAMPIRE)) || (p_ptr->mimic_form == resolve_mimic_name("Vampire")))
 	{
 		/* Reduced nutritional benefit */
 		/*		(void)set_food(p_ptr->food + (fval / 10)); -- No more */
@@ -1482,9 +1482,9 @@ void do_cmd_eat_food(void)
 		}
 	}
 
-	else if (PRACE_FLAG(PR1_NO_FOOD))
+	else if (race_flags1_p(PR1_NO_FOOD))
 	{
-		if (PRACE_FLAG(PR1_UNDEAD))
+		if (race_flags1_p(PR1_UNDEAD))
 		{
 			msg_print("The food of mortals is poor sustenance for you.");
 		}

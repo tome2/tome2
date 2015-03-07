@@ -1337,7 +1337,7 @@ bool_ set_stun(int v)
 	/* Hack -- Force good values */
 	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
 
-	if (PRACE_FLAG(PR1_NO_STUN)) v = 0;
+	if (race_flags1_p(PR1_NO_STUN)) v = 0;
 
 	/* Knocked out */
 	if (p_ptr->stun > 100)
@@ -1498,7 +1498,7 @@ bool_ set_cut(int v)
 	/* Hack -- Force good values */
 	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
 
-	if (PRACE_FLAG(PR1_NO_CUT)) v = 0;
+	if (race_flags1_p(PR1_NO_CUT)) v = 0;
 
 	/* Mortal wound */
 	if (p_ptr->cut > 1000)
@@ -1973,7 +1973,7 @@ void check_experience(void)
 		if (p_ptr->lev > p_ptr->max_plv)
 		{
 			p_ptr->max_plv = p_ptr->lev;
-			if ((PRACE_FLAG(PR1_CORRUPT)) &&
+			if ((race_flags1_p(PR1_CORRUPT)) &&
 			                (randint(3) == 1))
 			{
 				level_corruption = TRUE;
@@ -2102,7 +2102,7 @@ void gain_exp(s32b amount)
 		}
 	}
 
-	if ((p_ptr->max_exp > 0) && (PRACE_FLAG(PR1_CORRUPT)))
+	if ((p_ptr->max_exp > 0) && (race_flags1_p(PR1_CORRUPT)))
 	{
 		if ((randint(p_ptr->max_exp) < amount) || (randint(12000000) < amount))
 		{

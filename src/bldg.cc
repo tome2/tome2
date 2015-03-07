@@ -531,7 +531,7 @@ static bool_ inn_comm(int cmd)
 
 
 	/* Extract race info */
-	vampire = ((PRACE_FLAG(PR1_VAMPIRE)) || (p_ptr->mimic_form == resolve_mimic_name("Vampire")));
+	vampire = ((race_flags1_p(PR1_VAMPIRE)) || (p_ptr->mimic_form == resolve_mimic_name("Vampire")));
 
 	switch (cmd)
 	{

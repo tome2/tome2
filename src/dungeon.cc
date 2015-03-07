@@ -1495,7 +1495,7 @@ static void process_world(void)
 		{
 			/* Do nothing */
 		}
-		else if (PRACE_FLAG(PR1_SEMI_WRAITH) && (!p_ptr->wraith_form) && (f_info[cave[p_ptr->py][p_ptr->px].feat].flags1 & FF1_CAN_PASS))
+		else if (race_flags1_p(PR1_SEMI_WRAITH) && (!p_ptr->wraith_form) && (f_info[cave[p_ptr->py][p_ptr->px].feat].flags1 & FF1_CAN_PASS))
 		{
 			int amt = 1 + ((p_ptr->lev) / 5);
 
@@ -1717,7 +1717,7 @@ static void process_world(void)
 
 			PRAY_GOD(GOD_MANWE)
 			dec++;
-			if (PRACE_FLAG(PR1_ELF))
+			if (race_flags1_p(PR1_ELF))
 				dec -= wisdom_scale(2);
 			if (dec < 1) dec = 1;
 			inc_piety(GOD_MANWE, -dec);
@@ -1728,7 +1728,7 @@ static void process_world(void)
 
 			PRAY_GOD(GOD_MELKOR)
 			dec++;
-			if (PRACE_FLAG(PR1_ELF))
+			if (race_flags1_p(PR1_ELF))
 				dec += 5 - wisdom_scale(4);
 			if (dec < 1) dec = 1;
 			inc_piety(GOD_MELKOR, -dec);
@@ -2653,7 +2653,7 @@ static void process_world(void)
 		byte chance = 0;
 		int plev = p_ptr->lev;
 
-		if (PRACE_FLAG(PR1_RESIST_BLACK_BREATH)) chance = 2;
+		if (race_flags1_p(PR1_RESIST_BLACK_BREATH)) chance = 2;
 		else chance = 5;
 
 		if ((rand_int(100) < chance) && (p_ptr->exp > 0))
@@ -3911,7 +3911,7 @@ static void process_command(void)
 			if (p_ptr->control) break;
 			if (p_ptr->wild_mode) break;
 
-			if (PRACE_FLAG(PR1_NO_GOD))
+			if (race_flags1_p(PR1_NO_GOD))
 			{
 				msg_print("You cannot worship gods.");
 			}
@@ -5220,7 +5220,7 @@ void play_game(bool_ new_game)
 
 		/* Hack -- enter the world */
 		/* Mega-hack Vampires and Spectres start in the dungeon */
-		if (PRACE_FLAG(PR1_UNDEAD))
+		if (race_flags1_p(PR1_UNDEAD))
 		{
 			turn = (10L * DAY / 2) + (START_DAY * 10) + 1;
 		}
