@@ -462,17 +462,6 @@ extern const char *get_version_string();
 /* birth.c */
 extern bool_ no_begin_screen;
 
-/* init2.c */
-extern void init_corruptions();
-extern void create_stores_stock(int t);
-extern errr init_v_info(void);
-extern void init_file_paths(char *path);
-extern void init_file_paths_with_env();
-extern void init_angband(void);
-extern errr init_buildings(void);
-extern s16b error_idx;
-extern s16b error_line;
-
 /* joke.c */
 extern bool_ gen_joke_monsters(void *data, void *in, void *out);
 

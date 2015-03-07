@@ -16,6 +16,7 @@
 #include "gods.hpp"
 #include "help.hpp"
 #include "hooks.h"
+#include "init2.hpp"
 #include "mimic.hpp"
 #include "messages.h"
 #include "modules.hpp"

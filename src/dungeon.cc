@@ -27,6 +27,7 @@
 #include "gods.hpp"
 #include "help.hpp"
 #include "hooks.h"
+#include "init2.hpp"
 #include "levels.hpp"
 #include "loadsave.h"
 #include "loadsave.hpp"

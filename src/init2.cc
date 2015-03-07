@@ -1,3 +1,6 @@
+#include "init2.hpp"
+#include "init2.h"
+
 #include "angband.h"
 #include "cave.hpp"
 #include "files.hpp"

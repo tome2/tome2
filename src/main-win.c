@@ -70,6 +70,7 @@
 #include "angband.h"
 #include "dungeon.h"
 #include "files.h"
+#include "init2.h"
 #include "util.h"
 
 #ifdef WINDOWS

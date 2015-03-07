@@ -4,6 +4,7 @@
 #include "cave.hpp"
 #include "files.hpp"
 #include "gods.hpp"
+#include "init2.hpp"
 #include "monster2.hpp"
 #include "object1.hpp"
 #include "object2.hpp"
