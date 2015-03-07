@@ -1,7 +1,3 @@
-/* File: script.c */
-
-/* Purpose: scripting in lua */
-
 /*
  * Copyright (c) 2001 Dark God
  *
@@ -9,6 +5,8 @@
  * not for profit purposes provided that this copyright and statement are
  * included in all such copies.
  */
+
+#include "script.h"
 
 #include "angband.h"
 #include "init2.hpp"

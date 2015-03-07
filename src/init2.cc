@@ -14,6 +14,7 @@
 #include "modules.hpp"
 #include "quark.h"
 #include "randart.hpp"
+#include "script.h"
 #include "spells3.hpp"
 #include "squeltch.hpp"
 #include "tome/make_array.hpp"

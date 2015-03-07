@@ -488,8 +488,5 @@ extern bool_ private_check_user_directory(cptr dirpath);
 extern void user_name(char *buf, int id);
 #endif
 
-/* script.c */
-extern void init_lua_init(void);
-
 /* modules.cc */
 extern cptr force_module;
