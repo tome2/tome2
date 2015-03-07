@@ -17,6 +17,8 @@
 #include "cmd6.hpp"
 #include "cmd7.hpp"
 #include "corrupt.hpp"
+#include "files.h"
+#include "files.hpp"
 #include "generate.hpp"
 #include "gen_evol.hpp"
 #include "gods.hpp"

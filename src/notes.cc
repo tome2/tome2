@@ -10,6 +10,7 @@
 #include "notes.hpp"
 
 #include "angband.h"
+#include "files.hpp"
 #include "util.hpp"
 #include "util.h"
 

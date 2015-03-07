@@ -12,6 +12,7 @@
 #include "cmd1.hpp"
 #include "cmd2.hpp"
 #include "cmd7.hpp"
+#include "files.hpp"
 #include "hooks.h"
 #include "mimic.hpp"
 #include "monster2.hpp"

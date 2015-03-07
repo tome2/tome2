@@ -12,6 +12,7 @@
 #include "cave.hpp"
 #include "corrupt.hpp"
 #include "cmd7.hpp"
+#include "files.hpp"
 #include "gods.hpp"
 #include "hooks.h"
 #include "levels.hpp"

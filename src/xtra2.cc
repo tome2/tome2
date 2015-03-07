@@ -11,6 +11,7 @@
 #include "angband.h"
 #include "cave.hpp"
 #include "corrupt.hpp"
+#include "files.hpp"
 #include "gods.hpp"
 #include "hooks.h"
 #include "mimic.hpp"

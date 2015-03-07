@@ -10,6 +10,7 @@
 #include "cave.hpp"
 #include "cmd2.hpp"
 #include "cmd6.hpp"
+#include "files.hpp"
 #include "hooks.h"
 #include "lua_bind.hpp"
 #include "mimic.hpp"

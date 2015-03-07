@@ -12,6 +12,7 @@
 #include "cmd1.hpp"
 #include "cmd3.hpp"
 #include "cmd5.hpp"
+#include "files.hpp"
 #include "gods.hpp"
 #include "monster2.hpp"
 #include "monster3.hpp"

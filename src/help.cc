@@ -10,6 +10,7 @@
 #include "help.hpp"
 
 #include "angband.h"
+#include "files.hpp"
 #include "hooks.h"
 #include "skills.hpp"
 #include "util.hpp"

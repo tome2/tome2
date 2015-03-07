@@ -15,6 +15,7 @@
 
 #include "angband.h"
 #include "cmd3.hpp"
+#include "files.hpp"
 #include "hooks.h"
 #include "mimic.hpp"
 #include "q_library.h"

@@ -12,6 +12,7 @@
 #include "bldg.hpp"
 #include "cave.hpp"
 #include "cmd1.hpp"
+#include "files.hpp"
 #include "gods.hpp"
 #include "hooks.h"
 #include "levels.hpp"

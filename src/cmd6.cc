@@ -13,6 +13,7 @@
 #include "cmd1.hpp"
 #include "cmd7.hpp"
 #include "corrupt.hpp"
+#include "files.hpp"
 #include "hooks.h"
 #include "lua_bind.hpp"
 #include "mimic.hpp"

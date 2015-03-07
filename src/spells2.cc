@@ -12,6 +12,7 @@
 #include "cave.hpp"
 #include "cmd1.hpp"
 #include "cmd7.hpp"
+#include "files.hpp"
 #include "hooks.h"
 #include "monster2.hpp"
 #include "monster3.hpp"

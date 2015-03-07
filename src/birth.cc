@@ -11,6 +11,8 @@
 #include "corrupt.hpp"
 #include "cmd4.hpp"
 #include "cmd5.hpp"
+#include "files.h"
+#include "files.hpp"
 #include "gods.hpp"
 #include "help.hpp"
 #include "hooks.h"

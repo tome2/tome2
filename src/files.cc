@@ -6,6 +6,9 @@
  * included in all such copies.
  */
 
+#include "files.hpp"
+#include "files.h"
+
 #include "angband.h"
 #include "cave.hpp"
 #include "corrupt.hpp"

@@ -12,6 +12,7 @@
 #include "cave.hpp"
 #include "cmd4.hpp"
 #include "cmd5.hpp"
+#include "files.hpp"
 #include "gods.hpp"
 #include "hooks.h"
 #include "mimic.hpp"

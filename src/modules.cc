@@ -9,6 +9,7 @@
 #include "angband.h"
 #include "birth.hpp"
 #include "corrupt.hpp"
+#include "files.hpp"
 #include "hooks.h"
 #include "monster2.hpp"
 #include "spells2.hpp"

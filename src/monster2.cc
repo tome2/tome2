@@ -9,6 +9,7 @@
 
 #include "angband.h"
 #include "cave.hpp"
+#include "files.hpp"
 #include "hooks.h"
 #include "levels.hpp"
 #include "mimic.hpp"

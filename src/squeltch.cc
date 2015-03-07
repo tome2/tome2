@@ -9,14 +9,7 @@
 
 #include "squeltch.hpp"
 
-#include <jansson.h>
-#include <algorithm>
-#include <memory>
-#include <deque>
-#include <list>
-#include <string>
-#include <vector>
-
+#include "files.hpp"
 #include "tome/squelch/tree_printer.hpp"
 #include "tome/squelch/condition.hpp"
 #include "tome/squelch/condition_metadata.hpp"
@@ -26,6 +19,14 @@
 #include "tome/squelch/automatizer.hpp"
 #include "util.hpp"
 #include "util.h"
+
+#include <jansson.h>
+#include <algorithm>
+#include <memory>
+#include <deque>
+#include <list>
+#include <string>
+#include <vector>
 
 using squelch::action_type;
 using squelch::action_mapping;

@@ -9,6 +9,7 @@
 
 #include "angband.h"
 #include "corrupt.hpp"
+#include "files.hpp"
 #include "hooks.h"
 #include "levels.hpp"
 #include "messages.h"
