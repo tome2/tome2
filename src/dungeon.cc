@@ -11,6 +11,7 @@
 
 #include "angband.h"
 #include "birth.hpp"
+#include "birth.h"
 #include "cave.hpp"
 #include "cmd1.hpp"
 #include "cmd2.hpp"

@@ -460,9 +460,6 @@ extern timer_type *gl_timers;
 extern const char *get_version_string();
 extern tval_desc2 tvals[];
 
-/* birth.c */
-extern bool_ no_begin_screen;
-
 /*
  * Hack -- conditional (or "bizarre") externs
  */

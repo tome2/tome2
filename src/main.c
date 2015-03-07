@@ -9,6 +9,7 @@
  */
 
 #include "angband.h"
+#include "birth.h"
 #include "dungeon.h"
 #include "files.h"
 #include "init2.h"
