@@ -4,6 +4,7 @@
 #include "generate.hpp"
 #include "hooks.h"
 #include "init1.hpp"
+#include "lua_bind.hpp"
 #include "messages.h"
 #include "monster2.hpp"
 #include "monster3.hpp"

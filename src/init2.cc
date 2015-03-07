@@ -9,6 +9,7 @@
 #include "gen_maze.hpp"
 #include "hooks.h"
 #include "init1.hpp"
+#include "lua_bind.hpp"
 #include "messages.h"
 #include "modules.hpp"
 #include "quark.h"

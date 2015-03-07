@@ -1,6 +1,7 @@
 #include "q_fireprof.h"
 #include "quark.h"
 #include "hooks.h"
+#include "lua_bind.hpp"
 #include "object1.hpp"
 #include "object2.hpp"
 #include "traps.hpp"

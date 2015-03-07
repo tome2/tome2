@@ -31,6 +31,7 @@
 #include "levels.hpp"
 #include "loadsave.h"
 #include "loadsave.hpp"
+#include "lua_bind.hpp"
 #include "monster2.hpp"
 #include "monster3.hpp"
 #include "modules.hpp"

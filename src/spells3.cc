@@ -3,6 +3,7 @@
 #include "angband.h"
 #include "cave.hpp"
 #include "cmd5.hpp"
+#include "lua_bind.hpp"
 #include "mimic.hpp"
 #include "monster2.hpp"
 #include "monster3.hpp"

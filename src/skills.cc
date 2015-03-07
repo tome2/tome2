@@ -15,6 +15,7 @@
 #include "gods.hpp"
 #include "help.hpp"
 #include "hooks.h"
+#include "lua_bind.hpp"
 #include "monster2.hpp"
 #include "monster3.hpp"
 #include "object1.hpp"

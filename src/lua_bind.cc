@@ -1,7 +1,3 @@
-/* File: lua_bind.c */
-
-/* Purpose: various lua bindings */
-
 /*
  * Copyright (c) 2001 DarkGod
  *
@@ -11,6 +7,7 @@
  */
 
 #include "lua_bind.hpp"
+
 #include "angband.h"
 #include "cmd7.hpp"
 #include "corrupt.hpp"

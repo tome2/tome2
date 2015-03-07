@@ -15,6 +15,7 @@
 #include "files.hpp"
 #include "gods.hpp"
 #include "hooks.h"
+#include "lua_bind.hpp"
 #include "mimic.hpp"
 #include "monster2.hpp"
 #include "monster3.hpp"

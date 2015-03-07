@@ -12,6 +12,7 @@
 #include "birth.hpp"
 #include "cave.hpp"
 #include "corrupt.hpp"
+#include "lua_bind.hpp"
 #include "monster2.hpp"
 #include "object1.hpp"
 #include "object2.hpp"

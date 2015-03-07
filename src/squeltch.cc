@@ -11,6 +11,7 @@
 
 #include "files.hpp"
 #include "loadsave.hpp"
+#include "lua_bind.hpp"
 #include "object1.hpp"
 #include "object2.hpp"
 #include "tome/squelch/tree_printer.hpp"

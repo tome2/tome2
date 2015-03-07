@@ -12,6 +12,7 @@
 #include "files.hpp"
 #include "hooks.h"
 #include "joke.hpp"
+#include "lua_bind.hpp"
 #include "monster2.hpp"
 #include "object2.hpp"
 #include "spells2.hpp"

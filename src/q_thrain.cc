@@ -4,6 +4,7 @@
 #include "generate.hpp"
 #include "hooks.h"
 #include "init1.hpp"
+#include "lua_bind.hpp"
 #include "quark.h"
 #include "randart.hpp"
 #include "messages.h"

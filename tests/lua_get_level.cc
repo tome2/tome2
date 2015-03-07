@@ -1,3 +1,4 @@
+#include "lua_bind.hpp"
 #include "spell_type.hpp"
 #include <bandit/bandit.h>
 using namespace bandit;
