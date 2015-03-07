@@ -462,9 +462,6 @@ extern const char *get_version_string();
 /* birth.c */
 extern bool_ no_begin_screen;
 
-/* joke.c */
-extern bool_ gen_joke_monsters(void *data, void *in, void *out);
-
 /* melee1.c */
 /* melee2.c */
 extern int monst_spell_monst_spell;

@@ -11,6 +11,7 @@
 #include "corrupt.hpp"
 #include "files.hpp"
 #include "hooks.h"
+#include "joke.hpp"
 #include "monster2.hpp"
 #include "object2.hpp"
 #include "spells2.hpp"

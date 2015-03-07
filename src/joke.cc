@@ -1,3 +1,5 @@
+#include "joke.hpp"
+
 #include "angband.h"
 #include "monster2.hpp"
 #include "util.hpp"
