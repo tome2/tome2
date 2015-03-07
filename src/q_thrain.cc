@@ -3,6 +3,7 @@
 #include "cave.hpp"
 #include "generate.hpp"
 #include "hooks.h"
+#include "init1.hpp"
 #include "quark.h"
 #include "randart.hpp"
 #include "messages.h"

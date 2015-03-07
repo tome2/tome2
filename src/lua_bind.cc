@@ -14,6 +14,7 @@
 #include "angband.h"
 #include "cmd7.hpp"
 #include "corrupt.hpp"
+#include "init1.hpp"
 #include "monster2.hpp"
 #include "range.h"
 #include "skills.hpp"

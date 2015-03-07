@@ -11,6 +11,7 @@
 #include "angband.h"
 #include "cave.hpp"
 #include "hooks.h"
+#include "init1.hpp"
 #include "monster2.hpp"
 #include "util.hpp"
 

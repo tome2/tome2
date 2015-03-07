@@ -15,6 +15,7 @@
 #include "cmd3.hpp"
 #include "hiscore.h"
 #include "hooks.h"
+#include "init1.hpp"
 #include "levels.hpp"
 #include "loadsave.h"
 #include "loadsave.hpp"

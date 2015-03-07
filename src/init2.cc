@@ -5,6 +5,7 @@
 #include "gen_evol.hpp"
 #include "gen_maze.hpp"
 #include "hooks.h"
+#include "init1.hpp"
 #include "messages.h"
 #include "modules.hpp"
 #include "quark.h"

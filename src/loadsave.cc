@@ -3,6 +3,7 @@
 
 #include "angband.h"
 #include "birth.hpp"
+#include "init1.hpp"
 #include "levels.hpp"
 #include "messages.h"
 #include "modules.hpp"

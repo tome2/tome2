@@ -9,6 +9,7 @@
 #include "levels.hpp"
 
 #include "angband.h"
+#include "init1.hpp"
 #include "util.hpp"
 #include "util.h"
 

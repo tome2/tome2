@@ -4,9 +4,11 @@
 
 #include "util.hpp"
 #include "util.h"
+
 #include "angband.h"
 #include "cmd3.hpp"
 #include "cmd4.hpp"
+#include "init1.hpp"
 #include "messages.h"
 #include "quark.h"
 #include "xtra1.hpp"

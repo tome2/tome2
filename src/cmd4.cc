@@ -11,6 +11,7 @@
 #include "corrupt.hpp"
 #include "files.hpp"
 #include "hooks.h"
+#include "init1.hpp"
 #include "levels.hpp"
 #include "messages.h"
 #include "monster2.hpp"
