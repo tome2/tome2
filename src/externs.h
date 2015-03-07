@@ -519,8 +519,6 @@ extern void get_target(int dir, int *y, int *x);
 extern void get_map_size(const char *name, int *ysize, int *xsize);
 extern void load_map(const char *name, int *y, int *x);
 
-extern int lua_get_new_bounty_monster(int lev);
-
 extern char *lua_input_box(cptr title, int max);
 extern char lua_msg_box(cptr title);
 

@@ -217,69 +217,6 @@ void load_map(const char *name, int *y, int *x)
 }
 
 /*
- * Finds a good random bounty monster
- * Im too lazy to write it in lua since the lua API for monsters is not very well yet
- */
-
-/*
- * Hook for bounty monster selection.
- */
-static bool_ lua_mon_hook_bounty(int r_idx)
-{
-	monster_race* r_ptr = &r_info[r_idx];
-
-
-	/* Reject uniques */
-	if (r_ptr->flags1 & RF1_UNIQUE) return (FALSE);
-
-	/* Reject those who cannot leave anything */
-	if (!(r_ptr->flags9 & RF9_DROP_CORPSE)) return (FALSE);
-
-	/* Accept only monsters that can be generated */
-	if (r_ptr->flags9 & RF9_SPECIAL_GENE) return (FALSE);
-	if (r_ptr->flags9 & RF9_NEVER_GENE) return (FALSE);
-
-	/* Reject pets */
-	if (r_ptr->flags7 & RF7_PET) return (FALSE);
-
-	/* Reject friendly creatures */
-	if (r_ptr->flags7 & RF7_FRIENDLY) return (FALSE);
-
-	/* Accept only monsters that are not breeders */
-	if (r_ptr->flags4 & RF4_MULTIPLY) return (FALSE);
-
-	/* Forbid joke monsters */
-	if (r_ptr->flags8 & RF8_JOKEANGBAND) return (FALSE);
-
-	/* Accept only monsters that are not good */
-	if (r_ptr->flags3 & RF3_GOOD) return (FALSE);
-
-	/* The rest are acceptable */
-	return (TRUE);
-}
-
-int lua_get_new_bounty_monster(int lev)
-{
-	int r_idx;
-
-	/*
-	 * Set up the hooks -- no bounties on uniques or monsters
-	 * with no corpses
-	 */
-	get_mon_num_hook = lua_mon_hook_bounty;
-	get_mon_num_prep();
-
-	/* Set up the quest monster. */
-	r_idx = get_mon_num(lev);
-
-	/* Undo the filters */
-	get_mon_num_hook = NULL;
-	get_mon_num_prep();
-
-	return r_idx;
-}
-
-/*
  * Some misc functions
  */
 char *lua_input_box(cptr title, int max)
