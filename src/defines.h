@@ -2967,11 +2967,6 @@
 
 
 
-/*** Monster blow constants ***/
-
-#define MODIFY_AUX(o, n) ((o) = modify_aux((o), (n) >> 2, (n) & 3))
-#define MODIFY(o, n, min) MODIFY_AUX(o, n); (o) = ((o) < (min))?(min):(o)
-
 /*
  * New monster blow methods
  */

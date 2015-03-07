@@ -32,6 +32,9 @@
 #define MAX_FUNNY 22
 #define MAX_COMMENT 5
 
+#define MODIFY_AUX(o, n) ((o) = modify_aux((o), (n) >> 2, (n) & 3))
+#define MODIFY(o, n, min) MODIFY_AUX(o, n); (o) = ((o) < (min))?(min):(o)
+
 s32b monster_exp(s16b level)
 {
 	s32b capped_level = std::min(level, static_cast<s16b>(MONSTER_LEVEL_MAX));
