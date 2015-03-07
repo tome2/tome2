@@ -1,8 +1,4 @@
 /*
- * Maze dungeon generator
- */
-
-/*
  * Copyright (c) 2003 DarkGod. And somebody who posted the algorith on
  * rec.games.roguelike.development. I can't remember teh name :( please mail me
  *
@@ -10,6 +6,8 @@
  * not for profit purposes provided that this copyright and statement are
  * included in all such copies.
  */
+
+#include "gen_evol.hpp"
 
 #include "angband.h"
 #include "cave.hpp"
@@ -24,7 +22,7 @@
  */
 typedef signed char maze_row[(MAX_WID / 2) + 2];
 
-void dig(maze_row *maze, int y, int x, int d)
+static void dig(maze_row *maze, int y, int x, int d)
 {
 	int k;
 	int dy = 0, dx = 0;

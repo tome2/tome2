@@ -1,14 +1,12 @@
 /*
- * Generate a game of life level and make it evolve
- */
-
-/*
  * Copyright (c) 2003 DarkGod.
  *
  * This software may be copied and distributed for educational, research, and
  * not for profit purposes provided that this copyright and statement are
  * included in all such copies.
  */
+
+#include "gen_evol.hpp"
 
 #include "angband.h"
 #include "cave.hpp"

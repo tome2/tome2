@@ -494,13 +494,6 @@ extern void race_legends(void);
 extern void show_highclass(int building);
 extern errr get_xtra_line(const char * file_name, monster_type *m_ptr, char * output);
 
-/* gen_maze.c */
-extern bool_ level_generate_maze();
-
-/* gen_life.c */
-extern bool_ level_generate_life();
-extern void evolve_level(bool_ noise);
-
 /* generate.c */
 extern bool_ new_player_spot(int branch);
 extern void add_level_generator(cptr name, bool_ (*generator)(), bool_ stairs, bool_ monsters, bool_ objects, bool_ miscs);
