@@ -8422,7 +8422,7 @@ void generate_cave(void)
 				if (!p_ptr->wild_mode)
 				{
 					/* Make the wilderness */
-					wilderness_gen(0);
+					wilderness_gen();
 				}
 
 				/* Small wilderness mode */

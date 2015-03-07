@@ -136,7 +136,7 @@ static void plasma_recursive(int x1, int y1, int x2, int y2,
  *
  * Return the number of floor grids
  */
-static int generate_area(int y, int x, bool_ border, bool_ corner, bool_ refresh)
+static int generate_area(int y, int x, bool_ border, bool_ corner)
 {
 	int road, entrance;
 	int x1, y1;
@@ -344,7 +344,7 @@ static border_type border;
  * Build the wilderness area outside of the town.
  * -KMW-
  */
-void wilderness_gen(int refresh)
+void wilderness_gen()
 {
 	int i, y, x, hack_floor;
 	bool_ daytime;
@@ -365,7 +365,7 @@ void wilderness_gen(int refresh)
 	get_mon_num_prep();
 
 	/* North border */
-	generate_area(y - 1, x, TRUE, FALSE, refresh);
+	generate_area(y - 1, x, TRUE, FALSE);
 
 	for (i = 1; i < MAX_WID - 1; i++)
 	{
@@ -373,7 +373,7 @@ void wilderness_gen(int refresh)
 	}
 
 	/* South border */
-	generate_area(y + 1, x, TRUE, FALSE, refresh);
+	generate_area(y + 1, x, TRUE, FALSE);
 
 	for (i = 1; i < MAX_WID - 1; i++)
 	{
@@ -381,7 +381,7 @@ void wilderness_gen(int refresh)
 	}
 
 	/* West border */
-	generate_area(y, x - 1, TRUE, FALSE, refresh);
+	generate_area(y, x - 1, TRUE, FALSE);
 
 	for (i = 1; i < MAX_HGT - 1; i++)
 	{
@@ -389,7 +389,7 @@ void wilderness_gen(int refresh)
 	}
 
 	/* East border */
-	generate_area(y, x + 1, TRUE, FALSE, refresh);
+	generate_area(y, x + 1, TRUE, FALSE);
 
 	for (i = 1; i < MAX_HGT - 1; i++)
 	{
@@ -397,24 +397,24 @@ void wilderness_gen(int refresh)
 	}
 
 	/* North west corner */
-	generate_area(y - 1, x - 1, FALSE, TRUE, refresh);
+	generate_area(y - 1, x - 1, FALSE, TRUE);
 	border.north_west = cave[MAX_HGT - 2][MAX_WID - 2].feat;
 
 	/* North east corner */
-	generate_area(y - 1, x + 1, FALSE, TRUE, refresh);
+	generate_area(y - 1, x + 1, FALSE, TRUE);
 	border.north_east = cave[MAX_HGT - 2][1].feat;
 
 	/* South west corner */
-	generate_area(y + 1, x - 1, FALSE, TRUE, refresh);
+	generate_area(y + 1, x - 1, FALSE, TRUE);
 	border.south_west = cave[1][MAX_WID - 2].feat;
 
 	/* South east corner */
-	generate_area(y + 1, x + 1, FALSE, TRUE, refresh);
+	generate_area(y + 1, x + 1, FALSE, TRUE);
 	border.south_east = cave[1][1].feat;
 
 
 	/* Create terrain of the current area */
-	hack_floor = generate_area(y, x, FALSE, FALSE, refresh);
+	hack_floor = generate_area(y, x, FALSE, FALSE);
 
 
 	/* Special boundary walls -- North */
@@ -506,7 +506,6 @@ void wilderness_gen(int refresh)
 
 	player_place(p_ptr->oldpy, p_ptr->oldpx);
 
-	if (!refresh)
 	{
 		int lim = (generate_encounter == TRUE) ? 60 : MIN_M_ALLOC_TN;
 
