@@ -465,17 +465,145 @@ void do_cmd_messages(void)
 	character_icky = FALSE;
 }
 
+// File-local
+namespace {
 
+	/**
+	 * Interaction mode for options
+	 */
+	enum class interaction_mode_t {
+		READ_ONLY = 0,
+		READ_WRITE = 1
+	};
 
-/*
- * Number of cheating options
+}
+
+/**
+ * Interact with given vector of options.
  */
-#define CHEAT_MAX 6
+static void interact_with_options(std::vector<option_type *> const &options, char const *info, interaction_mode_t interaction_mode)
+{
+	size_t n = options.size();
+
+	/* Clear screen */
+	Term_clear();
+
+	/* Interact with the player */
+	size_t k = 0; /* Currently selected option index */
+	while (TRUE)
+	{
+		/* Prompt XXX XXX XXX */
+		char buf[80];
+		strnfmt(buf, 80, "%s (RET to advance, y/n to set, ESC to accept) ", info);
+		prt(buf, 0, 0);
+
+		/* Display the options */
+		for (size_t i = 0; i < n; i++)
+		{
+			byte a = TERM_WHITE;
+
+			/* Color current option */
+			if (i == k) {
+				a = TERM_L_BLUE;
+			}
+
+			/* Display the option text */
+			strnfmt(buf, 80, "%-48s: %s  (%s)",
+				options[i]->o_desc,
+				(*options[i]->o_var ? "yes" : "no "),
+				options[i]->o_text);
+			c_prt(a, buf, i + 2, 0);
+		}
+
+		/* Hilite current option */
+		move_cursor(k + 2, 50);
+
+		/* Get a key */
+		int ch = inkey();
+
+		/*
+		 * Hack -- Try to translate the key into a direction
+		 * to allow the use of roguelike keys for navigation
+		 */
+		{
+			int dir = get_keymap_dir(ch);
+			if ((dir == 2) || (dir == 4) || (dir == 6) || (dir == 8))
+			{
+				ch = I2D(dir);
+			}
+		}
+
+		/* Analyze */
+		switch (ch)
+		{
+		case ESCAPE:
+			{
+				return;
+			}
+
+		case '-':
+		case '8':
+			{
+				/* Adding n pre-modulo ensures that we don't
+				   wrap around to the wrong (post-modulo) index. */
+				k = (n + k - 1) % n;
+				break;
+			}
+
+		case ' ':
+		case '\n':
+		case '\r':
+		case '2':
+			{
+				k = (k + 1) % n;
+				break;
+			}
+
+		case 'y':
+		case 'Y':
+		case '6':
+			{
+				if (interaction_mode == interaction_mode_t::READ_ONLY)
+				{
+					break;
+				}
+				*(options[k]->o_var) = TRUE;
+				k = (k + 1) % n;
+				break;
+			}
+
+		case 'n':
+		case 'N':
+		case '4':
+			{
+				if (interaction_mode == interaction_mode_t::READ_ONLY)
+				{
+					break;
+				}
+
+				*(options[k]->o_var) = FALSE;
+				k = (k + 1) % n;
+				break;
+			}
+
+		default:
+			{
+				bell();
+
+				break;
+			}
+		}
+	}
+
+
+}
+
+
 
 /*
  * Cheating options
  */
-static option_type cheat_info[CHEAT_MAX] =
+static option_type cheat_info[6] =
 {
 	{ &cheat_peek, FALSE, 0, 0, "cheat_peek", "Peek into object creation" },
 	{ &cheat_hear, FALSE, 0, 1, "cheat_hear", "Peek into monster creation" },
@@ -490,108 +618,28 @@ static option_type cheat_info[CHEAT_MAX] =
  */
 static void do_cmd_options_cheat(cptr info)
 {
-	char ch;
+	// Calculate number of cheat options
+	size_t n = std::distance(std::begin(cheat_info), std::end(cheat_info));
 
-	int	i, k = 0, n = CHEAT_MAX;
-
-	int dir;
-
-	char buf[80];
-
-
-	/* Clear screen */
-	Term_clear();
-
-	/* Interact with the player */
-	while (TRUE)
+	// Build the vector of options we're going to interact with
+	std::vector<option_type *> options;
+	options.reserve(n);
+	for (auto &option : cheat_info)
 	{
-		/* Prompt XXX XXX XXX */
-		strnfmt(buf, 80, "%s (RET to advance, y/n to set, ESC to accept) ", info);
-		prt(buf, 0, 0);
+		options.push_back(&option);
+	}
 
-		/* Display the options */
-		for (i = 0; i < n; i++)
+	// Interact
+	interact_with_options(options, info, interaction_mode_t::READ_WRITE);
+
+	// If user toggled any of the options to TRUE, then we add those cheats
+	// to the player's "noscore" flags. Note that it doesn't matter what the
+	// previous value was -- we don't "unset" noscore flags anyway.
+	for (auto &option: options)
+	{
+		if (*option->o_var)
 		{
-			byte a = TERM_WHITE;
-
-			/* Color current option */
-			if (i == k) a = TERM_L_BLUE;
-
-			/* Display the option text */
-			strnfmt(buf, 80, "%-48s: %s  (%s)",
-			        cheat_info[i].o_desc,
-			        (*cheat_info[i].o_var ? "yes" : "no "),
-			        cheat_info[i].o_text);
-			c_prt(a, buf, i + 2, 0);
-		}
-
-		/* Hilite current option */
-		move_cursor(k + 2, 50);
-
-		/* Get a key */
-		ch = inkey();
-
-		/*
-		 * Hack -- Try to translate the key into a direction
-		 * to allow the use of roguelike keys for navigation
-		 */
-		dir = get_keymap_dir(ch);
-		if ((dir == 2) || (dir == 4) || (dir == 6) || (dir == 8)) ch = I2D(dir);
-
-
-		/* Analyze */
-		switch (ch)
-		{
-		case ESCAPE:
-			{
-				return;
-			}
-
-		case '-':
-		case '8':
-			{
-				k = (n + k - 1) % n;
-
-				break;
-			}
-
-		case ' ':
-		case '\n':
-		case '\r':
-		case '2':
-			{
-				k = (k + 1) % n;
-
-				break;
-			}
-
-		case 'y':
-		case 'Y':
-		case '6':
-			{
-				noscore |= (cheat_info[k].o_page * 256 + cheat_info[k].o_bit);
-				(*cheat_info[k].o_var) = TRUE;
-				k = (k + 1) % n;
-
-				break;
-			}
-
-		case 'n':
-		case 'N':
-		case '4':
-			{
-				(*cheat_info[k].o_var) = FALSE;
-				k = (k + 1) % n;
-
-				break;
-			}
-
-		default:
-			{
-				bell();
-
-				break;
-			}
+			noscore |= (option->o_page * 256 + option->o_bit);
 		}
 	}
 }
@@ -749,125 +797,22 @@ static void do_cmd_options_autosave(cptr info)
  */
 void do_cmd_options_aux(int page, cptr info, bool_ read_only)
 {
-	char ch;
-
-	int i, k = 0, n = 0;
-
-	int dir;
-
-	int	opt[24];
-
-	char buf[80];
-
-
-	/* Lookup the options */
-	for (i = 0; i < 24; i++) opt[i] = 0;
-
-	/* Scan the options */
-	for (i = 0; option_info[i].o_desc; i++)
+	// Scrape together all the options from the relevant page.
+	std::vector<option_type *> options;
+	options.reserve(64); // Seems a reasonable number; anything more would be unusable anyway
+	for (size_t i = 0; option_info[i].o_desc; i++)
 	{
-		/* Notice options on this "page" */
-		if (option_info[i].o_page == page) opt[n++] = i;
-	}
-
-
-	/* Clear screen */
-	Term_clear();
-
-	/* Interact with the player */
-	while (TRUE)
-	{
-		/* Prompt XXX XXX XXX */
-		strnfmt(buf, 80, "%s (RET to advance, y/n to set, ESC to accept) ", info);
-		prt(buf, 0, 0);
-
-		/* Display the options */
-		for (i = 0; i < n; i++)
+		if (option_info[i].o_page == page)
 		{
-			byte a = TERM_WHITE;
-
-			/* Color current option */
-			if (i == k) a = TERM_L_BLUE;
-
-			/* Display the option text */
-			strnfmt(buf, 80, "%-48s: %s  (%s)",
-			        option_info[opt[i]].o_desc,
-			        (*option_info[opt[i]].o_var ? "yes" : "no "),
-			        option_info[opt[i]].o_text);
-			c_prt(a, buf, i + 2, 0);
-		}
-
-		/* Hilite current option */
-		move_cursor(k + 2, 50);
-
-		/* Get a key */
-		ch = inkey();
-
-		/*
-		 * Hack -- Try to translate the key into a direction
-		 * to allow the use of roguelike keys for navigation
-		 */
-		dir = get_keymap_dir(ch);
-		if ((dir == 2) || (dir == 4) || (dir == 6) || (dir == 8)) ch = I2D(dir);
-
-		/* Analyze */
-		switch (ch)
-		{
-		case ESCAPE:
-			{
-				return;
-			}
-
-		case '-':
-		case '8':
-			{
-				k = (n + k - 1) % n;
-
-				break;
-			}
-
-		case ' ':
-		case '\n':
-		case '\r':
-		case '2':
-			{
-				k = (k + 1) % n;
-
-				break;
-			}
-
-		case 'y':
-		case 'Y':
-		case '6':
-			{
-				if (read_only) break;
-
-				(*option_info[opt[k]].o_var) = TRUE;
-				k = (k + 1) % n;
-
-				break;
-			}
-
-		case 'n':
-		case 'N':
-		case '4':
-			{
-				if (read_only) break;
-
-				(*option_info[opt[k]].o_var) = FALSE;
-				k = (k + 1) % n;
-
-				break;
-			}
-
-		default:
-			{
-				bell();
-
-				break;
-			}
+			options.push_back(&option_info[i]);
 		}
 	}
+
+	// Interact with the options
+	interaction_mode_t interaction_mode = read_only
+		? interaction_mode_t::READ_ONLY
+		: interaction_mode_t::READ_WRITE;
+	interact_with_options(options, info, interaction_mode);
 }
 
 
