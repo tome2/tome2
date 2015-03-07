@@ -67,3 +67,14 @@ bool_ view_yellow_lite; 		/* Use special colors for torch-lit grids */
 bool_ view_bright_lite; 		/* Use special colors for 'viewable' grids */
 bool_ view_granite_lite; 		/* Use special colors for wall grids (slow) */
 bool_ view_special_lite; 		/* Use special colors for floor grids (slow) */
+
+//
+// Option Set 5 - ToME options
+//
+bool_ linear_stats;
+bool_ player_char_health;		/* Display the player as a special symbol when in bad health ? */
+bool_ option_ingame_help;		/* Ingame contextual help */
+bool_ auto_more;			/* Auto more */
+bool_ inventory_no_move;		/* In inventory option window, just erase the letters,
+					 * rather that displaying the list without the invalid
+					 * selections */

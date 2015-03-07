@@ -13,6 +13,7 @@
 #include "files.hpp"
 #include "hooks.h"
 #include "object1.hpp"
+#include "options.hpp"
 #include "skills.hpp"
 #include "util.hpp"
 

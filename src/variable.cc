@@ -951,11 +951,6 @@ bool_ point_based;
 /* Preserve, special levels, ironman_rooms */
 bool_ preserve, special_lvls, ironman_rooms;
 
-/* In inventory option window, just erase the letters,
- * rather that displaying the list without the invalid
- * selections */
-bool_ inventory_no_move;
-
 /*
  * Such an ugly hack ...
  */
@@ -995,11 +990,6 @@ bool_ *special_lvl[MAX_DUNGEON_DEPTH];
 bool_ generate_special_feeling = FALSE;
 
 /*
- * Auto more
- */
-bool_ auto_more;
-
-/*
  * Dungeon flags
  */
 u32b dungeon_flags1;
@@ -1015,12 +1005,6 @@ birther previous_char;
  */
 hist_type *bg;
 int max_bg_idx;
-
-/*
- * Display the player as a special symbol when in bad health ?
- */
-bool_ player_char_health;
-
 
 /*
  * The spell list of schools
@@ -1044,11 +1028,6 @@ char gen_skill_modm[MAX_SKILLS];
 s16b gen_skill_mod[MAX_SKILLS];
 
 /*
- * Display stats as linear
- */
-bool_ linear_stats;
-
-/*
  * Table of "cli" macros.
  */
 cli_comm *cli_info;
@@ -1058,11 +1037,6 @@ int cli_total = 0;
  * max_bact, only used so that lua scripts can add new bacts without worrying about the numbers
  */
 int max_bact = 127;
-
-/*
- * Ingame contextual help
- */
-bool_ option_ingame_help = TRUE;
 
 /*
  * Automatizer enabled status

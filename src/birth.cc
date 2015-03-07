@@ -25,6 +25,7 @@
 #include "notes.hpp"
 #include "object1.hpp"
 #include "object2.hpp"
+#include "options.hpp"
 #include "q_rand.h"
 #include "skills.hpp"
 #include "spells2.hpp"

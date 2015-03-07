@@ -69,3 +69,12 @@ extern bool_ view_yellow_lite;
 extern bool_ view_bright_lite;
 extern bool_ view_granite_lite;
 extern bool_ view_special_lite;
+
+//
+// Option Set 5 - ToME options
+//
+extern bool_ linear_stats;
+extern bool_ player_char_health;
+extern bool_ option_ingame_help;
+extern bool_ auto_more;
+extern bool_ inventory_no_move;
