@@ -1,5 +1,6 @@
 #include "q_one.h"
 
+#include "cave.hpp"
 #include "gods.hpp"
 #include "hooks.h"
 #include "monster2.hpp"

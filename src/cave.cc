@@ -4576,3 +4576,167 @@ int new_effect(int type, int dam, int time, int cy, int cx, int rad, s32b flags)
 	effects[i].rad = rad;
 	return i;
 }
+
+/**
+ * Determine if a "legal" grid is a "floor" grid
+ *
+ * Line 1 -- forbid doors, rubble, seams, walls
+ *
+ * Note that the terrain features are split by a one bit test
+ * into those features which block line of sight and those that
+ * do not, allowing an extremely fast single bit check below.
+ *
+ * Add in the fact that some new terrain (water & lava) do NOT block sight
+ * -KMW-
+ */
+bool cave_floor_bold(int y, int x)
+{
+	return cave_floor_grid(&cave[y][x]);
+}
+
+/**
+ * Grid based version of "cave_floor_bold()"
+ */
+bool cave_floor_grid(cave_type const *c)
+{
+	return (f_info[c->feat].flags1 & FF1_FLOOR) && (c->feat != FEAT_MON_TRAP);
+}
+
+
+
+/**
+ * Determine if a "legal" grid is floor without the REMEMBER flag set
+ * Sometimes called "boring" grid
+ */
+bool cave_plain_floor_bold(int y, int x)
+{
+	return cave_plain_floor_grid(&cave[y][x]);
+}
+
+/**
+ * Grid based version of "cave_plain_floor_bold()"
+ */
+bool cave_plain_floor_grid(cave_type const *c)
+{
+	return
+		(f_info[c->feat].flags1 & FF1_FLOOR) &&
+		!(f_info[c->feat].flags1 & FF1_REMEMBER);
+}
+
+
+
+/**
+ * Determine if a "legal" grid isn't a "blocking line of sight" grid
+ *
+ * Line 1 -- forbid doors, rubble, seams, walls
+ *
+ * Note that the terrain features are split by a one bit test
+ * into those features which block line of sight and those that
+ * do not, allowing an extremely fast single bit check below.
+ *
+ * Add in the fact that some new terrain (water & lava) do NOT block sight
+ * -KMW-
+ */
+bool cave_sight_bold(int y, int x)
+{
+	return cave_sight_grid(&cave[y][x]);
+}
+
+bool cave_sight_grid(cave_type const *c)
+{
+	return !(f_info[c->feat].flags1 & FF1_NO_VISION);
+}
+
+
+/**
+ * Determine if a "legal" grid is a "clean" floor grid
+ *
+ * Line 1 -- forbid non-floors
+ * Line 2 -- forbid deep water -KMW-
+ * Line 3 -- forbid deep lava -KMW-
+ * Line 4 -- forbid normal objects
+ */
+bool cave_clean_bold(int y, int x)
+{
+	return
+		(f_info[cave[y][x].feat].flags1 & FF1_FLOOR) &&
+		(cave[y][x].feat != FEAT_MON_TRAP) &&
+		(cave[y][x].o_idx == 0) &&
+		!(f_info[cave[y][x].feat].flags1 & FF1_PERMANENT);
+}
+
+/*
+ * Determine if a "legal" grid is an "empty" floor grid
+ *
+ * Line 1 -- forbid doors, rubble, seams, walls
+ * Line 2 -- forbid normal monsters
+ * Line 3 -- forbid the player
+ */
+bool cave_empty_bold(int y, int x)
+{
+	return
+		cave_floor_bold(y,x) &&
+		!(cave[y][x].m_idx) &&
+		!((y == p_ptr->py) && (x == p_ptr->px));
+}
+
+
+/*
+ * Determine if a "legal" grid is an "naked" floor grid
+ *
+ * Line 1 -- forbid non-floors, non-shallow water & lava -KMW-
+ * Line 2 -- forbid normal objects
+ * Line 3 -- forbid player/monsters
+ */
+bool cave_naked_bold(int y, int x)
+{
+	return
+		(f_info[cave[y][x].feat].flags1 & FF1_FLOOR) &&
+		(cave[y][x].feat != FEAT_MON_TRAP) &&
+		!(f_info[cave[y][x].feat].flags1 & FF1_PERMANENT) &&
+		(cave[y][x].o_idx == 0) &&
+		(cave[y][x].m_idx == 0);
+}
+
+bool cave_naked_bold2(int y, int x)
+{
+	return
+		(f_info[cave[y][x].feat].flags1 & FF1_FLOOR) &&
+		(cave[y][x].feat != FEAT_MON_TRAP) &&
+		(cave[y][x].o_idx == 0) &&
+		(cave[y][x].m_idx == 0);
+}
+
+
+/**
+ * Determine if a "legal" grid is "permanent"
+ */
+bool cave_perma_bold(int y, int x)
+{
+	return cave_perma_grid(&cave[y][x]);
+}
+
+bool cave_perma_grid(cave_type const *c)
+{
+	return f_info[c->feat].flags1 & FF1_PERMANENT;
+}
+
+/*
+ * Determine if a "legal" grid is within "los" of the player
+ *
+ * Note the use of comparison to zero to force a "boolean" result
+ */
+bool player_has_los_bold(int y, int x)
+{
+	return (cave[y][x].info & (CAVE_VIEW)) != 0;
+}
+
+/*
+ * Determine if a "legal" grid can be "seen" by the player
+ *
+ * Note the use of comparison to zero to force a "boolean" result
+ */
+bool player_can_see_bold(int y, int x)
+{
+	return (cave[y][x].info & (CAVE_SEEN)) != 0;
+}
