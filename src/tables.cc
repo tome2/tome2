@@ -2211,9 +2211,9 @@ magic_power mindcraft_powers[MAX_MINDCRAFT_POWERS] =
 		"Telekinetic Wave",
 		"Powerful wave of pure telekinetic forces."
 	},
-		};
+};
 	
-	magic_power necro_powers[MAX_NECRO_POWERS] =
+magic_power necro_powers[MAX_NECRO_POWERS] =
 		{
 			/* Level gained,  cost,  %fail,  name,  desc */
 			{
