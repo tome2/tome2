@@ -52,6 +52,7 @@
 #include "spells5.hpp"
 #include "squeltch.hpp"
 #include "store.hpp"
+#include "tables.hpp"
 #include "util.hpp"
 #include "util.h"
 #include "wild.hpp"

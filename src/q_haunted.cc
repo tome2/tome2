@@ -5,6 +5,7 @@
 #include "init1.hpp"
 #include "monster2.hpp"
 #include "traps.hpp"
+#include "tables.hpp"
 #include "util.hpp"
 
 #define cquest (quest[QUEST_HAUNTED])

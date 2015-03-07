@@ -4,6 +4,7 @@
 #include "lua_bind.hpp"
 #include "object1.hpp"
 #include "object2.hpp"
+#include "tables.hpp"
 #include "traps.hpp"
 #include "util.hpp"
 

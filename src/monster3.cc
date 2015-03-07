@@ -15,6 +15,7 @@
 #include "monster2.hpp"
 #include "object2.hpp"
 #include "skills.hpp"
+#include "tables.hpp"
 #include "util.hpp"
 #include "util.h"
 #include "xtra2.hpp"

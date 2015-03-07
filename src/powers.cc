@@ -24,6 +24,7 @@
 #include "quark.h"
 #include "spells1.hpp"
 #include "spells2.hpp"
+#include "tables.hpp"
 #include "traps.hpp"
 #include "util.hpp"
 #include "util.h"

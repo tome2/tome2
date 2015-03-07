@@ -6,6 +6,7 @@
 #include "monster2.hpp"
 #include "object2.hpp"
 #include "hooks.h"
+#include "tables.hpp"
 #include "util.hpp"
 
 #define cquest (quest[QUEST_POISON])

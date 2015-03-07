@@ -22,6 +22,7 @@
 #include "spell_type.hpp"
 #include "skills.hpp"
 #include "spells5.hpp"
+#include "tables.hpp"
 #include "util.hpp"
 #include "util.h"
 #include "xtra1.hpp"

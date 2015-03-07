@@ -2,6 +2,7 @@
 
 #include "hooks.h"
 #include "object2.hpp"
+#include "tables.hpp"
 #include "util.hpp"
 
 #define cquest (quest[QUEST_NARSIL])

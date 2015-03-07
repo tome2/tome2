@@ -13,6 +13,7 @@
 #include "object2.hpp"
 #include "quark.h"
 #include "hooks.h"
+#include "tables.hpp"
 #include "util.hpp"
 #include "util.h"
 #include "xtra2.hpp"

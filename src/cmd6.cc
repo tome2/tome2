@@ -28,6 +28,7 @@
 #include "spells2.hpp"
 #include "spells5.hpp"
 #include "store.hpp"
+#include "tables.hpp"
 #include "util.hpp"
 #include "wild.hpp"
 #include "wizard2.hpp"

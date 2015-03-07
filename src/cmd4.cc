@@ -20,6 +20,7 @@
 #include "object2.hpp"
 #include "skills.hpp"
 #include "squeltch.hpp"
+#include "tables.hpp"
 #include "util.hpp"
 #include "util.h"
 #include "xtra1.hpp"

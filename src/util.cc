@@ -12,6 +12,8 @@
 #include "messages.h"
 #include "options.hpp"
 #include "quark.h"
+#include "tables.h"
+#include "tables.hpp"
 #include "xtra1.hpp"
 
 #include <boost/algorithm/string/predicate.hpp>

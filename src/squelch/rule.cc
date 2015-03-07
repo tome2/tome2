@@ -9,6 +9,7 @@
 #include "../object1.hpp"
 #include "../object2.hpp"
 #include "../quark.h"
+#include "../tables.hpp"
 #include "../util.hpp"
 
 namespace squelch {

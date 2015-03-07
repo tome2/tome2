@@ -17,6 +17,7 @@
 #include "script.h"
 #include "spells3.hpp"
 #include "squeltch.hpp"
+#include "tables.hpp"
 #include "tome/make_array.hpp"
 #include "util.hpp"
 #include "util.h"

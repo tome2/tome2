@@ -1,6 +1,7 @@
 #include "q_main.h"
 
 #include "hooks.h"
+#include "tables.hpp"
 #include "util.hpp"
 
 #include <cassert>

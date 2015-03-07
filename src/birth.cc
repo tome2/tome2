@@ -31,6 +31,7 @@
 #include "spells3.hpp"
 #include "spells5.hpp"
 #include "store.hpp"
+#include "tables.hpp"
 #include "util.hpp"
 #include "util.h"
 #include "xtra1.hpp"

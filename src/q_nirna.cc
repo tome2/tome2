@@ -4,6 +4,7 @@
 #include "hooks.h"
 #include "init1.hpp"
 #include "monster2.hpp"
+#include "tables.hpp"
 #include "util.hpp"
 
 #define cquest (quest[QUEST_NIRNAETH])

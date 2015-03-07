@@ -14,6 +14,7 @@
 #include "init1.hpp"
 #include "monster2.hpp"
 #include "options.hpp"
+#include "tables.hpp"
 #include "util.hpp"
 
 #include <memory>

@@ -5,6 +5,7 @@
 #include "options.hpp"
 #include "q_rand.h"
 #include "spells1.hpp"
+#include "tables.hpp"
 #include "util.hpp"
 #include "util.h"
 

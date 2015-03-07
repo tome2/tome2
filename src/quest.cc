@@ -1,5 +1,8 @@
 #include "quest.h"
+
 #include "angband.h"
+#include "tables.hpp"
+
 #include <cstddef>
 
 void init_hooks_quests()

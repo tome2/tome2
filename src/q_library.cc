@@ -6,6 +6,7 @@
 #include "object2.hpp"
 #include "spells3.hpp"
 #include "spells4.hpp"
+#include "tables.hpp"
 #include "util.hpp"
 #include "util.h"
 

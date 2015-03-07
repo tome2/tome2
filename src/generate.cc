@@ -17,6 +17,7 @@
 #include "options.hpp"
 #include "randart.hpp"
 #include "spells1.hpp"
+#include "tables.hpp"
 #include "traps.hpp"
 #include "util.hpp"
 #include "wild.hpp"

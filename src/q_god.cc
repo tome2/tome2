@@ -2,6 +2,7 @@
 #include "quark.h"
 #include "hooks.h"
 #include "object2.hpp"
+#include "tables.hpp"
 #include "util.hpp"
 
 #include <assert.h>

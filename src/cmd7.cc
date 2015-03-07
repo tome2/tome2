@@ -24,6 +24,7 @@
 #include "skills.hpp"
 #include "spells1.hpp"
 #include "spells2.hpp"
+#include "tables.hpp"
 #include "util.hpp"
 #include "util.h"
 #include "xtra1.hpp"

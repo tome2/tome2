@@ -22,6 +22,7 @@
 #include "object2.hpp"
 #include "spells1.hpp"
 #include "spells4.hpp"
+#include "tables.hpp"
 #include "traps.hpp"
 #include "util.hpp"
 #include "util.h"

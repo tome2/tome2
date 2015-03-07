@@ -4,6 +4,7 @@
 #include "cmd7.hpp"
 #include "object1.hpp"
 #include "object2.hpp"
+#include "tables.hpp"
 #include "util.hpp"
 #include "util.h"
 

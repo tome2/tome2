@@ -1,7 +1,3 @@
-/* File: tables.c */
-
-/* Purpose: Angband Tables */
-
 /*
  * Copyright (c) 1989 James E. Wilson, Robert A. Koeneke
  *
@@ -9,6 +5,9 @@
  * not for profit purposes provided that this copyright and statement are
  * included in all such copies.
  */
+
+#include "tables.hpp"
+#include "tables.h"
 
 #include "angband.h"
 #include "modules.hpp"
@@ -79,52 +78,6 @@ char hexsym[16] =
 		'0', '1', '2', '3', '4', '5', '6', '7',
 		'8', '9', 'A', 'B', 'C', 'D', 'E', 'F'
 	};
-
-
-/*
- * Stat Table (INT/WIS) -- Number of half-spells per level
- */
-byte adj_mag_study[] =
-{
-	0	/* 3 */,
-	0	/* 4 */,
-	0	/* 5 */,
-	0	/* 6 */,
-	0	/* 7 */,
-	1	/* 8 */,
-	1	/* 9 */,
-	1	/* 10 */,
-	1	/* 11 */,
-	2	/* 12 */,
-	2	/* 13 */,
-	2	/* 14 */,
-	2	/* 15 */,
-	2	/* 16 */,
-	2	/* 17 */,
-	2	/* 18/00-18/09 */,
-	2	/* 18/10-18/19 */,
-	2	/* 18/20-18/29 */,
-	2	/* 18/30-18/39 */,
-	2	/* 18/40-18/49 */,
-	3	/* 18/50-18/59 */,
-	3	/* 18/60-18/69 */,
-	3	/* 18/70-18/79 */,
-	3	/* 18/80-18/89 */,
-	4	/* 18/90-18/99 */,
-	4	/* 18/100-18/109 */,
-	4	/* 18/110-18/119 */,
-	5	/* 18/120-18/129 */,
-	5	/* 18/130-18/139 */,
-	5	/* 18/140-18/149 */,
-	5	/* 18/150-18/159 */,
-	5	/* 18/160-18/169 */,
-	5	/* 18/170-18/179 */,
-	5	/* 18/180-18/189 */,
-	5	/* 18/190-18/199 */,
-	5	/* 18/200-18/209 */,
-	6	/* 18/210-18/219 */,
-	6	/* 18/220+ */
-};
 
 
 /*
@@ -308,52 +261,6 @@ byte adj_chr_gold[] =
 	80      /* 18/200-18/209 */,
 	79      /* 18/210-18/219 */,
 	78      /* 18/220+ */
-};
-
-
-/*
- * Stat Table (INT) -- Magic devices
- */
-byte adj_int_dev[] =
-{
-	0       /* 3 */,
-	0       /* 4 */,
-	0       /* 5 */,
-	0       /* 6 */,
-	0       /* 7 */,
-	1       /* 8 */,
-	1       /* 9 */,
-	1       /* 10 */,
-	1       /* 11 */,
-	1       /* 12 */,
-	1       /* 13 */,
-	1       /* 14 */,
-	2       /* 15 */,
-	2       /* 16 */,
-	2       /* 17 */,
-	3       /* 18/00-18/09 */,
-	3       /* 18/10-18/19 */,
-	4       /* 18/20-18/29 */,
-	4       /* 18/30-18/39 */,
-	5       /* 18/40-18/49 */,
-	5       /* 18/50-18/59 */,
-	6       /* 18/60-18/69 */,
-	6       /* 18/70-18/79 */,
-	7       /* 18/80-18/89 */,
-	7       /* 18/90-18/99 */,
-	8       /* 18/100-18/109 */,
-	9       /* 18/110-18/119 */,
-	10      /* 18/120-18/129 */,
-	11      /* 18/130-18/139 */,
-	12      /* 18/140-18/149 */,
-	13      /* 18/150-18/159 */,
-	14      /* 18/160-18/169 */,
-	15      /* 18/170-18/179 */,
-	16      /* 18/180-18/189 */,
-	17      /* 18/190-18/199 */,
-	18      /* 18/200-18/209 */,
-	19      /* 18/210-18/219 */,
-	20      /* 18/220+ */
 };
 
 
@@ -2432,43 +2339,6 @@ magic_power symbiotic_powers[MAX_SYMBIOTIC_POWERS] =
 	},
 };
 
-
-/*
- * Textual translation of your god's "niceness".
- */
-
-cptr deity_niceness[10] =
-{
-	"a lovable deity",
-	"a friendly deity",
-	"an easygoing deity",
-	"a forgiving deity",
-	"an uncaring deity",
-	"a wary deity",
-	"an unforgiving deity",
-	"an impatient deity",
-	"a wrathful deity",
-	"an easily angered deity"
-};
-
-/*
- * Textual translation of your standing with your god.
- */
-
-cptr deity_standing[11] =
-{
-	"cursed",
-	"persecuted",
-	"punished",
-	"despised",
-	"disliked",
-	"watched",
-	"unnoticed",
-	"noticed",
-	"rewarded",
-	"favored",
-	"championed"
-};
 
 /*
  * Name and description (max. 10 lines) of the gods.
