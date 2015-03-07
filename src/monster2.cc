@@ -5,6 +5,7 @@
  * not for profit purposes provided that this copyright and statement are
  * included in all such copies.
  */
+#include "monster2.hpp"
 #include "angband.h"
 #include "cave.hpp"
 #include "hooks.h"
@@ -393,18 +394,6 @@ static cptr funny_comments[MAX_COMMENT] =
 	"Cool!",
 	"Far out!"
 };
-
-
-int get_wilderness_flag(void)
-{
-	int x = p_ptr->wilderness_x;
-	int y = p_ptr->wilderness_y;
-
-	if (dun_level)
-		return (RF8_DUNGEON);
-	else
-		return (1L << wf_info[wild_map[y][x].feat].terrain_idx);
-}
 
 
 /*
@@ -1529,7 +1518,7 @@ void lore_treasure(int m_idx, int num_item, int num_gold)
 
 
 
-void sanity_blast(monster_type * m_ptr, bool_ necro)
+static void sanity_blast(monster_type * m_ptr, bool_ necro)
 {
 	bool_ happened = FALSE;
 	int power = 100;
@@ -3030,7 +3019,7 @@ static int summon_specific_type = 0;
 /*
  * Hack -- help decide if a monster race is "okay" to summon
  */
-bool_ summon_specific_okay(int r_idx)
+static bool_ summon_specific_okay(int r_idx)
 {
 	monster_race *r_ptr = &r_info[r_idx];
 

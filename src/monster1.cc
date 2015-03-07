@@ -7,7 +7,9 @@
  */
 
 #include "monster1.hpp"
+
 #include "angband.h"
+#include "monster2.hpp"
 #include "util.hpp"
 
 /*
@@ -1652,7 +1654,7 @@ bool_ monster_dungeon(int r_idx)
 }
 
 
-bool_ monster_ocean(int r_idx)
+static bool_ monster_ocean(int r_idx)
 {
 	monster_race *r_ptr = &r_info[r_idx];
 
@@ -1663,7 +1665,7 @@ bool_ monster_ocean(int r_idx)
 }
 
 
-bool_ monster_shore(int r_idx)
+static bool_ monster_shore(int r_idx)
 {
 	monster_race *r_ptr = &r_info[r_idx];
 
@@ -1674,7 +1676,7 @@ bool_ monster_shore(int r_idx)
 }
 
 
-bool_ monster_waste(int r_idx)
+static bool_ monster_waste(int r_idx)
 {
 	monster_race *r_ptr = &r_info[r_idx];
 
@@ -1685,7 +1687,7 @@ bool_ monster_waste(int r_idx)
 }
 
 
-bool_ monster_town(int r_idx)
+static bool_ monster_town(int r_idx)
 {
 	monster_race *r_ptr = &r_info[r_idx];
 
@@ -1696,7 +1698,7 @@ bool_ monster_town(int r_idx)
 }
 
 
-bool_ monster_wood(int r_idx)
+static bool_ monster_wood(int r_idx)
 {
 	monster_race *r_ptr = &r_info[r_idx];
 
@@ -1707,7 +1709,7 @@ bool_ monster_wood(int r_idx)
 }
 
 
-bool_ monster_volcano(int r_idx)
+static bool_ monster_volcano(int r_idx)
 {
 	monster_race *r_ptr = &r_info[r_idx];
 
@@ -1718,7 +1720,7 @@ bool_ monster_volcano(int r_idx)
 }
 
 
-bool_ monster_mountain(int r_idx)
+static bool_ monster_mountain(int r_idx)
 {
 	monster_race *r_ptr = &r_info[r_idx];
 
@@ -1729,7 +1731,7 @@ bool_ monster_mountain(int r_idx)
 }
 
 
-bool_ monster_grass(int r_idx)
+static bool_ monster_grass(int r_idx)
 {
 	monster_race *r_ptr = &r_info[r_idx];
 
@@ -1740,7 +1742,7 @@ bool_ monster_grass(int r_idx)
 }
 
 
-bool_ monster_deep_water(int r_idx)
+static bool_ monster_deep_water(int r_idx)
 {
 	monster_race *r_ptr = &r_info[r_idx];
 
@@ -1753,7 +1755,7 @@ bool_ monster_deep_water(int r_idx)
 }
 
 
-bool_ monster_shallow_water(int r_idx)
+static bool_ monster_shallow_water(int r_idx)
 {
 	monster_race *r_ptr = &r_info[r_idx];
 
@@ -1766,7 +1768,7 @@ bool_ monster_shallow_water(int r_idx)
 }
 
 
-bool_ monster_lava(int r_idx)
+static bool_ monster_lava(int r_idx)
 {
 	monster_race *r_ptr = &r_info[r_idx];
 

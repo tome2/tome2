@@ -11,6 +11,7 @@
 #include "corrupt.hpp"
 #include "hooks.h"
 #include "messages.h"
+#include "monster2.hpp"
 #include "notes.hpp"
 #include "skills.hpp"
 #include "squeltch.hpp"

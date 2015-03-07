@@ -17,6 +17,7 @@
 #include "mimic.hpp"
 #include "messages.h"
 #include "modules.hpp"
+#include "monster2.hpp"
 #include "notes.hpp"
 #include "q_rand.h"
 #include "skills.hpp"

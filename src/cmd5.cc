@@ -12,6 +12,7 @@
 #include "birth.hpp"
 #include "cave.hpp"
 #include "corrupt.hpp"
+#include "monster2.hpp"
 #include "skills.hpp"
 #include "spell_type.hpp"
 #include "spells1.hpp"

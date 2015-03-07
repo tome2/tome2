@@ -17,6 +17,7 @@
 
 #include "angband.h"
 #include "xtra1.hpp"
+#include "monster2.hpp"
 #include "util.hpp"
 #include "util.h"
 

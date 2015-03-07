@@ -13,6 +13,7 @@
 #include "cmd3.hpp"
 #include "cmd5.hpp"
 #include "gods.hpp"
+#include "monster2.hpp"
 #include "skills.hpp"
 #include "spell_type.hpp"
 #include "spells2.hpp"

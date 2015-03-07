@@ -20,6 +20,7 @@
 #include "gods.hpp"
 #include "help.hpp"
 #include "hooks.h"
+#include "monster2.hpp"
 #include "modules.hpp"
 #include "notes.hpp"
 #include "powers.hpp"

@@ -1,8 +1,9 @@
 #include "q_wight.h"
 
 #include "cave.hpp"
-#include "quark.h"
 #include "hooks.h"
+#include "monster2.hpp"
+#include "quark.h"
 #include "util.hpp"
 
 #include <cassert>

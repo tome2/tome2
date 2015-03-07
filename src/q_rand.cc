@@ -2,9 +2,10 @@
 
 #include "cave.hpp"
 #include "hooks.h"
+#include "messages.h"
+#include "monster2.hpp"
 #include "skills.hpp"
 #include "util.hpp"
-#include "messages.h"
 
 #include <cassert>
 

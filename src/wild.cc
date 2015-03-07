@@ -9,6 +9,7 @@
 #include "angband.h"
 #include "cave.hpp"
 #include "hooks.h"
+#include "monster2.hpp"
 #include "util.hpp"
 
 #include <memory>

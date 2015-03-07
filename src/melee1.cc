@@ -10,6 +10,7 @@
 #include "cave.hpp"
 #include "cmd5.hpp"
 #include "mimic.hpp"
+#include "monster2.hpp"
 #include "skills.hpp"
 #include "spells1.hpp"
 #include "spells2.hpp"

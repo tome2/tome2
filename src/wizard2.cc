@@ -13,6 +13,7 @@
 #include "cmd4.hpp"
 #include "corrupt.hpp"
 #include "hooks.h"
+#include "monster2.hpp"
 #include "randart.hpp"
 #include "status.hpp"
 #include "spells1.hpp"

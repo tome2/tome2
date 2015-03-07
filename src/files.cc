@@ -13,6 +13,7 @@
 #include "hiscore.h"
 #include "hooks.h"
 #include "mimic.hpp"
+#include "monster2.hpp"
 #include "notes.hpp"
 #include "skills.hpp"
 #include "spells2.hpp"

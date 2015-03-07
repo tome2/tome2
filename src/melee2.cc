@@ -17,6 +17,7 @@
 #include "cmd1.hpp"
 #include "hooks.h"
 #include "messages.h"
+#include "monster2.hpp"
 #include "quark.h"
 #include "skills.hpp"
 #include "spells1.hpp"
@@ -31,6 +32,8 @@
 #define GRINDNOISE 20
 
 #define FOLLOW_DISTANCE 6
+
+static void cmonster_msg(char a, cptr fmt, ...);
 
 /*
  * Based on mon_take_hit... all monster attacks on
@@ -909,7 +912,7 @@ static void monst_bolt_monst(int m_idx, int y, int x, int typ, int dam_hp)
 }
 
 
-void monster_msg(cptr fmt, ...)
+static void monster_msg(cptr fmt, ...)
 {
 	va_list vp;
 

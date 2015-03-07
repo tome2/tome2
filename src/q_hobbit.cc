@@ -1,8 +1,9 @@
 #include "q_hobbit.h"
 
 #include "cave.hpp"
-#include "messages.h"
 #include "hooks.h"
+#include "messages.h"
+#include "monster2.hpp"
 #include "util.hpp"
 
 #include <cassert>

@@ -1,6 +1,7 @@
 #include "cave.hpp"
 
 #include "angband.h"
+#include "monster2.hpp"
 #include "q_rand.h"
 #include "spells1.hpp"
 #include "util.hpp"

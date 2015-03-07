@@ -1,4 +1,5 @@
 #include "angband.h"
+#include "monster2.hpp"
 #include "util.hpp"
 
 static void gen_joke_place_monster(int r_idx)

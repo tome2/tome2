@@ -12,6 +12,7 @@
 #include "device_allocation.h"
 #include "hooks.h"
 #include "mimic.hpp"
+#include "monster2.hpp"
 #include "randart.hpp"
 #include "skills.hpp"
 #include "spells2.hpp"

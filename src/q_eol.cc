@@ -2,6 +2,7 @@
 
 #include "cave.hpp"
 #include "hooks.h"
+#include "monster2.hpp"
 #include "traps.hpp"
 #include "util.hpp"
 

@@ -2,6 +2,7 @@
 #include "birth.hpp"
 #include "messages.h"
 #include "modules.hpp"
+#include "monster2.hpp"
 #include "quark.h"
 #include "hooks.h"
 #include "util.hpp"

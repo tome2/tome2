@@ -7,11 +7,13 @@
  */
 
 #include "spells2.hpp"
+
 #include "angband.h"
 #include "cave.hpp"
 #include "cmd1.hpp"
 #include "cmd7.hpp"
 #include "hooks.h"
+#include "monster2.hpp"
 #include "notes.hpp"
 #include "skills.hpp"
 #include "spells1.hpp"

@@ -1,6 +1,7 @@
 #include "angband.h"
 #include "cave.hpp"
 #include "gods.hpp"
+#include "monster2.hpp"
 #include "skills.hpp"
 #include "spells5.hpp"
 #include "traps.hpp"

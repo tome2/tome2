@@ -5,6 +5,7 @@
 #include "quark.h"
 #include "randart.hpp"
 #include "messages.h"
+#include "monster2.hpp"
 #include "util.hpp"
 
 #include <cassert>

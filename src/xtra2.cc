@@ -15,6 +15,7 @@
 #include "hooks.h"
 #include "mimic.hpp"
 #include "monster1.hpp"
+#include "monster2.hpp"
 #include "notes.hpp"
 #include "quark.h"
 #include "randart.hpp"
@@ -32,6 +33,8 @@
 #include <boost/algorithm/string/predicate.hpp>
 
 using boost::algorithm::iequals;
+
+static void corrupt_corrupted(void);
 
 /*
  * Set "p_ptr->parasite" and "p_ptr->parasite_r_idx"
@@ -5643,7 +5646,7 @@ void make_wish(void)
  * Corrupted have a 1/3 chance of losing a mutation each time this is called, 
  * assuming they have any in the first place
  */
-void corrupt_corrupted(void)
+static void corrupt_corrupted(void)
 {
 	if (magik(45))
 	{

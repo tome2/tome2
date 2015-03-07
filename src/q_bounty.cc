@@ -1,5 +1,6 @@
 #include "q_bounty.h"
 
+#include "monster2.hpp"
 #include "util.hpp"
 
 #define cquest (quest[QUEST_BOUNTY])

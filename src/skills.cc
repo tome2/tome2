@@ -15,6 +15,7 @@
 #include "gods.hpp"
 #include "help.hpp"
 #include "hooks.h"
+#include "monster2.hpp"
 #include "spells1.hpp"
 #include "spells4.hpp"
 #include "traps.hpp"

@@ -14,6 +14,7 @@
 #include "lua_bind.hpp"
 #include "mimic.hpp"
 #include "monster1.hpp"
+#include "monster2.hpp"
 #include "quark.h"
 #include "skills.hpp"
 #include "spell_type.hpp"

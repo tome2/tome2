@@ -14,6 +14,7 @@
 #include "cmd7.hpp"
 #include "hooks.h"
 #include "mimic.hpp"
+#include "monster2.hpp"
 #include "quark.h"
 #include "spells1.hpp"
 #include "spells2.hpp"
