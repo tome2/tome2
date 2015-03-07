@@ -1,7 +1,3 @@
-/* File: monster1.c */
-
-/* Purpose: describe monsters (using monster memory) */
-
 /*
  * Copyright (c) 1989 James E. Wilson, Christopher J. Stuart
  *
@@ -10,6 +6,7 @@
  * included in all such copies.
  */
 
+#include "monster1.hpp"
 #include "angband.h"
 #include "util.hpp"
 

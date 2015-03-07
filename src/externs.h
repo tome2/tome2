@@ -581,11 +581,6 @@ extern void process_monsters(void);
 extern void curse_equipment(int chance, int heavy_chance);
 extern void curse_equipment_dg(int chance, int heavy_chance);
 
-/* monster1.c */
-extern void screen_roff(int r_idx, int ego, int remember);
-extern void display_roff(int r_idx, int ego);
-extern void monster_description_out(int r_idx, int ego);
-
 /* monster2.c */
 extern s32b monster_exp(s16b level);
 extern void monster_set_level(int m_idx, int level);

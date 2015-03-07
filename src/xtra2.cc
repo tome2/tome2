@@ -14,6 +14,7 @@
 #include "gods.hpp"
 #include "hooks.h"
 #include "mimic.hpp"
+#include "monster1.hpp"
 #include "notes.hpp"
 #include "quark.h"
 #include "randart.hpp"

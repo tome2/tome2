@@ -16,6 +16,7 @@
 #include "hooks.h"
 #include "messages.h"
 #include "mimic.hpp"
+#include "monster1.hpp"
 #include "skills.hpp"
 #include "spells3.hpp"
 #include "spells6.hpp"

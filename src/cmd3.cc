@@ -11,6 +11,7 @@
 #include "cave.hpp"
 #include "gods.hpp"
 #include "hooks.h"
+#include "monster1.hpp"
 #include "quark.h"
 #include "squeltch.hpp"
 #include "store.hpp"
