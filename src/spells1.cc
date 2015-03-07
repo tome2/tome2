@@ -51,6 +51,25 @@ using std::chrono::milliseconds;
 #define MAX_TRIES 100
 
 /*
+ * Convert an "attr"/"char" pair into a "pict" (P)
+ */
+#define PICT(A,C) \
+	((((u16b)(A)) << 8) | ((byte)(C)))
+
+/*
+ * Convert a "pict" (P) into an "attr" (A)
+ */
+#define PICT_A(P) \
+	((byte)((P) >> 8))
+
+/*
+ * Convert a "pict" (P) into an "char" (C)
+ */
+#define PICT_C(P) \
+	((char)((byte)(P)))
+
+
+/*
  * Helper function -- return a "nearby" race for polymorphing
  *
  * Note that this function is one of the more "dangerous" ones...
