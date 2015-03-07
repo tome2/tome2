@@ -1215,3 +1215,57 @@ const char *get_version_string()
 	}
 	return version_str;
 }
+
+/*
+ * A list of tvals and their textual names
+ */
+tval_desc2 tvals[] =
+{
+	{ TV_SWORD, "Sword" },
+	{ TV_POLEARM, "Polearm" },
+	{ TV_HAFTED, "Hafted Weapon" },
+	{ TV_AXE, "Axe" },
+	{ TV_BOW, "Bow" },
+	{ TV_BOOMERANG, "Boomerang" },
+	{ TV_ARROW, "Arrows" },
+	{ TV_BOLT, "Bolts" },
+	{ TV_SHOT, "Shots" },
+	{ TV_SHIELD, "Shield" },
+	{ TV_CROWN, "Crown" },
+	{ TV_HELM, "Helm" },
+	{ TV_GLOVES, "Gloves" },
+	{ TV_BOOTS, "Boots" },
+	{ TV_CLOAK, "Cloak" },
+	{ TV_DRAG_ARMOR, "Dragon Scale Mail" },
+	{ TV_HARD_ARMOR, "Hard Armor" },
+	{ TV_SOFT_ARMOR, "Soft Armor" },
+	{ TV_RING, "Ring" },
+	{ TV_AMULET, "Amulet" },
+	{ TV_LITE, "Lite" },
+	{ TV_POTION, "Potion" },
+	{ TV_POTION2, "Potion" },
+	{ TV_SCROLL, "Scroll" },
+	{ TV_WAND, "Wand" },
+	{ TV_STAFF, "Staff" },
+	{ TV_ROD_MAIN, "Rod" },
+	{ TV_ROD, "Rod Tip" },
+	{ TV_BOOK, "Schools Spellbook", },
+	{ TV_SYMBIOTIC_BOOK, "Symbiotic Spellbook", },
+	{ TV_DRUID_BOOK, "Elemental Stone" },
+	{ TV_MUSIC_BOOK, "Music Book" },
+	{ TV_DAEMON_BOOK, "Daemon Book" },
+	{ TV_SPIKE, "Spikes" },
+	{ TV_DIGGING, "Digger" },
+	{ TV_CHEST, "Chest" },
+	{ TV_FOOD, "Food" },
+	{ TV_FLASK, "Flask" },
+	{ TV_MSTAFF, "Mage Staff" },
+	{ TV_BATERIE, "Essence" },
+	{ TV_PARCHMENT, "Parchment" },
+	{ TV_INSTRUMENT, "Musical Instrument" },
+	{ TV_RUNE1, "Rune 1" },
+	{ TV_RUNE2, "Rune 2" },
+	{ TV_JUNK, "Junk" },
+	{ TV_TRAPKIT, "Trapping Kit" },
+	{ 0, NULL }
+};

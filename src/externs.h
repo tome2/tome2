@@ -458,6 +458,7 @@ extern s32b DUNGEON_ASTRAL_WILD_Y;
 extern deity_type deity_info[MAX_GODS];
 extern timer_type *gl_timers;
 extern const char *get_version_string();
+extern tval_desc2 tvals[];
 
 /* birth.c */
 extern bool_ no_begin_screen;
@@ -480,12 +481,6 @@ extern bool_ private_check_user_directory(cptr dirpath);
 
 /* wizard1.c */
 extern void do_cmd_spoilers();
-
-/* wizard2.c */
-extern void do_cmd_wiz_cure_all(void);
-extern void do_cmd_wiz_named_friendly(int r_idx, bool_ slp);
-extern void do_cmd_debug();
-extern tval_desc2 tvals[];
 
 /*
  * Hack -- conditional (or "bizarre") externs
