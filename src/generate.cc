@@ -284,11 +284,6 @@ struct level_generator_type
 	cptr name;
 	bool_ (*generator)();
 
-	bool_ default_stairs;
-	bool_ default_monsters;
-	bool_ default_objects;
-	bool_ default_miscs;
-
 	struct level_generator_type *next;
 };
 
@@ -297,7 +292,7 @@ static level_generator_type *level_generators = NULL;
 /*
  * Add a new generator
  */
-void add_level_generator(cptr name, bool_ (*generator)(), bool_ stairs, bool_ monsters, bool_ objects, bool_ miscs)
+void add_level_generator(cptr name, bool_ (*generator)())
 {
 	assert(name != nullptr);
 
@@ -305,11 +300,6 @@ void add_level_generator(cptr name, bool_ (*generator)(), bool_ stairs, bool_ mo
 
 	g->name = strdup(name);
 	g->generator = generator;
-
-	g->default_stairs = stairs;
-	g->default_monsters = monsters;
-	g->default_objects = objects;
-	g->default_miscs = miscs;
 
 	g->next = level_generators;
 	level_generators = g;
@@ -7569,8 +7559,7 @@ static bool_ cave_gen(void)
 		generator = generator->next;
 	}
 
-	/* Only if requested */
-	if (generator->default_stairs)
+	/* Generate stairs */
 	{
 		/* Is there a dungeon branch ? */
 		if ((branch = get_branch()))
@@ -7612,8 +7601,7 @@ static bool_ cave_gen(void)
 	if (k > 10) k = 10;
 	if (k < 2) k = 2;
 
-	/* Only if requested */
-	if (generator->default_monsters)
+	/* Place monsters */
 	{
 
 		/*
@@ -7798,8 +7786,7 @@ static bool_ cave_gen(void)
 		}
 	}
 
-	/* Only if requested */
-	if (generator->default_miscs)
+	/* Place traps and rubble */
 	{
 		/* Place some traps in the dungeon */
 		alloc_object(ALLOC_SET_BOTH, ALLOC_TYP_TRAP, randint(k * 2));
@@ -7808,8 +7795,7 @@ static bool_ cave_gen(void)
 		alloc_object(ALLOC_SET_CORR, ALLOC_TYP_RUBBLE, randint(k));
 	}
 
-	/* Only if requested */
-	if (generator->default_objects)
+	/* Place objects and treasure */
 	{
 		/* Put some objects in rooms */
 		if (dungeon_type != DUNGEON_DEATH) alloc_object(ALLOC_SET_ROOM, ALLOC_TYP_OBJECT, randnor(DUN_AMT_ROOM, 3));
@@ -7819,8 +7805,7 @@ static bool_ cave_gen(void)
 		if (dungeon_type != DUNGEON_DEATH) alloc_object(ALLOC_SET_BOTH, ALLOC_TYP_GOLD, randnor(DUN_AMT_GOLD, 3));
 	}
 
-	/* Only if requested */
-	if (generator->default_miscs)
+	/* Place random features such as altars and void gates, etc. */
 	{
 		/* Put some altars */
 		alloc_object(ALLOC_SET_ROOM, ALLOC_TYP_ALTAR, randnor(DUN_AMT_ALTAR, 3));

@@ -3,7 +3,7 @@
 #include "angband.h"
 
 extern bool_ new_player_spot(int branch);
-extern void add_level_generator(cptr name, bool_ (*generator)(), bool_ stairs, bool_ monsters, bool_ objects, bool_ miscs);
+extern void add_level_generator(cptr name, bool_ (*generator)());
 extern bool_ level_generate_dungeon();
 extern bool_ generate_fracave(int y0, int x0,int xsize,int ysize,int cutoff,bool_ light,bool_ room);
 extern void generate_hmap(int y0, int x0,int xsiz,int ysiz,int grd,int roug,int cutoff);
