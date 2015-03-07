@@ -10,6 +10,7 @@
 #include "squeltch.hpp"
 
 #include "files.hpp"
+#include "loadsave.hpp"
 #include "tome/squelch/tree_printer.hpp"
 #include "tome/squelch/condition.hpp"
 #include "tome/squelch/condition_metadata.hpp"

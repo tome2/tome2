@@ -1,3 +1,6 @@
+#include "loadsave.hpp"
+#include "loadsave.h"
+
 #include "angband.h"
 #include "birth.hpp"
 #include "levels.hpp"

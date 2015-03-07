@@ -93,6 +93,7 @@
  */
 
 #include "angband.h"
+#include "loadsave.h"
 #include "util.h"
 
 #ifdef USE_X11

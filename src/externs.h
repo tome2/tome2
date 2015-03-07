@@ -501,13 +501,6 @@ extern s16b error_line;
 /* joke.c */
 extern bool_ gen_joke_monsters(void *data, void *in, void *out);
 
-/* loadsave.c */
-extern bool_ file_exist(cptr buf);
-extern bool_ load_dungeon(char *ext);
-extern void save_dungeon(void);
-extern bool_ save_player(void);
-extern bool_ load_player(void);
-
 /* melee1.c */
 /* melee2.c */
 extern int monst_spell_monst_spell;

@@ -10,6 +10,7 @@
 #include "cave.hpp"
 #include "hooks.h"
 #include "levels.hpp"
+#include "loadsave.hpp"
 #include "monster2.hpp"
 #include "randart.hpp"
 #include "spells1.hpp"

@@ -16,6 +16,8 @@
 #include "hiscore.h"
 #include "hooks.h"
 #include "levels.hpp"
+#include "loadsave.h"
+#include "loadsave.hpp"
 #include "mimic.hpp"
 #include "monster2.hpp"
 #include "monster3.hpp"

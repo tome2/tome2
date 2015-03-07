@@ -26,6 +26,7 @@
 #ifdef USE_SDL
 
 #include "angband.h"
+#include "loadsave.h"
 #include "util.h"
 
 #include <SDL.h>

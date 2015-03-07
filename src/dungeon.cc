@@ -28,6 +28,8 @@
 #include "help.hpp"
 #include "hooks.h"
 #include "levels.hpp"
+#include "loadsave.h"
+#include "loadsave.hpp"
 #include "monster2.hpp"
 #include "monster3.hpp"
 #include "modules.hpp"
