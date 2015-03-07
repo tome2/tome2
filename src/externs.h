@@ -479,9 +479,6 @@ extern void curse_equipment_dg(int chance, int heavy_chance);
 /* main.c */
 extern bool_ private_check_user_directory(cptr dirpath);
 
-/* wizard1.c */
-extern void do_cmd_spoilers();
-
 /*
  * Hack -- conditional (or "bizarre") externs
  */

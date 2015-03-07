@@ -1,6 +1,4 @@
-/* File: wizard1.c */
-
-/* Purpose: Spoiler generation -BEN- */
+#include "wizard1.hpp"
 
 #include "angband.h"
 #include "cmd7.hpp"
@@ -2324,7 +2322,7 @@ static void spoil_mon_info(cptr fname)
 }
 
 
-const char *long_intro =
+static const char *long_intro =
 	"Essences are the tools of the trade for Alchemists, "
 	"and unfortunately are useless for any other class. "
 	"Alchemists use essences to create magical items for them to use.\n\n"
