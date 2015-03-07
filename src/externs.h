@@ -476,9 +476,6 @@ extern void process_monsters(void);
 extern void curse_equipment(int chance, int heavy_chance);
 extern void curse_equipment_dg(int chance, int heavy_chance);
 
-/* main.c */
-extern bool_ private_check_user_directory(cptr dirpath);
-
 /*
  * Hack -- conditional (or "bizarre") externs
  */
@@ -487,6 +484,3 @@ extern bool_ private_check_user_directory(cptr dirpath);
 /* util.c */
 extern void user_name(char *buf, int id);
 #endif
-
-/* modules.cc */
-extern cptr force_module;

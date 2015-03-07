@@ -6,6 +6,9 @@
  * included in all such copies.
  */
 
+#include "modules.hpp"
+#include "modules.h"
+
 #include "angband.h"
 #include "birth.hpp"
 #include "corrupt.hpp"

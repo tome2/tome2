@@ -12,6 +12,7 @@
 #include "dungeon.h"
 #include "files.h"
 #include "init2.h"
+#include "modules.h"
 #include "script.h"
 #include "util.h"
 
