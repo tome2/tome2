@@ -942,14 +942,8 @@ s16b doppleganger;
 /* To allow wilderness encounters */
 bool_ generate_encounter;
 
-/* Autoroler */
-bool_ autoroll;
-
-/* Point based */
-bool_ point_based;
-
-/* Preserve, special levels, ironman_rooms */
-bool_ preserve, special_lvls, ironman_rooms;
+/* Special levels */
+bool_ special_lvls;
 
 /*
  * Such an ugly hack ...
@@ -957,11 +951,6 @@ bool_ preserve, special_lvls, ironman_rooms;
 bool_ *m_allow_special;
 bool_ *k_allow_special;
 bool_ *a_allow_special;
-
-/*
- * Which monsters are allowed ?
- */
-bool_ joke_monsters;
 
 /*
  * Center view
@@ -977,11 +966,6 @@ s16b plots[MAX_PLOTS];
  * Random quest
  */
 random_quest random_quests[MAX_RANDOM_QUEST];
-
-/*
- * Fated ?
- */
-bool_ fate_option;
 
 /*
  * Special levels

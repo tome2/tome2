@@ -1474,8 +1474,6 @@ option_type option_info[] =
 	{ &joke_monsters, FALSE, 6, 14,
 	  "joke_monsters", "Allow use of some 'joke' monsters" },
 
-	/* XXX */
-
 	{ &always_small_level, FALSE, 6, 16,
 	  "always_small_level", "Always make small levels" },
 

@@ -33,7 +33,6 @@ extern bool_ alert_failure;
 extern bool_ last_words;
 extern bool_ small_levels;
 extern bool_ empty_levels;
-extern bool_ always_small_level;
 extern bool_ confirm_stairs;
 extern bool_ wear_confirm;
 extern bool_ disturb_pets;
@@ -78,3 +77,14 @@ extern bool_ player_char_health;
 extern bool_ option_ingame_help;
 extern bool_ auto_more;
 extern bool_ inventory_no_move;
+
+//
+// Option Set 6 - Birth options
+//
+extern bool_ always_small_level;
+extern bool_ autoroll;
+extern bool_ fate_option;
+extern bool_ ironman_rooms;
+extern bool_ joke_monsters;
+extern bool_ point_based;
+extern bool_ preserve;

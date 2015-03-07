@@ -31,7 +31,6 @@ bool_ alert_failure; 		/* Alert user to various failures */
 bool_ last_words; 		/* Get last words upon dying */
 bool_ small_levels; 		/* Allow unusually small dungeon levels */
 bool_ empty_levels; 		/* Allow empty 'arena' levels */
-bool_ always_small_level;         /* Small levels */
 bool_ confirm_stairs; 		/* Prompt before staircases... */
 bool_ wear_confirm; 		/* Confirm before putting on known cursed items */
 bool_ disturb_pets; 		/* Pets moving nearby disturb us */
@@ -78,3 +77,14 @@ bool_ auto_more;			/* Auto more */
 bool_ inventory_no_move;		/* In inventory option window, just erase the letters,
 					 * rather that displaying the list without the invalid
 					 * selections */
+
+//
+// Option Set 6 - Birth options
+//
+bool_ always_small_level;
+bool_ autoroll;
+bool_ fate_option;
+bool_ ironman_rooms;
+bool_ joke_monsters;
+bool_ point_based;
+bool_ preserve;
