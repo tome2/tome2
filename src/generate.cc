@@ -15,6 +15,7 @@
 #include "spells1.hpp"
 #include "traps.hpp"
 #include "util.hpp"
+#include "wild.hpp"
 
 #include <cassert>
 #include <memory>

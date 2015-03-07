@@ -494,13 +494,6 @@ extern void race_legends(void);
 extern void show_highclass(int building);
 extern errr get_xtra_line(const char * file_name, monster_type *m_ptr, char * output);
 
-/* wild.c */
-extern int generate_area(int y, int x, bool_ border, bool_ corner, bool_ refresh);
-extern void wilderness_gen(int refresh);
-extern void wilderness_gen_small(void);
-extern void reveal_wilderness_around_player(int y, int x, int h, int w);
-extern void town_gen(int t_idx);
-
 
 /* init1.c */
 extern int color_char_to_attr(char c);

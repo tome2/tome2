@@ -6,6 +6,8 @@
  * included in all such copies.
  */
 
+#include "wild.hpp"
+
 #include "angband.h"
 #include "cave.hpp"
 #include "hooks.h"
@@ -134,7 +136,7 @@ static void plasma_recursive(int x1, int y1, int x2, int y2,
  *
  * Return the number of floor grids
  */
-int generate_area(int y, int x, bool_ border, bool_ corner, bool_ refresh)
+static int generate_area(int y, int x, bool_ border, bool_ corner, bool_ refresh)
 {
 	int road, entrance;
 	int x1, y1;

@@ -25,6 +25,7 @@
 #include "traps.hpp"
 #include "util.hpp"
 #include "util.h"
+#include "wild.hpp"
 #include "xtra1.hpp"
 #include "xtra2.hpp"
 

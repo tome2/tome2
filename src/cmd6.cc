@@ -25,6 +25,7 @@
 #include "spells5.hpp"
 #include "store.hpp"
 #include "util.hpp"
+#include "wild.hpp"
 #include "wizard2.hpp"
 #include "xtra1.hpp"
 #include "xtra2.hpp"
