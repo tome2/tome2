@@ -1104,11 +1104,6 @@ hist_type *bg;
 int max_bg_idx;
 
 /*
- * Variable savefile stuff
- */
-s32b extra_savefile_parts = 0;
-
-/*
  * Display the player as a special symbol when in bad health ?
  */
 bool_ player_char_health;
