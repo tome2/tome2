@@ -1051,11 +1051,6 @@ bool_ *k_allow_special;
 bool_ *a_allow_special;
 
 /*
- * Gives a random object to newly created characters
- */
-bool_ rand_birth;
-
-/*
  * Which monsters are allowed ?
  */
 bool_ joke_monsters;
