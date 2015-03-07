@@ -677,7 +677,7 @@ void do_cmd_destroy(void)
 	/* Create an automatizer rule */
 	if (automatizer_create)
 	{
-		automatizer_add_rule(o_ptr, TRUE);
+		automatizer_add_rule(o_ptr);
 	}
 
 	/*

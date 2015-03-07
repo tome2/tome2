@@ -436,7 +436,7 @@ void do_cmd_automatizer()
 
 enum class add_rule_mode { TVAL, TSVAL, NAME };
 
-static void easy_add_rule(action_type action, add_rule_mode mode, bool do_status, object_type *o_ptr)
+static void easy_add_rule(add_rule_mode mode, bool do_status, object_type *o_ptr)
 {
 	std::shared_ptr<Condition> condition;
 
@@ -488,44 +488,26 @@ static void easy_add_rule(action_type action, add_rule_mode mode, bool do_status
 	}
 
 	// Rule name
-	auto rule_name = action_mapping().stringify(action);
+	auto rule_name = action_mapping().stringify(action_type::AUTO_DESTROY);
 
 	// Append to list of rules
-	switch (action)
-	{
-	case action_type::AUTO_DESTROY:
-		automatizer->append_rule(
-			std::make_shared<DestroyRule>(
-				rule_name, game_module_idx, condition));
-		break;
-
-	case action_type::AUTO_PICKUP:
-		automatizer->append_rule(
-			std::make_shared<PickUpRule>(
-				rule_name, game_module_idx, condition));
-		break;
-
-	case action_type::AUTO_INSCRIBE:
-		assert(false);
-		break;
-	}
+	automatizer->append_rule(
+		std::make_shared<DestroyRule>(
+			rule_name, game_module_idx, condition));
 
 	msg_print("Rule added. Please go to the Automatizer screen (press = then T)");
 	msg_print("to save the modified ruleset.");
 }
 
-void automatizer_add_rule(object_type *o_ptr, bool_ destroy)
+void automatizer_add_rule(object_type *o_ptr)
 {
 	bool do_status = false;
-	action_type action = destroy
-		? action_type::AUTO_DESTROY
-		: action_type::AUTO_PICKUP;
 
 	while (true)
 	{
 		char ch;
 
-		if (!get_com(format("%s all of the same [T]ype, [F]amily or [N]ame, also use [S]tatus (%s)? ", (destroy) ? "Destroy" : "Pickup", (do_status) ? "Yes" : "No"), &ch))
+		if (!get_com(format("Destroy all of the same [T]ype, [F]amily or [N]ame, also use [S]tatus (%s)? ", (do_status) ? "Yes" : "No"), &ch))
 		{
 			break;
 		}
@@ -538,19 +520,19 @@ void automatizer_add_rule(object_type *o_ptr, bool_ destroy)
 
 		if (ch == 'T' || ch == 't')
 		{
-			easy_add_rule(action, add_rule_mode::TSVAL, do_status, o_ptr);
+			easy_add_rule(add_rule_mode::TSVAL, do_status, o_ptr);
 			break;
 		}
 
 		if (ch == 'F' || ch == 'f')
 		{
-			easy_add_rule(action, add_rule_mode::TVAL, do_status, o_ptr);
+			easy_add_rule(add_rule_mode::TVAL, do_status, o_ptr);
 			break;
 		}
 
 		if (ch == 'N' || ch == 'n')
 		{
-			easy_add_rule(action, add_rule_mode::NAME, do_status, o_ptr);
+			easy_add_rule(add_rule_mode::NAME, do_status, o_ptr);
 			break;
 		}
 	}
