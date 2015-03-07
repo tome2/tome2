@@ -3717,3 +3717,28 @@ int get_keymap_mode()
 		return KEYMAP_MODE_ORIG;
 	}
 }
+
+/**
+ * Determines if a map location is fully inside the outer walls
+ */
+bool in_bounds(int y, int x)
+{
+	return (y > 0) && (x > 0) && (y < cur_hgt-1) && (x < cur_wid-1);
+}
+
+/**
+ * Determines if a map location is on or inside the outer walls
+ */
+bool in_bounds2(int y, int x)
+{
+	return (y >= 0) && (x >= 0) && (y < cur_hgt) && (x < cur_wid);
+}
+
+/**
+ * Determines if a map location is currently "on screen" -RAK-
+ * Note that "panel_contains(Y,X)" always implies "in_bounds2(Y,X)".
+ */
+bool panel_contains(int y, int x)
+{
+	return (y >= panel_row_min) && (y <= panel_row_max) && (x >= panel_col_min) && (x <= panel_col_max);
+}

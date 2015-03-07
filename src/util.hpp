@@ -70,3 +70,6 @@ extern void repeat_push(int what);
 extern bool_ repeat_pull(int *what);
 extern void repeat_check(void);
 extern void get_count(int number, int max);
+extern bool in_bounds(int y, int x);
+extern bool in_bounds2(int y, int x);
+extern bool panel_contains(int y, int x);
