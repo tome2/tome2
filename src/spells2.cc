@@ -14,6 +14,7 @@
 #include "cmd7.hpp"
 #include "hooks.h"
 #include "monster2.hpp"
+#include "monster3.hpp"
 #include "notes.hpp"
 #include "skills.hpp"
 #include "spells1.hpp"

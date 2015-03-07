@@ -21,6 +21,7 @@
 #include "help.hpp"
 #include "hooks.h"
 #include "monster2.hpp"
+#include "monster3.hpp"
 #include "modules.hpp"
 #include "notes.hpp"
 #include "powers.hpp"

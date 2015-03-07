@@ -16,6 +16,7 @@
 #include "mimic.hpp"
 #include "monster1.hpp"
 #include "monster2.hpp"
+#include "monster3.hpp"
 #include "notes.hpp"
 #include "quark.h"
 #include "randart.hpp"

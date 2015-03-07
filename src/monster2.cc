@@ -6,10 +6,12 @@
  * included in all such copies.
  */
 #include "monster2.hpp"
+
 #include "angband.h"
 #include "cave.hpp"
 #include "hooks.h"
 #include "mimic.hpp"
+#include "monster3.hpp"
 #include "randart.hpp"
 #include "spells1.hpp"
 #include "spells2.hpp"

@@ -14,6 +14,7 @@
 #include "hooks.h"
 #include "mimic.hpp"
 #include "monster2.hpp"
+#include "monster3.hpp"
 #include "notes.hpp"
 #include "skills.hpp"
 #include "spells2.hpp"

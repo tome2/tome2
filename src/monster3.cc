@@ -6,6 +6,8 @@
  * included in all such copies.
  */
 
+#include "monster3.hpp"
+
 #include "angband.h"
 #include "cmd2.hpp"
 #include "gods.hpp"
