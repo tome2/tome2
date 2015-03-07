@@ -18,6 +18,7 @@
 #include "angband.h"
 #include "files.hpp"
 #include "monster2.hpp"
+#include "object1.hpp"
 #include "util.hpp"
 #include "util.h"
 #include "xtra1.hpp"

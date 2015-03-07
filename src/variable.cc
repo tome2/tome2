@@ -993,12 +993,6 @@ s32b RANDART_ARMOR;
 s32b RANDART_JEWEL;
 
 /*
- * Spell description
- */
-bool_ info_spell = FALSE;
-char spell_txt[50];
-
-/*
  * Random spells.
  */
 random_spell random_spells[MAX_SPELLS];

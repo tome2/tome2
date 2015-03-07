@@ -12,6 +12,7 @@
 #include "files.hpp"
 #include "hooks.h"
 #include "monster2.hpp"
+#include "object2.hpp"
 #include "spells2.hpp"
 #include "util.hpp"
 #include "util.h"

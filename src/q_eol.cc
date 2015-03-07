@@ -4,6 +4,7 @@
 #include "generate.hpp"
 #include "hooks.h"
 #include "monster2.hpp"
+#include "object2.hpp"
 #include "traps.hpp"
 #include "util.hpp"
 

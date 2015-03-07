@@ -15,6 +15,8 @@
 #include "cmd5.hpp"
 #include "files.hpp"
 #include "hooks.h"
+#include "object1.hpp"
+#include "object2.hpp"
 #include "quark.h"
 #include "spell_type.hpp"
 #include "skills.hpp"

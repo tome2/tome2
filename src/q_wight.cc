@@ -3,6 +3,7 @@
 #include "cave.hpp"
 #include "hooks.h"
 #include "monster2.hpp"
+#include "object2.hpp"
 #include "quark.h"
 #include "util.hpp"
 

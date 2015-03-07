@@ -6,6 +6,8 @@
  * included in all such copies.
  */
 
+#include "object1.hpp"
+
 #include "angband.h"
 #include "cave.hpp"
 #include "cmd2.hpp"
@@ -17,6 +19,7 @@
 #include "mimic.hpp"
 #include "monster1.hpp"
 #include "monster2.hpp"
+#include "object2.hpp"
 #include "quark.h"
 #include "skills.hpp"
 #include "spell_type.hpp"
@@ -27,6 +30,9 @@
 #include "xtra1.hpp"
 
 #include <cassert>
+
+static bool_ apply_flags_set(s16b a_idx, s16b set_idx,
+	u32b *f1, u32b *f2, u32b *f3, u32b *f4, u32b *f5, u32b *esp);
 
 /*
  * Hack -- note that "TERM_MULTI" is now just "TERM_VIOLET".
@@ -2725,7 +2731,7 @@ void display_ammo_damage(object_type *o_ptr)
 /*
  * Describe a magic stick powers
  */
-void describe_device(object_type *o_ptr)
+static void describe_device(object_type *o_ptr)
 {
 	char buf[128];
 
@@ -3890,7 +3896,7 @@ static s16b label_to_equip(int c)
  * Returns the next free slot of the given "type", return the first
  * if all are used
  */
-int get_slot(int slot)
+static int get_slot(int slot)
 {
 	int i = 0;
 
@@ -6574,7 +6580,7 @@ bool_ apply_set(s16b a_idx, s16b set_idx)
 	return (FALSE);
 }
 
-bool_ apply_flags_set(s16b a_idx, s16b set_idx,
+static bool_ apply_flags_set(s16b a_idx, s16b set_idx,
                      u32b *f1, u32b *f2, u32b *f3, u32b *f4, u32b *f5, u32b *esp)
 {
 	set_type *s_ptr = &set_info[set_idx];

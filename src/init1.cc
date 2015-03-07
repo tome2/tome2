@@ -3,6 +3,8 @@
 #include "files.hpp"
 #include "gods.hpp"
 #include "monster2.hpp"
+#include "object1.hpp"
+#include "object2.hpp"
 #include "skills.hpp"
 #include "spells5.hpp"
 #include "traps.hpp"

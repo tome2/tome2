@@ -12,6 +12,8 @@
 #include "mimic.hpp"
 #include "monster2.hpp"
 #include "monster3.hpp"
+#include "object1.hpp"
+#include "object2.hpp"
 #include "skills.hpp"
 #include "spells1.hpp"
 #include "spells2.hpp"

@@ -19,6 +19,8 @@
 #include "monster2.hpp"
 #include "monster3.hpp"
 #include "notes.hpp"
+#include "object1.hpp"
+#include "object2.hpp"
 #include "quark.h"
 #include "randart.hpp"
 #include "skills.hpp"

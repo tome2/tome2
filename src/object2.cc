@@ -6,6 +6,8 @@
  * included in all such copies.
  */
 
+#include "object2.hpp"
+
 #include "angband.h"
 #include "cave.hpp"
 #include "spell_type.hpp"
@@ -13,6 +15,7 @@
 #include "hooks.h"
 #include "mimic.hpp"
 #include "monster2.hpp"
+#include "object1.hpp"
 #include "randart.hpp"
 #include "skills.hpp"
 #include "spells2.hpp"

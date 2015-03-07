@@ -34,6 +34,8 @@
 #include "monster3.hpp"
 #include "modules.hpp"
 #include "notes.hpp"
+#include "object1.hpp"
+#include "object2.hpp"
 #include "powers.hpp"
 #include "quest.h"
 #include "quark.h"

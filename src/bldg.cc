@@ -18,6 +18,8 @@
 #include "files.hpp"
 #include "hooks.h"
 #include "mimic.hpp"
+#include "object1.hpp"
+#include "object2.hpp"
 #include "q_library.h"
 #include "q_fireprof.h"
 #include "q_bounty.h"

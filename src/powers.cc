@@ -7,6 +7,7 @@
  */
 
 #include "powers.hpp"
+
 #include "angband.h"
 #include "cave.hpp"
 #include "cmd1.hpp"
@@ -17,6 +18,8 @@
 #include "mimic.hpp"
 #include "monster2.hpp"
 #include "monster3.hpp"
+#include "object1.hpp"
+#include "object2.hpp"
 #include "quark.h"
 #include "spells1.hpp"
 #include "spells2.hpp"

@@ -12,6 +12,7 @@
 #include "cmd2.hpp"
 #include "gods.hpp"
 #include "monster2.hpp"
+#include "object2.hpp"
 #include "skills.hpp"
 #include "util.hpp"
 #include "util.h"

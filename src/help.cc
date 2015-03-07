@@ -12,6 +12,7 @@
 #include "angband.h"
 #include "files.hpp"
 #include "hooks.h"
+#include "object1.hpp"
 #include "skills.hpp"
 #include "util.hpp"
 

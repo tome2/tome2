@@ -4,6 +4,7 @@
 #include "quark.h"
 #include "messages.h"
 #include "monster2.hpp"
+#include "object2.hpp"
 #include "hooks.h"
 #include "util.hpp"
 

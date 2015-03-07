@@ -4,6 +4,7 @@
 #include "gods.hpp"
 #include "hooks.h"
 #include "monster2.hpp"
+#include "object2.hpp"
 #include "util.hpp"
 
 #define cquest (quest[QUEST_SPIDER])

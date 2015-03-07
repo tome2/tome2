@@ -15,6 +15,8 @@
 #include "files.hpp"
 #include "hooks.h"
 #include "monster2.hpp"
+#include "object1.hpp"
+#include "object2.hpp"
 #include "randart.hpp"
 #include "status.hpp"
 #include "spells1.hpp"

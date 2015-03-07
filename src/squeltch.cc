@@ -11,6 +11,8 @@
 
 #include "files.hpp"
 #include "loadsave.hpp"
+#include "object1.hpp"
+#include "object2.hpp"
 #include "tome/squelch/tree_printer.hpp"
 #include "tome/squelch/condition.hpp"
 #include "tome/squelch/condition_metadata.hpp"

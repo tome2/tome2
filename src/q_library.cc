@@ -2,6 +2,7 @@
 #include "quark.h"
 #include "hooks.h"
 #include "monster2.hpp"
+#include "object2.hpp"
 #include "spells3.hpp"
 #include "spells4.hpp"
 #include "util.hpp"

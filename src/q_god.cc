@@ -1,6 +1,7 @@
 #include "q_god.h"
 #include "quark.h"
 #include "hooks.h"
+#include "object2.hpp"
 #include "util.hpp"
 
 #include <assert.h>

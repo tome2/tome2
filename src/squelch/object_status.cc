@@ -2,6 +2,7 @@
 #include "tome/squelch/object_status.hpp"
 
 #include "angband.h"
+#include "object1.hpp"
 
 namespace squelch {
 

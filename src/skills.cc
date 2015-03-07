@@ -17,6 +17,8 @@
 #include "hooks.h"
 #include "monster2.hpp"
 #include "monster3.hpp"
+#include "object1.hpp"
+#include "object2.hpp"
 #include "spells1.hpp"
 #include "spells4.hpp"
 #include "traps.hpp"

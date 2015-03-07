@@ -2,6 +2,7 @@
 
 #include "angband.h"
 #include "gods.hpp"
+#include "object2.hpp"
 #include "skills.hpp"
 #include "spell_type.hpp"
 #include "spells4.hpp"
