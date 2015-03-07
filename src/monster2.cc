@@ -2106,8 +2106,9 @@ bool_ kind_is_randart(int k_idx)
  * except for the savefile loading code.
  */
 bool_ bypass_r_ptr_max_num = FALSE;
-int place_monster_result = 0;
+static int place_monster_result = 0;
 bool_ place_monster_one_no_drop = FALSE;
+static s16b hack_m_idx_ii = 0;
 s16b place_monster_one(int y, int x, int r_idx, int ego, bool_ slp, int status)
 {
 	int i;
