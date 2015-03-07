@@ -1,19 +1,3 @@
-/* File: externs.h */
-
-/* Purpose: extern declarations (variables and functions) */
-
-/*
- * Note that some files have their own header files
- * (z-util.h, z-form.h, term.h, random.h)
- */
-
-/*
- * Options for inc_stack_size_ex
- */
-typedef enum { OPTIMIZE, NO_OPTIMIZE } optimize_flag;
-typedef enum { DESCRIBE, NO_DESCRIBE } describe_flag;
-
-
 /*
  * Automatically generated "variable" declarations
  */

@@ -1,6 +1,10 @@
 #pragma once
 
-#include "angband.h"
+#include "h-basic.h"
+#include "types_fwd.h"
+
+typedef enum { OPTIMIZE, NO_OPTIMIZE } optimize_flag;
+typedef enum { DESCRIBE, NO_DESCRIBE } describe_flag;
 
 extern void inc_stack_size(int item, int delta);
 extern void inc_stack_size_ex(int item, int delta, optimize_flag opt, describe_flag desc);
