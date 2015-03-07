@@ -4,6 +4,7 @@
 #include "hooks.h"
 #include "init1.hpp"
 #include "monster2.hpp"
+#include "object1.hpp"
 #include "object2.hpp"
 #include "spells2.hpp"
 #include "tables.hpp"

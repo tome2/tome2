@@ -6613,7 +6613,106 @@ static bool_ apply_flags_set(s16b a_idx, s16b set_idx,
 	return (FALSE);
 }
 
+/*
+ * Return the "attr" for a given item.
+ * Use "flavor" if available.
+ * Default to user definitions.
+ */
 
+byte object_attr(object_type const *o_ptr)
+{
+	if (o_ptr->tval == TV_RANDART)
+	{
+		return random_artifacts[o_ptr->sval].attr;
+	}
+	else if (k_info[o_ptr->k_idx].flavor)
+	{
+		return misc_to_attr[k_info[o_ptr->k_idx].flavor];
+	}
+	else
+	{
+		return k_info[o_ptr->k_idx].x_attr;
+	}
+}
 
+byte object_attr_default(object_type *o_ptr)
+{
+	if (o_ptr->tval == TV_RANDART)
+	{
+		return random_artifacts[o_ptr->sval].attr;
+	}
+	else if (k_info[o_ptr->k_idx].flavor)
+	{
+		return misc_to_attr[k_info[o_ptr->k_idx].flavor];
+	}
+	else
+	{
+		return k_info[o_ptr->k_idx].d_attr;
+	}
+}
 
+/*
+ * Return the "char" for a given item.
+ * Use "flavor" if available.
+ * Default to user definitions.
+ */
 
+char object_char(object_type const *o_ptr)
+{
+	if (k_info[o_ptr->k_idx].flavor)
+	{
+		return misc_to_char[k_info[o_ptr->k_idx].flavor];
+	}
+	else
+	{
+		return k_info[o_ptr->k_idx].x_char;
+	}
+}
+
+char object_char_default(object_type const *o_ptr)
+{
+	if (k_info[o_ptr->k_idx].flavor)
+	{
+		return misc_to_char[k_info[o_ptr->k_idx].flavor];
+	}
+	else
+	{
+		return k_info[o_ptr->k_idx].d_char;
+	}
+}
+
+/**
+ * Is the given object an artifact?
+ */
+bool artifact_p(object_type const *o_ptr)
+{
+	return
+		(o_ptr->tval == TV_RANDART) ||
+		(o_ptr->name1 ? true : false) ||
+		(o_ptr->art_name ? true : false) ||
+		((k_info[o_ptr->k_idx].flags3 & TR3_NORM_ART) ? true : false);
+}
+
+/**
+ * Is the given object an ego item?
+ */
+bool ego_item_p(object_type const *o_ptr)
+{
+	return o_ptr->name2 || (o_ptr->name2b ? TRUE : FALSE);
+}
+
+/*
+ * Is the given object an ego item of the given type?
+ */
+bool is_ego_p(object_type const *o_ptr, s16b ego)
+{
+	return (o_ptr->name2 == ego) || (o_ptr->name2b == ego);
+}
+
+/**
+ * Is the given object identified as cursed?
+ */
+bool cursed_p(object_type const *o_ptr)
+{
+	return o_ptr->ident & (IDENT_CURSED);
+}

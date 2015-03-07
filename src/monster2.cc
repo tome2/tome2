@@ -14,6 +14,7 @@
 #include "levels.hpp"
 #include "mimic.hpp"
 #include "monster3.hpp"
+#include "object1.hpp"
 #include "object2.hpp"
 #include "options.hpp"
 #include "randart.hpp"

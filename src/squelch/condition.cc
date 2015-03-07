@@ -7,6 +7,7 @@
 #include "tome/squelch/tree_printer.hpp"
 #include "angband.h"
 #include "object1.hpp"
+#include "object2.hpp"
 #include "skills.hpp"
 #include "quark.h"
 #include "util.hpp"

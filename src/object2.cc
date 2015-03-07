@@ -823,6 +823,17 @@ void object_known(object_type *o_ptr)
 
 
 
+/*
+ * Determine if a given inventory item is "known"
+ * Test One -- Check for special "known" tag
+ * Test Two -- Check for "Easy Know" + "Aware"
+ */
+extern bool object_known_p(object_type const *o_ptr)
+{
+	return ((o_ptr->ident & (IDENT_KNOWN)) ||
+		(k_info[o_ptr->k_idx].easy_know && k_info[o_ptr->k_idx].aware));
+}
+
 
 
 /*
@@ -834,6 +845,13 @@ void object_aware(object_type *o_ptr)
 	k_info[o_ptr->k_idx].aware = TRUE;
 }
 
+/**
+ * Is the player aware of the effects of the given object?
+ */
+bool object_aware_p(object_type const *o_ptr)
+{
+	return k_info[o_ptr->k_idx].aware;
+}
 
 
 /*
@@ -845,6 +863,14 @@ void object_tried(object_type *o_ptr)
 	k_info[o_ptr->k_idx].tried = TRUE;
 }
 
+
+/**
+ * Has the given object been "tried"?
+ */
+bool object_tried_p(object_type const *o_ptr)
+{
+	return k_info[o_ptr->k_idx].tried;
+}
 
 
 /*

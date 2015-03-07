@@ -3,6 +3,7 @@
 
 #include "angband.h"
 #include "object1.hpp"
+#include "object2.hpp"
 #include "variable.hpp"
 
 namespace squelch {
