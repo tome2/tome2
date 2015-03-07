@@ -459,12 +459,3 @@ extern deity_type deity_info[MAX_GODS];
 extern timer_type *gl_timers;
 extern const char *get_version_string();
 extern tval_desc2 tvals[];
-
-/*
- * Hack -- conditional (or "bizarre") externs
- */
-
-#ifdef SET_UID
-/* util.c */
-extern void user_name(char *buf, int id);
-#endif
