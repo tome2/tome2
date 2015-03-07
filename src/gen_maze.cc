@@ -13,6 +13,8 @@
 
 #include "angband.h"
 #include "cave.hpp"
+#include "levels.hpp"
+
 #include <memory>
 
 /*

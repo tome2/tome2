@@ -10,6 +10,7 @@
 #include "angband.h"
 #include "corrupt.hpp"
 #include "hooks.h"
+#include "levels.hpp"
 #include "messages.h"
 #include "monster2.hpp"
 #include "notes.hpp"

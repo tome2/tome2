@@ -9,6 +9,7 @@
 #include "angband.h"
 #include "cave.hpp"
 #include "hooks.h"
+#include "levels.hpp"
 #include "monster2.hpp"
 #include "randart.hpp"
 #include "spells1.hpp"

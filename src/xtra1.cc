@@ -14,6 +14,7 @@
 #include "cmd7.hpp"
 #include "gods.hpp"
 #include "hooks.h"
+#include "levels.hpp"
 #include "messages.h"
 #include "mimic.hpp"
 #include "monster1.hpp"

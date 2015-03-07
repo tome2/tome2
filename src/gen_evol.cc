@@ -12,6 +12,7 @@
 
 #include "angband.h"
 #include "cave.hpp"
+#include "levels.hpp"
 
 /*
  * Generate a game of life level :) and make it evolve

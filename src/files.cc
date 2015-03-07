@@ -12,6 +12,7 @@
 #include "cmd3.hpp"
 #include "hiscore.h"
 #include "hooks.h"
+#include "levels.hpp"
 #include "mimic.hpp"
 #include "monster2.hpp"
 #include "monster3.hpp"

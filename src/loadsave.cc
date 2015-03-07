@@ -1,5 +1,6 @@
 #include "angband.h"
 #include "birth.hpp"
+#include "levels.hpp"
 #include "messages.h"
 #include "modules.hpp"
 #include "monster2.hpp"

@@ -1,7 +1,3 @@
-/* File: levels.c */
-
-/* Purpose: Levels functions */
-
 /*
  * Copyright (c) 1989 James E. Wilson, Robert A. Koeneke
  *
@@ -9,6 +5,8 @@
  * not for profit purposes provided that this copyright and statement are
  * included in all such copies.
  */
+
+#include "levels.hpp"
 
 #include "angband.h"
 #include "util.hpp"
@@ -19,7 +17,7 @@
  * Return the parameter of the given command in the given file
  */
 static int start_line = 0;
-bool_ get_command(const char *file, char comm, char *param)
+static bool_ get_command(const char *file, char comm, char *param)
 {
 	char buf[1024];
 	int i = -1;

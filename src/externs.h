@@ -679,18 +679,6 @@ extern s32b flag_cost(object_type * o_ptr, int plusses);
 /* main.c */
 extern bool_ private_check_user_directory(cptr dirpath);
 
-/* levels.c */
-extern bool_ get_dungeon_generator(char *buf);
-extern bool_ get_level_desc(char *buf);
-extern void get_level_flags(void);
-extern bool_ get_dungeon_name(char *buf);
-extern bool_ get_dungeon_special(char *buf);
-extern bool_ get_command(const char *file, char comm, char *param);
-extern int get_branch(void);
-extern int get_fbranch(void);
-extern int get_flevel(void);
-extern bool_ get_dungeon_save(char *buf);
-
 /* wizard1.c */
 extern void do_cmd_spoilers();
 
