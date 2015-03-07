@@ -51,24 +51,6 @@ using std::chrono::milliseconds;
 #define MAX_TRIES 100
 
 /*
- * Convert a "location" (Y,X) into a "grid" (G)
- */
-#define GRID(Y,X) \
-	(256 * (Y) + (X))
-
-/*
- * Convert a "grid" (G) into a "location" (Y)
- */
-#define GRID_Y(G) \
-	((int)((G) / 256U))
-
-/*
- * Convert a "grid" (G) into a "location" (X)
- */
-#define GRID_X(G) \
-	((int)((G) % 256U))
-
-/*
  * Helper function -- return a "nearby" race for polymorphing
  *
  * Note that this function is one of the more "dangerous" ones...
@@ -2644,13 +2626,14 @@ int get_mana_path_dir(int y, int x, int oy, int ox, int pdir, int mana)
  * is defined as "MAX(dy,dx) + MIN(dy,dx)/2", which means that the player
  * actually has an "octagon of projection" not a "circle of projection".
  *
- * The path grids are saved into the grid array pointed to by "gp", and
- * there should be room for at least "range" grids in "gp".  Note that
- * due to the way in which distance is calculated, this function normally
- * uses fewer than "range" grids for the projection path, so the result
- * of this function should never be compared directly to "range".  Note
- * that the initial grid (y1,x1) is never saved into the grid array, not
- * even if the initial grid is also the final grid.  XXX XXX XXX
+ * This function returns the coordinates of all the grids on the path.
+ * The returned vector will be empty if and only if (y1,x1) and (y2,x2) are
+ * equal. Note that due to the way in which distance is calculated, this
+ * function normally uses fewer than "range" grids for the projection
+ * path, so the size of the result of this function should never be
+ * compared directly to "range".  Note that the initial grid (y1,x1) is
+ * never saved into the returned grid array, not even if the initial grid
+ * is also the final grid.
  *
  * The "flg" flags can be used to modify the behavior of this function.
  *
@@ -2666,18 +2649,16 @@ int get_mana_path_dir(int y, int x, int oy, int ox, int pdir, int mana)
  * This flag is non-trivial and has not yet been implemented, but could
  * perhaps make use of the "vinfo" array (above).  XXX XXX XXX
  *
- * This function returns the number of grids (if any) in the path.  This
- * function will return zero if and only if (y1,x1) and (y2,x2) are equal.
- *
  * This algorithm is similar to, but slightly different from, the one used
  * by "update_view_los()", and very different from the one used by "los()".
  */
-static int project_path(u16b *gp, int range, int y1, int x1, int y2, int x2, int flg)
+static std::vector<std::tuple<int, int>> project_path(unsigned int range, int y1, int x1, int y2, int x2, int flg)
 {
 	int y, x, mana = 0, dir = 0;
 
-	int n = 0;
-	int k = 0;
+	/* Output grids */
+	std::vector<std::tuple<int, int>> gp;
+	gp.reserve(range + 10);
 
 	/* Absolute */
 	int ay, ax;
@@ -2696,7 +2677,10 @@ static int project_path(u16b *gp, int range, int y1, int x1, int y2, int x2, int
 
 
 	/* No path necessary (or allowed) */
-	if ((x1 == x2) && (y1 == y2)) return (0);
+	if ((x1 == x2) && (y1 == y2))
+	{
+		return gp;
+	}
 
 	/* Hack -- to make a bolt/beam/ball follow a mana path */
 	if (flg & PROJECT_MANA_PATH)
@@ -2715,23 +2699,33 @@ static int project_path(u16b *gp, int range, int y1, int x1, int y2, int x2, int
 		while (1)
 		{
 			/* Save grid */
-			gp[n++] = GRID(y, x);
+			gp.push_back(std::make_tuple(y, x));
 
 			/* Hack -- Check maximum range */
-			if (n >= range + 10) return n;
+			if (gp.size() >= range + 10)
+			{
+				return gp;
+			}
 
 			/* Always stop at non-initial wall grids */
-			if ((n > 0) && (!cave_sight_bold(y, x) || !cave_floor_bold(y, x))) return n;
+			if ((!cave_sight_bold(y, x) || !cave_floor_bold(y, x)))
+			{
+				return gp;
+			}
 
 			/* Sometimes stop at non-initial monsters/players */
-			if (flg & (PROJECT_STOP))
+			if ((flg & (PROJECT_STOP)) && (cave[y][x].m_idx != 0))
 			{
-				if ((n > 0) && (cave[y][x].m_idx != 0)) return n;
+				return gp;
 			}
 
 			/* Get the new direction */
 			dir = get_mana_path_dir(y, x, oy, ox, pdir, mana);
-			if (dir == 5) return n;
+			if (dir == 5)
+			{
+				return gp;
+			}
+
 			oy = y;
 			ox = x;
 			y += ddy[dir];
@@ -2784,28 +2778,37 @@ static int project_path(u16b *gp, int range, int y1, int x1, int y2, int x2, int
 		y = y1 + sy;
 		x = x1;
 
+		/* Counter for distance calculation */
+		int k = 0;
+
 		/* Create the projection path */
 		while (1)
 		{
 			/* Save grid */
-			gp[n++] = GRID(y, x);
+			gp.push_back(std::make_tuple(y, x));
 
 			/* Hack -- Check maximum range */
-			if ((n + (k >> 1)) >= range) break;
+			if ((gp.size() + (k >> 1)) >= range)
+			{
+				break;
+			}
 
 			/* Sometimes stop at destination grid */
-			if (!(flg & (PROJECT_THRU)))
+			if (!(flg & (PROJECT_THRU)) && (x == x2) && (y == y2))
 			{
-				if ((x == x2) && (y == y2)) break;
+				break;
 			}
 
 			/* Always stop at non-initial wall grids */
-			if ((n > 0) && (!cave_sight_bold(y, x) || !cave_floor_bold(y, x)) && !(flg & PROJECT_WALL)) break;
+			if ((!cave_sight_bold(y, x) || !cave_floor_bold(y, x)) && !(flg & PROJECT_WALL))
+			{
+				break;
+			}
 
 			/* Sometimes stop at non-initial monsters/players */
-			if (flg & (PROJECT_STOP))
+			if ((flg & (PROJECT_STOP)) && (cave[y][x].m_idx != 0))
 			{
-				if ((n > 0) && (cave[y][x].m_idx != 0)) break;
+				break;
 			}
 
 			/* Slant */
@@ -2846,28 +2849,37 @@ static int project_path(u16b *gp, int range, int y1, int x1, int y2, int x2, int
 		y = y1;
 		x = x1 + sx;
 
+		/* Counter for distance calculation */
+		int k = 0;
+
 		/* Create the projection path */
 		while (1)
 		{
 			/* Save grid */
-			gp[n++] = GRID(y, x);
+			gp.push_back(std::make_tuple(y, x));
 
 			/* Hack -- Check maximum range */
-			if ((n + (k >> 1)) >= range) break;
+			if ((gp.size() + (k >> 1)) >= range)
+			{
+				break;
+			}
 
 			/* Sometimes stop at destination grid */
-			if (!(flg & (PROJECT_THRU)))
+			if (!(flg & (PROJECT_THRU)) && (x == x2) && (y == y2))
 			{
-				if ((x == x2) && (y == y2)) break;
+				break;
 			}
 
 			/* Always stop at non-initial wall grids */
-			if ((n > 0) && (!cave_sight_bold(y, x) || !cave_floor_bold(y, x)) && !(flg & PROJECT_WALL)) break;
+			if ((!cave_sight_bold(y, x) || !cave_floor_bold(y, x)) && !(flg & PROJECT_WALL))
+			{
+				break;
+			}
 
 			/* Sometimes stop at non-initial monsters/players */
-			if (flg & (PROJECT_STOP))
+			if ((flg & (PROJECT_STOP)) && (cave[y][x].m_idx != 0))
 			{
-				if ((n > 0) && (cave[y][x].m_idx != 0)) break;
+				break;
 			}
 
 			/* Slant */
@@ -2906,24 +2918,30 @@ static int project_path(u16b *gp, int range, int y1, int x1, int y2, int x2, int
 		while (1)
 		{
 			/* Save grid */
-			gp[n++] = GRID(y, x);
+			gp.push_back(std::make_tuple(y, x));
 
 			/* Hack -- Check maximum range */
-			if ((n + (n >> 1)) >= range) break;
+			if ((gp.size() + (gp.size() >> 1)) >= range)
+			{
+				break;
+			}
 
 			/* Sometimes stop at destination grid */
-			if (!(flg & (PROJECT_THRU)))
+			if (!(flg & (PROJECT_THRU)) && (x == x2) && (y == y2))
 			{
-				if ((x == x2) && (y == y2)) break;
+				break;
 			}
 
 			/* Always stop at non-initial wall grids */
-			if ((n > 0) && (!cave_sight_bold(y, x) || !cave_floor_bold(y, x)) && !(flg & PROJECT_WALL)) break;
+			if ((!cave_sight_bold(y, x) || !cave_floor_bold(y, x)) && !(flg & PROJECT_WALL))
+			{
+				break;
+			}
 
 			/* Sometimes stop at non-initial monsters/players */
-			if (flg & (PROJECT_STOP))
+			if ((flg & (PROJECT_STOP)) && (cave[y][x].m_idx != 0))
 			{
-				if ((n > 0) && (cave[y][x].m_idx != 0)) break;
+				break;
 			}
 
 			/* Advance (Y) */
@@ -2934,9 +2952,8 @@ static int project_path(u16b *gp, int range, int y1, int x1, int y2, int x2, int
 		}
 	}
 
-
-	/* Length */
-	return (n);
+	/* Done */
+	return gp;
 }
 
 
@@ -8243,7 +8260,7 @@ static bool_ project_p(int who, int r, int y, int x, int dam, int typ, int a_rad
  */
 bool_ project(int who, int rad, int y, int x, int dam, int typ, int flg)
 {
-	int i, t, dist;
+	int t, dist;
 
 	int y1, x1;
 	int y2, x2;
@@ -8266,11 +8283,8 @@ bool_ project(int who, int rad, int y, int x, int dam, int typ, int flg)
 	/* Is the player blind? */
 	bool_ blind = (p_ptr->blind ? TRUE : FALSE);
 
-	/* Number of grids in the "path" */
-	int path_n = 0;
-
 	/* Actual grids in the "path" */
-	u16b path_g[1024];
+	std::vector<std::tuple<int, int>> path_g;
 
 	/* Number of grids in the "blast area" (including the "beam" path) */
 	int grids = 0;
@@ -8353,22 +8367,26 @@ bool_ project(int who, int rad, int y, int x, int dam, int typ, int flg)
 
 	/* Calculate the projection path */
 	if ((who == -101) || (who == -100))
-		path_n = 0;
+	{
+		/* Leave path empty */
+	}
 	else
-		path_n = project_path(path_g, MAX_RANGE, y1, x1, y2, x2, flg);
+	{
+		path_g = project_path(MAX_RANGE, y1, x1, y2, x2, flg);
+	}
 
 
 	/* Hack -- Handle stuff */
 	handle_stuff();
 
 	/* Project along the path */
-	for (i = 0; i < path_n; ++i)
+	for (auto const &grid_yx: path_g)
 	{
 		int oy = y;
 		int ox = x;
 
-		int ny = GRID_Y(path_g[i]);
-		int nx = GRID_X(path_g[i]);
+		int ny = std::get<0>(grid_yx);
+		int nx = std::get<1>(grid_yx);
 
 		/* Hack -- Balls explode before reaching walls */
 		if (!cave_floor_bold(ny, nx) && (rad > 0)) break;
@@ -8514,7 +8532,7 @@ bool_ project(int who, int rad, int y, int x, int dam, int typ, int flg)
 		for (t = 0; t <= rad; t++)
 		{
 			/* Dump everything with this radius */
-			for (i = gm[t]; i < gm[t + 1]; i++)
+			for (int i = gm[t]; i < gm[t + 1]; i++)
 			{
 				/* Extract the location */
 				y = gy[i];
@@ -8559,7 +8577,7 @@ bool_ project(int who, int rad, int y, int x, int dam, int typ, int flg)
 		if (drawn)
 		{
 			/* Erase the explosion drawn above */
-			for (i = 0; i < grids; i++)
+			for (int i = 0; i < grids; i++)
 			{
 				/* Extract the location */
 				y = gy[i];
@@ -8596,7 +8614,7 @@ bool_ project(int who, int rad, int y, int x, int dam, int typ, int flg)
 		}
 
 		/* Scan for features */
-		for (i = 0; i < grids; i++)
+		for (int i = 0; i < grids; i++)
 		{
 			/* Hack -- Notice new "dist" values */
 			if (gm[dist + 1] == i) dist++;
@@ -8629,7 +8647,7 @@ bool_ project(int who, int rad, int y, int x, int dam, int typ, int flg)
 		dist = 0;
 
 		/* Scan for objects */
-		for (i = 0; i < grids; i++)
+		for (int i = 0; i < grids; i++)
 		{
 			/* Hack -- Notice new "dist" values */
 			if (gm[dist + 1] == i) dist++;
@@ -8656,7 +8674,7 @@ bool_ project(int who, int rad, int y, int x, int dam, int typ, int flg)
 		dist = 0;
 
 		/* Scan for monsters */
-		for (i = 0; i < grids; i++)
+		for (int i = 0; i < grids; i++)
 		{
 			/* Hack -- Notice new "dist" values */
 			if (gm[dist + 1] == i) dist++;
@@ -8741,7 +8759,7 @@ bool_ project(int who, int rad, int y, int x, int dam, int typ, int flg)
 		dist = 0;
 
 		/* Scan for player */
-		for (i = 0; i < grids; i++)
+		for (int i = 0; i < grids; i++)
 		{
 			/* Hack -- Notice new "dist" values */
 			if (gm[dist + 1] == i) dist++;
