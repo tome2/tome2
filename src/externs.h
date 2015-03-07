@@ -513,9 +513,6 @@ extern void get_level_school(struct spell_type *spell, s32b max, s32b min, s32b 
 extern s32b get_level_max_stick;
 extern s32b get_level_use_stick;
 
-extern void set_target(int y, int x);
-extern void get_target(int dir, int *y, int *x);
-
 extern void get_map_size(const char *name, int *ysize, int *xsize);
 extern void load_map(const char *name, int *y, int *x);
 
