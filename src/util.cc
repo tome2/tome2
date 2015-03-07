@@ -14,6 +14,8 @@
 #include "quark.h"
 #include "tables.h"
 #include "tables.hpp"
+#include "variable.h"
+#include "variable.hpp"
 #include "xtra1.hpp"
 
 #include <boost/algorithm/string/predicate.hpp>

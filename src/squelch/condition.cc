@@ -10,6 +10,7 @@
 #include "skills.hpp"
 #include "quark.h"
 #include "util.hpp"
+#include "variable.hpp"
 
 namespace squelch {
 

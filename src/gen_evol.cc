@@ -12,6 +12,7 @@
 #include "cave.hpp"
 #include "generate.hpp"
 #include "levels.hpp"
+#include "variable.hpp"
 
 /*
  * Generate a game of life level :) and make it evolve

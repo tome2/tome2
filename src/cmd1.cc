@@ -33,6 +33,8 @@
 #include "traps.hpp"
 #include "util.hpp"
 #include "util.h"
+#include "variable.h"
+#include "variable.hpp"
 #include "wild.hpp"
 #include "xtra1.hpp"
 #include "xtra2.hpp"

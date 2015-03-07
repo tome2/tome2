@@ -13,6 +13,7 @@
 #include "cave.hpp"
 #include "generate.hpp"
 #include "levels.hpp"
+#include "variable.hpp"
 
 #include <memory>
 

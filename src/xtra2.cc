@@ -31,6 +31,8 @@
 #include "tables.hpp"
 #include "util.hpp"
 #include "util.h"
+#include "variable.h"
+#include "variable.hpp"
 #include "wizard2.hpp"
 #include "xtra1.hpp"
 

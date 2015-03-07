@@ -68,6 +68,7 @@ extern bool_ view_yellow_lite;
 extern bool_ view_bright_lite;
 extern bool_ view_granite_lite;
 extern bool_ view_special_lite;
+extern bool_ center_player;
 
 //
 // Option Set 5 - ToME options

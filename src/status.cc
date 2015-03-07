@@ -21,6 +21,8 @@
 #include "object1.hpp"
 #include "util.hpp"
 #include "util.h"
+#include "variable.h"
+#include "variable.hpp"
 #include "xtra1.hpp"
 
 static void row_trival(const char*, s16b, u32b, s16b, u32b, int, u32b[INVEN_TOTAL - INVEN_WIELD + 2][7]);

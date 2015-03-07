@@ -1,5 +1,6 @@
 #include "mimic.hpp"
 
+#include "variable.hpp"
 #include "xtra1.hpp"
 
 #include <cassert>

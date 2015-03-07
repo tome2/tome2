@@ -11,6 +11,7 @@
 #include "../quark.h"
 #include "../tables.hpp"
 #include "../util.hpp"
+#include "../variable.hpp"
 
 namespace squelch {
 

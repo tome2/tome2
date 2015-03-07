@@ -21,6 +21,8 @@
 #include "tome/make_array.hpp"
 #include "util.hpp"
 #include "util.h"
+#include "variable.h"
+#include "variable.hpp"
 
 #include <cassert>
 #include <type_traits>

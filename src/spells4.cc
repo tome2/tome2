@@ -12,6 +12,7 @@
 #include "spells6.hpp"
 #include "util.hpp"
 #include "util.h"
+#include "variable.hpp"
 
 #include <algorithm>
 #include <cassert>

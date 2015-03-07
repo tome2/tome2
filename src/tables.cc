@@ -39,7 +39,7 @@
 #include "q_one.h"
 #include "q_main.h"
 #include "q_rand.h"
-
+#include "variable.hpp"
 
 
 

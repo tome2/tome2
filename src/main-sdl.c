@@ -28,6 +28,7 @@
 #include "angband.h"
 #include "loadsave.h"
 #include "util.h"
+#include "variable.h"
 
 #include <SDL.h>
 #include <SDL_image.h>

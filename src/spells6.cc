@@ -7,6 +7,7 @@
 #include "skills.hpp"
 #include "spell_type.hpp"
 #include "spells4.hpp"
+#include "variable.hpp"
 
 #include <cassert>
 #include <vector>

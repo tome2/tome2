@@ -38,11 +38,10 @@ extern "C" {
 
 
 /*
- * Now, include the define's, the type's, and the extern's
+ * Now, include the defines and the types
  */
 #include "defines.h"
 #include "types.h"
-#include "externs.h"
 
 /***** Some copyright messages follow below *****/
 

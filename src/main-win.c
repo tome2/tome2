@@ -72,6 +72,7 @@
 #include "files.h"
 #include "init2.h"
 #include "util.h"
+#include "variable.h"
 
 #ifdef WINDOWS
 

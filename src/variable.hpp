@@ -1,6 +1,6 @@
-/*
- * Automatically generated "variable" declarations
- */
+#pragma once
+
+#include "angband.h"
 
 extern int max_macrotrigger;
 extern char *macro_template;
@@ -8,8 +8,6 @@ extern char *macro_modifier_chr;
 extern char *macro_modifier_name[MAX_MACRO_MOD];
 extern char *macro_trigger_name[MAX_MACRO_TRIG];
 extern char *macro_trigger_keycode[2][MAX_MACRO_TRIG];
-
-/* variable.c */
 extern byte version_major;
 extern byte version_minor;
 extern byte version_patch;
@@ -19,13 +17,8 @@ extern byte sf_patch;
 extern u32b sf_when;
 extern u16b sf_lives;
 extern u16b sf_saves;
-extern bool_ arg_wizard;
-extern bool_ arg_force_original;
-extern bool_ arg_force_roguelike;
-extern bool_ character_generated;
 extern bool_ character_dungeon;
 extern bool_ character_loaded;
-extern bool_ character_icky;
 extern bool_ character_xtra;
 extern u32b seed_flavor;
 extern s16b command_cmd;
@@ -39,7 +32,6 @@ extern bool_ create_up_stair;
 extern bool_ create_down_stair;
 extern bool_ create_up_shaft;
 extern bool_ create_down_shaft;
-extern bool_ msg_flag;
 extern bool_ alive;
 extern bool_ death;
 extern s16b running;
@@ -58,7 +50,6 @@ extern u16b total_winner;
 extern u16b has_won;
 extern u16b noscore;
 extern bool_ inkey_base;
-extern bool_ inkey_flag;
 extern s16b coin_type;
 extern bool_ opening_chest;
 extern bool_ shimmer_monsters;
@@ -110,11 +101,8 @@ extern s16b health_who;
 extern s16b monster_race_idx;
 extern s16b monster_ego_idx;
 extern object_type *tracked_object;
-extern char player_name[32];
-extern char player_base[32];
 extern char died_from[80];
 extern char history[4][60];
-extern char savefile[1024];
 extern s16b lite_n;
 extern s16b lite_y[LITE_MAX];
 extern s16b lite_x[LITE_MAX];
@@ -133,9 +121,6 @@ extern u32b option_flag[8];
 extern u32b option_mask[8];
 extern u32b window_flag[ANGBAND_TERM_MAX];
 extern u32b window_mask[ANGBAND_TERM_MAX];
-extern term *angband_term[ANGBAND_TERM_MAX];
-extern char angband_term_name[ANGBAND_TERM_MAX][80];
-extern byte angband_color_table[256][4];
 extern cave_type **cave;
 extern object_type *o_list;
 extern monster_type *m_list;
@@ -164,13 +149,9 @@ extern alchemist_recipe *alchemist_recipes;
 extern u32b alchemist_known_artifacts[6];
 extern u32b alchemist_gained;
 extern s16b player_hp[PY_MAX_LEVEL];
-
 extern artifact_select_flag *a_select_flags;
-
 extern ability_type *ab_info;
-
 extern skill_type *s_info;
-
 extern vault_type *v_info;
 extern feature_type *f_info;
 extern object_kind *k_info;
@@ -192,28 +173,11 @@ extern store_info_type *st_info;
 extern store_action_type *ba_info;
 extern owner_type *ow_info;
 extern set_type *set_info;
-
 extern cptr DEFAULT_FEAT_TEXT;
 extern cptr DEFAULT_FEAT_TUNNEL;
 extern cptr DEFAULT_FEAT_BLOCK;
-
-extern cptr ANGBAND_SYS;
-extern cptr ANGBAND_KEYBOARD;
 extern cptr ANGBAND_GRAF;
 extern char *ANGBAND_DIR;
-extern char *ANGBAND_DIR_MODULES;
-extern char *ANGBAND_DIR_SAVE;
-extern char *ANGBAND_DIR_CORE;
-extern char *ANGBAND_DIR_DNGN;
-extern char *ANGBAND_DIR_DATA;
-extern char *ANGBAND_DIR_EDIT;
-extern char *ANGBAND_DIR_FILE;
-extern char *ANGBAND_DIR_HELP;
-extern char *ANGBAND_DIR_INFO;
-extern char *ANGBAND_DIR_NOTE;
-extern char *ANGBAND_DIR_PREF;
-extern char *ANGBAND_DIR_USER;
-extern char *ANGBAND_DIR_XTRA;
 extern bool_ item_tester_full;
 extern byte item_tester_tval;
 extern bool_ (*item_tester_hook)(object_type *o_ptr);
@@ -270,7 +234,6 @@ extern bool_ special_lvls;
 extern bool_ *m_allow_special;
 extern bool_ *k_allow_special;
 extern bool_ *a_allow_special;
-extern bool_ center_player;
 extern s16b plots[MAX_PLOTS];
 extern random_quest random_quests[MAX_RANDOM_QUEST];
 extern bool_ *special_lvl[MAX_DUNGEON_DEPTH];
@@ -278,7 +241,6 @@ extern bool_ generate_special_feeling;
 extern u32b dungeon_flags1;
 extern u32b dungeon_flags2;
 extern birther previous_char;
-extern hist_type *bg;
 extern int max_bg_idx;
 extern s16b schools_count;
 extern school_type schools[SCHOOLS_MAX];

@@ -14,6 +14,8 @@
 #include "traps.hpp"
 #include "util.hpp"
 #include "util.h"
+#include "variable.h"
+#include "variable.hpp"
 
 #include <boost/algorithm/string/predicate.hpp>
 

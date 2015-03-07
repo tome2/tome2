@@ -5,6 +5,7 @@
 #include "device_allocation.h"
 #include "spells3.hpp"
 #include "spells4.hpp"
+#include "variable.hpp"
 
 #include <cassert>
 

@@ -4,6 +4,7 @@
 #include "monster2.hpp"
 #include "options.hpp"
 #include "util.hpp"
+#include "variable.hpp"
 
 static void gen_joke_place_monster(int r_idx)
 {

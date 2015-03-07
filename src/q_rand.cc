@@ -13,6 +13,7 @@
 #include "skills.hpp"
 #include "tables.hpp"
 #include "util.hpp"
+#include "variable.hpp"
 
 #include <cassert>
 

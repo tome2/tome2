@@ -7,6 +7,7 @@
 #include "tables.hpp"
 #include "traps.hpp"
 #include "util.hpp"
+#include "variable.hpp"
 
 #include <cassert>
 

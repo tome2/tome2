@@ -3,6 +3,7 @@
 #include "hooks.h"
 #include "tables.hpp"
 #include "util.hpp"
+#include "variable.hpp"
 
 #include <cassert>
 

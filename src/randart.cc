@@ -14,6 +14,8 @@
 #include "quark.h"
 #include "spells2.hpp"
 #include "util.hpp"
+#include "variable.h"
+#include "variable.hpp"
 
 #include <memory>
 #include <vector>

@@ -7,6 +7,7 @@
 #include "traps.hpp"
 #include "tables.hpp"
 #include "util.hpp"
+#include "variable.hpp"
 
 #define cquest (quest[QUEST_HAUNTED])
 

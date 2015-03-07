@@ -1,7 +1,3 @@
-/* File: variable.c */
-
-/* Purpose: Angband variables */
-
 /*
  * Copyright (c) 1989 James E. Wilson, Robert A. Koeneke
  *
@@ -10,7 +6,8 @@
  * included in all such copies.
  */
 
-#include "angband.h"
+#include "variable.hpp"
+#include "variable.h"
 #include "util.hpp"
 
 
@@ -951,11 +948,6 @@ bool_ special_lvls;
 bool_ *m_allow_special;
 bool_ *k_allow_special;
 bool_ *a_allow_special;
-
-/*
- * Center view
- */
-bool_ center_player = FALSE;
 
 /*
  * Plots

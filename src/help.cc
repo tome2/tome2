@@ -16,6 +16,7 @@
 #include "options.hpp"
 #include "skills.hpp"
 #include "util.hpp"
+#include "variable.hpp"
 
 #define DESC_MAX 14
 #define TRIGGERED_HELP_MAX 19

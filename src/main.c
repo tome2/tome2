@@ -16,6 +16,7 @@
 #include "modules.h"
 #include "script.h"
 #include "util.h"
+#include "variable.h"
 
 
 

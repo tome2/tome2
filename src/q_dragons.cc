@@ -6,6 +6,7 @@
 #include "monster2.hpp"
 #include "tables.hpp"
 #include "util.hpp"
+#include "variable.hpp"
 
 #define cquest (quest[QUEST_DRAGONS])
 

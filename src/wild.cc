@@ -16,6 +16,7 @@
 #include "options.hpp"
 #include "tables.hpp"
 #include "util.hpp"
+#include "variable.hpp"
 
 #include <memory>
 

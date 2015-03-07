@@ -13,6 +13,8 @@
 #include "files.hpp"
 #include "util.hpp"
 #include "util.h"
+#include "variable.h"
+#include "variable.hpp"
 
 /*
  * Show the notes file on the screen

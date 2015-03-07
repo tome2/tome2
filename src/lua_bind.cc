@@ -20,6 +20,7 @@
 #include "spells5.hpp"
 #include "tables.hpp"
 #include "util.hpp"
+#include "variable.hpp"
 
 #include <cassert>
 #include <functional>

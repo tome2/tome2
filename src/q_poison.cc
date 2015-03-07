@@ -8,6 +8,7 @@
 #include "hooks.h"
 #include "tables.hpp"
 #include "util.hpp"
+#include "variable.hpp"
 
 #define cquest (quest[QUEST_POISON])
 

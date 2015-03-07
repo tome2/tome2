@@ -66,6 +66,7 @@ bool_ view_yellow_lite; 		/* Use special colors for torch-lit grids */
 bool_ view_bright_lite; 		/* Use special colors for 'viewable' grids */
 bool_ view_granite_lite; 		/* Use special colors for wall grids (slow) */
 bool_ view_special_lite; 		/* Use special colors for floor grids (slow) */
+bool_ center_player;			/* Center view on player */
 
 //
 // Option Set 5 - ToME options

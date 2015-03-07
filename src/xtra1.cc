@@ -29,6 +29,8 @@
 #include "tables.hpp"
 #include "util.hpp"
 #include "util.h"
+#include "variable.h"
+#include "variable.hpp"
 #include "xtra2.hpp"
 
 #include <cassert>

@@ -22,8 +22,9 @@
 #include "spells3.hpp"
 #include "spells5.hpp"
 #include "tables.hpp"
-#include "util.hpp"
 #include "traps.hpp"
+#include "util.hpp"
+#include "variable.hpp"
 #include "xtra1.hpp"
 
 #include <cassert>

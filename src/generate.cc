@@ -20,6 +20,7 @@
 #include "tables.hpp"
 #include "traps.hpp"
 #include "util.hpp"
+#include "variable.hpp"
 #include "wild.hpp"
 
 #include <cassert>
