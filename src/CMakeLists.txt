@@ -21,7 +21,7 @@ SET(SRCS_COMMON
   xtra1.cc xtra2.cc skills.cc powers.cc gods.cc
   spells1.cc spells2.cc spells3.cc spells4.cc spells5.cc spells6.cc
   spell_type.cc device_allocation.cc
-  corrupt.cc joke.cc mimic.cc
+  corrupt.cc joke.cc mimic.cc options.cc
   status.cc files.cc notes.cc loadsave.cc
   cmd1.cc cmd2.cc cmd3.cc cmd4.cc cmd5.cc cmd6.cc cmd7.cc
   help.cc hiscore.cc range.cc dice.cc

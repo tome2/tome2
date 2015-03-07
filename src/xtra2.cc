@@ -22,6 +22,7 @@
 #include "notes.hpp"
 #include "object1.hpp"
 #include "object2.hpp"
+#include "options.hpp"
 #include "quark.h"
 #include "randart.hpp"
 #include "skills.hpp"

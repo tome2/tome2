@@ -4,6 +4,7 @@
 #include "cmd5.hpp"
 #include "gods.hpp"
 #include "lua_bind.hpp"
+#include "options.hpp"
 #include "spell_type.hpp"
 #include "spell_idx_list.hpp"
 #include "spells3.hpp"

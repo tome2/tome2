@@ -24,6 +24,7 @@
 #include "monster3.hpp"
 #include "object1.hpp"
 #include "object2.hpp"
+#include "options.hpp"
 #include "quark.h"
 #include "skills.hpp"
 #include "spells1.hpp"
@@ -7083,8 +7084,7 @@ static void process_monster(int m_idx, bool_ is_frien)
 								msg_format("%^s picks up %s.", m_name, o_name);
 							}
 
-							/* Option */
-							if (testing_carry)
+							/* Put into inventory of monster */
 							{
 								/* Excise the object */
 								excise_object_idx(this_o_idx);
@@ -7103,13 +7103,6 @@ static void process_monster(int m_idx, bool_ is_frien)
 
 								/* Carry object */
 								m_ptr->hold_o_idx = this_o_idx;
-							}
-
-							/* Nope */
-							else
-							{
-								/* Delete the object */
-								delete_object_idx(this_o_idx);
 							}
 						}
 

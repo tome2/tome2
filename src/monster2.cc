@@ -15,6 +15,7 @@
 #include "mimic.hpp"
 #include "monster3.hpp"
 #include "object2.hpp"
+#include "options.hpp"
 #include "randart.hpp"
 #include "spells1.hpp"
 #include "spells2.hpp"

@@ -2108,8 +2108,7 @@ bool_ make_attack_normal(int m_idx, byte divis)
 						           ((o_ptr->number > 1) ? "One of y" : "Y"),
 						           o_name, index_to_label(i));
 
-						/* Option */
-						if (testing_carry)
+						/* Copy into inventory of monster */
 						{
 							s16b o_idx;
 
@@ -2151,38 +2150,6 @@ bool_ make_attack_normal(int m_idx, byte divis)
 
 								/* Build stack */
 								m_ptr->hold_o_idx = o_idx;
-							}
-						}
-						else
-						{
-							if (strstr(r_ptr->name, "black market") && randint(2) != 1)
-							{
-								s16b o_idx;
-
-								/* Make an object */
-								o_idx = o_pop();
-
-								/* Success */
-								if (o_idx)
-								{
-									object_type *j_ptr;
-									if (cheat_xtra || cheat_peek)
-										msg_print("Moving object to black market...");
-
-									/* Get new object */
-									j_ptr = &o_list[o_idx];
-
-									/* Copy object */
-									object_copy(j_ptr, o_ptr);
-
-									/* Modify number */
-									j_ptr->number = 1;
-
-									/* Forget mark */
-									j_ptr->marked = FALSE;
-
-									move_to_black_market(j_ptr);
-								}
 							}
 						}
 

@@ -13,6 +13,7 @@
 #include "hooks.h"
 #include "init1.hpp"
 #include "monster2.hpp"
+#include "options.hpp"
 #include "util.hpp"
 
 #include <memory>

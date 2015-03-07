@@ -10,6 +10,7 @@
 #include "cmd4.hpp"
 #include "init1.hpp"
 #include "messages.h"
+#include "options.hpp"
 #include "quark.h"
 #include "xtra1.hpp"
 

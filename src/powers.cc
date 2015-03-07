@@ -20,6 +20,7 @@
 #include "monster3.hpp"
 #include "object1.hpp"
 #include "object2.hpp"
+#include "options.hpp"
 #include "quark.h"
 #include "spells1.hpp"
 #include "spells2.hpp"

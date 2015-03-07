@@ -12,6 +12,7 @@
 
 #include "angband.h"
 #include "modules.hpp"
+#include "options.hpp"
 #include "q_library.h"
 #include "q_fireprof.h"
 #include "q_bounty.h"
@@ -1573,17 +1574,6 @@ option_type option_info[] =
 
 	{ &fate_option, TRUE, 6, 18,
 	  "fate_option", "You can receive fates, good or bad" },
-
-	/* XXX 17 is used BEFORE */
-
-	/*** Stacking ***/
-
-	{ &testing_stack, TRUE, 7, 0,
-	  "testing_stack", "Allow objects to stack on floor" },
-
-	{ &testing_carry, TRUE, 7, 1,
-	  "testing_carry", "Allow monsters to carry objects" },
-
 
 	/*** End of Table ***/
 

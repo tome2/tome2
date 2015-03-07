@@ -41,6 +41,7 @@
 #include "notes.hpp"
 #include "object1.hpp"
 #include "object2.hpp"
+#include "options.hpp"
 #include "powers.hpp"
 #include "quest.h"
 #include "quark.h"

@@ -4,6 +4,7 @@
 #include "hooks.h"
 #include "object1.hpp"
 #include "object2.hpp"
+#include "options.hpp"
 #include "util.hpp"
 
 #define cquest (quest[QUEST_ULTRA_GOOD])

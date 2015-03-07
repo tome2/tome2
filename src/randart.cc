@@ -10,6 +10,7 @@
 #include "mimic.hpp"
 #include "object1.hpp"
 #include "object2.hpp"
+#include "options.hpp"
 #include "quark.h"
 #include "spells2.hpp"
 #include "util.hpp"
