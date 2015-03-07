@@ -3409,24 +3409,6 @@
 	((char)((byte)(P)))
 
 
-/*
- * Convert a "location" (Y,X) into a "grid" (G)
- */
-#define GRID(Y,X) \
-	(256 * (Y) + (X))
-
-/*
- * Convert a "grid" (G) into a "location" (Y)
- */
-#define GRID_Y(G) \
-	((int)((G) / 256U))
-
-/*
- * Convert a "grid" (G) into a "location" (X)
- */
-#define GRID_X(G) \
-	((int)((G) % 256U))
-
 
 /*
  * Determines if a map location is fully inside the outer walls
