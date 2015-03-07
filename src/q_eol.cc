@@ -1,6 +1,7 @@
 #include "q_eol.h"
 
 #include "cave.hpp"
+#include "generate.hpp"
 #include "hooks.h"
 #include "monster2.hpp"
 #include "traps.hpp"

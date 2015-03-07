@@ -6632,7 +6632,7 @@ static bool_ room_build(int y, int x, int typ)
 /*
  * Set level boundaries
  */
-void set_bounders(bool_ empty_level)
+static void set_bounders(bool_ empty_level)
 {
 	int y, x;
 
@@ -7169,7 +7169,7 @@ bool_ level_generate_dungeon()
 /*
  * Bring the imprinted pets from the old level
  */
-void replace_all_friends()
+static void replace_all_friends()
 {
 	int i;
 
@@ -7204,7 +7204,7 @@ void replace_all_friends()
 /*
  * Save the imprinted pets from the old level
  */
-void save_all_friends()
+static void save_all_friends()
 {
 	if (p_ptr->old_wild_mode) return;
 
@@ -7213,25 +7213,6 @@ void save_all_friends()
 	}
 }
 
-
-
-/*
- * Return the dungeon type of the current level(it can only return the
- * principal dungeons)
- */
-byte calc_dungeon_type()
-{
-	int i;
-
-	for (i = 0; i < max_d_idx; i++)
-	{
-		if ((dun_level >= d_info[i].mindepth) &&
-		                (dun_level <= d_info[i].maxdepth) &&
-		                (d_info[i].flags1 & DF1_PRINCIPAL))
-			return (i);
-	}
-	return (0);
-}
 
 
 /*
@@ -8197,7 +8178,7 @@ static void finalise_special_level(void)
 /*
  * Give some magical energy to the each grid of the level
  */
-void generate_grid_mana()
+static void generate_grid_mana()
 {
 	int y, x, mana, mult;
 	bool_ xtra_magic = FALSE;

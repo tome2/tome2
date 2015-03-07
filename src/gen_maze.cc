@@ -11,6 +11,7 @@
 
 #include "angband.h"
 #include "cave.hpp"
+#include "generate.hpp"
 #include "levels.hpp"
 
 #include <memory>

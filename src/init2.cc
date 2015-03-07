@@ -1,5 +1,6 @@
 #include "angband.h"
 #include "cave.hpp"
+#include "generate.hpp"
 #include "gen_evol.hpp"
 #include "gen_maze.hpp"
 #include "hooks.h"

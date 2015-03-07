@@ -1,6 +1,7 @@
 #include "q_rand.h"
 
 #include "cave.hpp"
+#include "generate.hpp"
 #include "hooks.h"
 #include "messages.h"
 #include "monster2.hpp"
