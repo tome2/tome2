@@ -11,12 +11,14 @@
 * to improve the general quality of the AI (version 0.1.1).
 */
 
-#include "angband.h"
+#include "melee2.hpp"
 
+#include "angband.h"
 #include "cave.hpp"
 #include "cmd1.hpp"
 #include "files.hpp"
 #include "hooks.h"
+#include "melee1.hpp"
 #include "messages.h"
 #include "monster2.hpp"
 #include "monster3.hpp"

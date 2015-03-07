@@ -6,6 +6,8 @@
  * included in all such copies.
  */
 
+#include "melee1.hpp"
+
 #include "angband.h"
 #include "cave.hpp"
 #include "cmd5.hpp"

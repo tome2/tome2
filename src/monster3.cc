@@ -11,6 +11,7 @@
 #include "angband.h"
 #include "cmd2.hpp"
 #include "gods.hpp"
+#include "melee2.hpp"
 #include "monster2.hpp"
 #include "object2.hpp"
 #include "skills.hpp"

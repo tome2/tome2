@@ -14,6 +14,7 @@
 #include "files.hpp"
 #include "gods.hpp"
 #include "hooks.h"
+#include "melee2.hpp"
 #include "mimic.hpp"
 #include "monster1.hpp"
 #include "monster2.hpp"

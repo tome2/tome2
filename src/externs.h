@@ -463,19 +463,6 @@ extern tval_desc2 tvals[];
 /* birth.c */
 extern bool_ no_begin_screen;
 
-/* melee1.c */
-/* melee2.c */
-extern int monst_spell_monst_spell;
-extern bool_ mon_take_hit_mon(int s_idx, int m_idx, int dam, bool_ *fear, cptr note);
-extern void mon_handle_fear(monster_type *m_ptr, int dam, bool_ *fear);
-extern int check_hit2(int power, int level, int ac);
-extern int get_attack_power(int effect);
-extern bool_ carried_make_attack_normal(int r_idx);
-extern bool_ make_attack_normal(int m_idx, byte divis);
-extern void process_monsters(void);
-extern void curse_equipment(int chance, int heavy_chance);
-extern void curse_equipment_dg(int chance, int heavy_chance);
-
 /*
  * Hack -- conditional (or "bizarre") externs
  */

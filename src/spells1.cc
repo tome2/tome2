@@ -14,6 +14,7 @@
 #include "cmd5.hpp"
 #include "files.hpp"
 #include "gods.hpp"
+#include "melee2.hpp"
 #include "monster2.hpp"
 #include "monster3.hpp"
 #include "object1.hpp"

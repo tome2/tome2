@@ -32,6 +32,8 @@
 #include "loadsave.h"
 #include "loadsave.hpp"
 #include "lua_bind.hpp"
+#include "melee1.hpp"
+#include "melee2.hpp"
 #include "monster2.hpp"
 #include "monster3.hpp"
 #include "modules.hpp"

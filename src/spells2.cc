@@ -14,6 +14,7 @@
 #include "cmd7.hpp"
 #include "files.hpp"
 #include "hooks.h"
+#include "melee2.hpp"
 #include "monster2.hpp"
 #include "monster3.hpp"
 #include "notes.hpp"
