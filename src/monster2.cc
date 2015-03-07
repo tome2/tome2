@@ -341,6 +341,11 @@ monster_race* race_info_idx(int r_idx, int ego)
 	return nr_ptr;
 }
 
+monster_race* race_inf(monster_type *m_ptr)
+{
+	return race_info_idx(m_ptr->r_idx, m_ptr->ego);
+}
+
 static cptr horror_desc[MAX_HORROR] =
 {
 	"abominable",

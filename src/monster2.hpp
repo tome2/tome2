@@ -10,6 +10,7 @@ extern bool_ mego_ok(monster_race const *r_ptr, int ego);
 extern void monster_check_experience(int m_idx, bool_ silent);
 extern void monster_gain_exp(int m_idx, u32b exp, bool_ silent);
 extern monster_race* race_info_idx(int r_idx, int ego);
+extern monster_race* race_inf(monster_type *m_ptr);
 extern void delete_monster_idx(int i);
 extern void delete_monster(int y, int x);
 extern void compact_monsters(int size);

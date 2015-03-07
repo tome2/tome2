@@ -3712,8 +3712,6 @@
 
 #define MEGO_CHANCE             18      /* % chances of getting ego monsters */
 
-#define race_inf(m_ptr) (race_info_idx((m_ptr)->r_idx, (m_ptr)->ego))
-
 /* Object generation */
 #define OBJ_GENE_TREASURE       20
 #define OBJ_GENE_COMBAT         20
