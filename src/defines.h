@@ -4062,8 +4062,6 @@
 #define POWER_WEB                       63
 #define POWER_COR_SPACE_TIME            64
 
-#define ADD_POWER(pow, p)       ((pow)[(p)] = TRUE)
-
 /*
  * Shield effect options
  */
