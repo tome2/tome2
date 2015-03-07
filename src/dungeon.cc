@@ -6,6 +6,9 @@
  * included in all such copies.
  */
 
+#include "dungeon.hpp"
+#include "dungeon.h"
+
 #include "angband.h"
 #include "birth.hpp"
 #include "cave.hpp"
@@ -865,7 +868,7 @@ static void check_music()
 /*
  * Generate the feature effect
  */
-void apply_effect(int y, int x)
+static void apply_effect(int y, int x)
 {
 	cave_type *c_ptr = &cave[y][x];
 
@@ -910,7 +913,7 @@ void apply_effect(int y, int x)
 
 
 /* XXX XXX XXX */
-bool_ is_recall = FALSE;
+static bool_ is_recall = FALSE;
 
 
 /*
@@ -4194,7 +4197,7 @@ static void process_command(void)
  * must come first just in case somebody manages to corrupt
  * the savefiles by clever use of menu commands or something.
  */
-void process_player(void)
+static void process_player(void)
 {
 	int i, j;
 

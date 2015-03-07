@@ -462,10 +462,6 @@ extern const char *get_version_string();
 /* birth.c */
 extern bool_ no_begin_screen;
 
-/* dungeon.c */
-extern void play_game(bool_ new_game);
-extern void sense_inventory();
-
 /* init1.c */
 extern int color_char_to_attr(char c);
 extern byte conv_color[16];
