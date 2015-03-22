@@ -2318,12 +2318,11 @@ casting_result meta_spellbinder()
 {
 	if (p_ptr->spellbinder_num != 0)
 	{
-		typedef struct trigger trigger;
 		struct trigger {
 			int idx;
 			cptr desc;
 		};
-		trigger triggers[] = {
+		struct trigger triggers[] = {
 			{ SPELLBINDER_HP75, "75% HP", },
 			{ SPELLBINDER_HP50, "50% HP", },
 			{ SPELLBINDER_HP25, "25% HP", },

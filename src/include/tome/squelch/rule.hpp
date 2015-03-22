@@ -152,8 +152,8 @@ public:
 	json_t *to_json() const override;
 
 protected:
-	virtual void do_write_tree(TreePrinter *p) const;
-	virtual bool do_apply_rule(object_type *o_ptr, int) const;
+        virtual void do_write_tree(TreePrinter *p) const override;
+        virtual bool do_apply_rule(object_type *o_ptr, int) const override;
 
 private:
 	// Inscription to use for inscription rules.
