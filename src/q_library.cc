@@ -156,7 +156,7 @@ static void quest_library_finalize_book()
 	int i = 0;
 	for (i = 1; i <= 3; i++)
 	{
-		school_book_type *school_book = school_books_at(BOOK_PLAYER);
+		school_book *school_book = school_books_at(BOOK_PLAYER);
 		school_book_add_spell(school_book, library_quest_book_get_slot(i));
 	}
 }

@@ -69,7 +69,6 @@ struct skill_type;
 struct spell_type;
 struct school_provider_list;
 struct school_type;
-struct school_book_type;
 struct gf_name_type;
 struct timer_type;
 struct ability_type;

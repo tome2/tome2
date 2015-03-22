@@ -11,7 +11,6 @@
 #include "object2.hpp"
 #include "skills.hpp"
 #include "spell_type.hpp"
-#include "spell_idx_list.hpp"
 #include "spells1.hpp"
 #include "spells2.hpp"
 #include "spells4.hpp"
@@ -2909,15 +2908,14 @@ casting_result tulkas_whirlwind()
 int udun_in_book(s32b sval, s32b pval)
 {
 	int count = 0;
-	school_book_type *school_book;
 
 	random_book_setup(sval, pval);
 
 	/* Get the school book */
-	school_book = school_books_at(sval);
+	school_book *school_book = school_books_at(sval);
 
 	/* Go through spells */
-	for (auto spell_idx : school_book->spell_idx_list->v) {
+	for (auto spell_idx : school_book->spell_idxs) {
 		spell_type *spell = spell_at(spell_idx);
 		for (auto school_idx : spell_type_get_schools(spell))
 		{
@@ -2939,10 +2937,10 @@ int levels_in_book(s32b sval, s32b pval)
 	random_book_setup(sval, pval);
 
 	/* Get the school book */
-	school_book_type *school_book = school_books_at(sval);
+	school_book *school_book = school_books_at(sval);
 
 	/* Parse all spells */
-	for (auto spell_idx : school_book->spell_idx_list->v)
+	for (auto spell_idx : school_book->spell_idxs)
 	{
 		spell_type *spell = spell_at(spell_idx);
 		levels += spell_type_skill_level(spell);

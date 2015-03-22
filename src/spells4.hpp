@@ -1,6 +1,7 @@
 #pragma once
 
 #include "angband.h"
+#include "school_book.hpp"
 
 extern s32b SCHOOL_AIR;
 extern s32b SCHOOL_AULE;
@@ -30,8 +31,8 @@ extern s32b SCHOOL_YAVANNA;
 
 void print_spell_desc(int s, int y);
 void init_school_books();
-school_book_type *school_books_at(int sval);
-void school_book_add_spell(school_book_type *school_book, s32b spell_idx);
+school_book *school_books_at(int sval);
+void school_book_add_spell(school_book *school_book, s32b spell_idx);
 void random_book_setup(s16b sval, s32b spell_idx);
 int print_spell(cptr label, byte color, int y, s32b s);
 int print_book(s16b sval, s32b pval, object_type *obj);

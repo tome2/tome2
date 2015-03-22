@@ -5,8 +5,8 @@
 #include "gods.hpp"
 #include "lua_bind.hpp"
 #include "options.hpp"
+#include "school_book.hpp"
 #include "spell_type.hpp"
-#include "spell_idx_list.hpp"
 #include "spells3.hpp"
 #include "spells5.hpp"
 #include "spells6.hpp"
@@ -18,7 +18,11 @@
 #include <cassert>
 #include <sstream>
 
-school_book_type school_books[SCHOOL_BOOKS_SIZE];
+static std::array<school_book, SCHOOL_BOOKS_SIZE> &school_books() {
+	static std::array<school_book, SCHOOL_BOOKS_SIZE> *instance = new std::array<school_book, SCHOOL_BOOKS_SIZE>;
+	return *instance;
+}
+
 
 s32b SCHOOL_AIR;
 s32b SCHOOL_AULE;
@@ -106,35 +110,23 @@ void print_spell_desc(int s, int y)
 	}
 }
 
-school_book_type *school_books_at(int i)
+school_book *school_books_at(int i)
 {
 	assert(i >= 0);
 	assert(i < SCHOOL_BOOKS_SIZE);
-	return &school_books[i];
+	return &school_books()[i];
 }
 
-static void school_book_init(school_book_type *school_book)
-{
-	school_book->spell_idx_list = new spell_idx_list();
-}
-
-void school_book_add_spell(school_book_type *school_book, s32b spell_idx)
+void school_book_add_spell(school_book *school_book, s32b spell_idx)
 {
 	assert(school_book != nullptr);
-	assert(school_book->spell_idx_list != nullptr);
-	school_book->spell_idx_list->v.push_back(spell_idx);
+	school_book->spell_idxs.insert(std::begin(school_book->spell_idxs), spell_idx);
 }
 
 int school_book_length(int sval)
 {
-	school_book_type *school_book = school_books_at(sval);
-
-	if (sval == BOOK_RANDOM)
-	{
-		return 1;
-	}
-
-	return school_book->spell_idx_list->v.size();
+	school_book *school_book = school_books_at(sval);
+	return school_book->spell_idxs.size();
 }
 
 int spell_x(int sval, int pval, int i)
@@ -147,38 +139,30 @@ int spell_x(int sval, int pval, int i)
 	}
 	else
 	{
-		school_book_type *school_book = school_books_at(sval);
-		return school_book->spell_idx_list->v.at(i);
+		school_book *school_book = school_books_at(sval);
+		return school_book->spell_idxs.at(i);
 	}
 }
 
 bool_ school_book_contains_spell(int sval, s32b spell_idx)
 {
 	random_book_setup(sval, spell_idx);
-	school_book_type *school_book = school_books_at(sval);
-	return (school_book->spell_idx_list->v.end() !=
-			std::find(school_book->spell_idx_list->v.begin(),
-				school_book->spell_idx_list->v.end(),
+	school_book *school_book = school_books_at(sval);
+	return (school_book->spell_idxs.end() !=
+			std::find(school_book->spell_idxs.begin(),
+				school_book->spell_idxs.end(),
 				spell_idx));
 }
 
-void push_spell(int book_idx, s32b spell_idx)
+static void push_spell(int book_idx, s32b spell_idx)
 {
-	school_book_type *school_book = school_books_at(book_idx);
+	school_book *school_book = school_books_at(book_idx);
 	assert(school_book != NULL);
 	school_book_add_spell(school_book, spell_idx);
 }
 
 void init_school_books()
 {
-	int i;
-
-	/* Initialize the new school books */
-	for (i = 0; i<SCHOOL_BOOKS_SIZE; i++)
-	{
-		school_book_init(&school_books[i]);
-	}
-
 	/* Note: We're adding the spells in the reverse order that
 	   they appear in each book. This is because the list 
 	   operations insert at the front. */
@@ -400,8 +384,9 @@ void random_book_setup(s16b sval, s32b spell_idx)
 {
 	if (sval == BOOK_RANDOM)
 	{
-		school_book_type *school_book = school_books_at(sval);
-		school_book->spell_idx_list->v.at(0) = spell_idx;
+		school_book *school_book = school_books_at(sval);
+		school_book->spell_idxs.clear();
+		school_book->spell_idxs.push_back(spell_idx);
 	}
 }
 
@@ -465,15 +450,14 @@ int print_book(s16b sval, s32b pval, object_type *obj)
 {
 	int y = 2;
 	int i;
-	school_book_type *school_book;
 
 	random_book_setup(sval, pval);
 
-	school_book = school_books_at(sval);
+	school_book *school_book = school_books_at(sval);
 
 	/* Parse all spells */
 	i = 0;
-	for (auto spell_idx : school_book->spell_idx_list->v)
+	for (auto spell_idx : school_book->spell_idxs)
 	{
 		byte color = TERM_L_DARK;
 		bool_ is_ok;
