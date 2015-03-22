@@ -89,3 +89,4 @@ bool_ ironman_rooms;
 bool_ joke_monsters;
 bool_ point_based;
 bool_ preserve;
+bool_ no_selling;

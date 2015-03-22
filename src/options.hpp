@@ -89,3 +89,4 @@ extern bool_ ironman_rooms;
 extern bool_ joke_monsters;
 extern bool_ point_based;
 extern bool_ preserve;
+extern bool_ no_selling;

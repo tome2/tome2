@@ -66,6 +66,10 @@ can also be viewed from the option menu while playing, but not changed then.
 #####GYou can receive fates, good or bad    [fate_option]
     Allows the player to turn off ToME's *****fatespoi.txt*0[fates] for that character.
 
+#####GItems always sell for 0 gold    [no_selling]
+    Disables selling items back to shops for money. The value of gold found in the  
+    dungeon is increased to compensate.
+
 ~~~~~07|Options|Ingame
 #####RIN GAME OPTIONS
 #####R===============

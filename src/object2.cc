@@ -16,6 +16,7 @@
 #include "mimic.hpp"
 #include "monster2.hpp"
 #include "object1.hpp"
+#include "options.hpp"
 #include "randart.hpp"
 #include "skills.hpp"
 #include "spells2.hpp"
@@ -5070,6 +5071,10 @@ bool_ make_gold(object_type *j_ptr)
 
 	/* Determine how much the treasure is "worth" */
 	j_ptr->pval = (base + (8L * randint(base)) + randint(8));
+	
+	/* Multiply value by 5 if selling is disabled */
+	if (no_selling)
+		j_ptr->pval *= 5;
 
 	/* Success */
 	return (TRUE);

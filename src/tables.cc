@@ -1479,6 +1479,9 @@ option_type option_info[] =
 
 	{ &fate_option, TRUE, 6, 18,
 	  "fate_option", "You can receive fates, good or bad" },
+	  
+	{ &no_selling, FALSE, 6, 20,
+	  "no_selling", "Items always sell for 0 gold" },
 
 	/*** End of Table ***/
 

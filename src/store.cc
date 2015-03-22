@@ -297,6 +297,9 @@ static s32b price_item(object_type *o_ptr, int greed, bool_ flip)
 
 		/* Mega-Hack -- Black market sucks */
 		if (st_info[st_ptr->st_idx].flags1 & SF1_ALL_ITEM) price = price / 2;
+		
+		/* No selling means you get no money */
+		if (no_selling) price = 0;
 	}
 
 	/* Shop is selling */
@@ -310,13 +313,13 @@ static s32b price_item(object_type *o_ptr, int greed, bool_ flip)
 
 		/* Mega-Hack -- Black market sucks */
 		if (st_info[st_ptr->st_idx].flags1 & SF1_ALL_ITEM) price = price * 2;
+		
+		/* Never give items away for free */
+		if (price <= 0L) price = 1L;
 	}
 
 	/* Compute the final price (with rounding) */
 	price = (price * adjust + 50L) / 100L;
-
-	/* Note -- Never become "free" */
-	if (price <= 0L) return (1L);
 
 	/* Return the price */
 	return (price);
