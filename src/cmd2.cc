@@ -4464,7 +4464,7 @@ void do_cmd_immovable_special(void)
 /* Can we sacrifice it ? */
 static bool_ item_tester_hook_sacrifiable(object_type *o_ptr)
 {
-	GOD(GOD_MELKOR)
+	if (p_ptr->pgod == GOD_MELKOR)
 	{
 		/* Corpses are */
 		if (o_ptr->tval == TV_CORPSE && o_ptr->sval == SV_CORPSE_CORPSE)
@@ -4537,7 +4537,7 @@ void do_cmd_sacrifice(void)
 		int agod = on_what - FEAT_ALTAR_HEAD + 1;
 
 		/* Not worshipping a god ? ahhhh! */
-		GOD(GOD_NONE)
+		if (p_ptr->pgod == GOD_NONE)
 		{
 			int i;
 
@@ -4555,7 +4555,7 @@ void do_cmd_sacrifice(void)
 		}
 		else if (p_ptr->pgod == agod)
 		{
-			GOD(GOD_MELKOR)
+			if (p_ptr->pgod == GOD_MELKOR)
 			{
 				/* One can sacrifice some HP for piety or damage */
 				if ((p_ptr->mhp > 10) && (p_ptr->chp > 10) && get_check("Do you want to sacrifice a part of yourself? "))
@@ -4612,7 +4612,7 @@ void do_cmd_sacrifice(void)
 				}
 			}
 
-			GOD(GOD_AULE)
+			if (p_ptr->pgod == GOD_AULE)
 			{
 				do_cmd_sacrifice_aule();
 			}

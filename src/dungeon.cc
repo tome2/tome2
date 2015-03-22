@@ -266,7 +266,7 @@ static byte value_check_aux2_magic(object_type *o_ptr)
  */
 static bool_ granted_resurrection(void)
 {
-	PRAY_GOD(GOD_ERU)
+	if (praying_to(GOD_ERU))
 	{
 		if (p_ptr->grace > 100000)
 		{
@@ -1005,7 +1005,7 @@ static void process_world_gods()
 	const char *race_name = rp_ptr->title;
 	const char *subrace_name = rmp_ptr->title;
 
-	GOD(GOD_VARDA)
+	if (p_ptr->pgod == GOD_VARDA)
 	{
 		if (grace_delay_trigger())
 		{
@@ -1035,7 +1035,7 @@ static void process_world_gods()
 		}
 	}
 
-	GOD(GOD_ULMO)
+	if (p_ptr->pgod == GOD_ULMO)
 	{
 		if (grace_delay_trigger())
 		{
@@ -1077,7 +1077,7 @@ static void process_world_gods()
 		}
 	}
 
-	GOD(GOD_AULE)
+	if (p_ptr->pgod == GOD_AULE)
 	{
 		if (grace_delay_trigger())
 		{
@@ -1159,7 +1159,7 @@ static void process_world_gods()
 		}
 	}
 
-	GOD(GOD_MANDOS)
+	if (p_ptr->pgod == GOD_MANDOS)
 	{
 		if (grace_delay_trigger())
 		{
@@ -1699,7 +1699,7 @@ static void process_world(void)
 	/* Eru piety incraese with time */
 	if (((turn % 100) == 0) && (!p_ptr->did_nothing) && (!p_ptr->wild_mode))
 	{
-		NOT_PRAY_GOD(GOD_ERU)
+		if ((p_ptr->pgod == GOD_ERU) && !p_ptr->praying)
 		{
 			int inc = wisdom_scale(10);
 
@@ -1711,40 +1711,55 @@ static void process_world(void)
 	/* Most gods piety decrease with time */
 	if (((turn % 300) == 0) && (!p_ptr->did_nothing) && (!p_ptr->wild_mode) && (dun_level))
 	{
-		GOD(GOD_MANWE)
+		if (p_ptr->pgod == GOD_MANWE)
 		{
 			int dec = 4 - wisdom_scale(3);
 
-			PRAY_GOD(GOD_MANWE)
-			dec++;
+			if (p_ptr->praying)
+			{
+				dec++;
+			}
+
 			if (race_flags1_p(PR1_ELF))
+			{
 				dec -= wisdom_scale(2);
-			if (dec < 1) dec = 1;
+			}
+
+			dec = std::max(1, dec);
+
 			inc_piety(GOD_MANWE, -dec);
 		}
-		GOD(GOD_MELKOR)
+
+		if (p_ptr->pgod == GOD_MELKOR)
 		{
 			int dec = 8 - wisdom_scale(6);
 
-			PRAY_GOD(GOD_MELKOR)
-			dec++;
+			if (p_ptr->praying)
+			{
+				dec++;
+			}
+
 			if (race_flags1_p(PR1_ELF))
+			{
 				dec += 5 - wisdom_scale(4);
-			if (dec < 1) dec = 1;
+			}
+
+			dec = std::max(1, dec);
+
 			inc_piety(GOD_MELKOR, -dec);
 		}
-		PRAY_GOD(GOD_TULKAS)
-		{
-			int dec = 4 - wisdom_scale(3);
 
-			if (dec < 1) dec = 1;
+		if (praying_to(GOD_TULKAS))
+		{
+			int dec = std::max(1, 4 - wisdom_scale(3));
+
 			inc_piety(GOD_TULKAS, -dec);
 		}
 	}
 	/* Yavanna piety decrease with time */
 	if (((turn % 400) == 0) && (!p_ptr->did_nothing) && (!p_ptr->wild_mode) && (dun_level))
 	{
-		GOD(GOD_YAVANNA)
+		if (p_ptr->pgod == GOD_YAVANNA)
 		{
 			int dec = 5 - wisdom_scale(3);
 
@@ -1753,10 +1768,8 @@ static void process_world(void)
 			{
 				dec -= wisdom_scale(2);
 			}
-			if (dec < 1)
-			{
-				dec = 1;
-			}
+
+			dec = std::max(1, dec);
 			inc_piety(GOD_YAVANNA, -dec);
 		}
 	}
@@ -1773,7 +1786,7 @@ static void process_world(void)
 	if (cave_no_regen) regen_amount = 0;
 
 	/* Being over grass allows Yavanna to regen you */
-	PRAY_GOD(GOD_YAVANNA)
+	if (praying_to(GOD_YAVANNA))
 	{
 		if (cave[p_ptr->py][p_ptr->px].feat == FEAT_GRASS)
 		{

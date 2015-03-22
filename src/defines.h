@@ -4133,10 +4133,6 @@
 #define GOD_MANDOS              9
 #define MAX_GODS               10
 
-#define GOD(g)                  if (p_ptr->pgod == (g))
-#define PRAY_GOD(g)             if ((p_ptr->pgod == (g)) && (p_ptr->praying))
-#define NOT_PRAY_GOD(g)         if ((p_ptr->pgod == (g)) && (!p_ptr->praying))
-
 /*
  * Command numbers for do_cmd_cli().
  *

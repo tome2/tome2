@@ -1524,7 +1524,7 @@ void take_hit(int damage, cptr hit_from)
 	/* Melkor acn summon to help you */
 	if (percent < 25)
 	{
-		PRAY_GOD(GOD_MELKOR)
+		if (praying_to(GOD_MELKOR))
 		{
 			int chance = p_ptr->grace / 500;  /*  * 100 / 50000; */
 

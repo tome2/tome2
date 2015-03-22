@@ -34,22 +34,22 @@ static bool_ quest_one_move_hook(void *, void *in_, void *)
 		cmsg_print(TERM_YELLOW, "'and destroy it. I know it will tempt you, but *NEVER* use it'");
 		cmsg_print(TERM_YELLOW, "'or it will corrupt you forever.'");
 
-		GOD(GOD_ERU)
+		if (p_ptr->pgod == GOD_ERU)
 		{
 			cmsg_print(TERM_YELLOW, "'Also, Eru will abandon you if you wear it.'");
 		}
 
-		GOD(GOD_MANWE)
+		if (p_ptr->pgod == GOD_MANWE)
 		{
 			cmsg_print(TERM_YELLOW, "'Also, Manwe will abandon you if you wear it.'");
 		}
 
-		GOD(GOD_TULKAS)
+		if (p_ptr->pgod == GOD_TULKAS)
 		{
 			cmsg_print(TERM_YELLOW, "'Also, Tulkas will abandon you if you wear it.'");
 		}
 
-		GOD(GOD_YAVANNA)
+		if (p_ptr->pgod == GOD_YAVANNA)
 		{
 			cmsg_print(TERM_YELLOW, "'Also, Yavanna will abandon you if you wear it.'");
 		}
@@ -61,7 +61,7 @@ static bool_ quest_one_move_hook(void *, void *in_, void *)
 		cmsg_print(TERM_YELLOW, "'are other people that might know.'");
 		cmsg_print(TERM_YELLOW, "'Do not forget: the Ring must be cast back into the fires of Mount Doom!'");
 
-		GOD(GOD_MELKOR)
+		if (p_ptr->pgod == GOD_MELKOR)
 		{
 			cmsg_print(TERM_YELLOW, "'Melkor will abandon you when you do, but you must do it anyway!'");
 		}

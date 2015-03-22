@@ -1664,7 +1664,7 @@ static void calc_mana(void)
 	msp += msp * cp_ptr->mana / 100;
 
 	/* Apply Eru mana */
-	GOD(GOD_ERU)
+	if (p_ptr->pgod == GOD_ERU)
 	{
 		s32b tmp = p_ptr->grace;
 
@@ -1831,7 +1831,7 @@ void calc_hitpoints(void)
 	}
 
 	/* Factor in the melkor hp modifications */
-	GOD(GOD_MELKOR)
+	if (p_ptr->pgod == GOD_MELKOR)
 	{
 		mhp -= (p_ptr->melkor_sacrifice * 10);
 		if (mhp < 1) mhp = 1;
@@ -2322,7 +2322,7 @@ int get_archery_skill()
 static void calc_gods()
 {
 	/* Boost WIS if the player follows Eru */
-	GOD(GOD_ERU)
+	if (p_ptr->pgod == GOD_ERU)
 	{
 		if (p_ptr->grace > 10000) p_ptr->stat_add[A_WIS] += 1;
 		if (p_ptr->grace > 20000) p_ptr->stat_add[A_WIS] += 1;
@@ -2330,7 +2330,7 @@ static void calc_gods()
 	}
 
 	/* Boost str, con, chr and reduce int, wis if the player follows Melkor */
-	GOD(GOD_MELKOR)
+	if (p_ptr->pgod == GOD_MELKOR)
 	{
 		if (p_ptr->grace > 10000) p_ptr->stat_add[A_STR] += 1;
 		if (p_ptr->grace > 20000) p_ptr->stat_add[A_STR] += 1;
@@ -2352,7 +2352,7 @@ static void calc_gods()
 		if (p_ptr->grace > 20000) p_ptr->stat_add[A_WIS] -= 1;
 		if (p_ptr->grace > 30000) p_ptr->stat_add[A_WIS] -= 1;
 
-		PRAY_GOD(GOD_MELKOR)
+		if (praying_to(GOD_MELKOR))
 		{
 			if (p_ptr->grace > 5000) p_ptr->invis += 30;
 			if (p_ptr->grace > 15000) p_ptr->immune_fire = TRUE;
@@ -2361,7 +2361,7 @@ static void calc_gods()
 	}
 
 	/* Gifts of Manwe if the player is praying to Manwe */
-	PRAY_GOD(GOD_MANWE)
+	if (praying_to(GOD_MANWE))
 	{
 		s32b add = p_ptr->grace;
 
@@ -2376,13 +2376,13 @@ static void calc_gods()
 	}
 
 	/* Manwe bonus not requiring the praying status */
-	GOD(GOD_MANWE)
+	if (p_ptr->pgod == GOD_MANWE)
 	{
 		if (p_ptr->grace >= 2000) p_ptr->ffall = TRUE;
 	}
 
 	/* Boost Str and Con if the player is following Tulkas */
-	GOD(GOD_TULKAS)
+	if (p_ptr->pgod == GOD_TULKAS)
 	{
 		if (p_ptr->grace > 5000) p_ptr->stat_add[A_CON] += 1;
 		if (p_ptr->grace > 10000) p_ptr->stat_add[A_CON] += 1;
@@ -2394,7 +2394,7 @@ static void calc_gods()
 	}
 
 	/* Aule provides to-hit/damage bonuses and fire resistance */
-	GOD(GOD_AULE)
+	if (p_ptr->pgod == GOD_AULE)
 	{
 		if (p_ptr->grace > 0)
 		{
@@ -2420,7 +2420,7 @@ static void calc_gods()
 
 	/* Mandos provides nether resistance and, while praying,
 	   nether immunity and prevents teleportation. */
-	GOD(GOD_MANDOS)
+	if (p_ptr->pgod == GOD_MANDOS)
 	{
 		p_ptr->resist_neth = TRUE;
 
@@ -2439,7 +2439,7 @@ static void calc_gods()
 
 	/* Ulmo provides water breath and, while praying can
 	   provide poison resistance and magic breath. */
-	GOD(GOD_ULMO)
+	if (p_ptr->pgod == GOD_ULMO)
 	{
 		p_ptr->water_breath = TRUE;
 
@@ -3243,7 +3243,7 @@ void calc_bonuses(bool_ silent)
 	}
 
 	/* Provide the damage we get from sacrifice */
-	GOD(GOD_MELKOR)
+	if (p_ptr->pgod == GOD_MELKOR)
 	{
 		int x = wisdom_scale(4);
 		if (x < 1) x = 1;

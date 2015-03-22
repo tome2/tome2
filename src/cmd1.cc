@@ -2465,7 +2465,7 @@ void py_attack(int y, int x, int max_blow)
 								while (randint(4) == 1);
 							}
 
-							PRAY_GOD(GOD_TULKAS)
+							if (praying_to(GOD_TULKAS))
 							{
 								if (magik(wisdom_scale(130) - m_ptr->level) && (p_ptr->grace > 1000))
 								{
@@ -2492,7 +2492,7 @@ void py_attack(int y, int x, int max_blow)
 						}
 
 						/* Melkor can cast curse for you*/
-						PRAY_GOD(GOD_MELKOR)
+						if (praying_to(GOD_MELKOR))
 						{
 							int lv = get_level(MELKOR_CURSE, 100, 1);
 
@@ -2928,7 +2928,7 @@ bool_ player_can_enter(byte feature)
 		    pass_wall ||
 		    (has_ability(AB_TREE_WALK)) ||
 		    (p_ptr->mimic_form == resolve_mimic_name("Ent")) ||
-		    ((p_ptr->grace >= 9000) && (p_ptr->praying) && (p_ptr->pgod == GOD_YAVANNA)))
+		    ((p_ptr->grace >= 9000) && praying_to(GOD_YAVANNA)))
 			return (TRUE);
 	}
 

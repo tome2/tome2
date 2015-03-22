@@ -64,7 +64,7 @@ static bool_ quest_spider_death_hook(void *, void *, void *)
 		cmsg_print(TERM_YELLOW, "The forest is now safer, thanks to you.");
 
 		/* Yavanna LOVES saving forests */
-		GOD(GOD_YAVANNA)
+		if (p_ptr->pgod == GOD_YAVANNA)
 		{
 			cmsg_print(TERM_L_GREEN, "You feel the gentle touch of Yavanna, as she smiles at you.");
 			inc_piety(GOD_YAVANNA, 6000);

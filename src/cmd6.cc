@@ -2365,7 +2365,7 @@ static bool_ quaff_potion(int tval, int sval, int pval, int pval2)
 				   potions of corruption. */
 				if (game_module_idx == MODULE_THEME)
 				{
-					GOD(GOD_MELKOR)
+					if (p_ptr->pgod == GOD_MELKOR)
 					{
 						msg_print("Your quaffing of this potion pleases Melkor!");
 						set_grace(p_ptr->grace + 2);

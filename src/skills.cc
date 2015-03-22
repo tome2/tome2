@@ -1170,7 +1170,7 @@ bool_ forbid_gloves()
 /* Which gods forbid edged weapons */
 bool_ forbid_non_blessed()
 {
-	GOD(GOD_ERU) return (TRUE);
+	if (p_ptr->pgod == GOD_ERU) return (TRUE);
 	return (FALSE);
 }
 

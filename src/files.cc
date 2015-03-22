@@ -1589,28 +1589,28 @@ void player_flags(u32b *f1, u32b *f2, u32b *f3, u32b *f4, u32b *f5, u32b *esp)
 	if (get_skill(SKILL_WATER) >= 30) (*f5) |= TR5_WATER_BREATH;
 
 /* Gods */
-	GOD(GOD_ERU)
+	if (p_ptr->pgod == GOD_ERU)
 	{
 		if ((p_ptr->grace >= 100) || (p_ptr->grace <= -100))  (*f1) |= TR1_MANA;
 		if (p_ptr->grace > 10000) (*f1) |= TR1_WIS;
 	}
 
-	GOD(GOD_MELKOR)
+	if (p_ptr->pgod == GOD_MELKOR)
 	{
 		(*f2) |= TR2_RES_FIRE;
 		if (p_ptr->melkor_sacrifice > 0) (*f2) |= TR2_LIFE;
 		if (p_ptr->grace > 10000) (*f1) |= (TR1_STR | TR1_CON | TR1_INT | TR1_WIS | TR1_CHR);
-		PRAY_GOD(GOD_MELKOR)
+		if (p_ptr->praying)
 		{
 			if (p_ptr->grace > 5000)  (*f2) |= TR2_INVIS;
 			if (p_ptr->grace > 15000) (*f2) |= TR2_IM_FIRE;
 		}
 	}
 
-	GOD(GOD_MANWE)
+	if (p_ptr->pgod == GOD_MANWE)
 	{
 		if (p_ptr->grace >= 2000) (*f3) |= TR3_FEATHER;
-		PRAY_GOD(GOD_MANWE)
+		if (p_ptr->praying)
 		{
 			if (p_ptr->grace >= 7000)  (*f2) |= TR2_FREE_ACT;
 			if (p_ptr->grace >= 15000) (*f4) |= TR4_FLY;
@@ -1618,13 +1618,13 @@ void player_flags(u32b *f1, u32b *f2, u32b *f3, u32b *f4, u32b *f5, u32b *esp)
 		}
 	}
 
-	GOD(GOD_TULKAS)
+	if (p_ptr->pgod == GOD_TULKAS)
 	{
 		if (p_ptr->grace > 5000)  (*f1) |= TR1_CON;
 		if (p_ptr->grace > 10000) (*f1) |= TR1_STR;
 	}
 
-	GOD(GOD_AULE)
+	if (p_ptr->pgod == GOD_AULE)
 	{
 		if (p_ptr->grace > 5000)
 		{
@@ -1632,7 +1632,7 @@ void player_flags(u32b *f1, u32b *f2, u32b *f3, u32b *f4, u32b *f5, u32b *esp)
 		}
 	}
 
-	GOD(GOD_MANDOS)
+	if (p_ptr->pgod == GOD_MANDOS)
 	{
 		(*f2) |= TR2_RES_NETHER;
 
@@ -1649,7 +1649,7 @@ void player_flags(u32b *f1, u32b *f2, u32b *f3, u32b *f4, u32b *f5, u32b *esp)
 		}
 	}
 
-	GOD(GOD_ULMO)
+	if (p_ptr->pgod == GOD_ULMO)
 	{
 		(*f5) |= TR5_WATER_BREATH;
 

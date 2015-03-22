@@ -3254,35 +3254,38 @@ bool_ mon_take_hit(int m_idx, int dam, bool_ *fear, cptr note)
 		/* Manwe appreciate evil monster death */
 		if (r_ptr->flags3 & RF3_EVIL)
 		{
-			int inc = m_ptr->level / 2;
+			int inc = std::max(1, m_ptr->level / 2);
 
-			if (!inc) inc = 1;
-			PRAY_GOD(GOD_MANWE) inc_piety(GOD_MANWE, inc);
+			if (praying_to(GOD_MANWE))
+			{
+				inc_piety(GOD_MANWE, inc);
+			}
 
-			if (inc < 2) inc = 2;
+			inc = std::max(2, inc);
+
 			inc_piety(GOD_TULKAS, inc / 2);
-			PRAY_GOD(GOD_TULKAS)
+
+			if (praying_to(GOD_TULKAS))
 			{
 				inc_piety(GOD_TULKAS, inc / 2);
-				if (r_ptr->flags3 & RF3_DEMON) inc_piety(GOD_TULKAS, inc);
+				if (r_ptr->flags3 & RF3_DEMON)
+				{
+					inc_piety(GOD_TULKAS, inc);
+				}
 			}
 		}
 
 		/* Yavanna likes when corruption is destroyed */
 		if ((r_ptr->flags3 & RF3_NONLIVING) || (r_ptr->flags3 & RF3_DEMON) || (r_ptr->flags3 & RF3_UNDEAD))
 		{
-			int inc = m_ptr->level / 2;
-
-			if (!inc) inc = 1;
+			int inc = std::max(1, m_ptr->level / 2);
 			inc_piety(GOD_YAVANNA, inc);
 		}
 
 		/* Yavanna doesnt like any killing in her name */
-		PRAY_GOD(GOD_YAVANNA)
+		if (praying_to(GOD_YAVANNA))
 		{
-			int inc = m_ptr->level / 2;
-
-			if (!inc) inc = 1;
+			int inc = std::max(1, m_ptr->level / 2);
 			inc_piety(GOD_YAVANNA, -inc);
 
 			/* Killing animals in her name is a VERY bad idea */

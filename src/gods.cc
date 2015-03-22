@@ -93,7 +93,7 @@ void follow_god(int god, bool_ silent)
 		p_ptr->pgod = god;
 
 		/* Melkor offer Udun magic */
-		GOD(GOD_MELKOR)
+		if (p_ptr->pgod == GOD_MELKOR)
 		{
 			s_info[SKILL_UDUN].hidden = FALSE;
 			if (!silent) msg_print("You feel the dark powers of Melkor in you.  You can now use the Udun skill.");
@@ -202,4 +202,9 @@ int find_god(cptr name)
 		}
 	}
 	return -1;
+}
+
+bool praying_to(int god)
+{
+	return (p_ptr->pgod == god) && p_ptr->praying;
 }

@@ -11,6 +11,7 @@
 #include "angband.h"
 #include "cave.hpp"
 #include "cmd5.hpp"
+#include "gods.hpp"
 #include "mimic.hpp"
 #include "monster2.hpp"
 #include "monster3.hpp"
@@ -1552,7 +1553,7 @@ bool_ make_attack_normal(int m_idx, byte divis)
 			}
 
 			/* Eru can help you */
-			PRAY_GOD(GOD_ERU)
+			if (praying_to(GOD_ERU))
 			{
 				s32b chance = p_ptr->grace;
 
