@@ -554,7 +554,7 @@ void do_cmd_skill()
 			if (dir == 8) sel--;
 
 			/* Miscellaneous skills cannot be increased/decreased as a group */
-			if (table[sel][0] == SKILL_MISC) continue;
+			if ((sel >= 0) && (sel < max) && table[sel][0] == SKILL_MISC) continue;
 
 			/* Increase the current skill */
 			if (dir == 6) increase_skill(table[sel][0], skill_invest.get());
