@@ -1829,7 +1829,8 @@ int use_symbiotic_power(int r_idx, bool_ great, bool_ only_number, bool_ no_cost
  * Find a spell in any books/objects
  */
 static int hack_force_spell = -1;
-static object_type *hack_force_spell_obj = NULL;
+static s32b hack_force_spell_pval = -1;
+
 bool_ get_item_hook_find_spell(int *item)
 {
 	int i, spell;
@@ -1863,7 +1864,7 @@ bool_ get_item_hook_find_spell(int *item)
 			{
 				*item = i;
 				hack_force_spell = spell;
-				hack_force_spell_obj = o_ptr;
+				hack_force_spell_pval = o_ptr->pval;
 				return TRUE;
 			}
 		}
@@ -1872,7 +1873,7 @@ bool_ get_item_hook_find_spell(int *item)
 		{
 			*item = i;
 			hack_force_spell = spell;
-			hack_force_spell_obj = o_ptr;
+			hack_force_spell_pval = o_ptr->pval;
 			return TRUE;
 		}
 	}
@@ -1882,10 +1883,10 @@ bool_ get_item_hook_find_spell(int *item)
 /*
  * Is the spell castable?
  */
-bool_ is_ok_spell(s32b spell_idx, object_type *o_ptr)
+bool_ is_ok_spell(s32b spell_idx, s32b pval)
 {
 	spell_type *spell = spell_at(spell_idx);
-	assert(o_ptr != NULL);
+
 	// Calculate availability based on caster's skill level.
 	s32b level;
 	bool_ na;
@@ -1896,7 +1897,7 @@ bool_ is_ok_spell(s32b spell_idx, object_type *o_ptr)
 	}
 	// Are we permitted to cast based on item pval? Only music
 	// spells have non-zero minimum PVAL.
-	if (o_ptr->pval < spell_type_minimum_pval(spell))
+	if (pval < spell_type_minimum_pval(spell))
 	{
 		return FALSE;
 	}
@@ -1925,7 +1926,7 @@ s32b get_school_spell(cptr do_what, s16b force_book)
 	u32b f1, f2, f3, f4, f5, esp;
 
 	hack_force_spell = -1;
-	hack_force_spell_obj = NULL;
+	hack_force_spell_pval = -1;
 
 	/* Ok do we need to ask for a book ? */
 	if (!force_book)
@@ -2047,7 +2048,7 @@ s32b get_school_spell(cptr do_what, s16b force_book)
 				spell = spell_x(sval, pval, i);
 
 				/* Do we need to do some pre test */
-				ok = is_ok_spell(spell, o_ptr);
+				ok = is_ok_spell(spell, o_ptr->pval);
 
 				/* Require "okay" spells */
 				if (!ok)
@@ -2068,7 +2069,7 @@ s32b get_school_spell(cptr do_what, s16b force_book)
 		bool_ ok;
 
 		/* Require "okay" spells */
-		ok = is_ok_spell(hack_force_spell, hack_force_spell_obj);
+		ok = is_ok_spell(hack_force_spell, hack_force_spell_pval);
 		if (ok)
 		{
 			flag = TRUE;

@@ -463,7 +463,7 @@ int print_book(s16b sval, s32b pval, object_type *obj)
 		bool_ is_ok;
 		char label[8];
 
-		is_ok = is_ok_spell(spell_idx, obj);
+		is_ok = is_ok_spell(spell_idx, obj->pval);
 		if (is_ok)
 		{
 			color = (get_mana(spell_idx) > get_power(spell_idx)) ? TERM_ORANGE : TERM_L_GREEN;
