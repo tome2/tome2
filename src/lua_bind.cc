@@ -53,7 +53,7 @@ s32b lua_get_level(spell_type *spell, s32b lvl, s32b max, s32b min, s32b bonus)
 	return lvl;
 }
 
-/* static */ s32b get_level_device(spell_type *spell, s32b max, s32b min, s32b device_skill, std::function<s32b(spell_type *, s32b, s32b, s32b, s32b)> lua_get_level = lua_get_level)
+/* static */ s32b get_level_device(spell_type *spell, s32b max, s32b min, s32b device_skill, std::function<s32b(spell_type *, s32b, s32b, s32b, s32b)> lua_get_level_ = lua_get_level)
 {
 	/* No max specified ? assume 50 */
 	if (max <= 0) {
@@ -76,7 +76,7 @@ s32b lua_get_level(spell_type *spell, s32b lvl, s32b max, s32b min, s32b bonus)
 	-- The loss of information should be negligible since 1 skill = 1000 internally
 	*/
 	lvl = lvl / 10;
-	lvl = lua_get_level(spell, lvl, max, min, 0);
+	lvl = lua_get_level_(spell, lvl, max, min, 0);
 
 	return lvl;
 }

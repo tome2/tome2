@@ -7,7 +7,7 @@ using namespace bandit;
 // Declarations for testing purposes:
 //
 
-s32b get_level_device(spell_type *spell, s32b max, s32b min, s32b device_skill, std::function<s32b(spell_type *, s32b, s32b, s32b, s32b)> lua_get_level = lua_get_level);
+s32b get_level_device(spell_type *spell, s32b max, s32b min, s32b device_skill, std::function<s32b(spell_type *, s32b, s32b, s32b, s32b)> lua_get_level_ = lua_get_level);
 
 //
 // Tests
