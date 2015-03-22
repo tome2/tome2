@@ -1,6 +1,7 @@
 #include "init1.hpp"
 
 #include "angband.h"
+#include "ability_type.hpp"
 #include "cave.hpp"
 #include "files.hpp"
 #include "gods.hpp"

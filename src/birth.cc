@@ -9,6 +9,7 @@
 #include "birth.h"
 
 #include "angband.h"
+#include "ability_type.hpp"
 #include "corrupt.hpp"
 #include "cmd4.hpp"
 #include "cmd5.hpp"

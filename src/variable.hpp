@@ -1,6 +1,7 @@
 #pragma once
 
 #include "angband.h"
+#include "ability_type_fwd.hpp"
 
 extern int max_macrotrigger;
 extern char *macro_template;

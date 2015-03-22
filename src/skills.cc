@@ -6,7 +6,10 @@
  * included in all such copies.
  */
 
+#include "skills.hpp"
+
 #include "angband.h"
+#include "ability_type.hpp"
 #include "birth.hpp"
 #include "cmd2.hpp"
 #include "cmd3.hpp"

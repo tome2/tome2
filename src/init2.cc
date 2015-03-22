@@ -2,6 +2,7 @@
 #include "init2.h"
 
 #include "angband.h"
+#include "ability_type.hpp"
 #include "cave.hpp"
 #include "files.hpp"
 #include "generate.hpp"

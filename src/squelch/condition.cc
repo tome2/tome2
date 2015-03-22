@@ -5,6 +5,7 @@
 
 #include "tome/squelch/cursor.hpp"
 #include "tome/squelch/tree_printer.hpp"
+#include "ability_type.hpp"
 #include "angband.h"
 #include "object1.hpp"
 #include "object2.hpp"

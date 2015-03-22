@@ -2,6 +2,7 @@
 #include "loadsave.h"
 
 #include "angband.h"
+#include "ability_type.hpp"
 #include "birth.hpp"
 #include "init1.hpp"
 #include "init2.hpp"
