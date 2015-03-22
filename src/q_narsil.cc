@@ -1,4 +1,4 @@
-#include "q_narsil.h"
+#include "q_narsil.hpp"
 
 #include "hooks.h"
 #include "object2.hpp"

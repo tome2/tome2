@@ -1,4 +1,4 @@
-#include "q_library.h"
+#include "q_library.hpp"
 #include "quark.h"
 #include "hooks.h"
 #include "lua_bind.hpp"

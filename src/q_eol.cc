@@ -1,4 +1,4 @@
-#include "q_eol.h"
+#include "q_eol.hpp"
 
 #include "cave.hpp"
 #include "generate.hpp"

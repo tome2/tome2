@@ -1,4 +1,4 @@
-#include "q_evil.h"
+#include "q_evil.hpp"
 
 #include "cave.hpp"
 #include "hooks.h"

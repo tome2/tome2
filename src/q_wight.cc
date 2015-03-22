@@ -1,4 +1,4 @@
-#include "q_wight.h"
+#include "q_wight.hpp"
 
 #include "cave.hpp"
 #include "hooks.h"

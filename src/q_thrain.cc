@@ -1,4 +1,4 @@
-#include "q_thrain.h"
+#include "q_thrain.hpp"
 
 #include "cave.hpp"
 #include "generate.hpp"

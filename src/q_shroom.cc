@@ -1,4 +1,4 @@
-#include "q_shroom.h"
+#include "q_shroom.hpp"
 
 #include "cave.hpp"
 #include "hooks.h"

@@ -4,7 +4,7 @@
 #include "monster2.hpp"
 #include "object1.hpp"
 #include "options.hpp"
-#include "q_rand.h"
+#include "q_rand.hpp"
 #include "spells1.hpp"
 #include "tables.hpp"
 #include "util.hpp"

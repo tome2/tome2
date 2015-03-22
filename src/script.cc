@@ -10,7 +10,7 @@
 
 #include "angband.h"
 #include "init2.hpp"
-#include "q_library.h"
+#include "q_library.hpp"
 #include "spells4.hpp"
 #include "spells5.hpp"
 #include "spells6.hpp"

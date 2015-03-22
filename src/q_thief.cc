@@ -1,4 +1,4 @@
-#include "q_thief.h"
+#include "q_thief.hpp"
 
 #include "cave.hpp"
 #include "hooks.h"

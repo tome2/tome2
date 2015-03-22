@@ -1,4 +1,4 @@
-#include "q_fireprof.h"
+#include "q_fireprof.hpp"
 #include "quark.h"
 #include "hooks.h"
 #include "lua_bind.hpp"

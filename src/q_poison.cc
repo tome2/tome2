@@ -1,4 +1,4 @@
-#include "q_poison.h"
+#include "q_poison.hpp"
 
 #include "cave.hpp"
 #include "quark.h"

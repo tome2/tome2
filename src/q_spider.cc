@@ -1,4 +1,4 @@
-#include "q_spider.h"
+#include "q_spider.hpp"
 
 #include "cave.hpp"
 #include "gods.hpp"

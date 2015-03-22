@@ -26,7 +26,7 @@
 #include "object1.hpp"
 #include "object2.hpp"
 #include "options.hpp"
-#include "q_rand.h"
+#include "q_rand.hpp"
 #include "skills.hpp"
 #include "spells2.hpp"
 #include "spells3.hpp"

@@ -1,4 +1,4 @@
-#include "q_ultrae.h"
+#include "q_ultrae.hpp"
 
 #define cquest (quest[QUEST_ULTRA_EVIL])
 

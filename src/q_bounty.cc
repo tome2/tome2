@@ -1,4 +1,4 @@
-#include "q_bounty.h"
+#include "q_bounty.hpp"
 
 #include "monster2.hpp"
 #include "object1.hpp"

@@ -1,4 +1,4 @@
-#include "q_one.h"
+#include "q_one.hpp"
 
 #include "cave.hpp"
 #include "gods.hpp"

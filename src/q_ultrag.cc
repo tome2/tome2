@@ -1,4 +1,4 @@
-#include "q_ultrag.h"
+#include "q_ultrag.hpp"
 
 #include "cave.hpp"
 #include "hooks.h"

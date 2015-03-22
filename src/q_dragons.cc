@@ -1,4 +1,4 @@
-#include "q_dragons.h"
+#include "q_dragons.hpp"
 
 #include "cave.hpp"
 #include "hooks.h"

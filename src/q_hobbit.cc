@@ -1,4 +1,4 @@
-#include "q_hobbit.h"
+#include "q_hobbit.hpp"
 
 #include "cave.hpp"
 #include "hooks.h"

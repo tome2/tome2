@@ -1,4 +1,4 @@
-#include "q_main.h"
+#include "q_main.hpp"
 
 #include "hooks.h"
 #include "tables.hpp"

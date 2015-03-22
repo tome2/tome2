@@ -1,4 +1,4 @@
-#include "q_god.h"
+#include "q_god.hpp"
 #include "quark.h"
 #include "hooks.h"
 #include "object2.hpp"

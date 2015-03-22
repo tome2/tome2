@@ -1,4 +1,4 @@
-#include "q_nirna.h"
+#include "q_nirna.hpp"
 
 #include "cave.hpp"
 #include "hooks.h"

@@ -1,4 +1,4 @@
-#include "q_nazgul.h"
+#include "q_nazgul.hpp"
 
 #include "cave.hpp"
 #include "hooks.h"

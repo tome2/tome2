@@ -1,4 +1,4 @@
-#include "q_rand.h"
+#include "q_rand.hpp"
 
 #include "cave.hpp"
 #include "generate.hpp"

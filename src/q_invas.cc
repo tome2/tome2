@@ -1,4 +1,4 @@
-#include "q_invas.h"
+#include "q_invas.hpp"
 
 #include "cave.hpp"
 #include "hooks.h"
