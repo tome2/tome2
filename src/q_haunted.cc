@@ -1,7 +1,7 @@
 #include "q_haunted.hpp"
 
 #include "cave.hpp"
-#include "hooks.h"
+#include "hooks.hpp"
 #include "init1.hpp"
 #include "monster2.hpp"
 #include "traps.hpp"

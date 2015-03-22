@@ -1,6 +1,6 @@
 #include "q_main.hpp"
 
-#include "hooks.h"
+#include "hooks.hpp"
 #include "tables.hpp"
 #include "util.hpp"
 #include "variable.hpp"

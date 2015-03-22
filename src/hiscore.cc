@@ -1,4 +1,4 @@
-#include "hiscore.h"
+#include "hiscore.hpp"
 
 #include "angband.h"
 #include "util.hpp"

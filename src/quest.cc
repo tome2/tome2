@@ -1,4 +1,4 @@
-#include "quest.h"
+#include "quest.hpp"
 
 #include "angband.h"
 #include "tables.hpp"

@@ -9,7 +9,7 @@
 #include "object1.hpp"
 #include "object2.hpp"
 #include "skills.hpp"
-#include "quark.h"
+#include "quark.hpp"
 #include "util.hpp"
 #include "variable.hpp"
 

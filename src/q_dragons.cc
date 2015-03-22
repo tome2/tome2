@@ -1,7 +1,7 @@
 #include "q_dragons.hpp"
 
 #include "cave.hpp"
-#include "hooks.h"
+#include "hooks.hpp"
 #include "init1.hpp"
 #include "monster2.hpp"
 #include "tables.hpp"

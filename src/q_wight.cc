@@ -1,11 +1,11 @@
 #include "q_wight.hpp"
 
 #include "cave.hpp"
-#include "hooks.h"
+#include "hooks.hpp"
 #include "init1.hpp"
 #include "monster2.hpp"
 #include "object2.hpp"
-#include "quark.h"
+#include "quark.hpp"
 #include "tables.hpp"
 #include "util.hpp"
 #include "variable.hpp"

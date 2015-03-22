@@ -13,7 +13,7 @@
 #include "cmd4.hpp"
 #include "corrupt.hpp"
 #include "files.hpp"
-#include "hooks.h"
+#include "hooks.hpp"
 #include "monster2.hpp"
 #include "object1.hpp"
 #include "object2.hpp"

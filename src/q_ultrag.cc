@@ -1,7 +1,7 @@
 #include "q_ultrag.hpp"
 
 #include "cave.hpp"
-#include "hooks.h"
+#include "hooks.hpp"
 #include "object1.hpp"
 #include "object2.hpp"
 #include "options.hpp"

@@ -1,11 +1,7 @@
 #pragma once
 
-#include "range_fwd.h"
+#include "range_fwd.hpp"
 #include "angband.h"
-
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 /*
  * Range
@@ -17,7 +13,3 @@ struct range_type
 };
 
 void range_init(range_type *range, s32b min, s32b max);
-
-#ifdef __cplusplus
-} // extern "C"
-#endif

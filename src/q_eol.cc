@@ -2,7 +2,7 @@
 
 #include "cave.hpp"
 #include "generate.hpp"
-#include "hooks.h"
+#include "hooks.hpp"
 #include "monster2.hpp"
 #include "object2.hpp"
 #include "tables.hpp"

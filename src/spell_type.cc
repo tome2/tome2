@@ -1,7 +1,7 @@
 #include "spell_type.hpp"
-#include "range.h"
-#include "device_allocation.h"
-#include "dice.h"
+#include "range.hpp"
+#include "device_allocation.hpp"
+#include "dice.hpp"
 #include "spells4.hpp"
 
 #include "angband.h"

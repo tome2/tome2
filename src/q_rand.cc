@@ -2,10 +2,10 @@
 
 #include "cave.hpp"
 #include "generate.hpp"
-#include "hooks.h"
+#include "hooks.hpp"
 #include "init1.hpp"
 #include "lua_bind.hpp"
-#include "messages.h"
+#include "messages.hpp"
 #include "monster2.hpp"
 #include "monster3.hpp"
 #include "object1.hpp"

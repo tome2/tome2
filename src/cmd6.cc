@@ -14,7 +14,7 @@
 #include "cmd7.hpp"
 #include "corrupt.hpp"
 #include "files.hpp"
-#include "hooks.h"
+#include "hooks.hpp"
 #include "lua_bind.hpp"
 #include "mimic.hpp"
 #include "monster2.hpp"

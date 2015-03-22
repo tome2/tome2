@@ -1,4 +1,5 @@
-#include "messages.h"
+#include "messages.hpp"
+
 #include "tome/make_array.hpp"
 
 #include "angband.h"

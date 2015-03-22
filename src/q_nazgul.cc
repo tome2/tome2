@@ -1,7 +1,7 @@
 #include "q_nazgul.hpp"
 
 #include "cave.hpp"
-#include "hooks.h"
+#include "hooks.hpp"
 #include "monster2.hpp"
 #include "object2.hpp"
 #include "tables.hpp"

@@ -10,7 +10,7 @@
 #include "angband.h"
 #include "cave.hpp"
 #include "files.hpp"
-#include "hooks.h"
+#include "hooks.hpp"
 #include "levels.hpp"
 #include "mimic.hpp"
 #include "monster3.hpp"

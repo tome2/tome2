@@ -1,6 +1,6 @@
 #include "q_fireprof.hpp"
-#include "quark.h"
-#include "hooks.h"
+#include "quark.hpp"
+#include "hooks.hpp"
 #include "lua_bind.hpp"
 #include "object1.hpp"
 #include "object2.hpp"

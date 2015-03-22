@@ -8,7 +8,7 @@
 #include "../modules.hpp"
 #include "../object1.hpp"
 #include "../object2.hpp"
-#include "../quark.h"
+#include "../quark.hpp"
 #include "../tables.hpp"
 #include "../util.hpp"
 #include "../variable.hpp"

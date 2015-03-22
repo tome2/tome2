@@ -6,8 +6,8 @@
 #include <functional>
 #include "h-basic.h"
 #include "types_fwd.h"
-#include "device_allocation_fwd.h"
-#include "range_fwd.h"
+#include "device_allocation_fwd.hpp"
+#include "range_fwd.hpp"
 
 /*
  * Casting type

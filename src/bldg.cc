@@ -16,7 +16,7 @@
 #include "angband.h"
 #include "cmd3.hpp"
 #include "files.hpp"
-#include "hooks.h"
+#include "hooks.hpp"
 #include "mimic.hpp"
 #include "object1.hpp"
 #include "object2.hpp"

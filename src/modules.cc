@@ -14,7 +14,7 @@
 #include "cave.hpp"
 #include "corrupt.hpp"
 #include "files.hpp"
-#include "hooks.h"
+#include "hooks.hpp"
 #include "joke.hpp"
 #include "lua_bind.hpp"
 #include "monster2.hpp"

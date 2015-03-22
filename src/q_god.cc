@@ -1,6 +1,6 @@
 #include "q_god.hpp"
-#include "quark.h"
-#include "hooks.h"
+#include "quark.hpp"
+#include "hooks.hpp"
 #include "object2.hpp"
 #include "tables.hpp"
 #include "util.hpp"

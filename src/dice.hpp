@@ -1,10 +1,6 @@
 #pragma once
 
-#include "dice_fwd.h"
-
-#ifdef __cplusplus
-extern "C" {
-#endif
+#include "dice_fwd.hpp"
 
 /**
  * Dice
@@ -15,7 +11,3 @@ struct dice_type
 	long num;   /* Number of dice */
 	long sides; /* Sides per dice */
 };
-
-#ifdef __cplusplus
-} // extern "C"
-#endif

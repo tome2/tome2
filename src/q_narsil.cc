@@ -1,6 +1,6 @@
 #include "q_narsil.hpp"
 
-#include "hooks.h"
+#include "hooks.hpp"
 #include "object2.hpp"
 #include "tables.hpp"
 #include "util.hpp"

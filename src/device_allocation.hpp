@@ -1,11 +1,7 @@
 #pragma once
 
-#include "device_allocation_fwd.h"
-#include "range.h"
-
-#ifdef __cplusplus
-extern "C" {
-#endif
+#include "device_allocation_fwd.hpp"
+#include "range.hpp"
 
 /*
  * Device allocation for skill
@@ -19,7 +15,3 @@ struct device_allocation
 };
 
 struct device_allocation *device_allocation_new(byte tval);
-
-#ifdef __cplusplus
-} // extern "C"
-#endif

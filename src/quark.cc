@@ -1,4 +1,5 @@
-#include "quark.h"
+#include "quark.hpp"
+
 #include "angband.h"
 
 #include <cassert>

@@ -13,7 +13,7 @@
 #include "corrupt.hpp"
 #include "init1.hpp"
 #include "monster2.hpp"
-#include "range.h"
+#include "range.hpp"
 #include "skills.hpp"
 #include "spell_type.hpp"
 #include "spells2.hpp"

@@ -2,7 +2,7 @@
 
 #include "angband.h"
 #include "spell_type.hpp"
-#include "device_allocation.h"
+#include "device_allocation.hpp"
 #include "spells3.hpp"
 #include "spells4.hpp"
 #include "variable.hpp"

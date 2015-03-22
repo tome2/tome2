@@ -14,7 +14,7 @@
 #include "cmd1.hpp"
 #include "files.hpp"
 #include "gods.hpp"
-#include "hooks.h"
+#include "hooks.hpp"
 #include "levels.hpp"
 #include "monster2.hpp"
 #include "monster3.hpp"

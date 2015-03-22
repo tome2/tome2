@@ -1,6 +1,6 @@
 #include "q_library.hpp"
-#include "quark.h"
-#include "hooks.h"
+#include "quark.hpp"
+#include "hooks.hpp"
 #include "lua_bind.hpp"
 #include "monster2.hpp"
 #include "object2.hpp"

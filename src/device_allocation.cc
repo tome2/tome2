@@ -1,4 +1,4 @@
-#include "device_allocation.h"
+#include "device_allocation.hpp"
 
 #include <cassert>
 

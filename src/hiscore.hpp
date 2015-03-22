@@ -2,10 +2,6 @@
 
 #include "h-basic.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 /*
  * Semi-Portable High Score List Entry (128 bytes) -- BEN
  *
@@ -80,7 +76,3 @@ int highscore_where(int highscore_fd, high_score *score);
  * best) or -1 on "failure"
  */
 int highscore_add(int highscore_fd, high_score *score);
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
