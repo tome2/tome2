@@ -1834,8 +1834,8 @@ static bool_ sell_haggle(object_type *o_ptr, s32b *price)
 	/* Sell the whole pile */
 	cur_ask *= o_ptr->number;
 
-	/* Describe the object (fully) */
-	object_desc_store(o_name, o_ptr, TRUE, 3);
+	/* Describe the object */
+	object_desc(o_name, o_ptr, TRUE, 3);
 
 	/* Prompt */
 	strnfmt(out_val, sizeof(out_val), "%s: " FMTs32b, "Price", cur_ask);
