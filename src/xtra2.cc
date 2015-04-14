@@ -3683,7 +3683,7 @@ void resize_window(void)
 /*
  * Monster health description
  */
-cptr look_mon_desc(int m_idx)
+static cptr look_mon_desc(int m_idx)
 {
 	monster_type *m_ptr = &m_list[m_idx];
 	monster_race *r_ptr = race_inf(m_ptr);
@@ -4330,9 +4330,10 @@ static int target_set_aux(int y, int x, int mode, cptr info)
 							if (m_ptr->mflag & MFLAG_PARTIAL) mstat = " (partial) ";
 
 							/* Describe, and prompt for recall */
-							sprintf(out_val, "%s%s%s%s (level %d, %s%s)%s%s[r,%s]",
+							sprintf(out_val, "%s%s%s%s (level %d, %s%s%s)%s%s[r,%s]",
 							        s1, s2, s3, m_name,
 							        m_ptr->level, look_mon_desc(c_ptr->m_idx),
+								(m_ptr->csleep) ? ", asleep" : "",
 							        (m_ptr->mflag & MFLAG_QUEST) ? ", quest" : "",
 							        (m_ptr->smart & SM_CLONED ? " (clone)" : ""),
 							        (mstat), info);
