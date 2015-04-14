@@ -169,30 +169,28 @@ static bool_ fireproof_enough_points(object_type *o_ptr, int *stack)
 
 static bool_ fireproof()
 {
-	int ret, item, stack = 0;
-	object_type *obj2 = NULL;
-	bool_ ret2;
+	int item;
 
 	item_tester_hook = item_tester_hook_proofable;
-	ret = get_item(&item,
-		       "Which item shall I fireproof?",
-		       "You have no more items I can fireproof, come back when you have some.",
-		       USE_INVEN);
-
-	/* get the object type from the number */
-	obj2 = get_object(item);
-
-	/* check we have enough points (if we 'got' an item) */
-	if (ret == TRUE) {
-		ret2 = fireproof_enough_points(obj2, &stack);
-	}
-
-	/* did either routine fail? */
-	if ((ret == FALSE) || (ret2 == FALSE))
+	if (!get_item(&item,
+		      "Which item shall I fireproof?",
+		      "You have no more items I can fireproof, come back when you have some.",
+		      USE_INVEN))
 	{
 		return FALSE;
 	}
-	else
+
+	/* get the object type from the number */
+	object_type *obj2 = get_object(item);
+
+	/* check we have enough points (if we 'got' an item) */
+	int stack = 0;
+	if (!fireproof_enough_points(obj2, &stack))
+	{
+		return FALSE;
+	}
+
+	/* Do the actual fireproofing */
 	{
 		bool_ carry_it;
 		object_type *obj3;
