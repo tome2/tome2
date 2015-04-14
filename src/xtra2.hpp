@@ -72,7 +72,6 @@ extern bool_ mon_take_hit(int m_idx, int dam, bool_ *fear, cptr note);
 extern bool_ change_panel(int dy, int dx);
 extern void verify_panel(void);
 extern cptr look_mon_desc(int m_idx);
-extern bool_ target_able(int m_idx);
 extern bool_ target_okay(void);
 extern bool_ target_set(int mode);
 extern bool_ get_aim_dir(int *dp);

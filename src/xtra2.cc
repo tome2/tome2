@@ -3824,7 +3824,7 @@ static void ang_sort(vptr u, vptr v, int n)
  * Future versions may restrict the ability to target "trappers"
  * and "mimics", but the semantics is a little bit weird.
  */
-bool_ target_able(int m_idx)
+static bool target_able(int m_idx)
 {
 	monster_type *m_ptr = &m_list[m_idx];
 
