@@ -2247,10 +2247,6 @@ void init_angband(void)
 	/* Process that file */
 	process_pref_file(buf);
 
-	/* Load automatizer rules */
-	path_build(buf, sizeof(buf), ANGBAND_DIR_USER, "automat.atm");
-	automatizer_load(buf);
-
 	/* Done */
 	note("[Initialisation complete]");
 }

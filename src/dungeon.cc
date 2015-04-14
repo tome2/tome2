@@ -62,6 +62,7 @@
 #include "xtra1.hpp"
 #include "xtra2.hpp"
 
+#include <boost/filesystem.hpp>
 #include <cassert>
 
 #define TY_CURSE_CHANCE 100
@@ -5077,12 +5078,20 @@ static void load_all_pref_files(void)
 	/* Process that file */
 	process_pref_file(buf);
 
-	/* Process player specific automatizer sets */
-	/* TODO: Disabled temporarily because it causes duplicate
-	 * rules on save and subsequent game load. */
-	/* sprintf(buf2, "%s.atm", player_name); */
-	/* path_build(buf, sizeof(buf), ANGBAND_DIR_USER, buf2); */
-	/* automatizer_load(buf); */
+	/* Load automatizer settings. Character-specific automatizer
+	 * file gets priority over the "template" file. We do not try
+	 * to merge the two files since that would require tracking
+	 * the providence of rules and such to avoid the same
+	 * duplication problems as caused when saving macros/keymaps. */
+	boost::filesystem::path userDirectory(ANGBAND_DIR_USER);
+	if (automatizer_load(userDirectory / (std::string(player_name) + ".atm")))
+	{
+		// Done
+	}
+	else if (automatizer_load(userDirectory / "automat.atm"))
+	{
+		// Done
+	}
 }
 
 /*

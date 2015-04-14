@@ -174,7 +174,8 @@ static void automatizer_save_rules()
 
 	Term_get_size(&wid, &hgt);
 
-	sprintf(name, "automat.atm");
+	sprintf(name, "%s.atm", player_name);
+
 	if (!input_box("Save name?", hgt / 2, wid / 2, name, sizeof(name)))
 	{
 		return;
@@ -562,34 +563,33 @@ void automatizer_init()
 }
 
 /**
- * Load automatizer file. This function may be called multiple times
- * with different file names -- it should NOT clear any automatizer
- * state (including loaded rules).
+ * Load automatizer file. Returns true iff automatizer
+ * rules were loaded successfully.
  */
-void automatizer_load(cptr file_path)
+bool automatizer_load(boost::filesystem::path const &path)
 {
-	assert(file_path != NULL);
 	assert(automatizer != NULL);
 
-	// Does the file exist?
-	if (!file_exist(file_path))
+	// Does the path exist?
+	if (!boost::filesystem::exists(path))
 	{
-		return; // Not fatal; just skip
+		return false; // Not fatal; just skip
 	}
 
 	// Parse file
 	json_error_t error;
 	std::shared_ptr<json_t> rules_json(
-		json_load_file(file_path, 0, &error),
+		json_load_file(path.c_str(), 0, &error),
 		&json_decref);
 	if (rules_json == nullptr)
 	{
-		msg_format("Error parsing automatizer rules from '%s'.", file_path);
+		msg_format("Error parsing automatizer rules from '%s'.", path.c_str());
 		msg_format("Line %d, Column %d", error.line, error.column);
 		msg_print(nullptr);
-		return;
+		return false;
 	}
 
 	// Load rules
 	automatizer->load_json(rules_json.get());
+	return true;
 }
