@@ -2193,7 +2193,7 @@ void store_purchase(void)
 		}
 		else
 		{
-			q = p_ptr->au / (best + (best / 10));
+			q = p_ptr->au / best;
 		}
 		if (o_ptr->number < q)
 			q = o_ptr->number;
