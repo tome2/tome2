@@ -129,13 +129,13 @@ int school_book_length(int sval)
 	return school_book->spell_idxs.size();
 }
 
-int spell_x(int sval, int pval, int i)
+int spell_x(int sval, int spell_idx, int i)
 {
 	assert(i >= 0);
 
 	if (sval == BOOK_RANDOM)
 	{
-		return pval;
+		return spell_idx;
 	}
 	else
 	{
@@ -446,12 +446,12 @@ int print_spell(cptr label_, byte color, int y, s32b s)
 	return y + 1;
 }
 
-int print_book(s16b sval, s32b pval, object_type *obj)
+int print_book(s16b sval, s32b spell_idx, object_type *obj)
 {
 	int y = 2;
 	int i;
 
-	random_book_setup(sval, pval);
+	random_book_setup(sval, spell_idx);
 
 	school_book *school_book = school_books_at(sval);
 
