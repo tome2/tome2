@@ -75,7 +75,6 @@ extern cptr look_mon_desc(int m_idx);
 extern bool_ target_okay(void);
 extern bool_ target_set(int mode);
 extern bool_ get_aim_dir(int *dp);
-extern bool_ get_hack_dir(int *dp);
 extern bool_ get_rep_dir(int *dp);
 extern bool_ set_shadow(int v);
 extern bool_ set_tim_esp(int v);
