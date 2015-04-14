@@ -878,7 +878,7 @@ bool object_tried_p(object_type const *o_ptr)
  * Return the "value" of an "unknown" item
  * Make a guess at the value of non-aware items
  */
-static s32b object_value_base(object_type *o_ptr)
+static s32b object_value_base(object_type const *o_ptr)
 {
 	object_kind *k_ptr = &k_info[o_ptr->k_idx];
 
@@ -942,7 +942,7 @@ static s32b object_value_base(object_type *o_ptr)
 }
 
 /* Return the value of the flags the object has... */
-s32b flag_cost(object_type * o_ptr, int plusses)
+s32b flag_cost(object_type const * o_ptr, int plusses)
 {
 	s32b total = 0;
 	u32b f1, f2, f3, f4, f5, esp;
@@ -1178,7 +1178,7 @@ s32b flag_cost(object_type * o_ptr, int plusses)
  *
  * Every wearable item with a "pval" bonus is worth extra (see below).
  */
-s32b object_value_real(object_type *o_ptr)
+s32b object_value_real(object_type const *o_ptr)
 {
 	s32b value;
 
@@ -1492,7 +1492,7 @@ s32b object_value_real(object_type *o_ptr)
  * Note that discounted items stay discounted forever, even if
  * the discount is "forgotten" by the player via memory loss.
  */
-s32b object_value(object_type *o_ptr)
+s32b object_value(object_type const *o_ptr)
 {
 	s32b value;
 
@@ -1548,7 +1548,7 @@ s32b object_value(object_type *o_ptr)
  *
  * Chests, and activatable items, never stack (for various reasons).
  */
-bool_ object_similar(object_type *o_ptr, object_type *j_ptr)
+bool_ object_similar(object_type const *o_ptr, object_type const *j_ptr)
 {
 	int total = o_ptr->number + j_ptr->number;
 	u32b f1, f2, f3, f4, f5, esp, f11, f12, f13, f14, esp1, f15;
@@ -5805,7 +5805,7 @@ void inc_stack_size_ex(int item, int delta, optimize_flag opt, describe_flag des
 /*
  * Check if we have space for an item in the pack without overflow
  */
-bool_ inven_carry_okay(object_type *o_ptr)
+bool_ inven_carry_okay(object_type const *o_ptr)
 {
 	int j;
 

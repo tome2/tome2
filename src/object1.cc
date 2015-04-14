@@ -757,7 +757,7 @@ void reset_visuals(void)
 /*
  * Extract "xtra" flags from object.
  */
-void object_flags_xtra(object_type *o_ptr, u32b *f2, u32b *f3, u32b *esp)
+static void object_flags_xtra(object_type const *o_ptr, u32b *f2, u32b *f3, u32b *esp)
 {
 	switch (o_ptr->xtra1)
 	{
@@ -874,7 +874,7 @@ void object_flags_xtra(object_type *o_ptr, u32b *f2, u32b *f3, u32b *esp)
  * Obtain the "flags" for an item
  */
 bool_ object_flags_no_set = FALSE;
-void object_flags(object_type *o_ptr, u32b *f1, u32b *f2, u32b *f3, u32b *f4, u32b *f5, u32b *esp)
+void object_flags(object_type const *o_ptr, u32b *f1, u32b *f2, u32b *f3, u32b *f4, u32b *f5, u32b *esp)
 {
 	object_kind *k_ptr = &k_info[o_ptr->k_idx];
 
@@ -960,7 +960,7 @@ int object_power(object_type *o_ptr)
 /*
  * Obtain the "flags" for an item which are known to the player
  */
-void object_flags_known(object_type *o_ptr, u32b *f1, u32b *f2, u32b *f3, u32b *f4, u32b *f5, u32b *esp)
+void object_flags_known(object_type const *o_ptr, u32b *f1, u32b *f2, u32b *f3, u32b *f4, u32b *f5, u32b *esp)
 {
 	object_kind *k_ptr = &k_info[o_ptr->k_idx];
 
@@ -3930,7 +3930,7 @@ static int get_slot(int slot)
  * Determine which equipment slot (if any) an item likes, ignoring the player's
  * current body and stuff if ideal == TRUE
  */
-s16b wield_slot_ideal(object_type *o_ptr, bool_ ideal)
+s16b wield_slot_ideal(object_type const *o_ptr, bool_ ideal)
 {
 	/* Theme has restrictions for winged races. */
 	if (game_module_idx == MODULE_THEME)
@@ -4116,7 +4116,7 @@ s16b wield_slot_ideal(object_type *o_ptr, bool_ ideal)
  * Determine which equipment slot (if any) an item likes for the player's
  * current body and stuff
  */
-s16b wield_slot(object_type *o_ptr)
+s16b wield_slot(object_type const *o_ptr)
 {
 	return wield_slot_ideal(o_ptr, FALSE);
 }
