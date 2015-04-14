@@ -70,11 +70,15 @@
 #define AUTO_CURSE_CHANCE 15
 #define CHAINSWORD_NOISE 100
 
+/**
+ * Type of a "sense" function
+ */
+typedef byte (*sense_function_t)(object_type const *o_ptr);
 
 /*
  * Return a "feeling" (or NULL) about an item.  Method 1 (Heavy).
  */
-static byte value_check_aux1(object_type *o_ptr)
+static byte value_check_aux1(object_type const *o_ptr)
 {
 	/* Artifacts */
 	if (artifact_p(o_ptr))
@@ -109,7 +113,7 @@ static byte value_check_aux1(object_type *o_ptr)
 	return (SENSE_AVERAGE);
 }
 
-static byte value_check_aux1_magic(object_type *o_ptr)
+static byte value_check_aux1_magic(object_type const *o_ptr)
 {
 	object_kind *k_ptr = &k_info[o_ptr->k_idx];
 
@@ -176,7 +180,7 @@ static byte value_check_aux1_magic(object_type *o_ptr)
 /*
  * Return a "feeling" (or NULL) about an item.  Method 2 (Light).
  */
-static byte value_check_aux2(object_type *o_ptr)
+static byte value_check_aux2(object_type const *o_ptr)
 {
 	/* Cursed items (all of them) */
 	if (cursed_p(o_ptr)) return (SENSE_CURSED);
@@ -198,7 +202,7 @@ static byte value_check_aux2(object_type *o_ptr)
 }
 
 
-static byte value_check_aux2_magic(object_type *o_ptr)
+static byte value_check_aux2_magic(object_type const *o_ptr)
 {
 	object_kind *k_ptr = &k_info[o_ptr->k_idx];
 
@@ -278,9 +282,8 @@ static bool_ granted_resurrection(void)
 	return (FALSE);
 }
 
-static byte select_sense(object_type *o_ptr)
+static sense_function_t select_sense(object_type *o_ptr, sense_function_t combat, sense_function_t magic)
 {
-	/* Valid "tval" codes */
 	switch (o_ptr->tval)
 	{
 	case TV_SHOT:
@@ -305,8 +308,7 @@ static byte select_sense(object_type *o_ptr)
 	case TV_BOOMERANG:
 	case TV_TRAPKIT:
 		{
-			return 1;
-			break;
+			return combat;
 		}
 
 	case TV_POTION:
@@ -317,22 +319,21 @@ static byte select_sense(object_type *o_ptr)
 	case TV_ROD:
 	case TV_ROD_MAIN:
 		{
-			return 2;
-			break;
+			return magic;
 		}
 
 		/* Dual use? */
 	case TV_DAEMON_BOOK:
 		{
-			return 1;
-			break;
+			return combat;
 		}
 	}
-	return 0;
+
+	return nullptr;
 }
 
 /*
- * Sense the inventory
+ * Sense quality of specific list of objects.
  *
  * Combat items (weapons and armour) - Fast, weak if combat skill < 10, strong
  * otherwise.
@@ -344,21 +345,8 @@ static byte select_sense(object_type *o_ptr)
  * they learn one form of ID or another, and because most magic items are
  * easy_know.
  */
-void sense_inventory(void)
+void sense_objects(std::vector<int> const &object_idxs)
 {
-	int i, combat_lev, magic_lev;
-
-	bool_ heavy_combat, heavy_magic;
-
-	byte feel;
-
-	object_type *o_ptr;
-
-	char o_name[80];
-
-
-	/*** Check for "sensing" ***/
-
 	/* No sensing when confused */
 	if (p_ptr->confused) return;
 
@@ -388,24 +376,21 @@ void sense_inventory(void)
 	 */
 
 	/* The combat skill affects weapon/armour pseudo-ID */
-	combat_lev = get_skill(SKILL_COMBAT);
+	int combat_lev = get_skill(SKILL_COMBAT);
 
 	/* The magic skill affects magic item pseudo-ID */
-	magic_lev = get_skill(SKILL_MAGIC);
+	int magic_lev = get_skill(SKILL_MAGIC);
 
 	/* Higher skill levels give the player better sense of items */
-	heavy_combat = (combat_lev > 10) ? TRUE : FALSE;
-	heavy_magic = (magic_lev > 10) ? TRUE : FALSE;
-
+	auto feel_combat = (combat_lev > 10) ? value_check_aux1 : value_check_aux2;
+	auto feel_magic = (magic_lev > 10) ? value_check_aux1_magic : value_check_aux2_magic;
 
 	/*** Sense everything ***/
 
 	/* Check everything */
-	for (i = 0; i < INVEN_TOTAL; i++)
+	for (auto i : object_idxs)
 	{
-		byte okay = 0;
-
-		o_ptr = &p_ptr->inventory[i];
+		object_type *o_ptr = get_object(i);
 
 		/* Skip empty slots */
 		if (!o_ptr->k_idx) continue;
@@ -416,37 +401,39 @@ void sense_inventory(void)
 		/* It is fully known, no information needed */
 		if (object_known_p(o_ptr)) continue;
 
-		/* Valid "tval" codes */
-		okay = select_sense(o_ptr);
+		/* Select appropriate sensing function, if any */
+		sense_function_t sense = select_sense(o_ptr, feel_combat, feel_magic);
 
-		/* Skip non-sense machines */
-		if (!okay) continue;
+		/* Skip non-sensed items */
+		if (!sense)
+		{
+			continue;
+		}
 
 		/* Check for a feeling */
-		if (okay == 1)
-		{
-			feel = (heavy_combat ? value_check_aux1(o_ptr) : value_check_aux2(o_ptr));
-		}
-		else
-		{
-			feel = (heavy_magic ? value_check_aux1_magic(o_ptr) : value_check_aux2_magic(o_ptr));
-		}
+		byte feel = sense(o_ptr);
 
 		/* Skip non-feelings */
-		if (feel == SENSE_NONE) continue;
+		if (feel == SENSE_NONE)
+		{
+			continue;
+		}
 
 		/* Get an object description */
+		char o_name[80];
 		object_desc(o_name, o_ptr, FALSE, 0);
 
-		/* Message (equipment) */
-		if (i >= INVEN_WIELD)
+		/* Messages */
+		if (i < 0) {
+			// We get a message from the floor handling code, so
+			// it would be overkill to have a message here too.
+		}
+		else if (i >= INVEN_WIELD)
 		{
 			msg_format("You feel the %s (%c) you are %s %s %s...",
 			           o_name, index_to_label(i), describe_use(i),
 			           ((o_ptr->number == 1) ? "is" : "are"), sense_desc[feel]);
 		}
-
-		/* Message (inventory) */
 		else
 		{
 			msg_format("You feel the %s (%c) in your pack %s %s...",
@@ -471,6 +458,20 @@ void sense_inventory(void)
 	squeltch_inventory();
 }
 
+void sense_inventory(void)
+{
+	static std::vector<int> idxs;
+	// Initialize static vector if necessary
+	if (idxs.empty())
+	{
+		idxs.reserve(INVEN_TOTAL);
+		for (int i = 0; i < INVEN_TOTAL; i++)
+		{
+			idxs.push_back(i);
+		}
+	}
+	sense_objects(idxs);
+}
 
 /*
  * Go to any level (ripped off from wiz_jump)

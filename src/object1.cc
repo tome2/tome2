@@ -4229,7 +4229,7 @@ static cptr mention_use(int i)
  */
 cptr describe_use(int i)
 {
-	cptr p;
+	cptr p = nullptr;
 
 	switch (i)
 	{
@@ -6113,48 +6113,57 @@ void object_pickup(int this_o_idx)
 
 void py_pickup_floor(int pickup)
 {
-	s16b this_o_idx, next_o_idx = 0;
-
-	char o_name[80] = "";
-	object_type *o_ptr = 0;
-
-	int floor_num = 0, floor_o_idx = 0;
-
-	bool_ do_pickup = TRUE;
-
-	bool_ do_ask = TRUE;
-
 	/* Hack -- ignore monster traps */
 	if (cave[p_ptr->py][p_ptr->px].feat == FEAT_MON_TRAP) return;
 
 	/* Try to grab ammo */
 	pickup_ammo();
 
+	/* Build a list of the floor objects. */
+	std::vector<int> floor_object_idxs;
+	{
+		s16b this_o_idx = cave[p_ptr->py][p_ptr->px].o_idx;
+		/* Reserve a number of slots if at least one is needed */
+		if (this_o_idx)
+		{
+			floor_object_idxs.reserve(16); // Avoid resizing in the common case
+		}
+		/* Fill in the indexes */
+		for (; this_o_idx; this_o_idx = o_list[this_o_idx].next_o_idx)
+		{
+			// Note the "-"! We need it for get_object()
+			// lookups to function correctly.
+			floor_object_idxs.push_back(0 - this_o_idx);
+		}
+	}
+
 	/* Mega Hack -- If we have auto-Id, do an ID sweep *before* squleching,
 	 * so that we don't have to walk over things twice to get them
 	 * squelched.  --dsb */
 	if (p_ptr->auto_id)
 	{
-		this_o_idx = cave[p_ptr->py][p_ptr->px].o_idx;
-
-		for (; this_o_idx; this_o_idx = next_o_idx)
+		for (auto const o_idx : floor_object_idxs)
 		{
-			/* Aquire the object */
-			o_ptr = &o_list[this_o_idx];
-
-			/* Acquire the next object index */
-			next_o_idx = o_ptr->next_o_idx;
-
-			/* Identify Object */
+			object_type *o_ptr = get_object(o_idx);
 			object_aware(o_ptr);
 			object_known(o_ptr);
 		}
 	}
 
+	/* Sense floor tile */
+	sense_objects(floor_object_idxs);
+
 	/* Squeltch the floor */
 	squeltch_grid();
 
 	/* Scan the pile of objects */
+	s16b next_o_idx = 0;
+	char o_name[80] = "";
+	object_type *o_ptr = 0;
+	int floor_num = 0;
+	int floor_o_idx = 0;
+
+	s16b this_o_idx;
 	for (this_o_idx = cave[p_ptr->py][p_ptr->px].o_idx; this_o_idx; this_o_idx = next_o_idx)
 	{
 		/* Acquire object */
@@ -6190,6 +6199,7 @@ void py_pickup_floor(int pickup)
 			continue;
 		}
 
+		/* Describe */
 		{
 			char testdesc[80];
 
@@ -6233,6 +6243,10 @@ void py_pickup_floor(int pickup)
 		/* Done */
 		return;
 	}
+
+	/* Are we actually going to pick up and/or ask about which item to pick up? */
+	bool_ do_pickup = TRUE;
+	bool_ do_ask = TRUE;
 
 	/* One item */
 	if (floor_num == 1)
