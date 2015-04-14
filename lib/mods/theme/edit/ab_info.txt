@@ -34,9 +34,9 @@ N:0:Spread blows
 D:If a monster dies to your attack but you still have blows left
 D:you won't lose the full turn, allowing you to attack some other
 D:monster in the same turn
-D:Prereq: Weaponmastery skill@30, Dex@17
+D:Prereq: Combat@30, Dex@17
 I:5
-k:30:Weaponmastery
+k:30:Combat
 S:17:DEX
 
 N:1:Tree walking
