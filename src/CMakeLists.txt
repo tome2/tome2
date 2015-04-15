@@ -17,6 +17,7 @@ SET(SRCS_COMMON
   q_troll.cc q_hobbit.cc q_thief.cc q_ultrae.cc q_ultrag.cc
   q_one.cc q_main.cc q_rand.cc quest.cc
   object1.cc object2.cc randart.cc squeltch.cc traps.cc
+  object_filter.cc
   monster1.cc monster2.cc monster3.cc
   xtra1.cc xtra2.cc skills.cc powers.cc gods.cc
   spells1.cc spells2.cc spells3.cc spells4.cc spells5.cc spells6.cc

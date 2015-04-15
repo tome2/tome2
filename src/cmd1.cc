@@ -4870,35 +4870,31 @@ void do_cmd_pet(void)
 /*
  * Incarnate into a body
  */
-bool_ do_cmd_integrate_body()
+void do_cmd_integrate_body()
 {
-	cptr q, s;
-
-	int item;
-
-	object_type *o_ptr;
-
-
 	if (!p_ptr->disembodied)
 	{
 		msg_print("You are already in a body.");
-		return FALSE;
+		return;
 	}
 
-	/* Restrict choices to monsters */
-	item_tester_tval = TV_CORPSE;
-
 	/* Get an item */
-	q = "Incarnate in which body? ";
-	s = "You have no corpse to incarnate in.";
-	if (!get_item(&item, q, s, (USE_FLOOR))) return FALSE;
+	int item;
+	if (!get_item(&item,
+		      "Incarnate in which body? ",
+		      "You have no corpse to incarnate in.",
+		      (USE_FLOOR),
+		      object_filter::TVal(TV_CORPSE)))
+	{
+		return;
+	}
 
-	o_ptr = &o_list[0 - item];
+	object_type *o_ptr = &o_list[0 - item];
 
 	if (o_ptr->sval != SV_CORPSE_CORPSE)
 	{
 		msg_print("You must select a corpse.");
-		return FALSE;
+		return;
 	}
 
 	p_ptr->body_monster = o_ptr->pval2;
@@ -4912,8 +4908,6 @@ bool_ do_cmd_integrate_body()
 	p_ptr->wraith_form = FALSE;
 	p_ptr->disembodied = FALSE;
 	do_cmd_redraw();
-
-	return TRUE;
 }
 
 /*

@@ -716,28 +716,6 @@ char *ANGBAND_DIR_XTRA;
 
 
 /*
- * Total Hack -- allow all items to be listed (even empty ones)
- * This is only used by "do_cmd_inven_e()" and is cleared there.
- */
-bool_ item_tester_full;
-
-
-/*
- * Here is a "pseudo-hook" used during calls to "get_item()" and
- * "show_inven()" and "show_equip()", and the choice window routines.
- */
-byte item_tester_tval;
-
-
-/*
- * Here is a "hook" used during calls to "get_item()" and
- * "show_inven()" and "show_equip()", and the choice window routines.
- */
-bool_ (*item_tester_hook)(object_type*);
-
-
-
-/*
  * Hack -- function hooks to restrict "get_mon_num_prep()" function
  */
 bool_ (*get_mon_num_hook)(int r_idx);

@@ -4668,8 +4668,7 @@ static void show_info(void)
 	if (equip_cnt)
 	{
 		Term_clear();
-		item_tester_full = TRUE;
-		show_equip();
+		show_equip_full();
 		prt("You are using: -more-", 0, 0);
 		if (inkey() == ESCAPE) return;
 	}
@@ -4678,8 +4677,7 @@ static void show_info(void)
 	if (inven_cnt)
 	{
 		Term_clear();
-		item_tester_full = TRUE;
-		show_inven();
+		show_inven_full();
 		prt("You are carrying: -more-", 0, 0);
 		if (inkey() == ESCAPE) return;
 	}

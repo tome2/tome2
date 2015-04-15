@@ -587,13 +587,10 @@ static void power_activate(int power)
 
 			cptr q, s;
 
-			/* Restrict choices to monsters */
-			item_tester_tval = TV_HYPNOS;
-
 			/* Get an item */
 			q = "Awaken which monster? ";
 			s = "You have no monster to awaken.";
-			if (!get_item(&item, q, s, (USE_FLOOR))) return;
+			if (!get_item(&item, q, s, (USE_FLOOR), object_filter::TVal(TV_HYPNOS))) return;
 
 			o_ptr = &o_list[0 - item];
 
@@ -878,12 +875,10 @@ static void power_activate(int power)
 			object_type * o_ptr;
 			int lev, item;
 
-			item_tester_hook = item_tester_hook_recharge;
-
 			/* Get an item */
 			q = "Drain which item? ";
 			s = "You have nothing to drain.";
-			if (!get_item(&item, q, s, (USE_INVEN | USE_FLOOR))) break;
+			if (!get_item(&item, q, s, (USE_INVEN | USE_FLOOR), item_tester_hook_recharge())) break;
 
 			o_ptr = get_object(item);
 

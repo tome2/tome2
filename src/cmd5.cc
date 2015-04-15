@@ -37,50 +37,40 @@
 /* Maximum number of tries for teleporting */
 #define MAX_TRIES 300
 
-static bool_ is_school_book(object_type *o_ptr)
+static object_filter_t const &is_school_book()
 {
-	if (o_ptr->tval == TV_BOOK)
-	{
-		return TRUE;
-	}
-	else if (o_ptr->tval == TV_DAEMON_BOOK)
-	{
-		return TRUE;
-	}
-	else if (o_ptr->tval == TV_INSTRUMENT)
-	{
-		return TRUE;
-	}
-	else
-	{
-		return FALSE;
-	}
+	using namespace object_filter;
+	static auto instance = Or(
+		TVal(TV_BOOK),
+		TVal(TV_DAEMON_BOOK),
+		TVal(TV_INSTRUMENT));
+	return instance;
 }
 
 /* Does it contains a schooled spell ? */
-static bool_ hook_school_spellable(object_type *o_ptr)
+static object_filter_t const &hook_school_spellable()
 {
-	if (is_school_book(o_ptr))
-		return TRUE;
-	else
-	{
-		u32b f1, f2, f3, f4, f5, esp;
-
-		/* Extract object flags */
-		object_flags(o_ptr, &f1, &f2, &f3, &f4, &f5, &esp);
-
-		if ((f5 & TR5_SPELL_CONTAIN) && (o_ptr->pval2 != -1))
-			return TRUE;
-	}
-	return FALSE;
+	using namespace object_filter;
+	static auto has_pval2 =
+		[=](object_type const *o_ptr) -> bool {
+			return (o_ptr->pval2 != -1);
+		};
+	static auto instance = Or(
+		is_school_book(),
+		And(
+			HasFlag5(TR5_SPELL_CONTAIN),
+			has_pval2));
+	return instance;
 }
 
-/* Is it a book */
-bool_ item_tester_hook_browsable(object_type *o_ptr)
+/* Is it a browsable for spells? */
+static object_filter_t const &item_tester_hook_browsable()
 {
-	if (hook_school_spellable(o_ptr)) return TRUE;
-	if (o_ptr->tval >= TV_BOOK) return TRUE;
-	return FALSE;
+	using namespace object_filter;
+	static auto instance = Or(
+		hook_school_spellable(),
+		TVal(TV_BOOK));
+	return instance;
 }
 
 /*
@@ -190,30 +180,31 @@ extern void do_cmd_browse_aux(object_type *o_ptr)
 	u32b f1, f2, f3, f4, f5, esp;
 	object_flags(o_ptr, &f1, &f2, &f3, &f4, &f5, &esp);
 
-	if (is_school_book(o_ptr))
+	if (is_school_book()(o_ptr))
+	{
 		browse_school_spell(o_ptr->sval, o_ptr->pval, o_ptr);
+	}
 	else if (f5 & TR5_SPELL_CONTAIN && o_ptr->pval2 != -1)
+	{
 		browse_school_spell(255, o_ptr->pval2, o_ptr);
+	}
 }
 
 void do_cmd_browse(void)
 {
-	int item;
-
-	cptr q, s;
-
-	object_type *o_ptr;
-
-	/* Restrict choices to "useful" books */
-	item_tester_hook = item_tester_hook_browsable;
-
 	/* Get an item */
-	q = "Browse which book? ";
-	s = "You have no books that you can read.";
-	if (!get_item(&item, q, s, (USE_INVEN | USE_EQUIP | USE_FLOOR))) return;
+	int item;
+	if (!get_item(&item,
+		      "Browse which book? ",
+		      "You have no books that you can read.",
+		      (USE_INVEN | USE_EQUIP | USE_FLOOR),
+		      item_tester_hook_browsable()))
+	{
+		return;
+	}
 
 	/* Get the item */
-	o_ptr = get_object(item);
+	object_type *o_ptr = get_object(item);
 
 	do_cmd_browse_aux(o_ptr);
 }
@@ -1831,53 +1822,56 @@ int use_symbiotic_power(int r_idx, bool_ great, bool_ only_number, bool_ no_cost
 static int hack_force_spell = -1;
 static s32b hack_force_spell_pval = -1;
 
-bool_ get_item_hook_find_spell(int *item)
+boost::optional<int> get_item_hook_find_spell(object_filter_t const &)
 {
-	int i, spell;
 	char buf[80];
-
 	strcpy(buf, "Manathrust");
 	if (!get_string("Spell name? ", buf, 79))
-		return FALSE;
+	{
+		return boost::none;
+	}
 
-	spell = find_spell(buf);
-	if (spell == -1) return FALSE;
+	int const spell = find_spell(buf);
+	if (spell == -1)
+	{
+		return boost::none;
+	}
 
-	for (i = 0; i < INVEN_TOTAL; i++)
+	for (int i = 0; i < INVEN_TOTAL; i++)
 	{
 		object_type *o_ptr = &p_ptr->inventory[i];
-		u32b f1, f2, f3, f4, f5, esp;
 
-		/* Must we wield it ? */
+		/* Extract object flags */
+		u32b f1, f2, f3, f4, f5, esp;
 		object_flags(o_ptr, &f1, &f2, &f3, &f4, &f5, &esp);
-		if ((wield_slot(o_ptr) != -1) && (i < INVEN_WIELD) && (f5 & TR5_WIELD_CAST)) continue;
+
+		/* Must we wield it to cast from it? */
+		if ((wield_slot(o_ptr) != -1) && (i < INVEN_WIELD) && (f5 & TR5_WIELD_CAST))
+		{
+			continue;
+		}
 
 		/* Is it a non-book? */
-		if (!is_school_book(o_ptr))
+		if (!is_school_book()(o_ptr))
 		{
-			u32b f1, f2, f3, f4, f5, esp;
-
-			/* Extract object flags */
-			object_flags(o_ptr, &f1, &f2, &f3, &f4, &f5, &esp);
-
+			/* Does it contain the appropriate spell? */
 			if ((f5 & TR5_SPELL_CONTAIN) && (o_ptr->pval2 == spell))
 			{
-				*item = i;
 				hack_force_spell = spell;
 				hack_force_spell_pval = o_ptr->pval;
-				return TRUE;
+				return i;
 			}
 		}
 		/* A random book ? */
 		else if (school_book_contains_spell(o_ptr->sval, spell))
 		{
-			*item = i;
 			hack_force_spell = spell;
 			hack_force_spell_pval = o_ptr->pval;
-			return TRUE;
+			return i;
 		}
 	}
-	return FALSE;
+
+	return boost::none;
 }
 
 /*
@@ -1918,8 +1912,6 @@ s32b get_school_spell(cptr do_what, s16b force_book)
 	int ask;
 	bool_ flag;
 	char out_val[160];
-	char buf2[40];
-	char buf3[40];
 	object_type *o_ptr, forge;
 	int tmp;
 	int sval, pval;
@@ -1931,11 +1923,20 @@ s32b get_school_spell(cptr do_what, s16b force_book)
 	/* Ok do we need to ask for a book ? */
 	if (!force_book)
 	{
-		get_item_extra_hook = get_item_hook_find_spell;
-		item_tester_hook = hook_school_spellable;
+		char buf2[40];
+		char buf3[40];
 		sprintf(buf2, "You have no book to %s from", do_what);
 		sprintf(buf3, "%s from which book?", do_what);
-		if (!get_item(&item, buf3, buf2, USE_INVEN | USE_EQUIP | USE_EXTRA )) return -1;
+
+		if (!get_item(&item,
+			      buf3,
+			      buf2,
+			      USE_INVEN | USE_EQUIP,
+			      hook_school_spellable(),
+			      get_item_hook_find_spell))
+		{
+			return -1;
+		}
 
 		/* Get the item */
 		o_ptr = get_object(item);
@@ -1972,7 +1973,7 @@ s32b get_school_spell(cptr do_what, s16b force_book)
 	spell = -1;
 
 	/* Is it a random book, or something else ? */
-	if (is_school_book(o_ptr))
+	if (is_school_book()(o_ptr))
 	{
 		sval = o_ptr->sval;
 		pval = o_ptr->pval;
@@ -2129,16 +2130,12 @@ void cast_school_spell()
 }
 
 /* Can it contains a schooled spell ? */
-static bool_ hook_school_can_spellable(object_type *o_ptr)
+static bool hook_school_can_spellable(object_type const *o_ptr)
 {
 	u32b f1, f2, f3, f4, f5, esp;
-
-	/* Extract object flags */
 	object_flags(o_ptr, &f1, &f2, &f3, &f4, &f5, &esp);
 
-	if ((f5 & TR5_SPELL_CONTAIN) && (o_ptr->pval2 == -1))
-		return TRUE;
-	return FALSE;
+	return ((f5 & TR5_SPELL_CONTAIN) && (o_ptr->pval2 == -1));
 }
 
 /*
@@ -2148,7 +2145,6 @@ void do_cmd_copy_spell()
 {
 	int spell = get_school_spell("copy", 0);
 	int item;
-	object_type *o_ptr;
 
 	if (spell == -1) return;
 
@@ -2159,9 +2155,12 @@ void do_cmd_copy_spell()
 		return;
 	}
 
-	item_tester_hook = hook_school_can_spellable;
-	if (!get_item(&item, "Copy to which object? ", "You have no object to copy to.", (USE_INVEN | USE_EQUIP))) return;
-	o_ptr = get_object(item);
+	if (!get_item(&item,
+		      "Copy to which object? ",
+		      "You have no object to copy to.",
+		      (USE_INVEN | USE_EQUIP),
+		      hook_school_can_spellable)) return;
+	object_type *o_ptr = get_object(item);
 
 	msg_print("You copy the spell!");
 	o_ptr->pval2 = spell;

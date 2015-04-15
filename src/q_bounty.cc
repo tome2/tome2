@@ -65,16 +65,9 @@ static int get_new_bounty_monster(int lev)
 	return r_idx;
 }
 
-static bool_ bounty_item_tester_hook(object_type *o_ptr)
+static bool bounty_item_tester_hook(object_type const *o_ptr)
 {
-	if ((o_ptr->tval == TV_CORPSE) && (o_ptr->pval2 == bounty_quest_monster))
-	{
-		return TRUE;
-	}
-	else
-	{
-		return FALSE;
-	}
+	return ((o_ptr->tval == TV_CORPSE) && (o_ptr->pval2 == bounty_quest_monster));
 }
 
 bool_ quest_bounty_init_hook(int dummy)
@@ -114,13 +107,13 @@ bool_ quest_bounty_get_item()
 	}
 
 	// Get the corpse.
-	item_tester_hook = bounty_item_tester_hook;
 	int item = -1;
 	bool_ ret =
 		get_item(&item,
 			 "What corpse to return?",
 			 "You have no corpse to return.",
-			 USE_INVEN);
+			 USE_INVEN,
+			 bounty_item_tester_hook);
 	if (!ret) {
 		return FALSE;
 	}

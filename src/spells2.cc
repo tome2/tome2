@@ -672,23 +672,24 @@ bool_ alchemy(void) /* Turns an object into gold, gain some of its value in a sh
 	int old_number;
 	long price;
 	bool_ force = FALSE;
-	object_type *o_ptr;
 	char o_name[80];
 	char out_val[160];
-
-	cptr q, s;
 
 	/* Hack -- force destruction */
 	if (command_arg > 0) force = TRUE;
 
 	/* Get an item */
-	q = "Turn which item to gold? ";
-	s = "You have nothing to turn to gold.";
-	if (!get_item(&item, q, s, (USE_INVEN | USE_FLOOR))) return (FALSE);
+	if (!get_item(&item,
+		      "Turn which item to gold? ",
+		      "You have nothing to turn to gold.",
+		      (USE_INVEN | USE_FLOOR),
+		      object_filter::True()))
+	{
+		return (FALSE);
+	}
 
 	/* Get the item */
-	o_ptr = get_object(item);
-
+	object_type *o_ptr = get_object(item);
 
 	/* See how many items */
 	if (o_ptr->number > 1)
@@ -2781,95 +2782,72 @@ void stair_creation(void)
 /*
  * Hook to specify "weapon"
  */
-static bool_ item_tester_hook_weapon(object_type *o_ptr)
+static object_filter_t const &item_tester_hook_weapon()
 {
-	switch (o_ptr->tval)
-	{
-	case TV_MSTAFF:
-	case TV_BOOMERANG:
-	case TV_SWORD:
-	case TV_AXE:
-	case TV_HAFTED:
-	case TV_POLEARM:
-	case TV_BOW:
-	case TV_BOLT:
-	case TV_ARROW:
-	case TV_SHOT:
-		{
-			return (TRUE);
-		}
-	case TV_DAEMON_BOOK:
-		{
-			switch (o_ptr->sval)
-			{
-			case SV_DEMONBLADE:
-				{
-					return (TRUE);
-				}
-			}
-		}
-	}
-
-	return (FALSE);
+	using namespace object_filter;
+	static auto instance =
+		Or(
+			TVal(TV_MSTAFF),
+			TVal(TV_BOOMERANG),
+			TVal(TV_SWORD),
+			TVal(TV_AXE),
+			TVal(TV_HAFTED),
+			TVal(TV_POLEARM),
+			TVal(TV_BOW),
+			TVal(TV_BOLT),
+			TVal(TV_ARROW),
+			TVal(TV_SHOT),
+			And(
+				TVal(TV_DAEMON_BOOK),
+				SVal(SV_DEMONBLADE)));
+	return instance;
 }
 
 
 /*
  * Hook to specify "armour"
  */
-static bool_ item_tester_hook_armour(object_type *o_ptr)
+static object_filter_t const &item_tester_hook_armour()
 {
-	switch (o_ptr->tval)
-	{
-	case TV_DRAG_ARMOR:
-	case TV_HARD_ARMOR:
-	case TV_SOFT_ARMOR:
-	case TV_SHIELD:
-	case TV_CLOAK:
-	case TV_CROWN:
-	case TV_HELM:
-	case TV_BOOTS:
-	case TV_GLOVES:
-		{
-			return (TRUE);
-		}
-	case TV_DAEMON_BOOK:
-		{
-			switch (o_ptr->sval)
-			{
-			case SV_DEMONHORN:
-			case SV_DEMONSHIELD:
-				{
-					return (TRUE);
-				}
-			}
-		}
-	}
-
-	return (FALSE);
+	using namespace object_filter;
+	static auto instance =
+		Or(
+			TVal(TV_DRAG_ARMOR),
+			TVal(TV_HARD_ARMOR),
+			TVal(TV_SOFT_ARMOR),
+			TVal(TV_SHIELD),
+			TVal(TV_CLOAK),
+			TVal(TV_CROWN),
+			TVal(TV_HELM),
+			TVal(TV_BOOTS),
+			TVal(TV_GLOVES),
+			And(
+				TVal(TV_DAEMON_BOOK),
+				Or(
+						SVal(SV_DEMONHORN),
+						SVal(SV_DEMONSHIELD))));
+	return instance;
 }
 
-
-/*
- * Check if an object is weapon or armour (but not arrow, bolt, or shot)
- */
-bool_ item_tester_hook_weapon_armour(object_type *o_ptr)
-{
-	return (item_tester_hook_weapon(o_ptr) ||
-	        item_tester_hook_armour(o_ptr));
-}
 
 /*
  * Check if an object is artifactable
  */
-bool_ item_tester_hook_artifactable(object_type *o_ptr)
+object_filter_t const &item_tester_hook_artifactable()
 {
-	return ((item_tester_hook_weapon(o_ptr) ||
-	         item_tester_hook_armour(o_ptr) ||
-	         (o_ptr->tval == TV_DIGGING) ||
-	         (o_ptr->tval == TV_RING) || (o_ptr->tval == TV_AMULET))
-	         /* be nice: allow only normal items */
-	         && (!artifact_p(o_ptr)) && (!ego_item_p(o_ptr)));
+	using namespace object_filter;
+	static auto instance = And(
+		// Check base item family
+		Or(
+			item_tester_hook_weapon(),
+			item_tester_hook_armour(),
+			TVal(TV_DIGGING),
+			TVal(TV_RING),
+			TVal(TV_AMULET)),
+		// Only unenchanted items
+		Not(IsArtifactP()),
+		Not(IsEgo()));
+	return instance;
 }
 
 
@@ -3069,24 +3047,26 @@ bool_ enchant_spell(int num_hit, int num_dam, int num_ac, int num_pval)
 {
 	int item;
 	bool_ okay = FALSE;
-	object_type *o_ptr;
 	char o_name[80];
 	cptr q, s;
 
 
 	/* Assume enchant weapon */
-	item_tester_hook = item_tester_hook_weapon;
+	object_filter_t object_filter = item_tester_hook_weapon();
 
 	/* Enchant armor if requested */
-	if (num_ac) item_tester_hook = item_tester_hook_armour;
+	if (num_ac)
+	{
+		object_filter = item_tester_hook_armour();
+	}
 
 	/* Get an item */
 	q = "Enchant which item? ";
 	s = "You have nothing to enchant.";
-	if (!get_item(&item, q, s, (USE_EQUIP | USE_INVEN | USE_FLOOR))) return (FALSE);
+	if (!get_item(&item, q, s, (USE_EQUIP | USE_INVEN | USE_FLOOR), object_filter)) return (FALSE);
 
 	/* Get the item */
-	o_ptr = get_object(item);
+	object_type *o_ptr = get_object(item);
 
 	/* Description */
 	object_desc(o_name, o_ptr, FALSE, 0);
@@ -3441,17 +3421,6 @@ void random_resistance (object_type * o_ptr, bool_ is_scroll, int specific)
 
 
 /*
- * Determines if an item is not identified
- */
-static bool_ item_tester_hook_unknown(object_type *o_ptr)
-{
-	return (object_known_p(o_ptr) ? FALSE : TRUE);
-}
-
-
-
-
-/*
  * Make note of found artifacts.
  */
 static void note_found_object(object_type *o_ptr)
@@ -3479,22 +3448,16 @@ static void note_found_object(object_type *o_ptr)
  */
 bool_ ident_spell(void)
 {
-	int item;
-
-	object_type *o_ptr;
-
-	char o_name[80];
-
-	cptr q, s;
-
 	/* Get an item */
-	item_tester_hook = item_tester_hook_unknown;
-	q = "Identify which item? ";
-	s = "You have nothing to identify.";
-	if (!get_item(&item, q, s, (USE_EQUIP | USE_INVEN | USE_FLOOR))) return (FALSE);
+	int item;
+	if (!get_item(&item,
+		      "Identify which item? ",
+		      "You have nothing to identify.",
+		      (USE_EQUIP | USE_INVEN | USE_FLOOR),
+		      object_filter::Not(object_known_p))) return (FALSE);
 
 	/* Get the item */
-	o_ptr = get_object(item);
+	object_type *o_ptr = get_object(item);
 
 	/* Identify it fully */
 	object_aware(o_ptr);
@@ -3510,6 +3473,7 @@ bool_ ident_spell(void)
 	p_ptr->window |= (PW_INVEN | PW_EQUIP | PW_PLAYER);
 
 	/* Description */
+	char o_name[80];
 	object_desc(o_name, o_ptr, TRUE, 3);
 
 	/* Describe */
@@ -3573,9 +3537,9 @@ bool_ ident_all(void)
 /*
  * Determine if an object is not fully identified
  */
-static bool_ item_tester_hook_no_mental(object_type *o_ptr)
+static bool item_tester_hook_no_mental(object_type const *o_ptr)
 {
-	return ((o_ptr->ident & (IDENT_MENTAL)) ? FALSE : TRUE);
+	return ((o_ptr->ident & (IDENT_MENTAL)) ? false : true);
 }
 
 /*
@@ -3584,20 +3548,19 @@ static bool_ item_tester_hook_no_mental(object_type *o_ptr)
  */
 bool_ identify_fully(void)
 {
-	int item;
-	object_type *o_ptr;
-	char o_name[80];
-
-	cptr q, s;
-
 	/* Get an item */
-	item_tester_hook = item_tester_hook_no_mental;
-	q = "Identify which item? ";
-	s = "You have nothing to identify.";
-	if (!get_item(&item, q, s, (USE_EQUIP | USE_INVEN | USE_FLOOR))) return (FALSE);
+	int item;
+	if (!get_item(&item,
+		      "Identify which item? ",
+		      "You have nothing to identify.",
+		      (USE_EQUIP | USE_INVEN | USE_FLOOR),
+		      item_tester_hook_no_mental))
+	{
+		return (FALSE);
+	}
 
 	/* Get the item */
-	o_ptr = get_object(item);
+	object_type *o_ptr = get_object(item);
 
 	/* Do the identification */
 	make_item_fully_identified(o_ptr);
@@ -3612,6 +3575,7 @@ bool_ identify_fully(void)
 	p_ptr->window |= (PW_INVEN | PW_EQUIP | PW_PLAYER);
 
 	/* Description */
+	char o_name[80];
 	object_desc(o_name, o_ptr, TRUE, 3);
 
 	/* Describe */
@@ -3650,27 +3614,19 @@ bool_ identify_fully(void)
 /*
  * Hook for "get_item()".  Determine if something is rechargable.
  */
-bool_ item_tester_hook_recharge(object_type *o_ptr)
+object_filter_t const &item_tester_hook_recharge()
 {
-	u32b f1, f2, f3, f4, f5, esp;
-
-	/* Extract the flags */
-	object_flags(o_ptr, &f1, &f2, &f3, &f4, &f5, &esp);
-
-	/* Some objects cannot be recharged */
-	if (f4 & TR4_NO_RECHARGE) return (FALSE);
-
-	/* Recharge staffs */
-	if (o_ptr->tval == TV_STAFF) return (TRUE);
-
-	/* Recharge wands */
-	if (o_ptr->tval == TV_WAND) return (TRUE);
-
-	/* Hack -- Recharge rods */
-	if (o_ptr->tval == TV_ROD_MAIN) return (TRUE);
-
-	/* Nope */
-	return (FALSE);
+	using namespace object_filter;
+	static auto instance =
+		And(
+			// Must NOT have NO_RECHARGE flag.
+			Not(HasFlag4(TR4_NO_RECHARGE)),
+			// ... and must be a device.
+			Or(
+				TVal(TV_STAFF),
+				TVal(TV_WAND),
+				TVal(TV_ROD_MAIN)));
+	return instance;
 }
 
 
@@ -3697,31 +3653,28 @@ bool_ item_tester_hook_recharge(object_type *o_ptr)
 bool_ recharge(int power)
 {
 	int recharge_strength, recharge_amount;
-	int item, lev;
-
+	int lev;
 	bool_ fail = FALSE;
 	byte fail_type = 1;
 
-
-	cptr q, s;
-
-	u32b f1, f2, f3, f4, f5, esp;
 	char o_name[80];
 
-	object_type *o_ptr;
-
-	/* Only accept legal items */
-	item_tester_hook = item_tester_hook_recharge;
-
 	/* Get an item */
-	q = "Recharge which item? ";
-	s = "You have nothing to recharge.";
-	if (!get_item(&item, q, s, (USE_INVEN | USE_FLOOR))) return (FALSE);
+	int item;
+	if (!get_item(&item,
+		      "Recharge which item? ",
+		      "You have nothing to recharge.",
+		      (USE_INVEN | USE_FLOOR),
+		      item_tester_hook_recharge()))
+	{
+		return (FALSE);
+	}
 
 	/* Get the item */
-	o_ptr = get_object(item);
+	object_type *o_ptr = get_object(item);
 
 	/* Extract the flags */
+	u32b f1, f2, f3, f4, f5, esp;
 	object_flags(o_ptr, &f1, &f2, &f3, &f4, &f5, &esp);
 
 	/* Extract the object "level" */

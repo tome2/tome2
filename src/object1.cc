@@ -49,6 +49,12 @@ static bool_ apply_flags_set(s16b a_idx, s16b set_idx,
 #define TERM_MULTI      TERM_VIOLET
 
 
+/**
+ * Show all equipment/inventory slots, even when empty?
+ */
+static bool item_tester_full;
+
+
 /*
  * Max sizes of the following arrays
  */
@@ -4327,45 +4333,42 @@ cptr describe_use(int i)
 /*
  * Check an item against the item tester info
  */
-bool_ item_tester_okay(object_type *o_ptr)
+static bool item_tester_okay(object_type const *o_ptr, object_filter_t const &filter)
 {
 	/* Hack -- allow listing empty slots */
-	if (item_tester_full) return (TRUE);
+	if (item_tester_full)
+	{
+		return true;
+	}
 
 	/* Require an item */
-	if (!o_ptr->k_idx) return (FALSE);
+	if (!o_ptr->k_idx)
+	{
+		return false;
+	}
 
 	/* Hack -- ignore "gold" */
-	if (o_ptr->tval == TV_GOLD) return (FALSE);
-
-	/* Check the tval */
-	if (item_tester_tval)
+	if (o_ptr->tval == TV_GOLD)
 	{
-		if (!(item_tester_tval == o_ptr->tval)) return (FALSE);
+		return false;
 	}
 
-	/* Check the hook */
-	if (item_tester_hook)
-	{
-		if (!(*item_tester_hook)(o_ptr)) return (FALSE);
-	}
-
-	/* Assume okay */
-	return (TRUE);
+	/* Check against the filter */
+	return filter(o_ptr);
 }
 
 
 
 
-void show_equip_aux(bool_ mirror, bool_ everything);
-void show_inven_aux(bool_ mirror, bool_ everything);
+static void show_equip_aux(bool_ mirror, bool_ everything, object_filter_t const &filter);
+static void show_inven_aux(bool_ mirror, bool_ everything, object_filter_t const &filter);
 
 /*
  * Choice window "shadow" of the "show_inven()" function
  */
 void display_inven(void)
 {
-	show_inven_aux(TRUE, inventory_no_move);
+	show_inven_aux(TRUE, inventory_no_move, object_filter::True());
 }
 
 
@@ -4375,7 +4378,7 @@ void display_inven(void)
  */
 void display_equip(void)
 {
-	show_equip_aux(TRUE, inventory_no_move);
+	show_equip_aux(TRUE, inventory_no_move, object_filter::True());
 }
 
 
@@ -4402,7 +4405,7 @@ byte get_item_letter_color(object_type *o_ptr)
  *
  * Hack -- do not display "trailing" empty slots
  */
-void show_inven_aux(bool_ mirror, bool_ everything)
+void show_inven_aux(bool_ mirror, bool_ everything, const object_filter_t &filter)
 {
 	int i, j, k, l, z = 0;
 	int row, col, len, lim;
@@ -4454,7 +4457,7 @@ void show_inven_aux(bool_ mirror, bool_ everything)
 		o_ptr = &p_ptr->inventory[i];
 
 		/* Is this item acceptable? */
-		if (!item_tester_okay(o_ptr))
+		if (!item_tester_okay(o_ptr, filter))
 		{
 			if ( !everything )
 				continue;
@@ -4562,20 +4565,34 @@ void show_inven_aux(bool_ mirror, bool_ everything)
 }
 
 
-void show_inven()
+static void show_inven(object_filter_t const &filter)
 {
-	show_inven_aux(FALSE, FALSE);
+	show_inven_aux(FALSE, FALSE, filter);
 }
 
-void show_equip()
+void show_inven_full()
 {
-	show_equip_aux(FALSE, FALSE);
+	item_tester_full = true;
+	show_inven(object_filter::True());
+	item_tester_full = false;
+}
+
+static void show_equip(object_filter_t const &filter)
+{
+	show_equip_aux(FALSE, FALSE, filter);
+}
+
+void show_equip_full()
+{
+	item_tester_full = true;
+	show_equip(object_filter::True());
+	item_tester_full = false;
 }
 
 /*
  * Display the equipment.
  */
-void show_equip_aux(bool_ mirror, bool_ everything)
+void show_equip_aux(bool_ mirror, bool_ everything, object_filter_t const &filter)
 {
 	int i, j, k, l;
 	int row, col, len, lim, idx;
@@ -4686,7 +4703,7 @@ void show_equip_aux(bool_ mirror, bool_ everything)
 			/* Truncate the description */
 			o_name[lim] = 0;
 			/* Is this item acceptable? */
-			if (!item_tester_okay(o_ptr))
+			if (!item_tester_okay(o_ptr, filter))
 			{
 				if (!everything) continue;
 				out_index[k] = -1;
@@ -4911,16 +4928,16 @@ static bool_ get_item_allow(int item)
 /*
  * Auxiliary function for "get_item()" -- test an index
  */
-static bool_ get_item_okay(int i)
+static bool get_item_okay(int i, object_filter_t const &filter)
 {
 	/* Illegal items */
-	if ((i < 0) || (i >= INVEN_TOTAL)) return (FALSE);
+	if ((i < 0) || (i >= INVEN_TOTAL))
+	{
+		return (FALSE);
+	}
 
 	/* Verify the item */
-	if (!item_tester_okay(&p_ptr->inventory[i])) return (FALSE);
-
-	/* Assume okay */
-	return (TRUE);
+	return item_tester_okay(&p_ptr->inventory[i], filter);
 }
 
 
@@ -4992,7 +5009,7 @@ static int get_tag(int *cp, char tag)
  * Return a list of o_list[] indexes of items at the given cave
  * location.
  */
-static std::vector<int> scan_floor(int y, int x)
+static std::vector<int> scan_floor(int y, int x, object_filter_t const &filter)
 {
 	int this_o_idx, next_o_idx;
 	std::vector<int> items;
@@ -5013,7 +5030,10 @@ static std::vector<int> scan_floor(int y, int x)
 		next_o_idx = o_ptr->next_o_idx;
 
 		/* Item tester */
-		if (!item_tester_okay(o_ptr)) continue;
+		if (!item_tester_okay(o_ptr, filter))
+		{
+			continue;
+		}
 
 		/* Accept this item */
 		items.push_back(this_o_idx);
@@ -5029,7 +5049,7 @@ static std::vector<int> scan_floor(int y, int x)
 /*
  * Display a list of the items on the floor at the given location.
  */
-static void show_floor(int y, int x)
+static void show_floor(int y, int x, object_filter_t const &filter)
 {
 	int i, j, k, l;
 	int col, len, lim;
@@ -5054,7 +5074,7 @@ static void show_floor(int y, int x)
 	lim -= 9;
 
 	/* Scan for objects in the grid, using item_tester_okay() */
-	auto const floor_list = scan_floor(y, x);
+	auto const floor_list = scan_floor(y, x, filter);
 	assert(floor_list.size() <= 23);
 	int const floor_num = floor_list.size(); // "int" for warning avoidance
 
@@ -5131,8 +5151,7 @@ static void show_floor(int y, int x)
  * This version of get_item() is called by get_item() when
  * the easy_floor is on.
  */
-bool_ (*get_item_extra_hook)(int *cp);
-static bool_ get_item_floor(int *cp, cptr pmt, cptr str, int mode)
+static bool_ get_item_floor(int *cp, cptr pmt, cptr str, int mode, object_filter_t const &filter, select_by_name_t const &select_by_name)
 {
 	char n1 = 0, n2 = 0, which = ' ';
 
@@ -5145,7 +5164,6 @@ static bool_ get_item_floor(int *cp, cptr pmt, cptr str, int mode)
 	bool_ equip = FALSE;
 	bool_ inven = FALSE;
 	bool_ floor = FALSE;
-	bool_ extra = FALSE;
 	bool_ automat = FALSE;
 
 	bool_ allow_equip = FALSE;
@@ -5176,28 +5194,16 @@ static bool_ get_item_floor(int *cp, cptr pmt, cptr str, int mode)
 			o_ptr = &o_list[k];
 
 			/* Validate the item */
-			if (item_tester_okay(o_ptr))
+			if (item_tester_okay(o_ptr, filter))
 			{
-				/* Forget the item_tester_tval restriction */
-				item_tester_tval = 0;
-
-				/* Forget the item_tester_hook restriction */
-				item_tester_hook = NULL;
-
 				/* Success */
 				return (TRUE);
 			}
 		}
 
 		/* Verify the item */
-		else if (get_item_okay(*cp))
+		else if (get_item_okay(*cp, filter))
 		{
-			/* Forget the item_tester_tval restriction */
-			item_tester_tval = 0;
-
-			/* Forget the item_tester_hook restriction */
-			item_tester_hook = NULL;
-
 			/* Success */
 			return (TRUE);
 		}
@@ -5208,7 +5214,6 @@ static bool_ get_item_floor(int *cp, cptr pmt, cptr str, int mode)
 	if (mode & (USE_EQUIP)) equip = TRUE;
 	if (mode & (USE_INVEN)) inven = TRUE;
 	if (mode & (USE_FLOOR)) floor = TRUE;
-	if (mode & (USE_EXTRA)) extra = TRUE;
 	if (mode & (USE_AUTO)) automat = TRUE;
 
 
@@ -5231,8 +5236,8 @@ static bool_ get_item_floor(int *cp, cptr pmt, cptr str, int mode)
 	if (!inven) i2 = -1;
 
 	/* Restrict inventory indexes */
-	while ((i1 <= i2) && (!get_item_okay(i1))) i1++;
-	while ((i1 <= i2) && (!get_item_okay(i2))) i2--;
+	while ((i1 <= i2) && (!get_item_okay(i1, filter))) i1++;
+	while ((i1 <= i2) && (!get_item_okay(i2, filter))) i2--;
 
 
 	/* Full equipment */
@@ -5243,13 +5248,13 @@ static bool_ get_item_floor(int *cp, cptr pmt, cptr str, int mode)
 	if (!equip) e2 = -1;
 
 	/* Restrict equipment indexes */
-	while ((e1 <= e2) && (!get_item_okay(e1))) e1++;
-	while ((e1 <= e2) && (!get_item_okay(e2))) e2--;
+	while ((e1 <= e2) && (!get_item_okay(e1, filter))) e1++;
+	while ((e1 <= e2) && (!get_item_okay(e2, filter))) e2--;
 
 
 	/* Floor items? */
 	auto const floor_list =
-		floor ? std::move(scan_floor(p_ptr->py, p_ptr->px))
+		floor ? std::move(scan_floor(p_ptr->py, p_ptr->px, filter))
 		      : std::vector<int>();
 	assert(floor_list.size() <= 23);
 	int const floor_num = floor_list.size(); // "int" for warning avoidance
@@ -5351,7 +5356,7 @@ static bool_ get_item_floor(int *cp, cptr pmt, cptr str, int mode)
 			n2 = I2A(i2);
 
 			/* Redraw */
-			show_inven();
+			show_inven(filter);
 		}
 
 		/* Equipment screen */
@@ -5362,7 +5367,7 @@ static bool_ get_item_floor(int *cp, cptr pmt, cptr str, int mode)
 			n2 = I2A(e2 - INVEN_WIELD);
 
 			/* Redraw */
-			show_equip();
+			show_equip(filter);
 		}
 
 		/* Floor screen */
@@ -5376,7 +5381,7 @@ static bool_ get_item_floor(int *cp, cptr pmt, cptr str, int mode)
 			n2 = I2A(k - floor_top);
 
 			/* Redraw */
-			show_floor(p_ptr->py, p_ptr->px);
+			show_floor(p_ptr->py, p_ptr->px, filter);
 		}
 
 		/* Viewing inventory */
@@ -5442,8 +5447,8 @@ static bool_ get_item_floor(int *cp, cptr pmt, cptr str, int mode)
 			}
 		}
 
-		/* Extra? */
-		if (extra)
+		/* Do we allow selection by name? */
+		if (select_by_name)
 		{
 			strcat(out_val, " @ for extra selection,");
 		}
@@ -5596,7 +5601,7 @@ static bool_ get_item_floor(int *cp, cptr pmt, cptr str, int mode)
 				}
 
 				/* Validate the item */
-				if (!get_item_okay(k))
+				if (!get_item_okay(k, filter))
 				{
 					bell();
 					break;
@@ -5655,7 +5660,7 @@ static bool_ get_item_floor(int *cp, cptr pmt, cptr str, int mode)
 				}
 
 				/* Validate the item */
-				if (!get_item_okay(k))
+				if (!get_item_okay(k, filter))
 				{
 					bell();
 					break;
@@ -5677,11 +5682,15 @@ static bool_ get_item_floor(int *cp, cptr pmt, cptr str, int mode)
 
 		case '@':
 			{
-				int i;
-
-				if (extra && get_item_extra_hook(&i))
+				// Ignore if not "enabled"
+				if (!select_by_name)
 				{
-					(*cp) = i;
+					break;
+				}
+				// Find by name
+				if (auto i = select_by_name(filter))
+				{
+					(*cp) = *i;
 					item = TRUE;
 					done = TRUE;
 				}
@@ -5738,7 +5747,7 @@ static bool_ get_item_floor(int *cp, cptr pmt, cptr str, int mode)
 				}
 
 				/* Validate the item */
-				if ((k >= 0) && !get_item_okay(k))
+				if ((k >= 0) && !get_item_okay(k, filter))
 				{
 					bell();
 					break;
@@ -5769,12 +5778,6 @@ static bool_ get_item_floor(int *cp, cptr pmt, cptr str, int mode)
 
 	/* Fix the screen */
 	screen_load();
-
-	/* Forget the item_tester_tval restriction */
-	item_tester_tval = 0;
-
-	/* Forget the item_tester_hook restriction */
-	item_tester_hook = NULL;
 
 	/* Track */
 	if (item && done)
@@ -5863,17 +5866,16 @@ static bool_ get_item_floor(int *cp, cptr pmt, cptr str, int mode)
  * We always erase the prompt when we are done, leaving a blank line,
  * or a warning message, if appropriate, if no items are available.
  */
-bool_ get_item(int *cp, cptr pmt, cptr str, int mode)
+bool_ get_item(int *cp, cptr pmt, cptr str, int mode, object_filter_t const &filter, select_by_name_t const &select_by_name)
 {
 	automatizer_create = FALSE;
-
-	return get_item_floor(cp, pmt, str, mode);
+	return get_item_floor(cp, pmt, str, mode, filter, select_by_name);
 }
 
 /*
  * Hook to determine if an object is getable
  */
-static bool_ item_tester_hook_getable(object_type *o_ptr)
+static bool item_tester_hook_getable(object_type const *o_ptr)
 {
 	if (!inven_carry_okay(o_ptr)) return (FALSE);
 
@@ -6285,12 +6287,9 @@ void py_pickup_floor(int pickup)
 		int item;
 
 		/* Get an item */
-
-		item_tester_hook = item_tester_hook_getable;
-
 		q = "Get which item? ";
 		s = "You have no room in your pack for any of the items here.";
-		if (get_item(&item, q, s, (USE_FLOOR)))
+		if (get_item(&item, q, s, (USE_FLOOR), item_tester_hook_getable))
 		{
 			this_o_idx = 0 - item;
 

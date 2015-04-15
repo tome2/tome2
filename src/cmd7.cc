@@ -2376,19 +2376,24 @@ static bool_ alchemist_exists(int tval, int sval, int ego, int artifact)
 /*
  * Hook to determine if an object can have things extracted from it.
  */
-bool_ item_tester_hook_extractable(object_type *o_ptr)
+bool item_tester_hook_extractable(object_type const *o_ptr)
 {
 
 	/* No artifacts */
-	if (artifact_p(o_ptr)) return (FALSE);
+	if (artifact_p(o_ptr))
+	{
+		return false;
+	}
 
 	/* No cursed things */
-	if (cursed_p(o_ptr)) return (FALSE);
+	if (cursed_p(o_ptr))
+	{
+		return false;
+	}
 
 	/* If we REALLY wanted to rebalance alchemists,
 	 * we'd test for 'fully identified this object kind' here.
 	 */
-
 	return ((o_ptr->tval == TV_ROD_MAIN && o_ptr->pval != 0)
 	        || alchemist_exists(o_ptr->tval, o_ptr->sval, o_ptr->name2, o_ptr->name1));
 }
@@ -2396,7 +2401,7 @@ bool_ item_tester_hook_extractable(object_type *o_ptr)
 /*
  * Hook to determine if an object is empowerable (NOT rechargeable)
  */
-bool_ item_tester_hook_empower(object_type *o_ptr)
+static bool item_tester_hook_empower(object_type const *o_ptr)
 {
 	int sval = -1;
 	int lev = get_skill(SKILL_ALCHEMY);
@@ -2408,14 +2413,14 @@ bool_ item_tester_hook_empower(object_type *o_ptr)
 	/* Never Empower a cursed item */
 	if ( cursed_p(o_ptr))
 	{
-		return FALSE;
+		return false;
 	}
 
 	/* Allow finalizing a self created artifact */
 	if (artifact_p(o_ptr)
 	                && (o_ptr->art_flags4 & TR4_ART_EXP)
 	                && !(o_ptr->art_flags4 & TR4_ULTIMATE))
-		return TRUE;
+		return true;
 
 	switch ( o_ptr->tval)
 	{
@@ -2452,7 +2457,7 @@ bool_ item_tester_hook_empower(object_type *o_ptr)
 		/* Disallow ego dragon armour before you can create artifacts.*/
 	case TV_DRAG_ARMOR:
 		if ( lev < 25)
-			return FALSE;
+			return false;
 		/* FALL THROUGH! no break here. */
 
 		/* weapons */
@@ -2488,24 +2493,24 @@ bool_ item_tester_hook_empower(object_type *o_ptr)
 
 		/* Disallow ANY creation of ego items below level 5*/
 		if ( lev < 5)
-			return FALSE;
+			return false;
 
 		/* empowering an ego item creates an artifact or a
 		 * double ego item, disallow below level 25 */
 		if ( lev < 25 && o_ptr->name2)
-			return FALSE;
+			return false;
 
 		/* Disallow double-ego and artifact unless the character has
 		 * the artifact creation ability. */
 		if (!has_ability(AB_CREATE_ART) && 
 		   (artifact_p(o_ptr) || (o_ptr->name2 && o_ptr->name2b)))
-			return FALSE;
+			return false;
 
 		/* Otherwise... */
-		return TRUE;
+		return true;
 
 	default:
-		return FALSE;
+		return false;
 	}
 
 	/* Return to the traditional alchemist objects.
@@ -2518,7 +2523,7 @@ bool_ item_tester_hook_empower(object_type *o_ptr)
 
 	if ((o_ptr->name2 || artifact_p(o_ptr)) &&
 	                o_ptr->tval != TV_RING && o_ptr->tval != TV_AMULET)
-		return FALSE;
+		return false;
 
 	/* return true if it's a 'of nothing' item;
 	 * does nothing for TV_ROD_MAIN and TV_BOOK
@@ -3567,8 +3572,6 @@ void do_cmd_alchemist(void)
 	object_type forge, forge2;
 	byte carry_o_ptr = FALSE;
 
-	cptr q, s;
-
 	/* With the new skill system, we can no longer depend on
 	 * check_exp to handle the changes and learning involved in
 	 * gaining levels.
@@ -3640,11 +3643,10 @@ void do_cmd_alchemist(void)
 		char o_name[200];
 
 		/* Get an item */
-		q = "Empower which item? ";
-		s = "You have no empowerable items.";
-		item_tester_hook = item_tester_hook_empower;
-
-		if (!get_item(&item, q, s, (USE_INVEN | USE_FLOOR))) return;
+		if (!get_item(&item,
+			      "Empower which item? ",
+			      "You have no empowerable items.",
+			      (USE_INVEN | USE_FLOOR), item_tester_hook_empower)) return;
 
 		/* Get the item */
 		o_ptr = get_object(item);
@@ -3970,12 +3972,12 @@ void do_cmd_alchemist(void)
 		object_type *s_ptr = NULL;
 		bool_ carry_s_ptr = FALSE;
 
-		item_tester_hook = item_tester_hook_extractable;
-
 		/* Get an item */
-		q = "Extract from which item? ";
-		s = "You have no item to extract power from.";
-		if (!get_item(&item, q, s, (USE_INVEN | USE_FLOOR))) return;
+		if (!get_item(&item,
+			      "Extract from which item? ",
+			      "You have no item to extract power from.",
+			      (USE_INVEN | USE_FLOOR),
+			      item_tester_hook_extractable)) return;
 
 		/* Get the item */
 		o_ptr = get_object(item);
@@ -4221,14 +4223,15 @@ void do_cmd_alchemist(void)
 	{
 		int item;
 
-		cptr q, s;
-
-		item_tester_hook = item_tester_hook_recharge;
-
 		/* Get an item */
-		q = "Recharge which item? ";
-		s = "You have no rechargable items.";
-		if (!get_item(&item, q, s, (USE_INVEN | USE_FLOOR ))) return;
+		if (!get_item(&item,
+			      "Recharge which item? ",
+			      "You have no rechargable items.",
+			      (USE_INVEN | USE_FLOOR),
+			      item_tester_hook_recharge()))
+		{
+			return;
+		}
 
 		/* Get the item */
 		o_ptr = get_object(item);
@@ -4971,12 +4974,14 @@ void do_cmd_possessor()
 /*
  * Hook to determine if an object is contertible in an arrow/bolt
  */
-static bool_ item_tester_hook_convertible(object_type *o_ptr)
+static object_filter_t const &item_tester_hook_convertible()
 {
-	if ((o_ptr->tval == TV_JUNK) || (o_ptr->tval == TV_SKELETON)) return TRUE;
-
-	/* Assume not */
-	return (FALSE);
+	using namespace object_filter;
+	static auto instance =
+		Or(
+			TVal(TV_JUNK),
+			TVal(TV_SKELETON));
+	return instance;
 }
 
 
@@ -5091,14 +5096,12 @@ void do_cmd_archer(void)
 	{
 		int item;
 
-		cptr q, s;
-
-		item_tester_hook = item_tester_hook_convertible;
-
 		/* Get an item */
-		q = "Convert which item? ";
-		s = "You have no item to convert.";
-		if (!get_item(&item, q, s, (USE_INVEN | USE_FLOOR))) return;
+		if (!get_item(&item,
+			      "Convert which item? ",
+			      "You have no item to convert.",
+			      (USE_INVEN | USE_FLOOR),
+			      item_tester_hook_convertible())) return;
 
 		/* Get local object */
 		q_ptr = &forge;
@@ -5129,14 +5132,12 @@ void do_cmd_archer(void)
 	{
 		int item;
 
-		cptr q, s;
-
-		item_tester_hook = item_tester_hook_convertible;
-
 		/* Get an item */
-		q = "Convert which item? ";
-		s = "You have no item to convert.";
-		if (!get_item(&item, q, s, (USE_INVEN | USE_FLOOR))) return;
+		if (!get_item(&item,
+			      "Convert which item? ",
+			      "You have no item to convert.",
+			      (USE_INVEN | USE_FLOOR),
+			      item_tester_hook_convertible())) return;
 
 		/* Get local object */
 		q_ptr = &forge;
@@ -5535,65 +5536,22 @@ void do_cmd_necromancer(void)
 	p_ptr->window |= (PW_PLAYER);
 }
 
-/* Runecrafters -- Move this into variable.c XXX XXX XXX */
-static s32b rune_combine = 0;
-
 /*
  * Hook to determine if an object is "runestone"
  */
-static bool_ item_tester_hook_runestone(object_type *o_ptr)
+static bool item_tester_hook_runestone(object_type const *o_ptr)
 {
-	if (o_ptr->tval != TV_RUNE2) return (FALSE);
-
-	if (o_ptr->sval != RUNE_STONE) return (FALSE);
-
-	if (o_ptr->pval != 0) return (FALSE);
-
-	/* Assume yes */
-	return (TRUE);
+	return ((o_ptr->tval == TV_RUNE2) &&
+		(o_ptr->sval == RUNE_STONE) &&
+		(o_ptr->pval == 0));
 }
 
-
-static bool_ item_tester_hook_runestone_full(object_type *o_ptr)
+static bool item_tester_hook_runestone_full(object_type const *o_ptr)
 {
-	if (o_ptr->tval != TV_RUNE2) return (FALSE);
-
-	if (o_ptr->sval != RUNE_STONE) return (FALSE);
-
-	if (o_ptr->pval == 0) return (FALSE);
-
-	/* Assume yes */
-	return (TRUE);
+	return ((o_ptr->tval == TV_RUNE2) &&
+		(o_ptr->sval == RUNE_STONE) &&
+		(o_ptr->pval != 0));
 }
-
-
-/*
- * Hook to determine if an object is "rune-able"
- */
-static bool_ item_tester_hook_runeable1(object_type *o_ptr)
-{
-	if (o_ptr->tval != TV_RUNE1) return (FALSE);
-
-	/* Assume yes */
-	return (TRUE);
-}
-
-
-/*
- * Hook to determine if an object is "rune-able"
- */
-static bool_ item_tester_hook_runeable2(object_type *o_ptr)
-{
-	if (o_ptr->tval != TV_RUNE2) return (FALSE);
-
-	if (o_ptr->sval == RUNE_STONE) return (FALSE);
-
-	if (rune_combine & BIT(o_ptr->sval)) return (FALSE);
-
-	/* Assume yes */
-	return (TRUE);
-}
-
 
 /*
  * math.h(sqrt) is banned of angband so ... :)
@@ -5902,44 +5860,43 @@ bool_ test_runespell(rune_spell *spell)
  */
 bool_ get_runespell(rune_spell *spell)
 {
-	int item, power_rune = 0, rune2 = 0, plev = get_skill(SKILL_RUNECRAFT);
+	s32b rune_combine = 0;
 
-	s32b power;
+	/* Lambda to use for selecting the secondary rune(s) */
+	auto rune2_filter = [&](object_type const *o_ptr) -> bool {
+		return ((o_ptr->tval == TV_RUNE2) &&
+			(o_ptr->sval != RUNE_STONE) &&
+			(!(rune_combine & BIT(o_ptr->sval))));
+	};
 
+	/* Prompt */
+	const char *const q = "Use which rune? ";
+	const char *const s = "You have no rune to use.";
+
+	/* Extract first rune for the base effect */
 	int type = 0;
+	{
+		int item;
+		if (!get_item(&item, q, s, (USE_INVEN | USE_FLOOR), object_filter::TVal(TV_RUNE1)))
+		{
+			return FALSE;
+		}
 
-	object_type *o_ptr;
+		object_type *o_ptr = get_object(item);
+		type = o_ptr->sval;
+	}
 
-	cptr q, s;
-
-	bool_ OK = FALSE;
-
-
-	rune_combine = 0;
-
-	/* Restrict choices to unused runes */
-	item_tester_hook = item_tester_hook_runeable1;
-
-	/* Get an item */
-	q = "Use which rune? ";
-	s = "You have no rune to use.";
-	if (!get_item(&item, q, s, (USE_INVEN | USE_FLOOR))) return FALSE;
-
-	/* Get the item */
-	o_ptr = get_object(item);
-	type = o_ptr->sval;
-
+	/* Choose secondary rune(s) */
+	int rune2 = 0;
 	while (1)
 	{
-		/* Restrict choices to unused secondary runes */
-		item_tester_hook = item_tester_hook_runeable2;
+		int item;
+		if (!get_item(&item, q, nullptr, (USE_INVEN | USE_FLOOR), rune2_filter))
+		{
+			break;
+		}
 
-		OK = !get_item(&item, q, s, (USE_INVEN | USE_FLOOR));
-
-		if (OK) break;
-
-		/* Get the item */
-		o_ptr = get_object(item);
+		object_type *o_ptr = get_object(item);
 
 		rune_combine |= 1 << o_ptr->sval;
 		rune2 |= 1 << o_ptr->sval;
@@ -5951,9 +5908,14 @@ bool_ get_runespell(rune_spell *spell)
 		return (FALSE);
 	}
 
-	power = get_quantity("Which amount of Mana?",
-	                     p_ptr->csp - (power_rune * (plev / 5)));
-	if (power < 1) power = 1;
+	int power_rune = 0;
+	int plev = get_skill(SKILL_RUNECRAFT);
+	s32b power = get_quantity("Which amount of Mana? ",
+			     p_ptr->csp - (power_rune * (plev / 5)));
+	if (power < 1)
+	{
+		power = 1;
+	}
 
 	spell->mana = power;
 	spell->type = type;
@@ -6274,10 +6236,6 @@ void do_cmd_runestone()
 {
 	rune_spell s_ptr;
 
-	object_type *o_ptr;
-
-	cptr q, s;
-
 	int item;
 
 
@@ -6316,16 +6274,18 @@ void do_cmd_runestone()
 		return;
 	}
 
-	/* Restrict choices to unused runes */
-	item_tester_hook = item_tester_hook_runestone_full;
-
 	/* Get an item */
-	q = "Cast from which runestone? ";
-	s = "You have no runestone to cast from.";
-	if (!get_item(&item, q, s, (USE_INVEN | USE_FLOOR))) return;
+	if (!get_item(&item,
+		      "Cast from which runestone? ",
+		      "You have no runestone to cast from.",
+		      (USE_INVEN | USE_FLOOR),
+		      item_tester_hook_runestone_full))
+	{
+		return;
+	}
 
 	/* Get the item */
-	o_ptr = get_object(item);
+	object_type *o_ptr = get_object(item);
 
 	s_ptr.type = o_ptr->pval;
 	s_ptr.rune2 = o_ptr->pval2;
@@ -6397,10 +6357,6 @@ void do_cmd_rune_carve()
 {
 	rune_spell s_ptr;
 
-	object_type *o_ptr;
-
-	cptr q, s;
-
 	int item, i;
 
 	char out_val[80];
@@ -6427,16 +6383,18 @@ void do_cmd_rune_carve()
 
 	if (!get_runespell(&s_ptr)) return;
 
-	/* Restrict choices to unused runes */
-	item_tester_hook = item_tester_hook_runestone;
-
 	/* Get an item */
-	q = "Use which runestone? ";
-	s = "You have no runestone to use.";
-	if (!get_item(&item, q, s, (USE_INVEN | USE_FLOOR))) return;
+	if (!get_item(&item,
+		      "Use which runestone? ",
+		      "You have no runestone to use.",
+		      (USE_INVEN | USE_FLOOR),
+		      item_tester_hook_runestone))
+	{
+		return;
+	}
 
 	/* Get the item */
-	o_ptr = get_object(item);
+	object_type *o_ptr = get_object(item);
 
 	o_ptr->pval = s_ptr.type;
 	o_ptr->pval2 = s_ptr.rune2;
@@ -6752,17 +6710,15 @@ void do_cmd_unbeliever()
 /*
  * Hook to determine if an object is totemable
  */
-static bool_ item_tester_hook_totemable(object_type *o_ptr)
+static object_filter_t const &item_tester_hook_totemable()
 {
-	/* Only full corpse */
-	if ((o_ptr->tval == TV_CORPSE) &&
-	                ((o_ptr->sval == SV_CORPSE_CORPSE) || (o_ptr->sval == SV_CORPSE_SKELETON)))
-	{
-		return (TRUE);
-	}
-
-	/* Assume not */
-	return (FALSE);
+	using namespace object_filter;
+	static auto instance = And(
+		TVal(TV_CORPSE),
+		Or(
+			SVal(SV_CORPSE_CORPSE),
+			SVal(SV_CORPSE_SKELETON)));
+	return instance;
 }
 
 
@@ -6771,14 +6727,7 @@ static bool_ item_tester_hook_totemable(object_type *o_ptr)
  */
 void do_cmd_summoner_extract()
 {
-	object_type *o_ptr, forge, *q_ptr;
-
-	cptr q, s;
-
-	int item, r;
-
-	bool_ partial;
-
+	object_type forge, *q_ptr;
 
 	/* Not when confused */
 	if (p_ptr->confused)
@@ -6794,17 +6743,21 @@ void do_cmd_summoner_extract()
 		return;
 	}
 
-	item_tester_hook = item_tester_hook_totemable;
-
 	/* Get an item */
-	q = "Use which corpse? ";
-	s = "You have no corpse to use.";
-	if (!get_item(&item, q, s, (USE_INVEN | USE_FLOOR))) return;
+	int item;
+	if (!get_item(&item,
+		      "Use which corpse? ",
+		      "You have no corpse to use.",
+		      (USE_INVEN | USE_FLOOR),
+		      item_tester_hook_totemable()))
+	{
+		return;
+	}
 
 	/* Get the item */
-	o_ptr = get_object(item);
+	object_type *o_ptr = get_object(item);
 
-
+	bool_ partial;
 	if (r_info[o_ptr->pval2].flags1 & RF1_UNIQUE)
 	{
 		partial = FALSE;
@@ -6814,7 +6767,7 @@ void do_cmd_summoner_extract()
 		partial = get_check("Do you want to create a partial totem?");
 	}
 
-	r = o_ptr->pval2;
+	int r = o_ptr->pval2;
 
 	inc_stack_size(item, -1);
 
@@ -6952,20 +6905,16 @@ void do_cmd_summoner_summon()
 
 	cptr q, s;
 
-	object_type *o_ptr;
-
 	monster_type *m_ptr;
 
 
 	/* Which Totem? */
-	item_tester_tval = TV_TOTEM;
-
 	q = "Summon from which Totem?";
 	s = "There are no totems to summon from!";
-	if (!get_item(&item, q, s, (USE_INVEN | USE_FLOOR))) return;
+	if (!get_item(&item, q, s, (USE_INVEN | USE_FLOOR), object_filter::TVal(TV_TOTEM))) return;
 
 	/* Access the item */
-	o_ptr = get_object(item);
+	object_type *o_ptr = get_object(item);
 
 	/* Take a turn */
 	energy_use = 100;
@@ -7307,19 +7256,18 @@ void do_cmd_symbiotic(void)
 				monster_type *m_ptr;
 				int m_idx;
 				int item, x, y, d;
-				object_type *o_ptr;
-
-				cptr q, s;
-
-				/* Restrict choices to monsters */
-				item_tester_tval = TV_HYPNOS;
 
 				/* Get an item */
-				q = "Awaken which monster? ";
-				s = "You have no monster to awaken.";
-				if (!get_item(&item, q, s, (USE_FLOOR))) return;
+				if (!get_item(&item,
+					      "Awaken which monster? ",
+					      "You have no monster to awaken.",
+					      (USE_FLOOR),
+					      object_filter::TVal(TV_HYPNOS)))
+				{
+					return;
+				}
 
-				o_ptr = &o_list[0 - item];
+				object_type *o_ptr = &o_list[0 - item];
 
 				d = 2;
 				while (d < 100)

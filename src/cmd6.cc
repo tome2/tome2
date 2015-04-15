@@ -37,7 +37,10 @@
 #include "xtra1.hpp"
 #include "xtra2.hpp"
 
+#include <boost/algorithm/string/predicate.hpp>
 #include <cassert>
+
+using boost::algorithm::iequals;
 
 /*
  * Forward declare
@@ -48,31 +51,41 @@ static bool_ activate_spell(object_type * o_ptr, byte choice);
 /*
  * General function to find an item by its name
  */
-cptr get_item_hook_find_obj_what;
-bool_ get_item_hook_find_obj(int *item)
+static select_by_name_t select_object_by_name(std::string const &prompt)
 {
-	int i;
-	char buf[80];
-	char buf2[100];
-
-	strcpy(buf, "");
-	if (!get_string(get_item_hook_find_obj_what, buf, 79))
-		return FALSE;
-
-	for (i = 0; i < INVEN_TOTAL; i++)
-	{
-		object_type *o_ptr = &p_ptr->inventory[i];
-
-		if (!item_tester_okay(o_ptr)) continue;
-
-		object_desc(buf2, o_ptr, -1, 0);
-		if (!strcmp(buf, buf2))
+	return [=](object_filter_t const &filter) -> boost::optional<int> {
+		// Ask for the name of the object we want to select
+		char buf[80] = "";
+		if (!get_string(prompt.c_str(), buf, 79))
 		{
-			*item = i;
-			return TRUE;
+			return boost::none;
 		}
-	}
-	return FALSE;
+		// Named objects must be in the inventory
+		for (size_t i = 0; i < INVEN_TOTAL; i++)
+		{
+			object_type *o_ptr = get_object(i);
+			// Must have an actual item in the slot
+			if (!o_ptr->k_idx)
+			{
+				continue;
+			}
+			// Must pass the filter
+			if (!filter(o_ptr))
+			{
+				continue;
+			}
+			// Check against the name of the object
+			// ignoring case.
+			char buf2[100];
+			object_desc(buf2, o_ptr, -1, 0);
+			if (iequals(buf, buf2))
+			{
+				return i;
+			}
+		}
+		// No match
+		return boost::none;
+	};
 }
 
 
@@ -933,13 +946,14 @@ static void corpse_effect(object_type *o_ptr, bool_ cutting)
 /*
  * Hook to determine if an object is eatable
  */
-static bool_ item_tester_hook_eatable(object_type *o_ptr)
+static object_filter_t const &item_tester_hook_eatable()
 {
-	/* Foods and, well, corpses are edible */
-	if ((o_ptr->tval == TV_FOOD) || (o_ptr->tval == TV_CORPSE)) return (TRUE);
-
-	/* Assume not */
-	return (FALSE);
+	using namespace object_filter;
+	static auto instance =
+		Or(
+			TVal(TV_FOOD),
+			TVal(TV_CORPSE));
+	return instance;
 }
 
 
@@ -948,32 +962,28 @@ static bool_ item_tester_hook_eatable(object_type *o_ptr)
  */
 void do_cmd_eat_food(void)
 {
-	int item, ident, lev, fval = 0;
+	int ident, lev, fval = 0;
 
-	object_type *o_ptr;
 	object_type *q_ptr, forge;
 
 	monster_race *r_ptr;
 
-	cptr q, s;
-
 	bool_ destroy = TRUE;
 
-
-	/* Restrict choices to food  */
-	item_tester_hook = item_tester_hook_eatable;
-
-	/* Set up the extra finder */
-	get_item_hook_find_obj_what = "Food full name? ";
-	get_item_extra_hook = get_item_hook_find_obj;
-
 	/* Get an item */
-	q = "Eat which item? ";
-	s = "You have nothing to eat.";
-	if (!get_item(&item, q, s, (USE_INVEN | USE_FLOOR | USE_EXTRA))) return;
+	int item;
+	if (!get_item(&item,
+		      "Eat which item? ",
+		      "You have nothing to eat.",
+		      (USE_INVEN | USE_FLOOR),
+		      item_tester_hook_eatable(),
+		      select_object_by_name("Food full name? ")))
+	{
+		return;
+	}
 
 	/* Get the item */
-	o_ptr = get_object(item);
+	object_type *o_ptr = get_object(item);
 
 	/* Sound */
 	sound(SOUND_EAT);
@@ -1517,29 +1527,20 @@ void do_cmd_cut_corpse(void)
 {
 	int item, meat = 0, not_meat = 0;
 
-	object_type *o_ptr;
-
-	object_type *i_ptr;
-
-	object_type object_type_body;
-
-	monster_race *r_ptr;
-
-	cptr q, s;
-
-
-	/* Restrict choices to corpses */
-	item_tester_tval = TV_CORPSE;
-
 	/* Get an item */
-	q = "Hack up which corpse? ";
-	s = "You have no corpses.";
-	if (!get_item(&item, q, s, (USE_INVEN | USE_FLOOR))) return;
+	if (!get_item(&item,
+		      "Hack up which corpse? ",
+		      "You have no corpses.",
+		      (USE_INVEN | USE_FLOOR),
+		      object_filter::TVal(TV_CORPSE)))
+	{
+		return;
+	}
 
 	/* Get the item */
-	o_ptr = get_object(item);
+	object_type *o_ptr = get_object(item);
 
-	r_ptr = &r_info[o_ptr->pval2];
+	monster_race *r_ptr = &r_info[o_ptr->pval2];
 
 	if ((o_ptr->sval != SV_CORPSE_CORPSE) && (o_ptr->sval != SV_CORPSE_HEAD))
 	{
@@ -1593,7 +1594,8 @@ void do_cmd_cut_corpse(void)
 	corpse_effect(o_ptr, TRUE);
 
 	/* Get local object */
-	i_ptr = &object_type_body;
+	object_type object_type_body;
+	object_type *i_ptr = &object_type_body;
 
 	/* Make some meat */
 	object_prep(i_ptr, lookup_kind(TV_CORPSE, SV_CORPSE_MEAT));
@@ -1624,32 +1626,27 @@ void do_cmd_cure_meat(void)
 {
 	int item, num, cure;
 
-	object_type *o_ptr;
-
 	object_type *i_ptr;
 
-	cptr q, s;
-
-
-	/* Restrict choices to corpses */
-	item_tester_tval = TV_CORPSE;
-	item_tester_hook = item_tester_hook_eatable;
-
 	/* Get some meat */
-	q = "Cure which meat? ";
-	s = "You have no meat to cure.";
-	if (!get_item(&item, q, s, (USE_INVEN | USE_FLOOR))) return;
+	if (!get_item(&item,
+		      "Cure which meat? ",
+		      "You have no meat to cure.",
+		      (USE_INVEN | USE_FLOOR),
+		      object_filter::And(item_tester_hook_eatable(), object_filter::TVal(TV_CORPSE))))
+	{
+		return;
+	}
 
 	/* Get the item */
-	o_ptr = get_object(item);
-
-	/* Restrict choices to potions */
-	item_tester_tval = TV_POTION;
+	object_type *o_ptr = get_object(item);
 
 	/* Get a potion */
-	q = "Use which potion? ";
-	s = "You have no potions to use.";
-	if (!get_item(&item, q, s, (USE_INVEN | USE_FLOOR))) return;
+	if (!get_item(&item,
+		      "Use which potion? ",
+		      "You have no potions to use.",
+		      (USE_INVEN | USE_FLOOR),
+		      object_filter::TVal(TV_POTION))) return;
 
 	/* Get the item */
 	i_ptr = get_object(item);
@@ -1672,8 +1669,8 @@ void do_cmd_cure_meat(void)
 	/* Take a turn */
 	energy_use = 100;
 
-	q = "You soak the meat.";
-	s = "You soak the meat.";
+	cptr q = "You soak the meat.";
+	cptr s = "You soak the meat.";
 
 	switch (i_ptr->sval)
 	{
@@ -1735,8 +1732,14 @@ void do_cmd_cure_meat(void)
 	}
 
 	/* Message */
-	if (object_known_p(i_ptr)) msg_print(q);
-	else msg_print(s);
+	if (object_known_p(i_ptr))
+	{
+		msg_print(q);
+	}
+	else
+	{
+		msg_print(s);
+	}
 
 	/* The meat is already spoiling */
 	if (((o_ptr->sval == SV_CORPSE_MEAT) && (o_ptr->weight > o_ptr->pval)) ||
@@ -1758,12 +1761,13 @@ void do_cmd_cure_meat(void)
 /*
  * Hook to determine if an object is quaffable
  */
-static bool_ item_tester_hook_quaffable(object_type *o_ptr)
+static object_filter_t const &item_tester_hook_quaffable()
 {
-	if ((o_ptr->tval == TV_POTION) || (o_ptr->tval == TV_POTION2)) return (TRUE);
-
-	/* Assume not */
-	return (FALSE);
+	using namespace object_filter;
+	static auto instance = Or(
+		TVal(TV_POTION),
+		TVal(TV_POTION2));
+	return instance;
 }
 
 
@@ -2475,29 +2479,24 @@ static bool_ quaff_potion(int tval, int sval, int pval, int pval2)
  */
 void do_cmd_quaff_potion(void)
 {
-	int item, ident, lev;
-
-	object_type *o_ptr;
+	int ident, lev;
 
 	object_type *q_ptr, forge;
 
-	cptr q, s;
-
-
-	/* Restrict choices to potions */
-	item_tester_hook = item_tester_hook_quaffable;
-
-	/* Set up the extra finder */
-	get_item_hook_find_obj_what = "Potion full name? ";
-	get_item_extra_hook = get_item_hook_find_obj;
-
 	/* Get an item */
-	q = "Quaff which potion? ";
-	s = "You have no potions to quaff.";
-	if (!get_item(&item, q, s, (USE_INVEN | USE_FLOOR | USE_EXTRA))) return;
+	int item;
+	if (!get_item(&item,
+		      "Quaff which potion? ",
+		      "You have no potions to quaff.",
+		      (USE_INVEN | USE_FLOOR),
+		      item_tester_hook_quaffable(),
+		      select_object_by_name("Potion full name? ")))
+	{
+		return;
+	}
 
 	/* Get the item */
-	o_ptr = get_object(item);
+	object_type *o_ptr = get_object(item);
 
 
 	/* Sound */
@@ -2576,9 +2575,7 @@ static void do_cmd_fill_bottle(void)
 
 	int tval, sval, item, amt = 1;
 
-	object_type *q_ptr, *o_ptr, forge;
-
-	cptr q, s;
+	object_type *q_ptr, forge;
 
 	/* Is the fountain empty? */
 	/*
@@ -2604,14 +2601,17 @@ static void do_cmd_fill_bottle(void)
 		sval = c_ptr->special - SV_POTION_LAST;
 	}
 
-	/* Restrict choices to bottles */
-	item_tester_tval = TV_BOTTLE;
-
 	/* Get an item */
-	q = "Fill which bottle? ";
-	s = "You have no bottles to fill.";
-	if (!get_item(&item, q, s, (USE_INVEN))) return;
-	o_ptr = &p_ptr->inventory[item];
+	if (!get_item(&item,
+		      "Fill which bottle? ",
+		      "You have no bottles to fill.",
+		      (USE_INVEN),
+		      object_filter::TVal(TV_BOTTLE)))
+	{
+		return;
+	}
+
+	object_type *o_ptr = &p_ptr->inventory[item];
 
 	/* Find out how many the player wants */
 	if (o_ptr->number > 1)
@@ -2862,12 +2862,14 @@ bool_ curse_weapon(void)
 /*
  * Hook to determine if an object is readable
  */
-static bool_ item_tester_hook_readable(object_type *o_ptr)
+static object_filter_t const &item_tester_hook_readable()
 {
-	if ((o_ptr->tval == TV_SCROLL) || (o_ptr->tval == TV_PARCHMENT)) return (TRUE);
-
-	/* Assume not */
-	return (FALSE);
+	using namespace object_filter;
+	static auto instance =
+		Or(
+			TVal(TV_SCROLL),
+			TVal(TV_PARCHMENT));
+	return instance;
 }
 
 
@@ -2880,15 +2882,6 @@ static bool_ item_tester_hook_readable(object_type *o_ptr)
  */
 void do_cmd_read_scroll(void)
 {
-	int item, k, used_up, ident, lev;
-
-	object_type *o_ptr;
-
-	object_type *q_ptr, forge;
-
-	cptr q, s;
-
-
 	/* Check some conditions */
 	if (p_ptr->blind)
 	{
@@ -2908,33 +2901,32 @@ void do_cmd_read_scroll(void)
 		return;
 	}
 
-
-	/* Restrict choices to scrolls */
-	item_tester_hook = item_tester_hook_readable;
-
-	/* Set up the extra finder */
-	get_item_hook_find_obj_what = "Scroll full name? ";
-	get_item_extra_hook = get_item_hook_find_obj;
-
 	/* Get an item */
-	q = "Read which scroll? ";
-	s = "You have no scrolls to read.";
-	if (!get_item(&item, q, s, (USE_INVEN | USE_FLOOR | USE_EXTRA))) return;
+	int item;
+	if (!get_item(&item,
+		      "Read which scroll? ",
+		      "You have no scrolls to read.",
+		      (USE_INVEN | USE_FLOOR),
+		      item_tester_hook_readable(),
+		      select_object_by_name("Scroll full name? ")))
+	{
+		return;
+	}
 
 	/* Get the item */
-	o_ptr = get_object(item);
+	object_type *o_ptr = get_object(item);
 
 	/* Take a turn */
 	energy_use = 100;
 
 	/* Not identified yet */
-	ident = FALSE;
+	int ident = FALSE;
 
 	/* Object level */
-	lev = k_info[o_ptr->k_idx].level;
+	int lev = k_info[o_ptr->k_idx].level;
 
 	/* Assume the scroll will get used up */
-	used_up = TRUE;
+	int used_up = TRUE;
 
 	/* Corruption */
 	if (player_has_corruption(CORRUPT_BALROG_AURA) && magik(5))
@@ -2952,13 +2944,11 @@ void do_cmd_read_scroll(void)
 		{
 		case SV_SCROLL_MASS_RESURECTION:
 			{
-				int k;
-
 				ident = TRUE;
 				msg_print("You feel the souls of the dead coming back "
 				          "from the Halls of Mandos.");
 
-				for (k = 0; k < max_r_idx; k++)
+				for (int k = 0; k < max_r_idx; k++)
 				{
 					monster_race *r_ptr = &r_info[k];
 
@@ -3075,7 +3065,7 @@ void do_cmd_read_scroll(void)
 
 		case SV_SCROLL_SUMMON_MONSTER:
 			{
-				for (k = 0; k < randint(3); k++)
+				for (int k = 0; k < randint(3); k++)
 				{
 					if (summon_specific(p_ptr->py, p_ptr->px, dun_level, 0))
 					{
@@ -3098,7 +3088,7 @@ void do_cmd_read_scroll(void)
 
 		case SV_SCROLL_SUMMON_UNDEAD:
 			{
-				for (k = 0; k < randint(3); k++)
+				for (int k = 0; k < randint(3); k++)
 				{
 					if (summon_specific(p_ptr->py, p_ptr->px, dun_level, SUMMON_UNDEAD))
 					{
@@ -3355,8 +3345,11 @@ void do_cmd_read_scroll(void)
 
 		case SV_SCROLL_PROTECTION_FROM_EVIL:
 			{
-				k = 3 * p_ptr->lev;
-				if (set_protevil(p_ptr->protevil + randint(25) + k)) ident = TRUE;
+				int k = 3 * p_ptr->lev;
+				if (set_protevil(p_ptr->protevil + randint(25) + k))
+				{
+					ident = TRUE;
+				}
 
 				break;
 			}
@@ -3596,7 +3589,7 @@ void do_cmd_read_scroll(void)
 			screen_save();
 
 			/* Get the filename */
-			q = format("book-%d.txt", o_ptr->sval);
+			cptr q = format("book-%d.txt", o_ptr->sval);
 
 			/* Peruse the help file */
 			(void)show_file(q, NULL, 0, 0);
@@ -3639,10 +3632,13 @@ void do_cmd_read_scroll(void)
 	/* Destroy scroll */
 	inc_stack_size(item, -1);
 
+	/* Alchemists end up with a "drained" scroll instead */
 	if (get_skill(SKILL_ALCHEMY))
 	{
 		if (item >= 0)
 		{
+			object_type *q_ptr, forge;
+
 			q_ptr = &forge;
 			object_prep(q_ptr, lookup_kind(TV_SCROLL, SV_SCROLL_NOTHING));
 			object_aware(q_ptr);
@@ -3726,11 +3722,7 @@ void do_cmd_use_staff(void)
 {
 	bool_ obvious, use_charge;
 
-	object_type *o_ptr;
-
 	u32b f1, f2, f3, f4, f5, esp;
-
-	cptr q, s;
 
 	/* No magic */
 	if (p_ptr->antimagic)
@@ -3739,21 +3731,20 @@ void do_cmd_use_staff(void)
 		return;
 	}
 
-	/* Restrict choices to wands */
-	item_tester_tval = TV_STAFF;
-
-	/* Set up the extra finder */
-	get_item_hook_find_obj_what = "Staff full name? ";
-	get_item_extra_hook = get_item_hook_find_obj;
-
 	/* Get an item */
-	q = "Use which staff? ";
-	s = "You have no staff to use.";
 	int item;
-	if (!get_item(&item, q, s, (USE_INVEN | USE_FLOOR | USE_EXTRA))) return;
+	if (!get_item(&item,
+		      "Use which staff? ",
+		      "You have no staff to use.",
+		      (USE_INVEN | USE_FLOOR),
+		      object_filter::TVal(TV_STAFF),
+		      select_object_by_name("Staff full name? ")))
+	{
+		return;
+	}
 
 	/* Get the item */
-	o_ptr = get_object(item);
+	object_type *o_ptr = get_object(item);
 
 	/* Mega-Hack -- refuse to use a pile from the ground */
 	if ((item < 0) && (o_ptr->number > 1))
@@ -3908,12 +3899,6 @@ void do_cmd_aim_wand(void)
 {
 	bool_ obvious, use_charge;
 
-	int item;
-
-	object_type *o_ptr;
-
-	cptr q, s;
-
 	u32b f1, f2, f3, f4, f5, esp;
 
 
@@ -3924,21 +3909,20 @@ void do_cmd_aim_wand(void)
 		return;
 	}
 
-	/* Restrict choices to wands */
-	item_tester_tval = TV_WAND;
-
-	/* Set up the extra finder */
-	get_item_hook_find_obj_what = "Wand full name? ";
-	get_item_extra_hook = get_item_hook_find_obj;
-
 	/* Get an item */
-	q = "Aim which wand? ";
-	s = "You have no wand to aim.";
-	if (!get_item(&item, q, s, (USE_INVEN | USE_FLOOR | USE_EXTRA))) return;
+	int item;
+	if (!get_item(&item,
+		      "Aim which wand? ",
+		      "You have no wand to aim.",
+		      (USE_INVEN | USE_FLOOR),
+		      object_filter::TVal(TV_WAND),
+		      select_object_by_name("Wand full name? ")))
+	{
+		return;
+	}
 
 	/* Get the item */
-	o_ptr = get_object(item);
-
+	object_type *o_ptr = get_object(item);
 
 	/* Mega-Hack -- refuse to aim a pile from the ground */
 	if ((item < 0) && (o_ptr->number > 1))
@@ -4052,25 +4036,24 @@ void do_cmd_aim_wand(void)
 /*
  * Hook to determine if an object is zapable
  */
-static bool_ item_tester_hook_zapable(object_type *o_ptr)
+static object_filter_t const &item_tester_hook_zapable()
 {
-	if ((o_ptr->tval == TV_ROD) || (o_ptr->tval == TV_ROD_MAIN)) return (TRUE);
-
-	/* Assume not */
-	return (FALSE);
+	using namespace object_filter;
+	static auto instance =
+		Or(
+			TVal(TV_ROD),
+			TVal(TV_ROD_MAIN));
+	return instance;
 }
 
 
 /*
  * Hook to determine if an object is attachable
  */
-static bool_ item_tester_hook_attachable(object_type *o_ptr)
+static bool item_tester_hook_attachable(object_type const *o_ptr)
 {
-	if ((o_ptr->tval == TV_ROD_MAIN) &&
-	                (o_ptr->pval == SV_ROD_NOTHING)) return (TRUE);
-
-	/* Assume not */
-	return (FALSE);
+	return ((o_ptr->tval == TV_ROD_MAIN) &&
+		(o_ptr->pval == SV_ROD_NOTHING));
 }
 
 
@@ -4080,10 +4063,6 @@ static bool_ item_tester_hook_attachable(object_type *o_ptr)
 void zap_combine_rod_tip(object_type *q_ptr, int tip_item)
 {
 	int item;
-
-	object_type *o_ptr;
-
-	cptr q, s;
 
 	u32b f1, f2, f3, f4, f5, esp;
 	s32b cost;
@@ -4096,16 +4075,18 @@ void zap_combine_rod_tip(object_type *q_ptr, int tip_item)
 		return;
 	}
 
-	/* Restrict choices to rods */
-	item_tester_hook = item_tester_hook_attachable;
-
 	/* Get an item */
-	q = "Attach the rod tip with which rod? ";
-	s = "You have no rod to attach to.";
-	if (!get_item(&item, q, s, (USE_INVEN))) return;
+	if (!get_item(&item,
+		      "Attach the rod tip with which rod? ",
+		      "You have no rod to attach to.",
+		      (USE_INVEN),
+		      item_tester_hook_attachable))
+	{
+		return;
+	}
 
 	/* Get the item */
-	o_ptr = get_object(item);
+	object_type *o_ptr = get_object(item);
 
 	/* Examine the rod */
 	object_flags(o_ptr, &f1, &f2, &f3, &f4, &f5, &esp);
@@ -4147,13 +4128,9 @@ void do_cmd_zap_rod(void)
 
 	bool_ require_dir;
 
-	object_type *o_ptr;
-
 	object_kind *tip_ptr;
 
 	u32b f1, f2, f3, f4, f5, esp;
-
-	cptr q, s;
 
 	/* Hack -- let perception get aborted */
 	bool_ use_charge = TRUE;
@@ -4166,21 +4143,19 @@ void do_cmd_zap_rod(void)
 		return;
 	}
 
-
-	/* Restrict choices to rods */
-	item_tester_hook = item_tester_hook_zapable;
-
-	/* Set up the extra finder */
-	get_item_hook_find_obj_what = "Rod full name? ";
-	get_item_extra_hook = get_item_hook_find_obj;
-
 	/* Get an item */
-	q = "Zap which rod? ";
-	s = "You have no rod to zap.";
-	if (!get_item(&item, q, s, (USE_INVEN | USE_FLOOR | USE_EXTRA))) return;
+	if (!get_item(&item,
+		      "Zap which rod? ",
+		      "You have no rod to zap.",
+		      (USE_INVEN | USE_FLOOR),
+		      item_tester_hook_zapable(),
+		      select_object_by_name("Rod full name? ")))
+	{
+		return;
+	}
 
 	/* Get the item */
-	o_ptr = get_object(item);
+	object_type *o_ptr = get_object(item);
 
 
 	/* "Zapping" a Rod Tip on rod of nothing will attach it */
@@ -4615,24 +4590,14 @@ void do_cmd_zap_rod(void)
 /*
  * Hook to determine if an object is activable
  */
-static bool_ item_tester_hook_activate(object_type *o_ptr)
+static object_filter_t const &item_tester_hook_activate()
 {
-	u32b f1, f2, f3, f4, f5, esp;
-
-
-	/* Not known */
-	if (!object_known_p(o_ptr)) return (FALSE);
-
-	/* Extract the flags */
-	object_flags(o_ptr, &f1, &f2, &f3, &f4, &f5, &esp);
-
-	/* Check activation flag */
-	if (f3 & (TR3_ACTIVATE)) return (TRUE);
-
-	/* Assume not */
-	return (FALSE);
+	using namespace object_filter;
+	static auto instance = And(
+		IsKnown(),
+		HasFlag3(TR3_ACTIVATE));
+	return instance;
 }
-
 
 
 /*
@@ -4784,7 +4749,7 @@ bool_ brand_bolts(void)
  * Eternal flame activation
  */
 
-static int get_eternal_artifact_idx(object_type *o_ptr)
+static int get_eternal_artifact_idx(object_type const *o_ptr)
 {
 	if ((o_ptr->tval == TV_SWORD) && (o_ptr->sval == SV_LONG_SWORD)) {
 		return 147;
@@ -4821,7 +4786,7 @@ static int get_eternal_artifact_idx(object_type *o_ptr)
 	return -1;
 }
 
-static bool_ eternal_flame_item_tester_hook(object_type *o_ptr)
+static bool eternal_flame_item_tester_hook(object_type const *o_ptr)
 {
 	if ((o_ptr->name1 > 0) ||
 	    (o_ptr->name2 > 0))
@@ -4837,11 +4802,11 @@ static bool activate_eternal_flame(int flame_item)
 	int item;
 	int artifact_idx = -1;
 
-	item_tester_hook = eternal_flame_item_tester_hook;
 	if (!get_item(&item,
 		      "Which object do you want to imbue?",
 		      "You have no objects to imbue.",
-		      USE_INVEN))
+		      USE_INVEN,
+		      eternal_flame_item_tester_hook))
 	{
 		return false;
 	}
@@ -4943,24 +4908,21 @@ void do_cmd_activate(void)
 
 	char ch, spell_choice;
 
-	object_type *o_ptr;
-
 	u32b f1, f2, f3, f4, f5, esp;
-
-	cptr q, s;
-
-
-	/* Prepare the hook */
-	item_tester_hook = item_tester_hook_activate;
 
 	/* Get an item */
 	command_wrk = USE_EQUIP;
-	q = "Activate which item? ";
-	s = "You have nothing to activate.";
-	if (!get_item(&item, q, s, (USE_EQUIP | USE_INVEN))) return;
+	if (!get_item(&item,
+		      "Activate which item? ",
+		      "You have nothing to activate.",
+		      (USE_EQUIP | USE_INVEN),
+		      item_tester_hook_activate()))
+	{
+		return;
+	}
 
 	/* Get the item */
-	o_ptr = get_object(item);
+	object_type *o_ptr = get_object(item);
 
 	/* Extract object flags */
 	object_flags(o_ptr, &f1, &f2, &f3, &f4, &f5, &esp);

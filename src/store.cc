@@ -627,17 +627,26 @@ static bool_ is_blessed(object_type const *o_ptr)
  *
  * Note that a shop-keeper must refuse to buy "worthless" items
  */
-static bool_ store_will_buy(object_type *o_ptr)
+static bool store_will_buy(object_type const *o_ptr)
 {
 	cptr store_name = st_info[st_ptr->st_idx].name;
 
 	/* Hack -- The Home is simple */
-	if (cur_store_num == 7) return (TRUE);
+	if (cur_store_num == 7)
+	{
+		return true;
+	}
 
-	if (st_info[st_ptr->st_idx].flags1 & SF1_MUSEUM) return TRUE;
+	if (st_info[st_ptr->st_idx].flags1 & SF1_MUSEUM)
+	{
+		return true;
+	}
 
 	/* XXX XXX XXX Ignore "worthless" items */
-	if (object_value(o_ptr) <= 0) return (FALSE);
+	if (object_value(o_ptr) <= 0)
+	{
+		return false;
+	}
 
 	/* What do stores buy? */
 	if (streq(store_name, STORE_GENERAL_STORE))
@@ -655,7 +664,7 @@ static bool_ store_will_buy(object_type *o_ptr)
 		case TV_DIGGING:
 		case TV_CLOAK:
 		case TV_BOTTLE:
-			return TRUE;
+			return true;
 		}
 	}
 	else if (streq(store_name, STORE_ARMOURY))
@@ -671,7 +680,7 @@ static bool_ store_will_buy(object_type *o_ptr)
 		case TV_SOFT_ARMOR:
 		case TV_HARD_ARMOR:
 		case TV_DRAG_ARMOR:
-			return TRUE;
+			return true;
 		}
 	}
 	else if (streq(store_name, STORE_WEAPONSMITH))
@@ -689,7 +698,7 @@ static bool_ store_will_buy(object_type *o_ptr)
 		case TV_SWORD:
 		case TV_AXE:
 		case TV_MSTAFF:
-			return TRUE;
+			return true;
 		}
 	}
 	else if (streq(store_name, STORE_TEMPLE))
@@ -701,34 +710,34 @@ static bool_ store_will_buy(object_type *o_ptr)
 		case TV_POTION2:
 		case TV_POTION:
 		case TV_HAFTED:
-			return TRUE;
+			return true;
 		}
 
 		if ((o_ptr->tval == TV_BOOK) &&
 		    (o_ptr->sval == BOOK_RANDOM) &&
 		    (spell_type_random_type(spell_at(o_ptr->pval)) == SKILL_SPIRITUALITY))
 		{
-			return TRUE;
+			return true;
 		}
 		else if ((o_ptr->tval == TV_POLEARM) &&
 			 is_blessed(o_ptr))
 		{
-			return TRUE;
+			return true;
 		}
 		else if ((o_ptr->tval == TV_SWORD) &&
 			 is_blessed(o_ptr))
 		{
-			return TRUE;
+			return true;
 		}
 		else if ((o_ptr->tval == TV_AXE) &&
 			 is_blessed(o_ptr))
 		{
-			return TRUE;
+			return true;
 		}
 		else if ((o_ptr->tval == TV_BOOMERANG) &&
 			 is_blessed(o_ptr))
 		{
-			return TRUE;
+			return true;
 		}
 	}
 	else if (streq(store_name, STORE_ALCHEMY))
@@ -740,7 +749,7 @@ static bool_ store_will_buy(object_type *o_ptr)
 		case TV_POTION:
 		case TV_BATERIE:
 		case TV_BOTTLE:
-			return TRUE;
+			return true;
 		}
 	}
 	else if (streq(store_name, STORE_MAGIC))
@@ -759,24 +768,24 @@ static bool_ store_will_buy(object_type *o_ptr)
 		case TV_POTION:
 		case TV_MSTAFF:
 		case TV_RANDART:
-			return TRUE;
+			return true;
 		}
 
 		if ((o_ptr->tval == TV_BOOK) &&
 		    (o_ptr->sval == BOOK_RANDOM) &&
 		    (spell_type_random_type(spell_at(o_ptr->pval)) == SKILL_MAGIC))
 		{
-			return TRUE;
+			return true;
 		}
 		else if ((o_ptr->tval == TV_BOOK) &&
 			 (o_ptr->sval != BOOK_RANDOM))
 		{
-			return TRUE;
+			return true;
 		}
 	}
 	else if (streq(store_name, STORE_BLACK_MARKET))
 	{
-		return TRUE;
+		return true;
 	}
 	else if (streq(store_name, STORE_BOOKS))
 	{
@@ -787,7 +796,7 @@ static bool_ store_will_buy(object_type *o_ptr)
 		case TV_MUSIC_BOOK:
 		case TV_DAEMON_BOOK:
 		case TV_DRUID_BOOK:
-			return TRUE;
+			return true;
 		}
 	}
 	else if (streq(store_name, STORE_PETS))
@@ -805,7 +814,7 @@ static bool_ store_will_buy(object_type *o_ptr)
 		case TV_ARROW:
 		case TV_BOW:
 		case TV_POTION2:
-			return TRUE;
+			return true;
 		}
 	}
 	else if (streq(store_name, STORE_RUNIC_MAGIC))
@@ -814,7 +823,7 @@ static bool_ store_will_buy(object_type *o_ptr)
 		{
 		case TV_RUNE1:
 		case TV_RUNE2:
-			return TRUE;
+			return true;
 		}
 	}
 	else if (streq(store_name, STORE_CONSTRUCTION_SUPPLIES))
@@ -823,7 +832,7 @@ static bool_ store_will_buy(object_type *o_ptr)
 		{
 		case TV_LITE:
 		case TV_DIGGING:
-			return TRUE;
+			return true;
 		}
 	}
 	else if (streq(store_name, STORE_MUSIC))
@@ -832,7 +841,7 @@ static bool_ store_will_buy(object_type *o_ptr)
 	}
 
 	/* Assume not okay */
-	return (FALSE);
+	return false;
 }
 
 
@@ -2435,36 +2444,35 @@ void store_sell(void)
 
 	object_type *o_ptr;
 
-	cptr q, s;
-
 	char o_name[80];
 
 	u32b f1, f2, f3, f4, f5, esp;
 
 	bool_ museum = (st_info[st_ptr->st_idx].flags1 & SF1_MUSEUM) ? TRUE : FALSE;
 
-	/* Prepare a prompt */
-	if (cur_store_num == 7) q = "Drop which item? ";
-	else if (museum) q = "Donate which item?";
-	else q = "Sell which item? ";
-
-	/* Only allow items the store will buy */
-	item_tester_hook = store_will_buy;
-
-	/* Get an item */
+	/* Prepare prompt */
+	cptr q, s;
 	if (cur_store_num == STORE_HOME)
 	{
+		q = "Drop which item? ";
 		s = "You have nothing to drop.";
 	}
 	else if (museum)
 	{
+		q = "Donate which item?";
 		s = "You have nothing to donate.";
 	}
 	else
 	{
+		q = "Sell which item? ";
 		s = "You have nothing that I want.";
 	}
-	if (!get_item(&item, q, s, (USE_EQUIP | USE_INVEN))) return;
+
+	/* Get an item */
+	if (!get_item(&item, q, s, (USE_EQUIP | USE_INVEN), store_will_buy))
+	{
+		return;
+	}
 
 	/* Get the item */
 	o_ptr = get_object(item);

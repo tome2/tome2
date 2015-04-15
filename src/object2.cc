@@ -829,7 +829,7 @@ void object_known(object_type *o_ptr)
  * Test One -- Check for special "known" tag
  * Test Two -- Check for "Easy Know" + "Aware"
  */
-extern bool object_known_p(object_type const *o_ptr)
+bool object_known_p(object_type const *o_ptr)
 {
 	return ((o_ptr->ident & (IDENT_KNOWN)) ||
 		(k_info[o_ptr->k_idx].easy_know && k_info[o_ptr->k_idx].aware));
@@ -6624,13 +6624,11 @@ void floor_decay(int item)
 /* Return the item be it on the floor or in inven */
 object_type *get_object(int item)
 {
-	/* Get the item (in the pack) */
 	if (item >= 0)
 	{
+		assert(item < INVEN_TOTAL);
 		return &p_ptr->inventory[item];
 	}
-
-	/* Get the item (on the floor) */
 	else
 	{
 		return &o_list[0 - item];

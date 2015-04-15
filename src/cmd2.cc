@@ -3130,8 +3130,6 @@ void do_cmd_fire(void)
 
 	char o_name[80];
 
-	cptr q, s;
-
 	int msec = delay_factor * delay_factor * delay_factor;
 
 
@@ -3160,14 +3158,15 @@ void do_cmd_fire(void)
 	/* If nothing correct try to choose from the backpack */
 	if ((p_ptr->tval_ammo != o_ptr->tval) || (!o_ptr->k_idx))
 	{
-		/* Require proper missile */
-		item_tester_tval = p_ptr->tval_ammo;
-
 		/* Get an item */
-		q = "Your quiver is empty.  Fire which item? ";
-		s = "You have nothing to fire.";
-		if (!get_item(&item, q, s, (USE_INVEN | USE_FLOOR))) return;
-
+		if (!get_item(&item,
+			      "Your quiver is empty.  Fire which item? ",
+			      "You have nothing to fire.",
+			      (USE_INVEN | USE_FLOOR),
+			      object_filter::TVal(p_ptr->tval_ammo)))
+		{
+			return;
+		}
 
 		/* Access the item */
 		o_ptr = get_object(item);
@@ -3539,7 +3538,7 @@ void do_cmd_fire(void)
  */
 void do_cmd_throw(void)
 {
-	int dir, item;
+	int dir;
 
 	s32b special = 0;
 
@@ -3558,8 +3557,6 @@ void do_cmd_throw(void)
 
 	object_type *q_ptr;
 
-	object_type *o_ptr;
-
 	bool_ hit_body = FALSE;
 
 	bool_ hit_wall = FALSE;
@@ -3572,20 +3569,20 @@ void do_cmd_throw(void)
 
 	int msec = delay_factor * delay_factor * delay_factor;
 
-	cptr q, s;
-
-	u32b f1, f2, f3, f4, f5, esp;
-
-
 	/* Get an item */
-	q = "Throw which item? ";
-	s = "You have nothing to throw.";
-	if (!get_item(&item, q, s, (USE_INVEN | USE_FLOOR))) return;
+	int item;
+	if (!get_item(&item,
+		      "Throw which item? ",
+		      "You have nothing to throw.",
+		      (USE_INVEN | USE_FLOOR)))
+	{
+		return;
+	}
 
 	/* Access the item */
-	o_ptr = get_object(item);
+	object_type *o_ptr = get_object(item);
 
-
+	u32b f1, f2, f3, f4, f5, esp;
 	object_flags(o_ptr, &f1, &f2, &f3, &f4, &f5, &esp);
 
 	/* Hack - Cannot throw away 'no drop' cursed items */
@@ -4462,7 +4459,7 @@ void do_cmd_immovable_special(void)
 }
 
 /* Can we sacrifice it ? */
-static bool_ item_tester_hook_sacrifiable(object_type *o_ptr)
+static bool item_tester_hook_sacrificable(object_type const *o_ptr)
 {
 	if (p_ptr->pgod == GOD_MELKOR)
 	{
@@ -4484,7 +4481,7 @@ static bool_ item_tester_hook_sacrifiable(object_type *o_ptr)
 /*
  * Is item eligible for sacrifice to Aule?
  */
-static bool_ item_tester_hook_sacrifice_aule(object_type *o_ptr)
+static bool item_tester_hook_sacrifice_aule(object_type const *o_ptr)
 {
 	/* perhaps restrict this only to metal armour and weapons  */
 	return (o_ptr->found == OBJ_FOUND_SELFMADE);
@@ -4497,11 +4494,11 @@ static void do_cmd_sacrifice_aule()
 {
 	int item;
 
-	item_tester_hook = item_tester_hook_sacrifice_aule;
 	if (!get_item(&item,
 		      "Sacrifice which item? ",
 		      "You have nothing to sacrifice.",
-		      USE_INVEN))
+		      USE_INVEN,
+		      item_tester_hook_sacrifice_aule))
 	{
 		return;
 	}
@@ -4583,15 +4580,18 @@ void do_cmd_sacrifice(void)
 				}
 				else
 				{
-					int item;
-					object_type *o_ptr;
-
-					/* Restrict choices to food */
-					item_tester_hook = item_tester_hook_sacrifiable;
-
 					/* Get an item */
-					if (!get_item(&item, "Sacrifice which item? ", "You have nothing to sacrifice.", (USE_INVEN))) return;
-					o_ptr = get_object(item);
+					int item;
+					if (!get_item(&item,
+						      "Sacrifice which item? ",
+						      "You have nothing to sacrifice.",
+						      (USE_INVEN),
+						      item_tester_hook_sacrificable))
+					{
+						return;
+					}
+
+					object_type *o_ptr = get_object(item);
 
 					/* Piety for corpses is based on monster level */
 					if (o_ptr->tval == TV_CORPSE)
@@ -4974,24 +4974,16 @@ void do_cmd_steal()
  */
 void do_cmd_give()
 {
-	int dir, x, y;
-
-	cave_type *c_ptr;
-
-	cptr q, s;
-
-	int item;
-
-
 	/* Get a "repeated" direction */
+	int dir;
 	if (!get_rep_dir(&dir)) return;
 
 	/* Get requested location */
-	y = p_ptr->py + ddy[dir];
-	x = p_ptr->px + ddx[dir];
+	int y = p_ptr->py + ddy[dir];
+	int x = p_ptr->px + ddx[dir];
 
 	/* Get requested grid */
-	c_ptr = &cave[y][x];
+	cave_type *c_ptr = &cave[y][x];
 
 	/* No monster in the way */
 	if (c_ptr->m_idx == 0)
@@ -5001,9 +4993,14 @@ void do_cmd_give()
 	}
 
 	/* Get an item */
-	q = "What item do you want to offer? ";
-	s = "You have nothing to offer.";
-	if (!get_item(&item, q, s, USE_INVEN)) return;
+	int item;
+	if (!get_item(&item,
+		      "What item do you want to offer? ",
+		      "You have nothing to offer.",
+		      USE_INVEN))
+	{
+		return;
+	}
 
 	/* Process hooks if there are any */
 	hook_give_in in = { c_ptr->m_idx, item };

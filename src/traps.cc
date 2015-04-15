@@ -2141,26 +2141,11 @@ void wiz_place_trap(int y, int x, int idx)
 /*
  * Hook to determine if an object is a device
  */
-static bool_ item_tester_hook_device(object_type *o_ptr)
+static bool item_tester_hook_device(object_type const *o_ptr)
 {
-	if (((o_ptr->tval == TV_ROD_MAIN) && (o_ptr->pval != 0)) ||
+	return (((o_ptr->tval == TV_ROD_MAIN) && (o_ptr->pval != 0)) ||
 	                (o_ptr->tval == TV_STAFF) ||
-	                (o_ptr->tval == TV_WAND)) return (TRUE);
-
-	/* Assume not */
-	return (FALSE);
-}
-
-/*
- * Hook to determine if an object is a potion
- */
-static bool_ item_tester_hook_potion(object_type *o_ptr)
-{
-	if ((o_ptr->tval == TV_POTION) ||
-	                (o_ptr->tval == TV_POTION2)) return (TRUE);
-
-	/* Assume not */
-	return (FALSE);
+			(o_ptr->tval == TV_WAND));
 }
 
 /*
@@ -2205,46 +2190,46 @@ void do_cmd_set_trap(void)
 		return;
 	}
 
-	/* Restrict choices to trapkits */
-	item_tester_tval = TV_TRAPKIT;
-
 	/* Get an item */
 	q = "Use which trapping kit? ";
 	s = "You have no trapping kits.";
-	if (!get_item(&item_kit, q, s, USE_INVEN)) return;
+	if (!get_item(&item_kit,
+		      q, s,
+		      USE_INVEN,
+		      object_filter::TVal(TV_TRAPKIT)))
+	{
+		return;
+	}
 
 	o_ptr = &p_ptr->inventory[item_kit];
 
 	/* Trap kits need a second object */
-	switch (o_ptr->sval)
-	{
-	case SV_TRAPKIT_BOW:
-		item_tester_tval = TV_ARROW;
-		break;
-	case SV_TRAPKIT_XBOW:
-		item_tester_tval = TV_BOLT;
-		break;
-	case SV_TRAPKIT_SLING:
-		item_tester_tval = TV_SHOT;
-		break;
-	case SV_TRAPKIT_POTION:
-		item_tester_hook = item_tester_hook_potion;
-		break;
-	case SV_TRAPKIT_SCROLL:
-		item_tester_tval = TV_SCROLL;
-		break;
-	case SV_TRAPKIT_DEVICE:
-		item_tester_hook = item_tester_hook_device;
-		break;
-	default:
-		msg_print("Unknown trapping kit type!");
-		break;
-	}
+	object_filter_t object_filter = object_filter::Or(
+		object_filter::And(
+			object_filter::SVal(SV_TRAPKIT_BOW),
+			object_filter::TVal(TV_ARROW)),
+		object_filter::And(
+			object_filter::SVal(SV_TRAPKIT_XBOW),
+			object_filter::TVal(TV_BOLT)),
+		object_filter::And(
+			object_filter::SVal(SV_TRAPKIT_SLING),
+			object_filter::TVal(TV_SHOT)),
+		object_filter::And(
+			object_filter::SVal(SV_TRAPKIT_POTION),
+			object_filter::Or(
+				object_filter::TVal(TV_POTION),
+				object_filter::TVal(TV_POTION2))),
+		object_filter::And(
+			object_filter::SVal(SV_TRAPKIT_SCROLL),
+			object_filter::TVal(TV_SCROLL)),
+		object_filter::And(
+			object_filter::SVal(SV_TRAPKIT_DEVICE),
+			&item_tester_hook_device));
 
 	/* Get the second item */
 	q = "Load with what? ";
 	s = "You have nothing to load that trap with.";
-	if (!get_item(&item_load, q, s, USE_INVEN)) return;
+	if (!get_item(&item_load, q, s, USE_INVEN, object_filter)) return;
 
 	/* Get the second object */
 	j_ptr = &p_ptr->inventory[item_load];

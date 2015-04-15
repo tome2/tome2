@@ -1384,11 +1384,15 @@ const char *fire_firewall_info()
 	return buf;
 }
 
-bool_ item_tester_hook_fire_golem(object_type *o_ptr)
+object_filter_t const &item_tester_hook_fire_golem()
 {
-	return ((o_ptr->tval == TV_LITE) &&
-		((o_ptr->sval == SV_LITE_TORCH) ||
-		 (o_ptr->sval == SV_LITE_LANTERN)));
+	using namespace object_filter;
+	static auto instance = And(
+		TVal(TV_LITE),
+		Or(
+			SVal(SV_LITE_TORCH),
+			SVal(SV_LITE_LANTERN)));
+	return instance;
 }
 
 casting_result fire_golem()
@@ -1400,12 +1404,12 @@ casting_result fire_golem()
 		return NO_CAST;
 	}
 
-	item_tester_hook = item_tester_hook_fire_golem;
 	int item;
 	if (!get_item(&item,
 		      "Which light source do you want to use to create the golem?",
 		      "You have no light source for the golem",
-		      USE_INVEN | USE_EQUIP))
+		      USE_INVEN | USE_EQUIP,
+		      item_tester_hook_fire_golem()))
 	{
 		return NO_CAST;
 	}
@@ -2949,32 +2953,31 @@ int levels_in_book(s32b sval, s32b pval)
 	return levels;
 }
 
-static bool_ udun_object_is_drainable(object_type *o_ptr)
+static object_filter_t const &udun_object_is_drainable()
 {
-	return ((o_ptr->tval == TV_WAND) ||
-		(o_ptr->tval == TV_ROD_MAIN) ||
-		(o_ptr->tval == TV_STAFF));
+	using namespace object_filter;
+	static auto instance = Or(
+		TVal(TV_WAND),
+		TVal(TV_ROD_MAIN),
+		TVal(TV_STAFF));
+	return instance;
 }
 
 casting_result udun_drain()
 {
-	int item;
-	object_type *o_ptr = NULL;
-
 	/* Ask for an item */
-	item_tester_hook = udun_object_is_drainable;
+	int item;
 	if (!get_item(&item,
 		      "What item to drain?",
 		      "You have nothing you can drain",
-		      USE_INVEN))
+		      USE_INVEN,
+		      udun_object_is_drainable()))
 	{
 		return NO_CAST;
 	}
 
 	/* Drain */
-
-	/* get the item */
-	o_ptr = get_object(item);
+	object_type *o_ptr = get_object(item);
 
 	switch (o_ptr->tval)
 	{
@@ -4038,34 +4041,27 @@ const char *aule_firebrand_info()
 	return buf;
 }
 
-static bool_ aule_enchant_weapon_item_tester(object_type *o_ptr)
+static object_filter_t const &aule_enchant_weapon_item_tester()
 {
-	if (o_ptr->name1 > 0)
-	{
-		return FALSE;
-	}
-
-	switch (o_ptr->tval)
-	{
-	case TV_MSTAFF:
-	case TV_BOW:
-	case TV_HAFTED:
-	case TV_POLEARM:
-	case TV_SWORD:
-	case TV_AXE:
-		return TRUE;
-
-	default:
-		return FALSE;
-	}
+	using namespace object_filter;
+	static auto instance = And(
+		// Cannot enchant artifacts, spell is probably already too overpowered.
+		Not(IsArtifact()),
+		// Only weapons which Aule likes
+		Or(
+			TVal(TV_MSTAFF),
+			TVal(TV_BOW),
+			TVal(TV_HAFTED),
+			TVal(TV_POLEARM),
+			TVal(TV_SWORD),
+			TVal(TV_AXE)));
+	return instance;
 }
 
 casting_result aule_enchant_weapon_spell()
 {
 	s32b level = get_level_s(AULE_ENCHANT_WEAPON, 50);
 	s16b num_h, num_d, num_p;
-	int item;
-	object_type *o_ptr = NULL;
 
 	num_h = 1 + randint(level/12);
 	num_d = 0;
@@ -4080,16 +4076,17 @@ casting_result aule_enchant_weapon_spell()
 		num_p = 1;
 	}
 
-	item_tester_hook = aule_enchant_weapon_item_tester;
+	int item;
 	if (!get_item(&item,
 		      "Which object do you want to enchant?",
 		      "You have no objects to enchant.",
-		      USE_INVEN))
+		      USE_INVEN,
+		      aule_enchant_weapon_item_tester()))
 	{
 		return NO_CAST;
 	}
 
-	o_ptr = get_object(item);
+	object_type *o_ptr = get_object(item);
 
 	o_ptr->to_h = o_ptr->to_h + num_h;
 	o_ptr->to_d = o_ptr->to_d + num_d;
@@ -4107,29 +4104,25 @@ const char *aule_enchant_weapon_info()
 	return buf;
 }
 
-bool_ aule_enchant_armor_item_tester(object_type *o_ptr)
+static object_filter_t const &aule_enchant_armor_item_tester()
 {
-	if (o_ptr->name1 > 0)
-	{
-		return FALSE;
-	}
-
-	switch (o_ptr->tval)
-	{
-	case TV_BOOTS:
-	case TV_GLOVES:
-	case TV_HELM:
-	case TV_CROWN:
-	case TV_SHIELD:
-	case TV_CLOAK:
-	case TV_SOFT_ARMOR:
-	case TV_HARD_ARMOR:
-	case TV_DRAG_ARMOR:
-		return TRUE;
-
-	default:
-		return FALSE;
-	}
+	using namespace object_filter;
+	static auto instance = And(
+		// No enchanting artifacts; the spell is already horribly
+		// overpowered.
+		Not(IsArtifact()),
+		// Only armor-like things can be enchanted
+		Or(
+			TVal(TV_BOOTS),
+			TVal(TV_GLOVES),
+			TVal(TV_HELM),
+			TVal(TV_CROWN),
+			TVal(TV_SHIELD),
+			TVal(TV_CLOAK),
+			TVal(TV_SOFT_ARMOR),
+			TVal(TV_HARD_ARMOR),
+			TVal(TV_DRAG_ARMOR)));
+	return instance;
 }
 
 casting_result aule_enchant_armour_spell()
@@ -4137,7 +4130,6 @@ casting_result aule_enchant_armour_spell()
 	s32b level = get_level_s(AULE_ENCHANT_ARMOUR, 50);
 	s16b num_h, num_d, num_a, num_p;
 	int item;
-	object_type *o_ptr = NULL;
 
 	num_a = 1 + randint(level/10);
 	num_h = 0;
@@ -4153,16 +4145,16 @@ casting_result aule_enchant_armour_spell()
 		num_p = 1;
 	}
 
-	item_tester_hook = aule_enchant_armor_item_tester;
 	if (!get_item(&item,
 		      "Which object do you want to enchant?",
 		      "You have no objects to enchant.",
-		      USE_INVEN))
+		      USE_INVEN,
+		      aule_enchant_armor_item_tester()))
 	{
 		return NO_CAST;
 	}
 
-	o_ptr = get_object(item);
+	object_type *o_ptr = get_object(item);
 
 	o_ptr->to_h = o_ptr->to_h + num_h;
 	o_ptr->to_d = o_ptr->to_d + num_d;

@@ -16,7 +16,7 @@ extern void move_player(int dir, int do_pickup, bool_ disarm);
 extern void move_player_aux(int dir, int do_pickup, int run, bool_ disarm);
 extern void run_step(int dir);
 extern void do_cmd_pet(void);
-extern bool_ do_cmd_integrate_body(void);
+extern void do_cmd_integrate_body();
 extern bool_ do_cmd_leave_body(bool_ drop_body);
 extern bool_ execute_inscription(byte i, byte y, byte x);
 extern void do_cmd_engrave(void);

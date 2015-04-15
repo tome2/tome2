@@ -1067,30 +1067,22 @@ static void wiz_quantity_item(object_type *o_ptr)
  */
 static void do_cmd_wiz_play(void)
 {
-	int item;
-
-	object_type	forge;
-	object_type *q_ptr;
-
-	object_type *o_ptr;
-
-	char ch;
-
-	bool_ changed;
-
-	cptr q, s;
-
 	/* Get an item */
-	q = "Play with which object? ";
-	s = "You have nothing to play with.";
-	if (!get_item(&item, q, s, (USE_EQUIP | USE_INVEN | USE_FLOOR))) return;
+	int item;
+	if (!get_item(&item,
+		      "Play with which object? ",
+		      "You have nothing to play with.",
+		      (USE_EQUIP | USE_INVEN | USE_FLOOR)))
+	{
+		return;
+	}
 
 	/* Get the item */
-	o_ptr = get_object(item);
+	object_type *o_ptr = get_object(item);
 
 
 	/* The item was not changed */
-	changed = FALSE;
+	bool_ changed = FALSE;
 
 
 	/* Icky */
@@ -1101,7 +1093,8 @@ static void do_cmd_wiz_play(void)
 
 
 	/* Get local object */
-	q_ptr = &forge;
+	object_type forge;
+	object_type *q_ptr = &forge;
 
 	/* Copy object */
 	object_copy(q_ptr, o_ptr);
@@ -1110,6 +1103,8 @@ static void do_cmd_wiz_play(void)
 	/* The main loop */
 	while (TRUE)
 	{
+		char ch;
+
 		/* Display the item */
 		wiz_display_item(q_ptr);
 

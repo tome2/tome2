@@ -47,16 +47,10 @@ void do_cmd_inven(void)
 	character_icky = TRUE;
 	Term_save();
 
-	/* Hack -- show empty slots */
-	item_tester_full = TRUE;
+	/* Show the inventory */
+	show_inven_full();
 
-	/* Display the p_ptr->inventory */
-	show_inven();
-
-	/* Hack -- hide empty slots */
-	item_tester_full = FALSE;
-
-
+	/* Show prompt */
 	{
 		s32b total_weight = calc_total_weight();
 
@@ -108,16 +102,10 @@ void do_cmd_equip(void)
 	character_icky = TRUE;
 	Term_save();
 
-	/* Hack -- show empty slots */
-	item_tester_full = TRUE;
-
 	/* Display the equipment */
-	show_equip();
+	show_equip_full();
 
-	/* Hack -- undo the hack above */
-	item_tester_full = FALSE;
-
-	/* Build a prompt */
+	/* Show prompt */
 	{
 		s32b total_weight = calc_total_weight();
 
@@ -158,7 +146,7 @@ void do_cmd_equip(void)
 /*
  * The "wearable" tester
  */
-static bool_ item_tester_hook_wear(object_type *o_ptr)
+static bool item_tester_hook_wear(object_type const *o_ptr)
 {
 	u32b f1, f2, f3, f4, f5, esp;
 	int slot = wield_slot(o_ptr);
@@ -220,27 +208,27 @@ void do_cmd_wield(void)
 
 	object_type *q_ptr;
 
-	object_type *o_ptr, *i_ptr;
+	object_type *i_ptr;
 
 	cptr act;
 
 	char o_name[80];
 
-	cptr q, s;
-
 	u32b f1, f2, f3, f4, f5, esp;
 
 
-	/* Restrict the choices */
-	item_tester_hook = item_tester_hook_wear;
-
 	/* Get an item */
-	q = "Wear/Wield which item? ";
-	s = "You have nothing you can wear or wield.";
-	if (!get_item(&item, q, s, (USE_INVEN | USE_FLOOR))) return;
+	if (!get_item(&item,
+		      "Wear/Wield which item? ",
+		      "You have nothing you can wear or wield.",
+		      (USE_INVEN | USE_FLOOR),
+		      item_tester_hook_wear))
+	{
+		return;
+	}
 
 	/* Get the item */
-	o_ptr = get_object(item);
+	object_type *o_ptr = get_object(item);
 
 	/* Check the slot */
 	slot = wield_slot(o_ptr);
@@ -464,20 +452,18 @@ void do_cmd_wield(void)
  */
 void do_cmd_takeoff(void)
 {
-	int item;
-
-	object_type *o_ptr;
-
-	cptr q, s;
-
-
 	/* Get an item */
-	q = "Take off which item? ";
-	s = "You are not wearing anything to take off.";
-	if (!get_item(&item, q, s, (USE_EQUIP))) return;
+	int item;
+	if (!get_item(&item,
+		      "Take off which item? ",
+		      "You are not wearing anything to take off.",
+		      (USE_EQUIP)))
+	{
+		return;
+	}
 
 	/* Get the item */
-	o_ptr = get_object(item);
+	object_type *o_ptr = get_object(item);
 
 	/* Item is cursed */
 	if (cursed_p(o_ptr) && (!wizard))
@@ -508,23 +494,19 @@ void do_cmd_takeoff(void)
  */
 void do_cmd_drop(void)
 {
-	int item, amt = 1;
-
-	object_type *o_ptr;
-
-	u32b f1, f2, f3, f4, f5, esp;
-
-	cptr q, s;
-
-
 	/* Get an item */
-	q = "Drop which item? ";
-	s = "You have nothing to drop.";
-	if (!get_item(&item, q, s, (USE_EQUIP | USE_INVEN))) return;
+	int item;
+	if (!get_item(&item,
+		      "Drop which item? ",
+		      "You have nothing to drop.",
+		      (USE_EQUIP | USE_INVEN)))
+	{
+		return;
+	}
 
 	/* Get the item */
-	o_ptr = get_object(item);
-
+	object_type *o_ptr = get_object(item);
+	u32b f1, f2, f3, f4, f5, esp;
 	object_flags(o_ptr, &f1, &f2, &f3, &f4, &f5, &esp);
 
 	/* Can we drop */
@@ -555,8 +537,8 @@ void do_cmd_drop(void)
 		}
 	}
 
-
 	/* See how many items */
+	int amt = 1;
 	if (o_ptr->number > 1)
 	{
 		/* Get a quantity */
@@ -579,37 +561,33 @@ void do_cmd_drop(void)
  */
 void do_cmd_destroy(void)
 {
-	int item, amt = 1;
-
 	int old_number;
 
 	bool_ force = FALSE;
 
-	object_type *o_ptr;
-
 	char o_name[80];
 
 	char out_val[160];
-
-	cptr q, s;
-
-	u32b f1, f2, f3, f4, f5, esp;
-
 
 	/* Hack -- force destruction */
 	if (command_arg > 0) force = TRUE;
 
 
 	/* Get an item */
-	q = "Destroy which item? ";
-	s = "You have nothing to destroy.";
-	if (!get_item(&item, q, s, (USE_INVEN | USE_FLOOR | USE_AUTO))) return;
+	int item;
+	if (!get_item(&item,
+		      "Destroy which item? ",
+		      "You have nothing to destroy.",
+		      (USE_INVEN | USE_FLOOR | USE_AUTO)))
+	{
+		return;
+	}
 
 	/* Get the item */
-	o_ptr = get_object(item);
-
+	object_type *o_ptr = get_object(item);
 
 	/* See how many items */
+	int amt = 1;
 	if (o_ptr->number > 1)
 	{
 		/* Get a quantity */
@@ -637,6 +615,7 @@ void do_cmd_destroy(void)
 	/* Take no time, just like the automatizer */
 	energy_use = 0;
 
+	u32b f1, f2, f3, f4, f5, esp;
 	object_flags(o_ptr, &f1, &f2, &f3, &f4, &f5, &esp);
 
 	if ((f4 & TR4_CURSE_NO_DROP) && cursed_p(o_ptr))
@@ -712,24 +691,21 @@ void do_cmd_destroy(void)
  */
 void do_cmd_observe(void)
 {
-	int item;
-
-	object_type *o_ptr;
-
-	char o_name[80];
-
-	cptr q, s;
-
-
 	/* Get an item */
-	q = "Examine which item? ";
-	s = "You have nothing to examine.";
-	if (!get_item(&item, q, s, (USE_EQUIP | USE_INVEN | USE_FLOOR))) return;
+	int item;
+	if (!get_item(&item,
+		      "Examine which item? ",
+		      "You have nothing to examine.",
+		      (USE_EQUIP | USE_INVEN | USE_FLOOR)))
+	{
+		return;
+	}
 
 	/* Get the item */
-	o_ptr = get_object(item);
+	object_type *o_ptr = get_object(item);
 
 	/* Description */
+	char o_name[80];
 	object_desc(o_name, o_ptr, TRUE, 3);
 
 	/* Describe */
@@ -747,20 +723,18 @@ void do_cmd_observe(void)
  */
 void do_cmd_uninscribe(void)
 {
-	int item;
-
-	object_type *o_ptr;
-
-	cptr q, s;
-
-
 	/* Get an item */
-	q = "Un-inscribe which item? ";
-	s = "You have nothing to un-inscribe.";
-	if (!get_item(&item, q, s, (USE_EQUIP | USE_INVEN | USE_FLOOR))) return;
+	int item;
+	if (!get_item(&item,
+		      "Un-inscribe which item? ",
+		      "You have nothing to un-inscribe.",
+		      (USE_EQUIP | USE_INVEN | USE_FLOOR)))
+	{
+		return;
+	}
 
 	/* Get the item */
-	o_ptr = get_object(item);
+	object_type *o_ptr = get_object(item);
 
 	/* Nothing to remove */
 	if (!o_ptr->note)
@@ -788,26 +762,21 @@ void do_cmd_uninscribe(void)
  */
 void do_cmd_inscribe(void)
 {
-	int item;
-
-	object_type *o_ptr;
-
-	char o_name[80];
-
-	char out_val[80];
-
-	cptr q, s;
-
-
 	/* Get an item */
-	q = "Inscribe which item? ";
-	s = "You have nothing to inscribe.";
-	if (!get_item(&item, q, s, (USE_EQUIP | USE_INVEN | USE_FLOOR))) return;
+	int item;
+	if (!get_item(&item,
+		      "Inscribe which item? ",
+		      "You have nothing to inscribe.",
+		      (USE_EQUIP | USE_INVEN | USE_FLOOR)))
+	{
+		return;
+	}
 
 	/* Get the item */
-	o_ptr = get_object(item);
+	object_type *o_ptr = get_object(item);
 
 	/* Describe the activity */
+	char o_name[80];
 	object_desc(o_name, o_ptr, TRUE, 3);
 
 	/* Message */
@@ -815,6 +784,7 @@ void do_cmd_inscribe(void)
 	msg_print(NULL);
 
 	/* Start with nothing */
+	char out_val[80];
 	strcpy(out_val, "");
 
 	/* Use old inscription */
@@ -843,17 +813,15 @@ void do_cmd_inscribe(void)
 /*
  * An "item_tester_hook" for refilling lanterns
  */
-static bool_ item_tester_refill_lantern(object_type *o_ptr)
+static object_filter_t const &item_tester_refill_lantern()
 {
-	/* Flasks of oil are okay */
-	if (o_ptr->tval == TV_FLASK) return (TRUE);
-
-	/* Lanterns are okay */
-	if ((o_ptr->tval == TV_LITE) &&
-	                (o_ptr->sval == SV_LITE_LANTERN)) return (TRUE);
-
-	/* Assume not okay */
-	return (FALSE);
+	using namespace object_filter;
+	static auto instance = Or(
+		TVal(TV_FLASK),
+		And(
+			TVal(TV_LITE),
+			SVal(SV_LITE_LANTERN)));
+	return instance;
 }
 
 
@@ -862,30 +830,25 @@ static bool_ item_tester_refill_lantern(object_type *o_ptr)
  */
 static void do_cmd_refill_lamp(void)
 {
-	int item;
-
-	object_type *o_ptr;
-	object_type *j_ptr;
-
-	cptr q, s;
-
-
-	/* Restrict the choices */
-	item_tester_hook = item_tester_refill_lantern;
-
 	/* Get an item */
-	q = "Refill with which flask? ";
-	s = "You have no flasks of oil.";
-	if (!get_item(&item, q, s, (USE_INVEN | USE_FLOOR))) return;
+	int item;
+	if (!get_item(&item,
+		      "Refill with which flask? ",
+		      "You have no flasks of oil.",
+		      (USE_INVEN | USE_FLOOR),
+		      item_tester_refill_lantern()))
+	{
+		return;
+	}
 
 	/* Get the item */
-	o_ptr = get_object(item);
+	object_type *o_ptr = get_object(item);
 
 	/* Take a partial turn */
 	energy_use = 50;
 
 	/* Access the lantern */
-	j_ptr = &p_ptr->inventory[INVEN_LITE];
+	object_type *j_ptr = &p_ptr->inventory[INVEN_LITE];
 
 	/* Refuel */
 	if (o_ptr->tval == TV_FLASK)
@@ -914,14 +877,14 @@ static void do_cmd_refill_lamp(void)
 /*
  * An "item_tester_hook" for refilling torches
  */
-static bool_ item_tester_refill_torch(object_type *o_ptr)
+static object_filter_t const &item_tester_refill_torch()
 {
-	/* Torches are okay */
-	if ((o_ptr->tval == TV_LITE) &&
-	                (o_ptr->sval == SV_LITE_TORCH)) return (TRUE);
-
-	/* Assume not okay */
-	return (FALSE);
+	using namespace object_filter;
+	static auto instance =
+		And(
+			TVal(TV_LITE),
+			SVal(SV_LITE_TORCH));
+	return instance;
 }
 
 
@@ -930,31 +893,25 @@ static bool_ item_tester_refill_torch(object_type *o_ptr)
  */
 static void do_cmd_refill_torch(void)
 {
-	int item;
-
-	object_type *o_ptr;
-
-	object_type *j_ptr;
-
-	cptr q, s;
-
-
-	/* Restrict the choices */
-	item_tester_hook = item_tester_refill_torch;
-
 	/* Get an item */
-	q = "Refuel with which torch? ";
-	s = "You have no extra torches.";
-	if (!get_item(&item, q, s, (USE_INVEN | USE_FLOOR))) return;
+	int item;
+	if (!get_item(&item,
+		      "Refuel with which torch? ",
+		      "You have no extra torches.",
+		      (USE_INVEN | USE_FLOOR),
+		      item_tester_refill_torch()))
+	{
+		return;
+	}
 
 	/* Get the item */
-	o_ptr = get_object(item);
+	object_type *o_ptr = get_object(item);
 
 	/* Take a partial turn */
 	energy_use = 50;
 
 	/* Access the primary torch */
-	j_ptr = &p_ptr->inventory[INVEN_LITE];
+	object_type *j_ptr = &p_ptr->inventory[INVEN_LITE];
 
 	/* Refuel */
 	j_ptr->timeout += o_ptr->timeout + 5;

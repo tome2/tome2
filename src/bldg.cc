@@ -887,7 +887,7 @@ static void list_weapon(object_type *o_ptr, int row, int col)
 /*
  * Select melee weapons
  */
-static bool_ item_tester_hook_melee_weapon(object_type *o_ptr)
+static bool item_tester_hook_melee_weapon(object_type const *o_ptr)
 {
 	return (wield_slot(o_ptr) == INVEN_WIELD);
 }
@@ -897,34 +897,28 @@ static bool_ item_tester_hook_melee_weapon(object_type *o_ptr)
  */
 static bool_ compare_weapons(void)
 {
-	int item, item2, i;
+	int item, i;
 
 	object_type *o1_ptr, *o2_ptr, *orig_ptr;
-
-	object_type *i_ptr;
-
-	cptr q, s;
-
 
 	clear_bldg(6, 18);
 
 	o1_ptr = NULL;
 	o2_ptr = NULL;
-	i_ptr = NULL;
 
 	/* Store copy of original wielded weapon in pack slot */
-	i_ptr = &p_ptr->inventory[INVEN_WIELD];
+	object_type *i_ptr = &p_ptr->inventory[INVEN_WIELD];
 	orig_ptr = &p_ptr->inventory[INVEN_PACK];
 	object_copy(orig_ptr, i_ptr);
 
 	i = 6;
-	/* Get first weapon */
-	/* Restrict choices to meele weapons */
-	item_tester_hook = item_tester_hook_melee_weapon;
 
-	q = "What is your first melee weapon? ";
-	s = "You have nothing to compare.";
-	if (!get_item(&item, q, s, (USE_EQUIP | USE_INVEN)))
+	/* Get first weapon */
+	if (!get_item(&item,
+		      "What is your first melee weapon? ",
+		      "You have nothing to compare.",
+		      (USE_EQUIP | USE_INVEN),
+		      item_tester_hook_melee_weapon))
 	{
 		object_wipe(orig_ptr);
 		return (FALSE);
@@ -935,12 +929,12 @@ static bool_ compare_weapons(void)
 		o1_ptr = &p_ptr->inventory[item];
 
 	/* Get second weapon */
-	/* Restrict choices to melee weapons */
-	item_tester_hook = item_tester_hook_melee_weapon;
-
-	q = "What is your second melee weapon? ";
-	s = "You have nothing to compare.";
-	if (!get_item(&item2, q, s, (USE_EQUIP | USE_INVEN)))
+	int item2;
+	if (!get_item(&item2,
+		      "What is your second melee weapon? ",
+		      "You have nothing to compare.",
+		      (USE_EQUIP | USE_INVEN),
+		      item_tester_hook_melee_weapon))
 	{
 		object_wipe(orig_ptr);
 		return (FALSE);

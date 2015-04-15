@@ -1,6 +1,7 @@
 #pragma once
 
 #include "angband.h"
+#include "object_filter.hpp"
 
 extern void curse_artifact(object_type * o_ptr);
 extern void grow_things(s16b type, int rad);
@@ -98,10 +99,10 @@ extern void alter_reality(void);
 extern void report_magics(void);
 extern void teleport_swap(int dir);
 extern void swap_position(int lty, int ltx);
-extern bool_ item_tester_hook_recharge(object_type *o_ptr);
+extern object_filter_t const &item_tester_hook_recharge();
 extern bool_ project_hack(int typ, int dam);
 extern void project_meteor(int radius, int typ, int dam, u32b flg);
-extern bool_ item_tester_hook_artifactable(object_type *o_ptr);
+extern object_filter_t const &item_tester_hook_artifactable();
 extern bool_ passwall(int dir, bool_ safe);
 extern bool_ project_hook(int typ, int dir, int dam, int flg);
 extern bool_ reset_recall(bool_ no_trepas_max_depth);

@@ -405,26 +405,24 @@ bool_ create_artifact(object_type *o_ptr, bool_ a_scroll, bool_ get_name)
 
 bool_ artifact_scroll(void)
 {
-	int item;
 	bool_ okay = FALSE;
-	object_type *o_ptr;
-	char o_name[80];
-
-	cptr q, s;
-
-
-	/* Enchant weapon/armour */
-	item_tester_hook = item_tester_hook_artifactable;
 
 	/* Get an item */
-	q = "Enchant which item? ";
-	s = "You have nothing to enchant.";
-	if (!get_item(&item, q, s, (USE_EQUIP | USE_INVEN | USE_FLOOR))) return (FALSE);
+	int item;
+	if (!get_item(&item,
+		      "Enchant which item? ",
+		      "You have nothing to enchant.",
+		      (USE_EQUIP | USE_INVEN | USE_FLOOR),
+		      item_tester_hook_artifactable()))
+	{
+		return (FALSE);
+	}
 
 	/* Get the item */
-	o_ptr = get_object(item);
+	object_type *o_ptr = get_object(item);
 
 	/* Description */
+	char o_name[80];
 	object_desc(o_name, o_ptr, FALSE, 0);
 
 	/* Describe */

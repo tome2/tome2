@@ -77,38 +77,27 @@ static int fireproof_get_sval()
 	return cquest.data[1];
 }
 
-static bool_ item_tester_hook_eligible(object_type *o_ptr)
+static bool item_tester_hook_eligible(object_type const *o_ptr)
 {
 	/* check it's the 'marked' item */
-	if ((o_ptr->tval == fireproof_get_settings()->tval) &&
+	return ((o_ptr->tval == fireproof_get_settings()->tval) &&
 	    (o_ptr->sval == fireproof_get_sval()) &&
-	    (o_ptr->pval2 == fireproof_get_sval()))
-	{
-		return TRUE;
-	}
-	else
-	{
-		return FALSE;
-	}
+	    (o_ptr->pval2 == fireproof_get_sval()));
 }
 
-static bool_ item_tester_hook_proofable(object_type *o_ptr)
+static object_filter_t const &item_tester_hook_proofable()
 {
-	u32b f1, f2, f3, f4, f5, esp;
-	object_flags(o_ptr, &f1, &f2, &f3, &f4, &f5, &esp);
-
-	/* is it a book/staff/scroll, is it already fireproof? */
-	if (((o_ptr->tval == TV_BOOK) ||
-	     (o_ptr->tval == TV_SCROLL) ||
-	     (o_ptr->tval == TV_STAFF))
-	    && ((f3 & TR3_IGNORE_FIRE) == 0))
-	{
-		return TRUE;
-	}
-	else
-	{
-		return FALSE;
-	}
+	using namespace object_filter;
+	static auto instance = And(
+		// Must be the correct item base type
+		Or(
+			TVal(TV_BOOK),
+			TVal(TV_SCROLL),
+			TVal(TV_STAFF)),
+		// Must NOT already be fireproof
+		Not(
+			HasFlag3(TR3_IGNORE_FIRE)));
+	return instance;
 }
 
 /*
@@ -170,12 +159,11 @@ static bool_ fireproof_enough_points(object_type *o_ptr, int *stack)
 static bool_ fireproof()
 {
 	int item;
-
-	item_tester_hook = item_tester_hook_proofable;
 	if (!get_item(&item,
 		      "Which item shall I fireproof?",
 		      "You have no more items I can fireproof, come back when you have some.",
-		      USE_INVEN))
+		      USE_INVEN,
+		      item_tester_hook_proofable()))
 	{
 		return FALSE;
 	}
@@ -288,8 +276,7 @@ void quest_fireproof_building(bool_ *paid, bool_ *recreate)
 		snprintf(pni, sizeof(pni), "You have no %s to return", settings->tval_name_plural);
 
 		/* ask for item */
-		item_tester_hook = item_tester_hook_eligible;
-		ret = get_item(&item_idx, p, pni, USE_INVEN);
+		ret = get_item(&item_idx, p, pni, USE_INVEN, item_tester_hook_eligible);
 
 		/* didn't get the item? */
 		if (!ret)
