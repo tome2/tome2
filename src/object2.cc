@@ -4435,7 +4435,7 @@ static bool_ theme_changed(obj_theme theme)
 /*
  * Maga-Hack -- match certain types of object only.
  */
-bool_ kind_is_theme(int k_idx)
+static bool kind_is_theme(int k_idx)
 {
 	object_kind *k_ptr = &k_info[k_idx];
 

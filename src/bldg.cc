@@ -39,7 +39,7 @@ static int building_loc = 0;
 /*
  * A helper function for is_state
  */
-bool_ is_state_aux(store_type *s_ptr, int state)
+static bool_ is_state_aux(store_type *s_ptr, int state)
 {
 	owner_type *ow_ptr = &ow_info[s_ptr->owner];
 
