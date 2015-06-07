@@ -284,9 +284,9 @@ namespace {
 			f_info = make_array<feature_type>(max_f_idx);
 		}
 
-		static errr parse(FILE *fp, char *buf)
+		static errr parse(FILE *fp)
 		{
-			return init_f_info_txt(fp, buf);
+			return init_f_info_txt(fp);
 		}
 
 	};
@@ -300,9 +300,9 @@ namespace {
 			k_info = make_array<object_kind>(max_k_idx);
 		}
 
-		static errr parse(FILE *fp, char *buf)
+		static errr parse(FILE *fp)
 		{
-			return init_k_info_txt(fp, buf);
+			return init_k_info_txt(fp);
 		};
 
 	};
@@ -316,9 +316,9 @@ namespace {
 			set_info = make_array<set_type>(max_set_idx);
 		}
 
-		static errr parse(FILE *fp, char *buf)
+		static errr parse(FILE *fp)
 		{
-			return init_set_info_txt(fp, buf);
+			return init_set_info_txt(fp);
 		}
 
 	};
@@ -332,9 +332,9 @@ namespace {
 			a_info = make_array<artifact_type>(max_a_idx);
 		}
 
-		static errr parse(FILE *fp, char *buf)
+		static errr parse(FILE *fp)
 		{
-			return init_a_info_txt(fp, buf);
+			return init_a_info_txt(fp);
 		}
 
 	};
@@ -348,9 +348,9 @@ namespace {
 			s_info = make_array<skill_type>(max_s_idx);
 		}
 
-		static errr parse(FILE *fp, char *buf)
+		static errr parse(FILE *fp)
 		{
-			return init_s_info_txt(fp, buf);
+			return init_s_info_txt(fp);
 		}
 
 	};
@@ -364,9 +364,9 @@ namespace {
 			ab_info = make_array<ability_type>(max_ab_idx);
 		}
 
-		static errr parse(FILE *fp, char *buf)
+		static errr parse(FILE *fp)
 		{
-			return init_ab_info_txt(fp, buf);
+			return init_ab_info_txt(fp);
 		}
 
 	};
@@ -380,9 +380,9 @@ namespace {
 			e_info = make_array<ego_item_type>(max_e_idx);
 		}
 
-		static errr parse(FILE *fp, char *buf)
+		static errr parse(FILE *fp)
 		{
-			return init_e_info_txt(fp, buf);
+			return init_e_info_txt(fp);
 		}
 
 	};
@@ -396,9 +396,9 @@ namespace {
 			ra_info = make_array<randart_part_type>(max_ra_idx);
 		}
 
-		static errr parse(FILE *fp, char *buf)
+		static errr parse(FILE *fp)
 		{
-			return init_ra_info_txt(fp, buf);
+			return init_ra_info_txt(fp);
 		}
 
 	};
@@ -412,9 +412,9 @@ namespace {
 			r_info = make_array<monster_race>(max_r_idx);
 		}
 
-		static errr parse(FILE *fp, char *buf)
+		static errr parse(FILE *fp)
 		{
-			return init_r_info_txt(fp, buf);
+			return init_r_info_txt(fp);
 		}
 
 	};
@@ -428,9 +428,9 @@ namespace {
 			re_info = make_array<monster_ego>(max_re_idx);
 		}
 
-		static errr parse(FILE *fp, char *buf)
+		static errr parse(FILE *fp)
 		{
-			return init_re_info_txt(fp, buf);
+			return init_re_info_txt(fp);
 		}
 
 	};
@@ -444,9 +444,9 @@ namespace {
 			d_info = make_array<dungeon_info_type>(max_d_idx);
 		}
 
-		static errr parse(FILE *fp, char *buf)
+		static errr parse(FILE *fp)
 		{
-			return init_d_info_txt(fp, buf);
+			return init_d_info_txt(fp);
 		}
 
 	};
@@ -460,9 +460,9 @@ namespace {
 			st_info = make_array<store_info_type>(max_st_idx);
 		}
 
-		static errr parse(FILE *fp, char *buf)
+		static errr parse(FILE *fp)
 		{
-			return init_st_info_txt(fp, buf);
+			return init_st_info_txt(fp);
 		}
 
 	};
@@ -476,9 +476,9 @@ namespace {
 			ow_info = make_array<owner_type>(max_ow_idx);
 		}
 
-		static errr parse(FILE *fp, char *buf)
+		static errr parse(FILE *fp)
 		{
-			return init_ow_info_txt(fp, buf);
+			return init_ow_info_txt(fp);
 		}
 
 	};
@@ -492,9 +492,9 @@ namespace {
 			ba_info = make_array<store_action_type>(max_ba_idx);
 		}
 
-		static errr parse(FILE *fp, char *buf)
+		static errr parse(FILE *fp)
 		{
-			return init_ba_info_txt(fp, buf);
+			return init_ba_info_txt(fp);
 		}
 
 	};
@@ -508,9 +508,9 @@ namespace {
 			wf_info = make_array<wilderness_type_info>(max_wf_idx);
 		}
 
-		static errr parse(FILE *fp, char *buf)
+		static errr parse(FILE *fp)
 		{
-			return init_wf_info_txt(fp, buf);
+			return init_wf_info_txt(fp);
 		}
 
 	};
@@ -524,9 +524,9 @@ namespace {
 			t_info = make_array<trap_type>(max_t_idx);
 		}
 
-		static errr parse(FILE *fp, char *buf)
+		static errr parse(FILE *fp)
 		{
-			return init_t_info_txt(fp, buf);
+			return init_t_info_txt(fp);
 		}
 
 	};
@@ -540,9 +540,9 @@ namespace {
 			v_info = make_array<vault_type>(max_v_idx);
 		}
 
-		static errr parse(FILE *fp, char *buf)
+		static errr parse(FILE *fp)
 		{
-			return init_v_info_txt(fp, buf);
+			return init_v_info_txt(fp);
 		}
 
 	};
@@ -564,9 +564,9 @@ namespace {
 			}
 		}
 
-		static errr parse(FILE *fp, char *buf)
+		static errr parse(FILE *fp)
 		{
-			return init_player_info_txt(fp, buf);
+			return init_player_info_txt(fp);
 		}
 
 	};
@@ -581,9 +581,9 @@ namespace {
 			a_select_flags = make_array<artifact_select_flag>(max_al_idx);
 		}
 
-		static errr parse(FILE *fp, char *buf)
+		static errr parse(FILE *fp)
 		{
-			return init_al_info_txt(fp, buf);
+			return init_al_info_txt(fp);
 		}
 
 	};
@@ -609,8 +609,7 @@ template<typename T> static errr init_x_info() {
 	}
 
 	/* Parse the file */
-	char buf[1024];
-	errr err = T::parse(fp, buf);
+	errr err = T::parse(fp);
 
 	/* Close it */
 	my_fclose(fp);
@@ -624,7 +623,6 @@ template<typename T> static errr init_x_info() {
 		/* Oops */
 		msg_format("Error %d at line %d of '%s'.", err, error_line, T::name);
 		msg_format("Record %d contains a '%s' error.", error_idx, oops);
-		msg_format("Parsing '%s'.", buf);
 		msg_print(NULL);
 
 		/* Quit */

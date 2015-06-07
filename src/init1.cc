@@ -1764,7 +1764,7 @@ static errr grab_one_race_kind_flag(u32b *f1, u32b *f2, u32b *f3, u32b *f4, u32b
 /*
  * Initialize the "player" arrays, by parsing an ascii "template" file
  */
-errr init_player_info_txt(FILE *fp, char *buf)
+errr init_player_info_txt(FILE *fp)
 {
 	int i = 0, z;
 	int powers = 0;
@@ -1772,7 +1772,7 @@ errr init_player_info_txt(FILE *fp, char *buf)
 	int tit_idx = 0;
 	int spec_idx = 0;
 	int cur_ab = -1;
-
+	char buf[1024];
 	char *s, *t;
 
 	/* Not ready yet */
@@ -3308,9 +3308,10 @@ errr init_player_info_txt(FILE *fp, char *buf)
 /*
  * Initialize the "v_info" array, by parsing an ascii "template" file
  */
-errr init_v_info_txt(FILE *fp, char *buf)
+errr init_v_info_txt(FILE *fp)
 {
 	int i;
+	char buf[1024];
 	char *s;
 
 	/* Not ready yet */
@@ -3509,10 +3510,10 @@ static errr grab_one_feature_flag(feature_type *f_ptr, cptr what)
 /*
  * Initialize the "f_info" array, by parsing an ascii "template" file
  */
-errr init_f_info_txt(FILE *fp, char *buf)
+errr init_f_info_txt(FILE *fp)
 {
 	int i;
-
+	char buf[1024];
 	char *s, *t;
 
 	/* Not ready yet */
@@ -3902,10 +3903,10 @@ static errr grab_one_kind_flag(object_kind *k_ptr, cptr what, bool_ obvious)
 /*
  * Initialize the "k_info" array, by parsing an ascii "template" file
  */
-errr init_k_info_txt(FILE *fp, char *buf)
+errr init_k_info_txt(FILE *fp)
 {
 	int i;
-
+	char buf[1024];
 	char *s, *t;
 
 	/* Not ready yet */
@@ -4359,11 +4360,12 @@ int init_al_info_essence(char *essence)
 /*
  * Initialize the "al_info" array, by parsing an ascii "template" file
  */
-errr init_al_info_txt(FILE *fp, char *buf)
+errr init_al_info_txt(FILE *fp)
 {
 	int al_idx = 0, a_idx = 0;
 	char *s, *t;
 	struct artifact_select_flag *a_ptr = NULL;
+	char buf[1024];
 
 	/* Not ready yet */
 	bool_ okay = FALSE;
@@ -4736,10 +4738,10 @@ static errr grab_one_artifact_flag(artifact_type *a_ptr, cptr what, bool_ obviou
 /*
  * Initialize the "a_info" array, by parsing an ascii "template" file
  */
-errr init_a_info_txt(FILE *fp, char *buf)
+errr init_a_info_txt(FILE *fp)
 {
 	int i;
-
+	char buf[1024];
 	char *s, *t;
 
 	/* Not ready yet */
@@ -5036,10 +5038,11 @@ errr init_a_info_txt(FILE *fp, char *buf)
 /*
 * Initialize the "set_info" array, by parsing an ascii "template" file
 */
-errr init_set_info_txt(FILE *fp, char *buf)
+errr init_set_info_txt(FILE *fp)
 {
 	int i;
 	int cur_art = 0, cur_num = 0;
+	char buf[1024];
 
 	char *s, *t;
 
@@ -5242,10 +5245,10 @@ errr init_set_info_txt(FILE *fp, char *buf)
 /*
  * Initialize the "s_info" array, by parsing an ascii "template" file
  */
-errr init_s_info_txt(FILE *fp, char *buf)
+errr init_s_info_txt(FILE *fp)
 {
 	int i, z, order = 1;
-
+	char buf[1024];
 	char *s;
 
 	/* Not ready yet */
@@ -5579,10 +5582,10 @@ errr init_s_info_txt(FILE *fp, char *buf)
 /*
  * Initialize the "ab_info" array, by parsing an ascii "template" file
  */
-errr init_ab_info_txt(FILE *fp, char *buf)
+errr init_ab_info_txt(FILE *fp)
 {
 	int i, z;
-
+	char buf[1024];
 	char *s;
 
 	/* Not ready yet */
@@ -6100,10 +6103,10 @@ static bool_ grab_one_ego_item_flag_restrict(ego_item_type *e_ptr, cptr what, bo
 /*
  * Initialize the "e_info" array, by parsing an ascii "template" file
  */
-errr init_e_info_txt(FILE *fp, char *buf)
+errr init_e_info_txt(FILE *fp)
 {
 	int i, cur_r = -1, cur_t = 0, j;
-
+	char buf[1024];
 	char *s, *t;
 
 	/* Not ready yet */
@@ -6603,10 +6606,10 @@ static bool_ grab_one_randart_item_flag(randart_part_type *ra_ptr, cptr what, ch
 /*
  * Initialize the "ra_info" array, by parsing an ascii "template" file
  */
-errr init_ra_info_txt(FILE *fp, char *buf)
+errr init_ra_info_txt(FILE *fp)
 {
 	int i, cur_t = 0, j, cur_g = 0;
-
+	char buf[1024];
 	char *s, *t;
 
 	/* Not ready yet */
@@ -7002,10 +7005,10 @@ static errr grab_one_spell_flag(monster_race *r_ptr, cptr what)
 /*
  * Initialize the "r_info" array, by parsing an ascii "template" file
  */
-errr init_r_info_txt(FILE *fp, char *buf)
+errr init_r_info_txt(FILE *fp)
 {
 	int i;
-
+	char buf[1024];
 	char *s, *t;
 
 	/* Not ready yet */
@@ -7612,10 +7615,10 @@ static errr grab_one_ego_flag(monster_ego *re_ptr, cptr what, bool_ must)
 /*
  * Initialize the "re_info" array, by parsing an ascii "template" file
  */
-errr init_re_info_txt(FILE *fp, char *buf)
+errr init_re_info_txt(FILE *fp)
 {
 	int i, j;
-
+	char buf[1024];
 	byte blow_num = 0;
 	int r_char_number = 0, nr_char_number = 0;
 
@@ -8131,10 +8134,10 @@ static errr grab_one_trap_type_flag(trap_type *t_ptr, cptr what)
 /*
  * Initialize the "tr_info" array, by parsing an ascii "template" file
  */
-errr init_t_info_txt(FILE *fp, char *buf)
+errr init_t_info_txt(FILE *fp)
 {
 	int i;
-
+	char buf[1024];
 	char *s, *t;
 
 	/* Not ready yet */
@@ -8464,9 +8467,10 @@ static errr grab_one_spell_monster_flag(dungeon_info_type *d_ptr, cptr what, byt
 /*
  * Initialize the "d_info" array, by parsing an ascii "template" file
  */
-errr init_d_info_txt(FILE *fp, char *buf)
+errr init_d_info_txt(FILE *fp)
 {
 	int i, j;
+	char buf[1024];
 
 	s16b rule_num = 0;
 
@@ -9082,10 +9086,10 @@ static errr grab_one_store_flag(store_info_type *st_ptr, cptr what)
 /*
  * Initialize the "st_info" array, by parsing an ascii "template" file
  */
-errr init_st_info_txt(FILE *fp, char *buf)
+errr init_st_info_txt(FILE *fp)
 {
 	int i = 0, item_idx = 0;
-
+	char buf[1024];
 	char *s, *t;
 
 	/* Not ready yet */
@@ -9345,10 +9349,10 @@ errr init_st_info_txt(FILE *fp, char *buf)
 /*
  * Initialize the "ba_info" array, by parsing an ascii "template" file
  */
-errr init_ba_info_txt(FILE *fp, char *buf)
+errr init_ba_info_txt(FILE *fp)
 {
 	int i = 0;
-
+	char buf[1024];
 	char *s;
 
 	/* Not ready yet */
@@ -9489,10 +9493,10 @@ errr init_ba_info_txt(FILE *fp, char *buf)
 /*
  * Initialize the "ow_info" array, by parsing an ascii "template" file
  */
-errr init_ow_info_txt(FILE *fp, char *buf)
+errr init_ow_info_txt(FILE *fp)
 {
 	int i;
-
+	char buf[1024];
 	char *s, *t;
 
 	/* Not ready yet */
@@ -9706,10 +9710,10 @@ static errr grab_one_wf_info_flag(wilderness_type_info *wf_ptr, cptr what)
 /*
  * Initialize the "wf_info" array, by parsing an ascii "template" file
  */
-errr init_wf_info_txt(FILE *fp, char *buf)
+errr init_wf_info_txt(FILE *fp)
 {
 	int i;
-
+	char buf[1024];
 	char *s, *t;
 
 	/* Not ready yet */
