@@ -10,7 +10,6 @@ extern bool_ quick_messages;
 extern bool_ carry_query_flag;
 extern bool_ use_old_target;
 extern bool_ always_pickup;
-extern bool_ prompt_pickup_heavy;
 extern bool_ always_repeat;
 extern bool_ ring_bell;
 

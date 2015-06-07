@@ -5999,44 +5999,31 @@ void pickup_ammo()
 }
 
 
-/*
- * Make the player carry everything in a grid
- *
- * If "pickup" is FALSE then only gold will be picked up
- *
- * This is called by py_pickup() when easy_floor is TRUE.
+/**
+ * Check for encumberance if player were to pick up
+ * given item.
  */
-bool_ can_carry_heavy(object_type *o_ptr)
+static bool can_carry_heavy(object_type const *o_ptr)
 {
-	/* Query if object is heavy */
-	if (prompt_pickup_heavy)
-	{
-		int i, j;
-		int old_enc = 0;
-		int new_enc = 0;
+	/* Extract the "weight limit" (in tenth pounds) */
+	int i = weight_limit();
 
-		/* Extract the "weight limit" (in tenth pounds) */
-		i = weight_limit();
+	/* Calculate current encumbarance */
+	int j = calc_total_weight();
 
-		/* Calculate current encumbarance */
-		j = calc_total_weight();
+	/* Apply encumbarance from weight */
+	int old_enc = 0;
+	if (j > i / 2) old_enc = ((j - (i / 2)) / (i / 10));
 
-		/* Apply encumbarance from weight */
-		if (j > i / 2) old_enc = ((j - (i / 2)) / (i / 10));
+	/* Increase the weight, recalculate encumbarance */
+	j += (o_ptr->number * o_ptr->weight);
 
-		/* Increase the weight, recalculate encumbarance */
-		j += (o_ptr->number * o_ptr->weight);
+	/* Apply encumbarance from weight */
+	int new_enc = 0;
+	if (j > i / 2) new_enc = ((j - (i / 2)) / (i / 10));
 
-		/* Apply encumbarance from weight */
-		if (j > i / 2) new_enc = ((j - (i / 2)) / (i / 10));
-
-		/* Should we query? */
-		if (new_enc > old_enc)
-		{
-			return (FALSE);
-		}
-	}
-	return (TRUE);
+	/* If the encumberance is the same, then we pick up without prompt */
+	return (new_enc <= old_enc);
 }
 
 /* Do the actuall picking up */

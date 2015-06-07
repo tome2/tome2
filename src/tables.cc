@@ -1291,9 +1291,6 @@ option_type option_info[] =
 	{ &always_pickup, FALSE, 1, 5,
 	  "always_pickup", "Pick things up by default" },
 
-	{ &prompt_pickup_heavy, TRUE, 1, 6,
-	  "prompt_pickup_heavy", "Prompt before picking up heavy objects" },
-
 	{ &always_repeat, TRUE, 1, 7,
 	  "always_repeat", "Repeat obvious commands" },
 
