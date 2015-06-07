@@ -41,12 +41,14 @@
 #include "xtra1.hpp"
 #include "xtra2.hpp"
 
+#include <boost/algorithm/string/predicate.hpp>
 #include <cassert>
 #include <chrono>
 #include <sstream>
 #include <thread>
 #include <vector>
 
+using boost::algorithm::iequals;
 using std::this_thread::sleep_for;
 using std::chrono::milliseconds;
 
@@ -6400,6 +6402,24 @@ static void print_dungeon_batch(std::vector<int> const &dungeon_idxs,
 	prt(format("Select a dungeon (a-%c), * to list, @ to select by name, +/- to scroll:", I2A(i - 1)), 0, 0);
 }
 
+static int find_dungeon_by_name(char const *name)
+{
+	/* Find the index corresponding to the name */
+	for (int i = 1; i < max_d_idx; i++)
+	{
+		/* Skip non-initialized entries. */
+		if (d_info[i].name == nullptr) {
+			continue;
+		}
+		if (iequals(name, d_info[i].name))
+		{
+			return i;
+		}
+	}
+	/* Not found */
+	return -1;
+}
+
 static int reset_recall_aux()
 {
 	char which;
@@ -6466,28 +6486,14 @@ static int reset_recall_aux()
 
 		else if (which == '@')
 		{
-			char buf[80], buf2[80];
-
+			char buf[80];
 			strcpy(buf, d_info[p_ptr->recall_dungeon].name);
 			if (!get_string("Which dungeon? ", buf, 79)) continue;
 
 			/* Find the index corresponding to the name */
-			int i;
-			for (i = 1; i < max_d_idx; i++)
-			{
-				sprintf(buf2, "%s", d_info[i].name);
+			int i = find_dungeon_by_name(buf);
 
-				/* Lowercase the name */
-				strlower(buf);
-				strlower(buf2);
-				if (strstr(buf2, buf))
-				{
-					/* valid dungeon found */
-					break;
-				}
-			}
-
-			if (i >= max_d_idx)
+			if (i < 0)
 			{
 				msg_print("Never heard of that place!");
 				msg_print(NULL);
