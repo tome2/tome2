@@ -29,6 +29,7 @@
 #include "xtra1.hpp"
 
 #include <cassert>
+#include <type_traits>
 #include <vector>
 
 /*
@@ -1937,6 +1938,7 @@ s16b lookup_kind(int tval, int sval)
 void object_wipe(object_type *o_ptr)
 {
 	/* Wipe the structure */
+	static_assert(std::is_pod<object_type>::value, "object_type must be POD type for memset to work");
 	memset(o_ptr, 0, sizeof(object_type));
 }
 
@@ -1959,7 +1961,7 @@ void object_prep(object_type *o_ptr, int k_idx)
 	object_kind *k_ptr = &k_info[k_idx];
 
 	/* Clear the record */
-	memset(o_ptr, 0, sizeof(object_type));
+	object_wipe(o_ptr);
 
 	/* Save the kind index */
 	o_ptr->k_idx = k_idx;
