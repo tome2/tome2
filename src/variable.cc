@@ -814,7 +814,7 @@ u16b max_st_idx;
 /*
  * Item sets
  */
-s16b max_set_idx = 1;
+u16b max_set_idx = 1;
 
 /*
  * Maximum number of players info in p_info.txt

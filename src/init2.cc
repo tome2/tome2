@@ -271,36 +271,346 @@ static void note(cptr str)
 
 
 /*
- * Initialise the "f_info" array
- *
- * Note that we let each entry have a unique "name" and "text" string,
- * even if the string happens to be empty (everyone has a unique '\0').
+ * Traits for data arrays
  */
-static errr init_f_info(void)
-{
-	errr err = 0;
+namespace {
 
-	FILE *fp;
+	struct f_info_traits {
 
-	/* General buffer */
-	char buf[1024];
+		static constexpr char const *name = "f_info.txt";
 
-	/* Allocate the "f_info" array */
-	f_info = make_array<feature_type>(max_f_idx);
+		static void allocate()
+		{
+			f_info = make_array<feature_type>(max_f_idx);
+		}
 
-	/*** Load the ascii template file ***/
+		static errr parse(FILE *fp, char *buf)
+		{
+			return init_f_info_txt(fp, buf);
+		}
+
+	};
+
+	struct k_info_traits {
+
+		static constexpr char const *name = "k_info.txt";
+
+		static void allocate()
+		{
+			k_info = make_array<object_kind>(max_k_idx);
+		}
+
+		static errr parse(FILE *fp, char *buf)
+		{
+			return init_k_info_txt(fp, buf);
+		};
+
+	};
+
+	struct set_info_traits {
+
+		static constexpr char const *name = "set_info.txt";
+
+		static void allocate()
+		{
+			set_info = make_array<set_type>(max_set_idx);
+		}
+
+		static errr parse(FILE *fp, char *buf)
+		{
+			return init_set_info_txt(fp, buf);
+		}
+
+	};
+
+	struct a_info_traits {
+
+		static constexpr char const *name = "a_info.txt";
+
+		static void allocate()
+		{
+			a_info = make_array<artifact_type>(max_a_idx);
+		}
+
+		static errr parse(FILE *fp, char *buf)
+		{
+			return init_a_info_txt(fp, buf);
+		}
+
+	};
+
+	struct s_info_traits {
+
+		static constexpr char const *name = "s_info.txt";
+
+		static void allocate()
+		{
+			s_info = make_array<skill_type>(max_s_idx);
+		}
+
+		static errr parse(FILE *fp, char *buf)
+		{
+			return init_s_info_txt(fp, buf);
+		}
+
+	};
+
+	struct ab_info_traits {
+
+		static constexpr char const *name = "ab_info.txt";
+
+		static void allocate()
+		{
+			ab_info = make_array<ability_type>(max_ab_idx);
+		}
+
+		static errr parse(FILE *fp, char *buf)
+		{
+			return init_ab_info_txt(fp, buf);
+		}
+
+	};
+
+	struct e_info_traits {
+
+		static constexpr char const *name = "e_info.txt";
+
+		static void allocate()
+		{
+			e_info = make_array<ego_item_type>(max_e_idx);
+		}
+
+		static errr parse(FILE *fp, char *buf)
+		{
+			return init_e_info_txt(fp, buf);
+		}
+
+	};
+
+	struct ra_info_traits {
+
+		static constexpr char const *name = "ra_info.txt";
+
+		static void allocate()
+		{
+			ra_info = make_array<randart_part_type>(max_ra_idx);
+		}
+
+		static errr parse(FILE *fp, char *buf)
+		{
+			return init_ra_info_txt(fp, buf);
+		}
+
+	};
+
+	struct r_info_traits {
+
+		static constexpr char const *name = "r_info.txt";
+
+		static void allocate()
+		{
+			r_info = make_array<monster_race>(max_r_idx);
+		}
+
+		static errr parse(FILE *fp, char *buf)
+		{
+			return init_r_info_txt(fp, buf);
+		}
+
+	};
+
+	struct re_info_traits {
+
+		static constexpr char const *name = "re_info.txt";
+
+		static void allocate()
+		{
+			re_info = make_array<monster_ego>(max_re_idx);
+		}
+
+		static errr parse(FILE *fp, char *buf)
+		{
+			return init_re_info_txt(fp, buf);
+		}
+
+	};
+
+	struct d_info_traits {
+
+		static constexpr char const *name = "d_info.txt";
+
+		static void allocate()
+		{
+			d_info = make_array<dungeon_info_type>(max_d_idx);
+		}
+
+		static errr parse(FILE *fp, char *buf)
+		{
+			return init_d_info_txt(fp, buf);
+		}
+
+	};
+
+	struct st_info_traits {
+
+		static constexpr char const *name = "st_info.txt";
+
+		static void allocate()
+		{
+			st_info = make_array<store_info_type>(max_st_idx);
+		}
+
+		static errr parse(FILE *fp, char *buf)
+		{
+			return init_st_info_txt(fp, buf);
+		}
+
+	};
+
+	struct ow_info_traits {
+
+		static constexpr char const *name = "ow_info.txt";
+
+		static void allocate()
+		{
+			ow_info = make_array<owner_type>(max_ow_idx);
+		}
+
+		static errr parse(FILE *fp, char *buf)
+		{
+			return init_ow_info_txt(fp, buf);
+		}
+
+	};
+
+	struct ba_info_traits {
+
+		static constexpr char const *name = "ba_info.txt";
+
+		static void allocate()
+		{
+			ba_info = make_array<store_action_type>(max_ba_idx);
+		}
+
+		static errr parse(FILE *fp, char *buf)
+		{
+			return init_ba_info_txt(fp, buf);
+		}
+
+	};
+
+	struct wf_info_traits {
+
+		static constexpr char const *name = "wf_info.txt";
+
+		static void allocate()
+		{
+			wf_info = make_array<wilderness_type_info>(max_wf_idx);
+		}
+
+		static errr parse(FILE *fp, char *buf)
+		{
+			return init_wf_info_txt(fp, buf);
+		}
+
+	};
+
+	struct tr_info_traits {
+
+		static constexpr char const *name = "tr_info.txt";
+
+		static void allocate()
+		{
+			t_info = make_array<trap_type>(max_t_idx);
+		}
+
+		static errr parse(FILE *fp, char *buf)
+		{
+			return init_t_info_txt(fp, buf);
+		}
+
+	};
+
+	struct v_info_traits {
+
+		static constexpr char const *name = "v_info.txt";
+
+		static void allocate()
+		{
+			v_info = make_array<vault_type>(max_v_idx);
+		}
+
+		static errr parse(FILE *fp, char *buf)
+		{
+			return init_v_info_txt(fp, buf);
+		}
+
+	};
+
+	struct p_info_traits {
+
+		static constexpr char const *name = "p_info.txt";
+
+		static void allocate()
+		{
+			race_info = make_array<player_race>(max_rp_idx);
+			race_mod_info = make_array<player_race_mod>(max_rmp_idx);
+			class_info = make_array<player_class>(max_c_idx);
+			bg = make_array<hist_type>(max_bg_idx);
+			meta_class_info = make_array<meta_class_type>(max_mc_idx);
+			for (std::size_t i = 0; i < max_mc_idx; i++)
+			{
+				meta_class_info[i].classes = make_array<s16b>(max_c_idx);
+			}
+		}
+
+		static errr parse(FILE *fp, char *buf)
+		{
+			return init_player_info_txt(fp, buf);
+		}
+
+	};
+
+	struct al_info_traits {
+
+		static constexpr char const *name = "al_info.txt";
+
+		static void allocate()
+		{
+			alchemist_recipes = make_array<alchemist_recipe>(max_al_idx);
+			a_select_flags = make_array<artifact_select_flag>(max_al_idx);
+		}
+
+		static errr parse(FILE *fp, char *buf)
+		{
+			return init_al_info_txt(fp, buf);
+		}
+
+	};
+
+}
+
+template<typename T> static errr init_x_info() {
+
+	/* Allocate the data array */
+	T::allocate();
 
 	/* Build the filename */
-	path_build(buf, 1024, ANGBAND_DIR_EDIT, "f_info.txt");
+	boost::filesystem::path path(ANGBAND_DIR_EDIT);
+	path /= T::name;
 
 	/* Open the file */
-	fp = my_fopen(buf, "r");
+	FILE *fp = my_fopen(path.c_str(), "r");
 
 	/* Parse it */
-	if (!fp) quit("Cannot open 'f_info.txt' file.");
+	if (!fp)
+	{
+		quit_fmt("Cannot open '%s' file.", T::name);
+	}
 
 	/* Parse the file */
-	err = init_f_info_txt(fp, buf);
+	char buf[1024];
+	errr err = T::parse(fp, buf);
 
 	/* Close it */
 	my_fclose(fp);
@@ -308,1090 +618,26 @@ static errr init_f_info(void)
 	/* Errors */
 	if (err)
 	{
-		cptr oops;
-
 		/* Error string */
-		oops = (((err > 0) && (err < 8)) ? err_str[err] : "unknown");
+		cptr oops = (((err > 0) && (err < 8)) ? err_str[err] : "unknown");
 
 		/* Oops */
-		msg_format("Error %d at line %d of 'f_info.txt'.", err, error_line);
+		msg_format("Error %d at line %d of '%s'.", err, error_line, T::name);
 		msg_format("Record %d contains a '%s' error.", error_idx, oops);
 		msg_format("Parsing '%s'.", buf);
 		msg_print(NULL);
 
 		/* Quit */
-		quit("Error in 'f_info.txt' file.");
+		quit_fmt("Error in '%s' file.", T::name);
 	}
 
 	/* Success */
 	return (0);
 }
 
-
-
-/*
- * Initialise the "k_info" array
- *
- * Note that we let each entry have a unique "name" and "text" string,
- * even if the string happens to be empty (everyone has a unique '\0').
- */
-static errr init_k_info(void)
+errr init_v_info()
 {
-	errr err = 0;
-
-	FILE *fp;
-
-	/* General buffer */
-	char buf[1024];
-
-	/* Allocate the "k_info" array */
-	k_info = make_array<object_kind>(max_k_idx);
-
-	/*** Load the ascii template file ***/
-
-	/* Build the filename */
-	path_build(buf, 1024, ANGBAND_DIR_EDIT, "k_info.txt");
-
-	/* Open the file */
-	fp = my_fopen(buf, "r");
-
-	/* Parse it */
-	if (!fp) quit("Cannot open 'k_info.txt' file.");
-
-	/* Parse the file */
-	err = init_k_info_txt(fp, buf);
-
-	/* Close it */
-	my_fclose(fp);
-
-	/* Errors */
-	if (err)
-	{
-		cptr oops;
-
-		/* Error string */
-		oops = (((err > 0) && (err < 8)) ? err_str[err] : "unknown");
-
-		/* Oops */
-		msg_format("Error %d at line %d of 'k_info.txt'.", err, error_line);
-		msg_format("Record %d contains a '%s' error.", error_idx, oops);
-		msg_format("Parsing '%s'.", buf);
-		msg_print(NULL);
-
-		/* Quit */
-		quit("Error in 'k_info.txt' file.");
-	}
-
-	/* Success */
-	return (0);
-}
-
-
-
-/*
- * Initialise the "set_info" array
- *
- * Note that we let each entry have a unique "name" and "text" string,
- * even if the string happens to be empty (everyone has a unique '\0').
- */
-static errr init_set_info(void)
-{
-	errr err = 0;
-
-	FILE *fp;
-
-	/* General buffer */
-	char buf[1024];
-
-	/* Allocate the "set_info" array */
-	set_info = make_array<set_type>(max_set_idx);
-
-	/*** Load the ascii template file ***/
-
-	/* Build the filename */
-	path_build(buf, 1024, ANGBAND_DIR_EDIT, "set_info.txt");
-
-	/* Open the file */
-	fp = my_fopen(buf, "r");
-
-	/* Parse it */
-	if (!fp) quit("Cannot open 'set_info.txt' file.");
-
-	/* Parse the file */
-	err = init_set_info_txt(fp, buf);
-
-	/* Close it */
-	my_fclose(fp);
-
-	/* Errors */
-	if (err)
-	{
-		cptr oops;
-
-		/* Error string */
-		oops = (((err > 0) && (err < 8)) ? err_str[err] : "unknown");
-
-		/* Oops */
-		msg_format("Error %d at line %d of 'set_info.txt'.", err, error_line);
-		msg_format("Record %d contains a '%s' error.", error_idx, oops);
-		msg_format("Parsing '%s'.", buf);
-		msg_print(NULL);
-
-		/* Quit */
-		quit("Error in 'set_info.txt' file.");
-	}
-
-	/* Success */
-	return (0);
-}
-
-
-/*
- * Initialise the "a_info" array
- *
- * Note that we let each entry have a unique "name" and "text" string,
- * even if the string happens to be empty (everyone has a unique '\0').
- */
-static errr init_a_info(void)
-{
-	errr err = 0;
-
-	FILE *fp;
-
-	/* General buffer */
-	char buf[1024];
-
-	/* Allocate the "a_info" array */
-	a_info = make_array<artifact_type>(max_a_idx);
-
-	/*** Load the ascii template file ***/
-
-	/* Build the filename */
-	path_build(buf, 1024, ANGBAND_DIR_EDIT, "a_info.txt");
-
-	/* Open the file */
-	fp = my_fopen(buf, "r");
-
-	/* Parse it */
-	if (!fp) quit("Cannot open 'a_info.txt' file.");
-
-	/* Parse the file */
-	err = init_a_info_txt(fp, buf);
-
-	/* Close it */
-	my_fclose(fp);
-
-	/* Errors */
-	if (err)
-	{
-		cptr oops;
-
-		/* Error string */
-		oops = (((err > 0) && (err < 8)) ? err_str[err] : "unknown");
-
-		/* Oops */
-		msg_format("Error %d at line %d of 'a_info.txt'.", err, error_line);
-		msg_format("Record %d contains a '%s' error.", error_idx, oops);
-		msg_format("Parsing '%s'.", buf);
-		msg_print(NULL);
-
-		/* Quit */
-		quit("Error in 'a_info.txt' file.");
-	}
-
-	/* Success */
-	return (0);
-}
-
-
-/*
- * Initialise the "s_info" array
- *
- * Note that we let each entry have a unique "name" and "text" string,
- * even if the string happens to be empty (everyone has a unique '\0').
- */
-static errr init_s_info(void)
-{
-	errr err = 0;
-
-	FILE *fp;
-
-	/* General buffer */
-	char buf[1024];
-
-	/* Allocate the "s_info" array */
-	s_info = make_array<skill_type>(max_s_idx);
-
-	/*** Load the ascii template file ***/
-
-	/* Build the filename */
-	path_build(buf, 1024, ANGBAND_DIR_EDIT, "s_info.txt");
-
-	/* Open the file */
-	fp = my_fopen(buf, "r");
-
-	/* Parse it */
-	if (!fp) quit("Cannot open 's_info.txt' file.");
-
-	/* Parse the file */
-	err = init_s_info_txt(fp, buf);
-
-	/* Close it */
-	my_fclose(fp);
-
-	/* Errors */
-	if (err)
-	{
-		cptr oops;
-
-		/* Error string */
-		oops = (((err > 0) && (err < 8)) ? err_str[err] : "unknown");
-
-		/* Oops */
-		msg_format("Error %d at line %d of 's_info.txt'.", err, error_line);
-		msg_format("Record %d contains a '%s' error.", error_idx, oops);
-		msg_format("Parsing '%s'.", buf);
-		msg_print(NULL);
-
-		/* Quit */
-		quit("Error in 's_info.txt' file.");
-	}
-
-	/* Success */
-	return (0);
-}
-
-/*
- * Initialise the "ab_info" array
- *
- * Note that we let each entry have a unique "name" and "text" string,
- * even if the string happens to be empty (everyone has a unique '\0').
- */
-static errr init_ab_info(void)
-{
-	errr err = 0;
-
-	FILE *fp;
-
-	/* General buffer */
-	char buf[1024];
-
-	/* Allocate the "ab_info" array */
-	ab_info = make_array<ability_type>(max_ab_idx);
-
-	/*** Load the ascii template file ***/
-
-	/* Build the filename */
-	path_build(buf, 1024, ANGBAND_DIR_EDIT, "ab_info.txt");
-
-	/* Open the file */
-	fp = my_fopen(buf, "r");
-
-	/* Parse it */
-	if (!fp) quit("Cannot open 'ab_info.txt' file.");
-
-	/* Parse the file */
-	err = init_ab_info_txt(fp, buf);
-
-	/* Close it */
-	my_fclose(fp);
-
-	/* Errors */
-	if (err)
-	{
-		cptr oops;
-
-		/* Error string */
-		oops = (((err > 0) && (err < 8)) ? err_str[err] : "unknown");
-
-		/* Oops */
-		msg_format("Error %d at line %d of 'ab_info.txt'.", err, error_line);
-		msg_format("Record %d contains a '%s' error.", error_idx, oops);
-		msg_format("Parsing '%s'.", buf);
-		msg_print(NULL);
-
-		/* Quit */
-		quit("Error in 'ab_info.txt' file.");
-	}
-
-	/* Success */
-	return (0);
-}
-
-
-
-/*
- * Initialise the "e_info" array
- *
- * Note that we let each entry have a unique "name" and "text" string,
- * even if the string happens to be empty (everyone has a unique '\0').
- */
-static errr init_e_info(void)
-{
-	errr err = 0;
-
-	FILE *fp;
-
-	/* General buffer */
-	char buf[1024];
-
-	/* Allocate the "e_info" array */
-	e_info = make_array<ego_item_type>(max_e_idx);
-
-	/*** Load the ascii template file ***/
-
-	/* Build the filename */
-	path_build(buf, 1024, ANGBAND_DIR_EDIT, "e_info.txt");
-
-	/* Open the file */
-	fp = my_fopen(buf, "r");
-
-	/* Parse it */
-	if (!fp) quit("Cannot open 'e_info.txt' file.");
-
-	/* Parse the file */
-	err = init_e_info_txt(fp, buf);
-
-	/* Close it */
-	my_fclose(fp);
-
-	/* Errors */
-	if (err)
-	{
-		cptr oops;
-
-		/* Error string */
-		oops = (((err > 0) && (err < 8)) ? err_str[err] : "unknown");
-
-		/* Oops */
-		msg_format("Error %d at line %d of 'e_info.txt'.", err, error_line);
-		msg_format("Record %d contains a '%s' error.", error_idx, oops);
-		msg_format("Parsing '%s'.", buf);
-		msg_print(NULL);
-
-		/* Quit */
-		quit("Error in 'e_info.txt' file.");
-	}
-
-	/* Success */
-	return (0);
-}
-
-
-
-/*
- * Initialise the "ra_info" array
- *
- * Note that we let each entry have a unique "name" and "text" string,
- * even if the string happens to be empty (everyone has a unique '\0').
- */
-static errr init_ra_info(void)
-{
-	errr err = 0;
-
-	FILE *fp;
-
-	/* General buffer */
-	char buf[1024];
-
-	/* Allocate the "ra_info" array */
-	ra_info = make_array<randart_part_type>(max_ra_idx);
-
-	/*** Load the ascii template file ***/
-
-	/* Build the filename */
-	path_build(buf, 1024, ANGBAND_DIR_EDIT, "ra_info.txt");
-
-	/* Open the file */
-	fp = my_fopen(buf, "r");
-
-	/* Parse it */
-	if (!fp) quit("Cannot open 'ra_info.txt' file.");
-
-	/* Parse the file */
-	err = init_ra_info_txt(fp, buf);
-
-	/* Close it */
-	my_fclose(fp);
-
-	/* Errors */
-	if (err)
-	{
-		cptr oops;
-
-		/* Error string */
-		oops = (((err > 0) && (err < 8)) ? err_str[err] : "unknown");
-
-		/* Oops */
-		msg_format("Error %d at line %d of 'ra_info.txt'.", err, error_line);
-		msg_format("Record %d contains a '%s' error.", error_idx, oops);
-		msg_format("Parsing '%s'.", buf);
-		msg_print(NULL);
-
-		/* Quit */
-		quit("Error in 'ra_info.txt' file.");
-	}
-
-	/* Success */
-	return (0);
-}
-
-
-
-/*
- * Initialise the "r_info" array
- *
- * Note that we let each entry have a unique "name" and "text" string,
- * even if the string happens to be empty (everyone has a unique '\0').
- */
-static errr init_r_info(void)
-{
-	errr err = 0;
-
-	FILE *fp;
-
-	/* General buffer */
-	char buf[1024];
-
-
-	/*** Make the fake arrays ***/
-
-	/* Allocate the "r_info" array */
-	r_info = make_array<monster_race>(max_r_idx);
-
-	/*** Load the ascii template file ***/
-
-	/* Build the filename */
-	path_build(buf, 1024, ANGBAND_DIR_EDIT, "r_info.txt");
-
-	/* Open the file */
-	fp = my_fopen(buf, "r");
-
-	/* Parse it */
-	if (!fp) quit("Cannot open 'r_info.txt' file.");
-
-	/* Parse the file */
-	err = init_r_info_txt(fp, buf);
-
-	/* Close it */
-	my_fclose(fp);
-
-	/* Errors */
-	if (err)
-	{
-		cptr oops;
-
-		/* Error string */
-		oops = (((err > 0) && (err < 8)) ? err_str[err] : "unknown");
-
-		/* Oops */
-		msg_format("Error %d at line %d of 'r_info.txt'.", err, error_line);
-		msg_format("Record %d contains a '%s' error.", error_idx, oops);
-		msg_format("Parsing '%s'.", buf);
-		msg_print(NULL);
-
-		/* Quit */
-		quit("Error in 'r_info.txt' file.");
-	}
-
-	/* Success */
-	return (0);
-}
-
-
-/*
- * Initialise the "re_info" array
- *
- * Note that we let each entry have a unique "name" string,
- * even if the string happens to be empty (everyone has a unique '\0').
- */
-static errr init_re_info(void)
-{
-	errr err = 0;
-
-	FILE *fp;
-
-	/* General buffer */
-	char buf[1024];
-
-	/* Allocate the "re_info" array */
-	re_info = make_array<monster_ego>(max_re_idx);
-
-	/*** Load the ascii template file ***/
-
-	/* Build the filename */
-	path_build(buf, 1024, ANGBAND_DIR_EDIT, "re_info.txt");
-
-	/* Open the file */
-	fp = my_fopen(buf, "r");
-
-	/* Parse it */
-	if (!fp) quit("Cannot open 're_info.txt' file.");
-
-	/* Parse the file */
-	err = init_re_info_txt(fp, buf);
-
-	/* Close it */
-	my_fclose(fp);
-
-	/* Errors */
-	if (err)
-	{
-		cptr oops;
-
-		/* Error string */
-		oops = (((err > 0) && (err < 8)) ? err_str[err] : "unknown");
-
-		/* Oops */
-		msg_format("Error %d at line %d of 're_info.txt'.", err, error_line);
-		msg_format("Record %d contains a '%s' error.", error_idx, oops);
-		msg_format("Parsing '%s'.", buf);
-		msg_print(NULL);
-
-		/* Quit */
-		quit("Error in 're_info.txt' file.");
-	}
-
-	/* Success */
-	return (0);
-}
-
-
-/*
- * Initialise the "d_info" array
- *
- * Note that we let each entry have a unique "name" and "short name" string,
- * even if the string happens to be empty (everyone has a unique '\0').
- */
-static errr init_d_info(void)
-{
-	errr err = 0;
-
-	FILE *fp;
-
-	/* General buffer */
-	char buf[1024];
-
-	/* Allocate the "d_info" array */
-	d_info = make_array<dungeon_info_type>(max_d_idx);
-
-	/*** Load the ascii template file ***/
-
-	/* Build the filename */
-	path_build(buf, 1024, ANGBAND_DIR_EDIT, "d_info.txt");
-
-	/* Open the file */
-	fp = my_fopen(buf, "r");
-
-	/* Parse it */
-	if (!fp) quit("Cannot open 'd_info.txt' file.");
-
-	/* Parse the file */
-	err = init_d_info_txt(fp, buf);
-
-	/* Close it */
-	my_fclose(fp);
-
-	/* Errors */
-	if (err)
-	{
-		cptr oops;
-
-		/* Error string */
-		oops = (((err > 0) && (err < 8)) ? err_str[err] : "unknown");
-
-		/* Oops */
-		msg_format("Error %d at line %d df 'd_info.txt'.", err, error_line);
-		msg_format("Record %d contains a '%s' error.", error_idx, oops);
-		msg_format("Parsing '%s'.", buf);
-		msg_print(NULL);
-
-		/* Quit */
-		quit("Error in 'd_info.txt' file.");
-	}
-
-	/* Success */
-	return (0);
-}
-
-
-/*
- * Initialise the "player" arrays
- *
- * Note that we let each entry have a unique "name" and "short name" string,
- * even if the string happens to be empty (everyone has a unique '\0').
- */
-static errr init_player_info(void)
-{
-	int i;
-
-	errr err = 0;
-
-	FILE *fp;
-
-	/* General buffer */
-	char buf[1024];
-
-	/* Allocate the "rp_info" array */
-	race_info = make_array<player_race>(max_rp_idx);
-
-	/* Allocate the "rmp_info" array */
-	race_mod_info = make_array<player_race_mod>(max_rmp_idx);
-
-	/* Allocate the "c_info" array */
-	class_info = make_array<player_class>(max_c_idx);
-
-	/* Allocate the "bg" array */
-	bg = make_array<hist_type>(max_bg_idx);
-
-	/* Allocate the "meta_class" array */
-	meta_class_info = make_array<meta_class_type>(max_mc_idx);
-	for (i = 0; i < max_mc_idx; i++)
-	{
-		meta_class_info[i].classes = make_array<s16b>(max_c_idx);
-	}
-
-	/*** Load the ascii template file ***/
-
-	/* Build the filename */
-	path_build(buf, 1024, ANGBAND_DIR_EDIT, "p_info.txt");
-
-	/* Open the file */
-	fp = my_fopen(buf, "r");
-
-	/* Parse it */
-	if (!fp) quit("Cannot open 'p_info.txt' file.");
-
-	/* Parse the file */
-	err = init_player_info_txt(fp, buf);
-
-	/* Close it */
-	my_fclose(fp);
-
-	/* Errors */
-	if (err)
-	{
-		cptr oops;
-
-		/* Error string */
-		oops = (((err > 0) && (err < 8)) ? err_str[err] : "unknown");
-
-		/* Oops */
-		msg_format("Error %d at line %d df 'p_info.txt'.", err, error_line);
-		msg_format("Record %d contains a '%s' error.", error_idx, oops);
-		msg_format("Parsing '%s'.", buf);
-		msg_print(NULL);
-
-		/* Quit */
-		quit("Error in 'p_info.txt' file.");
-	}
-
-	/* Success */
-	return (0);
-}
-
-/*
- * Initialise the "st_info" array
- *
- * Note that we let each entry have a unique "name" and "short name" string,
- * even if the string happens to be empty (everyone has a unique '\0').
- */
-static errr init_st_info(void)
-{
-	errr err = 0;
-
-	FILE *fp;
-
-	/* General buffer */
-	char buf[1024];
-
-	/* Allocate the "st_info" array */
-	st_info = make_array<store_info_type>(max_st_idx);
-
-	/*** Load the ascii template file ***/
-
-	/* Build the filename */
-	path_build(buf, 1024, ANGBAND_DIR_EDIT, "st_info.txt");
-
-	/* Open the file */
-	fp = my_fopen(buf, "r");
-
-	/* Parse it */
-	if (!fp) quit("Cannot open 'st_info.txt' file.");
-
-	/* Parse the file */
-	err = init_st_info_txt(fp, buf);
-
-	/* Close it */
-	my_fclose(fp);
-
-	/* Errors */
-	if (err)
-	{
-		cptr oops;
-
-		/* Error string */
-		oops = (((err > 0) && (err < 8)) ? err_str[err] : "unknown");
-
-		/* Oops */
-		msg_format("Error %d at line %d df 'st_info.txt'.", err, error_line);
-		msg_format("Record %d contains a '%s' error.", error_idx, oops);
-		msg_format("Parsing '%s'.", buf);
-		msg_print(NULL);
-
-		/* Quit */
-		quit("Error in 'st_info.txt' file.");
-	}
-
-	/* Success */
-	return (0);
-}
-
-/*
- * Initialise the "ow_info" array
- *
- * Note that we let each entry have a unique "name" and "short name" string,
- * even if the string happens to be empty (everyone has a unique '\0').
- */
-static errr init_ow_info(void)
-{
-	errr err = 0;
-
-	FILE *fp;
-
-	/* General buffer */
-	char buf[1024];
-
-	/* Allocate the "ow_info" array */
-	ow_info = make_array<owner_type>(max_ow_idx);
-
-	/*** Load the ascii template file ***/
-
-	/* Build the filename */
-	path_build(buf, 1024, ANGBAND_DIR_EDIT, "ow_info.txt");
-
-	/* Open the file */
-	fp = my_fopen(buf, "r");
-
-	/* Parse it */
-	if (!fp) quit("Cannot open 'ow_info.txt' file.");
-
-	/* Parse the file */
-	err = init_ow_info_txt(fp, buf);
-
-	/* Close it */
-	my_fclose(fp);
-
-	/* Errors */
-	if (err)
-	{
-		cptr oops;
-
-		/* Error string */
-		oops = (((err > 0) && (err < 8)) ? err_str[err] : "unknown");
-
-		/* Oops */
-		msg_format("Error %d at line %d df 'ow_info.txt'.", err, error_line);
-		msg_format("Record %d contains a '%s' error.", error_idx, oops);
-		msg_format("Parsing '%s'.", buf);
-		msg_print(NULL);
-
-		/* Quit */
-		quit("Error in 'ow_info.txt' file.");
-	}
-
-	/* Success */
-	return (0);
-}
-
-/*
- * Initialise the "ba_info" array
- *
- * Note that we let each entry have a unique "name" and "short name" string,
- * even if the string happens to be empty (everyone has a unique '\0').
- */
-static errr init_ba_info(void)
-{
-	errr err = 0;
-
-	FILE *fp;
-
-	/* General buffer */
-	char buf[1024];
-
-	/* Allocate the "ba_info" array */
-	ba_info = make_array<store_action_type>(max_ba_idx);
-
-	/*** Load the ascii template file ***/
-
-	/* Build the filename */
-	path_build(buf, 1024, ANGBAND_DIR_EDIT, "ba_info.txt");
-
-	/* Open the file */
-	fp = my_fopen(buf, "r");
-
-	/* Parse it */
-	if (!fp) quit("Cannot open 'ba_info.txt' file.");
-
-	/* Parse the file */
-	err = init_ba_info_txt(fp, buf);
-
-	/* Close it */
-	my_fclose(fp);
-
-	/* Errors */
-	if (err)
-	{
-		cptr oops;
-
-		/* Error string */
-		oops = (((err > 0) && (err < 8)) ? err_str[err] : "unknown");
-
-		/* Oops */
-		msg_format("Error %d at line %d df 'ba_info.txt'.", err, error_line);
-		msg_format("Record %d contains a '%s' error.", error_idx, oops);
-		msg_format("Parsing '%s'.", buf);
-		msg_print(NULL);
-
-		/* Quit */
-		quit("Error in 'ba_info.txt' file.");
-	}
-
-	/* Success */
-	return (0);
-}
-
-/*
- * Initialise the "wf_info" array
- *
- * Note that we let each entry have a unique "name" and "short name" string,
- * even if the string happens to be empty (everyone has a unique '\0').
- */
-static errr init_wf_info(void)
-{
-	errr err = 0;
-
-	FILE *fp;
-
-	/* General buffer */
-	char buf[1024];
-
-	/* Allocate the "wf_info" array */
-	wf_info = make_array<wilderness_type_info>(max_wf_idx);
-
-	/*** Load the ascii template file ***/
-
-	/* Build the filename */
-	path_build(buf, 1024, ANGBAND_DIR_EDIT, "wf_info.txt");
-
-	/* Open the file */
-	fp = my_fopen(buf, "r");
-
-	/* Parse it */
-	if (!fp) quit("Cannot open 'wf_info.txt' file.");
-
-	/* Parse the file */
-	err = init_wf_info_txt(fp, buf);
-
-	/* Close it */
-	my_fclose(fp);
-
-	/* Errors */
-	if (err)
-	{
-		cptr oops;
-
-		/* Error string */
-		oops = (((err > 0) && (err < 8)) ? err_str[err] : "unknown");
-
-		/* Oops */
-		msg_format("Error %d at line %d df 'wf_info.txt'.", err, error_line);
-		msg_format("Record %d contains a '%s' error.", error_idx, oops);
-		msg_format("Parsing '%s'.", buf);
-		msg_print(NULL);
-
-		/* Quit */
-		quit("Error in 'wf_info.txt' file.");
-	}
-
-	/* Success */
-	return (0);
-}
-
-
-/*
- * Initialise the "t_info" array
- *
- * Note that we let each entry have a unique "name" and "text" string,
- * even if the string happens to be empty (everyone has a unique '\0').
- */
-static errr init_t_info(void)
-{
-	errr err = 0;
-
-	FILE *fp;
-
-	/* General buffer */
-	char buf[1024];
-
-	/* Allocate the "t_info" array */
-	t_info = make_array<trap_type>(max_t_idx);
-
-	/*** Load the ascii template file ***/
-
-	/* Build the filename */
-	path_build(buf, 1024, ANGBAND_DIR_EDIT, "tr_info.txt");
-
-	/* Open the file */
-	fp = my_fopen(buf, "r");
-
-	/* Parse it */
-	if (!fp) quit("Cannot open 'tr_info.txt' file.");
-
-	/* Parse the file */
-	err = init_t_info_txt(fp, buf);
-
-	/* Close it */
-	my_fclose(fp);
-
-	/* Errors */
-	if (err)
-	{
-		cptr oops;
-
-		/* Error string */
-		oops = (((err > 0) && (err < 8)) ? err_str[err] : "unknown");
-
-		/* Oops */
-		msg_format("Error %d at line %d of 'tr_info.txt'.", err, error_line);
-		msg_format("Record %d contains a '%s' error.", error_idx, oops);
-		msg_format("Parsing '%s'.", buf);
-		msg_print(NULL);
-
-		/* Quit */
-		quit("Error in 'tr_info.txt' file.");
-	}
-
-	/* Success */
-	return (0);
-}
-
-
-/*
- * Initialise the "al_info" array
- *
- * Not a flat array, but an array none the less
- */
-errr init_al_info(void)
-{
-	errr err;
-
-	FILE *fp;
-
-	/* General buffer */
-	char buf[1024];
-
-	/* Allocate the arrays */
-	alchemist_recipes = make_array<alchemist_recipe>(max_al_idx);
-	a_select_flags = make_array<artifact_select_flag>(max_al_idx);
-
-	/*** Load the ascii template file ***/
-
-
-	/* Build the filename */
-	path_build(buf, 1024, ANGBAND_DIR_EDIT, "al_info.txt");
-
-	/* Open the file */
-	fp = my_fopen(buf, "r");
-
-	/* Parse it */
-	if (!fp) quit("Cannot open 'al_info.txt' file.");
-
-	/* Parse the file */
-	err = init_al_info_txt(fp, buf);
-
-	/* Close it */
-	my_fclose(fp);
-
-	/* Errors */
-	if (err)
-	{
-		cptr oops;
-
-		/* Error string */
-		oops = (((err > 0) && (err < 8)) ? err_str[err] : "unknown");
-
-		/* Oops */
-		msg_format("Error %d at line %d of 'al_info.txt'.", err, error_line);
-		msg_format("Record %d contains a '%s' error.", error_idx, oops);
-		msg_format("Parsing '%s'.", buf);
-		msg_print(NULL);
-
-		/* Quit */
-		quit("Error in 'al_info.txt' file.");
-	}
-
-	/* Success */
-	return (0);
-}
-
-
-/*
- * Initialise the "v_info" array
- *
- * Note that we let each entry have a unique "name" and "text" string,
- * even if the string happens to be empty (everyone has a unique '\0').
- */
-errr init_v_info(void)
-{
-	errr err;
-
-	FILE *fp;
-
-	/* General buffer */
-	char buf[1024];
-
-
-	/* Allocate the "v_info" array */
-	v_info = make_array<vault_type>(max_v_idx);
-
-	/*** Load the ascii template file ***/
-
-	/* Build the filename */
-	path_build(buf, 1024, ANGBAND_DIR_EDIT, "v_info.txt");
-
-	/* Open the file */
-	fp = my_fopen(buf, "r");
-
-	/* Parse it */
-	if (!fp) quit("Cannot open 'v_info.txt' file.");
-
-	/* Parse the file */
-	err = init_v_info_txt(fp, buf);
-
-	/* Close it */
-	my_fclose(fp);
-
-	/* Errors */
-	if (err)
-	{
-		cptr oops;
-
-		/* Error string */
-		oops = (((err > 0) && (err < 8)) ? err_str[err] : "unknown");
-
-		/* Oops */
-		msg_format("Error %d at line %d of 'v_info.txt'.", err, error_line);
-		msg_format("Record %d contains a '%s' error.", error_idx, oops);
-		msg_format("Parsing '%s'.", buf);
-		msg_print(NULL);
-
-		/* Quit */
-		quit("Error in 'v_info.txt' file.");
-	}
-
-	/* Success */
-	return (0);
+	return init_x_info<v_info_traits>();
 }
 
 /*
@@ -1854,7 +1100,7 @@ static errr init_alloc(void)
 }
 
 /* Init the sets in a_info */
-void init_sets_aux()
+static void init_sets_aux()
 {
 	int i, j;
 
@@ -2124,73 +1370,73 @@ void init_angband(void)
 
 	/* Initialise skills info */
 	note("[Initialising arrays... (skills)]");
-	if (init_s_info()) quit("Cannot initialise skills");
+	if (init_x_info<s_info_traits>()) quit("Cannot initialise skills");
 
 	/* Initialise abilities info */
 	note("[Initialising arrays... (abilities)]");
-	if (init_ab_info()) quit("Cannot initialise abilities");
+	if (init_x_info<ab_info_traits>()) quit("Cannot initialise abilities");
 
 	/* Initialise alchemy info */
 	note("[Initialising arrays... (alchemy)]");
-	if (init_al_info()) quit("Cannot initialise alchemy");
+	if (init_x_info<al_info_traits>()) quit("Cannot initialise alchemy");
 
 	/* Initialise player info */
 	note("[Initialising arrays... (players)]");
-	if (init_player_info()) quit("Cannot initialise players");
+	if (init_x_info<p_info_traits>()) quit("Cannot initialise players");
 
 	/* Initialise feature info */
 	note("[Initialising arrays... (features)]");
-	if (init_f_info()) quit("Cannot initialise features");
+	if (init_x_info<f_info_traits>()) quit("Cannot initialise features");
 
 	/* Initialise object info */
 	note("[Initialising arrays... (objects)]");
-	if (init_k_info()) quit("Cannot initialise objects");
+	if (init_x_info<k_info_traits>()) quit("Cannot initialise objects");
 
 	/* Initialise artifact info */
 	note("[Initialising arrays... (artifacts)]");
-	if (init_a_info()) quit("Cannot initialise artifacts");
+	if (init_x_info<a_info_traits>()) quit("Cannot initialise artifacts");
 
 	/* Initialise set info */
 	note("[Initialising item sets... (sets)]");
-	if (init_set_info()) quit("Cannot initialise item sets");
+	if (init_x_info<set_info_traits>()) quit("Cannot initialise item sets");
 	init_sets_aux();
 
 	/* Initialise ego-item info */
 	note("[Initialising arrays... (ego-items)]");
-	if (init_e_info()) quit("Cannot initialise ego-items");
+	if (init_x_info<e_info_traits>()) quit("Cannot initialise ego-items");
 
 	/* Initialise randart parts info */
 	note("[Initialising arrays... (randarts)]");
-	if (init_ra_info()) quit("Cannot initialise randarts");
+	if (init_x_info<ra_info_traits>()) quit("Cannot initialise randarts");
 
 	/* Initialise monster info */
 	note("[Initialising arrays... (monsters)]");
-	if (init_r_info()) quit("Cannot initialise monsters");
+	if (init_x_info<r_info_traits>()) quit("Cannot initialise monsters");
 
 	/* Initialise ego monster info */
 	note("[Initialising arrays... (ego monsters)]");
-	if (init_re_info()) quit("Cannot initialise ego monsters");
+	if (init_x_info<re_info_traits>()) quit("Cannot initialise ego monsters");
 
 	/* Initialise dungeon type info */
 	note("[Initialising arrays... (dungeon types)]");
-	if (init_d_info()) quit("Cannot initialise dungeon types");
+	if (init_x_info<d_info_traits>()) quit("Cannot initialise dungeon types");
 	init_guardians();
 
 	/* Initialise actions type info */
 	note("[Initialising arrays... (action types)]");
-	if (init_ba_info()) quit("Cannot initialise action types");
+	if (init_x_info<ba_info_traits>()) quit("Cannot initialise action types");
 
 	/* Initialise owners type info */
 	note("[Initialising arrays... (owners types)]");
-	if (init_ow_info()) quit("Cannot initialise owners types");
+	if (init_x_info<ow_info_traits>()) quit("Cannot initialise owners types");
 
 	/* Initialise stores type info */
 	note("[Initialising arrays... (stores types)]");
-	if (init_st_info()) quit("Cannot initialise stores types");
+	if (init_x_info<st_info_traits>()) quit("Cannot initialise stores types");
 
 	/* Initialise wilderness features array */
 	note("[Initialising arrays... (wilderness features)]");
-	if (init_wf_info()) quit("Cannot initialise wilderness features");
+	if (init_x_info<wf_info_traits>()) quit("Cannot initialise wilderness features");
 
 	/* Initialise wilderness map array */
 	note("[Initialising arrays... (wilderness map)]");
@@ -2202,7 +1448,7 @@ void init_angband(void)
 
 	/* Initialise trap info */
 	note("[Initialising arrays... (traps)]");
-	if (init_t_info()) quit("Cannot initialise traps");
+	if (init_x_info<tr_info_traits>()) quit("Cannot initialise traps");
 
 	/* Initialise some other arrays */
 	note("[Initialising arrays... (other)]");

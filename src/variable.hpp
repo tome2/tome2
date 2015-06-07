@@ -209,7 +209,7 @@ extern u16b max_st_idx;
 extern u16b max_ba_idx;
 extern u16b max_ow_idx;
 extern u16b max_wf_idx;
-extern s16b max_set_idx;
+extern u16b max_set_idx;
 extern int init_flags;
 extern bool_ ambush_flag;
 extern bool_ fate_flag;
