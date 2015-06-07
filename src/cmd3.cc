@@ -1578,7 +1578,6 @@ void do_cmd_query_symbol(void)
 			if (static_cast<size_t>(i) == who.size())
 			{
 				i = 0;
-				if (!expand_list) break;
 			}
 		}
 
@@ -1588,7 +1587,6 @@ void do_cmd_query_symbol(void)
 			if (i-- == 0)
 			{
 				i = who.size() - 1;
-				if (!expand_list) break;
 			}
 		}
 	}
@@ -1774,7 +1772,6 @@ bool_ research_mon()
 			if (static_cast<size_t>(i) == who.size())
 			{
 				i = 0;
-				if (!expand_list) break;
 			}
 		}
 
@@ -1784,7 +1781,6 @@ bool_ research_mon()
 			if (i-- == 0)
 			{
 				i = who.size() - 1;
-				if (!expand_list) break;
 			}
 		}
 	}

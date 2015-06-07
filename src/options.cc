@@ -38,8 +38,6 @@ bool_ disturb_pets; 		/* Pets moving nearby disturb us */
 // Option Set 3 -- Game-Play
 //
 bool_ auto_scum; 				/* Auto-scum for good levels */
-bool_ expand_look; 			/* Expand the power of the look command */
-bool_ expand_list; 			/* Expand the power of the list commands */
 bool_ view_perma_grids; 		/* Map remembers all perma-lit grids */
 bool_ view_torch_grids; 		/* Map remembers all torch-lit grids */
 bool_ dungeon_align; 			/* Generate dungeons with aligned rooms */

@@ -40,8 +40,6 @@ extern bool_ disturb_pets;
 // Option Set 3 -- Game-Play
 //
 extern bool_ auto_scum;
-extern bool_ expand_look;
-extern bool_ expand_list;
 extern bool_ view_perma_grids;
 extern bool_ view_torch_grids;
 extern bool_ dungeon_align;

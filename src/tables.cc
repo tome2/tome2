@@ -1356,12 +1356,6 @@ option_type option_info[] =
 	{ &auto_scum, TRUE, 3, 1,
 	  "auto_scum", "Auto-scum for good levels" },
 
-	{ &expand_look, FALSE, 3, 4,
-	  "expand_look", "Expand the power of the look command" },
-
-	{ &expand_list, FALSE, 3, 5,
-	  "expand_list", "Expand the power of the list commands" },
-
 	{ &view_perma_grids, TRUE, 3, 6,
 	  "view_perma_grids", "Map remembers all perma-lit grids" },
 

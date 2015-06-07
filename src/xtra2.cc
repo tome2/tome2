@@ -4093,9 +4093,6 @@ static void target_set_prepare(int mode)
 		{
 			cave_type *c_ptr = &cave[y][x];
 
-			/* Require line of sight, unless "look" is "expanded" */
-			if (!expand_look && !player_has_los_bold(y, x)) continue;
-
 			/* Require "interesting" contents */
 			if (!target_set_accept(y, x)) continue;
 
@@ -4729,7 +4726,6 @@ bool_ target_set(int mode)
 					if (++m == temp_n)
 					{
 						m = 0;
-						if (!expand_list) done = TRUE;
 					}
 					break;
 				}
@@ -4739,7 +4735,6 @@ bool_ target_set(int mode)
 					if (m-- == 0)
 					{
 						m = temp_n - 1;
-						if (!expand_list) done = TRUE;
 					}
 					break;
 				}
