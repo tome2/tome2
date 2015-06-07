@@ -39,6 +39,8 @@
 #include "xtra1.hpp"
 #include "xtra2.hpp"
 
+#include <boost/noncopyable.hpp>
+#include <boost/optional.hpp>
 #include <cassert>
 
 /* Maximum number of tries for teleporting */
