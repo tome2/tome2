@@ -5,7 +5,6 @@
 #include <string>
 #include <functional>
 #include "h-basic.h"
-#include "types_fwd.h"
 #include "device_allocation_fwd.hpp"
 #include "range_fwd.hpp"
 

@@ -5,6 +5,7 @@
 #include "gods.hpp"
 #include "lua_bind.hpp"
 #include "options.hpp"
+#include "player_type.hpp"
 #include "school_book.hpp"
 #include "spell_type.hpp"
 #include "spells3.hpp"

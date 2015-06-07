@@ -1,7 +1,9 @@
 #pragma once
 
-#include "angband.h"
+#include "h-basic.h"
+#include "identify_mode.hpp"
 #include "object_filter.hpp"
+#include "object_type_fwd.hpp"
 
 extern void curse_artifact(object_type * o_ptr);
 extern void grow_things(s16b type, int rad);

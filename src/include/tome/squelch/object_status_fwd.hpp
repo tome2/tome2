@@ -1,7 +1,6 @@
-#ifndef H_3261a8ad_ee1c_4a2b_9d21_7c9955f09542
-#define H_3261a8ad_ee1c_4a2b_9d21_7c9955f09542
+#pragma once
 
-#include "types_fwd.h"
+#include "../object_type_fwd.hpp"
 #include "tome/enum_string_map.hpp"
 
 namespace squelch {
@@ -11,5 +10,3 @@ EnumStringMap<status_type> &status_mapping();
 status_type object_status(object_type *o_ptr);
 
 } // namespace
-
-#endif

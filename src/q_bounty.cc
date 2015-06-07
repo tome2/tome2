@@ -1,8 +1,12 @@
 #include "q_bounty.hpp"
 
 #include "monster2.hpp"
+#include "monster_race.hpp"
 #include "object1.hpp"
 #include "object2.hpp"
+#include "object_type.hpp"
+#include "player_type.hpp"
+#include "skill_type.hpp"
 #include "tables.hpp"
 #include "util.hpp"
 #include "variable.hpp"

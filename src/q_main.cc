@@ -1,6 +1,12 @@
 #include "q_main.hpp"
 
+#include "hook_chardump_in.hpp"
+#include "hook_monster_death_in.hpp"
+#include "hook_new_monster_in.hpp"
 #include "hooks.hpp"
+#include "monster_race.hpp"
+#include "monster_type.hpp"
+#include "player_type.hpp"
 #include "tables.hpp"
 #include "util.hpp"
 #include "variable.hpp"

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "angband.h"
+#include "h-basic.h"
 
 bool_ quest_library_init_hook(int q);
 bool_ quest_library_describe(FILE *fff);

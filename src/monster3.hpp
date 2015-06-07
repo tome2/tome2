@@ -1,6 +1,7 @@
 #pragma once
 
-#include "angband.h"
+#include "h-basic.h"
+#include "monster_type_fwd.hpp"
 
 extern void dump_companions(FILE *outfile);
 extern void do_cmd_companion(void);

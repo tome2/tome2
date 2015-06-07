@@ -2,7 +2,6 @@
 
 #include "angband.h"
 
-// C linkage required for these functions since main-* code uses them.
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -28,7 +27,6 @@ extern byte angband_color_table[256][4];
 extern bool_ arg_wizard;
 extern bool_ arg_force_original;
 extern bool_ arg_force_roguelike;
-extern hist_type *bg;
 extern bool_ character_generated;
 extern bool_ character_icky;
 extern bool_ inkey_flag;

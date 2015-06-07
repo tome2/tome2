@@ -2,6 +2,11 @@
 
 #include "h-basic.h"
 
+/**
+ * Maximum number of high scores in the high score file
+ */
+constexpr int MAX_HISCORES = 100;
+
 /*
  * Semi-Portable High Score List Entry (128 bytes) -- BEN
  *

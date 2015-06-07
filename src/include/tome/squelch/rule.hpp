@@ -1,5 +1,4 @@
-#ifndef H_c3dd858a_4663_44a0_8871_ff6c8148a613
-#define H_c3dd858a_4663_44a0_8871_ff6c8148a613
+#pragma once
 
 #include <jansson.h>
 #include <memory>
@@ -8,7 +7,7 @@
 #include "tome/squelch/cursor_fwd.hpp"
 #include "tome/squelch/tree_printer_fwd.hpp"
 #include "tome/enum_string_map.hpp"
-#include "types_fwd.h"
+#include "../object_type_fwd.hpp"
 
 namespace squelch {
 
@@ -161,5 +160,3 @@ private:
 };
 
 } // namespace
-
-#endif

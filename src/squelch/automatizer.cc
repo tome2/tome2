@@ -4,8 +4,8 @@
 #include "tome/squelch/rule.hpp"
 #include "tome/squelch/cursor.hpp"
 #include "tome/squelch/tree_printer.hpp"
-#include "angband.h"
 #include "util.hpp"
+#include "z-term.h"
 
 namespace squelch {
 

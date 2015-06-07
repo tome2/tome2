@@ -1,7 +1,8 @@
 #pragma once
 
-#include "angband.h"
+#include "h-basic.h"
 
+/* Skill functions */
 extern void dump_skills(FILE *fff);
 extern s16b find_skill(cptr name);
 extern s16b find_skill_i(cptr name);

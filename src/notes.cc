@@ -9,8 +9,9 @@
 
 #include "notes.hpp"
 
-#include "angband.h"
 #include "files.hpp"
+#include "player_class.hpp"
+#include "player_type.hpp"
 #include "util.hpp"
 #include "util.h"
 #include "variable.h"

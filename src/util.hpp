@@ -1,6 +1,7 @@
 #pragma once
 
-#include "angband.h"
+#include "h-basic.h"
+#include "timer_type_fwd.hpp"
 
 #include <vector>
 #include <string>

@@ -8,7 +8,6 @@
  * are included in all such copies.
  */
 
-#include "angband.h"
 #include "birth.h"
 #include "dungeon.h"
 #include "files.h"

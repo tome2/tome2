@@ -1,6 +1,6 @@
 #pragma once
 
-#include "angband.h"
+#include "h-basic.h"
 
 extern void macro_recorder_start(void);
 extern void macro_recorder_add(char c);

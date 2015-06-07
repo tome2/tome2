@@ -1,7 +1,8 @@
 #pragma once
 
 #include "h-basic.h"
-#include "types_fwd.h"
+#include "object_type_fwd.hpp"
+#include "obj_theme_fwd.hpp"
 
 typedef enum { OPTIMIZE, NO_OPTIMIZE } optimize_flag;
 typedef enum { DESCRIBE, NO_DESCRIBE } describe_flag;
@@ -11,7 +12,7 @@ extern void inc_stack_size_ex(int item, int delta, optimize_flag opt, describe_f
 extern object_type *get_object(int item);
 extern s32b calc_total_weight(void);
 extern void add_random_ego_flag(object_type *o_ptr, int fego, bool_ *limit_blows);
-extern void init_match_theme(obj_theme theme);
+extern void init_match_theme(obj_theme const &theme);
 extern bool_ kind_is_artifactable(int k_idx);
 extern bool_ kind_is_legal(int k_idx);
 extern void inven_item_charges(int item);
@@ -50,7 +51,7 @@ extern void object_prep(object_type *o_ptr, int k_idx);
 extern void object_copy(object_type *o_ptr, object_type *j_ptr);
 extern int hack_apply_magic_power;
 extern void apply_magic(object_type *o_ptr, int lev, bool_ okay, bool_ good, bool_ great);
-extern bool_ make_object(object_type *j_ptr, bool_ good, bool_ great, obj_theme theme);
+extern bool_ make_object(object_type *j_ptr, bool_ good, bool_ great, obj_theme const &theme);
 extern void place_object(int y, int x, bool_ good, bool_ great, int where);
 extern bool_ make_gold(object_type *j_ptr);
 extern void place_gold(int y, int x);

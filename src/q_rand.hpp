@@ -1,6 +1,6 @@
 #pragma once
 
-#include "angband.h"
+#include "h-basic.h"
 
 void initialize_random_quests(int n);
 bool_ is_randhero(int level);

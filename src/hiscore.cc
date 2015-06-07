@@ -1,6 +1,5 @@
 #include "hiscore.hpp"
 
-#include "angband.h"
 #include "util.hpp"
 
 #include <cassert>

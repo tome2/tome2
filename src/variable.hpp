@@ -2,6 +2,52 @@
 
 #include "angband.h"
 #include "ability_type_fwd.hpp"
+#include "alchemist_recipe_fwd.hpp"
+#include "alloc_entry_fwd.hpp"
+#include "artifact_select_flag_fwd.hpp"
+#include "artifact_type_fwd.hpp"
+#include "birther.hpp"
+#include "cave_type_fwd.hpp"
+#include "deity_type.hpp"
+#include "dungeon_info_type_fwd.hpp"
+#include "effect_type.hpp"
+#include "ego_item_type_fwd.hpp"
+#include "fate.hpp"
+#include "feature_type_fwd.hpp"
+#include "hist_type_fwd.hpp"
+#include "meta_class_type_fwd.hpp"
+#include "monster_ego_fwd.hpp"
+#include "monster_race_fwd.hpp"
+#include "monster_type_fwd.hpp"
+#include "object_kind_fwd.hpp"
+#include "object_type_fwd.hpp"
+#include "owner_type_fwd.hpp"
+#include "player_class_fwd.hpp"
+#include "player_defs.hpp"
+#include "player_race_fwd.hpp"
+#include "player_race_mod_fwd.hpp"
+#include "player_sex_fwd.hpp"
+#include "player_spec_fwd.hpp"
+#include "player_type_fwd.hpp"
+#include "randart_gen_type_fwd.hpp"
+#include "randart_part_type_fwd.hpp"
+#include "random_artifact.hpp"
+#include "random_quest.hpp"
+#include "random_spell.hpp"
+#include "rune_spell.hpp"
+#include "school_type.hpp"
+#include "set_type_fwd.hpp"
+#include "skill_type_fwd.hpp"
+#include "skills_defs.hpp"
+#include "store_action_type_fwd.hpp"
+#include "store_info_type_fwd.hpp"
+#include "timer_type_fwd.hpp"
+#include "town_type_fwd.hpp"
+#include "trap_type_fwd.hpp"
+#include "tval_desc.hpp"
+#include "vault_type_fwd.hpp"
+#include "wilderness_map_fwd.hpp"
+#include "wilderness_type_info_fwd.hpp"
 
 extern int max_macrotrigger;
 extern char *macro_template;
@@ -267,4 +313,5 @@ extern s32b DUNGEON_ASTRAL_WILD_Y;
 extern deity_type deity_info[MAX_GODS];
 extern timer_type *gl_timers;
 extern const char *get_version_string();
-extern tval_desc2 tvals[];
+extern tval_desc tvals[];
+extern hist_type *bg;

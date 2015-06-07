@@ -1,6 +1,6 @@
 #pragma once
 
-#include "angband.h"
+#include "h-basic.h"
 
 extern void fix_message(void);
 extern void apply_flags(u32b f1, u32b f2, u32b f3, u32b f4, u32b f5, u32b esp, s16b pval, s16b tval, s16b to_h, s16b to_d, s16b to_a);

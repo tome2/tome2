@@ -8,10 +8,15 @@
 
 #include "monster1.hpp"
 
-#include "angband.h"
+#include "cave_type.hpp"
 #include "monster2.hpp"
+#include "monster_ego.hpp"
+#include "monster_race.hpp"
+#include "player_type.hpp"
 #include "util.hpp"
 #include "variable.hpp"
+#include "wilderness_map.hpp"
+#include "wilderness_type_info.hpp"
 
 /*
  * Pronoun arrays, by gender.

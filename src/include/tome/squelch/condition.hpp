@@ -1,5 +1,4 @@
-#ifndef H_e31ae6cc_eb8a_4909_ad6c_da485e4264a2
-#define H_e31ae6cc_eb8a_4909_ad6c_da485e4264a2
+#pragma once
 
 #include "tome/squelch/condition_fwd.hpp"
 
@@ -13,7 +12,7 @@
 #include "tome/squelch/tree_printer_fwd.hpp"
 #include "tome/squelch/object_status_fwd.hpp"
 #include "tome/enum_string_map.hpp"
-#include "types_fwd.h"
+#include "../object_type_fwd.hpp"
 
 namespace squelch {
 
@@ -631,5 +630,3 @@ protected:
 };
 
 } // namespace
-
-#endif

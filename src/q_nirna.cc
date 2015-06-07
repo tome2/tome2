@@ -1,9 +1,12 @@
 #include "q_nirna.hpp"
 
 #include "cave.hpp"
+#include "cave_type.hpp"
+#include "hook_quest_finish_in.hpp"
 #include "hooks.hpp"
 #include "init1.hpp"
 #include "monster2.hpp"
+#include "player_type.hpp"
 #include "tables.hpp"
 #include "util.hpp"
 #include "variable.hpp"

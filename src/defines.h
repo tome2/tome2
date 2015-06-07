@@ -172,12 +172,6 @@
 
 
 /*
- * Maximum number of high scores in the high score file
- */
-#define MAX_HISCORES    100
-
-
-/*
  * Maximum dungeon level.  The player can never reach this level
  * in the dungeon, and this value is used for various calculations
  * involving object and monster creation.  It must be at least 100.
@@ -235,13 +229,6 @@
 #define MACRO_MAX       256
 
 /*
- * OPTION: Maximum number of "quarks" (see "io.c")
- * Default: assume at most 512 different inscriptions are used
- */
-#define QUARK_MAX       768
-	/* Was 512... 256 quarks added for random artifacts */
-
-/*
  * Maximum value storable in a "byte" (hard-coded)
  */
 #define MAX_UCHAR       255
@@ -256,7 +243,6 @@
  * Store constants
  */
 #define STORE_INVEN_MAX 255             /* Max number of discrete objs in inven */
-#define STORE_CHOICES   56              /* Number of items to choose stock from */
 #define STORE_OBJ_LEVEL 5               /* Magic Level for normal stores */
 #define STORE_TURNOVER  9               /* Normal shop turnover, per day */
 #define STORE_MIN_KEEP  6               /* Min slots to "always" keep full */
@@ -333,18 +319,6 @@
 
 
 /*
- * Size of allocation table for objects
- */
-#define ALLOCATION_MAX 8
-
-
-/*
- * Size of flag rarity tables
- */
-#define FLAG_RARITY_MAX 6
-
-
-/*
  * Refueling constants
  */
 #define FUEL_TORCH      5000    /* Maximum amount of fuel in a torch */
@@ -385,7 +359,6 @@
 #define SUBRACE_SAVE    9               /* Ugly hack, should be in foo-info, the subrace saved to the savefile */
 #define PY_MAX_EXP      99999999L       /* Maximum exp */
 #define PY_MAX_GOLD     999999999L      /* Maximum gold */
-#define PY_MAX_LEVEL    50              /* Maximum level */
 
 /*
  * Player "food" crucial values
@@ -407,66 +380,10 @@
 #define PY_REGEN_MNBASE         524             /* Min amount mana regen*2^16 */
 
 /*
- * Maximum number of "normal" pack slots, and the index of the "overflow"
- * slot, which can hold an item, but only temporarily, since it causes the
- * pack to "overflow", dropping the "last" item onto the ground.  Since this
- * value is used as an actual slot, it must be less than "INVEN_WIELD" (below).
- * Note that "INVEN_PACK" is probably hard-coded by its use in savefiles, and
- * by the fact that the screen can only show 23 items plus a one-line prompt.
- */
-#define INVEN_PACK              23
-
-/*
- * Body parts
- */
-#define BODY_WEAPON     0
-#define BODY_TORSO      1
-#define BODY_ARMS       2
-#define BODY_FINGER     3
-#define BODY_HEAD       4
-#define BODY_LEGS       5
-#define BODY_MAX        6
-
-/*
- * Indexes used for various "equipment" slots (hard-coded by savefiles, etc).
- */
-#define INVEN_WIELD     24 /* 3 weapons -- WEAPONS */
-#define INVEN_BOW       27 /* 1 bow -- WEAPON */
-#define INVEN_RING      28 /* 6 rings -- FINGER */
-#define INVEN_NECK      34 /* 2 amulets -- HEAD */
-#define INVEN_LITE      36 /* 1 lite -- TORSO */
-#define INVEN_BODY      37 /* 1 body -- TORSO */
-#define INVEN_OUTER     38 /* 1 cloak -- TORSO */
-#define INVEN_ARM       39 /* 3 arms -- ARMS */
-#define INVEN_HEAD      42 /* 2 heads -- HEAD */
-#define INVEN_HANDS     44 /* 3 hands -- ARMS */
-#define INVEN_FEET      47 /* 2 feets -- LEGS */
-#define INVEN_CARRY     49 /* 1 carried monster -- TORSO */
-#define INVEN_AMMO      50 /* 1 quiver -- TORSO */
-#define INVEN_TOOL      51 /* 1 tool -- ARMS */
-
-/*
- * Total number of inventory slots (hard-coded).
- */
-#define INVEN_TOTAL     52
-#define INVEN_EQ        (INVEN_TOTAL - INVEN_WIELD)
-
-/*
  * A "stack" of items is limited to less than 100 items (hard-coded).
  */
 #define MAX_STACK_SIZE                  100
 
-
-
-/*
- * Indexes of the various "stats" (hard-coded by savefiles, etc).
- */
-#define A_STR   0
-#define A_INT   1
-#define A_WIS   2
-#define A_DEX   3
-#define A_CON   4
-#define A_CHR   5
 
 /*
  * Player sex constants (hard-coded by save-files, arrays, etc)
@@ -770,24 +687,6 @@
 #define EFF_DIR7                0x00000100      /* Directed effect */
 #define EFF_DIR8                0x00000200      /* Directed effect */
 #define EFF_DIR9                0x00000400      /* Directed effect */
-
-/*
- * Wilderness terrains
- */
-#define TERRAIN_EDGE             0 /* Edge of the World */
-#define TERRAIN_TOWN             1 /* Town */
-#define TERRAIN_DEEP_WATER       2 /* Deep water */
-#define TERRAIN_SHALLOW_WATER    3 /* Shallow water */
-#define TERRAIN_SWAMP            4 /* Swamp */
-#define TERRAIN_DIRT             5 /* Dirt */
-#define TERRAIN_GRASS            6 /* Grass */
-#define TERRAIN_TREES            7 /* Trees */
-#define TERRAIN_DESERT           8 /* Desert */
-#define TERRAIN_SHALLOW_LAVA     9 /* Shallow lava */
-#define TERRAIN_DEEP_LAVA       10 /* Deep lava */
-#define TERRAIN_MOUNTAIN        11 /* Mountain */
-
-#define MAX_WILD_TERRAIN        18
 
 /*** Artifact indexes (see "lib/edit/a_info.txt") ***/
 
@@ -3383,34 +3282,6 @@
 
 
 
-
-/*** Color constants ***/
-
-
-/*
- * Angband "attributes" (with symbols, and base (R,G,B) codes)
- *
- * The "(R,G,B)" codes are given in "fourths" of the "maximal" value,
- * and should "gamma corrected" on most (non-Macintosh) machines.
- */
-#define TERM_DARK                0  /* 'd' */   /* 0,0,0 */
-#define TERM_WHITE               1  /* 'w' */   /* 4,4,4 */
-#define TERM_SLATE               2  /* 's' */   /* 2,2,2 */
-#define TERM_ORANGE              3  /* 'o' */   /* 4,2,0 */
-#define TERM_RED                 4  /* 'r' */   /* 3,0,0 */
-#define TERM_GREEN               5  /* 'g' */   /* 0,2,1 */
-#define TERM_BLUE                6  /* 'b' */   /* 0,0,4 */
-#define TERM_UMBER               7  /* 'u' */   /* 2,1,0 */
-#define TERM_L_DARK              8  /* 'D' */   /* 1,1,1 */
-#define TERM_L_WHITE             9  /* 'W' */   /* 3,3,3 */
-#define TERM_VIOLET             10  /* 'v' */   /* 4,0,4 */
-#define TERM_YELLOW             11  /* 'y' */   /* 4,4,0 */
-#define TERM_L_RED              12  /* 'R' */   /* 4,0,0 */
-#define TERM_L_GREEN            13  /* 'G' */   /* 0,4,0 */
-#define TERM_L_BLUE             14  /* 'B' */   /* 0,4,4 */
-#define TERM_L_UMBER            15  /* 'U' */   /* 3,2,1 */
-
-
 /*** Sound constants ***/
 
 
@@ -3725,7 +3596,6 @@
 
 /* Town defines */
 #define TOWN_RANDOM     20              /* First random town */
-#define TOWN_DUNGEON    4               /* Maximun number of towns per dungeon */
 #define TOWN_CHANCE     50              /* Chance of 1 town */
 
 
@@ -3743,77 +3613,6 @@
 #define SF1_RANDOM              0x00000100L
 #define SF1_FORCE_LEVEL         0x00000200L
 #define SF1_MUSEUM              0x00000400L
-
-/*
- * Powers (mutation, activations, ...)
- */
-#define POWER_MAX                      65
-
-#define PWR_SPIT_ACID                  0
-#define PWR_BR_FIRE                    1
-#define PWR_HYPN_GAZE                  2
-#define PWR_TELEKINES                  3
-#define PWR_VTELEPORT                  4
-#define PWR_MIND_BLST                  5
-#define PWR_RADIATION                  6
-#define PWR_VAMPIRISM                  7
-#define PWR_SMELL_MET                  8
-#define PWR_SMELL_MON                  9
-#define PWR_BLINK                      10
-#define PWR_EAT_ROCK                   11
-#define PWR_SWAP_POS                   12
-#define PWR_SHRIEK                     13
-#define PWR_ILLUMINE                   14
-#define PWR_DET_CURSE                  15
-#define PWR_BERSERK                    16
-#define PWR_POLYMORPH                  17
-#define PWR_MIDAS_TCH                  18
-#define PWR_GROW_MOLD                  19
-#define PWR_RESIST                     20
-#define PWR_EARTHQUAKE                 21
-#define PWR_EAT_MAGIC                  22
-#define PWR_WEIGH_MAG                  23
-#define PWR_STERILITY                  24
-#define PWR_PANIC_HIT                  25
-#define PWR_DAZZLE                     26
-#define PWR_DARKRAY                    27
-#define PWR_RECALL                     28
-#define PWR_BANISH                     29
-#define PWR_COLD_TOUCH                 30
-#define PWR_LAUNCHER                   31
-
-#define PWR_PASSWALL                    32
-#define PWR_DETECT_TD                   33
-#define PWR_COOK_FOOD                   34
-#define PWR_UNFEAR                      35
-#define PWR_EXPL_RUNE                   36
-#define PWR_STM                         37
-#define PWR_POIS_DART                   38
-#define PWR_MAGIC_MISSILE               39
-#define PWR_GROW_TREE                   40
-#define PWR_BR_COLD                     41
-#define PWR_BR_CHAOS                    42
-#define PWR_BR_ELEM                     43
-#define PWR_WRECK_WORLD                 44
-#define PWR_SCARE                       45
-#define PWR_REST_LIFE                   46
-#define PWR_SUMMON_MONSTER              47
-#define PWR_NECRO                       48
-#define PWR_ROHAN                       49
-#define PWR_THUNDER                     50
-#define PWR_DEATHMOLD                   51
-#define PWR_HYPNO                       52
-#define PWR_UNHYPNO                     53
-#define PWR_INCARNATE                   54
-#define PWR_MAGIC_MAP                   55
-#define PWR_LAY_TRAP                    56
-#define PWR_COMPANION                   58
-#define PWR_BEAR                        59
-#define PWR_DODGE                       60
-#define PWR_BALROG                      61
-#define POWER_INVISIBILITY              62
-#define POWER_WEB                       63
-#define POWER_COR_SPACE_TIME            64
 
 /*
  * Shield effect options
@@ -3879,45 +3678,6 @@
 #define MODULE_TOME             0
 #define MODULE_THEME            1
 #define MAX_MODULES             2
-
-/*
- * Corruptions
- */
-#define CORRUPT_BALROG_AURA 0
-#define CORRUPT_BALROG_WINGS 1
-#define CORRUPT_BALROG_STRENGTH 2
-#define CORRUPT_BALROG_FORM 3
-#define CORRUPT_DEMON_SPIRIT 4
-#define CORRUPT_DEMON_HIDE 5
-#define CORRUPT_DEMON_BREATH 6
-#define CORRUPT_DEMON_REALM 7
-#define CORRUPT_RANDOM_TELEPORT 8
-#define CORRUPT_ANTI_TELEPORT 9
-#define CORRUPT_TROLL_BLOOD 10
-#define CORRUPT_VAMPIRE_TEETH 11
-#define CORRUPT_VAMPIRE_STRENGTH 12
-#define CORRUPT_VAMPIRE_VAMPIRE 13
-#define MUT1_SPIT_ACID 14
-#define MUT1_BR_FIRE 15
-#define MUT1_HYPN_GAZE 16
-#define MUT1_TELEKINES 17
-#define MUT1_VTELEPORT 18
-#define MUT1_MIND_BLST 19
-#define MUT1_VAMPIRISM 20
-#define MUT1_SMELL_MET 21
-#define MUT1_SMELL_MON 22
-#define MUT1_BLINK 23
-#define MUT1_EAT_ROCK 24
-#define MUT1_SWAP_POS 25
-#define MUT1_SHRIEK 26
-#define MUT1_ILLUMINE 27
-#define MUT1_DET_CURSE 28
-#define MUT1_BERSERK 29
-#define MUT1_MIDAS_TCH 30
-#define MUT1_GROW_MOLD 31
-#define MUT1_RESIST 32
-#define MUT1_EARTHQUAKE 33
-#define CORRUPTIONS_MAX 34
 
 /*
  * Races
@@ -3999,11 +3759,6 @@
 #define HOOK_FORBID_TRAVEL      75
 
 /*
- * In game help
- */
-#define HELP_MAX 64
-
-/*
  * Special weapon effects
  */
 #define SPEC_POIS               0x00000001L
@@ -4030,69 +3785,6 @@
 
 #define SKILL_EXCLUSIVE         9999            /* Flag to tell exclusive skills */
 
-#define SKILL_CONVEYANCE        1
-#define SKILL_MANA              2
-#define SKILL_FIRE              3
-#define SKILL_AIR               4
-#define SKILL_WATER             5
-#define SKILL_NATURE            6
-#define SKILL_EARTH             7
-#define SKILL_SYMBIOTIC         8
-#define SKILL_MUSIC             9
-#define SKILL_DIVINATION        10
-#define SKILL_TEMPORAL          11
-#define SKILL_DRUID             12
-#define SKILL_DAEMON            13
-#define SKILL_META              14
-#define SKILL_MAGIC             15
-#define SKILL_COMBAT            16
-#define SKILL_MASTERY           17
-#define SKILL_SWORD             18
-#define SKILL_AXE               19
-#define SKILL_POLEARM           20
-#define SKILL_HAFTED            21
-#define SKILL_BACKSTAB          22
-#define SKILL_ARCHERY           23
-#define SKILL_SLING             24
-#define SKILL_BOW               25
-#define SKILL_XBOW              26
-#define SKILL_BOOMERANG         27
-#define SKILL_SPIRITUALITY      28
-#define SKILL_MINDCRAFT         29
-#define SKILL_MISC              30
-#define SKILL_NECROMANCY        31
-#define SKILL_MIMICRY           32
-#define SKILL_ANTIMAGIC         33
-#define SKILL_RUNECRAFT         34
-#define SKILL_SNEAK             35
-#define SKILL_STEALTH           36
-#define SKILL_DISARMING         37
-/* XXX */
-#define SKILL_ALCHEMY           39
-#define SKILL_STEALING          40
-#define SKILL_SORCERY           41
-#define SKILL_HAND              42
-#define SKILL_THAUMATURGY       43
-#define SKILL_SUMMON            44
-#define SKILL_SPELL             45
-#define SKILL_DODGE             46
-#define SKILL_BEAR              47
-#define SKILL_LORE              48
-#define SKILL_PRESERVATION      49
-#define SKILL_POSSESSION        50
-#define SKILL_MIND              51
-#define SKILL_CRITS             52
-#define SKILL_PRAY              53
-#define SKILL_LEARN             54
-#define SKILL_UDUN              55
-#define SKILL_DEVICE            56
-#define SKILL_STUN              57
-#define SKILL_BOULDER           58
-#define SKILL_GEOMANCY          59
-
-/* Ugly but needed */
-#define MAX_SKILLS              200
-
 /* Number of skill choices for Lost Sword quests. */
 #define LOST_SWORD_NSKILLS	4
 
@@ -4102,11 +3794,6 @@
 #define SKF1_RANDOM_GAIN        0x00000004      /* Can be randomly gained by certain quests & such */
 
 #define MAX_MELEE               3
-
-/*
- * Player specialities, should be external but ti would be a mess
- */
-#define MAX_SPEC                20
 
 
 /*

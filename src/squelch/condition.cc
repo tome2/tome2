@@ -5,14 +5,20 @@
 
 #include "tome/squelch/cursor.hpp"
 #include "tome/squelch/tree_printer.hpp"
-#include "ability_type.hpp"
-#include "angband.h"
-#include "object1.hpp"
-#include "object2.hpp"
-#include "skills.hpp"
-#include "quark.hpp"
-#include "util.hpp"
-#include "variable.hpp"
+#include "../ability_type.hpp"
+#include "../object1.hpp"
+#include "../object2.hpp"
+#include "../object_kind.hpp"
+#include "../object_type.hpp"
+#include "../player_race.hpp"
+#include "../player_race_mod.hpp"
+#include "../player_spec.hpp"
+#include "../player_type.hpp"
+#include "../skills.hpp"
+#include "../skill_type.hpp"
+#include "../quark.hpp"
+#include "../util.hpp"
+#include "../variable.hpp"
 
 namespace squelch {
 

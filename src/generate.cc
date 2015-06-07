@@ -6,22 +6,35 @@
  * included in all such copies.
  */
 
-#include "angband.h"
+#include "generate.hpp"
+
+#include "artifact_type.hpp"
 #include "cave.hpp"
+#include "cave_type.hpp"
+#include "dungeon_info_type.hpp"
+#include "feature_type.hpp"
+#include "hook_build_room1_in.hpp"
 #include "hooks.hpp"
 #include "init1.hpp"
 #include "levels.hpp"
 #include "loadsave.hpp"
 #include "monster2.hpp"
+#include "monster_race.hpp"
+#include "monster_type.hpp"
 #include "object2.hpp"
+#include "object_kind.hpp"
 #include "options.hpp"
+#include "player_type.hpp"
 #include "randart.hpp"
 #include "spells1.hpp"
 #include "tables.hpp"
+#include "town_type.hpp"
 #include "traps.hpp"
 #include "util.hpp"
 #include "variable.hpp"
+#include "vault_type.hpp"
 #include "wild.hpp"
+#include "wilderness_map.hpp"
 
 #include <cassert>
 #include <memory>

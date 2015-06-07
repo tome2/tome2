@@ -1,10 +1,22 @@
 #include "q_god.hpp"
-#include "quark.hpp"
+
+#include "cave_type.hpp"
+#include "dungeon_info_type.hpp"
+#include "feature_type.hpp"
+#include "hook_chardump_in.hpp"
+#include "hook_get_in.hpp"
+#include "hook_enter_dungeon_in.hpp"
+#include "hook_player_level_in.hpp"
 #include "hooks.hpp"
 #include "object2.hpp"
+#include "player_type.hpp"
+#include "quark.hpp"
+#include "skill_type.hpp"
 #include "tables.hpp"
 #include "util.hpp"
 #include "variable.hpp"
+#include "wilderness_map.hpp"
+#include "wilderness_type_info.hpp"
 
 #include <assert.h>
 

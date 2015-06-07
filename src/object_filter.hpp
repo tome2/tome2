@@ -1,6 +1,8 @@
 #pragma once
 
-#include "angband.h"
+#include "h-basic.h"
+#include "object_type_fwd.hpp"
+
 #include <functional>
 #include <initializer_list>
 

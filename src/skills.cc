@@ -8,7 +8,6 @@
 
 #include "skills.hpp"
 
-#include "angband.h"
 #include "ability_type.hpp"
 #include "birth.hpp"
 #include "cmd2.hpp"
@@ -23,6 +22,12 @@
 #include "monster3.hpp"
 #include "object1.hpp"
 #include "object2.hpp"
+#include "player_class.hpp"
+#include "player_race.hpp"
+#include "player_race_mod.hpp"
+#include "player_spec.hpp"
+#include "player_type.hpp"
+#include "skill_type.hpp"
 #include "spells1.hpp"
 #include "spells4.hpp"
 #include "tables.hpp"

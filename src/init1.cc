@@ -1,22 +1,51 @@
 #include "init1.hpp"
 
-#include "angband.h"
 #include "ability_type.hpp"
+#include "alchemist_recipe.hpp"
+#include "artifact_type.hpp"
+#include "artifact_select_flag.hpp"
 #include "cave.hpp"
+#include "cave_type.hpp"
+#include "dungeon_info_type.hpp"
+#include "ego_item_type.hpp"
+#include "feature_type.hpp"
 #include "files.hpp"
 #include "gods.hpp"
+#include "hist_type.hpp"
 #include "init2.hpp"
+#include "meta_class_type.hpp"
 #include "monster2.hpp"
+#include "monster_ego.hpp"
+#include "monster_race.hpp"
+#include "monster_type.hpp"
 #include "object1.hpp"
 #include "object2.hpp"
+#include "object_kind.hpp"
+#include "owner_type.hpp"
+#include "player_class.hpp"
+#include "player_race.hpp"
+#include "player_race_mod.hpp"
+#include "player_type.hpp"
+#include "randart_gen_type.hpp"
+#include "randart_part_type.hpp"
+#include "set_type.hpp"
+#include "skill_type.hpp"
 #include "skills.hpp"
 #include "spells5.hpp"
+#include "store_action_type.hpp"
+#include "store_info_type.hpp"
+#include "store_type.hpp"
 #include "tables.hpp"
+#include "town_type.hpp"
+#include "trap_type.hpp"
 #include "traps.hpp"
 #include "util.hpp"
 #include "util.h"
 #include "variable.h"
 #include "variable.hpp"
+#include "vault_type.hpp"
+#include "wilderness_map.hpp"
+#include "wilderness_type_info.hpp"
 
 #include <boost/algorithm/string/predicate.hpp>
 
@@ -9202,6 +9231,7 @@ errr init_st_info_txt(FILE *fp)
 			st_ptr->table[item_idx++][0] = test_item_name(s);
 
 			st_ptr->table_num = item_idx;
+			assert(st_ptr->table_num <= STORE_CHOICES);
 
 			/* Next... */
 			continue;

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "angband.h"
+#include "h-basic.h"
 
 extern bool_ select_module(void);
 extern bool_ module_savefile_loadable(cptr savefile_mod);

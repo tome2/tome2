@@ -1,7 +1,8 @@
 #pragma once
 
-#include "angband.h"
-#include "school_book.hpp"
+#include "h-basic.h"
+#include "object_type_fwd.hpp"
+#include "school_book_fwd.hpp"
 
 extern s32b SCHOOL_AIR;
 extern s32b SCHOOL_AULE;

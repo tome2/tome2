@@ -1,6 +1,6 @@
 #pragma once
 
-#include "angband.h"
+#include "h-basic.h"
 
 extern void print_desc_aux(cptr txt, int y, int x);
 extern void save_savefile_names(void);

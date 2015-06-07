@@ -1,6 +1,7 @@
 #pragma once
 
-#include "angband.h"
+#include "h-basic.h"
+#include "object_type_fwd.hpp"
 
 extern byte show_monster_inven(int m_idx, int *monst_list);
 extern int breakage_chance(object_type *o_ptr);

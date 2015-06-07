@@ -9,11 +9,15 @@
 
 #include "squeltch.hpp"
 
+#include "cave_type.hpp"
 #include "files.hpp"
 #include "loadsave.hpp"
 #include "lua_bind.hpp"
 #include "object1.hpp"
 #include "object2.hpp"
+#include "object_kind.hpp"
+#include "object_type.hpp"
+#include "player_type.hpp"
 #include "tome/squelch/tree_printer.hpp"
 #include "tome/squelch/condition.hpp"
 #include "tome/squelch/condition_metadata.hpp"

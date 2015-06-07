@@ -1,6 +1,8 @@
 #pragma once
 
-#include "angband.h"
+#include "h-basic.h"
+#include "monster_type_fwd.hpp"
+#include "object_type_fwd.hpp"
 
 extern void attack_special(monster_type *m_ptr, s32b special, int dam);
 extern bool_ test_hit_fire(int chance, int ac, int vis);

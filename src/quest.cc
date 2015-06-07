@@ -1,6 +1,5 @@
 #include "quest.hpp"
 
-#include "angband.h"
 #include "tables.hpp"
 
 #include <cstddef>

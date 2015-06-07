@@ -1,5 +1,10 @@
-#include "angband.h"
+#include "corrupt.hpp"
+
 #include "init1.hpp"
+#include "player_race.hpp"
+#include "player_race_mod.hpp"
+#include "player_type.hpp"
+#include "stats.hpp"
 #include "util.hpp"
 #include "variable.hpp"
 #include "xtra1.hpp"

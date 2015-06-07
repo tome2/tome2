@@ -8,7 +8,6 @@
 
 #include "script.h"
 
-#include "angband.h"
 #include "init2.hpp"
 #include "q_library.hpp"
 #include "spells4.hpp"

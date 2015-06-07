@@ -15,10 +15,12 @@
  * there.
  */
 
-#include "angband.h"
 #include "files.hpp"
 #include "monster2.hpp"
+#include "monster_type.hpp"
 #include "object1.hpp"
+#include "player_type.hpp"
+#include "stats.hpp"
 #include "util.hpp"
 #include "util.h"
 #include "variable.h"

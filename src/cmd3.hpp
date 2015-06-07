@@ -1,6 +1,6 @@
 #pragma once
 
-#include "angband.h"
+#include "h-basic.h"
 
 extern void do_cmd_html_dump(void);
 extern void cli_add(cptr active, cptr trigger, cptr descr);

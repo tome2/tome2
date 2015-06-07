@@ -9,11 +9,15 @@
 
 #include "help.hpp"
 
-#include "angband.h"
+#include "cave_type.hpp"
 #include "files.hpp"
+#include "hook_get_in.hpp"
+#include "hook_identify_in.hpp"
+#include "hook_move_in.hpp"
 #include "hooks.hpp"
 #include "object1.hpp"
 #include "options.hpp"
+#include "player_type.hpp"
 #include "skills.hpp"
 #include "util.hpp"
 #include "variable.hpp"

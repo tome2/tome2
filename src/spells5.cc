@@ -1,6 +1,5 @@
 #include "spells5.hpp"
 
-#include "angband.h"
 #include "spell_type.hpp"
 #include "device_allocation.hpp"
 #include "spells3.hpp"

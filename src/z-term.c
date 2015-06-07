@@ -1,5 +1,3 @@
-/* File: z-term.c */
-
 /*
  * Copyright (c) 1997 Ben Harrison
  *
@@ -9,8 +7,6 @@
  */
 
 /* Purpose: a generic, efficient, terminal window package -BEN- */
-
-#include "angband.h"
 
 #include "z-term.h"
 

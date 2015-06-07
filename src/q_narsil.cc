@@ -1,7 +1,13 @@
 #include "q_narsil.hpp"
 
+#include "cave_type.hpp"
+#include "hook_chardump_in.hpp"
+#include "hook_identify_in.hpp"
+#include "hook_move_in.hpp"
 #include "hooks.hpp"
 #include "object2.hpp"
+#include "object_type.hpp"
+#include "player_type.hpp"
 #include "tables.hpp"
 #include "util.hpp"
 #include "variable.hpp"

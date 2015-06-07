@@ -1,6 +1,7 @@
 #pragma once
 
-#include "angband.h"
+#include "h-basic.h"
+#include "object_type_fwd.hpp"
 
 extern bool_ player_activate_trap_type(s16b y, s16b x, object_type *i_ptr, s16b item);
 extern void player_activate_door_trap(s16b y, s16b x);

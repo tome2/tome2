@@ -38,8 +38,6 @@
  * Consider the use of "savetty()" and "resetty()".  XXX XXX XXX
  */
 
-
-#include "angband.h"
 #include "util.h"
 #include "variable.h"
 

@@ -1,6 +1,7 @@
 #pragma once
 
-#include "angband.h"
+#include "h-basic.h"
+#include "object_type_fwd.hpp"
 
 extern bool_ is_magestaff(void);
 extern void do_cmd_browse_aux(object_type *o_ptr);

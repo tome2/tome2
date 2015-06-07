@@ -1,5 +1,8 @@
 #include "mimic.hpp"
 
+#include "player_type.hpp"
+#include "skill_type.hpp"
+#include "stats.hpp"
 #include "variable.hpp"
 #include "xtra1.hpp"
 

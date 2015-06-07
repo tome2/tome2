@@ -1,6 +1,6 @@
 #pragma once
 
-#include "angband.h"
+#include "h-basic.h"
 
 typedef bool_ (*hook_func_t)(void *, void *, void *);
 

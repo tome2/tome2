@@ -1,6 +1,6 @@
 #pragma once
 
-#include "angband.h"
+#include "h-basic.h"
 #include "object_filter.hpp"
 
 #include <boost/optional.hpp>

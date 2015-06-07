@@ -1,7 +1,7 @@
 #pragma once
 
 #include "range_fwd.hpp"
-#include "angband.h"
+#include "h-basic.h"
 
 /*
  * Range

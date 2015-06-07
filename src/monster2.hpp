@@ -1,6 +1,9 @@
 #pragma once
 
-#include "angband.h"
+#include "h-basic.h"
+#include "monster_race_fwd.hpp"
+#include "monster_type_fwd.hpp"
+#include "object_type_fwd.hpp"
 
 extern s32b monster_exp(s16b level);
 extern void monster_set_level(int m_idx, int level);

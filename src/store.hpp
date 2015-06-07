@@ -1,7 +1,5 @@
 #pragma once
 
-#include "angband.h"
-
 extern void do_cmd_store();
 extern void store_shuffle(int which);
 extern void store_maint(int town_num, int store_num);

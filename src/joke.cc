@@ -1,6 +1,5 @@
 #include "joke.hpp"
 
-#include "angband.h"
 #include "monster2.hpp"
 #include "options.hpp"
 #include "util.hpp"

@@ -1,6 +1,7 @@
 #pragma once
 
-#include "angband.h"
+#include "h-basic.h"
+#include "monster_type_fwd.hpp"
 
 extern void html_screenshot(cptr name);
 extern void help_file_screenshot(cptr name);

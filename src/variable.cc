@@ -8,6 +8,10 @@
 
 #include "variable.hpp"
 #include "variable.h"
+
+#include "cli_comm_fwd.hpp"
+#include "player_type.hpp"
+#include "randart_gen_type.hpp"
 #include "util.hpp"
 
 
@@ -1050,7 +1054,7 @@ const char *get_version_string()
 /*
  * A list of tvals and their textual names
  */
-tval_desc2 tvals[] =
+tval_desc tvals[] =
 {
 	{ TV_SWORD, "Sword" },
 	{ TV_POLEARM, "Polearm" },

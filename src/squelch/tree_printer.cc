@@ -1,7 +1,7 @@
 #include "tome/squelch/tree_printer_fwd.hpp"
 #include "tome/squelch/tree_printer.hpp"
 
-#include "angband.h"
+#include "../z-term.h"
 
 namespace squelch {
 

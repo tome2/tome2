@@ -4,11 +4,11 @@
 #include <vector>
 
 #include "tome/squelch/object_status.hpp"
-#include "angband.h"
 #include "lua_bind.hpp"
 #include "skills.hpp"
 #include "util.hpp"
 #include "util.h"
+#include "z-term.h"
 
 namespace squelch {
 

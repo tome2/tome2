@@ -41,7 +41,6 @@ extern "C" {
  * Now, include the defines and the types
  */
 #include "defines.h"
-#include "types.h"
 
 /***** Some copyright messages follow below *****/
 

@@ -8,15 +8,24 @@
 
 #include "wild.hpp"
 
-#include "angband.h"
 #include "cave.hpp"
+#include "cave_type.hpp"
+#include "feature_type.hpp"
+#include "hook_wild_gen_in.hpp"
 #include "hooks.hpp"
 #include "init1.hpp"
 #include "monster2.hpp"
+#include "monster_race.hpp"
+#include "monster_type.hpp"
 #include "options.hpp"
+#include "player_type.hpp"
+#include "store_info_type.hpp"
 #include "tables.hpp"
+#include "town_type.hpp"
 #include "util.hpp"
 #include "variable.hpp"
+#include "wilderness_map.hpp"
+#include "wilderness_type_info.hpp"
 
 #include <memory>
 
@@ -342,7 +351,23 @@ static int generate_area(int y, int x, bool_ border, bool_ corner)
 /*
  * Border of the wilderness area
  */
-static border_type border;
+namespace {
+
+	struct border_type
+	{
+		byte 	north[MAX_WID];
+		byte 	south[MAX_WID];
+		byte 	east[MAX_HGT];
+		byte 	west[MAX_HGT];
+		byte	north_west;
+		byte	north_east;
+		byte	south_west;
+		byte	south_east;
+	};
+
+	border_type border;
+
+}
 
 /*
  * Build the wilderness area outside of the town.

@@ -9,7 +9,6 @@
 
 #include "gen_evol.hpp"
 
-#include "angband.h"
 #include "cave.hpp"
 #include "generate.hpp"
 #include "levels.hpp"

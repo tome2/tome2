@@ -8,10 +8,12 @@
 
 #include "gen_evol.hpp"
 
-#include "angband.h"
 #include "cave.hpp"
+#include "cave_type.hpp"
+#include "feature_type.hpp"
 #include "generate.hpp"
 #include "levels.hpp"
+#include "player_type.hpp"
 #include "variable.hpp"
 
 /*

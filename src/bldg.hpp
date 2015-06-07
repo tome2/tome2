@@ -1,6 +1,7 @@
 #pragma once
 
-#include "angband.h"
+#include "h-basic.h"
+#include "store_type_fwd.hpp"
 
 extern bool_ bldg_process_command(store_type *s_ptr, int i);
 extern void show_building(store_type *s_ptr);

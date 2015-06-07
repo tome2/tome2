@@ -1,6 +1,8 @@
 #pragma once
 
-#include "angband.h"
+#include "h-basic.h"
+#include "rune_spell_fwd.hpp"
+#include "object_type_fwd.hpp"
 
 extern void do_cmd_pray(void);
 extern void do_cmd_create_boulder(void);

@@ -2,7 +2,7 @@
 
 #include "spell_type_fwd.hpp"
 #include "h-basic.h"
-#include "types_fwd.h"
+#include "timer_type_fwd.hpp"
 
 extern s32b NOXIOUSCLOUD;
 extern s32b AIRWINGS;

@@ -6,7 +6,6 @@
  * included in all such copies.
  */
 #include "hooks.hpp"
-#include "angband.h"
 
 #include <algorithm>
 #include <assert.h>

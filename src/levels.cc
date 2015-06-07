@@ -8,7 +8,7 @@
 
 #include "levels.hpp"
 
-#include "angband.h"
+#include "dungeon_info_type.hpp"
 #include "init1.hpp"
 #include "util.hpp"
 #include "util.h"

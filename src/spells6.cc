@@ -1,10 +1,12 @@
 #include "spells6.hpp"
 
-#include "angband.h"
 #include "gods.hpp"
 #include "lua_bind.hpp"
 #include "object2.hpp"
+#include "object_type.hpp"
+#include "player_type.hpp"
 #include "skills.hpp"
+#include "skill_type.hpp"
 #include "spell_type.hpp"
 #include "spells4.hpp"
 #include "variable.hpp"

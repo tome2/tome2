@@ -1,6 +1,6 @@
 #pragma once
 
-#include "angband.h"
+#include "h-basic.h"
 
 extern void init_hooks_help();
 extern void help_race(cptr race);

@@ -1,10 +1,11 @@
 #include "tome/squelch/object_status_fwd.hpp"
 #include "tome/squelch/object_status.hpp"
 
-#include "angband.h"
-#include "object1.hpp"
-#include "object2.hpp"
-#include "variable.hpp"
+#include "../inventory.hpp"
+#include "../object1.hpp"
+#include "../object2.hpp"
+#include "../object_type.hpp"
+#include "../variable.hpp"
 
 namespace squelch {
 

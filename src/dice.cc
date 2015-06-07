@@ -1,5 +1,7 @@
 #include "dice.hpp"
 
+#include "z-rand.h"
+
 #include <cassert>
 
 void dice_init(dice_type *dice, long base, long num, long sides)

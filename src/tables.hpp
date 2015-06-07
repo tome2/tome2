@@ -1,6 +1,26 @@
 #pragma once
 
 #include "angband.h"
+#include "activation.hpp"
+#include "between_exit.hpp"
+#include "body.hpp"
+#include "cli_comm_fwd.hpp"
+#include "flags_group.hpp"
+#include "gf_name_type.hpp"
+#include "inscription_info_type.hpp"
+#include "magic_power.hpp"
+#include "martial_arts.hpp"
+#include "module_type.hpp"
+#include "monster_power.hpp"
+#include "move_info_type.hpp"
+#include "option_type.hpp"
+#include "player_defs.hpp"
+#include "player_sex.hpp"
+#include "power_type.hpp"
+#include "powers.hpp"
+#include "quest_type.hpp"
+#include "tactic_info_type.hpp"
+#include "tval_desc.hpp"
 
 extern s16b ddd[9];
 extern s16b ddx[10];

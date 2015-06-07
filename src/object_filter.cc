@@ -1,6 +1,7 @@
 #include "object_filter.hpp"
 #include "object1.hpp"
 #include "object2.hpp"
+#include "object_type.hpp"
 
 namespace object_filter {
 

@@ -1,6 +1,9 @@
 #pragma once
 
-#include "angband.h"
+#include "h-basic.h"
+#include "monster_race_fwd.hpp"
+#include "object_type_fwd.hpp"
+#include "player_race_mod_fwd.hpp"
 
 extern void do_rebirth(void);
 extern void set_subrace_title(player_race_mod *rmp_ptr, cptr name);

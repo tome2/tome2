@@ -1,7 +1,7 @@
 #pragma once
 
 #include "h-basic.h"
-#include "types_fwd.h"
+#include "monster_type_fwd.hpp"
 
 extern int monst_spell_monst_spell;
 extern bool_ mon_take_hit_mon(int s_idx, int m_idx, int dam, bool_ *fear, cptr note);

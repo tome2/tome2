@@ -1,4 +1,4 @@
-#include "angband.h"
+#include "h-basic.h"
 
 extern s16b resolve_mimic_name(cptr name);
 extern s16b find_random_mimic_shape(byte level, bool_ limit);

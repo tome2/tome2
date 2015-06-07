@@ -1,6 +1,6 @@
 #pragma once
 
-#include "angband.h"
+#include "h-basic.h"
 
 typedef struct dice_type dice_type;
 struct dice_type;

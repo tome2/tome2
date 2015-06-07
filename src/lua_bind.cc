@@ -8,17 +8,19 @@
 
 #include "lua_bind.hpp"
 
-#include "angband.h"
 #include "cmd7.hpp"
 #include "corrupt.hpp"
 #include "init1.hpp"
 #include "monster2.hpp"
+#include "player_type.hpp"
 #include "range.hpp"
 #include "skills.hpp"
+#include "skill_type.hpp"
 #include "spell_type.hpp"
 #include "spells2.hpp"
 #include "spells5.hpp"
 #include "tables.hpp"
+#include "timer_type.hpp"
 #include "util.hpp"
 #include "variable.hpp"
 

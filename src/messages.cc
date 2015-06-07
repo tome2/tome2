@@ -2,7 +2,9 @@
 
 #include "tome/make_array.hpp"
 
-#include "angband.h"
+#include "z-term.h"
+#include "z-form.h"
+#include "z-util.h"
 
 /*
  * OPTION: Maximum number of messages to remember (see "io.c")

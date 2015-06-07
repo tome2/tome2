@@ -1,5 +1,4 @@
-#ifndef H_53108fce_b059_4a82_99db_e1d4970ebd77
-#define H_53108fce_b059_4a82_99db_e1d4970ebd77
+#pragma once
 
 #include <boost/noncopyable.hpp>
 #include <memory>
@@ -10,7 +9,7 @@
 #include "tome/squelch/cursor_fwd.hpp"
 #include "tome/squelch/tree_printer_fwd.hpp"
 #include "tome/squelch/condition_fwd.hpp"
-#include "types_fwd.h"
+#include "../object_type_fwd.hpp"
 
 namespace squelch {
 
@@ -155,5 +154,3 @@ private:
 };
 
 } // namespace
-
-#endif

@@ -8,12 +8,15 @@
 
 #include "monster3.hpp"
 
-#include "angband.h"
+#include "cave_type.hpp"
 #include "cmd2.hpp"
 #include "gods.hpp"
 #include "melee2.hpp"
 #include "monster2.hpp"
+#include "monster_race.hpp"
+#include "monster_type.hpp"
 #include "object2.hpp"
+#include "player_type.hpp"
 #include "skills.hpp"
 #include "tables.hpp"
 #include "util.hpp"

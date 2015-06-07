@@ -7,8 +7,10 @@
  */
 #include "gods.hpp"
 
-#include "angband.h"
+#include "player_type.hpp"
 #include "skills.hpp"
+#include "skill_type.hpp"
+#include "stats.hpp"
 #include "util.hpp"
 #include "util.h"
 #include "variable.h"

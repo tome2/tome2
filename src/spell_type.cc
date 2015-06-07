@@ -1,10 +1,11 @@
 #include "spell_type.hpp"
+
 #include "range.hpp"
 #include "device_allocation.hpp"
 #include "dice.hpp"
+#include "skills_defs.hpp"
 #include "spells4.hpp"
-
-#include "angband.h"
+#include "stats.hpp"
 
 #include <cassert>
 #include <vector>

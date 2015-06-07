@@ -9,7 +9,6 @@
 #include "tables.hpp"
 #include "tables.h"
 
-#include "angband.h"
 #include "modules.hpp"
 #include "options.hpp"
 #include "q_library.hpp"
@@ -39,6 +38,7 @@
 #include "q_one.hpp"
 #include "q_main.hpp"
 #include "q_rand.hpp"
+#include "stats.hpp"
 #include "variable.hpp"
 
 

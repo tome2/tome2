@@ -1,6 +1,7 @@
 #pragma once
 
-#include "angband.h"
+#include "h-basic.h"
+#include "object_type_fwd.hpp"
 
 extern void set_stick_mode(object_type *o_ptr);
 extern void unset_stick_mode(void);

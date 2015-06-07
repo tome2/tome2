@@ -30,7 +30,6 @@
  * and reorganised the file a bit.
  */
 
-#include "angband.h"
 #include "files.h"
 #include "util.h"
 #include "variable.h"

@@ -8,16 +8,27 @@
 
 #include "object2.hpp"
 
-#include "angband.h"
+#include "alloc_entry.hpp"
+#include "artifact_type.hpp"
 #include "cave.hpp"
+#include "cave_type.hpp"
 #include "spell_type.hpp"
 #include "device_allocation.hpp"
+#include "dungeon_info_type.hpp"
+#include "ego_item_type.hpp"
+#include "feature_type.hpp"
 #include "hooks.hpp"
 #include "mimic.hpp"
 #include "monster2.hpp"
+#include "monster_race.hpp"
+#include "monster_type.hpp"
 #include "object1.hpp"
+#include "object_kind.hpp"
+#include "object_type.hpp"
 #include "options.hpp"
+#include "player_type.hpp"
 #include "randart.hpp"
+#include "randart_part_type.hpp"
 #include "skills.hpp"
 #include "spells2.hpp"
 #include "spells3.hpp"
@@ -26,6 +37,7 @@
 #include "traps.hpp"
 #include "util.hpp"
 #include "variable.hpp"
+#include "wilderness_map.hpp"
 #include "xtra1.hpp"
 
 #include <cassert>
@@ -4412,7 +4424,7 @@ static obj_theme match_theme;
  * XXX XXX XXX It relies on the fact that obj_theme is a four byte structure
  * for its efficient operation. A horrendous hack, I'd say.
  */
-void init_match_theme(obj_theme theme)
+void init_match_theme(obj_theme const &theme)
 {
 	/* Save the theme */
 	match_theme = theme;
@@ -4814,7 +4826,7 @@ bool_ kind_is_artifactable(int k_idx)
  * through the forge--object_prep()--apply_magic() sequence and
  * get_obj_num() should never be called for that purpose XXX XXX XXX
  */
-bool_ make_object(object_type *j_ptr, bool_ good, bool_ great, obj_theme theme)
+bool_ make_object(object_type *j_ptr, bool_ good, bool_ great, obj_theme const &theme)
 {
 	int invprob, base;
 

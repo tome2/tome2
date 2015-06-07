@@ -1,6 +1,6 @@
 #pragma once
 
-#include "angband.h"
+#include "h-basic.h"
 
 extern bool_ new_player_spot(int branch);
 extern void add_level_generator(cptr name, bool_ (*generator)());

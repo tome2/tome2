@@ -1,6 +1,6 @@
 #include "quark.hpp"
 
-#include "angband.h"
+#include "z-util.h"
 
 #include <cassert>
 

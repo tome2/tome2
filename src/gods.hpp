@@ -1,6 +1,6 @@
 #pragma once
 
-#include "angband.h"
+#include "h-basic.h"
 
 extern void inc_piety(int god, s32b amt);
 extern void abandon_god(int god);

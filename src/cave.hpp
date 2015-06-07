@@ -1,6 +1,8 @@
 #pragma once
 
-#include "angband.h"
+#include "h-basic.h"
+#include "cave_type_fwd.hpp"
+#include "object_type_fwd.hpp"
 
 extern int distance(int y1, int x1, int y2, int x2);
 extern bool_ los(int y1, int x1, int y2, int x2);
