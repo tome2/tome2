@@ -1555,77 +1555,6 @@ static void strappend(char **s, const char *t)
 	strcat(*s, t);
 }
 
-/*
- * Implements fp stacks, for included files
- */
-static FILE *fp_stack[10];
-static int fp_stack_idx = 0;
-
-/*
- * Must be caleld before the main loop
- */
-static void fp_stack_init(FILE *fp)
-{
-	fp_stack[0] = fp;
-	fp_stack_idx = 0;
-}
-
-static void fp_stack_push(cptr name)
-{
-	if (fp_stack_idx < 9)
-	{
-		char buf[1024];
-		FILE *fp;
-
-		/* Build the filename */
-		path_build(buf, 1024, ANGBAND_DIR_EDIT, name);
-
-		/* Open the file */
-		fp = my_fopen(buf, "r");
-
-		/* Parse it */
-		if (!fp) quit(format("Cannot open '%s' file.", name));
-
-		printf("ibncluding %s\n", name);
-
-		fp_stack[++fp_stack_idx] = fp;
-	}
-}
-
-static bool_ fp_stack_pop()
-{
-	if (fp_stack_idx > 0)
-	{
-		FILE *fp = fp_stack[fp_stack_idx--];
-		my_fclose(fp);
-		return TRUE;
-	}
-	else
-		return FALSE;
-}
-
-/*
- * Must be used instead of my_fgets for teh main loop
- */
-static int my_fgets_dostack(char *buf, int len)
-{
-	// End of a file
-	if (0 != my_fgets(fp_stack[fp_stack_idx], buf, len))
-	{
-		// If any left, use them
-		if (fp_stack_pop())
-			return my_fgets_dostack(buf, len);
-		// If not, this is the end
-		else
-			return 1;
-	}
-	else
-	{
-		return 0;
-	}
-}
-
-
 /*** Initialize from ascii template files ***/
 
 /*
@@ -1873,8 +1802,7 @@ errr init_player_info_txt(FILE *fp, char *buf)
 	}
 
 	/* Parse */
-	fp_stack_init(fp);
-	while (0 == my_fgets_dostack(buf, 1024))
+	while (0 == my_fgets(fp, buf, 1024))
 	{
 		/* Advance the line number */
 		error_line++;
@@ -1903,13 +1831,6 @@ errr init_player_info_txt(FILE *fp, char *buf)
 
 		/* No version yet */
 		if (!okay) return (2);
-
-		/* Included file */
-		if (buf[0] == '<')
-		{
-			fp_stack_push(buf + 2);
-			continue;
-		}
 
 		/* Reinit error_idx */
 		if (buf[0] == 'I')
@@ -3405,8 +3326,7 @@ errr init_v_info_txt(FILE *fp, char *buf)
 	error_line = -1;
 
 	/* Parse */
-	fp_stack_init(fp);
-	while (0 == my_fgets_dostack(buf, 1024))
+	while (0 == my_fgets(fp, buf, 1024))
 	{
 		/* Advance the line number */
 		error_line++;
@@ -3436,13 +3356,6 @@ errr init_v_info_txt(FILE *fp, char *buf)
 
 		/* No version yet */
 		if (!okay) return (2);
-
-		/* Included file */
-		if (buf[0] == '<')
-		{
-			fp_stack_push(buf + 2);
-			continue;
-		}
 
 		/* Process 'N' for "New/Number/Name" */
 		if (buf[0] == 'N')
@@ -3615,8 +3528,7 @@ errr init_f_info_txt(FILE *fp, char *buf)
 	error_line = -1;
 
 	/* Parse */
-	fp_stack_init(fp);
-	while (0 == my_fgets_dostack(buf, 1024))
+	while (0 == my_fgets(fp, buf, 1024))
 	{
 		/* Advance the line number */
 		error_line++;
@@ -3645,13 +3557,6 @@ errr init_f_info_txt(FILE *fp, char *buf)
 
 		/* No version yet */
 		if (!okay) return (2);
-
-		/* Included file */
-		if (buf[0] == '<')
-		{
-			fp_stack_push(buf + 2);
-			continue;
-		}
 
 		/* Process 'N' for "New/Number/Name" */
 		if (buf[0] == 'N')
@@ -4018,8 +3923,7 @@ errr init_k_info_txt(FILE *fp, char *buf)
 
 
 	/* Parse */
-	fp_stack_init(fp);
-	while (0 == my_fgets_dostack(buf, 1024))
+	while (0 == my_fgets(fp, buf, 1024))
 	{
 		/* Advance the line number */
 		error_line++;
@@ -4048,13 +3952,6 @@ errr init_k_info_txt(FILE *fp, char *buf)
 
 		/* No version yet */
 		if (!okay) return (2);
-
-		/* Included file */
-		if (buf[0] == '<')
-		{
-			fp_stack_push(buf + 2);
-			continue;
-		}
 
 		/* Process 'N' for "New/Number/Name" */
 		if (buf[0] == 'N')
@@ -4478,8 +4375,7 @@ errr init_al_info_txt(FILE *fp, char *buf)
 	error_line = -1;
 
 	/* Parse */
-	fp_stack_init(fp);
-	while (0 == my_fgets_dostack(buf, 1024))
+	while (0 == my_fgets(fp, buf, 1024))
 	{
 		/* Advance the line number */
 		error_line++;
@@ -4507,13 +4403,6 @@ errr init_al_info_txt(FILE *fp, char *buf)
 
 		/* No version yet */
 		if (!okay) return (2);
-
-		/* Included file */
-		if (buf[0] == '<')
-		{
-			fp_stack_push(buf + 2);
-			continue;
-		}
 
 		/* Process 'I' for "Info" (one line only) */
 		if (buf[0] == 'I')
@@ -4868,8 +4757,7 @@ errr init_a_info_txt(FILE *fp, char *buf)
 
 
 	/* Parse */
-	fp_stack_init(fp);
-	while (0 == my_fgets_dostack(buf, 1024))
+	while (0 == my_fgets(fp, buf, 1024))
 	{
 		/* Advance the line number */
 		error_line++;
@@ -4898,13 +4786,6 @@ errr init_a_info_txt(FILE *fp, char *buf)
 
 		/* No version yet */
 		if (!okay) return (2);
-
-		/* Included file */
-		if (buf[0] == '<')
-		{
-			fp_stack_push(buf + 2);
-			continue;
-		}
 
 		/* Process 'N' for "New/Number/Name" */
 		if (buf[0] == 'N')
@@ -5177,8 +5058,7 @@ errr init_set_info_txt(FILE *fp, char *buf)
 
 
 	/* Parse */
-	fp_stack_init(fp);
-	while (0 == my_fgets_dostack(buf, 1024))
+	while (0 == my_fgets(fp, buf, 1024))
 	{
 		/* Advance the line number */
 		error_line++;
@@ -5207,13 +5087,6 @@ errr init_set_info_txt(FILE *fp, char *buf)
 
 		/* No version yet */
 		if (!okay) return (2);
-
-		/* Included file */
-		if (buf[0] == '<')
-		{
-			fp_stack_push(buf + 2);
-			continue;
-		}
 
 		/* Process 'N' for "New/Number/Name" */
 		if (buf[0] == 'N')
@@ -5390,8 +5263,7 @@ errr init_s_info_txt(FILE *fp, char *buf)
 
 
 	/* Parse */
-	fp_stack_init(fp);
-	while (0 == my_fgets_dostack(buf, 1024))
+	while (0 == my_fgets(fp, buf, 1024))
 	{
 		/* Advance the line number */
 		error_line++;
@@ -5420,13 +5292,6 @@ errr init_s_info_txt(FILE *fp, char *buf)
 
 		/* No version yet */
 		if (!okay) return (2);
-
-		/* Included file */
-		if (buf[0] == '<')
-		{
-			fp_stack_push(buf + 2);
-			continue;
-		}
 
 		/* Process 'T' for "skill Tree" */
 		if (buf[0] == 'T')
@@ -5735,8 +5600,7 @@ errr init_ab_info_txt(FILE *fp, char *buf)
 
 
 	/* Parse */
-	fp_stack_init(fp);
-	while (0 == my_fgets_dostack(buf, 1024))
+	while (0 == my_fgets(fp, buf, 1024))
 	{
 		/* Advance the line number */
 		error_line++;
@@ -5765,13 +5629,6 @@ errr init_ab_info_txt(FILE *fp, char *buf)
 
 		/* No version yet */
 		if (!okay) return (2);
-
-		/* Included file */
-		if (buf[0] == '<')
-		{
-			fp_stack_push(buf + 2);
-			continue;
-		}
 
 		/* Process 'N' for "New/Number/Name" */
 		if (buf[0] == 'N')
@@ -6264,8 +6121,7 @@ errr init_e_info_txt(FILE *fp, char *buf)
 
 
 	/* Parse */
-	fp_stack_init(fp);
-	while (0 == my_fgets_dostack(buf, 1024))
+	while (0 == my_fgets(fp, buf, 1024))
 	{
 		/* Advance the line number */
 		error_line++;
@@ -6294,13 +6150,6 @@ errr init_e_info_txt(FILE *fp, char *buf)
 
 		/* No version yet */
 		if (!okay) return (2);
-
-		/* Included file */
-		if (buf[0] == '<')
-		{
-			fp_stack_push(buf + 2);
-			continue;
-		}
 
 		/* Process 'N' for "New/Number/Name" */
 		if (buf[0] == 'N')
@@ -6775,8 +6624,7 @@ errr init_ra_info_txt(FILE *fp, char *buf)
 
 
 	/* Parse */
-	fp_stack_init(fp);
-	while (0 == my_fgets_dostack(buf, 1024))
+	while (0 == my_fgets(fp, buf, 1024))
 	{
 		/* Advance the line number */
 		error_line++;
@@ -6805,13 +6653,6 @@ errr init_ra_info_txt(FILE *fp, char *buf)
 
 		/* No version yet */
 		if (!okay) return (2);
-
-		/* Included file */
-		if (buf[0] == '<')
-		{
-			fp_stack_push(buf + 2);
-			continue;
-		}
 
 		/* Process 'G' for "General" (up to 30 lines) */
 		if (buf[0] == 'G')
@@ -7182,8 +7023,7 @@ errr init_r_info_txt(FILE *fp, char *buf)
 
 
 	/* Parse */
-	fp_stack_init(fp);
-	while (0 == my_fgets_dostack(buf, 1024))
+	while (0 == my_fgets(fp, buf, 1024))
 	{
 		/* Advance the line number */
 		error_line++;
@@ -7212,13 +7052,6 @@ errr init_r_info_txt(FILE *fp, char *buf)
 
 		/* No version yet */
 		if (!okay) return (2);
-
-		/* Included file */
-		if (buf[0] == '<')
-		{
-			fp_stack_push(buf + 2);
-			continue;
-		}
 
 		/* Process 'N' for "New/Number/Name" */
 		if (buf[0] == 'N')
@@ -7802,8 +7635,7 @@ errr init_re_info_txt(FILE *fp, char *buf)
 	error_line = -1;
 
 	/* Parse */
-	fp_stack_init(fp);
-	while (0 == my_fgets_dostack(buf, 1024))
+	while (0 == my_fgets(fp, buf, 1024))
 	{
 		/* Advance the line number */
 		error_line++;
@@ -7832,13 +7664,6 @@ errr init_re_info_txt(FILE *fp, char *buf)
 
 		/* No version yet */
 		if (!okay) return (2);
-
-		/* Included file */
-		if (buf[0] == '<')
-		{
-			fp_stack_push(buf + 2);
-			continue;
-		}
 
 		/* Process 'N' for "New/Number/Name" */
 		if (buf[0] == 'N')
@@ -8325,8 +8150,7 @@ errr init_t_info_txt(FILE *fp, char *buf)
 	error_line = -1;
 
 	/* Parse */
-	fp_stack_init(fp);
-	while (0 == my_fgets_dostack(buf, 1024))
+	while (0 == my_fgets(fp, buf, 1024))
 	{
 		/* Advance the line number */
 		error_line++;
@@ -8355,13 +8179,6 @@ errr init_t_info_txt(FILE *fp, char *buf)
 
 		/* No version yet */
 		if (!okay) return (2);
-
-		/* Included file */
-		if (buf[0] == '<')
-		{
-			fp_stack_push(buf + 2);
-			continue;
-		}
 
 		/* Process 'N' for "New/Number/Name" */
 		if (buf[0] == 'N')
@@ -8671,8 +8488,7 @@ errr init_d_info_txt(FILE *fp, char *buf)
 	error_line = -1;
 
 	/* Parse */
-	fp_stack_init(fp);
-	while (0 == my_fgets_dostack(buf, 1024))
+	while (0 == my_fgets(fp, buf, 1024))
 	{
 		/* Advance the line number */
 		error_line++;
@@ -8701,13 +8517,6 @@ errr init_d_info_txt(FILE *fp, char *buf)
 
 		/* No version yet */
 		if (!okay) return (2);
-
-		/* Included file */
-		if (buf[0] == '<')
-		{
-			fp_stack_push(buf + 2);
-			continue;
-		}
 
 		/* Process 'N' for "New/Number/Name" */
 		if (buf[0] == 'N')
@@ -9293,8 +9102,7 @@ errr init_st_info_txt(FILE *fp, char *buf)
 	error_line = -1;
 
 	/* Parse */
-	fp_stack_init(fp);
-	while (0 == my_fgets_dostack(buf, 1024))
+	while (0 == my_fgets(fp, buf, 1024))
 	{
 		/* Advance the line number */
 		error_line++;
@@ -9323,13 +9131,6 @@ errr init_st_info_txt(FILE *fp, char *buf)
 
 		/* No version yet */
 		if (!okay) return (2);
-
-		/* Included file */
-		if (buf[0] == '<')
-		{
-			fp_stack_push(buf + 2);
-			continue;
-		}
 
 		/* Process 'N' for "New/Number/Name" */
 		if (buf[0] == 'N')
@@ -9564,8 +9365,7 @@ errr init_ba_info_txt(FILE *fp, char *buf)
 	error_line = -1;
 
 	/* Parse */
-	fp_stack_init(fp);
-	while (0 == my_fgets_dostack(buf, 1024))
+	while (0 == my_fgets(fp, buf, 1024))
 	{
 		/* Advance the line number */
 		error_line++;
@@ -9594,13 +9394,6 @@ errr init_ba_info_txt(FILE *fp, char *buf)
 
 		/* No version yet */
 		if (!okay) return (2);
-
-		/* Included file */
-		if (buf[0] == '<')
-		{
-			fp_stack_push(buf + 2);
-			continue;
-		}
 
 		/* Process 'N' for "New/Number/Name" */
 		if (buf[0] == 'N')
@@ -9715,8 +9508,7 @@ errr init_ow_info_txt(FILE *fp, char *buf)
 	error_line = -1;
 
 	/* Parse */
-	fp_stack_init(fp);
-	while (0 == my_fgets_dostack(buf, 1024))
+	while (0 == my_fgets(fp, buf, 1024))
 	{
 		/* Advance the line number */
 		error_line++;
@@ -9745,13 +9537,6 @@ errr init_ow_info_txt(FILE *fp, char *buf)
 
 		/* No version yet */
 		if (!okay) return (2);
-
-		/* Included file */
-		if (buf[0] == '<')
-		{
-			fp_stack_push(buf + 2);
-			continue;
-		}
 
 		/* Process 'N' for "New/Number/Name" */
 		if (buf[0] == 'N')
@@ -9940,8 +9725,7 @@ errr init_wf_info_txt(FILE *fp, char *buf)
 	error_line = -1;
 
 	/* Parse */
-	fp_stack_init(fp);
-	while (0 == my_fgets_dostack(buf, 1024))
+	while (0 == my_fgets(fp, buf, 1024))
 	{
 		/* Advance the line number */
 		error_line++;
@@ -9970,13 +9754,6 @@ errr init_wf_info_txt(FILE *fp, char *buf)
 
 		/* No version yet */
 		if (!okay) return (2);
-
-		/* Included file */
-		if (buf[0] == '<')
-		{
-			fp_stack_push(buf + 2);
-			continue;
-		}
 
 		/* Process 'N' for "New/Number/Name" */
 		if (buf[0] == 'N')
