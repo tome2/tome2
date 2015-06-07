@@ -89,20 +89,20 @@ static void sf_put(byte v)
  */
 static void do_byte(byte *v, ls_flag_t flag)
 {
-	if (flag == ls_flag_t::LOAD)
+	switch (flag)
+	{
+	case ls_flag_t::LOAD:
 	{
 		*v = sf_get();
 		return;
 	}
-	if (flag == ls_flag_t::SAVE)
+	case ls_flag_t::SAVE:
 	{
 		byte val = *v;
 		sf_put(val);
 		return;
 	}
-	/* We should never reach here, so bail out */
-	printf("FATAL: do_byte passed %d\n", flag);
-	exit(0);
+	}
 }
 
 static void do_bool(bool_ *f, ls_flag_t flag)
@@ -117,13 +117,15 @@ static void do_bool(bool_ *f, ls_flag_t flag)
 
 static void do_u16b(u16b *v, ls_flag_t flag)
 {
-	if (flag == ls_flag_t::LOAD)
+	switch (flag)
+	{
+	case ls_flag_t::LOAD:
 	{
 		(*v) = sf_get();
 		(*v) |= ((u16b)(sf_get()) << 8);
 		return;
 	}
-	if (flag == ls_flag_t::SAVE)
+	case ls_flag_t::SAVE:
 	{
 		u16b val;
 		val = *v;
@@ -131,9 +133,7 @@ static void do_u16b(u16b *v, ls_flag_t flag)
 		sf_put((byte)((val >> 8) & 0xFF));
 		return;
 	}
-	/* Never should reach here, bail out */
-	printf("FATAL: do_u16b passed %d\n", flag);
-	exit(0);
+	}
 }
 
 static void do_s16b(s16b *ip, ls_flag_t flag)
@@ -143,7 +143,9 @@ static void do_s16b(s16b *ip, ls_flag_t flag)
 
 static void do_u32b(u32b *ip, ls_flag_t flag)
 {
-	if (flag == ls_flag_t::LOAD)
+	switch(flag)
+	{
+	case ls_flag_t::LOAD:
 	{
 		(*ip) = sf_get();
 		(*ip) |= ((u32b)(sf_get()) << 8);
@@ -151,7 +153,7 @@ static void do_u32b(u32b *ip, ls_flag_t flag)
 		(*ip) |= ((u32b)(sf_get()) << 24);
 		return;
 	}
-	if (flag == ls_flag_t::SAVE)
+	case ls_flag_t::SAVE:
 	{
 		u32b val = *ip;
 		sf_put((byte)(val & 0xFF));
@@ -160,9 +162,7 @@ static void do_u32b(u32b *ip, ls_flag_t flag)
 		sf_put((byte)((val >> 24) & 0xFF));
 		return;
 	}
-	/* Bad news if you're here, because you're going down */
-	printf("FATAL: do_u32b passed %d\n", flag);
-	exit(0);
+	}
 }
 
 static void do_s32b(s32b *ip, ls_flag_t flag)
@@ -178,7 +178,9 @@ static void do_xtra(int k_idx, ls_flag_t flag)
 	byte tmp8u = 0;
 	object_kind *k_ptr = &k_info[k_idx];
 
-	if (flag == ls_flag_t::SAVE)
+	switch(flag)
+	{
+	case ls_flag_t::SAVE:
 	{
 		if (k_ptr->aware) tmp8u |= 0x01;
 		if (k_ptr->tried) tmp8u |= 0x02;
@@ -186,14 +188,17 @@ static void do_xtra(int k_idx, ls_flag_t flag)
 		if (k_ptr->artifact) tmp8u |= 0x80;
 
 		do_byte(&tmp8u, flag);
+		return;
 	}
-	if (flag == ls_flag_t::LOAD)
+	case ls_flag_t::LOAD:
 	{
 		do_byte(&tmp8u, flag);
 		k_ptr->aware = ((tmp8u & 0x01) ? TRUE : FALSE);
 		k_ptr->tried = ((tmp8u & 0x02) ? TRUE : FALSE);
 		k_ptr->know = ((tmp8u & 0x04) ? TRUE : FALSE);
 		k_ptr->artifact = ((tmp8u & 0x80) ? TRUE : FALSE);
+		return;
+	}
 	}
 }
 
@@ -232,18 +237,18 @@ static void load_string(char *str, int max)
 static void do_string(char *str, int max, ls_flag_t flag)
 /* Max is ignored for writing */
 {
-	if (flag == ls_flag_t::LOAD)
+	switch(flag) {
+	case ls_flag_t::LOAD:
 	{
 		load_string(str, max);
 		return;
 	}
-	if (flag == ls_flag_t::SAVE)
+	case ls_flag_t::SAVE:
 	{
 		save_string(str);
 		return;
 	}
-	printf("FATAL: do_string passed flag %d\n", flag);
-	exit(0);
+	}
 }
 
 /*
