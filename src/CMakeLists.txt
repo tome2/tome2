@@ -124,6 +124,10 @@ SET(SRCS_TESTS
   ../tests/lua_get_level.cc
 )
 
+ADD_LIBRARY(game
+  ${SRCS_COMMON}
+)
+
 # Need a few additional source files for Windows.
 if(WIN32)
   SET(SRCS ${SRCS} main-win.c)
@@ -142,12 +146,12 @@ if(WIN32)
 endif(WIN32)
 
 # tome executable
-ADD_EXECUTABLE(tome ${EXECUTABLE_OPTIONS} ${SRCS_COMMON} ${SRCS_PROGRAM})
-TARGET_LINK_LIBRARIES(tome squelch ${LIBS})
+ADD_EXECUTABLE(tome ${EXECUTABLE_OPTIONS} ${SRCS_PROGRAM})
+TARGET_LINK_LIBRARIES(tome game squelch ${LIBS})
 
 # test harness executable
-ADD_EXECUTABLE(harness ${EXECUTABLE_OPTIONS} ${SRCS_COMMON} ${SRCS_TESTS})
-TARGET_LINK_LIBRARIES(harness squelch ${LIBS})
+ADD_EXECUTABLE(harness ${EXECUTABLE_OPTIONS} ${SRCS_TESTS})
+TARGET_LINK_LIBRARIES(harness game squelch ${LIBS})
 
 # Installation
 INSTALL(TARGETS tome
