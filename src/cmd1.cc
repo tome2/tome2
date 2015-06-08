@@ -4442,7 +4442,7 @@ void do_cmd_pet(void)
 
 	char power_desc[36][80];
 
-	bool_ flag, redraw;
+	bool_ flag;
 
 	int ask;
 
@@ -4521,80 +4521,55 @@ void do_cmd_pet(void)
 	/* Nothing chosen yet */
 	flag = FALSE;
 
-	/* No redraw yet */
-	redraw = FALSE;
-
 	/* Build a prompt (accept all spells) */
 	if (num <= 26)
 	{
 		/* Build a prompt (accept all spells) */
 		strnfmt(out_val, 78,
-		        "(Command %c-%c, *=List, ESC=exit) Select a command: ", I2A(0),
+			"(Command %c-%c, ESC=exit) Select a command: ", I2A(0),
 		        I2A(num - 1));
 	}
 	else
 	{
 		strnfmt(out_val, 78,
-		        "(Command %c-%c, *=List, ESC=exit) Select a command: ", I2A(0),
+			"(Command %c-%c, ESC=exit) Select a command: ", I2A(0),
 		        '0' + num - 27);
+	}
+
+	/* Save the screen */
+	character_icky = TRUE;
+	Term_save();
+
+	/* Show the list */
+	{
+		byte y = 1, x = 0;
+		int ctr = 0;
+		char dummy[80];
+
+		strcpy(dummy, "");
+
+		prt("", y++, x);
+
+		while (ctr < num)
+		{
+			strnfmt(dummy, 80, "%c) %s", I2A(ctr), power_desc[ctr]);
+			prt(dummy, y + ctr, x);
+			ctr++;
+		}
+
+		if (ctr < 17)
+		{
+			prt("", y + ctr, x);
+		}
+		else
+		{
+			prt("", y + 17, x);
+		}
 	}
 
 	/* Get a command from the user */
 	while (!flag && get_com(out_val, &choice))
 	{
-		/* Request redraw */
-		if ((choice == ' ') || (choice == '*') || (choice == '?'))
-		{
-			/* Show the list */
-			if (!redraw)
-			{
-				byte y = 1, x = 0;
-				int ctr = 0;
-				char dummy[80];
-
-				strcpy(dummy, "");
-
-				/* Show list */
-				redraw = TRUE;
-
-				/* Save the screen */
-				character_icky = TRUE;
-				Term_save();
-
-				prt("", y++, x);
-
-				while (ctr < num)
-				{
-					strnfmt(dummy, 80, "%c) %s", I2A(ctr), power_desc[ctr]);
-					prt(dummy, y + ctr, x);
-					ctr++;
-				}
-
-				if (ctr < 17)
-				{
-					prt("", y + ctr, x);
-				}
-				else
-				{
-					prt("", y + 17, x);
-				}
-			}
-
-			/* Hide the list */
-			else
-			{
-				/* Hide list */
-				redraw = FALSE;
-
-				/* Restore the screen */
-				Term_load();
-				character_icky = FALSE;
-			}
-
-			/* Redo asking */
-			continue;
-		}
-
 		if (choice == '\r' && num == 1)
 		{
 			choice = 'a';
@@ -4642,11 +4617,8 @@ void do_cmd_pet(void)
 	}
 
 	/* Restore the screen */
-	if (redraw)
-	{
-		Term_load();
-		character_icky = FALSE;
-	}
+	Term_load();
+	character_icky = FALSE;
 
 	/* Abort if needed */
 	if (!flag)
