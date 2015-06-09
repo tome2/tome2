@@ -1928,29 +1928,24 @@ static void do_lore(int r_idx, ls_flag_t flag)
 /*
  * Read a store
  */
-static bool_ do_store(store_type *str, ls_flag_t flag)
-/* FIXME! Why does this return anything when
-   it always returns the same thing? */
+static void do_store(store_type *str, ls_flag_t flag)
 {
-	int j;
-
-	byte num;
-
 	byte store_inven_max = STORE_INVEN_MAX;
 
 	/* Some basic info */
 	do_s32b(&str->store_open, flag);
 	do_u16b(&str->owner, flag);
-	if (flag == ls_flag_t::SAVE) num = str->stock_num;
 
 	/* Could be cleaner, done this way for benefit of the for loop later on */
+	byte num;
+	if (flag == ls_flag_t::SAVE) num = str->stock_num;
 	do_byte(&num, flag);
 
 	/* Last visit */
 	do_s32b(&str->last_visit, flag);
 
 	/* Items */
-	for (j = 0; j < num; j++)
+	for (int j = 0; j < num; j++)
 	{
 		if (flag == ls_flag_t::LOAD)
 			/* Can't this be cleaner? */
@@ -1971,9 +1966,6 @@ static bool_ do_store(store_type *str, ls_flag_t flag)
 		}
 		if (flag == ls_flag_t::SAVE) do_item(&str->stock[j], flag);
 	}
-
-	/* Success */
-	return (TRUE);
 }
 
 /*
