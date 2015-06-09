@@ -1296,205 +1296,29 @@ static void do_item(object_type *o_ptr, ls_flag_t flag)
 	}
 }
 
+static void do_cave_type(cave_type *c_ptr, ls_flag_t flag)
+{
+	do_u16b(&c_ptr->info, flag);
+	do_byte(&c_ptr->feat, flag);
+	do_byte(&c_ptr->mimic, flag);
+	do_s16b(&c_ptr->special, flag);
+	do_s16b(&c_ptr->special2, flag);
+	do_s16b(&c_ptr->t_idx, flag);
+	do_s16b(&c_ptr->inscription, flag);
+	do_byte(&c_ptr->mana, flag);
+	do_s16b(&c_ptr->effect, flag);
+}
 
 static void do_grid(ls_flag_t flag)
-/* Does the grid, RLE, blahblah. RLE sucks. I hate it. */
 {
-	int i = 0, y = 0, x = 0;
-	byte count = 0;
-	byte tmp8u = 0;
-	s16b tmp16s = 0;
-	cave_type *c_ptr;
-	byte prev_char = 0;
-	s16b prev_s16b = 0;
-	int ymax = cur_hgt, xmax = cur_wid;
-
-	int part; 	/* Which section of the grid we're on */
-
-	for (part = 0; part < 9; part++)	/* There are 8 fields to the grid, each stored
-												   in a seperate RLE data structure */
+	for (int y = 0; y < cur_hgt; y++)
 	{
-		if (flag == ls_flag_t::SAVE)
+		for (int x = 0; x < cur_wid; x++)
 		{
-			count = 0;
-			prev_s16b = 0;
-			prev_char = 0; 		/* Clear, prepare for RLE */
-			for (y = 0; y < cur_hgt; y++)
-			{
-				for (x = 0; x < cur_wid; x++)
-				{
-					c_ptr = &cave[y][x];
-					switch (part)
-					{
-					case 0:
-						tmp16s = c_ptr->info;
-						break;
-
-					case 1:
-						tmp8u = c_ptr->feat;
-						break;
-
-					case 2:
-						tmp8u = c_ptr->mimic;
-						break;
-
-					case 3:
-						tmp16s = c_ptr->special;
-						break;
-
-					case 4:
-						tmp16s = c_ptr->special2;
-						break;
-
-					case 5:
-						tmp16s = c_ptr->t_idx;
-						break;
-
-					case 6:
-						tmp16s = c_ptr->inscription;
-						break;
-
-					case 7:
-						tmp8u = c_ptr->mana;
-						break;
-
-					case 8:
-						tmp16s = c_ptr->effect;
-						break;
-					}
-					/* Flush a full run */
-					if ((((part != 1) && (part != 2) && (part != 7)) &&
-							(tmp16s != prev_s16b)) || (((part == 1) || (part == 2)
-										    || (part == 7)) &&
-										   (tmp8u != prev_char)) ||
-							(count == MAX_UCHAR))
-					{
-						do_byte(&count, ls_flag_t::SAVE);
-						switch (part)
-						{
-						case 0:
-						case 3:
-						case 4:
-						case 5:
-						case 6:
-						case 8:
-							do_s16b(&prev_s16b, ls_flag_t::SAVE);
-							prev_s16b = tmp16s;
-							break;
-
-						case 1:
-						case 2:
-						case 7:
-							do_byte(&prev_char, ls_flag_t::SAVE);
-							prev_char = tmp8u;
-							break;
-						}
-						count = 1; 	/* Reset RLE */
-					}
-					else
-						count++; 	/* Otherwise, keep going */
-				}
-			}
-			/* Fallen off the end of the world, flush anything left */
-			if (count)
-			{
-				do_byte(&count, ls_flag_t::SAVE);
-				switch (part)
-				{
-				case 0:
-				case 3:
-				case 4:
-				case 5:
-				case 6:
-				case 8:
-					do_s16b(&prev_s16b, ls_flag_t::SAVE);
-					break;
-
-				case 1:
-				case 2:
-				case 7:
-					do_byte(&prev_char, ls_flag_t::SAVE);
-					break;
-				}
-			}
-		}
-		if (flag == ls_flag_t::LOAD)
-		{
-			x = 0;
-			for (y = 0; y < ymax; )
-			{
-				do_byte(&count, ls_flag_t::LOAD);
-				switch (part)
-				{
-				case 0:
-				case 3:
-				case 4:
-				case 5:
-				case 6:
-				case 8:
-					do_s16b(&tmp16s, ls_flag_t::LOAD);
-					break;
-
-				case 1:
-				case 2:
-				case 7:
-					do_byte(&tmp8u, ls_flag_t::LOAD);
-					break;
-				}
-				for (i = count; i > 0; i--)	/* RLE */
-				{
-					c_ptr = &cave[y][x];
-					switch (part)
-					{
-					case 0:
-						c_ptr->info = tmp16s;
-						break;
-
-					case 1:
-						c_ptr->feat = tmp8u;
-						break;
-
-					case 2:
-						c_ptr->mimic = tmp8u;
-						break;
-
-					case 3:
-						c_ptr->special = tmp16s;
-						break;
-
-					case 4:
-						c_ptr->special2 = tmp16s;
-						break;
-
-					case 5:
-						c_ptr->t_idx = tmp16s;
-						break;
-
-					case 6:
-						c_ptr->inscription = tmp16s;
-						break;
-
-					case 7:
-						c_ptr->mana = tmp8u;
-						break;
-
-					case 8:
-						c_ptr->effect = tmp16s;
-						break;
-					}
-					if (++x >= xmax)
-					{
-						/* Wrap */
-						x = 0;
-						if ((++y) >= ymax) break;
-					}
-				}
-			}
+			do_cave_type(&cave[y][x], flag);
 		}
 	}
 }
-
-
 
 static void my_sentinel(const char *place, u16b value, ls_flag_t flag)
 /* This function lets us know exactly where a savefile is
