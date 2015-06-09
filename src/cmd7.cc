@@ -6334,7 +6334,7 @@ void do_cmd_rune_add_mem()
 
 	if (rune_num >= MAX_RUNES)
 	{
-		msg_print("You have already learn the maximun number of runespells!");
+		msg_print("You have already learned the maximum number of runespells!");
 		return;
 	}
 
