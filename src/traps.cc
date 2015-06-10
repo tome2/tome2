@@ -487,11 +487,6 @@ bool_ player_activate_trap_type(s16b y, s16b x, object_type *i_ptr, s16b item)
 		trap = i_ptr->pval;
 	}
 
-	if ((i_ptr == NULL) && (cave[y][x].o_idx != 0))
-	{
-		i_ptr = &o_list[cave[y][x].o_idx];
-	}
-
 	switch (trap)
 	{
 		/* stat traps */
