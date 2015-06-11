@@ -1028,9 +1028,6 @@ void do_cmd_activate_skill()
 	case MKEY_INCARNATION:
 		do_cmd_possessor();
 		break;
-	case MKEY_TELEKINESIS:
-		do_cmd_portable_hole();
-		break;
 	case MKEY_SUMMON:
 		do_cmd_summoner();
 		break;

@@ -441,7 +441,6 @@
 #define MKEY_RUNE               9
 #define MKEY_FORGING            10
 #define MKEY_INCARNATION        11
-#define MKEY_TELEKINESIS        12
 #define MKEY_SUMMON             13
 #define MKEY_TRAP               14
 #define MKEY_STEAL              15
@@ -1257,7 +1256,6 @@
 
 /* The "sval" codes for TV_TOOL */
 #define SV_TOOL_CLIMB 0
-#define SV_PORTABLE_HOLE 1
 
 /* The "sval" codes for TV_MSTAFF */
 #define SV_MSTAFF 1
