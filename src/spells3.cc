@@ -503,7 +503,7 @@ casting_result convey_recall()
 		swap_position(y, x);
 		return CAST_OBVIOUS;
 	}
-	else if (c_ptr->o_idx > 0)
+	else if (!c_ptr->o_idxs.empty())
 	{
 		// Set the target
 		target_who = -1;

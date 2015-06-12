@@ -614,19 +614,13 @@ static s16b chest_check(int y, int x)
 {
 	cave_type *c_ptr = &cave[y][x];
 
-	s16b this_o_idx, next_o_idx = 0;
-
-
 	/* Scan all objects in the grid */
-	for (this_o_idx = c_ptr->o_idx; this_o_idx; this_o_idx = next_o_idx)
+	for (auto const this_o_idx: c_ptr->o_idxs)
 	{
 		object_type * o_ptr;
 
 		/* Acquire object */
 		o_ptr = &o_list[this_o_idx];
-
-		/* Acquire next object */
-		next_o_idx = o_ptr->next_o_idx;
 
 		/* Skip unknown chests XXX XXX */
 		/* if (!o_ptr->marked) continue; */
@@ -4642,147 +4636,114 @@ void do_cmd_sacrifice(void)
  *
  * Return a list of o_list[] indexes of items of the given monster
  */
-bool_ scan_monst(int *items, int *item_num, int m_idx)
+std::vector<s16b> scan_monst(int m_idx)
 {
-	int this_o_idx, next_o_idx;
+	constexpr std::size_t max_size = 23;
 
-	int num = 0;
-
-
-	(*item_num) = 0;
+	/* Create output vector. */
+	std::vector<s16b> objects;
+	objects.reserve(std::min(max_size, m_list[m_idx].hold_o_idxs.size()));
 
 	/* Scan all objects in the grid */
-	for (this_o_idx = m_list[m_idx].hold_o_idx; this_o_idx;
-	                this_o_idx = next_o_idx)
+	for (auto const this_o_idx: m_list[m_idx].hold_o_idxs)
 	{
-		object_type * o_ptr;
-
-		/* Acquire object */
-		o_ptr = &o_list[this_o_idx];
-
-		/* Acquire next object */
-		next_o_idx = o_ptr->next_o_idx;
-
-		/* Accept this item */
-		items[num++] = this_o_idx;
-
-		/* XXX Hack -- Enforce limit */
-		if (num == 23) break;
+		objects.push_back(this_o_idx);
+		if (objects.size() == max_size) break;
 	}
 
-	/* Number of items */
-	(*item_num) = num;
-
 	/* Result */
-	return (num != 0);
+	return objects;
 }
 
 
 /*
  * Display a list of the items that the given monster carries.
+ * Returns the list of objects.
  */
-byte show_monster_inven(int m_idx, int *monst_list)
+std::vector<s16b> show_monster_inven(int m_idx)
 {
-	int i, j, k, l;
-
-	int col, len, lim;
-
-	object_type *o_ptr;
-
-	char o_name[80];
-
-	char tmp_val[80];
-
-	int out_index[23];
-
 	byte out_color[23];
-
 	char out_desc[23][80];
 
-	int monst_num;
-
-
 	/* Default length */
-	len = 79 - 50;
+	int len = 79 - 50;
 
 	/* Maximum space allowed for descriptions */
-	lim = 79 - 3;
+	int lim = 79 - 3;
 
 	/* Require space for weight */
 	lim -= 9;
 
 	/* Scan for objects on the monster */
-	(void)scan_monst(monst_list, &monst_num, m_idx);
+	std::vector<s16b> objects = scan_monst(m_idx);
+	assert(objects.size() <= 23);
 
-	/* Display the p_ptr->inventory */
-	for (k = 0, i = 0; i < monst_num; i++)
+	/* Calculate width of object names */
+	for (std::size_t i = 0; i < objects.size(); i++)
 	{
-		o_ptr = &o_list[monst_list[i]];
+		object_type *o_ptr = &o_list[objects.at(i)];
 
 		/* Describe the object */
+		char o_name[80];
 		object_desc(o_name, o_ptr, TRUE, 3);
 
 		/* Hack -- enforce max length */
 		o_name[lim] = '\0';
 
-		/* Save the index */
-		out_index[k] = i;
-
 		/* Acquire p_ptr->inventory color */
-		out_color[k] = tval_to_attr[o_ptr->tval & 0x7F];
+		out_color[i] = tval_to_attr[o_ptr->tval & 0x7F];
 
 		/* Save the object description */
-		strcpy(out_desc[k], o_name);
+		strcpy(out_desc[i], o_name);
 
 		/* Find the predicted "line length" */
-		l = strlen(out_desc[k]) + 5;
+		int l = strlen(out_desc[i]) + 5;
 
 		/* Account for the weight */
 		l += 9;
 
 		/* Maintain the maximum length */
 		if (l > len) len = l;
-
-		/* Advance to next "line" */
-		k++;
 	}
 
 	/* Find the column to start in */
-	col = (len > 76) ? 0 : (79 - len);
+	int col = (len > 76) ? 0 : (79 - len);
 
 	/* Output each entry */
-	for (j = 0; j < k; j++)
+	std::size_t i = 0;
+	for (i = 0; i < objects.size(); i++)
 	{
-		/* Get the index */
-		i = monst_list[out_index[j]];
-
 		/* Get the item */
-		o_ptr = &o_list[i];
+		object_type *o_ptr = &o_list[objects.at(i)];
 
 		/* Clear the line */
-		prt("", j + 1, col ? col - 2 : col);
+		prt("", i + 1, col ? col - 2 : col);
 
 		/* Prepare an index --(-- */
-		strnfmt(tmp_val, 80, "%c)", index_to_label(j));
+		char tmp_val[80];
+		strnfmt(tmp_val, 80, "%c)", index_to_label(i));
 
 		/* Clear the line with the (possibly indented) index */
-		put_str(tmp_val, j + 1, col);
+		put_str(tmp_val, i + 1, col);
 
 		/* Display the entry itself */
-		c_put_str(out_color[j], out_desc[j], j + 1, col + 3);
+		c_put_str(out_color[i], out_desc[i], i + 1, col + 3);
 
 		/* Display the weight if needed */
 		{
 			int wgt = o_ptr->weight * o_ptr->number;
 			strnfmt(tmp_val, 80, "%3d.%1d lb", wgt / 10, wgt % 10);
-			put_str(tmp_val, j + 1, 71);
+			put_str(tmp_val, i + 1, 71);
 		}
 	}
 
 	/* Make a "shadow" below the list (only if needed) */
-	if (j && (j < 23)) prt("", j + 1, col ? col - 2 : col);
+	if (i && (i < 23))
+	{
+		prt("", i + 1, col ? col - 2 : col);
+	}
 
-	return monst_num;
+	return objects;
 }
 
 
@@ -4791,26 +4752,16 @@ byte show_monster_inven(int m_idx, int *monst_list)
  */
 void do_cmd_steal()
 {
-	int x, y, dir = 0, item = -1, k = -1;
-
-	cave_type *c_ptr;
-
-	monster_type *m_ptr;
-
-	object_type *o_ptr, forge;
-
-	byte num = 0;
+	int dir = 0, item = -1, k = -1;
 
 	bool_ done = FALSE;
 
-	int monst_list[23];
-
-
 	/* Only works on adjacent monsters */
 	if (!get_rep_dir(&dir)) return;
-	y = p_ptr->py + ddy[dir];
-	x = p_ptr->px + ddx[dir];
-	c_ptr = &cave[y][x];
+	int y = p_ptr->py + ddy[dir];
+	int x = p_ptr->px + ddx[dir];
+
+	cave_type const *c_ptr = &cave[y][x];
 
 	if (!(c_ptr->m_idx))
 	{
@@ -4818,10 +4769,10 @@ void do_cmd_steal()
 		return;
 	}
 
-	m_ptr = &m_list[c_ptr->m_idx];
+	monster_type *m_ptr = &m_list[c_ptr->m_idx];
 
 	/* There were no non-gold items */
-	if (!m_ptr->hold_o_idx)
+	if (m_ptr->hold_o_idxs.empty())
 	{
 		msg_print("That monster has no objects!");
 		return;
@@ -4836,7 +4787,7 @@ void do_cmd_steal()
 
 	screen_save();
 
-	num = show_monster_inven(c_ptr->m_idx, monst_list);
+	std::vector<s16b> objects = show_monster_inven(c_ptr->m_idx);
 
 	/* Repeat until done */
 	while (!done)
@@ -4846,7 +4797,7 @@ void do_cmd_steal()
 
 		/* Build the prompt */
 		strnfmt(tmp_val, 80, "Choose an item to steal (a-%c) or ESC:",
-		        'a' - 1 + num);
+			'a' - 1 + objects.size());
 
 		/* Show the prompt */
 		prt(tmp_val, 0, 0);
@@ -4873,7 +4824,7 @@ void do_cmd_steal()
 				which = tolower(which);
 
 				k = islower(which) ? A2I(which) : -1;
-				if (k < 0 || k >= num)
+				if ((k < 0) || (static_cast<std::size_t>(k) >= objects.size()))
 				{
 					bell();
 
@@ -4881,7 +4832,7 @@ void do_cmd_steal()
 				}
 
 				/* Verify the item */
-				if (ver && !verify("Try", 0 - monst_list[k]))
+				if (ver && !verify("Try", -objects[k]))
 				{
 					done = TRUE;
 
@@ -4889,7 +4840,7 @@ void do_cmd_steal()
 				}
 
 				/* Accept that choice */
-				item = monst_list[k];
+				item = objects[k];
 				done = TRUE;
 
 				break;
@@ -4927,14 +4878,8 @@ void do_cmd_steal()
 			return;
 		}
 
-		/* Reconnect the objects list */
-		if (num == 1) m_ptr->hold_o_idx = 0;
-		else
-		{
-			if (k > 0) o_list[monst_list[k - 1]].next_o_idx = monst_list[k + 1];
-			if (k + 1 >= num) o_list[monst_list[k - 1]].next_o_idx = 0;
-			if (k == 0) m_ptr->hold_o_idx = monst_list[k + 1];
-		}
+		/* Remove from the monster's list of objects */
+		m_ptr->hold_o_idxs.erase(m_ptr->hold_o_idxs.begin() + k);
 
 		/* Rogues gain some xp */
 		if (race_flags1_p(PR1_EASE_STEAL))
@@ -4951,8 +4896,9 @@ void do_cmd_steal()
 			if (get_check("Phase door?")) teleport_player(10);
 		}
 
-		/* Get the item */
-		o_ptr = &forge;
+		/* Create the object we're going to copy into */
+		object_type forge;
+		object_type *o_ptr = &forge;
 
 		/* Special handling for gold */
 		if (o_list[item].tval == TV_GOLD)
@@ -4973,7 +4919,7 @@ void do_cmd_steal()
 			inven_carry(o_ptr, FALSE);
 		}
 
-		/* Delete it */
+		/* Delete source item */
 		o_list[item].k_idx = 0;
 	}
 

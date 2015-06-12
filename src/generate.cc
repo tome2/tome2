@@ -7181,32 +7181,32 @@ bool_ level_generate_dungeon()
  */
 static void replace_all_friends()
 {
-	int i;
-
-	if (p_ptr->wild_mode) return;
+	if (p_ptr->wild_mode)
+	{
+		return;
+	}
 
 	/* Scan every saved pet */
-	for (i = 0; i < max_m_idx; i++)
+	for (int i = 0; i < max_m_idx; i++)
 	{
 		if ((km_list[i].r_idx) && (km_list[i].status == MSTATUS_COMPANION))
 		{
-			int y = p_ptr->py, x = p_ptr->px;
-			cave_type *c_ptr;
-			monster_type *m_ptr;
+			int y = p_ptr->py;
+			int x = p_ptr->px;
 
 			/* Find a suitable location */
 			get_pos_player(5, &y, &x);
-			c_ptr = &cave[y][x];
+			cave_type *c_ptr = &cave[y][x];
 
 			/* Get a m_idx to use */
 			c_ptr->m_idx = m_pop();
-			m_ptr = &m_list[c_ptr->m_idx];
+			monster_type *m_ptr = &m_list[c_ptr->m_idx];
 
 			/* Actualy place the monster */
 			m_list[c_ptr->m_idx] = km_list[i];
 			m_ptr->fy = y;
 			m_ptr->fx = x;
-			m_ptr->hold_o_idx = 0;
+			m_ptr->hold_o_idxs.clear(); // Objects have been removed previously by caller
 		}
 	}
 }
@@ -7504,6 +7504,87 @@ static void fill_level(bool_ use_floor, byte smooth)
 }
 
 
+/**
+ * @brief double a grid tile. Used for the double-size dungeons
+ */
+static void supersize_grid_tile(int sy, int sx, int ty, int tx)
+{
+	/* Displacements for copied grid tiles */
+	constexpr std::size_t n_disp = 4;
+	int disp[n_disp][2] = {
+		{  0,  0 },
+		{  0, +1 },
+		{ +1,  0 },
+		{ +1, +1 }
+	};
+
+	/* Acquire the grid tile and monster */
+	cave_type *cc_ptr = &cave[sy][sx];
+	monster_type *m_ptr = &m_list[cc_ptr->m_idx];
+
+	/* Save the list of objects */
+	auto const object_idxs(cc_ptr->o_idxs);
+
+	/* Save the monster */
+	auto m_idx = cc_ptr->m_idx;
+
+	/* Create pointers to each of the target grid tiles */
+	cave_type *c_ptr[n_disp];
+	for (std::size_t i = 0; i < n_disp; i++)
+	{
+		c_ptr[i] = &cave[ty + disp[i][0]][tx + disp[i][1]];
+	}
+
+	/* Now we copy around the grid tiles. Objects and
+	   monsters are "removed" for now. */
+	for (std::size_t i = 0; i < 4; i++)
+	{
+		c_ptr[i] = &cave[ty + disp[i][0]][tx + disp[i][1]];
+
+		/* Copy grid */
+		*c_ptr[i] = *cc_ptr;
+		c_ptr[i]->o_idxs.clear(); // ... except objects in the tile
+		c_ptr[i]->m_idx = 0;      // ... except monsters in the tile
+
+		/* Void gates need special attention */
+		if (cc_ptr->feat == FEAT_BETWEEN)
+		{
+			int xxx = cc_ptr->special & 0xFF;
+			int yyy = cc_ptr->special >> 8;
+
+			xxx *= 2;
+			yyy *= 2;
+			xxx += disp[i][1];
+			yyy += disp[i][0];
+			c_ptr[i]->special = xxx + (yyy << 8);
+		}
+	}
+
+	/* Scatter objects randomly into the destination grid tiles */
+	for (auto const o_idx: object_idxs)
+	{
+		std::size_t i = static_cast<std::size_t>(rand_int(4));
+		/* Put object into grid tile */
+		c_ptr[i]->o_idxs.push_back(o_idx);
+		/* Give object its location */
+		object_type *o_ptr = &o_list[o_idx];
+		o_ptr->iy = ty + disp[i][0];
+		o_ptr->ix = tx + disp[i][1];
+	}
+
+	/* Scatter move monster randomly into one of the destination grid tiles */
+	if (m_idx != 0)
+	{
+		std::size_t i = static_cast<std::size_t>(rand_int(4));
+		/* Place monster into grid tile */
+		c_ptr[i]->m_idx = cc_ptr->m_idx;
+		/* Give the monster its location */
+		m_ptr->fy = ty + disp[i][0];
+		m_ptr->fx = tx + disp[i][1];
+	}
+}
+
+
 /*
  * Generate a new dungeon level
  *
@@ -7511,7 +7592,6 @@ static void fill_level(bool_ use_floor, byte smooth)
  */
 static bool_ cave_gen(void)
 {
-	int i, k, y, x, y1, x1, branch;
 	dungeon_info_type *d_ptr = &d_info[dungeon_type];
 
 	int max_vault_ok = 2;
@@ -7582,14 +7662,14 @@ static bool_ cave_gen(void)
 	/* Generate stairs */
 	{
 		/* Is there a dungeon branch ? */
-		if ((branch = get_branch()))
+		if (int branch = get_branch())
 		{
 			/* Place 5 down stair some walls */
 			alloc_stairs(FEAT_MORE, 5, 3, branch);
 		}
 
 		/* Is there a father dungeon branch ? */
-		if ((branch = get_fbranch()))
+		if (int branch = get_fbranch())
 		{
 			/* Place 1 down stair some walls */
 			alloc_stairs(FEAT_LESS, 5, 3, branch);
@@ -7617,7 +7697,7 @@ static bool_ cave_gen(void)
 	process_hooks_new(HOOK_GEN_LEVEL, NULL, NULL);
 
 	/* Basic "amount" */
-	k = (dun_level / 3);
+	int k = (dun_level / 3);
 	if (k > 10) k = 10;
 	if (k < 2) k = 2;
 
@@ -7627,7 +7707,7 @@ static bool_ cave_gen(void)
 		/*
 		 * Pick a base number of monsters
 		 */
-		i = d_ptr->min_m_alloc_level;
+		int i = d_ptr->min_m_alloc_level;
 
 		/* To make small levels a bit more playable */
 		if ((cur_hgt < MAX_HGT) || (cur_wid < MAX_WID))
@@ -7655,7 +7735,7 @@ static bool_ cave_gen(void)
 	}
 
 	/* Check fates */
-	for (i = 0; i < MAX_FATES; i++)
+	for (std::size_t i = 0; i < MAX_FATES; i++)
 	{
 		/* Ignore empty slots */
 		if (fates[i].fate == FATE_NONE) continue;
@@ -7788,8 +7868,8 @@ static bool_ cave_gen(void)
 		}
 	}
 
-	/* Re scan the list to eliminate the inutile fate */
-	for (i = 0; i < MAX_FATES; i++)
+	/* Re-scan the list to eliminate the inutile fate */
+	for (std::size_t i = 0; i < MAX_FATES; i++)
 	{
 		switch (fates[i].fate)
 		{
@@ -7921,13 +8001,11 @@ static bool_ cave_gen(void)
 				object_copy(o_ptr, q_ptr);
 
 				/* Build a stack */
-				o_ptr->next_o_idx = m_list[m_idx].hold_o_idx;
-
 				o_ptr->held_m_idx = m_idx;
 				o_ptr->ix = 0;
 				o_ptr->iy = 0;
 
-				m_list[m_idx].hold_o_idx = o_idx;
+				m_list[m_idx].hold_o_idxs.push_back(o_idx);
 			}
 		}
 
@@ -7973,13 +8051,11 @@ static bool_ cave_gen(void)
 				object_copy(o_ptr, q_ptr);
 
 				/* Build a stack */
-				o_ptr->next_o_idx = m_list[m_idx].hold_o_idx;
-
 				o_ptr->held_m_idx = m_idx;
 				o_ptr->ix = 0;
 				o_ptr->iy = 0;
 
-				m_list[m_idx].hold_o_idx = o_idx;
+				m_list[m_idx].hold_o_idxs.push_back(o_idx);
 			}
 		}
 	}
@@ -7990,64 +8066,24 @@ static bool_ cave_gen(void)
 	/* Now double the generated dungeon */
 	if (dungeon_flags1 & DF1_DOUBLE)
 	{
-		/* We begin at the bottom-right corner and from there move
-		 * up/left (this way we don't need another array for the
-		 * dungeon data) */
-		/* Note: we double the border permanent walls, too. It is
-		 * easier this way and I think it isn't too ugly */
-		for (y = cur_hgt - 1, y1 = y * 2; y >= 0; y--, y1 -= 2)
-			for (x = cur_wid - 1, x1 = x * 2; x >= 0; x--, x1 -= 2)
+		/*
+		 * We begin at the bottom-right corner and move upwards
+		 * to the left. This avoids the need for an extra copy of
+		 * the cave array.
+		 *
+		 * We double the border permanent walls, too.
+		 */
+		int y = cur_hgt - 1;
+		int y1 = y * 2;
+		for (; y >= 0; y--, y1 -= 2)
+		{
+			int x = cur_wid - 1;
+			int x1 = x * 2;
+			for (; x >= 0; x--, x1 -= 2)
 			{
-				int disp[4][2] = {{0, 0}, {0, + 1}, { + 1, 0}, { + 1, + 1}};
-
-				cave_type *c_ptr[4], *cc_ptr = &cave[y][x];
-				object_type *o_ptr = &o_list[cc_ptr->o_idx];
-				monster_type *m_ptr = &m_list[cc_ptr->m_idx];
-
-				/*
-				 * Now we copy the generated data to the
-				 * appropriate grids
-				 */
-				for (i = 0; i < 4; i++)
-				{
-					c_ptr[i] = &cave[y1 + disp[i][0]][x1 + disp[i][1]];
-					*c_ptr[i] = *cc_ptr;
-					c_ptr[i]->o_idx = 0;
-					c_ptr[i]->m_idx = 0;
-
-					if (cc_ptr->feat == FEAT_BETWEEN)
-					{
-						int xxx = cc_ptr->special & 0xFF;
-						int yyy = cc_ptr->special >> 8;
-
-						xxx *= 2;
-						yyy *= 2;
-						xxx += disp[i][1];
-						yyy += disp[i][0];
-						c_ptr[i]->special = xxx + (yyy << 8);
-					}
-				}
-
-				/* Objects should be put only in 1 of the
-				 * new grids (otherwise we would segfault
-				 * a lot) ... */
-				if (cc_ptr->o_idx != 0)
-				{
-					i = rand_int(4);
-					c_ptr[i]->o_idx = cc_ptr->o_idx;
-					o_ptr->iy = y1 + disp[i][0];
-					o_ptr->ix = x1 + disp[i][1];
-				}
-
-				/* ..just like monsters */
-				if (cc_ptr->m_idx != 0)
-				{
-					i = rand_int(4);
-					c_ptr[i]->m_idx = cc_ptr->m_idx;
-					m_ptr->fy = y1 + disp[i][0];
-					m_ptr->fx = x1 + disp[i][1];
-				}
+				supersize_grid_tile(y, x, y1, x1);
 			}
+		}
 
 		/* Set the width/height ... */
 		cur_wid *= 2;
@@ -8285,33 +8321,11 @@ void generate_cave(void)
 		{
 			for (x = 0; x < MAX_WID; x++)
 			{
-				/* No flags */
-				cave[y][x].info = 0;
+				/* Wipe */
+				cave[y][x].wipe();
 
 				/* No features */
 				cave_set_feat(y, x, FEAT_PERM_INNER);
-
-				/* No objects */
-				cave[y][x].o_idx = 0;
-
-				/* No monsters */
-				cave[y][x].m_idx = 0;
-
-				/* No traps */
-				cave[y][x].t_idx = 0;
-
-				/* No mimic */
-				cave[y][x].mimic = 0;
-
-				/* No effects */
-				cave[y][x].effect = 0;
-
-				/* No inscription */
-				cave[y][x].inscription = 0;
-
-				/* No flow */
-				cave[y][x].cost = 0;
-				cave[y][x].when = 0;
 			}
 		}
 
@@ -8345,33 +8359,11 @@ void generate_cave(void)
 			{
 				for (x = 0; x < MAX_WID; x++)
 				{
-					/* No flags */
-					cave[y][x].info = 0;
+					/* Wipe */
+					cave[y][x].wipe();
 
 					/* No features */
 					cave_set_feat(y, x, FEAT_PERM_INNER);
-
-					/* No objects */
-					cave[y][x].o_idx = 0;
-
-					/* No monsters */
-					cave[y][x].m_idx = 0;
-
-					/* No traps */
-					cave[y][x].t_idx = 0;
-
-					/* No mimic */
-					cave[y][x].mimic = 0;
-
-					/* No effect */
-					cave[y][x].effect = 0;
-
-					/* No inscription */
-					cave[y][x].inscription = 0;
-
-					/* No flow */
-					cave[y][x].cost = 0;
-					cave[y][x].when = 0;
 				}
 			}
 
@@ -8654,7 +8646,10 @@ void generate_cave(void)
 	}
 
 	/* Put the kept monsters -- DG */
-	if (!p_ptr->wild_mode) replace_all_friends();
+	if (!p_ptr->wild_mode)
+	{
+		replace_all_friends();
+	}
 
 	/* Hack -- Clear used up fates */
 	for (i = 0; i < MAX_FATES; i++)

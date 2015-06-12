@@ -345,12 +345,10 @@ bool_ do_control_walk(void)
 
 bool_ do_control_inven(void)
 {
-	int monst_list[23];
-
 	if (!p_ptr->control) return FALSE;
 	screen_save();
 	prt("Carried items", 0, 0);
-	show_monster_inven(p_ptr->control, monst_list);
+	(void) show_monster_inven(p_ptr->control);
 	inkey();
 	screen_load();
 	return TRUE;
@@ -358,24 +356,23 @@ bool_ do_control_inven(void)
 
 bool_ do_control_pickup(void)
 {
-	int this_o_idx, next_o_idx = 0;
-	monster_type *m_ptr = &m_list[p_ptr->control];
-	cave_type *c_ptr;
-	bool_ done = FALSE;
-
 	if (!p_ptr->control) return FALSE;
 
+	monster_type *m_ptr = &m_list[p_ptr->control];
+
+	cave_type *c_ptr = &cave[m_ptr->fy][m_ptr->fx];
+
+	/* Copy list of all objects in the grid; we need a
+	 * copy since we're going to be excising objects
+	 * from lists. */
+	auto const object_idxs(c_ptr->o_idxs);
+
 	/* Scan all objects in the grid */
-	c_ptr = &cave[m_ptr->fy][m_ptr->fx];
-	for (this_o_idx = c_ptr->o_idx; this_o_idx; this_o_idx = next_o_idx)
+	bool done = false;
+	for (auto const this_o_idx: object_idxs)
 	{
-		object_type * o_ptr;
-
 		/* Acquire object */
-		o_ptr = &o_list[this_o_idx];
-
-		/* Acquire next object */
-		next_o_idx = o_ptr->next_o_idx;
+		object_type *o_ptr = &o_list[this_o_idx];
 
 		/* Skip gold */
 		if (o_ptr->tval == TV_GOLD) continue;
@@ -392,14 +389,19 @@ bool_ do_control_pickup(void)
 		/* Memorize monster */
 		o_ptr->held_m_idx = p_ptr->control;
 
-		/* Build a stack */
-		o_ptr->next_o_idx = m_ptr->hold_o_idx;
-
 		/* Carry object */
-		m_ptr->hold_o_idx = this_o_idx;
-		done = TRUE;
+		m_ptr->hold_o_idxs.push_back(this_o_idx);
+
+		/* Picked up at least one object */
+		done = true;
 	}
-	if (done) msg_print("You pick up all objects on the floor.");
+
+	/* Feedback */
+	if (done)
+	{
+		msg_print("You pick up all objects on the floor.");
+	}
+
 	return TRUE;
 }
 

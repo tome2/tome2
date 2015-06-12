@@ -2508,8 +2508,6 @@ void monster_death(int m_idx)
 	int dump_item = 0;
 	int dump_gold = 0;
 
-	s16b this_o_idx, next_o_idx = 0;
-
 	monster_type *m_ptr = &m_list[m_idx];
 
 	monster_race *r_ptr = race_inf(m_ptr);
@@ -2565,16 +2563,14 @@ void monster_death(int m_idx)
 	/* If the doppleganger die, the variable must be set accordingly */
 	if (r_ptr->flags9 & RF9_DOPPLEGANGER) doppleganger = 0;
 
+	/* Need copy of object list since we're going to mutate it */
+	auto const object_idxs(m_ptr->hold_o_idxs);
+
 	/* Drop objects being carried */
-	for (this_o_idx = m_ptr->hold_o_idx; this_o_idx; this_o_idx = next_o_idx)
+	for (auto const this_o_idx: object_idxs)
 	{
-		object_type * o_ptr;
-
 		/* Acquire object */
-		o_ptr = &o_list[this_o_idx];
-
-		/* Acquire next object */
-		next_o_idx = o_ptr->next_o_idx;
+		object_type * o_ptr = &o_list[this_o_idx];
 
 		/* Paranoia */
 		o_ptr->held_m_idx = 0;
@@ -2596,7 +2592,7 @@ void monster_death(int m_idx)
 	}
 
 	/* Forget objects */
-	m_ptr->hold_o_idx = 0;
+	m_ptr->hold_o_idxs.clear();
 
 	/* Average dungeon and monster levels */
 	object_level = (dun_level + m_ptr->level) / 2;
@@ -4033,11 +4029,6 @@ static s16b target_pick(int y1, int x1, int dy, int dx)
  */
 static bool_ target_set_accept(int y, int x)
 {
-	cave_type *c_ptr;
-
-	s16b this_o_idx, next_o_idx = 0;
-
-
 	/* Player grid is always interesting */
 	if ((y == p_ptr->py) && (x == p_ptr->px)) return (TRUE);
 
@@ -4047,7 +4038,7 @@ static bool_ target_set_accept(int y, int x)
 
 
 	/* Examine the grid */
-	c_ptr = &cave[y][x];
+	cave_type *c_ptr = &cave[y][x];
 
 	/* Visible monsters */
 	if (c_ptr->m_idx && c_ptr->m_idx < max_r_idx)
@@ -4059,18 +4050,16 @@ static bool_ target_set_accept(int y, int x)
 	}
 
 	/* Scan all objects in the grid */
-	for (this_o_idx = c_ptr->o_idx; this_o_idx; this_o_idx = next_o_idx)
+	for (auto const this_o_idx: c_ptr->o_idxs)
 	{
-		object_type * o_ptr;
-
 		/* Acquire object */
-		o_ptr = &o_list[this_o_idx];
-
-		/* Acquire next object */
-		next_o_idx = o_ptr->next_o_idx;
+		object_type *o_ptr = &o_list[this_o_idx];
 
 		/* Memorized object */
-		if (o_ptr->marked) return (TRUE);
+		if (o_ptr->marked)
+		{
+			return (TRUE);
+		}
 	}
 
 	/* Interesting memorized features */
@@ -4195,8 +4184,6 @@ static int target_set_aux(int y, int x, int mode, cptr info)
 {
 	cave_type *c_ptr = &cave[y][x];
 
-	s16b this_o_idx, next_o_idx = 0;
-
 	cptr s1, s2, s3;
 
 	bool_ boring;
@@ -4261,14 +4248,15 @@ static int target_set_aux(int y, int x, int mode, cptr info)
 			/* Mimics special treatment -- looks like an object */
 			if ((r_ptr->flags9 & RF9_MIMIC) && (m_ptr->csleep))
 			{
-				object_type *o_ptr;
-
 				/* Acquire object */
-				o_ptr = &o_list[m_ptr->hold_o_idx];
+				object_type *o_ptr = &o_list[m_ptr->mimic_o_idx()];
 
 				if (o_ptr->marked)
 				{
-					if (target_object(y, x, mode, info, &boring, o_ptr, out_val, &s1, &s2, &s3, &query)) break;
+					if (target_object(y, x, mode, info, &boring, o_ptr, out_val, &s1, &s2, &s3, &query))
+					{
+						break;
+					}
 				}
 			}
 			else
@@ -4388,19 +4376,15 @@ static int target_set_aux(int y, int x, int mode, cptr info)
 					s2 = "carrying ";
 
 					/* Scan all objects being carried */
-					for (this_o_idx = m_ptr->hold_o_idx; this_o_idx; this_o_idx = next_o_idx)
+					std::size_t i = 0;
+					for (; i < m_ptr->hold_o_idxs.size(); i++)
 					{
-						char o_name[80];
-
-						object_type *o_ptr;
-
 						/* Acquire object */
-						o_ptr = &o_list[this_o_idx];
-
-						/* Acquire next object */
-						next_o_idx = o_ptr->next_o_idx;
+						auto this_o_idx = m_ptr->hold_o_idxs.at(i);
+						object_type *o_ptr = &o_list[this_o_idx];
 
 						/* Obtain an object description */
+						char o_name[80];
 						object_desc(o_name, o_ptr, TRUE, 3);
 
 						/* Describe the object */
@@ -4410,17 +4394,26 @@ static int target_set_aux(int y, int x, int mode, cptr info)
 						query = inkey();
 
 						/* Always stop at "normal" keys */
-						if ((query != '\r') && (query != '\n') && (query != ' ')) break;
+						if ((query != '\r') && (query != '\n') && (query != ' '))
+						{
+							break;
+						}
 
 						/* Sometimes stop at "space" key */
-						if ((query == ' ') && !(mode & (TARGET_LOOK))) break;
+						if ((query == ' ') && !(mode & (TARGET_LOOK)))
+						{
+							break;
+						}
 
 						/* Change the intro */
 						s2 = "also carrying ";
 					}
 
-					/* Double break */
-					if (this_o_idx) break;
+					/* Double break? */
+					if (i != m_ptr->hold_o_idxs.size())
+					{
+						break;
+					}
 
 					/* Use a preposition */
 					s2 = "on ";
@@ -4428,28 +4421,28 @@ static int target_set_aux(int y, int x, int mode, cptr info)
 			}
 		}
 
-
-
 		/* Scan all objects in the grid */
-		for (this_o_idx = c_ptr->o_idx; this_o_idx; this_o_idx = next_o_idx)
 		{
-			object_type * o_ptr;
-
-			/* Acquire object */
-			o_ptr = &o_list[this_o_idx];
-
-			/* Acquire next object */
-			next_o_idx = o_ptr->next_o_idx;
-
-			/* Describe it */
-			if (o_ptr->marked)
+			std::size_t i = 0;
+			for (; i < c_ptr->o_idxs.size(); i++)
 			{
-				if (target_object(y, x, mode, info, &boring, o_ptr, out_val, &s1, &s2, &s3, &query)) break;
+				/* Acquire object */
+				auto this_o_idx = c_ptr->o_idxs.at(i);
+				object_type *o_ptr = &o_list[this_o_idx];
+
+				/* Describe it */
+				if (o_ptr->marked && target_object(y, x, mode, info, &boring, o_ptr, out_val, &s1, &s2, &s3, &query))
+				{
+					break;
+				}
+			}
+
+			/* Double break? */
+			if (i != c_ptr->o_idxs.size())
+			{
+				break;
 			}
 		}
-
-		/* Double break */
-		if (this_o_idx) break;
 
 		/* Actual traps */
 		if ((c_ptr->info & (CAVE_TRDT)) && c_ptr->t_idx)

@@ -2,6 +2,9 @@
 
 #include "h-basic.h"
 
+#include <cassert>
+#include <vector>
+
 /**
  * A single "grid" in a Cave.
  *
@@ -27,26 +30,36 @@
  */
 struct cave_type
 {
-	u16b info;		/* Hack -- cave flags */
+	u16b info = 0;	                       /* Hack -- cave flags */
 
-	byte feat;		/* Hack -- feature type */
+	byte feat = 0;                         /* Hack -- feature type */
 
-	s16b o_idx;		/* Object in this grid */
+	std::vector<s16b> o_idxs { };          /* Indexes of objects in this grid */
 
-	s16b m_idx;		/* Monster in this grid */
+	s16b m_idx = 0;                        /* Monster in this grid */
 
-	s16b t_idx;		/* trap index (in t_list) or zero       */
+	s16b t_idx = 0;                        /* trap index (in t_list) or zero       */
 
-	s16b special, special2; /* Special cave info */
+	s16b special = 0;                      /* Special cave info */
+	s16b special2 = 0;                     /* Special cave info */
 
-	s16b inscription;       /* Inscription of the grid */
+	s16b inscription = 0;                  /* Inscription of the grid */
 
-	byte mana;              /* Magical energy of the grid */
+	byte mana = 0;                         /* Magical energy of the grid */
 
-	byte mimic;		/* Feature to mimic */
+	byte mimic = 0;                        /* Feature to mimic */
 
-	byte cost;		/* Hack -- cost of flowing */
-	byte when;		/* Hack -- when cost was computed */
+	byte cost = 0;                         /* Hack -- cost of flowing */
+	byte when = 0;                         /* Hack -- when cost was computed */
 
-	s16b effect;            /* The lasting effects */
+	s16b effect = 0;                       /* The lasting effects */
+
+	/**
+	 * @brief wipe the object's state
+	 */
+	void wipe() {
+		/* Reset to defaults */
+		*this = cave_type();
+	}
+
 };

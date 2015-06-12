@@ -429,27 +429,19 @@ void do_poly_self(void)
  */
 void fetch(int dir, int wgt, bool_ require_los)
 {
-	int ty, tx, i;
-
-	cave_type *c_ptr;
-
-	object_type *o_ptr;
-
-	char o_name[80];
-
-
 	/* Check to see if an object is already there */
-	if (cave[p_ptr->py][p_ptr->px].o_idx)
+	if (!cave[p_ptr->py][p_ptr->px].o_idxs.empty())
 	{
 		msg_print("You can't fetch when you're already standing on something.");
 		return;
 	}
 
 	/* Use a target */
+	cave_type *c_ptr = nullptr;
 	if ((dir == 5) && target_okay())
 	{
-		tx = target_col;
-		ty = target_row;
+		int tx = target_col;
+		int ty = target_row;
 
 		if (distance(p_ptr->py, p_ptr->px, ty, tx) > MAX_RANGE)
 		{
@@ -459,7 +451,7 @@ void fetch(int dir, int wgt, bool_ require_los)
 
 		c_ptr = &cave[ty][tx];
 
-		if (!c_ptr->o_idx)
+		if (c_ptr->o_idxs.empty())
 		{
 			msg_print("There is no object at this place.");
 			return;
@@ -474,8 +466,8 @@ void fetch(int dir, int wgt, bool_ require_los)
 	else
 	{
 		/* Use a direction */
-		ty = p_ptr->py;  /* Where to drop the item */
-		tx = p_ptr->px;
+		int ty = p_ptr->py;  /* Where to drop the item */
+		int tx = p_ptr->px;
 
 		while (1)
 		{
@@ -486,12 +478,17 @@ void fetch(int dir, int wgt, bool_ require_los)
 			if ((distance(p_ptr->py, p_ptr->px, ty, tx) > MAX_RANGE) ||
 			                !cave_floor_bold(ty, tx)) return;
 
-			if (c_ptr->o_idx) break;
+			if (!c_ptr->o_idxs.empty()) break;
 		}
 	}
 
-	o_ptr = &o_list[c_ptr->o_idx];
+	assert(c_ptr != nullptr);
+	assert(!c_ptr->o_idxs.empty());
 
+	/* Pick object from the list */
+	auto o_idx = c_ptr->o_idxs.front();
+
+	object_type *o_ptr = &o_list[o_idx];
 	if (o_ptr->weight > wgt)
 	{
 		/* Too heavy to 'fetch' */
@@ -499,13 +496,16 @@ void fetch(int dir, int wgt, bool_ require_los)
 		return;
 	}
 
-	i = c_ptr->o_idx;
-	c_ptr->o_idx = o_ptr->next_o_idx;
-	cave[p_ptr->py][p_ptr->px].o_idx = i;  /* 'move' it */
-	o_ptr->next_o_idx = 0;
+	/* Move the object between the lists */
+	c_ptr->o_idxs.erase(c_ptr->o_idxs.begin());         // Remove
+	cave[p_ptr->py][p_ptr->px].o_idxs.push_back(o_idx); // Add
+
+	/* Update object's location */
 	o_ptr->iy = p_ptr->py;
 	o_ptr->ix = p_ptr->px;
 
+	/* Feedback */
+	char o_name[80];
 	object_desc(o_name, o_ptr, TRUE, 0);
 	msg_format("%^s flies through the air to your feet.", o_name);
 

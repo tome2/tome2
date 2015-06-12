@@ -51,7 +51,7 @@ void evolve_level(bool_ noise)
 				if (f_info[c_ptr->feat].flags1 & FF1_PERMANENT) continue;
 
 				/* Avoid evolving grids with object or monster */
-				if (c_ptr->o_idx || c_ptr->m_idx) continue;
+				if ((!c_ptr->o_idxs.empty()) || c_ptr->m_idx) continue;
 
 				/* Avoid evolving player grid */
 				if ((j == p_ptr->py) && (i == p_ptr->px)) continue;
@@ -85,7 +85,7 @@ void evolve_level(bool_ noise)
 			if (f_info[c_ptr->feat].flags1 & FF1_PERMANENT) continue;
 
 			/* Avoid evolving grids with object or monster */
-			if (c_ptr->o_idx || c_ptr->m_idx) continue;
+			if ((!c_ptr->o_idxs.empty()) || c_ptr->m_idx) continue;
 
 			/* Avoid evolving player grid */
 			if ((j == p_ptr->py) && (i == p_ptr->px)) continue;

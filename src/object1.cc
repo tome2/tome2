@@ -5029,7 +5029,6 @@ static int get_tag(int *cp, char tag)
  */
 static std::vector<int> scan_floor(int y, int x, object_filter_t const &filter)
 {
-	int this_o_idx, next_o_idx;
 	std::vector<int> items;
 
 	/* Sanity */
@@ -5039,13 +5038,10 @@ static std::vector<int> scan_floor(int y, int x, object_filter_t const &filter)
 	}
 
 	/* Scan all objects in the grid */
-	for (this_o_idx = cave[y][x].o_idx; this_o_idx; this_o_idx = next_o_idx)
+	for (auto const this_o_idx: cave[y][x].o_idxs)
 	{
 		/* Acquire object */
 		object_type * o_ptr = &o_list[this_o_idx];
-
-		/* Acquire next object */
-		next_o_idx = o_ptr->next_o_idx;
 
 		/* Item tester */
 		if (!item_tester_okay(o_ptr, filter))
@@ -5979,21 +5975,19 @@ int wear_ammo(object_type *o_ptr)
  */
 void pickup_ammo()
 {
-	s16b this_o_idx, next_o_idx = 0, slot;
-	char o_name[80];
+	/* Copy list of objects since we're manipulating the list */
+	auto const object_idxs(cave[p_ptr->py][p_ptr->px].o_idxs);
 
 	/* Scan the pile of objects */
-	for (this_o_idx = cave[p_ptr->py][p_ptr->px].o_idx; this_o_idx; this_o_idx = next_o_idx)
+	for (auto const this_o_idx: object_idxs)
 	{
-		object_type * o_ptr;
-
 		/* Acquire object */
-		o_ptr = &o_list[this_o_idx];
+		object_type *o_ptr = &o_list[this_o_idx];
 
 		if (object_similar(o_ptr, &p_ptr->inventory[INVEN_AMMO]))
 		{
 			msg_print("You add the ammo to your quiver.");
-			slot = wear_ammo(o_ptr);
+			s16b slot = wear_ammo(o_ptr);
 
 			if (slot != -1)
 			{
@@ -6001,6 +5995,7 @@ void pickup_ammo()
 				o_ptr = &p_ptr->inventory[slot];
 
 				/* Describe the object */
+				char o_name[80];
 				object_desc(o_name, o_ptr, TRUE, 3);
 
 				/* Message */
@@ -6010,9 +6005,6 @@ void pickup_ammo()
 				delete_object_idx(this_o_idx);
 			}
 		}
-
-		/* Acquire next object */
-		next_o_idx = o_ptr->next_o_idx;
 	}
 }
 
@@ -6118,66 +6110,16 @@ void object_pickup(int this_o_idx)
 }
 
 
-void py_pickup_floor(int pickup)
+static void absorb_gold(cave_type const *c_ptr)
 {
-	/* Hack -- ignore monster traps */
-	if (cave[p_ptr->py][p_ptr->px].feat == FEAT_MON_TRAP) return;
+	/* Copy list of objects since we're going to manipulate the list itself */
+	auto const object_idxs(c_ptr->o_idxs);
 
-	/* Try to grab ammo */
-	pickup_ammo();
-
-	/* Build a list of the floor objects. */
-	std::vector<int> floor_object_idxs;
-	{
-		s16b this_o_idx = cave[p_ptr->py][p_ptr->px].o_idx;
-		/* Reserve a number of slots if at least one is needed */
-		if (this_o_idx)
-		{
-			floor_object_idxs.reserve(16); // Avoid resizing in the common case
-		}
-		/* Fill in the indexes */
-		for (; this_o_idx; this_o_idx = o_list[this_o_idx].next_o_idx)
-		{
-			// Note the "-"! We need it for get_object()
-			// lookups to function correctly.
-			floor_object_idxs.push_back(0 - this_o_idx);
-		}
-	}
-
-	/* Mega Hack -- If we have auto-Id, do an ID sweep *before* squleching,
-	 * so that we don't have to walk over things twice to get them
-	 * squelched.  --dsb */
-	if (p_ptr->auto_id)
-	{
-		for (auto const o_idx : floor_object_idxs)
-		{
-			object_type *o_ptr = get_object(o_idx);
-			object_aware(o_ptr);
-			object_known(o_ptr);
-		}
-	}
-
-	/* Sense floor tile */
-	sense_objects(floor_object_idxs);
-
-	/* Squeltch the floor */
-	squeltch_grid();
-
-	/* Scan the pile of objects */
-	s16b next_o_idx = 0;
-	char o_name[80] = "";
-	object_type *o_ptr = 0;
-	int floor_num = 0;
-	int floor_o_idx = 0;
-
-	s16b this_o_idx;
-	for (this_o_idx = cave[p_ptr->py][p_ptr->px].o_idx; this_o_idx; this_o_idx = next_o_idx)
+	/* Go through everything */
+	for (auto const this_o_idx: object_idxs)
 	{
 		/* Acquire object */
-		o_ptr = &o_list[this_o_idx];
-
-		/* Acquire next object */
-		next_o_idx = o_ptr->next_o_idx;
+		object_type *o_ptr = &o_list[this_o_idx];
 
 		/* Hack -- disturb */
 		disturb(0);
@@ -6189,7 +6131,7 @@ void py_pickup_floor(int pickup)
 			object_desc(goldname, o_ptr, TRUE, 3);
 			/* Message */
 			msg_format("You have found %ld gold pieces worth of %s.",
-			           (long)o_ptr->pval, goldname);
+				   (long)o_ptr->pval, goldname);
 
 			/* Collect the gold */
 			p_ptr->au += o_ptr->pval;
@@ -6202,123 +6144,156 @@ void py_pickup_floor(int pickup)
 
 			/* Delete the gold */
 			delete_object_idx(this_o_idx);
-
-			continue;
 		}
+	}
+}
 
-		/* Describe */
+static void sense_floor(cave_type const *c_ptr)
+{
+	/* Build a list of the floor objects. */
+	std::vector<int> floor_object_idxs;
+	{
+		/* Reserve the correct number of slots */
+		floor_object_idxs.reserve(c_ptr->o_idxs.size());
+		/* Fill in the indexes */
+		for (auto const this_o_idx: c_ptr->o_idxs)
 		{
-			char testdesc[80];
-
-			object_desc(testdesc, o_ptr, TRUE, 3);
-			if (0 != strncmp(testdesc, "(nothing)", 80))
-			{
-				strncpy(o_name, testdesc, 80);
-			}
+			// Note the "-"! We need it for get_object()
+			// lookups to function correctly.
+			floor_object_idxs.push_back(0 - this_o_idx);
 		}
-
-		/* Count non-gold */
-		floor_num++;
-
-		/* Remember this index */
-		floor_o_idx = this_o_idx;
 	}
 
-	/* There were no non-gold items */
-	if (!floor_num) return;
-
-	/* Mention number of items */
-	if (!pickup)
+	/* Mega Hack -- If we have auto-Id, do an ID sweep *before* squleching,
+	 * so that we don't have to walk over things twice to get them
+	 * squelched.  --dsb */
+	if (p_ptr->auto_id)
 	{
-		/* One item */
-		if (floor_num == 1)
+		for (auto const o_idx: floor_object_idxs)
 		{
-			/* Acquire object */
-			o_ptr = &o_list[floor_o_idx];
+			object_type *o_ptr = get_object(o_idx);
+			object_aware(o_ptr);
+			object_known(o_ptr);
+		}
+	}
+
+	/* Sense floor tile */
+	sense_objects(floor_object_idxs);
+}
+
+void py_pickup_floor(int pickup)
+{
+	/* Get the tile */
+	auto c_ptr = &cave[p_ptr->py][p_ptr->px];
+
+	/* Hack -- ignore monster traps */
+	if (c_ptr->feat == FEAT_MON_TRAP)
+	{
+		return;
+	}
+
+	/* Try to grab ammo */
+	pickup_ammo();
+
+	/* Auto-ID and pseudo-ID */
+	sense_floor(c_ptr);
+
+	/* Squeltch the floor */
+	squeltch_grid();
+
+	/* Absorb gold on the tile */
+	absorb_gold(&cave[p_ptr->py][p_ptr->px]);
+
+	/* We handle 0, 1, or "many" items cases separately */
+	if (c_ptr->o_idxs.empty())
+	{
+		/* Nothing to do */
+	}
+	else if (c_ptr->o_idxs.size() == 1)
+	{
+		/* Acquire object */
+		auto floor_o_idx = c_ptr->o_idxs.front();
+		auto o_ptr = &o_list[floor_o_idx];
+
+		/* Describe or pick up? */
+		if (!pickup)
+		{
+			/* Describe */
+			char o_name[80] = "";
+			object_desc(o_name, o_ptr, TRUE, 3);
 
 			/* Message */
 			msg_format("You see %s.", o_name);
 		}
-
-		/* Multiple items */
 		else
+		{
+			/* Are we actually going to pick up? */
+			bool_ do_pickup = TRUE;
+
+			/* Hack -- query every item */
+			if (carry_query_flag || (!can_carry_heavy(&o_list[floor_o_idx])))
+			{
+				char o_name[80] = "";
+				object_desc(o_name, o_ptr, TRUE, 3);
+
+				if (!inven_carry_okay(o_ptr) && !object_similar(o_ptr, &p_ptr->inventory[INVEN_AMMO]))
+				{
+					msg_format("You have no room for %s.", o_name);
+					return; /* Done */
+				}
+				else
+				{
+					char out_val[160];
+					sprintf(out_val, "Pick up %s? ", o_name);
+					do_pickup = get_check(out_val);
+				}
+			}
+
+			/* Just pick it up; unless it's a symbiote and we don't have Symbiosis */
+			if (do_pickup && ((o_list[floor_o_idx].tval != TV_HYPNOS) || (get_skill(SKILL_SYMBIOTIC))))
+			{
+				object_pickup(floor_o_idx);
+			}
+		}
+	}
+	else
+	{
+		/* Describe or pick up? */
+		if (!pickup)
 		{
 			/* Message */
-			msg_format("You see a pile of %d items.", floor_num);
-		}
-
-		/* Done */
-		return;
-	}
-
-	/* Are we actually going to pick up and/or ask about which item to pick up? */
-	bool_ do_pickup = TRUE;
-	bool_ do_ask = TRUE;
-
-	/* One item */
-	if (floor_num == 1)
-	{
-		/* Hack -- query every item */
-		if (carry_query_flag || (!can_carry_heavy(&o_list[floor_o_idx])))
-		{
-			if (!inven_carry_okay(o_ptr) && !object_similar(o_ptr, &p_ptr->inventory[INVEN_AMMO]))
-			{
-				object_desc(o_name, o_ptr, TRUE, 3);
-				msg_format("You have no room for %s.", o_name);
-				do_pickup = FALSE;
-			}
-			else
-			{
-				char out_val[160];
-				sprintf(out_val, "Pick up %s? ", o_name);
-				do_pickup = get_check(out_val);
-			}
-		}
-
-		/* Don't ask */
-		do_ask = FALSE;
-
-		if ((o_list[floor_o_idx].tval == TV_HYPNOS) && (!get_skill(SKILL_SYMBIOTIC)))
-			do_pickup = FALSE;
-		else
-			this_o_idx = floor_o_idx;
-	}
-
-	/* Ask */
-	if (do_ask)
-	{
-		cptr q, s;
-
-		int item;
-
-		/* Get an item */
-		q = "Get which item? ";
-		s = "You have no room in your pack for any of the items here.";
-		if (get_item(&item, q, s, (USE_FLOOR), item_tester_hook_getable))
-		{
-			this_o_idx = 0 - item;
-
-			if (!can_carry_heavy(&o_list[this_o_idx]))
-			{
-				char out_val[160];
-
-				/* Describe the object */
-				object_desc(o_name, &o_list[this_o_idx], TRUE, 3);
-
-				sprintf(out_val, "Pick up %s? ", o_name);
-				do_pickup = get_check(out_val);
-			}
+			msg_format("You see a pile of %d items.", c_ptr->o_idxs.size());
 		}
 		else
 		{
-			do_pickup = FALSE;
-		}
-	}
+			/* Prompt for the item to pick up */
+			cptr q = "Get which item? ";
+			cptr s = "You have no room in your pack for any of the items here.";
+			int item;
+			if (get_item(&item, q, s, (USE_FLOOR), item_tester_hook_getable))
+			{
+				s16b this_o_idx = 0 - item;
 
-	/* Pick up the item */
-	if (do_pickup)
-	{
-		object_pickup(this_o_idx);
+				bool_ do_pickup = TRUE;
+				if (!can_carry_heavy(&o_list[this_o_idx]))
+				{
+					/* Describe the object */
+					char o_name[80] = "";
+					object_desc(o_name, &o_list[this_o_idx], TRUE, 3);
+
+					/* Prompt */
+					char out_val[160];
+					sprintf(out_val, "Pick up %s? ", o_name);
+					do_pickup = get_check(out_val);
+				}
+
+				/* Pick up the item */
+				if (do_pickup)
+				{
+					object_pickup(this_o_idx);
+				}
+			}
+		}
 	}
 }
 

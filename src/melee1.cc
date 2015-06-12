@@ -2152,10 +2152,7 @@ bool_ make_attack_normal(int m_idx, byte divis)
 								j_ptr->held_m_idx = m_idx;
 
 								/* Build stack */
-								j_ptr->next_o_idx = m_ptr->hold_o_idx;
-
-								/* Build stack */
-								m_ptr->hold_o_idx = o_idx;
+								m_ptr->hold_o_idxs.push_back(o_idx);
 							}
 						}
 

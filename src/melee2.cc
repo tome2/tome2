@@ -6934,8 +6934,6 @@ static void process_monster(int m_idx, bool_ is_frien)
 		/* Creature has been allowed move */
 		if (do_move)
 		{
-			s16b this_o_idx, next_o_idx = 0;
-
 			/* Take a turn */
 			do_turn = TRUE;
 
@@ -7005,16 +7003,14 @@ static void process_monster(int m_idx, bool_ is_frien)
 			}
 			else
 			{
+				/* Copy list of objects; we need a copy because we're mutating the list. */
+				auto const object_idxs(c_ptr->o_idxs);
+
 				/* Scan all objects in the grid */
-				for (this_o_idx = c_ptr->o_idx; this_o_idx; this_o_idx = next_o_idx)
+				for (auto const this_o_idx: object_idxs)
 				{
-					object_type * o_ptr;
-
 					/* Acquire object */
-					o_ptr = &o_list[this_o_idx];
-
-					/* Acquire next object */
-					next_o_idx = o_ptr->next_o_idx;
+					object_type * o_ptr = &o_list[this_o_idx];
 
 					/* Skip gold */
 					if (o_ptr->tval == TV_GOLD) continue;
@@ -7108,11 +7104,8 @@ static void process_monster(int m_idx, bool_ is_frien)
 								/* Memorize monster */
 								o_ptr->held_m_idx = m_idx;
 
-								/* Build a stack */
-								o_ptr->next_o_idx = m_ptr->hold_o_idx;
-
 								/* Carry object */
-								m_ptr->hold_o_idx = this_o_idx;
+								m_ptr->hold_o_idxs.push_back(this_o_idx);
 							}
 						}
 

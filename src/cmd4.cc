@@ -3091,18 +3091,11 @@ void do_cmd_knowledge_artifacts(void)
 		{
 			cave_type *c_ptr = &cave[y][x];
 
-			s16b this_o_idx, next_o_idx = 0;
-
 			/* Scan all objects in the grid */
-			for (this_o_idx = c_ptr->o_idx; this_o_idx; this_o_idx = next_o_idx)
+			for (auto const this_o_idx: c_ptr->o_idxs)
 			{
-				object_type * o_ptr;
-
 				/* Acquire object */
-				o_ptr = &o_list[this_o_idx];
-
-				/* Acquire next object */
-				next_o_idx = o_ptr->next_o_idx;
+				object_type const * o_ptr = &o_list[this_o_idx];
 
 				/* Ignore random artifacts */
 				if (o_ptr->tval == TV_RANDART) continue;
@@ -3129,20 +3122,13 @@ void do_cmd_knowledge_artifacts(void)
 	/* Check monsters in the dungeon */
 	for (i = 0; i < m_max; i++)
 	{
-		monster_type *m_ptr = &m_list[i];
-
-		s16b this_o_idx, next_o_idx = 0;
-
 		/* Scan all objects the monster carries */
-		for (this_o_idx = m_ptr->hold_o_idx; this_o_idx; this_o_idx = next_o_idx)
+		for (auto const this_o_idx: m_list[i].hold_o_idxs)
 		{
 			object_type * o_ptr;
 
 			/* Acquire object */
 			o_ptr = &o_list[this_o_idx];
-
-			/* Acquire next object */
-			next_o_idx = o_ptr->next_o_idx;
 
 			/* Ignore random artifacts */
 			if (o_ptr->tval == TV_RANDART) continue;

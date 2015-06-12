@@ -92,8 +92,6 @@ struct object_type
 	u32b art_oflags5;       /* Obvious Flags, set 5 */
 	u32b art_oesp;          /* Obvious Flags, set esp */
 
-	s16b next_o_idx;	/* Next object in stack (if any) */
-
 	s16b held_m_idx;	/* Monster holding us (if any) */
 
 	byte sense;             /* Pseudo-id status */

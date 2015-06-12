@@ -40,6 +40,7 @@
 #include "wilderness_map.hpp"
 #include "xtra1.hpp"
 
+#include <algorithm>
 #include <cassert>
 #include <type_traits>
 #include <vector>
@@ -65,123 +66,36 @@ s32b calc_total_weight(void)
  */
 void excise_object_idx(int o_idx)
 {
-	object_type *j_ptr;
-
-	s16b this_o_idx, next_o_idx = 0;
-
-	s16b prev_o_idx = 0;
-
+	/* Function to remove from list */
+	auto remove_it = [o_idx](std::vector<s16b> *v) -> void {
+		v->erase(
+			std::remove(
+				v->begin(),
+				v->end(),
+				o_idx),
+			v->end());
+	};
 
 	/* Object */
-	j_ptr = &o_list[o_idx];
+	object_type *o_ptr = &o_list[o_idx];
 
 	/* Monster */
-	if (j_ptr->held_m_idx)
+	if (o_ptr->held_m_idx)
 	{
-		monster_type *m_ptr;
-
 		/* Monster */
-		m_ptr = &m_list[j_ptr->held_m_idx];
+		monster_type *m_ptr = &m_list[o_ptr->held_m_idx];
 
-		/* Scan all objects in the grid */
-		for (this_o_idx = m_ptr->hold_o_idx; this_o_idx; this_o_idx = next_o_idx)
-		{
-			object_type * o_ptr;
-
-			/* Acquire object */
-			o_ptr = &o_list[this_o_idx];
-
-			/* Acquire next object */
-			next_o_idx = o_ptr->next_o_idx;
-
-			/* Done */
-			if (this_o_idx == o_idx)
-			{
-				/* No previous */
-				if (prev_o_idx == 0)
-				{
-					/* Remove from list */
-					m_ptr->hold_o_idx = next_o_idx;
-				}
-
-				/* Real previous */
-				else
-				{
-					object_type *k_ptr;
-
-					/* Previous object */
-					k_ptr = &o_list[prev_o_idx];
-
-					/* Remove from list */
-					k_ptr->next_o_idx = next_o_idx;
-				}
-
-				/* Forget next pointer */
-				o_ptr->next_o_idx = 0;
-
-				/* Done */
-				break;
-			}
-
-			/* Save prev_o_idx */
-			prev_o_idx = this_o_idx;
-		}
+		/* Remove object from list of held objects, if present. */
+		remove_it(&m_ptr->hold_o_idxs);
 	}
-
 	/* Dungeon */
 	else
 	{
-		cave_type *c_ptr;
-
-		int y = j_ptr->iy;
-		int x = j_ptr->ix;
-
 		/* Grid */
-		c_ptr = &cave[y][x];
+		cave_type *c_ptr = &cave[o_ptr->iy][o_ptr->ix];
 
-		/* Scan all objects in the grid */
-		for (this_o_idx = c_ptr->o_idx; this_o_idx; this_o_idx = next_o_idx)
-		{
-			object_type * o_ptr;
-
-			/* Acquire object */
-			o_ptr = &o_list[this_o_idx];
-
-			/* Acquire next object */
-			next_o_idx = o_ptr->next_o_idx;
-
-			/* Done */
-			if (this_o_idx == o_idx)
-			{
-				/* No previous */
-				if (prev_o_idx == 0)
-				{
-					/* Remove from list */
-					c_ptr->o_idx = next_o_idx;
-				}
-
-				/* Real previous */
-				else
-				{
-					object_type *k_ptr;
-
-					/* Previous object */
-					k_ptr = &o_list[prev_o_idx];
-
-					/* Remove from list */
-					k_ptr->next_o_idx = next_o_idx;
-				}
-
-				/* Forget next pointer */
-				o_ptr->next_o_idx = 0;
-
-				/* Done */
-				break;
-			}
-
-			/* Save prev_o_idx */
-			prev_o_idx = this_o_idx;
-		}
+		/* Remove object from list of objects in the grid, if present. */
+		remove_it(&c_ptr->o_idxs);
 	}
 }
 
@@ -227,28 +141,17 @@ void delete_object_idx(int o_idx)
  */
 void delete_object(int y, int x)
 {
-	cave_type *c_ptr;
-
-	s16b this_o_idx, next_o_idx = 0;
-
-
 	/* Refuse "illegal" locations */
 	if (!in_bounds(y, x)) return;
 
-
 	/* Grid */
-	c_ptr = &cave[y][x];
+	cave_type *c_ptr = &cave[y][x];
 
 	/* Scan all objects in the grid */
-	for (this_o_idx = c_ptr->o_idx; this_o_idx; this_o_idx = next_o_idx)
+	for (auto const this_o_idx: c_ptr->o_idxs)
 	{
-		object_type * o_ptr;
-
 		/* Acquire object */
-		o_ptr = &o_list[this_o_idx];
-
-		/* Acquire next object */
-		next_o_idx = o_ptr->next_o_idx;
+		object_type *o_ptr = &o_list[this_o_idx];
 
 		/* Wipe the object */
 		object_wipe(o_ptr);
@@ -258,7 +161,7 @@ void delete_object(int y, int x)
 	}
 
 	/* Objects are gone */
-	c_ptr->o_idx = 0;
+	c_ptr->o_idxs.clear();
 
 	/* Visual update */
 	lite_spot(y, x);
@@ -270,75 +173,43 @@ void delete_object(int y, int x)
  */
 static void compact_objects_aux(int i1, int i2)
 {
-	int i;
-
-	cave_type *c_ptr;
-
-	object_type *o_ptr;
-
-
 	/* Do nothing */
 	if (i1 == i2) return;
 
-
-	/* Repair objects */
-	for (i = 1; i < o_max; i++)
-	{
-		/* Acquire object */
-		o_ptr = &o_list[i];
-
-		/* Skip "dead" objects */
-		if (!o_ptr->k_idx) continue;
-
-		/* Repair "next" pointers */
-		if (o_ptr->next_o_idx == i1)
-		{
-			/* Repair */
-			o_ptr->next_o_idx = i2;
-		}
-	}
-
-
 	/* Acquire object */
-	o_ptr = &o_list[i1];
-
+	object_type *o_ptr = &o_list[i1];
 
 	/* Monster */
 	if (o_ptr->held_m_idx)
 	{
-		monster_type *m_ptr;
-
 		/* Acquire monster */
-		m_ptr = &m_list[o_ptr->held_m_idx];
+		monster_type *m_ptr = &m_list[o_ptr->held_m_idx];
 
 		/* Repair monster */
-		if (m_ptr->hold_o_idx == i1)
+		for (auto &hold_o_idx: m_ptr->hold_o_idxs)
 		{
-			/* Repair */
-			m_ptr->hold_o_idx = i2;
+			if (hold_o_idx == i1)
+			{
+				hold_o_idx = i2;
+			}
 		}
 	}
 
 	/* Dungeon */
 	else
 	{
-		int y, x;
-
-		/* Acquire location */
-		y = o_ptr->iy;
-		x = o_ptr->ix;
-
 		/* Acquire grid */
-		c_ptr = &cave[y][x];
+		cave_type *c_ptr = &cave[o_ptr->iy][o_ptr->ix];
 
 		/* Repair grid */
-		if (c_ptr->o_idx == i1)
+		for (auto &o_idx: c_ptr->o_idxs)
 		{
-			/* Repair */
-			c_ptr->o_idx = i2;
+			if (o_idx == i1)
+			{
+				o_idx = i2;
+			}
 		}
 	}
-
 
 	/* Structure copy */
 	o_list[i2] = o_list[i1];
@@ -534,13 +405,11 @@ void wipe_o_list(void)
 		/* Monster */
 		if (o_ptr->held_m_idx)
 		{
-			monster_type *m_ptr;
-
 			/* Monster */
-			m_ptr = &m_list[o_ptr->held_m_idx];
+			monster_type *m_ptr = &m_list[o_ptr->held_m_idx];
 
 			/* Hack -- see above */
-			m_ptr->hold_o_idx = 0;
+			m_ptr->hold_o_idxs.clear();
 		}
 
 		/* Dungeon */
@@ -556,11 +425,11 @@ void wipe_o_list(void)
 			c_ptr = &cave[y][x];
 
 			/* Hack -- see above */
-			c_ptr->o_idx = 0;
+			c_ptr->o_idxs.clear();
 		}
 
 		/* Wipe the object */
-		memset(o_ptr, 0, sizeof(object_type));
+		object_wipe(o_ptr);
 	}
 
 	/* Reset "o_max" */
@@ -4996,10 +4865,8 @@ void place_object(int y, int x, bool_ good, bool_ great, int where)
 	/* Success */
 	if (o_idx)
 	{
-		object_type *o_ptr;
-
 		/* Acquire object */
-		o_ptr = &o_list[o_idx];
+		object_type *o_ptr = &o_list[o_idx];
 
 		/* Structure Copy */
 		object_copy(o_ptr, q_ptr);
@@ -5011,11 +4878,8 @@ void place_object(int y, int x, bool_ good, bool_ great, int where)
 		/* Acquire grid */
 		c_ptr = &cave[y][x];
 
-		/* Build a stack */
-		o_ptr->next_o_idx = c_ptr->o_idx;
-
 		/* Place the object */
-		c_ptr->o_idx = o_idx;
+		c_ptr->o_idxs.push_back(o_idx);
 
 		/* Notice */
 		note_spot(y, x);
@@ -5148,11 +5012,8 @@ void place_gold(int y, int x)
 		/* Acquire grid */
 		c_ptr = &cave[y][x];
 
-		/* Build a stack */
-		o_ptr->next_o_idx = c_ptr->o_idx;
-
 		/* Place the object */
-		c_ptr->o_idx = o_idx;
+		c_ptr->o_idxs.push_back(o_idx);
 
 		/* Notice */
 		note_spot(y, x);
@@ -5187,10 +5048,6 @@ s16b drop_near(object_type *j_ptr, int chance, int y, int x)
 	int by, bx;
 	int dy, dx;
 	int ty, tx;
-
-	s16b o_idx = 0;
-
-	s16b this_o_idx, next_o_idx = 0;
 
 	cave_type *c_ptr;
 
@@ -5271,15 +5128,10 @@ s16b drop_near(object_type *j_ptr, int chance, int y, int x)
 			k = 0;
 
 			/* Scan objects in that grid */
-			for (this_o_idx = c_ptr->o_idx; this_o_idx; this_o_idx = next_o_idx)
+			for (auto const this_o_idx: c_ptr->o_idxs)
 			{
-				object_type * o_ptr;
-
 				/* Acquire object */
-				o_ptr = &o_list[this_o_idx];
-
-				/* Acquire next object */
-				next_o_idx = o_ptr->next_o_idx;
+				object_type *o_ptr = &o_list[this_o_idx];
 
 				/* Check for possible combination */
 				if (object_similar(o_ptr, j_ptr)) comb = TRUE;
@@ -5377,15 +5229,10 @@ s16b drop_near(object_type *j_ptr, int chance, int y, int x)
 	c_ptr = &cave[by][bx];
 
 	/* Scan objects in that grid for combination */
-	for (this_o_idx = c_ptr->o_idx; this_o_idx; this_o_idx = next_o_idx)
+	for (auto const this_o_idx: c_ptr->o_idxs)
 	{
-		object_type * o_ptr;
-
 		/* Acquire object */
-		o_ptr = &o_list[this_o_idx];
-
-		/* Acquire next object */
-		next_o_idx = o_ptr->next_o_idx;
+		object_type *o_ptr = &o_list[this_o_idx];
 
 		/* Check for combination */
 		if (object_similar(o_ptr, j_ptr))
@@ -5402,6 +5249,7 @@ s16b drop_near(object_type *j_ptr, int chance, int y, int x)
 	}
 
 	/* Get new object */
+	s16b o_idx = 0;
 	if (!done) o_idx = o_pop();
 
 	/* Failure */
@@ -5448,11 +5296,8 @@ s16b drop_near(object_type *j_ptr, int chance, int y, int x)
 		/* No monster */
 		j_ptr->held_m_idx = 0;
 
-		/* Build a stack */
-		j_ptr->next_o_idx = c_ptr->o_idx;
-
 		/* Place the object */
-		c_ptr->o_idx = o_idx;
+		c_ptr->o_idxs.push_back(o_idx);
 
 		/* Success */
 		done = TRUE;
@@ -5992,7 +5837,6 @@ s16b inven_carry(object_type *o_ptr, bool_ final)
 
 	/* Clean out unused fields */
 	o_ptr->iy = o_ptr->ix = 0;
-	o_ptr->next_o_idx = 0;
 	o_ptr->held_m_idx = 0;
 
 	/* Count the items */
@@ -6382,23 +6226,11 @@ void reorder_pack(void)
  */
 s16b floor_carry(int y, int x, object_type *j_ptr)
 {
-	int n = 0;
-
-	s16b o_idx;
-
-	s16b this_o_idx, next_o_idx = 0;
-
-
 	/* Scan objects in that grid for combination */
-	for (this_o_idx = cave[y][x].o_idx; this_o_idx; this_o_idx = next_o_idx)
+	for (auto const this_o_idx: cave[y][x].o_idxs)
 	{
-		object_type * o_ptr;
-
 		/* Acquire object */
-		o_ptr = &o_list[this_o_idx];
-
-		/* Acquire next object */
-		next_o_idx = o_ptr->next_o_idx;
+		object_type *o_ptr = &o_list[this_o_idx];
 
 		/* Check for combination */
 		if (object_similar(o_ptr, j_ptr))
@@ -6406,27 +6238,25 @@ s16b floor_carry(int y, int x, object_type *j_ptr)
 			/* Combine the items */
 			object_absorb(o_ptr, j_ptr);
 
-			/* Result */
-			return (this_o_idx);
+			/* Done */
+			return this_o_idx;
 		}
-
-		/* Count objects */
-		n++;
 	}
 
 	/* The stack is already too large */
-	if (n > 23) return (0);
+	if (cave[y][x].o_idxs.size() > 23)
+	{
+		return (0);
+	}
 
 	/* Make an object */
-	o_idx = o_pop();
+	s16b o_idx = o_pop();
 
 	/* Success */
 	if (o_idx)
 	{
-		object_type *o_ptr;
-
 		/* Acquire object */
-		o_ptr = &o_list[o_idx];
+		object_type *o_ptr = &o_list[o_idx];
 
 		/* Structure Copy */
 		object_copy(o_ptr, j_ptr);
@@ -6438,11 +6268,8 @@ s16b floor_carry(int y, int x, object_type *j_ptr)
 		/* Forget monster */
 		o_ptr->held_m_idx = 0;
 
-		/* Build a stack */
-		o_ptr->next_o_idx = cave[y][x].o_idx;
-
 		/* Place the object */
-		cave[y][x].o_idx = o_idx;
+		cave[y][x].o_idxs.push_back(o_idx);
 
 		/* Notice */
 		note_spot(y, x);

@@ -656,17 +656,14 @@ bool_ player_activate_trap_type(s16b y, s16b x, object_type *i_ptr, s16b item)
 		/* Teleport Away Trap */
 	case TRAP_OF_TELEPORT_AWAY:
 		{
-			int item, amt;
-			object_type *o_ptr;
-
 			/* teleport away all items */
-			while (cave[y][x].o_idx != 0)
+			while (!cave[y][x].o_idxs.empty())
 			{
-				item = cave[y][x].o_idx;
+				auto item = cave[y][x].o_idxs.front();
 
-				o_ptr = &o_list[item];
+				object_type *o_ptr = &o_list[item];
 
-				amt = o_ptr->number;
+				int amt = o_ptr->number;
 
 				ident = do_trap_teleport_away(o_ptr, y, x);
 
@@ -1182,7 +1179,7 @@ bool_ player_activate_trap_type(s16b y, s16b x, object_type *i_ptr, s16b item)
 
 					cv_ptr2 = &cave[cy][cx];
 
-					if (!cave_valid_bold(cy, cx) || cv_ptr2->o_idx != 0) continue;
+					if (!cave_valid_bold(cy, cx) || (!cv_ptr2->o_idxs.empty())) continue;
 
 					/* don't put anything in vaults */
 					if (cv_ptr2->info & CAVE_ICKY) continue;
@@ -2730,8 +2727,6 @@ bool_ mon_hit_trap(int m_idx)
 	monster_type *m_ptr = &m_list[m_idx];
 	monster_race *r_ptr = &r_info[m_ptr->r_idx];
 
-	object_type *kit_o_ptr, *load_o_ptr, *j_ptr;
-
 	u32b f1, f2, f3, f4, f5, esp;
 
 	object_type object_type_body;
@@ -2758,9 +2753,10 @@ bool_ mon_hit_trap(int m_idx)
 	int cost = 0;
 
 	/* Get the trap objects */
-	kit_o_ptr = &o_list[cave[my][mx].special2];
-	load_o_ptr = &o_list[cave[my][mx].special];
-	j_ptr = &object_type_body;
+	auto kit_o_idx = cave[my][mx].special2;
+	auto kit_o_ptr = &o_list[kit_o_idx];
+	auto load_o_ptr = &o_list[cave[my][mx].special];
+	auto j_ptr = &object_type_body;
 
 	/* Get trap properties */
 	object_flags(kit_o_ptr, &f1, &f2, &f3, &f4, &f5, &esp);
@@ -3000,8 +2996,7 @@ bool_ mon_hit_trap(int m_idx)
 					if (load_o_ptr->number <= 0)
 					{
 						remove = TRUE;
-						delete_object_idx(kit_o_ptr->next_o_idx);
-						kit_o_ptr->next_o_idx = 0;
+						delete_object_idx(kit_o_idx);
 					}
 
 					/* Drop (or break) near that location */
@@ -3046,8 +3041,7 @@ bool_ mon_hit_trap(int m_idx)
 					if (load_o_ptr->number <= 0)
 					{
 						remove = TRUE;
-						delete_object_idx(kit_o_ptr->next_o_idx);
-						kit_o_ptr->next_o_idx = 0;
+						delete_object_idx(kit_o_idx);
 					}
 				}
 
@@ -3088,8 +3082,7 @@ bool_ mon_hit_trap(int m_idx)
 					if (load_o_ptr->number <= 0)
 					{
 						remove = TRUE;
-						delete_object_idx(kit_o_ptr->next_o_idx);
-						kit_o_ptr->next_o_idx = 0;
+						delete_object_idx(kit_o_idx);
 					}
 				}
 

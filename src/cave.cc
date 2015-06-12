@@ -366,24 +366,16 @@ bool_ no_lite(void)
  */
 bool_ cave_valid_bold(int y, int x)
 {
-	cave_type *c_ptr = &cave[y][x];
-
-	s16b this_o_idx, next_o_idx = 0;
-
+	cave_type const *c_ptr = &cave[y][x];
 
 	/* Forbid perma-grids */
 	if (cave_perma_grid(c_ptr)) return (FALSE);
 
 	/* Check objects */
-	for (this_o_idx = c_ptr->o_idx; this_o_idx; this_o_idx = next_o_idx)
+	for (auto const o_idx: c_ptr->o_idxs)
 	{
-		object_type * o_ptr;
-
 		/* Acquire object */
-		o_ptr = &o_list[this_o_idx];
-
-		/* Acquire next object */
-		next_o_idx = o_ptr->next_o_idx;
+		object_type *o_ptr = &o_list[o_idx];
 
 		/* Forbid artifact grids */
 		if ((o_ptr->art_name) || artifact_p(o_ptr)) return (FALSE);
@@ -832,18 +824,6 @@ static byte darker_attrs[16] =
 
 static void map_info(int y, int x, byte *ap, char *cp)
 {
-	cave_type *c_ptr;
-
-	feature_type *f_ptr;
-
-	s16b this_o_idx, next_o_idx = 0;
-
-	u16b info;
-
-	s16b t_idx;
-
-	byte feat;
-
 	byte a;
 
 	byte c;
@@ -851,16 +831,16 @@ static void map_info(int y, int x, byte *ap, char *cp)
 	/**** Preparation ****/
 
 	/* Access the grid */
-	c_ptr = &cave[y][x];
+	cave_type *c_ptr = &cave[y][x];
 
 
 	/* Cache some frequently used values */
 
 	/* Grid info */
-	info = c_ptr->info;
+	auto info = c_ptr->info;
 
 	/* Feature code */
-	feat = c_ptr->feat;
+	auto feat = c_ptr->feat;
 
 	/* Apply "mimic" field */
 	if (c_ptr->mimic)
@@ -873,7 +853,7 @@ static void map_info(int y, int x, byte *ap, char *cp)
 	}
 
 	/* Access floor */
-	f_ptr = &f_info[feat];
+	feature_type *f_ptr = &f_info[feat];
 
 
 	/**** Layer 1 -- Terrain feature ****/
@@ -910,7 +890,7 @@ static void map_info(int y, int x, byte *ap, char *cp)
 		if ((info & (CAVE_TRDT)) && (feat != FEAT_ILLUS_WALL))
 		{
 			/* Trap index */
-			t_idx = c_ptr->t_idx;
+			auto t_idx = c_ptr->t_idx;
 
 			/*
 			 * If trap is set on a floor grid that is not
@@ -1079,15 +1059,10 @@ static void map_info(int y, int x, byte *ap, char *cp)
 
 	if (feat != FEAT_MON_TRAP)
 	{
-		for (this_o_idx = c_ptr->o_idx; this_o_idx; this_o_idx = next_o_idx)
+		for (auto const o_idx: c_ptr->o_idxs)
 		{
-			object_type * o_ptr;
-
 			/* Acquire object */
-			o_ptr = &o_list[this_o_idx];
-
-			/* Acquire next object */
-			next_o_idx = o_ptr->next_o_idx;
+			object_type *o_ptr = &o_list[o_idx];
 
 			/* Memorized objects */
 			if (o_ptr->marked)
@@ -1123,10 +1098,8 @@ static void map_info(int y, int x, byte *ap, char *cp)
 
 		if (r_ptr->flags9 & RF9_MIMIC)
 		{
-			object_type *o_ptr;
-
-			/* Acquire object */
-			o_ptr = &o_list[m_ptr->hold_o_idx];
+			/* Acquire object being mimicked */
+			object_type *o_ptr = &o_list[m_ptr->mimic_o_idx()];
 
 			/* Memorized objects */
 			if (o_ptr->marked)
@@ -1286,18 +1259,6 @@ static void map_info(int y, int x, byte *ap, char *cp)
  */
 void map_info_default(int y, int x, byte *ap, char *cp)
 {
-	cave_type *c_ptr;
-
-	feature_type *f_ptr;
-
-	s16b this_o_idx, next_o_idx = 0;
-
-	u16b info;
-
-	s16b t_idx;
-
-	byte feat;
-
 	byte a;
 
 	byte c;
@@ -1305,16 +1266,16 @@ void map_info_default(int y, int x, byte *ap, char *cp)
 	/**** Preparation ****/
 
 	/* Access the grid */
-	c_ptr = &cave[y][x];
+	cave_type *c_ptr = &cave[y][x];
 
 
 	/* Cache some frequently used values */
 
 	/* Grid info */
-	info = c_ptr->info;
+	auto info = c_ptr->info;
 
 	/* Feature code */
-	feat = c_ptr->feat;
+	auto feat = c_ptr->feat;
 
 	/* Apply "mimic" field */
 	if (c_ptr->mimic)
@@ -1327,7 +1288,7 @@ void map_info_default(int y, int x, byte *ap, char *cp)
 	}
 
 	/* Access floor */
-	f_ptr = &f_info[feat];
+	feature_type *f_ptr = &f_info[feat];
 
 
 	/**** Layer 1 -- Terrain feature ****/
@@ -1365,7 +1326,7 @@ void map_info_default(int y, int x, byte *ap, char *cp)
 		if ((info & (CAVE_TRDT)) && (feat != FEAT_ILLUS_WALL))
 		{
 			/* Trap index */
-			t_idx = c_ptr->t_idx;
+			auto t_idx = c_ptr->t_idx;
 
 			/*
 			 * If trap is set on a floor grid that is not
@@ -1529,15 +1490,10 @@ void map_info_default(int y, int x, byte *ap, char *cp)
 
 	if (feat != FEAT_MON_TRAP)
 	{
-		for (this_o_idx = c_ptr->o_idx; this_o_idx; this_o_idx = next_o_idx)
+		for (auto const this_o_idx: c_ptr->o_idxs)
 		{
-			object_type * o_ptr;
-
 			/* Acquire object */
-			o_ptr = &o_list[this_o_idx];
-
-			/* Acquire next object */
-			next_o_idx = o_ptr->next_o_idx;
+			object_type *o_ptr = &o_list[this_o_idx];
 
 			/* Memorized objects */
 			if (o_ptr->marked)
@@ -1574,10 +1530,8 @@ void map_info_default(int y, int x, byte *ap, char *cp)
 
 		if (r_ptr->flags9 & RF9_MIMIC)
 		{
-			object_type *o_ptr;
-
-			/* Acquire object */
-			o_ptr = &o_list[m_ptr->hold_o_idx];
+			/* Acquire object being mimicked */
+			object_type *o_ptr = &o_list[m_ptr->mimic_o_idx()];
 
 			/* Memorized objects */
 			if (o_ptr->marked)
@@ -1804,20 +1758,15 @@ void note_spot(int y, int x)
 
 	u16b info = c_ptr->info;
 
-	s16b this_o_idx, next_o_idx = 0;
-
-
 	/* Require "seen" flag */
 	if (!(info & (CAVE_SEEN))) return;
 
 
 	/* Hack -- memorize objects */
-	for (this_o_idx = c_ptr->o_idx; this_o_idx; this_o_idx = next_o_idx)
+	for (auto const this_o_idx: c_ptr->o_idxs)
 	{
-		object_type * o_ptr = &o_list[this_o_idx];
-
-		/* Acquire next object */
-		next_o_idx = o_ptr->next_o_idx;
+		/* Acquire object */
+		object_type *o_ptr = &o_list[this_o_idx];
 
 		/* Memorize objects */
 		o_ptr->marked = TRUE;
@@ -1830,8 +1779,7 @@ void note_spot(int y, int x)
 
 		if (r_ptr->flags9 & RF9_MIMIC)
 		{
-			object_type *o_ptr = &o_list[m_ptr->hold_o_idx];
-
+			object_type *o_ptr = &o_list[m_ptr->mimic_o_idx()];
 			o_ptr->marked = TRUE;
 		}
 	}
@@ -4086,8 +4034,7 @@ void wiz_lite(void)
 
 				if (r_ptr->flags9 & RF9_MIMIC)
 				{
-					object_type *o_ptr = &o_list[m_ptr->hold_o_idx];
-
+					object_type *o_ptr = &o_list[m_ptr->mimic_o_idx()];
 					o_ptr->marked = TRUE;
 				}
 			}
@@ -4669,7 +4616,7 @@ bool cave_clean_bold(int y, int x)
 	return
 		(f_info[cave[y][x].feat].flags1 & FF1_FLOOR) &&
 		(cave[y][x].feat != FEAT_MON_TRAP) &&
-		(cave[y][x].o_idx == 0) &&
+		(cave[y][x].o_idxs.empty()) &&
 		!(f_info[cave[y][x].feat].flags1 & FF1_PERMANENT);
 }
 
@@ -4702,7 +4649,7 @@ bool cave_naked_bold(int y, int x)
 		(f_info[cave[y][x].feat].flags1 & FF1_FLOOR) &&
 		(cave[y][x].feat != FEAT_MON_TRAP) &&
 		!(f_info[cave[y][x].feat].flags1 & FF1_PERMANENT) &&
-		(cave[y][x].o_idx == 0) &&
+		(cave[y][x].o_idxs.empty()) &&
 		(cave[y][x].m_idx == 0);
 }
 
@@ -4711,7 +4658,7 @@ bool cave_naked_bold2(int y, int x)
 	return
 		(f_info[cave[y][x].feat].flags1 & FF1_FLOOR) &&
 		(cave[y][x].feat != FEAT_MON_TRAP) &&
-		(cave[y][x].o_idx == 0) &&
+		(cave[y][x].o_idxs.empty()) &&
 		(cave[y][x].m_idx == 0);
 }
 

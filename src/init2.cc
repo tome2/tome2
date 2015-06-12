@@ -828,10 +828,10 @@ static errr init_other(void)
 	o_list = make_array<object_type>(max_o_idx);
 
 	/* Allocate and Wipe the monster list */
-	m_list = make_array<monster_type>(max_m_idx);
+	m_list = new monster_type[max_m_idx];
 
 	/* Allocate and Wipe the to keep monster list */
-	km_list = make_array<monster_type>(max_m_idx);
+	km_list = new monster_type[max_m_idx];
 
 	/* Allocate and Wipe the max dungeon level */
 	max_dlv = make_array<s16b>(max_d_idx);
@@ -843,11 +843,11 @@ static errr init_other(void)
 	}
 
 	/* Allocate and wipe each line of the cave */
-	cave = make_array<cave_type *>(MAX_HGT);
+	cave = new cave_type *[MAX_HGT];
 	for (i = 0; i < MAX_HGT; i++)
 	{
 		/* Allocate one row of the cave */
-		cave[i] = make_array<cave_type>(MAX_WID);
+		cave[i] = new cave_type[MAX_WID];
 	}
 
 	/*** Pre-allocate the basic "auto-inscriptions" ***/

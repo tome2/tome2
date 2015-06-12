@@ -2,8 +2,9 @@
 
 #include "h-basic.h"
 #include "object_type_fwd.hpp"
+#include <vector>
 
-extern byte show_monster_inven(int m_idx, int *monst_list);
+extern std::vector<s16b> show_monster_inven(int m_idx);
 extern int breakage_chance(object_type *o_ptr);
 extern void do_cmd_go_up(void);
 extern void do_cmd_go_down(void);

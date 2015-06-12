@@ -433,21 +433,15 @@ static cptr funny_comments[MAX_COMMENT] =
  */
 void delete_monster_idx(int i)
 {
-	int x, y, j;
-
 	monster_type *m_ptr = &m_list[i];
 
 	monster_race *r_ptr = race_inf(m_ptr);
 
-	s16b this_o_idx, next_o_idx = 0;
-
 	bool_ had_lite = FALSE;
-	;
-
 
 	/* Get location */
-	y = m_ptr->fy;
-	x = m_ptr->fx;
+	int y = m_ptr->fy;
+	int x = m_ptr->fx;
 
 	/* Hack -- Reduce the racial counter */
 	r_ptr->cur_num--;
@@ -469,7 +463,8 @@ void delete_monster_idx(int i)
 	/* Hack -- remove tracked monster */
 	if (i == p_ptr->control) p_ptr->control = 0;
 
-	for (j = m_max - 1; j >= 1; j--)
+
+	for (int j = m_max - 1; j >= 1; j--)
 	{
 		/* Access the monster */
 		monster_type *t_ptr = &m_list[j];
@@ -483,17 +478,15 @@ void delete_monster_idx(int i)
 	/* Monster is gone */
 	cave[y][x].m_idx = 0;
 
+	/* Copy list of objects; need a copy since we're
+	 * manipulating the list itself below. */
+	auto const object_idxs(m_ptr->hold_o_idxs);
 
 	/* Delete objects */
-	for (this_o_idx = m_ptr->hold_o_idx; this_o_idx; this_o_idx = next_o_idx)
+	for (auto const this_o_idx: object_idxs)
 	{
-		object_type * o_ptr;
-
 		/* Acquire object */
-		o_ptr = &o_list[this_o_idx];
-
-		/* Acquire next object */
-		next_o_idx = o_ptr->next_o_idx;
+		object_type *o_ptr = &o_list[this_o_idx];
 
 		/* Hack -- efficiency */
 		o_ptr->held_m_idx = 0;
@@ -518,12 +511,13 @@ void delete_monster_idx(int i)
 				}
 			}
 		}
+
 		/* Delete the object */
 		delete_object_idx(this_o_idx);
 	}
 
 	/* Wipe the Monster */
-	memset(m_ptr, 0, sizeof(monster_type));
+	m_ptr->wipe();
 
 	/* Count monsters */
 	m_cnt--;
@@ -573,42 +567,27 @@ void delete_monster(int y, int x)
  */
 static void compact_monsters_aux(int i1, int i2)
 {
-	int y, x, j;
-
-	cave_type *c_ptr;
-
-	monster_type *m_ptr;
-
-	s16b this_o_idx, next_o_idx = 0;
-
-
 	/* Do nothing */
 	if (i1 == i2) return;
 
-
 	/* Old monster */
-	m_ptr = &m_list[i1];
+	monster_type *m_ptr = &m_list[i1];
 
 	/* Location */
-	y = m_ptr->fy;
-	x = m_ptr->fx;
+	int y = m_ptr->fy;
+	int x = m_ptr->fx;
 
 	/* Cave grid */
-	c_ptr = &cave[y][x];
+	cave_type *c_ptr = &cave[y][x];
 
 	/* Update the cave */
 	c_ptr->m_idx = i2;
 
 	/* Repair objects being carried by monster */
-	for (this_o_idx = m_ptr->hold_o_idx; this_o_idx; this_o_idx = next_o_idx)
+	for (auto const this_o_idx: m_ptr->hold_o_idxs)
 	{
-		object_type * o_ptr;
-
 		/* Acquire object */
-		o_ptr = &o_list[this_o_idx];
-
-		/* Acquire next object */
-		next_o_idx = o_ptr->next_o_idx;
+		object_type *o_ptr = &o_list[this_o_idx];
 
 		/* Reset monster pointer */
 		o_ptr->held_m_idx = i2;
@@ -626,7 +605,7 @@ static void compact_monsters_aux(int i1, int i2)
 	/* Hack -- Update the health bar */
 	if (health_who == i1) health_track(i2);
 
-	for (j = m_max - 1; j >= 1; j--)
+	for (int j = m_max - 1; j >= 1; j--)
 	{
 		/* Access the monster */
 		monster_type *t_ptr = &m_list[j];
@@ -641,7 +620,7 @@ static void compact_monsters_aux(int i1, int i2)
 	m_list[i2] = m_list[i1];
 
 	/* Wipe the hole */
-	memset(&m_list[i1], 0, sizeof(monster_type));
+	m_list[i1].wipe();
 }
 
 
@@ -759,7 +738,7 @@ void wipe_m_list(void)
 		cave[m_ptr->fy][m_ptr->fx].m_idx = 0;
 
 		/* Wipe the Monster */
-		memset(m_ptr, 0, sizeof(monster_type));
+		m_ptr->wipe();
 	}
 
 	/* Reset "m_max" */
@@ -2045,13 +2024,11 @@ void monster_carry(monster_type *m_ptr, int m_idx, object_type *q_ptr)
 		object_copy(o_ptr, q_ptr);
 
 		/* Build a stack */
-		o_ptr->next_o_idx = m_ptr->hold_o_idx;
-
 		o_ptr->held_m_idx = m_idx;
 		o_ptr->ix = 0;
 		o_ptr->iy = 0;
 
-		m_ptr->hold_o_idx = o_idx;
+		m_ptr->hold_o_idxs.push_back(o_idx);
 	}
 
 	else
@@ -2367,7 +2344,7 @@ s16b place_monster_one(int y, int x, int r_idx, int ego, bool_ slp, int status)
 	m_ptr->ml = FALSE;
 
 	/* No objects yet */
-	m_ptr->hold_o_idx = 0;
+	m_ptr->hold_o_idxs.clear();
 
 	m_ptr->status = status;
 
@@ -3982,26 +3959,22 @@ s16b player_place(int y, int x)
  */
 void monster_drop_carried_objects(monster_type *m_ptr)
 {
-	s16b this_o_idx, next_o_idx = 0;
-	object_type forge;
-	object_type *o_ptr;
-	object_type *q_ptr;
-
+	/* Copy list of objects; we need a copy since
+	   we're manipulating the list itself below. */
+	auto const object_idxs(m_ptr->hold_o_idxs);
 
 	/* Drop objects being carried */
-	for (this_o_idx = m_ptr->hold_o_idx; this_o_idx; this_o_idx = next_o_idx)
+	for (auto const this_o_idx: object_idxs)
 	{
 		/* Acquire object */
-		o_ptr = &o_list[this_o_idx];
-
-		/* Acquire next object */
-		next_o_idx = o_ptr->next_o_idx;
+		object_type *o_ptr = &o_list[this_o_idx];
 
 		/* Paranoia */
 		o_ptr->held_m_idx = 0;
 
 		/* Get local object */
-		q_ptr = &forge;
+		object_type forge;
+		object_type *q_ptr = &forge;
 
 		/* Copy the object */
 		object_copy(q_ptr, o_ptr);
@@ -4014,5 +3987,5 @@ void monster_drop_carried_objects(monster_type *m_ptr)
 	}
 
 	/* Forget objects */
-	m_ptr->hold_o_idx = 0;
+	m_ptr->hold_o_idxs.clear();
 }

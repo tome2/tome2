@@ -64,11 +64,11 @@ void squeltch_grid(void)
 		return;
 	}
 
+	// Copy list of objects since we may modify it
+	auto const object_idxs(cave[p_ptr->py][p_ptr->px].o_idxs);
+
 	// Scan the pile of objects
-	s16b next_o_idx = 0;
-	for (s16b this_o_idx = cave[p_ptr->py][p_ptr->px].o_idx;
-	     this_o_idx;
-	     this_o_idx = next_o_idx)
+	for (auto const this_o_idx: object_idxs)
 	{
 		// Acquire object
 		object_type * o_ptr = &o_list[this_o_idx];
@@ -78,9 +78,6 @@ void squeltch_grid(void)
 		{
 			object_aware(o_ptr);
 		}
-
-		// Acquire next object
-		next_o_idx = o_ptr->next_o_idx;
 
 		// Apply rules
 		automatizer->apply_rules(o_ptr, -this_o_idx);

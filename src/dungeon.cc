@@ -2341,7 +2341,7 @@ static void process_world(void)
 						if (!(dungeon_flags1 & DF1_DAMAGE_FEAT))
 						{
 							/* If the grid is empty, skip it */
-							if ((cave[j][k].o_idx == 0) &&
+							if ((cave[j][k].o_idxs.empty()) &&
 							                ((j != p_ptr->py) && (i != p_ptr->px))) continue;
 						}
 

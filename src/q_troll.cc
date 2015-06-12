@@ -93,14 +93,11 @@ static bool_ quest_troll_gen_hook(void *, void *, void *)
 						/* Structure copy */
 						object_copy(o_ptr, q_ptr);
 
-						/* Build a stack */
-						o_ptr->next_o_idx = m_list[m_idx].hold_o_idx;
-
+						/* Add to monster's inventory */
 						o_ptr->held_m_idx = m_idx;
 						o_ptr->ix = 0;
 						o_ptr->iy = 0;
-
-						m_list[m_idx].hold_o_idx = o_idx;
+						m_list[m_idx].hold_o_idxs.push_back(o_idx);
 					}
 					else
 					{

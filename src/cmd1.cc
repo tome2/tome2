@@ -559,30 +559,23 @@ s16b tot_dam_aux(object_type *o_ptr, int tdam, monster_type *m_ptr,
  */
 void search(void)
 {
-	int y, x, chance;
-
-	s16b this_o_idx, next_o_idx = 0;
-
-	cave_type *c_ptr;
-
-
 	/* Start with base search ability */
-	chance = p_ptr->skill_srh;
+	int chance = p_ptr->skill_srh;
 
 	/* Penalize various conditions */
 	if (p_ptr->blind || no_lite()) chance = chance / 10;
 	if (p_ptr->confused || p_ptr->image) chance = chance / 10;
 
 	/* Search the nearby grids, which are always in bounds */
-	for (y = (p_ptr->py - 1); y <= (p_ptr->py + 1); y++)
+	for (int y = (p_ptr->py - 1); y <= (p_ptr->py + 1); y++)
 	{
-		for (x = (p_ptr->px - 1); x <= (p_ptr->px + 1); x++)
+		for (int x = (p_ptr->px - 1); x <= (p_ptr->px + 1); x++)
 		{
 			/* Sometimes, notice things */
 			if (rand_int(100) < chance)
 			{
 				/* Access the grid */
-				c_ptr = &cave[y][x];
+				cave_type *c_ptr = &cave[y][x];
 
 				/* Invisible trap */
 				if ((c_ptr->t_idx != 0) && !(c_ptr->info & CAVE_TRDT))
@@ -613,16 +606,9 @@ void search(void)
 				}
 
 				/* Scan all objects in the grid */
-				for (this_o_idx = c_ptr->o_idx; this_o_idx;
-				                this_o_idx = next_o_idx)
+				for (auto const o_idx: c_ptr->o_idxs)
 				{
-					object_type * o_ptr;
-
-					/* Acquire object */
-					o_ptr = &o_list[this_o_idx];
-
-					/* Acquire next object */
-					next_o_idx = o_ptr->next_o_idx;
+					object_type * o_ptr = &o_list[o_idx];
 
 					/* Skip non-chests */
 					if (o_ptr->tval != TV_CHEST) continue;
@@ -4009,9 +3995,6 @@ static bool_ run_test(void)
 
 	int option = 0, option2 = 0;
 
-	cave_type *c_ptr;
-
-
 	/* Where we came from */
 	prev_dir = find_prevdir;
 
@@ -4023,9 +4006,6 @@ static bool_ run_test(void)
 	/* Look at every newly adjacent square. */
 	for (i = -max; i <= max; i++)
 	{
-		s16b this_o_idx, next_o_idx = 0;
-
-
 		/* New direction */
 		new_dir = cycle[chome[prev_dir] + i];
 
@@ -4034,7 +4014,7 @@ static bool_ run_test(void)
 		col = p_ptr->px + ddx[new_dir];
 
 		/* Access grid */
-		c_ptr = &cave[row][col];
+		cave_type *c_ptr = &cave[row][col];
 
 
 		/* Visible monsters abort running */
@@ -4047,15 +4027,10 @@ static bool_ run_test(void)
 		}
 
 		/* Visible objects abort running */
-		for (this_o_idx = c_ptr->o_idx; this_o_idx; this_o_idx = next_o_idx)
+		for (auto const o_idx: c_ptr->o_idxs)
 		{
-			object_type * o_ptr;
-
 			/* Acquire object */
-			o_ptr = &o_list[this_o_idx];
-
-			/* Acquire next object */
-			next_o_idx = o_ptr->next_o_idx;
+			object_type * o_ptr = &o_list[o_idx];
 
 			/* Visible object */
 			if (o_ptr->marked) return (TRUE);
@@ -4229,7 +4204,7 @@ static bool_ run_test(void)
 			col = p_ptr->px + ddx[new_dir];
 
 			/* Access grid */
-			c_ptr = &cave[row][col];
+			cave_type *c_ptr = &cave[row][col];
 
 			/* Unknown grids or non-obstacle */
 			if (!see_obstacle_grid(c_ptr))
@@ -4261,7 +4236,7 @@ static bool_ run_test(void)
 			col = p_ptr->px + ddx[new_dir];
 
 			/* Access grid */
-			c_ptr = &cave[row][col];
+			cave_type *c_ptr = &cave[row][col];
 
 			/* Unknown grid or non-obstacle */
 			if (!see_obstacle_grid(c_ptr))
@@ -5019,15 +4994,16 @@ bool_ execute_inscription(byte i, byte y, byte x)
 		{
 			monster_type *m_ptr;
 			monster_race *r_ptr;
-			cave_type *c_ptr;
 			int ii = x, ij = y;
 
 			cave_set_feat(ij, ii, FEAT_DARK_PIT);
 			msg_print("A chasm appears in the floor!");
 
-			if (cave[ij][ii].m_idx)
+			cave_type *c_ptr = &cave[ij][ii];
+
+			if (c_ptr->m_idx)
 			{
-				m_ptr = &m_list[cave[ij][ii].m_idx];
+				m_ptr = &m_list[c_ptr->m_idx];
 				r_ptr = race_inf(m_ptr);
 
 				if (r_ptr->flags7 & RF7_CAN_FLY)
@@ -5039,33 +5015,27 @@ bool_ execute_inscription(byte i, byte y, byte x)
 					if (!(r_ptr->flags1 & RF1_UNIQUE))
 					{
 						msg_print("The monster falls in the chasm!");
-						delete_monster_idx(cave[ij][ii].m_idx);
+						delete_monster_idx(c_ptr->m_idx);
 					}
 				}
 			}
 
-			if (cave[ij][ii].o_idx)
+			if (!c_ptr->o_idxs.empty())
 			{
-				s16b this_o_idx, next_o_idx = 0;
-
-				c_ptr = &cave[ij][ii];
+				/* Copy list of objects since we're going to be manipulating the list */
+				auto const object_idxs(c_ptr->o_idxs);
 
 				/* Scan all objects in the grid */
-				for (this_o_idx = c_ptr->o_idx; this_o_idx;
-				                this_o_idx = next_o_idx)
+				for (auto const this_o_idx: object_idxs)
 				{
-					object_type * o_ptr;
 					bool_ plural = FALSE;
 
 					char o_name[80];
 
 					/* Acquire object */
-					o_ptr = &o_list[this_o_idx];
+					object_type * o_ptr = &o_list[this_o_idx];
 
 					if (o_ptr->number > 1) plural = TRUE;
-
-					/* Acquire next object */
-					next_o_idx = o_ptr->next_o_idx;
 
 					/* Effect "observed" */
 					if (o_ptr->marked)

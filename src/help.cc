@@ -325,7 +325,7 @@ static bool_ trigger_fountain(void *in, void *out) {
 
 static bool_ trigger_found_object(void *in, void *out) {
 	hook_move_in *p = (hook_move_in *) in;
-	return cave[p->y][p->x].o_idx != 0;
+	return !cave[p->y][p->x].o_idxs.empty();
 }
 
 static bool_ trigger_found_altar(void *in, void *out) {

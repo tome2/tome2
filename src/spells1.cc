@@ -3924,8 +3924,6 @@ static bool_ project_o(int who, int r, int y, int x, int dam, int typ)
 {
 	cave_type *c_ptr = &cave[y][x];
 
-	s16b this_o_idx, next_o_idx = 0;
-
 	bool_ obvious = FALSE;
 
 	u32b f1, f2, f3, f4, f5, esp;
@@ -3945,11 +3943,12 @@ static bool_ project_o(int who, int r, int y, int x, int dam, int typ)
 	/* Check new gods. */
 	project_check_gods(typ);
 
-	/* Scan all objects in the grid */
-	for (this_o_idx = c_ptr->o_idx; this_o_idx; this_o_idx = next_o_idx)
-	{
-		object_type * o_ptr;
+	/* Copy list of objects since we may destroy during iteration */
+	auto const object_idxs(c_ptr->o_idxs);
 
+	/* Scan all objects in the grid */
+	for (auto const this_o_idx: object_idxs)
+	{
 		bool_ is_art = FALSE;
 		bool_ ignore = FALSE;
 		bool_ plural = FALSE;
@@ -3958,10 +3957,7 @@ static bool_ project_o(int who, int r, int y, int x, int dam, int typ)
 		cptr note_kill = NULL;
 
 		/* Acquire object */
-		o_ptr = &o_list[this_o_idx];
-
-		/* Acquire next object */
-		next_o_idx = o_ptr->next_o_idx;
+		object_type * o_ptr = &o_list[this_o_idx];
 
 		/* Extract the flags */
 		object_flags(o_ptr, &f1, &f2, &f3, &f4, &f5, &esp);

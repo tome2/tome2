@@ -1498,16 +1498,11 @@ static bool_ do_dungeon(ls_flag_t flag, bool_ no_companions)
 		/* Monster */
 		if (o_ptr->held_m_idx)
 		{
-			monster_type *m_ptr;
-
 			/* Monster */
-			m_ptr = &m_list[o_ptr->held_m_idx];
-
-			/* Build a stack */
-			o_ptr->next_o_idx = m_ptr->hold_o_idx;
+			monster_type *m_ptr = &m_list[o_ptr->held_m_idx];
 
 			/* Place the object */
-			m_ptr->hold_o_idx = o_idx;
+			m_ptr->hold_o_idxs.push_back(o_idx);
 		}
 
 		/* Dungeon */
@@ -1516,11 +1511,8 @@ static bool_ do_dungeon(ls_flag_t flag, bool_ no_companions)
 			/* Access the item location */
 			c_ptr = &cave[o_ptr->iy][o_ptr->ix];
 
-			/* Build a stack */
-			o_ptr->next_o_idx = c_ptr->o_idx;
-
 			/* Place the object */
-			c_ptr->o_idx = o_idx;
+			c_ptr->o_idxs.push_back(o_idx);
 		}
 	}
 

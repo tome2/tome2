@@ -1397,10 +1397,8 @@ static void fix_m_list(void)
 			/* Skip unseen monsters */
 			if (r_ptr->flags9 & RF9_MIMIC)
 			{
-				object_type *o_ptr;
-
 				/* Acquire object */
-				o_ptr = &o_list[m_ptr->hold_o_idx];
+				object_type *o_ptr = &o_list[m_ptr->mimic_o_idx()];
 
 				/* Memorized objects */
 				if (!o_ptr->marked) continue;

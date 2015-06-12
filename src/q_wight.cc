@@ -107,13 +107,11 @@ static bool_ quest_wight_gen_hook(void *, void *, void *)
 						object_copy(o_ptr, q_ptr);
 
 						/* Build a stack */
-						o_ptr->next_o_idx = m_list[m_idx].hold_o_idx;
-
 						o_ptr->held_m_idx = m_idx;
 						o_ptr->ix = 0;
 						o_ptr->iy = 0;
 
-						m_list[m_idx].hold_o_idx = o_idx;
+						m_list[m_idx].hold_o_idxs.push_back(o_idx);
 					}
 				}
 			}
