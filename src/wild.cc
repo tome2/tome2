@@ -189,15 +189,12 @@ static int generate_area(int y, int x, bool_ border, bool_ corner)
 		/* Hack -- Induce consistant town layout */
 		Rand_value = wild_map[y][x].seed;
 
-		if (!corner)
+		/* Create level background */
+		for (y1 = 0; y1 < MAX_HGT; y1++)
 		{
-			/* Create level background */
-			for (y1 = 0; y1 < MAX_HGT; y1++)
+			for (x1 = 0; x1 < MAX_WID; x1++)
 			{
-				for (x1 = 0; x1 < MAX_WID; x1++)
-				{
-					cave_set_feat(y1, x1, MAX_WILD_TERRAIN / 2);
-				}
+				cave_set_feat(y1, x1, MAX_WILD_TERRAIN / 2);
 			}
 		}
 
