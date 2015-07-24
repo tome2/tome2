@@ -760,7 +760,7 @@ std::shared_ptr<Condition> SkillCondition::from_json(json_t *j)
 		return nullptr;
 	}
 
-	uint16_t si = find_skill_i(s);
+	auto si = find_skill_i(s);
 	if (si < 0)
 	{
 		msg_print("Invalid 'name' property");
@@ -903,7 +903,7 @@ std::shared_ptr<Condition> AbilityCondition::from_json(json_t *j)
 		return nullptr;
 	}
 
-	uint16_t ai = find_ability(a);
+	auto ai = find_ability(a);
 	if (ai < 0)
 	{
 		msg_print("Invalid 'ability' property");

@@ -480,7 +480,7 @@ void tome_intro()
 		{ dleft , TERM_L_BLUE, "to find the true nature of the legends beyond them?", 12, 0, },
 		{ dright, TERM_L_BLUE, "If this is so, then seeketh me.", 13, -1, },
 		{ dleft , TERM_WHITE , "[Press any key to continue]", 23, -1, },
-		{ NULL, }
+		{ NULL  , TERM_WHITE , NULL, 0, 0, }
 	};
 	intro_text intro2[] =
 	{
@@ -493,7 +493,7 @@ void tome_intro()
 		{ dleft , TERM_WHITE  , "present", 15, 1, },
 		{ dright, TERM_YELLOW , "T.o.M.E.", 16, 0, },
 		{ dleft , TERM_WHITE  , "[Press any key to continue]", 23, -1, },
-		{ NULL, }
+		{ NULL  , TERM_WHITE  , NULL, 0, 0, }
 	};
 
 	screen_save();
@@ -528,7 +528,7 @@ void theme_intro()
 		{ dright, TERM_L_BLUE , "In the land of Mordor, where the Shadows lie.", 17, -1, },
 		{ dright, TERM_L_GREEN, "--J.R.R. Tolkien", 18, 0, },
 		{ dleft , TERM_WHITE  , "[Press any key to continue]", 23, -1, },
-		{ NULL, },
+		{ NULL  , TERM_WHITE  , NULL, 0, 0, },
 	};
 	struct intro_text intro2[] =
 	{
@@ -541,7 +541,7 @@ void theme_intro()
 		{ dleft , TERM_WHITE  , "present", 15, 1, },
 		{ dright, TERM_YELLOW , "Theme (a module for ToME)", 16, 0, },
 		{ dleft , TERM_WHITE  , "[Press any key to continue]", 23, -1, },
-		{ NULL, },
+		{ NULL  , TERM_WHITE  , NULL, 0, 0, },
 	};
 	
        	screen_save();
