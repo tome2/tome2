@@ -7,7 +7,7 @@ namespace bandit {
 
     inline run_policy_ptr create_run_policy(const options& opt)
     {
-      return run_policy_ptr(new bandit_run_policy(opt.skip(), opt.only()));
+      return run_policy_ptr(new bandit_run_policy(opt.skip(), opt.only(), opt.break_on_failure()));
     }
 
     inline listener_ptr create_reporter(const options& opt,
@@ -23,6 +23,11 @@ namespace bandit {
       if(name == "xunit")
       {
         return std::unique_ptr<detail::listener>(new xunit_reporter(*formatter));
+      }
+
+      if(name == "info")
+      {
+        return std::unique_ptr<detail::listener>(new info_reporter(*formatter, colorizer));
       }
 
       if(name == "spec")

@@ -1,20 +1,42 @@
 #include <snowhouse/snowhouse.h>
-
 using namespace snowhouse;
+#include "tests.h"
+
+void BooleanOperators();
+void BasicAssertions();
+void ContainerConstraints();
+void CustomMatchers();
+void ExceptionTests();
+void ExpressionErrorHandling();
+void MapTests();
+void OperatorTests();
+void SequenceContainerTests();
+void StringLineTests();
+void StringTests();
+void StringizeTests();
 
 int main()
 {
-  std::cout << "Testing that 23 is 23" << std::endl;
-  Assert::That(23, Is().EqualTo(23));
-
   try
   {
-    AssertThat(12, Is().LessThan(11).And().GreaterThan(99));
+  BasicAssertions();
+  BooleanOperators();
+  ContainerConstraints();
+  CustomMatchers();
+  ExceptionTests();
+  ExpressionErrorHandling();
+  MapTests();
+  OperatorTests();
+  SequenceContainerTests();
+  StringLineTests();
+  StringTests();
+  StringizeTests();
   }
-  catch(const AssertionException& ex)
+  catch(const AssertionException& e)
   {
-    std::cout << "Apparently this failed:" << std::endl;
-    std::cout << ex.GetMessage() << std::endl;
+    std::cout << "Tests failed!" << std::endl;
+    std::cout << e.GetMessage() << std::endl;
+    return 1;
   }
 
   return 0;

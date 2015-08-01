@@ -2,7 +2,7 @@
 #define BANDIT_REPORTERS_COLORIZER_H
 
 #ifdef _WIN32
-  #ifndef MINGW32
+  #ifndef NOMINMAX
     #define NOMINMAX
   #endif
 
@@ -31,11 +31,38 @@ namespace bandit { namespace detail {
 	  return "";
     }
 
+    const char* yellow() const
+    {
+      if(colors_enabled_)
+	  {
+		  set_console_color(FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+	  }
+	  return "";
+    }
+
+    const char* blue() const
+    {
+      if(colors_enabled_)
+	  {
+		  set_console_color(FOREGROUND_BLUE);
+	  }
+	  return "";
+    }
+
     const char* red() const
     {
       if(colors_enabled_)
 	  {
 		  set_console_color(FOREGROUND_RED);
+	  }
+	  return "";
+    }
+
+    const char* white() const
+    {
+      if(colors_enabled_)
+	  {
+		  set_console_color(FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY);
 	  }
 	  return "";
     }
@@ -52,7 +79,7 @@ namespace bandit { namespace detail {
   private:
 	  WORD get_console_color() const
 	  {
-		  CONSOLE_SCREEN_BUFFER_INFO info = {0};
+		  CONSOLE_SCREEN_BUFFER_INFO info{};
 		  GetConsoleScreenBufferInfo(stdout_handle_, &info);
 		  return info.wAttributes;
 	  }
@@ -80,9 +107,24 @@ namespace bandit { namespace detail {
       return colors_enabled_ ? "\033[1;32m" : "";
     }
 
+    const char* yellow() const
+    {
+      return colors_enabled_ ? "\033[1;33m" : "";
+    }
+
+    const char* blue() const
+    {
+      return colors_enabled_ ? "\033[1;34m" : "";
+    }
+
     const char* red() const
     {
       return colors_enabled_ ? "\033[1;31m" : "";
+    }
+
+    const char* white() const
+    {
+      return colors_enabled_ ? "\033[1;37m" : "";
     }
 
     const char* reset() const

@@ -3,7 +3,7 @@
 using namespace bandit::fakes;
 namespace bd = bandit::detail;
 
-go_bandit([](){
+SPEC_BEGIN(describe)
 
   describe("describe:", [](){
     bandit::detail::voidfunc_t describe_fn;
@@ -87,7 +87,7 @@ go_bandit([](){
 
     describe("skip", [&](){
       bool context_is_hard_skip;
-      auto describe_fn = 
+      describe_fn = 
           [&](){ context_is_hard_skip = context_stack->back()->hard_skip(); };
 
       before_each([&](){
@@ -102,7 +102,16 @@ go_bandit([](){
         });
       
       });
+
+      describe("xdescribe", [&](){
+
+        it("pushes a context marked as skipped on the stack", [&](){
+          xdescribe("context name", describe_fn, *reporter, *context_stack);
+          AssertThat(context_is_hard_skip, IsTrue());
+        });
+
+      });
     });
   });
 
-});
+SPEC_END

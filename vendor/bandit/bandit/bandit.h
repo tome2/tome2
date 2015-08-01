@@ -1,6 +1,12 @@
 #ifndef BANDIT_BANDIT_H
 #define BANDIT_BANDIT_H
 
+#ifdef _MSC_VER
+// Visual Studio (including 2013) does not support the noexcept keyword
+#define _ALLOW_KEYWORD_MACROS
+#define noexcept
+#endif
+
 #include <cassert>
 #include <functional>
 #include <iostream>
@@ -8,7 +14,7 @@
 #include <deque>
 #include <stdexcept>
 
-#define BANDIT_VERSION "1.1.4"
+#define BANDIT_VERSION "2.0.0"
 
 namespace bandit { namespace detail {
   typedef std::function<void ()> voidfunc_t;
@@ -16,6 +22,8 @@ namespace bandit { namespace detail {
 
 #include <bandit/assertion_frameworks/snowhouse/snowhouse/snowhouse.h>
 using namespace snowhouse;
+
+#include <bandit/assertion_frameworks/matchers/matchers.h>
 
 #include <bandit/external/optionparser.h>
 #include <bandit/options.h>
