@@ -2232,13 +2232,6 @@ void py_attack(int y, int x, int max_blow)
 	/* Extract monster name (or "it") */
 	monster_desc(m_name, m_ptr, 0);
 
-	/* Dont even bother */
-	if (r_ptr->flags7 & RF7_IM_MELEE)
-	{
-		msg_format("%^s is immune to melee attacks.");
-		return;
-	}
-
 	/* Auto-Recall if possible and visible */
 	if (m_ptr->ml) monster_race_track(m_ptr->r_idx, m_ptr->ego);
 

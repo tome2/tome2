@@ -3172,7 +3172,6 @@
 #define RF7_AI_PLAYER           0x00020000  /* Controlled by the player */
 #define RF7_NO_THEFT		0x00040000  /* Monster is immune to theft */
 #define RF7_SPIRIT		0x00080000  /* This is a Spirit, coming from the Void */
-#define RF7_IM_MELEE            0x00100000  /* IM melee */
 
 
 /*

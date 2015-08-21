@@ -5423,7 +5423,6 @@ static bool_ monst_attack_monst(int m_idx, int t_idx)
 
 	/* Not allowed to attack */
 	if (r_ptr->flags1 & RF1_NEVER_BLOW) return FALSE;
-	if (tr_ptr->flags7 & RF7_IM_MELEE) return FALSE;
 
 	/* Total armor */
 	ac = t_ptr->ac;

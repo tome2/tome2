@@ -411,7 +411,7 @@ static cptr r_info_flags7[] =
 	"AI_PLAYER",
 	"NO_THEFT",
 	"SPIRIT",
-	"IM_MELEE",
+	"XXX7X20",
 	"XXX7X21",
 	"XXX7X22",
 	"XXX7X23",
