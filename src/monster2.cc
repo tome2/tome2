@@ -3840,7 +3840,7 @@ void update_smart_learn(int m_idx, int what)
 	if (r_ptr->flags2 & (RF2_STUPID)) return;
 
 	/* Not intelligent, only learn sometimes */
-	if (!(r_ptr->flags2 & (RF2_SMART)) && (rand_int(100) < 50)) return;
+	if (!(r_ptr->flags2 & (RF2_SMART)) && magik(50)) return;
 
 
 	/* XXX XXX XXX */

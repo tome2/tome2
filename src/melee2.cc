@@ -329,7 +329,7 @@ static void remove_bad_spells(int m_idx, u32b *f4p, u32b *f5p, u32b *f6p)
 	if (smart_learn)
 	{
 		/* Hack -- Occasionally forget player status */
-		if (m_ptr->smart && (rand_int(100) < 1)) m_ptr->smart = 0L;
+		if (m_ptr->smart && magik(1)) m_ptr->smart = 0L;
 
 		/* Use the memorized flags */
 		smart = m_ptr->smart;
