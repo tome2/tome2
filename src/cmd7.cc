@@ -1215,16 +1215,6 @@ void do_cmd_beastmaster(void)
 int flags_select[32*5];
 int activation_select;
 
-/* Return true if the player is wielding the philosopher's stone
- */
-bool_ alchemist_has_stone(void)
-{
-	if (p_ptr->inventory[INVEN_LITE].name1 == 209)
-		return TRUE;
-	else
-		return FALSE;
-}
-
 /*
  Display a group of flags from a_select flags, and return
  the number of flags displayed (even invisible ones)
@@ -1252,11 +1242,13 @@ int show_flags(byte group, int pval)
 			sprintf(ttt, "%c) %s",
 			        (items < 26) ? I2A(items) : ('0' + items - 26),
 				a_select_flags[i].desc);
-			if ( wizard || alchemist_has_stone())
+			if ( wizard )
+			{
 				sprintf(ttt, "%c) %s (exp " FMTu32b ")",
 				        (items < 26) ? I2A(items) : ('0' + items - 26),
 					a_select_flags[i].desc,
 				        a_select_flags[i].xp);
+			}
 
 			/* Note: Somebody is VERY clever, and it wasn't me. Text printed as
 			 * TERM_DARK is actually printed as TERM_BLUE *SPACES* to prevent the
@@ -1290,9 +1282,11 @@ int show_flags(byte group, int pval)
 				break;     /* Just in Case*/
 			}
 		}
-		/* For alchemists who have the stone, at least show all the flags... */
-		if ((alchemist_has_stone() || wizard) && color == TERM_DARK)
+
+		if (wizard && color == TERM_DARK)
+		{
 			color = TERM_BLUE;
+		}
 
 		if (items < 16) x = 5;
 		else x = 45;
@@ -1378,7 +1372,7 @@ s32b get_flags_exp(int pval, int oldpval)
 			}
 		}
 	}
-	if ( alchemist_has_stone() ) exp = exp / 4;
+
 	return exp;
 }
 
@@ -2585,11 +2579,8 @@ static void do_cmd_toggle_artifact(object_type *o_ptr)
 	{
 		bool_ okay = TRUE;
 
-		if ( !alchemist_has_stone())
-		{
-			msg_print("Creating an artifact will result into a permanent loss of 10 hp.");
-			if (!get_check("Are you sure you want to do that?")) return;
-		}
+		msg_print("Creating an artifact will result into a permanent loss of 10 hp.");
+		if (!get_check("Are you sure you want to do that?")) return;
 
 		if (!magic_essence(get_skill(SKILL_ALCHEMY)))
 		{
@@ -2678,8 +2669,7 @@ static bool_ alchemist_items_check(int tval, int sval, int ego, int tocreate, bo
 
 				/* Randomly decrease the number of essences created */
 				if ( randint(3) == 1
-				                && randint(52) > get_skill(SKILL_ALCHEMY)
-				                && !alchemist_has_stone())
+						&& randint(52) > get_skill(SKILL_ALCHEMY))
 					o_ptr->number /= randint(2) + 1;
 				if ( o_ptr->number == 0)
 					continue;
@@ -3883,10 +3873,6 @@ void do_cmd_alchemist(void)
 		 But if making things doesn't take gold, what about the cash
 		 does the Philosopher's stone do?
 		 Time*/
-
-		/* 0% failure if you have the stone */
-		if ( alchemist_has_stone())
-			basechance = 0;
 
 		if (basechance > 0 && value)
 		{
