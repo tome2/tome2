@@ -308,7 +308,7 @@ static void status_curses(void)
 	row_bival("Clone", 4, TR4_CLONE, yo++, flag_arr);
 	row_bival("Temp", 5, TR5_TEMPORARY, yo++, flag_arr);
 	yo++;
-	row_count("Antimagic", 4, TR4_ANTIMAGIC_50, 5, 4, TR4_ANTIMAGIC_30, 3, 4, TR4_ANTIMAGIC_20, 2, 4, TR4_ANTIMAGIC_10, 1, yo++, flag_arr);
+	row_bival("Antimagic", 4, TR4_ANTIMAGIC_50, yo++, flag_arr);
 
 	c_put_str(TERM_WHITE, "Press ESC to continue", 23, 0);
 	Term_fresh();

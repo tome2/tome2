@@ -2679,9 +2679,6 @@
 #define TR4_CHEAPNESS           0x00008000L     /* Rod spells are cheaper(in mana cost) to cast */
 #define TR4_FOUNTAIN            0x00010000L     /* Available as fountain (for potions) */
 #define TR4_ANTIMAGIC_50        0x00020000L     /* Forbid magic */
-#define TR4_ANTIMAGIC_30        0x00040000L     /* Forbid magic */
-#define TR4_ANTIMAGIC_20        0x00080000L     /* Forbid magic */
-#define TR4_ANTIMAGIC_10        0x00100000L     /* Forbid magic */
 #define TR4_EASY_USE            0x00200000L     /* Easily activable */
 #define TR4_IM_NETHER           0x00400000L     /* Immunity to nether */
 #define TR4_RECHARGED           0x00800000L     /* Object has been recharged once */

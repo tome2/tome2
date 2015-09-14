@@ -2999,7 +2999,7 @@ bool_ object_out_desc(object_type *o_ptr, FILE *fff, bool_ trim_down, bool_ wait
 			text_out("It prevents the space-time continuum from being disrupted.  ");
 		}
 
-		if ((f4 & (TR4_ANTIMAGIC_50)) || (f4 & (TR4_ANTIMAGIC_30)) || (f4 & (TR4_ANTIMAGIC_20)) || (f4 & (TR4_ANTIMAGIC_10)))
+		if (f4 & TR4_ANTIMAGIC_50)
 		{
 			text_out("It generates an antimagic field.  ");
 		}
