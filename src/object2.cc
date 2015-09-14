@@ -3884,8 +3884,7 @@ void add_random_ego_flag(object_type *o_ptr, int fego, bool_ *limit_blows)
  * "good" and "great" arguments are false.  As a total hack, if "great" is
  * true, then the item gets 3 extra "attempts" to become an artifact.
  */
-int hack_apply_magic_power = 0;
-void apply_magic(object_type *o_ptr, int lev, bool_ okay, bool_ good, bool_ great)
+void apply_magic(object_type *o_ptr, int lev, bool_ okay, bool_ good, bool_ great, boost::optional<int> force_power)
 {
 	int i, rolls, f1, f2, power;
 	object_kind *k_ptr = &k_info[o_ptr->k_idx];
@@ -3986,15 +3985,11 @@ void apply_magic(object_type *o_ptr, int lev, bool_ okay, bool_ good, bool_ grea
 		if (magik(f2)) power = -2;
 	}
 
-	/* Mega hack */
-	if (hack_apply_magic_power)
+	/* Override power with parameter? */
+	if (auto power_override = force_power)
 	{
-		if (hack_apply_magic_power == -99)
-			power = 0;
-		else
-			power = hack_apply_magic_power;
+		power = *power_override;
 	}
-	hack_apply_magic_power = 0;
 
 	/* Assume no rolls */
 	rolls = 0;

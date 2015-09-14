@@ -786,8 +786,7 @@ static void wiz_reroll_item(object_type *o_ptr)
 		else if (ch == 'b' || ch == 'B')
 		{
 			object_prep(q_ptr, o_ptr->k_idx);
-			hack_apply_magic_power = -2;
-			apply_magic(q_ptr, dun_level, FALSE, FALSE, FALSE);
+			apply_magic(q_ptr, dun_level, FALSE, FALSE, FALSE, boost::make_optional(-2));
 		}
 
 		/* Apply normal magic, but first clear object */

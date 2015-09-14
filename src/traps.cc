@@ -1382,8 +1382,7 @@ bool_ player_activate_trap_type(s16b y, s16b x, object_type *i_ptr, s16b item)
 
 					/* Create a Wand of Nothing */
 					object_prep(j_ptr, lookup_kind(TV_WAND, SV_WAND_NOTHING));
-					hack_apply_magic_power = -99;
-					apply_magic(j_ptr, 0, FALSE, FALSE, FALSE);
+					apply_magic(j_ptr, 0, FALSE, FALSE, FALSE, boost::make_optional(0));
 					j_ptr->ident &= ~IDENT_KNOWN;
 					p_ptr->notice |= (PN_COMBINE | PN_REORDER);
 				}
@@ -1393,8 +1392,7 @@ bool_ player_activate_trap_type(s16b y, s16b x, object_type *i_ptr, s16b item)
 
 					/* Create a Staff of Nothing */
 					object_prep(j_ptr, lookup_kind(TV_STAFF, SV_STAFF_NOTHING));
-					hack_apply_magic_power = -99;
-					apply_magic(j_ptr, 0, FALSE, FALSE, FALSE);
+					apply_magic(j_ptr, 0, FALSE, FALSE, FALSE, boost::make_optional(0));
 					j_ptr->ident &= ~IDENT_KNOWN;
 					p_ptr->notice |= (PN_COMBINE | PN_REORDER);
 				}

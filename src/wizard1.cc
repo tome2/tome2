@@ -295,8 +295,7 @@ static void kind_info(char *buf, char *dam, char *wgt, int *lev, s32b *val, int 
 
 	if ((k_ptr->tval == TV_WAND) || (k_ptr->tval == TV_STAFF))
 	{
-		hack_apply_magic_power = -99;
-		apply_magic(q_ptr, 0, FALSE, FALSE, FALSE);
+		apply_magic(q_ptr, 0, FALSE, FALSE, FALSE, boost::make_optional(0));
 	}
 
 	/* Level */

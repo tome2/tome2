@@ -2778,8 +2778,7 @@ static void alchemist_display_recipe(int tval, int sval, int ego)
 		o_ptr = &forge;
 		object_prep(o_ptr, lookup_kind(tval, sval));
 		o_ptr->name2 = ego;
-		hack_apply_magic_power = -99;
-		apply_magic(o_ptr, get_skill(SKILL_ALCHEMY) * 2, FALSE, FALSE, FALSE);
+		apply_magic(o_ptr, get_skill(SKILL_ALCHEMY) * 2, FALSE, FALSE, FALSE, boost::make_optional(0));
 		object_aware(o_ptr);
 		object_known(o_ptr);
 		/* the 0 mode means only the text, leaving off any numbers */
@@ -3843,8 +3842,7 @@ void do_cmd_alchemist(void)
 			o_ptr = &forge;
 			object_wipe(o_ptr);
 			object_prep(o_ptr, lookup_kind(tval, sval));
-			hack_apply_magic_power = -99;
-			apply_magic(o_ptr, askill * 2, FALSE, FALSE, FALSE);
+			apply_magic(o_ptr, askill * 2, FALSE, FALSE, FALSE, boost::make_optional(0));
 			if ( o_ptr->tval == TV_WAND || o_ptr->tval == TV_STAFF)
 				o_ptr->pval = 0;
 			value = object_value_real(o_ptr);
@@ -4147,8 +4145,7 @@ void do_cmd_alchemist(void)
 						s_ptr->number = 1;
 
 						/* Force creation of non ego non cursed */
-						hack_apply_magic_power = -99;
-						apply_magic(s_ptr, 0, FALSE, FALSE, FALSE);
+						apply_magic(s_ptr, 0, FALSE, FALSE, FALSE, boost::make_optional(0));
 
 						/* Hack -- remove possible curse */
 						if (cursed_p(s_ptr))
