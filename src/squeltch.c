@@ -1481,7 +1481,7 @@ static condition_type *create_condition_name()
 	cptr s = lua_input_box("Object name to match?", 79);
 	if (strlen(s) == 0)
 	{
-		// do nothing
+		return NULL;
 	}
 
 	return condition_new_name(s);
@@ -1492,7 +1492,7 @@ static condition_type *create_condition_contain()
 	cptr s = lua_input_box("Word to find in object name?", 79);
 	if (strlen(s) == 0)
 	{
-		// do nothing
+		return NULL;
 	}
 
 	return condition_new_contain(s);
@@ -1503,7 +1503,7 @@ static condition_type *create_condition_inscribed()
 	cptr s = lua_input_box("Word to find in object inscription?", 79);
 	if (strlen(s) == 0)
 	{
-		// do nothing
+		return NULL;
 	}
 
 	return condition_new_inscribed(s);
@@ -1517,7 +1517,7 @@ static condition_type *create_condition_discount()
 		cptr s = lua_input_box("Min discount?", 79);
 		if (sscanf(s, "%d", &min) < 1)
 		{
-			// do nothing
+			return NULL;
 		}
 	}
 
@@ -1525,7 +1525,7 @@ static condition_type *create_condition_discount()
 		cptr s = lua_input_box("Max discount?", 79);
 		if (sscanf(s, "%d", &max) < 1)
 		{
-			// do nothing
+			return NULL;
 		}
 	}
 
@@ -1538,7 +1538,7 @@ static condition_type *create_condition_symbol()
 	cptr s = lua_input_box("Symbol to match?", 1);
 	if (sscanf(s, "%c", &c) < 1)
 	{
-		// do nothing
+		return NULL;
 	}
 
 	return condition_new_symbol(c);
@@ -1561,7 +1561,7 @@ static condition_type *create_condition_status()
 	case 'G': status = GOOD; break;
 	case 'V': status = VERY_GOOD; break;
 	case 'S': status = SPECIAL; break;
-	default: break;
+	default: return NULL;
 	}
 
 	return condition_new_status(status);
@@ -1578,7 +1578,7 @@ static condition_type *create_condition_state()
 	{
 	case 'i': s = IDENTIFIED; break;
 	case 'n': s = NOT_IDENTIFIED; break;
-	default: break;
+	default: return NULL;
 	}
 
 	return condition_new_state(s);
@@ -1590,7 +1590,7 @@ static condition_type *create_condition_tval()
 	cptr s = lua_input_box("Tval to match?", 79);
 	if (sscanf(s, "%d", &tval) < 1)
 	{
-		// do nothing
+		return NULL;
 	}
 
 	return condition_new_tval(tval);
@@ -1604,7 +1604,7 @@ static condition_type *create_condition_sval()
 		cptr s = lua_input_box("Min sval?", 79);
 		if (sscanf(s, "%d", &sval_min) < 1)
 		{
-			// do nothing
+			return NULL;
 		}
 	}
 
@@ -1612,7 +1612,7 @@ static condition_type *create_condition_sval()
 		cptr s = lua_input_box("Max sval?", 79);
 		if (sscanf(s, "%d", &sval_max) < 1)
 		{
-			// do nothing
+			return NULL;
 		}
 	}
 
@@ -1624,7 +1624,7 @@ static condition_type *create_condition_race()
 	cptr s = lua_input_box("Player race to match?", 79);
 	if (strlen(s) == 0)
 	{
-		// do nothing
+		return NULL;
 	}
 
 	return condition_new_race(s);
@@ -1635,7 +1635,7 @@ static condition_type *create_condition_subrace()
 	cptr s = lua_input_box("Player subrace to match?", 79);
 	if (strlen(s) == 0)
 	{
-		// do nothing
+		return NULL;
 	}
 
 	return condition_new_subrace(s); 
@@ -1646,7 +1646,7 @@ static condition_type *create_condition_class()
 	cptr s = lua_input_box("Player class to match?", 79);
 	if (strlen(s) == 0)
 	{
-		// do nothing
+		return NULL;
 	}
 
 	return condition_new_class(s);
@@ -1660,7 +1660,7 @@ static condition_type *create_condition_level()
 		cptr s = lua_input_box("Min player level?", 79);
 		if (sscanf(s, "%d", &min) < 1)
 		{
-			// do nothing
+			return NULL;
 		}
 	}
 
@@ -1668,7 +1668,7 @@ static condition_type *create_condition_level()
 		cptr s = lua_input_box("Max player level?", 79);
 		if (sscanf(s, "%d", &max) < 1)
 		{
-			// do nothing
+			return NULL;
 		}
 	}
 
@@ -1684,7 +1684,7 @@ static condition_type *create_condition_skill()
 		cptr s = lua_input_box("Min skill level?", 79);
 		if (sscanf(s, "%d", &min) < 1)
 		{
-			// do nothing
+			return NULL;
 		}
 	}
 
@@ -1692,7 +1692,7 @@ static condition_type *create_condition_skill()
 		cptr s = lua_input_box("Max skill level?", 79);
 		if (sscanf(s, "%d", &max) < 1)
 		{
-			// do nothing
+			return NULL;
 		}
 	}
 
@@ -1700,13 +1700,13 @@ static condition_type *create_condition_skill()
 		cptr s = lua_input_box("Skill name?", 79);
 		if (strlen(s) == 0)
 		{
-			// do nothing
+			return NULL;
 		}
 
 		skill_idx = find_skill_i(s);
 		if (skill_idx < 0)
 		{
-			// do nothing
+			return NULL;
 		}
 	}
 
@@ -1719,13 +1719,13 @@ static condition_type *create_condition_ability()
 	cptr s = lua_input_box("Ability name?", 79);
 	if (strlen(s) == 0)
 	{
-		// do nothing
+		return NULL;
 	}
 
 	ai = find_ability(s);
 	if (ai < 0)
 	{
-		// do nothing
+		return NULL;
 	}
 
 	return condition_new_ability(ai);
