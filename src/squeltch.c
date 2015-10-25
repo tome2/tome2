@@ -2221,7 +2221,10 @@ static void display_condition(condition_type *condition)
 	{
 		tree_write(ecol, "Negate the following:");
 		tree_write(TERM_WHITE, "\n");
-		display_condition(condition->subcondition);
+	        if (condition->subcondition != NULL) 
+	        {
+		        display_condition(condition->subcondition);
+		}
 		break;
 	}
 
