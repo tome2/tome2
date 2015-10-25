@@ -578,6 +578,11 @@ static condition_type *condition_new_equipment()
 
 static void condition_and_add(condition_type *and_c, condition_type *c)
 {
+	if (and_c == NULL || c == NULL)
+	{
+		return;
+	}
+
 	assert(and_c != NULL);
 	assert(c != NULL);
 	assert((and_c->match == M_AND) || (and_c->match == M_OR));
