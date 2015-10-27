@@ -975,10 +975,6 @@ These are accessible through the (=) Set options command.
 *****option.txt*2[(hilite_player)] -- causes the player's symbol to be drawn with the
 "cursor" on it. It will be drawn with the same color as the character.
 
-*****option.txt*3[(player_symbols)] -- for graphics mode only, and only works when option
-(use_graphics) is also on. This apparently varies the player graphic
-and its color based on class, race, and sex.
-
 #####G----------------------------------------------------------------------
 #####G4.18 Recharging a rod using a Recharge Item spell
 #####G----------------------------------------------------------------------
@@ -1070,15 +1066,7 @@ create a macro for a function key.
 #####G5.2 How can I automatically inscribe items when I pick them up?
 #####G----------------------------------------------------------------------
 
-You need to turn on the "Merge inscriptions when stacking" option.
-If you are already carrying the same item with an inscription, a new
-one will be added to the stack. Note that this WON'T merge discounts.
-Although discounts display like inscriptions, they are different.
-
-1) =   Options
-2) 1   User interface options
-3)     "Merge inscriptions when stacking" (stack_force_notes)
-       move down to this line and change to "yes".
+(Content removed because it was obsolete. Inscribe-on-pickup is now the default.)
 
 #####G----------------------------------------------------------------------
 #####G5.3 Can I use macros inside other macros?
@@ -1784,9 +1772,7 @@ options screen.
 rogue_like_commands
 use_old_target
 always_pickup
-depth_in_feet
 alert_hitpoint
-auto_haggle
 auto_scum
 
 #####G----------------------------------------------------------------------

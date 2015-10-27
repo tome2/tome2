@@ -1,7 +1,8 @@
-/* File: h-basic.h */
+#pragma once
 
-#ifndef INCLUDED_H_BASIC_H
-#define INCLUDED_H_BASIC_H
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 /*
  * The most basic "include" file.
@@ -21,5 +22,6 @@
 /* Basic constants and macros */
 #include "h-define.h"
 
+#ifdef __cplusplus
+} // extern "C"
 #endif
-

@@ -101,25 +101,10 @@ ANGBAND MENU
 
  POPUP "&Options"
  {
-  POPUP "&Graphics"
-  {
-   MENUITEM "&Old tiles", 400
-   MENUITEM "&New tiles", 401
-   MENUITEM "ASCII &Text", 403
-   MENUITEM "&Bigtile mode", 409
-   }
-
-  MENUITEM "&Sound", 402
-  MENUITEM SEPARATOR
   MENUITEM "Unused menu option", 410
   MENUITEM "Activate Screensaver", 411
  }
 
- POPUP "&Help"
- {
-  MENUITEM "&General", 901
-  MENUITEM "&Spoilers", 902
- }
 }
 
 ANGBAND ICON "angband.ico"

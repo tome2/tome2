@@ -83,7 +83,8 @@ N:4:Barrow-Downs
 D:BDw:a way to the Barrow-Downs.
 W:1:10:1:0:14:160
 # Theme adds *fog* (dense mist) on the Barrow-Downs :)
-L:88:94:210:2:199:4
+#L:88:94:210:2:199:4
+L:88:78:89:18:199:4
 A:96:80:97:19:57:1:57:97
 A:100:0:0
 O:20:20:20:20
@@ -308,7 +309,7 @@ M:ORC | R_CHAR_o | R_CHAR_O
 # There is Glaurung
 N:20:Erebor
 D:Ere:a tunnel leading into depths of the Lonely Mountain.
-W:60:72:35:0:20:140
+W:60:72:30:0:20:140
 L:88:100:1:0:1:0
 A:97:90:87:10:56:0:57:97
 O:40:40:40:40

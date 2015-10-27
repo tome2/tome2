@@ -66,7 +66,6 @@ TV_BOOK         111     /* spell books */
 ~~~~~12|Svals
 /* The "sval" codes for TV_TOOL */
  SV_TOOL_CLIMB 0
- SV_PORTABLE_HOLE 1
 ~~~~~16
 /* The "sval" codes for TV_SHOT/TV_ARROW/TV_BOLT */
  SV_AMMO_LIGHT                    0	/* pebbles */

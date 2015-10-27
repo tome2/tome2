@@ -25,11 +25,15 @@
 
 #ifdef USE_SDL
 
-#include "angband.h"
+#include "loadsave.h"
+#include "util.h"
+#include "variable.h"
+
 #include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_ttf.h>
 
+#include <assert.h>
 #include <math.h>
 
 /*************************************************
@@ -64,21 +68,6 @@ static char arg_font_name[64] = DEF_FONT_FILE;
 
 /**************/
 
-/* Graphics setting - signifies what graphics to use. Valid ints
-are available with given defines */
-
-/* No graphics - use only colored text */
-#define NO_GRAPHICS		0
-/* "Old" graphics - use 8x8.bmp to extract graphics tiles */
-#define GRAPHICS_8x8	8
-/* "New" graphics - use 16x16.bmp as tiles and apply mask.bmp for transparency*/
-#define GRAPHICS_16x16	16
-
-static int arg_graphics_type = NO_GRAPHICS;
-
-
-/**************/
-
 /* The number of term_data structures to set aside mem for */
 #define MAX_CONSOLE_COUNT 8
 
@@ -94,10 +83,6 @@ border */
 #define BORDER_THICKNESS 1
 
 /**************/
-
-/* some miscellaneous settings which have not been dealt
-with yet */
-static bool_ arg_double_width = FALSE;
 
 /* flag signifying whether the game is in full screen */
 static bool_ arg_full_screen = FALSE;
@@ -115,7 +100,7 @@ static bool_ window_properties_set = FALSE;
 static SDL_Surface *screen;
 
 /* the video settings for the system */
-static SDL_VideoInfo *videoInfo;
+static const SDL_VideoInfo *videoInfo;
 
 /* a flag to suspend updating of the screen;
 this is in place so that when a large area is being
@@ -581,23 +566,6 @@ static errr Term_xtra_sdl(int n, int v)
 			return (0);
 		}
 
-	case TERM_XTRA_FROSH:
-		{
-			/*
-			 * Flush a row of output XXX XXX XXX
-			 *
-			 * This action should make sure that row "v" of the "output"
-			 * to the window will actually appear on the window.
-			 *
-			 * This action is optional, assuming that "Term_text_xxx()"
-			 * (and similar functions) draw directly to the screen, or
-			 * that the "TERM_XTRA_FRESH" entry below takes care of any
-			 * necessary flushing issues.
-			 */
-
-			return (1);
-		}
-
 	case TERM_XTRA_FRESH:
 		{
 			/*
@@ -607,9 +575,7 @@ static errr Term_xtra_sdl(int n, int v)
 			 * window will actually appear on the window.
 			 *
 			 * This action is optional, assuming that "Term_text_xxx()"
-			 * (and similar functions) draw directly to the screen, or
-			 * that the "TERM_XTRA_FROSH" entry above takes care of any
-			 * necessary flushing issues.
+			 * (and similar functions) draw directly to the screen.
 			 */
 
 			/* If terminal display has been held for any reason,
@@ -633,21 +599,6 @@ static errr Term_xtra_sdl(int n, int v)
 			 * This action should produce a "beep" noise.
 			 *
 			 * This action is optional, but convenient.
-			 */
-
-			return (1);
-		}
-
-	case TERM_XTRA_SOUND:
-		{
-			/*
-			 * Make a sound XXX XXX XXX
-			 *
-			 * This action should produce sound number "v", where the
-			 * "name" of that sound is "sound_names[v]".  This method
-			 * is still under construction.
-			 *
-			 * This action is optional, and not very important.
 			 */
 
 			return (1);
@@ -718,40 +669,6 @@ static errr Term_xtra_sdl(int n, int v)
 			return (1);
 		}
 
-	case TERM_XTRA_DELAY:
-		{
-			/*
-			 * Delay for some milliseconds XXX XXX XXX
-			 *
-			 * This action is useful for proper "timing" of certain
-			 * visual effects, such as breath attacks.
-			 *
-			 * This action is optional, but may be required by this file,
-			 * especially if special "macro sequences" must be supported.
-			 */
-
-			/* I think that this command is system independent... */
-			/*sleep(v/1000);*/
-			/* main-x11 uses usleep(1000*v); */
-			/* main-win uses Sleep(v); */
-			return (1);
-		}
-
-	case TERM_XTRA_GET_DELAY:
-		{
-			/*
-			 * Get Delay of some milliseconds XXX XXX XXX
-			 * place the result in Term_xtra_long
-			 *
-			 * This action is useful for proper "timing" of certain
-			 * visual effects, such as recording cmovies.
-			 *
-			 * This action is optional, but cmovies wont perform
-			 * good without it
-			 */
-
-			return (1);
-		}
 	}
 
 	/* Unknown or Unhandled action */
@@ -1190,7 +1107,8 @@ static errr Term_text_sdl(int x, int y, int n, byte a, const char *cp)
 			SDL_BlitSurface(worksurf,NULL,td->surf,&base);
 		} else {
 			/* copy the desired character onto working surface */
-			SDL_BlitSurface(text[*cp],NULL,worksurf,NULL);
+			assert(*cp >= 0); // Make sure cast is valid
+			SDL_BlitSurface(text[(size_t)(*cp)],NULL,worksurf,NULL);
 			/* color our crayon surface with the desired color */
 			SDL_FillRect(crayon,NULL,color_data[a&0x0f]);
 			/* apply the color to the character on the working surface */
@@ -1380,7 +1298,6 @@ void moveTerminal(int x, int y)
 void bringToTop(int current)
 {
 	term_data *td;
-	term_data *tc;
 	int n = 0;
 	int i;
 	
@@ -1555,8 +1472,7 @@ void manipulationMode(void)
 	int mouse_x, mouse_y;
 	int value = 0, delta_x = 0, delta_y = 0;
 	int current_term;
-	SDL_Surface backup;
-	
+
 	/* Begin by redrawing the main terminal with its
 	purple border to signify that it is being edited*/
 
@@ -1849,8 +1765,6 @@ static errr term_data_init(term_data *td, int i)
 	t->soft_cursor = TRUE;
 
 	/* Picture routine flags */
-	t->always_pict = FALSE;
-	t->higher_pict = FALSE;
 	t->always_text = FALSE;
 
 	/* Erase with "white space" */
@@ -1950,7 +1864,7 @@ This routine processes arguments, opens the SDL
 window, loads fonts, etc. */
 errr init_sdl(int argc, char **argv)
 {
-	int i, surface_type;
+	int i;
 	char filename[PATH_MAX + 1];
 	const char file_sep = '.';
 	/* Flags to pass to SDL_SetVideoMode */
@@ -2053,25 +1967,6 @@ errr init_sdl(int argc, char **argv)
 				return -1;
 			}
 		}
-		/* see if new graphics are requested...*/
-		else if (0 == strcmp(argv[i], "-g"))
-		{
-			printf("New graphics (16x16) enabled!\n");
-			arg_graphics_type = GRAPHICS_16x16;
-		}
-		/* see if old graphics are requested...*/
-		else if (0 == strcmp(argv[i], "-o"))
-		{
-			printf("Old graphics (8x8) enabled!\n");
-			arg_graphics_type = GRAPHICS_8x8;
-		}
-		
-		/* see if double width tiles are requested */
-		else if (0 == strcmp(argv[i], "-b"))
-		{
-			/* do nothing for now */
-			/* arg_double_width = TRUE; */
-		}
 		/* switch into full-screen at startup */
 		else if (0 == strcmp(argv[i], "-fs"))
 		{
@@ -2168,13 +2063,6 @@ errr init_sdl(int argc, char **argv)
 	/* load and render the font */
 	loadAndRenderFont(arg_font_name,arg_font_size);
 
-	/* Graphics! ----
-	If graphics are selected, then load graphical tiles! */
-	if (arg_graphics_type != NO_GRAPHICS)
-	{
-		/* load graphics tiles */
-	}
-	
 	/* Initialize the working surface and crayon surface used for rendering
 	 text in different colors. */
 

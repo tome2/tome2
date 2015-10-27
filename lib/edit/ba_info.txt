@@ -65,10 +65,6 @@ N:10:Play craps
 C:0:0:0
 I:14:0:c
 
-N:11:Spin the wheel
-C:0:0:0
-I:15:0:s
-
 N:12:Play dice slots
 C:0:0:0
 I:16:0:d
@@ -96,14 +92,6 @@ I:5:0:l
 N:18:Research monster
 C:1600:1500:1400
 I:20:0:r
-
-N:19:View bounties
-C:0:0:0
-I:38:0:v
-
-N:20:Receive bounty money
-C:0:0:0
-I:39:0:b
 
 N:21:Get quest monster
 C:0:0:0
@@ -165,19 +153,6 @@ N:35:Get a quest
 C:0:0:0
 I:6:0:q
 
-# Restrict to liked/normal
-N:36:Get a quest
-C:0:0:0
-I:46:1:q
-
-N:37:Get a quest
-C:0:0:0
-I:47:0:q
-
-N:38:Get a quest
-C:0:0:0
-I:49:0:q
-
 N:39:Herbal Healing
 C:32000:10000:0
 I:50:0:h
@@ -190,10 +165,6 @@ N:41:Distribute earnings
 C:0:0:0
 I:7:2:d
 
-N:42:Morph restoration
-C:3000:1500:750
-I:37:0:r
-
 #for The Mirror
 N:43:View fate
 C:500:500:500
@@ -202,11 +173,6 @@ I:42:0:v
 #for The Mirror
 N:44:Research item
 C:1500:1500:1500
-I:1:0:a
-
-#for library in gondol
-N:45:Research item
-C:2000:2000:2000
 I:1:0:a
 
 #for Star-Dome
@@ -256,18 +222,6 @@ I:43:0:d:s
 N:55:Get an item
 C:0:0:0
 I:44:0:g:p
-
-N:56:Request an item
-C:0:0:0
-I:51:2:r
-
-N:57:Ask for loan
-C:0:0:0
-I:52:2:a
-
-N:58:Pay back loan
-C:0:0:0
-I:53:2:p
 
 N:59:Donate an item
 C:0:0:0

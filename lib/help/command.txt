@@ -137,7 +137,7 @@ that you can always, for example, use "\" + "." + "6", to specify "run east".
  *****command.txt*74[<  Go up staircase]                     *****command.txt*75[^X  Save and quit]
  *****command.txt*76[.  Run]                                 ^Y  (unused)
  *****command.txt*77[>  Go down staircase]                   ^Z  (special - borg command)
- *****command.txt*79[\  (special - bypass keymap)]            *****command.txt*80[|  Do cmovies]
+ *****command.txt*79[\  (special - bypass keymap)]
  *****command.txt*81[`  (special - escape)]                   *****command.txt*82[~  Display current knowledge]
  *****command.txt*83[/  Identify symbol]                      *****command.txt*84[?  Help]
                                         *****command.txt*98[^\]  Take an html screenshot]
@@ -198,13 +198,13 @@ that you can always, for example, use "\" + "." + "6", to specify "run east".
  *****command.txt*74[<  Go up staircase]                     *****command.txt*75[^X  Save and quit]
  *****command.txt*72[.  Stay still (with pickup)]            *****command.txt*95[^Y  (tunnel - north west)]
  *****command.txt*77[>  Go down staircase]                   ^Z  (special - borg command)
- *****command.txt*79[\  (special - bypass keymap)]            *****command.txt*80[|  Do cmovies]
+ *****command.txt*79[\  (special - bypass keymap)]
  *****command.txt*81[`  (special - escape)]                   *****command.txt*82[~  Display current knowledge]
  *****command.txt*83[/  Identify symbol]                      *****command.txt*84[?  Help]
 
 ~~~~~102|Commands|Special keys
 #####R=== Special Keys ===
- 
+
         Certain special keys may be intercepted by the operating system or
 the host machine, causing unexpected results.  In general, these special keys
 are control keys, and often, you can disable their special effects.
@@ -498,12 +498,7 @@ for a quantity will convert any "letters" into the maximal legal value.
         each corresponding to a different location on the body, and each of
         which may contain only a single object at a time, and each of which
         may only contain objects of the proper "type".
-        If the option "show_labels" is set, the slots are labelled as follows:  
-        Wielding (weapon), Shooting (missile launcher or instruments),
-        On finger (ring), Around neck (amulet), Light source (light source),
-        On body (armor), About body (cloak), On arm (shield), On head (helmet),
-        On hands (gloves), On feet (boots), Carrying (symbiote), Quiver (ammo),
-        Using (tool). You must be using an object to receive any of its special
+        You must be using an object to receive any of its special
         powers.
 ~~~~~7
 [[[[[GDrop an item (d)]
@@ -518,8 +513,7 @@ for a quantity will convert any "letters" into the maximal legal value.
 [[[[[GDestroy an item (k) or Destroy an item (^D)]
         This destroys an item in your inventory or on the dungeon floor.
         If the selected pile contains multiple objects, you may specify
-        a quantity.  You must always verify this command, unless the item
-        is cursed or worthless and the option "auto_destroy" is set.
+        a quantity.  You must always verify this command.
 ~~~~~42
 [[[[[GWear/Wield equipment (w)]
         To wear or wield an object in your inventory, use this command.
@@ -1215,17 +1209,6 @@ for a quantity will convert any "letters" into the maximal legal value.
         command allows the player to force the game to finish the current song
         and move on to another one (i.e. if you are tired of hearing the current
         song, you can change it).
-~~~~~80
-[[[[[GDo cmovies (|)]
-        The cmovie command (press | key in both normal or roguelike set) allows
-        you to make a "movie" that you can send to people showing your movement
-        through a part of the dungeon (like clearing that GCV . . .)
-
-        It asks for a name (it will add the extension itself) and then if you wish
-        to play or record it.
-
-        The cmovie files (.cmv) are located in lib/cmov, note that they quickly
-        become huge and so you REALLY should compress them before sending to friends.
 ~~~~~97
 [[[[[GRecord macros ($)]
         This is an easier way to create macros. Activate it, press the key

@@ -1,9 +1,4 @@
-/* File: angband.h */
-
-/* Main "Angband" header file */
-
-#ifndef INCLUDED_ANGBAND_H
-#define INCLUDED_ANGBAND_H
+#pragma once
 
 /*
  * Copyright (c) 1989 James E. Wilson
@@ -12,7 +7,6 @@
  * not for profit purposes provided that this copyright and statement are
  * included in all such copies.
  */
-
 
 /*
  * C++ guard.
@@ -32,7 +26,6 @@ extern "C" {
  * Then, include the header files for the low-level code
  */
 #include "z-util.h"
-#include "z-virt.h"
 #include "z-form.h"
 #include "z-rand.h"
 #include "z-term.h"
@@ -45,19 +38,9 @@ extern "C" {
 
 
 /*
- * SGLIB
- */
-#include "sglib.h"
-
-
-/*
- * Now, include the define's, the type's, and the extern's
+ * Now, include the defines and the types
  */
 #include "defines.h"
-#include "types.h"
-#include "spell_type_fwd.h"
-#include "externs.h"
-#include "plots.h"
 
 /***** Some copyright messages follow below *****/
 
@@ -110,8 +93,3 @@ extern "C" {
 #ifdef __cplusplus
 } /* extern "C" */
 #endif
-
-#endif
-
-
-

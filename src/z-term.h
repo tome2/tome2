@@ -17,8 +17,6 @@ extern "C" {
 
 #include "h-basic.h"
 
-#define IN_MAINWINDOW (Term == term_screen)
-
 /*
  * A term_win is a "window" for a Term
  *
@@ -48,18 +46,6 @@ struct term_win
 	byte *va;
 	char *vc;
 
-	byte **ta;
-	char **tc;
-
-	byte *vta;
-	char *vtc;
-
-	byte **ea;
-	char **ec;
-
-	byte *vea;
-	char *vec;
-
 };
 
 
@@ -67,17 +53,7 @@ struct term_win
 /*
  * An actual "term" structure
  *
- *	- Extra "user" info (used by application)
- *
  *	- Extra "data" info (used by implementation)
- *
- *
- *	- Flag "user_flag"
- *	  An extra "user" flag (used by application)
- *
- *
- *	- Flag "data_flag"
- *	  An extra "data" flag (used by implementation)
  *
  *
  *	- Flag "active_flag"
@@ -98,23 +74,12 @@ struct term_win
  *	- Flag "soft_cursor"
  *	  This "term" uses a "software" cursor
  *
- *	- Flag "always_pict"
- *	  Use the "Term_pict()" routine for all text
- *
- *	- Flag "higher_pict"
- *	  Use the "Term_pict()" routine for special text
- *
  *	- Flag "always_text"
  *	  Use the "Term_text()" routine for invisible text
- *
- *	- Flag "unused_flag"
- *	  Reserved for future use
  *
  *	- Flag "never_bored"
  *	  Never call the "TERM_XTRA_BORED" action
  *
- *	- Flag "never_frosh"
- *	  Never call the "TERM_XTRA_FROSH" action
  *
  *
  *	- Value "attr_blank"
@@ -151,8 +116,6 @@ struct term_win
  *	- Hook for init-ing the term
  *	- Hook for nuke-ing the term
  *
- *	- Hook for user actions
- *
  *	- Hook for extra actions
  *
  *	- Hook for placing the cursor
@@ -168,13 +131,7 @@ typedef struct term term;
 
 struct term
 {
-	vptr user;
-
 	vptr data;
-
-	bool_ user_flag;
-
-	bool_ data_flag;
 
 	bool_ active_flag;
 	bool_ mapped_flag;
@@ -182,21 +139,15 @@ struct term
 	bool_ fixed_shape;
 	bool_ icky_corner;
 	bool_ soft_cursor;
-	bool_ always_pict;
-	bool_ higher_pict;
 	bool_ always_text;
-	bool_ unused_flag;
 	bool_ never_bored;
-	bool_ never_frosh;
 
 	byte attr_blank;
 	char char_blank;
 
 	char *key_queue;
-
 	u16b key_head;
 	u16b key_tail;
-	u16b key_xtra;
 	u16b key_size;
 
 	byte wid;
@@ -211,13 +162,10 @@ struct term
 	term_win *old;
 	term_win *scr;
 
-	term_win *tmp;
 	term_win *mem;
 
 	void (*init_hook)(term *t);
 	void (*nuke_hook)(term *t);
-
-	errr (*user_hook)(int n);
 
 	errr (*xtra_hook)(int n, int v);
 
@@ -229,13 +177,35 @@ struct term
 
 	void (*resize_hook)(void);
 
-	errr (*pict_hook)(int x, int y, int n, const byte *ap, const char *cp, const byte *tap, const char *tcp, const byte *eap, const char *ecp);
-
 };
 
 
 
+/*** Color constants ***/
 
+
+/*
+ * Angband "attributes" (with symbols, and base (R,G,B) codes)
+ *
+ * The "(R,G,B)" codes are given in "fourths" of the "maximal" value,
+ * and should "gamma corrected" on most (non-Macintosh) machines.
+ */
+#define TERM_DARK                0  /* 'd' */   /* 0,0,0 */
+#define TERM_WHITE               1  /* 'w' */   /* 4,4,4 */
+#define TERM_SLATE               2  /* 's' */   /* 2,2,2 */
+#define TERM_ORANGE              3  /* 'o' */   /* 4,2,0 */
+#define TERM_RED                 4  /* 'r' */   /* 3,0,0 */
+#define TERM_GREEN               5  /* 'g' */   /* 0,2,1 */
+#define TERM_BLUE                6  /* 'b' */   /* 0,0,4 */
+#define TERM_UMBER               7  /* 'u' */   /* 2,1,0 */
+#define TERM_L_DARK              8  /* 'D' */   /* 1,1,1 */
+#define TERM_L_WHITE             9  /* 'W' */   /* 3,3,3 */
+#define TERM_VIOLET             10  /* 'v' */   /* 4,0,4 */
+#define TERM_YELLOW             11  /* 'y' */   /* 4,4,0 */
+#define TERM_L_RED              12  /* 'R' */   /* 4,0,0 */
+#define TERM_L_GREEN            13  /* 'G' */   /* 0,4,0 */
+#define TERM_L_BLUE             14  /* 'B' */   /* 0,4,4 */
+#define TERM_L_UMBER            15  /* 'U' */   /* 3,2,1 */
 
 
 
@@ -251,11 +221,8 @@ struct term
  *
  * The "TERM_XTRA_EVENT" action uses "v" to "wait" for an event
  * The "TERM_XTRA_SHAPE" action uses "v" to "show" the cursor
- * The "TERM_XTRA_FROSH" action uses "v" for the index of the row
- * The "TERM_XTRA_SOUND" action uses "v" for the index of a sound
  * The "TERM_XTRA_ALIVE" action uses "v" to "activate" (or "close")
  * The "TERM_XTRA_LEVEL" action uses "v" to "resume" (or "suspend")
- * The "TERM_XTRA_DELAY" action uses "v" as a "millisecond" value
  *
  * The other actions do not need a "v" code, so "zero" is used.
  */
@@ -263,39 +230,24 @@ struct term
 #define TERM_XTRA_FLUSH 2	/* Flush all pending events */
 #define TERM_XTRA_CLEAR 3	/* Clear the entire window */
 #define TERM_XTRA_SHAPE 4	/* Set cursor shape (optional) */
-#define TERM_XTRA_FROSH 5	/* Flush one row (optional) */
 #define TERM_XTRA_FRESH 6	/* Flush all rows (optional) */
 #define TERM_XTRA_NOISE 7	/* Make a noise (optional) */
-#define TERM_XTRA_SOUND 8	/* Make a sound (optional) */
 #define TERM_XTRA_BORED 9	/* Handle stuff when bored (optional) */
 #define TERM_XTRA_REACT 10	/* React to global changes (optional) */
 #define TERM_XTRA_ALIVE 11	/* Change the "hard" level (optional) */
 #define TERM_XTRA_LEVEL 12	/* Change the "soft" level (optional) */
-#define TERM_XTRA_DELAY 13	/* Delay some milliseconds (optional) */
-#define TERM_XTRA_GET_DELAY 14	/* Get the cuyrrent time in milliseconds (optional) */
-#define TERM_XTRA_SCANSUBDIR 15 /* Scan for subdir in a dir */
 #define TERM_XTRA_RENAME_MAIN_WIN 16 /* Rename the main game window */
 
 
 /**** Available Variables ****/
 
 extern term *Term;
-extern FILE *movfile;
-extern int do_movies;
-extern int last_paused;
-
 
 /**** Available Functions ****/
 
-extern errr Term_user(int n);
 extern errr Term_xtra(int n, int v);
-extern long Term_xtra_long;
-extern char scansubdir_dir[1024];
-extern int scansubdir_max;
-extern cptr scansubdir_result[255];
 
-extern void Term_queue_char(int x, int y, byte a, char c, byte ta, char tc, byte ea, char ec);
-extern void Term_queue_line(int x, int y, int n, byte *a, char *c, byte *ta, char *tc, byte *ea, char *ec);
+extern void Term_queue_char(int x, int y, byte a, char c);
 extern void Term_queue_chars(int x, int y, int n, byte a, cptr s);
 
 extern errr Term_fresh(void);
@@ -310,6 +262,7 @@ extern errr Term_erase(int x, int y, int n);
 extern errr Term_clear(void);
 extern errr Term_redraw(void);
 extern errr Term_redraw_section(int x1, int y1, int x2, int y2);
+extern void Term_bell();
 
 extern errr Term_get_cursor(int *v);
 extern errr Term_get_size(int *w, int *h);
@@ -325,8 +278,6 @@ extern errr Term_save(void);
 extern term_win* Term_save_to(void);
 extern errr Term_load(void);
 extern errr Term_load_from(term_win *save, bool_ final);
-
-extern errr Term_exchange(void);
 
 extern errr Term_resize(int w, int h);
 

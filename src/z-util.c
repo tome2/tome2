@@ -4,122 +4,7 @@
 
 #include "z-util.h"
 
-
-
-/*
- * Global variables for temporary use
- */
-char char_tmp = 0;
-byte byte_tmp = 0;
-sint sint_tmp = 0;
-uint uint_tmp = 0;
-long long_tmp = 0;
-huge huge_tmp = 0;
-errr errr_tmp = 0;
-
-
-/*
- * Global pointers for temporary use
- */
-cptr cptr_tmp = NULL;
-vptr vptr_tmp = NULL;
-
-
-
-
-/*
- * Constant bool meaning true
- */
-bool_ bool_true = 1;
-
-/*
- * Constant bool meaning false
- */
-bool_ bool_false = 0;
-
-
-/*
- * Global NULL cptr
- */
-cptr cptr_null = NULL;
-
-
-/*
- * Global NULL vptr
- */
-vptr vptr_null = NULL;
-
-
-
-/*
- * Global SELF vptr
- */
-vptr vptr_self = (vptr)(&vptr_self);
-
-
-
-/*
- * Convenient storage of the program name
- */
-cptr argv0 = NULL;
-
-
-
-/*
- * A routine that does nothing
- */
-void func_nothing(void)
-{
-	/* Do nothing */
-}
-
-
-/*
- * A routine that always returns "success"
- */
-errr func_success(void)
-{
-	return (0);
-}
-
-
-/*
- * A routine that always returns a simple "problem code"
- */
-errr func_problem(void)
-{
-	return (1);
-}
-
-
-/*
- * A routine that always returns a simple "failure code"
- */
-errr func_failure(void)
-{
-	return ( -1);
-}
-
-
-
-/*
- * A routine that always returns "true"
- */
-bool_ func_true(void)
-{
-	return (1);
-}
-
-
-/*
- * A routine that always returns "false"
- */
-bool_ func_false(void)
-{
-	return (0);
-}
-
-
+#include <assert.h>
 
 
 /*
@@ -150,6 +35,27 @@ bool_ suffix(cptr s, cptr t)
 }
 
 
+/**
+ * Captialize letter
+ */
+void capitalize(char *s)
+{
+	char *p = s;
+	assert(s != NULL);
+
+	for (; *p; p++)
+	{
+		if (!isspace(*p))
+		{
+			if (islower(*p))
+			{
+				*p = toupper(*p);
+			}
+			/* Done */
+			break;
+		}
+	}
+}
 
 
 /*
@@ -167,7 +73,7 @@ void plog(cptr str)
 	if (plog_aux) (*plog_aux)(str);
 
 	/* Just do a labeled fprintf to stderr */
-	else (void)(fprintf(stderr, "%s: %s\n", argv0 ? argv0 : "???", str));
+	else (void)(fprintf(stderr, "%s\n", str));
 }
 
 
@@ -200,35 +106,3 @@ void quit(cptr str)
 	/* Failure */
 	(void)(exit( -1));
 }
-
-
-
-/*
- * Redefinable "core" action
- */
-void (*core_aux)(cptr) = NULL;
-
-/*
- * Dump a core file, after printing a warning message
- * As with "quit()", try to use the "core_aux()" hook first.
- */
-void core(cptr str)
-{
-	char *crash = NULL;
-
-	/* Use the aux function */
-	if (core_aux) (*core_aux)(str);
-
-	/* Dump the warning string */
-	if (str) plog(str);
-
-	/* Attempt to Crash */
-	(*crash) = (*crash);
-
-	/* Be sure we exited */
-	quit("core() failed");
-}
-
-
-
-

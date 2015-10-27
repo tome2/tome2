@@ -1,0 +1,8 @@
+Release Checklist:
+==================
+
+* Bump version number.
+* Update changes.txt
+* Update IS_CVS in defines.h before tagging; undo post-tagging.
+* Check that system-wide installation succeeds.
+* Disable C/C++ compiler sanitization options

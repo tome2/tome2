@@ -2834,22 +2834,3 @@ M:C:Mage
 M:C:Priest
 M:C:Loremaster
 M:C:Pacifist
-#M:C:Test
-#M:C:Chaos-Warrior
-
-#M:N:1:B:Spellcasters -- Magic is The One True Way
-
-#M:N:2:y:Priests      -- Hail the powers of the Ainur
-#M:C:Mindcrafter
-
-#M:N:3:G:Beastfriends -- Monsters are fun
-#M:C:BeastMaster
-
-#M:N:4:v:Others       -- The way to your independence
-#M:C:Harper
-#M:C:Merchant
-
-#M:N:5:o:Tests        -- Test is you dare !
-#M:C:Test
-#M:C:Blade
-#M:C:Black-Knight

@@ -303,7 +303,7 @@ M:ORC | R_CHAR_k | R_CHAR_o | R_CHAR_O
 # There is Glaurung
 N:20:Erebor
 D:Ere:a tunnel leading into depths of the Lonely Mountain.
-W:60:72:35:0:20:140
+W:60:72:30:0:20:140
 L:88:100:1:0:1:0
 A:97:90:87:10:56:0:57:97
 O:40:40:40:40

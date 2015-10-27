@@ -66,6 +66,10 @@ can also be viewed from the option menu while playing, but not changed then.
 #####GYou can receive fates, good or bad    [fate_option]
     Allows the player to turn off ToME's *****fatespoi.txt*0[fates] for that character.
 
+#####GItems always sell for 0 gold    [no_selling]
+    Disables selling items back to shops for money. The value of gold found in the  
+    dungeon is increased to compensate.
+
 ~~~~~07|Options|Ingame
 #####RIN GAME OPTIONS
 #####R===============
@@ -109,20 +113,6 @@ off at will during the course of the game.
     a door, tunnel through walls, or disarm traps or chests, that you
     wish to repeat the command 99 times (see *****command.txt*0["command.txt"]).
 
-#####GShow dungeon level in feet    [depth_in_feet]
-    Display the dungeon depth in "feet" instead of as a level number (one
-    level is equivalent to 50'). This also affects the monster memory display.
-
-#####GMerge inscriptions when stacking    [stack_force_notes]
-    Force otherwise identical objects to merge, even if one has an empty
-    inscription and the other does not.  The resulting stack keeps the
-    non-empty inscription.
-
-#####GMerge discounts when stacking    [stack_force_costs]
-    Force otherwise identical objects to merge, even if they have different
-    discounts.  The resulting stack keeps the largest discount.  This option
-    may cause you to lose "value", but will give you optimal pack usage.
-
 #####GAudible bell (on errors, etc)    [ring_bell]
     Attempt to make a "bell" noise when various errors occur.
 
@@ -154,7 +144,7 @@ off at will during the course of the game.
     monster becomes viewable for the first time, and also whenever any
     viewable monster becomes no longer viewable.  This option ignores
     the existence of telepathy for the purpose of determining whether
-    a monster is viewable.  See also the "view_reduce_view" option.
+    a monster is viewable.
 
 #####GDisturb whenever map panel changes    [disturb_panel]
     This option causes you to be disturbed (stop running) when the screen
@@ -193,18 +183,6 @@ off at will during the course of the game.
     Display a random line  from  the "death.txt" file when your character
     dies. If this option is not selected, the "You die." message is displayed
     instead.
-
-#####GAllow shopkeepers and uniques to speak    [speak_unique]
-    If this option is in use, shopkeepers may sometimes whisper rumours to
-    you. Also certain monsters start boasting as they attack you, and when
-    they die, they say their "last words".
-
-#####GNo query to destroy known worthless items    [auto_destroy]
-    It can sometimes be annoying that the Destroy command asks for confirmation
-    when you are attempting to destroy a Broken sword {cursed}. If this option
-    is set, no confirmation will be asked if you attempt to destroy an object
-    which you know to be worthless. Of course, cursed artifacts cannot be
-    destroyed even if this option is set.
 
 #####GConfirm to wear/wield known cursed items    [confirm_wear]
     Some players may occasionally, due to a typing mistake, find themselves
@@ -256,18 +234,6 @@ off at will during the course of the game.
     especially deep in the dungeon.  The minimum "goodness" of the level
     is based on the dungeon level, so the deeper you go, the better the
     level will be.
-
-#####GAllow weapons and armor to stack    [stack_allow_items]
-    Allow identical weapons and armor to be combined into a stack.  This
-    also allows unidentified, but identical, ammo to be combined, which
-    may result in the auto-identification of some of the ammo, but which
-    makes it a lot easier to actually use unidentified ammo.
-
-#####GAllow wands/staffs/rods to stack    [stack_allow_wands]
-    Allow identical wands/staffs/rods to be combined into a stack.  This
-    may force the items to be unstacked to use them, which may result
-    in overflow of the pack.  Also, the entire stack can be recharged
-    (and possibly destroyed) at the same time.
 
 #####GExpand the power of the look command    [expand_look]
     Expand the "l"ook command to allow the user to look at grids which
@@ -323,26 +289,9 @@ off at will during the course of the game.
     Allow monsters to make paths to the player when they are nearby.  This
     option is extremely slow, but can produce viciously smart monsters.
 ~~~~~3
-#####GUse special symbols for the player char   [player_symbols]
-    If this option has been compiled in, it allows you to display your
-    character using race / class / sex dependent colours and graphical
-    symbols. Note that the support for this option may not have been
-    compiled in on all platforms.
-
-#####GPlain object descriptions    [plain_descriptions]
-    In ToME, this option disables "full" names for identified flavoured
-    objects; in other words, if this option is not in use, an identified
-    Potion of Speed could be listed (for example) as a Blue Potion of Speed.
-    If you prefer simpler, less verbose descriptions, set this option.
-
 #####GMonsters learn from their mistakes    [smart_learn]
     Allow monsters to learn what spell attacks you are resistant to,
     and to use this information to choose the best attacks.
-
-#####GMonsters exploit players weaknesses    [smart_cheat]
-    Allow monsters to know what spell attacks you are resistant to, without
-    first having to observe such an attack upon you, and to use this
-    information to choose the best attacks.
 
 #####GAllow unusually small dungeon levels    [small_levels]
     This option enables the creation of levels of varying sizes. Levels
@@ -369,9 +318,6 @@ off at will during the course of the game.
     when the player is running, which makes running more efficient (CPU-wise),
     but is extremely annoying.  Certain older versions of Angband used
     this behavior always, so "purists" should turn it on.
-
-#####GReduce view-radius in town    [view_reduce_view]
-    No longer in use.
 
 #####GAvoid checking for user abort    [avoid_abort]
     Avoid checking to see if the user has pressed a key during resting
@@ -488,11 +434,6 @@ Features which are unique to ToME are collected in this menu.
     time you come across an item or some other trigger. This is very useful
     for new players.  More experienced players may wish to switch this option
     off.
-
-#####GShow the experience needed for the next level    [exp_need]
-    Setting this option alters the display of experience on the left of
-    the main screen to the experience needed to reach the next character level,
-    instead of the character's current total experience.
 
 #####GUse the old(Z) coloring scheme(reload the game)    [old_colors]
     Setting this option toggles the ASCII game colour display from the

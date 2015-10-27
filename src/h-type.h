@@ -72,16 +72,10 @@ typedef int errr;
 #define uint uint_hack
 
 /*
- * Hack -- prevent problems with MSDOS and WINDOWS
+ * Hack -- prevent problems with WINDOWS
  */
 #undef huge
 #define huge huge_hack
-
-/*
- * Hack -- prevent problems with AMIGA
- */
-#undef byte
-#define byte byte_hack
 
 /* Note that "signed char" is not always "defined" */
 /* So always use "s16b" to hold small signed values */

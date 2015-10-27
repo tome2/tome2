@@ -33,19 +33,6 @@
 # define SEEK_END	2
 #endif
 
-/*
- * Hack -- force definitions -- see fd_lock()  XXX XXX XXX
- */
-#ifndef F_UNLCK
-# define F_UNLCK	0
-#endif
-#ifndef F_RDLCK
-# define F_RDLCK	1
-#endif
-#ifndef F_WRLCK
-# define F_WRLCK	2
-#endif
-
 
 /*
  * The constants "TRUE" and "FALSE"
@@ -86,12 +73,6 @@
  */
 #undef ABS
 #define ABS(a)		(((a) < 0)   ? (-(a)) : (a))
-
-/*
- * Non-typed sign extractor macro
- */
-#undef SGN
-#define SGN(a)		(((a) < 0)   ? (-1) : ((a) != 0))
 
 
 /*

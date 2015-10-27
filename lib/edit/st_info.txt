@@ -1,13 +1,5 @@
 # File: st_info.txt
 
-# Fixed Potions of Cure Light/Serious Wounds in the Temple, Potions of 
-# Restore Str/Con in the Alchemist
-# Magic Shop - Amulet of Slow Digestion, Wand of Light, Staffs of Enlightenment,
-# Door/Stair Location, Detect Invis/Evil, and Remove Curse
-
-# This file is used to initialize the "lib/raw/st_info.raw" file, which is
-# used to initialize the "store info type" information for the Angband game.
-
 # Do not modify this file unless you know exactly what you are doing,
 # unless you wish to risk possible system crashes and broken savefiles.
 
@@ -348,9 +340,6 @@ G:+:s
 W:0
 
 N:16:Beastmaster Shanty
-# Disabled the bounty list for the time being to not confuse people
-# with the bounty quest
-# A:18:0:19:20:21:22
 A:18:0:21:22:0:0
 O:19:19:19:19
 G:+:g
@@ -691,12 +680,6 @@ G:3:g
 F:RANDOM | MEDIUM_LEVEL | DEPEND_LEVEL
 F:RARE
 W:24
-
-N:56:Merchants Guild
-A:0:0:56:57:58:0
-O:68:68:68:68
-G:+:g
-W:0
 
 N:57:The Mathom-house
 A:0:0:59:0:3:0

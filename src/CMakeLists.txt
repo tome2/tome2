@@ -1,29 +1,136 @@
-SET(SRCS
-  main-gcu.c main-x11.c main-xaw.c main-sdl.c main-gtk2.c
-  z-rand.c z-util.c z-form.c z-virt.c z-term.c
-  variable.c tables.c plots.c util.c cave.c dungeon.c 
-  melee1.c melee2.c messages.c modules.c
-  q_god.c
-  object1.c object2.c randart.c squeltch.c traps.c 
-  monster1.c monster2.c monster3.c
-  xtra1.c xtra2.c skills.c powers.c gods.c
-  spells1.c spells2.c spells3.c spells4.c spells5.c spells6.c
-  spell_type.c
-  corrupt.c joke.c mimic.c
-  status.c files.c notes.c loadsave.c string_list.c
-  cmd1.c cmd2.c cmd3.c cmd4.c cmd5.c cmd6.c cmd7.c
-  help.c hiscore.c range.c
-  generate.c gen_maze.c gen_evol.c wild.c levels.c store.c bldg.c
-  cmovie.c
-  wizard2.c init2.c birth.c wizard1.c init1.c main.c 
-  quark.c
-  # Lua bits:
-  lua_bind.c script.c
+INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR})
+INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/include)
+INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/../vendor/bandit)
+
+# Add subdirectories
+ADD_SUBDIRECTORY (squelch)
+
+# Sources (common)
+SET(SRCS_COMMON
+  birth.cc
+  bldg.cc
+  cave.cc
+  cmd1.cc
+  cmd2.cc
+  cmd3.cc
+  cmd4.cc
+  cmd5.cc
+  cmd6.cc
+  cmd7.cc
+  corrupt.cc
+  device_allocation.cc
+  dice.cc
+  dungeon.cc
+  files.cc
+  gen_evol.cc
+  gen_maze.cc
+  generate.cc
+  gods.cc
+  help.cc
+  hiscore.cc
+  hooks.cc
+  init1.cc
+  init2.cc
+  joke.cc
+  levels.cc
+  loadsave.cc
+  lua_bind.cc
+  melee1.cc
+  melee2.cc
+  messages.cc
+  mimic.cc
+  modules.cc
+  monster1.cc
+  monster2.cc
+  monster3.cc
+  notes.cc
+  object1.cc
+  object2.cc
+  object_filter.cc
+  options.cc
+  powers.cc
+  q_betwen.cc
+  q_bounty.cc
+  q_dragons.cc
+  q_eol.cc
+  q_evil.cc
+  q_fireprof.cc
+  q_god.cc
+  q_god.cc
+  q_haunted.cc
+  q_hobbit.cc
+  q_invas.cc
+  q_library.cc
+  q_main.cc
+  q_narsil.cc
+  q_nazgul.cc
+  q_nirna.cc
+  q_one.cc
+  q_poison.cc
+  q_rand.cc
+  q_shroom.cc
+  q_spider.cc
+  q_thief.cc
+  q_thrain.cc
+  q_troll.cc
+  q_ultrae.cc
+  q_ultrag.cc
+  q_wight.cc
+  q_wolves.cc
+  quark.cc
+  quest.cc
+  randart.cc
+  range.cc
+  script.cc
+  skills.cc
+  spell_type.cc
+  spells1.cc
+  spells2.cc
+  spells3.cc
+  spells4.cc
+  spells5.cc
+  spells6.cc
+  squeltch.cc
+  status.cc
+  store.cc
+  tables.cc
+  traps.cc
+  util.cc
+  variable.cc
+  wild.cc
+  wizard1.cc
+  wizard2.cc
+  xtra1.cc
+  xtra2.cc
+  z-form.c
+  z-rand.c
+  z-term.c
+  z-util.c
+)
+
+# Sources (PROGRAM)
+SET(SRCS_PROGRAM
+  main-gcu.c
+  main-gtk2.c
+  main-sdl.c
+  main-x11.c
+  main.c
+)
+
+# Sources (TEST)
+SET(SRCS_TESTS
+  ../tests/get_level_device.cc
+  ../tests/harness.cc
+  ../tests/lua_get_level.cc
+)
+
+ADD_LIBRARY(game
+  ${SRCS_COMMON}
 )
 
 # Need a few additional source files for Windows.
 if(WIN32)
-  SET(SRCS ${SRCS} main-win.c readdib.c)
+  SET(SRCS ${SRCS} main-win.c)
   # Resource files require a little workaround.
   if(MINGW)
     # Workaround for resource compilation for mingw on CMake.
@@ -38,12 +145,13 @@ if(WIN32)
   endif(MINGW)
 endif(WIN32)
 
-
 # tome executable
-INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR})
-INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/include)
-ADD_EXECUTABLE(tome ${EXECUTABLE_OPTIONS} ${SRCS})
-TARGET_LINK_LIBRARIES(tome ${LIBS})
+ADD_EXECUTABLE(tome ${EXECUTABLE_OPTIONS} ${SRCS_PROGRAM})
+TARGET_LINK_LIBRARIES(tome game squelch ${LIBS})
+
+# test harness executable
+ADD_EXECUTABLE(harness ${EXECUTABLE_OPTIONS} ${SRCS_TESTS})
+TARGET_LINK_LIBRARIES(harness game squelch ${LIBS})
 
 # Installation
 INSTALL(TARGETS tome
