@@ -5268,7 +5268,7 @@ static bool_ get_item_floor(int *cp, cptr pmt, cptr str, int mode, object_filter
 
 	/* Floor items? */
 	auto const floor_list =
-		floor ? std::move(scan_floor(p_ptr->py, p_ptr->px, filter))
+		floor ? scan_floor(p_ptr->py, p_ptr->px, filter)
 		      : std::vector<int>();
 	assert(floor_list.size() <= 23);
 	int const floor_num = floor_list.size(); // "int" for warning avoidance
