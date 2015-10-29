@@ -2844,8 +2844,7 @@ static bool_ pattern_seq(int c_y, int c_x, int n_y, int n_x)
 				break;
 			default:
 				if (wizard)
-					msg_format("Funny Straight Road walking, %d.",
-					           cave[c_y][c_x]);
+					msg_format("Funny Straight Road walking.");
 				return TRUE; 	/* Goof-up */
 			}
 
