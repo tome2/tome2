@@ -4455,105 +4455,102 @@ static void center_string(char *buf, cptr str)
  */
 static void print_tomb(void)
 {
-	/* Print the text-tombstone */
+	cptr p;
+
+	char tmp[160];
+
+	char buf[1024];
+	char dummy[80];
+
+	FILE *fp;
+
+	time_t ct = time(nullptr);
+
+
+	/* Clear screen */
+	Term_clear();
+
+	/* Build the filename */
+	path_build(buf, 1024, ANGBAND_DIR_FILE, "dead.txt");
+
+	/* Open the News file */
+	fp = my_fopen(buf, "r");
+
+	/* Dump */
+	if (fp)
 	{
-		cptr p;
+		int i = 0;
 
-		char tmp[160];
-
-		char buf[1024];
-		char dummy[80];
-
-		FILE *fp;
-
-		time_t ct = time(nullptr);
-
-
-		/* Clear screen */
-		Term_clear();
-
-		/* Build the filename */
-		path_build(buf, 1024, ANGBAND_DIR_FILE, "dead.txt");
-
-		/* Open the News file */
-		fp = my_fopen(buf, "r");
-
-		/* Dump */
-		if (fp)
+		/* Dump the file to the screen */
+		while (0 == my_fgets(fp, buf, 1024))
 		{
-			int i = 0;
-
-			/* Dump the file to the screen */
-			while (0 == my_fgets(fp, buf, 1024))
-			{
-				/* Display and advance */
-				display_message(0, i++, strlen(buf), TERM_WHITE, buf);
-			}
-
-			/* Close */
-			my_fclose(fp);
+			/* Display and advance */
+			display_message(0, i++, strlen(buf), TERM_WHITE, buf);
 		}
 
-
-		/* King or Queen */
-		if (total_winner || (p_ptr->lev > PY_MAX_LEVEL))
-		{
-			p = "Magnificent";
-		}
-
-		/* Normal */
-		else
-		{
-			p = cp_ptr->titles[(p_ptr->lev - 1) / 5];
-		}
-
-		center_string(buf, player_name);
-		put_str(buf, 6, 11);
-
-		center_string(buf, "the");
-		put_str(buf, 7, 11);
-
-		center_string(buf, p);
-		put_str(buf, 8, 11);
-
-
-		center_string(buf, spp_ptr->title);
-		put_str(buf, 10, 11);
-
-		(void)sprintf(tmp, "Level: %d", (int)p_ptr->lev);
-		center_string(buf, tmp);
-		put_str(buf, 11, 11);
-
-		(void)sprintf(tmp, "Exp: %ld", (long)p_ptr->exp);
-		center_string(buf, tmp);
-		put_str(buf, 12, 11);
-
-		(void)sprintf(tmp, "AU: %ld", (long)p_ptr->au);
-		center_string(buf, tmp);
-		put_str(buf, 13, 11);
-
-		(void)sprintf(tmp, "Killed on Level %d", dun_level);
-		center_string(buf, tmp);
-		put_str(buf, 14, 11);
-
-
-		if (strlen(died_from) > 24)
-		{
-			strncpy(dummy, died_from, 24);
-			dummy[24] = '\0';
-			(void)sprintf(tmp, "by %s.", dummy);
-		}
-		else
-			(void)sprintf(tmp, "by %s.", died_from);
-
-		center_string(buf, tmp);
-		put_str(buf, 15, 11);
-
-
-		(void)sprintf(tmp, "%-.24s", ctime(&ct));
-		center_string(buf, tmp);
-		put_str(buf, 17, 11);
+		/* Close */
+		my_fclose(fp);
 	}
+
+
+	/* King or Queen */
+	if (total_winner || (p_ptr->lev > PY_MAX_LEVEL))
+	{
+		p = "Magnificent";
+	}
+
+	/* Normal */
+	else
+	{
+		p = cp_ptr->titles[(p_ptr->lev - 1) / 5];
+	}
+
+	center_string(buf, player_name);
+	put_str(buf, 6, 11);
+
+	center_string(buf, "the");
+	put_str(buf, 7, 11);
+
+	center_string(buf, p);
+	put_str(buf, 8, 11);
+
+
+	center_string(buf, spp_ptr->title);
+	put_str(buf, 10, 11);
+
+	(void)sprintf(tmp, "Level: %d", (int)p_ptr->lev);
+	center_string(buf, tmp);
+	put_str(buf, 11, 11);
+
+	(void)sprintf(tmp, "Exp: %ld", (long)p_ptr->exp);
+	center_string(buf, tmp);
+	put_str(buf, 12, 11);
+
+	(void)sprintf(tmp, "AU: %ld", (long)p_ptr->au);
+	center_string(buf, tmp);
+	put_str(buf, 13, 11);
+
+	(void)sprintf(tmp, "Killed on Level %d", dun_level);
+	center_string(buf, tmp);
+	put_str(buf, 14, 11);
+
+
+	if (strlen(died_from) > 24)
+	{
+		strncpy(dummy, died_from, 24);
+		dummy[24] = '\0';
+		(void)sprintf(tmp, "by %s.", dummy);
+	}
+	else
+		(void)sprintf(tmp, "by %s.", died_from);
+
+	center_string(buf, tmp);
+	put_str(buf, 15, 11);
+
+
+	(void)sprintf(tmp, "%-.24s", ctime(&ct));
+	center_string(buf, tmp);
+	put_str(buf, 17, 11);
 }
 
 
