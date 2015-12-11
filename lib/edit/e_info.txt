@@ -63,10 +63,6 @@
 
 
 
-# Version stamp (required)
-
-V:2.0.0
-
 ### Mage Staff ###
 
 N:1:of Mana

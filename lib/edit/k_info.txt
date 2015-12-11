@@ -20,11 +20,6 @@
 # Note that object zero is used for the "stack" picture (unused).
 
 
-# Version stamp (required)
-
-V:2.0.0
-
-
 ##### Something special #####
 
 N:0:something

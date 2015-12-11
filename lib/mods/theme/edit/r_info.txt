@@ -183,10 +183,6 @@
 
 # Note that monster zero is used for the "player" picture.
 
-# Version stamp (required)
-
-V:2.2.0
-
 ##### The Player #####
 
 N:0:Player

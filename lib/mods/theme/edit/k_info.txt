@@ -27,10 +27,6 @@
 # A: depth/rarity : depth/rarity : etc
 # F: flag | flag | etc
 
-# Version stamp (required)
-
-V:2.0.0
-
 
 ##### Something special #####
 

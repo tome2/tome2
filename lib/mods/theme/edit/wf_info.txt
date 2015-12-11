@@ -55,10 +55,6 @@
 #    corresponding to that wilderness tile (like, lots of mountain, some  
 #    trees, a bit of water...)
 
-# Version stamp (required)
-
-V:2.0.0
-
 N:0:Ekkaia
 D:the Encircling Sea
 W:1:0:0:182:0:X

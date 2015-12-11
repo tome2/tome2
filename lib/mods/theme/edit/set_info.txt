@@ -7,14 +7,10 @@
 # Do not modify this file unless you know exactly what you are doing,
 # unless you wish to risk possible system crashes and broken savefiles.
 
-# Version stamp (required)
-
 # N:idx:name
 # D:description
 # P:artifact index:number of item needed:pval
 # F:flags
-
-V:2.0.0
 
 # The Elven Gifts, took from Oangband
 

@@ -22,10 +22,6 @@
 
 # T:father:child
 
-# Version stamp (required)
-
-V:2.0.0
-
 ################################## MAGIC ##################################
 
 N:56:Magic-Device

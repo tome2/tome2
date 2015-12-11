@@ -28,10 +28,6 @@
 # if < 1000 then it points to a town
 # if >= 1000 then it points to the x - 1000 dungeon type
 
-# Version stamp (required)
-
-V:2.0.0
-
 N:0:Ekkaia
 D:the Encircling Sea
 W:1:0:0:182:0:X

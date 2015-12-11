@@ -17,10 +17,6 @@
 # 1 = Restrict to normal & liked
 # 2 = Restrict to liked
 
-# Version stamp (required)
-
-V:2.0.0
-
 N:0:Nothing
 C:0:0:0
 I:0:0:.

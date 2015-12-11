@@ -22,13 +22,9 @@
 
 # E:excluding ability:excluding ability
 
-# Version stamp (required)
-
 # Do not forget to update misc.txt with an entry like the following :
 # Maximum number of traits in ab_info.txt
 # M:b:50
-
-V:2.2.0
 
 N:0:Spread blows
 D:If a monster dies to your attack but you still have blows left

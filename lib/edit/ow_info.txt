@@ -13,10 +13,6 @@
 # L:liked races
 # H:hated races
 
-# Version stamp (required)
-
-V:2.0.0
-
 N:0:Bilbo the Friendly(Hobbit)
 I:20000:120
 C:120:100:80

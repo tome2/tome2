@@ -29,10 +29,6 @@
 # 3 = OR
 # 4 = NOR
 
-# Version stamp (required)
-
-V:2.0.0
-
 ### Wilderness(purely cosmetic, never used) ###
 
 N:0:Wilderness

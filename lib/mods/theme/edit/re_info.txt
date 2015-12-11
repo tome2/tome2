@@ -6,8 +6,6 @@
 # Do not modify this file unless you know exactly what you are doing,
 # unless you wish to risk possible system crashes and broken savefiles.
 
-# Version stamp (required)
-
 # Most values can be used with the +, -, % and = operators, = will set the
 # monster value, + and - will modify it based on the normal monster
 # % will apply that percentage to the monster value
@@ -27,8 +25,6 @@
 # O:monster flags to remove, use MF_ALL for all
 # S:monster spells to add for the ego-type
 # T:monster spells to remove, use MF_ALL for all
-
-V:2.0.0
 
 # A few undeads, to be created by the ANIM_DEAD spell
 

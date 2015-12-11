@@ -14,10 +14,6 @@
 
 # proba is the chance(out of 100) of the item being generated
 
-# Version stamp (required)
-
-V:2.0.0
-
 N:0:General Store
 I:100:& Wooden Torch~
 I:95:& Brass Lantern~

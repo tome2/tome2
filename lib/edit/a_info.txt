@@ -24,10 +24,6 @@
 #                                            -Leon Marrick
 # Contributors: Jeff Butler, Neal Hackler, Ethan Sicotte, Pat Tracy, Divia
 
-# Version stamp (required)
-
-V:2.0.0
-
 
 
 # The Phial of Galadriel

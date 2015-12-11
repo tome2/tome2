@@ -26,11 +26,6 @@
 # The 'Theme' module for ToME introduces many changes into this file; please 
 # refer to changes.txt in the module root folder for details.
 
-# Version stamp (required)
-
-V:2.0.0
-
-
 
 # The Phial of Galadriel
 

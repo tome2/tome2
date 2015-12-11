@@ -16,10 +16,6 @@
 # C:max to dam:max to hit:max to AC:max to pval
 # F:flags
 
-# Version stamp (required)
-
-V:2.0.0
-
 # General info, number of powers
 G:100:1d5:1
 G:14:0d0:1

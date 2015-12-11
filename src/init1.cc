@@ -1779,9 +1779,6 @@ errr init_player_info_txt(FILE *fp)
 	char buf[1024];
 	char *s, *t;
 
-	/* Not ready yet */
-	bool_ okay = FALSE;
-
 	/* Current entry */
 	player_race *rp_ptr = NULL;
 	player_race_mod *rmp_ptr = NULL;
@@ -1816,25 +1813,6 @@ errr init_player_info_txt(FILE *fp)
 
 		/* Verify correct "colon" format */
 		if (buf[1] != ':') return (1);
-
-
-		/* Hack -- Process 'V' for "Version" */
-		if (buf[0] == 'V')
-		{
-			int v1, v2, v3;
-
-			/* Scan for the values */
-			if (3 != sscanf(buf + 2, "%d.%d.%d", &v1, &v2, &v3)) return (2);
-
-			/* Okay to proceed */
-			okay = TRUE;
-
-			/* Continue */
-			continue;
-		}
-
-		/* No version yet */
-		if (!okay) return (2);
 
 		/* Reinit error_idx */
 		if (buf[0] == 'I')
@@ -3301,9 +3279,6 @@ errr init_player_info_txt(FILE *fp)
 		return (6);
 	}
 
-	/* No version yet */
-	if (!okay) return (2);
-
 	/* Success */
 	return (0);
 }
@@ -3317,9 +3292,6 @@ errr init_v_info_txt(FILE *fp)
 	int i;
 	char buf[1024];
 	char *s;
-
-	/* Not ready yet */
-	bool_ okay = FALSE;
 
 	/* Current entry */
 	vault_type *v_ptr = NULL;
@@ -3342,25 +3314,6 @@ errr init_v_info_txt(FILE *fp)
 
 		/* Verify correct "colon" format */
 		if (buf[1] != ':') return (1);
-
-
-		/* Hack -- Process 'V' for "Version" */
-		if (buf[0] == 'V')
-		{
-			int v1, v2, v3;
-
-			/* Scan for the values */
-			if (3 != sscanf(buf, "V:%d.%d.%d", &v1, &v2, &v3)) return (2);
-
-			/* Okay to proceed */
-			okay = TRUE;
-
-			/* Continue */
-			continue;
-		}
-
-		/* No version yet */
-		if (!okay) return (2);
 
 		/* Process 'N' for "New/Number/Name" */
 		if (buf[0] == 'N')
@@ -3477,10 +3430,6 @@ errr init_v_info_txt(FILE *fp)
 	}
 
 
-	/* No version yet */
-	if (!okay) return (2);
-
-
 	/* Success */
 	return (0);
 }
@@ -3520,9 +3469,6 @@ errr init_f_info_txt(FILE *fp)
 	char buf[1024];
 	char *s, *t;
 
-	/* Not ready yet */
-	bool_ okay = FALSE;
-
 	/* Current entry */
 	feature_type *f_ptr = NULL;
 
@@ -3543,25 +3489,6 @@ errr init_f_info_txt(FILE *fp)
 
 		/* Verify correct "colon" format */
 		if (buf[1] != ':') return (1);
-
-
-		/* Hack -- Process 'V' for "Version" */
-		if (buf[0] == 'V')
-		{
-			int v1, v2, v3;
-
-			/* Scan for the values */
-			if (3 != sscanf(buf + 2, "%d.%d.%d", &v1, &v2, &v3)) return (2);
-
-			/* Okay to proceed */
-			okay = TRUE;
-
-			/* Continue */
-			continue;
-		}
-
-		/* No version yet */
-		if (!okay) return (2);
 
 		/* Process 'N' for "New/Number/Name" */
 		if (buf[0] == 'N')
@@ -3791,9 +3718,6 @@ errr init_f_info_txt(FILE *fp)
 		return (6);
 	}
 
-	/* No version yet */
-	if (!okay) return (2);
-
 	/* Success */
 	return (0);
 }
@@ -3913,9 +3837,6 @@ errr init_k_info_txt(FILE *fp)
 	char buf[1024];
 	char *s, *t;
 
-	/* Not ready yet */
-	bool_ okay = FALSE;
-
 	/* Current entry */
 	object_kind *k_ptr = NULL;
 
@@ -3939,24 +3860,6 @@ errr init_k_info_txt(FILE *fp)
 		/* Verify correct "colon" format */
 		if (buf[1] != ':') return (1);
 
-
-		/* Hack -- Process 'V' for "Version" */
-		if (buf[0] == 'V')
-		{
-			int v1, v2, v3;
-
-			/* Scan for the values */
-			if (3 != sscanf(buf + 2, "%d.%d.%d", &v1, &v2, &v3)) return (2);
-
-			/* Okay to proceed */
-			okay = TRUE;
-
-			/* Continue */
-			continue;
-		}
-
-		/* No version yet */
-		if (!okay) return (2);
 
 		/* Process 'N' for "New/Number/Name" */
 		if (buf[0] == 'N')
@@ -4273,11 +4176,6 @@ errr init_k_info_txt(FILE *fp)
 		return (6);
 	}
 
-
-	/* No version yet */
-	if (!okay) return (2);
-
-
 	/* Success */
 	return (0);
 }
@@ -4399,9 +4297,6 @@ errr init_a_info_txt(FILE *fp)
 	char buf[1024];
 	char *s, *t;
 
-	/* Not ready yet */
-	bool_ okay = FALSE;
-
 	/* Current entry */
 	artifact_type *a_ptr = NULL;
 
@@ -4424,25 +4319,6 @@ errr init_a_info_txt(FILE *fp)
 
 		/* Verify correct "colon" format */
 		if (buf[1] != ':') return (1);
-
-
-		/* Hack -- Process 'V' for "Version" */
-		if (buf[0] == 'V')
-		{
-			int v1, v2, v3;
-
-			/* Scan for the values */
-			if (3 != sscanf(buf + 2, "%d.%d.%d", &v1, &v2, &v3)) return (2);
-
-			/* Okay to proceed */
-			okay = TRUE;
-
-			/* Continue */
-			continue;
-		}
-
-		/* No version yet */
-		if (!okay) return (2);
 
 		/* Process 'N' for "New/Number/Name" */
 		if (buf[0] == 'N')
@@ -4681,11 +4557,6 @@ errr init_a_info_txt(FILE *fp)
 		return (6);
 	}
 
-
-	/* No version yet */
-	if (!okay) return (2);
-
-
 	/* Success */
 	return (0);
 }
@@ -4700,9 +4571,6 @@ errr init_set_info_txt(FILE *fp)
 	char buf[1024];
 
 	char *s, *t;
-
-	/* Not ready yet */
-	bool_ okay = FALSE;
 
 	/* Current entry */
 	set_type *set_ptr = NULL;
@@ -4726,25 +4594,6 @@ errr init_set_info_txt(FILE *fp)
 
 		/* Verify correct "colon" format */
 		if (buf[1] != ':') return (1);
-
-
-		/* Hack -- Process 'V' for "Version" */
-		if (buf[0] == 'V')
-		{
-			int v1, v2, v3;
-
-			/* Scan for the values */
-			if (3 != sscanf(buf + 2, "%d.%d.%d", &v1, &v2, &v3)) return (2);
-
-			/* Okay to proceed */
-			okay = TRUE;
-
-			/* Continue */
-			continue;
-		}
-
-		/* No version yet */
-		if (!okay) return (2);
 
 		/* Process 'N' for "New/Number/Name" */
 		if (buf[0] == 'N')
@@ -4889,9 +4738,6 @@ errr init_set_info_txt(FILE *fp)
 		return (6);
 	}
 
-	/* No version yet */
-	if (!okay) return (2);
-
 	/* Success */
 	return (0);
 }
@@ -4905,9 +4751,6 @@ errr init_s_info_txt(FILE *fp)
 	int i, z, order = 1;
 	char buf[1024];
 	char *s;
-
-	/* Not ready yet */
-	bool_ okay = FALSE;
 
 	/* Current entry */
 	skill_type *s_ptr = NULL;
@@ -4931,25 +4774,6 @@ errr init_s_info_txt(FILE *fp)
 
 		/* Verify correct "colon" format */
 		if (buf[1] != ':') return (1);
-
-
-		/* Hack -- Process 'V' for "Version" */
-		if (buf[0] == 'V')
-		{
-			int v1, v2, v3;
-
-			/* Scan for the values */
-			if (3 != sscanf(buf + 2, "%d.%d.%d", &v1, &v2, &v3)) return (2);
-
-			/* Okay to proceed */
-			okay = TRUE;
-
-			/* Continue */
-			continue;
-		}
-
-		/* No version yet */
-		if (!okay) return (2);
 
 		/* Process 'T' for "skill Tree" */
 		if (buf[0] == 'T')
@@ -5227,9 +5051,6 @@ errr init_s_info_txt(FILE *fp)
 		return (6);
 	}
 
-	/* No version yet */
-	if (!okay) return (2);
-
 	/* Success */
 	return (0);
 }
@@ -5242,9 +5063,6 @@ errr init_ab_info_txt(FILE *fp)
 	int i, z;
 	char buf[1024];
 	char *s;
-
-	/* Not ready yet */
-	bool_ okay = FALSE;
 
 	/* Current entry */
 	ability_type *ab_ptr = NULL;
@@ -5268,25 +5086,6 @@ errr init_ab_info_txt(FILE *fp)
 
 		/* Verify correct "colon" format */
 		if (buf[1] != ':') return (1);
-
-
-		/* Hack -- Process 'V' for "Version" */
-		if (buf[0] == 'V')
-		{
-			int v1, v2, v3;
-
-			/* Scan for the values */
-			if (3 != sscanf(buf + 2, "%d.%d.%d", &v1, &v2, &v3)) return (2);
-
-			/* Okay to proceed */
-			okay = TRUE;
-
-			/* Continue */
-			continue;
-		}
-
-		/* No version yet */
-		if (!okay) return (2);
 
 		/* Process 'N' for "New/Number/Name" */
 		if (buf[0] == 'N')
@@ -5526,9 +5325,6 @@ errr init_ab_info_txt(FILE *fp)
 		return (6);
 	}
 
-	/* No version yet */
-	if (!okay) return (2);
-
 	/* Success */
 	return (0);
 }
@@ -5764,9 +5560,6 @@ errr init_e_info_txt(FILE *fp)
 	char buf[1024];
 	char *s, *t;
 
-	/* Not ready yet */
-	bool_ okay = FALSE;
-
 	/* Current entry */
 	ego_item_type *e_ptr = NULL;
 
@@ -5789,25 +5582,6 @@ errr init_e_info_txt(FILE *fp)
 
 		/* Verify correct "colon" format */
 		if (buf[1] != ':') return (1);
-
-
-		/* Hack -- Process 'V' for "Version" */
-		if (buf[0] == 'V')
-		{
-			int v1, v2, v3;
-
-			/* Scan for the values */
-			if (3 != sscanf(buf + 2, "%d.%d.%d", &v1, &v2, &v3)) return (2);
-
-			/* Okay to proceed */
-			okay = TRUE;
-
-			/* Continue */
-			continue;
-		}
-
-		/* No version yet */
-		if (!okay) return (2);
 
 		/* Process 'N' for "New/Number/Name" */
 		if (buf[0] == 'N')
@@ -6129,11 +5903,6 @@ errr init_e_info_txt(FILE *fp)
 		return (6);
 	}
 
-
-	/* No version yet */
-	if (!okay) return (2);
-
-
 	/* Success */
 	return (0);
 }
@@ -6267,9 +6036,6 @@ errr init_ra_info_txt(FILE *fp)
 	char buf[1024];
 	char *s, *t;
 
-	/* Not ready yet */
-	bool_ okay = FALSE;
-
 	/* Current entry */
 	randart_part_type *ra_ptr = NULL;
 
@@ -6292,25 +6058,6 @@ errr init_ra_info_txt(FILE *fp)
 
 		/* Verify correct "colon" format */
 		if (buf[1] != ':') return (1);
-
-
-		/* Hack -- Process 'V' for "Version" */
-		if (buf[0] == 'V')
-		{
-			int v1, v2, v3;
-
-			/* Scan for the values */
-			if (3 != sscanf(buf + 2, "%d.%d.%d", &v1, &v2, &v3)) return (2);
-
-			/* Okay to proceed */
-			okay = TRUE;
-
-			/* Continue */
-			continue;
-		}
-
-		/* No version yet */
-		if (!okay) return (2);
 
 		/* Process 'G' for "General" (up to 30 lines) */
 		if (buf[0] == 'G')
@@ -6528,11 +6275,6 @@ errr init_ra_info_txt(FILE *fp)
 		return (6);
 	}
 
-
-	/* No version yet */
-	if (!okay) return (2);
-
-
 	/* Success */
 	return (0);
 }
@@ -6666,9 +6408,6 @@ errr init_r_info_txt(FILE *fp)
 	char buf[1024];
 	char *s, *t;
 
-	/* Not ready yet */
-	bool_ okay = FALSE;
-
 	/* Current entry */
 	monster_race *r_ptr = NULL;
 
@@ -6691,25 +6430,6 @@ errr init_r_info_txt(FILE *fp)
 
 		/* Verify correct "colon" format */
 		if (buf[1] != ':') return (1);
-
-
-		/* Hack -- Process 'V' for "Version" */
-		if (buf[0] == 'V')
-		{
-			int v1, v2, v3;
-
-			/* Scan for the values */
-			if (3 != sscanf(buf + 2, "%d.%d.%d", &v1, &v2, &v3)) return (2);
-
-			/* Okay to proceed */
-			okay = TRUE;
-
-			/* Continue */
-			continue;
-		}
-
-		/* No version yet */
-		if (!okay) return (2);
 
 		/* Process 'N' for "New/Number/Name" */
 		if (buf[0] == 'N')
@@ -7033,9 +6753,6 @@ errr init_r_info_txt(FILE *fp)
 			r_info[i].flags8 = 0x0463;
 	}
 
-	/* No version yet */
-	if (!okay) return (2);
-
 	/* Success */
 	return (0);
 }
@@ -7279,9 +6996,6 @@ errr init_re_info_txt(FILE *fp)
 
 	char *s, *t;
 
-	/* Not ready yet */
-	bool_ okay = FALSE;
-
 	/* Current entry */
 	monster_ego *re_ptr = NULL;
 
@@ -7303,25 +7017,6 @@ errr init_re_info_txt(FILE *fp)
 
 		/* Verify correct "colon" format */
 		if (buf[1] != ':') return (1);
-
-
-		/* Hack -- Process 'V' for "Version" */
-		if (buf[0] == 'V')
-		{
-			int v1, v2, v3;
-
-			/* Scan for the values */
-			if (3 != sscanf(buf + 2, "%d.%d.%d", &v1, &v2, &v3)) return (2);
-
-			/* Okay to proceed */
-			okay = TRUE;
-
-			/* Continue */
-			continue;
-		}
-
-		/* No version yet */
-		if (!okay) return (2);
 
 		/* Process 'N' for "New/Number/Name" */
 		if (buf[0] == 'N')
@@ -7754,9 +7449,6 @@ errr init_re_info_txt(FILE *fp)
 		return (6);
 	}
 
-	/* No version yet */
-	if (!okay) return (2);
-
 	/* Success */
 	return (0);
 }
@@ -7795,9 +7487,6 @@ errr init_t_info_txt(FILE *fp)
 	char buf[1024];
 	char *s, *t;
 
-	/* Not ready yet */
-	bool_ okay = FALSE;
-
 	/* Current entry */
 	trap_type *t_ptr = NULL;
 
@@ -7818,25 +7507,6 @@ errr init_t_info_txt(FILE *fp)
 
 		/* Verify correct "colon" format */
 		if (buf[1] != ':') return (1);
-
-
-		/* Hack -- Process 'V' for "Version" */
-		if (buf[0] == 'V')
-		{
-			int v1, v2, v3;
-
-			/* Scan for the values */
-			if (3 != sscanf(buf + 2, "%d.%d.%d", &v1, &v2, &v3)) return (2);
-
-			/* Okay to proceed */
-			okay = TRUE;
-
-			/* Continue */
-			continue;
-		}
-
-		/* No version yet */
-		if (!okay) return (2);
 
 		/* Process 'N' for "New/Number/Name" */
 		if (buf[0] == 'N')
@@ -7958,9 +7628,6 @@ errr init_t_info_txt(FILE *fp)
 		/* Oops */
 		return (6);
 	}
-
-	/* No version yet */
-	if (!okay) return (2);
 
 	/* Success */
 	return (0);
@@ -8133,9 +7800,6 @@ errr init_d_info_txt(FILE *fp)
 
 	char *s, *t;
 
-	/* Not ready yet */
-	bool_ okay = FALSE;
-
 	/* Current entry */
 	dungeon_info_type *d_ptr = NULL;
 
@@ -8157,25 +7821,6 @@ errr init_d_info_txt(FILE *fp)
 
 		/* Verify correct "colon" format */
 		if (buf[1] != ':') return (1);
-
-
-		/* Hack -- Process 'V' for "Version" */
-		if (buf[0] == 'V')
-		{
-			int v1, v2, v3;
-
-			/* Scan for the values */
-			if (3 != sscanf(buf + 2, "%d.%d.%d", &v1, &v2, &v3)) return (2);
-
-			/* Okay to proceed */
-			okay = TRUE;
-
-			/* Continue */
-			continue;
-		}
-
-		/* No version yet */
-		if (!okay) return (2);
 
 		/* Process 'N' for "New/Number/Name" */
 		if (buf[0] == 'N')
@@ -8675,10 +8320,6 @@ errr init_d_info_txt(FILE *fp)
 		return (6);
 	}
 
-
-	/* No version yet */
-	if (!okay) return (2);
-
 	/* Success */
 	return (0);
 }
@@ -8747,9 +8388,6 @@ errr init_st_info_txt(FILE *fp)
 	char buf[1024];
 	char *s, *t;
 
-	/* Not ready yet */
-	bool_ okay = FALSE;
-
 	/* Current entry */
 	store_info_type *st_ptr = NULL;
 
@@ -8771,25 +8409,6 @@ errr init_st_info_txt(FILE *fp)
 
 		/* Verify correct "colon" format */
 		if (buf[1] != ':') return (1);
-
-
-		/* Hack -- Process 'V' for "Version" */
-		if (buf[0] == 'V')
-		{
-			int v1, v2, v3;
-
-			/* Scan for the values */
-			if (3 != sscanf(buf + 2, "%d.%d.%d", &v1, &v2, &v3)) return (2);
-
-			/* Okay to proceed */
-			okay = TRUE;
-
-			/* Continue */
-			continue;
-		}
-
-		/* No version yet */
-		if (!okay) return (2);
 
 		/* Process 'N' for "New/Number/Name" */
 		if (buf[0] == 'N')
@@ -8995,9 +8614,6 @@ errr init_st_info_txt(FILE *fp)
 		return (6);
 	}
 
-	/* No version yet */
-	if (!okay) return (2);
-
 	/* Success */
 	return (0);
 }
@@ -9010,9 +8626,6 @@ errr init_ba_info_txt(FILE *fp)
 	int i = 0;
 	char buf[1024];
 	char *s;
-
-	/* Not ready yet */
-	bool_ okay = FALSE;
 
 	/* Current entry */
 	store_action_type *ba_ptr = NULL;
@@ -9035,25 +8648,6 @@ errr init_ba_info_txt(FILE *fp)
 
 		/* Verify correct "colon" format */
 		if (buf[1] != ':') return (1);
-
-
-		/* Hack -- Process 'V' for "Version" */
-		if (buf[0] == 'V')
-		{
-			int v1, v2, v3;
-
-			/* Scan for the values */
-			if (3 != sscanf(buf + 2, "%d.%d.%d", &v1, &v2, &v3)) return (2);
-
-			/* Okay to proceed */
-			okay = TRUE;
-
-			/* Continue */
-			continue;
-		}
-
-		/* No version yet */
-		if (!okay) return (2);
 
 		/* Process 'N' for "New/Number/Name" */
 		if (buf[0] == 'N')
@@ -9139,9 +8733,6 @@ errr init_ba_info_txt(FILE *fp)
 		return (6);
 	}
 
-	/* No version yet */
-	if (!okay) return (2);
-
 	/* Success */
 	return (0);
 }
@@ -9154,9 +8745,6 @@ errr init_ow_info_txt(FILE *fp)
 	int i;
 	char buf[1024];
 	char *s, *t;
-
-	/* Not ready yet */
-	bool_ okay = FALSE;
 
 	/* Current entry */
 	owner_type *ow_ptr = NULL;
@@ -9178,25 +8766,6 @@ errr init_ow_info_txt(FILE *fp)
 
 		/* Verify correct "colon" format */
 		if (buf[1] != ':') return (1);
-
-
-		/* Hack -- Process 'V' for "Version" */
-		if (buf[0] == 'V')
-		{
-			int v1, v2, v3;
-
-			/* Scan for the values */
-			if (3 != sscanf(buf + 2, "%d.%d.%d", &v1, &v2, &v3)) return (2);
-
-			/* Okay to proceed */
-			okay = TRUE;
-
-			/* Continue */
-			continue;
-		}
-
-		/* No version yet */
-		if (!okay) return (2);
 
 		/* Process 'N' for "New/Number/Name" */
 		if (buf[0] == 'N')
@@ -9332,9 +8901,6 @@ errr init_ow_info_txt(FILE *fp)
 		return (6);
 	}
 
-	/* No version yet */
-	if (!okay) return (2);
-
 	/* Success */
 	return (0);
 }
@@ -9372,9 +8938,6 @@ errr init_wf_info_txt(FILE *fp)
 	char buf[1024];
 	char *s, *t;
 
-	/* Not ready yet */
-	bool_ okay = FALSE;
-
 	/* Current entry */
 	wilderness_type_info *wf_ptr = NULL;
 
@@ -9395,25 +8958,6 @@ errr init_wf_info_txt(FILE *fp)
 
 		/* Verify correct "colon" format */
 		if (buf[1] != ':') return (1);
-
-
-		/* Hack -- Process 'V' for "Version" */
-		if (buf[0] == 'V')
-		{
-			int v1, v2, v3;
-
-			/* Scan for the values */
-			if (3 != sscanf(buf + 2, "%d.%d.%d", &v1, &v2, &v3)) return (2);
-
-			/* Okay to proceed */
-			okay = TRUE;
-
-			/* Continue */
-			continue;
-		}
-
-		/* No version yet */
-		if (!okay) return (2);
 
 		/* Process 'N' for "New/Number/Name" */
 		if (buf[0] == 'N')
@@ -9549,9 +9093,6 @@ errr init_wf_info_txt(FILE *fp)
 		/* Oops */
 		return (6);
 	}
-
-	/* No version yet */
-	if (!okay) return (2);
 
 	/* Success */
 	return (0);

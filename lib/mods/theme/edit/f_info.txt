@@ -15,11 +15,6 @@
 # Note that terrain feature zero contains the "darkness" picture.
 
 
-# Version stamp (required)
-
-V:2.0.0
-
-
 # 0x00 --> nothing
 
 N:0:nothing

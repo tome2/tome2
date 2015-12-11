@@ -13,10 +13,6 @@
 # L:liked races
 # H:hated races
 
-# Version stamp (required)
-
-V:2.0.0
-
 # The zero index owner. If she owns a shop, there is a problem. :P
 N:0:Bell Goodchild(Hobbit)
 I:20000:120
