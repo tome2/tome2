@@ -2376,24 +2376,23 @@ static bool_ detect_monsters_string(cptr chars, int rad)
 }
 
 
-
-/*
- * Detect all "gold" objects on the current panel
+/**
+ * Detect objects on the current panel.
  */
-bool_ detect_objects_gold(int rad)
+template <typename P> bool detect_objects_fn(int radius, const char *object_message, const char *monsters, P p)
 {
-	int i, y, x;
-
-	bool_ detect = FALSE;
-
+	bool detect = false;
 
 	/* Scan objects */
-	for (i = 1; i < o_max; i++)
+	for (int i = 1; i < o_max; i++)
 	{
 		object_type *o_ptr = &o_list[i];
 
 		/* Skip dead objects */
 		if (!o_ptr->k_idx) continue;
+
+		/* Location */
+		int y, x;
 
 		/* Skip held objects */
 		if (o_ptr->held_m_idx)
@@ -2402,7 +2401,10 @@ bool_ detect_objects_gold(int rad)
 			monster_type *m_ptr = &m_list[o_ptr->held_m_idx];
 			monster_race *r_ptr = race_inf(m_ptr);
 
-			if (!(r_ptr->flags9 & RF9_MIMIC)) continue;
+			if (!(r_ptr->flags9 & RF9_MIMIC))
+			{
+				continue; /* Skip mimics completely */
+			}
 			else
 			{
 				/* Location */
@@ -2418,10 +2420,13 @@ bool_ detect_objects_gold(int rad)
 		}
 
 		/* Only detect nearby objects */
-		if (distance(p_ptr->py, p_ptr->px, y, x) > rad) continue;
+		if (distance(p_ptr->py, p_ptr->px, y, x) > radius)
+		{
+			continue;
+		}
 
-		/* Detect "gold" objects */
-		if (o_ptr->tval == TV_GOLD)
+		/* Detect objects that satisfy predicate */
+		if (p(o_ptr))
 		{
 			/* Hack -- memorize it */
 			o_ptr->marked = TRUE;
@@ -2437,89 +2442,52 @@ bool_ detect_objects_gold(int rad)
 	/* Describe */
 	if (detect)
 	{
-		msg_print("You sense the presence of treasure!");
+		msg_print(object_message);
 	}
 
-	if (detect_monsters_string("$", rad))
+	if (detect_monsters_string(monsters, radius))
 	{
-		detect = TRUE;
+		detect = true;
 	}
 
 	/* Result */
-	return (detect);
+	return detect;
+}
+
+
+/*
+ * Detect all "gold" objects on the current panel
+ */
+bool detect_objects_gold(int rad)
+{
+	auto predicate = [](object_type const *o_ptr) -> bool {
+		return o_ptr->tval == TV_GOLD;
+	};
+
+	return detect_objects_fn(
+		rad,
+		"You sense the presence of treasure!",
+		"$",
+		predicate);
 }
 
 
 /*
  * Detect all "normal" objects on the current panel
  */
-bool_ detect_objects_normal(int rad)
+bool detect_objects_normal(int rad)
 {
-	int i, y, x;
+	auto predicate = [](object_type const *o_ptr) -> bool {
+		return o_ptr->tval != TV_GOLD;
+	};
+	const char *object_message = "You sense the presence of objects!";
+	const char *monsters = "!=?|";
 
-	bool_ detect = FALSE;
-
-
-	/* Scan objects */
-	for (i = 1; i < o_max; i++)
-	{
-		object_type *o_ptr = &o_list[i];
-
-		/* Skip dead objects */
-		if (!o_ptr->k_idx) continue;
-
-		/* Skip held objects */
-		if (o_ptr->held_m_idx)
-		{
-			/* Access the monster */
-			monster_type *m_ptr = &m_list[o_ptr->held_m_idx];
-			monster_race *r_ptr = race_inf(m_ptr);
-
-			if (!(r_ptr->flags9 & RF9_MIMIC)) continue;
-			else
-			{
-				/* Location */
-				y = m_ptr->fy;
-				x = m_ptr->fx;
-			}
-		}
-		else
-		{
-			/* Location */
-			y = o_ptr->iy;
-			x = o_ptr->ix;
-		}
-
-		/* Only detect nearby objects */
-		if (distance(p_ptr->py, p_ptr->px, y, x) > rad) continue;
-
-		/* Detect "real" objects */
-		if (o_ptr->tval != TV_GOLD)
-		{
-			/* Hack -- memorize it */
-			o_ptr->marked = TRUE;
-
-			/* Redraw */
-			if (panel_contains(y, x)) lite_spot(y, x);
-
-			/* Detect */
-			detect = TRUE;
-		}
-	}
-
-	/* Describe */
-	if (detect)
-	{
-		msg_print("You sense the presence of objects!");
-	}
-
-	if (detect_monsters_string("!=?|", rad))
-	{
-		detect = TRUE;
-	}
-
-	/* Result */
-	return (detect);
+	return detect_objects_fn(
+		rad,
+		object_message,
+		monsters,
+		predicate);
 }
 
 
