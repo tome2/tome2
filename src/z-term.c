@@ -194,8 +194,7 @@
  *
  * The "Term->wipe_hook" hook provides this package with a simple way
  * to "erase", starting at "x,y", the next "n" grids.  This hook assumes
- * that the input is valid.  This hook is required, unless the setting
- * of the "always_text" flag makes it optional.
+ * that the input is valid.
  *
  * The "Term->text_hook" hook provides this package with a simple way
  * to "draw", starting at "x,y", the "n" chars contained in "cp", using
@@ -498,9 +497,6 @@ static void Term_fresh_row_text(int y, int x1, int x2)
 	byte *scr_aa = Term->scr->a[y];
 	char *scr_cc = Term->scr->c[y];
 
-	/* The "always_text" flag */
-	int always_text = Term->always_text;
-
 	/* Pending length */
 	int fn = 0;
 
@@ -534,7 +530,7 @@ static void Term_fresh_row_text(int y, int x1, int x2)
 			if (fn)
 			{
 				/* Draw pending chars (normal) */
-				if (fa || always_text)
+				if (fa)
 				{
 					(void)((*Term->text_hook)(fx, y, fn, fa, &scr_cc[fx]));
 				}
@@ -564,7 +560,7 @@ static void Term_fresh_row_text(int y, int x1, int x2)
 			if (fn)
 			{
 				/* Draw the pending chars */
-				if (fa || always_text)
+				if (fa)
 				{
 					(void)((*Term->text_hook)(fx, y, fn, fa, &scr_cc[fx]));
 				}
@@ -591,7 +587,7 @@ static void Term_fresh_row_text(int y, int x1, int x2)
 	if (fn)
 	{
 		/* Draw pending chars (normal) */
-		if (fa || always_text)
+		if (fa)
 		{
 			(void)((*Term->text_hook)(fx, y, fn, fa, &scr_cc[fx]));
 		}
@@ -661,14 +657,8 @@ static void Term_fresh_row_text(int y, int x1, int x2)
  * the "Term_wipe()" function is used to display all "black" text, such
  * as the default "spaces" created by "Term_clear()" and "Term_erase()".
  *
- * Note that the "Term->always_text" flag will disable the use of the
- * "Term_wipe()" function hook entirely, and force all text, even text
- * drawn in the color "black", to be explicitly drawn.  This is useful
- * for machines which implement "Term_wipe()" by just drawing spaces.
- *
  * Note that if no "black" text is ever drawn, and if "attr_blank" is
- * not "zero", then the "Term_wipe" hook will never be used, even if
- * the "Term->always_text" flag is not set.
+ * not "zero", then the "Term_wipe" hook will never be used.
  *
  * This function does nothing unless the "Term" is "mapped", which allows
  * certain systems to optimize the handling of "closed" windows.
@@ -788,7 +778,7 @@ errr Term_fresh(void)
 			char oc = old_cc[tx];
 
 			/* Hack -- restore the actual character */
-			if (oa || Term->always_text)
+			if (oa)
 			{
 				(void)((*Term->text_hook)(tx, ty, 1, oa, &oc));
 			}

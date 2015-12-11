@@ -71,9 +71,6 @@ struct term_win
  *	- Flag "soft_cursor"
  *	  This "term" uses a "software" cursor
  *
- *	- Flag "always_text"
- *	  Use the "Term_text()" routine for invisible text
- *
  *
  *
  *
@@ -126,7 +123,6 @@ struct term
 	bool_ total_erase;
 	bool_ icky_corner;
 	bool_ soft_cursor;
-	bool_ always_text;
 
 	char *key_queue;
 	u16b key_head;

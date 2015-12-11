@@ -1061,9 +1061,6 @@ void eraseTerminal(void)
  * which is not black, then this function must be able to draw
  * the resulting "blank" correctly.
  *
- * Note that this function must correctly handle "black" text if
- * the "always_text" flag is set, if this flag is not set, all the
- * "black" text will be handled by the "Term_wipe_xxx()" hook.
  */
 static errr Term_text_sdl(int x, int y, int n, byte a, const char *cp)
 {
@@ -1763,9 +1760,6 @@ static errr term_data_init(term_data *td, int i)
 
 	/* Use a "soft" cursor */
 	t->soft_cursor = TRUE;
-
-	/* Picture routine flags */
-	t->always_text = FALSE;
 
 	/* Hooks */
 	t->xtra_hook = Term_xtra_sdl;
