@@ -2286,40 +2286,48 @@ bool_ detect_treasure(int rad)
 }
 
 
-
 /*
- * Detect all (string) monsters on current panel
+ * Detect monsters on current panel using a
+ * predicate function P and an update function U.
+ * The "update function" is called exactly once if
+ * the predicate succeeds. The
  */
-static bool_ detect_monsters_string(cptr chars, int rad)
-{
-	int i, y, x;
-	bool_ flag = FALSE;
-
-
+template<typename P, typename U> static bool detect_monsters_fn(int radius, P p, U u) {
+	bool flag = false;
 	/* Scan monsters */
-	for (i = 1; i < m_max; i++)
+	for (int i = 1; i < m_max; i++)
 	{
 		monster_type *m_ptr = &m_list[i];
-		monster_race *r_ptr = race_inf(m_ptr);
 
 		/* Skip dead monsters */
-		if (!m_ptr->r_idx) continue;
+		if (!m_ptr->r_idx)
+		{
+			continue;
+		}
 
 		/* Location */
-		y = m_ptr->fy;
-		x = m_ptr->fx;
+		int const y = m_ptr->fy;
+		int const x = m_ptr->fx;
 
 		/* Only detect nearby monsters */
-		if (m_ptr->cdis > rad) continue;
-
-		/* Detect evil monsters */
-		if (strchr(chars, r_ptr->d_char))
+		if (m_ptr->cdis > radius)
 		{
+			continue;
+		}
+		/* Detect monsters which fulfill the predicate */
+		auto r_ptr = race_inf(m_ptr);
+		if (p(r_ptr))
+		{
+			/* Update */
+			u(r_ptr);
 
-			/* Update monster recall window */
+			/* We're assuming the update function does
+			 * *something*, so we'll need to update
+			 * the recall window if we're currently looking
+			 * at it.
+			 */
 			if (monster_race_idx == m_ptr->r_idx)
 			{
-				/* Window stuff */
 				p_ptr->window |= (PW_MONSTER);
 			}
 
@@ -2339,16 +2347,32 @@ static bool_ detect_monsters_string(cptr chars, int rad)
 			flag = TRUE;
 		}
 	}
+	/* Result */
+	return flag;
+}
+
+/*
+ * Detect all (string) monsters on current panel
+ */
+static bool_ detect_monsters_string(cptr chars, int rad)
+{
+	auto predicate = [chars](monster_race *r_ptr) -> bool {
+		return strchr(chars, r_ptr->d_char);
+	};
+	auto update = [](monster_race *) -> void {
+	};
 
 	/* Describe */
-	if (flag)
+	if (detect_monsters_fn(rad, predicate, update))
 	{
 		/* Describe result */
 		msg_print("You sense the presence of monsters!");
+		return TRUE;
 	}
-
-	/* Result */
-	return (flag);
+	else
+	{
+		return FALSE;
+	}
 }
 
 
@@ -2504,57 +2528,23 @@ bool_ detect_objects_normal(int rad)
  */
 bool_ detect_monsters_normal(int rad)
 {
-	int i, y, x;
+	auto predicate = [](monster_race *r_ptr) -> bool {
+		return (!(r_ptr->flags2 & (RF2_INVISIBLE))) ||
+			p_ptr->see_inv || p_ptr->tim_invis;
+	};
+	auto update = [](monster_race *) -> void {
+	};
 
-	bool_ flag = FALSE;
-
-
-	/* Scan monsters */
-	for (i = 1; i < m_max; i++)
-	{
-		monster_type *m_ptr = &m_list[i];
-		monster_race *r_ptr = race_inf(m_ptr);
-
-		/* Skip dead monsters */
-		if (!m_ptr->r_idx) continue;
-
-		/* Location */
-		y = m_ptr->fy;
-		x = m_ptr->fx;
-
-		/* Only detect nearby monsters */
-		if (m_ptr->cdis > rad) continue;
-
-		/* Detect all non-invisible monsters */
-		if ((!(r_ptr->flags2 & (RF2_INVISIBLE))) ||
-		                p_ptr->see_inv || p_ptr->tim_invis)
-		{
-			/* Repair visibility later */
-			repair_monsters = TRUE;
-
-			/* Hack -- Detect monster */
-			m_ptr->mflag |= (MFLAG_MARK | MFLAG_SHOW);
-
-			/* Hack -- See monster */
-			m_ptr->ml = TRUE;
-
-			/* Redraw */
-			if (panel_contains(y, x)) lite_spot(y, x);
-
-			/* Detect */
-			flag = TRUE;
-		}
-	}
-
-	/* Describe */
-	if (flag)
+	if (detect_monsters_fn(rad, predicate, update))
 	{
 		/* Describe result */
 		msg_print("You sense the presence of monsters!");
+		return TRUE;
 	}
-
-	/* Result */
-	return (flag);
+	else
+	{
+		return FALSE;
+	}
 }
 
 
@@ -2563,64 +2553,23 @@ bool_ detect_monsters_normal(int rad)
  */
 bool_ detect_monsters_invis(int rad)
 {
-	int i, y, x;
-	bool_ flag = FALSE;
+	auto predicate = [](monster_race *r_ptr) -> bool {
+		return (r_ptr->flags2 & (RF2_INVISIBLE));
+	};
+	auto update = [](monster_race *r_ptr) -> void {
+		r_ptr->r_flags2 |= (RF2_INVISIBLE);
+	};
 
-	/* Scan monsters */
-	for (i = 1; i < m_max; i++)
-	{
-		monster_type *m_ptr = &m_list[i];
-		monster_race *r_ptr = race_inf(m_ptr);
-
-		/* Skip dead monsters */
-		if (!m_ptr->r_idx) continue;
-
-		/* Location */
-		y = m_ptr->fy;
-		x = m_ptr->fx;
-
-		/* Only detect nearby monsters */
-		if (m_ptr->cdis > rad) continue;
-
-		/* Detect invisible monsters */
-		if (r_ptr->flags2 & (RF2_INVISIBLE))
-		{
-			/* Take note that they are invisible */
-			r_ptr->r_flags2 |= (RF2_INVISIBLE);
-
-			/* Update monster recall window */
-			if (monster_race_idx == m_ptr->r_idx)
-			{
-				/* Window stuff */
-				p_ptr->window |= (PW_MONSTER);
-			}
-
-			/* Repair visibility later */
-			repair_monsters = TRUE;
-
-			/* Hack -- Detect monster */
-			m_ptr->mflag |= (MFLAG_MARK | MFLAG_SHOW);
-
-			/* Hack -- See monster */
-			m_ptr->ml = TRUE;
-
-			/* Redraw */
-			if (panel_contains(y, x)) lite_spot(y, x);
-
-			/* Detect */
-			flag = TRUE;
-		}
-	}
-
-	/* Describe */
-	if (flag)
+	if (detect_monsters_fn(rad, predicate, update))
 	{
 		/* Describe result */
 		msg_print("You sense the presence of invisible creatures!");
+		return TRUE;
 	}
-
-	/* Result */
-	return (flag);
+	else
+	{
+		return FALSE;
+	}
 }
 
 
@@ -2630,60 +2579,16 @@ bool_ detect_monsters_invis(int rad)
  */
 bool_ detect_monsters_xxx(u32b match_flag, int rad)
 {
-	int i, y, x;
-	bool_ flag = FALSE;
-	cptr desc_monsters = "weird monsters";
+	auto predicate = [match_flag](monster_race *r_ptr) -> bool {
+		return (r_ptr->flags3 & match_flag);
+	};
+	auto update = [match_flag](monster_race *r_ptr) -> void {
+		r_ptr->r_flags3 |= (match_flag);
+	};
 
-
-	/* Scan monsters */
-	for (i = 1; i < m_max; i++)
+	if (detect_monsters_fn(rad, predicate, update))
 	{
-		monster_type *m_ptr = &m_list[i];
-		monster_race *r_ptr = race_inf(m_ptr);
-
-		/* Skip dead monsters */
-		if (!m_ptr->r_idx) continue;
-
-		/* Location */
-		y = m_ptr->fy;
-		x = m_ptr->fx;
-
-		/* Only detect nearby monsters */
-		if (m_ptr->cdis > rad) continue;
-
-		/* Detect evil monsters */
-		if (r_ptr->flags3 & (match_flag))
-		{
-			/* Take note that they are something */
-			r_ptr->r_flags3 |= (match_flag);
-
-			/* Update monster recall window */
-			if (monster_race_idx == m_ptr->r_idx)
-			{
-				/* Window stuff */
-				p_ptr->window |= (PW_MONSTER);
-			}
-
-			/* Repair visibility later */
-			repair_monsters = TRUE;
-
-			/* Hack -- Detect monster */
-			m_ptr->mflag |= (MFLAG_MARK | MFLAG_SHOW);
-
-			/* Hack -- See monster */
-			m_ptr->ml = TRUE;
-
-			/* Redraw */
-			if (panel_contains(y, x)) lite_spot(y, x);
-
-			/* Detect */
-			flag = TRUE;
-		}
-	}
-
-	/* Describe */
-	if (flag)
-	{
+		cptr desc_monsters = "weird monsters";
 		switch (match_flag)
 		{
 		case RF3_DEMON:
@@ -2695,15 +2600,20 @@ bool_ detect_monsters_xxx(u32b match_flag, int rad)
 		case RF3_GOOD:
 			desc_monsters = "good";
 			break;
+		case RF3_ORC:
+			desc_monsters = "orcs";
+			break;
 		}
 
 		/* Describe result */
 		msg_format("You sense the presence of %s!", desc_monsters);
 		msg_print(NULL);
+		return TRUE;
 	}
-
-	/* Result */
-	return (flag);
+	else
+	{
+		return FALSE;
+	}
 }
 
 
