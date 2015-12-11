@@ -363,26 +363,6 @@ errr my_fgets(FILE *fff, char *buf, huge n)
 
 
 /*
-* Hack -- replacement for "fputs()"
-*
-* Dump a string, plus a newline, to a file
-*
-* XXX XXX XXX Process internal weirdness?
-*/
-errr my_fputs(FILE *fff, cptr buf, huge n)
-{
-	/* XXX XXX */
-	n = n ? n : 0;
-
-	/* Dump, ignore errors */
-	(void)fprintf(fff, "%s\n", buf);
-
-	/* Success */
-	return (0);
-}
-
-
-/*
 * The Macintosh is a little bit brain-dead sometimes
 */
 #ifdef MACINTOSH

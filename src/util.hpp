@@ -16,7 +16,6 @@ extern s32b bst(s32b what, s32b t);
 extern errr path_temp(char *buf, int max);
 extern FILE *my_fopen(cptr file, cptr mode);
 extern errr my_fgets(FILE *fff, char *buf, huge n);
-extern errr my_fputs(FILE *fff, cptr buf, huge n);
 extern errr my_fclose(FILE *fff);
 extern errr fd_kill(cptr file);
 extern errr fd_move(cptr file, cptr what);

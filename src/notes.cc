@@ -70,7 +70,7 @@ void output_note(char *final_note)
 	if (!fff) return;
 
 	/* Add note, and close note file */
-	my_fputs(fff, final_note, 0);
+	fprintf(fff, "%s\n", final_note);
 
 	/* Close the handle */
 	my_fclose(fff);
