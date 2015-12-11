@@ -600,12 +600,6 @@ cptr DEFAULT_FEAT_BLOCK = DEFAULT_FEAT_TEXT;
 cptr ANGBAND_SYS = "xxx";
 
 /*
- * Hack -- The special Angband "Graphics Suffix"
- * This variable is used to choose an appropriate "graf-xxx" file
- */
-cptr ANGBAND_GRAF = "old";
-
-/*
  * Path name: The main "lib" directory
  * This variable is not actually used anywhere in the code
  */

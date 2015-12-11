@@ -216,7 +216,6 @@ extern set_type *set_info;
 extern cptr DEFAULT_FEAT_TEXT;
 extern cptr DEFAULT_FEAT_TUNNEL;
 extern cptr DEFAULT_FEAT_BLOCK;
-extern cptr ANGBAND_GRAF;
 extern char *ANGBAND_DIR;
 extern bool_ (*get_mon_num_hook)(int r_idx);
 extern bool_ (*get_mon_num2_hook)(int r_idx);

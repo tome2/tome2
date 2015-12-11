@@ -881,12 +881,6 @@ static cptr process_pref_file_expr(char **sp, char *fp)
 				v = ANGBAND_SYS;
 			}
 
-			/* Graphics */
-			if (streq(b + 1, "GRAF"))
-			{
-				v = ANGBAND_GRAF;
-			}
-
 			/* Race */
 			else if (streq(b + 1, "RACE"))
 			{

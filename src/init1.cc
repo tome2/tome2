@@ -10536,12 +10536,6 @@ static cptr process_dungeon_file_expr(char **sp, char *fp)
 				v = ANGBAND_SYS;
 			}
 
-			/* Graphics */
-			else if (streq(b + 1, "GRAF"))
-			{
-				v = ANGBAND_GRAF;
-			}
-
 			/* Race */
 			else if (streq(b + 1, "RACE"))
 			{
