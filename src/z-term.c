@@ -1658,9 +1658,6 @@ errr Term_resize(int w, int h)
 	term_win *hold_scr;
 	term_win *hold_mem;
 
-	/* Resizing is forbidden */
-	if (Term->fixed_shape) return ( -1);
-
 	/* Ignore illegal changes */
 	if ((w < 1) || (h < 1)) return ( -1);
 

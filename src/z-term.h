@@ -65,9 +65,6 @@ struct term_win
  *	- Flag "total_erase"
  *	  This "term" should be fully erased
  *
- *	- Flag "fixed_shape"
- *	  This "term" is not allowed to resize
- *
  *	- Flag "icky_corner"
  *	  This "term" has an "icky" corner grid
  *
@@ -136,7 +133,6 @@ struct term
 	bool_ active_flag;
 	bool_ mapped_flag;
 	bool_ total_erase;
-	bool_ fixed_shape;
 	bool_ icky_corner;
 	bool_ soft_cursor;
 	bool_ always_text;
