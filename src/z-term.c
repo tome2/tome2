@@ -1607,7 +1607,7 @@ errr Term_load(void)
 /*
  * Same as previous but allow to save more than one
  */
-errr Term_load_from(term_win *save, bool_ final)
+errr Term_load_from(term_win *save)
 {
 	int y;
 
@@ -1636,10 +1636,7 @@ errr Term_load_from(term_win *save, bool_ final)
 	Term->y2 = h - 1;
 
 	/* Free is requested */
-	if (final)
-	{
-		free(save);
-	}
+	free(save);
 
 	/* Success */
 	return (0);

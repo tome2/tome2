@@ -2079,7 +2079,7 @@ void do_cmd_html_dump()
 		if (!get_string("File(you can post it to http://angband.oook.cz/): ", tmp_val, 80))
 		{
 			/* Now restore the screen to initial state */
-			Term_load_from(save, TRUE);
+			Term_load_from(save);
 			Term_fresh();
 			return;
 		}
@@ -2090,14 +2090,14 @@ void do_cmd_html_dump()
 		if (!get_string("File: ", tmp_val, 80))
 		{
 			/* Now restore the screen to initial state */
-			Term_load_from(save, TRUE);
+			Term_load_from(save);
 			Term_fresh();
 			return;
 		}
 	}
 
 	/* Now restore the screen to dump it */
-	Term_load_from(save, TRUE);
+	Term_load_from(save);
 
 	if (html)
 		html_screenshot(tmp_val);
