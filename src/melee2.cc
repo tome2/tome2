@@ -5673,7 +5673,7 @@ static bool_ monst_attack_monst(int m_idx, int t_idx)
 			/* Message */
 			if (act)
 			{
-				strfmt(temp, act, t_name);
+				strnfmt(temp, sizeof(temp), act, t_name);
 				if (m_ptr->ml || t_ptr->ml)
 					monster_msg("%^s %s", m_name, temp);
 

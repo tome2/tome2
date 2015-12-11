@@ -1001,7 +1001,7 @@ static void carried_monster_attack(s16b m_idx, bool_ *fear, bool_ *mdeath,
 			/* Message */
 			if (act)
 			{
-				strfmt(temp, act, t_name);
+				strnfmt(temp, sizeof(temp), act, t_name);
 				if (t_ptr->ml)
 					msg_format("%s %s", sym_name, temp);
 
@@ -1519,7 +1519,7 @@ static void incarnate_monster_attack(s16b m_idx, bool_ *fear, bool_ *mdeath,
 			/* Message */
 			if (act)
 			{
-				strfmt(temp, act, t_name);
+				strnfmt(temp, sizeof(temp), act, t_name);
 				if (t_ptr->ml)
 					msg_format("You %s", temp);
 
