@@ -74,9 +74,6 @@ struct term_win
  *	- Flag "always_text"
  *	  Use the "Term_text()" routine for invisible text
  *
- *	- Flag "never_bored"
- *	  Never call the "TERM_XTRA_BORED" action
- *
  *
  *
  *	- Value "attr_blank"
@@ -136,7 +133,6 @@ struct term
 	bool_ icky_corner;
 	bool_ soft_cursor;
 	bool_ always_text;
-	bool_ never_bored;
 
 	byte attr_blank;
 	char char_blank;

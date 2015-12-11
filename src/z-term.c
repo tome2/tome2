@@ -1467,12 +1467,8 @@ errr Term_inkey(char *ch, bool_ wait, bool_ take)
 	/* Assume no key */
 	(*ch) = '\0';
 
-	/* Hack -- get bored */
-	if (!Term->never_bored)
-	{
-		/* Process random events */
-		Term_xtra(TERM_XTRA_BORED, 0);
-	}
+	/* Process queued UI events */
+	Term_xtra(TERM_XTRA_BORED, 0);
 
 	/* Wait */
 	if (wait)
