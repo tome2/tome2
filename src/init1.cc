@@ -971,46 +971,6 @@ static cptr t_info_flags[] =
 };
 
 /*
- * Wilderness feature flags
- */
-static cptr wf_info_flags1[] =
-{
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1"
-};
-
-/*
  * Stores flags
  */
 static cptr st_info_flags1[] =
@@ -8905,37 +8865,13 @@ errr init_ow_info_txt(FILE *fp)
 }
 
 /*
- * Grab one flag for a dungeon type from a textual string
- */
-static errr grab_one_wf_info_flag(wilderness_type_info *wf_ptr, cptr what)
-{
-	int i;
-
-	/* Scan flags1 */
-	for (i = 0; i < 32; i++)
-	{
-		if (streq(what, wf_info_flags1[i]))
-		{
-			wf_ptr->flags1 |= (1L << i);
-			return (0);
-		}
-	}
-
-	/* Oops */
-	msg_format("Unknown monster flag '%s'.", what);
-
-	/* Failure */
-	return (1);
-}
-
-/*
  * Initialize the "wf_info" array, by parsing an ascii "template" file
  */
 errr init_wf_info_txt(FILE *fp)
 {
 	int i;
 	char buf[1024];
-	char *s, *t;
+	char *s;
 
 	/* Current entry */
 	wilderness_type_info *wf_ptr = NULL;
@@ -9056,33 +8992,6 @@ errr init_wf_info_txt(FILE *fp)
 			for (i = 0; i < MAX_WILD_TERRAIN; i++)
 			{
 				wf_ptr->terrain[i] = terrain[i];
-			}
-
-			/* Next... */
-			continue;
-		}
-
-		/* Process 'F' for "Wilderness feature Flags" (multiple lines) */
-		if (buf[0] == 'F')
-		{
-			/* Parse every entry */
-			for (s = buf + 2; *s; )
-			{
-				/* Find the end of this entry */
-				for (t = s; *t && (*t != ' ') && (*t != '|'); ++t) /* loop */;
-
-				/* Nuke and skip any dividers */
-				if (*t)
-				{
-					*t++ = '\0';
-					while (*t == ' ' || *t == '|') t++;
-				}
-
-				/* Parse this entry */
-				if (0 != grab_one_wf_info_flag(wf_ptr, s)) return (5);
-
-				/* Start the next entry */
-				s = t;
 			}
 
 			/* Next... */
