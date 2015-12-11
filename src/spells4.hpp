@@ -36,7 +36,6 @@ school_book *school_books_at(int sval);
 void school_book_add_spell(school_book *school_book, s32b spell_idx);
 void random_book_setup(s16b sval, s32b spell_idx);
 int print_spell(cptr label, byte color, int y, s32b s);
-int print_book(s16b sval, s32b spell_idx, object_type *obj);
 int school_book_length(int sval);
 int spell_x(int sval, int spell_idx, int i);
 bool_ school_book_contains_spell(int sval, s32b spell_idx);

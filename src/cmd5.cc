@@ -22,6 +22,7 @@
 #include "player_race.hpp"
 #include "player_race_mod.hpp"
 #include "player_type.hpp"
+#include "school_book.hpp"
 #include "skills.hpp"
 #include "spell_type.hpp"
 #include "spells1.hpp"
@@ -109,6 +110,41 @@ bool_ is_magestaff()
 	/* Not wielding a mage staff */
 	return (FALSE);
 }
+
+
+static int print_book(s16b sval, s32b spell_idx, object_type *obj)
+{
+	int y = 2;
+	int i;
+
+	random_book_setup(sval, spell_idx);
+
+	school_book *school_book = school_books_at(sval);
+
+	/* Parse all spells */
+	i = 0;
+	for (auto spell_idx : school_book->spell_idxs)
+	{
+		byte color = TERM_L_DARK;
+		bool_ is_ok;
+		char label[8];
+
+		is_ok = is_ok_spell(spell_idx, obj->pval);
+		if (is_ok)
+		{
+			color = (get_mana(spell_idx) > get_power(spell_idx)) ? TERM_ORANGE : TERM_L_GREEN;
+		}
+
+		sprintf(label, "%c) ", 'a' + i);
+
+		y = print_spell(label, color, y, spell_idx);
+		i++;
+	}
+
+	prt(format("   %-20s%-16s Level Cost Fail Info", "Name", "School"), 1, 0);
+	return y;
+}
+
 
 
 static void browse_school_spell(int book, int spell_idx, object_type *o_ptr)
