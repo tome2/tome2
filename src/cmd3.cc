@@ -1943,7 +1943,7 @@ void cli_add(cptr active, cptr trigger, cptr descr)
 /*
  * Get a string using CLI completion.
  */
-bool_ get_string_cli(cptr prompt, char *buf, int len)
+static bool_ get_string_cli(cptr prompt, char *buf, int len)
 {
 	bool_ res;
 
@@ -1955,9 +1955,7 @@ bool_ get_string_cli(cptr prompt, char *buf, int len)
 	prt(prompt, 0, 0);
 
 	/* Ask the user for a string */
-	askfor_aux_complete = TRUE;
-	res = askfor_aux(buf, len);
-	askfor_aux_complete = FALSE;
+	res = askfor_aux_with_completion(buf, len);
 
 	/* Clear prompt */
 	prt("", 0, 0);

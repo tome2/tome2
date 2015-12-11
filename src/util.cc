@@ -2403,7 +2403,8 @@ static int complete_command(char *buf, int clen, int mlen)
 * ESCAPE clears the buffer and the window and returns FALSE.
 * RETURN accepts the current buffer contents and returns TRUE.
 */
-bool_ askfor_aux_complete = FALSE;
+static bool_ askfor_aux_complete = FALSE;
+
 bool_ askfor_aux(char *buf, int len)
 {
 	int y, x;
@@ -2519,6 +2520,13 @@ bool_ askfor_aux(char *buf, int len)
 	return (TRUE);
 }
 
+bool_ askfor_aux_with_completion(char *buf, int len)
+{
+	askfor_aux_complete = TRUE;
+	bool_ res = askfor_aux(buf, len);
+	askfor_aux_complete = FALSE;
+	return res;
+}
 
 /*
 * Get a string from the user
