@@ -461,14 +461,9 @@ char *keymap_act[KEYMAP_MODES][256];
 /*** Player information ***/
 
 /*
- * Static player info record
- */
-player_type p_body;
-
-/*
  * Pointer to the player info
  */
-player_type *p_ptr = &p_body;
+player_type *p_ptr = nullptr;
 
 /*
  * Pointer to the player tables

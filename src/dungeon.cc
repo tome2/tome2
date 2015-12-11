@@ -5122,6 +5122,9 @@ void play_game(bool_ new_game)
 
 	bool_ cheat_death = FALSE;
 
+	/* Initialize player */
+	p_ptr = new player_type();
+
 	/* Hack -- Character is "icky" */
 	character_icky = TRUE;
 
