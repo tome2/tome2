@@ -500,9 +500,6 @@ static void make_item_fully_identified(object_type *o_ptr)
 
 	/* Mark the item as fully known */
 	o_ptr->ident |= (IDENT_MENTAL);
-
-	/* For those with alchemist skills, learn how to create it */
-	alchemist_learn_object(o_ptr);
 }
 
 /*
@@ -3783,7 +3780,7 @@ bool_ recharge(int power)
 		}
 	}
 
-	/* Mark as recharged -- For alchemists */
+	/* Mark as recharged */
 	o_ptr->art_flags4 |= TR4_RECHARGED;
 
 	/* Inflict the penalties for failing a recharge. */

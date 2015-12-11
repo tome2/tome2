@@ -3,7 +3,7 @@
 #include "h-basic.h"
 
 /**
- * For level gaining artifacts, artifact creation, ...
+ * For level gaining artifacts
  */
 struct flags_group
 {

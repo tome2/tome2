@@ -891,9 +891,6 @@ static void player_wipe(void)
 		/* Reset "aware" */
 		k_ptr->aware = FALSE;
 
-		/* Reset "know" */
-		k_ptr->know = FALSE;
-
 		/* Reset "artifact" */
 		k_ptr->artifact = 0;
 	}
@@ -924,13 +921,6 @@ static void player_wipe(void)
 
 	/* Hack -- Well fed player */
 	p_ptr->food = PY_FOOD_FULL - 1;
-
-	/* Wipe the alchemists' recipes */
-	for ( i = 0 ; i < 32 ; i++)
-		alchemist_known_egos[i] = 0;
-	for ( i = 0 ; i < 6 ; i++)
-		alchemist_known_artifacts[i] = 0;
-	alchemist_gained = 0;
 
 	/* Clear "cheat" options */
 	cheat_peek = FALSE;

@@ -98,7 +98,7 @@ something you are more comfortable with.
   ~   Lites, Tools, Chests, etc       )   A shield
   ~   Junk, Sticks, Skeletons, etc    `   Trapping kit, climbing set
   ~   Stone, random artifact          o   Egg
-  *   An essence                      &   (unused)
+                                      &   (unused)
 
 ~~~~~05|Monsters
 #####G                             Monsters

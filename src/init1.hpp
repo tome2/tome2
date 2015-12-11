@@ -12,7 +12,6 @@ extern errr init_v_info_txt(FILE *fp);
 extern errr init_f_info_txt(FILE *fp);
 extern errr init_k_info_txt(FILE *fp);
 extern errr init_a_info_txt(FILE *fp);
-extern errr init_al_info_txt(FILE *fp);
 extern errr init_ra_info_txt(FILE *fp);
 extern errr init_e_info_txt(FILE *fp);
 extern errr init_r_info_txt(FILE *fp);

@@ -2492,8 +2492,6 @@ void do_cmd_quaff_potion(void)
 {
 	int ident, lev;
 
-	object_type *q_ptr, forge;
-
 	/* Get an item */
 	int item;
 	if (!get_item(&item,
@@ -2546,22 +2544,6 @@ void do_cmd_quaff_potion(void)
 	{
 		object_aware(o_ptr);
 		gain_exp((lev + (p_ptr->lev >> 1)) / p_ptr->lev);
-	}
-
-	if (get_skill(SKILL_ALCHEMY))
-	{
-		if (item >= 0)
-		{
-			q_ptr = &forge;
-			object_prep(q_ptr, lookup_kind(TV_BOTTLE, 1));
-			q_ptr->number = 1;
-			object_aware(q_ptr);
-			object_known(q_ptr);
-
-			q_ptr->ident |= IDENT_STOREB;
-
-			(void)inven_carry(q_ptr, FALSE);
-		}
 	}
 
 	/* Window stuff */
@@ -3642,24 +3624,6 @@ void do_cmd_read_scroll(void)
 
 	/* Destroy scroll */
 	inc_stack_size(item, -1);
-
-	/* Alchemists end up with a "drained" scroll instead */
-	if (get_skill(SKILL_ALCHEMY))
-	{
-		if (item >= 0)
-		{
-			object_type *q_ptr, forge;
-
-			q_ptr = &forge;
-			object_prep(q_ptr, lookup_kind(TV_SCROLL, SV_SCROLL_NOTHING));
-			object_aware(q_ptr);
-			object_known(q_ptr);
-
-			q_ptr->ident |= IDENT_STOREB;
-
-			(void)inven_carry(q_ptr, FALSE);
-		}
-	}
 }
 
 
@@ -5159,7 +5123,7 @@ const char *activation_aux(object_type * o_ptr, bool_ doit, int item)
 	if (!spell && o_ptr->name1)
 		spell = a_info[o_ptr->name1].activate;
 
-	/* Random and Alchemist Artifacts */
+	/* Random Artifacts */
 	if (!spell && o_ptr->art_name)
 		spell = o_ptr->xtra2;
 

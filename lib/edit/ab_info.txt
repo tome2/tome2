@@ -81,15 +81,6 @@ k:40:Combat
 S:30:DEX
 S:30:STR
 
-N:7:Artifact Creation
-D:In combination with a high alchemy skill this ability will let you
-D:design your very own artifacts
-D:Prereq: Alchemy@40, INT@35, WIS@35
-I:70
-k:40:Alchemy
-S:35:INT
-S:35:WIS
-
 N:8:Far reaching attack
 D:You can attack an enemy one square far using a long polearm.
 D:At high levels of Polearm-mastery skill, you can even hit two enemies at once.

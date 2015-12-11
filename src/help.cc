@@ -23,27 +23,26 @@
 #include "variable.hpp"
 
 #define DESC_MAX 14
-#define TRIGGERED_HELP_MAX 19
+#define TRIGGERED_HELP_MAX 18
 
 #define HELP_VOID_JUMPGATE 0
 #define HELP_FOUNTAIN      1
 #define HELP_FOUND_OBJECT  2
 #define HELP_FOUND_ALTAR   3
 #define HELP_FOUND_STAIR   4
-#define HELP_GET_ESSENCE   5
-#define HELP_GET_RUNE      6
-#define HELP_GET_ROD       7
-#define HELP_GET_ROD_TIP   8
-#define HELP_GET_TRAP_KIT  9
-#define HELP_GET_DEVICE   10
-#define HELP_WILDERNESS   11
-#define HELP_GAME_TOME    12
-#define HELP_GAME_THEME   13
-#define HELP_1ST_LEVEL    14
-#define HELP_20TH_LEVEL   15
-#define HELP_ID_SPELL_ITM 16
-#define HELP_MELEE_SKILLS 17
-#define HELP_MON_ASK_HELP 18
+#define HELP_GET_RUNE      5
+#define HELP_GET_ROD       6
+#define HELP_GET_ROD_TIP   7
+#define HELP_GET_TRAP_KIT  8
+#define HELP_GET_DEVICE    9
+#define HELP_WILDERNESS   10
+#define HELP_GAME_TOME    11
+#define HELP_GAME_THEME   12
+#define HELP_1ST_LEVEL    13
+#define HELP_20TH_LEVEL   14
+#define HELP_ID_SPELL_ITM 15
+#define HELP_MELEE_SKILLS 16
+#define HELP_MON_ASK_HELP 17
 
 /**
  * Game started?
@@ -157,7 +156,6 @@ context_help_type subrace_table[] =
 context_help_type class_table[] =
 {
 	/* ToME */
-	{ "Alchemist",      "c_alchem.txt",   0 },
 	{ "Archer",         "c_archer.txt",   0 },
 	{ "Assassin",       "c_assass.txt",   0 },
 	{ "Axemaster",      "c_axemas.txt",   0 },
@@ -234,7 +232,6 @@ context_help_type god_table[] =
 context_help_type skill_table[] =
 {
 	{ "Air",                 "skills.txt", 27 },
-	{ "Alchemy",             "skills.txt", 49 },
 	{ "Antimagic",           "skills.txt", 50 },
 	{ "Archery",             "skills.txt",  8 },
 	{ "Axe-mastery",         "skills.txt",  5 },
@@ -303,7 +300,6 @@ context_help_type ability_table[] =
 	{ "Extra Max Blow(2)",   "ability.txt",  6 },
 	{ "Ammo creation",       "ability.txt",  7 },
 	{ "Touch of death",      "ability.txt",  8 },
-	{ "Artifact Creation",   "ability.txt",  9 },
 	{ "Far reaching attack", "ability.txt", 10 },
 	{ "Trapping",            "ability.txt", 11 },
 	{ "Undead Form",         "ability.txt", 12 },
@@ -337,11 +333,6 @@ static bool_ trigger_found_altar(void *in, void *out) {
 static bool_ trigger_found_stairs(void *in, void *out) {
 	hook_move_in *p = (hook_move_in *) in;
 	return (cave[p->y][p->x].feat == FEAT_MORE);
-}
-
-static bool_ trigger_get_essence(void *in, void *out) {
-	hook_get_in *g = (hook_get_in *) in;
-	return (g->o_ptr->tval == TV_BATERIE);
 }
 
 static bool_ trigger_get_rune(void *in, void *out) {
@@ -459,13 +450,6 @@ static triggered_help_type triggered_help[TRIGGERED_HELP_MAX] =
 	  trigger_found_stairs,
 	  { "Ah, this is a stair, or a way into something. Press > to enter it.",
 	    "But be ready to fight what lies within, for it might not be too friendly.",
-	    NULL }
-	},
-	{ HELP_GET_ESSENCE,
-	  HOOK_GET,
-	  trigger_get_essence,
-	  { "Ah, an essence! Those magical containers stores energies. They are used",
-	    "with the Alchemy skill to create or modify the powers of items.",
 	    NULL }
 	},
 	{ HELP_GET_RUNE,

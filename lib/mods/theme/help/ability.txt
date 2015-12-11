@@ -27,11 +27,15 @@ playable, and maybe even powerful enough to win the game!
 
 Here follows a list of all the available abilities:
 
-*****ability.txt*02[Spread blows]               *****ability.txt*03[Tree walking]
-*****ability.txt*04[Perfect casting]            *****ability.txt*05[Extra Max Blow(1)]
-*****ability.txt*06[Extra Max Blow(2)]          *****ability.txt*07[Ammo creation]
-*****ability.txt*08[Touch of death]             *****ability.txt*09[Artifact Creation]
-*****ability.txt*10[Far reaching attack]        *****ability.txt*11[Trapping]
+*****ability.txt*02[Spread blows]
+*****ability.txt*03[Tree walking]
+*****ability.txt*04[Perfect casting]
+*****ability.txt*05[Extra Max Blow(1)]
+*****ability.txt*06[Extra Max Blow(2)]
+*****ability.txt*07[Ammo creation]
+*****ability.txt*08[Touch of death]
+*****ability.txt*10[Far reaching attack]
+*****ability.txt*11[Trapping]
 *****ability.txt*12[Undead Form]
 
 ~~~~~02|Abilities|Spread blows
@@ -84,12 +88,6 @@ for that kill.
 You must activate this from your 'm' menu.
 #####UPrereq: Necromancy skill@50, Combat skill@40, DEX@30, STR@30
 #####rCost: 15
-~~~~~09|Abilities|Artifact Creation
-[[[[[BArtifact Creation]
-In combination with a high alchemy skill this ability will let you
-design your very own artifacts.
-Prereq: Alchemy@40, INT@35, WIS@35
-#####rCost: 70
 ~~~~~10|Abilities|Far reaching attack
 [[[[[BFar reaching attack]
 You can attack an enemy one square far using a long polearm.

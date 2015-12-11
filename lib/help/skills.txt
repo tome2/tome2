@@ -108,7 +108,7 @@ on what each skill does, try [[[[[ghttp://www.killerbunnies.org/angband/skill-22
 for some third party help!
 The skills are:
 
-  *****skills.txt*27[Air]                 *****skills.txt*49[Alchemy]            *****skills.txt*50[Antimagic]          *****skills.txt*08[Archery]
+  *****skills.txt*27[Air]                 *****skills.txt*50[Antimagic]          *****skills.txt*08[Archery]
   *****skills.txt*05[Axe-mastery]         *****skills.txt*18[Backstab]           *****skills.txt*13[Barehand-combat]    *****skills.txt*61[Bearform-combat]
   *****skills.txt*12[Boomerang-mastery]   *****skills.txt*58[Boulder-throwing]   *****skills.txt*10[Bow-mastery]        *****skills.txt*01[Combat]             
   *****skills.txt*30[Conveyance]          *****skills.txt*44[Corpse-preservation]*****skills.txt*04[Critical-hits]      *****skills.txt*11[Crossbow-mastery]   
@@ -311,7 +311,7 @@ ability.
 
 Sub-skills include: Magic-device, Spell-power, Sorcery, Mana, Fire, Water, Air,
 Earth, Meta, Conveyance, Divination, Temporal, Mind, Nature, Udun, Demonology,
-Necromancy, Runecraft, Thaumaturgy, and Alchemy.
+Necromancy, Runecraft, and Thaumaturgy.
 ~~~~~54|Skills|Magic-device
 [[[[[BMagic-device]
 This skill is a sub-skill of the Magic skill. It eases the use of magical
@@ -465,13 +465,6 @@ any sort. However, once learned these spells do not gain in levels as the
 thaumaturgy skill or the spell-power skills are increased. Spending 1 skill
 point on your Thaumaturgy skill adds 0.06 bonus skill points to your Magic
 skill.
-~~~~~49|Skills|Alchemy
-[[[[[BAlchemy]
-The Alchemy skill affects your ability to extract and use essences to create
-magical items. 
-
-Investing in the Alchemy skill? You might be interested in the *****ability.txt*09[Artifact Creation] 
-ability.
 ~~~~~38|Skills|Spirituality
 [[[[[BSpirituality]
 The spirituality skill influences things which have a "helping hand" from the

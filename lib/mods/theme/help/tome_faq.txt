@@ -81,8 +81,7 @@ You can also fill empty bottles at a fountain (enabling you to identify the
 potion and hence the type of fountain) by using the 'H' command and answering
 'F' at the prompt.  The game will then ask you to choose bottles and how many
 bottles you want to fill.  You can find empty bottles on the dungeon and
-drinking pints of fine ale/wine will give you emtpy bottles; if you are 
-trained in Alchemy, you can reuse bottles after quaffing potions as well.
+drinking pints of fine ale/wine will give you emtpy bottles.
 
 #####G------------------------------------------------------------------------------
 #####GQ: I got killed by a Great Wyrm of Power at 50'!!! What happened?
@@ -102,13 +101,10 @@ activation can be something very nasty....
 
 To activate it, use the normal Activation command, but when prompted for which 
 item to activate change to the backpack instead of wielded equipment.
-~~~~~10|Essences
 ~~~~~11|Runes
 #####G------------------------------------------------------------------------------
-#####GQ: I keep coming across "essences" and "runes". What are they? 
+#####GQ: I keep coming across "runes". What are they?
 
-Essences are the *****c_alchem.txt*0[Alchemist's] friend, and you can only use them if you
-have access to the *****skills.txt*49[Alchemy] skill. 
 Runes are used to cast and store spells of varying types. *****c_runecr.txt*0[Runecrafters] are the
 class who are most proficient at using these. You can only use them if you 
 have access to the *****skills.txt*36[Runecrafting] skill.

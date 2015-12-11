@@ -1,7 +1,5 @@
 #include "wizard1.hpp"
 
-#include "alchemist_recipe.hpp"
-#include "artifact_select_flag.hpp"
 #include "artifact_type.hpp"
 #include "cmd7.hpp"
 #include "ego_item_type.hpp"
@@ -239,8 +237,6 @@ static grouper group_item[] =
 
 	{ TV_RUNE1, "Runes" },
 	{ TV_RUNE2, NULL },
-
-	{ TV_BATERIE, "Essences" },
 
 	{ TV_PARCHMENT, "Parchments" },
 
@@ -2330,237 +2326,6 @@ static void spoil_mon_info(cptr fname)
 	msg_print("Successfully created a spoiler file.");
 }
 
-
-static const char *long_intro =
-	"Essences are the tools of the trade for Alchemists, "
-	"and unfortunately are useless for any other class. "
-	"Alchemists use essences to create magical items for them to use.\n\n"
-	"They can be either found on the floor while exploring the dungeon, "
-	"or extracted from other magical items the alchemist finds "
-	"during their adventures.\n\n"
-	"To create an artifact, the alchemist will have to sacrifice 10 hit points, "
-	"and an amount of magic essence similar to his skill in alchemy. "
-	"The alchemist then allows the artifact to gain experience, "
-	"and when it has enough, "
-	"uses that experience to add abilities to the artifact. "
-	"The alchemist can allow the artifact to continue to gain experience, "
-	"thus keeping open the option to add more abilities later. "
-	"This requires a similar amount of magic essence, "
-	"but does not require the sacrifice of other hit points.\n\n"
-	"Note that the experience you gain is divided among the artifacts "
-	"that you have as well as going to yourself, "
-	"so you will gain levels more slowly when empowering artifacts. "
-	"Also, the artifact only gets 60% of the experience. "
-	"So killing a creature worth 20xp would gain 10 for you, "
-	"and 6 for the artifact.\n\n"
-	"You can also modify existing artifacts when you attain skill level 50. "
-	"Also at skill level 50 you will gain the ability to make temporary artifacts, "
-	"which don't require the complex empowerments that regular items require, "
-	"but also vanish after awhile.\n\n"
-	"You cannot give an artifact an ability "
-	"unless you have *Identified* an artifact which has that ability.\n\n"
-	"For every four levels gained in the alchemy skill, "
-	"the alchemist learns about objects of level (skill level)/4, "
-	"starting by learning about level 1 objects at skill level 0. "
-	"(actually 1, but who's counting?)\n\n"
-	"At skill level 5 you gain the ability to make ego items - but watch it! "
-	"Your base failure rate will be 90%, "
-	"and won't be 0% until you reach skill level 50. "
-	"Adding gold will increase the chances of success "
-	"in direct proportion to the value of the item you are trying to create. "
-	"Note that this results in automatic success "
-	"when the item you are trying to create "
-	"happens to pick up a curse in the process.\n\n"
-	"At skill level 5 you also gain knowledge of some basic ego item recipes. "
-	"These are: Acidic, Shocking, Fiery, Frozen, Venomous, and Chaotic weapons, "
-	"Resist Fire armour, and light sources of Fearlessness.\n\n"
-	"At skill level 10 you will gain knowledge of digging ego items, "
-	"if you have selected the option "
-	"'always  generate very unusual rooms' (ironman_rooms).\n\n"
-	"At skill level 15 you can create ego wands, staves, rings, etc.\n\n"
-	"At skill level 25 you gain the ability to empower artifacts "
-	"and double ego items.\n\n"
-	"At skill level 50 you gain the ability to create temporary artifacts, "
-	"which don't require any exotic ingredients "
-	"beyond a single corpse of any type.\n\n"
-	"Between skill levels 25 and 50, "
-	"you will steadily gain the ability to set more and more flags.\n\n"
-	"To finalise an artifact, you 'P'ower it, and select the powers you want.\n"
-	"Powers are divided into the following six categories:\n"
-	"*****essences.txt*03[Stats, Sustains, Luck, Speed, Vision, etc.]\n"
-	"*****essences.txt*04[Misc. (Auras, Light, See Invisibility, etc.)]\n"
-	"*****essences.txt*05[Weapon Brands]\n"
-	"*****essences.txt*06[Resistances and Immunities]\n"
-	"*****essences.txt*07[ESP and Curses]\n"
-	"*****essences.txt*08[Artifact Activations]\n";
-
-/*
- * Create a spoiler file for essences
- */
-static void spoil_bateries(cptr fname)
-{
-	int j, i, tval, sval, group;
-	object_type forge, *o_ptr;
-
-	char buf[1024];
-
-	tval = sval = group = -1;
-
-	/* Build the filename */
-	path_build(buf, sizeof(buf), ANGBAND_DIR_USER, fname);
-
-	/* File type is "TEXT" */
-	FILE_TYPE(FILE_TYPE_TEXT);
-
-	fff = my_fopen(buf, "w");
-
-	/* Oops */
-	if (!fff)
-	{
-		msg_print("Cannot create spoiler file.");
-		return;
-	}
-
-	/* Dump the header */
-
-	fprintf(fff,
-	        "|||||oy\n"
-	        "~~~~~01|Spoilers|Essences\n"
-	        "~~~~~02|Alchemist|Essence Spoiler\n"
-	        "#####REssence Spoiler for %s\n"
-	        "#####R-----------------------------------\n\n",
-	        get_version_string());
-
-
-	/*New code starts here -*/
-	/*print header, including artifact header*/
-	/*Cycle through artifact flags*/
-	/*	print desc*/
-	/*	cycle through all alchemist_recipies*/
-	/*		print matching*/
-	/*Print items header.*/
-	/*Cycle through alchemist_recipies*/
-	/*	sval or tval changed?*/
-	/*		skip artifacts (tval=0)*/
-	/*		print item desc (ego (tval=1) or item)*/
-	/*	print essences required*/
-	/*Done!*/
-
-	/*Print basic header.*/
-	spoil_out(long_intro);
-
-	/*Cycle through artifact flags*/
-	for ( i = 0 ; a_select_flags[i].group ; i++ )
-	{
-		if ( a_select_flags[i].group != group )
-		{
-			group = a_select_flags[i].group;
-			spoil_out("\n~~~~~");
-			switch (group)
-			{
-			case 1:
-				spoil_out("03\n#####GStats, Sustains, Luck, Speed, Vision, etc.\n");
-				break;
-			case 2:
-				spoil_out("04\n#####GMisc. (Auras, Light, See Invisibility, etc.)\n");
-				break;
-			case 3:
-				spoil_out("05\n#####GWeapon Brands\n");
-				break;
-			case 4:
-				spoil_out("06\n#####GResistances and Immunities\n");
-				break;
-			case 5:
-				spoil_out("07\n#####GESP and Curses\n");
-				break;
-			case 88:
-				spoil_out("08\n#####GArtifact Activations\n");
-				break;
-			default:
-				spoil_out(format("09\n#####GExtra Group=%d\n", group));
-			}
-			spoil_out("lvl     xp   Power\n");
-
-		}
-		/*	print desc*/
-		spoil_out(format("%-2d %8d  %-24s %s\n",
-		                 a_select_flags[i].level,
-		                 a_select_flags[i].xp,
-				 a_select_flags[i].desc,
-				 a_select_flags[i].item_desc));
-		/*	cycle through all alchemist_recipies*/
-		for ( j = 0 ; j < max_al_idx ; j++ )
-		{
-			/*		print matching*/
-			if (alchemist_recipes[j].tval == 0
-			                && alchemist_recipes[j].sval == a_select_flags[i].flag
-			                && alchemist_recipes[j].qty
-			   )
-			{
-				spoil_out(format("    %d essences of %s\n", alchemist_recipes[j].qty,
-						 k_info[lookup_kind(TV_BATERIE, alchemist_recipes[j].sval_essence)].name));
-			}
-		}
-	}
-
-	spoil_out("\n\nThe following basic item recipes also exist:\n");
-	/*Cycle through alchemist_recipies*/
-	for ( i = 0 ; i < max_al_idx ; i ++)
-	{
-		alchemist_recipe *ar_ptr = &alchemist_recipes[i];
-
-		/*	sval or tval changed?*/
-		if (tval != ar_ptr->tval || sval != ar_ptr->sval)
-		{
-			char o_name[80];
-			/*		skip artifacts (tval=0)*/
-			if (ar_ptr->tval == 0 )
-				continue;
-
-			tval = ar_ptr->tval;
-			sval = ar_ptr->sval;
-
-			/*		print item desc (ego (tval=1)or item)*/
-			if (ar_ptr->tval == 1)
-			{
-				strcpy(o_name, e_info[ar_ptr->sval].name);
-			}
-			else
-			{
-				/* Find the name of that object */
-				o_ptr = &forge;
-				object_wipe(o_ptr);
-				object_prep(o_ptr, lookup_kind(tval, sval));
-				apply_magic(o_ptr, 1, FALSE, FALSE, FALSE);
-				object_aware(o_ptr);
-				object_known(o_ptr);
-				o_ptr->name2 = o_ptr->name2b = 0;
-				/* the 0 mode means only the text, leaving off any numbers */
-				object_desc(o_name, o_ptr, FALSE, 0);
-			}
-			spoil_out("\n");
-			spoil_out(o_name);
-		}
-		/*	print essence required*/
-		spoil_out(format(" %d %s", ar_ptr->qty,
-				 k_info[lookup_kind(TV_BATERIE, ar_ptr->sval_essence)].name));
-	}
-
-	spoil_out(NULL);
-
-	/* Check for errors */
-	if (ferror(fff) || my_fclose(fff))
-	{
-		msg_print("Cannot close spoiler file.");
-		return;
-	}
-
-	/* Message */
-	msg_print("Successfully created a spoiler file.");
-	return;
-}
-
-
 /*
  * Print a bookless spell list
  */
@@ -2686,8 +2451,7 @@ void do_cmd_spoilers()
 		prt("(2) Full Artifact Info (artifact.spo)", 6, 5);
 		prt("(3) Brief Monster Info (mon-desc.spo)", 7, 5);
 		prt("(4) Full Monster Info  (mon-info.spo)", 8, 5);
-		prt("(5) Full Essences Info (ess-info.spo)", 9, 5);
-		prt("(6) Spell Info         (spell.spo)", 10, 5);
+		prt("(5) Spell Info         (spell.spo)", 10, 5);
 
 		/* Prompt */
 		prt("Command: ", 12, 0);
@@ -2727,12 +2491,6 @@ void do_cmd_spoilers()
 
 		/* Option (5) */
 		else if (i == '5')
-		{
-			spoil_bateries("ess-info.spo");
-		}
-
-		/* Option (6) */
-		else if (i == '6')
 		{
 			spoil_spells("spell.spo");
 		}

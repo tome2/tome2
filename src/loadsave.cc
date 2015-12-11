@@ -184,7 +184,6 @@ static void do_xtra(int k_idx, ls_flag_t flag)
 	{
 		if (k_ptr->aware) tmp8u |= 0x01;
 		if (k_ptr->tried) tmp8u |= 0x02;
-		if (k_ptr->know) tmp8u |= 0x04;
 		if (k_ptr->artifact) tmp8u |= 0x80;
 
 		do_byte(&tmp8u, flag);
@@ -195,7 +194,6 @@ static void do_xtra(int k_idx, ls_flag_t flag)
 		do_byte(&tmp8u, flag);
 		k_ptr->aware = ((tmp8u & 0x01) ? TRUE : FALSE);
 		k_ptr->tried = ((tmp8u & 0x02) ? TRUE : FALSE);
-		k_ptr->know = ((tmp8u & 0x04) ? TRUE : FALSE);
 		k_ptr->artifact = ((tmp8u & 0x80) ? TRUE : FALSE);
 		return;
 	}
@@ -585,24 +583,6 @@ static bool_ do_extra(ls_flag_t flag)
 
 	do_s16b(&p_ptr->luck_base, flag);
 	do_s16b(&p_ptr->luck_max, flag);
-
-	/* Found 24 unused bytes here...
-	   Converted it to be the alchemist's
-	   known artifact flags.
-	   Note that the ego flags and the gained levels
-	   record are recorded here too, but we use the
-	   _ver_ format to protect save file compatablity.
-	   Note that the other alchemist knowledge (item types known)
-	   is stored in do_aux, and is a bit flag in a previously
-	   unused bit.
-	   */
-	for (i = 0; i < 6 ; ++i)
-		do_u32b(&alchemist_known_artifacts[i], flag);
-
-	for (i = 0; i < 32 ; ++i)
-		do_u32b(&alchemist_known_egos[i], flag);
-
-	do_u32b(&alchemist_gained, flag);
 
 	do_s32b(&p_ptr->au, flag);
 

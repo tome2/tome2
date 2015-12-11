@@ -33,9 +33,6 @@ M:V:108
 # Maximum number of terrain features in f_info.txt
 M:F:256
 
-# Maximum number of alchemist recipes
-M:a:1000
-
 # Maximum number of artifacts in a_info.txt
 M:A:219
 

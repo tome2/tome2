@@ -2,9 +2,7 @@
 #include "init2.h"
 
 #include "ability_type.hpp"
-#include "alchemist_recipe.hpp"
 #include "alloc_entry.hpp"
-#include "artifact_select_flag.hpp"
 #include "artifact_type.hpp"
 #include "cave.hpp"
 #include "cave_type.hpp"
@@ -596,23 +594,6 @@ namespace {
 		static errr parse(FILE *fp)
 		{
 			return init_player_info_txt(fp);
-		}
-
-	};
-
-	struct al_info_traits {
-
-		static constexpr char const *name = "al_info.txt";
-
-		static void allocate()
-		{
-			alchemist_recipes = make_array<alchemist_recipe>(max_al_idx);
-			a_select_flags = make_array<artifact_select_flag>(max_al_idx);
-		}
-
-		static errr parse(FILE *fp)
-		{
-			return init_al_info_txt(fp);
 		}
 
 	};
@@ -1402,10 +1383,6 @@ void init_angband(void)
 	/* Initialise abilities info */
 	note("[Initialising arrays... (abilities)]");
 	if (init_x_info<ab_info_traits>()) quit("Cannot initialise abilities");
-
-	/* Initialise alchemy info */
-	note("[Initialising arrays... (alchemy)]");
-	if (init_x_info<al_info_traits>()) quit("Cannot initialise alchemy");
 
 	/* Initialise player info */
 	note("[Initialising arrays... (players)]");

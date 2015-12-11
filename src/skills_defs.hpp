@@ -40,7 +40,6 @@
 #define SKILL_SNEAK             35
 #define SKILL_STEALTH           36
 #define SKILL_DISARMING         37
-#define SKILL_ALCHEMY           39
 #define SKILL_STEALING          40
 #define SKILL_SORCERY           41
 #define SKILL_HAND              42

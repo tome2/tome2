@@ -1010,9 +1010,6 @@ void do_cmd_activate_skill()
 	case MKEY_MINDCRAFT:
 		do_cmd_mindcraft();
 		break;
-	case MKEY_ALCHEMY:
-		do_cmd_alchemist();
-		break;
 	case MKEY_MIMIC:
 		do_cmd_mimic();
 		break;

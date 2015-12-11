@@ -783,9 +783,9 @@ for a quantity will convert any "letters" into the maximal legal value.
         Use this command to read a scroll.  Scroll spells usually have an
         area effect, except for a few cases where they act on other objects.
         Reading a scroll causes the parchment to disintegrate as the scroll
-        takes effect, unless you are an Alchemist.  Most scrolls which prompt
-        for more information can be aborted (by pressing escape), which will
-        stop reading the scroll before it disintegrates.
+        takes effect.  Most scrolls which prompt for more information can
+        be aborted (by pressing escape), which will stop reading the scroll
+        before it disintegrates.
 ~~~~~58 
 [[[[[GInscribe an object ({)]
         This command inscribes a string on an object.  The inscription is

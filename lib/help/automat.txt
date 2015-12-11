@@ -25,10 +25,9 @@ things providing you are of a certain level.
 #####GSounds quite cool, but wha...
 STOP RIGHT THERE! I haven't finished yet! Let's look at some other examples.
 Most of the time, scrolls of darkness are pretty useless. Unless you are a
-vampire, or an alchemist, right? So you might think it was no good to add
-auto-destroy of scrolls of darkness to the automatizer. But you'd be wrong, for
-you can add rules that are dependent on certain conditions, like that you are
-of a certain race, or class.
+vampire, right? So you might think it was no good to add auto-destroy of scrolls
+of darkness to the automatizer. But you'd be wrong, for you can add rules that
+are dependent on certain conditions, like that you are of a certain race, or class.
 
 #####GHey this is sounding good. What if it destroys my artifacts?
 It can't. Artifacts can never be destroyed, by the automatizer. However, watch

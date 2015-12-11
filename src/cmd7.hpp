@@ -15,8 +15,6 @@ extern void do_cmd_summoner(void);
 extern void do_cmd_mindcraft(void);
 extern void do_cmd_mimic(void);
 extern void use_ability_blade(void);
-extern int alchemist_learn_object(object_type *o_ptr);
-extern void do_cmd_alchemist(void);
 extern void do_cmd_beastmaster(void);
 extern void do_cmd_powermage(void);
 extern void do_cmd_possessor(void);

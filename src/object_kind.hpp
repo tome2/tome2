@@ -73,8 +73,6 @@ struct object_kind
 
 	bool_ tried;			/* The player has "tried" one of the items */
 
-	bool_ know;                      /* extractable flag for the alchemist */
-
 	u32b esp;                       /* ESP flags */
 	u32b oesp;                      /* Obvious ESP flags */
 

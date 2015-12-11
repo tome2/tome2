@@ -36,22 +36,9 @@ struct fireproof_settings
 
 static fireproof_settings const *fireproof_get_settings()
 {
-	static fireproof_settings fireproof_settings_tome =
-		{ TV_BATERIE, "essence", "essences", 18, 12 };
-	static fireproof_settings fireproof_settings_theme =
+	static fireproof_settings fireproof_settings =
 		{ TV_RUNE2, "rune", "runes", 5, 24 };
-
-	if (game_module_idx == MODULE_TOME)
-	{
-		return &fireproof_settings_tome;
-	}
-	if (game_module_idx == MODULE_THEME)
-	{
-		return &fireproof_settings_theme;
-	}
-	/* If we get here we're in trouble. */
-	assert(FALSE);
-	return NULL;
+	return &fireproof_settings;
 }
 
 /* These constants are how many 'points' each type of item will take

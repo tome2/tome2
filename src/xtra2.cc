@@ -2084,44 +2084,10 @@ void check_experience_obj(object_type *o_ptr)
 
 
 /*
- * Gain experience (share it to objects if needed)
+ * Gain experience
  */
 void gain_exp(s32b amount)
 {
-	int i, num = 1;
-
-	/* Count the gaining xp objects */
-	for (i = INVEN_WIELD; i < INVEN_TOTAL; i++)
-	{
-		object_type *o_ptr = &p_ptr->inventory[i];
-		u32b f1, f2, f3, f4, f5, esp;
-
-		object_flags(o_ptr, &f1, &f2, &f3, &f4, &f5, &esp);
-
-		if (!o_ptr->k_idx) continue;
-
-		if (f4 & TR4_ART_EXP) num++;
-	}
-
-	/* Now give the xp */
-	for (i = INVEN_WIELD; i < INVEN_TOTAL; i++)
-	{
-		object_type *o_ptr = &p_ptr->inventory[i];
-		u32b f1, f2, f3, f4, f5, esp;
-
-		object_flags(o_ptr, &f1, &f2, &f3, &f4, &f5, &esp);
-
-		if (!o_ptr->k_idx) continue;
-
-		if (f4 & TR4_ART_EXP)
-		{
-			o_ptr->exp += 2 * amount / (num * 3);
-
-			/* Hack -- upper limit */
-			if (o_ptr->exp > PY_MAX_EXP) o_ptr->exp = PY_MAX_EXP;
-		}
-	}
-
 	if ((p_ptr->max_exp > 0) && (race_flags1_p(PR1_CORRUPT)))
 	{
 		if ((randint(p_ptr->max_exp) < amount) || (randint(12000000) < amount))
@@ -2133,7 +2099,7 @@ void gain_exp(s32b amount)
 	};
 
 	/* Gain some experience */
-	p_ptr->exp += amount / num;
+	p_ptr->exp += amount;
 
 	/* Slowly recover from experience drainage */
 	if (p_ptr->exp < p_ptr->max_exp)

@@ -482,26 +482,12 @@ player_spec *spp_ptr;
 
 
 /*
- * More spell info
- */
-u32b alchemist_known_egos[32];
-u32b alchemist_known_artifacts[6];
-u32b alchemist_gained;
-
-
-/*
  * Calculated base hp values for player at each level,
  * store them so that drain life + restore life does not
  * affect hit points.  Also prevents shameless use of backup
  * savefiles for hitpoint acquirement.
  */
 s16b player_hp[PY_MAX_LEVEL];
-
-/*
- * The alchemy recipe arrays
- */
-alchemist_recipe *alchemist_recipes;
-artifact_select_flag *a_select_flags;
 
 /*
  * The vault generation arrays
@@ -784,11 +770,6 @@ u16b max_v_idx;
  * Maximum number of terrain features in f_info.txt
  */
 u16b max_f_idx;
-
-/*
- * Maximum number of alchemist recipies in al_info.txt
- */
-u16b max_al_idx;
 
 /*
  * Maximum number of artifacts in a_info.txt
@@ -1095,7 +1076,6 @@ tval_desc tvals[] =
 	{ TV_FOOD, "Food" },
 	{ TV_FLASK, "Flask" },
 	{ TV_MSTAFF, "Mage Staff" },
-	{ TV_BATERIE, "Essence" },
 	{ TV_PARCHMENT, "Parchment" },
 	{ TV_INSTRUMENT, "Musical Instrument" },
 	{ TV_RUNE1, "Rune 1" },

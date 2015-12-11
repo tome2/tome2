@@ -30,5 +30,4 @@ extern void do_cmd_boomerang(void);
 extern void do_cmd_immovable_special(void);
 extern void fetch(int dir, int wgt, bool_ require_los);
 extern void do_cmd_sacrifice(void);
-extern void do_cmd_create_artifact(object_type *q_ptr);
 extern void do_cmd_steal(void);

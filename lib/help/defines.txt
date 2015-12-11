@@ -12,7 +12,6 @@ instance don't have svalues as they are defined in lua.
 
 TV_SKELETON      1      /* Skeletons ('s') */
 TV_BOTTLE        2      /* Empty bottles ('!') */
-*****defines.txt*04[TV_BATERIE]       4      /* For the Alchemists */
 TV_SPIKE         5      /* Spikes ('~') */
 TV_MSTAFF        6      /* Mage Staffs */
 TV_CHEST         7      /* Chests ('~') */
@@ -603,27 +602,6 @@ TV_BOOK         111     /* spell books */
  SV_FOOD_ATHELAS                 40
  SV_FOOD_GREAT_HEALTH            41
  SV_FOOD_FORTUNE_COOKIE          42
-~~~~~04
-/* The "sval" codes for TV_BATERIE */
- SV_BATERIE_POISON    1
- SV_BATERIE_EXPLOSION 2
- SV_BATERIE_TELEPORT  3
- SV_BATERIE_COLD      4
- SV_BATERIE_FIRE      5
- SV_BATERIE_ACID      6
- SV_BATERIE_LIFE      7
- SV_BATERIE_CONFUSION 8
- SV_BATERIE_LITE      9
- SV_BATERIE_CHAOS     10
- SV_BATERIE_TIME      11
- SV_BATERIE_MAGIC     12
- SV_BATERIE_XTRA_LIFE 13
- SV_BATERIE_DARKNESS  14
- SV_BATERIE_KNOWLEDGE 15
- SV_BATERIE_FORCE     16
- SV_BATERIE_LIGHTNING 17
- SV_BATERIE_MANA      18
- MAX_BATERIE_SVAL     18
 ~~~~~09
 /* The "sval" codes for TV_CORPSE */
  SV_CORPSE_CORPSE     1

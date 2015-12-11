@@ -371,11 +371,6 @@ I:1000
 F:RANDOM_GAIN
 G:80
 
-N:39:Alchemy
-D:Ability to use essences to modify/create magic items
-A:5:Use Alchemy
-I:1000
-
 # Antimagic exclude all magic
 E:Magic-Device:Antimagic
 E:Mana:Antimagic
@@ -526,7 +521,6 @@ T:Magic:Demonology
 T:Magic:Necromancy
 T:Magic:Runecraft
 T:Magic:Thaumaturgy
-T:Magic:Alchemy
 
 T:Geomancy:Fire
 T:Geomancy:Water

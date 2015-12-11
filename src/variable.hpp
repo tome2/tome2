@@ -2,9 +2,7 @@
 
 #include "angband.h"
 #include "ability_type_fwd.hpp"
-#include "alchemist_recipe_fwd.hpp"
 #include "alloc_entry_fwd.hpp"
-#include "artifact_select_flag_fwd.hpp"
 #include "artifact_type_fwd.hpp"
 #include "birther.hpp"
 #include "cave_type_fwd.hpp"
@@ -191,12 +189,7 @@ extern player_race *rp_ptr;
 extern player_race_mod *rmp_ptr;
 extern player_class *cp_ptr;
 extern player_spec *spp_ptr;
-extern u32b alchemist_known_egos[32];
-extern alchemist_recipe *alchemist_recipes;
-extern u32b alchemist_known_artifacts[6];
-extern u32b alchemist_gained;
 extern s16b player_hp[PY_MAX_LEVEL];
-extern artifact_select_flag *a_select_flags;
 extern ability_type *ab_info;
 extern skill_type *s_info;
 extern vault_type *v_info;
@@ -234,7 +227,6 @@ extern wilderness_map **wild_map;
 extern u16b old_max_s_idx;
 extern u16b max_ab_idx;
 extern u16b max_s_idx;
-extern u16b max_al_idx;
 extern u16b max_r_idx;
 extern u16b max_re_idx;
 extern u16b max_k_idx;

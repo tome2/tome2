@@ -425,7 +425,6 @@ static bool_ object_easy_know(int i)
 	case TV_SCROLL:
 	case TV_ROD:
 	case TV_ROD_MAIN:
-	case TV_BATERIE:
 		{
 			if (k_ptr->flags3 & TR3_NORM_ART)
 				return ( FALSE );
@@ -1519,13 +1518,6 @@ void object_desc(char *buf, object_type *o_ptr, int pref, int mode)
 			break;
 		}
 
-	case TV_BATERIE:
-		{
-			modstr = basenm;
-			basenm = "& Essence~ of #";
-			break;
-		}
-
 	case TV_PARCHMENT:
 		{
 			modstr = basenm;
@@ -2009,12 +2001,6 @@ void object_desc(char *buf, object_type *o_ptr, int pref, int mode)
 		}
 		t = object_desc_str(t, ", L:");
 		t = object_desc_num(t, o_ptr->elevel);
-		t = object_desc_chr(t, ')');
-	}
-	if ((f4 & TR4_ART_EXP) && known)
-	{
-		t = object_desc_str(t, " (Exp:");
-		t = object_desc_num(t, o_ptr->exp);
 		t = object_desc_chr(t, ')');
 	}
 

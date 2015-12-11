@@ -1709,13 +1709,6 @@ bool_ object_similar(object_type const *o_ptr, object_type const *j_ptr)
 			break;
 		}
 
-		/* UHH ugly hack for the fireproof quest, sorry */
-	case TV_BATERIE:
-		{
-			if (o_ptr->pval2 != j_ptr->pval2) return (FALSE);
-			break;
-		}
-
 		/* Various */
 	default:
 		{
@@ -4382,6 +4375,7 @@ static bool kind_is_theme(int k_idx)
 		prob = match_theme.combat;
 		break;
 	case TV_HAFTED:
+		// FIXME: These cases can be shortened drastically
 		prob = match_theme.combat;
 		break;
 	case TV_POLEARM:
@@ -4434,9 +4428,6 @@ static bool kind_is_theme(int k_idx)
 		prob = match_theme.magic;
 		break;
 	case TV_POTION2:
-		prob = match_theme.magic;
-		break;
-	case TV_BATERIE:
 		prob = match_theme.magic;
 		break;
 	case TV_RANDART:

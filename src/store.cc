@@ -757,7 +757,6 @@ static bool store_will_buy(object_type const *o_ptr)
 		case TV_SCROLL:
 		case TV_POTION2:
 		case TV_POTION:
-		case TV_BATERIE:
 		case TV_BOTTLE:
 			return true;
 		}

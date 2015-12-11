@@ -4060,20 +4060,10 @@ monster_power monster_powers[96] =
 tval_desc tval_descs[] =
 {
 	{
-		TV_BATERIE,
-		"Essences contain primitive magic forces which users of the "
-		"Alchemy skill can use to create powerful magic items from "
-		"other magic items."
-	},
-	{
 		TV_MSTAFF,
 		"Mage Staves are the spellcaster's weapons of choice.  "
 		"They all reduce spellcasting time to 80% of "
 		"normal time and some will yield even greater powers."
-	},
-	{
-		3,
-		"XXX"
 	},
 	{
 		TV_PARCHMENT,
@@ -4245,7 +4235,7 @@ tval_desc tval_descs[] =
 	},
 	{
 		TV_BOTTLE,
-		"An empty bottle. Maybe an alchemist could refill it."
+		"An empty bottle."
 	},
 	{
 		TV_SPIKE,
@@ -4262,8 +4252,7 @@ tval_desc tval_descs[] =
 	{
 		TV_GLOVES,
 		"Handgear is used to protect hands, but nonmagical ones "
-		"can sometimes hinder spellcasting.  Alchemists need "
-		"gloves in order to do alchemy."
+		"can sometimes hinder spellcasting."
 	},
 	{
 		TV_HELM,

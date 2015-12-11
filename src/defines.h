@@ -434,7 +434,6 @@
 /* XXX */
 #define MKEY_MINDCRAFT          2
 #define MKEY_ANTIMAGIC          3
-#define MKEY_ALCHEMY            5
 #define MKEY_MIMIC              6
 #define MKEY_NECRO              7
 #define MKEY_POWER_MAGE         8
@@ -1192,8 +1191,6 @@
 
 #define TV_SKELETON      1      /* Skeletons ('s') */
 #define TV_BOTTLE        2      /* Empty bottles ('!') */
-/* XXX */
-#define TV_BATERIE       4      /* For the Alchemists */
 #define TV_SPIKE         5      /* Spikes ('~') */
 #define TV_MSTAFF        6      /* Mage Staffs */
 #define TV_CHEST         7      /* Chests ('~') */
@@ -1843,27 +1840,6 @@
 #define SV_FOOD_ATHELAS                 40
 #define SV_FOOD_GREAT_HEALTH            41
 #define SV_FOOD_FORTUNE_COOKIE          42
-
-/* The "sval" codes for TV_BATERIE */
-#define SV_BATERIE_POISON    1
-#define SV_BATERIE_EXPLOSION 2
-#define SV_BATERIE_TELEPORT  3
-#define SV_BATERIE_COLD      4
-#define SV_BATERIE_FIRE      5
-#define SV_BATERIE_ACID      6
-#define SV_BATERIE_LIFE      7
-#define SV_BATERIE_CONFUSION 8
-#define SV_BATERIE_LITE      9
-#define SV_BATERIE_CHAOS     10
-#define SV_BATERIE_TIME      11
-#define SV_BATERIE_MAGIC     12
-#define SV_BATERIE_XTRA_LIFE 13
-#define SV_BATERIE_DARKNESS  14
-#define SV_BATERIE_KNOWLEDGE 15
-#define SV_BATERIE_FORCE     16
-#define SV_BATERIE_LIGHTNING 17
-#define SV_BATERIE_MANA      18
-#define MAX_BATERIE_SVAL     18
 
 /* The "sval" codes for TV_CORPSE */
 #define SV_CORPSE_CORPSE     1
@@ -2687,7 +2663,6 @@
 #define TR4_LITE2               0x04000000L     /* lite radius 2 */
 #define TR4_LITE3               0x08000000L     /* lite radius 3 */
 #define TR4_FUEL_LITE           0x10000000L     /* fuelable lite */
-#define TR4_ART_EXP             0x20000000L     /* Will accumulate xp */
 #define TR4_CURSE_NO_DROP       0x40000000L     /* The obj wont be dropped */
 #define TR4_NO_RECHARGE         0x80000000L     /* Object Cannot be recharged */
 #define TR4_NULL_MASK           0xFFFFFFFCL
@@ -3434,14 +3409,6 @@
 #define INIT_POSITION         0x10
 
 /*
- * Alchemists defines
- */
-#define MAX_ALCHEMIST_RECIPES 20
-#define ALCHEMIST_ENCHANT_DAM      0x01
-#define ALCHEMIST_ENCHANT_PVAL     0x02
-#define ALCHEMIST_ENCHANT_AC       0x04
-
-/*
  * Fate
  */
 #define MAX_FATES               200
@@ -3852,7 +3819,6 @@
 #define AB_MAX_BLOW2            4
 #define AB_AMMO_CREATION        5
 #define AB_DEATH_TOUCH          6
-#define AB_CREATE_ART           7
 #define AB_FAR_REACHING         8
 #define AB_TRAPPING             9
 #define AB_UNDEAD_FORM          10
