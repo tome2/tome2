@@ -4451,27 +4451,11 @@ static void center_string(char *buf, cptr str)
 
 
 /*
- * Redefinable "print_tombstone" action
- */
-bool_ (*tombstone_aux)(void) = NULL;
-
-
-/*
  * Display a "tomb-stone"
  */
 static void print_tomb(void)
 {
-	bool_ done = FALSE;
-
-	/* Do we use a special tombstone ? */
-	if (tombstone_aux)
-	{
-		/* Use tombstone hook */
-		done = (*tombstone_aux)();
-	}
-
 	/* Print the text-tombstone */
-	if (!done)
 	{
 		cptr p;
 
