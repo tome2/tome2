@@ -2740,126 +2740,6 @@ void py_attack(int y, int x, int max_blow)
 
 
 
-static bool_ pattern_tile(int y, int x)
-{
-	return ((cave[y][x].feat <= FEAT_PATTERN_XTRA2) &&
-	        (cave[y][x].feat >= FEAT_PATTERN_START));
-}
-
-
-static bool_ pattern_seq(int c_y, int c_x, int n_y, int n_x)
-{
-	if (!(pattern_tile(c_y, c_x)) && !(pattern_tile(n_y, n_x)))
-		return TRUE;
-
-	if (cave[n_y][n_x].feat == FEAT_PATTERN_START)
-	{
-		if ((!(pattern_tile(c_y, c_x))) &&
-		                !(p_ptr->confused || p_ptr->stun || p_ptr->image))
-		{
-			if (get_check
-			                ("If you start walking the Straight Road, you must walk the whole way. Ok? "))
-				return TRUE;
-			else
-				return FALSE;
-		}
-		else
-			return TRUE;
-	}
-	else if ((cave[n_y][n_x].feat == FEAT_PATTERN_OLD) ||
-	                (cave[n_y][n_x].feat == FEAT_PATTERN_END) ||
-	                (cave[n_y][n_x].feat == FEAT_PATTERN_XTRA2))
-	{
-		if (pattern_tile(c_y, c_x))
-		{
-			return TRUE;
-		}
-		else
-		{
-			msg_print
-			("You must start walking the Straight Road from the startpoint.");
-			return FALSE;
-		}
-	}
-	else if ((cave[n_y][n_x].feat == FEAT_PATTERN_XTRA1) ||
-	                (cave[c_y][c_x].feat == FEAT_PATTERN_XTRA1))
-	{
-		return TRUE;
-	}
-	else if (cave[c_y][c_x].feat == FEAT_PATTERN_START)
-	{
-		if (pattern_tile(n_y, n_x))
-			return TRUE;
-		else
-		{
-			msg_print("You must walk the Straight Road in correct order.");
-			return FALSE;
-		}
-	}
-	else if ((cave[c_y][c_x].feat == FEAT_PATTERN_OLD) ||
-	                (cave[c_y][c_x].feat == FEAT_PATTERN_END) ||
-	                (cave[c_y][c_x].feat == FEAT_PATTERN_XTRA2))
-	{
-		if (!pattern_tile(n_y, n_x))
-		{
-			msg_print("You may not step off from the Straight Road.");
-			return FALSE;
-		}
-		else
-		{
-			return TRUE;
-		}
-	}
-	else
-	{
-		if (!pattern_tile(c_y, c_x))
-		{
-			msg_print
-			("You must start walking the Straight Road from the startpoint.");
-			return FALSE;
-		}
-		else
-		{
-			byte ok_move = FEAT_PATTERN_START;
-			switch (cave[c_y][c_x].feat)
-			{
-			case FEAT_PATTERN_1:
-				ok_move = FEAT_PATTERN_2;
-				break;
-			case FEAT_PATTERN_2:
-				ok_move = FEAT_PATTERN_3;
-				break;
-			case FEAT_PATTERN_3:
-				ok_move = FEAT_PATTERN_4;
-				break;
-			case FEAT_PATTERN_4:
-				ok_move = FEAT_PATTERN_1;
-				break;
-			default:
-				if (wizard)
-					msg_format("Funny Straight Road walking.");
-				return TRUE; 	/* Goof-up */
-			}
-
-			if ((cave[n_y][n_x].feat == ok_move) ||
-			                (cave[n_y][n_x].feat == cave[c_y][c_x].feat))
-				return TRUE;
-			else
-			{
-				if (!pattern_tile(n_y, n_x))
-					msg_print("You may not step off from the Straight Road.");
-				else
-					msg_print
-					("You must walk the Straight Road in correct order.");
-
-				return FALSE;
-			}
-		}
-	}
-}
-
-
-
 bool_ player_can_enter(byte feature)
 {
 	bool_ pass_wall;
@@ -3249,8 +3129,7 @@ void move_player_aux(int dir, int do_pickup, int run, bool_ disarm)
 
 		/* Attack -- only if we can see it OR it is not in a wall */
 		if ((is_friend(m_ptr) > 0) &&
-		                !(p_ptr->confused || p_ptr->image || !(m_ptr->ml) || p_ptr->stun) &&
-		                (pattern_seq(p_ptr->py, p_ptr->px, y, x)) &&
+				!(p_ptr->confused || p_ptr->image || !(m_ptr->ml) || p_ptr->stun) &&
 		                ((player_can_enter(cave[y][x].feat))))
 		{
 			m_ptr->csleep = 0;
@@ -3398,20 +3277,6 @@ void move_player_aux(int dir, int do_pickup, int run, bool_ disarm)
 		/* Sound */
 		sound(SOUND_HITWALL);
 	}
-
-	/* Normal movement */
-	if (!pattern_seq(p_ptr->py, p_ptr->px, y, x))
-	{
-		if (!(p_ptr->confused || p_ptr->stun || p_ptr->image))
-		{
-			energy_use = 0;
-		}
-
-		disturb(0); 			/* To avoid a loop with running */
-
-		oktomove = FALSE;
-	}
-
 
 	/*
 	 * Check trap detection status -- retrieve them here
