@@ -881,11 +881,6 @@ static cptr process_pref_file_expr(char **sp, char *fp)
 				v = ANGBAND_SYS;
 			}
 
-			else if (streq(b + 1, "KEYBOARD"))
-			{
-				v = ANGBAND_KEYBOARD;
-			}
-
 			/* Graphics */
 			if (streq(b + 1, "GRAF"))
 			{

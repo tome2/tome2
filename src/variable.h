@@ -7,7 +7,6 @@ extern "C" {
 #endif
 
 extern cptr ANGBAND_SYS;
-extern cptr ANGBAND_KEYBOARD;
 extern char *ANGBAND_DIR_MODULES;
 extern char *ANGBAND_DIR_SAVE;
 extern char *ANGBAND_DIR_CORE;
