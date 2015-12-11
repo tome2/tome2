@@ -114,7 +114,7 @@ bool_ is_magestaff()
 static void browse_school_spell(int book, int spell_idx, object_type *o_ptr)
 {
 	int i;
-	int num = 0, where = 1;
+	int num = 0;
 	int ask;
 	char choice;
 	char out_val[160];
@@ -133,13 +133,13 @@ static void browse_school_spell(int book, int spell_idx, object_type *o_ptr)
 	Term_save();
 
 	/* Display a list of spells */
-	where = print_book(book, spell_idx, o_ptr);
+	print_book(book, spell_idx, o_ptr);
 
 	/* Get a spell from the user */
 	while (get_com(out_val, &choice))
 	{
 		/* Display a list of spells */
-		where = print_book(book, spell_idx, o_ptr);
+		print_book(book, spell_idx, o_ptr);
 
 		/* Note verify */
 		ask = (isupper(choice));
@@ -161,7 +161,7 @@ static void browse_school_spell(int book, int spell_idx, object_type *o_ptr)
 		Term_load();
 
 		/* Display a list of spells */
-		where = print_book(book, spell_idx, o_ptr);
+		auto where = print_book(book, spell_idx, o_ptr);
 		print_spell_desc(spell_x(book, spell_idx, i), where);
 	}
 
