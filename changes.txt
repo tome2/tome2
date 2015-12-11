@@ -1,3 +1,13 @@
+T.O.M.E 2.4.x (ah)
+
+Game:
+
+- Removed Alchemist class from ToME module. They were
+  horribly broken and encouraged only scummy play. They
+  were also indirectly responsible for a lot of items
+  that were junk to every other character class.
+- Increased size of the home drastically.
+
 T.o.M.E 2.3.10 (ah)
 
 User Interface:
