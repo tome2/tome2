@@ -1697,10 +1697,6 @@ static void term_data_link(term_data *td)
 	/* Use a "software" cursor */
 	t->soft_cursor = TRUE;
 
-	/* Erase with "white space" */
-	t->attr_blank = TERM_WHITE;
-	t->char_blank = ' ';
-
 	/* Prepare the template hooks */
 	t->xtra_hook = Term_xtra_win;
 	t->curs_hook = Term_curs_win;

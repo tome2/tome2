@@ -1271,10 +1271,7 @@ static errr term_data_init(term_data *td, int i)
 	/* Use a "soft" cursor */
 	t->soft_cursor = TRUE;
 
-	/* Erase with "white space" */
-	t->attr_blank = TERM_WHITE;
-	t->char_blank = ' ';
-
+	/* Hooks */
 	t->xtra_hook = Term_xtra_gtk;
 	t->text_hook = Term_text_gtk;
 	t->wipe_hook = Term_wipe_gtk;

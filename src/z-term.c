@@ -477,6 +477,11 @@ void Term_queue_chars(int x, int y, int n, byte a, cptr s)
 }
 
 
+/*
+ * Blank attribute/character
+ */
+static const byte ATTR_BLANK = TERM_WHITE;
+static const char CHAR_BLANK = ' ';
 
 /*
  * Flush a row of the current window (see "Term_fresh")
@@ -503,7 +508,7 @@ static void Term_fresh_row_text(int y, int x1, int x2)
 	int fx = 0;
 
 	/* Pending attr */
-	byte fa = Term->attr_blank;
+	byte fa = ATTR_BLANK;
 
 	byte oa;
 	char oc;
@@ -727,8 +732,8 @@ errr Term_fresh(void)
 	/* Handle "total erase" */
 	if (Term->total_erase)
 	{
-		byte na = Term->attr_blank;
-		char nc = Term->char_blank;
+		byte na = ATTR_BLANK;
+		char nc = CHAR_BLANK;
 
 		/* Physically erase the entire window */
 		Term_xtra(TERM_XTRA_CLEAR, 0);
@@ -1130,8 +1135,8 @@ errr Term_erase(int x, int y, int n)
 	int x1 = -1;
 	int x2 = -1;
 
-	int na = Term->attr_blank;
-	int nc = Term->char_blank;
+	int na = ATTR_BLANK;
+	int nc = CHAR_BLANK;
 
 	byte *scr_aa;
 	char *scr_cc;
@@ -1201,8 +1206,8 @@ errr Term_clear(void)
 	int w = Term->wid;
 	int h = Term->hgt;
 
-	byte na = Term->attr_blank;
-	char nc = Term->char_blank;
+	byte na = ATTR_BLANK;
+	char nc = CHAR_BLANK;
 
 	/* Cursor usable */
 	Term->scr->cu = 0;
@@ -1952,11 +1957,6 @@ errr term_init(term *t, int w, int h, int k)
 
 	/* Force "total erase" */
 	t->total_erase = TRUE;
-
-
-	/* Default "blank" */
-	t->attr_blank = 0;
-	t->char_blank = ' ';
 
 
 	/* Success */

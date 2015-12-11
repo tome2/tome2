@@ -76,12 +76,6 @@ struct term_win
  *
  *
  *
- *	- Value "attr_blank"
- *	  Use this "attr" value for "blank" grids
- *
- *	- Value "char_blank"
- *	  Use this "char" value for "blank" grids
- *
  *
  *	- Ignore this pointer
  *
@@ -133,9 +127,6 @@ struct term
 	bool_ icky_corner;
 	bool_ soft_cursor;
 	bool_ always_text;
-
-	byte attr_blank;
-	char char_blank;
 
 	char *key_queue;
 	u16b key_head;

@@ -1767,10 +1767,6 @@ static errr term_data_init(term_data *td, int i)
 	/* Picture routine flags */
 	t->always_text = FALSE;
 
-	/* Erase with "white space" */
-	t->attr_blank = TERM_WHITE;
-	t->char_blank = ' ';
-
 	/* Hooks */
 	t->xtra_hook = Term_xtra_sdl;
 	t->curs_hook = Term_curs_sdl;
