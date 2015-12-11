@@ -258,7 +258,7 @@ N:7:Home
 A:0:0:54:55:3:62
 O:0:0:0:0
 G:8:y
-W:24
+W:240
 
 N:8:Book Store
 # & Book~ of Beginner Cantrips
