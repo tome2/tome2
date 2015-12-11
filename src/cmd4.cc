@@ -3535,12 +3535,14 @@ static void do_cmd_knowledge_pets(void)
 		/* Calculate "upkeep" for friendly monsters */
 		if (m_ptr->status >= MSTATUS_PET)
 		{
-			char pet_name[80];
-			monster_race *r_ptr = race_inf(m_ptr);
+			auto const r_ptr = m_ptr->race();
 
 			t_friends++;
 			t_levels += m_ptr->level;
+
+			char pet_name[80];
 			monster_desc(pet_name, m_ptr, 0x88);
+
 			fprintf(fff, "%s%s (%s)\n",
 			        (r_ptr->flags1 & RF1_UNIQUE) ? "#####G" : "",
 			        pet_name,

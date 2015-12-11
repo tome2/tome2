@@ -40,10 +40,8 @@ static cptr wd_his[3] = { "its", "his", "her" };
  * Determine if the "armor" is known
  * The higher the level, the fewer kills needed.
  */
-static bool_ know_armour(int r_idx)
+static bool_ know_armour(std::shared_ptr<monster_race const> r_ptr)
 {
-	monster_race *r_ptr = &r_info[r_idx];
-
 	s32b level = r_ptr->level;
 
 	s32b kills = r_ptr->r_tkills;
@@ -67,10 +65,8 @@ static bool_ know_armour(int r_idx)
  * the higher the level of the monster, the fewer the attacks you need,
  * the more damage an attack does, the more attacks you need
  */
-static bool_ know_damage(int r_idx, int i)
+static bool_ know_damage(std::shared_ptr<monster_race const> r_ptr, int i)
 {
-	monster_race *r_ptr = &r_info[r_idx];
-
 	s32b level = r_ptr->level;
 
 	s32b a = r_ptr->r_blows[i];
@@ -106,10 +102,8 @@ static bool_ know_damage(int r_idx, int i)
  * left edge of the screen, on a cleared line, in which the recall is
  * to take place.  One extra blank line is left after the recall.
  */
-static void roff_aux(int r_idx, int ego, int remem)
+static void roff_aux(std::shared_ptr<monster_race> r_ptr, int remem)
 {
-	monster_race *r_ptr;
-
 	bool_ old = FALSE;
 	bool_ sin = FALSE;
 
@@ -136,12 +130,6 @@ static void roff_aux(int r_idx, int ego, int remem)
 	cptr	vp[64];
 
 	monster_race save_mem;
-
-
-
-	/* Access the race and lore */
-	r_ptr = race_info_idx(r_idx, ego);
-
 
 	/* Cheat -- Know everything */
 	if (cheat_know)
@@ -808,7 +796,7 @@ static void roff_aux(int r_idx, int ego, int remem)
 
 
 	/* Describe monster "toughness" */
-	if (know_armour(r_idx))
+	if (know_armour(r_ptr))
 	{
 		/* Armor */
 		text_out(format("%^s has an armor rating of ", wd_he[msex]));
@@ -1469,7 +1457,7 @@ static void roff_aux(int r_idx, int ego, int remem)
 			text_out_c(TERM_YELLOW, q);
 
 			/* Describe damage (if known) */
-			if (d1 && d2 && know_damage(r_idx, m))
+			if (d1 && d2 && know_damage(r_ptr, m))
 			{
 				/* Display the damage */
 				text_out(" with damage");
@@ -1517,18 +1505,15 @@ static void roff_aux(int r_idx, int ego, int remem)
  */
 static void roff_name(int r_idx, int ego)
 {
-	monster_race *r_ptr = race_info_idx(r_idx, ego);
-
-	byte	a1, a2;
-	char	c1, c2;
+	const auto r_ptr = race_info_idx(r_idx, ego);
 
 	/* Access the chars */
-	c1 = r_ptr->d_char;
-	c2 = r_ptr->x_char;
+	const char c1 = r_ptr->d_char;
+	const char c2 = r_ptr->x_char;
 
 	/* Access the attrs */
-	a1 = r_ptr->d_attr;
-	a2 = r_ptr->x_attr;
+	const byte a1 = r_ptr->d_attr;
+	const byte a2 = r_ptr->x_attr;
 
 	/* A title (use "The" for non-uniques) */
 	if (!(r_ptr->flags1 & (RF1_UNIQUE)))
@@ -1583,6 +1568,8 @@ static void roff_top(int r_idx, int ego)
  */
 void screen_roff(int r_idx, int ego, int remember)
 {
+	auto r_ptr = race_info_idx(r_idx, ego);
+
 	/* Flush messages */
 	msg_print(NULL);
 
@@ -1590,19 +1577,20 @@ void screen_roff(int r_idx, int ego, int remember)
 	Term_erase(0, 1, 255);
 
 	/* Recall monster */
-	roff_aux(r_idx, ego, remember);
+	roff_aux(r_ptr, remember);
 
 	/* Describe monster */
 	roff_top(r_idx, ego);
 }
 
 /*
- * Ddescribe the given monster race at the current pos of the "term" window
+ * Describe the given monster race at the current pos of the "term" window
  */
 void monster_description_out(int r_idx, int ego)
 {
+	auto r_ptr = race_info_idx(r_idx, ego);
 	roff_name(r_idx, ego);
-	roff_aux(r_idx, ego, 0);
+	roff_aux(r_ptr, 0);
 }
 
 /*
@@ -1625,7 +1613,8 @@ void display_roff(int r_idx, int ego)
 	Term_gotoxy(0, 1);
 
 	/* Recall monster */
-	roff_aux(r_idx, ego, 0);
+	auto r_ptr = race_info_idx(r_idx, ego);
+	roff_aux(r_ptr, 0);
 
 	/* Describe monster */
 	roff_top(r_idx, ego);
@@ -1835,7 +1824,7 @@ void set_mon_num_hook(void)
 /*
  * Check if monster can cross terrain
  */
-bool_ monster_can_cross_terrain(byte feat, monster_race *r_ptr)
+bool_ monster_can_cross_terrain(byte feat, std::shared_ptr<monster_race> r_ptr)
 {
 	/* Deep water */
 	if (feat == FEAT_DEEP_WATER)

@@ -2,9 +2,11 @@
 
 #include "h-basic.h"
 #include "monster_blow.hpp"
+#include "monster_race_fwd.hpp"
 
 #include <cassert>
 #include <vector>
+#include <memory>
 
 /**
  * Monster information for a specific monster.
@@ -65,6 +67,12 @@ struct monster_type
 	s16b target = 0;                    /* Monster target */
 
 	s16b possessor = 0;                 /* Is it under the control of a possessor ? */
+
+	/**
+	 * @brief get the "effective race" of the monster. This incorporates
+	 * the effects of the "ego" of the monster, if any.
+	 */
+	std::shared_ptr<monster_race> race() const;
 
 	/**
 	 * @brief wipe the object's state

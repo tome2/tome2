@@ -809,7 +809,6 @@ static void regen_monsters(void)
 	{
 		/* Check the i'th monster */
 		monster_type *m_ptr = &m_list[i];
-		monster_race *r_ptr = race_inf(m_ptr);
 
 		/* Skip dead monsters */
 		if (!m_ptr->r_idx) continue;
@@ -827,8 +826,8 @@ static void regen_monsters(void)
 			if (!frac) frac = 1;
 
 			/* Hack -- Some monsters regenerate quickly */
+			auto const r_ptr = m_ptr->race();
 			if (r_ptr->flags2 & (RF2_REGENERATE)) frac *= 2;
-
 
 			/* Hack -- Regenerate */
 			m_ptr->hp += frac;
@@ -2962,8 +2961,6 @@ static void process_world(void)
 		/* Hatch eggs */
 		if (o_ptr->tval == TV_EGG)
 		{
-			int mx, my;
-
 			if (o_ptr->timeout == 0)
 			{
 				o_ptr->pval--;
@@ -2971,17 +2968,14 @@ static void process_world(void)
 				/* Notice changes */
 				if (o_ptr->pval <= 0)
 				{
-					monster_type *m_ptr;
-					monster_race *r_ptr;
-
-					mx = p_ptr->px;
-					my = p_ptr->py + 1;
+					int mx = p_ptr->px;
+					int my = p_ptr->py + 1;
 					get_pos_player(5, &my, &mx);
 					msg_print("Your egg hatches!");
 					place_monster_aux(my, mx, o_ptr->pval2, FALSE, FALSE, MSTATUS_PET);
 
-					m_ptr = &m_list[cave[my][mx].m_idx];
-					r_ptr = race_inf(m_ptr);
+					monster_type *m_ptr = &m_list[cave[my][mx].m_idx];
+					auto const r_ptr = m_ptr->race();
 
 					if ((r_ptr->flags9 & RF9_IMPRESED) && can_create_companion())
 					{
@@ -4518,17 +4512,14 @@ static void process_player(void)
 				/* Shimmer multi-hued monsters */
 				for (i = 1; i < m_max; i++)
 				{
-					monster_type *m_ptr;
-					monster_race *r_ptr;
-
 					/* Access monster */
-					m_ptr = &m_list[i];
+					monster_type *m_ptr = &m_list[i];
 
 					/* Skip dead monsters */
 					if (!m_ptr->r_idx) continue;
 
 					/* Access the monster race */
-					r_ptr = race_inf(m_ptr);
+					auto const r_ptr = m_ptr->race();
 
 					/* Skip non-multi-hued monsters */
 					if (!(r_ptr->flags1 & (RF1_ATTR_MULTI))) continue;

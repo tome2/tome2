@@ -550,7 +550,7 @@ static byte breath_to_attr[32][2] =
  *
  * If a monster does not breath anything, it can be any color.
  */
-static byte multi_hued_attr(monster_race *r_ptr)
+static byte multi_hued_attr(std::shared_ptr<monster_race> r_ptr)
 {
 	byte allowed_attrs[15];
 
@@ -1094,7 +1094,7 @@ static void map_info(int y, int x, byte *ap, char *cp)
 	if (c_ptr->m_idx)
 	{
 		monster_type *m_ptr = &m_list[c_ptr->m_idx];
-		monster_race *r_ptr = race_inf(m_ptr);
+		auto const r_ptr = m_ptr->race();
 
 		if (r_ptr->flags9 & RF9_MIMIC)
 		{
@@ -1125,8 +1125,6 @@ static void map_info(int y, int x, byte *ap, char *cp)
 			/* Visible monster */
 			if (m_ptr->ml)
 			{
-				monster_race *r_ptr = race_inf(m_ptr);
-
 				/* Desired attr/char */
 				c = r_ptr->x_char;
 				a = r_ptr->x_attr;
@@ -1526,7 +1524,7 @@ void map_info_default(int y, int x, byte *ap, char *cp)
 	if (c_ptr->m_idx)
 	{
 		monster_type *m_ptr = &m_list[c_ptr->m_idx];
-		monster_race *r_ptr = race_inf(m_ptr);
+		auto const r_ptr = m_ptr->race();
 
 		if (r_ptr->flags9 & RF9_MIMIC)
 		{
@@ -1557,8 +1555,6 @@ void map_info_default(int y, int x, byte *ap, char *cp)
 			/* Visible monster */
 			if (m_ptr->ml)
 			{
-				monster_race *r_ptr = race_inf(m_ptr);
-
 				/* Default attr/char */
 				c = r_ptr->d_char;
 				a = r_ptr->d_attr;
@@ -1775,7 +1771,7 @@ void note_spot(int y, int x)
 	if (c_ptr->m_idx)
 	{
 		monster_type *m_ptr = &m_list[c_ptr->m_idx];
-		monster_race *r_ptr = race_inf(m_ptr);
+		auto r_ptr = m_ptr->race();
 
 		if (r_ptr->flags9 & RF9_MIMIC)
 		{
@@ -3617,7 +3613,6 @@ void update_mon_lite(void)
 	for (i = 1; i < m_max; i++)
 	{
 		monster_type *m_ptr = &m_list[i];
-		monster_race *r_ptr;
 
 		/* Skip dead monsters */
 		if (!m_ptr->r_idx) continue;
@@ -3625,8 +3620,8 @@ void update_mon_lite(void)
 		/* Skip out-of-sight monsters (MAX_SIGHT + max radius) */
 		if (m_ptr->cdis > MAX_SIGHT + 1) continue;
 
-		/* Access monster race info (with possible ego mods) */
-		r_ptr = race_info_idx(m_ptr->r_idx, m_ptr->ego);
+		/* Access monster race */
+		auto r_ptr = m_ptr->race();
 
 		/* Skip monsters not carrying light source */
 		if (!(r_ptr->flags9 & RF9_HAS_LITE)) continue;
@@ -4030,7 +4025,7 @@ void wiz_lite(void)
 			if (c_ptr->m_idx)
 			{
 				monster_type *m_ptr = &m_list[c_ptr->m_idx];
-				monster_race *r_ptr = race_inf(m_ptr);
+				auto const r_ptr = m_ptr->race();
 
 				if (r_ptr->flags9 & RF9_MIMIC)
 				{

@@ -5,6 +5,8 @@
 #include "object_type_fwd.hpp"
 #include "player_race_mod_fwd.hpp"
 
+#include <memory>
+
 extern void do_rebirth(void);
 extern void set_subrace_title(player_race_mod *rmp_ptr, cptr name);
 extern void set_subrace_description(player_race_mod *rmp_ptr, cptr desc);
@@ -69,7 +71,7 @@ extern void check_experience(void);
 extern void check_experience_obj(object_type *o_ptr);
 extern void gain_exp(s32b amount);
 extern void lose_exp(s32b amount);
-extern int get_coin_type(monster_race *r_ptr);
+extern int get_coin_type(std::shared_ptr<monster_race const> r_ptr);
 extern void monster_death(int m_idx);
 extern bool_ mon_take_hit(int m_idx, int dam, bool_ *fear, cptr note);
 extern bool_ change_panel(int dy, int dx);

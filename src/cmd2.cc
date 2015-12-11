@@ -3336,7 +3336,7 @@ void do_cmd_fire(void)
 				cave_type *c_ptr = &cave[y][x];
 
 				monster_type *m_ptr = &m_list[c_ptr->m_idx];
-				monster_race *r_ptr = race_inf(m_ptr);
+				auto const r_ptr = m_ptr->race();
 
 				/* Check the visibility */
 				visible = m_ptr->ml;
@@ -3750,7 +3750,7 @@ void do_cmd_throw(void)
 			cave_type *c_ptr = &cave[y][x];
 
 			monster_type *m_ptr = &m_list[c_ptr->m_idx];
-			monster_race *r_ptr = race_inf(m_ptr);
+			auto r_ptr = m_ptr->race();
 
 			/* Check the visibility */
 			visible = m_ptr->ml;
@@ -4077,7 +4077,7 @@ void do_cmd_boomerang(void)
 			cave_type *c_ptr = &cave[y][x];
 
 			monster_type *m_ptr = &m_list[c_ptr->m_idx];
-			monster_race *r_ptr = race_inf(m_ptr);
+			auto const r_ptr = m_ptr->race();
 
 			/* Check the visibility */
 			visible = m_ptr->ml;

@@ -72,7 +72,7 @@ bool_ is_enemy(monster_type *m_ptr, monster_type *t_ptr)
 
 bool_ change_side(monster_type *m_ptr)
 {
-	monster_race *r_ptr = race_inf(m_ptr);
+	auto const r_ptr = m_ptr->race();
 
 	/* neutrals and companions  */
 	switch (m_ptr->status)

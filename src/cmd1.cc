@@ -236,7 +236,7 @@ s16b tot_dam_aux(object_type *o_ptr, int tdam, monster_type *m_ptr,
 {
 	int mult = 1;
 
-	monster_race *r_ptr = race_inf(m_ptr);
+	auto const r_ptr = m_ptr->race();
 
 	u32b f1, f2, f3, f4, f5, esp;
 
@@ -681,10 +681,7 @@ static void hit_trap(void)
 
 void touch_zap_player(monster_type *m_ptr)
 {
-	int aura_damage = 0;
-
-	monster_race *r_ptr = race_inf(m_ptr);
-
+	auto r_ptr = m_ptr->race();
 
 	if (r_ptr->flags2 & (RF2_AURA_FIRE))
 	{
@@ -692,7 +689,7 @@ void touch_zap_player(monster_type *m_ptr)
 		{
 			char aura_dam[80];
 
-			aura_damage =
+			int aura_damage =
 			        damroll(1 + (m_ptr->level / 26), 1 + (m_ptr->level / 17));
 
 			/* Hack -- Get the "died from" name */
@@ -717,7 +714,7 @@ void touch_zap_player(monster_type *m_ptr)
 		{
 			char aura_dam[80];
 
-			aura_damage =
+			int aura_damage =
 			        damroll(1 + (m_ptr->level / 26), 1 + (m_ptr->level / 17));
 
 			/* Hack -- Get the "died from" name */
@@ -745,8 +742,6 @@ static void carried_monster_attack(s16b m_idx, bool_ *fear, bool_ *mdeath,
 	monster_type *t_ptr = &m_list[m_idx];
 
 	monster_race *r_ptr;
-
-	monster_race *tr_ptr = race_inf(t_ptr);
 
 	int ap_cnt;
 
@@ -1168,6 +1163,7 @@ static void carried_monster_attack(s16b m_idx, bool_ *fear, bool_ *mdeath,
 
 				if (touched)
 				{
+					auto tr_ptr = t_ptr->race();
 					/* Aura fire */
 					if ((tr_ptr->flags2 & RF2_AURA_FIRE) &&
 					                !(r_ptr->flags3 & RF3_IM_FIRE))
@@ -1268,9 +1264,7 @@ static void incarnate_monster_attack(s16b m_idx, bool_ *fear, bool_ *mdeath,
 {
 	monster_type *t_ptr = &m_list[m_idx];
 
-	monster_race *r_ptr;
-
-	monster_race *tr_ptr = race_inf(t_ptr);
+	auto tr_ptr = t_ptr->race();
 
 	int ap_cnt;
 
@@ -1289,7 +1283,7 @@ static void incarnate_monster_attack(s16b m_idx, bool_ *fear, bool_ *mdeath,
 
 	if (!p_ptr->body_monster) return;
 
-	r_ptr = race_info_idx(p_ptr->body_monster, 0);
+	auto r_ptr = &r_info[p_ptr->body_monster];
 
 	/* Not allowed to attack */
 	if (r_ptr->flags1 & RF1_NEVER_BLOW) return;
@@ -1834,12 +1828,10 @@ static void flavored_attack(int percent, char *output)
  */
 void attack_special(monster_type *m_ptr, s32b special, int dam)
 {
-	char m_name[80];
-
-	monster_race *r_ptr = race_inf(m_ptr);
-
+	auto const r_ptr = m_ptr->race();
 
 	/* Extract monster name (or "it") */
+	char m_name[80];
 	monster_desc(m_name, m_ptr, 0);
 
 	/* Special - Cut monster */
@@ -1912,12 +1904,10 @@ void attack_special(monster_type *m_ptr, s32b special, int dam)
 static void py_attack_hand(int *k, monster_type *m_ptr, s32b *special)
 {
 	s16b special_effect = 0, stun_effect = 0, times = 0;
-	martial_arts *ma_ptr, *old_ptr, *blow_table = ma_blows;
-	int resist_stun = 0, max = MAX_MA;
-	monster_race *r_ptr = race_inf(m_ptr);
-	char m_name[80];
+	martial_arts *blow_table = ma_blows;
+	int resist_stun = 0;
+	int max = MAX_MA;
 	bool_ desc = FALSE;
-	bool_ done_crit;
 	int plev = p_ptr->lev;
 
 	if ((!p_ptr->body_monster) && (p_ptr->mimic_form == resolve_mimic_name("Bear")) &&
@@ -1933,12 +1923,11 @@ static void py_attack_hand(int *k, monster_type *m_ptr, s32b *special)
 		max = MAX_MA;
 		plev = get_skill(SKILL_HAND);
 	}
-	ma_ptr = &blow_table[0];
-	old_ptr = &blow_table[0];
+	martial_arts *ma_ptr = &blow_table[0];
+	martial_arts *old_ptr = &blow_table[0];
 
 	/* Extract monster name (or "it") */
-	monster_desc(m_name, m_ptr, 0);
-
+	auto const r_ptr = m_ptr->race();
 	if (r_ptr->flags1 & RF1_UNIQUE) resist_stun += 88;
 	if (r_ptr->flags3 & RF3_NO_CONF) resist_stun += 44;
 	if (r_ptr->flags3 & RF3_NO_SLEEP) resist_stun += 44;
@@ -1975,6 +1964,11 @@ static void py_attack_hand(int *k, monster_type *m_ptr, s32b *special)
 
 	*k = damroll(ma_ptr->dd, ma_ptr->ds);
 
+	/* Extract name */
+	char m_name[80];
+	monster_desc(m_name, m_ptr, 0);
+
+	/* Describe attack */
 	if (ma_ptr->effect & MA_KNEE)
 	{
 		if (r_ptr->flags1 & RF1_MALE)
@@ -2028,6 +2022,7 @@ static void py_attack_hand(int *k, monster_type *m_ptr, s32b *special)
 		desc = TRUE;
 	}
 
+	bool_ done_crit;
 	*k = critical_norm(plev * (randint(10)), ma_ptr->min_level, *k, -1, &done_crit);
 
 	if ((special_effect & MA_KNEE) && ((*k + p_ptr->to_d) < m_ptr->hp))
@@ -2065,7 +2060,7 @@ static void py_attack_hand(int *k, monster_type *m_ptr, s32b *special)
 /*
  * Apply nazgul effects
  */
-void do_nazgul(int *k, int *num, int num_blow, int weap, monster_race *r_ptr,
+static void do_nazgul(int *k, int *num, int num_blow, int weap, std::shared_ptr<monster_race> r_ptr,
                object_type *o_ptr)
 {
 	u32b f1, f2, f3, f4, f5, esp;
@@ -2170,12 +2165,6 @@ void py_attack(int y, int x, int max_blow)
 
 	monster_type *m_ptr = &m_list[c_ptr->m_idx];
 
-	monster_race *r_ptr = race_inf(m_ptr);
-
-	object_type *o_ptr;
-
-	char m_name[80];
-
 	bool_ fear = FALSE;
 
 	bool_ mdeath = FALSE;
@@ -2230,6 +2219,7 @@ void py_attack(int y, int x, int max_blow)
 
 
 	/* Extract monster name (or "it") */
+	char m_name[80];
 	monster_desc(m_name, m_ptr, 0);
 
 	/* Auto-Recall if possible and visible */
@@ -2309,7 +2299,10 @@ void py_attack(int y, int x, int max_blow)
 			num = 0;
 
 			/* Access the weapon */
-			o_ptr = &p_ptr->inventory[INVEN_WIELD + weap];
+			object_type *o_ptr = &p_ptr->inventory[INVEN_WIELD + weap];
+
+			/* Get race info */
+			auto r_ptr = m_ptr->race();
 
 			/* Calculate the "attack quality" */
 			bonus = p_ptr->to_h + p_ptr->to_h_melee + o_ptr->to_h;
@@ -2686,7 +2679,7 @@ void py_attack(int y, int x, int max_blow)
 									monster_desc(m_name, m_ptr, 0);
 
 									/* Hack -- Get new race */
-									r_ptr = race_inf(m_ptr);
+									r_ptr = m_ptr->race();
 
 									fear = FALSE;
 								}
@@ -3070,7 +3063,7 @@ void move_player_aux(int dir, int do_pickup, int run, bool_ disarm)
 
 	monster_type *m_ptr;
 
-	monster_race *r_ptr = &r_info[p_ptr->body_monster], *mr_ptr;
+	monster_race *r_ptr = &r_info[p_ptr->body_monster];
 
 	char m_name[80];
 
@@ -3242,7 +3235,7 @@ void move_player_aux(int dir, int do_pickup, int run, bool_ disarm)
 
 	/* Get the monster */
 	m_ptr = &m_list[c_ptr->m_idx];
-	mr_ptr = race_inf(m_ptr);
+	auto const mr_ptr = m_ptr->race();
 
 	if (p_ptr->inventory[INVEN_WIELD].art_name)
 	{
@@ -4984,8 +4977,6 @@ bool_ execute_inscription(byte i, byte y, byte x)
 
 	case INSCRIP_CHASM:
 		{
-			monster_type *m_ptr;
-			monster_race *r_ptr;
 			int ii = x, ij = y;
 
 			cave_set_feat(ij, ii, FEAT_DARK_PIT);
@@ -4995,8 +4986,8 @@ bool_ execute_inscription(byte i, byte y, byte x)
 
 			if (c_ptr->m_idx)
 			{
-				m_ptr = &m_list[c_ptr->m_idx];
-				r_ptr = race_inf(m_ptr);
+				monster_type *m_ptr = &m_list[c_ptr->m_idx];
+				auto const r_ptr = m_ptr->race();
 
 				if (r_ptr->flags7 & RF7_CAN_FLY)
 				{

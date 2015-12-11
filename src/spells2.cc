@@ -2315,11 +2315,11 @@ template<typename P, typename U> static bool detect_monsters_fn(int radius, P p,
 			continue;
 		}
 		/* Detect monsters which fulfill the predicate */
-		auto r_ptr = race_inf(m_ptr);
-		if (p(r_ptr))
+		auto r_ptr = m_ptr->race();
+		if (p(r_ptr.get()))
 		{
 			/* Update */
-			u(r_ptr);
+			u(r_ptr.get());
 
 			/* We're assuming the update function does
 			 * *something*, so we'll need to update
@@ -2399,7 +2399,7 @@ template <typename P> bool detect_objects_fn(int radius, const char *object_mess
 		{
 			/* Access the monster */
 			monster_type *m_ptr = &m_list[o_ptr->held_m_idx];
-			monster_race *r_ptr = race_inf(m_ptr);
+			auto const r_ptr = m_ptr->race();
 
 			if (!(r_ptr->flags9 & RF9_MIMIC))
 			{
@@ -3919,7 +3919,6 @@ void aggravate_monsters(int who)
 	for (i = 1; i < m_max; i++)
 	{
 		monster_type *m_ptr = &m_list[i];
-		monster_race *r_ptr = race_inf(m_ptr);
 
 		/* Paranoia -- Skip dead monsters */
 		if (!m_ptr->r_idx) continue;
@@ -3942,6 +3941,8 @@ void aggravate_monsters(int who)
 		/* Speed up monsters in line of sight */
 		if (player_has_los_bold(m_ptr->fy, m_ptr->fx))
 		{
+			auto const r_ptr = m_ptr->race();
+
 			/* Speed up (instantly) to racial base + 10 */
 			if (m_ptr->mspeed < r_ptr->speed + 10)
 			{
@@ -3969,7 +3970,7 @@ void aggravate_monsters(int who)
 /*
  * Generic genocide race selection
  */
-bool_ get_genocide_race(cptr msg, char *typ)
+static bool get_genocide_race(cptr msg, char *typ)
 {
 	int i, j;
 	cave_type *c_ptr;
@@ -3982,14 +3983,14 @@ bool_ get_genocide_race(cptr msg, char *typ)
 	if (c_ptr->m_idx)
 	{
 		monster_type *m_ptr = &m_list[c_ptr->m_idx];
-		monster_race *r_ptr = race_inf(m_ptr);
+		auto const r_ptr = m_ptr->race();
 
 		*typ = r_ptr->d_char;
-		return TRUE;
+		return true;
 	}
 
 	msg_print("You must select a monster.");
-	return FALSE;
+	return false;
 }
 
 
@@ -4007,7 +4008,7 @@ bool_ genocide_aux(bool_ player_cast, char typ)
 	for (i = 1; i < m_max; i++)
 	{
 		monster_type *m_ptr = &m_list[i];
-		monster_race *r_ptr = race_inf(m_ptr);
+		auto const r_ptr = m_ptr->race();
 
 		/* Paranoia -- Skip dead monsters */
 		if (!m_ptr->r_idx) continue;
@@ -4133,7 +4134,7 @@ bool_ mass_genocide(bool_ player_cast)
 	for (i = 1; i < m_max; i++)
 	{
 		monster_type *m_ptr = &m_list[i];
-		monster_race *r_ptr = race_inf(m_ptr);
+		auto const r_ptr = m_ptr->race();
 
 		/* Paranoia -- Skip dead monsters */
 		if (!m_ptr->r_idx) continue;
@@ -4661,7 +4662,7 @@ void earthquake(int cy, int cx, int r)
 			if (c_ptr->m_idx)
 			{
 				monster_type *m_ptr = &m_list[c_ptr->m_idx];
-				monster_race *r_ptr = race_inf(m_ptr);
+				auto const r_ptr = m_ptr->race();
 
 				/* Most monsters cannot co-exist with rock */
 				if (!(r_ptr->flags2 & (RF2_KILL_WALL)) &&
@@ -4909,8 +4910,7 @@ static void cave_temp_room_lite(void)
 			int chance = 25;
 
 			monster_type *m_ptr = &m_list[c_ptr->m_idx];
-
-			monster_race *r_ptr = race_inf(m_ptr);
+			auto const r_ptr = m_ptr->race();
 
 			/* Update the monster */
 			update_mon(c_ptr->m_idx, FALSE);
@@ -5247,17 +5247,13 @@ bool_ fire_wall(int typ, int dir, int dam, int time)
 
 void teleport_swap(int dir)
 {
-	int tx, ty;
-	cave_type * c_ptr;
-	monster_type * m_ptr;
-	monster_race * r_ptr;
-
 	if (p_ptr->resist_continuum)
 	{
 		msg_print("The space-time continuum can't be disrupted.");
 		return;
 	}
 
+	int tx, ty;
 	if ((dir == 5) && target_okay())
 	{
 		tx = target_col;
@@ -5268,7 +5264,8 @@ void teleport_swap(int dir)
 		tx = p_ptr->px + ddx[dir];
 		ty = p_ptr->py + ddy[dir];
 	}
-	c_ptr = &cave[ty][tx];
+
+	cave_type *c_ptr = &cave[ty][tx];
 
 	if (!c_ptr->m_idx)
 	{
@@ -5276,8 +5273,8 @@ void teleport_swap(int dir)
 	}
 	else
 	{
-		m_ptr = &m_list[c_ptr->m_idx];
-		r_ptr = race_inf(m_ptr);
+		monster_type *m_ptr = &m_list[c_ptr->m_idx];
+		auto const r_ptr = m_ptr->race();
 
 		if (r_ptr->flags3 & RF3_RES_TELE)
 		{

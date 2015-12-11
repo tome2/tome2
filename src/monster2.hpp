@@ -4,6 +4,7 @@
 #include "monster_race_fwd.hpp"
 #include "monster_type_fwd.hpp"
 #include "object_type_fwd.hpp"
+#include <memory>
 
 extern s32b monster_exp(s16b level);
 extern void monster_set_level(int m_idx, int level);
@@ -12,8 +13,7 @@ extern void monster_msg_simple(cptr s);
 extern bool_ mego_ok(monster_race const *r_ptr, int ego);
 extern void monster_check_experience(int m_idx, bool_ silent);
 extern void monster_gain_exp(int m_idx, u32b exp, bool_ silent);
-extern monster_race* race_info_idx(int r_idx, int ego);
-extern monster_race* race_inf(monster_type *m_ptr);
+extern std::shared_ptr<monster_race> race_info_idx(int r_idx, int ego);
 extern void delete_monster_idx(int i);
 extern void delete_monster(int y, int x);
 extern void compact_monsters(int size);
@@ -49,4 +49,4 @@ extern bool_ monster_dungeon(int r_idx);
 extern bool_ monster_quest(int r_idx);
 extern void set_mon_num_hook(void);
 extern void set_mon_num2_hook(int y, int x);
-extern bool_ monster_can_cross_terrain(byte feat, monster_race *r_ptr);
+extern bool_ monster_can_cross_terrain(byte feat, std::shared_ptr<monster_race> r_ptr);

@@ -217,7 +217,7 @@ static bool_ player_handle_trap_of_walls(void)
 			if (cv_ptr->m_idx)
 			{
 				monster_type *m_ptr = &m_list[cv_ptr->m_idx];
-				monster_race *r_ptr = race_inf(m_ptr);
+				auto const r_ptr = m_ptr->race();
 
 				/* Most monsters cannot co-exist with rock */
 				if ((!(r_ptr->flags2 & RF2_KILL_WALL)) &&

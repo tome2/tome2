@@ -246,13 +246,9 @@ void teleport_player_directed(int rad, int dir)
  */
 void teleport_away(int m_idx, int dis)
 {
-	int ny = 0, nx = 0, oy, ox, d, i, min;
-	int tries = 0;
-
 	bool_ look = TRUE;
 
 	monster_type *m_ptr = &m_list[m_idx];
-	monster_race *r_ptr = race_inf(m_ptr);
 
 	if (p_ptr->resist_continuum)
 	{
@@ -264,13 +260,16 @@ void teleport_away(int m_idx, int dis)
 	if (!m_ptr->r_idx) return;
 
 	/* Save the old location */
-	oy = m_ptr->fy;
-	ox = m_ptr->fx;
+	const int oy = m_ptr->fy;
+	const int ox = m_ptr->fx;
 
 	/* Minimum distance */
-	min = dis / 2;
+	int min = dis / 2;
 
 	/* Look until done */
+	int tries = 0;
+	int ny = 0;
+	int nx = 0;
 	while (look)
 	{
 		tries++;
@@ -279,14 +278,14 @@ void teleport_away(int m_idx, int dis)
 		if (dis > 200) dis = 200;
 
 		/* Try several locations */
-		for (i = 0; i < 500; i++)
+		for (int i = 0; i < 500; i++)
 		{
 			/* Pick a (possibly illegal) location */
 			while (1)
 			{
 				ny = rand_spread(oy, dis);
 				nx = rand_spread(ox, dis);
-				d = distance(oy, ox, ny, nx);
+				int d = distance(oy, ox, ny, nx);
 				if ((d >= min) && (d <= dis)) break;
 			}
 
@@ -350,7 +349,11 @@ void teleport_away(int m_idx, int dis)
 	lite_spot(ny, nx);
 
 	/* Update monster light */
-	if (r_ptr->flags9 & RF9_HAS_LITE) p_ptr->update |= (PU_MON_LITE);
+	auto const r_ptr = m_ptr->race();
+	if (r_ptr->flags9 & RF9_HAS_LITE)
+	{
+		p_ptr->update |= (PU_MON_LITE);
+	}
 }
 
 
@@ -359,13 +362,8 @@ void teleport_away(int m_idx, int dis)
  */
 static void teleport_to_player(int m_idx)
 {
-	int ny = 0, nx = 0, oy, ox, d, i, min;
-	int dis = 2;
-
-	bool_ look = TRUE;
-
 	monster_type *m_ptr = &m_list[m_idx];
-	monster_race *r_ptr = race_inf(m_ptr);
+	auto const r_ptr = m_ptr->race();
 
 	int attempts = 500;
 
@@ -382,27 +380,33 @@ static void teleport_to_player(int m_idx)
 	if (randint(100) > m_ptr->level) return;
 
 	/* Save the old location */
-	oy = m_ptr->fy;
-	ox = m_ptr->fx;
+	const int oy = m_ptr->fy;
+	const int ox = m_ptr->fx;
 
 	/* Minimum distance */
-	min = dis / 2;
+	int dis = 2;
+	int min = dis / 2;
+
+	/* End destination */
+	int ny = 0;
+	int nx = 0;
 
 	/* Look until done */
+	bool_ look = TRUE;
 	while (look && --attempts)
 	{
 		/* Verify max distance */
 		if (dis > 200) dis = 200;
 
 		/* Try several locations */
-		for (i = 0; i < 500; i++)
+		for (int i = 0; i < 500; i++)
 		{
 			/* Pick a (possibly illegal) location */
 			while (1)
 			{
 				ny = rand_spread(p_ptr->py, dis);
 				nx = rand_spread(p_ptr->px, dis);
-				d = distance(p_ptr->py, p_ptr->px, ny, nx);
+				const int d = distance(p_ptr->py, p_ptr->px, ny, nx);
 				if ((d >= min) && (d <= dis)) break;
 			}
 
@@ -591,12 +595,9 @@ void teleport_player(int dis)
 			{
 				if (cave[oy + yy][ox + xx].m_idx)
 				{
-					monster_race *r_ptr = race_inf(&m_list[cave[oy + yy][ox + xx].m_idx]);
+					auto const r_ptr = m_list[cave[oy + yy][ox + xx].m_idx].race();
 
-					if ((r_ptr->flags6
-					                & RF6_TPORT) &&
-					                !(r_ptr->flags3
-					                  & RF3_RES_TELE))
+					if ((r_ptr->flags6 & RF6_TPORT) && !(r_ptr->flags3 & RF3_RES_TELE))
 						/*
 						 * The latter limitation is to avoid
 						 * totally unkillable suckers...
@@ -4360,8 +4361,6 @@ bool_ project_m(int who, int r, int y, int x, int dam, int typ)
 
 	monster_type *m_ptr = &m_list[c_ptr->m_idx];
 
-	monster_race *r_ptr = race_inf(m_ptr);
-
 	char killer [80];
 
 	/* Is the monster "seen"? */
@@ -4441,6 +4440,9 @@ bool_ project_m(int who, int r, int y, int x, int dam, int typ)
 
 	/* Get the monster name (BEFORE polymorphing) */
 	monster_desc(m_name, m_ptr, 0);
+
+	/* Get race information */
+	auto r_ptr = m_ptr->race();
 
 	/* Mega Gachk */
 	if (r_ptr->flags2 & RF2_DEATH_ORB)
@@ -6892,7 +6894,7 @@ bool_ project_m(int who, int r, int y, int x, int dam, int typ)
 			m_ptr = &m_list[c_ptr->m_idx];
 
 			/* Hack -- Get new race */
-			r_ptr = race_inf(m_ptr);
+			r_ptr = m_ptr->race();
 		}
 	}
 
@@ -8714,7 +8716,7 @@ bool_ project(int who, int rad, int y, int x, int dam, int typ, int flg)
 			}
 			else
 			{
-				monster_race *ref_ptr = race_inf(&m_list[cave[y][x].m_idx]);
+				auto ref_ptr = m_list[cave[y][x].m_idx].race();
 
 				if ((ref_ptr->flags2 & (RF2_REFLECTING)) && (randint(10) != 1)
 				                && (dist_hack > 1))

@@ -1291,7 +1291,10 @@ static void fix_monster(void)
 		Term_activate(angband_term[j]);
 
 		/* Display monster race info */
-		if (monster_race_idx) display_roff(monster_race_idx, monster_ego_idx);
+		if (monster_race_idx)
+		{
+			display_roff(monster_race_idx, monster_ego_idx);
+		}
 
 		/* Fresh */
 		Term_fresh();
@@ -3708,20 +3711,19 @@ void calc_bonuses(bool_ silent)
 	/* Monsters that only have their "natural" attacks */
 	else if (!r_info[p_ptr->body_monster].body_parts[BODY_WEAPON])
 	{
-		int str_index, dex_index;
-		int num = 0, wgt = 0, mul = 0;
-		monster_race *r_ptr = race_info_idx(p_ptr->body_monster, 0);
-
+		int num = 0;
+		int wgt = 0;
+		int mul = 0;
 		analyze_blow(&num, &wgt, &mul);
 
 		/* Access the strength vs weight */
-		str_index = (adj_str_blow[p_ptr->stat_ind[A_STR]] * mul / 3);
+		int str_index = (adj_str_blow[p_ptr->stat_ind[A_STR]] * mul / 3);
 
 		/* Maximal value */
 		if (str_index > 11) str_index = 11;
 
 		/* Index by dexterity */
-		dex_index = (adj_dex_blow[p_ptr->stat_ind[A_DEX]]);
+		int dex_index = (adj_dex_blow[p_ptr->stat_ind[A_DEX]]);
 
 		/* Maximal value */
 		if (dex_index > 11) dex_index = 11;
@@ -3739,6 +3741,7 @@ void calc_bonuses(bool_ silent)
 		if (p_ptr->num_blow < 1) p_ptr->num_blow = 1;
 
 		/* Limit as defined by monster body */
+		auto r_ptr = race_info_idx(p_ptr->body_monster, 0);
 		for (num = 0; num < p_ptr->num_blow; num++)
 			if (!r_ptr->blow[num].effect)
 				break;

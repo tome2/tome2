@@ -1349,8 +1349,6 @@ bool_ make_attack_normal(int m_idx, byte divis)
 {
 	monster_type *m_ptr = &m_list[m_idx];
 
-	monster_race *r_ptr = race_inf(m_ptr);
-
 	int ap_cnt;
 
 	int i, j, k, tmp, ac, rlev;
@@ -1370,7 +1368,8 @@ bool_ make_attack_normal(int m_idx, byte divis)
 	bool_ touched = FALSE, fear = FALSE, alive = TRUE;
 	bool_ explode = FALSE;
 
-	/* Not allowed to attack */
+	/* Not allowed to attack? */
+	auto r_ptr = m_ptr->race();
 	if (r_ptr->flags1 & (RF1_NEVER_BLOW)) return (FALSE);
 
 	/* ...nor if friendly */

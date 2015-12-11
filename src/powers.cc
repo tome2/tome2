@@ -546,7 +546,6 @@ static void power_activate(int power)
 			int dir, x, y;
 			cave_type *c_ptr;
 			monster_type *m_ptr;
-			monster_race *r_ptr;
 			object_type *q_ptr;
 			object_type forge;
 
@@ -558,7 +557,7 @@ static void power_activate(int power)
 			if (c_ptr->m_idx)
 			{
 				m_ptr = &m_list[c_ptr->m_idx];
-				r_ptr = race_inf(m_ptr);
+				auto const r_ptr = m_ptr->race();
 
 				if ((r_ptr->flags1 & RF1_NEVER_MOVE) && (m_ptr->status == MSTATUS_PET) && (!(r_ptr->flags9 & RF9_SPECIAL_GENE)))
 				{
@@ -987,23 +986,18 @@ static void power_activate(int power)
 
 	case PWR_BANISH:
 		{
-			int x, y;
-			cave_type *c_ptr;
-			monster_type *m_ptr;
-			monster_race *r_ptr;
-
 			if (!get_rep_dir(&dir)) return;
-			y = p_ptr->py + ddy[dir];
-			x = p_ptr->px + ddx[dir];
-			c_ptr = &cave[y][x];
+			const int x = p_ptr->px + ddx[dir];
+			const int y = p_ptr->py + ddy[dir];
+			cave_type *c_ptr = &cave[y][x];
 			if (!(c_ptr->m_idx))
 			{
 				msg_print("You sense no evil there!");
 				break;
 			}
 
-			m_ptr = &m_list[c_ptr->m_idx];
-			r_ptr = race_inf(m_ptr);
+			monster_type *m_ptr = &m_list[c_ptr->m_idx];
+			auto const r_ptr = m_ptr->race();
 
 			if (r_ptr->flags3 & RF3_EVIL)
 			{

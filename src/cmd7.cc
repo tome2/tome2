@@ -4104,7 +4104,6 @@ void do_cmd_symbiotic(void)
 				int dir, x, y;
 				cave_type *c_ptr;
 				monster_type *m_ptr;
-				monster_race *r_ptr;
 				object_type *q_ptr;
 				object_type forge;
 
@@ -4116,7 +4115,7 @@ void do_cmd_symbiotic(void)
 				if (c_ptr->m_idx)
 				{
 					m_ptr = &m_list[c_ptr->m_idx];
-					r_ptr = race_inf(m_ptr);
+					auto const r_ptr = m_ptr->race();
 
 					if (!(r_ptr->flags1 & RF1_NEVER_MOVE))
 					{

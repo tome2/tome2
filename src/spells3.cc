@@ -2125,14 +2125,13 @@ const char *manwe_call_info()
 
 void do_melkor_curse(int m_idx)
 {
-	monster_type *m_ptr = NULL;
 	assert(m_idx >= 0);
 
-	m_ptr = &m_list[m_idx];
+	monster_type *m_ptr = &m_list[m_idx];
 
 	if (get_level_s(MELKOR_CURSE, 50) >= 35)
 	{
-		monster_race *r_ptr = race_info_idx(m_ptr->r_idx, m_ptr->ego);
+		auto const r_ptr = m_ptr->race();
 
 		m_ptr->maxhp = m_ptr->maxhp - r_ptr->hside;
 		if (m_ptr->maxhp < 1)
@@ -2269,12 +2268,12 @@ casting_result melkor_mind_steal()
 	{
 		monster_type *m_ptr = &m_list[target_who];
 		int chance = get_level_s(MELKOR_MIND_STEAL, 50);
-		monster_race *r_ptr = race_info_idx(m_ptr->r_idx, m_ptr->ego);
-		char buf[128];
 
+		char buf[128];
 		monster_desc(buf, m_ptr, 0);
 		buf[0] = toupper(buf[0]);
 
+		auto const r_ptr = m_ptr->race();
 		if ((randint(m_ptr->level) < chance) &&
 		    ((r_ptr->flags1 & RF1_UNIQUE) == 0))
 		{

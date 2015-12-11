@@ -266,34 +266,45 @@ static int pick_ego_monster(monster_race const *r_ptr)
  * Return a (monster_race*) with the combination of the monster
  * properties and the ego type
  */
-monster_race* race_info_idx(int r_idx, int ego)
+std::shared_ptr<monster_race> race_info_idx(int r_idx, int ego)
 {
-	static monster_race race;
-	monster_ego *re_ptr = &re_info[ego];
-	monster_race *r_ptr = &r_info[r_idx], *nr_ptr = &race;
-	int i;
+	monster_race *r_ptr = &r_info[r_idx];
 
-	/* No work needed */
-	if (!ego) return r_ptr;
+	/* We don't need to allocate anything if it's an ordinary monster. */
+	if (!ego) {
+		return std::shared_ptr<monster_race>(r_ptr, [](monster_race *) {
+			// No need to delete -- will be freed when the r_info array is freed.
+		});
+	}
 
-	/* Copy the base monster */
+	/* We allocate a copy of the "base" monster race to refer to. */
+	auto nr_ptr = std::make_shared<monster_race>();
 	*nr_ptr = *r_ptr;
 
-	/* Adjust the values */
-	for (i = 0; i < 4; i++)
-	{
-		s32b j, k;
+	/* Get a reference to the ego monster modifiers */
+	monster_ego *re_ptr = &re_info[ego];
 
-		j = modify_aux(nr_ptr->blow[i].d_dice, re_ptr->blow[i].d_dice, re_ptr->blowm[i][0]);
+	/* Adjust the values */
+	for (int i = 0; i < 4; i++)
+	{
+		s32b j = modify_aux(nr_ptr->blow[i].d_dice, re_ptr->blow[i].d_dice, re_ptr->blowm[i][0]);
 		if (j < 0) j = 0;
-		k = modify_aux(nr_ptr->blow[i].d_side, re_ptr->blow[i].d_side, re_ptr->blowm[i][1]);
+
+		s32b k = modify_aux(nr_ptr->blow[i].d_side, re_ptr->blow[i].d_side, re_ptr->blowm[i][1]);
 		if (k < 0) k = 0;
 
 		nr_ptr->blow[i].d_dice = j;
 		nr_ptr->blow[i].d_side = k;
 
-		if (re_ptr->blow[i].method) nr_ptr->blow[i].method = re_ptr->blow[i].method;
-		if (re_ptr->blow[i].effect) nr_ptr->blow[i].effect = re_ptr->blow[i].effect;
+		if (re_ptr->blow[i].method)
+		{
+			nr_ptr->blow[i].method = re_ptr->blow[i].method;
+		}
+
+		if (re_ptr->blow[i].effect)
+		{
+			nr_ptr->blow[i].effect = re_ptr->blow[i].effect;
+		}
 	}
 
 	MODIFY(nr_ptr->hdice, re_ptr->hdice, 1);
@@ -352,11 +363,6 @@ monster_race* race_info_idx(int r_idx, int ego)
 
 	/* And finanly return a pointer to a fully working monster race */
 	return nr_ptr;
-}
-
-monster_race* race_inf(monster_type *m_ptr)
-{
-	return race_info_idx(m_ptr->r_idx, m_ptr->ego);
 }
 
 static cptr horror_desc[MAX_HORROR] =
@@ -433,17 +439,13 @@ static cptr funny_comments[MAX_COMMENT] =
  */
 void delete_monster_idx(int i)
 {
-	monster_type *m_ptr = &m_list[i];
-
-	monster_race *r_ptr = race_inf(m_ptr);
-
-	bool_ had_lite = FALSE;
-
 	/* Get location */
+	monster_type *m_ptr = &m_list[i];
 	int y = m_ptr->fy;
 	int x = m_ptr->fx;
 
 	/* Hack -- Reduce the racial counter */
+	auto const r_ptr = m_ptr->race();
 	r_ptr->cur_num--;
 	r_ptr->on_saved = FALSE;
 
@@ -451,6 +453,7 @@ void delete_monster_idx(int i)
 	if (r_ptr->flags4 & (RF4_MULTIPLY)) num_repro--;
 
 	/* XXX XXX XXX remove monster light source */
+	bool_ had_lite = FALSE;
 	if (r_ptr->flags9 & (RF9_HAS_LITE)) had_lite = TRUE;
 
 
@@ -659,8 +662,7 @@ void compact_monsters(int size)
 		for (i = 1; i < m_max; i++)
 		{
 			monster_type *m_ptr = &m_list[i];
-
-			monster_race *r_ptr = race_inf(m_ptr);
+			auto const r_ptr = m_ptr->race();
 
 			/* Paranoia -- skip "dead" monsters */
 			if (!m_ptr->r_idx) continue;
@@ -724,14 +726,13 @@ void wipe_m_list(void)
 	{
 		monster_type *m_ptr = &m_list[i];
 
-		monster_race *r_ptr = race_inf(m_ptr);
-
 		/* Skip dead monsters */
 		if (!m_ptr->r_idx) continue;
 
 		/* Mega-Hack -- preserve Unique's XXX XXX XXX */
 
 		/* Hack -- Reduce the racial counter */
+		auto r_ptr = m_ptr->race();
 		r_ptr->cur_num--;
 
 		/* Monster is gone */
@@ -1215,8 +1216,7 @@ s16b get_mon_num(int level)
  */
 void monster_desc(char *desc, monster_type *m_ptr, int mode)
 {
-	cptr res;
-	monster_race *r_ptr = race_inf(m_ptr);
+	auto r_ptr = m_ptr->race();
 	char silly_name[80], name[100];
 	bool_ seen, pron;
 	int insanity = (p_ptr->msane - p_ptr->csane) * 100 / p_ptr->msane;
@@ -1269,7 +1269,6 @@ void monster_desc(char *desc, monster_type *m_ptr, int mode)
 	/* Sexed Pronouns (seen and allowed, or unseen and allowed) */
 	pron = (m_ptr && ((seen && (mode & 0x20)) || (!seen && (mode & 0x10))));
 
-
 	/* First, try using pronouns, or describing hidden monsters */
 	if (!seen || pron)
 	{
@@ -1285,7 +1284,7 @@ void monster_desc(char *desc, monster_type *m_ptr, int mode)
 
 
 		/* Assume simple result */
-		res = "it";
+		cptr res = "it";
 
 		/* Brute force: split on the possibilities */
 		switch (kind | (mode & 0x07))
@@ -1534,16 +1533,17 @@ static void sanity_blast(monster_type * m_ptr, bool_ necro)
 
 	if (!necro)
 	{
-		char m_name[80];
-		monster_race *r_ptr;
+		if (m_ptr == nullptr) {
+			return;
+		}
 
-		if (m_ptr != NULL) r_ptr = race_inf(m_ptr);
-		else return;
+		auto const r_ptr = m_ptr->race();
 
 		power = (m_ptr->level) + 10;
 
 		if (m_ptr != NULL)
 		{
+			char m_name[80];
 			monster_desc(m_name, m_ptr, 0);
 
 			if (!(r_ptr->flags1 & RF1_UNIQUE))
@@ -1605,6 +1605,7 @@ static void sanity_blast(monster_type * m_ptr, bool_ necro)
 	{
 		msg_print("Your sanity is shaken by reading the Necronomicon!");
 	}
+
 	if (randint(power) < p_ptr->skill_sav) /* Mind blast */
 	{
 		if (!p_ptr->resist_conf)
@@ -1727,13 +1728,11 @@ void update_mon(int m_idx, bool_ full)
 {
 	monster_type *m_ptr = &m_list[m_idx];
 
-	monster_race *r_ptr = race_inf(m_ptr);
-
 	/* The current monster location */
-	int fy = m_ptr->fy;
-	int fx = m_ptr->fx;
+	const int fy = m_ptr->fy;
+	const int fx = m_ptr->fx;
 
-	bool_ old_ml = m_ptr->ml;
+	const bool_ old_ml = m_ptr->ml;
 
 	/* Seen at all */
 	bool_ flag = FALSE;
@@ -1750,18 +1749,17 @@ void update_mon(int m_idx, bool_ full)
 	bool_ do_invisible = FALSE;
 	bool_ do_cold_blood = FALSE;
 
+	auto const r_ptr = m_ptr->race();
 
 	/* Calculate distance */
 	if (full)
 	{
-		int d, dy, dx;
-
 		/* Distance components */
-		dy = (p_ptr->py > fy) ? (p_ptr->py - fy) : (fy - p_ptr->py);
-		dx = (p_ptr->px > fx) ? (p_ptr->px - fx) : (fx - p_ptr->px);
+		const int dy = (p_ptr->py > fy) ? (p_ptr->py - fy) : (fy - p_ptr->py);
+		const int dx = (p_ptr->px > fx) ? (p_ptr->px - fx) : (fx - p_ptr->px);
 
 		/* Approximate distance */
-		d = (dy > dx) ? (dy + (dx >> 1)) : (dx + (dy >> 1));
+		const int d = (dy > dx) ? (dy + (dx >> 1)) : (dx + (dy >> 1));
 
 		/* Save the distance (in a byte) */
 		m_ptr->cdis = (d < 255) ? d : 255;
@@ -1777,7 +1775,6 @@ void update_mon(int m_idx, bool_ full)
 		/* Detected */
 		if (m_ptr->mflag & (MFLAG_MARK)) flag = TRUE;
 	}
-
 
 	/* Process "nearby" monsters on the current "panel" */
 	else if (panel_contains(fy, fx))
@@ -2118,12 +2115,6 @@ s16b place_monster_one(int y, int x, int r_idx, int ego, bool_ slp, int status)
 	bool_ add_level = FALSE;
 	int min_level = 0, max_level = 0;
 
-	cave_type *c_ptr;
-
-	monster_type *m_ptr;
-
-	monster_race *r_ptr = &r_info[r_idx];
-
 	/* DO NOT PLACE A MONSTER IN THE SMALL SCALE WILDERNESS !!! */
 	if (p_ptr->wild_mode)
 	{
@@ -2186,30 +2177,35 @@ s16b place_monster_one(int y, int x, int r_idx, int ego, bool_ slp, int status)
 		return 0;
 	}
 
-	/* Paranoia */
-	if (!r_ptr->name)
+	/* Check for original monster race flags */
 	{
-		return 0;
-	}
+		monster_race *r_ptr = &r_info[r_idx];
 
-	/* Are we allowed to continue ? */
-	{
-		struct hook_new_monster_in in = { r_idx };
-		if (process_hooks_new(HOOK_NEW_MONSTER, &in, NULL))
+		/* Paranoia */
+		if (!r_ptr->name)
+		{
+			return 0;
+		}
+
+		/* Are we allowed to continue ? */
+		{
+			struct hook_new_monster_in in = { r_idx };
+			if (process_hooks_new(HOOK_NEW_MONSTER, &in, NULL))
+			{
+				return 0;
+			}
+		}
+
+		/* Ego Uniques are NOT to be created */
+		if ((r_ptr->flags1 & RF1_UNIQUE) && ego)
 		{
 			return 0;
 		}
 	}
 
-	/* Ego Uniques are NOT to be created */
-	if ((r_ptr->flags1 & RF1_UNIQUE) && ego)
-	{
-		return 0;
-	}
-
 	/* Now could we generate an Ego Monster */
 	/* Grab the special race if needed */
-	r_ptr = race_info_idx(r_idx, ego);
+	auto r_ptr = race_info_idx(r_idx, ego);
 
 	if (!monster_can_cross_terrain(cave[y][x].feat, r_ptr))
 	{
@@ -2302,7 +2298,7 @@ s16b place_monster_one(int y, int x, int r_idx, int ego, bool_ slp, int status)
 
 
 	/* Access the location */
-	c_ptr = &cave[y][x];
+	cave_type *c_ptr = &cave[y][x];
 
 	/* Make a new monster */
 	c_ptr->m_idx = m_pop();
@@ -2316,7 +2312,7 @@ s16b place_monster_one(int y, int x, int r_idx, int ego, bool_ slp, int status)
 
 
 	/* Get a new monster record */
-	m_ptr = &m_list[c_ptr->m_idx];
+	monster_type *m_ptr = &m_list[c_ptr->m_idx];
 
 	/* Save the race */
 	m_ptr->r_idx = r_idx;
@@ -2372,15 +2368,14 @@ s16b place_monster_one(int y, int x, int r_idx, int ego, bool_ slp, int status)
 	/* Only if not fated to die */
 	if ((dungeon_type != DUNGEON_DEATH) && (!place_monster_one_no_drop))
 	{
-		bool_ good = (r_ptr->flags1 & (RF1_DROP_GOOD)) ? TRUE : FALSE;
-		bool_ great = (r_ptr->flags1 & (RF1_DROP_GREAT)) ? TRUE : FALSE;
+		const bool_ good = (r_ptr->flags1 & (RF1_DROP_GOOD)) ? TRUE : FALSE;
+		const bool_ great = (r_ptr->flags1 & (RF1_DROP_GREAT)) ? TRUE : FALSE;
 
-		bool_ do_gold = (!(r_ptr->flags1 & (RF1_ONLY_ITEM)));
-		bool_ do_item = (!(r_ptr->flags1 & (RF1_ONLY_GOLD)));
-		bool_ do_mimic = (r_ptr->flags9 & (RF9_MIMIC));
-		int j;
+		const bool_ do_gold = (!(r_ptr->flags1 & (RF1_ONLY_ITEM)));
+		const bool_ do_item = (!(r_ptr->flags1 & (RF1_ONLY_GOLD)));
+		const bool_ do_mimic = (r_ptr->flags9 & (RF9_MIMIC));
 
-		int force_coin = get_coin_type(r_ptr);
+		const int force_coin = get_coin_type(r_ptr);
 
 		int dump_item = 0;
 		int dump_gold = 0;
@@ -2408,7 +2403,6 @@ s16b place_monster_one(int y, int x, int r_idx, int ego, bool_ slp, int status)
 		{
 			int tries = 1000;
 			obj_theme theme;
-			int i;
 
 			/* Get local object */
 			q_ptr = &forge;
@@ -2426,7 +2420,7 @@ s16b place_monster_one(int y, int x, int r_idx, int ego, bool_ slp, int status)
 			/* Rebuild allocation table */
 			get_obj_num_prep();
 
-			i = 0;
+			int i = 0;
 			while (tries)
 			{
 				tries--;
@@ -2455,7 +2449,7 @@ s16b place_monster_one(int y, int x, int r_idx, int ego, bool_ slp, int status)
 		}
 
 		/* Drop some objects */
-		for (j = 0; j < number; j++)
+		for (int j = 0; j < number; j++)
 		{
 			/* Get local object */
 			q_ptr = &forge;
@@ -2604,11 +2598,14 @@ s16b place_monster_one(int y, int x, int r_idx, int ego, bool_ slp, int status)
 	/* Hack -- Notice new multi-hued monsters */
 	if (r_ptr->flags1 & (RF1_ATTR_MULTI)) shimmer_monsters = TRUE;
 
-	/* Hack -- we need to modify the REAL r_info, not the fake one */
-	r_ptr = &r_info[r_idx];
+	/* Count monsters on the level */
+	{
+		/* Hack -- we need to modify the REAL r_info, not the fake one */
+		monster_race *r_ptr = &r_info[r_idx];
 
-	/* Hack -- Count the monsters on the level */
-	r_ptr->cur_num++;
+		/* Hack -- Count the monsters on the level */
+		r_ptr->cur_num++;
+	}
 
 	/* Unique monsters on saved levels should be "marked" */
 	if ((r_ptr->flags1 & RF1_UNIQUE) && get_dungeon_save(dummy))
@@ -3625,10 +3622,8 @@ static bool_ mutate_monster_okay(int r_idx)
  */
 bool_ multiply_monster(int m_idx, bool_ charm, bool_ clone)
 {
-	monster_type	*m_ptr = &m_list[m_idx];
-	monster_race *r_ptr = race_inf(m_ptr);
-
-	int i, y, x, new_race;
+	monster_type *m_ptr = &m_list[m_idx];
+	auto const r_ptr = m_ptr->race();
 
 	bool_ result = FALSE;
 
@@ -3639,18 +3634,17 @@ bool_ multiply_monster(int m_idx, bool_ charm, bool_ clone)
 	}
 
 	/* Try up to 18 times */
-	for (i = 0; i < 18; i++)
+	for (int i = 0; i < 18; i++)
 	{
-		int d = 1;
-
-
 		/* Pick a location */
-		scatter(&y, &x, m_ptr->fy, m_ptr->fx, d);
+		int x;
+		int y;
+		scatter(&y, &x, m_ptr->fy, m_ptr->fx, 1);
 
 		/* Require an "empty" floor grid */
 		if (!cave_empty_bold(y, x)) continue;
 
-		new_race = m_ptr->r_idx;
+		int new_race = m_ptr->r_idx;
 
 		/* It can mutate into a nastier monster */
 		if ((rand_int(100) < 3) && (!clone))
@@ -3720,13 +3714,10 @@ void message_pain_hook(cptr message, cptr name)
 
 void message_pain(int m_idx, int dam)
 {
-	long oldhp, newhp, tmp;
-	int percentage;
 	monster_type *m_ptr = &m_list[m_idx];
-	monster_race *r_ptr = race_inf(m_ptr);
-	char m_name[80];
 
 	/* Get the monster name */
+	char m_name[80];
 	monster_desc(m_name, m_ptr, 0);
 	capitalize(m_name);
 
@@ -3738,11 +3729,13 @@ void message_pain(int m_idx, int dam)
 	}
 
 	/* Note -- subtle fix -CFT */
-	newhp = (long)(m_ptr->hp);
-	oldhp = newhp + (long)(dam);
-	tmp = (newhp * 100L) / oldhp;
-	percentage = (int)(tmp);
+	long newhp = (long)(m_ptr->hp);
+	long oldhp = newhp + (long)(dam);
+	long tmp = (newhp * 100L) / oldhp;
+	int percentage = (int)(tmp);
 
+	/* Get racial information */
+	auto const r_ptr = m_ptr->race();
 
 	/* Jelly's, Mold's, Vortex's, Quthl's */
 	if (strchr("jmvQ", r_ptr->d_char))
@@ -3830,11 +3823,11 @@ void update_smart_learn(int m_idx, int what)
 {
 	monster_type *m_ptr = &m_list[m_idx];
 
-	monster_race *r_ptr = race_inf(m_ptr);
-
-
 	/* Not allowed to learn */
 	if (!smart_learn) return;
+
+	/* Get racial flags */
+	auto const r_ptr = m_ptr->race();
 
 	/* Too stupid to learn anything */
 	if (r_ptr->flags2 & (RF2_STUPID)) return;

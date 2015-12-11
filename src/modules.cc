@@ -776,7 +776,7 @@ static bool_ theme_push_past(void *data, void *in_, void *out_)
 	if (c_ptr->m_idx > 0)
 	{
 		monster_type *m_ptr = &m_list[c_ptr->m_idx];
-		monster_race *mr_ptr = race_inf(m_ptr);
+		auto const mr_ptr = m_ptr->race();
 
 		if (m_ptr->status >= MSTATUS_NEUTRAL)
 		{

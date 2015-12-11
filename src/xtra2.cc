@@ -2137,7 +2137,7 @@ void lose_exp(s32b amount)
  *
  * XXX XXX XXX Note the use of actual "monster names"
  */
-int get_coin_type(monster_race *r_ptr)
+int get_coin_type(std::shared_ptr<monster_race const> r_ptr)
 {
 	cptr name = r_ptr->name;
 
@@ -2169,16 +2169,15 @@ int get_coin_type(monster_race *r_ptr)
  */
 void place_corpse(monster_type *m_ptr)
 {
-	monster_race *r_ptr = race_inf(m_ptr);
-
-	object_type *i_ptr;
-	object_type object_type_body;
-
-	int x = m_ptr->fx;
-	int y = m_ptr->fy;
+	const int x = m_ptr->fx;
+	const int y = m_ptr->fy;
 
 	/* Get local object */
-	i_ptr = &object_type_body;
+	object_type object_type_body;
+	object_type *i_ptr = &object_type_body;
+
+	/* Get the race information */
+	auto const r_ptr = m_ptr->race();
 
 	/* It has a physical form */
 	if (r_ptr->flags9 & RF9_DROP_CORPSE)
@@ -2469,17 +2468,14 @@ static void monster_death_gods(int m_idx, monster_type *m_ptr)
  */
 void monster_death(int m_idx)
 {
-	int i, y, x, ny, nx;
-
 	int dump_item = 0;
 	int dump_gold = 0;
 
 	monster_type *m_ptr = &m_list[m_idx];
 
-	monster_race *r_ptr = race_inf(m_ptr);
+	auto const r_ptr = m_ptr->race();
 
 	bool_ visible = (m_ptr->ml || (r_ptr->flags1 & (RF1_UNIQUE)));
-
 
 	bool_ create_stairs = FALSE;
 	int force_coin = get_coin_type(r_ptr);
@@ -2488,8 +2484,8 @@ void monster_death(int m_idx)
 	object_type *q_ptr;
 
 	/* Get the location */
-	y = m_ptr->fy;
-	x = m_ptr->fx;
+	int y = m_ptr->fy;
+	int x = m_ptr->fx;
 
 	/* Process the appropriate hooks */
 	{
@@ -2658,7 +2654,7 @@ void monster_death(int m_idx)
 	/* Pink horrors are replaced with 2 Blue horrors */
 	else if (strstr(r_ptr->name, "ink horror"))
 	{
-		for (i = 0; i < 2; i++)
+		for (int i = 0; i < 2; i++)
 		{
 			int wy = p_ptr->py, wx = p_ptr->px;
 			int attempts = 100;
@@ -2877,7 +2873,7 @@ void monster_death(int m_idx)
 	}
 
 	/* Let monsters explode! */
-	for (i = 0; i < 4; i++)
+	for (int i = 0; i < 4; i++)
 	{
 		if (m_ptr->blow[i].method == RBM_EXPLODE)
 		{
@@ -3005,25 +3001,26 @@ void monster_death(int m_idx)
 		lore_treasure(m_idx, dump_item, dump_gold);
 	}
 
-	/* Current quest */
-	i = p_ptr->inside_quest;
-
 	/* Create a magical staircase */
 	if (create_stairs && (dun_level < d_info[dungeon_type].maxdepth))
 	{
-		int i, j;
-
-		for (i = -1; i <= 1; i++)
-			for (j = -1; j <= 1; j++)
-				if (!(f_info[cave[y + j][x + i].feat].flags1 & FF1_PERMANENT)) cave_set_feat(y + j, x + i, d_info[dungeon_type].floor1);
+		for (int i = -1; i <= 1; i++)
+		{
+			for (int j = -1; j <= 1; j++)
+			{
+				if (!(f_info[cave[y + j][x + i].feat].flags1 & FF1_PERMANENT))
+				{
+					cave_set_feat(y + j, x + i, d_info[dungeon_type].floor1);
+				}
+			}
+		}
 
 		/* Stagger around */
 		while (!cave_valid_bold(y, x))
 		{
-			int d = 1;
-
 			/* Pick a location */
-			scatter(&ny, &nx, y, x, d);
+			int ny, nx;
+			scatter(&ny, &nx, y, x, 1);
 
 			/* Stagger */
 			y = ny;
@@ -3077,9 +3074,8 @@ void monster_death(int m_idx)
 bool_ mon_take_hit(int m_idx, int dam, bool_ *fear, cptr note)
 {
 	monster_type *m_ptr = &m_list[m_idx];
-	monster_race *r_ptr = race_inf(m_ptr);
-	s32b div, new_exp, new_exp_frac;
-
+	auto const r_idx = m_ptr->r_idx;
+	auto const r_ptr = m_ptr->race();
 
 	/* Redraw (later) if needed */
 	if (health_who == m_idx) p_ptr->redraw |= (PR_FRAME);
@@ -3165,15 +3161,15 @@ bool_ mon_take_hit(int m_idx, int dam, bool_ *fear, cptr note)
 		}
 
 		/* Maximum player level */
-		div = p_ptr->max_plv;
+		const s32b div = p_ptr->max_plv;
 
 		if (m_ptr->status < MSTATUS_FRIEND)
 		{
 			/* Give some experience for the kill */
-			new_exp = ((long)r_ptr->mexp * m_ptr->level) / div;
+			int new_exp = ((long)r_ptr->mexp * m_ptr->level) / div;
 
 			/* Handle fractional experience */
-			new_exp_frac = ((((long)r_ptr->mexp * m_ptr->level) % div)
+			const s32b new_exp_frac = ((((long)r_ptr->mexp * m_ptr->level) % div)
 			                * 0x10000L / div) + p_ptr->exp_frac;
 
 			/* Keep track of experience */
@@ -3204,7 +3200,7 @@ bool_ mon_take_hit(int m_idx, int dam, bool_ *fear, cptr note)
 			if ((o_ptr->k_idx) && (f4 & TR4_LEVELS))
 			{
 				/* Give some experience for the kill */
-				new_exp = ((long)r_ptr->mexp * m_ptr->level) / (div * 2);
+				const int new_exp = ((long)r_ptr->mexp * m_ptr->level) / (div * 2);
 
 				/* Gain experience */
 				o_ptr->exp += new_exp;
@@ -3305,7 +3301,7 @@ bool_ mon_take_hit(int m_idx, int dam, bool_ *fear, cptr note)
 				 * XXX XXX XXX Not yet completed quest is
 				 * to kill a unique you've just killed
 				 */
-				if (r_ptr == &r_info[q_ptr->r_idx])
+				if (r_idx == q_ptr->r_idx)
 				{
 					/* Invalidate it */
 					q_ptr->type = 0;
@@ -3667,14 +3663,11 @@ void resize_window(void)
  */
 static cptr look_mon_desc(int m_idx)
 {
-	monster_type *m_ptr = &m_list[m_idx];
-	monster_race *r_ptr = race_inf(m_ptr);
-
 	bool_ living = TRUE;
-	int perc;
-
 
 	/* Determine if the monster is "living" (vs "undead") */
+	monster_type *m_ptr = &m_list[m_idx];
+	auto const r_ptr = m_ptr->race();
 	if (r_ptr->flags3 & (RF3_UNDEAD)) living = FALSE;
 	if (r_ptr->flags3 & (RF3_DEMON)) living = FALSE;
 	if (r_ptr->flags3 & (RF3_NONLIVING)) living = FALSE;
@@ -3690,7 +3683,7 @@ static cptr look_mon_desc(int m_idx)
 
 
 	/* Calculate a health "percentage" */
-	perc = 100L * m_ptr->hp / m_ptr->maxhp;
+	const int perc = 100L * m_ptr->hp / m_ptr->maxhp;
 
 	if (perc >= 60)
 	{
@@ -4209,7 +4202,7 @@ static int target_set_aux(int y, int x, int mode, cptr info)
 		if (c_ptr->m_idx)
 		{
 			monster_type *m_ptr = &m_list[c_ptr->m_idx];
-			monster_race *r_ptr = race_inf(m_ptr);
+			auto const r_ptr = m_ptr->race();
 
 			/* Mimics special treatment -- looks like an object */
 			if ((r_ptr->flags9 & RF9_MIMIC) && (m_ptr->csleep))
