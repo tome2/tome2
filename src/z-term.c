@@ -176,7 +176,6 @@
  *   Term->nuke_hook = Nuke the term
  *   Term->xtra_hook = Perform extra actions
  *   Term->curs_hook = Draw (or Move) the cursor
- *   Term->wipe_hook = Draw some blank spaces
  *   Term->text_hook = Draw some text in the window
  *
  * The "Term->xtra_hook" hook provides a variety of different functions,
@@ -191,10 +190,6 @@
  * setting of the "soft_cursor" flag.  Note that the cursor is never
  * redrawn if "nothing" has happened to the screen (even temporarily).
  * This hook is required.
- *
- * The "Term->wipe_hook" hook provides this package with a simple way
- * to "erase", starting at "x,y", the next "n" grids.  This hook assumes
- * that the input is valid.
  *
  * The "Term->text_hook" hook provides this package with a simple way
  * to "draw", starting at "x,y", the "n" chars contained in "cp", using
@@ -371,18 +366,6 @@ static errr Term_curs_hack(int x, int y)
 }
 
 /*
- * Hack -- fake hook for "Term_wipe()" (see above)
- */
-static errr Term_wipe_hack(int x, int y, int n)
-{
-	/* Compiler silliness */
-	if (x || y || n) return ( -2);
-
-	/* Oops */
-	return ( -1);
-}
-
-/*
  * Hack -- fake hook for "Term_text()" (see above)
  */
 static errr Term_text_hack(int x, int y, int n, byte a, const char *cp)
@@ -529,17 +512,7 @@ static void Term_fresh_row_text(int y, int x1, int x2)
 			/* Flush */
 			if (fn)
 			{
-				/* Draw pending chars (normal) */
-				if (fa)
-				{
-					(void)((*Term->text_hook)(fx, y, fn, fa, &scr_cc[fx]));
-				}
-
-				/* Draw pending chars (black) */
-				else
-				{
-					(void)((*Term->wipe_hook)(fx, y, fn));
-				}
+				(void)((*Term->text_hook)(fx, y, fn, fa, &scr_cc[fx]));
 
 				/* Forget */
 				fn = 0;
@@ -560,16 +533,7 @@ static void Term_fresh_row_text(int y, int x1, int x2)
 			if (fn)
 			{
 				/* Draw the pending chars */
-				if (fa)
-				{
-					(void)((*Term->text_hook)(fx, y, fn, fa, &scr_cc[fx]));
-				}
-
-				/* Hack -- Erase "leading" spaces */
-				else
-				{
-					(void)((*Term->wipe_hook)(fx, y, fn));
-				}
+				(void)((*Term->text_hook)(fx, y, fn, fa, &scr_cc[fx]));
 
 				/* Forget */
 				fn = 0;
@@ -586,17 +550,7 @@ static void Term_fresh_row_text(int y, int x1, int x2)
 	/* Flush */
 	if (fn)
 	{
-		/* Draw pending chars (normal) */
-		if (fa)
-		{
-			(void)((*Term->text_hook)(fx, y, fn, fa, &scr_cc[fx]));
-		}
-
-		/* Draw pending chars (black) */
-		else
-		{
-			(void)((*Term->wipe_hook)(fx, y, fn));
-		}
+		(void)((*Term->text_hook)(fx, y, fn, fa, &scr_cc[fx]));
 	}
 }
 
@@ -715,7 +669,6 @@ errr Term_fresh(void)
 
 	/* Paranoia -- use "fake" hooks to prevent core dumps */
 	if (!Term->curs_hook) Term->curs_hook = Term_curs_hack;
-	if (!Term->wipe_hook) Term->wipe_hook = Term_wipe_hack;
 	if (!Term->text_hook) Term->text_hook = Term_text_hack;
 
 
@@ -778,16 +731,7 @@ errr Term_fresh(void)
 			char oc = old_cc[tx];
 
 			/* Hack -- restore the actual character */
-			if (oa)
-			{
-				(void)((*Term->text_hook)(tx, ty, 1, oa, &oc));
-			}
-
-			/* Hack -- erase the grid */
-			else
-			{
-				(void)((*Term->wipe_hook)(tx, ty, 1));
-			}
+			(void)((*Term->text_hook)(tx, ty, 1, oa, &oc));
 		}
 	}
 

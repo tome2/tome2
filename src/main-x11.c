@@ -2199,25 +2199,6 @@ static errr Term_curs_x11(int x, int y)
 
 
 /*
- * Erase some characters.
- */
-static errr Term_wipe_x11(int x, int y, int n)
-{
-	/* Erase (use black) */
-	Infoclr_set(clr[TERM_DARK]);
-
-	/* Mega-Hack -- Erase some space */
-	Infofnt_text_non(x, y, "", n);
-
-	/* Redraw the selection if any, as it may have been obscured. (later) */
-	s_ptr->drawn = FALSE;
-
-	/* Success */
-	return (0);
-}
-
-
-/*
  * Draw some textual characters.
  */
 static errr Term_text_x11(int x, int y, int n, byte a, cptr s)
@@ -2479,7 +2460,6 @@ static errr term_data_init(term_data *td, int i)
 	/* Hooks */
 	t->xtra_hook = Term_xtra_x11;
 	t->curs_hook = Term_curs_x11;
-	t->wipe_hook = Term_wipe_x11;
 	t->text_hook = Term_text_x11;
 
 	/* Save the data */

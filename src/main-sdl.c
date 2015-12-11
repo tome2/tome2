@@ -970,33 +970,6 @@ static errr Term_curs_sdl(int x, int y)
 	return (0);
 }
 
-/* routine for wiping terminal locations - simply draws
-a black rectangle over the offending spots! */
-static errr Term_wipe_sdl(int x, int y, int n)
-{
-	static SDL_Rect base;
-	term_data *td = (term_data*)(Term->data);
-
-	/* calculate boundaries of the area to clear */
-	base.x = td->surf->clip_rect.x + x*t_width;
-	base.y = td->surf->clip_rect.y + y*t_height;
-	base.w = n*t_width;
-	base.h = t_height;
-
-	SDL_LOCK(td->surf);
-	
-	/* blank the screen area */
-	SDL_FillRect(td->surf, &base, td->black);
-
-	SDL_UNLOCK(td->surf);
-
-	/* And... UPDATE the rectangle we just wrote to! */
-	drawTermStuff(td,&base);
-
-	/* Success */
-	return (0);
-}
-	
 /* Perform a full clear of active terminal; redraw the borders.*/
 void eraseTerminal(void)
 {
@@ -1764,7 +1737,6 @@ static errr term_data_init(term_data *td, int i)
 	/* Hooks */
 	t->xtra_hook = Term_xtra_sdl;
 	t->curs_hook = Term_curs_sdl;
-	t->wipe_hook = Term_wipe_sdl;
 	t->text_hook = Term_text_sdl;
 
 	/* Save the data */

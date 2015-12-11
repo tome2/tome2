@@ -1561,34 +1561,6 @@ static errr Term_curs_win(int x, int y)
 
 
 /*
- * Low level graphics (Assumes valid input).
- *
- * Erase a "block" of "n" characters starting at (x,y).
- */
-static errr Term_wipe_win(int x, int y, int n)
-{
-	term_data *td = (term_data*)(Term->data);
-
-	HDC hdc;
-	RECT rc;
-
-	/* Rectangle to erase in client coords */
-	rc.left = x * td->tile_wid + td->size_ow1;
-	rc.right = rc.left + n * td->tile_wid;
-	rc.top = y * td->tile_hgt + td->size_oh1;
-	rc.bottom = rc.top + td->tile_hgt;
-
-	hdc = GetDC(td->w);
-	SetBkColor(hdc, RGB(0, 0, 0));
-	SelectObject(hdc, td->font_id);
-	ExtTextOut(hdc, 0, 0, ETO_OPAQUE, &rc, NULL, 0, NULL);
-	ReleaseDC(td->w, hdc);
-
-	/* Success */
-	return 0;
-}
-
-/*
  * Low level graphics.  Assumes valid input.
  *
  * Draw several ("n") chars, with an attr, at a given location.
@@ -1700,7 +1672,6 @@ static void term_data_link(term_data *td)
 	/* Prepare the template hooks */
 	t->xtra_hook = Term_xtra_win;
 	t->curs_hook = Term_curs_win;
-	t->wipe_hook = Term_wipe_win;
 	t->text_hook = Term_text_win;
 
 	/* Remember where we came from */

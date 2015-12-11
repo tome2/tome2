@@ -105,8 +105,6 @@ struct term_win
  *
  *	- Hook for placing the cursor
  *
- *	- Hook for drawing some blank spaces
- *
  *	- Hook for drawing a string of chars using an attr
  *
  *	- Hook for drawing a sequence of special attr/char pairs
@@ -149,8 +147,6 @@ struct term
 	errr (*xtra_hook)(int n, int v);
 
 	errr (*curs_hook)(int x, int y);
-
-	errr (*wipe_hook)(int x, int y, int n);
 
 	errr (*text_hook)(int x, int y, int n, byte a, cptr s);
 

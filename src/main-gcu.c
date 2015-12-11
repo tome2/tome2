@@ -702,34 +702,6 @@ static errr Term_curs_gcu(int x, int y)
 
 
 /*
- * Erase a grid of space
- * Hack -- try to be "semi-efficient".
- */
-static errr Term_wipe_gcu(int x, int y, int n)
-{
-	term_data *td = (term_data *)(Term->data);
-
-	/* Place cursor */
-	wmove(td->win, y, x);
-
-	/* Clear to end of line */
-	if (x + n >= td->t.wid)
-	{
-		wclrtoeol(td->win);
-	}
-
-	/* Clear some characters */
-	else
-	{
-		while (n-- > 0) waddch(td->win, ' ');
-	}
-
-	/* Success */
-	return (0);
-}
-
-
-/*
  * Place some text on the screen using an attribute
  */
 static errr Term_text_gcu(int x, int y, int n, byte a, cptr s)
@@ -790,7 +762,6 @@ static errr term_data_init_gcu(term_data *td, int rows, int cols, int y, int x)
 
 	/* Set some more hooks */
 	t->text_hook = Term_text_gcu;
-	t->wipe_hook = Term_wipe_gcu;
 	t->curs_hook = Term_curs_gcu;
 	t->xtra_hook = Term_xtra_gcu;
 

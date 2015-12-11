@@ -1274,7 +1274,6 @@ static errr term_data_init(term_data *td, int i)
 	/* Hooks */
 	t->xtra_hook = Term_xtra_gtk;
 	t->text_hook = Term_text_gtk;
-	t->wipe_hook = Term_wipe_gtk;
 	t->curs_hook = Term_curs_gtk;
 	t->nuke_hook = Term_nuke_gtk;
 
