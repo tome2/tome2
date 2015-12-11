@@ -39,6 +39,7 @@
 #include "variable.hpp"
 #include "wilderness_map.hpp"
 #include "xtra1.hpp"
+#include "z-rand.hpp"
 
 #include <algorithm>
 #include <cassert>

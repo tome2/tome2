@@ -27,7 +27,6 @@ extern "C" {
  */
 #include "z-util.h"
 #include "z-form.h"
-#include "z-rand.h"
 #include "z-term.h"
 
 

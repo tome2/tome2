@@ -55,6 +55,7 @@
 #include "wilderness_type_info.hpp"
 #include "wizard2.hpp"
 #include "xtra1.hpp"
+#include "z-rand.hpp"
 
 #include <type_traits>
 #include <cassert>

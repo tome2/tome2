@@ -50,6 +50,7 @@
 #include "variable.hpp"
 #include "wilderness_type_info.hpp"
 #include "xtra1.hpp"
+#include "z-rand.hpp"
 
 #include <cassert>
 

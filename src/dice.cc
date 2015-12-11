@@ -1,6 +1,6 @@
 #include "dice.hpp"
 
-#include "z-rand.h"
+#include "z-rand.hpp"
 
 #include <cassert>
 

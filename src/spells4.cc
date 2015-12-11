@@ -14,6 +14,7 @@
 #include "util.hpp"
 #include "util.h"
 #include "variable.hpp"
+#include "z-rand.hpp"
 
 #include <algorithm>
 #include <cassert>

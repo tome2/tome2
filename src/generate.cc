@@ -35,6 +35,7 @@
 #include "vault_type.hpp"
 #include "wild.hpp"
 #include "wilderness_map.hpp"
+#include "z-rand.hpp"
 
 #include <cassert>
 #include <memory>

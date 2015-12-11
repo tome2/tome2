@@ -104,7 +104,7 @@ SET(SRCS_COMMON
   xtra1.cc
   xtra2.cc
   z-form.c
-  z-rand.c
+  z-rand.cc
   z-term.c
   z-util.c
 )

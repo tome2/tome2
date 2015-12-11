@@ -52,6 +52,7 @@
 #include "wilderness_map.hpp"
 #include "wilderness_type_info.hpp"
 #include "xtra1.hpp"
+#include "z-rand.hpp"
 
 #include <memory>
 #include <unordered_set>

@@ -4,6 +4,7 @@
 #include "options.hpp"
 #include "util.hpp"
 #include "variable.hpp"
+#include "z-rand.hpp"
 
 static void gen_joke_place_monster(int r_idx)
 {

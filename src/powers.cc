@@ -37,6 +37,7 @@
 #include "variable.h"
 #include "variable.hpp"
 #include "xtra2.hpp"
+#include "z-rand.hpp"
 
 /*
  * Note: return value indicates the amount of mana to use

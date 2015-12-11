@@ -5,6 +5,7 @@
 #include "stats.hpp"
 #include "variable.hpp"
 #include "xtra1.hpp"
+#include "z-rand.hpp"
 
 #include <cassert>
 

@@ -14,6 +14,7 @@
 #include "traps.hpp"
 #include "util.hpp"
 #include "variable.hpp"
+#include "z-rand.hpp"
 
 #include <cassert>
 

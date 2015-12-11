@@ -13,6 +13,7 @@
 #include "generate.hpp"
 #include "levels.hpp"
 #include "variable.hpp"
+#include "z-rand.hpp"
 
 #include <memory>
 

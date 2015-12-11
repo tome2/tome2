@@ -40,6 +40,7 @@
 #include "variable.hpp"
 #include "xtra1.hpp"
 #include "xtra2.hpp"
+#include "z-rand.hpp"
 
 /* remember building location */
 static int building_loc = 0;

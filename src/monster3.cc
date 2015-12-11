@@ -24,6 +24,7 @@
 #include "variable.h"
 #include "variable.hpp"
 #include "xtra2.hpp"
+#include "z-rand.hpp"
 
 /*
  * Is the mon,ster in friendly state(pet, friend, ..)

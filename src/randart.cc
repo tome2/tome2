@@ -20,6 +20,7 @@
 #include "util.hpp"
 #include "variable.h"
 #include "variable.hpp"
+#include "z-rand.hpp"
 
 #include <memory>
 #include <vector>

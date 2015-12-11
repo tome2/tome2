@@ -36,6 +36,7 @@
 #include "variable.hpp"
 #include "xtra1.hpp"
 #include "xtra2.hpp"
+#include "z-rand.hpp"
 
 #include <cassert>
 #include <algorithm>

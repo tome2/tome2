@@ -39,6 +39,7 @@
 #include "wizard1.hpp"
 #include "xtra1.hpp"
 #include "xtra2.hpp"
+#include "z-rand.hpp"
 
 /*
  * Adds a lvl to a monster

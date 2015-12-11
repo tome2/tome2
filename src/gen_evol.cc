@@ -15,6 +15,7 @@
 #include "levels.hpp"
 #include "player_type.hpp"
 #include "variable.hpp"
+#include "z-rand.hpp"
 
 /*
  * Generate a game of life level :) and make it evolve

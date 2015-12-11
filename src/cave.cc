@@ -19,6 +19,7 @@
 #include "util.h"
 #include "variable.h"
 #include "variable.hpp"
+#include "z-rand.hpp"
 
 #include <cassert>
 #include <vector>

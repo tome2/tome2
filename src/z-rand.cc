@@ -2,7 +2,7 @@
 
 /* Purpose: a simple random number generator -BEN- */
 
-#include "z-rand.h"
+#include "z-rand.hpp"
 
 
 
@@ -154,7 +154,7 @@ s32b Rand_mod(s32b m)
  * This method has no bias, and is much less affected by patterns
  * in the "low" bits of the underlying RNG's.
  */
-s32b Rand_div(s32b m)
+static s32b Rand_div(s32b m)
 {
 	u32b r, n;
 
@@ -351,5 +351,26 @@ s32b maxroll(s16b num, s16b sides)
 	return (num * sides);
 }
 
+bool magik(int p) {
+	return rand_int(100) < p;
+}
 
+s32b rand_int(s32b m)
+{
+	return Rand_div(m);
+}
 
+s32b randint(s32b m)
+{
+	return rand_int(m) + 1;
+}
+
+s32b rand_range(s32b a, s32b b)
+{
+	return a + rand_int(1 + b - a);
+}
+
+s32b rand_spread(s32b a, s32b d)
+{
+	return a + rand_int(1 + d + d) - d;
+}

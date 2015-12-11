@@ -75,6 +75,7 @@
 #include "wizard2.hpp"
 #include "xtra1.hpp"
 #include "xtra2.hpp"
+#include "z-rand.hpp"
 
 #include <boost/filesystem.hpp>
 #include <cassert>

@@ -42,6 +42,7 @@
 #include "util.hpp"
 #include "variable.hpp"
 #include "xtra2.hpp"
+#include "z-rand.hpp"
 
 #include <cassert>
 

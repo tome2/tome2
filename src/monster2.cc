@@ -38,6 +38,7 @@
 #include "wilderness_map.hpp"
 #include "xtra1.hpp"
 #include "xtra2.hpp"
+#include "z-rand.hpp"
 
 #include <algorithm>
 #include <string>
