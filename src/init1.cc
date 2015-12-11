@@ -3989,16 +3989,15 @@ errr init_k_info_txt(FILE *fp)
 		/* Process 'W' for "More Info" (one line only) */
 		if (buf[0] == 'W')
 		{
-			int level, extra, wgt;
+			int level, unused, wgt;
 			long cost;
 
 			/* Scan for the values */
 			if (4 != sscanf(buf + 2, "%d:%d:%d:%ld",
-			                &level, &extra, &wgt, &cost)) return (1);
+					&level, &unused, &wgt, &cost)) return (1);
 
 			/* Save the values */
 			k_ptr->level = level;
-			k_ptr->extra = extra;
 			k_ptr->weight = wgt;
 			k_ptr->cost = cost;
 

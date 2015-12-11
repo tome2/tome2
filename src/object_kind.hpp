@@ -53,7 +53,6 @@ struct object_kind
 	byte chance[ALLOCATION_MAX];		/* Allocation chance(s) */
 
 	byte level;			/* Level */
-	byte extra;			/* Something */
 
 
 	byte d_attr;		/* Default object attribute */
