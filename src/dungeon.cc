@@ -5123,11 +5123,9 @@ void play_game(bool_ new_game)
 	/* Make sure main term is active */
 	Term_activate(angband_term[0]);
 
-	/* Initialise the resize hook XXX XXX XXX */
+	/* Initialise the resize hooks for all the terminals */
 	angband_term[0]->resize_hook = resize_map;
-
-	/* XXX XXX XXX hardcoded number of terms */
-	for (i = 1; i < 8; i++)
+	for (i = 1; i < ANGBAND_TERM_MAX; i++)
 	{
 		if (angband_term[i])
 		{
