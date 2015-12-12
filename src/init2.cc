@@ -758,11 +758,6 @@ void create_stores_stock(int t)
 }
 
 /*
- * Pointer to wilderness_map
- */
-typedef wilderness_map *wilderness_map_ptr;
-
-/*
  * Initialise wilderness map array
  */
 static errr init_wilderness(void)
