@@ -5157,6 +5157,8 @@ static errr top_twenty(void)
 
 
 	/* Clear the record */
+	static_assert(std::is_pod<high_score>::value,
+		      "Cannot memset a non-POD type");
 	memset(&the_score, 0, sizeof(high_score));
 
 	/* Save the version */
