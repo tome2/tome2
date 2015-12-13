@@ -3413,49 +3413,6 @@ s32b bst(s32b what, s32b t)
 	}
 }
 
-cptr get_month_name(int day, bool_ full, bool_ compact)
-{
-	int i = 8;
-	static char buf[40];
-
-	/* Find the period name */
-	while ((i > 0) && (day < month_day[i]))
-	{
-		i--;
-	}
-
-	switch (i)
-	{
-		/* Yestare/Mettare */
-	case 0:
-	case 8:
-		{
-			char buf2[20];
-
-			sprintf(buf2, "%s", get_day(day + 1));
-			if (full) sprintf(buf, "%s (%s day)", month_name[i], buf2);
-			else sprintf(buf, "%s", month_name[i]);
-			break;
-		}
-		/* 'Normal' months + Enderi */
-	default:
-		{
-			char buf2[20];
-			char buf3[20];
-
-			sprintf(buf2, "%s", get_day(day + 1 - month_day[i]));
-			sprintf(buf3, "%s", get_day(day + 1));
-
-			if (full) sprintf(buf, "%s day of %s (%s day)", buf2, month_name[i], buf3);
-			else if (compact) sprintf(buf, "%s day of %s", buf2, month_name[i]);
-			else sprintf(buf, "%s %s", buf2, month_name[i]);
-			break;
-		}
-	}
-
-	return (buf);
-}
-
 cptr get_day(int day)
 {
 	static char buf[20];

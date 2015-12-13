@@ -4341,43 +4341,6 @@ between_exit between_exits[MAX_BETWEEN_EXITS] =
 };
 
 /*
- * Months
- */
-int month_day[9] =
-{
-	0,        /* 1 day */
-
-	1,        /* 54 days */
-	55,       /* 72 days */
-	127,      /* 54 days */
-
-	181,      /* 3 days */
-
-	184,      /* 54 days */
-	238,      /* 72 days */
-	310,      /* 54 days */
-
-	364,      /* 1 day */
-};
-
-cptr month_name[9] =
-{
-	"Yestare",
-
-	"Tuile",
-	"Laire",
-	"Yavie",
-
-	"Enderi",
-
-	"Quelle",
-	"Hrive",
-	"Coire",
-
-	"Mettare",
-};
-
-/*
  * max body parts
  */
 int max_body_part[BODY_MAX] =

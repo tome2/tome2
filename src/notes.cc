@@ -89,7 +89,7 @@ void add_note(char *note, char code)
 {
 	char buf[100];
 	char final_note[100];
-	char long_day[50];
+	char turn_s[50];
 	char depths[32];
 
 	/* Get the first 60 chars - so do not have an overflow */
@@ -97,16 +97,14 @@ void add_note(char *note, char code)
 	strncpy(buf, note, 60);
 
 	/* Get date and time */
-	sprintf(long_day, "%ld:%02ld %s, %s", (long int) ((bst(HOUR, turn) % 12 == 0) ? 12 : (bst(HOUR, turn) % 12)),
-	        (long int) bst(MINUTE, turn), (bst(HOUR, turn) < 12) ? "AM" : "PM", get_month_name(bst(DAY, turn), FALSE,
-	                        FALSE));
+	sprintf(turn_s, "Turn % 12ld", static_cast<long int>(turn));
 
 	/* Get depth  */
 	if (!dun_level) strcpy(depths, "  Town");
 	else sprintf(depths, "Lev%3d", dun_level);
 
 	/* Make note */
-	sprintf(final_note, "%-20s %s %c: %s", long_day, depths, code, buf);
+	sprintf(final_note, "%-20s %s %c: %s", turn_s, depths, code, buf);
 
 	/* Output to the notes file */
 	output_note(final_note);
@@ -118,16 +116,12 @@ void add_note(char *note, char code)
  */
 void add_note_type(int note_number)
 {
-	char long_day[50], true_long_day[50];
+	char true_long_day[50];
 	char buf[1024];
 	time_t ct = time((time_t*)0);
 
 	/* Get the date */
 	strftime(true_long_day, 30, "%Y-%m-%d at %H:%M:%S", localtime(&ct));
-
-	/* Get the date */
-	sprintf(buf, "%ld", (long int) (bst(YEAR, turn) + START_YEAR));
-	sprintf(long_day, "%ld:%02ld %s the %s of III %s", (long int) ((bst(HOUR, turn) % 12 == 0) ? 12 : (bst(HOUR, turn) % 12)), (long int) bst(MINUTE, turn), (bst(HOUR, turn) < 12) ? "AM" : "PM", get_month_name(bst(DAY, turn), FALSE, FALSE), buf);
 
 	/* Work out what to do */
 	switch (note_number)
@@ -161,7 +155,7 @@ void add_note_type(int note_number)
 			        "%s slew Morgoth on %s\n"
 			        "Long live %s!\n"
 			        "================================================",
-			        player_name, long_day, player_name);
+				player_name, true_long_day, player_name);
 
 			break;
 		}

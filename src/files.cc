@@ -2215,7 +2215,7 @@ void display_player(int mode)
 		c_put_str(TERM_L_BLUE, deity_info[p_ptr->pgod].name, 7, 9);
 
 		/* Age, Height, Weight, Social */
-		prt_num("Age          ", (int)p_ptr->age + bst(YEAR, turn - (START_DAY * 10)), 2, 32, TERM_L_BLUE, "   ");
+		prt_num("Age          ", (int)p_ptr->age + bst(YEAR, turn), 2, 32, TERM_L_BLUE, "   ");
 		prt_num("Height       ", (int)p_ptr->ht, 3, 32, TERM_L_BLUE, "   ");
 		prt_num("Weight       ", (int)p_ptr->wt, 4, 32, TERM_L_BLUE, "   ");
 		prt_num("Social Class ", (int)p_ptr->sc, 5, 32, TERM_L_BLUE, "   ");
@@ -2750,17 +2750,7 @@ errr file_character(cptr name, bool_ full)
 
 	/* Date */
 	{
-		char buf2[20];
-		u32b days = bst(DAY, turn - (START_DAY * 10));
-
-		strnfmt(buf2, 20, get_day(bst(YEAR, START_DAY * 10) + START_YEAR));
-		fprintf(fff, "\n\n You started your adventure the %s of the %s year of the third age.",
-		        get_month_name(bst(DAY, START_DAY * 10), wizard, FALSE), buf2);
-
-		strnfmt(buf2, 20, get_day(bst(YEAR, turn) + START_YEAR));
-		fprintf(fff, "\n %s the %s of the %s year of the third age.",
-		        (death ? "You ended your adventure" : "It is currently"),
-		        get_month_name(bst(DAY, turn), wizard, FALSE), buf2);
+		u32b days = bst(DAY, turn);
 		fprintf(fff,
 		        (death ? "\n Your adventure lasted %ld day%s." : "\n You have been adventuring for %ld day%s."),
 		        (long int) days, (days == 1) ? "" : "s");
@@ -5182,7 +5172,7 @@ static errr top_twenty(void)
 	the_score.gold[9] = '\0';
 
 	/* Save the current turn */
-	sprintf(the_score.turns, "%9lu", (long)turn - (START_DAY * 10L));
+	sprintf(the_score.turns, "%9lu", (long)turn);
 	the_score.turns[9] = '\0';
 
 	/* Save the date in standard form (8 chars) */
@@ -5283,7 +5273,7 @@ static errr predict_score(void)
 	the_score.gold[9] = '\0';
 
 	/* Save the current turn */
-	sprintf(the_score.turns, "%9lu", (long)turn - (START_DAY * 10L));
+	sprintf(the_score.turns, "%9lu", (long)turn);
 	the_score.turns[9] = '\0';
 
 	/* Hack -- no time needed */

@@ -1395,17 +1395,6 @@ static void process_world(void)
 		}
 	}
 
-	/* Tell a day passed */
-	if (((turn + (DAY_START * 10L)) % (10L * DAY)) == 0)
-	{
-		char buf[20];
-
-		sprintf(buf, "%s", get_day(bst(YEAR, turn) + START_YEAR));
-		cmsg_format(TERM_L_GREEN,
-		            "Today it is %s of the %s year of the third age.",
-		            get_month_name(bst(DAY, turn), wizard, FALSE), buf);
-	}
-
 	/*** Process the monsters ***/
 
 	/* Check for creature generation. */
@@ -5249,14 +5238,14 @@ void play_game(bool_ new_game)
 		p_ptr->inside_quest = 0;
 
 		/* Hack -- enter the world */
-		/* Mega-hack Vampires and Spectres start in the dungeon */
+		/* Mega-hack Vampires and Spectres start at midnight */
 		if (race_flags1_p(PR1_UNDEAD))
 		{
-			turn = (10L * DAY / 2) + (START_DAY * 10) + 1;
+			turn = (10L * DAY / 2) + 1;
 		}
 		else
 		{
-			turn = (START_DAY * 10) + 1;
+			turn = 1;
 		}
 	}
 

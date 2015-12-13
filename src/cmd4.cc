@@ -4273,15 +4273,11 @@ void do_cmd_change_movement(int i)
  */
 void do_cmd_time()
 {
-	int day = bst(DAY, turn);
-
 	int hour = bst(HOUR, turn);
 
 	int min = bst(MINUTE, turn);
 
 	int full = hour * 100 + min;
-
-	char buf2[20];
 
 	int start = 9999;
 
@@ -4299,12 +4295,10 @@ void do_cmd_time()
 	/* Note */
 	strcpy(desc, "It is a strange time.");
 
-	/* Format time of the day */
-	strnfmt(buf2, 20, get_day(bst(YEAR, turn) + START_YEAR));
-
-	/* Display current date in the Elvish calendar */
-	msg_format("This is %s of the %s year of the third age.",
-	           get_month_name(day, wizard, FALSE), buf2);
+	/* Display day */
+	u32b days = bst(DAY, turn) + 1;
+	msg_format("This is the %s day of your adventure.",
+		   get_day(days));
 
 	/* Message */
 	msg_format("The time is %d:%02d %s.",

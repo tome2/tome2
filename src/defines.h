@@ -258,8 +258,6 @@
 #define HOUR                    (DAY / 24)              /* Number of turns per hour */
 #define MINUTE                  (HOUR / 60)             /* Number of turns per minute */
 #define DAY_START               (HOUR * 6)              /* Sunrise */
-#define START_YEAR              2890                    /* Bilbo birthday year */
-#define START_DAY               (DAY * (42 + 127))      /* Bilbo birthday */
 
 #define BREAK_GLYPH             550             /* Rune of protection resistance */
 #define BREAK_MINOR_GLYPH       99             /* For explosive runes */
