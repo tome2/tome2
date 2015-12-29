@@ -1,6 +1,0 @@
-Known Bugs:
-===========
-
-- If you save the game during the Thieves Quest in Bree, it will not be able to load.
-- Under Linux the X11 front-end does not work properly when NumLock is on.
-- Using modules: Automatizer save (+ note save, etc.) don't autocreate the module directory in the save directory hierarchy...
