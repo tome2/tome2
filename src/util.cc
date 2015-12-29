@@ -363,17 +363,6 @@ errr my_fgets(FILE *fff, char *buf, huge n)
 
 
 /*
-* The Macintosh is a little bit brain-dead sometimes
-*/
-#ifdef MACINTOSH
-# define open(N, F, M) \
-((M), open((char*)(N), F))
-# define write(F, B, S) \
-write(F, (char*)(B), S)
-#endif /* MACINTOSH */
-
-
-/*
 * Several systems have no "O_BINARY" flag
 */
 #ifndef O_BINARY

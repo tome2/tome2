@@ -185,9 +185,6 @@ static void automatizer_save_rules()
 	// Build the filename
 	path_build(buf, 1024, ANGBAND_DIR_USER, name);
 		
-	// File type is "TEXT"
-	FILE_TYPE(FILE_TYPE_TEXT);
-
 	if (file_exist(buf))
 	{
 		c_put_str(TERM_WHITE, "File exists, continue?[y/n]",

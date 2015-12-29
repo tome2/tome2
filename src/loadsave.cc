@@ -2888,9 +2888,6 @@ static bool_ save_player_aux(char *name)
 	/* No file yet */
 	fff = NULL;
 
-	/* File type is "SAVE" */
-	FILE_TYPE(FILE_TYPE_SAVE);
-
 	/* Create the savefile */
 	fd = fd_make(name, mode);
 

@@ -53,9 +53,6 @@ void output_note(char *final_note)
 	char basename[13];
 	char buf[1024];
 
-	/* File type is "TEXT" */
-	FILE_TYPE(FILE_TYPE_TEXT);
-
 	/* Hack -- extract first 8 characters of name and append an extension */
 	(void)strnfmt(basename, sizeof(basename), "%.8s.nte", player_base);
 	basename[sizeof(basename) - 1] = '\0';

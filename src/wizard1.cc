@@ -383,9 +383,6 @@ static void spoil_obj_desc(cptr fname)
 	/* Build the filename */
 	path_build(buf, sizeof(buf), ANGBAND_DIR_USER, fname);
 
-	/* File type is "TEXT" */
-	FILE_TYPE(FILE_TYPE_TEXT);
-
 	/* Open the file */
 	fff = my_fopen(buf, "w");
 
@@ -1242,9 +1239,6 @@ static void spoil_artifact(cptr fname)
 	/* Build the filename */
 	path_build(buf, sizeof(buf), ANGBAND_DIR_USER, fname);
 
-	/* File type is "TEXT" */
-	FILE_TYPE(FILE_TYPE_TEXT);
-
 	/* Open the file */
 	fff = my_fopen(buf, "w");
 
@@ -1332,9 +1326,6 @@ static void spoil_mon_desc(cptr fname)
 
 	/* Build the filename */
 	path_build(buf, sizeof(buf), ANGBAND_DIR_USER, fname);
-
-	/* File type is "TEXT" */
-	FILE_TYPE(FILE_TYPE_TEXT);
 
 	/* Open the file */
 	fff = my_fopen(buf, "w");
@@ -1476,9 +1467,6 @@ static void spoil_mon_info(cptr fname)
 
 	/* Build the filename */
 	path_build(buf, sizeof(buf), ANGBAND_DIR_USER, fname);
-
-	/* File type is "TEXT" */
-	FILE_TYPE(FILE_TYPE_TEXT);
 
 	/* Open the file */
 	fff = my_fopen(buf, "w");
@@ -2380,9 +2368,6 @@ static void spoil_spells(cptr fname)
 
 	/* Build the filename */
 	path_build(buf, sizeof(buf), ANGBAND_DIR_USER, fname);
-
-	/* File type is "TEXT" */
-	FILE_TYPE(FILE_TYPE_TEXT);
 
 	fff = my_fopen(buf, "w");
 

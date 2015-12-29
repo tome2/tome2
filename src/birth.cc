@@ -3396,9 +3396,6 @@ int load_savefile_names()
 	strcpy(tmp, "global.svg");
 	path_build(buf, 1024, ANGBAND_DIR_SAVE, tmp);
 
-	/* File type is "TEXT" */
-	FILE_TYPE(FILE_TYPE_TEXT);
-
 	/* Read the file */
 	fff = my_fopen(buf, "r");
 
@@ -3469,9 +3466,6 @@ int load_savefile_names()
 		strncpy(player_base, savefile_names[max], 32);
 		process_player_name(TRUE);
 
-		/* File type is 'SAVE' */
-		FILE_TYPE(FILE_TYPE_SAVE);
-
 		/* Try to open the savefile */
 		fd = fd_open(savefile, O_RDONLY);
 
@@ -3507,9 +3501,6 @@ void save_savefile_names()
 	/* Build the filename */
 	strcpy(tmp, "global.svg");
 	path_build(buf, 1024, ANGBAND_DIR_SAVE, tmp);
-
-	/* File type is "TEXT" */
-	FILE_TYPE(FILE_TYPE_TEXT);
 
 	/* Read the file */
 	fff = my_fopen(buf, "w");

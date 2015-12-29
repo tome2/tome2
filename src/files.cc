@@ -2557,9 +2557,6 @@ errr file_character(cptr name, bool_ full)
 	/* Build the filename */
 	path_build(buf, 1024, ANGBAND_DIR_USER, name);
 
-	/* File type is "TEXT" */
-	FILE_TYPE(FILE_TYPE_TEXT);
-
 	/* Check for existing file */
 	fd = fd_open(buf, O_RDONLY);
 
@@ -3885,9 +3882,6 @@ void help_file_screenshot(cptr name)
 	/* Build the filename */
 	path_build(buf, 1024, ANGBAND_DIR_USER, name);
 
-	/* File type is "TEXT" */
-	FILE_TYPE(FILE_TYPE_TEXT);
-
 	/* Append to the file */
 	htm = my_fopen(buf, "w");
 
@@ -3940,9 +3934,6 @@ void html_screenshot(cptr name)
 
 	/* Build the filename */
 	path_build(buf, 1024, ANGBAND_DIR_USER, name);
-
-	/* File type is "TEXT" */
-	FILE_TYPE(FILE_TYPE_TEXT);
 
 	/* Append to the file */
 	htm = my_fopen(buf, "w");
@@ -4064,23 +4055,6 @@ void process_player_name(bool_ sf)
 		}
 	}
 
-
-#ifdef MACINTOSH
-
-	/* Extract "useful" letters */
-	for (i = 0; player_base[i]; i++)
-	{
-		char c = player_base[i];
-
-		/* Convert "dot" to "underscore" */
-		if (c == '@.') c = '_';
-
-		/* Accept all the letters */
-		tmp[k++] = c;
-	}
-
-#else
-
 	/* Extract "useful" letters */
 	for (i = 0; player_base[i]; i++)
 	{
@@ -4092,8 +4066,6 @@ void process_player_name(bool_ sf)
 		/* Convert space, dot, and underscore to underscore */
 		else if (strchr("@. _", c)) tmp[k++] = '_';
 	}
-
-#endif
 
 
 #if defined(WINDOWS)

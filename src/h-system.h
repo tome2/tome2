@@ -38,17 +38,11 @@
 
 
 
-#ifdef MACINTOSH
-# include <unix.h>
-#endif
-
 #if defined(WINDOWS)
 # include <io.h>
 #endif
 
-#if !defined(MACINTOSH)
-#  include <memory.h>
-#endif
+#include <memory.h>
 
 
 # include <fcntl.h>

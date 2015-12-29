@@ -1023,9 +1023,6 @@ static errr option_dump(cptr fname)
 	/* Build the filename */
 	path_build(buf, 1024, ANGBAND_DIR_USER, fname);
 
-	/* File type is "TEXT" */
-	FILE_TYPE(FILE_TYPE_TEXT);
-
 	/* Append to the file */
 	fff = my_fopen(buf, "a");
 
@@ -1435,9 +1432,6 @@ static errr macro_dump(cptr fname)
 	/* Build the filename */
 	path_build(buf, 1024, ANGBAND_DIR_USER, fname);
 
-	/* File type is "TEXT" */
-	FILE_TYPE(FILE_TYPE_TEXT);
-
 	/* Append to the file */
 	fff = my_fopen(buf, "a");
 
@@ -1591,9 +1585,6 @@ static errr keymap_dump(cptr fname)
 	/* Build the filename */
 	path_build(buf, 1024, ANGBAND_DIR_USER, fname);
 
-	/* File type is "TEXT" */
-	FILE_TYPE(FILE_TYPE_TEXT);
-
 	/* Append to the file */
 	fff = my_fopen(buf, "a");
 
@@ -1664,9 +1655,6 @@ void do_cmd_macros(void)
 
 	/* Keymap mode */
 	mode = get_keymap_mode();
-
-	/* File type is "TEXT" */
-	FILE_TYPE(FILE_TYPE_TEXT);
 
 
 	/* Enter "icky" mode */
@@ -2026,10 +2014,6 @@ void do_cmd_visuals(void)
 	char tmp[160];
 
 	char buf[1024];
-
-
-	/* File type is "TEXT" */
-	FILE_TYPE(FILE_TYPE_TEXT);
 
 
 	/* Enter "icky" mode */
@@ -2462,10 +2446,6 @@ void do_cmd_colors(void)
 	char tmp[160];
 
 	char buf[1024];
-
-
-	/* File type is "TEXT" */
-	FILE_TYPE(FILE_TYPE_TEXT);
 
 
 	/* Enter "icky" mode */
@@ -2943,9 +2923,6 @@ void do_cmd_save_screen(void)
 
 	/* Build the filename */
 	path_build(buf, 1024, ANGBAND_DIR_USER, "dump.txt");
-
-	/* File type is "TEXT" */
-	FILE_TYPE(FILE_TYPE_TEXT);
 
 	/* Append to the file */
 	fff = my_fopen(buf, "w");
@@ -4050,9 +4027,6 @@ void do_cmd_knowledge(void)
 	int i;
 
 
-	/* File type is "TEXT" */
-	FILE_TYPE(FILE_TYPE_TEXT);
-
 	/* Enter "icky" mode */
 	character_icky = TRUE;
 
@@ -4218,9 +4192,6 @@ void do_cmd_knowledge(void)
  */
 void do_cmd_checkquest(void)
 {
-	/* File type is "TEXT" */
-	FILE_TYPE(FILE_TYPE_TEXT);
-
 	/* Enter "icky" mode */
 	character_icky = TRUE;
 

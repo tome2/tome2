@@ -1338,9 +1338,6 @@ void init_angband(void)
 	/* Failure */
 	if (fd < 0)
 	{
-		/* File type is "DATA" */
-		FILE_TYPE(FILE_TYPE_DATA);
-
 		/* Create a new high score file */
 		fd = fd_make(buf, mode);
 

@@ -20,13 +20,6 @@ extern "C" {
  */
 
 /*
- * OPTION: Compile on a Macintosh (see "A-mac-h" or "A-mac-pch")
- */
-#ifndef MACINTOSH
-/* #define MACINTOSH */
-#endif
-
-/*
  * OPTION: Compile on Windows (automatic)
  */
 #ifndef WINDOWS
@@ -67,7 +60,7 @@ extern "C" {
  * functions to extract user names and expand "tildes" in filenames.
  * Basically, SET_UID should *only* be set for "Unix" machines.
  */
-#if !defined(MACINTOSH) && !defined(WINDOWS)
+#if !defined(WINDOWS)
 # define SET_UID
 #endif
 
@@ -81,28 +74,10 @@ extern "C" {
  */
 #undef PATH_SEP
 #define PATH_SEP "/"
-#ifdef MACINTOSH
-# undef PATH_SEP
-# define PATH_SEP ":"
-#endif
 #if defined(WINDOWS) || defined(WINNT)
 # undef PATH_SEP
 # define PATH_SEP "\\"
 #endif
-
-
-/*
- * The Macintosh allows the use of a "file type" when creating a file
- */
-#if defined(MACINTOSH) && !defined(applec)
-# define FILE_TYPE_TEXT 'TEXT'
-# define FILE_TYPE_DATA 'DATA'
-# define FILE_TYPE_SAVE 'SAVE'
-# define FILE_TYPE(X) (_ftype = (X))
-#else
-# define FILE_TYPE(X) ((void)0)
-#endif
-
 
 #ifdef __cplusplus
 } // extern "C"
