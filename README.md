@@ -1,4 +1,8 @@
-## Building
+ToME is a [rogue-like](https://en.wikipedia.org/wiki/Roguelike) game.
+
+![Screenshot](/doc/images/screenshot.png)
+
+## Getting Started
 
 ### Prerequisites
 
