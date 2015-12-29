@@ -13,6 +13,13 @@ on your system somewhere where CMake can find them:
    - jansson
      See http://www.digip.org/jansson/
 
+   - Boost
+     See https://www.boost.org/
+
+
+Version requirements may vary somewhat, but usually you should be
+aiming for having at least a *recent* version of the above libraries.
+
 
 Option #1 : Run ToME from the build directory
 =============================================
@@ -58,8 +65,9 @@ probably missing the
 package. You'll also need to install the
 
     libjansson-dev
+    libboost-all-dev
 
-package.
+packages.
 
 Each frontend requires the additional packages listed below:
 
