@@ -1,6 +1,8 @@
-# Building
+## Building
 
-## Prerequisites
+### Prerequisites
+
+See below for specific distribution-specific hints, if needed.
 
 You will need to have the following libraries installed on your system
 somewhere where CMake can find them:
@@ -11,15 +13,10 @@ somewhere where CMake can find them:
 Version requirements may vary somewhat, but usually you should be
 aiming for having at least a **recent** version of the above libraries.
 
-## Using the CMake build system
-
-There are basically two options for ToME runs once built and the step
-used to configure the build needs to incorporate the choice.
-
-### **Option 1:** Run ToME from the build directory
+### Option 1: Running In-Place
 
 **This is currently the recommended option**, but it means that you
-cannot "install" ToME as such, you just run it from the build
+don't 'install' ToME as such, you just run it from the build
 directory.
 
 To configure for your system, run
@@ -39,7 +36,7 @@ you'll get mysterious errors about ToME not being able to find files
 (at best).
 
 
-### **Option 2:** Run ToME from a system install location
+### Option 2: Installing System-Wide
 
 To configure for your system, run
 
