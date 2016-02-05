@@ -351,7 +351,7 @@ s32b maxroll(s16b num, s16b sides)
 	return (num * sides);
 }
 
-bool magik(int p) {
+bool magik(s32b p) {
 	return rand_int(100) < p;
 }
 
