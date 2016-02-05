@@ -4267,9 +4267,10 @@ void do_cmd_time()
 	strcpy(desc, "It is a strange time.");
 
 	/* Display day */
-	u32b days = bst(DAY, turn) + 1;
+	auto days = bst(DAY, turn) + 1;
+	auto days_str = get_day(days);
 	msg_format("This is the %s day of your adventure.",
-		   get_day(days));
+		   days_str.c_str());
 
 	/* Message */
 	msg_format("The time is %d:%02d %s.",

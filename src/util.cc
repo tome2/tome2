@@ -27,6 +27,7 @@
 
 #include <boost/algorithm/string/predicate.hpp>
 #include <chrono>
+#include <sstream>
 #include <thread>
 
 using boost::algorithm::iequals;
@@ -3196,7 +3197,7 @@ void repeat_check(void)
  *
  * Allow numbers of any size and save the last keypress.
  */
-u32b get_number(u32b def, u32b max, int y, int x, char *cmd)
+static u32b get_number(u32b def, u32b max, int y, int x, char *cmd)
 {
 	u32b res = def;
 
@@ -3402,18 +3403,31 @@ s32b bst(s32b what, s32b t)
 	}
 }
 
-cptr get_day(int day)
+std::string get_day(s32b day_no)
 {
-	static char buf[20];
-	cptr p = "th";
-
-	if ((day / 10) == 1) ;
-	else if ((day % 10) == 1) p = "st";
-	else if ((day % 10) == 2) p = "nd";
-	else if ((day % 10) == 3) p = "rd";
-
-	sprintf(buf, "%d%s", day, p);
-	return (buf);
+	// Convert the number
+	std::string day(std::to_string(day_no));
+	// Suffix
+	if ((day_no / 10) == 1)
+	{
+		return day + "th";
+	}
+	else if ((day_no % 10) == 1)
+	{
+		return day + "st";
+	}
+	else if ((day_no % 10) == 2)
+	{
+		return day + "nd";
+	}
+	else if ((day_no % 10) == 3)
+	{
+		return day + "rd";
+	}
+	else
+	{
+		return day + "th";
+	}
 }
 
 cptr get_player_race_name(int pr, int ps)
