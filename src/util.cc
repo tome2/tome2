@@ -3430,27 +3430,23 @@ std::string get_day(s32b day_no)
 	}
 }
 
-cptr get_player_race_name(int pr, int ps)
+std::string get_player_race_name(int pr, int ps)
 {
-	static char buf[50];
-
 	if (ps)
 	{
 		if (race_mod_info[ps].place)
 		{
-			sprintf(buf, "%s %s", race_info[pr].title, race_mod_info[ps].title);
+			return std::string(race_info[pr].title) + " " + race_mod_info[ps].title;
 		}
 		else
 		{
-			sprintf(buf, "%s %s", race_mod_info[ps].title, race_info[pr].title);
+			return std::string(race_mod_info[ps].title) + " " + race_info[pr].title;
 		}
 	}
 	else
 	{
-		sprintf(buf, "%s", race_info[pr].title);
+		return std::string(race_info[pr].title);
 	}
-
-	return (buf);
 }
 
 /*

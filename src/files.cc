@@ -2207,9 +2207,12 @@ void display_player(int mode)
 			c_put_str(TERM_L_BLUE, tmp, 3, 9);
 		}
 		else
+		{
 			c_put_str(TERM_L_BLUE, sp_ptr->title, 3, 9);
-		sprintf(buf, "%s", get_player_race_name(p_ptr->prace, p_ptr->pracem));
-		c_put_str(TERM_L_BLUE, buf, 4, 9);
+		}
+
+		auto const player_race_name = get_player_race_name(p_ptr->prace, p_ptr->pracem);
+		c_put_str(TERM_L_BLUE, player_race_name.c_str(), 4, 9);
 		c_put_str(TERM_L_BLUE, spp_ptr->title, 5, 9);
 		c_put_str(TERM_L_BLUE, r_ptr->name, 6, 9);
 		c_put_str(TERM_L_BLUE, deity_info[p_ptr->pgod].name, 7, 9);
@@ -4788,11 +4791,12 @@ static void display_scores_aux(int highscore_fd, int from, int to, int note, hig
 			for (aged = the_score.turns; isspace(*aged); aged++) /* loop */;
 
 			/* Dump some info */
+			auto const player_race_name = get_player_race_name(pr, ps);
 			sprintf(out_val, "%3d.%9s  %s the %s %s, Level %d",
 				place,
 				the_score.pts,
 				the_score.who,
-				get_player_race_name(pr, ps),
+				player_race_name.c_str(),
 				class_info[pc].spec[pcs].title,
 			        clev);
 

@@ -1927,7 +1927,8 @@ static bool_ player_birth_aux_ask()
 			rmp_ptr = &race_mod_info[p_ptr->pracem];
 
 			/* Display */
-			c_put_str(TERM_L_BLUE, get_player_race_name(p_ptr->prace, p_ptr->pracem), 4, 9);
+			auto const race_name = get_player_race_name(p_ptr->prace, p_ptr->pracem);
+			c_put_str(TERM_L_BLUE, race_name.c_str(), 4, 9);
 		}
 	}
 
@@ -2745,8 +2746,8 @@ static bool_ player_birth_aux_auto()
 
 			c_put_str(TERM_L_BLUE, player_name, 2, 9);
 			c_put_str(TERM_L_BLUE, sp_ptr->title, 3, 9);
-			strnfmt(buf, 80, "%s", get_player_race_name(p_ptr->prace, p_ptr->pracem));
-			c_put_str(TERM_L_BLUE, buf, 4, 9);
+			auto const player_race_name = get_player_race_name(p_ptr->prace, p_ptr->pracem);
+			c_put_str(TERM_L_BLUE, player_race_name.c_str(), 4, 9);
 			c_put_str(TERM_L_BLUE, spp_ptr->title, 5, 9);
 
 			/* Label stats */
@@ -3512,9 +3513,10 @@ void save_savefile_names()
 	 * Save, use '@' intead of ':' as a separator because it cannot exists
 	 * in savefiles
 	 */
+	auto const player_race_name = get_player_race_name(p_ptr->prace, p_ptr->pracem);
 	fprintf(fff, "%s@%c%s@%s, the %s %s is %s\n", game_module,
 	        (death) ? '0' : '1', player_base, player_name,
-	        get_player_race_name(p_ptr->prace, p_ptr->pracem),
+		player_race_name.c_str(),
 		spp_ptr->title,
 	        (!death) ? "alive" : "dead");
 
