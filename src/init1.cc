@@ -7876,18 +7876,17 @@ errr init_d_info_txt(FILE *fp)
 		if (buf[0] == 'W')
 		{
 			int min_lev, max_lev;
-			int min_plev, next;
+			int min_plev;
 			int min_alloc, max_chance;
 
 			/* Scan for the values */
-			if (6 != sscanf(buf + 2, "%d:%d:%d:%d:%d:%d",
-			                &min_lev, &max_lev, &min_plev, &next, &min_alloc, &max_chance)) return (1);
+			if (5 != sscanf(buf + 2, "%d:%d:%d:%d:%d",
+					&min_lev, &max_lev, &min_plev, &min_alloc, &max_chance)) return (1);
 
 			/* Save the values */
 			d_ptr->mindepth = min_lev;
 			d_ptr->maxdepth = max_lev;
 			d_ptr->min_plev = min_plev;
-			d_ptr->next = next;
 			d_ptr->min_m_alloc_level = min_alloc;
 			d_ptr->max_m_alloc_chance = max_chance;
 

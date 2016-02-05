@@ -12,7 +12,7 @@
 
 # N:<index>:<name>
 # D:<3 letter short name>:<long name>
-# W:<min depth>:<max depth>:<min player level>:<next dungeon>:<min alloc>:<max alloc chance>
+# W:<min depth>:<max depth>:<min player level>:<min alloc>:<max alloc chance>
 # L:<floor1>:<%1>:<floor2>:<%2>:<floor3>:<%3>
 # A:<wall1>:<%1>:<wall2>:<%2>:<wall3>:<%3>:<outer wall>:<inner wall>
 # O:<%treasure>:<%combat>:<%magic>:<%tools>
@@ -33,7 +33,7 @@
 
 N:0:Wilderness
 D:Wil:a way to the Wilderness
-W:0:0:0:0:14:500
+W:0:0:0:14:500
 L:89:80:199:20:1:0
 A:96:100:56:0:56:0:57:58
 O:20:20:20:20
@@ -44,7 +44,7 @@ R:100:0
 
 N:1:Mirkwood
 D:Mkw:a way to the Mirkwood Forest.
-W:11:33:5:0:14:160
+W:11:33:5:14:160
 L:89:95:199:5:88:0
 A:96:100:97:0:56:0:202:96
 O:20:20:20:20
@@ -54,7 +54,7 @@ R:100:0
 
 N:2:Mordor
 D:Mdr:a door to the Land of Mordor.
-W:34:66:15:0:14:160
+W:34:66:15:14:160
 L:88:67:93:33:1:0
 L:0:100:0
 A:97:50:56:50:56:0:57:97
@@ -66,7 +66,7 @@ R:100:0
 
 N:3:Angband
 D:Ang:an entrance to the Pits of Angband.
-W:67:127:30:0:14:160
+W:67:127:30:14:160
 L:1:100:1:0:1:0
 A:56:100:56:0:56:0:57:58
 O:20:20:20:20
@@ -77,7 +77,7 @@ R:100:0
 
 N:4:Barrow-Downs
 D:BDw:a way to the Barrow-Downs.
-W:1:10:1:0:14:160
+W:1:10:1:14:160
 L:88:78:89:18:199:4
 L:0:95:5
 A:96:34:97:66:56:0:57:97
@@ -95,7 +95,7 @@ R:75:0
 # Levels 85-99
 N:5:Mount Doom
 D:MDm:a way to the top of the Mount Doom.
-W:85:99:18:0:14:160
+W:85:99:18:14:160
 L:86:90:205:10:1:0
 A:177:100:0:0:0:0:85:87
 O:10:10:30:30
@@ -110,7 +110,7 @@ M:IM_FIRE
 # guarded by Tik'srvzllat, who has the Ring of Phasing
 N:6:Nether Realm
 D:Nth:a magical portal to the Nether Realm.
-W:666:696:40:0:14:160
+W:666:696:40:14:160
 L:102:80:86:15:85:5
 A:85:80:87:20:87:0:57:85
 A:50:50:0
@@ -129,7 +129,7 @@ M:RES_NETH | R_CHAR_G | R_CHAR_W | R_CHAR_U
 # guarded by Ar-Pharazon the Golden, who has the stone "Toris Mejistos".
 N:7:Submerged Ruins
 D:Num:a submerged way to the lost land of Numenor.
-W:35:50:25:0:14:160
+W:35:50:25:14:160
 L:84:95:187:5:1:0
 A:187:80:84:10:56:10:57:187
 A:60:0:40
@@ -145,7 +145,7 @@ M:AQUATIC | CAN_SWIM | CAN_FLY
 # Used for astral mode
 N:8:Halls of Mandos
 D:HMa:*A BUG*YOU should see this message!*
-W:1:98:1:0:14:160
+W:1:98:1:14:160
 L:1:100:1:0:1:0
 O:20:20:20:20
 A:56:100:56:0:56:0:57:58
@@ -159,7 +159,7 @@ M:UNIQUE
 # guarded by Shelob.
 N:9:Cirith Ungol
 D:CUg:an entrance to Cirith Ungol.
-W:25:50:10:0:14:160
+W:25:50:10:14:160
 L:87:5:88:65:16:30
 A:97:90:16:10:56:0:16:58
 O:30:30:30:10
@@ -178,7 +178,7 @@ M:ORC | R_CHAR_w | R_CHAR_m | R_CHAR_j
 # guarded by Golgarach, the Living Rock
 N:10:Heart of the Earth
 D:HoE:a passage leading into the very heart of the world.
-W:25:36:10:0:14:160
+W:25:36:10:14:160
 L:1:100:1:0:1:0
 A:56:100:56:0:56:0:57:58
 O:40:10:10:20
@@ -195,7 +195,7 @@ R:30:0
 # Where Melkor lurks for the final battle!
 N:11:The Void
 D:Vod:a jumpgate to the Void
-W:128:150:40:0:20:160
+W:128:150:40:20:160
 L:183:97:102:3:0:0
 A:183:90:102:10:0:0:102:102
 A:40:60:0
@@ -212,7 +212,7 @@ M:UNDEAD | DEMON | DRAGON | NONLIVING | SPIRIT
 # TEST dungeon
 N:12:Test
 D:Tst:a way to test dungeon gen
-W:1:10:1:0:14:160
+W:1:10:1:14:160
 L:88:78:89:18:199:4
 L:0:95:5
 A:177:100:0:0:0:0:85:87
@@ -228,7 +228,7 @@ G:dungeon2
 # Feagwath is there, guarding Doomcaller
 N:16:Paths of the Dead
 D:PoD:the entrance to the Paths of the Dead.
-W:40:70:18:0:24:100
+W:40:70:18:24:100
 L:88:85:84:15:1:0
 A:56:75:87:25:56:0:57:58
 O:30:30:30:2
@@ -246,7 +246,7 @@ M:UNDEAD | NONLIVING
 # Guarded by The Glass Golem guarding The Helm of Knowledge
 N:17:Illusory Castle
 D:Ill:an entrance to the Illusory Castle.
-W:35:52:10:0:24:100
+W:35:52:10:24:100
 L:1:98:188:2:1:0
 A:56:50:189:50:56:0:57:58
 O:50:10:20:20
@@ -265,7 +265,7 @@ S:BR_CONF | BR_CHAO | BA_CHAO | CONF | FORGET | TRAPS | MULTIPLY
 # Guarded by The Minotaur of the Labyrinth with the Steel Helm of Hammerhand
 N:18:Maze
 D:Maz:a small tunnel leading to a maze of twisty little passages, all alike.
-W:25:37:15:0:20:160
+W:25:37:15:20:160
 L:1:100:1:0:1:0
 A:56:98:48:2:56:0:57:58
 O:2:40:10:40
@@ -281,7 +281,7 @@ M:R_CHAR_p
 # There is Azog with the Wand of Thrain at the bottom
 N:19:Orc Cave
 D:Orc:a dark tunnel leading to an Orc Cave.
-W:10:22:8:0:35:200
+W:10:22:8:35:200
 L:88:100:1:0:1:0
 A:97:100:56:0:56:0:57:97
 O:5:50:10:25
@@ -299,7 +299,7 @@ M:ORC | R_CHAR_k | R_CHAR_o | R_CHAR_O
 # There is Glaurung
 N:20:Erebor
 D:Ere:a tunnel leading into depths of the Lonely Mountain.
-W:60:72:30:0:20:140
+W:60:72:30:20:140
 L:88:100:1:0:1:0
 A:97:90:87:10:56:0:57:97
 O:40:40:40:40
@@ -317,7 +317,7 @@ M:DRAGON | R_CHAR_d
 # Old Man Willow protects it
 N:21:The Old Forest
 D:OFr:a path into the Old Forest.
-W:13:25:5:0:15:100
+W:13:25:5:15:100
 L:88:76:84:16:199:8
 L:68:16:16
 A:96:100:56:0:56:0:202:96
@@ -336,7 +336,7 @@ M:UNDEAD | R_CHAR_h
 # There is Durin's Bane
 N:22:Moria
 D:MoM:a stone door leading to the Mines of Moria.
-W:30:50:20:0:40:40
+W:30:50:20:40:40
 L:88:100:1:0:1:0
 A:97:100:56:0:56:0:57:97
 O:30:50:10:5
@@ -358,7 +358,7 @@ R:10:0
 # The Necromancer (weak Sauron) at the bottom, with the Ring of Durin
 N:23:Dol Guldur
 D:TDG:a gate leading to the tower of Dol Guldur.
-W:57:70:34:0:24:160
+W:57:70:34:24:160
 L:1:80:174:20:1:0
 A:56:100:56:0:56:0:57:58
 O:20:1:70:9
@@ -381,7 +381,7 @@ R:10:0
 # The Watcher in the Water is at the bottom
 N:24:The Small Water Cave
 D:SWC:the entrance to a small water cave.
-W:32:34:20:0:14:160
+W:32:34:20:14:160
 L:84:100:84:0:84:0
 A:97:100:56:0:56:0:57:58
 O:10:10:30:30
@@ -403,7 +403,7 @@ M:IM_COLD
 # Levels 45-70
 N:25:The Sacred Land Of Mountains
 D:LoM:the way to the Sacred Land of Mountains.
-W:45:70:20:0:14:160
+W:45:70:20:14:160
 L:89:100:89:0:89:0
 A:97:100:56:0:56:0:97:97
 O:20:20:20:20
@@ -419,7 +419,7 @@ R:40:0
 # Guarded by Ulfang the Black, Morgoth's first Easterling follower.
 N:26:The Land Of Rhun
 D:LoR:a way to the Land of Rhun.
-W:26:40:15:0:14:160
+W:26:40:15:14:160
 L:89:100:1:0:1:0
 A:89:50:96:25:84:25:57:58
 O:20:20:20:20
@@ -436,7 +436,7 @@ R:40:0
 # guarded by the Sandworm Queen (and her children), who will drop her armour
 N:27:The Sandworm lair
 D:SwL:a sandhole.
-W:22:30:12:0:5:200
+W:22:30:12:5:200
 L:91:85:94:10:93:5
 A:98:100:96:0:84:0:94:94
 O:15:5:60:20
@@ -451,7 +451,7 @@ S:MULTIPLY
 # Used by the death fate
 N:28:Death fate
 D:Dth:a fated death.
-W:1:1:1:0:30:255
+W:1:1:1:30:255
 L:1:100:1:0:1:0
 A:1:100:1:0:1:0:1:1
 O:1:1:1:1
@@ -464,7 +464,7 @@ R:100:0
 # Guarded by the White Balrog
 N:29:The Helcaraxe
 D:Ice:the entrance to the Grinding Ice of the Helcaraxe.
-W:20:40:10:0:14:160
+W:20:40:10:14:160
 L:90:0:88:70:84:30
 L:90:0:10
 A:95:0:56:100:56:0:57:58
@@ -483,7 +483,7 @@ M:IM_COLD
 # See god.lua for details
 N:30:a lost temple
 D:LTm:the entrance to a lost temple.
-W:1:50:1:0:14:160
+W:1:50:1:14:160
 L:1:100:1:0:1:0
 A:56:100:56:0:56:0:57:58
 O:20:20:20:20

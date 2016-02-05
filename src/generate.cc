@@ -420,19 +420,6 @@ static void place_up_stairs(int y, int x)
 
 
 /*
- * Convert existing terrain type to "down stairs" with dungeon changing.
- */
-static void place_magical_stairs(int y, int x, byte next)
-{
-	cave_type *c_ptr = &cave[y][x];
-
-	/* Create up stairs */
-	cave_set_feat(y, x, FEAT_MORE);
-	c_ptr->special = next;
-}
-
-
-/*
  * Convert existing terrain type to "down stairs"
  */
 static void place_down_stairs(int y, int x)
@@ -907,14 +894,7 @@ static void place_random_stairs(int y, int x)
 	}
 	else if (dun_level >= d_info[dungeon_type].maxdepth)
 	{
-		if (d_info[dungeon_type].next)
-		{
-			place_magical_stairs(y, x, d_info[dungeon_type].next);
-		}
-		else
-		{
-			place_up_stairs(y, x);
-		}
+		place_up_stairs(y, x);
 	}
 	else if (rand_int(100) < 50)
 	{
