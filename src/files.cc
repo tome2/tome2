@@ -5095,15 +5095,6 @@ static errr top_twenty(void)
 		goto out;
 	}
 
-	/* Borg-mode pre-empts scoring */
-	if (noscore & 0x00F0)
-	{
-		msg_print("Score not registered for borgs.");
-		msg_print(NULL);
-		display_scores_aux(highscore_fd, 0, 10, -1, NULL);
-		goto out;
-	}
-
 	/* Cheaters are not scored */
 	if (noscore & 0xFF00)
 	{

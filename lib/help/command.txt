@@ -136,7 +136,7 @@ that you can always, for example, use "\" + "." + "6", to specify "run east".
  *****command.txt*72[,  Stay still (with pickup)]            ^W  (special - wizard mode)
  *****command.txt*74[<  Go up staircase]                     *****command.txt*75[^X  Save and quit]
  *****command.txt*76[.  Run]                                 ^Y  (unused)
- *****command.txt*77[>  Go down staircase]                   ^Z  (special - borg command)
+ *****command.txt*77[>  Go down staircase]                   ^Z  (unused)
  *****command.txt*79[\  (special - bypass keymap)]
  *****command.txt*81[`  (special - escape)]                   *****command.txt*82[~  Display current knowledge]
  *****command.txt*83[/  Identify symbol]                      *****command.txt*84[?  Help]
@@ -197,7 +197,7 @@ that you can always, for example, use "\" + "." + "6", to specify "run east".
  *****command.txt*76[,  Run]                                 ^W  (special - wizard mode)
  *****command.txt*74[<  Go up staircase]                     *****command.txt*75[^X  Save and quit]
  *****command.txt*72[.  Stay still (with pickup)]            *****command.txt*95[^Y  (tunnel - north west)]
- *****command.txt*77[>  Go down staircase]                   ^Z  (special - borg command)
+ *****command.txt*77[>  Go down staircase]                   ^Z  (unused)
  *****command.txt*79[\  (special - bypass keymap)]
  *****command.txt*81[`  (special - escape)]                   *****command.txt*82[~  Display current knowledge]
  *****command.txt*83[/  Identify symbol]                      *****command.txt*84[?  Help]
