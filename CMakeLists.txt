@@ -69,23 +69,11 @@ ENDIF()
 # X11 support (OPTIONAL)
 #
 FIND_PACKAGE(X11)
-IF(X11_FOUND)
-  # Add X11 flags/options
-  ADD_DEFINITIONS(-DUSE_X11)
-  INCLUDE_DIRECTORIES(${X11_INCLUDE_DIR})
-  SET(LIBS ${LIBS} ${X11_LIBRARIES})
-ENDIF()
 
 #
 # GTK2 support (OPTIONAL)
 #
 FIND_PACKAGE(GTK2)
-IF(GTK2_FOUND)
-  # Add GTK flags/options
-  ADD_DEFINITIONS(-DUSE_GTK2)
-  INCLUDE_DIRECTORIES(${GTK2_INCLUDE_DIRS})
-  SET(LIBS ${LIBS} ${GTK2_LIBRARIES})
-ENDIF()
 
 #
 # SDL support (OPTIONAL)
@@ -100,10 +88,7 @@ IF(SDL_FOUND)
   FIND_PACKAGE(SDL_image)
   FIND_PACKAGE(SDL_ttf)
   IF(SDLIMAGE_FOUND AND SDLTTF_FOUND)
-    # Add SDL flags/options
-    ADD_DEFINITIONS(-DUSE_SDL)
-    INCLUDE_DIRECTORIES(${SDL_INCLUDE_DIR} ${SDLIMAGE_INCLUDE_DIR} ${SDLTTF_INCLUDE_DIR})
-    SET(LIBS ${LIBS} ${SDLIMAGE_LIBRARY} ${SDLTTF_LIBRARY} ${SDL_LIBRARY} m)
+    # Handled in src/CMakeLists.txt
   ELSE()
     # Let user know that (and why) we haven't enabled SDL.
     IF(SDLIMAGE_FOUND)
@@ -122,21 +107,14 @@ ENDIF()
 # Curses support (OPTIONAL)
 #
 FIND_PACKAGE(Curses)
-IF(CURSES_FOUND)
-  # Add Curses flags/options
-  ADD_DEFINITIONS(-DUSE_GCU)
-  INCLUDE_DIRECTORIES(${CURSES_INCLUDE_DIR})
-  SET(LIBS ${LIBS} ${CURSES_LIBRARIES})
-ENDIF()
 
 #
 # Windows support
 #
 if(WIN32)
-  # Add Windows flags/options
+  # This definition is required for more than just the main-win file,
+  # so we need to have it here.
   ADD_DEFINITIONS(-DWINDOWS)
-  SET(EXECUTABLE_OPTIONS WIN32)
-  SET(LIBS ${LIBS} winmm wsock32)
 endif(WIN32)
 
 #

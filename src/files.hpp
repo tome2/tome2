@@ -25,3 +25,4 @@ extern char *get_line(const char* fname, cptr fdir, char *linbuf, int line);
 extern void race_legends(void);
 extern void show_highclass(int building);
 extern errr get_xtra_line(const char * file_name, monster_type *m_ptr, char * output);
+extern void process_player_name(bool_ sf);

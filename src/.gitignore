@@ -1,3 +1,7 @@
 /harness
-/tome
+/tome-gcu
+/tome-gtk2
+/tome-sdl
+/tome-x11
+/tome-win
 *.plist

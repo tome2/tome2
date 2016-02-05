@@ -72,3 +72,6 @@ extern void get_count(int number, int max);
 extern bool in_bounds(int y, int x);
 extern bool in_bounds2(int y, int x);
 extern bool panel_contains(int y, int x);
+extern errr path_parse(char *buf, int max, cptr file);
+extern void pause_line(int row);
+extern void user_name(char *buf, int id);

@@ -23,9 +23,8 @@
  // in this Software without prior written authorization from the author(s).
  */
 
-#ifdef USE_SDL
-
 #include "loadsave.h"
+#include "main.h"
 #include "util.h"
 #include "variable.h"
 
@@ -1824,7 +1823,7 @@ void dumpWindowSettings(void)
 /* The main-sdl initialization routine!
 This routine processes arguments, opens the SDL
 window, loads fonts, etc. */
-errr init_sdl(int argc, char **argv)
+int init_sdl(int argc, char **argv)
 {
 	int i;
 	char filename[PATH_MAX + 1];
@@ -2097,4 +2096,18 @@ errr init_sdl(int argc, char **argv)
 	return 0;
 }
 
-#endif
+int main(int argc, char *argv[])
+{
+	return main_real(
+		argc,
+		argv,
+		"sdl",
+		init_sdl,
+		"  -- -n #            Number of virtual consoles to use\n"
+		"  -- -w #            Request screen width in pixels\n"
+		"  -- -h #            Request screen height in pixels\n"
+		"  -- -bpp #          Request screen color depth in bits\n"
+		"  -- -fs             Start with full-screen display\n"
+		"  -- -s #            Request font size\n"
+		"  -- -f <font>       Request true-type font by name\n");
+}

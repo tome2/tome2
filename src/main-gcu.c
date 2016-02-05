@@ -38,11 +38,10 @@
  * Consider the use of "savetty()" and "resetty()".  XXX XXX XXX
  */
 
+#include "main.h"
 #include "util.h"
 #include "variable.h"
 
-
-#ifdef USE_GCU
 
 #include <limits.h>
 
@@ -794,7 +793,7 @@ static void hook_quit(cptr str)
  *
  * Someone should really check the semantics of "initscr()"
  */
-errr init_gcu(int argc, char **argv)
+int init_gcu(int argc, char **argv)
 {
 	int i;
 
@@ -1015,7 +1014,12 @@ errr init_gcu(int argc, char **argv)
 	return (0);
 }
 
-
-#endif /* USE_GCU */
-
-
+int main(int argc, char *argv[])
+{
+	return main_real(
+		argc,
+		argv,
+		"gcu",
+		init_gcu,
+		"  -- -b              Requests big screen\n");
+}

@@ -6,7 +6,6 @@
  * included in all such copies.
  */
 #include "birth.hpp"
-#include "birth.h"
 
 #include "ability_type.hpp"
 #include "artifact_type.hpp"

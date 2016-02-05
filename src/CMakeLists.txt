@@ -108,15 +108,6 @@ SET(SRCS_COMMON
   z-util.c
 )
 
-# Sources (PROGRAM)
-SET(SRCS_PROGRAM
-  main-gcu.c
-  main-gtk2.c
-  main-sdl.c
-  main-x11.c
-  main.c
-)
-
 # Sources (TEST)
 SET(SRCS_TESTS
   ../tests/get_level_device.cc
@@ -128,11 +119,14 @@ ADD_LIBRARY(game
   ${SRCS_COMMON}
 )
 
+ADD_LIBRARY(game_main
+  main.cc)
+
 # Need a few additional source files for Windows.
-if(WIN32)
+IF(WIN32)
   SET(SRCS ${SRCS} main-win.c)
   # Resource files require a little workaround.
-  if(MINGW)
+  IF(MINGW)
     # Workaround for resource compilation for mingw on CMake.
     # See http://www.cmake.org/Bug/view.php?id=4068
     ADD_CUSTOM_COMMAND(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/angband_rc.o
@@ -140,20 +134,44 @@ if(WIN32)
                                            -i${CMAKE_CURRENT_SOURCE_DIR}/angband.rc
                                            -o ${CMAKE_CURRENT_BINARY_DIR}/angband_rc.o)
     SET(SRCS ${SRCS} ${CMAKE_CURRENT_BINARY_DIR}/angband_rc.o)
-  else(MINGW)
+  ELSE(MINGW)
     SET(SRCS ${SRCS} angband.rc)
-  endif(MINGW)
-endif(WIN32)
+  ENDIF(MINGW)
+  # Executable for Win32
+  ADD_EXECUTABLE(tome-win WIN32 main-win.c)
+  TARGET_LINK_LIBRARIES(tome-win game squelch ${LIBS} winmm wsock32)
+  INSTALL(TARGETS tome-win RUNTIME DESTINATION bin)
+ENDIF(WIN32)
 
-# tome executable
-ADD_EXECUTABLE(tome ${EXECUTABLE_OPTIONS} ${SRCS_PROGRAM})
-TARGET_LINK_LIBRARIES(tome game squelch ${LIBS})
+# tome executables
+IF(X11_FOUND)
+  INCLUDE_DIRECTORIES(${X11_INCLUDE_DIR})
+  ADD_EXECUTABLE(tome-x11 main-x11.c)
+  TARGET_LINK_LIBRARIES(tome-x11 game game_main squelch ${LIBS} ${X11_LIBRARIES})
+  INSTALL(TARGETS tome-x11 RUNTIME DESTINATION bin)
+ENDIF()
+
+IF(SDL_FOUND AND SDLIMAGE_FOUND AND SDLTTF_FOUND)
+  INCLUDE_DIRECTORIES(${SDL_INCLUDE_DIR} ${SDLIMAGE_INCLUDE_DIR} ${SDLTTF_INCLUDE_DIR})
+  ADD_EXECUTABLE(tome-sdl main-sdl.c)
+  TARGET_LINK_LIBRARIES(tome-sdl game game_main squelch ${LIBS} ${SDLIMAGE_LIBRARY} ${SDLTTF_LIBRARY} ${SDL_LIBRARY} m)
+  INSTALL(TARGETS tome-sdl RUNTIME DESTINATION bin)
+ENDIF()
+
+IF(CURSES_FOUND)
+  INCLUDE_DIRECTORIES(${CURSES_INCLUDE_DIR})
+  ADD_EXECUTABLE(tome-gcu main-gcu.c)
+  TARGET_LINK_LIBRARIES(tome-gcu game game_main squelch ${LIBS} ${CURSES_LIBRARIES})
+  INSTALL(TARGETS tome-gcu RUNTIME DESTINATION bin)
+ENDIF()
+
+IF(GTK2_FOUND)
+  INCLUDE_DIRECTORIES(${GTK2_INCLUDE_DIRS})
+  ADD_EXECUTABLE(tome-gtk2 main-gtk2.c)
+  TARGET_LINK_LIBRARIES(tome-gtk2 game game_main squelch ${LIBS} ${GTK2_LIBRARIES})
+  INSTALL(TARGETS tome-gtk2 RUNTIME DESTINATION bin)
+ENDIF()
 
 # test harness executable
-ADD_EXECUTABLE(harness ${EXECUTABLE_OPTIONS} ${SRCS_TESTS})
+ADD_EXECUTABLE(harness ${SRCS_TESTS})
 TARGET_LINK_LIBRARIES(harness game squelch ${LIBS})
-
-# Installation
-INSTALL(TARGETS tome
-  RUNTIME DESTINATION bin
-)

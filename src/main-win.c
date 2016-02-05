@@ -74,9 +74,6 @@
 #include "util.h"
 #include "variable.h"
 
-#ifdef WINDOWS
-
-
 /*
  * Extract the "WIN32" flag from the compiler
  */
@@ -3349,8 +3346,3 @@ int FAR PASCAL WinMain(HINSTANCE hInst, HINSTANCE hPrevInst,
 	/* Paranoia */
 	return (0);
 }
-
-
-#endif /* WINDOWS */
-
-

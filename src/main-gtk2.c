@@ -31,15 +31,10 @@
  */
 
 #include "files.h"
+#include "main.h"
 #include "util.h"
 #include "variable.h"
 
-
-/*
- * Activate variant-specific features
- */
-
-#ifdef USE_GTK2
 
 /* Force ANSI standard */
 /* #define __STRICT_ANSI__ */
@@ -1897,7 +1892,7 @@ static void hook_quit(cptr str)
 /*
  * Initialization function
  */
-errr init_gtk2(int argc, char **argv)
+int init_gtk2(int argc, char **argv)
 {
 	int i;
 
@@ -1974,4 +1969,17 @@ errr init_gtk2(int argc, char **argv)
 	return (0);
 }
 
-#endif /* USE_GTK2 */
+/**
+ * Main
+ */
+int main(int argc, char *argv[])
+{
+	return main_real(
+		argc,
+		argv,
+		"gtk2",
+		init_gtk2,
+		// Usage:
+		"  -- -n#             Number of terms to use\n"
+		"  -- -b              Turn off software backing store\n");
+}

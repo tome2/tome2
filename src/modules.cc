@@ -7,7 +7,6 @@
  */
 
 #include "modules.hpp"
-#include "modules.h"
 
 #include "birth.hpp"
 #include "cave.hpp"

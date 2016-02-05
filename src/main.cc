@@ -1,5 +1,3 @@
-/* File: main.c */
-
 /*
  * Copyright (c) 1997 Ben Harrison, and others
  *
@@ -8,23 +6,17 @@
  * are included in all such copies.
  */
 
-#include "birth.h"
+#include "main.h"
+
+#include "birth.hpp"
 #include "dungeon.h"
-#include "files.h"
+#include "files.hpp"
 #include "init2.h"
-#include "modules.h"
+#include "modules.hpp"
 #include "util.h"
+#include "util.hpp"
 #include "variable.h"
-
-
-
-/*
- * Some machines have a "main()" function in their "main-xxx.c" file,
- * all the others use this file for their "main()" function.
- */
-
-
-#if !defined(WINDOWS)
+#include "variable.hpp"
 
 
 /*
@@ -83,7 +75,6 @@ static void init_save_dir(void)
 	}
 }
 
-
 static void init_player_name()
 {
 	/* Get the user id (?) */
@@ -94,21 +85,49 @@ static void init_player_name()
 }
 
 
+/*
+ * Initialize and verify the file paths, and the score file.
+ *
+ * Use the ANGBAND_PATH environment var if possible, else use
+ * DEFAULT_PATH, and in either case, branch off appropriately.
+ *
+ * First, we'll look for the ANGBAND_PATH environment variable,
+ * and then look for the files in there.  If that doesn't work,
+ * we'll try the DEFAULT_PATH constant.  So be sure that one of
+ * these two things works...
+ *
+ * We must ensure that the path ends with "PATH_SEP" if needed,
+ * since the "init_file_paths()" function will simply append the
+ * relevant "sub-directory names" to the given path.
+ */
+static void init_file_paths_with_env()
+{
+	char path[1024];
+
+	/* Get the environment variable */
+	cptr tail = getenv("TOME_PATH");
+
+	/* Use the angband_path, or a default */
+	strcpy(path, tail ? tail : DEFAULT_PATH);
+
+	/* Hack -- Add a path separator (only if needed) */
+	if (!suffix(path, PATH_SEP)) strcat(path, PATH_SEP);
+
+	/* Initialize */
+	init_file_paths(path);
+}
+
 
 /*
  * Simple "main" function for multiple platforms.
  *
  * Note the special "--" option which terminates the processing of
  * standard options.  All non-standard options (if any) are passed
- * directly to the "init_xxx()" function.
+ * directly to the platform initialization function.
  */
-int main(int argc, char *argv[])
+int main_real(int argc, char *argv[], char const *platform_sys, int (*init_platform)(int, char *[]), char const *platform_usage)
 {
 	int i;
-
-	bool_ done = FALSE;
-
-	cptr mstr = NULL;
 
 	bool_ args = TRUE;
 
@@ -162,13 +181,6 @@ int main(int argc, char *argv[])
 				break;
 			}
 
-		case 'm':
-			{
-				if (!argv[i][2]) goto usage;
-				mstr = &argv[i][2];
-				break;
-			}
-
 		case 'M':
 			{
 				if (!argv[i][2]) goto usage;
@@ -179,13 +191,14 @@ int main(int argc, char *argv[])
 		case 'h':
 			{
 				goto usage;
-				break;
 			}
 
 		case '-':
 			{
 				if (argv[i][2] == 'h' && !strcmp((argv[i] + 2), "help"))
+				{
 					goto usage;
+				}
 				else
 				{
 					argv[i] = argv[0];
@@ -210,40 +223,10 @@ usage:
 				puts("  -o                 Request original keyset");
 				puts("  -r                 Request rogue-like keyset");
 				puts("  -u<who>            Use your <who> savefile");
-				puts("  -M<which>            Use the <which> module");
-				puts("  -m<sys>            Force 'main-<sys>.c' usage");
+				puts("  -M<which>          Use the <which> module");
 
-#ifdef USE_GTK2
-				puts("  -mgtk2             To use GTK2");
 				puts("  --                 Sub options");
-				puts("  -- -n#             Number of terms to use");
-				puts("  -- -b              Turn off software backing store");
-#endif /* USE_GTK2 */
-
-#ifdef USE_X11
-				puts("  -mx11              To use X11");
-				puts("  --                 Sub options");
-				puts("  -- -n#             Number of terms to use");
-				puts("  -- -d<name>        Display to use");
-#endif /* USE_X11 */
-
-#ifdef USE_GCU
-				puts("  -mgcu              To use curses");
-				puts("  --                 Sub options");
-				puts("  -- -b              Requests big screen");
-#endif /* USE_GCU */
-
-#ifdef USE_SDL
-				puts("  -msdl              To use SDL");
-				puts("  --                 Sub options");
-				puts("  -- -n #            Number of virtual consoles to use");
-				puts("  -- -w #            Request screen width in pixels");
-				puts("  -- -h #            Request screen height in pixels");
-				puts("  -- -bpp #          Request screen color depth in bits");
-				puts("  -- -fs             Start with full-screen display");
-				puts("  -- -s #            Request font size");
-				puts("  -- -f <font>       Request true-type font by name");
-#endif /* USE_SDL */
+				puts(platform_usage);
 
 				/* Actually abort the process */
 				quit(NULL);
@@ -266,77 +249,28 @@ usage:
 	/* Install "quit" hook */
 	quit_aux = quit_hook;
 
-
-#ifdef USE_GTK2
-	/* Attempt to use the "main-gtk2.c" support */
-	if (!done && (!mstr || (streq(mstr, "gtk2"))))
+	/* Run the platform main initialization */
+	if (init_platform(argc, argv))
 	{
-		extern errr init_gtk2(int, char**);
-		if (0 == init_gtk2(argc, argv))
-		{
-			ANGBAND_SYS = "gtk2";
-			done = TRUE;
-		}
+		quit("Unable to prepare any 'display module'!");
 	}
-#endif
-
-#ifdef USE_X11
-	/* Attempt to use the "main-x11.c" support */
-	if (!done && (!mstr || (streq(mstr, "x11"))))
+	else
 	{
-		extern errr init_x11(int, char**);
-		if (0 == init_x11(argc, argv))
-		{
-			ANGBAND_SYS = "x11";
-			done = TRUE;
-		}
+		ANGBAND_SYS = platform_sys;
+
+		/* Initialize */
+		init_angband();
+
+		/* Wait for response */
+		pause_line(23);
+
+		/* Play the game */
+		play_game();
+
+		/* Quit */
+		quit(NULL);
+
 	}
-#endif
-
-#ifdef USE_GCU
-	/* Attempt to use the "main-gcu.c" support */
-	if (!done && (!mstr || (streq(mstr, "gcu"))))
-	{
-		extern errr init_gcu(int, char**);
-		if (0 == init_gcu(argc, argv))
-		{
-			ANGBAND_SYS = "gcu";
-			done = TRUE;
-		}
-	}
-#endif
-
-#ifdef USE_SDL
-	/* Attempt to use the "main-sdl.c" support */
-	if (!done && (!mstr || (streq(mstr, "sdl"))))
-	{
-		extern errr init_sdl(int, char**);
-		if (0 == init_sdl(argc, argv))
-		{
-			ANGBAND_SYS = "sdl";
-			done = TRUE;
-		}
-	}
-#endif
-
-	/* Make sure we have a display! */
-	if (!done) quit("Unable to prepare any 'display module'!");
-
-
-	/* Initialize */
-	init_angband();
-
-	/* Wait for response */
-	pause_line(23);
-
-	/* Play the game */
-	play_game();
-
-	/* Quit */
-	quit(NULL);
-
 	/* Exit */
 	return (0);
 }
-
-#endif

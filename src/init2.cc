@@ -231,41 +231,6 @@ void init_file_paths(char *path)
 
 
 /*
- * Initialize and verify the file paths, and the score file.
- *
- * Use the ANGBAND_PATH environment var if possible, else use
- * DEFAULT_PATH, and in either case, branch off appropriately.
- *
- * First, we'll look for the ANGBAND_PATH environment variable,
- * and then look for the files in there.  If that doesn't work,
- * we'll try the DEFAULT_PATH constant.  So be sure that one of
- * these two things works...
- *
- * We must ensure that the path ends with "PATH_SEP" if needed,
- * since the "init_file_paths()" function will simply append the
- * relevant "sub-directory names" to the given path.
- */
-void init_file_paths_with_env()
-{
-	char path[1024];
-
-	cptr tail;
-
-	/* Get the environment variable */
-	tail = getenv("TOME_PATH");
-
-	/* Use the angband_path, or a default */
-	strcpy(path, tail ? tail : DEFAULT_PATH);
-
-	/* Hack -- Add a path separator (only if needed) */
-	if (!suffix(path, PATH_SEP)) strcat(path, PATH_SEP);
-
-	/* Initialize */
-	init_file_paths(path);
-}
-
-
-/*
  * Hack -- help give useful error messages
  */
 s16b error_idx;

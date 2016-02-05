@@ -28,11 +28,12 @@ To configure for your system, run
     $ cmake .
     $ make
 
-You should now be able to run
+You should now be able to run one of the executables in ./src
+to run ToME. For example, you'd run
 
-    $ ./src/tome
+    $ ./src/tome-x11
 
-to start ToME.
+to start ToME with the X11 frontend.
 
 **Important:** The current working directory must be at the root of
 the source tree for the above command to run -- if it isn't, then

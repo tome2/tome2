@@ -10,7 +10,6 @@
 #include "dungeon.h"
 
 #include "birth.hpp"
-#include "birth.h"
 #include "cave.hpp"
 #include "cave_type.hpp"
 #include "cmd1.hpp"
