@@ -2920,7 +2920,7 @@ struct hyperlink
 
 typedef struct hyperlink hyperlink_type;
 
-bool_ show_file(cptr name, cptr what, int line, int mode)
+static bool_ show_file_aux(cptr name, cptr what, int line)
 {
 	int i, k, x;
 
@@ -3418,7 +3418,7 @@ bool_ show_file(cptr name, cptr what, int line, int mode)
 			strcpy(tmp, "help.hlp");
 			if (askfor_aux(tmp, 80))
 			{
-				if (!show_file(tmp, NULL, 0, mode)) k = ESCAPE;
+				if (!show_file_aux(tmp, NULL, 0)) k = ESCAPE;
 			}
 		}
 
@@ -3472,7 +3472,7 @@ bool_ show_file(cptr name, cptr what, int line, int mode)
 			if (h_ptr->link_x[cur_link] != -1)
 			{
 				/* Recurse on that file */
-				if (!show_file(h_ptr->link[cur_link], NULL, h_ptr->link_line[cur_link], mode)) k = ESCAPE;
+				if (!show_file_aux(h_ptr->link[cur_link], NULL, h_ptr->link_line[cur_link])) k = ESCAPE;
 			}
 		}
 
@@ -3485,7 +3485,7 @@ bool_ show_file(cptr name, cptr what, int line, int mode)
 			if (h_ptr->link_key[i] == k)
 			{
 				/* Recurse on that file */
-				if (!show_file(h_ptr->link[i], NULL, h_ptr->link_line[i], mode)) k = ESCAPE;
+				if (!show_file_aux(h_ptr->link[i], NULL, h_ptr->link_line[i])) k = ESCAPE;
 				break;
 			}
 		}
@@ -3499,6 +3499,11 @@ bool_ show_file(cptr name, cptr what, int line, int mode)
 
 	/* Normal return */
 	return (TRUE);
+}
+
+void show_file(cptr name, cptr what, int line)
+{
+	show_file_aux(name, what, line);
 }
 
 static void cmovie_clean_line(int y, char *abuf, char *cbuf)
@@ -3698,7 +3703,7 @@ void do_cmd_help(void)
 	screen_save();
 
 	/* Peruse the main help file */
-	(void)show_file("help.hlp", NULL, 0, 0);
+	show_file("help.hlp", NULL);
 
 	/* Load screen */
 	screen_load();

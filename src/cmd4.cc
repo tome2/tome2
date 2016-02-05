@@ -3230,7 +3230,7 @@ void do_cmd_knowledge_artifacts(void)
 	my_fclose(fff);
 
 	/* Display the file contents */
-	show_file(file_name, "Artifacts Seen", 0, 0);
+	show_file(file_name, "Artifacts Seen");
 
 	/* Remove the file */
 	fd_kill(file_name);
@@ -3269,7 +3269,7 @@ void do_cmd_knowledge_traps(void)
 	my_fclose(fff);
 
 	/* Display the file contents */
-	show_file(file_name, "Traps known", 0, 0);
+	show_file(file_name, "Traps known");
 
 	/* Remove the file */
 	fd_kill(file_name);
@@ -3359,7 +3359,7 @@ static void do_cmd_knowledge_uniques(void)
 	my_fclose(fff);
 
 	/* Display the file contents */
-	show_file(file_name, "Known Uniques", 0, 0);
+	show_file(file_name, "Known Uniques");
 
 	/* Remove the file */
 	fd_kill(file_name);
@@ -3526,7 +3526,7 @@ static void do_cmd_knowledge_pets(void)
 	my_fclose(fff);
 
 	/* Display the file contents */
-	show_file(file_name, "Current Pets", 0, 0);
+	show_file(file_name, "Current Pets");
 
 	/* Remove the file */
 	fd_kill(file_name);
@@ -3648,7 +3648,7 @@ static void do_cmd_knowledge_kill_count(void)
 	my_fclose(fff);
 
 	/* Display the file contents */
-	show_file(file_name, "Kill Count", 0, 0);
+	show_file(file_name, "Kill Count");
 
 	/* Remove the file */
 	fd_kill(file_name);
@@ -3700,7 +3700,7 @@ static void do_cmd_knowledge_objects(void)
 	my_fclose(fff);
 
 	/* Display the file contents */
-	show_file(file_name, "Known Objects", 0, 0);
+	show_file(file_name, "Known Objects");
 
 	/* Remove the file */
 	fd_kill(file_name);
@@ -3740,7 +3740,7 @@ static void do_cmd_knowledge_dungeons(void)
 	my_fclose(fff);
 
 	/* Display the file contents */
-	show_file(file_name, "Recall Depths", 0, 0);
+	show_file(file_name, "Recall Depths");
 
 	/* Remove the file */
 	fd_kill(file_name);
@@ -3790,7 +3790,7 @@ void do_cmd_knowledge_towns(void)
 	my_fclose(fff);
 
 	/* Display the file contents */
-	show_file(file_name, "Dungeon Towns", 0, 0);
+	show_file(file_name, "Dungeon Towns");
 
 	/* Remove the file */
 	fd_kill(file_name);
@@ -3819,7 +3819,7 @@ static void do_cmd_knowledge_corruptions(void)
 	my_fclose(fff);
 
 	/* Display the file contents */
-	show_file(file_name, "Corruptions", 0, 0);
+	show_file(file_name, "Corruptions");
 
 	/* Remove the file */
 	fd_kill(file_name);
@@ -3924,7 +3924,7 @@ static void do_cmd_knowledge_quests(void)
 	my_fclose(fff);
 
 	/* Display the file contents */
-	show_file(file_name, "Quest status", 0, 0);
+	show_file(file_name, "Quest status");
 
 	/* Remove the file */
 	fd_kill(file_name);
@@ -3949,7 +3949,7 @@ static void do_cmd_knowledge_fates(void)
 	my_fclose(fff);
 
 	/* Display the file contents */
-	show_file(file_name, "Fate status", 0, 0);
+	show_file(file_name, "Fate status");
 
 	/* Remove the file */
 	fd_kill(file_name);

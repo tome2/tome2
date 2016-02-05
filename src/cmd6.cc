@@ -3586,7 +3586,7 @@ void do_cmd_read_scroll(void)
 			cptr q = format("book-%d.txt", o_ptr->sval);
 
 			/* Peruse the help file */
-			(void)show_file(q, NULL, 0, 0);
+			show_file(q, NULL);
 
 			/* Load screen */
 			screen_load();

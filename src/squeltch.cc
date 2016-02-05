@@ -301,7 +301,7 @@ void do_cmd_automatizer()
 			if (c == '?')
 			{
 				screen_save();
-				show_file("automat.txt", "Automatizer help", 0, 0);
+				show_file("automat.txt", "Automatizer help");
 				screen_load();
 			}
 			else if (c == '8')
@@ -375,7 +375,7 @@ void do_cmd_automatizer()
 			if (c == '?')
 			{
 				screen_save();
-				show_file("automat.txt", "Automatizer help", 0, 0);
+				show_file("automat.txt", "Automatizer help");
 				screen_load();
 			}
 			else if (c == '8')

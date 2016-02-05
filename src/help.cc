@@ -674,7 +674,7 @@ static void show_context_help(context_help_type *context_help)
 
 	screen_save();
 
-	show_file(context_help->file_name, 0, -context_help->anchor, 0);
+	show_file(context_help->file_name, 0, -context_help->anchor);
 
 	screen_load();
 }

@@ -332,7 +332,7 @@ static bool_ gamble_comm(int cmd)
 	if (cmd == BACT_GAMBLE_RULES)
 	{
 		/* Peruse the gambling help file */
-		(void)show_file("gambling.txt", NULL, 0, 0);
+		show_file("gambling.txt", NULL);
 	}
 	else
 	{
@@ -760,7 +760,7 @@ static void town_history(void)
 	screen_save();
 
 	/* Peruse the building help file */
-	(void)show_file("bldg.txt", NULL, 0, 0);
+	show_file("bldg.txt", NULL);
 
 	/* Load screen */
 	screen_load();

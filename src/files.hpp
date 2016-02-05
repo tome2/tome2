@@ -13,7 +13,7 @@ extern cptr describe_player_location(void);
 extern errr file_character(cptr name, bool_ full);
 extern errr process_pref_file_aux(char *buf);
 extern errr process_pref_file(cptr name);
-extern bool_ show_file(cptr name, cptr what, int line, int mode);
+extern void show_file(cptr name, cptr what, int line = 0);
 extern void do_cmd_help(void);
 extern void process_player_base(void);
 extern void get_name(void);

@@ -2040,7 +2040,7 @@ void do_cmd_cli_help()
 	Term_save();
 
 	/* Display the file contents */
-	show_file(file_name, "Command line help", 0, 0);
+	show_file(file_name, "Command line help");
 
 	/* Restore the screen */
 	Term_load();

@@ -776,7 +776,7 @@ static void status_companion(void)
 	my_fclose(fff);
 
 	/* Display the file contents */
-	show_file(file_name, "Companion List", 0, 0);
+	show_file(file_name, "Companion List");
 
 	/* Remove the file */
 	fd_kill(file_name);

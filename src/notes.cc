@@ -37,7 +37,7 @@ void show_notes_file(void)
 	sprintf(caption, "Note file %s", basename);
 
 	/* Invoke show_file */
-	(void)show_file(buf, caption, 0, 0);
+	show_file(buf, caption);
 
 	/* Done */
 	return;
