@@ -3759,13 +3759,6 @@ void process_player_name(bool_ sf)
 	}
 
 
-#if defined(WINDOWS)
-
-	/* Hack -- max length */
-	if (k > 8) k = 8;
-
-#endif
-
 	/* Terminate */
 	tmp[k] = '\0';
 	sprintf(player_base, "%s", tmp);
