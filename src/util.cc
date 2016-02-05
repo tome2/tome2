@@ -3456,7 +3456,7 @@ int ask_menu(cptr ask, const std::vector<std::string> &items)
 {
 	int ret = -1, i, start = 0;
 	char c;
-	int size = items.size(); // Convert to int to avoid warnings
+	int size = static_cast<int>(items.size()); // Convert to int to avoid warnings
 
 	/* Enter "icky" mode */
 	character_icky = TRUE;
