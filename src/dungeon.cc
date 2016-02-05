@@ -5092,12 +5092,8 @@ static void load_all_pref_files(void)
 
 /*
  * Actually play a game
- *
- * If the "new_game" parameter is true, then, after loading the
- * savefile, we will commit suicide, if necessary, to allow the
- * player to start a new game.
  */
-void play_game(bool_ new_game)
+void play_game()
 {
 	int i, tmp_dun;
 
@@ -5129,7 +5125,8 @@ void play_game(bool_ new_game)
 	(void)Term_set_cursor(0);
 
 	/* Character list */
-	if (!new_game && !no_begin_screen) new_game = begin_screen();
+	bool_ new_game = FALSE;
+	if (!no_begin_screen) new_game = begin_screen();
 	no_begin_screen = FALSE;
 
 	/* Attempt to load */

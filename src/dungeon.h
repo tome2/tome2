@@ -7,7 +7,7 @@
 extern "C" {
 #endif
 
-extern void play_game(bool_ new_game);
+extern void play_game();
 
 #ifdef __cplusplus
 } // extern "C"

@@ -109,8 +109,6 @@ int main(int argc, char *argv[])
 
 	bool_ done = FALSE;
 
-	bool_ new_game = FALSE;
-
 	cptr mstr = NULL;
 
 	bool_ args = TRUE;
@@ -134,13 +132,6 @@ int main(int argc, char *argv[])
 		/* Analyze option */
 		switch (argv[i][1])
 		{
-		case 'N':
-		case 'n':
-			{
-				new_game = TRUE;
-				break;
-			}
-
 		case 'W':
 		case 'w':
 			{
@@ -236,7 +227,6 @@ usage:
 				printf("\n");
 				puts("Usage: tome [options] [-- subopts]");
 				puts("  -h                 This help");
-				puts("  -n                 Start a new character");
 				puts("  -w                 Request wizard mode");
 				puts("  -o                 Request original keyset");
 				puts("  -r                 Request rogue-like keyset");
@@ -362,7 +352,7 @@ usage:
 	pause_line(23);
 
 	/* Play the game */
-	play_game(new_game);
+	play_game();
 
 	/* Quit */
 	quit(NULL);
