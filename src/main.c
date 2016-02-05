@@ -183,26 +183,6 @@ int main(int argc, char *argv[])
 				break;
 			}
 
-		case 'H':
-			{
-				char *s;
-				int j;
-
-				init_lua_init();
-
-				for (j = i + 1; j < argc; j++)
-				{
-					s = argv[j];
-
-					while (*s != '.') s++;
-					*s = '\0';
-					s++;
-					txt_to_html("head.aux", "foot.aux", argv[j], s, FALSE, FALSE);
-				}
-
-				return 0;
-			}
-
 		case '-':
 			{
 				if (argv[i][2] == 'h' && !strcmp((argv[i] + 2), "help"))
@@ -230,7 +210,6 @@ usage:
 				puts("  -w                 Request wizard mode");
 				puts("  -o                 Request original keyset");
 				puts("  -r                 Request rogue-like keyset");
-				puts("  -H <list of files> Convert helpfile to html");
 				puts("  -u<who>            Use your <who> savefile");
 				puts("  -M<which>            Use the <which> module");
 				puts("  -m<sys>            Force 'main-<sys>.c' usage");
