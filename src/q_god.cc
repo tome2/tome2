@@ -20,6 +20,7 @@
 #include "z-rand.hpp"
 
 #include <assert.h>
+#include <format.h>
 
 #define cquest (quest[QUEST_GOD])
 #define cquest_quests_given (cquest.data[0])
@@ -41,13 +42,9 @@
  * the return value will be one of the following: north, south,
  * east, west, north-east, south-east, south-west, north-west,
  * or "close" if it is within 2 tiles.
- *
- * The returned string is allocated with strdup().
  */
-static char *compass(int y, int x, int y2, int x2)
+static std::string compass(int y, int x, int y2, int x2)
 {
-	char compass_dir[64];
-
 	// is it close to the north/south meridian?
 	int y_diff = y2 - y;
 
@@ -85,20 +82,25 @@ static char *compass(int y, int x, int y2, int x2)
 	}
 
 	// Maybe it is very close
-	if ((!x_axis) && (!y_axis)) { strcpy(compass_dir, "close"); }
+	if ((!x_axis) && (!y_axis)) {
+		return ""; // Handled specially by caller
+	}
 	// Maybe it is (almost) due N/S
-	else if (!x_axis) { strcpy(compass_dir, y_axis); }
+	else if (!x_axis) {
+		return y_axis;
+	}
 	// Maybe it is (almost) due E/W
-	else if (!y_axis) { strcpy(compass_dir, x_axis); }
+	else if (!y_axis) {
+		return x_axis;
+	}
 	//  or if it is neither
-	else { sprintf(compass_dir, "%s-%s", y_axis, x_axis); }
-
-	/* Return a copy */
-	return strdup(compass_dir);
+	else {
+		return fmt::format("{}-{}", y_axis, x_axis);
+	}
 }
 
 /* Returns a relative approximation of the 'distance' of y2, x2 from y, x. */
-static cptr approximate_distance(int y, int x, int y2, int x2)
+static std::string approximate_distance(int y, int x, int y2, int x2)
 {
 	//  how far to away to the north/south?
 	int y_diff = abs(y2 - y);
@@ -222,93 +224,62 @@ static void get_home_coordinates(int *home1_y, int *home1_x, const char **home1,
 	}
 }
 
-/* Print using cmsg_print. */
-static void print_using_cmsg(cptr line, void *dummy)
-{
-	cmsg_print(TERM_YELLOW, line);
-}
-
-/* Print using print_hook. */
-static void print_using_print_hook(cptr line, void *f_)
-{
-	FILE *f = (FILE *) f_;
-	fprintf(f, "%s\n", line);
-}
-
-/* Show directions */
-static void print_directions(bool_ feel_it, void (*pfunc)(cptr, void *), void *pfdata)
+static std::string make_directions(bool feel_it)
 {
 	int home1_y, home1_x;
 	int home2_y, home2_x;
 	const char *home1 = NULL;
 	const char *home2 = NULL;
-	char *home1_axis = NULL;
-	char *home2_axis = NULL;
-	cptr home1_distance = NULL;
-	cptr home2_distance = NULL;
 	cptr feel_it_str = feel_it ? ", I can feel it.'" : ".";
-	char buf[256];
 
 	get_home_coordinates(
 		&home1_y, &home1_x, &home1,
 		&home2_y, &home2_x, &home2);
 
-	home1_axis = compass(home1_y, home1_x, cquest_dung_y, cquest_dung_x);
-	home2_axis = compass(home2_y, home2_x, cquest_dung_y, cquest_dung_x);
-
-	home1_distance = approximate_distance(home1_y, home1_x, cquest_dung_y, cquest_dung_x);
-	home2_distance = approximate_distance(home2_y, home2_x, cquest_dung_y, cquest_dung_x);
+	auto home1_axis = compass(home1_y, home1_x, cquest_dung_y, cquest_dung_x);
+	auto home2_axis = compass(home2_y, home2_x, cquest_dung_y, cquest_dung_x);
 
 	/* Build the message */
-	if (!streq(home1_axis, "close"))
+	if (home1_axis.empty())
 	{
-		snprintf(buf, sizeof(buf),
-			 "The temple lies %s to the %s of %s, ",
-			 home1_distance,
-			 home1_axis,
-			 home1);
-		pfunc(buf, pfdata);
+		return fmt::format("The temple lies very close to {}, ",
+			home1);
 	}
 	else
 	{
-		snprintf(buf, sizeof(buf),
-			 "The temple lies very close to %s, ",
-			 home1);
-		pfunc(buf, pfdata);
+		auto home1_distance = approximate_distance(home1_y, home1_x, cquest_dung_y, cquest_dung_x);
+		return fmt::format("The temple lies {} to the {} of {}, ",
+			home1_distance,
+			home1_axis,
+			home1);
 	}
 
-	if (!streq(home2_axis, "close"))
+	if (home2_axis.empty())
 	{
-		snprintf(buf, sizeof(buf),
-			 "and %s to the %s of %s%s",
-			 home2_distance,
-			 home2_axis,
-			 home2,
-			 feel_it_str);
-		pfunc(buf, pfdata);
+		return fmt::format("and very close to {}{}",
+			home2,
+			feel_it_str);
 	}
 	else
 	{
-		snprintf(buf, sizeof(buf),
-			 "and very close to %s%s",
-			 home2,
-			 feel_it_str);
-		pfunc(buf, pfdata);
+		auto home2_distance = approximate_distance(home2_y, home2_x, cquest_dung_y, cquest_dung_x);
+		return fmt::format("and {} to the {} of {}{}",
+			home2_distance,
+			home2_axis,
+			home2,
+			feel_it_str);
 	}
-
-	/* Free dyanmically allocated strings */
-	free(home1_axis);
-	free(home2_axis);
 }
 
 bool_ quest_god_describe(FILE *fff)
 {
 	if (cquest.status == QUEST_STATUS_TAKEN)
 	{
+		auto directions = make_directions(false);
 		fprintf(fff, "#####yGod quest " FMTs32b "!\n", cquest_quests_given);
 		fprintf(fff, "Thou art to find the lost temple of thy God and\n");
 		fprintf(fff, "to retrieve the lost part of the relic for thy God! \n");
-		print_directions(FALSE, print_using_print_hook, fff);
+		fprintf(fff, "%s\n", directions.c_str());
 		fprintf(fff, "\n");
 	}
 
@@ -978,6 +949,8 @@ static bool_ quest_god_player_level_hook(void *, void *in_, void *)
 		quest_god_place_rand_dung();
 		
 		/* God issues instructions */
+		auto directions = make_directions(true);
+
 		cmsg_format(TERM_L_BLUE, "The voice of %s booms in your head:", deity_info[p_ptr->pgod].name);
 		
 		cmsg_print(TERM_YELLOW, "'I have a task for thee.");
@@ -986,9 +959,8 @@ static bool_ quest_god_player_level_hook(void *, void *in_, void *)
 		cmsg_print(TERM_YELLOW, "Thou art to find my lost temple and retrieve a piece of the relic.");
 		cmsg_print(TERM_YELLOW, "When thy task is done, thou art to lift it in the air and call upon my name.");
 		cmsg_print(TERM_YELLOW, "I shall then come to reclaim what is mine!");
-		
-		print_directions(TRUE, print_using_cmsg, NULL);
-		
+		cmsg_print(TERM_YELLOW, directions.c_str());
+
 		/* Prepare depth of dungeon. If this was
 		 * generated in set_god_dungeon_attributes(),
 		 * then we'd have trouble if someone levelled
