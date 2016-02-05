@@ -2727,8 +2727,6 @@ static errr rd_savefile(void)
  */
 bool_ load_player(void)
 {
-	int fd = -1;
-
 	errr err = 0;
 
 	cptr what = "generic";
@@ -2761,13 +2759,16 @@ bool_ load_player(void)
 	if (!err)
 	{
 		/* Open the savefile */
-		fd = fd_open(savefile, O_RDONLY);
+		int fd = fd_open(savefile, O_RDONLY);
 
 		/* No file */
 		if (fd < 0) err = -1;
 
 		/* Message (below) */
 		if (err) what = "Cannot open savefile";
+
+		/* Close the file */
+		if (!err) fd_close(fd);
 	}
 
 	/* Process file */
@@ -2777,18 +2778,13 @@ bool_ load_player(void)
 
 		/* Open the file XXX XXX XXX XXX Should use Angband file interface */
 		fff = my_fopen(savefile, "rb");
-/*		fff = fdopen(fd, "r"); */
 
 		/* Read the first four bytes */
 		do_u32b(&vernum, ls_flag_t::LOAD);
 		do_byte(&tmp8u, ls_flag_t::LOAD); // For comatibility with old savefiles
 
-		/* XXX XXX XXX XXX Should use Angband file interface */
 		my_fclose(fff);
-		/* fclose(fff) */
 
-		/* Close the file */
-		fd_close(fd);
 	}
 
 	/* Process file */
