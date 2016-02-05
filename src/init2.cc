@@ -29,13 +29,16 @@
 #include "player_class.hpp"
 #include "player_race.hpp"
 #include "player_race_mod.hpp"
+#include "q_library.hpp"
 #include "quark.hpp"
 #include "randart.hpp"
 #include "randart_part_type.hpp"
-#include "script.h"
 #include "set_type.hpp"
 #include "skill_type.hpp"
 #include "spells3.hpp"
+#include "spells4.hpp"
+#include "spells5.hpp"
+#include "spells6.hpp"
 #include "squeltch.hpp"
 #include "store_action_type.hpp"
 #include "store_info_type.hpp"
@@ -1365,8 +1368,20 @@ void init_angband(void)
 	if (init_misc()) quit("Cannot initialise misc. values");
 
 	/* Initialise some other arrays */
-	note("[Initialising scripting... (script)]");
-	init_lua_init();
+	{
+		note("[Initialising scripting... (script)]");
+
+		/* Initialize schooled spells */
+		schools_init();
+		school_spells_init();
+		init_school_books();
+
+		/* Post-spell creation initialization */
+		initialize_bookable_spells();
+
+		/* Finish up the corruptions */
+		init_corruptions();
+	}
 
 	/* Initialise skills info */
 	note("[Initialising arrays... (skills)]");

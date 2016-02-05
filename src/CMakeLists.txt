@@ -82,7 +82,6 @@ SET(SRCS_COMMON
   quest.cc
   randart.cc
   range.cc
-  script.cc
   skills.cc
   spell_type.cc
   spells1.cc
