@@ -37,11 +37,12 @@
 #include "xtra1.hpp"
 #include "z-rand.hpp"
 
+#include <algorithm>
+#include <boost/filesystem.hpp>
 #include <cassert>
 #include <memory>
 #include <string>
 #include <vector>
-#include <algorithm>
 
 /*
  * Hack -- redraw the screen
@@ -3013,17 +3014,14 @@ void do_cmd_knowledge_artifacts(void)
 {
 	int i, k, z, x, y;
 
-	FILE *fff;
-
-	char file_name[1024];
-
 	char base_name[80];
 
 	/* Temporary file */
-	if (path_temp(file_name, 1024)) return;
+	auto const file_name_p = boost::filesystem::unique_path();
+	auto const file_name = file_name_p.c_str();
 
 	/* Open a new file */
-	fff = my_fopen(file_name, "w");
+	FILE *fff = my_fopen(file_name, "w");
 
 	/* Scan the artifacts */
 	std::unique_ptr<bool_[]> okay(new bool_[max_a_idx]);
@@ -3244,26 +3242,18 @@ void do_cmd_knowledge_artifacts(void)
  */
 void do_cmd_knowledge_traps(void)
 {
-	int k;
-
-	FILE *fff;
-
-	trap_type *t_ptr;
-
-	char file_name[1024];
-
-
 	/* Temporary file */
-	if (path_temp(file_name, 1024)) return;
+	auto const file_name_p = boost::filesystem::unique_path();
+	auto const file_name = file_name_p.c_str();
 
 	/* Open a new file */
-	fff = my_fopen(file_name, "w");
+	FILE *fff = my_fopen(file_name, "w");
 
 	/* Scan the traps */
-	for (k = 0; k < max_t_idx; k++)
+	for (int k = 0; k < max_t_idx; k++)
 	{
 		/* Get the trap */
-		t_ptr = &t_info[k];
+		trap_type *t_ptr = &t_info[k];
 
 		/* Skip "empty" traps */
 		if (!t_ptr->name) continue;
@@ -3306,22 +3296,16 @@ static bool compare_monster_level(int r_idx1, int r_idx2) {
  */
 static void do_cmd_knowledge_uniques(void)
 {
-	int k;
-
-	FILE *fff;
-
-	char file_name[1024];
-
-
 	/* Temporary file */
-	if (path_temp(file_name, 1024)) return;
+	auto const file_name_p = boost::filesystem::unique_path();
+	auto const file_name = file_name_p.c_str();
 
 	/* Open a new file */
-	fff = my_fopen(file_name, "w");
+	FILE *fff = my_fopen(file_name, "w");
 
 	// Extract the unique race indexes.
 	std::vector<int> unique_r_idxs;
-	for (k = 1; k < max_r_idx; k++)
+	for (int k = 1; k < max_r_idx; k++)
 	{
 		monster_race *r_ptr = &r_info[k];
 
@@ -3478,8 +3462,6 @@ static void do_cmd_knowledge_pets(void)
 {
 	int i;
 
-	FILE *fff;
-
 	monster_type *m_ptr;
 
 	int t_friends = 0;
@@ -3490,14 +3472,12 @@ static void do_cmd_knowledge_pets(void)
 
 	int upkeep_divider = 20;
 
-	char file_name[1024];
-
-
 	/* Temporary file */
-	if (path_temp(file_name, 1024)) return;
+	auto const file_name_p = boost::filesystem::unique_path();
+	auto const file_name = file_name_p.c_str();
 
 	/* Open a new file */
-	fff = my_fopen(file_name, "w");
+	FILE *fff = my_fopen(file_name, "w");
 
 	if (has_ability(AB_PERFECT_CASTING)) upkeep_divider = 15;
 
@@ -3561,20 +3541,14 @@ static void do_cmd_knowledge_pets(void)
  */
 static void do_cmd_knowledge_kill_count(void)
 {
-	int k;
-
-	FILE *fff;
-
-	char file_name[1024];
-
 	s32b Total = 0;
 
-
 	/* Temporary file */
-	if (path_temp(file_name, 1024)) return;
+	auto const file_name_p = boost::filesystem::unique_path();
+	auto const file_name = file_name_p.c_str();
 
 	/* Open a new file */
-	fff = my_fopen(file_name, "w");
+	FILE *fff = my_fopen(file_name, "w");
 
 	{
 		/* Monsters slain */
@@ -3622,7 +3596,7 @@ static void do_cmd_knowledge_kill_count(void)
 	Total = 0;
 
 	/* Scan the monster races */
-	for (k = 0; k < max_r_idx; k++)
+	for (int k = 0; k < max_r_idx; k++)
 	{
 		monster_race *r_ptr = &r_info[k];
 
@@ -3686,23 +3660,15 @@ static void do_cmd_knowledge_kill_count(void)
  */
 static void do_cmd_knowledge_objects(void)
 {
-	int k;
-
-	FILE *fff;
-
-	char o_name[80];
-
-	char file_name[1024];
-
-
 	/* Temporary file */
-	if (path_temp(file_name, 1024)) return;
+	auto const file_name_p = boost::filesystem::unique_path();
+	auto const file_name = file_name_p.c_str();
 
 	/* Open a new file */
-	fff = my_fopen(file_name, "w");
+	FILE *fff = my_fopen(file_name, "w");
 
 	/* Scan the object kinds */
-	for (k = 1; k < max_k_idx; k++)
+	for (int k = 1; k < max_k_idx; k++)
 	{
 		object_kind *k_ptr = &k_info[k];
 
@@ -3712,6 +3678,7 @@ static void do_cmd_knowledge_objects(void)
 		/* List known flavored objects */
 		if (k_ptr->flavor && k_ptr->aware)
 		{
+			char o_name[80];
 			object_type *i_ptr;
 			object_type object_type_body;
 
@@ -3745,21 +3712,18 @@ static void do_cmd_knowledge_objects(void)
  */
 static void do_cmd_knowledge_dungeons(void)
 {
-	int y;
-	char file_name[1024];
-	FILE *fff;
-
 	/* Temporary file */
-	if (path_temp(file_name, 1024)) return;
+	auto const file_name_p = boost::filesystem::unique_path();
+	auto const file_name = file_name_p.c_str();
 
 	/* Open a new file */
-	fff = my_fopen(file_name, "w");
+	FILE *fff = my_fopen(file_name, "w");
 
 	/* Oops */
 	if (fff == NULL) return;
 
 	/* Scan all dungeons */
-	for (y = 1; y < max_d_idx; y++)
+	for (int y = 1; y < max_d_idx; y++)
 	{
 		/* The dungeon has a valid recall depth set */
 		if (max_dlv[y])
@@ -3788,26 +3752,23 @@ static void do_cmd_knowledge_dungeons(void)
  */
 void do_cmd_knowledge_towns(void)
 {
-	int i, j;
-	char file_name[1024];
-	FILE *fff;
-
 	/* Temporary file */
-	if (path_temp(file_name, 1024)) return;
+	auto const file_name_p = boost::filesystem::unique_path();
+	auto const file_name = file_name_p.c_str();
 
 	/* Open a new file */
-	fff = my_fopen(file_name, "w");
+	FILE *fff = my_fopen(file_name, "w");
 
 	/* Oops */
 	if (fff == NULL) return;
 
 	/* Scan all dungeons */
-	for (i = 0; i < max_d_idx; i++)
+	for (int i = 0; i < max_d_idx; i++)
 	{
 		dungeon_info_type *d_ptr = &d_info[i];
 
 		/* Scan all dungeon town slots */
-		for (j = 0; j < TOWN_DUNGEON; j++)
+		for (int j = 0; j < TOWN_DUNGEON; j++)
 		{
 			int town_idx = d_ptr->t_idx[j];
 
@@ -3841,16 +3802,12 @@ void do_cmd_knowledge_towns(void)
  */
 static void do_cmd_knowledge_corruptions(void)
 {
-	FILE *fff;
-
-	char file_name[1024];
-
-
 	/* Temporary file */
-	if (path_temp(file_name, 1024)) return;
+	auto const file_name_p = boost::filesystem::unique_path();
+	auto const file_name = file_name_p.c_str();
 
 	/* Open a new file */
-	fff = my_fopen(file_name, "w");
+	FILE *fff = my_fopen(file_name, "w");
 
 	/* Dump the corruptions to file */
 	if (fff)
@@ -3907,10 +3864,6 @@ static void insert_sort_quest(int *order, int *num, int q_idx)
  */
 static void do_cmd_knowledge_quests(void)
 {
-	FILE *fff;
-
-	char file_name[1024];
-
 	int order[MAX_Q_IDX] = { };
 
 	int num = 0;
@@ -3919,10 +3872,11 @@ static void do_cmd_knowledge_quests(void)
 
 
 	/* Temporary file */
-	if (path_temp(file_name, 1024)) return;
+	auto const file_name_p = boost::filesystem::unique_path();
+	auto const file_name = file_name_p.c_str();
 
 	/* Open a new file */
-	fff = my_fopen(file_name, "w");
+	FILE *fff = my_fopen(file_name, "w");
 
 	for (i = 0; i < MAX_Q_IDX; i++)
 	{
@@ -3982,16 +3936,12 @@ static void do_cmd_knowledge_quests(void)
  */
 static void do_cmd_knowledge_fates(void)
 {
-	FILE *fff;
-
-	char file_name[1024];
-
-
 	/* Temporary file */
-	if (path_temp(file_name, 1024)) return;
+	auto const file_name_p = boost::filesystem::unique_path();
+	auto const file_name = file_name_p.c_str();
 
 	/* Open a new file */
-	fff = my_fopen(file_name, "w");
+	FILE *fff = my_fopen(file_name, "w");
 
 	dump_fates(fff);
 

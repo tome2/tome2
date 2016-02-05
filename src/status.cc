@@ -27,6 +27,9 @@
 #include "variable.hpp"
 #include "xtra1.hpp"
 
+#include <boost/filesystem.hpp>
+#include <string>
+
 static void row_trival(const char*, s16b, u32b, s16b, u32b, int, u32b[INVEN_TOTAL - INVEN_WIELD + 2][7]);
 static void row_bival(const char*, s16b, u32b, int, u32b[INVEN_TOTAL - INVEN_WIELD + 2][7]);
 static void row_npval(const char*, s16b, u32b, int, u32b[INVEN_TOTAL - INVEN_WIELD + 2][7]);
@@ -722,17 +725,14 @@ static void status_companion(void)
 {
 	int i;
 
-	FILE *fff;
-
-	char file_name[1024];
-
 	Term_clear();
 
 	/* Temporary file */
-	if (path_temp(file_name, 1024)) return;
+	auto const file_name_p = boost::filesystem::unique_path();
+	auto const file_name = file_name_p.c_str();
 
 	/* Open a new file */
-	fff = my_fopen(file_name, "w");
+	FILE *fff = my_fopen(file_name, "w");
 
 	/* Calculate companions */
 	/* Process the monsters (backwards) */

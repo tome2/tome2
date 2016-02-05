@@ -71,8 +71,6 @@ void user_name(char *buf, int id)
 * to assume that all filenames are "Unix" filenames, and explicitly "extract"
 * such filenames if needed (by "path_parse()", or perhaps "path_canon()").
 *
-* Note that "path_temp" should probably return a "canonical" filename.
-*
 * Note that "my_fopen()" and "my_open()" and "my_make()" and "my_kill()"
 * and "my_move()" and "my_copy()" should all take "canonical" filenames.
 *
@@ -167,42 +165,6 @@ errr path_parse(char *buf, int max, cptr file)
 
 
 #endif /* SET_UID */
-
-
-/*
-* Hack -- acquire a "temporary" file name if possible
-*
-* This filename is always in "system-specific" form.
-*/
-errr path_temp(char *buf, int max)
-{
-#ifdef WINDOWS
-	static u32b tmp_counter;
-	static char valid_characters[] =
-			"0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-	char rand_ext[4];
-
-	rand_ext[0] = valid_characters[rand_int(sizeof (valid_characters))];
-	rand_ext[1] = valid_characters[rand_int(sizeof (valid_characters))];
-	rand_ext[2] = valid_characters[rand_int(sizeof (valid_characters))];
-	rand_ext[3] = '\0';
-	strnfmt(buf, max, "%s/t_%ud.%s", ANGBAND_DIR_XTRA, tmp_counter, rand_ext);
-	tmp_counter++;
-#else 
-	cptr s;
-
-	/* Temp file */
-	s = tmpnam(NULL);
-
-	/* Oops */
-	if (!s) return ( -1);
-
-	/* Format to length */
-	strnfmt(buf, max, "%s", s);
-#endif
-	/* Success */
-	return (0);
-}
 
 
 /*

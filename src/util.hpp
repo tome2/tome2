@@ -12,7 +12,6 @@ extern void display_list(int y, int x, int h, int w, cptr title, cptr *list, int
 extern std::string get_player_race_name(int pr, int ps);
 extern std::string get_day(s32b day);
 extern s32b bst(s32b what, s32b t);
-extern errr path_temp(char *buf, int max);
 extern FILE *my_fopen(cptr file, cptr mode);
 extern errr my_fgets(FILE *fff, char *buf, huge n);
 extern errr my_fclose(FILE *fff);

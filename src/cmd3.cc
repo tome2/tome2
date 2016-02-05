@@ -40,6 +40,7 @@
 
 #include <cassert>
 #include <algorithm>
+#include <boost/filesystem.hpp>
 #include <memory>
 #include <utility>
 
@@ -2011,16 +2012,12 @@ void do_cmd_cli_help()
 {
 	int i, j;
 
-	FILE *fff;
-
-	char file_name[1024];
-
-
 	/* Temporary file */
-	if (path_temp(file_name, 1024)) return;
+	auto const file_name_p = boost::filesystem::unique_path();
+	auto const file_name = file_name_p.c_str();
 
 	/* Open a new file */
-	fff = my_fopen(file_name, "w");
+	FILE *fff = my_fopen(file_name, "w");
 
 	for (i = 0, j = -1; i < cli_total; i++)
 	{
