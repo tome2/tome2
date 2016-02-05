@@ -192,11 +192,6 @@ s32b VARDA_CALL_ALMAREN;
 s32b VARDA_EVENSTAR;
 s32b VARDA_STARKINDLER;
 
-static s32b get_level_s(int sp, int max)
-{
-	return get_level(sp, max, 1);
-}
-
 static void find_position(int y, int x, int *yy, int *xx)
 {
 	int attempts = 500;
@@ -628,13 +623,13 @@ casting_result demonology_demon_madness()
 	x2 = p_ptr->px - (x1 - p_ptr->px);
 
 	result = cplus(result,
-		       project(0, 1 + get_level(DEMON_MADNESS, 4, 0),
+		       project(0, 1 + get_level(DEMON_MADNESS, 4),
 			       y1, x1,
 			       20 + get_level_s(DEMON_MADNESS, 200),
 			       type,
 			       PROJECT_STOP | PROJECT_GRID | PROJECT_ITEM | PROJECT_KILL));
 	result = cplus(result,
-		       project(0, 1 + get_level(DEMON_MADNESS, 4, 0),
+		       project(0, 1 + get_level(DEMON_MADNESS, 4),
 			       y2, x2,
 			       20 + get_level_s(DEMON_MADNESS, 200),
 			       type,
@@ -649,7 +644,7 @@ const char *demonology_demon_madness_info()
 	sprintf(buf,
 		"dam " FMTs32b " rad " FMTs32b,
 		(20 + get_level_s(DEMON_MADNESS, 200)),
-		(1 + get_level(DEMON_MADNESS, 4, 0)));
+		(1 + get_level(DEMON_MADNESS, 4)));
 	return buf;
 }
 
@@ -721,7 +716,7 @@ casting_result demonology_unholy_word()
 		}
 
 		/* Oops he is angry now */
-		if (magik(30 - get_level(UNHOLY_WORD, 25, 0)))
+		if (magik(30 - get_level(UNHOLY_WORD, 25)))
 		{
 			char buf[128];
 			monster_desc(buf, m_ptr, 0);
@@ -741,7 +736,7 @@ casting_result demonology_unholy_word()
 			msg_format("You consume %s.", buf);
 
 			heal = (m_ptr->hp * 100) / m_ptr->maxhp;
-			heal = ((30 + get_level(UNHOLY_WORD, 50, 0)) * heal) / 100;
+			heal = ((30 + get_level(UNHOLY_WORD, 50)) * heal) / 100;
 
 			hp_player(heal);
 
@@ -761,13 +756,13 @@ const char *demonology_unholy_word_info()
 	static char buf[128];
 	sprintf(buf,
 		"heal mhp%% of " FMTs32b "%%",
-		(30 + get_level(UNHOLY_WORD, 50, 0)));
+		(30 + get_level(UNHOLY_WORD, 50)));
 	return buf;
 }
 
 casting_result demonology_demon_cloak()
 {
-	return cast(set_tim_reflect(randint(5) + 5 + get_level(DEMON_CLOAK, 15, 0)));
+	return cast(set_tim_reflect(randint(5) + 5 + get_level(DEMON_CLOAK, 15)));
 }
 
 const char *demonology_demon_cloak_info()
@@ -775,7 +770,7 @@ const char *demonology_demon_cloak_info()
 	static char buf[128];
 	sprintf(buf,
 		"dur " FMTs32b "+d5",
-		(5 + get_level(DEMON_CLOAK, 15, 0)));
+		(5 + get_level(DEMON_CLOAK, 15)));
 	return buf;
 }
 
@@ -844,10 +839,10 @@ casting_result demonology_discharge_minion()
 		delete_monster_idx(c_ptr->m_idx);
 		
 		dam = m_ptr->hp;
-		dam = (dam * (20 + get_level(DISCHARGE_MINION, 60, 0))) / 100;
-		if (dam > 100 + get_level(DISCHARGE_MINION, 500, 0))
+		dam = (dam * (20 + get_level(DISCHARGE_MINION, 60))) / 100;
+		if (dam > 100 + get_level(DISCHARGE_MINION, 500))
 		{
-			dam = 100 + get_level(DISCHARGE_MINION, 500, 0);
+			dam = 100 + get_level(DISCHARGE_MINION, 500);
 		}
 
 		/* We use project instead of fire_ball because we must tell it exactly where to land */
@@ -866,8 +861,8 @@ const char *demonology_discharge_minion_info()
 	static char buf[128];
 	sprintf(buf,
 		"dam " FMTs32b "%% max " FMTs32b,
-		(20 + get_level(DISCHARGE_MINION, 60, 0)),
-		(100 + get_level(DISCHARGE_MINION, 500, 0)));
+		(20 + get_level(DISCHARGE_MINION, 60)),
+		(100 + get_level(DISCHARGE_MINION, 500)));
 	return buf;
 }
 
@@ -963,7 +958,7 @@ casting_result divination_sense_hidden()
 {
 	casting_result result = NO_CAST;
 
-	result = cplus(result, detect_traps(15 + get_level(SENSEHIDDEN, 40, 0)));
+	result = cplus(result, detect_traps(15 + get_level(SENSEHIDDEN, 40)));
 	if (get_level_s(SENSEHIDDEN, 50) >= 15)
 	{
 		result = cplus(result, set_tim_invis(10 + randint(20) + get_level_s(SENSEHIDDEN, 40)));
@@ -996,8 +991,8 @@ const char *divination_sense_hidden_info()
 casting_result divination_reveal_ways()
 {
 	casting_result result = NO_CAST;
-	result = cplus(result, detect_doors(10 + get_level(REVEALWAYS, 40, 0)));
-	result = cplus(result, detect_stairs(10 + get_level(REVEALWAYS, 40, 0)));
+	result = cplus(result, detect_doors(10 + get_level(REVEALWAYS, 40)));
+	result = cplus(result, detect_stairs(10 + get_level(REVEALWAYS, 40)));
 	return result;
 }
 
@@ -1014,7 +1009,7 @@ casting_result divination_sense_monsters()
 {
 	casting_result result = NO_CAST;
 
-	result = cplus(result, detect_monsters_normal(10 + get_level(SENSEMONSTERS, 40, 0)));
+	result = cplus(result, detect_monsters_normal(10 + get_level(SENSEMONSTERS, 40)));
 	if (get_level_s(SENSEMONSTERS, 50) >= 30)
 	{
 		result = cplus(result, set_tim_esp(10 + randint(10) + get_level_s(SENSEMONSTERS, 20)));
@@ -1250,7 +1245,7 @@ casting_result eru_know_the_music()
 
 casting_result eru_lay_of_protection()
 {
-	return cast(fire_ball(GF_MAKE_GLYPH, 0, 1, 1 + get_level(ERU_PROT, 2, 0)));
+	return cast(fire_ball(GF_MAKE_GLYPH, 0, 1, 1 + get_level(ERU_PROT, 2)));
 }
 
 const char *eru_lay_of_protection_info()
@@ -1258,7 +1253,7 @@ const char *eru_lay_of_protection_info()
 	static char buf[128];
 	sprintf(buf,
 		"rad " FMTs32b,
-		(1 + get_level(ERU_PROT, 2, 0)));
+		(1 + get_level(ERU_PROT, 2)));
 	return buf;
 }
 
@@ -1471,7 +1466,7 @@ casting_result geomancy_call_the_elements()
 	fire_ball(GF_ELEMENTAL_GROWTH,
 		  dir,
 		  1,
-		  1 + get_level(CALL_THE_ELEMENTS, 5, 0));
+		  1 + get_level(CALL_THE_ELEMENTS, 5));
 
 	return CAST_OBVIOUS;
 }
@@ -1481,7 +1476,7 @@ const char *geomancy_call_the_elements_info()
 	static char buf[128];
 	sprintf(buf,
 		"rad " FMTs32b,
-		(1 + get_level(CALL_THE_ELEMENTS, 5, 0)));
+		(1 + get_level(CALL_THE_ELEMENTS, 5)));
 	return buf;
 }
 
@@ -2108,7 +2103,7 @@ casting_result manwe_call()
 
 	if (m_idx > 0)
 	{
-		monster_set_level(m_idx, 20 + get_level(MANWE_CALL, 70, 0));
+		monster_set_level(m_idx, 20 + get_level(MANWE_CALL, 70));
 		return CAST_OBVIOUS;
 	}
 
@@ -3123,7 +3118,7 @@ static int water_ice_storm_damage()
 
 static int water_ice_storm_radius()
 {
-	return 1 + get_level(ICESTORM, 3, 0);
+	return 1 + get_level(ICESTORM, 3);
 }
 
 static int water_ice_storm_duration()
@@ -3206,7 +3201,7 @@ static int water_vapor_damage()
 
 static int water_vapor_radius()
 {
-	return 3 + get_level(VAPOR, 9, 0);
+	return 3 + get_level(VAPOR, 9);
 }
 
 static int water_vapor_duration()
@@ -3927,7 +3922,7 @@ int music_clairaudience_lasting()
 	set_tim_esp(5);
 	if (get_level_s(MUSIC_MIND, 50) >= 10)
 	{
-		fire_ball(GF_IDENTIFY, 0, 1, 1 + get_level(MUSIC_MIND, 3, 0));
+		fire_ball(GF_IDENTIFY, 0, 1, 1 + get_level(MUSIC_MIND, 3));
 	}
 	return get_mana(MUSIC_MIND);
 }
@@ -3945,7 +3940,7 @@ const char *music_clairaudience_info()
 	if (get_level_s(MUSIC_MIND, 50) >= 10)
 	{
 		sprintf(buf, "rad " FMTs32b,
-			1 + get_level(MUSIC_MIND, 3, 0));
+			1 + get_level(MUSIC_MIND, 3));
 		return buf;
 	}
 	else
@@ -3958,8 +3953,8 @@ casting_result music_blow_spell()
 {
 	fire_ball(GF_SOUND,
 		  0,
-		  damroll(2 + get_level(MUSIC_BLOW, 10, 0), 4 + get_level(MUSIC_BLOW, 40, 0)),
-		  1 + get_level(MUSIC_BLOW, 12, 0));
+		  damroll(2 + get_level(MUSIC_BLOW, 10), 4 + get_level(MUSIC_BLOW, 40)),
+		  1 + get_level(MUSIC_BLOW, 12));
 	return CAST_OBVIOUS;
 }
 
@@ -3968,9 +3963,9 @@ const char *music_blow_info()
 	static char buf[128];
 	sprintf(buf,
 		"dam " FMTs32b "d" FMTs32b " rad " FMTs32b,
-		2 + get_level(MUSIC_BLOW, 10, 0),
-		4 + get_level(MUSIC_BLOW, 40, 0),
-		1 + get_level(MUSIC_BLOW, 12, 0));
+		2 + get_level(MUSIC_BLOW, 10),
+		4 + get_level(MUSIC_BLOW, 40),
+		1 + get_level(MUSIC_BLOW, 12));
 	return buf;
 }
 
@@ -3978,8 +3973,8 @@ casting_result music_gush_of_wind_spell()
 {
 	fire_ball(GF_AWAY_ALL,
 		  0,
-		  10 + get_level(MUSIC_BLOW, 40, 0),
-		  1 + get_level(MUSIC_BLOW, 12, 0));
+		  10 + get_level(MUSIC_BLOW, 40),
+		  1 + get_level(MUSIC_BLOW, 12));
 	return CAST_OBVIOUS;
 }
 
@@ -3988,8 +3983,8 @@ const char *music_gush_of_wind_info()
 	static char buf[128];
 	sprintf(buf,
 		"dist " FMTs32b " rad " FMTs32b,
-		10 + get_level(MUSIC_BLOW, 40, 0),
-		1 + get_level(MUSIC_BLOW, 12, 0));
+		10 + get_level(MUSIC_BLOW, 40),
+		1 + get_level(MUSIC_BLOW, 12));
 	return buf;
 }
 
@@ -4192,7 +4187,7 @@ casting_result aule_child_spell()
  
 	if (m_idx)
 	{
-		monster_set_level(m_idx, 20 + get_level(AULE_CHILD, 70, 0));
+		monster_set_level(m_idx, 20 + get_level(AULE_CHILD, 70));
 		return CAST_OBVIOUS;
 	}
 	else
@@ -4295,7 +4290,7 @@ const char *mandos_tale_of_doom_info()
 
 int call_to_the_halls_mlev()
 {
-	return 20 + get_level(MANDOS_CALL_HALLS, 70, 0);
+	return 20 + get_level(MANDOS_CALL_HALLS, 70);
 }
 
 casting_result mandos_call_to_the_halls_spell()
@@ -4408,7 +4403,7 @@ const char *ulmo_draught_of_ulmonan_info()
 
 static int call_of_the_ulumuri_mlev()
 {
-	return 30 + get_level(ULMO_CALL_ULUMURI, 70, 0);
+	return 30 + get_level(ULMO_CALL_ULUMURI, 70);
 }
 
 casting_result ulmo_call_of_the_ulumuri_spell()

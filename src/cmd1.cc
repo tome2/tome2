@@ -2474,7 +2474,7 @@ void py_attack(int y, int x, int max_blow)
 						/* Melkor can cast curse for you*/
 						if (praying_to(GOD_MELKOR))
 						{
-							int lv = get_level(MELKOR_CURSE, 100, 1);
+							int lv = get_level_s(MELKOR_CURSE, 100);
 
 							if (lv >= 10)
 							{

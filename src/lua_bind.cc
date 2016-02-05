@@ -185,7 +185,7 @@ s32b spell_chance_book(s32b s)
 	return spell_chance_school(s);
 }
 
-s32b get_level(s32b s, s32b max, s32b min)
+static s32b get_level_full(s32b s, s32b max, s32b min)
 {
 	auto spell = spell_at(s);
 	/** Ahah shall we use Magic device instead ? */
@@ -194,6 +194,16 @@ s32b get_level(s32b s, s32b max, s32b min)
 	} else {
 		return get_level_school_1(spell, max, min);
 	}
+}
+
+s32b get_level(s32b s, s32b max)
+{
+	return get_level_full(s, max, 0);
+}
+
+s32b get_level_s(int sp, int max)
+{
+	return get_level_full(sp, max, 1);
 }
 
 /* Level gen */

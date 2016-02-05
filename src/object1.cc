@@ -2767,7 +2767,7 @@ static void describe_device(object_type *o_ptr)
 					       });
 
 		text_out("\nSpell level: ");
-		sprintf(buf, FMTs32b, get_level(o_ptr->pval2, 50, 0));
+		sprintf(buf, FMTs32b, get_level(o_ptr->pval2, 50));
 		text_out_c(TERM_L_BLUE, buf);
 
 		text_out("\nMinimum Magic Device level to increase spell level: ");
