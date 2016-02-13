@@ -3285,10 +3285,6 @@ static int monster_get_race_level(int r_idx) {
 	return r_info[r_idx].level;
 }
 
-static bool compare_monster_level(int r_idx1, int r_idx2) {
-	return monster_get_race_level(r_idx1) < monster_get_race_level(r_idx2);
-}
-
 /*
  * Display known uniques
  *
@@ -3321,7 +3317,9 @@ static void do_cmd_knowledge_uniques(void)
 	// Sort races by level.
 	std::sort(std::begin(unique_r_idxs),
 		  std::end(unique_r_idxs),
-		  compare_monster_level);
+		  [](int r_idx1, int r_idx2) -> bool {
+			  return monster_get_race_level(r_idx1) < monster_get_race_level(r_idx2);
+		  });
 
 	/* Scan the monster races */
 	for (int r_idx : unique_r_idxs)
