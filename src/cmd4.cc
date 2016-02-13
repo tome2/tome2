@@ -3690,51 +3690,16 @@ static void do_cmd_knowledge_corruptions(void)
 
 
 /*
- * Helper function for do_cmd_knowledge_quests
- */
-static void insert_sort_quest(int *order, int *num, int q_idx)
-{
-	int i, j;
-
-	quest_type *q_ptr = &quest[q_idx];
-
-	int level = q_ptr->level;
-
-
-	/* Find the place */
-	for (i = 0; i < *num; i++)
-	{
-		quest_type *q2_ptr = &quest[order[i]];
-		int level2 = q2_ptr->level;
-
-		if (level < level2) break;
-	}
-
-	/* Move the remaining items */
-	for (j = *num - 1; j >= i; j--)
-	{
-		order[j + 1] = order[j];
-	}
-
-	/* Insert it */
-	order[i] = q_idx;
-	(*num)++;
-}
-
-
-/*
  * Print quest status of all active quests
  */
 static void do_cmd_knowledge_quests(void)
 {
 	/* Figure out display order of quests */
-	int order[MAX_Q_IDX] = { };
-
-	int num = 0;
-	for (int i = 0; i < MAX_Q_IDX; i++)
-	{
-		insert_sort_quest(order, &num, i);
-	}
+	int order[MAX_Q_IDX];
+	std::iota(order, order + MAX_Q_IDX, 0); // Start with order of definition
+	std::sort(order, order + MAX_Q_IDX, [](int qi, int qj) -> bool {
+		return (quest[qi].level < quest[qj].level);
+	});
 
 	/* Write */
 	fmt::MemoryWriter w;
