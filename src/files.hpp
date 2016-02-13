@@ -3,6 +3,9 @@
 #include "h-basic.h"
 #include "monster_type_fwd.hpp"
 
+#include <string>
+#include <vector>
+
 extern void html_screenshot(cptr name);
 extern void help_file_screenshot(cptr name);
 extern void player_flags(u32b* f1, u32b* f2, u32b* f3, u32b* f4, u32b* f5, u32b* esp);
@@ -13,6 +16,7 @@ extern cptr describe_player_location(void);
 extern errr file_character(cptr name, bool_ full);
 extern errr process_pref_file_aux(char *buf);
 extern errr process_pref_file(cptr name);
+extern void show_string(const char *lines, const char *title, int line = 0);
 extern void show_file(cptr name, cptr what, int line = 0);
 extern void do_cmd_help(void);
 extern void process_player_base(void);

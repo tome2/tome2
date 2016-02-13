@@ -18,10 +18,9 @@
 #include "z-rand.hpp"
 
 #include <cassert>
+#include <format.h>
 
 #define cquest (quest[QUEST_LIBRARY])
-
-#define print_hook(fmt,...) do { fprintf(hook_file, fmt, ##__VA_ARGS__); } while (0)
 
 #define MONSTER_LICH 518
 #define MONSTER_MONASTIC_LICH 611
@@ -482,25 +481,23 @@ void quest_library_building(bool_ *paid, bool_ *recreate)
 	}
 }
 
-bool_ quest_library_describe(FILE *hook_file)
+std::string quest_library_describe()
 {
+	fmt::MemoryWriter w;
+
 	if (cquest.status == QUEST_STATUS_TAKEN)
 	{
-		print_hook("#####yAn Old Mages Quest! (Danger Level: 35)\n");
-		print_hook("Make the library safe for the old mage in Minas Anor.\n");
-		print_hook("\n");
+		w.write("#####yAn Old Mages Quest! (Danger Level: 35)\n");
+		w.write("Make the library safe for the old mage in Minas Anor.");
 	}
 	else if (cquest.status == QUEST_STATUS_COMPLETED)
 	{
-		/* Quest done, book not gotten yet */
-		print_hook("#####yAn Old Mages Quest!\n");
-		print_hook("You have made the library safe for the old mage in Minas Anor.\n");
-		print_hook("Perhaps you should see about a reward.\n");
-		print_hook("\n");
+		w.write("#####yAn Old Mages Quest!\n");
+		w.write("You have made the library safe for the old mage in Minas Anor.\n");
+		w.write("Perhaps you should see about a reward.");
 	}
 
-	/* Normal processing */
-	return TRUE;
+	return w.str();
 }
 
 bool_ quest_library_init_hook(int q)

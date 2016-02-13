@@ -28,6 +28,7 @@
 #include "z-rand.hpp"
 
 #include <cassert>
+#include <format.h>
 
 static int randquest_hero[] = { 20, 13, 15, 16, 9, 17, 18, 8, -1 };
 
@@ -615,31 +616,37 @@ static bool_ quest_random_dump_hook(void *, void *in_, void *)
 	return (FALSE);
 }
 
-bool_ quest_random_describe(FILE *fff)
+std::string quest_random_describe()
 {
-	if (!(dungeon_flags1 & DF1_PRINCIPAL)) return FALSE;
-	if ((dun_level < 1) || (dun_level >= MAX_RANDOM_QUEST)) return FALSE;
-	if (!random_quests[dun_level].type) return FALSE;
-	if (random_quests[dun_level].done) return FALSE;
-	if (p_ptr->inside_quest) return FALSE;
-	if (!dun_level) return FALSE;
+	// Only emit description if we're actually on a
+	// random quest level.
+	if (!(dungeon_flags1 & DF1_PRINCIPAL)) return "";
+	if ((dun_level < 1) || (dun_level >= MAX_RANDOM_QUEST)) return "";
+	if (!random_quests[dun_level].type) return "";
+	if (random_quests[dun_level].done) return "";
+	if (p_ptr->inside_quest) return "";
+	if (!dun_level) return "";
+
+	fmt::MemoryWriter w;
 
 	if (!is_randhero(dun_level))
 	{
-		fprintf(fff, "#####yCaptured princess!\n");
-		fprintf(fff, "A princess is being held prisoner and tortured here!\n");
-		fprintf(fff, "Save her from the horrible %s.\n", r_info[random_quests[dun_level].r_idx].name);
+		w.write("#####yCaptured princess!\n");
+		w.write("A princess is being held prisoner and tortured here!\n");
+		w.write("Save her from the horrible {}.\n", r_info[random_quests[dun_level].r_idx].name);
 	}
 	else
 	{
-		fprintf(fff, "#####yLost sword!\n");
-		fprintf(fff, "An adventurer lost his sword to a bunch of %s!\n", r_info[random_quests[dun_level].r_idx].name);
-		fprintf(fff, "Kill them all to get it back.\n");
+		w.write("#####yLost sword!\n");
+		w.write("An adventurer lost his sword to a bunch of {}!\n", r_info[random_quests[dun_level].r_idx].name);
+		w.write("Kill them all to get it back.\n");
 	}
-	fprintf(fff, "Number: %d, Killed: %ld.\n",
-		random_quests[dun_level].type, (long int) quest[QUEST_RANDOM].data[0]);
-	fprintf(fff, "\n");
-	return TRUE;
+
+	w.write("Number: {}, Killed: {}.",
+		random_quests[dun_level].type,
+		quest[QUEST_RANDOM].data[0]);
+
+	return w.str();
 }
 
 bool_ quest_random_init_hook(int q_idx)

@@ -38,8 +38,8 @@
 #include "z-rand.hpp"
 
 #include <algorithm>
-#include <boost/filesystem.hpp>
 #include <cassert>
+#include <format.h>
 #include <memory>
 #include <string>
 #include <vector>
@@ -3016,13 +3016,6 @@ void do_cmd_knowledge_artifacts(void)
 
 	char base_name[80];
 
-	/* Temporary file */
-	auto const file_name_p = boost::filesystem::unique_path();
-	auto const file_name = file_name_p.c_str();
-
-	/* Open a new file */
-	FILE *fff = my_fopen(file_name, "w");
-
 	/* Scan the artifacts */
 	std::unique_ptr<bool_[]> okay(new bool_[max_a_idx]);
 	for (k = 0; k < max_a_idx; k++)
@@ -3155,6 +3148,9 @@ void do_cmd_knowledge_artifacts(void)
 		}
 	}
 
+	/* Output buffer */
+	fmt::MemoryWriter w;
+
 	/* Scan the artifacts */
 	for (k = 0; k < max_a_idx; k++)
 	{
@@ -3195,7 +3191,7 @@ void do_cmd_knowledge_artifacts(void)
 		}
 
 		/* Hack -- Build the artifact name */
-		fprintf(fff, "     The %s\n", base_name);
+		w.write("     The {}\n", base_name);
 	}
 
 	for (k = 0; k < max_k_idx; k++)
@@ -3223,17 +3219,11 @@ void do_cmd_knowledge_artifacts(void)
 		}
 
 		/* Hack -- Build the artifact name */
-		fprintf(fff, "     The %s\n", base_name);
+		w.write("     The {}\n", base_name);
 	}
 
-	/* Close the file */
-	my_fclose(fff);
-
-	/* Display the file contents */
-	show_file(file_name, "Artifacts Seen");
-
-	/* Remove the file */
-	fd_kill(file_name);
+	/* Display */
+	show_string(w.c_str(), "Artifacts Seen");
 }
 
 
@@ -3242,13 +3232,7 @@ void do_cmd_knowledge_artifacts(void)
  */
 void do_cmd_knowledge_traps(void)
 {
-	/* Temporary file */
-	auto const file_name_p = boost::filesystem::unique_path();
-	auto const file_name = file_name_p.c_str();
-
-	/* Open a new file */
-	FILE *fff = my_fopen(file_name, "w");
-
+	fmt::MemoryWriter w;
 	/* Scan the traps */
 	for (int k = 0; k < max_t_idx; k++)
 	{
@@ -3262,17 +3246,11 @@ void do_cmd_knowledge_traps(void)
 		if (!t_ptr->ident) continue;
 
 		/* Hack -- Build the trap name */
-		fprintf(fff, "     %s\n", t_ptr->name);
+		w.write("     {}\n", t_ptr->name);
 	}
 
-	/* Close the file */
-	my_fclose(fff);
-
 	/* Display the file contents */
-	show_file(file_name, "Traps known");
-
-	/* Remove the file */
-	fd_kill(file_name);
+	show_string(w.c_str(), "Traps known");
 }
 
 
@@ -3287,18 +3265,9 @@ static int monster_get_race_level(int r_idx) {
 
 /*
  * Display known uniques
- *
- * Note that the player ghosts are ignored.  XXX XXX XXX
  */
 static void do_cmd_knowledge_uniques(void)
 {
-	/* Temporary file */
-	auto const file_name_p = boost::filesystem::unique_path();
-	auto const file_name = file_name_p.c_str();
-
-	/* Open a new file */
-	FILE *fff = my_fopen(file_name, "w");
-
 	// Extract the unique race indexes.
 	std::vector<int> unique_r_idxs;
 	for (int k = 1; k < max_r_idx; k++)
@@ -3321,7 +3290,8 @@ static void do_cmd_knowledge_uniques(void)
 			  return monster_get_race_level(r_idx1) < monster_get_race_level(r_idx2);
 		  });
 
-	/* Scan the monster races */
+	// Scan the monster races
+	fmt::MemoryWriter w;
 	for (int r_idx : unique_r_idxs)
 	{
 		monster_race *r_ptr = &r_info[r_idx];
@@ -3337,30 +3307,24 @@ static void do_cmd_knowledge_uniques(void)
 				/* Print a message */
 				if (dead)
 				{
-					fprintf(fff, "[[[[[%c%c] [[[[[R%-68s is dead]\n",
-						conv_color[r_ptr->d_attr],
-						r_ptr->d_char,
+					w.write("[[[[[{}{}] [[[[[R{:<68} is dead]\n",
+						static_cast<char>(conv_color[r_ptr->d_attr]),
+						static_cast<char>(r_ptr->d_char),
 						r_ptr->name);
 				}
 				else
 				{
-					fprintf(fff, "[[[[[%c%c] [[[[[w%-68s is alive]\n",
-						conv_color[r_ptr->d_attr],
-						r_ptr->d_char,
+					w.write("[[[[[{}{}] [[[[[w{:<68} is alive]\n",
+						static_cast<char>(conv_color[r_ptr->d_attr]),
+						static_cast<char>(r_ptr->d_char),
 						r_ptr->name);
 				}
 			}
 		}
 	}
 
-	/* Close the file */
-	my_fclose(fff);
-
-	/* Display the file contents */
-	show_file(file_name, "Known Uniques");
-
-	/* Remove the file */
-	fd_kill(file_name);
+	// Display
+	show_string(w.c_str(), "Known Uniques");
 }
 
 
@@ -3458,32 +3422,17 @@ static void plural_aux(char *name)
  */
 static void do_cmd_knowledge_pets(void)
 {
-	int i;
-
-	monster_type *m_ptr;
-
 	int t_friends = 0;
-
 	int t_levels = 0;
 
-	int show_upkeep = 0;
-
-	int upkeep_divider = 20;
-
-	/* Temporary file */
-	auto const file_name_p = boost::filesystem::unique_path();
-	auto const file_name = file_name_p.c_str();
-
-	/* Open a new file */
-	FILE *fff = my_fopen(file_name, "w");
-
-	if (has_ability(AB_PERFECT_CASTING)) upkeep_divider = 15;
+	// Buffer
+	fmt::MemoryWriter w;
 
 	/* Process the monsters (backwards) */
-	for (i = m_max - 1; i >= 1; i--)
+	for (int i = m_max - 1; i >= 1; i--)
 	{
 		/* Access the monster */
-		m_ptr = &m_list[i];
+		monster_type *m_ptr = &m_list[i];
 
 		/* Ignore "dead" monsters */
 		if (!m_ptr->r_idx) continue;
@@ -3499,12 +3448,16 @@ static void do_cmd_knowledge_pets(void)
 			char pet_name[80];
 			monster_desc(pet_name, m_ptr, 0x88);
 
-			fprintf(fff, "%s%s (%s)\n",
-			        (r_ptr->flags1 & RF1_UNIQUE) ? "#####G" : "",
-			        pet_name,
-			        (m_ptr->status < MSTATUS_COMPANION) ? "pet" : "companion");
+			w.write("{}{} ({})\n",
+				(r_ptr->flags1 & RF1_UNIQUE) ? "#####G" : "",
+				pet_name,
+				(m_ptr->status < MSTATUS_COMPANION) ? "pet" : "companion");
 		}
 	}
+
+	// Calculate upkeep
+	int show_upkeep = 0;
+	int upkeep_divider = has_ability(AB_PERFECT_CASTING) ? 15 : 20;
 
 	if (t_friends > 1 + (p_ptr->lev / (upkeep_divider)))
 	{
@@ -3514,80 +3467,58 @@ static void do_cmd_knowledge_pets(void)
 		else if (show_upkeep < 10) show_upkeep = 10;
 	}
 
+	// Summary
+	w.write("----------------------------------------------\n");
+	w.write("   Total: {} pet{}.\n", t_friends, (t_friends == 1 ? "" : "s"));
+	w.write("   Upkeep: {}% mana.\n", show_upkeep);
 
-	fprintf(fff, "----------------------------------------------\n");
-	fprintf(fff, "   Total: %d pet%s.\n", t_friends, (t_friends == 1 ? "" : "s"));
-	fprintf(fff, "   Upkeep: %d%% mana.\n", show_upkeep);
-
-
-	/* Close the file */
-	my_fclose(fff);
-
-	/* Display the file contents */
-	show_file(file_name, "Current Pets");
-
-	/* Remove the file */
-	fd_kill(file_name);
+	// Display
+	show_string(w.c_str(), "Current Pets");
 }
 
 
 
 /*
  * Total kill count
- *
- * Note that the player ghosts are ignored.  XXX XXX XXX
  */
 static void do_cmd_knowledge_kill_count(void)
 {
 	s32b Total = 0;
 
-	/* Temporary file */
-	auto const file_name_p = boost::filesystem::unique_path();
-	auto const file_name = file_name_p.c_str();
+	// Buffer
+	fmt::MemoryWriter w;
 
-	/* Open a new file */
-	FILE *fff = my_fopen(file_name, "w");
-
+	// Summary of monsters slain
 	{
-		/* Monsters slain */
-		int kk;
-
 		/* For all monsters */
-		for (kk = 1; kk < max_r_idx; kk++)
+		for (int kk = 1; kk < max_r_idx; kk++)
 		{
 			monster_race *r_ptr = &r_info[kk];
 
 			if (r_ptr->flags1 & (RF1_UNIQUE))
 			{
-				bool_ dead = (r_ptr->max_num == 0);
-
-				if (dead)
+				if (r_ptr->max_num == 0)
 				{
 					Total++;
 				}
 			}
 			else
 			{
-				s16b This = r_ptr->r_pkills;
-
-				if (This > 0)
-				{
-					Total += This;
-				}
+				Total += std::max<s16b>(r_ptr->r_pkills, 0);
 			}
 		}
 
 		if (Total < 1)
 		{
-			fprintf(fff, "You have defeated no enemies yet.\n\n");
+			w.write("You have defeated no enemies yet.\n\n");
 		}
 		else if (Total == 1)
 		{
-			fprintf(fff, "You have defeated one enemy.\n\n");
+			w.write("You have defeated one enemy.\n\n");
 		}
 		else
 		{
-                  fprintf(fff, "You have defeated " FMTs32b " enemies.\n\n", Total);
+			w.write("You have defeated {} enemies.\n\n", Total);
 		}
 	}
 
@@ -3605,7 +3536,7 @@ static void do_cmd_knowledge_kill_count(void)
 			if (dead)
 			{
 				/* Print a message */
-				fprintf(fff, "     %s\n", r_ptr->name);
+				w.write("     {}\n", r_ptr->name);
 				Total++;
 			}
 		}
@@ -3619,11 +3550,11 @@ static void do_cmd_knowledge_kill_count(void)
 				{
 					if (strstr(r_ptr->name, "coins"))
 					{
-						fprintf(fff, "     1 pile of %s\n", r_ptr->name);
+						w.write("     1 pile of {}\n", r_ptr->name);
 					}
 					else
 					{
-						fprintf(fff, "     1 %s\n", r_ptr->name);
+						w.write("     1 {}\n", r_ptr->name);
 					}
 				}
 				else
@@ -3631,7 +3562,7 @@ static void do_cmd_knowledge_kill_count(void)
 					char to_plural[80];
 					strcpy(to_plural, r_ptr->name);
 					plural_aux(to_plural);
-					fprintf(fff, "     %d %s\n", This, to_plural);
+					w.write("     {} {}\n", This, to_plural);
 				}
 
 				Total += This;
@@ -3639,17 +3570,11 @@ static void do_cmd_knowledge_kill_count(void)
 		}
 	}
 
-	fprintf(fff, "----------------------------------------------\n");
-	fprintf(fff, "   Total: " FMTs32b " creature%s killed.\n", Total, (Total == 1 ? "" : "s"));
-
-	/* Close the file */
-	my_fclose(fff);
+	w.write("----------------------------------------------\n");
+	w.write("   Total: {} creature{} killed.\n", Total, (Total == 1 ? "" : "s"));
 
 	/* Display the file contents */
-	show_file(file_name, "Kill Count");
-
-	/* Remove the file */
-	fd_kill(file_name);
+	show_string(w.c_str(), "Kill Count");
 }
 
 
@@ -3658,12 +3583,7 @@ static void do_cmd_knowledge_kill_count(void)
  */
 static void do_cmd_knowledge_objects(void)
 {
-	/* Temporary file */
-	auto const file_name_p = boost::filesystem::unique_path();
-	auto const file_name = file_name_p.c_str();
-
-	/* Open a new file */
-	FILE *fff = my_fopen(file_name, "w");
+	fmt::MemoryWriter w;
 
 	/* Scan the object kinds */
 	for (int k = 1; k < max_k_idx; k++)
@@ -3676,32 +3596,25 @@ static void do_cmd_knowledge_objects(void)
 		/* List known flavored objects */
 		if (k_ptr->flavor && k_ptr->aware)
 		{
-			char o_name[80];
-			object_type *i_ptr;
 			object_type object_type_body;
 
 			/* Get local object */
-			i_ptr = &object_type_body;
+			object_type *i_ptr = &object_type_body;
 
 			/* Create fake object */
 			object_prep(i_ptr, k);
 
 			/* Describe the object */
+			char o_name[80];
 			object_desc_store(o_name, i_ptr, FALSE, 0);
 
 			/* Print a message */
-			fprintf(fff, "     %s\n", o_name);
+			w.write("     {}\n", o_name);
 		}
 	}
 
-	/* Close the file */
-	my_fclose(fff);
-
-	/* Display the file contents */
-	show_file(file_name, "Known Objects");
-
-	/* Remove the file */
-	fd_kill(file_name);
+	// Display
+	show_string(w.c_str(), "Known Objects");
 }
 
 
@@ -3710,15 +3623,7 @@ static void do_cmd_knowledge_objects(void)
  */
 static void do_cmd_knowledge_dungeons(void)
 {
-	/* Temporary file */
-	auto const file_name_p = boost::filesystem::unique_path();
-	auto const file_name = file_name_p.c_str();
-
-	/* Open a new file */
-	FILE *fff = my_fopen(file_name, "w");
-
-	/* Oops */
-	if (fff == NULL) return;
+	fmt::MemoryWriter w;
 
 	/* Scan all dungeons */
 	for (int y = 1; y < max_d_idx; y++)
@@ -3727,21 +3632,15 @@ static void do_cmd_knowledge_dungeons(void)
 		if (max_dlv[y])
 		{
 			/* Describe the recall depth */
-			fprintf(fff, "       %c%s: Level %d (%d')\n",
-			        (p_ptr->recall_dungeon == y) ? '*' : ' ',
+			w.write("       {}{}: Level {} ({}')\n",
+				(p_ptr->recall_dungeon == y) ? '*' : ' ',
 				d_info[y].name,
-			        max_dlv[y], 50 * (max_dlv[y]));
+				max_dlv[y], 50 * (max_dlv[y]));
 		}
 	}
 
-	/* Close the file */
-	my_fclose(fff);
-
-	/* Display the file contents */
-	show_file(file_name, "Recall Depths");
-
-	/* Remove the file */
-	fd_kill(file_name);
+	// Display
+	show_string(w.c_str(), "Recall Depths");
 }
 
 
@@ -3750,15 +3649,7 @@ static void do_cmd_knowledge_dungeons(void)
  */
 void do_cmd_knowledge_towns(void)
 {
-	/* Temporary file */
-	auto const file_name_p = boost::filesystem::unique_path();
-	auto const file_name = file_name_p.c_str();
-
-	/* Open a new file */
-	FILE *fff = my_fopen(file_name, "w");
-
-	/* Oops */
-	if (fff == NULL) return;
+	fmt::MemoryWriter w;
 
 	/* Scan all dungeons */
 	for (int i = 0; i < max_d_idx; i++)
@@ -3777,21 +3668,15 @@ void do_cmd_knowledge_towns(void)
 			if (!(town_info[town_idx].flags & (TOWN_KNOWN))) continue;
 
 			/* Describe the dungeon town */
-			fprintf(fff, "        %s: Level %d (%d')\n",
+			w.write("        {}: Level {} ({}')\n",
 				d_ptr->name,
-			        d_ptr->t_level[j],
-			        50 * d_ptr->t_level[j]);
+				d_ptr->t_level[j],
+				50 * d_ptr->t_level[j]);
 		}
 	}
 
-	/* Close the file */
-	my_fclose(fff);
-
 	/* Display the file contents */
-	show_file(file_name, "Dungeon Towns");
-
-	/* Remove the file */
-	fd_kill(file_name);
+	show_string(w.c_str(), "Dungeon Towns");
 }
 
 
@@ -3800,27 +3685,7 @@ void do_cmd_knowledge_towns(void)
  */
 static void do_cmd_knowledge_corruptions(void)
 {
-	/* Temporary file */
-	auto const file_name_p = boost::filesystem::unique_path();
-	auto const file_name = file_name_p.c_str();
-
-	/* Open a new file */
-	FILE *fff = my_fopen(file_name, "w");
-
-	/* Dump the corruptions to file */
-	if (fff)
-	{
-		dump_corruptions(fff, TRUE, FALSE);
-	}
-
-	/* Close the file */
-	my_fclose(fff);
-
-	/* Display the file contents */
-	show_file(file_name, "Corruptions");
-
-	/* Remove the file */
-	fd_kill(file_name);
+	show_string(dump_corruptions(true, false).c_str(), "Corruptions");
 }
 
 
@@ -3862,35 +3727,28 @@ static void insert_sort_quest(int *order, int *num, int q_idx)
  */
 static void do_cmd_knowledge_quests(void)
 {
+	/* Figure out display order of quests */
 	int order[MAX_Q_IDX] = { };
 
 	int num = 0;
-
-	int i, j, z;
-
-
-	/* Temporary file */
-	auto const file_name_p = boost::filesystem::unique_path();
-	auto const file_name = file_name_p.c_str();
-
-	/* Open a new file */
-	FILE *fff = my_fopen(file_name, "w");
-
-	for (i = 0; i < MAX_Q_IDX; i++)
+	for (int i = 0; i < MAX_Q_IDX; i++)
 	{
 		insert_sort_quest(order, &num, i);
 	}
 
-	for (z = 0; z < MAX_Q_IDX; z++)
+	/* Write */
+	fmt::MemoryWriter w;
+	for (int z = 0; z < MAX_Q_IDX; z++)
 	{
-		i = order[z];
+		int const i = order[z];
 
 		/* Dynamic descriptions */
 		if (quest[i].gen_desc != NULL)
 		{
-			if (!quest[i].gen_desc(fff))
+			auto s = quest[i].gen_desc();
+			if (!s.empty())
 			{
-				continue;
+				w.write("{}\n\n", s);
 			}
 		}
 
@@ -3900,32 +3758,26 @@ static void do_cmd_knowledge_quests(void)
 			if (quest[i].status == QUEST_STATUS_TAKEN)
 			{
 				/* Print the quest info */
-				fprintf(fff, "#####y%s (Danger level: %d)\n",
+				w.write("#####y{} (Danger level: {})\n",
 				        quest[i].name, quest[i].level);
 
-				j = 0;
+				int j = 0;
 				while ((j < 10) && (quest[i].desc[j][0] != '\0'))
 				{
-					fprintf(fff, "%s\n", quest[i].desc[j++]);
+					w.write("{}\n", quest[i].desc[j++]);
 				}
-				fprintf(fff, "\n");
+				w.write("\n");
 			}
 			else if (quest[i].status == QUEST_STATUS_COMPLETED)
 			{
-				fprintf(fff , "#####G%s Completed - Unrewarded\n", quest[i].name);
-				fprintf(fff, "\n");
+				w.write("#####G{} Completed - Unrewarded\n", quest[i].name);
+				w.write("\n");
 			}
 		}
 	}
 
-	/* Close the file */
-	my_fclose(fff);
-
-	/* Display the file contents */
-	show_file(file_name, "Quest status");
-
-	/* Remove the file */
-	fd_kill(file_name);
+	/* Display */
+	show_string(w.c_str(), "Quest status");
 }
 
 
@@ -3934,23 +3786,7 @@ static void do_cmd_knowledge_quests(void)
  */
 static void do_cmd_knowledge_fates(void)
 {
-	/* Temporary file */
-	auto const file_name_p = boost::filesystem::unique_path();
-	auto const file_name = file_name_p.c_str();
-
-	/* Open a new file */
-	FILE *fff = my_fopen(file_name, "w");
-
-	dump_fates(fff);
-
-	/* Close the file */
-	my_fclose(fff);
-
-	/* Display the file contents */
-	show_file(file_name, "Fate status");
-
-	/* Remove the file */
-	fd_kill(file_name);
+	show_string(dump_fates().c_str(), "Fate status");
 }
 
 

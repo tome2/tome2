@@ -271,19 +271,20 @@ static std::string make_directions(bool feel_it)
 	}
 }
 
-bool_ quest_god_describe(FILE *fff)
+std::string quest_god_describe()
 {
+	fmt::MemoryWriter w;
+
 	if (cquest.status == QUEST_STATUS_TAKEN)
 	{
 		auto directions = make_directions(false);
-		fprintf(fff, "#####yGod quest " FMTs32b "!\n", cquest_quests_given);
-		fprintf(fff, "Thou art to find the lost temple of thy God and\n");
-		fprintf(fff, "to retrieve the lost part of the relic for thy God! \n");
-		fprintf(fff, "%s\n", directions.c_str());
-		fprintf(fff, "\n");
+		w.write("#####yGod quest {}!\n", cquest_quests_given);
+		w.write("Thou art to find the lost temple of thy God and\n");
+		w.write("to retrieve the lost part of the relic for thy God!\n");
+		w.write("{}", directions.c_str());
 	}
 
-	return TRUE;
+	return w.str();
 }
 
 static void quest_god_place_rand_dung()

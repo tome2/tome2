@@ -28,6 +28,7 @@
 #include "xtra1.hpp"
 
 #include <boost/filesystem.hpp>
+#include <format.h>
 #include <string>
 
 static void row_trival(const char*, s16b, u32b, s16b, u32b, int, u32b[INVEN_TOTAL - INVEN_WIELD + 2][7]);
@@ -723,20 +724,12 @@ static void row_hd_bon(int which, int yo, u32b flag_arr[INVEN_TOTAL - INVEN_WIEL
 
 static void status_companion(void)
 {
-	int i;
-
 	Term_clear();
 
-	/* Temporary file */
-	auto const file_name_p = boost::filesystem::unique_path();
-	auto const file_name = file_name_p.c_str();
+	fmt::MemoryWriter w;
 
-	/* Open a new file */
-	FILE *fff = my_fopen(file_name, "w");
-
-	/* Calculate companions */
 	/* Process the monsters (backwards) */
-	for (i = m_max - 1; i >= 1; i--)
+	for (int i = m_max - 1; i >= 1; i--)
 	{
 		/* Access the monster */
 		monster_type *m_ptr = &m_list[i];
@@ -744,40 +737,35 @@ static void status_companion(void)
 		if (m_ptr->status == MSTATUS_COMPANION)
 		{
 			char m_name[80];
-			int b, y = 0;
-
-			/* Extract monster name */
 			monster_desc(m_name, m_ptr, 0x80);
 
-			fprintf(fff, "#####BCompanion: %s\n", m_name);
+			std::string exp_for_next_level = (m_ptr->level < MONSTER_LEVEL_MAX)
+				? std::to_string(monster_exp(m_ptr->level + 1))
+				: "****";
 
-			fprintf(fff, "  Lev/Exp : [[[[[G%d / %ld]\n", m_ptr->level, (long int) m_ptr->exp);
-			if (m_ptr->level < MONSTER_LEVEL_MAX) fprintf(fff, "  Next lvl: [[[[[G%ld]\n", (long int) monster_exp(m_ptr->level + 1));
-			else fprintf(fff, "  Next lvl: [[[[[G****]\n");
+			w.write("#####BCompanion: {}\n", m_name);
 
-			fprintf(fff, "  HP      : [[[[[G%ld / %ld]\n", (long int) m_ptr->hp, (long int) m_ptr->maxhp);
-			fprintf(fff, "  AC      : [[[[[G%d]\n", m_ptr->ac);
-			fprintf(fff, "  Speed   : [[[[[G%d]\n", m_ptr->mspeed - 110);
+			w.write("  Lev/Exp : [[[[[G{} / {}]\n", m_ptr->level, m_ptr->exp);
+			w.write("  Next lvl: [[[[[G{}]\n", exp_for_next_level);
 
-			for (b = 0; b < 4; b++)
+			w.write("  HP      : [[[[[G{} / {}]\n", m_ptr->hp, m_ptr->maxhp);
+			w.write("  AC      : [[[[[G{}]\n", m_ptr->ac);
+			w.write("  Speed   : [[[[[G{}]\n", m_ptr->mspeed - 110);
+
+			int y = 0;
+			for (int b = 0; b < 4; b++)
 			{
 				if (!m_ptr->blow[b].d_dice) continue;
 				if (!m_ptr->blow[b].d_side) continue;
 
-				fprintf(fff, "  Blow %1d  : [[[[[G%dd%d]\n", y + 1, m_ptr->blow[b].d_dice, m_ptr->blow[b].d_side);
+				w.write("  Blow {}  : [[[[[G{}d{}]\n", y + 1, m_ptr->blow[b].d_dice, m_ptr->blow[b].d_side);
 				y++;
 			}
 
-			fprintf(fff, "\n");
+			w.write("\n");
 		}
 	}
 
-	/* Close the file */
-	my_fclose(fff);
-
-	/* Display the file contents */
-	show_file(file_name, "Companion List");
-
-	/* Remove the file */
-	fd_kill(file_name);
+	/* Display */
+	show_string(w.c_str(), "Companion List");
 }

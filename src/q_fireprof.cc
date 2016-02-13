@@ -17,10 +17,9 @@
 #include "z-rand.hpp"
 
 #include <cassert>
+#include <format.h>
 
 #define cquest (quest[QUEST_FIREPROOF])
-
-#define print_hook(fmt,...) do { fprintf(hook_file, fmt, ##__VA_ARGS__); } while (0)
 
 /*
  * Per-module "settings"
@@ -427,7 +426,7 @@ static bool_ fireproof_stair_hook(void *, void *, void *)
 	}
 }
 
-bool_ quest_fireproof_describe(FILE *hook_file)
+std::string quest_fireproof_describe()
 {
 	fireproof_settings const *settings = fireproof_get_settings();
 	int num_books, num_staff, num_scroll;
@@ -437,37 +436,34 @@ bool_ quest_fireproof_describe(FILE *hook_file)
 	num_staff = get_item_points_remaining() / FIREPROOF_STAFF_POINTS;
 	num_scroll = get_item_points_remaining() / FIREPROOF_SCROLL_POINTS;
 
+	fmt::MemoryWriter w;
+
 	if (status == QUEST_STATUS_TAKEN)
 	{
 		/* Quest taken */
-		print_hook("#####yAn Old Mages Quest!\n");
-		print_hook("Retrieve the strange %s for the old mage "
-			   "in Lothlorien.\n", settings->tval_name);
-		print_hook("\n");
+		w.write("#####yAn Old Mages Quest!\n");
+		w.write("Retrieve the strange {} for the old mage in Lothlorien.", settings->tval_name);
 	}
 	else if (status == QUEST_STATUS_COMPLETED)
 	{
 		/* essence retrieved, not taken to mage */
-		print_hook("#####yAn Old Mages Quest!\n");
-		print_hook("You have retrieved the %s for the old "
-			   "mage in Lothlorien. Perhaps you \n", settings->tval_name);
-		print_hook("should see about a reward.\n");
-		print_hook("\n");
+		w.write("#####yAn Old Mages Quest!\n");
+		w.write("You have retrieved the {} for the old mage in Lothlorien.\n", settings->tval_name);
+		w.write("Perhaps you should see about a reward.");
 	}
 	else if ((status == QUEST_STATUS_FINISHED) &&
 		 (get_item_points_remaining() > 0))
 	{
 		/* essence returned, not all books fireproofed */
-		print_hook("#####yAn Old Mages Quest!\n");
-		print_hook("You have retrieved the %s for the old "
-			   "mage in Lothlorien. He will still \n", settings->tval_name);
-		print_hook("fireproof %d book(s) or %d staff/staves "
-			   "or %d scroll(s) for you.\n",
-			   num_books, num_staff, num_scroll);
-		print_hook("\n");
+		w.write("#####yAn Old Mages Quest!\n");
+		w.write("You have retrieved the {} for the old "
+			"mage in Lothlorien. He will still\n", settings->tval_name);
+		w.write("fireproof {} book(s) or {} staff/staves "
+			"or {} scroll(s) for you.",
+			num_books, num_staff, num_scroll);
 	}
 
-	return TRUE;
+	return w.str();
 }
 
 static bool_ fireproof_gen_hook(void *, void *, void *)

@@ -54,7 +54,10 @@
 #include "xtra1.hpp"
 #include "z-rand.hpp"
 
+#include <boost/filesystem.hpp>
 #include <memory>
+#include <iostream>
+#include <fstream>
 #include <unordered_set>
 
 /*
@@ -2784,7 +2787,7 @@ errr file_character(cptr name, bool_ full)
 	file_character_print_grid(fff, FALSE, FALSE);
 
 	/* Dump corruptions */
-	dump_corruptions(fff, FALSE, TRUE);
+	fprintf(fff, "\n%s\n", dump_corruptions(false, true).c_str());
 
 	/* Dump skills */
 	dump_skills(fff);
@@ -2806,7 +2809,7 @@ errr file_character(cptr name, bool_ full)
 		if ((fates[i].fate) && (fates[i].know))
 		{
 			fprintf(fff, "\n\n  [Fates]\n\n");
-			dump_fates(fff);
+			fprintf(fff, "%s", dump_fates().c_str());
 			break;
 		}
 	}
@@ -3499,6 +3502,24 @@ static bool_ show_file_aux(cptr name, cptr what, int line)
 
 	/* Normal return */
 	return (TRUE);
+}
+
+void show_string(const char *lines, const char *title, int line)
+{
+	// Temporary file
+	auto const file_name = boost::filesystem::unique_path().string();
+
+	// Open a new file
+	std::ofstream ofs(file_name);
+	ofs.exceptions(std::ofstream::failbit);
+	ofs << lines;
+	ofs.close();
+
+	// Display the file contents
+	show_file_aux(file_name.c_str(), title, line);
+
+	// Remove the file
+	fd_kill(file_name.c_str());
 }
 
 void show_file(cptr name, cptr what, int line)

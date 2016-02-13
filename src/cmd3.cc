@@ -40,7 +40,7 @@
 
 #include <cassert>
 #include <algorithm>
-#include <boost/filesystem.hpp>
+#include <format.h>
 #include <memory>
 #include <utility>
 
@@ -2010,28 +2010,22 @@ void do_cmd_cli(void)
  */
 void do_cmd_cli_help()
 {
-	int i, j;
-
-	/* Temporary file */
-	auto const file_name_p = boost::filesystem::unique_path();
-	auto const file_name = file_name_p.c_str();
-
-	/* Open a new file */
-	FILE *fff = my_fopen(file_name, "w");
-
-	for (i = 0, j = -1; i < cli_total; i++)
+	fmt::MemoryWriter w;
+	for (int i = 0, j = -1; i < cli_total; i++)
 	{
-		if (j < i - 1) fprintf(fff, "/");
-		fprintf(fff, "[[[[[G%s]", cli_info[i].comm);
+		if (j < i - 1)
+		{
+			w << "/";
+		}
+
+		w.write("[[[[[G{}]", cli_info[i].comm);
+
 		if (cli_info[i].descrip != cli_info[i + 1].descrip)
 		{
-			fprintf(fff, "   %s\n", cli_info[i].descrip);
+			w.write("   {}\n", cli_info[i].descrip);
 			j = i;
 		}
 	}
-
-	/* Close the file */
-	my_fclose(fff);
 
 	/* Enter "icky" mode */
 	character_icky = TRUE;
@@ -2040,16 +2034,13 @@ void do_cmd_cli_help()
 	Term_save();
 
 	/* Display the file contents */
-	show_file(file_name, "Command line help");
+	show_string(w.c_str(), "Command line help");
 
 	/* Restore the screen */
 	Term_load();
 
 	/* Leave "icky" mode */
 	character_icky = FALSE;
-
-	/* Remove the file */
-	fd_kill(file_name);
 }
 
 

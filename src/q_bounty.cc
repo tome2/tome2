@@ -11,6 +11,8 @@
 #include "util.hpp"
 #include "variable.hpp"
 
+#include <format.h>
+
 #define cquest (quest[QUEST_BOUNTY])
 
 #define bounty_quest_monster (cquest.data[0])
@@ -151,20 +153,18 @@ bool_ quest_bounty_get_item()
 	return FALSE;
 }
 
-bool_ quest_bounty_describe(FILE *fff)
+std::string quest_bounty_describe()
 {
 	char mdesc[512];
+	fmt::MemoryWriter w;
 
 	if (cquest.status == QUEST_STATUS_TAKEN)
 	{
 		monster_race_desc(mdesc, bounty_quest_monster, 0);
 
-		fprintf(fff, "#####yBounty quest!\n");
-		fprintf(fff, "You must bring back %s corpse to the beastmaster.\n", mdesc);
-		fprintf(fff, "\n");
-
-		return TRUE;
+		w.write("#####yBounty quest!\n");
+		w.write("You must bring back {} corpse to the beastmaster.", mdesc);
 	}
 
-	return FALSE;
+	return w.str();
 }

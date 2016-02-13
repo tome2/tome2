@@ -50,6 +50,7 @@
 #include "z-rand.hpp"
 
 #include <cassert>
+#include <format.h>
 
 /*
  * Converts stat num into a six-char (right justified) string
@@ -4529,18 +4530,19 @@ void gain_fate(byte fate)
 	}
 }
 
-void fate_desc(char *desc, int fate)
+std::string fate_desc(int fate)
 {
-	char buf[120];
+	fmt::MemoryWriter w;
 
 	if (fates[fate].serious)
 	{
-		strcpy(desc, "You are fated to ");
+		w.write("You are fated to ");
 	}
 	else
 	{
-		strcpy(desc, "You may ");
+		w.write("You may ");
 	}
+
 	switch (fates[fate].fate)
 	{
 	case FATE_FIND_O:
@@ -4552,8 +4554,7 @@ void fate_desc(char *desc, int fate)
 			object_prep(o_ptr, fates[fate].o_idx);
 			object_desc_store(o_name, o_ptr, 1, 0);
 
-			sprintf(buf, "find %s on level %d.", o_name, fates[fate].level);
-			strcat(desc, buf);
+			w.write("find {} on level {}.", o_name, fates[fate].level);
 			break;
 		}
 	case FATE_FIND_A:
@@ -4605,54 +4606,55 @@ void fate_desc(char *desc, int fate)
 				object_desc_store(o_name, q_ptr, 1, 0);
 			}
 
-			sprintf(buf, "find %s on level %d.", o_name, fates[fate].level);
-			strcat(desc, buf);
+			w.write("find {} on level {}.", o_name, fates[fate].level);
 			break;
 		}
 	case FATE_FIND_R:
 		{
 			char m_name[80];
-
 			monster_race_desc(m_name, fates[fate].r_idx, 0);
-			sprintf(buf, "meet %s on level %d.", m_name, fates[fate].level);
-			strcat(desc, buf);
+
+			w.write("meet {} on level {}.", m_name, fates[fate].level);
 			break;
 		}
 	case FATE_DIE:
 		{
-			sprintf(buf, "die on level %d.", fates[fate].level);
-			strcat(desc, buf);
+			w.write("die on level {}.", fates[fate].level);
 			break;
 		}
 	case FATE_NO_DIE_MORTAL:
 		{
-			strcat(desc, "never to die by the hand of a mortal being.");
+			w.write("never to die by the hand of a mortal being.");
 			break;
 		}
 	}
+
+	return w.str();
 }
 
-void dump_fates(FILE *outfile)
+std::string dump_fates()
 {
-	int i;
-	char buf[120];
 	bool_ pending = FALSE;
 
-	if (!outfile) return;
+	fmt::MemoryWriter w;
 
-	for (i = 0; i < MAX_FATES; i++)
+	for (int i = 0; i < MAX_FATES; i++)
 	{
 		if ((fates[i].fate) && (fates[i].know))
 		{
-			fate_desc(buf, i);
-			fprintf(outfile, "%s\n", buf);
+			w.write("{}\n", fate_desc(i));
 		}
-		if ((fates[i].fate) && !(fates[i].know)) pending = TRUE;
+
+		// Pending gets set if there's at least one fate we don't know
+		pending |= ((fates[i].fate) && !(fates[i].know));
 	}
+
 	if (pending)
 	{
-		fprintf(outfile, "You do not know all of your fate.\n");
+		w.write("You do not know all of your fate.\n");
 	}
+
+	return w.str();
 }
 
 /*

@@ -12,6 +12,7 @@
 #include "z-rand.hpp"
 
 #include <cassert>
+#include <format.h>
 
 /**
  * Corruptions
@@ -944,20 +945,18 @@ void lose_corruption()
 /*
  * Dump the corruption list
  */
-void dump_corruptions(FILE *fff, bool_ color, bool_ header)
+std::string dump_corruptions(bool color, bool header)
 {
-	int i;
+	fmt::MemoryWriter w;
 
-	assert(fff != NULL);
-
-	for (i = 0; i < CORRUPTIONS_MAX; i++)
+	for (int i = 0; i < CORRUPTIONS_MAX; i++)
 	{
-		corruption_type *c_ptr = &corruptions[i];
+		corruption_type const *c_ptr = &corruptions[i];
 
 		if (header)
 		{
-			fprintf(fff, "\n Corruption list:\n");
-			header = FALSE;
+			w.write("\nCorruption list:\n\n");
+			header = false;
 		}
 
 		if (p_ptr->corruptions[i])
@@ -966,16 +965,18 @@ void dump_corruptions(FILE *fff, bool_ color, bool_ header)
 
 			if (color)
 			{
-				fprintf(fff, "#####%c%s:\n", conv_color[c], c_ptr->name);
+				w.write("#####{}{}:\n", static_cast<char>(conv_color[c]), c_ptr->name);
 			}
 			else
 			{
-				fprintf(fff, "%s:\n", c_ptr->name);
+				w.write("{}:\n", c_ptr->name);
 			}
 
-			fprintf(fff, "%s\n", c_ptr->desc);
+			w.write("{}\n\n", c_ptr->desc);
 		}
 	}
+
+	return w.str();
 }
 
 /*

@@ -2995,7 +2995,6 @@ void do_cmd_read_scroll(void)
 		case SV_SCROLL_DIVINATION:
 			{
 				int i, count = 0;
-				char buf[120];
 
 				while (count < 1000)
 				{
@@ -3007,8 +3006,7 @@ void do_cmd_read_scroll(void)
 					msg_print("A message appears on the scroll. It says:");
 					msg_print(NULL);
 
-					fate_desc(buf, i);
-					msg_format("%s", buf);
+					msg_format("%s", fate_desc(i).c_str());
 
 					msg_print(NULL);
 					msg_print("The scroll disappears in a puff of smoke!");

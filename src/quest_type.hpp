@@ -2,6 +2,8 @@
 
 #include "h-basic.h"
 
+#include <string>
+
 /**
  * Quest descriptor and runtime data.
  */
@@ -23,5 +25,5 @@ struct quest_type
 
 	s32b data[9];          /* Various datas used by the quests */
 
-	bool_ (*gen_desc)(FILE *fff); /* Function for generating description. */
+	std::string (*gen_desc)(); /* Function for generating description. */
 };
