@@ -4811,8 +4811,6 @@ P:0:1d1:0:0:0
 
 # Amulet of Nothing
 
-# FIXME: Could remove "of Nothing" (amulets, rings, rods)
-
 N:572:Nothing
 G:":d
 I:40:16:0

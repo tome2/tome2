@@ -4376,7 +4376,6 @@ static bool kind_is_theme(int k_idx)
 		prob = match_theme.combat;
 		break;
 	case TV_HAFTED:
-		// FIXME: These cases can be shortened drastically
 		prob = match_theme.combat;
 		break;
 	case TV_POLEARM:
