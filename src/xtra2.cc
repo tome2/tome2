@@ -3706,81 +3706,6 @@ static cptr look_mon_desc(int m_idx)
 
 
 
-/*
- * Current "comp" function for ang_sort()
- */
-static bool_ (*ang_sort_comp)(vptr u, vptr v, int a, int b) = nullptr;
-
-/*
- * Current "swap" function for ang_sort()
- */
-static void (*ang_sort_swap)(vptr u, vptr v, int a, int b) = nullptr;
-
-
-
-/*
- * Angband sorting algorithm -- quick sort in place
- *
- * Note that the details of the data we are sorting is hidden,
- * and we rely on the "ang_sort_comp()" and "ang_sort_swap()"
- * function hooks to interact with the data, which is given as
- * two pointers, and which may have any user-defined form.
- */
-static void ang_sort_aux(vptr u, vptr v, int p, int q)
-{
-	int z, a, b;
-
-	/* Done sort */
-	if (p >= q) return;
-
-	/* Pivot */
-	z = p;
-
-	/* Begin */
-	a = p;
-	b = q;
-
-	/* Partition */
-	while (TRUE)
-	{
-		/* Slide i2 */
-		while (!(*ang_sort_comp)(u, v, b, z)) b--;
-
-		/* Slide i1 */
-		while (!(*ang_sort_comp)(u, v, z, a)) a++;
-
-		/* Done partition */
-		if (a >= b) break;
-
-		/* Swap */
-		(*ang_sort_swap)(u, v, a, b);
-
-		/* Advance */
-		a++, b--;
-	}
-
-	/* Recurse left side */
-	ang_sort_aux(u, v, p, b);
-
-	/* Recurse right side */
-	ang_sort_aux(u, v, b + 1, q);
-}
-
-
-/*
- * Angband sorting algorithm -- quick sort in place
- *
- * Note that the details of the data we are sorting is hidden,
- * and we rely on the "ang_sort_comp()" and "ang_sort_swap()"
- * function hooks to interact with the data, which is given as
- * two pointers, and which may have any user-defined form.
- */
-static void ang_sort(vptr u, vptr v, int n)
-{
-	/* Sort the array */
-	ang_sort_aux(u, v, 0, n - 1);
-}
-
 
 
 /*** Targetting Code ***/
@@ -3861,72 +3786,6 @@ bool_ target_okay(void)
 
 	/* Assume no target */
 	return (FALSE);
-}
-
-
-
-/*
- * Sorting hook -- comp function -- by "distance to player"
- *
- * We use "u" and "v" to point to arrays of "x" and "y" positions,
- * and sort the arrays by double-distance to the player.
- */
-static bool_ ang_sort_comp_distance(vptr u, vptr v, int a, int b)
-{
-	byte *x = (byte*)(u);
-	byte *y = (byte*)(v);
-
-	int da, db, kx, ky;
-
-	/* Absolute distance components */
-	kx = x[a];
-	kx -= p_ptr->px;
-	kx = ABS(kx);
-	ky = y[a];
-	ky -= p_ptr->py;
-	ky = ABS(ky);
-
-	/* Approximate Double Distance to the first point */
-	da = ((kx > ky) ? (kx + kx + ky) : (ky + ky + kx));
-
-	/* Absolute distance components */
-	kx = x[b];
-	kx -= p_ptr->px;
-	kx = ABS(kx);
-	ky = y[b];
-	ky -= p_ptr->py;
-	ky = ABS(ky);
-
-	/* Approximate Double Distance to the first point */
-	db = ((kx > ky) ? (kx + kx + ky) : (ky + ky + kx));
-
-	/* Compare the distances */
-	return (da <= db);
-}
-
-
-/*
- * Sorting hook -- swap function -- by "distance to player"
- *
- * We use "u" and "v" to point to arrays of "x" and "y" positions,
- * and sort the arrays by distance to the player.
- */
-static void ang_sort_swap_distance(vptr u, vptr v, int a, int b)
-{
-	byte *x = (byte*)(u);
-	byte *y = (byte*)(v);
-
-	byte temp;
-
-	/* Swap "x" */
-	temp = x[a];
-	x[a] = x[b];
-	x[b] = temp;
-
-	/* Swap "y" */
-	temp = y[a];
-	y[a] = y[b];
-	y[b] = temp;
 }
 
 
@@ -4050,37 +3909,52 @@ static bool_ target_set_accept(int y, int x)
  */
 static void target_set_prepare(int mode)
 {
-	int y, x;
-
-	/* Reset "temp" array */
+	// Reset "temp" array
 	temp_n = 0;
 
-	/* Scan the current panel */
-	for (y = panel_row_min; y <= panel_row_max; y++)
+	// Scan the current panel
+	for (int y = panel_row_min; y <= panel_row_max; y++)
 	{
-		for (x = panel_col_min; x <= panel_col_max; x++)
+		for (int x = panel_col_min; x <= panel_col_max; x++)
 		{
 			cave_type *c_ptr = &cave[y][x];
 
-			/* Require "interesting" contents */
+			// Require "interesting" contents
 			if (!target_set_accept(y, x)) continue;
 
-			/* Require target_able monsters for "TARGET_KILL" */
+			// Require target_able monsters for "TARGET_KILL"
 			if ((mode & (TARGET_KILL)) && !target_able(c_ptr->m_idx)) continue;
 
-			/* Save the location */
+			// Save the location
 			temp_x[temp_n] = x;
 			temp_y[temp_n] = y;
 			temp_n++;
 		}
 	}
 
-	/* Set the sort hooks */
-	ang_sort_comp = ang_sort_comp_distance;
-	ang_sort_swap = ang_sort_swap_distance;
+	// Sort the positions by distance to player; we'll
+	// use a stable sort to avoid equidistant targets
+	// "swapping" priorities. Note that we're actually
+	// sorting the _indexes_ of the positions for later
+	// swap-into-place.
+	std::size_t temp_i[TEMP_MAX];
+	std::iota(temp_i, temp_i + temp_n, 0);
+	std::stable_sort(temp_i, temp_i + temp_n, [](std::size_t i, std::size_t j) -> bool {
+		auto di = distance(p_ptr->py, p_ptr->px, temp_y[i], temp_x[i]);
+		auto dj = distance(p_ptr->py, p_ptr->px, temp_y[j], temp_x[j]);
+		return di < dj;
+	});
 
-	/* Sort the positions */
-	ang_sort(temp_x, temp_y, temp_n);
+	// Swap all the positions into their place. Note that
+	// we go only up to the middle of the array -- otherwise
+	// everything would be swapped _back_ into its original
+	// place. We do not need to care about the middle element
+	// since it's automatically at the correct position once
+	// we reach it.
+	for (s16b i = 0; i < temp_n / 2; i++) {
+		std::swap(temp_x[temp_i[i]], temp_x[i]);
+		std::swap(temp_y[temp_i[i]], temp_y[i]);
+	}
 }
 
 
