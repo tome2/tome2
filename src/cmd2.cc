@@ -1922,9 +1922,15 @@ static bool_ do_cmd_disarm_aux(int y, int x, int dir, int do_pickup)
 
 	bool_ more = FALSE;
 
-
 	/* Take a turn */
 	energy_use = 100;
+
+	/* If floating or flying, we can just move over it */
+	if (p_ptr->ffall || p_ptr->fly)
+	{
+		move_player_aux(dir, do_pickup, 0, FALSE);
+		return (more);
+	}
 
 	/* Get grid and contents */
 	c_ptr = &cave[y][x];
@@ -1997,7 +2003,6 @@ static bool_ do_cmd_disarm_aux(int y, int x, int dir, int do_pickup)
 	/* Failure -- Set off the trap */
 	else
 	{
-		/* Message */
 		msg_format("You set off the %s!", name);
 
 		/* Move the player onto the trap */

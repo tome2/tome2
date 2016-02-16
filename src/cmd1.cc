@@ -661,6 +661,12 @@ static void hit_trap(void)
 
 	cave_type *c_ptr;
 
+	/* Skip traps if flying/levitating */
+	if (p_ptr->ffall || p_ptr->fly)
+	{
+		msg_print("You float over the trap.");
+		return;
+	}
 
 	/* Disturb the player */
 	disturb(0);
