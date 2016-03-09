@@ -1114,7 +1114,7 @@ void do_cmd_activate_skill()
 		int dir, dy, dx, targetx, targety, max_blows, flags;
 
 		o_ptr = get_object(INVEN_WIELD);
-		if (o_ptr->tval == TV_POLEARM)
+		if (o_ptr->tval != TV_POLEARM)
 		{
 			msg_print("You will need a long polearm for this!");
 			return;
