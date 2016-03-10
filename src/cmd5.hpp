@@ -11,7 +11,7 @@ extern void do_cmd_browse(void);
 extern void fetch(int dir, int wgt, bool_ require_los);
 extern void do_poly_self(void);
 extern cptr symbiote_name(bool_ capitalize);
-extern int use_symbiotic_power(int r_idx, bool_ great, bool_ only_number, bool_ no_cost);
+extern int use_symbiotic_power(int r_idx, bool_ great, bool_ no_cost);
 extern bool_ is_ok_spell(s32b spell_idx, s32b pval);
 extern s32b get_school_spell(cptr do_what, s16b force_book);
 extern void do_cmd_copy_spell(void);

@@ -662,7 +662,7 @@ std::vector<int> extract_monster_powers(monster_race const *r_ptr, bool great)
 /*
  * Use a power of the monster in symbiosis
  */
-int use_symbiotic_power(int r_idx, bool_ great, bool_ only_number, bool_ no_cost)
+int use_symbiotic_power(int r_idx, bool_ great, bool_ no_cost)
 {
 	int power = -1;
 
@@ -695,8 +695,6 @@ int use_symbiotic_power(int r_idx, bool_ great, bool_ only_number, bool_ no_cost
 		msg_print("You have no powers you can use.");
 		return (0);
 	}
-
-	if (only_number) return (num);
 
 	/* Nothing chosen yet */
 	flag = FALSE;
