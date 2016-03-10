@@ -1869,7 +1869,10 @@ void cmsg_print(byte color, cptr msg)
 	/* if (character_generated) message_add(t); */
 
 	/* Window stuff */
-	p_ptr->window |= (PW_MESSAGE);
+	if (p_ptr)
+	{
+		p_ptr->window |= (PW_MESSAGE);
+	}
 
 	/* Remember the message */
 	msg_flag = TRUE;
