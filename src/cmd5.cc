@@ -709,7 +709,6 @@ static std::tuple<int, int> choose_monster_power(monster_race const *r_ptr, bool
 			byte y = 1, x = 0;
 			int ctr = 0;
 			char dummy[80];
-
 			strcpy(dummy, "");
 
 			prt ("", y++, x);
@@ -720,11 +719,16 @@ static std::tuple<int, int> choose_monster_power(monster_race const *r_ptr, bool
 
 				label = (ctr < 26) ? I2A(ctr) : I2D(ctr - 26);
 
+				byte color = TERM_L_GREEN;
 				if (!symbiosis)
 				{
 					int mana = calc_monster_spell_mana(mp_ptr);
 					strnfmt(dummy, 80, " %c) %2d %s",
 						label, mana, mp_ptr->name);
+					// Gray out if player doesn't have enough mana to cast.
+					if (mana > p_ptr->csp) {
+						color = TERM_L_DARK;
+					}
 				}
 				else
 				{
@@ -734,11 +738,11 @@ static std::tuple<int, int> choose_monster_power(monster_race const *r_ptr, bool
 
 				if (ctr < 17)
 				{
-					prt(dummy, y + ctr, x);
+					c_prt(color, dummy, y + ctr, x);
 				}
 				else
 				{
-					prt(dummy, y + ctr - 17, x + 40);
+					c_prt(color, dummy, y + ctr - 17, x + 40);
 				}
 
 				ctr++;
@@ -796,6 +800,15 @@ static std::tuple<int, int> choose_monster_power(monster_race const *r_ptr, bool
 
 		/* Save the spell index */
 		power = powers[i];
+
+		/* Make sure it's actually possible for the player to cast */
+		if (!symbiosis) {
+			if (p_ptr->csp < calc_monster_spell_mana(&monster_powers[power]))
+			{
+				bell();
+				continue;
+			}
+		}
 
 		/* Verify it */
 		if (ask)

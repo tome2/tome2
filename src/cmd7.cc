@@ -1842,22 +1842,7 @@ void do_cmd_possessor()
 
 		/* Select power */
 		use_monster_power(p_ptr->body_monster, use_great);
-
-		if (p_ptr->csp < 0)
-		{
-			msg_print("You lose control of your body!");
-			if (!do_cmd_leave_body(FALSE))
-			{
-				cmsg_print(TERM_VIOLET,
-				           "You are forced back into your body by your cursed items, "
-				           "you suffer a system shock!");
-
-				p_ptr->chp = 1;
-
-				/* Display the hitpoints */
-				p_ptr->redraw |= (PR_FRAME);
-			}
-		}
+		assert(p_ptr->csp >= 0); // Sanity check
 	}
 	else if (ext == 2)
 	{
