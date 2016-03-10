@@ -1668,16 +1668,6 @@ static errr grab_one_race_kind_flag(u32b *f1, u32b *f2, u32b *f3, u32b *f4, u32b
 		}
 	}
 
-	/* Check flags2 -- traps*/
-	for (i = 0; i < 32; i++)
-	{
-		if (streq(what, k_info_flags2_trap[i]))
-		{
-			(*f3) |= (1L << i);
-			return (0);
-		}
-	}
-
 	/* Check flags3 */
 	for (i = 0; i < 32; i++)
 	{
