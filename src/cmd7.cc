@@ -1841,7 +1841,7 @@ void do_cmd_possessor()
 		bool use_great = (get_skill_scale(SKILL_POSSESSION, 100) >= r_info[p_ptr->body_monster].level);
 
 		/* Select power */
-		use_symbiotic_power(p_ptr->body_monster, use_great, false);
+		use_monster_power(p_ptr->body_monster, use_great);
 
 		if (p_ptr->csp < 0)
 		{
@@ -4268,7 +4268,7 @@ void do_cmd_symbiotic(void)
 					break;
 				}
 
-				if (0 > use_symbiotic_power(o_ptr->pval, false, true))
+				if (0 > use_symbiotic_power(o_ptr->pval, false))
 					return;
 
 				break;
@@ -4307,7 +4307,7 @@ void do_cmd_symbiotic(void)
 					break;
 				}
 
-				if(0 > use_symbiotic_power(o_ptr->pval, true, true))
+				if(0 > use_symbiotic_power(o_ptr->pval, true))
 					return;
 
 				break;
@@ -4325,17 +4325,14 @@ void do_cmd_symbiotic(void)
 		case 8:
 			{
 				int y, x;
-				cave_type *c_ptr;
-				monster_type *m_ptr;
-
 				if (!tgt_pt(&x, &y)) return;
 
-				c_ptr = &cave[y][x];
+				cave_type *c_ptr = &cave[y][x];
 
 				if (!c_ptr->m_idx) break;
 
-				m_ptr = &m_list[c_ptr->m_idx];
-				use_symbiotic_power(m_ptr->r_idx, true, true);
+				monster_type *m_ptr = &m_list[c_ptr->m_idx];
+				use_symbiotic_power(m_ptr->r_idx, true);
 
 				break;
 			}

@@ -660,9 +660,20 @@ std::vector<int> extract_monster_powers(monster_race const *r_ptr, bool great)
 }
 
 /**
+ * Calculate mana required for a given monster power.
+ */
+static int calc_monster_spell_mana(monster_power const *mp_ptr)
+{
+	int mana = mp_ptr->mana / 10;
+	if (mana > p_ptr->msp) mana = p_ptr->msp;
+	if (!mana) mana = 1;
+	return mana;
+}
+
+/**
  * Choose a monster power
  */
-static std::tuple<int, int> choose_monster_power(monster_race const *r_ptr, bool great, bool no_cost)
+static std::tuple<int, int> choose_monster_power(monster_race const *r_ptr, bool great, bool symbiosis)
 {
 	/* Extract available monster powers */
 	std::vector<int> powers = extract_monster_powers(r_ptr, great);
@@ -682,7 +693,7 @@ static std::tuple<int, int> choose_monster_power(monster_race const *r_ptr, bool
 	char out_val[160];
 	strnfmt(out_val, 78,
 	        "(Powers a-%c, ESC=exit) Use which power of your %s? ",
-	        label, (no_cost ? "symbiote" : "body"));
+		label, (symbiosis ? "symbiote" : "body"));
 
 	/* Save the screen */
 	character_icky = TRUE;
@@ -706,16 +717,12 @@ static std::tuple<int, int> choose_monster_power(monster_race const *r_ptr, bool
 			while (ctr < num)
 			{
 				monster_power *mp_ptr = &monster_powers[powers[ctr]];
-				int mana = mp_ptr->mana / 10;
-
-				if (mana > p_ptr->msp) mana = p_ptr->msp;
-
-				if (!mana) mana = 1;
 
 				label = (ctr < 26) ? I2A(ctr) : I2D(ctr - 26);
 
-				if (!no_cost)
+				if (!symbiosis)
 				{
+					int mana = calc_monster_spell_mana(mp_ptr);
 					strnfmt(dummy, 80, " %c) %2d %s",
 						label, mana, mp_ptr->name);
 				}
@@ -1874,15 +1881,13 @@ static void apply_monster_power(monster_race const *r_ptr, int power)
 
 
 /*
- * Use a power of the monster in symbiosis
+ * Use a monster power and call the given callback.
  */
-int use_symbiotic_power(int r_idx, bool great, bool no_cost)
+static int use_monster_power_aux(monster_race const *r_ptr, bool great, bool symbiosis, std::function<void(monster_power const *power)> f)
 {
-	monster_race const *r_ptr = &r_info[r_idx];
-
 	int power;
 	int num;
-	std::tie(power, num) = choose_monster_power(r_ptr, great, no_cost);
+	std::tie(power, num) = choose_monster_power(r_ptr, great, symbiosis);
 
 	// Early exit?
 	if (power == 0) {
@@ -1894,25 +1899,11 @@ int use_symbiotic_power(int r_idx, bool great, bool no_cost)
 		return -1;
 	}
 
-	/* Apply the effect */
+	// Apply the effect
 	apply_monster_power(r_ptr, power);
 
-	/* Take some SP */
-	if (!no_cost)
-	{
-		int chance = (monster_powers[power].mana + r_ptr->level);
-		int pchance = adj_str_wgt[p_ptr->stat_ind[A_WIS]] / 2 + get_skill(SKILL_POSSESSION);
-
-		if (rand_int(chance) >= pchance)
-		{
-			int m = monster_powers[power].mana / 10;
-
-			if (m > p_ptr->msp) m = p_ptr->msp;
-			if (!m) m = 1;
-
-			p_ptr->csp -= m;
-		}
-	}
+	// Post-processing
+	f(&monster_powers[power]);
 
 	/* Redraw mana */
 	p_ptr->redraw |= (PR_FRAME);
@@ -1921,6 +1912,34 @@ int use_symbiotic_power(int r_idx, bool great, bool no_cost)
 	p_ptr->window |= (PW_PLAYER);
 
 	return (num);
+}
+
+/**
+ * Use a power of the monster in symbiosis
+ */
+int use_symbiotic_power(int r_idx, bool great)
+{
+	monster_race const *r_ptr = &r_info[r_idx];
+	return use_monster_power_aux(r_ptr, great, true, [](monster_power const *) {
+		// Don't need to do anything post-cast.
+	});
+}
+
+/**
+ * Use a power of a possessed body.
+ */
+void use_monster_power(int r_idx, bool great)
+{
+	monster_race const *r_ptr = &r_info[r_idx];
+	use_monster_power_aux(r_ptr, great, false, [r_ptr](monster_power const *power) {
+		// Sometimes give a free cast.
+		int chance = (power->mana + r_ptr->level);
+		int pchance = adj_str_wgt[p_ptr->stat_ind[A_WIS]] / 2 + get_skill(SKILL_POSSESSION);
+		if (rand_int(chance) >= pchance)
+		{
+			p_ptr->csp -= calc_monster_spell_mana(power);
+		}
+	});
 }
 
 /*
