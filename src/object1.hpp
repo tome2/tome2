@@ -20,6 +20,7 @@ extern int object_power(object_type *o_ptr);
 extern bool_ object_flags_no_set;
 extern void object_flags(object_type const *o_ptr, u32b *f1, u32b *f2, u32b *f3, u32b *f4, u32b *f5, u32b *esp);
 extern void object_flags_known(object_type const *o_ptr, u32b *f1, u32b *f2, u32b *f3, u32b *f4, u32b *f5, u32b *esp);
+extern s32b calc_object_need_exp(object_type const *o_ptr);
 extern void object_desc(char *buf, object_type *o_ptr, int pref, int mode);
 extern void object_desc_store(char *buf, object_type *o_ptr, int pref, int mode);
 extern bool_ object_out_desc(object_type *o_ptr, FILE *fff, bool_ trim_down, bool_ wait_for_it);

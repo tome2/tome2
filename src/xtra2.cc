@@ -2067,7 +2067,7 @@ void check_experience_obj(object_type *o_ptr)
 
 	/* Gain levels while possible */
 	while ((o_ptr->elevel < PY_MAX_LEVEL) &&
-	                (o_ptr->exp >= (player_exp[o_ptr->elevel - 1] * 5 / 2)))
+			(o_ptr->exp >= calc_object_need_exp(o_ptr)))
 	{
 		char buf[100];
 
