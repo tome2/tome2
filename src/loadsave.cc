@@ -259,7 +259,6 @@ static void do_quick_start(ls_flag_t flag)
 	u32b tmp32u;
 	int i;
 
-	do_s16b(&previous_char.sex, flag);
 	do_s16b(&previous_char.race, flag);
 	do_s16b(&previous_char.rmod, flag);
 	do_s16b(&previous_char.pclass, flag);
@@ -267,10 +266,6 @@ static void do_quick_start(ls_flag_t flag)
 	do_byte(&previous_char.quests, flag);
 	do_byte(&previous_char.god, flag);
 	do_s32b(&previous_char.grace, flag);
-	do_s16b(&previous_char.age, flag);
-	do_s16b(&previous_char.wt, flag);
-	do_s16b(&previous_char.ht, flag);
-	do_s16b(&previous_char.sc, flag);
 	do_s32b(&previous_char.au, flag);
 
 	for (i = 0; i < 6; i++) do_s16b(&(previous_char.stat[i]), flag);
@@ -333,19 +328,6 @@ static void do_subrace(ls_flag_t flag)
 
 	do_byte((byte*)&sr_ptr->r_mhp, flag);
 	do_s16b(&sr_ptr->r_exp, flag);
-
-	do_byte((byte*)&sr_ptr->b_age, flag);
-	do_byte((byte*)&sr_ptr->m_age, flag);
-
-	do_byte((byte*)&sr_ptr->m_b_ht, flag);
-	do_byte((byte*)&sr_ptr->m_m_ht, flag);
-	do_byte((byte*)&sr_ptr->f_b_ht, flag);
-	do_byte((byte*)&sr_ptr->f_m_ht, flag);
-
-	do_byte((byte*)&sr_ptr->m_b_wt, flag);
-	do_byte((byte*)&sr_ptr->m_m_wt, flag);
-	do_byte((byte*)&sr_ptr->f_b_wt, flag);
-	do_byte((byte*)&sr_ptr->f_m_wt, flag);
 
 	do_byte((byte*)&sr_ptr->infra, flag);
 
@@ -513,7 +495,6 @@ static bool_ do_extra(ls_flag_t flag)
 	do_byte(&p_ptr->pracem, flag);
 	do_byte(&p_ptr->pclass, flag);
 	do_byte(&p_ptr->pspec, flag);
-	do_byte(&p_ptr->psex, flag);
 	do_u16b(&tmp16b, flag);
 	do_u16b(&tmp16b, flag);
 	do_byte(&p_ptr->mimic_form, flag);
@@ -522,10 +503,6 @@ static bool_ do_extra(ls_flag_t flag)
 
 	do_byte(&p_ptr->hitdie, flag);
 	do_u16b(&p_ptr->expfact, flag);
-
-	do_s16b(&p_ptr->age, flag);
-	do_s16b(&p_ptr->ht, flag);
-	do_s16b(&p_ptr->wt, flag);
 
 	/* Dump the stats (maximum and current) */
 	for (i = 0; i < 6; ++i) do_s16b(&p_ptr->stat_max[i], flag);
@@ -696,7 +673,6 @@ static bool_ do_extra(ls_flag_t flag)
 
 	/* More info */
 	tmp16s = 0;
-	do_s16b(&p_ptr->sc, flag);
 	do_s16b(&p_ptr->blind, flag);
 	do_s16b(&p_ptr->paralyzed, flag);
 	do_s16b(&p_ptr->confused, flag);
@@ -2261,7 +2237,6 @@ static void junkinit(void)
 
 static void morejunk(void)
 {
-	sp_ptr = &sex_info[p_ptr->psex]; 	/* Sex */
 	rp_ptr = &race_info[p_ptr->prace]; 	/* Raceclass */
 	rmp_ptr = &race_mod_info[p_ptr->pracem];
 	cp_ptr = &class_info[p_ptr->pclass];

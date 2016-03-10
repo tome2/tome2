@@ -2190,41 +2190,20 @@ void display_player(int mode)
 
 		/* Name, Sex, Race, Class */
 		put_str("Name  :", 2, 1);
-		put_str("Sex   :", 3, 1);
-		put_str("Race  :", 4, 1);
-		put_str("Class :", 5, 1);
-		put_str("Body  :", 6, 1);
-		put_str("God   :", 7, 1);
 		c_put_str(TERM_L_BLUE, player_name, 2, 9);
-		if (p_ptr->body_monster != 0)
-		{
-			monster_race *r_ptr = &r_info[p_ptr->body_monster];
-			char tmp[12];
 
-			if ((r_ptr->flags1 & RF1_MALE) != 0)
-				strcpy(tmp, "Male");
-			else if ((r_ptr->flags1 & RF1_FEMALE) != 0)
-				strcpy(tmp, "Female");
-			else
-				strcpy(tmp, "Neuter");
-			c_put_str(TERM_L_BLUE, tmp, 3, 9);
-		}
-		else
-		{
-			c_put_str(TERM_L_BLUE, sp_ptr->title, 3, 9);
-		}
-
+		put_str("Race  :", 3, 1);
 		auto const player_race_name = get_player_race_name(p_ptr->prace, p_ptr->pracem);
-		c_put_str(TERM_L_BLUE, player_race_name.c_str(), 4, 9);
-		c_put_str(TERM_L_BLUE, spp_ptr->title, 5, 9);
-		c_put_str(TERM_L_BLUE, r_ptr->name, 6, 9);
-		c_put_str(TERM_L_BLUE, deity_info[p_ptr->pgod].name, 7, 9);
+		c_put_str(TERM_L_BLUE, player_race_name.c_str(), 3, 9);
 
-		/* Age, Height, Weight, Social */
-		prt_num("Age          ", (int)p_ptr->age + bst(YEAR, turn), 2, 32, TERM_L_BLUE, "   ");
-		prt_num("Height       ", (int)p_ptr->ht, 3, 32, TERM_L_BLUE, "   ");
-		prt_num("Weight       ", (int)p_ptr->wt, 4, 32, TERM_L_BLUE, "   ");
-		prt_num("Social Class ", (int)p_ptr->sc, 5, 32, TERM_L_BLUE, "   ");
+		put_str("Class :", 4, 1);
+		c_put_str(TERM_L_BLUE, spp_ptr->title, 4, 9);
+
+		put_str("Body  :", 5, 1);
+		c_put_str(TERM_L_BLUE, r_ptr->name, 5, 9);
+
+		put_str("God   :", 6, 1);
+		c_put_str(TERM_L_BLUE, deity_info[p_ptr->pgod].name, 6, 9);
 
 		/* Display the stats */
 		for (i = 0; i < 6; i++)
@@ -4858,7 +4837,6 @@ static errr top_twenty(void)
 	sprintf(the_score.who, "%-.15s", player_name);
 
 	/* Save the player info XXX XXX XXX */
-	sprintf(the_score.sex, "%c", (p_ptr->psex ? 'm' : 'f'));
 	sprintf(the_score.p_r, "%2d", p_ptr->prace);
 	sprintf(the_score.p_s, "%2d", p_ptr->pracem);
 	sprintf(the_score.p_c, "%2d", p_ptr->pclass);
@@ -4959,7 +4937,6 @@ static errr predict_score(void)
 	sprintf(the_score.who, "%-.15s", player_name);
 
 	/* Save the player info XXX XXX XXX */
-	sprintf(the_score.sex, "%c", (p_ptr->psex ? 'm' : 'f'));
 	sprintf(the_score.p_r, "%2d", p_ptr->prace);
 	sprintf(the_score.p_s, "%2d", p_ptr->pracem);
 	sprintf(the_score.p_c, "%2d", p_ptr->pclass);
@@ -5106,7 +5083,7 @@ static void kingly(void)
 	/* Display a message */
 	put_str("Veni, Vidi, Vici!", 15, 26);
 	put_str("I came, I saw, I conquered!", 16, 21);
-	put_str(format("All Hail the Mighty %s!", sp_ptr->winner), 17, 22);
+	put_str(format("All Hail the Mighty %s!", player_name), 17, 22);
 
 	/* Flush input */
 	flush();

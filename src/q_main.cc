@@ -105,7 +105,7 @@ static bool_ quest_morgoth_dump_hook(void *, void *in_, void *)
 	if (quest[QUEST_MORGOTH].status >= QUEST_STATUS_COMPLETED)
 	{
 		if (quest[QUEST_ONE].status == QUEST_STATUS_FINISHED)
-			fprintf(f, "\n You saved Arda and became a famed %s.", sp_ptr->winner);
+			fprintf(f, "\n You saved Arda and became a famed hero.");
 		else
 			fprintf(f, "\n You became a new force of darkness and enslaved all free people.");
 	}

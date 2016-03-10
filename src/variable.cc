@@ -469,7 +469,6 @@ player_type *p_ptr = nullptr;
  * Pointer to the player tables
  * (sex, race, race mod, class, magic)
  */
-player_sex *sp_ptr;
 player_race *rp_ptr;
 player_race_mod *rmp_ptr;
 player_class *cp_ptr;

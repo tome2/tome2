@@ -130,11 +130,6 @@
 #define STORE_GENERAL   0
 #define STORE_HOME      7
 
-/*
- * Maximum number of player "sex" types (see "table.c", etc)
- */
-#define MAX_SEXES            3
-
 /* Number of Random Artifacts */
 #define MAX_RANDARTS 84
 #define MAX_T_ACT    51
@@ -381,14 +376,6 @@
  * A "stack" of items is limited to less than 100 items (hard-coded).
  */
 #define MAX_STACK_SIZE                  100
-
-
-/*
- * Player sex constants (hard-coded by save-files, arrays, etc)
- */
-#define SEX_FEMALE              0
-#define SEX_MALE                1
-#define SEX_NEUTER              2
 
 
 /* Race flags */
@@ -2234,15 +2221,8 @@
 #define TRAP_OF_DROP_ALL_ITEMS            141
 #define TRAP_OF_DROP_EVERYTHING           142
 
-/* -SC- */
-#define TRAP_OF_FEMINITY                  150
-#define TRAP_OF_MASCULINITY               151
-#define TRAP_OF_NEUTRALITY                152
-#define TRAP_OF_AGING                     153
-#define TRAP_OF_GROWING                   154
-#define TRAP_OF_SHRINKING                 155
 #define TRAP_OF_ELDRITCH_HORROR           156
-/* XXX */
+
 #define TRAP_OF_DIVINE_ANGER              158
 #define TRAP_OF_DIVINE_WRATH              159
 #define TRAP_OF_HALLUCINATION             160

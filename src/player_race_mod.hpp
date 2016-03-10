@@ -29,19 +29,6 @@ struct player_race_mod
 	char r_mhp;                     /* (+) Race mod hit-dice modifier */
 	s16b r_exp;                     /* (+) Race mod experience factor */
 
-	char b_age;                     /* (+) base age */
-	char m_age;                     /* (+) mod age */
-
-	char m_b_ht;            /* (+) base height (males) */
-	char m_m_ht;            /* (+) mod height (males) */
-	char m_b_wt;            /* (+) base weight (males) */
-	char m_m_wt;            /* (+) mod weight (males) */
-
-	char f_b_ht;            /* (+) base height (females) */
-	char f_m_ht;            /* (+) mod height (females)   */
-	char f_b_wt;            /* (+) base weight (females) */
-	char f_m_wt;            /* (+) mod weight (females) */
-
 	char infra;             /* (+) Infra-vision range */
 
 	u32b choice[2];            /* Legal race choices */

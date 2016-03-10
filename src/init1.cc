@@ -2026,30 +2026,6 @@ errr init_player_info_txt(FILE *fp)
 			continue;
 		}
 
-		/* Process 'M' for "Mods" */
-		if ((buf[0] == 'R') && (buf[2] == 'M'))
-		{
-			int s[10];
-
-			/* Scan for the values */
-			if (10 != sscanf(buf + 4, "%d:%d:%d:%d:%d:%d:%d:%d:%d:%d",
-			                 &s[0], &s[1], &s[2], &s[3], &s[4], &s[5], &s[6], &s[7], &s[8], &s[9])) return (1);
-
-			rp_ptr->b_age = s[0];
-			rp_ptr->m_age = s[1];
-			rp_ptr->m_b_ht = s[2];
-			rp_ptr->m_m_ht = s[3];
-			rp_ptr->m_b_wt = s[4];
-			rp_ptr->m_m_wt = s[5];
-			rp_ptr->f_b_ht = s[6];
-			rp_ptr->f_m_ht = s[7];
-			rp_ptr->f_b_wt = s[8];
-			rp_ptr->f_m_wt = s[9];
-
-			/* Next... */
-			continue;
-		}
-
 		/* Process 'P' for "xtra" */
 		if ((buf[0] == 'R') && (buf[2] == 'P'))
 		{
@@ -2387,30 +2363,6 @@ errr init_player_info_txt(FILE *fp)
 			rmp_ptr->r_fos = s[5];
 			rmp_ptr->r_thn = s[6];
 			rmp_ptr->r_thb = s[7];
-
-			/* Next... */
-			continue;
-		}
-
-		/* Process 'M' for "Mods" */
-		if ((buf[0] == 'S') && (buf[2] == 'M'))
-		{
-			int s[10];
-
-			/* Scan for the values */
-			if (10 != sscanf(buf + 4, "%d:%d:%d:%d:%d:%d:%d:%d:%d:%d",
-			                 &s[0], &s[1], &s[2], &s[3], &s[4], &s[5], &s[6], &s[7], &s[8], &s[9])) return (1);
-
-			rmp_ptr->b_age = s[0];
-			rmp_ptr->m_age = s[1];
-			rmp_ptr->m_b_ht = s[2];
-			rmp_ptr->m_m_ht = s[3];
-			rmp_ptr->m_b_wt = s[4];
-			rmp_ptr->m_m_wt = s[5];
-			rmp_ptr->f_b_ht = s[6];
-			rmp_ptr->f_m_ht = s[7];
-			rmp_ptr->f_b_wt = s[8];
-			rmp_ptr->f_m_wt = s[9];
 
 			/* Next... */
 			continue;

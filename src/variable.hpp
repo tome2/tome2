@@ -24,7 +24,6 @@
 #include "player_defs.hpp"
 #include "player_race_fwd.hpp"
 #include "player_race_mod_fwd.hpp"
-#include "player_sex_fwd.hpp"
 #include "player_spec_fwd.hpp"
 #include "player_type_fwd.hpp"
 #include "randart_gen_type_fwd.hpp"
@@ -184,7 +183,6 @@ extern byte tval_to_attr[128];
 extern char tval_to_char[128];
 extern char *keymap_act[KEYMAP_MODES][256];
 extern player_type *p_ptr;
-extern player_sex *sp_ptr;
 extern player_race *rp_ptr;
 extern player_race_mod *rmp_ptr;
 extern player_class *cp_ptr;

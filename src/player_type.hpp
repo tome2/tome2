@@ -32,7 +32,6 @@ struct player_type
 	s16b py;		/* Player location */
 	s16b px;		/* Player location */
 
-	byte psex;              /* Sex index */
 	byte prace;             /* Race index */
 	byte pracem;            /* Race Mod index */
 	byte pclass;		/* Class index */
@@ -49,12 +48,6 @@ struct player_type
 	byte preserve;		/* Preserve artifacts */
 	byte special;           /* Special levels */
 	byte allow_one_death;   /* Blood of life */
-
-	s16b age;			/* Characters age */
-	s16b ht;			/* Height */
-	s16b wt;			/* Weight */
-	s16b sc;			/* Social Class */
-
 
 	s32b au;			/* Current Gold */
 

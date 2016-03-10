@@ -29,19 +29,6 @@ struct player_race
 	byte r_mhp;			/* Race hit-dice modifier */
 	u16b r_exp;                     /* Race experience factor */
 
-	byte b_age;			/* base age */
-	byte m_age;			/* mod age */
-
-	byte m_b_ht;		/* base height (males) */
-	byte m_m_ht;		/* mod height (males) */
-	byte m_b_wt;		/* base weight (males) */
-	byte m_m_wt;		/* mod weight (males) */
-
-	byte f_b_ht;		/* base height (females) */
-	byte f_m_ht;		/* mod height (females)	  */
-	byte f_b_wt;		/* base weight (females) */
-	byte f_m_wt;		/* mod weight (females) */
-
 	byte infra;             /* Infra-vision range */
 
 	u32b choice[2];            /* Legal class choices */

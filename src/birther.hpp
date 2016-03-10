@@ -7,7 +7,6 @@
  */
 struct birther
 {
-	s16b sex;
 	s16b race;
 	s16b rmod;
 	s16b pclass;
@@ -18,11 +17,6 @@ struct birther
 	byte god;
 	s32b grace;
 	s32b god_favor;
-
-	s16b age;
-	s16b wt;
-	s16b ht;
-	s16b sc;
 
 	s32b au;
 

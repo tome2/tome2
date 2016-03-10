@@ -36,7 +36,6 @@ struct high_score
 
 	char unused_1[8]; /* Kept for compatibility only */
 
-	char sex[2];                 /* Player Sex (string) */
 	char p_r[3];                 /* Player Race (number) */
 	char p_s[3];             /* Player Subrace (number) */
 	char p_c[3];                 /* Player Class (number) */

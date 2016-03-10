@@ -298,25 +298,6 @@ void do_poly_self(void)
 		/* Some form of racial polymorph... */
 		power -= 10;
 
-		if ((power > rand_int(5)) && (rand_int(4) == 0))
-		{
-			/* sex change */
-			power -= 2;
-
-			if (p_ptr->psex == SEX_MALE)
-			{
-				p_ptr->psex = SEX_FEMALE;
-				sp_ptr = &sex_info[p_ptr->psex];
-				strcpy(effect_msg, "female");
-			}
-			else
-			{
-				p_ptr->psex = SEX_MALE;
-				sp_ptr = &sex_info[p_ptr->psex];
-				strcpy(effect_msg, "male");
-			}
-		}
-
 		if ((power > rand_int(30)) && (rand_int(5) == 0))
 		{
 			int tmp = 0;
@@ -398,10 +379,7 @@ void do_poly_self(void)
 		/* Experience factor */
 		p_ptr->expfact = rp_ptr->r_exp + rmp_ptr->r_exp + cp_ptr->c_exp;
 
-		/* Calculate the height/weight */
-		get_height_weight();
-
-
+		/* Level up if necessary */
 		check_experience();
 		p_ptr->max_plv = p_ptr->lev;
 

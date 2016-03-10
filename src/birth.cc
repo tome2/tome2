@@ -204,7 +204,6 @@ static void save_prev_data(void)
 	/*** Save the current data ***/
 
 	/* Save the data */
-	previous_char.sex = p_ptr->psex;
 	previous_char.race = p_ptr->prace;
 	previous_char.rmod = p_ptr->pracem;
 	previous_char.pclass = p_ptr->pclass;
@@ -215,10 +214,6 @@ static void save_prev_data(void)
 	previous_char.god = p_ptr->pgod;
 	previous_char.grace = p_ptr->grace;
 
-	previous_char.age = p_ptr->age;
-	previous_char.wt = p_ptr->wt;
-	previous_char.ht = p_ptr->ht;
-	previous_char.sc = p_ptr->sc;
 	previous_char.au = p_ptr->au;
 
 	/* Save the stats */
@@ -249,10 +244,6 @@ static void load_prev_data(bool_ save)
 	/*** Save the current data ***/
 
 	/* Save the data */
-	temp.age = p_ptr->age;
-	temp.wt = p_ptr->wt;
-	temp.ht = p_ptr->ht;
-	temp.sc = p_ptr->sc;
 	temp.au = p_ptr->au;
 
 	/* Save the stats */
@@ -272,10 +263,6 @@ static void load_prev_data(bool_ save)
 	/*** Load the previous data ***/
 
 	/* Load the data */
-	p_ptr->age = previous_char.age;
-	p_ptr->wt = previous_char.wt;
-	p_ptr->ht = previous_char.ht;
-	p_ptr->sc = previous_char.sc;
 	p_ptr->au = previous_char.au;
 
 	/* Load the stats */
@@ -298,10 +285,6 @@ static void load_prev_data(bool_ save)
 	if (!save) return;
 
 	/* Save the data */
-	previous_char.age = temp.age;
-	previous_char.wt = temp.wt;
-	previous_char.ht = temp.ht;
-	previous_char.sc = temp.sc;
 	previous_char.au = temp.au;
 
 	/* Save the stats */
@@ -518,7 +501,7 @@ static void get_extra(void)
  */
 static void get_history(void)
 {
-	int i, n, chart, roll, social_class;
+	int i, n, chart, roll;
 
 	char *s, *t;
 
@@ -530,9 +513,6 @@ static void get_history(void)
 
 	/* Clear the history text */
 	buf[0] = '\0';
-
-	/* Initial social class */
-	social_class = randint(4);
 
 	/* Starting place */
 	chart = rp_ptr->chart;
@@ -553,22 +533,9 @@ static void get_history(void)
 		/* Acquire the textual history */
 		(void)strcat(buf, bg[i].info);
 
-		/* Add in the social class */
-		social_class += (int)(bg[i].bonus) - 50;
-
 		/* Enter the next chart */
 		chart = bg[i].next;
 	}
-
-
-
-	/* Verify social class */
-	if (social_class > 100) social_class = 100;
-	else if (social_class < 1) social_class = 1;
-
-	/* Save the social class */
-	p_ptr->sc = social_class;
-
 
 	/* Skip leading spaces */
 	for (s = buf; *s == ' '; s++) /* loop */;
@@ -655,89 +622,17 @@ static errr init_randart(void)
 }
 
 
-/*
- * A helper function for get_ahw(), also called by polymorph code
- */
-void get_height_weight(void)
-{
-	int h_mean, h_stddev;
-
-	int w_mean, w_stddev;
-
-
-	/* Extract mean and standard deviation -- Male */
-	if (p_ptr->psex == SEX_MALE)
-	{
-		h_mean = rp_ptr->m_b_ht + rmp_ptr->m_b_ht;
-		h_stddev = rp_ptr->m_m_ht + rmp_ptr->m_m_ht;
-
-		w_mean = rp_ptr->m_b_wt + rmp_ptr->m_b_wt;
-		w_stddev = rp_ptr->m_m_wt + rmp_ptr->m_m_wt;
-	}
-
-	/* Female */
-	else if (p_ptr->psex == SEX_FEMALE)
-	{
-		h_mean = rp_ptr->f_b_ht + rmp_ptr->f_b_ht;
-		h_stddev = rp_ptr->f_m_ht + rmp_ptr->f_m_ht;
-
-		w_mean = rp_ptr->f_b_wt + rmp_ptr->f_b_wt;
-		w_stddev = rp_ptr->f_m_wt + rmp_ptr->f_m_wt;
-	}
-
-	/* Neuter XXX */
-	else
-	{
-		h_mean = (rp_ptr->m_b_ht + rmp_ptr->m_b_ht +
-		          rp_ptr->f_b_ht + rmp_ptr->f_b_ht) / 2,
-		         h_stddev = (rp_ptr->m_m_ht + rmp_ptr->m_m_ht +
-		                     rp_ptr->f_m_ht + rmp_ptr->f_m_ht) / 2;
-
-		w_mean = (rp_ptr->m_b_wt + rmp_ptr->m_b_wt +
-		          rp_ptr->f_b_wt + rmp_ptr->f_b_wt) / 2,
-		         w_stddev = (rp_ptr->m_m_wt + rmp_ptr->m_m_wt +
-		                     rp_ptr->f_m_wt + rmp_ptr->f_m_wt) / 2;
-	}
-
-	/* Calculate height/weight */
-	p_ptr->ht = randnor(h_mean, h_stddev);
-	p_ptr->wt = randnor(w_mean, w_stddev);
-
-	/* Weight/height shouldn't be negative */
-	if (p_ptr->ht < 1) p_ptr->ht = 1;
-	if (p_ptr->wt < 1) p_ptr->wt = 1;
-}
-
-
-/*
- * Computes character's age, height, and weight
- */
-static void get_ahw(void)
-{
-	/* Calculate the age */
-	p_ptr->age = rp_ptr->b_age + rmp_ptr->b_age +
-	             randint(rp_ptr->m_age + rmp_ptr->m_age);
-
-	/* Calculate the height/weight */
-	get_height_weight();
-}
-
-
-
 
 /*
  * Get the player's starting money
  */
 static void get_money(void)
 {
-	int i, gold;
-
-
-	/* Social Class determines starting gold */
-	gold = (p_ptr->sc * 6) + randint(100) + 300;
+	/* Starting gold */
+	int gold = randint(100) + 300;
 
 	/* Process the stats */
-	for (i = 0; i < 6; i++)
+	for (int i = 0; i < 6; i++)
 	{
 		/* Mega-Hack -- reduce gold for high stats */
 		if (stat_use[i] >= 18 + 50) gold -= 300;
@@ -1583,10 +1478,12 @@ static bool_ player_birth_aux_ask()
 
 	char c;
 
-	char p2 = ')';
-
 	char buf[200];
 	char inp[200];
+
+	int const NAME_ROW = 2;
+	int const RACE_ROW = 3;
+	int const CLASS_ROW = 4;
 
 	s16b *class_types;
 
@@ -1596,14 +1493,12 @@ static bool_ player_birth_aux_ask()
 	Term_clear();
 
 	/* Title everything */
-	put_str("Name  :", 2, 1);
-	put_str("Sex   :", 3, 1);
-	put_str("Race  :", 4, 1);
-	put_str("Class :", 5, 1);
+	put_str("Name  :", NAME_ROW, 1);
+	c_put_str(TERM_L_BLUE, player_name, NAME_ROW, 9);
 
-	/* Dump the default name */
-	c_put_str(TERM_L_BLUE, player_name, 2, 9);
+	put_str("Race  :", RACE_ROW, 1);
 
+	put_str("Class :", CLASS_ROW, 1);
 
 	/*** Instructions ***/
 
@@ -1648,63 +1543,6 @@ static bool_ player_birth_aux_ask()
 
 	/* Clean up */
 	clear_from(15);
-
-	/*** Player sex ***/
-
-	if (do_quick_start)
-	{
-		k = previous_char.sex;
-	}
-	else
-	{
-		/* Extra info */
-		Term_putstr(5, 15, -1, TERM_WHITE,
-		            "Your 'sex' does not have any significant gameplay effects.");
-
-		/* Prompt for "Sex" */
-		for (n = 0; n < MAX_SEXES; n++)
-		{
-			/* Analyze */
-			p_ptr->psex = n;
-			sp_ptr = &sex_info[p_ptr->psex];
-
-			/* Display */
-			strnfmt(buf, 200, "%c%c %s", I2A(n), p2, sp_ptr->title);
-			put_str(buf, 21 + (n / 5), 2 + 15 * (n % 5));
-		}
-
-		/* Choose */
-		while (1)
-		{
-			strnfmt(buf, 200, "Choose a sex (%c-%c), * for random, = for options: ", I2A(0), I2A(n - 1));
-			put_str(buf, 20, 2);
-			c = inkey();
-			if (c == 'Q') quit(NULL);
-			if (c == 'S') return (FALSE);
-			if (c == '*')
-			{
-				k = rand_int(MAX_SEXES);
-				break;
-			}
-			k = (islower(c) ? A2I(c) : -1);
-			if ((k >= 0) && (k < n)) break;
-			if (c == '?') do_cmd_help();
-			else if (c == '=')
-			{
-				screen_save();
-				do_cmd_options_aux(6, "Startup Options", FALSE);
-				screen_load();
-			}
-			else bell();
-		}
-	}
-
-	/* Set sex */
-	p_ptr->psex = k;
-	sp_ptr = &sex_info[p_ptr->psex];
-
-	/* Display */
-	c_put_str(TERM_L_BLUE, sp_ptr->title, 3, 9);
 
 	/* Clean up */
 	clear_from(15);
@@ -1798,13 +1636,13 @@ static bool_ player_birth_aux_ask()
 	rp_ptr = &race_info[p_ptr->prace];
 
 	/* Display */
-	c_put_str(TERM_L_BLUE, rp_ptr->title, 4, 9);
+	c_put_str(TERM_L_BLUE, rp_ptr->title, RACE_ROW, 9);
 
 	/* Get a random name */
 	if (!do_quick_start) create_random_name(p_ptr->prace, player_name);
 
 	/* Display */
-	c_put_str(TERM_L_BLUE, player_name, 2, 9);
+	c_put_str(TERM_L_BLUE, player_name, NAME_ROW, 9);
 
 	/* Clean up */
 	clear_from(12);
@@ -1927,7 +1765,7 @@ static bool_ player_birth_aux_ask()
 
 			/* Display */
 			auto const race_name = get_player_race_name(p_ptr->prace, p_ptr->pracem);
-			c_put_str(TERM_L_BLUE, race_name.c_str(), 4, 9);
+			c_put_str(TERM_L_BLUE, race_name.c_str(), RACE_ROW, 9);
 		}
 	}
 
@@ -2152,7 +1990,7 @@ static bool_ player_birth_aux_ask()
 	spp_ptr = &class_info[p_ptr->pclass].spec[p_ptr->pspec];
 
 	/* Display */
-	c_put_str(TERM_L_BLUE, spp_ptr->title, 5, 9);
+	c_put_str(TERM_L_BLUE, spp_ptr->title, CLASS_ROW, 9);
 
 	/* Clean up */
 	clear_from(15);
@@ -2485,9 +2323,6 @@ static bool_ player_birth_aux_point(void)
 	/* Roll for base hitpoints */
 	get_extra();
 
-	/* Roll for age/height/weight */
-	get_ahw();
-
 	/* Roll for social class */
 	get_history();
 
@@ -2739,15 +2574,14 @@ static bool_ player_birth_aux_auto()
 			Term_clear();
 
 			put_str("Name :", 2, 1);
-			put_str("Sex  :", 3, 1);
-			put_str("Race :", 4, 1);
-			put_str("Class:", 5, 1);
-
 			c_put_str(TERM_L_BLUE, player_name, 2, 9);
-			c_put_str(TERM_L_BLUE, sp_ptr->title, 3, 9);
+
+			put_str("Race :", 3, 1);
 			auto const player_race_name = get_player_race_name(p_ptr->prace, p_ptr->pracem);
-			c_put_str(TERM_L_BLUE, player_race_name.c_str(), 4, 9);
-			c_put_str(TERM_L_BLUE, spp_ptr->title, 5, 9);
+			c_put_str(TERM_L_BLUE, player_race_name.c_str(), 3, 9);
+
+			put_str("Class:", 4, 1);
+			c_put_str(TERM_L_BLUE, spp_ptr->title, 4, 9);
 
 			/* Label stats */
 			put_str("STR:", 2 + A_STR, 61);
@@ -2838,9 +2672,6 @@ static bool_ player_birth_aux_auto()
 
 		/* Roll for base hitpoints */
 		get_extra();
-
-		/* Roll for age/height/weight */
-		get_ahw();
 
 		/* Roll for social class */
 		get_history();

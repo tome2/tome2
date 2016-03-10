@@ -1144,29 +1144,6 @@ s32b player_exp[PY_MAX_LEVEL] =
 
 
 /*
- * Player Sexes
- *
- *      Title,
- *      Winner
- */
-player_sex sex_info[MAX_SEXES] =
-{
-	{
-		"Female",
-		"Queen"
-	},
-
-{
-"Male",
-"King"
-},
-{
-"Neuter",
-"Ruler"
-}
-};
-
-/*
  * Hack -- the "basic" color names (see "TERM_xxx")
  */
 cptr color_names[16] =

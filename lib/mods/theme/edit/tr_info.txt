@@ -679,41 +679,6 @@ I:8:50:0:8:20:0d0:y
 D:A sudden sound startles you and you drop everything!
 F:FLOOR | CHEST | DOOR
 
-#-SC-
-N:150:Trap of Femininity
-I:4:30:5:0:10:2d8:r
-D:You feel like a new woman!
-F:FLOOR | CHEST | DOOR
-
-N:151:Trap of Masculinity
-I:4:30:5:0:10:2d8:r
-D:You feel like a new man!
-F:FLOOR | CHEST | DOOR
-
-N:152:Trap of Neutrality
-I:4:30:5:0:10:2d8:r
-D:You feel like a new woman... erm, a new man... er, WHAT did you say???
-F:FLOOR | CHEST | DOOR
-
-N:153:Trap of Aging
-I:5:50:5:0:15:1d8:r
-D:You suddenly age very fast!
-F:CHEST | DOOR
-
-N:154:Trap of Growing
-I:3:75:5:0:5:1d8:r
-D:You begin to grow!
-F:FLOOR | CHEST | DOOR
-
-N:155:Trap of Shrinking
-I:3:75:5:0:5:1d8:r
-D:You begin to shrink!
-F:FLOOR | CHEST | DOOR
-
-#N:156: UNUSED
-
-#N:157: UNUSED
-
 N:158:Trap of Divine Anger
 I:6:100:5:0:15:0d0:G
 D:A voice booms out "Have a care, mortal!"

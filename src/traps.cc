@@ -461,16 +461,6 @@ static bool_ player_handle_breath_trap(s16b rad, s16b type, u16b trap)
 }
 
 /*
- * This function damages the player by a trap
- */
-static void trap_hit(s16b trap)
-{
-	trap_type *t_ptr = &t_info[trap];
-	s16b dam = damroll(t_ptr->dd, t_ptr->ds);
-	take_hit(dam, t_ptr->name);
-}
-
-/*
  * this function activates one trap type, and returns
  * a bool_ indicating if this trap is now identified
  */
@@ -1822,76 +1812,6 @@ bool_ player_activate_trap_type(s16b y, s16b x, object_type *i_ptr, s16b item)
 	case TRAP_OF_GRAVITY_BALL:
 		ident = player_handle_breath_trap(3, GF_GRAVITY, TRAP_OF_GRAVITY_BALL);
 		break;
-
-		/* -SC- */
-	case TRAP_OF_FEMINITY:
-		{
-			msg_print("Gas sprouts out... you feel yourself transmute.");
-			p_ptr->psex = SEX_FEMALE;
-			sp_ptr = &sex_info[p_ptr->psex];
-			ident = TRUE;
-			trap_hit(trap);
-			break;
-		}
-
-	case TRAP_OF_MASCULINITY:
-		{
-			msg_print("Gas sprouts out... you feel yourself transmute.");
-			p_ptr->psex = SEX_MALE;
-			sp_ptr = &sex_info[p_ptr->psex];
-			ident = TRUE;
-			trap_hit(trap);
-			break;
-		}
-
-	case TRAP_OF_NEUTRALITY:
-		{
-			msg_print("Gas sprouts out... you feel yourself transmute.");
-			p_ptr->psex = SEX_NEUTER;
-			sp_ptr = &sex_info[p_ptr->psex];
-			ident = TRUE;
-			trap_hit(trap);
-			break;
-		}
-
-	case TRAP_OF_AGING:
-		{
-			msg_print("Colors are scintillating around you. "
-			          "You see your past running before your eyes.");
-			p_ptr->age += randint((rp_ptr->b_age + rmp_ptr->b_age) / 2);
-			ident = TRUE;
-			trap_hit(trap);
-			break;
-		}
-
-	case TRAP_OF_GROWING:
-		{
-			s16b tmp;
-
-			msg_print("Heavy fumes sprout out... you feel yourself transmute.");
-			if (p_ptr->psex == SEX_FEMALE) tmp = rp_ptr->f_b_ht + rmp_ptr->f_b_ht;
-			else tmp = rp_ptr->m_b_ht + rmp_ptr->m_b_ht;
-
-			p_ptr->ht += randint(tmp / 4);
-			ident = TRUE;
-			trap_hit(trap);
-			break;
-		}
-
-	case TRAP_OF_SHRINKING:
-		{
-			s16b tmp;
-
-			msg_print("Heavy fumes sprout out... you feel yourself transmute.");
-			if (p_ptr->psex == SEX_FEMALE) tmp = rp_ptr->f_b_ht + rmp_ptr->f_b_ht;
-			else tmp = rp_ptr->m_b_ht + rmp_ptr->m_b_ht;
-
-			p_ptr->ht -= randint(tmp / 4);
-			if (p_ptr->ht <= tmp / 4) p_ptr->ht = tmp / 4;
-			ident = TRUE;
-			trap_hit(trap);
-			break;
-		}
 
 		/* Trap of Divine Anger */
 	case TRAP_OF_DIVINE_ANGER:

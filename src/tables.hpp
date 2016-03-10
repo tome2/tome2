@@ -15,7 +15,6 @@
 #include "move_info_type.hpp"
 #include "option_type.hpp"
 #include "player_defs.hpp"
-#include "player_sex.hpp"
 #include "power_type.hpp"
 #include "powers.hpp"
 #include "quest_type.hpp"
@@ -49,7 +48,6 @@ extern byte adj_con_mhp[];
 extern byte blows_table[12][12];
 extern byte extract_energy[300];
 extern s32b player_exp[PY_MAX_LEVEL];
-extern player_sex sex_info[MAX_SEXES];
 extern cptr color_names[16];
 extern cptr stat_names[6];
 extern cptr stat_names_reduced[6];

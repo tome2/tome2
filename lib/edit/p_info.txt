@@ -826,7 +826,6 @@ C:a:O:23:16:1d1
 # R:S:str:int:wis:dex:con:chr:luck
 # R:K:dis:dev:sav:stl:srh:fos:thn:thb
 # R:P:hitdie:xp%:infra:history chart
-# R:M:b_age:m_age:m_b_ht:m_m_ht:m_b_wt:m_m_wt:f_b_ht:f_m_ht:f_b_wt:f_m_wt
 # R:E:weapons:torso:arms:finger:head:legs
 # R:C:allowed classes
 # R:G:race flags
@@ -844,7 +843,6 @@ R:D:Average in ability, they can be any class.
 R:S:0:0:0:0:0:0:0
 R:K:0:0:0:0:0:10:0:0
 R:P:10:100:0:1
-R:M:14:6:72:6:180:25:66:4:150:20
 R:E:1:1:1:2:1:1
 R:C:Warrior | Archer | Mage | Rogue | Priest | Loremaster
 
@@ -853,7 +851,6 @@ R:D:A crossbreed of elf and human, they get the best of the two races.
 R:S:0:1:1:1:-1:1:0
 R:K:2:3:3:1:6:11:-1:5
 R:P:9:110:2:4
-R:M:24:16:66:6:130:15:62:6:100:10
 R:E:1:1:1:2:1:1
 R:C:Warrior | Archer | Mage | Rogue | Priest | Loremaster
 R:G:ELF
@@ -872,7 +869,6 @@ R:D:but are more intelligent.
 R:S:-1:2:2:1:-2:2:0
 R:K:5:6:6:2:8:12:-5:15
 R:P:8:120:3:5
-R:M:75:75:60:4:100:6:54:4:80:6
 R:E:1:1:1:2:1:1
 R:R:1:0
 R:F:RES_LITE | 
@@ -892,7 +888,6 @@ R:D:They are small and quite weak but good at many things.
 R:S:-2:2:1:3:2:1:5
 R:K:15:18:18:5:12:15:-10:20
 R:P:7:110:4:10
-R:M:21:12:36:3:60:3:33:3:50:3
 R:E:1:1:1:2:1:1
 R:Z:create food
 R:G:RESIST_BLACK_BREATH | XTRA_MIGHT_SLING |
@@ -914,7 +909,6 @@ R:D:Very good at magic use, they are poor as fighters.
 R:S:-1:2:0:2:1:-2:2
 R:K:10:12:12:3:6:13:-8:12
 R:P:8:135:4:13
-R:M:50:40:42:3:90:6:39:3:75:3
 R:E:1:1:1:2:1:1
 R:Z:blink
 R:R:1:0
@@ -934,7 +928,6 @@ R:D:Miners and fighters of legend.
 R:S:2:-2:2:-2:2:-3:0
 R:K:2:9:10:-1:7:10:15:0
 R:P:11:125:5:16
-R:M:35:15:48:3:150:10:46:3:120:10
 R:E:1:1:1:2:1:1
 R:Z:find secret passages
 R:R:1:0
@@ -954,7 +947,6 @@ R:D:Quite strong but not very smart.
 R:S:2:-1:0:1:1:-4:-3
 R:K:-3:-3:-3:-1:0:7:12:-5
 R:P:10:110:3:25
-R:M:11:4:66:1:150:5:62:1:120:5
 R:E:1:1:1:2:1:1
 R:Z:remove fear
 R:R:1:0
@@ -974,7 +966,6 @@ R:D:They are extremely strong and dumb.
 R:S:4:-4:-2:-4:3:-6:-4
 R:K:-5:-8:-8:-2:-1:5:20:-10
 R:P:12:137:3:22
-R:M:20:10:96:10:250:50:84:8:225:40
 R:E:1:1:1:2:1:1
 R:Z:berserk
 R:R:1:0
@@ -996,7 +987,6 @@ R:D:stronger, smarter and wiser.
 R:S:1:2:2:2:3:2:2
 R:K:4:5:5:2:3:13:15:10
 R:P:10:180:0:1
-R:M:50:50:82:5:190:20:78:6:180:15
 R:E:1:1:1:2:1:1
 R:R:1:0
 R:F:SUST_CON | REGEN | 
@@ -1016,7 +1006,6 @@ R:D:they sometimes lack wisdom.
 R:S:1:3:2:3:1:5:0
 R:K:4:20:20:4:3:14:10:25
 R:P:10:200:4:7
-R:M:100:30:90:10:190:20:82:10:180:15
 R:E:1:1:1:2:1:1
 R:R:1:0
 R:F:SEE_INVIS | 
@@ -1037,7 +1026,6 @@ R:D:They are similar to half-trolls, strong and dumb.
 R:S:3:-1:-1:-1:3:-3:-2
 R:K:-3:-5:-5:-2:-1:5:20:0
 R:P:12:130:3:74
-R:M:40:10:92:10:255:60:80:8:235:60
 R:E:1:1:1:2:1:1
 R:Z:set explosive rune
 R:R:1:0
@@ -1057,7 +1045,6 @@ R:D:They have the unique power of being able to polymorph to bear forms.
 R:S:4:-2:-2:-1:3:-5:1
 R:K:-6:-8:-6:-2:-1:5:25:5
 R:P:12:150:3:75
-R:M:40:10:100:10:255:65:80:10:240:64
 R:E:1:1:1:2:1:1
 R:Z:turn into a bear
 R:R:1:0
@@ -1079,7 +1066,6 @@ R:D:A weaker kind of goblin, related to orcs.
 R:S:1:-1:0:1:0:-4:0
 R:K:-2:-3:-2:-1:1:8:10:-8
 R:P:9:125:3:82
-R:M:11:3:60:1:130:5:55:1:100:5
 R:E:1:1:1:2:1:1
 R:Z:poison dart
 R:R:1:0
@@ -1099,7 +1085,6 @@ R:D:They prefer to live in the darkness.
 R:S:1:-1:2:0:2:-4:-5
 R:K:3:5:10:1:5:10:9:0
 R:P:11:135:5:87
-R:M:40:12:43:3:92:6:40:3:78:3
 R:E:1:1:1:2:1:1
 R:Z:detect doors and traps
 R:R:1:0
@@ -1120,7 +1105,6 @@ R:D:they are not good.
 R:S:-1:3:2:2:-2:1:-2
 R:K:5:15:20:3:8:12:-5:10
 R:P:9:150:5:69
-R:M:75:75:60:4:100:6:54:4:80:6
 R:E:1:1:1:2:1:1
 R:Z:magic missile
 R:R:1:0
@@ -1144,7 +1128,6 @@ R:D:even the elves awoke. It is said 'Trolls are strong, Ents are STRONGER'.
 R:S:10:-3:2:-5:11:-3:-2
 R:K:5:5:20:-6:5:4:15:5
 R:P:14:210:5:95
-R:M:255:70:72:6:100:25:66:4:100:20
 R:E:1:1:1:2:1:1
 R:Z:grow trees
 R:G:NO_STUN | NO_FOOD |
@@ -1175,7 +1158,6 @@ R:D:Fast and powerful in battle.
 R:S:4:-2:3:1:4:2:0
 R:K:10:5:5:-8:1:1:5:5
 R:P:10:220:0:84
-R:M:20:3:60:3:80:4:54:3:70:4
 R:E:1:1:1:2:1:1
 R:Z:Rohan Knight's Powers
 R:R:1:3
@@ -1213,7 +1195,6 @@ R:D:They carry the power of wind and thunder.
 R:S:6:2:1:1:3:8:2
 R:K:6:0:10:-16:30:10:15:5
 R:P:12:400:0:89
-R:M:14:6:180:6:255:25:150:4:230:20
 R:E:1:1:1:2:1:1
 R:Z:Thunderlord's Powers
 R:R:1:0
@@ -1247,7 +1228,6 @@ R:D:power than an average race.
 R:S:10:0:10:0:10:-15:-5
 R:K:15:-5:15:25:0:10:25:25
 R:P:15:250:10:100
-R:M:5:15:10:1:50:1:10:1:50:1
 R:E:1:1:1:4:0:0
 R:Z:Death Mold's Powers
 R:G:EXPERIMENTAL
@@ -1269,7 +1249,6 @@ R:D:The weakest of all the races, bad at everything except gaining levels quickl
 R:S:-5:-5:-5:-5:-5:-5:-5
 R:K:-5:-5:-10:0:-5:0:-10:-10
 R:P:6:25:2:29
-R:M:10:4:40:5:50:10:35:4:45:10
 R:E:1:1:1:2:1:1
 R:C:Warrior | Archer | Mage | Rogue | Priest | Loremaster
 R:k:-500:+000:Disarming
@@ -1286,7 +1265,6 @@ R:D:Wood elves live in the great forests of Middle-earth.
 R:S:-3:2:1:5:-4:1:0
 R:K:5:6:6:5:8:12:-25:40
 R:P:7:130:4:5
-R:M:75:75:60:4:100:6:54:4:80:6
 R:E:1:1:1:2:1:1
 R:G:XTRA_MIGHT_BOW | 
 R:R:1:1
@@ -1309,7 +1287,6 @@ R:D:created by Eru to help the Valar in their task.
 R:S:0:0:0:0:0:0:4
 R:K:0:0:0:0:0:10:0:0
 R:P:10:100:0:91
-R:M:14:6:72:6:180:25:66:4:150:20
 R:E:1:1:1:2:1:1
 R:G:NO_GOD
 R:R:1:0
@@ -1352,7 +1329,6 @@ R:k:+000:+000:Archery
 # S:S:str:int:wis:dex:con:chr:luck:mana
 # S:K:dis:dev:sav:stl:srh:fos:thn:thb
 # S:P:hitdie:xp%:infra
-# S:M:b_age:m_age:m_b_ht:m_m_ht:m_b_wt:m_m_wt:f_b_ht:f_m_ht:f_b_wt:f_m_wt
 # S:E:weapons:torso:arms:finger:head:legs
 # S:A:allowed races
 # S:C:'A'llow/'F'orbid:allowed/forbiden classes
@@ -1370,7 +1346,6 @@ S:D:A:A normal member of the race.
 S:S:0:0:0:0:0:0:0:100
 S:K:0:0:0:0:0:0:0:0
 S:P:0:0:0
-S:M:0:0:0:0:0:0:0:0:0:0
 S:E:0:0:0:0:0:0
 S:A:Human | Half-Elf | Elf | Hobbit | Gnome | Dwarf | 
 S:A:Orc | Troll | Dunadan | High-Elf | Half-Ogre | Beorning | 
@@ -1385,7 +1360,6 @@ S:D:B:sunlight and cannot easily satiate their hunger.
 S:S:0:0:0:0:0:0:0:100
 S:K:0:0:0:0:0:0:0:0
 S:P:0:0:0
-S:M:0:0:0:0:0:0:0:0:0:0
 S:E:0:0:0:0:0:0
 S:A:Human | Half-Elf | Hobbit | Gnome | Dwarf | Orc |
 S:A:Troll | Dunadan | Half-Ogre | Beorning | Kobold | Petty-Dwarf | 
@@ -1400,7 +1374,6 @@ S:D:B:pass through walls. They are somewhat physically weak.
 S:S:-5:1:1:2:-3:-6:-3:105
 S:K:2:8:7:2:2:7:-5:-2
 S:P:-4:80:3
-S:M:50:15:0:0:-10:-5:0:0:-10:-5
 S:E:0:0:0:0:0:0
 S:A:Human | Half-Elf | Elf | Hobbit | Gnome | Dwarf | 
 S:A:Orc | Troll | Dunadan | High-Elf | Half-Ogre | Beorning | 
@@ -1425,7 +1398,6 @@ S:D:B:to sharp things.
 S:S:0:-2:-2:0:1:-4:-3:70
 S:K:-5:-5:5:-1:-1:8:8:0
 S:P:0:45:1
-S:M:50:15:0:0:-10:-5:0:0:-10:-5
 S:E:0:0:0:0:0:0
 S:A:Human | Half-Elf | Elf | Hobbit | Gnome | Dwarf | 
 S:A:Orc | Troll | Dunadan | High-Elf | Half-Ogre | Beorning | 
@@ -1450,7 +1422,6 @@ S:D:B:Strong and dumb is a zombie.
 S:S:2:-6:-6:1:4:-5:-4:70
 S:K:-2:-2:5:-1:-1:2:5:0
 S:P:3:45:1
-S:M:50:15:0:0:0:0:0:0:0:0
 S:E:0:0:0:0:0:0
 S:A:Human | Half-Elf | Elf | Hobbit | Gnome | Dwarf | 
 S:A:Orc | Troll | Dunadan | High-Elf | Half-Ogre | Beorning | 
@@ -1476,7 +1447,6 @@ S:D:A:Hardy members of their race, they are strong fighters but poor spellcaster
 S:S:2:-3:-2:1:1:-3:1:50
 S:K:-2:-10:2:-2:0:1:12:5
 S:P:1:25:0
-S:M:0:0:0:0:0:0:0:0:0:0
 S:E:0:0:0:0:0:0
 S:A:Human | Dwarf | Orc | Troll | Half-Ogre | Beorning | 
 S:C:F:Mage
@@ -1496,7 +1466,6 @@ S:D:A:reserves but at the cost of an increased physical weakness.
 S:S:-3:1:1:-3:-3:1:0:120
 S:K:5:10:5:3:4:10:-5:-5
 S:P:-3:20:1
-S:M:0:0:0:0:0:0:0:0:0:0
 S:E:0:0:0:0:0:0
 S:A:Human | Half-Elf | Elf | Hobbit | Gnome | Dwarf | 
 S:A:Dunadan | High-Elf | Petty-Dwarf | Dark-Elf | Ent | RohanKnight | 
@@ -1515,7 +1484,6 @@ S:D:A:In some very rare occasions souls can come back from the Halls of Mandos.
 S:S:0:0:0:0:0:0:0:100
 S:K:0:0:0:0:0:0:0:0
 S:P:0:0:0
-S:M:0:0:0:0:0:0:0:0:0:0
 S:E:0:0:0:0:0:0
 S:G:ASTRAL | NO_SUBRACE_CHANGE
 S:R:1:0
@@ -1533,7 +1501,6 @@ S:D:A:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 S:S:0:0:0:0:0:0:0:100
 S:K:0:0:0:0:0:0:0:0
 S:P:0:0:0
-S:M:0:0:0:0:0:0:0:0:0:0
 S:E:0:0:0:0:0:0
 
 

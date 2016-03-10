@@ -5460,12 +5460,6 @@ void play_game()
 			{
 				cheat_death = TRUE;
 
-				/* Mark social class, reset age, if needed */
-				if (p_ptr->sc) p_ptr->sc = p_ptr->age = 0;
-
-				/* Increase age */
-				p_ptr->age++;
-
 				/* Mark savefile */
 				noscore |= 0x0001;
 				msg_print("You invoke wizard mode and cheat death.");
