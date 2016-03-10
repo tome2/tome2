@@ -662,7 +662,7 @@ std::vector<int> extract_monster_powers(monster_race const *r_ptr, bool great)
 /*
  * Use a power of the monster in symbiosis
  */
-int use_symbiotic_power(int r_idx, bool_ great, bool_ no_cost)
+int use_symbiotic_power(int r_idx, bool great, bool no_cost)
 {
 	monster_race const *r_ptr = &r_info[r_idx];
 
