@@ -659,13 +659,11 @@ std::vector<int> extract_monster_powers(monster_race const *r_ptr, bool great)
 	return powers;
 }
 
-/*
- * Use a power of the monster in symbiosis
+/**
+ * Choose a monster power
  */
-int use_symbiotic_power(int r_idx, bool great, bool no_cost)
+static std::tuple<int, int> choose_monster_power(monster_race const *r_ptr, bool great, bool no_cost)
 {
-	monster_race const *r_ptr = &r_info[r_idx];
-
 	/* Extract available monster powers */
 	std::vector<int> powers = extract_monster_powers(r_ptr, great);
 	int const num = powers.size(); // Avoid signed/unsigned warnings
@@ -673,7 +671,7 @@ int use_symbiotic_power(int r_idx, bool great, bool no_cost)
 	if (!num)
 	{
 		msg_print("You have no powers you can use.");
-		return (0);
+		return std::make_tuple(0, num);
 	}
 
 	/* Get the last label */
@@ -815,6 +813,30 @@ int use_symbiotic_power(int r_idx, bool great, bool no_cost)
 	/* Abort if needed */
 	if (!flag)
 	{
+		return std::make_tuple(-1, num);
+	}
+
+	return std::make_tuple(power, num);
+}
+
+
+/*
+ * Use a power of the monster in symbiosis
+ */
+int use_symbiotic_power(int r_idx, bool great, bool no_cost)
+{
+	monster_race const *r_ptr = &r_info[r_idx];
+
+	int power;
+	int num;
+	std::tie(power, num) = choose_monster_power(r_ptr, great, no_cost);
+
+	// Early exit?
+	if (power == 0) {
+		// No powers available
+		return 0;
+	} else if (power < 0) {
+		// Canceled by user
 		energy_use = 0;
 		return -1;
 	}
