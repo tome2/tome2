@@ -2546,8 +2546,16 @@ static bool_ grab_tval_desc(int tval)
 	return TRUE;
 }
 
-#define CHECK_FIRST(txt, first) \
-if ((first)) { (first) = FALSE; text_out((txt)); } else text_out(", ");
+static void check_first(bool_ *first)
+{
+	if (*first) {
+		*first = FALSE;
+	}
+	else
+	{
+		text_out(", ");
+	}
+}
 
 /*
  * Display the damage done with a multiplier
@@ -2559,7 +2567,7 @@ void output_dam(object_type *o_ptr, int mult, int mult2, cptr against, cptr agai
 	dam = (o_ptr->dd + (o_ptr->dd * o_ptr->ds)) * 5 * mult;
 	dam += (o_ptr->to_d + p_ptr->to_d + p_ptr->to_d_melee) * 10;
 	dam *= p_ptr->num_blow;
-	CHECK_FIRST("", *first);
+	check_first(first);
 	if (dam > 0)
 	{
 		if (dam % 10)
@@ -2576,7 +2584,7 @@ void output_dam(object_type *o_ptr, int mult, int mult2, cptr against, cptr agai
 		dam = (o_ptr->dd + (o_ptr->dd * o_ptr->ds)) * 5 * mult2;
 		dam += (o_ptr->to_d + p_ptr->to_d + p_ptr->to_d_melee) * 10;
 		dam *= p_ptr->num_blow;
-		CHECK_FIRST("", *first);
+		check_first(first);
 		if (dam > 0)
 		{
 			if (dam % 10)
@@ -2656,7 +2664,7 @@ void output_ammo_dam(object_type *o_ptr, int mult, int mult2, cptr against, cptr
 	dam *= tmul;
 	if (!is_boomerang) dam += (p_ptr->to_d_ranged) * 10;
 	dam *= mult;
-	CHECK_FIRST("", *first);
+	check_first(first);
 	if (dam > 0)
 	{
 		if (dam % 10)
@@ -2676,7 +2684,7 @@ void output_ammo_dam(object_type *o_ptr, int mult, int mult2, cptr against, cptr
 		dam *= tmul;
 		if (!is_boomerang) dam += (p_ptr->to_d_ranged) * 10;
 		dam *= mult2;
-		CHECK_FIRST("", *first);
+		check_first(first);
 		if (dam > 0)
 		{
 			if (dam % 10)
@@ -2829,13 +2837,9 @@ bool_ object_out_desc(object_type *o_ptr, FILE *fff, bool_ trim_down, bool_ wait
 {
 	u32b f1, f2, f3, f4, f5, esp;
 
-	const char *txt;
-
 	cptr vp[64];
 	byte vc[64];
 	int vn;
-
-	bool_ first = TRUE;
 
 	/* Extract the flags */
 	if ((!(o_ptr->ident & (IDENT_MENTAL))) && (!fff))
@@ -2907,13 +2911,12 @@ bool_ object_out_desc(object_type *o_ptr, FILE *fff, bool_ trim_down, bool_ wait
 			else if (count_bits(o_ptr->pval3) > 1) text_out("It is sentient and can have access to the realms of ");
 			else text_out("It is sentient and can have access to the realm of ");
 
-			first = TRUE;
-			txt = "";
+			bool_ first = TRUE;
 			for (j = 0; j < MAX_FLAG_GROUP; j++)
 			{
 				if (BIT(j) & o_ptr->pval3)
 				{
-					CHECK_FIRST(txt, first);
+					check_first(&first);
 					text_out_c(flags_groups[j].color, flags_groups[j].name);
 				}
 			}
