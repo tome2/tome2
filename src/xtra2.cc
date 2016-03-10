@@ -37,6 +37,7 @@
 #include "player_race.hpp"
 #include "player_race_mod.hpp"
 #include "player_type.hpp"
+#include "point.hpp"
 #include "quark.hpp"
 #include "randart.hpp"
 #include "skill_type.hpp"
@@ -3793,40 +3794,35 @@ bool_ target_okay(void)
 /*
  * Hack -- help "select" a location (see below)
  */
-static s16b target_pick(int y1, int x1, int dy, int dx)
+static s16b target_pick(point p, int dy, int dx, std::vector<point> const &points)
 {
-	int i, v;
-
-	int x2, y2, x3, y3, x4, y4;
-
 	int b_i = -1, b_v = 9999;
 
-
 	/* Scan the locations */
-	for (i = 0; i < temp_n; i++)
+	for (std::size_t i = 0; i < points.size(); i++)
 	{
 		/* Point 2 */
-		x2 = temp_x[i];
-		y2 = temp_y[i];
+		int x2 = points[i].x();
+		int y2 = points[i].y();
 
 		/* Directed distance */
-		x3 = (x2 - x1);
-		y3 = (y2 - y1);
+		int x3 = (x2 - p.x());
+		int y3 = (y2 - p.y());
 
 		/* Verify quadrant */
 		if (dx && (x3 * dx <= 0)) continue;
 		if (dy && (y3 * dy <= 0)) continue;
 
 		/* Absolute distance */
-		x4 = ABS(x3);
-		y4 = ABS(y3);
+		int x4 = ABS(x3);
+		int y4 = ABS(y3);
 
 		/* Verify quadrant */
 		if (dy && !dx && (x4 > y4)) continue;
 		if (dx && !dy && (y4 > x4)) continue;
 
 		/* Approximate Double Distance */
-		v = ((x4 > y4) ? (x4 + x4 + y4) : (y4 + y4 + x4));
+		int v = ((x4 > y4) ? (x4 + x4 + y4) : (y4 + y4 + x4));
 
 		/* XXX XXX XXX Penalize location */
 
@@ -3907,10 +3903,9 @@ static bool_ target_set_accept(int y, int x)
  *
  * Return the number of target_able monsters in the set.
  */
-static void target_set_prepare(int mode)
+static std::vector<point> target_set_prepare(int mode)
 {
-	// Reset "temp" array
-	temp_n = 0;
+	std::vector<point> points;
 
 	// Scan the current panel
 	for (int y = panel_row_min; y <= panel_row_max; y++)
@@ -3926,35 +3921,24 @@ static void target_set_prepare(int mode)
 			if ((mode & (TARGET_KILL)) && !target_able(c_ptr->m_idx)) continue;
 
 			// Save the location
-			temp_x[temp_n] = x;
-			temp_y[temp_n] = y;
-			temp_n++;
+			points.push_back(point(x,y));
 		}
 	}
 
-	// Sort the positions by distance to player; we'll
+	// Sort the points by distance to player; we'll
 	// use a stable sort to avoid equidistant targets
-	// "swapping" priorities. Note that we're actually
-	// sorting the _indexes_ of the positions for later
-	// swap-into-place.
-	std::size_t temp_i[TEMP_MAX];
-	std::iota(temp_i, temp_i + temp_n, 0);
-	std::stable_sort(temp_i, temp_i + temp_n, [](std::size_t i, std::size_t j) -> bool {
-		auto di = distance(p_ptr->py, p_ptr->px, temp_y[i], temp_x[i]);
-		auto dj = distance(p_ptr->py, p_ptr->px, temp_y[j], temp_x[j]);
-		return di < dj;
-	});
+	// "swapping" priorities.
+	std::stable_sort(
+		std::begin(points),
+		std::end(points),
+		[](point i, point j) -> bool {
+			auto di = distance(p_ptr->py, p_ptr->px, i.y(), i.x());
+			auto dj = distance(p_ptr->py, p_ptr->px, j.y(), j.x());
+			return di < dj;
+		}
+	);
 
-	// Swap all the positions into their place. Note that
-	// we go only up to the middle of the array -- otherwise
-	// everything would be swapped _back_ into its original
-	// place. We do not need to care about the middle element
-	// since it's automatically at the correct position once
-	// we reach it.
-	for (s16b i = 0; i < temp_n / 2; i++) {
-		std::swap(temp_x[temp_i[i]], temp_x[i]);
-		std::swap(temp_y[temp_i[i]], temp_y[i]);
-	}
+	return points;
 }
 
 
@@ -4498,7 +4482,7 @@ bool_ target_set(int mode)
 
 
 	/* Prepare the "temp" array */
-	target_set_prepare(mode);
+	std::vector<point> points = target_set_prepare(mode);
 
 	/* Start near the player */
 	m = 0;
@@ -4507,10 +4491,10 @@ bool_ target_set(int mode)
 	while (!done)
 	{
 		/* Interesting grids */
-		if (flag && temp_n)
+		if (flag && points.size())
 		{
-			y = temp_y[m];
-			x = temp_x[m];
+			y = points[m].y();
+			x = points[m].x();
 
 			/* Access */
 			c_ptr = &cave[y][x];
@@ -4570,7 +4554,7 @@ bool_ target_set(int mode)
 			case '*':
 			case '+':
 				{
-					if (++m == temp_n)
+					if (++m == points.size())
 					{
 						m = 0;
 					}
@@ -4581,7 +4565,7 @@ bool_ target_set(int mode)
 				{
 					if (m-- == 0)
 					{
-						m = temp_n - 1;
+						m = points.size() - 1;
 					}
 					break;
 				}
@@ -4637,7 +4621,7 @@ bool_ target_set(int mode)
 			if (d)
 			{
 				/* Find a new monster */
-				i = target_pick(temp_y[m], temp_x[m], ddy[d], ddx[d]);
+				i = target_pick(points[m], ddy[d], ddx[d], points);
 
 				/* Scroll to find interesting grid */
 				if (i < 0)
@@ -4651,14 +4635,13 @@ bool_ target_set(int mode)
 					/* Note panel change */
 					if (change_panel(dy, dx))
 					{
-						int ty = temp_y[m];
-						int tx = temp_x[m];
+						auto const t = points[m];
 
 						/* Recalculate interesting grids */
 						target_set_prepare(mode);
 
 						/* Find a new monster */
-						i = target_pick(ty, tx, dy, dx);
+						i = target_pick(t, dy, dx, points);
 
 						/* Restore panel if needed */
 						if (i < 0)
@@ -4809,9 +4792,6 @@ bool_ target_set(int mode)
 			}
 		}
 	}
-
-	/* Forget */
-	temp_n = 0;
 
 	/* Clear the top line */
 	prt("", 0, 0);
