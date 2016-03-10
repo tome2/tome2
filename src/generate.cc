@@ -3512,264 +3512,270 @@ static void build_type6(int by0, int bx0)
 /*
  * Hack -- fill in "vault" rooms
  */
-static void build_vault(int yval, int xval, int ymax, int xmax, cptr data)
+static void build_vault(int yval, int xval, int ymax, int xmax, std::string const &data)
 {
-	int dx, dy, x, y, bwy[8], bwx[8], i;
-
-	cptr t;
-
-	cave_type *c_ptr;
+	int bwy[8], bwx[8];
 
 	/* Clean the between gates arrays */
-	for (i = 0; i < 8; i++)
+	for (std::size_t i = 0; i < 8; i++)
 	{
 		bwy[i] = bwx[i] = 9999;
 	}
 
 	/* Place dungeon features and objects */
-	for (t = data, dy = 0; dy < ymax; dy++)
 	{
-		for (dx = 0; dx < xmax; dx++, t++)
+		std::size_t t = 0;
+		for (int dy = 0; dy < ymax; dy++)
 		{
-			/* Extract the location */
-			x = xval - (xmax / 2) + dx;
-			y = yval - (ymax / 2) + dy;
-
-			/* Hack -- skip "non-grids" */
-			if (*t == ' ') continue;
-
-			/* Access the grid */
-			c_ptr = &cave[y][x];
-
-			/* Lay down a floor */
-			place_floor(y, x);
-
-			/* Part of a vault */
-			c_ptr->info |= (CAVE_ROOM | CAVE_ICKY);
-
-			/* Analyze the grid */
-			switch (*t)
+			for (int dx = 0; dx < xmax; dx++, t++)
 			{
-				/* Granite wall (outer) */
-			case '%':
-				{
-					cave_set_feat(y, x, FEAT_WALL_OUTER);
-					break;
-				}
+				auto d = data[t];
 
-				/* Granite wall (inner) */
-			case '#':
-				{
-					cave_set_feat(y, x, FEAT_WALL_INNER);
-					break;
-				}
+				/* Hack -- skip "non-grids" */
+				if (d == ' ') continue;
 
-				/* Permanent wall (inner) */
-			case 'X':
-				{
-					cave_set_feat(y, x, FEAT_PERM_INNER);
-					break;
-				}
+				/* Extract the location */
+				int x = xval - (xmax / 2) + dx;
+				int y = yval - (ymax / 2) + dy;
 
-				/* Treasure/trap */
-			case '*':
+				/* Access the grid */
+				auto c_ptr = &cave[y][x];
+
+				/* Lay down a floor */
+				place_floor(y, x);
+
+				/* Part of a vault */
+				c_ptr->info |= (CAVE_ROOM | CAVE_ICKY);
+
+				/* Analyze the grid */
+				switch (d)
 				{
-					if (rand_int(100) < 75)
+					/* Granite wall (outer) */
+				case '%':
 					{
-						place_object(y, x, FALSE, FALSE, OBJ_FOUND_VAULT);
+						cave_set_feat(y, x, FEAT_WALL_OUTER);
+						break;
 					}
-					else
+
+					/* Granite wall (inner) */
+				case '#':
+					{
+						cave_set_feat(y, x, FEAT_WALL_INNER);
+						break;
+					}
+
+					/* Permanent wall (inner) */
+				case 'X':
+					{
+						cave_set_feat(y, x, FEAT_PERM_INNER);
+						break;
+					}
+
+					/* Treasure/trap */
+				case '*':
+					{
+						if (rand_int(100) < 75)
+						{
+							place_object(y, x, FALSE, FALSE, OBJ_FOUND_VAULT);
+						}
+						else
+						{
+							place_trap(y, x);
+						}
+						break;
+					}
+
+					/* Secret doors */
+				case '+':
+					{
+						place_secret_door(y, x);
+						break;
+					}
+
+					/* Trap */
+				case '^':
 					{
 						place_trap(y, x);
+						break;
 					}
-					break;
-				}
 
-				/* Secret doors */
-			case '+':
-				{
-					place_secret_door(y, x);
-					break;
-				}
+					/* Glass wall */
+				case 'G':
+					{
+						cave_set_feat(y, x, FEAT_GLASS_WALL);
+						break;
+					}
 
-				/* Trap */
-			case '^':
-				{
-					place_trap(y, x);
-					break;
-				}
-
-				/* Glass wall */
-			case 'G':
-				{
-					cave_set_feat(y, x, FEAT_GLASS_WALL);
-					break;
-				}
-
-				/* Illusion wall */
-			case 'I':
-				{
-					cave_set_feat(y, x, FEAT_ILLUS_WALL);
-					break;
+					/* Illusion wall */
+				case 'I':
+					{
+						cave_set_feat(y, x, FEAT_ILLUS_WALL);
+						break;
+					}
 				}
 			}
 		}
 	}
 
 	/* Place dungeon monsters and objects */
-	for (t = data, dy = 0; dy < ymax; dy++)
 	{
-		for (dx = 0; dx < xmax; dx++, t++)
+		std::size_t t = 0;
+		for (int dy = 0; dy < ymax; dy++)
 		{
-			/* Extract the grid */
-			x = xval - (xmax / 2) + dx;
-			y = yval - (ymax / 2) + dy;
-
-			/* Hack -- skip "non-grids" */
-			if (*t == ' ') continue;
-
-			/* Access the grid */
-			c_ptr = &cave[y][x];
-
-			/* Analyze the symbol */
-			switch (*t)
+			for (int dx = 0; dx < xmax; dx++, t++)
 			{
-				/* Monster */
-			case '&':
-				{
-					monster_level = dun_level + 5;
-					place_monster(y, x, TRUE, TRUE);
-					monster_level = dun_level;
-					break;
-				}
+				auto d = data[t];
 
-				/* Meaner monster */
-			case '@':
-				{
-					monster_level = dun_level + 11;
-					place_monster(y, x, TRUE, TRUE);
-					monster_level = dun_level;
-					break;
-				}
+				/* Hack -- skip "non-grids" */
+				if (d == ' ') continue;
 
-				/* Meaner monster, plus treasure */
-			case '9':
-				{
-					monster_level = dun_level + 9;
-					place_monster(y, x, TRUE, TRUE);
-					monster_level = dun_level;
-					object_level = dun_level + 7;
-					place_object(y, x, TRUE, FALSE, OBJ_FOUND_VAULT);
-					object_level = dun_level;
-					break;
-				}
+				/* Extract the grid */
+				int x = xval - (xmax / 2) + dx;
+				int y = yval - (ymax / 2) + dy;
 
-				/* Nasty monster and treasure */
-			case '8':
-				{
-					monster_level = dun_level + 40;
-					place_monster(y, x, TRUE, TRUE);
-					monster_level = dun_level;
-					object_level = dun_level + 20;
-					place_object(y, x, TRUE, TRUE, OBJ_FOUND_VAULT);
-					object_level = dun_level;
-					break;
-				}
+				/* Access the grid */
+				auto c_ptr = &cave[y][x];
 
-				/* Monster and/or object */
-			case ',':
+				/* Analyze the symbol */
+				switch (d)
 				{
-					if (rand_int(100) < 50)
+					/* Monster */
+				case '&':
 					{
-						monster_level = dun_level + 3;
+						monster_level = dun_level + 5;
 						place_monster(y, x, TRUE, TRUE);
 						monster_level = dun_level;
+						break;
 					}
-					if (rand_int(100) < 50)
+
+					/* Meaner monster */
+				case '@':
 					{
+						monster_level = dun_level + 11;
+						place_monster(y, x, TRUE, TRUE);
+						monster_level = dun_level;
+						break;
+					}
+
+					/* Meaner monster, plus treasure */
+				case '9':
+					{
+						monster_level = dun_level + 9;
+						place_monster(y, x, TRUE, TRUE);
+						monster_level = dun_level;
 						object_level = dun_level + 7;
-						place_object(y, x, FALSE, FALSE, OBJ_FOUND_VAULT);
+						place_object(y, x, TRUE, FALSE, OBJ_FOUND_VAULT);
 						object_level = dun_level;
+						break;
 					}
-					break;
-				}
 
-			case 'p':
-				{
-					cave_set_feat(y, x, FEAT_PATTERN_START);
-					break;
-				}
-
-			case 'a':
-				{
-					cave_set_feat(y, x, FEAT_PATTERN_1);
-					break;
-				}
-
-			case 'b':
-				{
-					cave_set_feat(y, x, FEAT_PATTERN_2);
-					break;
-				}
-
-			case 'c':
-				{
-					cave_set_feat(y, x, FEAT_PATTERN_3);
-					break;
-				}
-
-			case 'd':
-				{
-					cave_set_feat(y, x, FEAT_PATTERN_4);
-					break;
-				}
-
-			case 'P':
-				{
-					cave_set_feat(y, x, FEAT_PATTERN_END);
-					break;
-				}
-
-			case 'B':
-				{
-					cave_set_feat(y, x, FEAT_PATTERN_XTRA1);
-					break;
-				}
-
-			case 'A':
-				{
-					object_level = dun_level + 12;
-					place_object(y, x, TRUE, FALSE, OBJ_FOUND_VAULT);
-					object_level = dun_level;
-					break;
-				}
-
-
-				/* Between gates */
-			case '0':
-			case '1':
-			case '2':
-			case '3':
-			case '4':
-			case '5':
-			case '6':
-			case '7':
-				{
-					/* Not found before */
-					if (bwy[*t - '0'] == 9999)
+					/* Nasty monster and treasure */
+				case '8':
 					{
-						cave_set_feat(y, x, FEAT_BETWEEN);
-						bwy[*t - '0'] = y;
-						bwx[*t - '0'] = x;
+						monster_level = dun_level + 40;
+						place_monster(y, x, TRUE, TRUE);
+						monster_level = dun_level;
+						object_level = dun_level + 20;
+						place_object(y, x, TRUE, TRUE, OBJ_FOUND_VAULT);
+						object_level = dun_level;
+						break;
 					}
-					/* The second time */
-					else
+
+					/* Monster and/or object */
+				case ',':
 					{
-						cave_set_feat(y, x, FEAT_BETWEEN);
-						c_ptr->special = bwx[*t - '0'] + (bwy[*t - '0'] << 8);
-						cave[bwy[*t - '0']][bwx[*t - '0']].special = x + (y << 8);
+						if (rand_int(100) < 50)
+						{
+							monster_level = dun_level + 3;
+							place_monster(y, x, TRUE, TRUE);
+							monster_level = dun_level;
+						}
+						if (rand_int(100) < 50)
+						{
+							object_level = dun_level + 7;
+							place_object(y, x, FALSE, FALSE, OBJ_FOUND_VAULT);
+							object_level = dun_level;
+						}
+						break;
 					}
-					break;
+
+				case 'p':
+					{
+						cave_set_feat(y, x, FEAT_PATTERN_START);
+						break;
+					}
+
+				case 'a':
+					{
+						cave_set_feat(y, x, FEAT_PATTERN_1);
+						break;
+					}
+
+				case 'b':
+					{
+						cave_set_feat(y, x, FEAT_PATTERN_2);
+						break;
+					}
+
+				case 'c':
+					{
+						cave_set_feat(y, x, FEAT_PATTERN_3);
+						break;
+					}
+
+				case 'd':
+					{
+						cave_set_feat(y, x, FEAT_PATTERN_4);
+						break;
+					}
+
+				case 'P':
+					{
+						cave_set_feat(y, x, FEAT_PATTERN_END);
+						break;
+					}
+
+				case 'B':
+					{
+						cave_set_feat(y, x, FEAT_PATTERN_XTRA1);
+						break;
+					}
+
+				case 'A':
+					{
+						object_level = dun_level + 12;
+						place_object(y, x, TRUE, FALSE, OBJ_FOUND_VAULT);
+						object_level = dun_level;
+						break;
+					}
+
+
+					/* Between gates */
+				case '0':
+				case '1':
+				case '2':
+				case '3':
+				case '4':
+				case '5':
+				case '6':
+				case '7':
+					{
+						/* Not found before */
+						if (bwy[d - '0'] == 9999)
+						{
+							cave_set_feat(y, x, FEAT_BETWEEN);
+							bwy[d - '0'] = y;
+							bwx[d - '0'] = x;
+						}
+						/* The second time */
+						else
+						{
+							cave_set_feat(y, x, FEAT_BETWEEN);
+							c_ptr->special = bwx[d - '0'] + (bwy[d - '0'] << 8);
+							cave[bwy[d - '0']][bwx[d - '0']].special = x + (y << 8);
+						}
+						break;
+					}
 				}
 			}
 		}

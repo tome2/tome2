@@ -3275,7 +3275,7 @@ errr init_v_info_txt(FILE *fp)
 			s = buf + 2;
 
 			/* Append data */
-			strappend(&v_ptr->data, s);
+			v_ptr->data += s;
 
 			/* Next... */
 			continue;

@@ -532,7 +532,7 @@ namespace {
 
 		static void allocate()
 		{
-			v_info = make_array<vault_type>(max_v_idx);
+			v_info = new vault_type[max_v_idx];
 		}
 
 		static errr parse(FILE *fp)

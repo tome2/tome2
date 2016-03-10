@@ -1,24 +1,25 @@
 #pragma once
 
 #include "h-basic.h"
+#include <string>
 
 /**
  * Vault descriptors.
  */
 struct vault_type
 {
-	char *data;			/* Vault data */
+	std::string data;		/* Vault data */
 
-	byte typ;			/* Vault type */
+	byte typ = 0;			/* Vault type */
 
-	byte rat;			/* Vault rating */
+	byte rat = 0;			/* Vault rating */
 
-	byte hgt;			/* Vault height */
-	byte wid;			/* Vault width */
+	byte hgt = 0;			/* Vault height */
+	byte wid = 0;			/* Vault width */
 
-	s16b lvl;                       /* level of special (if any) */
-	byte dun_type;                  /* Dungeon type where the level will show up */
+	s16b lvl = 0;                   /* level of special (if any) */
+	byte dun_type = 0;              /* Dungeon type where the level will show up */
 
-	s16b mon[10];                   /* special monster */
-	int item[3];                   /* number of item (usually artifact) */
+	s16b mon[10] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };                   /* special monster */
+	int item[3] = { 0, 0, 0 };                   /* number of item (usually artifact) */
 };
