@@ -821,25 +821,12 @@ static std::tuple<int, int> choose_monster_power(monster_race const *r_ptr, bool
 
 
 /*
- * Use a power of the monster in symbiosis
+ * Apply the effect of a monster power
  */
-int use_symbiotic_power(int r_idx, bool great, bool no_cost)
+static void apply_monster_power(monster_race const *r_ptr, int power)
 {
-	monster_race const *r_ptr = &r_info[r_idx];
-
-	int power;
-	int num;
-	std::tie(power, num) = choose_monster_power(r_ptr, great, no_cost);
-
-	// Early exit?
-	if (power == 0) {
-		// No powers available
-		return 0;
-	} else if (power < 0) {
-		// Canceled by user
-		energy_use = 0;
-		return -1;
-	}
+	assert(power >= 0);
+	assert(power < MONSTER_POWERS_MAX);
 
 	/* Shorthand */
 	int const x = p_ptr->px;
@@ -1622,8 +1609,8 @@ int use_symbiotic_power(int r_idx, bool great, bool no_cost)
 			p_ptr->energy -= 60 - plev;
 
 			if (!cave_empty_bold(ij, ii) ||
-			                (cave[ij][ii].info & CAVE_ICKY) ||
-			                (distance(ij, ii, p_ptr->py, p_ptr->px) > plev * 20 + 2))
+					(cave[ij][ii].info & CAVE_ICKY) ||
+					(distance(ij, ii, p_ptr->py, p_ptr->px) > plev * 20 + 2))
 			{
 				msg_print("You fail to show the destination correctly!");
 				p_ptr->energy -= 100;
@@ -1669,7 +1656,7 @@ int use_symbiotic_power(int r_idx, bool great, bool no_cost)
 	case 73:
 		{
 			(void)project( -1, 3, p_ptr->py, p_ptr->px, 0, GF_DARK_WEAK,
-			               PROJECT_GRID | PROJECT_KILL);
+				       PROJECT_GRID | PROJECT_KILL);
 
 			/* Unlite the room */
 			unlite_room(p_ptr->py, p_ptr->px);
@@ -1883,14 +1870,38 @@ int use_symbiotic_power(int r_idx, bool great, bool no_cost)
 
 		/* 95 S_UNIQUE -- Not available */
 	}
+}
+
+
+/*
+ * Use a power of the monster in symbiosis
+ */
+int use_symbiotic_power(int r_idx, bool great, bool no_cost)
+{
+	monster_race const *r_ptr = &r_info[r_idx];
+
+	int power;
+	int num;
+	std::tie(power, num) = choose_monster_power(r_ptr, great, no_cost);
+
+	// Early exit?
+	if (power == 0) {
+		// No powers available
+		return 0;
+	} else if (power < 0) {
+		// Canceled by user
+		energy_use = 0;
+		return -1;
+	}
+
+	/* Apply the effect */
+	apply_monster_power(r_ptr, power);
 
 	/* Take some SP */
 	if (!no_cost)
 	{
-		int chance, pchance;
-
-		chance = (monster_powers[power].mana + r_ptr->level);
-		pchance = adj_str_wgt[p_ptr->stat_ind[A_WIS]] / 2 + get_skill(SKILL_POSSESSION);
+		int chance = (monster_powers[power].mana + r_ptr->level);
+		int pchance = adj_str_wgt[p_ptr->stat_ind[A_WIS]] / 2 + get_skill(SKILL_POSSESSION);
 
 		if (rand_int(chance) >= pchance)
 		{
