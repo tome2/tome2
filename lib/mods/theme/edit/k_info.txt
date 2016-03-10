@@ -6478,6 +6478,16 @@ D:This valuable ring protects the wearer's intellect and intuition, as well as
 D:guarding him from most mental attacks.  From time to time, the wearer can 
 D:even purge himself of insanity.
 
+N:843:Unmagic
+G:=:d
+I:45:10:2
+W:50:0:2:3000
+A:50/1
+F:ANTIMAGIC_50
+f:ANTIMAGIC_50
+D:This valuable ring projects an aura of anti-magic around its wearer.
+
+
 ### New scroll ###
 N:846:Sterilise
 G:?:d
