@@ -664,27 +664,7 @@ std::vector<int> extract_monster_powers(monster_race const *r_ptr, bool great)
  */
 int use_symbiotic_power(int r_idx, bool_ great, bool_ no_cost)
 {
-	int power = -1;
-
-	int dir = 0 , i;
-
-	bool_ flag;
-
-	int ask, plev = p_ptr->lev;
-
-	char choice;
-
-	char out_val[160];
-
-	monster_race *r_ptr = &r_info[r_idx];
-
-	int const rlev = ((r_ptr->level >= 1) ? r_ptr->level : 1);
-
-	int x = p_ptr->px, y = p_ptr->py, k;
-
-	int rad;
-
-	int label;
+	monster_race const *r_ptr = &r_info[r_idx];
 
 	/* Extract available monster powers */
 	std::vector<int> powers = extract_monster_powers(r_ptr, great);
@@ -696,14 +676,12 @@ int use_symbiotic_power(int r_idx, bool_ great, bool_ no_cost)
 		return (0);
 	}
 
-	/* Nothing chosen yet */
-	flag = FALSE;
-
 	/* Get the last label */
-	label = (num <= 26) ? I2A(num - 1) : I2D(num - 1 - 26);
+	int label = (num <= 26) ? I2A(num - 1) : I2D(num - 1 - 26);
 
 	/* Build a prompt (accept all spells) */
 	/* Mega Hack -- if no_cost is false, we're actually a Possessor -dsb */
+	char out_val[160];
 	strnfmt(out_val, 78,
 	        "(Powers a-%c, ESC=exit) Use which power of your %s? ",
 	        label, (no_cost ? "symbiote" : "body"));
@@ -713,6 +691,8 @@ int use_symbiotic_power(int r_idx, bool_ great, bool_ no_cost)
 	Term_save();
 
 	/* Get a spell from the user */
+	int power = -1; // Selected power
+	bool_ flag = FALSE; // Nothing chosen yet
 	while (!flag)
 	{
 		/* Show the list */
@@ -769,6 +749,7 @@ int use_symbiotic_power(int r_idx, bool_ great, bool_ no_cost)
 			}
 		}
 
+		char choice;
 		if (!get_com(out_val, &choice))
 		{
 			flag = FALSE;
@@ -780,6 +761,8 @@ int use_symbiotic_power(int r_idx, bool_ great, bool_ no_cost)
 			choice = 'a';
 		}
 
+		int i;
+		int ask;
 		if (isalpha(choice))
 		{
 			/* Note verify */
@@ -836,16 +819,16 @@ int use_symbiotic_power(int r_idx, bool_ great, bool_ no_cost)
 		return -1;
 	}
 
-	/* 'Powerful' monsters have wider radii */
-	if (r_ptr->flags2 & RF2_POWERFUL)
-	{
-		rad = 1 + (p_ptr->lev / 15);
-	}
-	else
-	{
-		rad = 1 + (p_ptr->lev / 20);
-	}
+	/* Shorthand */
+	int const x = p_ptr->px;
+	int const y = p_ptr->py;
+	int const plev = p_ptr->lev;
+	int const rlev = ((r_ptr->level >= 1) ? r_ptr->level : 1);
 
+	/* 'Powerful' monsters have wider radii */
+	int rad = (r_ptr->flags2 & RF2_POWERFUL)
+			? 1 + (p_ptr->lev / 15)
+			: 1 + (p_ptr->lev / 20);
 
 	/* Analyse power */
 	switch (power)
@@ -879,6 +862,7 @@ int use_symbiotic_power(int r_idx, bool_ great, bool_ no_cost)
 		/* ROCKET */
 	case 3:
 		{
+			int dir;
 			if (!get_aim_dir(&dir)) break;
 
 			fire_ball(GF_ROCKET, dir, p_ptr->lev * 12, 1 + (p_ptr->lev / 20));
@@ -889,6 +873,7 @@ int use_symbiotic_power(int r_idx, bool_ great, bool_ no_cost)
 		/* ARROW_1 */
 	case 4:
 		{
+			int dir;
 			if (!get_aim_dir(&dir)) break;
 
 			fire_bolt(GF_ARROW, dir, damroll(1, 6));
@@ -899,6 +884,7 @@ int use_symbiotic_power(int r_idx, bool_ great, bool_ no_cost)
 		/* ARROW_2 */
 	case 5:
 		{
+			int dir;
 			if (!get_aim_dir(&dir)) break;
 
 			fire_bolt(GF_ARROW, dir, damroll(3, 6));
@@ -909,6 +895,7 @@ int use_symbiotic_power(int r_idx, bool_ great, bool_ no_cost)
 		/* ARROW_3 */
 	case 6:
 		{
+			int dir;
 			if (!get_aim_dir(&dir)) break;
 
 			fire_bolt(GF_ARROW, dir, damroll(5, 6));
@@ -919,6 +906,7 @@ int use_symbiotic_power(int r_idx, bool_ great, bool_ no_cost)
 		/* ARROW_4 */
 	case 7:
 		{
+			int dir;
 			if (!get_aim_dir(&dir)) break;
 
 			fire_bolt(GF_ARROW, dir, damroll(7, 6));
@@ -929,6 +917,7 @@ int use_symbiotic_power(int r_idx, bool_ great, bool_ no_cost)
 		/* BR_ACID */
 	case 8:
 		{
+			int dir;
 			if (!get_aim_dir(&dir)) break;
 
 			fire_ball(GF_ACID, dir, p_ptr->lev * 5, rad);
@@ -939,6 +928,7 @@ int use_symbiotic_power(int r_idx, bool_ great, bool_ no_cost)
 		/* BR_ELEC */
 	case 9:
 		{
+			int dir;
 			if (!get_aim_dir(&dir)) break;
 
 			fire_ball(GF_ELEC, dir, p_ptr->lev * 5, rad);
@@ -949,6 +939,7 @@ int use_symbiotic_power(int r_idx, bool_ great, bool_ no_cost)
 		/* BR_FIRE */
 	case 10:
 		{
+			int dir;
 			if (!get_aim_dir(&dir)) break;
 
 			fire_ball(GF_FIRE, dir, p_ptr->lev * 5, rad);
@@ -959,6 +950,7 @@ int use_symbiotic_power(int r_idx, bool_ great, bool_ no_cost)
 		/* BR_COLD */
 	case 11:
 		{
+			int dir;
 			if (!get_aim_dir(&dir)) break;
 
 			fire_ball(GF_COLD, dir, p_ptr->lev * 5, rad);
@@ -969,6 +961,7 @@ int use_symbiotic_power(int r_idx, bool_ great, bool_ no_cost)
 		/* BR_POIS */
 	case 12:
 		{
+			int dir;
 			if (!get_aim_dir(&dir)) break;
 
 			fire_ball(GF_POIS, dir, p_ptr->lev * 5, rad);
@@ -979,6 +972,7 @@ int use_symbiotic_power(int r_idx, bool_ great, bool_ no_cost)
 		/* BR_NETH */
 	case 13:
 		{
+			int dir;
 			if (!get_aim_dir(&dir)) break;
 
 			fire_ball(GF_NETHER, dir, p_ptr->lev * 5, rad);
@@ -989,6 +983,7 @@ int use_symbiotic_power(int r_idx, bool_ great, bool_ no_cost)
 		/* BR_LITE */
 	case 14:
 		{
+			int dir;
 			if (!get_aim_dir(&dir)) break;
 
 			fire_ball(GF_LITE, dir, p_ptr->lev * 8, rad);
@@ -999,6 +994,7 @@ int use_symbiotic_power(int r_idx, bool_ great, bool_ no_cost)
 		/* BR_DARK */
 	case 15:
 		{
+			int dir;
 			if (!get_aim_dir(&dir)) break;
 
 			fire_ball(GF_DARK, dir, p_ptr->lev * 8, rad);
@@ -1009,6 +1005,7 @@ int use_symbiotic_power(int r_idx, bool_ great, bool_ no_cost)
 		/* BR_CONF */
 	case 16:
 		{
+			int dir;
 			if (!get_aim_dir(&dir)) break;
 
 			fire_ball(GF_CONFUSION, dir, p_ptr->lev * 8, rad);
@@ -1019,6 +1016,7 @@ int use_symbiotic_power(int r_idx, bool_ great, bool_ no_cost)
 		/* BR_SOUN */
 	case 17:
 		{
+			int dir;
 			if (!get_aim_dir(&dir)) break;
 
 			fire_ball(GF_SOUND, dir, p_ptr->lev * 8, rad);
@@ -1029,6 +1027,7 @@ int use_symbiotic_power(int r_idx, bool_ great, bool_ no_cost)
 		/* BR_CHAO */
 	case 18:
 		{
+			int dir;
 			if (!get_aim_dir(&dir)) break;
 
 			fire_ball(GF_CHAOS, dir, p_ptr->lev * 7, rad);
@@ -1039,6 +1038,7 @@ int use_symbiotic_power(int r_idx, bool_ great, bool_ no_cost)
 		/* BR_DISE */
 	case 19:
 		{
+			int dir;
 			if (!get_aim_dir(&dir)) break;
 
 			fire_ball(GF_DISENCHANT, dir, p_ptr->lev * 7, rad);
@@ -1049,6 +1049,7 @@ int use_symbiotic_power(int r_idx, bool_ great, bool_ no_cost)
 		/* BR_NEXU */
 	case 20:
 		{
+			int dir;
 			if (!get_aim_dir(&dir)) break;
 
 			fire_ball(GF_NEXUS, dir, p_ptr->lev * 5, rad);
@@ -1059,6 +1060,7 @@ int use_symbiotic_power(int r_idx, bool_ great, bool_ no_cost)
 		/* BR_TIME */
 	case 21:
 		{
+			int dir;
 			if (!get_aim_dir(&dir)) break;
 
 			fire_ball(GF_TIME, dir, p_ptr->lev * 3, rad);
@@ -1069,6 +1071,7 @@ int use_symbiotic_power(int r_idx, bool_ great, bool_ no_cost)
 		/* BR_INER */
 	case 22:
 		{
+			int dir;
 			if (!get_aim_dir(&dir)) break;
 
 			fire_ball(GF_INERTIA, dir, p_ptr->lev * 4, rad);
@@ -1079,6 +1082,7 @@ int use_symbiotic_power(int r_idx, bool_ great, bool_ no_cost)
 		/* BR_GRAV */
 	case 23:
 		{
+			int dir;
 			if (!get_aim_dir(&dir)) break;
 
 			fire_ball(GF_GRAVITY, dir, p_ptr->lev * 4, rad);
@@ -1089,6 +1093,7 @@ int use_symbiotic_power(int r_idx, bool_ great, bool_ no_cost)
 		/* BR_SHAR */
 	case 24:
 		{
+			int dir;
 			if (!get_aim_dir(&dir)) break;
 
 			fire_ball(GF_SHARDS, dir, p_ptr->lev * 8, rad);
@@ -1099,6 +1104,7 @@ int use_symbiotic_power(int r_idx, bool_ great, bool_ no_cost)
 		/* BR_PLAS */
 	case 25:
 		{
+			int dir;
 			if (!get_aim_dir(&dir)) break;
 
 			fire_ball(GF_PLASMA, dir, p_ptr->lev * 3, rad);
@@ -1109,6 +1115,7 @@ int use_symbiotic_power(int r_idx, bool_ great, bool_ no_cost)
 		/* BR_WALL */
 	case 26:
 		{
+			int dir;
 			if (!get_aim_dir(&dir)) break;
 
 			fire_ball(GF_FORCE, dir, p_ptr->lev * 4, rad);
@@ -1119,6 +1126,7 @@ int use_symbiotic_power(int r_idx, bool_ great, bool_ no_cost)
 		/* BR_MANA */
 	case 27:
 		{
+			int dir;
 			if (!get_aim_dir(&dir)) break;
 
 			fire_ball(GF_MANA, dir, p_ptr->lev * 5, rad);
@@ -1129,6 +1137,7 @@ int use_symbiotic_power(int r_idx, bool_ great, bool_ no_cost)
 		/* BA_NUKE */
 	case 28:
 		{
+			int dir;
 			if (!get_aim_dir(&dir)) break;
 
 			fire_ball(GF_NUKE, dir, p_ptr->lev * 8, 1 + (p_ptr->lev / 20));
@@ -1139,6 +1148,7 @@ int use_symbiotic_power(int r_idx, bool_ great, bool_ no_cost)
 		/* BR_NUKE */
 	case 29:
 		{
+			int dir;
 			if (!get_aim_dir(&dir)) break;
 
 			fire_ball(GF_NUKE, dir, p_ptr->lev * 8, 1 + (p_ptr->lev / 20));
@@ -1149,6 +1159,7 @@ int use_symbiotic_power(int r_idx, bool_ great, bool_ no_cost)
 		/* BA_CHAO */
 	case 30:
 		{
+			int dir;
 			if (!get_aim_dir(&dir)) break;
 
 			fire_ball(GF_CHAOS, dir, p_ptr->lev * 4, 2);
@@ -1159,6 +1170,7 @@ int use_symbiotic_power(int r_idx, bool_ great, bool_ no_cost)
 		/* BR_DISI */
 	case 31:
 		{
+			int dir;
 			if (!get_aim_dir(&dir)) break;
 
 			fire_ball(GF_DISINTEGRATE, dir, p_ptr->lev * 5, 1 + (p_ptr->lev / 20));
@@ -1172,6 +1184,7 @@ int use_symbiotic_power(int r_idx, bool_ great, bool_ no_cost)
 		/* BA_ACID */
 	case 32:
 		{
+			int dir;
 			if (!get_aim_dir(&dir)) break;
 
 			fire_ball(GF_ACID, dir, randint(p_ptr->lev * 6) + 20, 2);
@@ -1182,6 +1195,7 @@ int use_symbiotic_power(int r_idx, bool_ great, bool_ no_cost)
 		/* BA_ELEC */
 	case 33:
 		{
+			int dir;
 			if (!get_aim_dir(&dir)) break;
 
 			fire_ball(GF_ELEC, dir, randint(p_ptr->lev * 3) + 20, 2);
@@ -1192,6 +1206,7 @@ int use_symbiotic_power(int r_idx, bool_ great, bool_ no_cost)
 		/* BA_FIRE */
 	case 34:
 		{
+			int dir;
 			if (!get_aim_dir(&dir)) break;
 
 			fire_ball(GF_FIRE, dir, randint(p_ptr->lev * 7) + 20, 2);
@@ -1202,6 +1217,7 @@ int use_symbiotic_power(int r_idx, bool_ great, bool_ no_cost)
 		/* BA_COLD */
 	case 35:
 		{
+			int dir;
 			if (!get_aim_dir(&dir)) break;
 
 			fire_ball(GF_COLD, dir, randint(p_ptr->lev * 3) + 20, 2);
@@ -1212,6 +1228,7 @@ int use_symbiotic_power(int r_idx, bool_ great, bool_ no_cost)
 		/* BA_POIS */
 	case 36:
 		{
+			int dir;
 			if (!get_aim_dir(&dir)) break;
 
 			fire_ball(GF_POIS, dir, damroll(12, 2), 2);
@@ -1222,6 +1239,7 @@ int use_symbiotic_power(int r_idx, bool_ great, bool_ no_cost)
 		/* BA_NETH */
 	case 37:
 		{
+			int dir;
 			if (!get_aim_dir(&dir)) break;
 
 			fire_ball(GF_NETHER, dir, randint(p_ptr->lev * 4) + 20, 2);
@@ -1232,6 +1250,7 @@ int use_symbiotic_power(int r_idx, bool_ great, bool_ no_cost)
 		/* BA_WATE */
 	case 38:
 		{
+			int dir;
 			if (!get_aim_dir(&dir)) break;
 
 			fire_ball(GF_WATER, dir, randint(p_ptr->lev * 4) + 20, 2);
@@ -1242,6 +1261,7 @@ int use_symbiotic_power(int r_idx, bool_ great, bool_ no_cost)
 		/* BA_MANA */
 	case 39:
 		{
+			int dir;
 			if (!get_aim_dir(&dir)) break;
 
 			fire_ball(GF_MANA, dir, randint(p_ptr->lev * 3) + 20, 2);
@@ -1252,6 +1272,7 @@ int use_symbiotic_power(int r_idx, bool_ great, bool_ no_cost)
 		/* BA_DARK */
 	case 40:
 		{
+			int dir;
 			if (!get_aim_dir(&dir)) break;
 
 			fire_ball(GF_DARK, dir, randint(p_ptr->lev * 3) + 20, 2);
@@ -1268,6 +1289,7 @@ int use_symbiotic_power(int r_idx, bool_ great, bool_ no_cost)
 		/* CAUSE_1 */
 	case 44:
 		{
+			int dir;
 			if (!get_aim_dir(&dir)) break;
 
 			fire_bolt(GF_MANA, dir, damroll(3, 8));
@@ -1278,6 +1300,7 @@ int use_symbiotic_power(int r_idx, bool_ great, bool_ no_cost)
 		/* CAUSE_2 */
 	case 45:
 		{
+			int dir;
 			if (!get_aim_dir(&dir)) break;
 
 			fire_bolt(GF_MANA, dir, damroll(8, 8));
@@ -1288,6 +1311,7 @@ int use_symbiotic_power(int r_idx, bool_ great, bool_ no_cost)
 		/* CAUSE_3 */
 	case 46:
 		{
+			int dir;
 			if (!get_aim_dir(&dir)) break;
 
 			fire_bolt(GF_MANA, dir, damroll(10, 15));
@@ -1298,6 +1322,7 @@ int use_symbiotic_power(int r_idx, bool_ great, bool_ no_cost)
 		/* CAUSE_4 */
 	case 47:
 		{
+			int dir;
 			if (!get_aim_dir(&dir)) break;
 
 			fire_bolt(GF_MANA, dir, damroll(15, 15));
@@ -1308,6 +1333,7 @@ int use_symbiotic_power(int r_idx, bool_ great, bool_ no_cost)
 		/* BO_ACID */
 	case 48:
 		{
+			int dir;
 			if (!get_aim_dir(&dir)) break;
 
 			fire_bolt(GF_ACID, dir, damroll(7, 8) + (p_ptr->lev / 3));
@@ -1318,6 +1344,7 @@ int use_symbiotic_power(int r_idx, bool_ great, bool_ no_cost)
 		/* BO_ELEC */
 	case 49:
 		{
+			int dir;
 			if (!get_aim_dir(&dir)) break;
 
 			fire_bolt(GF_ELEC, dir, damroll(4, 8) + (p_ptr->lev / 3));
@@ -1328,6 +1355,7 @@ int use_symbiotic_power(int r_idx, bool_ great, bool_ no_cost)
 		/* BO_FIRE */
 	case 50:
 		{
+			int dir;
 			if (!get_aim_dir(&dir)) break;
 
 			fire_bolt(GF_FIRE, dir, damroll(9, 8) + (p_ptr->lev / 3));
@@ -1338,6 +1366,7 @@ int use_symbiotic_power(int r_idx, bool_ great, bool_ no_cost)
 		/* BO_COLD */
 	case 51:
 		{
+			int dir;
 			if (!get_aim_dir(&dir)) break;
 
 			fire_bolt(GF_COLD, dir, damroll(6, 8) + (p_ptr->lev / 3));
@@ -1348,6 +1377,7 @@ int use_symbiotic_power(int r_idx, bool_ great, bool_ no_cost)
 		/* BO_POIS */
 	case 52:
 		{
+			int dir;
 			if (!get_aim_dir(&dir)) break;
 
 			fire_bolt(GF_POIS, dir, damroll(7, 8) + (p_ptr->lev / 3));
@@ -1358,6 +1388,7 @@ int use_symbiotic_power(int r_idx, bool_ great, bool_ no_cost)
 		/* BO_NETH */
 	case 53:
 		{
+			int dir;
 			if (!get_aim_dir(&dir)) break;
 
 			fire_bolt(GF_NETHER, dir, damroll(5, 5) + (p_ptr->lev / 3));
@@ -1368,6 +1399,7 @@ int use_symbiotic_power(int r_idx, bool_ great, bool_ no_cost)
 		/* BO_WATE */
 	case 54:
 		{
+			int dir;
 			if (!get_aim_dir(&dir)) break;
 
 			fire_bolt(GF_WATER, dir, damroll(10, 10) + (p_ptr->lev / 3));
@@ -1378,6 +1410,7 @@ int use_symbiotic_power(int r_idx, bool_ great, bool_ no_cost)
 		/* BO_MANA */
 	case 55:
 		{
+			int dir;
 			if (!get_aim_dir(&dir)) break;
 
 			fire_bolt(GF_MANA, dir, damroll(3, 8) + (p_ptr->lev / 3));
@@ -1388,6 +1421,7 @@ int use_symbiotic_power(int r_idx, bool_ great, bool_ no_cost)
 		/* BO_PLAS */
 	case 56:
 		{
+			int dir;
 			if (!get_aim_dir(&dir)) break;
 
 			fire_bolt(GF_PLASMA, dir, damroll(8, 8) + (p_ptr->lev / 3));
@@ -1398,6 +1432,7 @@ int use_symbiotic_power(int r_idx, bool_ great, bool_ no_cost)
 		/* BO_ICEE */
 	case 57:
 		{
+			int dir;
 			if (!get_aim_dir(&dir)) break;
 
 			fire_bolt(GF_ICE, dir, damroll(6, 6) + (p_ptr->lev / 3));
@@ -1408,6 +1443,7 @@ int use_symbiotic_power(int r_idx, bool_ great, bool_ no_cost)
 		/* MISSILE */
 	case 58:
 		{
+			int dir;
 			if (!get_aim_dir(&dir)) break;
 
 			fire_bolt(GF_MISSILE, dir, damroll(2, 6) + (p_ptr->lev / 3));
@@ -1418,6 +1454,7 @@ int use_symbiotic_power(int r_idx, bool_ great, bool_ no_cost)
 		/* SCARE */
 	case 59:
 		{
+			int dir;
 			if (!get_aim_dir(&dir)) break;
 
 			fear_monster(dir, plev);
@@ -1428,6 +1465,7 @@ int use_symbiotic_power(int r_idx, bool_ great, bool_ no_cost)
 		/* BLIND */
 	case 60:
 		{
+			int dir;
 			if (!get_aim_dir(&dir)) break;
 
 			fire_bolt(GF_CONFUSION, dir, damroll(1, 8) + (p_ptr->lev / 3));
@@ -1438,6 +1476,7 @@ int use_symbiotic_power(int r_idx, bool_ great, bool_ no_cost)
 		/* CONF */
 	case 61:
 		{
+			int dir;
 			if (!get_aim_dir(&dir)) break;
 
 			fire_bolt(GF_CONFUSION, dir, damroll(7, 8) + (p_ptr->lev / 3));
@@ -1448,6 +1487,7 @@ int use_symbiotic_power(int r_idx, bool_ great, bool_ no_cost)
 		/* SLOW */
 	case 62:
 		{
+			int dir;
 			if (!get_aim_dir(&dir)) break;
 
 			fire_bolt(GF_OLD_SLOW, dir, damroll(6, 8) + (p_ptr->lev / 3));
@@ -1458,6 +1498,7 @@ int use_symbiotic_power(int r_idx, bool_ great, bool_ no_cost)
 		/* HOLD */
 	case 63:
 		{
+			int dir;
 			if (!get_aim_dir(&dir)) break;
 
 			fire_bolt(GF_OLD_SLEEP, dir, damroll(5, 8) + (p_ptr->lev / 3));
@@ -1486,6 +1527,7 @@ int use_symbiotic_power(int r_idx, bool_ great, bool_ no_cost)
 		/* HAND_DOOM */
 	case 65:
 		{
+			int dir;
 			if (!get_aim_dir(&dir)) break;
 
 			fire_bolt(GF_MANA, dir, damroll(10, 8) + (p_ptr->lev));
@@ -1504,7 +1546,7 @@ int use_symbiotic_power(int r_idx, bool_ great, bool_ no_cost)
 		/* S_ANIMALS */
 	case 67:
 		{
-			for (k = 0; k < 4; k++)
+			for (int k = 0; k < 4; k++)
 			{
 				summon_specific_friendly(y, x, rlev, SUMMON_ANIMAL, TRUE);
 			}
@@ -1579,6 +1621,7 @@ int use_symbiotic_power(int r_idx, bool_ great, bool_ no_cost)
 				break;
 			}
 
+			int dir;
 			if (!get_aim_dir(&dir)) break;
 
 			(void)fire_beam(GF_AWAY_ALL, dir, plev);
@@ -1625,6 +1668,7 @@ int use_symbiotic_power(int r_idx, bool_ great, bool_ no_cost)
 		/* ANIM_DEAD -- Use the same code as the nether spell */
 	case 76:
 		{
+			int dir;
 			if (!get_aim_dir(&dir)) break;
 
 			fire_ball(GF_RAISE, dir, 1, 0);
@@ -1639,7 +1683,7 @@ int use_symbiotic_power(int r_idx, bool_ great, bool_ no_cost)
 		/* S_THUNDERLORD */
 	case 79:
 		{
-			for (k = 0; k < 1; k++)
+			for (int k = 0; k < 1; k++)
 			{
 				summon_specific_friendly(y, x, rlev, SUMMON_THUNDERLORD, TRUE);
 			}
@@ -1653,7 +1697,7 @@ int use_symbiotic_power(int r_idx, bool_ great, bool_ no_cost)
 			/* Big hack */
 			summon_kin_type = r_ptr->d_char;
 
-			for (k = 0; k < 6; k++)
+			for (int k = 0; k < 6; k++)
 			{
 				summon_specific_friendly(y, x, rlev, SUMMON_KIN, TRUE);
 			}
@@ -1664,7 +1708,7 @@ int use_symbiotic_power(int r_idx, bool_ great, bool_ no_cost)
 		/* S_HI_DEMON */
 	case 81:
 		{
-			for (k = 0; k < 1; k++)
+			for (int k = 0; k < 1; k++)
 			{
 				summon_specific_friendly(y, x, rlev, SUMMON_HI_DEMON, TRUE);
 			}
@@ -1675,7 +1719,7 @@ int use_symbiotic_power(int r_idx, bool_ great, bool_ no_cost)
 		/* S_MONSTER */
 	case 82:
 		{
-			for (k = 0; k < 1; k++)
+			for (int k = 0; k < 1; k++)
 			{
 				summon_specific_friendly(y, x, rlev, 0, TRUE);
 			}
@@ -1686,7 +1730,7 @@ int use_symbiotic_power(int r_idx, bool_ great, bool_ no_cost)
 		/* S_MONSTERS */
 	case 83:
 		{
-			for (k = 0; k < 6; k++)
+			for (int k = 0; k < 6; k++)
 			{
 				summon_specific_friendly(y, x, rlev, 0, TRUE);
 			}
@@ -1697,7 +1741,7 @@ int use_symbiotic_power(int r_idx, bool_ great, bool_ no_cost)
 		/* S_ANT */
 	case 84:
 		{
-			for (k = 0; k < 6; k++)
+			for (int k = 0; k < 6; k++)
 			{
 				summon_specific_friendly(y, x, rlev, SUMMON_ANT, TRUE);
 			}
@@ -1708,7 +1752,7 @@ int use_symbiotic_power(int r_idx, bool_ great, bool_ no_cost)
 		/* S_SPIDER */
 	case 85:
 		{
-			for (k = 0; k < 6; k++)
+			for (int k = 0; k < 6; k++)
 			{
 				summon_specific_friendly(y, x, rlev, SUMMON_SPIDER, TRUE);
 			}
@@ -1719,7 +1763,7 @@ int use_symbiotic_power(int r_idx, bool_ great, bool_ no_cost)
 		/* S_HOUND */
 	case 86:
 		{
-			for (k = 0; k < 6; k++)
+			for (int k = 0; k < 6; k++)
 			{
 				summon_specific_friendly(y, x, rlev, SUMMON_HOUND, TRUE);
 			}
@@ -1730,7 +1774,7 @@ int use_symbiotic_power(int r_idx, bool_ great, bool_ no_cost)
 		/* S_HYDRA */
 	case 87:
 		{
-			for (k = 0; k < 6; k++)
+			for (int k = 0; k < 6; k++)
 			{
 				summon_specific_friendly(y, x, rlev, SUMMON_HYDRA, TRUE);
 			}
@@ -1741,7 +1785,7 @@ int use_symbiotic_power(int r_idx, bool_ great, bool_ no_cost)
 		/* S_ANGEL */
 	case 88:
 		{
-			for (k = 0; k < 1; k++)
+			for (int k = 0; k < 1; k++)
 			{
 				summon_specific_friendly(y, x, rlev, SUMMON_ANGEL, TRUE);
 			}
@@ -1752,7 +1796,7 @@ int use_symbiotic_power(int r_idx, bool_ great, bool_ no_cost)
 		/* S_DEMON */
 	case 89:
 		{
-			for (k = 0; k < 1; k++)
+			for (int k = 0; k < 1; k++)
 			{
 				summon_specific_friendly(y, x, rlev, SUMMON_DEMON, TRUE);
 			}
@@ -1763,7 +1807,7 @@ int use_symbiotic_power(int r_idx, bool_ great, bool_ no_cost)
 		/* S_UNDEAD */
 	case 90:
 		{
-			for (k = 0; k < 1; k++)
+			for (int k = 0; k < 1; k++)
 			{
 				summon_specific_friendly(y, x, rlev, SUMMON_UNDEAD, TRUE);
 			}
@@ -1774,7 +1818,7 @@ int use_symbiotic_power(int r_idx, bool_ great, bool_ no_cost)
 		/* S_DRAGON */
 	case 91:
 		{
-			for (k = 0; k < 1; k++)
+			for (int k = 0; k < 1; k++)
 			{
 				summon_specific_friendly(y, x, rlev, SUMMON_DRAGON, TRUE);
 			}
@@ -1785,7 +1829,7 @@ int use_symbiotic_power(int r_idx, bool_ great, bool_ no_cost)
 		/* S_HI_UNDEAD */
 	case 92:
 		{
-			for (k = 0; k < 8; k++)
+			for (int k = 0; k < 8; k++)
 			{
 				summon_specific_friendly(y, x, rlev, SUMMON_HI_UNDEAD_NO_UNIQUES, TRUE);
 			}
@@ -1796,7 +1840,7 @@ int use_symbiotic_power(int r_idx, bool_ great, bool_ no_cost)
 		/* S_HI_DRAGON */
 	case 93:
 		{
-			for (k = 0; k < 8; k++)
+			for (int k = 0; k < 8; k++)
 			{
 				summon_specific_friendly(y, x, rlev, SUMMON_HI_DRAGON_NO_UNIQUES, TRUE);
 			}
@@ -1807,7 +1851,7 @@ int use_symbiotic_power(int r_idx, bool_ great, bool_ no_cost)
 		/* S_WRAITH */
 	case 94:
 		{
-			for (k = 0; k < 8; k++)
+			for (int k = 0; k < 8; k++)
 			{
 				summon_specific_friendly(y, x, rlev, SUMMON_WRAITH, TRUE);
 			}
