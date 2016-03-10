@@ -2,6 +2,7 @@
 
 #include "body.hpp"
 #include "h-basic.h"
+#include "player_defs.hpp"
 #include "skills_defs.hpp"
 
 struct player_race_mod
