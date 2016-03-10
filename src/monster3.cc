@@ -10,6 +10,7 @@
 
 #include "cave_type.hpp"
 #include "cmd2.hpp"
+#include "cmd5.hpp"
 #include "gods.hpp"
 #include "melee2.hpp"
 #include "monster2.hpp"
@@ -418,8 +419,7 @@ bool_ do_control_drop(void)
 bool_ do_control_magic(void)
 {
 	int power = -1;
-	int num = 0, i;
-	int powers[96];
+	int i;
 	bool_ flag, redraw;
 	int ask;
 	char choice;
@@ -437,36 +437,11 @@ bool_ do_control_magic(void)
 		return TRUE;
 	}
 
-	/* List the monster powers -- RF4_* */
-	for (i = 0; i < 32; i++)
-	{
-		if (r_ptr->flags4 & BIT(i))
-		{
-			if (!monster_powers[i].power) continue;
-			powers[num++] = i;
-		}
-	}
+	/* Extract available monster powers */
+	std::vector<int> powers = extract_monster_powers(r_ptr, true);
+	int const num = powers.size(); // Avoid signed/unsigned warnings
 
-	/* List the monster powers -- RF5_* */
-	for (i = 0; i < 32; i++)
-	{
-		if (r_ptr->flags5 & BIT(i))
-		{
-			if (!monster_powers[i + 32].power) continue;
-			powers[num++] = i + 32;
-		}
-	}
-
-	/* List the monster powers -- RF6_* */
-	for (i = 0; i < 32; i++)
-	{
-		if (r_ptr->flags6 & BIT(i))
-		{
-			if (!monster_powers[i + 64].power) continue;
-			powers[num++] = i + 64;
-		}
-	}
-
+	/* Are any powers available? */
 	if (!num)
 	{
 		msg_print("You have no powers you can use.");

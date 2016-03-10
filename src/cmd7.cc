@@ -1831,8 +1831,6 @@ void do_cmd_possessor()
 
 	if (ext == 1)
 	{
-		bool_ use_great = FALSE;
-
 		if (p_ptr->disembodied)
 		{
 			msg_print("You don't currently own a body to use.");
@@ -1840,9 +1838,9 @@ void do_cmd_possessor()
 		}
 
 		/* Do we have access to all the powers ? */
-		if (get_skill_scale(SKILL_POSSESSION, 100) >= r_info[p_ptr->body_monster].level)
-			use_great = TRUE;
+		bool_ use_great = (get_skill_scale(SKILL_POSSESSION, 100) >= r_info[p_ptr->body_monster].level);
 
+		/* Select power */
 		use_symbiotic_power(p_ptr->body_monster, use_great, FALSE, FALSE);
 
 		if (p_ptr->csp < 0)

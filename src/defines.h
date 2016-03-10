@@ -125,6 +125,11 @@
 #define MAX_RUNES           100
 
 /*
+ * Total number of monster powers
+ */
+#define MONSTER_POWERS_MAX 96
+
+/*
  * Total number of stores (see "store.c", etc)
  */
 #define STORE_GENERAL   0

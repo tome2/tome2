@@ -616,15 +616,57 @@ cptr symbiote_name(bool_ capitalize)
 }
 
 /*
+ * Extract powers
+ */
+std::vector<int> extract_monster_powers(monster_race const *r_ptr, bool great)
+{
+	std::vector<int> powers;
+	powers.reserve(MONSTER_POWERS_MAX);
+
+	/* List the monster powers -- RF4_* */
+	for (std::size_t i = 0; i < 32; i++)
+	{
+		if (r_ptr->flags4 & BIT(i))
+		{
+			if (monster_powers[i].great && (!great)) continue;
+			if (!monster_powers[i].power) continue;
+			powers.push_back(i);
+		}
+	}
+
+	/* List the monster powers -- RF5_* */
+	for (std::size_t i = 0; i < 32; i++)
+	{
+		if (r_ptr->flags5 & BIT(i))
+		{
+			if (monster_powers[i + 32].great && (!great)) continue;
+			if (!monster_powers[i + 32].power) continue;
+			powers.push_back(i + 32);
+		}
+	}
+
+	/* List the monster powers -- RF6_* */
+	for (std::size_t i = 0; i < 32; i++)
+	{
+		if (r_ptr->flags6 & BIT(i))
+		{
+			if (monster_powers[i + 64].great && (!great)) continue;
+			if (!monster_powers[i + 64].power) continue;
+			powers.push_back(i + 64);
+		}
+	}
+
+	return powers;
+}
+
+/*
  * Use a power of the monster in symbiosis
  */
 int use_symbiotic_power(int r_idx, bool_ great, bool_ only_number, bool_ no_cost)
 {
 	int power = -1;
 
-	int num = 0, dir = 0 , i;
-
-	int powers[96];
+	int dir = 0 , i;
 
 	bool_ flag;
 
@@ -636,7 +678,7 @@ int use_symbiotic_power(int r_idx, bool_ great, bool_ only_number, bool_ no_cost
 
 	monster_race *r_ptr = &r_info[r_idx];
 
-	int rlev = ((r_ptr->level >= 1) ? r_ptr->level : 1);
+	int const rlev = ((r_ptr->level >= 1) ? r_ptr->level : 1);
 
 	int x = p_ptr->px, y = p_ptr->py, k;
 
@@ -644,39 +686,9 @@ int use_symbiotic_power(int r_idx, bool_ great, bool_ only_number, bool_ no_cost
 
 	int label;
 
-
-	/* List the monster powers -- RF4_* */
-	for (i = 0; i < 32; i++)
-	{
-		if (r_ptr->flags4 & BIT(i))
-		{
-			if (monster_powers[i].great && (!great)) continue;
-			if (!monster_powers[i].power) continue;
-			powers[num++] = i;
-		}
-	}
-
-	/* List the monster powers -- RF5_* */
-	for (i = 0; i < 32; i++)
-	{
-		if (r_ptr->flags5 & BIT(i))
-		{
-			if (monster_powers[i + 32].great && (!great)) continue;
-			if (!monster_powers[i + 32].power) continue;
-			powers[num++] = i + 32;
-		}
-	}
-
-	/* List the monster powers -- RF6_* */
-	for (i = 0; i < 32; i++)
-	{
-		if (r_ptr->flags6 & BIT(i))
-		{
-			if (monster_powers[i + 64].great && (!great)) continue;
-			if (!monster_powers[i + 64].power) continue;
-			powers[num++] = i + 64;
-		}
-	}
+	/* Extract available monster powers */
+	std::vector<int> powers = extract_monster_powers(r_ptr, great);
+	int const num = powers.size(); // Avoid signed/unsigned warnings
 
 	if (!num)
 	{
