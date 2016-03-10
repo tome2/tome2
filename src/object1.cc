@@ -596,48 +596,37 @@ void flavor_init(void)
 		/* Get a new title */
 		while (TRUE)
 		{
-			char buf[80];
-
-			bool_ okay;
-
-			/* Start a new title */
-			buf[0] = '\0';
+			std::string buf;
 
 			/* Collect words until done */
 			while (1)
 			{
-				int q, s;
-
-				char tmp[80];
-
-				/* Start a new word */
-				tmp[0] = '\0';
-
 				/* Choose one or two syllables */
-				s = ((rand_int(100) < 30) ? 1 : 2);
+				int s = ((rand_int(100) < 30) ? 1 : 2);
 
 				/* Add a one or two syllable word */
-				for (q = 0; q < s; q++)
+				std::string tmp;
+				for (int q = 0; q < s; q++)
 				{
-					/* Add the syllable */
-					strcat(tmp, syllables[rand_int(MAX_SYLLABLES)]);
+					tmp += syllables[rand_int(MAX_SYLLABLES)];
 				}
 
 				/* Stop before getting too long */
-				if (strlen(buf) + 1 + strlen(tmp) > 15) break;
+				if (buf.size() + tmp.size() + 1 > 15)
+				{
+					break;
+				}
 
-				/* Add a space */
-				strcat(buf, " ");
-
-				/* Add the word */
-				strcat(buf, tmp);
+				/* Add the word with separator */
+				buf += " ";
+				buf += tmp;
 			}
 
 			/* Save the title */
-			strcpy(scroll_adj[i], buf + 1);
+			strcpy(scroll_adj[i], buf.c_str());
 
 			/* Assume okay */
-			okay = TRUE;
+			bool_ okay = TRUE;
 
 			/* Check for "duplicate" scroll titles */
 			for (j = 0; j < i; j++)
