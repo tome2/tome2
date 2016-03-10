@@ -3172,9 +3172,11 @@ void do_cmd_read_scroll(void)
 
 		case SV_SCROLL_STAR_REMOVE_CURSE:
 			{
-				remove_all_curse();
-
-				ident = TRUE;
+				if (remove_all_curse())
+				{
+					msg_print("You feel as if someone is watching over you.");
+					ident = TRUE;
+				}
 
 				break;
 			}
