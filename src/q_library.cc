@@ -58,7 +58,6 @@ void initialize_bookable_spells()
 	push_spell(RECHARGE);
 	push_spell(DISPERSEMAGIC);
 	push_spell(BLINK);
-	push_spell(DISARM);
 	push_spell(TELEPORT);
 	push_spell(SENSEMONSTERS);
 	push_spell(SENSEHIDDEN);

@@ -29,7 +29,6 @@
 #include "spells1.hpp"
 #include "tables.hpp"
 #include "town_type.hpp"
-#include "traps.hpp"
 #include "util.hpp"
 #include "variable.hpp"
 #include "vault_type.hpp"
@@ -1163,7 +1162,7 @@ static void alloc_object(int set, int typ, int num)
 
 		case ALLOC_TYP_TRAP:
 			{
-				place_trap(y, x);
+				/* Do nothing */
 				break;
 			}
 
@@ -1857,61 +1856,6 @@ static void vault_objects(int y, int x, int num)
 
 
 /*
- * Place a trap with a given displacement of point
- */
-static void vault_trap_aux(int y, int x, int yd, int xd)
-{
-	int count = 0, y1 = y, x1 = x;
-	int dummy = 0;
-
-	/* Place traps */
-	for (count = 0; count <= 5; count++)
-	{
-		/* Get a location */
-		while (dummy < SAFE_MAX_ATTEMPTS)
-		{
-			y1 = rand_spread(y, yd);
-			x1 = rand_spread(x, xd);
-			dummy++;
-			if (in_bounds(y1, x1)) break;
-		}
-
-		if (dummy >= SAFE_MAX_ATTEMPTS)
-		{
-			if (cheat_room)
-			{
-				msg_print("Warning! Could not place vault trap!");
-			}
-		}
-
-
-		/* Require "naked" floor grids */
-		if (!cave_naked_bold(y1, x1)) continue;
-
-		/* Place the trap */
-		place_trap(y1, x1);
-
-		/* Done */
-		break;
-	}
-}
-
-
-/*
- * Place some traps with a given displacement of given location
- */
-static void vault_traps(int y, int x, int yd, int xd, int num)
-{
-	int i;
-
-	for (i = 0; i < num; i++)
-	{
-		vault_trap_aux(y, x, yd, xd);
-	}
-}
-
-
-/*
  * Hack -- Place some sleeping monsters near the given location
  */
 static void vault_monsters(int y1, int x1, int num)
@@ -2280,9 +2224,6 @@ static void build_type3(int by0, int bx0)
 			/* Let's guard the treasure well */
 			vault_monsters(yval, xval, rand_int(2) + 3);
 
-			/* Traps naturally */
-			vault_traps(yval, xval, 4, 4, rand_int(3) + 2);
-
 			break;
 		}
 
@@ -2473,9 +2414,6 @@ static void build_type4(int by0, int bx0)
 				place_random_stairs(yval, xval);
 			}
 
-			/* Traps to protect the treasure */
-			vault_traps(yval, xval, 4, 10, 2 + randint(3));
-
 			break;
 		}
 
@@ -2590,10 +2528,6 @@ static void build_type4(int by0, int bx0)
 			/* Monsters just love mazes. */
 			vault_monsters(yval, xval - 5, randint(3));
 			vault_monsters(yval, xval + 5, randint(3));
-
-			/* Traps make them entertaining. */
-			vault_traps(yval, xval - 3, 2, 8, randint(3));
-			vault_traps(yval, xval + 3, 2, 8, randint(3));
 
 			/* Mazes should have some treasure too. */
 			vault_objects(yval, xval, 3);
@@ -3580,7 +3514,7 @@ static void build_vault(int yval, int xval, int ymax, int xmax, std::string cons
 						}
 						else
 						{
-							place_trap(y, x);
+							/* Do nothing */
 						}
 						break;
 					}
@@ -3595,7 +3529,7 @@ static void build_vault(int yval, int xval, int ymax, int xmax, std::string cons
 					/* Trap */
 				case '^':
 					{
-						place_trap(y, x);
+						/* Do nothing */
 						break;
 					}
 
@@ -4786,16 +4720,15 @@ static void fill_treasure(int x1, int x2, int y1, int y2, int difficulty)
 					}
 					else
 					{
-						place_trap(y, x);
+						/* Do nothing */
 					}
 				}
 				else if (value < 30)
 				{
-					/* Monster and trap */
+					/* Monster */
 					monster_level = dun_level + 5;
 					place_monster(y, x, TRUE, TRUE);
 					monster_level = dun_level;
-					place_trap(y, x);
 				}
 				else if (value < 40)
 				{
@@ -4815,8 +4748,7 @@ static void fill_treasure(int x1, int x2, int y1, int y2, int difficulty)
 				}
 				else if (value < 50)
 				{
-					/* Trap */
-					place_trap(y, x);
+					/* Do nothing */
 				}
 				else
 				{
@@ -4829,7 +4761,7 @@ static void fill_treasure(int x1, int x2, int y1, int y2, int difficulty)
 					}
 					else if (rand_int(100) < 50)
 					{
-						place_trap(y, x);
+						/* Do nothing */
 					}
 					else if (rand_int(100) < 50)
 					{
@@ -6085,9 +6017,6 @@ static void build_type12(int by0, int bx0)
 
 		/* Let's guard the treasure well */
 		vault_monsters(y0, x0, rand_int(2) + 3);
-
-		/* Traps naturally */
-		vault_traps(y0, x0, 4, 4, rand_int(3) + 2);
 	}
 }
 
@@ -7873,14 +7802,8 @@ static bool_ cave_gen(void)
 		}
 	}
 
-	/* Place traps and rubble */
-	{
-		/* Place some traps in the dungeon */
-		alloc_object(ALLOC_SET_BOTH, ALLOC_TYP_TRAP, randint(k * 2));
-
-		/* Put some rubble in corridors */
-		alloc_object(ALLOC_SET_CORR, ALLOC_TYP_RUBBLE, randint(k));
-	}
+	/* Put some rubble in corridors */
+	alloc_object(ALLOC_SET_CORR, ALLOC_TYP_RUBBLE, randint(k));
 
 	/* Place objects and treasure */
 	{

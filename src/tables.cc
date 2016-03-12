@@ -4133,11 +4133,6 @@ tval_desc tval_descs[] =
 		"arcane magics."
 	},
 	{
-		TV_TRAPKIT,
-		"Trapping kits are used with the trapping ability to set "
-		"deadly monster traps."
-	},
-	{
 		TV_STAFF,
 		"Staves are objects imbued with mystical powers."
 	},
@@ -4367,10 +4362,8 @@ gf_name_type gf_names[] =
 	{ GF_GRAVITY, "gravity" },
 	{ GF_KILL_WALL, "wall destruction" },
 	{ GF_KILL_DOOR, "door destruction" },
-	{ GF_KILL_TRAP, "trap destruction" },
 	{ GF_MAKE_WALL, "wall creation" },
 	{ GF_MAKE_DOOR, "door creation" },
-	{ GF_MAKE_TRAP, "trap creation" },
 	{ GF_OLD_CLONE, "clone" },
 	{ GF_OLD_POLY, "polymorph" },
 	{ GF_OLD_HEAL, "healing" },

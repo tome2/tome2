@@ -816,17 +816,6 @@ static void prt_status_line(void)
 		put_str("      ", row, col);
 	}
 
-	/* Dtrap */
-	col = 32;
-	if (cave[p_ptr->py][p_ptr->px].info & CAVE_DETECT)
-	{
-		c_put_str(TERM_L_GREEN, "DTrap", row, col);
-	}
-	else
-	{
-		put_str("     ", row, col);
-	}
-
 	/* State */
 	col = 38;
 	prt_state(row, col);
@@ -3914,9 +3903,6 @@ void calc_bonuses(bool_ silent)
 	/* Affect Skill -- digging (STR) */
 	p_ptr->skill_dig += adj_str_dig[p_ptr->stat_ind[A_STR]];
 
-	/* Affect Skill -- disarming (skill) */
-	p_ptr->skill_dis += (get_skill_scale(SKILL_DISARMING, 75));
-
 	/* Affect Skill -- magic devices (skill) */
 	p_ptr->skill_dev += (get_skill_scale(SKILL_DEVICE, 150));
 
@@ -3925,12 +3911,6 @@ void calc_bonuses(bool_ silent)
 
 	/* Affect Skill -- stealth (skill) */
 	p_ptr->skill_stl += (get_skill_scale(SKILL_STEALTH, 25));
-
-	/* Affect Skill -- search ability (Sneakiness skill) */
-	p_ptr->skill_srh += (get_skill_scale(SKILL_SNEAK, 35));
-
-	/* Affect Skill -- search frequency (Sneakiness skill) */
-	p_ptr->skill_fos += (get_skill_scale(SKILL_SNEAK, 25));
 
 	/* Affect Skill -- combat (Combat skill + mastery) */
 	p_ptr->skill_thn += (50 * (((7 * get_skill(p_ptr->melee_style)) + (3 * get_skill(SKILL_COMBAT))) / 10) / 10);

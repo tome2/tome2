@@ -919,30 +919,6 @@ void school_spells_init()
 	}
 
 	{
-		spell_type *spell = spell_new(&DISARM, "Disarm");
-		spell_type_describe(spell, "Destroys doors and traps");
-		spell_type_describe(spell, "At level 10 it destroys doors and traps, then reveals and unlocks any secret");
-		spell_type_describe(spell, "doors");
-		spell_type_set_mana(spell, 2, 4);
-		spell_type_set_difficulty(spell, 3, 15);
-		spell_type_init_mage(spell,
-				     RANDOM,
-				     SCHOOL_CONVEYANCE,
-				     no_info,
-				     convey_disarm);
-
-		spell_type_set_device_charges(spell, "10+d15");
-
-		{
-			device_allocation *device_allocation = device_allocation_new(TV_STAFF);
-			device_allocation->rarity = 4;
-			range_init(&device_allocation->base_level, 1, 10);
-			range_init(&device_allocation->max_level, 10, 50);
-			spell_type_add_device_allocation(spell, device_allocation);
-		}
-	}
-
-	{
 		spell_type *spell = spell_new(&TELEPORT, "Teleportation");
 		spell_type_describe(spell, "Teleports you around the level. The casting time decreases with level");
 		spell_type_set_mana(spell, 8, 14);

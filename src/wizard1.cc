@@ -243,8 +243,6 @@ static grouper group_item[] =
 	{ TV_DIGGING, "Tools" },
 	{ TV_TOOL, NULL },
 
-	{ TV_TRAPKIT, "Trapping Kits" },
-
 	{ TV_CHEST, "Chests" },
 
 	{ TV_SPIKE, "Various" },
@@ -565,7 +563,6 @@ static grouper group_artifact[] =
 
 	{ TV_TOOL, "Tools" },
 	{ TV_DIGGING, NULL },
-	{ TV_TRAPKIT, "Trapping Kits" },
 
 	{ 0, NULL }
 };

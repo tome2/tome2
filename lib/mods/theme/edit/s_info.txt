@@ -396,19 +396,8 @@ E:Thaumaturgy:Antimagic
 
 ################################## SNEAKINESS SKILLS ###############################
 
-N:35:Sneakiness
-D:General ability at the sneakiness skills.
-D:It also affects the searching abilities
-I:0
-F:RANDOM_GAIN
-
 N:36:Stealth
 D:Ability to move unnoticed, silently
-I:0
-F:RANDOM_GAIN
-
-N:37:Disarming
-D:Ability to disarm the various traps
 I:0
 F:RANDOM_GAIN
 
@@ -422,11 +411,9 @@ D:Ability to dodge blows and bolts
 A:16:Check dodge chance
 I:0
 
-f:Stealth:Sneakiness%15
-f:Disarming:Sneakiness%10
-f:Backstab:Sneakiness%5
-f:Stealing:Sneakiness%15
-f:Dodging:Sneakiness%10
+f:Backstab:Stealth%5
+f:Stealing:Stealth%15
+f:Dodging:Stealth%10
 
 
 ################################## MONSTER SKILLS ################################
@@ -495,12 +482,10 @@ T:Combat:Bearform-combat
 T:Combat:Boulder-throwing
 T:Combat:Antimagic
 
-T:Main:Sneakiness
-T:Sneakiness:Stealth
-T:Sneakiness:Disarming
-T:Sneakiness:Backstab
-T:Sneakiness:Stealing
-T:Sneakiness:Dodging
+T:Main:Stealth
+T:Stealth:Backstab
+T:Stealth:Stealing
+T:Stealth:Dodging
 
 T:Main:Magic
 T:Magic:Magic-Device

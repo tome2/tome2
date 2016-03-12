@@ -14,7 +14,6 @@
 #include "object2.hpp"
 #include "player_type.hpp"
 #include "tables.hpp"
-#include "traps.hpp"
 #include "util.hpp"
 #include "variable.hpp"
 #include "z-rand.hpp"
@@ -75,35 +74,6 @@ static bool_ quest_eol_gen_hook(void *, void *, void *)
 		/* Convert to normal format+ clean up*/
 		done = generate_fracave(y0, x0, xsize, ysize, cutoff, FALSE, TRUE);
 	}
-
-	/* Place a few traps */
-	for (x = xsize - 1; x >= 2; x--)
-		for (y = ysize - 1; y >= 2; y--)
-		{
-			if (!cave_clean_bold(y, x)) continue;
-
-			/* Place eol at the other end */
-			if (!m_idx)
-			{
-				// Find Eol's r_info entry
-				int r_idx = get_eol();
-				// "Summon" Eol
-				m_allow_special[r_idx] = TRUE;
-				m_idx = place_monster_one(y, x, r_idx, 0, FALSE, MSTATUS_ENEMY);
-				m_allow_special[r_idx] = FALSE;
-				// Mark with the QUEST flag
-				if (m_idx) m_list[m_idx].mflag |= MFLAG_QUEST;
-			}
-
-			if (magik(18))
-			{
-				place_trap(y, x);
-			}
-
-			/* Place player at one end */
-			p_ptr->py = y;
-			p_ptr->px = x;
-		}
 
 	cave_set_feat(p_ptr->py, p_ptr->px, FEAT_LESS);
 

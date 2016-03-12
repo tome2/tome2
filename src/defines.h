@@ -114,13 +114,6 @@
  */
 #define DEFAULT_RADIUS	25
 
-
-#define CHANCE_TRAP_JAMMED_DOOR 2500
-#define CHANCE_TRAP_SECRET_DOOR 1500
-#define CHANCE_TRAP_LOCKED_DOOR 1000
-#define CHANCE_TRAP_DOOR  500        /* in 10000 */
-#define CHANCE_TRAP_FLOOR 4          /* in 10000 chance of placing a trap */
-
 #define MAX_SPELLS          100
 #define MAX_RUNES           100
 
@@ -431,7 +424,7 @@
 #define MKEY_FORGING            10
 #define MKEY_INCARNATION        11
 #define MKEY_SUMMON             13
-#define MKEY_TRAP               14
+/* XXX */
 #define MKEY_STEAL              15
 #define MKEY_DODGE              16
 #define MKEY_SCHOOL             17
@@ -528,7 +521,7 @@
 /* Feature 0x10 -- web */
 
 /* Traps */
-#define FEAT_TRAP               0x11
+/* XXX */
 
 /* Features 0x12 - 0x1F -- unused */
 
@@ -613,7 +606,7 @@
 #define FEAT_MARKER             0xAC /* 172 */
 /* Feature 0xAD -- Underground Tunnel */
 #define FEAT_TAINTED_WATER      0xAE /* 174 */
-#define FEAT_MON_TRAP           0xAF /* 175 */
+/* XXX */
 #define FEAT_BETWEEN2           0xB0 /* 176 */
 #define FEAT_LAVA_WALL          0xB1 /* 177 */
 #define FEAT_GREAT_FIRE         0xB2 /* 178 */
@@ -1213,7 +1206,7 @@
 #define TV_LITE         39      /* Lites (including Specials) */
 #define TV_AMULET       40      /* Amulets (including Specials) */
 #define TV_RING         45      /* Rings (including Specials) */
-#define TV_TRAPKIT      46      /* Trapkits */
+/* XXX */
 #define TV_TOTEM        54      /* Summoner totems */
 #define TV_STAFF        55
 #define TV_WAND         65
@@ -1256,14 +1249,6 @@
 #define SV_DRUM                          58
 #define SV_HARP                          59
 #define SV_HORN                          60
-
-/* The "sval" codes for TV_TRAPKIT */
-#define SV_TRAPKIT_SLING                 1
-#define SV_TRAPKIT_BOW                   2
-#define SV_TRAPKIT_XBOW                  3
-#define SV_TRAPKIT_POTION                4
-#define SV_TRAPKIT_SCROLL                5
-#define SV_TRAPKIT_DEVICE                6
 
 /* The "sval" codes for TV_BOOMERANG */
 #define SV_BOOM_S_WOOD                   1      /* 1d4  */
@@ -1671,7 +1656,7 @@
 #define SV_SCROLL_SUMMON_MONSTER         4
 #define SV_SCROLL_SUMMON_UNDEAD          5
 #define SV_SCROLL_SUMMON_MINE            6
-#define SV_SCROLL_TRAP_CREATION          7
+/* XXX */
 #define SV_SCROLL_PHASE_DOOR             8
 #define SV_SCROLL_TELEPORT               9
 #define SV_SCROLL_TELEPORT_LEVEL        10
@@ -1692,7 +1677,7 @@
 #define SV_SCROLL_MAPPING               25
 #define SV_SCROLL_DETECT_GOLD           26
 #define SV_SCROLL_DETECT_ITEM           27
-#define SV_SCROLL_DETECT_TRAP           28
+/* XXX */
 #define SV_SCROLL_DETECT_DOOR           29
 #define SV_SCROLL_DETECT_INVIS          30
 #define SV_SCROLL_DIVINATION            31
@@ -1703,7 +1688,7 @@
 #define SV_SCROLL_MONSTER_CONFUSION     36
 #define SV_SCROLL_PROTECTION_FROM_EVIL  37
 #define SV_SCROLL_RUNE_OF_PROTECTION    38
-#define SV_SCROLL_TRAP_DOOR_DESTRUCTION 39
+/* XXX */
 #define SV_SCROLL_DEINCARNATION         40
 #define SV_SCROLL_STAR_DESTRUCTION      41
 #define SV_SCROLL_DISPEL_UNDEAD         42
@@ -1863,13 +1848,6 @@
  */
 #define SV_BOOK_MAX_GOOD    49
 
-/* flags for operation in get_random_trap in object3.c */
-
-#define TRAP_EXISTS     0x00000001L
-#define TRAP_FOUND      0x00000002L
-#define TRAP_NOTFOUND   0x00000004L
-#define TRAP_IDENTIFIED 0x00000008L
-
 /*** General flag values ***/
 
 
@@ -1884,11 +1862,11 @@
 #define CAVE_VIEW       0x0020    /* view flag */
 #define CAVE_TEMP       0x0040    /* temp flag */
 #define CAVE_WALL       0x0080    /* wall flag */
-#define CAVE_TRDT       0x0100    /* trap detected */
+/* XXX */
 #define CAVE_IDNT       0x0200    /* grid identified (fountains) */
 #define CAVE_SPEC       0x0400    /* special mark(quests) */
 #define CAVE_FREE       0x0800    /* no random generation on it */
-#define CAVE_DETECT     0x1000    /* Traps detected here */
+/* XXX */
 #define CAVE_PLIT       0x2000    /* Player lit grid */
 #define CAVE_MLIT       0x4000    /* Monster lit grid */
 
@@ -1971,7 +1949,7 @@
 #define SM_OPP_POIS             0x00100000
 #define SM_OPP_XXX1             0x00200000
 #define SM_CLONED               0x00400000
-#define SM_NOTE_TRAP            0x00800000
+/* XXX */
 #define SM_IMM_ACID             0x01000000
 #define SM_IMM_ELEC             0x02000000
 #define SM_IMM_FIRE             0x04000000
@@ -2057,200 +2035,9 @@
 
 
 /* jk */
-#define FTRAP_CHEST      0x000000001 /* may appear on chests */
-#define FTRAP_DOOR       0x000000002 /* may appear on doors/floors */
-#define FTRAP_FLOOR      0x000000004 /* may appear on floor */
-#define FTRAP_CHANGE     0x000000008 /* Color changing */
-#define FTRAP_XXX5       0x000000010
-#define FTRAP_XXX6       0x000000020
-#define FTRAP_XXX7       0x000000040
-#define FTRAP_XXX8       0x000000080
-#define FTRAP_XXX9       0x000000100
-#define FTRAP_XXX10      0x000000200
-#define FTRAP_XXX11      0x000000400
-#define FTRAP_XXX12      0x000000800
-#define FTRAP_XXX13      0x000001000
-#define FTRAP_XXX14      0x000002000
-#define FTRAP_XXX15      0x000004000
-#define FTRAP_XXX16      0x000008000
-#define FTRAP_LEVEL1     0x000010000 /* low level ball/bolt trap */
-#define FTRAP_LEVEL2     0x000020000 /* medium level ball/bolt trap */
-#define FTRAP_LEVEL3     0x000040000 /* high level ball/bolt trap */
-#define FTRAP_LEVEL4     0x000080000 /* oops level ball/bolt trap */
-#define FTRAP_XXX21      0x000100000
-#define FTRAP_XXX22      0x000200000
-#define FTRAP_XXX23      0x000400000
-#define FTRAP_XXX24      0x000800000
-#define FTRAP_XXX25      0x001000000
-#define FTRAP_XXX26      0x002000000
-#define FTRAP_XXX27      0x004000000
-#define FTRAP_XXX28      0x008000000
-#define FTRAP_XXX29      0x010000000
-#define FTRAP_XXX30      0x020000000
-#define FTRAP_XXX31      0x040000000
-#define FTRAP_XXX32      0x080000000
-
-/* jk */
 #define STAT_DEC_TEMPORARY 1
 #define STAT_DEC_NORMAL 2
 #define STAT_DEC_PERMANENT 3
-
-/* jk - which trap is which number */
-#define TRAP_OF_WEAKNESS_I                  1
-#define TRAP_OF_WEAKNESS_II                 2
-#define TRAP_OF_WEAKNESS_III                3
-#define TRAP_OF_INTELLIGENCE_I              4
-#define TRAP_OF_INTELLIGENCE_II             5
-#define TRAP_OF_INTELLIGENCE_III            6
-#define TRAP_OF_WISDOM_I                    7
-#define TRAP_OF_WISDOM_II                   8
-#define TRAP_OF_WISDOM_III                  9
-#define TRAP_OF_FUMBLING_I                 10
-#define TRAP_OF_FUMBLING_II                11
-#define TRAP_OF_FUMBLING_III               12
-#define TRAP_OF_WASTING_I                  13
-#define TRAP_OF_WASTING_II                 14
-#define TRAP_OF_WASTING_III                15
-#define TRAP_OF_BEAUTY_I                   16
-#define TRAP_OF_BEAUTY_II                  17
-#define TRAP_OF_BEAUTY_III                 18
-
-#define TRAP_OF_CURSE_WEAPON               20
-#define TRAP_OF_CURSE_ARMOR                21
-#define TRAP_OF_EARTHQUAKE                 22
-#define TRAP_OF_POISON_NEEDLE              23
-#define TRAP_OF_SUMMON_MONSTER             24
-#define TRAP_OF_SUMMON_UNDEAD              25
-#define TRAP_OF_SUMMON_GREATER_UNDEAD      26
-#define TRAP_OF_TELEPORT                   27
-#define TRAP_OF_PARALYZING                 28
-#define TRAP_OF_EXPLOSIVE_DEVICE           29
-#define TRAP_OF_TELEPORT_AWAY              30
-#define TRAP_OF_LOSE_MEMORY                31
-#define TRAP_OF_BITTER_REGRET              32
-#define TRAP_OF_BOWEL_CRAMPS               33
-#define TRAP_OF_BLINDNESS_CONFUSION        34
-#define TRAP_OF_AGGRAVATION                35
-#define TRAP_OF_MULTIPLICATION             36
-#define TRAP_OF_STEAL_ITEM                 37
-#define TRAP_OF_SUMMON_FAST_QUYLTHULGS     38
-#define TRAP_OF_SINKING                    39
-#define TRAP_OF_MANA_DRAIN                 40
-#define TRAP_OF_MISSING_MONEY              41
-#define TRAP_OF_NO_RETURN                  42
-#define TRAP_OF_SILENT_SWITCHING           43
-#define TRAP_OF_WALLS                      44
-#define TRAP_OF_CALLING_OUT                45
-#define TRAP_OF_SLIDING                    46
-#define TRAP_OF_CHARGES_DRAIN              47
-#define TRAP_OF_STAIR_MOVEMENT             48
-#define TRAP_OF_NEW                        49
-#define TRAP_OF_SCATTER_ITEMS              50
-#define TRAP_OF_DECAY                      51
-#define TRAP_OF_WASTING_WANDS              52
-#define TRAP_OF_FILLING                    53
-#define TRAP_OF_DRAIN_SPEED                54
-
-#define TRAP_OF_ELEC_BOLT                  60
-#define TRAP_OF_POIS_BOLT                  61
-#define TRAP_OF_ACID_BOLT                  62
-#define TRAP_OF_COLD_BOLT                  63
-#define TRAP_OF_FIRE_BOLT                  64
-#define TRAP_OF_PLASMA_BOLT                65
-#define TRAP_OF_WATER_BOLT                 66
-#define TRAP_OF_LITE_BOLT                  67
-#define TRAP_OF_DARK_BOLT                  68
-#define TRAP_OF_SHARDS_BOLT                69
-#define TRAP_OF_SOUND_BOLT                 70
-#define TRAP_OF_CONFUSION_BOLT             71
-#define TRAP_OF_FORCE_BOLT                 72
-#define TRAP_OF_INERTIA_BOLT               73
-#define TRAP_OF_MANA_BOLT                  74
-#define TRAP_OF_ICE_BOLT                   75
-#define TRAP_OF_CHAOS_BOLT                 76
-#define TRAP_OF_NETHER_BOLT                77
-#define TRAP_OF_DISENCHANT_BOLT            78
-#define TRAP_OF_NEXUS_BOLT                 79
-#define TRAP_OF_TIME_BOLT                  80
-#define TRAP_OF_GRAVITY_BOLT               81
-
-#define TRAP_OF_ELEC_BALL                  82
-#define TRAP_OF_POIS_BALL                  83
-#define TRAP_OF_ACID_BALL                  84
-#define TRAP_OF_COLD_BALL                  85
-#define TRAP_OF_FIRE_BALL                  86
-#define TRAP_OF_PLASMA_BALL                87
-#define TRAP_OF_WATER_BALL                 88
-#define TRAP_OF_LITE_BALL                  89
-#define TRAP_OF_DARK_BALL                  90
-#define TRAP_OF_SHARDS_BALL                91
-#define TRAP_OF_SOUND_BALL                 92
-#define TRAP_OF_CONFUSION_BALL             93
-#define TRAP_OF_FORCE_BALL                 94
-#define TRAP_OF_INERTIA_BALL               95
-#define TRAP_OF_MANA_BALL                  96
-#define TRAP_OF_ICE_BALL                   97
-#define TRAP_OF_CHAOS_BALL                 98
-#define TRAP_OF_NETHER_BALL                99
-#define TRAP_OF_DISENCHANT_BALL           100
-#define TRAP_OF_NEXUS_BALL                101
-#define TRAP_OF_TIME_BALL                 102
-#define TRAP_OF_GRAVITY_BALL              103
-
-#define TRAP_OF_ARROW_I                   110
-#define TRAP_OF_ARROW_II                  111
-#define TRAP_OF_ARROW_III                 112
-#define TRAP_OF_ARROW_IV                  113
-#define TRAP_OF_POISON_ARROW_I            114
-#define TRAP_OF_POISON_ARROW_II           115
-#define TRAP_OF_POISON_ARROW_III          116
-#define TRAP_OF_POISON_ARROW_IV           117
-#define TRAP_OF_DAGGER_I                  118
-#define TRAP_OF_DAGGER_II                 119
-#define TRAP_OF_POISON_DAGGER_I           120
-#define TRAP_OF_POISON_DAGGER_II          121
-#define TRAP_OF_ARROWS_I                  122
-#define TRAP_OF_ARROWS_II                 123
-#define TRAP_OF_ARROWS_III                124
-#define TRAP_OF_ARROWS_IV                 125
-#define TRAP_OF_POISON_ARROWS_I           126
-#define TRAP_OF_POISON_ARROWS_II          127
-#define TRAP_OF_POISON_ARROWS_III         128
-#define TRAP_OF_POISON_ARROWS_IV          129
-#define TRAP_OF_DAGGERS_I                 130
-#define TRAP_OF_DAGGERS_II                131
-#define TRAP_OF_POISON_DAGGERS_I          132
-#define TRAP_OF_POISON_DAGGERS_II         133
-
-#define TRAP_OF_DROP_ITEMS                140
-#define TRAP_OF_DROP_ALL_ITEMS            141
-#define TRAP_OF_DROP_EVERYTHING           142
-
-#define TRAP_OF_ELDRITCH_HORROR           156
-
-#define TRAP_OF_DIVINE_ANGER              158
-#define TRAP_OF_DIVINE_WRATH              159
-#define TRAP_OF_HALLUCINATION             160
-
-#define TRAP_OF_ROCKET                    161
-#define TRAP_OF_NUKE_BOLT                 162
-#define TRAP_OF_DEATH_RAY                 163
-#define TRAP_OF_HOLY_FIRE                 164
-#define TRAP_OF_HELL_FIRE                 165
-#define TRAP_OF_PSI_BOLT                  166
-#define TRAP_OF_PSI_DRAIN                 167
-#define TRAP_OF_NUKE_BALL                 168
-#define TRAP_OF_PSI_BALL                  169
-
-/* DG */
-#define TRAP_OF_ACQUIREMENT               170
-
-/* Runescrye */
-#define TRAP_G_ELEC_BOLT                171
-#define TRAP_G_POIS_BOLT                172
-#define TRAP_G_ACID_BOLT                173
-#define TRAP_G_COLD_BOLT                174
-#define TRAP_G_FIRE_BOLT                175
 
 /*** General index values ***/
 
@@ -2332,10 +2119,10 @@
 #define GF_GRAVITY      35
 #define GF_KILL_WALL    40
 #define GF_KILL_DOOR    41
-#define GF_KILL_TRAP    42
+/* XXX */
 #define GF_MAKE_WALL    45
 #define GF_MAKE_DOOR    46
-#define GF_MAKE_TRAP    47
+/* XXX */
 #define GF_OLD_CLONE    51
 #define GF_OLD_POLY             52
 #define GF_OLD_HEAL             53
@@ -2534,19 +2321,6 @@
 #define TR1_BRAND_FIRE          0x40000000L
 #define TR1_BRAND_COLD          0x80000000L
 #define TR1_NULL_MASK           0x00000000L
-
-#define TRAP2_AUTOMATIC_5       0x00000001L     /* Trap automatically rearms itself, 1 in 5 failure */
-#define TRAP2_AUTOMATIC_99      0x00000002L     /* Trap automatically rearms itself */
-#define TRAP2_KILL_GHOST        0x00000004L     /* Trap also affects PASS_WALL creatures */
-#define TRAP2_TELEPORT_TO       0x00000008L     /* After everything else, teleport to player */
-#define TRAP2_ONLY_DRAGON       0x00000010L     /* Affect only dragons & other AFFECTed creatures */
-#define TRAP2_ONLY_DEMON        0x00000020L     /* Affect only demons & other AFFECTed creatures */
-#define TRAP2_ONLY_ANIMAL       0x00000100L     /* Affect only animals & other AFFECTed creatures */
-#define TRAP2_ONLY_UNDEAD       0x00000200L     /* Affect only undead & others */
-#define TRAP2_ONLY_EVIL         0x00000400L     /* Affect only evil creatures &c. */
-
-#define TRAP2_ONLY_MASK		(TRAP2_ONLY_DRAGON | TRAP2_ONLY_DEMON | TRAP2_ONLY_ANIMAL | \
-				 TRAP2_ONLY_UNDEAD | TRAP2_ONLY_EVIL )
 
 #define TR2_SUST_STR            0x00000001L
 #define TR2_SUST_INT            0x00000002L
@@ -3800,7 +3574,7 @@
 #define AB_AMMO_CREATION        5
 #define AB_DEATH_TOUCH          6
 #define AB_FAR_REACHING         8
-#define AB_TRAPPING             9
+/* XXX */
 #define AB_UNDEAD_FORM          10
 
 /**

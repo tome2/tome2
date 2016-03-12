@@ -2032,76 +2032,6 @@ bool_ lose_all_info(void)
 }
 
 
-
-
-/*
- * Detect all traps on current panel
- */
-bool_ detect_traps(int rad)
-{
-	int x, y;
-	bool_ detect = FALSE;
-	cave_type *c_ptr;
-
-
-	/* Scan the current panel */
-	for (y = p_ptr->py - rad; y <= p_ptr->py + rad; y++)
-	{
-		for (x = p_ptr->px - rad; x <= p_ptr->px + rad; x++)
-		{
-			/* Reject locations outside of dungeon */
-			if (!in_bounds(y, x)) continue;
-
-			/* Reject those out of radius */
-			if (distance(p_ptr->py, p_ptr->px, y, x) > rad) continue;
-
-			/* Access the grid */
-			c_ptr = &cave[y][x];
-
-			/* mark as detected */
-			c_ptr->info |= CAVE_DETECT;
-
-			/* Detect invisible traps */
-			if (c_ptr->t_idx != 0)
-			{
-				/* Hack -- Remember detected traps */
-				c_ptr->info |= (CAVE_MARK);
-
-				/* Pick a trap */
-				pick_trap(y, x);
-
-				/* Obvious */
-				detect = TRUE;
-			}
-		}
-	}
-
-	/* Describe */
-	if (detect)
-	{
-		msg_print("You sense the presence of traps!");
-	}
-
-	/*
-	 * This reveals un-identified trap detection items,
-	 * but so does leaving/entering trap-detected areas...
-	 * There are a couple of possible solutions:
-	 * (1) Immediately self-id such items (i.e. always returns TRUE)
-	 * (2) add another parameter to function which tells if unaware
-	 * item is used for trap detection, and if it is the case,
-	 * do two-pass scanning, first scanning for traps if an unaware
-	 * item is used and return FALSE there are none,
-	 * followed by current implementation --pelpel
-	 */
-	p_ptr->redraw |= (PR_FRAME);
-
-	/* Result -- see my comment above -- pelpel */
-	/* return (detect); */
-	return (TRUE);
-}
-
-
-
 /*
  * Detect all doors on current panel
  */
@@ -2595,7 +2525,6 @@ bool_ detect_all(int rad)
 	bool_ detect = FALSE;
 
 	/* Detect everything */
-	if (detect_traps(rad)) detect = TRUE;
 	if (detect_doors(rad)) detect = TRUE;
 	if (detect_stairs(rad)) detect = TRUE;
 	if (detect_treasure(rad)) detect = TRUE;
@@ -5338,9 +5267,6 @@ void teleport_swap(int dir)
 			/* Update the monsters */
 			p_ptr->update |= (PU_DISTANCE);
 
-			/* Redraw trap detection status */
-			p_ptr->redraw |= (PR_FRAME);
-
 			/* Window stuff */
 			p_ptr->window |= (PW_OVERHEAD);
 
@@ -5391,9 +5317,6 @@ void swap_position(int lty, int ltx)
 		/* Update the monsters */
 		p_ptr->update |= (PU_DISTANCE);
 
-		/* Redraw trap detection status */
-		p_ptr->redraw |= (PR_FRAME);
-
 		/* Window stuff */
 		p_ptr->window |= (PW_OVERHEAD);
 
@@ -5439,9 +5362,6 @@ void swap_position(int lty, int ltx)
 
 		/* Update the monsters */
 		p_ptr->update |= (PU_DISTANCE);
-
-		/* Redraw trap detection status */
-		p_ptr->redraw |= (PR_FRAME);
 
 		/* Window stuff */
 		p_ptr->window |= (PW_OVERHEAD);
@@ -5548,14 +5468,6 @@ bool_ wizard_lock(int dir)
 	return (project_hook(GF_JAM_DOOR, dir, 20 + randint(30), flg));
 }
 
-
-bool_ disarm_trap(int dir)
-{
-	int flg = PROJECT_BEAM | PROJECT_GRID | PROJECT_ITEM;
-	return (project_hook(GF_KILL_TRAP, dir, 0, flg));
-}
-
-
 bool_ slow_monster(int dir)
 {
 	int flg = PROJECT_STOP | PROJECT_KILL;
@@ -5604,14 +5516,6 @@ bool_ teleport_monster(int dir)
 	return (project_hook(GF_AWAY_ALL, dir, MAX_SIGHT * 5, flg));
 }
 
-
-bool_ trap_creation(void)
-{
-	int flg = PROJECT_GRID | PROJECT_ITEM | PROJECT_HIDE;
-	return (project(0, 1, p_ptr->py, p_ptr->px, 0, GF_MAKE_TRAP, flg));
-}
-
-
 bool_ wall_stone(int y, int x)
 {
 	cave_type *c_ptr = &cave[y][x];
@@ -5643,12 +5547,6 @@ bool_ destroy_doors_touch(void)
 {
 	int flg = PROJECT_GRID | PROJECT_ITEM | PROJECT_HIDE;
 	return (project(0, 1, p_ptr->py, p_ptr->px, 0, GF_KILL_DOOR, flg));
-}
-
-bool_ destroy_traps_touch(void)
-{
-	int flg = PROJECT_GRID | PROJECT_ITEM | PROJECT_HIDE;
-	return (project(0, 1, p_ptr->py, p_ptr->px, 0, GF_KILL_TRAP, flg));
 }
 
 bool_ sleep_monsters_touch(void)
@@ -6226,9 +6124,6 @@ bool_ passwall(int dir, bool_ safe)
 
 	/* Update the monsters */
 	p_ptr->update |= (PU_DISTANCE);
-
-	/* Redraw trap detection status */
-	p_ptr->redraw |= (PR_FRAME);
 
 	/* Window stuff */
 	p_ptr->window |= (PW_OVERHEAD);

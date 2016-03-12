@@ -38,7 +38,6 @@
 #include "spells2.hpp"
 #include "stats.hpp"
 #include "tables.hpp"
-#include "traps.hpp"
 #include "util.hpp"
 #include "variable.hpp"
 #include "xtra2.hpp"
@@ -4238,7 +4237,6 @@ static bool_ make_attack_spell(int m_idx)
 				disturb(1);
 				if (blind) msg_format("%^s mumbles, and then cackles evilly.", m_name);
 				else msg_format("%^s casts a spell and cackles evilly.", m_name);
-				(void)trap_creation();
 				break;
 			}
 
@@ -6481,13 +6479,6 @@ static void process_monster(int m_idx, bool_ is_frien)
 			do_move = TRUE;
 		}
 
-		/* Floor is trapped? */
-		else if (c_ptr->feat == FEAT_MON_TRAP)
-		{
-			/* Go ahead and move */
-			do_move = TRUE;
-		}
-
 		/* Hack -- check for Glyph of Warding */
 		if ((c_ptr->feat == FEAT_GLYPH) &&
 		                !(r_ptr->flags1 & RF1_NEVER_BLOW))
@@ -6975,135 +6966,128 @@ static void process_monster(int m_idx, bool_ is_frien)
 					disturb(0);
 			}
 
-			/* Check for monster trap */
-			if (c_ptr->feat == FEAT_MON_TRAP)
-			{
-				if (mon_hit_trap(m_idx)) return;
-			}
-			else
-			{
-				/* Copy list of objects; we need a copy because we're mutating the list. */
-				auto const object_idxs(c_ptr->o_idxs);
 
-				/* Scan all objects in the grid */
-				for (auto const this_o_idx: object_idxs)
+			/* Copy list of objects; we need a copy because we're mutating the list. */
+			auto const object_idxs(c_ptr->o_idxs);
+
+			/* Scan all objects in the grid */
+			for (auto const this_o_idx: object_idxs)
+			{
+				/* Acquire object */
+				object_type * o_ptr = &o_list[this_o_idx];
+
+				/* Skip gold */
+				if (o_ptr->tval == TV_GOLD) continue;
+
+				/* Incarnate ? */
+				if ((o_ptr->tval == TV_CORPSE) && (r_ptr->flags7 & RF7_POSSESSOR) &&
+				                ((o_ptr->sval == SV_CORPSE_CORPSE) || (o_ptr->sval == SV_CORPSE_SKELETON)))
 				{
-					/* Acquire object */
-					object_type * o_ptr = &o_list[this_o_idx];
+					if (ai_possessor(m_idx, this_o_idx)) return;
+				}
 
-					/* Skip gold */
-					if (o_ptr->tval == TV_GOLD) continue;
+				/* Take or Kill objects on the floor */
+				/* rr9: Pets will no longer pick up/destroy items */
+				if ((((r_ptr->flags2 & (RF2_TAKE_ITEM)) &&
+				                ((is_friend(m_ptr) <= 0) || p_ptr->pet_pickup_items)) ||
+				                (r_ptr->flags2 & (RF2_KILL_ITEM))) &&
+				                (is_friend(m_ptr) <= 0))
+				{
+					u32b f1, f2, f3, f4, f5, esp;
 
-					/* Incarnate ? */
-					if ((o_ptr->tval == TV_CORPSE) && (r_ptr->flags7 & RF7_POSSESSOR) &&
-					                ((o_ptr->sval == SV_CORPSE_CORPSE) || (o_ptr->sval == SV_CORPSE_SKELETON)))
+					u32b flg3 = 0L;
+
+					char m_name[80];
+					char o_name[80];
+
+					/* Extract some flags */
+					object_flags(o_ptr, &f1, &f2, &f3, &f4, &f5, &esp);
+
+					/* Acquire the object name */
+					object_desc(o_name, o_ptr, TRUE, 3);
+
+					/* Acquire the monster name */
+					monster_desc(m_name, m_ptr, 0x04);
+
+					/* React to objects that hurt the monster */
+					if (f5 & (TR5_KILL_DEMON)) flg3 |= (RF3_DEMON);
+					if (f5 & (TR5_KILL_UNDEAD)) flg3 |= (RF3_UNDEAD);
+					if (f1 & (TR1_SLAY_DRAGON)) flg3 |= (RF3_DRAGON);
+					if (f1 & (TR1_SLAY_TROLL)) flg3 |= (RF3_TROLL);
+					if (f1 & (TR1_SLAY_GIANT)) flg3 |= (RF3_GIANT);
+					if (f1 & (TR1_SLAY_ORC)) flg3 |= (RF3_ORC);
+					if (f1 & (TR1_SLAY_DEMON)) flg3 |= (RF3_DEMON);
+					if (f1 & (TR1_SLAY_UNDEAD)) flg3 |= (RF3_UNDEAD);
+					if (f1 & (TR1_SLAY_ANIMAL)) flg3 |= (RF3_ANIMAL);
+					if (f1 & (TR1_SLAY_EVIL)) flg3 |= (RF3_EVIL);
+
+					/* The object cannot be picked up by the monster */
+					if (artifact_p(o_ptr) || (r_ptr->flags3 & flg3) ||
+					                (o_ptr->art_name))
 					{
-						if (ai_possessor(m_idx, this_o_idx)) return;
-					}
-
-					/* Take or Kill objects on the floor */
-					/* rr9: Pets will no longer pick up/destroy items */
-					if ((((r_ptr->flags2 & (RF2_TAKE_ITEM)) &&
-					                ((is_friend(m_ptr) <= 0) || p_ptr->pet_pickup_items)) ||
-					                (r_ptr->flags2 & (RF2_KILL_ITEM))) &&
-					                (is_friend(m_ptr) <= 0))
-					{
-						u32b f1, f2, f3, f4, f5, esp;
-
-						u32b flg3 = 0L;
-
-						char m_name[80];
-						char o_name[80];
-
-						/* Extract some flags */
-						object_flags(o_ptr, &f1, &f2, &f3, &f4, &f5, &esp);
-
-						/* Acquire the object name */
-						object_desc(o_name, o_ptr, TRUE, 3);
-
-						/* Acquire the monster name */
-						monster_desc(m_name, m_ptr, 0x04);
-
-						/* React to objects that hurt the monster */
-						if (f5 & (TR5_KILL_DEMON)) flg3 |= (RF3_DEMON);
-						if (f5 & (TR5_KILL_UNDEAD)) flg3 |= (RF3_UNDEAD);
-						if (f1 & (TR1_SLAY_DRAGON)) flg3 |= (RF3_DRAGON);
-						if (f1 & (TR1_SLAY_TROLL)) flg3 |= (RF3_TROLL);
-						if (f1 & (TR1_SLAY_GIANT)) flg3 |= (RF3_GIANT);
-						if (f1 & (TR1_SLAY_ORC)) flg3 |= (RF3_ORC);
-						if (f1 & (TR1_SLAY_DEMON)) flg3 |= (RF3_DEMON);
-						if (f1 & (TR1_SLAY_UNDEAD)) flg3 |= (RF3_UNDEAD);
-						if (f1 & (TR1_SLAY_ANIMAL)) flg3 |= (RF3_ANIMAL);
-						if (f1 & (TR1_SLAY_EVIL)) flg3 |= (RF3_EVIL);
-
-						/* The object cannot be picked up by the monster */
-						if (artifact_p(o_ptr) || (r_ptr->flags3 & flg3) ||
-						                (o_ptr->art_name))
-						{
-							/* Only give a message for "take_item" */
-							if (r_ptr->flags2 & (RF2_TAKE_ITEM))
-							{
-								/* Take note */
-								did_take_item = TRUE;
-
-								/* Describe observable situations */
-								if (m_ptr->ml && player_has_los_bold(ny, nx))
-								{
-									/* Dump a message */
-									msg_format("%^s tries to pick up %s, but fails.",
-									           m_name, o_name);
-								}
-							}
-						}
-
-						/* Pick up the item */
-						else if (r_ptr->flags2 & (RF2_TAKE_ITEM))
+						/* Only give a message for "take_item" */
+						if (r_ptr->flags2 & (RF2_TAKE_ITEM))
 						{
 							/* Take note */
 							did_take_item = TRUE;
 
 							/* Describe observable situations */
-							if (player_has_los_bold(ny, nx))
+							if (m_ptr->ml && player_has_los_bold(ny, nx))
 							{
 								/* Dump a message */
-								msg_format("%^s picks up %s.", m_name, o_name);
-							}
-
-							/* Put into inventory of monster */
-							{
-								/* Excise the object */
-								excise_object_idx(this_o_idx);
-
-								/* Forget mark */
-								o_ptr->marked = FALSE;
-
-								/* Forget location */
-								o_ptr->iy = o_ptr->ix = 0;
-
-								/* Memorize monster */
-								o_ptr->held_m_idx = m_idx;
-
-								/* Carry object */
-								m_ptr->hold_o_idxs.push_back(this_o_idx);
+								msg_format("%^s tries to pick up %s, but fails.",
+								           m_name, o_name);
 							}
 						}
+					}
 
-						/* Destroy the item */
-						else
+					/* Pick up the item */
+					else if (r_ptr->flags2 & (RF2_TAKE_ITEM))
+					{
+						/* Take note */
+						did_take_item = TRUE;
+
+						/* Describe observable situations */
+						if (player_has_los_bold(ny, nx))
 						{
-							/* Take note */
-							did_kill_item = TRUE;
-
-							/* Describe observable situations */
-							if (player_has_los_bold(ny, nx))
-							{
-								/* Dump a message */
-								msg_format("%^s crushes %s.", m_name, o_name);
-							}
-
-							/* Delete the object */
-							delete_object_idx(this_o_idx);
+							/* Dump a message */
+							msg_format("%^s picks up %s.", m_name, o_name);
 						}
+
+						/* Put into inventory of monster */
+						{
+							/* Excise the object */
+							excise_object_idx(this_o_idx);
+
+							/* Forget mark */
+							o_ptr->marked = FALSE;
+
+							/* Forget location */
+							o_ptr->iy = o_ptr->ix = 0;
+
+							/* Memorize monster */
+							o_ptr->held_m_idx = m_idx;
+
+							/* Carry object */
+							m_ptr->hold_o_idxs.push_back(this_o_idx);
+						}
+					}
+
+					/* Destroy the item */
+					else
+					{
+						/* Take note */
+						did_kill_item = TRUE;
+
+						/* Describe observable situations */
+						if (player_has_los_bold(ny, nx))
+						{
+							/* Dump a message */
+							msg_format("%^s crushes %s.", m_name, o_name);
+						}
+
+						/* Delete the object */
+						delete_object_idx(this_o_idx);
 					}
 				}
 			}

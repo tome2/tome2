@@ -29,7 +29,6 @@
 #include "tables.hpp"
 #include "timer_type.hpp"
 #include "town_type.hpp"
-#include "trap_type.hpp"
 #include "util.hpp"
 #include "util.h"
 #include "wilderness_map.hpp"
@@ -1007,7 +1006,6 @@ static bool_ wearable_p(object_type *o_ptr)
 	case TV_HYPNOS:
 	case TV_INSTRUMENT:
 	case TV_DAEMON_BOOK:
-	case TV_TRAPKIT:
 	case TV_TOOL:
 		{
 			return (TRUE);
@@ -2546,23 +2544,6 @@ static bool_ do_savefile_aux(ls_flag_t flag)
 	for (i = 0; i < tmp16u; i++)
 	{
 		do_fate(i, flag);
-	}
-
-	/* Load the Traps */
-	if (flag == ls_flag_t::SAVE) tmp16u = max_t_idx;
-	do_u16b(&tmp16u, flag);
-
-	/* Incompatible save files */
-	if ((flag == ls_flag_t::LOAD) && (tmp16u > max_t_idx))
-	{
-		note(format("Too many (%u) traps!", tmp16u));
-		return (FALSE);
-	}
-
-	/* fate flags */
-	for (i = 0; i < tmp16u; i++)
-	{
-		do_byte((byte*)&t_info[i].ident, flag);
 	}
 
 	/* inscription knowledge */

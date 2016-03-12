@@ -44,7 +44,6 @@
 #include "store_type.hpp"
 #include "tables.hpp"
 #include "town_type.hpp"
-#include "trap_type.hpp"
 #include "util.hpp"
 #include "util.h"
 #include "variable.h"
@@ -292,26 +291,6 @@ errr process_pref_file_aux(char *buf)
 				if (n2)
 				{
 					rmp_ptr->g_char = n2;
-				}
-				return (0);
-			}
-		}
-
-		/* Process "G:T:<num>:<a>/<c>" -- attr/char for traps */
-		if (buf[2] == 'T')
-		{
-			if (tokenize(buf + 4, 3, zz, ':', '/') == 3)
-			{
-				trap_type *t_ptr;
-				i = (huge)strtol(zz[0], NULL, 0);
-				n1 = strtol(zz[1], NULL, 0);
-				n2 = strtol(zz[2], NULL, 0);
-				if (i >= max_t_idx) return (1);
-				t_ptr = &t_info[i];
-				if (n1) t_ptr->g_attr = n1;
-				if (n2)
-				{
-					t_ptr->g_char = n2;
 				}
 				return (0);
 			}
