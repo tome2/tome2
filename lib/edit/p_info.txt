@@ -171,8 +171,6 @@ C:a:k:=0:=0:Axe-mastery
 C:a:k:=0:=0:Hafted-mastery
 C:a:k:=0:=0:Polearm-mastery
 C:a:k:+1000:-200:Archery
-
-
 C:a:k:+1000:+400:Magic
 C:a:k:+1000:+300:Spirituality
 C:a:k:=0:=0:Antimagic
@@ -221,7 +219,6 @@ C:k:+0:+700:Thaumaturgy
 C:k:+1000:+550:Spirituality
 C:k:+1000:+200:Combat
 C:k:+700:+500:Weaponmastery
-
 C:k:+0000:+400:Stealth
 C:b:1:Perfect casting
 C:g:All Gods
@@ -366,9 +363,7 @@ C:k:+0:+300:Crossbow-mastery
 C:k:+0:+300:Sling-mastery
 C:k:+0:+300:Boomerang-mastery
 C:k:+0:%150:Boulder-throwing
-
 C:k:+0000:+400:Stealth
-
 C:k:+1000:+300:Magic
 C:k:+0:+100:Magic-Device
 C:k:+1000:+400:Spirituality
@@ -396,8 +391,6 @@ C:a:k:+0:+400:Magic
 C:a:k:+0:+500:Nature
 C:a:k:+0:+500:Divination
 C:a:k:+0:+500:Conveyance
-
-
 C:a:k:+0:+200:Monster-lore
 C:a:O:19:12:1d1
 C:a:O:17:1:10d3
@@ -471,9 +464,7 @@ C:k:+0:+500:Conveyance
 C:k:+0:+500:Divination
 C:k:+0:+500:Temporal
 C:k:+1000:+700:Spirituality
-
 C:k:+1000:+1500:Stealth
-
 C:k:+1000:+1000:Backstab
 C:k:+1000:+2000:Stealing
 C:k:+1000:+2000:Dodging
@@ -496,7 +487,6 @@ C:a:k:+0:-400:Conveyance
 C:a:k:+0:-400:Divination
 C:a:k:+0:-300:Temporal
 C:a:k:+0:+500:Stealth
-
 C:a:k:+0:+1000:Backstab
 C:a:k:+0:-1800:Stealing
 C:a:k:+0:-800:Magic-Device
@@ -525,9 +515,7 @@ C:k:+1000:+700:Weaponmastery
 C:k:+1000:+700:Archery
 C:k:+1000:+700:Barehand-combat
 C:k:+0:+600:Magic
-
 C:k:+1000:+700:Stealth
-
 C:k:+1000:+700:Spirituality
 C:k:+1000:+600:Monster-lore
 C:k:+0:+500:Possession
@@ -556,7 +544,6 @@ C:a:k:+0:-100:Combat
 C:a:k:+0:-100:Weaponmastery
 C:a:k:+0:-300:Archery
 C:a:k:-1000:-700:Barehand-combat
-
 C:a:k:+0:-200:Spirituality
 C:a:k:+1000:+300:Possession
 C:a:k:+0:+200:Corpse-preservation
@@ -574,7 +561,6 @@ C:a:k:+0:+100:Combat
 C:a:k:+0:+100:Weaponmastery
 C:a:k:+0:-100:Barehand-combat
 C:a:k:+1000:+100:Magic
-
 C:a:k:+0:+100:Stealth
 C:a:k:+0:-200:Spirituality
 C:a:k:+0:-400:Possession
@@ -592,7 +578,6 @@ C:a:k:+0:+100:Combat
 C:a:k:+0:+100:Weaponmastery
 C:a:k:+0:-100:Barehand-combat
 C:a:k:+1000:+100:Magic
-
 C:a:k:+0:+100:Stealth
 C:a:k:+0:-200:Spirituality
 C:a:k:+0:-400:Possession
@@ -611,9 +596,7 @@ C:a:k:+0:-100:Weaponmastery
 C:a:k:+0:-300:Archery
 C:a:k:-1000:-700:Barehand-combat
 C:a:k:+1000:+200:Magic
-
 C:a:k:+0:+0:Stealth
-
 C:a:k:+0:-200:Spirituality
 C:a:k:+15000:+100:Monster-lore
 C:a:k:+0:-500:Possession
@@ -632,9 +615,7 @@ C:a:k:-1000:-400:Weaponmastery
 C:a:k:-1000:-300:Archery
 C:a:k:+0:+200:Barehand-combat
 C:a:k:+0:+0:Magic
-
 C:a:k:+0:+200:Stealth
-
 C:a:k:+0:+200:Spirituality
 C:a:k:+0:-400:Possession
 C:a:k:+0:-200:Corpse-preservation
@@ -656,7 +637,6 @@ C:a:O:14:59:1d1
 C:a:k:+1000:+0:Magic
 C:a:k:-1000:-700:Archery
 C:a:k:+0:-100:Barehand-combat
-
 C:a:k:+0:+100:Spirituality
 C:a:k:+0:-500:Possession
 C:a:k:+0:-100:Summoning
@@ -694,8 +674,6 @@ C:k:+1000:+1000:Spirituality
 C:k:+1000:+700:Prayer
 C:k:+2000:+700:Combat
 C:k:+1000:+700:Weaponmastery
-
-
 C:k:+0000:+400:Stealth
 C:k:+0:+50:Magic-Device
 C:b:1:Perfect casting
@@ -763,7 +741,6 @@ C:a:g:Yavanna Kementari
 C:a:k:+0:-300:Prayer
 C:a:k:+0:-200:Necromancy
 C:a:k:+1000:+300:Mindcraft
-
 C:a:k:+0:+100:Magic-Device
 
 ###############################TEST###############################
@@ -797,8 +774,6 @@ C:k:+0:+200:Axe-mastery
 C:k:+0:+200:Hafted-mastery
 C:k:+0:+200:Polearm-mastery
 C:k:+1000:+600:Archery
-
-
 C:k:+1000:+300:Magic
 C:k:+0:+550:Antimagic
 
@@ -850,11 +825,9 @@ R:P:9:110:2:4
 R:E:1:1:1:2:1:1
 R:C:Warrior | Archer | Mage | Rogue | Priest | Loremaster
 R:G:ELF
-
 R:k:+300:+000:Magic-Device
 R:k:+1500:+000:Spirituality
 R:k:+1000:+000:Stealth
-
 R:k:-100:+000:Weaponmastery
 R:k:+500:+000:Archery
 
@@ -870,11 +843,9 @@ R:R:1:0
 R:F:RES_LITE | 
 R:C:Warrior | Archer | Mage | Priest | Loremaster
 R:G:ELF
-
 R:k:+600:+000:Magic-Device
 R:k:+3000:+000:Spirituality
 R:k:+2000:+000:Stealth
-
 R:k:-500:+000:Weaponmastery
 R:k:+1500:+000:Archery
 
@@ -891,11 +862,9 @@ R:R:1:0
 R:F:SUST_DEX | 
 R:C:Warrior | Archer | Mage | Rogue | Loremaster
 R:k:+0:+300:Sling-mastery
-
 R:k:+1800:+000:Magic-Device
 R:k:+9000:+000:Spirituality
 R:k:+5000:+000:Stealth
-
 R:k:-1000:+000:Weaponmastery
 R:k:+2000:+000:Archery
 
@@ -910,11 +879,9 @@ R:Z:blink
 R:R:1:0
 R:F:FREE_ACT | 
 R:C:Warrior | Mage | Rogue
-
 R:k:+1200:+000:Magic-Device
 R:k:+6000:+000:Spirituality
 R:k:+3000:+000:Stealth
-
 R:k:-800:+000:Weaponmastery
 R:k:+1200:+000:Archery
 
@@ -930,11 +897,9 @@ R:R:1:0
 R:F:RES_BLIND | 
 R:C:Warrior | Priest
 R:k:+0:+200:Axe-mastery
-
 R:k:+900:+000:Magic-Device
 R:k:+5000:+000:Spirituality
 R:k:-1000:+000:Stealth
-
 R:k:+1500:+000:Weaponmastery
 R:k:+500:+000:Archery
 
@@ -948,11 +913,9 @@ R:Z:remove fear
 R:R:1:0
 R:F:RES_DARK | 
 R:C:Warrior | Archer | Rogue | Priest
-
 R:k:-300:+000:Magic-Device
 R:k:-1000:+000:Spirituality
 R:k:-1000:+000:Stealth
-
 R:k:+1200:+000:Weaponmastery
 R:k:-500:+000:Archery
 
@@ -969,11 +932,9 @@ R:F:SUST_STR |
 R:R:15:0
 R:F:REGEN | 
 R:C:Warrior
-
 R:k:-800:+000:Magic-Device
 R:k:-4000:+000:Spirituality
 R:k:-2000:+000:Stealth
-
 R:k:+2000:+000:Weaponmastery
 R:k:-1000:+000:Archery
 
@@ -987,11 +948,9 @@ R:E:1:1:1:2:1:1
 R:R:1:0
 R:F:SUST_CON | REGEN | 
 R:C:Warrior | Archer | Mage | Rogue | Priest | Loremaster
-
 R:k:+500:+000:Magic-Device
 R:k:+2500:+000:Spirituality
 R:k:+2000:+000:Stealth
-
 R:k:+1500:+000:Weaponmastery
 R:k:+1000:+000:Archery
 
@@ -1008,11 +967,9 @@ R:F:SEE_INVIS |
 R:F:RES_LITE | 
 R:G:ELF
 R:C:Warrior | Archer | Mage | Priest | Loremaster
-
 R:k:+2000:+000:Magic-Device
 R:k:+10000:+000:Spirituality
 R:k:+4000:+000:Stealth
-
 R:k:+1000:+000:Weaponmastery
 R:k:+2500:+000:Archery
 
@@ -1027,11 +984,9 @@ R:Z:set explosive rune
 R:R:1:0
 R:F:SUST_STR | RES_DARK | 
 R:C:Warrior | Priest
-
 R:k:-500:+000:Magic-Device
 R:k:-2500:+000:Spirituality
 R:k:-2000:+000:Stealth
-
 R:k:+2000:+000:Weaponmastery
 R:k:+000:+000:Archery
 
@@ -1049,11 +1004,9 @@ R:R:20:1
 R:F:STR | 
 R:C:Warrior | Rogue | Loremaster
 R:k:+1000:+1000:Bearform-combat
-
 R:k:-800:+000:Magic-Device
 R:k:-3000:+000:Spirituality
 R:k:-2000:+000:Stealth
-
 R:k:+2500:+000:Weaponmastery
 R:k:+500:+000:Archery
 
@@ -1067,11 +1020,9 @@ R:Z:poison dart
 R:R:1:0
 R:F:RES_POIS | 
 R:C:Warrior | Archer | Rogue
-
 R:k:-300:+000:Magic-Device
 R:k:-1000:+000:Spirituality
 R:k:-1000:+000:Stealth
-
 R:k:+1000:+000:Weaponmastery
 R:k:-800:+000:Archery
 
@@ -1086,11 +1037,9 @@ R:Z:detect doors and traps
 R:R:1:0
 R:F:RES_DARK | RES_DISEN | 
 R:C:Warrior | Rogue
-
 R:k:+500:+000:Magic-Device
 R:k:+5000:+000:Spirituality
 R:k:+1000:+000:Stealth
-
 R:k:+000:+000:Weaponmastery
 R:k:+000:+000:Archery
 
@@ -1110,11 +1059,9 @@ R:F:SEE_INVIS |
 R:C:Warrior | Archer | Mage | Rogue | Priest
 R:G:ELF
 R:k:+0:+200:Magic
-
 R:k:+1500:+000:Magic-Device
 R:k:+10000:+000:Spirituality
 R:k:+3000:+000:Stealth
-
 R:k:-500:+000:Weaponmastery
 R:k:+1000:+000:Archery
 
@@ -1140,11 +1087,9 @@ R:O:70:32:2d3
 R:b:1:Tree walking
 R:k:+0:+200:Barehand-combat
 R:k:+0:+600:Boulder-throwing
-
 R:k:+500:+000:Magic-Device
 R:k:+10000:+000:Spirituality
 R:k:-6000:+000:Stealth
-
 R:k:-300:+000:Weaponmastery
 R:k:-200:+000:Archery
 
@@ -1177,14 +1122,11 @@ R:F:SPEED |
 R:R:45:1
 R:F:SPEED | 
 R:C:Warrior | Priest
-
 R:k:+500:+000:Magic-Device
 R:k:+2500:+000:Spirituality
 R:k:-8000:+000:Stealth
-
 R:k:+100:+200:Weaponmastery
 R:k:+500:+000:Archery
-
 R:N:17:Thunderlord
 R:D:A thunderlord is a Great Eagle of Manwe, ridden by a Maia of Manwe.
 R:D:They carry the power of wind and thunder.
@@ -1210,11 +1152,9 @@ R:F:RES_POIS |
 R:R:45:0
 R:F:IM_ELEC | 
 R:C:Warrior | Mage | Archer | Priest
-
 R:k:+000:+000:Magic-Device
 R:k:+5000:+000:Spirituality
 R:k:-16000:+000:Stealth
-
 R:k:+1500:+000:Weaponmastery
 R:k:+500:+000:Archery
 
@@ -1232,11 +1172,9 @@ R:F:IMMOVABLE | HOLD_LIFE |
 R:F:RES_NETHER | RES_NEXUS | 
 R:C:Mage | Priest
 R:k:+0:+200:Necromancy
-
 R:k:-500:+000:Magic-Device
 R:k:+7500:+000:Spirituality
 R:k:+25000:+000:Stealth
-
 R:k:+2500:+000:Weaponmastery
 R:k:+2500:+000:Archery
 
@@ -1247,11 +1185,9 @@ R:K:-5:-5:-10:0:-5:0:-10:-10
 R:P:6:25:2:29
 R:E:1:1:1:2:1:1
 R:C:Warrior | Archer | Mage | Rogue | Priest | Loremaster
-
 R:k:-500:+000:Magic-Device
 R:k:-2500:+000:Spirituality
 R:k:-5000:+000:Stealth
-
 R:k:-500:+000:Weaponmastery
 R:k:-500:+000:Archery
 
@@ -1269,11 +1205,9 @@ R:C:Warrior | Archer | Mage | Priest | Loremaster
 R:G:ELF
 R:k:+0:+200:Archery
 R:b:1:Tree walking
-
 R:k:+600:+000:Magic-Device
 R:k:+3000:+000:Spirituality
 R:k:+5000:+000:Stealth
-
 R:k:-2500:+000:Weaponmastery
 R:k:+4000:+000:Archery
 
@@ -1306,12 +1240,10 @@ R:F:STR | INT | WIS | DEX | CON | CHR |
 R:R:48:1
 R:F:STR | INT | WIS | DEX | CON | CHR | 
 R:C:Warrior | Archer | Mage
-
 R:k:+000:+000:Magic-Device
 R:k:+000:+000:Spirituality
 R:k:=0:=0:Prayer
 R:k:+000:+000:Stealth
-
 R:k:+000:+000:Weaponmastery
 R:k:+000:+000:Archery
 
@@ -1380,11 +1312,9 @@ S:R:1:0
 S:F:SEE_INVIS | HOLD_LIFE | 
 S:F:SLOW_DIGEST | RES_COLD | RES_POIS | RES_NETHER | 
 S:O:70:32:2d3
-
 S:k:+800:+000:Magic-Device
 S:k:+700:+000:Spirituality
 S:k:+2000:+000:Stealth
-
 S:k:-500:+000:Weaponmastery
 S:k:-200:+000:Archery
 
@@ -1405,11 +1335,9 @@ S:F:RES_POIS | RES_SHARDS |
 S:R:10:0
 S:F:RES_COLD | 
 S:O:70:32:2d3
-
 S:k:-500:+000:Magic-Device
 S:k:+500:+000:Spirituality
 S:k:-1000:+000:Stealth
-
 S:k:+800:+000:Weaponmastery
 S:k:+000:+000:Archery
 
@@ -1430,11 +1358,9 @@ S:F:SLOW_DIGEST | RES_POIS |
 S:R:5:0
 S:F:RES_COLD | 
 S:O:70:32:2d3
-
 S:k:-200:+000:Magic-Device
 S:k:+500:+000:Spirituality
 S:k:-1000:+000:Stealth
-
 S:k:+500:+000:Weaponmastery
 S:k:+000:+000:Archery
 
@@ -1448,11 +1374,9 @@ S:A:Human | Dwarf | Orc | Troll | Half-Ogre | Beorning |
 S:C:F:Mage
 S:R:10:0
 S:F:RES_FEAR | 
-
 S:k:-1000:+000:Magic-Device
 S:k:+200:+000:Spirituality
 S:k:-2000:+000:Stealth
-
 S:k:+1200:+000:Weaponmastery
 S:k:+500:+000:Archery
 
@@ -1467,11 +1391,9 @@ S:A:Human | Half-Elf | Elf | Hobbit | Gnome | Dwarf |
 S:A:Dunadan | High-Elf | Petty-Dwarf | Dark-Elf | Ent | RohanKnight | 
 S:A:Thunderlord | DeathMold | Yeek | Wood-Elf | Maia | 
 S:C:F:Warrior | Archer
-
 S:k:+1000:+000:Magic-Device
 S:k:+500:+000:Spirituality
 S:k:+3000:+000:Stealth
-
 S:k:-500:+000:Weaponmastery
 S:k:-500:+000:Archery
 
