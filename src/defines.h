@@ -1593,7 +1593,6 @@
 #define SV_ROD_HEALING                   9
 #define SV_ROD_RESTORATION              10
 #define SV_ROD_SPEED                    11
-/* xxx (aimed) */
 #define SV_ROD_TELEPORT_AWAY            13
 #define SV_ROD_DISARMING                14
 #define SV_ROD_LITE                     15
@@ -2813,7 +2812,7 @@
 #define RF6_TELE_AWAY                   0x00000080      /* Move player far away */
 #define RF6_TELE_LEVEL                  0x00000100      /* Move player vertically */
 #define RF6_DARKNESS                    0x00000200      /* Create Darkness */
-#define RF6_TRAPS                       0x00000400      /* Create Traps */
+#define RF6_XXX1                        0x00000400      /* Create Traps */
 #define RF6_FORGET                      0x00000800      /* Cause amnesia */
 #define RF6_RAISE_DEAD                  0x00001000      /* Raise Dead */
 #define RF6_S_BUG                       0x00002000      /* Summon Software bug */
@@ -2916,7 +2915,7 @@
 
 #define RF6_INT_MASK \
    (RF6_BLINK |  RF6_TPORT | RF6_TELE_LEVEL | RF6_TELE_AWAY | \
-    RF6_HEAL | RF6_HASTE | RF6_TRAPS | \
+    RF6_HEAL | RF6_HASTE | \
     RF6_S_KIN | RF6_S_HI_DEMON | RF6_S_MONSTER | RF6_S_MONSTERS | \
     RF6_S_ANT | RF6_S_SPIDER | RF6_S_HOUND | RF6_S_HYDRA | \
     RF6_S_ANGEL | RF6_S_DRAGON | RF6_S_UNDEAD | RF6_S_DEMON | \
