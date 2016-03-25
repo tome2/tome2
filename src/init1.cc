@@ -1916,12 +1916,9 @@ errr init_player_info_txt(FILE *fp)
 			if (8 != sscanf(buf + 4, "%d:%d:%d:%d:%d:%d:%d:%d",
 			                &s[0], &s[1], &s[2], &s[3], &s[4], &s[5], &s[6], &s[7])) return (1);
 
-			rp_ptr->r_dis = s[0];
 			rp_ptr->r_dev = s[1];
 			rp_ptr->r_sav = s[2];
 			rp_ptr->r_stl = s[3];
-			rp_ptr->r_srh = s[4];
-			rp_ptr->r_fos = s[5];
 			rp_ptr->r_thn = s[6];
 			rp_ptr->r_thb = s[7];
 
@@ -2302,12 +2299,9 @@ errr init_player_info_txt(FILE *fp)
 			if (8 != sscanf(buf + 4, "%d:%d:%d:%d:%d:%d:%d:%d",
 			                &s[0], &s[1], &s[2], &s[3], &s[4], &s[5], &s[6], &s[7])) return (1);
 
-			rmp_ptr->r_dis = s[0];
 			rmp_ptr->r_dev = s[1];
 			rmp_ptr->r_sav = s[2];
 			rmp_ptr->r_stl = s[3];
-			rmp_ptr->r_srh = s[4];
-			rmp_ptr->r_fos = s[5];
 			rmp_ptr->r_thn = s[6];
 			rmp_ptr->r_thb = s[7];
 
@@ -2738,12 +2732,9 @@ errr init_player_info_txt(FILE *fp)
 			if (8 != sscanf(buf + 4, "%d:%d:%d:%d:%d:%d:%d:%d",
 			                &s[0], &s[1], &s[2], &s[3], &s[4], &s[5], &s[6], &s[7])) return (1);
 
-			c_ptr->c_dis = s[0];
 			c_ptr->c_dev = s[1];
 			c_ptr->c_sav = s[2];
 			c_ptr->c_stl = s[3];
-			c_ptr->c_srh = s[4];
-			c_ptr->c_fos = s[5];
 			c_ptr->c_thn = s[6];
 			c_ptr->c_thb = s[7];
 
@@ -2760,12 +2751,9 @@ errr init_player_info_txt(FILE *fp)
 			if (8 != sscanf(buf + 4, "%d:%d:%d:%d:%d:%d:%d:%d",
 			                &s[0], &s[1], &s[2], &s[3], &s[4], &s[5], &s[6], &s[7])) return (1);
 
-			c_ptr->x_dis = s[0];
 			c_ptr->x_dev = s[1];
 			c_ptr->x_sav = s[2];
 			c_ptr->x_stl = s[3];
-			c_ptr->x_srh = s[4];
-			c_ptr->x_fos = s[5];
 			c_ptr->x_thn = s[6];
 			c_ptr->x_thb = s[7];
 
