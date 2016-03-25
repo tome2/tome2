@@ -1773,7 +1773,6 @@ static void spoil_mon_info(cptr fname)
 		if (flags6 & (RF6_TELE_AWAY)) vp[vn++] = "teleport away";
 		if (flags6 & (RF6_TELE_LEVEL)) vp[vn++] = "teleport level";
 		if (flags6 & (RF6_DARKNESS)) vp[vn++] = "create darkness";
-		if (flags6 & (RF6_TRAPS)) vp[vn++] = "create traps";
 		if (flags6 & (RF6_FORGET)) vp[vn++] = "cause amnesia";
 		if (flags6 & (RF6_RAISE_DEAD)) vp[vn++] = "raise dead";
 		if (flags6 & (RF6_S_THUNDERLORD)) vp[vn++] = "summon a thunderlord";
