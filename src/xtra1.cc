@@ -2896,10 +2896,6 @@ void calc_bonuses(bool_ silent)
 	/* Base infravision (purely racial) */
 	p_ptr->see_infra = rp_ptr->infra + rmp_ptr->infra;
 
-
-	/* Base skill -- disarming */
-	p_ptr->skill_dis = 0;
-
 	/* Base skill -- magic devices */
 	p_ptr->skill_dev = 0;
 
@@ -3237,7 +3233,6 @@ void calc_bonuses(bool_ silent)
 	p_ptr->to_a += tactic_info[(byte)p_ptr->tactic].to_ac;
 
 	p_ptr->skill_stl += tactic_info[(byte)p_ptr->tactic].to_stealth;
-	p_ptr->skill_dis += tactic_info[(byte)p_ptr->tactic].to_disarm;
 	p_ptr->skill_sav += tactic_info[(byte)p_ptr->tactic].to_saving;
 
 	p_ptr->pspeed += move_info[(byte)p_ptr->movement].to_speed;
@@ -3889,10 +3884,6 @@ void calc_bonuses(bool_ silent)
 
 	/* Affect Skill -- stealth (bonus one) */
 	p_ptr->skill_stl += 1;
-
-	/* Affect Skill -- disarming (DEX and INT) */
-	p_ptr->skill_dis += adj_dex_dis[p_ptr->stat_ind[A_DEX]];
-	p_ptr->skill_dis += adj_int_dis[p_ptr->stat_ind[A_INT]];
 
 	/* Affect Skill -- magic devices (INT) */
 	p_ptr->skill_dev += get_skill_scale(SKILL_DEVICE, 20);
