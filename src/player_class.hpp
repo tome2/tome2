@@ -22,21 +22,15 @@ struct player_class
 
 	s16b c_adj[6];	                /* Class stat modifier */
 
-	s16b c_dis;			/* class disarming */
 	s16b c_dev;			/* class magic devices */
 	s16b c_sav;			/* class saving throws */
 	s16b c_stl;			/* class stealth */
-	s16b c_srh;			/* class searching ability */
-	s16b c_fos;			/* class searching frequency */
 	s16b c_thn;			/* class to hit (normal) */
 	s16b c_thb;			/* class to hit (bows) */
 
-	s16b x_dis;			/* extra disarming */
 	s16b x_dev;			/* extra magic devices */
 	s16b x_sav;			/* extra saving throws */
 	s16b x_stl;			/* extra stealth */
-	s16b x_srh;			/* extra searching ability */
-	s16b x_fos;			/* extra searching frequency */
 	s16b x_thn;			/* extra to hit (normal) */
 	s16b x_thb;			/* extra to hit (bows) */
 
