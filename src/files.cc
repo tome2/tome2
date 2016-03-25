@@ -1346,8 +1346,8 @@ static cptr likert(int x, int y)
 static void display_player_various(void)
 {
 	int tmp, tmp2, damdice, damsides, dambonus, blows;
-	int xthn, xthb, xfos, xsrh;
-	int xdis, xdev, xsav, xstl;
+	int xthn, xthb;
+	int xdev, xsav, xstl;
 	cptr desc;
 	int i;
 
@@ -1369,12 +1369,9 @@ static void display_player_various(void)
 	blows = p_ptr->num_blow;
 
 	/* Basic abilities */
-	xdis = p_ptr->skill_dis;
 	xdev = p_ptr->skill_dev;
 	xsav = p_ptr->skill_sav;
 	xstl = p_ptr->skill_stl;
-	xsrh = p_ptr->skill_srh;
-	xfos = p_ptr->skill_fos;
 
 
 	put_str("Fighting    :", 16, 1);
@@ -1393,18 +1390,6 @@ static void display_player_various(void)
 	desc = likert(xstl, 1);
 	c_put_str(likert_color, desc, 19, 15);
 
-
-	put_str("Perception  :", 16, 28);
-	desc = likert(xfos, 6);
-	c_put_str(likert_color, desc, 16, 42);
-
-	put_str("Searching   :", 17, 28);
-	desc = likert(xsrh, 6);
-	c_put_str(likert_color, desc, 17, 42);
-
-	put_str("Disarming   :", 18, 28);
-	desc = likert(xdis, 8);
-	c_put_str(likert_color, desc, 18, 42);
 
 	put_str("Magic Device:", 19, 28);
 	desc = likert(xdev, 6);
