@@ -4158,12 +4158,6 @@ static void process_command(void)
 			do_cmd_macro_recorder();
 			break;
 		}
-	case CMD_BLUNDER:
-		{
-			if (do_control_walk()) break;
-			do_cmd_walk(always_pickup, FALSE);
-			break;
-		}
 		/* Hack -- Unknown command */
 	default:
 		{

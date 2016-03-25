@@ -3551,7 +3551,6 @@
 #define CMD_DUMP_HTML	-8186
 #define CMD_MACRO    	-8185
 #define CMD_QUEST    	-8184
-#define CMD_BLUNDER	-8183
 #define CMD_SHOW_ABILITY -8182
 
 #define CLI_MAX	128
