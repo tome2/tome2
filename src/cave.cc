@@ -910,7 +910,6 @@ static void map_info(int y, int x, byte *ap, char *cp)
 		 * Special lighting effects, if specified and applicable
 		 * This will never happen for
 		 * - any grids in the overhead map
-		 * - traps
 		 * - (graphics modes) terrain features without corresponding
 		 *   "darker" tiles.
 		 *
@@ -1022,6 +1021,36 @@ static void map_info(int y, int x, byte *ap, char *cp)
 
 
 	/**** Layer 2 -- Objects ****/
+
+	{
+		for (auto const o_idx: c_ptr->o_idxs)
+		{
+			/* Acquire object */
+			object_type *o_ptr = &o_list[o_idx];
+
+			/* Memorized objects */
+			if (o_ptr->marked)
+			{
+				/* Normal char */
+				*cp = object_char(o_ptr);
+
+				/* Normal attr */
+				*ap = object_attr(o_ptr);
+
+				/* Multi-hued attr */
+				if (!avoid_other && (k_info[o_ptr->k_idx].flags5 & TR5_ATTR_MULTI))
+				{
+					*ap = get_shimmer_color();
+				}
+
+				/* Hack -- hallucination */
+				if (p_ptr->image) image_object(ap, cp);
+
+				/* Done */
+				break;
+			}
+		}
+	}
 
 
 	/**** Layer 3 -- Handle monsters ****/
@@ -1279,7 +1308,6 @@ void map_info_default(int y, int x, byte *ap, char *cp)
 		 * Special lighting effects, if specified and applicable
 		 * This will never happen for
 		 * - any grids in the overhead map
-		 * - traps
 		 * - (graphics modes) terrain features without corresponding
 		 *   "darker" tiles.
 		 *
@@ -1386,6 +1414,37 @@ void map_info_default(int y, int x, byte *ap, char *cp)
 
 
 	/**** Layer 2 -- Objects ****/
+
+	{
+		for (auto const this_o_idx: c_ptr->o_idxs)
+		{
+			/* Acquire object */
+			object_type *o_ptr = &o_list[this_o_idx];
+
+			/* Memorized objects */
+			if (o_ptr->marked)
+			{
+				/* Normal char */
+				*cp = object_char_default(o_ptr);
+
+				/* Normal attr */
+				*ap = object_attr_default(o_ptr);
+
+				/* Multi-hued attr */
+				if (!avoid_other &&
+				                (k_info[o_ptr->k_idx].flags5 & TR5_ATTR_MULTI))
+				{
+					*ap = get_shimmer_color();
+				}
+
+				/* Hack -- hallucination */
+				if (p_ptr->image) image_object(ap, cp);
+
+				/* Done */
+				break;
+			}
+		}
+	}
 
 
 	/**** Layer 3 -- Handle monsters ****/
@@ -1657,7 +1716,7 @@ void note_spot(int y, int x)
 		if (cave_plain_floor_grid(c_ptr))
 		{
 			/* Option -- memorise certain floors */
-			if ((info & (CAVE_GLOW)) && (view_perma_grids) ||
+			if (((info & (CAVE_GLOW)) && view_perma_grids ) ||
 			                view_torch_grids)
 			{
 				/* Memorize */
