@@ -191,7 +191,6 @@
  * Hack -- Dungeon allocation "types"
  */
 #define ALLOC_TYP_RUBBLE	1	/* Rubble */
-#define ALLOC_TYP_TRAP		3	/* Trap */
 #define ALLOC_TYP_GOLD		4	/* Gold */
 #define ALLOC_TYP_OBJECT	5	/* Object */
 #define ALLOC_TYP_ALTAR         6       /* Altar */
@@ -1118,12 +1117,6 @@ static void alloc_object(int set, int typ, int num)
 		case ALLOC_TYP_RUBBLE:
 			{
 				place_rubble(y, x);
-				break;
-			}
-
-		case ALLOC_TYP_TRAP:
-			{
-				/* Do nothing */
 				break;
 			}
 
