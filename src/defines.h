@@ -378,7 +378,6 @@
 
 /* Race flags */
 #define PR1_EXPERIMENTAL        0x00000001L     /* Is still under developemnt */
-/* XXX */
 #define PR1_RESIST_BLACK_BREATH 0x00000004L     /* Resist black breath */
 #define PR1_NO_STUN             0x00000008L     /* Never stunned */
 #define PR1_XTRA_MIGHT_BOW      0x00000010L     /* Xtra might with bows */
@@ -392,29 +391,16 @@
 #define PR1_CORRUPT             0x00001000L     /* hack-- corrupted */
 #define PR1_NO_FOOD             0x00002000L     /* little gain from food */
 #define PR1_NO_GOD              0x00004000L     /* cannot worship */
-/* XXX */
 #define PR1_ELF                 0x00010000L     /* Is an elf */
 #define PR1_SEMI_WRAITH         0x00020000L     /* Takes damage when going in walls */
 #define PR1_NO_SUBRACE_CHANGE   0x00040000L     /* Impossible to change subrace */
-/* XXX */
 #define PR1_ANTIMAGIC           0x00100000L     /* antimagic ... hack */
 #define PR1_MOLD_FRIEND         0x00200000L     /* Not attacked by molds wielded */
 #define PR1_GOD_FRIEND          0x00400000L     /* Better grace */
-/* XXX */
 #define PR1_INNATE_SPELLS       0x01000000L     /* KNown all spells, only need books */
-/* XXX */
-/* XXX */
 #define PR1_EASE_STEAL          0x08000000L     /* Gain xp by stealing */
-/* XXX */
-/* XXX */
-/* XXX */
-/* XXX */
-
-/* XXX */
 #define PR2_ASTRAL              0x00000002L     /* Is it an astral being coming from th halls of mandos ? */
-/* XXX */
 
-/* XXX */
 #define MKEY_MINDCRAFT          2
 #define MKEY_ANTIMAGIC          3
 #define MKEY_MIMIC              6
@@ -424,7 +410,6 @@
 #define MKEY_FORGING            10
 #define MKEY_INCARNATION        11
 #define MKEY_SUMMON             13
-/* XXX */
 #define MKEY_STEAL              15
 #define MKEY_DODGE              16
 #define MKEY_SCHOOL             17
@@ -520,9 +505,6 @@
 
 /* Feature 0x10 -- web */
 
-/* Traps */
-/* XXX */
-
 /* Features 0x12 - 0x1F -- unused */
 
 /* Doors */
@@ -606,7 +588,6 @@
 #define FEAT_MARKER             0xAC /* 172 */
 /* Feature 0xAD -- Underground Tunnel */
 #define FEAT_TAINTED_WATER      0xAE /* 174 */
-/* XXX */
 #define FEAT_BETWEEN2           0xB0 /* 176 */
 #define FEAT_LAVA_WALL          0xB1 /* 177 */
 #define FEAT_GREAT_FIRE         0xB2 /* 178 */
@@ -1206,7 +1187,6 @@
 #define TV_LITE         39      /* Lites (including Specials) */
 #define TV_AMULET       40      /* Amulets (including Specials) */
 #define TV_RING         45      /* Rings (including Specials) */
-/* XXX */
 #define TV_TOTEM        54      /* Summoner totems */
 #define TV_STAFF        55
 #define TV_WAND         65
@@ -1656,7 +1636,6 @@
 #define SV_SCROLL_SUMMON_MONSTER         4
 #define SV_SCROLL_SUMMON_UNDEAD          5
 #define SV_SCROLL_SUMMON_MINE            6
-/* XXX */
 #define SV_SCROLL_PHASE_DOOR             8
 #define SV_SCROLL_TELEPORT               9
 #define SV_SCROLL_TELEPORT_LEVEL        10
@@ -1677,7 +1656,6 @@
 #define SV_SCROLL_MAPPING               25
 #define SV_SCROLL_DETECT_GOLD           26
 #define SV_SCROLL_DETECT_ITEM           27
-/* XXX */
 #define SV_SCROLL_DETECT_DOOR           29
 #define SV_SCROLL_DETECT_INVIS          30
 #define SV_SCROLL_DIVINATION            31
@@ -1688,7 +1666,6 @@
 #define SV_SCROLL_MONSTER_CONFUSION     36
 #define SV_SCROLL_PROTECTION_FROM_EVIL  37
 #define SV_SCROLL_RUNE_OF_PROTECTION    38
-/* XXX */
 #define SV_SCROLL_DEINCARNATION         40
 #define SV_SCROLL_STAR_DESTRUCTION      41
 #define SV_SCROLL_DISPEL_UNDEAD         42
@@ -1720,7 +1697,6 @@
 #define SV_POTION_SLEEP                 11
 #define SV_POTION_LEARNING              12
 #define SV_POTION_LOSE_MEMORIES         13
-/* xxx */
 #define SV_POTION_RUINATION             15
 #define SV_POTION_DEC_STR               16
 #define SV_POTION_DEC_INT               17
@@ -1760,7 +1736,6 @@
 #define SV_POTION_INC_DEX               51
 #define SV_POTION_INC_CON               52
 #define SV_POTION_INC_CHR               53
-/* xxx */
 #define SV_POTION_AUGMENTATION          55
 #define SV_POTION_ENLIGHTENMENT         56
 #define SV_POTION_STAR_ENLIGHTENMENT    57
@@ -1862,11 +1837,9 @@
 #define CAVE_VIEW       0x0020    /* view flag */
 #define CAVE_TEMP       0x0040    /* temp flag */
 #define CAVE_WALL       0x0080    /* wall flag */
-/* XXX */
 #define CAVE_IDNT       0x0200    /* grid identified (fountains) */
 #define CAVE_SPEC       0x0400    /* special mark(quests) */
 #define CAVE_FREE       0x0800    /* no random generation on it */
-/* XXX */
 #define CAVE_PLIT       0x2000    /* Player lit grid */
 #define CAVE_MLIT       0x4000    /* Monster lit grid */
 
@@ -1949,7 +1922,6 @@
 #define SM_OPP_POIS             0x00100000
 #define SM_OPP_XXX1             0x00200000
 #define SM_CLONED               0x00400000
-/* XXX */
 #define SM_IMM_ACID             0x01000000
 #define SM_IMM_ELEC             0x02000000
 #define SM_IMM_FIRE             0x04000000
@@ -1996,17 +1968,12 @@
 #define PU_MANA         0x00000020L     /* Calculate csp and msp */
 #define PU_SPELLS       0x00000040L     /* Calculate spells */
 #define PU_POWERS       0x00000080L     /* Calculate powers */
-/* xxx (many) */
 #define PU_UN_VIEW      0x00010000L     /* Forget view */
-/* xxx (many) */
 #define PU_VIEW         0x00100000L     /* Update view */
 #define PU_MON_LITE     0x00200000L     /* Update monster light */
-/* xxx */
 #define PU_MONSTERS     0x01000000L     /* Update monsters */
 #define PU_DISTANCE     0x02000000L     /* Update distances */
-/* xxx */
 #define PU_FLOW         0x10000000L     /* Update flow */
-/* xxx (many) */
 
 
 /*
@@ -2021,17 +1988,13 @@
  */
 #define PW_INVEN        0x00000001L     /* Display inven/equip */
 #define PW_EQUIP        0x00000002L     /* Display equip/inven */
-/* xxx */
 #define PW_PLAYER       0x00000008L     /* Display character */
 #define PW_M_LIST       0x00000010L /* Show monster list */
-/* xxx */
 #define PW_MESSAGE      0x00000040L     /* Display messages */
 #define PW_OVERHEAD     0x00000080L     /* Display overhead view */
 #define PW_MONSTER      0x00000100L     /* Display monster recall */
 #define PW_OBJECT       0x00000200L     /* Display object recall */
-/* xxx */
 #define PW_SNAPSHOT     0x00000800L     /* Display snap-shot */
-/* xxx */
 
 
 /* jk */
@@ -2119,10 +2082,8 @@
 #define GF_GRAVITY      35
 #define GF_KILL_WALL    40
 #define GF_KILL_DOOR    41
-/* XXX */
 #define GF_MAKE_WALL    45
 #define GF_MAKE_DOOR    46
-/* XXX */
 #define GF_OLD_CLONE    51
 #define GF_OLD_POLY             52
 #define GF_OLD_HEAL             53
@@ -2916,7 +2877,6 @@
 #define RF8_WILD_GRASS          0x00000400
 #define RF8_NO_CUT              0x00000800
 #define RF8_CTHANGBAND          0x00001000  /* Not used in ToME */
-/* XXX */
 #define RF8_ZANGBAND            0x00004000  /* Not used in ToME */
 #define RF8_JOKEANGBAND         0x00008000
 #define RF8_ANGBAND             0x00010000
@@ -3573,7 +3533,6 @@
 #define AB_AMMO_CREATION        5
 #define AB_DEATH_TOUCH          6
 #define AB_FAR_REACHING         8
-/* XXX */
 #define AB_UNDEAD_FORM          10
 
 /**
