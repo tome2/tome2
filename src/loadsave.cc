@@ -1255,7 +1255,6 @@ static void do_cave_type(cave_type *c_ptr, ls_flag_t flag)
 	do_byte(&c_ptr->mimic, flag);
 	do_s16b(&c_ptr->special, flag);
 	do_s16b(&c_ptr->special2, flag);
-	do_s16b(&c_ptr->t_idx, flag);
 	do_s16b(&c_ptr->inscription, flag);
 	do_byte(&c_ptr->mana, flag);
 	do_s16b(&c_ptr->effect, flag);
