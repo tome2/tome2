@@ -2578,12 +2578,6 @@ void apply_flags(u32b f1, u32b f2, u32b f3, u32b f4, u32b f5, u32b esp, s16b pva
 	/* Affect stealth */
 	if (f1 & (TR1_STEALTH)) p_ptr->skill_stl += pval;
 
-	/* Affect searching ability (factor of five) */
-	if (f1 & (TR1_SEARCH)) p_ptr->skill_srh += (pval * 5);
-
-	/* Affect searching frequency (factor of five) */
-	if (f1 & (TR1_SEARCH)) p_ptr->skill_fos += (pval * 5);
-
 	/* Affect infravision */
 	if (f1 & (TR1_INFRA)) p_ptr->see_infra += pval;
 
@@ -2904,12 +2898,6 @@ void calc_bonuses(bool_ silent)
 
 	/* Base skill -- stealth */
 	p_ptr->skill_stl = 0;
-
-	/* Base skill -- searching ability */
-	p_ptr->skill_srh = 0;
-
-	/* Base skill -- searching frequency */
-	p_ptr->skill_fos = 0;
 
 	/* Base skill -- combat (normal) */
 	p_ptr->skill_thn = 0;
@@ -3236,8 +3224,6 @@ void calc_bonuses(bool_ silent)
 	p_ptr->skill_sav += tactic_info[(byte)p_ptr->tactic].to_saving;
 
 	p_ptr->pspeed += move_info[(byte)p_ptr->movement].to_speed;
-	p_ptr->skill_srh += move_info[(byte)p_ptr->movement].to_search;
-	p_ptr->skill_fos += move_info[(byte)p_ptr->movement].to_percep;
 	p_ptr->skill_stl += move_info[(byte)p_ptr->movement].to_stealth;
 
 	/* Apply temporary "stun" */
