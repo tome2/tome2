@@ -1108,8 +1108,6 @@ void self_knowledge(FILE *fff)
 			info[i++] = "You can teleport level.";
 		if (r_ptr->flags6 & RF6_DARKNESS)
 			info[i++] = "You can create darkness.";
-		if (r_ptr->flags6 & RF6_TRAPS)
-			info[i++] = "You can create traps.";
 		/* Not implemented */
 		if (r_ptr->flags6 & RF6_FORGET)
 			info[i++] = "You can fade memories.";
