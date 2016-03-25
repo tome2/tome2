@@ -4009,7 +4009,6 @@ monster_power monster_powers[96] =
 		{ RF6_TELE_AWAY, "Teleport Away", 20, FALSE },
 		{ RF6_TELE_LEVEL, "Teleport Level", 20, TRUE },
 		{ RF6_DARKNESS, "Darkness", 3, FALSE },
-		{ RF6_TRAPS, "Create Traps", 10, TRUE },
 		{ 0, "(none)", 0, FALSE },
 		{ RF6_RAISE_DEAD, "Raise the Dead", 400, TRUE },
 		{ 0, "(none)", 0, FALSE },
