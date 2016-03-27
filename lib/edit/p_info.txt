@@ -1250,7 +1250,6 @@ R:C:Mage
 R:C:Priest
 R:C:Rogue
 R:C:Warrior
-R:k:-500:+000:Disarming
 R:k:-500:+000:Magic-Device
 R:k:-2500:+000:Spirituality
 R:k:-5000:+000:Stealth
