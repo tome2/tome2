@@ -261,7 +261,8 @@ G:70
 N:47:Bearform-combat
 D:Ability to fight in bear form
 I:1000
-F:HIDDEN | AUTO_HIDE
+F:AUTO_HIDE
+F:HIDDEN
 
 N:52:Critical-hits
 D:Ability to deal critical hits with swords < 5lb

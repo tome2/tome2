@@ -59,6 +59,9 @@ struct monster_race
 
 	byte body_parts[BODY_MAX];      /* To help to decide what to use when body changing */
 
+	byte artifact_idx;              /* Artifact index of standard artifact dropped; 0 if none. */
+	int  artifact_chance;           /* Percentage chance of dropping the artifact. */
+
 	byte level;                     /* Level of creature */
 	byte rarity;			/* Rarity of creature */
 

@@ -2770,40 +2770,8 @@ void monster_death(int m_idx)
 		}
 		else
 		{
-			byte a_idx = 0;
-			int chance = 0;
-			int I_kind = 0;
-
-			if (strstr(r_ptr->name, "Marda, rider of the Gold Laronth"))
-			{
-				a_idx = ART_MARDA;
-				chance = 50;
-			}
-			else if (strstr(r_ptr->name, "Saruman of Many Colours"))
-			{
-				a_idx = ART_PALANTIR;
-				chance = 30;
-			}
-			else if (strstr(r_ptr->name, "Hagen, son of Alberich"))
-			{
-				a_idx = ART_NIMLOTH;
-				chance = 66;
-			}
-			else if (strstr(r_ptr->name, "Durin's Bane"))
-			{
-				a_idx = ART_CALRIS;
-				chance = 60;
-			}
-			else if (strstr(r_ptr->name, "Gothmog, the High Captain of Balrogs"))
-			{
-				a_idx = ART_GOTHMOG;
-				chance = 50;
-			}
-			else if (strstr(r_ptr->name, "Eol, the Dark Elf"))
-			{
-				a_idx = ART_ANGUIREL;
-				chance = 50;
-			}
+			byte a_idx = r_ptr->artifact_idx;
+			int chance = r_ptr->artifact_chance;
 
 			if ((a_idx > 0) && ((randint(99) < chance) || (wizard)))
 			{
@@ -2818,7 +2786,7 @@ void monster_death(int m_idx)
 					object_wipe(q_ptr);
 
 					/* Acquire the "kind" index */
-					I_kind = lookup_kind(a_ptr->tval, a_ptr->sval);
+					int I_kind = lookup_kind(a_ptr->tval, a_ptr->sval);
 
 					/* Create the artifact */
 					object_prep(q_ptr, I_kind);

@@ -18,10 +18,13 @@ N:0:Elven Gifts
 D:It is from a group of Elven items once entrusted to Hobbits
 # Phial of Galadriel
 P:1:2:1
-F:WIS | CHR | RES_DARK
+F:CHR
+F:RES_DARK
+F:WIS
 # Sting
 P:88:2:2
-F:STEALTH | REGEN
+F:REGEN
+F:STEALTH
 
 
 # The Dragon Slayer
@@ -30,7 +33,9 @@ N:1:Dragon Slayer
 D:It is from a group of items rumoured to be the bane of dragons.
 # Bow of bard
 P:125:2:3
-F:DEX | CON | RES_FIRE
+F:CON
+F:DEX
+F:RES_FIRE
 # Arrow of Bard
 P:63:2:5
 F:SPEED
@@ -44,17 +49,22 @@ D:It is one of the 3 legendary daggers.
 P:66:2:2
 F:STR
 P:66:3:1
-F:KILL_DRAGON | REGEN | SH_FIRE
+F:KILL_DRAGON
+F:REGEN
+F:SH_FIRE
 # Nimthanc
 P:67:2:2
 F:CON
 P:67:3:1
-F:KILL_DEMON | IM_COLD
+F:IM_COLD
+F:KILL_DEMON
 # Dethanc
 P:68:2:2
 F:DEX
 P:68:3:1
-F:KILL_UNDEAD | SH_ELEC | FLY
+F:FLY
+F:KILL_UNDEAD
+F:SH_ELEC
 
 
 # Gothmog's Armoury -- Demonologists set
@@ -64,10 +74,17 @@ D:It is from a group of items that once belonged to Gothmog,
 D:the High Captain of the Balrogs
 # The demonblade of Gothmog
 P:181:3:7
-F:STR | CON | SPEED | VAMPIRIC
+F:CON
+F:SPEED
+F:STR
+F:VAMPIRIC
 # The demonshield of Gothmog
 P:182:3:0
-F:IM_FIRE | IM_COLD | SH_ELEC
+F:IM_COLD
+F:IM_FIRE
+F:SH_ELEC
 # The demonhorn of Gothmog
 P:183:3:0
-F:ESP_EVIL | ESP_GOOD | AUTO_ID
+F:AUTO_ID
+F:ESP_EVIL
+F:ESP_GOOD

@@ -720,9 +720,9 @@ cptr k_info_flags5[] =
 	"MAGIC_BREATH",
 	"WATER_BREATH",
 	"WIELD_CAST",
-	"XXX8X17",
-	"XXX8X18",
-	"XXX8X19",
+	"RANDOM_RESIST",
+	"RANDOM_POWER",
+	"RANDOM_RES_OR_POWER",
 	"XXX8X20",
 	"XXX8X21",
 	"XXX8X22",
@@ -1991,24 +1991,9 @@ errr init_player_info_txt(FILE *fp)
 		/* Process 'G' for "Player flags" (multiple lines) */
 		if ((buf[0] == 'R') && (buf[2] == 'G'))
 		{
-			/* Parse every entry */
-			for (s = buf + 4; *s; )
+			if (0 != grab_one_player_race_flag(&rp_ptr->flags1, &rp_ptr->flags2, buf + 4))
 			{
-				/* Find the end of this entry */
-				for (t = s; *t && (*t != ' ') && (*t != '|'); ++t) /* loop */;
-
-				/* Nuke and skip any dividers */
-				if (*t)
-				{
-					*t++ = '\0';
-					while (*t == ' ' || *t == '|') t++;
-				}
-
-				/* Parse this entry */
-				if (0 != grab_one_player_race_flag(&rp_ptr->flags1, &rp_ptr->flags2, s)) return (5);
-
-				/* Start the next entry */
-				s = t;
+				return (5);
 			}
 
 			/* Next... */
@@ -2018,24 +2003,9 @@ errr init_player_info_txt(FILE *fp)
 		/* Process 'F' for "level Flags" (multiple lines) */
 		if ((buf[0] == 'R') && (buf[2] == 'F'))
 		{
-			/* Parse every entry */
-			for (s = buf + 4; *s; )
+			if (0 != grab_one_race_kind_flag(&rp_ptr->oflags1[lev], &rp_ptr->oflags2[lev], &rp_ptr->oflags3[lev], &rp_ptr->oflags4[lev], &rp_ptr->oflags5[lev], &rp_ptr->oesp[lev], buf + 4))
 			{
-				/* Find the end of this entry */
-				for (t = s; *t && (*t != ' ') && (*t != '|'); ++t) /* loop */;
-
-				/* Nuke and skip any dividers */
-				if (*t)
-				{
-					*t++ = '\0';
-					while (*t == ' ' || *t == '|') t++;
-				}
-
-				/* Parse this entry */
-				if (0 != grab_one_race_kind_flag(&rp_ptr->oflags1[lev], &rp_ptr->oflags2[lev], &rp_ptr->oflags3[lev], &rp_ptr->oflags4[lev], &rp_ptr->oflags5[lev], &rp_ptr->oesp[lev], s)) return (5);
-
-				/* Start the next entry */
-				s = t;
+				return (5);
 			}
 
 			/* Next... */
@@ -2073,24 +2043,9 @@ errr init_player_info_txt(FILE *fp)
 		/* Process 'C' for "Class choice flags" (multiple lines) */
 		if ((buf[0] == 'R') && (buf[2] == 'C'))
 		{
-			/* Parse every entry */
-			for (s = buf + 4; *s; )
+			if (0 != grab_one_class_flag(rp_ptr->choice, buf + 4))
 			{
-				/* Find the end of this entry */
-				for (t = s; *t && (*t != ' ') && (*t != '|'); ++t) /* loop */;
-
-				/* Nuke and skip any dividers */
-				if (*t)
-				{
-					*t++ = '\0';
-					while (*t == ' ' || *t == '|') t++;
-				}
-
-				/* Parse this entry */
-				if (0 != grab_one_class_flag(rp_ptr->choice, s)) return (5);
-
-				/* Start the next entry */
-				s = t;
+				return (5);
 			}
 
 			/* Next... */
@@ -2329,24 +2284,9 @@ errr init_player_info_txt(FILE *fp)
 		/* Process 'G' for "Player flags" (multiple lines) */
 		if ((buf[0] == 'S') && (buf[2] == 'G'))
 		{
-			/* Parse every entry */
-			for (s = buf + 4; *s; )
+			if (0 != grab_one_player_race_flag(&rmp_ptr->flags1, &rmp_ptr->flags2, buf + 4))
 			{
-				/* Find the end of this entry */
-				for (t = s; *t && (*t != ' ') && (*t != '|'); ++t) /* loop */;
-
-				/* Nuke and skip any dividers */
-				if (*t)
-				{
-					*t++ = '\0';
-					while (*t == ' ' || *t == '|') t++;
-				}
-
-				/* Parse this entry */
-				if (0 != grab_one_player_race_flag(&rmp_ptr->flags1, &rmp_ptr->flags2, s)) return (5);
-
-				/* Start the next entry */
-				s = t;
+				return (5);
 			}
 
 			/* Next... */
@@ -2356,24 +2296,9 @@ errr init_player_info_txt(FILE *fp)
 		/* Process 'F' for "level Flags" (multiple lines) */
 		if ((buf[0] == 'S') && (buf[2] == 'F'))
 		{
-			/* Parse every entry */
-			for (s = buf + 4; *s; )
+			if (0 != grab_one_race_kind_flag(&rmp_ptr->oflags1[lev], &rmp_ptr->oflags2[lev], &rmp_ptr->oflags3[lev], &rmp_ptr->oflags4[lev], &rmp_ptr->oflags5[lev], &rmp_ptr->oesp[lev], buf + 4))
 			{
-				/* Find the end of this entry */
-				for (t = s; *t && (*t != ' ') && (*t != '|'); ++t) /* loop */;
-
-				/* Nuke and skip any dividers */
-				if (*t)
-				{
-					*t++ = '\0';
-					while (*t == ' ' || *t == '|') t++;
-				}
-
-				/* Parse this entry */
-				if (0 != grab_one_race_kind_flag(&rmp_ptr->oflags1[lev], &rmp_ptr->oflags2[lev], &rmp_ptr->oflags3[lev], &rmp_ptr->oflags4[lev], &rmp_ptr->oflags5[lev], &rmp_ptr->oesp[lev], s)) return (5);
-
-				/* Start the next entry */
-				s = t;
+				return (5);
 			}
 
 			/* Next... */
@@ -2411,24 +2336,9 @@ errr init_player_info_txt(FILE *fp)
 		/* Process 'A' for "Allowed races" (multiple lines) */
 		if ((buf[0] == 'S') && (buf[2] == 'A'))
 		{
-			/* Parse every entry */
-			for (s = buf + 4; *s; )
+			if (0 != grab_one_race_allow_flag(rmp_ptr->choice, buf + 4))
 			{
-				/* Find the end of this entry */
-				for (t = s; *t && (*t != ' ') && (*t != '|'); ++t) /* loop */;
-
-				/* Nuke and skip any dividers */
-				if (*t)
-				{
-					*t++ = '\0';
-					while (*t == ' ' || *t == '|') t++;
-				}
-
-				/* Parse this entry */
-				if (0 != grab_one_race_allow_flag(rmp_ptr->choice, s)) return (5);
-
-				/* Start the next entry */
-				s = t;
+			       return (5);
 			}
 
 			/* Next... */
@@ -2438,32 +2348,23 @@ errr init_player_info_txt(FILE *fp)
 		/* Process 'C' for "Class choice flags" (multiple lines) */
 		if ((buf[0] == 'S') && (buf[2] == 'C'))
 		{
-			u32b choice[2] = {0, 0}, z;
-
-			/* Parse every entry */
-			for (s = buf + 6; *s; )
+			u32b choice[2] = {0, 0};
+			if (0 != grab_one_class_flag(choice, buf + 6))
 			{
-				/* Find the end of this entry */
-				for (t = s; *t && (*t != ' ') && (*t != '|'); ++t) /* loop */;
-
-				/* Nuke and skip any dividers */
-				if (*t)
-				{
-					*t++ = '\0';
-					while (*t == ' ' || *t == '|') t++;
-				}
-
-				/* Parse this entry */
-				if (0 != grab_one_class_flag(choice, s)) return (5);
-
-				/* Start the next entry */
-				s = t;
+				return (5);
 			}
 
-			for (z = 0; z < 2; z++)
+			/* Combine into the class flags */
+			for (int z = 0; z < 2; z++)
 			{
-				if (buf[4] == 'A') rmp_ptr->pclass[z] |= choice[z];
-				else rmp_ptr->mclass[z] |= choice[z];
+				if (buf[4] == 'A')
+				{
+					rmp_ptr->pclass[z] |= choice[z];
+				}
+				else
+				{
+					rmp_ptr->mclass[z] |= choice[z];
+				}
 			}
 
 			/* Next... */
@@ -2817,24 +2718,9 @@ errr init_player_info_txt(FILE *fp)
 		/* Process 'G' for "Player flags" (multiple lines) */
 		if ((buf[0] == 'C') && (buf[2] == 'G'))
 		{
-			/* Parse every entry */
-			for (s = buf + 4; *s; )
+			if (0 != grab_one_player_race_flag(&c_ptr->flags1, &c_ptr->flags2, buf + 4))
 			{
-				/* Find the end of this entry */
-				for (t = s; *t && (*t != ' ') && (*t != '|'); ++t) /* loop */;
-
-				/* Nuke and skip any dividers */
-				if (*t)
-				{
-					*t++ = '\0';
-					while (*t == ' ' || *t == '|') t++;
-				}
-
-				/* Parse this entry */
-				if (0 != grab_one_player_race_flag(&c_ptr->flags1, &c_ptr->flags2, s)) return (5);
-
-				/* Start the next entry */
-				s = t;
+				return (5);
 			}
 
 			/* Next... */
@@ -3307,7 +3193,7 @@ errr init_f_info_txt(FILE *fp)
 {
 	int i;
 	char buf[1024];
-	char *s, *t;
+	char *s;
 
 	/* Current entry */
 	feature_type *f_ptr = NULL;
@@ -3528,31 +3414,14 @@ errr init_f_info_txt(FILE *fp)
 		/* Hack -- Process 'F' for flags */
 		if (buf[0] == 'F')
 		{
-			/* Parse every entry textually */
-			for (s = buf + 2; *s; )
+			if (0 != grab_one_feature_flag(&f_ptr->flags1, buf + 2))
 			{
-				/* Find the end of this entry */
-				for (t = s; *t && (*t != ' ') && (*t != '|'); ++t) /* loop */;
-
-				/* Nuke and skip any dividers */
-				if (*t)
-				{
-					*t++ = '\0';
-					while (*t == ' ' || *t == '|') t++;
-				}
-
-				/* Parse this entry */
-				if (0 != grab_one_feature_flag(&f_ptr->flags1, s)) return (5);
-
-				/* Start the next entry */
-				s = t;
+				return (5);
 			}
 
 			/* Next... */
 			continue;
 		}
-
-
 
 		/* Oops */
 		return (6);
@@ -3683,8 +3552,14 @@ errr init_k_info_txt(FILE *fp)
 			/* Acquire the text */
 			s = buf + 2;
 
-			/* Append description */
-			strappend(&k_ptr->text, s);
+			if (!k_ptr->text)
+			{
+				k_ptr->text = my_strdup(s);
+			}
+			else
+			{
+				strappend(&k_ptr->text, format("\n%s", s));
+			}
 
 			/* Next... */
 			continue;
@@ -3887,24 +3762,9 @@ errr init_k_info_txt(FILE *fp)
 		/* Hack -- Process 'F' for flags */
 		if (buf[0] == 'F')
 		{
-			/* Parse every entry textually */
-			for (s = buf + 2; *s; )
+			if (0 != grab_one_kind_flag(k_ptr, buf + 2, FALSE))
 			{
-				/* Find the end of this entry */
-				for (t = s; *t && (*t != ' ') && (*t != '|'); ++t) /* loop */;
-
-				/* Nuke and skip any dividers */
-				if (*t)
-				{
-					*t++ = '\0';
-					while (*t == ' ' || *t == '|') t++;
-				}
-
-				/* Parse this entry */
-				if (0 != grab_one_kind_flag(k_ptr, s, FALSE)) return (5);
-
-				/* Start the next entry */
-				s = t;
+				return (5);
 			}
 
 			/* Next... */
@@ -3914,24 +3774,9 @@ errr init_k_info_txt(FILE *fp)
 		/* Hack -- Process 'f' for obvious flags */
 		if (buf[0] == 'f')
 		{
-			/* Parse every entry textually */
-			for (s = buf + 2; *s; )
+			if (0 != grab_one_kind_flag(k_ptr, buf + 2, TRUE))
 			{
-				/* Find the end of this entry */
-				for (t = s; *t && (*t != ' ') && (*t != '|'); ++t) /* loop */;
-
-				/* Nuke and skip any dividers */
-				if (*t)
-				{
-					*t++ = '\0';
-					while (*t == ' ' || *t == '|') t++;
-				}
-
-				/* Parse this entry */
-				if (0 != grab_one_kind_flag(k_ptr, s, TRUE)) return (5);
-
-				/* Start the next entry */
-				s = t;
+				return (5);
 			}
 
 			/* Next... */
@@ -3990,7 +3835,7 @@ errr init_a_info_txt(FILE *fp)
 {
 	int i;
 	char buf[1024];
-	char *s, *t;
+	char *s;
 
 	/* Current entry */
 	artifact_type *a_ptr = NULL;
@@ -4183,25 +4028,7 @@ errr init_a_info_txt(FILE *fp)
 		/* Hack -- Process 'F' for flags */
 		if (buf[0] == 'F')
 		{
-			/* Parse every entry textually */
-			for (s = buf + 2; *s; )
-			{
-				/* Find the end of this entry */
-				for (t = s; *t && (*t != ' ') && (*t != '|'); ++t) /* loop */;
-
-				/* Nuke and skip any dividers */
-				if (*t)
-				{
-					*t++ = '\0';
-					while ((*t == ' ') || (*t == '|')) t++;
-				}
-
-				/* Parse this entry */
-				if (0 != grab_one_artifact_flag(a_ptr, s, FALSE)) return (5);
-
-				/* Start the next entry */
-				s = t;
-			}
+			if (0 != grab_one_artifact_flag(a_ptr, buf+2, FALSE)) return (5);
 
 			/* Next... */
 			continue;
@@ -4210,25 +4037,7 @@ errr init_a_info_txt(FILE *fp)
 		/* Hack -- Process 'f' for obvious flags */
 		if (buf[0] == 'f')
 		{
-			/* Parse every entry textually */
-			for (s = buf + 2; *s; )
-			{
-				/* Find the end of this entry */
-				for (t = s; *t && (*t != ' ') && (*t != '|'); ++t) /* loop */;
-
-				/* Nuke and skip any dividers */
-				if (*t)
-				{
-					*t++ = '\0';
-					while (*t == ' ' || *t == '|') t++;
-				}
-
-				/* Parse this entry */
-				if (0 != grab_one_artifact_flag(a_ptr, s, TRUE)) return (5);
-
-				/* Start the next entry */
-				s = t;
-			}
+			if (0 != grab_one_artifact_flag(a_ptr, buf+2, TRUE)) return (5);
 
 			/* Next... */
 			continue;
@@ -4265,7 +4074,7 @@ errr init_set_info_txt(FILE *fp)
 	int cur_art = 0, cur_num = 0;
 	char buf[1024];
 
-	char *s, *t;
+	char *s;
 
 	/* Current entry */
 	set_type *set_ptr = NULL;
@@ -4398,30 +4207,16 @@ errr init_set_info_txt(FILE *fp)
 		/* Process 'F' for flags */
 		if (buf[0] == 'F')
 		{
-			/* Parse every entry textually */
-			for (s = buf + 2; *s; )
+			/* Parse this entry */
+			if (0 != grab_one_race_kind_flag(&set_ptr->arts[cur_art].flags1[cur_num],
+							 &set_ptr->arts[cur_art].flags2[cur_num],
+							 &set_ptr->arts[cur_art].flags3[cur_num],
+							 &set_ptr->arts[cur_art].flags4[cur_num],
+							 &set_ptr->arts[cur_art].flags5[cur_num],
+							 &set_ptr->arts[cur_art].esp[cur_num],
+							 buf + 2))
 			{
-				/* Find the end of this entry */
-				for (t = s; *t && (*t != ' ') && (*t != '|'); ++t) /* loop */;
-
-				/* Nuke and skip any dividers */
-				if (*t)
-				{
-					*t++ = '\0';
-					while ((*t == ' ') || (*t == '|')) t++;
-				}
-
-				/* Parse this entry */
-				if (0 != grab_one_race_kind_flag(&set_ptr->arts[cur_art].flags1[cur_num],
-				                                 &set_ptr->arts[cur_art].flags2[cur_num],
-				                                 &set_ptr->arts[cur_art].flags3[cur_num],
-				                                 &set_ptr->arts[cur_art].flags4[cur_num],
-				                                 &set_ptr->arts[cur_art].flags5[cur_num],
-				                                 &set_ptr->arts[cur_art].esp[cur_num],
-				                                 s)) return (5);
-
-				/* Start the next entry */
-				s = t;
+				return (5);
 			}
 
 			/* Next... */
@@ -4716,26 +4511,9 @@ errr init_s_info_txt(FILE *fp)
 		/* Process 'F' for flags */
 		if (buf[0] == 'F')
 		{
-			char *t;
-
-			/* Parse every entry textually */
-			for (s = buf + 2; *s; )
+			if (0 != grab_one_skill_flag(&s_ptr->flags1, buf + 2))
 			{
-				/* Find the end of this entry */
-				for (t = s; *t && (*t != ' ') && (*t != '|'); ++t) /* loop */;
-
-				/* Nuke and skip any dividers */
-				if (*t)
-				{
-					*t++ = '\0';
-					while ((*t == ' ') || (*t == '|')) t++;
-				}
-
-				/* Parse this entry */
-				if (0 != grab_one_skill_flag(&(s_ptr->flags1), s)) return (5);
-
-				/* Start the next entry */
-				s = t;
+				return (5);
 			}
 
 			/* Next... */
@@ -5361,24 +5139,9 @@ errr init_e_info_txt(FILE *fp)
 		/* Hack -- Process 'r:F' for forbidden flags */
 		if ((buf[0] == 'r') && (buf[2] == 'F'))
 		{
-			/* Parse every entry textually */
-			for (s = buf + 4; *s; )
+			if (0 != grab_one_ego_item_flag_restrict(e_ptr, buf + 4, FALSE))
 			{
-				/* Find the end of this entry */
-				for (t = s; *t && (*t != ' ') && (*t != '|'); ++t) /* loop */;
-
-				/* Nuke and skip any dividers */
-				if (*t)
-				{
-					*t++ = '\0';
-					while ((*t == ' ') || (*t == '|')) t++;
-				}
-
-				/* Parse this entry */
-				if (0 != grab_one_ego_item_flag_restrict(e_ptr, s, FALSE)) return (5);
-
-				/* Start the next entry */
-				s = t;
+				return (5);
 			}
 
 			/* Next... */
@@ -5505,7 +5268,7 @@ errr init_ra_info_txt(FILE *fp)
 {
 	int i, cur_t = 0, j, cur_g = 0;
 	char buf[1024];
-	char *s, *t;
+	char *s;
 
 	/* Current entry */
 	randart_part_type *ra_ptr = NULL;
@@ -5691,24 +5454,9 @@ errr init_ra_info_txt(FILE *fp)
 		/* Hack -- Process 'F' for flags */
 		if (buf[0] == 'F')
 		{
-			/* Parse every entry textually */
-			for (s = buf + 2; *s; )
+			if (0 != grab_one_randart_item_flag(ra_ptr, buf + 2, 'F'))
 			{
-				/* Find the end of this entry */
-				for (t = s; *t && (*t != ' ') && (*t != '|'); ++t) /* loop */;
-
-				/* Nuke and skip any dividers */
-				if (*t)
-				{
-					*t++ = '\0';
-					while ((*t == ' ') || (*t == '|')) t++;
-				}
-
-				/* Parse this entry */
-				if (0 != grab_one_randart_item_flag(ra_ptr, s, 'F')) return (5);
-
-				/* Start the next entry */
-				s = t;
+				return (5);
 			}
 
 			/* Next... */
@@ -5718,24 +5466,9 @@ errr init_ra_info_txt(FILE *fp)
 		/* Hack -- Process 'A' for antagonic flags */
 		if (buf[0] == 'A')
 		{
-			/* Parse every entry textually */
-			for (s = buf + 2; *s; )
+			if (0 != grab_one_randart_item_flag(ra_ptr, buf + 2, 'A'))
 			{
-				/* Find the end of this entry */
-				for (t = s; *t && (*t != ' ') && (*t != '|'); ++t) /* loop */;
-
-				/* Nuke and skip any dividers */
-				if (*t)
-				{
-					*t++ = '\0';
-					while ((*t == ' ') || (*t == '|')) t++;
-				}
-
-				/* Parse this entry */
-				if (0 != grab_one_randart_item_flag(ra_ptr, s, 'A')) return (5);
-
-				/* Start the next entry */
-				s = t;
+				return (5);
 			}
 
 			/* Next... */
@@ -5984,6 +5717,25 @@ errr init_r_info_txt(FILE *fp)
 			continue;
 		}
 
+		/* Process 'A' for standard artifact drop (one line only) */
+		if (buf[0] == 'A')
+		{
+			int artifact_idx;
+			int artifact_chance;
+
+			/* Scan for values */
+			if (2 != sscanf(buf + 2, "%d:%d",
+					&artifact_idx,
+					&artifact_chance)) return (1);
+
+			/* Save the values */
+			r_ptr->artifact_idx = artifact_idx;
+			r_ptr->artifact_chance = artifact_chance;
+
+			/* Next... */
+			continue;
+		}
+
 		/* Process 'W' for "More Info" (one line only) */
 		if (buf[0] == 'W')
 		{
@@ -6070,24 +5822,9 @@ errr init_r_info_txt(FILE *fp)
 		/* Process 'F' for "Basic Flags" (multiple lines) */
 		if (buf[0] == 'F')
 		{
-			/* Parse every entry */
-			for (s = buf + 2; *s; )
+			if (0 != grab_one_basic_flag(r_ptr, buf + 2))
 			{
-				/* Find the end of this entry */
-				for (t = s; *t && (*t != ' ') && (*t != '|'); ++t) /* loop */;
-
-				/* Nuke and skip any dividers */
-				if (*t)
-				{
-					*t++ = '\0';
-					while (*t == ' ' || *t == '|') t++;
-				}
-
-				/* Parse this entry */
-				if (0 != grab_one_basic_flag(r_ptr, s)) return (5);
-
-				/* Start the next entry */
-				s = t;
+				return (5);
 			}
 
 			/* Next... */
@@ -6097,37 +5834,22 @@ errr init_r_info_txt(FILE *fp)
 		/* Process 'S' for "Spell Flags" (multiple lines) */
 		if (buf[0] == 'S')
 		{
-			/* Parse every entry */
-			for (s = buf + 2; *s; )
+			s = buf + 2;
+
+			/* XXX XXX XXX Hack -- Read spell frequency */
+			if (1 == sscanf(s, "1_IN_%d", &i))
 			{
-				/* Find the end of this entry */
-				for (t = s; *t && (*t != ' ') && (*t != '|'); ++t) /* loop */;
+				/* Extract a "frequency" */
+				r_ptr->freq_spell = r_ptr->freq_inate = 100 / i;
+			}
 
-				/* Nuke and skip any dividers */
-				if (*t)
+			/* Parse this entry */
+			else
+			{
+				if (0 != grab_one_spell_flag(r_ptr, s))
 				{
-					*t++ = '\0';
-					while ((*t == ' ') || (*t == '|')) t++;
+					return (5);
 				}
-
-				/* XXX XXX XXX Hack -- Read spell frequency */
-				if (1 == sscanf(s, "1_IN_%d", &i))
-				{
-					/* Extract a "frequency" */
-					r_ptr->freq_spell = r_ptr->freq_inate = 100 / i;
-
-					/* Start at next entry */
-					s = t;
-
-					/* Continue */
-					continue;
-				}
-
-				/* Parse this entry */
-				if (0 != grab_one_spell_flag(r_ptr, s)) return (5);
-
-				/* Start the next entry */
-				s = t;
 			}
 
 			/* Next... */
@@ -6475,39 +6197,24 @@ errr init_re_info_txt(FILE *fp)
 			char r_char;
 
 			/* Parse every entry */
-			for (s = buf + 2; *s; )
+			s = buf + 2;
+
+			/* XXX XXX XXX Hack -- Read monster symbols */
+			if (1 == sscanf(s, "R_CHAR_%c", &r_char))
 			{
-				/* Find the end of this entry */
-				for (t = s; *t && (*t != ' ') && (*t != '|'); ++t) /* loop */;
+				/* Limited to 5 races */
+				if (r_char_number >= 5) continue;
 
-				/* Nuke and skip any dividers */
-				if (*t)
+				/* Extract a "frequency" */
+				re_ptr->r_char[r_char_number++] = r_char;
+			}
+
+			/* Parse this entry */
+			else {
+				if (0 != grab_one_ego_flag(re_ptr, s, TRUE))
 				{
-					*t++ = '\0';
-					while (*t == ' ' || *t == '|') t++;
+					return (5);
 				}
-
-				/* XXX XXX XXX Hack -- Read monster symbols */
-				if (1 == sscanf(s, "R_CHAR_%c", &r_char))
-				{
-					/* Limited to 5 races */
-					if (r_char_number >= 5) continue;
-
-					/* Extract a "frequency" */
-					re_ptr->r_char[r_char_number++] = r_char;
-
-					/* Start at next entry */
-					s = t;
-
-					/* Continue */
-					continue;
-				}
-
-				/* Parse this entry */
-				if (0 != grab_one_ego_flag(re_ptr, s, TRUE)) return (5);
-
-				/* Start the next entry */
-				s = t;
 			}
 
 			/* Next... */
@@ -6520,39 +6227,24 @@ errr init_re_info_txt(FILE *fp)
 			char r_char;
 
 			/* Parse every entry */
-			for (s = buf + 2; *s; )
+			s = buf + 2;
+
+			/* XXX XXX XXX Hack -- Read monster symbols */
+			if (1 == sscanf(s, "R_CHAR_%c", &r_char))
 			{
-				/* Find the end of this entry */
-				for (t = s; *t && (*t != ' ') && (*t != '|'); ++t) /* loop */;
+				/* Limited to 5 races */
+				if (nr_char_number >= 5) continue;
 
-				/* Nuke and skip any dividers */
-				if (*t)
+				/* Extract a "frequency" */
+				re_ptr->nr_char[nr_char_number++] = r_char;
+			}
+
+			/* Parse this entry */
+			else {
+				if (0 != grab_one_ego_flag(re_ptr, s, FALSE))
 				{
-					*t++ = '\0';
-					while (*t == ' ' || *t == '|') t++;
+					return (5);
 				}
-
-				/* XXX XXX XXX Hack -- Read monster symbols */
-				if (1 == sscanf(s, "R_CHAR_%c", &r_char))
-				{
-					/* Limited to 5 races */
-					if (nr_char_number >= 5) continue;
-
-					/* Extract a "frequency" */
-					re_ptr->nr_char[nr_char_number++] = r_char;
-
-					/* Start at next entry */
-					s = t;
-
-					/* Continue */
-					continue;
-				}
-
-				/* Parse this entry */
-				if (0 != grab_one_ego_flag(re_ptr, s, FALSE)) return (5);
-
-				/* Start the next entry */
-				s = t;
 			}
 
 			/* Next... */
@@ -6562,24 +6254,9 @@ errr init_re_info_txt(FILE *fp)
 		/* Process 'M' for "Basic Monster Flags" (multiple lines) */
 		if (buf[0] == 'M')
 		{
-			/* Parse every entry */
-			for (s = buf + 2; *s; )
+			if (0 != grab_one_basic_ego_flag(re_ptr, buf + 2, TRUE))
 			{
-				/* Find the end of this entry */
-				for (t = s; *t && (*t != ' ') && (*t != '|'); ++t) /* loop */;
-
-				/* Nuke and skip any dividers */
-				if (*t)
-				{
-					*t++ = '\0';
-					while (*t == ' ' || *t == '|') t++;
-				}
-
-				/* Parse this entry */
-				if (0 != grab_one_basic_ego_flag(re_ptr, s, TRUE)) return (5);
-
-				/* Start the next entry */
-				s = t;
+				return (5);
 			}
 
 			/* Next... */
@@ -6589,37 +6266,21 @@ errr init_re_info_txt(FILE *fp)
 		/* Process 'O' for "Basic Monster -Flags" (multiple lines) */
 		if (buf[0] == 'O')
 		{
-			/* Parse every entry */
-			for (s = buf + 2; *s; )
+			s = buf + 2;
+
+			/* XXX XXX XXX Hack -- Read no flags */
+			if (!strcmp(s, "MF_ALL"))
 			{
-				/* Find the end of this entry */
-				for (t = s; *t && (*t != ' ') && (*t != '|'); ++t) /* loop */;
+				/* No flags */
+				re_ptr->nflags1 = re_ptr->nflags2 = re_ptr->nflags3 = re_ptr->nflags7 = re_ptr->nflags8 = re_ptr->nflags9 = 0xFFFFFFFF;
+			}
 
-				/* Nuke and skip any dividers */
-				if (*t)
+			/* Parse this entry */
+			else {
+				if (0 != grab_one_basic_ego_flag(re_ptr, s, FALSE))
 				{
-					*t++ = '\0';
-					while (*t == ' ' || *t == '|') t++;
+					return (5);
 				}
-
-				/* XXX XXX XXX Hack -- Read no flags */
-				if (!strcmp(s, "MF_ALL"))
-				{
-					/* No flags */
-					re_ptr->nflags1 = re_ptr->nflags2 = re_ptr->nflags3 = re_ptr->nflags7 = re_ptr->nflags8 = re_ptr->nflags9 = 0xFFFFFFFF;
-
-					/* Start at next entry */
-					s = t;
-
-					/* Continue */
-					continue;
-				}
-
-				/* Parse this entry */
-				if (0 != grab_one_basic_ego_flag(re_ptr, s, FALSE)) return (5);
-
-				/* Start the next entry */
-				s = t;
 			}
 
 			/* Next... */
@@ -6629,37 +6290,21 @@ errr init_re_info_txt(FILE *fp)
 		/* Process 'S' for "Spell Flags" (multiple lines) */
 		if (buf[0] == 'S')
 		{
-			/* Parse every entry */
-			for (s = buf + 2; *s; )
+			s = buf + 2;
+
+			/* XXX XXX XXX Hack -- Read spell frequency */
+			if (1 == sscanf(s, "1_IN_%d", &i))
 			{
-				/* Find the end of this entry */
-				for (t = s; *t && (*t != ' ') && (*t != '|'); ++t) /* loop */;
+				/* Extract a "frequency" */
+				re_ptr->freq_spell = re_ptr->freq_inate = 100 / i;
+			}
 
-				/* Nuke and skip any dividers */
-				if (*t)
+			/* Parse this entry */
+			else {
+				if (0 != grab_one_spell_ego_flag(re_ptr, s, TRUE))
 				{
-					*t++ = '\0';
-					while ((*t == ' ') || (*t == '|')) t++;
+					return (5);
 				}
-
-				/* XXX XXX XXX Hack -- Read spell frequency */
-				if (1 == sscanf(s, "1_IN_%d", &i))
-				{
-					/* Extract a "frequency" */
-					re_ptr->freq_spell = re_ptr->freq_inate = 100 / i;
-
-					/* Start at next entry */
-					s = t;
-
-					/* Continue */
-					continue;
-				}
-
-				/* Parse this entry */
-				if (0 != grab_one_spell_ego_flag(re_ptr, s, TRUE)) return (5);
-
-				/* Start the next entry */
-				s = t;
 			}
 
 			/* Next... */
@@ -6790,7 +6435,7 @@ errr init_d_info_txt(FILE *fp)
 
 	byte r_char_number = 0;
 
-	char *s, *t;
+	char *s;
 
 	/* Current entry */
 	dungeon_info_type *d_ptr = NULL;
@@ -7096,104 +6741,57 @@ errr init_d_info_txt(FILE *fp)
 			int artif = 0, monst = 0, obj = 0;
 			int ix = -1, iy = -1, ox = -1, oy = -1;
 			int fill_method;
+			s = buf + 2;
 
-			/* Parse every entry */
-			for (s = buf + 2; *s; )
+			/* Read dungeon in/out coords */
+			if (4 == sscanf(s, "WILD_%d_%d__%d_%d", &ix, &iy, &ox, &oy))
 			{
-				/* Find the end of this entry */
-				for (t = s; *t && (*t != ' ') && (*t != '|'); ++t) /* loop */;
+				d_ptr->ix = ix;
+				d_ptr->iy = iy;
+				d_ptr->ox = ox;
+				d_ptr->oy = oy;
+			}
 
-				/* Nuke and skip any dividers */
-				if (*t)
+			/* Read dungeon size */
+			else if (2 == sscanf(s, "SIZE_%d_%d", &ix, &iy))
+			{
+				d_ptr->size_x = ix;
+				d_ptr->size_y = iy;
+			}
+
+			/* Read dungeon fill method */
+			else if (1 == sscanf(s, "FILL_METHOD_%d", &fill_method))
+			{
+				d_ptr->fill_method = fill_method;
+			}
+
+			/* Read Final Object */
+			else if (1 == sscanf(s, "FINAL_OBJECT_%d", &obj))
+			{
+				/* Extract a "Final Artifact" */
+				d_ptr->final_object = obj;
+			}
+
+			/* Read Final Artifact */
+			else if (1 == sscanf(s, "FINAL_ARTIFACT_%d", &artif ))
+			{
+				/* Extract a "Final Artifact" */
+				d_ptr->final_artifact = artif ;
+			}
+
+			/* Read Artifact Guardian */
+			else if (1 == sscanf(s, "FINAL_GUARDIAN_%d", &monst))
+			{
+				/* Extract a "Artifact Guardian" */
+				d_ptr->final_guardian = monst;
+			}
+
+			/* Parse this entry */
+			else {
+				if (0 != grab_one_dungeon_flag(&(d_ptr->flags1), &(d_ptr->flags2), s))
 				{
-					*t++ = '\0';
-					while (*t == ' ' || *t == '|') t++;
+					return (5);
 				}
-
-				/* Read dungeon in/out coords */
-				if (4 == sscanf(s, "WILD_%d_%d__%d_%d", &ix, &iy, &ox, &oy))
-				{
-					d_ptr->ix = ix;
-					d_ptr->iy = iy;
-					d_ptr->ox = ox;
-					d_ptr->oy = oy;
-
-					/* Start at next entry */
-					s = t;
-
-					/* Continue */
-					continue;
-				}
-
-				/* Read dungeon size */
-				if (2 == sscanf(s, "SIZE_%d_%d", &ix, &iy))
-				{
-					d_ptr->size_x = ix;
-					d_ptr->size_y = iy;
-
-					/* Start at next entry */
-					s = t;
-
-					/* Continue */
-					continue;
-				}
-
-				/* Read dungeon fill method */
-				if (1 == sscanf(s, "FILL_METHOD_%d", &fill_method))
-				{
-					d_ptr->fill_method = fill_method;
-
-					/* Start at next entry */
-					s = t;
-
-					/* Continue */
-					continue;
-				}
-
-				/* Read Final Object */
-				if (1 == sscanf(s, "FINAL_OBJECT_%d", &obj))
-				{
-					/* Extract a "Final Artifact" */
-					d_ptr->final_object = obj;
-
-					/* Start at next entry */
-					s = t;
-
-					/* Continue */
-					continue;
-				}
-
-				/* Read Final Artifact */
-				if (1 == sscanf(s, "FINAL_ARTIFACT_%d", &artif ))
-				{
-					/* Extract a "Final Artifact" */
-					d_ptr->final_artifact = artif ;
-
-					/* Start at next entry */
-					s = t;
-
-					/* Continue */
-					continue;
-				}
-
-				/* Read Artifact Guardian */
-				if (1 == sscanf(s, "FINAL_GUARDIAN_%d", &monst))
-				{
-					/* Extract a "Artifact Guardian" */
-					d_ptr->final_guardian = monst;
-
-					/* Start at next entry */
-					s = t;
-
-					/* Continue */
-					continue;
-				}
-
-				/* Parse this entry */
-				if (0 != grab_one_dungeon_flag(&(d_ptr->flags1), &(d_ptr->flags2), s)) return (5);
-
-				/* Start the next entry */
-				s = t;
 			}
 
 			/* Next... */
@@ -7239,41 +6837,24 @@ errr init_d_info_txt(FILE *fp)
 		if (buf[0] == 'M')
 		{
 			byte r_char;
+			s = buf + 2;
 
-			/* Parse every entry */
-			for (s = buf + 2; *s; )
+			/* Read monster symbols */
+			if (1 == sscanf(s, "R_CHAR_%c", &r_char))
 			{
-				/* Find the end of this entry */
-				for (t = s; *t && (*t != ' ') && (*t != '|'); ++t) /* loop */;
+				/* Limited to 5 races */
+				if (r_char_number >= 5) continue;
 
-				/* Nuke and skip any dividers */
-				if (*t)
+				/* Extract a "frequency" */
+				d_ptr->rules[rule_num].r_char[r_char_number++] = r_char;
+			}
+
+			/* Parse this entry */
+			else {
+				if (0 != grab_one_basic_monster_flag(d_ptr, s, rule_num))
 				{
-					*t++ = '\0';
-					while (*t == ' ' || *t == '|') t++;
+					return (5);
 				}
-
-				/* Read monster symbols */
-				if (1 == sscanf(s, "R_CHAR_%c", &r_char))
-				{
-					/* Limited to 5 races */
-					if (r_char_number >= 5) continue;
-
-					/* Extract a "frequency" */
-					d_ptr->rules[rule_num].r_char[r_char_number++] = r_char;
-
-					/* Start at next entry */
-					s = t;
-
-					/* Continue */
-					continue;
-				}
-
-				/* Parse this entry */
-				if (0 != grab_one_basic_monster_flag(d_ptr, s, rule_num)) return (5);
-
-				/* Start the next entry */
-				s = t;
 			}
 
 			/* Next... */
@@ -7283,24 +6864,12 @@ errr init_d_info_txt(FILE *fp)
 		/* Process 'S' for "Spell Flags" (multiple lines) */
 		if (buf[0] == 'S')
 		{
-			/* Parse every entry */
-			for (s = buf + 2; *s; )
+			s = buf + 2;
+
+			/* Parse this entry */
+			if (0 != grab_one_spell_monster_flag(d_ptr, s, rule_num))
 			{
-				/* Find the end of this entry */
-				for (t = s; *t && (*t != ' ') && (*t != '|'); ++t) /* loop */;
-
-				/* Nuke and skip any dividers */
-				if (*t)
-				{
-					*t++ = '\0';
-					while ((*t == ' ') || (*t == '|')) t++;
-				}
-
-				/* Parse this entry */
-				if (0 != grab_one_spell_monster_flag(d_ptr, s, rule_num)) return (5);
-
-				/* Start the next entry */
-				s = t;
+				return (5);
 			}
 
 			/* Next... */
@@ -7368,7 +6937,7 @@ errr init_st_info_txt(FILE *fp)
 {
 	int i = 0, item_idx = 0;
 	char buf[1024];
-	char *s, *t;
+	char *s;
 
 	/* Current entry */
 	store_info_type *st_ptr = NULL;
@@ -7532,25 +7101,7 @@ errr init_st_info_txt(FILE *fp)
 		/* Process 'F' for "store Flags" (multiple lines) */
 		if (buf[0] == 'F')
 		{
-			/* Parse every entry */
-			for (s = buf + 2; *s; )
-			{
-				/* Find the end of this entry */
-				for (t = s; *t && (*t != ' ') && (*t != '|'); ++t) /* loop */;
-
-				/* Nuke and skip any dividers */
-				if (*t)
-				{
-					*t++ = '\0';
-					while (*t == ' ' || *t == '|') t++;
-				}
-
-				/* Parse this entry */
-				if (0 != grab_one_store_flag(st_ptr, s)) return (5);
-
-				/* Start the next entry */
-				s = t;
-			}
+			if (0 != grab_one_store_flag(st_ptr, buf + 2)) return (5);
 
 			/* Next... */
 			continue;
@@ -7726,7 +7277,7 @@ errr init_ow_info_txt(FILE *fp)
 {
 	int i;
 	char buf[1024];
-	char *s, *t;
+	char *s;
 
 	/* Current entry */
 	owner_type *ow_ptr = NULL;
@@ -7829,24 +7380,9 @@ errr init_ow_info_txt(FILE *fp)
 		/* Process 'L' for "Liked races/classes" (multiple lines) */
 		if (buf[0] == 'L')
 		{
-			/* Parse every entry */
-			for (s = buf + 2; *s; )
+			if (0 != grab_one_race_flag(ow_ptr, STORE_LIKED, buf + 2))
 			{
-				/* Find the end of this entry */
-				for (t = s; *t && (*t != ' ') && (*t != '|'); ++t) /* loop */;
-
-				/* Nuke and skip any dividers */
-				if (*t)
-				{
-					*t++ = '\0';
-					while (*t == ' ' || *t == '|') t++;
-				}
-
-				/* Parse this entry */
-				if (0 != grab_one_race_flag(ow_ptr, STORE_LIKED, s)) return (5);
-
-				/* Start the next entry */
-				s = t;
+				return (5);
 			}
 
 			/* Next... */
@@ -7855,24 +7391,9 @@ errr init_ow_info_txt(FILE *fp)
 		/* Process 'H' for "Hated races/classes" (multiple lines) */
 		if (buf[0] == 'H')
 		{
-			/* Parse every entry */
-			for (s = buf + 2; *s; )
+			if (0 != grab_one_race_flag(ow_ptr, STORE_HATED, buf + 2))
 			{
-				/* Find the end of this entry */
-				for (t = s; *t && (*t != ' ') && (*t != '|'); ++t) /* loop */;
-
-				/* Nuke and skip any dividers */
-				if (*t)
-				{
-					*t++ = '\0';
-					while (*t == ' ' || *t == '|') t++;
-				}
-
-				/* Parse this entry */
-				if (0 != grab_one_race_flag(ow_ptr, STORE_HATED, s)) return (5);
-
-				/* Start the next entry */
-				s = t;
+				return (5);
 			}
 
 			/* Next... */

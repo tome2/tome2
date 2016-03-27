@@ -17,242 +17,530 @@
 N:0:Bell Goodchild(Hobbit)
 I:20000:120
 C:120:100:80
-L:Elf | Half-Elf | High-Elf | Dunadan | Hobbit | Dwarf | RohanKnight
-H:Dragon | Demon | Orc | Troll | Half-Ogre | Beorning | Druadan | Dark-Elf
+L:Dunadan
+L:Dwarf
+L:Elf
+L:Half-Elf
+L:High-Elf
+L:Hobbit
+L:RohanKnight
+H:Beorning
+H:Dark-Elf
+H:Demon
+H:Dragon
+H:Druadan
+H:Half-Ogre
+H:Orc
+H:Troll
 
 ### The General Store - 1 ###
 
 N:1:Balin(Dwarf)
 I:25000:130
 C:150:100:50
-L:Dwarf | Petty-Dwarf
-H:Dragon | Demon | Orc | Dark-Elf | Half-Ogre | Troll
+L:Dwarf
+L:Petty-Dwarf
+H:Dark-Elf
+H:Demon
+H:Dragon
+H:Half-Ogre
+H:Orc
+H:Troll
 
 N:2:Berylla Boffin(Hobbit)
 I:20000:130
 C:125:100:70
-L:Human | Hobbit
-H:Dragon | Demon | Beorning | Orc | Half-Ogre | Troll | Easterling
+L:Hobbit
+L:Human
+H:Beorning
+H:Demon
+H:Dragon
+H:Easterling
+H:Half-Ogre
+H:Orc
+H:Troll
 
 N:3:Adrahil(Half-Elf)
 I:30000:120
 C:110:100:80
-L:Half-Elf | High-Elf | Dunadan | Elf
-H:Dragon | Demon | Orc | Dark-Elf | Half-Ogre | Petty-Dwarf | Dwarf | Troll
+L:Dunadan
+L:Elf
+L:Half-Elf
+L:High-Elf
+H:Dark-Elf
+H:Demon
+H:Dragon
+H:Dwarf
+H:Half-Ogre
+H:Orc
+H:Petty-Dwarf
+H:Troll
 
 N:4:Aegnor(Wood-Elf)
 I:10000:140
 C:110:100:80
-L:High-Elf | Dunadan | Elf
-H:Dragon | Demon | Orc | Half-Ogre | Troll | Easterling
+L:Dunadan
+L:Elf
+L:High-Elf
+H:Demon
+H:Dragon
+H:Easterling
+H:Half-Ogre
+H:Orc
+H:Troll
 
 ### The Armoury - 2 ###
 
 N:5:Bifur(Dwarf)
 I:20000:130
 C:125:100:70
-L:Hobbit | Petty-Dwarf | Dwarf
-H:Dragon | Demon | Beorning | Orc | Half-Ogre | Troll
+L:Dwarf
+L:Hobbit
+L:Petty-Dwarf
+H:Beorning
+H:Demon
+H:Dragon
+H:Half-Ogre
+H:Orc
+H:Troll
 
 N:6:Lalia Clayhanger(Hobbit)
 I:25000:130
 C:125:100:50
-L:Human | Hobbit | Elf
-H:Dragon | Demon | Beorning | Orc | Half-Ogre | Troll
+L:Elf
+L:Hobbit
+L:Human
+H:Beorning
+H:Demon
+H:Dragon
+H:Half-Ogre
+H:Orc
+H:Troll
 
 N:7:Alcarin(Human)
 I:10000:140
 C:110:100:80
-L:Human | Half-Elf | RohanKnight | Dunadan
-H:Dragon | Demon | Beorning | Orc | Half-Ogre | Petty-Dwarf | Troll | Easterling
+L:Dunadan
+L:Half-Elf
+L:Human
+L:RohanKnight
+H:Beorning
+H:Demon
+H:Dragon
+H:Easterling
+H:Half-Ogre
+H:Orc
+H:Petty-Dwarf
+H:Troll
 
 N:8:Alatariel(High-Elf)
 I:30000:120
 C:110:100:80
-L:High-Elf | Dunadan | Elf
-H:Dragon | Demon | Orc | Dark-Elf | Half-Ogre | Petty-Dwarf | Troll | Easterling
+L:Dunadan
+L:Elf
+L:High-Elf
+H:Dark-Elf
+H:Demon
+H:Dragon
+H:Easterling
+H:Half-Ogre
+H:Orc
+H:Petty-Dwarf
+H:Troll
 
 ### The Weaponsmith - 3 ###
 
 N:9:Bofur(Dwarf)
 I:30000:120
 C:125:100:70
-L:Human | Dwarf
-H:Dragon | Demon | Beorning | Orc | Half-Ogre | Troll
+L:Dwarf
+L:Human
+H:Beorning
+H:Demon
+H:Dragon
+H:Half-Ogre
+H:Orc
+H:Troll
 
 N:10:Daisy Gamgee(Hobbit)
 I:20000:130
 C:110:100:80
-L:Human | Hobbit
-H:Dragon | Demon | Beorning | Orc | Half-Ogre | Troll
+L:Hobbit
+L:Human
+H:Beorning
+H:Demon
+H:Dragon
+H:Half-Ogre
+H:Orc
+H:Troll
 
 N:11:Beregond(Dunadan)
 I:25000:130
 C:110:100:80
-L:Human | High-Elf | Dunadan | Elf
-H:Dragon | Demon | Orc | Half-Ogre | Troll
+L:Dunadan
+L:Elf
+L:High-Elf
+L:Human
+H:Demon
+H:Dragon
+H:Half-Ogre
+H:Orc
+H:Troll
 
 N:12:Amarie(Dark-Elf)
 I:10000:140
 C:125:100:50
-L:Dark-Elf | Elf
-H:Dragon | Demon | Orc | Half-Ogre | Petty-Dwarf | Dwarf | Troll | Easterling
+L:Dark-Elf
+L:Elf
+H:Demon
+H:Dragon
+H:Dwarf
+H:Easterling
+H:Half-Ogre
+H:Orc
+H:Petty-Dwarf
+H:Troll
 
 ### The Temple - 4 ###
 
 N:13:Bombur(Dwarf)
 I:20000:130
 C:125:100:70
-L:Half-Elf | Petty-Dwarf | Dwarf
-H:Dragon | Demon | Beorning | Orc | Half-Ogre | Troll
+L:Dwarf
+L:Half-Elf
+L:Petty-Dwarf
+H:Beorning
+H:Demon
+H:Dragon
+H:Half-Ogre
+H:Orc
+H:Troll
 
 N:14:Dora Baggins(Hobbit)
 I:30000:120
 C:110:100:80
-L:Human | High-Elf | Hobbit | Elf
-H:Dragon | Demon | Beorning | Orc | Half-Ogre | Troll
+L:Elf
+L:High-Elf
+L:Hobbit
+L:Human
+H:Beorning
+H:Demon
+H:Dragon
+H:Half-Ogre
+H:Orc
+H:Troll
 
 N:15:Bergil(Half-Elf)
 I:10000:140
 C:125:100:50
-L:Human | Half-Elf | Dunadan | Elf
-H:Dragon | Demon | Beorning | Orc | Dark-Elf | Half-Ogre | Troll | Easterling
+L:Dunadan
+L:Elf
+L:Half-Elf
+L:Human
+H:Beorning
+H:Dark-Elf
+H:Demon
+H:Dragon
+H:Easterling
+H:Half-Ogre
+H:Orc
+H:Troll
 
 N:16:Amdir(Wood-Elf)
 I:25000:130
 C:110:100:80
-L:High-Elf | Dunadan | Hobbit | Elf
-H:Dragon | Demon | Orc | Dark-Elf | Half-Ogre | Dwarf | Troll | Easterling
+L:Dunadan
+L:Elf
+L:High-Elf
+L:Hobbit
+H:Dark-Elf
+H:Demon
+H:Dragon
+H:Dwarf
+H:Easterling
+H:Half-Ogre
+H:Orc
+H:Troll
 
 ### The Alchemist - 5 ###
 
 N:17:Borin(Dwarf)
 I:20000:130
 C:110:100:80
-L:Petty-Dwarf | Dwarf
-H:Dragon | Demon | Orc | Dark-Elf | Half-Ogre | Elf | Troll
+L:Dwarf
+L:Petty-Dwarf
+H:Dark-Elf
+H:Demon
+H:Dragon
+H:Elf
+H:Half-Ogre
+H:Orc
+H:Troll
 
 N:18:Elfstan Fairbairn(Hobbit)
 I:10000:140
 C:125:100:50
-L:Human | Half-Elf | High-Elf | Hobbit | Elf
-H:Dragon | Demon | Beorning | Orc | Half-Ogre | Dwarf | Troll
+L:Elf
+L:Half-Elf
+L:High-Elf
+L:Hobbit
+L:Human
+H:Beorning
+H:Demon
+H:Dragon
+H:Dwarf
+H:Half-Ogre
+H:Orc
+H:Troll
 
 N:19:Cemendur(Human)
 I:25000:130
 C:110:100:80
-L:Human | Half-Elf | RohanKnight | Dunadan | Elf
-H:Dragon | Demon | Beorning | Orc | Dark-Elf | Half-Ogre | Troll | Easterling
+L:Dunadan
+L:Elf
+L:Half-Elf
+L:Human
+L:RohanKnight
+H:Beorning
+H:Dark-Elf
+H:Demon
+H:Dragon
+H:Easterling
+H:Half-Ogre
+H:Orc
+H:Troll
 
 N:20:Annael(High-Elf)
 I:30000:120
 C:125:100:70
-L:Human | Half-Elf | High-Elf | Dunadan | Elf
-H:Dragon | Demon | Beorning | Orc | Dark-Elf | Half-Ogre | Dwarf | Troll
+L:Dunadan
+L:Elf
+L:Half-Elf
+L:High-Elf
+L:Human
+H:Beorning
+H:Dark-Elf
+H:Demon
+H:Dragon
+H:Dwarf
+H:Half-Ogre
+H:Orc
+H:Troll
 
 ### The Magic Shop - 6 ###
 
 N:21:Dis(Dwarf)
 I:30000:120
 C:125:100:50
-L:Petty-Dwarf | Dwarf | Half-Elf | Dunadan
-H:Dragon | Demon | Beorning | Orc | Dark-Elf | Half-Ogre | Human | Troll | Eagle
+L:Dunadan
+L:Dwarf
+L:Half-Elf
+L:Petty-Dwarf
+H:Beorning
+H:Dark-Elf
+H:Demon
+H:Dragon
+H:Eagle
+H:Half-Ogre
+H:Human
+H:Orc
+H:Troll
 
 N:22:Folco Boffin(Hobbit)
 I:10000:140
 C:110:100:80
 L:Hobbit
-H:Dragon | Demon | Orc | Troll
+H:Demon
+H:Dragon
+H:Orc
+H:Troll
 
 N:23:Ciryon(Dunadan)
 I:25000:130
 C:110:100:80
-L:Human | Half-Elf | High-Elf | RohanKnight | Dunadan | Hobbit | Elf
-H:Dragon | Demon | Orc | Half-Ogre | Troll
+L:Dunadan
+L:Elf
+L:Half-Elf
+L:High-Elf
+L:Hobbit
+L:Human
+L:RohanKnight
+H:Demon
+H:Dragon
+H:Half-Ogre
+H:Orc
+H:Troll
 
 N:24:Arminas(Dark-Elf)
 I:20000:130
 C:125:100:70
-L:Human | Dark-Elf | Elf
-H:Dragon | Demon | Beorning | Orc | High-Elf | Half-Ogre | Petty-Dwarf | Troll | Easterling
+L:Dark-Elf
+L:Elf
+L:Human
+H:Beorning
+H:Demon
+H:Dragon
+H:Easterling
+H:Half-Ogre
+H:High-Elf
+H:Orc
+H:Petty-Dwarf
+H:Troll
 
 ### The Black Market - 7 ###
 
 N:25:Dori(Dwarf)
 I:30000:150
 C:110:100:90
-L:Dwarf | Easterling
-H:Dragon | Demon | Orc 
+L:Dwarf
+L:Easterling
+H:Demon
+H:Dragon
+H:Orc
 
 N:26:Halfred Greenhand(Hobbit)
 I:30000:150
 C:110:100:90
-L:Hobbit 
-H:Dragon | Demon | Troll
+L:Hobbit
+H:Demon
+H:Dragon
+H:Troll
 
 N:27:Deorwine(Half-Elf)
 I:30000:150
 C:110:100:90
-L:Half-Elf | Easterling
-H:Dragon | Demon | Dark-Elf
+L:Easterling
+L:Half-Elf
+H:Dark-Elf
+H:Demon
+H:Dragon
 
 N:28:Artanis(Wood-Elf)
 I:30000:150
 C:110:100:90
-L:High-Elf | Elf | Easterling
-H:Dragon | Demon | Orc | Troll
+L:Easterling
+L:Elf
+L:High-Elf
+H:Demon
+H:Dragon
+H:Orc
+H:Troll
 
 ### The Bookstore - 9 ###
 
 N:29:Dwalin(Dwarf)
 I:20000:130
 C:125:100:70
-L:Human | Petty-Dwarf | Dwarf
-H:Dragon | Demon | Orc | Elf | Half-Ogre | Troll
+L:Dwarf
+L:Human
+L:Petty-Dwarf
+H:Demon
+H:Dragon
+H:Elf
+H:Half-Ogre
+H:Orc
+H:Troll
 
 N:30:Tanta Hornblower(Hobbit)
 I:10000:140
 C:110:100:80
-L:Human | Hobbit | Elf
-H:Dragon | Demon | Beorning | Orc | Troll
+L:Elf
+L:Hobbit
+L:Human
+H:Beorning
+H:Demon
+H:Dragon
+H:Orc
+H:Troll
 
 N:31:Dorlas(Human)
 I:30000:120
 C:150:100:50
-L:Human | RohanKnight | Dunadan
-H:Dragon | Demon | Beorning | Orc | Half-Ogre | Troll | Easterling
+L:Dunadan
+L:Human
+L:RohanKnight
+H:Beorning
+H:Demon
+H:Dragon
+H:Easterling
+H:Half-Ogre
+H:Orc
+H:Troll
 
 N:32:Caranthir(High-Elf)
 I:25000:130
 C:110:100:80
-L:Half-Elf | High-Elf | Elf
-H:Dragon | Demon | Orc | Dark-Elf | Half-Ogre | Petty-Dwarf | Dwarf | Troll | Easterling
+L:Elf
+L:Half-Elf
+L:High-Elf
+H:Dark-Elf
+H:Demon
+H:Dragon
+H:Dwarf
+H:Easterling
+H:Half-Ogre
+H:Orc
+H:Petty-Dwarf
+H:Troll
 
 ### The Pet Shop - 0 ###
 
 N:33:Fili(Dwarf)
 I:20000:130
 C:125:100:70
-L:RohanKnight | Petty-Dwarf | Dwarf
-H:Dragon | Demon | Beorning | Orc | Half-Ogre | Troll
+L:Dwarf
+L:Petty-Dwarf
+L:RohanKnight
+H:Beorning
+H:Demon
+H:Dragon
+H:Half-Ogre
+H:Orc
+H:Troll
 
 N:34:Lalia Clayhanger(Hobbit)
 I:25000:130
 C:110:100:80
-L:Human | Hobbit | Elf
-H:Dragon | Demon | Beorning | Orc | Troll
+L:Elf
+L:Hobbit
+L:Human
+H:Beorning
+H:Demon
+H:Dragon
+H:Orc
+H:Troll
 
 N:35:Elfwine(Dunadan)
 I:10000:140
 C:110:100:80
-L:Human | Half-Elf | High-Elf | RohanKnight | Dunadan | Elf
-H:Dragon | Demon | Beorning | Orc | Dark-Elf | Half-Ogre | Petty-Dwarf | Troll
+L:Dunadan
+L:Elf
+L:Half-Elf
+L:High-Elf
+L:Human
+L:RohanKnight
+H:Beorning
+H:Dark-Elf
+H:Demon
+H:Dragon
+H:Half-Ogre
+H:Orc
+H:Petty-Dwarf
+H:Troll
 
 N:36:Edrahil(Dark-Elf)
 I:30000:120
 C:150:100:50
-L:Dark-Elf | Elf | Easterling
-H:Dragon | Demon | Orc | High-Elf | Half-Ogre | Dwarf | Troll
+L:Dark-Elf
+L:Easterling
+L:Elf
+H:Demon
+H:Dragon
+H:Dwarf
+H:Half-Ogre
+H:High-Elf
+H:Orc
+H:Troll
 
 ### The Mayors/Kings/Rulers ###
 
@@ -260,210 +548,461 @@ H:Dragon | Demon | Orc | High-Elf | Half-Ogre | Dwarf | Troll
 N:37:Uldrik(Human)
 I:0:0
 C:0:0:0
-L:Human | RohanKnight | Dunadan | Hobbit | 
-H:Dragon | Demon | Orc | Half-Ogre | Troll
+L:Dunadan
+L:Hobbit
+L:Human
+L:RohanKnight
+H:Demon
+H:Dragon
+H:Half-Ogre
+H:Orc
+H:Troll
 
 #Minas Anor
 N:38:Aragorn (Dunadan)
 I:0:0
 C:0:0:0
-L:Human | High-Elf | RohanKnight | Dunadan | Hobbit | Elf  
-H:Dragon | Demon | Orc | Half-Ogre | Petty-Dwarf | Troll
+L:Dunadan
+L:Elf
+L:High-Elf
+L:Hobbit
+L:Human
+L:RohanKnight
+H:Demon
+H:Dragon
+H:Half-Ogre
+H:Orc
+H:Petty-Dwarf
+H:Troll
 
 #Khazad-Dum
 N:39:Gimli(Dwarf)
 I:0:0
 C:0:0:0
-L:RohanKnight | Dunadan | Hobbit | Elf | Dwarf 
-H:Dragon | Demon | Orc | Half-Ogre | Troll
+L:Dunadan
+L:Dwarf
+L:Elf
+L:Hobbit
+L:RohanKnight
+H:Demon
+H:Dragon
+H:Half-Ogre
+H:Orc
+H:Troll
 
 #Beorn's Halls
 N:40:Deor(Beorning)
 I:100:100
 C:110:100:90
-L:Beorning | Dwarf | Maia | Hobbit | Ent
-H:Dragon | Demon | Orc | Half-Ogre | Troll
+L:Beorning
+L:Dwarf
+L:Ent
+L:Hobbit
+L:Maia
+H:Demon
+H:Dragon
+H:Half-Ogre
+H:Orc
+H:Troll
 
 #Dale
 N:41:Bard the Grim(Human)
 I:100:100
 C:110:100:90
-L:Human | Hobbit | Dwarf
-H:Dragon | Demon | Beorning | Orc | Half-Ogre | Troll  
+L:Dwarf
+L:Hobbit
+L:Human
+H:Beorning
+H:Demon
+H:Dragon
+H:Half-Ogre
+H:Orc
+H:Troll
 
 #Henneth Annun
 N:42:Halbarad(Dunadan)
 I:100:100
 C:110:100:90
-L:Human | High-Elf | Dunadan | Hobbit | Elf  
-H:Dragon | Demon | Orc | Half-Ogre | Troll
+L:Dunadan
+L:Elf
+L:High-Elf
+L:Hobbit
+L:Human
+H:Demon
+H:Dragon
+H:Half-Ogre
+H:Orc
+H:Troll
 
 #Imladris
 N:43:Elrond Half-Elven
 I:100:100
 C:110:100:90
-L:Human | Half-Elf | High-Elf | RohanKnight | Dunadan | Hobbit | Elf | Dwarf | Ent
-H:Dragon | Demon | Orc | Half-Ogre | Troll
+L:Dunadan
+L:Dwarf
+L:Elf
+L:Ent
+L:Half-Elf
+L:High-Elf
+L:Hobbit
+L:Human
+L:RohanKnight
+H:Demon
+H:Dragon
+H:Half-Ogre
+H:Orc
+H:Troll
 
 #Helm's Deep
 N:44:Erkenbrand(RohanKnight)
 I:100:100
 C:110:100:90
-L:Human | Maia | RohanKnight | Dunadan | Hobbit | Elf | Dwarf | Ent
-H:Dragon | Demon | Beorning | Orc | Dark-Elf | Half-Ogre | Petty-Dwarf | Troll
+L:Dunadan
+L:Dwarf
+L:Elf
+L:Ent
+L:Hobbit
+L:Human
+L:Maia
+L:RohanKnight
+H:Beorning
+H:Dark-Elf
+H:Demon
+H:Dragon
+H:Half-Ogre
+H:Orc
+H:Petty-Dwarf
+H:Troll
 
 #Thranduil's Halls
 N:45:Legolas Greenleaf(Wood-Elf)
 I:100:100
 C:110:100:90
-L:High-Elf | Dunadan | Ent | Elf
-H:Dragon | Demon | Orc | Half-Ogre | Petty-Dwarf | Troll
+L:Dunadan
+L:Elf
+L:Ent
+L:High-Elf
+H:Demon
+H:Dragon
+H:Half-Ogre
+H:Orc
+H:Petty-Dwarf
+H:Troll
 
 #Edoras
 N:46:Theoden(RohanKnight)
 I:100:100
 C:110:100:90
-L:Human | RohanKnight | Dunadan | Hobbit | Elf  
-H:Dragon | Demon | Orc | Half-Ogre | Troll  
+L:Dunadan
+L:Elf
+L:Hobbit
+L:Human
+L:RohanKnight
+H:Demon
+H:Dragon
+H:Half-Ogre
+H:Orc
+H:Troll
 
 #Esgaroth
 N:47:The Master(Human)
 I:100:100
 C:110:100:90
-L:Human 
-H:Dragon | Demon | Beorning | Orc | Dark-Elf | Half-Ogre | Troll  
+L:Human
+H:Beorning
+H:Dark-Elf
+H:Demon
+H:Dragon
+H:Half-Ogre
+H:Orc
+H:Troll
 
 #Hobbiton
 N:48:Samwise Gamgee(Hobbit)
 I:100:100
 C:110:100:90
-L:Hobbit | Elf | High-Elf | Dark-Elf
-H:Dragon | Demon | Orc | Half-Ogre | Troll  
+L:Dark-Elf
+L:Elf
+L:High-Elf
+L:Hobbit
+H:Demon
+H:Dragon
+H:Half-Ogre
+H:Orc
+H:Troll
 
 #Osgiliath
 N:49:Eldacar(Human)
 I:100:100
 C:110:100:90
-L:Human | Half-Elf | High-Elf | RohanKnight | Dunadan | Hobbit | Elf
-H:Dragon | Demon | Beorning | Orc | Dark-Elf | Half-Ogre | Petty-Dwarf | Dwarf | Troll
+L:Dunadan
+L:Elf
+L:Half-Elf
+L:High-Elf
+L:Hobbit
+L:Human
+L:RohanKnight
+H:Beorning
+H:Dark-Elf
+H:Demon
+H:Dragon
+H:Dwarf
+H:Half-Ogre
+H:Orc
+H:Petty-Dwarf
+H:Troll
 
 #Pelargir
 N:50:Earnil(Dunadan)
 I:100:100
 C:110:100:90
-L:Human | Half-Elf | High-Elf | RohanKnight | Dunadan | Hobbit | Elf
-H:Dragon | Demon | Beorning | Orc | Dark-Elf | Half-Ogre | Petty-Dwarf | Dwarf | Troll
+L:Dunadan
+L:Elf
+L:Half-Elf
+L:High-Elf
+L:Hobbit
+L:Human
+L:RohanKnight
+H:Beorning
+H:Dark-Elf
+H:Demon
+H:Dragon
+H:Dwarf
+H:Half-Ogre
+H:Orc
+H:Petty-Dwarf
+H:Troll
 
 ### Caras Galadhon owners ###
 
 N:51:Galadriel(High-Elf)
 I:15000:110
 C:120:100:80
-L:High-Elf | Half-Elf | Elf
-H:Dragon | Demon | Orc | Troll | Half-Ogre | Beorning
+L:Elf
+L:Half-Elf
+L:High-Elf
+H:Beorning
+H:Demon
+H:Dragon
+H:Half-Ogre
+H:Orc
+H:Troll
 
 N:52:Celeborn(High-Elf)
 I:15000:110
 C:120:100:80
-L:High-Elf | Half-Elf | Elf
-H:Dragon | Demon | Orc | Troll | Half-Ogre | Beorning 
+L:Elf
+L:Half-Elf
+L:High-Elf
+H:Beorning
+H:Demon
+H:Dragon
+H:Half-Ogre
+H:Orc
+H:Troll
 
 N:53:Aulendil(Elf)
 I:30000:110
 C:120:100:80
 #L:Warrior | 
-H:Dragon | Demon | Orc | Troll | Half-Ogre | Beorning 
+H:Beorning
+H:Demon
+H:Dragon
+H:Half-Ogre
+H:Orc
+H:Troll
 
 N:54:Valceronwe(Elf)
 I:30000:110
 C:120:100:80
 #L:Mage | Thaumaturgist | Sorceror
-H:Dragon | Demon | Orc | Troll | Half-Ogre | Beorning 
+H:Beorning
+H:Demon
+H:Dragon
+H:Half-Ogre
+H:Orc
+H:Troll
 
 N:55:Voronwe(Elf)
 I:30000:110
 C:120:100:80
 #L:Priest | Paladin
-H:Dragon | Demon | Orc | Troll | Half-Ogre | Beorning 
+H:Beorning
+H:Demon
+H:Dragon
+H:Half-Ogre
+H:Orc
+H:Troll
 
 N:56:Celegail(Elf)
 I:30000:110
 C:120:100:80
 #L:Ranger
-H:Dragon | Demon | Orc | Troll | Half-Ogre | Beorning 
+H:Beorning
+H:Demon
+H:Dragon
+H:Half-Ogre
+H:Orc
+H:Troll
 
 ### Gondolin owners ###
 
 N:57:Turgon(High-Elf)
 I:30000:110
 C:120:100:80
-L:High-Elf | Half-Elf | Elf
-H:Dragon | Demon | Orc | Troll | Half-Ogre | Beorning  | Easterling
+L:Elf
+L:Half-Elf
+L:High-Elf
+H:Beorning
+H:Demon
+H:Dragon
+H:Easterling
+H:Half-Ogre
+H:Orc
+H:Troll
 
 N:58:Pengolodh(High-Elf)
 I:0:110
 C:120:100:80
-L:High-Elf | Half-Elf | Elf
-H:Dragon | Demon | Orc | Troll | Half-Ogre | Beorning  | Easterling
+L:Elf
+L:Half-Elf
+L:High-Elf
+H:Beorning
+H:Demon
+H:Dragon
+H:Easterling
+H:Half-Ogre
+H:Orc
+H:Troll
 
 N:59:Aerandir(High-Elf)
 I:0:110
 C:120:100:80
-L:High-Elf | Half-Elf | Elf
-H:Dragon | Demon | Orc | Troll | Half-Ogre | Beorning  | Easterling 
+L:Elf
+L:Half-Elf
+L:High-Elf
+H:Beorning
+H:Demon
+H:Dragon
+H:Easterling
+H:Half-Ogre
+H:Orc
+H:Troll
 
 N:60:Celebrimbor(High-Elf)
 I:0:110
 C:120:100:80
-L:High-Elf | Half-Elf | Elf
+L:Elf
+L:Half-Elf
+L:High-Elf
 #L:Warrior | 
-H:Dragon | Demon | Orc | Troll | Half-Ogre | Beorning  | Easterling 
+H:Beorning
+H:Demon
+H:Dragon
+H:Easterling
+H:Half-Ogre
+H:Orc
+H:Troll
 
 N:61:Lomelosse(High-Elf)
 I:0:110
 C:120:100:80
-L:High-Elf | Half-Elf | Elf |
-H:Dragon | Demon | Orc | Troll | Half-Ogre | Beorning  | Easterling 
+L:Elf
+L:Half-Elf
+L:High-Elf
+H:Beorning
+H:Demon
+H:Dragon
+H:Easterling
+H:Half-Ogre
+H:Orc
+H:Troll
 
 N:62:Arlindel(High-Elf)
 I:0:110
 C:120:100:80
-L:High-Elf | Half-Elf | Elf
+L:Elf
+L:Half-Elf
+L:High-Elf
 #L:Harper | Ranger
-H:Dragon | Demon | Orc | Troll | Half-Ogre | Beorning  | Easterling 
+H:Beorning
+H:Demon
+H:Dragon
+H:Easterling
+H:Half-Ogre
+H:Orc
+H:Troll
 
 N:63:Sulraen(High-Elf)
 I:0:110
 C:120:100:80
-L:High-Elf | Half-Elf | Elf
+L:Elf
+L:Half-Elf
+L:High-Elf
 #L:Mage | Sorceror
-H:Dragon | Demon | Orc | Troll | Half-Ogre | Beorning  | Easterling 
+H:Beorning
+H:Demon
+H:Dragon
+H:Easterling
+H:Half-Ogre
+H:Orc
+H:Troll
 
 N:64:Firiel(High-Elf)
 I:0:110
 C:120:100:80
-L:High-Elf | Half-Elf | Elf | 
-H:Dragon | Demon | Orc | Troll | Half-Ogre | Beorning  | Easterling 
+L:Elf
+L:Half-Elf
+L:High-Elf
+H:Beorning
+H:Demon
+H:Dragon
+H:Easterling
+H:Half-Ogre
+H:Orc
+H:Troll
 
 N:65:Earendur(High-Elf)
 I:0:110
 C:120:100:80
-L:High-Elf | Half-Elf | Elf
-H:Dragon | Demon | Orc | Troll | Half-Ogre | Beorning  | Easterling 
+L:Elf
+L:Half-Elf
+L:High-Elf
+H:Beorning
+H:Demon
+H:Dragon
+H:Easterling
+H:Half-Ogre
+H:Orc
+H:Troll
 
 N:66:Glorfindel(High-Elf)
 I:0:110
 C:120:100:80
-L:High-Elf | Half-Elf
+L:Half-Elf
+L:High-Elf
 #L:Ranger
-H:Dragon | Demon | Orc | Troll | Half-Ogre | Beorning  | Easterling 
+H:Beorning
+H:Demon
+H:Dragon
+H:Easterling
+H:Half-Ogre
+H:Orc
+H:Troll
 
 N:67:Ecthelion(High-Elf)
 I:0:110
 C:120:100:80
-L:High-Elf | Half-Elf
+L:Half-Elf
+L:High-Elf
 #L:Paladin
-H:Dragon | Demon | Orc | Troll | Half-Ogre | Beorning  | Easterling 
+H:Beorning
+H:Demon
+H:Dragon
+H:Easterling
+H:Half-Ogre
+H:Orc
+H:Troll
 
 ### The Inn-Keepers (minus Gondolin) ###
 
@@ -471,97 +1010,204 @@ H:Dragon | Demon | Orc | Troll | Half-Ogre | Beorning  | Easterling
 N:68:Barliman Butterbur(Human)
 I:100:120
 C:120:100:80
-L:Dunadan | Hobbit | Human |
-H:Dragon | Demon | Orc | Troll | Half-Ogre | Beorning | Easterling
+L:Dunadan
+L:Hobbit
+L:Human
+H:Beorning
+H:Demon
+H:Dragon
+H:Easterling
+H:Half-Ogre
+H:Orc
+H:Troll
 
 #Pelargir
 N:69:Ciryatur(Dunadan)
 I:100:120
 C:110:100:80
-L:Dunadan | Human | RohanKnight
-H:Dragon | Demon | Orc | Troll | Half-Ogre | Beorning
+L:Dunadan
+L:Human
+L:RohanKnight
+H:Beorning
+H:Demon
+H:Dragon
+H:Half-Ogre
+H:Orc
+H:Troll
 
 #Caras Galadhon
 N:70:Celebor(Elf)
 I:100:120
 C:110:100:80
-L:High-Elf | Elf
-H:Dragon | Demon | Beorning | Orc | Half-Ogre | Troll | Easterling
+L:Elf
+L:High-Elf
+H:Beorning
+H:Demon
+H:Dragon
+H:Easterling
+H:Half-Ogre
+H:Orc
+H:Troll
 
 #Minas Anor
 N:71:Bregolas(Human)
 I:100:120
 C:110:100:80
-L:Human | RohanKnight | Dunadan
-H:Dragon | Demon | Beorning | Orc | Half-Ogre | Troll | Easterling
+L:Dunadan
+L:Human
+L:RohanKnight
+H:Beorning
+H:Demon
+H:Dragon
+H:Easterling
+H:Half-Ogre
+H:Orc
+H:Troll
 
 #Khazad-Dum
 N:72:Thror(Dwarf)
 I:100:120
 C:110:100:80
-L:Petty-Dwarf | Dwarf
-H:Dragon | Demon | Beorning | Orc | Dark-Elf | Half-Ogre | High-Elf | Troll
+L:Dwarf
+L:Petty-Dwarf
+H:Beorning
+H:Dark-Elf
+H:Demon
+H:Dragon
+H:Half-Ogre
+H:High-Elf
+H:Orc
+H:Troll
 
 #Dale
 N:73:Troin(Dwarf)
 I:100:120
 C:110:100:80
-L:Human | Dwarf
-H:Dragon | Demon | Orc | Half-Ogre | Troll
+L:Dwarf
+L:Human
+H:Demon
+H:Dragon
+H:Half-Ogre
+H:Orc
+H:Troll
 
 #Edoras
 N:74:Theodwyn(Shieldmaiden)
 I:100:120
 C:110:100:80
-L:Human | RohanKnight | Dunadan
-H:Dragon | Demon | Beorning | Orc | Half-Ogre | Troll  | Easterling
+L:Dunadan
+L:Human
+L:RohanKnight
+H:Beorning
+H:Demon
+H:Dragon
+H:Easterling
+H:Half-Ogre
+H:Orc
+H:Troll
 
 #Esgaroth
 N:75:Garm(Human)
 I:100:120
 C:110:100:80
-L:Human | Dwarf
-H:Dragon | Demon | Beorning | Orc | Half-Ogre | Petty-Dwarf | Troll
+L:Dwarf
+L:Human
+H:Beorning
+H:Demon
+H:Dragon
+H:Half-Ogre
+H:Orc
+H:Petty-Dwarf
+H:Troll
 
 #Hobbiton
 N:76:Rose Cotton(Hobbit)
 I:100:120
 C:110:100:80
-L:Human | High-Elf | Hobbit
-H:Dragon | Demon | Orc | Half-Ogre | Troll  | Easterling
+L:High-Elf
+L:Hobbit
+L:Human
+H:Demon
+H:Dragon
+H:Easterling
+H:Half-Ogre
+H:Orc
+H:Troll
 
 #Osgiliath
 N:77:Palantir(Human)
 I:100:120
 C:110:100:80
-L:Human | High-Elf | RohanKnight | Dunadan | Elf
-H:Dragon | Demon | Beorning | Orc | Half-Ogre | Troll  | Easterling
+L:Dunadan
+L:Elf
+L:High-Elf
+L:Human
+L:RohanKnight
+H:Beorning
+H:Demon
+H:Dragon
+H:Easterling
+H:Half-Ogre
+H:Orc
+H:Troll
 
 ### The Soothsayers ###
 
 N:78:Ori(Dwarf)
 I:20000:130
 C:125:100:70
-L:Hobbit | Petty-Dwarf | Dwarf
-H:Dragon | Demon | Beorning | Orc | Half-Ogre | Troll
+L:Dwarf
+L:Hobbit
+L:Petty-Dwarf
+H:Beorning
+H:Demon
+H:Dragon
+H:Half-Ogre
+H:Orc
+H:Troll
 
 N:79:Tolman Gardner(Hobbit)
 I:25000:130
 C:150:100:50
-L:Human | Hobbit | Elf
-H:Dragon | Demon | Beorning | Orc | Half-Ogre | Troll
+L:Elf
+L:Hobbit
+L:Human
+H:Beorning
+H:Demon
+H:Dragon
+H:Half-Ogre
+H:Orc
+H:Troll
 
 N:80:Inziladun(Human)
 I:10000:140
 C:110:100:80
-L:Human | Half-Elf | RohanKnight | Dunadan  | Easterling
-H:Dragon | Demon | Beorning | Orc | Half-Ogre | Petty-Dwarf | Troll
+L:Dunadan
+L:Easterling
+L:Half-Elf
+L:Human
+L:RohanKnight
+H:Beorning
+H:Demon
+H:Dragon
+H:Half-Ogre
+H:Orc
+H:Petty-Dwarf
+H:Troll
 
 N:81:Gelmir(High-Elf)
 I:30000:120
 C:110:100:80
-L:High-Elf | Dunadan | Elf
-H:Dragon | Demon | Orc | Dark-Elf | Half-Ogre | Petty-Dwarf | Troll
+L:Dunadan
+L:Elf
+L:High-Elf
+H:Dark-Elf
+H:Demon
+H:Dragon
+H:Half-Ogre
+H:Orc
+H:Petty-Dwarf
+H:Troll
 
 ### The Eagles ###
 
@@ -569,103 +1215,199 @@ N:82:Palano(Eagle)
 I:30000:130
 C:125:100:50
 L:Eagle
-H:Dragon | Demon | RohanKnight
+H:Demon
+H:Dragon
+H:RohanKnight
 
 N:83:Eglad(Eagle)
 I:30000:130
 C:125:100:50
 L:Eagle
-H:Dragon | Demon | Hobbit
+H:Demon
+H:Dragon
+H:Hobbit
 
 N:84:Hiron(Eagle)
 I:30000:130
 C:125:100:50
 L:Eagle
-H:Dragon | Demon | Dunadan
+H:Demon
+H:Dragon
+H:Dunadan
 
 N:85:Grada(Eagle)
 I:30000:130
 C:125:100:50
 L:Eagle
-H:Dragon | Demon | High-Elf
+H:Demon
+H:Dragon
+H:High-Elf
 
 ### The Librarians ###
 
 N:86:Frerin(Dwarf)
 I:25000:130
 C:150:100:50
-L:Dwarf | Petty-Dwarf
-H:Dragon | Demon | Orc | Dark-Elf | Half-Ogre | Troll
+L:Dwarf
+L:Petty-Dwarf
+H:Dark-Elf
+H:Demon
+H:Dragon
+H:Half-Ogre
+H:Orc
+H:Troll
 
 N:87:Malva Headstrong(Hobbit)
 I:20000:130
 C:125:100:70
-L:Human | Hobbit
-H:Dragon | Demon | Beorning | Orc | Half-Ogre | Troll
+L:Hobbit
+L:Human
+H:Beorning
+H:Demon
+H:Dragon
+H:Half-Ogre
+H:Orc
+H:Troll
 
 N:88:Erendis(Half-Elf)
 I:30000:120
 C:110:100:80
-L:Half-Elf | High-Elf | Dunadan | Elf  | Easterling
-H:Dragon | Demon | Orc | Dark-Elf | Half-Ogre | Petty-Dwarf | Dwarf | Troll
+L:Dunadan
+L:Easterling
+L:Elf
+L:Half-Elf
+L:High-Elf
+H:Dark-Elf
+H:Demon
+H:Dragon
+H:Dwarf
+H:Half-Ogre
+H:Orc
+H:Petty-Dwarf
+H:Troll
 
 N:89:Elemmakil(Wood-Elf)
 I:10000:140
 C:110:100:80
-L:High-Elf | Dunadan | Elf
-H:Dragon | Demon | Orc | Half-Ogre | Troll
+L:Dunadan
+L:Elf
+L:High-Elf
+H:Demon
+H:Dragon
+H:Half-Ogre
+H:Orc
+H:Troll
 
 ### The Casino Owners ###
 
 N:90:Fror(Dwarf)
 I:20000:130
 C:125:100:70
-L:Hobbit | Petty-Dwarf | Dwarf
-H:Dragon | Demon | Beorning | Orc | Half-Ogre | Troll
+L:Dwarf
+L:Hobbit
+L:Petty-Dwarf
+H:Beorning
+H:Demon
+H:Dragon
+H:Half-Ogre
+H:Orc
+H:Troll
 
 N:91:Marmadas Brandybuck(Hobbit)
 I:25000:130
 C:150:100:50
-L:Human | Hobbit | Elf
-H:Dragon | Demon | Beorning | Orc | Half-Ogre | Troll
+L:Elf
+L:Hobbit
+L:Human
+H:Beorning
+H:Demon
+H:Dragon
+H:Half-Ogre
+H:Orc
+H:Troll
 
 N:92:Fastred(Human)
 I:10000:140
 C:110:100:80
-L:Human | Half-Elf | RohanKnight | Dunadan  | Easterling
-H:Dragon | Demon | Beorning | Orc | Half-Ogre | Petty-Dwarf | Troll
+L:Dunadan
+L:Easterling
+L:Half-Elf
+L:Human
+L:RohanKnight
+H:Beorning
+H:Demon
+H:Dragon
+H:Half-Ogre
+H:Orc
+H:Petty-Dwarf
+H:Troll
 
 N:93:Elured(High-Elf)
 I:30000:120
 C:110:100:80
-L:High-Elf | Dunadan | Elf
-H:Dragon | Demon | Orc | Dark-Elf | Half-Ogre | Petty-Dwarf | Troll
+L:Dunadan
+L:Elf
+L:High-Elf
+H:Dark-Elf
+H:Demon
+H:Dragon
+H:Half-Ogre
+H:Orc
+H:Petty-Dwarf
+H:Troll
 
 ### The Beastmasters ###
 
 N:94:Gloin(Dwarf)
 I:30000:120
 C:125:100:70
-L:Human | Dwarf
-H:Dragon | Demon | Beorning | Orc | Half-Ogre | Troll
+L:Dwarf
+L:Human
+H:Beorning
+H:Demon
+H:Dragon
+H:Half-Ogre
+H:Orc
+H:Troll
 
 N:95:Milo Burrows(Hobbit)
 I:20000:130
 C:110:100:80
-L:Human | Hobbit
-H:Dragon | Demon | Beorning | Orc | Half-Ogre | Troll
+L:Hobbit
+L:Human
+H:Beorning
+H:Demon
+H:Dragon
+H:Half-Ogre
+H:Orc
+H:Troll
 
 N:96:Findegil(Dunadan)
 I:25000:130
 C:110:100:80
-L:Human | High-Elf | Dunadan | Elf
-H:Dragon | Demon | Orc | Half-Ogre | Troll
+L:Dunadan
+L:Elf
+L:High-Elf
+L:Human
+H:Demon
+H:Dragon
+H:Half-Ogre
+H:Orc
+H:Troll
 
 N:97:Elurin(Dark-Elf)
 I:10000:140
 C:150:100:50
-L:Dark-Elf | Elf  | Easterling
-H:Dragon | Demon | Orc | Half-Ogre | Petty-Dwarf | Dwarf | Troll
+L:Dark-Elf
+L:Easterling
+L:Elf
+H:Demon
+H:Dragon
+H:Dwarf
+H:Half-Ogre
+H:Orc
+H:Petty-Dwarf
+H:Troll
 
 ### Gondor/Rohan owners ###
 
@@ -674,130 +1416,272 @@ H:Dragon | Demon | Orc | Half-Ogre | Petty-Dwarf | Dwarf | Troll
 N:98:Tarcil(Human)
 I:30000:120
 C:150:100:50
-L:Human | RohanKnight | Dunadan
-H:Dragon | Demon | Orc | Half-Ogre | Troll  | Easterling
+L:Dunadan
+L:Human
+L:RohanKnight
+H:Demon
+H:Dragon
+H:Easterling
+H:Half-Ogre
+H:Orc
+H:Troll
 
 N:99:Ulbar(Easterling)
 I:10000:140
 C:110:100:80
-L:Human | RohanKnight | Dunadan
-L:Half-Elf | High-Elf | Elf  | Easterling
+L:Dunadan
+L:Easterling
+L:Elf
+L:Half-Elf
+L:High-Elf
+L:Human
+L:RohanKnight
 
 N:100:Brego(RohanKnight)
 I:25000:130
 C:110:100:80
-L:Human | RohanKnight | Dunadan
-H:Dragon | Demon | Beorning | Dark-Elf | Petty-Dwarf | Troll  | Easterling
+L:Dunadan
+L:Human
+L:RohanKnight
+H:Beorning
+H:Dark-Elf
+H:Demon
+H:Dragon
+H:Easterling
+H:Petty-Dwarf
+H:Troll
 
 N:101:Ostoher(Dunadan)
 I:20000:130
 C:125:100:70
-L:Human | RohanKnight | Dunadan
-H:Dragon | Demon | Beorning | Orc | Half-Ogre | Dwarf | Troll  | Easterling
+L:Dunadan
+L:Human
+L:RohanKnight
+H:Beorning
+H:Demon
+H:Dragon
+H:Dwarf
+H:Easterling
+H:Half-Ogre
+H:Orc
+H:Troll
 
 #Tower of Magery
 
 N:102:Arveleg(Human)
 I:25000:130
 C:125:100:70
-L:Human | RohanKnight | Dunadan
-H:Dragon | Demon | Orc | Half-Ogre | Troll  | Easterling
+L:Dunadan
+L:Human
+L:RohanKnight
+H:Demon
+H:Dragon
+H:Easterling
+H:Half-Ogre
+H:Orc
+H:Troll
 
 N:103:Uldar(Easterling)
 I:30000:120
 C:110:100:80
-L:Human | RohanKnight | Dunadan  | Easterling
-L:Half-Elf | High-Elf | Elf
+L:Dunadan
+L:Easterling
+L:Elf
+L:Half-Elf
+L:High-Elf
+L:Human
+L:RohanKnight
 
 N:104:Aldor(RohanKnight)
 I:20000:130
 C:150:100:50
-L:Human | RohanKnight | Dunadan
-H:Dragon | Demon | Beorning | Dark-Elf | Petty-Dwarf | Troll  | Easterling
+L:Dunadan
+L:Human
+L:RohanKnight
+H:Beorning
+H:Dark-Elf
+H:Demon
+H:Dragon
+H:Easterling
+H:Petty-Dwarf
+H:Troll
 
 N:105:Tarannon(Dunadan)
 I:10000:140
 C:110:100:80
-L:Human | RohanKnight | Dunadan
-H:Dragon | Demon | Beorning | Orc | Half-Ogre | Dwarf | Troll  | Easterling
+L:Dunadan
+L:Human
+L:RohanKnight
+H:Beorning
+H:Demon
+H:Dragon
+H:Dwarf
+H:Easterling
+H:Half-Ogre
+H:Orc
+H:Troll
 
 #Inner Temple
 
 N:106:Eradan(Human)
 I:30000:120
 C:125:100:70
-L:Human | RohanKnight | Dunadan
-H:Dragon | Demon | Orc | Half-Ogre | Troll
+L:Dunadan
+L:Human
+L:RohanKnight
+H:Demon
+H:Dragon
+H:Half-Ogre
+H:Orc
+H:Troll
 
 N:107:Ulwise(Easterling)
 I:25000:130
 C:150:100:50
-L:Human | RohanKnight | Dunadan  | Easterling
-L:Half-Elf | High-Elf | Elf
+L:Dunadan
+L:Easterling
+L:Elf
+L:Half-Elf
+L:High-Elf
+L:Human
+L:RohanKnight
 
 N:108:Gram(RohanKnight)
 I:20000:130
 C:110:100:80
-L:Human | RohanKnight | Dunadan
-H:Dragon | Demon | Beorning | Dark-Elf | Petty-Dwarf | Troll  | Easterling
+L:Dunadan
+L:Human
+L:RohanKnight
+H:Beorning
+H:Dark-Elf
+H:Demon
+H:Dragon
+H:Easterling
+H:Petty-Dwarf
+H:Troll
 
 N:109:Minalcar(Dunadan)
 I:10000:140
 C:110:100:80
-L:Human | RohanKnight | Dunadan
-H:Dragon | Demon | Beorning | Orc | Half-Ogre | Dwarf | Troll
+L:Dunadan
+L:Human
+L:RohanKnight
+H:Beorning
+H:Demon
+H:Dragon
+H:Dwarf
+H:Half-Ogre
+H:Orc
+H:Troll
 
 #Paladins Guild
 
 N:110:Herion(Human)
 I:30000:120
 C:150:100:50
-L:Human | RohanKnight | Dunadan  | Easterling
-H:Dragon | Demon | Orc | Half-Ogre | Troll
+L:Dunadan
+L:Easterling
+L:Human
+L:RohanKnight
+H:Demon
+H:Dragon
+H:Half-Ogre
+H:Orc
+H:Troll
 
 N:111:Ulgug(Easterling)
 I:10000:140
 C:110:100:80
-L:Human | RohanKnight | Dunadan  | Easterling
-L:Half-Elf | High-Elf | Elf
+L:Dunadan
+L:Easterling
+L:Elf
+L:Half-Elf
+L:High-Elf
+L:Human
+L:RohanKnight
 
 N:112:Walda(RohanKnight)
 I:25000:130
 C:110:100:80
-L:Human | RohanKnight | Dunadan
-H:Dragon | Demon | Beorning | Dark-Elf | Petty-Dwarf | Troll  | Easterling
+L:Dunadan
+L:Human
+L:RohanKnight
+H:Beorning
+H:Dark-Elf
+H:Demon
+H:Dragon
+H:Easterling
+H:Petty-Dwarf
+H:Troll
 
 N:113:Calimehtar(Dunadan)
 I:20000:130
 C:125:100:70
-L:Human | RohanKnight | Dunadan
-H:Dragon | Demon | Beorning | Orc | Half-Ogre | Dwarf | Troll  | Easterling
+L:Dunadan
+L:Human
+L:RohanKnight
+H:Beorning
+H:Demon
+H:Dragon
+H:Dwarf
+H:Easterling
+H:Half-Ogre
+H:Orc
+H:Troll
 
 #Rangers Guild
 
 N:114:Egalmoth(Human)
 I:25000:130
 C:125:100:70
-L:Human | RohanKnight | Dunadan
-H:Dragon | Demon | Orc | Half-Ogre | Troll  | Easterling
+L:Dunadan
+L:Human
+L:RohanKnight
+H:Demon
+H:Dragon
+H:Easterling
+H:Half-Ogre
+H:Orc
+H:Troll
 
 N:115:Ulaf(Easterling)
 I:30000:120
 C:110:100:80
-L:Human | RohanKnight | Dunadan  | Easterling
-L:Half-Elf | High-Elf | Elf
+L:Dunadan
+L:Easterling
+L:Elf
+L:Half-Elf
+L:High-Elf
+L:Human
+L:RohanKnight
 
 N:116:Fengel(RohanKnight)
 I:20000:130
 C:150:100:50
-L:Human | RohanKnight | Dunadan
-H:Dragon | Demon | Beorning | Dark-Elf | Petty-Dwarf | Troll  | Easterling
+L:Dunadan
+L:Human
+L:RohanKnight
+H:Beorning
+H:Dark-Elf
+H:Demon
+H:Dragon
+H:Easterling
+H:Petty-Dwarf
+H:Troll
 
 N:117:Telemnar(Dunadan)
 I:10000:140
 C:110:100:80
-L:Human | RohanKnight | Dunadan
-H:Dragon | Demon | Beorning | Orc | Half-Ogre | Dwarf | Troll
+L:Dunadan
+L:Human
+L:RohanKnight
+H:Beorning
+H:Demon
+H:Dragon
+H:Dwarf
+H:Half-Ogre
+H:Orc
+H:Troll
 
 ### Dungeon Markets ###
 
@@ -807,25 +1691,36 @@ N:118:Ris(Dwarf)
 I:30000:150
 C:150:100:50
 L:Dwarf
-H:Dragon | Demon | Orc
+H:Demon
+H:Dragon
+H:Orc
 
 N:119:Malach Aradan(Human)
 I:25000:200
 C:125:100:60
-L:Human  | Easterling
-H:Dragon | Demon | Troll
+L:Easterling
+L:Human
+H:Demon
+H:Dragon
+H:Troll
 
 N:120:Indis(Half-Elf)
 I:20000:170
 C:115:100:70
-L:Half-Elf  | Easterling
-H:Dragon | Demon | Half-Ogre
+L:Easterling
+L:Half-Elf
+H:Demon
+H:Dragon
+H:Half-Ogre
 
 N:121:Rogdug(Half-Orc)
 I:10000:130
 C:125:100:80
-L:Orc  | Easterling
-H:Dragon | Demon | Elf
+L:Easterling
+L:Orc
+H:Demon
+H:Dragon
+H:Elf
 
 ### The Haftedsmiths ###
 
@@ -833,25 +1728,36 @@ N:122:Sogur(Dwarf)
 I:20000:170
 C:125:100:80
 L:Dwarf
-H:Dragon | Demon | Orc
+H:Demon
+H:Dragon
+H:Orc
 
 N:123:Manwendil(Human)
 I:25000:200
 C:115:100:70
-L:Human  | Easterling
-H:Dragon | Demon | Troll
+L:Easterling
+L:Human
+H:Demon
+H:Dragon
+H:Troll
 
 N:124:Lenwe(Half-Elf)
 I:10000:130
 C:150:100:50
-L:Half-Elf  | Easterling
-H:Dragon | Demon | Half-Ogre
+L:Easterling
+L:Half-Elf
+H:Demon
+H:Dragon
+H:Half-Ogre
 
 N:125:Ghaz(Half-Orc)
 I:30000:150
 C:125:100:60
-L:Orc  | Easterling
-H:Dragon | Demon | Elf
+L:Easterling
+L:Orc
+H:Demon
+H:Dragon
+H:Elf
 
 ### The Polearmsmiths ###
 
@@ -859,25 +1765,36 @@ N:126:Tolin(Dwarf)
 I:10000:130
 C:115:100:70
 L:Dwarf
-H:Dragon | Demon | Orc
+H:Demon
+H:Dragon
+H:Orc
 
 N:127:Narmacil(Human)
 I:25000:200
 C:125:100:80
-L:Human  | Easterling
-H:Dragon | Demon | Troll
+L:Easterling
+L:Human
+H:Demon
+H:Dragon
+H:Troll
 
 N:128:Lindir(Half-Elf)
 I:20000:170
 C:150:100:50
-L:Half-Elf  | Easterling
-H:Dragon | Demon | Half-Ogre
+L:Easterling
+L:Half-Elf
+H:Demon
+H:Dragon
+H:Half-Ogre
 
 N:129:Stogash(Half-Orc)
 I:30000:150
 C:125:100:60
-L:Orc  | Easterling
-H:Dragon | Demon | Elf
+L:Easterling
+L:Orc
+H:Demon
+H:Dragon
+H:Elf
 
 ### The Swordsmiths ###
 
@@ -885,25 +1802,36 @@ N:130:Tis(Dwarf)
 I:20000:170
 C:125:100:80
 L:Dwarf
-H:Dragon | Demon | Orc
+H:Demon
+H:Dragon
+H:Orc
 
 N:131:Nuneth(Human)
 I:10000:130
 C:125:100:60
-L:Human  | Easterling
-H:Dragon | Demon | Troll
+L:Easterling
+L:Human
+H:Demon
+H:Dragon
+H:Troll
 
 N:132:Mahtan(Half-Elf)
 I:30000:150
 C:115:100:70
-L:Half-Elf  | Easterling
-H:Dragon | Demon | Half-Ogre
+L:Easterling
+L:Half-Elf
+H:Demon
+H:Dragon
+H:Half-Ogre
 
 N:133:Rudak(Half-Orc)
 I:25000:200
 C:150:100:50
-L:Orc  | Easterling
-H:Dragon | Demon | Elf
+L:Easterling
+L:Orc
+H:Demon
+H:Dragon
+H:Elf
 
 ### The Rare Jewellers ###
 
@@ -911,25 +1839,36 @@ N:134:Uin(Dwarf)
 I:25000:200
 C:115:100:70
 L:Dwarf
-H:Dragon | Demon | Orc
+H:Demon
+H:Dragon
+H:Orc
 
 N:135:Ornendil(Human)
 I:10000:130
 C:125:100:60
-L:Human  | Easterling
-H:Dragon | Demon | Troll
+L:Easterling
+L:Human
+H:Demon
+H:Dragon
+H:Troll
 
 N:136:Malgalad(Half-Elf)
 I:30000:150
 C:125:100:80
-L:Half-Elf  | Easterling
-H:Dragon | Demon | Half-Ogre
+L:Easterling
+L:Half-Elf
+H:Demon
+H:Dragon
+H:Half-Ogre
 
 N:137:Ghashuf(Half-Orc)
 I:20000:170
 C:150:100:50
-L:Orc  | Easterling
-H:Dragon | Demon | Elf
+L:Easterling
+L:Orc
+H:Demon
+H:Dragon
+H:Elf
 
 ### The Jewellers ###
 
@@ -937,285 +1876,433 @@ N:138:Vali(Dwarf)
 I:25000:200
 C:150:100:50
 L:Dwarf
-H:Dragon | Demon | Orc
+H:Demon
+H:Dragon
+H:Orc
 
 N:139:Orodreth(Human)
 I:30000:150
 C:115:100:70
-L:Human  | Easterling
-H:Dragon | Demon | Troll
+L:Easterling
+L:Human
+H:Demon
+H:Dragon
+H:Troll
 
 N:140:Theodred(Half-Elf)
 I:10000:130
 C:125:100:80
-L:Half-Elf  | Easterling
-H:Dragon | Demon | Half-Ogre
+L:Easterling
+L:Half-Elf
+H:Demon
+H:Dragon
+H:Half-Ogre
 
 N:141:Rangush(Half-Orc)
 I:20000:170
 C:125:100:60
-L:Orc  | Easterling
-H:Dragon | Demon | Elf
+L:Easterling
+L:Orc
+H:Demon
+H:Dragon
+H:Elf
 
 ### The Footwear Shop owners ###
 
 N:142:Nellas(Human)
 I:10000:130
 C:115:100:70
-L:Human  | Easterling
-H:Dragon | Demon | Troll
+L:Easterling
+L:Human
+H:Demon
+H:Dragon
+H:Troll
 
 N:143:Tindomiel(Half-Elf)
 I:25000:200
 C:125:100:80
-L:Half-Elf  | Easterling
-H:Dragon | Demon | Half-Ogre
+L:Easterling
+L:Half-Elf
+H:Demon
+H:Dragon
+H:Half-Ogre
 
 N:144:Ragnor(Half-Elf)
 I:20000:170
 C:150:100:50
-L:Half-Elf  | Easterling
-H:Dragon | Demon | Half-Ogre
+L:Easterling
+L:Half-Elf
+H:Demon
+H:Dragon
+H:Half-Ogre
 
 N:145:Idrish(Half-Orc)
 I:30000:150
 C:125:100:60
-L:Orc  | Easterling
-H:Dragon | Demon | Elf
+L:Easterling
+L:Orc
+H:Demon
+H:Dragon
+H:Elf
 
 ### The Rare Footwear Shop owners ###
 
 N:146:Nerwen(Human)
 I:20000:170
 C:125:100:80
-L:Human  | Easterling
-H:Dragon | Demon | Troll
+L:Easterling
+L:Human
+H:Demon
+H:Dragon
+H:Troll
 
 N:147:Ulbar (Half-Elf)
 I:10000:130
 C:125:100:60
-L:Half-Elf  | Easterling
-H:Dragon | Demon | Half-Ogre
+L:Easterling
+L:Half-Elf
+H:Demon
+H:Dragon
+H:Half-Ogre
 
 N:148:Pelendur(Half-Elf)
 I:30000:150
 C:115:100:70
-L:Half-Elf  | Easterling
-H:Dragon | Demon | Half-Ogre
+L:Easterling
+L:Half-Elf
+H:Demon
+H:Dragon
+H:Half-Ogre
 
 N:149:Budgar(Half-Orc)
 I:25000:200
 C:150:100:50
-L:Orc  | Easterling
-H:Dragon | Demon | Elf
+L:Easterling
+L:Orc
+H:Demon
+H:Dragon
+H:Elf
 
 ### The Dungeon Librarians ###
 
 N:150:Nom(Human)
 I:25000:200
 C:115:100:70
-L:Human  | Easterling
-H:Dragon | Demon | Troll
+L:Easterling
+L:Human
+H:Demon
+H:Dragon
+H:Troll
 
 N:151:Urwen (Half-Elf)
 I:10000:130
 C:125:100:60
-L:Half-Elf  | Easterling
-H:Dragon | Demon | Half-Ogre
+L:Easterling
+L:Half-Elf
+H:Demon
+H:Dragon
+H:Half-Ogre
 
 N:152:Rian(Half-Elf)
 I:30000:150
 C:125:100:80
-L:Half-Elf  | Easterling
-H:Dragon | Demon | Half-Ogre
+L:Easterling
+L:Half-Elf
+H:Demon
+H:Dragon
+H:Half-Ogre
 
 N:153:Mosrog(Half-Orc)
 I:20000:170
 C:150:100:50
-L:Orc  | Easterling
-H:Dragon | Demon | Elf
+L:Easterling
+L:Orc
+H:Demon
+H:Dragon
+H:Elf
 
 ### The Expensive Black Marketeers ###
 
 N:154:Olwe(Human)
 I:30000:200
 C:125:100:90
-L:Human  | Easterling
-H:Dragon | Demon | Troll
+L:Easterling
+L:Human
+H:Demon
+H:Dragon
+H:Troll
 
 N:155:Valacar(Half-Elf)
 I:30000:200
 C:125:100:90
-L:Half-Elf  | Easterling
-H:Dragon | Demon | Half-Ogre
+L:Easterling
+L:Half-Elf
+H:Demon
+H:Dragon
+H:Half-Ogre
 
 N:156:Silmarien(Half-Elf)
 I:30000:200
 C:125:100:90
-L:Half-Elf  | Easterling
-H:Dragon | Demon | Half-Ogre
+L:Easterling
+L:Half-Elf
+H:Demon
+H:Dragon
+H:Half-Ogre
 
 N:157:Ghaz(Half-Orc)
 I:30000:200
 C:125:100:90
-L:Orc  | Easterling
-H:Dragon | Demon | Elf
+L:Easterling
+L:Orc
+H:Demon
+H:Dragon
+H:Elf
 
 ### The Common Shop Owners ###
 
 N:158:Ioreth(Human)
 I:25000:200
 C:150:100:50
-L:Human  | Easterling
-H:Dragon | Demon | Troll
+L:Easterling
+L:Human
+H:Demon
+H:Dragon
+H:Troll
 
 N:159:Vidugavia(Half-Elf)
 I:30000:150
 C:115:100:70
-L:Half-Elf  | Easterling
-H:Dragon | Demon | Half-Ogre
+L:Easterling
+L:Half-Elf
+H:Demon
+H:Dragon
+H:Half-Ogre
 
 N:160:Soronto(Half-Elf)
 I:10000:130
 C:125:100:80
-L:Half-Elf  | Easterling
-H:Dragon | Demon | Half-Ogre
+L:Easterling
+L:Half-Elf
+H:Demon
+H:Dragon
+H:Half-Ogre
 
 N:161:Nazg(Half-Orc)
 I:20000:170
 C:125:100:60
-L:Orc  | Easterling
-H:Dragon | Demon | Elf
+L:Easterling
+L:Orc
+H:Demon
+H:Dragon
+H:Elf
 
 ### The Dragon Hunters ###
 
 N:162:Oropher(Human)
 I:10000:130
 C:115:100:70
-L:Human  | Easterling
-H:Dragon | Demon | Troll
+L:Easterling
+L:Human
+H:Demon
+H:Dragon
+H:Troll
 
 N:163:Walda(Half-Elf)
 I:25000:200
 C:125:100:80
-L:Half-Elf  | Easterling
-H:Dragon | Demon | Half-Ogre
+L:Easterling
+L:Half-Elf
+H:Demon
+H:Dragon
+H:Half-Ogre
 
 N:164:Mithrellas(Half-Elf)
 I:20000:170
 C:150:100:50
-L:Half-Elf  | Easterling
-H:Dragon | Demon | Half-Ogre
+L:Easterling
+L:Half-Elf
+H:Demon
+H:Dragon
+H:Half-Ogre
 
 N:165:Urbag(Half-Orc)
 I:30000:150
 C:125:100:60
-L:Orc  | Easterling
-H:Dragon | Demon | Elf
+L:Easterling
+L:Orc
+H:Demon
+H:Dragon
+H:Elf
 
 ### The Speed Ring Market Owners ###
 
 N:166:Orophin(Human)
 I:20000:170
 C:125:100:80
-L:Human  | Easterling
-H:Dragon | Demon | Troll
+L:Easterling
+L:Human
+H:Demon
+H:Dragon
+H:Troll
 
 N:167:Wulf(Half-Orc)
 I:10000:130
 C:125:100:60
-L:Orc  | Easterling
-H:Dragon | Demon | Elf
+L:Easterling
+L:Orc
+H:Demon
+H:Dragon
+H:Elf
 
 N:168:Baguk(Half-Troll)
 I:30000:150
 C:115:100:70
-L:Troll  | Easterling
-H:Dragon | Demon | Human
+L:Easterling
+L:Troll
+H:Demon
+H:Dragon
+H:Human
 
 N:169:Zikram(Half-Orc)
 I:25000:200
 C:150:100:50
-L:Orc  | Easterling
-H:Dragon | Demon | Elf
+L:Easterling
+L:Orc
+H:Demon
+H:Dragon
+H:Elf
 
 ### The Scribes ###
 
 N:170:Rumil(Human)
 I:25000:200
 C:115:100:70
-L:Human  | Easterling
-H:Dragon | Demon | Troll
+L:Easterling
+L:Human
+H:Demon
+H:Dragon
+H:Troll
 
 N:171:Saeros(Half-Elf)
 I:10000:130
 C:125:100:60
-L:Half-Elf  | Easterling
-H:Dragon | Demon | Half-Ogre
+L:Easterling
+L:Half-Elf
+H:Demon
+H:Dragon
+H:Half-Ogre
 
 N:172:Zartosh(Half-Orc)
 I:30000:150
 C:125:100:80
-L:Orc  | Easterling
-H:Dragon | Demon | Elf
+L:Easterling
+L:Orc
+H:Demon
+H:Dragon
+H:Elf
 
 N:173:Shog(Half-Troll)
 I:20000:170
 C:150:100:50
-L:Troll  | Easterling
-H:Dragon | Demon | Human
+L:Easterling
+L:Troll
+H:Demon
+H:Dragon
+H:Human
 
 ### The Potion Peddlers ###
 
 N:174:Zamin(Human)
 I:25000:200
 C:150:100:50
-L:Human  | Easterling
-H:Dragon | Demon | Troll
+L:Easterling
+L:Human
+H:Demon
+H:Dragon
+H:Troll
 
 N:175:Algosh(Half-Orc)
 I:30000:150
 C:115:100:70
-L:Orc  | Easterling
-H:Dragon | Demon | Elf
+L:Easterling
+L:Orc
+H:Demon
+H:Dragon
+H:Elf
 
 N:176:Seghash(Half-Troll)
 I:10000:130
 C:125:100:80
-L:Troll  | Easterling
-H:Dragon | Demon | Human
+L:Easterling
+L:Troll
+H:Demon
+H:Dragon
+H:Human
 
 N:177:Kabbug(Half-Orc)
 I:20000:170
 C:125:100:60
-L:Orc  | Easterling
-H:Dragon | Demon | Elf
+L:Easterling
+L:Orc
+H:Demon
+H:Dragon
+H:Elf
 
 ### The Master Archers ###
 
 N:178:Palin(Dwarf)
 I:30000:120
 C:125:100:70
-L:Human | Dwarf
-H:Dragon | Demon | Beorning | Orc | Half-Ogre | Troll  | Easterling
+L:Dwarf
+L:Human
+H:Beorning
+H:Demon
+H:Dragon
+H:Easterling
+H:Half-Ogre
+H:Orc
+H:Troll
 
 N:179:Wilcome Cotton(Hobbit)
 I:20000:130
 C:110:100:80
-L:Human | Hobbit
-H:Dragon | Demon | Beorning | Orc | Half-Ogre | Troll  | Easterling
+L:Hobbit
+L:Human
+H:Beorning
+H:Demon
+H:Dragon
+H:Easterling
+H:Half-Ogre
+H:Orc
+H:Troll
 
 N:180:Inzilbeth(Dunadan)
 I:25000:130
 C:110:100:80
-L:Human | High-Elf | Dunadan | Elf
-H:Dragon | Demon | Orc | Half-Ogre | Troll
+L:Dunadan
+L:Elf
+L:High-Elf
+L:Human
+H:Demon
+H:Dragon
+H:Half-Ogre
+H:Orc
+H:Troll
 
 N:181:Gildor Inglorion(Dark-Elf)
 I:10000:140
 C:150:100:50
-L:Dark-Elf | Elf  | Easterling
-H:Dragon | Demon | Orc | Half-Ogre | Petty-Dwarf | Dwarf | Troll
+L:Dark-Elf
+L:Easterling
+L:Elf
+H:Demon
+H:Dragon
+H:Dwarf
+H:Half-Ogre
+H:Orc
+H:Petty-Dwarf
+H:Troll
 
 ### Theme stores ###
 
@@ -1224,104 +2311,248 @@ H:Dragon | Demon | Orc | Half-Ogre | Petty-Dwarf | Dwarf | Troll
 N:182:Gror(Dwarf)
 I:20000:130
 C:125:100:70
-L:Half-Elf | Petty-Dwarf | Dwarf
-H:Dragon | Demon | Beorning | Orc | Half-Ogre | Troll
+L:Dwarf
+L:Half-Elf
+L:Petty-Dwarf
+H:Beorning
+H:Demon
+H:Dragon
+H:Half-Ogre
+H:Orc
+H:Troll
 
 N:183:Saradoc Oldbuck(Hobbit)
 I:30000:120
 C:110:100:80
-L:Human | High-Elf | Hobbit | Elf
-H:Dragon | Demon | Beorning | Orc | Half-Ogre | Troll
+L:Elf
+L:High-Elf
+L:Hobbit
+L:Human
+H:Beorning
+H:Demon
+H:Dragon
+H:Half-Ogre
+H:Orc
+H:Troll
 
 N:184:Gloredhel(Half-Elf)
 I:10000:140
 C:150:100:50
-L:Human | Half-Elf | Dunadan | Elf  | Easterling
-H:Dragon | Demon | Beorning | Orc | Dark-Elf | Half-Ogre | Troll
+L:Dunadan
+L:Easterling
+L:Elf
+L:Half-Elf
+L:Human
+H:Beorning
+H:Dark-Elf
+H:Demon
+H:Dragon
+H:Half-Ogre
+H:Orc
+H:Troll
 
 N:185:Erellont(Wood-Elf)
 I:25000:130
 C:110:100:80
-L:High-Elf | Dunadan | Hobbit | Elf
-H:Dragon | Demon | Orc | Dark-Elf | Half-Ogre | Dwarf | Troll  | Easterling
+L:Dunadan
+L:Elf
+L:High-Elf
+L:Hobbit
+H:Dark-Elf
+H:Demon
+H:Dragon
+H:Dwarf
+H:Easterling
+H:Half-Ogre
+H:Orc
+H:Troll
 
 ### The Hunters ###
 
 N:186:Kili(Dwarf)
 I:20000:130
 C:110:100:80
-L:Petty-Dwarf | Dwarf
-H:Dragon | Demon | Orc | Dark-Elf | Half-Ogre | Elf | Troll
+L:Dwarf
+L:Petty-Dwarf
+H:Dark-Elf
+H:Demon
+H:Dragon
+H:Elf
+H:Half-Ogre
+H:Orc
+H:Troll
 
 N:187:Ruby Bolger(Hobbit)
 I:10000:140
 C:150:100:50
-L:Human | Half-Elf | High-Elf | Hobbit | Elf  | Easterling
-H:Dragon | Demon | Beorning | Orc | Half-Ogre | Dwarf | Troll
+L:Easterling
+L:Elf
+L:Half-Elf
+L:High-Elf
+L:Hobbit
+L:Human
+H:Beorning
+H:Demon
+H:Dragon
+H:Dwarf
+H:Half-Ogre
+H:Orc
+H:Troll
 
 N:188:Goldwine(Human)
 I:25000:130
 C:110:100:80
-L:Human | Half-Elf | RohanKnight | Dunadan | Elf  | Easterling
-H:Dragon | Demon | Beorning | Orc | Dark-Elf | Half-Ogre | Troll
+L:Dunadan
+L:Easterling
+L:Elf
+L:Half-Elf
+L:Human
+L:RohanKnight
+H:Beorning
+H:Dark-Elf
+H:Demon
+H:Dragon
+H:Half-Ogre
+H:Orc
+H:Troll
 
 N:189:Erestor(High-Elf)
 I:30000:120
 C:125:100:70
-L:Human | Half-Elf | High-Elf | Dunadan | Elf
-H:Dragon | Demon | Beorning | Orc | Dark-Elf | Half-Ogre | Dwarf | Troll  | Easterling
+L:Dunadan
+L:Elf
+L:Half-Elf
+L:High-Elf
+L:Human
+H:Beorning
+H:Dark-Elf
+H:Demon
+H:Dragon
+H:Dwarf
+H:Easterling
+H:Half-Ogre
+H:Orc
+H:Troll
 
 ### The Runecrafters ###
 
 N:190:Nori(Dwarf)
 I:30000:120
 C:150:100:50
-L:Petty-Dwarf | Dwarf | Half-Elf | Dunadan
-H:Dragon | Demon | Beorning | Orc | Dark-Elf | Half-Ogre | Human | Troll | Eagle
+L:Dunadan
+L:Dwarf
+L:Half-Elf
+L:Petty-Dwarf
+H:Beorning
+H:Dark-Elf
+H:Demon
+H:Dragon
+H:Eagle
+H:Half-Ogre
+H:Human
+H:Orc
+H:Troll
 
 N:191:Camellia Sackville(Hobbit)
 I:10000:140
 C:110:100:80
-L:Hobbit  | Easterling
-H:Dragon | Demon | Orc | Troll
+L:Easterling
+L:Hobbit
+H:Demon
+H:Dragon
+H:Orc
+H:Troll
 
 N:192:Hador Lorindol(Dunadan)
 I:25000:130
 C:110:100:80
-L:Human | Half-Elf | High-Elf | RohanKnight | Dunadan | Hobbit | Elf
-H:Dragon | Demon | Orc | Half-Ogre | Troll  | Easterling
+L:Dunadan
+L:Elf
+L:Half-Elf
+L:High-Elf
+L:Hobbit
+L:Human
+L:RohanKnight
+H:Demon
+H:Dragon
+H:Easterling
+H:Half-Ogre
+H:Orc
+H:Troll
 
 N:193:Galathil(Dark-Elf)
 I:20000:130
 C:125:100:70
-L:Human | Dark-Elf | Elf
-H:Dragon | Demon | Beorning | Orc | High-Elf | Half-Ogre | Petty-Dwarf | Troll
+L:Dark-Elf
+L:Elf
+L:Human
+H:Beorning
+H:Demon
+H:Dragon
+H:Half-Ogre
+H:High-Elf
+H:Orc
+H:Petty-Dwarf
+H:Troll
 
 ### The Musicians ###
 
 N:194:Oin(Dwarf)
 I:20000:130
 C:125:100:70
-L:Human | Petty-Dwarf | Dwarf
-H:Dragon | Demon | Orc | Elf | Half-Ogre | Troll  | Easterling
+L:Dwarf
+L:Human
+L:Petty-Dwarf
+H:Demon
+H:Dragon
+H:Easterling
+H:Elf
+H:Half-Ogre
+H:Orc
+H:Troll
 
 N:195:Robin Smallburrow(Hobbit)
 I:10000:140
 C:110:100:80
-L:Human | Hobbit | Elf
-H:Dragon | Demon | Beorning | Orc | Troll  | Easterling
+L:Elf
+L:Hobbit
+L:Human
+H:Beorning
+H:Demon
+H:Dragon
+H:Easterling
+H:Orc
+H:Troll
 
 N:196:Hareth(Half-Elf)
 I:30000:120
 C:150:100:50
-L:Human | RohanKnight | Dunadan
-H:Dragon | Demon | Beorning | Orc | Half-Ogre | Troll  | Easterling
+L:Dunadan
+L:Human
+L:RohanKnight
+H:Beorning
+H:Demon
+H:Dragon
+H:Easterling
+H:Half-Ogre
+H:Orc
+H:Troll
 
 N:197:Galdor(Wood-Elf)
 I:25000:130
 C:110:100:80
-L:Half-Elf | High-Elf | Elf
-H:Dragon | Demon | Orc | Dark-Elf | Half-Ogre | Petty-Dwarf | Dwarf | Troll  | Easterling
+L:Elf
+L:Half-Elf
+L:High-Elf
+H:Dark-Elf
+H:Demon
+H:Dragon
+H:Dwarf
+H:Easterling
+H:Half-Ogre
+H:Orc
+H:Petty-Dwarf
+H:Troll
 
 ### The Precious Metalsmiths ###
 
@@ -1329,82 +2560,176 @@ N:198:Gabil(Dwarf)
 I:10000:130
 C:115:100:70
 L:Dwarf
-H:Dragon | Demon | Orc
+H:Demon
+H:Dragon
+H:Orc
 
 N:199:Isil(Human)
 I:25000:200
 C:125:100:80
-L:Human  | Easterling
-H:Dragon | Demon | Troll
+L:Easterling
+L:Human
+H:Demon
+H:Dragon
+H:Troll
 
 N:200:Grima(Half-Orc)
 I:20000:170
 C:150:100:50
-L:Orc  | Easterling
-H:Dragon | Demon | Elf
+L:Easterling
+L:Orc
+H:Demon
+H:Dragon
+H:Elf
 
 N:201:Kosh(Half-Troll)
 I:30000:150
 C:125:100:60
-L:Troll  | Easterling
-H:Dragon | Demon | Human
+L:Easterling
+L:Troll
+H:Demon
+H:Dragon
+H:Human
 
 ### The Mapmakers ###
 
 N:202:Pas(Dwarf)
 I:20000:130
 C:125:100:70
-L:Half-Elf | Petty-Dwarf | Dwarf
-H:Dragon | Demon | Beorning | Orc | Half-Ogre | Troll
+L:Dwarf
+L:Half-Elf
+L:Petty-Dwarf
+H:Beorning
+H:Demon
+H:Dragon
+H:Half-Ogre
+H:Orc
+H:Troll
 
 N:203:Isumbras Took(Hobbit)
 I:30000:120
 C:110:100:80
-L:Human | High-Elf | Hobbit | Elf
-H:Dragon | Demon | Beorning | Orc | Half-Ogre | Troll  | Easterling
+L:Elf
+L:High-Elf
+L:Hobbit
+L:Human
+H:Beorning
+H:Demon
+H:Dragon
+H:Easterling
+H:Half-Ogre
+H:Orc
+H:Troll
 
 N:204:Labadal(Half-Elf)
 I:10000:140
 C:150:100:50
-L:Human | Half-Elf | Dunadan | Elf  | Easterling
-H:Dragon | Demon | Beorning | Orc | Dark-Elf | Half-Ogre | Troll
+L:Dunadan
+L:Easterling
+L:Elf
+L:Half-Elf
+L:Human
+H:Beorning
+H:Dark-Elf
+H:Demon
+H:Dragon
+H:Half-Ogre
+H:Orc
+H:Troll
 
 N:205:Guilin(Wood-Elf)
 I:25000:130
 C:110:100:80
-L:High-Elf | Dunadan | Hobbit | Elf
-H:Dragon | Demon | Orc | Dark-Elf | Half-Ogre | Dwarf | Troll
+L:Dunadan
+L:Elf
+L:High-Elf
+L:Hobbit
+H:Dark-Elf
+H:Demon
+H:Dragon
+H:Dwarf
+H:Half-Ogre
+H:Orc
+H:Troll
 
 ### The Farmers ###
 
 N:206:Rili(Dwarf)
 I:20000:130
 C:110:100:80
-L:Petty-Dwarf | Dwarf
-H:Dragon | Demon | Orc | Dark-Elf | Half-Ogre | Elf | Troll
+L:Dwarf
+L:Petty-Dwarf
+H:Dark-Elf
+H:Demon
+H:Dragon
+H:Elf
+H:Half-Ogre
+H:Orc
+H:Troll
 
 N:207:Wiseman Gamwich(Hobbit)
 I:10000:140
 C:150:100:50
-L:Human | Half-Elf | High-Elf | Hobbit | Elf
-H:Dragon | Demon | Beorning | Orc | Half-Ogre | Dwarf | Troll
+L:Elf
+L:Half-Elf
+L:High-Elf
+L:Hobbit
+L:Human
+H:Beorning
+H:Demon
+H:Dragon
+H:Dwarf
+H:Half-Ogre
+H:Orc
+H:Troll
 
 N:208:Lalaith(Human)
 I:25000:130
 C:110:100:80
-L:Human | Half-Elf | RohanKnight | Dunadan | Elf
-H:Dragon | Demon | Beorning | Orc | Dark-Elf | Half-Ogre | Troll  | Easterling
+L:Dunadan
+L:Elf
+L:Half-Elf
+L:Human
+L:RohanKnight
+H:Beorning
+H:Dark-Elf
+H:Demon
+H:Dragon
+H:Easterling
+H:Half-Ogre
+H:Orc
+H:Troll
 
 N:209:Gwindor(High-Elf)
 I:30000:120
 C:125:100:70
-L:Human | Half-Elf | High-Elf | Dunadan | Elf
-H:Dragon | Demon | Beorning | Orc | Dark-Elf | Half-Ogre | Dwarf | Troll
+L:Dunadan
+L:Elf
+L:Half-Elf
+L:High-Elf
+L:Human
+H:Beorning
+H:Dark-Elf
+H:Demon
+H:Dragon
+H:Dwarf
+H:Half-Ogre
+H:Orc
+H:Troll
 
 ### The Old Mage in Minas Anor ###
 
 N:210:Malbeth the Seer
 I:20000:130
 C:110:100:80
-L:Human | RohanKnight | Dunadan | High-Elf
-H:Dragon | Demon | Beorning | Orc | Half-Ogre | Troll  | Easterling
+L:Dunadan
+L:High-Elf
+L:Human
+L:RohanKnight
+H:Beorning
+H:Demon
+H:Dragon
+H:Easterling
+H:Half-Ogre
+H:Orc
+H:Troll
