@@ -3735,8 +3735,14 @@ errr init_k_info_txt(FILE *fp)
 			/* Acquire the text */
 			s = buf + 2;
 
-			/* Append description */
-			strappend(&k_ptr->text, s);
+			if (!k_ptr->text)
+			{
+				k_ptr->text = my_strdup(s);
+			}
+			else
+			{
+				strappend(&k_ptr->text, format("\n%s", s));
+			}
 
 			/* Next... */
 			continue;
