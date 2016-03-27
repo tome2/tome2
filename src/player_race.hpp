@@ -17,12 +17,9 @@ struct player_race
 
 	char luck;                      /* Luck */
 
-	s16b r_dis;			/* disarming */
 	s16b r_dev;			/* magic devices */
 	s16b r_sav;			/* saving throw */
 	s16b r_stl;			/* stealth */
-	s16b r_srh;			/* search ability */
-	s16b r_fos;			/* search frequency */
 	s16b r_thn;			/* combat (normal) */
 	s16b r_thb;			/* combat (shooting) */
 

@@ -45,7 +45,6 @@
 #include "store.hpp"
 #include "tables.hpp"
 #include "town_type.hpp"
-#include "trap_type.hpp"
 #include "util.hpp"
 #include "util.h"
 #include "variable.h"
@@ -876,13 +875,6 @@ static void player_wipe(void)
 		inscription_info[i].know = FALSE;
 	}
 
-	/* Wipe the known traps list */
-	for (i = 0; i < max_t_idx; i++)
-	{
-		t_info[i].known = 0;
-		t_info[i].ident = FALSE;
-	}
-
 	/* Reset wild_mode to FALSE */
 	p_ptr->wild_mode = FALSE;
 	p_ptr->old_wild_mode = FALSE;
@@ -1131,30 +1123,6 @@ static void player_outfit(void)
 		q_ptr->timeout = rand_range(3, 7) * 500;
 		object_aware(q_ptr);
 		object_known(q_ptr);
-		(void)inven_carry(q_ptr, FALSE);
-	}
-
-	/* Rogues have a better knowledge of traps */
-	if (has_ability(AB_TRAPPING))
-	{
-		t_info[TRAP_OF_DAGGER_I].known = randint(50) + 50;
-		t_info[TRAP_OF_POISON_NEEDLE].known = randint(50) + 50;
-		t_info[TRAP_OF_FIRE_BOLT].known = randint(50) + 50;
-		t_info[TRAP_OF_DAGGER_I].ident = TRUE;
-		t_info[TRAP_OF_POISON_NEEDLE].ident = TRUE;
-		t_info[TRAP_OF_FIRE_BOLT].ident = TRUE;
-
-		/* Hack -- Give the player a some ammo for the traps */
-		object_type forge;
-		object_type *q_ptr = &forge;
-		object_prep(q_ptr, lookup_kind(TV_SHOT, SV_AMMO_NORMAL));
-		q_ptr->number = (byte)rand_range(5, 15);
-		object_aware(q_ptr);
-		object_known(q_ptr);
-
-		/* These objects are "storebought" */
-		q_ptr->ident |= IDENT_MENTAL;
-
 		(void)inven_carry(q_ptr, FALSE);
 	}
 

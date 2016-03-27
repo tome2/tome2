@@ -14,7 +14,6 @@
 #include "spells1.hpp"
 #include "store_info_type.hpp"
 #include "tables.hpp"
-#include "trap_type.hpp"
 #include "util.hpp"
 #include "util.h"
 #include "variable.h"
@@ -887,40 +886,6 @@ static void map_info(int y, int x, byte *ap, char *cp)
 			a = TERM_VIOLET;
 		}
 
-		/* Mega-Hack 3 -- Traps don't have f_info entries either */
-		if ((info & (CAVE_TRDT)) && (feat != FEAT_ILLUS_WALL))
-		{
-			/* Trap index */
-			auto t_idx = c_ptr->t_idx;
-
-			/*
-			 * If trap is set on a floor grid that is not
-			 * one of "interesting" features, use a special
-			 * symbol to display it. Check for doors is no longer
-			 * necessary because they have REMEMBER flag now.
-			 *
-			 * Cave macros cannot be used safely here, because of
-			 * c_ptr->mimic XXX XXX
-			 */
-			if ((f_ptr->flags1 & (FF1_FLOOR | FF1_REMEMBER)) == FF1_FLOOR)
-			{
-				c = f_info[FEAT_TRAP].x_char;
-			}
-
-			/* Add attr XXX XXX XXX */
-			a = t_info[t_idx].color;
-
-			/* Get a new color with a strange formula :) XXX XXX XXX */
-			if (t_info[t_idx].flags & FTRAP_CHANGE)
-			{
-				s32b tmp;
-
-				tmp = dun_level + dungeon_type + feat;
-
-				a = tmp % 16;
-			}
-		}
-
 
 		/**** Step 2 -- Apply special random effects ****/
 		if (!avoid_other && !avoid_shimmer)
@@ -945,7 +910,6 @@ static void map_info(int y, int x, byte *ap, char *cp)
 		 * Special lighting effects, if specified and applicable
 		 * This will never happen for
 		 * - any grids in the overhead map
-		 * - traps
 		 * - (graphics modes) terrain features without corresponding
 		 *   "darker" tiles.
 		 *
@@ -957,7 +921,7 @@ static void map_info(int y, int x, byte *ap, char *cp)
 		if (view_special_lite &&
 		                ((f_ptr->flags1 & (FF1_FLOOR | FF1_REMEMBER)) == FF1_FLOOR))
 		{
-			if (!p_ptr->wild_mode && !(info & (CAVE_TRDT)))
+			if (!p_ptr->wild_mode)
 			{
 				/* Handle "seen" grids */
 				if (info & (CAVE_SEEN))
@@ -997,7 +961,7 @@ static void map_info(int y, int x, byte *ap, char *cp)
 		else if (view_granite_lite &&
 		                (f_ptr->flags1 & (FF1_NO_VISION | FF1_DOOR)))
 		{
-			if (!p_ptr->wild_mode && !(info & (CAVE_TRDT)))
+			if (!p_ptr->wild_mode)
 			{
 				/* Handle "seen" grids */
 				if (info & (CAVE_SEEN))
@@ -1058,7 +1022,6 @@ static void map_info(int y, int x, byte *ap, char *cp)
 
 	/**** Layer 2 -- Objects ****/
 
-	if (feat != FEAT_MON_TRAP)
 	{
 		for (auto const o_idx: c_ptr->o_idxs)
 		{
@@ -1321,40 +1284,6 @@ void map_info_default(int y, int x, byte *ap, char *cp)
 			a = TERM_VIOLET;
 		}
 
-		/* Mega-Hack 3 -- Traps don't have f_info entries either */
-		if ((info & (CAVE_TRDT)) && (feat != FEAT_ILLUS_WALL))
-		{
-			/* Trap index */
-			auto t_idx = c_ptr->t_idx;
-
-			/*
-			 * If trap is set on a floor grid that is not
-			 * one of "interesting" features, use a special
-			 * symbol to display it. Check for doors is no longer
-			 * necessary because they have REMEMBER flag now.
-			 *
-			 * Cave macros cannot be used safely here, because of
-			 * c_ptr->mimic XXX XXX
-			 */
-			if ((f_ptr->flags1 & (FF1_FLOOR | FF1_REMEMBER)) == FF1_FLOOR)
-			{
-				c = f_info[FEAT_TRAP].d_char;
-			}
-
-			/* Add attr */
-			a = t_info[t_idx].color;
-
-			/* Get a new color with a strange formula :) */
-			if (t_info[t_idx].flags & FTRAP_CHANGE)
-			{
-				s32b tmp;
-
-				tmp = dun_level + dungeon_type + feat;
-
-				a = tmp % 16;
-			}
-		}
-
 
 		/**** Step 2 -- Apply special random effects ****/
 		if (!avoid_other)
@@ -1379,7 +1308,6 @@ void map_info_default(int y, int x, byte *ap, char *cp)
 		 * Special lighting effects, if specified and applicable
 		 * This will never happen for
 		 * - any grids in the overhead map
-		 * - traps
 		 * - (graphics modes) terrain features without corresponding
 		 *   "darker" tiles.
 		 *
@@ -1391,7 +1319,7 @@ void map_info_default(int y, int x, byte *ap, char *cp)
 		if (view_special_lite &&
 		                ((f_ptr->flags1 & (FF1_FLOOR | FF1_REMEMBER)) == FF1_FLOOR))
 		{
-			if (!p_ptr->wild_mode && !(info & (CAVE_TRDT)))
+			if (!p_ptr->wild_mode)
 			{
 				/* Handle "seen" grids */
 				if (info & (CAVE_SEEN))
@@ -1431,7 +1359,7 @@ void map_info_default(int y, int x, byte *ap, char *cp)
 		else if (view_granite_lite &&
 		                (f_ptr->flags1 & (FF1_NO_VISION | FF1_DOOR)))
 		{
-			if (!p_ptr->wild_mode && !(info & (CAVE_TRDT)))
+			if (!p_ptr->wild_mode)
 			{
 				/* Handle "seen" grids */
 				if (info & (CAVE_SEEN))
@@ -1487,7 +1415,6 @@ void map_info_default(int y, int x, byte *ap, char *cp)
 
 	/**** Layer 2 -- Objects ****/
 
-	if (feat != FEAT_MON_TRAP)
 	{
 		for (auto const this_o_idx: c_ptr->o_idxs)
 		{
@@ -1789,8 +1716,7 @@ void note_spot(int y, int x)
 		if (cave_plain_floor_grid(c_ptr))
 		{
 			/* Option -- memorise certain floors */
-			if ((info & (CAVE_TRDT)) ||
-			                ((info & (CAVE_GLOW)) && view_perma_grids ) ||
+			if (((info & (CAVE_GLOW)) && view_perma_grids ) ||
 			                view_torch_grids)
 			{
 				/* Memorize */
@@ -4550,7 +4476,7 @@ bool cave_floor_bold(int y, int x)
  */
 bool cave_floor_grid(cave_type const *c)
 {
-	return (f_info[c->feat].flags1 & FF1_FLOOR) && (c->feat != FEAT_MON_TRAP);
+	return (f_info[c->feat].flags1 & FF1_FLOOR);
 }
 
 
@@ -4611,7 +4537,6 @@ bool cave_clean_bold(int y, int x)
 {
 	return
 		(f_info[cave[y][x].feat].flags1 & FF1_FLOOR) &&
-		(cave[y][x].feat != FEAT_MON_TRAP) &&
 		(cave[y][x].o_idxs.empty()) &&
 		!(f_info[cave[y][x].feat].flags1 & FF1_PERMANENT);
 }
@@ -4643,7 +4568,6 @@ bool cave_naked_bold(int y, int x)
 {
 	return
 		(f_info[cave[y][x].feat].flags1 & FF1_FLOOR) &&
-		(cave[y][x].feat != FEAT_MON_TRAP) &&
 		!(f_info[cave[y][x].feat].flags1 & FF1_PERMANENT) &&
 		(cave[y][x].o_idxs.empty()) &&
 		(cave[y][x].m_idx == 0);
@@ -4653,7 +4577,6 @@ bool cave_naked_bold2(int y, int x)
 {
 	return
 		(f_info[cave[y][x].feat].flags1 & FF1_FLOOR) &&
-		(cave[y][x].feat != FEAT_MON_TRAP) &&
 		(cave[y][x].o_idxs.empty()) &&
 		(cave[y][x].m_idx == 0);
 }

@@ -44,7 +44,6 @@
 #include "store_info_type.hpp"
 #include "store_type.hpp"
 #include "tables.hpp"
-#include "trap_type.hpp"
 #include "tome/make_array.hpp"
 #include "town_type.hpp"
 #include "util.hpp"
@@ -506,22 +505,6 @@ namespace {
 		static errr parse(FILE *fp)
 		{
 			return init_wf_info_txt(fp);
-		}
-
-	};
-
-	struct tr_info_traits {
-
-		static constexpr char const *name = "tr_info.txt";
-
-		static void allocate()
-		{
-			t_info = make_array<trap_type>(max_t_idx);
-		}
-
-		static errr parse(FILE *fp)
-		{
-			return init_t_info_txt(fp);
 		}
 
 	};
@@ -1421,10 +1404,6 @@ void init_angband(void)
 	/* Initialise town array */
 	note("[Initialising arrays... (towns)]");
 	if (init_towns()) quit("Cannot initialise towns");
-
-	/* Initialise trap info */
-	note("[Initialising arrays... (traps)]");
-	if (init_x_info<tr_info_traits>()) quit("Cannot initialise traps");
 
 	/* Initialise some other arrays */
 	note("[Initialising arrays... (other)]");

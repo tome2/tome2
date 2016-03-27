@@ -817,7 +817,6 @@ static bool store_will_buy(object_type const *o_ptr)
 	{
 		switch (o_ptr->tval)
 		{
-		case TV_TRAPKIT:
 		case TV_BOOMERANG:
 		case TV_SHOT:
 		case TV_BOLT:

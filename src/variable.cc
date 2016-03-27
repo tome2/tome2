@@ -520,9 +520,6 @@ randart_part_type *ra_info;
 randart_gen_type ra_gen[30];
 
 /* jk */
-/* the trap-arrays */
-trap_type *t_info;
-
 /*
  * The monster race arrays
  */
@@ -1059,6 +1056,5 @@ tval_desc tvals[] =
 	{ TV_RUNE1, "Rune 1" },
 	{ TV_RUNE2, "Rune 2" },
 	{ TV_JUNK, "Junk" },
-	{ TV_TRAPKIT, "Trapping Kit" },
 	{ 0, NULL }
 };

@@ -35,8 +35,6 @@
 #include "squeltch.hpp"
 #include "stats.hpp"
 #include "tables.hpp"
-#include "traps.hpp"
-#include "trap_type.hpp"
 #include "util.hpp"
 #include "util.h"
 #include "variable.hpp"
@@ -626,8 +624,6 @@ void teleport_player(int dis)
 	/* Update the monsters */
 	p_ptr->update |= (PU_DISTANCE);
 
-	/* Redraw trap detection status */
-	p_ptr->redraw |= (PR_FRAME);
 
 	/* Window stuff */
 	p_ptr->window |= (PW_OVERHEAD);
@@ -855,9 +851,6 @@ void teleport_player_to(int ny, int nx)
 
 	/* Update the monsters */
 	p_ptr->update |= (PU_DISTANCE);
-
-	/* Redraw trap detection status */
-	p_ptr->redraw |= (PR_FRAME);
 
 	/* Window stuff */
 	p_ptr->window |= (PW_OVERHEAD);
@@ -3239,71 +3232,12 @@ static bool_ project_f(int who, int r, int y, int x, int dam, int typ)
 			break;
 		}
 
-		/* Destroy Traps (and Locks) */
-	case GF_KILL_TRAP:
-		{
-			/* Destroy normal traps and disarm monster traps */
-			if ((c_ptr->t_idx != 0) || (c_ptr->feat == FEAT_MON_TRAP))
-			{
-				/* Check line of sight */
-				if (player_has_los_bold(y, x))
-				{
-					msg_print("There is a bright flash of light!");
-					obvious = TRUE;
-				}
-
-				/* Forget the trap */
-				c_ptr->info &= ~(CAVE_MARK | CAVE_TRDT);
-
-				/* Destroy normal traps */
-				c_ptr->t_idx = 0;
-
-				/* Disarm monster traps */
-				if (c_ptr->feat == FEAT_MON_TRAP)
-				{
-					c_ptr->special = c_ptr->special2 = 0;
-
-					/* Remove the feature */
-					if (!(f_info[c_ptr->feat].flags1 & FF1_PERMANENT))
-						place_floor_convert_glass(y, x);
-				}
-
-				/* Hack -- Force redraw */
-				note_spot(y, x);
-				lite_spot(y, x);
-			}
-
-			/* Secret / Locked doors are found and unlocked */
-			else if ((c_ptr->feat == FEAT_SECRET) ||
-			                ((c_ptr->feat >= FEAT_DOOR_HEAD + 0x01) &&
-			                 (c_ptr->feat <= FEAT_DOOR_HEAD + 0x07)))
-			{
-
-				/* Check line of sound */
-				if (player_has_los_bold(y, x))
-				{
-					msg_print("Click!");
-					obvious = TRUE;
-				}
-
-				/* Remove feature mimic */
-				cave[y][x].mimic = 0;
-
-				/* Unlock the door */
-				cave_set_feat(y, x, FEAT_DOOR_HEAD + 0x00);
-			}
-
-			break;
-		}
-
 		/* Destroy Doors (and traps) */
 	case GF_KILL_DOOR:
 		{
 			/* Destroy all doors and traps, and disarm monster traps */
 			if ((c_ptr->feat == FEAT_OPEN) ||
 			                (c_ptr->feat == FEAT_BROKEN) ||
-			                (c_ptr->t_idx != 0) ||
-			                (c_ptr->feat == FEAT_MON_TRAP) ||
 			                ((c_ptr->feat >= FEAT_DOOR_HEAD) &&
 			                 (c_ptr->feat <= FEAT_DOOR_TAIL)))
 			{
@@ -3324,14 +3258,7 @@ static bool_ project_f(int who, int r, int y, int x, int dam, int typ)
 				}
 
 				/* Forget the door */
-				c_ptr->info &= ~(CAVE_MARK | CAVE_TRDT);
-
-				/* Remove normal traps */
-				c_ptr->t_idx = 0;
-
-				/* Disarm monster traps */
-				if (c_ptr->feat == FEAT_MON_TRAP)
-					c_ptr->special = c_ptr->special2 = 0;
+				c_ptr->info &= ~(CAVE_MARK);
 
 				/* Remove the feature */
 				if (!(f_info[c_ptr->feat].flags1 & FF1_PERMANENT))
@@ -3516,19 +3443,6 @@ static bool_ project_f(int who, int r, int y, int x, int dam, int typ)
 
 			break;
 		}
-
-		/* Make traps */
-	case GF_MAKE_TRAP:
-		{
-			/* Require a "naked" floor grid */
-			if (!cave_clean_bold(y, x)) break;
-
-			/* Place a trap */
-			place_trap(y, x);
-
-			break;
-		}
-
 
 	case GF_MAKE_GLYPH:
 		{
@@ -4043,7 +3957,6 @@ static bool_ project_o(int who, int r, int y, int x, int dam, int typ)
 			}
 
 			/* Unlock chests */
-		case GF_KILL_TRAP:
 		case GF_KILL_DOOR:
 			{
 				/* Chests are noticed only if trapped or locked */
@@ -7156,9 +7069,6 @@ static bool_ project_p(int who, int r, int y, int x, int dam, int typ, int a_rad
 	/* If the player is blind, be more descriptive */
 	if (blind) fuzzy = TRUE;
 
-	/* If the player is hit by a trap, be more descritive */
-	if (who == -2) fuzzy = TRUE;
-
 	/* Did ``God'' do it? */
 	if (who == -99)
 	{
@@ -7191,12 +7101,6 @@ static bool_ project_p(int who, int r, int y, int x, int dam, int typ, int a_rad
 
 		/* Get the monster's real name */
 		monster_desc(killer, m_ptr, 0x88);
-	}
-
-	if (who == -2)
-	{
-		sprintf(killer, "%s",
-			t_info[cave[p_ptr->py][p_ptr->px].t_idx].name);
 	}
 
 	/* Analyze the damage */
@@ -9022,17 +8926,11 @@ static void describe_attack_fully(int type, char* r)
 	case GF_KILL_DOOR:
 		strcpy(r, "door destruction");
 		break;
-	case GF_KILL_TRAP:
-		strcpy(r, "trap destruction");
-		break;
 	case GF_STONE_WALL:
 		strcpy(r, "wall creation");
 		break;
 	case GF_MAKE_DOOR:
 		strcpy(r, "door creation");
-		break;
-	case GF_MAKE_TRAP:
-		strcpy(r, "trap creation");
 		break;
 	case GF_DESTRUCTION:
 		strcpy(r, "destruction");
