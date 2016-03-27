@@ -16,77 +16,156 @@
 N:0:Bilbo the Friendly(Hobbit)
 I:20000:120
 C:120:100:80
-L:Elf | Half-Elf | High-Elf | Dunadan | Hobbit | Dwarf | RohanKnight
-H:Orc | Troll | DeathMold | Half-Ogre | Beorning | Kobold
+L:Dunadan
+L:Dwarf
+L:Elf
+L:Half-Elf
+L:High-Elf
+L:Hobbit
+L:RohanKnight
+H:Beorning
+H:DeathMold
+H:Half-Ogre
+H:Kobold
+H:Orc
+H:Troll
 
 N:1:Uldrik(Human)
 I:20000:120
 C:120:100:80
-L:Dunadan | Hobbit | Human |
-H:Orc | Troll | DeathMold | Half-Ogre | Beorning | Kobold |
+L:Dunadan
+L:Hobbit
+L:Human
+H:Beorning
+H:DeathMold
+H:Half-Ogre
+H:Kobold
+H:Orc
+H:Troll
 
 
 N:2:Otick(Human)
 I:100:120
 C:120:100:80
-L:Dunadan | Hobbit | Human |
-H:Orc | Troll | DeathMold | Half-Ogre | Beorning | Kobold |
+L:Dunadan
+L:Hobbit
+L:Human
+H:Beorning
+H:DeathMold
+H:Half-Ogre
+H:Kobold
+H:Orc
+H:Troll
 
 
 N:3:Merana(Human)
 I:0:120
 C:200:100:95
 L:Human
-H:Orc | Troll | DeathMold | Half-Ogre | Beorning | Kobold |
+H:Beorning
+H:DeathMold
+H:Half-Ogre
+H:Kobold
+H:Orc
+H:Troll
 
 
 N:4:Mirimbar(High-Elf)
 I:0:120
 C:120:100:80
-L:High-Elf | Half-Elf | Elf
-H:Orc | Troll | Half-Ogre | Beorning | Kobold |
+L:Elf
+L:Half-Elf
+L:High-Elf
+H:Beorning
+H:Half-Ogre
+H:Kobold
+H:Orc
+H:Troll
 
 N:5:Raistlin the Chicken(Human)
 I:20000:130
 C:120:100:80
 L:Human
-H:Orc | Troll | Half-Ogre | Beorning | Kobold |
+H:Beorning
+H:Half-Ogre
+H:Kobold
+H:Orc
+H:Troll
 
 N:6:Sultan the Midget(Gnome)
 I:30000:120
 C:120:100:80
-L:Gnome | Dwarf | Petty-Dwarf
-H:Orc | Troll | Half-Ogre | Beorning | Kobold |
+L:Dwarf
+L:Gnome
+L:Petty-Dwarf
+H:Beorning
+H:Half-Ogre
+H:Kobold
+H:Orc
+H:Troll
 
 N:7:Lyar-el the Comely(Elf)
 I:30000:120
 C:120:100:80
-L:Elf | Half-Elf | Dark-Elf | High-Elf
-H:Orc | Troll | Half-Ogre | Beorning | Kobold |
+L:Dark-Elf
+L:Elf
+L:Half-Elf
+L:High-Elf
+H:Beorning
+H:Half-Ogre
+H:Kobold
+H:Orc
+H:Troll
 
 N:8:Kon-Dar the Ugly(Half-Orc)
 I:5000:140
 C:120:100:80
-L:Orc | Troll | Half-Ogre | Beorning | Kobold
-H:Gnome | Dwarf | Human | RohanKnight | Elf | Half-Elf | High-Elf
+L:Beorning
+L:Half-Ogre
+L:Kobold
+L:Orc
+L:Troll
+H:Dwarf
+H:Elf
+H:Gnome
+H:Half-Elf
+H:High-Elf
+H:Human
+H:RohanKnight
 
 N:9:Darg-Low the Grim(Human)
 I:10000:130
 C:120:100:80
 L:Human
-H:Orc | Troll | Half-Ogre | Beorning | Kobold |
+H:Beorning
+H:Half-Ogre
+H:Kobold
+H:Orc
+H:Troll
 
 N:10:Decado the Handsome(Dunadan)
 I:25000:140
 C:120:100:80
-L:Human | Dunadan | RohanKnight
-H:Orc | Troll | Half-Ogre | Beorning | Kobold |
+L:Dunadan
+L:Human
+L:RohanKnight
+H:Beorning
+H:Half-Ogre
+H:Kobold
+H:Orc
+H:Troll
 
 N:11:Wieland the Smith(Dwarf)
 I:30000:140
 C:120:100:80
-L:Gnome | Dwarf | Petty-Dwarf
-H:Orc | Troll | Half-Ogre | Beorning | Kobold |
+L:Dwarf
+L:Gnome
+L:Petty-Dwarf
+H:Beorning
+H:Half-Ogre
+H:Kobold
+H:Orc
+H:Troll
 
 N:12:Arnold the Beastly(Barbarian)
 I:5000:140
@@ -95,26 +174,55 @@ C:120:100:80
 N:13:Arndal Beast-Slayer(Half-Elf)
 I:10000:130
 C:120:100:80
-L:Elf | Half-Elf | Dark-Elf | High-Elf
-H:Orc | Troll | Half-Ogre | Beorning | Kobold |
+L:Dark-Elf
+L:Elf
+L:Half-Elf
+L:High-Elf
+H:Beorning
+H:Half-Ogre
+H:Kobold
+H:Orc
+H:Troll
 
 N:14:Eddie Beast-Master(Half-Orc)
 I:25000:140
 C:120:100:80
-L:Orc | Troll | Half-Ogre | Beorning | Kobold
-H:Gnome | Dwarf | Human | RohanKnight | Elf | Half-Elf | High-Elf
+L:Beorning
+L:Half-Ogre
+L:Kobold
+L:Orc
+L:Troll
+H:Dwarf
+H:Elf
+H:Gnome
+H:Half-Elf
+H:High-Elf
+H:Human
+H:RohanKnight
 
 N:15:Oglign Dragon-Slayer(Dwarf)
 I:30000:130
 C:120:100:80
-L:Gnome | Dwarf | Petty-Dwarf
-H:Orc | Troll | Half-Ogre | Beorning | Kobold |
+L:Dwarf
+L:Gnome
+L:Petty-Dwarf
+H:Beorning
+H:Half-Ogre
+H:Kobold
+H:Orc
+H:Troll
 
 N:16:Aragorn(Dunadan)
 I:20000:140
 C:120:100:80
-L:Human | Dunadan | RohanKnight
-H:Orc | Troll | Half-Ogre | Beorning | Kobold |
+L:Dunadan
+L:Human
+L:RohanKnight
+H:Beorning
+H:Half-Ogre
+H:Kobold
+H:Orc
+H:Troll
 
 N:17:Sondar(Human)
 I:0:140
@@ -123,15 +231,28 @@ C:120:100:80
 N:18:Celebor(Half-Elf)
 I:100:120
 C:120:100:80
-L:Dunadan | Hobbit | Human |
-H:Orc | Troll | DeathMold | Half-Ogre | Beorning | Kobold |
+L:Dunadan
+L:Hobbit
+L:Human
+H:Beorning
+H:DeathMold
+H:Half-Ogre
+H:Kobold
+H:Orc
+H:Troll
 
 
 N:19:Sharra(Human)
 I:25000:140
 C:120:100:80
-L:Human | Dunadan | RohanKnight
-H:Orc | Troll | Half-Ogre | Beorning | Kobold |
+L:Dunadan
+L:Human
+L:RohanKnight
+H:Beorning
+H:Half-Ogre
+H:Kobold
+H:Orc
+H:Troll
 
 N:20:Hjolgar(Barbarian)
 I:5000:140
@@ -169,266 +290,523 @@ L:Thunderlord
 N:26:Ludwig the Humble(Dwarf)
 I:5000:130
 C:120:100:80
-L:Gnome | Dwarf | Petty-Dwarf
-H:Orc | Troll | Half-Ogre | Beorning | Kobold |
+L:Dwarf
+L:Gnome
+L:Petty-Dwarf
+H:Beorning
+H:Half-Ogre
+H:Kobold
+H:Orc
+H:Troll
 
 N:27:Gunnar the Paladin(Half-Troll)
 I:10000:130
 C:120:100:80
-L:Orc | Troll | Half-Ogre | Beorning | Kobold
-H:Gnome | Dwarf | Human | RohanKnight | Elf | Half-Elf | High-Elf
+L:Beorning
+L:Half-Ogre
+L:Kobold
+L:Orc
+L:Troll
+H:Dwarf
+H:Elf
+H:Gnome
+H:Half-Elf
+H:High-Elf
+H:Human
+H:RohanKnight
 
 N:28:Torin the Chosen(High-Elf)
 I:25000:130
 C:120:100:80
-L:High-Elf | Half-Elf | Elf
-H:Orc | Troll | Half-Ogre | Beorning | Kobold |
+L:Elf
+L:Half-Elf
+L:High-Elf
+H:Beorning
+H:Half-Ogre
+H:Kobold
+H:Orc
+H:Troll
 
 N:29:Sarastro the Wise(Human)
 I:30000:130
 C:120:100:80
-L:Dunadan | Hobbit | Human |
-H:Orc | Troll | DeathMold | Half-Ogre | Beorning | Kobold |
+L:Dunadan
+L:Hobbit
+L:Human
+H:Beorning
+H:DeathMold
+H:Half-Ogre
+H:Kobold
+H:Orc
+H:Troll
 
 
 N:30:Mauser the Chemist(Half-Elf)
 I:10000:130
 C:120:100:80
-L:Dunadan | Hobbit | Human |
-H:Orc | Troll | DeathMold | Half-Ogre | Beorning | Kobold |
+L:Dunadan
+L:Hobbit
+L:Human
+H:Beorning
+H:DeathMold
+H:Half-Ogre
+H:Kobold
+H:Orc
+H:Troll
 
 
 N:31:Wizzle the Chaotic(Hobbit)
 I:10000:130
 C:120:100:80
-L:Elf | Half-Elf | High-Elf | Dunadan | Hobbit | Dwarf | RohanKnight
-H:Orc | Troll | DeathMold | Half-Ogre | Beorning | Kobold |
+L:Dunadan
+L:Dwarf
+L:Elf
+L:Half-Elf
+L:High-Elf
+L:Hobbit
+L:RohanKnight
+H:Beorning
+H:DeathMold
+H:Half-Ogre
+H:Kobold
+H:Orc
+H:Troll
 
 
 N:32:Midas the Greedy(Gnome)
 I:15000:140
 C:120:100:80
-L:Gnome | Dwarf | Petty-Dwarf
-H:Orc | Troll | Half-Ogre | Beorning | Kobold |
+L:Dwarf
+L:Gnome
+L:Petty-Dwarf
+H:Beorning
+H:Half-Ogre
+H:Kobold
+H:Orc
+H:Troll
 
 N:33:Ja-Far the Alchemist(Elf)
 I:15000:140
 C:120:100:80
-L:Elf | Half-Elf | Dark-Elf | High-Elf
-H:Orc | Troll | Half-Ogre | Beorning | Kobold |
+L:Dark-Elf
+L:Elf
+L:Half-Elf
+L:High-Elf
+H:Beorning
+H:Half-Ogre
+H:Kobold
+H:Orc
+H:Troll
 
 N:34:Ariel the Sorceress(Half-Elf)
 I:20000:140
 C:120:100:80
-L:Dunadan | Hobbit | Human |
-H:Orc | Troll | DeathMold | Half-Ogre | Beorning | Kobold |
+L:Dunadan
+L:Hobbit
+L:Human
+H:Beorning
+H:DeathMold
+H:Half-Ogre
+H:Kobold
+H:Orc
+H:Troll
 
 
 N:35:Buggerby the Great(Gnome)
 I:20000:140
 C:120:100:80
-L:Gnome | Dwarf | Petty-Dwarf
-H:Orc | Troll | Half-Ogre | Beorning | Kobold |
+L:Dwarf
+L:Gnome
+L:Petty-Dwarf
+H:Beorning
+H:Half-Ogre
+H:Kobold
+H:Orc
+H:Troll
 
 N:36:Inglorian the Mage(Human)
 I:30000:140
 C:120:100:80
-L:Dunadan | Hobbit | Human |
-H:Orc | Troll | DeathMold | Half-Ogre | Beorning | Kobold |
+L:Dunadan
+L:Hobbit
+L:Human
+H:Beorning
+H:DeathMold
+H:Half-Ogre
+H:Kobold
+H:Orc
+H:Troll
 
 
 N:37:Luthien Starshine(High-Elf)
 I:30000:130
 C:120:100:80
-L:High-Elf | Half-Elf | Elf
-H:Orc | Troll | Half-Ogre | Beorning | Kobold |
+L:Elf
+L:Half-Elf
+L:High-Elf
+H:Beorning
+H:Half-Ogre
+H:Kobold
+H:Orc
+H:Troll
 
 N:38:Gary Gygaz(Half-Troll)
 I:20000:180
 C:120:100:80
 #L:Rogue
-H:Gnome | Dwarf | Human | RohanKnight | Elf | Half-Elf | High-Elf
+H:Dwarf
+H:Elf
+H:Gnome
+H:Half-Elf
+H:High-Elf
+H:Human
+H:RohanKnight
 
 N:39:Histor the Goblin(Half-Orc)
 I:20000:180
 C:120:100:80
 #L:Rogue
-H:Gnome | Dwarf | Human | RohanKnight | Elf | Half-Elf | High-Elf
+H:Dwarf
+H:Elf
+H:Gnome
+H:Half-Elf
+H:High-Elf
+H:Human
+H:RohanKnight
 
 N:40:Zorak the Smart(Dwarf)
 I:30000:180
 C:120:100:80
 #L:Rogue
-H:Orc | Troll | Half-Ogre | Beorning | Kobold |
+H:Beorning
+H:Half-Ogre
+H:Kobold
+H:Orc
+H:Troll
 
 N:41:Tipo the Fair(Human)
 I:30000:180
 C:120:100:80
 #L:Rogue
-H:Orc | Troll | DeathMold | Half-Ogre | Beorning | Kobold |
+H:Beorning
+H:DeathMold
+H:Half-Ogre
+H:Kobold
+H:Orc
+H:Troll
 
 
 N:42:Dolaf the Greedy(Human)
 I:10000:130
 C:120:100:80
-L:Dunadan | Hobbit | Human |
-H:Orc | Troll | DeathMold | Half-Ogre | Beorning | Kobold |
+L:Dunadan
+L:Hobbit
+L:Human
+H:Beorning
+H:DeathMold
+H:Half-Ogre
+H:Kobold
+H:Orc
+H:Troll
 
 
 N:43:Odnar the Sage(High-Elf)
 I:15000:110
 C:120:100:80
-L:High-Elf | Half-Elf | Elf
-H:Orc | Troll | Half-Ogre | Beorning | Kobold |
+L:Elf
+L:Half-Elf
+L:High-Elf
+H:Beorning
+H:Half-Ogre
+H:Kobold
+H:Orc
+H:Troll
 
 N:44:Gandar the Neutral(Dark-Elf)
 I:25000:110
 C:120:100:80
-L:High-Elf | Half-Elf | Elf
-H:Orc | Troll | Half-Ogre | Beorning | Kobold
+L:Elf
+L:Half-Elf
+L:High-Elf
+H:Beorning
+H:Half-Ogre
+H:Kobold
+H:Orc
+H:Troll
 
 N:45:Ro-sha the Patient(Elf)
 I:30000:110
 C:120:100:80
-L:Elf | Half-Elf | Dark-Elf | High-Elf
-H:Orc | Troll | Half-Ogre | Beorning | Kobold |
+L:Dark-Elf
+L:Elf
+L:Half-Elf
+L:High-Elf
+H:Beorning
+H:Half-Ogre
+H:Kobold
+H:Orc
+H:Troll
 
 N:46:N'rak the Summoner(Human)
 I:10000:130
 C:120:100:80
-L:Human | Dunadan | RohanKnight
-H:Orc | Troll | Half-Ogre | Beorning | Kobold |
+L:Dunadan
+L:Human
+L:RohanKnight
+H:Beorning
+H:Half-Ogre
+H:Kobold
+H:Orc
+H:Troll
 
 N:47:Esperion the Beastlover(High-Elf)
 I:15000:110
 C:120:100:80
-L:High-Elf | Half-Elf | Elf
-H:Orc | Troll | Half-Ogre | Beorning | Kobold |
+L:Elf
+L:Half-Elf
+L:High-Elf
+H:Beorning
+H:Half-Ogre
+H:Kobold
+H:Orc
+H:Troll
 
 N:48:Flarim the Shopkeeper(Dunadan)
 I:25000:110
 C:120:100:80
-L:Human | Dunadan | RohanKnight
-H:Orc | Troll | Half-Ogre | Beorning | Kobold |
+L:Dunadan
+L:Human
+L:RohanKnight
+H:Beorning
+H:Half-Ogre
+H:Kobold
+H:Orc
+H:Troll
 
 N:49:Tril-akheb the Supreme(Elf)
 I:30000:110
 C:120:100:80
-L:Elf | Half-Elf | Dark-Elf | High-Elf
-H:Orc | Troll | Half-Ogre | Beorning | Kobold |
+L:Dark-Elf
+L:Elf
+L:Half-Elf
+L:High-Elf
+H:Beorning
+H:Half-Ogre
+H:Kobold
+H:Orc
+H:Troll
 
 N:50:Dorchel(Elf)
 I:30000:110
 C:120:100:80
-L:Elf | Half-Elf | Dark-Elf | High-Elf
-H:Orc | Troll | Half-Ogre | Beorning | Kobold |
+L:Dark-Elf
+L:Elf
+L:Half-Elf
+L:High-Elf
+H:Beorning
+H:Half-Ogre
+H:Kobold
+H:Orc
+H:Troll
 
 N:51:Galadriel(High-Elf)
 I:15000:110
 C:120:100:80
-L:High-Elf | Half-Elf | Elf
-H:Orc | Troll | Half-Ogre | Beorning | Kobold |
+L:Elf
+L:Half-Elf
+L:High-Elf
+H:Beorning
+H:Half-Ogre
+H:Kobold
+H:Orc
+H:Troll
 
 N:52:Celeborn(High-Elf)
 I:15000:110
 C:120:100:80
-L:High-Elf | Half-Elf | Elf
-H:Orc | Troll | Half-Ogre | Beorning | Kobold |
+L:Elf
+L:Half-Elf
+L:High-Elf
+H:Beorning
+H:Half-Ogre
+H:Kobold
+H:Orc
+H:Troll
 
 N:53:Aulendil(Elf)
 I:30000:110
 C:120:100:80
 #L:Warrior |
-H:Orc | Troll | Half-Ogre | Beorning | Kobold |
+H:Beorning
+H:Half-Ogre
+H:Kobold
+H:Orc
+H:Troll
 
 N:54:Valceronwe(Elf)
 I:30000:110
 C:120:100:80
 #L:Mage | Thaumaturgist | Sorceror
-H:Orc | Troll | Half-Ogre | Beorning | Kobold |
+H:Beorning
+H:Half-Ogre
+H:Kobold
+H:Orc
+H:Troll
 
 N:55:Voronwe(Elf)
 I:30000:110
 C:120:100:80
 #L:Priest | Paladin
-H:Orc | Troll | Half-Ogre | Beorning | Kobold |
+H:Beorning
+H:Half-Ogre
+H:Kobold
+H:Orc
+H:Troll
 
 N:56:Celegail(Elf)
 I:30000:110
 C:120:100:80
 #L:Ranger
-H:Orc | Troll | Half-Ogre | Beorning | Kobold |
+H:Beorning
+H:Half-Ogre
+H:Kobold
+H:Orc
+H:Troll
 
 N:57:Turgon(High-Elf)
 I:30000:110
 C:120:100:80
-L:High-Elf | Half-Elf | Elf
-H:Orc | Troll | Half-Ogre | Beorning | Kobold |
+L:Elf
+L:Half-Elf
+L:High-Elf
+H:Beorning
+H:Half-Ogre
+H:Kobold
+H:Orc
+H:Troll
 
 N:58:Pengolodh(High-Elf)
 I:0:110
 C:120:100:80
-L:High-Elf | Half-Elf | Elf
-H:Orc | Troll | Half-Ogre | Beorning | Kobold |
+L:Elf
+L:Half-Elf
+L:High-Elf
+H:Beorning
+H:Half-Ogre
+H:Kobold
+H:Orc
+H:Troll
 
 N:59:Aerandir(High-Elf)
 I:0:110
 C:120:100:80
-L:High-Elf | Half-Elf | Elf
-H:Orc | Troll | Half-Ogre | Beorning | Kobold |
+L:Elf
+L:Half-Elf
+L:High-Elf
+H:Beorning
+H:Half-Ogre
+H:Kobold
+H:Orc
+H:Troll
 
 N:60:Celebrimbor(High-Elf)
 I:0:110
 C:120:100:80
-L:High-Elf | Half-Elf | Elf
+L:Elf
+L:Half-Elf
+L:High-Elf
 #L:Warrior |
-H:Orc | Troll | Half-Ogre | Beorning | Kobold |
+H:Beorning
+H:Half-Ogre
+H:Kobold
+H:Orc
+H:Troll
 
 N:61:Lomelosse(High-Elf)
 I:0:110
 C:120:100:80
-L:High-Elf | Half-Elf | Elf |
-H:Orc | Troll | Half-Ogre | Beorning | Kobold |
+L:Elf
+L:Half-Elf
+L:High-Elf
+H:Beorning
+H:Half-Ogre
+H:Kobold
+H:Orc
+H:Troll
 
 N:62:Arlindel(High-Elf)
 I:0:110
 C:120:100:80
-L:High-Elf | Half-Elf | Elf
+L:Elf
+L:Half-Elf
+L:High-Elf
 #L:Harper | Ranger
-H:Orc | Troll | Half-Ogre | Beorning | Kobold |
+H:Beorning
+H:Half-Ogre
+H:Kobold
+H:Orc
+H:Troll
 
 N:63:Sulraen(High-Elf)
 I:0:110
 C:120:100:80
-L:High-Elf | Half-Elf | Elf
+L:Elf
+L:Half-Elf
+L:High-Elf
 #L:Mage | Sorceror
-H:Orc | Troll | Half-Ogre | Beorning | Kobold |
+H:Beorning
+H:Half-Ogre
+H:Kobold
+H:Orc
+H:Troll
 
 N:64:Firiel(High-Elf)
 I:0:110
 C:120:100:80
-L:High-Elf | Half-Elf | Elf |
-H:Orc | Troll | Half-Ogre | Beorning | Kobold |
+L:Elf
+L:Half-Elf
+L:High-Elf
+H:Beorning
+H:Half-Ogre
+H:Kobold
+H:Orc
+H:Troll
 
 N:65:Earendur(High-Elf)
 I:0:110
 C:120:100:80
-L:High-Elf | Half-Elf | Elf
-H:Orc | Troll | Half-Ogre | Beorning | Kobold |
+L:Elf
+L:Half-Elf
+L:High-Elf
+H:Beorning
+H:Half-Ogre
+H:Kobold
+H:Orc
+H:Troll
 
 N:66:Glorfindel(High-Elf)
 I:0:110
 C:120:100:80
-L:High-Elf | Half-Elf
+L:Half-Elf
+L:High-Elf
 #L:Ranger
-H:Orc | Troll | Half-Ogre | Beorning | Kobold |
+H:Beorning
+H:Half-Ogre
+H:Kobold
+H:Orc
+H:Troll
 
 N:67:Ecthelion(High-Elf)
 I:0:110
 C:120:100:80
-L:High-Elf | Half-Elf
+L:Half-Elf
+L:High-Elf
 #L:Paladin
-H:Orc | Troll | Half-Ogre | Beorning | Kobold |
+H:Beorning
+H:Half-Ogre
+H:Kobold
+H:Orc
+H:Troll
 
 N:68:Kanris(Human)
 I:5000:140
@@ -437,5 +815,12 @@ C:120:100:80
 N:69:Barliman Butterbur(Human)
 I:100:120
 C:120:100:80
-L:Dunadan | Hobbit | Human |
-H:Orc | Troll | DeathMold | Half-Ogre | Beorning | Kobold |
+L:Dunadan
+L:Hobbit
+L:Human
+H:Beorning
+H:DeathMold
+H:Half-Ogre
+H:Kobold
+H:Orc
+H:Troll

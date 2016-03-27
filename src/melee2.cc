@@ -6328,7 +6328,7 @@ static void process_monster(int m_idx, bool_ is_frien)
 		if (player_has_los_bold(oy, ox) && (r_ptr->flags2 & RF2_CAN_SPEAK))
 		{
 			char m_name[80];
-			char monmessage[80];
+			char monmessage[1024];
 
 			/* Acquire the monster name/poss */
 			if (m_ptr->ml)

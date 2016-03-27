@@ -664,7 +664,7 @@ C:B:4:35:3
 C:C:L:H:10000:2:40
 C:P:2:20
 C:Z:detect curses
-C:G:GOD_FRIEND |
+C:G:GOD_FRIEND
 C:E:0:0:0:0:0:0
 C:k:+1000:+900:Magic
 C:k:+0:+600:Spell-power
@@ -815,7 +815,12 @@ R:S:0:0:0:0:0:0:0
 R:K:0:0:0:0:0:10:0:0
 R:P:10:100:0:1
 R:E:1:1:1:2:1:1
-R:C:Warrior | Archer | Mage | Rogue | Priest | Loremaster
+R:C:Archer
+R:C:Loremaster
+R:C:Mage
+R:C:Priest
+R:C:Rogue
+R:C:Warrior
 
 R:N:1:Half-Elf
 R:D:A crossbreed of elf and human, they get the best of the two races.
@@ -823,7 +828,12 @@ R:S:0:1:1:1:-1:1:0
 R:K:2:3:3:1:6:11:-1:5
 R:P:9:110:2:4
 R:E:1:1:1:2:1:1
-R:C:Warrior | Archer | Mage | Rogue | Priest | Loremaster
+R:C:Archer
+R:C:Loremaster
+R:C:Mage
+R:C:Priest
+R:C:Rogue
+R:C:Warrior
 R:G:ELF
 R:k:+300:+000:Magic-Device
 R:k:+1500:+000:Spirituality
@@ -840,8 +850,12 @@ R:K:5:6:6:2:8:12:-5:15
 R:P:8:120:3:5
 R:E:1:1:1:2:1:1
 R:R:1:0
-R:F:RES_LITE | 
-R:C:Warrior | Archer | Mage | Priest | Loremaster
+R:F:RES_LITE
+R:C:Archer
+R:C:Loremaster
+R:C:Mage
+R:C:Priest
+R:C:Warrior
 R:G:ELF
 R:k:+600:+000:Magic-Device
 R:k:+3000:+000:Spirituality
@@ -857,10 +871,15 @@ R:K:15:18:18:5:12:15:-10:20
 R:P:7:110:4:10
 R:E:1:1:1:2:1:1
 R:Z:create food
-R:G:RESIST_BLACK_BREATH | XTRA_MIGHT_SLING |
+R:G:RESIST_BLACK_BREATH
+R:G:XTRA_MIGHT_SLING
 R:R:1:0
-R:F:SUST_DEX | 
-R:C:Warrior | Archer | Mage | Rogue | Loremaster
+R:F:SUST_DEX
+R:C:Archer
+R:C:Loremaster
+R:C:Mage
+R:C:Rogue
+R:C:Warrior
 R:k:+0:+300:Sling-mastery
 R:k:+1800:+000:Magic-Device
 R:k:+9000:+000:Spirituality
@@ -877,8 +896,10 @@ R:P:8:135:4:13
 R:E:1:1:1:2:1:1
 R:Z:blink
 R:R:1:0
-R:F:FREE_ACT | 
-R:C:Warrior | Mage | Rogue
+R:F:FREE_ACT
+R:C:Mage
+R:C:Rogue
+R:C:Warrior
 R:k:+1200:+000:Magic-Device
 R:k:+6000:+000:Spirituality
 R:k:+3000:+000:Stealth
@@ -894,8 +915,9 @@ R:P:11:125:5:16
 R:E:1:1:1:2:1:1
 R:Z:find secret passages
 R:R:1:0
-R:F:RES_BLIND | 
-R:C:Warrior | Priest
+R:F:RES_BLIND
+R:C:Priest
+R:C:Warrior
 R:k:+0:+200:Axe-mastery
 R:k:+900:+000:Magic-Device
 R:k:+5000:+000:Spirituality
@@ -911,8 +933,11 @@ R:P:10:110:3:25
 R:E:1:1:1:2:1:1
 R:Z:remove fear
 R:R:1:0
-R:F:RES_DARK | 
-R:C:Warrior | Archer | Rogue | Priest
+R:F:RES_DARK
+R:C:Archer
+R:C:Priest
+R:C:Rogue
+R:C:Warrior
 R:k:-300:+000:Magic-Device
 R:k:-1000:+000:Spirituality
 R:k:-1000:+000:Stealth
@@ -928,9 +953,9 @@ R:P:12:137:3:22
 R:E:1:1:1:2:1:1
 R:Z:berserk
 R:R:1:0
-R:F:SUST_STR | 
+R:F:SUST_STR
 R:R:15:0
-R:F:REGEN | 
+R:F:REGEN
 R:C:Warrior
 R:k:-800:+000:Magic-Device
 R:k:-4000:+000:Spirituality
@@ -946,8 +971,14 @@ R:K:4:5:5:2:3:13:15:10
 R:P:10:180:0:1
 R:E:1:1:1:2:1:1
 R:R:1:0
-R:F:SUST_CON | REGEN | 
-R:C:Warrior | Archer | Mage | Rogue | Priest | Loremaster
+R:F:REGEN
+R:F:SUST_CON
+R:C:Archer
+R:C:Loremaster
+R:C:Mage
+R:C:Priest
+R:C:Rogue
+R:C:Warrior
 R:k:+500:+000:Magic-Device
 R:k:+2500:+000:Spirituality
 R:k:+2000:+000:Stealth
@@ -963,10 +994,14 @@ R:K:4:20:20:4:3:14:10:25
 R:P:10:200:4:7
 R:E:1:1:1:2:1:1
 R:R:1:0
-R:F:SEE_INVIS | 
-R:F:RES_LITE | 
+R:F:RES_LITE
+R:F:SEE_INVIS
 R:G:ELF
-R:C:Warrior | Archer | Mage | Priest | Loremaster
+R:C:Archer
+R:C:Loremaster
+R:C:Mage
+R:C:Priest
+R:C:Warrior
 R:k:+2000:+000:Magic-Device
 R:k:+10000:+000:Spirituality
 R:k:+4000:+000:Stealth
@@ -982,8 +1017,10 @@ R:P:12:130:3:74
 R:E:1:1:1:2:1:1
 R:Z:set explosive rune
 R:R:1:0
-R:F:SUST_STR | RES_DARK | 
-R:C:Warrior | Priest
+R:F:RES_DARK
+R:F:SUST_STR
+R:C:Priest
+R:C:Warrior
 R:k:-500:+000:Magic-Device
 R:k:-2500:+000:Spirituality
 R:k:-2000:+000:Stealth
@@ -999,10 +1036,12 @@ R:P:12:150:3:75
 R:E:1:1:1:2:1:1
 R:Z:turn into a bear
 R:R:1:0
-R:F:SUST_STR | 
+R:F:SUST_STR
 R:R:20:1
-R:F:STR | 
-R:C:Warrior | Rogue | Loremaster
+R:F:STR
+R:C:Loremaster
+R:C:Rogue
+R:C:Warrior
 R:k:+1000:+1000:Bearform-combat
 R:k:-800:+000:Magic-Device
 R:k:-3000:+000:Spirituality
@@ -1018,8 +1057,10 @@ R:P:9:125:3:82
 R:E:1:1:1:2:1:1
 R:Z:poison dart
 R:R:1:0
-R:F:RES_POIS | 
-R:C:Warrior | Archer | Rogue
+R:F:RES_POIS
+R:C:Archer
+R:C:Rogue
+R:C:Warrior
 R:k:-300:+000:Magic-Device
 R:k:-1000:+000:Spirituality
 R:k:-1000:+000:Stealth
@@ -1035,8 +1076,10 @@ R:P:11:135:5:87
 R:E:1:1:1:2:1:1
 R:Z:detect doors and traps
 R:R:1:0
-R:F:RES_DARK | RES_DISEN | 
-R:C:Warrior | Rogue
+R:F:RES_DARK
+R:F:RES_DISEN
+R:C:Rogue
+R:C:Warrior
 R:k:+500:+000:Magic-Device
 R:k:+5000:+000:Spirituality
 R:k:+1000:+000:Stealth
@@ -1053,10 +1096,14 @@ R:P:9:150:5:69
 R:E:1:1:1:2:1:1
 R:Z:magic missile
 R:R:1:0
-R:F:RES_DARK | 
+R:F:RES_DARK
 R:R:20:0
-R:F:SEE_INVIS | 
-R:C:Warrior | Archer | Mage | Rogue | Priest
+R:F:SEE_INVIS
+R:C:Archer
+R:C:Mage
+R:C:Priest
+R:C:Rogue
+R:C:Warrior
 R:G:ELF
 R:k:+0:+200:Magic
 R:k:+1500:+000:Magic-Device
@@ -1073,16 +1120,22 @@ R:K:5:5:20:-6:5:4:15:5
 R:P:14:210:5:95
 R:E:1:1:1:2:1:1
 R:Z:grow trees
-R:G:NO_STUN | NO_FOOD |
-R:G:AC_LEVEL | 
+R:G:AC_LEVEL
+R:G:NO_FOOD
+R:G:NO_STUN
 R:R:1:-5
-R:F:SPEED | SENS_FIRE | SLOW_DIGEST | 
+R:F:SENS_FIRE
+R:F:SLOW_DIGEST
+R:F:SPEED
 R:R:5:0
-R:F:SEE_INVIS | 
+R:F:SEE_INVIS
 R:R:20:0
-R:F:ESP_ORC | 
-R:F:ESP_TROLL | ESP_EVIL | 
-R:C:Warrior | Priest | Loremaster
+R:F:ESP_EVIL
+R:F:ESP_ORC
+R:F:ESP_TROLL
+R:C:Loremaster
+R:C:Priest
+R:C:Warrior
 R:O:70:32:2d3
 R:b:1:Tree walking
 R:k:+0:+200:Barehand-combat
@@ -1102,26 +1155,27 @@ R:P:10:220:0:84
 R:E:1:1:1:2:1:1
 R:Z:Rohan Knight's Powers
 R:R:1:3
-R:F:SPEED | 
+R:F:SPEED
 R:R:5:1
-R:F:SPEED | 
+R:F:SPEED
 R:R:10:1
-R:F:SPEED | 
+R:F:SPEED
 R:R:15:1
-R:F:SPEED | 
+R:F:SPEED
 R:R:20:1
-R:F:SPEED | 
+R:F:SPEED
 R:R:25:1
-R:F:SPEED | 
+R:F:SPEED
 R:R:30:1
-R:F:SPEED | 
+R:F:SPEED
 R:R:35:1
-R:F:SPEED | 
+R:F:SPEED
 R:R:40:1
-R:F:SPEED | 
+R:F:SPEED
 R:R:45:1
-R:F:SPEED | 
-R:C:Warrior | Priest
+R:F:SPEED
+R:C:Priest
+R:C:Warrior
 R:k:+500:+000:Magic-Device
 R:k:+2500:+000:Spirituality
 R:k:-8000:+000:Stealth
@@ -1136,22 +1190,25 @@ R:P:12:400:0:89
 R:E:1:1:1:2:1:1
 R:Z:Thunderlord's Powers
 R:R:1:0
-R:F:FEATHER | 
+R:F:FEATHER
 R:R:4:0
-R:F:ESP_DRAGON |
+R:F:ESP_DRAGON
 R:R:5:0
-R:F:RES_ELEC | 
+R:F:RES_ELEC
 R:R:10:0
-R:F:RES_COLD | 
+R:F:RES_COLD
 R:R:15:0
-R:F:RES_ACID | 
+R:F:RES_ACID
 R:R:17:0
-R:F:FLY | 
+R:F:FLY
 R:R:35:0
-R:F:RES_POIS | 
+R:F:RES_POIS
 R:R:45:0
-R:F:IM_ELEC | 
-R:C:Warrior | Mage | Archer | Priest
+R:F:IM_ELEC
+R:C:Archer
+R:C:Mage
+R:C:Priest
+R:C:Warrior
 R:k:+000:+000:Magic-Device
 R:k:+5000:+000:Spirituality
 R:k:-16000:+000:Stealth
@@ -1168,9 +1225,12 @@ R:E:1:1:1:4:0:0
 R:Z:Death Mold's Powers
 R:G:EXPERIMENTAL
 R:R:1:0
-R:F:IMMOVABLE | HOLD_LIFE |
-R:F:RES_NETHER | RES_NEXUS | 
-R:C:Mage | Priest
+R:F:HOLD_LIFE
+R:F:IMMOVABLE
+R:F:RES_NETHER
+R:F:RES_NEXUS
+R:C:Mage
+R:C:Priest
 R:k:+0:+200:Necromancy
 R:k:-500:+000:Magic-Device
 R:k:+7500:+000:Spirituality
@@ -1184,7 +1244,13 @@ R:S:-5:-5:-5:-5:-5:-5:-5
 R:K:-5:-5:-10:0:-5:0:-10:-10
 R:P:6:25:2:29
 R:E:1:1:1:2:1:1
-R:C:Warrior | Archer | Mage | Rogue | Priest | Loremaster
+R:C:Archer
+R:C:Loremaster
+R:C:Mage
+R:C:Priest
+R:C:Rogue
+R:C:Warrior
+R:k:-500:+000:Disarming
 R:k:-500:+000:Magic-Device
 R:k:-2500:+000:Spirituality
 R:k:-5000:+000:Stealth
@@ -1198,10 +1264,15 @@ R:S:-3:2:1:5:-4:1:0
 R:K:5:6:6:5:8:12:-25:40
 R:P:7:130:4:5
 R:E:1:1:1:2:1:1
-R:G:XTRA_MIGHT_BOW | 
+R:G:XTRA_MIGHT_BOW
 R:R:1:1
-R:F:XTRA_MIGHT | RES_LITE | 
-R:C:Warrior | Archer | Mage | Priest | Loremaster
+R:F:RES_LITE
+R:F:XTRA_MIGHT
+R:C:Archer
+R:C:Loremaster
+R:C:Mage
+R:C:Priest
+R:C:Warrior
 R:G:ELF
 R:k:+0:+200:Archery
 R:b:1:Tree walking
@@ -1220,26 +1291,68 @@ R:P:10:100:0:91
 R:E:1:1:1:2:1:1
 R:G:NO_GOD
 R:R:1:0
-R:F:AGGRAVATE | 
+R:F:AGGRAVATE
 R:R:20:0
-R:F:DRAIN_EXP | 
+R:F:DRAIN_EXP
 R:R:6:1
-R:F:STR | INT | WIS | DEX | CON | CHR | 
+R:F:CHR
+R:F:CON
+R:F:DEX
+R:F:INT
+R:F:STR
+R:F:WIS
 R:R:12:1
-R:F:STR | INT | WIS | DEX | CON | CHR | 
+R:F:CHR
+R:F:CON
+R:F:DEX
+R:F:INT
+R:F:STR
+R:F:WIS
 R:R:18:1
-R:F:STR | INT | WIS | DEX | CON | CHR | 
+R:F:CHR
+R:F:CON
+R:F:DEX
+R:F:INT
+R:F:STR
+R:F:WIS
 R:R:24:1
-R:F:STR | INT | WIS | DEX | CON | CHR | 
+R:F:CHR
+R:F:CON
+R:F:DEX
+R:F:INT
+R:F:STR
+R:F:WIS
 R:R:30:1
-R:F:STR | INT | WIS | DEX | CON | CHR | 
+R:F:CHR
+R:F:CON
+R:F:DEX
+R:F:INT
+R:F:STR
+R:F:WIS
 R:R:36:1
-R:F:STR | INT | WIS | DEX | CON | CHR | 
+R:F:CHR
+R:F:CON
+R:F:DEX
+R:F:INT
+R:F:STR
+R:F:WIS
 R:R:42:1
-R:F:STR | INT | WIS | DEX | CON | CHR | 
+R:F:CHR
+R:F:CON
+R:F:DEX
+R:F:INT
+R:F:STR
+R:F:WIS
 R:R:48:1
-R:F:STR | INT | WIS | DEX | CON | CHR | 
-R:C:Warrior | Archer | Mage
+R:F:CHR
+R:F:CON
+R:F:DEX
+R:F:INT
+R:F:STR
+R:F:WIS
+R:C:Archer
+R:C:Mage
+R:C:Warrior
 R:k:+000:+000:Magic-Device
 R:k:+000:+000:Spirituality
 R:k:=0:=0:Prayer
@@ -1275,10 +1388,28 @@ S:S:0:0:0:0:0:0:0:100
 S:K:0:0:0:0:0:0:0:0
 S:P:0:0:0
 S:E:0:0:0:0:0:0
-S:A:Human | Half-Elf | Elf | Hobbit | Gnome | Dwarf | 
-S:A:Orc | Troll | Dunadan | High-Elf | Half-Ogre | Beorning | 
-S:A:Kobold | Petty-Dwarf | Dark-Elf | Ent | RohanKnight | Thunderlord | 
-S:A:DeathMold | Yeek | Wood-Elf | Maia | 
+S:A:Beorning
+S:A:Dark-Elf
+S:A:DeathMold
+S:A:Dunadan
+S:A:Dwarf
+S:A:Elf
+S:A:Ent
+S:A:Gnome
+S:A:Half-Elf
+S:A:Half-Ogre
+S:A:High-Elf
+S:A:Hobbit
+S:A:Human
+S:A:Kobold
+S:A:Maia
+S:A:Orc
+S:A:Petty-Dwarf
+S:A:RohanKnight
+S:A:Thunderlord
+S:A:Troll
+S:A:Wood-Elf
+S:A:Yeek
 
 # Just a place holder, the actualy setting are done with corruptions, see
 # corrupt.lua and player.lua
@@ -1289,9 +1420,21 @@ S:S:0:0:0:0:0:0:0:100
 S:K:0:0:0:0:0:0:0:0
 S:P:0:0:0
 S:E:0:0:0:0:0:0
-S:A:Human | Half-Elf | Hobbit | Gnome | Dwarf | Orc |
-S:A:Troll | Dunadan | Half-Ogre | Beorning | Kobold | Petty-Dwarf | 
-S:A:Dark-Elf | RohanKnight | Yeek | 
+S:A:Beorning
+S:A:Dark-Elf
+S:A:Dunadan
+S:A:Dwarf
+S:A:Gnome
+S:A:Half-Elf
+S:A:Half-Ogre
+S:A:Hobbit
+S:A:Human
+S:A:Kobold
+S:A:Orc
+S:A:Petty-Dwarf
+S:A:RohanKnight
+S:A:Troll
+S:A:Yeek
 S:C:A:Mage
 S:O:70:0:5d3
 S:O:70:32:2d3
@@ -1303,14 +1446,38 @@ S:S:-5:1:1:2:-3:-6:-3:105
 S:K:2:8:7:2:2:7:-5:-2
 S:P:-4:80:3
 S:E:0:0:0:0:0:0
-S:A:Human | Half-Elf | Elf | Hobbit | Gnome | Dwarf | 
-S:A:Orc | Troll | Dunadan | High-Elf | Half-Ogre | Beorning | 
-S:A:Kobold | Petty-Dwarf | Dark-Elf | RohanKnight | Yeek | Wood-Elf | 
-S:C:F:Warrior | Archer
-S:G:UNDEAD | NO_CUT | NO_FOOD | SEMI_WRAITH | NO_SUBRACE_CHANGE
+S:A:Beorning
+S:A:Dark-Elf
+S:A:Dunadan
+S:A:Dwarf
+S:A:Elf
+S:A:Gnome
+S:A:Half-Elf
+S:A:Half-Ogre
+S:A:High-Elf
+S:A:Hobbit
+S:A:Human
+S:A:Kobold
+S:A:Orc
+S:A:Petty-Dwarf
+S:A:RohanKnight
+S:A:Troll
+S:A:Wood-Elf
+S:A:Yeek
+S:C:F:Archer
+S:C:F:Warrior
+S:G:NO_CUT
+S:G:NO_FOOD
+S:G:NO_SUBRACE_CHANGE
+S:G:SEMI_WRAITH
+S:G:UNDEAD
 S:R:1:0
-S:F:SEE_INVIS | HOLD_LIFE | 
-S:F:SLOW_DIGEST | RES_COLD | RES_POIS | RES_NETHER | 
+S:F:HOLD_LIFE
+S:F:RES_COLD
+S:F:RES_NETHER
+S:F:RES_POIS
+S:F:SEE_INVIS
+S:F:SLOW_DIGEST
 S:O:70:32:2d3
 S:k:+800:+000:Magic-Device
 S:k:+700:+000:Spirituality
@@ -1325,15 +1492,35 @@ S:S:0:-2:-2:0:1:-4:-3:70
 S:K:-5:-5:5:-1:-1:8:8:0
 S:P:0:45:1
 S:E:0:0:0:0:0:0
-S:A:Human | Half-Elf | Elf | Hobbit | Gnome | Dwarf | 
-S:A:Orc | Troll | Dunadan | High-Elf | Half-Ogre | Beorning | 
-S:A:Kobold | Petty-Dwarf | Dark-Elf | RohanKnight | Yeek | Wood-Elf | 
-S:G:UNDEAD | NO_CUT | NO_FOOD | NO_SUBRACE_CHANGE
+S:A:Beorning
+S:A:Dark-Elf
+S:A:Dunadan
+S:A:Dwarf
+S:A:Elf
+S:A:Gnome
+S:A:Half-Elf
+S:A:Half-Ogre
+S:A:High-Elf
+S:A:Hobbit
+S:A:Human
+S:A:Kobold
+S:A:Orc
+S:A:Petty-Dwarf
+S:A:RohanKnight
+S:A:Troll
+S:A:Wood-Elf
+S:A:Yeek
+S:G:NO_CUT
+S:G:NO_FOOD
+S:G:NO_SUBRACE_CHANGE
+S:G:UNDEAD
 S:R:1:0
-S:F:SEE_INVIS | HOLD_LIFE | 
-S:F:RES_POIS | RES_SHARDS | 
+S:F:HOLD_LIFE
+S:F:RES_POIS
+S:F:RES_SHARDS
+S:F:SEE_INVIS
 S:R:10:0
-S:F:RES_COLD | 
+S:F:RES_COLD
 S:O:70:32:2d3
 S:k:-500:+000:Magic-Device
 S:k:+500:+000:Spirituality
@@ -1347,16 +1534,35 @@ S:S:2:-6:-6:1:4:-5:-4:70
 S:K:-2:-2:5:-1:-1:2:5:0
 S:P:3:45:1
 S:E:0:0:0:0:0:0
-S:A:Human | Half-Elf | Elf | Hobbit | Gnome | Dwarf | 
-S:A:Orc | Troll | Dunadan | High-Elf | Half-Ogre | Beorning | 
-S:A:Kobold | Petty-Dwarf | Dark-Elf | RohanKnight | Yeek | Wood-Elf | 
+S:A:Beorning
+S:A:Dark-Elf
+S:A:Dunadan
+S:A:Dwarf
+S:A:Elf
+S:A:Gnome
+S:A:Half-Elf
+S:A:Half-Ogre
+S:A:High-Elf
+S:A:Hobbit
+S:A:Human
+S:A:Kobold
+S:A:Orc
+S:A:Petty-Dwarf
+S:A:RohanKnight
+S:A:Troll
+S:A:Wood-Elf
+S:A:Yeek
 S:C:F:Mage
-S:G:UNDEAD | NO_FOOD | NO_SUBRACE_CHANGE
+S:G:NO_FOOD
+S:G:NO_SUBRACE_CHANGE
+S:G:UNDEAD
 S:R:1:0
-S:F:SEE_INVIS | HOLD_LIFE | 
-S:F:SLOW_DIGEST | RES_POIS | 
+S:F:HOLD_LIFE
+S:F:RES_POIS
+S:F:SEE_INVIS
+S:F:SLOW_DIGEST
 S:R:5:0
-S:F:RES_COLD | 
+S:F:RES_COLD
 S:O:70:32:2d3
 S:k:-200:+000:Magic-Device
 S:k:+500:+000:Spirituality
@@ -1370,10 +1576,15 @@ S:S:2:-3:-2:1:1:-3:1:50
 S:K:-2:-10:2:-2:0:1:12:5
 S:P:1:25:0
 S:E:0:0:0:0:0:0
-S:A:Human | Dwarf | Orc | Troll | Half-Ogre | Beorning | 
+S:A:Beorning
+S:A:Dwarf
+S:A:Half-Ogre
+S:A:Human
+S:A:Orc
+S:A:Troll
 S:C:F:Mage
 S:R:10:0
-S:F:RES_FEAR | 
+S:F:RES_FEAR
 S:k:-1000:+000:Magic-Device
 S:k:+200:+000:Spirituality
 S:k:-2000:+000:Stealth
@@ -1387,10 +1598,25 @@ S:S:-3:1:1:-3:-3:1:0:120
 S:K:5:10:5:3:4:10:-5:-5
 S:P:-3:20:1
 S:E:0:0:0:0:0:0
-S:A:Human | Half-Elf | Elf | Hobbit | Gnome | Dwarf | 
-S:A:Dunadan | High-Elf | Petty-Dwarf | Dark-Elf | Ent | RohanKnight | 
-S:A:Thunderlord | DeathMold | Yeek | Wood-Elf | Maia | 
-S:C:F:Warrior | Archer
+S:A:Dark-Elf
+S:A:DeathMold
+S:A:Dunadan
+S:A:Dwarf
+S:A:Elf
+S:A:Ent
+S:A:Gnome
+S:A:Half-Elf
+S:A:High-Elf
+S:A:Hobbit
+S:A:Human
+S:A:Maia
+S:A:Petty-Dwarf
+S:A:RohanKnight
+S:A:Thunderlord
+S:A:Wood-Elf
+S:A:Yeek
+S:C:F:Archer
+S:C:F:Warrior
 S:k:+1000:+000:Magic-Device
 S:k:+500:+000:Spirituality
 S:k:+3000:+000:Stealth
@@ -1403,13 +1629,32 @@ S:S:0:0:0:0:0:0:0:100
 S:K:0:0:0:0:0:0:0:0
 S:P:0:0:0
 S:E:0:0:0:0:0:0
-S:G:ASTRAL | NO_SUBRACE_CHANGE
+S:G:ASTRAL
+S:G:NO_SUBRACE_CHANGE
 S:R:1:0
 S:F:SEE_INVIS
-S:A:Human | Half-Elf | Elf | Hobbit | Gnome | Dwarf | 
-S:A:Orc | Troll | Dunadan | High-Elf | Half-Ogre | Beorning | 
-S:A:Kobold | Petty-Dwarf | Dark-Elf | Ent | RohanKnight | Thunderlord | 
-S:A:DeathMold | Yeek | Wood-Elf | Maia | 
+S:A:Beorning
+S:A:Dark-Elf
+S:A:DeathMold
+S:A:Dunadan
+S:A:Dwarf
+S:A:Elf
+S:A:Ent
+S:A:Gnome
+S:A:Half-Elf
+S:A:Half-Ogre
+S:A:High-Elf
+S:A:Hobbit
+S:A:Human
+S:A:Kobold
+S:A:Maia
+S:A:Orc
+S:A:Petty-Dwarf
+S:A:RohanKnight
+S:A:Thunderlord
+S:A:Troll
+S:A:Wood-Elf
+S:A:Yeek
 S:O:70:32:25d2
 S:O:70:12:25d3
 

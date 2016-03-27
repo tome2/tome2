@@ -1353,7 +1353,7 @@ bool_ make_attack_normal(int m_idx, byte divis)
 	int ap_cnt;
 
 	int i, j, k, tmp, ac, rlev;
-	int do_cut, do_stun, do_vampire;
+	int do_cut, do_stun;
 
 	s32b gold;
 
@@ -1615,7 +1615,7 @@ bool_ make_attack_normal(int m_idx, byte divis)
 			}
 
 			/* Assume no cut or stun */
-			do_cut = do_stun = do_vampire = 0;
+			do_cut = do_stun = 0;
 
 			/* Describe the attack method */
 			switch (method)
@@ -1668,8 +1668,6 @@ bool_ make_attack_normal(int m_idx, byte divis)
 				{
 					act = "bites you.";
 					do_cut = 1;
-					if (magik(5) && iequals(r_ptr->name, "vampire"))
-						do_vampire = TRUE;
 					touched = TRUE;
 					sound(SOUND_BITE);
 					break;
@@ -2853,14 +2851,6 @@ bool_ make_attack_normal(int m_idx, byte divis)
 
 				/* Apply the stun */
 				if (k) (void)set_stun(p_ptr->stun + k);
-			}
-
-			/* Do vampiric thingies */
-			if (do_vampire)
-			{
-				/* Change to resist(but never total protection) */
-/*				if (magik(3) || (magik(m_ptr->level - (p_ptr->lev / 2))))
-					gain_corruption("Vampire");*/
 			}
 
 			if (explode)
