@@ -243,8 +243,6 @@ static grouper group_item[] =
 	{ TV_DIGGING, "Tools" },
 	{ TV_TOOL, NULL },
 
-	{ TV_TRAPKIT, "Trapping Kits" },
-
 	{ TV_CHEST, "Chests" },
 
 	{ TV_SPIKE, "Various" },
@@ -565,7 +563,6 @@ static grouper group_artifact[] =
 
 	{ TV_TOOL, "Tools" },
 	{ TV_DIGGING, NULL },
-	{ TV_TRAPKIT, "Trapping Kits" },
 
 	{ 0, NULL }
 };
@@ -1776,7 +1773,6 @@ static void spoil_mon_info(cptr fname)
 		if (flags6 & (RF6_TELE_AWAY)) vp[vn++] = "teleport away";
 		if (flags6 & (RF6_TELE_LEVEL)) vp[vn++] = "teleport level";
 		if (flags6 & (RF6_DARKNESS)) vp[vn++] = "create darkness";
-		if (flags6 & (RF6_TRAPS)) vp[vn++] = "create traps";
 		if (flags6 & (RF6_FORGET)) vp[vn++] = "cause amnesia";
 		if (flags6 & (RF6_RAISE_DEAD)) vp[vn++] = "raise dead";
 		if (flags6 & (RF6_S_THUNDERLORD)) vp[vn++] = "summon a thunderlord";

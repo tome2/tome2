@@ -4009,7 +4009,6 @@ monster_power monster_powers[96] =
 		{ RF6_TELE_AWAY, "Teleport Away", 20, FALSE },
 		{ RF6_TELE_LEVEL, "Teleport Level", 20, TRUE },
 		{ RF6_DARKNESS, "Darkness", 3, FALSE },
-		{ RF6_TRAPS, "Create Traps", 10, TRUE },
 		{ 0, "(none)", 0, FALSE },
 		{ RF6_RAISE_DEAD, "Raise the Dead", 400, TRUE },
 		{ 0, "(none)", 0, FALSE },
@@ -4131,11 +4130,6 @@ tval_desc tval_descs[] =
 		TV_RING,
 		"Rings are fine pieces of jewelry, usually imbued with "
 		"arcane magics."
-	},
-	{
-		TV_TRAPKIT,
-		"Trapping kits are used with the trapping ability to set "
-		"deadly monster traps."
 	},
 	{
 		TV_STAFF,
@@ -4367,10 +4361,8 @@ gf_name_type gf_names[] =
 	{ GF_GRAVITY, "gravity" },
 	{ GF_KILL_WALL, "wall destruction" },
 	{ GF_KILL_DOOR, "door destruction" },
-	{ GF_KILL_TRAP, "trap destruction" },
 	{ GF_MAKE_WALL, "wall creation" },
 	{ GF_MAKE_DOOR, "door creation" },
-	{ GF_MAKE_TRAP, "trap creation" },
 	{ GF_OLD_CLONE, "clone" },
 	{ GF_OLD_POLY, "polymorph" },
 	{ GF_OLD_HEAL, "healing" },

@@ -38,8 +38,6 @@ struct cave_type
 
 	s16b m_idx = 0;                        /* Monster in this grid */
 
-	s16b t_idx = 0;                        /* trap index (in t_list) or zero       */
-
 	s16b special = 0;                      /* Special cave info */
 	s16b special2 = 0;                     /* Special cave info */
 

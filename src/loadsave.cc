@@ -29,7 +29,6 @@
 #include "tables.hpp"
 #include "timer_type.hpp"
 #include "town_type.hpp"
-#include "trap_type.hpp"
 #include "util.hpp"
 #include "util.h"
 #include "wilderness_map.hpp"
@@ -317,12 +316,9 @@ static void do_subrace(ls_flag_t flag)
 	do_byte((byte*)&sr_ptr->luck, flag);
 	do_s16b(&sr_ptr->mana, flag);
 
-	do_s16b(&sr_ptr->r_dis, flag);
 	do_s16b(&sr_ptr->r_dev, flag);
 	do_s16b(&sr_ptr->r_sav, flag);
 	do_s16b(&sr_ptr->r_stl, flag);
-	do_s16b(&sr_ptr->r_srh, flag);
-	do_s16b(&sr_ptr->r_fos, flag);
 	do_s16b(&sr_ptr->r_thn, flag);
 	do_s16b(&sr_ptr->r_thb, flag);
 
@@ -1007,7 +1003,6 @@ static bool_ wearable_p(object_type *o_ptr)
 	case TV_HYPNOS:
 	case TV_INSTRUMENT:
 	case TV_DAEMON_BOOK:
-	case TV_TRAPKIT:
 	case TV_TOOL:
 		{
 			return (TRUE);
@@ -1260,7 +1255,6 @@ static void do_cave_type(cave_type *c_ptr, ls_flag_t flag)
 	do_byte(&c_ptr->mimic, flag);
 	do_s16b(&c_ptr->special, flag);
 	do_s16b(&c_ptr->special2, flag);
-	do_s16b(&c_ptr->t_idx, flag);
 	do_s16b(&c_ptr->inscription, flag);
 	do_byte(&c_ptr->mana, flag);
 	do_s16b(&c_ptr->effect, flag);
@@ -2546,23 +2540,6 @@ static bool_ do_savefile_aux(ls_flag_t flag)
 	for (i = 0; i < tmp16u; i++)
 	{
 		do_fate(i, flag);
-	}
-
-	/* Load the Traps */
-	if (flag == ls_flag_t::SAVE) tmp16u = max_t_idx;
-	do_u16b(&tmp16u, flag);
-
-	/* Incompatible save files */
-	if ((flag == ls_flag_t::LOAD) && (tmp16u > max_t_idx))
-	{
-		note(format("Too many (%u) traps!", tmp16u));
-		return (FALSE);
-	}
-
-	/* fate flags */
-	for (i = 0; i < tmp16u; i++)
-	{
-		do_byte((byte*)&t_info[i].ident, flag);
 	}
 
 	/* inscription knowledge */

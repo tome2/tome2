@@ -11,7 +11,6 @@
 #include "player_type.hpp"
 #include "quark.hpp"
 #include "tables.hpp"
-#include "traps.hpp"
 #include "util.hpp"
 #include "variable.hpp"
 #include "z-rand.hpp"
@@ -476,84 +475,39 @@ static bool_ fireproof_gen_hook(void *, void *, void *)
 		return FALSE;
 	}
 
-	/* Go ahead */
+	/* load the map */
 	{
-		int traps, trap_y, trap_x;
-
-		/* load the map */
-		{
-			int x0 = 2;
-			int y0 = 2;
-			load_map("fireprof.map", &y0, &x0);
-		}
-
-		/* no teleport */
-		dungeon_flags2 = DF2_NO_TELEPORT;
-
-		/* determine type of item */
-		fireproof_set_sval(randint(settings->sval_max));
-
-		/* create essence */
-		{
-			int x, y;
-			object_type forge;
-
-			object_prep(&forge, lookup_kind(settings->tval, fireproof_get_sval()));
-
-			/* mark item */
-			forge.pval2 = fireproof_get_sval();
-			forge.note = quark_add("quest");
-
-			/* roll for co-ordinates in top half of map */
-			y = randint(3) + 2;
-			x = randint(45) + 2;
-
-			/* drop it */
-			drop_near(&forge, -1, y, x);
-		}
-
-		/* how many traps to generate */
-		traps = rand_range(10, 30);
-					
-		/* generate the traps */
-		while (traps > 0)
-		{
-			int tries = 0, trap_level = 0;
-
-			/* make sure it's a safe place */
-			while (tries == 0)
-			{
-				/* get grid coordinates */
-				trap_y = randint(19) + 2;
-				trap_x = randint(45) + 2;
-				cave_type *c_ptr = &cave[trap_y][trap_x];
-
-				/* are the coordinates on a stair, or a wall? */
-				if (((f_info[c_ptr->feat].flags1 & FF1_PERMANENT) != 0) ||
-				    ((f_info[c_ptr->feat].flags1 & FF1_FLOOR) == 0))
-				{
-					/* try again */
-					tries = 0;
-				}
-				else
-				{
-					/* not a stair, then stop this 'while' */
-					tries = 1;
-				}
-			}
-
-			/* randomise level of trap */
-			trap_level = rand_range(20, 40);
-
-			/* put the trap there */
-			place_trap_leveled(trap_y, trap_x, trap_level);
-
-			/* that's one less trap to place */
-			traps = traps - 1;
-		}
-		
-		return TRUE;
+		int x0 = 2;
+		int y0 = 2;
+		load_map("fireprof.map", &y0, &x0);
 	}
+
+	/* no teleport */
+	dungeon_flags2 = DF2_NO_TELEPORT;
+
+	/* determine type of item */
+	fireproof_set_sval(randint(settings->sval_max));
+
+	/* create essence */
+	{
+		int x, y;
+		object_type forge;
+
+		object_prep(&forge, lookup_kind(settings->tval, fireproof_get_sval()));
+
+		/* mark item */
+		forge.pval2 = fireproof_get_sval();
+		forge.note = quark_add("quest");
+
+		/* roll for co-ordinates in top half of map */
+		y = randint(3) + 2;
+		x = randint(45) + 2;
+
+		/* drop it */
+		drop_near(&forge, -1, y, x);
+	}
+	
+	return TRUE;
 }
 
 bool_ quest_fireproof_init_hook(int q)

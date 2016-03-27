@@ -41,7 +41,6 @@ s32b THUNDERSTORM;
 s32b STERILIZE;
 
 s32b BLINK;
-s32b DISARM;
 s32b TELEPORT;
 s32b TELEAWAY;
 s32b RECALL;
@@ -396,19 +395,6 @@ const char *convey_blink_info()
 		"distance " FMTs32b,
 		(10 + get_level_s(BLINK, 8)));
 	return buf;
-}
-
-casting_result convey_disarm()
-{
-	casting_result result = NO_CAST;
-
-	result = cplus(result, destroy_doors_touch());
-	if (get_level_s(DISARM, 50) >= 10)
-	{
-		result = cplus(result, destroy_traps_touch());
-	}
-
-	return result;
 }
 
 casting_result convey_teleport()
@@ -957,12 +943,7 @@ casting_result divination_vision()
 casting_result divination_sense_hidden()
 {
 	casting_result result = NO_CAST;
-
-	result = cplus(result, detect_traps(15 + get_level(SENSEHIDDEN, 40)));
-	if (get_level_s(SENSEHIDDEN, 50) >= 15)
-	{
-		result = cplus(result, set_tim_invis(10 + randint(20) + get_level_s(SENSEHIDDEN, 40)));
-	}
+	result = cplus(result, set_tim_invis(10 + randint(20) + get_level_s(SENSEHIDDEN, 40)));
 
 	return result;
 }

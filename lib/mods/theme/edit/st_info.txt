@@ -163,7 +163,6 @@ I:100:Monster Confusion
 I:100:Magic Mapping
 I:100:Treasure Detection
 I:100:Object Detection
-I:100:Trap Detection
 I:100:Detect Invisible
 I:100:Recharging
 I:100:Satisfy Hunger

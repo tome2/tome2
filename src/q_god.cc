@@ -372,10 +372,9 @@ static void quest_god_generate_relic()
 		x = randint(cur_wid-1);
 		c_ptr = &cave[y][x];
 
-		/* are the coordinates on a floor, not on a permanent feature (eg stairs), and not on a trap ? */
+		/* are the coordinates on a floor, and not on a permanent feature (eg stairs)*/
 		if ((f_info[c_ptr->feat].flags1 & FF1_FLOOR) &&
-		    (!(f_info[c_ptr->feat].flags1 & FF1_PERMANENT)) &&
-		    (c_ptr->t_idx == 0))
+		    (!(f_info[c_ptr->feat].flags1 & FF1_PERMANENT)))
 		{
 			break;
 		}

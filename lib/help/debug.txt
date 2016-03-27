@@ -29,7 +29,7 @@ will not be scored if you use debug commands.
  *****debug.txt*29[o  Edit object attributes]               O  (unused)
  *****debug.txt*31[p  Phase door]                           P  (unused)
  *****debug.txt*33[q  Get a quest]                          Q  (unused)
- r  (unused)                             *****debug.txt*36[R  Create a trap]
+ r  (unused)                             *****debug.txt*36  R  (unused)
  *****debug.txt*37[s  Summon monster]                       *****debug.txt*38[S  Change the feature of the map]
  *****debug.txt*39[t  Teleport]                             *****debug.txt*40[T  Teleport to a town]
  *****debug.txt*41[u  Complete map]                         *****debug.txt*42[U  Become undead]
@@ -109,7 +109,7 @@ maximal legal value.
         For example : 03^AC will create the Arkenstone of Thrane (+3)
 ~~~~~7
 [[[[[GDetect all (d)]
-        Sense ways out/monsters/objects/traps.
+        Sense ways out/monsters/objects.
 ~~~~~8
 [[[[[GTeleport to the wilderness (D)]
         From a dungeon this will teleport you to the wilderness level
@@ -183,11 +183,6 @@ maximal legal value.
 ~~~~~35
 [[[[[GGain reward (r)]
         Some high being grants you a reward.
-~~~~~36
-[[[[[GCreate a trap (R)]
-        Use the "Command count", aka 0, to specify a number from
-        tr_info.txt to put a trap on the ground where you are
-        standing.
 ~~~~~37
 [[[[[GSummon monster (s)]
         Summon a random monster, next to where you stand.

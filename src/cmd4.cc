@@ -29,7 +29,6 @@
 #include "squeltch.hpp"
 #include "tables.hpp"
 #include "town_type.hpp"
-#include "trap_type.hpp"
 #include "util.hpp"
 #include "util.h"
 #include "variable.h"
@@ -3227,33 +3226,6 @@ void do_cmd_knowledge_artifacts(void)
 }
 
 
-/*
- * Check the status of traps
- */
-void do_cmd_knowledge_traps(void)
-{
-	fmt::MemoryWriter w;
-	/* Scan the traps */
-	for (int k = 0; k < max_t_idx; k++)
-	{
-		/* Get the trap */
-		trap_type *t_ptr = &t_info[k];
-
-		/* Skip "empty" traps */
-		if (!t_ptr->name) continue;
-
-		/* Skip unidentified traps */
-		if (!t_ptr->ident) continue;
-
-		/* Hack -- Build the trap name */
-		w.write("     {}\n", t_ptr->name);
-	}
-
-	/* Display the file contents */
-	show_string(w.c_str(), "Traps known");
-}
-
-
 static int monster_get_race_level(int r_idx) {
 	/* Hack -- Morgoth is always last */
 	if (r_idx == 862) {
@@ -3801,7 +3773,6 @@ void do_cmd_knowledge(void)
 		prt("(7) Display current pets", 10, 5);
 		prt("(8) Display current quests", 11, 5);
 		prt("(9) Display current fates", 12, 5);
-		prt("(0) Display known traps", 13, 5);
 		prt("(A) Display known dungeon towns", 14, 5);
 		prt("(B) Display notes", 15, 5);
 
@@ -3884,14 +3855,6 @@ void do_cmd_knowledge(void)
 		case '9':
 			{
 				do_cmd_knowledge_fates();
-
-				break;
-			}
-
-			/* Traps */
-		case '0':
-			{
-				do_cmd_knowledge_traps();
 
 				break;
 			}
