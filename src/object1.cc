@@ -1129,9 +1129,6 @@ std::string object_desc_aux(object_type *o_ptr, int pref, int mode)
 {
 	bool_ hack_name = FALSE;
 
-	bool_ aware = FALSE;
-	bool_ known = FALSE;
-
 	bool_ append_name = FALSE;
 
 	bool_ show_weapon = FALSE;
@@ -1143,12 +1140,11 @@ std::string object_desc_aux(object_type *o_ptr, int pref, int mode)
 	u32b f1, f2, f3, f4, f5, esp;
 	object_flags(o_ptr, &f1, &f2, &f3, &f4, &f5, &esp);
 
-
 	/* See if the object is "aware" */
-	if (object_aware_p(o_ptr)) aware = TRUE;
+	bool_ aware = object_aware_p(o_ptr);
 
 	/* See if the object is "known" */
-	if (object_known_p(o_ptr)) known = TRUE;
+	bool_ known = object_known_p(o_ptr);
 
 	/* Hack -- Extract the sub-type "indexx" */
 	auto const indexx = o_ptr->sval;
