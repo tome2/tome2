@@ -29,7 +29,6 @@
 #include "spells1.hpp"
 #include "tables.hpp"
 #include "town_type.hpp"
-#include "traps.hpp"
 #include "util.hpp"
 #include "variable.hpp"
 #include "vault_type.hpp"
@@ -192,7 +191,6 @@
  * Hack -- Dungeon allocation "types"
  */
 #define ALLOC_TYP_RUBBLE	1	/* Rubble */
-#define ALLOC_TYP_TRAP		3	/* Trap */
 #define ALLOC_TYP_GOLD		4	/* Gold */
 #define ALLOC_TYP_OBJECT	5	/* Object */
 #define ALLOC_TYP_ALTAR         6       /* Altar */
@@ -918,45 +916,6 @@ static void place_locked_door(int y, int x)
 
 
 /*
- * Place a secret door at the given location
- */
-static void place_secret_door(int y, int x)
-{
-	cave_type *c_ptr = &cave[y][x];
-
-	/* Vaults */
-	if (c_ptr->info & CAVE_ICKY)
-	{
-		c_ptr->mimic = FEAT_WALL_INNER;
-	}
-
-	/* Ordinary room -- use current outer or inner wall */
-	else if (c_ptr->info & CAVE_ROOM)
-	{
-		/* Determine if it's inner or outer XXX XXX XXX */
-		if ((cave[y - 1][x].info & CAVE_ROOM) &&
-		                (cave[y + 1][x].info & CAVE_ROOM) &&
-		                (cave[y][x - 1].info & CAVE_ROOM) &&
-		                (cave[y][x + 1].info & CAVE_ROOM))
-		{
-			c_ptr->mimic = feat_wall_inner;
-		}
-		else
-		{
-			c_ptr->mimic = feat_wall_outer;
-		}
-	}
-	else
-	{
-		c_ptr->mimic = fill_type[rand_int(100)];
-	}
-
-	/* Create secret door */
-	cave_set_feat(y, x, FEAT_SECRET);
-}
-
-
-/*
  * Place a random type of door at the given location
  */
 static void place_random_door(int y, int x)
@@ -980,11 +939,11 @@ static void place_random_door(int y, int x)
 		cave_set_feat(y, x, FEAT_BROKEN);
 	}
 
-	/* Secret doors (200/1000) */
+	/* Secret doors (200/1000) - now locked instead */
 	else if (tmp < 600)
 	{
-		/* Create secret door */
-		place_secret_door(y, x);
+		/* Create locked door */
+		place_locked_door(y, x);
 	}
 
 	/* Closed doors (300/1000) */
@@ -1158,12 +1117,6 @@ static void alloc_object(int set, int typ, int num)
 		case ALLOC_TYP_RUBBLE:
 			{
 				place_rubble(y, x);
-				break;
-			}
-
-		case ALLOC_TYP_TRAP:
-			{
-				place_trap(y, x);
 				break;
 			}
 
@@ -1857,61 +1810,6 @@ static void vault_objects(int y, int x, int num)
 
 
 /*
- * Place a trap with a given displacement of point
- */
-static void vault_trap_aux(int y, int x, int yd, int xd)
-{
-	int count = 0, y1 = y, x1 = x;
-	int dummy = 0;
-
-	/* Place traps */
-	for (count = 0; count <= 5; count++)
-	{
-		/* Get a location */
-		while (dummy < SAFE_MAX_ATTEMPTS)
-		{
-			y1 = rand_spread(y, yd);
-			x1 = rand_spread(x, xd);
-			dummy++;
-			if (in_bounds(y1, x1)) break;
-		}
-
-		if (dummy >= SAFE_MAX_ATTEMPTS)
-		{
-			if (cheat_room)
-			{
-				msg_print("Warning! Could not place vault trap!");
-			}
-		}
-
-
-		/* Require "naked" floor grids */
-		if (!cave_naked_bold(y1, x1)) continue;
-
-		/* Place the trap */
-		place_trap(y1, x1);
-
-		/* Done */
-		break;
-	}
-}
-
-
-/*
- * Place some traps with a given displacement of given location
- */
-static void vault_traps(int y, int x, int yd, int xd, int num)
-{
-	int i;
-
-	for (i = 0; i < num; i++)
-	{
-		vault_trap_aux(y, x, yd, xd);
-	}
-}
-
-
-/*
  * Hack -- Place some sleeping monsters near the given location
  */
 static void vault_monsters(int y1, int x1, int num)
@@ -2257,20 +2155,20 @@ static void build_type3(int by0, int bx0)
 			/* Build the vault */
 			build_rectangle(y1b, x1a, y2b, x2a, feat_wall_inner, info);
 
-			/* Place a secret door on the inner room */
+			/* Place a locked door on the inner room */
 			switch (rand_int(4))
 			{
 			case 0:
-				place_secret_door(y1b, xval);
+				place_locked_door(y1b, xval);
 				break;
 			case 1:
-				place_secret_door(y2b, xval);
+				place_locked_door(y2b, xval);
 				break;
 			case 2:
-				place_secret_door(yval, x1a);
+				place_locked_door(yval, x1a);
 				break;
 			case 3:
-				place_secret_door(yval, x2a);
+				place_locked_door(yval, x2a);
 				break;
 			}
 
@@ -2279,9 +2177,6 @@ static void build_type3(int by0, int bx0)
 
 			/* Let's guard the treasure well */
 			vault_monsters(yval, xval, rand_int(2) + 3);
-
-			/* Traps naturally */
-			vault_traps(yval, xval, 4, 4, rand_int(3) + 2);
 
 			break;
 		}
@@ -2308,13 +2203,13 @@ static void build_type3(int by0, int bx0)
 					cave_set_feat(y2b + 1, x, feat_wall_inner);
 				}
 
-				/* Sometimes shut using secret doors */
+				/* Sometimes shut using locked doors */
 				if (rand_int(3) == 0)
 				{
-					place_secret_door(yval, x1a - 1);
-					place_secret_door(yval, x2a + 1);
-					place_secret_door(y1b - 1, xval);
-					place_secret_door(y2b + 1, xval);
+					place_locked_door(yval, x1a - 1);
+					place_locked_door(yval, x2a + 1);
+					place_locked_door(y1b - 1, xval);
+					place_locked_door(y2b + 1, xval);
 				}
 			}
 
@@ -2394,20 +2289,20 @@ static void build_type4(int by0, int bx0)
 		/* Just an inner room with a monster */
 	case 1:
 		{
-			/* Place a secret door */
+			/* Place a locked door */
 			switch (randint(4))
 			{
 			case 1:
-				place_secret_door(y1 - 1, xval);
+				place_locked_door(y1 - 1, xval);
 				break;
 			case 2:
-				place_secret_door(y2 + 1, xval);
+				place_locked_door(y2 + 1, xval);
 				break;
 			case 3:
-				place_secret_door(yval, x1 - 1);
+				place_locked_door(yval, x1 - 1);
 				break;
 			case 4:
-				place_secret_door(yval, x2 + 1);
+				place_locked_door(yval, x2 + 1);
 				break;
 			}
 
@@ -2420,20 +2315,20 @@ static void build_type4(int by0, int bx0)
 		/* Treasure Vault (with a door) */
 	case 2:
 		{
-			/* Place a secret door */
+			/* Place a locked door */
 			switch (randint(4))
 			{
 			case 1:
-				place_secret_door(y1 - 1, xval);
+				place_locked_door(y1 - 1, xval);
 				break;
 			case 2:
-				place_secret_door(y2 + 1, xval);
+				place_locked_door(y2 + 1, xval);
 				break;
 			case 3:
-				place_secret_door(yval, x1 - 1);
+				place_locked_door(yval, x1 - 1);
 				break;
 			case 4:
-				place_secret_door(yval, x2 + 1);
+				place_locked_door(yval, x2 + 1);
 				break;
 			}
 
@@ -2473,29 +2368,26 @@ static void build_type4(int by0, int bx0)
 				place_random_stairs(yval, xval);
 			}
 
-			/* Traps to protect the treasure */
-			vault_traps(yval, xval, 4, 10, 2 + randint(3));
-
 			break;
 		}
 
 		/* Inner pillar(s). */
 	case 3:
 		{
-			/* Place a secret door */
+			/* Place a locked door */
 			switch (randint(4))
 			{
 			case 1:
-				place_secret_door(y1 - 1, xval);
+				place_locked_door(y1 - 1, xval);
 				break;
 			case 2:
-				place_secret_door(y2 + 1, xval);
+				place_locked_door(y2 + 1, xval);
 				break;
 			case 3:
-				place_secret_door(yval, x1 - 1);
+				place_locked_door(yval, x1 - 1);
 				break;
 			case 4:
-				place_secret_door(yval, x2 + 1);
+				place_locked_door(yval, x2 + 1);
 				break;
 			}
 
@@ -2539,9 +2431,9 @@ static void build_type4(int by0, int bx0)
 				cave_set_feat(yval, xval - 5, feat_wall_inner);
 				cave_set_feat(yval, xval + 5, feat_wall_inner);
 
-				/* Secret doors (random top/bottom) */
-				place_secret_door(yval - 3 + (randint(2) * 2), xval - 3);
-				place_secret_door(yval - 3 + (randint(2) * 2), xval + 3);
+				/* Locked doors (random top/bottom) */
+				place_locked_door(yval - 3 + (randint(2) * 2), xval - 3);
+				place_locked_door(yval - 3 + (randint(2) * 2), xval + 3);
 
 				/* Monsters */
 				vault_monsters(yval, xval - 2, randint(2));
@@ -2558,20 +2450,20 @@ static void build_type4(int by0, int bx0)
 		/* Maze inside. */
 	case 4:
 		{
-			/* Place a secret door */
+			/* Place a locked door */
 			switch (randint(4))
 			{
 			case 1:
-				place_secret_door(y1 - 1, xval);
+				place_locked_door(y1 - 1, xval);
 				break;
 			case 2:
-				place_secret_door(y2 + 1, xval);
+				place_locked_door(y2 + 1, xval);
 				break;
 			case 3:
-				place_secret_door(yval, x1 - 1);
+				place_locked_door(yval, x1 - 1);
 				break;
 			case 4:
-				place_secret_door(yval, x2 + 1);
+				place_locked_door(yval, x2 + 1);
 				break;
 			}
 
@@ -2590,10 +2482,6 @@ static void build_type4(int by0, int bx0)
 			/* Monsters just love mazes. */
 			vault_monsters(yval, xval - 5, randint(3));
 			vault_monsters(yval, xval + 5, randint(3));
-
-			/* Traps make them entertaining. */
-			vault_traps(yval, xval - 3, 2, 8, randint(3));
-			vault_traps(yval, xval + 3, 2, 8, randint(3));
 
 			/* Mazes should have some treasure too. */
 			vault_objects(yval, xval, 3);
@@ -2619,18 +2507,18 @@ static void build_type4(int by0, int bx0)
 			if (rand_int(100) < 50)
 			{
 				int i = randint(10);
-				place_secret_door(y1 - 1, xval - i);
-				place_secret_door(y1 - 1, xval + i);
-				place_secret_door(y2 + 1, xval - i);
-				place_secret_door(y2 + 1, xval + i);
+				place_locked_door(y1 - 1, xval - i);
+				place_locked_door(y1 - 1, xval + i);
+				place_locked_door(y2 + 1, xval - i);
+				place_locked_door(y2 + 1, xval + i);
 			}
 			else
 			{
 				int i = randint(3);
-				place_secret_door(yval + i, x1 - 1);
-				place_secret_door(yval - i, x1 - 1);
-				place_secret_door(yval + i, x2 + 1);
-				place_secret_door(yval - i, x2 + 1);
+				place_locked_door(yval + i, x1 - 1);
+				place_locked_door(yval - i, x1 - 1);
+				place_locked_door(yval + i, x2 + 1);
+				place_locked_door(yval - i, x2 + 1);
 			}
 
 			/* Treasure, centered at the center of the cross */
@@ -2964,20 +2852,20 @@ static void build_type5(int by0, int bx0)
 	/* The inner walls */
 	build_rectangle(y1 - 1, x1 - 1, y2 + 1, x2 + 1, feat_wall_inner, CAVE_ROOM);
 
-	/* Place a secret door */
+	/* Place a locked door */
 	switch (randint(4))
 	{
 	case 1:
-		place_secret_door(y1 - 1, xval);
+		place_locked_door(y1 - 1, xval);
 		break;
 	case 2:
-		place_secret_door(y2 + 1, xval);
+		place_locked_door(y2 + 1, xval);
 		break;
 	case 3:
-		place_secret_door(yval, x1 - 1);
+		place_locked_door(yval, x1 - 1);
 		break;
 	case 4:
-		place_secret_door(yval, x2 + 1);
+		place_locked_door(yval, x2 + 1);
 		break;
 	}
 
@@ -3201,20 +3089,20 @@ static void build_type6(int by0, int bx0)
 	/* The inner walls */
 	build_rectangle(y1 - 1, x1 - 1, y2 + 1, x2 + 1, feat_wall_outer, CAVE_ROOM);
 
-	/* Place a secret door */
+	/* Place a locked door */
 	switch (randint(4))
 	{
 	case 1:
-		place_secret_door(y1 - 1, xval);
+		place_locked_door(y1 - 1, xval);
 		break;
 	case 2:
-		place_secret_door(y2 + 1, xval);
+		place_locked_door(y2 + 1, xval);
 		break;
 	case 3:
-		place_secret_door(yval, x1 - 1);
+		place_locked_door(yval, x1 - 1);
 		break;
 	case 4:
-		place_secret_door(yval, x2 + 1);
+		place_locked_door(yval, x2 + 1);
 		break;
 	}
 
@@ -3580,22 +3468,22 @@ static void build_vault(int yval, int xval, int ymax, int xmax, std::string cons
 						}
 						else
 						{
-							place_trap(y, x);
+							/* Do nothing */
 						}
 						break;
 					}
 
-					/* Secret doors */
+					/* locked doors */
 				case '+':
 					{
-						place_secret_door(y, x);
+						place_locked_door(y, x);
 						break;
 					}
 
 					/* Trap */
 				case '^':
 					{
-						place_trap(y, x);
+						/* Do nothing */
 						break;
 					}
 
@@ -4613,30 +4501,30 @@ static void build_small_room(int x0, int y0)
 {
 	build_rectangle(y0 - 1, x0 - 1, y0 + 1, x0 + 1, feat_wall_inner, CAVE_ROOM);
 
-	/* Place a secret door on one side */
+	/* Place a locked door on one side */
 	switch (rand_int(4))
 	{
 	case 0:
 		{
-			place_secret_door(y0, x0 - 1);
+			place_locked_door(y0, x0 - 1);
 			break;
 		}
 
 	case 1:
 		{
-			place_secret_door(y0, x0 + 1);
+			place_locked_door(y0, x0 + 1);
 			break;
 		}
 
 	case 2:
 		{
-			place_secret_door(y0 - 1, x0);
+			place_locked_door(y0 - 1, x0);
 			break;
 		}
 
 	case 3:
 		{
-			place_secret_door(y0 + 1, x0);
+			place_locked_door(y0 + 1, x0);
 			break;
 		}
 	}
@@ -4672,8 +4560,8 @@ static void add_door(int x, int y)
 	                (cave[y][x - 1].feat == feat_wall_outer) &&
 	                (cave[y][x + 1].feat == feat_wall_outer))
 	{
-		/* secret door */
-		place_secret_door(y, x);
+		/* locked door */
+		place_locked_door(y, x);
 
 		/* set boundarys so don't get wide doors */
 		place_filler(y, x - 1);
@@ -4694,8 +4582,8 @@ static void add_door(int x, int y)
 	                (cave[y + 1][x].feat == feat_wall_outer) &&
 	                get_is_floor(x - 1, y) && get_is_floor(x + 1, y))
 	{
-		/* secret door */
-		place_secret_door(y, x);
+		/* locked door */
+		place_locked_door(y, x);
 
 		/* set boundarys so don't get wide doors */
 		place_filler(y - 1, x);
@@ -4786,16 +4674,15 @@ static void fill_treasure(int x1, int x2, int y1, int y2, int difficulty)
 					}
 					else
 					{
-						place_trap(y, x);
+						/* Do nothing */
 					}
 				}
 				else if (value < 30)
 				{
-					/* Monster and trap */
+					/* Monster */
 					monster_level = dun_level + 5;
 					place_monster(y, x, TRUE, TRUE);
 					monster_level = dun_level;
-					place_trap(y, x);
 				}
 				else if (value < 40)
 				{
@@ -4815,8 +4702,7 @@ static void fill_treasure(int x1, int x2, int y1, int y2, int difficulty)
 				}
 				else if (value < 50)
 				{
-					/* Trap */
-					place_trap(y, x);
+					/* Do nothing */
 				}
 				else
 				{
@@ -4829,7 +4715,7 @@ static void fill_treasure(int x1, int x2, int y1, int y2, int difficulty)
 					}
 					else if (rand_int(100) < 50)
 					{
-						place_trap(y, x);
+						/* Do nothing */
 					}
 					else if (rand_int(100) < 50)
 					{
@@ -6085,9 +5971,6 @@ static void build_type12(int by0, int bx0)
 
 		/* Let's guard the treasure well */
 		vault_monsters(y0, x0, rand_int(2) + 3);
-
-		/* Traps naturally */
-		vault_traps(y0, x0, 4, 4, rand_int(3) + 2);
 	}
 }
 
@@ -6527,7 +6410,7 @@ static void try_doors(int y, int x)
 			/* Clear OK flags XXX */
 			for (i = 0; i < 4; i++) dir_ok[i] = FALSE;
 
-			/* Put one or two secret doors */
+			/* Put one or two locked doors */
 			dir_ok[rand_int(4)] = TRUE;
 			dir_ok[rand_int(4)] = TRUE;
 		}
@@ -6545,7 +6428,7 @@ static void try_doors(int y, int x)
 			}
 		}
 
-		/* Place secret door(s) */
+		/* Place locked door(s) */
 		for (i = 0; i < 4; i++)
 		{
 			/* Bad location */
@@ -6555,8 +6438,8 @@ static void try_doors(int y, int x)
 			yy = y + ddy_ddd[i];
 			xx = x + ddx_ddd[i];
 
-			/* Place a secret door */
-			place_secret_door(yy, xx);
+			/* Place a locked door */
+			place_locked_door(yy, xx);
 		}
 	}
 }
@@ -7873,14 +7756,8 @@ static bool_ cave_gen(void)
 		}
 	}
 
-	/* Place traps and rubble */
-	{
-		/* Place some traps in the dungeon */
-		alloc_object(ALLOC_SET_BOTH, ALLOC_TYP_TRAP, randint(k * 2));
-
-		/* Put some rubble in corridors */
-		alloc_object(ALLOC_SET_CORR, ALLOC_TYP_RUBBLE, randint(k));
-	}
+	/* Put some rubble in corridors */
+	alloc_object(ALLOC_SET_CORR, ALLOC_TYP_RUBBLE, randint(k));
 
 	/* Place objects and treasure */
 	{

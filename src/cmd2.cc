@@ -38,8 +38,6 @@
 #include "spells3.hpp"
 #include "stats.hpp"
 #include "tables.hpp"
-#include "trap_type.hpp"
-#include "traps.hpp"
 #include "util.hpp"
 #include "util.h"
 #include "variable.h"
@@ -346,8 +344,6 @@ void do_cmd_go_down(void)
 
 	bool_ go_down = FALSE, go_down_many = FALSE, prob_traveling = FALSE;
 
-	bool_ fall_trap = FALSE;
-
 	char i;
 
 	int old_dun = dun_level;
@@ -362,8 +358,6 @@ void do_cmd_go_down(void)
 	c_ptr = &cave[p_ptr->py][p_ptr->px];
 
 	if (p_ptr->astral && (dun_level == 98)) return;
-
-	if (c_ptr->t_idx == TRAP_OF_SINKING) fall_trap = TRUE;
 
 	/* test if on special level */
 	if ((dungeon_flags2 & DF2_ASK_LEAVE))
@@ -468,7 +462,7 @@ void do_cmd_go_down(void)
 		}
 	}
 
-	else if (!(fall_trap))
+	else
 	{
 		msg_print("I see no down staircase here.");
 		return;
@@ -478,15 +472,10 @@ void do_cmd_go_down(void)
 	{
 		energy_use = 0;
 
-		if (fall_trap)
-			msg_print("You deliberately jump through the trap door.");
+		if (c_ptr->feat == FEAT_WAY_MORE)
+			msg_print("You enter the next area.");
 		else
-		{
-			if (c_ptr->feat == FEAT_WAY_MORE)
-				msg_print("You enter the next area.");
-			else
-				msg_print("You enter a maze of down staircases.");
-		}
+			msg_print("You enter a maze of down staircases.");
 
 		autosave_checkpoint();
 
@@ -556,57 +545,8 @@ void do_cmd_go_down(void)
 
 		/* Leaving */
 		p_ptr->leaving = TRUE;
-
-		if (!fall_trap)
-		{
-			/* Create a way back */
-			if (go_down_many)
-				create_up_shaft = TRUE;
-			else
-				create_up_stair = TRUE;
-		}
 	}
 }
-
-
-
-/*
- * Simple command to "search" for one turn
- */
-void do_cmd_search(void)
-{
-	/* Allow repeated command */
-	if (command_arg)
-	{
-		/* Set repeat count */
-		command_rep = command_arg - 1;
-
-		/* Redraw the state */
-		p_ptr->redraw |= (PR_FRAME);
-
-		/* Cancel the arg */
-		command_arg = 0;
-	}
-
-	/* Take a turn */
-	energy_use = 100;
-
-	/* Search */
-	search();
-}
-
-
-/*
- * Hack -- toggle search mode
- */
-void do_cmd_toggle_search(void)
-{
-	p_ptr->update |= (PU_BONUS);
-	p_ptr->redraw |= (PR_FRAME);
-	p_ptr->searching = !p_ptr->searching;
-}
-
-
 
 /*
  * Determine if a grid contains a chest
@@ -717,41 +657,6 @@ static void chest_death(int y, int x, s16b o_idx)
 
 
 /*
- * Chests have traps too.
- *
- * Exploding chest destroys contents (and traps).
- * Note that the chest itself is never destroyed.
- */
-static void chest_trap(int y, int x, s16b o_idx)
-{
-	int trap;
-
-	object_type *o_ptr = &o_list[o_idx];
-
-	bool_ ident = FALSE;
-
-
-	/* Ignore disarmed chests */
-	if (o_ptr->pval <= 0) return;
-
-	/* Obtain the trap */
-	trap = o_ptr->pval;
-
-	/* Message */
-	msg_print("You found a trap!");
-
-	/* Set off trap */
-	ident = player_activate_trap_type(y, x, o_ptr, o_idx);
-	if (ident)
-	{
-		t_info[o_ptr->pval].ident = TRUE;
-		msg_format("You identified the trap as %s.",
-			   t_info[trap].name);
-	}
-}
-
-
-/*
  * Attempt to open the given chest at the given location
  *
  * Assume there is no monster blocking the destination
@@ -788,7 +693,7 @@ static bool_ do_cmd_open_chest(int y, int x, s16b o_idx)
 		flag = FALSE;
 
 		/* Get the "disarm" factor */
-		i = p_ptr->skill_dis;
+		i = 100;
 
 		/* Penalize some conditions */
 		if (p_ptr->blind || no_lite()) i = i / 10;
@@ -823,9 +728,6 @@ static bool_ do_cmd_open_chest(int y, int x, s16b o_idx)
 	/* Allowed to open */
 	if (flag)
 	{
-		/* Apply chest traps, if any */
-		chest_trap(y, x, o_idx);
-
 		/* Let the Chest drop items */
 		chest_death(y, x, o_idx);
 	}
@@ -861,16 +763,6 @@ static bool_ is_closed(cave_type *c_ptr)
 
 	return ((feat >= FEAT_DOOR_HEAD) && (feat <= FEAT_DOOR_TAIL));
 }
-
-
-/*
- * Return TRUE if the given grid has a trap
- */
-static bool_ is_trap(cave_type *c_ptr)
-{
-	return ((c_ptr->info & (CAVE_TRDT)) != 0);
-}
-
 
 /*
  * Return the number of doors/traps around (or under)
@@ -953,9 +845,6 @@ static int count_chests(int *y, int *x, bool_ trapped)
 		/* Already open */
 		if (o_ptr->pval == 0) continue;
 
-		/* No (known) traps here */
-		if (trapped && (!object_known_p(o_ptr) || !o_ptr->pval)) continue;
-
 		/* OK */
 		++count;
 
@@ -1037,7 +926,7 @@ static bool_ do_cmd_open_aux(int y, int x, int dir)
 	else if (c_ptr->feat >= FEAT_DOOR_HEAD + 0x01)
 	{
 		/* Disarm factor */
-		i = p_ptr->skill_dis;
+		i = 100;
 
 		/* Penalize some conditions */
 		if (p_ptr->blind || no_lite()) i = i / 10;
@@ -1057,9 +946,6 @@ static bool_ do_cmd_open_aux(int y, int x, int dir)
 		{
 			/* Message */
 			msg_print("You have picked the lock.");
-
-			/* Set off trap */
-			if (c_ptr->t_idx != 0) player_activate_door_trap(y, x);
 
 			/* Open the door */
 			cave_set_feat(y, x, FEAT_OPEN);
@@ -1091,9 +977,6 @@ static bool_ do_cmd_open_aux(int y, int x, int dir)
 	/* Closed door */
 	else
 	{
-		/* Set off trap */
-		if (c_ptr->t_idx != 0) player_activate_door_trap(y, x);
-
 		/* Open the door */
 		cave_set_feat(y, x, FEAT_OPEN);
 
@@ -1260,9 +1143,6 @@ static bool_ do_cmd_close_aux(int y, int x, int dir)
 
 	/* Get grid and contents */
 	c_ptr = &cave[y][x];
-
-	/* Set off trap */
-	if (c_ptr->t_idx != 0) player_activate_door_trap(y, x);
 
 	/* Broken door */
 	if (c_ptr->feat == FEAT_BROKEN)
@@ -1520,9 +1400,6 @@ static bool_ do_cmd_tunnel_aux(int y, int x, int dir)
 			/* We may continue chopping */
 			msg_print(f_ptr->tunnel);
 			more = TRUE;
-
-			/* Occasional Search XXX XXX */
-			if (rand_int(100) < 25) search();
 		}
 	}
 
@@ -1673,9 +1550,6 @@ static bool_ do_cmd_tunnel_aux(int y, int x, int dir)
 			msg_print("You have finished the tunnel.");
 			c_ptr->mimic = 0;
 			lite_spot(y, x);
-
-			/* Set off trap */
-			if (c_ptr->t_idx != 0) player_activate_door_trap(y, x);
 		}
 
 		/* Keep trying */
@@ -1690,9 +1564,6 @@ static bool_ do_cmd_tunnel_aux(int y, int x, int dir)
 			/* We may continue tunelling */
 			msg_print(f_info[feat].tunnel);
 			more = TRUE;
-
-			/* Occasional Search XXX XXX */
-			if (rand_int(100) < 25) search();
 		}
 	}
 
@@ -1824,306 +1695,6 @@ void do_cmd_tunnel(void)
 	if (!more) disturb(0);
 }
 
-
-/*
- * Perform the basic "disarm" command
- *
- * Assume destination is a visible trap
- *
- * Assume there is no monster blocking the destination
- *
- * Returns TRUE if repeated commands may continue
- */
-static bool_ do_cmd_disarm_chest(int y, int x, s16b o_idx)
-{
-	int i, j;
-
-	bool_ more = FALSE;
-
-	object_type *o_ptr = &o_list[o_idx];
-
-	trap_type *t_ptr = &t_info[o_ptr->pval];
-
-
-	/* Take a turn */
-	energy_use = 100;
-
-	/* Get the "disarm" factor */
-	i = p_ptr->skill_dis;
-
-	/* Penalize some conditions */
-	if (p_ptr->blind || no_lite()) i = i / 10;
-	if (p_ptr->confused || p_ptr->image) i = i / 10;
-
-	/* Extract the difficulty */
-	j = i - t_ptr->difficulty * 3;
-
-	/* Always have a small chance of success */
-	if (j < 2) j = 2;
-
-	/* Must find the trap first. */
-	if (!object_known_p(o_ptr))
-	{
-		msg_print("I don't see any traps.");
-	}
-
-	/* Already disarmed/unlocked */
-	else if (o_ptr->pval <= 0)
-	{
-		msg_print("The chest is not trapped.");
-	}
-
-	/* Success (get a lot of experience) */
-	else if (rand_int(100) < j)
-	{
-		msg_print("You have disarmed the chest.");
-		gain_exp(t_ptr->difficulty * 3);
-		o_ptr->pval = (0 - o_ptr->pval);
-	}
-
-	/* Failure -- Keep trying */
-	else if ((i > 5) && (randint(i) > 5))
-	{
-		/* We may keep trying */
-		more = TRUE;
-		if (flush_failure) flush();
-		msg_print("You failed to disarm the chest.");
-	}
-
-	/* Failure -- Set off the trap */
-	else
-	{
-		msg_print("You set off a trap!");
-		sound(SOUND_FAIL);
-		chest_trap(y, x, o_idx);
-	}
-
-	/* Result */
-	return (more);
-}
-
-
-/*
- * Perform the basic "disarm" command
- *
- * Assume destination is a visible trap
- *
- * Assume there is no monster blocking the destination
- *
- * Returns TRUE if repeated commands may continue
- */
-static bool_ do_cmd_disarm_aux(int y, int x, int dir, int do_pickup)
-{
-	int i, j, power;
-
-	cave_type *c_ptr;
-
-	cptr name;
-
-	bool_ more = FALSE;
-
-
-	/* Take a turn */
-	energy_use = 100;
-
-	/* Get grid and contents */
-	c_ptr = &cave[y][x];
-
-	/* Access trap name */
-	if (t_info[c_ptr->t_idx].ident)
-	{
-		name = t_info[c_ptr->t_idx].name;
-	}
-	else
-	{
-		name = "unknown trap";
-	}
-
-	/* Get the "disarm" factor */
-	i = p_ptr->skill_dis;
-
-	/* Penalize some conditions */
-	if (p_ptr->blind || no_lite()) i = i / 10;
-	if (p_ptr->confused || p_ptr->image) i = i / 10;
-
-	/* XXX XXX XXX Variable power? */
-
-	/* Extract trap "power" */
-	power = t_info[c_ptr->t_idx].difficulty;
-
-	/* Extract the difficulty */
-	j = i - power;
-
-	/* Always have a small chance of success */
-	if (j < 2) j = 2;
-
-	/* Success */
-	if (rand_int(100) < j)
-	{
-		/* Message */
-		msg_format("You have disarmed the %s.", name);
-
-		/* Reward */
-		gain_exp(power);
-
-		/* Forget the trap */
-		c_ptr->info &= ~(CAVE_MARK | CAVE_TRDT);
-
-		/* Remove the trap */
-		c_ptr->t_idx = 0;
-
-		/* Move the player onto the trap */
-		if (!(f_info[c_ptr->feat].flags1 & FF1_DOOR))
-			move_player_aux(dir, do_pickup, 0, TRUE);
-
-		/* Remove trap attr from grid */
-		note_spot(y, x);
-		lite_spot(y, x);
-	}
-
-	/* Failure -- Keep trying */
-	else if ((i > 5) && (randint(i) > 5))
-	{
-		/* Failure */
-		if (flush_failure) flush();
-
-		/* Message */
-		msg_format("You failed to disarm the %s.", name);
-
-		/* We may keep trying */
-		more = TRUE;
-	}
-
-	/* Failure -- Set off the trap */
-	else
-	{
-		/* Message */
-		msg_format("You set off the %s!", name);
-
-		/* Move the player onto the trap */
-		if (!(f_info[c_ptr->feat].flags1 & FF1_DOOR))
-			move_player_aux(dir, do_pickup, 0, FALSE);
-	}
-
-	/* Result */
-	return (more);
-}
-
-
-/*
- * Disamrs the monster traps(no failure)
- */
-void do_cmd_disarm_mon_trap(int y, int x)
-{
-	msg_print("You disarm the monster trap.");
-
-	place_floor_convert_glass(y, x);
-	cave[p_ptr->py][p_ptr->px].special = cave[p_ptr->py][p_ptr->px].special2 = 0;
-}
-
-
-/*
- * Disarms a trap, or chest
- */
-void do_cmd_disarm(void)
-{
-	int y, x, dir;
-
-	s16b o_idx;
-
-	cave_type *c_ptr;
-
-	bool_ more = FALSE;
-
-
-	/* Pick a direction if there's an obvious choice */
-	{
-		int num_traps, num_chests;
-
-		/* Count visible traps */
-		num_traps = count_feats(&y, &x, is_trap, TRUE);
-
-		/* Count chests (trapped) */
-		num_chests = count_chests(&y, &x, TRUE);
-
-		/* See if only one target */
-		if (num_traps || num_chests)
-		{
-			if (num_traps + num_chests <= 1)
-				command_dir = coords_to_dir(y, x);
-		}
-	}
-
-	/* Allow repeated command */
-	if (command_arg)
-	{
-		/* Set repeat count */
-		command_rep = command_arg - 1;
-
-		/* Redraw the state */
-		p_ptr->redraw |= (PR_FRAME);
-
-		/* Cancel the arg */
-		command_arg = 0;
-	}
-
-	/* Get a direction (or abort) */
-	if (get_rep_dir(&dir))
-	{
-		/* Get location */
-		y = p_ptr->py + ddy[dir];
-		x = p_ptr->px + ddx[dir];
-
-		/* Get grid and contents */
-		c_ptr = &cave[y][x];
-
-		/* Check for chests */
-		o_idx = chest_check(y, x);
-
-		/* Disarm a trap */
-		if (((c_ptr->t_idx == 0) || (!(c_ptr->info & CAVE_TRDT))) &&
-		                !o_idx && (c_ptr->feat != FEAT_MON_TRAP))
-		{
-			/* Message */
-			msg_print("You see nothing there to disarm.");
-		}
-
-		/* Monster in the way */
-		else if (c_ptr->m_idx)
-		{
-			/* Message */
-			msg_print("There is a monster in the way!");
-
-			/* Attack */
-			py_attack(y, x, -1);
-		}
-
-		/* Disarm chest */
-		else if (o_idx)
-		{
-			/* Disarm the chest */
-			more = do_cmd_disarm_chest(y, x, o_idx);
-		}
-
-		/* Disarm trap */
-		else
-		{
-			/* Disarm the trap */
-			if (c_ptr->feat == FEAT_MON_TRAP)
-			{
-				do_cmd_disarm_mon_trap(y, x);
-				more = FALSE;
-			}
-			else
-				more = do_cmd_disarm_aux(y, x, dir, always_pickup);
-		}
-	}
-
-	/* Cancel repeat unless told not to */
-	if (!more) disturb(0);
-}
-
-
 /*
  * Perform the basic "bash" command
  *
@@ -2182,18 +1753,12 @@ static bool_ do_cmd_bash_aux(int y, int x, int dir)
 		/* Break down the door */
 		if (rand_int(100) < 50)
 		{
-			/* Set off trap */
-			if (c_ptr->t_idx != 0) player_activate_door_trap(y, x);
-
 			cave_set_feat(y, x, FEAT_BROKEN);
 		}
 
 		/* Open the door */
 		else
 		{
-			/* Set off trap */
-			if (c_ptr->t_idx != 0) player_activate_door_trap(y, x);
-
 			cave_set_feat(y, x, FEAT_OPEN);
 		}
 
@@ -2399,13 +1964,6 @@ void do_cmd_alter(void)
 		{
 			/* Tunnel */
 			more = do_cmd_tunnel_aux(y, x, dir);
-		}
-
-		/* Disarm traps */
-		else if (c_ptr->t_idx != 0)
-		{
-			/* Tunnel */
-			more = do_cmd_disarm_aux(y, x, dir, always_pickup);
 		}
 
 		/* Oops */
@@ -2846,20 +2404,6 @@ void do_cmd_stay(int pickup)
 	/* Take a turn */
 	energy_use = 100;
 
-
-	/* Spontaneous Searching */
-	if ((p_ptr->skill_fos >= 50) || (0 == rand_int(50 - p_ptr->skill_fos)))
-	{
-		search();
-	}
-
-	/* Continuous Searching */
-	if (p_ptr->searching)
-	{
-		search();
-	}
-
-
 	/* Handle "objects" */
 	carry(pickup);
 
@@ -2950,9 +2494,6 @@ void do_cmd_rest(void)
 
 	/* Save the rest code */
 	resting = command_arg;
-
-	/* Cancel searching */
-	p_ptr->searching = FALSE;
 
 	/* Recalculate bonuses */
 	p_ptr->update |= (PU_BONUS);

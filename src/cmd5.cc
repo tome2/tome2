@@ -1684,14 +1684,6 @@ static void apply_monster_power(monster_race const *r_ptr, int power)
 			break;
 		}
 
-		/* TRAPS */
-	case 74:
-		{
-			trap_creation();
-
-			break;
-		}
-
 		/* 75 FORGET -- Not available */
 
 		/* ANIM_DEAD -- Use the same code as the nether spell */

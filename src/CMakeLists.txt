@@ -99,7 +99,6 @@ SET(SRCS_COMMON
   status.cc
   store.cc
   tables.cc
-  traps.cc
   util.cc
   variable.cc
   wild.cc

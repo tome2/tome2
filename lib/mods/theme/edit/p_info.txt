@@ -82,9 +82,7 @@ C:k:+0:+400:Axe-mastery
 C:k:+0:+400:Hafted-mastery
 C:k:+0:+400:Polearm-mastery
 C:k:+1000:+600:Archery
-C:k:+1000:+900:Sneakiness
 C:k:+0000:+400:Stealth
-C:k:+1000:+900:Disarming
 C:k:+1000:+300:Magic
 C:k:+1000:+400:Spirituality
 C:k:+0:+550:Antimagic
@@ -182,8 +180,8 @@ C:a:k:=0:=0:Axe-mastery
 C:a:k:=0:=0:Hafted-mastery
 C:a:k:=0:=0:Polearm-mastery
 C:a:k:+1000:-200:Archery
-C:a:k:+1000:+900:Sneakiness
-C:a:k:+1000:+900:Disarming
+
+
 C:a:k:+1000:+400:Magic
 C:a:k:+1000:+300:Spirituality
 C:a:k:=0:=0:Antimagic
@@ -248,7 +246,6 @@ C:k:+0:+700:Thaumaturgy
 C:k:+1000:+550:Spirituality
 C:k:+1000:+200:Combat
 C:k:+700:+500:Weaponmastery
-C:k:+1000:+900:Sneakiness
 C:k:+0000:+400:Stealth
 C:b:1:Perfect casting
 C:g:All Gods
@@ -431,9 +428,7 @@ C:k:+0:+300:Crossbow-mastery
 C:k:+0:+300:Sling-mastery
 C:k:+0:+300:Boomerang-mastery
 C:k:+0:%150:Boulder-throwing
-C:k:+1000:+900:Sneakiness
 C:k:+0000:+400:Stealth
-C:k:+1000:+900:Disarming
 C:k:+1000:+300:Magic
 C:k:+0:+100:Magic-Device
 C:k:+1000:+400:Spirituality
@@ -461,8 +456,6 @@ C:a:k:+0:+200:Weaponmastery
 C:a:k:+0:+400:Magic
 C:a:k:+0:+500:Nature
 C:a:k:+0:+500:Divination
-C:a:k:+0:+700:Disarming
-C:a:k:+0:+50:Sneakiness
 C:a:k:+0:+200:Monster-lore
 C:a:k:+0:+300:Summoning
 C:a:O:19:12:1d1
@@ -477,15 +470,12 @@ C:a:g:Varda Elentari
 C:a:g:Aule the Smith
 C:a:g:Ulmo
 C:a:g:Mandos
-C:a:b:1:Trapping
 
 C:a:N:Sniper
 C:a:D:Snipers are very stealthy archers without much hand-to-hand combat 
 C:a:D:ability, but with a penchant to disappear when it suits them.
 C:a:k:+0:-300:Combat
-C:a:k:+1000:+100:Sneakiness
 C:a:k:+1000:+700:Stealth 
-C:a:k:+0:+100:Disarming
 C:a:k:+1000:+700:Backstab
 C:a:k:+0:+300:Magic
 C:a:k:+1000:+500:Conveyance
@@ -557,9 +547,7 @@ C:k:+0:+500:Conveyance
 C:k:+0:+500:Divination
 C:k:+0:+500:Temporal
 C:k:+1000:+700:Spirituality
-C:k:+1000:+2000:Sneakiness
 C:k:+1000:+1500:Stealth
-C:k:+1000:+2000:Disarming
 C:k:+1000:+1000:Backstab
 C:k:+1000:+2000:Stealing
 C:k:+1000:+2000:Dodging
@@ -569,7 +557,6 @@ C:b:10:Extra Max Blow(1)
 C:a:N:Rogue
 C:a:D:Rogues are masters of tricks. They can steal from shops and monsters,
 C:a:D:and lure monsters into deadly monster traps.
-C:a:b:1:Trapping
 C:a:O:46:1:1d1
 
 C:a:N:Assassin
@@ -584,7 +571,6 @@ C:a:k:+0:-400:Conveyance
 C:a:k:+0:-400:Divination
 C:a:k:+0:-300:Temporal
 C:a:k:+0:+500:Stealth
-C:a:k:+0:-1000:Disarming
 C:a:k:+0:+1000:Backstab
 C:a:k:+0:-1800:Stealing
 C:a:k:+0:-550:Magic-Device
@@ -626,9 +612,7 @@ C:k:+1000:+700:Weaponmastery
 C:k:+1000:+700:Archery
 C:k:+1000:+700:Barehand-combat
 C:k:+0:+600:Magic
-C:k:+1000:+700:Sneakiness
 C:k:+1000:+700:Stealth
-C:k:+1000:+700:Disarming
 C:k:+1000:+700:Spirituality
 C:k:+1000:+600:Monster-lore
 C:k:+0:+500:Possession
@@ -657,7 +641,6 @@ C:a:k:+0:-100:Combat
 C:a:k:+0:-100:Weaponmastery
 C:a:k:+0:-300:Archery
 C:a:k:-1000:-700:Barehand-combat
-C:a:k:+0:-200:Disarming
 C:a:k:+0:-200:Spirituality
 C:a:k:+1000:+300:Possession
 C:a:k:+0:+200:Corpse-preservation
@@ -676,7 +659,6 @@ C:a:k:+0:+100:Combat
 C:a:k:+0:+100:Weaponmastery
 C:a:k:+0:-100:Barehand-combat
 C:a:k:+1000:+100:Magic
-C:a:k:+0:+100:Sneakiness
 C:a:k:+0:+100:Stealth
 C:a:k:+0:-200:Spirituality
 C:a:k:+0:-400:Possession
@@ -695,7 +677,6 @@ C:a:k:+0:+100:Combat
 C:a:k:+0:+100:Weaponmastery
 C:a:k:+0:-100:Barehand-combat
 C:a:k:+1000:+100:Magic
-C:a:k:+0:+100:Sneakiness
 C:a:k:+0:+100:Stealth
 C:a:k:+0:-200:Spirituality
 C:a:k:+0:-400:Possession
@@ -715,9 +696,7 @@ C:a:k:+0:-100:Weaponmastery
 C:a:k:+0:-300:Archery
 C:a:k:-1000:-700:Barehand-combat
 C:a:k:+1000:+200:Magic
-C:a:k:+0:+0:Sneakiness
 C:a:k:+0:+0:Stealth
-C:a:k:+0:-200:Disarming
 C:a:k:+0:-200:Spirituality
 C:a:k:+15000:+100:Monster-lore
 C:a:k:+0:-500:Possession
@@ -737,9 +716,7 @@ C:a:k:-1000:-400:Weaponmastery
 C:a:k:-1000:-300:Archery
 C:a:k:+0:+200:Barehand-combat
 C:a:k:+0:+0:Magic
-C:a:k:+0:+200:Sneakiness
 C:a:k:+0:+200:Stealth
-C:a:k:+0:+200:Disarming
 C:a:k:+0:+200:Spirituality
 C:a:k:+0:-400:Possession
 C:a:k:+0:-200:Corpse-preservation
@@ -762,7 +739,6 @@ C:a:O:14:59:1d1
 C:a:k:+1000:+0:Magic
 C:a:k:-1000:-700:Archery
 C:a:k:+0:-100:Barehand-combat
-C:a:k:+0:-100:Disarming
 C:a:k:+0:+100:Spirituality
 C:a:k:+0:-500:Possession
 C:a:k:+0:-100:Summoning
@@ -778,7 +754,6 @@ C:a:k:+0:+200:Combat
 C:a:k:=0:=0:Weaponmastery
 C:a:k:+0:+200:Barehand-combat
 C:a:k:+1000:+1000:Antimagic
-C:a:k:+0:+200:Disarming
 C:a:k:+0:+300:Stealth
 C:a:k:+0:+1000:Dodging
 C:a:k:=0:=0:Magic
@@ -826,10 +801,8 @@ C:k:=0:=0:Combat
 C:k:=0:=0:Weaponmastery
 C:k:=0:=0:Archery
 C:k:=0:=0:Barehand-combat
-C:k:+0:+600:Sneakiness
 C:k:+0:+600:Stealth
 C:k:+1000:+700:Dodging
-C:k:+1000:+600:Disarming
 C:k:+1000:+600:Magic
 C:k:=0:=0:Magic-Device
 C:k:+0:+500:Spell-power
@@ -842,14 +815,6 @@ C:k:=0:=0:Mimicry
 C:k:=0:=0:Music
 C:b:15:Perfect casting
 C:g:All Gods
-
-C:a:N:Trapper
-C:a:D:These pacifists use traps to snare monsters, and
-C:a:D:make totems from corpses to summon aid.
-C:O:46:1:1d1
-C:a:k:+1000:+600:Summoning
-C:a:b:1:Trapping
-C:a:b:10:Ammo creation
 
 C:a:N:Peace-mage
 C:a:D:These pacifists use magic to escape danger, and
@@ -891,8 +856,6 @@ C:k:+1000:+1000:Spirituality
 C:k:+1000:+700:Prayer
 C:k:+2000:+700:Combat
 C:k:+1000:+700:Weaponmastery
-C:k:+1000:+900:Sneakiness
-C:k:+0000:+900:Disarming
 C:k:+0000:+400:Stealth
 C:k:+0:+50:Magic-Device
 C:b:1:Perfect casting
@@ -964,7 +927,6 @@ C:a:g:Mandos
 C:a:k:+0:-300:Prayer
 C:a:k:+0:-200:Necromancy
 C:a:k:+1000:+300:Mindcraft
-C:a:k:+0:+200:Sneakiness
 C:a:k:+0:+100:Magic-Device
 
 C:a:N:Stonewright
@@ -1039,8 +1001,8 @@ C:k:+0:+200:Axe-mastery
 C:k:+0:+200:Hafted-mastery
 C:k:+0:+200:Polearm-mastery
 C:k:+1000:+600:Archery
-C:k:+1000:+900:Sneakiness
-C:k:+1000:+900:Disarming
+
+
 C:k:+1000:+300:Magic
 C:k:+0:+550:Antimagic
 
@@ -1104,11 +1066,9 @@ R:C:Priest
 R:C:Rogue
 R:C:Warrior
 R:G:ELF
-R:k:+200:+000:Disarming
 R:k:+300:+000:Magic-Device
 R:k:+1500:+000:Spirituality
 R:k:+1000:+000:Stealth
-R:k:+600:+000:Sneakiness
 R:k:-100:+000:Weaponmastery
 R:k:+500:+000:Archery
 
@@ -1129,11 +1089,9 @@ R:C:Pacifist
 R:C:Priest
 R:C:Warrior
 R:G:ELF
-R:k:+500:+000:Disarming
 R:k:+600:+000:Magic-Device
 R:k:+3000:+000:Spirituality
 R:k:+2000:+000:Stealth
-R:k:+800:+000:Sneakiness
 R:k:-500:+000:Weaponmastery
 R:k:+1500:+000:Archery
 
@@ -1156,11 +1114,9 @@ R:C:Pacifist
 R:C:Rogue
 R:C:Warrior
 R:k:+0:+300:Sling-mastery
-R:k:+1500:+000:Disarming
 R:k:+1800:+000:Magic-Device
 R:k:+9000:+000:Spirituality
 R:k:+6000:+000:Stealth
-R:k:+1200:+000:Sneakiness
 R:k:-1000:+000:Weaponmastery
 R:k:+2000:+000:Archery
 
@@ -1178,11 +1134,9 @@ R:C:Mage
 R:C:Pacifist
 R:C:Rogue
 R:C:Warrior
-R:k:+1000:+000:Disarming
 R:k:+1200:+000:Magic-Device
 R:k:+6000:+000:Spirituality
 R:k:+3000:+000:Stealth
-R:k:+600:+000:Sneakiness
 R:k:-800:+000:Weaponmastery
 R:k:+1200:+000:Archery
 
@@ -1201,11 +1155,9 @@ R:C:Pacifist
 R:C:Priest
 R:C:Warrior
 R:k:+0:+200:Axe-mastery
-R:k:+200:+000:Disarming
 R:k:+900:+000:Magic-Device
 R:k:+5000:+000:Spirituality
 R:k:-1000:+000:Stealth
-R:k:+700:+000:Sneakiness
 R:k:+1500:+000:Weaponmastery
 R:k:+500:+000:Archery
 
@@ -1222,11 +1174,9 @@ R:C:Archer
 R:C:Priest
 R:C:Rogue
 R:C:Warrior
-R:k:-300:+000:Disarming
 R:k:-300:+000:Magic-Device
 R:k:-1000:+000:Spirituality
 R:k:-1000:+000:Stealth
-R:k:+000:+000:Sneakiness
 R:k:+1200:+000:Weaponmastery
 R:k:-500:+000:Archery
 
@@ -1243,11 +1193,9 @@ R:F:SUST_STR
 R:R:15:0
 R:F:REGEN
 R:C:Warrior
-R:k:-500:+000:Disarming
 R:k:-800:+000:Magic-Device
 R:k:-4000:+000:Spirituality
 R:k:-2000:+000:Stealth
-R:k:-100:+000:Sneakiness
 R:k:+2000:+000:Weaponmastery
 R:k:+0:+200:Hafted-mastery
 R:k:-1000:+000:Archery
@@ -1269,11 +1217,9 @@ R:C:Pacifist
 R:C:Priest
 R:C:Rogue
 R:C:Warrior
-R:k:+400:+000:Disarming
 R:k:+500:+000:Magic-Device
 R:k:+2500:+000:Spirituality
 R:k:+2000:+000:Stealth
-R:k:+800:+000:Sneakiness
 R:k:+1500:+000:Weaponmastery
 R:k:+1000:+000:Archery
 
@@ -1295,11 +1241,9 @@ R:C:Mage
 R:C:Pacifist
 R:C:Priest
 R:C:Warrior
-R:k:+400:+000:Disarming
 R:k:+2000:+000:Magic-Device
 R:k:+10000:+000:Spirituality
 R:k:+4000:+000:Stealth
-R:k:+300:+000:Sneakiness
 R:k:+1000:+000:Weaponmastery
 R:k:+2500:+000:Archery
 
@@ -1317,11 +1261,9 @@ R:F:SUST_STR
 R:C:Pacifist
 R:C:Priest
 R:C:Warrior
-R:k:-300:+000:Disarming
 R:k:-500:+000:Magic-Device
 R:k:-2500:+000:Spirituality
 R:k:-2000:+000:Stealth
-R:k:-100:+000:Sneakiness
 R:k:+2000:+000:Weaponmastery
 R:k:+000:+000:Archery
 
@@ -1341,11 +1283,9 @@ R:C:Loremaster
 R:C:Rogue
 R:C:Warrior
 R:k:+1000:+1000:Bearform-combat
-R:k:-600:+000:Disarming
 R:k:-800:+000:Magic-Device
 R:k:-3000:+000:Spirituality
 R:k:-2000:+000:Stealth
-R:k:-100:+000:Sneakiness
 R:k:+2500:+000:Weaponmastery
 R:k:+500:+000:Archery
 
@@ -1368,11 +1308,9 @@ R:C:Pacifist
 R:C:Rogue
 R:C:Warrior
 R:k:+0:+250:Boomerang-mastery 
-R:k:-200:+000:Disarming
 R:k:-300:+000:Magic-Device
 R:k:-1000:+000:Spirituality
 R:k:+1000:+000:Stealth
-R:k:+100:+000:Sneakiness
 R:k:+1000:+000:Weaponmastery
 R:k:+800:+000:Archery
 
@@ -1390,11 +1328,9 @@ R:F:RES_DARK
 R:F:RES_DISEN
 R:C:Rogue
 R:C:Warrior
-R:k:+300:+000:Disarming
 R:k:+500:+000:Magic-Device
 R:k:+5000:+000:Spirituality
 R:k:+1000:+000:Stealth
-R:k:+500:+000:Sneakiness
 R:k:+000:+000:Weaponmastery
 R:k:+000:+000:Archery
 
@@ -1418,11 +1354,9 @@ R:C:Rogue
 R:C:Warrior
 R:G:ELF
 R:k:+0:+200:Magic
-R:k:+500:+000:Disarming
 R:k:+1500:+000:Magic-Device
 R:k:+10000:+000:Spirituality
 R:k:+3000:+000:Stealth
-R:k:+800:+000:Sneakiness
 R:k:-500:+000:Weaponmastery
 R:k:+1000:+000:Archery
 
@@ -1456,11 +1390,9 @@ R:O:70:32:2d3
 R:b:1:Tree walking
 R:k:+0:+200:Barehand-combat
 R:k:+0:+600:Boulder-throwing
-R:k:+500:+000:Disarming
 R:k:+500:+000:Magic-Device
 R:k:+10000:+000:Spirituality
 R:k:-6000:+000:Stealth
-R:k:+500:+000:Sneakiness
 R:k:-300:+000:Weaponmastery
 R:k:-200:+000:Archery
 
@@ -1495,11 +1427,9 @@ R:F:SPEED
 R:C:Pacifist
 R:C:Priest
 R:C:Warrior
-R:k:+1000:+000:Disarming
 R:k:+500:+000:Magic-Device
 R:k:+2500:+000:Spirituality
 R:k:-8000:+000:Stealth
-R:k:+100:+000:Sneakiness
 R:k:+100:+200:Weaponmastery
 R:k:+500:+000:Archery
 
@@ -1536,11 +1466,10 @@ R:C:Loremaster
 R:C:Mage
 R:C:Pacifist
 R:C:Priest
-R:k:+600:+000:Disarming
 R:k:+000:+000:Magic-Device
 R:k:+5000:+000:Spirituality
 R:k:-16000:+000:Stealth
-R:k:+3000:+000:Sneakiness
+
 
 ### Base race characteristics tweaked from Annals of Ea for Theme.
 
@@ -1563,11 +1492,10 @@ R:C:Mage
 R:C:Pacifist
 R:C:Priest
 #R:G:EVIL
-R:k:+1000:+000:Disarming
 R:k:+500:+000:Magic-Device
 R:k:-4000:+000:Spirituality
 R:k:-10000:+000:Stealth
-R:k:+000:+000:Sneakiness
+
 
 R:N:19:Yeek
 R:D:The weakest of all the races, bad at everything except gaining levels quickly.
@@ -1582,11 +1510,9 @@ R:C:Pacifist
 R:C:Priest
 R:C:Rogue
 R:C:Warrior
-R:k:-500:+000:Disarming
 R:k:-500:+000:Magic-Device
 R:k:-2500:+000:Spirituality
 R:k:-5000:+000:Stealth
-R:k:-500:+000:Sneakiness
 R:k:-500:+000:Weaponmastery
 R:k:-500:+000:Archery
 
@@ -1613,11 +1539,9 @@ R:C:Warrior
 R:G:ELF
 R:k:+0:+200:Archery
 R:b:1:Tree walking
-R:k:+500:+000:Disarming
 R:k:+600:+000:Magic-Device
 R:k:+3000:+000:Spirituality
 R:k:+5000:+000:Stealth
-R:k:+800:+000:Sneakiness
 R:k:+1000:+000:Weaponmastery
 R:k:+4000:+000:Archery
 
@@ -1693,12 +1617,10 @@ R:C:Archer
 R:C:Mage
 R:C:Pacifist
 R:C:Warrior
-R:k:+000:+000:Disarming
 R:k:+000:+000:Magic-Device
 R:k:+000:+000:Spirituality
 R:k:=0:=0:Prayer
 R:k:+000:+000:Stealth
-R:k:+000:+000:Sneakiness
 R:k:+000:+000:Weaponmastery
 R:k:+000:+000:Archery
 
@@ -1727,9 +1649,7 @@ R:k:+0:+200:Axe-mastery
 R:k:+0:+200:Hafted-mastery
 R:k:+0:+200:Polearm-mastery
 R:k:+2000:+200:Archery
-R:k:+1000:+300:Sneakiness
 R:k:+1000:+200:Stealth
-R:k:+1000:+200:Disarming
 R:k:=0:=0:Magic
 R:k:=0:=0:Magic-Device
 R:k:=0:=0:Spell-power
@@ -1759,11 +1679,9 @@ R:F:HOLD_LIFE
 R:F:RES_DARK
 R:F:RES_FEAR
 R:Z:spear of darkness
-R:k:+500:+000:Disarming
 R:k:+050:+000:Magic-Device
 R:k:-5000:+000:Spirituality
 R:k:+000:+000:Stealth
-R:k:+000:+000:Sneakiness
 R:k:+000:+000:Weaponmastery
 R:k:+000:+000:Archery
 
@@ -1888,11 +1806,9 @@ S:F:RES_POIS
 S:F:SEE_INVIS
 S:F:SLOW_DIGEST
 S:O:70:32:2d3
-S:k:+200:+000:Disarming
 S:k:+800:+000:Magic-Device
 S:k:+700:+000:Spirituality
 S:k:+2000:+000:Stealth
-S:k:+200:+000:Sneakiness
 S:k:-500:+000:Weaponmastery
 S:k:-200:+000:Archery
 
@@ -1934,11 +1850,9 @@ S:F:SEE_INVIS
 S:R:10:0
 S:F:RES_COLD
 S:O:70:32:2d3
-S:k:-500:+000:Disarming
 S:k:-500:+000:Magic-Device
 S:k:+500:+000:Spirituality
 S:k:-1000:+000:Stealth
-S:k:-100:+000:Sneakiness
 S:k:+800:+000:Weaponmastery
 S:k:+000:+000:Archery
 
@@ -1979,11 +1893,9 @@ S:F:SLOW_DIGEST
 S:R:5:0
 S:F:RES_COLD
 S:O:70:32:2d3
-S:k:-200:+000:Disarming
 S:k:-200:+000:Magic-Device
 S:k:+500:+000:Spirituality
 S:k:-1000:+000:Stealth
-S:k:-100:+000:Sneakiness
 S:k:+500:+000:Weaponmastery
 S:k:+000:+000:Archery
 
@@ -2004,11 +1916,9 @@ S:A:Troll
 S:C:F:Mage
 S:R:10:0
 S:F:RES_FEAR
-S:k:-200:+000:Disarming
 S:k:-1000:+000:Magic-Device
 S:k:+200:+000:Spirituality
 S:k:-2000:+000:Stealth
-S:k:+000:+000:Sneakiness
 S:k:+1200:+000:Weaponmastery
 S:k:+500:+000:Archery
 
@@ -2037,11 +1947,9 @@ S:A:Wood-Elf
 S:A:Yeek
 S:C:F:Archer
 S:C:F:Warrior
-S:k:+500:+000:Disarming
 S:k:+1000:+000:Magic-Device
 S:k:+500:+000:Spirituality
 S:k:+3000:+000:Stealth
-S:k:+400:+000:Sneakiness
 S:k:-500:+000:Weaponmastery
 S:k:-500:+000:Archery
 
@@ -2322,8 +2230,8 @@ S:F:SPEED
 S:Z:poison dart
 R:k:-200:+000:Weaponmastery
 R:k:+1000:+300:Archery
-R:k:+1000:+000:Sneakiness
-R:k:+500:+200:Disarming
+
+
 S:k:+1000:+500:Stealth
 R:k:+050:+000:Magic-Device
 S:k:+0:+200:Magic
@@ -2355,8 +2263,6 @@ S:R:50:0
 S:F:CLIMB
 R:k:-400:+000:Weaponmastery
 R:k:+000:+300:Archery
-R:k:+1000:+000:Sneakiness
-R:k:+500:+100:Disarming
 S:k:+500:+200:Stealth
 S:k:+0:+200:Magic
 S:k:+1000:+300:Mind
@@ -2401,7 +2307,6 @@ S:F:SEARCH
 S:Z:smell monsters
 S:Z:smell metal
 R:k:+500:+300:Stealth
-R:k:+500:+200:Sneakiness
 R:k:+000:+000:Weaponmastery
 R:k:+000:+000:Archery
 
@@ -2442,7 +2347,6 @@ S:F:TUNNEL
 S:k:+1000:+500:Boulder-throwing
 S:Z:eat rock
 R:k:-800:+000:Stealth
-R:k:-500:+000:Sneakiness
 R:k:-500:+000:Archery
 
 S:N:20:(Caborrog)
@@ -2477,7 +2381,7 @@ S:k:+0:+300:Conveyance
 S:k:+0:+300:Temporal
 S:Z:panic hit
 R:k:-1000:+000:Stealth
-R:k:-500:+000:Sneakiness
+
 
 S:N:21:(Draugrog)
 S:D:A:These doglike demons are of a higher order than the Huroeg, 
@@ -2524,7 +2428,6 @@ S:k:+0:+200:Magic
 S:k:+0:+200:Spirituality
 S:k:+1000:+500:Mindcraft
 R:k:-10000:+000:Stealth
-R:k:-500:+200:Sneakiness
 R:k:+300:+000:Weaponmastery
 R:k:+200:+000:Archery
 
@@ -2644,7 +2547,6 @@ S:R:50:1
 S:F:LUCK
 S:F:SPEED
 R:k:+25000:+500:Stealth
-R:k:+2000:+200:Sneakiness
 R:k:+2000:+300:Magic-Device
 
 S:N:23:(Limrog)
@@ -2663,8 +2565,6 @@ S:F:WATER_BREATH
 S:R:50:0
 S:F:MAGIC_BREATH
 R:k:+3000:+300:Stealth
-R:k:+500:+200:Sneakiness
-R:k:+2000:+200:Disarming
 S:k:+0:+200:Magic
 S:k:+0:+500:Conveyance
 S:k:+0:+500:Temporal
@@ -2699,8 +2599,6 @@ S:k:+1000:+100:Combat
 S:k:+1000:+100:Weaponmastery
 R:k:+1000:+100:Archery
 R:k:-300:+000:Stealth
-R:k:+500:+200:Sneakiness
-R:k:+500:+100:Disarming
 S:Z:scare monster
 S:Z:berserk
 
@@ -2727,8 +2625,6 @@ S:Z:turn into a Balrog
 R:k:+1000:+300:Weaponmastery
 R:k:+1000:+300:Archery
 R:k:+1000:+200:Stealth
-R:k:+500:+200:Sneakiness
-R:k:+1000:+200:Disarming
 R:k:+500:+200:Magic
 
 ##############################################################################

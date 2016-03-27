@@ -47,7 +47,6 @@
 #include "stats.hpp"
 #include "store_info_type.hpp"
 #include "tables.hpp"
-#include "trap_type.hpp"
 #include "util.hpp"
 #include "util.h"
 #include "variable.h"
@@ -3848,9 +3847,6 @@ static bool_ target_set_accept(int y, int x)
 	/* Interesting memorized features */
 	if (c_ptr->info & (CAVE_MARK))
 	{
-		/* Traps are interesting */
-		if (c_ptr->info & (CAVE_TRDT)) return (TRUE);
-
 		/* Hack -- Doors are boring */
 		if (c_ptr->feat == FEAT_OPEN) return (FALSE);
 		if (c_ptr->feat == FEAT_BROKEN) return (FALSE);
@@ -4228,34 +4224,6 @@ static int target_set_aux(int y, int x, int mode, cptr info)
 			{
 				break;
 			}
-		}
-
-		/* Actual traps */
-		if ((c_ptr->info & (CAVE_TRDT)) && c_ptr->t_idx)
-		{
-			cptr name = "a trap", s4;
-
-			/* Name trap */
-			if (t_info[c_ptr->t_idx].ident)
-			{
-				s4 = format("(%s)", t_info[c_ptr->t_idx].name);
-			}
-			else
-			{
-				s4 = "an unknown trap";
-			}
-
-			/* Display a message */
-			sprintf(out_val, "%s%s%s%s [%s]", s1, s2, s3, name, s4);
-			prt(out_val, 0, 0);
-			move_cursor_relative(y, x);
-			query = inkey();
-
-			/* Stop on everything but "return" */
-			if ((query != '\r') && (query != '\n')) break;
-
-			/* Repeat forever */
-			continue;
 		}
 
 		/* Feature (apply "mimic") */

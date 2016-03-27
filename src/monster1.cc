@@ -704,7 +704,6 @@ static void roff_aux(std::shared_ptr<monster_race> r_ptr, int remem)
 	if (flags6 & (RF6_TELE_LEVEL)) vp[vn++] = "teleport level";
 	if (flags6 & (RF6_S_THUNDERLORD)) vp[vn++] = "summon a Thunderlord";
 	if (flags6 & (RF6_DARKNESS)) vp[vn++] = "create darkness";
-	if (flags6 & (RF6_TRAPS)) vp[vn++] = "create traps";
 	if (flags6 & (RF6_FORGET)) vp[vn++] = "cause amnesia";
 	if (flags6 & (RF6_RAISE_DEAD)) vp[vn++] = "raise dead";
 	if (flags6 & (RF6_S_MONSTER)) vp[vn++] = "summon a monster";

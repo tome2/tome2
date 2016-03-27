@@ -40,7 +40,6 @@
 #include "store_info_type_fwd.hpp"
 #include "timer_type_fwd.hpp"
 #include "town_type_fwd.hpp"
-#include "trap_type_fwd.hpp"
 #include "tval_desc.hpp"
 #include "vault_type_fwd.hpp"
 #include "wilderness_map_fwd.hpp"
@@ -206,7 +205,6 @@ extern player_class *class_info;
 extern meta_class_type *meta_class_info;
 extern player_race *race_info;
 extern player_race_mod *race_mod_info;
-extern trap_type *t_info;
 extern wilderness_type_info *wf_info;
 extern int wildc2i[256];
 extern store_info_type *st_info;

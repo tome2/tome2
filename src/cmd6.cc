@@ -2289,7 +2289,6 @@ static bool_ quaff_potion(int tval, int sval, int pval, int pval2)
 				wiz_lite_extra();
 				(void)do_inc_stat(A_INT);
 				(void)do_inc_stat(A_WIS);
-				(void)detect_traps(DEFAULT_RADIUS);
 				(void)detect_doors(DEFAULT_RADIUS);
 				(void)detect_stairs(DEFAULT_RADIUS);
 				(void)detect_treasure(DEFAULT_RADIUS);
@@ -3091,13 +3090,6 @@ void do_cmd_read_scroll(void)
 				break;
 			}
 
-		case SV_SCROLL_TRAP_CREATION:
-			{
-				if (trap_creation()) ident = TRUE;
-
-				break;
-			}
-
 		case SV_SCROLL_PHASE_DOOR:
 			{
 				teleport_player(10);
@@ -3275,13 +3267,6 @@ void do_cmd_read_scroll(void)
 				break;
 			}
 
-		case SV_SCROLL_DETECT_TRAP:
-			{
-				if (detect_traps(DEFAULT_RADIUS)) ident = TRUE;
-
-				break;
-			}
-
 		case SV_SCROLL_DETECT_DOOR:
 			{
 				if (detect_doors(DEFAULT_RADIUS)) ident = TRUE;
@@ -3353,13 +3338,6 @@ void do_cmd_read_scroll(void)
 				warding_glyph();
 
 				ident = TRUE;
-
-				break;
-			}
-
-		case SV_SCROLL_TRAP_DOOR_DESTRUCTION:
-			{
-				if (destroy_doors_touch()) ident = TRUE;
 
 				break;
 			}
@@ -4161,7 +4139,6 @@ void do_cmd_zap_rod(void)
 	{
 		switch (o_ptr->pval)
 		{
-		case SV_ROD_DETECT_TRAP:
 		case SV_ROD_HAVOC:
 		case SV_ROD_HOME:
 			{
@@ -4271,13 +4248,6 @@ void do_cmd_zap_rod(void)
 			ident = TRUE;
 
 			do_cmd_home_trump();
-
-			break;
-		}
-
-	case SV_ROD_DETECT_TRAP:
-		{
-			if (detect_traps(DEFAULT_RADIUS)) ident = TRUE;
 
 			break;
 		}
@@ -4400,13 +4370,6 @@ void do_cmd_zap_rod(void)
 	case SV_ROD_TELEPORT_AWAY:
 		{
 			if (teleport_monster(dir)) ident = TRUE;
-
-			break;
-		}
-
-	case SV_ROD_DISARMING:
-		{
-			if (disarm_trap(dir)) ident = TRUE;
 
 			break;
 		}
@@ -5760,7 +5723,6 @@ const char *activation_aux(object_type * o_ptr, bool_ doit, int item)
 			if (!doit) return "clairvoyance every 100+d100 turns";
 			msg_print("The stone glows a deep green...");
 			wiz_lite_extra();
-			(void)detect_traps(DEFAULT_RADIUS);
 			(void)detect_doors(DEFAULT_RADIUS);
 			(void)detect_stairs(DEFAULT_RADIUS);
 
@@ -7373,8 +7335,7 @@ const char *activation_aux(object_type * o_ptr, bool_ doit, int item)
 						c_ptr->info &= ~(CAVE_GLOW);
 
 						/* Hack -- Forget "boring" grids */
-						if (cave_plain_floor_grid(c_ptr) &&
-						                !(c_ptr->info & (CAVE_TRDT)))
+						if (cave_plain_floor_grid(c_ptr))
 						{
 							/* Forget the grid */
 							c_ptr->info &= ~(CAVE_MARK);
