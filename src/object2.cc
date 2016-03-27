@@ -2043,76 +2043,33 @@ static void object_mention(object_type *o_ptr)
 
 void random_artifact_resistance(object_type * o_ptr)
 {
-	bool_ give_resistance = FALSE, give_power = FALSE;
+	auto f5 = a_info[o_ptr->name1].flags5;
 
-	switch (o_ptr->name1)
+	// Check flags
+	bool give_resistance = (f5 & TR5_RANDOM_RESIST);
+	bool give_power = (f5 & TR5_RANDOM_POWER);
+	if (f5 & TR5_RANDOM_RES_OR_POWER)
 	{
-	case ART_CELEBORN:
-	case ART_ARVEDUI:
-	case ART_CASPANION:
-	case ART_TRON:
-	case ART_ROHIRRIM:
-	case ART_CELEGORM:
-	case ART_ANARION:
-	case ART_THRANDUIL:
-	case ART_LUTHIEN:
-	case ART_THROR:
-	case ART_THORIN:
-	case ART_NIMTHANC:
-	case ART_DETHANC:
-	case ART_NARTHANC:
-	case ART_STING:
-	case ART_TURMIL:
-	case ART_THALKETTOTH:
+		if (randint(2) == 1)
 		{
-			/* Give a resistance */
-			give_resistance = TRUE;
+			give_resistance = true;
 		}
-		break;
-	case ART_MAEDHROS:
-	case ART_GLAMDRING:
-	case ART_ORCRIST:
-	case ART_ANDURIL:
-	case ART_ZARCUTHRA:
-	case ART_GURTHANG:
-	case ART_HARADEKKET:
-	case ART_CUBRAGOL:
-	case ART_DAWN:
+		else
 		{
-			/* Give a resistance OR a power */
-			if (randint(2) == 1) give_resistance = TRUE;
-			else give_power = TRUE;
+			give_power = true;
 		}
-		break;
-	case ART_NENYA:
-	case ART_VILYA:
-	case ART_BERUTHIEL:
-	case ART_FINGOLFIN:
-	case ART_THINGOL:
-	case ART_ULMO:
-	case ART_OLORIN:
-		{
-			/* Give a power */
-			give_power = TRUE;
-		}
-		break;
-	case ART_POWER:
-	case ART_GONDOR:
-	case ART_AULE:
-		{
-			/* Give both */
-			give_power = TRUE;
-			give_resistance = TRUE;
-		}
-		break;
 	}
 
+	// Grant the resistance/power
 	if (give_power)
 	{
 		o_ptr->xtra1 = EGO_XTRA_ABILITY;
 
 		/* Randomize the "xtra" power */
-		if (o_ptr->xtra1) o_ptr->xtra2 = randint(256);
+		if (o_ptr->xtra1)
+		{
+			o_ptr->xtra2 = randint(256);
+		}
 	}
 
 	artifact_bias = 0;
