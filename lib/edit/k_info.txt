@@ -266,7 +266,8 @@ N:29:& Blue Stone~
 G:":B
 I:40:18:0
 W:60:0:3:90000
-F:INSTA_ART | SPECIAL_GENE
+F:INSTA_ART
+F:SPECIAL_GENE
 
 ##### Edged Weapons #####
 
@@ -285,7 +286,8 @@ I:23:21:0
 W:15:0:140:350
 A:15/1
 P:0:3d4:0:0:0
-F:SHOW_MODS | COULD2H
+F:COULD2H
+F:SHOW_MODS
 f:COULD2H
 D:This is a long, double-edged sword with a plain hilt that could
 D:be wielded in one or two hands. It's called a "bastard sword" because in
@@ -340,8 +342,11 @@ W:70:0:180:4000
 A:70/8
 P:0:6d5:0:0:0
 F:ATTR_MULTI
-F:RES_CHAOS | CHAOTIC | SHOW_MODS
-f:RES_CHAOS | CHAOTIC
+F:CHAOTIC
+F:RES_CHAOS
+F:SHOW_MODS
+f:CHAOTIC
+f:RES_CHAOS
 D:A mighty sword which seems to be completely blunt. However, it is a conduit
 D:into the realms of pure chaos and strikes its victims with the devastating
 D:might of chaos itself whenever it connects. It gives you resistance to chaos
@@ -354,7 +359,8 @@ I:23:25:0
 W:30:0:200:775
 A:30/1:40/1
 P:0:3d6:0:0:0
-F:SHOW_MODS | MUST2H
+F:MUST2H
+F:SHOW_MODS
 f:MUST2H
 D:This blade is lot longer, wider and heavier than a long sword. You have to
 D:wield it with two hands. This means that wielding a shield makes fighting
@@ -388,7 +394,8 @@ I:23:28:0
 W:40:0:260:850
 A:40/1
 P:0:4d5:0:0:0
-F:SHOW_MODS | MUST2H
+F:MUST2H
+F:SHOW_MODS
 f:MUST2H
 D:These weapons have been built in all sizes. They are custom-made
 D:for warriors that want to set out and kill their archenemy. These
@@ -400,7 +407,8 @@ I:23:20:0
 W:20:0:120:400
 A:20/1
 P:0:3d4:0:0:0
-F:SHOW_MODS | COULD2H
+F:COULD2H
+F:SHOW_MODS
 f:COULD2H
 D:The katana is a long blade with only a small disk for a guard.
 D:Its hilt is long enough for two hands, though it could be used
@@ -480,7 +488,8 @@ I:21:6:0
 W:20:0:150:200
 A:20/1
 P:0:2d4:0:0:0
-F:SHOW_MODS | COULD2H
+F:COULD2H
+F:SHOW_MODS
 f:COULD2H
 D:This weapon has a ball linked with a chain to a wooden handle.
 D:Preferred tactic is smashing the brains of your opponent.
@@ -502,7 +511,8 @@ I:21:13:0
 W:10:0:150:353
 A:10/1
 P:0:2d6:0:0:0
-F:SHOW_MODS | COULD2H
+F:COULD2H
+F:SHOW_MODS
 f:COULD2H
 D:This weapon was originally used to cut corn. More warlike versions
 D:sport a large blade stuck on a wooden handle. The hinge allows it to get
@@ -514,7 +524,8 @@ I:21:18:0
 W:45:0:280:590
 A:45/1
 P:0:3d6:0:0:0
-F:SHOW_MODS | MUST2H
+F:MUST2H
+F:SHOW_MODS
 f:MUST2H
 D:This two-handed version of the flail gives the fighter a fearsome
 D:weapon that can do a fair amount of damage.  It typically has several
@@ -536,7 +547,8 @@ I:21:5:0
 W:5:0:120:130
 A:5/1
 P:0:2d4:0:0:0
-F:SHOW_MODS | COULD2H
+F:COULD2H
+F:SHOW_MODS
 f:COULD2H
 D:This weapon is a club ending in a sphere. The sphere is studded
 D:with metal shards, and thus can both crush and cut your adversary.
@@ -547,7 +559,8 @@ I:21:3:0
 W:10:0:150:200
 A:10/1
 P:0:1d9:0:0:0
-F:SHOW_MODS | COULD2H
+F:COULD2H
+F:SHOW_MODS
 f:COULD2H
 D:A long, wooden pole, usually the height of the wielder. Four of them can be
 D:made out of the trunk of one young tree, hence the name. The quarterstaff
@@ -561,7 +574,8 @@ I:21:8:0
 W:5:0:120:225
 A:5/1
 P:0:3d3:0:0:0
-F:SHOW_MODS | COULD2H
+F:COULD2H
+F:SHOW_MODS
 f:COULD2H
 D:A large hammer, designed to crush skulls with mighty strikes.
 
@@ -571,7 +585,8 @@ I:21:15:0
 W:15:0:180:502
 A:15/1
 P:0:3d4:0:0:0
-F:SHOW_MODS | COULD2H
+F:COULD2H
+F:SHOW_MODS
 f:COULD2H
 D:A large, mean mace filled with lead in order to wreak a maximum of havoc.
 
@@ -581,8 +596,11 @@ I:21:20:0
 W:80:0:400:4300
 A:80/5
 P:0:5d8:0:0:0
-F:SLAY_UNDEAD | SHOW_MODS | MUST2H
-f:MUST2H | SLAY_UNDEAD
+F:MUST2H
+F:SHOW_MODS
+F:SLAY_UNDEAD
+f:MUST2H
+f:SLAY_UNDEAD
 D:This mace is custom-made for priests that go out to destroy evil.
 D:It is deadly, especially for undead.
 
@@ -592,7 +610,8 @@ I:21:10:0
 W:10:0:120:376
 A:10/1
 P:0:2d5:0:0:0
-F:SHOW_MODS | COULD2H
+F:COULD2H
+F:SHOW_MODS
 f:COULD2H
 D:A war hammer combined with a spearpoint, mounted on a long pole.
 
@@ -604,7 +623,8 @@ I:22:10:0
 W:15:0:180:408
 A:15/1
 P:0:2d6:0:0:0
-F:SHOW_MODS | MUST2H
+F:MUST2H
+F:SHOW_MODS
 f:MUST2H
 D:This polearm has a beak mounted opposite the blade.
 
@@ -614,7 +634,8 @@ I:22:13:0
 W:20:0:190:363
 A:20/1
 P:0:2d6:0:0:0
-F:SHOW_MODS | COULD2H
+F:COULD2H
+F:SHOW_MODS
 f:COULD2H
 D:A polearm with a long, slightly curved knife-like blade. It has spurs on
 D:the dull side of the blade. It's primarily a slashing and chopping weapon. Glaives
@@ -628,7 +649,8 @@ I:22:15:0
 W:25:0:190:430
 A:25/1
 P:0:3d5:0:0:0
-F:SHOW_MODS | COULD2H
+F:COULD2H
+F:SHOW_MODS
 f:COULD2H
 D:The halberd has a broad, short axe blade on a 5 - 6ft long haft, with a
 D:spearpoint at the top, often a back-spike and occasionally a butt-spike. Used to
@@ -644,7 +666,8 @@ I:22:4:0
 W:10:0:160:340
 A:10/1
 P:0:1d8:0:0:0
-F:SHOW_MODS | COULD2H
+F:COULD2H
+F:SHOW_MODS
 f:COULD2H
 D:This is a polearm with a long square-sectioned spike on the end.
 
@@ -654,7 +677,8 @@ I:22:8:0
 W:15:0:160:358
 A:15/1
 P:0:2d5:0:0:0
-F:SHOW_MODS | COULD2H
+F:COULD2H
+F:SHOW_MODS
 f:COULD2H
 D:A staff, 16-18 feet long, that has a small piercing head about 10 inches
 D:long. The pike is often used by infantry to fend off cavalry.  It is very
@@ -679,7 +703,8 @@ I:22:5:0
 W:5:0:70:120
 A:5/1
 P:0:1d8:0:0:0
-F:SHOW_MODS | COULD2H
+F:COULD2H
+F:SHOW_MODS
 f:COULD2H
 D:The trident is based on the pitchfork.  In fact, when not used as a weapon,
 D:it is often employed as a pitchfork. It is famous for its uses in
@@ -692,7 +717,8 @@ I:22:20:0
 W:10:0:300:230
 A:10/1
 P:0:2d8:0:0:0
-F:SHOW_MODS | MUST2H
+F:MUST2H
+F:SHOW_MODS
 f:MUST2H
 D:This is the original polearm. It is shaped like a spear but is bigger. It's
 D:meant to fend off enemies, not to be thrown.
@@ -703,7 +729,8 @@ I:24:25:0
 W:40:0:230:500
 A:40/1
 P:0:4d4:0:0:0
-F:SHOW_MODS | MUST2H
+F:MUST2H
+F:SHOW_MODS
 f:MUST2H
 D:A huge and heavy two-headed axe.
 
@@ -713,7 +740,8 @@ I:22:22:0
 W:15:0:170:334
 A:15/1
 P:0:2d8:0:0:0
-F:SHOW_MODS | COULD2H
+F:COULD2H
+F:SHOW_MODS
 f:COULD2H
 D:Nordic polearm with a broad blade and a hook mounted on the end of the shaft.
 D:The Nordics' take on the halberd. The polearm of choice for many Nordics,
@@ -725,7 +753,8 @@ I:22:28:0
 W:45:0:250:750
 A:45/1
 P:0:3d8:0:0:0
-F:SHOW_MODS | COULD2H
+F:COULD2H
+F:SHOW_MODS
 f:COULD2H
 D:Nordic polearm with a broad blade and a hook mounted on the end of the shaft.
 D:A Nordic version of the halberd. The polearm of choice for many Nordics,
@@ -737,7 +766,8 @@ I:24:11:0
 W:15:0:160:304
 A:15/1
 P:0:2d6:0:0:0
-F:SHOW_MODS | COULD2H
+F:COULD2H
+F:SHOW_MODS
 f:COULD2H
 D:A one-headed axe made for combat, with an elongated moon-shaped blade.
 
@@ -747,7 +777,8 @@ I:22:17:0
 W:45:0:250:800
 A:45/1
 P:0:5d3:0:0:0
-F:SHOW_MODS | COULD2H
+F:COULD2H
+F:SHOW_MODS
 f:COULD2H
 D:A simple farm implement, converted into a weapon by slightly straightening
 D:its blade and putting it in line with its pole, instead of the typical
@@ -759,8 +790,13 @@ I:22:30:0
 W:80:0:250:10000
 A:80/20
 P:0:8d4:0:0:0
-F:SHOW_MODS | MUST2H | WOUNDING | VORPAL
-f:MUST2H | VORPAL | WOUNDING
+F:MUST2H
+F:SHOW_MODS
+F:VORPAL
+F:WOUNDING
+f:MUST2H
+f:VORPAL
+f:WOUNDING
 D:The simple design of the war scythe, but this one uses a finely crafted and
 D:incredibly sharp steel blade which causes terrible wounds when it hits.
 
@@ -952,8 +988,13 @@ I:35:2:0
 W:30:0:5:1500
 A:30/4
 P:4:0d0:0:0:4
-F:IGNORE_ACID | IGNORE_COLD | IGNORE_FIRE | IGNORE_ELEC
-F:STEALTH | SEARCH | LUCK
+F:IGNORE_ACID
+F:IGNORE_COLD
+F:IGNORE_ELEC
+F:IGNORE_FIRE
+F:LUCK
+F:SEARCH
+F:STEALTH
 f:STEALTH
 D:A wonderfully light cloak coloured in brown and green hues. Its colouring
 D:greatly helps the wearer to avoid undesired attention. Wearing it makes you
@@ -1266,7 +1307,9 @@ I:35:6:1
 W:60:0:5:7500
 A:75/4
 P:6:0d0:0:0:4
-F:RES_DARK | RES_LITE | STEALTH
+F:RES_DARK
+F:RES_LITE
+F:STEALTH
 f:STEALTH
 D:A rare cloak imbued with magic to radiate a strange twilight, absorbing both
 D:extreme brightness and darkness.
@@ -1344,7 +1387,8 @@ G:=:d
 I:45:24:0
 W:30:0:2:500
 A:30/1
-F:STR | HIDE_TYPE
+F:HIDE_TYPE
+F:STR
 f:STR
 D:This bauble magically improves your strength.
 
@@ -1353,7 +1397,8 @@ G:=:d
 I:45:26:0
 W:30:0:2:500
 A:30/1
-F:DEX | HIDE_TYPE
+F:DEX
+F:HIDE_TYPE
 f:DEX
 D:This piece of jewellery magically improves your agility.
 
@@ -1362,7 +1407,8 @@ G:=:d
 I:45:27:0
 W:30:0:2:500
 A:30/1
-F:CON | HIDE_TYPE
+F:CON
+F:HIDE_TYPE
 f:CON
 D:This ring magically grants you health, improving your constitution.
 
@@ -1371,7 +1417,8 @@ G:=:d
 I:45:25:0
 W:30:0:2:500
 A:30/1
-F:INT | HIDE_TYPE
+F:HIDE_TYPE
+F:INT
 f:INT
 D:This magical piece of jewellery makes you smarter.
 
@@ -1380,7 +1427,8 @@ G:=:d
 I:45:31:0
 W:75:0:2:100000
 A:75/1
-F:SPEED | HIDE_TYPE
+F:HIDE_TYPE
+F:SPEED
 f:SPEED
 D:This wonderful ring grants you additional energy, allowing you to act faster.
 
@@ -1389,7 +1437,8 @@ G:=:d
 I:45:23:0
 W:5:0:2:250
 A:5/1
-F:SEARCH | HIDE_TYPE
+F:HIDE_TYPE
+F:SEARCH
 f:SEARCH
 D:This ring magically improves your attention, so you can detect hidden things better.
 
@@ -1400,7 +1449,10 @@ I:45:4:0
 W:5:0:2:250
 A:5/1
 a:DEST_TELE
-F:CURSED | TELEPORT | EASY_KNOW | ACTIVATE
+F:ACTIVATE
+F:CURSED
+F:EASY_KNOW
+F:TELEPORT
 f:TELEPORT
 D:This ring will uncontrollably send you to different places at its whim.
 D:You can use its power once at your will, but it will destroy the ring.
@@ -1410,7 +1462,8 @@ G:=:d
 I:45:6:0
 W:5:0:2:250
 A:5/1
-F:SLOW_DIGEST | EASY_KNOW
+F:EASY_KNOW
+F:SLOW_DIGEST
 f:SLOW_DIGEST
 D:This magical bauble grants you some sustenance, allowing you to subsist on less food.
 
@@ -1419,7 +1472,9 @@ G:=:d
 I:45:8:0
 W:10:0:2:250
 A:10/1
-F:RES_FIRE | IGNORE_FIRE | EASY_KNOW
+F:EASY_KNOW
+F:IGNORE_FIRE
+F:RES_FIRE
 f:RES_FIRE
 D:This piece of jewellery grants you some protection from the burning heat of fire.
 
@@ -1428,7 +1483,9 @@ G:=:d
 I:45:9:0
 W:10:0:2:250
 A:10/1
-F:RES_COLD | IGNORE_COLD | EASY_KNOW
+F:EASY_KNOW
+F:IGNORE_COLD
+F:RES_COLD
 f:RES_COLD
 D:This piece of jewellery grants you some protection from the chilling forces of cold.
 
@@ -1437,7 +1494,8 @@ G:=:d
 I:45:7:0
 W:5:0:2:200
 A:5/1
-F:FEATHER | EASY_KNOW
+F:EASY_KNOW
+F:FEATHER
 f:FEATHER
 D:When you put on this ring, you will be able to float just above the floor.
 D:It prevents you from drowning, and all your falls will be painless.
@@ -1447,7 +1505,8 @@ G:=:d
 I:45:20:0
 W:60:0:2:16000
 A:60/2
-F:RES_POIS | EASY_KNOW
+F:EASY_KNOW
+F:RES_POIS
 f:RES_POIS
 D:This magical ring grants protection from poison.
 D:It is rumoured that in deep dungeons monsters can kill you at once if you
@@ -1458,7 +1517,8 @@ G:=:d
 I:45:21:0
 W:20:0:2:1500
 A:20/1
-F:FREE_ACT | EASY_KNOW
+F:EASY_KNOW
+F:FREE_ACT
 f:FREE_ACT
 D:This magical bauble prevents you from being held.
 D:Some monsters will paralyse you and then kill you if you lack free action.
@@ -1468,7 +1528,9 @@ G:=:d
 I:45:2:-5
 W:5:0:2:0
 A:5/1
-F:CURSED | STR | HIDE_TYPE
+F:CURSED
+F:HIDE_TYPE
+F:STR
 f:STR
 D:This accursed ring will sap your strength, rendering you much weaker as long as you wear it.
 
@@ -1479,7 +1541,9 @@ W:50:0:2:3000
 A:50/1
 P:0:0d0:0:0:15
 a:BA_FIRE_4
-F:RES_FIRE | IGNORE_FIRE | ACTIVATE
+F:ACTIVATE
+F:IGNORE_FIRE
+F:RES_FIRE
 f:RES_FIRE
 D:This fiery circlet grants you protection, makes fire less dangerous and even
 D:allows you to call forth a ball of flame.
@@ -1491,7 +1555,9 @@ W:50:0:2:3000
 A:50/1
 P:0:0d0:0:0:15
 a:BA_ACID_4
-F:RES_ACID | IGNORE_ACID | ACTIVATE
+F:ACTIVATE
+F:IGNORE_ACID
+F:RES_ACID
 f:RES_ACID
 D:This magical ring is imbued with spells of devouring acid, granting protection against such
 D:assaults and the ability to shoot acid at your foes.
@@ -1503,7 +1569,9 @@ W:50:0:2:3000
 A:50/1
 a:BA_COLD_4
 P:0:0d0:0:0:15
-F:RES_COLD | IGNORE_COLD | ACTIVATE
+F:ACTIVATE
+F:IGNORE_COLD
+F:RES_COLD
 f:RES_COLD
 D:This ring is imbued with supernatural cold, which makes you less vulnerable to such effects
 D:and occasionally allows you to throw balls of ice at your foes.
@@ -1513,7 +1581,12 @@ G:=:d
 I:45:0:-5
 W:50:0:2:0
 A:50/1
-F:CURSED | TELEPORT | WIS | CHR | HIDE_TYPE | AUTO_CURSE
+F:AUTO_CURSE
+F:CHR
+F:CURSED
+F:HIDE_TYPE
+F:TELEPORT
+F:WIS
 D:This accursed ring will turn you into a bumbling fool and, in addition, magically
 D:transports you to places you never wanted to see. It can recurse itself if
 D:you leave it on too long.
@@ -1523,7 +1596,9 @@ G:=:d
 I:45:3:-5
 W:5:0:2:0
 A:5/1
-F:CURSED | INT | HIDE_TYPE
+F:CURSED
+F:HIDE_TYPE
+F:INT
 f:INT
 D:This wicked ring feeds off your intellect, magically making you stupid.
 
@@ -1556,7 +1631,10 @@ G:=:d
 I:45:1:0
 W:5:0:2:0
 A:5/1
-F:CURSED | AGGRAVATE | EASY_KNOW | AUTO_CURSE
+F:AGGRAVATE
+F:AUTO_CURSE
+F:CURSED
+F:EASY_KNOW
 f:AGGRAVATE
 D:This faithless ring will draw opponents' attention towards its hapless owner.
 
@@ -1565,7 +1643,8 @@ G:=:d
 I:45:22:0
 W:30:0:2:340
 A:30/1
-F:SEE_INVIS | EASY_KNOW
+F:EASY_KNOW
+F:SEE_INVIS
 f:SEE_INVIS
 D:This magical piece of jewellery allows your eyes to perceive beings otherwise unseen.
 
@@ -1574,7 +1653,8 @@ G:=:d
 I:45:10:0
 W:20:0:2:400
 A:20/1
-F:SUST_STR | EASY_KNOW
+F:EASY_KNOW
+F:SUST_STR
 f:SUST_STR
 D:This magical bauble protects your physical force against attacks attempting to drain it.
 
@@ -1583,7 +1663,8 @@ G:=:d
 I:45:11:0
 W:20:0:2:400
 A:20/1
-F:SUST_INT | EASY_KNOW
+F:EASY_KNOW
+F:SUST_INT
 f:SUST_INT
 D:This magical ring protects your intellect against attempts to lower it.
 
@@ -1592,7 +1673,8 @@ G:=:d
 I:45:12:0
 W:20:0:2:400
 A:20/1
-F:SUST_WIS | EASY_KNOW
+F:EASY_KNOW
+F:SUST_WIS
 f:SUST_WIS
 D:This magical ring protects you from attempts to make you more foolish.
 
@@ -1601,7 +1683,8 @@ G:=:d
 I:45:13:0
 W:20:0:2:400
 A:20/1
-F:SUST_CON | EASY_KNOW
+F:EASY_KNOW
+F:SUST_CON
 f:SUST_CON
 D:This magical ring protects your health, making it impossible for your opponents to lower it.
 
@@ -1610,7 +1693,8 @@ G:=:d
 I:45:14:0
 W:20:0:2:400
 A:20/1
-F:SUST_DEX | EASY_KNOW
+F:EASY_KNOW
+F:SUST_DEX
 f:SUST_DEX
 D:This magical ring protects your nerves, so that you will never become clumsy.
 
@@ -1619,7 +1703,8 @@ G:=:d
 I:45:15:0
 W:20:0:2:400
 A:20/1
-F:SUST_CHR | EASY_KNOW
+F:EASY_KNOW
+F:SUST_CHR
 f:SUST_CHR
 D:This ring magically protects your beauty and charm from attempts to make you ugly.
 
@@ -1638,7 +1723,10 @@ G:":d
 I:40:6:0
 W:50:0:3:1000
 A:50/4
-F:INT | WIS | HIDE_TYPE | LITE1
+F:HIDE_TYPE
+F:INT
+F:LITE1
+F:WIS
 D:This talisman grants a sharper wit, greater insight and brightness to light dark places.
 
 N:164:Charisma
@@ -1646,7 +1734,8 @@ G:":d
 I:40:7:0
 W:30:0:3:500
 A:30/1
-F:CHR | HIDE_TYPE
+F:CHR
+F:HIDE_TYPE
 f:CHR
 D:This amulet grants beauty beyond mere looks.
 
@@ -1655,7 +1744,8 @@ G:":d
 I:40:5:0
 W:15:0:3:600
 A:15/1
-F:SEARCH | HIDE_TYPE
+F:HIDE_TYPE
+F:SEARCH
 f:SEARCH
 D:This amulet grants keen sight, finding things that are hidden.
 
@@ -1664,7 +1754,9 @@ G:":d
 I:40:1:0
 W:10:0:3:250
 A:10/1
-F:CURSED | TELEPORT | EASY_KNOW
+F:CURSED
+F:EASY_KNOW
+F:TELEPORT
 f:TELEPORT
 D:This amulet nastily throws you all over the place.
 
@@ -1673,7 +1765,8 @@ G:":d
 I:40:3:0
 W:15:0:3:200
 A:15/1
-F:SLOW_DIGEST | EASY_KNOW
+F:EASY_KNOW
+F:SLOW_DIGEST
 f:SLOW_DIGEST
 D:This talisman will make you hungry less quickly when worn.
 
@@ -1682,7 +1775,9 @@ G:":d
 I:40:4:0
 W:10:0:3:250
 A:10/1
-F:RES_ACID | IGNORE_ACID | EASY_KNOW
+F:EASY_KNOW
+F:IGNORE_ACID
+F:RES_ACID
 f:RES_ACID
 D:This magical talisman will make the corroding forces of acid less threatening to your health.
 
@@ -1713,9 +1808,18 @@ I:40:8:0
 W:70:0:3:30000
 A:70/8
 P:0:0d0:-4:-4:0
-F:INT | SUST_INT | SEARCH | SPELL_CONTAIN | WIELD_CAST
-F:FREE_ACT | RES_BLIND | RES_CONF |
-F:IGNORE_ACID | IGNORE_ELEC | IGNORE_FIRE | IGNORE_COLD
+F:FREE_ACT
+F:IGNORE_ACID
+F:IGNORE_COLD
+F:IGNORE_ELEC
+F:IGNORE_FIRE
+F:INT
+F:RES_BLIND
+F:RES_CONF
+F:SEARCH
+F:SPELL_CONTAIN
+F:SUST_INT
+F:WIELD_CAST
 D:This rare amulet is highly desirable for mages, as it makes its wearer smarter, more attentive
 D:and impervious to magics which would make their own magic-use impossible.
 
@@ -1724,8 +1828,16 @@ G:":d
 I:40:0:-5
 W:50:0:3:0
 A:50/1
-F:CURSED | STR | INT | WIS | DEX | CON | CHR | HIDE_TYPE
-F:AUTO_CURSE | CURSE_NO_DROP
+F:AUTO_CURSE
+F:CHR
+F:CON
+F:CURSED
+F:CURSE_NO_DROP
+F:DEX
+F:HIDE_TYPE
+F:INT
+F:STR
+F:WIS
 D:This wicked amulet will drain all your abilities, turning you into a mere shadow of yourself. It
 D:is exceedingly hard to get rid of.
 
@@ -1786,7 +1898,10 @@ G:?:d
 I:70:50:0
 W:100:0:5:10000
 A:100/8
-F:IGNORE_FIRE | IGNORE_ACID | IGNORE_COLD | IGNORE_ELEC
+F:IGNORE_ACID
+F:IGNORE_COLD
+F:IGNORE_ELEC
+F:IGNORE_FIRE
 D:A piece of paper inscribed with strange shifting runes. Upon reading them, they will release
 D:a blast of chaotic forces.
 
@@ -1926,7 +2041,8 @@ I:16:2:0
 W:40:0:4:20
 A:40/2:65/1
 P:0:3d4:5:5:0
-F:SHOW_MODS | IGNORE_ACID
+F:IGNORE_ACID
+F:SHOW_MODS
 D:Sling bullets made from the slags of mithril smelting. They are unusually heavy, hitting
 D:with great force, and are almost imperishable.
 
@@ -2562,8 +2678,11 @@ I:71:60:100
 W:20:0:4:250
 A:20/1:45/1:80/1:100/1
 P:0:1d1:0:0:0
-F:IGNORE_ACID | IGNORE_ELEC | IGNORE_FIRE | IGNORE_COLD
 F:FOUNTAIN
+F:IGNORE_ACID
+F:IGNORE_COLD
+F:IGNORE_ELEC
+F:IGNORE_FIRE
 D:This great potion infuses you with the power of the elements, so that you can better
 D:withstand their ravages.
 
@@ -2770,8 +2889,12 @@ W:127:0:4:0
 A:127/255
 P:0:1d1:0:0:0
 T:39:2
-F:NORM_ART | FULL_NAME | SPECIAL_GENE | EASY_USE
-F:ACTIVATE | ACTIVATE_NO_WIELD
+F:ACTIVATE
+F:ACTIVATE_NO_WIELD
+F:EASY_USE
+F:FULL_NAME
+F:NORM_ART
+F:SPECIAL_GENE
 a:ETERNAL_FLAME
 D:An impossibly bright, flickering living flame. It can be used
 D:once to imbue an object with the power of Eru Iluvatar himself.
@@ -2782,7 +2905,9 @@ I:23:34:0
 W:0:0:7:10
 A:0/1:5/1:10/1:20/1
 P:0:1d4:0:0:0
-F:SHOW_MODS | VAMPIRIC | SPECIAL_GENE
+F:SHOW_MODS
+F:SPECIAL_GENE
+F:VAMPIRIC
 D:This looks like some animal's teeth or at least you think
 D:it comes from an animal...
 
@@ -2794,7 +2919,12 @@ W:50:10:10:12000
 P:0:1d4:0:0:0
 A:50/200
 T:55:8
-F:NO_RECHARGE | EASY_USE | RECHARGED | NORM_ART | FULL_NAME | SPECIAL_GENE
+F:EASY_USE
+F:FULL_NAME
+F:NORM_ART
+F:NO_RECHARGE
+F:RECHARGED
+F:SPECIAL_GENE
 D:This horn was given to you as a reward. Blow it if you are in dire need
 D:of leaving your current location fast.
 
@@ -2970,7 +3100,8 @@ I:111:0:0
 W:50:0:30:25000
 A:50/4
 P:0:1d1:0:0:0
-F:FULL_NAME | EASY_KNOW
+F:EASY_KNOW
+F:FULL_NAME
 D:The bright blue cover of this tome seems to glow
 D:with an inner violet light. You feel more attuned
 D:to raw magic as you hold it.
@@ -2981,7 +3112,9 @@ I:111:1:0
 W:50:0:30:25000
 A:50/4
 P:0:1d1:0:0:0
-F:FULL_NAME | EASY_KNOW | IGNORE_FIRE
+F:EASY_KNOW
+F:FULL_NAME
+F:IGNORE_FIRE
 D:The cover of this tome is bright red, with flickering
 D:flames dancing across it once in a while. As you hold
 D:it, you begin to gain a much closer knowledge of all
@@ -2993,7 +3126,9 @@ I:111:2:0
 W:50:0:30:25000
 A:50/4
 P:0:1d1:0:0:0
-F:FULL_NAME | EASY_KNOW | IGNORE_ELEC
+F:EASY_KNOW
+F:FULL_NAME
+F:IGNORE_ELEC
 D:The pages of this tome have a tendency to turn themselves,
 D:as though flipped by an errant wind. As you hold it,
 D:you start feeling wind at your fingertips.
@@ -3004,7 +3139,9 @@ I:111:3:0
 W:50:0:30:25000
 A:50/4
 P:0:1d1:0:0:0
-F:FULL_NAME | EASY_KNOW | IGNORE_ACID
+F:EASY_KNOW
+F:FULL_NAME
+F:IGNORE_ACID
 D:The solid leather cover of this tome seems permanently
 D:stained with caked mud and grass. Heavy it is to lift,
 D:yet strangely comforting to hold - you feel stronger
@@ -3016,7 +3153,8 @@ I:111:4:0
 W:50:0:30:25000
 A:50/4
 P:0:1d1:0:0:0
-F:FULL_NAME | EASY_KNOW
+F:EASY_KNOW
+F:FULL_NAME
 D:The cover and pages of this tome seem to be perpetually
 D:wet, though they are not wet to the touch. As you hold
 D:it, you begin to understand ocean storms better.
@@ -3027,7 +3165,8 @@ I:111:5:0
 W:50:0:30:25000
 A:50/4
 P:0:1d1:0:0:0
-F:FULL_NAME | EASY_KNOW
+F:EASY_KNOW
+F:FULL_NAME
 D:This book seems to flicker strangely. It's one of those books
 D:with an annoying tendency to disappear when you need it and
 D:reappear in the unlikeliest places. As you hold it, you start
@@ -3039,7 +3178,8 @@ I:111:6:0
 W:50:0:30:25000
 A:50/4
 P:0:1d1:0:0:0
-F:FULL_NAME | EASY_KNOW
+F:EASY_KNOW
+F:FULL_NAME
 D:The cover of this tome is a bright shade of green, and it gives off
 D:a healthy, zesty scent that makes your thoughts clearer. As you
 D:hold it, your heart goes out to all living things upon Arda.
@@ -3050,7 +3190,8 @@ I:111:7:0
 W:50:0:30:25000
 A:50/4
 P:0:1d1:0:0:0
-F:FULL_NAME | EASY_KNOW
+F:EASY_KNOW
+F:FULL_NAME
 D:A thick book with solid leather binding. It looks entirely 
 D:unremarkable, but as you hold it, you feel strangely able 
 D:to learn the inner workings of things and creatures.
@@ -3129,8 +3270,11 @@ I:39:0:0:4000
 W:1:0:30:2
 A:1/1
 P:0:1d1:0:0:0
-F:EASY_KNOW | LITE1 | FUEL_LITE
-f:LITE1 | FUEL_LITE
+F:EASY_KNOW
+F:FUEL_LITE
+F:LITE1
+f:FUEL_LITE
+f:LITE1
 D:A piece of wood with an oily rag wrapped around it. When lit, it will give off a little light and
 D:much smoke.
 
@@ -3140,8 +3284,12 @@ I:39:1:0:7500
 W:3:0:50:35
 A:3/1
 P:0:1d1:0:0:0
-F:EASY_KNOW | IGNORE_FIRE | LITE2 | FUEL_LITE
-f:LITE2 | FUEL_LITE
+F:EASY_KNOW
+F:FUEL_LITE
+F:IGNORE_FIRE
+F:LITE2
+f:FUEL_LITE
+f:LITE2
 D:A brass container with a wick emerging from it, protected from draughts by a sheet of greased
 D:paper. It can be carried by a handle.
 
@@ -3399,7 +3547,8 @@ G:=:d
 I:45:58:0
 W:10:0:2:1000
 A:10/1
-F:SPELL_CONTAIN | WIELD_CAST
+F:SPELL_CONTAIN
+F:WIELD_CAST
 f:SPELL_CONTAIN
 D:This ring is a container for spells. Those that are skilled in copying spells can inscribe a
 D:spell into it.
@@ -3411,7 +3560,8 @@ G:":d
 I:40:27:0
 W:10:0:2:1000
 A:10/1
-F:SPELL_CONTAIN | WIELD_CAST
+F:SPELL_CONTAIN
+F:WIELD_CAST
 f:SPELL_CONTAIN
 D:This amulet is a container for spells. Those that are skilled in copying spells can inscribe a
 D:spell into it.
@@ -3514,9 +3664,14 @@ W:60:0:200:50000
 A:60/8
 P:30:2d4:-2:0:10
 a:BR_ACID
-F:RES_ACID | FLY |
-f:RES_ACID |
-F:ACTIVATE | IGNORE_ACID | IGNORE_ELEC | IGNORE_FIRE | IGNORE_COLD
+F:ACTIVATE
+F:FLY
+F:IGNORE_ACID
+F:IGNORE_COLD
+F:IGNORE_ELEC
+F:IGNORE_FIRE
+F:RES_ACID
+f:RES_ACID
 D:An armour made of a black dragon's hide, containing some of this beast's powers.
 
 N:401:& Blue Dragon Scale Mail~
@@ -3526,9 +3681,14 @@ W:50:0:200:40000
 A:50/8
 P:30:2d4:-2:0:10
 a:BR_ELEC
-F:RES_ELEC | FLY |
-f:RES_ELEC |
-F:ACTIVATE | IGNORE_ACID | IGNORE_ELEC | IGNORE_FIRE | IGNORE_COLD
+F:ACTIVATE
+F:FLY
+F:IGNORE_ACID
+F:IGNORE_COLD
+F:IGNORE_ELEC
+F:IGNORE_FIRE
+F:RES_ELEC
+f:RES_ELEC
 D:A piece of dragon hide fashioned into an armour, shimmering bright blue.
 
 N:402:& White Dragon Scale Mail~
@@ -3538,9 +3698,14 @@ W:50:0:200:40000
 A:50/8
 a:BR_COLD
 P:30:2d4:-2:0:10
-F:RES_COLD | FLY |
-f:RES_COLD |
-F:ACTIVATE | IGNORE_ACID | IGNORE_ELEC | IGNORE_FIRE | IGNORE_COLD
+F:ACTIVATE
+F:FLY
+F:IGNORE_ACID
+F:IGNORE_COLD
+F:IGNORE_ELEC
+F:IGNORE_FIRE
+F:RES_COLD
+f:RES_COLD
 D:An armour fashioned from dragon hide, glistening the white of snow.
 
 N:403:& Red Dragon Scale Mail~
@@ -3550,9 +3715,14 @@ W:60:0:200:50000
 A:60/8
 P:30:2d4:-2:0:10
 a:BR_FIRE
-F:RES_FIRE | FLY |
-f:RES_FIRE |
-F:ACTIVATE | IGNORE_ACID | IGNORE_ELEC | IGNORE_FIRE | IGNORE_COLD
+F:ACTIVATE
+F:FLY
+F:IGNORE_ACID
+F:IGNORE_COLD
+F:IGNORE_ELEC
+F:IGNORE_FIRE
+F:RES_FIRE
+f:RES_FIRE
 D:The skin of a dragon made into a suit of armour. It glows a bright red and radiates heat.
 
 N:404:& Green Dragon Scale Mail~
@@ -3562,9 +3732,14 @@ W:50:0:200:40000
 A:50/8
 P:30:2d4:-2:0:10
 a:BR_POIS
-F:RES_POIS | FLY |
-f:RES_POIS |
-F:ACTIVATE | IGNORE_ACID | IGNORE_ELEC | IGNORE_FIRE | IGNORE_COLD
+F:ACTIVATE
+F:FLY
+F:IGNORE_ACID
+F:IGNORE_COLD
+F:IGNORE_ELEC
+F:IGNORE_FIRE
+F:RES_POIS
+f:RES_POIS
 D:A suit of armour fashioned of dragon hide. It is dirty green and smells awful.
 
 N:405:& Multi-Hued Dragon Scale Mail~
@@ -3574,10 +3749,23 @@ W:90:0:200:150000
 A:90/32
 P:30:2d4:-2:0:10
 a:BR_MANY
+F:ACTIVATE
 F:ATTR_MULTI
-F:RES_ACID | RES_ELEC | RES_FIRE | RES_COLD | RES_POIS | FLY |
-f:RES_ACID | RES_ELEC | RES_FIRE | RES_COLD | RES_POIS |
-F:ACTIVATE | IGNORE_ACID | IGNORE_ELEC | IGNORE_FIRE | IGNORE_COLD
+F:FLY
+F:IGNORE_ACID
+F:IGNORE_COLD
+F:IGNORE_ELEC
+F:IGNORE_FIRE
+F:RES_ACID
+F:RES_COLD
+F:RES_ELEC
+F:RES_FIRE
+F:RES_POIS
+f:RES_ACID
+f:RES_COLD
+f:RES_ELEC
+f:RES_FIRE
+f:RES_POIS
 D:A powerful armour made of dragonhide. It glows red, blue, green, black and white.
 
 N:406:& Pseudo Dragon Scale Mail~
@@ -3587,8 +3775,14 @@ W:70:0:200:70000
 A:70/16
 P:30:2d4:-2:0:10
 a:BR_LIGHT
-F:RES_LITE | RES_DARK | FLY |
-F:ACTIVATE | IGNORE_ACID | IGNORE_ELEC | IGNORE_FIRE | IGNORE_COLD
+F:ACTIVATE
+F:FLY
+F:IGNORE_ACID
+F:IGNORE_COLD
+F:IGNORE_ELEC
+F:IGNORE_FIRE
+F:RES_DARK
+F:RES_LITE
 D:A suit of armour made of dragon hide, glowing with a strange light, or is it darkness?
 
 N:407:& Law Dragon Scale Mail~
@@ -3598,8 +3792,14 @@ W:80:0:200:80000
 A:80/16
 P:30:2d4:-2:0:10
 a:BR_SHARD
-F:RES_SOUND | RES_SHARDS | FLY |
-F:ACTIVATE | IGNORE_ACID | IGNORE_ELEC | IGNORE_FIRE | IGNORE_COLD
+F:ACTIVATE
+F:FLY
+F:IGNORE_ACID
+F:IGNORE_COLD
+F:IGNORE_ELEC
+F:IGNORE_FIRE
+F:RES_SHARDS
+F:RES_SOUND
 D:A piece of dragonhide cut and shaped so it can be worn as armour. The scales are very sharp,
 D:and the roaring of a storm seems to come from it, but you're not afraid of either.
 
@@ -3610,8 +3810,13 @@ W:50:0:200:40000
 A:50/8
 P:30:2d4:-2:0:10
 a:BR_CONF
-F:RES_CONF | FLY |
-F:ACTIVATE | IGNORE_ACID | IGNORE_ELEC | IGNORE_FIRE | IGNORE_COLD
+F:ACTIVATE
+F:FLY
+F:IGNORE_ACID
+F:IGNORE_COLD
+F:IGNORE_ELEC
+F:IGNORE_FIRE
+F:RES_CONF
 D:A suit of armour made from dragon skin. Its brownish scales glitter in a dazzling light.
 
 N:409:& Gold Dragon Scale Mail~
@@ -3621,8 +3826,13 @@ W:60:0:200:50000
 A:60/8
 P:30:2d4:-2:0:10
 a:BR_SOUND
-F:RES_SOUND | FLY |
-F:ACTIVATE | IGNORE_ACID | IGNORE_ELEC | IGNORE_FIRE | IGNORE_COLD
+F:ACTIVATE
+F:FLY
+F:IGNORE_ACID
+F:IGNORE_COLD
+F:IGNORE_ELEC
+F:IGNORE_FIRE
+F:RES_SOUND
 D:A suit of golden-hued armour made of dragonhide. The rustle of its scales occasionally
 D:increases to a loud boom.
 
@@ -3633,10 +3843,16 @@ W:80:0:200:80000
 A:80/16
 P:30:2d4:-2:0:10
 a:BR_CHAOS
+F:ACTIVATE
 F:ATTR_MULTI
-F:RES_CHAOS | RES_DISEN | FLY |
-f:RES_CHAOS |
-F:ACTIVATE | IGNORE_ACID | IGNORE_ELEC | IGNORE_FIRE | IGNORE_COLD
+F:FLY
+F:IGNORE_ACID
+F:IGNORE_COLD
+F:IGNORE_ELEC
+F:IGNORE_FIRE
+F:RES_CHAOS
+F:RES_DISEN
+f:RES_CHAOS
 D:A suit of armour made of dragon hide. It glows in colours you have never seen before. As you
 D:put it on, you feel like you could change the world and are no longer afraid of your equipment
 D:losing its magic.
@@ -3648,8 +3864,16 @@ W:95:0:200:100000
 A:95/32
 P:30:2d4:-2:0:10
 a:BR_BALANCE
-F:RES_CHAOS | RES_DISEN | RES_SOUND | RES_SHARDS | FLY |
-F:ACTIVATE | IGNORE_ACID | IGNORE_ELEC | IGNORE_FIRE | IGNORE_COLD
+F:ACTIVATE
+F:FLY
+F:IGNORE_ACID
+F:IGNORE_COLD
+F:IGNORE_ELEC
+F:IGNORE_FIRE
+F:RES_CHAOS
+F:RES_DISEN
+F:RES_SHARDS
+F:RES_SOUND
 D:A suit of armour made of the hide of a dead dragon. When wearing it, you feel like you
 D:understand the principles of law and chaos, and no longer fear either.
 
@@ -3660,11 +3884,27 @@ W:100:0:250:350000
 A:100/64
 P:40:2d4:-3:0:15
 a:BR_POWER
+F:ACTIVATE
 F:ATTR_MULTI
-F:RES_ACID | RES_FIRE | RES_COLD | RES_ELEC | RES_POIS | FLY |
-F:RES_NETHER | RES_NEXUS | RES_CHAOS | RES_LITE | RES_DARK |
-F:RES_SHARDS | RES_SOUND | RES_DISEN | RES_CONF |
-F:ACTIVATE | IGNORE_ACID | IGNORE_ELEC | IGNORE_FIRE | IGNORE_COLD
+F:FLY
+F:IGNORE_ACID
+F:IGNORE_COLD
+F:IGNORE_ELEC
+F:IGNORE_FIRE
+F:RES_ACID
+F:RES_CHAOS
+F:RES_COLD
+F:RES_CONF
+F:RES_DARK
+F:RES_DISEN
+F:RES_ELEC
+F:RES_FIRE
+F:RES_LITE
+F:RES_NETHER
+F:RES_NEXUS
+F:RES_POIS
+F:RES_SHARDS
+F:RES_SOUND
 D:A suit of armour made of a very thick richly coloured dragonhide. You think you'll never have
 D:to fear dragons if you put it on.
 
@@ -3676,7 +3916,10 @@ I:32:7:0
 W:45:0:50:10000
 A:80/4
 P:8:1d3:0:0:10
-F:IGNORE_ACID | IGNORE_FIRE | IGNORE_ELEC | IGNORE_COLD
+F:IGNORE_ACID
+F:IGNORE_COLD
+F:IGNORE_ELEC
+F:IGNORE_FIRE
 D:An iron helmet, covered with a layer of dragonhide. It offers great protection and may grant
 D:protection against some dragon's attacks, based on the dragon the hide was taken from.
 
@@ -3686,7 +3929,10 @@ I:34:6:0
 W:70:0:100:10000
 A:80/4
 P:8:1d3:0:0:10
-F:IGNORE_ACID | IGNORE_FIRE | IGNORE_ELEC | IGNORE_COLD
+F:IGNORE_ACID
+F:IGNORE_COLD
+F:IGNORE_ELEC
+F:IGNORE_FIRE
 D:A large shield, with a dragonskin cover. Depending on which dragon the hide came from, it
 D:might grant protection against some sorts of dragon breath.
 
@@ -3778,8 +4024,9 @@ G:=:d
 I:45:38:0
 W:10:0:2:300
 A:10/2
-F:RES_FEAR | EASY_KNOW
-f:RES_FEAR |
+F:EASY_KNOW
+F:RES_FEAR
+f:RES_FEAR
 D:This ring grants courage, so that you can never become afraid.
 
 N:426:Light and Darkness Resistance
@@ -3787,8 +4034,11 @@ G:=:d
 I:45:39:0
 W:30:0:2:3000
 A:30/2
-F:RES_LITE | RES_DARK | EASY_KNOW
-f:RES_LITE | RES_DARK |
+F:EASY_KNOW
+F:RES_DARK
+F:RES_LITE
+f:RES_DARK
+f:RES_LITE
 D:This ring protects against fluctuations of the light.
 
 N:427:Nether Resistance
@@ -3796,8 +4046,10 @@ G:=:d
 I:45:40:0
 W:34:0:2:14500
 A:34/2
-F:RES_NETHER | HOLD_LIFE | EASY_KNOW
-f:RES_NETHER |
+F:EASY_KNOW
+F:HOLD_LIFE
+F:RES_NETHER
+f:RES_NETHER
 D:This blessed ring improves your life force, protecting you from the draining forces of nether
 D:and other attempts to suck your lifeblood.
 
@@ -3806,8 +4058,9 @@ G:=:d
 I:45:41:0
 W:24:0:2:3000
 A:24/2
-F:RES_NEXUS | EASY_KNOW
-f:RES_NEXUS |
+F:EASY_KNOW
+F:RES_NEXUS
+f:RES_NEXUS
 D:This ring of stability protects you from the warping forces of nexus.
 
 N:429:Sound Resistance
@@ -3815,8 +4068,9 @@ G:=:d
 I:45:42:0
 W:26:0:2:3000
 A:26/2
-F:RES_SOUND | EASY_KNOW
-f:RES_SOUND |
+F:EASY_KNOW
+F:RES_SOUND
+f:RES_SOUND
 D:This ring projects an aura of quiet around you, protecting you from loud noise.
 
 N:430:Confusion Resistance
@@ -3824,8 +4078,9 @@ G:=:d
 I:45:43:0
 W:22:0:2:3000
 A:22/2
-F:RES_CONF | EASY_KNOW
-f:RES_CONF |
+F:EASY_KNOW
+F:RES_CONF
+f:RES_CONF
 D:This ring stabilises your mind, protecting you from all kinds of befuddlement.
 
 N:431:Shard Resistance
@@ -3833,8 +4088,9 @@ G:=:d
 I:45:44:0
 W:25:0:2:3000
 A:25/2
-F:RES_SHARDS | EASY_KNOW
-f:RES_SHARDS |
+F:EASY_KNOW
+F:RES_SHARDS
+f:RES_SHARDS
 D:This piece of jewellery magically toughens your skin, protecting you from flying shrapnel.
 
 N:432:Disenchantment Resistance
@@ -3842,8 +4098,9 @@ G:=:d
 I:45:45:0
 W:90:0:2:15000
 A:90/10
-F:RES_DISEN | EASY_KNOW
-f:RES_DISEN |
+F:EASY_KNOW
+F:RES_DISEN
+f:RES_DISEN
 D:This rare ring of preservation protects your equipment from attempts to sap its magic, also
 D:causing you to suffer less pain from such attacks.
 
@@ -3852,8 +4109,10 @@ G:=:d
 I:45:46:0
 W:50:0:2:13000
 A:50/2
-F:RES_CHAOS | RES_CONF | EASY_KNOW
-f:RES_CHAOS |
+F:EASY_KNOW
+F:RES_CHAOS
+F:RES_CONF
+f:RES_CHAOS
 D:This ring protects you from the horribly warping forces of chaos.
 
 N:434:Blindness Resistance
@@ -3861,8 +4120,9 @@ G:=:d
 I:45:47:0
 W:60:0:2:7500
 A:60/2
-F:RES_BLIND | EASY_KNOW
-f:RES_BLIND |
+F:EASY_KNOW
+F:RES_BLIND
+f:RES_BLIND
 D:This ring magically preserves your eyesight, making you impervious to any attempt to blind
 D:you.
 
@@ -3871,8 +4131,14 @@ G:=:d
 I:45:48:0
 W:100:0:2:100000
 A:100/5
-F:RES_DISEN | RES_POIS | HOLD_LIFE | FREE_ACT
-f:RES_DISEN | RES_POIS | HOLD_LIFE | FREE_ACT
+F:FREE_ACT
+F:HOLD_LIFE
+F:RES_DISEN
+F:RES_POIS
+f:FREE_ACT
+f:HOLD_LIFE
+f:RES_DISEN
+f:RES_POIS
 D:This blessed ring will protect you from disenchantment, poison, attempts to drain your life
 D:force and holding magic.
 
@@ -3956,7 +4222,10 @@ I:17:3:0
 W:55:0:2:35
 A:50/4:90/2
 P:0:3d4:0:0:0
-F:SHOW_MODS | SLAY_EVIL | IGNORE_ACID | IGNORE_FIRE
+F:IGNORE_ACID
+F:IGNORE_FIRE
+F:SHOW_MODS
+F:SLAY_EVIL
 D:An arrow to be shot with a bow, its iron head coated with hallowed silver,
 D:a material that sears the flesh of all evil creatures.
 
@@ -3966,7 +4235,10 @@ I:18:3:0
 W:50:0:2:40
 A:60/4:95/2
 P:0:3d5:0:0:0
-F:SHOW_MODS | SLAY_EVIL | IGNORE_ACID | IGNORE_FIRE
+F:IGNORE_ACID
+F:IGNORE_FIRE
+F:SHOW_MODS
+F:SLAY_EVIL
 D:This crossbow bolt has a silver tip, blessed by the Valar for fighting evil.
 
 N:467:Lightning Resistance
@@ -3974,8 +4246,10 @@ G:":d
 I:40:29:0
 W:10:0:3:250
 A:10/1
-F:RES_ELEC | IGNORE_ELEC | EASY_KNOW
-f:RES_ELEC |
+F:EASY_KNOW
+F:IGNORE_ELEC
+F:RES_ELEC
+f:RES_ELEC
 D:This amulet will protect you from electrical discharges and storms.
 
 N:468:Wisdom
@@ -3983,8 +4257,10 @@ G:":d
 I:40:28:0
 W:30:0:3:500
 A:30/1
-F:WIS | SUST_WIS | HIDE_TYPE
-f:WIS |
+F:HIDE_TYPE
+F:SUST_WIS
+F:WIS
+f:WIS
 D:This magical amulet will magically make you wiser, and fend off
 D:attacks that would reduce your wisdom. Beware: if cursed, the
 D:amulet will do the opposite.
@@ -3994,8 +4270,9 @@ G:":d
 I:40:30:0
 W:30:0:3:600
 A:30/3
-F:REGEN | EASY_KNOW
-f:REGEN |
+F:EASY_KNOW
+F:REGEN
+f:REGEN
 D:Wearing this amulet will trigger your body's regenerational
 D:processes quicker and make them proceed faster.
 
@@ -4004,8 +4281,9 @@ G:":d
 I:40:26:0
 W:10:0:3:200
 A:10/1
-F:INFRA | HIDE_TYPE
-f:INFRA |
+F:HIDE_TYPE
+F:INFRA
+f:INFRA
 D:This amulet will increase your ability to sense warm-blooded
 D:creatures in your vicinity. Beware: if cursed, it will do
 D:just the opposite.
@@ -4015,8 +4293,16 @@ G:":d
 I:40:25:0
 W:70:0:3:30000
 A:70/8
-F:WIS | CHR | SUST_WIS | SUST_CHR | LITE1 | HIDE_TYPE |
-F:RES_DARK | RES_LITE | RES_FIRE | HOLD_LIFE |
+F:CHR
+F:HIDE_TYPE
+F:HOLD_LIFE
+F:LITE1
+F:RES_DARK
+F:RES_FIRE
+F:RES_LITE
+F:SUST_CHR
+F:SUST_WIS
+F:WIS
 D:This blessed amulet will protect your wisdom and charms from
 D:diminishing, often adding to them as well. It also grants
 D:some extra protective magics by the grace of the Valar.
@@ -4026,8 +4312,14 @@ G:":d
 I:40:24:0
 W:70:0:3:30000
 A:70/8
-F:STR | CON | SUST_STR | SUST_CON | FREE_ACT | HIDE_TYPE |
-F:RES_FEAR | RES_DISEN |
+F:CON
+F:FREE_ACT
+F:HIDE_TYPE
+F:RES_DISEN
+F:RES_FEAR
+F:STR
+F:SUST_CON
+F:SUST_STR
 D:The ultimate amulet for a warrior, it will grant protection
 D:in the face of some evil magics, protect your strength and health,
 D:also increasing them. Beware: if cursed, the amulet will
@@ -4038,8 +4330,14 @@ G:":d
 I:40:23:0
 W:70:0:3:30000
 A:70/8
-F:DEX | SUST_DEX | STEALTH | SPEED | INFRA | HIDE_TYPE |
-F:RES_NEXUS | RES_POIS
+F:DEX
+F:HIDE_TYPE
+F:INFRA
+F:RES_NEXUS
+F:RES_POIS
+F:SPEED
+F:STEALTH
+F:SUST_DEX
 D:The ultimate amulet for a rogue or assassin, it protects the
 D:wearer against some evil magics, granting improvements in
 D:the abilities vital to these adventurers. Beware: if cursed,
@@ -4050,9 +4348,12 @@ G:":d
 I:40:22:0
 W:50:0:3:25000
 A:50/6
-F:ESP_ALL |
-f:ESP_ALL |
-F:IGNORE_ACID | IGNORE_ELEC | IGNORE_FIRE | IGNORE_COLD
+F:ESP_ALL
+F:IGNORE_ACID
+F:IGNORE_COLD
+F:IGNORE_ELEC
+F:IGNORE_FIRE
+f:ESP_ALL
 D:This rare and powerful amulet lays bare the minds of monsters
 D:before the wearer.
 
@@ -4061,9 +4362,19 @@ G:":d
 I:40:21:0
 W:60:0:3:20000
 A:60/4
-F:SUST_STR | SUST_INT | SUST_WIS | SUST_DEX | SUST_CON | SUST_CHR |
-F:HOLD_LIFE | SLOW_DIGEST | EASY_KNOW |
-F:IGNORE_ACID | IGNORE_ELEC | IGNORE_FIRE | IGNORE_COLD
+F:EASY_KNOW
+F:HOLD_LIFE
+F:IGNORE_ACID
+F:IGNORE_COLD
+F:IGNORE_ELEC
+F:IGNORE_FIRE
+F:SLOW_DIGEST
+F:SUST_CHR
+F:SUST_CON
+F:SUST_DEX
+F:SUST_INT
+F:SUST_STR
+F:SUST_WIS
 D:This blessed amulet will make the wearer impervious to evil magics
 D:that would sap innate abilities. It also slows down the digestive
 D:system, making food less necessary on long journeys.
@@ -4099,7 +4410,8 @@ N:479:& Ring~
 G:=:d
 I:45:57:0
 W:70:0:2:65000
-F:INSTA_ART | SPECIAL_GENE
+F:INSTA_ART
+F:SPECIAL_GENE
 
 ##### And here starts the gold/gems #####
 
@@ -4205,7 +4517,10 @@ G:\:D
 I:21:50:0
 W:15:0:200:1000
 P:0:3d9:0:0:0
-F:SHOW_MODS | INSTA_ART | MUST2H | SPECIAL_GENE
+F:INSTA_ART
+F:MUST2H
+F:SHOW_MODS
+F:SPECIAL_GENE
 f:MUST2H
 
 N:499:& Massive Iron Crown~
@@ -4213,7 +4528,8 @@ G:]:D
 I:33:50:0
 W:44:0:20:1000
 P:0:1d1:0:0:0
-F:INSTA_ART | SPECIAL_GENE
+F:INSTA_ART
+F:SPECIAL_GENE
 
 
 ##### Objects 500 to 511 are "Special Artifacts" #####
@@ -4317,7 +4633,8 @@ N:508:& Ring~
 G:=:d
 I:45:34:0
 W:80:0:2:100000
-F:INSTA_ART | SPECIAL_GENE
+F:INSTA_ART
+F:SPECIAL_GENE
 
 # The Ring of Power 'Nenya' -- see artifact list
 
@@ -4360,9 +4677,13 @@ G:":d
 I:40:9:0
 W:60:0:3:30000
 A:60/4
-F:REFLECT | EASY_KNOW
-f:REFLECT |
-F:IGNORE_ACID | IGNORE_ELEC | IGNORE_FIRE | IGNORE_COLD
+F:EASY_KNOW
+F:IGNORE_ACID
+F:IGNORE_COLD
+F:IGNORE_ELEC
+F:IGNORE_FIRE
+F:REFLECT
+f:REFLECT
 D:This wondrous amulet will magically make the wearer
 D:reflect arrows and bolts launched by adversaries.
 
@@ -4373,9 +4694,12 @@ G:":d
 I:40:13:0
 W:40:0:3:30000
 A:40/4
+F:IGNORE_ACID
+F:IGNORE_COLD
+F:IGNORE_ELEC
+F:IGNORE_FIRE
 F:NO_MAGIC
 f:NO_MAGIC
-F:IGNORE_ACID | IGNORE_ELEC | IGNORE_FIRE | IGNORE_COLD
 D:This amulet wards off magic of any kind, good or bad.
 
 N:522:Anti-Teleportation
@@ -4383,9 +4707,12 @@ G:":d
 I:40:14:0
 W:30:0:3:15000
 A:30/4
+F:IGNORE_ACID
+F:IGNORE_COLD
+F:IGNORE_ELEC
+F:IGNORE_FIRE
 F:NO_TELE
 f:NO_TELE
-F:IGNORE_ACID | IGNORE_ELEC | IGNORE_FIRE | IGNORE_COLD
 D:This amulet will prevent the space-time continuum from
 D:being disrupted around the wearer.
 
@@ -4396,9 +4723,18 @@ G:":d
 I:40:15:0
 W:50:0:3:25000
 A:50/4
-F:RES_ACID | RES_ELEC | RES_FIRE | RES_COLD
-f:RES_ACID | RES_ELEC | RES_FIRE | RES_COLD
-F:IGNORE_ACID | IGNORE_ELEC | IGNORE_FIRE | IGNORE_COLD
+F:IGNORE_ACID
+F:IGNORE_COLD
+F:IGNORE_ELEC
+F:IGNORE_FIRE
+F:RES_ACID
+F:RES_COLD
+F:RES_ELEC
+F:RES_FIRE
+f:RES_ACID
+f:RES_COLD
+f:RES_ELEC
+f:RES_FIRE
 D:This amulet will make the wearer resist the elements.
 
 ##### New arms #####
@@ -4409,7 +4745,8 @@ I:23:29:0
 W:40:0:280:580
 A:40/3
 P:0:4d6:0:0:0
-F:SHOW_MODS | MUST2H
+F:MUST2H
+F:SHOW_MODS
 f:MUST2H
 D:This great sword of foreign origin is approximately 6 feet long. The hilt is
 D:long enough for even four hands to grip. A mighty weapon for a warrior.
@@ -4421,7 +4758,9 @@ I:39:3:0
 W:15:0:50:5000
 A:15/2
 P:0:1d1:0:0:0
-F:EASY_KNOW | IGNORE_FIRE | LITE2
+F:EASY_KNOW
+F:IGNORE_FIRE
+F:LITE2
 f:LITE2
 D:Made by the dwarves, this lantern provides light in the
 D:darkest recesses of the earth.
@@ -4442,7 +4781,9 @@ I:39:2:0
 W:5:0:50:2500
 A:5/1
 P:0:1d1:0:0:0
-F:EASY_KNOW | IGNORE_FIRE | LITE1
+F:EASY_KNOW
+F:IGNORE_FIRE
+F:LITE1
 f:LITE1
 D:This enchanted torch never needs to be fuelled.
 
@@ -4473,7 +4814,9 @@ I:39:4:0
 W:25:0:50:15000
 A:25/3
 P:0:1d1:0:0:0
-F:EASY_KNOW | IGNORE_FIRE | LITE3
+F:EASY_KNOW
+F:IGNORE_FIRE
+F:LITE3
 f:LITE3
 D:Made by the descendants of the Noldo craftsman, this lamp
 D:contains a part of the flame which burned inside Feanor.
@@ -4502,7 +4845,8 @@ I:24:1:0
 W:10:0:60:120
 A:10/2
 P:0:1d5:0:0:0
-F:SHOW_MODS | COULD2H
+F:COULD2H
+F:SHOW_MODS
 f:COULD2H
 D:This is a large axe that could be wielded in one or two hands.  It has
 D:a single blade with a pick on the reverse, designed for armour piercing.
@@ -4580,7 +4924,8 @@ I:23:26:0
 W:40:0:230:600
 A:40/2
 P:0:3d7:0:0:0
-F:SHOW_MODS | MUST2H
+F:MUST2H
+F:SHOW_MODS
 f:MUST2H
 D:A large, two-handed sword with a blade that weaves
 D:left and right until it reaches the hilt.
@@ -4591,7 +4936,8 @@ I:23:23:0
 W:40:0:200:600
 A:40/2
 P:0:2d8:0:0:0
-F:SHOW_MODS | COULD2H
+F:COULD2H
+F:SHOW_MODS
 f:COULD2H
 D:Also known as a Claidhmore, or Greatsword, this weapon is favoured
 D:by powerful mercenaries. The blade is large, straight, and broad,
@@ -4603,7 +4949,8 @@ I:23:24:0
 W:40:0:200:600
 A:40/3
 P:0:2d9:0:0:0
-F:SHOW_MODS | MUST2H
+F:MUST2H
+F:SHOW_MODS
 f:MUST2H
 D:This is the strictly two-handed version of the bastard sword.
 D:The blade is of medium length, double-edged, and considerably
@@ -4615,7 +4962,8 @@ I:23:22:0
 W:40:0:240:500
 A:40/3
 P:0:4d5:0:0:0
-F:SHOW_MODS | MUST2H
+F:MUST2H
+F:SHOW_MODS
 f:MUST2H
 D:This is a larger version of the curved oriental blade.
 D:Runes of war decorate its golden hilt.
@@ -4647,7 +4995,8 @@ I:22:6:0
 W:18:0:155:301
 A:18/2
 P:0:1d10:0:0:0
-F:SHOW_MODS | COULD2H
+F:COULD2H
+F:SHOW_MODS
 f:COULD2H
 D:It is a type of glaive with two ornate hooks on the back
 D:of the blade. It is typically 8 to 9 feet long.
@@ -4658,7 +5007,8 @@ I:22:16:0
 W:21:0:165:320
 A:21/1
 P:0:2d5:0:0:0
-F:SHOW_MODS | COULD2H
+F:COULD2H
+F:SHOW_MODS
 f:COULD2H
 D:Mounted on a long shaft for maximum reach, this weapon is
 D:effective at repelling both cavalry and infantry.
@@ -4669,7 +5019,8 @@ I:22:29:0
 W:43:0:400:700
 A:43/2
 P:0:4d8:0:0:0
-F:SHOW_MODS | MUST2H
+F:MUST2H
+F:SHOW_MODS
 f:MUST2H
 D:This is a shock weapon. Its purpose is to unhorse a rider
 D:in single combat, or smash through the armour of opposing lines.
@@ -4757,7 +5108,10 @@ G:`:g
 I:46:5:0
 W:5:0:20:50
 A:5/2:40/2
-F:IGNORE_ACID | IGNORE_FIRE | IGNORE_COLD | IGNORE_ELEC
+F:IGNORE_ACID
+F:IGNORE_COLD
+F:IGNORE_ELEC
+F:IGNORE_FIRE
 D:It must be loaded with scrolls, which will release
 D:their spells at the monster who triggers the trap.
 
@@ -4766,7 +5120,10 @@ G:`:v
 I:46:6:0
 W:20:0:20:50
 A:20/2:40/2:60/2
-F:IGNORE_ACID | IGNORE_FIRE | IGNORE_COLD | IGNORE_ELEC
+F:IGNORE_ACID
+F:IGNORE_COLD
+F:IGNORE_ELEC
+F:IGNORE_FIRE
 D:It must be loaded with a magic device (wand, staff, or rod), which
 D:will fire its spell at the monster who triggers the trap.
 
@@ -4784,7 +5141,8 @@ I:65:2:-1:SPELL=Nothing
 W:2:0:10:20
 A:2/1
 P:0:1d1:0:0:0
-F:NO_RECHARGE | SPECIAL_GENE
+F:NO_RECHARGE
+F:SPECIAL_GENE
 
 N:567:Nothing
 G:=:d
@@ -4799,7 +5157,8 @@ I:55:30:0
 W:5:0:50:50
 A:5/1
 P:0:1d1:0:0:0
-F:NO_RECHARGE | SPECIAL_GENE
+F:NO_RECHARGE
+F:SPECIAL_GENE
 
 N:569:Nothing
 G:-:d
@@ -4827,7 +5186,8 @@ W:70:0:4:10000
 A:70/16
 P:0:1d1:0:0:0
 T:71:2
-F:NORM_ART | FULL_NAME
+F:FULL_NAME
+F:NORM_ART
 D:Quaffing this measure of living blood will imbue your body and soul
 D:with the power to escape death one time.
 
@@ -4839,7 +5199,8 @@ I:6:1:0
 W:5:0:12:300
 A:5/1:20/1:50/1:80/1
 P:0:1d4:0:0:0
-F:SHOW_MODS | COULD2H
+F:COULD2H
+F:SHOW_MODS
 f:COULD2H
 D:It looks like a simple walking stick, plain and nondescript.
 D:In the hands of a spellcaster, it can be a deadly weapon.
@@ -4853,8 +5214,10 @@ W:50:0:2:3000
 A:50/1
 P:0:0d0:0:0:15
 a:BA_ELEC_4
-F:RES_ELEC | IGNORE_ELEC | ACTIVATE
-f:RES_ELEC |
+F:ACTIVATE
+F:IGNORE_ELEC
+F:RES_ELEC
+f:RES_ELEC
 D:This sparkling circlet grants you protection, makes electricity less
 D:dangerous and even allows you to call forth a ball of lightning.
 
@@ -4896,8 +5259,9 @@ G:=:d
 I:45:53:4
 W:50:0:2:10000
 A:50/1
-F:INVIS | HIDE_TYPE
-f:INVIS |
+F:HIDE_TYPE
+F:INVIS
+f:INVIS
 D:This magical bauble will hide you from sight.
 
 ######### Here are the parchments ########
@@ -5046,7 +5410,8 @@ I:72:1:0
 W:5:0:4:100
 A:1/3:5/1:10/1
 P:0:1d1:0:0:0
-F:FULL_NAME | EASY_KNOW
+F:EASY_KNOW
+F:FULL_NAME
 D:This concoction can transform your body for a short period of time.
 
 # XXX 606 -> 617
@@ -5119,7 +5484,8 @@ I:36:16:0
 W:5:0:60:400
 A:25/1
 P:9:1d1:0:0:0
-F:RES_FIRE | RES_COLD |
+F:RES_COLD
+F:RES_FIRE
 D:This suit of thick impregnated cloth is worn by the riders of flying steeds,
 D:and protects them from extremes of temperatures.
 
@@ -5128,7 +5494,8 @@ N:647:& Stone~
 G:~:g
 I:39:106:0
 W:15:0:15:20000
-F:INSTA_ART | SPECIAL_GENE
+F:INSTA_ART
+F:SPECIAL_GENE
 
 # Here are the boomerangs
 
@@ -5256,7 +5623,9 @@ G:~:o
 I:102:0:0
 W:1:0:50:0
 A:1/1:10/1:20/1:30/1
-F:INSTA_ART | ACTIVATE | ACTIVATE_NO_WIELD
+F:ACTIVATE
+F:ACTIVATE_NO_WIELD
+F:INSTA_ART
 
 N:663:Craftsmanship
 G:?:d
@@ -5285,7 +5654,9 @@ I:14:60:1
 W:7:0:30:400
 A:7/2:20/1:40/1:80/1
 P:0:1d1:0:0:0
-F:CON | ACTIVATE | WIELD_CAST
+F:ACTIVATE
+F:CON
+F:WIELD_CAST
 D:A simple wind instrument made from brass. If used by inexperienced musicians it sounds
 D:like somebody making "prbbt!" noises down a drainpipe.
 
@@ -5295,7 +5666,8 @@ I:14:58:1
 W:7:0:30:400
 A:7/2:20/1:40/1:80/1
 P:0:1d1:0:0:0
-F:STR | WIELD_CAST
+F:STR
+F:WIELD_CAST
 D:A sort of clay pot with a bit of skin stretched over its mouth.
 
 N:671:& Harp~
@@ -5304,7 +5676,8 @@ I:14:59:1
 W:7:0:30:400
 A:7/2:20/1:40/1:80/1
 P:0:1d1:0:0:0
-F:CHR | WIELD_CAST
+F:CHR
+F:WIELD_CAST
 D:A number of strings held by a wooden frame.
 
 #N:672:& Banjo~
@@ -5348,7 +5721,8 @@ I:10:1:0
 W:5:0:30:100
 A:5/1:15/1:25/1:35/1
 P:0:1d1:0:0:0
-F:ACTIVATE | ACTIVATE_NO_WIELD
+F:ACTIVATE
+F:ACTIVATE_NO_WIELD
 
 ### Two more scrolls ###
 
@@ -5383,7 +5757,8 @@ I:105:2:0
 W:10:5:2:300
 A:10/1
 P:0:1d1:0:0:0
-F:IGNORE_COLD | IGNORE_ELEC
+F:IGNORE_COLD
+F:IGNORE_ELEC
 
 N:681:Sphere
 G:?:b
@@ -5391,7 +5766,9 @@ I:105:3:0
 W:15:5:2:1000
 A:15/1
 P:0:1d1:0:0:0
-F:IGNORE_ELEC | IGNORE_FIRE | IGNORE_COLD
+F:IGNORE_COLD
+F:IGNORE_ELEC
+F:IGNORE_FIRE
 
 N:682:Knowledge
 G:?:b
@@ -5445,7 +5822,10 @@ I:104:10:0
 W:23:5:2:1000
 A:23/1
 P:0:1d1:0:0:0
-F:IGNORE_ACID | IGNORE_ELEC | IGNORE_FIRE | IGNORE_COLD
+F:IGNORE_ACID
+F:IGNORE_COLD
+F:IGNORE_ELEC
+F:IGNORE_FIRE
 
 N:689:Chaos
 G:?:v
@@ -5454,7 +5834,10 @@ W:26:5:2:2000
 A:26/1
 P:0:1d1:0:0:0
 F:ATTR_MULTI
-F:IGNORE_ACID | IGNORE_ELEC | IGNORE_FIRE | IGNORE_COLD
+F:IGNORE_ACID
+F:IGNORE_COLD
+F:IGNORE_ELEC
+F:IGNORE_FIRE
 
 N:690:Mind
 G:?:D
@@ -5486,7 +5869,10 @@ I:105:4:0
 W:50:5:2:5000
 A:50/1
 P:0:1d1:0:0:0
-F:IGNORE_ELEC | IGNORE_FIRE | IGNORE_COLD | IGNORE_ACID
+F:IGNORE_ACID
+F:IGNORE_COLD
+F:IGNORE_ELEC
+F:IGNORE_FIRE
 
 N:694:Armageddon
 G:?:b
@@ -5494,7 +5880,10 @@ I:105:5:0
 W:30:5:2:4000
 A:30/1
 P:0:1d1:0:0:0
-F:IGNORE_ELEC | IGNORE_FIRE | IGNORE_COLD | IGNORE_ACID
+F:IGNORE_ACID
+F:IGNORE_COLD
+F:IGNORE_ELEC
+F:IGNORE_FIRE
 
 N:695:Gravity
 G:?:G
@@ -5531,10 +5920,14 @@ I:45:51:0
 W:90:0:2:300000
 A:90/100
 T:45:23
-F:PRECOGNITION |
-f:PRECOGNITION |
-F:NORM_ART | FULL_NAME
-F:IGNORE_ACID | IGNORE_ELEC | IGNORE_FIRE | IGNORE_COLD
+F:FULL_NAME
+F:IGNORE_ACID
+F:IGNORE_COLD
+F:IGNORE_ELEC
+F:IGNORE_FIRE
+F:NORM_ART
+F:PRECOGNITION
+f:PRECOGNITION
 D:This magical ring allows you to know what you will encounter in the near future.
 
 # Athelas, cures Black Breath
@@ -5575,8 +5968,12 @@ I:70:40:0
 W:90:0:5:160000
 A:90/140
 T:70:51
-F:NORM_ART | FULL_NAME
-F:IGNORE_ACID | IGNORE_ELEC | IGNORE_FIRE | IGNORE_COLD
+F:FULL_NAME
+F:IGNORE_ACID
+F:IGNORE_COLD
+F:IGNORE_ELEC
+F:IGNORE_FIRE
+F:NORM_ART
 D:It allows you to leave your body to reincarnate into
 D:another one. However, your current body is lost in the process.
 
@@ -5586,7 +5983,8 @@ I:23:33:0
 W:25:0:70:500
 A:25/1:80/2
 P:0:3d7:0:0:0
-F:SHOW_MODS | ANTIMAGIC_50
+F:ANTIMAGIC_50
+F:SHOW_MODS
 f:ANTIMAGIC_50
 D:A strange, very sharp long sword, which seems to drain light from its surroundings. As you
 D:wield it, you feel much less attuned to magic.
@@ -5688,8 +6086,12 @@ W:90:0:4:100000
 A:90/25
 P:0:1d1:0:0:0
 T:71:49
-F:NORM_ART | FULL_NAME
-F:IGNORE_ACID | IGNORE_FIRE | IGNORE_COLD | IGNORE_ELEC
+F:FULL_NAME
+F:IGNORE_ACID
+F:IGNORE_COLD
+F:IGNORE_ELEC
+F:IGNORE_FIRE
+F:NORM_ART
 D:This old potion is supposed to grant more learning power
 D:to its user.
 
@@ -5728,8 +6130,9 @@ G:=:d
 I:45:54:0
 W:20:0:2:16000
 A:20/3
-F:FLY | EASY_KNOW
-f:FLY |
+F:EASY_KNOW
+F:FLY
+f:FLY
 D:This ring is imbued with the power of eagles. It grants you the power of flight.
 
 N:756:& Tome~ of the Time
@@ -5738,7 +6141,8 @@ I:111:8:0
 W:50:0:30:25000
 A:50/4
 P:0:1d1:0:0:0
-F:FULL_NAME | EASY_KNOW
+F:EASY_KNOW
+F:FULL_NAME
 D:This tome seems to have trouble deciding whether it really exists now. Its flickering pages
 D:contain all that is known about the currents of time.
 
@@ -5756,7 +6160,10 @@ I:111:9:0
 W:50:0:30:25000
 A:50/4
 P:0:1d1:0:0:0
-F:FULL_NAME | EASY_KNOW | IGNORE_FIRE | ATTR_MULTI
+F:ATTR_MULTI
+F:EASY_KNOW
+F:FULL_NAME
+F:IGNORE_FIRE
 D:This tome gives you deeper insights on the works of magic.
 
 N:759:& Tome~ of the Mind
@@ -5765,7 +6172,8 @@ I:111:10:0
 W:50:0:30:25000
 A:50/4
 P:0:1d1:0:0:0
-F:FULL_NAME | EASY_KNOW
+F:EASY_KNOW
+F:FULL_NAME
 D:This tome has no pages; knowledge is transferred to you if you simply
 D:hold it.
 
@@ -5775,7 +6183,8 @@ I:111:20:0
 W:50:0:30:25000
 A:50/4
 P:0:1d1:0:0:0
-F:FULL_NAME | EASY_KNOW
+F:EASY_KNOW
+F:FULL_NAME
 D:This dusty tome is filled with ancient rituals,
 D:designed to uncover all that is hidden.
 
@@ -5785,7 +6194,8 @@ I:111:21:0
 W:50:0:30:25000
 A:50/4
 P:0:1d1:0:0:0
-F:FULL_NAME | EASY_KNOW
+F:EASY_KNOW
+F:FULL_NAME
 D:A large jewel-encrusted tome that transfers
 D:wisdom and understanding to its wearer.
 
@@ -5795,7 +6205,8 @@ I:111:22:0
 W:50:0:30:25000
 A:50/4
 P:0:1d1:0:0:0
-F:FULL_NAME | EASY_KNOW
+F:EASY_KNOW
+F:FULL_NAME
 D:This tome fills you with glorious visions of total devastation.
 D:Anyone in your way shall be destroyed.
 
@@ -5805,7 +6216,9 @@ I:111:11:0
 W:50:0:30:25000
 A:50/4
 P:0:1d1:0:0:0
-F:FULL_NAME | EASY_KNOW | ATTR_MULTI
+F:ATTR_MULTI
+F:EASY_KNOW
+F:FULL_NAME
 D:This singed book smells like burned flesh.  Its power is as evident
 D:as its thirst for your blood.
 
@@ -5815,7 +6228,8 @@ I:111:23:0
 W:50:0:30:25000
 A:50/4
 P:0:1d1:0:0:0
-F:FULL_NAME | EASY_KNOW
+F:EASY_KNOW
+F:FULL_NAME
 D:A black and scarlet flame springs from this tome, issuing
 D:a thunderous roar under which you think you hear the screams of tormented souls.
 
@@ -5825,7 +6239,8 @@ I:111:24:0
 W:50:0:30:25000
 A:50/4
 P:0:1d1:0:0:0
-F:FULL_NAME | EASY_KNOW
+F:EASY_KNOW
+F:FULL_NAME
 
 # for the Library Quest
 # Tome of PLAYER
@@ -5835,8 +6250,15 @@ I:111:61:0
 W:50:0:30:25000
 A:50/4
 P:0:1d1:0:0:0
-F:FULL_NAME | EASY_KNOW | ATTR_MULTI | SPECIAL_GENE
-F:IGNORE_ACID | IGNORE_ELEC | IGNORE_FIRE | IGNORE_COLD | NORM_ART
+F:ATTR_MULTI
+F:EASY_KNOW
+F:FULL_NAME
+F:IGNORE_ACID
+F:IGNORE_COLD
+F:IGNORE_ELEC
+F:IGNORE_FIRE
+F:NORM_ART
+F:SPECIAL_GENE
 D:This book has some of your favourite spells inside.
 
 # The Ring of Phasing -- see artifact list
@@ -5846,7 +6268,8 @@ G:=:d
 I:45:55:0
 W:110:0:2:300000
 A:110/5
-F:INSTA_ART | SPECIAL_GENE
+F:INSTA_ART
+F:SPECIAL_GENE
 
 N:771:[Earth]
 G:?:R
@@ -5874,7 +6297,10 @@ I:114:2:0
 W:50:0:30:2500
 A:50/1
 P:0:1d1:0:0:0
-F:IGNORE_ACID | IGNORE_ELEC | IGNORE_FIRE | IGNORE_COLD
+F:IGNORE_ACID
+F:IGNORE_COLD
+F:IGNORE_ELEC
+F:IGNORE_FIRE
 F:SPECIAL_GENE
 D:A completely translucent gem; as you behold it, you hear a great wind and feel like you're
 D:about to take off and fly away.
@@ -5885,7 +6311,10 @@ I:114:3:0
 W:70:0:30:50000
 A:70/3
 P:0:1d1:0:0:0
-F:IGNORE_ACID | IGNORE_ELEC | IGNORE_FIRE | IGNORE_COLD
+F:IGNORE_ACID
+F:IGNORE_COLD
+F:IGNORE_ELEC
+F:IGNORE_FIRE
 F:SPECIAL_GENE
 D:A large gem, filled with dark blue water. It feels strangely heavy and cold.
 
@@ -5895,7 +6324,10 @@ I:114:4:0
 W:100:0:30:100000
 A:100/3
 P:0:1d1:0:0:0
-F:IGNORE_ACID | IGNORE_ELEC | IGNORE_FIRE | IGNORE_COLD
+F:IGNORE_ACID
+F:IGNORE_COLD
+F:IGNORE_ELEC
+F:IGNORE_FIRE
 F:SPECIAL_GENE
 D:A large gem that seems somehow immaterial and is filled with a strange insubstantial... power?
 
@@ -5908,8 +6340,12 @@ W:90:0:15:150000
 A:100/14
 P:0:1d1:0:0:0
 T:66:1
-F:NORM_ART | FULL_NAME
-F:IGNORE_FIRE | IGNORE_ACID | IGNORE_COLD | IGNORE_ELEC
+F:FULL_NAME
+F:IGNORE_ACID
+F:IGNORE_COLD
+F:IGNORE_ELEC
+F:IGNORE_FIRE
+F:NORM_ART
 D:This rod creates a little hatch, allowing access to your home, no matter how far away the abode
 D:is.
 
@@ -5920,7 +6356,9 @@ I:23:32:1
 W:50:900:45:2000
 A:48/4:60/2:80/1
 P:0:4d4:-2:2:0
-F:IGNORE_ACID | RES_DARK | STEALTH
+F:IGNORE_ACID
+F:RES_DARK
+F:STEALTH
 f:STEALTH
 D:A thin long sword made of a completely black metal, which reflects no light.
 
@@ -5930,7 +6368,8 @@ I:23:31:0
 W:60:1800:50:6000
 A:60/20
 P:0:1d6:4:0:0
-F:SHOW_MODS | VORPAL
+F:SHOW_MODS
+F:VORPAL
 D:A small sword made of a blueish metal with a strangely rough surface. As anything is hurt
 D:with it, the weapon will stick inside the wound and cause horrible wounds when torn away.
 
@@ -5941,7 +6380,9 @@ I:40:17:0
 W:25:0:3:10000
 A:25/1
 a:BA_POIS_4
-F:RES_POIS | DEX | ACTIVATE
+F:ACTIVATE
+F:DEX
+F:RES_POIS
 D:A petrified serpent's tongue, hung on a thin chain to be clasped around your neck. It makes you
 D:like unto snakes, able to wriggle out of tight corners, impervious to poisons and poisonous
 D:yourself.
@@ -5954,9 +6395,14 @@ G:=:d
 I:45:5:0
 W:100:0:2:1
 A:100/100
-F:INVIS | DRAIN_EXP | CURSED | HEAVY_CURSE | CURSE_NO_DROP
+F:CURSED
+F:CURSE_NO_DROP
+F:DRAIN_EXP
+F:FULL_NAME
+F:HEAVY_CURSE
+F:INVIS
+F:SPECIAL_GENE
 f:INVIS
-F:SPECIAL_GENE | FULL_NAME
 
 # To help people climb mountains...
 
@@ -5986,7 +6432,9 @@ I:115:55:0
 W:10:0:150:500
 A:10/1
 P:0:4d6:0:0:0
-F:SHOW_MODS | SLAY_DEMON | WIELD_CAST
+F:SHOW_MODS
+F:SLAY_DEMON
+F:WIELD_CAST
 D:This blade has been taken from the corpse of a demon.
 D:Some demonic energy is still coursing through it, helping
 D:you slay other demons.
@@ -5997,7 +6445,8 @@ I:115:56:0
 W:15:0:70:500
 A:15/1
 P:5:1d1:0:0:0
-F:REGEN | WIELD_CAST
+F:REGEN
+F:WIELD_CAST
 D:This shield has been taken from the corpse of a demon.
 D:Some demonic energy is still coursing through it, giving
 D:life to any that wield it.
@@ -6008,7 +6457,8 @@ I:115:57:0
 W:20:0:30:500
 A:20/1
 P:2:1d1:0:0:0
-F:LITE2 | WIELD_CAST
+F:LITE2
+F:WIELD_CAST
 D:This horn is about six feet long.  Just looking at it makes you nervous.
 
 # XXX
@@ -6092,7 +6542,8 @@ I:80:41:0
 W:90:5:2:60000
 A:90/50
 T:80:40
-F:NORM_ART | FULL_NAME
+F:FULL_NAME
+F:NORM_ART
 D:This food will, once eaten, permanently add 70 HP.
 
 # Scroll of Mass Resurrection - artifact scroll
@@ -6102,8 +6553,12 @@ I:70:43:0
 W:55:0:5:0
 A:55/1
 T:70:1
-F:NORM_ART | FULL_NAME
-F:IGNORE_FIRE | IGNORE_ACID | IGNORE_COLD | IGNORE_ELEC
+F:FULL_NAME
+F:IGNORE_ACID
+F:IGNORE_COLD
+F:IGNORE_ELEC
+F:IGNORE_FIRE
+F:NORM_ART
 D:This magical scroll sends a call to the halls of Mandos, issuing forth all those who have been
 D:slain by the reader.
 
@@ -6133,7 +6588,8 @@ I:24:30:0
 W:70:0:300:6000
 A:70/8
 P:0:5d7:0:0:0
-F:SLAY_ANIMAL | SHOW_MODS
+F:SHOW_MODS
+F:SLAY_ANIMAL
 D:A huge axe, the sort used for slaughtering animals, this weapon is unusually deadly against
 D:natural creatures.
 
@@ -6143,7 +6599,10 @@ I:105:255:0
 W:10:5:2:300
 A:10/3:20/2:30/1:60/1
 P:0:1d1:0:0:0
-F:IGNORE_COLD | IGNORE_ELEC | IGNORE_FIRE | IGNORE_ACID
+F:IGNORE_ACID
+F:IGNORE_COLD
+F:IGNORE_ELEC
+F:IGNORE_FIRE
 D:A small oval stone. One surface is flat, as if something ought to be scratched or inscribed into
 D:it.
 
@@ -6173,7 +6632,12 @@ W:10:10:10:3200
 A:10/200
 P:0:10d10:0:0:0
 T:65:6
-F:RECHARGE | SPECIAL_GENE | EASY_USE | RECHARGED | NORM_ART | FULL_NAME
+F:EASY_USE
+F:FULL_NAME
+F:NORM_ART
+F:RECHARGE
+F:RECHARGED
+F:SPECIAL_GENE
 D:The miner's friend.  This wand was used by Thrain to dig into the
 D:walls of the dungeon.  Its indestructible nature makes it quite useful.
 
@@ -6185,7 +6649,11 @@ W:50:10:10:12000
 P:0:10d4:0:0:0
 A:50/200
 T:55:8
-F:RECHARGE | EASY_USE | RECHARGED | NORM_ART | FULL_NAME
+F:EASY_USE
+F:FULL_NAME
+F:NORM_ART
+F:RECHARGE
+F:RECHARGED
 D:Mithrandir's staff that throws powerful fire attacks at all enemies.  It
 D:can be recharged without blowing up, for it is built to hold
 D:much magical energy.
@@ -6219,7 +6687,11 @@ I:11:7:0
 W:0:0:0:1000
 A:0/1
 P:0:1d1:0:0:0
-F:SPECIAL_GENE | IGNORE_COLD | IGNORE_ELEC | IGNORE_FIRE | IGNORE_ACID
+F:IGNORE_ACID
+F:IGNORE_COLD
+F:IGNORE_ELEC
+F:IGNORE_FIRE
+F:SPECIAL_GENE
 D:Although it looks like a piece of junk, it is actually part of an ancient
 D:relic belonging to Priests of Eru. The relic now lies in pieces, hidden
 D:from all but but his most dedicated followers.
@@ -6230,7 +6702,11 @@ I:11:8:0
 W:0:0:0:1000
 A:0/1
 P:0:1d1:0:0:0
-F:SPECIAL_GENE | IGNORE_COLD | IGNORE_ELEC | IGNORE_FIRE | IGNORE_ACID
+F:IGNORE_ACID
+F:IGNORE_COLD
+F:IGNORE_ELEC
+F:IGNORE_FIRE
+F:SPECIAL_GENE
 D:Although it looks like a piece of junk, it is actually part of an ancient
 D:relic belonging to Priests of Manwe. The relic now lies in pieces, hidden
 D:from all but his most dedicated followers.
@@ -6241,7 +6717,11 @@ I:11:9:0
 W:0:0:0:1000
 A:0/1
 P:0:1d1:0:0:0
-F:SPECIAL_GENE | IGNORE_COLD | IGNORE_ELEC | IGNORE_FIRE | IGNORE_ACID
+F:IGNORE_ACID
+F:IGNORE_COLD
+F:IGNORE_ELEC
+F:IGNORE_FIRE
+F:SPECIAL_GENE
 D:Although it looks like a piece of junk, it is actually part of an ancient
 D:relic belonging to worshippers of Tulkas. The relic now lies in pieces,
 D:hidden from all but his most dedicated followers.
@@ -6252,7 +6732,11 @@ I:11:10:0
 W:0:0:0:1000
 A:0/1
 P:0:1d1:0:0:0
-F:SPECIAL_GENE | IGNORE_COLD | IGNORE_ELEC | IGNORE_FIRE | IGNORE_ACID
+F:IGNORE_ACID
+F:IGNORE_COLD
+F:IGNORE_ELEC
+F:IGNORE_FIRE
+F:SPECIAL_GENE
 D:Although it looks like a piece of junk, it is actually part of an ancient
 D:relic belonging to Dark Priests. The relic now lies in pieces, hidden
 D:from all but the most faithful followers of Melkor.
@@ -6263,7 +6747,11 @@ I:11:11:0
 W:0:0:0:1000
 A:0/1
 P:0:1d1:0:0:0
-F:SPECIAL_GENE | IGNORE_COLD | IGNORE_ELEC | IGNORE_FIRE | IGNORE_ACID
+F:IGNORE_ACID
+F:IGNORE_COLD
+F:IGNORE_ELEC
+F:IGNORE_FIRE
+F:SPECIAL_GENE
 D:Although it looks like a piece of junk, it is actually part of an ancient
 D:relic belonging to Druids. The relic now lies in pieces, hidden
 D:from all but the most faithful followers of Yavanna.

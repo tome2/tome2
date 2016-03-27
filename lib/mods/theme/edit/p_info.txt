@@ -881,7 +881,7 @@ C:B:4:35:3
 C:C:L:H:10000:2:40
 C:P:2:20
 C:Z:detect curses
-C:G:GOD_FRIEND |
+C:G:GOD_FRIEND
 C:E:0:0:0:0:0:0
 C:k:+1000:+900:Magic
 C:k:+0:+600:Spell-power
@@ -1082,7 +1082,13 @@ R:S:0:0:0:0:0:0:0
 R:K:0:0:0:0:0:10:0:0
 R:P:10:100:0:1
 R:E:1:1:1:2:1:1
-R:C:Warrior | Archer | Mage | Rogue | Priest | Loremaster | Pacifist
+R:C:Archer
+R:C:Loremaster
+R:C:Mage
+R:C:Pacifist
+R:C:Priest
+R:C:Rogue
+R:C:Warrior
 
 R:N:1:Half-Elf
 R:D:A crossbreed of elf and human, they get the best of the two races.
@@ -1090,7 +1096,13 @@ R:S:0:1:1:1:-1:1:0
 R:K:2:3:3:1:6:11:-1:5
 R:P:9:110:2:4
 R:E:1:1:1:2:1:1
-R:C:Warrior | Archer | Mage | Rogue | Priest | Loremaster | Pacifist
+R:C:Archer
+R:C:Loremaster
+R:C:Mage
+R:C:Pacifist
+R:C:Priest
+R:C:Rogue
+R:C:Warrior
 R:G:ELF
 R:k:+200:+000:Disarming
 R:k:+300:+000:Magic-Device
@@ -1109,8 +1121,13 @@ R:K:5:6:6:2:8:12:-5:15
 R:P:8:120:3:5
 R:E:1:1:1:2:1:1
 R:R:1:0
-R:F:RES_LITE | 
-R:C:Warrior | Archer | Mage | Priest | Loremaster | Pacifist
+R:F:RES_LITE
+R:C:Archer
+R:C:Loremaster
+R:C:Mage
+R:C:Pacifist
+R:C:Priest
+R:C:Warrior
 R:G:ELF
 R:k:+500:+000:Disarming
 R:k:+600:+000:Magic-Device
@@ -1128,10 +1145,16 @@ R:K:15:18:18:5:12:15:-10:20
 R:P:7:110:4:10
 R:E:1:1:1:2:1:0
 R:Z:create food
-R:G:RESIST_BLACK_BREATH | XTRA_MIGHT_SLING |
+R:G:RESIST_BLACK_BREATH
+R:G:XTRA_MIGHT_SLING
 R:R:1:0
-R:F:SUST_DEX | 
-R:C:Warrior | Archer | Mage | Rogue | Loremaster | Pacifist
+R:F:SUST_DEX
+R:C:Archer
+R:C:Loremaster
+R:C:Mage
+R:C:Pacifist
+R:C:Rogue
+R:C:Warrior
 R:k:+0:+300:Sling-mastery
 R:k:+1500:+000:Disarming
 R:k:+1800:+000:Magic-Device
@@ -1150,8 +1173,11 @@ R:P:8:135:4:13
 R:E:1:1:1:2:1:1
 R:Z:blink
 R:R:1:0
-R:F:FREE_ACT | 
-R:C:Warrior | Mage | Rogue | Pacifist
+R:F:FREE_ACT
+R:C:Mage
+R:C:Pacifist
+R:C:Rogue
+R:C:Warrior
 R:k:+1000:+000:Disarming
 R:k:+1200:+000:Magic-Device
 R:k:+6000:+000:Spirituality
@@ -1169,8 +1195,11 @@ R:P:11:125:5:16
 R:E:1:1:1:2:1:1
 R:Z:find secret passages
 R:R:1:0
-R:F:RES_BLIND | LITE1
-R:C:Warrior | Priest | Pacifist
+R:F:LITE1
+R:F:RES_BLIND
+R:C:Pacifist
+R:C:Priest
+R:C:Warrior
 R:k:+0:+200:Axe-mastery
 R:k:+200:+000:Disarming
 R:k:+900:+000:Magic-Device
@@ -1188,8 +1217,11 @@ R:P:10:110:3:25
 R:E:1:1:1:2:1:1
 R:Z:remove fear
 R:R:1:0
-R:F:RES_DARK | 
-R:C:Warrior | Archer | Rogue | Priest
+R:F:RES_DARK
+R:C:Archer
+R:C:Priest
+R:C:Rogue
+R:C:Warrior
 R:k:-300:+000:Disarming
 R:k:-300:+000:Magic-Device
 R:k:-1000:+000:Spirituality
@@ -1207,9 +1239,9 @@ R:P:12:137:3:22
 R:E:1:1:1:2:1:1
 R:Z:berserk
 R:R:1:0
-R:F:SUST_STR | 
+R:F:SUST_STR
 R:R:15:0
-R:F:REGEN | 
+R:F:REGEN
 R:C:Warrior
 R:k:-500:+000:Disarming
 R:k:-800:+000:Magic-Device
@@ -1228,8 +1260,15 @@ R:K:4:5:5:2:3:13:15:10
 R:P:10:180:0:1
 R:E:1:1:1:2:1:1
 R:R:1:0
-R:F:SUST_CON | REGEN | 
-R:C:Warrior | Archer | Mage | Rogue | Priest | Loremaster | Pacifist
+R:F:REGEN
+R:F:SUST_CON
+R:C:Archer
+R:C:Loremaster
+R:C:Mage
+R:C:Pacifist
+R:C:Priest
+R:C:Rogue
+R:C:Warrior
 R:k:+400:+000:Disarming
 R:k:+500:+000:Magic-Device
 R:k:+2500:+000:Spirituality
@@ -1247,10 +1286,15 @@ R:K:4:20:20:4:3:14:10:25
 R:P:10:200:4:7
 R:E:1:1:1:2:1:1
 R:R:1:0
-R:F:SEE_INVIS | 
-R:F:RES_LITE | 
+R:F:RES_LITE
+R:F:SEE_INVIS
 R:G:ELF
-R:C:Warrior | Archer | Mage | Priest | Loremaster | Pacifist
+R:C:Archer
+R:C:Loremaster
+R:C:Mage
+R:C:Pacifist
+R:C:Priest
+R:C:Warrior
 R:k:+400:+000:Disarming
 R:k:+2000:+000:Magic-Device
 R:k:+10000:+000:Spirituality
@@ -1268,8 +1312,11 @@ R:P:12:130:3:74
 R:E:1:1:1:2:1:1
 R:Z:set explosive rune
 R:R:1:0
-R:F:SUST_STR | RES_DARK | 
-R:C:Warrior | Priest | Pacifist
+R:F:RES_DARK
+R:F:SUST_STR
+R:C:Pacifist
+R:C:Priest
+R:C:Warrior
 R:k:-300:+000:Disarming
 R:k:-500:+000:Magic-Device
 R:k:-2500:+000:Spirituality
@@ -1287,10 +1334,12 @@ R:P:12:150:3:75
 R:E:1:1:1:2:1:1
 R:Z:turn into a bear
 R:R:1:0
-R:F:SUST_STR | 
+R:F:SUST_STR
 R:R:20:1
-R:F:STR | 
-R:C:Warrior | Rogue | Loremaster
+R:F:STR
+R:C:Loremaster
+R:C:Rogue
+R:C:Warrior
 R:k:+1000:+1000:Bearform-combat
 R:k:-600:+000:Disarming
 R:k:-800:+000:Magic-Device
@@ -1312,8 +1361,12 @@ R:P:9:115:0:82
 R:E:1:1:1:2:1:1 
 R:Z:poison dart
 R:R:1:0
-R:F:RES_POIS | 
-R:C:Warrior | Archer | Rogue | Loremaster | Pacifist
+R:F:RES_POIS
+R:C:Archer
+R:C:Loremaster
+R:C:Pacifist
+R:C:Rogue
+R:C:Warrior
 R:k:+0:+250:Boomerang-mastery 
 R:k:-200:+000:Disarming
 R:k:-300:+000:Magic-Device
@@ -1332,8 +1385,11 @@ R:P:11:135:5:87
 R:E:1:1:1:2:1:1
 R:Z:detect doors and traps
 R:R:1:0
-R:F:RES_DARK | RES_DISEN | LITE1
-R:C:Warrior | Rogue
+R:F:LITE1
+R:F:RES_DARK
+R:F:RES_DISEN
+R:C:Rogue
+R:C:Warrior
 R:k:+300:+000:Disarming
 R:k:+500:+000:Magic-Device
 R:k:+5000:+000:Spirituality
@@ -1352,10 +1408,14 @@ R:P:9:150:5:69
 R:E:1:1:1:2:1:1
 R:Z:magic missile
 R:R:1:0
-R:F:RES_DARK | 
+R:F:RES_DARK
 R:R:20:0
-R:F:SEE_INVIS | 
-R:C:Warrior | Archer | Mage | Rogue | Priest
+R:F:SEE_INVIS
+R:C:Archer
+R:C:Mage
+R:C:Priest
+R:C:Rogue
+R:C:Warrior
 R:G:ELF
 R:k:+0:+200:Magic
 R:k:+500:+000:Disarming
@@ -1374,16 +1434,24 @@ R:K:5:5:20:-6:5:4:15:5
 R:P:14:210:5:95
 R:E:1:1:1:2:1:1
 R:Z:grow trees
-R:G:NO_STUN | NO_FOOD |
-R:G:AC_LEVEL | 
+R:G:AC_LEVEL
+R:G:NO_FOOD
+R:G:NO_STUN
 R:R:1:-5
-R:F:SPEED | SENS_FIRE | SLOW_DIGEST | RES_POIS
+R:F:RES_POIS
+R:F:SENS_FIRE
+R:F:SLOW_DIGEST
+R:F:SPEED
 R:R:5:0
-R:F:SEE_INVIS | 
+R:F:SEE_INVIS
 R:R:20:0
-R:F:ESP_ORC | 
-R:F:ESP_TROLL | ESP_EVIL | 
-R:C:Warrior | Priest | Loremaster | Pacifist
+R:F:ESP_EVIL
+R:F:ESP_ORC
+R:F:ESP_TROLL
+R:C:Loremaster
+R:C:Pacifist
+R:C:Priest
+R:C:Warrior
 R:O:70:32:2d3
 R:b:1:Tree walking
 R:k:+0:+200:Barehand-combat
@@ -1405,26 +1473,28 @@ R:P:10:220:0:84
 R:E:1:1:1:2:1:1
 R:Z:Rohan Knight's Powers
 R:R:1:3
-R:F:SPEED | 
+R:F:SPEED
 R:R:5:1
-R:F:SPEED | 
+R:F:SPEED
 R:R:10:1
-R:F:SPEED | 
+R:F:SPEED
 R:R:15:1
-R:F:SPEED | 
+R:F:SPEED
 R:R:20:1
-R:F:SPEED | 
+R:F:SPEED
 R:R:25:1
-R:F:SPEED | 
+R:F:SPEED
 R:R:30:1
-R:F:SPEED | 
+R:F:SPEED
 R:R:35:1
-R:F:SPEED | 
+R:F:SPEED
 R:R:40:1
-R:F:SPEED | 
+R:F:SPEED
 R:R:45:1
-R:F:SPEED | 
-R:C:Warrior | Priest | Pacifist
+R:F:SPEED
+R:C:Pacifist
+R:C:Priest
+R:C:Warrior
 R:k:+1000:+000:Disarming
 R:k:+500:+000:Magic-Device
 R:k:+2500:+000:Spirituality
@@ -1443,25 +1513,29 @@ R:K:6:0:10:-16:30:10:0:0
 R:P:12:300:5:89
 R:E:0:1:0:4:1:1
 R:R:1:0
-R:F:FEATHER | FLY
+R:F:FEATHER
+R:F:FLY
 R:R:4:0
-R:F:ESP_DRAGON |
+R:F:ESP_DRAGON
 R:R:5:0
-R:F:RES_ELEC | 
+R:F:RES_ELEC
 R:R:10:0
-R:F:RES_COLD | 
+R:F:RES_COLD
 R:R:15:0
-R:F:RES_ACID | 
+R:F:RES_ACID
 R:R:17:0
-R:F:RES_FIRE | 
+R:F:RES_FIRE
 R:R:35:0
-R:F:RES_POIS | 
+R:F:RES_POIS
 R:R:45:0
-R:F:IM_ELEC | 
+R:F:IM_ELEC
 R:R:50:0
 R:F:CLIMB
 R:k:+1000:+300:Barehand-combat
-R:C:Loremaster | Mage | Priest | Pacifist
+R:C:Loremaster
+R:C:Mage
+R:C:Pacifist
+R:C:Priest
 R:k:+600:+000:Disarming
 R:k:+000:+000:Magic-Device
 R:k:+5000:+000:Spirituality
@@ -1484,7 +1558,10 @@ R:k:=0:=0:Weaponmastery
 R:k:+0:+400:Barehand-combat
 R:k:=0:=0:Geomancy
 R:F:FLY
-R:C:Loremaster | Mage | Priest | Pacifist
+R:C:Loremaster
+R:C:Mage
+R:C:Pacifist
+R:C:Priest
 #R:G:EVIL
 R:k:+1000:+000:Disarming
 R:k:+500:+000:Magic-Device
@@ -1498,7 +1575,13 @@ R:S:-5:-5:-5:-5:-5:-5:-5
 R:K:-5:-5:-10:0:-5:0:-10:-10
 R:P:6:25:2:29
 R:E:1:1:1:2:1:1
-R:C:Warrior | Archer | Mage | Rogue | Priest | Loremaster | Pacifist
+R:C:Archer
+R:C:Loremaster
+R:C:Mage
+R:C:Pacifist
+R:C:Priest
+R:C:Rogue
+R:C:Warrior
 R:k:-500:+000:Disarming
 R:k:-500:+000:Magic-Device
 R:k:-2500:+000:Spirituality
@@ -1517,10 +1600,16 @@ R:S:2:2:-3:5:0:1:0
 R:K:5:6:6:5:8:12:-5:40
 R:P:7:130:4:5
 R:E:1:1:1:2:1:1
-R:G:XTRA_MIGHT_BOW | 
+R:G:XTRA_MIGHT_BOW
 R:R:1:1
-R:F:XTRA_MIGHT | RES_LITE | 
-R:C:Warrior | Archer | Mage | Priest | Loremaster | Pacifist
+R:F:RES_LITE
+R:F:XTRA_MIGHT
+R:C:Archer
+R:C:Loremaster
+R:C:Mage
+R:C:Pacifist
+R:C:Priest
+R:C:Warrior
 R:G:ELF
 R:k:+0:+200:Archery
 R:b:1:Tree walking
@@ -1543,24 +1632,67 @@ R:P:10:100:0:91
 R:E:1:1:1:2:1:1
 R:G:NO_GOD
 R:R:20:0
-R:F:DRAIN_EXP | 
+R:F:DRAIN_EXP
 R:R:6:1
-R:F:STR | INT | WIS | DEX | CON | CHR | 
+R:F:CHR
+R:F:CON
+R:F:DEX
+R:F:INT
+R:F:STR
+R:F:WIS
 R:R:12:1
-R:F:STR | INT | WIS | DEX | CON | CHR | 
+R:F:CHR
+R:F:CON
+R:F:DEX
+R:F:INT
+R:F:STR
+R:F:WIS
 R:R:18:1
-R:F:STR | INT | WIS | DEX | CON | CHR | 
+R:F:CHR
+R:F:CON
+R:F:DEX
+R:F:INT
+R:F:STR
+R:F:WIS
 R:R:24:1
-R:F:STR | INT | WIS | DEX | CON | CHR | 
+R:F:CHR
+R:F:CON
+R:F:DEX
+R:F:INT
+R:F:STR
+R:F:WIS
 R:R:30:1
-R:F:STR | INT | WIS | DEX | CON | CHR | 
+R:F:CHR
+R:F:CON
+R:F:DEX
+R:F:INT
+R:F:STR
+R:F:WIS
 R:R:36:1
-R:F:STR | INT | WIS | DEX | CON | CHR | 
+R:F:CHR
+R:F:CON
+R:F:DEX
+R:F:INT
+R:F:STR
+R:F:WIS
 R:R:42:1
-R:F:STR | INT | WIS | DEX | CON | CHR | 
+R:F:CHR
+R:F:CON
+R:F:DEX
+R:F:INT
+R:F:STR
+R:F:WIS
 R:R:48:1
-R:F:STR | INT | WIS | DEX | CON | CHR | 
-R:C:Warrior | Archer | Mage | Pacifist
+R:F:CHR
+R:F:CON
+R:F:DEX
+R:F:INT
+R:F:STR
+R:F:WIS
+R:C:Archer
+R:C:Mage
+R:C:Pacifist
+R:C:Warrior
 R:k:+000:+000:Disarming
 R:k:+000:+000:Magic-Device
 R:k:+000:+000:Spirituality
@@ -1580,8 +1712,10 @@ R:S:2:-2:-2:-2:2:-1:-1
 R:K:0:-5:-1:0:0:10:5:5
 R:P:10:140:0:105
 R:E:1:1:1:2:1:1
-R:C:Warrior | Archer
-R:G:XTRA_MIGHT_XBOW | NO_STUN
+R:C:Archer
+R:C:Warrior
+R:G:NO_STUN
+R:G:XTRA_MIGHT_XBOW
 R:R:5:0
 R:F:FREE_ACT
 R:R:15:0
@@ -1614,9 +1748,16 @@ R:K:0:0:0:0:0:0:0:0
 R:P:10:170:3:109
 # Everything at zero here, depends on type of demon.
 R:E:0:0:0:0:0:0
-R:C:Warrior | Archer | Mage | Rogue | Priest | Loremaster
+R:C:Archer
+R:C:Loremaster
+R:C:Mage
+R:C:Priest
+R:C:Rogue
+R:C:Warrior
 R:G:CORRUPT
-R:F:RES_FEAR | HOLD_LIFE | RES_DARK
+R:F:HOLD_LIFE
+R:F:RES_DARK
+R:F:RES_FEAR
 R:Z:spear of darkness
 R:k:+500:+000:Disarming
 R:k:+050:+000:Magic-Device
@@ -1654,10 +1795,28 @@ S:S:0:0:0:0:0:0:0:100
 S:K:0:0:0:0:0:0:0:0
 S:P:0:0:0
 S:E:0:0:0:0:0:0
-S:A:Human | Half-Elf | Elf | Hobbit | Gnome | Dwarf | 
-S:A:Orc | Troll | Dunadan | High-Elf | Half-Ogre | Beorning | 
-S:A:Druadan | Petty-Dwarf | Dark-Elf | Ent | RohanKnight | Eagle | 
-S:A:Yeek | Wood-Elf | Maia | Easterling
+S:A:Beorning
+S:A:Dark-Elf
+S:A:Druadan
+S:A:Dunadan
+S:A:Dwarf
+S:A:Eagle
+S:A:Easterling
+S:A:Elf
+S:A:Ent
+S:A:Gnome
+S:A:Half-Elf
+S:A:Half-Ogre
+S:A:High-Elf
+S:A:Hobbit
+S:A:Human
+S:A:Maia
+S:A:Orc
+S:A:Petty-Dwarf
+S:A:RohanKnight
+S:A:Troll
+S:A:Wood-Elf
+S:A:Yeek
 
 # Just a place holder, the actualy setting are done with corruptions, see
 # corrupt.lua and player.lua
@@ -1668,9 +1827,22 @@ S:S:0:0:0:0:0:0:0:100
 S:K:0:0:0:0:0:0:0:0
 S:P:0:0:0
 S:E:0:0:0:0:0:0
-S:A:Human | Half-Elf | Hobbit | Gnome | Dwarf | Orc |
-S:A:Troll | Dunadan | Half-Ogre | Beorning | Druadan | Petty-Dwarf | 
-S:A:Dark-Elf | RohanKnight | Yeek | Easterling
+S:A:Beorning
+S:A:Dark-Elf
+S:A:Druadan
+S:A:Dunadan
+S:A:Dwarf
+S:A:Easterling
+S:A:Gnome
+S:A:Half-Elf
+S:A:Half-Ogre
+S:A:Hobbit
+S:A:Human
+S:A:Orc
+S:A:Petty-Dwarf
+S:A:RohanKnight
+S:A:Troll
+S:A:Yeek
 S:C:A:Mage
 S:O:70:0:5d3
 S:O:70:32:2d3
@@ -1682,14 +1854,39 @@ S:S:-5:1:1:2:-3:-6:-3:105
 S:K:2:8:7:2:2:7:-5:-2
 S:P:-4:80:3
 S:E:0:0:0:0:0:0
-S:A:Human | Half-Elf | Elf | Hobbit | Gnome | Dwarf | 
-S:A:Orc | Troll | Dunadan | High-Elf | Half-Ogre | Beorning | Easterling | 
-S:A:Druadan | Petty-Dwarf | Dark-Elf | RohanKnight | Yeek | Wood-Elf | 
-S:C:F:Warrior | Archer
-S:G:UNDEAD | NO_CUT | NO_FOOD | SEMI_WRAITH | NO_SUBRACE_CHANGE
+S:A:Beorning
+S:A:Dark-Elf
+S:A:Druadan
+S:A:Dunadan
+S:A:Dwarf
+S:A:Easterling
+S:A:Elf
+S:A:Gnome
+S:A:Half-Elf
+S:A:Half-Ogre
+S:A:High-Elf
+S:A:Hobbit
+S:A:Human
+S:A:Orc
+S:A:Petty-Dwarf
+S:A:RohanKnight
+S:A:Troll
+S:A:Wood-Elf
+S:A:Yeek
+S:C:F:Archer
+S:C:F:Warrior
+S:G:NO_CUT
+S:G:NO_FOOD
+S:G:NO_SUBRACE_CHANGE
+S:G:SEMI_WRAITH
+S:G:UNDEAD
 S:R:1:0
-S:F:SEE_INVIS | HOLD_LIFE | 
-S:F:SLOW_DIGEST | RES_COLD | RES_POIS | RES_NETHER | 
+S:F:HOLD_LIFE
+S:F:RES_COLD
+S:F:RES_NETHER
+S:F:RES_POIS
+S:F:SEE_INVIS
+S:F:SLOW_DIGEST
 S:O:70:32:2d3
 S:k:+200:+000:Disarming
 S:k:+800:+000:Magic-Device
@@ -1706,15 +1903,36 @@ S:S:0:-2:-2:0:1:-4:-3:70
 S:K:-5:-5:5:-1:-1:8:8:0
 S:P:0:45:1
 S:E:0:0:0:0:0:0
-S:A:Human | Half-Elf | Elf | Hobbit | Gnome | Dwarf | 
-S:A:Orc | Troll | Dunadan | High-Elf | Half-Ogre | Beorning | Easterling | 
-S:A:Druadan | Petty-Dwarf | Dark-Elf | RohanKnight | Yeek | Wood-Elf | 
-S:G:UNDEAD | NO_CUT | NO_FOOD | NO_SUBRACE_CHANGE
+S:A:Beorning
+S:A:Dark-Elf
+S:A:Druadan
+S:A:Dunadan
+S:A:Dwarf
+S:A:Easterling
+S:A:Elf
+S:A:Gnome
+S:A:Half-Elf
+S:A:Half-Ogre
+S:A:High-Elf
+S:A:Hobbit
+S:A:Human
+S:A:Orc
+S:A:Petty-Dwarf
+S:A:RohanKnight
+S:A:Troll
+S:A:Wood-Elf
+S:A:Yeek
+S:G:NO_CUT
+S:G:NO_FOOD
+S:G:NO_SUBRACE_CHANGE
+S:G:UNDEAD
 S:R:1:0
-S:F:SEE_INVIS | HOLD_LIFE | 
-S:F:RES_POIS | RES_SHARDS | 
+S:F:HOLD_LIFE
+S:F:RES_POIS
+S:F:RES_SHARDS
+S:F:SEE_INVIS
 S:R:10:0
-S:F:RES_COLD | 
+S:F:RES_COLD
 S:O:70:32:2d3
 S:k:-500:+000:Disarming
 S:k:-500:+000:Magic-Device
@@ -1730,16 +1948,36 @@ S:S:2:-6:-6:1:4:-5:-4:70
 S:K:-2:-2:5:-1:-1:2:5:0
 S:P:3:45:1
 S:E:0:0:0:0:0:0
-S:A:Human | Half-Elf | Elf | Hobbit | Gnome | Dwarf | 
-S:A:Orc | Troll | Dunadan | High-Elf | Half-Ogre | Beorning | Easterling | 
-S:A:Druadan | Petty-Dwarf | Dark-Elf | RohanKnight | Yeek | Wood-Elf | 
+S:A:Beorning
+S:A:Dark-Elf
+S:A:Druadan
+S:A:Dunadan
+S:A:Dwarf
+S:A:Easterling
+S:A:Elf
+S:A:Gnome
+S:A:Half-Elf
+S:A:Half-Ogre
+S:A:High-Elf
+S:A:Hobbit
+S:A:Human
+S:A:Orc
+S:A:Petty-Dwarf
+S:A:RohanKnight
+S:A:Troll
+S:A:Wood-Elf
+S:A:Yeek
 S:C:F:Mage
-S:G:UNDEAD | NO_FOOD | NO_SUBRACE_CHANGE
+S:G:NO_FOOD
+S:G:NO_SUBRACE_CHANGE
+S:G:UNDEAD
 S:R:1:0
-S:F:SEE_INVIS | HOLD_LIFE | 
-S:F:SLOW_DIGEST | RES_POIS | 
+S:F:HOLD_LIFE
+S:F:RES_POIS
+S:F:SEE_INVIS
+S:F:SLOW_DIGEST
 S:R:5:0
-S:F:RES_COLD | 
+S:F:RES_COLD
 S:O:70:32:2d3
 S:k:-200:+000:Disarming
 S:k:-200:+000:Magic-Device
@@ -1755,10 +1993,17 @@ S:S:2:-3:-2:1:1:-3:1:50
 S:K:-2:-10:2:-2:0:1:12:5
 S:P:1:25:0
 S:E:0:0:0:0:0:0
-S:A:Human | Dwarf | Orc | Troll | Half-Ogre | Beorning | Druadan | Easterling
+S:A:Beorning
+S:A:Druadan
+S:A:Dwarf
+S:A:Easterling
+S:A:Half-Ogre
+S:A:Human
+S:A:Orc
+S:A:Troll
 S:C:F:Mage
 S:R:10:0
-S:F:RES_FEAR | 
+S:F:RES_FEAR
 S:k:-200:+000:Disarming
 S:k:-1000:+000:Magic-Device
 S:k:+200:+000:Spirituality
@@ -1774,10 +2019,24 @@ S:S:-3:1:1:-3:-3:1:0:120
 S:K:5:10:5:3:4:10:-5:-5
 S:P:-3:20:1
 S:E:0:0:0:0:0:0
-S:A:Human | Half-Elf | Elf | Hobbit | Gnome | Dwarf |
-S:A:Dunadan | High-Elf | Petty-Dwarf | Dark-Elf | Ent | RohanKnight | 
-S:A:Eagle | Yeek | Wood-Elf | Maia | 
-S:C:F:Warrior | Archer
+S:A:Dark-Elf
+S:A:Dunadan
+S:A:Dwarf
+S:A:Eagle
+S:A:Elf
+S:A:Ent
+S:A:Gnome
+S:A:Half-Elf
+S:A:High-Elf
+S:A:Hobbit
+S:A:Human
+S:A:Maia
+S:A:Petty-Dwarf
+S:A:RohanKnight
+S:A:Wood-Elf
+S:A:Yeek
+S:C:F:Archer
+S:C:F:Warrior
 S:k:+500:+000:Disarming
 S:k:+1000:+000:Magic-Device
 S:k:+500:+000:Spirituality
@@ -1792,11 +2051,22 @@ S:S:0:0:0:0:0:0:0:100
 S:K:0:0:0:0:0:0:0:0
 S:P:0:0:0
 S:E:0:0:0:0:0:0
-S:G:ASTRAL | NO_SUBRACE_CHANGE
+S:G:ASTRAL
+S:G:NO_SUBRACE_CHANGE
 S:R:1:0
 S:F:SEE_INVIS
-S:A:Half-Elf | Elf | High-Elf | Dark-Elf | Wood-Elf | Maia | 
-S:A:Hobbit | Gnome | Dwarf | Petty-Dwarf | Ent | Eagle |
+S:A:Dark-Elf
+S:A:Dwarf
+S:A:Eagle
+S:A:Elf
+S:A:Ent
+S:A:Gnome
+S:A:Half-Elf
+S:A:High-Elf
+S:A:Hobbit
+S:A:Maia
+S:A:Petty-Dwarf
+S:A:Wood-Elf
 S:O:70:32:25d2
 S:O:70:12:25d3
 
@@ -1819,11 +2089,14 @@ S:S:3:0:0:0:0:0:0:100
 S:K:0:0:0:0:-2:2:5:0
 S:P:0:0:1
 S:E:0:0:0:0:0:0
-S:A:Dragon 
-S:C:F:Warrior | Archer
+S:A:Dragon
+S:C:F:Archer
+S:C:F:Warrior
 S:G:NO_SUBRACE_CHANGE
 S:R:1:0
-S:F:SUST_STR | SH_FIRE | RES_FIRE
+S:F:RES_FIRE
+S:F:SH_FIRE
+S:F:SUST_STR
 S:R:5:1
 S:F:STR
 S:R:10:1
@@ -1839,7 +2112,8 @@ S:F:STR
 S:R:45:0
 S:F:IM_FIRE
 S:R:50:1
-S:F:STR | CLIMB
+S:F:CLIMB
+S:F:STR
 S:Z:fire breath
 S:k:+1000:+600:Fire
 
@@ -1852,11 +2126,13 @@ S:S:0:0:0:0:0:3:0:100
 S:K:2:0:1:0:0:0:0:0
 S:P:0:0:0
 S:E:0:0:0:0:0:0
-S:A:Dragon 
-S:C:F:Archer | Warrior
+S:A:Dragon
+S:C:F:Archer
+S:C:F:Warrior
 S:G:NO_SUBRACE_CHANGE
 S:R:1:0
-S:F:SUST_CHR | | RES_ACID
+S:F:RES_ACID
+S:F:SUST_CHR
 S:R:5:1
 S:F:CHR
 S:R:10:1
@@ -1872,7 +2148,8 @@ S:F:CHR
 S:R:45:0
 S:F:IM_ACID
 S:R:50:1
-S:F:CHR | CLIMB
+S:F:CHR
+S:F:CLIMB
 S:Z:spit acid
 S:k:+1000:+600:Water
 
@@ -1885,11 +2162,13 @@ S:S:0:0:0:0:3:0:0:100
 S:K:0:0:2:0:0:0:0:0
 S:P:0:0:0
 S:E:0:0:0:0:0:0
-S:A:Dragon 
-S:C:F:Archer | Warrior
+S:A:Dragon
+S:C:F:Archer
+S:C:F:Warrior
 S:G:NO_SUBRACE_CHANGE
 S:R:1:0
-S:F:SUST_CON | RES_POIS
+S:F:RES_POIS
+S:F:SUST_CON
 S:R:5:1
 S:F:CON
 S:R:10:1
@@ -1903,7 +2182,8 @@ S:F:CON
 S:R:40:1
 S:F:CON
 S:R:50:1
-S:F:CON | CLIMB
+S:F:CLIMB
+S:F:CON
 S:Z:poison dart
 S:k:+1000:+600:Air
 
@@ -1915,11 +2195,14 @@ S:S:0:0:0:3:0:0:0:100
 S:K:3:0:0:2:1:0:0:0
 S:P:0:0:1
 S:E:0:0:0:0:0:0
-S:A:Dragon 
-S:C:F:Archer | Warrior
+S:A:Dragon
+S:C:F:Archer
+S:C:F:Warrior
 S:G:NO_SUBRACE_CHANGE
 S:R:1:0
-S:F:SUST_DEX | RES_ELEC | SH_ELEC
+S:F:RES_ELEC
+S:F:SH_ELEC
+S:F:SUST_DEX
 S:R:5:1
 S:F:DEX
 S:R:10:1
@@ -1935,7 +2218,8 @@ S:F:DEX
 S:R:45:0
 S:F:IM_ELEC
 S:R:50:1
-S:F:DEX | CLIMB
+S:F:CLIMB
+S:F:DEX
 S:Z:dazzle
 S:k:+1000:+600:Earth
 
@@ -1947,11 +2231,14 @@ S:S:0:3:0:0:0:0:0:100
 S:K:0:2:0:0:0:0:0:0
 S:P:0:0:0
 S:E:0:0:0:0:0:0
-S:A:Dragon 
-S:C:F:Archer | Warrior
+S:A:Dragon
+S:C:F:Archer
+S:C:F:Warrior
 S:G:NO_SUBRACE_CHANGE
 S:R:1:0
-S:F:SUST_INT | RES_COLD | SENS_FIRE
+S:F:RES_COLD
+S:F:SENS_FIRE
+S:F:SUST_INT
 S:R:5:1
 S:F:INT
 S:R:10:1
@@ -1967,7 +2254,8 @@ S:F:INT
 S:R:45:0
 S:F:IM_COLD
 S:R:50:1
-S:F:INT | CLIMB
+S:F:CLIMB
+S:F:INT
 S:Z:cold breath
 S:k:+1000:+600:Divination
 
@@ -1980,11 +2268,15 @@ S:S:0:0:3:0:0:0:0:100
 S:K:0:0:1:5:2:2:0:0
 S:P:0:0:3
 S:E:0:0:0:0:0:0
-S:A:Dragon 
-S:C:F:Archer | Warrior
-S:G:NO_SUBRACE_CHANGE | UNDEAD | SEMI_WRAITH
+S:A:Dragon
+S:C:F:Archer
+S:C:F:Warrior
+S:G:NO_SUBRACE_CHANGE
+S:G:SEMI_WRAITH
+S:G:UNDEAD
 S:R:1:0
-S:F:SUST_WIS | HOLD_LIFE
+S:F:HOLD_LIFE
+S:F:SUST_WIS
 S:R:5:1
 S:F:WIS
 S:R:10:1
@@ -1998,7 +2290,8 @@ S:F:WIS
 S:R:40:1
 S:F:WIS
 S:R:50:1
-S:F:WIS | CLIMB
+S:F:CLIMB
+S:F:WIS
 S:Z:chaos breath
 S:k:+1000:+600:Meta
 
@@ -2013,7 +2306,7 @@ S:S:-1:1:1:1:-1:-2:0:100
 S:K:2:0:1:2:2:20:0:0
 S:P:1:20:1
 S:E:1:1:1:2:1:1
-S:A:Demon 
+S:A:Demon
 S:C:F:Priest
 S:G:NO_SUBRACE_CHANGE
 S:R:1:0
@@ -2047,10 +2340,13 @@ S:P:1:0:1
 # R:E:weapons:torso:arms:finger:head:legs
 S:E:0:1:2:4:1:1
 S:A:Demon
-S:C:F:Warrior | Archer | Priest
+S:C:F:Archer
+S:C:F:Priest
+S:C:F:Warrior
 S:G:NO_SUBRACE_CHANGE
 S:R:1:0
-S:F:SUST_CHR | FLY
+S:F:FLY
+S:F:SUST_CHR
 S:R:5:0
 S:F:FREE_ACT
 S:R:10:0
@@ -2074,29 +2370,34 @@ S:S:-1:0:0:0:-1:0:0:100
 S:K:2:0:2:0:5:30:0:0
 S:P:0:-10:2
 S:E:1:1:1:2:1:1
-S:A:Demon 
+S:A:Demon
 S:C:F:Priest
 S:G:NO_SUBRACE_CHANGE
 S:R:5:0
 S:F:ESP_ANIMAL
 S:R:10:1
-S:F:ESP_ORC | SEARCH
+S:F:ESP_ORC
+S:F:SEARCH
 S:R:15:0
 S:F:ESP_TROLL
 S:R:20:1
-S:F:ESP_DRAGON | SEARCH
+S:F:ESP_DRAGON
+S:F:SEARCH
 S:R:25:0
 S:F:ESP_UNDEAD
 S:R:30:1
-S:F:ESP_NONLIVING | SEARCH
+S:F:ESP_NONLIVING
+S:F:SEARCH
 S:R:35:0
 S:F:ESP_EVIL
 S:R:40:1
-S:F:ESP_GOOD | SEARCH
+S:F:ESP_GOOD
+S:F:SEARCH
 S:R:45:0
 S:F:ESP_DEMON
 S:R:50:1
-S:F:ESP_ALL | SEARCH
+S:F:ESP_ALL
+S:F:SEARCH
 S:Z:smell monsters
 S:Z:smell metal
 R:k:+500:+300:Stealth
@@ -2113,23 +2414,31 @@ S:S:2:-1:-2:-2:2:-1:0:100
 S:K:-1:0:0:-8:-2:-10:5:0
 S:P:2:20:0
 S:E:1:1:1:2:1:1
-S:A:Demon 
-S:C:F:Priest | Mage
-S:G:NO_SUBRACE_CHANGE | NO_STUN
+S:A:Demon
+S:C:F:Mage
+S:C:F:Priest
+S:G:NO_STUN
+S:G:NO_SUBRACE_CHANGE
 S:R:1:0
 S:F:RES_POIS
 S:R:10:1
-S:F:RES_FIRE | TUNNEL
+S:F:RES_FIRE
+S:F:TUNNEL
 S:R:20:1
-S:F:RES_ACID | TUNNEL
+S:F:RES_ACID
+S:F:TUNNEL
 S:R:30:1
-S:F:RES_ELEC | TUNNEL
+S:F:RES_ELEC
+S:F:TUNNEL
 S:R:40:1
-S:F:RES_COLD | TUNNEL
+S:F:RES_COLD
+S:F:TUNNEL
 S:R:45:1
-S:F:RES_SHARDS | TUNNEL
+S:F:RES_SHARDS
+S:F:TUNNEL
 S:R:50:1
-S:F:RES_SOUND | TUNNEL
+S:F:RES_SOUND
+S:F:TUNNEL
 S:k:+1000:+500:Boulder-throwing
 S:Z:eat rock
 R:k:-800:+000:Stealth
@@ -2147,8 +2456,11 @@ S:K:0:0:1:-10:2:10:0:0
 S:P:2:10:0
 S:E:1:1:1:2:1:1
 S:A:Demon
-S:C:F:Archer | Priest
-S:G:NO_SUBRACE_CHANGE | NO_STUN | AC_LEVEL
+S:C:F:Archer
+S:C:F:Priest
+S:G:AC_LEVEL
+S:G:NO_STUN
+S:G:NO_SUBRACE_CHANGE
 S:R:1:0
 S:F:RES_POIS
 S:R:1:7
@@ -2176,29 +2488,34 @@ S:S:1:1:1:1:1:-1:0:100
 S:K:2:0:2:-20:5:30:0:0
 S:P:0:-20:2
 S:E:1:1:1:2:1:1
-S:A:Demon 
+S:A:Demon
 S:C:F:Priest
 S:G:NO_SUBRACE_CHANGE
 S:R:4:0
 S:F:ESP_ANIMAL
 S:R:8:1
-S:F:ESP_ORC | SEARCH
+S:F:ESP_ORC
+S:F:SEARCH
 S:R:12:0
 S:F:ESP_TROLL
 S:R:16:1
-S:F:ESP_DRAGON | SEARCH
+S:F:ESP_DRAGON
+S:F:SEARCH
 S:R:20:0
 S:F:ESP_UNDEAD
 S:R:24:1
-S:F:ESP_NONLIVING | SEARCH
+S:F:ESP_NONLIVING
+S:F:SEARCH
 S:R:28:0
 S:F:ESP_EVIL
 S:R:32:1
-S:F:ESP_GOOD | SEARCH
+S:F:ESP_GOOD
+S:F:SEARCH
 S:R:36:0
 S:F:ESP_DEMON
 S:R:40:1
-S:F:ESP_ALL | SEARCH
+S:F:ESP_ALL
+S:F:SEARCH
 S:R:50:0
 S:F:PRECOGNITION
 S:Z:smell monsters
@@ -2222,54 +2539,110 @@ S:K:5:5:5:10:5:50:0:0
 S:P:2:40:3
 S:E:0:1:0:1:1:0
 S:A:Demon
-S:C:F:Warrior | Archer | Priest | Rogue
+S:C:F:Archer
+S:C:F:Priest
+S:C:F:Rogue
+S:C:F:Warrior
 S:G:NO_SUBRACE_CHANGE
 S:R:1:0
-S:F:FEATHER | FREE_ACT | LITE1 | RES_POIS | 
+S:F:FEATHER
+S:F:FREE_ACT
+S:F:LITE1
+S:F:RES_POIS
 S:R:1:0
-S:F:REGEN | SEE_INVIS | SLOW_DIGEST | SUST_CHR |
+S:F:REGEN
+S:F:SEE_INVIS
+S:F:SLOW_DIGEST
+S:F:SUST_CHR
 S:R:1:10
-S:F:SPEED |
+S:F:SPEED
 S:R:5:0
-S:F:ESP_ANIMAL | RES_FIRE | RES_COLD | SUST_WIS |
+S:F:ESP_ANIMAL
+S:F:RES_COLD
+S:F:RES_FIRE
+S:F:SUST_WIS
 S:R:5:1
-S:F:LUCK | SPEED |
+S:F:LUCK
+S:F:SPEED
 S:R:10:0
-S:F:ESP_ORC | RES_ELEC | RES_ACID | SUST_INT | WATER_BREATH |
+S:F:ESP_ORC
+S:F:RES_ACID
+S:F:RES_ELEC
+S:F:SUST_INT
+S:F:WATER_BREATH
 S:R:10:1
-S:F:LUCK | SPEED |
+S:F:LUCK
+S:F:SPEED
 S:R:15:0
-S:F:ESP_TROLL | FLY | RES_CONF | RES_LITE | SUST_CON |
+S:F:ESP_TROLL
+S:F:FLY
+S:F:RES_CONF
+S:F:RES_LITE
+S:F:SUST_CON
 S:R:15:1
-S:F:LUCK | SPEED | SPELL |
+S:F:LUCK
+S:F:SPEED
+S:F:SPELL
 S:R:20:0
-S:F:ESP_DRAGON | ESP_GIANT | LITE2 | RES_BLIND | SUST_DEX |
+S:F:ESP_DRAGON
+S:F:ESP_GIANT
+S:F:LITE2
+S:F:RES_BLIND
+S:F:SUST_DEX
 S:R:20:1
-S:F:LUCK | SPEED |
+S:F:LUCK
+S:F:SPEED
 S:R:25:0
-S:F:ESP_UNDEAD | ESP_NONLIVING | RES_DISEN | RES_CHAOS | SUST_STR |
+S:F:ESP_NONLIVING
+S:F:ESP_UNDEAD
+S:F:RES_CHAOS
+S:F:RES_DISEN
+S:F:SUST_STR
 S:R:25:1
-S:F:LUCK | SPEED |
+S:F:LUCK
+S:F:SPEED
 S:R:30:0
-S:F:ESP_EVIL | ESP_DEMON | RES_SOUND |
+S:F:ESP_DEMON
+S:F:ESP_EVIL
+S:F:RES_SOUND
 S:R:30:1
-S:F:LUCK | SPEED | SPELL |
+S:F:LUCK
+S:F:SPEED
+S:F:SPELL
 S:R:35:0
-S:F:CLIMB | ESP_GOOD | ESP_THUNDERLORD | RES_SHARDS |
+S:F:CLIMB
+S:F:ESP_GOOD
+S:F:ESP_THUNDERLORD
+S:F:RES_SHARDS
 S:R:35:1
-S:F:LUCK | SPEED |
+S:F:LUCK
+S:F:SPEED
 S:R:40:0
-S:F:ESP_UNIQUE | LITE3 | PRECOGNITION | RES_NEXUS | RES_NETHER |
+S:F:ESP_UNIQUE
+S:F:LITE3
+S:F:PRECOGNITION
+S:F:RES_NETHER
+S:F:RES_NEXUS
 S:R:40:1
-S:F:LUCK | SPEED |
+S:F:LUCK
+S:F:SPEED
 S:R:45:0
-S:F:ESP_ALL | IM_ACID | IM_ELEC | IM_FIRE | IM_COLD | MAGIC_BREATH |
+S:F:ESP_ALL
+S:F:IM_ACID
+S:F:IM_COLD
+S:F:IM_ELEC
+S:F:IM_FIRE
+S:F:MAGIC_BREATH
 S:R:45:1
-S:F:SPEED | SPELL |
+S:F:SPEED
+S:F:SPELL
 S:R:50:0
-S:F:IM_NETHER | REFLECT | WRAITH |
+S:F:IM_NETHER
+S:F:REFLECT
+S:F:WRAITH
 S:R:50:1
-S:F:LUCK | SPEED |
+S:F:LUCK
+S:F:SPEED
 R:k:+25000:+500:Stealth
 R:k:+2000:+200:Sneakiness
 R:k:+2000:+300:Magic-Device
@@ -2282,7 +2655,7 @@ S:S:-2:1:1:3:-1:-1:2:150
 S:K:2:2:2:2:2:30:0:0
 S:P:1:50:2
 S:E:1:1:1:2:1:1
-S:A:Demon 
+S:A:Demon
 S:C:F:Priest
 S:G:NO_SUBRACE_CHANGE
 S:R:1:0
@@ -2309,15 +2682,19 @@ S:S:2:1:1:-1:2:1:1:100
 S:K:0:0:4:-3:0:10:10:10
 S:P:2:30:0
 S:E:1:1:1:2:1:1
-S:A:Demon 
-S:C:F:Priest | Mage
+S:A:Demon
+S:C:F:Mage
+S:C:F:Priest
 S:G:NO_SUBRACE_CHANGE
 S:R:5:0
-S:F:RES_FIRE | RES_COLD
+S:F:RES_COLD
+S:F:RES_FIRE
 S:R:10:0
-S:F:RES_ELEC | RES_ACID
+S:F:RES_ACID
+S:F:RES_ELEC
 S:R:15:0
-S:F:RES_POIS | RES_CONF
+S:F:RES_CONF
+S:F:RES_POIS
 S:k:+1000:+100:Combat
 S:k:+1000:+100:Weaponmastery
 R:k:+1000:+100:Archery
@@ -2336,11 +2713,14 @@ S:S:1:1:1:1:1:1:0:150
 S:K:1:1:1:1:1:20:15:10
 S:P:3:50:2
 S:E:1:1:1:2:1:1
-S:A:Demon 
-S:C:F:Priest | Loremaster | Rogue
+S:A:Demon
+S:C:F:Loremaster
+S:C:F:Priest
+S:C:F:Rogue
 S:G:NO_SUBRACE_CHANGE
 S:R:1:0
-S:F:IM_FIRE | SH_FIRE
+S:F:IM_FIRE
+S:F:SH_FIRE
 S:k:+0:+300:Combat
 S:k:+0:+300:Magic
 S:Z:turn into a Balrog
