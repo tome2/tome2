@@ -678,19 +678,13 @@
 
 /*** Artifact indexes (see "lib/edit/a_info.txt") ***/
 
-#define ART_PALANTIR                    202
 #define ART_ANCHOR                      14
 #define ART_POWER                       13
-#define ART_MARDA               26
 #define ART_MORGOTH                     34
 #define ART_NARSIL              164
-#define ART_CALRIS                      71
 #define ART_GLAMDRING           73
 #define ART_ANDURIL                     83
-#define ART_ANGUIREL            84
-#define ART_NIMLOTH                     99
 #define ART_GROND                       111
-#define ART_GOTHMOG                     123
 
 /* Spell for various object */
 #define SPELL_ID_PLAIN          1

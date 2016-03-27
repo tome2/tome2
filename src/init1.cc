@@ -5769,6 +5769,25 @@ errr init_r_info_txt(FILE *fp)
 			continue;
 		}
 
+		/* Process 'A' for standard artifact drop (one line only) */
+		if (buf[0] == 'A')
+		{
+			int artifact_idx;
+			int artifact_chance;
+
+			/* Scan for values */
+			if (2 != sscanf(buf + 2, "%d:%d",
+					&artifact_idx,
+					&artifact_chance)) return (1);
+
+			/* Save the values */
+			r_ptr->artifact_idx = artifact_idx;
+			r_ptr->artifact_chance = artifact_chance;
+
+			/* Next... */
+			continue;
+		}
+
 		/* Process 'W' for "More Info" (one line only) */
 		if (buf[0] == 'W')
 		{

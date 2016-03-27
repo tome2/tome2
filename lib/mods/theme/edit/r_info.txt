@@ -130,6 +130,7 @@
 # S: spell frequency |
 # S: spell type | spell type | etc
 # D: Description
+# A: a_ptr_index : %chance
 
 # 'N' indicates the beginning of an entry. The serial number must
 # increase for each new item. Entry 0 is used for the player.
@@ -18728,6 +18729,7 @@ I:130:80d30:20:100:60
 W:49:2:1400:25000
 E:1:1:1:2:1:1
 O:10:40:40:10
+A:84:50
 B:HIT:HURT:3d8
 B:HIT:HURT:3d8
 B:HIT:HURT:3d8
@@ -22496,6 +22498,7 @@ I:120:70d100:100:100:0
 W:60:1:1600:35000
 E:1:1:1:2:1:1
 O:0:0:100:0
+A:202:30
 B:HIT:UN_BONUS:6d8
 B:HIT:UN_BONUS:6d8
 B:HIT:HURT:5d5
@@ -23298,6 +23301,7 @@ I:130:100d85:100:100:50
 W:75:6:420000:35000
 E:1:1:1:2:1:1
 O:50:50:0:0
+A:26:50
 B:HIT:HURT:12d15
 B:HIT:HURT:12d15
 B:HIT:HURT:12d15
@@ -25666,6 +25670,7 @@ I:130:120d100:100:140:0
 W:95:1:17000:43000
 E:1:1:1:2:1:1
 O:0:100:0:0
+A:123:50
 B:HIT:FIRE:9d12
 B:HIT:FIRE:9d12
 B:CRUSH:HURT:8d12
@@ -26265,6 +26270,7 @@ I:130:30d100:20:100:80
 W:50:3:13000:30000
 E:1:1:1:2:1:1
 O:0:50:50:0
+A:71:60
 B:HIT:FIRE:6d12
 B:HIT:FIRE:6d12
 B:CRUSH:HURT:5d12
