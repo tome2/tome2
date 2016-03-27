@@ -5,6 +5,7 @@ lib*.a
 *.#*
 CMakeFiles
 CMakeCache.txt
+CMakeLists.txt.user
 cmake_install.cmake
 install_manifest.txt
 Makefile
