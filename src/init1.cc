@@ -507,7 +507,7 @@ static cptr r_info_flags9[] =
 /*
  * Object flags
  */
-cptr k_info_flags1[] =
+static cptr k_info_flags1[] =
 {
 	"STR",
 	"INT",
@@ -546,7 +546,7 @@ cptr k_info_flags1[] =
 /*
  * Object flags
  */
-cptr k_info_flags2[] =
+static cptr k_info_flags2[] =
 {
 	"SUST_STR",
 	"SUST_INT",
@@ -585,7 +585,7 @@ cptr k_info_flags2[] =
 /*
  * Trap flags
  */
-cptr k_info_flags2_trap[] =
+static cptr k_info_flags2_trap[] =
 {
 	"AUTOMATIC_5",
 	"AUTOMATIC_99",
@@ -625,7 +625,7 @@ cptr k_info_flags2_trap[] =
 /*
  * Object flags
  */
-cptr k_info_flags3[] =
+static cptr k_info_flags3[] =
 {
 	"SH_FIRE",
 	"SH_ELEC",
@@ -664,7 +664,7 @@ cptr k_info_flags3[] =
 /*
  * Object flags
  */
-cptr k_info_flags4[] =
+static cptr k_info_flags4[] =
 {
 	"NEVER_BLOW",
 	"PRECOGNITION",
@@ -703,7 +703,7 @@ cptr k_info_flags4[] =
 /*
  * Object flags
  */
-cptr k_info_flags5[] =
+static cptr k_info_flags5[] =
 {
 	"TEMPORARY",
 	"DRAIN_MANA",
@@ -742,7 +742,7 @@ cptr k_info_flags5[] =
 /*
  * ESP flags
  */
-cptr esp_flags[] =
+static cptr esp_flags[] =
 {
 	"ESP_ORC",
 	"ESP_TROLL",
@@ -1011,7 +1011,7 @@ static cptr st_info_flags1[] =
 /*
  * Race flags
  */
-cptr rp_info_flags1[] =
+static cptr rp_info_flags1[] =
 {
 	"EXPERIMENTAL",
 	"XXX",
@@ -1050,7 +1050,7 @@ cptr rp_info_flags1[] =
 /*
  * Race flags
  */
-cptr rp_info_flags2[] =
+static cptr rp_info_flags2[] =
 {
 	"XXX",
 	"ASTRAL",
