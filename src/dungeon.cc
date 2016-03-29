@@ -2566,7 +2566,7 @@ static void process_world(void)
 	}
 	if ((dungeon_flags2 & DF2_NO_BREATH) && (!p_ptr->magical_breath))
 	{
-		cmsg_print(TERM_L_RED, "There is no air there!  You suffocate!");
+		cmsg_print(TERM_L_RED, "There is no air here!  You suffocate!");
 		take_hit(damroll(3, p_ptr->lev), "suffocating");
 	}
 

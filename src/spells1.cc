@@ -886,7 +886,7 @@ void teleport_player_level(void)
 	}
 	if (dungeon_flags2 & DF2_NO_EASY_MOVE)
 	{
-		msg_print("Some powerfull force prevents your from teleporting.");
+		msg_print("Some powerful force prevents your from teleporting.");
 		return;
 	}
 
