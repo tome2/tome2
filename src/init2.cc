@@ -436,7 +436,7 @@ namespace {
 
 		static void allocate()
 		{
-			d_info = make_array<dungeon_info_type>(max_d_idx);
+			d_info = new dungeon_info_type[max_d_idx];
 		}
 
 		static errr parse(FILE *fp)
