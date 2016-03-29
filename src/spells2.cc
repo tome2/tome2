@@ -12,6 +12,7 @@
 #include "cave_type.hpp"
 #include "cmd1.hpp"
 #include "cmd7.hpp"
+#include "dungeon_flag.hpp"
 #include "dungeon_info_type.hpp"
 #include "feature_type.hpp"
 #include "files.hpp"
@@ -2622,13 +2623,13 @@ void stair_creation(void)
 		return;
 	}
 
-	if (dungeon_flags1 & DF1_FLAT)
+	if (dungeon_flags & DF_FLAT)
 	{
 		msg_print("No stair creation in non dungeons...");
 		return;
 	}
 
-	if (dungeon_flags2 & DF2_SPECIAL)
+	if (dungeon_flags & DF_SPECIAL)
 	{
 		msg_print("No stair creation on special levels...");
 		return;
@@ -4096,7 +4097,7 @@ bool_ genocide(bool_ player_cast)
 {
 	char typ;
 
-	if (dungeon_flags2 & DF2_NO_GENO) return (FALSE);
+	if (dungeon_flags & DF_NO_GENO) return (FALSE);
 
 	/* Hack -- when you are fated to die, you cant cheat :) */
 	if (dungeon_type == DUNGEON_DEATH)
@@ -4122,7 +4123,7 @@ bool_ mass_genocide(bool_ player_cast)
 	int msec = delay_factor * delay_factor * delay_factor;
 	int dam = 0;
 
-	if (dungeon_flags2 & DF2_NO_GENO) return (FALSE);
+	if (dungeon_flags & DF_NO_GENO) return (FALSE);
 
 	/* Hack -- when you are fated to die, you cant cheat :) */
 	if (dungeon_type == DUNGEON_DEATH)
@@ -4324,7 +4325,7 @@ void destroy_area(int y1, int x1, int r)
 	bool_ flag = FALSE;
 
 
-	if (dungeon_flags2 & DF2_NO_GENO)
+	if (dungeon_flags & DF_NO_GENO)
 	{
 		msg_print("Not on special levels!");
 		return;
@@ -6156,7 +6157,7 @@ bool_ passwall(int dir, bool_ safe)
 
 	if (p_ptr->wild_mode) return FALSE;
 	if (p_ptr->inside_quest) return FALSE;
-	if (dungeon_flags2 & DF2_NO_TELEPORT) return FALSE;
+	if (dungeon_flags & DF_NO_TELEPORT) return FALSE;
 
 	/* Must go somewhere */
 	if (dir == 5) return FALSE;
@@ -6305,7 +6306,7 @@ static int reset_recall_aux()
 	for (size_t i = 1; i < max_d_idx; i++)
 	{
 		/* skip "blocked" dungeons */
-		if (d_info[i].flags1 & DF1_NO_RECALL) continue;
+		if (d_info[i].flags & DF_NO_RECALL) continue;
 
 		if (max_dlv[i])
 		{
@@ -6372,7 +6373,7 @@ static int reset_recall_aux()
 				msg_print(NULL);
 				continue;
 			}
-			else if (d_info[i].flags1 & DF1_NO_RECALL)
+			else if (d_info[i].flags & DF_NO_RECALL)
 			{
 				msg_print("This place blocks my magic!");
 				msg_print(NULL);
@@ -6457,7 +6458,7 @@ void create_between_gate(int dist, int y, int x)
 {
 	int ii, ij, plev = get_skill(SKILL_CONVEYANCE);
 
-	if (dungeon_flags2 & DF2_NO_TELEPORT)
+	if (dungeon_flags & DF_NO_TELEPORT)
 	{
 		msg_print("Not on special levels!");
 		return;

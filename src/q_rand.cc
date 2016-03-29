@@ -3,6 +3,7 @@
 #include "artifact_type.hpp"
 #include "cave.hpp"
 #include "cave_type.hpp"
+#include "dungeon_flag.hpp"
 #include "dungeon_info_type.hpp"
 #include "generate.hpp"
 #include "hook_build_room1_in.hpp"
@@ -84,7 +85,7 @@ void initialize_random_quests(int n)
 		{
 			dungeon_info_type *d_ptr = &d_info[j];
 
-			if (!(d_ptr->flags1 & DF1_PRINCIPAL)) continue;
+			if (!(d_ptr->flags & DF_PRINCIPAL)) continue;
 
 			if ((d_ptr->mindepth <= rl) && (rl <= d_ptr->maxdepth))
 			{
@@ -408,7 +409,7 @@ static bool_ quest_random_death_hook(void *, void *in_, void *)
 	s32b m_idx = in->m_idx;
 	int r_idx = m_list[m_idx].r_idx;
 
-	if (!(dungeon_flags1 & DF1_PRINCIPAL)) return (FALSE);
+	if (!(dungeon_flags & DF_PRINCIPAL)) return (FALSE);
 	if ((dun_level < 1) || (dun_level >= MAX_RANDOM_QUEST)) return (FALSE);
 	if (!random_quests[dun_level].type) return (FALSE);
 	if (random_quests[dun_level].done) return (FALSE);
@@ -439,7 +440,7 @@ static bool_ quest_random_turn_hook(void *, void *, void *)
 
 static bool_ quest_random_feeling_hook(void *, void *, void *)
 {
-	if (!(dungeon_flags1 & DF1_PRINCIPAL)) return (FALSE);
+	if (!(dungeon_flags & DF_PRINCIPAL)) return (FALSE);
 	if ((dun_level < 1) || (dun_level >= MAX_RANDOM_QUEST)) return (FALSE);
 	if (!random_quests[dun_level].type) return (FALSE);
 	if (random_quests[dun_level].done) return (FALSE);
@@ -460,7 +461,7 @@ static bool_ quest_random_gen_hero_hook(void *, void *, void *)
 {
 	int i;
 
-	if (!(dungeon_flags1 & DF1_PRINCIPAL)) return (FALSE);
+	if (!(dungeon_flags & DF_PRINCIPAL)) return (FALSE);
 	if ((dun_level < 1) || (dun_level >= MAX_RANDOM_QUEST)) return (FALSE);
 	if (!random_quests[dun_level].type) return (FALSE);
 	if (random_quests[dun_level].done) return (FALSE);
@@ -498,7 +499,7 @@ static bool_ quest_random_gen_hook(void *, void *in_, void *)
 	int y2, x2, yval, xval;
 	int y1, x1, xsize, ysize;
 
-	if (!(dungeon_flags1 & DF1_PRINCIPAL)) return (FALSE);
+	if (!(dungeon_flags & DF_PRINCIPAL)) return (FALSE);
 	if ((dun_level < 1) || (dun_level >= MAX_RANDOM_QUEST)) return (FALSE);
 	if (!random_quests[dun_level].type) return (FALSE);
 	if (random_quests[dun_level].done) return (FALSE);
@@ -620,7 +621,7 @@ std::string quest_random_describe()
 {
 	// Only emit description if we're actually on a
 	// random quest level.
-	if (!(dungeon_flags1 & DF1_PRINCIPAL)) return "";
+	if (!(dungeon_flags & DF_PRINCIPAL)) return "";
 	if ((dun_level < 1) || (dun_level >= MAX_RANDOM_QUEST)) return "";
 	if (!random_quests[dun_level].type) return "";
 	if (random_quests[dun_level].done) return "";

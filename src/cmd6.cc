@@ -14,6 +14,7 @@
 #include "cmd1.hpp"
 #include "cmd7.hpp"
 #include "corrupt.hpp"
+#include "dungeon_flag.hpp"
 #include "dungeon_info_type.hpp"
 #include "ego_item_type.hpp"
 #include "files.hpp"
@@ -3127,7 +3128,7 @@ void do_cmd_read_scroll(void)
 
 		case SV_SCROLL_WORD_OF_RECALL:
 			{
-				if ((dungeon_flags2 & DF2_ASK_LEAVE) && !get_check("Leave this unique level forever? "))
+				if ((dungeon_flags & DF_ASK_LEAVE) && !get_check("Leave this unique level forever? "))
 				{
 					used_up = FALSE;
 				}
@@ -4301,7 +4302,7 @@ void do_cmd_zap_rod(void)
 
 	case SV_ROD_RECALL:
 		{
-			if ((dungeon_flags2 & DF2_ASK_LEAVE) && !get_check("Leave this unique level forever? "))
+			if ((dungeon_flags & DF_ASK_LEAVE) && !get_check("Leave this unique level forever? "))
 			{
 				use_charge = FALSE;
 			}
@@ -6849,7 +6850,7 @@ const char *activation_aux(object_type * o_ptr, bool_ doit, int item)
 	case ACT_DIM_DOOR:
 		{
 			if (!doit) return "dimension door every 100 turns";
-			if (dungeon_flags2 & DF2_NO_TELEPORT)
+			if (dungeon_flags & DF_NO_TELEPORT)
 			{
 				msg_print("Not on special levels!");
 				break;
@@ -6892,7 +6893,7 @@ const char *activation_aux(object_type * o_ptr, bool_ doit, int item)
 
 	case ACT_RECALL:
 		{
-			if (!(dungeon_flags2 & DF2_ASK_LEAVE) || ((dungeon_flags2 & DF2_ASK_LEAVE) && !get_check("Leave this unique level forever? ")))
+			if (!(dungeon_flags & DF_ASK_LEAVE) || ((dungeon_flags & DF_ASK_LEAVE) && !get_check("Leave this unique level forever? ")))
 			{
 				if (!doit) return "word of recall every 200 turns";
 				msg_print("It glows soft white...");

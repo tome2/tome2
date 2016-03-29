@@ -1,6 +1,7 @@
 #include "q_god.hpp"
 
 #include "cave_type.hpp"
+#include "dungeon_flag.hpp"
 #include "dungeon_info_type.hpp"
 #include "feature_type.hpp"
 #include "hook_chardump_in.hpp"
@@ -450,13 +451,17 @@ static void quest_god_set_god_dungeon_attributes_eru()
 
 	/* F: A large pillar, with stairs created at edges. (You can't
 	 * climb a rock through the middle, can you?) */
-	d_info[DUNGEON_GOD].flags1 =
-		DF1_BIG | DF1_NO_DOORS | DF1_CIRCULAR_ROOMS |
-		DF1_EMPTY | DF1_TOWER | DF1_FLAT | DF1_ADJUST_LEVEL_2;
-	d_info[DUNGEON_GOD].flags2 =
-		DF2_ADJUST_LEVEL_1_2 |
-		DF2_NO_SHAFT |
-		DF2_ADJUST_LEVEL_PLAYER;
+	d_info[DUNGEON_GOD].flags =
+		DF_BIG |
+		DF_NO_DOORS |
+		DF_CIRCULAR_ROOMS |
+		DF_EMPTY |
+		DF_TOWER |
+		DF_FLAT |
+		DF_ADJUST_LEVEL_2 |
+		DF_ADJUST_LEVEL_1_2 |
+		DF_NO_SHAFT |
+		DF_ADJUST_LEVEL_PLAYER;
 
 	/* R: */
 	d_info[DUNGEON_GOD].rules[0].mode = 3;
@@ -505,11 +510,13 @@ static void quest_god_set_god_dungeon_attributes_manwe()
 
 	/* F: It's open, goes up like a tower, give it a few
 	 * interesting rooms, make the monsters hard(ish). */
-	d_info[DUNGEON_GOD].flags1 =
-		DF1_NO_DOORS | DF1_TOWER |
-		DF1_CAVERN | DF1_ADJUST_LEVEL_2;
-	d_info[DUNGEON_GOD].flags2 =
-		DF2_NO_SHAFT | DF2_ADJUST_LEVEL_PLAYER;
+	d_info[DUNGEON_GOD].flags =
+		DF_NO_DOORS |
+		DF_TOWER |
+		DF_CAVERN |
+		DF_ADJUST_LEVEL_2 |
+		DF_NO_SHAFT |
+		DF_ADJUST_LEVEL_PLAYER;
 
 	/* R: */
 	d_info[DUNGEON_GOD].rules[0].mode = 3;
@@ -564,8 +571,10 @@ static void quest_god_set_god_dungeon_attributes_tulkas()
 	d_info[DUNGEON_GOD].objs.tools = 15;
 
 	/* F: fairly standard */
-	d_info[DUNGEON_GOD].flags1 = DF1_NO_DESTROY | DF1_ADJUST_LEVEL_2;
-	d_info[DUNGEON_GOD].flags2 = DF2_ADJUST_LEVEL_PLAYER;
+	d_info[DUNGEON_GOD].flags =
+		DF_NO_DESTROY |
+		DF_ADJUST_LEVEL_2 |
+		DF_ADJUST_LEVEL_PLAYER;
 
 	/* R: */
 	d_info[DUNGEON_GOD].rules[0].mode = 3;
@@ -609,8 +618,12 @@ static void quest_god_set_god_dungeon_attributes_melkor()
 	d_info[DUNGEON_GOD].objs.tools = 25;
 
 	/* F: Small, lava rivers, nasty monsters hehehehehe */
-	d_info[DUNGEON_GOD].flags1 = DF1_SMALL | DF1_LAVA_RIVERS | DF1_ADJUST_LEVEL_1;
-	d_info[DUNGEON_GOD].flags2 = DF2_ADJUST_LEVEL_1_2 | DF2_ADJUST_LEVEL_PLAYER;
+	d_info[DUNGEON_GOD].flags =
+		DF_SMALL |
+		DF_LAVA_RIVERS |
+		DF_ADJUST_LEVEL_1 |
+		DF_ADJUST_LEVEL_1_2 |
+		DF_ADJUST_LEVEL_PLAYER;
 
 	/* R: No restrictions on monsters here */
 	d_info[DUNGEON_GOD].rules[0].mode = 0;
@@ -655,13 +668,16 @@ static void quest_god_set_god_dungeon_attributes_yavanna()
 	d_info[DUNGEON_GOD].objs.tools = 40;
 
 	/* F: Natural looking */
-	d_info[DUNGEON_GOD].flags1 =
-		DF1_NO_DOORS | DF1_WATER_RIVERS |
-		DF1_NO_DESTROY | DF1_ADJUST_LEVEL_1 | 
-		DF1_NO_RECALL;
-	d_info[DUNGEON_GOD].flags2 =
-		DF2_ADJUST_LEVEL_1_2 | DF2_NO_SHAFT |
-		DF2_NO_GENO | DF2_ADJUST_LEVEL_PLAYER;
+	d_info[DUNGEON_GOD].flags =
+		DF_NO_DOORS |
+		DF_WATER_RIVERS |
+		DF_NO_DESTROY |
+		DF_ADJUST_LEVEL_1 |
+		DF_NO_RECALL |
+		DF_ADJUST_LEVEL_1_2 |
+		DF_NO_SHAFT |
+		DF_NO_GENO |
+		DF_ADJUST_LEVEL_PLAYER;
 
 	/* R: Demons, Undead, non-living */
 	d_info[DUNGEON_GOD].rules[0].mode = 3;
@@ -703,9 +719,11 @@ static void quest_god_set_god_dungeon_attributes_aule()
 
 	/* F: Small, no destroyed levels, min monster level = dungeon
 	 * level */
-	d_info[DUNGEON_GOD].flags1 = 
-		DF1_SMALL | DF1_NO_DESTROY |
-		DF1_ADJUST_LEVEL_1 | DF1_NO_STREAMERS;
+	d_info[DUNGEON_GOD].flags =
+		DF_SMALL |
+		DF_NO_DESTROY |
+		DF_ADJUST_LEVEL_1 |
+		DF_NO_STREAMERS;
 
 	/* R: No restrictions on monsters here */
 	d_info[DUNGEON_GOD].rules[0].mode = 0;
@@ -743,11 +761,13 @@ static void quest_god_set_god_dungeon_attributes_varda()
 
 	/* F: It's open, goes up like a tower, give it a few
 	 * interesting rooms, make the monsters hard(ish). */
-	d_info[DUNGEON_GOD].flags1 =
-		DF1_NO_DOORS | DF1_TOWER |
-		DF1_CAVERN | DF1_ADJUST_LEVEL_1;
-	d_info[DUNGEON_GOD].flags2 =
-		DF2_NO_SHAFT | DF2_ADJUST_LEVEL_PLAYER;
+	d_info[DUNGEON_GOD].flags =
+		DF_NO_DOORS |
+		DF_TOWER |
+		DF_CAVERN |
+		DF_ADJUST_LEVEL_1 |
+		DF_NO_SHAFT |
+		DF_ADJUST_LEVEL_PLAYER;
 
 	/* R: */
 	d_info[DUNGEON_GOD].rules[0].mode = 3;
@@ -795,8 +815,10 @@ static void quest_god_set_god_dungeon_attributes_ulmo()
 	d_info[DUNGEON_GOD].objs.tools = 5;
 
 	/* F: fairly standard */
-	d_info[DUNGEON_GOD].flags1 = DF1_NO_DESTROY | DF1_ADJUST_LEVEL_2;
-	d_info[DUNGEON_GOD].flags2 = DF2_ADJUST_LEVEL_PLAYER;
+	d_info[DUNGEON_GOD].flags =
+		DF_NO_DESTROY |
+		DF_ADJUST_LEVEL_2 |
+		DF_ADJUST_LEVEL_PLAYER;
 
 	/* R: */
 	d_info[DUNGEON_GOD].rules[0].mode = 3;
@@ -838,8 +860,10 @@ static void quest_god_set_god_dungeon_attributes_mandos()
 	d_info[DUNGEON_GOD].objs.tools = 15;
 
 	/* F: fairly standard */
-	d_info[DUNGEON_GOD].flags1 = DF1_NO_DESTROY | DF1_ADJUST_LEVEL_2;
-	d_info[DUNGEON_GOD].flags2 = DF2_ADJUST_LEVEL_PLAYER;
+	d_info[DUNGEON_GOD].flags =
+		DF_NO_DESTROY |
+		DF_ADJUST_LEVEL_2 |
+		DF_ADJUST_LEVEL_PLAYER;
 
 	/* R: */
 	d_info[DUNGEON_GOD].rules[0].mode = 3;

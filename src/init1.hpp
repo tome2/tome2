@@ -1,6 +1,7 @@
 #pragma once
 
 #include "h-basic.h"
+#include "dungeon_flag_set.hpp"
 
 extern int color_char_to_attr(char c);
 extern byte conv_color[16];
@@ -22,5 +23,5 @@ extern errr init_ba_info_txt(FILE *fp);
 extern errr init_st_info_txt(FILE *fp);
 extern errr init_ow_info_txt(FILE *fp);
 extern errr init_wf_info_txt(FILE *fp);
-extern errr grab_one_dungeon_flag(u32b *flags1, u32b *flags2, cptr what);
+extern errr grab_one_dungeon_flag(dungeon_flag_set *flags, const char *str);
 extern errr process_dungeon_file(cptr name, int *yval, int *xval, int ymax, int xmax, bool_ init, bool_ full);

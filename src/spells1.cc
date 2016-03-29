@@ -13,6 +13,7 @@
 #include "cmd1.hpp"
 #include "cmd3.hpp"
 #include "cmd5.hpp"
+#include "dungeon_flag.hpp"
 #include "dungeon_info_type.hpp"
 #include "files.hpp"
 #include "feature_type.hpp"
@@ -508,7 +509,7 @@ void teleport_player(int dis)
 		return;
 	}
 
-	if ((dungeon_flags2 & DF2_NO_TELEPORT) && (!teleport_player_bypass))
+	if ((dungeon_flags & DF_NO_TELEPORT) && (!teleport_player_bypass))
 	{
 		msg_print("No teleport on special levels...");
 		return;
@@ -797,7 +798,7 @@ void teleport_player_to(int ny, int nx)
 		return;
 	}
 
-	if (dungeon_flags2 & DF2_NO_TELEPORT)
+	if (dungeon_flags & DF_NO_TELEPORT)
 	{
 		msg_print("No teleport on special levels...");
 		return;
@@ -879,12 +880,12 @@ void teleport_player_level(void)
 		msg_print("There is no effect.");
 		return;
 	}
-	if (dungeon_flags2 & DF2_NO_TELEPORT)
+	if (dungeon_flags & DF_NO_TELEPORT)
 	{
 		msg_print("No teleport on special levels...");
 		return;
 	}
-	if (dungeon_flags2 & DF2_NO_EASY_MOVE)
+	if (dungeon_flags & DF_NO_EASY_MOVE)
 	{
 		msg_print("Some powerful force prevents your from teleporting.");
 		return;
@@ -2403,7 +2404,7 @@ static void apply_nexus(monster_type *m_ptr)
 {
 	if (m_ptr == NULL) return;
 
-	if (!(dungeon_flags2 & DF2_NO_TELEPORT))
+	if (!(dungeon_flags & DF_NO_TELEPORT))
 	{
 		switch (randint(7))
 		{
@@ -6245,7 +6246,7 @@ bool_ project_m(int who, int r, int y, int x, int dam, int typ)
 	case GF_AWAY_UNDEAD:
 		{
 
-			if (dungeon_flags2 & DF2_NO_TELEPORT) break; /* No teleport on special levels */
+			if (dungeon_flags & DF_NO_TELEPORT) break; /* No teleport on special levels */
 			/* Only affect undead */
 			if (r_ptr->flags3 & (RF3_UNDEAD))
 			{
@@ -6291,7 +6292,7 @@ bool_ project_m(int who, int r, int y, int x, int dam, int typ)
 		/* Teleport evil (Use "dam" as "power") */
 	case GF_AWAY_EVIL:
 		{
-			if (dungeon_flags2 & DF2_NO_TELEPORT) break; /* No teleport on special levels */
+			if (dungeon_flags & DF_NO_TELEPORT) break; /* No teleport on special levels */
 			/* Only affect evil */
 			if (r_ptr->flags3 & (RF3_EVIL))
 			{
@@ -6339,7 +6340,7 @@ bool_ project_m(int who, int r, int y, int x, int dam, int typ)
 		{
 			bool_ resists_tele = FALSE;
 
-			if (dungeon_flags2 & DF2_NO_TELEPORT) break; /* No teleport on special levels */
+			if (dungeon_flags & DF_NO_TELEPORT) break; /* No teleport on special levels */
 			if (r_ptr->flags3 & (RF3_RES_TELE))
 			{
 				if (r_ptr->flags1 & (RF1_UNIQUE))
@@ -7812,7 +7813,7 @@ static bool_ project_p(int who, int r, int y, int x, int dam, int typ, int a_rad
 		/* Gravity -- stun plus slowness plus teleport */
 	case GF_GRAVITY:
 		{
-			if (dungeon_flags2 & DF2_NO_TELEPORT) break; /* No teleport on special levels */
+			if (dungeon_flags & DF_NO_TELEPORT) break; /* No teleport on special levels */
 			if (fuzzy) msg_print("You are hit by something heavy!");
 			msg_print("Gravity warps around you.");
 			if (!unsafe)

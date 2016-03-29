@@ -13,6 +13,7 @@
 #include "cave_type.hpp"
 #include "cmd1.hpp"
 #include "dungeon_info_type.hpp"
+#include "dungeon_flag.hpp"
 #include "feature_type.hpp"
 #include "files.hpp"
 #include "gods.hpp"
@@ -160,7 +161,7 @@ void do_cmd_go_up(void)
 		{
 			go_up = TRUE;
 		}
-		else if ((dungeon_flags2 & DF2_ASK_LEAVE))
+		else if (dungeon_flags & DF_ASK_LEAVE)
 		{
 			go_up = get_check("Leave this unique level forever? ");
 		}
@@ -181,7 +182,7 @@ void do_cmd_go_up(void)
 		{
 			go_up = TRUE;
 		}
-		else if ((dungeon_flags2 & DF2_ASK_LEAVE))
+		else if (dungeon_flags & DF_ASK_LEAVE)
 		{
 			go_up = get_check("Leave this unique level forever? ");
 		}
@@ -200,7 +201,7 @@ void do_cmd_go_up(void)
 	{
 		leaving_quest = p_ptr->inside_quest;
 
-		if ((dungeon_flags2 & DF2_ASK_LEAVE) &&
+		if ((dungeon_flags & DF_ASK_LEAVE) &&
 				!get_check("Leave this unique level forever? "))
 			return;
 
@@ -214,12 +215,12 @@ void do_cmd_go_up(void)
 	}
 
 	/* Exits to previous area in flat terrains */
-	else if (!(dungeon_flags1 & DF1_FLAT) &&
+	else if (!(dungeon_flags & DF_FLAT) &&
 	                p_ptr->prob_travel && !p_ptr->inside_quest)
 	{
 		if (d_ptr->mindepth == dun_level) return;
 
-		if (dungeon_flags2 & DF2_NO_EASY_MOVE)
+		if (dungeon_flags & DF_NO_EASY_MOVE)
 		{
 			msg_print("Some powerful force prevents your from teleporting.");
 			return;
@@ -366,7 +367,7 @@ void do_cmd_go_down(void)
 	if (c_ptr->t_idx == TRAP_OF_SINKING) fall_trap = TRUE;
 
 	/* test if on special level */
-	if ((dungeon_flags2 & DF2_ASK_LEAVE))
+	if (dungeon_flags & DF_ASK_LEAVE)
 	{
 		prt("Leave this unique level forever (y/n) ? ", 0, 0);
 		flush();
@@ -444,12 +445,12 @@ void do_cmd_go_down(void)
 		return;
 	}
 
-	else if (!(dungeon_flags1 & DF1_FLAT) &&
+	else if (!(dungeon_flags & DF_FLAT) &&
 	                p_ptr->prob_travel && !p_ptr->inside_quest)
 	{
 		if (d_ptr->maxdepth == dun_level) return;
 
-		if (dungeon_flags2 & DF2_NO_EASY_MOVE)
+		if (dungeon_flags & DF_NO_EASY_MOVE)
 		{
 			msg_print("Some powerful force prevents your from teleporting.");
 			return;
@@ -4259,7 +4260,7 @@ static bool_ tport_vertically(bool_ how)
 		return (FALSE);
 	}
 
-	if (dungeon_flags2 & DF2_NO_EASY_MOVE)
+	if (dungeon_flags & DF_NO_EASY_MOVE)
 	{
 		msg_print("Some powerful force prevents you from teleporting.");
 		return FALSE;

@@ -1311,8 +1311,6 @@ static void my_sentinel(const char *place, u16b value, ls_flag_t flag)
  */
 static bool_ do_dungeon(ls_flag_t flag, bool_ no_companions)
 {
-	int i;
-
 	cave_type *c_ptr;
 
 	/* Read specific */
@@ -1331,8 +1329,10 @@ static bool_ do_dungeon(ls_flag_t flag, bool_ no_companions)
 	do_s16b(&max_panel_rows, flag);
 	do_s16b(&max_panel_cols, flag);
 
-	do_u32b(&dungeon_flags1, flag);
-	do_u32b(&dungeon_flags2, flag);
+	for (std::size_t i = 0; i < dungeon_flags.size(); i++)
+	{
+		do_u32b(&dungeon_flags[i], flag);
+	}
 
 	/* Last teleportation */
 	do_s16b(&last_teleportation_y, flag);
@@ -1347,7 +1347,7 @@ static bool_ do_dungeon(ls_flag_t flag, bool_ no_companions)
 		quit("Too many spell effects");
 	}
 
-	for (i = 0; i < tmp16b; ++i)
+	for (std::size_t i = 0; i < tmp16b; ++i)
 	{
 		do_s16b(&effects[i].type, flag);
 		do_s16b(&effects[i].dam, flag);
@@ -1359,7 +1359,7 @@ static bool_ do_dungeon(ls_flag_t flag, bool_ no_companions)
 	}
 
 	/* TO prevent bugs with evolving dungeons */
-	for (i = 0; i < 100; i++)
+	for (std::size_t i = 0; i < 100; i++)
 	{
 		do_s16b(&floor_type[i], flag);
 		do_s16b(&fill_type[i], flag);
@@ -1393,7 +1393,7 @@ static bool_ do_dungeon(ls_flag_t flag, bool_ no_companions)
 
 		if (no_companions)
 		{
-			for (i = 1; i < o_max; i++)
+			for (int i = 1; i < o_max; i++)
 			{
 				object_type *o_ptr = &o_list[i];
 
@@ -1418,7 +1418,7 @@ static bool_ do_dungeon(ls_flag_t flag, bool_ no_companions)
 	}
 
 	/* Dungeon items */
-	for (i = 1; i < tmp16b; i++)
+	for (int i = 1; i < tmp16b; i++)
 	{
 		int o_idx;
 
@@ -1481,7 +1481,7 @@ static bool_ do_dungeon(ls_flag_t flag, bool_ no_companions)
 
 		if (no_companions)
 		{
-			for (i = 1; i < m_max; i++)
+			for (int i = 1; i < m_max; i++)
 			{
 				monster_type *m_ptr = &m_list[i];
 
@@ -1506,7 +1506,7 @@ static bool_ do_dungeon(ls_flag_t flag, bool_ no_companions)
 	}
 
 	/* Read the monsters */
-	for (i = 1; i < tmp16b; i++)
+	for (int i = 1; i < tmp16b; i++)
 	{
 		int m_idx;
 		monster_type *m_ptr;
@@ -1569,7 +1569,7 @@ static bool_ do_dungeon(ls_flag_t flag, bool_ no_companions)
 		note(format("Too many (%d) monster entries!", tmp16b));
 		return (FALSE);
 	}
-	for (i = 1; i < tmp16b; i++)
+	for (std::size_t i = 1; i < tmp16b; i++)
 	{
 		monster_type *m_ptr;
 

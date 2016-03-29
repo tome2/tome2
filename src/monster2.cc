@@ -11,6 +11,7 @@
 #include "artifact_type.hpp"
 #include "cave.hpp"
 #include "cave_type.hpp"
+#include "dungeon_flag.hpp"
 #include "dungeon_info_type.hpp"
 #include "files.hpp"
 #include "hook_new_monster_in.hpp"
@@ -215,7 +216,7 @@ static int pick_ego_monster(monster_race const *r_ptr)
 	int tries = max_re_idx + 10;
 	monster_ego *re_ptr;
 
-	if ((!(dungeon_flags2 & DF2_ELVEN)) && (!(dungeon_flags2 & DF2_DWARVEN)))
+	if ((!(dungeon_flags & DF_ELVEN)) && (!(dungeon_flags & DF_DWARVEN)))
 	{
 		/* No townspeople ego */
 		if (!r_ptr->level) return 0;
@@ -250,9 +251,9 @@ static int pick_ego_monster(monster_race const *r_ptr)
 	/* Bypass restrictions for themed townspeople */
 	else
 	{
-		if (dungeon_flags2 & DF2_ELVEN)
+		if (dungeon_flags & DF_ELVEN)
 			ego = test_mego_name("Elven");
-		else if (dungeon_flags2 & DF2_DWARVEN)
+		else if (dungeon_flags & DF_DWARVEN)
 			ego = test_mego_name("Dwarven");
 
 		if (mego_ok(r_ptr, ego))
@@ -2548,18 +2549,18 @@ s16b place_monster_one(int y, int x, int r_idx, int ego, bool_ slp, int status)
 	}
 
 
-	if (dungeon_flags2 & DF2_ADJUST_LEVEL_1_2)
+	if (dungeon_flags & DF_ADJUST_LEVEL_1_2)
 	{
 		min_level = max_level = dun_level / 2;
 		add_level = TRUE;
 	}
-	if (dungeon_flags1 & DF1_ADJUST_LEVEL_1)
+	if (dungeon_flags & DF_ADJUST_LEVEL_1)
 	{
 		if (!min_level) min_level = dun_level;
 		max_level = dun_level;
 		add_level = TRUE;
 	}
-	if (dungeon_flags1 & DF1_ADJUST_LEVEL_2)
+	if (dungeon_flags & DF_ADJUST_LEVEL_2)
 	{
 		if (!min_level) min_level = dun_level * 2;
 		max_level = dun_level * 2;

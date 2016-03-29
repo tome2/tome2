@@ -16,6 +16,7 @@
 #include "cave.hpp"
 #include "cave_type.hpp"
 #include "cmd1.hpp"
+#include "dungeon_flag.hpp"
 #include "feature_type.hpp"
 #include "files.hpp"
 #include "hook_mon_speak_in.hpp"
@@ -2259,7 +2260,7 @@ static bool_ monst_spell_monst(int m_idx)
 			/* RF6_TPORT */
 		case 160 + 5:
 			{
-				if (dungeon_flags2 & DF2_NO_TELEPORT) break;  /* No teleport on special levels */
+				if (dungeon_flags & DF_NO_TELEPORT) break;  /* No teleport on special levels */
 				else
 				{
 					if (disturb_other) disturb(1);
@@ -2279,7 +2280,7 @@ static bool_ monst_spell_monst(int m_idx)
 			/* RF6_TELE_AWAY */
 		case 160 + 7:
 			{
-				if (dungeon_flags2 & DF2_NO_TELEPORT) break;
+				if (dungeon_flags & DF_NO_TELEPORT) break;
 
 				if (!direct) break;
 				else

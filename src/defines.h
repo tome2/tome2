@@ -2558,58 +2558,6 @@
 #define FF1_ATTR_MULTI          0x00020000L
 #define FF1_SUPPORT_GROWTH      0x00040000L
 
-/*** Dungeon type flags -- DG ***/
-#define DF1_PRINCIPAL           0x00000001L	/* Is a principal dungeon */
-#define DF1_MAZE                0x00000002L	/* Is a maze-type dungeon */
-#define DF1_SMALLEST            0x00000004L	/* Creates VERY small levels like The Maze */
-#define DF1_SMALL               0x00000008L	/* Creates small levels like Dol Goldor */
-#define DF1_BIG                 0x00000010L	/* Creates big levels like Moria, and Angband dungeons */
-#define DF1_NO_DOORS            0x00000020L	/* No doors on rooms, like Barrowdowns, Old Forest etc) */
-#define DF1_WATER_RIVER         0x00000040L	/* Allow a single water streamer on a level */
-#define DF1_LAVA_RIVER          0x00000080L	/* Allow a single lava streamer on a level */
-#define DF1_WATER_RIVERS        0x00000100L	/* Allow multiple water streamers on a level */
-#define DF1_LAVA_RIVERS         0x00000200L	/* Allow multiple lava streamers on a level */
-#define DF1_CAVE                0x00000400L	/* Allow rooms */
-#define DF1_CAVERN              0x00000800L	/* Allow cavern rooms */
-#define DF1_NO_UP               0x00001000L	/* Disallow up stairs */
-#define DF1_HOT                 0x00002000L	/* Corpses on ground and in pack decay quicker through heat */
-#define DF1_COLD                0x00004000L	/* Corpses on ground and in pack decay quicker through cold */
-#define DF1_FORCE_DOWN          0x00008000L	/* No up stairs generated */
-#define DF1_FORGET              0x00010000L	/* Features are forgotten, like the Maze and Illusory Castle */
-#define DF1_NO_DESTROY          0x00020000L	/* No destroyed levels in dungeon */
-#define DF1_SAND_VEIN           0x00040000L	/* Like in the sandworm lair */
-#define DF1_CIRCULAR_ROOMS      0x00080000L	/* Allow circular rooms */
-#define DF1_EMPTY               0x00100000L	/* Allow arena levels */
-#define DF1_DAMAGE_FEAT         0x00200000L
-#define DF1_FLAT                0x00400000L	/* Creates paths to next areas at edge of level, like Barrowdowns */
-#define DF1_TOWER               0x00800000L	/* You start at bottom and go up rather than the reverse */
-#define DF1_RANDOM_TOWNS        0x01000000L	/* Allow random towns */
-#define DF1_DOUBLE              0x02000000L	/* Creates double-walled dungeon like Helcaraxe and Erebor */
-#define DF1_LIFE_LEVEL          0x04000000L	/* Creates dungeon level on modified 'game of life' algorithm */
-#define DF1_EVOLVE              0x08000000L	/* Evolving, pulsing levels like Heart of the Earth */
-#define DF1_ADJUST_LEVEL_1      0x10000000L	/* Minimum monster level will be equal to dungeon level */
-#define DF1_ADJUST_LEVEL_2      0x20000000L	/* Minimum monster level will be double the dungeon level */
-#define DF1_NO_RECALL           0x40000000L	/* No recall allowed */
-#define DF1_NO_STREAMERS        0x80000000L	/* No streamers */
-
-#define DF2_ADJUST_LEVEL_1_2    0x00000001L	/* Minimum monster level will be half the dungeon level */
-#define DF2_NO_SHAFT            0x00000002L	/* No shafts */
-#define DF2_ADJUST_LEVEL_PLAYER 0x00000004L	/* Uses player level*2 instead of dungeon level for other ADJUST_LEVEL flags */
-#define DF2_NO_TELEPORT         0x00000008L
-#define DF2_ASK_LEAVE           0x00000010L
-#define DF2_NO_STAIR            0x00000020L
-#define DF2_SPECIAL             0x00000040L
-#define DF2_NO_NEW_MONSTER      0x00000080L
-#define DF2_DESC                0x00000100L
-#define DF2_NO_GENO             0x00000200L
-#define DF2_NO_BREATH           0x00000400L     /* Oups, cannot breath here */
-#define DF2_WATER_BREATH        0x00000800L     /* Oups, cannot breath here, need water breathing */
-#define DF2_ELVEN               0x00001000L     /* Try to create elven monster ego */
-#define DF2_DWARVEN             0x00002000L     /* Try to create dwarven monster ego */
-#define DF2_NO_EASY_MOVE        0x00004000L     /* Forbid stuff like teleport level, probability travel, ... */
-#define DF2_NO_RECALL_OUT       0x00008000L     /* Cannot recall out of the place */
-#define DF2_DESC_ALWAYS         0x00010000L     /* Always shows the desc */
-
 /*** Town flags ***/
 #define TOWN_REAL	0x01	/* Town is really present */
 #define TOWN_KNOWN	0x02	/* Town is found by the player */

@@ -10,6 +10,7 @@
 #include "variable.h"
 
 #include "cli_comm_fwd.hpp"
+#include "dungeon_flag_set.hpp"
 #include "player_type.hpp"
 #include "randart_gen_type.hpp"
 #include "util.hpp"
@@ -909,8 +910,7 @@ bool_ generate_special_feeling = FALSE;
 /*
  * Dungeon flags
  */
-u32b dungeon_flags1;
-u32b dungeon_flags2;
+DECLARE_FLAG_ZERO_IMPL(dungeon_flag_set, dungeon_flags);
 
 /*
  * The last character displayed

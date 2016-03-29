@@ -20,6 +20,7 @@
 #include "cmd6.hpp"
 #include "cmd7.hpp"
 #include "corrupt.hpp"
+#include "dungeon_flag.hpp"
 #include "dungeon_info_type.hpp"
 #include "feature_type.hpp"
 #include "files.h"
@@ -1402,7 +1403,7 @@ static void process_world(void)
 	                (rand_int(d_info[(dun_level) ? dungeon_type : DUNGEON_WILDERNESS].max_m_alloc_chance) == 0))
 	{
 		/* Make a new monster */
-		if (!(dungeon_flags2 & DF2_NO_NEW_MONSTER))
+		if (!(dungeon_flags & DF_NO_NEW_MONSTER))
 		{
 			(void)alloc_monster(MAX_SIGHT + 5, FALSE);
 		}
@@ -2326,7 +2327,7 @@ static void process_world(void)
 					{
 						int l, dam = 0;
 
-						if (!(dungeon_flags1 & DF1_DAMAGE_FEAT))
+						if (!(dungeon_flags & DF_DAMAGE_FEAT))
 						{
 							/* If the grid is empty, skip it */
 							if ((cave[j][k].o_idxs.empty()) &&
@@ -2559,12 +2560,12 @@ static void process_world(void)
 	}
 
 	/* Arg cannot breath? */
-	if ((dungeon_flags2 & DF2_WATER_BREATH) && (!p_ptr->water_breath))
+	if ((dungeon_flags & DF_WATER_BREATH) && (!p_ptr->water_breath))
 	{
 		cmsg_print(TERM_L_RED, "You cannot breathe water!  You suffocate!");
 		take_hit(damroll(3, p_ptr->lev), "suffocating");
 	}
-	if ((dungeon_flags2 & DF2_NO_BREATH) && (!p_ptr->magical_breath))
+	if ((dungeon_flags & DF_NO_BREATH) && (!p_ptr->magical_breath))
 	{
 		cmsg_print(TERM_L_RED, "There is no air here!  You suffocate!");
 		take_hit(damroll(3, p_ptr->lev), "suffocating");
@@ -2922,11 +2923,11 @@ static void process_world(void)
 			{
 				if (o_ptr->timeout > 0)
 				{
-					if (dungeon_flags1 & DF1_HOT)
+					if (dungeon_flags & DF_HOT)
 					{
 						o_ptr->pval -= 2;
 					}
-					else if ((dungeon_flags1 & DF1_COLD) && rand_int(2))
+					else if ((dungeon_flags & DF_COLD) && rand_int(2))
 					{
 						if (magik(50)) o_ptr->pval--;
 					}
@@ -3040,11 +3041,11 @@ static void process_world(void)
 			{
 				if (o_ptr->timeout > 0)
 				{
-					if (dungeon_flags1 & DF1_HOT)
+					if (dungeon_flags & DF_HOT)
 					{
 						o_ptr->pval -= 2;
 					}
-					else if ((dungeon_flags1 & DF1_COLD) && rand_int(2))
+					else if ((dungeon_flags & DF_COLD) && rand_int(2))
 					{
 						if (magik(50)) o_ptr->pval--;
 					}
@@ -3098,7 +3099,7 @@ static void process_world(void)
 		}
 
 		/* No recall. sorry */
-		else if (dungeon_flags2 & DF2_NO_RECALL_OUT)
+		else if (dungeon_flags & DF_NO_RECALL_OUT)
 		{
 			cmsg_print(TERM_L_DARK, "You cannot recall from here.");
 			p_ptr->word_recall = 0;
@@ -4651,7 +4652,7 @@ static void process_player(void)
 			 *
 			 * Forget everything when requested hehe I'm *NASTY*
 			 */
-			if (dun_level && (dungeon_flags1 & DF1_FORGET))
+			if (dun_level && (dungeon_flags & DF_FORGET))
 			{
 				wiz_dark();
 			}
@@ -4736,8 +4737,8 @@ static void dungeon(void)
 	if (!dungeon_stair) create_down_shaft = create_up_shaft = FALSE;
 
 	/* no connecting stairs on special levels */
-	if (!(dungeon_flags2 & DF2_NO_STAIR)) create_down_stair = create_up_stair = FALSE;
-	if (!(dungeon_flags2 & DF2_NO_STAIR)) create_down_shaft = create_up_shaft = FALSE;
+	if (!(dungeon_flags & DF_NO_STAIR)) create_down_stair = create_up_stair = FALSE;
+	if (!(dungeon_flags & DF_NO_STAIR)) create_down_shaft = create_up_shaft = FALSE;
 
 	/* Make a stairway. */
 	if ((create_up_stair || create_down_stair ||
@@ -4753,19 +4754,19 @@ static void dungeon(void)
 			/* Make stairs */
 			if (create_down_stair)
 			{
-				cave_set_feat(p_ptr->py, p_ptr->px, (dungeon_flags1 & DF1_FLAT) ? FEAT_WAY_MORE : FEAT_MORE);
+				cave_set_feat(p_ptr->py, p_ptr->px, (dungeon_flags & DF_FLAT) ? FEAT_WAY_MORE : FEAT_MORE);
 			}
 			else if (create_down_shaft)
 			{
-				cave_set_feat(p_ptr->py, p_ptr->px, (dungeon_flags1 & DF1_FLAT) ? FEAT_WAY_MORE : FEAT_SHAFT_DOWN);
+				cave_set_feat(p_ptr->py, p_ptr->px, (dungeon_flags & DF_FLAT) ? FEAT_WAY_MORE : FEAT_SHAFT_DOWN);
 			}
 			else if (create_up_shaft)
 			{
-				cave_set_feat(p_ptr->py, p_ptr->px, (dungeon_flags1 & DF1_FLAT) ? FEAT_WAY_LESS : FEAT_SHAFT_UP);
+				cave_set_feat(p_ptr->py, p_ptr->px, (dungeon_flags & DF_FLAT) ? FEAT_WAY_LESS : FEAT_SHAFT_UP);
 			}
 			else
 			{
-				cave_set_feat(p_ptr->py, p_ptr->px, (dungeon_flags1 & DF1_FLAT) ? FEAT_WAY_LESS : FEAT_LESS);
+				cave_set_feat(p_ptr->py, p_ptr->px, (dungeon_flags & DF_FLAT) ? FEAT_WAY_LESS : FEAT_LESS);
 			}
 		}
 
@@ -4981,7 +4982,7 @@ static void dungeon(void)
 		process_hooks_new(HOOK_END_TURN, NULL, NULL);
 
 		/* Make it pulsate and live !!!! */
-		if ((dungeon_flags1 & DF1_EVOLVE) && dun_level)
+		if ((dungeon_flags & DF_EVOLVE) && dun_level)
 		{
 			if (!(turn % 10)) evolve_level(TRUE);
 		}

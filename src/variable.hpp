@@ -7,6 +7,7 @@
 #include "birther.hpp"
 #include "cave_type_fwd.hpp"
 #include "deity_type.hpp"
+#include "dungeon_flag_set.hpp"
 #include "dungeon_info_type_fwd.hpp"
 #include "effect_type.hpp"
 #include "ego_item_type_fwd.hpp"
@@ -276,8 +277,7 @@ extern s16b plots[MAX_PLOTS];
 extern random_quest random_quests[MAX_RANDOM_QUEST];
 extern bool_ *special_lvl[MAX_DUNGEON_DEPTH];
 extern bool_ generate_special_feeling;
-extern u32b dungeon_flags1;
-extern u32b dungeon_flags2;
+DECLARE_FLAG_ZERO_INTF(dungeon_flag_set, dungeon_flags);
 extern birther previous_char;
 extern int max_bg_idx;
 extern s16b schools_count;

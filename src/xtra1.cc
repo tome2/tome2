@@ -13,6 +13,7 @@
 #include "cave_type.hpp"
 #include "corrupt.hpp"
 #include "cmd7.hpp"
+#include "dungeon_flag.hpp"
 #include "dungeon_info_type.hpp"
 #include "files.hpp"
 #include "gods.hpp"
@@ -540,7 +541,7 @@ static void prt_depth(int row, int col)
 	{
 		/* Empty */
 	}
-	else if (dungeon_flags2 & DF2_SPECIAL)
+	else if (dungeon_flags & DF_SPECIAL)
 	{
 		strcpy(depths, "Special");
 	}
@@ -561,7 +562,7 @@ static void prt_depth(int row, int col)
 	}
 	else
 	{
-		if (dungeon_flags1 & DF1_TOWER)
+		if (dungeon_flags & DF_TOWER)
 		{
 			(void)strnfmt(depths, 32, "%c%c%c -%d",
 			              d_ptr->short_name[0],

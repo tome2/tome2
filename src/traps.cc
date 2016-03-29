@@ -14,6 +14,7 @@
 #include "cave_type.hpp"
 #include "cmd1.hpp"
 #include "cmd2.hpp"
+#include "dungeon_flag.hpp"
 #include "dungeon_info_type.hpp"
 #include "feature_type.hpp"
 #include "files.hpp"
@@ -838,7 +839,7 @@ bool_ player_activate_trap_type(s16b y, s16b x, object_type *i_ptr, s16b item)
 
 			if (p_ptr->ffall)
 			{
-				if (dungeon_flags1 & DF1_TOWER)
+				if (dungeon_flags & DF_TOWER)
 				{
 					msg_print("You float gently down to the previous level.");
 				}
@@ -858,7 +859,7 @@ bool_ player_activate_trap_type(s16b y, s16b x, object_type *i_ptr, s16b item)
 				autosave_checkpoint();
 			}
 
-			if (dungeon_flags1 & DF1_TOWER) dun_level--;
+			if (dungeon_flags & DF_TOWER) dun_level--;
 			else dun_level++;
 
 			/* Leaving */
@@ -1977,7 +1978,7 @@ void place_trap(int y, int x)
 		 */
 		if ((trap == TRAP_OF_SINKING) &&
 		    ((d_ptr->maxdepth == dun_level) ||
-		     (dungeon_flags1 & DF1_FLAT) || (is_quest(dun_level))) )
+		     (dungeon_flags & DF_FLAT) || is_quest(dun_level)) )
 		{
 			continue;
 		}

@@ -5,6 +5,7 @@
 #include "cave.hpp"
 #include "cave_type.hpp"
 #include "dungeon_info_type.hpp"
+#include "dungeon_flag.hpp"
 #include "ego_item_type.hpp"
 #include "feature_type.hpp"
 #include "files.hpp"
@@ -840,81 +841,6 @@ static cptr f_info_flags1[] =
 	"WEB",
 	"ATTR_MULTI",
 	"SUPPORT_GROWTH",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1"
-};
-
-/*
- * Dungeon flags
- */
-static cptr d_info_flags1[] =
-{
-	"PRINCIPAL",
-	"MAZE",
-	"SMALLEST",
-	"SMALL",
-	"BIG",
-	"NO_DOORS",
-	"WATER_RIVER",
-	"LAVA_RIVER",
-	"WATER_RIVERS",
-	"LAVA_RIVERS",
-	"CAVE",
-	"CAVERN",
-	"NO_UP",
-	"HOT",
-	"COLD",
-	"FORCE_DOWN",
-	"FORGET",
-	"NO_DESTROY",
-	"SAND_VEIN",
-	"CIRCULAR_ROOMS",
-	"EMPTY",
-	"DAMAGE_FEAT",
-	"FLAT",
-	"TOWER",
-	"RANDOM_TOWNS",
-	"DOUBLE",
-	"LIFE_LEVEL",
-	"EVOLVE",
-	"ADJUST_LEVEL_1",
-	"ADJUST_LEVEL_2",
-	"NO_RECALL",
-	"NO_STREAMERS"
-};
-
-static cptr d_info_flags2[] =
-{
-	"ADJUST_LEVEL_1_2",
-	"NO_SHAFT",
-	"ADJUST_LEVEL_PLAYER",
-	"NO_TELEPORT",
-	"ASK_LEAVE",
-	"NO_STAIR",
-	"SPECIAL",
-	"NO_NEW_MONSTER",
-	"DESC",
-	"NO_GENO",
-	"NO_BREATH",
-	"WATER_BREATH",
-	"ELVEN",
-	"DWARVEN",
-	"NO_EASY_MOVE",
-	"NO_RECALL_OUT",
-	"DESC_ALWAYS",
-	"XXX1",
-	"XXX1",
 	"XXX1",
 	"XXX1",
 	"XXX1",
@@ -6585,20 +6511,15 @@ errr init_t_info_txt(FILE *fp)
 	return (0);
 }
 
-/*
- * Grab one flag for a dungeon type from a textual string
- */
-errr grab_one_dungeon_flag(u32b *f1, u32b *f2, cptr what)
+errr grab_one_dungeon_flag(dungeon_flag_set *flags, const char *str)
 {
-	if (lookup_flags(what,
-		flag_tie(f1, d_info_flags1),
-		flag_tie(f2, d_info_flags2)))
-	{
-		return (0);
-	}
+#define DF(tier, index, name) \
+	if (streq(str, #name)) { *flags |= DF_##name; return 0; }
+#include "dungeon_flag_list.hpp"
+#undef DF
 
 	/* Oops */
-	msg_format("Unknown dungeon type flag '%s'.", what);
+	msg_format("Unknown dungeon type flag '%s'.", str);
 
 	/* Failure */
 	return (1);
@@ -7013,7 +6934,7 @@ errr init_d_info_txt(FILE *fp)
 
 			/* Parse this entry */
 			else {
-				if (0 != grab_one_dungeon_flag(&(d_ptr->flags1), &(d_ptr->flags2), s))
+				if (0 != grab_one_dungeon_flag(&d_ptr->flags, s))
 				{
 					return (5);
 				}
@@ -8044,7 +7965,7 @@ static errr process_dungeon_file_aux(char *buf, int *yval, int *xval, int xvalst
 			}
 
 			/* Parse this entry */
-			if (0 != grab_one_dungeon_flag(&dungeon_flags1, &dungeon_flags2, s)) return 1;
+			if (0 != grab_one_dungeon_flag(&dungeon_flags, s)) return 1;
 
 			/* Start the next entry */
 			s = t;

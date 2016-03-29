@@ -1,6 +1,7 @@
 #include "q_fireprof.hpp"
 
 #include "cave_type.hpp"
+#include "dungeon_flag.hpp"
 #include "feature_type.hpp"
 #include "hook_get_in.hpp"
 #include "hooks.hpp"
@@ -488,7 +489,7 @@ static bool_ fireproof_gen_hook(void *, void *, void *)
 		}
 
 		/* no teleport */
-		dungeon_flags2 = DF2_NO_TELEPORT;
+		dungeon_flags = DF_NO_TELEPORT;
 
 		/* determine type of item */
 		fireproof_set_sval(randint(settings->sval_max));

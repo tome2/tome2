@@ -12,6 +12,7 @@
 #include "corrupt.hpp"
 #include "cmd4.hpp"
 #include "cmd5.hpp"
+#include "dungeon_flag.hpp"
 #include "dungeon_info_type.hpp"
 #include "files.h"
 #include "files.hpp"
@@ -3126,7 +3127,7 @@ void player_birth(void)
 			d_ptr->t_idx[z] = 0;
 			d_ptr->t_level[z] = 0;
 		}
-		if (!(d_ptr->flags1 & DF1_RANDOM_TOWNS)) continue;
+		if (!(d_ptr->flags & DF_RANDOM_TOWNS)) continue;
 
 		/* Can we add a town ? */
 		while (magik(TOWN_CHANCE - (num * 10)))

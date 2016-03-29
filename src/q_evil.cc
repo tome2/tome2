@@ -2,6 +2,7 @@
 
 #include "cave.hpp"
 #include "cave_type.hpp"
+#include "dungeon_flag.hpp"
 #include "feature_type.hpp"
 #include "hook_quest_finish_in.hpp"
 #include "hooks.hpp"
@@ -47,7 +48,7 @@ static bool_ quest_evil_gen_hook(void *, void *, void *)
 
 	init_flags = INIT_CREATE_DUNGEON;
 	process_dungeon_file("evil.map", &ystart, &xstart, cur_hgt, cur_wid, TRUE, FALSE);
-	dungeon_flags2 |= DF2_NO_GENO;
+	dungeon_flags |= DF_NO_GENO;
 
 	/* Place some random balrogs */
 	for (i = 6; i > 0; )

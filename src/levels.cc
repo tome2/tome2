@@ -213,7 +213,7 @@ void get_level_flags()
 			}
 
 			/* Parse this entry */
-			if (0 != grab_one_dungeon_flag(&dungeon_flags1, &dungeon_flags2, s)) return;
+			if (0 != grab_one_dungeon_flag(&dungeon_flags, s)) return;
 
 			/* Start the next entry */
 			s = t;

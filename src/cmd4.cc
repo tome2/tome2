@@ -10,6 +10,7 @@
 #include "artifact_type.hpp"
 #include "cave_type.hpp"
 #include "corrupt.hpp"
+#include "dungeon_flag.hpp"
 #include "dungeon_info_type.hpp"
 #include "feature_type.hpp"
 #include "files.hpp"
@@ -2722,7 +2723,7 @@ void do_cmd_feeling(void)
 	if (feeling > 10) feeling = 10;
 
 	/* Feeling of the fate */
-	if (fate_flag && !(dungeon_flags2 & DF2_SPECIAL) && !p_ptr->inside_quest)
+	if (fate_flag && !(dungeon_flags & DF_SPECIAL) && !p_ptr->inside_quest)
 	{
 		msg_print("You feel that you will meet your fate here.");
 	}
@@ -2734,11 +2735,11 @@ void do_cmd_feeling(void)
 	}
 
 	/* No useful feeling in special levels */
-	if (dungeon_flags2 & DF2_DESC)
+	if (dungeon_flags & DF_DESC)
 	{
 		char buf[1024];
 
-		if ((get_dungeon_save(buf)) || (generate_special_feeling) || (dungeon_flags2 & DF2_DESC_ALWAYS))
+		if (get_dungeon_save(buf) || generate_special_feeling || (dungeon_flags & DF_DESC_ALWAYS))
 		{
 			if (!get_level_desc(buf)) msg_print("Someone forgot to describe this level!");
 			else msg_print(buf);

@@ -3,6 +3,7 @@
 #include "h-basic.h"
 #include "rule_type.hpp"
 #include "obj_theme.hpp"
+#include "dungeon_flag_set.hpp"
 
 #include <array>
 
@@ -45,8 +46,7 @@ struct dungeon_info_type
 	int min_m_alloc_level = 0;                    /* Minimal number of monsters per level */
 	int max_m_alloc_chance = 0;                   /* There is a 1/max_m_alloc_chance chance per round of creating a new monster */
 
-	u32b flags1 = 0;                              /* Dungeon flags 1 */
-	u32b flags2 = 0;                              /* Dungeon flags 2 */
+	dungeon_flag_set flags { };                   /* Dungeon flags */
 
 	int size_x = 0;
 	int size_y = 0;

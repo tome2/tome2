@@ -12,6 +12,7 @@
 #include "cave.hpp"
 #include "cave_type.hpp"
 #include "dungeon_info_type.hpp"
+#include "dungeon_flag.hpp"
 #include "feature_type.hpp"
 #include "hook_build_room1_in.hpp"
 #include "hooks.hpp"
@@ -406,7 +407,7 @@ static void place_up_stairs(int y, int x)
 	cave_type *c_ptr = &cave[y][x];
 
 	/* Create up stairs */
-	if ((rand_int(3) != 0) || (dungeon_flags2 & DF2_NO_SHAFT))
+	if ((rand_int(3) != 0) || (dungeon_flags & DF_NO_SHAFT))
 	{
 		cave_set_feat(y, x, FEAT_LESS);
 	}
@@ -431,7 +432,7 @@ static void place_down_stairs(int y, int x)
 	 * All thoses tests are necesary because a shaft can jump up to 4 levels
 	 */
 	if ((dun_level + 4 > d_info[dungeon_type].maxdepth) ||
-	                (rand_int(3) != 0) || (dungeon_flags2 & DF2_NO_SHAFT))
+			(rand_int(3) != 0) || (dungeon_flags & DF_NO_SHAFT))
 	{
 		cave_set_feat(y, x, FEAT_MORE);
 	}
@@ -706,7 +707,7 @@ bool_ new_player_spot(int branch)
 	int max_attempts = 5000;
 
 	/* Place the player */
-	if (dungeon_flags1 & DF1_FLAT)
+	if (dungeon_flags & DF_FLAT)
 	{
 		place_new_way(&y, &x);
 	}
@@ -739,13 +740,13 @@ bool_ new_player_spot(int branch)
 	p_ptr->px = x;
 
 	/* XXX XXX XXX */
-	if (dungeon_stair && !(dungeon_flags2 & DF2_NO_STAIR) && dun_level &&
+	if (dungeon_stair && !(dungeon_flags & DF_NO_STAIR) && dun_level &&
 	                (!is_quest(dun_level) || (old_dun_level < dun_level)) && !branch)
 	{
 		if (old_dun_level < dun_level)
 		{
 			place_up_stairs(p_ptr->py , p_ptr->px);
-			if (dungeon_flags1 & DF1_FLAT)
+			if (dungeon_flags & DF_FLAT)
 			{
 				cave_set_feat(p_ptr->py, p_ptr->px, FEAT_WAY_LESS);
 			}
@@ -753,7 +754,7 @@ bool_ new_player_spot(int branch)
 		else
 		{
 			place_down_stairs(p_ptr->py , p_ptr->px);
-			if (dungeon_flags1 & DF1_FLAT)
+			if (dungeon_flags & DF_FLAT)
 			{
 				cave_set_feat(p_ptr->py, p_ptr->px, FEAT_WAY_MORE);
 			}
@@ -1024,7 +1025,7 @@ static void alloc_stairs(int feat, int num, int walls, int branch)
 		/* Try several times, then decrease "walls" */
 		for (j = 0; j <= SAFE_MAX_ATTEMPTS; j++)
 		{
-			if (dungeon_flags1 & DF1_FLAT)
+			if (dungeon_flags & DF_FLAT)
 			{
 				place_new_way(&y, &x);
 			}
@@ -1045,11 +1046,11 @@ static void alloc_stairs(int feat, int num, int walls, int branch)
 			if (!dun_level)
 			{
 				/* Clear previous contents, add down stairs */
-				if (dungeon_flags1 & DF1_FLAT)
+				if (dungeon_flags & DF_FLAT)
 				{
 					cave_set_feat(y, x, FEAT_WAY_MORE);
 				}
-				else if ((rand_int(3) == 0) && (!(dungeon_flags2 & DF2_NO_SHAFT)))
+				else if ((rand_int(3) == 0) && (!(dungeon_flags & DF_NO_SHAFT)))
 				{
 					cave_set_feat(y, x, FEAT_SHAFT_DOWN);
 				}
@@ -1062,14 +1063,14 @@ static void alloc_stairs(int feat, int num, int walls, int branch)
 			/* Quest -- must go up */
 			else if ((is_quest(dun_level) && (dun_level >= 1)) ||
 			                ((dun_level >= d_info[dungeon_type].maxdepth) &&
-			                 (!(dungeon_flags1 & DF1_FORCE_DOWN))))
+					 (!(dungeon_flags & DF_FORCE_DOWN))))
 			{
 				/* Clear previous contents, add up stairs */
-				if (dungeon_flags1 & DF1_FLAT)
+				if (dungeon_flags & DF_FLAT)
 				{
 					cave_set_feat(y, x, FEAT_WAY_LESS);
 				}
-				else if ((rand_int(3) == 0) && (!(dungeon_flags2 & DF2_NO_SHAFT)))
+				else if ((rand_int(3) == 0) && (!(dungeon_flags & DF_NO_SHAFT)))
 				{
 					cave_set_feat(y, x, FEAT_SHAFT_UP);
 				}
@@ -1726,7 +1727,7 @@ static void check_room_boundary(int x1, int y1, int x2, int y2)
 	bool_ old_is_floor, new_is_floor;
 
 	/* Avoid doing this in irrelevant places -- pelpel */
-	if (!(dungeon_flags1 & DF1_CAVERN)) return;
+	if (!(dungeon_flags & DF_CAVERN)) return;
 
 	/* Initialize */
 	count = 0;
@@ -6359,7 +6360,7 @@ static void build_tunnel(int row1, int col1, int row2, int col2, bool_ water)
 		place_floor(y, x);
 
 		/* Occasional doorway */
-		if (!(dungeon_flags1 & DF1_NO_DOORS) &&
+		if (!(dungeon_flags & DF_NO_DOORS) &&
 		                (rand_int(100) < DUN_TUN_PEN))
 		{
 			/* Place a random door */
@@ -6463,7 +6464,7 @@ static void try_doors(int y, int x)
 	/* if (!in_bounds(y, x)) return; */
 
 	/* Some dungeons don't have doors at all */
-	if (dungeon_flags1 & (DF1_NO_DOORS)) return;
+	if (dungeon_flags & DF_NO_DOORS) return;
 
 	/* Reset tally */
 	n = 0;
@@ -6703,7 +6704,7 @@ bool_ level_generate_dungeon()
 	}
 
 	/* Check for arena level */
-	if ((dungeon_flags1 & (DF1_EMPTY)) ||
+	if ((dungeon_flags & DF_EMPTY) ||
 	                (empty_levels && (rand_int(EMPTY_LEVEL) == 0)))
 	{
 		empty_level = TRUE;
@@ -6718,7 +6719,7 @@ bool_ level_generate_dungeon()
 	}
 
 	/* Possible cavern */
-	if ((dungeon_flags1 & DF1_CAVERN) && (rand_int(dun_level / 2) > DUN_CAVERN))
+	if ((dungeon_flags & DF_CAVERN) && (rand_int(dun_level / 2) > DUN_CAVERN))
 	{
 		cavern = TRUE;
 
@@ -6744,7 +6745,7 @@ bool_ level_generate_dungeon()
 	if ((cur_wid != MAX_WID) || (cur_hgt != MAX_HGT)) destroyed = FALSE;
 
 	/* Hack -- No destroyed levels */
-	if (dungeon_flags1 & DF1_NO_DESTROY) destroyed = FALSE;
+	if (dungeon_flags & DF_NO_DESTROY) destroyed = FALSE;
 
 	/* Actual maximum number of rooms on this level */
 	dun->row_rooms = cur_hgt / BLOCK_HGT;
@@ -6819,7 +6820,7 @@ bool_ level_generate_dungeon()
 			else
 			{
 				/* Attempt a "trivial" room */
-				if ((dungeon_flags1 & DF1_CIRCULAR_ROOMS) &&
+				if ((dungeon_flags & DF_CIRCULAR_ROOMS) &&
 				                room_build(y, x, 9))
 				{
 					continue;
@@ -6894,7 +6895,7 @@ bool_ level_generate_dungeon()
 			/* Hack - build standard rectangular rooms if needed */
 			if (k < 90)
 			{
-				if ((dungeon_flags1 & DF1_CIRCULAR_ROOMS) && room_build(y, x, 1)) continue;
+				if ((dungeon_flags & DF_CIRCULAR_ROOMS) && room_build(y, x, 1)) continue;
 				else if (room_build(y, x, 9)) continue;
 			}
 
@@ -6903,13 +6904,13 @@ bool_ level_generate_dungeon()
 		}
 
 		/* Attempt a trivial room */
-		if (dungeon_flags1 & DF1_CAVE)
+		if (dungeon_flags & DF_CAVE)
 		{
 			if (room_build(y, x, 10)) continue;
 		}
 		else
 		{
-			if ((dungeon_flags1 & DF1_CIRCULAR_ROOMS) && room_build(y, x, 9)) continue;
+			if ((dungeon_flags & DF_CIRCULAR_ROOMS) && room_build(y, x, 9)) continue;
 			else if (room_build(y, x, 1)) continue;
 		}
 	}
@@ -6993,7 +6994,7 @@ bool_ level_generate_dungeon()
 	}
 
 	/* Add some sand streamers */
-	if ((dungeon_flags1 & DF1_SAND_VEIN) && !rand_int(4))
+	if ((dungeon_flags & DF_SAND_VEIN) && !rand_int(4))
 	{
 		if ((cheat_room) || (p_ptr->precognition)) msg_print("Sand vein.");
 		build_streamer(FEAT_SANDWALL, DUN_STR_SC);
@@ -7009,18 +7010,18 @@ bool_ level_generate_dungeon()
 	}
 
 	/* Hack -- Add some rivers if requested */
-	if ((dungeon_flags1 & DF1_WATER_RIVER) && !rand_int(4))
+	if ((dungeon_flags & DF_WATER_RIVER) && !rand_int(4))
 	{
 		if (cheat_room || p_ptr->precognition) msg_print("River of water.");
 		add_river(FEAT_DEEP_WATER, FEAT_SHAL_WATER);
 	}
-	if ((dungeon_flags1 & DF1_LAVA_RIVER) && !rand_int(4))
+	if ((dungeon_flags & DF_LAVA_RIVER) && !rand_int(4))
 	{
 		if ((cheat_room) || (p_ptr->precognition)) msg_print("River of lava.");
 		add_river(FEAT_DEEP_LAVA, FEAT_SHAL_LAVA);
 	}
 
-	if (dungeon_flags1 & DF1_WATER_RIVERS)
+	if (dungeon_flags & DF_WATER_RIVERS)
 	{
 		int max = 3 + rand_int(2);
 		bool_ said = FALSE;
@@ -7036,7 +7037,7 @@ bool_ level_generate_dungeon()
 		}
 	}
 
-	if (dungeon_flags1 & DF1_LAVA_RIVERS)
+	if (dungeon_flags & DF_LAVA_RIVERS)
 	{
 		int max = 2 + rand_int(2);
 		bool_ said = FALSE;
@@ -7053,7 +7054,7 @@ bool_ level_generate_dungeon()
 	}
 
 	/* Add streamers of trees, water, or lava -KMW- */
-	if (!(dungeon_flags1 & DF1_NO_STREAMERS))
+	if (!(dungeon_flags & DF_NO_STREAMERS))
 	{
 		int num;
 
@@ -7062,7 +7063,7 @@ bool_ level_generate_dungeon()
 		 *
 		 * Small trees (penetrate walls)
 		 */
-		if ((dungeon_flags1 & DF1_FLAT) && (randint(20) > 15))
+		if ((dungeon_flags & DF_FLAT) && (randint(20) > 15))
 		{
 			num = randint(DUN_STR_QUA);
 
@@ -7599,7 +7600,7 @@ static bool_ cave_gen(void)
 	 * width/height, generate the dungeon normally, then double it
 	 * in both directions
 	 */
-	if (dungeon_flags1 & DF1_DOUBLE)
+	if (dungeon_flags & DF_DOUBLE)
 	{
 		cur_wid /= 2;
 		cur_hgt /= 2;
@@ -7662,22 +7663,22 @@ static bool_ cave_gen(void)
 			alloc_stairs(FEAT_LESS, 5, 3, branch);
 		}
 
-		if ((dun_level < d_ptr->maxdepth) || ((dun_level == d_ptr->maxdepth) && (dungeon_flags1 & DF1_FORCE_DOWN)))
+		if ((dun_level < d_ptr->maxdepth) || ((dun_level == d_ptr->maxdepth) && (dungeon_flags & DF_FORCE_DOWN)))
 		{
 			/* Place 3 or 4 down stairs near some walls */
-			alloc_stairs((dungeon_flags1 & DF1_FLAT) ? FEAT_WAY_MORE : FEAT_MORE, rand_range(3, 4), 3, 0);
+			alloc_stairs((dungeon_flags & DF_FLAT) ? FEAT_WAY_MORE : FEAT_MORE, rand_range(3, 4), 3, 0);
 
 			/* Place 0 or 1 down shafts near some walls */
-			if (!(dungeon_flags2 & DF2_NO_SHAFT)) alloc_stairs((dungeon_flags1 & DF1_FLAT) ? FEAT_WAY_MORE : FEAT_SHAFT_DOWN, rand_range(0, 1), 3, 0);
+			if (!(dungeon_flags & DF_NO_SHAFT)) alloc_stairs((dungeon_flags & DF_FLAT) ? FEAT_WAY_MORE : FEAT_SHAFT_DOWN, rand_range(0, 1), 3, 0);
 		}
 
-		if ((dun_level > d_ptr->mindepth) || ((dun_level == d_ptr->mindepth) && (!(dungeon_flags1 & DF1_NO_UP))))
+		if ((dun_level > d_ptr->mindepth) || ((dun_level == d_ptr->mindepth) && (!(dungeon_flags & DF_NO_UP))))
 		{
 			/* Place 1 or 2 up stairs near some walls */
-			alloc_stairs((dungeon_flags1 & DF1_FLAT) ? FEAT_WAY_LESS : FEAT_LESS, rand_range(1, 2), 3, 0);
+			alloc_stairs((dungeon_flags & DF_FLAT) ? FEAT_WAY_LESS : FEAT_LESS, rand_range(1, 2), 3, 0);
 
 			/* Place 0 or 1 up shafts near some walls */
-			if (!(dungeon_flags2 & DF2_NO_SHAFT)) alloc_stairs((dungeon_flags1 & DF1_FLAT) ? FEAT_WAY_LESS : FEAT_SHAFT_UP, rand_range(0, 1), 3, 0);
+			if (!(dungeon_flags & DF_NO_SHAFT)) alloc_stairs((dungeon_flags & DF_FLAT) ? FEAT_WAY_LESS : FEAT_SHAFT_UP, rand_range(0, 1), 3, 0);
 		}
 	}
 
@@ -8051,7 +8052,7 @@ static bool_ cave_gen(void)
 		wiz_lite();
 
 	/* Now double the generated dungeon */
-	if (dungeon_flags1 & DF1_DOUBLE)
+	if (dungeon_flags & DF_DOUBLE)
 	{
 		/*
 		 * We begin at the bottom-right corner and move upwards
@@ -8266,13 +8267,11 @@ void generate_cave(void)
 	/* Initialize the flags with the basic dungeon flags */
 	if (!dun_level)
 	{
-		dungeon_flags1 = d_info[DUNGEON_WILDERNESS].flags1;
-		dungeon_flags2 = d_info[DUNGEON_WILDERNESS].flags2;
+		dungeon_flags = d_info[DUNGEON_WILDERNESS].flags;
 	}
 	else
 	{
-		dungeon_flags1 = d_ptr->flags1;
-		dungeon_flags2 = d_ptr->flags2;
+		dungeon_flags = d_ptr->flags;
 	}
 
 	/* Is it a town level ? */
@@ -8462,8 +8461,8 @@ void generate_cave(void)
 					}
 				}
 				/* Very small (1 x 1 panel) level */
-				else if (!(dungeon_flags1 & DF1_BIG) &&
-				                (dungeon_flags1 & DF1_SMALLEST))
+				else if (!(dungeon_flags & DF_BIG) &&
+						(dungeon_flags & DF_SMALLEST))
 				{
 					if (cheat_room || p_ptr->precognition)
 					{
@@ -8488,9 +8487,9 @@ void generate_cave(void)
 				}
 
 				/* Small level */
-				else if (!(dungeon_flags1 & DF1_BIG) &&
+				else if (!(dungeon_flags & DF_BIG) &&
 				                (always_small_level ||
-				                 (dungeon_flags1 & DF1_SMALL) ||
+						 (dungeon_flags & DF_SMALL) ||
 				                 (small_levels && rand_int(SMALL_LEVEL) == 0)))
 				{
 					if (cheat_room || p_ptr->precognition)

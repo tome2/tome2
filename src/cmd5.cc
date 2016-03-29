@@ -12,6 +12,7 @@
 #include "cave.hpp"
 #include "cave_type.hpp"
 #include "corrupt.hpp"
+#include "dungeon_flag.hpp"
 #include "lua_bind.hpp"
 #include "monster2.hpp"
 #include "monster_race.hpp"
@@ -1586,7 +1587,7 @@ static void apply_monster_power(monster_race const *r_ptr, int power)
 		/* BLINK */
 	case 68:
 		{
-			if (dungeon_flags2 & DF2_NO_TELEPORT)
+			if (dungeon_flags & DF_NO_TELEPORT)
 			{
 				msg_print("No teleport on special levels...");
 				break;
@@ -1600,7 +1601,7 @@ static void apply_monster_power(monster_race const *r_ptr, int power)
 		/* TPORT */
 	case 69:
 		{
-			if (dungeon_flags2 & DF2_NO_TELEPORT)
+			if (dungeon_flags & DF_NO_TELEPORT)
 			{
 				msg_print("No teleport on special levels...");
 				break;
@@ -1616,7 +1617,7 @@ static void apply_monster_power(monster_race const *r_ptr, int power)
 		{
 			int ii, ij;
 
-			if (dungeon_flags2 & DF2_NO_TELEPORT)
+			if (dungeon_flags & DF_NO_TELEPORT)
 			{
 				msg_print("No teleport on special levels...");
 				break;
@@ -1644,7 +1645,7 @@ static void apply_monster_power(monster_race const *r_ptr, int power)
 		/* TELE_AWAY */
 	case 71:
 		{
-			if (dungeon_flags2 & DF2_NO_TELEPORT)
+			if (dungeon_flags & DF_NO_TELEPORT)
 			{
 				msg_print("No teleport on special levels...");
 				break;
@@ -1661,7 +1662,7 @@ static void apply_monster_power(monster_race const *r_ptr, int power)
 		/* TELE_LEVEL */
 	case 72:
 		{
-			if (dungeon_flags2 & DF2_NO_TELEPORT)
+			if (dungeon_flags & DF_NO_TELEPORT)
 			{
 				msg_print("No teleport on special levels...");
 				break;

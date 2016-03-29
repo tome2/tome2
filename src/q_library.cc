@@ -1,6 +1,7 @@
 #include "q_library.hpp"
 
 #include "cave_type.hpp"
+#include "dungeon_flag.hpp"
 #include "hooks.hpp"
 #include "lua_bind.hpp"
 #include "monster2.hpp"
@@ -324,7 +325,7 @@ static bool_ quest_library_gen_hook(void *, void *, void *)
 		int y = 2;
 		int x = 2;
 		load_map("library.map", &y, &x);
-		dungeon_flags2 = DF2_NO_GENO;
+		dungeon_flags = DF_NO_GENO;
 	}
 
 	/* Generate monsters */

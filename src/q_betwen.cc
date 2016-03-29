@@ -1,6 +1,7 @@
 #include "q_betwen.hpp"
 
 #include "cave.hpp"
+#include "dungeon_flag.hpp"
 #include "cave_type.hpp"
 #include "hook_chardump_in.hpp"
 #include "hook_init_quest_in.hpp"
@@ -96,7 +97,7 @@ static bool_ quest_between_gen_hook(void *, void *, void *)
 	/* Otherwise instadeath */
 	energy_use = 0;
 
-	dungeon_flags2 |= DF2_NO_GENO;
+	dungeon_flags |= DF_NO_GENO;
 
 	return TRUE;
 }

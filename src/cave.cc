@@ -1,6 +1,7 @@
 #include "cave.hpp"
 
 #include "cave_type.hpp"
+#include "dungeon_flag.hpp"
 #include "feature_type.hpp"
 #include "hook_enter_dungeon_in.hpp"
 #include "monster2.hpp"
@@ -4467,7 +4468,7 @@ void disturb(int stop_search)
 static int random_quest_number()
 {
 	if ((dun_level >= 1) && (dun_level < MAX_RANDOM_QUEST) &&
-			(dungeon_flags1 & DF1_PRINCIPAL) &&
+			(dungeon_flags & DF_PRINCIPAL) &&
 			(random_quests[dun_level].type) &&
 					(!random_quests[dun_level].done) &&
 					(!is_randhero(dun_level)))

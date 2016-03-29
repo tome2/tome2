@@ -13,6 +13,7 @@
 #include "cmd1.hpp"
 #include "cmd5.hpp"
 #include "cmd6.hpp"
+#include "dungeon_flag.hpp"
 #include "ego_item_type.hpp"
 #include "files.hpp"
 #include "hooks.hpp"
@@ -531,7 +532,7 @@ void do_cmd_mindcraft(void)
 				{
 					int ii, ij;
 
-					if (dungeon_flags2 & DF2_NO_TELEPORT)
+					if (dungeon_flags & DF_NO_TELEPORT)
 					{
 						msg_print("Not on special levels!");
 						break;

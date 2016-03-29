@@ -13,6 +13,7 @@
 #include "cmd1.hpp"
 #include "cmd2.hpp"
 #include "cmd7.hpp"
+#include "dungeon_flag.hpp"
 #include "feature_type.hpp"
 #include "files.hpp"
 #include "hooks.hpp"
@@ -390,7 +391,7 @@ static void power_activate(int power)
 		}
 		if (amber_power == 2)
 		{
-			if (dungeon_flags2 & DF2_NO_TELEPORT)
+			if (dungeon_flags & DF_NO_TELEPORT)
 			{
 				msg_print("No teleport on special levels ...");
 				break;
@@ -417,7 +418,7 @@ static void power_activate(int power)
 		}
 		if (amber_power == 3)
 		{
-			if (dungeon_flags2 & DF2_NO_TELEPORT)
+			if (dungeon_flags & DF_NO_TELEPORT)
 			{
 				msg_print("No recall on special levels..");
 				break;
@@ -978,7 +979,7 @@ static void power_activate(int power)
 
 	case PWR_RECALL:
 		{
-			if (!(dungeon_flags2 & DF2_ASK_LEAVE) || ((dungeon_flags2 & DF2_ASK_LEAVE) && !get_check("Leave this unique level forever? ")))
+			if (!(dungeon_flags & DF_ASK_LEAVE) || ((dungeon_flags & DF_ASK_LEAVE) && !get_check("Leave this unique level forever? ")))
 			{
 				recall_player(21, 15);
 			}
