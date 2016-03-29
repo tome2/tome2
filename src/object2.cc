@@ -2040,6 +2040,63 @@ static void object_mention(object_type *o_ptr)
 	}
 }
 
+static void random_artifact_power(object_type *o_ptr)
+{
+	// Shorthand
+	auto f2 = &o_ptr->art_flags2;
+	auto f3 = &o_ptr->art_flags3;
+	auto esp = &o_ptr->art_esp;
+
+	// Choose ability
+	auto try_choose = [&o_ptr, &f2, &f3, &esp](int choice) {
+		switch (choice)
+		{
+		case 0:
+			(*f3) |= (TR3_FEATHER);
+			break;
+		case 1:
+			(*f3) |= (TR3_LITE1);
+			break;
+		case 2:
+			(*f3) |= (TR3_SEE_INVIS);
+			break;
+		case 3:
+			(*esp) |= (ESP_ALL);
+			break;
+		case 4:
+			(*f3) |= (TR3_SLOW_DIGEST);
+			break;
+		case 5:
+			(*f3) |= (TR3_REGEN);
+			break;
+		case 6:
+			(*f2) |= (TR2_FREE_ACT);
+			break;
+		case 7:
+			(*f2) |= (TR2_HOLD_LIFE);
+			break;
+		}
+	};
+
+	// Save old values for comparison
+	u32b const old_f2 = *f2;
+	u32b const old_f3 = *f3;
+	u32b const old_esp = *esp;
+
+	// Choose an ability; make sure we choose one that isn't already chosen
+	for (int tries = 0; tries < 1000; tries++)
+	{
+		// Tentative choice
+		int choice = rand_int(8);
+		try_choose(choice);
+
+		// If there's any difference, then we chose a non-overlapping power.
+		if ((*f2 != old_f2) || (*f3 != old_f3) || (*esp != old_esp))
+		{
+			break;
+		}
+	}
+}
 
 void random_artifact_resistance(object_type * o_ptr)
 {
@@ -2063,20 +2120,26 @@ void random_artifact_resistance(object_type * o_ptr)
 	// Grant the resistance/power
 	if (give_power)
 	{
-		o_ptr->xtra1 = EGO_XTRA_ABILITY;
-
-		/* Randomize the "xtra" power */
-		if (o_ptr->xtra1)
-		{
-			o_ptr->xtra2 = randint(256);
-		}
+		random_artifact_power(o_ptr);
 	}
 
 	artifact_bias = 0;
 
 	if (give_resistance)
 	{
-		random_resistance(o_ptr, FALSE, ((randint(22)) + 16));
+		// Save resistance flags
+		u32b const f2 = o_ptr->art_flags2;
+		// We'll be a little generous here and make sure that the object
+		// gets a resistance that it doesn't actually already have.
+		for (int tries = 0; tries < 1000; tries++)
+		{
+			random_resistance(o_ptr, FALSE, ((randint(22)) + 16));
+			// Picked up a new resistance?
+			if (f2 != o_ptr->art_flags2)
+			{
+				break;
+			}
+		}
 	}
 }
 

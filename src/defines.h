@@ -2247,9 +2247,6 @@
 /* High resist */
 #define EGO_XTRA_POWER          2
 
-/* Special ability */
-#define EGO_XTRA_ABILITY        3
-
 /*** Object flag values ***/
 
 

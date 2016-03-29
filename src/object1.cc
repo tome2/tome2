@@ -850,40 +850,6 @@ static void object_flags_xtra(object_type const *o_ptr, u32b *f2, u32b *f3, u32b
 		break;
 	}
 	
-	case EGO_XTRA_ABILITY:
-	{
-		/* Choose an ability */
-		switch (o_ptr->xtra2 % 8)
-		{
-		case 0:
-			(*f3) |= (TR3_FEATHER);
-			break;
-		case 1:
-			(*f3) |= (TR3_LITE1);
-			break;
-		case 2:
-			(*f3) |= (TR3_SEE_INVIS);
-			break;
-		case 3:
-			(*esp) |= (ESP_ALL);
-			break;
-		case 4:
-			(*f3) |= (TR3_SLOW_DIGEST);
-			break;
-		case 5:
-			(*f3) |= (TR3_REGEN);
-			break;
-		case 6:
-			(*f2) |= (TR2_FREE_ACT);
-			break;
-		case 7:
-			(*f2) |= (TR2_HOLD_LIFE);
-			break;
-		}
-		
-		break;
-	}
-
 	}
 }
 
@@ -920,16 +886,13 @@ void object_flags(object_type const *o_ptr, u32b *f1, u32b *f2, u32b *f3, u32b *
 			apply_flags_set(o_ptr->name1, a_ptr->set, f1, f2, f3, f4, f5, esp);
 	}
 
-	/* Random artifact ! */
-	if (o_ptr->art_flags1 || o_ptr->art_flags2 || o_ptr->art_flags3 || o_ptr->art_flags4 || o_ptr->art_flags5 || o_ptr->art_esp)
-	{
-		(*f1) |= o_ptr->art_flags1;
-		(*f2) |= o_ptr->art_flags2;
-		(*f3) |= o_ptr->art_flags3;
-		(*f4) |= o_ptr->art_flags4;
-		(*f5) |= o_ptr->art_flags5;
-		(*esp) |= o_ptr->art_esp;
-	}
+	/* Mix in art_{flagsX,esp} */
+	(*f1) |= o_ptr->art_flags1;
+	(*f2) |= o_ptr->art_flags2;
+	(*f3) |= o_ptr->art_flags3;
+	(*f4) |= o_ptr->art_flags4;
+	(*f5) |= o_ptr->art_flags5;
+	(*esp) |= o_ptr->art_esp;
 
 	/* Extra powers */
 	if (!(o_ptr->art_name))
