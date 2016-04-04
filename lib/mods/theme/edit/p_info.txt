@@ -180,8 +180,6 @@ C:a:k:=0:=0:Axe-mastery
 C:a:k:=0:=0:Hafted-mastery
 C:a:k:=0:=0:Polearm-mastery
 C:a:k:+1000:-200:Archery
-
-
 C:a:k:+1000:+400:Magic
 C:a:k:+1000:+300:Spirituality
 C:a:k:=0:=0:Antimagic
@@ -1001,8 +999,6 @@ C:k:+0:+200:Axe-mastery
 C:k:+0:+200:Hafted-mastery
 C:k:+0:+200:Polearm-mastery
 C:k:+1000:+600:Archery
-
-
 C:k:+1000:+300:Magic
 C:k:+0:+550:Antimagic
 
@@ -2230,8 +2226,6 @@ S:F:SPEED
 S:Z:poison dart
 R:k:-200:+000:Weaponmastery
 R:k:+1000:+300:Archery
-
-
 S:k:+1000:+500:Stealth
 R:k:+050:+000:Magic-Device
 S:k:+0:+200:Magic
