@@ -4672,10 +4672,6 @@ static void fill_treasure(int x1, int x2, int y1, int y2, int difficulty)
 					{
 						place_object(y, x, FALSE, FALSE, OBJ_FOUND_FLOOR);
 					}
-					else
-					{
-						/* Do nothing */
-					}
 				}
 				else if (value < 30)
 				{
