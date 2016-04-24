@@ -1655,16 +1655,8 @@ void do_cmd_tunnel(void)
 		/* Get grid */
 		c_ptr = &cave[y][x];
 
-		/* No tunnelling through doors */
-		if (((c_ptr->feat >= FEAT_DOOR_HEAD) &&
-		                (c_ptr->feat <= FEAT_DOOR_TAIL)) || (c_ptr->feat == FEAT_SHOP))
-		{
-			/* Message */
-			msg_print("You cannot tunnel through doors.");
-		}
-
 		/* No tunnelling through air */
-		else if (cave_floor_grid(c_ptr))
+		if (cave_floor_grid(c_ptr))
 		{
 			/* Message */
 			msg_print("You cannot tunnel through air.");
