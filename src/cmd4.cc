@@ -42,6 +42,7 @@
 #include <cassert>
 #include <format.h>
 #include <memory>
+#include <numeric>
 #include <string>
 #include <vector>
 
