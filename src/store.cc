@@ -490,7 +490,7 @@ static void mass_produce(object_type *o_ptr)
  *
  * See "object_similar()" for the same function for the "player"
  */
-static bool_ store_object_similar(object_type *o_ptr, object_type *j_ptr)
+static bool_ store_object_similar(object_type const *o_ptr, object_type *j_ptr)
 {
 	/* Hack -- Identical items cannot be stacked */
 	if (o_ptr == j_ptr) return (0);

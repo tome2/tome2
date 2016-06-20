@@ -1092,7 +1092,7 @@ s32b calc_object_need_exp(object_type const *o_ptr)
  *   2 -- The Cloak of Death [1,+3] (+2 to Stealth)
  *   3 -- The Cloak of Death [1,+3] (+2 to Stealth) {nifty}
  */
-std::string object_desc_aux(object_type *o_ptr, int pref, int mode)
+static std::string object_desc_aux(object_type const *o_ptr, int pref, int mode)
 {
 	bool_ hack_name = FALSE;
 
@@ -2179,7 +2179,7 @@ std::string object_desc_aux(object_type *o_ptr, int pref, int mode)
 	return t;
 }
 
-void object_desc(char *buf, object_type *o_ptr, int pref, int mode)
+void object_desc(char *buf, object_type const *o_ptr, int pref, int mode)
 {
 	auto s = object_desc_aux(o_ptr, pref, mode);
 	auto n = std::min<std::size_t>(s.size(), 79);
@@ -4154,7 +4154,7 @@ void display_equip(void)
 
 
 /* Get the color of the letter idx */
-byte get_item_letter_color(object_type *o_ptr)
+byte get_item_letter_color(object_type const *o_ptr)
 {
 	byte color = TERM_WHITE;
 
