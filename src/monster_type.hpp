@@ -4,6 +4,7 @@
 #include "monster_blow.hpp"
 #include "monster_race_fwd.hpp"
 
+#include <array>
 #include <cassert>
 #include <vector>
 #include <memory>
@@ -28,12 +29,7 @@ struct monster_type
 	s32b hp = 0;                        /* Current Hit points */
 	s32b maxhp = 0;                     /* Max Hit points */
 
-	monster_blow blow[4] = {            /* Up to four blows per round */
-		{ 0, 0, 0, 0 },
-		{ 0, 0, 0, 0 },
-		{ 0, 0, 0, 0 },
-		{ 0, 0, 0, 0 },
-	};
+	std::array<monster_blow, 4> blow {};/* Up to four blows per round */
 
 	byte speed = 0;                     /* Speed (normally 110) */
 	byte level = 0;                     /* Level of creature */

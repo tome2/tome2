@@ -12,8 +12,8 @@
  */
 struct monster_blow
 {
-	byte method;
-	byte effect;
-	byte d_dice;
-	byte d_side;
+	byte method = 0;
+	byte effect = 0;
+	byte d_dice = 0;
+	byte d_side = 0;
 };

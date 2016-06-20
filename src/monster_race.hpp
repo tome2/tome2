@@ -5,6 +5,8 @@
 #include "monster_blow.hpp"
 #include "obj_theme.hpp"
 
+#include <array>
+
 /**
  * Monster race descriptors and runtime data, including racial memories.
  *
@@ -55,13 +57,7 @@ struct monster_race
 	u32b flags8 = 0;			/* Flags 8 (wilderness info) */
 	u32b flags9 = 0;			/* Flags 9 (drops info) */
 
-
-	monster_blow blow[4] = {                 /* Up to four blows per round */
-		{ 0, 0, 0, 0 },
-		{ 0, 0, 0, 0 },
-		{ 0, 0, 0, 0 },
-		{ 0, 0, 0, 0 },
-	};
+	std::array<monster_blow, 4> blow { };   /* Up to four blows per round */
 
 	byte body_parts[BODY_MAX] = { 0 };       /* To help to decide what to use when body changing */
 

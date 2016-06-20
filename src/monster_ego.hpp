@@ -3,6 +3,8 @@
 #include "h-basic.h"
 #include "monster_blow.hpp"
 
+#include <array>
+
 /**
  * Monster ego descriptors.
  */
@@ -11,12 +13,7 @@ struct monster_ego
 	const char *name = nullptr;              /* Name */
 	bool_ before = false;                    /* Display ego before or after */
 
-	monster_blow blow[4] = {                 /* Up to four blows per round */
-		{ 0, 0, 0, 0 },
-		{ 0, 0, 0, 0 },
-		{ 0, 0, 0, 0 },
-		{ 0, 0, 0, 0 },
-	};
+	std::array<monster_blow, 4> blow { };    /* Up to four blows per round */
 	byte blowm[4][2] = {
 		{ 0, 0 },
 		{ 0, 0 },
