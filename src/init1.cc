@@ -5726,10 +5726,6 @@ errr init_r_info_txt(FILE *fp)
 	{
 		/* Invert flag WILD_ONLY <-> RF8_DUNGEON */
 		r_info[i].flags8 ^= 1L;
-
-		/* WILD_TOO without any other wilderness flags enables all flags */
-		if ((r_info[i].flags8 & RF8_WILD_TOO) && !(r_info[i].flags8 & 0x7FFFFFFE))
-			r_info[i].flags8 = 0x0463;
 	}
 
 	/* Success */
