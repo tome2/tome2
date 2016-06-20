@@ -1517,14 +1517,10 @@ static bool_ player_birth_aux_ask()
 
 	if (previous_char.quick_ok)
 	{
-		/* Extra info */
-		Term_putstr(1, 15, -1, TERM_WHITE,
-		            "Do you want to use the quick start function(same character as your last one).");
-
 		/* Choose */
 		while (1)
 		{
-			put_str("Use quick start (y/n)?", 20, 2);
+			put_str("Use same character as last time (y/n)? ", 20, 2);
 			c = inkey();
 			if (c == 'Q') quit(NULL);
 			else if (c == 'S') return (FALSE);
