@@ -26,66 +26,70 @@
  */
 struct monster_race
 {
-	const char *name;                       /* Name */
-	char *text;                             /* Text */
+	const char *name = nullptr;              /* Name */
+	char *text = nullptr;                    /* Text */
 
-	u16b hdice;				/* Creatures hit dice count */
-	u16b hside;				/* Creatures hit dice sides */
+	u16b hdice = 0;                          /* Creatures hit dice count */
+	u16b hside = 0;                          /* Creatures hit dice sides */
 
-	s16b ac;				/* Armour Class */
+	s16b ac = 0;                             /* Armour Class */
 
-	s16b sleep;				/* Inactive counter (base) */
-	byte aaf;				/* Area affect radius (1-100) */
-	byte speed;				/* Speed (normally 110) */
+	s16b sleep = 0;                          /* Inactive counter (base) */
+	byte aaf = 0;                            /* Area affect radius (1-100) */
+	byte speed = 0;                          /* Speed (normally 110) */
 
-	s32b mexp;				/* Exp value for kill */
+	s32b mexp = 0;                           /* Exp value for kill */
 
-	s32b weight;                            /* Weight of the monster */
+	s32b weight = 0;                         /* Weight of the monster */
 
-	byte freq_inate;		/* Inate spell frequency */
-	byte freq_spell;		/* Other spell frequency */
+	byte freq_inate = 0;                     /* Inate spell frequency */
+	byte freq_spell = 0;                     /* Other spell frequency */
 
-	u32b flags1;			/* Flags 1 (general) */
-	u32b flags2;			/* Flags 2 (abilities) */
-	u32b flags3;			/* Flags 3 (race/resist) */
-	u32b flags4;			/* Flags 4 (inate/breath) */
-	u32b flags5;			/* Flags 5 (normal spells) */
-	u32b flags6;			/* Flags 6 (special spells) */
-	u32b flags7;			/* Flags 7 (movement related abilities) */
-	u32b flags8;			/* Flags 8 (wilderness info) */
-	u32b flags9;			/* Flags 9 (drops info) */
-
-	monster_blow blow[4];           /* Up to four blows per round */
-
-	byte body_parts[BODY_MAX];      /* To help to decide what to use when body changing */
-
-	byte artifact_idx;              /* Artifact index of standard artifact dropped; 0 if none. */
-	int  artifact_chance;           /* Percentage chance of dropping the artifact. */
-
-	byte level;                     /* Level of creature */
-	byte rarity;			/* Rarity of creature */
+	u32b flags1 = 0;			/* Flags 1 (general) */
+	u32b flags2 = 0;			/* Flags 2 (abilities) */
+	u32b flags3 = 0;			/* Flags 3 (race/resist) */
+	u32b flags4 = 0;			/* Flags 4 (inate/breath) */
+	u32b flags5 = 0;			/* Flags 5 (normal spells) */
+	u32b flags6 = 0;			/* Flags 6 (special spells) */
+	u32b flags7 = 0;			/* Flags 7 (movement related abilities) */
+	u32b flags8 = 0;			/* Flags 8 (wilderness info) */
+	u32b flags9 = 0;			/* Flags 9 (drops info) */
 
 
-	byte d_attr;			/* Default monster attribute */
-	char d_char;			/* Default monster character */
+	monster_blow blow[4] = {                 /* Up to four blows per round */
+		{ 0, 0, 0, 0 },
+		{ 0, 0, 0, 0 },
+		{ 0, 0, 0, 0 },
+		{ 0, 0, 0, 0 },
+	};
+
+	byte body_parts[BODY_MAX] = { 0 };       /* To help to decide what to use when body changing */
+
+	byte artifact_idx = 0;                   /* Artifact index of standard artifact dropped; 0 if none. */
+	int  artifact_chance = 0;                /* Percentage chance of dropping the artifact. */
+
+	byte level = 0;                          /* Level of creature */
+	byte rarity = 0;                         /* Rarity of creature */
+
+	byte d_attr = 0;                         /* Default monster attribute */
+	char d_char = 0;                         /* Default monster character */
 
 
-	byte x_attr;			/* Desired monster attribute */
-	char x_char;			/* Desired monster character */
+	byte x_attr = 0;                         /* Desired monster attribute */
+	char x_char = 0;                         /* Desired monster character */
 
+	s16b max_num = 0;                        /* Maximum population allowed per level */
+	byte cur_num = 0;                        /* Monster population on current level */
 
-	s16b max_num;                   /* Maximum population allowed per level */
+	s16b r_pkills = 0;                       /* Count monsters killed in this life */
 
-	byte cur_num;			/* Monster population on current level */
+	bool_ on_saved = 0;                      /* Is the (unique) on a saved level ? */
 
+	byte total_visible = 0;                  /* Amount of this race that are visible */
 
-	s16b r_pkills;			/* Count monsters killed in this life */
+	obj_theme drops = obj_theme              /* The drops type */
+		{ 0, 0, 0, 0 };
 
-	bool_ on_saved;                  /* Is the (unique) on a saved level ? */
-
-	byte total_visible;             /* Amount of this race that are visible */
-
-	obj_theme drops;                /* The drops type */
 };
 
 

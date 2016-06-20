@@ -404,7 +404,7 @@ namespace {
 
 		static void allocate()
 		{
-			r_info = make_array<monster_race>(max_r_idx);
+			r_info = new monster_race[max_r_idx];
 		}
 
 		static errr parse(FILE *fp)
