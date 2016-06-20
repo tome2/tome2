@@ -1693,23 +1693,6 @@ static void apply_monster_power(monster_race const *r_ptr, int power)
 			break;
 		}
 
-		/* 75 FORGET -- Not available */
-
-		/* ANIM_DEAD -- Use the same code as the nether spell */
-	case 76:
-		{
-			int dir;
-			if (!get_aim_dir(&dir)) break;
-
-			fire_ball(GF_RAISE, dir, 1, 0);
-
-			break;
-		}
-
-		/* 77 S_BUG -- Not available, well we do that anyway ;) */
-
-		/* 78 S_RNG -- Not available, who dares? */
-
 		/* S_THUNDERLORD */
 	case 79:
 		{

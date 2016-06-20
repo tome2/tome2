@@ -2344,12 +2344,6 @@ static bool_ monst_spell_monst(int m_idx)
 				break;
 			}
 
-			/* RF6_ANIM_DEAD */
-		case 160 + 12:
-			{
-				break;
-			}
-
 			/* RF6_S_BUG */
 		case 160 + 13:
 			{
@@ -4213,10 +4207,6 @@ static bool_ make_attack_spell(int m_idx)
 				}
 				break;
 			}
-
-			/* RF6_ANIM_DEAD */
-		case 160 + 12:
-			break;
 
 			/* RF6_S_BUG */
 		case 160 + 13:
