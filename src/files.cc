@@ -4211,9 +4211,9 @@ static void print_tomb(void)
 static void show_info(void)
 {
 	/* Hack -- Know everything in the inven/equip */
-	for (int i = 0; i < INVEN_TOTAL; i++)
+	for (auto &o_ref: p_ptr->inventory)
 	{
-		auto o_ptr = &p_ptr->inventory[i];
+		auto o_ptr = &o_ref;
 
 		/* Skip non-objects */
 		if (!o_ptr->k_idx) continue;
