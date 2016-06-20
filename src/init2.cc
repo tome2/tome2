@@ -293,7 +293,7 @@ namespace {
 
 		static void allocate()
 		{
-			k_info = make_array<object_kind>(max_k_idx);
+			k_info = new object_kind[max_k_idx];
 		}
 
 		static errr parse(FILE *fp)

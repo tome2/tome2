@@ -14,70 +14,70 @@ constexpr int ALLOCATION_MAX = 8;
  */
 struct object_kind
 {
-	const char *name;               /* Name */
-	char *text;                     /* Text */
+	const char *name = nullptr;              /* Name */
+	char *text = nullptr;                    /* Text */
 
-	byte tval;			/* Object type */
-	byte sval;			/* Object sub type */
+	byte tval = 0;                           /* Object type */
+	byte sval = 0;                           /* Object sub type */
 
-	s32b pval;                      /* Object extra info */
-	s32b pval2;                     /* Object extra info */
+	s32b pval = 0;                           /* Object extra info */
+	s32b pval2 = 0;                          /* Object extra info */
 
-	s16b to_h;			/* Bonus to hit */
-	s16b to_d;			/* Bonus to damage */
-	s16b to_a;			/* Bonus to armor */
+	s16b to_h = 0;                           /* Bonus to hit */
+	s16b to_d = 0;                           /* Bonus to damage */
+	s16b to_a = 0;                           /* Bonus to armor */
 
-	s16b activate;		        /* Activation number */
+	s16b activate = 0;                       /* Activation number */
 
-	s16b ac;			/* Base armor */
+	s16b ac = 0;                             /* Base armor */
 
-	byte dd, ds;		/* Damage dice/sides */
+	byte dd = 0;                             /* Damage dice */
+	byte ds = 0;                             /* Damage sides */
 
-	s32b weight;            /* Weight */
+	s32b weight = 0;                         /* Weight */
 
-	s32b cost;			/* Object "base cost" */
+	s32b cost = 0;                           /* Object "base cost" */
 
-	u32b flags1;		/* Flags, set 1 */
-	u32b flags2;		/* Flags, set 2 */
-	u32b flags3;		/* Flags, set 3 */
-	u32b flags4;            /* Flags, set 4 */
-	u32b flags5;            /* Flags, set 5 */
+	u32b flags1 = 0;                         /* Flags, set 1 */
+	u32b flags2 = 0;                         /* Flags, set 2 */
+	u32b flags3 = 0;                         /* Flags, set 3 */
+	u32b flags4 = 0;                         /* Flags, set 4 */
+	u32b flags5 = 0;                         /* Flags, set 5 */
 
-	u32b oflags1;		/* Obvious Flags, set 1 */
-	u32b oflags2;		/* Obvious Flags, set 2 */
-	u32b oflags3;		/* Obvious Flags, set 3 */
-	u32b oflags4;           /* Obvious Flags, set 4 */
-	u32b oflags5;           /* Obvious Flags, set 5 */
+	u32b oflags1 = 0;                        /* Obvious Flags, set 1 */
+	u32b oflags2 = 0;                        /* Obvious Flags, set 2 */
+	u32b oflags3 = 0;                        /* Obvious Flags, set 3 */
+	u32b oflags4 = 0;                        /* Obvious Flags, set 4 */
+	u32b oflags5 = 0;                        /* Obvious Flags, set 5 */
 
-	byte locale[ALLOCATION_MAX];		/* Allocation level(s) */
-	byte chance[ALLOCATION_MAX];		/* Allocation chance(s) */
+	byte locale[ALLOCATION_MAX] = { 0 };     /* Allocation level(s) */
+	byte chance[ALLOCATION_MAX] = { 0 };     /* Allocation chance(s) */
 
-	byte level;			/* Level */
-
-
-	byte d_attr;		/* Default object attribute */
-	char d_char;		/* Default object character */
+	byte level = 0;                          /* Level */
 
 
-	byte x_attr;		/* Desired object attribute */
-	char x_char;		/* Desired object character */
+	byte d_attr = 0;                         /* Default object attribute */
+	char d_char = 0;                         /* Default object character */
 
 
-	byte flavor;			/* Special object flavor (or zero) */
+	byte x_attr = 0;                         /* Desired object attribute */
+	char x_char = 0;                         /* Desired object character */
 
-	bool_ easy_know;		/* This object is always known (if aware) */
 
+	byte flavor = 0;                         /* Special object flavor (or zero) */
 
-	bool_ aware;			/* The player is "aware" of the item's effects */
+	bool_ easy_know = 0;                     /* This object is always known (if aware) */
 
-	bool_ tried;			/* The player has "tried" one of the items */
+	bool_ aware = 0;                         /* The player is "aware" of the item's effects */
 
-	u32b esp;                       /* ESP flags */
-	u32b oesp;                      /* Obvious ESP flags */
+	bool_ tried = 0;                         /* The player has "tried" one of the items */
 
-	byte btval;                     /* Become Object type */
-	byte bsval;                     /* Become Object sub type */
-	bool_ artifact;                  /* Is it a normal artifact(already generated) */
+	u32b esp = 0;                            /* ESP flags */
+	u32b oesp = 0;                           /* Obvious ESP flags */
 
-	s16b power;                     /* Power granted(if any) */
+	byte btval = 0;                          /* Become Object type */
+	byte bsval = 0;                          /* Become Object sub type */
+	bool_ artifact = 0;                      /* Is it a normal artifact(already generated) */
+
+	s16b power = 0;                          /* Power granted(if any) */
 };
