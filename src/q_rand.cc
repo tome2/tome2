@@ -15,8 +15,9 @@
 #include "messages.hpp"
 #include "monster2.hpp"
 #include "monster3.hpp"
-#include "monster_type.hpp"
 #include "monster_race.hpp"
+#include "monster_spell_flag.hpp"
+#include "monster_type.hpp"
 #include "object1.hpp"
 #include "object2.hpp"
 #include "object_kind.hpp"
@@ -115,7 +116,7 @@ void initialize_random_quests(int n)
 			if (r_ptr->flags9 & RF9_NEVER_GENE) continue;
 
 			/* Accept only monsters that are not breeders */
-			if (r_ptr->flags4 & RF4_MULTIPLY) continue;
+			if (r_ptr->spells & SF_MULTIPLY) continue;
 
 			/* Forbid joke monsters */
 			if (r_ptr->flags8 & RF8_JOKEANGBAND) continue;

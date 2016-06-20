@@ -21,6 +21,7 @@
 #include "loadsave.hpp"
 #include "monster2.hpp"
 #include "monster_race.hpp"
+#include "monster_spell_flag.hpp"
 #include "monster_type.hpp"
 #include "object2.hpp"
 #include "object_kind.hpp"
@@ -2857,33 +2858,6 @@ static bool_ vault_aux_giant(int r_idx)
 
 
 /*
- * Hack -- breath type for "vault_aux_dragon()"
- */
-static u32b vault_aux_dragon_mask4;
-
-
-/*
- * Helper function for "monster pit (dragon)"
- */
-static bool_ vault_aux_dragon(int r_idx)
-{
-	monster_race *r_ptr = &r_info[r_idx];
-
-	/* Decline unique monsters */
-	if (r_ptr->flags1 & RF1_UNIQUE) return (FALSE);
-
-	/* Hack -- Require "d" or "D" monsters */
-	if (!strchr("Dd", r_ptr->d_char)) return (FALSE);
-
-	/* Hack -- Require correct "breath attack" */
-	if (r_ptr->flags4 != vault_aux_dragon_mask4) return (FALSE);
-
-	/* Okay */
-	return (TRUE);
-}
-
-
-/*
  * Helper function for "monster pit (demon)"
  */
 static bool_ vault_aux_demon(int r_idx)
@@ -3283,93 +3257,71 @@ static void build_type6(int by0, int bx0)
 	/* Dragon pit */
 	else if (tmp < 80)
 	{
+		/* Hack - get_mon_num_hook needs a plain function */
+		static monster_spell_flag_set mask;
+
 		/* Pick dragon type */
 		switch (rand_int(6))
 		{
-			/* Black */
 		case 0:
 			{
-				/* Message */
 				name = "acid dragon";
-
-				/* Restrict dragon breath type */
-				vault_aux_dragon_mask4 = RF4_BR_ACID;
-
-				/* Done */
+				mask = SF_BR_ACID;
 				break;
 			}
-
-			/* Blue */
 		case 1:
 			{
-				/* Message */
 				name = "electric dragon";
-
-				/* Restrict dragon breath type */
-				vault_aux_dragon_mask4 = RF4_BR_ELEC;
-
-				/* Done */
+				mask = SF_BR_ELEC;
 				break;
 			}
 
-			/* Red */
 		case 2:
 			{
-				/* Message */
 				name = "fire dragon";
-
-				/* Restrict dragon breath type */
-				vault_aux_dragon_mask4 = RF4_BR_FIRE;
-
-				/* Done */
+				mask = SF_BR_FIRE;
 				break;
 			}
 
-			/* White */
 		case 3:
 			{
-				/* Message */
 				name = "cold dragon";
-
-				/* Restrict dragon breath type */
-				vault_aux_dragon_mask4 = RF4_BR_COLD;
-
-				/* Done */
+				mask = SF_BR_COLD;
 				break;
 			}
 
-			/* Green */
 		case 4:
 			{
-				/* Message */
 				name = "poison dragon";
-
-				/* Restrict dragon breath type */
-				vault_aux_dragon_mask4 = RF4_BR_POIS;
-
-				/* Done */
+				mask = SF_BR_POIS;
 				break;
 			}
 
-			/* Multi-hued */
 		default:
 			{
-				/* Message */
 				name = "multi-hued dragon";
-
-				/* Restrict dragon breath type */
-				vault_aux_dragon_mask4 = (RF4_BR_ACID | RF4_BR_ELEC |
-				                          RF4_BR_FIRE | RF4_BR_COLD |
-				                          RF4_BR_POIS);
-
-				/* Done */
+				mask = SF_BR_ACID | SF_BR_ELEC | SF_BR_FIRE | SF_BR_COLD | SF_BR_POIS;
 				break;
 			}
 
 		}
 
 		/* Restrict monster selection */
-		get_mon_num_hook = vault_aux_dragon;
+		get_mon_num_hook = [](int r_idx) -> bool_ {
+			monster_race *r_ptr = &r_info[r_idx];
+
+			/* Decline unique monsters */
+			if (r_ptr->flags1 & RF1_UNIQUE) return (FALSE);
+
+			/* Hack -- Require "d" or "D" monsters */
+			if (!strchr("Dd", r_ptr->d_char)) return (FALSE);
+
+			/* Hack -- Require correct "breath attack" */
+			if ((r_ptr->spells & mask) != mask) return (FALSE);
+
+			/* Okay */
+			return (TRUE);
+		};
 	}
 
 	/* Demon pit */

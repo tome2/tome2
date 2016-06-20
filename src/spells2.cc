@@ -22,6 +22,7 @@
 #include "monster2.hpp"
 #include "monster3.hpp"
 #include "monster_race.hpp"
+#include "monster_spell_flag.hpp"
 #include "monster_type.hpp"
 #include "notes.hpp"
 #include "object1.hpp"
@@ -882,7 +883,7 @@ void self_knowledge(FILE *fff)
 			info[i++] = "You have an empty mind.";
 		if (r_ptr->flags2 & RF2_WEIRD_MIND)
 			info[i++] = "You have a weird mind.";
-		if (r_ptr->flags4 & RF4_MULTIPLY)
+		if (r_ptr->spells & SF_MULTIPLY)
 			info[i++] = "You can multiply.";
 		if (r_ptr->flags2 & RF2_POWERFUL)
 			info[i++] = "You have strong breath.";
@@ -974,186 +975,183 @@ void self_knowledge(FILE *fff)
 		if (r_ptr->flags3 & RF3_NO_SLEEP)
 			info[i++] = "You are immune to sleep.";
 
-		if (r_ptr->flags4 & RF4_SHRIEK)
+		if (r_ptr->spells & SF_SHRIEK)
 			info[i++] = "You can aggravate monsters.";
-		if (r_ptr->flags4 & RF4_ROCKET)
+		if (r_ptr->spells & SF_ROCKET)
 			info[i++] = "You can fire a rocket.";
-		if (r_ptr->flags4 & RF4_ARROW_1)
+		if (r_ptr->spells & SF_ARROW_1)
 			info[i++] = "You can fire a light arrow.";
-		if (r_ptr->flags4 & RF4_ARROW_2)
+		if (r_ptr->spells & SF_ARROW_2)
 			info[i++] = "You can fire a heavy arrow.";
-		if (r_ptr->flags4 & RF4_ARROW_3)
+		if (r_ptr->spells & SF_ARROW_3)
 			info[i++] = "You can fire a light missile.";
-		if (r_ptr->flags4 & RF4_ARROW_4)
+		if (r_ptr->spells & SF_ARROW_4)
 			info[i++] = "You can fire a heavy missile.";
-		if (r_ptr->flags4 & RF4_BR_ACID)
+		if (r_ptr->spells & SF_BR_ACID)
 			info[i++] = "You can breathe acid.";
-		if (r_ptr->flags4 & RF4_BR_ELEC)
+		if (r_ptr->spells & SF_BR_ELEC)
 			info[i++] = "You can breathe electricity.";
-		if (r_ptr->flags4 & RF4_BR_FIRE)
+		if (r_ptr->spells & SF_BR_FIRE)
 			info[i++] = "You can breathe fire.";
-		if (r_ptr->flags4 & RF4_BR_COLD)
+		if (r_ptr->spells & SF_BR_COLD)
 			info[i++] = "You can breathe cold.";
-		if (r_ptr->flags4 & RF4_BR_POIS)
+		if (r_ptr->spells & SF_BR_POIS)
 			info[i++] = "You can breathe poison.";
-		if (r_ptr->flags4 & RF4_BR_NETH)
+		if (r_ptr->spells & SF_BR_NETH)
 			info[i++] = "You can breathe nether.";
-		if (r_ptr->flags4 & RF4_BR_LITE)
+		if (r_ptr->spells & SF_BR_LITE)
 			info[i++] = "You can breathe light.";
-		if (r_ptr->flags4 & RF4_BR_DARK)
+		if (r_ptr->spells & SF_BR_DARK)
 			info[i++] = "You can breathe darkness.";
-		if (r_ptr->flags4 & RF4_BR_CONF)
+		if (r_ptr->spells & SF_BR_CONF)
 			info[i++] = "You can breathe confusion.";
-		if (r_ptr->flags4 & RF4_BR_SOUN)
+		if (r_ptr->spells & SF_BR_SOUN)
 			info[i++] = "You can breathe sound.";
-		if (r_ptr->flags4 & RF4_BR_CHAO)
+		if (r_ptr->spells & SF_BR_CHAO)
 			info[i++] = "You can breathe chaos.";
-		if (r_ptr->flags4 & RF4_BR_DISE)
+		if (r_ptr->spells & SF_BR_DISE)
 			info[i++] = "You can breathe disenchantment.";
-		if (r_ptr->flags4 & RF4_BR_NEXU)
+		if (r_ptr->spells & SF_BR_NEXU)
 			info[i++] = "You can breathe nexus.";
-		if (r_ptr->flags4 & RF4_BR_TIME)
+		if (r_ptr->spells & SF_BR_TIME)
 			info[i++] = "You can breathe time.";
-		if (r_ptr->flags4 & RF4_BR_INER)
+		if (r_ptr->spells & SF_BR_INER)
 			info[i++] = "You can breathe inertia.";
-		if (r_ptr->flags4 & RF4_BR_GRAV)
+		if (r_ptr->spells & SF_BR_GRAV)
 			info[i++] = "You can breathe gravity.";
-		if (r_ptr->flags4 & RF4_BR_SHAR)
+		if (r_ptr->spells & SF_BR_SHAR)
 			info[i++] = "You can breathe shards.";
-		if (r_ptr->flags4 & RF4_BR_PLAS)
+		if (r_ptr->spells & SF_BR_PLAS)
 			info[i++] = "You can breathe plasma.";
-		if (r_ptr->flags4 & RF4_BR_WALL)
+		if (r_ptr->spells & SF_BR_WALL)
 			info[i++] = "You can breathe force.";
-		if (r_ptr->flags4 & RF4_BR_MANA)
+		if (r_ptr->spells & SF_BR_MANA)
 			info[i++] = "You can breathe mana.";
-		if (r_ptr->flags4 & RF4_BR_NUKE)
+		if (r_ptr->spells & SF_BR_NUKE)
 			info[i++] = "You can breathe nuke.";
-		if (r_ptr->flags4 & RF4_BR_DISI)
+		if (r_ptr->spells & SF_BR_DISI)
 			info[i++] = "You can breathe disintegration.";
-		if (r_ptr->flags5 & RF5_BA_ACID)
+		if (r_ptr->spells & SF_BA_ACID)
 			info[i++] = "You can cast a ball of acid.";
-		if (r_ptr->flags5 & RF5_BA_ELEC)
+		if (r_ptr->spells & SF_BA_ELEC)
 			info[i++] = "You can cast a ball of electricity.";
-		if (r_ptr->flags5 & RF5_BA_FIRE)
+		if (r_ptr->spells & SF_BA_FIRE)
 			info[i++] = "You can cast a ball of fire.";
-		if (r_ptr->flags5 & RF5_BA_COLD)
+		if (r_ptr->spells & SF_BA_COLD)
 			info[i++] = "You can cast a ball of cold.";
-		if (r_ptr->flags5 & RF5_BA_POIS)
+		if (r_ptr->spells & SF_BA_POIS)
 			info[i++] = "You can cast a ball of poison.";
-		if (r_ptr->flags5 & RF5_BA_NETH)
+		if (r_ptr->spells & SF_BA_NETH)
 			info[i++] = "You can cast a ball of nether.";
-		if (r_ptr->flags5 & RF5_BA_WATE)
+		if (r_ptr->spells & SF_BA_WATE)
 			info[i++] = "You can cast a ball of water.";
-		/* Not implemented */
-		if (r_ptr->flags5 & RF5_DRAIN_MANA)
+		if (r_ptr->spells & SF_DRAIN_MANA)
 			info[i++] = "You can drain mana.";
-		if (r_ptr->flags5 & RF5_MIND_BLAST)
+		if (r_ptr->spells & SF_MIND_BLAST)
 			info[i++] = "You can cause mind blasting.";
-		if (r_ptr->flags5 & RF5_BRAIN_SMASH)
+		if (r_ptr->spells & SF_BRAIN_SMASH)
 			info[i++] = "You can cause brain smashing.";
-		if (r_ptr->flags5 & RF5_CAUSE_1)
+		if (r_ptr->spells & SF_CAUSE_1)
 			info[i++] = "You can cause light wounds.";
-		if (r_ptr->flags5 & RF5_CAUSE_2)
+		if (r_ptr->spells & SF_CAUSE_2)
 			info[i++] = "You can cause serious wounds.";
-		if (r_ptr->flags5 & RF5_CAUSE_3)
+		if (r_ptr->spells & SF_CAUSE_3)
 			info[i++] = "You can cause critical wounds.";
-		if (r_ptr->flags5 & RF5_CAUSE_4)
+		if (r_ptr->spells & SF_CAUSE_4)
 			info[i++] = "You can cause mortal wounds.";
-		if (r_ptr->flags5 & RF5_BO_ACID)
+		if (r_ptr->spells & SF_BO_ACID)
 			info[i++] = "You can cast a bolt of acid.";
-		if (r_ptr->flags5 & RF5_BO_ELEC)
+		if (r_ptr->spells & SF_BO_ELEC)
 			info[i++] = "You can cast a bolt of electricity.";
-		if (r_ptr->flags5 & RF5_BO_FIRE)
+		if (r_ptr->spells & SF_BO_FIRE)
 			info[i++] = "You can cast a bolt of fire.";
-		if (r_ptr->flags5 & RF5_BO_COLD)
+		if (r_ptr->spells & SF_BO_COLD)
 			info[i++] = "You can cast a bolt of cold.";
-		if (r_ptr->flags5 & RF5_BO_POIS)
+		if (r_ptr->spells & SF_BO_POIS)
 			info[i++] = "You can cast a bolt of poison.";
-		if (r_ptr->flags5 & RF5_BO_NETH)
+		if (r_ptr->spells & SF_BO_NETH)
 			info[i++] = "You can cast a bolt of nether.";
-		if (r_ptr->flags5 & RF5_BO_WATE)
+		if (r_ptr->spells & SF_BO_WATE)
 			info[i++] = "You can cast a bolt of water.";
-		if (r_ptr->flags5 & RF5_BO_MANA)
+		if (r_ptr->spells & SF_BO_MANA)
 			info[i++] = "You can cast a bolt of mana.";
-		if (r_ptr->flags5 & RF5_BO_PLAS)
+		if (r_ptr->spells & SF_BO_PLAS)
 			info[i++] = "You can cast a bolt of plasma.";
-		if (r_ptr->flags5 & RF5_BO_ICEE)
+		if (r_ptr->spells & SF_BO_ICEE)
 			info[i++] = "You can cast a bolt of ice.";
-		if (r_ptr->flags5 & RF5_MISSILE)
+		if (r_ptr->spells & SF_MISSILE)
 			info[i++] = "You can cast magic missile.";
-		if (r_ptr->flags5 & RF5_SCARE)
+		if (r_ptr->spells & SF_SCARE)
 			info[i++] = "You can terrify.";
-		if (r_ptr->flags5 & RF5_BLIND)
+		if (r_ptr->spells & SF_BLIND)
 			info[i++] = "You can blind.";
-		if (r_ptr->flags5 & RF5_CONF)
+		if (r_ptr->spells & SF_CONF)
 			info[i++] = "You can use confusion.";
-		if (r_ptr->flags5 & RF5_SLOW)
+		if (r_ptr->spells & SF_SLOW)
 			info[i++] = "You can cast slow.";
-		if (r_ptr->flags5 & RF5_HOLD)
+		if (r_ptr->spells & SF_HOLD)
 			info[i++] = "You can touch to paralyze.";
-		if (r_ptr->flags6 & RF6_HASTE)
+		if (r_ptr->spells & SF_HASTE)
 			info[i++] = "You can haste yourself.";
-		if (r_ptr->flags6 & RF6_HAND_DOOM)
+		if (r_ptr->spells & SF_HAND_DOOM)
 			info[i++] = "You can invoke Hand of Doom.";
-		if (r_ptr->flags6 & RF6_HEAL)
+		if (r_ptr->spells & SF_HEAL)
 			info[i++] = "You can heal yourself.";
-		if (r_ptr->flags6 & RF6_BLINK)
+		if (r_ptr->spells & SF_BLINK)
 			info[i++] = "You can blink.";
-		if (r_ptr->flags6 & RF6_TPORT)
+		if (r_ptr->spells & SF_TPORT)
 			info[i++] = "You can teleport.";
-		if (r_ptr->flags6 & RF6_TELE_TO)
+		if (r_ptr->spells & SF_TELE_TO)
 			info[i++] = "You can go between places.";
-		if (r_ptr->flags6 & RF6_TELE_AWAY)
+		if (r_ptr->spells & SF_TELE_AWAY)
 			info[i++] = "You can teleport away.";
-		if (r_ptr->flags6 & RF6_TELE_LEVEL)
+		if (r_ptr->spells & SF_TELE_LEVEL)
 			info[i++] = "You can teleport level.";
-		if (r_ptr->flags6 & RF6_DARKNESS)
+		if (r_ptr->spells & SF_DARKNESS)
 			info[i++] = "You can create darkness.";
-		if (r_ptr->flags6 & RF6_TRAPS)
+		if (r_ptr->spells & SF_TRAPS)
 			info[i++] = "You can create traps.";
-		/* Not implemented */
-		if (r_ptr->flags6 & RF6_FORGET)
+		if (r_ptr->spells & SF_FORGET)
 			info[i++] = "You can fade memories.";
-		if (r_ptr->flags6 & RF6_RAISE_DEAD)
+		if (r_ptr->spells & SF_RAISE_DEAD)
 			info[i++] = "You can Raise the Dead.";
-		if (r_ptr->flags6 & RF6_S_BUG)
+		if (r_ptr->spells & SF_S_BUG)
 			info[i++] = "You can magically summon a Software Bugs.";
-		if (r_ptr->flags6 & RF6_S_RNG)
+		if (r_ptr->spells & SF_S_RNG)
 			info[i++] = "You can magically summon the RNG.";
-		if (r_ptr->flags6 & RF6_S_THUNDERLORD)
+		if (r_ptr->spells & SF_S_THUNDERLORD)
 			info[i++] = "You can magically summon some Thunderlords.";
-		if (r_ptr->flags6 & RF6_S_KIN)
+		if (r_ptr->spells & SF_S_KIN)
 			info[i++] = "You can magically summon some Kins.";
-		if (r_ptr->flags6 & RF6_S_HI_DEMON)
+		if (r_ptr->spells & SF_S_HI_DEMON)
 			info[i++] = "You can magically summon greater demons.";
-		if (r_ptr->flags6 & RF6_S_MONSTER)
+		if (r_ptr->spells & SF_S_MONSTER)
 			info[i++] = "You can magically summon a monster.";
-		if (r_ptr->flags6 & RF6_S_MONSTERS)
+		if (r_ptr->spells & SF_S_MONSTERS)
 			info[i++] = "You can magically summon monsters.";
-		if (r_ptr->flags6 & RF6_S_ANT)
+		if (r_ptr->spells & SF_S_ANT)
 			info[i++] = "You can magically summon ants.";
-		if (r_ptr->flags6 & RF6_S_SPIDER)
+		if (r_ptr->spells & SF_S_SPIDER)
 			info[i++] = "You can magically summon spiders.";
-		if (r_ptr->flags6 & RF6_S_HOUND)
+		if (r_ptr->spells & SF_S_HOUND)
 			info[i++] = "You can magically summon hounds.";
-		if (r_ptr->flags6 & RF6_S_HYDRA)
+		if (r_ptr->spells & SF_S_HYDRA)
 			info[i++] = "You can magically summon hydras.";
-		if (r_ptr->flags6 & RF6_S_ANGEL)
+		if (r_ptr->spells & SF_S_ANGEL)
 			info[i++] = "You can magically summon an angel.";
-		if (r_ptr->flags6 & RF6_S_DEMON)
+		if (r_ptr->spells & SF_S_DEMON)
 			info[i++] = "You can magically summon a demon.";
-		if (r_ptr->flags6 & RF6_S_UNDEAD)
+		if (r_ptr->spells & SF_S_UNDEAD)
 			info[i++] = "You can magically summon an undead.";
-		if (r_ptr->flags6 & RF6_S_DRAGON)
+		if (r_ptr->spells & SF_S_DRAGON)
 			info[i++] = "You can magically summon a dragon.";
-		if (r_ptr->flags6 & RF6_S_HI_UNDEAD)
+		if (r_ptr->spells & SF_S_HI_UNDEAD)
 			info[i++] = "You can magically summon greater undead.";
-		if (r_ptr->flags6 & RF6_S_HI_DRAGON)
+		if (r_ptr->spells & SF_S_HI_DRAGON)
 			info[i++] = "You can magically summon greater dragons.";
-		if (r_ptr->flags6 & RF6_S_WRAITH)
+		if (r_ptr->spells & SF_S_WRAITH)
 			info[i++] = "You can magically summon a wraith.";
-		/* Not implemented */
-		if (r_ptr->flags6 & RF6_S_UNIQUE)
+		if (r_ptr->spells & SF_S_UNIQUE)
 			info[i++] = "You can magically summon an unique monster.";
 		/* Not implemented */
 		if (r_ptr->flags7 & RF7_AQUATIC)

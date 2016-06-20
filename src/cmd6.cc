@@ -25,6 +25,7 @@
 #include "mimic.hpp"
 #include "monster2.hpp"
 #include "monster_race.hpp"
+#include "monster_spell_flag.hpp"
 #include "monster_type.hpp"
 #include "object1.hpp"
 #include "object2.hpp"
@@ -539,7 +540,7 @@ static void corpse_effect(object_type *o_ptr, bool_ cutting)
 	 */
 
 	/* Acid */
-	if (r_ptr->flags4 & RF4_BR_ACID && brpow > 0)
+	if ((r_ptr->spells & SF_BR_ACID) && brpow > 0)
 	{
 		brdam = ((brpow / 3) > 1600 ? 1600 : (brpow / 3));
 
@@ -554,13 +555,13 @@ static void corpse_effect(object_type *o_ptr, bool_ cutting)
 		}
 		o_ptr->pval = 1;
 	}
-	else if (r_ptr->flags4 & RF4_BR_ACID)
+	else if (r_ptr->spells & SF_BR_ACID)
 	{
 		set_oppose_acid(p_ptr->oppose_acid + rand_int(10) + 10);
 	}
 
 	/* Electricity */
-	if (r_ptr->flags4 & RF4_BR_ELEC && brpow > 0)
+	if ((r_ptr->spells & SF_BR_ELEC) && brpow > 0)
 	{
 		brdam = ((brpow / 3) > 1600 ? 1600 : (brpow / 3));
 
@@ -576,13 +577,13 @@ static void corpse_effect(object_type *o_ptr, bool_ cutting)
 		o_ptr->weight = o_ptr->weight - brpow;
 		o_ptr->pval = o_ptr->weight;
 	}
-	else if (r_ptr->flags4 & RF4_BR_ELEC)
+	else if (r_ptr->spells & SF_BR_ELEC)
 	{
 		set_oppose_elec(p_ptr->oppose_elec + rand_int(10) + 10);
 	}
 
 	/* Fire */
-	if (r_ptr->flags4 & RF4_BR_FIRE && brpow > 0)
+	if ((r_ptr->spells & SF_BR_FIRE) && brpow > 0)
 	{
 		brdam = ((brpow / 3) > 1600 ? 1600 : (brpow / 3));
 
@@ -597,13 +598,13 @@ static void corpse_effect(object_type *o_ptr, bool_ cutting)
 		}
 		o_ptr->pval = 1;
 	}
-	else if (r_ptr->flags4 & RF4_BR_FIRE)
+	else if (r_ptr->spells & SF_BR_FIRE)
 	{
 		set_oppose_fire(p_ptr->oppose_fire + rand_int(10) + 10);
 	}
 
 	/* Cold */
-	if (r_ptr->flags4 & RF4_BR_COLD && brpow > 0)
+	if ((r_ptr->spells & SF_BR_COLD) && brpow > 0)
 	{
 		brdam = ((brpow / 3) > 1600 ? 1600 : (brpow / 3));
 
@@ -619,13 +620,13 @@ static void corpse_effect(object_type *o_ptr, bool_ cutting)
 		o_ptr->weight = o_ptr->weight - brpow;
 		o_ptr->pval = o_ptr->weight;
 	}
-	else if (r_ptr->flags4 & RF4_BR_COLD)
+	else if (r_ptr->spells & SF_BR_COLD)
 	{
 		set_oppose_cold(p_ptr->oppose_cold + rand_int(10) + 10);
 	}
 
 	/* Poison */
-	if (r_ptr->flags4 & RF4_BR_POIS && brpow > 0)
+	if ((r_ptr->spells & SF_BR_POIS) && brpow > 0)
 	{
 		brdam = ((brpow / 3) > 800 ? 800 : (brpow / 3));
 
@@ -648,7 +649,7 @@ static void corpse_effect(object_type *o_ptr, bool_ cutting)
 	}
 
 	/* Nether */
-	if (r_ptr->flags4 & RF4_BR_NETH && brpow > 0)
+	if ((r_ptr->spells & SF_BR_NETH) && brpow > 0)
 	{
 		brdam = ((brpow / 6) > 550 ? 550 : (brpow / 6));
 
@@ -685,7 +686,7 @@ static void corpse_effect(object_type *o_ptr, bool_ cutting)
 	}
 
 	/* Confusion */
-	if (r_ptr->flags4 & RF4_BR_CONF && brpow > 0)
+	if ((r_ptr->spells & SF_BR_CONF) && brpow > 0)
 	{
 		msg_print("A strange liquid splashes on you!");
 
@@ -698,7 +699,7 @@ static void corpse_effect(object_type *o_ptr, bool_ cutting)
 	}
 
 	/* Chaos */
-	if (r_ptr->flags4 & RF4_BR_CHAO && brpow > 0)
+	if ((r_ptr->spells & SF_BR_CHAO) && brpow > 0)
 	{
 		brdam = ((brpow / 6) > 600 ? 600 : (brpow / 6));
 
@@ -744,7 +745,7 @@ static void corpse_effect(object_type *o_ptr, bool_ cutting)
 	}
 
 	/* Disenchantment */
-	if (r_ptr->flags4 & RF4_BR_DISE && brpow > 0)
+	if ((r_ptr->spells & SF_BR_DISE) && brpow > 0)
 	{
 		brdam = ((brpow / 6) > 500 ? 500 : (brpow / 6));
 
@@ -766,7 +767,7 @@ static void corpse_effect(object_type *o_ptr, bool_ cutting)
 	}
 
 	/* Plasma */
-	if (r_ptr->flags4 & RF4_BR_PLAS && brpow > 0)
+	if ((r_ptr->spells & SF_BR_PLAS) && brpow > 0)
 	{
 		brdam = ((brpow / 6) > 150 ? 150 : (brpow / 6));
 
@@ -880,27 +881,27 @@ static void corpse_effect(object_type *o_ptr, bool_ cutting)
 		{
 			(void)set_confused(0);
 		}
-		if (r_ptr->flags6 & RF6_S_THUNDERLORD)
+		if (r_ptr->spells & SF_S_THUNDERLORD)
 		{
 			summon_specific_friendly(p_ptr->py, p_ptr->px, dun_level, SUMMON_THUNDERLORD, FALSE);
 		}
-		if (r_ptr->flags6 & RF6_S_DEMON)
+		if (r_ptr->spells & SF_S_DEMON)
 		{
 			summon_specific_friendly(p_ptr->py, p_ptr->px, dun_level, SUMMON_DEMON, FALSE);
 		}
-		if (r_ptr->flags6 & RF6_S_KIN)
+		if (r_ptr->spells & SF_S_KIN)
 		{
 			summon_specific_friendly(p_ptr->py, p_ptr->px, dun_level, SUMMON_KIN, FALSE);
 		}
-		if (r_ptr->flags6 & RF6_S_HI_DEMON)
+		if (r_ptr->spells & SF_S_HI_DEMON)
 		{
 			summon_specific_friendly(p_ptr->py, p_ptr->px, dun_level, SUMMON_HI_DEMON, FALSE);
 		}
-		if (r_ptr->flags6 & RF6_S_MONSTER)
+		if (r_ptr->spells & SF_S_MONSTER)
 		{
 			summon_specific_friendly(p_ptr->py, p_ptr->px, dun_level, 0, FALSE);
 		}
-		if (r_ptr->flags6 & RF6_S_MONSTERS)
+		if (r_ptr->spells & SF_S_MONSTERS)
 		{
 			int k;
 			for (k = 0; k < 8; k++)
@@ -908,47 +909,47 @@ static void corpse_effect(object_type *o_ptr, bool_ cutting)
 				summon_specific_friendly(p_ptr->py, p_ptr->px, dun_level, 0, FALSE);
 			}
 		}
-		if (r_ptr->flags6 & RF6_S_UNDEAD)
+		if (r_ptr->spells & SF_S_UNDEAD)
 		{
 			summon_specific_friendly(p_ptr->py, p_ptr->px, dun_level, SUMMON_UNDEAD, FALSE);
 		}
-		if (r_ptr->flags6 & RF6_S_DRAGON)
+		if (r_ptr->spells & SF_S_DRAGON)
 		{
 			summon_specific_friendly(p_ptr->py, p_ptr->px, dun_level, SUMMON_DRAGON, FALSE);
 		}
-		if (r_ptr->flags6 & RF6_S_ANT)
+		if (r_ptr->spells & SF_S_ANT)
 		{
 			summon_specific_friendly(p_ptr->py, p_ptr->px, dun_level, SUMMON_ANT, FALSE);
 		}
-		if (r_ptr->flags6 & RF6_S_SPIDER)
+		if (r_ptr->spells & SF_S_SPIDER)
 		{
 			summon_specific_friendly(p_ptr->py, p_ptr->px, dun_level, SUMMON_SPIDER, FALSE);
 		}
-		if (r_ptr->flags6 & RF6_S_HOUND)
+		if (r_ptr->spells & SF_S_HOUND)
 		{
 			summon_specific_friendly(p_ptr->py, p_ptr->px, dun_level, SUMMON_HOUND, FALSE);
 		}
-		if (r_ptr->flags6 & RF6_S_HYDRA)
+		if (r_ptr->spells & SF_S_HYDRA)
 		{
 			summon_specific_friendly(p_ptr->py, p_ptr->px, dun_level, SUMMON_HYDRA, FALSE);
 		}
-		if (r_ptr->flags6 & RF6_S_ANGEL)
+		if (r_ptr->spells & SF_S_ANGEL)
 		{
 			summon_specific_friendly(p_ptr->py, p_ptr->px, dun_level, SUMMON_ANGEL, FALSE);
 		}
-		if (r_ptr->flags6 & RF6_S_HI_DRAGON)
+		if (r_ptr->spells & SF_S_HI_DRAGON)
 		{
 			summon_specific_friendly(p_ptr->py, p_ptr->px, dun_level, SUMMON_HI_DRAGON, FALSE);
 		}
-		if (r_ptr->flags6 & RF6_S_HI_UNDEAD)
+		if (r_ptr->spells & SF_S_HI_UNDEAD)
 		{
 			summon_specific_friendly(p_ptr->py, p_ptr->px, dun_level, SUMMON_HI_UNDEAD, FALSE);
 		}
-		if (r_ptr->flags6 & RF6_S_WRAITH)
+		if (r_ptr->spells & SF_S_WRAITH)
 		{
 			summon_specific_friendly(p_ptr->py, p_ptr->px, dun_level, SUMMON_WRAITH, FALSE);
 		}
-		if (r_ptr->flags6 & RF6_S_UNIQUE)
+		if (r_ptr->spells & SF_S_UNIQUE)
 		{
 			summon_specific_friendly(p_ptr->py, p_ptr->px, dun_level, SUMMON_UNIQUE, FALSE);
 		}

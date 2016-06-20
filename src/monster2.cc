@@ -22,6 +22,7 @@
 #include "monster3.hpp"
 #include "monster_ego.hpp"
 #include "monster_race.hpp"
+#include "monster_spell_flag.hpp"
 #include "monster_type.hpp"
 #include "object1.hpp"
 #include "object2.hpp"
@@ -333,23 +334,19 @@ std::shared_ptr<monster_race> race_info_idx(int r_idx, int ego)
 	nr_ptr->flags1 &= ~(re_ptr->nflags1);
 	nr_ptr->flags2 &= ~(re_ptr->nflags2);
 	nr_ptr->flags3 &= ~(re_ptr->nflags3);
-	nr_ptr->flags4 &= ~(re_ptr->nflags4);
-	nr_ptr->flags5 &= ~(re_ptr->nflags5);
-	nr_ptr->flags6 &= ~(re_ptr->nflags6);
 	nr_ptr->flags7 &= ~(re_ptr->nflags7);
 	nr_ptr->flags8 &= ~(re_ptr->nflags8);
 	nr_ptr->flags9 &= ~(re_ptr->nflags9);
+	nr_ptr->spells &= ~(re_ptr->nspells);
 
 	/* Add some flags */
 	nr_ptr->flags1 |= re_ptr->mflags1;
 	nr_ptr->flags2 |= re_ptr->mflags2;
 	nr_ptr->flags3 |= re_ptr->mflags3;
-	nr_ptr->flags4 |= re_ptr->mflags4;
-	nr_ptr->flags5 |= re_ptr->mflags5;
-	nr_ptr->flags6 |= re_ptr->mflags6;
 	nr_ptr->flags7 |= re_ptr->mflags7;
 	nr_ptr->flags8 |= re_ptr->mflags8;
 	nr_ptr->flags9 |= re_ptr->mflags9;
+	nr_ptr->spells |= re_ptr->mspells;
 
 	/* Change the char/attr is needed */
 	if (re_ptr->d_char != MEGO_CHAR_ANY)
@@ -452,7 +449,7 @@ void delete_monster_idx(int i)
 	r_ptr->on_saved = FALSE;
 
 	/* Hack -- count the number of "reproducers" */
-	if (r_ptr->flags4 & RF4_MULTIPLY) num_repro--;
+	if (r_ptr->spells & SF_MULTIPLY) num_repro--;
 
 	/* XXX XXX XXX remove monster light source */
 	bool_ had_lite = FALSE;
@@ -884,21 +881,6 @@ bool_ apply_rule(monster_race *r_ptr, byte rule)
 			if ((d_ptr->rules[rule].mflags3 & r_ptr->flags3) != d_ptr->rules[rule].mflags3)
 				return FALSE;
 		}
-		if (d_ptr->rules[rule].mflags4)
-		{
-			if ((d_ptr->rules[rule].mflags4 & r_ptr->flags4) != d_ptr->rules[rule].mflags4)
-				return FALSE;
-		}
-		if (d_ptr->rules[rule].mflags5)
-		{
-			if ((d_ptr->rules[rule].mflags5 & r_ptr->flags5) != d_ptr->rules[rule].mflags5)
-				return FALSE;
-		}
-		if (d_ptr->rules[rule].mflags6)
-		{
-			if ((d_ptr->rules[rule].mflags6 & r_ptr->flags6) != d_ptr->rules[rule].mflags6)
-				return FALSE;
-		}
 		if (d_ptr->rules[rule].mflags7)
 		{
 			if ((d_ptr->rules[rule].mflags7 & r_ptr->flags7) != d_ptr->rules[rule].mflags7)
@@ -912,6 +894,11 @@ bool_ apply_rule(monster_race *r_ptr, byte rule)
 		if (d_ptr->rules[rule].mflags9)
 		{
 			if ((d_ptr->rules[rule].mflags9 & r_ptr->flags9) != d_ptr->rules[rule].mflags9)
+				return FALSE;
+		}
+		if (d_ptr->rules[rule].mspells)
+		{
+			if ((d_ptr->rules[rule].mspells & r_ptr->spells) != d_ptr->rules[rule].mspells)
 				return FALSE;
 		}
 		for (a = 0; a < 5; a++)
@@ -929,12 +916,11 @@ bool_ apply_rule(monster_race *r_ptr, byte rule)
 		if (d_ptr->rules[rule].mflags1 && (r_ptr->flags1 & d_ptr->rules[rule].mflags1)) return TRUE;
 		if (d_ptr->rules[rule].mflags2 && (r_ptr->flags2 & d_ptr->rules[rule].mflags2)) return TRUE;
 		if (d_ptr->rules[rule].mflags3 && (r_ptr->flags3 & d_ptr->rules[rule].mflags3)) return TRUE;
-		if (d_ptr->rules[rule].mflags4 && (r_ptr->flags4 & d_ptr->rules[rule].mflags4)) return TRUE;
-		if (d_ptr->rules[rule].mflags5 && (r_ptr->flags5 & d_ptr->rules[rule].mflags5)) return TRUE;
-		if (d_ptr->rules[rule].mflags6 && (r_ptr->flags6 & d_ptr->rules[rule].mflags6)) return TRUE;
 		if (d_ptr->rules[rule].mflags7 && (r_ptr->flags7 & d_ptr->rules[rule].mflags7)) return TRUE;
 		if (d_ptr->rules[rule].mflags8 && (r_ptr->flags8 & d_ptr->rules[rule].mflags8)) return TRUE;
 		if (d_ptr->rules[rule].mflags9 && (r_ptr->flags9 & d_ptr->rules[rule].mflags9)) return TRUE;
+
+		if (d_ptr->rules[rule].mspells && (r_ptr->spells & d_ptr->rules[rule].mspells)) return TRUE;
 
 		for (a = 0; a < 5; a++)
 			if (d_ptr->rules[rule].r_char[a] == r_ptr->d_char) return TRUE;
@@ -2497,7 +2483,7 @@ s16b place_monster_one(int y, int x, int r_idx, int ego, bool_ slp, int status)
 
 
 	/* Hack -- Count the number of "reproducers" */
-	if (r_ptr->flags4 & RF4_MULTIPLY) num_repro++;
+	if (r_ptr->spells & SF_MULTIPLY) num_repro++;
 
 
 	/* Hack -- Notice new multi-hued monsters */
@@ -3114,7 +3100,7 @@ static bool_ summon_specific_okay(int r_idx)
 			        !(r_ptr->flags3 & RF3_EVIL) &&
 			        !(r_ptr->flags3 & RF3_UNDEAD) &&
 			        !(r_ptr->flags3 & RF3_DEMON) &&
-			        !(r_ptr->flags4 || r_ptr->flags5 || r_ptr->flags6) &&
+				!r_ptr->spells &&
 			        !(r_ptr->flags1 & RF1_UNIQUE));
 			break;
 		}

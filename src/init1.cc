@@ -16,6 +16,7 @@
 #include "monster2.hpp"
 #include "monster_ego.hpp"
 #include "monster_race.hpp"
+#include "monster_spell.hpp"
 #include "monster_type.hpp"
 #include "object1.hpp"
 #include "object2.hpp"
@@ -267,124 +268,6 @@ static cptr r_info_flags3[] =
 	"NO_CONF",
 	"NO_SLEEP"
 };
-
-/*
- * Monster race flags
- */
-static cptr r_info_flags4[] =
-{
-	"SHRIEK",
-	"MULTIPLY",
-	"S_ANIMAL",
-	"ROCKET",
-	"ARROW_1",
-	"ARROW_2",
-	"ARROW_3",
-	"ARROW_4",
-	"BR_ACID",
-	"BR_ELEC",
-	"BR_FIRE",
-	"BR_COLD",
-	"BR_POIS",
-	"BR_NETH",
-	"BR_LITE",
-	"BR_DARK",
-	"BR_CONF",
-	"BR_SOUN",
-	"BR_CHAO",
-	"BR_DISE",
-	"BR_NEXU",
-	"BR_TIME",
-	"BR_INER",
-	"BR_GRAV",
-	"BR_SHAR",
-	"BR_PLAS",
-	"BR_WALL",
-	"BR_MANA",
-	"BA_NUKE",
-	"BR_NUKE",
-	"BA_CHAO",
-	"BR_DISI",
-};
-
-/*
- * Monster race flags
- */
-static cptr r_info_flags5[] =
-{
-	"BA_ACID",
-	"BA_ELEC",
-	"BA_FIRE",
-	"BA_COLD",
-	"BA_POIS",
-	"BA_NETH",
-	"BA_WATE",
-	"BA_MANA",
-	"BA_DARK",
-	"DRAIN_MANA",
-	"MIND_BLAST",
-	"BRAIN_SMASH",
-	"CAUSE_1",
-	"CAUSE_2",
-	"CAUSE_3",
-	"CAUSE_4",
-	"BO_ACID",
-	"BO_ELEC",
-	"BO_FIRE",
-	"BO_COLD",
-	"BO_POIS",
-	"BO_NETH",
-	"BO_WATE",
-	"BO_MANA",
-	"BO_PLAS",
-	"BO_ICEE",
-	"MISSILE",
-	"SCARE",
-	"BLIND",
-	"CONF",
-	"SLOW",
-	"HOLD"
-};
-
-/*
- * Monster race flags
- */
-static cptr r_info_flags6[] =
-{
-	"HASTE",
-	"HAND_DOOM",
-	"HEAL",
-	"S_ANIMALS",
-	"BLINK",
-	"TPORT",
-	"TELE_TO",
-	"TELE_AWAY",
-	"TELE_LEVEL",
-	"DARKNESS",
-	"TRAPS",
-	"FORGET",
-	"ANIM_DEAD",  /* ToDo: Implement ANIM_DEAD */
-	"S_BUG",
-	"S_RNG",
-	"S_THUNDERLORD",   /* DG : Summon Thunderlord */
-	"S_KIN",
-	"S_HI_DEMON",
-	"S_MONSTER",
-	"S_MONSTERS",
-	"S_ANT",
-	"S_SPIDER",
-	"S_HOUND",
-	"S_HYDRA",
-	"S_ANGEL",
-	"S_DEMON",
-	"S_UNDEAD",
-	"S_DRAGON",
-	"S_HI_UNDEAD",
-	"S_HI_DRAGON",
-	"S_WRAITH",
-	"S_UNIQUE"
-};
-
 
 /*
  * Monster race flags
@@ -5488,14 +5371,15 @@ static errr grab_one_basic_flag(monster_race *r_ptr, cptr what)
 /*
  * Grab one (spell) flag in a monster_race from a textual string
  */
-static errr grab_one_spell_flag(monster_race *r_ptr, cptr what)
+static errr grab_one_monster_spell_flag(monster_spell_flag_set *flags, cptr what)
 {
-	if (lookup_flags(what,
-		flag_tie(&r_ptr->flags4, r_info_flags4),
-		flag_tie(&r_ptr->flags5, r_info_flags5),
-		flag_tie(&r_ptr->flags6, r_info_flags6)))
+	for (auto const &monster_spell: monster_spells())
 	{
-		return (0);
+		if (streq(what, monster_spell->name))
+		{
+			*flags |= monster_spell->flag_set;
+			return 0;
+		}
 	}
 
 	/* Oops */
@@ -5823,7 +5707,7 @@ errr init_r_info_txt(FILE *fp)
 			/* Parse this entry */
 			else
 			{
-				if (0 != grab_one_spell_flag(r_ptr, s))
+				if (0 != grab_one_monster_spell_flag(&r_ptr->spells, s))
 				{
 					return (5);
 				}
@@ -5885,32 +5769,6 @@ static errr grab_one_basic_ego_flag(monster_ego *re_ptr, cptr what, bool_ add)
 	return (1);
 }
 
-
-/*
- * Grab one (spell) flag in a monster_race from a textual string
- */
-static errr grab_one_spell_ego_flag(monster_ego *re_ptr, cptr what, bool_ add)
-{
-	/* Dispatch to correct set of flags */
-	u32b *f4 = add ? &re_ptr->mflags4 : &re_ptr->nflags4;
-	u32b *f5 = add ? &re_ptr->mflags5 : &re_ptr->nflags5;
-	u32b *f6 = add ? &re_ptr->mflags6 : &re_ptr->nflags6;
-
-	/* Lookup */
-	if (lookup_flags(what,
-		flag_tie(f4, r_info_flags4),
-		flag_tie(f5, r_info_flags5),
-		flag_tie(f6, r_info_flags6)))
-	{
-		return (0);
-	}
-
-	/* Oops */
-	msg_format("Unknown monster flag '%s'.", what);
-
-	/* Failure */
-	return (1);
-}
 
 /*
  * Grab one (basic) flag in a monster_race from a textual string
@@ -6278,7 +6136,7 @@ errr init_re_info_txt(FILE *fp)
 
 			/* Parse this entry */
 			else {
-				if (0 != grab_one_spell_ego_flag(re_ptr, s, TRUE))
+				if (0 != grab_one_monster_spell_flag(&re_ptr->mspells, s))
 				{
 					return (5);
 				}
@@ -6308,7 +6166,7 @@ errr init_re_info_txt(FILE *fp)
 				if (!strcmp(s, "MF_ALL"))
 				{
 					/* No flags */
-					re_ptr->nflags4 = re_ptr->nflags5 = re_ptr->nflags6 = 0xFFFFFFFF;
+					re_ptr->nspells = ~monster_spell_flag_set();
 
 					/* Start at next entry */
 					s = t;
@@ -6318,7 +6176,7 @@ errr init_re_info_txt(FILE *fp)
 				}
 
 				/* Parse this entry */
-				if (0 != grab_one_spell_ego_flag(re_ptr, s, FALSE)) return (5);
+				if (0 != grab_one_monster_spell_flag(&re_ptr->nspells, s)) return (5);
 
 				/* Start the next entry */
 				s = t;
@@ -6547,26 +6405,6 @@ static errr grab_one_basic_monster_flag(dungeon_info_type *d_ptr, cptr what, byt
 	return (1);
 }
 
-
-/*
- * Grab one (spell) flag in a monster_race from a textual string
- */
-static errr grab_one_spell_monster_flag(dungeon_info_type *d_ptr, cptr what, byte rule)
-{
-	if (lookup_flags(what,
-		flag_tie(&d_ptr->rules[rule].mflags4, r_info_flags4),
-		flag_tie(&d_ptr->rules[rule].mflags5, r_info_flags5),
-		flag_tie(&d_ptr->rules[rule].mflags6, r_info_flags6)))
-	{
-		return 0;
-	}
-
-	/* Oops */
-	msg_format("Unknown monster flag '%s'.", what);
-
-	/* Failure */
-	return (1);
-}
 
 /*
  * Initialize the "d_info" array, by parsing an ascii "template" file
@@ -7009,7 +6847,7 @@ errr init_d_info_txt(FILE *fp)
 			s = buf + 2;
 
 			/* Parse this entry */
-			if (0 != grab_one_spell_monster_flag(d_ptr, s, rule_num))
+			if (0 != grab_one_monster_spell_flag(&d_ptr->rules[rule_num].mspells, s))
 			{
 				return (5);
 			}

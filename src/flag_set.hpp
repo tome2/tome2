@@ -16,6 +16,9 @@ private:
 	std::uint32_t m_data[tiers];
 
 public:
+	static constexpr const std::size_t nbits = tiers * 32;
+
+public:
 
 	constexpr flag_set()
 		: m_data { 0 }
@@ -79,6 +82,12 @@ public:
 	constexpr operator bool() const
 	{
 		return !empty();
+	}
+
+	constexpr bool bit(std::size_t i) const
+	{
+		assert(i < nbits);
+		return (m_data[i / 32] & (1UL << (i % 32)));
 	}
 
 	flag_set &operator |= (flag_set const &other)

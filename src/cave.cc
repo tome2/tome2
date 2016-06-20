@@ -6,6 +6,7 @@
 #include "hook_enter_dungeon_in.hpp"
 #include "monster2.hpp"
 #include "monster_race.hpp"
+#include "monster_spell_flag.hpp"
 #include "monster_type.hpp"
 #include "object1.hpp"
 #include "object_kind.hpp"
@@ -500,47 +501,57 @@ static char get_shimmer_color()
 
 
 /*
- * Table of breath colors.  Must match listings in a single set of 
- * monster spell flags.
- *
- * The value "255" is special.  Monsters with that kind of breath 
- * may be any color.
+ * Breath color
  */
-static byte breath_to_attr[32][2] =
-{
-	{ 0, 0 },
-	{ 0, 0 },
-	{ 0, 0 },
-	{ 0, 0 },
-	{ 0, 0 },
-	{ 0, 0 },
-	{ 0, 0 },
-	{ 0, 0 },
-	{ TERM_SLATE, TERM_L_DARK },        /* RF4_BRTH_ACID */
-	{ TERM_BLUE, TERM_L_BLUE },        /* RF4_BRTH_ELEC */
-	{ TERM_RED, TERM_L_RED },          /* RF4_BRTH_FIRE */
-	{ TERM_WHITE, TERM_L_WHITE },      /* RF4_BRTH_COLD */
-	{ TERM_GREEN, TERM_L_GREEN },      /* RF4_BRTH_POIS */
-	{ TERM_L_GREEN, TERM_GREEN },      /* RF4_BRTH_NETHR */
-	{ TERM_YELLOW, TERM_ORANGE },      /* RF4_BRTH_LITE */
-	{ TERM_L_DARK, TERM_SLATE },       /* RF4_BRTH_DARK */
-	{ TERM_L_UMBER, TERM_UMBER },      /* RF4_BRTH_CONFU */
-	{ TERM_YELLOW, TERM_L_UMBER },     /* RF4_BRTH_SOUND */
-	{ 255, 255 },    /* (any color) */ /* RF4_BRTH_CHAOS */
-	{ TERM_VIOLET, TERM_VIOLET },      /* RF4_BRTH_DISEN */
-	{ TERM_L_RED, TERM_VIOLET },       /* RF4_BRTH_NEXUS */
-	{ TERM_L_BLUE, TERM_L_BLUE },      /* RF4_BRTH_TIME */
-	{ TERM_L_WHITE, TERM_SLATE },      /* RF4_BRTH_INER */
-	{ TERM_L_WHITE, TERM_SLATE },      /* RF4_BRTH_GRAV */
-	{ TERM_UMBER, TERM_L_UMBER },      /* RF4_BRTH_SHARD */
-	{ TERM_ORANGE, TERM_RED },         /* RF4_BRTH_PLAS */
-	{ TERM_UMBER, TERM_L_UMBER },      /* RF4_BRTH_FORCE */
-	{ TERM_L_BLUE, TERM_WHITE },       /* RF4_BRTH_MANA */
-	{ 0, 0 },      /*  */
-	{ TERM_GREEN, TERM_L_GREEN },      /* RF4_BRTH_NUKE */
-	{ 0, 0 },      /*  */
-	{ TERM_WHITE, TERM_L_RED },        /* RF4_BRTH_DISINT */
+struct breath_color {
+	std::size_t breath_idx;
+	byte first_color;
+	byte second_color;
 };
+
+
+/*
+ * Breath colors. The value "255" is special.  Monsters with
+ * that kind of breath may be any color.
+ */
+static breath_color const *lookup_breath_color(std::size_t i)
+{
+	static breath_color breath_to_attr[] =
+	{
+		{ SF_BR_ACID_IDX, TERM_SLATE, TERM_L_DARK },
+		{ SF_BR_ELEC_IDX, TERM_BLUE, TERM_L_BLUE },
+		{ SF_BR_FIRE_IDX, TERM_RED, TERM_L_RED },
+		{ SF_BR_COLD_IDX, TERM_WHITE, TERM_L_WHITE },
+		{ SF_BR_POIS_IDX, TERM_GREEN, TERM_L_GREEN },
+		{ SF_BR_NETH_IDX, TERM_L_GREEN, TERM_GREEN },
+		{ SF_BR_LITE_IDX, TERM_YELLOW, TERM_ORANGE },
+		{ SF_BR_DARK_IDX, TERM_L_DARK, TERM_SLATE },
+		{ SF_BR_CONF_IDX, TERM_L_UMBER, TERM_UMBER },
+		{ SF_BR_SOUN_IDX, TERM_YELLOW, TERM_L_UMBER },
+		{ SF_BR_CHAO_IDX, 255, 255 },
+		{ SF_BR_DISE_IDX, TERM_VIOLET, TERM_VIOLET },
+		{ SF_BR_NEXU_IDX, TERM_L_RED, TERM_VIOLET },
+		{ SF_BR_TIME_IDX, TERM_L_BLUE, TERM_L_BLUE },
+		{ SF_BR_INER_IDX, TERM_L_WHITE, TERM_SLATE },
+		{ SF_BR_GRAV_IDX, TERM_L_WHITE, TERM_SLATE },
+		{ SF_BR_SHAR_IDX, TERM_UMBER, TERM_L_UMBER },
+		{ SF_BR_PLAS_IDX, TERM_ORANGE, TERM_RED },
+		{ SF_BR_WALL_IDX, TERM_UMBER, TERM_L_UMBER },
+		{ SF_BR_MANA_IDX, TERM_L_BLUE, TERM_WHITE },
+		{ SF_BR_NUKE_IDX, TERM_GREEN, TERM_L_GREEN },
+		{ SF_BR_DISI_IDX, TERM_WHITE, TERM_L_RED },
+	};
+
+	for (auto const &breath_color: breath_to_attr)
+	{
+		if (breath_color.breath_idx == i)
+		{
+			return &breath_color;
+		}
+	}
+
+	return nullptr;
+}
 
 
 /*
@@ -556,9 +567,7 @@ static byte multi_hued_attr(std::shared_ptr<monster_race> r_ptr)
 {
 	byte allowed_attrs[15];
 
-	int i, j;
-
-	int stored_colors = 0;
+	std::size_t stored_colors = 0;
 
 	int breaths = 0;
 
@@ -571,18 +580,22 @@ static byte multi_hued_attr(std::shared_ptr<monster_race> r_ptr)
 	if (!r_ptr->freq_inate) return (get_shimmer_color());
 
 	/* Check breaths */
-	for (i = 0; i < 32; i++)
+	for (std::size_t i = 0; i < monster_spell_flag_set::nbits; i++)
 	{
 		bool_ stored = FALSE;
 
 		/* Don't have that breath */
-		if (!(r_ptr->flags4 & (1L << i))) continue;
+		if (!(r_ptr->spells.bit(i))) continue;
+
+		/* Find the breath in our list */
+		auto breath_color = lookup_breath_color(i);
+		if (!breath_color)
+		{
+			continue;
+		}
 
 		/* Get the first color of this breath */
-		first_color = breath_to_attr[i][0];
-
-		/* Breath has no color associated with it */
-		if (first_color == 0) continue;
+		first_color = breath_color->first_color;
 
 		/* Monster can be of any color */
 		if (first_color == 255) return (randint(15));
@@ -596,7 +609,7 @@ static byte multi_hued_attr(std::shared_ptr<monster_race> r_ptr)
 
 
 		/* Always store the first color */
-		for (j = 0; j < stored_colors; j++)
+		for (std::size_t j = 0; j < stored_colors; j++)
 		{
 			/* Already stored */
 			if (allowed_attrs[j] == first_color) stored = TRUE;
@@ -613,7 +626,7 @@ static byte multi_hued_attr(std::shared_ptr<monster_race> r_ptr)
 		 */
 		if (breaths == 1)
 		{
-			second_color = breath_to_attr[i][1];
+			second_color = breath_color->second_color;
 		}
 	}
 

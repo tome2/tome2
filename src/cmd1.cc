@@ -25,6 +25,7 @@
 #include "monster2.hpp"
 #include "monster3.hpp"
 #include "monster_race.hpp"
+#include "monster_spell_flag.hpp"
 #include "monster_type.hpp"
 #include "object1.hpp"
 #include "object2.hpp"
@@ -2228,7 +2229,7 @@ void py_attack(int y, int x, int max_blow)
 							/* Stunning blow */
 							if (magik(get_skill(SKILL_STUN)) && (o_ptr->tval == TV_HAFTED) && (o_ptr->weight > 50) && done_crit)
 							{
-								if (!(r_ptr->flags4 & RF4_BR_SOUN) && !(r_ptr->flags4 & RF4_BR_WALL) && k)
+								if (!(r_ptr->spells & SF_BR_SOUN) && !(r_ptr->spells & SF_BR_WALL) && k)
 								{
 									int tmp;
 
@@ -2476,7 +2477,7 @@ void py_attack(int y, int x, int max_blow)
 						                (randint(90) > m_ptr->level))
 						{
 							if (!((r_ptr->flags1 & RF1_UNIQUE) ||
-							                (r_ptr->flags4 & RF4_BR_CHAO) ||
+							                (r_ptr->spells & SF_BR_CHAO) ||
 							                (m_ptr->mflag & MFLAG_QUEST)))
 							{
 								/* Handle polymorph */

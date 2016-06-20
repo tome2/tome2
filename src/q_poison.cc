@@ -10,6 +10,7 @@
 #include "messages.hpp"
 #include "monster2.hpp"
 #include "monster_race.hpp"
+#include "monster_spell_flag.hpp"
 #include "monster_type.hpp"
 #include "object2.hpp"
 #include "player_type.hpp"
@@ -33,7 +34,7 @@ static bool_ create_molds_hook(int r_idx)
 {
 	monster_race *r_ptr = &r_info[r_idx];
 
-	if (r_ptr->flags4 & RF4_MULTIPLY) return FALSE;
+	if (r_ptr->spells & SF_MULTIPLY) return FALSE;
 
 	if (r_ptr->d_char == 'm') return TRUE;
 	else if (r_ptr->d_char == ',') return TRUE;

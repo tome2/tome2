@@ -2,6 +2,7 @@
 
 #include "h-basic.h"
 #include "monster_blow.hpp"
+#include "monster_spell_flag_set.hpp"
 
 #include <array>
 
@@ -55,23 +56,23 @@ struct monster_ego
 	u32b mflags1 = 0;
 	u32b mflags2 = 0;
 	u32b mflags3 = 0;
-	u32b mflags4 = 0;
-	u32b mflags5 = 0;
-	u32b mflags6 = 0;
 	u32b mflags7 = 0;
 	u32b mflags8 = 0;
 	u32b mflags9 = 0;
+
+	/* Monster spells */
+	monster_spell_flag_set mspells;
 
 	/* Negative Flags, to be removed from the monster flags */
 	u32b nflags1 = 0;
 	u32b nflags2 = 0;
 	u32b nflags3 = 0;
-	u32b nflags4 = 0;
-	u32b nflags5 = 0;
-	u32b nflags6 = 0;
 	u32b nflags7 = 0;
 	u32b nflags8 = 0;
 	u32b nflags9 = 0;
+
+	/* Negative spells; to be removed from the monster spells */
+	monster_spell_flag_set nspells;
 
 	s16b level = 0;                          /* Level of creature */
 	s16b rarity = 0;                         /* Rarity of creature */

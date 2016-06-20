@@ -21,8 +21,9 @@
 #include "melee2.hpp"
 #include "monster2.hpp"
 #include "monster3.hpp"
-#include "monster_type.hpp"
 #include "monster_race.hpp"
+#include "monster_spell_flag.hpp"
+#include "monster_type.hpp"
 #include "object1.hpp"
 #include "object2.hpp"
 #include "object_kind.hpp"
@@ -599,7 +600,7 @@ void teleport_player(int dis)
 				{
 					auto const r_ptr = m_list[cave[oy + yy][ox + xx].m_idx].race();
 
-					if ((r_ptr->flags6 & RF6_TPORT) && !(r_ptr->flags3 & RF3_RES_TELE))
+					if ((r_ptr->spells & SF_TPORT) && !(r_ptr->flags3 & RF3_RES_TELE))
 						/*
 						 * The latter limitation is to avoid
 						 * totally unkillable suckers...
@@ -4830,7 +4831,7 @@ bool_ project_m(int who, int r, int y, int x, int dam, int typ)
 			if (seen) obvious = TRUE;
 			do_poly = TRUE;
 			do_conf = (5 + randint(11) + r) / (r + 1);
-			if ((r_ptr->flags4 & RF4_BR_CHAO) ||
+			if ((r_ptr->spells & SF_BR_CHAO) ||
 			                ((r_ptr->flags3 & RF3_DEMON) && (randint(3) == 1)))
 			{
 				note = " resists.";
@@ -4846,7 +4847,7 @@ bool_ project_m(int who, int r, int y, int x, int dam, int typ)
 		{
 			if (seen) obvious = TRUE;
 			if (magik(33)) do_cut = (10 + randint(15) + r) / (r + 1);
-			if (r_ptr->flags4 & RF4_BR_SHAR)
+			if (r_ptr->spells & SF_BR_SHAR)
 			{
 				note = " resists.";
 				dam *= 3;
@@ -4862,7 +4863,7 @@ bool_ project_m(int who, int r, int y, int x, int dam, int typ)
 			if (seen) obvious = TRUE;
 
 			if (magik(12)) do_cut = (10 + randint(15) + r) / (r + 1);
-			if (r_ptr->flags4 & RF4_BR_SHAR)
+			if (r_ptr->spells & SF_BR_SHAR)
 			{
 				note = " resists somewhat.";
 				dam /= 2;
@@ -4883,7 +4884,7 @@ bool_ project_m(int who, int r, int y, int x, int dam, int typ)
 			}
 			else
 				do_stun = (10 + randint(15) + r) / (r + 1);
-			if (r_ptr->flags4 & RF4_BR_SOUN)
+			if (r_ptr->spells & SF_BR_SOUN)
 			{
 				note = " resists.";
 				dam *= 2;
@@ -4897,7 +4898,7 @@ bool_ project_m(int who, int r, int y, int x, int dam, int typ)
 		{
 			if (seen) obvious = TRUE;
 			do_conf = (10 + randint(15) + r) / (r + 1);
-			if (r_ptr->flags4 & RF4_BR_CONF)
+			if (r_ptr->spells & SF_BR_CONF)
 			{
 				note = " resists.";
 				dam *= 2;
@@ -5025,7 +5026,7 @@ bool_ project_m(int who, int r, int y, int x, int dam, int typ)
 			/* --hack-- Only stun if a monster fired it */
 			else do_stun = (randint(15) + r) / (r + 1);
 
-			if (r_ptr->flags4 & RF4_BR_WALL)
+			if (r_ptr->spells & SF_BR_WALL)
 			{
 				note = " resists.";
 				dam *= 3;
@@ -5038,7 +5039,7 @@ bool_ project_m(int who, int r, int y, int x, int dam, int typ)
 	case GF_INERTIA:
 		{
 			if (seen) obvious = TRUE;
-			if (r_ptr->flags4 & RF4_BR_INER)
+			if (r_ptr->spells & SF_BR_INER)
 			{
 				note = " resists.";
 				dam *= 3;
@@ -5065,7 +5066,7 @@ bool_ project_m(int who, int r, int y, int x, int dam, int typ)
 	case GF_TIME:
 		{
 			if (seen) obvious = TRUE;
-			if (r_ptr->flags4 & RF4_BR_TIME)
+			if (r_ptr->spells & SF_BR_TIME)
 			{
 				note = " resists.";
 				dam *= 3;
@@ -5098,7 +5099,7 @@ bool_ project_m(int who, int r, int y, int x, int dam, int typ)
 			if (!resist_tele) do_dist = 10;
 			else do_dist = 0;
 
-			if (r_ptr->flags4 & RF4_BR_GRAV)
+			if (r_ptr->spells & SF_BR_GRAV)
 			{
 				note = " resists.";
 				dam *= 3;
@@ -6068,7 +6069,7 @@ bool_ project_m(int who, int r, int y, int x, int dam, int typ)
 	case GF_LITE:
 		{
 			if (seen) obvious = TRUE;
-			if (r_ptr->flags4 & RF4_BR_LITE)
+			if (r_ptr->spells & SF_BR_LITE)
 			{
 				note = " resists.";
 				dam *= 2;
@@ -6090,7 +6091,7 @@ bool_ project_m(int who, int r, int y, int x, int dam, int typ)
 			if (seen) obvious = TRUE;
 
 			/* Likes darkness... */
-			if ((r_ptr->flags4 & RF4_BR_DARK) ||
+			if ((r_ptr->spells & SF_BR_DARK) ||
 			                (r_ptr->flags3 & RF3_ORC) ||
 			                (r_ptr->flags3 & RF3_HURT_LITE))
 			{
@@ -6620,14 +6621,14 @@ bool_ project_m(int who, int r, int y, int x, int dam, int typ)
 		if ((who > 0) && (dam > m_ptr->hp)) dam = m_ptr->hp;
 	}
 
-	if (do_pois && (!(r_ptr->flags3 & RF3_IM_POIS)) && (!(r_ptr->flags3 & RF4_BR_POIS)) && hurt_monster(m_ptr))
+	if (do_pois && (!(r_ptr->flags3 & RF3_IM_POIS)) && (!(r_ptr->flags3 & SF_BR_POIS)) && hurt_monster(m_ptr))
 	{
 		if (m_ptr->poisoned) note = " is more poisoned.";
 		else note = " is poisoned.";
 		m_ptr->poisoned += do_pois;
 	}
 
-	if (do_cut && (!(r_ptr->flags4 & RF4_BR_WALL)) && hurt_monster(m_ptr))
+	if (do_cut && (!(r_ptr->spells & SF_BR_WALL)) && hurt_monster(m_ptr))
 	{
 		if (m_ptr->bleeding) note = " bleeds more strongly.";
 		else note = " starts bleeding.";
@@ -6760,8 +6761,8 @@ bool_ project_m(int who, int r, int y, int x, int dam, int typ)
 
 	/* Sound and Impact breathers never stun */
 	else if (do_stun &&
-	                !(r_ptr->flags4 & RF4_BR_SOUN) &&
-	                !(r_ptr->flags4 & RF4_BR_WALL) && hurt_monster(m_ptr))
+	                !(r_ptr->spells & SF_BR_SOUN) &&
+	                !(r_ptr->spells & SF_BR_WALL) && hurt_monster(m_ptr))
 	{
 		/* Obvious */
 		if (seen) obvious = TRUE;
@@ -6785,8 +6786,8 @@ bool_ project_m(int who, int r, int y, int x, int dam, int typ)
 	/* Confusion and Chaos breathers (and sleepers) never confuse */
 	else if (do_conf &&
 	                !(r_ptr->flags3 & RF3_NO_CONF) &&
-	                !(r_ptr->flags4 & RF4_BR_CONF) &&
-	                !(r_ptr->flags4 & RF4_BR_CHAO) && hurt_monster(m_ptr))
+	                !(r_ptr->spells & SF_BR_CONF) &&
+	                !(r_ptr->spells & SF_BR_CHAO) && hurt_monster(m_ptr))
 	{
 		/* Obvious */
 		if (seen) obvious = TRUE;

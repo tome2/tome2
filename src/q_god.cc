@@ -9,6 +9,7 @@
 #include "hook_enter_dungeon_in.hpp"
 #include "hook_player_level_in.hpp"
 #include "hooks.hpp"
+#include "monster_spell_flag.hpp"
 #include "object2.hpp"
 #include "player_type.hpp"
 #include "quark.hpp"
@@ -534,8 +535,8 @@ static void quest_god_set_god_dungeon_attributes_manwe()
 	 * too. They would have ransacked his elf-loving temple :) */
 	d_info[DUNGEON_GOD].rules[0].mflags2 = RF2_INVISIBLE;
 	d_info[DUNGEON_GOD].rules[1].mflags3 = RF3_ORC | RF3_IM_POIS;
-	d_info[DUNGEON_GOD].rules[2].mflags4 = RF4_BR_POIS | RF4_BR_GRAV;
-	d_info[DUNGEON_GOD].rules[3].mflags5 = RF5_BA_POIS;
+	d_info[DUNGEON_GOD].rules[2].mspells = SF_BR_POIS | SF_BR_GRAV;
+	d_info[DUNGEON_GOD].rules[3].mspells = SF_BA_POIS;
 	d_info[DUNGEON_GOD].rules[4].mflags7 = RF7_CAN_FLY;
 }
 
@@ -784,8 +785,8 @@ static void quest_god_set_god_dungeon_attributes_varda()
 	/* M: We want air(poison-type) or flying characters. Orcs too. */
 	d_info[DUNGEON_GOD].rules[0].mflags2 = RF2_INVISIBLE;
 	d_info[DUNGEON_GOD].rules[1].mflags3 = RF3_ORC | RF3_IM_POIS;
-	d_info[DUNGEON_GOD].rules[2].mflags4 = RF4_BR_POIS | RF4_BR_GRAV;
-	d_info[DUNGEON_GOD].rules[3].mflags5 = RF5_BA_POIS;
+	d_info[DUNGEON_GOD].rules[2].mspells = SF_BR_POIS | SF_BR_GRAV;
+	d_info[DUNGEON_GOD].rules[3].mspells = SF_BA_POIS;
 	d_info[DUNGEON_GOD].rules[4].mflags7 = RF7_CAN_FLY;
 }
 

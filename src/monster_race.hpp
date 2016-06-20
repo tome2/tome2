@@ -3,6 +3,7 @@
 #include "body.hpp"
 #include "h-basic.h"
 #include "monster_blow.hpp"
+#include "monster_spell_flag_set.hpp"
 #include "obj_theme.hpp"
 
 #include <array>
@@ -50,12 +51,11 @@ struct monster_race
 	u32b flags1 = 0;			/* Flags 1 (general) */
 	u32b flags2 = 0;			/* Flags 2 (abilities) */
 	u32b flags3 = 0;			/* Flags 3 (race/resist) */
-	u32b flags4 = 0;			/* Flags 4 (inate/breath) */
-	u32b flags5 = 0;			/* Flags 5 (normal spells) */
-	u32b flags6 = 0;			/* Flags 6 (special spells) */
 	u32b flags7 = 0;			/* Flags 7 (movement related abilities) */
 	u32b flags8 = 0;			/* Flags 8 (wilderness info) */
 	u32b flags9 = 0;			/* Flags 9 (drops info) */
+
+	monster_spell_flag_set spells;          /* Spells */
 
 	std::array<monster_blow, 4> blow { };   /* Up to four blows per round */
 

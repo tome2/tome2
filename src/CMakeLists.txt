@@ -45,6 +45,7 @@ SET(SRCS_COMMON
   messages.cc
   mimic.cc
   modules.cc
+  monster_spell.cc
   monster_type.cc
   monster1.cc
   monster2.cc

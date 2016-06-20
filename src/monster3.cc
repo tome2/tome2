@@ -15,6 +15,7 @@
 #include "melee2.hpp"
 #include "monster2.hpp"
 #include "monster_race.hpp"
+#include "monster_spell_flag.hpp"
 #include "monster_type.hpp"
 #include "object2.hpp"
 #include "player_type.hpp"
@@ -62,8 +63,8 @@ bool_ is_enemy(monster_type *m_ptr, monster_type *t_ptr)
 	int s1 = is_friend(m_ptr), s2 = is_friend(t_ptr);
 
 	/* Monsters hates breeders */
-	if ((m_ptr->status != MSTATUS_NEUTRAL) && (rt_ptr->flags4 & RF4_MULTIPLY) && (num_repro > MAX_REPRO * 2 / 3) && (r_ptr->d_char != rt_ptr->d_char)) return TRUE;
-	if ((t_ptr->status != MSTATUS_NEUTRAL) && (r_ptr->flags4 & RF4_MULTIPLY) && (num_repro > MAX_REPRO * 2 / 3) && (r_ptr->d_char != rt_ptr->d_char)) return TRUE;
+	if ((m_ptr->status != MSTATUS_NEUTRAL) && (rt_ptr->spells & SF_MULTIPLY) && (num_repro > MAX_REPRO * 2 / 3) && (r_ptr->d_char != rt_ptr->d_char)) return TRUE;
+	if ((t_ptr->status != MSTATUS_NEUTRAL) && (r_ptr->spells & SF_MULTIPLY) && (num_repro > MAX_REPRO * 2 / 3) && (r_ptr->d_char != rt_ptr->d_char)) return TRUE;
 
 	/* No special conditions, lets test normal flags */
 	if (s1 && s2 && (s1 == -s2)) return TRUE;
@@ -205,7 +206,7 @@ bool_ ai_possessor(int m_idx, int o_idx)
 	m_ptr->energy = 0;
 
 	/* Hack -- Count the number of "reproducers" */
-	if (r_ptr->flags4 & RF4_MULTIPLY) num_repro++;
+	if (r_ptr->spells & SF_MULTIPLY) num_repro++;
 
 	/* Hack -- Notice new multi-hued monsters */
 	if (r_ptr->flags1 & RF1_ATTR_MULTI) shimmer_monsters = TRUE;
@@ -280,7 +281,7 @@ void ai_deincarnate(int m_idx)
 	m_ptr->energy = 0;
 
 	/* Hack -- Count the number of "reproducers" */
-	if (r_ptr->flags4 & RF4_MULTIPLY) num_repro++;
+	if (r_ptr->spells & SF_MULTIPLY) num_repro++;
 
 	/* Hack -- Notice new multi-hued monsters */
 	if (r_ptr->flags1 & RF1_ATTR_MULTI) shimmer_monsters = TRUE;
@@ -411,7 +412,6 @@ bool_ do_control_drop(void)
 
 bool_ do_control_magic(void)
 {
-	int power = -1;
 	int i;
 	bool_ flag, redraw;
 	int ask;
@@ -431,7 +431,7 @@ bool_ do_control_magic(void)
 	}
 
 	/* Extract available monster powers */
-	std::vector<int> powers = extract_monster_powers(r_ptr, true);
+	auto powers = extract_monster_powers(r_ptr, true);
 	int const num = powers.size(); // Avoid signed/unsigned warnings
 
 	/* Are any powers available? */
@@ -443,6 +443,7 @@ bool_ do_control_magic(void)
 
 	/* Nothing chosen yet */
 	flag = FALSE;
+	monster_power const *power = nullptr;
 
 	/* No redraw yet */
 	redraw = FALSE;
@@ -481,7 +482,7 @@ bool_ do_control_magic(void)
 
 				while (ctr < num)
 				{
-					monster_power *mp_ptr = &monster_powers[powers[ctr]];
+					monster_power const *mp_ptr = powers[ctr];
 
 					label = (ctr < 26) ? I2A(ctr) : I2D(ctr - 26);
 
@@ -565,7 +566,7 @@ bool_ do_control_magic(void)
 			char tmp_val[160];
 
 			/* Prompt */
-			strnfmt(tmp_val, 78, "Use %s? ", monster_powers[power].name);
+			strnfmt(tmp_val, 78, "Use %s? ", power->name);
 
 			/* Belay that order */
 			if (!get_check(tmp_val)) continue;
@@ -586,7 +587,7 @@ bool_ do_control_magic(void)
 	if (flag)
 	{
 		energy_use = 100;
-		monst_spell_monst_spell = power + 96;
+		monst_spell_monst_spell = power->monster_spell_index;
 	}
 	return TRUE;
 }

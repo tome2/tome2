@@ -2,6 +2,7 @@
 
 #include "monster2.hpp"
 #include "monster_race.hpp"
+#include "monster_spell_flag.hpp"
 #include "object1.hpp"
 #include "object2.hpp"
 #include "object_type.hpp"
@@ -38,7 +39,7 @@ static bool_ lua_mon_hook_bounty(int r_idx)
 	if (r_ptr->flags7 & RF7_FRIENDLY) return (FALSE);
 
 	/* Accept only monsters that are not breeders */
-	if (r_ptr->flags4 & RF4_MULTIPLY) return (FALSE);
+	if (r_ptr->spells & SF_MULTIPLY) return (FALSE);
 
 	/* Forbid joke monsters */
 	if (r_ptr->flags8 & RF8_JOKEANGBAND) return (FALSE);

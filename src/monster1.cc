@@ -12,6 +12,7 @@
 #include "monster2.hpp"
 #include "monster_ego.hpp"
 #include "monster_race.hpp"
+#include "monster_spell_flag.hpp"
 #include "player_type.hpp"
 #include "util.hpp"
 #include "variable.hpp"
@@ -65,11 +66,9 @@ static void roff_aux(std::shared_ptr<monster_race const> r_ptr)
 	u32b const flags1 = r_ptr->flags1;
 	u32b const flags2 = r_ptr->flags2;
 	u32b const flags3 = r_ptr->flags3;
-	u32b const flags4 = r_ptr->flags4;
-	u32b const flags5 = r_ptr->flags5;
-	u32b const flags6 = r_ptr->flags6;
 	u32b const flags7 = r_ptr->flags7;
 	u32b const flags9 = r_ptr->flags9;
+	monster_spell_flag_set spells = r_ptr->spells;
 
 	/* Extract a gender (if applicable) */
 	int msex = 0;
@@ -355,12 +354,12 @@ static void roff_aux(std::shared_ptr<monster_race const> r_ptr)
 
 	/* Collect inate attacks */
 	vn = 0;
-	if (flags4 & RF4_SHRIEK)	vp[vn++] = "shriek for help";
-	if (flags4 & RF4_ROCKET)	vp[vn++] = "shoot a rocket";
-	if (flags4 & (RF4_ARROW_1))	vp[vn++] = "fire an arrow";
-	if (flags4 & (RF4_ARROW_2))	vp[vn++] = "fire arrows";
-	if (flags4 & (RF4_ARROW_3))	vp[vn++] = "fire a missile";
-	if (flags4 & (RF4_ARROW_4))	vp[vn++] = "fire missiles";
+	if (spells & SF_SHRIEK) vp[vn++] = "shriek for help";
+	if (spells & SF_ROCKET) vp[vn++] = "shoot a rocket";
+	if (spells & SF_ARROW_1) vp[vn++] = "fire an arrow";
+	if (spells & SF_ARROW_2) vp[vn++] = "fire arrows";
+	if (spells & SF_ARROW_3) vp[vn++] = "fire a missile";
+	if (spells & SF_ARROW_4) vp[vn++] = "fire missiles";
 
 	/* Describe inate attacks */
 	if (vn)
@@ -387,28 +386,28 @@ static void roff_aux(std::shared_ptr<monster_race const> r_ptr)
 
 	/* Collect breaths */
 	vn = 0;
-	if (flags4 & RF4_BR_ACID)	vp[vn++] = "acid";
-	if (flags4 & RF4_BR_ELEC)	vp[vn++] = "lightning";
-	if (flags4 & RF4_BR_FIRE)	vp[vn++] = "fire";
-	if (flags4 & RF4_BR_COLD)	vp[vn++] = "frost";
-	if (flags4 & RF4_BR_POIS)	vp[vn++] = "poison";
-	if (flags4 & RF4_BR_NETH)	vp[vn++] = "nether";
-	if (flags4 & RF4_BR_LITE)	vp[vn++] = "light";
-	if (flags4 & RF4_BR_DARK)	vp[vn++] = "darkness";
-	if (flags4 & RF4_BR_CONF)	vp[vn++] = "confusion";
-	if (flags4 & RF4_BR_SOUN)	vp[vn++] = "sound";
-	if (flags4 & RF4_BR_CHAO)	vp[vn++] = "chaos";
-	if (flags4 & RF4_BR_DISE)	vp[vn++] = "disenchantment";
-	if (flags4 & RF4_BR_NEXU)	vp[vn++] = "nexus";
-	if (flags4 & RF4_BR_TIME)	vp[vn++] = "time";
-	if (flags4 & RF4_BR_INER)	vp[vn++] = "inertia";
-	if (flags4 & RF4_BR_GRAV)	vp[vn++] = "gravity";
-	if (flags4 & RF4_BR_SHAR)	vp[vn++] = "shards";
-	if (flags4 & RF4_BR_PLAS)	vp[vn++] = "plasma";
-	if (flags4 & RF4_BR_WALL)	vp[vn++] = "force";
-	if (flags4 & RF4_BR_MANA)	vp[vn++] = "mana";
-	if (flags4 & RF4_BR_NUKE)	vp[vn++] = "toxic waste";
-	if (flags4 & RF4_BR_DISI)	vp[vn++] = "disintegration";
+	if (spells & SF_BR_ACID)	vp[vn++] = "acid";
+	if (spells & SF_BR_ELEC)	vp[vn++] = "lightning";
+	if (spells & SF_BR_FIRE)	vp[vn++] = "fire";
+	if (spells & SF_BR_COLD)	vp[vn++] = "frost";
+	if (spells & SF_BR_POIS)	vp[vn++] = "poison";
+	if (spells & SF_BR_NETH)	vp[vn++] = "nether";
+	if (spells & SF_BR_LITE)	vp[vn++] = "light";
+	if (spells & SF_BR_DARK)	vp[vn++] = "darkness";
+	if (spells & SF_BR_CONF)	vp[vn++] = "confusion";
+	if (spells & SF_BR_SOUN)	vp[vn++] = "sound";
+	if (spells & SF_BR_CHAO)	vp[vn++] = "chaos";
+	if (spells & SF_BR_DISE)	vp[vn++] = "disenchantment";
+	if (spells & SF_BR_NEXU)	vp[vn++] = "nexus";
+	if (spells & SF_BR_TIME)	vp[vn++] = "time";
+	if (spells & SF_BR_INER)	vp[vn++] = "inertia";
+	if (spells & SF_BR_GRAV)	vp[vn++] = "gravity";
+	if (spells & SF_BR_SHAR)	vp[vn++] = "shards";
+	if (spells & SF_BR_PLAS)	vp[vn++] = "plasma";
+	if (spells & SF_BR_WALL)	vp[vn++] = "force";
+	if (spells & SF_BR_MANA)	vp[vn++] = "mana";
+	if (spells & SF_BR_NUKE)	vp[vn++] = "toxic waste";
+	if (spells & SF_BR_DISI)	vp[vn++] = "disintegration";
 
 	/* Describe breaths */
 	if (vn)
@@ -435,73 +434,73 @@ static void roff_aux(std::shared_ptr<monster_race const> r_ptr)
 
 	/* Collect spells */
 	vn = 0;
-	if (flags5 & RF5_BA_ACID) vp[vn++] = "produce acid balls";
-	if (flags5 & RF5_BA_ELEC) vp[vn++] = "produce lightning balls";
-	if (flags5 & RF5_BA_FIRE) vp[vn++] = "produce fire balls";
-	if (flags5 & RF5_BA_COLD) vp[vn++] = "produce frost balls";
-	if (flags5 & RF5_BA_POIS) vp[vn++] = "produce poison balls";
-	if (flags5 & RF5_BA_NETH) vp[vn++] = "produce nether balls";
-	if (flags5 & RF5_BA_WATE) vp[vn++] = "produce water balls";
-	if (flags4 & RF4_BA_NUKE) vp[vn++] = "produce balls of radiation";
-	if (flags5 & RF5_BA_MANA) vp[vn++] = "invoke mana storms";
-	if (flags5 & RF5_BA_DARK) vp[vn++] = "invoke darkness storms";
-	if (flags4 & RF4_BA_CHAO) vp[vn++] = "invoke raw chaos";
-	if (flags6 & RF6_HAND_DOOM) vp[vn++] = "invoke the Hand of Doom";
-	if (flags5 & RF5_DRAIN_MANA) vp[vn++] = "drain mana";
-	if (flags5 & RF5_MIND_BLAST) vp[vn++] = "cause mind blasting";
-	if (flags5 & RF5_BRAIN_SMASH) vp[vn++] = "cause brain smashing";
-	if (flags5 & (RF5_CAUSE_1)) vp[vn++] = "cause light wounds and cursing";
-	if (flags5 & (RF5_CAUSE_2)) vp[vn++] = "cause serious wounds and cursing";
-	if (flags5 & (RF5_CAUSE_3)) vp[vn++] = "cause critical wounds and cursing";
-	if (flags5 & (RF5_CAUSE_4)) vp[vn++] = "cause mortal wounds";
-	if (flags5 & RF5_BO_ACID) vp[vn++] = "produce acid bolts";
-	if (flags5 & RF5_BO_ELEC) vp[vn++] = "produce lightning bolts";
-	if (flags5 & RF5_BO_FIRE) vp[vn++] = "produce fire bolts";
-	if (flags5 & RF5_BO_COLD) vp[vn++] = "produce frost bolts";
-	if (flags5 & RF5_BO_POIS) vp[vn++] = "produce poison bolts";
-	if (flags5 & RF5_BO_NETH) vp[vn++] = "produce nether bolts";
-	if (flags5 & RF5_BO_WATE) vp[vn++] = "produce water bolts";
-	if (flags5 & RF5_BO_MANA) vp[vn++] = "produce mana bolts";
-	if (flags5 & RF5_BO_PLAS) vp[vn++] = "produce plasma bolts";
-	if (flags5 & RF5_BO_ICEE) vp[vn++] = "produce ice bolts";
-	if (flags5 & RF5_MISSILE) vp[vn++] = "produce magic missiles";
-	if (flags5 & RF5_SCARE) vp[vn++] = "terrify";
-	if (flags5 & RF5_BLIND) vp[vn++] = "blind";
-	if (flags5 & RF5_CONF) vp[vn++] = "confuse";
-	if (flags5 & RF5_SLOW) vp[vn++] = "slow";
-	if (flags5 & RF5_HOLD) vp[vn++] = "paralyze";
-	if (flags6 & RF6_HASTE) vp[vn++] = "haste-self";
-	if (flags6 & RF6_HEAL) vp[vn++] = "heal-self";
-	if (flags6 & RF6_BLINK) vp[vn++] = "blink-self";
-	if (flags6 & RF6_TPORT) vp[vn++] = "teleport-self";
-	if (flags6 & RF6_S_BUG) vp[vn++] = "summon software bugs";
-	if (flags6 & RF6_S_RNG) vp[vn++] = "summon RNG";
-	if (flags6 & RF6_TELE_TO) vp[vn++] = "teleport to";
-	if (flags6 & RF6_TELE_AWAY) vp[vn++] = "teleport away";
-	if (flags6 & RF6_TELE_LEVEL) vp[vn++] = "teleport level";
-	if (flags6 & RF6_S_THUNDERLORD) vp[vn++] = "summon a Thunderlord";
-	if (flags6 & RF6_DARKNESS) vp[vn++] = "create darkness";
-	if (flags6 & RF6_TRAPS) vp[vn++] = "create traps";
-	if (flags6 & RF6_FORGET) vp[vn++] = "cause amnesia";
-	if (flags6 & RF6_RAISE_DEAD) vp[vn++] = "raise dead";
-	if (flags6 & RF6_S_MONSTER) vp[vn++] = "summon a monster";
-	if (flags6 & RF6_S_MONSTERS) vp[vn++] = "summon monsters";
-	if (flags6 & RF6_S_KIN) vp[vn++] = "summon aid";
-	if (flags6 & RF6_S_ANT) vp[vn++] = "summon ants";
-	if (flags6 & RF6_S_SPIDER) vp[vn++] = "summon spiders";
-	if (flags6 & RF6_S_HOUND) vp[vn++] = "summon hounds";
-	if (flags6 & RF6_S_HYDRA) vp[vn++] = "summon hydras";
-	if (flags6 & RF6_S_ANGEL) vp[vn++] = "summon an angel";
-	if (flags6 & RF6_S_DEMON) vp[vn++] = "summon a demon";
-	if (flags6 & RF6_S_UNDEAD) vp[vn++] = "summon an undead";
-	if (flags6 & RF6_S_DRAGON) vp[vn++] = "summon a dragon";
-	if (flags4 & RF4_S_ANIMAL) vp[vn++] = "summon animal";
-	if (flags6 & RF6_S_ANIMALS) vp[vn++] = "summon animals";
-	if (flags6 & RF6_S_HI_UNDEAD) vp[vn++] = "summon Greater Undead";
-	if (flags6 & RF6_S_HI_DRAGON) vp[vn++] = "summon Ancient Dragons";
-	if (flags6 & RF6_S_HI_DEMON) vp[vn++] = "summon Greater Demons";
-	if (flags6 & RF6_S_WRAITH) vp[vn++] = "summon Ringwraith";
-	if (flags6 & RF6_S_UNIQUE) vp[vn++] = "summon Unique Monsters";
+	if (spells & SF_BA_ACID) vp[vn++] = "produce acid balls";
+	if (spells & SF_BA_ELEC) vp[vn++] = "produce lightning balls";
+	if (spells & SF_BA_FIRE) vp[vn++] = "produce fire balls";
+	if (spells & SF_BA_COLD) vp[vn++] = "produce frost balls";
+	if (spells & SF_BA_POIS) vp[vn++] = "produce poison balls";
+	if (spells & SF_BA_NETH) vp[vn++] = "produce nether balls";
+	if (spells & SF_BA_WATE) vp[vn++] = "produce water balls";
+	if (spells & SF_BA_NUKE) vp[vn++] = "produce balls of radiation";
+	if (spells & SF_BA_MANA) vp[vn++] = "invoke mana storms";
+	if (spells & SF_BA_DARK) vp[vn++] = "invoke darkness storms";
+	if (spells & SF_BA_CHAO) vp[vn++] = "invoke raw chaos";
+	if (spells & SF_HAND_DOOM) vp[vn++] = "invoke the Hand of Doom";
+	if (spells & SF_DRAIN_MANA) vp[vn++] = "drain mana";
+	if (spells & SF_MIND_BLAST) vp[vn++] = "cause mind blasting";
+	if (spells & SF_BRAIN_SMASH) vp[vn++] = "cause brain smashing";
+	if (spells & (SF_CAUSE_1)) vp[vn++] = "cause light wounds and cursing";
+	if (spells & (SF_CAUSE_2)) vp[vn++] = "cause serious wounds and cursing";
+	if (spells & (SF_CAUSE_3)) vp[vn++] = "cause critical wounds and cursing";
+	if (spells & (SF_CAUSE_4)) vp[vn++] = "cause mortal wounds";
+	if (spells & SF_BO_ACID) vp[vn++] = "produce acid bolts";
+	if (spells & SF_BO_ELEC) vp[vn++] = "produce lightning bolts";
+	if (spells & SF_BO_FIRE) vp[vn++] = "produce fire bolts";
+	if (spells & SF_BO_COLD) vp[vn++] = "produce frost bolts";
+	if (spells & SF_BO_POIS) vp[vn++] = "produce poison bolts";
+	if (spells & SF_BO_NETH) vp[vn++] = "produce nether bolts";
+	if (spells & SF_BO_WATE) vp[vn++] = "produce water bolts";
+	if (spells & SF_BO_MANA) vp[vn++] = "produce mana bolts";
+	if (spells & SF_BO_PLAS) vp[vn++] = "produce plasma bolts";
+	if (spells & SF_BO_ICEE) vp[vn++] = "produce ice bolts";
+	if (spells & SF_MISSILE) vp[vn++] = "produce magic missiles";
+	if (spells & SF_SCARE) vp[vn++] = "terrify";
+	if (spells & SF_BLIND) vp[vn++] = "blind";
+	if (spells & SF_CONF) vp[vn++] = "confuse";
+	if (spells & SF_SLOW) vp[vn++] = "slow";
+	if (spells & SF_HOLD) vp[vn++] = "paralyze";
+	if (spells & SF_HASTE) vp[vn++] = "haste-self";
+	if (spells & SF_HEAL) vp[vn++] = "heal-self";
+	if (spells & SF_BLINK) vp[vn++] = "blink-self";
+	if (spells & SF_TPORT) vp[vn++] = "teleport-self";
+	if (spells & SF_S_BUG) vp[vn++] = "summon software bugs";
+	if (spells & SF_S_RNG) vp[vn++] = "summon RNG";
+	if (spells & SF_TELE_TO) vp[vn++] = "teleport to";
+	if (spells & SF_TELE_AWAY) vp[vn++] = "teleport away";
+	if (spells & SF_TELE_LEVEL) vp[vn++] = "teleport level";
+	if (spells & SF_S_THUNDERLORD) vp[vn++] = "summon a Thunderlord";
+	if (spells & SF_DARKNESS) vp[vn++] = "create darkness";
+	if (spells & SF_TRAPS) vp[vn++] = "create traps";
+	if (spells & SF_FORGET) vp[vn++] = "cause amnesia";
+	if (spells & SF_RAISE_DEAD) vp[vn++] = "raise dead";
+	if (spells & SF_S_MONSTER) vp[vn++] = "summon a monster";
+	if (spells & SF_S_MONSTERS) vp[vn++] = "summon monsters";
+	if (spells & SF_S_KIN) vp[vn++] = "summon aid";
+	if (spells & SF_S_ANT) vp[vn++] = "summon ants";
+	if (spells & SF_S_SPIDER) vp[vn++] = "summon spiders";
+	if (spells & SF_S_HOUND) vp[vn++] = "summon hounds";
+	if (spells & SF_S_HYDRA) vp[vn++] = "summon hydras";
+	if (spells & SF_S_ANGEL) vp[vn++] = "summon an angel";
+	if (spells & SF_S_DEMON) vp[vn++] = "summon a demon";
+	if (spells & SF_S_UNDEAD) vp[vn++] = "summon an undead";
+	if (spells & SF_S_DRAGON) vp[vn++] = "summon a dragon";
+	if (spells & SF_S_ANIMAL) vp[vn++] = "summon animal";
+	if (spells & SF_S_ANIMALS) vp[vn++] = "summon animals";
+	if (spells & SF_S_HI_UNDEAD) vp[vn++] = "summon Greater Undead";
+	if (spells & SF_S_HI_DRAGON) vp[vn++] = "summon Ancient Dragons";
+	if (spells & SF_S_HI_DEMON) vp[vn++] = "summon Greater Demons";
+	if (spells & SF_S_WRAITH) vp[vn++] = "summon Ringwraith";
+	if (spells & SF_S_UNIQUE) vp[vn++] = "summon Unique Monsters";
 
 	/* Describe spells */
 	if (vn)
@@ -633,7 +632,7 @@ static void roff_aux(std::shared_ptr<monster_race const> r_ptr)
 	{
 		text_out(format("%^s is rarely detected by telepathy.  ", wd_he[msex]));
 	}
-	if (flags4 & RF4_MULTIPLY)
+	if (spells & SF_MULTIPLY)
 	{
 		text_out_c(TERM_L_UMBER, format("%^s breeds explosively.  ", wd_he[msex]));
 	}
@@ -641,6 +640,7 @@ static void roff_aux(std::shared_ptr<monster_race const> r_ptr)
 	{
 		text_out_c(TERM_L_WHITE, format("%^s regenerates quickly.  ", wd_he[msex]));
 	}
+
 	if (r_ptr->flags7 & RF7_MORTAL)
 	{
 		text_out_c(TERM_RED, format("%^s is a mortal being.  ", wd_he[msex]));
@@ -1388,7 +1388,7 @@ bool_ monster_quest(int r_idx)
 	if (r_ptr->flags7 & RF7_AQUATIC) return FALSE;
 
 	/* No random quests for multiplying monsters */
-	if (r_ptr->flags4 & RF4_MULTIPLY) return FALSE;
+	if (r_ptr->spells & SF_MULTIPLY) return FALSE;
 
 	return TRUE;
 }
