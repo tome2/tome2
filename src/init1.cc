@@ -3728,8 +3728,6 @@ errr init_set_info_txt(FILE *fp)
 		/* Process 'N' for "New/Number/Name" */
 		if (buf[0] == 'N')
 		{
-			int z, y;
-
 			/* Find the colon before the name */
 			s = strchr(buf + 2, ':');
 
@@ -3764,11 +3762,12 @@ errr init_set_info_txt(FILE *fp)
 			/* Initialize */
 			set_ptr->num = 0;
 			set_ptr->num_use = 0;
-			for (z = 0; z < 6; z++)
+
+			for (std::size_t z = 0; z < SET_MAX_SIZE; z++)
 			{
 				set_ptr->arts[z].a_idx = 0;
 				set_ptr->arts[z].present = FALSE;
-				for (y = 0; y < 6; y++)
+				for (std::size_t y = 0; y < SET_MAX_SIZE; y++)
 				{
 					set_ptr->arts[z].flags1[y] = 0;
 					set_ptr->arts[z].flags2[y] = 0;

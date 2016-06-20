@@ -309,7 +309,7 @@ namespace {
 
 		static void allocate()
 		{
-			set_info = make_array<set_type>(max_set_idx);
+			set_info = new set_type[max_set_idx];
 		}
 
 		static errr parse(FILE *fp)
