@@ -343,7 +343,7 @@ static cptr r_info_flags8[] =
 	"XXX8X27",
 	"XXX8X28",
 	"XXX8X29",
-	"WILD_SWAMP", 	/* ToDo: Implement Swamp */
+	"XXX8X30",
 	"WILD_TOO",
 };
 
