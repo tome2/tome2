@@ -1037,9 +1037,6 @@ static bool_ wearable_p(object_type *o_ptr)
 
 /*
  * rd/wr an object
- *
- * FIXME! This code probably has a lot of cruft from the old Z/V codebase.
- *
  */
 static void do_item(object_type *o_ptr, ls_flag_t flag)
 {
@@ -1943,10 +1940,8 @@ static void do_options(ls_flag_t flag)
 
 
 /*
- * Handle player inventory
- *
- * FIXME! This function probably could be unified better
- * Note that the inventory is "re-sorted" later by "dungeon()".
+ * Handle player inventory. Note that the inventory is
+ * "re-sorted" later by "dungeon()".
  */
 static bool_ do_inventory(ls_flag_t flag)
 {
@@ -2046,7 +2041,7 @@ static bool_ do_inventory(ls_flag_t flag)
 /*
  * Read the saved messages
  */
-static void do_messages(ls_flag_t flag)   /* FIXME! We should be able to unify this better */
+static void do_messages(ls_flag_t flag)
 {
 	int i;
 	char buf[128];
@@ -2265,7 +2260,7 @@ static bool_ do_savefile_aux(ls_flag_t flag)
 		sf_saves++; 				/* Increment the saves ctr */
 	}
 
-	/* Handle version bytes. FIXME! DG wants me to change this all around */
+	/* Handle version bytes */
 	if (flag == ls_flag_t::LOAD)
 	{
 		u32b mt32b;
