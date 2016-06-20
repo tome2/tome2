@@ -251,6 +251,22 @@ static void do_string(char *str, int max, ls_flag_t flag)
 }
 
 /*
+ * Load/save flag set
+ */
+namespace {
+
+template<std::size_t Tiers> void do_flag_set(flag_set<Tiers> *flags, ls_flag_t flag)
+{
+	for (std::size_t i = 0; i < flags->size(); i++)
+	{
+		do_u32b(&(*flags)[i], flag);
+	}
+}
+
+} // namespace (anonymous)
+
+
+/*
  * Load/Save quick start data
  */
 static void do_quick_start(ls_flag_t flag)
@@ -1329,10 +1345,7 @@ static bool_ do_dungeon(ls_flag_t flag, bool_ no_companions)
 	do_s16b(&max_panel_rows, flag);
 	do_s16b(&max_panel_cols, flag);
 
-	for (std::size_t i = 0; i < dungeon_flags.size(); i++)
-	{
-		do_u32b(&dungeon_flags[i], flag);
-	}
+	do_flag_set(&dungeon_flags, flag);
 
 	/* Last teleportation */
 	do_s16b(&last_teleportation_y, flag);
