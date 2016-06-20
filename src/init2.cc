@@ -23,6 +23,7 @@
 #include "modules.hpp"
 #include "monster_ego.hpp"
 #include "monster_race.hpp"
+#include "monster_race_flag.hpp"
 #include "monster_type.hpp"
 #include "object_kind.hpp"
 #include "owner_type.hpp"
@@ -1103,7 +1104,7 @@ static void init_guardians(void)
 		{
 			monster_race *r_ptr = &r_info[d_ptr->final_guardian];
 
-			r_ptr->flags9 |= RF9_SPECIAL_GENE;
+			r_ptr->flags |= RF_SPECIAL_GENE;
 
 			/* Mark the final artifact */
 			if (d_ptr->final_artifact)
@@ -1124,7 +1125,7 @@ static void init_guardians(void)
 			/* Give randart if there are no final artifacts */
 			if (!(d_ptr->final_artifact) && !(d_ptr->final_object))
 			{
-				r_ptr->flags7 |= RF7_DROP_RANDART;
+				r_ptr->flags |= RF_DROP_RANDART;
 			}
 		}
 	}

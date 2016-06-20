@@ -21,6 +21,7 @@
 #include "mimic.hpp"
 #include "monster2.hpp"
 #include "monster_race.hpp"
+#include "monster_race_flag.hpp"
 #include "monster_type.hpp"
 #include "object1.hpp"
 #include "object_kind.hpp"
@@ -3261,7 +3262,7 @@ static void a_m_aux_4(object_type *o_ptr, int level, int power)
 			int r_idx = get_mon_num(dun_level);
 			r_ptr = &r_info[r_idx];
 
-			if (!(r_ptr->flags1 & RF1_UNIQUE))
+			if (!(r_ptr->flags & RF_UNIQUE))
 				o_ptr->pval2 = r_idx;
 			else
 				o_ptr->pval2 = 2;
@@ -3281,7 +3282,7 @@ static void a_m_aux_4(object_type *o_ptr, int level, int power)
 				r_idx = get_mon_num(dun_level);
 				r_ptr = &r_info[r_idx];
 
-				if (r_ptr->flags9 & RF9_HAS_EGG)
+				if (r_ptr->flags & RF_HAS_EGG)
 				{
 					o_ptr->pval2 = r_idx;
 					OK = TRUE;
@@ -3303,7 +3304,7 @@ static void a_m_aux_4(object_type *o_ptr, int level, int power)
 			int r_idx = get_mon_num(dun_level);
 			r_ptr = &r_info[r_idx];
 
-			if (!(r_ptr->flags1 & RF1_NEVER_MOVE))
+			if (!(r_ptr->flags & RF_NEVER_MOVE))
 				o_ptr->pval = r_idx;
 			else
 				o_ptr->pval = 20;
@@ -6337,7 +6338,7 @@ void pack_decay(int item)
 		}
 
 		/* Monster must have a skeleton for its corpse to become one */
-		if ((i_ptr->sval == SV_CORPSE_CORPSE) && (r_ptr->flags3 & RF9_DROP_SKELETON))
+		if ((i_ptr->sval == SV_CORPSE_CORPSE) && (r_ptr->flags & RF_DROP_SKELETON))
 		{
 			/* Replace the corpse with a skeleton */
 			object_prep(i_ptr, lookup_kind(TV_CORPSE, SV_CORPSE_SKELETON));
@@ -6432,7 +6433,7 @@ void floor_decay(int item)
 		}
 
 		/* Monster must have a skeleton for its corpse to become one */
-		if ((i_ptr->sval == SV_CORPSE_CORPSE) && (r_ptr->flags3 & RF9_DROP_SKELETON))
+		if ((i_ptr->sval == SV_CORPSE_CORPSE) && (r_ptr->flags & RF_DROP_SKELETON))
 		{
 			/* Replace the corpse with a skeleton */
 			object_prep(i_ptr, lookup_kind(TV_CORPSE, SV_CORPSE_SKELETON));

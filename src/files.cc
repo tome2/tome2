@@ -27,6 +27,7 @@
 #include "monster3.hpp"
 #include "monster_ego.hpp"
 #include "monster_race.hpp"
+#include "monster_race_flag.hpp"
 #include "monster_type.hpp"
 #include "notes.hpp"
 #include "object1.hpp"
@@ -1476,7 +1477,7 @@ static void display_player_various(void)
 	}
 	else if (!r_info[p_ptr->body_monster].body_parts[BODY_WEAPON])
 	{
-		if (r_info[p_ptr->body_monster].flags1 & RF1_NEVER_BLOW)
+		if (r_info[p_ptr->body_monster].flags & RF_NEVER_BLOW)
 			desc = "nil!";
 		else
 		{
@@ -1560,13 +1561,13 @@ void wield_monster_flags(u32b *f1, u32b *f2, u32b *f3, u32b *f4, u32b *f5, u32b 
 	{
 		r_ptr = &r_info[o_ptr->pval];
 
-		if (r_ptr->flags2 & RF2_INVISIBLE)
+		if (r_ptr->flags & RF_INVISIBLE)
 			(*f2) |= TR2_INVIS;
-		if (r_ptr->flags2 & RF2_REFLECTING)
+		if (r_ptr->flags & RF_REFLECTING)
 			(*f2) |= TR2_REFLECT;
-		if (r_ptr->flags7 & RF7_CAN_FLY)
+		if (r_ptr->flags & RF_CAN_FLY)
 			(*f3) |= TR3_FEATHER;
-		if (r_ptr->flags7 & RF7_AQUATIC)
+		if (r_ptr->flags & RF_AQUATIC)
 			(*f5) |= TR5_WATER_BREATH;
 	}
 }
@@ -1712,24 +1713,24 @@ void player_flags(u32b *f1, u32b *f2, u32b *f3, u32b *f4, u32b *f5, u32b *esp)
 	{
 		monster_race *r_ptr = &r_info[p_ptr->body_monster];
 
-		if (r_ptr->flags2 & RF2_REFLECTING) (*f2) |= TR2_REFLECT;
-		if (r_ptr->flags2 & RF2_REGENERATE) (*f3) |= TR3_REGEN;
-		if (r_ptr->flags2 & RF2_AURA_FIRE) (*f3) |= TR3_SH_FIRE;
-		if (r_ptr->flags2 & RF2_AURA_ELEC) (*f3) |= TR3_SH_ELEC;
-		if (r_ptr->flags2 & RF2_PASS_WALL) (*f3) |= TR3_WRAITH;
-		if (r_ptr->flags3 & RF3_SUSCEP_FIRE) (*f2) |= TR2_SENS_FIRE;
-		if (r_ptr->flags3 & RF3_IM_ACID) (*f2) |= TR2_RES_ACID;
-		if (r_ptr->flags3 & RF3_IM_ELEC) (*f2) |= TR2_RES_ELEC;
-		if (r_ptr->flags3 & RF3_IM_FIRE) (*f2) |= TR2_RES_FIRE;
-		if (r_ptr->flags3 & RF3_IM_POIS) (*f2) |= TR2_RES_POIS;
-		if (r_ptr->flags3 & RF3_IM_COLD) (*f2) |= TR2_RES_COLD;
-		if (r_ptr->flags3 & RF3_RES_NETH) (*f2) |= TR2_RES_NETHER;
-		if (r_ptr->flags3 & RF3_RES_NEXU) (*f2) |= TR2_RES_NEXUS;
-		if (r_ptr->flags3 & RF3_RES_DISE) (*f2) |= TR2_RES_DISEN;
-		if (r_ptr->flags3 & RF3_NO_FEAR) (*f2) |= TR2_RES_FEAR;
-		if (r_ptr->flags3 & RF3_NO_SLEEP) (*f2) |= TR2_FREE_ACT;
-		if (r_ptr->flags3 & RF3_NO_CONF) (*f2) |= TR2_RES_CONF;
-		if (r_ptr->flags7 & RF7_CAN_FLY) (*f3) |= TR3_FEATHER;
+		if (r_ptr->flags & RF_REFLECTING) (*f2) |= TR2_REFLECT;
+		if (r_ptr->flags & RF_REGENERATE) (*f3) |= TR3_REGEN;
+		if (r_ptr->flags & RF_AURA_FIRE) (*f3) |= TR3_SH_FIRE;
+		if (r_ptr->flags & RF_AURA_ELEC) (*f3) |= TR3_SH_ELEC;
+		if (r_ptr->flags & RF_PASS_WALL) (*f3) |= TR3_WRAITH;
+		if (r_ptr->flags & RF_SUSCEP_FIRE) (*f2) |= TR2_SENS_FIRE;
+		if (r_ptr->flags & RF_IM_ACID) (*f2) |= TR2_RES_ACID;
+		if (r_ptr->flags & RF_IM_ELEC) (*f2) |= TR2_RES_ELEC;
+		if (r_ptr->flags & RF_IM_FIRE) (*f2) |= TR2_RES_FIRE;
+		if (r_ptr->flags & RF_IM_POIS) (*f2) |= TR2_RES_POIS;
+		if (r_ptr->flags & RF_IM_COLD) (*f2) |= TR2_RES_COLD;
+		if (r_ptr->flags & RF_RES_NETH) (*f2) |= TR2_RES_NETHER;
+		if (r_ptr->flags & RF_RES_NEXU) (*f2) |= TR2_RES_NEXUS;
+		if (r_ptr->flags & RF_RES_DISE) (*f2) |= TR2_RES_DISEN;
+		if (r_ptr->flags & RF_NO_FEAR) (*f2) |= TR2_RES_FEAR;
+		if (r_ptr->flags & RF_NO_SLEEP) (*f2) |= TR2_FREE_ACT;
+		if (r_ptr->flags & RF_NO_CONF) (*f2) |= TR2_RES_CONF;
+		if (r_ptr->flags & RF_CAN_FLY) (*f3) |= TR3_FEATHER;
 	}
 
 	(*f1) |= p_ptr->xtra_f1;
@@ -2701,7 +2702,7 @@ errr file_character(cptr name, bool_ full)
 		{
 			monster_race *r_ptr = &r_info[k];
 
-			if (r_ptr->flags1 & RF1_UNIQUE)
+			if (r_ptr->flags & RF_UNIQUE)
 			{
 				bool_ dead = (r_ptr->max_num == 0);
 				if (dead)
@@ -4052,7 +4053,7 @@ static long total_points(void)
 	{
 		monster_race *r_ptr = &r_info[k];
 
-		if (r_ptr->flags1 & RF1_UNIQUE)
+		if (r_ptr->flags & RF_UNIQUE)
 		{
 			bool_ dead = (r_ptr->max_num == 0);
 

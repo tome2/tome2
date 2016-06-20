@@ -25,6 +25,7 @@
 #include "mimic.hpp"
 #include "monster2.hpp"
 #include "monster_race.hpp"
+#include "monster_race_flag.hpp"
 #include "monster_spell_flag.hpp"
 #include "monster_type.hpp"
 #include "object1.hpp"
@@ -789,7 +790,7 @@ static void corpse_effect(object_type *o_ptr, bool_ cutting)
 	}
 
 	/* Hack -- Jellies are immune to acid only if they are already acidic */
-	if (strchr("j", r_ptr->d_char) && (r_ptr->flags3 & RF3_IM_ACID))
+	if (strchr("j", r_ptr->d_char) && (r_ptr->flags & RF_IM_ACID))
 	{
 		dam = damroll(8, 8);
 
@@ -811,7 +812,7 @@ static void corpse_effect(object_type *o_ptr, bool_ cutting)
 	 * are immune to poison because their body already contains
 	 * poisonous chemicals.
 	 */
-	if (strchr("ijkmS,", r_ptr->d_char) && (r_ptr->flags3 & RF3_IM_POIS))
+	if (strchr("ijkmS,", r_ptr->d_char) && (r_ptr->flags & RF_IM_POIS))
 	{
 		if (!(p_ptr->resist_pois || p_ptr->oppose_pois))
 		{
@@ -826,58 +827,58 @@ static void corpse_effect(object_type *o_ptr, bool_ cutting)
 	 */
 	if (!harmful && !cutting && (o_ptr->sval != SV_CORPSE_MEAT))
 	{
-		if (r_ptr->flags3 & RF3_IM_ACID)
+		if (r_ptr->flags & RF_IM_ACID)
 		{
 			set_oppose_acid(p_ptr->oppose_acid + rand_int(10) + 10);
 		}
-		if (r_ptr->flags3 & RF3_IM_ELEC)
+		if (r_ptr->flags & RF_IM_ELEC)
 		{
 			set_oppose_elec(p_ptr->oppose_elec + rand_int(10) + 10);
 		}
-		if (r_ptr->flags3 & RF3_IM_FIRE)
+		if (r_ptr->flags & RF_IM_FIRE)
 		{
 			set_oppose_fire(p_ptr->oppose_fire + rand_int(10) + 10);
 		}
-		if (r_ptr->flags3 & RF3_IM_COLD)
+		if (r_ptr->flags & RF_IM_COLD)
 		{
 			set_oppose_cold(p_ptr->oppose_cold + rand_int(10) + 10);
 		}
-		if (r_ptr->flags3 & RF3_IM_POIS)
+		if (r_ptr->flags & RF_IM_POIS)
 		{
 			set_oppose_pois(p_ptr->oppose_pois + rand_int(10) + 10);
 		}
-		if (r_ptr->flags3 & RF3_RES_NETH)
+		if (r_ptr->flags & RF_RES_NETH)
 		{
 			set_protevil(p_ptr->protevil + rand_int(25) + 3 * r_ptr->level);
 		}
-		if (r_ptr->flags3 & RF3_RES_PLAS)
+		if (r_ptr->flags & RF_RES_PLAS)
 		{
 			set_oppose_fire(p_ptr->oppose_fire + rand_int(20) + 20);
 		}
-		if (r_ptr->flags2 & RF2_SHAPECHANGER)
+		if (r_ptr->flags & RF_SHAPECHANGER)
 		{
 			/* DGDGDG			(void)set_mimic(20 , rand_int(MIMIC_VALAR)); */
 		}
 
-		if (r_ptr->flags3 & RF3_DEMON)
+		if (r_ptr->flags & RF_DEMON)
 		{
 			/* DGDGDG			(void)set_mimic(30 , MIMIC_DEMON); */
 		}
 
-		if (r_ptr->flags3 & RF3_UNDEAD)
+		if (r_ptr->flags & RF_UNDEAD)
 		{
 			/* DGDGDG			(void)set_mimic(30 , MIMIC_VAMPIRE); */
 		}
 
-		if (r_ptr->flags3 & RF3_NO_FEAR)
+		if (r_ptr->flags & RF_NO_FEAR)
 		{
 			(void)set_afraid(0);
 		}
-		if (r_ptr->flags3 & RF3_NO_STUN)
+		if (r_ptr->flags & RF_NO_STUN)
 		{
 			(void)set_stun(0);
 		}
-		if (r_ptr->flags3 & RF3_NO_CONF)
+		if (r_ptr->flags & RF_NO_CONF)
 		{
 			(void)set_confused(0);
 		}
@@ -1372,7 +1373,7 @@ void do_cmd_eat_food(void)
 				/* Not all is edible. Apologies if messy. */
 
 				/* Check weight -- they have to have some meat left */
-				if (r_ptr->flags9 & RF9_DROP_SKELETON)
+				if (r_ptr->flags & RF_DROP_SKELETON)
 				{
 					if (o_ptr->weight <= (r_ptr->weight * 3) / 5)
 					{
@@ -1566,7 +1567,7 @@ void do_cmd_cut_corpse(void)
 	{
 	case SV_CORPSE_CORPSE:
 		{
-			if (r_ptr->flags9 & RF9_DROP_SKELETON)
+			if (r_ptr->flags & RF_DROP_SKELETON)
 			{
 				not_meat = (r_ptr->weight * 3) / 5;
 			}
@@ -2948,8 +2949,8 @@ void do_cmd_read_scroll(void)
 				{
 					monster_race *r_ptr = &r_info[k];
 
-					if (r_ptr->flags1 & RF1_UNIQUE &&
-					                !(r_ptr->flags9 & RF9_SPECIAL_GENE))
+					if (r_ptr->flags & RF_UNIQUE &&
+					                !(r_ptr->flags & RF_SPECIAL_GENE))
 					{
 						r_ptr->max_num = 1;
 					}
@@ -5859,7 +5860,7 @@ const char *activation_aux(object_type * o_ptr, bool_ doit, int item)
 		{
 			if (!doit) return "detect orcs every 10 turns";
 			msg_print("Your weapon glows brightly...");
-			(void)detect_monsters_xxx(RF3_ORC, DEFAULT_RADIUS);
+			detect_monsters_orcs(DEFAULT_RADIUS);
 
 			o_ptr->timeout = 10;
 

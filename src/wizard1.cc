@@ -4,6 +4,7 @@
 #include "cmd7.hpp"
 #include "ego_item_type.hpp"
 #include "monster_race.hpp"
+#include "monster_race_flag.hpp"
 #include "monster_spell_flag.hpp"
 #include "object1.hpp"
 #include "object2.hpp"
@@ -1371,7 +1372,7 @@ static void spoil_mon_desc(cptr fname)
 		monster_race *r_ptr = &r_info[who_i];
 
 		/* Get the "name" */
-		if (r_ptr->flags1 & RF1_UNIQUE)
+		if (r_ptr->flags & RF_UNIQUE)
 		{
 			sprintf(nam, "[U] %s", r_ptr->name);
 		}
@@ -1401,7 +1402,7 @@ static void spoil_mon_desc(cptr fname)
 		sprintf(ac, "%d", r_ptr->ac);
 
 		/* Hitpoints */
-		if ((r_ptr->flags1 & RF1_FORCE_MAXHP) || (r_ptr->hside == 1))
+		if ((r_ptr->flags & RF_FORCE_MAXHP) || (r_ptr->hside == 1))
 		{
 			sprintf(hp, "%d", r_ptr->hdice * r_ptr->hside);
 		}
@@ -1491,22 +1492,19 @@ static void spoil_mon_info(cptr fname)
 		monster_race *r_ptr = &r_info[n];
 
 		/* Extract the flags */
-		auto const flags1 = r_ptr->flags1;
-		auto const flags2 = r_ptr->flags2;
-		auto const flags3 = r_ptr->flags3;
-		auto const flags9 = r_ptr->flags9;
+		auto const flags = r_ptr->flags;
 		auto const spells = r_ptr->spells;
 		breath = FALSE;
 		magic = FALSE;
 
 		/* Extract a gender (if applicable) */
-		if (flags1 & RF1_FEMALE) msex = 2;
-		else if (flags1 & RF1_MALE) msex = 1;
+		if (flags & RF_FEMALE) msex = 2;
+		else if (flags & RF_MALE) msex = 1;
 		else msex = 0;
 
 
 		/* Prefix */
-		if (flags1 & RF1_UNIQUE)
+		if (flags & RF_UNIQUE)
 		{
 			spoil_out("[U] ");
 		}
@@ -1555,7 +1553,7 @@ static void spoil_mon_info(cptr fname)
 		spoil_out(buf);
 
 		/* Hitpoints */
-		if ((flags1 & RF1_FORCE_MAXHP) || (r_ptr->hside == 1))
+		if ((flags & RF_FORCE_MAXHP) || (r_ptr->hside == 1))
 		{
 			sprintf(buf, "Hp:%d  ", r_ptr->hdice * r_ptr->hside);
 		}
@@ -1581,31 +1579,31 @@ static void spoil_mon_info(cptr fname)
 
 		spoil_out("This");
 
-		if (flags2 & RF2_ELDRITCH_HORROR) spoil_out (" sanity-blasting");
-		if (flags3 & RF3_ANIMAL) spoil_out(" natural");
-		if (flags3 & RF3_EVIL) spoil_out(" evil");
-		if (flags3 & RF3_GOOD) spoil_out(" good");
-		if (flags3 & RF3_UNDEAD) spoil_out(" undead");
+		if (flags & RF_ELDRITCH_HORROR) spoil_out (" sanity-blasting");
+		if (flags & RF_ANIMAL) spoil_out(" natural");
+		if (flags & RF_EVIL) spoil_out(" evil");
+		if (flags & RF_GOOD) spoil_out(" good");
+		if (flags & RF_UNDEAD) spoil_out(" undead");
 
-		if (flags3 & RF3_DRAGON) spoil_out(" dragon");
-		else if (flags3 & RF3_DEMON) spoil_out(" demon");
-		else if (flags3 & RF3_GIANT) spoil_out(" giant");
-		else if (flags3 & RF3_TROLL) spoil_out(" troll");
-		else if (flags3 & RF3_ORC) spoil_out(" orc");
-		else if (flags3 & RF3_THUNDERLORD) spoil_out (" Thunderlord");
+		if (flags & RF_DRAGON) spoil_out(" dragon");
+		else if (flags & RF_DEMON) spoil_out(" demon");
+		else if (flags & RF_GIANT) spoil_out(" giant");
+		else if (flags & RF_TROLL) spoil_out(" troll");
+		else if (flags & RF_ORC) spoil_out(" orc");
+		else if (flags & RF_THUNDERLORD) spoil_out (" Thunderlord");
 		else spoil_out(" creature");
 
 		spoil_out(" moves");
 
-		if ((flags1 & (RF1_RAND_50)) && (flags1 & (RF1_RAND_25)))
+		if ((flags & RF_RAND_50) && (flags & RF_RAND_25))
 		{
 			spoil_out(" extremely erratically");
 		}
-		else if (flags1 & (RF1_RAND_50))
+		else if (flags & RF_RAND_50)
 		{
 			spoil_out(" somewhat erratically");
 		}
-		else if (flags1 & (RF1_RAND_25))
+		else if (flags & RF_RAND_25)
 		{
 			spoil_out(" a bit erratically");
 		}
@@ -1614,52 +1612,52 @@ static void spoil_mon_info(cptr fname)
 			spoil_out(" normally");
 		}
 
-		if (flags1 & RF1_NEVER_MOVE)
+		if (flags & RF_NEVER_MOVE)
 		{
 			spoil_out(", but does not deign to chase intruders");
 		}
 
 		spoil_out(".  ");
 
-		if (!r_ptr->level || (flags1 & RF1_FORCE_DEPTH))
+		if (!r_ptr->level || (flags & RF_FORCE_DEPTH))
 		{
 			sprintf(buf, "%s is never found out of depth.  ", wd_che[msex]);
 			spoil_out(buf);
 		}
 
-		if (flags1 & RF1_FORCE_SLEEP)
+		if (flags & RF_FORCE_SLEEP)
 		{
 			sprintf(buf, "%s is always created sluggish.  ", wd_che[msex]);
 			spoil_out(buf);
 		}
 
-		if (flags2 & RF2_AURA_FIRE)
+		if (flags & RF_AURA_FIRE)
 		{
 			sprintf(buf, "%s is surrounded by flames.  ", wd_che[msex]);
 			spoil_out(buf);
 		}
 
-		if (flags2 & RF2_AURA_ELEC)
+		if (flags & RF_AURA_ELEC)
 		{
 			sprintf(buf, "%s is surrounded by electricity.  ", wd_che[msex]);
 			spoil_out(buf);
 		}
 
-		if (flags2 & RF2_REFLECTING)
+		if (flags & RF_REFLECTING)
 		{
 			sprintf(buf, "%s reflects bolt spells.  ", wd_che[msex]);
 			spoil_out(buf);
 		}
 
-		if (flags1 & RF1_ESCORT)
+		if (flags & RF_ESCORT)
 		{
 			sprintf(buf, "%s usually appears with ", wd_che[msex]);
 			spoil_out(buf);
-			if (flags1 & RF1_ESCORTS) spoil_out("escorts.  ");
+			if (flags & RF_ESCORTS) spoil_out("escorts.  ");
 			else spoil_out("an escort.  ");
 		}
 
-		if ((flags1 & RF1_FRIEND) || (flags1 & RF1_FRIENDS))
+		if ((flags & RF_FRIEND) || (flags & RF_FRIENDS))
 		{
 			sprintf(buf, "%s usually appears in groups.  ", wd_che[msex]);
 			spoil_out(buf);
@@ -1723,7 +1721,7 @@ static void spoil_mon_info(cptr fname)
 				else spoil_out(" or ");
 				spoil_out(vp[i]);
 			}
-			if (flags2 & RF2_POWERFUL) spoil_out(" powerfully");
+			if (flags & RF_POWERFUL) spoil_out(" powerfully");
 		}
 
 		/* Collect spells */
@@ -1810,7 +1808,7 @@ static void spoil_mon_info(cptr fname)
 			}
 
 			spoil_out(" magical, casting spells");
-			if (flags2 & RF2_SMART) spoil_out(" intelligently");
+			if (flags & RF_SMART) spoil_out(" intelligently");
 
 			for (i = 0; i < vn; i++)
 			{
@@ -1831,15 +1829,15 @@ static void spoil_mon_info(cptr fname)
 
 		/* Collect special abilities. */
 		vn = 0;
-		if (flags2 & RF2_OPEN_DOOR) vp[vn++] = "open doors";
-		if (flags2 & RF2_BASH_DOOR) vp[vn++] = "bash down doors";
-		if (flags2 & RF2_PASS_WALL) vp[vn++] = "pass through walls";
-		if (flags2 & RF2_KILL_WALL) vp[vn++] = "bore through walls";
-		if (flags2 & RF2_MOVE_BODY) vp[vn++] = "push past weaker monsters";
-		if (flags2 & RF2_KILL_BODY) vp[vn++] = "destroy weaker monsters";
-		if (flags2 & RF2_TAKE_ITEM) vp[vn++] = "pick up objects";
-		if (flags2 & RF2_KILL_ITEM) vp[vn++] = "destroy objects";
-		if (flags9 & RF9_HAS_LITE) vp[vn++] = "illuminate the dungeon";
+		if (flags & RF_OPEN_DOOR) vp[vn++] = "open doors";
+		if (flags & RF_BASH_DOOR) vp[vn++] = "bash down doors";
+		if (flags & RF_PASS_WALL) vp[vn++] = "pass through walls";
+		if (flags & RF_KILL_WALL) vp[vn++] = "bore through walls";
+		if (flags & RF_MOVE_BODY) vp[vn++] = "push past weaker monsters";
+		if (flags & RF_KILL_BODY) vp[vn++] = "destroy weaker monsters";
+		if (flags & RF_TAKE_ITEM) vp[vn++] = "pick up objects";
+		if (flags & RF_KILL_ITEM) vp[vn++] = "destroy objects";
+		if (flags & RF_HAS_LITE) vp[vn++] = "illuminate the dungeon";
 
 		if (vn)
 		{
@@ -1854,22 +1852,22 @@ static void spoil_mon_info(cptr fname)
 			spoil_out(".  ");
 		}
 
-		if (flags2 & RF2_INVISIBLE)
+		if (flags & RF_INVISIBLE)
 		{
 			spoil_out(wd_che[msex]);
 			spoil_out(" is invisible.  ");
 		}
-		if (flags2 & RF2_COLD_BLOOD)
+		if (flags & RF_COLD_BLOOD)
 		{
 			spoil_out(wd_che[msex]);
 			spoil_out(" is cold blooded.  ");
 		}
-		if (flags2 & RF2_EMPTY_MIND)
+		if (flags & RF_EMPTY_MIND)
 		{
 			spoil_out(wd_che[msex]);
 			spoil_out(" is not detected by telepathy.  ");
 		}
-		if (flags2 & RF2_WEIRD_MIND)
+		if (flags & RF_WEIRD_MIND)
 		{
 			spoil_out(wd_che[msex]);
 			spoil_out(" is rarely detected by telepathy.  ");
@@ -1879,7 +1877,7 @@ static void spoil_mon_info(cptr fname)
 			spoil_out(wd_che[msex]);
 			spoil_out(" breeds explosively.  ");
 		}
-		if (flags2 & RF2_REGENERATE)
+		if (flags & RF_REGENERATE)
 		{
 			spoil_out(wd_che[msex]);
 			spoil_out(" regenerates quickly.  ");
@@ -1887,10 +1885,10 @@ static void spoil_mon_info(cptr fname)
 
 		/* Collect susceptibilities */
 		vn = 0;
-		if (flags3 & RF3_HURT_ROCK) vp[vn++] = "rock remover";
-		if (flags3 & RF3_HURT_LITE) vp[vn++] = "bright light";
-		if (flags3 & RF3_SUSCEP_FIRE) vp[vn++] = "fire";
-		if (flags3 & RF3_SUSCEP_COLD) vp[vn++] = "cold";
+		if (flags & RF_HURT_ROCK) vp[vn++] = "rock remover";
+		if (flags & RF_HURT_LITE) vp[vn++] = "bright light";
+		if (flags & RF_SUSCEP_FIRE) vp[vn++] = "fire";
+		if (flags & RF_SUSCEP_COLD) vp[vn++] = "cold";
 
 		if (vn)
 		{
@@ -1907,11 +1905,11 @@ static void spoil_mon_info(cptr fname)
 
 		/* Collect immunities */
 		vn = 0;
-		if (flags3 & RF3_IM_ACID) vp[vn++] = "acid";
-		if (flags3 & RF3_IM_ELEC) vp[vn++] = "lightning";
-		if (flags3 & RF3_IM_FIRE) vp[vn++] = "fire";
-		if (flags3 & RF3_IM_COLD) vp[vn++] = "cold";
-		if (flags3 & RF3_IM_POIS) vp[vn++] = "poison";
+		if (flags & RF_IM_ACID) vp[vn++] = "acid";
+		if (flags & RF_IM_ELEC) vp[vn++] = "lightning";
+		if (flags & RF_IM_FIRE) vp[vn++] = "fire";
+		if (flags & RF_IM_COLD) vp[vn++] = "cold";
+		if (flags & RF_IM_POIS) vp[vn++] = "poison";
 
 		if (vn)
 		{
@@ -1928,12 +1926,12 @@ static void spoil_mon_info(cptr fname)
 
 		/* Collect resistances */
 		vn = 0;
-		if (flags3 & RF3_RES_NETH) vp[vn++] = "nether";
-		if (flags3 & RF3_RES_WATE) vp[vn++] = "water";
-		if (flags3 & RF3_RES_PLAS) vp[vn++] = "plasma";
-		if (flags3 & RF3_RES_NEXU) vp[vn++] = "nexus";
-		if (flags3 & RF3_RES_DISE) vp[vn++] = "disenchantment";
-		if (flags3 & RF3_RES_TELE) vp[vn++] = "teleportation";
+		if (flags & RF_RES_NETH) vp[vn++] = "nether";
+		if (flags & RF_RES_WATE) vp[vn++] = "water";
+		if (flags & RF_RES_PLAS) vp[vn++] = "plasma";
+		if (flags & RF_RES_NEXU) vp[vn++] = "nexus";
+		if (flags & RF_RES_DISE) vp[vn++] = "disenchantment";
+		if (flags & RF_RES_TELE) vp[vn++] = "teleportation";
 
 		if (vn)
 		{
@@ -1950,10 +1948,10 @@ static void spoil_mon_info(cptr fname)
 
 		/* Collect non-effects */
 		vn = 0;
-		if (flags3 & RF3_NO_STUN) vp[vn++] = "stunned";
-		if (flags3 & RF3_NO_FEAR) vp[vn++] = "frightened";
-		if (flags3 & RF3_NO_CONF) vp[vn++] = "confused";
-		if (flags3 & RF3_NO_SLEEP) vp[vn++] = "slept";
+		if (flags & RF_NO_STUN) vp[vn++] = "stunned";
+		if (flags & RF_NO_FEAR) vp[vn++] = "frightened";
+		if (flags & RF_NO_CONF) vp[vn++] = "confused";
+		if (flags & RF_NO_SLEEP) vp[vn++] = "slept";
 
 		if (vn)
 		{
@@ -1986,12 +1984,12 @@ static void spoil_mon_info(cptr fname)
 		spoil_out(buf);
 
 		i = 0;
-		if (flags1 & (RF1_DROP_60)) i += 1;
-		if (flags1 & (RF1_DROP_90)) i += 2;
-		if (flags1 & (RF1_DROP_1D2)) i += 2;
-		if (flags1 & (RF1_DROP_2D2)) i += 4;
-		if (flags1 & (RF1_DROP_3D2)) i += 6;
-		if (flags1 & (RF1_DROP_4D2)) i += 8;
+		if (flags & RF_DROP_60) i += 1;
+		if (flags & RF_DROP_90) i += 2;
+		if (flags & RF_DROP_1D2) i += 2;
+		if (flags & RF_DROP_2D2) i += 4;
+		if (flags & RF_DROP_3D2) i += 6;
+		if (flags & RF_DROP_4D2) i += 8;
 
 		/* Drops gold and/or items */
 		if (i)
@@ -2015,24 +2013,24 @@ static void spoil_mon_info(cptr fname)
 				spoil_out(buf);
 			}
 
-			if (flags1 & RF1_DROP_GREAT)
+			if (flags & RF_DROP_GREAT)
 			{
 				if (sin) spoil_out("n");
 				spoil_out(" exceptional object");
 			}
-			else if (flags1 & RF1_DROP_GOOD)
+			else if (flags & RF_DROP_GOOD)
 			{
 				spoil_out(" good object");
 			}
-			else if (flags1 & RF1_DROP_USEFUL)
+			else if (flags & RF_DROP_USEFUL)
 			{
 				spoil_out(" useful object");
 			}
-			else if (flags1 & RF1_ONLY_ITEM)
+			else if (flags & RF_ONLY_ITEM)
 			{
 				spoil_out(" object");
 			}
-			else if (flags1 & RF1_ONLY_GOLD)
+			else if (flags & RF_ONLY_GOLD)
 			{
 				spoil_out(" treasure");
 			}
@@ -2045,7 +2043,7 @@ static void spoil_mon_info(cptr fname)
 			}
 			if (i > 1) spoil_out("s");
 
-			if (flags1 & RF1_DROP_CHOSEN)
+			if (flags & RF_DROP_CHOSEN)
 			{
 				spoil_out(", in addition to chosen objects");
 			}
@@ -2292,7 +2290,7 @@ static void spoil_mon_info(cptr fname)
 		{
 			spoil_out(".  ");
 		}
-		else if (flags1 & RF1_NEVER_BLOW)
+		else if (flags & RF_NEVER_BLOW)
 		{
 			sprintf(buf, "%s has no physical attacks.  ", wd_che[msex]);
 			spoil_out(buf);

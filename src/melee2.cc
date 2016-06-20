@@ -28,6 +28,7 @@
 #include "monster2.hpp"
 #include "monster3.hpp"
 #include "monster_race.hpp"
+#include "monster_race_flag.hpp"
 #include "monster_spell.hpp"
 #include "monster_spell_flag.hpp"
 #include "monster_type.hpp"
@@ -69,7 +70,7 @@ bool_ mon_take_hit_mon(int s_idx, int m_idx, int dam, bool_ *fear, cptr note)
 
 	/* Some monsters are immune to death */
 	auto const r_ptr = m_ptr->race();
-	if (r_ptr->flags7 & RF7_NO_DEATH) return FALSE;
+	if (r_ptr->flags & RF_NO_DEATH) return FALSE;
 
 	/* Wake it up */
 	m_ptr->csleep = 0;
@@ -80,7 +81,7 @@ bool_ mon_take_hit_mon(int s_idx, int m_idx, int dam, bool_ *fear, cptr note)
 	/* It is dead now... or is it? */
 	if (m_ptr->hp < 0)
 	{
-		if (((r_ptr->flags1 & RF1_UNIQUE) && (m_ptr->status <= MSTATUS_NEUTRAL_P)) ||
+		if (((r_ptr->flags & RF_UNIQUE) && (m_ptr->status <= MSTATUS_NEUTRAL_P)) ||
 		                (m_ptr->mflag & MFLAG_QUEST))
 		{
 			m_ptr->hp = 1;
@@ -96,10 +97,10 @@ bool_ mon_take_hit_mon(int s_idx, int m_idx, int dam, bool_ *fear, cptr note)
 			monster_desc(m_name, m_ptr, 0);
 
 			/* Make a sound */
-			if ((r_ptr->flags3 & RF3_DEMON) ||
-			                (r_ptr->flags3 & RF3_UNDEAD) ||
-			                (r_ptr->flags2 & RF2_STUPID) ||
-			                (r_ptr->flags3 & RF3_NONLIVING) ||
+			if ((r_ptr->flags & RF_DEMON) ||
+			                (r_ptr->flags & RF_UNDEAD) ||
+			                (r_ptr->flags & RF_STUPID) ||
+			                (r_ptr->flags & RF_NONLIVING) ||
 			                (strchr("Evg", r_ptr->d_char)))
 			{
 				sound(SOUND_N_KILL);
@@ -120,10 +121,10 @@ bool_ mon_take_hit_mon(int s_idx, int m_idx, int dam, bool_ *fear, cptr note)
 				/* Do nothing */
 			}
 			/* Death by Physical attack -- non-living monster */
-			else if ((r_ptr->flags3 & RF3_DEMON) ||
-			                (r_ptr->flags3 & RF3_UNDEAD) ||
-			                (r_ptr->flags2 & RF2_STUPID) ||
-			                (r_ptr->flags3 & RF3_NONLIVING) ||
+			else if ((r_ptr->flags & RF_DEMON) ||
+			                (r_ptr->flags & RF_UNDEAD) ||
+			                (r_ptr->flags & RF_STUPID) ||
+			                (r_ptr->flags & RF_NONLIVING) ||
 			                (strchr("Evg", r_ptr->d_char)))
 			{
 				cmonster_msg(TERM_L_RED, "%^s is destroyed.", m_name);
@@ -174,7 +175,7 @@ bool_ mon_take_hit_mon(int s_idx, int m_idx, int dam, bool_ *fear, cptr note)
 			}
 
 			/* When an Unique dies, it stays dead */
-			if (r_ptr->flags1 & RF1_UNIQUE)
+			if (r_ptr->flags & RF_UNIQUE)
 			{
 				r_ptr->max_num = 0;
 			}
@@ -231,7 +232,7 @@ void mon_handle_fear(monster_type *m_ptr, int dam, bool_ *fear)
 
 	/* Sometimes a monster gets scared by damage */
 	auto const r_ptr = m_ptr->race();
-	if (!m_ptr->monfear && !(r_ptr->flags3 & RF3_NO_FEAR))
+	if (!m_ptr->monfear && !(r_ptr->flags & RF_NO_FEAR))
 	{
 		int percentage;
 
@@ -292,7 +293,7 @@ void mon_handle_fear(monster_type *m_ptr, int dam, bool_ *fear)
 static bool_ int_outof(std::shared_ptr<monster_race> r_ptr, int prob)
 {
 	/* Non-Smart monsters are half as "smart" */
-	if (!(r_ptr->flags2 & RF2_SMART)) prob = prob / 2;
+	if (!(r_ptr->flags & RF_SMART)) prob = prob / 2;
 
 	/* Roll the dice */
 	return (rand_int(100) < prob);
@@ -313,7 +314,7 @@ static void remove_bad_spells(int m_idx, monster_spell_flag_set *spells_p)
 
 	/* Too stupid to know anything? */
 	auto const r_ptr = m_ptr->race();
-	if (r_ptr->flags2 & RF2_STUPID) return;
+	if (r_ptr->flags & RF_STUPID) return;
 
 
 	/* Must be cheating or learning */
@@ -712,7 +713,7 @@ static monster_spell const *choose_attack_spell(int m_idx, std::vector<monster_s
 
 	/* Stupid monsters choose randomly */
 	auto const r_ptr = m_ptr->race();
-	if (r_ptr->flags2 & RF2_STUPID)
+	if (r_ptr->flags & RF_STUPID)
 	{
 		/* Pick at random */
 		return spells[rand_int(spells.size())];
@@ -847,7 +848,7 @@ static void breath(int m_idx, int typ, int dam_hp, int rad)
 	auto const r_ptr = m_ptr->race();
 
 	/* Determine the radius of the blast */
-	if (rad < 1) rad = (r_ptr->flags2 & RF2_POWERFUL) ? 3 : 2;
+	if (rad < 1) rad = (r_ptr->flags & RF_POWERFUL) ? 3 : 2;
 
 	/* Target the player with a ball attack */
 	(void)project(m_idx, rad, p_ptr->py, p_ptr->px, dam_hp, typ, flg);
@@ -867,7 +868,7 @@ static void monst_breath_monst(int m_idx, int y, int x, int typ, int dam_hp, int
 	auto const r_ptr = m_ptr->race();
 
 	/* Determine the radius of the blast */
-	if (rad < 1) rad = (r_ptr->flags2 & RF2_POWERFUL) ? 3 : 2;
+	if (rad < 1) rad = (r_ptr->flags & RF_POWERFUL) ? 3 : 2;
 
 	(void)project(m_idx, rad, y, x, dam_hp, typ, flg);
 }
@@ -1043,7 +1044,7 @@ static bool_ monst_spell_monst(int m_idx)
 		monster_spell_flag_set allowed_spells = r_ptr->spells;
 
 		/* Hack -- allow "desperate" spells */
-		if ((r_ptr->flags2 & RF2_SMART) &&
+		if ((r_ptr->flags & RF_SMART) &&
 		                (m_ptr->hp < m_ptr->maxhp / 10) &&
 		                (rand_int(100) < 50))
 		{
@@ -1626,8 +1627,8 @@ static bool_ monst_spell_monst(int m_idx)
 				}
 
 				/* Attempt a saving throw */
-				if ((tr_ptr->flags1 & RF1_UNIQUE) ||
-				                (tr_ptr->flags3 & RF3_NO_CONF) ||
+				if ((tr_ptr->flags & RF_UNIQUE) ||
+				                (tr_ptr->flags & RF_NO_CONF) ||
 				                (t_ptr->level > randint((rlev - 10) < 1 ? 1 : (rlev - 10)) + 10))
 				{
 					/* No obvious effect */
@@ -1663,8 +1664,8 @@ static bool_ monst_spell_monst(int m_idx)
 				}
 
 				/* Attempt a saving throw */
-				if ((tr_ptr->flags1 & RF1_UNIQUE) ||
-				                (tr_ptr->flags3 & RF3_NO_CONF) ||
+				if ((tr_ptr->flags & RF_UNIQUE) ||
+				                (tr_ptr->flags & RF_NO_CONF) ||
 				                (t_ptr->level > randint((rlev - 10) < 1 ? 1 : (rlev - 10)) + 10))
 				{
 					/* No obvious effect */
@@ -1878,7 +1879,7 @@ static bool_ monst_spell_monst(int m_idx)
 				if (disturb_other) disturb(1);
 				if (blind || !see_m) monster_msg("%^s mumbles, and you hear scary noises.", m_name);
 				else monster_msg("%^s casts a fearful illusion at %s.", m_name, t_name);
-				if (tr_ptr->flags3 & RF3_NO_FEAR)
+				if (tr_ptr->flags & RF_NO_FEAR)
 				{
 					if (see_t) monster_msg("%^s refuses to be frightened.", t_name);
 				}
@@ -1902,7 +1903,7 @@ static bool_ monst_spell_monst(int m_idx)
 				if (blind || !see_m) monster_msg("%^s mumbles.", m_name);
 				else monster_msg("%^s casts a spell, burning %s%s eyes.", m_name, t_name,
 					                 (!strcmp(t_name, "it") ? "s" : "'s"));
-				if (tr_ptr->flags3 & RF3_NO_CONF)  /* Simulate blindness with confusion */
+				if (tr_ptr->flags & RF_NO_CONF)  /* Simulate blindness with confusion */
 				{
 					if (see_t) monster_msg("%^s is unaffected.", t_name);
 				}
@@ -1926,7 +1927,7 @@ static bool_ monst_spell_monst(int m_idx)
 				if (disturb_other) disturb(1);
 				if (blind || !see_m) monster_msg("%^s mumbles, and you hear puzzling noises.", m_name);
 				else monster_msg("%^s creates a mesmerising illusion in front of %s.", m_name, t_name);
-				if (tr_ptr->flags3 & RF3_NO_CONF)
+				if (tr_ptr->flags & RF_NO_CONF)
 				{
 					if (see_t) monster_msg("%^s disbelieves the feeble spell.", t_name);
 				}
@@ -1949,7 +1950,7 @@ static bool_ monst_spell_monst(int m_idx)
 				if (disturb_other) disturb(1);
 				if (!blind && see_either) monster_msg("%^s drains power from %s%s muscles.", m_name, t_name,
 					                                      (!strcmp(t_name, "it") ? "s" : "'s"));
-				if (tr_ptr->flags1 & RF1_UNIQUE)
+				if (tr_ptr->flags & RF_UNIQUE)
 				{
 					if (see_t) monster_msg("%^s is unaffected.", t_name);
 				}
@@ -1971,8 +1972,8 @@ static bool_ monst_spell_monst(int m_idx)
 				if (!direct) break;
 				if (disturb_other) disturb(1);
 				if (!blind && see_m) monster_msg("%^s stares intently at %s.", m_name, t_name);
-				if ((tr_ptr->flags1 & RF1_UNIQUE) ||
-				                (tr_ptr->flags3 & RF3_NO_STUN))
+				if ((tr_ptr->flags & RF_UNIQUE) ||
+				                (tr_ptr->flags & RF_NO_STUN))
 				{
 					if (see_t) monster_msg("%^s is unaffected.", t_name);
 				}
@@ -2026,7 +2027,7 @@ static bool_ monst_spell_monst(int m_idx)
 				else if (!blind) monster_msg("%^s invokes the Hand of Doom on %s.", m_name, t_name);
 				else
 					monster_msg ("You hear someone invoke the Hand of Doom!");
-				if (tr_ptr->flags1 & RF1_UNIQUE)
+				if (tr_ptr->flags & RF_UNIQUE)
 				{
 					if (!blind && see_t) monster_msg("^%s is unaffected!", t_name);
 				}
@@ -2167,9 +2168,9 @@ static bool_ monst_spell_monst(int m_idx)
 					monster_msg("%^s teleports %s away.", m_name, t_name);
 
 
-					if (tr_ptr->flags3 & RF3_RES_TELE)
+					if (tr_ptr->flags & RF_RES_TELE)
 					{
-						if (tr_ptr->flags1 & RF1_UNIQUE)
+						if (tr_ptr->flags & RF_UNIQUE)
 						{
 							if (see_t)
 							{
@@ -2282,7 +2283,7 @@ static bool_ monst_spell_monst(int m_idx)
 				if (blind || !see_m) monster_msg("%^s mumbles.", m_name);
 				else monster_msg("%^s magically summons %s %s.",
 					                 m_name, m_poss,
-					                 ((r_ptr->flags1) & RF1_UNIQUE ?
+					                 ((r_ptr->flags) & RF_UNIQUE ?
 					                  "minions" : "kin"));
 				summon_kin_type = r_ptr->d_char;  /* Big hack */
 				for (int k = 0; k < 6; k++)
@@ -2773,7 +2774,7 @@ static bool_ make_attack_spell(int m_idx)
 
 	/* Cannot attack the player if mortal and player fated to never die by the ... */
 	auto const r_ptr = m_ptr->race();
-	if ((r_ptr->flags7 & RF7_MORTAL) && (p_ptr->no_mortal)) return (FALSE);
+	if ((r_ptr->flags & RF_MORTAL) && (p_ptr->no_mortal)) return (FALSE);
 
 	/* Hack -- Extract the spell probability */
 	chance = (r_ptr->freq_inate + r_ptr->freq_spell) / 2;
@@ -2810,7 +2811,7 @@ static bool_ make_attack_spell(int m_idx)
 	}
 
 	/* Hack -- allow "desperate" spells */
-	if ((r_ptr->flags2 & RF2_SMART) &&
+	if ((r_ptr->flags & RF_SMART) &&
 	                (m_ptr->hp < m_ptr->maxhp / 10) &&
 	                (rand_int(100) < 50))
 	{
@@ -2829,7 +2830,7 @@ static bool_ make_attack_spell(int m_idx)
 
 	/* Check for a clean bolt shot */
 	if ((allowed_spells & SF_BOLT_MASK) &&
-	    !(r_ptr->flags2 & RF2_STUPID) &&
+	    !(r_ptr->flags & RF_STUPID) &&
 	    !clean_shot(m_ptr->fy, m_ptr->fx, y, x))
 	{
 		/* Remove spells that will only hurt friends */
@@ -2838,7 +2839,7 @@ static bool_ make_attack_spell(int m_idx)
 
 	/* Check for a possible summon */
 	if ((allowed_spells & SF_SUMMON_MASK) &&
-	    !(r_ptr->flags2 & RF2_STUPID) &&
+	    !(r_ptr->flags & RF_STUPID) &&
 	    !(summon_possible(y, x)))
 	{
 		/* Remove summoning spells */
@@ -2873,7 +2874,7 @@ static bool_ make_attack_spell(int m_idx)
 	failrate = 25 - (rlev + 3) / 4;
 
 	/* Hack -- Stupid monsters will never fail (for jellies and such) */
-	if (r_ptr->flags2 & RF2_STUPID) failrate = 0;
+	if (r_ptr->flags & RF_STUPID) failrate = 0;
 
 	/* Check for spell failure (inate attacks never fail) */
 	if ((!thrown_spell->is_innate) && (rand_int(100) < failrate))
@@ -4017,7 +4018,7 @@ static bool_ make_attack_spell(int m_idx)
 				if (blind) msg_format("%^s mumbles.", m_name);
 				else msg_format("%^s magically summons %s %s.",
 					                m_name, m_poss,
-					                ((r_ptr->flags1) & RF1_UNIQUE ?
+					                ((r_ptr->flags) & RF_UNIQUE ?
 					                 "minions" : "kin"));
 				summon_kin_type = r_ptr->d_char;  /* Big hack */
 
@@ -4645,7 +4646,7 @@ static void get_target_monster(int m_idx)
 		if (m_idx == i) continue;
 
 		/* Cannot be targeted */
-		if (rt_ptr->flags7 & RF7_NO_TARGET) continue;
+		if (rt_ptr->flags & RF_NO_TARGET) continue;
 
 		if (is_enemy(m_ptr, t_ptr) && (los(m_ptr->fy, m_ptr->fx, t_ptr->fy, t_ptr->fx) &&
 		                               ((dd = distance(m_ptr->fy, m_ptr->fx, t_ptr->fy, t_ptr->fx)) < d)))
@@ -4705,13 +4706,13 @@ static bool_ get_moves(int m_idx, int *mm)
 	const auto r_ptr = m_ptr->race();
 
 	/* A possessor is not interrested in the player, it only wants a corpse */
-	if (r_ptr->flags7 & RF7_POSSESSOR)
+	if (r_ptr->flags & RF_POSSESSOR)
 	{
 		find_corpse(m_ptr, &y2, &x2);
 	}
 
 	/* Let quests redefine AI */
-	if (r_ptr->flags7 & RF7_AI_SPECIAL)
+	if (r_ptr->flags & RF_AI_SPECIAL)
 	{
 		struct hook_monster_ai_in in = { m_idx, &m_list[m_idx] };
 		struct hook_monster_ai_out out = { 0, 0 };
@@ -4724,7 +4725,7 @@ static bool_ get_moves(int m_idx, int *mm)
 
 	if (m_idx == p_ptr->control)
 	{
-		if ((r_ptr->flags7 & RF7_AI_PLAYER) || magik(85))
+		if ((r_ptr->flags & RF_AI_PLAYER) || magik(85))
 		{
 			if (distance(p_ptr->py, p_ptr->px, m_ptr->fy, m_ptr->fx) < 50)
 			{
@@ -4739,7 +4740,7 @@ static bool_ get_moves(int m_idx, int *mm)
 	int x = m_ptr->fx - x2;
 
 	/* Tease the player */
-	if (r_ptr->flags7 & RF7_AI_ANNOY)
+	if (r_ptr->flags & RF_AI_ANNOY)
 	{
 		if (distance(m_ptr->fy, m_ptr->fx, y2, x2) < 4)
 		{
@@ -4749,7 +4750,7 @@ static bool_ get_moves(int m_idx, int *mm)
 	}
 
 	/* Death orbs .. */
-	if (r_ptr->flags2 & RF2_DEATH_ORB)
+	if (r_ptr->flags & RF_DEATH_ORB)
 	{
 		if (!los(m_ptr->fy, m_ptr->fx, y2, x2))
 		{
@@ -4765,10 +4766,10 @@ static bool_ get_moves(int m_idx, int *mm)
 		* Animal packs try to get the player out of corridors
 		* (...unless they can move through walls -- TY)
 		*/
-		if ((r_ptr->flags1 & RF1_FRIENDS) &&
-		                (r_ptr->flags3 & RF3_ANIMAL) &&
-		                !((r_ptr->flags2 & RF2_PASS_WALL) ||
-		                  (r_ptr->flags2 & RF2_KILL_WALL)))
+		if ((r_ptr->flags & RF_FRIENDS) &&
+		                (r_ptr->flags & RF_ANIMAL) &&
+		                !((r_ptr->flags & RF_PASS_WALL) ||
+		                  (r_ptr->flags & RF_KILL_WALL)))
 		{
 			int i, room = 0;
 
@@ -4792,7 +4793,7 @@ static bool_ get_moves(int m_idx, int *mm)
 		}
 
 		/* Monster groups try to surround the player */
-		if (!done && (r_ptr->flags1 & RF1_FRIENDS))
+		if (!done && (r_ptr->flags & RF_FRIENDS))
 		{
 			int i;
 
@@ -5075,7 +5076,7 @@ static bool_ monst_attack_monst(int m_idx, int t_idx)
 	const auto tr_ptr = t_ptr->race();
 
 	/* Not allowed to attack */
-	if (r_ptr->flags1 & RF1_NEVER_BLOW) return FALSE;
+	if (r_ptr->flags & RF_NEVER_BLOW) return FALSE;
 
 	/* Total armor */
 	const int ac = t_ptr->ac;
@@ -5487,8 +5488,8 @@ static bool_ monst_attack_monst(int m_idx, int t_idx)
 				if (touched)
 				{
 					/* Aura fire */
-					if ((tr_ptr->flags2 & RF2_AURA_FIRE) &&
-					                !(r_ptr->flags3 & RF3_IM_FIRE))
+					if ((tr_ptr->flags & RF_AURA_FIRE) &&
+					                !(r_ptr->flags & RF_IM_FIRE))
 					{
 						if (m_ptr->ml || t_ptr->ml)
 						{
@@ -5502,7 +5503,7 @@ static bool_ monst_attack_monst(int m_idx, int t_idx)
 					}
 
 					/* Aura elec */
-					if ((tr_ptr->flags2 & RF2_AURA_ELEC) && !(r_ptr->flags3 & RF3_IM_ELEC))
+					if ((tr_ptr->flags & RF_AURA_ELEC) && !(r_ptr->flags & RF_IM_ELEC))
 					{
 						if (m_ptr->ml || t_ptr->ml)
 						{
@@ -5594,27 +5595,27 @@ static bool_ player_invis(monster_type * m_ptr)
 	s16b inv = p_ptr->invis;
 	s16b mlv = m_ptr->level;
 
-	if (r_ptr->flags3 & RF3_NO_SLEEP)
+	if (r_ptr->flags & RF_NO_SLEEP)
 		mlv += 10;
-	if (r_ptr->flags3 & RF3_DRAGON)
+	if (r_ptr->flags & RF_DRAGON)
 		mlv += 20;
-	if (r_ptr->flags3 & RF3_UNDEAD)
+	if (r_ptr->flags & RF_UNDEAD)
 		mlv += 15;
-	if (r_ptr->flags3 & RF3_DEMON)
+	if (r_ptr->flags & RF_DEMON)
 		mlv += 15;
-	if (r_ptr->flags3 & RF3_ANIMAL)
+	if (r_ptr->flags & RF_ANIMAL)
 		mlv += 15;
-	if (r_ptr->flags3 & RF3_ORC)
+	if (r_ptr->flags & RF_ORC)
 		mlv -= 15;
-	if (r_ptr->flags3 & RF3_TROLL)
+	if (r_ptr->flags & RF_TROLL)
 		mlv -= 10;
-	if (r_ptr->flags2 & RF2_STUPID)
+	if (r_ptr->flags & RF_STUPID)
 		mlv /= 2;
-	if (r_ptr->flags2 & RF2_SMART)
+	if (r_ptr->flags & RF_SMART)
 		mlv = (mlv * 5) / 4;
 	if (m_ptr->mflag & MFLAG_QUEST)
 		inv = 0;
-	if (r_ptr->flags2 & RF2_INVISIBLE)
+	if (r_ptr->flags & RF_INVISIBLE)
 		inv = 0;
 	if (m_ptr->mflag & MFLAG_CONTROL)
 		inv = 0;
@@ -5659,7 +5660,7 @@ static void process_monster(int m_idx, bool_ is_frien)
 	const bool_ inv = player_invis(m_ptr);
 
 	auto const r_ptr = m_ptr->race();
-	if (r_ptr->flags9 & RF9_DOPPLEGANGER) doppleganger = m_idx;
+	if (r_ptr->flags & RF_DOPPLEGANGER) doppleganger = m_idx;
 
 	/* Handle "bleeding" */
 	if (m_ptr->bleeding)
@@ -5872,12 +5873,12 @@ static void process_monster(int m_idx, bool_ is_frien)
 	bool_ gets_angry = FALSE;
 
 	/* No one wants to be your friend if you're aggravating */
-	if ((m_ptr->status > MSTATUS_NEUTRAL) && (m_ptr->status < MSTATUS_COMPANION) && (p_ptr->aggravate) && !(r_ptr->flags7 & RF7_PET))
+	if ((m_ptr->status > MSTATUS_NEUTRAL) && (m_ptr->status < MSTATUS_COMPANION) && (p_ptr->aggravate) && !(r_ptr->flags & RF_PET))
 		gets_angry = TRUE;
 
 	/* Paranoia... no friendly uniques outside wizard mode -- TY */
 	if ((m_ptr->status > MSTATUS_NEUTRAL) && (m_ptr->status < MSTATUS_COMPANION) && !(wizard) &&
-	                (r_ptr->flags1 & RF1_UNIQUE) && !(r_ptr->flags7 & RF7_PET))
+	                (r_ptr->flags & RF_UNIQUE) && !(r_ptr->flags & RF_PET))
 		gets_angry = TRUE;
 
 	if (gets_angry)
@@ -5940,7 +5941,7 @@ static void process_monster(int m_idx, bool_ is_frien)
 
 	if (randint(SPEAK_CHANCE) == 1)
 	{
-		if (player_has_los_bold(oy, ox) && (r_ptr->flags2 & RF2_CAN_SPEAK))
+		if (player_has_los_bold(oy, ox) && (r_ptr->flags & RF_CAN_SPEAK))
 		{
 			char m_name[80];
 			char monmessage[1024];
@@ -6007,8 +6008,8 @@ static void process_monster(int m_idx, bool_ is_frien)
 	}
 
 	/* 75% random movement */
-	else if ((r_ptr->flags1 & (RF1_RAND_50)) &&
-	                (r_ptr->flags1 & (RF1_RAND_25)) &&
+	else if ((r_ptr->flags & RF_RAND_50) &&
+			(r_ptr->flags & RF_RAND_25) &&
 	                (rand_int(100) < 75))
 	{
 		/* Try four "random" directions */
@@ -6016,7 +6017,7 @@ static void process_monster(int m_idx, bool_ is_frien)
 	}
 
 	/* 50% random movement */
-	else if ((r_ptr->flags1 & (RF1_RAND_50)) &&
+	else if ((r_ptr->flags & RF_RAND_50) &&
 	                (rand_int(100) < 50))
 	{
 		/* Try four "random" directions */
@@ -6024,7 +6025,7 @@ static void process_monster(int m_idx, bool_ is_frien)
 	}
 
 	/* 25% random movement */
-	else if ((r_ptr->flags1 & (RF1_RAND_25)) &&
+	else if ((r_ptr->flags & RF_RAND_25) &&
 	                (rand_int(100) < 25))
 	{
 		/* Try four "random" directions */
@@ -6087,7 +6088,7 @@ static void process_monster(int m_idx, bool_ is_frien)
 
 		/* Hack -- check for Glyph of Warding */
 		if ((c_ptr->feat == FEAT_GLYPH) &&
-		                !(r_ptr->flags1 & RF1_NEVER_BLOW))
+		                !(r_ptr->flags & RF_NEVER_BLOW))
 		{
 			/* Assume no move allowed */
 			do_move = FALSE;
@@ -6113,7 +6114,7 @@ static void process_monster(int m_idx, bool_ is_frien)
 		}
 
 		/* Hack -- trees are obstacle */
-		else if ((cave[ny][nx].feat == FEAT_TREES) && (r_ptr->flags9 & RF9_KILL_TREES))
+		else if ((cave[ny][nx].feat == FEAT_TREES) && (r_ptr->flags & RF_KILL_TREES))
 		{
 			do_move = TRUE;
 
@@ -6144,28 +6145,28 @@ static void process_monster(int m_idx, bool_ is_frien)
 
 
 		/* Some monsters can fly */
-		else if ((f_info[c_ptr->feat].flags1 & FF1_CAN_LEVITATE) && (r_ptr->flags7 & RF7_CAN_FLY))
+		else if ((f_info[c_ptr->feat].flags1 & FF1_CAN_LEVITATE) && (r_ptr->flags & RF_CAN_FLY))
 		{
 			/* Pass through walls/doors/rubble */
 			do_move = TRUE;
 		}
 
 		/* Some monsters can fly */
-		else if ((f_info[c_ptr->feat].flags1 & FF1_CAN_FLY) && (r_ptr->flags7 & RF7_CAN_FLY))
+		else if ((f_info[c_ptr->feat].flags1 & FF1_CAN_FLY) && (r_ptr->flags & RF_CAN_FLY))
 		{
 			/* Pass through trees/... */
 			do_move = TRUE;
 		}
 
 		/* Monster moves through walls (and doors) */
-		else if ((f_info[c_ptr->feat].flags1 & FF1_CAN_PASS) && (r_ptr->flags2 & RF2_PASS_WALL))
+		else if ((f_info[c_ptr->feat].flags1 & FF1_CAN_PASS) && (r_ptr->flags & RF_PASS_WALL))
 		{
 			/* Pass through walls/doors/rubble */
 			do_move = TRUE;
 		}
 
 		/* Monster destroys walls (and doors) */
-		else if ((f_info[c_ptr->feat].flags1 & FF1_CAN_PASS) && (r_ptr->flags2 & RF2_KILL_WALL))
+		else if ((f_info[c_ptr->feat].flags1 & FF1_CAN_PASS) && (r_ptr->flags & RF_KILL_WALL))
 		{
 			/* Eat through walls/doors/rubble */
 			do_move = TRUE;
@@ -6186,7 +6187,7 @@ static void process_monster(int m_idx, bool_ is_frien)
 		}
 
 		/* Monster moves through walls (and doors) */
-		else if ((f_info[c_ptr->feat].flags1 & FF1_CAN_PASS) && (r_ptr->flags2 & RF2_PASS_WALL))
+		else if ((f_info[c_ptr->feat].flags1 & FF1_CAN_PASS) && (r_ptr->flags & RF_PASS_WALL))
 		{
 			/* Pass through walls/doors/rubble */
 			do_move = TRUE;
@@ -6194,7 +6195,7 @@ static void process_monster(int m_idx, bool_ is_frien)
 
 		/* Monster moves through webs */
 		else if ((f_info[c_ptr->feat].flags1 & FF1_WEB) &&
-		                (r_ptr->flags7 & RF7_SPIDER))
+		                (r_ptr->flags & RF_SPIDER))
 		{
 			/* Pass through webs */
 			do_move = TRUE;
@@ -6210,7 +6211,7 @@ static void process_monster(int m_idx, bool_ is_frien)
 			/* Take a turn */
 			do_turn = TRUE;
 
-			if ((r_ptr->flags2 & RF2_OPEN_DOOR) &&
+			if ((r_ptr->flags & RF_OPEN_DOOR) &&
 			                ((is_friend(m_ptr) <= 0) || p_ptr->pet_open_doors))
 			{
 				/* Closed doors and secret doors */
@@ -6245,7 +6246,7 @@ static void process_monster(int m_idx, bool_ is_frien)
 			}
 
 			/* Stuck doors -- attempt to bash them down if allowed */
-			if (may_bash && (r_ptr->flags2 & RF2_BASH_DOOR) &&
+			if (may_bash && (r_ptr->flags & RF_BASH_DOOR) &&
 			                ((is_friend(m_ptr) <= 0) || p_ptr->pet_open_doors))
 			{
 				int k;
@@ -6294,7 +6295,7 @@ static void process_monster(int m_idx, bool_ is_frien)
 			}
 		}
 		else if (do_move && (c_ptr->feat == FEAT_MINOR_GLYPH)
-		                && !(r_ptr->flags1 & RF1_NEVER_BLOW))
+		                && !(r_ptr->flags & RF_NEVER_BLOW))
 		{
 			/* Assume no move allowed */
 			do_move = FALSE;
@@ -6339,7 +6340,7 @@ static void process_monster(int m_idx, bool_ is_frien)
 			/* Access that cave grid's contents */
 			y_ptr = &m_list[c_ptr->m_idx];
 
-			if (!(r_ptr->flags3 & RF3_IM_COLD))
+			if (!(r_ptr->flags & RF_IM_COLD))
 			{
 				if ((m_ptr->hp - distance(ny, nx, oy, ox)*2) <= 0)
 				{
@@ -6379,7 +6380,7 @@ static void process_monster(int m_idx, bool_ is_frien)
 
 		/* Some monsters never attack */
 		if (do_move && (ny == p_ptr->py) && (nx == p_ptr->px) &&
-		                (r_ptr->flags1 & RF1_NEVER_BLOW))
+		                (r_ptr->flags & RF_NEVER_BLOW))
 		{
 			/* Do not move */
 			do_move = FALSE;
@@ -6416,12 +6417,12 @@ static void process_monster(int m_idx, bool_ is_frien)
 			do_move = FALSE;
 
 			/* Kill weaker monsters */
-			if ((r_ptr->flags2 & RF2_KILL_BODY) &&
+			if ((r_ptr->flags & RF_KILL_BODY) &&
 			    (r_ptr->mexp > z_ptr->mexp) && (cave_floor_bold(ny, nx)) &&
 			    /* Friends don't kill friends... */
 			    !((is_friend(m_ptr) > 0) && (is_friend(m2_ptr) > 0)) &&
 			    /* Uniques aren't faceless monsters in a crowd */
-			    !(z_ptr->flags1 & RF1_UNIQUE) &&
+			    !(z_ptr->flags & RF_UNIQUE) &&
 			    /* Don't wreck quests */
 			    !(m2_ptr->mflag & (MFLAG_QUEST | MFLAG_QUEST2)) &&
 			    /* Don't punish summoners for relying on their friends */
@@ -6455,7 +6456,7 @@ static void process_monster(int m_idx, bool_ is_frien)
 			}
 
 			/* Push past weaker monsters (unless leaving a wall) */
-			else if ((r_ptr->flags2 & RF2_MOVE_BODY) &&
+			else if ((r_ptr->flags & RF_MOVE_BODY) &&
 			                (r_ptr->mexp > z_ptr->mexp) && cave_floor_bold(ny, nx) &&
 			                (cave_floor_bold(m_ptr->fy, m_ptr->fx)))
 			{
@@ -6477,11 +6478,8 @@ static void process_monster(int m_idx, bool_ is_frien)
 		}
 
 		/* Some monsters never move */
-		if (do_move && (r_ptr->flags1 & RF1_NEVER_MOVE))
+		if (do_move && (r_ptr->flags & RF_NEVER_MOVE))
 		{
-			/* Hack -- memorize lack of attacks */
-			/* if (m_ptr->ml) r_ptr->r_flags1 |= RF1_NEVER_MOVE; */
-
 			/* Do not move */
 			do_move = FALSE;
 		}
@@ -6573,7 +6571,7 @@ static void process_monster(int m_idx, bool_ is_frien)
 					if (o_ptr->tval == TV_GOLD) continue;
 
 					/* Incarnate ? */
-					if ((o_ptr->tval == TV_CORPSE) && (r_ptr->flags7 & RF7_POSSESSOR) &&
+					if ((o_ptr->tval == TV_CORPSE) && (r_ptr->flags & RF_POSSESSOR) &&
 					                ((o_ptr->sval == SV_CORPSE_CORPSE) || (o_ptr->sval == SV_CORPSE_SKELETON)))
 					{
 						if (ai_possessor(m_idx, this_o_idx)) return;
@@ -6581,14 +6579,12 @@ static void process_monster(int m_idx, bool_ is_frien)
 
 					/* Take or Kill objects on the floor */
 					/* rr9: Pets will no longer pick up/destroy items */
-					if ((((r_ptr->flags2 & RF2_TAKE_ITEM) &&
+					if ((((r_ptr->flags & RF_TAKE_ITEM) &&
 					                ((is_friend(m_ptr) <= 0) || p_ptr->pet_pickup_items)) ||
-					                (r_ptr->flags2 & RF2_KILL_ITEM)) &&
+					                (r_ptr->flags & RF_KILL_ITEM)) &&
 					                (is_friend(m_ptr) <= 0))
 					{
 						u32b f1, f2, f3, f4, f5, esp;
-
-						u32b flg3 = 0L;
 
 						char m_name[80];
 						char o_name[80];
@@ -6603,23 +6599,24 @@ static void process_monster(int m_idx, bool_ is_frien)
 						monster_desc(m_name, m_ptr, 0x04);
 
 						/* React to objects that hurt the monster */
-						if (f5 & (TR5_KILL_DEMON)) flg3 |= RF3_DEMON;
-						if (f5 & (TR5_KILL_UNDEAD)) flg3 |= RF3_UNDEAD;
-						if (f1 & (TR1_SLAY_DRAGON)) flg3 |= RF3_DRAGON;
-						if (f1 & (TR1_SLAY_TROLL)) flg3 |= RF3_TROLL;
-						if (f1 & (TR1_SLAY_GIANT)) flg3 |= RF3_GIANT;
-						if (f1 & (TR1_SLAY_ORC)) flg3 |= RF3_ORC;
-						if (f1 & (TR1_SLAY_DEMON)) flg3 |= RF3_DEMON;
-						if (f1 & (TR1_SLAY_UNDEAD)) flg3 |= RF3_UNDEAD;
-						if (f1 & (TR1_SLAY_ANIMAL)) flg3 |= RF3_ANIMAL;
-						if (f1 & (TR1_SLAY_EVIL)) flg3 |= RF3_EVIL;
+						monster_race_flag_set flg;
+						if (f5 & (TR5_KILL_DEMON)) flg |= RF_DEMON;
+						if (f5 & (TR5_KILL_UNDEAD)) flg |= RF_UNDEAD;
+						if (f1 & (TR1_SLAY_DRAGON)) flg |= RF_DRAGON;
+						if (f1 & (TR1_SLAY_TROLL)) flg |= RF_TROLL;
+						if (f1 & (TR1_SLAY_GIANT)) flg |= RF_GIANT;
+						if (f1 & (TR1_SLAY_ORC)) flg |= RF_ORC;
+						if (f1 & (TR1_SLAY_DEMON)) flg |= RF_DEMON;
+						if (f1 & (TR1_SLAY_UNDEAD)) flg |= RF_UNDEAD;
+						if (f1 & (TR1_SLAY_ANIMAL)) flg |= RF_ANIMAL;
+						if (f1 & (TR1_SLAY_EVIL)) flg |= RF_EVIL;
 
 						/* The object cannot be picked up by the monster */
-						if (artifact_p(o_ptr) || (r_ptr->flags3 & flg3) ||
+						if (artifact_p(o_ptr) || (r_ptr->flags & flg) ||
 						                (o_ptr->art_name))
 						{
 							/* Only give a message for "take_item" */
-							if (r_ptr->flags2 & RF2_TAKE_ITEM)
+							if (r_ptr->flags & RF_TAKE_ITEM)
 							{
 								/* Describe observable situations */
 								if (m_ptr->ml && player_has_los_bold(ny, nx))
@@ -6632,7 +6629,7 @@ static void process_monster(int m_idx, bool_ is_frien)
 						}
 
 						/* Pick up the item */
-						else if (r_ptr->flags2 & RF2_TAKE_ITEM)
+						else if (r_ptr->flags & RF_TAKE_ITEM)
 						{
 							/* Describe observable situations */
 							if (player_has_los_bold(ny, nx))
@@ -6678,7 +6675,7 @@ static void process_monster(int m_idx, bool_ is_frien)
 			}
 
 			/* Update monster light */
-			if (r_ptr->flags9 & RF9_HAS_LITE) p_ptr->update |= (PU_MON_LITE);
+			if (r_ptr->flags & RF_HAS_LITE) p_ptr->update |= (PU_MON_LITE);
 		}
 
 		/* Stop when done */
@@ -6810,7 +6807,7 @@ void process_monsters(void)
 	monster_type *m_ptr;
 
 	/* Check the doppleganger */
-	if (doppleganger && !(r_info[m_list[doppleganger].r_idx].flags9 & RF9_DOPPLEGANGER))
+	if (doppleganger && !(r_info[m_list[doppleganger].r_idx].flags & RF_DOPPLEGANGER))
 		doppleganger = 0;
 
 	/* Hack -- calculate the "player noise" */

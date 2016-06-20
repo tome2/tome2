@@ -6,6 +6,7 @@
 #include "hook_enter_dungeon_in.hpp"
 #include "monster2.hpp"
 #include "monster_race.hpp"
+#include "monster_race_flag.hpp"
 #include "monster_spell_flag.hpp"
 #include "monster_type.hpp"
 #include "object1.hpp"
@@ -1111,7 +1112,7 @@ static void map_info(int y, int x, byte *ap, char *cp)
 		monster_type *m_ptr = &m_list[c_ptr->m_idx];
 		auto const r_ptr = m_ptr->race();
 
-		if (r_ptr->flags9 & RF9_MIMIC)
+		if (r_ptr->flags & RF_MIMIC)
 		{
 			/* Acquire object being mimicked */
 			object_type *o_ptr = &o_list[m_ptr->mimic_o_idx()];
@@ -1155,10 +1156,10 @@ static void map_info(int y, int x, byte *ap, char *cp)
 				}
 
 				/* Multi-hued monster */
-				else if (r_ptr->flags1 & RF1_ATTR_MULTI)
+				else if (r_ptr->flags & RF_ATTR_MULTI)
 				{
 					/* Is it a shapechanger? */
-					if (r_ptr->flags2 & RF2_SHAPECHANGER)
+					if (r_ptr->flags & RF_SHAPECHANGER)
 					{
 						image_random(ap, cp);
 					}
@@ -1166,7 +1167,7 @@ static void map_info(int y, int x, byte *ap, char *cp)
 						*cp = c;
 
 					/* Multi-hued attr */
-					if (r_ptr->flags2 & RF2_ATTR_ANY)
+					if (r_ptr->flags & RF_ATTR_ANY)
 					{
 						*ap = randint(15);
 					}
@@ -1177,7 +1178,7 @@ static void map_info(int y, int x, byte *ap, char *cp)
 				}
 
 				/* Normal monster (not "clear" in any way) */
-				else if (!(r_ptr->flags1 & (RF1_ATTR_CLEAR | RF1_CHAR_CLEAR)))
+				else if (!(r_ptr->flags & (RF_ATTR_CLEAR | RF_CHAR_CLEAR)))
 				{
 					/* Use char */
 					*cp = c;
@@ -1203,14 +1204,14 @@ static void map_info(int y, int x, byte *ap, char *cp)
 				else
 				{
 					/* Normal (non-clear char) monster */
-					if (!(r_ptr->flags1 & RF1_CHAR_CLEAR))
+					if (!(r_ptr->flags & RF_CHAR_CLEAR))
 					{
 						/* Normal char */
 						*cp = c;
 					}
 
 					/* Normal (non-clear attr) monster */
-					else if (!(r_ptr->flags1 & RF1_ATTR_CLEAR))
+					else if (!(r_ptr->flags & RF_ATTR_CLEAR))
 					{
 						/* Normal attr */
 						*ap = a;
@@ -1234,7 +1235,7 @@ static void map_info(int y, int x, byte *ap, char *cp)
 		monster_race *r_ptr = &r_info[p_ptr->body_monster];
 
 		/* Get the "player" attr */
-		if (!avoid_other && (r_ptr->flags1 & RF1_ATTR_MULTI))
+		if (!avoid_other && (r_ptr->flags & RF_ATTR_MULTI))
 		{
 			a = get_shimmer_color();
 		}
@@ -1541,7 +1542,7 @@ void map_info_default(int y, int x, byte *ap, char *cp)
 		monster_type *m_ptr = &m_list[c_ptr->m_idx];
 		auto const r_ptr = m_ptr->race();
 
-		if (r_ptr->flags9 & RF9_MIMIC)
+		if (r_ptr->flags & RF_MIMIC)
 		{
 			/* Acquire object being mimicked */
 			object_type *o_ptr = &o_list[m_ptr->mimic_o_idx()];
@@ -1585,10 +1586,10 @@ void map_info_default(int y, int x, byte *ap, char *cp)
 				}
 
 				/* Multi-hued monster */
-				else if (r_ptr->flags1 & RF1_ATTR_MULTI)
+				else if (r_ptr->flags & RF_ATTR_MULTI)
 				{
 					/* Is it a shapechanger? */
-					if (r_ptr->flags2 & RF2_SHAPECHANGER)
+					if (r_ptr->flags & RF_SHAPECHANGER)
 					{
 						image_random(ap, cp);
 					}
@@ -1596,7 +1597,7 @@ void map_info_default(int y, int x, byte *ap, char *cp)
 						*cp = c;
 
 					/* Multi-hued attr */
-					if (r_ptr->flags2 & RF2_ATTR_ANY)
+					if (r_ptr->flags & RF_ATTR_ANY)
 					{
 						*ap = randint(15);
 					}
@@ -1607,7 +1608,7 @@ void map_info_default(int y, int x, byte *ap, char *cp)
 				}
 
 				/* Normal monster (not "clear" in any way) */
-				else if (!(r_ptr->flags1 & (RF1_ATTR_CLEAR | RF1_CHAR_CLEAR)))
+				else if (!(r_ptr->flags & (RF_ATTR_CLEAR | RF_CHAR_CLEAR)))
 				{
 					/* Use char */
 					*cp = c;
@@ -1630,14 +1631,14 @@ void map_info_default(int y, int x, byte *ap, char *cp)
 				else
 				{
 					/* Normal (non-clear char) monster */
-					if (!(r_ptr->flags1 & RF1_CHAR_CLEAR))
+					if (!(r_ptr->flags & RF_CHAR_CLEAR))
 					{
 						/* Normal char */
 						*cp = c;
 					}
 
 					/* Normal (non-clear attr) monster */
-					else if (!(r_ptr->flags1 & RF1_ATTR_CLEAR))
+					else if (!(r_ptr->flags & RF_ATTR_CLEAR))
 					{
 						/* Normal attr */
 						*ap = a;
@@ -1663,7 +1664,7 @@ void map_info_default(int y, int x, byte *ap, char *cp)
 		monster_race *r_ptr = &r_info[p_ptr->body_monster];
 
 		/* Get the "player" attr */
-		if (!avoid_other && (r_ptr->flags1 & RF1_ATTR_MULTI))
+		if (!avoid_other && (r_ptr->flags & RF_ATTR_MULTI))
 		{
 			a = get_shimmer_color();
 		}
@@ -1788,7 +1789,7 @@ void note_spot(int y, int x)
 		monster_type *m_ptr = &m_list[c_ptr->m_idx];
 		auto r_ptr = m_ptr->race();
 
-		if (r_ptr->flags9 & RF9_MIMIC)
+		if (r_ptr->flags & RF_MIMIC)
 		{
 			object_type *o_ptr = &o_list[m_ptr->mimic_o_idx()];
 			o_ptr->marked = TRUE;
@@ -3533,7 +3534,7 @@ void forget_mon_lite(void)
  * This function works within the current player's field of view
  * calculated by update_view(), so it should normally be called
  * whenever FoV is updated (== PU_VIEW | PU_MON_LITE). The other
- * case is when RF9_HAS_LITE monsters have moved or dead. Monster
+ * case is when RF_HAS_LITE monsters have moved or dead. Monster
  * creation occurs out of LoS, so I chose not to take this into
  * consideration.
  *
@@ -3639,7 +3640,7 @@ void update_mon_lite(void)
 		auto r_ptr = m_ptr->race();
 
 		/* Skip monsters not carrying light source */
-		if (!(r_ptr->flags9 & RF9_HAS_LITE)) continue;
+		if (!(r_ptr->flags & RF_HAS_LITE)) continue;
 
 		/* Access the location */
 		fy = m_ptr->fy;
@@ -4025,7 +4026,7 @@ void wiz_lite(void)
 				monster_type *m_ptr = &m_list[c_ptr->m_idx];
 				auto const r_ptr = m_ptr->race();
 
-				if (r_ptr->flags9 & RF9_MIMIC)
+				if (r_ptr->flags & RF_MIMIC)
 				{
 					object_type *o_ptr = &o_list[m_ptr->mimic_o_idx()];
 					o_ptr->marked = TRUE;

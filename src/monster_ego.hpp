@@ -2,6 +2,7 @@
 
 #include "h-basic.h"
 #include "monster_blow.hpp"
+#include "monster_race_flag_set.hpp"
 #include "monster_spell_flag_set.hpp"
 
 #include <array>
@@ -39,37 +40,17 @@ struct monster_ego
 	byte freq_spell = 0;                     /* Other spell frequency */
 
 	/* Ego flags */
-	u32b flags1 = 0;
-	u32b flags2 = 0;
-	u32b flags3 = 0;
-	u32b flags7 = 0;
-	u32b flags8 = 0;
-	u32b flags9 = 0;
-	u32b hflags1 = 0;
-	u32b hflags2 = 0;
-	u32b hflags3 = 0;
-	u32b hflags7 = 0;
-	u32b hflags8 = 0;
-	u32b hflags9 = 0;
+	monster_race_flag_set flags;
+	monster_race_flag_set hflags;
 
 	/* Monster flags */
-	u32b mflags1 = 0;
-	u32b mflags2 = 0;
-	u32b mflags3 = 0;
-	u32b mflags7 = 0;
-	u32b mflags8 = 0;
-	u32b mflags9 = 0;
+	monster_race_flag_set mflags;
 
 	/* Monster spells */
 	monster_spell_flag_set mspells;
 
-	/* Negative Flags, to be removed from the monster flags */
-	u32b nflags1 = 0;
-	u32b nflags2 = 0;
-	u32b nflags3 = 0;
-	u32b nflags7 = 0;
-	u32b nflags8 = 0;
-	u32b nflags9 = 0;
+	/* Negative flags, to be removed from the monster flags */
+	monster_race_flag_set nflags;
 
 	/* Negative spells; to be removed from the monster spells */
 	monster_spell_flag_set nspells;

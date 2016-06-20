@@ -27,6 +27,7 @@
 #include "monster2.hpp"
 #include "monster3.hpp"
 #include "monster_race.hpp"
+#include "monster_race_flag.hpp"
 #include "monster_type.hpp"
 #include "object1.hpp"
 #include "object2.hpp"
@@ -81,7 +82,7 @@ static bool_ do_cmd_bash_fountain(int y, int x)
 	monster_race *r_ptr = &r_info[p_ptr->body_monster];
 
 
-	if ((p_ptr->body_monster != 0) && !(r_ptr->flags2 & RF2_BASH_DOOR))
+	if ((p_ptr->body_monster != 0) && !(r_ptr->flags & RF_BASH_DOOR))
 	{
 		msg_print("You cannot do that.");
 
@@ -772,7 +773,7 @@ static bool_ do_cmd_open_chest(int y, int x, s16b o_idx)
 	monster_race *r_ptr = &r_info[p_ptr->body_monster];
 
 
-	if ((p_ptr->body_monster != 0) && !(r_ptr->flags2 & RF2_OPEN_DOOR))
+	if ((p_ptr->body_monster != 0) && !(r_ptr->flags & RF_OPEN_DOOR))
 	{
 		msg_print("You cannot open chests.");
 
@@ -1014,7 +1015,7 @@ static bool_ do_cmd_open_aux(int y, int x, int dir)
 	monster_race *r_ptr = &r_info[p_ptr->body_monster];
 
 
-	if ((p_ptr->body_monster != 0) && !(r_ptr->flags2 & RF2_OPEN_DOOR))
+	if ((p_ptr->body_monster != 0) && !(r_ptr->flags & RF_OPEN_DOOR))
 	{
 		msg_print("You cannot open doors.");
 
@@ -1129,7 +1130,7 @@ void do_cmd_open(void)
 	monster_race *r_ptr = &r_info[p_ptr->body_monster];
 
 
-	if ((p_ptr->body_monster != 0) && !(r_ptr->flags2 & RF2_OPEN_DOOR))
+	if ((p_ptr->body_monster != 0) && !(r_ptr->flags & RF_OPEN_DOOR))
 	{
 		msg_print("You cannot open doors.");
 
@@ -1249,7 +1250,7 @@ static bool_ do_cmd_close_aux(int y, int x, int dir)
 	monster_race *r_ptr = &r_info[p_ptr->body_monster];
 
 
-	if ((p_ptr->body_monster != 0) && !(r_ptr->flags2 & RF2_OPEN_DOOR))
+	if ((p_ptr->body_monster != 0) && !(r_ptr->flags & RF_OPEN_DOOR))
 	{
 		msg_print("You cannot close doors.");
 
@@ -2145,7 +2146,7 @@ static bool_ do_cmd_bash_aux(int y, int x, int dir)
 	monster_race *r_ptr = &r_info[p_ptr->body_monster];
 
 
-	if ((p_ptr->body_monster != 0) && !(r_ptr->flags2 & RF2_BASH_DOOR))
+	if ((p_ptr->body_monster != 0) && !(r_ptr->flags & RF_BASH_DOOR))
 	{
 		msg_print("You cannot do that.");
 
@@ -2259,7 +2260,7 @@ void do_cmd_bash(void)
 	monster_race *r_ptr = &r_info[p_ptr->body_monster];
 
 
-	if ((p_ptr->body_monster != 0) && !(r_ptr->flags2 & RF2_BASH_DOOR))
+	if ((p_ptr->body_monster != 0) && !(r_ptr->flags & RF_BASH_DOOR))
 	{
 		msg_print("You cannot do that.");
 
@@ -3355,9 +3356,9 @@ void do_cmd_fire(void)
 					cptr note_dies = " dies.";
 
 					/* Some monsters get "destroyed" */
-					if ((r_ptr->flags3 & RF3_DEMON) ||
-					                (r_ptr->flags3 & RF3_UNDEAD) ||
-					                (r_ptr->flags2 & RF2_STUPID) ||
+					if ((r_ptr->flags & RF_DEMON) ||
+					                (r_ptr->flags & RF_UNDEAD) ||
+					                (r_ptr->flags & RF_STUPID) ||
 					                (strchr("Evg", r_ptr->d_char)))
 					{
 						/* Special note at death */
@@ -3769,9 +3770,9 @@ void do_cmd_throw(void)
 				cptr note_dies = " dies.";
 
 				/* Some monsters get "destroyed" */
-				if ((r_ptr->flags3 & RF3_DEMON) ||
-				                (r_ptr->flags3 & RF3_UNDEAD) ||
-				                (r_ptr->flags2 & RF2_STUPID) ||
+				if ((r_ptr->flags & RF_DEMON) ||
+				                (r_ptr->flags & RF_UNDEAD) ||
+				                (r_ptr->flags & RF_STUPID) ||
 				                (strchr("Evg", r_ptr->d_char)))
 				{
 					/* Special note at death */
@@ -4096,9 +4097,9 @@ void do_cmd_boomerang(void)
 				cptr note_dies = " dies.";
 
 				/* Some monsters get "destroyed" */
-				if ((r_ptr->flags3 & RF3_DEMON) ||
-				                (r_ptr->flags3 & RF3_UNDEAD) ||
-				                (r_ptr->flags2 & RF2_STUPID) ||
+				if ((r_ptr->flags & RF_DEMON) ||
+				                (r_ptr->flags & RF_UNDEAD) ||
+				                (r_ptr->flags & RF_STUPID) ||
 				                (strchr("Evg", r_ptr->d_char)))
 				{
 					/* Special note at death */
@@ -4781,7 +4782,7 @@ void do_cmd_steal()
 	}
 
 	/* The monster is immune */
-	if (r_info[m_ptr->r_idx].flags7 & RF7_NO_THEFT)
+	if (r_info[m_ptr->r_idx].flags & RF_NO_THEFT)
 	{
 		msg_print("The monster is guarding the treasures.");
 		return;

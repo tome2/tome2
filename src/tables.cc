@@ -10,6 +10,7 @@
 #include "tables.h"
 
 #include "modules.hpp"
+#include "monster_race_flag.hpp"
 #include "monster_spell_flag.hpp"
 #include "options.hpp"
 #include "q_library.hpp"

@@ -24,6 +24,7 @@
 #include "lua_bind.hpp"
 #include "monster2.hpp"
 #include "monster_race.hpp"
+#include "monster_race_flag.hpp"
 #include "monster_type.hpp"
 #include "object2.hpp"
 #include "object_type.hpp"
@@ -780,7 +781,7 @@ static bool_ theme_push_past(void *data, void *in_, void *out_)
 		if (m_ptr->status >= MSTATUS_NEUTRAL)
 		{
 			if (cave_floor_bold(p->y, p->x) ||
-			    (mr_ptr->flags2 == RF2_PASS_WALL))
+			    (mr_ptr->flags == RF_PASS_WALL))
 			{
 				char buf[128];
 

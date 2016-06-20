@@ -20,6 +20,7 @@
 #include "mimic.hpp"
 #include "monster2.hpp"
 #include "monster_race.hpp"
+#include "monster_race_flag.hpp"
 #include "monster_type.hpp"
 #include "object1.hpp"
 #include "object2.hpp"
@@ -3653,7 +3654,7 @@ void do_cmd_summoner_extract()
 	object_type *o_ptr = get_object(item);
 
 	bool_ partial;
-	if (r_info[o_ptr->pval2].flags1 & RF1_UNIQUE)
+	if (r_info[o_ptr->pval2].flags & RF_UNIQUE)
 	{
 		partial = FALSE;
 	}
@@ -3702,7 +3703,7 @@ void summon_true(int r_idx, int item)
 
 
 	/* Uniques are less likely to be nice */
-	if (r_ptr->flags1 & RF1_UNIQUE)
+	if (r_ptr->flags & RF_UNIQUE)
 	{
 		/* Because it's unique, it will always be destroyed */
 		used = TRUE;
@@ -4102,7 +4103,7 @@ void do_cmd_symbiotic(void)
 					m_ptr = &m_list[c_ptr->m_idx];
 					auto const r_ptr = m_ptr->race();
 
-					if (!(r_ptr->flags1 & RF1_NEVER_MOVE))
+					if (!(r_ptr->flags & RF_NEVER_MOVE))
 					{
 						msg_print("You can only hypnotise monsters that cannot move.");
 					}
@@ -4110,7 +4111,7 @@ void do_cmd_symbiotic(void)
 					{
 						msg_print("You can only hypnotise pets and companions.");
 					}
-					else if (r_ptr->flags9 & RF9_SPECIAL_GENE)
+					else if (r_ptr->flags & RF_SPECIAL_GENE)
 					{
 						msg_print("You cannot hypnotise this monster.");
 					}

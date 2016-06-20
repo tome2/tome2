@@ -18,6 +18,7 @@
 #include "hooks.hpp"
 #include "monster1.hpp"
 #include "monster_race.hpp"
+#include "monster_race_flag.hpp"
 #include "object1.hpp"
 #include "object2.hpp"
 #include "object_kind.hpp"
@@ -1325,7 +1326,7 @@ static void roff_top(int r_idx)
 	Term_gotoxy(0, 0);
 
 	/* A title (use "The" for non-uniques) */
-	if (!(r_ptr->flags1 & RF1_UNIQUE))
+	if (!(r_ptr->flags & RF_UNIQUE))
 	{
 		Term_addstr( -1, TERM_WHITE, "The ");
 	}
@@ -1435,10 +1436,10 @@ void do_cmd_query_symbol(void)
 		monster_race *r_ptr = &r_info[i];
 
 		/* Require non-unique monsters if needed */
-		if (norm && (r_ptr->flags1 & RF1_UNIQUE)) continue;
+		if (norm && (r_ptr->flags & RF_UNIQUE)) continue;
 
 		/* Require unique monsters if needed */
-		if (uniq && !(r_ptr->flags1 & RF1_UNIQUE)) continue;
+		if (uniq && !(r_ptr->flags & RF_UNIQUE)) continue;
 
 		/* Require monsters with the name requested if needed */
 		if (name)

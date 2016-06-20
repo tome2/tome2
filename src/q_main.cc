@@ -5,6 +5,7 @@
 #include "hook_new_monster_in.hpp"
 #include "hooks.hpp"
 #include "monster_race.hpp"
+#include "monster_race_flag.hpp"
 #include "monster_type.hpp"
 #include "player_type.hpp"
 #include "tables.hpp"
@@ -153,9 +154,9 @@ static bool_ quest_sauron_resurect_hook(void *, void *in_, void *)
 	monster_type *m_ptr = &m_list[m_idx];
 	monster_race *r_ptr = &r_info[m_ptr->r_idx];
 
-	if ((r_ptr->flags7 & RF7_NAZGUL) && r_info[get_sauron()].max_num)
+	if ((r_ptr->flags & RF_NAZGUL) && r_info[get_sauron()].max_num)
 	{
-		msg_format("Somehow you feel %s is not totally destroyed...", (r_ptr->flags1 & RF1_FEMALE ? "she" : "he"));
+		msg_format("Somehow you feel %s is not totally destroyed...", (r_ptr->flags & RF_FEMALE ? "she" : "he"));
 		r_ptr->max_num = 1;
 	}
 	else if ((m_ptr->r_idx == get_sauron()) && (quest[QUEST_ONE].status < QUEST_STATUS_FINISHED))

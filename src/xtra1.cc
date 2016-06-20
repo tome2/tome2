@@ -26,6 +26,7 @@
 #include "monster1.hpp"
 #include "monster2.hpp"
 #include "monster_race.hpp"
+#include "monster_race_flag.hpp"
 #include "monster_type.hpp"
 #include "object1.hpp"
 #include "object2.hpp"
@@ -1401,7 +1402,7 @@ static void fix_m_list(void)
 			if (m_ptr->hp < 0) continue;
 
 			/* Skip unseen monsters */
-			if (r_ptr->flags9 & RF9_MIMIC)
+			if (r_ptr->flags & RF_MIMIC)
 			{
 				/* Acquire object */
 				object_type *o_ptr = &o_list[m_ptr->mimic_o_idx()];
@@ -1441,7 +1442,7 @@ static void fix_m_list(void)
 				if (!r_ptr->total_visible) continue;
 
 				/* Uniques */
-				if (r_ptr->flags1 & RF1_UNIQUE)
+				if (r_ptr->flags & RF_UNIQUE)
 				{
 					attr = TERM_L_BLUE;
 				}
@@ -1453,7 +1454,7 @@ static void fix_m_list(void)
 					{
 						attr = TERM_VIOLET;
 
-						if (r_ptr->flags1 & RF1_UNIQUE)
+						if (r_ptr->flags & RF_UNIQUE)
 						{
 							attr = TERM_RED;
 						}
@@ -1461,7 +1462,7 @@ static void fix_m_list(void)
 				}
 				else
 				{
-					if (!(r_ptr->flags1 & RF1_UNIQUE)) attr = TERM_GREEN;
+					if (!(r_ptr->flags & RF_UNIQUE)) attr = TERM_GREEN;
 				}
 
 
@@ -2055,13 +2056,13 @@ void calc_wield_monster()
 	{
 		r_ptr = &r_info[o_ptr->pval];
 
-		if (r_ptr->flags2 & RF2_INVISIBLE)
+		if (r_ptr->flags & RF_INVISIBLE)
 			p_ptr->invis += 20;
-		if (r_ptr->flags2 & RF2_REFLECTING)
+		if (r_ptr->flags & RF_REFLECTING)
 			p_ptr->reflect = TRUE;
-		if (r_ptr->flags7 & RF7_CAN_FLY)
+		if (r_ptr->flags & RF_CAN_FLY)
 			p_ptr->ffall = TRUE;
-		if (r_ptr->flags7 & RF7_AQUATIC)
+		if (r_ptr->flags & RF_AQUATIC)
 			p_ptr->water_breath = TRUE;
 	}
 }
@@ -2207,29 +2208,29 @@ void calc_body_bonus()
 	p_ptr->ac += r_ptr->ac;
 	p_ptr->pspeed = r_ptr->speed;
 
-	if (r_ptr->flags1 & RF1_NEVER_MOVE) p_ptr->immovable = TRUE;
-	if (r_ptr->flags2 & RF2_STUPID) p_ptr->stat_add[A_INT] -= 1;
-	if (r_ptr->flags2 & RF2_SMART) p_ptr->stat_add[A_INT] += 1;
-	if (r_ptr->flags2 & RF2_REFLECTING) p_ptr->reflect = TRUE;
-	if (r_ptr->flags2 & RF2_INVISIBLE) p_ptr->invis += 20;
-	if (r_ptr->flags2 & RF2_REGENERATE) p_ptr->regenerate = TRUE;
-	if (r_ptr->flags2 & RF2_AURA_FIRE) p_ptr->sh_fire = TRUE;
-	if (r_ptr->flags2 & RF2_AURA_ELEC) p_ptr->sh_elec = TRUE;
-	if (r_ptr->flags2 & RF2_PASS_WALL) p_ptr->wraith_form = TRUE;
-	if (r_ptr->flags3 & RF3_SUSCEP_FIRE) p_ptr->sensible_fire = TRUE;
-	if (r_ptr->flags3 & RF3_IM_ACID) p_ptr->resist_acid = TRUE;
-	if (r_ptr->flags3 & RF3_IM_ELEC) p_ptr->resist_elec = TRUE;
-	if (r_ptr->flags3 & RF3_IM_FIRE) p_ptr->resist_fire = TRUE;
-	if (r_ptr->flags3 & RF3_IM_POIS) p_ptr->resist_pois = TRUE;
-	if (r_ptr->flags3 & RF3_IM_COLD) p_ptr->resist_cold = TRUE;
-	if (r_ptr->flags3 & RF3_RES_NETH) p_ptr->resist_neth = TRUE;
-	if (r_ptr->flags3 & RF3_RES_NEXU) p_ptr->resist_nexus = TRUE;
-	if (r_ptr->flags3 & RF3_RES_DISE) p_ptr->resist_disen = TRUE;
-	if (r_ptr->flags3 & RF3_NO_FEAR) p_ptr->resist_fear = TRUE;
-	if (r_ptr->flags3 & RF3_NO_SLEEP) p_ptr->free_act = TRUE;
-	if (r_ptr->flags3 & RF3_NO_CONF) p_ptr->resist_conf = TRUE;
-	if (r_ptr->flags7 & RF7_CAN_FLY) p_ptr->ffall = TRUE;
-	if (r_ptr->flags7 & RF7_AQUATIC) p_ptr->water_breath = TRUE;
+	if (r_ptr->flags & RF_NEVER_MOVE) p_ptr->immovable = TRUE;
+	if (r_ptr->flags & RF_STUPID) p_ptr->stat_add[A_INT] -= 1;
+	if (r_ptr->flags & RF_SMART) p_ptr->stat_add[A_INT] += 1;
+	if (r_ptr->flags & RF_REFLECTING) p_ptr->reflect = TRUE;
+	if (r_ptr->flags & RF_INVISIBLE) p_ptr->invis += 20;
+	if (r_ptr->flags & RF_REGENERATE) p_ptr->regenerate = TRUE;
+	if (r_ptr->flags & RF_AURA_FIRE) p_ptr->sh_fire = TRUE;
+	if (r_ptr->flags & RF_AURA_ELEC) p_ptr->sh_elec = TRUE;
+	if (r_ptr->flags & RF_PASS_WALL) p_ptr->wraith_form = TRUE;
+	if (r_ptr->flags & RF_SUSCEP_FIRE) p_ptr->sensible_fire = TRUE;
+	if (r_ptr->flags & RF_IM_ACID) p_ptr->resist_acid = TRUE;
+	if (r_ptr->flags & RF_IM_ELEC) p_ptr->resist_elec = TRUE;
+	if (r_ptr->flags & RF_IM_FIRE) p_ptr->resist_fire = TRUE;
+	if (r_ptr->flags & RF_IM_POIS) p_ptr->resist_pois = TRUE;
+	if (r_ptr->flags & RF_IM_COLD) p_ptr->resist_cold = TRUE;
+	if (r_ptr->flags & RF_RES_NETH) p_ptr->resist_neth = TRUE;
+	if (r_ptr->flags & RF_RES_NEXU) p_ptr->resist_nexus = TRUE;
+	if (r_ptr->flags & RF_RES_DISE) p_ptr->resist_disen = TRUE;
+	if (r_ptr->flags & RF_NO_FEAR) p_ptr->resist_fear = TRUE;
+	if (r_ptr->flags & RF_NO_SLEEP) p_ptr->free_act = TRUE;
+	if (r_ptr->flags & RF_NO_CONF) p_ptr->resist_conf = TRUE;
+	if (r_ptr->flags & RF_CAN_FLY) p_ptr->ffall = TRUE;
+	if (r_ptr->flags & RF_AQUATIC) p_ptr->water_breath = TRUE;
 }
 
 

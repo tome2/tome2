@@ -12,6 +12,7 @@
 #include "monster2.hpp"
 #include "monster_ego.hpp"
 #include "monster_race.hpp"
+#include "monster_race_flag.hpp"
 #include "monster_spell_flag.hpp"
 #include "player_type.hpp"
 #include "util.hpp"
@@ -63,26 +64,22 @@ static void roff_aux(std::shared_ptr<monster_race const> r_ptr)
 	cptr	vp[64];
 
 	/* Shorthand */
-	u32b const flags1 = r_ptr->flags1;
-	u32b const flags2 = r_ptr->flags2;
-	u32b const flags3 = r_ptr->flags3;
-	u32b const flags7 = r_ptr->flags7;
-	u32b const flags9 = r_ptr->flags9;
+	auto const flags = r_ptr->flags;
 	monster_spell_flag_set spells = r_ptr->spells;
 
 	/* Extract a gender (if applicable) */
 	int msex = 0;
-	if (flags1 & RF1_FEMALE)
+	if (flags & RF_FEMALE)
 	{
 		msex = 2;
 	}
-	else if (flags1 & RF1_MALE)
+	else if (flags & RF_MALE)
 	{
 		msex = 1;
 	}
 
 	/* Treat uniques differently */
-	if (flags1 & RF1_UNIQUE)
+	if (flags & RF_UNIQUE)
 	{
 		if (r_ptr->max_num == 0)
 		{
@@ -120,7 +117,7 @@ static void roff_aux(std::shared_ptr<monster_race const> r_ptr)
 	old = FALSE;
 
 	/* Describe location */
-	if (r_ptr->flags7 & RF7_PET)
+	if (r_ptr->flags & RF_PET)
 	{
 		text_out(format("%^s is ", wd_he[msex]));
 		text_out_c(TERM_L_BLUE, "friendly");
@@ -174,18 +171,18 @@ static void roff_aux(std::shared_ptr<monster_race const> r_ptr)
 		text_out("moves");
 
 		/* Random-ness */
-		if ((flags1 & (RF1_RAND_50)) || (flags1 & (RF1_RAND_25)))
+		if ((flags & RF_RAND_50) || (flags & RF_RAND_25))
 		{
 			/* Adverb */
-			if ((flags1 & (RF1_RAND_50)) && (flags1 & (RF1_RAND_25)))
+			if ((flags & RF_RAND_50) && (flags & RF_RAND_25))
 			{
 				text_out(" extremely");
 			}
-			else if (flags1 & (RF1_RAND_50))
+			else if (flags & RF_RAND_50)
 			{
 				text_out(" somewhat");
 			}
-			else if (flags1 & (RF1_RAND_25))
+			else if (flags & RF_RAND_25)
 			{
 				text_out(" a bit");
 			}
@@ -217,7 +214,7 @@ static void roff_aux(std::shared_ptr<monster_race const> r_ptr)
 	}
 
 	/* The code above includes "attack speed" */
-	if (flags1 & RF1_NEVER_MOVE)
+	if (flags & RF_NEVER_MOVE)
 	{
 		/* Introduce */
 		if (old)
@@ -245,7 +242,7 @@ static void roff_aux(std::shared_ptr<monster_race const> r_ptr)
 	/* Describe experience if known */
 	{
 		/* Introduction */
-		if (flags1 & RF1_UNIQUE)
+		if (flags & RF_UNIQUE)
 		{
 			text_out("Killing this");
 		}
@@ -255,21 +252,21 @@ static void roff_aux(std::shared_ptr<monster_race const> r_ptr)
 		}
 
 		/* Describe the "quality" */
-		if (flags2 & RF2_ELDRITCH_HORROR) text_out_c(TERM_VIOLET, " sanity-blasting");
-		if (flags3 & RF3_ANIMAL) text_out_c(TERM_VIOLET, " natural");
-		if (flags3 & RF3_EVIL) text_out_c(TERM_VIOLET, " evil");
-		if (flags3 & RF3_GOOD) text_out_c(TERM_VIOLET, " good");
-		if (flags3 & RF3_UNDEAD) text_out_c(TERM_VIOLET, " undead");
+		if (flags & RF_ELDRITCH_HORROR) text_out_c(TERM_VIOLET, " sanity-blasting");
+		if (flags & RF_ANIMAL) text_out_c(TERM_VIOLET, " natural");
+		if (flags & RF_EVIL) text_out_c(TERM_VIOLET, " evil");
+		if (flags & RF_GOOD) text_out_c(TERM_VIOLET, " good");
+		if (flags & RF_UNDEAD) text_out_c(TERM_VIOLET, " undead");
 
 		/* Describe the "race" */
-		if (flags3 & RF3_DRAGON) text_out_c(TERM_VIOLET, " dragon");
-		else if (flags3 & RF3_DEMON) text_out_c(TERM_VIOLET, " demon");
-		else if (flags3 & RF3_GIANT) text_out_c(TERM_VIOLET, " giant");
-		else if (flags3 & RF3_TROLL) text_out_c(TERM_VIOLET, " troll");
-		else if (flags3 & RF3_ORC) text_out_c(TERM_VIOLET, " orc");
-		else if (flags3 & RF3_THUNDERLORD)text_out_c(TERM_VIOLET, " Thunderlord");
-		else if (flags7 & RF7_SPIDER) text_out_c(TERM_VIOLET, " spider");
-		else if (flags7 & RF7_NAZGUL) text_out_c(TERM_VIOLET, " Nazgul");
+		if (flags & RF_DRAGON) text_out_c(TERM_VIOLET, " dragon");
+		else if (flags & RF_DEMON) text_out_c(TERM_VIOLET, " demon");
+		else if (flags & RF_GIANT) text_out_c(TERM_VIOLET, " giant");
+		else if (flags & RF_TROLL) text_out_c(TERM_VIOLET, " troll");
+		else if (flags & RF_ORC) text_out_c(TERM_VIOLET, " orc");
+		else if (flags & RF_THUNDERLORD)text_out_c(TERM_VIOLET, " Thunderlord");
+		else if (flags & RF_SPIDER) text_out_c(TERM_VIOLET, " spider");
+		else if (flags & RF_NAZGUL) text_out_c(TERM_VIOLET, " Nazgul");
 		else text_out(" creature");
 
 		/* Group some variables */
@@ -310,26 +307,26 @@ static void roff_aux(std::shared_ptr<monster_race const> r_ptr)
 		}
 	}
 
-	if ((flags2 & RF2_AURA_FIRE) && (flags2 & RF2_AURA_ELEC))
+	if ((flags & RF_AURA_FIRE) && (flags & RF_AURA_ELEC))
 	{
 		text_out(format("%^s is surrounded by ", wd_he[msex]));
 		text_out_c(TERM_VIOLET, "flames and electricity");
 		text_out(".  ");
 	}
-	else if (flags2 & RF2_AURA_FIRE)
+	else if (flags & RF_AURA_FIRE)
 	{
 		text_out(format("%^s is surrounded by ", wd_he[msex]));
 		text_out_c(TERM_ORANGE, "flames");
 		text_out(".  ");
 	}
-	else if (flags2 & RF2_AURA_ELEC)
+	else if (flags & RF_AURA_ELEC)
 	{
 		text_out(format("%^s is surrounded by ", wd_he[msex]));
 		text_out_c(TERM_L_BLUE, "electricity");
 		text_out(".  ");
 	}
 
-	if (flags2 & RF2_REFLECTING)
+	if (flags & RF_REFLECTING)
 	{
 		text_out(format("%^s ", wd_he[msex]));
 		text_out_c(TERM_L_UMBER, "reflects");
@@ -338,14 +335,14 @@ static void roff_aux(std::shared_ptr<monster_race const> r_ptr)
 
 
 	/* Describe escorts */
-	if ((flags1 & RF1_ESCORT) || (flags1 & RF1_ESCORTS))
+	if ((flags & RF_ESCORT) || (flags & RF_ESCORTS))
 	{
 		text_out(format("%^s usually appears with escorts.  ",
 		                wd_he[msex]));
 	}
 
 	/* Describe friends */
-	else if ((flags1 & RF1_FRIEND) || (flags1 & RF1_FRIENDS))
+	else if ((flags & RF_FRIEND) || (flags & RF_FRIENDS))
 	{
 		text_out(format("%^s usually appears in groups.  ",
 		                wd_he[msex]));
@@ -522,7 +519,7 @@ static void roff_aux(std::shared_ptr<monster_race const> r_ptr)
 		text_out(" magical, casting spells");
 
 		/* Adverb */
-		if (flags2 & RF2_SMART) text_out_c(TERM_YELLOW, " intelligently");
+		if (flags & RF_SMART) text_out_c(TERM_YELLOW, " intelligently");
 
 		/* Scan */
 		for (n = 0; n < vn; n++)
@@ -562,7 +559,7 @@ static void roff_aux(std::shared_ptr<monster_race const> r_ptr)
 		text_out_c(TERM_L_GREEN, format("%d", r_ptr->ac));
 
 		/* Maximized hitpoints */
-		if (flags1 & RF1_FORCE_MAXHP)
+		if (flags & RF_FORCE_MAXHP)
 		{
 			text_out(" and a life rating of ");
 			text_out_c(TERM_L_GREEN, format("%d", r_ptr->hdice * r_ptr->hside));
@@ -582,15 +579,15 @@ static void roff_aux(std::shared_ptr<monster_race const> r_ptr)
 
 	/* Collect special abilities. */
 	vn = 0;
-	if (flags2 & RF2_OPEN_DOOR) vp[vn++] = "open doors";
-	if (flags2 & RF2_BASH_DOOR) vp[vn++] = "bash down doors";
-	if (flags2 & RF2_PASS_WALL) vp[vn++] = "pass through walls";
-	if (flags2 & RF2_KILL_WALL) vp[vn++] = "bore through walls";
-	if (flags2 & RF2_MOVE_BODY) vp[vn++] = "push past weaker monsters";
-	if (flags2 & RF2_KILL_BODY) vp[vn++] = "destroy weaker monsters";
-	if (flags2 & RF2_TAKE_ITEM) vp[vn++] = "pick up objects";
-	if (flags2 & RF2_KILL_ITEM) vp[vn++] = "destroy objects";
-	if (flags9 & RF9_HAS_LITE) vp[vn++] = "illuminate the dungeon";
+	if (flags & RF_OPEN_DOOR) vp[vn++] = "open doors";
+	if (flags & RF_BASH_DOOR) vp[vn++] = "bash down doors";
+	if (flags & RF_PASS_WALL) vp[vn++] = "pass through walls";
+	if (flags & RF_KILL_WALL) vp[vn++] = "bore through walls";
+	if (flags & RF_MOVE_BODY) vp[vn++] = "push past weaker monsters";
+	if (flags & RF_KILL_BODY) vp[vn++] = "destroy weaker monsters";
+	if (flags & RF_TAKE_ITEM) vp[vn++] = "pick up objects";
+	if (flags & RF_KILL_ITEM) vp[vn++] = "destroy objects";
+	if (flags & RF_HAS_LITE) vp[vn++] = "illuminate the dungeon";
 
 	/* Describe special abilities. */
 	if (vn)
@@ -616,19 +613,19 @@ static void roff_aux(std::shared_ptr<monster_race const> r_ptr)
 
 
 	/* Describe special abilities. */
-	if (flags2 & RF2_INVISIBLE)
+	if (flags & RF_INVISIBLE)
 	{
 		text_out_c(TERM_GREEN, format("%^s is invisible.  ", wd_he[msex]));
 	}
-	if (flags2 & RF2_COLD_BLOOD)
+	if (flags & RF_COLD_BLOOD)
 	{
 		text_out(format("%^s is cold blooded.  ", wd_he[msex]));
 	}
-	if (flags2 & RF2_EMPTY_MIND)
+	if (flags & RF_EMPTY_MIND)
 	{
 		text_out(format("%^s is not detected by telepathy.  ", wd_he[msex]));
 	}
-	if (flags2 & RF2_WEIRD_MIND)
+	if (flags & RF_WEIRD_MIND)
 	{
 		text_out(format("%^s is rarely detected by telepathy.  ", wd_he[msex]));
 	}
@@ -636,12 +633,12 @@ static void roff_aux(std::shared_ptr<monster_race const> r_ptr)
 	{
 		text_out_c(TERM_L_UMBER, format("%^s breeds explosively.  ", wd_he[msex]));
 	}
-	if (flags2 & RF2_REGENERATE)
+	if (flags & RF_REGENERATE)
 	{
 		text_out_c(TERM_L_WHITE, format("%^s regenerates quickly.  ", wd_he[msex]));
 	}
 
-	if (r_ptr->flags7 & RF7_MORTAL)
+	if (r_ptr->flags & RF_MORTAL)
 	{
 		text_out_c(TERM_RED, format("%^s is a mortal being.  ", wd_he[msex]));
 	}
@@ -653,37 +650,37 @@ static void roff_aux(std::shared_ptr<monster_race const> r_ptr)
 
 	/* Collect susceptibilities */
 	vn = 0;
-	if (flags3 & RF3_HURT_ROCK)
+	if (flags & RF_HURT_ROCK)
 	{
 		vp[vn++] = "rock remover";
 		color[vn - 1] = TERM_UMBER;
 	}
-	if (flags3 & RF3_HURT_LITE)
+	if (flags & RF_HURT_LITE)
 	{
 		vp[vn++] = "bright light";
 		color[vn - 1] = TERM_YELLOW;
 	}
-	if (flags3 & RF3_SUSCEP_FIRE)
+	if (flags & RF_SUSCEP_FIRE)
 	{
 		vp[vn++] = "fire";
 		color[vn - 1] = TERM_RED;
 	}
-	if (flags3 & RF3_SUSCEP_COLD)
+	if (flags & RF_SUSCEP_COLD)
 	{
 		vp[vn++] = "cold";
 		color[vn - 1] = TERM_L_WHITE;
 	}
-	if (flags9 & RF9_SUSCEP_ACID)
+	if (flags & RF_SUSCEP_ACID)
 	{
 		vp[vn++] = "acid";
 		color[vn - 1] = TERM_GREEN;
 	}
-	if (flags9 & RF9_SUSCEP_ELEC)
+	if (flags & RF_SUSCEP_ELEC)
 	{
 		vp[vn++] = "lightning";
 		color[vn - 1] = TERM_L_BLUE;
 	}
-	if (flags9 & RF9_SUSCEP_POIS)
+	if (flags & RF_SUSCEP_POIS)
 	{
 		vp[vn++] = "poison";
 		color[vn - 1] = TERM_L_GREEN;
@@ -714,27 +711,27 @@ static void roff_aux(std::shared_ptr<monster_race const> r_ptr)
 
 	/* Collect immunities */
 	vn = 0;
-	if (flags3 & RF3_IM_ACID)
+	if (flags & RF_IM_ACID)
 	{
 		vp[vn++] = "acid";
 		color[vn - 1] = TERM_L_GREEN;
 	}
-	if (flags3 & RF3_IM_ELEC)
+	if (flags & RF_IM_ELEC)
 	{
 		vp[vn++] = "lightning";
 		color[vn - 1] = TERM_L_BLUE;
 	}
-	if (flags3 & RF3_IM_FIRE)
+	if (flags & RF_IM_FIRE)
 	{
 		vp[vn++] = "fire";
 		color[vn - 1] = TERM_L_RED;
 	}
-	if (flags3 & RF3_IM_COLD)
+	if (flags & RF_IM_COLD)
 	{
 		vp[vn++] = "cold";
 		color[vn - 1] = TERM_L_BLUE;
 	}
-	if (flags3 & RF3_IM_POIS)
+	if (flags & RF_IM_POIS)
 	{
 		vp[vn++] = "poison";
 		color[vn - 1] = TERM_L_GREEN;
@@ -765,12 +762,12 @@ static void roff_aux(std::shared_ptr<monster_race const> r_ptr)
 
 	/* Collect resistances */
 	vn = 0;
-	if (flags3 & RF3_RES_NETH) vp[vn++] = "nether";
-	if (flags3 & RF3_RES_WATE) vp[vn++] = "water";
-	if (flags3 & RF3_RES_PLAS) vp[vn++] = "plasma";
-	if (flags3 & RF3_RES_NEXU) vp[vn++] = "nexus";
-	if (flags3 & RF3_RES_DISE) vp[vn++] = "disenchantment";
-	if (flags3 & RF3_RES_TELE) vp[vn++] = "teleportation";
+	if (flags & RF_RES_NETH) vp[vn++] = "nether";
+	if (flags & RF_RES_WATE) vp[vn++] = "water";
+	if (flags & RF_RES_PLAS) vp[vn++] = "plasma";
+	if (flags & RF_RES_NEXU) vp[vn++] = "nexus";
+	if (flags & RF_RES_DISE) vp[vn++] = "disenchantment";
+	if (flags & RF_RES_TELE) vp[vn++] = "teleportation";
 
 	/* Describe resistances */
 	if (vn)
@@ -797,10 +794,10 @@ static void roff_aux(std::shared_ptr<monster_race const> r_ptr)
 
 	/* Collect non-effects */
 	vn = 0;
-	if (flags3 & RF3_NO_STUN) vp[vn++] = "stunned";
-	if (flags3 & RF3_NO_FEAR) vp[vn++] = "frightened";
-	if (flags3 & RF3_NO_CONF) vp[vn++] = "confused";
-	if (flags3 & RF3_NO_SLEEP) vp[vn++] = "slept";
+	if (flags & RF_NO_STUN) vp[vn++] = "stunned";
+	if (flags & RF_NO_FEAR) vp[vn++] = "frightened";
+	if (flags & RF_NO_CONF) vp[vn++] = "confused";
+	if (flags & RF_NO_SLEEP) vp[vn++] = "slept";
 
 	/* Describe non-effects */
 	if (vn)
@@ -886,15 +883,15 @@ static void roff_aux(std::shared_ptr<monster_race const> r_ptr)
 		byte drop_item;
 
 		drop_gold = drop_item =
-			(((r_ptr->flags1 & (RF1_DROP_4D2)) ? 8 : 0) +
-			 ((r_ptr->flags1 & (RF1_DROP_3D2)) ? 6 : 0) +
-			 ((r_ptr->flags1 & (RF1_DROP_2D2)) ? 4 : 0) +
-			 ((r_ptr->flags1 & (RF1_DROP_1D2)) ? 2 : 0) +
-			 ((r_ptr->flags1 & (RF1_DROP_90)) ? 1 : 0) +
-			 ((r_ptr->flags1 & (RF1_DROP_60)) ? 1 : 0));
+			(((r_ptr->flags & RF_DROP_4D2) ? 8 : 0) +
+			 ((r_ptr->flags & RF_DROP_3D2) ? 6 : 0) +
+			 ((r_ptr->flags & RF_DROP_2D2) ? 4 : 0) +
+			 ((r_ptr->flags & RF_DROP_1D2) ? 2 : 0) +
+			 ((r_ptr->flags & RF_DROP_90) ? 1 : 0) +
+			 ((r_ptr->flags & RF_DROP_60) ? 1 : 0));
 
-		if (r_ptr->flags1 & RF1_ONLY_GOLD) drop_item = 0;
-		if (r_ptr->flags1 & RF1_ONLY_ITEM) drop_gold = 0;
+		if (r_ptr->flags & RF_ONLY_GOLD) drop_item = 0;
+		if (r_ptr->flags & RF_ONLY_ITEM) drop_gold = 0;
 
 		/* No "n" needed */
 		sin = FALSE;
@@ -924,13 +921,13 @@ static void roff_aux(std::shared_ptr<monster_race const> r_ptr)
 
 
 		/* Great */
-		if (flags1 & RF1_DROP_GREAT)
+		if (flags & RF_DROP_GREAT)
 		{
 			p = " exceptional";
 		}
 
 		/* Good (no "n" needed) */
-		else if (flags1 & RF1_DROP_GOOD)
+		else if (flags & RF_DROP_GOOD)
 		{
 			p = " good";
 			sin = FALSE;
@@ -1240,7 +1237,7 @@ static void roff_aux(std::shared_ptr<monster_race const> r_ptr)
 	}
 
 	/* Notice lack of attacks */
-	else if (flags1 & RF1_NEVER_BLOW)
+	else if (flags & RF_NEVER_BLOW)
 	{
 		text_out(format("%^s has no physical attacks.  ", wd_he[msex]));
 	}
@@ -1272,7 +1269,7 @@ static void roff_name(int r_idx, int ego)
 	const byte a2 = r_ptr->x_attr;
 
 	/* A title (use "The" for non-uniques) */
-	if (!(r_ptr->flags1 & RF1_UNIQUE))
+	if (!(r_ptr->flags & RF_UNIQUE))
 	{
 		Term_addstr( -1, TERM_WHITE, "The ");
 	}
@@ -1382,10 +1379,10 @@ bool_ monster_quest(int r_idx)
 	monster_race *r_ptr = &r_info[r_idx];
 
 	/* Random quests are in the dungeon */
-	if (!(r_ptr->flags8 & RF8_DUNGEON)) return FALSE;
+	if (r_ptr->flags & RF_WILD_ONLY) return FALSE;
 
 	/* No random quests for aquatic monsters */
-	if (r_ptr->flags7 & RF7_AQUATIC) return FALSE;
+	if (r_ptr->flags & RF_AQUATIC) return FALSE;
 
 	/* No random quests for multiplying monsters */
 	if (r_ptr->spells & SF_MULTIPLY) return FALSE;
@@ -1398,7 +1395,7 @@ bool_ monster_dungeon(int r_idx)
 {
 	monster_race *r_ptr = &r_info[r_idx];
 
-	if (r_ptr->flags8 & RF8_DUNGEON)
+	if (!(r_ptr->flags & RF_WILD_ONLY))
 		return TRUE;
 	else
 		return FALSE;
@@ -1409,7 +1406,7 @@ static bool_ monster_ocean(int r_idx)
 {
 	monster_race *r_ptr = &r_info[r_idx];
 
-	if (r_ptr->flags8 & RF8_WILD_OCEAN)
+	if (r_ptr->flags & RF_WILD_OCEAN)
 		return TRUE;
 	else
 		return FALSE;
@@ -1420,7 +1417,7 @@ static bool_ monster_shore(int r_idx)
 {
 	monster_race *r_ptr = &r_info[r_idx];
 
-	if (r_ptr->flags8 & RF8_WILD_SHORE)
+	if (r_ptr->flags & RF_WILD_SHORE)
 		return TRUE;
 	else
 		return FALSE;
@@ -1431,7 +1428,7 @@ static bool_ monster_waste(int r_idx)
 {
 	monster_race *r_ptr = &r_info[r_idx];
 
-	if (r_ptr->flags8 & RF8_WILD_WASTE)
+	if (r_ptr->flags & RF_WILD_WASTE)
 		return TRUE;
 	else
 		return FALSE;
@@ -1442,7 +1439,7 @@ static bool_ monster_town(int r_idx)
 {
 	monster_race *r_ptr = &r_info[r_idx];
 
-	if (r_ptr->flags8 & RF8_WILD_TOWN)
+	if (r_ptr->flags & RF_WILD_TOWN)
 		return TRUE;
 	else
 		return FALSE;
@@ -1453,7 +1450,7 @@ static bool_ monster_wood(int r_idx)
 {
 	monster_race *r_ptr = &r_info[r_idx];
 
-	if (r_ptr->flags8 & RF8_WILD_WOOD)
+	if (r_ptr->flags & RF_WILD_WOOD)
 		return TRUE;
 	else
 		return FALSE;
@@ -1464,7 +1461,7 @@ static bool_ monster_volcano(int r_idx)
 {
 	monster_race *r_ptr = &r_info[r_idx];
 
-	if (r_ptr->flags8 & RF8_WILD_VOLCANO)
+	if (r_ptr->flags & RF_WILD_VOLCANO)
 		return TRUE;
 	else
 		return FALSE;
@@ -1475,7 +1472,7 @@ static bool_ monster_mountain(int r_idx)
 {
 	monster_race *r_ptr = &r_info[r_idx];
 
-	if (r_ptr->flags8 & RF8_WILD_MOUNTAIN)
+	if (r_ptr->flags & RF_WILD_MOUNTAIN)
 		return TRUE;
 	else
 		return FALSE;
@@ -1486,7 +1483,7 @@ static bool_ monster_grass(int r_idx)
 {
 	monster_race *r_ptr = &r_info[r_idx];
 
-	if (r_ptr->flags8 & RF8_WILD_GRASS)
+	if (r_ptr->flags & RF_WILD_GRASS)
 		return TRUE;
 	else
 		return FALSE;
@@ -1499,7 +1496,7 @@ static bool_ monster_deep_water(int r_idx)
 
 	if (!monster_dungeon(r_idx)) return FALSE;
 
-	if (r_ptr->flags7 & RF7_AQUATIC)
+	if (r_ptr->flags & RF_AQUATIC)
 		return TRUE;
 	else
 		return FALSE;
@@ -1512,7 +1509,7 @@ static bool_ monster_shallow_water(int r_idx)
 
 	if (!monster_dungeon(r_idx)) return FALSE;
 
-	if (r_ptr->flags2 & RF2_AURA_FIRE)
+	if (r_ptr->flags & RF_AURA_FIRE)
 		return FALSE;
 	else
 		return TRUE;
@@ -1525,9 +1522,9 @@ static bool_ monster_lava(int r_idx)
 
 	if (!monster_dungeon(r_idx)) return FALSE;
 
-	if (((r_ptr->flags3 & RF3_IM_FIRE) ||
-	                (r_ptr->flags7 & RF7_CAN_FLY)) &&
-	                !(r_ptr->flags3 & RF3_AURA_COLD))
+	if (((r_ptr->flags & RF_IM_FIRE) ||
+	                (r_ptr->flags & RF_CAN_FLY)) &&
+	                !(r_ptr->flags & RF_AURA_COLD))
 		return TRUE;
 	else
 		return FALSE;
@@ -1585,9 +1582,9 @@ bool_ monster_can_cross_terrain(byte feat, std::shared_ptr<monster_race> r_ptr)
 	/* Deep water */
 	if (feat == FEAT_DEEP_WATER)
 	{
-		if ((r_ptr->flags7 & RF7_AQUATIC) ||
-		                (r_ptr->flags7 & RF7_CAN_FLY) ||
-		                (r_ptr->flags7 & RF7_CAN_SWIM))
+		if ((r_ptr->flags & RF_AQUATIC) ||
+		                (r_ptr->flags & RF_CAN_FLY) ||
+		                (r_ptr->flags & RF_CAN_SWIM))
 			return TRUE;
 		else
 			return FALSE;
@@ -1595,14 +1592,14 @@ bool_ monster_can_cross_terrain(byte feat, std::shared_ptr<monster_race> r_ptr)
 	/* Shallow water */
 	else if (feat == FEAT_SHAL_WATER)
 	{
-		if (r_ptr->flags2 & RF2_AURA_FIRE)
+		if (r_ptr->flags & RF_AURA_FIRE)
 			return FALSE;
 		else
 			return TRUE;
 	}
 	/* Aquatic monster */
-	else if ((r_ptr->flags7 & RF7_AQUATIC) &&
-	                !(r_ptr->flags7 & RF7_CAN_FLY))
+	else if ((r_ptr->flags & RF_AQUATIC) &&
+	                !(r_ptr->flags & RF_CAN_FLY))
 	{
 		return FALSE;
 	}
@@ -1610,8 +1607,8 @@ bool_ monster_can_cross_terrain(byte feat, std::shared_ptr<monster_race> r_ptr)
 	else if ((feat == FEAT_SHAL_LAVA) ||
 	                (feat == FEAT_DEEP_LAVA))
 	{
-		if ((r_ptr->flags3 & RF3_IM_FIRE) ||
-		                (r_ptr->flags7 & RF7_CAN_FLY))
+		if ((r_ptr->flags & RF_IM_FIRE) ||
+		                (r_ptr->flags & RF_CAN_FLY))
 			return TRUE;
 		else
 			return FALSE;

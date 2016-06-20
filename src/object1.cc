@@ -26,6 +26,7 @@
 #include "monster2.hpp"
 #include "monster_ego.hpp"
 #include "monster_race.hpp"
+#include "monster_race_flag.hpp"
 #include "monster_type.hpp"
 #include "object2.hpp"
 #include "object_kind.hpp"
@@ -1374,7 +1375,7 @@ std::string object_desc_aux(object_type *o_ptr, int pref, int mode)
 		{
 			monster_race* r_ptr = &r_info[o_ptr->pval2];
 			modstr = basenm;
-			if (r_ptr->flags1 & RF1_UNIQUE)
+			if (r_ptr->flags & RF_UNIQUE)
 			{
 				basenm = fmt::format("& {}'s #~", r_ptr->name);
 			}
@@ -1531,11 +1532,11 @@ std::string object_desc_aux(object_type *o_ptr, int pref, int mode)
 			t += ' ';
 		}
 
-		else if ((o_ptr->tval == TV_CORPSE) && (r_ptr->flags1 & RF1_UNIQUE))
+		else if ((o_ptr->tval == TV_CORPSE) && (r_ptr->flags & RF_UNIQUE))
 		{}
 
 
-		else if ((o_ptr->tval == TV_HYPNOS) && (r_ptr->flags1 & RF1_UNIQUE))
+		else if ((o_ptr->tval == TV_HYPNOS) && (r_ptr->flags & RF_UNIQUE))
 		{}
 
 		/* Hack -- The only one of its kind */

@@ -16,6 +16,7 @@
 #include "monster2.hpp"
 #include "monster_ego.hpp"
 #include "monster_race.hpp"
+#include "monster_race_flag.hpp"
 #include "monster_spell.hpp"
 #include "monster_type.hpp"
 #include "object1.hpp"
@@ -149,242 +150,6 @@ static cptr r_info_blow_effect[] =
 	"PARASITE",
 	"ABOMINATION",
 	NULL
-};
-
-
-/*
- * Monster race flags
- */
-static cptr r_info_flags1[] =
-{
-	"UNIQUE",
-	"QUESTOR",
-	"MALE",
-	"FEMALE",
-	"CHAR_CLEAR",
-	"CHAR_MULTI",
-	"ATTR_CLEAR",
-	"ATTR_MULTI",
-	"FORCE_DEPTH",
-	"FORCE_MAXHP",
-	"FORCE_SLEEP",
-	"FORCE_EXTRA",
-	"FRIEND",
-	"FRIENDS",
-	"ESCORT",
-	"ESCORTS",
-	"NEVER_BLOW",
-	"NEVER_MOVE",
-	"RAND_25",
-	"RAND_50",
-	"ONLY_GOLD",
-	"ONLY_ITEM",
-	"DROP_60",
-	"DROP_90",
-	"DROP_1D2",
-	"DROP_2D2",
-	"DROP_3D2",
-	"DROP_4D2",
-	"DROP_GOOD",
-	"DROP_GREAT",
-	"DROP_USEFUL",
-	"DROP_CHOSEN"
-};
-
-/*
- * Monster race flags
- */
-static cptr r_info_flags2[] =
-{
-	"STUPID",
-	"SMART",
-	"CAN_SPEAK",
-	"REFLECTING",
-	"INVISIBLE",
-	"COLD_BLOOD",
-	"EMPTY_MIND",
-	"WEIRD_MIND",
-	"DEATH_ORB",
-	"REGENERATE",
-	"SHAPECHANGER",
-	"ATTR_ANY",
-	"POWERFUL",
-	"ELDRITCH_HORROR",
-	"AURA_FIRE",
-	"AURA_ELEC",
-	"OPEN_DOOR",
-	"BASH_DOOR",
-	"PASS_WALL",
-	"KILL_WALL",
-	"MOVE_BODY",
-	"KILL_BODY",
-	"TAKE_ITEM",
-	"KILL_ITEM",
-	"BRAIN_1",
-	"BRAIN_2",
-	"BRAIN_3",
-	"BRAIN_4",
-	"BRAIN_5",
-	"BRAIN_6",
-	"BRAIN_7",
-	"BRAIN_8"
-};
-
-/*
- * Monster race flags
- */
-static cptr r_info_flags3[] =
-{
-	"ORC",
-	"TROLL",
-	"GIANT",
-	"DRAGON",
-	"DEMON",
-	"UNDEAD",
-	"EVIL",
-	"ANIMAL",
-	"THUNDERLORD",
-	"GOOD",
-	"AURA_COLD",  /* TODO: Implement aura_cold */
-	"NONLIVING",
-	"HURT_LITE",
-	"HURT_ROCK",
-	"SUSCEP_FIRE",
-	"SUSCEP_COLD",
-	"IM_ACID",
-	"IM_ELEC",
-	"IM_FIRE",
-	"IM_COLD",
-	"IM_POIS",
-	"RES_TELE",
-	"RES_NETH",
-	"RES_WATE",
-	"RES_PLAS",
-	"RES_NEXU",
-	"RES_DISE",
-	"UNIQUE_4",
-	"NO_FEAR",
-	"NO_STUN",
-	"NO_CONF",
-	"NO_SLEEP"
-};
-
-/*
- * Monster race flags
- */
-static cptr r_info_flags7[] =
-{
-	"AQUATIC",
-	"CAN_SWIM",
-	"CAN_FLY",
-	"FRIENDLY",
-	"PET",
-	"MORTAL",
-	"SPIDER",
-	"NAZGUL",
-	"DG_CURSE",
-	"POSSESSOR",
-	"NO_DEATH",
-	"NO_TARGET",
-	"AI_ANNOY",
-	"AI_SPECIAL",
-	"NEUTRAL",
-	"DROP_ART",
-	"DROP_RANDART",
-	"AI_PLAYER",
-	"NO_THEFT",
-	"SPIRIT",
-	"XXX7X20",
-	"XXX7X21",
-	"XXX7X22",
-	"XXX7X23",
-	"XXX7X24",
-	"XXX7X25",
-	"XXX7X26",
-	"XXX7X27",
-	"XXX7X28",
-	"XXX7X29",
-	"XXX7X30",
-	"XXX7X31",
-};
-
-/*
- * Monster race flags
- */
-static cptr r_info_flags8[] =
-{
-	"WILD_ONLY",
-	"WILD_TOWN",
-	"XXX8X02",
-	"WILD_SHORE",
-	"WILD_OCEAN",
-	"WILD_WASTE",
-	"WILD_WOOD",
-	"WILD_VOLCANO",
-	"XXX8X08",
-	"WILD_MOUNTAIN",
-	"WILD_GRASS",
-	"NO_CUT",
-	"CTHANGBAND",
-	"XXX8X13",
-	"ZANGBAND",
-	"JOKEANGBAND",
-	"BASEANGBAND",
-	"XXX8X17",
-	"XXX8X18",
-	"XXX8X19",
-	"XXX8X20",
-	"XXX8X21",
-	"XXX8X22",
-	"XXX8X23",
-	"XXX8X24",
-	"XXX8X25",
-	"XXX8X26",
-	"XXX8X27",
-	"XXX8X28",
-	"XXX8X29",
-	"XXX8X30",
-	"WILD_TOO",
-};
-
-
-/*
- * Monster race flags - Drops
- */
-static cptr r_info_flags9[] =
-{
-	"DROP_CORPSE",
-	"DROP_SKELETON",
-	"HAS_LITE",
-	"MIMIC",
-	"HAS_EGG",
-	"IMPRESED",
-	"SUSCEP_ACID",
-	"SUSCEP_ELEC",
-	"SUSCEP_POIS",
-	"KILL_TREES",
-	"WYRM_PROTECT",
-	"DOPPLEGANGER",
-	"ONLY_DEPTH",
-	"SPECIAL_GENE",
-	"NEVER_GENE",
-	"XXX9X15",
-	"XXX9X16",
-	"XXX9X17",
-	"XXX9X18",
-	"XXX9X19",
-	"XXX9X20",
-	"XXX9X21",
-	"XXX9X22",
-	"XXX9X23",
-	"XXX9X24",
-	"XXX9X25",
-	"XXX9X26",
-	"XXX9X27",
-	"XXX9X28",
-	"XXX9X29",
-	"XXX9X30",
-	"XXX9X31",
 };
 
 
@@ -5344,21 +5109,17 @@ errr init_ra_info_txt(FILE *fp)
 	return (0);
 }
 
-/*
- * Grab one (basic) flag in a monster_race from a textual string
- */
-static errr grab_one_basic_flag(monster_race *r_ptr, cptr what)
+
+static errr grab_monster_race_flag(monster_race_flag_set *flags, cptr what)
 {
-	if (lookup_flags(what,
-		flag_tie(&r_ptr->flags1, r_info_flags1),
-		flag_tie(&r_ptr->flags2, r_info_flags2),
-		flag_tie(&r_ptr->flags3, r_info_flags3),
-		flag_tie(&r_ptr->flags7, r_info_flags7),
-		flag_tie(&r_ptr->flags8, r_info_flags8),
-		flag_tie(&r_ptr->flags9, r_info_flags9)))
-	{
-		return 0;
-	}
+#define RF(tier, index, name) \
+	if (streq(what, #name)) \
+	{ \
+		*flags |= BOOST_PP_CAT(RF_,name); \
+		return 0; \
+	};
+#include "monster_race_flag_list.hpp"
+#undef RF
 
 	/* Oops */
 	msg_format("Unknown monster flag '%s'.", what);
@@ -5683,7 +5444,7 @@ errr init_r_info_txt(FILE *fp)
 		/* Process 'F' for "Basic Flags" (multiple lines) */
 		if (buf[0] == 'F')
 		{
-			if (0 != grab_one_basic_flag(r_ptr, buf + 2))
+			if (0 != grab_monster_race_flag(&r_ptr->flags, buf + 2))
 			{
 				return (5);
 			}
@@ -5721,82 +5482,10 @@ errr init_r_info_txt(FILE *fp)
 		return (6);
 	}
 
-	/* Postprocessing */
-	for (i = 1; i < max_r_idx; i++)
-	{
-		/* Invert flag WILD_ONLY <-> RF8_DUNGEON */
-		r_info[i].flags8 ^= 1L;
-	}
-
 	/* Success */
 	return (0);
 }
 
-
-/*
- * Grab one (basic) flag in a monster_race from a textual string
- */
-static errr grab_one_basic_ego_flag(monster_ego *re_ptr, cptr what, bool_ add)
-{
-	/* Dispatch to correct set of flags */
-	u32b *f1 = add ? &re_ptr->mflags1 : &re_ptr->nflags1;
-	u32b *f2 = add ? &re_ptr->mflags2 : &re_ptr->nflags2;
-	u32b *f3 = add ? &re_ptr->mflags3 : &re_ptr->nflags3;
-	u32b *f7 = add ? &re_ptr->mflags7 : &re_ptr->nflags7;
-	u32b *f8 = add ? &re_ptr->mflags8 : &re_ptr->nflags8;
-	u32b *f9 = add ? &re_ptr->mflags9 : &re_ptr->nflags9;
-
-	/* Lookup */
-	if (lookup_flags(what,
-		flag_tie(f1, r_info_flags1),
-		flag_tie(f2, r_info_flags2),
-		flag_tie(f3, r_info_flags3),
-		flag_tie(f7, r_info_flags7),
-		flag_tie(f8, r_info_flags8),
-		flag_tie(f9, r_info_flags9)))
-	{
-		return 0;
-	}
-
-	/* Oops */
-	msg_format("Unknown monster flag '%s'.", what);
-
-	/* Failure */
-	return (1);
-}
-
-
-/*
- * Grab one (basic) flag in a monster_race from a textual string
- */
-static errr grab_one_ego_flag(monster_ego *re_ptr, cptr what, bool_ must)
-{
-	/* Dispatch to correct set of flags */
-	u32b *f1 = must ? &re_ptr->flags1 : &re_ptr->hflags1;
-	u32b *f2 = must ? &re_ptr->flags2 : &re_ptr->hflags2;
-	u32b *f3 = must ? &re_ptr->flags3 : &re_ptr->hflags3;
-	u32b *f7 = must ? &re_ptr->flags7 : &re_ptr->hflags7;
-	u32b *f8 = must ? &re_ptr->flags8 : &re_ptr->hflags8;
-	u32b *f9 = must ? &re_ptr->flags9 : &re_ptr->hflags9;
-
-	/* Lookup */
-	if (lookup_flags(what,
-		flag_tie(f1, r_info_flags1),
-		flag_tie(f2, r_info_flags2),
-		flag_tie(f3, r_info_flags3),
-		flag_tie(f7, r_info_flags7),
-		flag_tie(f8, r_info_flags8),
-		flag_tie(f9, r_info_flags9)))
-	{
-		return (0);
-	}
-
-	/* Oops */
-	msg_format("Unknown monster flag '%s'.", what);
-
-	/* Failure */
-	return (1);
-}
 
 /*
  * Initialize the "re_info" array, by parsing an ascii "template" file
@@ -6042,7 +5731,7 @@ errr init_re_info_txt(FILE *fp)
 
 			/* Parse this entry */
 			else {
-				if (0 != grab_one_ego_flag(re_ptr, s, TRUE))
+				if (0 != grab_monster_race_flag(&re_ptr->flags, s))
 				{
 					return (5);
 				}
@@ -6072,7 +5761,7 @@ errr init_re_info_txt(FILE *fp)
 
 			/* Parse this entry */
 			else {
-				if (0 != grab_one_ego_flag(re_ptr, s, FALSE))
+				if (0 != grab_monster_race_flag(&re_ptr->hflags, s))
 				{
 					return (5);
 				}
@@ -6085,7 +5774,7 @@ errr init_re_info_txt(FILE *fp)
 		/* Process 'M' for "Basic Monster Flags" (multiple lines) */
 		if (buf[0] == 'M')
 		{
-			if (0 != grab_one_basic_ego_flag(re_ptr, buf + 2, TRUE))
+			if (0 != grab_monster_race_flag(&re_ptr->mflags, buf + 2))
 			{
 				return (5);
 			}
@@ -6102,13 +5791,12 @@ errr init_re_info_txt(FILE *fp)
 			/* XXX XXX XXX Hack -- Read no flags */
 			if (!strcmp(s, "MF_ALL"))
 			{
-				/* No flags */
-				re_ptr->nflags1 = re_ptr->nflags2 = re_ptr->nflags3 = re_ptr->nflags7 = re_ptr->nflags8 = re_ptr->nflags9 = 0xFFFFFFFF;
+				re_ptr->nflags = ~monster_race_flag_set();
 			}
 
 			/* Parse this entry */
 			else {
-				if (0 != grab_one_basic_ego_flag(re_ptr, s, FALSE))
+				if (0 != grab_monster_race_flag(&re_ptr->nflags, s))
 				{
 					return (5);
 				}
@@ -6373,29 +6061,6 @@ errr grab_one_dungeon_flag(dungeon_flag_set *flags, const char *str)
 
 	/* Oops */
 	msg_format("Unknown dungeon type flag '%s'.", str);
-
-	/* Failure */
-	return (1);
-}
-
-/*
- * Grab one (basic) flag in a monster_race from a textual string
- */
-static errr grab_one_basic_monster_flag(dungeon_info_type *d_ptr, cptr what, byte rule)
-{
-	if (lookup_flags(what,
-		flag_tie(&d_ptr->rules[rule].mflags1, r_info_flags1),
-		flag_tie(&d_ptr->rules[rule].mflags2, r_info_flags2),
-		flag_tie(&d_ptr->rules[rule].mflags3, r_info_flags3),
-		flag_tie(&d_ptr->rules[rule].mflags7, r_info_flags7),
-		flag_tie(&d_ptr->rules[rule].mflags8, r_info_flags8),
-		flag_tie(&d_ptr->rules[rule].mflags9, r_info_flags9)))
-	{
-		return 0;
-	}
-
-	/* Oops */
-	msg_format("Unknown monster flag '%s'.", what);
 
 	/* Failure */
 	return (1);
@@ -6827,7 +6492,7 @@ errr init_d_info_txt(FILE *fp)
 
 			/* Parse this entry */
 			else {
-				if (0 != grab_one_basic_monster_flag(d_ptr, s, rule_num))
+				if (0 != grab_monster_race_flag(&d_ptr->rules[rule_num].mflags, s))
 				{
 					return (5);
 				}

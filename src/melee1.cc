@@ -15,6 +15,7 @@
 #include "monster2.hpp"
 #include "monster3.hpp"
 #include "monster_race.hpp"
+#include "monster_race_flag.hpp"
 #include "monster_type.hpp"
 #include "object1.hpp"
 #include "object2.hpp"
@@ -235,7 +236,7 @@ bool_ carried_make_attack_normal(int r_idx)
 	bool_ alive = TRUE;
 
 	/* Not allowed to attack */
-	if (r_ptr->flags1 & RF1_NEVER_BLOW) return (FALSE);
+	if (r_ptr->flags & RF_NEVER_BLOW) return (FALSE);
 
 	/* Total armor */
 	ac = p_ptr->ac + p_ptr->to_a;
@@ -280,7 +281,7 @@ bool_ carried_make_attack_normal(int r_idx)
 
 			/* Hack -- Apply "protection from evil" */
 			if ((p_ptr->protevil > 0) &&
-			                (r_ptr->flags3 & RF3_EVIL) &&
+			                (r_ptr->flags & RF_EVIL) &&
 			                (p_ptr->lev >= rlev) &&
 			                ((rand_int(100) + p_ptr->lev) > 50))
 			{
@@ -293,7 +294,7 @@ bool_ carried_make_attack_normal(int r_idx)
 
 			/* Hack -- Apply "protection from good" */
 			if ((p_ptr->protgood > 0) &&
-			                (r_ptr->flags3 & RF3_GOOD) &&
+			                (r_ptr->flags & RF_GOOD) &&
 			                (p_ptr->lev >= rlev) &&
 			                ((rand_int(100) + p_ptr->lev) > 50))
 			{
@@ -1249,7 +1250,7 @@ bool_ make_attack_normal(int m_idx, byte divis)
 
 	/* Not allowed to attack? */
 	auto r_ptr = m_ptr->race();
-	if (r_ptr->flags1 & RF1_NEVER_BLOW) return (FALSE);
+	if (r_ptr->flags & RF_NEVER_BLOW) return (FALSE);
 
 	/* ...nor if friendly */
 	if (is_friend(m_ptr) >= 0)
@@ -1259,7 +1260,7 @@ bool_ make_attack_normal(int m_idx, byte divis)
 	}
 
 	/* Cannot attack the player if mortal and player fated to never die by the ... */
-	if ((r_ptr->flags7 & RF7_MORTAL) && (p_ptr->no_mortal)) return (FALSE);
+	if ((r_ptr->flags & RF_MORTAL) && (p_ptr->no_mortal)) return (FALSE);
 
 	/* Total armor */
 	ac = p_ptr->ac + p_ptr->to_a;
@@ -1435,7 +1436,7 @@ bool_ make_attack_normal(int m_idx, byte divis)
 				if (chance > 50000) chance = 50000;
 				chance -= rlev * 300;
 
-				if ((randint(100000) < chance) && (r_ptr->flags3 & RF3_EVIL))
+				if ((randint(100000) < chance) && (r_ptr->flags & RF_EVIL))
 				{
 					/* Message */
 					msg_format("The hand of Eru Iluvatar stops %s blow.", m_name);
@@ -1447,7 +1448,7 @@ bool_ make_attack_normal(int m_idx, byte divis)
 
 			/* Hack -- Apply "protection from evil" */
 			if ((p_ptr->protevil > 0) &&
-			                (r_ptr->flags3 & RF3_EVIL) &&
+			                (r_ptr->flags & RF_EVIL) &&
 			                (p_ptr->lev >= rlev) &&
 			                ((rand_int(100) + p_ptr->lev) > 50))
 			{
@@ -1460,7 +1461,7 @@ bool_ make_attack_normal(int m_idx, byte divis)
 
 			/* Hack -- Apply "protection from good" */
 			if ((p_ptr->protgood > 0) &&
-			                (r_ptr->flags3 & RF3_GOOD) &&
+			                (r_ptr->flags & RF_GOOD) &&
 			                (p_ptr->lev >= rlev) &&
 			                ((rand_int(100) + p_ptr->lev) > 50))
 			{
@@ -1675,16 +1676,16 @@ bool_ make_attack_normal(int m_idx, byte divis)
 			 * a successful blow. Uniques have a better chance. -LM-
 			 * Nazgul have a 25% chance
 			 */
-			if (r_ptr->flags7 & RF7_NAZGUL)
+			if (r_ptr->flags & RF_NAZGUL)
 			{
 				black_breath_attack(4);
 			}
-			else if ((m_ptr->level >= 35) && (r_ptr->flags3 & RF3_UNDEAD) &&
-					    (r_ptr->flags1 & RF1_UNIQUE))
+			else if ((m_ptr->level >= 35) && (r_ptr->flags & RF_UNDEAD) &&
+					    (r_ptr->flags & RF_UNIQUE))
 			{
 				black_breath_attack(300 - m_ptr->level);
 			}
-			else if ((m_ptr->level >= 40) && (r_ptr->flags3 & RF3_UNDEAD))
+			else if ((m_ptr->level >= 40) && (r_ptr->flags & RF_UNDEAD))
 			{
 				black_breath_attack(450 - m_ptr->level);
 			}
@@ -2638,7 +2639,7 @@ bool_ make_attack_normal(int m_idx, byte divis)
 			{
 				if (p_ptr->sh_fire && alive)
 				{
-					if (!(r_ptr->flags3 & RF3_IM_FIRE))
+					if (!(r_ptr->flags & RF_IM_FIRE))
 					{
 						msg_format("%^s is suddenly very hot!", m_name);
 						if (mon_take_hit(m_idx, damroll(2, 6), &fear,
@@ -2652,7 +2653,7 @@ bool_ make_attack_normal(int m_idx, byte divis)
 
 				if (p_ptr->sh_elec && alive)
 				{
-					if (!(r_ptr->flags3 & RF3_IM_ELEC))
+					if (!(r_ptr->flags & RF_IM_ELEC))
 					{
 						msg_format("%^s gets zapped!", m_name);
 						if (mon_take_hit(m_idx, damroll(2, 6), &fear,
@@ -2677,7 +2678,7 @@ bool_ make_attack_normal(int m_idx, byte divis)
 
 				if (p_ptr->shield && (p_ptr->shield_opt & SHIELD_FIRE) && alive)
 				{
-					if (!(r_ptr->flags3 & RF3_IM_FIRE))
+					if (!(r_ptr->flags & RF_IM_FIRE))
 					{
 						msg_format("%^s gets burned by your fiery shield!", m_name);
 						if (mon_take_hit(m_idx, damroll(p_ptr->shield_power_opt, p_ptr->shield_power_opt2), &fear,
@@ -2704,7 +2705,7 @@ bool_ make_attack_normal(int m_idx, byte divis)
 				{
 					int tmp;
 
-					if ((!(r_ptr->flags1 & RF1_UNIQUE)) && (damroll(p_ptr->shield_power_opt, p_ptr->shield_power_opt2) - m_ptr->level > 0))
+					if ((!(r_ptr->flags & RF_UNIQUE)) && (damroll(p_ptr->shield_power_opt, p_ptr->shield_power_opt2) - m_ptr->level > 0))
 					{
 						msg_format("%^s gets scared away!", m_name);
 

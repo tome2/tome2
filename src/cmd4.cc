@@ -20,6 +20,7 @@
 #include "messages.hpp"
 #include "monster2.hpp"
 #include "monster_race.hpp"
+#include "monster_race_flag.hpp"
 #include "monster_type.hpp"
 #include "notes.hpp"
 #include "object1.hpp"
@@ -3276,9 +3277,9 @@ static void do_cmd_knowledge_uniques(void)
 		monster_race *r_ptr = &r_info[k];
 
 		/* Only print Uniques */
-		if ((r_ptr->flags1 & RF1_UNIQUE) &&
-		    !(r_ptr->flags7 & RF7_PET) &&
-		    !(r_ptr->flags7 & RF7_NEUTRAL))
+		if ((r_ptr->flags & RF_UNIQUE) &&
+		    !(r_ptr->flags & RF_PET) &&
+		    !(r_ptr->flags & RF_NEUTRAL))
 		{
 			unique_r_idxs.push_back(k);
 		}
@@ -3298,7 +3299,7 @@ static void do_cmd_knowledge_uniques(void)
 		monster_race *r_ptr = &r_info[r_idx];
 
 		/* Only print Uniques */
-		if (r_ptr->flags1 & RF1_UNIQUE)
+		if (r_ptr->flags & RF_UNIQUE)
 		{
 			bool_ dead = (r_ptr->max_num == 0);
 
@@ -3446,7 +3447,7 @@ static void do_cmd_knowledge_pets(void)
 			monster_desc(pet_name, m_ptr, 0x88);
 
 			w.write("{}{} ({})\n",
-				(r_ptr->flags1 & RF1_UNIQUE) ? "#####G" : "",
+				(r_ptr->flags & RF_UNIQUE) ? "#####G" : "",
 				pet_name,
 				(m_ptr->status < MSTATUS_COMPANION) ? "pet" : "companion");
 		}
@@ -3492,7 +3493,7 @@ static void do_cmd_knowledge_kill_count(void)
 		{
 			monster_race *r_ptr = &r_info[kk];
 
-			if (r_ptr->flags1 & RF1_UNIQUE)
+			if (r_ptr->flags & RF_UNIQUE)
 			{
 				if (r_ptr->max_num == 0)
 				{
@@ -3526,7 +3527,7 @@ static void do_cmd_knowledge_kill_count(void)
 	{
 		monster_race *r_ptr = &r_info[k];
 
-		if (r_ptr->flags1 & RF1_UNIQUE)
+		if (r_ptr->flags & RF_UNIQUE)
 		{
 			bool_ dead = (r_ptr->max_num == 0);
 

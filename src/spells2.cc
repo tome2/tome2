@@ -22,6 +22,7 @@
 #include "monster2.hpp"
 #include "monster3.hpp"
 #include "monster_race.hpp"
+#include "monster_race_flag.hpp"
 #include "monster_spell_flag.hpp"
 #include "monster_type.hpp"
 #include "notes.hpp"
@@ -847,132 +848,132 @@ void self_knowledge(FILE *fff)
 	{
 		monster_race *r_ptr = &r_info[p_ptr->body_monster];
 
-		if (r_ptr->flags1 & RF1_CHAR_CLEAR ||
-		                r_ptr->flags1 & RF1_ATTR_CLEAR)
+		if (r_ptr->flags & RF_CHAR_CLEAR ||
+		                r_ptr->flags & RF_ATTR_CLEAR)
 			info[i++] = "You are transparent.";
-		if ((r_ptr->flags1 & RF1_CHAR_MULTI) ||
-		                (r_ptr->flags2 & RF2_SHAPECHANGER))
+		if ((r_ptr->flags & RF_CHAR_MULTI) ||
+		                (r_ptr->flags & RF_SHAPECHANGER))
 			info[i++] = "Your form constantly changes.";
-		if (r_ptr->flags1 & RF1_ATTR_MULTI)
+		if (r_ptr->flags & RF_ATTR_MULTI)
 			info[i++] = "Your color constantly changes.";
-		if (r_ptr->flags1 & RF1_NEVER_BLOW)
+		if (r_ptr->flags & RF_NEVER_BLOW)
 			info[i++] = "You do not have a physical weapon.";
-		if (r_ptr->flags1 & RF1_NEVER_MOVE)
+		if (r_ptr->flags & RF_NEVER_MOVE)
 			info[i++] = "You cannot move.";
-		if ((r_ptr->flags1 & RF1_RAND_25) &&
-		                (r_ptr->flags1 & RF1_RAND_50))
+		if ((r_ptr->flags & RF_RAND_25) &&
+		                (r_ptr->flags & RF_RAND_50))
 			info[i++] = "You move extremely erratically.";
-		else if (r_ptr->flags1 & RF1_RAND_50)
+		else if (r_ptr->flags & RF_RAND_50)
 			info[i++] = "You move somewhat erratically.";
-		else if (r_ptr->flags1 & RF1_RAND_25)
+		else if (r_ptr->flags & RF_RAND_25)
 			info[i++] = "You move a bit erratically.";
-		if (r_ptr->flags2 & RF2_STUPID)
+		if (r_ptr->flags & RF_STUPID)
 			info[i++] = "You are very stupid (INT -4).";
-		if (r_ptr->flags2 & RF2_SMART)
+		if (r_ptr->flags & RF_SMART)
 			info[i++] = "You are very smart (INT +4).";
 		/* Not implemented */
-		if (r_ptr->flags2 & RF2_CAN_SPEAK)
+		if (r_ptr->flags & RF_CAN_SPEAK)
 			info[i++] = "You can speak.";
 		else
 			info[i++] = "You cannot speak.";
 		/* Not implemented */
-		if (r_ptr->flags2 & RF2_COLD_BLOOD)
+		if (r_ptr->flags & RF_COLD_BLOOD)
 			info[i++] = "You are cold blooded.";
 		/* Not implemented */
-		if (r_ptr->flags2 & RF2_EMPTY_MIND)
+		if (r_ptr->flags & RF_EMPTY_MIND)
 			info[i++] = "You have an empty mind.";
-		if (r_ptr->flags2 & RF2_WEIRD_MIND)
+		if (r_ptr->flags & RF_WEIRD_MIND)
 			info[i++] = "You have a weird mind.";
 		if (r_ptr->spells & SF_MULTIPLY)
 			info[i++] = "You can multiply.";
-		if (r_ptr->flags2 & RF2_POWERFUL)
+		if (r_ptr->flags & RF_POWERFUL)
 			info[i++] = "You have strong breath.";
 		/* Not implemented */
-		if (r_ptr->flags2 & RF2_ELDRITCH_HORROR)
+		if (r_ptr->flags & RF_ELDRITCH_HORROR)
 			info[i++] = "You are an eldritch horror.";
-		if (r_ptr->flags2 & RF2_OPEN_DOOR)
+		if (r_ptr->flags & RF_OPEN_DOOR)
 			info[i++] = "You can open doors.";
 		else
 			info[i++] = "You cannot open doors.";
-		if (r_ptr->flags2 & RF2_BASH_DOOR)
+		if (r_ptr->flags & RF_BASH_DOOR)
 			info[i++] = "You can bash doors.";
 		else
 			info[i++] = "You cannot bash doors.";
-		if (r_ptr->flags2 & RF2_PASS_WALL)
+		if (r_ptr->flags & RF_PASS_WALL)
 			info[i++] = "You can pass walls.";
-		if (r_ptr->flags2 & RF2_KILL_WALL)
+		if (r_ptr->flags & RF_KILL_WALL)
 			info[i++] = "You destroy walls.";
 		/* Not implemented */
-		if (r_ptr->flags2 & RF2_MOVE_BODY)
+		if (r_ptr->flags & RF_MOVE_BODY)
 			info[i++] = "You can move monsters.";
 		/* Not implemented */
-		if (r_ptr->flags3 & RF3_ORC)
+		if (r_ptr->flags & RF_ORC)
 			info[i++] = "You have orc blood in your veins.";
 		/* Not implemented */
-		else if (r_ptr->flags3 & RF3_TROLL)
+		else if (r_ptr->flags & RF_TROLL)
 			info[i++] = "You have troll blood in your veins.";
 		/* Not implemented */
-		else if (r_ptr->flags3 & RF3_GIANT)
+		else if (r_ptr->flags & RF_GIANT)
 			info[i++] = "You have giant blood in your veins.";
 		/* Not implemented */
-		else if (r_ptr->flags3 & RF3_DRAGON)
+		else if (r_ptr->flags & RF_DRAGON)
 			info[i++] = "You have dragon blood in your veins.";
 		/* Not implemented */
-		else if (r_ptr->flags3 & RF3_DEMON)
+		else if (r_ptr->flags & RF_DEMON)
 			info[i++] = "You have demon blood in your veins.";
 		/* Not implemented */
-		else if (r_ptr->flags3 & RF3_UNDEAD)
+		else if (r_ptr->flags & RF_UNDEAD)
 			info[i++] = "You are an undead.";
 		/* Not implemented */
-		else if (r_ptr->flags3 & RF3_ANIMAL)
+		else if (r_ptr->flags & RF_ANIMAL)
 			info[i++] = "You are an animal.";
 		/* Not implemented */
-		else if (r_ptr->flags3 & RF3_THUNDERLORD)
+		else if (r_ptr->flags & RF_THUNDERLORD)
 			info[i++] = "You have thunderlord blood in your veins.";
-		if (r_ptr->flags3 & RF3_EVIL)
+		if (r_ptr->flags & RF_EVIL)
 			info[i++] = "You are inherently evil.";
-		else if (r_ptr->flags3 & RF3_GOOD)
+		else if (r_ptr->flags & RF_GOOD)
 			info[i++] = "You are inherently good.";
-		if (r_ptr->flags3 & RF3_AURA_COLD)
+		if (r_ptr->flags & RF_AURA_COLD)
 			info[i++] = "You are surrounded by a chilly aura.";
 		/* Not implemented */
-		if (r_ptr->flags3 & RF3_NONLIVING)
+		if (r_ptr->flags & RF_NONLIVING)
 			info[i++] = "You are not living.";
 		/* Not implemented */
-		if (r_ptr->flags3 & RF3_HURT_LITE)
+		if (r_ptr->flags & RF_HURT_LITE)
 			info[i++] = "Your eyes are vulnerable to bright light.";
 		/* Not implemented */
-		if (r_ptr->flags3 & RF3_HURT_ROCK)
+		if (r_ptr->flags & RF_HURT_ROCK)
 			info[i++] = "You can be hurt by rock remover.";
-		if (r_ptr->flags3 & RF3_SUSCEP_FIRE)
+		if (r_ptr->flags & RF_SUSCEP_FIRE)
 			info[i++] = "You are vulnerable to fire.";
-		if (r_ptr->flags3 & RF3_SUSCEP_COLD)
+		if (r_ptr->flags & RF_SUSCEP_COLD)
 			info[i++] = "You are vulnerable to cold.";
-		if (r_ptr->flags3 & RF3_RES_TELE)
+		if (r_ptr->flags & RF_RES_TELE)
 			info[i++] = "You are resistant to teleportation.";
-		if (r_ptr->flags3 & RF3_RES_NETH)
+		if (r_ptr->flags & RF_RES_NETH)
 			info[i++] = "You are resistant to nether.";
-		if (r_ptr->flags3 & RF3_RES_WATE)
+		if (r_ptr->flags & RF_RES_WATE)
 			info[i++] = "You are resistant to water.";
-		if (r_ptr->flags3 & RF3_RES_PLAS)
+		if (r_ptr->flags & RF_RES_PLAS)
 			info[i++] = "You are resistant to plasma.";
-		if (r_ptr->flags3 & RF3_RES_WATE)
+		if (r_ptr->flags & RF_RES_WATE)
 			info[i++] = "You are resistant to nexus.";
-		if (r_ptr->flags3 & RF3_RES_DISE)
+		if (r_ptr->flags & RF_RES_DISE)
 			info[i++] = "You are resistant to disease.";
 		/* Not implemented */
-		if (r_ptr->flags3 & RF3_NO_SLEEP)
+		if (r_ptr->flags & RF_NO_SLEEP)
 			info[i++] = "You cannot be slept.";
 		/* Not implemented */
-		if (r_ptr->flags3 & RF3_UNIQUE_4)
+		if (r_ptr->flags & RF_UNIQUE_4)
 			info[i++] = "You are a Nazgul.";
-		if (r_ptr->flags3 & RF3_NO_FEAR)
+		if (r_ptr->flags & RF_NO_FEAR)
 			info[i++] = "You are immune to fear.";
-		if (r_ptr->flags3 & RF3_NO_STUN)
+		if (r_ptr->flags & RF_NO_STUN)
 			info[i++] = "You are immune to stun.";
-		if (r_ptr->flags3 & RF3_NO_CONF)
+		if (r_ptr->flags & RF_NO_CONF)
 			info[i++] = "You are immune to confusion.";
-		if (r_ptr->flags3 & RF3_NO_SLEEP)
+		if (r_ptr->flags & RF_NO_SLEEP)
 			info[i++] = "You are immune to sleep.";
 
 		if (r_ptr->spells & SF_SHRIEK)
@@ -1154,49 +1155,49 @@ void self_knowledge(FILE *fff)
 		if (r_ptr->spells & SF_S_UNIQUE)
 			info[i++] = "You can magically summon an unique monster.";
 		/* Not implemented */
-		if (r_ptr->flags7 & RF7_AQUATIC)
+		if (r_ptr->flags & RF_AQUATIC)
 			info[i++] = "You are aquatic.";
 		/* Not implemented */
-		if (r_ptr->flags7 & RF7_CAN_SWIM)
+		if (r_ptr->flags & RF_CAN_SWIM)
 			info[i++] = "You can swim.";
 		/* Not implemented */
-		if (r_ptr->flags7 & RF7_CAN_FLY)
+		if (r_ptr->flags & RF_CAN_FLY)
 			info[i++] = "You can fly.";
-		if ((r_ptr->flags7 & RF7_MORTAL) == 0)
+		if ((r_ptr->flags & RF_MORTAL) == 0)
 			info[i++] = "You are immortal.";
 		/* Not implemented */
-		if (r_ptr->flags7 & RF7_NAZGUL)
+		if (r_ptr->flags & RF_NAZGUL)
 			info[i++] = "You are a Nazgul.";
 
-		if (r_ptr->flags7 & RF7_SPIDER)
+		if (r_ptr->flags & RF_SPIDER)
 			info[i++] = "You are a spider.";
 
-		if (r_ptr->flags8 & RF8_WILD_TOWN)
+		if (r_ptr->flags & RF_WILD_TOWN)
 			info[i++] = "You appear in towns.";
-		if (r_ptr->flags8 & RF8_WILD_SHORE)
+		if (r_ptr->flags & RF_WILD_SHORE)
 			info[i++] = "You appear on the shore.";
-		if (r_ptr->flags8 & RF8_WILD_OCEAN)
+		if (r_ptr->flags & RF_WILD_OCEAN)
 			info[i++] = "You appear in the ocean.";
-		if (r_ptr->flags8 & RF8_WILD_WASTE)
+		if (r_ptr->flags & RF_WILD_WASTE)
 			info[i++] = "You appear in the waste.";
-		if (r_ptr->flags8 & RF8_WILD_WOOD)
+		if (r_ptr->flags & RF_WILD_WOOD)
 			info[i++] = "You appear in woods.";
-		if (r_ptr->flags8 & RF8_WILD_VOLCANO)
+		if (r_ptr->flags & RF_WILD_VOLCANO)
 			info[i++] = "You appear in volcanos.";
-		if (r_ptr->flags8 & RF8_WILD_MOUNTAIN)
+		if (r_ptr->flags & RF_WILD_MOUNTAIN)
 			info[i++] = "You appear in the mountains.";
-		if (r_ptr->flags8 & RF8_WILD_GRASS)
+		if (r_ptr->flags & RF_WILD_GRASS)
 			info[i++] = "You appear in grassy areas.";
 
-		if (r_ptr->flags9 & RF9_SUSCEP_ACID)
+		if (r_ptr->flags & RF_SUSCEP_ACID)
 			info[i++] = "You are vulnerable to acid.";
-		if (r_ptr->flags9 & RF9_SUSCEP_ELEC)
+		if (r_ptr->flags & RF_SUSCEP_ELEC)
 			info[i++] = "You are vulnerable to electricity.";
-		if (r_ptr->flags9 & RF9_SUSCEP_POIS)
+		if (r_ptr->flags & RF_SUSCEP_POIS)
 			info[i++] = "You are vulnerable to poison.";
-		if (r_ptr->flags9 & RF9_KILL_TREES)
+		if (r_ptr->flags & RF_KILL_TREES)
 			info[i++] = "You can eat trees.";
-		if (r_ptr->flags9 & RF9_WYRM_PROTECT)
+		if (r_ptr->flags & RF_WYRM_PROTECT)
 			info[i++] = "You are protected by great wyrms of power.";
 	}
 
@@ -2386,7 +2387,7 @@ template <typename P> bool detect_objects_fn(int radius, const char *object_mess
 			monster_type *m_ptr = &m_list[o_ptr->held_m_idx];
 			auto const r_ptr = m_ptr->race();
 
-			if (!(r_ptr->flags9 & RF9_MIMIC))
+			if (!(r_ptr->flags & RF_MIMIC))
 			{
 				continue; /* Skip mimics completely */
 			}
@@ -2482,7 +2483,7 @@ bool detect_objects_normal(int rad)
 bool_ detect_monsters_normal(int rad)
 {
 	auto predicate = [](monster_race *r_ptr) -> bool {
-		return (!(r_ptr->flags2 & RF2_INVISIBLE)) ||
+		return (!(r_ptr->flags & RF_INVISIBLE)) ||
 			p_ptr->see_inv || p_ptr->tim_invis;
 	};
 
@@ -2505,7 +2506,7 @@ bool_ detect_monsters_normal(int rad)
 bool_ detect_monsters_invis(int rad)
 {
 	auto predicate = [](monster_race *r_ptr) -> bool {
-		return (r_ptr->flags2 & RF2_INVISIBLE);
+		return (r_ptr->flags & RF_INVISIBLE);
 	};
 
 	if (detect_monsters_fn(rad, predicate))
@@ -2523,41 +2524,17 @@ bool_ detect_monsters_invis(int rad)
 
 
 /*
- * A "generic" detect monsters routine, tagged to flags3
+ * Detect orcs
  */
-bool_ detect_monsters_xxx(u32b match_flag, int rad)
+void detect_monsters_orcs(int rad)
 {
-	auto predicate = [match_flag](monster_race *r_ptr) -> bool {
-		return (r_ptr->flags3 & match_flag);
+	auto predicate = [](monster_race *r_ptr) -> bool {
+		return (r_ptr->flags & RF_ORC);
 	};
 
 	if (detect_monsters_fn(rad, predicate))
 	{
-		cptr desc_monsters = "weird monsters";
-		switch (match_flag)
-		{
-		case RF3_DEMON:
-			desc_monsters = "demons";
-			break;
-		case RF3_UNDEAD:
-			desc_monsters = "the undead";
-			break;
-		case RF3_GOOD:
-			desc_monsters = "good";
-			break;
-		case RF3_ORC:
-			desc_monsters = "orcs";
-			break;
-		}
-
-		/* Describe result */
-		msg_format("You sense the presence of %s!", desc_monsters);
-		msg_print(NULL);
-		return TRUE;
-	}
-	else
-	{
-		return FALSE;
+		msg_print("You sense the presence of orcs!");
 	}
 }
 
@@ -3991,7 +3968,7 @@ bool_ genocide_aux(bool_ player_cast, char typ)
 		if (!m_ptr->r_idx) continue;
 
 		/* Hack -- Skip Unique Monsters */
-		if (r_ptr->flags1 & RF1_UNIQUE) continue;
+		if (r_ptr->flags & RF_UNIQUE) continue;
 
 		/* Hack -- Skip Quest Monsters */
 		if (m_ptr->mflag & MFLAG_QUEST) continue;
@@ -4000,7 +3977,7 @@ bool_ genocide_aux(bool_ player_cast, char typ)
 		if (r_ptr->d_char != typ) continue;
 
 		/* Oups */
-		if (r_ptr->flags2 & RF2_DEATH_ORB)
+		if (r_ptr->flags & RF_DEATH_ORB)
 		{
 			int wx, wy;
 			int attempts = 500;
@@ -4117,7 +4094,7 @@ bool_ mass_genocide(bool_ player_cast)
 		if (!m_ptr->r_idx) continue;
 
 		/* Hack -- Skip unique monsters */
-		if (r_ptr->flags1 & RF1_UNIQUE) continue;
+		if (r_ptr->flags & RF_UNIQUE) continue;
 
 		/* Hack -- Skip Quest Monsters */
 		if (m_ptr->mflag & MFLAG_QUEST) continue;
@@ -4126,7 +4103,7 @@ bool_ mass_genocide(bool_ player_cast)
 		if (m_ptr->cdis > MAX_SIGHT) continue;
 
 		/* Oups */
-		if (r_ptr->flags2 & RF2_DEATH_ORB)
+		if (r_ptr->flags & RF_DEATH_ORB)
 		{
 			int wx, wy;
 			int attempts = 500;
@@ -4554,8 +4531,8 @@ void earthquake(int cy, int cx, int r)
 				auto const r_ptr = m_ptr->race();
 
 				/* Most monsters cannot co-exist with rock */
-				if (!(r_ptr->flags2 & RF2_KILL_WALL) &&
-				                !(r_ptr->flags2 & RF2_PASS_WALL))
+				if (!(r_ptr->flags & RF_KILL_WALL) &&
+				                !(r_ptr->flags & RF_PASS_WALL))
 				{
 					char m_name[80];
 
@@ -4563,7 +4540,7 @@ void earthquake(int cy, int cx, int r)
 					sn = 0;
 
 					/* Monster can move to escape the wall */
-					if (!(r_ptr->flags1 & RF1_NEVER_MOVE))
+					if (!(r_ptr->flags & RF_NEVER_MOVE))
 					{
 						/* Look for safety */
 						for (i = 0; i < 8; i++)
@@ -4805,10 +4782,10 @@ static void cave_temp_room_lite(void)
 			update_mon(c_ptr->m_idx, FALSE);
 
 			/* Stupid monsters rarely wake up */
-			if (r_ptr->flags2 & RF2_STUPID) chance = 10;
+			if (r_ptr->flags & RF_STUPID) chance = 10;
 
 			/* Smart monsters always wake up */
-			if (r_ptr->flags2 & RF2_SMART) chance = 100;
+			if (r_ptr->flags & RF_SMART) chance = 100;
 
 			/* Sometimes monsters wake up */
 			if (m_ptr->csleep && (rand_int(100) < chance))
@@ -5165,7 +5142,7 @@ void teleport_swap(int dir)
 		monster_type *m_ptr = &m_list[c_ptr->m_idx];
 		auto const r_ptr = m_ptr->race();
 
-		if (r_ptr->flags3 & RF3_RES_TELE)
+		if (r_ptr->flags & RF_RES_TELE)
 		{
 			msg_print("Your teleportation is blocked!");
 		}

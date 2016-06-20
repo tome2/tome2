@@ -2,6 +2,7 @@
 
 #include "monster2.hpp"
 #include "monster_race.hpp"
+#include "monster_race_flag.hpp"
 #include "monster_spell_flag.hpp"
 #include "object1.hpp"
 #include "object2.hpp"
@@ -23,29 +24,29 @@ static bool_ lua_mon_hook_bounty(int r_idx)
 	monster_race* r_ptr = &r_info[r_idx];
 
 	/* Reject uniques */
-	if (r_ptr->flags1 & RF1_UNIQUE) return (FALSE);
+	if (r_ptr->flags & RF_UNIQUE) return (FALSE);
 
 	/* Reject those who cannot leave anything */
-	if (!(r_ptr->flags9 & RF9_DROP_CORPSE)) return (FALSE);
+	if (!(r_ptr->flags & RF_DROP_CORPSE)) return (FALSE);
 
 	/* Accept only monsters that can be generated */
-	if (r_ptr->flags9 & RF9_SPECIAL_GENE) return (FALSE);
-	if (r_ptr->flags9 & RF9_NEVER_GENE) return (FALSE);
+	if (r_ptr->flags & RF_SPECIAL_GENE) return (FALSE);
+	if (r_ptr->flags & RF_NEVER_GENE) return (FALSE);
 
 	/* Reject pets */
-	if (r_ptr->flags7 & RF7_PET) return (FALSE);
+	if (r_ptr->flags & RF_PET) return (FALSE);
 
 	/* Reject friendly creatures */
-	if (r_ptr->flags7 & RF7_FRIENDLY) return (FALSE);
+	if (r_ptr->flags & RF_FRIENDLY) return (FALSE);
 
 	/* Accept only monsters that are not breeders */
 	if (r_ptr->spells & SF_MULTIPLY) return (FALSE);
 
 	/* Forbid joke monsters */
-	if (r_ptr->flags8 & RF8_JOKEANGBAND) return (FALSE);
+	if (r_ptr->flags & RF_JOKEANGBAND) return (FALSE);
 
 	/* Accept only monsters that are not good */
-	if (r_ptr->flags3 & RF3_GOOD) return (FALSE);
+	if (r_ptr->flags & RF_GOOD) return (FALSE);
 
 	/* The rest are acceptable */
 	return (TRUE);

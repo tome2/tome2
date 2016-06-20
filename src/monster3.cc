@@ -15,6 +15,7 @@
 #include "melee2.hpp"
 #include "monster2.hpp"
 #include "monster_race.hpp"
+#include "monster_race_flag.hpp"
 #include "monster_spell_flag.hpp"
 #include "monster_type.hpp"
 #include "object2.hpp"
@@ -82,7 +83,7 @@ bool_ change_side(monster_type *m_ptr)
 	{
 	case MSTATUS_FRIEND:
 		m_ptr->status = MSTATUS_ENEMY;
-		if ((r_ptr->flags3 & RF3_ANIMAL) && (!(r_ptr->flags3 & RF3_EVIL)))
+		if ((r_ptr->flags & RF_ANIMAL) && (!(r_ptr->flags & RF_EVIL)))
 			inc_piety(GOD_YAVANNA, -m_ptr->level * 4);
 		break;
 	case MSTATUS_NEUTRAL_P:
@@ -93,7 +94,7 @@ bool_ change_side(monster_type *m_ptr)
 		break;
 	case MSTATUS_PET:
 		m_ptr->status = MSTATUS_ENEMY;
-		if ((r_ptr->flags3 & RF3_ANIMAL) && (!(r_ptr->flags3 & RF3_EVIL)))
+		if ((r_ptr->flags & RF_ANIMAL) && (!(r_ptr->flags & RF_EVIL)))
 			inc_piety(GOD_YAVANNA, -m_ptr->level * 4);
 		break;
 	case MSTATUS_COMPANION:
@@ -175,7 +176,7 @@ bool_ ai_possessor(int m_idx, int o_idx)
 	m_ptr->csleep = 0;
 
 	/* Assign maximal hitpoints */
-	if (r_ptr->flags1 & RF1_FORCE_MAXHP)
+	if (r_ptr->flags & RF_FORCE_MAXHP)
 	{
 		m_ptr->maxhp = maxroll(r_ptr->hdice, r_ptr->hside);
 	}
@@ -209,7 +210,7 @@ bool_ ai_possessor(int m_idx, int o_idx)
 	if (r_ptr->spells & SF_MULTIPLY) num_repro++;
 
 	/* Hack -- Notice new multi-hued monsters */
-	if (r_ptr->flags1 & RF1_ATTR_MULTI) shimmer_monsters = TRUE;
+	if (r_ptr->flags & RF_ATTR_MULTI) shimmer_monsters = TRUE;
 
 	/* Hack -- Count the monsters on the level */
 	r_ptr->cur_num++;
@@ -250,7 +251,7 @@ void ai_deincarnate(int m_idx)
 	m_ptr->csleep = 0;
 
 	/* Assign maximal hitpoints */
-	if (r_ptr->flags1 & RF1_FORCE_MAXHP)
+	if (r_ptr->flags & RF_FORCE_MAXHP)
 	{
 		m_ptr->maxhp = maxroll(r_ptr->hdice, r_ptr->hside);
 	}
@@ -284,7 +285,7 @@ void ai_deincarnate(int m_idx)
 	if (r_ptr->spells & SF_MULTIPLY) num_repro++;
 
 	/* Hack -- Notice new multi-hued monsters */
-	if (r_ptr->flags1 & RF1_ATTR_MULTI) shimmer_monsters = TRUE;
+	if (r_ptr->flags & RF_ATTR_MULTI) shimmer_monsters = TRUE;
 
 	/* Hack -- Count the monsters on the level */
 	r_ptr->cur_num++;

@@ -2,6 +2,7 @@
 
 #include "h-basic.h"
 #include "identify_mode.hpp"
+#include "monster_race_flag_set.hpp"
 #include "object_filter.hpp"
 #include "object_type_fwd.hpp"
 
@@ -32,7 +33,7 @@ extern bool detect_objects_gold(int rad);
 extern bool detect_objects_normal(int rad);
 extern bool_ detect_monsters_normal(int rad);
 extern bool_ detect_monsters_invis(int rad);
-extern bool_ detect_monsters_xxx(u32b match_flag, int rad);
+extern void detect_monsters_orcs(int rad);
 extern bool_ detect_all(int rad);
 extern void stair_creation(void);
 extern bool_ wall_stone(int y, int x);

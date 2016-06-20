@@ -27,6 +27,7 @@
 #include "modules.hpp"
 #include "monster2.hpp"
 #include "monster_race.hpp"
+#include "monster_race_flag.hpp"
 #include "notes.hpp"
 #include "object1.hpp"
 #include "object2.hpp"
@@ -804,8 +805,8 @@ static void player_wipe(void)
 		r_ptr->max_num = 100;
 
 		/* Hack -- Reset the max counter */
-		if (r_ptr->flags1 & RF1_UNIQUE) r_ptr->max_num = 1;
-		if (r_ptr->flags3 & RF3_UNIQUE_4) r_ptr->max_num = 4;
+		if (r_ptr->flags & RF_UNIQUE) r_ptr->max_num = 1;
+		if (r_ptr->flags & RF_UNIQUE_4) r_ptr->max_num = 4;
 
 		/* Clear player kills */
 		r_ptr->r_pkills = 0;

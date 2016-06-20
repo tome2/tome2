@@ -21,6 +21,7 @@
 #include "gods.hpp"
 #include "monster2.hpp"
 #include "monster_race.hpp"
+#include "monster_race_flag.hpp"
 #include "monster_type.hpp"
 #include "object1.hpp"
 #include "object2.hpp"
@@ -222,8 +223,8 @@ static bool_ player_handle_trap_of_walls(void)
 				auto const r_ptr = m_ptr->race();
 
 				/* Most monsters cannot co-exist with rock */
-				if ((!(r_ptr->flags2 & RF2_KILL_WALL)) &&
-				                (!(r_ptr->flags2 & RF2_PASS_WALL)))
+				if ((!(r_ptr->flags & RF_KILL_WALL)) &&
+				                (!(r_ptr->flags & RF_PASS_WALL)))
 				{
 					char m_name[80];
 
@@ -231,7 +232,7 @@ static bool_ player_handle_trap_of_walls(void)
 					sn = 0;
 
 					/* Monster can move to escape the wall */
-					if (!(r_ptr->flags1 & RF1_NEVER_MOVE))
+					if (!(r_ptr->flags & RF_NEVER_MOVE))
 					{
 						/* Look for safety */
 						for (i = 0; i < 8; i++)
@@ -2450,7 +2451,7 @@ bool_ mon_hit_trap_aux_scroll(int m_idx, int sval)
 			monster_race *r_ptr = &r_info[m_ptr->r_idx];
 			genocide_aux(FALSE, r_ptr->d_char);
 			/* although there's no point in a multiple genocide trap... */
-			return (!(r_ptr->flags1 & RF1_UNIQUE));
+			return (!(r_ptr->flags & RF_UNIQUE));
 		}
 	case SV_SCROLL_MASS_GENOCIDE:
 		for (k = 0; k < 8; k++)
@@ -2613,7 +2614,7 @@ bool_ mon_hit_trap_aux_potion(int m_idx, object_type *o_ptr)
 		case SV_POTION_LIFE:
 			{
 				monster_race *r_ptr = &r_info[m_ptr->r_idx];
-				if (r_ptr->flags3 & RF3_UNDEAD)
+				if (r_ptr->flags & RF_UNDEAD)
 				{
 					typ = GF_HOLY_FIRE;
 					dam = damroll(20, 20);
@@ -2683,17 +2684,17 @@ bool_ mon_hit_trap(int m_idx)
 
 	/* Can set off check */
 	/* Ghosts only set off Ghost traps */
-	if ((r_ptr->flags2 & RF2_PASS_WALL) && !(f2 & TRAP2_KILL_GHOST)) return (FALSE);
+	if ((r_ptr->flags & RF_PASS_WALL) && !(f2 & TRAP2_KILL_GHOST)) return (FALSE);
 
 	/* Some traps are specialized to some creatures */
 	if (f2 & TRAP2_ONLY_MASK)
 	{
 		bool_ affect = FALSE;
-		if ((f2 & TRAP2_ONLY_DRAGON) && (r_ptr->flags3 & RF3_DRAGON)) affect = TRUE;
-		if ((f2 & TRAP2_ONLY_DEMON) && (r_ptr->flags3 & RF3_DEMON)) affect = TRUE;
-		if ((f2 & TRAP2_ONLY_UNDEAD) && (r_ptr->flags3 & RF3_UNDEAD)) affect = TRUE;
-		if ((f2 & TRAP2_ONLY_EVIL) && (r_ptr->flags3 & RF3_EVIL)) affect = TRUE;
-		if ((f2 & TRAP2_ONLY_ANIMAL) && (r_ptr->flags3 & RF3_ANIMAL)) affect = TRUE;
+		if ((f2 & TRAP2_ONLY_DRAGON) && (r_ptr->flags & RF_DRAGON)) affect = TRUE;
+		if ((f2 & TRAP2_ONLY_DEMON) && (r_ptr->flags & RF_DEMON)) affect = TRUE;
+		if ((f2 & TRAP2_ONLY_UNDEAD) && (r_ptr->flags & RF_UNDEAD)) affect = TRUE;
+		if ((f2 & TRAP2_ONLY_EVIL) && (r_ptr->flags & RF_EVIL)) affect = TRUE;
+		if ((f2 & TRAP2_ONLY_ANIMAL) && (r_ptr->flags & RF_ANIMAL)) affect = TRUE;
 
 		/* Don't set it off if forbidden */
 		if (!affect) return (FALSE);
@@ -2713,13 +2714,13 @@ bool_ mon_hit_trap(int m_idx)
 	smartness = r_ptr->level;
 
 	/* Smart monsters are better at detecting traps */
-	if (r_ptr->flags2 & RF2_SMART) smartness += 10;
+	if (r_ptr->flags & RF_SMART) smartness += 10;
 
 	/* Some monsters have already noticed one of out traps */
 	if (m_ptr->smart & SM_NOTE_TRAP) smartness += 20;
 
 	/* Stupid monsters are no good at detecting traps */
-	if (r_ptr->flags2 & (RF2_STUPID | RF2_EMPTY_MIND)) smartness = -150;
+	if (r_ptr->flags & (RF_STUPID | RF_EMPTY_MIND)) smartness = -150;
 
 	/* Check if the monster notices the trap */
 	if (randint(300) > (difficulty - smartness + 150)) notice = TRUE;
@@ -2738,13 +2739,13 @@ bool_ mon_hit_trap(int m_idx)
 		smartness = r_ptr->level / 5;
 
 		/* Smart monsters are better at disarming */
-		if (r_ptr->flags2 & RF2_SMART) smartness *= 2;
+		if (r_ptr->flags & RF_SMART) smartness *= 2;
 
 		/* Stupid monsters never disarm traps */
-		if (r_ptr->flags2 & RF2_STUPID) smartness = -150;
+		if (r_ptr->flags & RF_STUPID) smartness = -150;
 
 		/* Nonsmart animals never disarm traps */
-		if ((r_ptr->flags3 & RF3_ANIMAL) && !(r_ptr->flags2 & RF2_SMART)) smartness = -150;
+		if ((r_ptr->flags & RF_ANIMAL) && !(r_ptr->flags & RF_SMART)) smartness = -150;
 
 		/* Check if the monster disarms the trap */
 		if (randint(120) > (difficulty - smartness + 80)) disarm = TRUE;
@@ -2823,9 +2824,9 @@ bool_ mon_hit_trap(int m_idx)
 						cptr note_dies = " dies.";
 
 						/* Some monsters get "destroyed" */
-						if ((r_ptr->flags3 & RF3_DEMON) ||
-						                (r_ptr->flags3 & RF3_UNDEAD) ||
-						                (r_ptr->flags2 & RF2_STUPID) ||
+						if ((r_ptr->flags & RF_DEMON) ||
+						                (r_ptr->flags & RF_UNDEAD) ||
+						                (r_ptr->flags & RF_STUPID) ||
 						                (strchr("Evg", r_ptr->d_char)))
 						{
 							/* Special note at death */

@@ -21,6 +21,7 @@
 #include "monster2.hpp"
 #include "monster3.hpp"
 #include "monster_race.hpp"
+#include "monster_race_flag.hpp"
 #include "monster_type.hpp"
 #include "object1.hpp"
 #include "object2.hpp"
@@ -561,7 +562,7 @@ static void power_activate(int power)
 				m_ptr = &m_list[c_ptr->m_idx];
 				auto const r_ptr = m_ptr->race();
 
-				if ((r_ptr->flags1 & RF1_NEVER_MOVE) && (m_ptr->status == MSTATUS_PET) && (!(r_ptr->flags9 & RF9_SPECIAL_GENE)))
+				if ((r_ptr->flags & RF_NEVER_MOVE) && (m_ptr->status == MSTATUS_PET) && (!(r_ptr->flags & RF_SPECIAL_GENE)))
 				{
 					q_ptr = &forge;
 					object_prep(q_ptr, lookup_kind(TV_HYPNOS, 1));
@@ -1001,7 +1002,7 @@ static void power_activate(int power)
 			monster_type *m_ptr = &m_list[c_ptr->m_idx];
 			auto const r_ptr = m_ptr->race();
 
-			if (r_ptr->flags3 & RF3_EVIL)
+			if (r_ptr->flags & RF_EVIL)
 			{
 				/* Delete the monster, rather than killing it. */
 				delete_monster_idx(c_ptr->m_idx);

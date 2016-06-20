@@ -25,6 +25,7 @@
 #include "monster2.hpp"
 #include "monster3.hpp"
 #include "monster_race.hpp"
+#include "monster_race_flag.hpp"
 #include "monster_spell_flag.hpp"
 #include "monster_type.hpp"
 #include "object1.hpp"
@@ -260,68 +261,68 @@ s16b tot_dam_aux(object_type *o_ptr, int tdam, monster_type *m_ptr,
 	case TV_DIGGING:
 		{
 			/* Slay Animal */
-			if ((f1 & (TR1_SLAY_ANIMAL)) && (r_ptr->flags3 & RF3_ANIMAL))
+			if ((f1 & (TR1_SLAY_ANIMAL)) && (r_ptr->flags & RF_ANIMAL))
 			{
 				if (mult < 2) mult = 2;
 			}
 
 			/* Slay Evil */
-			if ((f1 & (TR1_SLAY_EVIL)) && (r_ptr->flags3 & RF3_EVIL))
+			if ((f1 & (TR1_SLAY_EVIL)) && (r_ptr->flags & RF_EVIL))
 			{
 				if (mult < 2) mult = 2;
 			}
 
 			/* Slay Undead */
-			if ((f1 & (TR1_SLAY_UNDEAD)) && (r_ptr->flags3 & RF3_UNDEAD))
+			if ((f1 & (TR1_SLAY_UNDEAD)) && (r_ptr->flags & RF_UNDEAD))
 			{
 				if (mult < 3) mult = 3;
 			}
 
 			/* Slay Demon */
-			if ((f1 & (TR1_SLAY_DEMON)) && (r_ptr->flags3 & RF3_DEMON))
+			if ((f1 & (TR1_SLAY_DEMON)) && (r_ptr->flags & RF_DEMON))
 			{
 				if (mult < 3) mult = 3;
 			}
 
 			/* Slay Orc */
-			if ((f1 & (TR1_SLAY_ORC)) && (r_ptr->flags3 & RF3_ORC))
+			if ((f1 & (TR1_SLAY_ORC)) && (r_ptr->flags & RF_ORC))
 			{
 				if (mult < 3) mult = 3;
 			}
 
 			/* Slay Troll */
-			if ((f1 & (TR1_SLAY_TROLL)) && (r_ptr->flags3 & RF3_TROLL))
+			if ((f1 & (TR1_SLAY_TROLL)) && (r_ptr->flags & RF_TROLL))
 			{
 				if (mult < 3) mult = 3;
 			}
 
 			/* Slay Giant */
-			if ((f1 & (TR1_SLAY_GIANT)) && (r_ptr->flags3 & RF3_GIANT))
+			if ((f1 & (TR1_SLAY_GIANT)) && (r_ptr->flags & RF_GIANT))
 			{
 				if (mult < 3) mult = 3;
 			}
 
 			/* Slay Dragon  */
-			if ((f1 & (TR1_SLAY_DRAGON)) && (r_ptr->flags3 & RF3_DRAGON))
+			if ((f1 & (TR1_SLAY_DRAGON)) && (r_ptr->flags & RF_DRAGON))
 			{
 				if (mult < 3) mult = 3;
 			}
 
 			/* Execute Dragon */
-			if ((f1 & (TR1_KILL_DRAGON)) && (r_ptr->flags3 & RF3_DRAGON))
+			if ((f1 & (TR1_KILL_DRAGON)) && (r_ptr->flags & RF_DRAGON))
 			{
 				if (mult < 5) mult = 5;
 			}
 
 			/* Execute Undead */
-			if ((f5 & (TR5_KILL_UNDEAD)) && (r_ptr->flags3 & RF3_UNDEAD))
+			if ((f5 & (TR5_KILL_UNDEAD)) && (r_ptr->flags & RF_UNDEAD))
 			{
 
 				if (mult < 5) mult = 5;
 			}
 
 			/* Execute Demon */
-			if ((f5 & (TR5_KILL_DEMON)) && (r_ptr->flags3 & RF3_DEMON))
+			if ((f5 & (TR5_KILL_DEMON)) && (r_ptr->flags & RF_DEMON))
 			{
 				if (mult < 5) mult = 5;
 			}
@@ -330,11 +331,11 @@ s16b tot_dam_aux(object_type *o_ptr, int tdam, monster_type *m_ptr,
 			/* Brand (Acid) */
 			if (f1 & (TR1_BRAND_ACID))
 			{
-				if (r_ptr->flags3 & RF3_IM_ACID)
+				if (r_ptr->flags & RF_IM_ACID)
 				{
 					// No additional multiplier
 				}
-				else if (r_ptr->flags9 & RF9_SUSCEP_ACID)
+				else if (r_ptr->flags & RF_SUSCEP_ACID)
 				{
 					if (mult < 6) mult = 6;
 				}
@@ -347,11 +348,11 @@ s16b tot_dam_aux(object_type *o_ptr, int tdam, monster_type *m_ptr,
 			/* Brand (Elec) */
 			if (f1 & (TR1_BRAND_ELEC))
 			{
-				if (r_ptr->flags3 & RF3_IM_ELEC)
+				if (r_ptr->flags & RF_IM_ELEC)
 				{
 					// No additional multiplier
 				}
-				else if (r_ptr->flags9 & RF9_SUSCEP_ELEC)
+				else if (r_ptr->flags & RF_SUSCEP_ELEC)
 				{
 					if (mult < 6) mult = 6;
 				}
@@ -364,11 +365,11 @@ s16b tot_dam_aux(object_type *o_ptr, int tdam, monster_type *m_ptr,
 			/* Brand (Fire) */
 			if (f1 & (TR1_BRAND_FIRE))
 			{
-				if (r_ptr->flags3 & RF3_IM_FIRE)
+				if (r_ptr->flags & RF_IM_FIRE)
 				{
 					// No additional multiplier
 				}
-				else if (r_ptr->flags3 & RF3_SUSCEP_FIRE)
+				else if (r_ptr->flags & RF_SUSCEP_FIRE)
 				{
 					if (mult < 6) mult = 6;
 				}
@@ -381,11 +382,11 @@ s16b tot_dam_aux(object_type *o_ptr, int tdam, monster_type *m_ptr,
 			/* Brand (Cold) */
 			if (f1 & (TR1_BRAND_COLD))
 			{
-				if (r_ptr->flags3 & RF3_IM_COLD)
+				if (r_ptr->flags & RF_IM_COLD)
 				{
 					// No additional multiplier
 				}
-				else if (r_ptr->flags3 & RF3_SUSCEP_COLD)
+				else if (r_ptr->flags & RF_SUSCEP_COLD)
 				{
 					if (mult < 6) mult = 6;
 				}
@@ -398,11 +399,11 @@ s16b tot_dam_aux(object_type *o_ptr, int tdam, monster_type *m_ptr,
 			/* Brand (Poison) */
 			if (f1 & (TR1_BRAND_POIS) || (p_ptr->tim_poison))
 			{
-				if (r_ptr->flags3 & RF3_IM_POIS)
+				if (r_ptr->flags & RF_IM_POIS)
 				{
 					// No additional damage
 				}
-				else if (r_ptr->flags9 & RF9_SUSCEP_POIS)
+				else if (r_ptr->flags & RF_SUSCEP_POIS)
 				{
 					if (mult < 6) mult = 6;
 					if (magik(95)) *special |= SPEC_POIS;
@@ -417,7 +418,7 @@ s16b tot_dam_aux(object_type *o_ptr, int tdam, monster_type *m_ptr,
 			/* Wounding */
 			if (f5 & (TR5_WOUNDING))
 			{
-				if (r_ptr->flags8 & RF8_NO_CUT)
+				if (r_ptr->flags & RF_NO_CUT)
 				{
 					// No additional damage
 				}
@@ -565,7 +566,7 @@ void touch_zap_player(monster_type *m_ptr)
 {
 	auto r_ptr = m_ptr->race();
 
-	if (r_ptr->flags2 & RF2_AURA_FIRE)
+	if (r_ptr->flags & RF_AURA_FIRE)
 	{
 		if (!(p_ptr->immune_fire))
 		{
@@ -589,7 +590,7 @@ void touch_zap_player(monster_type *m_ptr)
 	}
 
 
-	if (r_ptr->flags2 & RF2_AURA_ELEC)
+	if (r_ptr->flags & RF_AURA_ELEC)
 	{
 		if (!(p_ptr->immune_elec))
 		{
@@ -649,7 +650,7 @@ static void carried_monster_attack(s16b m_idx, bool_ *fear, bool_ *mdeath,
 	r_ptr = &r_info[o_ptr->pval];
 
 	/* Not allowed to attack */
-	if (r_ptr->flags1 & RF1_NEVER_BLOW) return;
+	if (r_ptr->flags & RF_NEVER_BLOW) return;
 
 	/* Total armor */
 	ac = t_ptr->ac;
@@ -1036,8 +1037,8 @@ static void carried_monster_attack(s16b m_idx, bool_ *fear, bool_ *mdeath,
 				{
 					auto tr_ptr = t_ptr->race();
 					/* Aura fire */
-					if ((tr_ptr->flags2 & RF2_AURA_FIRE) &&
-					                !(r_ptr->flags3 & RF3_IM_FIRE))
+					if ((tr_ptr->flags & RF_AURA_FIRE) &&
+					                !(r_ptr->flags & RF_IM_FIRE))
 					{
 						if (t_ptr->ml)
 						{
@@ -1051,8 +1052,8 @@ static void carried_monster_attack(s16b m_idx, bool_ *fear, bool_ *mdeath,
 					}
 
 					/* Aura elec */
-					if ((tr_ptr->flags2 & RF2_AURA_ELEC) &&
-					                !(r_ptr->flags3 & RF3_IM_ELEC))
+					if ((tr_ptr->flags & RF_AURA_ELEC) &&
+					                !(r_ptr->flags & RF_IM_ELEC))
 					{
 						if (t_ptr->ml)
 						{
@@ -1138,7 +1139,7 @@ static void incarnate_monster_attack(s16b m_idx, bool_ *fear, bool_ *mdeath,
 	auto r_ptr = &r_info[p_ptr->body_monster];
 
 	/* Not allowed to attack */
-	if (r_ptr->flags1 & RF1_NEVER_BLOW) return;
+	if (r_ptr->flags & RF_NEVER_BLOW) return;
 
 	/* Total armor */
 	ac = t_ptr->ac;
@@ -1524,8 +1525,8 @@ static void incarnate_monster_attack(s16b m_idx, bool_ *fear, bool_ *mdeath,
 				if (touched)
 				{
 					/* Aura fire */
-					if ((tr_ptr->flags2 & RF2_AURA_FIRE) &&
-					                !(r_ptr->flags3 & RF3_IM_FIRE))
+					if ((tr_ptr->flags & RF_AURA_FIRE) &&
+					                !(r_ptr->flags & RF_IM_FIRE))
 					{
 						if (t_ptr->ml)
 						{
@@ -1539,8 +1540,8 @@ static void incarnate_monster_attack(s16b m_idx, bool_ *fear, bool_ *mdeath,
 					}
 
 					/* Aura elec */
-					if ((tr_ptr->flags2 & RF2_AURA_ELEC) &&
-					                !(r_ptr->flags3 & RF3_IM_ELEC))
+					if ((tr_ptr->flags & RF_AURA_ELEC) &&
+					                !(r_ptr->flags & RF_IM_ELEC))
 					{
 						if (t_ptr->ml)
 						{
@@ -1661,7 +1662,7 @@ void attack_special(monster_type *m_ptr, s32b special, int dam)
 	/* Special - Cut monster */
 	if (special & SPEC_CUT)
 	{
-		if (r_ptr->flags8 & RF8_NO_CUT)
+		if (r_ptr->flags & RF_NO_CUT)
 		{
 			// No damage
 		}
@@ -1683,11 +1684,11 @@ void attack_special(monster_type *m_ptr, s32b special, int dam)
 	/* Special - Poison monster */
 	if (special & SPEC_POIS)
 	{
-		if (r_ptr->flags3 & RF3_IM_POIS)
+		if (r_ptr->flags & RF_IM_POIS)
 		{
 			// No damage
 		}
-		else if (r_ptr->flags9 & RF9_SUSCEP_POIS)
+		else if (r_ptr->flags & RF_SUSCEP_POIS)
 		{
 			if (m_ptr->poisoned)
 			{
@@ -1747,11 +1748,11 @@ static void py_attack_hand(int *k, monster_type *m_ptr, s32b *special)
 
 	/* Extract monster name (or "it") */
 	auto const r_ptr = m_ptr->race();
-	if (r_ptr->flags1 & RF1_UNIQUE) resist_stun += 88;
-	if (r_ptr->flags3 & RF3_NO_CONF) resist_stun += 44;
-	if (r_ptr->flags3 & RF3_NO_SLEEP) resist_stun += 44;
-	if ((r_ptr->flags3 & RF3_UNDEAD) ||
-	                (r_ptr->flags3 & RF3_NONLIVING)) resist_stun += 88;
+	if (r_ptr->flags & RF_UNIQUE) resist_stun += 88;
+	if (r_ptr->flags & RF_NO_CONF) resist_stun += 44;
+	if (r_ptr->flags & RF_NO_SLEEP) resist_stun += 44;
+	if ((r_ptr->flags & RF_UNDEAD) ||
+	                (r_ptr->flags & RF_NONLIVING)) resist_stun += 88;
 
 	if (plev)
 	{
@@ -1790,7 +1791,7 @@ static void py_attack_hand(int *k, monster_type *m_ptr, s32b *special)
 	/* Describe attack */
 	if (ma_ptr->effect & MA_KNEE)
 	{
-		if (r_ptr->flags1 & RF1_MALE)
+		if (r_ptr->flags & RF_MALE)
 		{
 			if (!desc) msg_format("You hit %s in the groin with your knee!",
 				                      m_name);
@@ -1811,7 +1812,7 @@ static void py_attack_hand(int *k, monster_type *m_ptr, s32b *special)
 	if (ma_ptr->effect & MA_SLOW)
 	{
 		if (!
-		                ((r_ptr->flags1 & RF1_NEVER_MOVE) ||
+		                ((r_ptr->flags & RF_NEVER_MOVE) ||
 		                 strchr("UjmeEv$,DdsbBFIJQSXclnw!=?", r_ptr->d_char)))
 		{
 			if (!desc) msg_format("You kick %s in the ankle.", m_name);
@@ -1853,7 +1854,7 @@ static void py_attack_hand(int *k, monster_type *m_ptr, s32b *special)
 	if (((special_effect & MA_FULL_SLOW) || (special_effect & MA_SLOW)) &&
 	                ((*k + p_ptr->to_d) < m_ptr->hp))
 	{
-		if (!(r_ptr->flags1 & RF1_UNIQUE) &&
+		if (!(r_ptr->flags & RF_UNIQUE) &&
 		                (randint(plev) > m_ptr->level) && m_ptr->mspeed > 60)
 		{
 			msg_format("%^s starts limping slower.", m_name);
@@ -1899,7 +1900,7 @@ static void do_nazgul(int *k, int *num, int num_blow, int weap, std::shared_ptr<
 		allow_shatter = FALSE;
 
 	/* Mega Hack -- Hitting Nazgul is REALY dangerous (ideas from Akhronath) */
-	if (r_ptr->flags7 & RF7_NAZGUL)
+	if (r_ptr->flags & RF_NAZGUL)
 	{
 		if ((!o_ptr->name2) && (!artifact_p(o_ptr)) && allow_shatter)
 		{
@@ -2014,7 +2015,7 @@ void py_attack(int y, int x, int max_blow)
 	/* Disturb the player */
 	disturb(0);
 
-	if (r_info[p_ptr->body_monster].flags1 & RF1_NEVER_BLOW)
+	if (r_info[p_ptr->body_monster].flags & RF_NEVER_BLOW)
 	{
 		msg_print("You cannot attack in this form!");
 		return;
@@ -2183,8 +2184,8 @@ void py_attack(int y, int x, int max_blow)
 						if ((f1 & TR1_VAMPIRIC) || (chaos_effect == 1))
 						{
 							if (!
-							                ((r_ptr->flags3 & RF3_UNDEAD) ||
-							                 (r_ptr->flags3 & RF3_NONLIVING)))
+							                ((r_ptr->flags & RF_UNDEAD) ||
+							                 (r_ptr->flags & RF_NONLIVING)))
 								drain_result = m_ptr->hp;
 							else
 								drain_result = 0;
@@ -2450,7 +2451,7 @@ void py_attack(int y, int x, int max_blow)
 							}
 
 							/* Confuse the monster */
-							if (r_ptr->flags3 & RF3_NO_CONF)
+							if (r_ptr->flags & RF_NO_CONF)
 							{
 								msg_format("%^s is unaffected.", m_name);
 							}
@@ -2476,7 +2477,7 @@ void py_attack(int y, int x, int max_blow)
 						else if ((chaos_effect == 5) && cave_floor_bold(y, x) &&
 						                (randint(90) > m_ptr->level))
 						{
-							if (!((r_ptr->flags1 & RF1_UNIQUE) ||
+							if (!((r_ptr->flags & RF_UNIQUE) ||
 							                (r_ptr->spells & SF_BR_CHAO) ||
 							                (m_ptr->mflag & MFLAG_QUEST)))
 							{
@@ -2621,7 +2622,7 @@ bool_ player_can_enter(byte feature)
 	else if (f_info[feature].flags1 & FF1_NO_WALK)
 		return (FALSE);
 	else if ((f_info[feature].flags1 & FF1_WEB) &&
-	                ((!(r_info[p_ptr->body_monster].flags7 & RF7_SPIDER)) && (p_ptr->mimic_form != resolve_mimic_name("Spider"))))
+			((!(r_info[p_ptr->body_monster].flags & RF_SPIDER)) && (p_ptr->mimic_form != resolve_mimic_name("Spider"))))
 		return (FALSE);
 
 	return (TRUE);
@@ -2647,7 +2648,7 @@ static bool_ easy_open_door(int y, int x)
 	monster_race *r_ptr = &r_info[p_ptr->body_monster];
 
 
-	if ((p_ptr->body_monster != 0) && !(r_ptr->flags2 & RF2_OPEN_DOOR))
+	if ((p_ptr->body_monster != 0) && !(r_ptr->flags & RF_OPEN_DOOR))
 	{
 		msg_print("You cannot open doors.");
 
@@ -2771,21 +2772,21 @@ void move_player_aux(int dir, int do_pickup, int run, bool_ disarm)
 	/* Hack - random movement */
 	if (p_ptr->disembodied)
 		tmp = dir;
-	else if ((r_ptr->flags1 & RF1_RAND_25) && (r_ptr->flags1 & RF1_RAND_50))
+	else if ((r_ptr->flags & RF_RAND_25) && (r_ptr->flags & RF_RAND_50))
 	{
 		if (randint(100) < 75)
 			tmp = randint(9);
 		else
 			tmp = dir;
 	}
-	else if (r_ptr->flags1 & RF1_RAND_50)
+	else if (r_ptr->flags & RF_RAND_50)
 	{
 		if (randint(100) < 50)
 			tmp = randint(9);
 		else
 			tmp = dir;
 	}
-	else if (r_ptr->flags1 & RF1_RAND_25)
+	else if (r_ptr->flags & RF_RAND_25)
 	{
 		if (randint(100) < 25)
 			tmp = randint(9);
@@ -2963,7 +2964,7 @@ void move_player_aux(int dir, int do_pickup, int run, bool_ disarm)
 				py_attack(y, x, -1);
 			}
 			else if (cave_floor_bold(p_ptr->py, p_ptr->px) ||
-			                (mr_ptr->flags2 & RF2_PASS_WALL))
+			                (mr_ptr->flags & RF_PASS_WALL))
 			{
 				msg_format("You push past %s.", m_name);
 				m_ptr->fy = p_ptr->py;
@@ -4339,7 +4340,7 @@ void do_cmd_pet(void)
 				m_ptr = &m_list[pet_ctr];
 				r_ptr = &r_info[m_ptr->r_idx];
 
-				if ((!(r_ptr->flags7 & RF7_NO_DEATH)) && ((m_ptr->status == MSTATUS_PET) || (m_ptr->status == MSTATUS_FRIEND)))	/* Get rid of it! */
+				if ((!(r_ptr->flags & RF_NO_DEATH)) && ((m_ptr->status == MSTATUS_PET) || (m_ptr->status == MSTATUS_FRIEND)))	/* Get rid of it! */
 				{
 					bool_ checked = FALSE;
 					char command;
@@ -4408,7 +4409,7 @@ void do_cmd_pet(void)
 				m_ptr = &m_list[pet_ctr];
 				r_ptr = &r_info[m_ptr->r_idx];
 
-				if ((!(r_ptr->flags7 & RF7_NO_DEATH)) && ((m_ptr->status == MSTATUS_COMPANION)))	/* Get rid of it! */
+				if ((!(r_ptr->flags & RF_NO_DEATH)) && ((m_ptr->status == MSTATUS_COMPANION)))	/* Get rid of it! */
 				{
 					bool_ delete_this = FALSE;
 
@@ -4572,7 +4573,7 @@ bool_ do_cmd_leave_body(bool_ drop_body)
 			o_ptr->ident |= IDENT_STOREB;
 
 			/* Unique corpses are unique */
-			if (r_ptr->flags1 & RF1_UNIQUE)
+			if (r_ptr->flags & RF_UNIQUE)
 			{
 				o_ptr->name1 = 201;
 			}
@@ -4668,13 +4669,13 @@ bool_ execute_inscription(byte i, byte y, byte x)
 				monster_type *m_ptr = &m_list[c_ptr->m_idx];
 				auto const r_ptr = m_ptr->race();
 
-				if (r_ptr->flags7 & RF7_CAN_FLY)
+				if (r_ptr->flags & RF_CAN_FLY)
 				{
 					msg_print("The monster simply flies over the chasm.");
 				}
 				else
 				{
-					if (!(r_ptr->flags1 & RF1_UNIQUE))
+					if (!(r_ptr->flags & RF_UNIQUE))
 					{
 						msg_print("The monster falls in the chasm!");
 						delete_monster_idx(c_ptr->m_idx);

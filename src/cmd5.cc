@@ -16,6 +16,7 @@
 #include "lua_bind.hpp"
 #include "monster2.hpp"
 #include "monster_race.hpp"
+#include "monster_race_flag.hpp"
 #include "monster_spell_flag.hpp"
 #include "object1.hpp"
 #include "object2.hpp"
@@ -592,7 +593,7 @@ cptr symbiote_name(bool_ capitalize)
 		monster_race *r_ptr = &r_info[o_ptr->pval];
 		cptr s = NULL;
 
-		if (r_ptr->flags1 & RF1_UNIQUE)
+		if (r_ptr->flags & RF_UNIQUE)
 		{
 			/* Unique monster; no preceding "your", and ignore our name. */
 			strncpy(buf, r_ptr->name, sizeof(buf));
@@ -857,7 +858,7 @@ static void apply_monster_power(monster_race const *r_ptr, std::size_t monster_s
 	int const rlev = ((r_ptr->level >= 1) ? r_ptr->level : 1);
 
 	/* 'Powerful' monsters have wider radii */
-	int rad = (r_ptr->flags2 & RF2_POWERFUL)
+	int rad = (r_ptr->flags & RF_POWERFUL)
 			? 1 + (p_ptr->lev / 15)
 			: 1 + (p_ptr->lev / 20);
 

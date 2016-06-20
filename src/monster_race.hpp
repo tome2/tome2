@@ -3,6 +3,7 @@
 #include "body.hpp"
 #include "h-basic.h"
 #include "monster_blow.hpp"
+#include "monster_race_flag_set.hpp"
 #include "monster_spell_flag_set.hpp"
 #include "obj_theme.hpp"
 
@@ -48,12 +49,7 @@ struct monster_race
 	byte freq_inate = 0;                     /* Inate spell frequency */
 	byte freq_spell = 0;                     /* Other spell frequency */
 
-	u32b flags1 = 0;			/* Flags 1 (general) */
-	u32b flags2 = 0;			/* Flags 2 (abilities) */
-	u32b flags3 = 0;			/* Flags 3 (race/resist) */
-	u32b flags7 = 0;			/* Flags 7 (movement related abilities) */
-	u32b flags8 = 0;			/* Flags 8 (wilderness info) */
-	u32b flags9 = 0;			/* Flags 9 (drops info) */
+	monster_race_flag_set flags;            /* Flags */
 
 	monster_spell_flag_set spells;          /* Spells */
 
