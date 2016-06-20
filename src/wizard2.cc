@@ -35,7 +35,6 @@
 #include "variable.hpp"
 #include "wilderness_map.hpp"
 #include "wilderness_type_info.hpp"
-#include "wizard1.hpp"
 #include "xtra1.hpp"
 #include "xtra2.hpp"
 #include "z-rand.hpp"
@@ -1564,11 +1563,6 @@ void do_cmd_debug()
 	case '\r':
 		break;
 
-
-		/* Hack -- Generate Spoilers */
-	case '"':
-		do_cmd_spoilers();
-		break;
 
 		/* Hack -- Help */
 	case '?':

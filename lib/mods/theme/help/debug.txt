@@ -59,7 +59,7 @@ will not be scored if you use debug commands.
  ;  (unused)                            ^S  (unused)
  :  (unused)                            ^T  (unused)
  '  (unused)                            ^U  (unused)
- *****debug.txt*75["  Create spoiler]                      ^V  (unused)
+                                        ^V  (unused)
  ,  (unused)                            ^W  (unused)
  <  (unused)                            ^X  (unused)
  .  (unused)                            ^Y  (unused)
@@ -259,9 +259,6 @@ maximal legal value.
             3 monster becomes pet
             4 monster becomes companion
         You then point at an enemy and press space.
-~~~~~75
-[[[[[GCreate spoiler (")]
-        Brings up a menu that allows you to create a spoiler file.
 ~~~~~81
 [[[[[GLua script (>)]
         Allows you to run a Lua script.

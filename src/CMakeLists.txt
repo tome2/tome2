@@ -103,7 +103,6 @@ SET(SRCS_COMMON
   util.cc
   variable.cc
   wild.cc
-  wizard1.cc
   wizard2.cc
   xtra1.cc
   xtra2.cc
