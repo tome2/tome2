@@ -40,7 +40,7 @@ s32b maxroll(s16b num, s16b sides);
 bool magik(s32b p);
 
 /*
- * Generates a random long integer X where O<=X<M.
+ * Generates a random long integer X where 0<=X<M.
  * The integer X falls along a uniform distribution.
  * For example, if M is 100, you get "percentile dice"
  */
