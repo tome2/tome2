@@ -325,7 +325,7 @@ namespace {
 
 		static void allocate()
 		{
-			a_info = make_array<artifact_type>(max_a_idx);
+			a_info = new artifact_type[max_a_idx];
 		}
 
 		static errr parse(FILE *fp)
