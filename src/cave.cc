@@ -3934,29 +3934,12 @@ void update_flow(void)
  */
 void map_area(void)
 {
-	int i, x, y, y1, y2, x1, x2;
-
-	cave_type *c_ptr;
-
-
-	/* Pick an area to map */
-	y1 = panel_row_min - randint(10);
-	y2 = panel_row_max + randint(10);
-	x1 = panel_col_min - randint(20);
-	x2 = panel_col_max + randint(20);
-
-	/* Speed -- shrink to fit legal bounds */
-	if (y1 < 1) y1 = 1;
-	if (y2 > cur_hgt - 2) y2 = cur_hgt - 2;
-	if (x1 < 1) x1 = 1;
-	if (x2 > cur_wid - 2) x2 = cur_wid - 2;
-
-	/* Scan that area */
-	for (y = y1; y <= y2; y++)
+	/* Scan the whole map */
+	for (int y = 1; y < cur_hgt - 1; y++)
 	{
-		for (x = x1; x <= x2; x++)
+		for (int x = 1; x < cur_wid - 1; x++)
 		{
-			c_ptr = &cave[y][x];
+			auto c_ptr = &cave[y][x];
 
 			/* All non-walls are "checked" */
 			if (!is_wall(c_ptr))
@@ -3969,7 +3952,7 @@ void map_area(void)
 				}
 
 				/* Memorize known walls */
-				for (i = 0; i < 8; i++)
+				for (int i = 0; i < 8; i++)
 				{
 					c_ptr = &cave[y + ddy_ddd[i]][x + ddx_ddd[i]];
 
