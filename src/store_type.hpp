@@ -1,7 +1,9 @@
 #pragma once
 
 #include "h-basic.h"
-#include "object_type.hpp"
+#include "object_type_fwd.hpp"
+
+#include <vector>
 
 /**
  * A store, with an owner, various state flags, a current stock
@@ -9,35 +11,30 @@
  */
 struct store_type
 {
-	u16b st_idx;
+	u16b st_idx = 0;
 
 	/**
 	 * Owner index
 	 */
-	u16b owner;
+	u16b owner = 0;
 
 	/**
 	 * Closed until this turn.
 	 */
-	s32b store_open;
+	s32b store_open = 0;
 
 	/**
 	 * Last visited on this turn.
 	 */
-	s32b last_visit;
-
-	/**
-	 * Stock: Number of entries.
-	 */
-	byte stock_num;
+	s32b last_visit = 0;
 
 	/**
 	 * Stock: Total size of array
 	 */
-	s16b stock_size;
+	u16b stock_size = 0;
 
 	/**
 	 * Stock: Actual stock items
 	 */
-	object_type *stock;
+	std::vector<object_type> stock;
 };

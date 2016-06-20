@@ -2482,17 +2482,16 @@ void file_character_print_item(FILE *fff, char label, object_type *obj, bool_ fu
  */
 void file_character_print_store(FILE *fff, wilderness_type_info *place, int store, bool_ full)
 {
-	int i;
 	town_type *town = &town_info[place->entrance];
 	store_type *st_ptr = &town->store[store];
 
-	if (st_ptr->stock_num)
+	if (st_ptr->stock.size())
 	{
 		/* Header with name of the town */
 		fprintf(fff, "  [%s Inventory - %s]\n\n", st_info[store].name, place->name);
 
 		/* Dump all available items */
-		for (i = 0; i < st_ptr->stock_num; i++)
+		for (std::size_t i = 0; i < st_ptr->stock.size(); i++)
 		{
 			file_character_print_item(fff, I2A(i%24), &st_ptr->stock[i], full);
 		}
@@ -4211,14 +4210,10 @@ static void print_tomb(void)
  */
 static void show_info(void)
 {
-	int i, j, k;
-	object_type *o_ptr;
-	store_type *st_ptr;
-
 	/* Hack -- Know everything in the inven/equip */
-	for (i = 0; i < INVEN_TOTAL; i++)
+	for (int i = 0; i < INVEN_TOTAL; i++)
 	{
-		o_ptr = &p_ptr->inventory[i];
+		auto o_ptr = &p_ptr->inventory[i];
 
 		/* Skip non-objects */
 		if (!o_ptr->k_idx) continue;
@@ -4228,14 +4223,13 @@ static void show_info(void)
 		object_known(o_ptr);
 	}
 
-	for (i = 1; i < max_towns; i++)
+	/* Hack -- Know everything in the home */
+	for (int i = 1; i < max_towns; i++)
 	{
-		st_ptr = &town_info[i].store[7];
-
-		/* Hack -- Know everything in the home */
-		for (j = 0; j < st_ptr->stock_num; j++)
+		auto st_ptr = &town_info[i].store[7];
+		for (auto &o_ref: st_ptr->stock)
 		{
-			o_ptr = &st_ptr->stock[j];
+			auto o_ptr = &o_ref;
 
 			/* Skip non-objects */
 			if (!o_ptr->k_idx) continue;
@@ -4324,27 +4318,28 @@ static void show_info(void)
 	}
 
 	/* Homes in the different towns */
-	for (k = 1; k < max_towns; k++)
+	for (int k = 1; k < max_towns; k++)
 	{
-		st_ptr = &town_info[k].store[7];
+		store_type *st_ptr = &town_info[k].store[7];
 
 		/* Home -- if anything there */
-		if (st_ptr->stock_num)
+		if (!st_ptr->stock.empty())
 		{
+			std::size_t i;
 			/* Display contents of the home */
-			for (k = 0, i = 0; i < st_ptr->stock_num; k++)
+			for (k = 0, i = 0; i < st_ptr->stock.size(); k++)
 			{
 				/* Clear screen */
 				Term_clear();
 
 				/* Show 12 items */
-				for (j = 0; (j < 12) && (i < st_ptr->stock_num); j++, i++)
+				for (int j = 0; (j < 12) && (i < st_ptr->stock.size()); j++, i++)
 				{
 					char o_name[80];
 					char tmp_val[80];
 
 					/* Acquire item */
-					o_ptr = &st_ptr->stock[i];
+					auto o_ptr = &st_ptr->stock[i];
 
 					/* Print header, clear line */
 					sprintf(tmp_val, "%c) ", I2A(j));

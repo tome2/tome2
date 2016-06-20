@@ -26,6 +26,7 @@
 #include "monster_race_flag.hpp"
 #include "monster_type.hpp"
 #include "object_kind.hpp"
+#include "object_type.hpp"
 #include "owner_type.hpp"
 #include "player_class.hpp"
 #include "player_race.hpp"
@@ -688,7 +689,7 @@ static errr init_towns(void)
 		if (i <= max_real_towns) town_info[i].flags |= (TOWN_REAL);
 
 		/* Allocate the stores */
-		town_info[i].store = make_array<store_type>(max_st_idx);
+		town_info[i].store = new store_type[max_st_idx];
 
 		/* Fill in each store */
 		for (j = 0; j < max_st_idx; j++)
@@ -708,20 +709,19 @@ static errr init_towns(void)
 
 void create_stores_stock(int t)
 {
-	int j;
 	town_type *t_ptr = &town_info[t];
 
 	if (t_ptr->stocked) return;
 
-	for (j = 0; j < max_st_idx; j++)
+	for (int j = 0; j < max_st_idx; j++)
 	{
 		store_type *st_ptr = &t_ptr->store[j];
 
 		/* Assume full stock */
 		st_ptr->stock_size = st_info[j].max_obj;
 
-		/* Allocate the stock */
-		st_ptr->stock = make_array<object_type>(st_ptr->stock_size);
+		/* Reserve space for stock */
+		st_ptr->stock.reserve(st_ptr->stock_size);
 	}
 	t_ptr->stocked = TRUE;
 }

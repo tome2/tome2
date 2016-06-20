@@ -1688,7 +1688,10 @@ static void do_store(store_type *str, ls_flag_t flag)
 
 	/* Could be cleaner, done this way for benefit of the for loop later on */
 	byte num;
-	if (flag == ls_flag_t::SAVE) num = str->stock_num;
+	if (flag == ls_flag_t::SAVE)
+	{
+		num = str->stock.size();
+	}
 	do_byte(&num, flag);
 
 	/* Last visit */
@@ -1698,7 +1701,6 @@ static void do_store(store_type *str, ls_flag_t flag)
 	for (int j = 0; j < num; j++)
 	{
 		if (flag == ls_flag_t::LOAD)
-			/* Can't this be cleaner? */
 		{
 			object_type forge;
 			/* Wipe the object */
@@ -1706,15 +1708,17 @@ static void do_store(store_type *str, ls_flag_t flag)
 			/* Read the item */
 			do_item(&forge, ls_flag_t::LOAD);
 			/* Acquire valid items */
-			if ((str->stock_num < store_inven_max) && (str->stock_num < str->stock_size))
+			if ((str->stock.size() < store_inven_max) && (str->stock.size() < str->stock_size))
 			{
-				int k = str->stock_num++;
-
-				/* Acquire the item */
-				object_copy(&str->stock[k], &forge);
+				object_type stock_obj;
+				object_copy(&stock_obj, &forge);
+				str->stock.push_back(stock_obj);
 			}
 		}
-		if (flag == ls_flag_t::SAVE) do_item(&str->stock[j], flag);
+		if (flag == ls_flag_t::SAVE)
+		{
+			do_item(&str->stock[j], flag);
+		}
 	}
 }
 
