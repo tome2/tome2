@@ -618,7 +618,10 @@ void flavor_init(void)
 				}
 
 				/* Add the word with separator */
-				buf += " ";
+				if (buf.size() > 0)
+				{
+					buf += " ";
+				}
 				buf += tmp;
 			}
 
