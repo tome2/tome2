@@ -2018,7 +2018,7 @@ static std::string object_desc_aux(object_type const *o_ptr, int pref, int mode)
 	/* Hack -- Process Lanterns/Torches */
 	else if ((o_ptr->tval == TV_LITE) && (f4 & TR4_FUEL_LITE))
 	{
-		t += fmt::format(" (with {:d}  turns of light)", o_ptr->timeout);
+		t += fmt::format(" (with {:d} turns of light)", o_ptr->timeout);
 	}
 
 
