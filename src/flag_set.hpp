@@ -67,6 +67,19 @@ public:
 		return true;
 	}
 
+	constexpr std::size_t count() const
+	{
+		std::size_t n = 0;
+		for (std::size_t i = 0; i < nbits; i++)
+		{
+			if (bit(i))
+			{
+				n += 1;
+			}
+		}
+		return n;
+	}
+
 	uint32_t &operator[](std::size_t i)
 	{
 		assert(i < tiers);
