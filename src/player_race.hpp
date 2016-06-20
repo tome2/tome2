@@ -3,68 +3,67 @@
 #include "h-basic.h"
 #include "body.hpp"
 #include "player_defs.hpp"
+#include "player_race_ability_type.hpp"
 #include "skills_defs.hpp"
+
+#include <array>
 
 /**
  * Player racial descriptior.
  */
 struct player_race
 {
-	const char *title;              /* Type of race */
-	char *desc;
+	const char *title = nullptr;                            /* Type of race */
+	char *desc = nullptr;
 
-	s16b r_adj[6];                  /* Racial stat bonuses */
+	s16b r_adj[6] { };                                      /* Racial stat bonuses */
 
-	char luck;                      /* Luck */
+	char luck = '\0';                                       /* Luck */
 
-	s16b r_dis;			/* disarming */
-	s16b r_dev;			/* magic devices */
-	s16b r_sav;			/* saving throw */
-	s16b r_stl;			/* stealth */
-	s16b r_srh;			/* search ability */
-	s16b r_fos;			/* search frequency */
-	s16b r_thn;			/* combat (normal) */
-	s16b r_thb;			/* combat (shooting) */
+	s16b r_dis = 0;                                         /* disarming */
+	s16b r_dev = 0;                                         /* magic devices */
+	s16b r_sav = 0;                                         /* saving throw */
+	s16b r_stl = 0;                                         /* stealth */
+	s16b r_srh = 0;                                         /* search ability */
+	s16b r_fos = 0;                                         /* search frequency */
+	s16b r_thn = 0;                                         /* combat (normal) */
+	s16b r_thb = 0;                                         /* combat (shooting) */
 
-	byte r_mhp;			/* Race hit-dice modifier */
-	u16b r_exp;                     /* Race experience factor */
+	byte r_mhp = 0;                                         /* Race hit-dice modifier */
+	u16b r_exp = 0;                                         /* Race experience factor */
 
-	byte infra;             /* Infra-vision range */
+	byte infra = 0;                                         /* Infra-vision range */
 
-	u32b choice[2];            /* Legal class choices */
+	u32b choice[2] { };                                     /* Legal class choices */
 
-	s16b powers[4];         /* Powers of the race */
+	s16b powers[4] { };                                     /* Powers of the race */
 
-	byte body_parts[BODY_MAX];      /* To help to decide what to use when body changing */
+	byte body_parts[BODY_MAX] { };                          /* To help to decide what to use when body changing */
 
-	s16b chart;             /* Chart history */
+	s16b chart = 0;                                         /* Chart history */
 
-	u32b flags1;
-	u32b flags2;            /* flags */
+	u32b flags1 = 0;
+	u32b flags2 = 0;
 
-	u32b oflags1[PY_MAX_LEVEL + 1];
-	u32b oflags2[PY_MAX_LEVEL + 1];
-	u32b oflags3[PY_MAX_LEVEL + 1];
-	u32b oflags4[PY_MAX_LEVEL + 1];
-	u32b oflags5[PY_MAX_LEVEL + 1];
-	u32b oesp[PY_MAX_LEVEL + 1];
-	s16b opval[PY_MAX_LEVEL + 1];
+	u32b oflags1[PY_MAX_LEVEL + 1] { };
+	u32b oflags2[PY_MAX_LEVEL + 1] { };
+	u32b oflags3[PY_MAX_LEVEL + 1] { };
+	u32b oflags4[PY_MAX_LEVEL + 1] { };
+	u32b oflags5[PY_MAX_LEVEL + 1] { };
+	u32b oesp[PY_MAX_LEVEL + 1] { };
+	s16b opval[PY_MAX_LEVEL + 1] { };
 
-	char skill_basem[MAX_SKILLS];
-	u32b skill_base[MAX_SKILLS];
-	char skill_modm[MAX_SKILLS];
-	s16b skill_mod[MAX_SKILLS];
+	char skill_basem[MAX_SKILLS] { };
+	u32b skill_base[MAX_SKILLS] { };
+	char skill_modm[MAX_SKILLS] { };
+	s16b skill_mod[MAX_SKILLS] { };
 
-	s16b obj_tval[5];
-	s16b obj_sval[5];
-	s16b obj_pval[5];
-	s16b obj_dd[5];
-	s16b obj_ds[5];
-	s16b obj_num;
+	s16b obj_tval[5] { };
+	s16b obj_sval[5] { };
+	s16b obj_pval[5] { };
+	s16b obj_dd[5] { };
+	s16b obj_ds[5] { };
+	s16b obj_num = 0;
 
-	struct
-	{
-		s16b    ability;
-		s16b    level;
-	} abilities[10];                /* Abilitiers to be gained by level(doesnt take prereqs in account) */
+	std::array<player_race_ability_type, 10> abilities;     /* Abilitiers to be gained by level(doesnt take prereqs in account) */
 };

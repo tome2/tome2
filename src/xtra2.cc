@@ -5356,11 +5356,6 @@ void switch_subrace(int racem, bool_ copy_old)
 	/* If we switch to the saved subrace, we copy over the old subrace data */
 	if (copy_old && (racem == SUBRACE_SAVE))
 	{
-		// This code is very reliant on the race_mod_info
-		// elements being simple PODs, in particular the
-		// text pointers being *unmanaged* owned pointers.
-		static_assert(std::is_pod<player_race_mod>::value,
-			      "This code needs reworking");
 		// Keep references to owned pointers.
 		auto old_title = race_mod_info[SUBRACE_SAVE].title;
 		auto old_desc = race_mod_info[SUBRACE_SAVE].desc;

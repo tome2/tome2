@@ -550,9 +550,9 @@ namespace {
 
 		static void allocate()
 		{
-			race_info = make_array<player_race>(max_rp_idx);
-			race_mod_info = make_array<player_race_mod>(max_rmp_idx);
-			class_info = make_array<player_class>(max_c_idx);
+			race_info = new player_race[max_rp_idx];
+			race_mod_info = new player_race_mod[max_rmp_idx];
+			class_info = new player_class[max_c_idx];
 			bg = make_array<hist_type>(max_bg_idx);
 			meta_class_info = make_array<meta_class_type>(max_mc_idx);
 			for (std::size_t i = 0; i < max_mc_idx; i++)
