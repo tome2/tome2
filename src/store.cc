@@ -1498,7 +1498,7 @@ static void display_entry(int pos)
  */
 static void display_inventory(void)
 {
-	int i, k;
+	int k;
 
 	/* Display the next 12 items */
 	for (k = 0; k < 12; k++)
@@ -1514,7 +1514,7 @@ static void display_inventory(void)
 	}
 
 	/* Erase the extra lines and the "more" prompt */
-	for (i = k; i < 13; i++) prt("", i + 6, 0);
+	for (int i = k; i < 13; i++) prt("", i + 6, 0);
 
 	/* Assume "no current page" */
 	put_str("         ", 5, 20);
@@ -1851,6 +1851,31 @@ static bool_ retire_owner_p(void)
 }
 
 /*
+ * Adjust store_top to account for a removed item
+ */
+static void adjust_store_top_item_removed()
+{
+	/* Nothing left? */
+	if (st_ptr->stock.empty() == 0)
+	{
+		store_top = 0;
+	}
+
+	/* Already at the top beginning? */
+	else if (store_top == 0)
+	{
+		/* Nothing to do */
+	}
+
+	/* Nothing left on current screen? */
+	else if (store_top >= static_cast<int>(st_ptr->stock.size()))
+	{
+		store_top -= 12;
+	}
+}
+
+
+/*
  * Stole an item from a store                   -DG-
  */
 void store_stole(void)
@@ -2024,11 +2049,7 @@ void store_stole(void)
 		/* The item is gone */
 		else if (st_ptr->stock.size() != prev_stock_size)
 		{
-			/* Pick the correct screen */
-			if (store_top >= static_cast<int>(st_ptr->stock.size()))
-			{
-				store_top -= 12;
-			}
+			adjust_store_top_item_removed();
 
 			/* Redraw everything */
 			display_inventory();
@@ -2295,11 +2316,7 @@ void store_purchase(void)
 				/* The item is gone */
 				else if (st_ptr->stock.size() != prev_stock_size)
 				{
-					/* Pick the correct screen */
-					if (store_top >= static_cast<int>(st_ptr->stock.size()))
-					{
-						store_top -= 12;
-					}
+					adjust_store_top_item_removed();
 				}
 
 				/* Redraw everything */
@@ -2358,17 +2375,7 @@ void store_purchase(void)
 		/* The item is gone */
 		else
 		{
-			/* Nothing left */
-			if (st_ptr->stock.empty() == 0)
-			{
-				store_top = 0;
-			}
-
-			/* Nothing left on that screen */
-			else if (store_top >= static_cast<int>(st_ptr->stock.size()))
-			{
-				store_top -= 12;
-			}
+			adjust_store_top_item_removed();
 
 			/* Redraw everything */
 			display_inventory();
