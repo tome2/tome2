@@ -53,7 +53,7 @@ will not be scored if you use debug commands.
  [  (unused)                            ^M  (unused)
  ]  (unused)                            ^N  (unused)
  *****debug.txt*67[-  Create object]                       ^O  (unused)
- *****debug.txt*69[_  The path to the god dark]            ^P  (unused)
+                                        ^P  (unused)
  *****debug.txt*71[+  Gain a fate]                         ^Q  (unused)
  *****debug.txt*73[=  Align monster]                       ^R  (unused)
  ;  (unused)                            ^S  (unused)
@@ -63,7 +63,7 @@ will not be scored if you use debug commands.
  ,  (unused)                            ^W  (unused)
  <  (unused)                            ^X  (unused)
  .  (unused)                            ^Y  (unused)
- *****debug.txt*81[>  Lua script]                          ^Z  (unused)
+                                        ^Z  (unused)
  \  (unused)                             |  (unused)
  `  (unused)                             ~  (unused)
  *****debug.txt*91[/  Summon monster]                       *****debug.txt*92[?  Help]
@@ -242,10 +242,6 @@ maximal legal value.
 [[[[[GCreate object (-)]
         Allows you to create a new object where you stand. You must
         specify an object number from k_info.txt.
-~~~~~69
-[[[[[GThe path to the god dark (_)]
-        Do not use this as it is used by DarkGod as a test for Lua
-        and will CRASH the game. You have been warned.
 ~~~~~71
 [[[[[GGain a fate (+)]
         Unearth more of your prophecy.
@@ -259,9 +255,6 @@ maximal legal value.
             3 monster becomes pet
             4 monster becomes companion
         You then point at an enemy and press space.
-~~~~~81
-[[[[[GLua script (>)]
-        Allows you to run a Lua script.
 ~~~~~91
 [[[[[GSummon monster (/)]
         Summons a random monster next to you.
