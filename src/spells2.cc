@@ -2954,7 +2954,7 @@ void curse_artifact(object_type * o_ptr)
 
 
 
-void random_resistance (object_type * o_ptr, bool_ is_scroll, int specific)
+void random_resistance(object_type *o_ptr, int specific)
 {
 	/* To avoid a number of possible bugs */
 	if (!specific)
@@ -3086,7 +3086,7 @@ void random_resistance (object_type * o_ptr, bool_ is_scroll, int specific)
 	{
 	case 1 :
 		if (randint(WEIRD_LUCK) != 1)
-			random_resistance(o_ptr, is_scroll, specific);
+			random_resistance(o_ptr, specific);
 		else
 		{
 			o_ptr->art_flags2 |= TR2_IM_ACID;
@@ -3097,7 +3097,7 @@ void random_resistance (object_type * o_ptr, bool_ is_scroll, int specific)
 		break;
 	case 2:
 		if (randint(WEIRD_LUCK) != 1)
-			random_resistance(o_ptr, is_scroll, specific);
+			random_resistance(o_ptr, specific);
 		else
 		{
 			o_ptr->art_flags2 |= TR2_IM_ELEC;
@@ -3108,7 +3108,7 @@ void random_resistance (object_type * o_ptr, bool_ is_scroll, int specific)
 		break;
 	case 3:
 		if (randint(WEIRD_LUCK) != 1)
-			random_resistance(o_ptr, is_scroll, specific);
+			random_resistance(o_ptr, specific);
 		else
 		{
 			o_ptr->art_flags2 |= TR2_IM_COLD;
@@ -3119,7 +3119,7 @@ void random_resistance (object_type * o_ptr, bool_ is_scroll, int specific)
 		break;
 	case 4:
 		if (randint(WEIRD_LUCK) != 1)
-			random_resistance(o_ptr, is_scroll, specific);
+			random_resistance(o_ptr, specific);
 		else
 		{
 			o_ptr->art_flags2 |= TR2_IM_FIRE;
@@ -3236,7 +3236,7 @@ void random_resistance (object_type * o_ptr, bool_ is_scroll, int specific)
 		if (o_ptr->tval >= TV_CLOAK && o_ptr->tval <= TV_HARD_ARMOR)
 			o_ptr->art_flags3 |= TR3_SH_ELEC;
 		else
-			random_resistance(o_ptr, is_scroll, specific);
+			random_resistance(o_ptr, specific);
 		if (!(artifact_bias))
 			artifact_bias = BIAS_ELEC;
 		break;
@@ -3244,7 +3244,7 @@ void random_resistance (object_type * o_ptr, bool_ is_scroll, int specific)
 		if (o_ptr->tval >= TV_CLOAK && o_ptr->tval <= TV_HARD_ARMOR)
 			o_ptr->art_flags3 |= TR3_SH_FIRE;
 		else
-			random_resistance(o_ptr, is_scroll, specific);
+			random_resistance(o_ptr, specific);
 		if (!(artifact_bias))
 			artifact_bias = BIAS_FIRE;
 		break;
@@ -3253,7 +3253,7 @@ void random_resistance (object_type * o_ptr, bool_ is_scroll, int specific)
 		                o_ptr->tval == TV_HELM || o_ptr->tval == TV_HARD_ARMOR)
 			o_ptr->art_flags2 |= TR2_REFLECT;
 		else
-			random_resistance(o_ptr, is_scroll, specific);
+			random_resistance(o_ptr, specific);
 		break;
 	}
 }

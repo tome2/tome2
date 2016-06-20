@@ -2133,7 +2133,7 @@ void random_artifact_resistance(object_type * o_ptr)
 		// gets a resistance that it doesn't actually already have.
 		for (int tries = 0; tries < 1000; tries++)
 		{
-			random_resistance(o_ptr, FALSE, ((randint(22)) + 16));
+			random_resistance(o_ptr, randint(22) + 16);
 			// Picked up a new resistance?
 			if (f2 != o_ptr->art_flags2)
 			{
@@ -2607,9 +2607,9 @@ static void dragon_resist(object_type * o_ptr)
 		artifact_bias = 0;
 
 		if (randint(4) == 1)
-			random_resistance(o_ptr, FALSE, ((randint(14)) + 4));
+			random_resistance(o_ptr, randint(14) + 4);
 		else
-			random_resistance(o_ptr, FALSE, ((randint(22)) + 16));
+			random_resistance(o_ptr, randint(22) + 16);
 	}
 	while (randint(2) == 1);
 }
@@ -2858,7 +2858,7 @@ static void a_m_aux_3(object_type *o_ptr, int level, int power)
 				{
 					do
 					{
-						random_resistance(o_ptr, FALSE, ((randint(20)) + 18));
+					        random_resistance(o_ptr, randint(20) + 18);
 					}
 					while (randint(4) == 1);
 
@@ -3085,7 +3085,7 @@ static void a_m_aux_3(object_type *o_ptr, int level, int power)
 
 			case SV_AMULET_RESISTANCE:
 				{
-					if (randint(3) == 1) random_resistance(o_ptr, FALSE, ((randint(34)) + 4));
+				        if (randint(3) == 1) random_resistance(o_ptr, randint(34) + 4);
 					if (randint(5) == 1) o_ptr->art_flags2 |= TR2_RES_POIS;
 				}
 				break;
@@ -3567,23 +3567,23 @@ void add_random_ego_flag(object_type *o_ptr, int fego, bool_ *limit_blows)
 	if (fego & ETR4_R_ELEM)
 	{
 		/* Make an acid/elec/fire/cold/poison resist */
-		random_resistance(o_ptr, FALSE, randint(14) + 4);
+		random_resistance(o_ptr, randint(14) + 4);
 	}
 	if (fego & ETR4_R_LOW)
 	{
 		/* Make an acid/elec/fire/cold resist */
-		random_resistance(o_ptr, FALSE, randint(12) + 4);
+		random_resistance(o_ptr, randint(12) + 4);
 	}
 
 	if (fego & ETR4_R_HIGH)
 	{
 		/* Make a high resist */
-		random_resistance(o_ptr, FALSE, randint(22) + 16);
+		random_resistance(o_ptr, randint(22) + 16);
 	}
 	if (fego & ETR4_R_ANY)
 	{
 		/* Make any resist */
-		random_resistance(o_ptr, FALSE, randint(34) + 4);
+		random_resistance(o_ptr, randint(34) + 4);
 	}
 
 	if (fego & ETR4_R_DRAGON)

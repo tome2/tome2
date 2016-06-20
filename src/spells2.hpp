@@ -111,4 +111,4 @@ extern void geomancy_random_wall(int y, int x);
 extern void geomancy_random_floor(int y, int x, bool_ kill_wall);
 extern void geomancy_dig(int oy, int ox, int dir, int length);
 extern void channel_the_elements(int y, int x, int level);
-extern void random_resistance (object_type * o_ptr, bool_ is_scroll, int specific);
+extern void random_resistance(object_type *o_ptr, int specific);
