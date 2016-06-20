@@ -24,7 +24,6 @@
 #include "object_kind.hpp"
 #include "player_type.hpp"
 #include "randart.hpp"
-#include "status.hpp"
 #include "spells1.hpp"
 #include "spells2.hpp"
 #include "stats.hpp"
@@ -1569,10 +1568,6 @@ void do_cmd_debug()
 		/* Hack -- Generate Spoilers */
 	case '"':
 		do_cmd_spoilers();
-		break;
-
-	case 'A':
-		status_main();
 		break;
 
 		/* Hack -- Help */

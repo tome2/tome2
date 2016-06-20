@@ -97,7 +97,6 @@ SET(SRCS_COMMON
   spells5.cc
   spells6.cc
   squeltch.cc
-  status.cc
   store.cc
   tables.cc
   traps.cc

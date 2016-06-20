@@ -12,7 +12,7 @@ will not be scored if you use debug commands.
 ~~~~~100|Debug|Command List
 #####R=== Command List Summary ===
 
- *****debug.txt*1[a  Autorestore]                          *****debug.txt*2[A  Show all stats]
+ *****debug.txt*1[a  Autorestore]
  *****debug.txt*3[b  Teleport to target]                   *****debug.txt*4[B  HP to zero]
  *****debug.txt*5[c  Create object]                        *****debug.txt*6[C  Create artifact]
  *****debug.txt*7[d  Detect all]                           *****debug.txt*8[D  Teleport to the wilderness]
@@ -85,10 +85,6 @@ maximal legal value.
 ~~~~~1
 [[[[[GAutorestore (a)]
         Restores all your stats.  This includes HP, SP, hunger, lost levels, etc.
-~~~~~2
-[[[[[GShow all stats (A)]
-        This brings up the Character status menu, where you can view
-        all the stats about your character.
 ~~~~~3
 [[[[[GTeleport to target (b)]
         You first need to have a monster targeted, then you can use
