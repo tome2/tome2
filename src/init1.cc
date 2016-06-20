@@ -5575,12 +5575,11 @@ errr init_r_info_txt(FILE *fp)
 			/* Ensure empty description */
 			r_ptr->text = my_strdup("");
 
-			/* HACK -- Those ones HAVE to have a set default value */
-			r_ptr->drops.treasure = OBJ_GENE_TREASURE;
-			r_ptr->drops.combat = OBJ_GENE_COMBAT;
-			r_ptr->drops.magic = OBJ_GENE_MAGIC;
-			r_ptr->drops.tools = OBJ_GENE_TOOL;
-			r_ptr->freq_inate = r_ptr->freq_spell = 0;
+			/* Set default drop theme */
+			r_ptr->drops = obj_theme::defaults();
+
+			r_ptr->freq_inate = 0;
+			r_ptr->freq_spell = 0;
 
 			/* Next... */
 			continue;
@@ -6662,11 +6661,8 @@ errr init_d_info_txt(FILE *fp)
 				for (k = 0; k < 5; k++) d_ptr->rules[j].r_char[k] = 0;
 			}
 
-			/* HACK -- Those ones HAVE to have a set default value */
-			d_ptr->objs.treasure = OBJ_GENE_TREASURE;
-			d_ptr->objs.combat = OBJ_GENE_COMBAT;
-			d_ptr->objs.magic = OBJ_GENE_MAGIC;
-			d_ptr->objs.tools = OBJ_GENE_TOOL;
+			/* Set default drop theme */
+			d_ptr->objs = obj_theme::defaults();
 
 			/* The default generator */
 			strcpy(d_ptr->generator, "dungeon");

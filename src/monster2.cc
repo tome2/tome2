@@ -2313,17 +2313,11 @@ s16b place_monster_one(int y, int x, int r_idx, int ego, bool_ slp, int status)
 		if (r_ptr->flags7 & RF7_DROP_RANDART)
 		{
 			int tries = 1000;
-			obj_theme theme;
-
 			/* Get local object */
 			q_ptr = &forge;
 
-			theme.treasure = 101;
-			theme.combat = 101;
-			theme.magic = 101;
-			theme.tools = 101;
-
-			init_match_theme(theme);
+			/* No theme */
+			init_match_theme(obj_theme::no_theme());
 
 			/* Apply restriction */
 			get_obj_num_hook = kind_is_legal;

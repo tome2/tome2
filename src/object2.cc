@@ -4296,43 +4296,40 @@ try_an_other_ego:
 
 
 /* The themed objects to use */
-static obj_theme match_theme;
+static obj_theme *match_theme = nullptr;
 
 /*
  * XXX XXX XXX It relies on the fact that obj_theme is a four byte structure
  * for its efficient operation. A horrendous hack, I'd say.
  */
-void init_match_theme(obj_theme const &theme)
+bool init_match_theme(obj_theme const &theme)
 {
-	/* Save the theme */
-	match_theme = theme;
+	if (match_theme == nullptr)
+	{
+		match_theme = new obj_theme(theme);
+		return true;
+	}
+	else if (*match_theme != theme)
+	{
+		*match_theme = theme;
+		return true;
+	}
+	else
+	{
+		return false;
+	}
 }
-
-/*
- * Ditto XXX XXX XXX
- */
-static bool_ theme_changed(obj_theme theme)
-{
-	/* Any of the themes has been changed */
-	if (theme.treasure != match_theme.treasure) return (TRUE);
-	if (theme.combat != match_theme.combat) return (TRUE);
-	if (theme.magic != match_theme.magic) return (TRUE);
-	if (theme.tools != match_theme.tools) return (TRUE);
-
-	/* No changes */
-	return (FALSE);
-}
-
 
 /*
  * Maga-Hack -- match certain types of object only.
  */
-static bool kind_is_theme(int k_idx)
+static bool kind_is_theme(obj_theme const *theme, int k_idx)
 {
+	assert(theme != nullptr);
+
 	object_kind *k_ptr = &k_info[k_idx];
 
 	s32b prob = 0;
-
 
 	/*
 	 * Paranoia -- Prevent accidental "(Nothing)"
@@ -4340,8 +4337,10 @@ static bool kind_is_theme(int k_idx)
 	 *
 	 * Caution: Junks go into the allocation table.
 	 */
-	if (match_theme.treasure + match_theme.combat +
-	                match_theme.magic + match_theme.tools == 0) return (TRUE);
+	if (theme->treasure + theme->combat + theme->magic + theme->tools == 0)
+	{
+		return TRUE;
+	}
 
 
 	/* Pick probability to use */
@@ -4360,150 +4359,150 @@ static bool kind_is_theme(int k_idx)
 			 * larger than theme components, or we would see
 			 * unexpected, well, junks.
 			 */
-			prob = 100 - (match_theme.treasure + match_theme.combat +
-			              match_theme.magic + match_theme.tools);
+			prob = 100 - (theme->treasure + theme->combat +
+				      theme->magic + theme->tools);
 			break;
 		}
 	case TV_CHEST:
-		prob = match_theme.treasure;
+		prob = theme->treasure;
 		break;
 	case TV_CROWN:
-		prob = match_theme.treasure;
+		prob = theme->treasure;
 		break;
 	case TV_DRAG_ARMOR:
-		prob = match_theme.treasure;
+		prob = theme->treasure;
 		break;
 	case TV_AMULET:
-		prob = match_theme.treasure;
+		prob = theme->treasure;
 		break;
 	case TV_RING:
-		prob = match_theme.treasure;
+		prob = theme->treasure;
 		break;
 
 	case TV_SHOT:
-		prob = match_theme.combat;
+		prob = theme->combat;
 		break;
 	case TV_ARROW:
-		prob = match_theme.combat;
+		prob = theme->combat;
 		break;
 	case TV_BOLT:
-		prob = match_theme.combat;
+		prob = theme->combat;
 		break;
 	case TV_BOOMERANG:
-		prob = match_theme.combat;
+		prob = theme->combat;
 		break;
 	case TV_BOW:
-		prob = match_theme.combat;
+		prob = theme->combat;
 		break;
 	case TV_HAFTED:
-		prob = match_theme.combat;
+		prob = theme->combat;
 		break;
 	case TV_POLEARM:
-		prob = match_theme.combat;
+		prob = theme->combat;
 		break;
 	case TV_SWORD:
-		prob = match_theme.combat;
+		prob = theme->combat;
 		break;
 	case TV_AXE:
-		prob = match_theme.combat;
+		prob = theme->combat;
 		break;
 	case TV_GLOVES:
-		prob = match_theme.combat;
+		prob = theme->combat;
 		break;
 	case TV_HELM:
-		prob = match_theme.combat;
+		prob = theme->combat;
 		break;
 	case TV_SHIELD:
-		prob = match_theme.combat;
+		prob = theme->combat;
 		break;
 	case TV_SOFT_ARMOR:
-		prob = match_theme.combat;
+		prob = theme->combat;
 		break;
 	case TV_HARD_ARMOR:
-		prob = match_theme.combat;
+		prob = theme->combat;
 		break;
 
 	case TV_MSTAFF:
-		prob = match_theme.magic;
+		prob = theme->magic;
 		break;
 	case TV_STAFF:
-		prob = match_theme.magic;
+		prob = theme->magic;
 		break;
 	case TV_WAND:
-		prob = match_theme.magic;
+		prob = theme->magic;
 		break;
 	case TV_ROD:
-		prob = match_theme.magic;
+		prob = theme->magic;
 		break;
 	case TV_ROD_MAIN:
-		prob = match_theme.magic;
+		prob = theme->magic;
 		break;
 	case TV_SCROLL:
-		prob = match_theme.magic;
+		prob = theme->magic;
 		break;
 	case TV_PARCHMENT:
-		prob = match_theme.magic;
+		prob = theme->magic;
 		break;
 	case TV_POTION:
-		prob = match_theme.magic;
+		prob = theme->magic;
 		break;
 	case TV_POTION2:
-		prob = match_theme.magic;
+		prob = theme->magic;
 		break;
 	case TV_RANDART:
-		prob = match_theme.magic;
+		prob = theme->magic;
 		break;
 	case TV_RUNE1:
-		prob = match_theme.magic;
+		prob = theme->magic;
 		break;
 	case TV_RUNE2:
-		prob = match_theme.magic;
+		prob = theme->magic;
 		break;
 	case TV_BOOK:
-		prob = match_theme.magic;
+		prob = theme->magic;
 		break;
 	case TV_SYMBIOTIC_BOOK:
-		prob = match_theme.magic;
+		prob = theme->magic;
 		break;
 	case TV_MUSIC_BOOK:
-		prob = match_theme.magic;
+		prob = theme->magic;
 		break;
 	case TV_DRUID_BOOK:
-		prob = match_theme.magic;
+		prob = theme->magic;
 		break;
 	case TV_DAEMON_BOOK:
-		prob = match_theme.magic;
+		prob = theme->magic;
 		break;
 
 	case TV_LITE:
-		prob = match_theme.tools;
+		prob = theme->tools;
 		break;
 	case TV_CLOAK:
-		prob = match_theme.tools;
+		prob = theme->tools;
 		break;
 	case TV_BOOTS:
-		prob = match_theme.tools;
+		prob = theme->tools;
 		break;
 	case TV_SPIKE:
-		prob = match_theme.tools;
+		prob = theme->tools;
 		break;
 	case TV_DIGGING:
-		prob = match_theme.tools;
+		prob = theme->tools;
 		break;
 	case TV_FLASK:
-		prob = match_theme.tools;
+		prob = theme->tools;
 		break;
 	case TV_FOOD:
-		prob = match_theme.tools;
+		prob = theme->tools;
 		break;
 	case TV_TOOL:
-		prob = match_theme.tools;
+		prob = theme->tools;
 		break;
 	case TV_INSTRUMENT:
-		prob = match_theme.tools;
+		prob = theme->tools;
 		break;
 	case TV_TRAPKIT:
-		prob = match_theme.tools;
+		prob = theme->tools;
 		break;
 	}
 
@@ -4521,7 +4520,7 @@ bool_ kind_is_legal(int k_idx)
 {
 	object_kind *k_ptr = &k_info[k_idx];
 
-	if (!kind_is_theme(k_idx)) return FALSE;
+	if (!kind_is_theme(match_theme, k_idx)) return FALSE;
 
 	if (k_ptr->flags4 & TR4_SPECIAL_GENE)
 	{
@@ -4715,14 +4714,9 @@ bool_ make_object(object_type *j_ptr, bool_ good, bool_ great, obj_theme const &
 	/* Generate a special object, or a normal object */
 	if ((rand_int(invprob) != 0) || !make_artifact_special(j_ptr))
 	{
-		int k_idx;
-
-		/* See if the theme has been changed XXX XXX XXX */
-		if (theme_changed(theme))
+		/* See if the theme has been changed */
+		if (init_match_theme(theme))
 		{
-			/* Select items based on "theme" */
-			init_match_theme(theme);
-
 			/* Invalidate the cached allocation table */
 			alloc_kind_table_valid = FALSE;
 		}
@@ -4751,7 +4745,7 @@ bool_ make_object(object_type *j_ptr, bool_ good, bool_ great, obj_theme const &
 		}
 
 		/* Pick a random object */
-		k_idx = get_obj_num(base);
+		int k_idx = get_obj_num(base);
 
 		/* Good objects */
 		if (good)

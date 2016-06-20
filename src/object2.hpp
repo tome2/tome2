@@ -14,7 +14,7 @@ extern void inc_stack_size_ex(int item, int delta, optimize_flag opt, describe_f
 extern object_type *get_object(int item);
 extern s32b calc_total_weight(void);
 extern void add_random_ego_flag(object_type *o_ptr, int fego, bool_ *limit_blows);
-extern void init_match_theme(obj_theme const &theme);
+extern bool init_match_theme(obj_theme const &theme);
 extern bool_ kind_is_artifactable(int k_idx);
 extern bool_ kind_is_legal(int k_idx);
 extern void inven_item_charges(int item);

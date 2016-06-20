@@ -63,7 +63,7 @@ struct dungeon_info_type
 	int ox = 0;                                   /* Wilderness coordinates of exit */
 	int oy = 0;                                   /* Wilderness coordinates of exit */
 
-	obj_theme objs = obj_theme { 0, 0, 0, 0 };    /* The drops type */
+	obj_theme objs;                               /* The drops type */
 
 	int d_dice[4] = { 0 };                        /* Number of dices */
 	int d_side[4] = { 0 };                        /* Number of sides */

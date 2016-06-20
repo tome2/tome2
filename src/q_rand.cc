@@ -213,7 +213,6 @@ bool_ is_randhero(int level)
 
 static void do_get_new_obj(int y, int x)
 {
-	obj_theme theme;
 	object_type *q_ptr[3], forge[3];
 	int res, i;
 
@@ -227,14 +226,8 @@ static void do_get_new_obj(int y, int x)
 		/* Wipe the object */
 		object_wipe(q_ptr[i]);
 
-		/* No themes */
-		theme.treasure = 100;
-		theme.combat = 100;
-		theme.magic = 100;
-		theme.tools = 100;
-
 		/* Make a great object */
-		make_object(q_ptr[i], TRUE, TRUE, theme);
+		make_object(q_ptr[i], TRUE, TRUE, obj_theme::no_theme());
 		q_ptr[i]->found = OBJ_FOUND_REWARD;
 
 		char buf[100];

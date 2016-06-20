@@ -1286,14 +1286,8 @@ static void store_create(void)
 		/* Black Market */
 		else if (st_info[st_ptr->st_idx].flags1 & SF1_ALL_ITEM)
 		{
-			obj_theme theme;
-
 			/* No themes */
-			theme.treasure = 100;
-			theme.combat = 100;
-			theme.magic = 100;
-			theme.tools = 100;
-			init_match_theme(theme);
+			init_match_theme(obj_theme::no_theme());
 
 			/*
 			 * Even in Black Markets, illegal objects can be
@@ -1339,14 +1333,8 @@ static void store_create(void)
 			/* Hack -- i > 10000 means it's a tval and all svals are allowed */
 			if (i > 10000)
 			{
-				obj_theme theme;
-
 				/* No themes */
-				theme.treasure = 100;
-				theme.combat = 100;
-				theme.magic = 100;
-				theme.tools = 100;
-				init_match_theme(theme);
+				init_match_theme(obj_theme::no_theme());
 
 				/* Activate restriction */
 				get_obj_num_hook = kind_is_storeok;

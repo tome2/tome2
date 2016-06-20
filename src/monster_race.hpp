@@ -83,8 +83,7 @@ struct monster_race
 
 	byte total_visible = 0;                  /* Amount of this race that are visible */
 
-	obj_theme drops = obj_theme              /* The drops type */
-		{ 0, 0, 0, 0 };
+	obj_theme drops;                         /* The drops type */
 
 };
 

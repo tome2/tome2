@@ -3265,12 +3265,6 @@
 
 #define MEGO_CHANCE             18      /* % chances of getting ego monsters */
 
-/* Object generation */
-#define OBJ_GENE_TREASURE       20
-#define OBJ_GENE_COMBAT         20
-#define OBJ_GENE_MAGIC          20
-#define OBJ_GENE_TOOL           20
-
 /*
  * Used (or should be) by various functions and tables needing access to
  * single bits

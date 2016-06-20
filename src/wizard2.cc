@@ -866,15 +866,7 @@ static void wiz_statistics(object_type *o_ptr)
 	object_type forge;
 	object_type	*q_ptr;
 
-	obj_theme theme;
-
 	cptr q = "Rolls: %ld, Matches: %ld, Better: %ld, Worse: %ld, Other: %ld";
-
-	/* We can have everything */
-	theme.treasure = OBJ_GENE_TREASURE;
-	theme.combat = OBJ_GENE_COMBAT;
-	theme.magic = OBJ_GENE_MAGIC;
-	theme.tools = OBJ_GENE_TOOL;
 
 	/* XXX XXX XXX Mega-Hack -- allow multiple artifacts */
 	if (artifact_p(o_ptr))
@@ -963,7 +955,7 @@ static void wiz_statistics(object_type *o_ptr)
 			object_wipe(q_ptr);
 
 			/* Create an object */
-			make_object(q_ptr, good, great, theme);
+			make_object(q_ptr, good, great, obj_theme::defaults());
 
 
 			/* XXX XXX XXX Mega-Hack -- allow multiple artifacts */
