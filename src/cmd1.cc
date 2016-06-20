@@ -1857,7 +1857,7 @@ static void py_attack_hand(int *k, monster_type *m_ptr, s32b *special)
 		if (!(r_ptr->flags & RF_UNIQUE) &&
 		                (randint(plev) > m_ptr->level) && m_ptr->mspeed > 60)
 		{
-			msg_format("%^s starts limping slower.", m_name);
+			msg_format("%^s starts limping.", m_name);
 			m_ptr->mspeed -= 10;
 		}
 	}
