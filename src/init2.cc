@@ -373,7 +373,7 @@ namespace {
 
 		static void allocate()
 		{
-			e_info = make_array<ego_item_type>(max_e_idx);
+			e_info = new ego_item_type[max_e_idx];
 		}
 
 		static errr parse(FILE *fp)
