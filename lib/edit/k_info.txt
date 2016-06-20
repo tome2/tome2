@@ -3338,14 +3338,6 @@ A:5/1:10/1:20/1
 P:0:1d1:0:0:0
 D:Zapping this rod will release a minor detection magic, alerting you of nearby pits and snares.
 
-N:353:Probing
-G:-:d
-I:66:7:50
-W:40:0:15:4000
-A:40/4
-P:0:1d1:0:0:0
-D:A rod of knowledge which will tell you about nearby creatures' health.
-
 N:354:Recall
 G:-:d
 I:66:3:80

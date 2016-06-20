@@ -1279,23 +1279,6 @@ static bool compare_monster_level(int w1, int w2)
 	return compare_monster_experience(w1, w2);
 }
 
-/**
- * Sort by total number of kills
- */
-static bool compare_total_kills(int w1, int w2)
-{
-	/* Extract total kills */
-	s16b z1 = r_info[w1].r_tkills;
-	s16b z2 = r_info[w2].r_tkills;
-
-	/* Compare total kills */
-	if (z1 < z2) return true;
-	if (z1 > z2) return false;
-
-	/* Punt to monster level. */
-	return compare_monster_level(w1, w2);
-}
-
 /*
  * Sort by player kills
  */
@@ -1309,8 +1292,8 @@ static bool compare_player_kills(int w1, int w2)
 	if (z1 < z2) return true;
 	if (z1 > z2) return false;
 
-	/* Punt to total number of kills. */
-	return compare_total_kills(w1, w2);
+	/* Punt to monster level. */
+	return compare_monster_level(w1, w2);
 }
 
 
@@ -1451,9 +1434,6 @@ void do_cmd_query_symbol(void)
 	{
 		monster_race *r_ptr = &r_info[i];
 
-		/* Nothing to recall */
-		if (!cheat_know && !r_ptr->r_sights) continue;
-
 		/* Require non-unique monsters if needed */
 		if (norm && (r_ptr->flags1 & (RF1_UNIQUE))) continue;
 
@@ -1555,7 +1535,7 @@ void do_cmd_query_symbol(void)
 				Term_save();
 
 				/* Recall on screen */
-				screen_roff(who[i], 0, 0);
+				screen_roff(who[i], 0);
 
 				/* Hack -- Complete the prompt (again) */
 				Term_addstr( -1, TERM_WHITE, " [(r)ecall, ESC]");
@@ -1605,206 +1585,6 @@ void do_cmd_query_symbol(void)
 
 	/* Re-display the identity */
 	prt(buf, 0, 0);
-}
-
-
-/*
- *  research_mon
- *  -KMW-
- */
-bool_ research_mon()
-{
-	int i, r_idx;
-
-	char sym, query;
-
-	char buf[128];
-
-
-	s16b oldkills;
-
-	byte oldwake;
-
-	bool_ oldcheat;
-
-
-	bool_ all = FALSE;
-
-	bool_ uniq = FALSE;
-
-	bool_ norm = FALSE;
-
-	bool_ notpicked;
-
-
-	bool_ recall = FALSE;
-
-	monster_race *r2_ptr;
-
-	/* Hack -- Remember "cheat_know" flag */
-	oldcheat = cheat_know;
-
-
-	/* Get a character, or abort */
-	if (!get_com("Enter character of monster: ", &sym)) return (TRUE);
-
-	/* Find that character info, and describe it */
-	for (i = 0; ident_info[i]; ++i)
-	{
-		if (sym == ident_info[i][0]) break;
-	}
-
-	if (ident_info[i])
-	{
-		strnfmt(buf, 128, "%c - %s.", sym, ident_info[i] + 2);
-	}
-	else
-	{
-		strnfmt(buf, 128, "%c - %s.", sym, "Unknown Symbol");
-	}
-
-	/* Display the result */
-	prt(buf, 16, 10);
-
-
-	/* Collect matching monsters */
-	std::vector<u16b> who;
-	for (i = 1; i < max_r_idx; i++)
-	{
-		monster_race *r_ptr = &r_info[i];
-
-		/* Hack -- Force "cheat_know" */
-		cheat_know = TRUE;
-
-		/* Nothing to recall */
-		if (!cheat_know && !r_ptr->r_sights) continue;
-
-		/* Require non-unique monsters if needed */
-		if (norm && (r_ptr->flags1 & (RF1_UNIQUE))) continue;
-
-		/* Require unique monsters if needed */
-		if (uniq && !(r_ptr->flags1 & (RF1_UNIQUE))) continue;
-
-		/* Collect "appropriate" monsters */
-		if (all || (r_ptr->d_char == sym)) {
-			who.push_back(i);
-		}
-	}
-
-	/* Nothing to recall */
-	if (who.empty())
-	{
-		/* Restore the "cheat_know" flag */
-		cheat_know = oldcheat;
-
-		return (TRUE);
-	}
-
-
-	query = 'y';
-
-	/* Sort by level */
-	std::sort(std::begin(who), std::end(who), compare_monster_level);
-
-
-	/* Start at the end */
-	i = who.size() - 1;
-
-	notpicked = TRUE;
-
-	/* Scan the monster memory */
-	while (notpicked)
-	{
-		/* Extract a race */
-		r_idx = who[i];
-
-		/* Hack -- Auto-recall */
-		monster_race_track(r_idx, 0);
-
-		/* Hack -- Handle stuff */
-		handle_stuff();
-
-		/* Hack -- Begin the prompt */
-		roff_top(r_idx);
-
-		/* Hack -- Complete the prompt */
-		Term_addstr( -1, TERM_WHITE, " [(r)ecall, ESC, space to continue]");
-
-		/* Interact */
-		while (1)
-		{
-			/* Recall */
-			if (recall)
-			{
-				/* Save the screen */
-				character_icky = TRUE;
-				Term_save();
-
-				/* Recall on screen */
-				r2_ptr = &r_info[r_idx];
-
-				oldkills = r2_ptr->r_tkills;
-				oldwake = r2_ptr->r_wake;
-				screen_roff(who[i], 0, 1);
-				r2_ptr->r_tkills = oldkills;
-				r2_ptr->r_wake = oldwake;
-				r2_ptr->r_sights = 1;
-				cheat_know = oldcheat;
-				notpicked = FALSE;
-				break;
-
-			}
-
-			/* Command */
-			query = inkey();
-
-			/* Unrecall */
-			if (recall)
-			{
-				/* Restore */
-				Term_load();
-				character_icky = FALSE;
-			}
-
-			/* Normal commands */
-			if (query != 'r') break;
-
-			/* Toggle recall */
-			recall = !recall;
-		}
-
-		/* Stop scanning */
-		if (query == ESCAPE) break;
-
-		/* Move to "prev" monster */
-		if (query == '-')
-		{
-			i++;
-			assert(i >= 0);
-			if (static_cast<size_t>(i) == who.size())
-			{
-				i = 0;
-			}
-		}
-
-		/* Move to "next" monster */
-		else
-		{
-			if (i-- == 0)
-			{
-				i = who.size() - 1;
-			}
-		}
-	}
-
-
-	/* Re-display the identity */
-	/* prt(buf, 5, 5);*/
-
-	/* Restore the "cheat_know" flag */
-	cheat_know = oldcheat;
-
-	return (notpicked);
 }
 
 

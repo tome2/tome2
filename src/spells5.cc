@@ -1143,7 +1143,7 @@ void school_spells_init()
 		spell_type_describe(spell, "Asks for an object and identifies it");
 		spell_type_describe(spell, "At level 17 it identifies all objects in the inventory");
 		spell_type_describe(spell, "At level 27 it identifies all objects in the inventory and in a");
-		spell_type_describe(spell, "radius on the floor, as well as probing monsters in that radius");
+		spell_type_describe(spell, "radius on the floor");
 		spell_type_set_mana(spell, 10, 50);
 		spell_type_set_difficulty(spell, 8, 40);
 		spell_type_init_mage(spell,
@@ -2321,8 +2321,7 @@ void school_spells_init()
 	{
 		spell_type *spell = spell_new(&MUSIC_MIND, "Clairaudience(IV)");
 		spell_type_describe(spell, "Allows you to sense monster minds as long as you sing.");
-		spell_type_describe(spell, "At level 10 it identifies all objects in a radius on the floor,");
-		spell_type_describe(spell, "as well as probing monsters in that radius.");
+		spell_type_describe(spell, "At level 10 it identifies all objects in a radius on the floor.");
 		spell_type_describe(spell, "Consumes the amount of mana each turn.");
 		spell_type_set_mana(spell, 15, 30);
 		spell_type_set_difficulty(spell, 25, 75);

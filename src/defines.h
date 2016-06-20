@@ -788,7 +788,6 @@
 #define ACT_FUNDIN              30
 #define ACT_EOL                 31
 #define ACT_UMBAR               32
-#define ACT_NUMENOR             33
 #define ACT_KNOWLEDGE           34
 #define ACT_UNDEATH             35
 #define ACT_THRAIN              36
@@ -834,10 +833,6 @@
 #define ACT_GANDALF             76
 #define ACT_MARDA               77
 #define ACT_PALANTIR            78
-/*
-                                79
-                                80
-*/
 #define ACT_CURE_LW             81
 #define ACT_CURE_MW             82
 #define ACT_CURE_POISON         83
@@ -845,9 +840,6 @@
 #define ACT_REST_ALL            85
 #define ACT_CURE_700            86
 #define ACT_CURE_1000           87
-/*
-                                88
-*/
 #define ACT_EREBOR              89
 #define ACT_DRUEDAIN            90
 #define ACT_ESP                 91
@@ -1428,12 +1420,10 @@
 #define SV_ROD_ILLUMINATION              4
 #define SV_ROD_MAPPING                   5
 #define SV_ROD_DETECTION                 6
-#define SV_ROD_PROBING                   7
 #define SV_ROD_CURING                    8
 #define SV_ROD_HEALING                   9
 #define SV_ROD_RESTORATION              10
 #define SV_ROD_SPEED                    11
-/* xxx (aimed) */
 #define SV_ROD_TELEPORT_AWAY            13
 #define SV_ROD_DISARMING                14
 #define SV_ROD_LITE                     15
@@ -3086,7 +3076,6 @@
 #define BACT_REST                   17
 #define BACT_FOOD                   18
 #define BACT_RUMORS                 19
-#define BACT_RESEARCH_MONSTER       20
 #define BACT_COMPARE_WEAPONS        21
 #define BACT_ENCHANT_WEAPON         23
 #define BACT_ENCHANT_ARMOR          24

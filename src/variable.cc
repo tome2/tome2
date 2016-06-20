@@ -175,7 +175,6 @@ bool_ cheat_peek; 		/* Peek into object creation */
 bool_ cheat_hear; 		/* Peek into monster creation */
 bool_ cheat_room; 		/* Peek into dungeon creation */
 bool_ cheat_xtra; 		/* Peek into something else */
-bool_ cheat_know; 		/* Know complete monster info */
 bool_ cheat_live; 		/* Allow player to avoid death */
 
 

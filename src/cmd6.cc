@@ -4341,15 +4341,6 @@ void do_cmd_zap_rod(void)
 			break;
 		}
 
-	case SV_ROD_PROBING:
-		{
-			probing();
-
-			ident = TRUE;
-
-			break;
-		}
-
 	case SV_ROD_CURING:
 		{
 			if (set_blind(0)) ident = TRUE;
@@ -5224,67 +5215,6 @@ const char *activation_aux(object_type * o_ptr, bool_ doit, int item)
 			fire_bolt(GF_MISSILE, dir, damroll(10, 10));
 
 			o_ptr->timeout = rand_int(20) + 20;
-
-			break;
-		}
-
-	case ACT_NUMENOR:
-		{
-			/* Give full knowledge */
-			/* Hack -- Maximal info */
-			monster_race *r_ptr;
-			cave_type *c_ptr;
-			int x, y, m;
-
-			if (!doit) return "analyze monster every 500+d200 turns";
-
-			if (!tgt_pt(&x, &y)) break;
-
-			c_ptr = &cave[y][x];
-			if (!c_ptr->m_idx) break;
-
-			r_ptr = &r_info[c_ptr->m_idx];
-
-			/* Observe "maximal" attacks */
-			for (m = 0; m < 4; m++)
-			{
-				/* Examine "actual" blows */
-				if (r_ptr->blow[m].effect || r_ptr->blow[m].method)
-				{
-					/* Hack -- maximal observations */
-					r_ptr->r_blows[m] = MAX_UCHAR;
-				}
-			}
-
-			/* Hack -- maximal drops */
-			r_ptr->r_drop_gold = r_ptr->r_drop_item =
-			                             (((r_ptr->flags1 & (RF1_DROP_4D2)) ? 8 : 0) +
-			                              ((r_ptr->flags1 & (RF1_DROP_3D2)) ? 6 : 0) +
-			                              ((r_ptr->flags1 & (RF1_DROP_2D2)) ? 4 : 0) +
-			                              ((r_ptr->flags1 & (RF1_DROP_1D2)) ? 2 : 0) +
-			                              ((r_ptr->flags1 & (RF1_DROP_90)) ? 1 : 0) +
-			                              ((r_ptr->flags1 & (RF1_DROP_60)) ? 1 : 0));
-
-			/* Hack -- but only "valid" drops */
-			if (r_ptr->flags1 & (RF1_ONLY_GOLD)) r_ptr->r_drop_item = 0;
-			if (r_ptr->flags1 & (RF1_ONLY_ITEM)) r_ptr->r_drop_gold = 0;
-
-			/* Hack -- observe many spells */
-			r_ptr->r_cast_inate = MAX_UCHAR;
-			r_ptr->r_cast_spell = MAX_UCHAR;
-
-			/* Hack -- know all the flags */
-			r_ptr->r_flags1 = r_ptr->flags1;
-			r_ptr->r_flags2 = r_ptr->flags2;
-			r_ptr->r_flags3 = r_ptr->flags3;
-			r_ptr->r_flags4 = r_ptr->flags4;
-			r_ptr->r_flags5 = r_ptr->flags5;
-			r_ptr->r_flags6 = r_ptr->flags6;
-			r_ptr->r_flags7 = r_ptr->flags7;
-			r_ptr->r_flags8 = r_ptr->flags8;
-			r_ptr->r_flags9 = r_ptr->flags9;
-
-			o_ptr->timeout = rand_int(200) + 500;
 
 			break;
 		}
@@ -6739,10 +6669,9 @@ const char *activation_aux(object_type * o_ptr, bool_ doit, int item)
 
 	case ACT_DETECT_XTRA:
 		{
-			if (!doit) return "detection, probing and identify true every 1000 turns";
+			if (!doit) return "detection and identify true every 1000 turns";
 			msg_print("It glows brightly...");
 			detect_all(DEFAULT_RADIUS);
-			probing();
 			identify_fully();
 
 			o_ptr->timeout = 1000;

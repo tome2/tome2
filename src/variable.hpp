@@ -121,7 +121,6 @@ extern bool_ cheat_peek;
 extern bool_ cheat_hear;
 extern bool_ cheat_room;
 extern bool_ cheat_xtra;
-extern bool_ cheat_know;
 extern bool_ cheat_live;
 extern byte hitpoint_warn;
 extern byte delay_factor;

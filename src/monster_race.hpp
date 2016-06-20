@@ -79,35 +79,7 @@ struct monster_race
 	byte cur_num;			/* Monster population on current level */
 
 
-	s16b r_sights;			/* Count sightings of this monster */
-	s16b r_deaths;			/* Count deaths from this monster */
-
 	s16b r_pkills;			/* Count monsters killed in this life */
-	s16b r_tkills;			/* Count monsters killed in all lives */
-
-	byte r_wake;			/* Number of times woken up (?) */
-	byte r_ignore;			/* Number of times ignored (?) */
-
-	byte r_xtra1;			/* Something (unused) */
-	byte r_xtra2;			/* Something (unused) */
-
-	byte r_drop_gold;		/* Max number of gold dropped at once */
-	byte r_drop_item;		/* Max number of item dropped at once */
-
-	byte r_cast_inate;		/* Max number of inate spells seen */
-	byte r_cast_spell;		/* Max number of other spells seen */
-
-	byte r_blows[4];		/* Number of times each blow type was seen */
-
-	u32b r_flags1;			/* Observed racial flags */
-	u32b r_flags2;			/* Observed racial flags */
-	u32b r_flags3;			/* Observed racial flags */
-	u32b r_flags4;			/* Observed racial flags */
-	u32b r_flags5;			/* Observed racial flags */
-	u32b r_flags6;			/* Observed racial flags */
-	u32b r_flags7;			/* Observed racial flags */
-	u32b r_flags8;                  /* Observed racial flags */
-	u32b r_flags9;                  /* Observed racial flags */
 
 	bool_ on_saved;                  /* Is the (unique) on a saved level ? */
 

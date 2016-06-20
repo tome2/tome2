@@ -46,8 +46,6 @@ extern void aggravate_monsters(int who);
 extern bool_ genocide_aux(bool_ player_cast, char typ);
 extern bool_ genocide(bool_ player_cast);
 extern bool_ mass_genocide(bool_ player_cast);
-extern void do_probe(int m_idx);
-extern bool_ probing(void);
 extern void change_wild_mode(void);
 extern bool_ banish_evil(int dist);
 extern bool_ dispel_evil(int dam);

@@ -33,63 +33,6 @@ static cptr wd_his[3] = { "its", "his", "her" };
 
 
 
-
-
-
-/*
- * Determine if the "armor" is known
- * The higher the level, the fewer kills needed.
- */
-static bool_ know_armour(std::shared_ptr<monster_race const> r_ptr)
-{
-	s32b level = r_ptr->level;
-
-	s32b kills = r_ptr->r_tkills;
-
-	/* Normal monsters */
-	if (kills > 304 / (4 + level)) return (TRUE);
-
-	/* Skip non-uniques */
-	if (!(r_ptr->flags1 & (RF1_UNIQUE))) return (FALSE);
-
-	/* Unique monsters */
-	if (kills > 304 / (38 + (5*level) / 4)) return (TRUE);
-
-	/* Assume false */
-	return (FALSE);
-}
-
-
-/*
- * Determine if the "damage" of the given attack is known
- * the higher the level of the monster, the fewer the attacks you need,
- * the more damage an attack does, the more attacks you need
- */
-static bool_ know_damage(std::shared_ptr<monster_race const> r_ptr, int i)
-{
-	s32b level = r_ptr->level;
-
-	s32b a = r_ptr->r_blows[i];
-
-	s32b d1 = r_ptr->blow[i].d_dice;
-	s32b d2 = r_ptr->blow[i].d_side;
-
-	s32b d = d1 * d2;
-
-	/* Normal monsters */
-	if ((4 + level) * a > 80 * d) return (TRUE);
-
-	/* Skip non-uniques */
-	if (!(r_ptr->flags1 & (RF1_UNIQUE))) return (FALSE);
-
-	/* Unique monsters */
-	if ((4 + level) * (2 * a) > 80 * d) return (TRUE);
-
-	/* Assume false */
-	return (FALSE);
-}
-
-
 /*
  * Hack -- display monster information using "text_out()"
  *
@@ -102,7 +45,7 @@ static bool_ know_damage(std::shared_ptr<monster_race const> r_ptr, int i)
  * left edge of the screen, on a cleared line, in which the recall is
  * to take place.  One extra blank line is left after the recall.
  */
-static void roff_aux(std::shared_ptr<monster_race> r_ptr, int remem)
+static void roff_aux(std::shared_ptr<monster_race const> r_ptr)
 {
 	bool_ old = FALSE;
 	bool_ sin = FALSE;
@@ -111,191 +54,40 @@ static void roff_aux(std::shared_ptr<monster_race> r_ptr, int remem)
 
 	cptr p, q;
 
-	int msex = 0;
-
 	bool_ breath = FALSE;
 	bool_ magic = FALSE;
-
-	u32b	flags1;
-	u32b	flags2;
-	u32b	flags3;
-	u32b	flags4;
-	u32b	flags5;
-	u32b	flags6;
-	u32b flags7;
-	u32b flags9;
 
 	int	vn = 0;
 	byte color[64];
 	cptr	vp[64];
 
-	monster_race save_mem;
-
-	/* Cheat -- Know everything */
-	if (cheat_know)
-	{
-		/* XXX XXX XXX */
-
-		/* Save the "old" memory */
-		save_mem = *r_ptr;
-
-		/* Hack -- Maximal kills */
-		r_ptr->r_tkills = MAX_SHORT;
-
-		/* Hack -- Maximal info */
-		r_ptr->r_wake = r_ptr->r_ignore = MAX_UCHAR;
-
-		/* Observe "maximal" attacks */
-		for (m = 0; m < 4; m++)
-		{
-			/* Examine "actual" blows */
-			if (r_ptr->blow[m].effect || r_ptr->blow[m].method)
-			{
-				/* Hack -- maximal observations */
-				r_ptr->r_blows[m] = MAX_UCHAR;
-			}
-		}
-
-		/* Hack -- maximal drops */
-		r_ptr->r_drop_gold = r_ptr->r_drop_item =
-		                             (((r_ptr->flags1 & (RF1_DROP_4D2)) ? 8 : 0) +
-		                              ((r_ptr->flags1 & (RF1_DROP_3D2)) ? 6 : 0) +
-		                              ((r_ptr->flags1 & (RF1_DROP_2D2)) ? 4 : 0) +
-		                              ((r_ptr->flags1 & (RF1_DROP_1D2)) ? 2 : 0) +
-		                              ((r_ptr->flags1 & (RF1_DROP_90)) ? 1 : 0) +
-		                              ((r_ptr->flags1 & (RF1_DROP_60)) ? 1 : 0));
-
-		/* Hack -- but only "valid" drops */
-		if (r_ptr->flags1 & (RF1_ONLY_GOLD)) r_ptr->r_drop_item = 0;
-		if (r_ptr->flags1 & (RF1_ONLY_ITEM)) r_ptr->r_drop_gold = 0;
-
-		/* Hack -- observe many spells */
-		r_ptr->r_cast_inate = MAX_UCHAR;
-		r_ptr->r_cast_spell = MAX_UCHAR;
-
-		/* Hack -- know all the flags */
-		r_ptr->r_flags1 = r_ptr->flags1;
-		r_ptr->r_flags2 = r_ptr->flags2;
-		r_ptr->r_flags3 = r_ptr->flags3;
-		r_ptr->r_flags4 = r_ptr->flags4;
-		r_ptr->r_flags5 = r_ptr->flags5;
-		r_ptr->r_flags6 = r_ptr->flags6;
-		r_ptr->r_flags7 = r_ptr->flags7;
-		r_ptr->r_flags8 = r_ptr->flags8;
-		r_ptr->r_flags9 = r_ptr->flags9;
-	}
-
+	/* Shorthand */
+	u32b const flags1 = r_ptr->flags1;
+	u32b const flags2 = r_ptr->flags2;
+	u32b const flags3 = r_ptr->flags3;
+	u32b const flags4 = r_ptr->flags4;
+	u32b const flags5 = r_ptr->flags5;
+	u32b const flags6 = r_ptr->flags6;
+	u32b const flags7 = r_ptr->flags7;
+	u32b const flags9 = r_ptr->flags9;
 
 	/* Extract a gender (if applicable) */
-	if (r_ptr->flags1 & (RF1_FEMALE)) msex = 2;
-	else if (r_ptr->flags1 & (RF1_MALE)) msex = 1;
-
-
-	/* Obtain a copy of the "known" flags */
-	flags1 = (r_ptr->flags1 & r_ptr->r_flags1);
-	flags2 = (r_ptr->flags2 & r_ptr->r_flags2);
-	flags3 = (r_ptr->flags3 & r_ptr->r_flags3);
-	flags4 = (r_ptr->flags4 & r_ptr->r_flags4);
-	flags5 = (r_ptr->flags5 & r_ptr->r_flags5);
-	flags6 = (r_ptr->flags6 & r_ptr->r_flags6);
-	flags7 = (r_ptr->flags7 & r_ptr->r_flags7);
-	flags9 = (r_ptr->flags9 & r_ptr->r_flags9);
-
-
-	/* Assume some "obvious" flags */
-	if (r_ptr->flags1 & (RF1_UNIQUE)) flags1 |= (RF1_UNIQUE);
-	if (r_ptr->flags1 & (RF1_MALE)) flags1 |= (RF1_MALE);
-	if (r_ptr->flags1 & (RF1_FEMALE)) flags1 |= (RF1_FEMALE);
-
-	/* Assume some "creation" flags */
-	if (r_ptr->flags1 & (RF1_FRIEND)) flags1 |= (RF1_FRIEND);
-	if (r_ptr->flags1 & (RF1_FRIENDS)) flags1 |= (RF1_FRIENDS);
-	if (r_ptr->flags1 & (RF1_ESCORT)) flags1 |= (RF1_ESCORT);
-	if (r_ptr->flags1 & (RF1_ESCORTS)) flags1 |= (RF1_ESCORTS);
-
-	/* Killing a monster reveals some properties */
-	if (r_ptr->r_tkills)
+	int msex = 0;
+	if (flags1 & (RF1_FEMALE))
 	{
-		/* Know "race" flags */
-		if (r_ptr->flags3 & (RF3_ORC)) flags3 |= (RF3_ORC);
-		if (r_ptr->flags3 & (RF3_TROLL)) flags3 |= (RF3_TROLL);
-		if (r_ptr->flags3 & (RF3_GIANT)) flags3 |= (RF3_GIANT);
-		if (r_ptr->flags3 & (RF3_DRAGON)) flags3 |= (RF3_DRAGON);
-		if (r_ptr->flags3 & (RF3_DEMON)) flags3 |= (RF3_DEMON);
-		if (r_ptr->flags3 & (RF3_UNDEAD)) flags3 |= (RF3_UNDEAD);
-		if (r_ptr->flags3 & (RF3_EVIL)) flags3 |= (RF3_EVIL);
-		if (r_ptr->flags3 & (RF3_GOOD)) flags3 |= (RF3_GOOD);
-		if (r_ptr->flags3 & (RF3_ANIMAL)) flags3 |= (RF3_ANIMAL);
-		if (r_ptr->flags3 & (RF3_THUNDERLORD)) flags3 |= (RF3_THUNDERLORD);
-		if (r_ptr->flags7 & (RF7_SPIDER)) flags7 |= (RF7_SPIDER);
-
-		/* Know "forced" flags */
-		if (r_ptr->flags1 & (RF1_FORCE_DEPTH)) flags1 |= (RF1_FORCE_DEPTH);
-		if (r_ptr->flags1 & (RF1_FORCE_MAXHP)) flags1 |= (RF1_FORCE_MAXHP);
+		msex = 2;
 	}
-
+	else if (flags1 & (RF1_MALE))
+	{
+		msex = 1;
+	}
 
 	/* Treat uniques differently */
 	if (flags1 & (RF1_UNIQUE))
 	{
-		/* Hack -- Determine if the unique is "dead" */
-		bool_ dead = (r_ptr->max_num == 0) ? TRUE : FALSE;
-
-		/* We've been killed... */
-		if (r_ptr->r_deaths)
-		{
-			/* Killed ancestors */
-			text_out(format("%^s has slain %d of your ancestors",
-			                wd_he[msex], r_ptr->r_deaths));
-
-			/* But we've also killed it */
-			if (dead)
-			{
-				text_out(format(", but you have avenged them!  ") );
-			}
-
-			/* Unavenged (ever) */
-			else
-			{
-				text_out(format(", who %s unavenged.  ",
-				                plural(r_ptr->r_deaths, "remains", "remain")));
-			}
-		}
-
-		/* Dead unique who never hurt us */
-		else if (dead)
+		if (r_ptr->max_num == 0)
 		{
 			text_out("You have slain this foe.  ");
-		}
-	}
-
-	/* Not unique, but killed us */
-	else if (r_ptr->r_deaths)
-	{
-		/* Dead ancestors */
-		text_out(format("%d of your ancestors %s been killed by this creature, ",
-		                r_ptr->r_deaths, plural(r_ptr->r_deaths, "has", "have")));
-
-		/* Some kills this life */
-		if (r_ptr->r_pkills)
-		{
-			text_out("and you have exterminated at least ");
-			text_out_c(TERM_L_GREEN, format("%d", r_ptr->r_pkills));
-			text_out(" of the creatures.  ");
-		}
-
-		/* Some kills past lives */
-		else if (r_ptr->r_tkills)
-		{
-			text_out(format("and %s have exterminated at least %d of the creatures.  ",
-			                "your ancestors", r_ptr->r_tkills));
-		}
-
-		/* No kills */
-		else
-		{
-			text_out(format("and %s is not ever known to have been defeated.  ",
-			                wd_he[msex]));
 		}
 	}
 
@@ -310,13 +102,6 @@ static void roff_aux(std::shared_ptr<monster_race> r_ptr, int remem)
 			text_out(" of these creatures.  ");
 		}
 
-		/* Killed some last life */
-		else if (r_ptr->r_tkills)
-		{
-			text_out(format("Your ancestors have killed at least %d of these creatures.  ",
-			                r_ptr->r_tkills));
-		}
-
 		/* Killed none */
 		else
 		{
@@ -327,13 +112,7 @@ static void roff_aux(std::shared_ptr<monster_race> r_ptr, int remem)
 
 	/* Descriptions */
 	{
-		char buf[2048];
-
-		/* Simple method */
-		strcpy(buf, r_ptr->text);
-
-		/* Dump it */
-		text_out(buf);
+		text_out(r_ptr->text);
 		text_out("  ");
 	}
 
@@ -360,7 +139,7 @@ static void roff_aux(std::shared_ptr<monster_race> r_ptr, int remem)
 		text_out_c(TERM_L_GREEN, "lives in the town or the wilderness");
 		old = TRUE;
 	}
-	else if (r_ptr->r_tkills)
+	else
 	{
 		if (old)
 			text_out(", ");
@@ -382,7 +161,6 @@ static void roff_aux(std::shared_ptr<monster_race> r_ptr, int remem)
 
 
 	/* Describe movement */
-	if (TRUE)
 	{
 		/* Introduction */
 		if (old)
@@ -466,7 +244,6 @@ static void roff_aux(std::shared_ptr<monster_race> r_ptr, int remem)
 
 
 	/* Describe experience if known */
-	if (r_ptr->r_tkills)
 	{
 		/* Introduction */
 		if (flags1 & (RF1_UNIQUE))
@@ -765,30 +542,14 @@ static void roff_aux(std::shared_ptr<monster_race> r_ptr, int remem)
 	/* End the sentence about inate/other spells */
 	if (breath || magic)
 	{
-		/* Total casting */
-		m = r_ptr->r_cast_inate + r_ptr->r_cast_spell;
-
 		/* Average frequency */
 		n = (r_ptr->freq_inate + r_ptr->freq_spell) / 2;
 
 		/* Describe the spell frequency */
-		if (m > 100)
-		{
-			text_out("; ");
-			text_out_c(TERM_L_GREEN, "1");
-			text_out(" time in ");
-			text_out_c(TERM_L_GREEN, format("%d", 100 / n));
-		}
-
-		/* Guess at the frequency */
-		else if (m)
-		{
-			n = ((n + 9) / 10) * 10;
-			text_out("; about ");
-			text_out_c(TERM_L_GREEN, "1");
-			text_out(" time in ");
-			text_out_c(TERM_L_GREEN, format("%d", 100 / n));
-		}
+		text_out("; ");
+		text_out_c(TERM_L_GREEN, "1");
+		text_out(" time in ");
+		text_out_c(TERM_L_GREEN, format("%d", 100 / n));
 
 		/* End this sentence */
 		text_out(".  ");
@@ -796,7 +557,6 @@ static void roff_aux(std::shared_ptr<monster_race> r_ptr, int remem)
 
 
 	/* Describe monster "toughness" */
-	if (know_armour(r_ptr))
 	{
 		/* Armor */
 		text_out(format("%^s has an armor rating of ", wd_he[msex]));
@@ -1065,10 +825,7 @@ static void roff_aux(std::shared_ptr<monster_race> r_ptr, int remem)
 	}
 
 
-	/* Do we know how aware it is? */
-	if (((static_cast<int>(r_ptr->r_wake) * static_cast<int>(r_ptr->r_wake)) > r_ptr->sleep) ||
-	    (r_ptr->r_ignore == MAX_UCHAR) ||
-	    ((r_ptr->sleep == 0) && (r_ptr->r_tkills >= 10)))
+	/* How aware is it? */
 	{
 		cptr act;
 
@@ -1123,34 +880,46 @@ static void roff_aux(std::shared_ptr<monster_race> r_ptr, int remem)
 
 
 	/* Drops gold and/or items */
-	if (r_ptr->r_drop_gold || r_ptr->r_drop_item)
 	{
+		/* Calculate drops */
+		byte drop_gold;
+		byte drop_item;
+
+		drop_gold = drop_item =
+			(((r_ptr->flags1 & (RF1_DROP_4D2)) ? 8 : 0) +
+			 ((r_ptr->flags1 & (RF1_DROP_3D2)) ? 6 : 0) +
+			 ((r_ptr->flags1 & (RF1_DROP_2D2)) ? 4 : 0) +
+			 ((r_ptr->flags1 & (RF1_DROP_1D2)) ? 2 : 0) +
+			 ((r_ptr->flags1 & (RF1_DROP_90)) ? 1 : 0) +
+			 ((r_ptr->flags1 & (RF1_DROP_60)) ? 1 : 0));
+
+		if (r_ptr->flags1 & RF1_ONLY_GOLD) drop_item = 0;
+		if (r_ptr->flags1 & RF1_ONLY_ITEM) drop_gold = 0;
+
 		/* No "n" needed */
 		sin = FALSE;
 
-		/* Intro */
-		text_out(format("%^s may carry", wd_he[msex]));
-
 		/* Count maximum drop */
-		n = MAX(r_ptr->r_drop_gold, r_ptr->r_drop_item);
+		n = MAX(drop_gold, drop_item);
 
-		/* One drop (may need an "n") */
-		if (n == 1)
+		/* Intro text */
+		if (n == 0)
 		{
-			text_out(" a");
+			text_out(format("%^s carries no items", wd_he[msex]));
+
+		}
+		else if (n == 1)
+		{
+			text_out(format("%^s may carry a", wd_he[msex]));
 			sin = TRUE;
 		}
-
-		/* Two drops */
 		else if (n == 2)
 		{
-			text_out(" one or two");
+			text_out(format("%^s may carry one or two", wd_he[msex]));
 		}
-
-		/* Many drops */
 		else
 		{
-			text_out(format(" up to %d", n));
+			text_out(format("%^s may carry up to %d", wd_he[msex], n));
 		}
 
 
@@ -1175,7 +944,7 @@ static void roff_aux(std::shared_ptr<monster_race> r_ptr, int remem)
 
 
 		/* Objects */
-		if (r_ptr->r_drop_item)
+		if (drop_item)
 		{
 			/* Handle singular "an" */
 			if (sin) text_out("n");
@@ -1191,7 +960,7 @@ static void roff_aux(std::shared_ptr<monster_race> r_ptr, int remem)
 		}
 
 		/* Treasures */
-		if (r_ptr->r_drop_gold)
+		if (drop_gold)
 		{
 			/* Cancel prefix */
 			if (!p) sin = FALSE;
@@ -1211,33 +980,27 @@ static void roff_aux(std::shared_ptr<monster_race> r_ptr, int remem)
 	}
 
 
-	/* Count the number of "known" attacks */
+	/* Count the number of attacks */
 	for (n = 0, m = 0; m < 4; m++)
 	{
 		/* Skip non-attacks */
 		if (!r_ptr->blow[m].method) continue;
 
 		/* Count known attacks */
-		if (r_ptr->r_blows[m]) n++;
+		n++;
 	}
 
-	/* Examine (and count) the actual attacks */
+	/* Examine the actual attacks */
 	for (r = 0, m = 0; m < 4; m++)
 	{
-		int method, effect, d1, d2;
-
 		/* Skip non-attacks */
 		if (!r_ptr->blow[m].method) continue;
 
-		/* Skip unknown attacks */
-		if (!r_ptr->r_blows[m]) continue;
-
-
 		/* Extract the attack info */
-		method = r_ptr->blow[m].method;
-		effect = r_ptr->blow[m].effect;
-		d1 = r_ptr->blow[m].d_dice;
-		d2 = r_ptr->blow[m].d_side;
+		int method = r_ptr->blow[m].method;
+		int effect = r_ptr->blow[m].effect;
+		int d1 = r_ptr->blow[m].d_dice;
+		int d2 = r_ptr->blow[m].d_side;
 
 
 		/* No method yet */
@@ -1457,7 +1220,7 @@ static void roff_aux(std::shared_ptr<monster_race> r_ptr, int remem)
 			text_out_c(TERM_YELLOW, q);
 
 			/* Describe damage (if known) */
-			if (d1 && d2 && know_damage(r_ptr, m))
+			if (d1 && d2)
 			{
 				/* Display the damage */
 				text_out(" with damage");
@@ -1491,13 +1254,6 @@ static void roff_aux(std::shared_ptr<monster_race> r_ptr, int remem)
 
 	/* All done */
 	text_out("\n");
-
-	/* Cheat -- know everything */
-	if ((cheat_know) && (remem == 0))
-	{
-		/* Hack -- restore memory */
-		*r_ptr = save_mem;
-	}
 }
 
 /*
@@ -1566,7 +1322,7 @@ static void roff_top(int r_idx, int ego)
 /*
  * Hack -- describe the given monster race at the top of the screen
  */
-void screen_roff(int r_idx, int ego, int remember)
+void screen_roff(int r_idx, int ego)
 {
 	auto r_ptr = race_info_idx(r_idx, ego);
 
@@ -1577,7 +1333,7 @@ void screen_roff(int r_idx, int ego, int remember)
 	Term_erase(0, 1, 255);
 
 	/* Recall monster */
-	roff_aux(r_ptr, remember);
+	roff_aux(r_ptr);
 
 	/* Describe monster */
 	roff_top(r_idx, ego);
@@ -1590,7 +1346,7 @@ void monster_description_out(int r_idx, int ego)
 {
 	auto r_ptr = race_info_idx(r_idx, ego);
 	roff_name(r_idx, ego);
-	roff_aux(r_ptr, 0);
+	roff_aux(r_ptr);
 }
 
 /*
@@ -1614,7 +1370,7 @@ void display_roff(int r_idx, int ego)
 
 	/* Recall monster */
 	auto r_ptr = race_info_idx(r_idx, ego);
-	roff_aux(r_ptr, 0);
+	roff_aux(r_ptr);
 
 	/* Describe monster */
 	roff_top(r_idx, ego);

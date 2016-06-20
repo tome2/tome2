@@ -26,7 +26,7 @@ There are six spells available for the divination school. These Spells are:
    Asks for an object and identifies it.
    At spell level 17 it identifies all objects in the inventory.
    At spell level 27 it identifies all objects in the inventory and in a 
-   radius on the floor, as well as probing monsters in that radius.
+   radius on the floor.
 4. [[[[[sReveal Ways] (school level 9)
    Detects the doors/stairs/ways in a certain radius around you.
 5. [[[[[sVision] (school level 15)

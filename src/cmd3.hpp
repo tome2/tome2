@@ -21,4 +21,3 @@ extern void do_cmd_look(void);
 extern void do_cmd_locate(void);
 extern void do_cmd_query_symbol(void);
 extern bool_ do_cmd_sense_grid_mana(void);
-extern bool_ research_mon(void);

@@ -85,10 +85,6 @@ N:17:Look at busts of Kings
 C:0:0:0
 I:5:0:l
 
-N:18:Research monster
-C:1600:1500:1400
-I:20:0:r
-
 N:21:Get quest monster
 C:0:0:0
 I:54:0:q

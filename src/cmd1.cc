@@ -261,109 +261,60 @@ s16b tot_dam_aux(object_type *o_ptr, int tdam, monster_type *m_ptr,
 			/* Slay Animal */
 			if ((f1 & (TR1_SLAY_ANIMAL)) && (r_ptr->flags3 & (RF3_ANIMAL)))
 			{
-				if (m_ptr->ml)
-				{
-					r_ptr->r_flags3 |= (RF3_ANIMAL);
-				}
-
 				if (mult < 2) mult = 2;
 			}
 
 			/* Slay Evil */
 			if ((f1 & (TR1_SLAY_EVIL)) && (r_ptr->flags3 & (RF3_EVIL)))
 			{
-				if (m_ptr->ml)
-				{
-					r_ptr->r_flags3 |= (RF3_EVIL);
-				}
-
 				if (mult < 2) mult = 2;
 			}
 
 			/* Slay Undead */
 			if ((f1 & (TR1_SLAY_UNDEAD)) && (r_ptr->flags3 & (RF3_UNDEAD)))
 			{
-				if (m_ptr->ml)
-				{
-					r_ptr->r_flags3 |= (RF3_UNDEAD);
-				}
-
 				if (mult < 3) mult = 3;
 			}
 
 			/* Slay Demon */
 			if ((f1 & (TR1_SLAY_DEMON)) && (r_ptr->flags3 & (RF3_DEMON)))
 			{
-				if (m_ptr->ml)
-				{
-					r_ptr->r_flags3 |= (RF3_DEMON);
-				}
-
 				if (mult < 3) mult = 3;
 			}
 
 			/* Slay Orc */
 			if ((f1 & (TR1_SLAY_ORC)) && (r_ptr->flags3 & (RF3_ORC)))
 			{
-				if (m_ptr->ml)
-				{
-					r_ptr->r_flags3 |= (RF3_ORC);
-				}
-
 				if (mult < 3) mult = 3;
 			}
 
 			/* Slay Troll */
 			if ((f1 & (TR1_SLAY_TROLL)) && (r_ptr->flags3 & (RF3_TROLL)))
 			{
-				if (m_ptr->ml)
-				{
-					r_ptr->r_flags3 |= (RF3_TROLL);
-				}
-
 				if (mult < 3) mult = 3;
 			}
 
 			/* Slay Giant */
 			if ((f1 & (TR1_SLAY_GIANT)) && (r_ptr->flags3 & (RF3_GIANT)))
 			{
-				if (m_ptr->ml)
-				{
-					r_ptr->r_flags3 |= (RF3_GIANT);
-				}
-
 				if (mult < 3) mult = 3;
 			}
 
 			/* Slay Dragon  */
 			if ((f1 & (TR1_SLAY_DRAGON)) && (r_ptr->flags3 & (RF3_DRAGON)))
 			{
-				if (m_ptr->ml)
-				{
-					r_ptr->r_flags3 |= (RF3_DRAGON);
-				}
-
 				if (mult < 3) mult = 3;
 			}
 
 			/* Execute Dragon */
 			if ((f1 & (TR1_KILL_DRAGON)) && (r_ptr->flags3 & (RF3_DRAGON)))
 			{
-				if (m_ptr->ml)
-				{
-					r_ptr->r_flags3 |= (RF3_DRAGON);
-				}
-
 				if (mult < 5) mult = 5;
 			}
 
 			/* Execute Undead */
 			if ((f5 & (TR5_KILL_UNDEAD)) && (r_ptr->flags3 & (RF3_UNDEAD)))
 			{
-				if (m_ptr->ml)
-				{
-					r_ptr->r_flags3 |= (RF3_UNDEAD);
-				}
 
 				if (mult < 5) mult = 5;
 			}
@@ -371,11 +322,6 @@ s16b tot_dam_aux(object_type *o_ptr, int tdam, monster_type *m_ptr,
 			/* Execute Demon */
 			if ((f5 & (TR5_KILL_DEMON)) && (r_ptr->flags3 & (RF3_DEMON)))
 			{
-				if (m_ptr->ml)
-				{
-					r_ptr->r_flags3 |= (RF3_DEMON);
-				}
-
 				if (mult < 5) mult = 5;
 			}
 
@@ -383,26 +329,14 @@ s16b tot_dam_aux(object_type *o_ptr, int tdam, monster_type *m_ptr,
 			/* Brand (Acid) */
 			if (f1 & (TR1_BRAND_ACID))
 			{
-				/* Notice immunity */
 				if (r_ptr->flags3 & (RF3_IM_ACID))
 				{
-					if (m_ptr->ml)
-					{
-						r_ptr->r_flags3 |= (RF3_IM_ACID);
-					}
+					// No additional multiplier
 				}
-
-				/* Notice susceptibility */
 				else if (r_ptr->flags9 & (RF9_SUSCEP_ACID))
 				{
-					if (m_ptr->ml)
-					{
-						r_ptr->r_flags9 |= (RF9_SUSCEP_ACID);
-					}
 					if (mult < 6) mult = 6;
 				}
-
-				/* Otherwise, take the damage */
 				else
 				{
 					if (mult < 3) mult = 3;
@@ -412,26 +346,14 @@ s16b tot_dam_aux(object_type *o_ptr, int tdam, monster_type *m_ptr,
 			/* Brand (Elec) */
 			if (f1 & (TR1_BRAND_ELEC))
 			{
-				/* Notice immunity */
 				if (r_ptr->flags3 & (RF3_IM_ELEC))
 				{
-					if (m_ptr->ml)
-					{
-						r_ptr->r_flags3 |= (RF3_IM_ELEC);
-					}
+					// No additional multiplier
 				}
-
-				/* Notice susceptibility */
 				else if (r_ptr->flags9 & (RF9_SUSCEP_ELEC))
 				{
-					if (m_ptr->ml)
-					{
-						r_ptr->r_flags9 |= (RF9_SUSCEP_ELEC);
-					}
 					if (mult < 6) mult = 6;
 				}
-
-				/* Otherwise, take the damage */
 				else
 				{
 					if (mult < 3) mult = 3;
@@ -441,26 +363,14 @@ s16b tot_dam_aux(object_type *o_ptr, int tdam, monster_type *m_ptr,
 			/* Brand (Fire) */
 			if (f1 & (TR1_BRAND_FIRE))
 			{
-				/* Notice immunity */
 				if (r_ptr->flags3 & (RF3_IM_FIRE))
 				{
-					if (m_ptr->ml)
-					{
-						r_ptr->r_flags3 |= (RF3_IM_FIRE);
-					}
+					// No additional multiplier
 				}
-
-				/* Notice susceptibility */
 				else if (r_ptr->flags3 & (RF3_SUSCEP_FIRE))
 				{
-					if (m_ptr->ml)
-					{
-						r_ptr->r_flags3 |= (RF3_SUSCEP_FIRE);
-					}
 					if (mult < 6) mult = 6;
 				}
-
-				/* Otherwise, take the damage */
 				else
 				{
 					if (mult < 3) mult = 3;
@@ -470,26 +380,14 @@ s16b tot_dam_aux(object_type *o_ptr, int tdam, monster_type *m_ptr,
 			/* Brand (Cold) */
 			if (f1 & (TR1_BRAND_COLD))
 			{
-				/* Notice immunity */
 				if (r_ptr->flags3 & (RF3_IM_COLD))
 				{
-					if (m_ptr->ml)
-					{
-						r_ptr->r_flags3 |= (RF3_IM_COLD);
-					}
+					// No additional multiplier
 				}
-
-				/* Notice susceptibility */
 				else if (r_ptr->flags3 & (RF3_SUSCEP_COLD))
 				{
-					if (m_ptr->ml)
-					{
-						r_ptr->r_flags3 |= (RF3_SUSCEP_COLD);
-					}
 					if (mult < 6) mult = 6;
 				}
-
-				/* Otherwise, take the damage */
 				else
 				{
 					if (mult < 3) mult = 3;
@@ -499,27 +397,15 @@ s16b tot_dam_aux(object_type *o_ptr, int tdam, monster_type *m_ptr,
 			/* Brand (Poison) */
 			if (f1 & (TR1_BRAND_POIS) || (p_ptr->tim_poison))
 			{
-				/* Notice immunity */
 				if (r_ptr->flags3 & (RF3_IM_POIS))
 				{
-					if (m_ptr->ml)
-					{
-						r_ptr->r_flags3 |= (RF3_IM_POIS);
-					}
+					// No additional damage
 				}
-
-				/* Notice susceptibility */
 				else if (r_ptr->flags9 & (RF9_SUSCEP_POIS))
 				{
-					if (m_ptr->ml)
-					{
-						r_ptr->r_flags9 |= (RF9_SUSCEP_POIS);
-					}
 					if (mult < 6) mult = 6;
 					if (magik(95)) *special |= SPEC_POIS;
 				}
-
-				/* Otherwise, take the damage */
 				else
 				{
 					if (mult < 3) mult = 3;
@@ -530,16 +416,10 @@ s16b tot_dam_aux(object_type *o_ptr, int tdam, monster_type *m_ptr,
 			/* Wounding */
 			if (f5 & (TR5_WOUNDING))
 			{
-				/* Notice immunity */
 				if (r_ptr->flags8 & (RF8_NO_CUT))
 				{
-					if (m_ptr->ml)
-					{
-						r_info[m_ptr->r_idx].r_flags8 |= (RF8_NO_CUT);
-					}
+					// No additional damage
 				}
-
-				/* Otherwise, take the damage */
 				else
 				{
 					if (magik(50)) *special |= SPEC_CUT;
@@ -703,7 +583,6 @@ void touch_zap_player(monster_type *m_ptr)
 			if (p_ptr->sensible_fire) aura_damage = (aura_damage + 2) * 2;
 
 			take_hit(aura_damage, aura_dam);
-			r_ptr->r_flags2 |= RF2_AURA_FIRE;
 			handle_stuff();
 		}
 	}
@@ -726,7 +605,6 @@ void touch_zap_player(monster_type *m_ptr)
 
 			msg_print("You get zapped!");
 			take_hit(aura_damage, aura_dam);
-			r_ptr->r_flags2 |= RF2_AURA_ELEC;
 			handle_stuff();
 		}
 	}
@@ -792,9 +670,6 @@ static void carried_monster_attack(s16b m_idx, bool_ *fear, bool_ *mdeath,
 	/* Scan through all four blows */
 	for (ap_cnt = 0; ap_cnt < 4; ap_cnt++)
 	{
-		bool_ visible = FALSE;
-		bool_ obvious = FALSE;
-
 		int power = 0;
 		int damage = 0;
 
@@ -817,9 +692,6 @@ static void carried_monster_attack(s16b m_idx, bool_ *fear, bool_ *mdeath,
 		{
 			/* break; */
 		}
-
-		/* Extract visibility (before blink) */
-		visible = TRUE;
 
 		/* Extract the attack "power" */
 		power = get_attack_power(effect);
@@ -1007,9 +879,6 @@ static void carried_monster_attack(s16b m_idx, bool_ *fear, bool_ *mdeath,
 
 			}
 
-			/* Hack -- assume all attacks are obvious */
-			obvious = TRUE;
-
 			/* Roll out the damage */
 			damage = damroll(d_dice, d_side);
 
@@ -1173,8 +1042,6 @@ static void carried_monster_attack(s16b m_idx, bool_ *fear, bool_ *mdeath,
 						{
 							blinked = FALSE;
 							msg_format("You are suddenly very hot!");
-							if (t_ptr->ml)
-								tr_ptr->r_flags2 |= RF2_AURA_FIRE;
 						}
 						project(m_idx, 0, p_ptr->py, p_ptr->px,
 						        damroll(1 + ((t_ptr->level) / 26),
@@ -1190,8 +1057,6 @@ static void carried_monster_attack(s16b m_idx, bool_ *fear, bool_ *mdeath,
 						{
 							blinked = FALSE;
 							msg_format("You get zapped!");
-							if (t_ptr->ml)
-								tr_ptr->r_flags2 |= RF2_AURA_ELEC;
 						}
 						project(m_idx, 0, p_ptr->py, p_ptr->px,
 						        damroll(1 + ((t_ptr->level) / 26),
@@ -1227,21 +1092,6 @@ static void carried_monster_attack(s16b m_idx, bool_ *fear, bool_ *mdeath,
 					/* Message */
 					msg_format("%s misses %s.", sym_name, t_name);
 					break;
-				}
-			}
-		}
-
-
-		/* Analyze "visible" monsters only */
-		if (visible)
-		{
-			/* Count "obvious" attacks (and ones that cause damage) */
-			if (obvious || damage || (r_ptr->r_blows[ap_cnt] > 10))
-			{
-				/* Count attacks of this type */
-				if (r_ptr->r_blows[ap_cnt] < MAX_UCHAR)
-				{
-					r_ptr->r_blows[ap_cnt]++;
 				}
 			}
 		}
@@ -1310,9 +1160,6 @@ static void incarnate_monster_attack(s16b m_idx, bool_ *fear, bool_ *mdeath,
 	for (ap_cnt = 0; ap_cnt < (p_ptr->num_blow > 4) ? 4 : p_ptr->num_blow;
 	                ap_cnt++)
 	{
-		bool_ visible = FALSE;
-		bool_ obvious = FALSE;
-
 		int power = 0;
 		int damage = 0;
 
@@ -1335,9 +1182,6 @@ static void incarnate_monster_attack(s16b m_idx, bool_ *fear, bool_ *mdeath,
 		{
 			/* break; */
 		}
-
-		/* Extract visibility (before blink) */
-		visible = TRUE;
 
 		/* Extract the attack "power" */
 		power = get_attack_power(effect);
@@ -1525,9 +1369,6 @@ static void incarnate_monster_attack(s16b m_idx, bool_ *fear, bool_ *mdeath,
 
 			}
 
-			/* Hack -- assume all attacks are obvious */
-			obvious = TRUE;
-
 			/* Roll out the damage */
 			damage = damroll(d_dice, d_side) + p_ptr->to_d;
 
@@ -1689,8 +1530,6 @@ static void incarnate_monster_attack(s16b m_idx, bool_ *fear, bool_ *mdeath,
 						{
 							blinked = FALSE;
 							msg_format("You are suddenly very hot!");
-							if (t_ptr->ml)
-								tr_ptr->r_flags2 |= RF2_AURA_FIRE;
 						}
 						project(m_idx, 0, p_ptr->py, p_ptr->px,
 						        damroll(1 + ((t_ptr->level) / 26),
@@ -1706,8 +1545,6 @@ static void incarnate_monster_attack(s16b m_idx, bool_ *fear, bool_ *mdeath,
 						{
 							blinked = FALSE;
 							msg_format("You get zapped!");
-							if (t_ptr->ml)
-								tr_ptr->r_flags2 |= RF2_AURA_ELEC;
 						}
 						project(m_idx, 0, p_ptr->py, p_ptr->px,
 						        damroll(1 + ((t_ptr->level) / 26),
@@ -1745,21 +1582,6 @@ static void incarnate_monster_attack(s16b m_idx, bool_ *fear, bool_ *mdeath,
 					msg_format("You miss %s.", t_name);
 
 					break;
-				}
-			}
-		}
-
-
-		/* Analyze "visible" monsters only */
-		if (visible)
-		{
-			/* Count "obvious" attacks (and ones that cause damage) */
-			if (obvious || damage || (r_ptr->r_blows[ap_cnt] > 10))
-			{
-				/* Count attacks of this type */
-				if (r_ptr->r_blows[ap_cnt] < MAX_UCHAR)
-				{
-					r_ptr->r_blows[ap_cnt]++;
 				}
 			}
 		}
@@ -1838,22 +1660,20 @@ void attack_special(monster_type *m_ptr, s32b special, int dam)
 	/* Special - Cut monster */
 	if (special & SPEC_CUT)
 	{
-		/* Cut the monster */
 		if (r_ptr->flags8 & (RF8_NO_CUT))
 		{
-			if (m_ptr->ml)
-			{
-				r_info[m_ptr->r_idx].r_flags8 |= (RF8_NO_CUT);
-			}
+			// No damage
 		}
 		else if (rand_int(100) >= r_ptr->level)
 		{
-			/* Already partially poisoned */
-			if (m_ptr->bleeding) msg_format("%^s is bleeding more strongly.",
-				                                m_name);
-			/* Was not poisoned */
+			if (m_ptr->bleeding)
+			{
+				msg_format("%^s is bleeding more strongly.", m_name);
+			}
 			else
+			{
 				msg_format("%^s is bleeding.", m_name);
+			}
 
 			m_ptr->bleeding += dam * 2;
 		}
@@ -1862,36 +1682,33 @@ void attack_special(monster_type *m_ptr, s32b special, int dam)
 	/* Special - Poison monster */
 	if (special & SPEC_POIS)
 	{
-		/* Poison the monster */
 		if (r_ptr->flags3 & (RF3_IM_POIS))
 		{
-			if (m_ptr->ml)
-			{
-				r_ptr->r_flags3 |= (RF3_IM_POIS);
-			}
+			// No damage
 		}
-		/* Notice susceptibility */
 		else if (r_ptr->flags9 & (RF9_SUSCEP_POIS))
 		{
-			if (m_ptr->ml)
+			if (m_ptr->poisoned)
 			{
-				r_ptr->r_flags9 |= (RF9_SUSCEP_POIS);
+				msg_format("%^s is more poisoned.", m_name);
 			}
-			/* Already partially poisoned */
-			if (m_ptr->poisoned) msg_format("%^s is more poisoned.", m_name);
-			/* Was not poisoned */
 			else
+			{
 				msg_format("%^s is poisoned.", m_name);
+			}
 
 			m_ptr->poisoned += dam * 2;
 		}
 		else if (rand_int(100) >= r_ptr->level)
 		{
-			/* Already partially poisoned */
-			if (m_ptr->poisoned) msg_format("%^s is more poisoned.", m_name);
-			/* Was not poisoned */
+			if (m_ptr->poisoned)
+			{
+				msg_format("%^s is more poisoned.", m_name);
+			}
 			else
+			{
 				msg_format("%^s is poisoned.", m_name);
+			}
 
 			m_ptr->poisoned += dam;
 		}
@@ -2634,11 +2451,6 @@ void py_attack(int y, int x, int max_blow)
 							/* Confuse the monster */
 							if (r_ptr->flags3 & (RF3_NO_CONF))
 							{
-								if (m_ptr->ml)
-								{
-									r_ptr->r_flags3 |= (RF3_NO_CONF);
-								}
-
 								msg_format("%^s is unaffected.", m_name);
 							}
 							else if (rand_int(100) < m_ptr->level)

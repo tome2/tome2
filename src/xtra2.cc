@@ -2470,14 +2470,9 @@ static void monster_death_gods(int m_idx, monster_type *m_ptr)
  */
 void monster_death(int m_idx)
 {
-	int dump_item = 0;
-	int dump_gold = 0;
-
 	monster_type *m_ptr = &m_list[m_idx];
 
 	auto const r_ptr = m_ptr->race();
-
-	bool_ visible = (m_ptr->ml || (r_ptr->flags1 & (RF1_UNIQUE)));
 
 	bool_ create_stairs = FALSE;
 	int force_coin = get_coin_type(r_ptr);
@@ -2547,9 +2542,6 @@ void monster_death(int m_idx)
 
 		/* Delete the object */
 		delete_object_idx(this_o_idx);
-
-		if (q_ptr->tval == TV_GOLD) dump_gold++;
-		else dump_item++;
 
 		/* Drop it */
 		drop_near(q_ptr, -1, y, x);
@@ -2964,13 +2956,6 @@ void monster_death(int m_idx)
 	if ((!force_coin) && (magik(10 + get_skill_scale(SKILL_PRESERVATION, 75))) && (!(m_ptr->mflag & MFLAG_NO_DROP)))
 		place_corpse(m_ptr);
 
-	/* Take note of any dropped treasure */
-	if (visible && (dump_item || dump_gold))
-	{
-		/* Take notes on treasure */
-		lore_treasure(m_idx, dump_item, dump_gold);
-	}
-
 	/* Create a magical staircase */
 	if (create_stairs && (dun_level < d_info[dungeon_type].maxdepth))
 	{
@@ -3295,9 +3280,6 @@ bool_ mon_take_hit(int m_idx, int dam, bool_ *fear, cptr note)
 		{
 			/* Count kills this life */
 			if (r_ptr->r_pkills < MAX_SHORT) r_ptr->r_pkills++;
-
-			/* Count kills in all lives */
-			if (r_ptr->r_tkills < MAX_SHORT) r_ptr->r_tkills++;
 
 			/* Hack -- Auto-recall */
 			monster_race_track(m_ptr->r_idx, m_ptr->ego);
@@ -4080,7 +4062,7 @@ static int target_set_aux(int y, int x, int mode, cptr info)
 							Term_save();
 
 							/* Recall on screen */
-							screen_roff(m_ptr->r_idx, m_ptr->ego, 0);
+							screen_roff(m_ptr->r_idx, m_ptr->ego);
 
 							/* Hack -- Complete the prompt (again) */
 							Term_addstr( -1, TERM_WHITE, format("  [r,%s]", info));
@@ -4429,8 +4411,6 @@ bool_ target_set(int mode)
 
 	char info[80];
 
-	cave_type *c_ptr;
-
 	int screen_wid, screen_hgt;
 	int panel_wid, panel_hgt;
 
@@ -4465,7 +4445,7 @@ bool_ target_set(int mode)
 			x = points[m].x();
 
 			/* Access */
-			c_ptr = &cave[y][x];
+			cave_type *c_ptr = &cave[y][x];
 
 			/* Allow target */
 			if (target_able(c_ptr->m_idx))
@@ -4631,9 +4611,6 @@ bool_ target_set(int mode)
 		/* Arbitrary grids */
 		else
 		{
-			/* Access */
-			c_ptr = &cave[y][x];
-
 			/* Default prompt */
 			strcpy(info, "q,t,p,m,+,-,'dir'");
 

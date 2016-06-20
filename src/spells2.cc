@@ -2294,7 +2294,7 @@ bool_ detect_treasure(int rad)
  * The "update function" is called exactly once if
  * the predicate succeeds. The
  */
-template<typename P, typename U> static bool detect_monsters_fn(int radius, P p, U u) {
+template<typename P> static bool detect_monsters_fn(int radius, P p) {
 	bool flag = false;
 	/* Scan monsters */
 	for (int i = 1; i < m_max; i++)
@@ -2320,19 +2320,6 @@ template<typename P, typename U> static bool detect_monsters_fn(int radius, P p,
 		auto r_ptr = m_ptr->race();
 		if (p(r_ptr.get()))
 		{
-			/* Update */
-			u(r_ptr.get());
-
-			/* We're assuming the update function does
-			 * *something*, so we'll need to update
-			 * the recall window if we're currently looking
-			 * at it.
-			 */
-			if (monster_race_idx == m_ptr->r_idx)
-			{
-				p_ptr->window |= (PW_MONSTER);
-			}
-
 			/* Repair visibility later */
 			repair_monsters = TRUE;
 
@@ -2361,11 +2348,9 @@ static bool_ detect_monsters_string(cptr chars, int rad)
 	auto predicate = [chars](monster_race *r_ptr) -> bool {
 		return strchr(chars, r_ptr->d_char);
 	};
-	auto update = [](monster_race *) -> void {
-	};
 
 	/* Describe */
-	if (detect_monsters_fn(rad, predicate, update))
+	if (detect_monsters_fn(rad, predicate))
 	{
 		/* Describe result */
 		msg_print("You sense the presence of monsters!");
@@ -2502,10 +2487,8 @@ bool_ detect_monsters_normal(int rad)
 		return (!(r_ptr->flags2 & (RF2_INVISIBLE))) ||
 			p_ptr->see_inv || p_ptr->tim_invis;
 	};
-	auto update = [](monster_race *) -> void {
-	};
 
-	if (detect_monsters_fn(rad, predicate, update))
+	if (detect_monsters_fn(rad, predicate))
 	{
 		/* Describe result */
 		msg_print("You sense the presence of monsters!");
@@ -2526,11 +2509,8 @@ bool_ detect_monsters_invis(int rad)
 	auto predicate = [](monster_race *r_ptr) -> bool {
 		return (r_ptr->flags2 & (RF2_INVISIBLE));
 	};
-	auto update = [](monster_race *r_ptr) -> void {
-		r_ptr->r_flags2 |= (RF2_INVISIBLE);
-	};
 
-	if (detect_monsters_fn(rad, predicate, update))
+	if (detect_monsters_fn(rad, predicate))
 	{
 		/* Describe result */
 		msg_print("You sense the presence of invisible creatures!");
@@ -2552,11 +2532,8 @@ bool_ detect_monsters_xxx(u32b match_flag, int rad)
 	auto predicate = [match_flag](monster_race *r_ptr) -> bool {
 		return (r_ptr->flags3 & match_flag);
 	};
-	auto update = [match_flag](monster_race *r_ptr) -> void {
-		r_ptr->r_flags3 |= (match_flag);
-	};
 
-	if (detect_monsters_fn(rad, predicate, update))
+	if (detect_monsters_fn(rad, predicate))
 	{
 		cptr desc_monsters = "weird monsters";
 		switch (match_flag)
@@ -4217,94 +4194,6 @@ bool_ mass_genocide(bool_ player_cast)
 	}
 
 	return (result);
-}
-
-/* Probe a monster */
-void do_probe(int m_idx)
-{
-	char m_name[80];
-	monster_type *m_ptr = &m_list[m_idx];
-
-	/* Get "the monster" or "something" */
-	monster_desc(m_name, m_ptr, 0x04);
-
-	/* Describe the monster */
-	if (!wizard && (m_ptr->status != MSTATUS_COMPANION)) msg_format("%^s has %d hit points.", m_name, m_ptr->hp);
-	else
-	{
-		int i;
-		char t_name[80];
-		msg_format("%^s has %d(%d) hit points, %d ac, %d speed.", m_name, m_ptr->hp, m_ptr->maxhp, m_ptr->ac, m_ptr->mspeed - 110);
-		msg_format("%^s attacks with:", m_name);
-
-		for (i = 0; i < 4; i++)
-		{
-			msg_format("    Blow %d: %dd%d", i, m_ptr->blow[i].d_dice, m_ptr->blow[i].d_side);
-		}
-
-		if (m_ptr->target > 0)
-			monster_desc(t_name, &m_list[m_ptr->target], 0x04);
-		else if (!m_ptr->target)
-			sprintf(t_name, "you");
-		else
-			sprintf(t_name, "nothing");
-		msg_format("%^s target is %s.", m_name, t_name);
-
-		{
-			std::ostringstream buf;
-			buf << " has " << m_ptr->exp
-			    << " exp and needs " << monster_exp(m_ptr->level + 1) << ".";
-			msg_format("%^s%s", m_name, buf.str().c_str());
-		}
-	}
-
-	/* Learn all of the non-spell, non-treasure flags */
-	lore_do_probe(m_idx);
-}
-
-/*
- * Probe nearby monsters
- */
-bool_ probing(void)
-{
-	int i;
-
-	bool_ probe = FALSE;
-
-
-	/* Probe all (nearby) monsters */
-	for (i = 1; i < m_max; i++)
-	{
-		monster_type *m_ptr = &m_list[i];
-
-		/* Paranoia -- Skip dead monsters */
-		if (!m_ptr->r_idx) continue;
-
-		/* Require line of sight */
-		if (!player_has_los_bold(m_ptr->fy, m_ptr->fx)) continue;
-
-		/* Probe visible monsters */
-		if (m_ptr->ml)
-		{
-			/* Start the message */
-			if (!probe) msg_print("Probing...");
-
-			/* Actualy probe */
-			do_probe(i);
-
-			/* Probe worked */
-			probe = TRUE;
-		}
-	}
-
-	/* Done */
-	if (probe)
-	{
-		msg_print("That's all.");
-	}
-
-	/* Result */
-	return (probe);
 }
 
 

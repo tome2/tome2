@@ -396,7 +396,6 @@ TV_BOOK         111     /* spell books */
  SV_ROD_ILLUMINATION              4
  SV_ROD_MAPPING                   5
  SV_ROD_DETECTION                 6
- SV_ROD_PROBING                   7
  SV_ROD_CURING                    8
  SV_ROD_HEALING                   9
  SV_ROD_RESTORATION              10

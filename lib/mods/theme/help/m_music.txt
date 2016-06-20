@@ -61,8 +61,7 @@ of instrument contains a different family of musical songs:
    Consumes mana each turn.
 5. [[[[[vClairaudience(IV)] (School level 25)
    Allows you to sense monster minds as long as you sing.
-   At level 10 it identifies all objects in a radius on the floor,
-   as well as probing monsters in that radius.
+   At level 10 it identifies all objects in a radius on the floor.
    Consumes mana each turn.
 
 #####GHorns

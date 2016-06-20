@@ -218,7 +218,6 @@ T:100:40:7
 I:100:Searching
 I:100:Cure Light Wounds
 # Rods
-I:100:Probing
 I:25:& Wooden Rod~ of#
 # Book
 T:100:111:50
@@ -377,7 +376,7 @@ T:65:8:17
 T:60:8:18
 # Monstrous Compendium 11
 T:55:8:19
-A:18:2:21:22:3:0
+A:0:2:21:22:3:0
 O:94:95:96:97
 G:+:g
 W:24

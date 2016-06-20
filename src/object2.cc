@@ -4618,7 +4618,6 @@ static bool_ kind_is_good(int k_idx)
 		/* Expensive rod tips are good */
 	case TV_ROD:
 		{
-			/* Probing is not good, but Recall is*/
 			if (k_ptr->cost >= 4500) return TRUE;
 			return FALSE;
 		}

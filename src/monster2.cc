@@ -1468,66 +1468,6 @@ void monster_race_desc(char *desc, int r_idx, int ego)
 
 
 
-/*
- * Learn about a monster (by "probing" it)
- */
-void lore_do_probe(int m_idx)
-{
-	monster_type *m_ptr = &m_list[m_idx];
-
-	monster_race *r_ptr = &r_info[m_ptr->r_idx];
-
-	/* Hack -- Memorize some flags */
-	r_ptr->r_flags1 = r_ptr->flags1;
-	r_ptr->r_flags2 = r_ptr->flags2;
-	r_ptr->r_flags3 = r_ptr->flags3;
-
-	/* Update monster recall window */
-	if (monster_race_idx == m_ptr->r_idx)
-	{
-		/* Window stuff */
-		p_ptr->window |= (PW_MONSTER);
-	}
-}
-
-
-/*
- * Take note that the given monster just dropped some treasure
- *
- * Note that learning the "GOOD"/"GREAT" flags gives information
- * about the treasure (even when the monster is killed for the first
- * time, such as uniques, and the treasure has not been examined yet).
- *
- * This "indirect" method is used to prevent the player from learning
- * exactly how much treasure a monster can drop from observing only
- * a single example of a drop.  This method actually observes how much
- * gold and items are dropped, and remembers that information to be
- * described later by the monster recall code.
- */
-void lore_treasure(int m_idx, int num_item, int num_gold)
-{
-	monster_type *m_ptr = &m_list[m_idx];
-
-	monster_race *r_ptr = &r_info[m_ptr->r_idx];
-
-	/* Note the number of things dropped */
-	if (num_item > r_ptr->r_drop_item) r_ptr->r_drop_item = num_item;
-	if (num_gold > r_ptr->r_drop_gold) r_ptr->r_drop_gold = num_gold;
-
-	/* Hack -- memorize the good/great flags */
-	if (r_ptr->flags1 & (RF1_DROP_GOOD)) r_ptr->r_flags1 |= (RF1_DROP_GOOD);
-	if (r_ptr->flags1 & (RF1_DROP_GREAT)) r_ptr->r_flags1 |= (RF1_DROP_GREAT);
-
-	/* Update monster recall window */
-	if (monster_race_idx == m_ptr->r_idx)
-	{
-		/* Window stuff */
-		p_ptr->window |= (PW_MONSTER);
-	}
-}
-
-
-
 static void sanity_blast(monster_type * m_ptr, bool_ necro)
 {
 	bool_ happened = FALSE;
@@ -1592,9 +1532,6 @@ static void sanity_blast(monster_type * m_ptr, bool_ necro)
 			/* Something frightening happens... */
 			msg_format("You behold the %s visage of %s!",
 			           horror_desc[(randint(MAX_HORROR)) - 1], m_name);
-
-			r_ptr->r_flags2 |= RF2_ELDRITCH_HORROR;
-
 		}
 
 		/* Undead characters are 50% likely to be unaffected */
@@ -1742,15 +1679,6 @@ void update_mon(int m_idx, bool_ full)
 	/* Seen by vision */
 	bool_ easy = FALSE;
 
-	/* Seen by telepathy */
-	bool_ hard = FALSE;
-
-	/* Various extra flags */
-	bool_ do_empty_mind = FALSE;
-	bool_ do_weird_mind = FALSE;
-	bool_ do_invisible = FALSE;
-	bool_ do_cold_blood = FALSE;
-
 	auto const r_ptr = m_ptr->race();
 
 	/* Calculate distance */
@@ -1789,20 +1717,21 @@ void update_mon(int m_idx, bool_ full)
 			{
 				/* Infravision only works on "warm" creatures */
 				/* Below, we will need to know that infravision failed */
-				if (r_ptr->flags2 & (RF2_COLD_BLOOD)) do_cold_blood = TRUE;
-
-				/* Infravision works */
-				if (!do_cold_blood) easy = flag = TRUE;
+				if (!(r_ptr->flags2 & RF2_COLD_BLOOD))
+				{
+					/* Infravision works */
+					easy = flag = TRUE;
+				}
 			}
 
 			/* Use "illumination" */
 			if (player_can_see_bold(fy, fx))
 			{
-				/* Take note of invisibility */
-				if (r_ptr->flags2 & (RF2_INVISIBLE)) do_invisible = TRUE;
-
 				/* Visible, or detectable, monsters get seen */
-				if (!do_invisible || p_ptr->see_inv) easy = flag = TRUE;
+				if (p_ptr->see_inv || !(r_ptr->flags2 & RF2_INVISIBLE))
+				{
+					easy = flag = TRUE;
+				}
 			}
 		}
 
@@ -1834,16 +1763,14 @@ void update_mon(int m_idx, bool_ full)
 				/* Empty mind, no telepathy */
 				if (r_ptr->flags2 & (RF2_EMPTY_MIND))
 				{
-					do_empty_mind = TRUE;
+					/* No telepathy */
 				}
 
 				/* Weird mind, occasional telepathy */
 				else if (r_ptr->flags2 & (RF2_WEIRD_MIND))
 				{
-					do_weird_mind = TRUE;
 					if (rand_int(100) < 10)
 					{
-						hard = TRUE;
 						flag = TRUE;
 					}
 				}
@@ -1851,7 +1778,6 @@ void update_mon(int m_idx, bool_ full)
 				/* Normal mind, allow telepathy */
 				else
 				{
-					hard = TRUE;
 					flag = TRUE;
 				}
 			}
@@ -1883,29 +1809,12 @@ void update_mon(int m_idx, bool_ full)
 			/* Update monster list window */
 			p_ptr->window |= (PW_M_LIST);
 
-			/* Hack -- Count "fresh" sightings */
-			if (r_ptr->r_sights < MAX_SHORT) r_ptr->r_sights++;
-
 			/* Disturb on appearance */
 			if (disturb_move)
 			{
 				if (disturb_pets || (is_friend(m_ptr) <= 0)) disturb(1);
 			}
 		}
-
-		/* Apply telepathy */
-		if (hard)
-		{
-			/* Hack -- Memorize mental flags */
-			if (r_ptr->flags2 & (RF2_SMART)) r_ptr->r_flags2 |= (RF2_SMART);
-			if (r_ptr->flags2 & (RF2_STUPID)) r_ptr->r_flags2 |= (RF2_STUPID);
-		}
-
-		/* Memorize various observable flags */
-		if (do_empty_mind) r_ptr->r_flags2 |= (RF2_EMPTY_MIND);
-		if (do_weird_mind) r_ptr->r_flags2 |= (RF2_WEIRD_MIND);
-		if (do_cold_blood) r_ptr->r_flags2 |= (RF2_COLD_BLOOD);
-		if (do_invisible) r_ptr->r_flags2 |= (RF2_INVISIBLE);
 	}
 
 	/* The monster is not visible */

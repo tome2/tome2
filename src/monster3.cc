@@ -107,7 +107,6 @@ bool_ change_side(monster_type *m_ptr)
 bool_ ai_multiply(int m_idx)
 {
 	monster_type *m_ptr = &m_list[m_idx];
-	monster_race *r_ptr = &r_info[m_ptr->r_idx];
 	int k, y, x, oy = m_ptr->fy, ox = m_ptr->fx;
 	bool_ is_frien = (is_friend(m_ptr) > 0);
 
@@ -135,12 +134,6 @@ bool_ ai_multiply(int m_idx)
 		/* Try to multiply */
 		if (multiply_monster(m_idx, (is_frien), FALSE))
 		{
-			/* Take note if visible */
-			if (m_ptr->ml)
-			{
-				r_ptr->r_flags4 |= (RF4_MULTIPLY);
-			}
-
 			/* Multiplying takes energy */
 			return TRUE;
 		}

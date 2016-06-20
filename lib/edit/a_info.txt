@@ -1067,7 +1067,6 @@ N:43:of Numenor
 I:33:12:3
 W:60:30:40:50000
 P:0:1d1:0:0:18
-F:ACTIVATE
 F:CHR
 F:DEX
 F:DRAIN_MANA
@@ -1084,7 +1083,6 @@ F:RES_SOUND
 F:SEARCH
 F:SEE_INVIS
 F:SPEED
-a:NUMENOR
 D:A crown of massive gold, set with wondrous jewels of thought and warding, 
 D:worn by the kings of ancient Numenor.  Its wearer may go into battle 
 D:always knowing what he faces - unless his own folly blinds him to the 

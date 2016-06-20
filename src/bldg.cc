@@ -1218,12 +1218,6 @@ bool_ bldg_process_command(store_type *s_ptr, int i)
 			break;
 		}
 
-	case BACT_RESEARCH_MONSTER:
-		{
-			paid = !research_mon();
-			break;
-		}
-
 	case BACT_COMPARE_WEAPONS:
 		{
 			paid = compare_weapons();

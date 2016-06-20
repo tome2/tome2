@@ -23,8 +23,6 @@ extern errr get_mon_num_prep(void);
 extern s16b get_mon_num(int level);
 extern void monster_desc(char *desc, monster_type *m_ptr, int mode);
 extern void monster_race_desc(char *desc, int r_idx, int ego);
-extern void lore_do_probe(int m_idx);
-extern void lore_treasure(int m_idx, int num_item, int num_gold);
 extern void update_mon(int m_idx, bool_ full);
 extern void update_monsters(bool_ full);
 extern void monster_carry(monster_type *m_ptr, int m_idx, object_type *q_ptr);

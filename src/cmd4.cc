@@ -625,7 +625,6 @@ static option_type cheat_info[6] =
 	{ &cheat_hear, FALSE, 0, 1, "cheat_hear", "Peek into monster creation" },
 	{ &cheat_room, FALSE, 0, 2, "cheat_room", "Peek into dungeon creation" },
 	{ &cheat_xtra, FALSE, 0, 3, "cheat_xtra", "Peek into something else" },
-	{ &cheat_know, FALSE, 0, 4, "cheat_know", "Know complete monster info" },
 	{ &cheat_live, FALSE, 0, 5, "cheat_live", "Allow player to avoid death" }
 };
 
@@ -3303,24 +3302,20 @@ static void do_cmd_knowledge_uniques(void)
 		{
 			bool_ dead = (r_ptr->max_num == 0);
 
-			/* Only display "known" uniques */
-			if (dead || cheat_know || r_ptr->r_sights)
+			/* Print a message */
+			if (dead)
 			{
-				/* Print a message */
-				if (dead)
-				{
-					w.write("[[[[[{}{}] [[[[[R{:<68} is dead]\n",
-						static_cast<char>(conv_color[r_ptr->d_attr]),
-						static_cast<char>(r_ptr->d_char),
-						r_ptr->name);
-				}
-				else
-				{
-					w.write("[[[[[{}{}] [[[[[w{:<68} is alive]\n",
-						static_cast<char>(conv_color[r_ptr->d_attr]),
-						static_cast<char>(r_ptr->d_char),
-						r_ptr->name);
-				}
+				w.write("[[[[[{}{}] [[[[[R{:<68} is dead]\n",
+					static_cast<char>(conv_color[r_ptr->d_attr]),
+					static_cast<char>(r_ptr->d_char),
+					r_ptr->name);
+			}
+			else
+			{
+				w.write("[[[[[{}{}] [[[[[w{:<68} is alive]\n",
+					static_cast<char>(conv_color[r_ptr->d_attr]),
+					static_cast<char>(r_ptr->d_char),
+					r_ptr->name);
 			}
 		}
 	}

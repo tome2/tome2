@@ -1446,8 +1446,8 @@ static void fix_m_list(void)
 					attr = TERM_L_BLUE;
 				}
 
-				/* Have we ever killed one? */
-				if (r_ptr->r_tkills)
+				/* Have we killed one? */
+				if (r_ptr->r_pkills)
 				{
 					if (r_ptr->level > dun_level)
 					{

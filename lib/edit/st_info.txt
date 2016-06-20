@@ -224,7 +224,6 @@ I:100:Lightning Resistance
 I:100:Searching
 I:100:Cure Light Wounds
 # Rods
-I:100:Probing
 I:25:& Wooden Rod~ of#
 # Book
 T:100:111:50
@@ -337,7 +336,7 @@ G:+:s
 W:0
 
 N:16:Beastmaster Shanty
-A:18:0:21:22:0:0
+A:0:0:21:22:0:0
 O:19:19:19:19
 G:+:g
 W:0

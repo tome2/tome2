@@ -1637,62 +1637,39 @@ bool_ file_exist(cptr buf)
  */
 static void do_lore(int r_idx, ls_flag_t flag)
 {
+	byte tmp_u8 = 0;
+	u32b tmp_u32 = 0;
+	s16b tmp_s16 = 0;
 	monster_race *r_ptr = &r_info[r_idx];
 
-	/* Count sights/deaths/kills */
-	do_s16b(&r_ptr->r_sights, flag);
-	do_s16b(&r_ptr->r_deaths, flag);
+	do_s16b(&tmp_s16, flag);
+	do_s16b(&tmp_s16, flag);
 	do_s16b(&r_ptr->r_pkills, flag);
-	do_s16b(&r_ptr->r_tkills, flag);
+	do_s16b(&tmp_s16, flag);
+	do_byte(&tmp_u8, flag);
+	do_byte(&tmp_u8, flag);
+	do_byte(&tmp_u8, flag);
+	do_byte(&tmp_u8, flag);
+	do_byte(&tmp_u8, flag);
+	do_byte(&tmp_u8, flag);
+	do_byte(&tmp_u8, flag);
+	do_byte(&tmp_u8, flag);
+	do_byte(&tmp_u8, flag);
+	do_byte(&tmp_u8, flag);
+	do_byte(&tmp_u8, flag);
+	do_byte(&tmp_u8, flag);
+	do_u32b(&tmp_u32, flag);
+	do_u32b(&tmp_u32, flag);
+	do_u32b(&tmp_u32, flag);
+	do_u32b(&tmp_u32, flag);
+	do_u32b(&tmp_u32, flag);
+	do_u32b(&tmp_u32, flag);
+	do_u32b(&tmp_u32, flag);
+	do_u32b(&tmp_u32, flag);
+	do_u32b(&tmp_u32, flag);
 
-	/* Count wakes and ignores */
-	do_byte(&r_ptr->r_wake, flag);
-	do_byte(&r_ptr->r_ignore, flag);
-
-	/* Extra stuff */
-	do_byte(&r_ptr->r_xtra1, flag);
-	do_byte(&r_ptr->r_xtra2, flag);
-
-	/* Count drops */
-	do_byte(&r_ptr->r_drop_gold, flag);
-	do_byte(&r_ptr->r_drop_item, flag);
-
-	/* Count spells */
-	do_byte(&r_ptr->r_cast_inate, flag);
-	do_byte(&r_ptr->r_cast_spell, flag);
-
-	/* Count blows of each type */
-	do_byte(&r_ptr->r_blows[0], flag);
-	do_byte(&r_ptr->r_blows[1], flag);
-	do_byte(&r_ptr->r_blows[2], flag);
-	do_byte(&r_ptr->r_blows[3], flag);
-
-	/* Memorize flags */
-	do_u32b(&r_ptr->r_flags1, flag); 	/* Just to remind you */
-	do_u32b(&r_ptr->r_flags2, flag); 	/* flag is unrelated to */
-	do_u32b(&r_ptr->r_flags3, flag); 	/* the other argument */
-	do_u32b(&r_ptr->r_flags4, flag);
-	do_u32b(&r_ptr->r_flags5, flag);
-	do_u32b(&r_ptr->r_flags6, flag);
-	do_u32b(&r_ptr->r_flags7, flag);
-	do_u32b(&r_ptr->r_flags8, flag);
-	do_u32b(&r_ptr->r_flags9, flag);
-
-	/* Read the "Racial" monster tmp16b per level */
 	do_s16b(&r_ptr->max_num, flag);
-
 	do_byte((byte*)&r_ptr->on_saved, flag);
-
-	if (flag == ls_flag_t::LOAD)
-	{
-		/* Lore flag repair? */
-		r_ptr->r_flags1 &= r_ptr->flags1;
-		r_ptr->r_flags2 &= r_ptr->flags2;
-		r_ptr->r_flags3 &= r_ptr->flags3;
-		r_ptr->r_flags4 &= r_ptr->flags4;
-		r_ptr->r_flags5 &= r_ptr->flags5;
-		r_ptr->r_flags6 &= r_ptr->flags6;
-	}
 }
 
 
@@ -1806,7 +1783,6 @@ static void do_options(ls_flag_t flag)
 		cheat_hear = (c & 0x0200) ? TRUE : FALSE;
 		cheat_room = (c & 0x0400) ? TRUE : FALSE;
 		cheat_xtra = (c & 0x0800) ? TRUE : FALSE;
-		cheat_know = (c & 0x1000) ? TRUE : FALSE;
 		cheat_live = (c & 0x2000) ? TRUE : FALSE;
 	}
 	if (flag == ls_flag_t::SAVE)
@@ -1817,7 +1793,6 @@ static void do_options(ls_flag_t flag)
 		if (cheat_hear) c |= 0x0200;
 		if (cheat_room) c |= 0x0400;
 		if (cheat_xtra) c |= 0x0800;
-		if (cheat_know) c |= 0x1000;
 		if (cheat_live) c |= 0x2000;
 		do_u16b(&c, ls_flag_t::SAVE);
 	}
