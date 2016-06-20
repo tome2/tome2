@@ -45,7 +45,7 @@ go_bandit([]() {
 			// Setup
 			fs_t fs = fs_t();
 			// Exercise
-			bool result = fs;
+			auto result = bool(fs);
 			// Verify
 			AssertThat(result, Equals(false));
 		});
@@ -54,7 +54,7 @@ go_bandit([]() {
 			// Setup
 			fs_t fs = fs_t::make(1, 3);
 			// Exercise
-			bool result = fs;
+			auto result = bool(fs);
 			// Verify
 			AssertThat(result, Equals(true));
 		});

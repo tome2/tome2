@@ -2218,9 +2218,9 @@ s16b place_monster_one(int y, int x, int r_idx, int ego, bool_ slp, int status)
 		const bool_ good = (r_ptr->flags & RF_DROP_GOOD) ? TRUE : FALSE;
 		const bool_ great = (r_ptr->flags & RF_DROP_GREAT) ? TRUE : FALSE;
 
-		const bool_ do_gold = (!(r_ptr->flags & RF_ONLY_ITEM));
-		const bool_ do_item = (!(r_ptr->flags & RF_ONLY_GOLD));
-		const bool_ do_mimic = (r_ptr->flags & RF_MIMIC);
+		auto const do_gold = (r_ptr->flags & RF_ONLY_ITEM).empty();
+		auto const do_item = (r_ptr->flags & RF_ONLY_GOLD).empty();
+		auto const do_mimic = bool(r_ptr->flags & RF_MIMIC);
 
 		const int force_coin = get_coin_type(r_ptr);
 

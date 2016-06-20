@@ -92,9 +92,19 @@ public:
 		return m_data[i];
 	}
 
-	constexpr operator bool() const
+	explicit constexpr operator bool() const
 	{
 		return !empty();
+	}
+
+	constexpr bool operator == (flag_set const &other) const
+	{
+		return m_data == other.m_data;
+	}
+
+	constexpr bool operator != (flag_set const &other) const
+	{
+		return !(*this == other);
 	}
 
 	constexpr bool bit(std::size_t i) const

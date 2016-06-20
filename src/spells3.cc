@@ -2272,7 +2272,7 @@ casting_result melkor_mind_steal()
 
 		auto const r_ptr = m_ptr->race();
 		if ((randint(m_ptr->level) < chance) &&
-		    ((r_ptr->flags & RF_UNIQUE) == 0))
+		    ((r_ptr->flags & RF_UNIQUE).empty()))
 		{
 			p_ptr->control = target_who;
 			m_ptr->mflag |= MFLAG_CONTROL;

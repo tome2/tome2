@@ -6622,7 +6622,7 @@ bool_ project_m(int who, int r, int y, int x, int dam, int typ)
 		if ((who > 0) && (dam > m_ptr->hp)) dam = m_ptr->hp;
 	}
 
-	if (do_pois && (!(r_ptr->flags & RF_IM_POIS)) && (!(r_ptr->flags & SF_BR_POIS)) && hurt_monster(m_ptr))
+	if (do_pois && (r_ptr->flags & RF_IM_POIS).empty() && (r_ptr->spells & SF_BR_POIS).empty() && hurt_monster(m_ptr))
 	{
 		if (m_ptr->poisoned) note = " is more poisoned.";
 		else note = " is poisoned.";

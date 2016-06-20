@@ -1163,7 +1163,7 @@ void self_knowledge(FILE *fff)
 		/* Not implemented */
 		if (r_ptr->flags & RF_CAN_FLY)
 			info[i++] = "You can fly.";
-		if ((r_ptr->flags & RF_MORTAL) == 0)
+		if ((r_ptr->flags & RF_MORTAL).empty())
 			info[i++] = "You are immortal.";
 		/* Not implemented */
 		if (r_ptr->flags & RF_NAZGUL)
@@ -2506,7 +2506,7 @@ bool_ detect_monsters_normal(int rad)
 bool_ detect_monsters_invis(int rad)
 {
 	auto predicate = [](monster_race *r_ptr) -> bool {
-		return (r_ptr->flags & RF_INVISIBLE);
+		return bool(r_ptr->flags & RF_INVISIBLE);
 	};
 
 	if (detect_monsters_fn(rad, predicate))
@@ -2529,7 +2529,7 @@ bool_ detect_monsters_invis(int rad)
 void detect_monsters_orcs(int rad)
 {
 	auto predicate = [](monster_race *r_ptr) -> bool {
-		return (r_ptr->flags & RF_ORC);
+		return bool(r_ptr->flags & RF_ORC);
 	};
 
 	if (detect_monsters_fn(rad, predicate))
