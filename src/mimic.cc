@@ -588,11 +588,9 @@ static mimic_form_type mimic_forms[MIMIC_FORMS_MAX] =
 /*
  * Is the mimicry form enabled for the current module?
  */
-static bool_ mimic_form_enabled(mimic_form_type *f)
+static bool mimic_form_enabled(mimic_form_type const *f)
 {
-	int i;
-
-	for (i = 0; f->modules[i] >= 0; i++)
+	for (int i = 0; f->modules[i] >= 0; i++)
 	{
 		if (f->modules[i] == game_module_idx)
 		{
@@ -618,11 +616,9 @@ static mimic_form_type *get_mimic_form(int mf_idx)
  */
 s16b resolve_mimic_name(cptr name)
 {
-	s16b i;
-
-	for (i = 0; i < MIMIC_FORMS_MAX; i++)
+	for (s16b i = 0; i < MIMIC_FORMS_MAX; i++)
 	{
-		mimic_form_type *mf_ptr = get_mimic_form(i);
+		auto const mf_ptr = get_mimic_form(i);
 		if (mimic_form_enabled(mf_ptr) && streq(mf_ptr->name, name))
 		{
 			return i;
@@ -641,13 +637,10 @@ s16b find_random_mimic_shape(byte level, bool_ limit)
 
 	while (tries > 0)
 	{
-		int mf_idx = 0;
-		mimic_form_type *mf_ptr = NULL;
-
 		tries = tries - 1;
 
-		mf_idx = rand_int(MIMIC_FORMS_MAX);
-		mf_ptr = get_mimic_form(mf_idx);
+		int mf_idx = rand_int(MIMIC_FORMS_MAX);
+		auto const mf_ptr = get_mimic_form(mf_idx);
 
 		if (mimic_form_enabled(mf_ptr))
 		{
@@ -695,7 +688,7 @@ byte get_mimic_level(s16b mf_idx)
  */
 s32b get_mimic_random_duration(s16b mf_idx)
 {
-	mimic_form_type *mf_ptr = get_mimic_form(mf_idx);
+	auto const mf_ptr = get_mimic_form(mf_idx);
 	return rand_range(mf_ptr->duration.min, mf_ptr->duration.max);
 }
 
@@ -704,7 +697,7 @@ s32b get_mimic_random_duration(s16b mf_idx)
  */
 byte calc_mimic()
 {
-	mimic_form_type *mf_ptr = get_mimic_form(p_ptr->mimic_form);
+	auto const mf_ptr = get_mimic_form(p_ptr->mimic_form);
 	if (mf_ptr->calc != NULL)
 	{
 		return mf_ptr->calc();
