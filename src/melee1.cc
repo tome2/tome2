@@ -235,7 +235,7 @@ bool_ carried_make_attack_normal(int r_idx)
 	bool_ alive = TRUE;
 
 	/* Not allowed to attack */
-	if (r_ptr->flags1 & (RF1_NEVER_BLOW)) return (FALSE);
+	if (r_ptr->flags1 & RF1_NEVER_BLOW) return (FALSE);
 
 	/* Total armor */
 	ac = p_ptr->ac + p_ptr->to_a;
@@ -280,7 +280,7 @@ bool_ carried_make_attack_normal(int r_idx)
 
 			/* Hack -- Apply "protection from evil" */
 			if ((p_ptr->protevil > 0) &&
-			                (r_ptr->flags3 & (RF3_EVIL)) &&
+			                (r_ptr->flags3 & RF3_EVIL) &&
 			                (p_ptr->lev >= rlev) &&
 			                ((rand_int(100) + p_ptr->lev) > 50))
 			{
@@ -293,7 +293,7 @@ bool_ carried_make_attack_normal(int r_idx)
 
 			/* Hack -- Apply "protection from good" */
 			if ((p_ptr->protgood > 0) &&
-			                (r_ptr->flags3 & (RF3_GOOD)) &&
+			                (r_ptr->flags3 & RF3_GOOD) &&
 			                (p_ptr->lev >= rlev) &&
 			                ((rand_int(100) + p_ptr->lev) > 50))
 			{
@@ -1249,7 +1249,7 @@ bool_ make_attack_normal(int m_idx, byte divis)
 
 	/* Not allowed to attack? */
 	auto r_ptr = m_ptr->race();
-	if (r_ptr->flags1 & (RF1_NEVER_BLOW)) return (FALSE);
+	if (r_ptr->flags1 & RF1_NEVER_BLOW) return (FALSE);
 
 	/* ...nor if friendly */
 	if (is_friend(m_ptr) >= 0)
@@ -1435,7 +1435,7 @@ bool_ make_attack_normal(int m_idx, byte divis)
 				if (chance > 50000) chance = 50000;
 				chance -= rlev * 300;
 
-				if ((randint(100000) < chance) && (r_ptr->flags3 & (RF3_EVIL)))
+				if ((randint(100000) < chance) && (r_ptr->flags3 & RF3_EVIL))
 				{
 					/* Message */
 					msg_format("The hand of Eru Iluvatar stops %s blow.", m_name);
@@ -1447,7 +1447,7 @@ bool_ make_attack_normal(int m_idx, byte divis)
 
 			/* Hack -- Apply "protection from evil" */
 			if ((p_ptr->protevil > 0) &&
-			                (r_ptr->flags3 & (RF3_EVIL)) &&
+			                (r_ptr->flags3 & RF3_EVIL) &&
 			                (p_ptr->lev >= rlev) &&
 			                ((rand_int(100) + p_ptr->lev) > 50))
 			{
@@ -1460,7 +1460,7 @@ bool_ make_attack_normal(int m_idx, byte divis)
 
 			/* Hack -- Apply "protection from good" */
 			if ((p_ptr->protgood > 0) &&
-			                (r_ptr->flags3 & (RF3_GOOD)) &&
+			                (r_ptr->flags3 & RF3_GOOD) &&
 			                (p_ptr->lev >= rlev) &&
 			                ((rand_int(100) + p_ptr->lev) > 50))
 			{
@@ -1679,12 +1679,12 @@ bool_ make_attack_normal(int m_idx, byte divis)
 			{
 				black_breath_attack(4);
 			}
-			else if ((m_ptr->level >= 35) && (r_ptr->flags3 & (RF3_UNDEAD)) &&
-					    (r_ptr->flags1 & (RF1_UNIQUE)))
+			else if ((m_ptr->level >= 35) && (r_ptr->flags3 & RF3_UNDEAD) &&
+					    (r_ptr->flags1 & RF1_UNIQUE))
 			{
 				black_breath_attack(300 - m_ptr->level);
 			}
-			else if ((m_ptr->level >= 40) && (r_ptr->flags3 & (RF3_UNDEAD)))
+			else if ((m_ptr->level >= 40) && (r_ptr->flags3 & RF3_UNDEAD))
 			{
 				black_breath_attack(450 - m_ptr->level);
 			}

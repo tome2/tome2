@@ -118,10 +118,10 @@ bool_ mon_take_hit_mon(int s_idx, int m_idx, int dam, bool_ *fear, cptr note)
 				/* Do nothing */
 			}
 			/* Death by Physical attack -- non-living monster */
-			else if ((r_ptr->flags3 & (RF3_DEMON)) ||
-			                (r_ptr->flags3 & (RF3_UNDEAD)) ||
-			                (r_ptr->flags2 & (RF2_STUPID)) ||
-			                (r_ptr->flags3 & (RF3_NONLIVING)) ||
+			else if ((r_ptr->flags3 & RF3_DEMON) ||
+			                (r_ptr->flags3 & RF3_UNDEAD) ||
+			                (r_ptr->flags2 & RF2_STUPID) ||
+			                (r_ptr->flags3 & RF3_NONLIVING) ||
 			                (strchr("Evg", r_ptr->d_char)))
 			{
 				cmonster_msg(TERM_L_RED, "%^s is destroyed.", m_name);
@@ -172,7 +172,7 @@ bool_ mon_take_hit_mon(int s_idx, int m_idx, int dam, bool_ *fear, cptr note)
 			}
 
 			/* When an Unique dies, it stays dead */
-			if (r_ptr->flags1 & (RF1_UNIQUE))
+			if (r_ptr->flags1 & RF1_UNIQUE)
 			{
 				r_ptr->max_num = 0;
 			}
@@ -229,7 +229,7 @@ void mon_handle_fear(monster_type *m_ptr, int dam, bool_ *fear)
 
 	/* Sometimes a monster gets scared by damage */
 	auto const r_ptr = m_ptr->race();
-	if (!m_ptr->monfear && !(r_ptr->flags3 & (RF3_NO_FEAR)))
+	if (!m_ptr->monfear && !(r_ptr->flags3 & RF3_NO_FEAR))
 	{
 		int percentage;
 
@@ -290,7 +290,7 @@ void mon_handle_fear(monster_type *m_ptr, int dam, bool_ *fear)
 static bool_ int_outof(std::shared_ptr<monster_race> r_ptr, int prob)
 {
 	/* Non-Smart monsters are half as "smart" */
-	if (!(r_ptr->flags2 & (RF2_SMART))) prob = prob / 2;
+	if (!(r_ptr->flags2 & RF2_SMART)) prob = prob / 2;
 
 	/* Roll the dice */
 	return (rand_int(100) < prob);
@@ -314,7 +314,7 @@ static void remove_bad_spells(int m_idx, u32b *f4p, u32b *f5p, u32b *f6p)
 
 	/* Too stupid to know anything? */
 	auto const r_ptr = m_ptr->race();
-	if (r_ptr->flags2 & (RF2_STUPID)) return;
+	if (r_ptr->flags2 & RF2_STUPID) return;
 
 
 	/* Must be cheating or learning */
@@ -338,178 +338,178 @@ static void remove_bad_spells(int m_idx, u32b *f4p, u32b *f5p, u32b *f6p)
 
 	if (smart & (SM_IMM_ACID))
 	{
-		if (int_outof(r_ptr, 100)) f4 &= ~(RF4_BR_ACID);
-		if (int_outof(r_ptr, 100)) f5 &= ~(RF5_BA_ACID);
-		if (int_outof(r_ptr, 100)) f5 &= ~(RF5_BO_ACID);
+		if (int_outof(r_ptr, 100)) f4 &= ~RF4_BR_ACID;
+		if (int_outof(r_ptr, 100)) f5 &= ~RF5_BA_ACID;
+		if (int_outof(r_ptr, 100)) f5 &= ~RF5_BO_ACID;
 	}
 	else if ((smart & (SM_OPP_ACID)) && (smart & (SM_RES_ACID)))
 	{
-		if (int_outof(r_ptr, 80)) f4 &= ~(RF4_BR_ACID);
-		if (int_outof(r_ptr, 80)) f5 &= ~(RF5_BA_ACID);
-		if (int_outof(r_ptr, 80)) f5 &= ~(RF5_BO_ACID);
+		if (int_outof(r_ptr, 80)) f4 &= ~RF4_BR_ACID;
+		if (int_outof(r_ptr, 80)) f5 &= ~RF5_BA_ACID;
+		if (int_outof(r_ptr, 80)) f5 &= ~RF5_BO_ACID;
 	}
 	else if ((smart & (SM_OPP_ACID)) || (smart & (SM_RES_ACID)))
 	{
-		if (int_outof(r_ptr, 30)) f4 &= ~(RF4_BR_ACID);
-		if (int_outof(r_ptr, 30)) f5 &= ~(RF5_BA_ACID);
-		if (int_outof(r_ptr, 30)) f5 &= ~(RF5_BO_ACID);
+		if (int_outof(r_ptr, 30)) f4 &= ~RF4_BR_ACID;
+		if (int_outof(r_ptr, 30)) f5 &= ~RF5_BA_ACID;
+		if (int_outof(r_ptr, 30)) f5 &= ~RF5_BO_ACID;
 	}
 
 
 	if (smart & (SM_IMM_ELEC))
 	{
-		if (int_outof(r_ptr, 100)) f4 &= ~(RF4_BR_ELEC);
-		if (int_outof(r_ptr, 100)) f5 &= ~(RF5_BA_ELEC);
-		if (int_outof(r_ptr, 100)) f5 &= ~(RF5_BO_ELEC);
+		if (int_outof(r_ptr, 100)) f4 &= ~RF4_BR_ELEC;
+		if (int_outof(r_ptr, 100)) f5 &= ~RF5_BA_ELEC;
+		if (int_outof(r_ptr, 100)) f5 &= ~RF5_BO_ELEC;
 	}
 	else if ((smart & (SM_OPP_ELEC)) && (smart & (SM_RES_ELEC)))
 	{
-		if (int_outof(r_ptr, 80)) f4 &= ~(RF4_BR_ELEC);
-		if (int_outof(r_ptr, 80)) f5 &= ~(RF5_BA_ELEC);
-		if (int_outof(r_ptr, 80)) f5 &= ~(RF5_BO_ELEC);
+		if (int_outof(r_ptr, 80)) f4 &= ~RF4_BR_ELEC;
+		if (int_outof(r_ptr, 80)) f5 &= ~RF5_BA_ELEC;
+		if (int_outof(r_ptr, 80)) f5 &= ~RF5_BO_ELEC;
 	}
 	else if ((smart & (SM_OPP_ELEC)) || (smart & (SM_RES_ELEC)))
 	{
-		if (int_outof(r_ptr, 30)) f4 &= ~(RF4_BR_ELEC);
-		if (int_outof(r_ptr, 30)) f5 &= ~(RF5_BA_ELEC);
-		if (int_outof(r_ptr, 30)) f5 &= ~(RF5_BO_ELEC);
+		if (int_outof(r_ptr, 30)) f4 &= ~RF4_BR_ELEC;
+		if (int_outof(r_ptr, 30)) f5 &= ~RF5_BA_ELEC;
+		if (int_outof(r_ptr, 30)) f5 &= ~RF5_BO_ELEC;
 	}
 
 
 	if (smart & (SM_IMM_FIRE))
 	{
-		if (int_outof(r_ptr, 100)) f4 &= ~(RF4_BR_FIRE);
-		if (int_outof(r_ptr, 100)) f5 &= ~(RF5_BA_FIRE);
-		if (int_outof(r_ptr, 100)) f5 &= ~(RF5_BO_FIRE);
+		if (int_outof(r_ptr, 100)) f4 &= ~RF4_BR_FIRE;
+		if (int_outof(r_ptr, 100)) f5 &= ~RF5_BA_FIRE;
+		if (int_outof(r_ptr, 100)) f5 &= ~RF5_BO_FIRE;
 	}
 	else if ((smart & (SM_OPP_FIRE)) && (smart & (SM_RES_FIRE)))
 	{
-		if (int_outof(r_ptr, 80)) f4 &= ~(RF4_BR_FIRE);
-		if (int_outof(r_ptr, 80)) f5 &= ~(RF5_BA_FIRE);
-		if (int_outof(r_ptr, 80)) f5 &= ~(RF5_BO_FIRE);
+		if (int_outof(r_ptr, 80)) f4 &= ~RF4_BR_FIRE;
+		if (int_outof(r_ptr, 80)) f5 &= ~RF5_BA_FIRE;
+		if (int_outof(r_ptr, 80)) f5 &= ~RF5_BO_FIRE;
 	}
 	else if ((smart & (SM_OPP_FIRE)) || (smart & (SM_RES_FIRE)))
 	{
-		if (int_outof(r_ptr, 30)) f4 &= ~(RF4_BR_FIRE);
-		if (int_outof(r_ptr, 30)) f5 &= ~(RF5_BA_FIRE);
-		if (int_outof(r_ptr, 30)) f5 &= ~(RF5_BO_FIRE);
+		if (int_outof(r_ptr, 30)) f4 &= ~RF4_BR_FIRE;
+		if (int_outof(r_ptr, 30)) f5 &= ~RF5_BA_FIRE;
+		if (int_outof(r_ptr, 30)) f5 &= ~RF5_BO_FIRE;
 	}
 
 
 	if (smart & (SM_IMM_COLD))
 	{
-		if (int_outof(r_ptr, 100)) f4 &= ~(RF4_BR_COLD);
-		if (int_outof(r_ptr, 100)) f5 &= ~(RF5_BA_COLD);
-		if (int_outof(r_ptr, 100)) f5 &= ~(RF5_BO_COLD);
-		if (int_outof(r_ptr, 100)) f5 &= ~(RF5_BO_ICEE);
+		if (int_outof(r_ptr, 100)) f4 &= ~RF4_BR_COLD;
+		if (int_outof(r_ptr, 100)) f5 &= ~RF5_BA_COLD;
+		if (int_outof(r_ptr, 100)) f5 &= ~RF5_BO_COLD;
+		if (int_outof(r_ptr, 100)) f5 &= ~RF5_BO_ICEE;
 	}
 	else if ((smart & (SM_OPP_COLD)) && (smart & (SM_RES_COLD)))
 	{
-		if (int_outof(r_ptr, 80)) f4 &= ~(RF4_BR_COLD);
-		if (int_outof(r_ptr, 80)) f5 &= ~(RF5_BA_COLD);
-		if (int_outof(r_ptr, 80)) f5 &= ~(RF5_BO_COLD);
-		if (int_outof(r_ptr, 80)) f5 &= ~(RF5_BO_ICEE);
+		if (int_outof(r_ptr, 80)) f4 &= ~RF4_BR_COLD;
+		if (int_outof(r_ptr, 80)) f5 &= ~RF5_BA_COLD;
+		if (int_outof(r_ptr, 80)) f5 &= ~RF5_BO_COLD;
+		if (int_outof(r_ptr, 80)) f5 &= ~RF5_BO_ICEE;
 	}
 	else if ((smart & (SM_OPP_COLD)) || (smart & (SM_RES_COLD)))
 	{
-		if (int_outof(r_ptr, 30)) f4 &= ~(RF4_BR_COLD);
-		if (int_outof(r_ptr, 30)) f5 &= ~(RF5_BA_COLD);
-		if (int_outof(r_ptr, 30)) f5 &= ~(RF5_BO_COLD);
-		if (int_outof(r_ptr, 30)) f5 &= ~(RF5_BO_ICEE);
+		if (int_outof(r_ptr, 30)) f4 &= ~RF4_BR_COLD;
+		if (int_outof(r_ptr, 30)) f5 &= ~RF5_BA_COLD;
+		if (int_outof(r_ptr, 30)) f5 &= ~RF5_BO_COLD;
+		if (int_outof(r_ptr, 30)) f5 &= ~RF5_BO_ICEE;
 	}
 
 
 	if ((smart & (SM_OPP_POIS)) && (smart & (SM_RES_POIS)))
 	{
-		if (int_outof(r_ptr, 80)) f4 &= ~(RF4_BR_POIS);
-		if (int_outof(r_ptr, 80)) f5 &= ~(RF5_BA_POIS);
-		if (int_outof(r_ptr, 40)) f4 &= ~(RF4_BA_NUKE);
-		if (int_outof(r_ptr, 40)) f4 &= ~(RF4_BR_NUKE);
+		if (int_outof(r_ptr, 80)) f4 &= ~RF4_BR_POIS;
+		if (int_outof(r_ptr, 80)) f5 &= ~RF5_BA_POIS;
+		if (int_outof(r_ptr, 40)) f4 &= ~RF4_BA_NUKE;
+		if (int_outof(r_ptr, 40)) f4 &= ~RF4_BR_NUKE;
 	}
 	else if ((smart & (SM_OPP_POIS)) || (smart & (SM_RES_POIS)))
 	{
-		if (int_outof(r_ptr, 30)) f4 &= ~(RF4_BR_POIS);
-		if (int_outof(r_ptr, 30)) f5 &= ~(RF5_BA_POIS);
+		if (int_outof(r_ptr, 30)) f4 &= ~RF4_BR_POIS;
+		if (int_outof(r_ptr, 30)) f5 &= ~RF5_BA_POIS;
 	}
 
 
 	if (smart & (SM_RES_NETH))
 	{
-		if (int_outof(r_ptr, 50)) f4 &= ~(RF4_BR_NETH);
-		if (int_outof(r_ptr, 50)) f5 &= ~(RF5_BA_NETH);
-		if (int_outof(r_ptr, 50)) f5 &= ~(RF5_BO_NETH);
+		if (int_outof(r_ptr, 50)) f4 &= ~RF4_BR_NETH;
+		if (int_outof(r_ptr, 50)) f5 &= ~RF5_BA_NETH;
+		if (int_outof(r_ptr, 50)) f5 &= ~RF5_BO_NETH;
 	}
 
 	if (smart & (SM_RES_LITE))
 	{
-		if (int_outof(r_ptr, 50)) f4 &= ~(RF4_BR_LITE);
+		if (int_outof(r_ptr, 50)) f4 &= ~RF4_BR_LITE;
 	}
 
 	if (smart & (SM_RES_DARK))
 	{
-		if (int_outof(r_ptr, 50)) f4 &= ~(RF4_BR_DARK);
-		if (int_outof(r_ptr, 50)) f5 &= ~(RF5_BA_DARK);
+		if (int_outof(r_ptr, 50)) f4 &= ~RF4_BR_DARK;
+		if (int_outof(r_ptr, 50)) f5 &= ~RF5_BA_DARK;
 	}
 
 	if (smart & (SM_RES_FEAR))
 	{
-		if (int_outof(r_ptr, 100)) f5 &= ~(RF5_SCARE);
+		if (int_outof(r_ptr, 100)) f5 &= ~RF5_SCARE;
 	}
 
 	if (smart & (SM_RES_CONF))
 	{
-		if (int_outof(r_ptr, 100)) f5 &= ~(RF5_CONF);
-		if (int_outof(r_ptr, 50)) f4 &= ~(RF4_BR_CONF);
+		if (int_outof(r_ptr, 100)) f5 &= ~RF5_CONF;
+		if (int_outof(r_ptr, 50)) f4 &= ~RF4_BR_CONF;
 	}
 
 	if (smart & (SM_RES_CHAOS))
 	{
-		if (int_outof(r_ptr, 100)) f5 &= ~(RF5_CONF);
-		if (int_outof(r_ptr, 50)) f4 &= ~(RF4_BR_CONF);
-		if (int_outof(r_ptr, 50)) f4 &= ~(RF4_BR_CHAO);
-		if (int_outof(r_ptr, 50)) f4 &= ~(RF4_BA_CHAO);
+		if (int_outof(r_ptr, 100)) f5 &= ~RF5_CONF;
+		if (int_outof(r_ptr, 50)) f4 &= ~RF4_BR_CONF;
+		if (int_outof(r_ptr, 50)) f4 &= ~RF4_BR_CHAO;
+		if (int_outof(r_ptr, 50)) f4 &= ~RF4_BA_CHAO;
 	}
 
 	if (smart & (SM_RES_DISEN))
 	{
-		if (int_outof(r_ptr, 100)) f4 &= ~(RF4_BR_DISE);
+		if (int_outof(r_ptr, 100)) f4 &= ~RF4_BR_DISE;
 	}
 
 	if (smart & (SM_RES_BLIND))
 	{
-		if (int_outof(r_ptr, 100)) f5 &= ~(RF5_BLIND);
+		if (int_outof(r_ptr, 100)) f5 &= ~RF5_BLIND;
 	}
 
 	if (smart & (SM_RES_NEXUS))
 	{
-		if (int_outof(r_ptr, 50)) f4 &= ~(RF4_BR_NEXU);
-		if (int_outof(r_ptr, 50)) f6 &= ~(RF6_TELE_LEVEL);
+		if (int_outof(r_ptr, 50)) f4 &= ~RF4_BR_NEXU;
+		if (int_outof(r_ptr, 50)) f6 &= ~RF6_TELE_LEVEL;
 	}
 
 	if (smart & (SM_RES_SOUND))
 	{
-		if (int_outof(r_ptr, 50)) f4 &= ~(RF4_BR_SOUN);
+		if (int_outof(r_ptr, 50)) f4 &= ~RF4_BR_SOUN;
 	}
 
 	if (smart & (SM_RES_SHARD))
 	{
-		if (int_outof(r_ptr, 50)) f4 &= ~(RF4_BR_SHAR);
-		if (int_outof(r_ptr, 20)) f4 &= ~(RF4_ROCKET);
+		if (int_outof(r_ptr, 50)) f4 &= ~RF4_BR_SHAR;
+		if (int_outof(r_ptr, 20)) f4 &= ~RF4_ROCKET;
 	}
 
 	if (smart & (SM_IMM_REFLECT))
 	{
-		if (int_outof(r_ptr, 100)) f5 &= ~(RF5_BO_COLD);
-		if (int_outof(r_ptr, 100)) f5 &= ~(RF5_BO_FIRE);
-		if (int_outof(r_ptr, 100)) f5 &= ~(RF5_BO_ACID);
-		if (int_outof(r_ptr, 100)) f5 &= ~(RF5_BO_ELEC);
-		if (int_outof(r_ptr, 100)) f5 &= ~(RF5_BO_POIS);
-		if (int_outof(r_ptr, 100)) f5 &= ~(RF5_BO_NETH);
-		if (int_outof(r_ptr, 100)) f5 &= ~(RF5_BO_WATE);
-		if (int_outof(r_ptr, 100)) f5 &= ~(RF5_BO_MANA);
-		if (int_outof(r_ptr, 100)) f5 &= ~(RF5_BO_PLAS);
-		if (int_outof(r_ptr, 100)) f5 &= ~(RF5_BO_ICEE);
-		if (int_outof(r_ptr, 100)) f5 &= ~(RF5_MISSILE);
+		if (int_outof(r_ptr, 100)) f5 &= ~RF5_BO_COLD;
+		if (int_outof(r_ptr, 100)) f5 &= ~RF5_BO_FIRE;
+		if (int_outof(r_ptr, 100)) f5 &= ~RF5_BO_ACID;
+		if (int_outof(r_ptr, 100)) f5 &= ~RF5_BO_ELEC;
+		if (int_outof(r_ptr, 100)) f5 &= ~RF5_BO_POIS;
+		if (int_outof(r_ptr, 100)) f5 &= ~RF5_BO_NETH;
+		if (int_outof(r_ptr, 100)) f5 &= ~RF5_BO_WATE;
+		if (int_outof(r_ptr, 100)) f5 &= ~RF5_BO_MANA;
+		if (int_outof(r_ptr, 100)) f5 &= ~RF5_BO_PLAS;
+		if (int_outof(r_ptr, 100)) f5 &= ~RF5_BO_ICEE;
+		if (int_outof(r_ptr, 100)) f5 &= ~RF5_MISSILE;
 		if (int_outof(r_ptr, 100)) f4 &= ~(RF4_ARROW_1);
 		if (int_outof(r_ptr, 100)) f4 &= ~(RF4_ARROW_2);
 		if (int_outof(r_ptr, 100)) f4 &= ~(RF4_ARROW_3);
@@ -518,13 +518,13 @@ static void remove_bad_spells(int m_idx, u32b *f4p, u32b *f5p, u32b *f6p)
 
 	if (smart & (SM_IMM_FREE))
 	{
-		if (int_outof(r_ptr, 100)) f5 &= ~(RF5_HOLD);
-		if (int_outof(r_ptr, 100)) f5 &= ~(RF5_SLOW);
+		if (int_outof(r_ptr, 100)) f5 &= ~RF5_HOLD;
+		if (int_outof(r_ptr, 100)) f5 &= ~RF5_SLOW;
 	}
 
 	if (smart & (SM_IMM_MANA))
 	{
-		if (int_outof(r_ptr, 100)) f5 &= ~(RF5_DRAIN_MANA);
+		if (int_outof(r_ptr, 100)) f5 &= ~RF5_DRAIN_MANA;
 	}
 
 	/* XXX XXX XXX No spells left? */
@@ -770,7 +770,7 @@ static int choose_attack_spell(int m_idx, byte spells[], byte num)
 
 	/* Stupid monsters choose randomly */
 	auto const r_ptr = m_ptr->race();
-	if (r_ptr->flags2 & (RF2_STUPID))
+	if (r_ptr->flags2 & RF2_STUPID)
 	{
 		/* Pick at random */
 		return (spells[rand_int(num)]);
@@ -884,7 +884,7 @@ static void breath(int m_idx, int typ, int dam_hp, int rad)
 	auto const r_ptr = m_ptr->race();
 
 	/* Determine the radius of the blast */
-	if (rad < 1) rad = (r_ptr->flags2 & (RF2_POWERFUL)) ? 3 : 2;
+	if (rad < 1) rad = (r_ptr->flags2 & RF2_POWERFUL) ? 3 : 2;
 
 	/* Target the player with a ball attack */
 	(void)project(m_idx, rad, p_ptr->py, p_ptr->px, dam_hp, typ, flg);
@@ -904,7 +904,7 @@ static void monst_breath_monst(int m_idx, int y, int x, int typ, int dam_hp, int
 	auto const r_ptr = m_ptr->race();
 
 	/* Determine the radius of the blast */
-	if (rad < 1) rad = (r_ptr->flags2 & (RF2_POWERFUL)) ? 3 : 2;
+	if (rad < 1) rad = (r_ptr->flags2 & RF2_POWERFUL) ? 3 : 2;
 
 	(void)project(m_idx, rad, y, x, dam_hp, typ, flg);
 }
@@ -1065,14 +1065,14 @@ static bool_ monst_spell_monst(int m_idx)
 		f6 = r_ptr->flags6;
 
 		/* Hack -- allow "desperate" spells */
-		if ((r_ptr->flags2 & (RF2_SMART)) &&
+		if ((r_ptr->flags2 & RF2_SMART) &&
 		                (m_ptr->hp < m_ptr->maxhp / 10) &&
 		                (rand_int(100) < 50))
 		{
 			/* Require intelligent spells */
-			f4 &= (RF4_INT_MASK);
-			f5 &= (RF5_INT_MASK);
-			f6 &= (RF6_INT_MASK);
+			f4 &= RF4_INT_MASK;
+			f5 &= RF5_INT_MASK;
+			f6 &= RF6_INT_MASK;
 
 			/* No spells left */
 			if ((!f4 && !f5 && !f6) && (monst_spell_monst_spell == -1)) return (FALSE);
@@ -1708,8 +1708,8 @@ static bool_ monst_spell_monst(int m_idx)
 				}
 
 				/* Attempt a saving throw */
-				if ((tr_ptr->flags1 & (RF1_UNIQUE)) ||
-				                (tr_ptr->flags3 & (RF3_NO_CONF)) ||
+				if ((tr_ptr->flags1 & RF1_UNIQUE) ||
+				                (tr_ptr->flags3 & RF3_NO_CONF) ||
 				                (t_ptr->level > randint((rlev - 10) < 1 ? 1 : (rlev - 10)) + 10))
 				{
 					/* No obvious effect */
@@ -1746,8 +1746,8 @@ static bool_ monst_spell_monst(int m_idx)
 				}
 
 				/* Attempt a saving throw */
-				if ((tr_ptr->flags1 & (RF1_UNIQUE)) ||
-				                (tr_ptr->flags3 & (RF3_NO_CONF)) ||
+				if ((tr_ptr->flags1 & RF1_UNIQUE) ||
+				                (tr_ptr->flags3 & RF3_NO_CONF) ||
 				                (t_ptr->level > randint((rlev - 10) < 1 ? 1 : (rlev - 10)) + 10))
 				{
 					/* No obvious effect */
@@ -2279,9 +2279,9 @@ static bool_ monst_spell_monst(int m_idx)
 					monster_msg("%^s teleports %s away.", m_name, t_name);
 
 
-					if (tr_ptr->flags3 & (RF3_RES_TELE))
+					if (tr_ptr->flags3 & RF3_RES_TELE)
 					{
-						if (tr_ptr->flags1 & (RF1_UNIQUE))
+						if (tr_ptr->flags1 & RF1_UNIQUE)
 						{
 							if (see_t)
 							{
@@ -2948,14 +2948,14 @@ static bool_ make_attack_spell(int m_idx)
 	if (no_inate) f4 = 0L;
 
 	/* Hack -- allow "desperate" spells */
-	if ((r_ptr->flags2 & (RF2_SMART)) &&
+	if ((r_ptr->flags2 & RF2_SMART) &&
 	                (m_ptr->hp < m_ptr->maxhp / 10) &&
 	                (rand_int(100) < 50))
 	{
 		/* Require intelligent spells */
-		f4 &= (RF4_INT_MASK);
-		f5 &= (RF5_INT_MASK);
-		f6 &= (RF6_INT_MASK);
+		f4 &= RF4_INT_MASK;
+		f5 &= RF5_INT_MASK;
+		f6 &= RF6_INT_MASK;
 
 		/* No spells left */
 		if (!f4 && !f5 && !f6) return (FALSE);
@@ -2968,27 +2968,27 @@ static bool_ make_attack_spell(int m_idx)
 	if (!f4 && !f5 && !f6) return (FALSE);
 
 	/* Check for a clean bolt shot */
-	if ((f4&(RF4_BOLT_MASK) || f5 & (RF5_BOLT_MASK) ||
-	     f6&(RF6_BOLT_MASK)) &&
-	    !(r_ptr->flags2 & (RF2_STUPID)) &&
+	if ((f4&RF4_BOLT_MASK || f5 & RF5_BOLT_MASK ||
+	     f6&RF6_BOLT_MASK) &&
+	    !(r_ptr->flags2 & RF2_STUPID) &&
 	    !clean_shot(m_ptr->fy, m_ptr->fx, y, x))
 	{
 		/* Remove spells that will only hurt friends */
-		f4 &= ~(RF4_BOLT_MASK);
-		f5 &= ~(RF5_BOLT_MASK);
-		f6 &= ~(RF6_BOLT_MASK);
+		f4 &= ~RF4_BOLT_MASK;
+		f5 &= ~RF5_BOLT_MASK;
+		f6 &= ~RF6_BOLT_MASK;
 	}
 
 	/* Check for a possible summon */
-	if ((f4 & (RF4_SUMMON_MASK) || f5 & (RF5_SUMMON_MASK) ||
-	     f6 & (RF6_SUMMON_MASK)) &&
-	    !(r_ptr->flags2 & (RF2_STUPID)) &&
+	if ((f4 & RF4_SUMMON_MASK || f5 & RF5_SUMMON_MASK ||
+	     f6 & RF6_SUMMON_MASK) &&
+	    !(r_ptr->flags2 & RF2_STUPID) &&
 	    !(summon_possible(y, x)))
 	{
 		/* Remove summoning spells */
-		f4 &= ~(RF4_SUMMON_MASK);
-		f5 &= ~(RF5_SUMMON_MASK);
-		f6 &= ~(RF6_SUMMON_MASK);
+		f4 &= ~RF4_SUMMON_MASK;
+		f5 &= ~RF5_SUMMON_MASK;
+		f6 &= ~RF6_SUMMON_MASK;
 	}
 
 	/* No spells left */
@@ -3034,7 +3034,7 @@ static bool_ make_attack_spell(int m_idx)
 	failrate = 25 - (rlev + 3) / 4;
 
 	/* Hack -- Stupid monsters will never fail (for jellies and such) */
-	if (r_ptr->flags2 & (RF2_STUPID)) failrate = 0;
+	if (r_ptr->flags2 & RF2_STUPID) failrate = 0;
 
 	/* Check for spell failure (inate attacks never fail) */
 	if ((thrown_spell >= 128) && (rand_int(100) < failrate))
@@ -5032,8 +5032,8 @@ static bool_ get_moves(int m_idx, int *mm)
 		*/
 		if ((r_ptr->flags1 & RF1_FRIENDS) &&
 		                (r_ptr->flags3 & RF3_ANIMAL) &&
-		                !((r_ptr->flags2 & (RF2_PASS_WALL)) ||
-		                  (r_ptr->flags2 & (RF2_KILL_WALL))))
+		                !((r_ptr->flags2 & RF2_PASS_WALL) ||
+		                  (r_ptr->flags2 & RF2_KILL_WALL)))
 		{
 			int i, room = 0;
 
@@ -5767,7 +5767,7 @@ static bool_ monst_attack_monst(int m_idx, int t_idx)
 					}
 
 					/* Aura elec */
-					if ((tr_ptr->flags2 & (RF2_AURA_ELEC)) && !(r_ptr->flags3 & (RF3_IM_ELEC)))
+					if ((tr_ptr->flags2 & RF2_AURA_ELEC) && !(r_ptr->flags3 & RF3_IM_ELEC))
 					{
 						if (m_ptr->ml || t_ptr->ml)
 						{
@@ -6142,7 +6142,7 @@ static void process_monster(int m_idx, bool_ is_frien)
 
 	/* Paranoia... no friendly uniques outside wizard mode -- TY */
 	if ((m_ptr->status > MSTATUS_NEUTRAL) && (m_ptr->status < MSTATUS_COMPANION) && !(wizard) &&
-	                (r_ptr->flags1 & (RF1_UNIQUE)) && !(r_ptr->flags7 & RF7_PET))
+	                (r_ptr->flags1 & RF1_UNIQUE) && !(r_ptr->flags7 & RF7_PET))
 		gets_angry = TRUE;
 
 	if (gets_angry)
@@ -6198,7 +6198,7 @@ static void process_monster(int m_idx, bool_ is_frien)
 	ox = m_ptr->fx;
 
 	/* Attempt to "multiply" if able and allowed */
-	if ((r_ptr->flags4 & (RF4_MULTIPLY)) && (num_repro < MAX_REPRO))
+	if ((r_ptr->flags4 & RF4_MULTIPLY) && (num_repro < MAX_REPRO))
 	{
 		if (ai_multiply(m_idx)) return;
 	}
@@ -6409,28 +6409,28 @@ static void process_monster(int m_idx, bool_ is_frien)
 
 
 		/* Some monsters can fly */
-		else if ((f_info[c_ptr->feat].flags1 & FF1_CAN_LEVITATE) && (r_ptr->flags7 & (RF7_CAN_FLY)))
+		else if ((f_info[c_ptr->feat].flags1 & FF1_CAN_LEVITATE) && (r_ptr->flags7 & RF7_CAN_FLY))
 		{
 			/* Pass through walls/doors/rubble */
 			do_move = TRUE;
 		}
 
 		/* Some monsters can fly */
-		else if ((f_info[c_ptr->feat].flags1 & FF1_CAN_FLY) && (r_ptr->flags7 & (RF7_CAN_FLY)))
+		else if ((f_info[c_ptr->feat].flags1 & FF1_CAN_FLY) && (r_ptr->flags7 & RF7_CAN_FLY))
 		{
 			/* Pass through trees/... */
 			do_move = TRUE;
 		}
 
 		/* Monster moves through walls (and doors) */
-		else if ((f_info[c_ptr->feat].flags1 & FF1_CAN_PASS) && (r_ptr->flags2 & (RF2_PASS_WALL)))
+		else if ((f_info[c_ptr->feat].flags1 & FF1_CAN_PASS) && (r_ptr->flags2 & RF2_PASS_WALL))
 		{
 			/* Pass through walls/doors/rubble */
 			do_move = TRUE;
 		}
 
 		/* Monster destroys walls (and doors) */
-		else if ((f_info[c_ptr->feat].flags1 & FF1_CAN_PASS) && (r_ptr->flags2 & (RF2_KILL_WALL)))
+		else if ((f_info[c_ptr->feat].flags1 & FF1_CAN_PASS) && (r_ptr->flags2 & RF2_KILL_WALL))
 		{
 			/* Eat through walls/doors/rubble */
 			do_move = TRUE;
@@ -6451,7 +6451,7 @@ static void process_monster(int m_idx, bool_ is_frien)
 		}
 
 		/* Monster moves through walls (and doors) */
-		else if ((f_info[c_ptr->feat].flags1 & FF1_CAN_PASS) && (r_ptr->flags2 & (RF2_PASS_WALL)))
+		else if ((f_info[c_ptr->feat].flags1 & FF1_CAN_PASS) && (r_ptr->flags2 & RF2_PASS_WALL))
 		{
 			/* Pass through walls/doors/rubble */
 			do_move = TRUE;
@@ -6475,7 +6475,7 @@ static void process_monster(int m_idx, bool_ is_frien)
 			/* Take a turn */
 			do_turn = TRUE;
 
-			if ((r_ptr->flags2 & (RF2_OPEN_DOOR)) &&
+			if ((r_ptr->flags2 & RF2_OPEN_DOOR) &&
 			                ((is_friend(m_ptr) <= 0) || p_ptr->pet_open_doors))
 			{
 				/* Closed doors and secret doors */
@@ -6745,7 +6745,7 @@ static void process_monster(int m_idx, bool_ is_frien)
 		if (do_move && (r_ptr->flags1 & RF1_NEVER_MOVE))
 		{
 			/* Hack -- memorize lack of attacks */
-			/* if (m_ptr->ml) r_ptr->r_flags1 |= (RF1_NEVER_MOVE); */
+			/* if (m_ptr->ml) r_ptr->r_flags1 |= RF1_NEVER_MOVE; */
 
 			/* Do not move */
 			do_move = FALSE;
@@ -6846,9 +6846,9 @@ static void process_monster(int m_idx, bool_ is_frien)
 
 					/* Take or Kill objects on the floor */
 					/* rr9: Pets will no longer pick up/destroy items */
-					if ((((r_ptr->flags2 & (RF2_TAKE_ITEM)) &&
+					if ((((r_ptr->flags2 & RF2_TAKE_ITEM) &&
 					                ((is_friend(m_ptr) <= 0) || p_ptr->pet_pickup_items)) ||
-					                (r_ptr->flags2 & (RF2_KILL_ITEM))) &&
+					                (r_ptr->flags2 & RF2_KILL_ITEM)) &&
 					                (is_friend(m_ptr) <= 0))
 					{
 						u32b f1, f2, f3, f4, f5, esp;
@@ -6868,23 +6868,23 @@ static void process_monster(int m_idx, bool_ is_frien)
 						monster_desc(m_name, m_ptr, 0x04);
 
 						/* React to objects that hurt the monster */
-						if (f5 & (TR5_KILL_DEMON)) flg3 |= (RF3_DEMON);
-						if (f5 & (TR5_KILL_UNDEAD)) flg3 |= (RF3_UNDEAD);
-						if (f1 & (TR1_SLAY_DRAGON)) flg3 |= (RF3_DRAGON);
-						if (f1 & (TR1_SLAY_TROLL)) flg3 |= (RF3_TROLL);
-						if (f1 & (TR1_SLAY_GIANT)) flg3 |= (RF3_GIANT);
-						if (f1 & (TR1_SLAY_ORC)) flg3 |= (RF3_ORC);
-						if (f1 & (TR1_SLAY_DEMON)) flg3 |= (RF3_DEMON);
-						if (f1 & (TR1_SLAY_UNDEAD)) flg3 |= (RF3_UNDEAD);
-						if (f1 & (TR1_SLAY_ANIMAL)) flg3 |= (RF3_ANIMAL);
-						if (f1 & (TR1_SLAY_EVIL)) flg3 |= (RF3_EVIL);
+						if (f5 & (TR5_KILL_DEMON)) flg3 |= RF3_DEMON;
+						if (f5 & (TR5_KILL_UNDEAD)) flg3 |= RF3_UNDEAD;
+						if (f1 & (TR1_SLAY_DRAGON)) flg3 |= RF3_DRAGON;
+						if (f1 & (TR1_SLAY_TROLL)) flg3 |= RF3_TROLL;
+						if (f1 & (TR1_SLAY_GIANT)) flg3 |= RF3_GIANT;
+						if (f1 & (TR1_SLAY_ORC)) flg3 |= RF3_ORC;
+						if (f1 & (TR1_SLAY_DEMON)) flg3 |= RF3_DEMON;
+						if (f1 & (TR1_SLAY_UNDEAD)) flg3 |= RF3_UNDEAD;
+						if (f1 & (TR1_SLAY_ANIMAL)) flg3 |= RF3_ANIMAL;
+						if (f1 & (TR1_SLAY_EVIL)) flg3 |= RF3_EVIL;
 
 						/* The object cannot be picked up by the monster */
 						if (artifact_p(o_ptr) || (r_ptr->flags3 & flg3) ||
 						                (o_ptr->art_name))
 						{
 							/* Only give a message for "take_item" */
-							if (r_ptr->flags2 & (RF2_TAKE_ITEM))
+							if (r_ptr->flags2 & RF2_TAKE_ITEM)
 							{
 								/* Describe observable situations */
 								if (m_ptr->ml && player_has_los_bold(ny, nx))
@@ -6897,7 +6897,7 @@ static void process_monster(int m_idx, bool_ is_frien)
 						}
 
 						/* Pick up the item */
-						else if (r_ptr->flags2 & (RF2_TAKE_ITEM))
+						else if (r_ptr->flags2 & RF2_TAKE_ITEM)
 						{
 							/* Describe observable situations */
 							if (player_has_los_bold(ny, nx))

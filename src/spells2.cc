@@ -2484,7 +2484,7 @@ bool detect_objects_normal(int rad)
 bool_ detect_monsters_normal(int rad)
 {
 	auto predicate = [](monster_race *r_ptr) -> bool {
-		return (!(r_ptr->flags2 & (RF2_INVISIBLE))) ||
+		return (!(r_ptr->flags2 & RF2_INVISIBLE)) ||
 			p_ptr->see_inv || p_ptr->tim_invis;
 	};
 
@@ -2507,7 +2507,7 @@ bool_ detect_monsters_normal(int rad)
 bool_ detect_monsters_invis(int rad)
 {
 	auto predicate = [](monster_race *r_ptr) -> bool {
-		return (r_ptr->flags2 & (RF2_INVISIBLE));
+		return (r_ptr->flags2 & RF2_INVISIBLE);
 	};
 
 	if (detect_monsters_fn(rad, predicate))
@@ -3993,7 +3993,7 @@ bool_ genocide_aux(bool_ player_cast, char typ)
 		if (!m_ptr->r_idx) continue;
 
 		/* Hack -- Skip Unique Monsters */
-		if (r_ptr->flags1 & (RF1_UNIQUE)) continue;
+		if (r_ptr->flags1 & RF1_UNIQUE) continue;
 
 		/* Hack -- Skip Quest Monsters */
 		if (m_ptr->mflag & MFLAG_QUEST) continue;
@@ -4119,7 +4119,7 @@ bool_ mass_genocide(bool_ player_cast)
 		if (!m_ptr->r_idx) continue;
 
 		/* Hack -- Skip unique monsters */
-		if (r_ptr->flags1 & (RF1_UNIQUE)) continue;
+		if (r_ptr->flags1 & RF1_UNIQUE) continue;
 
 		/* Hack -- Skip Quest Monsters */
 		if (m_ptr->mflag & MFLAG_QUEST) continue;
@@ -4556,8 +4556,8 @@ void earthquake(int cy, int cx, int r)
 				auto const r_ptr = m_ptr->race();
 
 				/* Most monsters cannot co-exist with rock */
-				if (!(r_ptr->flags2 & (RF2_KILL_WALL)) &&
-				                !(r_ptr->flags2 & (RF2_PASS_WALL)))
+				if (!(r_ptr->flags2 & RF2_KILL_WALL) &&
+				                !(r_ptr->flags2 & RF2_PASS_WALL))
 				{
 					char m_name[80];
 
@@ -4565,7 +4565,7 @@ void earthquake(int cy, int cx, int r)
 					sn = 0;
 
 					/* Monster can move to escape the wall */
-					if (!(r_ptr->flags1 & (RF1_NEVER_MOVE)))
+					if (!(r_ptr->flags1 & RF1_NEVER_MOVE))
 					{
 						/* Look for safety */
 						for (i = 0; i < 8; i++)
@@ -4807,10 +4807,10 @@ static void cave_temp_room_lite(void)
 			update_mon(c_ptr->m_idx, FALSE);
 
 			/* Stupid monsters rarely wake up */
-			if (r_ptr->flags2 & (RF2_STUPID)) chance = 10;
+			if (r_ptr->flags2 & RF2_STUPID) chance = 10;
 
 			/* Smart monsters always wake up */
-			if (r_ptr->flags2 & (RF2_SMART)) chance = 100;
+			if (r_ptr->flags2 & RF2_SMART) chance = 100;
 
 			/* Sometimes monsters wake up */
 			if (m_ptr->csleep && (rand_int(100) < chance))

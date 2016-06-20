@@ -2701,7 +2701,7 @@ errr file_character(cptr name, bool_ full)
 		{
 			monster_race *r_ptr = &r_info[k];
 
-			if (r_ptr->flags1 & (RF1_UNIQUE))
+			if (r_ptr->flags1 & RF1_UNIQUE)
 			{
 				bool_ dead = (r_ptr->max_num == 0);
 				if (dead)
@@ -4052,7 +4052,7 @@ static long total_points(void)
 	{
 		monster_race *r_ptr = &r_info[k];
 
-		if (r_ptr->flags1 & (RF1_UNIQUE))
+		if (r_ptr->flags1 & RF1_UNIQUE)
 		{
 			bool_ dead = (r_ptr->max_num == 0);
 

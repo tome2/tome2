@@ -3355,9 +3355,9 @@ void do_cmd_fire(void)
 					cptr note_dies = " dies.";
 
 					/* Some monsters get "destroyed" */
-					if ((r_ptr->flags3 & (RF3_DEMON)) ||
-					                (r_ptr->flags3 & (RF3_UNDEAD)) ||
-					                (r_ptr->flags2 & (RF2_STUPID)) ||
+					if ((r_ptr->flags3 & RF3_DEMON) ||
+					                (r_ptr->flags3 & RF3_UNDEAD) ||
+					                (r_ptr->flags2 & RF2_STUPID) ||
 					                (strchr("Evg", r_ptr->d_char)))
 					{
 						/* Special note at death */
@@ -3769,9 +3769,9 @@ void do_cmd_throw(void)
 				cptr note_dies = " dies.";
 
 				/* Some monsters get "destroyed" */
-				if ((r_ptr->flags3 & (RF3_DEMON)) ||
-				                (r_ptr->flags3 & (RF3_UNDEAD)) ||
-				                (r_ptr->flags2 & (RF2_STUPID)) ||
+				if ((r_ptr->flags3 & RF3_DEMON) ||
+				                (r_ptr->flags3 & RF3_UNDEAD) ||
+				                (r_ptr->flags2 & RF2_STUPID) ||
 				                (strchr("Evg", r_ptr->d_char)))
 				{
 					/* Special note at death */
@@ -4096,9 +4096,9 @@ void do_cmd_boomerang(void)
 				cptr note_dies = " dies.";
 
 				/* Some monsters get "destroyed" */
-				if ((r_ptr->flags3 & (RF3_DEMON)) ||
-				                (r_ptr->flags3 & (RF3_UNDEAD)) ||
-				                (r_ptr->flags2 & (RF2_STUPID)) ||
+				if ((r_ptr->flags3 & RF3_DEMON) ||
+				                (r_ptr->flags3 & RF3_UNDEAD) ||
+				                (r_ptr->flags2 & RF2_STUPID) ||
 				                (strchr("Evg", r_ptr->d_char)))
 				{
 					/* Special note at death */
@@ -4781,7 +4781,7 @@ void do_cmd_steal()
 	}
 
 	/* The monster is immune */
-	if (r_info[m_ptr->r_idx].flags7 & (RF7_NO_THEFT))
+	if (r_info[m_ptr->r_idx].flags7 & RF7_NO_THEFT)
 	{
 		msg_print("The monster is guarding the treasures.");
 		return;

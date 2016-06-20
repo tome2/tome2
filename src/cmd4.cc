@@ -3276,7 +3276,7 @@ static void do_cmd_knowledge_uniques(void)
 		monster_race *r_ptr = &r_info[k];
 
 		/* Only print Uniques */
-		if (r_ptr->flags1 & (RF1_UNIQUE) &&
+		if ((r_ptr->flags1 & RF1_UNIQUE) &&
 		    !(r_ptr->flags7 & RF7_PET) &&
 		    !(r_ptr->flags7 & RF7_NEUTRAL))
 		{
@@ -3298,7 +3298,7 @@ static void do_cmd_knowledge_uniques(void)
 		monster_race *r_ptr = &r_info[r_idx];
 
 		/* Only print Uniques */
-		if (r_ptr->flags1 & (RF1_UNIQUE))
+		if (r_ptr->flags1 & RF1_UNIQUE)
 		{
 			bool_ dead = (r_ptr->max_num == 0);
 
@@ -3492,7 +3492,7 @@ static void do_cmd_knowledge_kill_count(void)
 		{
 			monster_race *r_ptr = &r_info[kk];
 
-			if (r_ptr->flags1 & (RF1_UNIQUE))
+			if (r_ptr->flags1 & RF1_UNIQUE)
 			{
 				if (r_ptr->max_num == 0)
 				{
@@ -3526,7 +3526,7 @@ static void do_cmd_knowledge_kill_count(void)
 	{
 		monster_race *r_ptr = &r_info[k];
 
-		if (r_ptr->flags1 & (RF1_UNIQUE))
+		if (r_ptr->flags1 & RF1_UNIQUE)
 		{
 			bool_ dead = (r_ptr->max_num == 0);
 

@@ -2671,7 +2671,7 @@ void monster_death(int m_idx)
 	}
 
 	/* Mega-Hack -- drop "winner" treasures */
-	else if (r_ptr->flags1 & (RF1_DROP_CHOSEN))
+	else if (r_ptr->flags1 & RF1_DROP_CHOSEN)
 	{
 		if (strstr(r_ptr->name, "Morgoth, Lord of Darkness"))
 		{
@@ -3074,7 +3074,7 @@ bool_ mon_take_hit(int m_idx, int dam, bool_ *fear, cptr note)
 			while (--curses);
 		}
 
-		if (r_ptr->flags2 & (RF2_CAN_SPEAK))
+		if (r_ptr->flags2 & RF2_CAN_SPEAK)
 		{
 			char line_got[80];
 			/* Dump a message */
@@ -3100,10 +3100,10 @@ bool_ mon_take_hit(int m_idx, int dam, bool_ *fear, cptr note)
 		}
 
 		/* Death by Physical attack -- non-living monster */
-		else if ((r_ptr->flags3 & (RF3_DEMON)) ||
-		                (r_ptr->flags3 & (RF3_UNDEAD)) ||
-		                (r_ptr->flags2 & (RF2_STUPID)) ||
-		                (r_ptr->flags3 & (RF3_NONLIVING)) ||
+		else if ((r_ptr->flags3 & RF3_DEMON) ||
+		                (r_ptr->flags3 & RF3_UNDEAD) ||
+		                (r_ptr->flags2 & RF2_STUPID) ||
+		                (r_ptr->flags3 & RF3_NONLIVING) ||
 		                (strchr("Evg", r_ptr->d_char)))
 		{
 			cmsg_format(TERM_L_RED, "You have destroyed %s.", m_name);
@@ -3164,7 +3164,7 @@ bool_ mon_take_hit(int m_idx, int dam, bool_ *fear, cptr note)
 		}
 
 		/* When the player kills a Unique, it stays dead */
-		if (r_ptr->flags1 & (RF1_UNIQUE))
+		if (r_ptr->flags1 & RF1_UNIQUE)
 		{
 			r_ptr->max_num = 0;
 		}
@@ -3237,7 +3237,7 @@ bool_ mon_take_hit(int m_idx, int dam, bool_ *fear, cptr note)
 		* XXX XXX XXX Mega-Hack -- Remove random quest rendered
 		* impossible
 		*/
-		if (r_ptr->flags1 & (RF1_UNIQUE))
+		if (r_ptr->flags1 & RF1_UNIQUE)
 		{
 			int i;
 
@@ -3276,7 +3276,7 @@ bool_ mon_take_hit(int m_idx, int dam, bool_ *fear, cptr note)
 		}
 
 		/* Recall even invisible uniques or winners */
-		if (m_ptr->ml || (r_ptr->flags1 & (RF1_UNIQUE)))
+		if (m_ptr->ml || (r_ptr->flags1 & RF1_UNIQUE))
 		{
 			/* Count kills this life */
 			if (r_ptr->r_pkills < MAX_SHORT) r_ptr->r_pkills++;
@@ -3620,9 +3620,9 @@ static cptr look_mon_desc(int m_idx)
 	/* Determine if the monster is "living" (vs "undead") */
 	monster_type *m_ptr = &m_list[m_idx];
 	auto const r_ptr = m_ptr->race();
-	if (r_ptr->flags3 & (RF3_UNDEAD)) living = FALSE;
-	if (r_ptr->flags3 & (RF3_DEMON)) living = FALSE;
-	if (r_ptr->flags3 & (RF3_NONLIVING)) living = FALSE;
+	if (r_ptr->flags3 & RF3_UNDEAD) living = FALSE;
+	if (r_ptr->flags3 & RF3_DEMON) living = FALSE;
+	if (r_ptr->flags3 & RF3_NONLIVING) living = FALSE;
 	if (strchr("Egv", r_ptr->d_char)) living = FALSE;
 
 
@@ -4137,8 +4137,8 @@ static int target_set_aux(int y, int x, int mode, cptr info)
 					s1 = "It is ";
 
 					/* Hack -- take account of gender */
-					if (r_ptr->flags1 & (RF1_FEMALE)) s1 = "She is ";
-					else if (r_ptr->flags1 & (RF1_MALE)) s1 = "He is ";
+					if (r_ptr->flags1 & RF1_FEMALE) s1 = "She is ";
+					else if (r_ptr->flags1 & RF1_MALE) s1 = "He is ";
 
 					/* Use a preposition */
 					s2 = "carrying ";

@@ -1142,10 +1142,10 @@ static void map_info(int y, int x, byte *ap, char *cp)
 				}
 
 				/* Multi-hued monster */
-				else if (r_ptr->flags1 & (RF1_ATTR_MULTI))
+				else if (r_ptr->flags1 & RF1_ATTR_MULTI)
 				{
 					/* Is it a shapechanger? */
-					if (r_ptr->flags2 & (RF2_SHAPECHANGER))
+					if (r_ptr->flags2 & RF2_SHAPECHANGER)
 					{
 						image_random(ap, cp);
 					}
@@ -1153,7 +1153,7 @@ static void map_info(int y, int x, byte *ap, char *cp)
 						*cp = c;
 
 					/* Multi-hued attr */
-					if (r_ptr->flags2 & (RF2_ATTR_ANY))
+					if (r_ptr->flags2 & RF2_ATTR_ANY)
 					{
 						*ap = randint(15);
 					}
@@ -1190,14 +1190,14 @@ static void map_info(int y, int x, byte *ap, char *cp)
 				else
 				{
 					/* Normal (non-clear char) monster */
-					if (!(r_ptr->flags1 & (RF1_CHAR_CLEAR)))
+					if (!(r_ptr->flags1 & RF1_CHAR_CLEAR))
 					{
 						/* Normal char */
 						*cp = c;
 					}
 
 					/* Normal (non-clear attr) monster */
-					else if (!(r_ptr->flags1 & (RF1_ATTR_CLEAR)))
+					else if (!(r_ptr->flags1 & RF1_ATTR_CLEAR))
 					{
 						/* Normal attr */
 						*ap = a;
@@ -1572,10 +1572,10 @@ void map_info_default(int y, int x, byte *ap, char *cp)
 				}
 
 				/* Multi-hued monster */
-				else if (r_ptr->flags1 & (RF1_ATTR_MULTI))
+				else if (r_ptr->flags1 & RF1_ATTR_MULTI)
 				{
 					/* Is it a shapechanger? */
-					if (r_ptr->flags2 & (RF2_SHAPECHANGER))
+					if (r_ptr->flags2 & RF2_SHAPECHANGER)
 					{
 						image_random(ap, cp);
 					}
@@ -1583,7 +1583,7 @@ void map_info_default(int y, int x, byte *ap, char *cp)
 						*cp = c;
 
 					/* Multi-hued attr */
-					if (r_ptr->flags2 & (RF2_ATTR_ANY))
+					if (r_ptr->flags2 & RF2_ATTR_ANY)
 					{
 						*ap = randint(15);
 					}
@@ -1617,14 +1617,14 @@ void map_info_default(int y, int x, byte *ap, char *cp)
 				else
 				{
 					/* Normal (non-clear char) monster */
-					if (!(r_ptr->flags1 & (RF1_CHAR_CLEAR)))
+					if (!(r_ptr->flags1 & RF1_CHAR_CLEAR))
 					{
 						/* Normal char */
 						*cp = c;
 					}
 
 					/* Normal (non-clear attr) monster */
-					else if (!(r_ptr->flags1 & (RF1_ATTR_CLEAR)))
+					else if (!(r_ptr->flags1 & RF1_ATTR_CLEAR))
 					{
 						/* Normal attr */
 						*ap = a;

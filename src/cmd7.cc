@@ -3702,7 +3702,7 @@ void summon_true(int r_idx, int item)
 
 
 	/* Uniques are less likely to be nice */
-	if (r_ptr->flags1 & (RF1_UNIQUE))
+	if (r_ptr->flags1 & RF1_UNIQUE)
 	{
 		/* Because it's unique, it will always be destroyed */
 		used = TRUE;

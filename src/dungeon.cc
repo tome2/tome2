@@ -791,7 +791,7 @@ static void regen_monsters(void)
 			if (!frac) frac = 1;
 
 			/* Hack -- Some monsters regenerate quickly */
-			if (r_ptr->flags2 & (RF2_REGENERATE)) frac *= 2;
+			if (r_ptr->flags2 & RF2_REGENERATE) frac *= 2;
 
 
 			/* Hack -- Regenerate */
@@ -828,7 +828,7 @@ static void regen_monsters(void)
 
 			/* Hack -- Some monsters regenerate quickly */
 			auto const r_ptr = m_ptr->race();
-			if (r_ptr->flags2 & (RF2_REGENERATE)) frac *= 2;
+			if (r_ptr->flags2 & RF2_REGENERATE) frac *= 2;
 
 			/* Hack -- Regenerate */
 			m_ptr->hp += frac;
@@ -4512,7 +4512,7 @@ static void process_player(void)
 					auto const r_ptr = m_ptr->race();
 
 					/* Skip non-multi-hued monsters */
-					if (!(r_ptr->flags1 & (RF1_ATTR_MULTI))) continue;
+					if (!(r_ptr->flags1 & RF1_ATTR_MULTI)) continue;
 
 					/* Reset the flag */
 					shimmer_monsters = TRUE;

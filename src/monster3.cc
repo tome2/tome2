@@ -174,7 +174,7 @@ bool_ ai_possessor(int m_idx, int o_idx)
 	m_ptr->csleep = 0;
 
 	/* Assign maximal hitpoints */
-	if (r_ptr->flags1 & (RF1_FORCE_MAXHP))
+	if (r_ptr->flags1 & RF1_FORCE_MAXHP)
 	{
 		m_ptr->maxhp = maxroll(r_ptr->hdice, r_ptr->hside);
 	}
@@ -205,10 +205,10 @@ bool_ ai_possessor(int m_idx, int o_idx)
 	m_ptr->energy = 0;
 
 	/* Hack -- Count the number of "reproducers" */
-	if (r_ptr->flags4 & (RF4_MULTIPLY)) num_repro++;
+	if (r_ptr->flags4 & RF4_MULTIPLY) num_repro++;
 
 	/* Hack -- Notice new multi-hued monsters */
-	if (r_ptr->flags1 & (RF1_ATTR_MULTI)) shimmer_monsters = TRUE;
+	if (r_ptr->flags1 & RF1_ATTR_MULTI) shimmer_monsters = TRUE;
 
 	/* Hack -- Count the monsters on the level */
 	r_ptr->cur_num++;
@@ -249,7 +249,7 @@ void ai_deincarnate(int m_idx)
 	m_ptr->csleep = 0;
 
 	/* Assign maximal hitpoints */
-	if (r_ptr->flags1 & (RF1_FORCE_MAXHP))
+	if (r_ptr->flags1 & RF1_FORCE_MAXHP)
 	{
 		m_ptr->maxhp = maxroll(r_ptr->hdice, r_ptr->hside);
 	}
@@ -280,10 +280,10 @@ void ai_deincarnate(int m_idx)
 	m_ptr->energy = 0;
 
 	/* Hack -- Count the number of "reproducers" */
-	if (r_ptr->flags4 & (RF4_MULTIPLY)) num_repro++;
+	if (r_ptr->flags4 & RF4_MULTIPLY) num_repro++;
 
 	/* Hack -- Notice new multi-hued monsters */
-	if (r_ptr->flags1 & (RF1_ATTR_MULTI)) shimmer_monsters = TRUE;
+	if (r_ptr->flags1 & RF1_ATTR_MULTI) shimmer_monsters = TRUE;
 
 	/* Hack -- Count the monsters on the level */
 	r_ptr->cur_num++;

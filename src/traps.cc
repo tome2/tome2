@@ -2823,9 +2823,9 @@ bool_ mon_hit_trap(int m_idx)
 						cptr note_dies = " dies.";
 
 						/* Some monsters get "destroyed" */
-						if ((r_ptr->flags3 & (RF3_DEMON)) ||
-						                (r_ptr->flags3 & (RF3_UNDEAD)) ||
-						                (r_ptr->flags2 & (RF2_STUPID)) ||
+						if ((r_ptr->flags3 & RF3_DEMON) ||
+						                (r_ptr->flags3 & RF3_UNDEAD) ||
+						                (r_ptr->flags2 & RF2_STUPID) ||
 						                (strchr("Evg", r_ptr->d_char)))
 						{
 							/* Special note at death */
