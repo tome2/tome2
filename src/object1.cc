@@ -2667,19 +2667,17 @@ bool_ object_out_desc(object_type *o_ptr, FILE *fff, bool_ trim_down, bool_ wait
 
 		if ((f4 & TR4_LEVELS) && (!trim_down))
 		{
-			int j = 0;
-
 			if (count_bits(o_ptr->pval3) == 0) text_out("It is sentient");
 			else if (count_bits(o_ptr->pval3) > 1) text_out("It is sentient and can have access to the realms of ");
 			else text_out("It is sentient and can have access to the realm of ");
 
 			bool_ first = TRUE;
-			for (j = 0; j < MAX_FLAG_GROUP; j++)
+			for (std::size_t j = 0; j < flags_groups().size(); j++)
 			{
 				if (BIT(j) & o_ptr->pval3)
 				{
 					check_first(&first);
-					text_out_c(flags_groups[j].color, flags_groups[j].name);
+					text_out_c(flags_groups()[j].color, flags_groups()[j].name);
 				}
 			}
 
@@ -6057,13 +6055,13 @@ static void gain_flag_group(object_type *o_ptr)
 
 	while (tries--)
 	{
-		grp = rand_int(MAX_FLAG_GROUP);
+		grp = rand_int(flags_groups().size());
 
 		/* If we already got this group continue */
 		if (o_ptr->pval3 & BIT(grp)) continue;
 
 		/* Not enough points ? */
-		if (flags_groups[grp].price > o_ptr->pval2) continue;
+		if (flags_groups()[grp].price > o_ptr->pval2) continue;
 
 		/* Ok, enough points and not already got it */
 		break;
@@ -6072,7 +6070,7 @@ static void gain_flag_group(object_type *o_ptr)
 	/* Ack, nothing found */
 	if (tries <= 1) return;
 
-	o_ptr->pval2 -= flags_groups[grp].price;
+	o_ptr->pval2 -= flags_groups()[grp].price;
 	o_ptr->pval3 |= BIT(grp);
 
 	/* Message */
@@ -6080,7 +6078,7 @@ static void gain_flag_group(object_type *o_ptr)
 		char o_name[80];
 
 		object_desc(o_name, o_ptr, FALSE, 0);
-		msg_format("%s gains access to the %s realm.", o_name, flags_groups[grp].name);
+		msg_format("%s gains access to the %s realm.", o_name, flags_groups()[grp].name);
 	}
 }
 
@@ -6097,27 +6095,27 @@ static u32b get_flag(object_type *o_ptr, int grp, int k)
 	switch (k)
 	{
 	case 0:
-		flag_set = flags_groups[grp].flags1;
+		flag_set = flags_groups()[grp].flags1;
 		flag_test = f1;
 		break;
 	case 1:
-		flag_set = flags_groups[grp].flags2;
+		flag_set = flags_groups()[grp].flags2;
 		flag_test = f2;
 		break;
 	case 2:
-		flag_set = flags_groups[grp].flags3;
+		flag_set = flags_groups()[grp].flags3;
 		flag_test = f3;
 		break;
 	case 3:
-		flag_set = flags_groups[grp].flags4;
+		flag_set = flags_groups()[grp].flags4;
 		flag_test = f4;
 		break;
 	case 4:
-		flag_set = flags_groups[grp].esp;
+		flag_set = flags_groups()[grp].esp;
 		flag_test = esp;
 		break;
 	default:
-		flag_set = flags_groups[grp].flags1;
+		flag_set = flags_groups()[grp].flags1;
 		flag_test = f1;
 		break;
 	}
@@ -6159,7 +6157,7 @@ static void gain_flag_group_flag(object_type *o_ptr)
 		k = rand_int(5);
 
 		/* get a flag group */
-		grp = rand_int(MAX_FLAG_GROUP);
+		grp = rand_int(flags_groups().size());
 
 		if (!(BIT(grp) & o_ptr->pval3)) continue;
 
@@ -6197,7 +6195,7 @@ static void gain_flag_group_flag(object_type *o_ptr)
 		char o_name[80];
 
 		object_desc(o_name, o_ptr, FALSE, 0);
-		msg_format("%s gains a new power from the %s realm.", o_name, flags_groups[grp].name);
+		msg_format("%s gains a new power from the %s realm.", o_name, flags_groups()[grp].name);
 	}
 }
 

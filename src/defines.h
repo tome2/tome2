@@ -2476,8 +2476,6 @@
 #define ESP_SPIDER              0x00001000L
 #define ESP_ALL                 0x80000000L
 
-/* Number of group of flags to choose from */
-#define MAX_FLAG_GROUP          12
 #define NEW_GROUP_CHANCE        40      /* Chance to get a new group */
 
 /*
