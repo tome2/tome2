@@ -420,7 +420,7 @@ namespace {
 
 		static void allocate()
 		{
-			re_info = make_array<monster_ego>(max_re_idx);
+			re_info = new monster_ego[max_re_idx];
 		}
 
 		static errr parse(FILE *fp)
