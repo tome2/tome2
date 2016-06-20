@@ -770,7 +770,7 @@ static errr init_other(void)
 
 
 	/* Allocate and Wipe the object list */
-	o_list = make_array<object_type>(max_o_idx);
+	o_list = new object_type[max_o_idx];
 
 	/* Allocate and Wipe the monster list */
 	m_list = new monster_type[max_m_idx];

@@ -31,74 +31,73 @@
  */
 struct object_type
 {
-	s16b k_idx;			/* Kind index (zero if "dead") */
+	s16b k_idx = 0;                          /* Kind index (zero if "dead") */
 
-	byte iy;			/* Y-position on map, or zero */
-	byte ix;			/* X-position on map, or zero */
+	byte iy = 0;                             /* Y-position on map, or zero */
+	byte ix = 0;                             /* X-position on map, or zero */
 
-	byte tval;			/* Item type (from kind) */
-	byte sval;			/* Item sub-type (from kind) */
+	byte tval = 0;                           /* Item type (from kind) */
+	byte sval = 0;                           /* Item sub-type (from kind) */
 
-	s32b pval;                      /* Item extra-parameter */
-	s16b pval2;                     /* Item extra-parameter for some special
-					   items*/
-	s32b pval3;                     /* Item extra-parameter for some special
-					   items*/
+	s32b pval = 0;                           /* Item extra-parameter */
+	s16b pval2 = 0;                          /* Item extra-parameter for some special items */
+	s32b pval3 = 0;                          /* Item extra-parameter for some special items */
 
-	byte discount;		/* Discount (if any) */
+	byte discount = 0;                       /* Discount (if any) */
 
-	byte number;		/* Number of items */
+	byte number = 0;                         /* Number of items */
 
-	s32b weight;            /* Item weight */
+	s32b weight = 0;                         /* Item weight */
 
-	byte elevel;            /* Item exp level */
-	s32b exp;               /* Item exp */
+	byte elevel = 0;                         /* Item exp level */
+	s32b exp = 0;                            /* Item exp */
 
-	byte name1;			/* Artifact type, if any */
-	s16b name2;                     /* Ego-Item type, if any */
-	s16b name2b;                    /* Second Ego-Item type, if any */
+	byte name1 = 0;                          /* Artifact type, if any */
+	s16b name2 = 0;                          /* Ego-Item type, if any */
+	s16b name2b = 0;                         /* Second Ego-Item type, if any */
 
-	byte xtra1;			/* Extra info type */
-	s16b xtra2;                     /* Extra info index */
+	byte xtra1 = 0;                          /* Extra info type */
+	s16b xtra2 = 0;                          /* Extra info index */
 
-	s16b to_h;			/* Plusses to hit */
-	s16b to_d;			/* Plusses to damage */
-	s16b to_a;			/* Plusses to AC */
+	s16b to_h = 0;                           /* Plusses to hit */
+	s16b to_d = 0;                           /* Plusses to damage */
+	s16b to_a = 0;                           /* Plusses to AC */
 
-	s16b ac;			/* Normal AC */
+	s16b ac = 0;                             /* Normal AC */
 
-	byte dd, ds;		/* Damage dice/sides */
+	byte dd = 0;                             /* Damage dice/sides */
+	byte ds = 0;                             /* Damage dice/sides */
 
-	s16b timeout;		/* Timeout Counter */
+	s16b timeout = 0;                        /* Timeout Counter */
 
-	byte ident;			/* Special flags  */
+	byte ident = 0;                          /* Special flags  */
 
-	byte marked;		/* Object is marked */
+	byte marked = 0;                         /* Object is marked */
 
-	u16b note;			/* Inscription index */
-	u16b art_name;      /* Artifact name (random artifacts) */
+	u16b note = 0;                           /* Inscription index */
+	u16b art_name = 0;                       /* Artifact name (random artifacts) */
 
-	u32b art_flags1;        /* Flags, set 1  Alas, these were necessary */
-	u32b art_flags2;        /* Flags, set 2  for the random artifacts of*/
-	u32b art_flags3;        /* Flags, set 3  Zangband */
-	u32b art_flags4;        /* Flags, set 4  PernAngband */
-	u32b art_flags5;        /* Flags, set 5  PernAngband */
-	u32b art_esp;           /* Flags, set esp  PernAngband */
+	u32b art_flags1 = 0;                     /* Flags, set 1  Alas, these were necessary */
+	u32b art_flags2 = 0;                     /* Flags, set 2  for the random artifacts of*/
+	u32b art_flags3 = 0;                     /* Flags, set 3  Zangband */
+	u32b art_flags4 = 0;                     /* Flags, set 4  PernAngband */
+	u32b art_flags5 = 0;                     /* Flags, set 5  PernAngband */
+	u32b art_esp = 0;                        /* Flags, set esp  PernAngband */
 
-	u32b art_oflags1;       /* Obvious Flags, set 1 */
-	u32b art_oflags2;       /* Obvious Flags, set 2 */
-	u32b art_oflags3;       /* Obvious Flags, set 3 */
-	u32b art_oflags4;       /* Obvious Flags, set 4 */
-	u32b art_oflags5;       /* Obvious Flags, set 5 */
-	u32b art_oesp;          /* Obvious Flags, set esp */
+	u32b art_oflags1 = 0;                    /* Obvious Flags, set 1 */
+	u32b art_oflags2 = 0;                    /* Obvious Flags, set 2 */
+	u32b art_oflags3 = 0;                    /* Obvious Flags, set 3 */
+	u32b art_oflags4 = 0;                    /* Obvious Flags, set 4 */
+	u32b art_oflags5 = 0;                    /* Obvious Flags, set 5 */
+	u32b art_oesp = 0;                       /* Obvious Flags, set esp */
 
-	s16b held_m_idx;	/* Monster holding us (if any) */
+	s16b held_m_idx = 0;                     /* Monster holding the object; if any */
 
-	byte sense;             /* Pseudo-id status */
+	byte sense = 0;                          /* Pseudo-id status */
 
-	byte found;             /* How did we find it */
-	s16b found_aux1;        /* Stores info for found */
-	s16b found_aux2;        /* Stores info for found */
-	s16b found_aux3;        /* Stores info for found */
-	s16b found_aux4;        /* Stores info for found */
+	byte found = 0;                          /* How did we find it */
+	s16b found_aux1 = 0;                     /* Stores info for found */
+	s16b found_aux2 = 0;                     /* Stores info for found */
+	s16b found_aux3 = 0;                     /* Stores info for found */
+	s16b found_aux4 = 0;                     /* Stores info for found */
 };

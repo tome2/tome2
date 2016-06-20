@@ -1814,8 +1814,7 @@ s16b lookup_kind(int tval, int sval)
 void object_wipe(object_type *o_ptr)
 {
 	/* Wipe the structure */
-	static_assert(std::is_pod<object_type>::value, "object_type must be POD type for memset to work");
-	memset(o_ptr, 0, sizeof(object_type));
+	*o_ptr = object_type();
 }
 
 
