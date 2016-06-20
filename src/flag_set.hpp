@@ -119,6 +119,16 @@ public:
 		return f;
 	}
 
+	constexpr flag_set operator ~ () const
+	{
+		flag_set f;
+		for (std::size_t i = 0; i < tiers; i++)
+		{
+			f.m_data[i] = ~m_data[i];
+		}
+		return f;
+	}
+
 };
 
 // Implementation details, because preprocessor.
