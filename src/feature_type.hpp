@@ -7,26 +7,26 @@
  */
 struct feature_type
 {
-	char *name;             /* Name */
+	char *name = nullptr;                    /* Name */
 
-	const char *text;       /* Text. May point to shared read-only memory, DO NOT FREE! */
-	const char *tunnel;     /* Text for tunneling. May point to shared read-only memory, DO NOT FREE! */
-	const char *block;      /* Text for blocking. May point to shared read-only memory, DO NOT FREE! */
+	const char *text = nullptr;              /* Text. May point to shared read-only memory, DO NOT FREE! */
+	const char *tunnel = nullptr;            /* Text for tunneling. May point to shared read-only memory, DO NOT FREE! */
+	const char *block = nullptr;             /* Text for blocking. May point to shared read-only memory, DO NOT FREE! */
 
-	byte mimic;             /* Feature to mimic */
+	byte mimic = 0;                          /* Feature to mimic */
 
-	u32b flags1;            /* First set of flags */
+	u32b flags1 = 0;                         /* First set of flags */
 
-	byte d_attr;		/* Default feature attribute */
-	char d_char;		/* Default feature character */
+	byte d_attr = 0;                         /* Default feature attribute */
+	char d_char = '\0';                      /* Default feature character */
 
-	byte x_attr;		/* Desired feature attribute */
-	char x_char;		/* Desired feature character */
+	byte x_attr = 0;                         /* Desired feature attribute */
+	char x_char = '\0';                      /* Desired feature character */
 
-	byte shimmer[7];        /* Shimmer colors */
+	byte shimmer[7];                         /* Shimmer colors */
 
-	int d_dice[4];                  /* Number of dices */
-	int d_side[4];                  /* Number of sides */
-	int d_frequency[4];             /* Frequency of damage (1 is the minimum) */
-	int d_type[4];                  /* Type of damage */
+	int d_dice[4] = { 0 };                   /* Number of dice */
+	int d_side[4] = { 0 };                   /* Number of sides */
+	int d_frequency[4] = { 0 };              /* Frequency of damage (1 is the minimum) */
+	int d_type[4] = { 0 };                   /* Type of damage */
 };

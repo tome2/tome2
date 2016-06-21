@@ -279,7 +279,7 @@ namespace {
 
 		static void allocate()
 		{
-			f_info = make_array<feature_type>(max_f_idx);
+			f_info = new feature_type[max_f_idx];
 		}
 
 		static errr parse(FILE *fp)
