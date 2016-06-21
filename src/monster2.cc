@@ -709,8 +709,6 @@ void wipe_m_list(void)
 		/* Skip dead monsters */
 		if (!m_ptr->r_idx) continue;
 
-		/* Mega-Hack -- preserve Unique's XXX XXX XXX */
-
 		/* Hack -- Reduce the racial counter */
 		auto r_ptr = m_ptr->race();
 		r_ptr->cur_num--;
