@@ -195,6 +195,9 @@ static void wiz_create_named_art()
 
 	apply_magic(q_ptr, -1, TRUE, TRUE, TRUE);
 
+	/* Apply any random resistances/powers */
+	random_artifact_resistance(q_ptr);
+
 	/* Identify it fully */
 	object_aware(q_ptr);
 	object_known(q_ptr);
