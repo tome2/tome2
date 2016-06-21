@@ -17,13 +17,8 @@ struct feature_type
 
 	u32b flags1;            /* First set of flags */
 
-	byte extra;             /* Extra byte (unused) */
-
-	s16b unused;		/* Extra bytes (unused) */
-
 	byte d_attr;		/* Default feature attribute */
 	char d_char;		/* Default feature character */
-
 
 	byte x_attr;		/* Desired feature attribute */
 	char x_char;		/* Desired feature character */
