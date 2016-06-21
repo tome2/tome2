@@ -2108,7 +2108,7 @@ static void random_artifact_power(object_type *o_ptr)
 
 void random_artifact_resistance(object_type * o_ptr)
 {
-	auto art_flags = a_info[o_ptr->name1].flags;
+	auto const art_flags = a_info[o_ptr->name1].flags;
 
 	// Check flags of the 'protype' artifact
 	auto give_resistance = bool(art_flags & TR_RANDOM_RESIST);
@@ -2125,7 +2125,7 @@ void random_artifact_resistance(object_type * o_ptr)
 		}
 	}
 
-	// Grant the resistance/power
+	// Grant a power?
 	if (give_power)
 	{
 		random_artifact_power(o_ptr);
@@ -2135,15 +2135,17 @@ void random_artifact_resistance(object_type * o_ptr)
 
 	if (give_resistance)
 	{
-		// Save flags
-		auto const flags = o_ptr->art_flags;
+		// Save the *combined* pre-existing flags on the object;
+		// including any power we may have granted above.
+		auto const flags_before = art_flags | o_ptr->art_flags;
+
 		// We'll be a little generous here and make sure that the object
 		// gets a resistance that it doesn't actually already have.
 		for (int tries = 0; tries < 1000; tries++)
 		{
 			random_resistance(o_ptr, randint(22) + 16);
-			// Picked up a new resistance?
-			if (flags != o_ptr->art_flags)
+			// Picked up new resistance?
+			if (flags_before != (art_flags | o_ptr->art_flags))
 			{
 				break;
 			}
