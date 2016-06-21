@@ -16,6 +16,7 @@
 #include "cmd2.hpp"
 #include "dungeon_flag.hpp"
 #include "dungeon_info_type.hpp"
+#include "feature_flag.hpp"
 #include "feature_type.hpp"
 #include "files.hpp"
 #include "gods.hpp"
@@ -125,7 +126,7 @@ static bool_ do_trap_teleport_away(object_type *i_ptr, s16b y, s16b x)
 		c_ptr = &cave[y1][x1];
 
 		/* Require floor space (or shallow terrain) -KMW- */
-		if (!(f_info[c_ptr->feat].flags1 & FF1_FLOOR)) continue;
+		if (!(f_info[c_ptr->feat].flags & FF_FLOOR)) continue;
 
 		o_idx = drop_near(i_ptr, 0, y1, x1);
 	}
@@ -348,7 +349,7 @@ static bool_ player_handle_trap_of_walls(void)
 			/* Destroy location (if valid) */
 			if ((cx < cur_wid) && (cy < cur_hgt) && cave_valid_bold(cy, cx))
 			{
-				bool_ floor = (f_info[cave[cy][cx].feat].flags1 & FF1_FLOOR);
+				bool floor = bool(f_info[cave[cy][cx].feat].flags & FF_FLOOR);
 
 				/* Delete any object that is still there */
 				delete_object(cy, cx);
@@ -1904,7 +1905,7 @@ void player_activate_door_trap(s16b y, s16b x)
 
 	/* Return if trap or door not found */
 	if ((c_ptr->t_idx == 0) ||
-	                !(f_info[c_ptr->feat].flags1 & FF1_DOOR)) return;
+	                !(f_info[c_ptr->feat].flags & FF_DOOR)) return;
 
 	/* Disturb */
 	disturb(0);
@@ -1952,10 +1953,10 @@ void place_trap(int y, int x)
 
 	/* Traps only appears on empty floor */
 	if (!cave_floor_grid(c_ptr) &&
-	                !(f_info[c_ptr->feat].flags1 & (FF1_DOOR))) return;
+	                !(f_info[c_ptr->feat].flags & FF_DOOR)) return;
 
 	/* Set flags */
-	if (f_info[c_ptr->feat].flags1 & FF1_DOOR) flags = FTRAP_DOOR;
+	if (f_info[c_ptr->feat].flags & FF_DOOR) flags = FTRAP_DOOR;
 	else flags = FTRAP_FLOOR;
 
 	/* Try 100 times */
@@ -2054,7 +2055,7 @@ void wiz_place_trap(int y, int x, int idx)
 	cave_type *c_ptr = &cave[y][x];
 
 	/* Dangerous enough as it is... */
-	if (!cave_floor_grid(c_ptr) && (!(f_info[c_ptr->feat].flags1 & FF1_DOOR))) return;
+	if (!cave_floor_grid(c_ptr) && (!(f_info[c_ptr->feat].flags & FF_DOOR))) return;
 
 	c_ptr->t_idx = idx;
 }

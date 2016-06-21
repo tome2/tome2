@@ -13,6 +13,7 @@
 #include "cmd4.hpp"
 #include "cmd5.hpp"
 #include "dungeon_info_type.hpp"
+#include "feature_flag.hpp"
 #include "feature_type.hpp"
 #include "files.hpp"
 #include "gods.hpp"
@@ -2601,23 +2602,23 @@ bool_ player_can_enter(byte feature)
 			return (TRUE);
 	}
 
-	if ((p_ptr->climb) && (f_info[feature].flags1 & FF1_CAN_CLIMB))
+	if ((p_ptr->climb) && (f_info[feature].flags & FF_CAN_CLIMB))
 		return (TRUE);
 	if ((p_ptr->fly) &&
-	                ((f_info[feature].flags1 & FF1_CAN_FLY) ||
-	                 (f_info[feature].flags1 & FF1_CAN_LEVITATE)))
+	                ((f_info[feature].flags & FF_CAN_FLY) ||
+	                 (f_info[feature].flags & FF_CAN_LEVITATE)))
 		return (TRUE);
-	else if (only_wall && (f_info[feature].flags1 & FF1_FLOOR))
+	else if (only_wall && (f_info[feature].flags & FF_FLOOR))
 		return (FALSE);
 	else if ((p_ptr->ffall) &&
-	                (f_info[feature].flags1 & FF1_CAN_LEVITATE))
+	                (f_info[feature].flags & FF_CAN_LEVITATE))
 		return (TRUE);
 	else if ((pass_wall || only_wall) &&
-	                (f_info[feature].flags1 & FF1_CAN_PASS))
+	                (f_info[feature].flags & FF_CAN_PASS))
 		return (TRUE);
-	else if (f_info[feature].flags1 & FF1_NO_WALK)
+	else if (f_info[feature].flags & FF_NO_WALK)
 		return (FALSE);
-	else if ((f_info[feature].flags1 & FF1_WEB) &&
+	else if ((f_info[feature].flags & FF_WEB) &&
 			((!(r_info[p_ptr->body_monster].flags & RF_SPIDER)) && (p_ptr->mimic_form != resolve_mimic_name("Spider"))))
 		return (FALSE);
 
@@ -3232,7 +3233,7 @@ void move_player_aux(int dir, int do_pickup, int run, bool_ disarm)
 
 		/* Discover invisible traps */
 		else if ((c_ptr->t_idx != 0) &&
-		                !(f_info[cave[y][x].feat].flags1 & FF1_DOOR))
+		                !(f_info[cave[y][x].feat].flags & FF_DOOR))
 		{
 			/* Disturb */
 			disturb(0);
@@ -3318,7 +3319,7 @@ static int see_obstacle_grid(cave_type *c_ptr)
 
 
 	/* "Safe" floor grids aren't obstacles */
-	if (f_info[c_ptr->feat].flags1 & FF1_CAN_RUN) return (FALSE);
+	if (f_info[c_ptr->feat].flags & FF_CAN_RUN) return (FALSE);
 
 	/* Must be known to the player */
 	if (!(c_ptr->info & (CAVE_MARK))) return (FALSE);
@@ -3771,7 +3772,7 @@ static bool_ run_test(void)
 			}
 
 			/* Check the "don't notice running" flag */
-			if (f_info[c_ptr->feat].flags1 & FF1_DONT_NOTICE_RUNNING)
+			if (f_info[c_ptr->feat].flags & FF_DONT_NOTICE_RUNNING)
 			{
 				notice = FALSE;
 			}

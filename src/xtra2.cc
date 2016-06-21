@@ -14,6 +14,7 @@
 #include "corrupt.hpp"
 #include "dungeon_info_type.hpp"
 #include "ego_item_type.hpp"
+#include "feature_flag.hpp"
 #include "feature_type.hpp"
 #include "files.hpp"
 #include "gods.hpp"
@@ -2975,7 +2976,7 @@ void monster_death(int m_idx)
 		{
 			for (int j = -1; j <= 1; j++)
 			{
-				if (!(f_info[cave[y + j][x + i].feat].flags1 & FF1_PERMANENT))
+				if (!(f_info[cave[y + j][x + i].feat].flags & FF_PERMANENT))
 				{
 					cave_set_feat(y + j, x + i, d_info[dungeon_type].floor1);
 				}
@@ -3849,7 +3850,7 @@ static bool_ target_set_accept(int y, int x)
 		                (c_ptr->feat <= FEAT_DOOR_TAIL)) return (FALSE);
 
 		/* Accept 'naturally' interesting features */
-		if (f_info[c_ptr->feat].flags1 & FF1_NOTICE) return (TRUE);
+		if (f_info[c_ptr->feat].flags & FF_NOTICE) return (TRUE);
 	}
 
 	/* Nope */

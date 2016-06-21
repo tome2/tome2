@@ -3,6 +3,7 @@
 #include "cave.hpp"
 #include "cave_type.hpp"
 #include "dungeon_flag.hpp"
+#include "feature_flag.hpp"
 #include "feature_type.hpp"
 #include "hook_quest_finish_in.hpp"
 #include "hooks.hpp"
@@ -54,13 +55,12 @@ static bool_ quest_wolves_gen_hook(void *, void *, void *)
 	/* Place some random wolves */
 	for (i = damroll(4, 4); i > 0; )
 	{
-		int m_idx, flags;
 		y = rand_int(21) + 3;
 		x = rand_int(31) + 3;
-		flags = f_info[cave[y][x].feat].flags1;
-		if (!(flags & FF1_PERMANENT) && (flags & FF1_FLOOR))
+		auto const flags = f_info[cave[y][x].feat].flags;
+		if (!(flags & FF_PERMANENT) && (flags & FF_FLOOR))
 		{
-			m_idx = place_monster_one(y, x, 196, 0, magik(50), MSTATUS_ENEMY);
+			int m_idx = place_monster_one(y, x, 196, 0, magik(50), MSTATUS_ENEMY);
 			if (m_idx) m_list[m_idx].mflag |= MFLAG_QUEST;
 			--i;
 		}
@@ -69,13 +69,12 @@ static bool_ quest_wolves_gen_hook(void *, void *, void *)
 	/* Place some random wargs */
 	for (i = damroll(4, 4); i > 0; )
 	{
-		int m_idx, flags;
 		y = rand_int(21) + 3;
 		x = rand_int(31) + 3;
-		flags = f_info[cave[y][x].feat].flags1;
-		if (!(flags & FF1_PERMANENT) && (flags & FF1_FLOOR))
+		auto const flags = f_info[cave[y][x].feat].flags;
+		if (!(flags & FF_PERMANENT) && (flags & FF_FLOOR))
 		{
-			m_idx = place_monster_one(y, x, 257, 0, magik(50), MSTATUS_ENEMY);
+			int m_idx = place_monster_one(y, x, 257, 0, magik(50), MSTATUS_ENEMY);
 			if (m_idx) m_list[m_idx].mflag |= MFLAG_QUEST;
 			--i;
 		}

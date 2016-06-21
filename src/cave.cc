@@ -2,6 +2,7 @@
 
 #include "cave_type.hpp"
 #include "dungeon_flag.hpp"
+#include "feature_flag.hpp"
 #include "feature_type.hpp"
 #include "hook_enter_dungeon_in.hpp"
 #include "monster2.hpp"
@@ -91,7 +92,7 @@ static bool_ is_wall(cave_type *c_ptr)
 	if (feat == FEAT_SMALL_TREES) return TRUE;
 
 	/* Normal cases: use the WALL flag in f_info.txt */
-	return (f_info[feat].flags1 & FF1_WALL) ? TRUE : FALSE;
+	return (f_info[feat].flags & FF_WALL) ? TRUE : FALSE;
 }
 
 
@@ -918,7 +919,7 @@ static void map_info(int y, int x, byte *ap, char *cp)
 			 * Cave macros cannot be used safely here, because of
 			 * c_ptr->mimic XXX XXX
 			 */
-			if ((f_ptr->flags1 & (FF1_FLOOR | FF1_REMEMBER)) == FF1_FLOOR)
+			if ((f_ptr->flags & (FF_FLOOR | FF_REMEMBER)) == FF_FLOOR)
 			{
 				c = f_info[FEAT_TRAP].x_char;
 			}
@@ -948,7 +949,7 @@ static void map_info(int y, int x, byte *ap, char *cp)
 			}
 
 			/* Multi-hued attr */
-			else if (f_ptr->flags1 & FF1_ATTR_MULTI)
+			else if (f_ptr->flags & FF_ATTR_MULTI)
 			{
 				a = f_ptr->shimmer[rand_int(7)];
 			}
@@ -971,7 +972,7 @@ static void map_info(int y, int x, byte *ap, char *cp)
 
 		/* view_special_lite: lighting effects for boring features */
 		if (view_special_lite &&
-		                ((f_ptr->flags1 & (FF1_FLOOR | FF1_REMEMBER)) == FF1_FLOOR))
+		                ((f_ptr->flags & (FF_FLOOR | FF_REMEMBER)) == FF_FLOOR))
 		{
 			if (!p_ptr->wild_mode && !(info & (CAVE_TRDT)))
 			{
@@ -1011,7 +1012,7 @@ static void map_info(int y, int x, byte *ap, char *cp)
 
 		/* view_granite_lite: lighting effects for walls and doors */
 		else if (view_granite_lite &&
-		                (f_ptr->flags1 & (FF1_NO_VISION | FF1_DOOR)))
+		                (f_ptr->flags & (FF_NO_VISION | FF_DOOR)))
 		{
 			if (!p_ptr->wild_mode && !(info & (CAVE_TRDT)))
 			{
@@ -1352,7 +1353,7 @@ void map_info_default(int y, int x, byte *ap, char *cp)
 			 * Cave macros cannot be used safely here, because of
 			 * c_ptr->mimic XXX XXX
 			 */
-			if ((f_ptr->flags1 & (FF1_FLOOR | FF1_REMEMBER)) == FF1_FLOOR)
+			if ((f_ptr->flags & (FF_FLOOR | FF_REMEMBER)) == FF_FLOOR)
 			{
 				c = f_info[FEAT_TRAP].d_char;
 			}
@@ -1382,7 +1383,7 @@ void map_info_default(int y, int x, byte *ap, char *cp)
 			}
 
 			/* Multi-hued attr */
-			else if (f_ptr->flags1 & FF1_ATTR_MULTI)
+			else if (f_ptr->flags & FF_ATTR_MULTI)
 			{
 				a = f_ptr->shimmer[rand_int(7)];
 			}
@@ -1405,7 +1406,7 @@ void map_info_default(int y, int x, byte *ap, char *cp)
 
 		/* view_special_lite: lighting effects for boring features */
 		if (view_special_lite &&
-		                ((f_ptr->flags1 & (FF1_FLOOR | FF1_REMEMBER)) == FF1_FLOOR))
+		                ((f_ptr->flags & (FF_FLOOR | FF_REMEMBER)) == FF_FLOOR))
 		{
 			if (!p_ptr->wild_mode && !(info & (CAVE_TRDT)))
 			{
@@ -1445,7 +1446,7 @@ void map_info_default(int y, int x, byte *ap, char *cp)
 
 		/* view_granite_lite: lighting effects for walls and doors */
 		else if (view_granite_lite &&
-		                (f_ptr->flags1 & (FF1_NO_VISION | FF1_DOOR)))
+		                (f_ptr->flags & (FF_NO_VISION | FF_DOOR)))
 		{
 			if (!p_ptr->wild_mode && !(info & (CAVE_TRDT)))
 			{
@@ -3691,7 +3692,7 @@ void update_mon_lite(void)
 			 *
 			 * We don't have four sides for a wall grid, so...
 			 */
-			if (invis && (f_info[c_ptr->feat].flags1 & FF1_NO_VISION)) continue;
+			if (invis && (f_info[c_ptr->feat].flags & FF_NO_VISION)) continue;
 
 			/* Give monster light to the location */
 			c_ptr->info |= (CAVE_MLIT | CAVE_SEEN);
@@ -4548,7 +4549,7 @@ bool cave_floor_bold(int y, int x)
  */
 bool cave_floor_grid(cave_type const *c)
 {
-	return (f_info[c->feat].flags1 & FF1_FLOOR) && (c->feat != FEAT_MON_TRAP);
+	return (f_info[c->feat].flags & FF_FLOOR) && (c->feat != FEAT_MON_TRAP);
 }
 
 
@@ -4568,8 +4569,8 @@ bool cave_plain_floor_bold(int y, int x)
 bool cave_plain_floor_grid(cave_type const *c)
 {
 	return
-		(f_info[c->feat].flags1 & FF1_FLOOR) &&
-		!(f_info[c->feat].flags1 & FF1_REMEMBER);
+		(f_info[c->feat].flags & FF_FLOOR) &&
+		!(f_info[c->feat].flags & FF_REMEMBER);
 }
 
 
@@ -4593,7 +4594,7 @@ bool cave_sight_bold(int y, int x)
 
 bool cave_sight_grid(cave_type const *c)
 {
-	return !(f_info[c->feat].flags1 & FF1_NO_VISION);
+	return !(f_info[c->feat].flags & FF_NO_VISION);
 }
 
 
@@ -4608,10 +4609,10 @@ bool cave_sight_grid(cave_type const *c)
 bool cave_clean_bold(int y, int x)
 {
 	return
-		(f_info[cave[y][x].feat].flags1 & FF1_FLOOR) &&
+		(f_info[cave[y][x].feat].flags & FF_FLOOR) &&
 		(cave[y][x].feat != FEAT_MON_TRAP) &&
 		(cave[y][x].o_idxs.empty()) &&
-		!(f_info[cave[y][x].feat].flags1 & FF1_PERMANENT);
+		!(f_info[cave[y][x].feat].flags & FF_PERMANENT);
 }
 
 /*
@@ -4640,9 +4641,9 @@ bool cave_empty_bold(int y, int x)
 bool cave_naked_bold(int y, int x)
 {
 	return
-		(f_info[cave[y][x].feat].flags1 & FF1_FLOOR) &&
+		(f_info[cave[y][x].feat].flags & FF_FLOOR) &&
 		(cave[y][x].feat != FEAT_MON_TRAP) &&
-		!(f_info[cave[y][x].feat].flags1 & FF1_PERMANENT) &&
+		!(f_info[cave[y][x].feat].flags & FF_PERMANENT) &&
 		(cave[y][x].o_idxs.empty()) &&
 		(cave[y][x].m_idx == 0);
 }
@@ -4650,7 +4651,7 @@ bool cave_naked_bold(int y, int x)
 bool cave_naked_bold2(int y, int x)
 {
 	return
-		(f_info[cave[y][x].feat].flags1 & FF1_FLOOR) &&
+		(f_info[cave[y][x].feat].flags & FF_FLOOR) &&
 		(cave[y][x].feat != FEAT_MON_TRAP) &&
 		(cave[y][x].o_idxs.empty()) &&
 		(cave[y][x].m_idx == 0);
@@ -4667,7 +4668,7 @@ bool cave_perma_bold(int y, int x)
 
 bool cave_perma_grid(cave_type const *c)
 {
-	return f_info[c->feat].flags1 & FF1_PERMANENT;
+	return bool(f_info[c->feat].flags & FF_PERMANENT);
 }
 
 /*

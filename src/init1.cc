@@ -7,6 +7,7 @@
 #include "dungeon_info_type.hpp"
 #include "dungeon_flag.hpp"
 #include "ego_item_type.hpp"
+#include "feature_flag.hpp"
 #include "feature_type.hpp"
 #include "files.hpp"
 #include "gods.hpp"
@@ -191,45 +192,6 @@ static cptr ego_flags[] =
 	"R_STAT_SUST",
 	"R_IMMUNITY",
 	"LIMIT_BLOWS"
-};
-
-/*
- * Feature flags
- */
-static cptr f_info_flags1[] =
-{
-	"NO_WALK",
-	"NO_VISION",
-	"CAN_LEVITATE",
-	"CAN_PASS",
-	"FLOOR",
-	"WALL",
-	"PERMANENT",
-	"CAN_FLY",
-	"REMEMBER",
-	"NOTICE",
-	"DONT_NOTICE_RUNNING",
-	"CAN_RUN",
-	"DOOR",
-	"SUPPORT_LIGHT",
-	"CAN_CLIMB",
-	"TUNNELABLE",
-	"WEB",
-	"ATTR_MULTI",
-	"SUPPORT_GROWTH",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1"
 };
 
 /*
@@ -2540,12 +2502,16 @@ errr init_v_info_txt(FILE *fp)
 /*
  * Grab one flag in an feature_type from a textual string
  */
-static errr grab_one_feature_flag(u32b *f1, cptr what)
+static int grab_one_feature_flag(cptr what, feature_flag_set *flags)
 {
-	if (lookup_flags(what, flag_tie(f1, f_info_flags1)))
-	{
-		return (0);
-	}
+#define FF(tier, index, name) \
+	if (streq(what, #name)) \
+	{ \
+	        *flags |= BOOST_PP_CAT(FF_,name); \
+	        return 0; \
+        };
+#include "feature_flag_list.hpp"
+#undef FF
 
 	/* Oops */
 	msg_format("Unknown feature flag '%s'.", what);
@@ -2783,7 +2749,7 @@ errr init_f_info_txt(FILE *fp)
 		/* Hack -- Process 'F' for flags */
 		if (buf[0] == 'F')
 		{
-			if (0 != grab_one_feature_flag(&f_ptr->flags1, buf + 2))
+			if (0 != grab_one_feature_flag(buf + 2, &f_ptr->flags))
 			{
 				return (5);
 			}

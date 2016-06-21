@@ -13,6 +13,7 @@
 #include "cave_type.hpp"
 #include "dungeon_info_type.hpp"
 #include "dungeon_flag.hpp"
+#include "feature_flag.hpp"
 #include "feature_type.hpp"
 #include "hook_build_room1_in.hpp"
 #include "hooks.hpp"
@@ -560,8 +561,8 @@ void place_new_way(int *y, int *x)
 		if (c_ptr->info & (CAVE_ICKY)) continue;
 
 		/* Reject permanent features */
-		if ((f_info[c_ptr->feat].flags1 & (FF1_PERMANENT)) &&
-		                (f_info[c_ptr->feat].flags1 & (FF1_FLOOR))) continue;
+		if ((f_info[c_ptr->feat].flags & FF_PERMANENT) &&
+		                (f_info[c_ptr->feat].flags & FF_FLOOR)) continue;
 
 		/* Reject room walls */
 		if ((c_ptr->info & (CAVE_ROOM)) &&
@@ -780,10 +781,10 @@ static int next_to_walls(int y, int x)
 {
 	int	k = 0;
 
-	if (f_info[cave[y + 1][x].feat].flags1 & FF1_WALL) k++;
-	if (f_info[cave[y - 1][x].feat].flags1 & FF1_WALL) k++;
-	if (f_info[cave[y][x + 1].feat].flags1 & FF1_WALL) k++;
-	if (f_info[cave[y][x - 1].feat].flags1 & FF1_WALL) k++;
+	if (f_info[cave[y + 1][x].feat].flags & FF_WALL) k++;
+	if (f_info[cave[y - 1][x].feat].flags & FF_WALL) k++;
+	if (f_info[cave[y][x + 1].feat].flags & FF_WALL) k++;
+	if (f_info[cave[y][x - 1].feat].flags & FF_WALL) k++;
 
 	return (k);
 }
@@ -1534,13 +1535,13 @@ static void build_streamer2(int feat, int killwall)
 				if (c_ptr->info & (CAVE_ICKY)) continue;
 
 				/* Reject permanent features */
-				if ((f_info[c_ptr->feat].flags1 & (FF1_PERMANENT)) &&
-				                (f_info[c_ptr->feat].flags1 & (FF1_FLOOR))) continue;
+				if ((f_info[c_ptr->feat].flags & FF_PERMANENT) &&
+				                (f_info[c_ptr->feat].flags & FF_FLOOR)) continue;
 
 				/* Avoid converting walls when told so */
 				if (killwall == 0)
 				{
-					if (f_info[c_ptr->feat].flags1 & FF1_WALL) continue;
+					if (f_info[c_ptr->feat].flags & FF_WALL) continue;
 				}
 
 				/* Clear mimic feature to avoid nasty consequences */
@@ -1597,7 +1598,7 @@ static void build_streamer2(int feat, int killwall)
 					continue;
 
 				/* Only convert non-permanent features */
-				if (f_info[cave[ty][tx].feat].flags1 & FF1_PERMANENT) continue;
+				if (f_info[cave[ty][tx].feat].flags & FF_PERMANENT) continue;
 
 				/* Clear mimic feature to avoid nasty consequences */
 				cave[ty][tx].mimic = 0;
@@ -1715,7 +1716,7 @@ static bool_ get_is_floor(int x, int y)
 	if (!in_bounds(y, x)) return (FALSE);
 
 	/* Do the real check: */
-	if (f_info[cave[y][x].feat].flags1 & FF1_FLOOR) return (TRUE);
+	if (f_info[cave[y][x].feat].flags & FF_FLOOR) return (TRUE);
 
 	return (FALSE);
 }
@@ -4410,7 +4411,7 @@ bool_ generate_fracave(int y0, int x0, int xsize, int ysize,
 			c_ptr = &cave[y + y0 - yhsize][x + x0 - xhsize];
 
 			/* A floor grid to be converted */
-			if ((f_info[c_ptr->feat].flags1 & FF1_FLOOR) &&
+			if ((f_info[c_ptr->feat].flags & FF_FLOOR) &&
 			                (c_ptr->info & CAVE_ICKY))
 
 			{
@@ -6386,15 +6387,15 @@ static bool_ possible_doorway(int y, int x)
 	if (next_to_corr(y, x) >= 2)
 	{
 		/* Check Vertical */
-		if ((f_info[cave[y - 1][x].feat].flags1 & FF1_WALL) &&
-		                (f_info[cave[y + 1][x].feat].flags1 & FF1_WALL))
+		if ((f_info[cave[y - 1][x].feat].flags & FF_WALL) &&
+		                (f_info[cave[y + 1][x].feat].flags & FF_WALL))
 		{
 			return (TRUE);
 		}
 
 		/* Check Horizontal */
-		if ((f_info[cave[y][x - 1].feat].flags1 & FF1_WALL) &&
-		                (f_info[cave[y][x + 1].feat].flags1 & FF1_WALL))
+		if ((f_info[cave[y][x - 1].feat].flags & FF_WALL) &&
+		                (f_info[cave[y][x + 1].feat].flags & FF_WALL))
 		{
 			return (TRUE);
 		}
@@ -6437,7 +6438,7 @@ static void try_doors(int y, int x)
 		if (!in_bounds(yy, xx)) continue;
 
 		/* Ignore walls */
-		if (f_info[cave[yy][xx].feat].flags1 & (FF1_WALL)) continue;
+		if (f_info[cave[yy][xx].feat].flags & FF_WALL) continue;
 
 		/* Ignore room grids */
 		if (cave[yy][xx].info & (CAVE_ROOM)) continue;

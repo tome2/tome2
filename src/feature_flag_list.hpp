@@ -1,0 +1,25 @@
+/**
+ * X-macro list of all the feature flags
+ */
+
+/* FF(<tier>, <index>, <name>) */
+
+FF(1,  0, NO_WALK)
+FF(1,  1, NO_VISION)
+FF(1,  2, CAN_LEVITATE)
+FF(1,  3, CAN_PASS)
+FF(1,  4, FLOOR)
+FF(1,  5, WALL)
+FF(1,  6, PERMANENT)
+FF(1,  7, CAN_FLY)
+FF(1,  8, REMEMBER)
+FF(1,  9, NOTICE)
+FF(1, 10, DONT_NOTICE_RUNNING)
+FF(1, 11, CAN_RUN)
+FF(1, 12, DOOR)
+FF(1, 13, SUPPORT_LIGHT)
+FF(1, 14, CAN_CLIMB)
+FF(1, 15, TUNNELABLE)
+FF(1, 16, WEB)
+FF(1, 17, ATTR_MULTI)
+FF(1, 18, SUPPORT_GROWTH)

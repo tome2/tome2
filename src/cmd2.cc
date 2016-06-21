@@ -14,6 +14,7 @@
 #include "cmd1.hpp"
 #include "dungeon_info_type.hpp"
 #include "dungeon_flag.hpp"
+#include "feature_flag.hpp"
 #include "feature_type.hpp"
 #include "files.hpp"
 #include "gods.hpp"
@@ -1410,7 +1411,7 @@ static bool_ do_cmd_tunnel_test(int y, int x)
 	}
 
 	/* Must be tunnelable */
-	if (!(f_info[cave[y][x].feat].flags1 & FF1_TUNNELABLE))
+	if (!(f_info[cave[y][x].feat].flags & FF_TUNNELABLE))
 	{
 		/* Message */
 		msg_print(f_info[cave[y][x].feat].tunnel);
@@ -1502,7 +1503,7 @@ static bool_ do_cmd_tunnel_aux(int y, int x, int dir)
 	sound(SOUND_DIG);
 
 	/* Titanium */
-	if (f_ptr->flags1 & FF1_PERMANENT)
+	if (f_ptr->flags & FF_PERMANENT)
 	{
 		msg_print(f_ptr->tunnel);
 	}
@@ -1976,7 +1977,7 @@ static bool_ do_cmd_disarm_aux(int y, int x, int dir, int do_pickup)
 		c_ptr->t_idx = 0;
 
 		/* Move the player onto the trap */
-		if (!(f_info[c_ptr->feat].flags1 & FF1_DOOR))
+		if (!(f_info[c_ptr->feat].flags & FF_DOOR))
 			move_player_aux(dir, do_pickup, 0, TRUE);
 
 		/* Remove trap attr from grid */
@@ -2004,7 +2005,7 @@ static bool_ do_cmd_disarm_aux(int y, int x, int dir, int do_pickup)
 		msg_format("You set off the %s!", name);
 
 		/* Move the player onto the trap */
-		if (!(f_info[c_ptr->feat].flags1 & FF1_DOOR))
+		if (!(f_info[c_ptr->feat].flags & FF_DOOR))
 			move_player_aux(dir, do_pickup, 0, FALSE);
 	}
 
@@ -2398,7 +2399,7 @@ void do_cmd_alter(void)
 		}
 
 		/* Tunnel through walls */
-		else if (f_info[c_ptr->feat].flags1 & FF1_TUNNELABLE)
+		else if (f_info[c_ptr->feat].flags & FF_TUNNELABLE)
 		{
 			/* Tunnel */
 			more = do_cmd_tunnel_aux(y, x, dir);

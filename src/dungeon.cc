@@ -22,6 +22,7 @@
 #include "corrupt.hpp"
 #include "dungeon_flag.hpp"
 #include "dungeon_info_type.hpp"
+#include "feature_flag.hpp"
 #include "feature_type.hpp"
 #include "files.h"
 #include "files.hpp"
@@ -1489,11 +1490,11 @@ static void process_world(void)
 			/* Do nothing */
 		}
 		/* Player can climb over mountains */
-		else if ((p_ptr->climb) && (f_info[feature].flags1 & FF1_CAN_CLIMB))
+		else if ((p_ptr->climb) && (f_info[feature].flags & FF_CAN_CLIMB))
 		{
 			/* Do nothing */
 		}
-		else if (race_flags1_p(PR1_SEMI_WRAITH) && (!p_ptr->wraith_form) && (f_info[cave[p_ptr->py][p_ptr->px].feat].flags1 & FF1_CAN_PASS))
+		else if (race_flags1_p(PR1_SEMI_WRAITH) && (!p_ptr->wraith_form) && (f_info[cave[p_ptr->py][p_ptr->px].feat].flags & FF_CAN_PASS))
 		{
 			int amt = 1 + ((p_ptr->lev) / 5);
 
@@ -4563,7 +4564,10 @@ static void process_player(void)
 						}
 
 						/* Skip normal features */
-						if (!(f_ptr->flags1 & (FF1_ATTR_MULTI))) continue;
+						if (!(f_ptr->flags & FF_ATTR_MULTI))
+						{
+							continue;
+						}
 
 						/* Redraw a shimmering spot */
 						lite_spot(j, i);

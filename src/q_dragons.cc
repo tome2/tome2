@@ -3,6 +3,7 @@
 #include "cave.hpp"
 #include "cave_type.hpp"
 #include "dungeon_flag.hpp"
+#include "feature_flag.hpp"
 #include "feature_type.hpp"
 #include "hook_quest_finish_in.hpp"
 #include "hooks.hpp"
@@ -53,13 +54,12 @@ static bool_ quest_dragons_gen_hook(void *, void *, void *)
 	/* Place some columns */
 	for (i = 35; i > 0; )
 	{
-		int flags;
 		y = rand_int(21) + 3;
 		x = rand_int(31) + 3;
 		/* Bar columns on even squares so the whole level is guaranteed to be
 		   accessible */
-		flags = f_info[cave[y][x].feat].flags1;
-		if (!(flags % 2) && !(flags & FF1_PERMANENT) && (flags & FF1_FLOOR))
+		auto const flags = f_info[cave[y][x].feat].flags;
+		if (!(x % 2) && !(flags & FF_PERMANENT) && (flags & FF_FLOOR))
 		{
 			--i;
 			cave_set_feat(y, x, FEAT_MOUNTAIN);
@@ -69,11 +69,10 @@ static bool_ quest_dragons_gen_hook(void *, void *, void *)
 	/* Place some random dragons */
 	for (i = 25; i > 0; )
 	{
-		int m_idx, flags;
 		y = rand_int(21) + 3;
 		x = rand_int(31) + 3;
-		flags = f_info[cave[y][x].feat].flags1;
-		if (!(flags & FF1_PERMANENT) && (flags & FF1_FLOOR))
+		auto const flags = f_info[cave[y][x].feat].flags;
+		if (!(flags & FF_PERMANENT) && (flags & FF_FLOOR))
 		{
 			/*                       blue, white, red, black, bronze, gold, green, multi-hued */
 			int baby_dragons[8] = {163, 164, 167, 166, 218, 219, 165, 204};
@@ -95,7 +94,7 @@ static bool_ quest_dragons_gen_hook(void *, void *, void *)
 				dragon = mature_dragons[color];
 
 			--i;
-			m_idx = place_monster_one(y, x, dragon, 0, magik(33), MSTATUS_ENEMY);
+			int m_idx = place_monster_one(y, x, dragon, 0, magik(33), MSTATUS_ENEMY);
 			if (m_idx) m_list[m_idx].mflag |= MFLAG_QUEST;
 		}
 	}

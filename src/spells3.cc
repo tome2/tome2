@@ -3,6 +3,7 @@
 #include "cave.hpp"
 #include "cave_type.hpp"
 #include "cmd5.hpp"
+#include "feature_flag.hpp"
 #include "feature_type.hpp"
 #include "lua_bind.hpp"
 #include "mimic.hpp"
@@ -2738,8 +2739,8 @@ casting_result tempo_magelock()
 
 			c_ptr = &cave[y][x];
 
-			if ((!(f_info[c_ptr->feat].flags1 | FF1_FLOOR)) ||
-			    (f_info[c_ptr->feat].flags1 | FF1_PERMANENT) ||
+			if ((!(f_info[c_ptr->feat].flags | FF_FLOOR)) ||
+			    (f_info[c_ptr->feat].flags | FF_PERMANENT) ||
 			    (!los(p_ptr->py, p_ptr->px, y, x)))
 			{
 				msg_print("You cannot place it there.");

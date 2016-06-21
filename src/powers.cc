@@ -14,6 +14,7 @@
 #include "cmd2.hpp"
 #include "cmd7.hpp"
 #include "dungeon_flag.hpp"
+#include "feature_flag.hpp"
 #include "feature_type.hpp"
 #include "files.hpp"
 #include "hooks.hpp"
@@ -722,7 +723,7 @@ static void power_activate(int power)
 				msg_print("You bite into thin air!");
 				break;
 			}
-			else if ((f_info[c_ptr->feat].flags1 & FF1_PERMANENT) || (c_ptr->feat == FEAT_MOUNTAIN))
+			else if ((f_info[c_ptr->feat].flags & FF_PERMANENT) || (c_ptr->feat == FEAT_MOUNTAIN))
 			{
 				msg_print("Ouch!  This wall is harder than your teeth!");
 				break;

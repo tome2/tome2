@@ -16,6 +16,7 @@
 #include "device_allocation.hpp"
 #include "dungeon_info_type.hpp"
 #include "ego_item_type.hpp"
+#include "feature_flag.hpp"
 #include "feature_type.hpp"
 #include "hooks.hpp"
 #include "mimic.hpp"
@@ -5096,7 +5097,7 @@ s16b drop_near(object_type *j_ptr, int chance, int y, int x)
 			c_ptr = &cave[ty][tx];
 
 			/* Require floor space (or shallow terrain) -KMW- */
-			if (!(f_info[c_ptr->feat].flags1 & FF1_FLOOR)) continue;
+			if (!(f_info[c_ptr->feat].flags & FF_FLOOR)) continue;
 
 			/* No traps */
 			if (c_ptr->t_idx) continue;

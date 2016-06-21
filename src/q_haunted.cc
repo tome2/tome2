@@ -3,6 +3,7 @@
 #include "cave.hpp"
 #include "cave_type.hpp"
 #include "dungeon_flag.hpp"
+#include "feature_flag.hpp"
 #include "feature_type.hpp"
 #include "hook_quest_finish_in.hpp"
 #include "hooks.hpp"
@@ -54,11 +55,10 @@ static bool_ quest_haunted_gen_hook(void *, void *, void *)
 	/* Place some ghosts */
 	for (i = 12; i > 0; )
 	{
-		int flags;
 		y = rand_int(21) + 3;
 		x = rand_int(31) + 3;
-		flags = f_info[cave[y][x].feat].flags1;
-		if (!(flags & FF1_PERMANENT) && (flags & FF1_FLOOR))
+		auto const flags = f_info[cave[y][x].feat].flags;
+		if (!(flags & FF_PERMANENT) && (flags & FF_FLOOR))
 		{
 			m_idx = place_monster_one(y, x, 477, 0, FALSE, MSTATUS_ENEMY);
 			if (m_idx) m_list[m_idx].mflag |= MFLAG_QUEST;
@@ -69,11 +69,10 @@ static bool_ quest_haunted_gen_hook(void *, void *, void *)
 	/* Place some random monsters to haunt us */
 	for (i = damroll(4, 4); i > 0; )
 	{
-		int flags;
 		y = rand_int(21) + 3;
 		x = rand_int(31) + 3;
-		flags = f_info[cave[y][x].feat].flags1;
-		if (!(flags & FF1_PERMANENT) && (flags & FF1_FLOOR))
+		auto const flags = f_info[cave[y][x].feat].flags;
+		if (!(flags & FF_PERMANENT) && (flags & FF_FLOOR))
 		{
 			int monsters[22] = { 65, 100, 124, 125, 133, 231, 273, 327, 365, 416, 418,
 			                     507, 508, 533, 534, 553, 554, 555, 577, 607, 622, 665};
@@ -87,11 +86,10 @@ static bool_ quest_haunted_gen_hook(void *, void *, void *)
 	/* Place some random traps */
 	for (i = 10 + damroll(4, 4); i > 0; )
 	{
-		int flags;
 		y = rand_int(21) + 3;
 		x = rand_int(31) + 3;
-		flags = f_info[cave[y][x].feat].flags1;
-		if (!(flags & FF1_PERMANENT) && (flags & FF1_FLOOR))
+		auto const flags = f_info[cave[y][x].feat].flags;
+		if (!(flags & FF_PERMANENT) && (flags & FF_FLOOR))
 		{
 			--i;
 			place_trap(y, x);

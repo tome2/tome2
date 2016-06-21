@@ -10,6 +10,7 @@
 
 #include "cave.hpp"
 #include "cave_type.hpp"
+#include "feature_flag.hpp"
 #include "feature_type.hpp"
 #include "hook_wild_gen_in.hpp"
 #include "hooks.hpp"
@@ -522,7 +523,7 @@ void wilderness_gen()
 			else
 			{
 				/* Darken "boring" features */
-				if (!(f_info[c_ptr->feat].flags1 & FF1_REMEMBER))
+				if (!(f_info[c_ptr->feat].flags & FF_REMEMBER))
 				{
 					/* Forget the grid */
 					c_ptr->info &= ~(CAVE_GLOW | CAVE_MARK);
@@ -915,7 +916,7 @@ static void set_border(int y, int x)
 
 	/* Was a floor */
 	if (cave_floor_bold(y, x) ||
-	                (f_info[cave[y][x].feat].flags1 & FF1_DOOR))
+	                (f_info[cave[y][x].feat].flags & FF_DOOR))
 	{
 		cave_set_feat(y, x, FEAT_DOOR_HEAD);
 	}

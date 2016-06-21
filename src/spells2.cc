@@ -14,6 +14,7 @@
 #include "cmd7.hpp"
 #include "dungeon_flag.hpp"
 #include "dungeon_info_type.hpp"
+#include "feature_flag.hpp"
 #include "feature_type.hpp"
 #include "files.hpp"
 #include "hook_identify_in.hpp"
@@ -104,7 +105,7 @@ void grow_trees(int rad)
 		if (!in_bounds(p_ptr->py + j, p_ptr->px + i)) continue;
 		if (distance(p_ptr->py, p_ptr->px, p_ptr->py + j, p_ptr->px + i) > rad) continue;
 
-		if (cave_clean_bold(p_ptr->py + j, p_ptr->px + i) && (f_info[cave[p_ptr->py][p_ptr->px].feat].flags1 & FF1_SUPPORT_GROWTH))
+		if (cave_clean_bold(p_ptr->py + j, p_ptr->px + i) && (f_info[cave[p_ptr->py][p_ptr->px].feat].flags & FF_SUPPORT_GROWTH))
 		{
 			cave_set_feat(p_ptr->py + j, p_ptr->px + i, FEAT_TREES);
 		}
@@ -126,7 +127,7 @@ void grow_grass(int rad)
 		if (!in_bounds(p_ptr->py + j, p_ptr->px + i)) continue;
 		if (distance(p_ptr->py, p_ptr->px, p_ptr->py + j, p_ptr->px + i) > rad) continue;
 
-		if (cave_clean_bold(p_ptr->py + j, p_ptr->px + i) && (f_info[cave[p_ptr->py][p_ptr->px].feat].flags1 & FF1_SUPPORT_GROWTH))
+		if (cave_clean_bold(p_ptr->py + j, p_ptr->px + i) && (f_info[cave[p_ptr->py][p_ptr->px].feat].flags & FF_SUPPORT_GROWTH))
 		{
 			cave_set_feat(p_ptr->py + j, p_ptr->px + i, FEAT_GRASS);
 		}
@@ -5471,11 +5472,11 @@ bool_ wall_stone(int y, int x)
 {
 	cave_type *c_ptr = &cave[y][x];
 	int flg = PROJECT_GRID | PROJECT_ITEM;
-	int featflags = f_info[c_ptr->feat].flags1;
+	auto const featflags = f_info[c_ptr->feat].flags;
 
 	bool_ dummy = (project(0, 1, y, x, 0, GF_STONE_WALL, flg));
 
-	if (!(featflags & FF1_PERMANENT) && !(featflags & FF1_WALL))
+	if (!(featflags & FF_PERMANENT) && !(featflags & FF_WALL))
 		cave_set_feat(y, x, FEAT_FLOOR);
 
 	/* Update stuff */
@@ -6023,7 +6024,7 @@ bool_ passwall(int dir, bool_ safe)
 		c_ptr = &cave[y][x];
 
 		/* Perm walls stops the transfer */
-		if ((!in_bounds(y, x)) && (f_info[c_ptr->feat].flags1 & FF1_PERMANENT))
+		if ((!in_bounds(y, x)) && (f_info[c_ptr->feat].flags & FF_PERMANENT))
 		{
 			/* get the last working position */
 			x -= ddx[dir];
@@ -6043,7 +6044,7 @@ bool_ passwall(int dir, bool_ safe)
 		ly = y;
 
 		/* Pass over walls */
-		if (f_info[c_ptr->feat].flags1 & FF1_WALL) continue;
+		if (f_info[c_ptr->feat].flags & FF_WALL) continue;
 
 		/* So it must be ok */
 		ok = TRUE;
@@ -6340,12 +6341,12 @@ void create_between_gate(int dist, int y, int x)
 		ij = y;
 		ii = x;
 	}
-	if (!(f_info[cave[p_ptr->py][p_ptr->px].feat].flags1 & FF1_PERMANENT))
+	if (!(f_info[cave[p_ptr->py][p_ptr->px].feat].flags & FF_PERMANENT))
 	{
 		cave_set_feat(p_ptr->py, p_ptr->px, FEAT_BETWEEN);
 		cave[p_ptr->py][p_ptr->px].special = ii + (ij << 8);
 	}
-	if (!(f_info[cave[ij][ii].feat].flags1 & FF1_PERMANENT))
+	if (!(f_info[cave[ij][ii].feat].flags & FF_PERMANENT))
 	{
 		cave_set_feat(ij, ii, FEAT_BETWEEN);
 		cave[ij][ii].special = p_ptr->px + (p_ptr->py << 8);
@@ -6427,7 +6428,7 @@ void geomancy_random_wall(int y, int x)
 	};
 
 	/* Do not destroy permanent things */
-	if (f_info[c_ptr->feat].flags1 & FF1_PERMANENT) {
+	if (f_info[c_ptr->feat].flags & FF_PERMANENT) {
 		return;
 	}
 
@@ -6461,10 +6462,10 @@ void geomancy_random_floor(int y, int x, bool_ kill_wall)
 	};
 
 	/* Do not destroy permanent things */
-	if (f_info[c_ptr->feat].flags1 & FF1_PERMANENT) {
+	if (f_info[c_ptr->feat].flags & FF_PERMANENT) {
 		return;
 	}
-	if (!(kill_wall || (f_info[c_ptr->feat].flags1 & FF1_FLOOR))) {
+	if (!(kill_wall || (f_info[c_ptr->feat].flags & FF_FLOOR))) {
 		return;
 	}
 

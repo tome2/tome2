@@ -3,6 +3,7 @@
 #include "cave_type.hpp"
 #include "dungeon_flag.hpp"
 #include "dungeon_info_type.hpp"
+#include "feature_flag.hpp"
 #include "feature_type.hpp"
 #include "hook_chardump_in.hpp"
 #include "hook_get_in.hpp"
@@ -376,8 +377,8 @@ static void quest_god_generate_relic()
 		c_ptr = &cave[y][x];
 
 		/* are the coordinates on a floor, not on a permanent feature (eg stairs), and not on a trap ? */
-		if ((f_info[c_ptr->feat].flags1 & FF1_FLOOR) &&
-		    (!(f_info[c_ptr->feat].flags1 & FF1_PERMANENT)) &&
+		if ((f_info[c_ptr->feat].flags & FF_FLOOR) &&
+		    (!(f_info[c_ptr->feat].flags & FF_PERMANENT)) &&
 		    (c_ptr->t_idx == 0))
 		{
 			break;

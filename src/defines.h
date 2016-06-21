@@ -2306,27 +2306,6 @@
 #define ETR4_R_IMMUNITY        0x40000000L     /* Item gives a random immunity */
 #define ETR4_LIMIT_BLOWS       0x80000000L     /* switch the "limit blows" feature */
 
-/*** Features flags -- DG ***/
-#define FF1_NO_WALK             0x00000001L
-#define FF1_NO_VISION           0x00000002L
-#define FF1_CAN_LEVITATE        0x00000004L
-#define FF1_CAN_PASS            0x00000008L
-#define FF1_FLOOR               0x00000010L
-#define FF1_WALL                0x00000020L
-#define FF1_PERMANENT           0x00000040L
-#define FF1_CAN_FLY             0x00000080L
-#define FF1_REMEMBER            0x00000100L
-#define FF1_NOTICE              0x00000200L
-#define FF1_DONT_NOTICE_RUNNING 0x00000400L
-#define FF1_CAN_RUN             0x00000800L
-#define FF1_DOOR                0x00001000L
-#define FF1_SUPPORT_LIGHT       0x00002000L
-#define FF1_CAN_CLIMB           0x00004000L
-#define FF1_TUNNELABLE          0x00008000L
-#define FF1_WEB                 0x00010000L
-#define FF1_ATTR_MULTI          0x00020000L
-#define FF1_SUPPORT_GROWTH      0x00040000L
-
 /*** Town flags ***/
 #define TOWN_REAL	0x01	/* Town is really present */
 #define TOWN_KNOWN	0x02	/* Town is found by the player */

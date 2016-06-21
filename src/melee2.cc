@@ -17,6 +17,7 @@
 #include "cave_type.hpp"
 #include "cmd1.hpp"
 #include "dungeon_flag.hpp"
+#include "feature_flag.hpp"
 #include "feature_type.hpp"
 #include "files.hpp"
 #include "hook_mon_speak_in.hpp"
@@ -6136,35 +6137,35 @@ static void process_monster(int m_idx, bool_ is_frien)
 		}
 
 		/* Permanent wall */
-		else if (f_info[c_ptr->feat].flags1 & FF1_PERMANENT)
+		else if (f_info[c_ptr->feat].flags & FF_PERMANENT)
 		{
 			/* Nothing */
 		}
 
 
 		/* Some monsters can fly */
-		else if ((f_info[c_ptr->feat].flags1 & FF1_CAN_LEVITATE) && (r_ptr->flags & RF_CAN_FLY))
+		else if ((f_info[c_ptr->feat].flags & FF_CAN_LEVITATE) && (r_ptr->flags & RF_CAN_FLY))
 		{
 			/* Pass through walls/doors/rubble */
 			do_move = TRUE;
 		}
 
 		/* Some monsters can fly */
-		else if ((f_info[c_ptr->feat].flags1 & FF1_CAN_FLY) && (r_ptr->flags & RF_CAN_FLY))
+		else if ((f_info[c_ptr->feat].flags & FF_CAN_FLY) && (r_ptr->flags & RF_CAN_FLY))
 		{
 			/* Pass through trees/... */
 			do_move = TRUE;
 		}
 
 		/* Monster moves through walls (and doors) */
-		else if ((f_info[c_ptr->feat].flags1 & FF1_CAN_PASS) && (r_ptr->flags & RF_PASS_WALL))
+		else if ((f_info[c_ptr->feat].flags & FF_CAN_PASS) && (r_ptr->flags & RF_PASS_WALL))
 		{
 			/* Pass through walls/doors/rubble */
 			do_move = TRUE;
 		}
 
 		/* Monster destroys walls (and doors) */
-		else if ((f_info[c_ptr->feat].flags1 & FF1_CAN_PASS) && (r_ptr->flags & RF_KILL_WALL))
+		else if ((f_info[c_ptr->feat].flags & FF_CAN_PASS) && (r_ptr->flags & RF_KILL_WALL))
 		{
 			/* Eat through walls/doors/rubble */
 			do_move = TRUE;
@@ -6185,14 +6186,14 @@ static void process_monster(int m_idx, bool_ is_frien)
 		}
 
 		/* Monster moves through walls (and doors) */
-		else if ((f_info[c_ptr->feat].flags1 & FF1_CAN_PASS) && (r_ptr->flags & RF_PASS_WALL))
+		else if ((f_info[c_ptr->feat].flags & FF_CAN_PASS) && (r_ptr->flags & RF_PASS_WALL))
 		{
 			/* Pass through walls/doors/rubble */
 			do_move = TRUE;
 		}
 
 		/* Monster moves through webs */
-		else if ((f_info[c_ptr->feat].flags1 & FF1_WEB) &&
+		else if ((f_info[c_ptr->feat].flags & FF_WEB) &&
 		                (r_ptr->flags & RF_SPIDER))
 		{
 			/* Pass through webs */

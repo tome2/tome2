@@ -2,6 +2,8 @@
 
 #include "h-basic.h"
 
+#include "feature_flag_set.hpp"
+
 /**
  * Terrain feature descriptor.
  */
@@ -15,7 +17,7 @@ struct feature_type
 
 	byte mimic = 0;                          /* Feature to mimic */
 
-	u32b flags1 = 0;                         /* First set of flags */
+	feature_flag_set flags;                  /* First set of flags */
 
 	byte d_attr = 0;                         /* Default feature attribute */
 	char d_char = '\0';                      /* Default feature character */

@@ -16,6 +16,7 @@
 #include "dungeon_flag.hpp"
 #include "dungeon_info_type.hpp"
 #include "files.hpp"
+#include "feature_flag.hpp"
 #include "feature_type.hpp"
 #include "gods.hpp"
 #include "melee2.hpp"
@@ -2987,12 +2988,12 @@ static bool_ project_f(int who, int r, int y, int x, int dam, int typ)
 			 * the conditional... -- pelpel
 			 */
 			if (!cave_plain_floor_bold(y, x) ||
-			                (f_info[cave[y][x].feat].flags1 & FF1_PERMANENT)) break;
+			                (f_info[cave[y][x].feat].flags & FF_PERMANENT)) break;
 
 			/* Destination shouldn't be "interesting" either */
 			while (tries &&
 			                (!cave_plain_floor_bold(y2, x2) ||
-			                 (f_info[cave[y2][x2].feat].flags1 & FF1_PERMANENT)))
+			                 (f_info[cave[y2][x2].feat].flags & FF_PERMANENT)))
 			{
 				y2 = y1 = randint(cur_hgt) - 1;
 				x2 = x1 = randint(cur_wid) - 1;
@@ -3033,7 +3034,7 @@ static bool_ project_f(int who, int r, int y, int x, int dam, int typ)
 	case GF_HELL_FIRE:
 		{
 			/* "Permanent" features will stay */
-			if ((f_info[c_ptr->feat].flags1 & FF1_PERMANENT)) break;
+			if ((f_info[c_ptr->feat].flags & FF_PERMANENT)) break;
 
 			/* Trees *will* burn */
 			if (c_ptr->feat == FEAT_TREES)
@@ -3072,7 +3073,7 @@ static bool_ project_f(int who, int r, int y, int x, int dam, int typ)
 			}
 
 			/* Floors can become ash or lava (chance == 25%) */
-			else if (f_info[c_ptr->feat].flags1 & FF1_FLOOR)
+			else if (f_info[c_ptr->feat].flags & FF_FLOOR)
 			{
 				int k = rand_int(100);
 
@@ -3119,7 +3120,7 @@ static bool_ project_f(int who, int r, int y, int x, int dam, int typ)
 			int k;
 
 			/* "Permanent" features will stay */
-			if ((f_info[c_ptr->feat].flags1 & FF1_PERMANENT)) break;
+			if ((f_info[c_ptr->feat].flags & FF_PERMANENT)) break;
 
 			/* Needs more than 30 damage */
 			if (dam < 30) break;
@@ -3188,7 +3189,7 @@ static bool_ project_f(int who, int r, int y, int x, int dam, int typ)
 	case GF_NUKE:
 		{
 			/* "Permanent" features will stay */
-			if ((f_info[c_ptr->feat].flags1 & FF1_PERMANENT)) break;
+			if ((f_info[c_ptr->feat].flags & FF_PERMANENT)) break;
 
 			if ((c_ptr->feat == FEAT_TREES) ||
 			                (c_ptr->feat == FEAT_SMALL_TREES))
@@ -3208,11 +3209,11 @@ static bool_ project_f(int who, int r, int y, int x, int dam, int typ)
 	case GF_DISINTEGRATE:
 		{
 			/* "Permanent" features will stay */
-			if ((f_info[c_ptr->feat].flags1 & FF1_PERMANENT)) break;
+			if ((f_info[c_ptr->feat].flags & FF_PERMANENT)) break;
 
 			if (((c_ptr->feat == FEAT_TREES) ||
 			     (c_ptr->feat == FEAT_SMALL_TREES) ||
-			     (f_info[c_ptr->feat].flags1 & FF1_FLOOR)) &&
+			     (f_info[c_ptr->feat].flags & FF_FLOOR)) &&
 			    (rand_int(100) < 30))
 			{
 				/* Flow change */
@@ -3258,7 +3259,7 @@ static bool_ project_f(int who, int r, int y, int x, int dam, int typ)
 					c_ptr->special = c_ptr->special2 = 0;
 
 					/* Remove the feature */
-					if (!(f_info[c_ptr->feat].flags1 & FF1_PERMANENT))
+					if (!(f_info[c_ptr->feat].flags & FF_PERMANENT))
 						place_floor_convert_glass(y, x);
 				}
 
@@ -3328,7 +3329,7 @@ static bool_ project_f(int who, int r, int y, int x, int dam, int typ)
 					c_ptr->special = c_ptr->special2 = 0;
 
 				/* Remove the feature */
-				if (!(f_info[c_ptr->feat].flags1 & FF1_PERMANENT))
+				if (!(f_info[c_ptr->feat].flags & FF_PERMANENT))
 					place_floor_convert_glass(y, x);
 
 				/* Hack -- Force redraw */
@@ -3369,7 +3370,7 @@ static bool_ project_f(int who, int r, int y, int x, int dam, int typ)
 			if (cave_floor_bold(y, x)) break;
 
 			/* "Permanent" features will stay */
-			if ((f_info[c_ptr->feat].flags1 & FF1_PERMANENT)) break;
+			if ((f_info[c_ptr->feat].flags & FF_PERMANENT)) break;
 
 			/* Granite -- How about other wall types? */
 			if ((c_ptr->feat >= FEAT_WALL_EXTRA) &&
@@ -3497,7 +3498,7 @@ static bool_ project_f(int who, int r, int y, int x, int dam, int typ)
 			/* Require a "naked" floor grid */
 			if (!cave_clean_bold(y, x)) break;
 
-			if ((f_info[c_ptr->feat].flags1 & FF1_PERMANENT)) break;
+			if ((f_info[c_ptr->feat].flags & FF_PERMANENT)) break;
 
 			/* Create a closed door */
 			cave_set_feat(y, x, FEAT_DOOR_HEAD + 0x00);
@@ -3529,7 +3530,7 @@ static bool_ project_f(int who, int r, int y, int x, int dam, int typ)
 			/* Require a "naked" floor grid */
 			if (!cave_clean_bold(y, x)) break;
 
-			if ((f_info[c_ptr->feat].flags1 & FF1_PERMANENT)) break;
+			if ((f_info[c_ptr->feat].flags & FF_PERMANENT)) break;
 
 			cave_set_feat(y, x, FEAT_GLYPH);
 
@@ -3545,8 +3546,8 @@ static bool_ project_f(int who, int r, int y, int x, int dam, int typ)
 			/* Require a "naked" floor grid */
 			if (!cave_clean_bold(y, x)) break;
 
-			if ((f_info[c_ptr->feat].flags1 & FF1_PERMANENT)) break;
-			if (!(f_info[c_ptr->feat].flags1 & FF1_FLOOR)) break;
+			if ((f_info[c_ptr->feat].flags & FF_PERMANENT)) break;
+			if (!(f_info[c_ptr->feat].flags & FF_FLOOR)) break;
 
 			/* Place a wall */
 			cave_set_feat(y, x, FEAT_WALL_EXTRA);
@@ -3589,7 +3590,7 @@ static bool_ project_f(int who, int r, int y, int x, int dam, int typ)
 
 	case GF_LAVA_FLOW:
 		{
-			if ((f_info[c_ptr->feat].flags1 & FF1_PERMANENT)) break;
+			if ((f_info[c_ptr->feat].flags & FF_PERMANENT)) break;
 
 			/* Shallow Lava */
 			if (dam == 1)
@@ -3703,7 +3704,7 @@ static bool_ project_f(int who, int r, int y, int x, int dam, int typ)
 			/* Delete the monster (if any) */
 			delete_monster(y, x);
 
-			if ((f_info[c_ptr->feat].flags1 & FF1_PERMANENT)) break;
+			if ((f_info[c_ptr->feat].flags & FF_PERMANENT)) break;
 
 			/* Destroy "valid" grids */
 			if (cave_valid_bold(y, x))

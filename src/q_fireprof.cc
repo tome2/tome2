@@ -2,6 +2,7 @@
 
 #include "cave_type.hpp"
 #include "dungeon_flag.hpp"
+#include "feature_flag.hpp"
 #include "feature_type.hpp"
 #include "hook_get_in.hpp"
 #include "hooks.hpp"
@@ -531,8 +532,8 @@ static bool_ fireproof_gen_hook(void *, void *, void *)
 				cave_type *c_ptr = &cave[trap_y][trap_x];
 
 				/* are the coordinates on a stair, or a wall? */
-				if (((f_info[c_ptr->feat].flags1 & FF1_PERMANENT) != 0) ||
-				    ((f_info[c_ptr->feat].flags1 & FF1_FLOOR) == 0))
+				if (bool(f_info[c_ptr->feat].flags & FF_PERMANENT) ||
+				    (f_info[c_ptr->feat].flags & FF_FLOOR).empty())
 				{
 					/* try again */
 					tries = 0;
