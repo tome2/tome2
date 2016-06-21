@@ -15,6 +15,7 @@
 #include "spell_type.hpp"
 #include "device_allocation.hpp"
 #include "dungeon_info_type.hpp"
+#include "ego_flag.hpp"
 #include "ego_item_type.hpp"
 #include "feature_flag.hpp"
 #include "feature_type.hpp"
@@ -3458,9 +3459,9 @@ void trap_hack(object_type *o_ptr)
 }
 
 /* Add a random glag to the ego item */
-void add_random_ego_flag(object_type *o_ptr, int fego, bool_ *limit_blows)
+void add_random_ego_flag(object_type *o_ptr, ego_flag_set const &fego, bool_ *limit_blows)
 {
-	if (fego & ETR4_SUSTAIN)
+	if (fego & ETR_SUSTAIN)
 	{
 		/* Make a random sustain */
 		switch (randint(6))
@@ -3486,7 +3487,7 @@ void add_random_ego_flag(object_type *o_ptr, int fego, bool_ *limit_blows)
 		}
 	}
 
-	if (fego & ETR4_OLD_RESIST)
+	if (fego & ETR_OLD_RESIST)
 	{
 		/* Make a random resist, equal probabilities */
 		switch (randint(11))
@@ -3527,7 +3528,7 @@ void add_random_ego_flag(object_type *o_ptr, int fego, bool_ *limit_blows)
 		}
 	}
 
-	if (fego & ETR4_ABILITY)
+	if (fego & ETR_ABILITY)
 	{
 		/* Choose an ability */
 		switch (randint(8))
@@ -3559,35 +3560,35 @@ void add_random_ego_flag(object_type *o_ptr, int fego, bool_ *limit_blows)
 		}
 	}
 
-	if (fego & ETR4_R_ELEM)
+	if (fego & ETR_R_ELEM)
 	{
 		/* Make an acid/elec/fire/cold/poison resist */
 		random_resistance(o_ptr, randint(14) + 4);
 	}
-	if (fego & ETR4_R_LOW)
+	if (fego & ETR_R_LOW)
 	{
 		/* Make an acid/elec/fire/cold resist */
 		random_resistance(o_ptr, randint(12) + 4);
 	}
 
-	if (fego & ETR4_R_HIGH)
+	if (fego & ETR_R_HIGH)
 	{
 		/* Make a high resist */
 		random_resistance(o_ptr, randint(22) + 16);
 	}
-	if (fego & ETR4_R_ANY)
+	if (fego & ETR_R_ANY)
 	{
 		/* Make any resist */
 		random_resistance(o_ptr, randint(34) + 4);
 	}
 
-	if (fego & ETR4_R_DRAGON)
+	if (fego & ETR_R_DRAGON)
 	{
 		/* Make "dragon resist" */
 		dragon_resist(o_ptr);
 	}
 
-	if (fego & ETR4_SLAY_WEAP)
+	if (fego & ETR_SLAY_WEAP)
 	{
 		/* Make a Weapon of Slaying */
 
@@ -3616,120 +3617,120 @@ void add_random_ego_flag(object_type *o_ptr, int fego, bool_ *limit_blows)
 		}
 	}
 
-	if (fego & ETR4_DAM_DIE)
+	if (fego & ETR_DAM_DIE)
 	{
 		/* Increase damage dice */
 		o_ptr->dd++;
 	}
 
-	if (fego & ETR4_DAM_SIZE)
+	if (fego & ETR_DAM_SIZE)
 	{
 		/* Increase damage dice size */
 		o_ptr->ds++;
 	}
 
-	if (fego & ETR4_LIMIT_BLOWS)
+	if (fego & ETR_LIMIT_BLOWS)
 	{
 		/* Swap this flag */
 		*limit_blows = !(*limit_blows);
 	}
 
-	if (fego & ETR4_PVAL_M1)
+	if (fego & ETR_PVAL_M1)
 	{
 		/* Increase pval */
 		o_ptr->pval++;
 	}
 
-	if (fego & ETR4_PVAL_M2)
+	if (fego & ETR_PVAL_M2)
 	{
 		/* Increase pval */
 		o_ptr->pval += m_bonus(2, dun_level);
 	}
 
-	if (fego & ETR4_PVAL_M3)
+	if (fego & ETR_PVAL_M3)
 	{
 		/* Increase pval */
 		o_ptr->pval += m_bonus(3, dun_level);
 	}
 
-	if (fego & ETR4_PVAL_M5)
+	if (fego & ETR_PVAL_M5)
 	{
 		/* Increase pval */
 		o_ptr->pval += m_bonus(5, dun_level);
 	}
-	if (fego & ETR4_AC_M1)
+	if (fego & ETR_AC_M1)
 	{
 		/* Increase ac */
 		o_ptr->to_a++;
 	}
 
-	if (fego & ETR4_AC_M2)
+	if (fego & ETR_AC_M2)
 	{
 		/* Increase ac */
 		o_ptr->to_a += m_bonus(2, dun_level);
 	}
 
-	if (fego & ETR4_AC_M3)
+	if (fego & ETR_AC_M3)
 	{
 		/* Increase ac */
 		o_ptr->to_a += m_bonus(3, dun_level);
 	}
 
-	if (fego & ETR4_AC_M5)
+	if (fego & ETR_AC_M5)
 	{
 		/* Increase ac */
 		o_ptr->to_a += m_bonus(5, dun_level);
 	}
 
-	if (fego & ETR4_TH_M1)
+	if (fego & ETR_TH_M1)
 	{
 		/* Increase to hit */
 		o_ptr->to_h++;
 	}
 
-	if (fego & ETR4_TH_M2)
+	if (fego & ETR_TH_M2)
 	{
 		/* Increase to hit */
 		o_ptr->to_h += m_bonus(2, dun_level);
 	}
 
-	if (fego & ETR4_TH_M3)
+	if (fego & ETR_TH_M3)
 	{
 		/* Increase to hit */
 		o_ptr->to_h += m_bonus(3, dun_level);
 	}
 
-	if (fego & ETR4_TH_M5)
+	if (fego & ETR_TH_M5)
 	{
 		/* Increase to hit */
 		o_ptr->to_h += m_bonus(5, dun_level);
 	}
 
-	if (fego & ETR4_TD_M1)
+	if (fego & ETR_TD_M1)
 	{
 		/* Increase to dam */
 		o_ptr->to_d++;
 	}
 
-	if (fego & ETR4_TD_M2)
+	if (fego & ETR_TD_M2)
 	{
 		/* Increase to dam */
 		o_ptr->to_d += m_bonus(2, dun_level);
 	}
 
-	if (fego & ETR4_TD_M3)
+	if (fego & ETR_TD_M3)
 	{
 		/* Increase to dam */
 		o_ptr->to_d += m_bonus(3, dun_level);
 	}
 
-	if (fego & ETR4_TD_M5)
+	if (fego & ETR_TD_M5)
 	{
 		/* Increase to dam */
 		o_ptr->to_d += m_bonus(5, dun_level);
 	}
 
-	if (fego & ETR4_R_P_ABILITY)
+	if (fego & ETR_R_P_ABILITY)
 	{
 		/* Add a random pval-affected ability */
 		/* This might cause boots with + to blows */
@@ -3755,7 +3756,7 @@ void add_random_ego_flag(object_type *o_ptr, int fego, bool_ *limit_blows)
 			break;
 		}
 	}
-	if (fego & ETR4_R_STAT)
+	if (fego & ETR_R_STAT)
 	{
 		/* Add a random stat */
 		switch (randint(6))
@@ -3781,7 +3782,7 @@ void add_random_ego_flag(object_type *o_ptr, int fego, bool_ *limit_blows)
 		}
 	}
 
-	if (fego & ETR4_R_STAT_SUST)
+	if (fego & ETR_R_STAT_SUST)
 	{
 		/* Add a random stat and sustain it */
 		switch (randint(6))
@@ -3829,7 +3830,7 @@ void add_random_ego_flag(object_type *o_ptr, int fego, bool_ *limit_blows)
 		}
 	}
 
-	if (fego & ETR4_R_IMMUNITY)
+	if (fego & ETR_R_IMMUNITY)
 	{
 		/* Give a random immunity */
 		switch (randint(4))

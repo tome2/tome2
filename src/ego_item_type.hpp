@@ -1,5 +1,6 @@
 #pragma once
 
+#include "ego_flag_set.hpp"
 #include "h-basic.h"
 #include "object_flag_set.hpp"
 
@@ -44,7 +45,7 @@ struct ego_item_type
 	std::array<object_flag_set, FLAG_RARITY_MAX> flags;
 	std::array<object_flag_set, FLAG_RARITY_MAX> oflags;
 
-	u32b fego[FLAG_RARITY_MAX] = { 0 };      /* ego flags */
+	std::array<ego_flag_set, FLAG_RARITY_MAX> fego;
 
 	object_flag_set need_flags;
 	object_flag_set forbid_flags;

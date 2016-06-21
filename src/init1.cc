@@ -6,6 +6,7 @@
 #include "cave_type.hpp"
 #include "dungeon_info_type.hpp"
 #include "dungeon_flag.hpp"
+#include "ego_flag.hpp"
 #include "ego_item_type.hpp"
 #include "feature_flag.hpp"
 #include "feature_type.hpp"
@@ -156,44 +157,6 @@ static cptr r_info_blow_effect[] =
 	NULL
 };
 
-
-/* Specially handled properties for ego-items */
-
-static cptr ego_flags[] =
-{
-	"SUSTAIN",
-	"OLD_RESIST",
-	"ABILITY",
-	"R_ELEM",
-	"R_LOW",
-	"R_HIGH",
-	"R_ANY",
-	"R_DRAGON",
-	"SLAY_WEAP",
-	"DAM_DIE",
-	"DAM_SIZE",
-	"PVAL_M1",
-	"PVAL_M2",
-	"PVAL_M3",
-	"PVAL_M5",
-	"AC_M1",
-	"AC_M2",
-	"AC_M3",
-	"AC_M5",
-	"TH_M1",
-	"TH_M2",
-	"TH_M3",
-	"TH_M5",
-	"TD_M1",
-	"TD_M2",
-	"TD_M3",
-	"TD_M5",
-	"R_P_ABILITY",
-	"R_STAT",
-	"R_STAT_SUST",
-	"R_IMMUNITY",
-	"LIMIT_BLOWS"
-};
 
 /*
  * Trap flags
@@ -3976,11 +3939,27 @@ errr init_ab_info_txt(FILE *fp)
 
 
 /*
+ * Look up ego flag
+ */
+static ego_flag_set lookup_ego_flag(const char *what)
+{
+#define ETR(tier, index, name) \
+	if (streq(what, #name)) \
+	{ \
+	        return BOOST_PP_CAT(ETR_,name); \
+        };
+#include "ego_flag_list.hpp"
+#undef ETR
+	return ego_flag_set();
+}
+
+
+/*
  * Grab one flag in a ego-item_type from a textual string.
  *
  * We explicitly allow nullptr for the "ego" parameter.
  */
-static bool_ grab_one_ego_item_flag(object_flag_set *flags, u32b *ego, cptr what)
+static bool_ grab_one_ego_item_flag(object_flag_set *flags, ego_flag_set *ego, cptr what)
 {
 	/* Lookup as an object_flag */
 	if (auto f = object_flag_set_from_string(what))
@@ -3992,8 +3971,9 @@ static bool_ grab_one_ego_item_flag(object_flag_set *flags, u32b *ego, cptr what
 	/* Lookup as ego flag */
 	if (ego)
 	{
-		if (lookup_flags(what, flag_tie(ego, ego_flags)))
+		if (auto f = lookup_ego_flag(what))
 		{
+			*ego |= f;
 			return (0);
 		}
 	}
@@ -4423,7 +4403,7 @@ errr init_ra_info_txt(FILE *fp)
 				ra_ptr->tval[j] = 255;
 			}
 			ra_ptr->flags = object_flag_set();
-			ra_ptr->fego = 0;
+			ra_ptr->fego = ego_flag_set();
 
 			/* Next... */
 			continue;

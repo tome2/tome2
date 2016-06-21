@@ -1,5 +1,6 @@
 #pragma once
 
+#include "ego_flag_set.hpp"
 #include "h-basic.h"
 #include "object_flag_set.hpp"
 
@@ -27,7 +28,7 @@ struct randart_part_type
 
 	object_flag_set flags;                   /* Ego item flags */
 
-	u32b fego = 0;                           /* ego flags */
+	ego_flag_set fego;                       /* Ego flags */
 
 	object_flag_set aflags;                  /* Antagonistic ego item flags */
 

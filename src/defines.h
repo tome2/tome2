@@ -2234,40 +2234,6 @@
 
 #define NEW_GROUP_CHANCE        40      /* Chance to get a new group */
 
-/*** Ego flags ***/
-#define ETR4_SUSTAIN           0x00000001L     /* Ego-Item gives a Random Sustain */
-#define ETR4_OLD_RESIST        0x00000002L     /* The old "extra power" random high resist */
-#define ETR4_ABILITY           0x00000004L     /* Ego-Item has a random Sustain */
-#define ETR4_R_ELEM            0x00000008L     /* Item resists Acid/Fire/Cold/Elec or Poison */
-#define ETR4_R_LOW             0x00000010L     /* Item has a random low resist */
-#define ETR4_R_HIGH            0x00000020L     /* Item has a random high resist */
-#define ETR4_R_ANY             0x00000040L     /* Item has one additional resist */
-#define ETR4_R_DRAGON          0x00000080L     /* Item gets "Dragon" Resist */
-#define ETR4_SLAY_WEAP         0x00000100L     /* Special 'Slaying' bonus */
-#define ETR4_DAM_DIE           0x00000200L     /* Item has an additional dam die */
-#define ETR4_DAM_SIZE          0x00000400L     /* Item has greater damage dice */
-#define ETR4_PVAL_M1           0x00000800L     /* Item has +1 to pval */
-#define ETR4_PVAL_M2           0x00001000L     /* Item has +(up to 2) to pval */
-#define ETR4_PVAL_M3           0x00002000L     /* Item has +(up to 3) to pval */
-#define ETR4_PVAL_M5           0x00004000L     /* Item has +(up to 5) to pval */
-#define ETR4_AC_M1             0x00008000L     /* Item has +1 to AC */
-#define ETR4_AC_M2             0x00010000L     /* Item has +(up to 2) to AC */
-#define ETR4_AC_M3             0x00020000L     /* Item has +(up to 3) to AC */
-#define ETR4_AC_M5             0x00040000L     /* Item has +(up to 5) to AC */
-#define ETR4_TH_M1             0x00080000L     /* Item has +1 to hit */
-#define ETR4_TH_M2             0x00100000L     /* Item has +(up to 2) to hit */
-#define ETR4_TH_M3             0x00200000L     /* Item has +(up to 3) to hit */
-#define ETR4_TH_M5             0x00400000L     /* Item has +(up to 5) to hit */
-#define ETR4_TD_M1             0x00800000L     /* Item has +1 to dam */
-#define ETR4_TD_M2             0x01000000L     /* Item has +(up to 2) to dam */
-#define ETR4_TD_M3             0x02000000L     /* Item has +(up to 3) to dam */
-#define ETR4_TD_M5             0x04000000L     /* Item has +(up to 5) to dam */
-#define ETR4_R_P_ABILITY       0x08000000L     /* Item has a random pval-affected ability */
-#define ETR4_R_STAT            0x10000000L     /* Item affects a random stat */
-#define ETR4_R_STAT_SUST       0x20000000L     /* Item affects a random stat & sustains it */
-#define ETR4_R_IMMUNITY        0x40000000L     /* Item gives a random immunity */
-#define ETR4_LIMIT_BLOWS       0x80000000L     /* switch the "limit blows" feature */
-
 /*** Town flags ***/
 #define TOWN_REAL	0x01	/* Town is really present */
 #define TOWN_KNOWN	0x02	/* Town is found by the player */
