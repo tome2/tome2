@@ -158,7 +158,7 @@ static void wiz_create_named_art()
 	object_type forge;
 	object_type *q_ptr;
 	int i, a_idx;
-	cptr p = "Number of the artifact :";
+	cptr p = "Number of the artifact: ";
 	char out_val[80] = "";
 	artifact_type *a_ptr;
 
