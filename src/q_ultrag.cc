@@ -10,6 +10,7 @@
 #include "monster_type.hpp"
 #include "object1.hpp"
 #include "object2.hpp"
+#include "object_flag.hpp"
 #include "object_type.hpp"
 #include "options.hpp"
 #include "player_type.hpp"
@@ -119,15 +120,13 @@ static bool_ quest_ultra_good_stair_hook(void *, void *in_, void *)
 		/* Now look for an ULTIMATE artifact, that is, one imbued with the flame */
 		for (i = INVEN_WIELD; i < INVEN_TOTAL; i++)
 		{
-			u32b f1, f2, f3, f4, f5, esp;
 			object_type *o_ptr = get_object(i);
 
 			if (!o_ptr->k_idx) continue;
 
-			/* Examine the gloves */
-			object_flags(o_ptr, &f1, &f2, &f3, &f4, &f5, &esp);
+			auto const flags = object_flags(o_ptr);
 
-			if (f4 & TR4_ULTIMATE)
+			if (flags & TR_ULTIMATE)
 			{
 				ultimate = TRUE;
 				break;

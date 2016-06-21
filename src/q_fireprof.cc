@@ -8,6 +8,7 @@
 #include "lua_bind.hpp"
 #include "object1.hpp"
 #include "object2.hpp"
+#include "object_flag.hpp"
 #include "object_type.hpp"
 #include "player_type.hpp"
 #include "quark.hpp"
@@ -90,7 +91,7 @@ static object_filter_t const &item_tester_hook_proofable()
 			TVal(TV_STAFF)),
 		// Must NOT already be fireproof
 		Not(
-			HasFlag3(TR3_IGNORE_FIRE)));
+			HasFlags(TR_IGNORE_FIRE)));
 	return instance;
 }
 

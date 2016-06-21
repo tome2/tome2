@@ -20,6 +20,7 @@
 #include "monster_spell_flag.hpp"
 #include "object1.hpp"
 #include "object2.hpp"
+#include "object_flag.hpp"
 #include "object_type.hpp"
 #include "player_class.hpp"
 #include "player_race.hpp"
@@ -72,7 +73,7 @@ static object_filter_t const &hook_school_spellable()
 	static auto instance = Or(
 		is_school_book(),
 		And(
-			HasFlag5(TR5_SPELL_CONTAIN),
+			HasFlags(TR_SPELL_CONTAIN),
 			has_pval2));
 	return instance;
 }
@@ -226,14 +227,13 @@ static void browse_school_spell(int book, int spell_idx, object_type *o_ptr)
 
 extern void do_cmd_browse_aux(object_type *o_ptr)
 {
-	u32b f1, f2, f3, f4, f5, esp;
-	object_flags(o_ptr, &f1, &f2, &f3, &f4, &f5, &esp);
+	auto const flags = object_flags(o_ptr);
 
 	if (is_school_book()(o_ptr))
 	{
 		browse_school_spell(o_ptr->sval, o_ptr->pval, o_ptr);
 	}
-	else if (f5 & TR5_SPELL_CONTAIN && o_ptr->pval2 != -1)
+	else if ((flags & TR_SPELL_CONTAIN) && (o_ptr->pval2 != -1))
 	{
 		browse_school_spell(255, o_ptr->pval2, o_ptr);
 	}
@@ -1867,11 +1867,10 @@ boost::optional<int> get_item_hook_find_spell(object_filter_t const &)
 		object_type *o_ptr = &p_ptr->inventory[i];
 
 		/* Extract object flags */
-		u32b f1, f2, f3, f4, f5, esp;
-		object_flags(o_ptr, &f1, &f2, &f3, &f4, &f5, &esp);
+		auto const flags = object_flags(o_ptr);
 
 		/* Must we wield it to cast from it? */
-		if ((wield_slot(o_ptr) != -1) && (i < INVEN_WIELD) && (f5 & TR5_WIELD_CAST))
+		if ((wield_slot(o_ptr) != -1) && (i < INVEN_WIELD) && (flags & TR_WIELD_CAST))
 		{
 			continue;
 		}
@@ -1880,7 +1879,7 @@ boost::optional<int> get_item_hook_find_spell(object_filter_t const &)
 		if (!is_school_book()(o_ptr))
 		{
 			/* Does it contain the appropriate spell? */
-			if ((f5 & TR5_SPELL_CONTAIN) && (o_ptr->pval2 == spell))
+			if ((flags & TR_SPELL_CONTAIN) && (o_ptr->pval2 == spell))
 			{
 				hack_force_spell = spell;
 				hack_force_spell_pval = o_ptr->pval;
@@ -1940,7 +1939,6 @@ s32b get_school_spell(cptr do_what, s16b force_book)
 	object_type *o_ptr, forge;
 	int tmp;
 	int sval, pval;
-	u32b f1, f2, f3, f4, f5, esp;
 
 	hack_force_spell = -1;
 	hack_force_spell_pval = -1;
@@ -1966,10 +1964,10 @@ s32b get_school_spell(cptr do_what, s16b force_book)
 		/* Get the item */
 		o_ptr = get_object(item);
 
-		object_flags(o_ptr, &f1, &f2, &f3, &f4, &f5, &esp);
+		auto const f = object_flags(o_ptr);
 
 		/* If it can be wielded, it must */
-		if ((wield_slot(o_ptr) != -1) && (item < INVEN_WIELD) && (f5 & TR5_WIELD_CAST))
+		if ((wield_slot(o_ptr) != -1) && (item < INVEN_WIELD) && (f & TR_WIELD_CAST))
 		{
 			msg_format("You cannot %s from that object; it must be wielded first.", do_what);
 			return -1;
@@ -2157,10 +2155,9 @@ void cast_school_spell()
 /* Can it contains a schooled spell ? */
 static bool hook_school_can_spellable(object_type const *o_ptr)
 {
-	u32b f1, f2, f3, f4, f5, esp;
-	object_flags(o_ptr, &f1, &f2, &f3, &f4, &f5, &esp);
+	auto const f = object_flags(o_ptr);
 
-	return ((f5 & TR5_SPELL_CONTAIN) && (o_ptr->pval2 == -1));
+	return ((f & TR_SPELL_CONTAIN) && (o_ptr->pval2 == -1));
 }
 
 /*

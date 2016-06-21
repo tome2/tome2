@@ -2,6 +2,7 @@
 
 #include "body.hpp"
 #include "h-basic.h"
+#include "object_flag_set.hpp"
 #include "player_defs.hpp"
 #include "player_race_ability_type.hpp"
 #include "skills_defs.hpp"
@@ -46,12 +47,7 @@ struct player_race_mod
 	u32b flags1 = 0;
 	u32b flags2 = 0;
 
-	u32b oflags1[PY_MAX_LEVEL + 1] { };
-	u32b oflags2[PY_MAX_LEVEL + 1] { };
-	u32b oflags3[PY_MAX_LEVEL + 1] { };
-	u32b oflags4[PY_MAX_LEVEL + 1] { };
-	u32b oflags5[PY_MAX_LEVEL + 1] { };
-	u32b oesp[PY_MAX_LEVEL + 1] { };
+	std::array<object_flag_set, PY_MAX_LEVEL + 1> oflags;
 	s16b opval[PY_MAX_LEVEL + 1] { };
 
 	byte g_attr = 0;                                        /* Overlay graphic attribute */

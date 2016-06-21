@@ -30,6 +30,7 @@
 #include "monster_type.hpp"
 #include "object1.hpp"
 #include "object2.hpp"
+#include "object_flag.hpp"
 #include "object_kind.hpp"
 #include "object_type.hpp"
 #include "options.hpp"
@@ -2767,10 +2768,7 @@ bool_ curse_armor(void)
 		o_ptr->ac = 0;
 		o_ptr->dd = 0;
 		o_ptr->ds = 0;
-		o_ptr->art_flags1 = 0;
-		o_ptr->art_flags2 = 0;
-		o_ptr->art_flags3 = 0;
-		o_ptr->art_flags4 = 0;
+		o_ptr->art_flags = object_flag_set();
 
 		/* Curse it */
 		o_ptr->ident |= (IDENT_CURSED);
@@ -2832,10 +2830,7 @@ bool_ curse_weapon(void)
 		o_ptr->ac = 0;
 		o_ptr->dd = 0;
 		o_ptr->ds = 0;
-		o_ptr->art_flags1 = 0;
-		o_ptr->art_flags2 = 0;
-		o_ptr->art_flags3 = 0;
-		o_ptr->art_flags4 = 0;
+		o_ptr->art_flags = object_flag_set();
 
 
 		/* Curse it */
@@ -3701,8 +3696,6 @@ void do_cmd_use_staff(void)
 {
 	bool_ obvious, use_charge;
 
-	u32b f1, f2, f3, f4, f5, esp;
-
 	/* No magic */
 	if (p_ptr->antimagic)
 	{
@@ -3749,10 +3742,10 @@ void do_cmd_use_staff(void)
 	unset_stick_mode();
 
 	/* Extract object flags */
-	object_flags(o_ptr, &f1, &f2, &f3, &f4, &f5, &esp);
+	auto const flags = object_flags(o_ptr);
 
 	/* Is it simple to use ? */
-	if (f4 & TR4_EASY_USE)
+	if (flags & TR_EASY_USE)
 	{
 		chance /= 3;
 	}
@@ -3878,9 +3871,6 @@ void do_cmd_aim_wand(void)
 {
 	bool_ obvious, use_charge;
 
-	u32b f1, f2, f3, f4, f5, esp;
-
-
 	/* No magic */
 	if (p_ptr->antimagic)
 	{
@@ -3927,10 +3917,10 @@ void do_cmd_aim_wand(void)
 	unset_stick_mode();
 
 	/* Extract object flags */
-	object_flags(o_ptr, &f1, &f2, &f3, &f4, &f5, &esp);
+	auto const flags = object_flags(o_ptr);
 
 	/* Is it simple to use ? */
-	if (f4 & TR4_EASY_USE)
+	if (flags & TR_EASY_USE)
 	{
 		chance /= 3;
 	}
@@ -4041,12 +4031,6 @@ static bool item_tester_hook_attachable(object_type const *o_ptr)
  */
 void zap_combine_rod_tip(object_type *q_ptr, int tip_item)
 {
-	int item;
-
-	u32b f1, f2, f3, f4, f5, esp;
-	s32b cost;
-
-
 	/* No magic */
 	if (p_ptr->antimagic)
 	{
@@ -4055,6 +4039,7 @@ void zap_combine_rod_tip(object_type *q_ptr, int tip_item)
 	}
 
 	/* Get an item */
+	int item;
 	if (!get_item(&item,
 		      "Attach the rod tip with which rod? ",
 		      "You have no rod to attach to.",
@@ -4068,12 +4053,11 @@ void zap_combine_rod_tip(object_type *q_ptr, int tip_item)
 	object_type *o_ptr = get_object(item);
 
 	/* Examine the rod */
-	object_flags(o_ptr, &f1, &f2, &f3, &f4, &f5, &esp);
+	auto const flags = object_flags(o_ptr);
 
 	/* Calculate rod tip's mana cost */
-	cost = q_ptr->pval;
-
-	if (f4 & TR4_CHEAPNESS)
+	s32b cost = q_ptr->pval;
+	if (flags & TR_CHEAPNESS)
 	{
 		cost /= 2;
 	}
@@ -4108,8 +4092,6 @@ void do_cmd_zap_rod(void)
 	bool_ require_dir;
 
 	object_kind *tip_ptr;
-
-	u32b f1, f2, f3, f4, f5, esp;
 
 	/* Hack -- let perception get aborted */
 	bool_ use_charge = TRUE;
@@ -4191,9 +4173,12 @@ void do_cmd_zap_rod(void)
 	energy_use = 100;
 
 	/* Examine the rod */
-	object_flags(o_ptr, &f1, &f2, &f3, &f4, &f5, &esp);
+	auto const flags = object_flags(o_ptr);
 
-	if (f4 & TR4_FAST_CAST) energy_use /= 2;
+	if (flags & TR_FAST_CAST)
+	{
+		energy_use /= 2;
+	}
 
 	/* Not identified yet */
 	ident = FALSE;
@@ -4217,7 +4202,7 @@ void do_cmd_zap_rod(void)
 	}
 
 	/* Is it simple to use ? */
-	if (f4 & TR4_EASY_USE)
+	if (flags & TR_EASY_USE)
 	{
 		chance *= 10;
 	}
@@ -4246,7 +4231,7 @@ void do_cmd_zap_rod(void)
 	cost = tip_ptr->pval;
 
 	/* "Cheapness" ego halven the cost */
-	if (f4 & TR4_CHEAPNESS) cost = cost / 2;
+	if (flags & TR_CHEAPNESS) cost = cost / 2;
 
 	/* A single rod is still charging */
 	if (o_ptr->timeout < cost)
@@ -4565,7 +4550,7 @@ static object_filter_t const &item_tester_hook_activate()
 	using namespace object_filter;
 	static auto instance = And(
 		IsKnown(),
-		HasFlag3(TR3_ACTIVATE));
+		HasFlags(TR_ACTIVATE));
 	return instance;
 }
 
@@ -4878,8 +4863,6 @@ void do_cmd_activate(void)
 
 	char ch, spell_choice;
 
-	u32b f1, f2, f3, f4, f5, esp;
-
 	/* Get an item */
 	command_wrk = USE_EQUIP;
 	if (!get_item(&item,
@@ -4895,10 +4878,10 @@ void do_cmd_activate(void)
 	object_type *o_ptr = get_object(item);
 
 	/* Extract object flags */
-	object_flags(o_ptr, &f1, &f2, &f3, &f4, &f5, &esp);
+	auto const flags = object_flags(o_ptr);
 
 	/* Wearable items have to be worn */
-	if (!(f5 & TR5_ACTIVATE_NO_WIELD))
+	if (!(flags & TR_ACTIVATE_NO_WIELD))
 	{
 		if (item < INVEN_WIELD)
 		{
@@ -4941,7 +4924,7 @@ void do_cmd_activate(void)
 	}
 
 	/* Is it simple to use ? */
-	if (f4 & TR4_EASY_USE)
+	if (flags & TR_EASY_USE)
 	{
 		chance *= 10;
 	}

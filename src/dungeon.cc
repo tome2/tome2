@@ -46,6 +46,7 @@
 #include "notes.hpp"
 #include "object1.hpp"
 #include "object2.hpp"
+#include "object_flag.hpp"
 #include "object_kind.hpp"
 #include "object_type.hpp"
 #include "options.hpp"
@@ -849,17 +850,10 @@ static void regen_monsters(void)
  *
  * Should belong to object1.c, renamed to object_decays() -- pelpel
  */
-static bool_ decays(object_type *o_ptr)
+static bool decays(object_type *o_ptr)
 {
-	u32b f1, f2, f3, f4, f5, esp;
-
-
-	/* Extract some flags */
-	object_flags(o_ptr, &f1, &f2, &f3, &f4, &f5, &esp);
-
-	if (f3 & TR3_DECAY) return (TRUE);
-
-	return (FALSE);
+	auto const flags = object_flags(o_ptr);
+	return bool(flags & TR_DECAY);
 }
 
 
@@ -1233,8 +1227,6 @@ static void process_world(void)
 	cave_type *c_ptr;
 
 	object_type *o_ptr;
-	u32b f1 = 0 , f2 = 0 , f3 = 0, f4 = 0, f5 = 0, esp = 0;
-
 
 	/*
 	 * Every 10 game turns -- which means this section is invoked once
@@ -1582,10 +1574,10 @@ static void process_world(void)
 			o_ptr = &p_ptr->inventory[INVEN_WIELD];
 
 			/* Examine the sword */
-			object_flags(o_ptr, &f1, &f2, &f3, &f4, &f5, &esp);
+			auto const flags = object_flags(o_ptr);
 
 			/* Hitpoints multiplier consume a lot of food */
-			if (o_ptr->k_idx && (f2 & (TR2_LIFE))) i += o_ptr->pval * 5;
+			if (o_ptr->k_idx && (flags & TR_LIFE)) i += o_ptr->pval * 5;
 
 			/* Slow digestion takes less food */
 			if (p_ptr->slow_digest) i -= 10;
@@ -2580,8 +2572,6 @@ static void process_world(void)
 	 */
 	if (((turn % 3000) == 0) && p_ptr->black_breath)
 	{
-		u32b f1, f2, f3, f4, f5;
-
 		bool_ be_silent = FALSE;
 
 		/* check all equipment for the Black Breath flag. */
@@ -2593,10 +2583,10 @@ static void process_world(void)
 			if (!o_ptr->k_idx) continue;
 
 			/* Extract the item flags */
-			object_flags(o_ptr, &f1, &f2, &f3, &f4, &f5, &esp);
+			auto const flags = object_flags(o_ptr);
 
 			/* No messages if object has the flag, to avoid annoyance. */
-			if (f4 & (TR4_BLACK_BREATH)) be_silent = TRUE;
+			if (flags & TR_BLACK_BREATH) be_silent = TRUE;
 
 		}
 		/* If we are allowed to speak, warn and disturb. */
@@ -2618,10 +2608,10 @@ static void process_world(void)
 	if (o_ptr->tval == TV_LITE)
 	{
 		/* Extract the item flags */
-		object_flags(o_ptr, &f1, &f2, &f3, &f4, &f5, &esp);
+		auto const flags = object_flags(o_ptr);
 
 		/* Hack -- Use some fuel */
-		if ((f4 & TR4_FUEL_LITE) && (o_ptr->timeout > 0))
+		if ((flags & TR_FUEL_LITE) && (o_ptr->timeout > 0))
 		{
 			/* Decrease life-span */
 			o_ptr->timeout--;
@@ -2767,17 +2757,17 @@ static void process_world(void)
 		/* Get the object */
 		o_ptr = &p_ptr->inventory[i];
 
-		object_flags(o_ptr, &f1, &f2, &f3, &f4, &f5, &esp);
+		auto const flags = object_flags(o_ptr);
 
 
 		/* TY Curse */
-		if ((f3 & TR3_TY_CURSE) && (rand_int(TY_CURSE_CHANCE) == 0))
+		if ((flags & TR_TY_CURSE) && (rand_int(TY_CURSE_CHANCE) == 0))
 		{
 			activate_ty_curse();
 		}
 
 		/* DG Curse */
-		if ((f4 & TR4_DG_CURSE) && (rand_int(DG_CURSE_CHANCE) == 0))
+		if ((flags & TR_DG_CURSE) && (rand_int(DG_CURSE_CHANCE) == 0))
 		{
 			activate_dg_curse();
 
@@ -2786,7 +2776,7 @@ static void process_world(void)
 		}
 
 		/* Auto Curse */
-		if ((f3 & TR3_AUTO_CURSE) && (rand_int(AUTO_CURSE_CHANCE) == 0))
+		if ((flags & TR_AUTO_CURSE) && (rand_int(AUTO_CURSE_CHANCE) == 0))
 		{
 			/* The object recurse itself ! */
 			o_ptr->ident |= IDENT_CURSED;
@@ -2796,7 +2786,7 @@ static void process_world(void)
 		 * Hack: Uncursed teleporting items (e.g. Dragon Weapons)
 		 * can actually be useful!
 		 */
-		if ((f3 & TR3_TELEPORT) && (rand_int(100) < 1))
+		if ((flags & TR_TELEPORT) && (rand_int(100) < 1))
 		{
 			if ((o_ptr->ident & IDENT_CURSED) && !p_ptr->anti_tele)
 			{
@@ -2826,7 +2816,7 @@ static void process_world(void)
 		if (!o_ptr->k_idx) continue;
 
 		/* Hack: Skip wielded lights that need fuel (already handled above) */
-		if ((i == INVEN_LITE) && (o_ptr->tval == TV_LITE) && (f4 & TR4_FUEL_LITE)) continue;
+		if ((i == INVEN_LITE) && (o_ptr->tval == TV_LITE) && (flags & TR_FUEL_LITE)) continue;
 
 		/* Recharge activatable objects */
 		if (o_ptr->timeout > 0)
@@ -2869,10 +2859,10 @@ static void process_world(void)
 		if (!o_ptr->k_idx) continue;
 
 		/* Examine the rod */
-		object_flags(o_ptr, &f1, &f2, &f3, &f4, &f5, &esp);
+		auto const flags = object_flags(o_ptr);
 
 		/* Temporary items are destroyed */
-		if (f5 & TR5_TEMPORARY)
+		if (flags & TR_TEMPORARY)
 		{
 			o_ptr->timeout--;
 
@@ -2889,7 +2879,7 @@ static void process_world(void)
 		if ((o_ptr->tval == TV_ROD_MAIN) && (o_ptr->timeout < o_ptr->pval2))
 		{
 			/* Increase the rod's mana. */
-			o_ptr->timeout += (f4 & TR4_CHARGING) ? 2 : 1;
+			o_ptr->timeout += (flags & TR_CHARGING) ? 2 : 1;
 
 			/* Always notice */
 			j++;
@@ -2903,7 +2893,7 @@ static void process_world(void)
 		}
 
 		/* Examine all charging random artifacts */
-		if ((f5 & TR5_ACTIVATE_NO_WIELD) && (o_ptr->timeout > 0))
+		if ((flags & TR_ACTIVATE_NO_WIELD) && (o_ptr->timeout > 0))
 		{
 			/* Charge it */
 			o_ptr->timeout--;
@@ -3004,10 +2994,10 @@ static void process_world(void)
 		if (!o_ptr->k_idx) continue;
 
 		/* Examine the rod */
-		object_flags(o_ptr, &f1, &f2, &f3, &f4, &f5, &esp);
+		auto const flags = object_flags(o_ptr);
 
 		/* Temporary items are destroyed */
-		if (f5 & TR5_TEMPORARY)
+		if (flags & TR_TEMPORARY)
 		{
 			o_ptr->timeout--;
 
@@ -3025,7 +3015,7 @@ static void process_world(void)
 		if ((o_ptr->tval == TV_ROD_MAIN) && (o_ptr->timeout < o_ptr->pval2))
 		{
 			/* Increase the rod's mana. */
-			o_ptr->timeout += (f4 & TR4_CHARGING) ? 2 : 1;
+			o_ptr->timeout += (flags & TR_CHARGING) ? 2 : 1;
 
 			/* Do not overflow */
 			if (o_ptr->timeout >= o_ptr->pval2)
@@ -3493,16 +3483,8 @@ static void process_command(void)
 		/* Go up staircase */
 	case '<':
 		{
-			object_type *o_ptr;
-			u32b f1 = 0 , f2 = 0 , f3 = 0, f4 = 0, f5 = 0, esp = 0;
-
-
-			/* Check for light being wielded */
-			o_ptr = &p_ptr->inventory[INVEN_LITE];
-			/* Burn some fuel in the current lite */
-			if (o_ptr->tval == TV_LITE)
-				/* Extract the item flags */
-				object_flags(o_ptr, &f1, &f2, &f3, &f4, &f5, &esp);
+			/* Get the light being wielded */
+			auto o_ptr = &p_ptr->inventory[INVEN_LITE];
 
 			/* Cannot move if rooted in place */
 			if (p_ptr->tim_roots) break;
@@ -4540,7 +4522,7 @@ static void process_player(void)
 					if ((!o_ptr->k_idx) || (!o_ptr->ix)) continue;
 
 					/* Skip non-multi-hued monsters */
-					if (!(k_ptr->flags5 & (TR5_ATTR_MULTI))) continue;
+					if (!(k_ptr->flags & TR_ATTR_MULTI)) continue;
 
 					/* Reset the flag */
 					shimmer_objects = TRUE;

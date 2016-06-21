@@ -25,6 +25,7 @@
 #include "monster_spell_flag.hpp"
 #include "monster_type.hpp"
 #include "object2.hpp"
+#include "object_flag.hpp"
 #include "object_kind.hpp"
 #include "options.hpp"
 #include "player_type.hpp"
@@ -823,7 +824,7 @@ static void place_fountain(int y, int x)
 		object_kind *k_ptr = &k_info[k];
 
 		if (((k_ptr->tval == TV_POTION) || (k_ptr->tval == TV_POTION2)) &&
-		                (k_ptr->level <= dun_level) && (k_ptr->flags4 & TR4_FOUNTAIN))
+				(k_ptr->level <= dun_level) && (k_ptr->flags & TR_FOUNTAIN))
 		{
 			if (k_ptr->tval == TV_POTION2) svals[maxsval] = k_ptr->sval + SV_POTION_LAST;
 			else svals[maxsval] = k_ptr->sval;

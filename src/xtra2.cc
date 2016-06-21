@@ -32,6 +32,7 @@
 #include "notes.hpp"
 #include "object1.hpp"
 #include "object2.hpp"
+#include "object_flag.hpp"
 #include "object_kind.hpp"
 #include "options.hpp"
 #include "player_class.hpp"
@@ -2572,24 +2573,34 @@ void monster_death(int m_idx)
 		q_ptr->dd = 6;
 		q_ptr->pval = 2;
 
-		q_ptr->art_flags1 |= ( TR1_VAMPIRIC | TR1_STR | TR1_CON | TR1_BLOWS );
-		q_ptr->art_flags2 |= ( TR2_FREE_ACT | TR2_HOLD_LIFE |
-		                       TR2_RES_NEXUS | TR2_RES_CHAOS | TR2_RES_NETHER |
-		                       TR2_RES_CONF );  /* No longer resist_disen */
-		q_ptr->art_flags3 |= ( TR3_IGNORE_ACID | TR3_IGNORE_ELEC |
-		                       TR3_IGNORE_FIRE | TR3_IGNORE_COLD);
-		/* Just to be sure */
+		q_ptr->art_flags |=
+			TR_VAMPIRIC |
+			TR_STR |
+			TR_CON |
+			TR_BLOWS |
+			TR_FREE_ACT |
+			TR_HOLD_LIFE |
+			TR_RES_NEXUS |
+			TR_RES_CHAOS |
+			TR_RES_NETHER |
+			TR_RES_CONF |
+			TR_IGNORE_ACID |
+			TR_IGNORE_ELEC |
+			TR_IGNORE_FIRE |
+			TR_IGNORE_COLD |
+			TR_NO_TELE |
+			TR_CURSED |
+			TR_HEAVY_CURSE;
 
-		q_ptr->art_flags3 |= TR3_NO_TELE;  /* How's that for a downside? */
-
-		/* For game balance... */
-		q_ptr->art_flags3 |= (TR3_CURSED | TR3_HEAVY_CURSE);
 		q_ptr->ident |= IDENT_CURSED;
-
 		if (randint(2) == 1)
-			q_ptr->art_flags3 |= (TR3_DRAIN_EXP);
+		{
+			q_ptr->art_flags |= TR_DRAIN_EXP;
+		}
 		else
-			q_ptr->art_flags3 |= (TR3_AGGRAVATE);
+		{
+			q_ptr->art_flags |= TR_AGGRAVATE;
+		}
 
 		q_ptr->found = OBJ_FOUND_MONSTER;
 		q_ptr->found_aux1 = m_ptr->r_idx;
@@ -2799,7 +2810,7 @@ void monster_death(int m_idx)
 					q_ptr->weight = a_ptr->weight;
 
 					/* Hack -- acquire "cursed" flag */
-					if (a_ptr->flags3 & (TR3_CURSED)) q_ptr->ident |= (IDENT_CURSED);
+					if (a_ptr->flags & TR_CURSED) q_ptr->ident |= (IDENT_CURSED);
 
 					random_artifact_resistance(q_ptr);
 
@@ -3145,15 +3156,12 @@ bool_ mon_take_hit(int m_idx, int dam, bool_ *fear, cptr note)
 
 		if (!note)
 		{
-			object_type *o_ptr;
-			u32b f1, f2, f3, f4, f5, esp;
-
 			/* Access the weapon */
-			o_ptr = &p_ptr->inventory[INVEN_WIELD];
-			object_flags(o_ptr, &f1, &f2, &f3, &f4, &f5, &esp);
+			object_type *o_ptr = &p_ptr->inventory[INVEN_WIELD];
+			auto const flags = object_flags(o_ptr);
 
 			/* Can the weapon gain levels ? */
-			if ((o_ptr->k_idx) && (f4 & TR4_LEVELS))
+			if ((o_ptr->k_idx) && (flags & TR_LEVELS))
 			{
 				/* Give some experience for the kill */
 				const int new_exp = ((long)r_ptr->mexp * m_ptr->level) / (div * 2);
@@ -5061,8 +5069,8 @@ static bool_ test_object_wish(char *name, object_type *o_ptr, object_type *forge
 		o_ptr = forge;
 
 		if (!k_ptr->name) continue;
-		if (k_ptr->flags3 & TR3_NORM_ART) continue;
-		if (k_ptr->flags3 & TR3_INSTA_ART) continue;
+		if (k_ptr->flags & TR_NORM_ART) continue;
+		if (k_ptr->flags & TR_INSTA_ART) continue;
 		if (k_ptr->tval == TV_GOLD) continue;
 
 		object_prep(o_ptr, i);

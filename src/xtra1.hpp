@@ -1,11 +1,12 @@
 #pragma once
 
 #include "h-basic.h"
+#include "object_flag_set.hpp"
 
 #include <string>
 
 extern void fix_message(void);
-extern void apply_flags(u32b f1, u32b f2, u32b f3, u32b f4, u32b f5, u32b esp, s16b pval, s16b tval, s16b to_h, s16b to_d, s16b to_a);
+extern void apply_flags(object_flag_set const &f, s16b pval, s16b tval, s16b to_h, s16b to_d, s16b to_a);
 extern int luck(int min, int max);
 extern int weight_limit(void);
 extern bool_ calc_powers_silent;

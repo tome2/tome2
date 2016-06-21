@@ -1,5 +1,6 @@
 #include "mimic.hpp"
 
+#include "object_flag.hpp"
 #include "player_type.hpp"
 #include "skill_type.hpp"
 #include "stats.hpp"
@@ -37,8 +38,8 @@ struct mimic_form_type
 
 static s32b abomination_calc()
 {
-	apply_flags(TR1_SPEED + TR1_STR + TR1_INT + TR1_WIS + TR1_DEX + TR1_CON + TR1_CHR, 0, 0, 0, 0, 0, -10, 0, 0, 0, 0);
-	p_ptr->xtra_f3 |= TR3_AGGRAVATE;
+	apply_flags(TR_SPEED | TR_STR | TR_INT | TR_WIS | TR_DEX | TR_CON | TR_CHR, -10, 0, 0, 0, 0);
+	p_ptr->xtra_flags |= TR_AGGRAVATE;
 
 	return 0;
 }
@@ -89,23 +90,23 @@ static s32b eagle_calc()
 
 	if (p_ptr->mimic_level >= 20)
 	{
-                p_ptr->xtra_f4 |= TR4_FLY;
-                p_ptr->xtra_f3 |= TR3_SEE_INVIS;
+		p_ptr->xtra_flags |= TR_FLY;
+		p_ptr->xtra_flags |= TR_SEE_INVIS;
 	}
 	
 	if (p_ptr->mimic_level >= 25)
 	{
-                p_ptr->xtra_f2 |= TR2_FREE_ACT;
+		p_ptr->xtra_flags |= TR_FREE_ACT;
 	}
 
 	if (p_ptr->mimic_level >= 30)
 	{
-                p_ptr->xtra_f2 |= TR2_RES_ELEC;
+		p_ptr->xtra_flags |= TR_RES_ELEC;
 	}
 
 	if (p_ptr->mimic_level >= 35)
 	{
-                p_ptr->xtra_f3 |= TR3_SH_ELEC;
+		p_ptr->xtra_flags |= TR_SH_ELEC;
 	}
 
 	return 0;
@@ -120,27 +121,27 @@ static s32b wolf_calc()
 
 	p_ptr->pspeed = p_ptr->pspeed + 10 + (p_ptr->mimic_level / 5);
 
-	p_ptr->xtra_f2 |= TR2_FREE_ACT;
-	p_ptr->xtra_f2 |= TR2_RES_FEAR;
+	p_ptr->xtra_flags |= TR_FREE_ACT;
+	p_ptr->xtra_flags |= TR_RES_FEAR;
 
 	if (p_ptr->mimic_level >= 10)
 	{
-		p_ptr->xtra_f2 |= TR2_RES_COLD;
+		p_ptr->xtra_flags |= TR_RES_COLD;
 	}
 
 	if (p_ptr->mimic_level >= 15)
 	{
-                p_ptr->xtra_f3 |= TR3_SEE_INVIS;
+		p_ptr->xtra_flags |= TR_SEE_INVIS;
 	}
 
 	if (p_ptr->mimic_level >= 30)
 	{
-		p_ptr->xtra_f2 |= TR2_RES_DARK;
+		p_ptr->xtra_flags |= TR_RES_DARK;
 	}
 
 	if (p_ptr->mimic_level >= 35)
 	{
-		p_ptr->xtra_f2 |= TR2_RES_CONF;
+		p_ptr->xtra_flags |= TR_RES_CONF;
 	}
 
 	return 0;
@@ -157,13 +158,13 @@ static s32b spider_calc()
 
 	p_ptr->pspeed = p_ptr->pspeed + 5;
 
-	p_ptr->xtra_f2 |= TR2_RES_POIS;
-	p_ptr->xtra_f2 |= TR2_RES_FEAR;
-	p_ptr->xtra_f2 |= TR2_RES_DARK;
+	p_ptr->xtra_flags |= TR_RES_POIS;
+	p_ptr->xtra_flags |= TR_RES_FEAR;
+	p_ptr->xtra_flags |= TR_RES_DARK;
 
 	if (p_ptr->mimic_level >= 40)
 	{
-                p_ptr->xtra_f4 |= TR4_CLIMB;
+		p_ptr->xtra_flags |= TR_CLIMB;
 	}
 
 	return 0;
@@ -191,12 +192,12 @@ static s32b ent_calc()
 	p_ptr->stat_add[A_CON] += p_ptr->mimic_level / 5;
 	p_ptr->stat_add[A_CHR] += -7;
 
-	p_ptr->xtra_f2 |= TR2_RES_POIS;
-	p_ptr->xtra_f2 |= TR2_RES_COLD;
-	p_ptr->xtra_f2 |= TR2_FREE_ACT;
-	p_ptr->xtra_f3 |= TR3_REGEN;
-	p_ptr->xtra_f3 |= TR3_SEE_INVIS;
-	p_ptr->xtra_f2 |= TR2_SENS_FIRE;
+	p_ptr->xtra_flags |= TR_RES_POIS;
+	p_ptr->xtra_flags |= TR_RES_COLD;
+	p_ptr->xtra_flags |= TR_FREE_ACT;
+	p_ptr->xtra_flags |= TR_REGEN;
+	p_ptr->xtra_flags |= TR_SEE_INVIS;
+	p_ptr->xtra_flags |= TR_SENS_FIRE;
 
 	return 0;
 }
@@ -226,14 +227,14 @@ static s32b vapour_calc()
 
 	/* But they are stealthy */
 	p_ptr->skill_stl = p_ptr->skill_stl + 10 + (p_ptr->mimic_level / 5);
-	p_ptr->xtra_f2 |= TR2_RES_POIS;
-	p_ptr->xtra_f2 |= TR2_RES_SHARDS;
-	p_ptr->xtra_f2 |= TR2_IM_COLD;
-	p_ptr->xtra_f2 |= TR2_FREE_ACT;
-	p_ptr->xtra_f3 |= TR3_REGEN;
-	p_ptr->xtra_f3 |= TR3_SEE_INVIS;
-	p_ptr->xtra_f2 |= TR2_SENS_FIRE;
-	p_ptr->xtra_f3 |= TR3_FEATHER;
+	p_ptr->xtra_flags |= TR_RES_POIS;
+	p_ptr->xtra_flags |= TR_RES_SHARDS;
+	p_ptr->xtra_flags |= TR_IM_COLD;
+	p_ptr->xtra_flags |= TR_FREE_ACT;
+	p_ptr->xtra_flags |= TR_REGEN;
+	p_ptr->xtra_flags |= TR_SEE_INVIS;
+	p_ptr->xtra_flags |= TR_SENS_FIRE;
+	p_ptr->xtra_flags |= TR_FEATHER;
 
 	return 0;
 }
@@ -252,10 +253,10 @@ static s32b serpent_calc()
 	p_ptr->stat_add[A_CON] += p_ptr->mimic_level / 7;
 	p_ptr->stat_add[A_CHR] += -6;
 
-	p_ptr->xtra_f2 |= TR2_RES_POIS;
+	p_ptr->xtra_flags |= TR_RES_POIS;
 	if (p_ptr->mimic_level >= 25)
 	{
-            	p_ptr->xtra_f2 |= TR2_FREE_ACT;
+		p_ptr->xtra_flags |= TR_FREE_ACT;
 	}
 
 	return 0;
@@ -279,22 +280,22 @@ static s32b mumak_calc()
 
 	if (p_ptr->mimic_level >= 10)
 	{
-		p_ptr->xtra_f2 |= TR2_RES_FEAR;
+		p_ptr->xtra_flags |= TR_RES_FEAR;
 	}
 
 	if (p_ptr->mimic_level >= 25)
 	{
-		p_ptr->xtra_f2 |= TR2_RES_CONF;
+		p_ptr->xtra_flags |= TR_RES_CONF;
 	}
 
 	if (p_ptr->mimic_level >= 30)
 	{
-            	p_ptr->xtra_f2 |= TR2_FREE_ACT;
+		p_ptr->xtra_flags |= TR_FREE_ACT;
 	}
 
 	if (p_ptr->mimic_level >= 35)
 	{
-		p_ptr->xtra_f2 |= TR2_RES_NEXUS;
+		p_ptr->xtra_flags |= TR_RES_NEXUS;
 	}
 
 	return 0;
@@ -316,22 +317,22 @@ static s32b bear_calc()
 
 	if (p_ptr->mimic_level >= 10)
 	{
-            	p_ptr->xtra_f2 |= TR2_FREE_ACT;
+		p_ptr->xtra_flags |= TR_FREE_ACT;
 	}
 
 	if (p_ptr->mimic_level >= 20)
 	{
-		p_ptr->xtra_f3 |= TR3_REGEN;
+		p_ptr->xtra_flags |= TR_REGEN;
 	}
 
 	if (p_ptr->mimic_level >= 30)
 	{
-		p_ptr->xtra_f2 |= TR2_RES_CONF;
+		p_ptr->xtra_flags |= TR_RES_CONF;
 	}
 
 	if (p_ptr->mimic_level >= 35)
 	{
-		p_ptr->xtra_f2 |= TR2_RES_NEXUS;
+		p_ptr->xtra_flags |= TR_RES_NEXUS;
 	}
 
 	/* activate the skill */
@@ -349,17 +350,17 @@ static s32b balrog_calc()
 	p_ptr->stat_add[A_CON] += 5 + p_ptr->mimic_level / 5;
 	p_ptr->stat_add[A_CHR] += - ( 5 + p_ptr->mimic_level / 10);
 
-	p_ptr->xtra_f2 |= TR2_IM_ACID;
-	p_ptr->xtra_f2 |= TR2_IM_FIRE;
-	p_ptr->xtra_f2 |= TR2_IM_ELEC;
-	p_ptr->xtra_f2 |= TR2_RES_DARK;
-	p_ptr->xtra_f2 |= TR2_RES_CHAOS;
-	p_ptr->xtra_f2 |= TR2_RES_POIS;
-	p_ptr->xtra_f2 |= TR2_HOLD_LIFE;
-	p_ptr->xtra_f3 |= TR3_FEATHER;
-	p_ptr->xtra_f3 |= TR3_REGEN;
-	p_ptr->xtra_f3 |= TR3_SH_FIRE;
-	p_ptr->xtra_f3 |= TR3_LITE1;
+	p_ptr->xtra_flags |= TR_IM_ACID;
+	p_ptr->xtra_flags |= TR_IM_FIRE;
+	p_ptr->xtra_flags |= TR_IM_ELEC;
+	p_ptr->xtra_flags |= TR_RES_DARK;
+	p_ptr->xtra_flags |= TR_RES_CHAOS;
+	p_ptr->xtra_flags |= TR_RES_POIS;
+	p_ptr->xtra_flags |= TR_HOLD_LIFE;
+	p_ptr->xtra_flags |= TR_FEATHER;
+	p_ptr->xtra_flags |= TR_REGEN;
+	p_ptr->xtra_flags |= TR_SH_FIRE;
+	p_ptr->xtra_flags |= TR_LITE1;
 
 	return 1; /* Adds a blow */
 }
@@ -373,17 +374,17 @@ static s32b maia_calc()
 	p_ptr->stat_add[A_CON] += 5 + p_ptr->mimic_level / 5;
 	p_ptr->stat_add[A_CHR] += 5 + p_ptr->mimic_level / 5;
 
-	p_ptr->xtra_f2 |= TR2_IM_FIRE;
-	p_ptr->xtra_f2 |= TR2_IM_ELEC;
-	p_ptr->xtra_f2 |= TR2_IM_ACID;
-	p_ptr->xtra_f2 |= TR2_IM_COLD;
-	p_ptr->xtra_f2 |= TR2_RES_POIS;
-	p_ptr->xtra_f2 |= TR2_RES_LITE;
-	p_ptr->xtra_f2 |= TR2_RES_DARK;
-	p_ptr->xtra_f2 |= TR2_RES_CHAOS;
-	p_ptr->xtra_f2 |= TR2_HOLD_LIFE;
-	p_ptr->xtra_f3 |= TR3_FEATHER;
-	p_ptr->xtra_f3 |= TR3_REGEN;
+	p_ptr->xtra_flags |= TR_IM_FIRE;
+	p_ptr->xtra_flags |= TR_IM_ELEC;
+	p_ptr->xtra_flags |= TR_IM_ACID;
+	p_ptr->xtra_flags |= TR_IM_COLD;
+	p_ptr->xtra_flags |= TR_RES_POIS;
+	p_ptr->xtra_flags |= TR_RES_LITE;
+	p_ptr->xtra_flags |= TR_RES_DARK;
+	p_ptr->xtra_flags |= TR_RES_CHAOS;
+	p_ptr->xtra_flags |= TR_HOLD_LIFE;
+	p_ptr->xtra_flags |= TR_FEATHER;
+	p_ptr->xtra_flags |= TR_REGEN;
 
 	return 2; /* Add two blows */
 }
@@ -394,10 +395,10 @@ static s32b fire_elemental_calc()
 	p_ptr->stat_add[A_DEX] += 5 + (p_ptr->mimic_level / 5);
 	p_ptr->stat_add[A_WIS] += -5 - (p_ptr->mimic_level / 5);
 
-	p_ptr->xtra_f2 |= TR2_IM_FIRE;
-	p_ptr->xtra_f2 |= TR2_RES_POIS;
-	p_ptr->xtra_f3 |= TR3_SH_FIRE;
-	p_ptr->xtra_f3 |= TR3_LITE1;
+	p_ptr->xtra_flags |= TR_IM_FIRE;
+	p_ptr->xtra_flags |= TR_RES_POIS;
+	p_ptr->xtra_flags |= TR_SH_FIRE;
+	p_ptr->xtra_flags |= TR_LITE1;
 
 	return 0;
 }

@@ -34,6 +34,7 @@
 #include "monster_type.hpp"
 #include "object1.hpp"
 #include "object2.hpp"
+#include "object_flag.hpp"
 #include "options.hpp"
 #include "player_type.hpp"
 #include "quark.hpp"
@@ -2571,7 +2572,6 @@ static bool_ monst_spell_monst(int m_idx)
 void curse_equipment(int chance, int heavy_chance)
 {
 	bool_ changed = FALSE;
-	u32b o1, o2, o3, o4, esp, o5;
 	object_type * o_ptr =
 		&p_ptr->inventory[rand_range(INVEN_WIELD, INVEN_TOTAL - 1)];
 
@@ -2579,11 +2579,11 @@ void curse_equipment(int chance, int heavy_chance)
 
 	if (!(o_ptr->k_idx)) return;
 
-	object_flags(o_ptr, &o1, &o2, &o3, &o4, &o5, &esp);
+	auto const flags = object_flags(o_ptr);
 
 
 	/* Extra, biased saving throw for blessed items */
-	if ((o3 & (TR3_BLESSED)) && (randint(888) > chance))
+	if ((flags & TR_BLESSED) && (randint(888) > chance))
 	{
 		char o_name[256];
 		object_desc(o_name, o_ptr, FALSE, 0);
@@ -2596,17 +2596,17 @@ void curse_equipment(int chance, int heavy_chance)
 	if ((randint(100) <= heavy_chance) &&
 	                (o_ptr->name1 || o_ptr->name2 || o_ptr->art_name))
 	{
-		if (!(o3 & TR3_HEAVY_CURSE))
+		if (!(flags & TR_HEAVY_CURSE))
 			changed = TRUE;
-		o_ptr->art_flags3 |= TR3_HEAVY_CURSE;
-		o_ptr->art_flags3 |= TR3_CURSED;
+		o_ptr->art_flags |= TR_HEAVY_CURSE;
+		o_ptr->art_flags |= TR_CURSED;
 		o_ptr->ident |= IDENT_CURSED;
 	}
 	else
 	{
-		if (!(o_ptr->ident & (IDENT_CURSED)))
+		if (!(o_ptr->ident & IDENT_CURSED))
 			changed = TRUE;
-		o_ptr->art_flags3 |= TR3_CURSED;
+		o_ptr->art_flags |= TR_CURSED;
 		o_ptr->ident |= IDENT_CURSED;
 	}
 
@@ -2627,7 +2627,7 @@ void curse_equipment(int chance, int heavy_chance)
 void curse_equipment_dg(int chance, int heavy_chance)
 {
 	bool_ changed = FALSE;
-	u32b o1, o2, o3, o4, esp, o5;
+
 	object_type * o_ptr =
 		&p_ptr->inventory[rand_range(INVEN_WIELD, INVEN_TOTAL - 1)];
 
@@ -2635,37 +2635,35 @@ void curse_equipment_dg(int chance, int heavy_chance)
 
 	if (!(o_ptr->k_idx)) return;
 
-	object_flags(o_ptr, &o1, &o2, &o3, &o4, &o5, &esp);
+	auto const flags = object_flags(o_ptr);
 
 
 	/* Extra, biased saving throw for blessed items */
-	if ((o3 & (TR3_BLESSED)) && (randint(888) > chance))
+	if ((flags & TR_BLESSED) && (randint(888) > chance))
 	{
 		char o_name[256];
 		object_desc(o_name, o_ptr, FALSE, 0);
 		msg_format("Your %s resist%s cursing!", o_name,
 		           ((o_ptr->number > 1) ? "" : "s"));
-		/* Hmmm -- can we wear multiple items? If not, this is unnecessary */
-		/* DG -- Yes we can, in the quiver */
 		return;
 	}
 
 	if ((randint(100) <= heavy_chance) &&
 	                (o_ptr->name1 || o_ptr->name2 || o_ptr->art_name))
 	{
-		if (!(o3 & TR3_HEAVY_CURSE))
+		if (!(flags & TR_HEAVY_CURSE))
 			changed = TRUE;
-		o_ptr->art_flags3 |= TR3_HEAVY_CURSE;
-		o_ptr->art_flags3 |= TR3_CURSED;
-		o_ptr->art_flags4 |= TR4_DG_CURSE;
+		o_ptr->art_flags |= TR_HEAVY_CURSE;
+		o_ptr->art_flags |= TR_CURSED;
+		o_ptr->art_flags |= TR_DG_CURSE;
 		o_ptr->ident |= IDENT_CURSED;
 	}
 	else
 	{
-		if (!(o_ptr->ident & (IDENT_CURSED)))
+		if (!(o_ptr->ident & IDENT_CURSED))
 			changed = TRUE;
-		o_ptr->art_flags3 |= TR3_CURSED;
-		o_ptr->art_flags4 |= TR4_DG_CURSE;
+		o_ptr->art_flags |= TR_CURSED;
+		o_ptr->art_flags |= TR_DG_CURSE;
 		o_ptr->ident |= IDENT_CURSED;
 	}
 
@@ -6584,13 +6582,11 @@ static void process_monster(int m_idx, bool_ is_frien)
 					                (r_ptr->flags & RF_KILL_ITEM)) &&
 					                (is_friend(m_ptr) <= 0))
 					{
-						u32b f1, f2, f3, f4, f5, esp;
-
 						char m_name[80];
 						char o_name[80];
 
 						/* Extract some flags */
-						object_flags(o_ptr, &f1, &f2, &f3, &f4, &f5, &esp);
+						auto const flags = object_flags(o_ptr);
 
 						/* Acquire the object name */
 						object_desc(o_name, o_ptr, TRUE, 3);
@@ -6600,16 +6596,16 @@ static void process_monster(int m_idx, bool_ is_frien)
 
 						/* React to objects that hurt the monster */
 						monster_race_flag_set flg;
-						if (f5 & (TR5_KILL_DEMON)) flg |= RF_DEMON;
-						if (f5 & (TR5_KILL_UNDEAD)) flg |= RF_UNDEAD;
-						if (f1 & (TR1_SLAY_DRAGON)) flg |= RF_DRAGON;
-						if (f1 & (TR1_SLAY_TROLL)) flg |= RF_TROLL;
-						if (f1 & (TR1_SLAY_GIANT)) flg |= RF_GIANT;
-						if (f1 & (TR1_SLAY_ORC)) flg |= RF_ORC;
-						if (f1 & (TR1_SLAY_DEMON)) flg |= RF_DEMON;
-						if (f1 & (TR1_SLAY_UNDEAD)) flg |= RF_UNDEAD;
-						if (f1 & (TR1_SLAY_ANIMAL)) flg |= RF_ANIMAL;
-						if (f1 & (TR1_SLAY_EVIL)) flg |= RF_EVIL;
+						if (flags & TR_KILL_DEMON) flg |= RF_DEMON;
+						if (flags & TR_KILL_UNDEAD) flg |= RF_UNDEAD;
+						if (flags & TR_SLAY_DRAGON) flg |= RF_DRAGON;
+						if (flags & TR_SLAY_TROLL) flg |= RF_TROLL;
+						if (flags & TR_SLAY_GIANT) flg |= RF_GIANT;
+						if (flags & TR_SLAY_ORC) flg |= RF_ORC;
+						if (flags & TR_SLAY_DEMON) flg |= RF_DEMON;
+						if (flags & TR_SLAY_UNDEAD) flg |= RF_UNDEAD;
+						if (flags & TR_SLAY_ANIMAL) flg |= RF_ANIMAL;
+						if (flags & TR_SLAY_EVIL) flg |= RF_EVIL;
 
 						/* The object cannot be picked up by the monster */
 						if (artifact_p(o_ptr) || (r_ptr->flags & flg) ||

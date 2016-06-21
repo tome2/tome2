@@ -1,6 +1,7 @@
 #include "corrupt.hpp"
 
 #include "init1.hpp"
+#include "object_flag.hpp"
 #include "player_race.hpp"
 #include "player_race_mod.hpp"
 #include "player_type.hpp"
@@ -105,14 +106,14 @@ static void player_gain_vampire()
 
 	/* Bonus/and .. not bonus :) */
 	rmp_ptr->flags1 = rmp_ptr->flags1 | PR1_HURT_LITE;
-	rmp_ptr->oflags2[2] = rmp_ptr->oflags2[2]
-		| TR2_RES_POIS
-		| TR2_RES_NETHER
-		| TR2_RES_COLD
-		| TR2_RES_DARK
-		| TR2_HOLD_LIFE;
-	rmp_ptr->oflags3[2] = rmp_ptr->oflags3[2]
-		| TR3_LITE1;
+	rmp_ptr->oflags[2] = rmp_ptr->oflags[2]
+		| TR_RES_POIS
+		| TR_RES_NETHER
+		| TR_RES_COLD
+		| TR_RES_DARK
+		| TR_HOLD_LIFE;
+	rmp_ptr->oflags[2] = rmp_ptr->oflags[2]
+		| TR_LITE1;
 }
 
 /**

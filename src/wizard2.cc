@@ -21,6 +21,8 @@
 #include "monster_type.hpp"
 #include "object1.hpp"
 #include "object2.hpp"
+#include "object_flag.hpp"
+#include "object_flag_meta.hpp"
 #include "object_kind.hpp"
 #include "player_type.hpp"
 #include "randart.hpp"
@@ -224,32 +226,6 @@ static void do_cmd_summon_horde()
 
 
 /*
- * Output a long int in binary format.
- */
-static void prt_binary(u32b flags, int row, int col)
-{
-	int i;
-	u32b bitmask;
-
-	/* Scan the flags */
-	for (i = bitmask = 1; i <= 32; i++, bitmask *= 2)
-	{
-		/* Dump set bits */
-		if (flags & bitmask)
-		{
-			Term_putch(col++, row, TERM_BLUE, '*');
-		}
-
-		/* Dump unset bits */
-		else
-		{
-			Term_putch(col++, row, TERM_WHITE, '-');
-		}
-	}
-}
-
-
-/*
  * Hack -- Teleport to the target
  */
 static void do_cmd_wiz_bamf(void)
@@ -442,11 +418,10 @@ static void do_cmd_wiz_change(void)
 static void wiz_display_item(object_type *o_ptr)
 {
 	int i, j = 13;
-	u32b f1, f2, f3, f4, f5, esp;
 	char buf[256];
 
 	/* Extract the flags */
-	object_flags(o_ptr, &f1, &f2, &f3, &f4, &f5, &esp);
+	auto const flags = object_flags(o_ptr);
 
 	/* Clear the screen */
 	for (i = 1; i <= 23; i++) prt("", i, j - 2);
@@ -473,32 +448,27 @@ static void wiz_display_item(object_type *o_ptr)
 	prt(format("ident = %04x  timeout = %-d",
 	           o_ptr->ident, o_ptr->timeout), 8, j);
 
-	prt("+------------FLAGS1------------+", 10, j);
-	prt("AFFECT........SLAY........BRAND.", 11, j);
-	prt("              cvae      xsqpaefc", 12, j);
-	prt("siwdcc  ssidsahanvudotgddhuoclio", 13, j);
-	prt("tnieoh  trnipttmiinmrrnrrraiierl", 14, j);
-	prt("rtsxna..lcfgdkcpmldncltggpksdced", 15, j);
-	prt_binary(f1, 16, j);
+	/* Print all the flags which are set */
+	prt("Flags:", 10, j);
 
-	prt("+------------FLAGS2------------+", 17, j);
-	prt("SUST....IMMUN.RESIST............", 18, j);
-	prt("        aefcprpsaefcpfldbc sn   ", 19, j);
-	prt("siwdcc  cliooeatcliooeialoshtncd", 20, j);
-	prt("tnieoh  ierlifraierliatrnnnrhehi", 21, j);
-	prt("rtsxna..dcedslatdcedsrekdfddrxss", 22, j);
-	prt_binary(f2, 23, j);
-
-	prt("+------------FLAGS3------------+", 10, j + 32);
-	prt("fe      ehsi  st    iiiiadta  hp", 11, j + 32);
-	prt("il   n taihnf ee    ggggcregb vr", 12, j + 32);
-	prt("re  nowysdose eld   nnnntalrl ym", 13, j + 32);
-	prt("ec  omrcyewta ieirmsrrrriieaeccc", 14, j + 32);
-	prt("aa  taauktmatlnpgeihaefcvnpvsuuu", 15, j + 32);
-	prt("uu  egirnyoahivaeggoclioaeoasrrr", 16, j + 32);
-	prt("rr  litsopdretitsehtierltxrtesss", 17, j + 32);
-	prt("aa  echewestreshtntsdcedeptedeee", 18, j + 32);
-	prt_binary(f3, 19, j + 32);
+	int const row0 = 11;
+	int row = row0;
+	int col = 0;
+	for (auto const &object_flag_meta: object_flags_meta())
+	{
+		// Is the flag set?
+		if (object_flag_meta->flag_set & flags)
+		{
+			// Advance to next row/column
+			row += 1;
+			if (row >= 23) {
+				row = row0 + 1;
+				col += 1;
+			}
+			// Display
+			prt(object_flag_meta->name, row, j + 1 + 20 * col);
+		}
+	}
 }
 
 
@@ -622,7 +592,7 @@ static int wiz_create_itemtype(void)
 		if (k_ptr->tval == tval)
 		{
 			/* Hack -- Skip instant artifacts */
-			if (k_ptr->flags3 & (TR3_INSTA_ART)) continue;
+			if (k_ptr->flags & TR_INSTA_ART) continue;
 
 			/* Acquire the "name" of object "i" */
 			strip_name(buf, i);
@@ -662,10 +632,9 @@ static void wiz_tweak_item(object_type *o_ptr)
 {
 	cptr p;
 	char tmp_val[80];
-	u32b f1, f2, f3, f4, f5, esp;
 
 	/* Extract the flags */
-	object_flags(o_ptr, &f1, &f2, &f3, &f4, &f5, &esp);
+	auto const flags = object_flags(o_ptr);
 
 
 	p = "Enter new 'pval' setting: ";
@@ -727,7 +696,7 @@ static void wiz_tweak_item(object_type *o_ptr)
 	if (!get_string(p, tmp_val, 9)) return;
 	wiz_display_item(o_ptr);
 	o_ptr->exp = atoi(tmp_val);
-	if (f4 & TR4_LEVELS) check_experience_obj(o_ptr);
+	if (flags & TR_LEVELS) check_experience_obj(o_ptr);
 
 	p = "Enter new 'timeout' setting: ";
 	sprintf(tmp_val, "%d", o_ptr->timeout);

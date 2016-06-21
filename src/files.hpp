@@ -2,13 +2,14 @@
 
 #include "h-basic.h"
 #include "monster_type_fwd.hpp"
+#include "object_flag_set.hpp"
 
 #include <string>
 #include <vector>
 
 extern void html_screenshot(cptr name);
 extern void help_file_screenshot(cptr name);
-extern void player_flags(u32b* f1, u32b* f2, u32b* f3, u32b* f4, u32b* f5, u32b* esp);
+extern object_flag_set player_flags();
 extern void wipe_saved(void);
 extern s16b tokenize(char *buf, s16b num, char **tokens, char delim1, char delim2);
 extern void display_player(int mode);

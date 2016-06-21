@@ -23,6 +23,7 @@
 #include "loadsave.h"
 #include "loadsave.hpp"
 #include "mimic.hpp"
+#include "monoid.hpp"
 #include "monster2.hpp"
 #include "monster3.hpp"
 #include "monster_ego.hpp"
@@ -32,6 +33,8 @@
 #include "notes.hpp"
 #include "object1.hpp"
 #include "object2.hpp"
+#include "object_flag.hpp"
+#include "object_flag_meta.hpp"
 #include "object_kind.hpp"
 #include "options.hpp"
 #include "player_class.hpp"
@@ -56,9 +59,10 @@
 #include "z-rand.hpp"
 
 #include <boost/filesystem.hpp>
-#include <memory>
 #include <iostream>
 #include <fstream>
+#include <limits>
+#include <memory>
 #include <unordered_set>
 
 /*
@@ -1546,620 +1550,642 @@ static void display_player_various(void)
  * Obtain the "flags" of the wielded symbiote
  */
 
-void wield_monster_flags(u32b *f1, u32b *f2, u32b *f3, u32b *f4, u32b *f5, u32b *esp)
+static object_flag_set wield_monster_flags()
 {
-	object_type *o_ptr;
-	monster_race *r_ptr;
-
-	/* Clear */
-	(*f1) = (*f2) = (*f3) = (*f4) = (*f5) = (*esp) = 0L;
+	object_flag_set flags;
 
 	/* Get the carried monster */
-	o_ptr = &p_ptr->inventory[INVEN_CARRY];
-
+	auto o_ptr = &p_ptr->inventory[INVEN_CARRY];
 	if (o_ptr->k_idx)
 	{
-		r_ptr = &r_info[o_ptr->pval];
+		auto r_ptr = &r_info[o_ptr->pval];
 
 		if (r_ptr->flags & RF_INVISIBLE)
-			(*f2) |= TR2_INVIS;
+			flags |= TR_INVIS;
 		if (r_ptr->flags & RF_REFLECTING)
-			(*f2) |= TR2_REFLECT;
+			flags |= TR_REFLECT;
 		if (r_ptr->flags & RF_CAN_FLY)
-			(*f3) |= TR3_FEATHER;
+			flags |= TR_FEATHER;
 		if (r_ptr->flags & RF_AQUATIC)
-			(*f5) |= TR5_WATER_BREATH;
+			flags |= TR_WATER_BREATH;
 	}
+
+	return flags;
 }
 
 
 /*
  * Obtain the "flags" for the player as if he was an item
  */
-void player_flags(u32b *f1, u32b *f2, u32b *f3, u32b *f4, u32b *f5, u32b *esp)
+object_flag_set player_flags()
 {
-	int i;
-
 	/* Clear */
-	(*f1) = (*f2) = (*f3) = (*f4) = (*f5) = (*esp) = 0L;
+	object_flag_set f;
 
 	/* Astral chars */
 	if (p_ptr->astral)
 	{
-		(*f3) |= TR3_WRAITH;
+		f |= TR_WRAITH;
 	}
 
 /* Skills */
-	if (get_skill(SKILL_DAEMON) > 20) (*f2) |= TR2_RES_CONF;
-	if (get_skill(SKILL_DAEMON) > 30) (*f2) |= TR2_RES_FEAR;
-	if (get_skill(SKILL_MINDCRAFT) >= 40) (*esp) |= ESP_ALL;
+	if (get_skill(SKILL_DAEMON) > 20) f |= TR_RES_CONF;
+	if (get_skill(SKILL_DAEMON) > 30) f |= TR_RES_FEAR;
+	if (get_skill(SKILL_MINDCRAFT) >= 40) f |= ESP_ALL;
 	if (p_ptr->melee_style == SKILL_HAND && get_skill(SKILL_HAND) > 24 && !monk_heavy_armor())
-		(*f2) |= TR2_FREE_ACT;
-/* Hack - from Lua */
-	if (get_skill(SKILL_MANA) >= 35) (*f1) |= TR1_MANA;
-	if (get_skill(SKILL_AIR) >= 50) (*f5) |= (TR5_MAGIC_BREATH | TR5_WATER_BREATH);
-	if (get_skill(SKILL_WATER) >= 30) (*f5) |= TR5_WATER_BREATH;
+	{
+		f |= TR_FREE_ACT;
+	}
+	if (get_skill(SKILL_MANA) >= 35) f |= TR_MANA;
+	if (get_skill(SKILL_AIR) >= 50) f |= (TR_MAGIC_BREATH | TR_WATER_BREATH);
+	if (get_skill(SKILL_WATER) >= 30) f |= TR_WATER_BREATH;
 
 /* Gods */
 	if (p_ptr->pgod == GOD_ERU)
 	{
-		if ((p_ptr->grace >= 100) || (p_ptr->grace <= -100))  (*f1) |= TR1_MANA;
-		if (p_ptr->grace > 10000) (*f1) |= TR1_WIS;
+		if ((p_ptr->grace >= 100) || (p_ptr->grace <= -100))  f |= TR_MANA;
+		if (p_ptr->grace > 10000) f |= TR_WIS;
 	}
 
 	if (p_ptr->pgod == GOD_MELKOR)
 	{
-		(*f2) |= TR2_RES_FIRE;
-		if (p_ptr->melkor_sacrifice > 0) (*f2) |= TR2_LIFE;
-		if (p_ptr->grace > 10000) (*f1) |= (TR1_STR | TR1_CON | TR1_INT | TR1_WIS | TR1_CHR);
+		f |= TR_RES_FIRE;
+		if (p_ptr->melkor_sacrifice > 0) f |= TR_LIFE;
+		if (p_ptr->grace > 10000) f |= (TR_STR | TR_CON | TR_INT | TR_WIS | TR_CHR);
 		if (p_ptr->praying)
 		{
-			if (p_ptr->grace > 5000)  (*f2) |= TR2_INVIS;
-			if (p_ptr->grace > 15000) (*f2) |= TR2_IM_FIRE;
+			if (p_ptr->grace > 5000)  f |= TR_INVIS;
+			if (p_ptr->grace > 15000) f |= TR_IM_FIRE;
 		}
 	}
 
 	if (p_ptr->pgod == GOD_MANWE)
 	{
-		if (p_ptr->grace >= 2000) (*f3) |= TR3_FEATHER;
+		if (p_ptr->grace >= 2000) f |= TR_FEATHER;
 		if (p_ptr->praying)
 		{
-			if (p_ptr->grace >= 7000)  (*f2) |= TR2_FREE_ACT;
-			if (p_ptr->grace >= 15000) (*f4) |= TR4_FLY;
-			if ((p_ptr->grace >= 5000) || (p_ptr->grace <= -5000)) (*f1) |= TR1_SPEED;
+			if (p_ptr->grace >= 7000)  f |= TR_FREE_ACT;
+			if (p_ptr->grace >= 15000) f |= TR_FLY;
+			if ((p_ptr->grace >= 5000) || (p_ptr->grace <= -5000)) f |= TR_SPEED;
 		}
 	}
 
 	if (p_ptr->pgod == GOD_TULKAS)
 	{
-		if (p_ptr->grace > 5000)  (*f1) |= TR1_CON;
-		if (p_ptr->grace > 10000) (*f1) |= TR1_STR;
+		if (p_ptr->grace > 5000)  f |= TR_CON;
+		if (p_ptr->grace > 10000) f |= TR_STR;
 	}
 
 	if (p_ptr->pgod == GOD_AULE)
 	{
 		if (p_ptr->grace > 5000)
 		{
-			(*f2) |= TR2_RES_FIRE;
+			f |= TR_RES_FIRE;
 		}
 	}
 
 	if (p_ptr->pgod == GOD_MANDOS)
 	{
-		(*f2) |= TR2_RES_NETHER;
+		f |= TR_RES_NETHER;
 
 		if ((p_ptr->grace > 10000) &&
 		    (p_ptr->praying == TRUE))
 		{
-			(*f3) |= TR3_NO_TELE;
+			f |= TR_NO_TELE;
 		}
 
 		if ((p_ptr->grace > 20000) &&
 		    (p_ptr->praying == TRUE))
 		{
-			(*f4) |= TR4_IM_NETHER;
+			f |= TR_IM_NETHER;
 		}
 	}
 
 	if (p_ptr->pgod == GOD_ULMO)
 	{
-		(*f5) |= TR5_WATER_BREATH;
+		f |= TR_WATER_BREATH;
 
 		if ((p_ptr->grace > 1000) &&
 		    (p_ptr->praying == TRUE))
 		{
-			(*f2) |= TR2_RES_POIS;
+			f |= TR_RES_POIS;
 		}
 
 		if ((p_ptr->grace > 15000) &&
 		    (p_ptr->praying == TRUE))
 		{
-			(*f5) |= TR5_MAGIC_BREATH;
+			f |= TR_MAGIC_BREATH;
 		}
 	}
 
 	/* Classes */
-	for (i = 1; i <= p_ptr->lev; i++)
+	for (int i = 1; i <= p_ptr->lev; i++)
 	{
-		(*f1) |= cp_ptr->oflags1[i];
-		(*f2) |= cp_ptr->oflags2[i];
-		(*f3) |= cp_ptr->oflags3[i];
-		(*f4) |= cp_ptr->oflags4[i];
-		(*f5) |= cp_ptr->oflags5[i];
-		(*esp) |= cp_ptr->oesp[i];
+		f |= cp_ptr->oflags[i];
 	}
 
 	/* Races */
 	if ((!p_ptr->mimic_form) && (!p_ptr->body_monster))
 	{
-		for (i = 1; i <= p_ptr->lev; i++)
+		for (int i = 1; i <= p_ptr->lev; i++)
 		{
-			(*f1) |= rp_ptr->oflags1[i];
-			(*f2) |= rp_ptr->oflags2[i];
-			(*f3) |= rp_ptr->oflags3[i];
-			(*f4) |= rp_ptr->oflags4[i];
-			(*f5) |= rp_ptr->oflags5[i];
-			(*esp) |= rp_ptr->oesp[i];
+			f |= rp_ptr->oflags[i];
 
-			(*f1) |= rmp_ptr->oflags1[i];
-			(*f2) |= rmp_ptr->oflags2[i];
-			(*f3) |= rmp_ptr->oflags3[i];
-			(*f4) |= rmp_ptr->oflags4[i];
-			(*f5) |= rmp_ptr->oflags5[i];
-			(*esp) |= rmp_ptr->oesp[i];
+			f |= rmp_ptr->oflags[i];
 		}
 	}
 	else
 	{
 		monster_race *r_ptr = &r_info[p_ptr->body_monster];
 
-		if (r_ptr->flags & RF_REFLECTING) (*f2) |= TR2_REFLECT;
-		if (r_ptr->flags & RF_REGENERATE) (*f3) |= TR3_REGEN;
-		if (r_ptr->flags & RF_AURA_FIRE) (*f3) |= TR3_SH_FIRE;
-		if (r_ptr->flags & RF_AURA_ELEC) (*f3) |= TR3_SH_ELEC;
-		if (r_ptr->flags & RF_PASS_WALL) (*f3) |= TR3_WRAITH;
-		if (r_ptr->flags & RF_SUSCEP_FIRE) (*f2) |= TR2_SENS_FIRE;
-		if (r_ptr->flags & RF_IM_ACID) (*f2) |= TR2_RES_ACID;
-		if (r_ptr->flags & RF_IM_ELEC) (*f2) |= TR2_RES_ELEC;
-		if (r_ptr->flags & RF_IM_FIRE) (*f2) |= TR2_RES_FIRE;
-		if (r_ptr->flags & RF_IM_POIS) (*f2) |= TR2_RES_POIS;
-		if (r_ptr->flags & RF_IM_COLD) (*f2) |= TR2_RES_COLD;
-		if (r_ptr->flags & RF_RES_NETH) (*f2) |= TR2_RES_NETHER;
-		if (r_ptr->flags & RF_RES_NEXU) (*f2) |= TR2_RES_NEXUS;
-		if (r_ptr->flags & RF_RES_DISE) (*f2) |= TR2_RES_DISEN;
-		if (r_ptr->flags & RF_NO_FEAR) (*f2) |= TR2_RES_FEAR;
-		if (r_ptr->flags & RF_NO_SLEEP) (*f2) |= TR2_FREE_ACT;
-		if (r_ptr->flags & RF_NO_CONF) (*f2) |= TR2_RES_CONF;
-		if (r_ptr->flags & RF_CAN_FLY) (*f3) |= TR3_FEATHER;
+		if (r_ptr->flags & RF_REFLECTING) f |= TR_REFLECT;
+		if (r_ptr->flags & RF_REGENERATE) f |= TR_REGEN;
+		if (r_ptr->flags & RF_AURA_FIRE) f |= TR_SH_FIRE;
+		if (r_ptr->flags & RF_AURA_ELEC) f |= TR_SH_ELEC;
+		if (r_ptr->flags & RF_PASS_WALL) f |= TR_WRAITH;
+		if (r_ptr->flags & RF_SUSCEP_FIRE) f |= TR_SENS_FIRE;
+		if (r_ptr->flags & RF_IM_ACID) f |= TR_RES_ACID;
+		if (r_ptr->flags & RF_IM_ELEC) f |= TR_RES_ELEC;
+		if (r_ptr->flags & RF_IM_FIRE) f |= TR_RES_FIRE;
+		if (r_ptr->flags & RF_IM_POIS) f |= TR_RES_POIS;
+		if (r_ptr->flags & RF_IM_COLD) f |= TR_RES_COLD;
+		if (r_ptr->flags & RF_RES_NETH) f |= TR_RES_NETHER;
+		if (r_ptr->flags & RF_RES_NEXU) f |= TR_RES_NEXUS;
+		if (r_ptr->flags & RF_RES_DISE) f |= TR_RES_DISEN;
+		if (r_ptr->flags & RF_NO_FEAR) f |= TR_RES_FEAR;
+		if (r_ptr->flags & RF_NO_SLEEP) f |= TR_FREE_ACT;
+		if (r_ptr->flags & RF_NO_CONF) f |= TR_RES_CONF;
+		if (r_ptr->flags & RF_CAN_FLY) f |= TR_FEATHER;
 	}
 
-	(*f1) |= p_ptr->xtra_f1;
-	(*f2) |= p_ptr->xtra_f2;
-	(*f3) |= p_ptr->xtra_f3;
-	(*f4) |= p_ptr->xtra_f4;
-	(*f5) |= p_ptr->xtra_f5;
-	(*esp) |= p_ptr->xtra_esp;
+	f |= p_ptr->xtra_flags;
 
 	if (p_ptr->black_breath)
 	{
-		(*f4) |= TR4_BLACK_BREATH;
+		f |= TR_BLACK_BREATH;
 	}
 
 	if (p_ptr->hp_mod != 0)
 	{
-		(*f2) |= TR2_LIFE;
+		f |= TR_LIFE;
+	}
+
+	return f;
+}
+
+namespace { // <anonymous>
+
+/*
+ * Build an return a (static) index of all the object_flag_meta
+ * information indexed by page->column->row.
+ */
+static std::vector<object_flag_meta const *> const &object_flag_metas_by_pcr(int page, int column, int row)
+{
+	static std::vector<std::vector<std::vector<std::vector<object_flag_meta const *>>>> instance;
+
+	if (instance.empty())
+	{
+		// Find number of pages, columns and rows.
+		std::size_t n_pages = 0;
+		std::size_t n_columns = 0;
+		std::size_t n_rows = 0;
+
+		for (auto const &object_flag_meta: object_flags_meta())
+		{
+			n_pages = std::max<std::size_t>(n_pages, object_flag_meta->c_page + 1);
+			n_columns = std::max<std::size_t>(n_columns, object_flag_meta->c_column + 1);
+			n_rows = std::max<std::size_t>(n_rows, object_flag_meta->c_row + 1);
+		}
+
+		// Sanity check; we should always have enough data.
+		assert(n_pages > 0);
+		assert(n_columns > 0);
+		assert(n_rows > 0);
+
+		// Build the scaffolding structure without the actual data.
+		instance.reserve(n_pages);
+		for (std::size_t i = 0; i < n_pages; i++)
+		{
+			std::vector<std::vector<std::vector<object_flag_meta const *>>> page;
+			page.reserve(n_columns);
+
+			for (std::size_t j = 0; j < n_columns; j++)
+			{
+				std::vector<std::vector<object_flag_meta const *>> column;
+				column.reserve(n_rows);
+
+				for (std::size_t k = 0; k < n_rows; k++)
+				{
+					std::vector<object_flag_meta const *> row;
+					column.push_back(row);
+				}
+
+				page.push_back(column);
+			}
+
+			instance.push_back(page);
+		}
+
+		// Insert all the data.
+		for (auto const object_flag_meta: object_flags_meta())
+		{
+			// Ignore if not mapped to any page.
+			if (!object_flag_meta->c_name)
+			{
+				continue;
+			}
+
+			// Find the row
+			auto &row = instance
+			        .at(object_flag_meta->c_page)
+			        .at(object_flag_meta->c_column)
+			        .at(object_flag_meta->c_row);
+
+			// Insert
+			row.push_back(object_flag_meta);
+		}
+	}
+
+	return instance.at(page).at(column).at(row);
+}
+
+
+/**
+ * Convert a number to a digit, capping at '9'. Ignores the sign of the number.
+ */
+static char number_to_digit(int n) {
+	// Throw away sign.
+	n = std::abs(n);
+	// Convert to digit or '*'
+	return (n > 9 ? '*' : I2D(n));
+};
+
+
+/**
+ * Check that two object_flag types are compatible.
+ */
+static bool object_flag_types_are_compatible(char type_a, char type_b)
+{
+	switch (type_a)
+	{
+	case 'n':
+		return (type_b == 'n');
+	case 'b':
+		return (type_b == 'b');
+	case '+':
+	case '*':
+		return (type_b == '+') || (type_b == '*');
+	case 'f':
+		return (type_b == 'f');
+	case '\0':
+		return true;
+	default:
+		abort();
 	}
 }
 
-/*
- * Object flag names
+/**
+ * Object flag data for calculating cells on the character sheet.
  */
-static cptr object_flag_names[192] =
-{
-	"Add Str",
-	"Add Int",
-	"Add Wis",
-	"Add Dex",
-	"Add Con",
-	"Add Chr",
-	"Mul Mana",
-	"Mul SPower",
-	"Add Stea.",
-	"Add Sear.",
-	"Add Infra",
-	"Add Tun..",
-	"Add Speed",
-	"Add Blows",
-	"Chaotic",
-	"Vampiric",
-	"Slay Anim.",
-	"Slay Evil",
-	"Slay Und.",
-	"Slay Demon",
-	"Slay Orc",
-	"Slay Troll",
-	"Slay Giant",
-	"Slay Drag.",
-	"Kill Drag.",
-	"Sharpness",
-	"Impact",
-	"Poison Brd",
-	"Acid Brand",
-	"Elec Brand",
-	"Fire Brand",
-	"Cold Brand",
+struct object_flag_cell {
+	/**
+	 * Type designator for the cell, if any.
+	 */
+	char type;
 
-	"Sust Str",
-	"Sust Int",
-	"Sust Wis",
-	"Sust Dex",
-	"Sust Con",
-	"Sust Chr",
-	"Invisible",
-	"Mul life",
-	"Imm Acid",
-	"Imm Elec",
-	"Imm Fire",
-	"Imm Cold",
-	"Sens Fire",
-	"Reflect",
-	"Free Act",
-	"Hold Life",
-	"Res Acid",
-	"Res Elec",
-	"Res Fire",
-	"Res Cold",
-	"Res Pois",
-	"Res Fear",
-	"Res Light",
-	"Res Dark",
-	"Res Blind",
-	"Res Conf",
-	"Res Sound",
-	"Res Shard",
-	"Res Neth",
-	"Res Nexus",
-	"Res Chaos",
-	"Res Disen",
+	/**
+	 * Associated PVAL, if any.
+	 */
+	int pval;
 
+	/**
+	 * Label for the cell, given its current contents.
+	 */
+	const char *label;
 
+	/**
+	 * Create object_flag_cell from object_flag_meta.
+	 */
+	static object_flag_cell from_object_flag_meta(object_flag_meta const &object_flag_meta, int pval)
+	{
+		// The FIXED type flags require special handling.
+		if ((object_flag_meta.c_type == '1') || (object_flag_meta.c_type == '2') || (object_flag_meta.c_type == '3'))
+		{
+			return object_flag_cell {
+				'f',
+				D2I(object_flag_meta.c_type),
+				object_flag_meta.c_name
+			};
+		}
+		else
+		{
+			return object_flag_cell {
+				object_flag_meta.c_type,
+				pval,
+				object_flag_meta.c_name
+			};
+		}
+	}
 
-	"Aura Fire",
-	"Aura Elec",
-	"Auto Curse",
-	NULL,
-	"NoTeleport",
-	"AntiMagic",
-	"WraithForm",
-	"EvilCurse",
-	NULL,
-	NULL,
-	NULL,
-	NULL,
-	"Levitate",
-	"Lite",
-	"See Invis",
-	NULL,
-	"Digestion",
-	"Regen",
-	"Xtra Might",
-	"Xtra Shots",
-	NULL,
-	NULL,
-	NULL,
-	NULL,
-	"Activate",
-	"Drain Exp",
-	"Teleport",
-	"Aggravate",
-	"Blessed",
-	"Cursed",
-	"Hvy Curse",
-	"Prm Curse",
-
-	"No blows",
-	"Precogn.",
-	"B.Breath",
-	"Recharge",
-	"Fly",
-	"Mrg.Curse",
-	NULL,
-	NULL,
-	"Sentient",
-	"Clone",
-	NULL,
-	"Climb",
-	NULL,
-	NULL,
-	NULL,
-	NULL,
-	NULL,
-	NULL,
-	NULL,
-	NULL,
-	NULL,
-	NULL,
-	"Imm Neth",
-	NULL,
-	NULL,
-	NULL,
-	NULL,
-	NULL,
-	NULL,
-	NULL,
-	NULL,
-	NULL,
-
-	"Orc.ESP",
-	"Troll.ESP",
-	"Dragon.ESP",
-	"Giant.ESP",
-	"Demon.ESP",
-	"Undead.ESP",
-	"Evil.ESP",
-	"Animal.ESP",
-	"TLord.ESP",
-	"Good.ESP",
-	"Nlive.ESP",
-	"Unique.ESP",
-	"Spider ESP",
-	NULL,
-	NULL,
-	NULL,
-	NULL,
-	NULL,
-	NULL,
-	NULL,
-	NULL,
-	NULL,
-	NULL,
-	NULL,
-	NULL,
-	NULL,
-	NULL,
-	NULL,
-	NULL,
-	NULL,
-	NULL,
-	"Full ESP",
 };
+
+namespace detail { // "hide" from surrounding scope; should only be accessed through the monoid
+
+static object_flag_cell object_flag_cell_append(object_flag_cell const &a, object_flag_cell const &b)
+{
+	// The "empty" value automatically gets swallowed, whatever
+	// "side" of the append it's on.
+	if (a.type == '\0')
+	{
+		return b;
+	}
+
+	if (b.type == '\0')
+	{
+		return a;
+	}
+
+	// The rest of the code assumes compatible types, so we
+	// assert this to a) avoid over-complicated logic, and
+	// b) breaking under 'unexpected' changes to the object
+	// flag list.
+	if (!object_flag_types_are_compatible(a.type, b.type))
+	{
+		abort();
+	}
+
+	// Any boolean flag which is "set" overrides the previous
+	// flag. (If the flag was already set we won't lose any
+	// information.)
+	if (b.type == 'b')
+	{
+		return b;
+	}
+
+	// Flags with a numerical value get added together.
+	if (b.type == 'n')  // (a.type == 'n') by symmetry and object_flag_types_are_compatible()
+	{
+		// Arbitrary choice of label -- the labels *should* be the same, by definition
+		return object_flag_cell { 'n', a.pval + b.pval, a.label };
+	}
+
+	// Fixed-value flags.
+	if (a.type == 'f')   // (b.type == 'f') by symmetry and object_flag_types_are_compatible()
+	{
+		// Arbitrary choice of label -- the labels *should* be the same, by definition
+		return object_flag_cell { 'f', a.pval + b.pval, a.label };
+	}
+
+	// Flags of the TERNARY variety have a "supercedes" rule
+	// where immunity supercedes resistance.
+	if (a.type == '*')
+	{
+		return object_flag_cell { '*', 0, a.label };
+	}
+	else if (b.type == '*')
+	{
+		return object_flag_cell { '*', 0, b.label };
+	}
+	else  // Both must be '+'
+	{
+		// Arbitrary choice of label -- the labels *should* be the same, by definition
+		return object_flag_cell { '+', 0, a.label };
+	}
+}
+
+constexpr object_flag_cell object_flag_cell_empty { '\0', 0, nullptr };
+
+} // namespace "detail"
+
+using object_flag_cell_monoid = monoid<object_flag_cell, detail::object_flag_cell_append, detail::object_flag_cell_empty>;
+
+} // namespace <anonymous>
+
+namespace { // <anonymous>
+
+static object_flag_meta const *get_lowest_priority_object_flag_meta(std::vector<object_flag_meta const *> const &object_flag_metas)
+{
+	object_flag_meta const *found = nullptr;
+
+	for (auto object_flag_meta: object_flag_metas)
+	{
+		if ((!found) || (found->c_priority > object_flag_meta->c_priority))
+		{
+			found = object_flag_meta;
+		}
+	}
+
+	return found;
+}
+
+
+static std::tuple<char, int> object_flag_cell_to_char(object_flag_cell const &object_flag_cell)
+{
+	switch (object_flag_cell.type)
+	{
+	case 'n':
+	case 'f':
+		// If we have no pval, we use a simple '+'. This applies
+		// to the 'player' slot.
+		if (object_flag_cell.pval == 0)
+		{
+			return std::make_tuple('+', 1);
+		}
+		else
+		{
+			return std::make_tuple(
+			        number_to_digit(object_flag_cell.pval),
+			        (object_flag_cell.pval >= 0) ? 1 : -1);
+		}
+		break;
+
+	case 'b':
+	case '+':
+		return std::make_tuple('+', 1);
+		break;
+
+	case '*':
+		return std::make_tuple('*', 1);
+		break;
+
+	default:
+		return std::make_tuple('.', 0);
+		break;
+	}
+
+	abort();
+}
+
+
+/*
+ * Output a slot
+ */
+static void display_flag_row(
+        int y,
+        int x0,
+        std::vector<std::tuple<char, int, object_flag_set>> const &slots,
+        std::vector<object_flag_meta const *> const &object_flag_metas_at_pcr)
+{
+	assert(!object_flag_metas_at_pcr.empty());
+
+	// Accumulated value of all of the slots
+	auto acc = object_flag_cell_monoid::empty;
+
+	// Go through each slot
+	for (std::size_t i = 0; i < slots.size(); i++)
+	{
+		object_flag_cell combined = object_flag_cell_monoid::empty;
+
+		// Go through all flags that are actually set for this 'cell'.
+		{
+			auto const &slot = slots[i];
+			auto const pval = std::get<1>(slot);
+			auto const flags = std::get<2>(slot);
+
+			for (auto const object_flag_meta: object_flag_metas_at_pcr)
+			{
+				if (object_flag_meta->flag_set & flags)
+				{
+					combined = object_flag_cell_monoid::append(
+					        combined,
+					        object_flag_cell::from_object_flag_meta(*object_flag_meta, pval));
+				}
+			}
+		}
+
+		// Accumulate into the global accumulator
+		acc = object_flag_cell_monoid::append(acc, combined);
+
+		// Write the cell's value.
+		auto const char_and_rating = object_flag_cell_to_char(combined);
+		auto const ch = std::get<0>(char_and_rating);
+		auto const rating = std::get<1>(char_and_rating);
+
+		// Convert good flag into a color.
+		byte a;
+		if (rating == 0)
+		{
+			a = (i & 0x02) ? TERM_GREEN : TERM_SLATE;
+		}
+		else if (rating < 0)
+		{
+			a = TERM_RED;
+		}
+		else
+		{
+			a = TERM_L_GREEN;
+		}
+
+		// Output the flag
+		Term_putch(x0 + 11 + i, y, a, ch);
+	}
+
+	// Extract the label. If the flag isn't set at all then we don't have
+	// an actual label, so we'll use the one from the meta-level object
+	// flag definition. Note that the prioritization is crucial for the
+	// labeling to work properly; e.g. IMM_FIRE comes *before* the
+	// RES_FIRE flag in the object flag list, but we don't want the *label*
+	// from IMM_FIRE to be used when the flag is not set at all.
+	auto const label = (acc.label != nullptr)
+	        ? acc.label
+	        : get_lowest_priority_object_flag_meta(object_flag_metas_at_pcr)->c_name;
+
+	// Get the "rating" for the label.
+	auto const rating = std::get<1>(object_flag_cell_to_char(acc));
+
+	byte label_attr;
+	if (rating == 0) {
+		label_attr = TERM_WHITE;
+	} else if (rating < 0) {
+		label_attr = TERM_RED;
+	} else {
+		label_attr = TERM_L_GREEN;
+	}
+
+	Term_putch(x0 + 10, y, TERM_WHITE, ':');
+	Term_putstr(x0, y, -1, label_attr, label);
+}
 
 /*
  * Summarize resistances
  */
-static void display_player_ben_one(int mode)
+static void display_player_ben_one(int page)
 {
-	int i, n, x, y, z, dispx, modetemp, xtemp;
+	// Slots of flags to show.
+	std::vector<std::tuple<char, int, object_flag_set>> slots;
+	slots.reserve(INVEN_TOTAL - INVEN_WIELD + 1);
 
-	object_type *o_ptr;
-
-	char dummy[80], c;
-
-	u32b f1, f2, f3, f4, f5, esp;
-
-	u16b b[INVEN_TOTAL - INVEN_WIELD + 1][10];
-
-	int d[INVEN_TOTAL - INVEN_WIELD + 1];
-
-	bool_ got;
-
-	byte a;
-
-	cptr name;
-
-	/* Scan equipment */
-	for (i = INVEN_WIELD; i < INVEN_TOTAL; i++)
+	// Scan equipment
+	for (std::size_t i = INVEN_WIELD; i < INVEN_TOTAL; i++)
 	{
-		/* Index */
-		n = (i - INVEN_WIELD);
+		// Skip inventory slots that don't exist on the body.
+		auto n = i - INVEN_WIELD;
+		if ((n < INVEN_TOTAL - INVEN_WIELD) && (!p_ptr->body_parts[n])) continue;
 
-		/* Object */
-		o_ptr = &p_ptr->inventory[i];
-
-		/* Known object flags */
-		object_flags_known(o_ptr, &f1, &f2, &f3, &f4, &f5, &esp);
-
-		/* Incorporate */
-		b[n][0] = (u16b)(f1 & 0xFFFF);
-		b[n][1] = (u16b)(f1 >> 16);
-		b[n][2] = (u16b)(f2 & 0xFFFF);
-		b[n][3] = (u16b)(f2 >> 16);
-		b[n][4] = (u16b)(f3 & 0xFFFF);
-		b[n][5] = (u16b)(f3 >> 16);
-		b[n][6] = (u16b)(f4 & 0xFFFF);
-		b[n][7] = (u16b)(f4 >> 16);
-		b[n][8] = (u16b)(esp & 0xFFFF);
-		b[n][9] = (u16b)(esp >> 16);
-		d[n] = o_ptr->pval;
+		// Extract object flags
+		auto const o_ptr = &p_ptr->inventory[i];
+		auto const flags = object_flags_known(o_ptr);
+		// Add slot
+		slots.emplace_back(
+		        std::make_tuple('a' + i - INVEN_WIELD, o_ptr->pval, flags));
 	}
 
-	/* Carried symbiote */
-	n = INVEN_CARRY - INVEN_WIELD;
-
-	/* Player flags */
-	wield_monster_flags(&f1, &f2, &f3, &f4, &f5, &esp);
-
-	/* Incorporate */
-	b[n][0] = (u16b)(f1 & 0xFFFF);
-	b[n][1] = (u16b)(f1 >> 16);
-	b[n][2] = (u16b)(f2 & 0xFFFF);
-	b[n][3] = (u16b)(f2 >> 16);
-	b[n][4] = (u16b)(f3 & 0xFFFF);
-	b[n][5] = (u16b)(f3 >> 16);
-	b[n][6] = (u16b)(f4 & 0xFFFF);
-	b[n][7] = (u16b)(f4 >> 16);
-	b[n][8] = (u16b)(esp & 0xFFFF);
-	b[n][9] = (u16b)(esp >> 16);
-
-	/* Index */
-	n = INVEN_TOTAL - INVEN_WIELD;
-
-	/* Player flags */
-	player_flags(&f1, &f2, &f3, &f4, &f5, &esp);
-
-	/* Incorporate */
-	b[n][0] = (u16b)(f1 & 0xFFFF);
-	b[n][1] = (u16b)(f1 >> 16);
-	b[n][2] = (u16b)(f2 & 0xFFFF);
-	b[n][3] = (u16b)(f2 >> 16);
-	b[n][4] = (u16b)(f3 & 0xFFFF);
-	b[n][5] = (u16b)(f3 >> 16);
-	b[n][6] = (u16b)(f4 & 0xFFFF);
-	b[n][7] = (u16b)(f4 >> 16);
-	b[n][8] = (u16b)(esp & 0xFFFF);
-	b[n][9] = (u16b)(esp >> 16);
-
-	/* Generate the equip chars */
-	sprintf(dummy, " ");
-	for (i = 0; i < INVEN_TOTAL - INVEN_WIELD; i++)
+	// Carried symbiote
 	{
-		/* If you have that body part then show it */
-		if (p_ptr->body_parts[i])
+		// Extract flags
+		auto const flags = wield_monster_flags();
+		// Add slot
+		slots.emplace_back(
+		        std::make_tuple('z', 0, flags));
+	}
+
+	// Player
+	slots.emplace_back(
+	        std::make_tuple('@', 0, player_flags()));
+
+	// Go through each column
+	for (int col = 0; col < 2; col++)
+	{
+		// Base coordinate for output
+		const auto x0 = col * 40;
+		const auto y0 = 3;
+
+		// Add slot headings.
 		{
-			strcat(dummy, format("%c", i + 'a'));
+			std::string buf;
+			buf.reserve(slots.size());
+
+			for (auto const &slot: slots)
+			{
+				buf += std::get<0>(slot);
+			}
+
+			Term_putstr(x0 + 11, y0, -1, TERM_WHITE, buf.c_str());
 		}
-	}
-	strcat(dummy, "@");
 
-	/* Scan cols */
-	for (x = 1; x > -1; x--)
-	{
-		/* Label */
-		Term_putstr(x * 40 + 11, 3, -1, TERM_WHITE, dummy);
-
-		/* Scan rows */
-		for (y = 0; y < 16; y++)
+		// Scan rows
+		for (int row = 0; row < 16; row++)
 		{
-			if (mode == 3 && x == 1)
+			// Extract the flag metadata for the current page/col/row
+			auto const object_flag_metas_at_pcr =
+			        object_flag_metas_by_pcr(page, col, row);
+
+			// Ignore flags which we don't actually map to anything.
+			if (object_flag_metas_at_pcr.empty())
 			{
-				modetemp = 4;
-				xtemp = 0;
-			}
-			else
-			{
-				modetemp = mode;
-				xtemp = x;
+				continue;
 			}
 
-			for (z = mode; z <= modetemp; z++)
-			{
-				if (mode == 3 && x == 1 && z == modetemp) xtemp = 1;
-				name = object_flag_names[32 * modetemp + 16 * xtemp + y];
-				got = FALSE;
+			// Y coordinate for the row
+			auto const y = y0 + 1 + row;
 
-				/* No name */
-				if (!name) continue;
-
-				/* Dump colon */
-				if (!(modetemp == 1 && x == 0 && y > 7 && y < 12))
-				{
-					Term_putch(x * 40 + 10, y + 4, TERM_WHITE, ':');
-				}
-
-				/* Check flags */
-				dispx = 0;
-				for (n = 0; n < INVEN_TOTAL - INVEN_WIELD + 1; n++)
-				{
-					/* Change colour every two columns */
-					bool_ is_green = (dispx & 0x02);
-					a = (is_green ? TERM_GREEN : TERM_SLATE);
-					c = '.';
-
-					/* If the body part doesn't exists then skip it :) */
-					if ((n < INVEN_TOTAL - INVEN_WIELD) && (!p_ptr->body_parts[n])) continue;
-
-					/* Increment the drawing coordinates */
-					dispx++;
-
-					/* Check flag */
-					if (b[n][2 * modetemp + xtemp] & (1 << y))
-					{
-						a = (is_green ? TERM_L_GREEN : TERM_WHITE);
-						if (modetemp == 1 && x == 0 && y > 7 && y < 12)
-						{
-							c = '*';
-						}
-						else if (modetemp == 0 && x == 0 && y < 14 && (y < 6 || y > 7))
-						{
-							if (n == INVEN_TOTAL - INVEN_WIELD)
-							{
-								c = '+';
-							}
-							else
-							{
-								c = d[n];
-								if (c < 0)
-								{
-									c = -c;
-									a = TERM_RED;
-								}
-								c = (c > 9 ? '*' : I2D(c));
-							}
-						}
-						else
-						{
-							c = '+';
-						}
-						got = TRUE;
-					}
-
-					/* HACK - Check for nether immunity and
-					   apply to Res Neth line */
-					if (modetemp == 1 && x == 1 && y == 12)
-					{
-						if (b[n][7] & (1 << 6))
-						{
-							a = (is_green ? TERM_L_GREEN : TERM_WHITE);
-							c = '*';
-							got = TRUE;
-						}
-					}
-
-					/* Dump flag */
-					if (modetemp == 1 && x == 0 && y > 7 && y < 12)
-					{
-						if (c == '*') Term_putch(40 + 11 + dispx, y - 4, a, c);
-					}
-					else
-					{
-						Term_putch(x * 40 + 11 + dispx, y + 4, a, c);
-					}
-				}
-
-				a = TERM_WHITE;
-				if (got)
-				{
-					if (modetemp == 1 && x == 0 && y > 7 && y < 12)
-					{
-						a = TERM_L_GREEN;
-					}
-					else if (modetemp != 0)
-					{
-						a = TERM_GREEN;
-					}
-				}
-
-				/* HACK - Check for nether immunity and change "Res Neth" */
-				if (modetemp == 1 && x == 1 && y == 12 && p_ptr->immune_neth)
-				{
-					name = "Imm Neth";
-					a = TERM_L_GREEN;
-				}
-
-				/* Dump name */
-				if (modetemp == 1 && x == 0 && y > 7 && y < 12)
-				{
-					if (got) Term_putstr(40, y - 4, -1, a, name);
-				}
-				else
-				{
-					Term_putstr(x * 40, y + 4, -1, a, name);
-				}
-			}
+			// Show the row
+			display_flag_row(y, x0, slots, object_flag_metas_at_pcr);
 		}
 	}
 }
 
+} // namespace <anonymous>
 
 /*
  * Display the character on the screen (various modes)
@@ -4030,7 +4056,7 @@ static long total_points(void)
 		object_kind *k_ptr = &k_info[k];
 
 		/* Hack -- skip artifacts */
-		if (k_ptr->flags3 & (TR3_INSTA_ART)) continue;
+		if (k_ptr->flags & TR_INSTA_ART) continue;
 
 		/* List known flavored objects */
 		if (k_ptr->flavor && k_ptr->aware)

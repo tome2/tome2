@@ -9,6 +9,7 @@
 #include "monster2.hpp"
 #include "monster_type.hpp"
 #include "object2.hpp"
+#include "object_flag.hpp"
 #include "player_type.hpp"
 #include "quark.hpp"
 #include "tables.hpp"
@@ -76,23 +77,30 @@ static bool_ quest_wight_gen_hook(void *, void *, void *)
 
 					q_ptr->art_name = quark_add("of the Wight");
 
-					q_ptr->art_flags1 |= ( TR1_INT | TR1_SEARCH );
-					q_ptr->art_flags2 |= ( TR2_RES_BLIND | TR2_SENS_FIRE | TR2_RES_CONF );
-					q_ptr->art_flags3 |= ( TR3_IGNORE_ACID | TR3_IGNORE_ELEC |
-					                       TR3_IGNORE_FIRE | TR3_IGNORE_COLD | TR3_SEE_INVIS);
+					q_ptr->art_flags |=
+						TR_INT |
+						TR_SEARCH |
+						TR_RES_BLIND |
+						TR_SENS_FIRE |
+						TR_RES_CONF |
+						TR_IGNORE_ACID |
+						TR_IGNORE_ELEC |
+						TR_IGNORE_FIRE |
+						TR_IGNORE_COLD |
+						TR_SEE_INVIS |
+						TR_CURSED |
+						TR_HEAVY_CURSE;
 
-					/* For game balance... */
-					q_ptr->art_flags3 |= (TR3_CURSED | TR3_HEAVY_CURSE);
 					q_ptr->ident |= IDENT_CURSED;
 
 					if (randint(2) == 1)
 					{
-						q_ptr->art_flags1 |= (TR1_SPELL);
+						q_ptr->art_flags |= TR_SPELL;
 						q_ptr->pval = 6;
 					}
 					else
 					{
-						q_ptr->art_flags1 |= (TR1_MANA);
+						q_ptr->art_flags |= TR_MANA;
 						q_ptr->pval = 2;
 					}
 

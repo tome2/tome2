@@ -1,6 +1,7 @@
 #pragma once
 
 #include "h-basic.h"
+#include "object_flag_set.hpp"
 
 /**
  * Object information for a specific object.
@@ -77,19 +78,8 @@ struct object_type
 	u16b note = 0;                           /* Inscription index */
 	u16b art_name = 0;                       /* Artifact name (random artifacts) */
 
-	u32b art_flags1 = 0;                     /* Flags, set 1  Alas, these were necessary */
-	u32b art_flags2 = 0;                     /* Flags, set 2  for the random artifacts of*/
-	u32b art_flags3 = 0;                     /* Flags, set 3  Zangband */
-	u32b art_flags4 = 0;                     /* Flags, set 4  PernAngband */
-	u32b art_flags5 = 0;                     /* Flags, set 5  PernAngband */
-	u32b art_esp = 0;                        /* Flags, set esp  PernAngband */
-
-	u32b art_oflags1 = 0;                    /* Obvious Flags, set 1 */
-	u32b art_oflags2 = 0;                    /* Obvious Flags, set 2 */
-	u32b art_oflags3 = 0;                    /* Obvious Flags, set 3 */
-	u32b art_oflags4 = 0;                    /* Obvious Flags, set 4 */
-	u32b art_oflags5 = 0;                    /* Obvious Flags, set 5 */
-	u32b art_oesp = 0;                       /* Obvious Flags, set esp */
+	object_flag_set art_flags;               /* Flags */
+	object_flag_set art_oflags;              /* Obvious flags */
 
 	s16b held_m_idx = 0;                     /* Monster holding the object; if any */
 

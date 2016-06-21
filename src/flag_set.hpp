@@ -50,6 +50,14 @@ public:
 		return f;
 	}
 
+	static constexpr flag_set make_bit(std::size_t ibit)
+	{
+		assert(ibit < nbits);
+		flag_set f;
+		f.m_data[ibit / 32] = (1UL << (ibit % 32));
+		return f;
+	}
+
 	constexpr std::size_t size() const
 	{
 		return tiers;

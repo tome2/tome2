@@ -1,6 +1,7 @@
 #pragma once
 
 #include "h-basic.h"
+#include "object_flag_set.hpp"
 #include "object_type_fwd.hpp"
 
 #include <functional>
@@ -21,19 +22,9 @@ object_filter_t TVal(byte tval);
 object_filter_t SVal(byte sval);
 
 /**
- * Has given bit mask in flag3 value.
+ * Has given set of flags set.
  */
-object_filter_t HasFlag3(u32b mask);
-
-/**
- * Has given bit mask in flag4 value.
- */
-object_filter_t HasFlag4(u32b mask);
-
-/**
- * Has given bit mask in flag5 value.
- */
-object_filter_t HasFlag5(u32b mask);
+object_filter_t HasFlags(object_flag_set const &);
 
 /**
  * Is the object an artifact?

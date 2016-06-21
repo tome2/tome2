@@ -358,12 +358,7 @@ static void do_subrace(ls_flag_t flag)
 
 	for (i = 0; i < PY_MAX_LEVEL + 1; i++)
 	{
-		do_u32b(&sr_ptr->oflags1[i], flag);
-		do_u32b(&sr_ptr->oflags2[i], flag);
-		do_u32b(&sr_ptr->oflags3[i], flag);
-		do_u32b(&sr_ptr->oflags4[i], flag);
-		do_u32b(&sr_ptr->oflags5[i], flag);
-		do_u32b(&sr_ptr->oesp[i], flag);
+		do_flag_set(&sr_ptr->oflags[i], flag);
 		do_s16b(&sr_ptr->opval[i], flag);
 	}
 
@@ -1043,10 +1038,6 @@ static void do_item(object_type *o_ptr, ls_flag_t flag)
 	byte old_dd;
 	byte old_ds;
 
-	u32b f1, f2, f3, f4, f5, esp;
-
-	object_kind *k_ptr;
-
 	/* Kind */
 	do_s16b(&o_ptr->k_idx, flag);
 
@@ -1099,20 +1090,10 @@ static void do_item(object_type *o_ptr, ls_flag_t flag)
 	do_byte(&o_ptr->marked, flag);
 
 	/* flags */
-	do_u32b(&o_ptr->art_flags1, flag);
-	do_u32b(&o_ptr->art_flags2, flag);
-	do_u32b(&o_ptr->art_flags3, flag);
-	do_u32b(&o_ptr->art_flags4, flag);
-	do_u32b(&o_ptr->art_flags5, flag);
-	do_u32b(&o_ptr->art_esp, flag);
+	do_flag_set(&o_ptr->art_flags, flag);
 
 	/* obvious flags */
-	do_u32b(&o_ptr->art_oflags1, flag);
-	do_u32b(&o_ptr->art_oflags2, flag);
-	do_u32b(&o_ptr->art_oflags3, flag);
-	do_u32b(&o_ptr->art_oflags4, flag);
-	do_u32b(&o_ptr->art_oflags5, flag);
-	do_u32b(&o_ptr->art_oesp, flag);
+	do_flag_set(&o_ptr->art_oflags, flag);
 
 	/* Monster holding object */
 	do_s16b(&o_ptr->held_m_idx, flag);
@@ -1177,7 +1158,7 @@ static void do_item(object_type *o_ptr, ls_flag_t flag)
 	/*********** END OF ls_flag_t::SAVE ***************/
 
 	/* Obtain the "kind" template */
-	k_ptr = &k_info[o_ptr->k_idx];
+	object_kind *k_ptr = &k_info[o_ptr->k_idx];
 
 	/* Obtain tval/sval from k_info */
 	o_ptr->tval = k_ptr->tval;
@@ -1201,9 +1182,6 @@ static void do_item(object_type *o_ptr, ls_flag_t flag)
 		return;
 	}
 
-
-	/* Extract the flags */
-	object_flags(o_ptr, &f1, &f2, &f3, &f4, &f5, &esp);
 
 	/* Paranoia */
 	if (o_ptr->name1)

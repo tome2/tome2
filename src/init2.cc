@@ -25,6 +25,7 @@
 #include "monster_race.hpp"
 #include "monster_race_flag.hpp"
 #include "monster_type.hpp"
+#include "object_flag.hpp"
 #include "object_kind.hpp"
 #include "object_type.hpp"
 #include "owner_type.hpp"
@@ -390,7 +391,7 @@ namespace {
 
 		static void allocate()
 		{
-			ra_info = make_array<randart_part_type>(max_ra_idx);
+			ra_info = new randart_part_type[max_ra_idx];
 		}
 
 		static errr parse(FILE *fp)
@@ -1110,16 +1111,14 @@ static void init_guardians(void)
 			if (d_ptr->final_artifact)
 			{
 				artifact_type *a_ptr = &a_info[d_ptr->final_artifact];
-
-				a_ptr->flags4 |= TR4_SPECIAL_GENE;
+				a_ptr->flags |= TR_SPECIAL_GENE;
 			}
 
 			/* Mark the final object */
 			if (d_ptr->final_object)
 			{
 				object_kind *k_ptr = &k_info[d_ptr->final_object];
-
-				k_ptr->flags4 |= TR4_SPECIAL_GENE;
+				k_ptr->flags |= TR_SPECIAL_GENE;
 			}
 
 			/* Give randart if there are no final artifacts */

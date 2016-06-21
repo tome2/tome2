@@ -28,6 +28,7 @@
 #include "monster_race_flag.hpp"
 #include "monster_spell_flag.hpp"
 #include "monster_type.hpp"
+#include "object_flag.hpp"
 #include "object1.hpp"
 #include "object2.hpp"
 #include "options.hpp"
@@ -241,11 +242,8 @@ s16b tot_dam_aux(object_type *o_ptr, int tdam, monster_type *m_ptr,
 
 	auto const r_ptr = m_ptr->race();
 
-	u32b f1, f2, f3, f4, f5, esp;
-
-
 	/* Extract the flags */
-	object_flags(o_ptr, &f1, &f2, &f3, &f4, &f5, &esp);
+	auto const f = object_flags(o_ptr);
 
 	/* Some "weapons" and "ammo" do extra damage */
 	switch (o_ptr->tval)
@@ -261,75 +259,75 @@ s16b tot_dam_aux(object_type *o_ptr, int tdam, monster_type *m_ptr,
 	case TV_DIGGING:
 		{
 			/* Slay Animal */
-			if ((f1 & (TR1_SLAY_ANIMAL)) && (r_ptr->flags & RF_ANIMAL))
+			if ((f & TR_SLAY_ANIMAL) && (r_ptr->flags & RF_ANIMAL))
 			{
 				if (mult < 2) mult = 2;
 			}
 
 			/* Slay Evil */
-			if ((f1 & (TR1_SLAY_EVIL)) && (r_ptr->flags & RF_EVIL))
+			if ((f & TR_SLAY_EVIL) && (r_ptr->flags & RF_EVIL))
 			{
 				if (mult < 2) mult = 2;
 			}
 
 			/* Slay Undead */
-			if ((f1 & (TR1_SLAY_UNDEAD)) && (r_ptr->flags & RF_UNDEAD))
+			if ((f & TR_SLAY_UNDEAD) && (r_ptr->flags & RF_UNDEAD))
 			{
 				if (mult < 3) mult = 3;
 			}
 
 			/* Slay Demon */
-			if ((f1 & (TR1_SLAY_DEMON)) && (r_ptr->flags & RF_DEMON))
+			if ((f & TR_SLAY_DEMON) && (r_ptr->flags & RF_DEMON))
 			{
 				if (mult < 3) mult = 3;
 			}
 
 			/* Slay Orc */
-			if ((f1 & (TR1_SLAY_ORC)) && (r_ptr->flags & RF_ORC))
+			if ((f & TR_SLAY_ORC) && (r_ptr->flags & RF_ORC))
 			{
 				if (mult < 3) mult = 3;
 			}
 
 			/* Slay Troll */
-			if ((f1 & (TR1_SLAY_TROLL)) && (r_ptr->flags & RF_TROLL))
+			if ((f & TR_SLAY_TROLL) && (r_ptr->flags & RF_TROLL))
 			{
 				if (mult < 3) mult = 3;
 			}
 
 			/* Slay Giant */
-			if ((f1 & (TR1_SLAY_GIANT)) && (r_ptr->flags & RF_GIANT))
+			if ((f & TR_SLAY_GIANT) && (r_ptr->flags & RF_GIANT))
 			{
 				if (mult < 3) mult = 3;
 			}
 
 			/* Slay Dragon  */
-			if ((f1 & (TR1_SLAY_DRAGON)) && (r_ptr->flags & RF_DRAGON))
+			if ((f & TR_SLAY_DRAGON) && (r_ptr->flags & RF_DRAGON))
 			{
 				if (mult < 3) mult = 3;
 			}
 
 			/* Execute Dragon */
-			if ((f1 & (TR1_KILL_DRAGON)) && (r_ptr->flags & RF_DRAGON))
+			if ((f & TR_KILL_DRAGON) && (r_ptr->flags & RF_DRAGON))
 			{
 				if (mult < 5) mult = 5;
 			}
 
 			/* Execute Undead */
-			if ((f5 & (TR5_KILL_UNDEAD)) && (r_ptr->flags & RF_UNDEAD))
+			if ((f & TR_KILL_UNDEAD) && (r_ptr->flags & RF_UNDEAD))
 			{
 
 				if (mult < 5) mult = 5;
 			}
 
 			/* Execute Demon */
-			if ((f5 & (TR5_KILL_DEMON)) && (r_ptr->flags & RF_DEMON))
+			if ((f & TR_KILL_DEMON) && (r_ptr->flags & RF_DEMON))
 			{
 				if (mult < 5) mult = 5;
 			}
 
 
 			/* Brand (Acid) */
-			if (f1 & (TR1_BRAND_ACID))
+			if (f & TR_BRAND_ACID)
 			{
 				if (r_ptr->flags & RF_IM_ACID)
 				{
@@ -346,7 +344,7 @@ s16b tot_dam_aux(object_type *o_ptr, int tdam, monster_type *m_ptr,
 			}
 
 			/* Brand (Elec) */
-			if (f1 & (TR1_BRAND_ELEC))
+			if (f & TR_BRAND_ELEC)
 			{
 				if (r_ptr->flags & RF_IM_ELEC)
 				{
@@ -363,7 +361,7 @@ s16b tot_dam_aux(object_type *o_ptr, int tdam, monster_type *m_ptr,
 			}
 
 			/* Brand (Fire) */
-			if (f1 & (TR1_BRAND_FIRE))
+			if (f & TR_BRAND_FIRE)
 			{
 				if (r_ptr->flags & RF_IM_FIRE)
 				{
@@ -380,7 +378,7 @@ s16b tot_dam_aux(object_type *o_ptr, int tdam, monster_type *m_ptr,
 			}
 
 			/* Brand (Cold) */
-			if (f1 & (TR1_BRAND_COLD))
+			if (f & TR_BRAND_COLD)
 			{
 				if (r_ptr->flags & RF_IM_COLD)
 				{
@@ -397,7 +395,7 @@ s16b tot_dam_aux(object_type *o_ptr, int tdam, monster_type *m_ptr,
 			}
 
 			/* Brand (Poison) */
-			if (f1 & (TR1_BRAND_POIS) || (p_ptr->tim_poison))
+			if ((f & TR_BRAND_POIS) || (p_ptr->tim_poison))
 			{
 				if (r_ptr->flags & RF_IM_POIS)
 				{
@@ -416,7 +414,7 @@ s16b tot_dam_aux(object_type *o_ptr, int tdam, monster_type *m_ptr,
 			}
 
 			/* Wounding */
-			if (f5 & (TR5_WOUNDING))
+			if (f & TR_WOUNDING)
 			{
 				if (r_ptr->flags & RF_NO_CUT)
 				{
@@ -1883,21 +1881,22 @@ static void py_attack_hand(int *k, monster_type *m_ptr, s32b *special)
 static void do_nazgul(int *k, int *num, int num_blow, int weap, std::shared_ptr<monster_race> r_ptr,
                object_type *o_ptr)
 {
-	u32b f1, f2, f3, f4, f5, esp;
-
-	bool_ mundane;
 	bool_ allow_shatter = TRUE;
 
 	/* Extract mundane-ness of the current weapon */
-	object_flags(o_ptr, &f1, &f2, &f3, &f4, &f5, &esp);
+	auto const f = object_flags(o_ptr);
 
 	/* It should be Slay Evil, Slay Undead, or *Slay Undead* */
-	mundane = !(f1 & TR1_SLAY_EVIL) && !(f1 & TR1_SLAY_UNDEAD) &&
-	          !(f5 & TR5_KILL_UNDEAD);
+	bool_ const mundane =
+		!(f & TR_SLAY_EVIL) &&
+		!(f & TR_SLAY_UNDEAD) &&
+		!(f & TR_KILL_UNDEAD);
 
 	/* Some blades can resist shattering */
-	if (f5 & TR5_RES_MORGUL)
+	if (f & TR_RES_MORGUL)
+	{
 		allow_shatter = FALSE;
+	}
 
 	/* Mega Hack -- Hitting Nazgul is REALY dangerous (ideas from Akhronath) */
 	if (r_ptr->flags & RF_NAZGUL)
@@ -2006,9 +2005,6 @@ void py_attack(int y, int x, int max_blow)
 	int drain_result = 0, drain_heal = 0;
 
 	int drain_left = MAX_VAMPIRIC_DRAIN;
-
-	/* A massive hack -- life-draining weapons */
-	u32b f1, f2, f3, f4, f5, esp;
 
 	int weap;
 
@@ -2128,9 +2124,9 @@ void py_attack(int y, int x, int max_blow)
 			bonus = p_ptr->to_h + p_ptr->to_h_melee + o_ptr->to_h;
 			chance = p_ptr->skill_thn + (bonus * BTH_PLUS_ADJ);
 
-			object_flags(o_ptr, &f1, &f2, &f3, &f4, &f5, &esp);
+			auto const flags = object_flags(o_ptr);
 
-			if (!(f4 & TR4_NEVER_BLOW))
+			if (!(flags & TR_NEVER_BLOW))
 			{
 				int num_blow = p_ptr->num_blow;
 
@@ -2151,7 +2147,7 @@ void py_attack(int y, int x, int max_blow)
 						k = 1;
 
 						/* Select a chaotic effect (50% chance) */
-						if ((f1 & TR1_CHAOTIC) && (rand_int(2) == 0))
+						if ((flags & TR_CHAOTIC) && (rand_int(2) == 0))
 						{
 							if (randint(5) < 3)
 							{
@@ -2181,7 +2177,7 @@ void py_attack(int y, int x, int max_blow)
 						}
 
 						/* Vampiric drain */
-						if ((f1 & TR1_VAMPIRIC) || (chaos_effect == 1))
+						if ((flags & TR_VAMPIRIC) || (chaos_effect == 1))
 						{
 							if (!
 							                ((r_ptr->flags & RF_UNDEAD) ||
@@ -2191,7 +2187,7 @@ void py_attack(int y, int x, int max_blow)
 								drain_result = 0;
 						}
 
-						if (f1 & TR1_VORPAL && (randint(6) == 1))
+						if ((flags & TR_VORPAL) && (randint(6) == 1))
 							vorpal_cut = TRUE;
 						else
 							vorpal_cut = FALSE;
@@ -2308,7 +2304,7 @@ void py_attack(int y, int x, int max_blow)
 						}
 
 						/* May it clone the monster ? */
-						if ((f4 & TR4_CLONE) && magik(30))
+						if ((flags & TR_CLONE) && magik(30))
 						{
 							msg_format("Oh no! Your weapon clones %^s!",
 							           m_name);

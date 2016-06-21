@@ -1,6 +1,7 @@
 #pragma once
 
 #include "h-basic.h"
+#include "object_flag_set.hpp"
 
 /**
  * Size of allocation table for objects
@@ -38,17 +39,9 @@ struct object_kind
 
 	s32b cost = 0;                           /* Object "base cost" */
 
-	u32b flags1 = 0;                         /* Flags, set 1 */
-	u32b flags2 = 0;                         /* Flags, set 2 */
-	u32b flags3 = 0;                         /* Flags, set 3 */
-	u32b flags4 = 0;                         /* Flags, set 4 */
-	u32b flags5 = 0;                         /* Flags, set 5 */
+	object_flag_set flags;
 
-	u32b oflags1 = 0;                        /* Obvious Flags, set 1 */
-	u32b oflags2 = 0;                        /* Obvious Flags, set 2 */
-	u32b oflags3 = 0;                        /* Obvious Flags, set 3 */
-	u32b oflags4 = 0;                        /* Obvious Flags, set 4 */
-	u32b oflags5 = 0;                        /* Obvious Flags, set 5 */
+	object_flag_set oflags;
 
 	byte locale[ALLOCATION_MAX] = { 0 };     /* Allocation level(s) */
 	byte chance[ALLOCATION_MAX] = { 0 };     /* Allocation chance(s) */
@@ -71,9 +64,6 @@ struct object_kind
 	bool_ aware = 0;                         /* The player is "aware" of the item's effects */
 
 	bool_ tried = 0;                         /* The player has "tried" one of the items */
-
-	u32b esp = 0;                            /* ESP flags */
-	u32b oesp = 0;                           /* Obvious ESP flags */
 
 	byte btval = 0;                          /* Become Object type */
 	byte bsval = 0;                          /* Become Object sub type */

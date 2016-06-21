@@ -25,6 +25,7 @@
 #include "notes.hpp"
 #include "object1.hpp"
 #include "object2.hpp"
+#include "object_flag.hpp"
 #include "object_kind.hpp"
 #include "player_type.hpp"
 #include "skills.hpp"
@@ -3046,7 +3047,7 @@ void do_cmd_knowledge_artifacts(void)
 		okayk[k] = FALSE;
 
 		/* Skip "empty" artifacts */
-		if (!(k_ptr->flags3 & TR3_NORM_ART)) continue;
+		if (!(k_ptr->flags & TR_NORM_ART)) continue;
 
 		/* Skip "uncreated" artifacts */
 		if (!k_ptr->artifact) continue;
@@ -3078,7 +3079,7 @@ void do_cmd_knowledge_artifacts(void)
 				if (object_known_p(o_ptr)) continue;
 
 				/* Note the artifact */
-				if (k_info[o_ptr->k_idx].flags3 & TR3_NORM_ART)
+				if (k_info[o_ptr->k_idx].flags & TR_NORM_ART)
 				{
 					okayk[o_ptr->k_idx] = FALSE;
 				}
@@ -3111,7 +3112,7 @@ void do_cmd_knowledge_artifacts(void)
 			if (object_known_p(o_ptr)) continue;
 
 			/* Note the artifact */
-			if (k_info[o_ptr->k_idx].flags3 & TR3_NORM_ART)
+			if (k_info[o_ptr->k_idx].flags & TR_NORM_ART)
 			{
 				okayk[o_ptr->k_idx] = FALSE;
 			}
@@ -3140,7 +3141,7 @@ void do_cmd_knowledge_artifacts(void)
 		if (object_known_p(o_ptr)) continue;
 
 		/* Note the artifact */
-		if (k_info[o_ptr->k_idx].flags3 & TR3_NORM_ART)
+		if (k_info[o_ptr->k_idx].flags & TR_NORM_ART)
 		{
 			okayk[o_ptr->k_idx] = FALSE;
 		}
@@ -3172,7 +3173,6 @@ void do_cmd_knowledge_artifacts(void)
 		{
 			object_type forge;
 			object_type *q_ptr;
-			u32b f1, f2, f3, f4, f5, esp;
 
 			/* Get local object */
 			q_ptr = &forge;
@@ -3184,9 +3184,11 @@ void do_cmd_knowledge_artifacts(void)
 			q_ptr->name1 = k;
 
 			/* Spell in it ? no ! */
-			object_flags(q_ptr, &f1, &f2, &f3, &f4, &f5, &esp);
-			if (f5 & TR5_SPELL_CONTAIN)
+			auto const flags = object_flags(q_ptr);
+			if (flags & TR_SPELL_CONTAIN)
+			{
 				q_ptr->pval2 = -1;
+			}
 
 			/* Describe the artifact */
 			object_desc_store(base_name, q_ptr, FALSE, 0);
@@ -3589,7 +3591,7 @@ static void do_cmd_knowledge_objects(void)
 		object_kind *k_ptr = &k_info[k];
 
 		/* Hack -- skip artifacts */
-		if (k_ptr->flags3 & (TR3_INSTA_ART)) continue;
+		if (k_ptr->flags & (TR_INSTA_ART)) continue;
 
 		/* List known flavored objects */
 		if (k_ptr->flavor && k_ptr->aware)

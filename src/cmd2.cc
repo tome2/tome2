@@ -31,6 +31,7 @@
 #include "monster_type.hpp"
 #include "object1.hpp"
 #include "object2.hpp"
+#include "object_flag.hpp"
 #include "object_kind.hpp"
 #include "options.hpp"
 #include "player_type.hpp"
@@ -3594,11 +3595,10 @@ void do_cmd_throw(void)
 	/* Access the item */
 	object_type *o_ptr = get_object(item);
 
-	u32b f1, f2, f3, f4, f5, esp;
-	object_flags(o_ptr, &f1, &f2, &f3, &f4, &f5, &esp);
+	auto const flags = object_flags(o_ptr);
 
 	/* Hack - Cannot throw away 'no drop' cursed items */
-	if (cursed_p(o_ptr) && (f4 & TR4_CURSE_NO_DROP))
+	if (cursed_p(o_ptr) && (flags & TR_CURSE_NO_DROP))
 	{
 		/* Oops */
 		msg_print("Hmmm, you seem to be unable to throw it.");

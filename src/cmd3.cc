@@ -21,6 +21,7 @@
 #include "monster_race_flag.hpp"
 #include "object1.hpp"
 #include "object2.hpp"
+#include "object_flag.hpp"
 #include "object_kind.hpp"
 #include "object_type.hpp"
 #include "options.hpp"
@@ -161,28 +162,18 @@ void do_cmd_equip(void)
  */
 static bool item_tester_hook_wear(object_type const *o_ptr)
 {
-	u32b f1, f2, f3, f4, f5, esp;
 	int slot = wield_slot(o_ptr);
 
-
-	/* Extract the flags */
-	object_flags(o_ptr, &f1, &f2, &f3, &f4, &f5, &esp);
-
 	/* Only one ultimate at a time */
-	if (f4 & TR4_ULTIMATE)
+	if (object_flags(o_ptr) & TR_ULTIMATE)
 	{
-		int i;
-
-		for (i = INVEN_WIELD; i < INVEN_TOTAL; i++)
+		for (int i = INVEN_WIELD; i < INVEN_TOTAL; i++)
 		{
 			object_type *q_ptr = &p_ptr->inventory[i];
 
-			/* Extract the flags */
-			object_flags(q_ptr, &f1, &f2, &f3, &f4, &f5, &esp);
-
 			if (!q_ptr->k_idx) continue;
 
-			if (f4 & TR4_ULTIMATE) return (FALSE);
+			if (object_flags(q_ptr) & TR_ULTIMATE) return (FALSE);
 		}
 	}
 
@@ -226,9 +217,6 @@ void do_cmd_wield(void)
 	cptr act;
 
 	char o_name[80];
-
-	u32b f1, f2, f3, f4, f5, esp;
-
 
 	/* Get an item */
 	if (!get_item(&item,
@@ -283,11 +271,11 @@ void do_cmd_wield(void)
 	}
 
 	/* Extract the flags */
-	object_flags(o_ptr, &f1, &f2, &f3, &f4, &f5, &esp);
+	auto const flags = object_flags(o_ptr);
 
 	/* Two handed weapons can't be wielded with a shield */
 	if ((is_slot_ok(slot - INVEN_WIELD + INVEN_ARM)) &&
-	                (f4 & TR4_MUST2H) &&
+			(flags & TR_MUST2H) &&
 	                (p_ptr->inventory[slot - INVEN_WIELD + INVEN_ARM].k_idx != 0))
 	{
 		object_desc(o_name, o_ptr, FALSE, 0);
@@ -300,10 +288,10 @@ void do_cmd_wield(void)
 		i_ptr = &p_ptr->inventory[slot - INVEN_ARM + INVEN_WIELD];
 
 		/* Extract the flags */
-		object_flags(i_ptr, &f1, &f2, &f3, &f4, &f5, &esp);
+		auto const i_flags = object_flags(i_ptr);
 
 		/* Prevent shield from being put on if wielding 2H */
-		if ((f4 & TR4_MUST2H) && (i_ptr->k_idx) &&
+		if ((i_flags & TR_MUST2H) && (i_ptr->k_idx) &&
 		                (p_ptr->body_parts[slot - INVEN_WIELD] == INVEN_ARM))
 		{
 			object_desc(o_name, o_ptr, FALSE, 0);
@@ -312,7 +300,7 @@ void do_cmd_wield(void)
 		}
 
 		if ((p_ptr->body_parts[slot - INVEN_WIELD] == INVEN_ARM) &&
-		                (f4 & TR4_COULD2H))
+		                (i_flags & TR_COULD2H))
 		{
 			if (!get_check("Are you sure you want to restrict your fighting? "))
 			{
@@ -321,13 +309,9 @@ void do_cmd_wield(void)
 		}
 	}
 
-
-	/* Extract the flags */
-	object_flags(o_ptr, &f1, &f2, &f3, &f4, &f5, &esp);
-
 	if ((is_slot_ok(slot - INVEN_WIELD + INVEN_ARM)) &&
 	                (p_ptr->inventory[slot - INVEN_WIELD + INVEN_ARM].k_idx != 0) &&
-	                (f4 & TR4_COULD2H))
+			(flags & TR_COULD2H))
 	{
 		if (!get_check("Are you sure you want to use this weapon with a shield?"))
 		{
@@ -519,8 +503,7 @@ void do_cmd_drop(void)
 
 	/* Get the item */
 	object_type *o_ptr = get_object(item);
-	u32b f1, f2, f3, f4, f5, esp;
-	object_flags(o_ptr, &f1, &f2, &f3, &f4, &f5, &esp);
+	auto const flags = object_flags(o_ptr);
 
 	/* Can we drop */
 	struct hook_drop_in in = { item };
@@ -539,7 +522,7 @@ void do_cmd_drop(void)
 		}
 		else
 		{
-			if (f4 & TR4_CURSE_NO_DROP)
+			if (flags & TR_CURSE_NO_DROP)
 			{
 				/* Oops */
 				msg_print("Hmmm, you seem to be unable to drop it.");
@@ -628,10 +611,8 @@ void do_cmd_destroy(void)
 	/* Take no time, just like the automatizer */
 	energy_use = 0;
 
-	u32b f1, f2, f3, f4, f5, esp;
-	object_flags(o_ptr, &f1, &f2, &f3, &f4, &f5, &esp);
-
-	if ((f4 & TR4_CURSE_NO_DROP) && cursed_p(o_ptr))
+	auto const flags = object_flags(o_ptr);
+	if ((flags & TR_CURSE_NO_DROP) && cursed_p(o_ptr))
 	{
 		/* Oops */
 		msg_print("Hmmm, you seem to be unable to destroy it.");
@@ -691,8 +672,10 @@ void do_cmd_destroy(void)
 	}
 
 	/* Eru wont be happy */
-	if (f3 & TR3_BLESSED)
+	if (flags & TR_BLESSED)
+	{
 		inc_piety(GOD_ERU, -10 * k_info[o_ptr->k_idx].level);
+	}
 
 	/* Eliminate the item */
 	inc_stack_size(item, -amt);
@@ -958,13 +941,8 @@ static void do_cmd_refill_torch(void)
  */
 void do_cmd_refill(void)
 {
-	object_type *o_ptr;
-
-	u32b f1, f2, f3, f4, f5, esp;
-
-
 	/* Get the light */
-	o_ptr = &p_ptr->inventory[INVEN_LITE];
+	auto o_ptr = &p_ptr->inventory[INVEN_LITE];
 
 	/* It is nothing */
 	if (o_ptr->tval != TV_LITE)
@@ -973,9 +951,9 @@ void do_cmd_refill(void)
 		return;
 	}
 
-	object_flags(o_ptr, &f1, &f2, &f3, &f4, &f5, &esp);
+	auto const flags = object_flags(o_ptr);
 
-	if (f4 & TR4_FUEL_LITE)
+	if (flags & TR_FUEL_LITE)
 	{
 		/* It's a torch */
 		if (o_ptr->sval == SV_LITE_TORCH ||

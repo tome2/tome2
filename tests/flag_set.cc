@@ -90,6 +90,21 @@ go_bandit([]() {
 			AssertThat(result[1], Equals(8UL));
 		});
 
+		it("make_bit(5) should set the 5th bit in the 1st tier", [&] {
+			// Exercise
+			fs_t result = fs_t::make_bit(5);
+			// Verify
+			AssertThat(result[0], Equals(32L));
+			AssertThat(result[1], Equals(0L));
+		});
+
+		it("make_bit(37) should set the 5th bit in the 2nd tier", [&] {
+			// Exercise
+			fs_t result = fs_t::make_bit(37);
+			// Verify
+			AssertThat(result[0], Equals(0L));
+			AssertThat(result[1], Equals(32L));
+		});
 	});
 
 });

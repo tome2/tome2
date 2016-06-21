@@ -54,6 +54,7 @@ SET(SRCS_COMMON
   object1.cc
   object2.cc
   object_filter.cc
+  object_flag_meta.cc
   options.cc
   powers.cc
   q_betwen.cc

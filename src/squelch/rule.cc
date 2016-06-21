@@ -8,6 +8,7 @@
 #include "../modules.hpp"
 #include "../object1.hpp"
 #include "../object2.hpp"
+#include "../object_flag.hpp"
 #include "../object_type.hpp"
 #include "../quark.hpp"
 #include "../tables.hpp"
@@ -250,10 +251,8 @@ bool DestroyRule::do_apply_rule(object_type *o_ptr, int item_idx) const
 	
 	// Cannot destroy CURSE_NO_DROP objects.
 	{
-		u32b f1, f2, f3, f4, f5, esp;
-		object_flags(o_ptr, &f1, &f2, &f3, &f4, &f5, &esp);
-		
-		if ((f4 & TR4_CURSE_NO_DROP) != 0)
+		auto const f = object_flags(o_ptr);
+		if (f & TR_CURSE_NO_DROP)
 		{
 			return false;
 		}

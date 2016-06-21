@@ -10,6 +10,7 @@
 #include "mimic.hpp"
 #include "object1.hpp"
 #include "object2.hpp"
+#include "object_flag.hpp"
 #include "object_type.hpp"
 #include "options.hpp"
 #include "player_type.hpp"
@@ -37,7 +38,6 @@
 static bool_ grab_one_power(int *ra_idx, object_type *o_ptr, bool_ good, s16b *max_times)
 {
 	bool_ ret = FALSE;
-	u32b f1, f2, f3, f4, f5, esp;
 
 	std::vector<size_t> ok_ra;
 
@@ -71,13 +71,8 @@ static bool_ grab_one_power(int *ra_idx, object_type *o_ptr, bool_ good, s16b *m
 		if (max_times[i] >= ra_ptr->max) continue;
 
 		/* Must NOT have the antagonic flags */
-		object_flags(o_ptr, &f1, &f2, &f3, &f4, &f5, &esp);
-		if (f1 & ra_ptr->aflags1) continue;
-		if (f2 & ra_ptr->aflags2) continue;
-		if (f3 & ra_ptr->aflags3) continue;
-		if (f4 & ra_ptr->aflags4) continue;
-		if (f5 & ra_ptr->aflags5) continue;
-		if (esp & ra_ptr->aesp) continue;
+		auto const flags = object_flags(o_ptr);
+		if (flags & ra_ptr->aflags) continue;
 
 		/* ok */
 		ok_ra.push_back(i);
@@ -124,7 +119,7 @@ static bool_ grab_one_power(int *ra_idx, object_type *o_ptr, bool_ good, s16b *m
 void give_activation_power (object_type * o_ptr)
 {
 	o_ptr->xtra2 = 0;
-	o_ptr->art_flags3 &= ~TR3_ACTIVATE;
+	o_ptr->art_flags &= ~TR_ACTIVATE;
 	o_ptr->timeout = 0;
 }
 
@@ -268,7 +263,6 @@ bool_ create_artifact(object_type *o_ptr, bool_ a_scroll, bool_ get_name)
 	int powers = 0, i;
 	s32b total_flags, total_power = 0;
 	bool_ a_cursed = FALSE;
-	u32b f1, f2, f3, f4, f5, esp;
 	s16b pval = 0;
 	bool_ limit_blows = FALSE;
 
@@ -308,20 +302,15 @@ bool_ create_artifact(object_type *o_ptr, bool_ a_scroll, bool_ get_name)
 
 		total_power += ra_ptr->value;
 
-		o_ptr->art_flags1 |= ra_ptr->flags1;
-		o_ptr->art_flags2 |= ra_ptr->flags2;
-		o_ptr->art_flags3 |= ra_ptr->flags3;
-		o_ptr->art_flags4 |= ra_ptr->flags4;
-		o_ptr->art_flags5 |= ra_ptr->flags5;
-		o_ptr->art_esp |= ra_ptr->esp;
+		o_ptr->art_flags |= ra_ptr->flags;
 
 		add_random_ego_flag(o_ptr, ra_ptr->fego, &limit_blows);
 
 		/* get flags */
-		object_flags(o_ptr, &f1, &f2, &f3, &f4, &f5, &esp);
+		auto const flags = object_flags(o_ptr);
 
 		/* Hack -- acquire "cursed" flag */
-		if (f3 & TR3_CURSED) o_ptr->ident |= (IDENT_CURSED);
+		if (flags & TR_CURSED) o_ptr->ident |= (IDENT_CURSED);
 
 		/* Hack -- obtain bonuses */
 		if (ra_ptr->max_to_h > 0) o_ptr->to_h += randint(ra_ptr->max_to_h);
@@ -339,22 +328,22 @@ bool_ create_artifact(object_type *o_ptr, bool_ a_scroll, bool_ get_name)
 	if (pval < 0) o_ptr->pval = randint( -pval);
 
 	/* No insane number of blows */
-	if (limit_blows && (o_ptr->art_flags1 & TR1_BLOWS))
+	if (limit_blows && (o_ptr->art_flags & TR_BLOWS))
 	{
 		if (o_ptr->pval > 2) o_ptr->pval = randint(2);
 	}
 
 	/* Just to be sure */
-	o_ptr->art_flags3 |= ( TR3_IGNORE_ACID | TR3_IGNORE_ELEC |
-	                       TR3_IGNORE_FIRE | TR3_IGNORE_COLD);
+	o_ptr->art_flags |=
+		TR_IGNORE_ACID |
+		TR_IGNORE_ELEC |
+		TR_IGNORE_FIRE |
+		TR_IGNORE_COLD;
 
 	total_flags = flag_cost(o_ptr, o_ptr->pval);
 	if (cheat_peek) msg_format("%ld", total_flags);
 
 	if (a_cursed) curse_artifact(o_ptr);
-
-	/* Extract the flags */
-	object_flags(o_ptr, &f1, &f2, &f3, &f4, &f5, &esp);
 
 	if (get_name)
 	{
@@ -393,13 +382,16 @@ bool_ create_artifact(object_type *o_ptr, bool_ a_scroll, bool_ get_name)
 	/* Window stuff */
 	p_ptr->window |= (PW_INVEN | PW_EQUIP);
 
+	/* Extract the flags */
+	auto const flags = object_flags(o_ptr);
+
 	/* HACKS for ToME */
 	if (o_ptr->tval == TV_CLOAK && o_ptr->sval == SV_MIMIC_CLOAK)
 	{
 		s32b mimic = find_random_mimic_shape(127, TRUE);
 		o_ptr->pval2 = mimic;
 	}
-	else if (f5 & TR5_SPELL_CONTAIN)
+	else if (flags & TR_SPELL_CONTAIN)
 	{
 		o_ptr->pval2 = -1;
 	}

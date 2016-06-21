@@ -275,7 +275,6 @@ struct player_type
 	bool_ see_inv = FALSE;                                  /* Can see invisible */
 	bool_ regenerate = FALSE;                               /* Regenerate hit pts */
 	bool_ hold_life = FALSE;                                /* Resist life draining */
-	u32b telepathy = 0;                                     /* Telepathy */
 	bool_ slow_digest = FALSE;                              /* Slower digestion */
 	bool_ bless_blade = FALSE;                              /* Blessed blade */
 	byte xtra_might = 0;                                    /* Extra might bow */
@@ -356,13 +355,11 @@ struct player_type
 
 	bool_ precognition = FALSE;                             /* Like the cheat mode */
 
-	/*** Extra flags -- used for lua and easying stuff ***/
-	u32b xtra_f1 = 0;
-	u32b xtra_f2 = 0;
-	u32b xtra_f3 = 0;
-	u32b xtra_f4 = 0;
-	u32b xtra_f5 = 0;
-	u32b xtra_esp = 0;
+	/*** Extra flags ***/
+	object_flag_set xtra_flags;
+
+	/** Computed flags based on all worn items, etc. */
+	object_flag_set computed_flags;
 
 	/* Corruptions */
 	bool_ corruptions[CORRUPTIONS_MAX] = { FALSE };

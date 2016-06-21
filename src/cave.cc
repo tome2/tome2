@@ -10,6 +10,7 @@
 #include "monster_spell_flag.hpp"
 #include "monster_type.hpp"
 #include "object1.hpp"
+#include "object_flag.hpp"
 #include "object_kind.hpp"
 #include "options.hpp"
 #include "player_type.hpp"
@@ -1090,7 +1091,7 @@ static void map_info(int y, int x, byte *ap, char *cp)
 				*ap = object_attr(o_ptr);
 
 				/* Multi-hued attr */
-				if (!avoid_other && (k_info[o_ptr->k_idx].flags5 & TR5_ATTR_MULTI))
+				if (!avoid_other && (k_info[o_ptr->k_idx].flags & TR_ATTR_MULTI))
 				{
 					*ap = get_shimmer_color();
 				}
@@ -1127,7 +1128,7 @@ static void map_info(int y, int x, byte *ap, char *cp)
 				*ap = object_attr(o_ptr);
 
 				/* Multi-hued attr */
-				if (!avoid_other && (k_info[o_ptr->k_idx].flags5 & TR5_ATTR_MULTI))
+				if (!avoid_other && (k_info[o_ptr->k_idx].flags & TR_ATTR_MULTI))
 				{
 					*ap = get_shimmer_color();
 				}
@@ -1519,8 +1520,7 @@ void map_info_default(int y, int x, byte *ap, char *cp)
 				*ap = object_attr_default(o_ptr);
 
 				/* Multi-hued attr */
-				if (!avoid_other &&
-				                (k_info[o_ptr->k_idx].flags5 & TR5_ATTR_MULTI))
+				if (!avoid_other && (k_info[o_ptr->k_idx].flags & TR_ATTR_MULTI))
 				{
 					*ap = get_shimmer_color();
 				}
@@ -1557,7 +1557,7 @@ void map_info_default(int y, int x, byte *ap, char *cp)
 				*ap = object_attr_default(o_ptr);
 
 				/* Multi-hued attr */
-				if (!avoid_other && (k_info[o_ptr->k_idx].flags5 & TR5_ATTR_MULTI))
+				if (!avoid_other && (k_info[o_ptr->k_idx].flags & TR_ATTR_MULTI))
 				{
 					*ap = get_shimmer_color();
 				}

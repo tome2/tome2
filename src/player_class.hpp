@@ -2,6 +2,7 @@
 
 #include "body.hpp"
 #include "h-basic.h"
+#include "object_flag_set.hpp"
 #include "player_defs.hpp"
 #include "player_spec.hpp"
 
@@ -78,12 +79,7 @@ struct player_class
 
 	char body_parts[BODY_MAX] { };                          /* To help to decide what to use when body changing */
 
-	u32b oflags1[PY_MAX_LEVEL + 1] { };
-	u32b oflags2[PY_MAX_LEVEL + 1] { };
-	u32b oflags3[PY_MAX_LEVEL + 1] { };
-	u32b oflags4[PY_MAX_LEVEL + 1] { };
-	u32b oflags5[PY_MAX_LEVEL + 1] { };
-	u32b oesp[PY_MAX_LEVEL + 1] { };
+	std::array<object_flag_set, PY_MAX_LEVEL + 1>  oflags;
 	s16b opval[PY_MAX_LEVEL + 1] { };
 
 	char skill_basem[MAX_SKILLS] { };

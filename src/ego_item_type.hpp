@@ -1,6 +1,9 @@
 #pragma once
 
 #include "h-basic.h"
+#include "object_flag_set.hpp"
+
+#include <array>
 
 /*
  * Size of flag rarity tables
@@ -38,33 +41,21 @@ struct ego_item_type
 
 	byte rar[FLAG_RARITY_MAX] = { 0 };
 
-	u32b flags1[FLAG_RARITY_MAX] = { 0 };    /* Ego-Item Flags, set 1 */
-	u32b flags2[FLAG_RARITY_MAX] = { 0 };    /* Ego-Item Flags, set 2 */
-	u32b flags3[FLAG_RARITY_MAX] = { 0 };    /* Ego-Item Flags, set 3 */
-	u32b flags4[FLAG_RARITY_MAX] = { 0 };    /* Ego-Item Flags, set 4 */
-	u32b flags5[FLAG_RARITY_MAX] = { 0 };    /* Ego-Item Flags, set 5 */
-	u32b esp[FLAG_RARITY_MAX] = { 0 };       /* ESP flags */
-	u32b oflags1[FLAG_RARITY_MAX] = { 0 };   /* Ego-Item Obvious Flags, set 1 */
-	u32b oflags2[FLAG_RARITY_MAX] = { 0 };   /* Ego-Item Obvious Flags, set 2 */
-	u32b oflags3[FLAG_RARITY_MAX] = { 0 };   /* Ego-Item Obvious Flags, set 3 */
-	u32b oflags4[FLAG_RARITY_MAX] = { 0 };   /* Ego-Item Obvious Flags, set 4 */
-	u32b oflags5[FLAG_RARITY_MAX] = { 0 };   /* Ego-Item Obvious Flags, set 5 */
-	u32b oesp[FLAG_RARITY_MAX] = { 0 };      /* Obvious ESP flags */
+	std::array<object_flag_set, FLAG_RARITY_MAX> flags;
+	std::array<object_flag_set, FLAG_RARITY_MAX> oflags;
 
 	u32b fego[FLAG_RARITY_MAX] = { 0 };      /* ego flags */
 
-	u32b need_flags1 = 0;                    /* Ego-Item Flags, set 1 */
-	u32b need_flags2 = 0;                    /* Ego-Item Flags, set 2 */
-	u32b need_flags3 = 0;                    /* Ego-Item Flags, set 3 */
-	u32b need_flags4 = 0;                    /* Ego-Item Flags, set 4 */
-	u32b need_flags5 = 0;                    /* Ego-Item Flags, set 5 */
-	u32b need_esp = 0;                       /* ESP flags */
-	u32b forbid_flags1 = 0;                  /* Ego-Item Flags, set 1 */
-	u32b forbid_flags2 = 0;                  /* Ego-Item Flags, set 2 */
-	u32b forbid_flags3 = 0;                  /* Ego-Item Flags, set 3 */
-	u32b forbid_flags4 = 0;                  /* Ego-Item Flags, set 4 */
-	u32b forbid_flags5 = 0;                  /* Ego-Item Flags, set 5 */
-	u32b forbid_esp = 0;                     /* ESP flags */
+	object_flag_set need_flags;
+	object_flag_set forbid_flags;
 
-	s16b power = 0;                          /* Power granted, if any */
+	s16b power = -1;                        /* Power granted, if any */
+
+public:
+	ego_item_type()
+	{
+		std::fill(std::begin(tval),
+		          std::end(tval),
+		          255);
+	}
 };

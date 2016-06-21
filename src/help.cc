@@ -16,6 +16,7 @@
 #include "hook_move_in.hpp"
 #include "hooks.hpp"
 #include "object1.hpp"
+#include "object_flag.hpp"
 #include "options.hpp"
 #include "player_type.hpp"
 #include "skills.hpp"
@@ -389,9 +390,8 @@ static bool_ trigger_identify_spell_item(void *in_, void *out) {
 
 	if (in->mode == IDENT_FULL)
 	{
-		u32b f1, f2, f3, f4, f5, esp;
-		object_flags(in->o_ptr, &f1, &f2, &f3, &f4, &f5, &esp);
-		if (f5 & TR5_SPELL_CONTAIN)
+		auto const f = object_flags(in->o_ptr);
+		if (f & TR_SPELL_CONTAIN)
 		{
 			return TRUE;
 		}

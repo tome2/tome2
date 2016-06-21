@@ -23,6 +23,7 @@
 #include "mimic.hpp"
 #include "object1.hpp"
 #include "object2.hpp"
+#include "object_flag.hpp"
 #include "owner_type.hpp"
 #include "player_type.hpp"
 #include "q_library.hpp"
@@ -770,7 +771,7 @@ static void town_history(void)
 /*
  * compare_weapon_aux2 -KMW-
  */
-static void compare_weapon_aux2(object_type *o_ptr, int numblows, int r, int c, int mult, const char *attr, u32b f1, u32b f2, u32b f3, byte color)
+static void compare_weapon_aux2(object_type *o_ptr, int numblows, int r, int c, int mult, const char *attr, byte color)
 {
 	char tmp_str[80];
 
@@ -788,80 +789,77 @@ static void compare_weapon_aux2(object_type *o_ptr, int numblows, int r, int c, 
  */
 static void compare_weapon_aux1(object_type *o_ptr, int col, int r)
 {
-	u32b f1, f2, f3, f4, f5, esp;
+	auto const f = object_flags(o_ptr);
 
-	object_flags(o_ptr, &f1, &f2, &f3, &f4, &f5, &esp);
-
-
-	if (f1 & (TR1_SLAY_ANIMAL))
+	if (f & TR_SLAY_ANIMAL)
 	{
 		compare_weapon_aux2(o_ptr, p_ptr->num_blow, r++, col, 2, "Animals:",
-		                    f1, f2, f3, TERM_YELLOW);
+				    TERM_YELLOW);
 	}
-	if (f1 & (TR1_SLAY_EVIL))
+	if (f & TR_SLAY_EVIL)
 	{
 		compare_weapon_aux2(o_ptr, p_ptr->num_blow, r++, col, 2, "Evil:",
-		                    f1, f2, f3, TERM_YELLOW);
+				    TERM_YELLOW);
 	}
-	if (f1 & (TR1_SLAY_UNDEAD))
+	if (f & TR_SLAY_UNDEAD)
 	{
 		compare_weapon_aux2(o_ptr, p_ptr->num_blow, r++, col, 3, "Undead:",
-		                    f1, f2, f3, TERM_YELLOW);
+				    TERM_YELLOW);
 	}
-	if (f1 & (TR1_SLAY_DEMON))
+	if (f & TR_SLAY_DEMON)
 	{
 		compare_weapon_aux2(o_ptr, p_ptr->num_blow, r++, col, 3, "Demons:",
-		                    f1, f2, f3, TERM_YELLOW);
+				    TERM_YELLOW);
 	}
-	if (f1 & (TR1_SLAY_ORC))
+	if (f & TR_SLAY_ORC)
 	{
 		compare_weapon_aux2(o_ptr, p_ptr->num_blow, r++, col, 3, "Orcs:",
-		                    f1, f2, f3, TERM_YELLOW);
+				    TERM_YELLOW);
 	}
-	if (f1 & (TR1_SLAY_TROLL))
+	if (f & TR_SLAY_TROLL)
 	{
 		compare_weapon_aux2(o_ptr, p_ptr->num_blow, r++, col, 3, "Trolls:",
-		                    f1, f2, f3, TERM_YELLOW);
+				    TERM_YELLOW);
 	}
-	if (f1 & (TR1_SLAY_GIANT))
+	if (f & TR_SLAY_GIANT)
 	{
 		compare_weapon_aux2(o_ptr, p_ptr->num_blow, r++, col, 3, "Giants:",
-		                    f1, f2, f3, TERM_YELLOW);
+				    TERM_YELLOW);
 	}
-	if (f1 & (TR1_SLAY_DRAGON))
+	if (f & TR_SLAY_DRAGON)
 	{
 		compare_weapon_aux2(o_ptr, p_ptr->num_blow, r++, col, 3, "Dragons:",
-		                    f1, f2, f3, TERM_YELLOW);
+				    TERM_YELLOW);
 	}
-	if (f1 & (TR1_KILL_DRAGON))
+	if (f & TR_KILL_DRAGON)
 	{
 		compare_weapon_aux2(o_ptr, p_ptr->num_blow, r++, col, 5, "Dragons:",
-		                    f1, f2, f3, TERM_YELLOW);
+				    TERM_YELLOW);
 	}
-	if (f1 & (TR1_BRAND_ACID))
+	if (f & TR_BRAND_ACID)
 	{
 		compare_weapon_aux2(o_ptr, p_ptr->num_blow, r++, col, 3, "Acid:",
-		                    f1, f2, f3, TERM_RED);
+				    TERM_RED);
 	}
-	if (f1 & (TR1_BRAND_ELEC))
+	if (f & TR_BRAND_ELEC)
 	{
 		compare_weapon_aux2(o_ptr, p_ptr->num_blow, r++, col, 3, "Elec:",
-		                    f1, f2, f3, TERM_RED);
+				    TERM_RED);
 	}
-	if (f1 & (TR1_BRAND_FIRE))
+	if (f & TR_BRAND_FIRE)
 	{
 		compare_weapon_aux2(o_ptr, p_ptr->num_blow, r++, col, 3, "Fire:",
-		                    f1, f2, f3, TERM_RED);
+				    TERM_RED);
 	}
-	if (f1 & (TR1_BRAND_COLD))
+	if (f & TR_BRAND_COLD)
 	{
 		compare_weapon_aux2(o_ptr, p_ptr->num_blow, r++, col, 3, "Cold:",
-		                    f1, f2, f3, TERM_RED);
+				    TERM_RED);
 	}
-	if (f1 & (TR1_BRAND_POIS))
+	if (f & TR_BRAND_POIS)
 	{
 		compare_weapon_aux2(o_ptr, p_ptr->num_blow, r++, col, 3, "Poison:",
-		                    f1, f2, f3, TERM_RED);
+				    TERM_RED);
 	}
 }
 

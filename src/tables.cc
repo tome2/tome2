@@ -12,6 +12,7 @@
 #include "modules.hpp"
 #include "monster_race_flag.hpp"
 #include "monster_spell_flag.hpp"
+#include "object_flag.hpp"
 #include "options.hpp"
 #include "q_library.hpp"
 #include "q_fireprof.hpp"
@@ -2662,121 +2663,92 @@ extern std::vector<flags_group> const &flags_groups()
 			"Fire",
 			TERM_L_RED,
 			1,
-			TR1_SLAY_UNDEAD | TR1_BRAND_FIRE,
-			TR2_RES_FIRE,
-			TR3_SH_FIRE | TR3_LITE1 | TR3_IGNORE_FIRE,
-			0,
-			0,
+			TR_SLAY_UNDEAD | TR_BRAND_FIRE | TR_RES_FIRE |
+	                TR_SH_FIRE | TR_LITE1 | TR_IGNORE_FIRE,
 		},
 		flags_group {
 			"Cold",
 			TERM_WHITE,
 			1,
-			TR1_SLAY_DRAGON | TR1_SLAY_DEMON | TR1_BRAND_COLD,
-			TR2_RES_COLD | TR2_INVIS,
-			TR3_SLOW_DIGEST | TR3_IGNORE_COLD,
-			0,
-			0,
+			TR_SLAY_DRAGON | TR_SLAY_DEMON | TR_BRAND_COLD | TR_RES_COLD |
+	                TR_INVIS | TR_SLOW_DIGEST | TR_IGNORE_COLD,
 		},
 		flags_group {
 			"Acid",
 			TERM_GREEN,
 			3,
-			TR1_SLAY_ANIMAL | TR1_IMPACT | TR1_TUNNEL | TR1_BRAND_ACID,
-			TR2_RES_ACID,
-			TR3_IGNORE_ACID,
-			0,
-			0,
+			TR_SLAY_ANIMAL | TR_IMPACT | TR_TUNNEL |
+	                TR_BRAND_ACID | TR_RES_ACID | TR_IGNORE_ACID,
 		},
 		flags_group {
 			"Lightning",
 			TERM_L_BLUE,
 			1,
-			TR1_SLAY_EVIL | TR1_BRAND_ELEC,
-			TR2_RES_ELEC,
-			TR3_IGNORE_ELEC | TR3_SH_ELEC | TR3_TELEPORT,
-			0,
-			0,
+			TR_SLAY_EVIL | TR_BRAND_ELEC | TR_RES_ELEC |
+	                TR_IGNORE_ELEC | TR_SH_ELEC | TR_TELEPORT,
 		},
 		flags_group {
 			"Poison",
 			TERM_L_GREEN,
 			2,
-			TR1_CHR | TR1_VAMPIRIC | TR1_SLAY_ANIMAL | TR1_BRAND_POIS,
-			TR2_SUST_CHR | TR2_RES_POIS,
-			TR3_DRAIN_EXP,
-			0,
-			ESP_TROLL | ESP_GIANT,
+			TR_CHR | TR_VAMPIRIC | TR_SLAY_ANIMAL | TR_BRAND_POIS |
+	                TR_SUST_CHR | TR_RES_POIS | TR_DRAIN_EXP |
+	                ESP_TROLL | ESP_GIANT,
 		},
 		flags_group {
 			"Air",
 			TERM_BLUE,
 			5,
-			TR1_WIS | TR1_STEALTH | TR1_INFRA | TR1_SPEED,
-			TR2_RES_LITE | TR2_RES_DARK | TR2_RES_BLIND | TR2_SUST_WIS,
-			TR3_FEATHER | TR3_SEE_INVIS | TR3_BLESSED,
-			0,
-			ESP_GOOD,
+			TR_WIS | TR_STEALTH | TR_INFRA | TR_SPEED |
+			TR_RES_LITE | TR_RES_DARK | TR_RES_BLIND | TR_SUST_WIS |
+	                TR_FEATHER | TR_SEE_INVIS | TR_BLESSED |
+	                ESP_GOOD,
 		},
 		flags_group {
 			"Earth",
 			TERM_L_UMBER,
 			5,
-			TR1_STR | TR1_CON | TR1_TUNNEL | TR1_BLOWS | TR1_SLAY_TROLL | TR1_SLAY_GIANT | TR1_IMPACT,
-			TR2_SUST_STR | TR2_SUST_CON | TR2_FREE_ACT | TR2_RES_FEAR | TR2_RES_SHARDS,
-			TR3_REGEN,
-			0,
+			TR_STR | TR_CON | TR_TUNNEL | TR_BLOWS | TR_SLAY_TROLL |
+			TR_SLAY_GIANT | TR_IMPACT | TR_SUST_STR | TR_SUST_CON |
+	                TR_FREE_ACT | TR_RES_FEAR | TR_RES_SHARDS | TR_REGEN |
 			ESP_TROLL | ESP_GIANT,
 		},
 		flags_group {
 			"Mind",
 			TERM_YELLOW,
 			7,
-			TR1_INT | TR1_SEARCH,
-			TR2_SUST_INT | TR2_RES_CONF | TR2_RES_FEAR,
-			0,
-			0,
+	                TR_INT | TR_SEARCH | TR_SUST_INT | TR_RES_CONF | TR_RES_FEAR |
 			ESP_ORC | ESP_TROLL | ESP_GIANT | ESP_ANIMAL | ESP_UNIQUE | ESP_SPIDER | ESP_DEMON,
 		},
 		flags_group {
 			"Shield",
 			TERM_RED,
 			7,
-			TR1_DEX,
-			TR2_SUST_DEX | TR2_INVIS | TR2_REFLECT | TR2_HOLD_LIFE | TR2_RES_SOUND | TR2_RES_NEXUS,
-			TR3_REGEN,
-			0,
-			0,
+			TR_DEX | TR_SUST_DEX | TR_INVIS | TR_REFLECT |
+			TR_HOLD_LIFE | TR_RES_SOUND | TR_RES_NEXUS |
+	                TR_REGEN,
 		},
 		flags_group {
 			"Chaos",
 			TERM_VIOLET,
 			7,
-			TR1_CHAOTIC | TR1_IMPACT,
-			TR2_RES_CHAOS | TR2_RES_DISEN,
-			TR3_REGEN,
-			0,
+	                TR_CHAOTIC | TR_IMPACT | TR_RES_CHAOS | TR_RES_DISEN | TR_REGEN |
 			ESP_ALL,
 		},
 		flags_group {
 			"Magic",
 			TERM_L_BLUE,
 			10,
-			TR1_MANA | TR1_SPELL,
-			TR2_RES_CHAOS | TR2_RES_DISEN,
-			TR3_WRAITH,
-			TR4_PRECOGNITION | TR4_FLY | TR4_CLONE,
-			0,
+			TR_MANA | TR_SPELL | TR_RES_CHAOS | TR_RES_DISEN | TR_WRAITH |
+			TR_PRECOGNITION | TR_FLY | TR_CLONE,
 		},
 		flags_group {
 			"Antimagic",
 			TERM_L_DARK,
 			10,
-			TR1_VAMPIRIC | TR1_CHAOTIC | TR1_BLOWS | TR1_SPEED,
-			TR2_LIFE | TR2_REFLECT | TR2_FREE_ACT | TR2_HOLD_LIFE,
-			TR3_NO_MAGIC | TR3_NO_TELE | TR3_SEE_INVIS,
-			TR4_ANTIMAGIC_50,
-			0,
+			TR_VAMPIRIC | TR_CHAOTIC | TR_BLOWS | TR_SPEED | TR_LIFE |
+			TR_REFLECT | TR_FREE_ACT | TR_HOLD_LIFE | TR_NO_MAGIC |
+			TR_NO_TELE | TR_SEE_INVIS | TR_ANTIMAGIC_50,
 		}
 	};
 

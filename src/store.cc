@@ -19,6 +19,7 @@
 #include "obj_theme.hpp"
 #include "object1.hpp"
 #include "object2.hpp"
+#include "object_flag.hpp"
 #include "object_kind.hpp"
 #include "options.hpp"
 #include "owner_type.hpp"
@@ -523,9 +524,7 @@ static bool_ store_object_similar(object_type const *o_ptr, object_type *j_ptr)
 	if (o_ptr->art_name || j_ptr->art_name) return (0);
 
 	/* Hack -- Identical art_flags! */
-	if ((o_ptr->art_flags1 != j_ptr->art_flags1) ||
-	                (o_ptr->art_flags2 != j_ptr->art_flags2) ||
-	                (o_ptr->art_flags3 != j_ptr->art_flags3))
+	if (o_ptr->art_flags != j_ptr->art_flags)
 		return (0);
 
 	/* Hack -- Never stack "powerful" items */
@@ -622,12 +621,10 @@ static bool_ store_check_num(object_type *o_ptr)
 }
 
 
-static bool_ is_blessed(object_type const *o_ptr)
+static bool is_blessed(object_type const *o_ptr)
 {
-	u32b f1, f2, f3, f4, f5, esp;
-	object_flags_known(o_ptr, &f1, &f2, &f3, &f4, &f5, &esp);
-	if (f3 & TR3_BLESSED) return (TRUE);
-	else return (FALSE);
+	auto flags = object_flags_known(o_ptr);
+	return bool(flags & TR_BLESSED);
 }
 
 
@@ -1173,10 +1170,10 @@ static bool_ kind_is_storeok(int k_idx)
 {
 	object_kind *k_ptr = &k_info[k_idx];
 
-	if (k_info[k_idx].flags3 & TR3_NORM_ART)
+	if (k_info[k_idx].flags & TR_NORM_ART)
 		return ( FALSE );
 
-	if (k_info[k_idx].flags3 & TR3_INSTA_ART)
+	if (k_info[k_idx].flags & TR_INSTA_ART)
 		return ( FALSE );
 
 	if (!kind_is_legal(k_idx)) return FALSE;
@@ -1288,7 +1285,7 @@ static void store_create(void)
 			chance = st_info[st_ptr->st_idx].table[item][1];
 
 			/* Don't allow k_info artifacts */
-			if ((i <= 10000) && (k_info[i].flags3 & TR3_NORM_ART))
+			if ((i <= 10000) && (k_info[i].flags & TR_NORM_ART))
 				continue;
 
 			/* Does it passes the rarity check ? */
@@ -1328,11 +1325,11 @@ static void store_create(void)
 		if (!obj_all_done)
 		{
 			/* Don't allow k_info artifacts */
-			if (k_info[i].flags3 & TR3_NORM_ART)
+			if (k_info[i].flags & TR_NORM_ART)
 				continue;
 
 			/* Don't allow artifacts */
-			if (k_info[i].flags3 & TR3_INSTA_ART)
+			if (k_info[i].flags & TR_INSTA_ART)
 				continue;
 
 			/* Get local object */
@@ -1347,11 +1344,11 @@ static void store_create(void)
 			/* Hack -- Charge lite's */
 			if (q_ptr->tval == TV_LITE)
 			{
-				u32b f1, f2, f3, f4, f5, esp;
-
-				object_flags(q_ptr, &f1, &f2, &f3, &f4, &f5, &esp);
-
-				if (f4 & TR4_FUEL_LITE) q_ptr->timeout = k_info[q_ptr->k_idx].pval2;
+				auto const flags = object_flags(q_ptr);
+				if (flags & TR_FUEL_LITE)
+				{
+					q_ptr->timeout = k_info[q_ptr->k_idx].pval2;
+				}
 			}
 
 		}
@@ -2401,11 +2398,7 @@ void store_sell(void)
 	object_type forge;
 	object_type *q_ptr;
 
-	object_type *o_ptr;
-
 	char o_name[80];
-
-	u32b f1, f2, f3, f4, f5, esp;
 
 	bool_ museum = (st_info[st_ptr->st_idx].flags1 & SF1_MUSEUM) ? TRUE : FALSE;
 
@@ -2434,9 +2427,9 @@ void store_sell(void)
 	}
 
 	/* Get the item */
-	o_ptr = get_object(item);
+	auto o_ptr = get_object(item);
 
-	object_flags(o_ptr, &f1, &f2, &f3, &f4, &f5, &esp);
+	auto const flags = object_flags(o_ptr);
 
 	/* Hack -- Cannot remove cursed items */
 	if (cursed_p(o_ptr))
@@ -2451,7 +2444,7 @@ void store_sell(void)
 		}
 		else
 		{
-			if (f4 & TR4_CURSE_NO_DROP)
+			if (flags & TR_CURSE_NO_DROP)
 			{
 				/* Oops */
 				msg_print("Hmmm, you seem to be unable to drop it.");

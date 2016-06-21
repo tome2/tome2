@@ -21,6 +21,7 @@
 #include "monster_type.hpp"
 #include "object1.hpp"
 #include "object2.hpp"
+#include "object_flag.hpp"
 #include "object_kind.hpp"
 #include "object_type.hpp"
 #include "player_type.hpp"
@@ -266,7 +267,7 @@ static void do_get_new_obj(int y, int x)
 			{
 				random_artifacts[o_ptr->sval].generated = FALSE;
 			}
-			else if (k_info[o_ptr->k_idx].flags3 & TR3_NORM_ART)
+			else if (k_info[o_ptr->k_idx].flags & TR_NORM_ART)
 			{
 				k_info[o_ptr->k_idx].artifact = FALSE;
 			}

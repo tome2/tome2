@@ -17,33 +17,10 @@ object_filter_t SVal(byte sval) {
 	};
 }
 
-object_filter_t HasFlag3(u32b mask) {
+object_filter_t HasFlags(object_flag_set const &mask) {
 	return [=](object_type const *o_ptr) -> bool {
-		// Extract the flags
-		u32b f1, f2, f3, f4, f5, esp;
-		object_flags(o_ptr, &f1, &f2, &f3, &f4, &f5, &esp);
-		// Does the item have the flag?
-		return (f3 & mask);
-	};
-}
-
-object_filter_t HasFlag4(u32b mask) {
-	return [=](object_type const *o_ptr) -> bool {
-		// Extract the flags
-		u32b f1, f2, f3, f4, f5, esp;
-		object_flags(o_ptr, &f1, &f2, &f3, &f4, &f5, &esp);
-		// Does the item have the flag?
-		return (f4 & mask);
-	};
-}
-
-object_filter_t HasFlag5(u32b mask) {
-	return [=](object_type const *o_ptr) -> bool {
-		// Extract the flags
-		u32b f1, f2, f3, f4, f5, esp;
-		object_flags(o_ptr, &f1, &f2, &f3, &f4, &f5, &esp);
-		// Does the item have the flag?
-		return (f5 & mask);
+		auto const flags = object_flags(o_ptr);
+		return bool(flags & mask);
 	};
 }
 

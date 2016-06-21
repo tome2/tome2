@@ -24,6 +24,7 @@
 #include "monster_type.hpp"
 #include "object1.hpp"
 #include "object2.hpp"
+#include "object_flag.hpp"
 #include "object_kind.hpp"
 #include "options.hpp"
 #include "player_type.hpp"
@@ -2311,7 +2312,7 @@ void do_cmd_necromancer(void)
 				object_prep(o_ptr, k_idx);
 				apply_magic(o_ptr, plev * 2, TRUE, TRUE, TRUE);
 
-				o_ptr->art_flags5 |= TR5_TEMPORARY;
+				o_ptr->art_flags |= TR_TEMPORARY;
 				o_ptr->timeout = dur;
 
 				/* These objects are "storebought" */

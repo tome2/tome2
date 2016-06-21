@@ -1,6 +1,7 @@
 #pragma once
 
 #include "h-basic.h"
+#include "object_flag_set.hpp"
 
 /**
  * Artifact descriptor.
@@ -34,26 +35,14 @@ struct artifact_type
 
 	s32b cost = 0;                           /* Artifact "cost" */
 
-	u32b flags1 = 0;                         /* Artifact Flags, set 1 */
-	u32b flags2 = 0;                         /* Artifact Flags, set 2 */
-	u32b flags3 = 0;                         /* Artifact Flags, set 3 */
-	u32b flags4 = 0;                         /* Artifact Flags, set 4 */
-	u32b flags5 = 0;                         /* Artifact Flags, set 5 */
-
-	u32b oflags1 = 0;                        /* Obvious Flags, set 1 */
-	u32b oflags2 = 0;                        /* Obvious Flags, set 2 */
-	u32b oflags3 = 0;                        /* Obvious Flags, set 3 */
-	u32b oflags4 = 0;                        /* Obvious Flags, set 4 */
-	u32b oflags5 = 0;                        /* Obvious Flags, set 5 */
+	object_flag_set flags;                   /* Artifact Flags */
+	object_flag_set oflags;                  /* Obvious Flags */
 
 	byte level = 0;                          /* Artifact level */
 	byte rarity = 0;                         /* Artifact rarity */
 
 	byte cur_num = 0;                        /* Number created (0 or 1) */
 	byte max_num = 0;                        /* Unused (should be "1") */
-
-	u32b esp = 0;                            /* ESP flags */
-	u32b oesp = 0;                           /* ESP flags */
 
 	s16b power = 0;                          /* Power granted, if any */
 

@@ -27,6 +27,7 @@
 #include "monster_type.hpp"
 #include "object1.hpp"
 #include "object2.hpp"
+#include "object_flag.hpp"
 #include "object_kind.hpp"
 #include "object_type.hpp"
 #include "options.hpp"
@@ -484,7 +485,7 @@ void delete_monster_idx(int i)
 				{
 					random_artifacts[o_ptr->sval].generated = FALSE;
 				}
-				else if (k_info[o_ptr->k_idx].flags3 & TR3_NORM_ART)
+				else if (k_info[o_ptr->k_idx].flags & TR_NORM_ART)
 				{
 					k_info[o_ptr->k_idx].artifact = FALSE;
 				}
@@ -1670,26 +1671,25 @@ void update_mon(int m_idx, bool_ full)
 		}
 
 		/* Telepathy can see all "nearby" monsters with "minds" */
-		if (p_ptr->telepathy)
 		{
 			/* Assume we cant see */
-			bool_ can_esp = FALSE;
+			bool can_esp = false;
 
 			/* Different ESP */
-			if ((p_ptr->telepathy & ESP_ORC) && (r_ptr->flags & RF_ORC)) can_esp = TRUE;
-			if ((p_ptr->telepathy & ESP_SPIDER) && (r_ptr->flags & RF_SPIDER)) can_esp = TRUE;
-			if ((p_ptr->telepathy & ESP_TROLL) && (r_ptr->flags & RF_TROLL)) can_esp = TRUE;
-			if ((p_ptr->telepathy & ESP_DRAGON) && (r_ptr->flags & RF_DRAGON)) can_esp = TRUE;
-			if ((p_ptr->telepathy & ESP_GIANT) && (r_ptr->flags & RF_GIANT)) can_esp = TRUE;
-			if ((p_ptr->telepathy & ESP_DEMON) && (r_ptr->flags & RF_DEMON)) can_esp = TRUE;
-			if ((p_ptr->telepathy & ESP_UNDEAD) && (r_ptr->flags & RF_UNDEAD)) can_esp = TRUE;
-			if ((p_ptr->telepathy & ESP_EVIL) && (r_ptr->flags & RF_EVIL)) can_esp = TRUE;
-			if ((p_ptr->telepathy & ESP_ANIMAL) && (r_ptr->flags & RF_ANIMAL)) can_esp = TRUE;
-			if ((p_ptr->telepathy & ESP_THUNDERLORD) && (r_ptr->flags & RF_THUNDERLORD)) can_esp = TRUE;
-			if ((p_ptr->telepathy & ESP_GOOD) && (r_ptr->flags & RF_GOOD)) can_esp = TRUE;
-			if ((p_ptr->telepathy & ESP_NONLIVING) && (r_ptr->flags & RF_NONLIVING)) can_esp = TRUE;
-			if ((p_ptr->telepathy & ESP_UNIQUE) && ((r_ptr->flags & RF_UNIQUE) || (r_ptr->flags & RF_UNIQUE_4))) can_esp = TRUE;
-			if (p_ptr->telepathy & ESP_ALL) can_esp = TRUE;
+			can_esp |= ((p_ptr->computed_flags & ESP_ORC) && (r_ptr->flags & RF_ORC));
+			can_esp |= ((p_ptr->computed_flags & ESP_SPIDER) && (r_ptr->flags & RF_SPIDER));
+			can_esp |= ((p_ptr->computed_flags & ESP_TROLL) && (r_ptr->flags & RF_TROLL));
+			can_esp |= ((p_ptr->computed_flags & ESP_DRAGON) && (r_ptr->flags & RF_DRAGON));
+			can_esp |= ((p_ptr->computed_flags & ESP_GIANT) && (r_ptr->flags & RF_GIANT));
+			can_esp |= ((p_ptr->computed_flags & ESP_DEMON) && (r_ptr->flags & RF_DEMON));
+			can_esp |= ((p_ptr->computed_flags & ESP_UNDEAD) && (r_ptr->flags & RF_UNDEAD));
+			can_esp |= ((p_ptr->computed_flags & ESP_EVIL) && (r_ptr->flags & RF_EVIL));
+			can_esp |= ((p_ptr->computed_flags & ESP_ANIMAL) && (r_ptr->flags & RF_ANIMAL));
+			can_esp |= ((p_ptr->computed_flags & ESP_THUNDERLORD) && (r_ptr->flags & RF_THUNDERLORD));
+			can_esp |= ((p_ptr->computed_flags & ESP_GOOD) && (r_ptr->flags & RF_GOOD));
+			can_esp |= ((p_ptr->computed_flags & ESP_NONLIVING) && (r_ptr->flags & RF_NONLIVING));
+			can_esp |= ((p_ptr->computed_flags & ESP_UNIQUE) && ((r_ptr->flags & RF_UNIQUE) || (r_ptr->flags & RF_UNIQUE_4)));
+			can_esp |= bool(p_ptr->computed_flags & ESP_ALL);
 
 			/* Only do this when we can really detect monster */
 			if (can_esp)
@@ -1880,7 +1880,7 @@ void monster_carry(monster_type *m_ptr, int m_idx, object_type *q_ptr)
 		{
 			a_info[q_ptr->name1].cur_num = 0;
 		}
-		else if (k_info[q_ptr->k_idx].flags3 & TR3_NORM_ART)
+		else if (k_info[q_ptr->k_idx].flags & TR_NORM_ART)
 		{
 			k_info[q_ptr->k_idx].artifact = 0;
 		}
