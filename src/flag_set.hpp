@@ -99,7 +99,14 @@ public:
 
 	constexpr bool operator == (flag_set const &other) const
 	{
-		return m_data == other.m_data;
+		for (std::size_t i = 0; i < tiers; i++)
+		{
+			if (m_data[i] != other.m_data[i])
+			{
+				return false;
+			}
+		}
+		return true;
 	}
 
 	constexpr bool operator != (flag_set const &other) const

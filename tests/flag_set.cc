@@ -59,6 +59,16 @@ go_bandit([]() {
 			AssertThat(result, Equals(true));
 		});
 
+		it("== operator should compare equals as equals", [&] {
+			// Setup
+			fs_t fs1 = fs_t::make(1, 3);
+			fs_t fs2 = fs_t::make(1, 3);
+			// Exercise
+			auto result = (fs1 == fs2);
+			// Verify
+			AssertThat(result, Equals(true));
+		});
+
 		it("| operator should respect the tier and index", [&] {
 			// Setup
 			fs_t fs1 = fs_t::make(0, 31);
