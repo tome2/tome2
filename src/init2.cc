@@ -678,14 +678,9 @@ static errr init_misc(void)
  */
 static errr init_towns(void)
 {
-	int i = 0, j = 0;
+	town_info = new town_type[max_towns];
 
-	/*** Prepare the Towns ***/
-
-	/* Allocate the towns */
-	town_info = make_array<town_type>(max_towns);
-
-	for (i = 1; i < max_towns; i++)
+	for (std::size_t i = 1; i < max_towns; i++)
 	{
 		if (i <= max_real_towns) town_info[i].flags |= (TOWN_REAL);
 
@@ -693,7 +688,7 @@ static errr init_towns(void)
 		town_info[i].store = new store_type[max_st_idx];
 
 		/* Fill in each store */
-		for (j = 0; j < max_st_idx; j++)
+		for (std::size_t j = 0; j < max_st_idx; j++)
 		{
 			/* Access the store */
 			store_type *st_ptr = &town_info[i].store[j];
@@ -705,6 +700,7 @@ static errr init_towns(void)
 			st_ptr->stock_size = 0;
 		}
 	}
+
 	return 0;
 }
 
