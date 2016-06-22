@@ -21,8 +21,6 @@ struct skill_type
 	s32b value;                             /* Actual value */
 	s32b mod;                               /* Modifier(1 skill point = modifier skill) */
 
-	u32b uses;                             	/* Number of times used */
-
 	s16b action[MAX_SKILLS];                /* List of actions against other skills */
 
 	s16b father;                            /* Father in the skill tree */

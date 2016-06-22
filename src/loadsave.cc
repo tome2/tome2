@@ -544,7 +544,6 @@ static bool_ do_extra(ls_flag_t flag)
 			do_s32b(&s_info[i].mod, flag);
 			do_byte((byte*)&s_info[i].dev, flag);
 			do_byte((byte*)&s_info[i].hidden, flag);
-			do_u32b(&s_info[i].uses, flag);
 		}
 		else
 		{
@@ -552,7 +551,6 @@ static bool_ do_extra(ls_flag_t flag)
 			do_s16b(&tmp16s, flag);
 			do_byte(&tmp8u, flag);
 			do_byte(&tmp8u, flag);
-			do_u32b(&tmp32u, flag);
 		}
 	}
 
