@@ -343,7 +343,7 @@ namespace {
 
 		static void allocate()
 		{
-			s_info = make_array<skill_type>(max_s_idx);
+			s_info = new skill_type[max_s_idx];
 		}
 
 		static errr parse(FILE *fp)
