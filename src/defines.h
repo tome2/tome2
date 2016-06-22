@@ -383,44 +383,6 @@
 #define MAX_STACK_SIZE                  100
 
 
-/* Race flags */
-#define PR1_EXPERIMENTAL        0x00000001L     /* Is still under developemnt */
-/* XXX */
-#define PR1_RESIST_BLACK_BREATH 0x00000004L     /* Resist black breath */
-#define PR1_NO_STUN             0x00000008L     /* Never stunned */
-#define PR1_XTRA_MIGHT_BOW      0x00000010L     /* Xtra might with bows */
-#define PR1_XTRA_MIGHT_XBOW     0x00000020L     /* Xtra might with xbows */
-#define PR1_XTRA_MIGHT_SLING    0x00000040L     /* Xtra might with slings */
-#define PR1_AC_LEVEL            0x00000080L     /* More AC with levels */
-#define PR1_HURT_LITE           0x00000100L     /* Hurt by light */
-#define PR1_VAMPIRE             0x00000200L     /* Vampire */
-#define PR1_UNDEAD              0x00000400L     /* Undead */
-#define PR1_NO_CUT              0x00000800L     /* no cuts */
-#define PR1_CORRUPT             0x00001000L     /* hack-- corrupted */
-#define PR1_NO_FOOD             0x00002000L     /* little gain from food */
-#define PR1_NO_GOD              0x00004000L     /* cannot worship */
-/* XXX */
-#define PR1_ELF                 0x00010000L     /* Is an elf */
-#define PR1_SEMI_WRAITH         0x00020000L     /* Takes damage when going in walls */
-#define PR1_NO_SUBRACE_CHANGE   0x00040000L     /* Impossible to change subrace */
-/* XXX */
-#define PR1_ANTIMAGIC           0x00100000L     /* antimagic ... hack */
-#define PR1_MOLD_FRIEND         0x00200000L     /* Not attacked by molds wielded */
-#define PR1_GOD_FRIEND          0x00400000L     /* Better grace */
-/* XXX */
-#define PR1_INNATE_SPELLS       0x01000000L     /* KNown all spells, only need books */
-/* XXX */
-/* XXX */
-#define PR1_EASE_STEAL          0x08000000L     /* Gain xp by stealing */
-/* XXX */
-/* XXX */
-/* XXX */
-/* XXX */
-
-/* XXX */
-#define PR2_ASTRAL              0x00000002L     /* Is it an astral being coming from th halls of mandos ? */
-/* XXX */
-
 /* XXX */
 #define MKEY_MINDCRAFT          2
 #define MKEY_ANTIMAGIC          3

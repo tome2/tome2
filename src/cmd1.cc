@@ -33,6 +33,7 @@
 #include "object1.hpp"
 #include "object2.hpp"
 #include "options.hpp"
+#include "player_race_flag.hpp"
 #include "player_type.hpp"
 #include "quark.hpp"
 #include "skills.hpp"
@@ -2560,7 +2561,7 @@ bool_ player_can_enter(byte feature)
 
 
 	/* Player can not walk through "walls" unless in Shadow Form */
-	if (p_ptr->wraith_form || (race_flags1_p(PR1_SEMI_WRAITH)))
+	if (p_ptr->wraith_form || (race_flags_p(PR_SEMI_WRAITH)))
 		pass_wall = TRUE;
 	else
 		pass_wall = FALSE;

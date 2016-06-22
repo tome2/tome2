@@ -353,8 +353,7 @@ static void do_subrace(ls_flag_t flag)
 	for (i = 0; i < BODY_MAX; i++)
 		do_byte((byte*)&sr_ptr->body_parts[i], flag);
 
-	do_u32b(&sr_ptr->flags1, flag);
-	do_u32b(&sr_ptr->flags2, flag);
+	do_flag_set(&sr_ptr->flags, flag);
 
 	for (i = 0; i < PY_MAX_LEVEL + 1; i++)
 	{

@@ -36,6 +36,7 @@
 #include "options.hpp"
 #include "player_class.hpp"
 #include "player_race.hpp"
+#include "player_race_flag.hpp"
 #include "player_race_mod.hpp"
 #include "player_type.hpp"
 #include "skill_type.hpp"
@@ -3028,7 +3029,7 @@ void calc_bonuses(bool_ silent)
 			apply_flags(rmp_ptr->oflags[i], rmp_ptr->opval[i], 0, 0, 0, 0);
 		}
 
-		if (race_flags1_p(PR1_HURT_LITE))
+		if (race_flags_p(PR_HURT_LITE))
 			p_ptr->sensible_lite = TRUE;
 	}
 
@@ -3146,7 +3147,7 @@ void calc_bonuses(bool_ silent)
 	/* Hack -- aura of fire also provides light */
 	if (p_ptr->sh_fire) p_ptr->lite = TRUE;
 
-	if (race_flags1_p(PR1_AC_LEVEL))
+	if (race_flags_p(PR_AC_LEVEL))
 	{
 		p_ptr->to_a += 20 + (p_ptr->lev / 5);
 		p_ptr->dis_to_a += 20 + (p_ptr->lev / 5);
@@ -3617,13 +3618,13 @@ void calc_bonuses(bool_ silent)
 		if (p_ptr->num_fire < 1) p_ptr->num_fire = 1;
 	}
 
-	if (race_flags1_p(PR1_XTRA_MIGHT_BOW) && p_ptr->tval_ammo == TV_ARROW)
+	if (race_flags_p(PR_XTRA_MIGHT_BOW) && p_ptr->tval_ammo == TV_ARROW)
 		p_ptr->xtra_might += 1;
 
-	if (race_flags1_p(PR1_XTRA_MIGHT_SLING) && p_ptr->tval_ammo == TV_SHOT)
+	if (race_flags_p(PR_XTRA_MIGHT_SLING) && p_ptr->tval_ammo == TV_SHOT)
 		p_ptr->xtra_might += 1;
 
-	if (race_flags1_p(PR1_XTRA_MIGHT_XBOW) && p_ptr->tval_ammo == TV_BOLT)
+	if (race_flags_p(PR_XTRA_MIGHT_XBOW) && p_ptr->tval_ammo == TV_BOLT)
 		p_ptr->xtra_might += 1;
 
 	/* Examine the "current tool" */
@@ -4679,12 +4680,7 @@ int luck(int min, int max)
 	return (luck + min);
 }
 
-bool race_flags1_p(u32b flags1_mask)
+bool race_flags_p(player_race_flag_set const &flags_mask)
 {
-	return (rp_ptr->flags1 | rmp_ptr->flags1 | cp_ptr->flags1 | spp_ptr->flags1) & flags1_mask;
-}
-
-bool race_flags2_p(u32b flags2_mask)
-{
-	return (rp_ptr->flags2 | rmp_ptr->flags2 | cp_ptr->flags2 | spp_ptr->flags2) & flags2_mask;
+	return bool((rp_ptr->flags | rmp_ptr->flags | cp_ptr->flags | spp_ptr->flags) & flags_mask);
 }

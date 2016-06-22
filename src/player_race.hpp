@@ -5,6 +5,7 @@
 #include "object_flag_set.hpp"
 #include "player_defs.hpp"
 #include "player_race_ability_type.hpp"
+#include "player_race_flag_set.hpp"
 #include "skills_defs.hpp"
 
 #include <array>
@@ -43,8 +44,7 @@ struct player_race
 
 	s16b chart = 0;                                         /* Chart history */
 
-	u32b flags1 = 0;
-	u32b flags2 = 0;
+	player_race_flag_set flags;
 
 	std::array<object_flag_set, PY_MAX_LEVEL + 1>  oflags;
 	s16b opval[PY_MAX_LEVEL + 1] { };

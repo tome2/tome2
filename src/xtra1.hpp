@@ -2,6 +2,7 @@
 
 #include "h-basic.h"
 #include "object_flag_set.hpp"
+#include "player_race_flag_set.hpp"
 
 #include <string>
 
@@ -23,5 +24,4 @@ extern void calc_bonuses(bool_ silent);
 extern void gain_fate(byte fate);
 extern std::string fate_desc(int fate);
 extern std::string dump_fates();
-extern bool race_flags1_p(u32b flags1_mask);
-extern bool race_flags2_p(u32b flags2_mask);
+extern bool race_flags_p(player_race_flag_set const &flags_mask);

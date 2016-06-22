@@ -35,6 +35,7 @@
 #include "object_flag.hpp"
 #include "object_kind.hpp"
 #include "options.hpp"
+#include "player_race_flag.hpp"
 #include "player_type.hpp"
 #include "skills.hpp"
 #include "spells1.hpp"
@@ -4886,7 +4887,7 @@ void do_cmd_steal()
 		m_ptr->hold_o_idxs.erase(m_ptr->hold_o_idxs.begin() + k);
 
 		/* Rogues gain some xp */
-		if (race_flags1_p(PR1_EASE_STEAL))
+		if (race_flags_p(PR_EASE_STEAL))
 		{
 			s32b max_point;
 

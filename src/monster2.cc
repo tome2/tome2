@@ -31,6 +31,7 @@
 #include "object_kind.hpp"
 #include "object_type.hpp"
 #include "options.hpp"
+#include "player_race_flag.hpp"
 #include "player_type.hpp"
 #include "randart.hpp"
 #include "spells1.hpp"
@@ -1470,7 +1471,7 @@ static void sanity_blast(monster_type * m_ptr, bool_ necro)
 		}
 
 		/* Undead characters are 50% likely to be unaffected */
-		if ((race_flags1_p(PR1_UNDEAD)) || (p_ptr->mimic_form == resolve_mimic_name("Vampire")))
+		if ((race_flags_p(PR_UNDEAD)) || (p_ptr->mimic_form == resolve_mimic_name("Vampire")))
 		{
 			if (randint(100) < (25 + (p_ptr->lev))) return;
 		}

@@ -52,6 +52,7 @@
 #include "object_type.hpp"
 #include "options.hpp"
 #include "player_race.hpp"
+#include "player_race_flag.hpp"
 #include "player_race_mod.hpp"
 #include "player_spec.hpp"
 #include "player_type.hpp"
@@ -1494,7 +1495,7 @@ static void process_world(void)
 		{
 			/* Do nothing */
 		}
-		else if (race_flags1_p(PR1_SEMI_WRAITH) && (!p_ptr->wraith_form) && (f_info[cave[p_ptr->py][p_ptr->px].feat].flags & FF_CAN_PASS))
+		else if (race_flags_p(PR_SEMI_WRAITH) && (!p_ptr->wraith_form) && (f_info[cave[p_ptr->py][p_ptr->px].feat].flags & FF_CAN_PASS))
 		{
 			int amt = 1 + ((p_ptr->lev) / 5);
 
@@ -1719,7 +1720,7 @@ static void process_world(void)
 				dec++;
 			}
 
-			if (race_flags1_p(PR1_ELF))
+			if (race_flags_p(PR_ELF))
 			{
 				dec -= wisdom_scale(2);
 			}
@@ -1738,7 +1739,7 @@ static void process_world(void)
 				dec++;
 			}
 
-			if (race_flags1_p(PR1_ELF))
+			if (race_flags_p(PR_ELF))
 			{
 				dec += 5 - wisdom_scale(4);
 			}
@@ -2663,7 +2664,7 @@ static void process_world(void)
 		byte chance = 0;
 		int plev = p_ptr->lev;
 
-		if (race_flags1_p(PR1_RESIST_BLACK_BREATH)) chance = 2;
+		if (race_flags_p(PR_RESIST_BLACK_BREATH)) chance = 2;
 		else chance = 5;
 
 		if ((rand_int(100) < chance) && (p_ptr->exp > 0))
@@ -3908,7 +3909,7 @@ static void process_command(void)
 			if (p_ptr->control) break;
 			if (p_ptr->wild_mode) break;
 
-			if (race_flags1_p(PR1_NO_GOD))
+			if (race_flags_p(PR_NO_GOD))
 			{
 				msg_print("You cannot worship gods.");
 			}
@@ -5223,7 +5224,7 @@ void play_game()
 
 		/* Hack -- enter the world */
 		/* Mega-hack Vampires and Spectres start at midnight */
-		if (race_flags1_p(PR1_UNDEAD))
+		if (race_flags_p(PR_UNDEAD))
 		{
 			turn = (10L * DAY / 2) + 1;
 		}

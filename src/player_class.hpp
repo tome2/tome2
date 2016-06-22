@@ -4,6 +4,7 @@
 #include "h-basic.h"
 #include "object_flag_set.hpp"
 #include "player_defs.hpp"
+#include "player_race_flag_set.hpp"
 #include "player_spec.hpp"
 
 /**
@@ -55,8 +56,7 @@ struct player_class
 	byte max_spell_level = 0;                            /* Maximun spell level */
 	byte magic_max_spell = 0;                            /* Maximun numbner of spells one can learn by natural means */
 
-	u32b flags1 = 0;
-	u32b flags2 = 0;
+	player_race_flag_set flags;
 
 	s16b mana = 0;
 	s16b blow_num = 0;

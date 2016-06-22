@@ -33,6 +33,7 @@
 #include "object_kind.hpp"
 #include "object_type.hpp"
 #include "options.hpp"
+#include "player_race_flag.hpp"
 #include "player_type.hpp"
 #include "skills.hpp"
 #include "spells1.hpp"
@@ -4492,7 +4493,7 @@ void earthquake(int cy, int cx, int r)
 		map[16 + p_ptr->py - cy][16 + p_ptr->px - cx] = FALSE;
 
 		/* Semi-wraiths have to be hurt *some*, says DG */
-		if (race_flags1_p(PR1_SEMI_WRAITH))
+		if (race_flags_p(PR_SEMI_WRAITH))
 			damage /= 4;
 
 		/* Take some damage */

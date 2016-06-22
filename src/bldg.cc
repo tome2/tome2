@@ -25,6 +25,7 @@
 #include "object2.hpp"
 #include "object_flag.hpp"
 #include "owner_type.hpp"
+#include "player_race_flag.hpp"
 #include "player_type.hpp"
 #include "q_library.hpp"
 #include "q_fireprof.hpp"
@@ -542,7 +543,7 @@ static bool_ inn_comm(int cmd)
 
 
 	/* Extract race info */
-	vampire = ((race_flags1_p(PR1_VAMPIRE)) || (p_ptr->mimic_form == resolve_mimic_name("Vampire")));
+	vampire = ((race_flags_p(PR_VAMPIRE)) || (p_ptr->mimic_form == resolve_mimic_name("Vampire")));
 
 	switch (cmd)
 	{

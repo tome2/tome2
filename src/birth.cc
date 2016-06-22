@@ -35,6 +35,7 @@
 #include "options.hpp"
 #include "player_class.hpp"
 #include "player_race.hpp"
+#include "player_race_flag.hpp"
 #include "player_race_mod.hpp"
 #include "player_type.hpp"
 #include "q_rand.hpp"
@@ -1204,7 +1205,7 @@ int dump_classes(s16b *classes, int sel, u32b *restrictions)
 			std::string desc;
 
 			desc += cp_ptr->desc;
-			if (cp_ptr->flags1 & PR1_EXPERIMENTAL)
+			if (cp_ptr->flags & PR_EXPERIMENTAL)
 			{
 				desc += "\nEXPERIMENTAL";
 			}
@@ -1212,7 +1213,7 @@ int dump_classes(s16b *classes, int sel, u32b *restrictions)
 			print_desc(desc.c_str());
 
 			if (!(restrictions[classes[n] / 32] & BIT(classes[n])) ||
-			                cp_ptr->flags1 & PR1_EXPERIMENTAL)
+			                (cp_ptr->flags & PR_EXPERIMENTAL))
 				c_put_str(TERM_BLUE, buf, 18 + (n / 4), 1 + 20 * (n % 4));
 			else
 				c_put_str(TERM_L_BLUE, buf, 18 + (n / 4), 1 + 20 * (n % 4));
@@ -1220,7 +1221,7 @@ int dump_classes(s16b *classes, int sel, u32b *restrictions)
 		else
 		{
 			if (!(restrictions[classes[n] / 32] & BIT(classes[n])) ||
-			                cp_ptr->flags1 & PR1_EXPERIMENTAL)
+			                (cp_ptr->flags & PR_EXPERIMENTAL))
 				c_put_str(TERM_SLATE, buf, 18 + (n / 4), 1 + 20 * (n % 4));
 			else
 				put_str(buf, 18 + (n / 4), 1 + 20 * (n % 4));
@@ -1266,21 +1267,21 @@ int dump_specs(int sel)
 			std::string desc;
 
 			desc += spp_ptr->desc;
-			if (spp_ptr->flags1 & PR1_EXPERIMENTAL)
+			if (spp_ptr->flags & PR_EXPERIMENTAL)
 			{
 				desc += "\nEXPERIMENTAL";
 			}
 
 			print_desc(desc.c_str());
 
-			if (spp_ptr->flags1 & PR1_EXPERIMENTAL)
+			if (spp_ptr->flags & PR_EXPERIMENTAL)
 				c_put_str(TERM_BLUE, buf, 18 + (n / 4), 1 + 20 * (n % 4));
 			else
 				c_put_str(TERM_L_BLUE, buf, 18 + (n / 4), 1 + 20 * (n % 4));
 		}
 		else
 		{
-			if (spp_ptr->flags1 & PR1_EXPERIMENTAL)
+			if (spp_ptr->flags & PR_EXPERIMENTAL)
 				c_put_str(TERM_SLATE, buf, 18 + (n / 4), 1 + 20 * (n % 4));
 			else
 				put_str(buf, 18 + (n / 4), 1 + 20 * (n % 4));
@@ -1322,21 +1323,21 @@ int dump_races(int sel)
 			std::string desc;
 
 			desc += rp_ptr->desc;
-			if (rp_ptr->flags1 & PR1_EXPERIMENTAL)
+			if (rp_ptr->flags & PR_EXPERIMENTAL)
 			{
 				desc += "\nEXPERIMENTAL";
 			}
 
 			print_desc(desc.c_str());
 
-			if (rp_ptr->flags1 & PR1_EXPERIMENTAL)
+			if (rp_ptr->flags & PR_EXPERIMENTAL)
 				c_put_str(TERM_BLUE, buf, 18 + (n / 5), 1 + 15 * (n % 5));
 			else
 				c_put_str(TERM_L_BLUE, buf, 18 + (n / 5), 1 + 15 * (n % 5));
 		}
 		else
 		{
-			if (rp_ptr->flags1 & PR1_EXPERIMENTAL)
+			if (rp_ptr->flags & PR_EXPERIMENTAL)
 				c_put_str(TERM_SLATE, buf, 18 + (n / 5), 1 + 15 * (n % 5));
 			else
 				put_str(buf, 18 + (n / 5), 1 + 15 * (n % 5));
@@ -1383,21 +1384,21 @@ int dump_rmods(int sel, int *racem, int max)
 			std::string desc;
 
 			desc += rmp_ptr->desc;
-			if (rmp_ptr->flags1 & PR1_EXPERIMENTAL)
+			if (rmp_ptr->flags & PR_EXPERIMENTAL)
 			{
 				desc += "\nEXPERIMENTAL";
 			}
 
 			print_desc(desc.c_str());
 
-			if (rmp_ptr->flags1 & PR1_EXPERIMENTAL)
+			if (rmp_ptr->flags & PR_EXPERIMENTAL)
 				c_put_str(TERM_BLUE, buf, 18 + (n / 5), 1 + 15 * (n % 5));
 			else
 				c_put_str(TERM_L_BLUE, buf, 18 + (n / 5), 1 + 15 * (n % 5));
 		}
 		else
 		{
-			if (rmp_ptr->flags1 & PR1_EXPERIMENTAL)
+			if (rmp_ptr->flags & PR_EXPERIMENTAL)
 				c_put_str(TERM_SLATE, buf, 18 + (n / 5), 1 + 15 * (n % 5));
 			else
 				put_str(buf, 18 + (n / 5), 1 + 15 * (n % 5));
@@ -1998,7 +1999,7 @@ static bool_ player_birth_aux_ask()
 		p_ptr->pgod = k;
 		set_grace(previous_char.grace);
 	}
-	else if (race_flags1_p(PR1_NO_GOD))
+	else if (race_flags_p(PR_NO_GOD))
 	{
 		p_ptr->pgod = GOD_NONE;
 	}
@@ -2105,7 +2106,7 @@ static bool_ player_birth_aux_ask()
 		}
 
 		/* A god that like us ? more grace ! */
-		if (race_flags1_p(PR1_GOD_FRIEND))
+		if (race_flags_p(PR_GOD_FRIEND))
 		{
 			set_grace(200);
 		}
@@ -2135,7 +2136,7 @@ static bool_ player_birth_aux_ask()
 	/* Set birth options: maximize, preserve, sepcial levels and astral */
 	p_ptr->preserve = preserve;
 	p_ptr->special = special_lvls;
-	p_ptr->astral = (race_flags2_p(PR2_ASTRAL)) ? TRUE : FALSE;
+	p_ptr->astral = (race_flags_p(PR_ASTRAL)) ? TRUE : FALSE;
 
 	/*
 	 * A note by pelpel. (remove this please)

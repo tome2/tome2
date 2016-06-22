@@ -39,6 +39,7 @@
 #include "options.hpp"
 #include "player_class.hpp"
 #include "player_race.hpp"
+#include "player_race_flag.hpp"
 #include "player_race_mod.hpp"
 #include "player_spec.hpp"
 #include "player_type.hpp"
@@ -2698,7 +2699,7 @@ errr file_character(cptr name, bool_ full)
 	if (noscore)
 		fprintf(fff, "\n You have done something illegal.");
 
-	if (race_flags1_p(PR1_EXPERIMENTAL))
+	if (race_flags_p(PR_EXPERIMENTAL))
 		fprintf(fff, "\n You have done something experimental.");
 
 	{

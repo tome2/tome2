@@ -2,6 +2,7 @@
 
 #include "h-basic.h"
 #include "player_race_ability_type.hpp"
+#include "player_race_flag_set.hpp"
 #include "skills_defs.hpp"
 
 #include <array>
@@ -30,8 +31,7 @@ struct player_spec
 
 	u32b gods = 0;
 
-	u32b flags1 = 0;
-	u32b flags2 = 0;
+	player_race_flag_set flags;
 
 	std::array<player_race_ability_type, 10> abilities;     /* Abilities to be gained by level(doesnt take prereqs in account) */
 };

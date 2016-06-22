@@ -28,6 +28,7 @@
 #include "owner_type.hpp"
 #include "player_class.hpp"
 #include "player_race.hpp"
+#include "player_race_flag.hpp"
 #include "player_race_mod.hpp"
 #include "player_type.hpp"
 #include "randart_gen_type.hpp"
@@ -249,84 +250,6 @@ static cptr st_info_flags1[] =
 	"RANDOM",
 	"FORCE_LEVEL",
 	"MUSEUM",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1"
-};
-
-/*
- * Race flags
- */
-static cptr rp_info_flags1[] =
-{
-	"EXPERIMENTAL",
-	"XXX",
-	"RESIST_BLACK_BREATH",
-	"NO_STUN",
-	"XTRA_MIGHT_BOW",
-	"XTRA_MIGHT_XBOW",
-	"XTRA_MIGHT_SLING",
-	"AC_LEVEL",
-	"HURT_LITE",
-	"VAMPIRE",
-	"UNDEAD",
-	"NO_CUT",
-	"CORRUPT",
-	"NO_FOOD",
-	"NO_GOD",
-	"XXX",
-	"ELF",
-	"SEMI_WRAITH",
-	"NO_SUBRACE_CHANGE",
-	"XXX",
-	"XXX",
-	"MOLD_FRIEND",
-	"GOD_FRIEND",
-	"XXX",
-	"INNATE_SPELLS",
-	"XXX",
-	"XXX",
-	"EASE_STEAL",
-	"XXX",
-	"XXX",
-	"XXX",
-	"XXX"
-};
-
-/*
- * Race flags
- */
-static cptr rp_info_flags2[] =
-{
-	"XXX",
-	"ASTRAL",
-	"XXX",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
 	"XXX1",
 	"XXX1",
 	"XXX1",
@@ -922,14 +845,16 @@ static errr grab_one_skill_flag(u32b *f1, cptr what)
 /*
  * Grab one flag from a textual string
  */
-static errr grab_one_player_race_flag(u32b *f1, u32b *f2, cptr what)
+static errr grab_one_player_race_flag(player_race_flag_set *flags, cptr what)
 {
-	if (lookup_flags(what,
-		flag_tie(f1, rp_info_flags1),
-		flag_tie(f2, rp_info_flags2)))
-	{
-		return 0;
-	}
+#define PR(tier, index, name) \
+	if (streq(what, #name)) \
+	{ \
+	        *flags |= BOOST_PP_CAT(PR_,name); \
+	        return 0; \
+        };
+#include "player_race_flag_list.hpp"
+#undef PR
 
 	/* Oops */
 	msg_format("(2)Unknown race flag '%s'.", what);
@@ -1310,7 +1235,7 @@ errr init_player_info_txt(FILE *fp)
 		/* Process 'G' for "Player flags" (multiple lines) */
 		if ((buf[0] == 'R') && (buf[2] == 'G'))
 		{
-			if (0 != grab_one_player_race_flag(&rp_ptr->flags1, &rp_ptr->flags2, buf + 4))
+			if (0 != grab_one_player_race_flag(&rp_ptr->flags, buf + 4))
 			{
 				return (5);
 			}
@@ -1606,7 +1531,7 @@ errr init_player_info_txt(FILE *fp)
 		/* Process 'G' for "Player flags" (multiple lines) */
 		if ((buf[0] == 'S') && (buf[2] == 'G'))
 		{
-			if (0 != grab_one_player_race_flag(&rmp_ptr->flags1, &rmp_ptr->flags2, buf + 4))
+			if (0 != grab_one_player_race_flag(&rmp_ptr->flags, buf + 4))
 			{
 				return (5);
 			}
@@ -2046,7 +1971,7 @@ errr init_player_info_txt(FILE *fp)
 		/* Process 'G' for "Player flags" (multiple lines) */
 		if ((buf[0] == 'C') && (buf[2] == 'G'))
 		{
-			if (0 != grab_one_player_race_flag(&c_ptr->flags1, &c_ptr->flags2, buf + 4))
+			if (0 != grab_one_player_race_flag(&c_ptr->flags, buf + 4))
 			{
 				return (5);
 			}
@@ -2244,7 +2169,10 @@ errr init_player_info_txt(FILE *fp)
 					}
 
 					/* Parse this entry */
-					if (0 != grab_one_player_race_flag(&s_ptr->flags1, &s_ptr->flags2, s)) return (5);
+					if (0 != grab_one_player_race_flag(&s_ptr->flags, s))
+					{
+						return (5);
+					}
 
 					/* Start the next entry */
 					s = t;

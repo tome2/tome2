@@ -38,6 +38,7 @@
 #include "options.hpp"
 #include "player_class.hpp"
 #include "player_race.hpp"
+#include "player_race_flag.hpp"
 #include "player_race_mod.hpp"
 #include "player_type.hpp"
 #include "point.hpp"
@@ -1362,7 +1363,7 @@ bool_ set_stun(int v)
 	/* Hack -- Force good values */
 	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
 
-	if (race_flags1_p(PR1_NO_STUN)) v = 0;
+	if (race_flags_p(PR_NO_STUN)) v = 0;
 
 	/* Knocked out */
 	if (p_ptr->stun > 100)
@@ -1523,7 +1524,7 @@ bool_ set_cut(int v)
 	/* Hack -- Force good values */
 	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
 
-	if (race_flags1_p(PR1_NO_CUT)) v = 0;
+	if (race_flags_p(PR_NO_CUT)) v = 0;
 
 	/* Mortal wound */
 	if (p_ptr->cut > 1000)
@@ -1998,7 +1999,7 @@ void check_experience(void)
 		if (p_ptr->lev > p_ptr->max_plv)
 		{
 			p_ptr->max_plv = p_ptr->lev;
-			if ((race_flags1_p(PR1_CORRUPT)) &&
+			if ((race_flags_p(PR_CORRUPT)) &&
 			                (randint(3) == 1))
 			{
 				level_corruption = TRUE;
@@ -2093,7 +2094,7 @@ void check_experience_obj(object_type *o_ptr)
  */
 void gain_exp(s32b amount)
 {
-	if ((p_ptr->max_exp > 0) && (race_flags1_p(PR1_CORRUPT)))
+	if ((p_ptr->max_exp > 0) && (race_flags_p(PR_CORRUPT)))
 	{
 		if ((randint(p_ptr->max_exp) < amount) || (randint(12000000) < amount))
 		{
