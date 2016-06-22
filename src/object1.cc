@@ -60,6 +60,7 @@
 #include <boost/algorithm/string/predicate.hpp>
 #include <cassert>
 #include <format.h>
+#include <utility>
 
 using boost::starts_with;
 
@@ -454,6 +455,25 @@ static bool_ object_easy_know(int i)
 	return (FALSE);
 }
 
+
+
+/**
+ * Shuffle flavor arrays into a random permutation
+ */
+template <std::size_t N>
+static void shuffle_flavors(cptr adj[], byte col[])
+{
+	// The classic Fisher-Yates shuffle
+	for (std::size_t i = N - 1; i > 0; i--)
+	{
+		int j = rand_int(i + 1);
+		std::swap(adj[i], adj[j]);
+		std::swap(col[i], col[j]);
+	}
+}
+
+
+
 /*
  * Prepare the "variable" part of the "k_info" array.
  *
@@ -487,13 +507,6 @@ static bool_ object_easy_know(int i)
  */
 void flavor_init(void)
 {
-	int i, j;
-
-	byte temp_col;
-
-	cptr temp_adj;
-
-
 	/* Hack -- Use the "simple" RNG */
 	Rand_quick = TRUE;
 
@@ -502,99 +515,24 @@ void flavor_init(void)
 
 
 	/* Efficiency -- Rods/Wands share initial array */
-	for (i = 0; i < MAX_METALS; i++)
+	for (std::size_t i = 0; i < MAX_METALS; i++)
 	{
 		rod_adj[i] = wand_adj[i];
 		rod_col[i] = wand_col[i];
 	}
 
 
-	/* Rings have "ring colors" */
-	for (i = 0; i < MAX_ROCKS; i++)
-	{
-		j = rand_int(MAX_ROCKS);
-		temp_adj = ring_adj[i];
-		ring_adj[i] = ring_adj[j];
-		ring_adj[j] = temp_adj;
-		temp_col = ring_col[i];
-		ring_col[i] = ring_col[j];
-		ring_col[j] = temp_col;
-	}
-
-	/* Amulets have "amulet colors" */
-	for (i = 0; i < MAX_AMULETS; i++)
-	{
-		j = rand_int(MAX_AMULETS);
-		temp_adj = amulet_adj[i];
-		amulet_adj[i] = amulet_adj[j];
-		amulet_adj[j] = temp_adj;
-		temp_col = amulet_col[i];
-		amulet_col[i] = amulet_col[j];
-		amulet_col[j] = temp_col;
-	}
-
-	/* Staffs */
-	for (i = 0; i < MAX_WOODS; i++)
-	{
-		j = rand_int(MAX_WOODS);
-		temp_adj = staff_adj[i];
-		staff_adj[i] = staff_adj[j];
-		staff_adj[j] = temp_adj;
-		temp_col = staff_col[i];
-		staff_col[i] = staff_col[j];
-		staff_col[j] = temp_col;
-	}
-
-	/* Wands */
-	for (i = 0; i < MAX_METALS; i++)
-	{
-		j = rand_int(MAX_METALS);
-		temp_adj = wand_adj[i];
-		wand_adj[i] = wand_adj[j];
-		wand_adj[j] = temp_adj;
-		temp_col = wand_col[i];
-		wand_col[i] = wand_col[j];
-		wand_col[j] = temp_col;
-	}
-
-	/* Rods */
-	for (i = 0; i < MAX_METALS; i++)
-	{
-		j = rand_int(MAX_METALS);
-		temp_adj = rod_adj[i];
-		rod_adj[i] = rod_adj[j];
-		rod_adj[j] = temp_adj;
-		temp_col = rod_col[i];
-		rod_col[i] = rod_col[j];
-		rod_col[j] = temp_col;
-	}
-
-	/* Foods (Mushrooms) */
-	for (i = 0; i < MAX_SHROOM; i++)
-	{
-		j = rand_int(MAX_SHROOM);
-		temp_adj = food_adj[i];
-		food_adj[i] = food_adj[j];
-		food_adj[j] = temp_adj;
-		temp_col = food_col[i];
-		food_col[i] = food_col[j];
-		food_col[j] = temp_col;
-	}
-
-	/* Potions */
-	for (i = 4; i < MAX_COLORS; i++)
-	{
-		j = rand_int(MAX_COLORS - 4) + 4;
-		temp_adj = potion_adj[i];
-		potion_adj[i] = potion_adj[j];
-		potion_adj[j] = temp_adj;
-		temp_col = potion_col[i];
-		potion_col[i] = potion_col[j];
-		potion_col[j] = temp_col;
-	}
+	/* Object flavors */
+	shuffle_flavors<MAX_ROCKS>(ring_adj, ring_col);
+	shuffle_flavors<MAX_AMULETS>(amulet_adj, amulet_col);
+	shuffle_flavors<MAX_WOODS>(staff_adj, staff_col);
+	shuffle_flavors<MAX_METALS>(wand_adj, wand_col);
+	shuffle_flavors<MAX_METALS>(rod_adj, rod_col);
+	shuffle_flavors<MAX_SHROOM>(food_adj, food_col);
+	shuffle_flavors<MAX_COLORS - 4>(potion_adj + 4, potion_col + 4);
 
 	/* Scrolls (random titles, always white) */
-	for (i = 0; i < MAX_TITLES; i++)
+	for (std::size_t i = 0; i < MAX_TITLES; i++)
 	{
 		/* Get a new title */
 		while (TRUE)
@@ -635,7 +573,7 @@ void flavor_init(void)
 			bool_ okay = TRUE;
 
 			/* Check for "duplicate" scroll titles */
-			for (j = 0; j < i; j++)
+			for (std::size_t j = 0; j < i; j++)
 			{
 				cptr hack1 = scroll_adj[j];
 				cptr hack2 = scroll_adj[i];
@@ -666,7 +604,7 @@ void flavor_init(void)
 	Rand_quick = FALSE;
 
 	/* Analyze every object */
-	for (i = 1; i < max_k_idx; i++)
+	for (std::size_t i = 1; i < max_k_idx; i++)
 	{
 		object_kind *k_ptr = &k_info[i];
 
