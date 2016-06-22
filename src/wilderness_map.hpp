@@ -7,9 +7,8 @@
  */
 struct wilderness_map
 {
-	int     feat;                   /* Wilderness feature */
-	u32b    seed;                   /* Seed for the RNG */
-	u16b    entrance;               /* Entrance for dungeons */
-
-	bool_    known;                  /* Is it seen by the player ? */
+	int feat = 0;                            /* Wilderness feature */
+	u32b seed = 0;                           /* Seed for the RNG */
+	u16b entrance = 0;                       /* Entrance for dungeons */
+	bool_ known = FALSE;                     /* Is it seen by the player ? */
 };

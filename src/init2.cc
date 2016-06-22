@@ -728,15 +728,13 @@ void create_stores_stock(int t)
  */
 static errr init_wilderness(void)
 {
-	int i;
-
 	/* Allocate the wilderness (two-dimension array) */
 	wild_map = make_array<wilderness_map *>(max_wild_y);
 
 	/* Init the other pointers */
-	for (i = 0; i < max_wild_y; i++)
+	for (std::size_t i = 0; i < max_wild_y; i++)
 	{
-		wild_map[i] = make_array<wilderness_map>(max_wild_x);
+		wild_map[i] = new wilderness_map[max_wild_x];
 	}
 
 	/* No encounter right now */
