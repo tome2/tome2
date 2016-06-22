@@ -503,7 +503,7 @@ namespace {
 
 		static void allocate()
 		{
-			wf_info = make_array<wilderness_type_info>(max_wf_idx);
+			wf_info = new wilderness_type_info[max_wf_idx];
 		}
 
 		static errr parse(FILE *fp)
