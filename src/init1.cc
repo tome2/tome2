@@ -3569,24 +3569,6 @@ errr init_s_info_txt(FILE *fp)
 			continue;
 		}
 
-		/* Process 'I' for "Info" (one line only) */
-		if (buf[0] == 'I')
-		{
-			int rate;
-
-			/* Scan for the values */
-			if (1 != sscanf(buf + 2, "%d", &rate))
-			{
-				return (1);
-			}
-
-			/* Save the values */
-			s_ptr->rate = rate;
-
-			/* Next... */
-			continue;
-		}
-
 		/* Process 'G' for "random Gain" (one line only) */
 		if (buf[0] == 'G')
 		{

@@ -20,7 +20,6 @@ struct skill_type
 
 	s32b value;                             /* Actual value */
 	s32b mod;                               /* Modifier(1 skill point = modifier skill) */
-	s16b rate;                              /* Modifier decreasing rate */
 
 	u32b uses;                             	/* Number of times used */
 

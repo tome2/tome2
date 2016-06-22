@@ -487,7 +487,6 @@ void do_cmd_skill()
 	/* Allocate arrays to save skill values */
 	std::unique_ptr<s32b[]> skill_values_save(new s32b[MAX_SKILLS]);
 	std::unique_ptr<s32b[]> skill_mods_save(new s32b[MAX_SKILLS]);
-	std::unique_ptr<s16b[]> skill_rates_save(new s16b[MAX_SKILLS]);
 	std::unique_ptr<s16b[]> skill_invest(new s16b[MAX_SKILLS]);
 	std::unique_ptr<s32b[]> skill_bonus(new s32b[MAX_SKILLS]);
 
@@ -501,7 +500,6 @@ void do_cmd_skill()
 
 		skill_values_save[i] = s_ptr->value;
 		skill_mods_save[i] = s_ptr->mod;
-		skill_rates_save[i] = s_ptr->rate;
 		skill_invest[i] = 0;
 		skill_bonus[i] = 0;
 	}
@@ -615,7 +613,6 @@ void do_cmd_skill()
 
 				s_ptr->value = skill_values_save[i];
 				s_ptr->mod = skill_mods_save[i];
-				s_ptr->rate = skill_rates_save[i];
 			}
 		}
 	}
