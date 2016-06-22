@@ -30,6 +30,7 @@
 #include "spells5.hpp"
 #include "stats.hpp"
 #include "store_action_type.hpp"
+#include "store_flag.hpp"
 #include "store_type.hpp"
 #include "store_info_type.hpp"
 #include "tables.hpp"
@@ -308,7 +309,7 @@ static s32b price_item(object_type *o_ptr, int greed, bool_ flip)
 		if (adjust > 100) adjust = 100;
 
 		/* Mega-Hack -- Black market sucks */
-		if (st_info[st_ptr->st_idx].flags1 & SF1_ALL_ITEM) price = price / 2;
+		if (st_info[st_ptr->st_idx].flags & STF_ALL_ITEM) price = price / 2;
 		
 		/* No selling means you get no money */
 		if (no_selling) price = 0;
@@ -324,7 +325,7 @@ static s32b price_item(object_type *o_ptr, int greed, bool_ flip)
 		if (adjust < 100) adjust = 100;
 
 		/* Mega-Hack -- Black market sucks */
-		if (st_info[st_ptr->st_idx].flags1 & SF1_ALL_ITEM) price = price * 2;
+		if (st_info[st_ptr->st_idx].flags & STF_ALL_ITEM) price = price * 2;
 		
 		/* Never give items away for free */
 		if (price <= 0L) price = 1L;
@@ -589,7 +590,7 @@ static bool_ store_check_num(object_type *o_ptr)
 	}
 
 	/* The "home" acts like the player */
-	if ((cur_store_num == 7) || (st_info[st_ptr->st_idx].flags1 & SF1_MUSEUM))
+	if ((cur_store_num == 7) || (st_info[st_ptr->st_idx].flags & STF_MUSEUM))
 	{
 		/* Check all the items */
 		for (auto const &o_ref: st_ptr->stock)
@@ -644,7 +645,7 @@ static bool store_will_buy(object_type const *o_ptr)
 		return true;
 	}
 
-	if (st_info[st_ptr->st_idx].flags1 & SF1_MUSEUM)
+	if (st_info[st_ptr->st_idx].flags & STF_MUSEUM)
 	{
 		return true;
 	}
@@ -1096,7 +1097,7 @@ static bool_ black_market_crap(object_type *o_ptr)
 	for (std::size_t i = 0; i < max_st_idx; i++)
 	{
 		if (i == STORE_HOME) continue;
-		if (st_info[i].flags1 & SF1_MUSEUM) continue;
+		if (st_info[i].flags & STF_MUSEUM) continue;
 
 		/* Check every item in the store */
 		for (auto const &stock_obj: town_info[p_ptr->town_num].store[i].stock)
@@ -1146,16 +1147,16 @@ int return_level()
 	store_info_type *sti_ptr = &st_info[st_ptr->st_idx];
 	int level;
 
-	if (sti_ptr->flags1 & SF1_RANDOM) level = 0;
+	if (sti_ptr->flags & STF_RANDOM) level = 0;
 	else level = rand_range(1, STORE_OBJ_LEVEL);
 
-	if (sti_ptr->flags1 & SF1_DEPEND_LEVEL) level += dun_level;
+	if (sti_ptr->flags & STF_DEPEND_LEVEL) level += dun_level;
 
-	if (sti_ptr->flags1 & SF1_SHALLOW_LEVEL) level += 5 + rand_int(5);
-	if (sti_ptr->flags1 & SF1_MEDIUM_LEVEL) level += 25 + rand_int(25);
-	if (sti_ptr->flags1 & SF1_DEEP_LEVEL) level += 45 + rand_int(45);
+	if (sti_ptr->flags & STF_SHALLOW_LEVEL) level += 5 + rand_int(5);
+	if (sti_ptr->flags & STF_MEDIUM_LEVEL) level += 25 + rand_int(25);
+	if (sti_ptr->flags & STF_DEEP_LEVEL) level += 45 + rand_int(45);
 
-	if (sti_ptr->flags1 & SF1_ALL_ITEM) level += p_ptr->lev;
+	if (sti_ptr->flags & STF_ALL_ITEM) level += p_ptr->lev;
 
 	return (level);
 }
@@ -1248,7 +1249,7 @@ static void store_create(void)
 		}
 
 		/* Black Market */
-		else if (st_info[st_ptr->st_idx].flags1 & SF1_ALL_ITEM)
+		else if (st_info[st_ptr->st_idx].flags & STF_ALL_ITEM)
 		{
 			/* No themes */
 			init_match_theme(obj_theme::no_theme());
@@ -1305,8 +1306,14 @@ static void store_create(void)
 				store_tval = i - 10000;
 
 				/* Do we forbid too shallow items ? */
-				if (st_info[st_ptr->st_idx].flags1 & SF1_FORCE_LEVEL) store_level = level;
-				else store_level = 0;
+				if (st_info[st_ptr->st_idx].flags & STF_FORCE_LEVEL)
+				{
+					store_level = level;
+				}
+				else
+				{
+					store_level = 0;
+				}
 
 				/* Prepare allocation table */
 				get_obj_num_prep();
@@ -1363,7 +1370,7 @@ static void store_create(void)
 		if (q_ptr->tval == TV_CHEST) continue;
 
 		/* Prune the black market */
-		if (st_info[st_ptr->st_idx].flags1 & SF1_ALL_ITEM)
+		if (st_info[st_ptr->st_idx].flags & STF_ALL_ITEM)
 		{
 			/* Hack -- No "crappy" items */
 			if (black_market_crap(q_ptr)) continue;
@@ -1429,7 +1436,7 @@ static void display_entry(int pos)
 
 	/* Describe an item in the home */
 	if ((cur_store_num == 7) ||
-	                (st_info[st_ptr->st_idx].flags1 & SF1_MUSEUM))
+	        (st_info[st_ptr->st_idx].flags & STF_MUSEUM))
 	{
 		int maxwid = 75;
 
@@ -1565,7 +1572,7 @@ void display_store(void)
 		put_str("Weight", 5, 70);
 	}
 
-	else if (st_info[st_ptr->st_idx].flags1 & SF1_MUSEUM)
+	else if (st_info[st_ptr->st_idx].flags & STF_MUSEUM)
 	{
 		/* Show the name of the store */
 		strnfmt(buf, 80, "%s", st_info[cur_store_num].name);
@@ -2078,7 +2085,7 @@ void store_stole(void)
 void store_purchase(void)
 {
 	/* Museum? */
-	if (st_info[st_ptr->st_idx].flags1 & SF1_MUSEUM)
+	if (st_info[st_ptr->st_idx].flags & STF_MUSEUM)
 	{
 		msg_print("You cannot take items from the museum!");
 		return;
@@ -2400,7 +2407,7 @@ void store_sell(void)
 
 	char o_name[80];
 
-	bool_ museum = (st_info[st_ptr->st_idx].flags1 & SF1_MUSEUM) ? TRUE : FALSE;
+	bool museum = bool(st_info[st_ptr->st_idx].flags & STF_MUSEUM);
 
 	/* Prepare prompt */
 	cptr q, s;
@@ -2695,7 +2702,7 @@ void store_examine(void)
 	if (st_ptr->stock.empty())
 	{
 		if (cur_store_num == 7) msg_print("Your home is empty.");
-		else if (st_info[st_ptr->st_idx].flags1 & SF1_MUSEUM) msg_print("The museum is empty.");
+		else if (st_info[st_ptr->st_idx].flags & STF_MUSEUM) msg_print("The museum is empty.");
 		else msg_print("I am currently out of stock.");
 		return;
 	}
@@ -3380,7 +3387,7 @@ void store_shuffle(int which)
 	if (which == STORE_HOME) return;
 
 	/* Ignoer Museum */
-	if (st_info[st_ptr->st_idx].flags1 & SF1_MUSEUM) return;
+	if (st_info[st_ptr->st_idx].flags & STF_MUSEUM) return;
 
 
 	/* Save the store index */
@@ -3434,13 +3441,13 @@ void store_maint(int town_num, int store_num)
 	st_ptr = &town_info[town_num].store[store_num];
 
 	/* Ignoer Museum */
-	if (st_info[st_ptr->st_idx].flags1 & SF1_MUSEUM) return;
+	if (st_info[st_ptr->st_idx].flags & STF_MUSEUM) return;
 
 	/* Activate the owner */
 	ot_ptr = &ow_info[st_ptr->owner];
 
 	/* Mega-Hack -- prune the black market */
-	if (st_info[st_ptr->st_idx].flags1 & SF1_ALL_ITEM)
+	if (st_info[st_ptr->st_idx].flags & STF_ALL_ITEM)
 	{
 		/* Destroy crappy black market items */
 		for (int j = st_ptr->stock.size() - 1; j >= 0; j--)

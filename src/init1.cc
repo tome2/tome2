@@ -39,6 +39,7 @@
 #include "skills.hpp"
 #include "spells5.hpp"
 #include "store_action_type.hpp"
+#include "store_flag.hpp"
 #include "store_info_type.hpp"
 #include "store_type.hpp"
 #include "tables.hpp"
@@ -195,45 +196,6 @@ static cptr t_info_flags[] =
 	"XXX30",
 	"XXX31",
 	"XXX32"
-};
-
-/*
- * Stores flags
- */
-static cptr st_info_flags1[] =
-{
-	"DEPEND_LEVEL",
-	"SHALLOW_LEVEL",
-	"MEDIUM_LEVEL",
-	"DEEP_LEVEL",
-	"RARE",
-	"VERY_RARE",
-	"COMMON",
-	"ALL_ITEM",
-	"RANDOM",
-	"FORCE_LEVEL",
-	"MUSEUM",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1"
 };
 
 /* Skill flags */
@@ -5994,13 +5956,15 @@ static errr grab_one_race_flag(owner_type *ow_ptr, int state, cptr what)
 /*
  * Grab one store flag from a textual string
  */
-static errr grab_one_store_flag(store_info_type *st_ptr, cptr what)
+static errr grab_one_store_flag(store_flag_set *flags, cptr what)
 {
-	/* Scan store flags */
-	if (lookup_flags(what, flag_tie(&st_ptr->flags1, st_info_flags1)))
-	{
-		return 0;
-	}
+#define STF(tier, index, name) \
+	if (streq(what, #name)) { \
+	        *flags |= BOOST_PP_CAT(STF_,name); \
+	        return 0; \
+        }
+#include "store_flag_list.hpp"
+#undef STF
 
 	/* Oops */
 	msg_format("Unknown store flag '%s'.", what);
@@ -6183,7 +6147,10 @@ errr init_st_info_txt(FILE *fp)
 		/* Process 'F' for "store Flags" (multiple lines) */
 		if (buf[0] == 'F')
 		{
-			if (0 != grab_one_store_flag(st_ptr, buf + 2)) return (5);
+			if (0 != grab_one_store_flag(&st_ptr->flags, buf + 2))
+			{
+				return (5);
+			}
 
 			/* Next... */
 			continue;

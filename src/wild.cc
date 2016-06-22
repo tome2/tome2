@@ -21,6 +21,7 @@
 #include "options.hpp"
 #include "player_type.hpp"
 #include "store_info_type.hpp"
+#include "store_flag.hpp"
 #include "tables.hpp"
 #include "town_type.hpp"
 #include "util.hpp"
@@ -890,9 +891,9 @@ static int get_shops(int *rooms)
 	{
 		int chance = 50;
 
-		if (st_info[n].flags1 & SF1_COMMON) chance += 30;
-		if (st_info[n].flags1 & SF1_RARE) chance -= 20;
-		if (st_info[n].flags1 & SF1_VERY_RARE) chance -= 30;
+		if (st_info[n].flags & STF_COMMON) chance += 30;
+		if (st_info[n].flags & STF_RARE) chance -= 20;
+		if (st_info[n].flags & STF_VERY_RARE) chance -= 30;
 
 		if (!magik(chance)) continue;
 
@@ -900,7 +901,7 @@ static int get_shops(int *rooms)
 			if (rooms[i] == n)
 				continue;
 
-		if (st_info[n].flags1 & SF1_RANDOM) rooms[num++] = n;
+		if (st_info[n].flags & STF_RANDOM) rooms[num++] = n;
 	}
 
 	return num;

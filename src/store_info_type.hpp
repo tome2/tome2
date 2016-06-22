@@ -1,6 +1,7 @@
 #pragma once
 
 #include "h-basic.h"
+#include "store_flag_set.hpp"
 
 /**
  * Number of items to choose stock from
@@ -30,5 +31,5 @@ struct store_info_type
 	byte x_attr = 0;                         /* Desired building attribute */
 	char x_char = '\0';                      /* Desired building character */
 
-	u32b flags1 = 0;                         /* Flags */
+	store_flag_set flags;                    /* Flags */
 };

@@ -2628,21 +2628,6 @@
 
 
 /*
- * Store flags
- */
-#define SF1_DEPEND_LEVEL        0x00000001L
-#define SF1_SHALLOW_LEVEL       0x00000002L
-#define SF1_MEDIUM_LEVEL        0x00000004L
-#define SF1_DEEP_LEVEL          0x00000008L
-#define SF1_RARE                0x00000010L
-#define SF1_VERY_RARE           0x00000020L
-#define SF1_COMMON              0x00000040L
-#define SF1_ALL_ITEM            0x00000080L     /* Works as the BM */
-#define SF1_RANDOM              0x00000100L
-#define SF1_FORCE_LEVEL         0x00000200L
-#define SF1_MUSEUM              0x00000400L
-
-/*
  * Shield effect options
  */
 #define SHIELD_NONE             0x0000
