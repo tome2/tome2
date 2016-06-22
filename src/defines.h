@@ -2801,11 +2801,6 @@
 /* Number of skill choices for Lost Sword quests. */
 #define LOST_SWORD_NSKILLS	4
 
-/* SKill flags */
-#define SKF1_HIDDEN             0x00000001      /* Starts hidden */
-#define SKF1_AUTO_HIDE          0x00000002      /* Tries to rehide at calc_bonus */
-#define SKF1_RANDOM_GAIN        0x00000004      /* Can be randomly gained by certain quests & such */
-
 #define MAX_MELEE               3
 
 

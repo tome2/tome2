@@ -27,6 +27,7 @@
 #include "player_race_mod.hpp"
 #include "player_spec.hpp"
 #include "player_type.hpp"
+#include "skill_flag.hpp"
 #include "skill_type.hpp"
 #include "spells1.hpp"
 #include "spells4.hpp"
@@ -1241,11 +1242,10 @@ void init_skill(s32b value, s32b mod, int i)
 {
 	s_info[i].value = value;
 	s_info[i].mod = mod;
-
-	if (s_info[i].flags1 & SKF1_HIDDEN)
-		s_info[i].hidden = TRUE;
-	else
-		s_info[i].hidden = FALSE;
+	s_info[i].hidden = (s_info[i].flags & SKF_HIDDEN)
+	        ? TRUE
+	        : FALSE
+	        ;
 }
 
 /*
@@ -1320,7 +1320,7 @@ void do_get_new_skill()
 	max_a = 0;
 	for (i = 0; i < max_s_idx; i++)
 	{
-		if (s_info[i].flags1 & SKF1_RANDOM_GAIN) {
+		if (s_info[i].flags & SKF_RANDOM_GAIN) {
 			available_skills[max_a] = i;
 			max_a++;
 		}

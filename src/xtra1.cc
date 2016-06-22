@@ -39,6 +39,7 @@
 #include "player_race_flag.hpp"
 #include "player_race_mod.hpp"
 #include "player_type.hpp"
+#include "skill_flag.hpp"
 #include "skill_type.hpp"
 #include "skills.hpp"
 #include "spells3.hpp"
@@ -2951,7 +2952,7 @@ void calc_bonuses(bool_ silent)
 	/* Hide the skills that should auto hide */
 	for (i = 0; i < max_s_idx; i++)
 	{
-		if (s_info[i].flags1 & SKF1_AUTO_HIDE)
+		if (s_info[i].flags & SKF_AUTO_HIDE)
 			s_info[i].hidden = TRUE;
 	}
 

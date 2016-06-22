@@ -35,6 +35,7 @@
 #include "randart_gen_type.hpp"
 #include "randart_part_type.hpp"
 #include "set_type.hpp"
+#include "skill_flag.hpp"
 #include "skill_type.hpp"
 #include "skills.hpp"
 #include "spells5.hpp"
@@ -196,43 +197,6 @@ static cptr t_info_flags[] =
 	"XXX30",
 	"XXX31",
 	"XXX32"
-};
-
-/* Skill flags */
-static cptr s_info_flags1[] =
-{
-	"HIDDEN",
-	"AUTO_HIDE",
-	"RANDOM_GAIN",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1",
-	"XXX1"
 };
 
 
@@ -754,12 +718,16 @@ static errr grab_one_race_allow_flag(u32b *choice, cptr what)
 /*
  * Grab one flag from a textual string
  */
-static errr grab_one_skill_flag(u32b *f1, cptr what)
+static errr grab_one_skill_flag(skill_flag_set *flags, cptr what)
 {
-	if (lookup_flags(what, flag_tie(f1, s_info_flags1)))
-	{
-		return 0;
-	}
+#define SKF(tier, index, name) \
+	if (streq(what, #name)) \
+	{ \
+	        *flags |= BOOST_PP_CAT(SKF_,name); \
+	        return 0; \
+        };
+#include "skill_flag_list.hpp"
+#undef SKF
 
 	/* Oops */
 	msg_format("(2)Unknown skill flag '%s'.", what);
@@ -3590,7 +3558,7 @@ errr init_s_info_txt(FILE *fp)
 		/* Process 'F' for flags */
 		if (buf[0] == 'F')
 		{
-			if (0 != grab_one_skill_flag(&s_ptr->flags1, buf + 2))
+			if (0 != grab_one_skill_flag(&s_ptr->flags, buf + 2))
 			{
 				return (5);
 			}

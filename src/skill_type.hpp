@@ -1,6 +1,7 @@
 #pragma once
 
 #include "h-basic.h"
+#include "skill_flag_set.hpp"
 #include "skills_defs.hpp"
 
 /**
@@ -30,5 +31,5 @@ struct skill_type
 
 	byte random_gain_chance = 0;            /* Chance to gain from Lost Sword quest; if applicable */
 
-	u32b flags1 = 0;                        /* Skill flags */
+	skill_flag_set flags;                   /* Skill flags */
 };
