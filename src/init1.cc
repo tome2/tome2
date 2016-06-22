@@ -6100,13 +6100,14 @@ errr init_st_info_txt(FILE *fp)
 			if (!*s) return (1);
 
 			/* Get the index */
-			st_ptr->table[item_idx][1] = atoi(buf + 2);
+			st_ptr->item_chance[item_idx] = atoi(buf + 2);
 
 			/* Append chars to the name */
-			st_ptr->table[item_idx++][0] = test_item_name(s);
+			st_ptr->item_kind[item_idx] = test_item_name(s);
 
-			st_ptr->table_num = item_idx;
-			assert(st_ptr->table_num <= STORE_CHOICES);
+			item_idx++;
+			st_ptr->item_num = item_idx;
+			assert(st_ptr->item_num <= STORE_CHOICES);
 
 			/* Next... */
 			continue;
@@ -6122,11 +6123,13 @@ errr init_st_info_txt(FILE *fp)
 			                &rar1, &tv1, &sv1)) return (1);
 
 			/* Get the index */
-			st_ptr->table[item_idx][1] = rar1;
+			st_ptr->item_chance[item_idx] = rar1;
 			/* Hack -- 256 as a sval means all possible items */
-			st_ptr->table[item_idx++][0] = (sv1 < 256) ? lookup_kind(tv1, sv1) : tv1 + 10000;
+			st_ptr->item_kind[item_idx] = (sv1 < 256) ? lookup_kind(tv1, sv1) : tv1 + 10000;
 
-			st_ptr->table_num = item_idx;
+			item_idx++;
+			st_ptr->item_num = item_idx;
+			assert(st_ptr->item_num <= STORE_CHOICES);
 
 			/* Next... */
 			continue;

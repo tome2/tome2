@@ -1280,9 +1280,9 @@ static void store_create(void)
 		else
 		{
 			/* Hack -- Pick an item to sell */
-			item = rand_int(st_info[st_ptr->st_idx].table_num);
-			i = st_info[st_ptr->st_idx].table[item][0];
-			chance = st_info[st_ptr->st_idx].table[item][1];
+			item = rand_int(st_info[st_ptr->st_idx].item_num);
+			i = st_info[st_ptr->st_idx].item_kind[item];
+			chance = st_info[st_ptr->st_idx].item_chance[item];
 
 			/* Don't allow k_info artifacts */
 			if ((i <= 10000) && (k_info[i].flags & TR_NORM_ART))

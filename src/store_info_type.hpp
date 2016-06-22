@@ -14,8 +14,10 @@ struct store_info_type
 {
 	const char *name;               /* Name */
 
-	s16b table[STORE_CHOICES][2];   /* Table -- Legal item kinds */
-	byte table_num;                 /* Number of items */
+	s16b item_kind[STORE_CHOICES];  /* Table -- Legal item kinds */
+	s16b item_chance[STORE_CHOICES];
+	byte item_num;                  /* Number of items */
+
 	s16b max_obj;                   /* Number of items this store can hold */
 
 	u16b owners[4];                 /* List of owners(refers to ow_info) */
