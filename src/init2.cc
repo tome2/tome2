@@ -455,7 +455,7 @@ namespace {
 
 		static void allocate()
 		{
-			st_info = make_array<store_info_type>(max_st_idx);
+			st_info = new store_info_type[max_st_idx];
 		}
 
 		static errr parse(FILE *fp)
