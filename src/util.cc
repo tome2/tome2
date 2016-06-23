@@ -3499,10 +3499,6 @@ bool_ prefix(cptr s, cptr t)
 	/* Paranoia */
 	if (!s || !t)
 	{
-		if (alert_failure)
-		{
-			message_add("prefix() called with null argument!", TERM_RED);
-		}
 		return FALSE;
 	}
 

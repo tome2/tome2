@@ -1313,9 +1313,6 @@ option_type option_info[] =
 	{ &disturb_other, FALSE, 2, 9,
 	  "disturb_other", "Disturb whenever random things happen" },
 
-	{ &alert_failure, FALSE, 2, 11,
-	  "alert_failure", "Alert user to various failures" },
-
 	{ &last_words, TRUE, 2, 12,
 	  "last_words", "Get last words when the character dies" },
 
