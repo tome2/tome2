@@ -3039,7 +3039,7 @@ static void validate_bg(void)
 /*
  * Initialize a random town
  */
-void init_town(int t_idx, int level)
+void init_town(int t_idx)
 {
 	town_type *t_ptr = &town_info[t_idx];
 
@@ -3157,7 +3157,7 @@ void player_birth(void)
 			}
 
 			/* Create the town */
-			init_town(d_ptr->t_idx[num], d_ptr->t_level[num]);
+			init_town(d_ptr->t_idx[num]);
 
 			num++;
 
