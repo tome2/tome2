@@ -1909,7 +1909,10 @@ static void process_world(void)
 		if (p_ptr->chp < warning)
 		{
 			/* Hack -- bell on first notice */
-			if (alert_hitpoint && (old_chp > warning)) bell();
+			if (old_chp > warning)
+			{
+				bell();
+			}
 
 			sound(SOUND_WARN);
 

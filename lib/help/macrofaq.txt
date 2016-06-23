@@ -1772,7 +1772,6 @@ options screen.
 rogue_like_commands
 use_old_target
 always_pickup
-alert_hitpoint
 auto_scum
 
 #####G----------------------------------------------------------------------

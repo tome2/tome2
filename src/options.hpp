@@ -27,7 +27,6 @@ extern bool_ disturb_detect;
 extern bool_ disturb_state;
 extern bool_ disturb_minor;
 extern bool_ disturb_other;
-extern bool_ alert_hitpoint;
 extern bool_ alert_failure;
 extern bool_ last_words;
 extern bool_ small_levels;

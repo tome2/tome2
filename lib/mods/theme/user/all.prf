@@ -62,9 +62,6 @@ X:disturb_minor
 # Option 'Disturb whenever random things happen'
 X:disturb_other
 
-# Option 'Alert user to critical hitpoints'
-Y:alert_hitpoint
-
 # Option 'Alert user to various failures'
 Y:alert_failure
 

@@ -25,7 +25,6 @@ bool_ disturb_detect; 		/* Disturb whenever leaving trap-detected area */
 bool_ disturb_state; 			/* Disturn whenever player state changes */
 bool_ disturb_minor; 			/* Disturb whenever boring things happen */
 bool_ disturb_other; 			/* Disturb whenever various things happen */
-bool_ alert_hitpoint; 		/* Alert user to critical hitpoints */
 bool_ alert_failure; 		/* Alert user to various failures */
 bool_ last_words; 		/* Get last words upon dying */
 bool_ small_levels; 		/* Allow unusually small dungeon levels */

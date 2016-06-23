@@ -1313,9 +1313,6 @@ option_type option_info[] =
 	{ &disturb_other, FALSE, 2, 9,
 	  "disturb_other", "Disturb whenever random things happen" },
 
-	{ &alert_hitpoint, FALSE, 2, 10,
-	  "alert_hitpoint", "Alert user to critical hitpoints" },
-
 	{ &alert_failure, FALSE, 2, 11,
 	  "alert_failure", "Alert user to various failures" },
 

@@ -171,10 +171,6 @@ off at will during the course of the game.
     even if this option is unset.  (You may also inscribe an item with {.}
     to suppress its random-teleportation power, unless it is cursed.)
 
-#####GAlert user to critical hitpoints    [alert_hitpoint]
-    Produce a "bell" noise, and flushes all pending input, when your hitpoints
-    reach the warning point chosen elsewhere, preventing stupid deaths.
-
 #####GAlert user to various failures    [alert_failure]
     Produce a "bell" noise, and flushes all pending input, when various
     failures occur, as described above.

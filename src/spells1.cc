@@ -1410,7 +1410,10 @@ void take_hit(int damage, cptr hit_from)
 	if (p_ptr->chp < warning)
 	{
 		/* Hack -- bell on first notice */
-		if (alert_hitpoint && (old_chp > warning)) bell();
+		if (old_chp > warning)
+		{
+			bell();
+		}
 
 		sound(SOUND_WARN);
 
@@ -1551,7 +1554,10 @@ void take_sanity_hit(int damage, cptr hit_from)
 	if (p_ptr->csane < warning)
 	{
 		/* Hack -- bell on first notice */
-		if (alert_hitpoint && (old_csane > warning)) bell();
+		if (old_csane > warning)
+		{
+			bell();
+		}
 
 		sound(SOUND_WARN);
 
