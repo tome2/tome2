@@ -263,16 +263,35 @@ static void do_std_string(std::string &s, ls_flag_t flag)
 	}
 }
 
-/*
- * Load/save flag set
- */
 namespace {
 
+/**
+ * Load/save flag set
+ */
 template<std::size_t Tiers> void do_flag_set(flag_set<Tiers> *flags, ls_flag_t flag)
 {
 	for (std::size_t i = 0; i < flags->size(); i++)
 	{
 		do_u32b(&(*flags)[i], flag);
+	}
+}
+
+template<typename T, typename F> void do_vector(ls_flag_t flag, std::vector<T> &v, F f)
+{
+	u32b n = v.size();
+
+	do_u32b(&n, flag);
+
+	if (flag == ls_flag_t::LOAD)
+	{
+		v.clear(); // Make sure it's empty
+		v.reserve(n);
+		std::fill_n(std::back_inserter(v), n, T());
+	}
+
+	for (std::size_t i = 0; i < n; i++)
+	{
+		f(&v[i], flag);
 	}
 }
 
@@ -568,12 +587,8 @@ static bool_ do_extra(ls_flag_t flag)
 
 
 	/* Save/load spellbinder */
-	do_byte(&p_ptr->spellbinder.num, flag);
 	do_byte(&p_ptr->spellbinder.trigger, flag);
-	for (std::size_t i = 0; i < 4; i++)
-	{
-		do_u32b(&p_ptr->spellbinder.spells[i], flag);
-	}
+	do_vector(flag, p_ptr->spellbinder.spell_idxs, do_u32b);
 
 	// Quests
 	{

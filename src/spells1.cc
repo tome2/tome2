@@ -1206,13 +1206,14 @@ void spellbinder_trigger()
 	auto spellbinder = &p_ptr->spellbinder;
 
 	cmsg_print(TERM_L_GREEN, "The spellbinder is triggered!");
-	for (int i = 0; i < spellbinder->num; i++)
+
+	for (auto spell_idx: spellbinder->spell_idxs)
 	{
-		msg_format("Triggering spell %s.", spell_type_name(spell_at(spellbinder->spells[i])));
-		lua_cast_school_spell(spellbinder->spells[i], TRUE);
+		msg_format("Triggering spell %s.", spell_type_name(spell_at(spell_idx)));
+		lua_cast_school_spell(spell_idx, TRUE);
 	}
 
-	spellbinder->num = 0;
+	spellbinder->spell_idxs.clear();
 	spellbinder->trigger = 0;
 }
 

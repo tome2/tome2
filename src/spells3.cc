@@ -2326,7 +2326,7 @@ casting_result meta_spellbinder()
 {
 	auto spellbinder = &p_ptr->spellbinder;
 
-	if (spellbinder->num != 0)
+	if (spellbinder->spell_idxs.size() > 0)
 	{
 		struct trigger {
 			int idx;
@@ -2339,7 +2339,6 @@ casting_result meta_spellbinder()
 			{ -1, NULL, },
 		};
 		int trigger_idx = -1;
-		int i;
 
 		assert(spellbinder->trigger >= 0);
 
@@ -2354,9 +2353,9 @@ casting_result meta_spellbinder()
 		msg_print("The spellbinder is already active.");
 		msg_format("It will trigger at %s.", triggers[trigger_idx].desc);
 		msg_print("With the spells: ");
-		for (i = 0; i < spellbinder->num; i++)
+		for (auto spell_idx : spellbinder->spell_idxs)
 		{ 
-			msg_print(spell_type_name(spell_at(spellbinder->spells[i])));
+			msg_print(spell_type_name(spell_at(spell_idx)));
 		}
 
 		/* Doesn't cost anything */
@@ -2365,7 +2364,6 @@ casting_result meta_spellbinder()
 	else
 	{
 		char c;
-		int i;
 
 		if (!get_com("Trigger at [a]75% hp [b]50% hp [c]25% hp?", &c))
 		{
@@ -2388,17 +2386,19 @@ casting_result meta_spellbinder()
 			
 		}
 
-		spellbinder->num = get_spellbinder_max();
-		i = spellbinder->num;
-		while (i > 0)
+		std::size_t n = get_spellbinder_max();
+		while (n > 0)
 		{
 			s32b s = get_school_spell("bind", 0);
+
 			if (s == -1)
 			{
 				spellbinder->trigger = 0;
-				spellbinder->num = 0;
+				spellbinder->spell_idxs.clear();
 				return CAST_OBVIOUS;
-			} else {
+			}
+			else
+			{
 				if (spell_type_skill_level(spell_at(s)) > 7 + get_level_s(SPELLBINDER, 35))
 				{
 					msg_format("You are only allowed spells with a base level of " FMTs32b ".", (7 + get_level_s(SPELLBINDER, 35)));
@@ -2406,8 +2406,8 @@ casting_result meta_spellbinder()
 				}
 			}
 
-			spellbinder->spells[i] = s;
-			i = i - 1;
+			spellbinder->spell_idxs.push_back(s);
+			n--;
 		}
 		
 		p_ptr->energy = p_ptr->energy - 3100;

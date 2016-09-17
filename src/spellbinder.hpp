@@ -1,6 +1,7 @@
 #pragma once
 
 #include "h-basic.h"
+#include <vector>
 
 /**
  * Spellbinder state
@@ -8,14 +9,9 @@
 struct spellbinder {
 
 	/**
-	 * Number of bound spells.
-	 */
-	byte num = 0;
-
-	/**
 	 * Bound spells.
 	 */
-	u32b spells[4] = { 0 };
+	std::vector<u32b> spell_idxs;
 
 	/**
 	 * Trigger condition.
