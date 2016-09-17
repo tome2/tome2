@@ -48,7 +48,6 @@ struct player_type
 	u16b expfact = 0;                                       /* Experience factor */
 
 	byte preserve = 0;                                      /* Preserve artifacts */
-	byte special = 0;                                       /* Special levels */
 	byte allow_one_death = 0;                               /* Blood of life */
 
 	s32b au = 0;                                            /* Current Gold */

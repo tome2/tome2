@@ -881,9 +881,6 @@ s16b doppleganger;
 /* To allow wilderness encounters */
 bool_ generate_encounter;
 
-/* Special levels */
-bool_ special_lvls;
-
 /*
  * Such an ugly hack ...
  */

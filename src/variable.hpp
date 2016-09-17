@@ -269,7 +269,6 @@ extern byte dungeon_type;
 extern s16b *max_dlv;
 extern s16b doppleganger;
 extern bool_ generate_encounter;
-extern bool_ special_lvls;
 extern bool_ *m_allow_special;
 extern bool_ *k_allow_special;
 extern bool_ *a_allow_special;
