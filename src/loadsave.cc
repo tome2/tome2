@@ -742,10 +742,7 @@ static bool_ do_extra(ls_flag_t flag)
 	do_s16b(&p_ptr->oppose_acid, flag);
 	do_s16b(&p_ptr->oppose_elec, flag);
 	do_s16b(&p_ptr->oppose_pois, flag);
-	do_s16b(&p_ptr->oppose_ld, flag);
 	do_s16b(&p_ptr->oppose_cc, flag);
-	do_s16b(&p_ptr->oppose_ss, flag);
-	do_s16b(&p_ptr->oppose_nex, flag);
 
 	do_s16b(&p_ptr->tim_esp, flag);
 	do_s16b(&p_ptr->tim_wraith, flag);

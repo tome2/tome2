@@ -2213,28 +2213,10 @@ static void process_world(void)
 		(void)set_oppose_pois(p_ptr->oppose_pois - 1);
 	}
 
-	/* Oppose Light & Dark */
-	if (p_ptr->oppose_ld)
-	{
-		(void)set_oppose_ld(p_ptr->oppose_ld - 1);
-	}
-
 	/* Oppose Chaos & Confusion */
 	if (p_ptr->oppose_cc)
 	{
 		(void)set_oppose_cc(p_ptr->oppose_cc - 1);
-	}
-
-	/* Oppose Sound & Shards */
-	if (p_ptr->oppose_ss)
-	{
-		(void)set_oppose_ss(p_ptr->oppose_ss - 1);
-	}
-
-	/* Oppose Nexus */
-	if (p_ptr->oppose_nex)
-	{
-		(void)set_oppose_nex(p_ptr->oppose_nex - 1);
 	}
 
 	/* Timed mimicry */

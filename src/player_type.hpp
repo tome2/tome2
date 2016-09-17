@@ -128,10 +128,7 @@ struct player_type
 	s16b oppose_fire = 0;                                   /* Timed -- oppose heat */
 	s16b oppose_cold = 0;                                   /* Timed -- oppose cold */
 	s16b oppose_pois = 0;                                   /* Timed -- oppose poison */
-	s16b oppose_ld = 0;                                     /* Timed -- oppose light & dark */
 	s16b oppose_cc = 0;                                     /* Timed -- oppose chaos & confusion */
-	s16b oppose_ss = 0;                                     /* Timed -- oppose sound & shards */
-	s16b oppose_nex = 0;                                    /* Timed -- oppose nexus */
 
 	s16b tim_esp = 0;                                       /* Timed ESP */
 	s16b tim_wraith = 0;                                    /* Timed wraithform */

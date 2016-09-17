@@ -3409,31 +3409,11 @@ void calc_bonuses(bool_ silent)
 		p_ptr->fly = TRUE;
 	}
 
-	/* Oppose Light & Dark */
-	if (p_ptr->oppose_ld)
-	{
-		p_ptr->resist_lite = TRUE;
-		p_ptr->resist_dark = TRUE;
-	}
-
 	/* Oppose Chaos & Confusion */
 	if (p_ptr->oppose_cc)
 	{
 		p_ptr->resist_chaos = TRUE;
 		p_ptr->resist_conf = TRUE;
-	}
-
-	/* Oppose Sound & Shards */
-	if (p_ptr->oppose_ss)
-	{
-		p_ptr->resist_sound = TRUE;
-		p_ptr->resist_shard = TRUE;
-	}
-
-	/* Oppose Nexus */
-	if (p_ptr->oppose_nex)
-	{
-		p_ptr->resist_nexus = TRUE;
 	}
 
 	/* Temporary "fast" */

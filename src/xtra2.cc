@@ -403,17 +403,6 @@ bool_ set_strike(int v)
 }
 
 /*
- * Set "p_ptr->oppose_ld"
- */
-bool_ set_oppose_ld(int v)
-{
-	return set_simple_field(
-		&p_ptr->oppose_ld, v,
-		TERM_WHITE, "You feel protected against light's fluctuation.",
-		TERM_WHITE, "You are no longer protected against light's fluctuation.");
-}
-
-/*
  * Set "p_ptr->oppose_cc"
  */
 bool_ set_oppose_cc(int v)
@@ -422,28 +411,6 @@ bool_ set_oppose_cc(int v)
 		&p_ptr->oppose_cc, v,
 		TERM_WHITE, "You feel protected against raw chaos.",
 		TERM_WHITE, "You are no longer protected against chaos.");
-}
-
-/*
- * Set "p_ptr->oppose_ss"
- */
-bool_ set_oppose_ss(int v)
-{
-	return set_simple_field(
-		&p_ptr->oppose_ss, v,
-		TERM_WHITE, "You feel protected against the ravages of sound and shards.",
-		TERM_WHITE, "You are no longer protected against the ravages of sound and shards.");
-}
-
-/*
- * Set "p_ptr->oppose_nex"
- */
-bool_ set_oppose_nex(int v)
-{
-	return set_simple_field(
-		&p_ptr->oppose_nex, v,
-		TERM_WHITE, "You feel protected against the strange forces of nexus.",
-		TERM_WHITE, "You are no longer protected against the strange forces of nexus.");
 }
 
 /*
