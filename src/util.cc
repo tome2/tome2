@@ -2002,16 +2002,20 @@ void c_prt(byte attr, cptr str, int row, int col)
 	Term_addstr( -1, attr, str);
 }
 
-/*
-* As above, but in "white"
-*/
+void c_prt(byte attr, std::string const &s, int row, int col)
+{
+	c_prt(attr, s.c_str(), row, col);
+}
+
 void prt(cptr str, int row, int col)
 {
-	/* Spawn */
 	c_prt(TERM_WHITE, str, row, col);
 }
 
-
+void prt(std::string const &s, int row, int col)
+{
+	prt(s.c_str(), row, col);
+}
 
 /*
  * Print some (colored) text to the screen at the current cursor position,

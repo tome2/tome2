@@ -38,6 +38,8 @@ extern void screen_load(void);
 extern void c_put_str(byte attr, cptr str, int row, int col);
 extern void put_str(cptr str, int row, int col);
 extern void c_prt(byte attr, cptr str, int row, int col);
+extern void c_prt(byte attr, std::string const &s, int row, int col);
+extern void prt(std::string const &s, int row, int col);
 extern void text_out_to_screen(byte a, cptr str);
 extern void text_out_to_file(byte a, cptr str);
 extern void text_out(cptr str);
