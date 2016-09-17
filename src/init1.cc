@@ -5870,12 +5870,18 @@ errr init_st_info_txt(FILE *fp)
 			                &a1, &a2, &a3, &a4, &a5, &a6)) return (1);
 
 			/* Save the values */
-			st_ptr->actions[0] = a1;
-			st_ptr->actions[1] = a2;
-			st_ptr->actions[2] = a3;
-			st_ptr->actions[3] = a4;
-			st_ptr->actions[4] = a5;
-			st_ptr->actions[5] = a6;
+			st_ptr->actions.push_back(a1);
+			st_ptr->actions.push_back(a2);
+			st_ptr->actions.push_back(a3);
+			st_ptr->actions.push_back(a4);
+			st_ptr->actions.push_back(a5);
+			st_ptr->actions.push_back(a6);
+
+			/* Remove zero entries since they have no effect */
+			st_ptr->actions.erase(
+			        std::remove(st_ptr->actions.begin(), st_ptr->actions.end(), 0),
+			        st_ptr->actions.end()
+			);
 
 			/* Next... */
 			continue;

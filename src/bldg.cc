@@ -51,7 +51,7 @@ static int building_loc = 0;
 /*
  * A helper function for is_state
  */
-static bool_ is_state_aux(store_type *s_ptr, int state)
+static bool_ is_state_aux(store_type const *s_ptr, int state)
 {
 	owner_type *ow_ptr = &ow_info[s_ptr->owner];
 
@@ -76,7 +76,7 @@ static bool_ is_state_aux(store_type *s_ptr, int state)
 /*
  * Test if the state accords with the player
  */
-bool_ is_state(store_type *s_ptr, int state)
+bool_ is_state(store_type const *s_ptr, int state)
 {
 	if (state == STORE_NORMAL)
 	{
@@ -110,25 +110,18 @@ static void clear_bldg(int min_row, int max_row)
 /*
  * Display a building.
  */
-void show_building(store_type *s_ptr)
+void show_building(store_type const *s_ptr)
 {
-	char buff[20];
-
-	int i;
-
-	byte action_color;
-
-	char tmp_str[80];
-
 	store_info_type *st_ptr = &st_info[s_ptr->st_idx];
 
-
-	for (i = 0; i < 6; i++)
+	for (std::size_t i = 0; i < st_ptr->actions.size(); i++)
 	{
 		store_action_type *ba_ptr = &ba_info[st_ptr->actions[i]];
 
-		if (ba_ptr->letter != '.')
 		{
+			byte action_color;
+			char buff[20];
+
 			if (ba_ptr->action_restr == 0)
 			{
 				if ((is_state(s_ptr, STORE_LIKED) && (ba_ptr->costs[STORE_LIKED] == 0)) ||
@@ -196,6 +189,8 @@ void show_building(store_type *s_ptr)
 					strnfmt(buff, 20, "(closed)");
 				}
 			}
+
+			char tmp_str[80];
 
 			strnfmt(tmp_str, 80, " %c", ba_ptr->letter);
 			c_put_str(TERM_YELLOW, tmp_str, 21 + (i / 2), 17 + (30 * (i % 2)));
@@ -1094,10 +1089,8 @@ static bool_ research_item(void)
 /*
  * Execute a building command
  */
-bool_ bldg_process_command(store_type *s_ptr, int i)
+bool_ bldg_process_command(const store_type *s_ptr, store_action_type const *ba_ptr)
 {
-	store_action_type *ba_ptr = &ba_info[st_info[s_ptr->st_idx].actions[i]];
-
 	int bact = ba_ptr->action;
 
 	int bcost;

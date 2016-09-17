@@ -2772,6 +2772,31 @@ static bool_ leave_store = FALSE;
 
 
 /*
+ * Find building action for command. Returns nullptr if no matching
+ * action is found.
+ */
+static store_action_type *find_store_action(s16b command_cmd)
+{
+	for (std::size_t i = 0; i < st_info[st_ptr->st_idx].actions.size(); i++)
+	{
+		auto ba_ptr = &ba_info[st_info[st_ptr->st_idx].actions[i]];
+
+		if (ba_ptr->letter && (ba_ptr->letter == command_cmd))
+		{
+			return ba_ptr;
+		}
+
+		if (ba_ptr->letter_aux && (ba_ptr->letter_aux == command_cmd))
+		{
+			return ba_ptr;
+		}
+	}
+
+	return nullptr;
+}
+
+
+/*
  * Process a command in a store
  *
  * Note that we must allow the use of a few "special" commands
@@ -2781,39 +2806,17 @@ static bool_ leave_store = FALSE;
  */
 static bool_ store_process_command(void)
 {
-	bool_ validcmd = FALSE;
-	int i;
-	store_action_type *ba_ptr;
 	bool_ recreate = FALSE;
 
 	/* Handle repeating the last command */
 	repeat_check();
 
-	for (i = 0; i < 6; i++)
-	{
-		ba_ptr = &ba_info[st_info[st_ptr->st_idx].actions[i]];
+	store_action_type *ba_ptr =
+	        find_store_action(command_cmd);
 
-		if (ba_ptr->letter)
-		{
-			if (ba_ptr->letter == command_cmd)
-			{
-				validcmd = TRUE;
-				break;
-			}
-		}
-		if (ba_ptr->letter_aux)
-		{
-			if (ba_ptr->letter_aux == command_cmd)
-			{
-				validcmd = TRUE;
-				break;
-			}
-		}
-	}
-
-	if (validcmd)
+	if (ba_ptr)
 	{
-		recreate = bldg_process_command(st_ptr, i);
+		recreate = bldg_process_command(st_ptr, ba_ptr);
 	}
 	else
 	{
@@ -3193,13 +3196,11 @@ void do_cmd_store(void)
 	display_store();
 
 	/* Mega-Hack -- Ignore keymaps on store action letters */
-	for (i = 0; i < 6; i++)
+	for (std::size_t i = 0; i < st_info[st_ptr->st_idx].actions.size(); i++)
 	{
-		store_action_type *ba_ptr =
-			&ba_info[st_info[st_ptr->st_idx].actions[i]];
+		store_action_type *ba_ptr = &ba_info[st_info[st_ptr->st_idx].actions[i]];
 		request_command_ignore_keymaps[2*i] = ba_ptr->letter;
 		request_command_ignore_keymaps[2*i+1] = ba_ptr->letter_aux;
-
 	}
 
 	/* Do not leave */

@@ -19,7 +19,7 @@ struct store_info_type
 
 	std::vector<u16b> owners;                /* List of owners; refers to ow_info */
 
-	u16b actions[6] = { 0 };                 /* Actions(refers to ba_info) */
+	std::vector<u16b> actions;               /* Actions; refers to ba_info */
 
 	byte d_attr = 0;                         /* Default building attribute */
 	char d_char = '\0';                      /* Default building character */
