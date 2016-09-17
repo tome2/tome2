@@ -11,6 +11,7 @@
 #include "feature_flag.hpp"
 #include "feature_type.hpp"
 #include "files.hpp"
+#include "game.hpp"
 #include "gods.hpp"
 #include "hist_type.hpp"
 #include "init2.hpp"
@@ -6363,7 +6364,7 @@ static dungeon_grid letter[255];
  */
 static errr process_dungeon_file_aux(char *buf, int *yval, int *xval, int xvalstart, int ymax, int xmax, bool_ full)
 {
-	auto &wilderness = *wilderness_ptr;
+	auto &wilderness = game->wilderness;
 
 	int i;
 

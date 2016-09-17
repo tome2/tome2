@@ -14,6 +14,7 @@
 #include "dungeon_flag.hpp"
 #include "dungeon_info_type.hpp"
 #include "files.hpp"
+#include "game.hpp"
 #include "hook_new_monster_in.hpp"
 #include "hook_new_monster_end_in.hpp"
 #include "hooks.hpp"

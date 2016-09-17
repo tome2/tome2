@@ -15,6 +15,7 @@
 #include "cmd3.hpp"
 #include "dungeon_info_type.hpp"
 #include "feature_type.hpp"
+#include "game.hpp"
 #include "hiscore.hpp"
 #include "hook_chardump_in.hpp"
 #include "hooks.hpp"
@@ -2321,7 +2322,7 @@ void display_player(int mode)
  */
 cptr describe_player_location()
 {
-	auto const &wilderness = *wilderness_ptr;
+	auto const &wilderness = game->wilderness;
 
 	int i;
 	static char desc[80];

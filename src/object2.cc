@@ -19,6 +19,7 @@
 #include "ego_item_type.hpp"
 #include "feature_flag.hpp"
 #include "feature_type.hpp"
+#include "game.hpp"
 #include "hooks.hpp"
 #include "mimic.hpp"
 #include "monster2.hpp"

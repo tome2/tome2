@@ -9,6 +9,7 @@
 #include "monster1.hpp"
 
 #include "cave_type.hpp"
+#include "game.hpp"
 #include "monster2.hpp"
 #include "monster_ego.hpp"
 #include "monster_race.hpp"
@@ -1535,7 +1536,7 @@ void set_mon_num_hook(void)
 {
 	if (!dun_level)
 	{
-		auto const &wilderness = *wilderness_ptr;
+		auto const &wilderness = game->wilderness;
 		switch (wf_info[wilderness(p_ptr->wilderness_x, p_ptr->wilderness_y).feat].terrain_idx)
 		{
 		case TERRAIN_TOWN:

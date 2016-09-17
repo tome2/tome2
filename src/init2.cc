@@ -11,6 +11,7 @@
 #include "ego_item_type.hpp"
 #include "files.hpp"
 #include "feature_type.hpp"
+#include "game.hpp"
 #include "generate.hpp"
 #include "gen_evol.hpp"
 #include "gen_maze.hpp"
@@ -1258,9 +1259,6 @@ void init_angband(void)
 
 	// Initialize game structure
 	game = new Game();
-
-	/* Allocate the wilderness */
-	wilderness_ptr = new grid<wilderness_map>();
 
 	/*** Initialise some arrays ***/
 

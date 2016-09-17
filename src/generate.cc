@@ -15,6 +15,7 @@
 #include "dungeon_flag.hpp"
 #include "feature_flag.hpp"
 #include "feature_type.hpp"
+#include "game.hpp"
 #include "hook_build_room1_in.hpp"
 #include "hooks.hpp"
 #include "init1.hpp"

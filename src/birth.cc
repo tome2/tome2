@@ -16,6 +16,7 @@
 #include "dungeon_info_type.hpp"
 #include "files.h"
 #include "files.hpp"
+#include "game.hpp"
 #include "gods.hpp"
 #include "help.hpp"
 #include "hist_type.hpp"
@@ -3191,7 +3192,7 @@ void player_birth(void)
 	}
 
 	/* Init wilderness seeds */
-	auto &wilderness = *wilderness_ptr;
+	auto &wilderness = game->wilderness;
 	for (std::size_t y = 0; y < wilderness.height(); y++)
 	{
 		for (std::size_t x = 0; x < wilderness.width(); x++)

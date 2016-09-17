@@ -6,6 +6,7 @@
 #include "cave_type.hpp"
 #include "dungeon_info_type.hpp"
 #include "ego_item_type.hpp"
+#include "game.hpp"
 #include "init1.hpp"
 #include "init2.hpp"
 #include "levels.hpp"
@@ -2245,7 +2246,7 @@ static bool do_quests(ls_flag_t flag)
 
 static bool do_wilderness(ls_flag_t flag)
 {
-	auto &wilderness = *wilderness_ptr;
+	auto &wilderness = game->wilderness;
 
 	// Player position and "mode" wrt. wilderness
 	do_s32b(&p_ptr->wilderness_x, flag);

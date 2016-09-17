@@ -12,6 +12,7 @@
 #include "cave_type.hpp"
 #include "feature_flag.hpp"
 #include "feature_type.hpp"
+#include "game.hpp"
 #include "hook_wild_gen_in.hpp"
 #include "hooks.hpp"
 #include "init1.hpp"
@@ -155,7 +156,7 @@ static void plasma_recursive(int x1, int y1, int x2, int y2,
  */
 static int generate_area(int y, int x, bool_ border, bool_ corner)
 {
-	auto const &wilderness = *wilderness_ptr;
+	auto const &wilderness = game->wilderness;
 	int road, entrance;
 	int x1, y1;
 	int hack_floor = 0;
@@ -575,7 +576,7 @@ void wilderness_gen()
  */
 void wilderness_gen_small()
 {
-	auto const &wilderness = *wilderness_ptr;
+	auto const &wilderness = game->wilderness;
 	int xstart = 0;
 	int ystart = 0;
 
@@ -645,7 +646,7 @@ void wilderness_gen_small()
 /* Show a small radius of wilderness around the player */
 void reveal_wilderness_around_player(int y, int x, int h, int w)
 {
-	auto &wilderness = *wilderness_ptr;
+	auto &wilderness = game->wilderness;
 
 	/* Circle or square ? */
 	if (h == 0)

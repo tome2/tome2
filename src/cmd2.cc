@@ -17,6 +17,7 @@
 #include "feature_flag.hpp"
 #include "feature_type.hpp"
 #include "files.hpp"
+#include "game.hpp"
 #include "gods.hpp"
 #include "hook_chat_in.hpp"
 #include "hook_enter_dungeon_in.hpp"
@@ -2549,7 +2550,7 @@ static void do_cmd_walk_jump(int pickup, bool_ disarm)
 	energy_use *= (p_ptr->wild_mode) ? ((MAX_HGT + MAX_WID) / 2) : 1;
 
 	/* Hack again -- Is there a special encounter ??? */
-	auto const &wilderness = *wilderness_ptr;
+	auto const &wilderness = game->wilderness;
 	if (p_ptr->wild_mode &&
 	                magik(wf_info[wilderness(p_ptr->px, p_ptr->py).feat].level - (p_ptr->lev * 2)))
 	{

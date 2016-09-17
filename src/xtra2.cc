@@ -17,6 +17,7 @@
 #include "feature_flag.hpp"
 #include "feature_type.hpp"
 #include "files.hpp"
+#include "game.hpp"
 #include "gods.hpp"
 #include "hook_player_level_in.hpp"
 #include "hook_monster_death_in.hpp"
@@ -4237,7 +4238,7 @@ static int target_set_aux(int y, int x, int mode, cptr info)
 
 			if (p_ptr->wild_mode && (feat == FEAT_TOWN))
 			{
-				auto const &wilderness = *wilderness_ptr;
+				auto const &wilderness = game->wilderness;
 				auto const &wf = wf_info[wilderness(x, y).feat];
 
 				s3 = "";

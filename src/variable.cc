@@ -669,12 +669,6 @@ s32b get_level_max_stick = -1;
 s32b get_level_use_stick = -1;
 
 /*
- * Wilderness map
- */
-grid<wilderness_map> *wilderness_ptr;
-
-
-/*
  * Maximum number of skills in s_info.txt
  */
 u16b max_s_idx;

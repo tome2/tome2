@@ -16,6 +16,7 @@
 #include "dungeon_flag.hpp"
 #include "dungeon_info_type.hpp"
 #include "files.hpp"
+#include "game.hpp"
 #include "gods.hpp"
 #include "hook_calculate_hp_in.hpp"
 #include "hook_calculate_hp_out.hpp"
@@ -559,7 +560,7 @@ static void prt_depth(int row, int col)
 	}
 	else if (!dun_level)
 	{
-		auto const &wilderness = *wilderness_ptr;
+		auto const &wilderness = game->wilderness;
 		auto const &wf = wf_info[wilderness(p_ptr->wilderness_x, p_ptr->wilderness_y).feat];
 		if (wf.name)
 		{

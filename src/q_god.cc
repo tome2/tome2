@@ -5,6 +5,7 @@
 #include "dungeon_info_type.hpp"
 #include "feature_flag.hpp"
 #include "feature_type.hpp"
+#include "game.hpp"
 #include "hook_chardump_in.hpp"
 #include "hook_get_in.hpp"
 #include "hook_enter_dungeon_in.hpp"
@@ -292,7 +293,7 @@ std::string quest_god_describe()
 
 static void quest_god_place_rand_dung()
 {
-	auto &wilderness = *wilderness_ptr;
+	auto &wilderness = game->wilderness;
 
 	int x = -1, y = -1, tries;
 

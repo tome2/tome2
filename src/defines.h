@@ -2463,7 +2463,7 @@
  */
 #define level_or_feat(DTYPE, DLEVEL) \
 	((DTYPE) == DUNGEON_WILDERNESS ? \
-	        (*wilderness_ptr)(p_ptr->wilderness_x, p_ptr->wilderness_y).feat : \
+	        (game->wilderness)(p_ptr->wilderness_x, p_ptr->wilderness_y).feat : \
 		(DLEVEL) )
 
 

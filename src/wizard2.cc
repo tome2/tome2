@@ -15,6 +15,7 @@
 #include "corrupt.hpp"
 #include "dungeon_info_type.hpp"
 #include "files.hpp"
+#include "game.hpp"
 #include "hooks.hpp"
 #include "monster2.hpp"
 #include "monster_race.hpp"
@@ -86,7 +87,7 @@ static void teleport_player_town(int town)
 	dun_level = 0;
 	p_ptr->town_num = town;
 
-	auto const &wilderness = *wilderness_ptr;
+	auto const &wilderness = game->wilderness;
 	for (std::size_t y = 0; y < wilderness.height(); y++)
 	{
 		for (std::size_t x = 0; x < wilderness.width(); x++)

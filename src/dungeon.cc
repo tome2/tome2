@@ -26,6 +26,7 @@
 #include "feature_type.hpp"
 #include "files.h"
 #include "files.hpp"
+#include "game.hpp"
 #include "generate.hpp"
 #include "gen_evol.hpp"
 #include "gods.hpp"
@@ -3524,7 +3525,7 @@ static void process_command(void)
 			/* Special cases */
 			else
 			{
-				auto const &wilderness = *wilderness_ptr;
+				auto const &wilderness = game->wilderness;
 				auto const &tile = wilderness(p_ptr->px, p_ptr->py);
 				if ((wf_info[tile.feat].entrance >= 1000) || (tile.entrance > 1000))
 				{
@@ -4297,7 +4298,7 @@ static void process_player(void)
 		/* Hack -- mark current wilderness location as known */
 		if (!p_ptr->wild_mode && dun_level == 0)
 		{
-			auto &wilderness = *wilderness_ptr;
+			auto &wilderness = game->wilderness;
 			wilderness(p_ptr->wilderness_x, p_ptr->wilderness_y).known = TRUE;
 		}
 
