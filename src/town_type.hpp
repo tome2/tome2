@@ -1,6 +1,7 @@
 #pragma once
 
 #include "h-basic.h"
+#include "seed.hpp"
 #include "store_type_fwd.hpp"
 
 #include <vector>
@@ -12,7 +13,7 @@ struct town_type
 {
 	cptr name = nullptr;
 
-	u32b seed = 0;                           /* Seed for RNG */
+	seed_t seed = seed_t::system();  /* Seed for RNG */
 
 	std::vector<store_type> store;           /* The stores [max_st_idx] */
 

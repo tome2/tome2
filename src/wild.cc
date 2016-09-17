@@ -186,11 +186,8 @@ static int generate_area(int y, int x, bool_ border, bool_ corner)
 		terrain[2][1] = wild_map[yp][x].feat;
 		terrain[2][2] = wild_map[yp][xp].feat;
 
-		/* Hack -- Use the "simple" RNG */
-		Rand_quick = TRUE;
-
 		/* Hack -- Induce consistant town layout */
-		Rand_value = wild_map[y][x].seed;
+		set_quick_rng(wild_map[y][x].seed);
 
 		/* Create level background */
 		for (y1 = 0; y1 < MAX_HGT; y1++)
@@ -217,9 +214,6 @@ static int generate_area(int y, int x, bool_ border, bool_ corner)
 			plasma_recursive(1, 1, MAX_WID - 2, MAX_HGT - 2, MAX_WILD_TERRAIN - 1, roughness);
 		}
 
-		/* Use the complex RNG */
-		Rand_quick = FALSE;
-
 		for (y1 = 1; y1 < MAX_HGT - 1; y1++)
 		{
 			for (x1 = 1; x1 < MAX_WID - 1; x1++)
@@ -229,6 +223,8 @@ static int generate_area(int y, int x, bool_ border, bool_ corner)
 			}
 		}
 
+		/* Change back to "complex" RNG */
+		set_complex_rng();
 	}
 
 	/* Should we create a town ? */
@@ -297,11 +293,8 @@ static int generate_area(int y, int x, bool_ border, bool_ corner)
 		}
 	}
 
-	/* Hack -- Use the "simple" RNG */
-	Rand_quick = TRUE;
-
 	/* Hack -- Induce consistant town layout */
-	Rand_value = wild_map[y][x].seed;
+	set_quick_rng(wild_map[y][x].seed);
 
 	entrance = wf_info[wild_map[y][x].feat].entrance;
 	if (!entrance) entrance = wild_map[y][x].entrance;
@@ -320,7 +313,7 @@ static int generate_area(int y, int x, bool_ border, bool_ corner)
 	}
 
 	/* Use the complex RNG */
-	Rand_quick = FALSE;
+	set_complex_rng();
 
 	/* MEGA HACK -- set at least one floor grid */
 	for (y1 = 1; y1 < cur_hgt - 1; y1++)

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "h-basic.h"
+#include "seed.hpp"
 
 /**
  * A structure describing a wilderness map
@@ -8,7 +9,7 @@
 struct wilderness_map
 {
 	int feat = 0;                            /* Wilderness feature */
-	u32b seed = 0;                           /* Seed for the RNG */
+	seed_t seed = seed_t::system();          /* Seed for the RNG when building tile */
 	u16b entrance = 0;                       /* Entrance for dungeons */
 	bool_ known = FALSE;                     /* Is it seen by the player ? */
 };

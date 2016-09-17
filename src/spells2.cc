@@ -78,8 +78,8 @@ void grow_things(s16b type, int rad)
 
 	for (a = 0; a < rad * rad + 11; a++)
 	{
-		i = (Rand_mod((rad * 2) + 1)-rad + Rand_mod((rad * 2) + 1)-rad) / 2;
-		j = (Rand_mod((rad * 2) + 1)-rad + Rand_mod((rad * 2) + 1)-rad) / 2;
+		i = (rand_int((rad * 2) + 1)-rad + rand_int((rad * 2) + 1)-rad) / 2;
+		j = (rand_int((rad * 2) + 1)-rad + rand_int((rad * 2) + 1)-rad) / 2;
 
 		if (!in_bounds(p_ptr->py + j, p_ptr->px + i)) continue;
 		if (distance(p_ptr->py, p_ptr->px, p_ptr->py + j, p_ptr->px + i) > rad) continue;
@@ -100,8 +100,8 @@ void grow_trees(int rad)
 
 	for (a = 0; a < rad * rad + 11; a++)
 	{
-		i = (Rand_mod((rad * 2) + 1)-rad + Rand_mod((rad * 2) + 1)-rad) / 2;
-		j = (Rand_mod((rad * 2) + 1)-rad + Rand_mod((rad * 2) + 1)-rad) / 2;
+		i = (rand_int((rad * 2) + 1)-rad + rand_int((rad * 2) + 1)-rad) / 2;
+		j = (rand_int((rad * 2) + 1)-rad + rand_int((rad * 2) + 1)-rad) / 2;
 
 		if (!in_bounds(p_ptr->py + j, p_ptr->px + i)) continue;
 		if (distance(p_ptr->py, p_ptr->px, p_ptr->py + j, p_ptr->px + i) > rad) continue;
@@ -122,8 +122,8 @@ void grow_grass(int rad)
 
 	for (a = 0; a < rad * rad + 11; a++)
 	{
-		i = (Rand_mod((rad * 2) + 1)-rad + Rand_mod((rad * 2) + 1)-rad) / 2;
-		j = (Rand_mod((rad * 2) + 1)-rad + Rand_mod((rad * 2) + 1)-rad) / 2;
+		i = (rand_int((rad * 2) + 1)-rad + rand_int((rad * 2) + 1)-rad) / 2;
+		j = (rand_int((rad * 2) + 1)-rad + rand_int((rad * 2) + 1)-rad) / 2;
 
 		if (!in_bounds(p_ptr->py + j, p_ptr->px + i)) continue;
 		if (distance(p_ptr->py, p_ptr->px, p_ptr->py + j, p_ptr->px + i) > rad) continue;

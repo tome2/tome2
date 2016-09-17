@@ -8299,8 +8299,7 @@ void generate_cave(void)
 	/* Seed the RNG if appropriate */
 	if (town_level)
 	{
-		Rand_quick = TRUE;
-		Rand_value = town_info[town_level].seed;
+		set_quick_rng(town_info[town_level].seed);
 	}
 
 	process_hooks_new(HOOK_GEN_LEVEL_BEGIN, NULL, NULL);

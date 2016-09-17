@@ -5125,27 +5125,8 @@ void play_game()
 		process_player_name(FALSE);
 	}
 
-	/* Init the RNG */
-	if (Rand_quick)
-	{
-		u32b seed;
-
-		/* Basic seed */
-		seed = (time(NULL));
-
-#ifdef SET_UID
-
-		/* Mutate the seed on Unix machines */
-		seed = ((seed >> 3) * (getpid() << 1));
-
-#endif
-
-		/* Use the complex RNG */
-		Rand_quick = FALSE;
-
-		/* Seed the "complex" RNG */
-		Rand_state_init(seed);
-	}
+	/* Force "complex" RNG */
+	set_complex_rng();
 
 	/* Roll new character */
 	if (new_game)
@@ -5156,8 +5137,8 @@ void play_game()
 		/* The dungeon is not ready */
 		character_dungeon = FALSE;
 
-		/* Hack -- seed for flavors */
-		seed_flavor = rand_int(0x10000000);
+		/* Set the seed for flavors */
+		seed_flavor() = seed_t::system();
 
 		/* Roll up a new character */
 		player_birth();

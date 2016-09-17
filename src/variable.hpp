@@ -48,6 +48,7 @@
 #include "vault_type_fwd.hpp"
 #include "wilderness_map_fwd.hpp"
 #include "wilderness_type_info_fwd.hpp"
+#include "seed.hpp"
 
 extern int max_macrotrigger;
 extern char *macro_template;
@@ -58,7 +59,7 @@ extern char *macro_trigger_keycode[2][MAX_MACRO_TRIG];
 extern bool_ character_dungeon;
 extern bool_ character_loaded;
 extern bool_ character_xtra;
-extern u32b seed_flavor;
+extern seed_t &seed_flavor();
 extern s16b command_cmd;
 extern s16b command_arg;
 extern s16b command_rep;

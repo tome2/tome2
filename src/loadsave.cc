@@ -315,9 +315,37 @@ template<typename T, typename F> void do_vector(ls_flag_t flag, std::vector<T> &
 	}
 }
 
+static void do_bytes(ls_flag_t flag, std::uint8_t *buf, std::size_t n)
+{
+	for (std::size_t i = 0; i < n; i++)
+	{
+		do_byte(&buf[i], flag);
+	}
+};
+
+static void do_seed(seed_t *seed, ls_flag_t flag)
+{
+	uint8_t buf[seed_t::n_bytes];
+
+	if (flag == ls_flag_t::SAVE)
+	{
+		seed->to_bytes(buf);
+	}
+
+	do_bytes(flag, buf, sizeof(buf));
+
+	if (flag == ls_flag_t::LOAD)
+	{
+		*seed = seed_t::from_bytes(buf);
+	}
+}
+
 } // namespace (anonymous)
 
 
+/*
+ * Load/Save quick start data
+ */
 static void do_quick_start(ls_flag_t flag)
 {
 	do_s16b(&previous_char.race, flag);
@@ -878,8 +906,8 @@ static bool_ do_extra(ls_flag_t flag)
 		}
 	}
 
-	/* Load random seeds */
-	do_u32b(&seed_flavor, flag); /* For consistent object flavors. */
+	/* Random seed for object flavors. */
+	do_seed(&seed_flavor(), flag);
 
 	/* Special stuff */
 	do_u16b(&total_winner, flag);
@@ -1676,19 +1704,24 @@ static void do_store(store_type *str, ls_flag_t flag)
  */
 static void do_randomizer(ls_flag_t flag)
 {
-	/* Place */
-	do_u16b(&Rand_place, flag);
+	std::string state;
 
-	/* State */
-	for (std::size_t i = 0; i < RAND_DEG; i++)
+        if (flag == ls_flag_t::SAVE)
+        {
+		state = get_complex_rng_state();
+        }
+
+	do_std_string(state, flag);
+
+	if (flag == ls_flag_t::LOAD)
 	{
-		do_u32b(&Rand_state[i], flag);
+		set_complex_rng_state(state);
 	}
 
 	/* Accept */
 	if (flag == ls_flag_t::LOAD)
 	{
-		Rand_quick = FALSE;
+		set_complex_rng();
 	}
 }
 
@@ -2129,25 +2162,6 @@ static bool do_object_lore(ls_flag_t flag)
 }
 
 
-/*
- * Note that this function may not be needed at all.
- * It was taken out of load_player_aux(). Do we need it?
- */
-static void junkinit(void)
-{
-	p_ptr->inside_quest = 0;
-	p_ptr->town_num = 1;
-	p_ptr->wilderness_x = 4;
-	p_ptr->wilderness_y = 4;
-	for (std::size_t i = 0; i < max_wild_x; i++)
-	{
-		for (std::size_t j = 0; j < max_wild_y; j++)
-		{
-			wild_map[j][i].seed = rand_int(0x10000000);
-		}
-	}
-}
-
 static bool do_towns(ls_flag_t flag)
 {
 	u16b max_towns_ldsv = max_towns;
@@ -2181,7 +2195,7 @@ static bool do_towns(ls_flag_t flag)
 
 		if (i >= TOWN_RANDOM)
 		{
-			do_u32b(&town->seed, flag);
+			do_seed(&town->seed, flag);
 			do_byte(&town->flags, flag);
 
 			// Create stock if necessary
@@ -2289,7 +2303,7 @@ static bool do_wilderness(ls_flag_t flag)
 		for (std::size_t j = 0; j < wild_y_size; j++)
 		{
 			auto w = &wild_map[j][i];
-			do_u32b(&w->seed, flag);
+			do_seed(&w->seed, flag);
 			do_u16b(&w->entrance, flag);
 			do_bool(&w->known, flag);
 		}
@@ -2515,12 +2529,6 @@ static bool_ do_savefile_aux(ls_flag_t flag)
 	if (!do_object_lore(flag))
 	{
 		return FALSE;
-	}
-
-	// Initialize
-	if (flag == ls_flag_t::LOAD)
-	{
-		junkinit();
 	}
 
 	if (!do_towns(flag))

@@ -2,6 +2,7 @@ INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR})
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/include)
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/../vendor/bandit)
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/../vendor/fmt)
+INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/../vendor/pcg-cpp/include)
 
 # Add subdirectories
 ADD_SUBDIRECTORY (squelch)
@@ -105,6 +106,7 @@ SET(SRCS_COMMON
   variable.cc
   wild.cc
   wizard2.cc
+  seed.cc
   xtra1.cc
   xtra2.cc
   z-form.c

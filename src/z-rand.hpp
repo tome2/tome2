@@ -1,8 +1,9 @@
 #pragma once
 
 #include "h-basic.h"
+#include "seed_fwd.hpp"
 
-
+#include <string>
 
 /**** Available constants ****/
 
@@ -19,17 +20,34 @@
 /**** Available Variables ****/
 
 
-extern bool_ Rand_quick;
-extern u32b Rand_value;
-extern u16b Rand_place;
-extern u32b Rand_state[RAND_DEG];
+/**
+ * Change to "quick" RNG, using the given seed.
+ */
+void set_quick_rng(seed_t const &seed);
 
+
+/**
+ * Change to "complex" RNG which uses the "non-deterministic" seed.
+ */
+void set_complex_rng();
+
+
+/**
+ * Get a copy of the state of the "complex" RNG.
+ */
+std::string get_complex_rng_state();
+
+
+/**
+ * Set the state of the "complex" RNG. The given array must have
+ * been previously obtained via the get_complex_rng_state() function.
+ */
+void set_complex_rng_state(std::string const &state);
 
 /**** Available Functions ****/
 
 
-void Rand_state_init(u32b seed);
-s32b Rand_mod(s32b m);
+void Rand_state_init();
 s16b randnor(int mean, int stand);
 s32b damroll(s16b num, s16b sides);
 s32b maxroll(s16b num, s16b sides);

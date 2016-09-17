@@ -4,214 +4,113 @@
 
 #include "z-rand.hpp"
 
+#include <assert.h>
+#include <cstdint>
+#include <limits>
+#include <random>
+#include <sstream>
 
+#include "pcg_random.hpp"
+#include "seed.hpp"
 
-
-/*
- * Angband 2.7.9 introduced a new (optimized) random number generator,
- * based loosely on the old "random.c" from Berkeley but with some major
- * optimizations and algorithm changes.  See below for more details.
- *
- * Code by myself (benh@phial.com) and Randy (randy@stat.tamu.edu).
- *
- * This code provides (1) a "decent" RNG, based on the "BSD-degree-63-RNG"
- * used in Angband 2.7.8, but rather optimized, and (2) a "simple" RNG,
- * based on the simple "LCRNG" currently used in Angband, but "corrected"
- * to give slightly better values.  Both of these are available in two
- * flavors, first, the simple "mod" flavor, which is fast, but slightly
- * biased at high values, and second, the simple "div" flavor, which is
- * less fast (and potentially non-terminating) but which is not biased
- * and is much less subject to low-bit-non-randomness problems.
- *
- * You can select your favorite flavor by proper definition of the
- * "rand_int()" macro in the "defines.h" file.
- *
- * Note that, in Angband 2.8.0, the "state" table will be saved in the
- * savefile, so a special "initialization" phase will be necessary.
- *
- * Note the use of the "simple" RNG, first you activate it via
- * "Rand_quick = TRUE" and "Rand_value = seed" and then it is used
- * automatically used instead of the "complex" RNG, and when you are
- * done, you de-activate it via "Rand_quick = FALSE" or choose a new
- * seed via "Rand_value = seed".
+/**
+ * Choice of RNG; we use the "statistically most powerful" (per the
+ * documentation) RNG. The "insecure" bit just means that the RNG
+ * is definitely known to *not* be cryptographically secure.
  */
+using rng_t = pcg64_once_insecure;
 
-
-/*
- * Random Number Generator -- Linear Congruent RNG
+/**
+ * Reseed the given RNG.
  */
-#define LCRNG(X)        ((X) * 1103515245 + 12345)
-
-
-
-/*
- * Use the "simple" LCRNG
- */
-bool_ Rand_quick = TRUE;
-
-
-/*
- * Current "value" of the "simple" RNG
- */
-u32b Rand_value;
-
-
-/*
- * Current "index" for the "complex" RNG
- */
-u16b Rand_place;
-
-/*
- * Current "state" table for the "complex" RNG
- */
-u32b Rand_state[RAND_DEG];
-
-
-
-/*
- * Initialize the "complex" RNG using a new seed
- */
-void Rand_state_init(u32b seed)
+static void reseed_rng(rng_t *rng, seed_t const &seed)
 {
-	int i, j;
+	assert(rng != nullptr);
+	// Create a seed_seq from the seed data.
+	std::uint32_t data[seed_t::n_uint32];
+	std::seed_seq seed_seq(
+	        std::begin(data),
+	        std::end(data)
+	);
+	// Seed the RNG.
+	rng->seed(seed_seq);
+}
 
-	/* Seed the table */
-	Rand_state[0] = seed;
+/**
+ * Allocate a new RNG and initialize with the given seed.
+ */
+static rng_t *new_seeded_rng(seed_t const &seed)
+{
+	rng_t *rng = new rng_t;
+	reseed_rng(rng, seed);
+	return rng;
+}
 
-	/* Propagate the seed */
-	for (i = 1; i < RAND_DEG; i++) Rand_state[i] = LCRNG(Rand_state[i - 1]);
+/**
+ * The "quick" RNG is used for fixed-seed applications.
+ */
+static rng_t *quick_rng()
+{
+	// Note that the "quick_rng" will always be seeded explicitly
+	// whenever it's used, so we don't need to do any seeding here.
+	static rng_t *instance = new rng_t();
+	return instance;
+}
 
-	/* Cycle the table ten times per degree */
-	for (i = 0; i < RAND_DEG * 10; i++)
-	{
-		/* Acquire the next index */
-		j = Rand_place + 1;
-		if (j == RAND_DEG) j = 0;
-
-		/* Update the table, extract an entry */
-		Rand_state[j] += Rand_state[Rand_place];
-
-		/* Advance the index */
-		Rand_place = j;
-	}
+/**
+ * The "complex" RNG is used when we really want non-deterministic
+ * random numbers.
+ */
+static rng_t *complex_rng()
+{
+	static rng_t *instance = new_seeded_rng(seed_t::system());
+	return instance;
 }
 
 
-/*
- * Extract a "random" number from 0 to m-1, via "modulus"
- *
- * Note that "m" should probably be less than 500000, or the
- * results may be rather biased towards low values.
+/**
+ * Current RNG.
  */
-s32b Rand_mod(s32b m)
+static rng_t *current_rng = nullptr;
+
+/**
+ * Get the current RNG.
+ */
+static rng_t *get_current_rng()
 {
-	int j;
-	u32b r;
-
-	/* Hack -- simple case */
-	if (m <= 1) return (0);
-
-	/* Use the "simple" RNG */
-	if (Rand_quick)
+	// Do we need to initialize?
+	if (current_rng == nullptr)
 	{
-		/* Cycle the generator */
-		r = (Rand_value = LCRNG(Rand_value));
-
-		/* Mutate a 28-bit "random" number */
-		r = (r >> 4) % m;
+		// We start with the complex RNG.
+		current_rng = complex_rng();
 	}
 
-	/* Use the "complex" RNG */
-	else
-	{
-		/* Acquire the next index */
-		j = Rand_place + 1;
-		if (j == RAND_DEG) j = 0;
-
-		/* Update the table, extract an entry */
-		r = (Rand_state[j] += Rand_state[Rand_place]);
-
-		/* Advance the index */
-		Rand_place = j;
-
-		/* Extract a "random" number */
-		r = (r >> 4) % m;
-	}
-
-	/* Use the value */
-	return (r);
+	return current_rng;
 }
 
-
-/*
- * Extract a "random" number from 0 to m-1, via "division"
- *
- * This method selects "random" 28-bit numbers, and then uses
- * division to drop those numbers into "m" different partitions,
- * plus a small non-partition to reduce bias, taking as the final
- * value the first "good" partition that a number falls into.
- *
- * This method has no bias, and is much less affected by patterns
- * in the "low" bits of the underlying RNG's.
- */
-static s32b Rand_div(s32b m)
+void set_quick_rng(seed_t const &seed)
 {
-	u32b r, n;
-
-	/* Hack -- simple case */
-	if (m <= 1) return (0);
-
-	/* Partition size */
-	n = (0x10000000 / m);
-
-	/* Use a simple RNG */
-	if (Rand_quick)
-	{
-		/* Wait for it */
-		while (1)
-		{
-			/* Cycle the generator */
-			r = (Rand_value = LCRNG(Rand_value));
-
-			/* Mutate a 28-bit "random" number */
-			r = ((r >> 4) & 0x0FFFFFFF) / n;
-
-			/* Done */
-			if (r < (u32b)m) break;
-		}
-	}
-
-	/* Use a complex RNG */
-	else
-	{
-		/* Wait for it */
-		while (1)
-		{
-			int j;
-
-			/* Acquire the next index */
-			j = Rand_place + 1;
-			if (j == RAND_DEG) j = 0;
-
-			/* Update the table, extract an entry */
-			r = (Rand_state[j] += Rand_state[Rand_place]);
-
-			/* Hack -- extract a 28-bit "random" number */
-			r = ((r >> 4) & 0x0FFFFFFF) / n;
-
-			/* Advance the index */
-			Rand_place = j;
-
-			/* Done */
-			if (r < (u32b)m) break;
-		}
-	}
-
-	/* Use the value */
-	return (r);
+	reseed_rng(quick_rng(), seed);
+	current_rng = quick_rng();
 }
 
+void set_complex_rng()
+{
+	current_rng = complex_rng();
+}
 
+std::string get_complex_rng_state()
+{
+	std::stringstream s;
+	s << *complex_rng();
+	return s.str();
+}
+
+void set_complex_rng_state(std::string const &state)
+{
+	std::stringstream s(state);
+	s >> *complex_rng();
+}
 
 
 /*
@@ -357,20 +256,41 @@ bool magik(s32b p) {
 
 s32b rand_int(s32b m)
 {
-	return Rand_div(m);
+	/* Degenerate case */
+	if (m < 1)
+	{
+		return 0;
+	}
+	/* Normal case */
+	std::uniform_int_distribution<s32b> distribution(0, m - 1);
+	return distribution(*get_current_rng());
 }
 
 s32b randint(s32b m)
 {
-	return rand_int(m) + 1;
+	/* Degenerate case */
+	if (m < 2)
+	{
+		return 1;
+	}
+	/* Normal case */
+	std::uniform_int_distribution<s32b> distribution(1, m);
+	return distribution(*get_current_rng());
 }
 
 s32b rand_range(s32b a, s32b b)
 {
-	return a + rand_int(1 + b - a);
+	/* Degenerate case */
+	if (b < a)
+	{
+		return a;
+	}
+	/* Normal case */
+	std::uniform_int_distribution<s32b> distribution(a, b);
+	return distribution(*get_current_rng());
 }
 
 s32b rand_spread(s32b a, s32b d)
 {
-	return a + rand_int(1 + d + d) - d;
+	return rand_range(a-d, a+d);
 }

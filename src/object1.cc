@@ -507,12 +507,8 @@ static void shuffle_flavors(cptr adj[], byte col[])
  */
 void flavor_init(void)
 {
-	/* Hack -- Use the "simple" RNG */
-	Rand_quick = TRUE;
-
 	/* Hack -- Induce consistant flavors */
-	Rand_value = seed_flavor;
-
+	set_quick_rng(seed_flavor());
 
 	/* Efficiency -- Rods/Wands share initial array */
 	for (std::size_t i = 0; i < MAX_METALS; i++)
@@ -599,9 +595,8 @@ void flavor_init(void)
 		scroll_col[i] = TERM_WHITE;
 	}
 
-
 	/* Hack -- Use the "complex" RNG */
-	Rand_quick = FALSE;
+	set_complex_rng();
 
 	/* Analyze every object */
 	for (std::size_t i = 1; i < max_k_idx; i++)

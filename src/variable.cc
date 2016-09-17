@@ -42,7 +42,11 @@ bool_ character_loaded; 		/* The character was loaded from a savefile */
 bool_ character_icky; 		/* The game is in an icky full screen mode */
 bool_ character_xtra; 		/* The game is in an icky startup mode */
 
-u32b seed_flavor; 		/* Hack -- consistent object colors */
+seed_t &seed_flavor()
+{
+	static seed_t *instance = new seed_t(seed_t::system());
+	return *instance;
+}
 
 s16b command_cmd; 		/* Current "Angband Command" */
 

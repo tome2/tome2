@@ -3050,7 +3050,7 @@ void init_town(int t_idx)
 	t_ptr->flags &= ~(TOWN_KNOWN);
 
 	/* Generation seed for the town */
-	t_ptr->seed = randint(0x10000000);
+	t_ptr->seed = seed_t::system();
 }
 
 /*
@@ -3189,7 +3189,7 @@ void player_birth(void)
 	{
 		for (j = 0; j < max_wild_y; j++)
 		{
-			wild_map[j][i].seed = rand_int(0x10000000);
+			wild_map[j][i].seed = seed_t::system();
 			wild_map[j][i].entrance = 0;
 			wild_map[j][i].known = FALSE;
 		}
