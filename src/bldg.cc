@@ -118,86 +118,84 @@ void show_building(store_type const *s_ptr)
 	{
 		store_action_type *ba_ptr = &ba_info[st_ptr->actions[i]];
 
-		{
-			byte action_color;
-			char buff[20];
+		byte action_color;
+		char buff[20];
 
-			if (ba_ptr->action_restr == 0)
+		if (ba_ptr->action_restr == 0)
+		{
+			if ((is_state(s_ptr, STORE_LIKED) && (ba_ptr->costs[STORE_LIKED] == 0)) ||
+			                (is_state(s_ptr, STORE_HATED) && (ba_ptr->costs[STORE_HATED] == 0)) ||
+			                (is_state(s_ptr, STORE_NORMAL) && (ba_ptr->costs[STORE_NORMAL] == 0)))
 			{
-				if ((is_state(s_ptr, STORE_LIKED) && (ba_ptr->costs[STORE_LIKED] == 0)) ||
-				                (is_state(s_ptr, STORE_HATED) && (ba_ptr->costs[STORE_HATED] == 0)) ||
-				                (is_state(s_ptr, STORE_NORMAL) && (ba_ptr->costs[STORE_NORMAL] == 0)))
-				{
-					action_color = TERM_WHITE;
-					buff[0] = '\0';
-				}
-				else if (is_state(s_ptr, STORE_LIKED))
-				{
-					action_color = TERM_L_GREEN;
-					strnfmt(buff, 20, "(%dgp)", ba_ptr->costs[STORE_LIKED]);
-				}
-				else if (is_state(s_ptr, STORE_HATED))
-				{
-					action_color = TERM_RED;
-					strnfmt(buff, 20, "(%dgp)", ba_ptr->costs[STORE_HATED]);
-				}
-				else
-				{
-					action_color = TERM_YELLOW;
-					strnfmt(buff, 20, "(%dgp)", ba_ptr->costs[STORE_NORMAL]);
-				}
+				action_color = TERM_WHITE;
+				buff[0] = '\0';
 			}
-			else if (ba_ptr->action_restr == 1)
+			else if (is_state(s_ptr, STORE_LIKED))
 			{
-				if ((is_state(s_ptr, STORE_LIKED) && (ba_ptr->costs[STORE_LIKED] == 0)) ||
-				                (is_state(s_ptr, STORE_NORMAL) && (ba_ptr->costs[STORE_NORMAL] == 0)))
-				{
-					action_color = TERM_WHITE;
-					buff[0] = '\0';
-				}
-				else if (is_state(s_ptr, STORE_LIKED))
-				{
-					action_color = TERM_L_GREEN;
-					strnfmt(buff, 20, "(%dgp)", ba_ptr->costs[STORE_LIKED]);
-				}
-				else if (is_state(s_ptr, STORE_HATED))
-				{
-					action_color = TERM_L_DARK;
-					strnfmt(buff, 20, "(closed)");
-				}
-				else
-				{
-					action_color = TERM_YELLOW;
-					strnfmt(buff, 20, "(%dgp)", ba_ptr->costs[STORE_NORMAL]);
-				}
+				action_color = TERM_L_GREEN;
+				strnfmt(buff, 20, "(%dgp)", ba_ptr->costs[STORE_LIKED]);
+			}
+			else if (is_state(s_ptr, STORE_HATED))
+			{
+				action_color = TERM_RED;
+				strnfmt(buff, 20, "(%dgp)", ba_ptr->costs[STORE_HATED]);
 			}
 			else
 			{
-				if (is_state(s_ptr, STORE_LIKED) && (ba_ptr->costs[STORE_LIKED] == 0))
-				{
-					action_color = TERM_WHITE;
-					buff[0] = '\0';
-				}
-				else if (is_state(s_ptr, STORE_LIKED))
-				{
-					action_color = TERM_L_GREEN;
-					strnfmt(buff, 20, "(%dgp)", ba_ptr->costs[STORE_LIKED]);
-				}
-				else
-				{
-					action_color = TERM_L_DARK;
-					strnfmt(buff, 20, "(closed)");
-				}
+				action_color = TERM_YELLOW;
+				strnfmt(buff, 20, "(%dgp)", ba_ptr->costs[STORE_NORMAL]);
 			}
-
-			char tmp_str[80];
-
-			strnfmt(tmp_str, 80, " %c", ba_ptr->letter);
-			c_put_str(TERM_YELLOW, tmp_str, 21 + (i / 2), 17 + (30 * (i % 2)));
-
-			strnfmt(tmp_str, 80, ") %s %s", ba_ptr->name, buff);
-			c_put_str(action_color, tmp_str, 21 + (i / 2), 2 + 17 + (30 * (i % 2)));
 		}
+		else if (ba_ptr->action_restr == 1)
+		{
+			if ((is_state(s_ptr, STORE_LIKED) && (ba_ptr->costs[STORE_LIKED] == 0)) ||
+			                (is_state(s_ptr, STORE_NORMAL) && (ba_ptr->costs[STORE_NORMAL] == 0)))
+			{
+				action_color = TERM_WHITE;
+				buff[0] = '\0';
+			}
+			else if (is_state(s_ptr, STORE_LIKED))
+			{
+				action_color = TERM_L_GREEN;
+				strnfmt(buff, 20, "(%dgp)", ba_ptr->costs[STORE_LIKED]);
+			}
+			else if (is_state(s_ptr, STORE_HATED))
+			{
+				action_color = TERM_L_DARK;
+				strnfmt(buff, 20, "(closed)");
+			}
+			else
+			{
+				action_color = TERM_YELLOW;
+				strnfmt(buff, 20, "(%dgp)", ba_ptr->costs[STORE_NORMAL]);
+			}
+		}
+		else
+		{
+			if (is_state(s_ptr, STORE_LIKED) && (ba_ptr->costs[STORE_LIKED] == 0))
+			{
+				action_color = TERM_WHITE;
+				buff[0] = '\0';
+			}
+			else if (is_state(s_ptr, STORE_LIKED))
+			{
+				action_color = TERM_L_GREEN;
+				strnfmt(buff, 20, "(%dgp)", ba_ptr->costs[STORE_LIKED]);
+			}
+			else
+			{
+				action_color = TERM_L_DARK;
+				strnfmt(buff, 20, "(closed)");
+			}
+		}
+
+		char tmp_str[80];
+
+		strnfmt(tmp_str, 80, " %c", ba_ptr->letter);
+		c_put_str(TERM_YELLOW, tmp_str, 21 + (i / 2), 17 + (30 * (i % 2)));
+
+		strnfmt(tmp_str, 80, ") %s %s", ba_ptr->name, buff);
+		c_put_str(action_color, tmp_str, 21 + (i / 2), 2 + 17 + (30 * (i % 2)));
 	}
 }
 
