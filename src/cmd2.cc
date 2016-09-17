@@ -4166,8 +4166,7 @@ void do_cmd_boomerang(void)
 				j = (hit_body ? breakage_chance(o_ptr) : 0);
 
 				/* Break the boomerang */
-				if (!(o_ptr->art_name || artifact_p(o_ptr)) &&
-				                (rand_int(100) < j))
+				if ((!artifact_p(o_ptr)) && (rand_int(100) < j))
 				{
 					msg_print(format("Your %s is destroyed.", o_name));
 					inc_stack_size_ex(INVEN_BOW, -1, OPTIMIZE, NO_DESCRIBE);

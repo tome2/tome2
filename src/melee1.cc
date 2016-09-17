@@ -1867,7 +1867,7 @@ bool_ make_attack_normal(int m_idx, byte divis)
 						if (!o_ptr->k_idx) continue;
 
 						/* Skip artifacts */
-						if (artifact_p(o_ptr) || o_ptr->art_name) continue;
+						if (artifact_p(o_ptr)) continue;
 
 						/* Get a description */
 						object_desc(o_name, o_ptr, FALSE, 3);

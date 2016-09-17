@@ -311,7 +311,7 @@ void compact_objects(int size)
 			chance = chance - cur_lev / 2;
 
 			/* Artifacts */
-			if ( artifact_p(o_ptr) || o_ptr->art_name )
+			if (artifact_p(o_ptr))
 			{
 				/* Artifacts are "immune if the level is lower     */
 				/* than 300 + artifact level                       */
@@ -5082,7 +5082,7 @@ s16b drop_near(object_type *j_ptr, int chance, int y, int x)
 
 
 	/* Handle normal "breakage" */
-	if (!(j_ptr->art_name || artifact_p(j_ptr)) && (rand_int(100) < chance))
+	if ((!artifact_p(j_ptr)) && (rand_int(100) < chance))
 	{
 		/* Message */
 		msg_format("The %s disappear%s.",
@@ -5187,7 +5187,7 @@ s16b drop_near(object_type *j_ptr, int chance, int y, int x)
 
 
 	/* Handle lack of space */
-	if (!flag && !(artifact_p(j_ptr) || j_ptr->art_name))
+	if (!flag && (!artifact_p(j_ptr)))
 	{
 		/* Message */
 		msg_format("The %s disappear%s.",

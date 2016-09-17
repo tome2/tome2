@@ -623,7 +623,7 @@ void do_cmd_destroy(void)
 
 
 	/* Artifacts cannot be destroyed */
-	if (artifact_p(o_ptr) || o_ptr->art_name)
+	if (artifact_p(o_ptr))
 	{
 		byte feel = SENSE_SPECIAL;
 

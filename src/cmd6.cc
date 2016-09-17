@@ -2739,7 +2739,7 @@ bool_ curse_armor(void)
 	object_desc(o_name, o_ptr, FALSE, 3);
 
 	/* Attempt a saving throw for artifacts */
-	if (((o_ptr->art_name) || artifact_p(o_ptr)) && (rand_int(100) < 50))
+	if (artifact_p(o_ptr) && (rand_int(100) < 50))
 	{
 		/* Cool */
 		msg_format("A terrible black aura tries to surround your armour, "
@@ -2801,7 +2801,7 @@ bool_ curse_weapon(void)
 	object_desc(o_name, o_ptr, FALSE, 3);
 
 	/* Attempt a saving throw */
-	if ((artifact_p(o_ptr) || o_ptr->art_name) && (rand_int(100) < 50))
+	if (artifact_p(o_ptr) && (rand_int(100) < 50))
 	{
 		/* Cool */
 		msg_format("A terrible black aura tries to surround your weapon, "
@@ -4644,7 +4644,7 @@ bool_ brand_bolts(void)
 		if (o_ptr->tval != TV_BOLT) continue;
 
 		/* Skip artifacts and ego-items */
-		if (o_ptr->art_name || artifact_p(o_ptr) || ego_item_p(o_ptr)) continue;
+		if (artifact_p(o_ptr) || ego_item_p(o_ptr)) continue;
 
 		/* Skip cursed/broken items */
 		if (cursed_p(o_ptr)) continue;

@@ -728,7 +728,7 @@ bool_ alchemy(void) /* Turns an object into gold, gain some of its value in a sh
 	}
 
 	/* Artifacts cannot be destroyed */
-	if (artifact_p(o_ptr) || o_ptr->art_name)
+	if (artifact_p(o_ptr))
 	{
 		byte feel = SENSE_SPECIAL;
 
@@ -2695,7 +2695,7 @@ bool_ enchant(object_type *o_ptr, int n, int eflag)
 {
 	int i, chance, prob;
 	bool_ res = FALSE;
-	bool_ a = (artifact_p(o_ptr) || o_ptr->art_name);
+	auto const a = artifact_p(o_ptr);
 
 
 	/* Extract the flags */
@@ -3252,7 +3252,7 @@ static void note_found_object(object_type *o_ptr)
 	char note[150];
 	char item_name[80];
 
-	if (artifact_p(o_ptr) || o_ptr->name1)
+	if (artifact_p(o_ptr))
 	{
 		object_desc(item_name, o_ptr, FALSE, 0);
 

@@ -6211,8 +6211,7 @@ static void process_monster(int m_idx, bool_ is_frien)
 						if (flags & TR_SLAY_EVIL) flg |= RF_EVIL;
 
 						/* The object cannot be picked up by the monster */
-						if (artifact_p(o_ptr) || (r_ptr->flags & flg) ||
-						                (o_ptr->art_name))
+						if (artifact_p(o_ptr) || (r_ptr->flags & flg))
 						{
 							/* Only give a message for "take_item" */
 							if (r_ptr->flags & RF_TAKE_ITEM)

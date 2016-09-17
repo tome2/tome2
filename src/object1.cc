@@ -1469,7 +1469,7 @@ static std::string object_desc_aux(object_type const *o_ptr, int pref, int mode)
 		{}
 
 		/* Hack -- The only one of its kind */
-		else if (known && (artifact_p(o_ptr) || o_ptr->art_name))
+		else if (known && artifact_p(o_ptr))
 		{
 			t += "The ";
 		}
@@ -1571,7 +1571,7 @@ static std::string object_desc_aux(object_type const *o_ptr, int pref, int mode)
 		}
 
 		/* Hack -- The only one of its kind */
-		else if (known && (artifact_p(o_ptr) || o_ptr->art_name))
+		else if (known && artifact_p(o_ptr))
 		{
 			t += "The ";
 		}
@@ -3463,7 +3463,7 @@ bool_ object_out_desc(object_type *o_ptr, FILE *fff, bool_ trim_down, bool_ wait
 
 	/* Copying how others seem to do it. -- neil */
 	if (o_ptr->tval == TV_RING || o_ptr->tval == TV_AMULET ||
-	                !trim_down || (ego_item_p(o_ptr)) || (artifact_p(o_ptr)))
+	                !trim_down || ego_item_p(o_ptr) || artifact_p(o_ptr))
 	{
 		/* Where did we found it ? */
 		if (o_ptr->found == OBJ_FOUND_MONSTER)

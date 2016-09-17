@@ -723,7 +723,7 @@ static void wiz_reroll_item(object_type *o_ptr)
 
 
 	/* Hack -- leave artifacts alone */
-	if (artifact_p(o_ptr) || o_ptr->art_name) return;
+	if (artifact_p(o_ptr)) return;
 
 
 	/* Get local object */
