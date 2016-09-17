@@ -3046,7 +3046,7 @@ static void validate_bg(void)
 /*
  * Initialize a random town
  */
-void init_town(int t_idx)
+static void init_town(int t_idx)
 {
 	town_type *t_ptr = &town_info[t_idx];
 
