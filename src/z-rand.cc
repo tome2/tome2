@@ -9,6 +9,7 @@
 #include <limits>
 #include <random>
 #include <sstream>
+#include <type_traits>
 
 #include "pcg_random.hpp"
 #include "seed.hpp"
@@ -113,119 +114,76 @@ void set_complex_rng_state(std::string const &state)
 }
 
 
-/*
- * The number of entries in the "randnor_table"
- */
-#define RANDNOR_NUM	256
 
 /*
- * The standard deviation of the "randnor_table"
+ * Stochastic rounding
  */
-#define RANDNOR_STD	64
-
-/*
- * The normal distribution table for the "randnor()" function (below)
- */
-static s16b randnor_table[RANDNOR_NUM] =
+static double round_stochastic(double x)
 {
-	206, 613, 1022, 1430, 1838, 2245, 2652, 3058,
-	3463, 3867, 4271, 4673, 5075, 5475, 5874, 6271,
-	6667, 7061, 7454, 7845, 8234, 8621, 9006, 9389,
-	9770, 10148, 10524, 10898, 11269, 11638, 12004, 12367,
-	12727, 13085, 13440, 13792, 14140, 14486, 14828, 15168,
-	15504, 15836, 16166, 16492, 16814, 17133, 17449, 17761,
-	18069, 18374, 18675, 18972, 19266, 19556, 19842, 20124,
-	20403, 20678, 20949, 21216, 21479, 21738, 21994, 22245,
+	double n;
+	double f = std::modf(x, &n);
 
-	22493, 22737, 22977, 23213, 23446, 23674, 23899, 24120,
-	24336, 24550, 24759, 24965, 25166, 25365, 25559, 25750,
-	25937, 26120, 26300, 26476, 26649, 26818, 26983, 27146,
-	27304, 27460, 27612, 27760, 27906, 28048, 28187, 28323,
-	28455, 28585, 28711, 28835, 28955, 29073, 29188, 29299,
-	29409, 29515, 29619, 29720, 29818, 29914, 30007, 30098,
-	30186, 30272, 30356, 30437, 30516, 30593, 30668, 30740,
-	30810, 30879, 30945, 31010, 31072, 31133, 31192, 31249,
+	// Round up?
+	if (f > 0.5)
+	{
+		return n + 1;
+	}
 
-	31304, 31358, 31410, 31460, 31509, 31556, 31601, 31646,
-	31688, 31730, 31770, 31808, 31846, 31882, 31917, 31950,
-	31983, 32014, 32044, 32074, 32102, 32129, 32155, 32180,
-	32205, 32228, 32251, 32273, 32294, 32314, 32333, 32352,
-	32370, 32387, 32404, 32420, 32435, 32450, 32464, 32477,
-	32490, 32503, 32515, 32526, 32537, 32548, 32558, 32568,
-	32577, 32586, 32595, 32603, 32611, 32618, 32625, 32632,
-	32639, 32645, 32651, 32657, 32662, 32667, 32672, 32677,
+	// Round down?
+	if (f < 0.5)
+	{
+		return n - 1;
+	}
 
-	32682, 32686, 32690, 32694, 32698, 32702, 32705, 32708,
-	32711, 32714, 32717, 32720, 32722, 32725, 32727, 32729,
-	32731, 32733, 32735, 32737, 32739, 32740, 32742, 32743,
-	32745, 32746, 32747, 32748, 32749, 32750, 32751, 32752,
-	32753, 32754, 32755, 32756, 32757, 32757, 32758, 32758,
-	32759, 32760, 32760, 32761, 32761, 32761, 32762, 32762,
-	32763, 32763, 32763, 32764, 32764, 32764, 32764, 32765,
-	32765, 32765, 32765, 32766, 32766, 32766, 32766, 32767,
-};
-
+	// Tie breaker is random; hence 'stochastic'.
+	std::uniform_int_distribution<int> distribution(0, 1);
+	if (distribution(*get_current_rng()) == 0)
+	{
+		return n - 1;
+	}
+	else
+	{
+		return n + 1;
+	}
+}
 
 
 /*
  * Generate a random integer number of NORMAL distribution
- *
- * The table above is used to generate a psuedo-normal distribution,
- * in a manner which is much faster than calling a transcendental
- * function to calculate a true normal distribution.
- *
- * Basically, entry 64*N in the table above represents the number of
- * times out of 32767 that a random variable with normal distribution
- * will fall within N standard deviations of the mean.  That is, about
- * 68 percent of the time for N=1 and 95 percent of the time for N=2.
- *
- * The table above contains a "faked" final entry which allows us to
- * pretend that all values in a normal distribution are strictly less
- * than four standard deviations away from the mean.  This results in
- * "conservative" distribution of approximately 1/32768 values.
- *
- * Note that the binary search takes up to 16 quick iterations.
  */
 s16b randnor(int mean, int stand)
 {
-	s16b tmp;
-	s16b offset;
+	// Get our own return type; we need it for limits and casting.
+	using retval_t = std::result_of<decltype(&randnor)(int, int)>::type;
 
-	s16b low = 0;
-	s16b high = RANDNOR_NUM;
-
-	/* Paranoia */
-	if (stand < 1) return (mean);
-
-	/* Roll for probability */
-	tmp = (s16b)rand_int(32768);
-
-	/* Binary Search */
-	while (low < high)
+	// Degenerate case
+	if (stand < 1)
 	{
-		int mid = (low + high) >> 1;
-
-		/* Move right if forced */
-		if (randnor_table[mid] < tmp)
-		{
-			low = mid + 1;
-		}
-
-		/* Move left otherwise */
-		else
-		{
-			high = mid;
-		}
+		return 0;
 	}
 
-	/* Convert the index into an offset */
-	offset = (long)stand * (long)low / RANDNOR_STD;
+	// Sample from normal distribution
+	std::normal_distribution<double> distribution(mean, stand);
+	double x = distribution(*get_current_rng());
 
-	/* One half should be negative */
-	if (rand_int(100) < 50) return (mean - offset);
+	// Stochastic rounding to avoid rounding bias
+	double rounded_x = round_stochastic(x);
 
-	/* One half should be positive */
-	return (mean + offset);
+	// Enforce limits of retval_t. Given that we're talking about a normal
+	// distribution, we're usually very unlikely to actually hit these (given
+	// reasonable values for 'mean' and 'stand' parameters), but in (very) rare
+	// cases it's needed to avoid undefined behavior due to the conversion
+	// we're going to do. This does introduce some (very minor) bias, but
+	// it's really unavoidable since retval_t cannot represent all possible
+	// values. We also assuming that a double can accurately represent all
+	// values in the range of retval_t.
+	double clipped_x = std::min(
+	        static_cast<double>(std::numeric_limits<retval_t>::max()),
+	        std::max(static_cast<double>(std::numeric_limits<retval_t>::min()),
+	                rounded_x));
+
+	// Done: We just need to convert to retval_t.
+	return static_cast<retval_t>(clipped_x);
 }
 
 
