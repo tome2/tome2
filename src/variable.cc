@@ -438,14 +438,6 @@ player_spec *spp_ptr;
 
 
 /*
- * Calculated base hp values for player at each level,
- * store them so that drain life + restore life does not
- * affect hit points.  Also prevents shameless use of backup
- * savefiles for hitpoint acquirement.
- */
-s16b player_hp[PY_MAX_LEVEL];
-
-/*
  * The vault generation arrays
  */
 vault_type *v_info;

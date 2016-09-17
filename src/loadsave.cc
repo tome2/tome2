@@ -2409,6 +2409,8 @@ static bool do_floor_inscriptions(ls_flag_t flag)
 
 static bool do_player_hd(ls_flag_t flag)
 {
+	auto &player_hp = game->player_hp;
+
 	u16b max_level = PY_MAX_LEVEL;
 
 	do_u16b(&max_level, flag);

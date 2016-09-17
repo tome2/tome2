@@ -59,6 +59,7 @@
 #include "xtra2.hpp"
 #include "z-rand.hpp"
 
+#include <numeric>
 #include <string>
 
 /*
@@ -442,13 +443,53 @@ static void get_stats(void)
 
 
 /*
+ * Roll for player HP
+ */
+void roll_player_hp()
+{
+	auto &player_hp = game->player_hp;
+
+	// Minimum hitpoints at highest level
+	int const min_value =
+	        (PY_MAX_LEVEL * (p_ptr->hitdie - 1) * 3) / 8 + PY_MAX_LEVEL;
+
+	// Maximum hitpoints at highest level
+	int const max_value =
+	        (PY_MAX_LEVEL * (p_ptr->hitdie - 1) * 5) / 8 + PY_MAX_LEVEL;
+
+	// Pre-calculate level 1 hitdice; first roll is always maximal
+	player_hp[0] = p_ptr->hitdie;
+
+	// Roll out the hitpoints
+	while (true)
+	{
+		// Roll the hitpoint values
+		std::generate(
+		        player_hp.begin() + 1,
+		        player_hp.end(),
+		        []() { return randint(p_ptr->hitdie); });
+
+		// Sum along
+		std::partial_sum(
+		        player_hp.begin(),
+		        player_hp.end(),
+		        player_hp.begin());
+
+		// Require "valid" hitpoints at highest level
+		if (player_hp.back() < min_value) continue;
+		if (player_hp.back() > max_value) continue;
+
+		// Acceptable
+		break;
+	}
+}
+
+
+/*
  * Roll for some info that the auto-roller ignores
  */
 static void get_extra(void)
 {
-	int i, j, min_value, max_value;
-
-
 	/* Level one */
 	p_ptr->max_plv = p_ptr->lev = 1;
 
@@ -464,37 +505,10 @@ static void get_extra(void)
 	/* Initial hitpoints */
 	p_ptr->mhp = p_ptr->hitdie;
 
-	/* Minimum hitpoints at highest level */
-	min_value = (PY_MAX_LEVEL * (p_ptr->hitdie - 1) * 3) / 8;
-	min_value += PY_MAX_LEVEL;
+	/* Roll for HP */
+	roll_player_hp();
 
-	/* Maximum hitpoints at highest level */
-	max_value = (PY_MAX_LEVEL * (p_ptr->hitdie - 1) * 5) / 8;
-	max_value += PY_MAX_LEVEL;
-
-	/* Pre-calculate level 1 hitdice */
-	player_hp[0] = p_ptr->hitdie;
-
-	/* Roll out the hitpoints */
-	while (TRUE)
-	{
-		/* Roll the hitpoint values */
-		for (i = 1; i < PY_MAX_LEVEL; i++)
-		{
-			j = randint(p_ptr->hitdie);
-			player_hp[i] = player_hp[i - 1] + j;
-		}
-
-		/* XXX Could also require acceptable "mid-level" hitpoints */
-
-		/* Require "valid" hitpoints at highest level */
-		if (player_hp[PY_MAX_LEVEL - 1] < min_value) continue;
-		if (player_hp[PY_MAX_LEVEL - 1] > max_value) continue;
-
-		/* Acceptable */
-		break;
-	}
-
+	/* Set tactics and movement */
 	p_ptr->tactic = 4;
 	p_ptr->movement = 4;
 }

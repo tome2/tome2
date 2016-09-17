@@ -1841,15 +1841,13 @@ static void calc_mana(void)
  */
 void calc_hitpoints(void)
 {
-	int bonus, mhp;
+	auto const &player_hp = game->player_hp;
 
 	/* Un-inflate "half-hitpoint bonus per level" value */
-	bonus = ((int)(adj_con_mhp[p_ptr->stat_ind[A_CON]]) - 128);
+	int const bonus = ((int)(adj_con_mhp[p_ptr->stat_ind[A_CON]]) - 128);
 
 	/* Calculate hitpoints */
-	assert(p_ptr->lev - 1 >= 0);
-	assert(p_ptr->lev - 1 < PY_MAX_LEVEL);
-	mhp = player_hp[p_ptr->lev - 1] + (bonus * p_ptr->lev / 2);
+	int mhp = player_hp[p_ptr->lev - 1] + (bonus * p_ptr->lev / 2);
 
 	/* Always have at least one hitpoint per level */
 	if (mhp < p_ptr->lev + 1) mhp = p_ptr->lev + 1;

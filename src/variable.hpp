@@ -169,7 +169,6 @@ extern player_race *rp_ptr;
 extern player_race_mod *rmp_ptr;
 extern player_class *cp_ptr;
 extern player_spec *spp_ptr;
-extern s16b player_hp[PY_MAX_LEVEL];
 extern char player_name[32];
 extern char player_base[32];
 extern ability_type *ab_info;

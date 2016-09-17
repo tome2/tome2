@@ -9,6 +9,7 @@
 #include "wizard2.hpp"
 
 #include "artifact_type.hpp"
+#include "birth.hpp"
 #include "cave.hpp"
 #include "cave_type.hpp"
 #include "cmd4.hpp"
@@ -116,32 +117,14 @@ static void teleport_player_town(int town)
  */
 void do_cmd_rerate(void)
 {
-	int min_value, max_value, i, percent;
+	auto &player_hp = game->player_hp;
 
-	min_value = (PY_MAX_LEVEL * 3 * (p_ptr->hitdie - 1)) / 8;
-	min_value += PY_MAX_LEVEL;
+	// Force HP re-roll
+	roll_player_hp();
 
-	max_value = (PY_MAX_LEVEL * 5 * (p_ptr->hitdie - 1)) / 8;
-	max_value += PY_MAX_LEVEL;
-
-	player_hp[0] = p_ptr->hitdie;
-
-	/* Rerate */
-	while (1)
-	{
-		/* Collect values */
-		for (i = 1; i < PY_MAX_LEVEL; i++)
-		{
-			player_hp[i] = randint(p_ptr->hitdie);
-			player_hp[i] += player_hp[i - 1];
-		}
-
-		/* Legal values */
-		if ((player_hp[PY_MAX_LEVEL - 1] >= min_value) &&
-		                (player_hp[PY_MAX_LEVEL - 1] <= max_value)) break;
-	}
-
-	percent = (int)(((long)player_hp[PY_MAX_LEVEL - 1] * 200L) /
+	// Calculate life rating
+	int percent = static_cast<int>(
+	        (static_cast<long>(player_hp[PY_MAX_LEVEL - 1]) * 200L) /
 	                (p_ptr->hitdie + ((PY_MAX_LEVEL - 1) * p_ptr->hitdie)));
 
 	/* Update and redraw hitpoints */
