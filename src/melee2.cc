@@ -1082,6 +1082,31 @@ static bool_ monst_spell_monst(int m_idx)
 		see_either = (see_m || see_t);
 		see_both = (see_m && see_t);
 
+		/* Do a breath */
+		auto do_breath = [&](char const *element, int gf, s32b max, int divisor) -> void {
+			// Interrupt
+			if (disturb_other)
+			{
+				disturb(1);
+			}
+			// Message
+			if (!see_either)
+			{
+				monster_msg("You hear breathing noise.");
+			}
+			else if (blind)
+			{
+				monster_msg("%^s breathes.", m_name);
+			}
+			else
+			{
+				monster_msg("%^s breathes %s at %s.", m_name, element, t_name);
+			}
+			// Breathe
+			monst_breath_monst(m_idx, y, x, gf, std::min(max, m_ptr->hp / divisor), 0);
+		};
+
+		/* Spell effect */
 		int count = 0;
 		switch (thrown_spell->spell_idx)
 		{
@@ -1170,227 +1195,127 @@ static bool_ monst_spell_monst(int m_idx)
 
 		case SF_BR_ACID_IDX:
 			{
-				if (disturb_other) disturb(1);
-				if (!see_either) monster_msg("You hear breathing noise.");
-				else if (blind) monster_msg("%^s breathes.", m_name);
-				else monster_msg("%^s breathes acid at %s.", m_name, t_name);
-				monst_breath_monst(m_idx, y, x, GF_ACID,
-				                   ((m_ptr->hp / 3) > 1600 ? 1600 : (m_ptr->hp / 3)), 0);
+			        do_breath("acid", GF_ACID, 1600, 3);
 				break;
 			}
 
 		case SF_BR_ELEC_IDX:
 			{
-				if (disturb_other) disturb(1);
-				if (!see_either) monster_msg("You hear breathing noise.");
-				else if (blind) monster_msg("%^s breathes.", m_name);
-				else monster_msg("%^s breathes lightning at %s.", m_name, t_name);
-				monst_breath_monst(m_idx, y, x, GF_ELEC,
-				                   ((m_ptr->hp / 3) > 1600 ? 1600 : (m_ptr->hp / 3)), 0);
+			        do_breath("lightning", GF_ELEC, 1600, 3);
 				break;
 			}
 
 		case SF_BR_FIRE_IDX:
 			{
-				if (disturb_other) disturb(1);
-				if (!see_either) monster_msg("You hear breathing noise.");
-				else if (blind) monster_msg("%^s breathes.", m_name);
-				else monster_msg("%^s breathes fire at %s.", m_name, t_name);
-				monst_breath_monst(m_idx, y, x, GF_FIRE,
-				                   ((m_ptr->hp / 3) > 1600 ? 1600 : (m_ptr->hp / 3)), 0);
+			        do_breath("fire", GF_FIRE, 1600, 3);
 				break;
 			}
 
 		case SF_BR_COLD_IDX:
 			{
-				if (disturb_other) disturb(1);
-				if (!see_either) monster_msg("You hear breathing noise.");
-				else if (blind) monster_msg("%^s breathes.", m_name);
-				else monster_msg("%^s breathes frost at %s.", m_name, t_name);
-				monst_breath_monst(m_idx, y, x, GF_COLD,
-				                   ((m_ptr->hp / 3) > 1600 ? 1600 : (m_ptr->hp / 3)), 0);
+			        do_breath("frost", GF_COLD, 1600, 3);
 				break;
 			}
 
 		case SF_BR_POIS_IDX:
 			{
-				if (disturb_other) disturb(1);
-				if (!see_either) monster_msg("You hear breathing noise.");
-				else if (blind) monster_msg("%^s breathes.", m_name);
-				else monster_msg("%^s breathes gas at %s.", m_name, t_name);
-				monst_breath_monst(m_idx, y, x, GF_POIS,
-				                   ((m_ptr->hp / 3) > 800 ? 800 : (m_ptr->hp / 3)), 0);
+			        do_breath("gas", GF_POIS, 800, 3);
 				break;
 			}
 
 		case SF_BR_NETH_IDX:
 			{
-				if (disturb_other) disturb(1);
-				if (!see_either) monster_msg("You hear breathing noise.");
-				else if (blind) monster_msg("%^s breathes.", m_name);
-				else monster_msg("%^s breathes nether at %s.", m_name, t_name);
-				monst_breath_monst(m_idx, y, x, GF_NETHER,
-				                   ((m_ptr->hp / 6) > 550 ? 550 : (m_ptr->hp / 6)), 0);
+			        do_breath("nether", GF_NETHER, 550, 6);
 				break;
 			}
 
 		case SF_BR_LITE_IDX:
 			{
-				if (disturb_other) disturb(1);
-				if (!see_either) monster_msg("You hear breathing noise.");
-				else if (blind) monster_msg("%^s breathes.", m_name);
-				else monster_msg("%^s breathes light at %s.", m_name, t_name);
-				monst_breath_monst(m_idx, y, x, GF_LITE,
-				                   ((m_ptr->hp / 6) > 400 ? 400 : (m_ptr->hp / 6)), 0);
+			        do_breath("light", GF_LITE, 400, 6);
 				break;
 			}
 
 		case SF_BR_DARK_IDX:
 			{
-				if (disturb_other) disturb(1);
-				if (!see_either) monster_msg("You hear breathing noise.");
-				else if (blind) monster_msg("%^s breathes.", m_name);
-				else monster_msg("%^s breathes darkness at %s.", m_name, t_name);
-				monst_breath_monst(m_idx, y, x, GF_DARK,
-				                   ((m_ptr->hp / 6) > 400 ? 400 : (m_ptr->hp / 6)), 0);
+			        do_breath("darkness", GF_DARK, 400, 6);
 				break;
 			}
 
 		case SF_BR_CONF_IDX:
 			{
-				if (disturb_other) disturb(1);
-				if (!see_either) monster_msg("You hear breathing noise.");
-				else if (blind) monster_msg("%^s breathes.", m_name);
-				else monster_msg("%^s breathes confusion at %s.", m_name, t_name);
-				monst_breath_monst(m_idx, y, x, GF_CONFUSION,
-				                   ((m_ptr->hp / 6) > 400 ? 400 : (m_ptr->hp / 6)), 0);
+			        do_breath("confusion", GF_CONFUSION, 400, 6);
 				break;
 			}
 
 		case SF_BR_SOUN_IDX:
 			{
-				if (disturb_other) disturb(1);
-				if (!see_either) monster_msg("You hear breathing noise.");
-				else if (blind) monster_msg("%^s breathes.", m_name);
-				else monster_msg("%^s breathes sound at %s.", m_name, t_name);
-				monst_breath_monst(m_idx, y, x, GF_SOUND,
-				                   ((m_ptr->hp / 6) > 400 ? 400 : (m_ptr->hp / 6)), 0);
+			        do_breath("sound", GF_SOUND, 400, 6);
 				break;
 			}
 
 		case SF_BR_CHAO_IDX:
 			{
-				if (disturb_other) disturb(1);
-				if (!see_either) monster_msg("You hear breathing noise.");
-				else if (blind) monster_msg("%^s breathes.", m_name);
-				else monster_msg("%^s breathes chaos at %s.", m_name, t_name);
-				monst_breath_monst(m_idx, y, x, GF_CHAOS,
-				                   ((m_ptr->hp / 6) > 600 ? 600 : (m_ptr->hp / 6)), 0);
+			        do_breath("chaos", GF_CHAOS, 600, 6);
 				break;
 			}
 
 		case SF_BR_DISE_IDX:
 			{
-				if (disturb_other) disturb(1);
-				if (!see_either) monster_msg("You hear breathing noise.");
-				else if (blind) monster_msg("%^s breathes.", m_name);
-				else monster_msg("%^s breathes disenchantment at %s.", m_name, t_name);
-				monst_breath_monst(m_idx, y, x, GF_DISENCHANT,
-				                   ((m_ptr->hp / 6) > 500 ? 500 : (m_ptr->hp / 6)), 0);
+			        do_breath("disenchantment", GF_DISENCHANT, 500, 6);
 				break;
 			}
 
 		case SF_BR_NEXU_IDX:
 			{
-				if (disturb_other) disturb(1);
-				if (!see_either) monster_msg("You hear breathing noise.");
-				else if (blind) monster_msg("%^s breathes.", m_name);
-				else monster_msg("%^s breathes nexus at %s.", m_name, t_name);
-				monst_breath_monst(m_idx, y, x, GF_NEXUS,
-				                   ((m_ptr->hp / 3) > 250 ? 250 : (m_ptr->hp / 3)), 0);
+			        do_breath("nexus", GF_NEXUS, 250, 3);
 				break;
 			}
 
 		case SF_BR_TIME_IDX:
 			{
-				if (disturb_other) disturb(1);
-				if (!see_either) monster_msg("You hear breathing noise.");
-				else if (blind) monster_msg("%^s breathes.", m_name);
-				else monster_msg("%^s breathes time at %s.", m_name, t_name);
-				monst_breath_monst(m_idx, y, x, GF_TIME,
-				                   ((m_ptr->hp / 3) > 150 ? 150 : (m_ptr->hp / 3)), 0);
+			        do_breath("time", GF_TIME, 150, 3);
 				break;
 			}
 
 		case SF_BR_INER_IDX:
 			{
-				if (disturb_other) disturb(1);
-				if (!see_either) monster_msg("You hear breathing noise.");
-				else if (blind) monster_msg("%^s breathes.", m_name);
-				else monster_msg("%^s breathes inertia at %s.", m_name, t_name);
-				monst_breath_monst(m_idx, y, x, GF_INERTIA,
-				                   ((m_ptr->hp / 6) > 200 ? 200 : (m_ptr->hp / 6)), 0);
+			        do_breath("inertia", GF_INERTIA, 200, 6);
 				break;
 			}
 
 		case SF_BR_GRAV_IDX:
 			{
-				if (disturb_other) disturb(1);
-				if (!see_either) monster_msg("You hear breathing noise.");
-				else if (blind) monster_msg("%^s breathes.", m_name);
-				else monster_msg("%^s breathes gravity at %s.", m_name, t_name);
-				monst_breath_monst(m_idx, y, x, GF_GRAVITY,
-				                   ((m_ptr->hp / 3) > 200 ? 200 : (m_ptr->hp / 3)), 0);
+			        do_breath("gravity", GF_GRAVITY, 200, 3);
 				break;
 			}
 
 		case SF_BR_SHAR_IDX:
 			{
-				if (disturb_other) disturb(1);
-				if (!see_either) monster_msg("You hear breathing noise.");
-				else if (blind) monster_msg("%^s breathes.", m_name);
-				else monster_msg("%^s breathes shards at %s.", m_name, t_name);
-				monst_breath_monst(m_idx, y, x, GF_SHARDS,
-				                   ((m_ptr->hp / 6) > 400 ? 400 : (m_ptr->hp / 6)), 0);
+			        do_breath("shards", GF_SHARDS, 400, 6);
 				break;
 			}
 
 		case SF_BR_PLAS_IDX:
 			{
-				if (disturb_other) disturb(1);
-				if (!see_either) monster_msg("You hear breathing noise.");
-				else if (blind) monster_msg("%^s breathes.", m_name);
-				else monster_msg("%^s breathes plasma at %s.", m_name, t_name);
-				monst_breath_monst(m_idx, y, x, GF_PLASMA,
-				                   ((m_ptr->hp / 6) > 150 ? 150 : (m_ptr->hp / 6)), 0);
+			        do_breath("plasma", GF_PLASMA, 150, 6);
 				break;
 			}
 
 		case SF_BR_WALL_IDX:
 			{
-				if (disturb_other) disturb(1);
-				if (!see_either) monster_msg("You hear breathing noise.");
-				else if (blind) monster_msg("%^s breathes.", m_name);
-				else monster_msg("%^s breathes force at %s.", m_name, t_name);
-				monst_breath_monst(m_idx, y, x, GF_FORCE,
-				                   ((m_ptr->hp / 6) > 200 ? 200 : (m_ptr->hp / 6)), 0);
+			        do_breath("force", GF_FORCE, 200, 6);
 				break;
 			}
 
 		case SF_BR_MANA_IDX:
 			{
-				if (disturb_other) disturb(1);
-				if (!see_either) monster_msg("You hear breathing noise.");
-				else if (blind) monster_msg("%^s breathes.", m_name);
-				else monster_msg("%^s breathes magical energy at %s.", m_name, t_name);
-				monst_breath_monst(m_idx, y, x, GF_MANA,
-				                   ((m_ptr->hp / 3) > 250 ? 250 : (m_ptr->hp / 3)), 0);
+			        do_breath("magical energy", GF_MANA, 250, 3);
 				break;
 			}
 
 		case SF_BA_NUKE_IDX:
 			{
-				if (disturb_other) disturb(1);
+			        if (disturb_other) disturb(1);
 				if (!see_either) monster_msg("You hear someone mumble.");
 				else if (blind) monster_msg("%^s mumbles.", m_name);
 				else monster_msg("%^s casts a ball of radiation at %s.", m_name, t_name);
@@ -1401,12 +1326,7 @@ static bool_ monst_spell_monst(int m_idx)
 
 		case SF_BR_NUKE_IDX:
 			{
-				if (disturb_other) disturb(1);
-				if (!see_either) monster_msg("You hear breathing noise.");
-				else if (blind) monster_msg("%^s breathes.", m_name);
-				else monster_msg("%^s breathes toxic waste at %s.", m_name, t_name);
-				monst_breath_monst(m_idx, y, x, GF_NUKE,
-				                   ((m_ptr->hp / 3) > 800 ? 800 : (m_ptr->hp / 3)), 0);
+			        do_breath("toxic waste", GF_NUKE, 800, 3);
 				break;
 			}
 
@@ -1423,12 +1343,7 @@ static bool_ monst_spell_monst(int m_idx)
 
 		case SF_BR_DISI_IDX:
 			{
-				if (disturb_other) disturb(1);
-				if (!see_either) monster_msg("You hear breathing noise.");
-				else if (blind) monster_msg("%^s breathes.", m_name);
-				else monster_msg("%^s breathes disintegration at %s.", m_name, t_name);
-				monst_breath_monst(m_idx, y, x, GF_DISINTEGRATE,
-				                   ((m_ptr->hp / 3) > 300 ? 300 : (m_ptr->hp / 3)), 0);
+			        do_breath("disintegration", GF_DISINTEGRATE, 300, 3);
 				break;
 			}
 
@@ -2859,6 +2774,25 @@ static bool_ make_attack_spell(int m_idx)
 		/* Hack -- Get the "died from" name */
 		monster_desc(ddesc, m_ptr, 0x88);
 
+		/* Do a breath */
+		auto do_breath = [&](char const *element, int gf, s32b max, int divisor, int smart_learn) -> void {
+			// Interrupt
+			disturb(1);
+			// Message
+			if (blind)
+			{
+				msg_format("%^s breathes.", m_name);
+			}
+			else
+			{
+				msg_format("%^s breathes %s.", m_name, element);
+			}
+			// Breathe
+			breath(m_idx, gf, std::min(m_ptr->hp / divisor, max), 0);
+			// Update "smart" monster knowledge
+			update_smart_learn(m_idx, smart_learn);
+		};
+
 		/* Cast the spell. */
 		switch (thrown_spell->spell_idx)
 		{
@@ -2941,215 +2875,121 @@ static bool_ make_attack_spell(int m_idx)
 
 		case SF_BR_ACID_IDX:
 			{
-				disturb(1);
-				if (blind) msg_format("%^s breathes.", m_name);
-				else msg_format("%^s breathes acid.", m_name);
-				breath(m_idx, GF_ACID,
-				       ((m_ptr->hp / 3) > 1600 ? 1600 : (m_ptr->hp / 3)), 0);
-				update_smart_learn(m_idx, DRS_ACID);
+			        do_breath("acid", GF_ACID, 1600, 3, DRS_ACID);
 				break;
 			}
 
 		case SF_BR_ELEC_IDX:
 			{
-				disturb(1);
-				if (blind) msg_format("%^s breathes.", m_name);
-				else msg_format("%^s breathes lightning.", m_name);
-				breath(m_idx, GF_ELEC,
-				       ((m_ptr->hp / 3) > 1600 ? 1600 : (m_ptr->hp / 3)), 0);
-				update_smart_learn(m_idx, DRS_ELEC);
+			        do_breath("lightning", GF_ELEC, 1600, 3, DRS_ELEC);
 				break;
 			}
 
 		case SF_BR_FIRE_IDX:
 			{
-				disturb(1);
-				if (blind) msg_format("%^s breathes.", m_name);
-				else msg_format("%^s breathes fire.", m_name);
-				breath(m_idx, GF_FIRE,
-				       ((m_ptr->hp / 3) > 1600 ? 1600 : (m_ptr->hp / 3)), 0);
-				update_smart_learn(m_idx, DRS_FIRE);
+			        do_breath("fire", GF_FIRE, 1600, 3, DRS_FIRE);
 				break;
 			}
 
 		case SF_BR_COLD_IDX:
 			{
-				disturb(1);
-				if (blind) msg_format("%^s breathes.", m_name);
-				else msg_format("%^s breathes frost.", m_name);
-				breath(m_idx, GF_COLD,
-				       ((m_ptr->hp / 3) > 1600 ? 1600 : (m_ptr->hp / 3)), 0);
-				update_smart_learn(m_idx, DRS_COLD);
+			        do_breath("frost", GF_COLD, 1600, 3, DRS_COLD);
 				break;
 			}
 
 		case SF_BR_POIS_IDX:
 			{
-				disturb(1);
-				if (blind) msg_format("%^s breathes.", m_name);
-				else msg_format("%^s breathes gas.", m_name);
-				breath(m_idx, GF_POIS,
-				       ((m_ptr->hp / 3) > 800 ? 800 : (m_ptr->hp / 3)), 0);
-				update_smart_learn(m_idx, DRS_POIS);
+			        do_breath("gas", GF_POIS, 800, 3, DRS_POIS);
 				break;
 			}
 
 		case SF_BR_NETH_IDX:
 			{
-				disturb(1);
-				if (blind) msg_format("%^s breathes.", m_name);
-				else msg_format("%^s breathes nether.", m_name);
-				breath(m_idx, GF_NETHER,
-				       ((m_ptr->hp / 6) > 550 ? 550 : (m_ptr->hp / 6)), 0);
-				update_smart_learn(m_idx, DRS_NETH);
+			        do_breath("nether", GF_NETHER, 550, 6, DRS_NETH);
 				break;
 			}
 
 		case SF_BR_LITE_IDX:
 			{
-				disturb(1);
-				if (blind) msg_format("%^s breathes.", m_name);
-				else msg_format("%^s breathes light.", m_name);
-				breath(m_idx, GF_LITE,
-				       ((m_ptr->hp / 6) > 400 ? 400 : (m_ptr->hp / 6)), 0);
-				update_smart_learn(m_idx, DRS_LITE);
+			        do_breath("light", GF_LITE, 400, 6, DRS_LITE);
 				break;
 			}
 
 		case SF_BR_DARK_IDX:
 			{
-				disturb(1);
-				if (blind) msg_format("%^s breathes.", m_name);
-				else msg_format("%^s breathes darkness.", m_name);
-				breath(m_idx, GF_DARK,
-				       ((m_ptr->hp / 6) > 400 ? 400 : (m_ptr->hp / 6)), 0);
-				update_smart_learn(m_idx, DRS_DARK);
+			        do_breath("darkness", GF_DARK, 400, 6, DRS_DARK);
 				break;
 			}
 
 		case SF_BR_CONF_IDX:
 			{
-				disturb(1);
-				if (blind) msg_format("%^s breathes.", m_name);
-				else msg_format("%^s breathes confusion.", m_name);
-				breath(m_idx, GF_CONFUSION,
-				       ((m_ptr->hp / 6) > 400 ? 400 : (m_ptr->hp / 6)), 0);
-				update_smart_learn(m_idx, DRS_CONF);
+			        do_breath("confusion", GF_CONFUSION, 400, 6, DRS_CONF);
 				break;
 			}
 
 		case SF_BR_SOUN_IDX:
 			{
-				disturb(1);
-				if (blind) msg_format("%^s breathes.", m_name);
-				else msg_format("%^s breathes sound.", m_name);
-				breath(m_idx, GF_SOUND,
-				       ((m_ptr->hp / 6) > 400 ? 400 : (m_ptr->hp / 6)), 0);
-				update_smart_learn(m_idx, DRS_SOUND);
+			        do_breath("sound", GF_SOUND, 400, 6, DRS_SOUND);
 				break;
 			}
 
 		case SF_BR_CHAO_IDX:
 			{
-				disturb(1);
-				if (blind) msg_format("%^s breathes.", m_name);
-				else msg_format("%^s breathes chaos.", m_name);
-				breath(m_idx, GF_CHAOS,
-				       ((m_ptr->hp / 6) > 600 ? 600 : (m_ptr->hp / 6)), 0);
-				update_smart_learn(m_idx, DRS_CHAOS);
+			        do_breath("chaos", GF_CHAOS, 600, 6, DRS_CHAOS);
 				break;
 			}
 
 		case SF_BR_DISE_IDX:
 			{
-				disturb(1);
-				if (blind) msg_format("%^s breathes.", m_name);
-				else msg_format("%^s breathes disenchantment.", m_name);
-				breath(m_idx, GF_DISENCHANT,
-				       ((m_ptr->hp / 6) > 500 ? 500 : (m_ptr->hp / 6)), 0);
-				update_smart_learn(m_idx, DRS_DISEN);
+			        do_breath("disenchantment", GF_DISENCHANT, 500, 6, DRS_DISEN);
 				break;
 			}
 
 		case SF_BR_NEXU_IDX:
 			{
-				disturb(1);
-				if (blind) msg_format("%^s breathes.", m_name);
-				else msg_format("%^s breathes nexus.", m_name);
-				breath(m_idx, GF_NEXUS,
-				       ((m_ptr->hp / 3) > 250 ? 250 : (m_ptr->hp / 3)), 0);
-				update_smart_learn(m_idx, DRS_NEXUS);
+			        do_breath("nexus", GF_NEXUS, 250, 3, DRS_NEXUS);
 				break;
 			}
 
 		case SF_BR_TIME_IDX:
 			{
-				disturb(1);
-				if (blind) msg_format("%^s breathes.", m_name);
-				else msg_format("%^s breathes time.", m_name);
-				breath(m_idx, GF_TIME,
-				       ((m_ptr->hp / 3) > 150 ? 150 : (m_ptr->hp / 3)), 0);
+			        do_breath("time", GF_TIME, 150, 3, DRS_NONE);
 				break;
 			}
 
 		case SF_BR_INER_IDX:
 			{
-				disturb(1);
-				if (blind) msg_format("%^s breathes.", m_name);
-				else msg_format("%^s breathes inertia.", m_name);
-				breath(m_idx, GF_INERTIA,
-				       ((m_ptr->hp / 6) > 200 ? 200 : (m_ptr->hp / 6)), 0);
+			        do_breath("inertia", GF_INERTIA, 200, 6, DRS_NONE);
 				break;
 			}
 
 		case SF_BR_GRAV_IDX:
 			{
-				disturb(1);
-				if (blind) msg_format("%^s breathes.", m_name);
-				else msg_format("%^s breathes gravity.", m_name);
-				breath(m_idx, GF_GRAVITY,
-				       ((m_ptr->hp / 3) > 200 ? 200 : (m_ptr->hp / 3)), 0);
+			        do_breath("gravity", GF_GRAVITY, 200, 3, DRS_NONE);
 				break;
 			}
 
 		case SF_BR_SHAR_IDX:
 			{
-				disturb(1);
-				if (blind) msg_format("%^s breathes.", m_name);
-				else msg_format("%^s breathes shards.", m_name);
-				breath(m_idx, GF_SHARDS,
-				       ((m_ptr->hp / 6) > 400 ? 400 : (m_ptr->hp / 6)), 0);
-				update_smart_learn(m_idx, DRS_SHARD);
+			        do_breath("shards", GF_SHARDS, 400, 6, DRS_SHARD);
 				break;
 			}
 
 		case SF_BR_PLAS_IDX:
 			{
-				disturb(1);
-				if (blind) msg_format("%^s breathes.", m_name);
-				else msg_format("%^s breathes plasma.", m_name);
-				breath(m_idx, GF_PLASMA,
-				       ((m_ptr->hp / 6) > 150 ? 150 : (m_ptr->hp / 6)), 0);
+			        do_breath("plasma", GF_PLASMA, 150, 6, DRS_NONE);
 				break;
 			}
 
 		case SF_BR_WALL_IDX:
 			{
-				disturb(1);
-				if (blind) msg_format("%^s breathes.", m_name);
-				else msg_format("%^s breathes force.", m_name);
-				breath(m_idx, GF_FORCE,
-				       ((m_ptr->hp / 6) > 200 ? 200 : (m_ptr->hp / 6)), 0);
+			        do_breath("force", GF_FORCE, 200, 6, DRS_NONE);
 				break;
 			}
 
 		case SF_BR_MANA_IDX:
 			{
-				disturb(1);
-				if (blind) msg_format("%^s breathes.", m_name);
-				else msg_format("%^s breathes magical energy.", m_name);
-				breath(m_idx, GF_MANA,
-				       ((m_ptr->hp / 3) > 250 ? 250 : (m_ptr->hp / 3)), 0);
+			        do_breath("magical energy", GF_MANA, 250, 3, DRS_NONE);
 				break;
 			}
 
@@ -3165,12 +3005,7 @@ static bool_ make_attack_spell(int m_idx)
 
 		case SF_BR_NUKE_IDX:
 			{
-				disturb(1);
-				if (blind) msg_format("%^s breathes.", m_name);
-				else msg_format("%^s breathes toxic waste.", m_name);
-				breath(m_idx, GF_NUKE,
-				       ((m_ptr->hp / 3) > 800 ? 800 : (m_ptr->hp / 3)), 0);
-				update_smart_learn(m_idx, DRS_POIS);
+			        do_breath("toxic waste", GF_NUKE, 800, 3, DRS_POIS);
 				break;
 			}
 
@@ -3186,11 +3021,7 @@ static bool_ make_attack_spell(int m_idx)
 
 		case SF_BR_DISI_IDX:
 			{
-				disturb(1);
-				if (blind) msg_format("%^s breathes.", m_name);
-				else msg_format("%^s breathes disintegration.", m_name);
-				breath(m_idx, GF_DISINTEGRATE,
-				       ((m_ptr->hp / 3) > 300 ? 300 : (m_ptr->hp / 3)), 0);
+			        do_breath("disintegration", GF_DISINTEGRATE, 300, 3, DRS_NONE);
 				break;
 			}
 
