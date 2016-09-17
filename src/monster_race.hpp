@@ -77,8 +77,6 @@ struct monster_race
 
 	bool_ on_saved = 0;                      /* Is the (unique) on a saved level ? */
 
-	byte total_visible = 0;                  /* Amount of this race that are visible */
-
 	obj_theme drops;                         /* The drops type */
 
 };

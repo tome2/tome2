@@ -1353,10 +1353,13 @@ static void fix_object(void)
 
 static void fix_m_list(void)
 {
-	int i, j;
+	// Mirror of the r_info array, index by index. We use a
+	// statically allocated value to avoid frequent allocations.
+	static auto r_total_visible =
+	        std::vector<u16b>(max_r_idx, 0);
 
 	/* Scan windows */
-	for (j = 0; j < 8; j++)
+	for (std::size_t j = 0; j < 8; j++)
 	{
 		term *old = Term;
 
@@ -1389,18 +1392,17 @@ static void fix_m_list(void)
 		}
 
 		/* reset visible count */
-		for (i = 1; i < max_r_idx; i++)
+		for (std::size_t i = 1; i < max_r_idx; i++)
 		{
-			monster_race *r_ptr = &r_info[i];
-
-			r_ptr->total_visible = 0;
+			r_total_visible[i] = 0;
 		}
 
 		/* Count up the number visible in each race */
-		for (i = 1; i < m_max; i++)
+		for (std::size_t i = 1; i < static_cast<u16b>(m_max); i++)
 		{
-			monster_type *m_ptr = &m_list[i];
-			monster_race *r_ptr = &r_info[m_ptr->r_idx];
+			auto const m_ptr = &m_list[i];
+			auto const r_ptr = &r_info[m_ptr->r_idx];
+			auto total_visible = &r_total_visible[m_ptr->r_idx];
 
 			/* Skip dead monsters */
 			if (m_ptr->hp < 0) continue;
@@ -1420,7 +1422,7 @@ static void fix_m_list(void)
 			}
 
 			/* Increase for this race */
-			r_ptr->total_visible++;
+			(*total_visible)++;
 
 			/* Increase total Count */
 			c++;
@@ -1435,15 +1437,19 @@ static void fix_m_list(void)
 
 			c_prt(TERM_WHITE, format("You can see %d monster%s", c, (c > 1 ? "s:" : ":")), 0, 0);
 
-			for (i = 1; i < max_r_idx; i++)
+			for (std::size_t i = 1; i < max_r_idx; i++)
 			{
-				monster_race *r_ptr = &r_info[i];
+				auto const r_ptr = &r_info[i];
+				auto const total_visible = r_total_visible[i];
 
 				/* Default Colour */
 				byte attr = TERM_SLATE;
 
 				/* Only visible monsters */
-				if (!r_ptr->total_visible) continue;
+				if (!total_visible)
+				{
+					continue;
+				}
 
 				/* Uniques */
 				if (r_ptr->flags & RF_UNIQUE)
@@ -1469,15 +1475,14 @@ static void fix_m_list(void)
 					if (!(r_ptr->flags & RF_UNIQUE)) attr = TERM_GREEN;
 				}
 
-
 				/* Dump the monster name */
-				if (r_ptr->total_visible == 1)
+				if (total_visible == 1)
 				{
 					c_prt(attr, r_ptr->name, (num % (h - 1)) + 1, (num / (h - 1) * 26));
 				}
 				else
 				{
-					c_prt(attr, format("%s (x%d)", r_ptr->name, r_ptr->total_visible), (num % (h - 1)) + 1, (num / (h - 1)) * 26);
+					c_prt(attr, format("%s (x%d)", r_ptr->name, total_visible), (num % (h - 1)) + 1, (num / (h - 1)) * 26);
 				}
 
 				num++;
