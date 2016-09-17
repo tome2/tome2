@@ -22,15 +22,6 @@ struct player_race_mod
 	char luck = '\0';                                       /* Luck */
 	s16b mana = 0;                                          /* Mana % */
 
-	s16b r_dis = 0;                                         /* (+) disarming */
-	s16b r_dev = 0;                                         /* (+) magic devices */
-	s16b r_sav = 0;                                         /* (+) saving throw */
-	s16b r_stl = 0;                                         /* (+) stealth */
-	s16b r_srh = 0;                                         /* (+) search ability */
-	s16b r_fos = 0;                                         /* (+) search frequency */
-	s16b r_thn = 0;                                         /* (+) combat (normal) */
-	s16b r_thb = 0;                                         /* (+) combat (shooting) */
-
 	char r_mhp = 0;                                         /* (+) Race mod hit-dice modifier */
 	s16b r_exp = 0;                                         /* (+) Race mod experience factor */
 

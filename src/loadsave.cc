@@ -300,15 +300,6 @@ static void do_subrace(ls_flag_t flag)
 	do_byte((byte*)&sr_ptr->luck, flag);
 	do_s16b(&sr_ptr->mana, flag);
 
-	do_s16b(&sr_ptr->r_dis, flag);
-	do_s16b(&sr_ptr->r_dev, flag);
-	do_s16b(&sr_ptr->r_sav, flag);
-	do_s16b(&sr_ptr->r_stl, flag);
-	do_s16b(&sr_ptr->r_srh, flag);
-	do_s16b(&sr_ptr->r_fos, flag);
-	do_s16b(&sr_ptr->r_thn, flag);
-	do_s16b(&sr_ptr->r_thb, flag);
-
 	do_byte((byte*)&sr_ptr->r_mhp, flag);
 	do_s16b(&sr_ptr->r_exp, flag);
 

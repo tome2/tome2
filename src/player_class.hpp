@@ -23,38 +23,10 @@ struct player_class
 
 	s16b c_adj[6] { };	                             /* Class stat modifier */
 
-	s16b c_dis = 0;                                      /* class disarming */
-	s16b c_dev = 0;                                      /* class magic devices */
-	s16b c_sav = 0;                                      /* class saving throws */
-	s16b c_stl = 0;                                      /* class stealth */
-	s16b c_srh = 0;                                      /* class searching ability */
-	s16b c_fos = 0;                                      /* class searching frequency */
-	s16b c_thn = 0;                                      /* class to hit (normal) */
-	s16b c_thb = 0;                                      /* class to hit (bows) */
-
-	s16b x_dis = 0;                                      /* extra disarming */
-	s16b x_dev = 0;                                      /* extra magic devices */
-	s16b x_sav = 0;                                      /* extra saving throws */
-	s16b x_stl = 0;                                      /* extra stealth */
-	s16b x_srh = 0;                                      /* extra searching ability */
-	s16b x_fos = 0;                                      /* extra searching frequency */
-	s16b x_thn = 0;                                      /* extra to hit (normal) */
-	s16b x_thb = 0;                                      /* extra to hit (bows) */
-
 	s16b c_mhp = 0;                                      /* Class hit-dice adjustment */
 	s16b c_exp = 0;                                      /* Class experience factor */
 
 	s16b powers[4] { };                                  /* Powers of the class */
-
-	s16b spell_book = 0;                                 /* Tval of spell books (if any) */
-	s16b spell_stat = 0;                                 /* Stat for spells (if any)  */
-	s16b spell_lev = 0;                                  /* The higher it is the higher the spells level are */
-	s16b spell_fail = 0;                                 /* The higher it is the higher the spells failure are */
-	s16b spell_mana = 0;                                 /* The higher it is the higher the spells mana are */
-	s16b spell_first = 0;                                /* Level of first spell */
-	s16b spell_weight = 0;                               /* Weight that hurts spells */
-	byte max_spell_level = 0;                            /* Maximun spell level */
-	byte magic_max_spell = 0;                            /* Maximun numbner of spells one can learn by natural means */
 
 	player_race_flag_set flags;
 

@@ -29,7 +29,6 @@ G:k:+1000:+1000:Magic-Device
 # C:D:1:titles
 # C:S:str:int:wis:dex:con:chr:mana:bonus blows
 # C:K:dis:dev:sav:stl:srh:fos:thn:thb
-# C:X:dis:dev:sav:stl:srh:fos:thn:thb
 # C:P:hitdie:xp%
 # C:B:num:wgt:mul
 # C:C:(H|L):(H|L):base:pl:plus
@@ -65,8 +64,6 @@ C:D:1:Baron
 C:D:1:Duke
 C:D:1:Lord
 C:S:5:-2:-2:2:2:-1:0:0
-C:K:10:10:0:1:10:10:10:10
-C:X:0:0:0:0:0:0:0:0
 C:B:4:30:5
 C:C:H:L:9000:2:40
 C:P:9:0
@@ -197,8 +194,6 @@ C:D:1:Sorcerer
 C:D:1:Ipsissimus
 C:D:1:Archimage
 C:S:-5:3:0:1:-2:1:50:0
-C:K:10:10:0:1:10:10:10:10
-C:X:0:0:0:0:0:0:0:0
 C:B:4:40:2
 C:C:L:H:240000:1:5
 C:P:0:30
@@ -354,8 +349,6 @@ C:D:1:Archer
 C:D:1:Archer
 C:D:1:Great Archer
 C:S:2:1:0:2:1:1:0:0
-C:K:10:10:0:1:10:10:10:10
-C:X:0:0:0:0:0:0:0:0
 C:B:4:35:4
 C:C:H:L:9000:2:40
 C:P:4:30
@@ -423,8 +416,6 @@ C:D:1:Master Thief
 C:D:1:Assassin
 C:D:1:Guildmaster
 C:S:2:1:-2:3:1:-1:0:0
-C:K:10:10:0:1:10:10:10:10
-C:X:0:0:0:0:0:0:0:0
 C:B:4:30:3
 C:C:H:H:20000:2:40
 C:P:6:25
@@ -518,8 +509,6 @@ C:D:1:Lorekeeper
 C:D:1:Loremaster
 C:D:1:Loremaster
 C:S:1:-2:1:1:0:1:0:0
-C:K:10:10:0:1:10:10:10:10
-C:X:0:0:0:0:0:0:0:0
 C:B:4:30:3
 C:C:H:L:9000:2:40
 C:P:8:40
@@ -682,8 +671,6 @@ C:D:1:Cardinal
 C:D:1:Inquisitor
 C:D:1:Pope
 C:S:-1:-3:3:-1:0:2:0:0
-C:K:10:10:0:1:10:10:10:10
-C:X:0:0:0:0:0:0:0:0
 C:B:4:35:3
 C:C:L:H:10000:2:40
 C:P:2:20
@@ -784,8 +771,6 @@ C:D:1:Baron
 C:D:1:Duke
 C:D:1:Lord
 C:S:5:-2:-2:2:2:-1:0:3
-C:K:10:10:0:1:10:10:10:10
-C:X:0:0:0:0:0:0:0:0
 C:B:6:30:5
 C:C:H:L:9000:2:40
 C:P:9:0
@@ -841,7 +826,6 @@ R:D:Humans are the second born, the Edain.
 R:D:They are the basic race to which all others are compared.
 R:D:Average in ability, they can be any class.
 R:S:0:0:0:0:0:0:0
-R:K:0:0:0:0:0:10:0:0
 R:P:10:100:0:1
 R:E:1:1:1:2:1:1
 R:C:Archer
@@ -854,7 +838,6 @@ R:C:Warrior
 R:N:1:Half-Elf
 R:D:A crossbreed of elf and human, they get the best of the two races.
 R:S:0:1:1:1:-1:1:0
-R:K:2:3:3:1:6:11:-1:5
 R:P:9:110:2:4
 R:E:1:1:1:2:1:1
 R:C:Archer
@@ -877,7 +860,6 @@ R:D:Elves are the first born, the Eldar.
 R:D:More spiritual than physical beings, they are weaker than humans
 R:D:but are more intelligent.
 R:S:-1:2:2:1:-2:2:0
-R:K:5:6:6:2:8:12:-5:15
 R:P:8:120:3:5
 R:E:1:1:1:2:1:1
 R:R:1:0
@@ -900,7 +882,6 @@ R:N:3:Hobbit
 R:D:An old but quiet race related to humans.
 R:D:They are small and quite weak but good at many things.
 R:S:-2:2:1:3:2:1:5
-R:K:15:18:18:5:12:15:-10:20
 R:P:7:110:4:10
 R:E:1:1:1:2:1:1
 R:Z:create food
@@ -926,7 +907,6 @@ R:N:4:Gnome
 R:D:Related to dwarves, Gnomes are between Dwarves and Hobbits in size.
 R:D:Very good at magic use, they are poor as fighters.
 R:S:-1:2:0:2:1:-2:2
-R:K:10:12:12:3:6:13:-8:12
 R:P:8:135:4:13
 R:E:1:1:1:2:1:1
 R:Z:blink
@@ -947,7 +927,6 @@ R:N:5:Dwarf
 R:D:The children of Aule, a strong but small race.
 R:D:Miners and fighters of legend.
 R:S:2:-2:2:-2:2:-3:0
-R:K:2:9:10:-1:7:10:15:0
 R:P:11:125:5:16
 R:E:1:1:1:2:1:1
 R:Z:find secret passages
@@ -967,7 +946,6 @@ R:k:+500:+000:Archery
 R:N:6:Orc
 R:D:Quite strong but not very smart.
 R:S:2:-1:0:1:1:-4:-3
-R:K:-3:-3:-3:-1:0:7:12:-5
 R:P:10:110:3:25
 R:E:1:1:1:2:1:1
 R:Z:remove fear
@@ -989,7 +967,6 @@ R:N:7:Troll
 R:D:They can bear the light of the sun.
 R:D:They are extremely strong and dumb.
 R:S:4:-4:-2:-4:3:-6:-4
-R:K:-5:-8:-8:-2:-1:5:20:-10
 R:P:12:137:3:22
 R:E:1:1:1:2:1:1
 R:Z:berserk
@@ -1010,7 +987,6 @@ R:N:8:Dunadan
 R:D:The greatest of the Edain, humans in all respects but
 R:D:stronger, smarter and wiser.
 R:S:1:2:2:2:3:2:2
-R:K:4:5:5:2:3:13:15:10
 R:P:10:180:0:1
 R:E:1:1:1:2:1:1
 R:R:1:0
@@ -1035,7 +1011,6 @@ R:D:Elves are the first born, the Eldar.
 R:D:High elves are the best of the Eldar, strong, fast, intellectual, though
 R:D:they sometimes lack wisdom.
 R:S:1:3:2:3:1:5:0
-R:K:4:20:20:4:3:14:10:25
 R:P:10:200:4:7
 R:E:1:1:1:2:1:1
 R:R:1:0
@@ -1059,7 +1034,6 @@ R:N:10:Half-Ogre
 R:D:A crossbreed between a human and an ogre.
 R:D:They are similar to half-trolls, strong and dumb.
 R:S:3:-1:-1:-1:3:-3:-2
-R:K:-3:-5:-5:-2:-1:5:20:0
 R:P:12:130:3:74
 R:E:1:1:1:2:1:1
 R:Z:set explosive rune
@@ -1080,7 +1054,6 @@ R:N:11:Beorning
 R:D:A race of men shapeshifters.
 R:D:They have the unique power of being able to polymorph to bear forms.
 R:S:4:-2:-2:-1:3:-5:1
-R:K:-6:-8:-6:-2:-1:5:25:5
 R:P:12:150:3:75
 R:E:1:1:1:2:1:1
 R:Z:turn into a bear
@@ -1103,7 +1076,6 @@ R:k:+500:+000:Archery
 R:N:12:Kobold
 R:D:A weaker kind of goblin, related to orcs.
 R:S:1:-1:0:1:0:-4:0
-R:K:-2:-3:-2:-1:1:8:10:-8
 R:P:9:125:3:82
 R:E:1:1:1:2:1:1
 R:Z:poison dart
@@ -1124,7 +1096,6 @@ R:N:13:Petty-Dwarf
 R:D:A nearly extinct subrace of dwarves.
 R:D:They prefer to live in the darkness.
 R:S:1:-1:2:0:2:-4:-5
-R:K:3:5:10:1:5:10:9:0
 R:P:11:135:5:87
 R:E:1:1:1:2:1:1
 R:Z:detect doors and traps
@@ -1146,7 +1117,6 @@ R:D:Elves are the first born, the Eldar.
 R:D:Dark elves are rare on Middle-earth and even though not evil
 R:D:they are not good.
 R:S:-1:3:2:2:-2:1:-2
-R:K:5:15:20:3:8:12:-5:10
 R:P:9:150:5:69
 R:E:1:1:1:2:1:1
 R:Z:magic missile
@@ -1173,7 +1143,6 @@ R:N:15:Ent
 R:D:Guardian of the forests of Middle-earth, summoned by Yavanna before
 R:D:even the elves awoke. It is said 'Trolls are strong, Ents are STRONGER'.
 R:S:10:-3:2:-5:11:-3:-2
-R:K:5:5:20:-6:5:4:15:5
 R:P:14:210:5:95
 R:E:1:1:1:2:1:1
 R:Z:grow trees
@@ -1209,7 +1178,6 @@ R:N:16:RohanKnight
 R:D:Humans from the land of Rohan, riding the great Mearas.
 R:D:Fast and powerful in battle.
 R:S:4:-2:3:1:4:2:0
-R:K:10:5:5:-8:1:1:5:5
 R:P:10:220:0:84
 R:E:1:1:1:2:1:1
 R:Z:Rohan Knight's Powers
@@ -1247,7 +1215,6 @@ R:N:17:Thunderlord
 R:D:A thunderlord is a Great Eagle of Manwe, ridden by a Maia of Manwe.
 R:D:They carry the power of wind and thunder.
 R:S:6:2:1:1:3:8:2
-R:K:6:0:10:-16:30:10:15:5
 R:P:12:400:0:89
 R:E:1:1:1:2:1:1
 R:Z:Thunderlord's Powers
@@ -1283,7 +1250,6 @@ R:N:18:DeathMold
 R:D:A pure mass of evilness, DeathMolds cannot move, but they have much more
 R:D:power than an average race.
 R:S:10:0:10:0:10:-15:-5
-R:K:15:-5:15:25:0:10:25:25
 R:P:15:250:10:100
 R:E:1:1:1:4:0:0
 R:Z:Death Mold's Powers
@@ -1307,7 +1273,6 @@ R:k:+2500:+000:Archery
 R:N:19:Yeek
 R:D:The weakest of all the races, bad at everything except gaining levels quickly.
 R:S:-5:-5:-5:-5:-5:-5:-5
-R:K:-5:-5:-10:0:-5:0:-10:-10
 R:P:6:25:2:29
 R:E:1:1:1:2:1:1
 R:C:Archer
@@ -1328,7 +1293,6 @@ R:N:20:Wood-Elf
 R:D:Elves are the first born, the Eldar.
 R:D:Wood elves live in the great forests of Middle-earth.
 R:S:-3:2:1:5:-4:1:0
-R:K:5:6:6:5:8:12:-25:40
 R:P:7:130:4:5
 R:E:1:1:1:2:1:1
 R:G:XTRA_MIGHT_BOW
@@ -1355,7 +1319,6 @@ R:N:21:Maia
 R:D:An old race, dating from before the creation of Arda, the Maiar were
 R:D:created by Eru to help the Valar in their task.
 R:S:0:0:0:0:0:0:4
-R:K:0:0:0:0:0:10:0:0
 R:P:10:100:0:91
 R:E:1:1:1:2:1:1
 R:G:NO_GOD
@@ -1456,7 +1419,6 @@ I:
 S:N:0: 
 S:D:A:A normal member of the race.
 S:S:0:0:0:0:0:0:0:100
-S:K:0:0:0:0:0:0:0:0
 S:P:0:0:0
 S:E:0:0:0:0:0:0
 S:A:Beorning
@@ -1488,7 +1450,6 @@ S:N:1:Vampire
 S:D:B:Vampires are powerful undead, wielding great powers. They still fear the
 S:D:B:sunlight and cannot easily satiate their hunger.
 S:S:0:0:0:0:0:0:0:100
-S:K:0:0:0:0:0:0:0:0
 S:P:0:0:0
 S:E:0:0:0:0:0:0
 S:A:Beorning
@@ -1514,7 +1475,6 @@ S:N:2:Spectre
 S:D:B:Spectres only partially exist in the mortal world and so they can
 S:D:B:pass through walls. They are somewhat physically weak.
 S:S:-5:1:1:2:-3:-6:-3:105
-S:K:2:8:7:2:2:7:-5:-2
 S:P:-4:80:3
 S:E:0:0:0:0:0:0
 S:A:Beorning
@@ -1562,7 +1522,6 @@ S:N:3:Skeleton
 S:D:B:Yet an other kind of undead. Their physical 'body' is not very vulnerable
 S:D:B:to sharp things.
 S:S:0:-2:-2:0:1:-4:-3:70
-S:K:-5:-5:5:-1:-1:8:8:0
 S:P:0:45:1
 S:E:0:0:0:0:0:0
 S:A:Beorning
@@ -1606,7 +1565,6 @@ S:k:+000:+000:Archery
 S:N:4:Zombie
 S:D:B:Strong and dumb is a zombie.
 S:S:2:-6:-6:1:4:-5:-4:70
-S:K:-2:-2:5:-1:-1:2:5:0
 S:P:3:45:1
 S:E:0:0:0:0:0:0
 S:A:Beorning
@@ -1650,7 +1608,6 @@ S:k:+000:+000:Archery
 S:N:5:Barbarian
 S:D:A:Hardy members of their race, they are strong fighters but poor spellcasters.
 S:S:2:-3:-2:1:1:-3:1:50
-S:K:-2:-10:2:-2:0:1:12:5
 S:P:1:25:0
 S:E:0:0:0:0:0:0
 S:A:Beorning
@@ -1674,7 +1631,6 @@ S:N:6:Hermit
 S:D:A:Through years of isolation hermits can manage to increase their mana
 S:D:A:reserves but at the cost of an increased physical weakness.
 S:S:-3:1:1:-3:-3:1:0:120
-S:K:5:10:5:3:4:10:-5:-5
 S:P:-3:20:1
 S:E:0:0:0:0:0:0
 S:A:Dark-Elf
@@ -1707,7 +1663,6 @@ S:k:-500:+000:Archery
 S:N:8:LostSoul
 S:D:A:In some very rare occasions souls can come back from the Halls of Mandos.
 S:S:0:0:0:0:0:0:0:100
-S:K:0:0:0:0:0:0:0:0
 S:P:0:0:0
 S:E:0:0:0:0:0:0
 S:G:ASTRAL
@@ -1743,7 +1698,6 @@ S:O:70:12:25d3
 S:N:9:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 S:D:A:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 S:S:0:0:0:0:0:0:0:100
-S:K:0:0:0:0:0:0:0:0
 S:P:0:0:0
 S:E:0:0:0:0:0:0
 
