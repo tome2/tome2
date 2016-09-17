@@ -37,6 +37,7 @@ extern void health_track(int m_idx);
 extern void monster_race_track(int r_idx, int ego);
 extern void object_track(object_type *o_ptr);
 extern void disturb(int stop_search);
+extern void disturb_on_state();
 extern int is_quest(int level);
 extern int new_effect(int type, int dam, int time, int cy, int cx, int rad, s32b flags);
 extern bool cave_floor_bold(int y, int x);

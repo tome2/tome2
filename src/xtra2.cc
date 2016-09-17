@@ -134,7 +134,7 @@ bool_ set_parasite(int v, int r)
 	if (!notice) return (FALSE);
 
 	/* Disturb */
-	if (disturb_state) disturb(0);
+	disturb_on_state();
 
 	/* Recalculate bonuses */
 	p_ptr->update |= (PU_BONUS);
@@ -187,8 +187,7 @@ static bool_ set_simple_field(
 		return (FALSE);
 
 	/* Disturb */
-	if (disturb_state)
-		disturb(0);
+	disturb_on_state();
 
 	/* Recalculate bonuses */
 	p_ptr->update |= (PU_BONUS);
@@ -460,7 +459,7 @@ bool_ set_mimic(int v, int p, int level)
 	if (!notice) return (FALSE);
 
 	/* Disturb */
-	if (disturb_state) disturb(0);
+	disturb_on_state();
 
 	/* Redraw title */
 	p_ptr->redraw |= (PR_FRAME);
@@ -757,7 +756,7 @@ bool_ set_fast(int v, int p)
 	if (!notice) return (FALSE);
 
 	/* Disturb */
-	if (disturb_state) disturb(0);
+	disturb_on_state();
 
 	/* Recalculate bonuses */
 	p_ptr->update |= (PU_BONUS);
@@ -1060,7 +1059,7 @@ bool_ set_tim_thunder(int v, int p1, int p2)
 	if (!notice) return (FALSE);
 
 	/* Disturb */
-	if (disturb_state) disturb(0);
+	disturb_on_state();
 
 	/* Recalculate bonuses */
 	p_ptr->update |= (PU_BONUS);
@@ -1267,7 +1266,7 @@ bool_ set_tim_regen(int v, int p)
 	if (!notice) return (FALSE);
 
 	/* Disturb */
-	if (disturb_state) disturb(0);
+	disturb_on_state();
 
 	/* Handle stuff */
 	handle_stuff();
@@ -1407,7 +1406,7 @@ bool_ set_stun(int v)
 			/* None */
 		case 0:
 			msg_print("You are no longer stunned.");
-			if (disturb_state) disturb(0);
+			disturb_on_state();
 			break;
 		}
 
@@ -1422,7 +1421,7 @@ bool_ set_stun(int v)
 	if (!notice) return (FALSE);
 
 	/* Disturb */
-	if (disturb_state) disturb(0);
+	disturb_on_state();
 
 	/* Recalculate bonuses */
 	p_ptr->update |= (PU_BONUS);
@@ -1615,7 +1614,7 @@ bool_ set_cut(int v)
 			/* None */
 		case 0:
 			msg_print("You are no longer bleeding.");
-			if (disturb_state) disturb(0);
+			disturb_on_state();
 			break;
 		}
 
@@ -1630,7 +1629,7 @@ bool_ set_cut(int v)
 	if (!notice) return (FALSE);
 
 	/* Disturb */
-	if (disturb_state) disturb(0);
+	disturb_on_state();
 
 	/* Recalculate bonuses */
 	p_ptr->update |= (PU_BONUS);
@@ -1844,7 +1843,7 @@ bool_ set_food(int v)
 	if (!notice) return (FALSE);
 
 	/* Disturb */
-	if (disturb_state) disturb(0);
+	disturb_on_state();
 
 	/* Recalculate bonuses */
 	p_ptr->update |= (PU_BONUS);

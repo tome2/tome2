@@ -2229,7 +2229,7 @@ static void process_world(void)
 				att &= ~(CLASS_LEGS);
 				att &= ~(CLASS_WALL);
 
-				if (disturb_state) disturb(0);
+				disturb_on_state();
 			}
 
 			p_ptr->update |= (PU_BODY);

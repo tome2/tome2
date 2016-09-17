@@ -4460,6 +4460,19 @@ void disturb(int stop_search)
 
 
 /*
+ * Disturb if option 'disturb_state' is set.
+ */
+void disturb_on_state()
+{
+	if (disturb_state)
+	{
+		disturb(0);
+	}
+}
+
+
+
+/*
  * Return the index of the random quest on this level
  * (or zero)
  */
