@@ -1608,7 +1608,7 @@ void do_cmd_powermage(void)
 
 	p_ptr->csp -= s_ptr->mana;
 
-	s_ptr->untried = FALSE;
+	s_ptr->untried = false;
 	proj_flags = s_ptr->proj_flags;
 
 	/* Hack -- Spell needs a target */

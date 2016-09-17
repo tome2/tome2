@@ -17,5 +17,5 @@ struct random_spell
 	byte dam_sides;
 	byte dam_dice;
 	byte level;             /* Level needed */
-	bool_ untried;           /* Is the spell was tried? */
+	bool untried;           /* Is the spell was tried? */
 };

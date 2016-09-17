@@ -8953,7 +8953,7 @@ void generate_spell(int plev)
 
 	rspell->level = plev;
 	rspell->mana = mana;
-	rspell->untried = TRUE;
+	rspell->untried = true;
 
 	/* Spells are always maximally destructive. */
 	rspell->proj_flags = PROJECT_KILL | PROJECT_ITEM | PROJECT_GRID;
