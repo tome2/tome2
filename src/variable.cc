@@ -683,7 +683,6 @@ wilderness_map **wild_map;
 /*
  * Maximum number of skills in s_info.txt
  */
-u16b old_max_s_idx = 0;
 u16b max_s_idx;
 
 /*

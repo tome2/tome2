@@ -210,7 +210,6 @@ extern bool_ (*get_obj_num_hook)(int k_idx);
 extern u16b max_wild_x;
 extern u16b max_wild_y;
 extern wilderness_map **wild_map;
-extern u16b old_max_s_idx;
 extern u16b max_ab_idx;
 extern u16b max_s_idx;
 extern u16b max_r_idx;

@@ -601,37 +601,17 @@ static bool_ do_extra(ls_flag_t flag)
 
 		do_u16b(&tmp16u, flag);
 
-		if ((flag == ls_flag_t::LOAD) && (tmp16u > MAX_SKILLS))
+		if ((flag == ls_flag_t::LOAD) && (tmp16u != MAX_SKILLS))
 		{
-			quit("Too many skills");
+			quit("Too few/many skills");
 		}
-
-		if (flag == ls_flag_t::SAVE)
-		{
-			old_max_s_idx = max_s_idx;
-		}
-		do_u16b(&old_max_s_idx, flag);
 
 		for (std::size_t i = 0; i < tmp16u; i++)
 		{
-			if (i < old_max_s_idx)
-			{
-				do_s32b(&s_info[i].value, flag);
-				do_s32b(&s_info[i].mod, flag);
-				do_bool(&s_info[i].dev, flag);
-				do_bool(&s_info[i].hidden, flag);
-			}
-			else
-			{
-				// Skip extraneous entries
-				u32b tmp32u = 0;
-				s16b tmp16s = 0;
-				bool_ tmp8u = 0;
-				do_u32b(&tmp32u, flag);
-				do_s16b(&tmp16s, flag);
-				do_bool(&tmp8u, flag);
-				do_bool(&tmp8u, flag);
-			}
+			do_s32b(&s_info[i].value, flag);
+			do_s32b(&s_info[i].mod, flag);
+			do_bool(&s_info[i].dev, flag);
+			do_bool(&s_info[i].hidden, flag);
 		}
 	}
 

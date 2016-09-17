@@ -5103,20 +5103,6 @@ void play_game()
 		/* The dungeon is not ready */
 		character_dungeon = FALSE;
 	}
-	else
-	{
-		int i;
-
-		/* Init new skills to their defaults */
-		for (i = old_max_s_idx; i < max_s_idx; i++)
-		{
-			s32b value = 0, mod = 0;
-
-			compute_skills(&value, &mod, i);
-
-			init_skill(value, mod, i);
-		}
-	}
 
 	/* Process old character */
 	if (!new_game)
