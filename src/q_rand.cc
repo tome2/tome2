@@ -182,7 +182,7 @@ void initialize_random_quests(int n)
 				r_ptr->max_num = -1;
 			}
 
-			q_ptr->done = FALSE;
+			q_ptr->done = false;
 
 			if (wizard)
 			{
@@ -314,7 +314,7 @@ static void princess_death(s32b m_idx, s32b r_idx)
 
 			do_get_new_obj(y, x);
 
-			random_quests[dun_level].done = TRUE;
+			random_quests[dun_level].done = true;
 
 			break;
 		}
@@ -323,7 +323,7 @@ static void princess_death(s32b m_idx, s32b r_idx)
 
 static void hero_death(s32b m_idx, s32b r_idx)
 {
-	random_quests[dun_level].done = TRUE;
+	random_quests[dun_level].done = true;
 
 	cmsg_print(TERM_YELLOW, "The adventurer steps out of the shadows and picks up his sword:");
 	cmsg_print(TERM_YELLOW, "'Ah! My sword! My trusty sword! Thanks.");

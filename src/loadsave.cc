@@ -145,6 +145,24 @@ static void do_bool(bool_ *f, ls_flag_t flag)
 	}
 }
 
+static void do_bool(bool *x, ls_flag_t flag)
+{
+	switch (flag)
+	{
+	case ls_flag_t::LOAD:
+	{
+		*x = (sf_get() != 0);
+		return;
+	}
+	case ls_flag_t::SAVE:
+	{
+		byte val = (*x) ? 1 : 0;
+		sf_put(val);
+		return;
+	}
+	}
+}
+
 static void do_u16b(u16b *v, ls_flag_t flag)
 {
 	switch (flag)
