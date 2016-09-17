@@ -2139,8 +2139,7 @@ static bool_ player_birth_aux_ask()
 		}
 	}
 
-	/* Set birth options: preserve, astral */
-	p_ptr->preserve = preserve;
+	/* Is the player an "astral" being? */
 	p_ptr->astral = (race_flags_p(PR_ASTRAL)) ? TRUE : FALSE;
 
 	/*

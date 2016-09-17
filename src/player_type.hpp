@@ -47,7 +47,6 @@ struct player_type
 	byte hitdie = 0;                                        /* Hit dice (sides) */
 	u16b expfact = 0;                                       /* Experience factor */
 
-	byte preserve = 0;                                      /* Preserve artifacts */
 	byte allow_one_death = 0;                               /* Blood of life */
 
 	s32b au = 0;                                            /* Current Gold */

@@ -2662,7 +2662,7 @@ errr file_character(cptr name, bool_ full)
 	else
 		fprintf(fff, "\n Joke monsters:        OFF");
 
-	if (p_ptr->preserve)
+	if (preserve)
 		fprintf(fff, "\n Preserve Mode:        ON");
 	else
 		fprintf(fff, "\n Preserve Mode:        OFF");
@@ -4017,7 +4017,7 @@ static long total_points(void)
 
 	if (!comp_death) comp_death = 1;
 
-	if (p_ptr->preserve) mult -= 1;  /* Penalize preserve, maximize modes */
+	if (preserve) mult -= 1;  /* Penalize preserve, maximize modes */
 	mult -= 1; /* maximize pentalty, always on */
 	if (auto_scum) mult -= 4;
 	if (small_levels) mult += ((always_small_level) ? 4 : 10);

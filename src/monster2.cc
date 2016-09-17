@@ -476,7 +476,7 @@ void delete_monster_idx(int i)
 		/* Hack -- efficiency */
 		o_ptr->held_m_idx = 0;
 
-		if ( p_ptr->preserve )
+		if (preserve)
 		{
 			/* Hack -- Preserve unknown artifacts */
 			if (artifact_p(o_ptr) && !object_known_p(o_ptr))

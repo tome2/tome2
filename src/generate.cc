@@ -8508,7 +8508,7 @@ void generate_cave(void)
 			else feeling = 10;
 
 			/* Hack -- Have a special feeling sometimes */
-			if (good_item_flag && !p_ptr->preserve) feeling = 1;
+			if (good_item_flag && !preserve) feeling = 1;
 
 			/* It takes 1000 game turns for "feelings" to recharge */
 			if ((turn - old_turn) < 1000) feeling = 0;

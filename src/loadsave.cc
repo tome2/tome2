@@ -792,7 +792,6 @@ static bool_ do_extra(ls_flag_t flag)
 	do_bool(&p_ptr->black_breath, flag);
 	do_bool(&fate_flag, flag);
 	do_byte(&p_ptr->searching, flag);
-	do_byte(&p_ptr->preserve, flag);
 	do_bool(&ambush_flag, flag);
 	do_byte(&p_ptr->allow_one_death, flag);
 

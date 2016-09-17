@@ -387,7 +387,7 @@ void wipe_o_list(void)
 		if (!o_ptr->k_idx) continue;
 
 		/* Mega-Hack -- preserve artifacts */
-		if (!character_dungeon || p_ptr->preserve)
+		if (!character_dungeon || preserve)
 		{
 			/* Hack -- Preserve unknown artifacts */
 			if (artifact_p(o_ptr) && !object_known_p(o_ptr))
