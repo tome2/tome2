@@ -144,8 +144,6 @@ extern char **macro__pat;
 extern char **macro__act;
 extern bool_ *macro__cmd;
 extern char *macro__buf;
-extern u32b option_flag[8];
-extern u32b option_mask[8];
 extern u32b window_flag[ANGBAND_TERM_MAX];
 extern u32b window_mask[ANGBAND_TERM_MAX];
 extern cave_type **cave;

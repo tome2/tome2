@@ -809,37 +809,6 @@ static errr init_other(void)
 	(void)quark_add("uncursed");
 	(void)quark_add("on sale");
 
-
-	/*** Prepare the options ***/
-
-	/* Scan the options */
-	for (auto const &option : options->standard_options)
-	{
-		int os = option.o_page;
-		int ob = option.o_bit;
-
-		/* Set the "default" options */
-		if (option.o_var)
-		{
-			/* Accept */
-			option_mask[os] |= (1L << ob);
-
-			/* Set */
-			if (option.o_norm)
-			{
-				/* Set */
-				option_flag[os] |= (1L << ob);
-			}
-
-			/* Clear */
-			else
-			{
-				/* Clear */
-				option_flag[os] &= ~(1L << ob);
-			}
-		}
-	}
-
 	/* Analyze the windows */
 	for (n = 0; n < 8; n++)
 	{

@@ -8,15 +8,9 @@
 struct option_type
 {
 	/**
-	 * Address of actual option variable. NULL signals the
-	 * end of the table.
+	 * Address of actual option variable.
 	 */
 	bool_ *o_var;
-
-	/**
-	 * Default value.
-	 */
-	byte o_norm;
 
 	/**
 	 * Option page number.

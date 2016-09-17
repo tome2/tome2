@@ -5147,26 +5147,6 @@ void play_game()
 		Rand_state_init(seed);
 	}
 
-	/* Extract the options */
-	for (auto const &option: options->standard_options)
-	{
-		int os = option.o_page;
-		int ob = option.o_bit;
-
-		/* Set the "default" options */
-		if (option.o_var)
-		{
-			if (option_flag[os] & (1L << ob))
-			{
-				*option.o_var = TRUE;
-			}
-			else
-			{
-				*option.o_var = FALSE;
-			}
-		}
-	}
-
 	/* Roll new character */
 	if (new_game)
 	{

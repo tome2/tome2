@@ -68,6 +68,19 @@ enum class ls_flag_t {
 	SAVE = 7
 };
 
+/**
+ * Structure for loading/saving option values
+ */
+namespace {
+
+struct option_value {
+	std::string name;
+	bool_ value;
+};
+
+} // namespace (anonymous)
+
+
 /*
  * Basic byte-level reading from savefile. This provides a single point
  * of interface to the pseudoencryption that ToME (and Angband)
@@ -277,6 +290,13 @@ static void do_std_string(std::string &s, ls_flag_t flag)
 		break;
 	}
 }
+
+static void do_option_value(option_value *option_value, ls_flag_t flag)
+{
+	do_std_string(option_value->name, flag);
+	do_bool(&option_value->value, flag);
+}
+
 
 namespace {
 
@@ -1727,45 +1747,58 @@ static void do_options(ls_flag_t flag)
 	do_bool(&options->autosave_t, flag);
 	do_s16b(&options->autosave_freq, flag);
 
-	if (flag == ls_flag_t::LOAD)
+	// Standard options
 	{
-		/* Read the option flags */
-		for (n = 0; n < 8; n++) do_u32b(&oflag[n], flag);
+		std::vector<option_value> option_values;
 
-		/* Read the option masks */
-		for (n = 0; n < 8; n++) do_u32b(&mask[n], flag);
-
-		/* Analyze the options */
-		for (n = 0; n < 8; n++)
+		// If we're saving we need to map to a vector of key-value pairs.
+		if (flag == ls_flag_t::SAVE)
 		{
-			/* Analyze the options */
-			for (i = 0; i < 32; i++)
+			for (auto const &option: options->standard_options)
 			{
-				/* Process valid flags */
-				if (mask[n] & (1L << i))
-				{
-					/* Process valid flags */
-					if (option_mask[n] & (1L << i))
-					{
-						/* Set */
-						if (oflag[n] & (1L << i))
-						{
-							/* Set */
-							option_flag[n] |= (1L << i);
-						}
+				option_values.emplace_back(
+				        option_value {
+				                option.o_text,
+				                *option.o_var
+				        }
+				);
+			}
+		}
 
-						/* Clear */
-						else
-						{
-							/* Clear */
-							option_flag[n] &= ~(1L << i);
-						}
+		// Read/write the option values
+		do_vector(flag, option_values, do_option_value);
+
+		// If we're loading we need to set options based of the key-value pairs.
+		if (flag == ls_flag_t::LOAD)
+		{
+			// Go through all the options that were loaded.
+			for (auto const &option_value: option_values)
+			{
+				// We need to search through all the options
+				// that are actually in the game; we'll ignore
+				// saved options that are now gone.
+				const option_type *found_option;
+				for (auto const &option: options->standard_options)
+				{
+					if (option_value.name == option.o_text)
+					{
+						found_option = &option;
+						break;
 					}
+				}
+
+				// If we found the option, we'll set the value.
+				if (found_option)
+				{
+					*(*found_option).o_var = option_value.value;
 				}
 			}
 		}
 
+	}
 
+	if (flag == ls_flag_t::LOAD)
+	{
 		/*** Window Options ***/
 
 		/* Read the window flags */
@@ -1804,42 +1837,9 @@ static void do_options(ls_flag_t flag)
 			}
 		}
 	}
+
 	if (flag == ls_flag_t::SAVE)
 	{
-		/* Analyze the options */
-		for (auto const &option: options->standard_options)
-		{
-			int os = option.o_page;
-			int ob = option.o_bit;
-
-			/* Process real entries */
-			if (option.o_var)
-			{
-				/* Set */
-				if (*option.o_var)
-				{
-					/* Set */
-					option_flag[os] |= (1L << ob);
-				}
-
-				/* Clear */
-				else
-				{
-					/* Clear */
-					option_flag[os] &= ~(1L << ob);
-				}
-			}
-		}
-
-
-		/*** Normal options ***/
-
-		/* Dump the flags */
-		for (i = 0; i < 8; i++) do_u32b(&option_flag[i], flag);
-
-		/* Dump the masks */
-		for (i = 0; i < 8; i++) do_u32b(&option_mask[i], flag);
-
 		/*** Window options ***/
 
 		/* Dump the flags */
