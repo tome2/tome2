@@ -2496,7 +2496,6 @@ static bool_ make_attack_spell(int m_idx)
 	int chance, rlev, failrate;
 	char m_name[80];
 	bool_ no_inate = FALSE;
-	int x, y;
 
 	/* Extract the blind-ness */
 	bool_ blind = (p_ptr->blind ? TRUE : FALSE);
@@ -2508,19 +2507,12 @@ static bool_ make_attack_spell(int m_idx)
 	bool_ seen = (!blind && m_ptr->ml);
 
 	/* Target location */
-	if (m_ptr->target > -1)
+	if (m_ptr->target != 0)
 	{
-		if (!m_ptr->target)
-		{
-			y = p_ptr->py;
-			x = p_ptr->px;
-		}
-		else
-		{
-			return (FALSE);
-		}
+		return FALSE;
 	}
-	else return FALSE;
+	int y = p_ptr->py;
+	int x = p_ptr->px;
 
 	/* Cannot cast spells when confused */
 	if (m_ptr->confused) return (FALSE);
