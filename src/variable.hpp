@@ -20,6 +20,7 @@
 #include "monster_type_fwd.hpp"
 #include "object_kind_fwd.hpp"
 #include "object_type_fwd.hpp"
+#include "options.hpp"
 #include "owner_type_fwd.hpp"
 #include "player_class_fwd.hpp"
 #include "player_defs.hpp"
@@ -289,3 +290,4 @@ extern hist_type *bg;
 extern bool_ arg_wizard;
 extern bool_ arg_force_original;
 extern bool_ arg_force_roguelike;
+extern struct options *options;

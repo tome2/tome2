@@ -594,14 +594,12 @@ errr process_pref_file_aux(char *buf)
 	/* Process "X:<str>" -- turn option off */
 	else if (buf[0] == 'X')
 	{
-		for (i = 0; option_info[i].o_desc; i++)
+		for (auto const &option: options->standard_options)
 		{
-			if (option_info[i].o_var &&
-			                option_info[i].o_text &&
-			                streq(option_info[i].o_text, buf + 2))
+			if (option.o_var && streq(option.o_text, buf + 2))
 			{
-				(*option_info[i].o_var) = FALSE;
-				return (0);
+				*option.o_var = FALSE;
+				return 0;
 			}
 		}
 	}
@@ -609,14 +607,12 @@ errr process_pref_file_aux(char *buf)
 	/* Process "Y:<str>" -- turn option on */
 	else if (buf[0] == 'Y')
 	{
-		for (i = 0; option_info[i].o_desc; i++)
+		for (auto const &option: options->standard_options)
 		{
-			if (option_info[i].o_var &&
-			                option_info[i].o_text &&
-			                streq(option_info[i].o_text, buf + 2))
+			if (option.o_var && streq(option.o_text, buf + 2))
 			{
-				(*option_info[i].o_var) = TRUE;
-				return (0);
+				*option.o_var = TRUE;
+				return 0;
 			}
 		}
 	}
@@ -1175,7 +1171,7 @@ static void display_player_middle(void)
 		{
 			color = TERM_L_BLUE;
 		}
-		else if (p_ptr->chp > (p_ptr->mhp * hitpoint_warn) / 10)
+		else if (p_ptr->chp > (p_ptr->mhp * options->hitpoint_warn) / 10)
 		{
 			color = TERM_VIOLET;
 		}
@@ -1196,7 +1192,7 @@ static void display_player_middle(void)
 		{
 			color = TERM_L_GREEN;
 		}
-		else if (p_ptr->chp > (p_ptr->mhp * hitpoint_warn) / 10)
+		else if (p_ptr->chp > (p_ptr->mhp * options->hitpoint_warn) / 10)
 		{
 			color = TERM_YELLOW;
 		}
@@ -1216,7 +1212,7 @@ static void display_player_middle(void)
 	{
 		color = TERM_L_GREEN;
 	}
-	else if (p_ptr->csp > (p_ptr->msp * hitpoint_warn) / 10)
+	else if (p_ptr->csp > (p_ptr->msp * options->hitpoint_warn) / 10)
 	{
 		color = TERM_YELLOW;
 	}
@@ -1235,7 +1231,7 @@ static void display_player_middle(void)
 	{
 		color = TERM_L_GREEN;
 	}
-	else if (p_ptr->csane > (p_ptr->msane * hitpoint_warn) / 10)
+	else if (p_ptr->csane > (p_ptr->msane * options->hitpoint_warn) / 10)
 	{
 		color = TERM_YELLOW;
 	}
@@ -2657,34 +2653,34 @@ errr file_character(cptr name, bool_ full)
 
 	/* List the patches */
 	fprintf(fff, "\n\n  [Miscellaneous information]\n");
-	if (joke_monsters)
+	if (options->joke_monsters)
 		fprintf(fff, "\n Joke monsters:        ON");
 	else
 		fprintf(fff, "\n Joke monsters:        OFF");
 
-	if (preserve)
+	if (options->preserve)
 		fprintf(fff, "\n Preserve Mode:        ON");
 	else
 		fprintf(fff, "\n Preserve Mode:        OFF");
 
-	if (auto_scum)
+	if (options->auto_scum)
 		fprintf(fff, "\n Autoscum:             ON");
 	else
 		fprintf(fff, "\n Autoscum:             OFF");
 
-	if (always_small_level)
+	if (options->always_small_level)
 		fprintf(fff, "\n Small Levels:         ALWAYS");
-	else if (small_levels)
+	else if (options->small_levels)
 		fprintf(fff, "\n Small Levels:         ON");
 	else
 		fprintf(fff, "\n Small Levels:         OFF");
 
-	if (empty_levels)
+	if (options->empty_levels)
 		fprintf(fff, "\n Arena Levels:         ON");
 	else
 		fprintf(fff, "\n Arena Levels:         OFF");
 
-	if (ironman_rooms)
+	if (options->ironman_rooms)
 		fprintf(fff, "\n Always unusual rooms: ON");
 	else
 		fprintf(fff, "\n Always unusual rooms: OFF");
@@ -3996,7 +3992,7 @@ void do_cmd_save_game(void)
  */
 void autosave_checkpoint()
 {
-	if (autosave_l)
+	if (options->autosave_l)
 	{
 		is_autosave = TRUE;
 		msg_print("Autosaving the game...");
@@ -4017,12 +4013,12 @@ static long total_points(void)
 
 	if (!comp_death) comp_death = 1;
 
-	if (preserve) mult -= 1;  /* Penalize preserve, maximize modes */
+	if (options->preserve) mult -= 1;  /* Penalize preserve, maximize modes */
 	mult -= 1; /* maximize pentalty, always on */
-	if (auto_scum) mult -= 4;
-	if (small_levels) mult += ((always_small_level) ? 4 : 10);
-	if (empty_levels) mult += 2;
-	if (smart_learn) mult += 4;
+	if (options->auto_scum) mult -= 4;
+	if (options->small_levels) mult += ((options->always_small_level) ? 4 : 10);
+	if (options->empty_levels) mult += 2;
+	if (options->smart_learn) mult += 4;
 
 	if (mult < 2) mult = 2;  /* At least 10% of the original score */
 	/* mult is now between 2 and 40, i.e. 10% and 200% */
@@ -5261,7 +5257,7 @@ errr get_rnd_line(const char *file_name, char *output)
 	strcpy(output, "");
 
 	/* test hack */
-	if (wizard && cheat_xtra) msg_print(file_name);
+	if (wizard && options->cheat_xtra) msg_print(file_name);
 
 	/* Build the filename */
 	path_build(buf, 1024, ANGBAND_DIR_FILE, file_name);
@@ -5383,7 +5379,7 @@ errr get_xtra_line(const char *file_name, monster_type *m_ptr, char *output)
 	strcpy(output, "");
 
 	/* test and DEBUG hack */
-	if (wizard && cheat_xtra)
+	if (wizard && options->cheat_xtra)
 	{
 		msg_print(file_name);
 	}
@@ -5462,7 +5458,7 @@ errr get_xtra_line(const char *file_name, monster_type *m_ptr, char *output)
 	line = rand_int(num_entries);
 
 	/* test and DEBUG hack */
-	if (wizard && cheat_xtra)
+	if (wizard && options->cheat_xtra)
 	{
 		sprintf(buf, "Line number %d", line);
 		msg_print(buf);

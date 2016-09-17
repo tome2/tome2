@@ -29,14 +29,14 @@ static bool_ quest_ultra_good_move_hook(void *, void *in_, void *)
 
 	if (cquest.status == QUEST_STATUS_UNTAKEN)
 	{
-		bool_ old_quick_messages = quick_messages;
-
 		if (quest[QUEST_MORGOTH].status < QUEST_STATUS_FINISHED) return (FALSE);
 
 		/* The mirror of Galadriel */
 		if ((c_ptr->feat != FEAT_SHOP) || (c_ptr->special != 23)) return (FALSE);
 
-		quick_messages = FALSE;
+		auto old_quick_messages = options->quick_messages;
+		options->quick_messages = FALSE;
+
 		cmsg_print(TERM_L_BLUE, "You meet Galadriel.");
 		cmsg_print(TERM_YELLOW, "'I still cannot believe this is all over.'");
 		cmsg_print(TERM_YELLOW, "'Morgoth's reign of terror is over at last!'");
@@ -82,7 +82,8 @@ static bool_ quest_ultra_good_move_hook(void *, void *in_, void *)
 			cquest.status = QUEST_STATUS_TAKEN;
 			cquest.init(QUEST_ULTRA_GOOD);
 		}
-		quick_messages = old_quick_messages;
+
+		options->quick_messages = old_quick_messages;
 
 		return TRUE;
 	}

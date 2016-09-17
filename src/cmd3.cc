@@ -248,7 +248,7 @@ void do_cmd_wield(void)
 		return;
 	}
 
-	if ((cursed_p(o_ptr)) && (wear_confirm)
+	if ((cursed_p(o_ptr)) && (options->wear_confirm)
 	                && (object_known_p(o_ptr) || (o_ptr->ident & (IDENT_SENSE))))
 	{
 		char dummy[512];

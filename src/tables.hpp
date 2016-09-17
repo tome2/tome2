@@ -54,7 +54,6 @@ extern cptr color_names[16];
 extern cptr stat_names[6];
 extern cptr stat_names_reduced[6];
 extern cptr window_flag_desc[32];
-extern option_type option_info[];
 extern martial_arts bear_blows[MAX_BEAR];
 extern martial_arts ma_blows[MAX_MA];
 extern magic_power mindcraft_powers[MAX_MINDCRAFT_POWERS];

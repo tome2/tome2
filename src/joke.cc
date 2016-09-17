@@ -24,7 +24,7 @@ static void gen_joke_place_monster(int r_idx)
 
 bool_ gen_joke_monsters(void *data, void *in, void *out)
 {
-	if (joke_monsters)
+	if (options->joke_monsters)
 	{
 		if ((dungeon_type == 20) &&
 		    (dun_level == 72))

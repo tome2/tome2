@@ -516,10 +516,13 @@ void wilderness_gen()
 			if (daytime)
 			{
 				/* Assume lit */
-				c_ptr->info |= (CAVE_GLOW);
+				c_ptr->info |= CAVE_GLOW;
 
 				/* Hack -- Memorize lit grids if allowed */
-				if (view_perma_grids) c_ptr->info |= (CAVE_MARK);
+				if (options->view_perma_grids)
+				{
+					c_ptr->info |= CAVE_MARK;
+				}
 			}
 			else
 			{

@@ -3938,7 +3938,7 @@ bool_ genocide_aux(bool_ player_cast, char typ)
 {
 	int i;
 	bool_ result = FALSE;
-	int msec = delay_factor * delay_factor * delay_factor;
+	auto const msec = options->delay_factor_ms();
 	int dam = 0;
 
 	/* Delete the monsters of that "type" */
@@ -4055,13 +4055,11 @@ bool_ mass_genocide(bool_ player_cast)
 {
 	int i;
 	bool_ result = FALSE;
-	int msec = delay_factor * delay_factor * delay_factor;
+	auto const msec = options->delay_factor_ms();
 	int dam = 0;
 
-	if (dungeon_flags & DF_NO_GENO) return (FALSE);
-
-	/* Hack -- when you are fated to die, you cant cheat :) */
-	if (dungeon_type == DUNGEON_DEATH)
+	/* Prevented? */
+	if ((dungeon_flags & DF_NO_GENO) || (dungeon_type == DUNGEON_DEATH))
 	{
 		msg_print("A mysterious force stops the genocide.");
 		return FALSE;

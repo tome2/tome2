@@ -597,7 +597,7 @@ static bool_ triggered_help_hook(void *data, void *in, void *out)
 {
 	triggered_help_type *triggered_help = (triggered_help_type *) data;
 	/* Not triggered before and trigger now? */
-	if ((option_ingame_help) &&
+	if (options->ingame_help &&
 	    (!p_ptr->help.activated[triggered_help->help_index]) &&
 	    triggered_help->trigger_func(in,out))
 	{

@@ -476,7 +476,7 @@ void delete_monster_idx(int i)
 		/* Hack -- efficiency */
 		o_ptr->held_m_idx = 0;
 
-		if (preserve)
+		if (options->preserve)
 		{
 			/* Hack -- Preserve unknown artifacts */
 			if (artifact_p(o_ptr) && !object_known_p(o_ptr))
@@ -1018,7 +1018,7 @@ s16b get_mon_num(int level)
 		}
 
 		/* Joke monsters allowed ? or not ? */
-		if (!joke_monsters && (r_ptr->flags & RF_JOKEANGBAND)) continue;
+		if (!options->joke_monsters && (r_ptr->flags & RF_JOKEANGBAND)) continue;
 
 		/* Some dungeon types restrict the possible monsters */
 		if (!summon_hack && !restrict_monster_to_dungeon(r_idx) && dun_level) continue;
@@ -1745,9 +1745,12 @@ void update_mon(int m_idx, bool_ full)
 			p_ptr->window |= (PW_M_LIST);
 
 			/* Disturb on appearance */
-			if (disturb_move)
+			if (options->disturb_move)
 			{
-				if (disturb_pets || (is_friend(m_ptr) <= 0)) disturb(1);
+				if (options->disturb_pets || (is_friend(m_ptr) <= 0))
+				{
+					disturb(1);
+				}
 			}
 		}
 	}
@@ -1771,9 +1774,12 @@ void update_mon(int m_idx, bool_ full)
 			p_ptr->window |= (PW_M_LIST);
 
 			/* Disturb on disappearance*/
-			if (disturb_move)
+			if (options->disturb_move)
 			{
-				if (disturb_pets || (is_friend(m_ptr) <= 0)) disturb(1);
+				if (options->disturb_pets || (is_friend(m_ptr) <= 0))
+				{
+					disturb(1);
+				}
 			}
 		}
 	}
@@ -1798,9 +1804,12 @@ void update_mon(int m_idx, bool_ full)
 			m_ptr->mflag |= (MFLAG_VIEW);
 
 			/* Disturb on appearance */
-			if (disturb_near)
+			if (options->disturb_near)
 			{
-				if (disturb_pets || (is_friend(m_ptr) <= 0)) disturb(1);
+				if (options->disturb_pets || (is_friend(m_ptr) <= 0))
+				{
+					disturb(1);
+				}
 			}
 
 		}
@@ -1819,9 +1828,12 @@ void update_mon(int m_idx, bool_ full)
 			p_ptr->window |= (PW_M_LIST);
 
 			/* Disturb on disappearance */
-			if (disturb_near)
+			if (options->disturb_near)
 			{
-				if (disturb_pets || (is_friend(m_ptr) <= 0)) disturb(1);
+				if (options->disturb_pets || (is_friend(m_ptr) <= 0))
+				{
+					disturb(1);
+				}
 			}
 		}
 	}
@@ -2118,7 +2130,10 @@ s16b place_monster_one(int y, int x, int r_idx, int ego, bool_ slp, int status)
 		if (r_ptr->flags & RF_UNIQUE)
 		{
 			/* Message for cheaters */
-			if ((cheat_hear) || (p_ptr->precognition)) msg_format("Deep Unique (%s).", r_ptr->name);
+			if (options->cheat_hear || p_ptr->precognition)
+			{
+				msg_format("Deep Unique (%s).", r_ptr->name);
+			}
 
 			/* Boost rating by twice delta-depth */
 			rating += (r_ptr->level - dun_level) * 2;
@@ -2128,7 +2143,10 @@ s16b place_monster_one(int y, int x, int r_idx, int ego, bool_ slp, int status)
 		else
 		{
 			/* Message for cheaters */
-			if ((cheat_hear) || (p_ptr->precognition)) msg_format("Deep Monster (%s).", r_ptr->name);
+			if (options->cheat_hear || p_ptr->precognition)
+			{
+				msg_format("Deep Monster (%s).", r_ptr->name);
+			}
 
 			/* Boost rating by delta-depth */
 			rating += (r_ptr->level - dun_level);
@@ -2139,7 +2157,10 @@ s16b place_monster_one(int y, int x, int r_idx, int ego, bool_ slp, int status)
 	else if (r_ptr->flags & RF_UNIQUE)
 	{
 		/* Unique monsters induce message */
-		if ((cheat_hear) || (p_ptr->precognition)) msg_format("Unique (%s).", r_ptr->name);
+		if (options->cheat_hear || p_ptr->precognition)
+		{
+			msg_format("Unique (%s).", r_ptr->name);
+		}
 	}
 
 
@@ -2823,7 +2844,7 @@ bool_ alloc_monster(int dis, bool_ slp)
 
 	if (!attempts_left)
 	{
-		if (cheat_xtra || cheat_hear)
+		if (options->cheat_xtra || options->cheat_hear)
 		{
 			msg_print("Warning! Could not allocate a new monster. Small level?");
 		}
@@ -2836,7 +2857,10 @@ bool_ alloc_monster(int dis, bool_ slp)
 	{
 		if (alloc_horde(y, x))
 		{
-			if ((cheat_hear) || (p_ptr->precognition)) msg_print("Monster horde.");
+			if (options->cheat_hear || p_ptr->precognition)
+			{
+				msg_print("Monster horde.");
+			}
 			return (TRUE);
 		}
 	}
@@ -3662,7 +3686,7 @@ void message_pain(int m_idx, int dam)
 void update_smart_learn(int m_idx, int what)
 {
 	/* Not allowed to learn */
-	if (!smart_learn)
+	if (!options->smart_learn)
 	{
 		return;
 	}

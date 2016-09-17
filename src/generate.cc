@@ -744,7 +744,7 @@ bool_ new_player_spot(int branch)
 	p_ptr->px = x;
 
 	/* XXX XXX XXX */
-	if (dungeon_stair && !(dungeon_flags & DF_NO_STAIR) && dun_level &&
+	if (options->dungeon_stair && !(dungeon_flags & DF_NO_STAIR) && dun_level &&
 	                (!is_quest(dun_level) || (old_dun_level < dun_level)) && !branch)
 	{
 		if (old_dun_level < dun_level)
@@ -1148,7 +1148,7 @@ static void alloc_object(int set, int typ, int num)
 
 		if (dummy >= SAFE_MAX_ATTEMPTS)
 		{
-			if (cheat_room)
+			if (options->cheat_room)
 			{
 				msg_format("Warning! Could not place object, type : %d!", typ);
 			}
@@ -1469,7 +1469,7 @@ static void build_streamer(int feat, int chance)
 
 		if (dummy >= SAFE_MAX_ATTEMPTS)
 		{
-			if (cheat_room)
+			if (options->cheat_room)
 			{
 				msg_print("Warning! Could not place streamer!");
 			}
@@ -1622,7 +1622,7 @@ static void destroy_level(void)
 	cave_type *c_ptr;
 
 	/* Note destroyed levels */
-	if ((cheat_room) || (p_ptr->precognition)) msg_print("Destroyed Level");
+	if ((options->cheat_room) || (p_ptr->precognition)) msg_print("Destroyed Level");
 
 	/* Drop a few epi-centers (usually about two) */
 	for (n = 0; n < randint(5); n++)
@@ -1832,7 +1832,7 @@ static void vault_objects(int y, int x, int num)
 
 			if (dummy >= SAFE_MAX_ATTEMPTS)
 			{
-				if (cheat_room)
+				if (options->cheat_room)
 				{
 					msg_print("Warning! Could not place vault object!");
 				}
@@ -1883,7 +1883,7 @@ static void vault_trap_aux(int y, int x, int yd, int xd)
 
 		if (dummy >= SAFE_MAX_ATTEMPTS)
 		{
-			if (cheat_room)
+			if (options->cheat_room)
 			{
 				msg_print("Warning! Could not place vault trap!");
 			}
@@ -3067,7 +3067,7 @@ static void build_type5(int by0, int bx0)
 	if (empty) return;
 
 	/* Describe */
-	if (cheat_room || p_ptr->precognition)
+	if (options->cheat_room || p_ptr->precognition)
 	{
 		/* Room type */
 		msg_format("Monster nest (%s)", name);
@@ -3390,12 +3390,12 @@ static void build_type6(int by0, int bx0)
 	}
 
 	/* Message */
-	if (cheat_room || p_ptr->precognition)
+	if (options->cheat_room || p_ptr->precognition)
 	{
 		/* Room type */
 		msg_format("Monster pit (%s)", name);
 
-		if (cheat_hear || p_ptr->precognition)
+		if (options->cheat_hear || p_ptr->precognition)
 		{
 			/* Contents */
 			for (i = 0; i < 8; i++)
@@ -3761,13 +3761,16 @@ static void build_type7(int by0, int bx0)
 	/* Try to allocate space for room.  If fails, exit */
 	if (!room_alloc(v_ptr->wid, v_ptr->hgt, FALSE, by0, bx0, &xval, &yval))
 	{
-		if (cheat_room) msg_print("Could not allocate this vault here");
+		if (options->cheat_room)
+		{
+			msg_print("Could not allocate this vault here");
+		}
 		return;
 	}
 
 	if (dummy >= SAFE_MAX_ATTEMPTS)
 	{
-		if (cheat_room)
+		if (options->cheat_room)
 		{
 			msg_print("Warning! Could not place lesser vault!");
 		}
@@ -3776,7 +3779,10 @@ static void build_type7(int by0, int bx0)
 
 
 	/* Message */
-	if (cheat_room || p_ptr->precognition) msg_print("Lesser Vault");
+	if (options->cheat_room || p_ptr->precognition)
+	{
+		msg_print("Lesser Vault");
+	}
 
 	/* Boost the rating */
 	rating += v_ptr->rat;
@@ -3817,13 +3823,16 @@ static void build_type8(int by0, int bx0)
 	/* Try to allocate space for room.  If fails, exit */
 	if (!room_alloc(v_ptr->wid, v_ptr->hgt, FALSE, by0, bx0, &xval, &yval))
 	{
-		if (cheat_room) msg_print("Could not allocate this vault here");
+		if (options->cheat_room)
+		{
+			msg_print("Could not allocate this vault here");
+		}
 		return;
 	}
 
 	if (dummy >= SAFE_MAX_ATTEMPTS)
 	{
-		if (cheat_room)
+		if (options->cheat_room)
 		{
 			msg_print("Warning! Could not place greater vault!");
 		}
@@ -3832,7 +3841,10 @@ static void build_type8(int by0, int bx0)
 
 
 	/* Message */
-	if (cheat_room || p_ptr->precognition) msg_print("Greater Vault");
+	if (options->cheat_room || p_ptr->precognition)
+	{
+		msg_print("Greater Vault");
+	}
 
 	/* Boost the rating */
 	rating += v_ptr->rat;
@@ -4828,7 +4840,10 @@ static void build_bubble_vault(int x0, int y0, int xsize, int ysize)
 	int xhsize = xsize / 2;
 	int yhsize = ysize / 2;
 
-	if (cheat_room) msg_print("Bubble Vault");
+	if (options->cheat_room)
+	{
+		msg_print("Bubble Vault");
+	}
 
 	/* Allocate center of bubbles */
 	center[0].x = randint(xsize - 3) + 1;
@@ -5030,7 +5045,10 @@ static void build_room_vault(int x0, int y0, int xsize, int ysize)
 	xhsize = xsize / 2;
 	yhsize = ysize / 2;
 
-	if (cheat_room) msg_print("Room Vault");
+	if (options->cheat_room)
+	{
+		msg_print("Room Vault");
+	}
 
 	/* Fill area so don't get problems with arena levels */
 	for (x1 = 0; x1 <= xsize; x1++)
@@ -5088,7 +5106,10 @@ static void build_cave_vault(int x0, int y0, int xsiz, int ysiz)
 	xsize = xhsize * 2;
 	ysize = yhsize * 2;
 
-	if (cheat_room) msg_print("Cave Vault");
+	if (options->cheat_room)
+	{
+		msg_print("Cave Vault");
+	}
 
 	light = done = FALSE;
 	room = TRUE;
@@ -5255,7 +5276,10 @@ static void build_maze_vault(int x0, int y0, int xsize, int ysize)
 	cave_type *c_ptr;
 
 
-	if (cheat_room) msg_print("Maze Vault");
+	if (options->cheat_room)
+	{
+		msg_print("Maze Vault");
+	}
 
 	/* Choose lite or dark */
 	light = (dun_level <= randint(25));
@@ -5321,7 +5345,10 @@ static void build_mini_c_vault(int x0, int y0, int xsize, int ysize)
 	int y1, x1, y2, x2, y, x, total;
 	int m, n, num_vertices;
 
-	if (cheat_room) msg_print("Mini Checker Board Vault");
+	if (options->cheat_room)
+	{
+		msg_print("Mini Checker Board Vault");
+	}
 
 	/* Pick a random room size */
 	dy = ysize / 2 - 1;
@@ -5627,7 +5654,10 @@ static void build_castle_vault(int x0, int y0, int xsize, int ysize)
 	y2 = y0 + dy;
 	x2 = x0 + dx;
 
-	if (cheat_room) msg_print("Castle Vault");
+	if (options->cheat_room)
+	{
+		msg_print("Castle Vault");
+	}
 
 	/* Generate the room */
 	for (y = y1 - 1; y <= y2 + 1; y++)
@@ -5751,7 +5781,10 @@ static void build_target_vault(int x0, int y0, int xsize, int ysize)
 	h3 = randint(32);
 	h4 = randint(32) - 16;
 
-	if (cheat_room) msg_print("Target Vault");
+	if (options->cheat_room)
+	{
+		msg_print("Target Vault");
+	}
 
 	/* Work out outer radius */
 	if (xsize > ysize)
@@ -6527,7 +6560,7 @@ static void try_doors(int y, int x)
 static bool_ room_build(int y, int x, int typ)
 {
 	/* Restrict level */
-	if ((dun_level < roomdep[typ]) && !ironman_rooms) return (FALSE);
+	if ((dun_level < roomdep[typ]) && !options->ironman_rooms) return (FALSE);
 
 	/* Restrict "crowded" rooms */
 	if (dun->crowded && ((typ == 5) || (typ == 6))) return (FALSE);
@@ -6660,11 +6693,11 @@ bool_ level_generate_dungeon()
 
 	/* Check for arena level */
 	if ((dungeon_flags & DF_EMPTY) ||
-	                (empty_levels && (rand_int(EMPTY_LEVEL) == 0)))
+	                (options->empty_levels && (rand_int(EMPTY_LEVEL) == 0)))
 	{
 		empty_level = TRUE;
 
-		if (cheat_room || p_ptr->precognition)
+		if (options->cheat_room || p_ptr->precognition)
 		{
 			msg_print("Arena level.");
 		}
@@ -6679,7 +6712,7 @@ bool_ level_generate_dungeon()
 		cavern = TRUE;
 
 		/* Make a large fractal cave in the middle of the dungeon */
-		if (cheat_room)
+		if (options->cheat_room)
 		{
 			msg_print("Cavern on level.");
 		}
@@ -6727,7 +6760,7 @@ bool_ level_generate_dungeon()
 	x = rand_int(dun->col_rooms);
 
 	/* Align dungeon rooms */
-	if (dungeon_align)
+	if (options->dungeon_align)
 	{
 		/* Slide some rooms right */
 		if ((x % 3) == 0) x++;
@@ -6750,7 +6783,7 @@ bool_ level_generate_dungeon()
 		x = rand_int(dun->col_rooms);
 
 		/* Align dungeon rooms */
-		if (dungeon_align)
+		if (options->dungeon_align)
 		{
 			/* Slide some rooms right */
 			if ((x % 3) == 0) x++;
@@ -6789,13 +6822,13 @@ bool_ level_generate_dungeon()
 
 		/* Attempt an "unusual" room -- no vaults on town levels */
 		if (!town_level &&
-		                (ironman_rooms || (rand_int(DUN_UNUSUAL) < dun_level)))
+		        (options->ironman_rooms || (rand_int(DUN_UNUSUAL) < dun_level)))
 		{
 			/* Roll for room type */
-			k = (ironman_rooms ? 0 : rand_int(100));
+			k = (options->ironman_rooms ? 0 : rand_int(100));
 
 			/* Attempt a very unusual room */ /* test hack */
-			if (ironman_rooms || (rand_int(DUN_UNUSUAL) < dun_level))
+			if (options->ironman_rooms || (rand_int(DUN_UNUSUAL) < dun_level))
 			{
 				/* Type 8 -- Greater vault (10%) */
 				if (k < 10)
@@ -6806,7 +6839,10 @@ bool_ level_generate_dungeon()
 					}
 					else
 					{
-						if (cheat_room) msg_print("Refusing a greater vault.");
+						if (options->cheat_room)
+						{
+							msg_print("Refusing a greater vault.");
+						}
 					}
 				}
 
@@ -6819,7 +6855,10 @@ bool_ level_generate_dungeon()
 					}
 					else
 					{
-						if (cheat_room) msg_print("Refusing a lesser vault.");
+						if (options->cheat_room)
+						{
+							msg_print("Refusing a lesser vault.");
+						}
 					}
 				}
 
@@ -6951,7 +6990,10 @@ bool_ level_generate_dungeon()
 	/* Add some sand streamers */
 	if ((dungeon_flags & DF_SAND_VEIN) && !rand_int(4))
 	{
-		if ((cheat_room) || (p_ptr->precognition)) msg_print("Sand vein.");
+		if (options->cheat_room || p_ptr->precognition)
+		{
+			msg_print("Sand vein.");
+		}
 		build_streamer(FEAT_SANDWALL, DUN_STR_SC);
 	}
 
@@ -6967,12 +7009,18 @@ bool_ level_generate_dungeon()
 	/* Hack -- Add some rivers if requested */
 	if ((dungeon_flags & DF_WATER_RIVER) && !rand_int(4))
 	{
-		if (cheat_room || p_ptr->precognition) msg_print("River of water.");
+		if (options->cheat_room || p_ptr->precognition)
+		{
+			msg_print("River of water.");
+		}
 		add_river(FEAT_DEEP_WATER, FEAT_SHAL_WATER);
 	}
 	if ((dungeon_flags & DF_LAVA_RIVER) && !rand_int(4))
 	{
-		if ((cheat_room) || (p_ptr->precognition)) msg_print("River of lava.");
+		if (options->cheat_room || p_ptr->precognition)
+		{
+			msg_print("River of lava.");
+		}
 		add_river(FEAT_DEEP_LAVA, FEAT_SHAL_LAVA);
 	}
 
@@ -6986,7 +7034,10 @@ bool_ level_generate_dungeon()
 			if (rand_int(3) == 0)
 			{
 				add_river(FEAT_DEEP_WATER, FEAT_SHAL_WATER);
-				if (!said && ((cheat_room) || (p_ptr->precognition))) msg_print("Rivers of water.");
+				if (!said && (options->cheat_room || p_ptr->precognition))
+				{
+					msg_print("Rivers of water.");
+				}
 				said = TRUE;
 			}
 		}
@@ -7002,7 +7053,10 @@ bool_ level_generate_dungeon()
 			if (rand_int(3) == 0)
 			{
 				add_river(FEAT_DEEP_LAVA, FEAT_SHAL_LAVA);
-				if (!said && ((cheat_room) || (p_ptr->precognition))) msg_print("Rivers of lava.");
+				if (!said && (options->cheat_room || p_ptr->precognition))
+				{
+					msg_print("Rivers of lava.");
+				}
 				said = TRUE;
 			}
 		}
@@ -7661,8 +7715,11 @@ static bool_ cave_gen(void)
 			i = (i * cur_wid) / MAX_WID;
 			i += 1;
 
-			if (i > small_tester) i = small_tester;
-			else if (cheat_hear)
+			if (i > small_tester)
+			{
+				i = small_tester;
+			}
+			else if (options->cheat_hear)
 			{
 				msg_format("Reduced monsters base from %d to %d", small_tester, i);
 			}
@@ -8171,7 +8228,7 @@ static void generate_grid_mana()
 	{
 		xtra_magic = TRUE;
 
-		if (cheat_room || p_ptr->precognition)
+		if (options->cheat_room || p_ptr->precognition)
 		{
 			msg_print("Magical level");
 		}
@@ -8394,7 +8451,7 @@ void generate_cave(void)
 				/* Requested size level */
 				if (d_ptr->size_x != -1)
 				{
-					if (cheat_room || p_ptr->precognition)
+					if (options->cheat_room || p_ptr->precognition)
 					{
 						msg_print ("A 'size' dungeon level.");
 					}
@@ -8410,7 +8467,7 @@ void generate_cave(void)
 					panel_row_min = max_panel_rows * (SCREEN_HGT / 2);
 					panel_col_min = max_panel_cols * (SCREEN_WID / 2);
 
-					if (cheat_room)
+					if (options->cheat_room)
 					{
 						msg_format("X:%d, Y:%d.", max_panel_cols, max_panel_rows);
 					}
@@ -8419,7 +8476,7 @@ void generate_cave(void)
 				else if (!(dungeon_flags & DF_BIG) &&
 						(dungeon_flags & DF_SMALLEST))
 				{
-					if (cheat_room || p_ptr->precognition)
+					if (options->cheat_room || p_ptr->precognition)
 					{
 						msg_print ("A 'small' dungeon level.");
 					}
@@ -8435,7 +8492,7 @@ void generate_cave(void)
 					panel_row_min = max_panel_rows * (SCREEN_HGT / 2);
 					panel_col_min = max_panel_cols * (SCREEN_WID / 2);
 
-					if (cheat_room)
+					if (options->cheat_room)
 					{
 						msg_format("X:1, Y:1.");
 					}
@@ -8443,11 +8500,11 @@ void generate_cave(void)
 
 				/* Small level */
 				else if (!(dungeon_flags & DF_BIG) &&
-				                (always_small_level ||
+				                (options->always_small_level ||
 						 (dungeon_flags & DF_SMALL) ||
-				                 (small_levels && rand_int(SMALL_LEVEL) == 0)))
+				                 (options->small_levels && rand_int(SMALL_LEVEL) == 0)))
 				{
-					if (cheat_room || p_ptr->precognition)
+					if (options->cheat_room || p_ptr->precognition)
 					{
 						msg_print ("A 'small' dungeon level.");
 					}
@@ -8466,7 +8523,7 @@ void generate_cave(void)
 					panel_row_min = max_panel_rows * (SCREEN_HGT / 2);
 					panel_col_min = max_panel_cols * (SCREEN_WID / 2);
 
-					if (cheat_room)
+					if (options->cheat_room)
 					{
 						msg_format("X:%d, Y:%d.", max_panel_cols, max_panel_rows);
 					}
@@ -8508,7 +8565,7 @@ void generate_cave(void)
 			else feeling = 10;
 
 			/* Hack -- Have a special feeling sometimes */
-			if (good_item_flag && !preserve) feeling = 1;
+			if (good_item_flag && !options->preserve) feeling = 1;
 
 			/* It takes 1000 game turns for "feelings" to recharge */
 			if ((turn - old_turn) < 1000) feeling = 0;
@@ -8538,7 +8595,7 @@ void generate_cave(void)
 			}
 
 			/* Mega-Hack -- "auto-scum" */
-			if (auto_scum && (num < 100) && !p_ptr->inside_quest && dun_level)
+			if (options->auto_scum && (num < 100) && !p_ptr->inside_quest && dun_level)
 			{
 				/* Require "goodness" */
 				if ((feeling > 9) ||
@@ -8548,8 +8605,8 @@ void generate_cave(void)
 				                ((dun_level >= 40) && (feeling > 5)))
 				{
 					/* Give message to cheaters */
-					if (cheat_room || cheat_hear ||
-					                cheat_peek || cheat_xtra || p_ptr->precognition)
+					if (options->cheat_room || options->cheat_hear ||
+					        options->cheat_peek || options->cheat_xtra || p_ptr->precognition)
 					{
 						/* Message */
 						why = "boring level";

@@ -1770,7 +1770,7 @@ static void py_attack_hand(int *k, monster_type *m_ptr, s32b *special)
 			{
 				old_ptr = ma_ptr;
 
-				if (wizard && cheat_xtra)
+				if (wizard && options->cheat_xtra)
 				{
 					msg_print("Attack re-selected.");
 				}
@@ -2403,7 +2403,7 @@ void py_attack(int y, int x, int max_blow)
 							{
 								drain_heal = damroll(4, (drain_result / 6));
 
-								if (cheat_xtra)
+								if (options->cheat_xtra)
 								{
 									msg_format("Draining left: %d", drain_left);
 								}
@@ -3080,7 +3080,7 @@ void move_player_aux(int dir, int do_pickup, int run, bool_ disarm)
 	new_dtrap = ((cave[y][x].info & CAVE_DETECT) != 0);
 
 	/* Normal movement */
-	if (oktomove && running && disturb_detect)
+	if (oktomove && running && options->disturb_detect)
 	{
 		/*
 		 * Disturb the player when about to leave the trap detected
@@ -3720,7 +3720,7 @@ static bool_ run_test(void)
 			case FEAT_BROKEN:
 				{
 					/* Option -- ignore */
-					if (find_ignore_doors) notice = FALSE;
+				        if (options->find_ignore_doors) notice = FALSE;
 
 					/* Done */
 					break;
@@ -3746,7 +3746,7 @@ static bool_ run_test(void)
 			case FEAT_BETWEEN2:
 				{
 					/* Option -- ignore */
-					if (find_ignore_stairs) notice = FALSE;
+				        if (options->find_ignore_stairs) notice = FALSE;
 
 					/* Done */
 					break;
@@ -3925,7 +3925,7 @@ static bool_ run_test(void)
 		}
 
 		/* Two options, examining corners */
-		else if (find_examine && !find_cut)
+		else if (options->find_examine && !options->find_cut)
 		{
 			/* Primary option */
 			find_current = option;
@@ -3947,7 +3947,7 @@ static bool_ run_test(void)
 			{
 				/* Can not see anything ahead and in the direction we */
 				/* are turning, assume that it is a potential corner. */
-				if (find_examine &&
+				if (options->find_examine &&
 				                see_nothing(option, row, col) &&
 				                see_nothing(option2, row, col))
 				{
@@ -3963,7 +3963,7 @@ static bool_ run_test(void)
 			}
 
 			/* This corner is seen to be enclosed; we cut the corner. */
-			else if (find_cut)
+			else if (options->find_cut)
 			{
 				find_current = option2;
 				find_prevdir = option2;
@@ -4044,7 +4044,7 @@ void run_step(int dir)
 
 
 	/* Move the player, using the "pickup" flag */
-	move_player_aux(find_current, always_pickup, 1, TRUE);
+	move_player_aux(find_current, options->always_pickup, 1, TRUE);
 }
 
 

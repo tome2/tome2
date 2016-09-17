@@ -631,6 +631,9 @@ static void init_basic()
 
 	/* Extended trigger macros */
 	cli_info = make_array<cli_comm>(CLI_MAX);
+
+	/* Options */
+	options = new struct options();
 }
 
 
@@ -810,19 +813,19 @@ static errr init_other(void)
 	/*** Prepare the options ***/
 
 	/* Scan the options */
-	for (i = 0; option_info[i].o_desc; i++)
+	for (auto const &option : options->standard_options)
 	{
-		int os = option_info[i].o_page;
-		int ob = option_info[i].o_bit;
+		int os = option.o_page;
+		int ob = option.o_bit;
 
 		/* Set the "default" options */
-		if (option_info[i].o_var)
+		if (option.o_var)
 		{
 			/* Accept */
 			option_mask[os] |= (1L << ob);
 
 			/* Set */
-			if (option_info[i].o_norm)
+			if (option.o_norm)
 			{
 				/* Set */
 				option_flag[os] |= (1L << ob);

@@ -5896,7 +5896,7 @@ void py_pickup_floor(int pickup)
 			bool_ do_pickup = TRUE;
 
 			/* Hack -- query every item */
-			if (carry_query_flag || (!can_carry_heavy(&o_list[floor_o_idx])))
+			if (options->carry_query_flag || !can_carry_heavy(&o_list[floor_o_idx]))
 			{
 				char o_name[80] = "";
 				object_desc(o_name, o_ptr, TRUE, 3);

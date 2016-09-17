@@ -63,7 +63,7 @@
  */
 void cnv_stat(int val, char *out_val)
 {
-	if (!linear_stats)
+	if (!options->linear_stats)
 	{
 		/* Above 18 */
 		if (val > 18)
@@ -230,7 +230,7 @@ static void prt_sane(void)
 	{
 		color = TERM_L_GREEN;
 	}
-	else if (perc > (10 * hitpoint_warn))
+	else if (perc > (10 * options->hitpoint_warn))
 	{
 		color = TERM_YELLOW;
 	}
@@ -419,7 +419,10 @@ static void prt_hp(void)
 
 	byte color;
 
-	if (player_char_health) lite_spot(p_ptr->py, p_ptr->px);
+	if (options->player_char_health)
+	{
+		lite_spot(p_ptr->py, p_ptr->px);
+	}
 
 	if (p_ptr->necro_extra & CLASS_UNDEAD)
 	{
@@ -431,7 +434,7 @@ static void prt_hp(void)
 		{
 			color = TERM_L_BLUE;
 		}
-		else if (p_ptr->chp > (p_ptr->mhp * hitpoint_warn) / 10)
+		else if (p_ptr->chp > (p_ptr->mhp * options->hitpoint_warn) / 10)
 		{
 			color = TERM_VIOLET;
 		}
@@ -451,7 +454,7 @@ static void prt_hp(void)
 		{
 			color = TERM_L_GREEN;
 		}
-		else if (p_ptr->chp > (p_ptr->mhp * hitpoint_warn) / 10)
+		else if (p_ptr->chp > (p_ptr->mhp * options->hitpoint_warn) / 10)
 		{
 			color = TERM_YELLOW;
 		}
@@ -490,7 +493,7 @@ static void prt_mh(void)
 	{
 		color = TERM_L_GREEN;
 	}
-	else if (o_ptr->pval2 > (o_ptr->pval3 * hitpoint_warn) / 10)
+	else if (o_ptr->pval2 > (o_ptr->pval3 * options->hitpoint_warn) / 10)
 	{
 		color = TERM_YELLOW;
 	}
@@ -518,7 +521,7 @@ static void prt_sp(void)
 	{
 		color = TERM_L_GREEN;
 	}
-	else if (p_ptr->csp > (p_ptr->msp * hitpoint_warn) / 10)
+	else if (p_ptr->csp > (p_ptr->msp * options->hitpoint_warn) / 10)
 	{
 		color = TERM_YELLOW;
 	}
@@ -2013,7 +2016,7 @@ static void calc_torch(void)
 
 
 	/* Reduce lite when running if requested */
-	if (running && view_reduce_lite)
+	if (running && options->view_reduce_lite)
 	{
 		/* Reduce the lite radius if needed */
 		if (p_ptr->cur_lite > 1) p_ptr->cur_lite = 1;

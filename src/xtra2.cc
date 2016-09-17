@@ -3370,7 +3370,7 @@ void verify_panel(void)
 	if (max_pcol_min < 0) max_pcol_min = 0;
 
 	/* An option: center on player */
-	if (center_player)
+	if (options->center_player)
 	{
 		/* Center vertically */
 		prow_min = y - panel_hgt;
@@ -3444,7 +3444,10 @@ void verify_panel(void)
 	panel_col_min = pcol_min;
 
 	/* Hack -- optional disturb on "panel change" */
-	if (disturb_panel && !center_player) disturb(0);
+	if (options->disturb_panel && !options->center_player)
+	{
+		disturb(0);
+	}
 
 	/* Recalculate the boundaries */
 	panel_bounds();
@@ -4733,7 +4736,10 @@ bool_ get_aim_dir(int *dp)
 	dir = command_dir;
 
 	/* Hack -- auto-target if requested */
-	if (use_old_target && target_okay()) dir = 5;
+	if (options->use_old_target && target_okay())
+	{
+		dir = 5;
+	}
 
 	/* Ask until satisfied */
 	while (!dir)

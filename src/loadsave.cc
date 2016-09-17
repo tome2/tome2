@@ -1709,23 +1709,23 @@ static void do_options(ls_flag_t flag)
 	/*** Special info */
 
 	/* Read "delay_factor" */
-	do_byte(&delay_factor, flag);
+	do_byte(&options->delay_factor, flag);
 
 	/* Read "hitpoint_warn" */
-	do_byte(&hitpoint_warn, flag);
+	do_byte(&options->hitpoint_warn, flag);
 
 	/*** Cheating options ***/
 	do_bool(&wizard, flag);
-	do_bool(&cheat_peek, flag);
-	do_bool(&cheat_hear, flag);
-	do_bool(&cheat_room, flag);
-	do_bool(&cheat_xtra, flag);
-	do_bool(&cheat_live, flag);
+	do_bool(&options->cheat_peek, flag);
+	do_bool(&options->cheat_hear, flag);
+	do_bool(&options->cheat_room, flag);
+	do_bool(&options->cheat_xtra, flag);
+	do_bool(&options->cheat_live, flag);
 
 	/*** Autosave options */
-	do_bool(&autosave_l, flag);
-	do_bool(&autosave_t, flag);
-	do_s16b(&autosave_freq, flag);
+	do_bool(&options->autosave_l, flag);
+	do_bool(&options->autosave_t, flag);
+	do_s16b(&options->autosave_freq, flag);
 
 	if (flag == ls_flag_t::LOAD)
 	{
@@ -1807,16 +1807,16 @@ static void do_options(ls_flag_t flag)
 	if (flag == ls_flag_t::SAVE)
 	{
 		/* Analyze the options */
-		for (i = 0; option_info[i].o_desc; i++)
+		for (auto const &option: options->standard_options)
 		{
-			int os = option_info[i].o_page;
-			int ob = option_info[i].o_bit;
+			int os = option.o_page;
+			int ob = option.o_bit;
 
 			/* Process real entries */
-			if (option_info[i].o_var)
+			if (option.o_var)
 			{
 				/* Set */
-				if (*option_info[i].o_var)
+				if (*option.o_var)
 				{
 					/* Set */
 					option_flag[os] |= (1L << ob);

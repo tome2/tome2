@@ -1237,7 +1237,7 @@ void take_hit(int damage, cptr hit_from)
 
 	char death_message[80];
 
-	int warning = (p_ptr->mhp * hitpoint_warn / 10);
+	int warning = (p_ptr->mhp * options->hitpoint_warn / 10);
 	int percent;
 
 	/* Paranoia */
@@ -1325,7 +1325,7 @@ void take_hit(int damage, cptr hit_from)
 		if (((!has_ability(AB_UNDEAD_FORM)) || ((p_ptr->necro_extra & CLASS_UNDEAD))))
 		{
 			/* Hack -- Note death */
-			if (!last_words)
+			if (!options->last_words)
 			{
 				cmsg_print(TERM_RED, "You die.");
 				msg_print(NULL);
@@ -1461,8 +1461,10 @@ void take_hit(int damage, cptr hit_from)
 		}
 	}
 
-	if (player_char_health)
+	if (options->player_char_health)
+	{
 		lite_spot(p_ptr->py, p_ptr->px);
+	}
 }
 
 
@@ -1473,7 +1475,7 @@ void take_sanity_hit(int damage, cptr hit_from)
 
 	char death_message[80];
 
-	int warning = (p_ptr->msane * hitpoint_warn / 10);
+	int warning = (p_ptr->msane * options->hitpoint_warn / 10);
 
 
 	/* Paranoia */
@@ -1497,7 +1499,7 @@ void take_sanity_hit(int damage, cptr hit_from)
 	{
 		/* Hack -- Note death */
 		cmsg_print(TERM_VIOLET, "You turn into an unthinking vegetable.");
-		if (!last_words)
+		if (!options->last_words)
 		{
 			cmsg_print(TERM_RED, "You die.");
 			msg_print(NULL);
@@ -8035,7 +8037,7 @@ bool_ project(int who, int rad, int y, int x, int dam, int typ, int flg)
 
 	int y_saver, x_saver;  /* For reflecting monsters */
 
-	int msec = delay_factor * delay_factor * delay_factor;
+	auto const msec = options->delay_factor_ms();
 
 	/* Assume the player sees nothing */
 	bool_ notice = FALSE;
@@ -8190,10 +8192,16 @@ bool_ project(int who, int rad, int y, int x, int dam, int typ, int flg)
 				/* Visual effects */
 				print_rel(c, a, y, x);
 				move_cursor_relative(y, x);
-				if (fresh_before) Term_fresh();
+				if (options->fresh_before)
+				{
+					Term_fresh();
+				}
 				sleep_for(milliseconds(msec));
 				lite_spot(y, x);
-				if (fresh_before) Term_fresh();
+				if (options->fresh_before)
+				{
+					Term_fresh();
+				}
 
 				/* Display "beam" grids */
 				if (flg & (PROJECT_BEAM))
@@ -8330,7 +8338,7 @@ bool_ project(int who, int rad, int y, int x, int dam, int typ, int flg)
 			move_cursor_relative(y2, x2);
 
 			/* Flush each "radius" seperately */
-			if (fresh_before) Term_fresh();
+			if (options->fresh_before) Term_fresh();
 
 			/* Delay (efficiently) */
 			if (visual || drawn)
@@ -8360,7 +8368,7 @@ bool_ project(int who, int rad, int y, int x, int dam, int typ, int flg)
 			move_cursor_relative(y2, x2);
 
 			/* Flush the explosion */
-			if (fresh_before) Term_fresh();
+			if (options->fresh_before) Term_fresh();
 		}
 	}
 

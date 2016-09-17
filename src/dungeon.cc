@@ -1274,7 +1274,7 @@ static void process_world(void)
 	}
 
 	/* Check the fate */
-	if (fate_option && (p_ptr->lev > 10))
+	if (options->fate_option && (p_ptr->lev > 10))
 	{
 		/*
 		 * WAS: == 666 against randint(50000).
@@ -1301,9 +1301,9 @@ static void process_world(void)
 	}
 
 	/*** Attempt timed autosave ***/
-	if (autosave_t && autosave_freq)
+	if (options->autosave_t && options->autosave_freq)
 	{
-		if ((turn % ((s32b)autosave_freq * 10)) == 0)
+		if ((turn % (static_cast<s32b>(options->autosave_freq) * 10)) == 0)
 		{
 			is_autosave = TRUE;
 			msg_print("Autosaving the game...");
@@ -1341,10 +1341,13 @@ static void process_world(void)
 						c_ptr = &cave[y][x];
 
 						/* Assume lit */
-						c_ptr->info |= (CAVE_GLOW);
+						c_ptr->info |= CAVE_GLOW;
 
 						/* Hack -- Memorize lit grids if allowed */
-						if (view_perma_grids) c_ptr->info |= (CAVE_MARK);
+						if (options->view_perma_grids)
+						{
+							c_ptr->info |= CAVE_MARK;
+						}
 
 						/* Hack -- Notice spot */
 						note_spot(y, x);
@@ -1847,7 +1850,7 @@ static void process_world(void)
 	if (p_ptr->necro_extra & CLASS_UNDEAD)
 	{
 		int old_chp = p_ptr->chp;
-		int warning = (p_ptr->mhp * hitpoint_warn / 10);
+		int warning = (p_ptr->mhp * options->hitpoint_warn / 10);
 
 		/* Bypass invulnerability and wraithform */
 		p_ptr->chp--;
@@ -1861,10 +1864,10 @@ static void process_world(void)
 		/* Dead player */
 		if (p_ptr->chp < 0)
 		{
-			bool_ old_quick = quick_messages;
+			bool_ old_quick = options->quick_messages;
 
 			/* Hack -- Note death */
-			if (!last_words)
+			if (!options->last_words)
 			{
 				msg_print("You die.");
 				msg_print(NULL);
@@ -1891,12 +1894,12 @@ static void process_world(void)
 			/* Note death */
 			death = TRUE;
 
-			quick_messages = FALSE;
+			options->quick_messages = FALSE;
 			if (get_check("Make a last screenshot? "))
 			{
 				do_cmd_html_dump();
 			}
-			quick_messages = old_quick;
+			options->quick_messages = old_quick;
 
 			/* Dead */
 			return;
@@ -2610,7 +2613,10 @@ static void process_world(void)
 			/* The light is getting dim */
 			else if ((o_ptr->timeout < 100) && (o_ptr->timeout % 10 == 0))
 			{
-				if (disturb_minor) disturb(0);
+				if (options->disturb_minor)
+				{
+					disturb(0);
+				}
 				cmsg_print(TERM_YELLOW, "Your light is growing faint.");
 			}
 		}
@@ -3370,7 +3376,7 @@ static void process_command(void)
 		{
 			if (do_control_walk()) break;
 
-			do_cmd_walk(always_pickup, TRUE);
+			do_cmd_walk(options->always_pickup, TRUE);
 
 			break;
 		}
@@ -3380,7 +3386,7 @@ static void process_command(void)
 		{
 			if (do_control_walk()) break;
 
-			do_cmd_walk(!always_pickup, TRUE);
+			do_cmd_walk(!options->always_pickup, TRUE);
 
 			break;
 		}
@@ -3400,7 +3406,7 @@ static void process_command(void)
 	case ',':
 		{
 			if (do_control_pickup()) break;
-			do_cmd_stay(always_pickup);
+			do_cmd_stay(options->always_pickup);
 			break;
 		}
 
@@ -3408,7 +3414,7 @@ static void process_command(void)
 	case 'g':
 		{
 			if (p_ptr->control) break;
-			do_cmd_stay(!always_pickup);
+			do_cmd_stay(!options->always_pickup);
 			break;
 		}
 
@@ -4139,7 +4145,7 @@ static void process_command(void)
 	case CMD_BLUNDER:
 		{
 			if (do_control_walk()) break;
-			do_cmd_walk(always_pickup, FALSE);
+			do_cmd_walk(options->always_pickup, FALSE);
 			break;
 		}
 		/* Hack -- Unknown command */
@@ -4253,7 +4259,7 @@ static void process_player(void)
 	}
 
 	/* Handle "abort" */
-	if (!avoid_abort)
+	if (!options->avoid_abort)
 	{
 		/* Check for "player abort" (semi-efficiently for resting) */
 		if (running || command_rep || (resting && !(resting & 0x0F)))
@@ -4300,7 +4306,7 @@ static void process_player(void)
 		move_cursor_relative(p_ptr->py, p_ptr->px);
 
 		/* Refresh (optional) */
-		if (fresh_before) Term_fresh();
+		if (options->fresh_before) Term_fresh();
 
 		/* Hack -- Pack Overflow */
 		if (p_ptr->inventory[INVEN_PACK].k_idx)
@@ -4443,7 +4449,7 @@ static void process_player(void)
 
 
 			/* Shimmer monsters if needed */
-			if (!avoid_other && shimmer_monsters)
+			if (!options->avoid_other && shimmer_monsters)
 			{
 				/* Clear the flag */
 				shimmer_monsters = FALSE;
@@ -4472,7 +4478,7 @@ static void process_player(void)
 			}
 
 			/* Shimmer objects if needed and requested */
-			if (!avoid_other && !avoid_shimmer && shimmer_objects)
+			if (!options->avoid_other && !options->avoid_shimmer && shimmer_objects)
 			{
 				/* Clear the flag */
 				shimmer_objects = FALSE;
@@ -4508,7 +4514,7 @@ static void process_player(void)
 			 * fast, and that's why shimmering has been limited to small
 			 * number of monsters -- pelpel
 			 */
-			if (!avoid_other && !avoid_shimmer &&
+			if (!options->avoid_other && !options->avoid_shimmer &&
 			                !resting && !running)
 			{
 				for (j = panel_row_min; j <= panel_row_max; j++)
@@ -4685,8 +4691,8 @@ static void dungeon(void)
 	if (!dun_level) create_down_shaft = create_up_shaft = FALSE;
 
 	/* Option -- no connected stairs */
-	if (!dungeon_stair) create_down_stair = create_up_stair = FALSE;
-	if (!dungeon_stair) create_down_shaft = create_up_shaft = FALSE;
+	if (!options->dungeon_stair) create_down_stair = create_up_stair = FALSE;
+	if (!options->dungeon_stair) create_down_shaft = create_up_shaft = FALSE;
 
 	/* no connecting stairs on special levels */
 	if (!(dungeon_flags & DF_NO_STAIR)) create_down_stair = create_up_stair = FALSE;
@@ -4893,7 +4899,7 @@ static void dungeon(void)
 		move_cursor_relative(p_ptr->py, p_ptr->px);
 
 		/* Optional fresh */
-		if (fresh_after) Term_fresh();
+		if (options->fresh_after) Term_fresh();
 
 		/* Hack -- Notice death or departure */
 		if (!alive || death) break;
@@ -4921,7 +4927,7 @@ static void dungeon(void)
 		move_cursor_relative(p_ptr->py, p_ptr->px);
 
 		/* Optional fresh */
-		if (fresh_after) Term_fresh();
+		if (options->fresh_after) Term_fresh();
 
 		/* Hack -- Notice death or departure */
 		if (!alive || death) break;
@@ -4955,7 +4961,7 @@ static void dungeon(void)
 		move_cursor_relative(p_ptr->py, p_ptr->px);
 
 		/* Optional fresh */
-		if (fresh_after) Term_fresh();
+		if (options->fresh_after) Term_fresh();
 
 		/* Hack -- Notice death or departure */
 		if (!alive || death) break;
@@ -5142,26 +5148,21 @@ void play_game()
 	}
 
 	/* Extract the options */
-	for (i = 0; option_info[i].o_desc; i++)
+	for (auto const &option: options->standard_options)
 	{
-		int os = option_info[i].o_page;
-		int ob = option_info[i].o_bit;
+		int os = option.o_page;
+		int ob = option.o_bit;
 
 		/* Set the "default" options */
-		if (option_info[i].o_var)
+		if (option.o_var)
 		{
-			/* Set */
 			if (option_flag[os] & (1L << ob))
 			{
-				/* Set */
-				(*option_info[i].o_var) = TRUE;
+				*option.o_var = TRUE;
 			}
-
-			/* Clear */
 			else
 			{
-				/* Clear */
-				(*option_info[i].o_var) = FALSE;
+				*option.o_var = FALSE;
 			}
 		}
 	}
@@ -5232,8 +5233,8 @@ void play_game()
 	load_all_pref_files();
 
 	/* Set or clear "rogue_like_commands" if requested */
-	if (arg_force_original) rogue_like_commands = FALSE;
-	if (arg_force_roguelike) rogue_like_commands = TRUE;
+	if (arg_force_original) options->rogue_like_commands = FALSE;
+	if (arg_force_roguelike) options->rogue_like_commands = TRUE;
 
 	/* Initialize vault info */
 	if (init_v_info()) quit("Cannot initialize vaults");
@@ -5409,7 +5410,7 @@ void play_game()
 			}
 
 			/* Cheat death option */
-			else if ((wizard || cheat_live) && !get_check("Die? "))
+			else if ((wizard || options->cheat_live) && !get_check("Die? "))
 			{
 				cheat_death = TRUE;
 

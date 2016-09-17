@@ -500,7 +500,7 @@ namespace {
 /**
  * Interact with given vector of options.
  */
-static void interact_with_options(std::vector<option_type *> const &options, char const *info, interaction_mode_t interaction_mode)
+static void interact_with_options(std::vector<option_type> const &options, char const *info, interaction_mode_t interaction_mode)
 {
 	size_t n = options.size();
 
@@ -528,9 +528,9 @@ static void interact_with_options(std::vector<option_type *> const &options, cha
 
 			/* Display the option text */
 			strnfmt(buf, 80, "%-48s: %s  (%s)",
-				options[i]->o_desc,
-				(*options[i]->o_var ? "yes" : "no "),
-				options[i]->o_text);
+			        options[i].o_desc,
+			        (*options[i].o_var) ? "yes" : "no ",
+			        options[i].o_text);
 			c_prt(a, buf, i + 2, 0);
 		}
 
@@ -586,7 +586,7 @@ static void interact_with_options(std::vector<option_type *> const &options, cha
 				{
 					break;
 				}
-				*(options[k]->o_var) = TRUE;
+				*(options[k].o_var) = TRUE;
 				k = (k + 1) % n;
 				break;
 			}
@@ -600,7 +600,7 @@ static void interact_with_options(std::vector<option_type *> const &options, cha
 					break;
 				}
 
-				*(options[k]->o_var) = FALSE;
+				*(options[k].o_var) = FALSE;
 				k = (k + 1) % n;
 				break;
 			}
@@ -620,54 +620,25 @@ static void interact_with_options(std::vector<option_type *> const &options, cha
 
 
 /*
- * Cheating options
- */
-static option_type cheat_info[6] =
-{
-	{ &cheat_peek, FALSE, 0, 0, "cheat_peek", "Peek into object creation" },
-	{ &cheat_hear, FALSE, 0, 1, "cheat_hear", "Peek into monster creation" },
-	{ &cheat_room, FALSE, 0, 2, "cheat_room", "Peek into dungeon creation" },
-	{ &cheat_xtra, FALSE, 0, 3, "cheat_xtra", "Peek into something else" },
-	{ &cheat_live, FALSE, 0, 5, "cheat_live", "Allow player to avoid death" }
-};
-
-/*
  * Interact with some options for cheating
  */
 static void do_cmd_options_cheat(cptr info)
 {
-	// Calculate number of cheat options
-	size_t n = std::distance(std::begin(cheat_info), std::end(cheat_info));
-
-	// Build the vector of options we're going to interact with
-	std::vector<option_type *> options;
-	options.reserve(n);
-	for (auto &option : cheat_info)
-	{
-		options.push_back(&option);
-	}
-
 	// Interact
-	interact_with_options(options, info, interaction_mode_t::READ_WRITE);
+	interact_with_options(options->cheat_options, info, interaction_mode_t::READ_WRITE);
 
 	// If user toggled any of the options to TRUE, then we add those cheats
 	// to the player's "noscore" flags. Note that it doesn't matter what the
 	// previous value was -- we don't "unset" noscore flags anyway.
-	for (auto &option: options)
+	for (auto const &option: options->cheat_options)
 	{
-		if (*option->o_var)
+		if (*option.o_var)
 		{
-			noscore |= (option->o_page * 256 + option->o_bit);
+			noscore |= (option.o_page * 256 + option.o_bit);
 		}
 	}
 }
 
-
-static option_type autosave_info[2] =
-{
-	{ &autosave_l, FALSE, 0, 6, "autosave_l", "Autosave when entering new levels" },
-	{ &autosave_t, FALSE, 0, 7, "autosave_t", "Timed autosave" },
-};
 
 s16b toggle_frequency(s16b current)
 {
@@ -692,7 +663,9 @@ static void do_cmd_options_autosave(cptr info)
 {
 	char ch;
 
-	int i, k = 0, n = 2;
+	int i, k = 0;
+
+	int n = options->autosave_options.size();
 
 	int dir;
 
@@ -719,15 +692,18 @@ static void do_cmd_options_autosave(cptr info)
 			/* Color current option */
 			if (i == k) a = TERM_L_BLUE;
 
+			/* Get the option */
+			auto const option = &options->autosave_options[i];
+
 			/* Display the option text */
 			strnfmt(buf, 80, "%-48s: %s  (%s)",
-			        autosave_info[i].o_desc,
-			        (*autosave_info[i].o_var ? "yes" : "no "),
-			        autosave_info[i].o_text);
+			        option->o_desc,
+			        (*option->o_var) ? "yes" : "no ",
+			        option->o_text);
 			c_prt(a, buf, i + 2, 0);
 		}
 
-		prt(format("Timed autosave frequency: every %d turns", autosave_freq), 5, 0);
+		prt(format("Timed autosave frequency: every %d turns", options->autosave_freq), 5, 0);
 
 
 		/* Hilite current option */
@@ -773,8 +749,7 @@ static void do_cmd_options_autosave(cptr info)
 		case 'Y':
 		case '6':
 			{
-
-				(*autosave_info[k].o_var) = TRUE;
+			        (*options->autosave_options[k].o_var) = TRUE;
 				k = (k + 1) % n;
 
 				break;
@@ -784,7 +759,7 @@ static void do_cmd_options_autosave(cptr info)
 		case 'N':
 		case '4':
 			{
-				(*autosave_info[k].o_var) = FALSE;
+			        (*options->autosave_options[k].o_var) = FALSE;
 				k = (k + 1) % n;
 
 				break;
@@ -793,9 +768,9 @@ static void do_cmd_options_autosave(cptr info)
 		case 'f':
 		case 'F':
 			{
-				autosave_freq = toggle_frequency(autosave_freq);
-				prt(format("Timed autosave frequency: every %d turns",
-				           autosave_freq), 5, 0);
+			        options->autosave_freq = toggle_frequency(options->autosave_freq);
+				prt(fmt::format("Timed autosave frequency: every {} turns",
+				           options->autosave_freq), 5, 0);
 
 				break;
 			}
@@ -816,21 +791,22 @@ static void do_cmd_options_autosave(cptr info)
 void do_cmd_options_aux(int page, cptr info, bool_ read_only)
 {
 	// Scrape together all the options from the relevant page.
-	std::vector<option_type *> options;
-	options.reserve(64); // Seems a reasonable number; anything more would be unusable anyway
-	for (size_t i = 0; option_info[i].o_desc; i++)
-	{
-		if (option_info[i].o_page == page)
-		{
-			options.push_back(&option_info[i]);
-		}
-	}
+	std::vector<option_type> page_options;
+	page_options.reserve(options->standard_options.size());
+	std::copy_if(
+	        std::begin(options->standard_options),
+	        std::end(options->standard_options),
+	        std::back_inserter(page_options),
+	        [=](option_type const &option) -> bool {
+		        return (option.o_page == page);
+	        }
+	);
 
 	// Interact with the options
 	interaction_mode_t interaction_mode = read_only
 		? interaction_mode_t::READ_ONLY
 		: interaction_mode_t::READ_WRITE;
-	interact_with_options(options, info, interaction_mode);
+	interact_with_options(page_options, info, interaction_mode);
 }
 
 
@@ -1042,25 +1018,25 @@ static errr option_dump(cptr fname)
 	fprintf(fff, "# Automatic option dump\n\n");
 
 	/* Dump options (skip cheat, adult, score) */
-	for (i = 0; option_info[i].o_var != NULL; i++)
+	for (auto const &option: options->standard_options)
 	{
 		/* Require a real option */
-		if (!option_info[i].o_text) continue;
+		if (!option.o_text) continue;
 
 		/* No birth options */
-		if (option_info[i].o_page == 6) continue;
+		if (option.o_page == 6) continue;
 
 		/* Comment */
-		fprintf(fff, "# Option '%s'\n", option_info[i].o_desc);
+		fprintf(fff, "# Option '%s'\n", option.o_desc);
 
 		/* Dump the option */
-		if ((*option_info[i].o_var))
+		if (*option.o_var)
 		{
-			fprintf(fff, "Y:%s\n", option_info[i].o_text);
+			fprintf(fff, "Y:%s\n", option.o_text);
 		}
 		else
 		{
-			fprintf(fff, "X:%s\n", option_info[i].o_text);
+			fprintf(fff, "X:%s\n", option.o_text);
 		}
 
 		/* Skip a line */
@@ -1345,14 +1321,26 @@ void do_cmd_options(void)
 				/* Get a new value */
 				while (1)
 				{
-					int msec = delay_factor * delay_factor * delay_factor;
-					prt(format("Current base delay factor: %d (%d msec)",
-					           delay_factor, msec), 22, 0);
+					auto const msec = options->delay_factor_ms();
+
+					prt(fmt::format("Current base delay factor: {:d} ({:d} msec)",
+					           options->delay_factor, msec), 22, 0);
 					prt("Delay Factor (0-9 or ESC to accept): ", 23, 0);
+
 					k = inkey();
-					if (k == ESCAPE) break;
-					if (isdigit(k)) delay_factor = D2I(k);
-					else bell();
+					if (k == ESCAPE)
+					{
+						break;
+					}
+
+					if (isdigit(k))
+					{
+						options->delay_factor = D2I(k);
+					}
+					else
+					{
+						bell();
+					}
 				}
 
 				break;
@@ -1368,13 +1356,24 @@ void do_cmd_options(void)
 				/* Get a new value */
 				while (1)
 				{
-					prt(format("Current hitpoint warning: %d0%%",
-					           hitpoint_warn), 22, 0);
+					prt(fmt::format("Current hitpoint warning: {:d}0%",
+					           options->hitpoint_warn), 22, 0);
 					prt("Hitpoint Warning (0-9 or ESC to accept): ", 20, 0);
+
 					k = inkey();
-					if (k == ESCAPE) break;
-					if (isdigit(k)) hitpoint_warn = D2I(k);
-					else bell();
+					if (k == ESCAPE)
+					{
+						break;
+					}
+
+					if (isdigit(k))
+					{
+						options->hitpoint_warn = D2I(k);
+					}
+					else
+					{
+						bell();
+					}
 				}
 
 				break;

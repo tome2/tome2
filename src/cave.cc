@@ -940,7 +940,7 @@ static void map_info(int y, int x, byte *ap, char *cp)
 
 
 		/**** Step 2 -- Apply special random effects ****/
-		if (!avoid_other && !avoid_shimmer)
+		if (!options->avoid_other && !options->avoid_shimmer)
 		{
 			/* Special terrain effect */
 			if (c_ptr->effect)
@@ -971,7 +971,7 @@ static void map_info(int y, int x, byte *ap, char *cp)
 		 */
 
 		/* view_special_lite: lighting effects for boring features */
-		if (view_special_lite &&
+		if (options->view_special_lite &&
 		                ((f_ptr->flags & (FF_FLOOR | FF_REMEMBER)) == FF_FLOOR))
 		{
 			if (!p_ptr->wild_mode && !(info & (CAVE_TRDT)))
@@ -980,7 +980,7 @@ static void map_info(int y, int x, byte *ap, char *cp)
 				if (info & (CAVE_SEEN))
 				{
 					/* Only lit by "torch" light */
-					if (view_yellow_lite && !(info & (CAVE_GLOW)))
+					if (options->view_yellow_lite && !(info & (CAVE_GLOW)))
 					{
 						/* Use "yellow" */
 						a = TERM_YELLOW;
@@ -1002,7 +1002,7 @@ static void map_info(int y, int x, byte *ap, char *cp)
 				}
 
 				/* "Out-of-sight" glowing grids -- handle "view_bright_lite" */
-				else if (view_bright_lite)
+				else if (options->view_bright_lite)
 				{
 					/* Use darker colour */
 					a = dark_attrs[a & 0xF];
@@ -1011,7 +1011,7 @@ static void map_info(int y, int x, byte *ap, char *cp)
 		}
 
 		/* view_granite_lite: lighting effects for walls and doors */
-		else if (view_granite_lite &&
+		else if (options->view_granite_lite &&
 		                (f_ptr->flags & (FF_NO_VISION | FF_DOOR)))
 		{
 			if (!p_ptr->wild_mode && !(info & (CAVE_TRDT)))
@@ -1030,7 +1030,7 @@ static void map_info(int y, int x, byte *ap, char *cp)
 				}
 
 				/* Handle "view_bright_lite" */
-				else if (view_bright_lite)
+				else if (options->view_bright_lite)
 				{
 					/* Use darker colour */
 					a = dark_attrs[a & 0xF];
@@ -1092,7 +1092,7 @@ static void map_info(int y, int x, byte *ap, char *cp)
 				*ap = object_attr(o_ptr);
 
 				/* Multi-hued attr */
-				if (!avoid_other && (k_info[o_ptr->k_idx].flags & TR_ATTR_MULTI))
+				if (!options->avoid_other && (k_info[o_ptr->k_idx].flags & TR_ATTR_MULTI))
 				{
 					*ap = get_shimmer_color();
 				}
@@ -1129,7 +1129,7 @@ static void map_info(int y, int x, byte *ap, char *cp)
 				*ap = object_attr(o_ptr);
 
 				/* Multi-hued attr */
-				if (!avoid_other && (k_info[o_ptr->k_idx].flags & TR_ATTR_MULTI))
+				if (!options->avoid_other && (k_info[o_ptr->k_idx].flags & TR_ATTR_MULTI))
 				{
 					*ap = get_shimmer_color();
 				}
@@ -1148,7 +1148,7 @@ static void map_info(int y, int x, byte *ap, char *cp)
 				a = r_ptr->x_attr;
 
 				/* Ignore weird codes */
-				if (avoid_other)
+				if (options->avoid_other)
 				{
 					/* Use char */
 					*cp = c;
@@ -1237,7 +1237,7 @@ static void map_info(int y, int x, byte *ap, char *cp)
 		monster_race *r_ptr = &r_info[p_ptr->body_monster];
 
 		/* Get the "player" attr */
-		if (!avoid_other && (r_ptr->flags & RF_ATTR_MULTI))
+		if (!options->avoid_other && (r_ptr->flags & RF_ATTR_MULTI))
 		{
 			a = get_shimmer_color();
 		}
@@ -1250,7 +1250,7 @@ static void map_info(int y, int x, byte *ap, char *cp)
 		c = r_ptr->x_char;
 
 		/* Show player health char instead? */
-		if (player_char_health)
+		if (options->player_char_health)
 		{
 			int percent = p_ptr->chp * 10 / p_ptr->mhp;
 
@@ -1279,10 +1279,13 @@ void map_info_default(int y, int x, byte *ap, char *cp)
 
 	byte c;
 
+	/* Shorthand */
+	auto const avoid_other = options->avoid_other;
+
 	/**** Preparation ****/
 
 	/* Access the grid */
-	cave_type *c_ptr = &cave[y][x];
+	auto const c_ptr = &cave[y][x];
 
 
 	/* Cache some frequently used values */
@@ -1304,7 +1307,7 @@ void map_info_default(int y, int x, byte *ap, char *cp)
 	}
 
 	/* Access floor */
-	feature_type *f_ptr = &f_info[feat];
+	feature_type const *f_ptr = &f_info[feat];
 
 
 	/**** Layer 1 -- Terrain feature ****/
@@ -1405,7 +1408,7 @@ void map_info_default(int y, int x, byte *ap, char *cp)
 		 */
 
 		/* view_special_lite: lighting effects for boring features */
-		if (view_special_lite &&
+		if (options->view_special_lite &&
 		                ((f_ptr->flags & (FF_FLOOR | FF_REMEMBER)) == FF_FLOOR))
 		{
 			if (!p_ptr->wild_mode && !(info & (CAVE_TRDT)))
@@ -1414,7 +1417,7 @@ void map_info_default(int y, int x, byte *ap, char *cp)
 				if (info & (CAVE_SEEN))
 				{
 					/* Only lit by "torch" light */
-					if (view_yellow_lite && !(info & (CAVE_GLOW)))
+					if (options->view_yellow_lite && !(info & (CAVE_GLOW)))
 					{
 						/* Use "yellow" */
 						a = TERM_YELLOW;
@@ -1436,7 +1439,7 @@ void map_info_default(int y, int x, byte *ap, char *cp)
 				}
 
 				/* "Out-of-sight" glowing grids -- handle "view_bright_lite" */
-				else if (view_bright_lite)
+				else if (options->view_bright_lite)
 				{
 					/* Use darker colour */
 					a = dark_attrs[a & 0xF];
@@ -1445,7 +1448,7 @@ void map_info_default(int y, int x, byte *ap, char *cp)
 		}
 
 		/* view_granite_lite: lighting effects for walls and doors */
-		else if (view_granite_lite &&
+		else if (options->view_granite_lite &&
 		                (f_ptr->flags & (FF_NO_VISION | FF_DOOR)))
 		{
 			if (!p_ptr->wild_mode && !(info & (CAVE_TRDT)))
@@ -1464,7 +1467,7 @@ void map_info_default(int y, int x, byte *ap, char *cp)
 				}
 
 				/* Handle "view_bright_lite" */
-				else if (view_bright_lite)
+				else if (options->view_bright_lite)
 				{
 					/* Use darker colour */
 					a = dark_attrs[a & 0xF];
@@ -1799,18 +1802,18 @@ void note_spot(int y, int x)
 
 
 	/* Hack -- memorize grids */
-	if (!(info & (CAVE_MARK)))
+	if (!(info & CAVE_MARK))
 	{
 		/* Memorise some "boring" grids */
 		if (cave_plain_floor_grid(c_ptr))
 		{
 			/* Option -- memorise certain floors */
-			if ((info & (CAVE_TRDT)) ||
-			                ((info & (CAVE_GLOW)) && view_perma_grids ) ||
-			                view_torch_grids)
+			if ((info & CAVE_TRDT) ||
+			        ((info & CAVE_GLOW) && options->view_perma_grids) ||
+			        options->view_torch_grids)
 			{
 				/* Memorize */
-				c_ptr->info |= (CAVE_MARK);
+				c_ptr->info |= CAVE_MARK;
 			}
 		}
 
@@ -1818,7 +1821,7 @@ void note_spot(int y, int x)
 		else
 		{
 			/* Memorize */
-			c_ptr->info |= (CAVE_MARK);
+			c_ptr->info |= CAVE_MARK;
 		}
 	}
 }
@@ -2036,9 +2039,6 @@ void display_map(int *cy, int *cx)
 
 	byte tp;
 
-	bool_ old_view_special_lite;
-	bool_ old_view_granite_lite;
-
 	int hgt, wid, yrat, xrat, yfactor, xfactor;
 
 
@@ -2063,12 +2063,12 @@ void display_map(int *cy, int *cx)
 
 
 	/* Save lighting effects */
-	old_view_special_lite = view_special_lite;
-	old_view_granite_lite = view_granite_lite;
+	auto const old_view_special_lite = options->view_special_lite;
+	auto const old_view_granite_lite = options->view_granite_lite;
 
 	/* Disable lighting effects */
-	view_special_lite = FALSE;
-	view_granite_lite = FALSE;
+	options->view_special_lite = FALSE;
+	options->view_granite_lite = FALSE;
 
 
 	/* Set up initial maps */
@@ -2165,8 +2165,8 @@ void display_map(int *cy, int *cx)
 	*cx = p_ptr->px * xfactor / xrat + COL_MAP;
 
 	/* Restore lighting effects */
-	view_special_lite = old_view_special_lite;
-	view_granite_lite = old_view_granite_lite;
+	options->view_special_lite = old_view_special_lite;
+	options->view_granite_lite = old_view_granite_lite;
 }
 
 
@@ -3871,7 +3871,7 @@ void update_flow(void)
 	int x, y, d;
 
 	/* Hack -- disabled */
-	if (!flow_by_sound) return;
+	if (!options->flow_by_sound) return;
 
 	/* Paranoia -- make sure the array is empty */
 	if (temp_n) return;
@@ -4057,7 +4057,7 @@ void wiz_lite(void)
 					}
 
 					/* Normally, memorize floors (see above) */
-					if (view_perma_grids && !view_torch_grids)
+					if (options->view_perma_grids && !options->view_torch_grids)
 					{
 						/* Memorize the grid */
 						c_ptr->info |= (CAVE_MARK);
@@ -4454,7 +4454,10 @@ void disturb(int stop_search)
 	}
 
 	/* Flush the input if requested */
-	if (flush_disturb) flush();
+	if (options->flush_disturb)
+	{
+		flush();
+	}
 }
 
 
@@ -4464,7 +4467,7 @@ void disturb(int stop_search)
  */
 void disturb_on_state()
 {
-	if (disturb_state)
+	if (options->disturb_state)
 	{
 		disturb(0);
 	}
@@ -4477,7 +4480,7 @@ void disturb_on_state()
  */
 void disturb_on_other()
 {
-	if (disturb_other)
+	if (options->disturb_other)
 	{
 		disturb(1);
 	}

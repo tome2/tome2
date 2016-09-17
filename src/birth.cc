@@ -820,11 +820,7 @@ static void player_wipe(void)
 	p_ptr->food = PY_FOOD_FULL - 1;
 
 	/* Clear "cheat" options */
-	cheat_peek = FALSE;
-	cheat_hear = FALSE;
-	cheat_room = FALSE;
-	cheat_xtra = FALSE;
-	cheat_live = FALSE;
+	options->reset_cheat_options();
 
 	/* Assume no winning game */
 	total_winner = 0;
@@ -2174,7 +2170,7 @@ static bool_ player_birth_aux_ask()
 	/*** User enters number of quests ***/
 	/* Heino Vander Sanden and Jimmy De Laet */
 
-	if (!ironman_rooms)
+	if (!options->ironman_rooms)
 	{
 		if (do_quick_start)
 		{
@@ -2467,7 +2463,7 @@ static bool_ player_birth_aux_auto()
 
 
 	/* Initialize */
-	if (autoroll)
+	if (options->autoroll)
 	{
 		int mval[6];
 
@@ -2530,7 +2526,7 @@ static bool_ player_birth_aux_auto()
 				if (!askfor_aux(inp, 8)) inp[0] = '\0';
 
 				/* Weirdos stat display .. erm .. I mean, original stat display */
-				if (!linear_stats)
+				if (!options->linear_stats)
 				{
 					/* Hack -- add a fake slash */
 					strcat(inp, "/");
@@ -2570,7 +2566,7 @@ static bool_ player_birth_aux_auto()
 	while (TRUE)
 	{
 		/* Feedback */
-		if (autoroll)
+		if (options->autoroll)
 		{
 			Term_clear();
 
@@ -2610,7 +2606,7 @@ static bool_ player_birth_aux_auto()
 		}
 
 		/* Auto-roll */
-		while (autoroll)
+		while (options->autoroll)
 		{
 			bool_ accept = TRUE;
 
@@ -2832,7 +2828,7 @@ static bool_ player_birth_aux()
 	else
 	{
 		/* Point based */
-		if (point_based)
+		if (options->point_based)
 		{
 			if (!player_birth_aux_point()) return FALSE;
 		}

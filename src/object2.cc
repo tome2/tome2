@@ -387,7 +387,7 @@ void wipe_o_list(void)
 		if (!o_ptr->k_idx) continue;
 
 		/* Mega-Hack -- preserve artifacts */
-		if (!character_dungeon || preserve)
+		if (!character_dungeon || options->preserve)
 		{
 			/* Hack -- Preserve unknown artifacts */
 			if (artifact_p(o_ptr) && !object_known_p(o_ptr))
@@ -2687,7 +2687,10 @@ static void a_m_aux_2(object_type *o_ptr, int level, int power)
 			rating += 30;
 
 			/* Mention the item */
-			if ((cheat_peek) || (p_ptr->precognition)) object_mention(o_ptr);
+			if (options->cheat_peek || p_ptr->precognition)
+			{
+				object_mention(o_ptr);
+			}
 
 			break;
 		}
@@ -2699,7 +2702,10 @@ static void a_m_aux_2(object_type *o_ptr, int level, int power)
 				rating += 5;
 
 				/* Mention the item */
-				if ((cheat_peek) || (p_ptr->precognition)) object_mention(o_ptr);
+				if (options->cheat_peek || p_ptr->precognition)
+				{
+					object_mention(o_ptr);
+				}
 				dragon_resist(o_ptr);
 			}
 			break;
@@ -2712,7 +2718,10 @@ static void a_m_aux_2(object_type *o_ptr, int level, int power)
 				rating += 5;
 
 				/* Mention the item */
-				if ((cheat_peek) || (p_ptr->precognition)) object_mention(o_ptr);
+				if (options->cheat_peek || p_ptr->precognition)
+				{
+					object_mention(o_ptr);
+				}
 				dragon_resist(o_ptr);
 			}
 			break;
@@ -2843,7 +2852,10 @@ static void a_m_aux_3(object_type *o_ptr, int level, int power)
 					rating += 25;
 
 					/* Mention the item */
-					if ((cheat_peek) || (p_ptr->precognition)) object_mention(o_ptr);
+					if (options->cheat_peek || p_ptr->precognition)
+					{
+						object_mention(o_ptr);
+					}
 
 					break;
 				}
@@ -3011,7 +3023,10 @@ static void a_m_aux_3(object_type *o_ptr, int level, int power)
 					o_ptr->pval = 1 + m_bonus(3, level);
 
 					/* Mention the item */
-					if ((cheat_peek) || (p_ptr->precognition)) object_mention(o_ptr);
+					if (options->cheat_peek || p_ptr->precognition)
+					{
+						object_mention(o_ptr);
+					}
 					break;
 				}
 
@@ -3023,7 +3038,10 @@ static void a_m_aux_3(object_type *o_ptr, int level, int power)
 					o_ptr->to_d = 1 + m_bonus(5, level);
 
 					/* Mention the item */
-					if ((cheat_peek) || (p_ptr->precognition)) object_mention(o_ptr);
+					if (options->cheat_peek || p_ptr->precognition)
+					{
+						object_mention(o_ptr);
+					}
 					break;
 				}
 
@@ -3113,7 +3131,10 @@ static void a_m_aux_3(object_type *o_ptr, int level, int power)
 					rating += 25;
 
 					/* Mention the item */
-					if ((cheat_peek) || (p_ptr->precognition)) object_mention(o_ptr);
+					if (options->cheat_peek || p_ptr->precognition)
+					{
+						object_mention(o_ptr);
+					}
 
 					break;
 				}
@@ -3394,7 +3415,10 @@ static void a_m_aux_4(object_type *o_ptr, int level, int power)
 			/* Rating boost */
 			rating += 25;
 			/*  Mention the item */
-			if ((cheat_peek) || (p_ptr->precognition)) object_mention(o_ptr);
+			if (options->cheat_peek || p_ptr->precognition)
+			{
+				object_mention(o_ptr);
+			}
 		}
 		break;
 	case TV_POTION2:
@@ -3944,7 +3968,10 @@ void apply_magic(object_type *o_ptr, int lev, bool_ okay, bool_ good, bool_ grea
 
 			k_ptr->artifact = TRUE;
 
-			if (cheat_peek || p_ptr->precognition) object_mention(o_ptr);
+			if (options->cheat_peek || p_ptr->precognition)
+			{
+				object_mention(o_ptr);
+			}
 		}
 
 		return;
@@ -4059,7 +4086,10 @@ void apply_magic(object_type *o_ptr, int lev, bool_ okay, bool_ good, bool_ grea
 		good_item_flag = TRUE;
 
 		/* Cheat -- peek at the item */
-		if ((cheat_peek) || (p_ptr->precognition)) object_mention(o_ptr);
+		if (options->cheat_peek || p_ptr->precognition)
+		{
+			object_mention(o_ptr);
+		}
 
 		/* Spell in it? No! */
 		if (a_ptr->flags & TR_SPELL_CONTAIN)
@@ -4219,7 +4249,10 @@ try_an_other_ego:
 		}
 
 		/* Cheat -- describe the item */
-		if ((cheat_peek) || (p_ptr->precognition)) object_mention(o_ptr);
+		if (options->cheat_peek || p_ptr->precognition)
+		{
+			object_mention(o_ptr);
+		}
 	}
 
 
@@ -4773,7 +4806,10 @@ bool_ make_object(object_type *j_ptr, bool_ good, bool_ great, obj_theme const &
 		rating += (k_info[j_ptr->k_idx].level - dun_level);
 
 		/* Cheat -- peek at items */
-		if ((cheat_peek) || (p_ptr->precognition)) object_mention(j_ptr);
+		if (options->cheat_peek || p_ptr->precognition)
+		{
+			object_mention(j_ptr);
+		}
 	}
 
 	/* Success */
@@ -4930,8 +4966,10 @@ bool_ make_gold(object_type *j_ptr)
 	j_ptr->pval = (base + (8L * randint(base)) + randint(8));
 	
 	/* Multiply value by 5 if selling is disabled */
-	if (no_selling)
+	if (options->no_selling)
+	{
 		j_ptr->pval *= 5;
+	}
 
 	/* Success */
 	return (TRUE);

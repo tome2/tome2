@@ -300,7 +300,7 @@ static s32b price_item(object_type *o_ptr, int greed, bool_ flip)
 		if (st_info[st_ptr->st_idx].flags & STF_ALL_ITEM) price = price / 2;
 		
 		/* No selling means you get no money */
-		if (no_selling) price = 0;
+		if (options->no_selling) price = 0;
 	}
 
 	/* Shop is selling */
@@ -454,7 +454,7 @@ static void mass_produce(object_type *o_ptr)
 
 	if (o_ptr->art_name)
 	{
-		if (cheat_peek && discount)
+		if (options->cheat_peek && discount)
 		{
 			msg_print("No discount on random artifacts.");
 		}
@@ -1704,7 +1704,7 @@ static bool_ prompt_yesno(cptr prompt)
 		}
 
 		/* Any other key must be in the allowed set to break the loop. */
-		if ((strchr(allowed, key) != NULL) || quick_messages) {
+		if ((strchr(allowed, key) != NULL) || options->quick_messages) {
 			/* Check for presence in the 'yes' set */
 			ret = (strchr(yes, key) != NULL);
 			break;

@@ -143,6 +143,11 @@ int text_out_indent = 0;
 
 
 /*
+ * Options
+ */
+struct options *options = nullptr;
+
+/*
  * Dungeon variables
  */
 

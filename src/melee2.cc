@@ -302,23 +302,22 @@ static void remove_bad_spells(int m_idx, monster_spell_flag_set *spells_p)
 
 	/* Too stupid to know anything? */
 	auto const r_ptr = m_ptr->race();
-	if (r_ptr->flags & RF_STUPID) return;
-
-
-	/* Must be cheating or learning */
-	if (!smart_learn) return;
-
-
-	/* Update acquired knowledge */
-	if (smart_learn)
+	if (r_ptr->flags & RF_STUPID)
 	{
-		/* Hack -- Occasionally forget player status */
-		if (m_ptr->smart && magik(1)) m_ptr->smart = 0L;
-
-		/* Use the memorized flags */
-		smart = m_ptr->smart;
+		return;
 	}
 
+	/* Must be cheating or learning */
+	if (!options->smart_learn)
+	{
+		return;
+	}
+
+	/* Hack -- Occasionally forget player status */
+	if (m_ptr->smart && magik(1)) m_ptr->smart = 0L;
+
+	/* Use the memorized flags */
+	smart = m_ptr->smart;
 
 	/* Nothing known */
 	if (!smart) return;
@@ -897,7 +896,7 @@ static void monster_msg(cptr fmt, ...)
 void monster_msg_simple(cptr s)
 {
 	/* Display */
-	if (disturb_other)
+	if (options->disturb_other)
 	{
 		msg_print(s);
 	}
@@ -924,7 +923,7 @@ void cmonster_msg(char a, cptr fmt, ...)
 	va_end(vp);
 
 	/* Display */
-	if (disturb_other)
+	if (options->disturb_other)
 		cmsg_print(a, buf);
 	else
 	{
@@ -3933,7 +3932,10 @@ static int mon_will_run(int m_idx)
 static bool_ get_fear_moves_aux(int m_idx, int *yp, int *xp)
 {
 	/* Monster flowing disabled */
-	if (!flow_by_sound) return (FALSE);
+	if (!options->flow_by_sound)
+	{
+		return (FALSE);
+	}
 
 	/* Monster location */
 	monster_type *m_ptr = &m_list[m_idx];
@@ -4051,7 +4053,7 @@ static bool_ find_safety(int m_idx, int *yp, int *xp)
 				if (distance(y, x, fy, fx) != d) continue;
 
 				/* Check for "availability" (if monsters can flow) */
-				if (flow_by_sound)
+				if (options->flow_by_sound)
 				{
 					/* Ignore grids very far from the player */
 					if (cave[y][x].when < cave[p_ptr->py][p_ptr->px].when) continue;
@@ -4439,7 +4441,7 @@ static bool_ get_moves(int m_idx, int *mm)
 			else
 			{
 				/* Attempt to avoid the player */
-				if (flow_by_sound)
+				if (options->flow_by_sound)
 				{
 					/* Adjust movement */
 					(void)get_fear_moves_aux(m_idx, &y, &x);
@@ -5846,7 +5848,10 @@ static void process_monster(int m_idx, bool_ is_frien)
 					msg_print("You hear a door burst open!");
 
 					/* Disturb (sometimes) */
-					if (disturb_minor) disturb(0);
+					if (options->disturb_minor)
+					{
+						disturb(0);
+					}
 
 					/* The door was bashed open */
 					did_bash_door = TRUE;
@@ -6127,12 +6132,12 @@ static void process_monster(int m_idx, bool_ is_frien)
 			}
 
 			/* Possible disturb */
-			if (m_ptr->ml && (disturb_move ||
+			if (m_ptr->ml && (options->disturb_move ||
 			                  ((m_ptr->mflag & (MFLAG_VIEW)) &&
-			                   disturb_near)))
+			                   options->disturb_near)))
 			{
 				/* Disturb */
-				if ((is_friend(m_ptr) < 0) || disturb_pets)
+				if ((is_friend(m_ptr) < 0) || options->disturb_pets)
 					disturb(0);
 			}
 
@@ -6485,7 +6490,7 @@ void process_monsters(void)
 
 		/* Hack -- Monsters can "smell" the player from far away */
 		/* Note that most monsters have "aaf" of "20" or so */
-		else if (flow_by_sound &&
+		else if (options->flow_by_sound &&
 		                (cave[p_ptr->py][p_ptr->px].when == cave[fy][fx].when) &&
 		                (cave[fy][fx].cost < MONSTER_FLOW_DEPTH) &&
 		                (cave[fy][fx].cost < r_ptr->aaf))

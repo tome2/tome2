@@ -1225,7 +1225,7 @@ void flush(void)
  */
 void flush_on_failure()
 {
-	if (flush_failure)
+	if (options->flush_failure)
 	{
 		flush();
 	}
@@ -1241,7 +1241,7 @@ void bell(void)
 	Term_fresh();
 
 	/* Make a bell noise (if allowed) */
-	if (ring_bell)
+	if (options->ring_bell)
 	{
 		Term_bell();
 	}
@@ -1506,7 +1506,7 @@ static char inkey_real(bool_ inkey_scan)
 	(void)Term_get_cursor(&v);
 
 	/* Show the cursor if waiting, except sometimes in "command" mode */
-	if (!inkey_scan && (!inkey_flag || hilite_player || character_icky))
+	if (!inkey_scan && (!inkey_flag || options->hilite_player || character_icky))
 	{
 		/* Show the cursor */
 		(void)Term_set_cursor(1);
@@ -1598,7 +1598,7 @@ static char inkey_real(bool_ inkey_scan)
 
 
 		/* Handle "control-right-bracket" */
-		if ((ch == 29) || ((!rogue_like_commands) && (ch == KTRL('D'))))
+		if ((ch == 29) || ((!options->rogue_like_commands) && (ch == KTRL('D'))))
 		{
 			/* Strip this key */
 			ch = 0;
@@ -1691,7 +1691,7 @@ static void msg_flush(int x)
 	while (1)
 	{
 		int cmd = inkey();
-		if (quick_messages) break;
+		if (options->quick_messages) break;
 		if ((cmd == ESCAPE) || (cmd == ' ')) break;
 		if ((cmd == '\n') || (cmd == '\r')) break;
 		bell();
@@ -1801,7 +1801,7 @@ void cmsg_print(byte color, cptr msg)
 	if (character_generated) message_add(msg, color);
 
 	/* Handle "auto_more" */
-	if (auto_more)
+	if (options->auto_more)
 	{
 		/* Window stuff */
 		p_ptr->window |= (PW_MESSAGE);
@@ -1883,7 +1883,7 @@ void cmsg_print(byte color, cptr msg)
 	p += n + 1;
 
 	/* Optional refresh */
-	if (fresh_message) Term_fresh();
+	if (options->fresh_message) Term_fresh();
 }
 
 /* Hack -- for compatibility and easy sake */
@@ -2546,7 +2546,7 @@ bool_ get_check(cptr prompt)
 	while (TRUE)
 	{
 		i = inkey();
-		if (quick_messages) break;
+		if (options->quick_messages) break;
 		if (i == ESCAPE) break;
 		if (strchr("YyNn", i)) break;
 		bell();
@@ -2955,7 +2955,7 @@ void request_command(int shopping)
 	}
 
 	/* Hack -- Auto-repeat certain commands */
-	if (always_repeat && (command_arg <= 0))
+	if (options->always_repeat && (command_arg <= 0))
 	{
 		/* Hack -- auto repeat certain commands */
 		if (strchr("TBDoc+", command_cmd))
@@ -3265,7 +3265,10 @@ void get_count(int number, int max)
 	command_arg = number;
 
 	/* Hack -- Optional flush */
-	if (flush_command) flush();
+	if (options->flush_command)
+	{
+		flush();
+	}
 
 	/* Clear top line */
 	prt("", 0, 0);
@@ -3626,7 +3629,7 @@ timer_type *new_timer(void (*callback)(), s32b delay)
 
 int get_keymap_mode()
 {
-	if (rogue_like_commands)
+	if (options->rogue_like_commands)
 	{
 		return KEYMAP_MODE_ROGUE;
 	}

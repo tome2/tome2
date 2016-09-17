@@ -140,7 +140,7 @@ static bool_ stair_hooks(stairs_direction direction)
  */
 static bool ask_leave()
 {
-	if (confirm_stairs)
+	if (options->confirm_stairs)
 	{
 		if (get_check("Really leave the level? "))
 		{
@@ -2102,7 +2102,7 @@ void do_cmd_disarm(void)
 				more = FALSE;
 			}
 			else
-				more = do_cmd_disarm_aux(y, x, dir, always_pickup);
+				more = do_cmd_disarm_aux(y, x, dir, options->always_pickup);
 		}
 	}
 
@@ -2185,7 +2185,7 @@ static bool_ do_cmd_bash_aux(int y, int x, int dir)
 		}
 
 		/* Hack -- Fall through the door. Can't disarm while falling. */
-		move_player_aux(dir, always_pickup, 0, FALSE);
+		move_player_aux(dir, options->always_pickup, 0, FALSE);
 
 		/* Update some things */
 		p_ptr->update |= (PU_VIEW | PU_MON_LITE);
@@ -2389,7 +2389,7 @@ void do_cmd_alter(void)
 		else if (c_ptr->t_idx != 0)
 		{
 			/* Tunnel */
-			more = do_cmd_disarm_aux(y, x, dir, always_pickup);
+			more = do_cmd_disarm_aux(y, x, dir, options->always_pickup);
 		}
 
 		/* Oops */
@@ -2713,7 +2713,7 @@ static void do_cmd_unwalk()
 	else if (((feat >= FEAT_QUEST_ENTER) && (feat <= FEAT_QUEST_UP)) ||
 			((feat >= FEAT_LESS) && (feat <= FEAT_MORE)))
 	{
-		move_player(dir, always_pickup, TRUE);
+		move_player(dir, options->always_pickup, TRUE);
 		more = FALSE;
 	}
 
@@ -2730,7 +2730,7 @@ static void do_cmd_unwalk()
 			while (dir == 5);
 		}
 
-		move_player(dir, always_pickup, TRUE);
+		move_player(dir, options->always_pickup, TRUE);
 	}
 
 	/* Walking semantics */
@@ -3124,7 +3124,7 @@ void do_cmd_fire(void)
 
 	char o_name[80];
 
-	int msec = delay_factor * delay_factor * delay_factor;
+	auto const msec = options->delay_factor_ms();
 
 
 	/* Get the "bow" (if any) */
@@ -3554,7 +3554,7 @@ void do_cmd_throw(void)
 
 	char o_name[80];
 
-	int msec = delay_factor * delay_factor * delay_factor;
+	auto const msec = options->delay_factor_ms();
 
 	/* Get an item */
 	int item;
@@ -3925,7 +3925,7 @@ void do_cmd_boomerang(void)
 
 	s32b special = 0;
 
-	int msec = delay_factor * delay_factor * delay_factor;
+	auto const msec = options->delay_factor_ms();
 
 
 	/* Get the "bow" (if any) */
@@ -4367,7 +4367,7 @@ void do_cmd_immovable_special(void)
 
 			if (!get_aim_dir(&dir)) return;
 			fetch(dir, p_ptr->lev * 15, FALSE);
-			py_pickup_floor(always_pickup);
+			py_pickup_floor(options->always_pickup);
 
 			did_act = TRUE;
 			break;
