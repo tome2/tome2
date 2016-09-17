@@ -51,6 +51,6 @@ struct player_race_mod
 
 	std::vector<object_proto> object_protos;
 
-	std::array<player_race_ability_type, 10> abilities;     /* Abilities to be gained by level; doesnt take prereqs in account */
+	std::vector<player_race_ability_type> abilities;        /* Abilities to be gained by level; ignores prereqs */
 };
 

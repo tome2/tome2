@@ -25,5 +25,5 @@ struct player_spec
 
 	player_race_flag_set flags;
 
-	std::array<player_race_ability_type, 10> abilities;     /* Abilities to be gained by level(doesnt take prereqs in account) */
+	std::vector<player_race_ability_type> abilities;        /* Abilities to be gained by level; ignores prereqs */
 };

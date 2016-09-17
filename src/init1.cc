@@ -868,16 +868,55 @@ static int read_proto_object(std::vector<object_proto> *protos, cptr buf)
 
 
 /*
+ * Read an ability assignment
+ */
+static int read_ability(std::vector<player_race_ability_type> *abilities, char *buf)
+{
+	int level = 0;
+	char *name = nullptr;
+
+	// Find the ':' separator
+	if (!(name = strchr(buf, ':')))
+	{
+		return 1;
+	}
+
+	// Split the buffer there and advance to point at the ability name
+	name++;
+
+	// Extract the level
+	if (1 != sscanf(buf, "%d:", &level))
+	{
+		return 1;
+	}
+
+	// Try to find the ability by name
+	int idx = find_ability(name);
+	if (idx < 0)
+	{
+		return 1;
+	}
+
+	// Insert
+	player_race_ability_type ability;
+	ability.ability = idx;
+	ability.level = level;
+	abilities->emplace_back(ability);
+
+	return 0;
+}
+
+
+/*
  * Initialize the "player" arrays, by parsing an ascii "template" file
  */
 errr init_player_info_txt(FILE *fp)
 {
-	int i = 0, z;
+	int i = 0;
 	int powers = 0;
 	int lev = 1;
 	int tit_idx = 0;
 	int spec_idx = 0;
-	int cur_ab = -1;
 	char buf[1024];
 	char *s, *t;
 
@@ -987,9 +1026,6 @@ errr init_player_info_txt(FILE *fp)
 			rp_ptr->powers[0] = rp_ptr->powers[1] = rp_ptr->powers[2] = rp_ptr->powers[3] = -1;
 			powers = 0;
 			lev = 1;
-			cur_ab = 0;
-			for (z = 0; z < 10; z++)
-				rp_ptr->abilities[z].level = -1;
 
 			/* Next... */
 			continue;
@@ -1100,22 +1136,10 @@ errr init_player_info_txt(FILE *fp)
 		/* Process 'b' for "abilities" */
 		if ((buf[0] == 'R') && (buf[2] == 'b'))
 		{
-			char *sec;
-
-			/* Scan for the values */
-			if (NULL == (sec = strchr(buf + 4, ':')))
+			if (read_ability(&rp_ptr->abilities, buf + 4))
 			{
-				return (1);
+				return 1;
 			}
-			*sec = '\0';
-			sec++;
-			if (!*sec) return (1);
-
-			if ((i = find_ability(sec)) == -1) return (1);
-
-			rp_ptr->abilities[cur_ab].ability = i;
-			rp_ptr->abilities[cur_ab].level = atoi(buf + 4);
-			cur_ab++;
 
 			/* Next... */
 			continue;
@@ -1225,9 +1249,6 @@ errr init_player_info_txt(FILE *fp)
 			rmp_ptr->powers[0] = rmp_ptr->powers[1] = rmp_ptr->powers[2] = rmp_ptr->powers[3] = -1;
 			powers = 0;
 			lev = 1;
-			cur_ab = 0;
-			for (z = 0; z < 10; z++)
-				rmp_ptr->abilities[z].level = -1;
 
 			/* Next... */
 			continue;
@@ -1351,22 +1372,10 @@ errr init_player_info_txt(FILE *fp)
 		/* Process 'b' for "abilities" */
 		if ((buf[0] == 'S') && (buf[2] == 'b'))
 		{
-			char *sec;
-
-			/* Scan for the values */
-			if (NULL == (sec = strchr(buf + 4, ':')))
+			if (read_ability(&rmp_ptr->abilities, buf + 4))
 			{
 				return (1);
 			}
-			*sec = '\0';
-			sec++;
-			if (!*sec) return (1);
-
-			if ((i = find_ability(sec)) == -1) return (1);
-
-			rmp_ptr->abilities[cur_ab].ability = i;
-			rmp_ptr->abilities[cur_ab].level = atoi(buf + 4);
-			cur_ab++;
 
 			/* Next... */
 			continue;
@@ -1503,9 +1512,6 @@ errr init_player_info_txt(FILE *fp)
 			c_ptr->powers[0] = c_ptr->powers[1] = c_ptr->powers[2] = c_ptr->powers[3] = -1;
 			powers = 0;
 			lev = 1;
-			for (z = 0; z < 10; z++)
-				c_ptr->abilities[z].level = -1;
-			cur_ab = 0;
 			tit_idx = 0;
 			spec_idx = -1;
 			for (z = 0; z < MAX_SPEC; z++)
@@ -1631,22 +1637,10 @@ errr init_player_info_txt(FILE *fp)
 		/* Process 'b' for "abilities" */
 		if ((buf[0] == 'C') && (buf[2] == 'b'))
 		{
-			char *sec;
-
-			/* Scan for the values */
-			if (NULL == (sec = strchr(buf + 4, ':')))
+			if (read_ability(&c_ptr->abilities, buf + 4))
 			{
-				return (1);
+				return 1;
 			}
-			*sec = '\0';
-			sec++;
-			if (!*sec) return (1);
-
-			if ((i = find_ability(sec)) == -1) return (1);
-
-			c_ptr->abilities[cur_ab].ability = i;
-			c_ptr->abilities[cur_ab].level = atoi(buf + 4);
-			cur_ab++;
 
 			/* Next... */
 			continue;
@@ -1790,11 +1784,6 @@ errr init_player_info_txt(FILE *fp)
 				assert(!s_ptr->title);
 				s_ptr->title = my_strdup(s);
 
-				/* Initialize */
-				cur_ab = 0;
-				for (z = 0; z < 10; z++)
-					s_ptr->abilities[z].level = -1;
-
 				/* Next... */
 				continue;
 			}
@@ -1862,22 +1851,10 @@ errr init_player_info_txt(FILE *fp)
 			/* Process 'b' for "abilities" */
 			if (buf[4] == 'b')
 			{
-				char *sec;
-
-				/* Scan for the values */
-				if (NULL == (sec = strchr(buf + 6, ':')))
+				if (read_ability(&s_ptr->abilities, buf + 6))
 				{
-					return (1);
+					return 1;
 				}
-				*sec = '\0';
-				sec++;
-				if (!*sec) return (1);
-
-				if ((i = find_ability(sec)) == -1) return (1);
-
-				s_ptr->abilities[cur_ab].ability = i;
-				s_ptr->abilities[cur_ab].level = atoi(buf + 6);
-				cur_ab++;
 
 				/* Next... */
 				continue;

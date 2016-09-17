@@ -1749,41 +1749,23 @@ void do_cmd_ability()
  */
 void apply_level_abilities(int level)
 {
-	int i;
-
-	for (i = 0; i < 10; i++)
+	auto apply = [level](std::vector<player_race_ability_type> const &abilities) -> void
 	{
-		if (cp_ptr->abilities[i].level == level)
+		for (auto const &a: abilities)
 		{
-			if ((level > 1) && (!ab_info[cp_ptr->abilities[i].ability].acquired))
+			if (a.level == level)
 			{
-				cmsg_format(TERM_L_GREEN, "You have learned the ability '%s'.", ab_info[cp_ptr->abilities[i].ability].name);
+				if ((level > 1) && (!ab_info[a.ability].acquired))
+				{
+					cmsg_format(TERM_L_GREEN, "You have learned the ability '%s'.", ab_info[a.ability].name);
+				}
+				ab_info[a.ability].acquired = TRUE;
 			}
-			ab_info[cp_ptr->abilities[i].ability].acquired = TRUE;
 		}
-		if (spp_ptr->abilities[i].level == level)
-		{
-			if ((level > 1) && (!ab_info[spp_ptr->abilities[i].ability].acquired))
-			{
-				cmsg_format(TERM_L_GREEN, "You have learned the ability '%s'.", ab_info[spp_ptr->abilities[i].ability].name);
-			}
-			ab_info[spp_ptr->abilities[i].ability].acquired = TRUE;
-		}
-		if (rp_ptr->abilities[i].level == level)
-		{
-			if ((level > 1) && (!ab_info[rp_ptr->abilities[i].ability].acquired))
-			{
-				cmsg_format(TERM_L_GREEN, "You have learned the ability '%s'.", ab_info[rp_ptr->abilities[i].ability].name);
-			}
-			ab_info[rp_ptr->abilities[i].ability].acquired = TRUE;
-		}
-		if (rmp_ptr->abilities[i].level == level)
-		{
-			if ((level > 1) && (!ab_info[rmp_ptr->abilities[i].ability].acquired))
-			{
-				cmsg_format(TERM_L_GREEN, "You have learned the ability '%s'.", ab_info[rmp_ptr->abilities[i].ability].name);
-			}
-			ab_info[rmp_ptr->abilities[i].ability].acquired = TRUE;
-		}
-	}
+	};
+
+	apply(cp_ptr->abilities);
+	apply(spp_ptr->abilities);
+	apply(rp_ptr->abilities);
+	apply(rmp_ptr->abilities);
 }
