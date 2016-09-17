@@ -2548,7 +2548,7 @@ static void calc_corruptions()
 		{
 			s_info[SKILL_DAEMON].mod = 1500;
 		}
-		s_info[SKILL_DAEMON].hidden = FALSE;
+		s_info[SKILL_DAEMON].hidden = false;
 	}
 
 	if (player_has_corruption(CORRUPT_RANDOM_TELEPORT))
@@ -2974,7 +2974,7 @@ void calc_bonuses(bool_ silent)
 	{
 		if (s_descriptors[i].flags & SKF_AUTO_HIDE)
 		{
-			s_info[i].hidden = TRUE;
+			s_info[i].hidden = true;
 		}
 	}
 

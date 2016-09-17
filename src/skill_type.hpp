@@ -23,10 +23,10 @@ struct skill_type
 	/**
 	 * Is the branch developed?
 	 */
-	bool_ dev = FALSE;
+	bool dev = false;
 
 	/**
 	 * Is the skill hidden?
 	 */
-	bool_ hidden = FALSE;
+	bool hidden = false;
 };

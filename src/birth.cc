@@ -2783,7 +2783,7 @@ static bool_ player_birth_aux()
 
 	for (i = 1; i < max_s_idx; i++)
 	{
-		s_info[i].dev = FALSE;
+		s_info[i].dev = false;
 	}
 
 	for (i = 1; i < max_s_idx; i++)
@@ -2802,7 +2802,7 @@ static bool_ player_birth_aux()
 			while (z != -1)
 			{
 				// Mark as developed
-				s_info[z].dev = TRUE;
+				s_info[z].dev = true;
 				// Next node up the tree
 				z = s_descriptors[z].father;
 				if (z == 0)

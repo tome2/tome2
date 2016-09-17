@@ -136,16 +136,19 @@ bool_ quest_bounty_get_item()
 	skill_type *lore = &s_info[SKILL_LORE];
 	skill_type *preservation = &s_info[SKILL_PRESERVATION];
 
-	if (lore->mod == 0) {
+	if (lore->mod == 0)
+	{
 		lore->mod = 900;
-		lore->dev = TRUE;
+		lore->dev = true;
 	}
+
 	lore->value += lore->mod;
 
-	if (preservation->mod == 0) {
+	if (preservation->mod == 0)
+	{
 		preservation->value = 800;
 		preservation->mod = 800;
-		preservation->dev = TRUE;
+		preservation->dev = true;
 		msg_print("I see you don't know the corpse preservation skill, I shall teach you it too.");
 	}
 

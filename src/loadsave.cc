@@ -610,8 +610,8 @@ static bool_ do_extra(ls_flag_t flag)
 		{
 			do_s32b(&s_info[i].value, flag);
 			do_s32b(&s_info[i].mod, flag);
-			do_bool(&s_info[i].dev, flag);
-			do_bool(&s_info[i].hidden, flag);
+			do_std_bool(&s_info[i].dev, flag);
+			do_std_bool(&s_info[i].hidden, flag);
 		}
 	}
 

@@ -336,7 +336,7 @@ static s32b bear_calc()
 	}
 
 	/* activate the skill */
-	s_info[SKILL_BEAR].hidden = FALSE;
+	s_info[SKILL_BEAR].hidden = false;
 
 	return 0;
 }

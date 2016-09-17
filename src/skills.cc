@@ -229,7 +229,11 @@ static void init_table_aux(int table[MAX_SKILLS][2], int *idx, int father, int l
 		table[*idx][0] = i;
 		table[*idx][1] = lev;
 		(*idx)++;
-		if (s_info[i].dev || full) init_table_aux(table, idx, i, lev + 1, full);
+
+		if (s_info[i].dev || full)
+		{
+			init_table_aux(table, idx, i, lev + 1, full);
+		}
 	}
 }
 
@@ -528,8 +532,8 @@ void do_cmd_skill()
 		/* Expand / collapse list of skills */
 		else if (c == '\r')
 		{
-			if (s_info[table[sel][0]].dev) s_info[table[sel][0]].dev = FALSE;
-			else s_info[table[sel][0]].dev = TRUE;
+			s_info[table[sel][0]].dev = !s_info[table[sel][0]].dev;
+
 			init_table(table, &max, FALSE);
 		}
 
@@ -1206,8 +1210,8 @@ void init_skill(s32b value, s32b mod, int i)
 	s_info[i].value = value;
 	s_info[i].mod = mod;
 	s_info[i].hidden = (s_descriptors[i].flags & SKF_HIDDEN)
-	        ? TRUE
-	        : FALSE
+	        ? true
+	        : false
 	        ;
 }
 
