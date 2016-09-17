@@ -2041,35 +2041,33 @@ static void do_timers(ls_flag_t flag)
  */
 static void do_stores(ls_flag_t flag)
 {
-	u16b real_max = 0;
+	// Indexes for "real" towns.
+	std::vector<byte> reals;
+	reals.reserve(max_towns);
 
-	/* Note that this forbids max_towns from shrinking, but that is fine */
-	std::unique_ptr<byte[]> reals(new byte[max_towns]);
-
-	/* Find the real towns */
+	// Fill in the "real" towns if necessary.
 	if (flag == ls_flag_t::SAVE)
 	{
 		for (int i = 1; i < max_towns; i++)
 		{
-			if (!(town_info[i].flags & (TOWN_REAL))) continue;
-			reals[real_max++] = i;
+			if (!(town_info[i].flags & TOWN_REAL))
+			{
+				continue;
+			}
+			reals.emplace_back(i);
 		}
 	}
-	do_u16b(&real_max, flag);
-	for (int i = 0; i < real_max; i++)
-	{
-		do_byte(&reals[i], flag);
-	}
+
+	// Load/save
+	do_vector(flag, reals, do_byte);
 
 	/* Read the stores */
 	u16b n_stores = max_st_idx;
 	do_u16b(&n_stores, flag);
 	assert(n_stores <= max_st_idx);
 
-	for (int i = 0; i < real_max; i++)
+	for (auto const z: reals)
 	{
-		int z = reals[i];
-
 		if (!town_info[z].stocked)
 		{
 			create_stores_stock(z);
