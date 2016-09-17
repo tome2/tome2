@@ -2039,8 +2039,6 @@ errr init_player_info_txt(FILE *fp)
 			/* Append chars to the name */
 			strcpy(mc_ptr->name, s + 2);
 			mc_ptr->color = color_char_to_attr(s[0]);
-			for (powers = 0; powers < max_c_idx; powers++)
-				mc_ptr->classes[powers] = -1;
 			powers = 0;
 
 			/* Next... */
@@ -2066,7 +2064,7 @@ errr init_player_info_txt(FILE *fp)
 
 			if (i == max_c_idx) return (6);
 
-			mc_ptr->classes[powers++] = i;
+			mc_ptr->classes.push_back(i);
 
 			/* Next... */
 			continue;

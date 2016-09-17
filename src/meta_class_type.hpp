@@ -1,10 +1,11 @@
 #pragma once
 
 #include "h-basic.h"
+#include <vector>
 
 struct meta_class_type
 {
 	char name[80] = "";                      /* Name */
 	byte color = 0;
-	s16b *classes = nullptr;                 /* List of classes */
+	std::vector<u16b> classes;               /* List of classes */
 };

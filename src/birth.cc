@@ -1171,16 +1171,16 @@ static void player_outfit(void)
 }
 
 
-int dump_classes(s16b *classes, int sel, u32b *restrictions)
+static void dump_classes(std::vector<u16b> const &classes, int sel, u32b *restrictions)
 {
-	int n = 0;
-
 	char buf[80];
 
 	/* Clean up */
 	clear_from(12);
 
-	while (classes[n] != -1)
+	int n_max = static_cast<int>(classes.size()); // Warning avoidance
+
+	for (int n = 0; n < n_max; n++)
 	{
 		cptr mod = "";
 		char p2 = ')', p1 = ' ';
@@ -1226,10 +1226,8 @@ int dump_classes(s16b *classes, int sel, u32b *restrictions)
 			else
 				put_str(buf, 18 + (n / 4), 1 + 20 * (n % 4));
 		}
-		n++;
-	}
 
-	return (n);
+	}
 }
 
 int dump_specs(int sel)
@@ -1485,8 +1483,6 @@ static bool_ player_birth_aux_ask()
 	int const NAME_ROW = 2;
 	int const RACE_ROW = 3;
 	int const CLASS_ROW = 4;
-
-	s16b *class_types;
 
 	/*** Intro ***/
 
@@ -1824,21 +1820,24 @@ static bool_ player_birth_aux_ask()
 		{
 			k = 0;
 		}
-		class_types = meta_class_info[k].classes;
+
 		clear_from(15);
 
+		auto const &class_types = meta_class_info[k].classes;
+
 		/* Count classes */
-		n = 0;
-		while (class_types[n] != -1) n++;
+		n = class_types.size();
 
 		/* Only one choice = instant choice */
 		if (n == 1)
+		{
 			k = 0;
+		}
 		else
 		{
 			/* Dump classes */
 			sel = 0;
-			n = dump_classes(class_types, sel, restrictions);
+			dump_classes(class_types, sel, restrictions);
 
 			/* Get a class */
 			while (1)
