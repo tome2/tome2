@@ -1670,29 +1670,14 @@ static void do_options(ls_flag_t flag)
 	do_byte(&hitpoint_warn, flag);
 
 	/*** Cheating options ***/
-	if (flag == ls_flag_t::LOAD)		/* There *MUST* be some nice way to unify this! */
-	{
-		u16b c;
-		do_u16b(&c, ls_flag_t::LOAD);
-		if (c & 0x0002) wizard = TRUE;
-		cheat_peek = (c & 0x0100) ? TRUE : FALSE;
-		cheat_hear = (c & 0x0200) ? TRUE : FALSE;
-		cheat_room = (c & 0x0400) ? TRUE : FALSE;
-		cheat_xtra = (c & 0x0800) ? TRUE : FALSE;
-		cheat_live = (c & 0x2000) ? TRUE : FALSE;
-	}
-	if (flag == ls_flag_t::SAVE)
-	{
-		u16b c = 0;
-		if (wizard) c |= 0x0002;
-		if (cheat_peek) c |= 0x0100;
-		if (cheat_hear) c |= 0x0200;
-		if (cheat_room) c |= 0x0400;
-		if (cheat_xtra) c |= 0x0800;
-		if (cheat_live) c |= 0x2000;
-		do_u16b(&c, ls_flag_t::SAVE);
-	}
+	do_bool(&wizard, flag);
+	do_bool(&cheat_peek, flag);
+	do_bool(&cheat_hear, flag);
+	do_bool(&cheat_room, flag);
+	do_bool(&cheat_xtra, flag);
+	do_bool(&cheat_live, flag);
 
+	/*** Autosave options */
 	do_bool(&autosave_l, flag);
 	do_bool(&autosave_t, flag);
 	do_s16b(&autosave_freq, flag);
