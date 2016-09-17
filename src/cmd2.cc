@@ -134,6 +134,29 @@ static bool_ stair_hooks(stairs_direction direction)
 	return (!out.allow);
 }
 
+/*
+ * Ask for confirmation before leaving level; based
+ * on whether the 'confirm_stairs' option is set.
+ */
+static bool ask_leave()
+{
+	if (confirm_stairs)
+	{
+		if (get_check("Really leave the level? "))
+		{
+			return true; // Leave
+		}
+		else
+		{
+			return false; // Don't leave
+		}
+	}
+	else
+	{
+		return true; // Leave
+	}
+}
+
 
 /*
  * Go up one level
@@ -169,11 +192,7 @@ void do_cmd_go_up(void)
 		{
 			go_up = get_check("Leave this unique level forever? ");
 		}
-		else if (confirm_stairs)
-		{
-			go_up = get_check("Really leave the level? ");
-		}
-		else
+		else if (ask_leave())
 		{
 			go_up = TRUE;
 		}
@@ -190,11 +209,7 @@ void do_cmd_go_up(void)
 		{
 			go_up = get_check("Leave this unique level forever? ");
 		}
-		else if (confirm_stairs)
-		{
-			go_up_many = get_check("Really leave the level? ");
-		}
-		else
+		else if (ask_leave())
 		{
 			go_up_many = TRUE;
 		}
@@ -232,12 +247,7 @@ void do_cmd_go_up(void)
 
 		prob_traveling = TRUE;
 
-		if (confirm_stairs)
-		{
-			if (get_check("Really leave the level? "))
-				go_up = TRUE;
-		}
-		else
+		if (ask_leave())
 		{
 			go_up = TRUE;
 		}
@@ -399,12 +409,7 @@ void do_cmd_go_down(void)
 		}
 		else
 		{
-			if (confirm_stairs)
-			{
-				if (get_check("Really leave the level? "))
-					go_down_many = TRUE;
-			}
-			else
+			if (ask_leave())
 			{
 				go_down_many = TRUE;
 			}
@@ -428,12 +433,7 @@ void do_cmd_go_down(void)
 		}
 		else
 		{
-			if (confirm_stairs)
-			{
-				if (get_check("Really leave the level? "))
-					go_down = TRUE;
-			}
-			else
+			if (ask_leave())
 			{
 				go_down = TRUE;
 			}
@@ -462,12 +462,7 @@ void do_cmd_go_down(void)
 
 		prob_traveling = TRUE;
 
-		if (confirm_stairs)
-		{
-			if (get_check("Really leave the level? "))
-				go_down = TRUE;
-		}
-		else
+		if (ask_leave())
 		{
 			go_down = TRUE;
 		}
