@@ -3051,9 +3051,6 @@ void init_town(int t_idx)
 
 	/* Generation seed for the town */
 	t_ptr->seed = randint(0x10000000);
-
-	/* Total hack and not even used */
-	t_ptr->numstores = 8;
 }
 
 /*

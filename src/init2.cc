@@ -682,15 +682,16 @@ static errr init_towns(void)
 
 	for (std::size_t i = 1; i < max_towns; i++)
 	{
-		if (i <= max_real_towns) town_info[i].flags |= (TOWN_REAL);
-
-		/* Allocate the stores */
-		town_info[i].store = new store_type[max_st_idx];
+		if (i <= max_real_towns)
+		{
+			town_info[i].flags |= TOWN_REAL;
+		}
 
 		/* Fill in each store */
 		for (std::size_t j = 0; j < max_st_idx; j++)
 		{
-			/* Access the store */
+			/* Create the store */
+			town_info[i].store.emplace_back(store_type());
 			store_type *st_ptr = &town_info[i].store[j];
 
 			/* Know who we are */

@@ -2351,7 +2351,7 @@ static bool_ do_savefile_aux(ls_flag_t flag)
 			if (i >= TOWN_RANDOM)
 			{
 				do_u32b(&town_info[i].seed, flag);
-				do_byte(&town_info[i].numstores, flag);
+				do_byte(&tmp8u, flag);
 				do_byte(&town_info[i].flags, flag);
 
 				/* If the town is realy used create a sock */
