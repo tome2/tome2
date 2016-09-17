@@ -533,49 +533,6 @@ void fetch(int dir, int wgt, bool_ require_los)
 
 
 /*
- * Handle random effects of player shrieking
- */
-void shriek_effect()
-{
-	switch (randint(9))
-	{
-	case 1:
-	case 5:
-	case 8:
-	case 9:
-		{
-			msg_print("You make a high-pitched shriek!");
-			aggravate_monsters(1);
-
-			break;
-		}
-	case 2:
-	case 6:
-		{
-			msg_print("Oops! You call a monster.");
-			summon_specific(p_ptr->py, p_ptr->px, max_dlv[dungeon_type], 0);
-
-			break;
-		}
-	case 3:
-	case 7:
-		{
-			msg_print("The dungeon collapses!");
-			earthquake(p_ptr->py, p_ptr->px, 5);
-
-			break;
-		}
-	case 4:
-		{
-			msg_print("Your shriek is so horrible that you damage your health!");
-			take_hit(damroll(p_ptr->lev / 5, 8), "inner hemorrhaging");
-
-			break;
-		}
-	}
-}
-
-/*
  * Return the symbiote's name or description.
  */
 cptr symbiote_name(bool_ capitalize)
