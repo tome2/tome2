@@ -3,6 +3,7 @@
 #include "body.hpp"
 #include "h-basic.h"
 #include "object_flag_set.hpp"
+#include "object_proto.hpp"
 #include "player_defs.hpp"
 #include "player_race_ability_type.hpp"
 #include "player_race_flag_set.hpp"
@@ -47,11 +48,7 @@ struct player_race_mod
 
 	struct skill_modifiers skill_modifiers;
 
-	s16b obj_tval[5] { };
-	s16b obj_sval[5] { };
-	s16b obj_pval[5] { };
-	s16b obj_dd[5] { };
-	s16b obj_ds[5] { };
+	std::array<object_proto, 5> obj;
 	s16b obj_num = 0;
 
 	std::array<player_race_ability_type, 10> abilities;     /* Abilities to be gained by level; doesnt take prereqs in account */

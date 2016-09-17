@@ -838,6 +838,35 @@ static int read_skill_modifiers(skill_modifiers *skill_modifiers, cptr buf)
 
 
 /*
+ * Read prototype objects
+ */
+static int read_proto_object(object_proto *proto, s16b *num, cptr buf)
+{
+	int s0, s1, s2, s3, s4;
+
+	if (5 != sscanf(buf, "%d:%d:%d:%dd%d", &s0, &s1, &s4, &s2, &s3))
+	{
+		s4 = 0;
+
+		if (4 != sscanf(buf, "%d:%d:%dd%d", &s0, &s1, &s2, &s3))
+		{
+			return 1;
+		}
+	}
+
+	proto->pval = s4;
+	proto->tval = s0;
+	proto->sval = s1;
+	proto->dd = s2;
+	proto->ds = s3;
+
+	(*num)++;
+
+	return 0;
+}
+
+
+/*
  * Initialize the "player" arrays, by parsing an ascii "template" file
  */
 errr init_player_info_txt(FILE *fp)
@@ -1136,26 +1165,10 @@ errr init_player_info_txt(FILE *fp)
 		/* Process 'O' for "Object birth" */
 		if ((buf[0] == 'R') && (buf[2] == 'O'))
 		{
-			int s[5];
-
-			/* Scan for the values */
-			if (5 != sscanf(buf + 4, "%d:%d:%d:%dd%d",
-			                &s[0], &s[1], &s[4], &s[2], &s[3]))
+			if (read_proto_object(&rp_ptr->obj[rp_ptr->obj_num], &rp_ptr->obj_num, buf + 4))
 			{
-				s[4] = 0;
-
-				if (4 != sscanf(buf + 4, "%d:%d:%dd%d",
-				                &s[0], &s[1], &s[2], &s[3]))
-				{
-					return (1);
-				}
+				return 1;
 			}
-
-			rp_ptr->obj_pval[rp_ptr->obj_num] = s[4];
-			rp_ptr->obj_tval[rp_ptr->obj_num] = s[0];
-			rp_ptr->obj_sval[rp_ptr->obj_num] = s[1];
-			rp_ptr->obj_dd[rp_ptr->obj_num] = s[2];
-			rp_ptr->obj_ds[rp_ptr->obj_num++] = s[3];
 
 			/* Next... */
 			continue;
@@ -1402,26 +1415,10 @@ errr init_player_info_txt(FILE *fp)
 		/* Process 'O' for "Object birth" */
 		if ((buf[0] == 'S') && (buf[2] == 'O'))
 		{
-			int s[5];
-
-			/* Scan for the values */
-			if (5 != sscanf(buf + 4, "%d:%d:%d:%dd%d",
-			                &s[0], &s[1], &s[4], &s[2], &s[3]))
+			if (read_proto_object(&rmp_ptr->obj[rmp_ptr->obj_num], &rmp_ptr->obj_num, buf + 4))
 			{
-				s[4] = 0;
-
-				if (4 != sscanf(buf + 4, "%d:%d:%dd%d",
-				                &s[0], &s[1], &s[2], &s[3]))
-				{
-					return (1);
-				}
+				return 1;
 			}
-
-			rmp_ptr->obj_pval[rmp_ptr->obj_num] = s[4];
-			rmp_ptr->obj_tval[rmp_ptr->obj_num] = s[0];
-			rmp_ptr->obj_sval[rmp_ptr->obj_num] = s[1];
-			rmp_ptr->obj_dd[rmp_ptr->obj_num] = s[2];
-			rmp_ptr->obj_ds[rmp_ptr->obj_num++] = s[3];
 
 			/* Next... */
 			continue;
@@ -1560,26 +1557,10 @@ errr init_player_info_txt(FILE *fp)
 		/* Process 'O' for "Object birth" */
 		if ((buf[0] == 'C') && (buf[2] == 'O'))
 		{
-			int s[5];
-
-			/* Scan for the values */
-			if (5 != sscanf(buf + 4, "%d:%d:%d:%dd%d",
-			                &s[0], &s[1], &s[4], &s[2], &s[3]))
+			if (read_proto_object(&c_ptr->obj[c_ptr->obj_num], &c_ptr->obj_num, buf + 4))
 			{
-				s[4] = 0;
-
-				if (4 != sscanf(buf + 4, "%d:%d:%dd%d",
-				                &s[0], &s[1], &s[2], &s[3]))
-				{
-					return (1);
-				}
+				return 1;
 			}
-
-			c_ptr->obj_pval[c_ptr->obj_num] = s[4];
-			c_ptr->obj_tval[c_ptr->obj_num] = s[0];
-			c_ptr->obj_sval[c_ptr->obj_num] = s[1];
-			c_ptr->obj_dd[c_ptr->obj_num] = s[2];
-			c_ptr->obj_ds[c_ptr->obj_num++] = s[3];
 
 			/* Next... */
 			continue;
@@ -1861,26 +1842,10 @@ errr init_player_info_txt(FILE *fp)
 			/* Process 'O' for "Object birth" */
 			if (buf[4] == 'O')
 			{
-				int s[5];
-
-				/* Scan for the values */
-				if (5 != sscanf(buf + 6, "%d:%d:%d:%dd%d",
-				                &s[0], &s[1], &s[4], &s[2], &s[3]))
+				if (read_proto_object(&s_ptr->obj[s_ptr->obj_num], &s_ptr->obj_num, buf + 6))
 				{
-					s[4] = 0;
-
-					if (4 != sscanf(buf + 6, "%d:%d:%dd%d",
-					                &s[0], &s[1], &s[2], &s[3]))
-					{
-						return (1);
-					}
+					return 1;
 				}
-
-				s_ptr->obj_pval[s_ptr->obj_num] = s[4];
-				s_ptr->obj_tval[s_ptr->obj_num] = s[0];
-				s_ptr->obj_sval[s_ptr->obj_num] = s[1];
-				s_ptr->obj_dd[s_ptr->obj_num] = s[2];
-				s_ptr->obj_ds[s_ptr->obj_num++] = s[3];
 
 				/* Next... */
 				continue;

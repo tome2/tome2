@@ -3,6 +3,7 @@
 #include "body.hpp"
 #include "h-basic.h"
 #include "object_flag_set.hpp"
+#include "object_proto.hpp"
 #include "player_defs.hpp"
 #include "player_race_flag_set.hpp"
 #include "player_spec.hpp"
@@ -43,11 +44,7 @@ struct player_class
 	byte sense_heavy = 0;
 	byte sense_heavy_magic = 0;
 
-	s16b obj_tval[5] { };
-	s16b obj_sval[5] { };
-	s16b obj_pval[5] { };
-	s16b obj_dd[5] { };
-	s16b obj_ds[5] { };
+	std::array<object_proto, 5> obj;
 	s16b obj_num = 0;
 
 	char body_parts[BODY_MAX] { };                          /* To help to decide what to use when body changing */

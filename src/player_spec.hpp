@@ -1,6 +1,7 @@
 #pragma once
 
 #include "h-basic.h"
+#include "object_proto.hpp"
 #include "player_race_ability_type.hpp"
 #include "player_race_flag_set.hpp"
 #include "skill_modifiers.hpp"
@@ -17,11 +18,7 @@ struct player_spec
 
 	struct skill_modifiers skill_modifiers;
 
-	s16b obj_tval[5] { };
-	s16b obj_sval[5] { };
-	s16b obj_pval[5] { };
-	s16b obj_dd[5] { };
-	s16b obj_ds[5] { };
+	std::array<object_proto, 5> obj;
 	s16b obj_num = 0;
 
 	u32b gods = 0;

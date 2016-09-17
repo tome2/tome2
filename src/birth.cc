@@ -909,25 +909,26 @@ static void player_wipe(void)
 
 
 /* Create an object */
-void outfit_obj(int tv, int sv, int pval, int dd, int ds)
+static void outfit_obj(object_proto const *proto)
 {
 	object_type forge;
-	object_type *q_ptr;
 
 	/* Get local object */
-	q_ptr = &forge;
+	auto q_ptr = &forge;
 	q_ptr->pval = 0;
 	q_ptr->pval2 = 0;
 
 	/* Hack -- Give the player an object */
-	object_prep(q_ptr, lookup_kind(tv, sv));
+	object_prep(q_ptr, lookup_kind(proto->tval, proto->sval));
 
-	if (pval)
-		q_ptr->pval = pval;
+	if (proto->pval)
+	{
+		q_ptr->pval = proto->pval;
+	}
 
 	/* These objects are "storebought" */
 	q_ptr->ident |= IDENT_MENTAL;
-	q_ptr->number = damroll(dd, ds);
+	q_ptr->number = damroll(proto->dd, proto->ds);
 
 	object_aware(q_ptr);
 	object_known(q_ptr);
@@ -1161,13 +1162,21 @@ static void player_outfit(void)
 
 	/* Hack -- Give the player some useful objects */
 	for (i = 0; i < rp_ptr->obj_num; i++)
-		outfit_obj(rp_ptr->obj_tval[i], rp_ptr->obj_sval[i], rp_ptr->obj_pval[i], rp_ptr->obj_dd[i], rp_ptr->obj_ds[i]);
+	{
+		outfit_obj(&rp_ptr->obj[i]);
+	}
 	for (i = 0; i < rmp_ptr->obj_num; i++)
-		outfit_obj(rmp_ptr->obj_tval[i], rmp_ptr->obj_sval[i], rmp_ptr->obj_pval[i], rmp_ptr->obj_dd[i], rmp_ptr->obj_ds[i]);
+	{
+		outfit_obj(&rmp_ptr->obj[i]);
+	}
 	for (i = 0; i < cp_ptr->obj_num; i++)
-		outfit_obj(cp_ptr->obj_tval[i], cp_ptr->obj_sval[i], cp_ptr->obj_pval[i], cp_ptr->obj_dd[i], cp_ptr->obj_ds[i]);
+	{
+		outfit_obj(&cp_ptr->obj[i]);
+	}
 	for (i = 0; i < cp_ptr->spec[p_ptr->pspec].obj_num; i++)
-		outfit_obj(cp_ptr->spec[p_ptr->pspec].obj_tval[i], cp_ptr->spec[p_ptr->pspec].obj_sval[i], cp_ptr->spec[p_ptr->pspec].obj_pval[i], cp_ptr->spec[p_ptr->pspec].obj_dd[i], cp_ptr->spec[p_ptr->pspec].obj_ds[i]);
+	{
+		outfit_obj(&cp_ptr->spec[p_ptr->pspec].obj[i]);
+	}
 }
 
 
