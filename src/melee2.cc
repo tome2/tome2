@@ -1106,9 +1106,76 @@ static bool_ monst_spell_monst(int m_idx)
 			monst_breath_monst(m_idx, y, x, gf, std::min(max, m_ptr->hp / divisor), 0);
 		};
 
+		/* Messages for summoning */
+		struct summon_messages {
+			char const *singular;
+			char const *plural;
+		};
+
+		/* Default message for summoning when player is blinded */
+		auto blind_msg_default = summon_messages {
+		        "You hear something appear nearby.",
+		        "You hear many things appear nearby."
+	        };
+
+		/* Do a summoning spell */
+		auto do_summon = [&](char const *action, int n, int friendly_type, int hostile_type, summon_messages const &blind_msg) -> void {
+			// Interrupt
+			if (disturb_other)
+			{
+				disturb(1);
+			}
+			// Message
+			if (blind || !see_m)
+			{
+				monster_msg("%^s mumbles.", m_name);
+			}
+			else
+			{
+				monster_msg("%^s magically %s", m_name, action);
+			}
+			// Do the actual summoning
+			int count = 0;
+			for (int k = 0; k < n; k++)
+			{
+				if (friendly)
+				{
+					count += summon_specific_friendly(y, x, rlev, friendly_type, TRUE);
+				}
+				else if (!friendly)
+				{
+					count += summon_specific(y, x, rlev, hostile_type);
+				}
+			}
+			// Message for blinded characters
+			if (blind)
+			{
+				if (count == 1)
+				{
+					monster_msg(blind_msg.singular);
+				}
+				else if (count > 1)
+				{
+					monster_msg(blind_msg.plural);
+				}
+			}
+		};
+
+		/* There's no summoning friendly uniques or Nazgul */
+		auto spell_idx = thrown_spell->spell_idx;
+
+		if (friendly)
+		{
+			if ((thrown_spell->spell_idx == SF_S_UNIQUE_IDX) &&
+			        (thrown_spell->spell_idx == SF_S_WRAITH_IDX))
+			{
+				// Summon high undead instead
+				spell_idx = SF_S_HI_UNDEAD_IDX;
+			}
+		}
+
 		/* Spell effect */
-		int count = 0;
-		switch (thrown_spell->spell_idx)
+		switch (spell_idx)
 		{
 		case SF_SHRIEK_IDX:
 			{
@@ -1122,22 +1189,6 @@ static bool_ monst_spell_monst(int m_idx)
 
 		case SF_MULTIPLY_IDX:
 			{
-				break;
-			}
-
-		case SF_S_ANIMAL_IDX:
-			{
-				if (disturb_other) disturb(1);
-				if (blind || !see_m) monster_msg("%^s mumbles.", m_name);
-				else monster_msg("%^s magically summons an animal!", m_name);
-				for (int k = 0; k < 1; k++)
-				{
-					if (friendly)
-						count += summon_specific_friendly(y, x, rlev, SUMMON_ANIMAL, TRUE);
-					else
-						count += summon_specific(y, x, rlev, SUMMON_ANIMAL);
-				}
-				if (blind && count) monster_msg("You hear something appear nearby.");
 				break;
 			}
 
@@ -1989,22 +2040,6 @@ static bool_ monst_spell_monst(int m_idx)
 				break;
 			}
 
-		case SF_S_ANIMALS_IDX:
-			{
-				if (disturb_other) disturb(1);
-				if (blind || !see_m) monster_msg("%^s mumbles.", m_name);
-				else monster_msg("%^s magically summons some animals!", m_name);
-				for (int k = 0; k < 4; k++)
-				{
-					if (friendly)
-						count += summon_specific_friendly(y, x, rlev, SUMMON_ANIMAL, TRUE);
-					else
-						count += summon_specific(y, x, rlev, SUMMON_ANIMAL);
-				}
-				if (blind && count) monster_msg("You hear many things appear nearby.");
-				break;
-			}
-
 		case SF_BLINK_IDX:
 			{
 				if (disturb_other) disturb(1);
@@ -2104,326 +2139,189 @@ static bool_ monst_spell_monst(int m_idx)
 				break;
 			}
 
+		case SF_S_ANIMAL_IDX:
+		        {
+			        do_summon("summons an animal!", 1, SUMMON_ANIMAL, SUMMON_ANIMAL, blind_msg_default);
+				break;
+		        }
+
+		case SF_S_ANIMALS_IDX:
+		        {
+			        do_summon("summons some animals!", 4, SUMMON_ANIMAL, SUMMON_ANIMAL, blind_msg_default);
+				break;
+		        }
+
 		case SF_S_BUG_IDX:
 			{
-				if (disturb_other) disturb(1);
-				if (blind || !see_m) monster_msg("%^s mumbles.", m_name);
-				else monster_msg("%^s magically codes some software bugs.", m_name);
-				for (int k = 0; k < 6; k++)
-				{
-					if (friendly)
-						count += summon_specific_friendly(y, x, rlev, SUMMON_BUG, TRUE);
-					else
-						count += summon_specific(y, x, rlev, SUMMON_BUG);
-				}
-				if (blind && count) monster_msg("You hear many things appear nearby.");
+			        do_summon("codes some software bugs.", 6, SUMMON_BUG, SUMMON_BUG, blind_msg_default);
 				break;
 			}
 
 		case SF_S_RNG_IDX:
 			{
-				if (disturb_other) disturb(1);
-				if (blind || !see_m) monster_msg("%^s mumbles.", m_name);
-				else monster_msg("%^s magically codes some RNGs.", m_name);
-				for (int k = 0; k < 6; k++)
-				{
-					if (friendly)
-						count += summon_specific_friendly(y, x, rlev, SUMMON_RNG, TRUE);
-					else
-						count += summon_specific(y, x, rlev, SUMMON_RNG);
-				}
-				if (blind && count) monster_msg("You hear many things appear nearby.");
+			        do_summon("codes some RNGs.", 6, SUMMON_RNG, SUMMON_RNG, blind_msg_default);
 				break;
 			}
 
 		case SF_S_THUNDERLORD_IDX:
 			{
-				if (disturb_other) disturb(1);
-				if (blind || !see_m) monster_msg("%^s mumbles.", m_name);
-				else monster_msg("%^s magically summons a Thunderlord!", m_name);
-				for (int k = 0; k < 1; k++)
-				{
-					if (friendly)
-						count += summon_specific_friendly(y, x, rlev, SUMMON_THUNDERLORD, TRUE);
-					else
-						count += summon_specific(y, x, rlev, SUMMON_THUNDERLORD);
-				}
-				if (blind && count) monster_msg("You hear something appear nearby.");
+			        do_summon("summons a Thunderlord!", 1, SUMMON_THUNDERLORD, SUMMON_THUNDERLORD, blind_msg_default);
 				break;
 			}
 
 		case SF_S_KIN_IDX:
 			{
-				if (disturb_other) disturb(1);
-				if (blind || !see_m) monster_msg("%^s mumbles.", m_name);
-				else monster_msg("%^s magically summons %s %s.",
-					                 m_name, m_poss,
-					                 ((r_ptr->flags) & RF_UNIQUE ?
-					                  "minions" : "kin"));
-				summon_kin_type = r_ptr->d_char;  /* Big hack */
-				for (int k = 0; k < 6; k++)
-				{
-					if (friendly)
-						count += summon_specific_friendly(y, x, rlev, SUMMON_KIN, TRUE);
-					else
-						count += summon_specific(y, x, rlev, SUMMON_KIN);
-				}
-				if (blind && count) monster_msg("You hear many things appear nearby.");
-
-
+			        // Describe the summons
+			        char action[256];
+				sprintf(action,
+				        "summons %s %s.",
+				        m_poss,
+				        (r_ptr->flags & RF_UNIQUE ? "minions" : "kin"));
+				// Force the right type of "kin"
+			        summon_kin_type = r_ptr->d_char;
+				// Summon
+				do_summon(action, 6, SUMMON_KIN, SUMMON_KIN, blind_msg_default);
 				break;
 			}
 
 		case SF_S_HI_DEMON_IDX:
 			{
-				if (disturb_other) disturb(1);
-				if (blind || !see_m) monster_msg("%^s mumbles.", m_name);
-				else monster_msg("%^s magically summons greater demons!", m_name);
-				if (blind && count) monster_msg("You hear heavy steps nearby.");
-				if (friendly)
-					summon_specific_friendly(y, x, rlev, SUMMON_HI_DEMON, TRUE);
-				else
-					summon_cyber();
+			        do_summon("summons greater demons!", 8, SUMMON_HI_DEMON, SUMMON_HI_DEMON, blind_msg_default);
 				break;
-			}
+		        }
 
 		case SF_S_MONSTER_IDX:
 			{
-				if (disturb_other) disturb(1);
-				if (blind || !see_m) monster_msg("%^s mumbles.", m_name);
-				else monster_msg("%^s magically summons help!", m_name);
-				for (int k = 0; k < 1; k++)
-				{
-					if (friendly)
-						count += summon_specific_friendly(y, x, rlev, SUMMON_NO_UNIQUES, TRUE);
-					else
-						count += summon_specific(y, x, rlev, 0);
-				}
-				if (blind && count) monster_msg("You hear something appear nearby.");
+			        do_summon("summons help!", 1, SUMMON_NO_UNIQUES, 0, blind_msg_default);
 				break;
 			}
 
 		case SF_S_MONSTERS_IDX:
 			{
-				if (disturb_other) disturb(1);
-				if (blind || !see_m) monster_msg("%^s mumbles.", m_name);
-				else monster_msg("%^s magically summons monsters!", m_name);
-				for (int k = 0; k < 8; k++)
-				{
-					if (friendly)
-						count += summon_specific_friendly(y, x, rlev, SUMMON_NO_UNIQUES, TRUE);
-					else
-						count += summon_specific(y, x, rlev, 0);
-				}
-				if (blind && count) monster_msg("You hear many things appear nearby.");
+			        do_summon("summons monsters!", 8, SUMMON_NO_UNIQUES, 0, blind_msg_default);
 				break;
 			}
 
 		case SF_S_ANT_IDX:
 			{
-				if (disturb_other) disturb(1);
-				if (blind || !see_m) monster_msg("%^s mumbles.", m_name);
-				else monster_msg("%^s magically summons ants.", m_name);
-				for (int k = 0; k < 6; k++)
-				{
-					if (friendly)
-						count += summon_specific_friendly(y, x, rlev, SUMMON_ANT, TRUE);
-					else
-						count += summon_specific(y, x, rlev, SUMMON_ANT);
-				}
-				if (blind && count) monster_msg("You hear many things appear nearby.");
+			        do_summon("summons ants.", 6, SUMMON_ANT, SUMMON_ANT, blind_msg_default);
 				break;
 			}
 
 		case SF_S_SPIDER_IDX:
 			{
-				if (disturb_other) disturb(1);
-				if (blind || !see_m) monster_msg("%^s mumbles.", m_name);
-				else monster_msg("%^s magically summons spiders.", m_name);
-				for (int k = 0; k < 6; k++)
-				{
-					if (friendly)
-						count += summon_specific_friendly(y, x, rlev, SUMMON_SPIDER, TRUE);
-					else
-						count += summon_specific(y, x, rlev, SUMMON_SPIDER);
-				}
-				if (blind && count) monster_msg("You hear many things appear nearby.");
+			        do_summon("summons spiders.", 6, SUMMON_SPIDER, SUMMON_SPIDER, blind_msg_default);
 				break;
 			}
 
 		case SF_S_HOUND_IDX:
 			{
-				if (disturb_other) disturb(1);
-				if (blind || !see_m) monster_msg("%^s mumbles.", m_name);
-				else monster_msg("%^s magically summons hounds.", m_name);
-				for (int k = 0; k < 6; k++)
-				{
-					if (friendly)
-						count += summon_specific_friendly(y, x, rlev, SUMMON_HOUND, TRUE);
-					else
-						count += summon_specific(y, x, rlev, SUMMON_HOUND);
-				}
-				if (blind && count) monster_msg("You hear many things appear nearby.");
+			        do_summon("summons hounds.", 6, SUMMON_HOUND, SUMMON_HOUND, blind_msg_default);
 				break;
 			}
 
 		case SF_S_HYDRA_IDX:
 			{
-				if (disturb_other) disturb(1);
-				if (blind || !see_m) monster_msg("%^s mumbles.", m_name);
-				else monster_msg("%^s magically summons hydras.", m_name);
-				for (int k = 0; k < 6; k++)
-				{
-					if (friendly)
-						count += summon_specific_friendly(y, x, rlev, SUMMON_HYDRA, TRUE);
-					else
-						count += summon_specific(y, x, rlev, SUMMON_HYDRA);
-				}
-				if (blind && count) monster_msg("You hear many things appear nearby.");
+			        do_summon("summons hydras.", 6, SUMMON_HYDRA, SUMMON_HYDRA, blind_msg_default);
 				break;
 			}
 
 		case SF_S_ANGEL_IDX:
 			{
-				if (disturb_other) disturb(1);
-				if (blind || !see_m) monster_msg("%^s mumbles.", m_name);
-				else monster_msg("%^s magically summons an angel!", m_name);
-				for (int k = 0; k < 1; k++)
-				{
-					if (friendly)
-						count += summon_specific_friendly(y, x, rlev, SUMMON_ANGEL, TRUE);
-					else
-						count += summon_specific(y, x, rlev, SUMMON_ANGEL);
-				}
-				if (blind && count) monster_msg("You hear something appear nearby.");
+			        do_summon("summons an angel!", 1, SUMMON_ANGEL, SUMMON_ANGEL, blind_msg_default);
 				break;
 			}
 
 		case SF_S_DEMON_IDX:
 			{
-				if (disturb_other) disturb(1);
-				if (blind || !see_m) monster_msg("%^s mumbles.", m_name);
-				else monster_msg("%^s magically summons a demon!", m_name);
-				for (int k = 0; k < 1; k++)
-				{
-					if (friendly)
-						count += summon_specific_friendly(y, x, rlev, SUMMON_DEMON, TRUE);
-					else
-						count += summon_specific(y, x, rlev, SUMMON_DEMON);
-				}
-				if (blind && count) monster_msg("You hear something appear nearby.");
+			        do_summon("summons a demon!", 1, SUMMON_DEMON, SUMMON_DEMON, blind_msg_default);
 				break;
 			}
 
 		case SF_S_UNDEAD_IDX:
 			{
-				if (disturb_other) disturb(1);
-				if (blind || !see_m) monster_msg("%^s mumbles.", m_name);
-				else monster_msg("%^s magically summons an undead adversary!", m_name);
-				for (int k = 0; k < 1; k++)
-				{
-					if (friendly)
-						count += summon_specific_friendly(y, x, rlev, SUMMON_UNDEAD, TRUE);
-					else
-						count += summon_specific(y, x, rlev, SUMMON_UNDEAD);
-				}
-				if (blind && count) monster_msg("You hear something appear nearby.");
+			        do_summon("summons an undead adversary!", 1, SUMMON_UNDEAD, SUMMON_UNDEAD, blind_msg_default);
 				break;
 			}
 
 		case SF_S_DRAGON_IDX:
 			{
-				if (disturb_other) disturb(1);
-				if (blind || !see_m) monster_msg("%^s mumbles.", m_name);
-				else monster_msg("%^s magically summons a dragon!", m_name);
-				for (int k = 0; k < 1; k++)
-				{
-					if (friendly)
-						count += summon_specific_friendly(y, x, rlev, SUMMON_DRAGON, TRUE);
-					else
-						count += summon_specific(y, x, rlev, SUMMON_DRAGON);
-				}
-				if (blind && count) monster_msg("You hear something appear nearby.");
+			        do_summon("summons a dragon!", 1, SUMMON_DRAGON, SUMMON_DRAGON, blind_msg_default);
 				break;
 			}
 
 		case SF_S_HI_UNDEAD_IDX:
 			{
-				if (disturb_other) disturb(1);
-				if (blind || !see_m) monster_msg("%^s mumbles.", m_name);
-				else monster_msg("%^s magically summons greater undead!", m_name);
-				for (int k = 0; k < 8; k++)
-				{
-					if (friendly)
-						count += summon_specific_friendly(y, x, rlev, SUMMON_HI_UNDEAD_NO_UNIQUES, TRUE);
-					else
-						count += summon_specific(y, x, rlev, SUMMON_HI_UNDEAD);
-				}
-				if (blind && count)
-				{
-					monster_msg("You hear many creepy things appear nearby.");
-				}
+			        summon_messages blind_msg {
+					"You hear a creepy thing appear nearby.",
+					"You hear many creepy things appear nearby."
+				};
+				do_summon("summons greater undead!", 8, SUMMON_HI_UNDEAD_NO_UNIQUES, SUMMON_HI_UNDEAD, blind_msg);
 				break;
 			}
 
 		case SF_S_HI_DRAGON_IDX:
 			{
-				if (disturb_other) disturb(1);
-				if (blind || !see_m) monster_msg("%^s mumbles.", m_name);
-				else monster_msg("%^s magically summons ancient dragons!", m_name);
-				for (int k = 0; k < 8; k++)
-				{
-					if (friendly)
-						count += summon_specific_friendly(y, x, rlev, SUMMON_HI_DRAGON_NO_UNIQUES, TRUE);
-					else
-						count += summon_specific(y, x, rlev, SUMMON_HI_DRAGON);
-				}
-				if (blind && count)
-				{
-					monster_msg("You hear many powerful things appear nearby.");
-				}
+			        summon_messages blind_msg {
+					"You hear many a powerful thing appear nearby.",
+					"You hear many powerful things appear nearby."
+				};
+				do_summon("summons ancient dragons!", 8, SUMMON_HI_DRAGON_NO_UNIQUES, SUMMON_HI_DRAGON, blind_msg);
 				break;
 			}
 
 		case SF_S_WRAITH_IDX:
 			{
-				if (disturb_other) disturb(1);
-				if (blind || !see_m) monster_msg("%^s mumbles.", m_name);
-				else monster_msg("%^s magically summons a wraith!", m_name);
-
-
-				for (int k = 0; k < 8; k++)
-				{
-					count += summon_specific(y, x, rlev, SUMMON_WRAITH);
-				}
-
-				if (blind && count)
-				{
-					monster_msg("You hear immortal beings appear nearby.");
-				}
+			        // No summoning Nazgul; see the remapping code above the switch.
+			        assert(!friendly);
+				// Summon
+				summon_messages blind_msg {
+					"You hear an immortal being appear nearby.",
+					"You hear immortal beings appear nearby."
+				};
+				do_summon("summons a wraith!", 8, 0 /* not used */, SUMMON_WRAITH, blind_msg);
 				break;
 			}
 
 		case SF_S_UNIQUE_IDX:
 			{
-				if (disturb_other) disturb(1);
-				if (blind || !see_m) monster_msg("%^s mumbles.", m_name);
-				else monster_msg("%^s magically summons special opponents!", m_name);
+			        // No summoning uniques; see the remapping code above the switch.
+			        assert(!friendly);
+				// Interrupt
+			        if (disturb_other)
+				{
+					disturb(1);
+				}
+				// Message
+				if (blind || !see_m)
+				{
+					monster_msg("%^s mumbles.", m_name);
+				}
+				else
+				{
+					monster_msg("%^s magically summons special opponents!", m_name);
+				}
+				// Summon
+				int count = 0;
 				for (int k = 0; k < 8; k++)
 				{
-					if (!friendly)
-						count += summon_specific(y, x, rlev, SUMMON_UNIQUE);
+					count += summon_specific(y, x, rlev, SUMMON_UNIQUE);
 				}
 				for (int k = 0; k < 8; k++)
 				{
-					if (friendly)
-						count += summon_specific_friendly(y, x, rlev, SUMMON_HI_UNDEAD_NO_UNIQUES, TRUE);
-					else
-						count += summon_specific(y, x, rlev, SUMMON_HI_UNDEAD);
+					count += summon_specific(y, x, rlev, SUMMON_HI_UNDEAD);
 				}
-				if (blind && count)
+				// Message
+				if (blind)
 				{
-					monster_msg("You hear many powerful things appear nearby.");
+					if (count == 1)
+					{
+						monster_msg("You hear a powerful thing appear nearby.");
+					}
+					else if (count > 1)
+					{
+						monster_msg("You hear many powerful things appear nearby.");
+					}
 				}
 				break;
 			}
@@ -2602,13 +2500,10 @@ static bool_ make_attack_spell(int m_idx)
 	static const auto SF_INT_MASK = compute_smart_mask();
 	static const auto SF_INNATE_MASK = compute_innate_mask();
 
-	int k, chance, rlev, failrate;
+	int chance, rlev, failrate;
 	char m_name[80];
 	bool_ no_inate = FALSE;
 	int x, y;
-
-	/* Summon count */
-	int count = 0;
 
 	/* Extract the blind-ness */
 	bool_ blind = (p_ptr->blind ? TRUE : FALSE);
@@ -2793,6 +2688,51 @@ static bool_ make_attack_spell(int m_idx)
 			update_smart_learn(m_idx, smart_learn);
 		};
 
+		/* Messages for summoning */
+		struct summon_messages {
+			char const *singular;
+			char const *plural;
+		};
+
+		/* Default message for summoning when player is blinded */
+		summon_messages blind_msg_default {
+			"You hear something appear nearby.",
+			"You hear many things appear nearby."
+		};
+
+		/* Do a summoning spell */
+		auto do_summon = [&](char const *action, int n, int type, summon_messages const &blind_msg) -> void {
+			// Interrupt
+			disturb(1);
+			// Message
+			if (blind)
+			{
+				msg_format("%^s mumbles.", m_name);
+			}
+			else
+			{
+				msg_format("%^s magically %s", m_name, action);
+			}
+			// Do the actual summoning
+			int count = 0;
+			for (int k = 0; k < n; k++)
+			{
+				count += summon_specific(y, x, rlev, type);
+			}
+			// Message for blinded characters
+			if (blind)
+			{
+				if (count == 1)
+				{
+					msg_print(blind_msg.singular);
+				}
+				else if (count > 1)
+				{
+					msg_print(blind_msg.plural);
+				}
+			}
+		};
+
 		/* Cast the spell. */
 		switch (thrown_spell->spell_idx)
 		{
@@ -2806,19 +2746,6 @@ static bool_ make_attack_spell(int m_idx)
 
 		case SF_MULTIPLY_IDX:
 			{
-				break;
-			}
-
-		case SF_S_ANIMAL_IDX:
-			{
-				disturb(1);
-				if (blind) msg_format("%^s mumbles.", m_name);
-				else msg_format("%^s magically summons an animal!", m_name);
-				for (k = 0; k < 1; k++)
-				{
-					count += summon_specific(y, x, rlev, SUMMON_ANIMAL);
-				}
-				if (blind && count) msg_print("You hear something appear nearby.");
 				break;
 			}
 
@@ -3657,19 +3584,6 @@ static bool_ make_attack_spell(int m_idx)
 				break;
 			}
 
-		case SF_S_ANIMALS_IDX:
-			{
-				disturb(1);
-				if (blind) msg_format("%^s mumbles.", m_name);
-				else msg_format("%^s magically summons some animals!", m_name);
-				for (k = 0; k < 4; k++)
-				{
-					count += summon_specific(y, x, rlev, SUMMON_ANIMAL);
-				}
-				if (blind && count) msg_print("You hear something appear nearby.");
-				break;
-			}
-
 		case SF_BLINK_IDX:
 			{
 				disturb(1);
@@ -3757,271 +3671,181 @@ static bool_ make_attack_spell(int m_idx)
 				break;
 			}
 
+		case SF_S_ANIMAL_IDX:
+		        {
+			        do_summon("summons an animal!", 1, SUMMON_ANIMAL, blind_msg_default);
+				break;
+		        }
+
+		case SF_S_ANIMALS_IDX:
+		        {
+			        do_summon("summons some animals!", 4, SUMMON_ANIMAL, blind_msg_default);
+				break;
+		        }
+
 		case SF_S_BUG_IDX:
 			{
-				disturb(1);
-				if (blind) msg_format("%^s mumbles.", m_name);
-				else msg_format("%^s magically codes some software bugs.", m_name);
-				for (k = 0; k < 6; k++)
-				{
-					count += summon_specific(y, x, rlev, SUMMON_BUG);
-				}
-				if (blind && count) msg_print("You hear many things appear nearby.");
+			        do_summon("codes some software bugs.", 6, SUMMON_BUG, blind_msg_default);
 				break;
 			}
 
 		case SF_S_RNG_IDX:
 			{
-				disturb(1);
-				if (blind) msg_format("%^s mumbles.", m_name);
-				else msg_format("%^s magically codes some RNGs.", m_name);
-				for (k = 0; k < 6; k++)
-				{
-					count += summon_specific(y, x, rlev, SUMMON_RNG);
-				}
-				if (blind && count) msg_print("You hear many things appear nearby.");
+			        do_summon("codes some RNGs.", 6, SUMMON_RNG, blind_msg_default);
 				break;
 			}
 
 		case SF_S_THUNDERLORD_IDX:
 			{
-				disturb(1);
-				if (blind) msg_format("%^s mumbles.", m_name);
-				else msg_format("%^s magically summons a Thunderlord!", m_name);
-				for (k = 0; k < 1; k++)
-				{
-					count += summon_specific(y, x, rlev, SUMMON_THUNDERLORD);
-				}
-				if (blind && count) msg_print("You hear something appear nearby.");
+			        do_summon("summons a Thunderlord!", 1, SUMMON_THUNDERLORD, blind_msg_default);
 				break;
 			}
 
 		case SF_S_KIN_IDX:
 			{
-				disturb(1);
-				if (blind) msg_format("%^s mumbles.", m_name);
-				else msg_format("%^s magically summons %s %s.",
-					                m_name, m_poss,
-					                ((r_ptr->flags) & RF_UNIQUE ?
-					                 "minions" : "kin"));
-				summon_kin_type = r_ptr->d_char;  /* Big hack */
-
-				for (k = 0; k < 6; k++)
-				{
-					count += summon_specific(y, x, rlev, SUMMON_KIN);
-				}
-				if (blind && count) msg_print("You hear many things appear nearby.");
-
+			        // Describe the summons
+			        char action[256];
+				sprintf(action,
+				        "summons %s %s.",
+				        m_poss,
+				        (r_ptr->flags & RF_UNIQUE) ? "minions" : "kin");
+				// Force the correct type of "kin"
+				summon_kin_type = r_ptr->d_char;
+				// Summon
+				do_summon(action, 6, SUMMON_KIN, blind_msg_default);
 				break;
 			}
 
 		case SF_S_HI_DEMON_IDX:
 			{
-				disturb(1);
-				if (blind) msg_format("%^s mumbles.", m_name);
-				else msg_format("%^s magically summons greater demons!", m_name);
-				if (blind && count) msg_print("You hear heavy steps nearby.");
-				summon_cyber();
+			        do_summon("summons greater demons!", 8, SUMMON_HI_DEMON, blind_msg_default);
 				break;
 			}
 
 		case SF_S_MONSTER_IDX:
 			{
-				disturb(1);
-				if (blind) msg_format("%^s mumbles.", m_name);
-				else msg_format("%^s magically summons help!", m_name);
-				for (k = 0; k < 1; k++)
-				{
-					count += summon_specific(y, x, rlev, 0);
-				}
-				if (blind && count) msg_print("You hear something appear nearby.");
+			        do_summon("summons help!", 1, 0, blind_msg_default);
 				break;
 			}
 
 		case SF_S_MONSTERS_IDX:
 			{
-				disturb(1);
-				if (blind) msg_format("%^s mumbles.", m_name);
-				else msg_format("%^s magically summons monsters!", m_name);
-				for (k = 0; k < 8; k++)
-				{
-					count += summon_specific(y, x, rlev, 0);
-				}
-				if (blind && count) msg_print("You hear many things appear nearby.");
+			        do_summon("summons monsters!", 8, 0, blind_msg_default);
 				break;
 			}
 
 		case SF_S_ANT_IDX:
 			{
-				disturb(1);
-				if (blind) msg_format("%^s mumbles.", m_name);
-				else msg_format("%^s magically summons ants.", m_name);
-				for (k = 0; k < 6; k++)
-				{
-					count += summon_specific(y, x, rlev, SUMMON_ANT);
-				}
-				if (blind && count) msg_print("You hear many things appear nearby.");
+			        do_summon("summons ants.", 6, SUMMON_ANT, blind_msg_default);
 				break;
 			}
 
 		case SF_S_SPIDER_IDX:
 			{
-				disturb(1);
-				if (blind) msg_format("%^s mumbles.", m_name);
-				else msg_format("%^s magically summons spiders.", m_name);
-				for (k = 0; k < 6; k++)
-				{
-					count += summon_specific(y, x, rlev, SUMMON_SPIDER);
-				}
-				if (blind && count) msg_print("You hear many things appear nearby.");
+			        do_summon("summons spiders.", 6, SUMMON_SPIDER, blind_msg_default);
 				break;
 			}
 
 		case SF_S_HOUND_IDX:
 			{
-				disturb(1);
-				if (blind) msg_format("%^s mumbles.", m_name);
-				else msg_format("%^s magically summons hounds.", m_name);
-				for (k = 0; k < 6; k++)
-				{
-					count += summon_specific(y, x, rlev, SUMMON_HOUND);
-				}
-				if (blind && count) msg_print("You hear many things appear nearby.");
+			        do_summon("summons hounds.", 6, SUMMON_HOUND, blind_msg_default);
 				break;
 			}
 
 		case SF_S_HYDRA_IDX:
 			{
-				disturb(1);
-				if (blind) msg_format("%^s mumbles.", m_name);
-				else msg_format("%^s magically summons hydras.", m_name);
-				for (k = 0; k < 6; k++)
-				{
-					count += summon_specific(y, x, rlev, SUMMON_HYDRA);
-				}
-				if (blind && count) msg_print("You hear many things appear nearby.");
+			        do_summon("summons hydras.", 6, SUMMON_HYDRA, blind_msg_default);
 				break;
 			}
 
 		case SF_S_ANGEL_IDX:
 			{
-				disturb(1);
-				if (blind) msg_format("%^s mumbles.", m_name);
-				else msg_format("%^s magically summons an angel!", m_name);
-				for (k = 0; k < 1; k++)
-				{
-					count += summon_specific(y, x, rlev, SUMMON_ANGEL);
-				}
-				if (blind && count) msg_print("You hear something appear nearby.");
+			        do_summon("summons an angel!", 1, SUMMON_ANGEL, blind_msg_default);
 				break;
 			}
 
 		case SF_S_DEMON_IDX:
 			{
-				disturb(1);
-				if (blind) msg_format("%^s mumbles.", m_name);
-				else msg_format("%^s magically summons a demon!", m_name);
-				for (k = 0; k < 1; k++)
-				{
-					count += summon_specific(y, x, rlev, SUMMON_DEMON);
-				}
-				if (blind && count) msg_print("You hear something appear nearby.");
+			        do_summon("summons a demon!", 1, SUMMON_DEMON, blind_msg_default);
 				break;
 			}
 
 		case SF_S_UNDEAD_IDX:
 			{
-				disturb(1);
-				if (blind) msg_format("%^s mumbles.", m_name);
-				else msg_format("%^s magically summons an undead adversary!", m_name);
-				for (k = 0; k < 1; k++)
-				{
-					count += summon_specific(y, x, rlev, SUMMON_UNDEAD);
-				}
-				if (blind && count) msg_print("You hear something appear nearby.");
+			        do_summon("summons an undead adversary!", 1, SUMMON_UNDEAD, blind_msg_default);
 				break;
 			}
 
 		case SF_S_DRAGON_IDX:
 			{
-				disturb(1);
-				if (blind) msg_format("%^s mumbles.", m_name);
-				else msg_format("%^s magically summons a dragon!", m_name);
-				for (k = 0; k < 1; k++)
-				{
-					count += summon_specific(y, x, rlev, SUMMON_DRAGON);
-				}
-				if (blind && count) msg_print("You hear something appear nearby.");
+			        do_summon("summons a dragon!", 1, SUMMON_DRAGON, blind_msg_default);
 				break;
 			}
 
 		case SF_S_HI_UNDEAD_IDX:
 			{
-				disturb(1);
-				if (blind) msg_format("%^s mumbles.", m_name);
-				else msg_format("%^s magically summons greater undead!", m_name);
-				for (k = 0; k < 8; k++)
-				{
-					count += summon_specific(y, x, rlev, SUMMON_HI_UNDEAD);
-				}
-				if (blind && count)
-				{
-					msg_print("You hear many creepy things appear nearby.");
-				}
+			        summon_messages blind_msg {
+					"You hear a creepy thing appear nearby.",
+					"You hear many creepy things appear nearby."
+				};
+				do_summon("summons greater undead!", 8, SUMMON_HI_UNDEAD, blind_msg);
 				break;
 			}
 
 		case SF_S_HI_DRAGON_IDX:
 			{
-				disturb(1);
-				if (blind) msg_format("%^s mumbles.", m_name);
-				else msg_format("%^s magically summons ancient dragons!", m_name);
-				for (k = 0; k < 8; k++)
-				{
-					count += summon_specific(y, x, rlev, SUMMON_HI_DRAGON);
-				}
-				if (blind && count)
-				{
-					msg_print("You hear many powerful things appear nearby.");
-				}
+			        summon_messages blind_msg {
+					"You hear a powerful thing appear nearby.",
+					"You hear many powerful things appear nearby."
+				};
+				do_summon("summons ancient dragons!", 8, SUMMON_HI_DRAGON, blind_msg);
 				break;
 			}
 
 		case SF_S_WRAITH_IDX:
 			{
-				disturb(1);
-				if (blind) msg_format("%^s mumbles.", m_name);
-				else msg_format("%^s magically summons Wraith!", m_name);
-
-
-				for (k = 0; k < 8; k++)
-				{
-					count += summon_specific(y, x, rlev, SUMMON_WRAITH);
-				}
-
-				if (blind && count)
-				{
-					msg_print("You hear immortal beings appear nearby.");
-				}
+			        summon_messages blind_msg {
+					"You hear an immortal being appear nearby.",
+					"You hear immortal beings appear nearby."
+				};
+				do_summon("summons Wraiths!", 8, SUMMON_WRAITH, blind_msg);
 				break;
 			}
 
 		case SF_S_UNIQUE_IDX:
 			{
-				disturb(1);
-				if (blind) msg_format("%^s mumbles.", m_name);
-				else msg_format("%^s magically summons special opponents!", m_name);
-				for (k = 0; k < 8; k++)
+			        // Interrupt
+			        disturb(1);
+				// Message
+				if (blind)
+				{
+					msg_format("%^s mumbles.", m_name);
+				}
+				else
+				{
+					msg_format("%^s magically summons special opponents!", m_name);
+				}
+				// Summon
+				int count = 0;
+				for (int k = 0; k < 8; k++)
 				{
 					count += summon_specific(y, x, rlev, SUMMON_UNIQUE);
 				}
-				for (k = 0; k < 8; k++)
+				for (int k = 0; k < 8; k++)
 				{
 					count += summon_specific(y, x, rlev, SUMMON_HI_UNDEAD);
 				}
-				if (blind && count)
+				// Message
+				if (blind)
 				{
-					msg_print("You hear many powerful things appear nearby.");
+					if (count == 1)
+					{
+						msg_print("You hear a powerful thing appear nearby.");
+					}
+					else if (count > 1)
+					{
+						msg_print("You hear many powerful things appear nearby.");
+					}
 				}
 				break;
 			}
