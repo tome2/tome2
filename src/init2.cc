@@ -556,6 +556,7 @@ namespace {
 			class_info = new player_class[max_c_idx];
 			bg = make_array<hist_type>(max_bg_idx);
 			meta_class_info = new meta_class_type[max_mc_idx];
+			gen_skill = new skill_modifiers;
 		}
 
 		static errr parse(FILE *fp)

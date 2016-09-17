@@ -3,6 +3,7 @@
 #include "h-basic.h"
 #include "player_race_ability_type.hpp"
 #include "player_race_flag_set.hpp"
+#include "skill_modifiers.hpp"
 #include "skills_defs.hpp"
 
 #include <array>
@@ -15,10 +16,7 @@ struct player_spec
 	const char *title = nullptr;                            /* Type of class spec */
 	char *desc = nullptr;                                   /* Small desc of the class spec */
 
-	char skill_basem[MAX_SKILLS] { };                       /* Mod for value */
-	u32b skill_base[MAX_SKILLS] { };                        /* value */
-	char skill_modm[MAX_SKILLS] { };                        /* mod for mod */
-	s16b skill_mod[MAX_SKILLS] { };                         /* mod */
+	struct skill_modifiers skill_modifiers;
 
 	u32b skill_ideal[MAX_SKILLS] { };                       /* Ideal skill levels at level 50 */
 

@@ -6,6 +6,7 @@
 #include "player_defs.hpp"
 #include "player_race_ability_type.hpp"
 #include "player_race_flag_set.hpp"
+#include "skill_modifiers.hpp"
 #include "skills_defs.hpp"
 
 #include <array>
@@ -44,10 +45,7 @@ struct player_race_mod
 	byte g_attr = 0;                                        /* Overlay graphic attribute */
 	char g_char = '\0';                                     /* Overlay graphic character */
 
-	char skill_basem[MAX_SKILLS] { };
-	u32b skill_base[MAX_SKILLS] { };
-	char skill_modm[MAX_SKILLS] { };
-	s16b skill_mod[MAX_SKILLS] { };
+	struct skill_modifiers skill_modifiers;
 
 	s16b obj_tval[5] { };
 	s16b obj_sval[5] { };

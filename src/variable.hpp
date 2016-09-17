@@ -35,6 +35,7 @@
 #include "rune_spell.hpp"
 #include "school_type.hpp"
 #include "set_type_fwd.hpp"
+#include "skill_modifiers_fwd.hpp"
 #include "skill_type_fwd.hpp"
 #include "skills_defs.hpp"
 #include "store_action_type_fwd.hpp"
@@ -284,10 +285,7 @@ extern school_type schools[SCHOOLS_MAX];
 extern int project_time;
 extern s32b project_time_effect;
 extern effect_type effects[MAX_EFFECTS];
-extern char gen_skill_basem[MAX_SKILLS];
-extern u32b gen_skill_base[MAX_SKILLS];
-extern char gen_skill_modm[MAX_SKILLS];
-extern s16b gen_skill_mod[MAX_SKILLS];
+extern skill_modifiers *gen_skill;
 extern int max_bact;
 extern bool_ automatizer_enabled;
 extern s16b last_teleportation_y;

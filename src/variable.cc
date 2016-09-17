@@ -13,6 +13,7 @@
 #include "dungeon_flag_set.hpp"
 #include "player_type.hpp"
 #include "randart_gen_type.hpp"
+#include "skill_modifiers.hpp"
 #include "util.hpp"
 
 
@@ -938,10 +939,7 @@ effect_type effects[MAX_EFFECTS];
 /*
  * General skills set
  */
-char gen_skill_basem[MAX_SKILLS];
-u32b gen_skill_base[MAX_SKILLS];
-char gen_skill_modm[MAX_SKILLS];
-s16b gen_skill_mod[MAX_SKILLS];
+skill_modifiers *gen_skill;
 
 /*
  * Table of "cli" macros.

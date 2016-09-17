@@ -261,6 +261,22 @@ static void do_quick_start(ls_flag_t flag)
 	}
 }
 
+static void do_skill_modifier(skill_modifier *s, ls_flag_t flag)
+{
+	do_byte((byte*) &s->basem, flag);
+	do_u32b(        &s->base, flag);
+	do_byte((byte*) &s->modm, flag);
+	do_s16b(        &s->mod, flag);
+}
+
+static void do_skill_modifiers(skill_modifiers *skill_modifiers, ls_flag_t flag)
+{
+	for (std::size_t i = 0; i < MAX_SKILLS; i++)
+	{
+		do_skill_modifier(&skill_modifiers->modifiers[i], flag);
+	}
+}
+
 /*
  * The special saved subrace
  */
@@ -326,13 +342,7 @@ static void do_subrace(ls_flag_t flag)
 	do_byte(&sr_ptr->g_attr, flag);
 	do_byte((byte*)&sr_ptr->g_char, flag);
 
-	for (i = 0; i < MAX_SKILLS; i++)
-	{
-		do_byte((byte*)&sr_ptr->skill_basem[i], flag);
-		do_u32b(&sr_ptr->skill_base[i], flag);
-		do_byte((byte*)&sr_ptr->skill_modm[i], flag);
-		do_s16b(&sr_ptr->skill_mod[i], flag);
-	}
+	do_skill_modifiers(&sr_ptr->skill_modifiers, flag);
 }
 
 

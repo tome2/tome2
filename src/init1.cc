@@ -807,6 +807,37 @@ static errr grab_object_flag(object_flag_set *flags, cptr what)
 }
 
 /*
+ * Read skill values
+ */
+static int read_skill_modifiers(skill_modifiers *skill_modifiers, cptr buf)
+{
+	long val, mod;
+	char v, m;
+	char name[200];
+
+	if (5 != sscanf(buf, "%c%ld:%c%ld:%s", &v, &val, &m, &mod, name))
+	{
+		return 1;
+	}
+
+	long i;
+	if ((i = find_skill(name)) == -1)
+	{
+		return 1;
+	}
+
+	auto s = &skill_modifiers->modifiers[i];
+
+	s->basem = monster_ego_modify(v);
+	s->base = val;
+	s->modm = monster_ego_modify(m);
+	s->mod = mod;
+
+	return 0;
+}
+
+
+/*
  * Initialize the "player" arrays, by parsing an ascii "template" file
  */
 errr init_player_info_txt(FILE *fp)
@@ -833,15 +864,6 @@ errr init_player_info_txt(FILE *fp)
 
 	/* Just before the first line */
 	error_line = -1;
-
-	/* Init general skills */
-	for (z = 0; z < MAX_SKILLS; z++)
-	{
-		gen_skill_basem[z] = 0;
-		gen_skill_base[z] = 0;
-		gen_skill_modm[z] = 0;
-		gen_skill_mod[z] = 0;
-	}
 
 	/* Parse */
 	while (0 == my_fgets(fp, buf, 1024))
@@ -888,18 +910,10 @@ errr init_player_info_txt(FILE *fp)
 		/* Process 'G:k' for "General skills" */
 		if ((buf[0] == 'G') && (buf[2] == 'k'))
 		{
-			long val, mod, i;
-			char name[200], v, m;
-
-			/* Scan for the values */
-			if (5 != sscanf(buf + 4, "%c%ld:%c%ld:%s",
-			                &v, &val, &m, &mod, name)) return (1);
-
-			if ((i = find_skill(name)) == -1) return (1);
-			gen_skill_basem[i] = monster_ego_modify(v);
-			gen_skill_base[i] = val;
-			gen_skill_modm[i] = monster_ego_modify(m);
-			gen_skill_mod[i] = mod;
+			if (read_skill_modifiers(gen_skill, buf + 4))
+			{
+				return 1;
+			}
 
 			/* Next... */
 			continue;
@@ -1044,18 +1058,10 @@ errr init_player_info_txt(FILE *fp)
 		/* Process 'k' for "skills" */
 		if ((buf[0] == 'R') && (buf[2] == 'k'))
 		{
-			long val, mod, i;
-			char name[200], v, m;
-
-			/* Scan for the values */
-			if (5 != sscanf(buf + 4, "%c%ld:%c%ld:%s",
-			                &v, &val, &m, &mod, name)) return (1);
-
-			if ((i = find_skill(name)) == -1) return (1);
-			rp_ptr->skill_basem[i] = monster_ego_modify(v);
-			rp_ptr->skill_base[i] = val;
-			rp_ptr->skill_modm[i] = monster_ego_modify(m);
-			rp_ptr->skill_mod[i] = mod;
+			if (read_skill_modifiers(&rp_ptr->skill_modifiers, buf + 4))
+			{
+				return 1;
+			}
 
 			/* Next... */
 			continue;
@@ -1319,18 +1325,10 @@ errr init_player_info_txt(FILE *fp)
 		/* Process 'k' for "skills" */
 		if ((buf[0] == 'S') && (buf[2] == 'k'))
 		{
-			long val, mod, i;
-			char name[200], v, m;
-
-			/* Scan for the values */
-			if (5 != sscanf(buf + 4, "%c%ld:%c%ld:%s",
-			                &v, &val, &m, &mod, name)) return (1);
-
-			if ((i = find_skill(name)) == -1) return (1);
-			rmp_ptr->skill_basem[i] = monster_ego_modify(v);
-			rmp_ptr->skill_base[i] = val;
-			rmp_ptr->skill_modm[i] = monster_ego_modify(m);
-			rmp_ptr->skill_mod[i] = mod;
+			if (read_skill_modifiers(&rmp_ptr->skill_modifiers, buf + 4))
+			{
+				return 1;
+			}
 
 			/* Next... */
 			continue;
@@ -1640,18 +1638,10 @@ errr init_player_info_txt(FILE *fp)
 		/* Process 'k' for "skills" */
 		if ((buf[0] == 'C') && (buf[2] == 'k'))
 		{
-			long val, mod, i;
-			char name[200], v, m;
-
-			/* Scan for the values */
-			if (5 != sscanf(buf + 4, "%c%ld:%c%ld:%s",
-			                &v, &val, &m, &mod, name)) return (1);
-
-			if ((i = find_skill(name)) == -1) return (1);
-			c_ptr->skill_basem[i] = monster_ego_modify(v);
-			c_ptr->skill_base[i] = val;
-			c_ptr->skill_modm[i] = monster_ego_modify(m);
-			c_ptr->skill_mod[i] = mod;
+			if (read_skill_modifiers(&c_ptr->skill_modifiers, buf + 4))
+			{
+				return 1;
+			}
 
 			/* Next... */
 			continue;
@@ -1916,18 +1906,10 @@ errr init_player_info_txt(FILE *fp)
 			/* Process 'k' for "skills" */
 			if (buf[4] == 'k')
 			{
-				long val, mod, i;
-				char name[200], v, m;
-
-				/* Scan for the values */
-				if (5 != sscanf(buf + 6, "%c%ld:%c%ld:%s",
-				                &v, &val, &m, &mod, name)) return (1);
-
-				if ((i = find_skill(name)) == -1) return (1);
-				s_ptr->skill_basem[i] = monster_ego_modify(v);
-				s_ptr->skill_base[i] = val;
-				s_ptr->skill_modm[i] = monster_ego_modify(m);
-				s_ptr->skill_mod[i] = mod;
+				if (read_skill_modifiers(&s_ptr->skill_modifiers, buf + 6))
+				{
+					return 1;
+				}
 
 				/* Next... */
 				continue;

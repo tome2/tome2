@@ -7,6 +7,7 @@
 #include "player_race_ability_type.hpp"
 #include "player_race_flag_set.hpp"
 #include "skills_defs.hpp"
+#include "skill_modifiers.hpp"
 
 #include <array>
 
@@ -40,10 +41,7 @@ struct player_race
 	std::array<object_flag_set, PY_MAX_LEVEL + 1>  oflags;
 	s16b opval[PY_MAX_LEVEL + 1] { };
 
-	char skill_basem[MAX_SKILLS] { };
-	u32b skill_base[MAX_SKILLS] { };
-	char skill_modm[MAX_SKILLS] { };
-	s16b skill_mod[MAX_SKILLS] { };
+	struct skill_modifiers skill_modifiers;
 
 	s16b obj_tval[5] { };
 	s16b obj_sval[5] { };

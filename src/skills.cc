@@ -1177,62 +1177,25 @@ bool_ forbid_non_blessed()
 
 
 /*
+ * Augment skill value/modifier with the given skill_modifiers
+ */
+static void augment_skills(s32b *v, s32b *m, skill_modifier const &s)
+{
+	*v = modify_aux(*v, s.base, s.basem);
+	*m = modify_aux(*m, s.mod,  s.modm);
+}
+
+
+/*
  * Gets the base value of a skill, given a race/class/...
  */
 void compute_skills(s32b *v, s32b *m, int i)
 {
-	s32b value, mod;
-
-	/***** general skills *****/
-
-	/* If the skill correspond to the magic school lets pump them a bit */
-	value = gen_skill_base[i];
-	mod = gen_skill_mod[i];
-
-	*v = modify_aux(*v,
-	                value, gen_skill_basem[i]);
-	*m = modify_aux(*m,
-	                mod, gen_skill_modm[i]);
-
-	/***** race skills *****/
-
-	value = rp_ptr->skill_base[i];
-	mod = rp_ptr->skill_mod[i];
-
-	*v = modify_aux(*v,
-	                value, rp_ptr->skill_basem[i]);
-	*m = modify_aux(*m,
-	                mod, rp_ptr->skill_modm[i]);
-
-	/***** race mod skills *****/
-
-	value = rmp_ptr->skill_base[i];
-	mod = rmp_ptr->skill_mod[i];
-
-	*v = modify_aux(*v,
-	                value, rmp_ptr->skill_basem[i]);
-	*m = modify_aux(*m,
-	                mod, rmp_ptr->skill_modm[i]);
-
-	/***** class skills *****/
-
-	value = cp_ptr->skill_base[i];
-	mod = cp_ptr->skill_mod[i];
-
-	*v = modify_aux(*v,
-	                value, cp_ptr->skill_basem[i]);
-	*m = modify_aux(*m,
-	                mod, cp_ptr->skill_modm[i]);
-
-	/***** class spec skills *****/
-
-	value = spp_ptr->skill_base[i];
-	mod = spp_ptr->skill_mod[i];
-
-	*v = modify_aux(*v,
-	                value, spp_ptr->skill_basem[i]);
-	*m = modify_aux(*m,
-	                mod, spp_ptr->skill_modm[i]);
+	augment_skills(v, m, gen_skill->modifiers[i]);
+	augment_skills(v, m, rp_ptr->skill_modifiers.modifiers[i]);
+	augment_skills(v, m, rmp_ptr->skill_modifiers.modifiers[i]);
+	augment_skills(v, m, cp_ptr->skill_modifiers.modifiers[i]);
+	augment_skills(v, m, spp_ptr->skill_modifiers.modifiers[i]);
 }
 
 /*

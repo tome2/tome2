@@ -6,6 +6,7 @@
 #include "player_defs.hpp"
 #include "player_race_flag_set.hpp"
 #include "player_spec.hpp"
+#include "skill_modifiers.hpp"
 
 /**
  * Maximum number of specialties.
@@ -54,10 +55,7 @@ struct player_class
 	std::array<object_flag_set, PY_MAX_LEVEL + 1>  oflags;
 	s16b opval[PY_MAX_LEVEL + 1] { };
 
-	char skill_basem[MAX_SKILLS] { };
-	u32b skill_base[MAX_SKILLS] { };
-	char skill_modm[MAX_SKILLS] { };
-	s16b skill_mod[MAX_SKILLS] { };
+	struct skill_modifiers skill_modifiers;
 
 	u32b gods = 0;
 
