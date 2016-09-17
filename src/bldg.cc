@@ -981,8 +981,7 @@ static bool_ compare_weapons(void)
  * sharpen arrows, repair armor, repair weapon
  * -KMW-
  */
-static bool_ fix_item(int istart, int iend, int ispecific, bool_ iac,
-                     int ireward, bool_ set_reward)
+static bool_ fix_item(int istart, int iend, int ispecific, bool_ iac)
 {
 	int i;
 
@@ -1216,15 +1215,13 @@ bool_ bldg_process_command(const store_type *s_ptr, store_action_type const *ba_
 
 	case BACT_ENCHANT_WEAPON:
 		{
-			paid = fix_item(INVEN_WIELD, INVEN_WIELD, 0, FALSE,
-			                BACT_ENCHANT_WEAPON, set_reward);
+		        paid = fix_item(INVEN_WIELD, INVEN_WIELD, 0, FALSE);
 			break;
 		}
 
 	case BACT_ENCHANT_ARMOR:
 		{
-			paid = fix_item(INVEN_BODY, INVEN_FEET, 0, TRUE,
-			                BACT_ENCHANT_ARMOR, set_reward);
+		        paid = fix_item(INVEN_BODY, INVEN_FEET, 0, TRUE);
 			break;
 		}
 
@@ -1290,15 +1287,13 @@ bool_ bldg_process_command(const store_type *s_ptr, store_action_type const *ba_
 
 	case BACT_ENCHANT_ARROWS:
 		{
-			paid = fix_item(0, INVEN_WIELD, TV_ARROW, FALSE,
-			                BACT_ENCHANT_ARROWS, set_reward);
+		        paid = fix_item(0, INVEN_WIELD, TV_ARROW, FALSE);
 			break;
 		}
 
 	case BACT_ENCHANT_BOW:
 		{
-			paid = fix_item(INVEN_BOW, INVEN_BOW, TV_BOW, FALSE,
-			                BACT_ENCHANT_BOW, set_reward);
+		        paid = fix_item(INVEN_BOW, INVEN_BOW, TV_BOW, FALSE);
 			break;
 		}
 
