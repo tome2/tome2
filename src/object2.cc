@@ -1984,14 +1984,10 @@ static void finalize_randart(object_type* o_ptr, int lev)
 {
 	int r;
 	int i = 0;
-	int foo = lev + randnor(0, 5);
 	bool_ flag = TRUE;
 
 	/* Paranoia */
 	if (o_ptr->tval != TV_RANDART) return;
-
-	if (foo < 1) foo = 1;
-	if (foo > 100) foo = 100;
 
 	while (flag)
 	{
