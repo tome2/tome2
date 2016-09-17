@@ -134,6 +134,11 @@ static void do_byte(byte *v, ls_flag_t flag)
 	}
 }
 
+static void do_char(char *c, ls_flag_t flag)
+{
+	do_byte((byte *) c, flag);
+}
+
 static void do_bool(bool_ *f, ls_flag_t flag)
 {
 	byte b = *f;
@@ -390,10 +395,10 @@ static void do_quick_start(ls_flag_t flag)
 
 static void do_skill_modifier(skill_modifier *s, ls_flag_t flag)
 {
-	do_byte((byte*) &s->basem, flag);
-	do_u32b(        &s->base, flag);
-	do_byte((byte*) &s->modm, flag);
-	do_s16b(        &s->mod, flag);
+	do_char(&s->basem, flag);
+	do_u32b(&s->base, flag);
+	do_char(&s->modm, flag);
+	do_s16b(&s->mod, flag);
 }
 
 static void do_skill_modifiers(skill_modifiers *skill_modifiers, ls_flag_t flag)
@@ -428,13 +433,13 @@ static void do_subrace(ls_flag_t flag)
 		do_s16b(&sr_ptr->ps.adj[i], flag);
 	}
 
-	do_byte((byte*)&sr_ptr->luck, flag);
+	do_char(&sr_ptr->luck, flag);
 	do_s16b(&sr_ptr->mana, flag);
 
-	do_byte((byte*)&sr_ptr->ps.mhp, flag);
+	do_s16b(&sr_ptr->ps.mhp, flag);
 	do_s16b(&sr_ptr->ps.exp, flag);
 
-	do_byte((byte*)&sr_ptr->infra, flag);
+	do_char(&sr_ptr->infra, flag);
 
 	{
 		u16b n = sr_ptr->ps.powers.size();
@@ -454,7 +459,7 @@ static void do_subrace(ls_flag_t flag)
 
 	for (i = 0; i < BODY_MAX; i++)
 	{
-		do_byte((byte*)&sr_ptr->body_parts[i], flag);
+		do_char(&sr_ptr->body_parts[i], flag);
 	}
 
 	do_flag_set(&sr_ptr->flags, flag);
@@ -465,7 +470,7 @@ static void do_subrace(ls_flag_t flag)
 	}
 
 	do_byte(&sr_ptr->g_attr, flag);
-	do_byte((byte*)&sr_ptr->g_char, flag);
+	do_char(&sr_ptr->g_char, flag);
 
 	do_skill_modifiers(&sr_ptr->skill_modifiers, flag);
 }
@@ -891,10 +896,10 @@ static bool_ do_extra(ls_flag_t flag)
 	}
 
 	/* The tactic */
-	do_byte((byte*)&p_ptr->tactic, flag);
+	do_char(&p_ptr->tactic, flag);
 
 	/* The movement */
-	do_byte((byte*)&p_ptr->movement, flag);
+	do_char(&p_ptr->movement, flag);
 
 	/* The comapnions killed */
 	do_s16b(&p_ptr->companion_killed, flag);
