@@ -27,6 +27,7 @@
 #include "object2.hpp"
 #include "object_flag.hpp"
 #include "object_kind.hpp"
+#include "options.hpp"
 #include "player_type.hpp"
 #include "skills.hpp"
 #include "squeltch.hpp"

@@ -82,3 +82,21 @@ bool_ joke_monsters;
 bool_ point_based;
 bool_ preserve;
 bool_ no_selling;
+
+//
+// Other options
+//
+
+bool_ cheat_peek;                      /* Peek into object creation */
+bool_ cheat_hear;                      /* Peek into monster creation */
+bool_ cheat_room;                      /* Peek into dungeon creation */
+bool_ cheat_xtra;                      /* Peek into something else */
+bool_ cheat_live;                      /* Allow player to avoid death */
+
+byte hitpoint_warn;                    /* Hitpoint warning (0 to 9) */
+
+byte delay_factor;                     /* Delay factor (0 to 9) */
+
+s16b autosave_freq;                    /* Autosave frequency */
+bool_ autosave_t;                      /* Timed autosave */
+bool_ autosave_l;                      /* Autosave before entering new levels */

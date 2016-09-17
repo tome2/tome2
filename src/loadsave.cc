@@ -18,6 +18,7 @@
 #include "object1.hpp"
 #include "object2.hpp"
 #include "object_kind.hpp"
+#include "options.hpp"
 #include "player_class.hpp"
 #include "player_level_flag.hpp"
 #include "player_race.hpp"

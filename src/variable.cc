@@ -143,33 +143,6 @@ int text_out_indent = 0;
 
 
 /*
- * Software options (set via the '=' command).  See "tables.c"
- */
-
-
-
-
-/* Cheating options */
-
-bool_ cheat_peek; 		/* Peek into object creation */
-bool_ cheat_hear; 		/* Peek into monster creation */
-bool_ cheat_room; 		/* Peek into dungeon creation */
-bool_ cheat_xtra; 		/* Peek into something else */
-bool_ cheat_live; 		/* Allow player to avoid death */
-
-
-/* Special options */
-
-byte hitpoint_warn; 		/* Hitpoint warning (0 to 9) */
-
-byte delay_factor; 		/* Delay factor (0 to 9) */
-
-bool_ autosave_l;         /* Autosave before entering new levels */
-bool_ autosave_t;         /* Timed autosave */
-s16b autosave_freq;      /* Autosave frequency */
-
-
-/*
  * Dungeon variables
  */
 

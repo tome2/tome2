@@ -84,3 +84,20 @@ extern bool_ joke_monsters;
 extern bool_ point_based;
 extern bool_ preserve;
 extern bool_ no_selling;
+
+//
+// Other options
+//
+extern bool_ cheat_peek;
+extern bool_ cheat_hear;
+extern bool_ cheat_room;
+extern bool_ cheat_xtra;
+extern bool_ cheat_live;
+
+extern byte hitpoint_warn;
+
+extern byte delay_factor;
+
+extern s16b autosave_freq;
+extern bool_ autosave_t;
+extern bool_ autosave_l;
