@@ -16,9 +16,6 @@ struct skill_type
 
 	s16b action_mkey = 0;                   /* Action do to */
 
-	s32b i_value = 0;                       /* Current value */
-	s32b i_mod = 0;                         /* Modifier, i.e. how much value 1 skill point gives */
-
 	s32b value = 0;                         /* Current value */
 	s32b mod = 0;                           /* Modifier, i.e. how much value 1 skill point gives */
 
