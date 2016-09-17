@@ -2746,9 +2746,6 @@ static bool_ make_attack_spell(int m_idx)
 	/* Extract the "see-able-ness" */
 	bool_ seen = (!blind && m_ptr->ml);
 
-	/* Assume "normal" target */
-	bool_ normal = TRUE;
-
 	/* Target location */
 	if (m_ptr->target > -1)
 	{
@@ -2787,8 +2784,7 @@ static bool_ make_attack_spell(int m_idx)
 	/* Sometimes forbid inate attacks (breaths) */
 	if (rand_int(100) >= (chance * 2)) no_inate = TRUE;
 
-	/* Hack -- require projectable player */
-	if (normal)
+	/* Require projectable player */
 	{
 		/* Check range */
 		if (m_ptr->cdis > MAX_RANGE) return (FALSE);
