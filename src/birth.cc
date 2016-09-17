@@ -1230,7 +1230,7 @@ static void dump_classes(std::vector<u16b> const &classes, int sel, u32b *restri
 	}
 }
 
-int dump_specs(int sel)
+static int dump_specs(int sel)
 {
 	int n = 0;
 
@@ -1289,7 +1289,7 @@ int dump_specs(int sel)
 	return (n);
 }
 
-int dump_races(int sel)
+static int dump_races(int sel)
 {
 	int n = 0;
 
@@ -1346,7 +1346,7 @@ int dump_races(int sel)
 }
 
 
-int dump_rmods(int sel, int *racem, int max)
+static int dump_rmods(int sel, int *racem, int max)
 {
 	int n = 0;
 
@@ -1406,7 +1406,7 @@ int dump_rmods(int sel, int *racem, int max)
 	return (n);
 }
 
-int dump_gods(int sel, int *choice, int max)
+static int dump_gods(int sel, int *choice, int max)
 {
 	int i, j;
 	char buf[80];
