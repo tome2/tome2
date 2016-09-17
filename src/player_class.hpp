@@ -38,12 +38,6 @@ struct player_class
 	s16b blow_mul = 0;
 	s16b extra_blows = 0;
 
-	s32b sense_base = 0;
-	s32b sense_pl = 0;
-	s32b sense_plus = 0;
-	byte sense_heavy = 0;
-	byte sense_heavy_magic = 0;
-
 	std::vector<object_proto> object_protos;
 
 	char body_parts[BODY_MAX] { };                          /* To help to decide what to use when body changing */

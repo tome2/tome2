@@ -1707,26 +1707,6 @@ errr init_player_info_txt(FILE *fp)
 			continue;
 		}
 
-		/* Process 'C' for "sensing" */
-		if ((buf[0] == 'C') && (buf[2] == 'C'))
-		{
-			long int s[3];
-			char h, m;
-
-			/* Scan for the values */
-			if (5 != sscanf(buf + 4, "%c:%c:%ld:%ld:%ld",
-			                &h, &m, &s[0], &s[1], &s[2])) return (1);
-
-			c_ptr->sense_heavy = (h == 'H') ? TRUE : FALSE;
-			c_ptr->sense_heavy_magic = (m == 'H') ? TRUE : FALSE;
-			c_ptr->sense_base = s[0];
-			c_ptr->sense_pl = s[1];
-			c_ptr->sense_plus = s[2];
-
-			/* Next... */
-			continue;
-		}
-
 		/* Process 'B' for "blows" */
 		if ((buf[0] == 'C') && (buf[2] == 'B'))
 		{
