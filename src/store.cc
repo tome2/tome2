@@ -1197,7 +1197,7 @@ static bool_ kind_is_storeok(int k_idx)
  */
 static void store_create(void)
 {
-	int i = 0, tries, level = 0, chance, item;
+	int i = 0, tries, level = 0;
 
 	object_type forge;
 	object_type *q_ptr = NULL;
@@ -1281,9 +1281,9 @@ static void store_create(void)
 		else
 		{
 			/* Hack -- Pick an item to sell */
-			item = rand_int(st_info[st_ptr->st_idx].item_num);
-			i = st_info[st_ptr->st_idx].item_kind[item];
-			chance = st_info[st_ptr->st_idx].item_chance[item];
+			auto const &item = st_info[st_ptr->st_idx].items[rand_int(st_info[st_ptr->st_idx].items.size())];
+			i = item.kind;
+			auto chance = item.chance;
 
 			/* Don't allow k_info artifacts */
 			if ((i <= 10000) && (k_info[i].flags & TR_NORM_ART))

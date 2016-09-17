@@ -2,11 +2,9 @@
 
 #include "h-basic.h"
 #include "store_flag_set.hpp"
+#include "store_item.hpp"
 
-/**
- * Number of items to choose stock from
- */
-constexpr int STORE_CHOICES = 56;
+#include <vector>
 
 /**
  * Store descriptor.
@@ -15,9 +13,7 @@ struct store_info_type
 {
 	const char *name = nullptr;              /* Name */
 
-	s16b item_kind[STORE_CHOICES] = { 0 };   /* Table -- Legal item kinds */
-	s16b item_chance[STORE_CHOICES] = { 0 };
-	byte item_num = 0;                       /* Number of items */
+	std::vector<store_item> items;           /* Table -- Legal item kinds */
 
 	s16b max_obj = 0;                        /* Number of items this store can hold */
 

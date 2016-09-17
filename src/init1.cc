@@ -5723,7 +5723,7 @@ static errr grab_one_store_flag(store_flag_set *flags, cptr what)
  */
 errr init_st_info_txt(FILE *fp)
 {
-	int i = 0, item_idx = 0;
+	int i = 0;
 	char buf[1024];
 	char *s;
 
@@ -5783,9 +5783,6 @@ errr init_st_info_txt(FILE *fp)
 			assert(!st_ptr->name);
 			st_ptr->name = my_strdup(s);
 
-			/* We are ready for a new set of objects */
-			item_idx = 0;
-
 			/* Next... */
 			continue;
 		}
@@ -5808,15 +5805,11 @@ errr init_st_info_txt(FILE *fp)
 			/* Paranoia -- require a name */
 			if (!*s) return (1);
 
-			/* Get the index */
-			st_ptr->item_chance[item_idx] = atoi(buf + 2);
-
-			/* Append chars to the name */
-			st_ptr->item_kind[item_idx] = test_item_name(s);
-
-			item_idx++;
-			st_ptr->item_num = item_idx;
-			assert(st_ptr->item_num <= STORE_CHOICES);
+			/* Add to items array */
+			store_item item;
+			item.chance = atoi(buf + 2);
+			item.kind = test_item_name(s);
+			st_ptr->items.emplace_back(item);
 
 			/* Next... */
 			continue;
@@ -5831,14 +5824,13 @@ errr init_st_info_txt(FILE *fp)
 			if (3 != sscanf(buf + 2, "%d:%d:%d",
 			                &rar1, &tv1, &sv1)) return (1);
 
-			/* Get the index */
-			st_ptr->item_chance[item_idx] = rar1;
-			/* Hack -- 256 as a sval means all possible items */
-			st_ptr->item_kind[item_idx] = (sv1 < 256) ? lookup_kind(tv1, sv1) : tv1 + 10000;
-
-			item_idx++;
-			st_ptr->item_num = item_idx;
-			assert(st_ptr->item_num <= STORE_CHOICES);
+			/* Add to the items array */
+			store_item item;
+			item.chance = rar1;
+			item.kind = (sv1 < 256)
+			        ? lookup_kind(tv1, sv1)
+			        : tv1 + 10000;    /* An SVAL of 256 means all possible items. */
+			st_ptr->items.emplace_back(item);
 
 			/* Next... */
 			continue;
