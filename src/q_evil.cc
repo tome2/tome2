@@ -121,7 +121,7 @@ static bool_ quest_evil_finish_hook(void *, void *in_, void *)
 	return TRUE;
 }
 
-bool_ quest_evil_init_hook(int q_idx)
+bool_ quest_evil_init_hook()
 {
 	if ((cquest.status >= QUEST_STATUS_UNTAKEN) && (cquest.status < QUEST_STATUS_FINISHED))
 	{

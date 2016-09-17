@@ -82,7 +82,7 @@ static bool_ quest_one_move_hook(void *, void *in_, void *)
 
 		/* Continue the plot */
 		cquest.status = QUEST_STATUS_TAKEN;
-		cquest.init(QUEST_ONE);
+		cquest.init();
 
 		return TRUE;
 	}
@@ -114,7 +114,7 @@ static bool_ quest_one_drop_hook(void *, void *in_, void *)
 	cquest.status = QUEST_STATUS_FINISHED;
 	*(quest[QUEST_ONE].plot) = QUEST_SAURON;
 	quest[*(quest[QUEST_ONE].plot)].status = QUEST_STATUS_TAKEN;
-	quest[*(quest[QUEST_ONE].plot)].init(*(quest[QUEST_ONE].plot));
+	quest[*(quest[QUEST_ONE].plot)].init();
 
 	return TRUE;
 }
@@ -166,7 +166,7 @@ static bool_ quest_one_wield_hook(void *, void *in_, void *)
 	cquest.status = QUEST_STATUS_FAILED_DONE;
 	*(quest[QUEST_ONE].plot) = QUEST_SAURON;
 	quest[*(quest[QUEST_ONE].plot)].status = QUEST_STATUS_TAKEN;
-	quest[*(quest[QUEST_ONE].plot)].init(*(quest[QUEST_ONE].plot));
+	quest[*(quest[QUEST_ONE].plot)].init();
 
 	/* Ok lets reset the lives counter */
 	p_ptr->lives = 0;
@@ -357,7 +357,7 @@ static bool_ quest_one_gen_hook(void *, void *, void *)
 	return (FALSE);
 }
 
-bool_ quest_one_init_hook(int q_idx)
+bool_ quest_one_init_hook()
 {
 	if ((cquest.status >= QUEST_STATUS_TAKEN) && (cquest.status < QUEST_STATUS_FINISHED))
 	{

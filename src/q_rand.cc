@@ -646,7 +646,7 @@ std::string quest_random_describe()
 	return w.str();
 }
 
-bool_ quest_random_init_hook(int q_idx)
+bool_ quest_random_init_hook()
 {
 	add_hook_new(HOOK_MONSTER_DEATH, quest_random_death_hook,    "rand_death",     NULL);
 	add_hook_new(HOOK_NEW_LEVEL,     quest_random_turn_hook,     "rand_new_lvl",   NULL);

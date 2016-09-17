@@ -1189,7 +1189,7 @@ static bool_ quest_god_birth_objects_hook(void *, void *, void *)
 	return FALSE;
 }
 
-bool_ quest_god_init_hook(int q)
+bool_ quest_god_init_hook()
 {
 	/* Only need hooks if the quest is unfinished. */
 	if ((cquest.status >= QUEST_STATUS_UNTAKEN) &&

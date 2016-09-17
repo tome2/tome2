@@ -80,7 +80,7 @@ static bool_ quest_ultra_good_move_hook(void *, void *in_, void *)
 
 			/* Continue the plot */
 			cquest.status = QUEST_STATUS_TAKEN;
-			cquest.init(QUEST_ULTRA_GOOD);
+			cquest.init();
 		}
 
 		options->quick_messages = old_quick_messages;
@@ -275,7 +275,7 @@ static bool_ quest_ultra_good_dump_hook(void *, void *in_, void *)
 }
 
 
-bool_ quest_ultra_good_init_hook(int q)
+bool_ quest_ultra_good_init_hook()
 {
 	if ((cquest.status >= QUEST_STATUS_TAKEN) && (cquest.status < QUEST_STATUS_FINISHED))
 	{

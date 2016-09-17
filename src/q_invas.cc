@@ -120,7 +120,7 @@ static bool_ quest_invasion_turn_hook(void *, void *, void *)
 
 	cquest.status = QUEST_STATUS_TAKEN;
 
-	quest_invasion_init_hook(QUEST_INVASION);
+	quest_invasion_init_hook();
 	del_hook_new(HOOK_END_TURN, quest_invasion_turn_hook);
 	process_hooks_restart = TRUE;
 
@@ -207,7 +207,7 @@ static bool_ quest_invasion_stair_hook(void *, void *in_, void *)
 	return TRUE;
 }
 
-bool_ quest_invasion_init_hook(int q_idx)
+bool_ quest_invasion_init_hook()
 {
 	add_hook_new(HOOK_END_TURN,  quest_invasion_turn_hook, "invasion_turn", NULL);
 	add_hook_new(HOOK_CHAR_DUMP, quest_invasion_dump_hook, "invasion_dump", NULL);

@@ -559,7 +559,7 @@ static bool_ fireproof_gen_hook(void *, void *, void *)
 	}
 }
 
-bool_ quest_fireproof_init_hook(int q)
+bool_ quest_fireproof_init_hook()
 {
 	/* Only need hooks if the quest is unfinished. */
 	if ((cquest.status >= QUEST_STATUS_UNTAKEN) &&

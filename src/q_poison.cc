@@ -240,7 +240,7 @@ static bool_ quest_poison_drop_hook(void *, void *in_, void *)
 	return FALSE;
 }
 
-bool_ quest_poison_init_hook(int q_idx)
+bool_ quest_poison_init_hook()
 {
 	/* Get a place to place the poison */
 	if (!cquest.data[1])

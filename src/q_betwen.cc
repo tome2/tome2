@@ -198,7 +198,7 @@ static bool_ quest_between_forbid_hook(void *, void *in_, void *)
 	return (FALSE);
 }
 
-bool_ quest_between_init_hook(int q)
+bool_ quest_between_init_hook()
 {
 	if ((cquest.status >= QUEST_STATUS_TAKEN) && (cquest.status < QUEST_STATUS_FINISHED))
 	{

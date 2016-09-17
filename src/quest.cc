@@ -6,12 +6,11 @@
 
 void init_hooks_quests()
 {
-	for (std::size_t i = 0; i < MAX_Q_IDX; i++)
+	for (auto const &q: quest)
 	{
-		if (quest[i].init != NULL)
+		if (q.init)
 		{
-			quest[i].init(i);
+			q.init();
 		}
 	}
 }
-

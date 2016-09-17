@@ -2256,7 +2256,7 @@ static bool_ player_birth_aux_ask()
 		plots[PLOT_OTHER] = QUEST_NULL;
 	}
 
-	quest_random_init_hook(QUEST_RANDOM);
+	quest_random_init_hook();
 
 	/* Ok */
 	return (TRUE);

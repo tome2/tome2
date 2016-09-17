@@ -270,7 +270,7 @@ static bool_ quest_shroom_chat_hook(void *, void *in_, void *)
 		msg_print("to the west of Bree? Please try to not harm my dogs. They are so lovely...");
 
 		cquest.status = QUEST_STATUS_TAKEN;
-		quest[QUEST_SHROOM].init(QUEST_SHROOM);
+		quest[QUEST_SHROOM].init();
 	}
 	else
 	{
@@ -280,7 +280,7 @@ static bool_ quest_shroom_chat_hook(void *, void *in_, void *)
 	return TRUE;
 }
 
-bool_ quest_shroom_init_hook(int q_idx)
+bool_ quest_shroom_init_hook()
 {
 	/* Get a number of 'shrooms */
 	if (!cquest.data[1])

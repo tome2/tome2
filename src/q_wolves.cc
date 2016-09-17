@@ -134,7 +134,7 @@ static bool_ quest_wolves_finish_hook(void *, void *in_, void *)
 	return TRUE;
 }
 
-bool_ quest_wolves_init_hook(int q_idx)
+bool_ quest_wolves_init_hook()
 {
 	if ((cquest.status >= QUEST_STATUS_UNTAKEN) && (cquest.status < QUEST_STATUS_FINISHED))
 	{

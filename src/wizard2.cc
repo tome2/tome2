@@ -1680,7 +1680,7 @@ void do_cmd_debug()
 			{
 				quest[command_arg].status = QUEST_STATUS_TAKEN;
 				*(quest[command_arg].plot) = command_arg;
-				quest[command_arg].init(command_arg);
+				quest[command_arg].init();
 				break;
 			}
 			break;

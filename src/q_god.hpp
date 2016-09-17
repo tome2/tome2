@@ -5,4 +5,4 @@
 #include <string>
 
 std::string quest_god_describe();
-bool_ quest_god_init_hook(int q);
+bool_ quest_god_init_hook();

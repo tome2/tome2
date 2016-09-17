@@ -112,7 +112,7 @@ static bool_ quest_nirnaeth_stair_hook(void *, void *, void *)
 	return (FALSE);
 }
 
-bool_ quest_nirnaeth_init_hook(int q_idx)
+bool_ quest_nirnaeth_init_hook()
 {
 	if ((cquest.status >= QUEST_STATUS_TAKEN) && (cquest.status < QUEST_STATUS_FINISHED))
 	{

@@ -501,7 +501,7 @@ std::string quest_library_describe()
 	return w.str();
 }
 
-bool_ quest_library_init_hook(int q)
+bool_ quest_library_init_hook()
 {
 	/* Only need hooks if the quest is unfinished. */
 	if ((cquest.status >= QUEST_STATUS_UNTAKEN) &&

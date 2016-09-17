@@ -93,7 +93,7 @@ static bool_ quest_morgoth_hook(void *, void *, void *)
 			*(quest[QUEST_MORGOTH].plot) = QUEST_ULTRA_GOOD;
 		else
 			*(quest[QUEST_MORGOTH].plot) = QUEST_ULTRA_EVIL;
-		quest[*(quest[QUEST_MORGOTH].plot)].init(*(quest[QUEST_MORGOTH].plot));
+		quest[*(quest[QUEST_MORGOTH].plot)].init();
 	}
 	return (FALSE);
 }
@@ -113,7 +113,7 @@ static bool_ quest_morgoth_dump_hook(void *, void *in_, void *)
 	return (FALSE);
 }
 
-bool_ quest_morgoth_init_hook(int q_idx)
+bool_ quest_morgoth_init_hook()
 {
 	if ((quest[QUEST_MORGOTH].status >= QUEST_STATUS_TAKEN) && (quest[QUEST_MORGOTH].status < QUEST_STATUS_FINISHED))
 	{
@@ -140,7 +140,7 @@ static bool_ quest_sauron_hook(void *, void *, void *)
 		del_hook_new(HOOK_MONSTER_DEATH, quest_sauron_hook);
 		add_hook_new(HOOK_MONSTER_DEATH, quest_morgoth_hook, "morgort_death", NULL);
 		*(quest[QUEST_SAURON].plot) = QUEST_MORGOTH;
-		quest_morgoth_init_hook(QUEST_MORGOTH);
+		quest_morgoth_init_hook();
 
 		process_hooks_restart = TRUE;
 	}
@@ -167,7 +167,7 @@ static bool_ quest_sauron_resurect_hook(void *, void *in_, void *)
 	return FALSE;
 }
 
-bool_ quest_sauron_init_hook(int q_idx)
+bool_ quest_sauron_init_hook()
 {
 	if ((quest[QUEST_SAURON].status >= QUEST_STATUS_TAKEN) && (quest[QUEST_SAURON].status < QUEST_STATUS_FINISHED))
 	{
@@ -192,7 +192,7 @@ static bool_ quest_necro_hook(void *, void *, void *)
 		quest[QUEST_NECRO].status = QUEST_STATUS_FINISHED;
 
 		*(quest[QUEST_NECRO].plot) = QUEST_ONE;
-		quest[*(quest[QUEST_NECRO].plot)].init(*(quest[QUEST_NECRO].plot));
+		quest[*(quest[QUEST_NECRO].plot)].init();
 
 		del_hook_new(HOOK_MONSTER_DEATH, quest_necro_hook);
 		process_hooks_restart = TRUE;
@@ -200,7 +200,7 @@ static bool_ quest_necro_hook(void *, void *, void *)
 	return (FALSE);
 }
 
-bool_ quest_necro_init_hook(int q_idx)
+bool_ quest_necro_init_hook()
 {
 	if ((quest[QUEST_NECRO].status >= QUEST_STATUS_TAKEN) && (quest[QUEST_NECRO].status < QUEST_STATUS_FINISHED))
 	{

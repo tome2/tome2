@@ -134,7 +134,7 @@ static bool_ quest_eol_finish_hook(void *, void *in_, void *)
 
 	/* Continue the plot */
 	*(quest[q_idx].plot) = QUEST_NIRNAETH;
-	quest[*(quest[q_idx].plot)].init(*(quest[q_idx].plot));
+	quest[*(quest[q_idx].plot)].init();
 
 	del_hook_new(HOOK_QUEST_FINISH, quest_eol_finish_hook);
 	process_hooks_restart = TRUE;
@@ -212,7 +212,7 @@ static bool_ quest_eol_stair_hook(void *, void *in_, void *)
 	return FALSE;
 }
 
-bool_ quest_eol_init_hook(int q)
+bool_ quest_eol_init_hook()
 {
 	if ((cquest.status >= QUEST_STATUS_TAKEN) && (cquest.status < QUEST_STATUS_FINISHED))
 	{

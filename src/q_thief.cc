@@ -160,7 +160,7 @@ static bool_ quest_thieves_finish_hook(void *, void *in_, void *)
 		else
 			*(quest[q_idx].plot) = QUEST_WIGHT;
 	}
-	quest[*(quest[q_idx].plot)].init(*(quest[q_idx].plot));
+	quest[*(quest[q_idx].plot)].init();
 
 	del_hook_new(HOOK_QUEST_FINISH, quest_thieves_finish_hook);
 	process_hooks_restart = TRUE;
@@ -181,7 +181,7 @@ static bool_ quest_thieves_feeling_hook(void *, void *, void *)
 	return TRUE;
 }
 
-bool_ quest_thieves_init_hook(int q_idx)
+bool_ quest_thieves_init_hook()
 {
 	if ((cquest.status >= QUEST_STATUS_UNTAKEN) && (cquest.status < QUEST_STATUS_FINISHED))
 	{

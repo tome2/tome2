@@ -2,4 +2,4 @@
 
 #include "h-basic.h"
 
-bool_ quest_eol_init_hook(int q_idx);
+bool_ quest_eol_init_hook();

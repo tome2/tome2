@@ -78,7 +78,7 @@ static bool bounty_item_tester_hook(object_type const *o_ptr)
 	return ((o_ptr->tval == TV_CORPSE) && (o_ptr->pval2 == bounty_quest_monster));
 }
 
-bool_ quest_bounty_init_hook(int dummy)
+bool_ quest_bounty_init_hook()
 {
 	return FALSE;
 }

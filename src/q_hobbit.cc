@@ -151,7 +151,7 @@ static bool_ quest_hobbit_chat_hook(void *, void *in_, void *)
 		msg_print("maze and never been seen again! Could you find him for me?");
 
 		cquest.status = QUEST_STATUS_TAKEN;
-		quest[QUEST_HOBBIT].init(QUEST_HOBBIT);
+		quest[QUEST_HOBBIT].init();
 	}
 	else if (cquest.status == QUEST_STATUS_COMPLETED)
 	{
@@ -198,7 +198,7 @@ static bool_ quest_hobbit_dump_hook(void *, void *in_, void *)
 	return (FALSE);
 }
 
-bool_ quest_hobbit_init_hook(int q_idx)
+bool_ quest_hobbit_init_hook()
 {
 	/* Get a level to place the hobbit */
 	if (!cquest.data[0])

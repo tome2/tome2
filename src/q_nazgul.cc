@@ -131,7 +131,7 @@ static bool_ quest_nazgul_death_hook(void *, void *in_, void *)
 	return (FALSE);
 }
 
-bool_ quest_nazgul_init_hook(int q_idx)
+bool_ quest_nazgul_init_hook()
 {
 	if ((cquest.status >= QUEST_STATUS_TAKEN) && (cquest.status < QUEST_STATUS_FINISHED))
 	{

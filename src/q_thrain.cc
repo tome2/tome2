@@ -194,7 +194,7 @@ static bool_ quest_thrain_feeling_hook(void *, void *, void *)
 
 	cmsg_format(TERM_YELLOW, "You hear someone shouting under the torture.");
 	cquest.status = QUEST_STATUS_TAKEN;
-	cquest.init(QUEST_THRAIN);
+	cquest.init();
 
 	return (FALSE);
 }
@@ -235,7 +235,7 @@ static bool_ quest_thrain_turn_hook(void *, void *, void *)
 	return (FALSE);
 }
 
-bool_ quest_thrain_init_hook(int q)
+bool_ quest_thrain_init_hook()
 {
 	if (!cquest.data[0])
 	{

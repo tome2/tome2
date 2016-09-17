@@ -2288,7 +2288,7 @@ static bool do_quests(ls_flag_t flag)
 		// Initialize the quest if necessary
 		if ((flag == ls_flag_t::LOAD) && (q->init != NULL))
 		{
-			q->init(i);
+			q->init();
 		}
 	}
 
