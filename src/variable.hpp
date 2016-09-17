@@ -13,6 +13,7 @@
 #include "ego_item_type_fwd.hpp"
 #include "fate.hpp"
 #include "feature_type_fwd.hpp"
+#include "grid.hpp"
 #include "hist_type_fwd.hpp"
 #include "meta_class_type_fwd.hpp"
 #include "monster_ego_fwd.hpp"
@@ -207,9 +208,7 @@ extern char *ANGBAND_DIR_DNGN;
 extern bool_ (*get_mon_num_hook)(int r_idx);
 extern bool_ (*get_mon_num2_hook)(int r_idx);
 extern bool_ (*get_obj_num_hook)(int k_idx);
-extern u16b max_wild_x;
-extern u16b max_wild_y;
-extern wilderness_map **wild_map;
+extern grid<wilderness_map> *wilderness_ptr;
 extern u16b max_ab_idx;
 extern u16b max_s_idx;
 extern u16b max_r_idx;

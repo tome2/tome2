@@ -2321,11 +2321,13 @@ void display_player(int mode)
  */
 cptr describe_player_location()
 {
+	auto const &wilderness = *wilderness_ptr;
+
 	int i;
 	static char desc[80];
 	int pwx = (p_ptr->wild_mode ? p_ptr->px : p_ptr->wilderness_x);
 	int pwy = (p_ptr->wild_mode ? p_ptr->py : p_ptr->wilderness_y);
-	int feat = wild_map[pwy][pwx].feat;
+	int feat = wilderness(pwx, pwy).feat;
 
 	if (dungeon_type != DUNGEON_WILDERNESS && dun_level > 0)
 	{
@@ -2362,7 +2364,7 @@ cptr describe_player_location()
 			if (!wf_info[i].entrance) continue;
 
 			/* Skip if we haven't seen it */
-			if (!wild_map[wy][wx].known) continue;
+			if (!wilderness(wx, wy).known) continue;
 
 			dist = distance(wy, wx, pwy, pwx);
 			if (dist < l_dist || l_dist < 0)

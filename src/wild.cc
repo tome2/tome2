@@ -30,6 +30,7 @@
 #include "wilderness_type_info.hpp"
 #include "z-rand.hpp"
 
+#include <algorithm>
 #include <memory>
 
 
@@ -154,13 +155,17 @@ static void plasma_recursive(int x1, int y1, int x2, int y2,
  */
 static int generate_area(int y, int x, bool_ border, bool_ corner)
 {
+	auto const &wilderness = *wilderness_ptr;
 	int road, entrance;
 	int x1, y1;
 	int hack_floor = 0;
 
 	/* Number of the town (if any) */
-	p_ptr->town_num = wf_info[wild_map[y][x].feat].entrance;
-	if (!p_ptr->town_num) p_ptr->town_num = wild_map[y][x].entrance;
+	p_ptr->town_num = wf_info[wilderness(x, y).feat].entrance;
+	if (!p_ptr->town_num)
+	{
+		p_ptr->town_num = wilderness(x, y).entrance;
+	}
 
 	{
 		int roughness = 1;  /* The roughness of the level. */
@@ -172,22 +177,23 @@ static int generate_area(int y, int x, bool_ border, bool_ corner)
 		if (!p_ptr->oldpy) p_ptr->oldpy = MAX_HGT / 2;
 
 		/* Initialize the terrain array */
-		ym = ((y - 1) < 0) ? 0 : (y - 1);
-		xm = ((x - 1) < 0) ? 0 : (x - 1);
-		yp = ((y + 1) >= max_wild_y) ? (max_wild_y - 1) : (y + 1);
-		xp = ((x + 1) >= max_wild_x) ? (max_wild_x - 1) : (x + 1);
-		terrain[0][0] = wild_map[ym][xm].feat;
-		terrain[0][1] = wild_map[ym][x].feat;
-		terrain[0][2] = wild_map[ym][xp].feat;
-		terrain[1][0] = wild_map[y][xm].feat;
-		terrain[1][1] = wild_map[y][x].feat;
-		terrain[1][2] = wild_map[y][xp].feat;
-		terrain[2][0] = wild_map[yp][xm].feat;
-		terrain[2][1] = wild_map[yp][x].feat;
-		terrain[2][2] = wild_map[yp][xp].feat;
+		ym = std::max<int>(y - 1, 0);
+		xm = std::max<int>(x - 1, 0);
+		yp = std::min<int>(y + 1, static_cast<int>(wilderness.height()) - 1);
+		xp = std::min<int>(x + 1, static_cast<int>(wilderness.width()) - 1);
+
+		terrain[0][0] = wilderness(xm, ym).feat;
+		terrain[0][1] = wilderness(x , ym).feat;
+		terrain[0][2] = wilderness(xp, ym).feat;
+		terrain[1][0] = wilderness(xm, y ).feat;
+		terrain[1][1] = wilderness(x , y ).feat;
+		terrain[1][2] = wilderness(xp, y ).feat;
+		terrain[2][0] = wilderness(xm, yp).feat;
+		terrain[2][1] = wilderness(x , yp).feat;
+		terrain[2][2] = wilderness(xp, yp).feat;
 
 		/* Hack -- Induce consistant town layout */
-		set_quick_rng(wild_map[y][x].seed);
+		set_quick_rng(wilderness(x, y).seed);
 
 		/* Create level background */
 		for (y1 = 0; y1 < MAX_HGT; y1++)
@@ -250,7 +256,7 @@ static int generate_area(int y, int x, bool_ border, bool_ corner)
 		 * Place roads in the wilderness
 		 * ToDo: make the road a bit more interresting
 		 */
-		road = wf_info[wild_map[y][x].feat].road;
+		road = wf_info[wilderness(x, y).feat].road;
 
 		if (road & ROAD_NORTH)
 		{
@@ -294,10 +300,10 @@ static int generate_area(int y, int x, bool_ border, bool_ corner)
 	}
 
 	/* Hack -- Induce consistant town layout */
-	set_quick_rng(wild_map[y][x].seed);
+	set_quick_rng(wilderness(x, y).seed);
 
-	entrance = wf_info[wild_map[y][x].feat].entrance;
-	if (!entrance) entrance = wild_map[y][x].entrance;
+	entrance = wf_info[wilderness(x, y).feat].entrance;
+	if (!entrance) entrance = wilderness(x, y).entrance;
 
 	/* Create the dungeon if requested on the map */
 	if (entrance >= 1000)
@@ -332,11 +338,10 @@ static int generate_area(int y, int x, bool_ border, bool_ corner)
 		hack_floor = 1;
 	}
 
-	/* Set the monster generation level to the wilderness level */
-	monster_level = wf_info[wild_map[y][x].feat].level;
-
-	/* Set the object generation level to the wilderness level */
-	object_level = wf_info[wild_map[y][x].feat].level;
+	/* Set the monster/object generation level to the wilderness level */
+	auto const &wf = wf_info[wilderness(x, y).feat];
+	monster_level = wf.level;
+	object_level = wf.level;
 
 	return hack_floor;
 }
@@ -570,14 +575,14 @@ void wilderness_gen()
  */
 void wilderness_gen_small()
 {
-	int i, j, entrance;
+	auto const &wilderness = *wilderness_ptr;
 	int xstart = 0;
 	int ystart = 0;
 
 	/* To prevent stupid things */
-	for (i = 0; i < MAX_WID; i++)
+	for (int i = 0; i < MAX_WID; i++)
 	{
-		for (j = 0; j < MAX_HGT; j++)
+		for (int j = 0; j < MAX_HGT; j++)
 		{
 			cave_set_feat(j, i, FEAT_EKKAIA);
 		}
@@ -587,31 +592,35 @@ void wilderness_gen_small()
 	process_dungeon_file("w_info.txt", &ystart, &xstart, cur_hgt, cur_wid, TRUE, FALSE);
 
 	/* Fill the map */
-	for (i = 0; i < max_wild_x; i++)
+	for (std::size_t x = 0; x < wilderness.width(); x++)
 	{
-		for (j = 0; j < max_wild_y; j++)
+		for (std::size_t y = 0; y < wilderness.height(); y++)
 		{
-			entrance = wf_info[wild_map[j][i].feat].entrance;
-			if (!entrance) entrance = wild_map[j][i].entrance;
+			auto const &wm = wilderness(x, y);
 
-			if (wild_map[j][i].entrance)
+			int entrance = wf_info[wm.feat].entrance;
+			if (!entrance) entrance = wm.entrance;
+
+			if (wm.entrance)
 			{
-				cave_set_feat(j, i, FEAT_MORE);
+				cave_set_feat(y, x, FEAT_MORE);
 			}
 			else
 			{
-				cave_set_feat(j, i, wf_info[wild_map[j][i].feat].feat);
+				cave_set_feat(y, x, wf_info[wm.feat].feat);
 			}
 
-			if ((cave[j][i].feat == FEAT_MORE) && (entrance >= 1000))
+			auto &cv = cave[y][x];
+
+			if ((cv.feat == FEAT_MORE) && (entrance >= 1000))
 			{
-				cave[j][i].special = entrance - 1000;
+				cv.special = entrance - 1000;
 			}
 
 			/* Show it if we know it */
-			if (wild_map[j][i].known)
+			if (wm.known)
 			{
-				cave[j][i].info |= (CAVE_GLOW | CAVE_MARK);
+				cv.info |= (CAVE_GLOW | CAVE_MARK);
 			}
 		}
 	}
@@ -621,7 +630,7 @@ void wilderness_gen_small()
 	p_ptr->py = p_ptr->wilderness_y;
 
 	/* Set rewarded quests to finished */
-	for (i = 0; i < MAX_Q_IDX; i++)
+	for (int i = 0; i < MAX_Q_IDX; i++)
 	{
 		if (quest[i].status == QUEST_STATUS_REWARDED)
 		{
@@ -636,26 +645,30 @@ void wilderness_gen_small()
 /* Show a small radius of wilderness around the player */
 void reveal_wilderness_around_player(int y, int x, int h, int w)
 {
-	int i, j;
+	auto &wilderness = *wilderness_ptr;
 
 	/* Circle or square ? */
 	if (h == 0)
 	{
-		for (i = x - w; i < x + w; i++)
+		for (int i = x - w; i < x + w; i++)
 		{
-			for (j = y - w; j < y + w; j++)
+			for (int j = y - w; j < y + w; j++)
 			{
 				/* Bound checking */
 				if (!in_bounds(j, i)) continue;
 
 				/* Severe bound checking */
-				if ((i < 0) || (i >= max_wild_x) || (j < 0) || (j >= max_wild_y)) continue;
+				if ((i < 0) || (static_cast<size_t>(i) >= wilderness.width()) ||
+				    (j < 0) || (static_cast<size_t>(j) >= wilderness.height()))
+				{
+					continue;
+				}
 
 				/* We want a radius, not a "squarus" :) */
 				if (distance(y, x, j, i) >= w) continue;
 
 				/* New we know here */
-				wild_map[j][i].known = TRUE;
+				wilderness(i, j).known = TRUE;
 
 				/* Only if we are in overview */
 				if (p_ptr->wild_mode)
@@ -670,15 +683,15 @@ void reveal_wilderness_around_player(int y, int x, int h, int w)
 	}
 	else
 	{
-		for (i = x; i < x + w; i++)
+		for (int i = x; i < x + w; i++)
 		{
-			for (j = y; j < y + h; j++)
+			for (int j = y; j < y + h; j++)
 			{
 				/* Bound checking */
 				if (!in_bounds(j, i)) continue;
 
 				/* New we know here */
-				wild_map[j][i].known = TRUE;
+				wilderness(i, j).known = TRUE;
 
 				/* Only if we are in overview */
 				if (p_ptr->wild_mode)

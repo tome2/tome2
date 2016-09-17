@@ -292,12 +292,14 @@ std::string quest_god_describe()
 
 static void quest_god_place_rand_dung()
 {
+	auto &wilderness = *wilderness_ptr;
+
 	int x = -1, y = -1, tries;
 
 	/* erase old dungeon */
 	if (cquest_quests_given > 0)
 	{
-		wild_map[cquest_dung_y][cquest_dung_x].entrance = 0;
+		wilderness(cquest_dung_x, cquest_dung_y).entrance = 0;
 		
 		/* erase old recall level */
 		max_dlv[DUNGEON_GOD] = 0;
@@ -307,19 +309,17 @@ static void quest_god_place_rand_dung()
 	tries = 1000;
 	while (tries > 0)
 	{
-		wilderness_map *w_ptr = NULL;
-		wilderness_type_info *wf_ptr = NULL;
 		tries = tries - 1;
 
 		/* get grid coordinates, within a range which prevents
 		 * dungeon being generated at the very edge of the
 		 * wilderness (would crash the game). */
-		x = rand_range(1, max_wild_x-2);
-		y = rand_range(1, max_wild_y-2);
+		x = rand_range(1, wilderness.width()-2);
+		y = rand_range(1, wilderness.height()-2);
 
 		/* Is there a town/dungeon/potentially impassable feature there, ? */
-		w_ptr = &wild_map[y][x];
-		wf_ptr = &wf_info[w_ptr->feat];
+		wilderness_map const *w_ptr = &wilderness(x, y);
+		wilderness_type_info const *wf_ptr = &wf_info[w_ptr->feat];
 
 		if ((w_ptr->entrance != 0) ||
 		    (wf_ptr->entrance != 0) ||
@@ -350,7 +350,7 @@ static void quest_god_place_rand_dung()
 	}
 
 	/* create god dungeon in that place */
-	wild_map[y][x].entrance = 1000 + DUNGEON_GOD;
+	wilderness(x, y).entrance = 1000 + DUNGEON_GOD;
 
 	/* set quest variables */
 	cquest_dung_x = x;

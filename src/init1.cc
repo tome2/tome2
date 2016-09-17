@@ -6363,6 +6363,8 @@ static dungeon_grid letter[255];
  */
 static errr process_dungeon_file_aux(char *buf, int *yval, int *xval, int xvalstart, int ymax, int xmax, bool_ full)
 {
+	auto &wilderness = *wilderness_ptr;
+
 	int i;
 
 	char *zz[33];
@@ -6842,7 +6844,7 @@ static errr process_dungeon_file_aux(char *buf, int *yval, int *xval, int xvalst
 
 			int y = *yval;
 
-			for (int x = 0; x < max_wild_x; x++)
+			for (std::size_t x = 0; x < wilderness.width(); x++)
 			{
 				char i;
 				if (1 != sscanf(s + x, "%c", &i))
@@ -6852,7 +6854,7 @@ static errr process_dungeon_file_aux(char *buf, int *yval, int *xval, int xvalst
 
 				auto const wi = wildc2i[(int)i];
 
-				wild_map[y][x].feat = wi;
+				wilderness(x, y).feat = wi;
 
 				/*
 				 * If this is a town/dungeon entrance, note
@@ -6914,7 +6916,9 @@ static errr process_dungeon_file_aux(char *buf, int *yval, int *xval, int xvalst
 		{
 			if (tokenize(buf + 4, 3, zz, ':', '/') == 3)
 			{
-				wild_map[atoi(zz[1])][atoi(zz[2])].entrance = 1000 + atoi(zz[0]);
+				int y = atoi(zz[1]);
+				int x = atoi(zz[2]);
+				wilderness(x, y).entrance = 1000 + atoi(zz[0]);
 			}
 			else
 			{
@@ -7104,13 +7108,13 @@ static errr process_dungeon_file_aux(char *buf, int *yval, int *xval, int xvalst
 			/* Maximum wilderness x size */
 			else if (zz[0][0] == 'X')
 			{
-				max_wild_x = atoi(zz[1]);
+				wilderness.width(atoi(zz[1]));
 			}
 
 			/* Maximum wilderness y size */
 			else if (zz[0][0] == 'Y')
 			{
-				max_wild_y = atoi(zz[1]);
+				wilderness.height(atoi(zz[1]));
 			}
 
 			/* Maximum d_idx */

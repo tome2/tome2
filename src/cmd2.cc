@@ -2549,8 +2549,9 @@ static void do_cmd_walk_jump(int pickup, bool_ disarm)
 	energy_use *= (p_ptr->wild_mode) ? ((MAX_HGT + MAX_WID) / 2) : 1;
 
 	/* Hack again -- Is there a special encounter ??? */
+	auto const &wilderness = *wilderness_ptr;
 	if (p_ptr->wild_mode &&
-	                magik(wf_info[wild_map[p_ptr->py][p_ptr->px].feat].level - (p_ptr->lev * 2)))
+	                magik(wf_info[wilderness(p_ptr->px, p_ptr->py).feat].level - (p_ptr->lev * 2)))
 	{
 		/* Go into large wilderness view */
 		p_ptr->wilderness_x = p_ptr->px;

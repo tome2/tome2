@@ -4237,10 +4237,11 @@ static int target_set_aux(int y, int x, int mode, cptr info)
 
 			if (p_ptr->wild_mode && (feat == FEAT_TOWN))
 			{
+				auto const &wilderness = *wilderness_ptr;
+				auto const &wf = wf_info[wilderness(x, y).feat];
+
 				s3 = "";
-				name = format("%s(%s)",
-					      wf_info[wild_map[y][x].feat].name,
-					      wf_info[wild_map[y][x].feat].text);
+				name = format("%s(%s)", wf.name, wf.text);
 			}
 
 			if ((feat == FEAT_FOUNTAIN) && (c_ptr->info & CAVE_IDNT))

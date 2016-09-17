@@ -1535,7 +1535,8 @@ void set_mon_num_hook(void)
 {
 	if (!dun_level)
 	{
-		switch (wf_info[wild_map[p_ptr->wilderness_y][p_ptr->wilderness_x].feat].terrain_idx)
+		auto const &wilderness = *wilderness_ptr;
+		switch (wf_info[wilderness(p_ptr->wilderness_x, p_ptr->wilderness_y).feat].terrain_idx)
 		{
 		case TERRAIN_TOWN:
 			get_mon_num_hook = monster_town;

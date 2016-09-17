@@ -669,15 +669,9 @@ s32b get_level_max_stick = -1;
 s32b get_level_use_stick = -1;
 
 /*
- * Maximum size of the wilderness map
- */
-u16b max_wild_x;
-u16b max_wild_y;
-
-/*
  * Wilderness map
  */
-wilderness_map **wild_map;
+grid<wilderness_map> *wilderness_ptr;
 
 
 /*

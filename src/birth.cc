@@ -3191,13 +3191,15 @@ void player_birth(void)
 	}
 
 	/* Init wilderness seeds */
-	for (i = 0; i < max_wild_x; i++)
+	auto &wilderness = *wilderness_ptr;
+	for (std::size_t y = 0; y < wilderness.height(); y++)
 	{
-		for (j = 0; j < max_wild_y; j++)
+		for (std::size_t x = 0; x < wilderness.width(); x++)
 		{
-			wild_map[j][i].seed = seed_t::system();
-			wild_map[j][i].entrance = 0;
-			wild_map[j][i].known = FALSE;
+			auto &w = wilderness(x, y);
+			w.seed = seed_t::system();
+			w.entrance = 0;
+			w.known = FALSE;
 		}
 	}
 }

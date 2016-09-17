@@ -80,26 +80,33 @@ static void wiz_align_monster(int status)
  */
 static void teleport_player_town(int town)
 {
-	int x = 0, y = 0;
-
 	autosave_checkpoint();
 
 	/* Change town */
 	dun_level = 0;
 	p_ptr->town_num = town;
 
-	for (x = 0; x < max_wild_x; x++)
-		for (y = 0; y < max_wild_y; y++)
-			if (p_ptr->town_num == wf_info[wild_map[y][x].feat].entrance) goto finteletown;
-finteletown:
-	p_ptr->wilderness_y = y;
-	p_ptr->wilderness_x = x;
+	auto const &wilderness = *wilderness_ptr;
+	for (std::size_t y = 0; y < wilderness.height(); y++)
+	{
+		for (std::size_t x = 0; x < wilderness.width(); x++)
+		{
+			if (p_ptr->town_num == wf_info[wilderness(x, y).feat].entrance)
+			{
+				p_ptr->wilderness_y = y;
+				p_ptr->wilderness_x = x;
 
-	leaving_quest = p_ptr->inside_quest;
-	p_ptr->inside_quest = 0;
+				leaving_quest = p_ptr->inside_quest;
+				p_ptr->inside_quest = 0;
 
-	/* Leaving */
-	p_ptr->leaving = TRUE;
+				/* Leaving */
+				p_ptr->leaving = TRUE;
+
+				// Done
+				return;
+			}
+		}
+	}
 }
 
 

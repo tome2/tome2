@@ -2245,6 +2245,8 @@ static bool do_quests(ls_flag_t flag)
 
 static bool do_wilderness(ls_flag_t flag)
 {
+	auto &wilderness = *wilderness_ptr;
+
 	// Player position and "mode" wrt. wilderness
 	do_s32b(&p_ptr->wilderness_x, flag);
 	do_s32b(&p_ptr->wilderness_y, flag);
@@ -2252,14 +2254,14 @@ static bool do_wilderness(ls_flag_t flag)
 	do_bool(&p_ptr->old_wild_mode, flag);
 
 	// Size of the wilderness
-	u16b wild_x_size = max_wild_x;
-	u16b wild_y_size = max_wild_y;
+	u16b wild_x_size = wilderness.width();
+	u16b wild_y_size = wilderness.height();
 	do_u16b(&wild_x_size, flag);
 	do_u16b(&wild_y_size, flag);
 
 	if (flag == ls_flag_t::LOAD)
 	{
-		if ((wild_x_size > max_wild_x) || (wild_y_size > max_wild_y))
+		if ((wild_x_size > wilderness.width()) || (wild_y_size > wilderness.height()))
 		{
 			note("Wilderness is too big!");
 			return false;
@@ -2267,11 +2269,11 @@ static bool do_wilderness(ls_flag_t flag)
 	}
 
 	// Save/load wilderness tile state
-	for (std::size_t i = 0; i < wild_x_size; i++)
+	for (std::size_t x = 0; x < wild_x_size; x++)
 	{
-		for (std::size_t j = 0; j < wild_y_size; j++)
+		for (std::size_t y = 0; y < wild_y_size; y++)
 		{
-			auto w = &wild_map[j][i];
+			auto w = &wilderness(x, y);
 			do_seed(&w->seed, flag);
 			do_u16b(&w->entrance, flag);
 			do_bool(&w->known, flag);

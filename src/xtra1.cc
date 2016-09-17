@@ -559,9 +559,11 @@ static void prt_depth(int row, int col)
 	}
 	else if (!dun_level)
 	{
-		if (wf_info[wild_map[p_ptr->wilderness_y][p_ptr->wilderness_x].feat].name)
+		auto const &wilderness = *wilderness_ptr;
+		auto const &wf = wf_info[wilderness(p_ptr->wilderness_x, p_ptr->wilderness_y).feat];
+		if (wf.name)
 		{
-			strcpy(depths, wf_info[wild_map[p_ptr->wilderness_y][p_ptr->wilderness_x].feat].name);
+			strcpy(depths, wf.name);
 		}
 		else
 		{

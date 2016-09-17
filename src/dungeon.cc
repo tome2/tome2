@@ -3524,8 +3524,9 @@ static void process_command(void)
 			/* Special cases */
 			else
 			{
-				if ((wf_info[wild_map[p_ptr->py][p_ptr->px].feat].entrance >= 1000) ||
-				                (wild_map[p_ptr->py][p_ptr->px].entrance > 1000))
+				auto const &wilderness = *wilderness_ptr;
+				auto const &tile = wilderness(p_ptr->px, p_ptr->py);
+				if ((wf_info[tile.feat].entrance >= 1000) || (tile.entrance > 1000))
 				{
 					p_ptr->wilderness_x = p_ptr->px;
 					p_ptr->wilderness_y = p_ptr->py;
@@ -4295,7 +4296,10 @@ static void process_player(void)
 
 		/* Hack -- mark current wilderness location as known */
 		if (!p_ptr->wild_mode && dun_level == 0)
-			wild_map[p_ptr->wilderness_y][p_ptr->wilderness_x].known = TRUE;
+		{
+			auto &wilderness = *wilderness_ptr;
+			wilderness(p_ptr->wilderness_x, p_ptr->wilderness_y).known = TRUE;
+		}
 
 
 		/* Place the cursor on the player */
