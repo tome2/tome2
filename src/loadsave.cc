@@ -45,6 +45,20 @@
 static u32b vernum; /* Version flag */
 static FILE *fff; 	/* Local savefile ptr */
 
+/*
+ * Savefile version
+ */
+static byte sf_major;
+static byte sf_minor;
+static byte sf_patch;
+
+/*
+ * Savefile information
+ */
+static u32b sf_when;                   /* Time when savefile created */
+static u16b sf_lives;                  /* Number of past "lives" with this file */
+static u16b sf_saves;                  /* Number of "saves" during this life */
+
 /**
  * Load/save flag
  */

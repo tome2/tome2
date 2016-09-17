@@ -25,20 +25,6 @@ char *macro_trigger_name[MAX_MACRO_TRIG];
 char *macro_trigger_keycode[2][MAX_MACRO_TRIG];
 
 /*
- * Savefile version
- */
-byte sf_major; 			/* Savefile's "version_major" */
-byte sf_minor; 			/* Savefile's "version_minor" */
-byte sf_patch; 			/* Savefile's "version_patch" */
-
-/*
- * Savefile information
- */
-u32b sf_when; 			/* Time when savefile created */
-u16b sf_lives; 			/* Number of past "lives" with this file */
-u16b sf_saves; 			/* Number of "saves" during this life */
-
-/*
  * Run-time aruments
  */
 bool_ arg_wizard; 			/* Command arg -- Request wizard mode */
