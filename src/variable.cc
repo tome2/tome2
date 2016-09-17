@@ -25,13 +25,6 @@ char *macro_trigger_name[MAX_MACRO_TRIG];
 char *macro_trigger_keycode[2][MAX_MACRO_TRIG];
 
 /*
- * Executable version
- */
-byte version_major;
-byte version_minor;
-byte version_patch;
-
-/*
  * Savefile version
  */
 byte sf_major; 			/* Savefile's "version_major" */

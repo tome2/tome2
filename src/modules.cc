@@ -204,9 +204,6 @@ static void activate_module(int module_idx)
 	VERSION_MAJOR = module_ptr->meta.version.major;
 	VERSION_MINOR = module_ptr->meta.version.minor;
 	VERSION_PATCH = module_ptr->meta.version.patch;
-	version_major = VERSION_MAJOR;
-	version_minor = VERSION_MINOR;
-	version_patch = VERSION_PATCH;
 
 	/* Change window name if needed */
 	if (strcmp(game_module, "ToME"))
