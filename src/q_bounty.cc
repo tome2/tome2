@@ -13,7 +13,7 @@
 #include "util.hpp"
 #include "variable.hpp"
 
-#include <format.h>
+#include <fmt/format.h>
 
 #define cquest (quest[QUEST_BOUNTY])
 

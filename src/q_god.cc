@@ -24,7 +24,7 @@
 #include "z-rand.hpp"
 
 #include <assert.h>
-#include <format.h>
+#include <fmt/format.h>
 
 #define cquest (quest[QUEST_GOD])
 #define cquest_quests_given (cquest.data[0])

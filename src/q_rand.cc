@@ -32,7 +32,7 @@
 #include "z-rand.hpp"
 
 #include <cassert>
-#include <format.h>
+#include <fmt/format.h>
 
 static int randquest_hero[] = { 20, 13, 15, 16, 9, 17, 18, 8, -1 };
 

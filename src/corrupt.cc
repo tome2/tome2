@@ -14,7 +14,7 @@
 #include "z-rand.hpp"
 
 #include <cassert>
-#include <format.h>
+#include <fmt/format.h>
 
 /**
  * Corruptions

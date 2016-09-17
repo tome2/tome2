@@ -56,7 +56,7 @@
 #include "z-rand.hpp"
 
 #include <cassert>
-#include <format.h>
+#include <fmt/format.h>
 
 /*
  * Converts stat num into a six-char (right justified) string

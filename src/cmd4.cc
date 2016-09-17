@@ -43,7 +43,7 @@
 
 #include <algorithm>
 #include <cassert>
-#include <format.h>
+#include <fmt/format.h>
 #include <memory>
 #include <numeric>
 #include <string>

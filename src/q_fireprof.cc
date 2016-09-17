@@ -20,7 +20,7 @@
 #include "z-rand.hpp"
 
 #include <cassert>
-#include <format.h>
+#include <fmt/format.h>
 
 #define cquest (quest[QUEST_FIREPROOF])
 
