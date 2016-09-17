@@ -79,7 +79,7 @@ struct object_type
 
 	std::string inscription;                 /* Inscription index */
 
-	u16b art_name = 0;                       /* Artifact name (random artifacts) */
+	std::string artifact_name;               /* Artifact name */
 
 	object_flag_set art_flags;               /* Flags */
 	object_flag_set art_oflags;              /* Obvious flags */

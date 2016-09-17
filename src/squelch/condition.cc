@@ -16,7 +16,6 @@
 #include "../player_type.hpp"
 #include "../skills.hpp"
 #include "../skill_type.hpp"
-#include "../quark.hpp"
 #include "../util.hpp"
 #include "../variable.hpp"
 

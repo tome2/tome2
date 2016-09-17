@@ -963,7 +963,7 @@ s32b flag_cost(object_type const *o_ptr, int plusses)
 
 	/* Also, give some extra for activatable powers... */
 
-	if ((o_ptr->art_name) && (o_ptr->art_flags & TR_ACTIVATE))
+	if ((!o_ptr->artifact_name.empty()) && (o_ptr->art_flags & TR_ACTIVATE))
 	{
 		int type = o_ptr->xtra2;
 
@@ -2036,7 +2036,7 @@ static void object_mention(object_type *o_ptr)
 	}
 
 	/* Random Artifact */
-	else if (o_ptr->art_name)
+	else if (!o_ptr->artifact_name.empty())
 	{
 		msg_print("Random artifact");
 	}
@@ -4177,7 +4177,10 @@ void apply_magic(object_type *o_ptr, int lev, bool_ okay, bool_ good, bool_ grea
 		}
 	}
 
-	if (o_ptr->art_name) rating += 40;
+	if (!o_ptr->artifact_name.empty())
+	{
+		rating += 40;
+	}
 
 	/* Hack -- analyze ego-items */
 	else if (o_ptr->name2)

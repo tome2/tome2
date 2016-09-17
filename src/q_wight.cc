@@ -75,7 +75,7 @@ static bool_ quest_wight_gen_hook(void *, void *, void *)
 
 					/* Name the rags */
 
-					q_ptr->art_name = quark_add("of the Wight");
+					q_ptr->artifact_name = "of the Wight";
 
 					q_ptr->art_flags |=
 						TR_INT |

@@ -717,7 +717,7 @@ void reset_visuals(void)
 static void object_flags_xtra(object_type const *o_ptr, object_flag_set *f)
 {
 	// Artifacts don't get *ego* extra powers.
-	if (o_ptr->art_name)
+	if (!o_ptr->artifact_name.empty())
 	{
 		return;
 	}
@@ -1126,7 +1126,7 @@ static std::string object_desc_aux(object_type const *o_ptr, int pref, int mode)
 			else
 				basenm = aware ? "& # Amulet~" : "& # Amulet~";
 
-			if (known && !o_ptr->art_name && artifact_p(o_ptr))
+			if (known && o_ptr->artifact_name.empty() && artifact_p(o_ptr))
 			{
 				basenm = k_ptr->name;
 			}
@@ -1149,7 +1149,7 @@ static std::string object_desc_aux(object_type const *o_ptr, int pref, int mode)
 			/* Hack -- The One Ring */
 			if (!aware && (o_ptr->sval == SV_RING_POWER)) modstr = "Plain Gold";
 
-			if (known && !o_ptr->art_name && artifact_p(o_ptr))
+			if (known && o_ptr->artifact_name.empty() && artifact_p(o_ptr))
 			{
 				basenm = k_ptr->name;
 			}
@@ -1681,10 +1681,10 @@ static std::string object_desc_aux(object_type const *o_ptr, int pref, int mode)
 		}
 
 		/* Is it a new random artifact ? */
-		if (o_ptr->art_name)
+		if (!o_ptr->artifact_name.empty())
 		{
 			t += ' ';
-			t += quark_str(o_ptr->art_name);
+			t += o_ptr->artifact_name;
 		}
 
 
@@ -1848,7 +1848,7 @@ static std::string object_desc_aux(object_type const *o_ptr, int pref, int mode)
 		else if (o_ptr->to_h)
 		{
 			t += fmt::format(" ({:+d}", o_ptr->to_h);
-			if (!(flags & TR_HIDE_TYPE) || o_ptr->art_name)
+			if (!(flags & TR_HIDE_TYPE) || (!o_ptr->artifact_name.empty()))
 			{
 				t += " to accuracy";
 			}
@@ -1859,7 +1859,7 @@ static std::string object_desc_aux(object_type const *o_ptr, int pref, int mode)
 		else if (o_ptr->to_d)
 		{
 			t += fmt::format(" ({:+d}", o_ptr->to_d);
-			if (!(flags & TR_HIDE_TYPE) || o_ptr->art_name)
+			if (!(flags & TR_HIDE_TYPE) || (!o_ptr->artifact_name.empty()))
 			{
 				t += " to damage";
 			}
@@ -6291,7 +6291,7 @@ bool artifact_p(object_type const *o_ptr)
 	return
 		(o_ptr->tval == TV_RANDART) ||
 		(o_ptr->name1 ? true : false) ||
-		(o_ptr->art_name ? true : false) ||
+	        (!o_ptr->artifact_name.empty()) ||
 		((k_info[o_ptr->k_idx].flags & TR_NORM_ART) ? true : false);
 }
 

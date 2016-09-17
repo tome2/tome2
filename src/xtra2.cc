@@ -62,10 +62,12 @@
 #include "xtra1.hpp"
 #include "z-rand.hpp"
 
-#include <type_traits>
-#include <cassert>
-
 #include <boost/algorithm/string/predicate.hpp>
+#include <cassert>
+#include <fmt/format.h>
+#include <type_traits>
+
+
 
 using boost::algorithm::iequals;
 
@@ -2492,7 +2494,7 @@ void monster_death(int m_idx)
 
 		/* Mega-Hack -- Name the sword  */
 
-		q_ptr->art_name = quark_add("'Stormbringer'");
+		q_ptr->artifact_name = "'Stormbringer'";
 		q_ptr->to_h = 16;
 		q_ptr->to_d = 16;
 		q_ptr->ds = 6;
@@ -2688,7 +2690,7 @@ void monster_death(int m_idx)
 			create_artifact(q_ptr, TRUE, FALSE);
 
 			/* Save the inscription */
-			q_ptr->art_name = quark_add(format("of %s", r_ptr->name));
+			q_ptr->artifact_name = fmt::format("of {}", r_ptr->name);
 
 			q_ptr->found = OBJ_FOUND_MONSTER;
 			q_ptr->found_aux1 = m_ptr->r_idx;

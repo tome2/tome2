@@ -457,7 +457,7 @@ void quest_library_building(bool_ *paid, bool_ *recreate)
 				object_type forge;
 				object_type *q_ptr = &forge;
 				object_prep(q_ptr, lookup_kind(TV_BOOK, 61));
-				q_ptr->art_name = quark_add(player_name);
+				q_ptr->artifact_name = player_name;
 				q_ptr->found = OBJ_FOUND_REWARD;
 				object_aware(q_ptr);
 				object_known(q_ptr);

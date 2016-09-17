@@ -80,18 +80,20 @@ static bool_ quest_thrain_death_hook(void *, void *in_, void *)
 			int x = m_ptr->fx;
 			int y = m_ptr->fy;
 			int i, j;
-			object_type forge, *q_ptr;
 
 			delete_monster_idx(r);
 
 			/* Wipe the glass walls and create a stair */
 			for (i = x - 1; i <= x + 1; i++)
+			{
 				for (j = y - 1; j <= y + 1; j++)
 				{
 					if (in_bounds(j, i)) cave_set_feat(j, i, FEAT_FLOOR);
 				}
+			}
 
 			/* Get local object */
+			object_type forge, *q_ptr;
 			q_ptr = &forge;
 
 			/* Wipe the object */
@@ -100,7 +102,7 @@ static bool_ quest_thrain_death_hook(void *, void *in_, void *)
 			q_ptr->number = 1;
 			q_ptr->found = OBJ_FOUND_REWARD;
 			create_artifact(q_ptr, FALSE, TRUE);
-			q_ptr->art_name = quark_add("of Thrain");
+			q_ptr->artifact_name = "of Thrain";
 
 			/* Drop it in the dungeon */
 			drop_near(q_ptr, -1, y, x);

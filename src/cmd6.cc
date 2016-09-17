@@ -5077,7 +5077,7 @@ const char *activation_aux(object_type * o_ptr, bool_ doit, int item)
 		spell = a_info[o_ptr->name1].activate;
 
 	/* Random Artifacts */
-	if (!spell && o_ptr->art_name)
+	if (!spell && (!o_ptr->artifact_name.empty()))
 		spell = o_ptr->xtra2;
 
 	/* Ego Items */

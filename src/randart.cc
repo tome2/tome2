@@ -379,7 +379,7 @@ bool_ create_artifact(object_type *o_ptr, bool_ a_scroll, bool_ get_name)
 	}
 
 	/* Save the inscription */
-	o_ptr->art_name = quark_add(new_name);
+	o_ptr->artifact_name = new_name;
 	o_ptr->name2 = o_ptr->name2b = 0;
 
 	/* Window stuff */

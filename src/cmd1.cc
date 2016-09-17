@@ -2046,21 +2046,16 @@ void py_attack(int y, int x, int max_blow)
 	                !(p_ptr->stun || p_ptr->confused || p_ptr->image ||
 	                  !(m_ptr->ml)))
 	{
-		if (!(p_ptr->inventory[INVEN_WIELD].art_name))
+		// Only 'Stormbringer' can hit friendlies unless player forces attack.
+		if (p_ptr->inventory[INVEN_WIELD].artifact_name == "'Stormbringer'")
+		{
+			msg_format("Your black blade greedily attacks %s!", m_name);
+		}
+		else
 		{
 			msg_format("You stop to avoid hitting %s.", m_name);
 			return;
 		}
-
-		if (!
-		                (streq
-		                 (quark_str(p_ptr->inventory[INVEN_WIELD].art_name), "'Stormbringer'")))
-		{
-			msg_format("You stop to avoid hitting %s.", m_name);
-			return;
-		}
-
-		msg_format("Your black blade greedily attacks %s!", m_name);
 	}
 
 	/* Break goi/manashield */
@@ -2740,8 +2735,6 @@ void move_player_aux(int dir, int do_pickup, int run, bool_ disarm)
 
 	char m_name[80];
 
-	bool_ stormbringer = FALSE;
-
 	bool_ old_dtrap, new_dtrap;
 
 	bool_ oktomove = TRUE;
@@ -2910,12 +2903,6 @@ void move_player_aux(int dir, int do_pickup, int run, bool_ disarm)
 	m_ptr = &m_list[c_ptr->m_idx];
 	auto const mr_ptr = m_ptr->race();
 
-	if (p_ptr->inventory[INVEN_WIELD].art_name)
-	{
-		if (streq(quark_str(p_ptr->inventory[INVEN_WIELD].art_name), "'Stormbringer'"))
-			stormbringer = TRUE;
-	}
-
 	/* Hack -- attack monsters */
 	if (c_ptr->m_idx && (m_ptr->ml || player_can_enter(c_ptr->feat)))
 	{
@@ -2935,6 +2922,9 @@ void move_player_aux(int dir, int do_pickup, int run, bool_ disarm)
 
 			/* Track a new monster */
 			if (m_ptr->ml) health_track(c_ptr->m_idx);
+
+			/* Is it Stormbringer? */
+			bool stormbringer = p_ptr->inventory[INVEN_WIELD].artifact_name == "'Stormbringer'";
 
 			/* displace? */
 			if (stormbringer && (randint(1000) > 666))

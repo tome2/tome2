@@ -452,7 +452,7 @@ static void mass_produce(object_type *o_ptr)
 	}
 
 
-	if (o_ptr->art_name)
+	if (!o_ptr->artifact_name.empty())
 	{
 		if (options->cheat_peek && discount)
 		{
@@ -510,7 +510,8 @@ static bool_ store_object_similar(object_type const *o_ptr, object_type *j_ptr)
 	if (o_ptr->name2b != j_ptr->name2b) return (0);
 
 	/* Random artifacts don't stack !*/
-	if (o_ptr->art_name || j_ptr->art_name) return (0);
+	if (!o_ptr->artifact_name.empty()) return 0;
+	if (!j_ptr->artifact_name.empty()) return 0;
 
 	/* Hack -- Identical art_flags! */
 	if (o_ptr->art_flags != j_ptr->art_flags)
@@ -3396,7 +3397,7 @@ void store_shuffle(int which)
 		auto o_ptr = &o_ref;
 
 		/* Hack -- Sell all old items for "half price" */
-		if (!(o_ptr->art_name))
+		if (o_ptr->artifact_name.empty())
 			o_ptr->discount = 50;
 
 		/* Mega-Hack -- Note that the item is "on sale" */

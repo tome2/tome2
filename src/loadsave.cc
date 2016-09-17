@@ -1141,31 +1141,15 @@ static void do_item(object_type *o_ptr, ls_flag_t flag)
 	// Inscription
 	do_std_string(o_ptr->inscription, flag);
 
-	/* Artifact name */
-	if (flag == ls_flag_t::LOAD)
-	{
-		char buf[128];
-		load_string(buf, 128);
-		if (buf[0])
-		{
-			o_ptr->art_name = quark_add(buf);
-		}
-	}
-	if (flag == ls_flag_t::SAVE)
-	{
-		if (o_ptr->art_name)
-		{
-			save_string(quark_str(o_ptr->art_name));
-		}
-		else
-		{
-			save_string("");
-		}
-	}
+	// Artifact name
+	do_std_string(o_ptr->artifact_name, flag);
 
-	if (flag == ls_flag_t::SAVE) return ; 	/* Stick any more shared code before this. The rest
-										   of this function is reserved for ls_flag_t::LOAD's
-										   cleanup functions */
+	/* Stick any more shared code before this. The rest
+	   of this function is reserved for ls_flag_t::LOAD's
+	   cleanup functions */
+
+	if (flag == ls_flag_t::SAVE) return;
+
 	/*********** END OF ls_flag_t::SAVE ***************/
 
 	/* Obtain the "kind" template */
@@ -1248,7 +1232,7 @@ static void do_item(object_type *o_ptr, ls_flag_t flag)
 		o_ptr->ds = old_ds;
 	}
 
-	if (o_ptr->art_name)		/* A random artifact */
+	if (!o_ptr->artifact_name.empty())	/* A random artifact */
 	{
 		o_ptr->dd = old_dd;
 		o_ptr->ds = old_ds;

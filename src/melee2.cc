@@ -2362,7 +2362,7 @@ void curse_equipment(int chance, int heavy_chance)
 	}
 
 	if ((randint(100) <= heavy_chance) &&
-	                (o_ptr->name1 || o_ptr->name2 || o_ptr->art_name))
+	    (o_ptr->name1 || o_ptr->name2 || (!o_ptr->artifact_name.empty())))
 	{
 		if (!(flags & TR_HEAVY_CURSE))
 			changed = TRUE;
@@ -2414,7 +2414,7 @@ void curse_equipment_dg(int chance, int heavy_chance)
 	}
 
 	if ((randint(100) <= heavy_chance) &&
-	                (o_ptr->name1 || o_ptr->name2 || o_ptr->art_name))
+	    (o_ptr->name1 || o_ptr->name2 || (!o_ptr->artifact_name.empty())))
 	{
 		if (!(flags & TR_HEAVY_CURSE))
 			changed = TRUE;
