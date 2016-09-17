@@ -1575,6 +1575,16 @@ static object_flag_set wield_monster_flags()
 }
 
 
+template<class LF>
+static void apply_lflags(LF const &lflags, object_flag_set *f)
+{
+	for (int i = 1; i <= p_ptr->lev; i++)
+	{
+		(*f) |= lflags[i].oflags;
+	}
+}
+
+
 /*
  * Obtain the "flags" for the player as if he was an item
  */
@@ -1680,20 +1690,13 @@ object_flag_set player_flags()
 	}
 
 	/* Classes */
-	for (int i = 1; i <= p_ptr->lev; i++)
-	{
-		f |= cp_ptr->oflags[i];
-	}
+	apply_lflags(cp_ptr->lflags, &f);
 
 	/* Races */
 	if ((!p_ptr->mimic_form) && (!p_ptr->body_monster))
 	{
-		for (int i = 1; i <= p_ptr->lev; i++)
-		{
-			f |= rp_ptr->oflags[i];
-
-			f |= rmp_ptr->oflags[i];
-		}
+		apply_lflags(rp_ptr->lflags, &f);
+		apply_lflags(rmp_ptr->lflags, &f);
 	}
 	else
 	{

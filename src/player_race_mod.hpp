@@ -5,6 +5,7 @@
 #include "object_flag_set.hpp"
 #include "object_proto.hpp"
 #include "player_defs.hpp"
+#include "player_level_flag.hpp"
 #include "player_race_ability_type.hpp"
 #include "player_race_flag_set.hpp"
 #include "skill_modifiers.hpp"
@@ -41,8 +42,7 @@ struct player_race_mod
 
 	player_race_flag_set flags;
 
-	std::array<object_flag_set, PY_MAX_LEVEL + 1> oflags;
-	s16b opval[PY_MAX_LEVEL + 1] { };
+	std::array<player_level_flag, PY_MAX_LEVEL+1> lflags;
 
 	byte g_attr = 0;                                        /* Overlay graphic attribute */
 	char g_char = '\0';                                     /* Overlay graphic character */

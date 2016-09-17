@@ -2727,6 +2727,18 @@ void apply_flags(object_flag_set const &f, s16b pval, s16b tval, s16b to_h, s16b
 }
 
 
+/**
+ * Apply player level flags
+ */
+template <class LF>
+static void apply_lflags(LF const &lflags)
+{
+	for (int i = 1; i <= p_ptr->lev; i++)
+	{
+		apply_flags(lflags[i].oflags, lflags[i].pval, 0, 0, 0, 0);
+	}
+}
+
 
 /**
  * Are barehand fighter's hands empty?
@@ -2978,10 +2990,8 @@ void calc_bonuses(bool_ silent)
 	/* The powers gived by the wielded monster */
 	calc_wield_monster();
 
-	for (i = 1; i <= p_ptr->lev; i++)
-	{
-		apply_flags(cp_ptr->oflags[i], cp_ptr->opval[i], 0, 0, 0, 0);
-	}
+	/* Apply all the level-dependent class flags */
+	apply_lflags(cp_ptr->lflags);
 
 	if (p_ptr->melee_style == SKILL_HAND)
 	{
@@ -3022,14 +3032,11 @@ void calc_bonuses(bool_ silent)
 	/***** Races ****/
 	if ((!p_ptr->mimic_form) && (!p_ptr->body_monster))
 	{
-		int i;
+		/* Apply level-dependent flags from race/sub-race */
+		apply_lflags(rp_ptr->lflags);
+		apply_lflags(rmp_ptr->lflags);
 
-		for (i = 1; i <= p_ptr->lev; i++)
-		{
-			apply_flags(rp_ptr->oflags[i], rp_ptr->opval[i], 0, 0, 0, 0);
-			apply_flags(rmp_ptr->oflags[i], rmp_ptr->opval[i], 0, 0, 0, 0);
-		}
-
+		/* Is the player's race hurt by light? */
 		if (race_flags_p(PR_HURT_LITE))
 			p_ptr->sensible_lite = TRUE;
 	}

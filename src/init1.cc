@@ -1040,7 +1040,7 @@ errr init_player_info_txt(FILE *fp)
 			                &s[0], &s[1])) return (1);
 
 			lev = s[0];
-			rp_ptr->opval[lev] = s[1];
+			rp_ptr->lflags[lev].pval = s[1];
 
 			/* Next... */
 			continue;
@@ -1154,7 +1154,7 @@ errr init_player_info_txt(FILE *fp)
 		/* Process 'F' for "level Flags" (multiple lines) */
 		if ((buf[0] == 'R') && (buf[2] == 'F'))
 		{
-			if (grab_object_flag(&rp_ptr->oflags[lev], buf + 4))
+			if (grab_object_flag(&rp_ptr->lflags[lev].oflags, buf + 4))
 			{
 				return (5);
 			}
@@ -1290,7 +1290,7 @@ errr init_player_info_txt(FILE *fp)
 			                &s[0], &s[1])) return (1);
 
 			lev = s[0];
-			rmp_ptr->opval[lev] = s[1];
+			rmp_ptr->lflags[lev].pval = s[1];
 
 			/* Next... */
 			continue;
@@ -1404,7 +1404,7 @@ errr init_player_info_txt(FILE *fp)
 		/* Process 'F' for "level Flags" (multiple lines) */
 		if ((buf[0] == 'S') && (buf[2] == 'F'))
 		{
-			if (0 != grab_object_flag(&rmp_ptr->oflags[lev], buf + 4))
+			if (0 != grab_object_flag(&rmp_ptr->lflags[lev].oflags, buf + 4))
 			{
 				return (5);
 			}
@@ -1592,7 +1592,7 @@ errr init_player_info_txt(FILE *fp)
 			                &s[0], &s[1])) return (1);
 
 			lev = s[0];
-			c_ptr->opval[lev] = s[1];
+			c_ptr->lflags[lev].pval = s[1];
 
 			/* Next... */
 			continue;
@@ -1753,7 +1753,7 @@ errr init_player_info_txt(FILE *fp)
 				}
 
 				/* Parse this entry */
-				if (0 != grab_object_flag(&c_ptr->oflags[lev], s))
+				if (0 != grab_object_flag(&c_ptr->lflags[lev].oflags, s))
 				{
 					return (5);
 				}

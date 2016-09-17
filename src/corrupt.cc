@@ -106,15 +106,15 @@ static void player_gain_vampire()
 	}
 
 	/* Bonus/and .. not bonus :) */
-	rmp_ptr->flags = rmp_ptr->flags | PR_HURT_LITE;
-	rmp_ptr->oflags[2] = rmp_ptr->oflags[2]
-		| TR_RES_POIS
-		| TR_RES_NETHER
-		| TR_RES_COLD
-		| TR_RES_DARK
-		| TR_HOLD_LIFE;
-	rmp_ptr->oflags[2] = rmp_ptr->oflags[2]
-		| TR_LITE1;
+	rmp_ptr->flags |= PR_HURT_LITE;
+	rmp_ptr->lflags[1].oflags |=
+	        ( TR_RES_POIS
+	        | TR_RES_NETHER
+	        | TR_RES_COLD
+	        | TR_RES_DARK
+	        | TR_HOLD_LIFE
+	        | TR_LITE1
+	        );
 }
 
 /**

@@ -5,6 +5,7 @@
 #include "object_flag_set.hpp"
 #include "object_proto.hpp"
 #include "player_defs.hpp"
+#include "player_level_flag.hpp"
 #include "player_race_flag_set.hpp"
 #include "player_spec.hpp"
 #include "skill_modifiers.hpp"
@@ -42,8 +43,7 @@ struct player_class
 
 	char body_parts[BODY_MAX] { };                          /* To help to decide what to use when body changing */
 
-	std::array<object_flag_set, PY_MAX_LEVEL + 1>  oflags;
-	s16b opval[PY_MAX_LEVEL + 1] { };
+	std::array<player_level_flag, PY_MAX_LEVEL+1> lflags;
 
 	struct skill_modifiers skill_modifiers;
 

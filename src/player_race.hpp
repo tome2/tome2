@@ -5,6 +5,7 @@
 #include "object_flag_set.hpp"
 #include "object_proto.hpp"
 #include "player_defs.hpp"
+#include "player_level_flag.hpp"
 #include "player_race_ability_type.hpp"
 #include "player_race_flag_set.hpp"
 #include "skills_defs.hpp"
@@ -40,8 +41,7 @@ struct player_race
 
 	player_race_flag_set flags;
 
-	std::array<object_flag_set, PY_MAX_LEVEL + 1>  oflags;
-	s16b opval[PY_MAX_LEVEL + 1] { };
+	std::array<player_level_flag, PY_MAX_LEVEL+1> lflags;
 
 	struct skill_modifiers skill_modifiers;
 

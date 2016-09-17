@@ -19,6 +19,7 @@
 #include "object2.hpp"
 #include "object_kind.hpp"
 #include "player_class.hpp"
+#include "player_level_flag.hpp"
 #include "player_race.hpp"
 #include "player_race_mod.hpp"
 #include "player_type.hpp"
@@ -277,6 +278,12 @@ static void do_skill_modifiers(skill_modifiers *skill_modifiers, ls_flag_t flag)
 	}
 }
 
+static void do_player_level_flag(player_level_flag *lflag, ls_flag_t flag)
+{
+	do_flag_set(&lflag->oflags, flag);
+	do_s16b(&lflag->pval, flag);
+}
+
 /*
  * The special saved subrace
  */
@@ -335,8 +342,7 @@ static void do_subrace(ls_flag_t flag)
 
 	for (i = 0; i < PY_MAX_LEVEL + 1; i++)
 	{
-		do_flag_set(&sr_ptr->oflags[i], flag);
-		do_s16b(&sr_ptr->opval[i], flag);
+		do_player_level_flag(&sr_ptr->lflags[i], flag);
 	}
 
 	do_byte(&sr_ptr->g_attr, flag);
