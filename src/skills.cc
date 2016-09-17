@@ -122,20 +122,19 @@ static void decrease_skill(int i, s16b *invest)
  */
 s16b find_skill(cptr name)
 {
-	u16b i;
-
 	/* Scan skill list */
-	for (i = 1; i < max_s_idx; i++)
+	for (int i = 1; i < max_s_idx; i++)
 	{
-		if (s_info[i].name && streq(s_info[i].name, name))
+		if (s_descriptors[i].name && streq(s_descriptors[i].name, name))
 		{
 			return (i);
 		}
 	}
 
 	/* No match found */
-	return ( -1);
+	return -1;
 }
+
 s16b find_skill_i(cptr name)
 {
 	u16b i;
@@ -144,7 +143,7 @@ s16b find_skill_i(cptr name)
 	for (i = 1; i < max_s_idx; i++)
 	{
 		/* The name matches */
-		if (s_info[i].name && iequals(s_info[i].name, name))
+		if (s_descriptors[i].name && iequals(s_descriptors[i].name, name))
 		{
 			return (i);
 		}
@@ -191,7 +190,7 @@ static int get_idx(int i)
 {
 	for (int j = 1; j < max_s_idx; j++)
 	{
-		if (s_info[j].order == i)
+		if (s_descriptors[j].order == i)
 			return (j);
 	}
 	return (0);
@@ -207,7 +206,7 @@ static bool_ is_known(int s_idx)
 	for (i = 0; i < max_s_idx; i++)
 	{
 		/* It is our child, if we don't know it we continue to search, if we know it it is enough*/
-		if (s_info[i].father == s_idx)
+		if (s_descriptors[i].father == s_idx)
 		{
 			if (is_known(i))
 				return TRUE;
@@ -223,7 +222,7 @@ static void init_table_aux(int table[MAX_SKILLS][2], int *idx, int father, int l
 	for (int j = 1; j < max_s_idx; j++)
 	{
 		int i = get_idx(j);
-		if (s_info[i].father != father) continue;
+		if (s_descriptors[i].father != father) continue;
 		if (s_info[i].hidden) continue;
 		if (!is_known(i)) continue;
 
@@ -240,16 +239,17 @@ static void init_table(int table[MAX_SKILLS][2], int *max, bool_ full)
 	init_table_aux(table, max, -1, 0, full);
 }
 
-static bool_ has_child(int sel)
+static bool has_child(int sel)
 {
-	int i;
-
-	for (i = 1; i < max_s_idx; i++)
+	for (int i = 1; i < max_s_idx; i++)
 	{
-		if ((s_info[i].father == sel) && (is_known(i)))
-			return (TRUE);
+		if ((s_descriptors[i].father == sel) && is_known(i))
+		{
+			return true;
+		}
 	}
-	return (FALSE);
+
+	return false;
 }
 
 
@@ -283,11 +283,11 @@ void dump_skills(FILE *fff)
 
 		if (!has_child(i))
 		{
-			strcat(buf, format(" . %s", s_info[i].name));
+			strcat(buf, format(" . %s", s_descriptors[i].name));
 		}
 		else
 		{
-			strcat(buf, format(" - %s", s_info[i].name));
+			strcat(buf, format(" - %s", s_descriptors[i].name));
 		}
 
 		fprintf(fff, "%-49s%s%06.3f [%05.3f]",
@@ -317,7 +317,7 @@ void print_skills(int table[MAX_SKILLS][2], int max, int sel, int start)
 	display_message(0, 1, strlen(keys), TERM_WHITE, keys);
 	c_prt((p_ptr->skill_points) ? TERM_L_BLUE : TERM_L_RED,
 	      format("Skill points left: %d", p_ptr->skill_points), 2, 0);
-	print_desc_aux(s_info[table[sel][0]].desc, 3, 0);
+	print_desc_aux(s_descriptors[table[sel][0]].desc, 3, 0);
 
 	for (j = start; j < start + (hgt - 7); j++)
 	{
@@ -343,17 +343,17 @@ void print_skills(int table[MAX_SKILLS][2], int max, int sel, int start)
 		}
 		if (!has_child(i))
 		{
-			c_prt(color, format("%c.%c%s", deb, end, s_info[i].name),
+			c_prt(color, format("%c.%c%s", deb, end, s_descriptors[i].name),
 			      j + 7 - start, table[j][1] * 4);
 		}
 		else if (s_info[i].dev)
 		{
-			c_prt(color, format("%c-%c%s", deb, end, s_info[i].name),
+			c_prt(color, format("%c-%c%s", deb, end, s_descriptors[i].name),
 			      j + 7 - start, table[j][1] * 4);
 		}
 		else
 		{
-			c_prt(color, format("%c+%c%s", deb, end, s_info[i].name),
+			c_prt(color, format("%c+%c%s", deb, end, s_descriptors[i].name),
 			      j + 7 - start, table[j][1] * 4);
 		}
 		c_prt(color,
@@ -444,7 +444,7 @@ static void recalc_skills_theory(s16b *invest, s32b *base_val, s32b *base_mod, s
 			if (j == i) continue;
 
 			/* Exclusive skills */
-			if ((s_info[i].action[j] == SKILL_EXCLUSIVE) && invest[i])
+			if ((s_descriptors[i].action[j] == SKILL_EXCLUSIVE) && invest[i])
 			{
 				/* Turn it off */
 				p_ptr->skill_points += invest[j];
@@ -453,10 +453,10 @@ static void recalc_skills_theory(s16b *invest, s32b *base_val, s32b *base_mod, s
 			}
 
 			/* Non-exclusive skills */
-			else if (s_info[i].action[j])
+			else if (s_descriptors[i].action[j])
 			{
 				/* Increase / decrease with a % */
-				s32b val = s_info[j].value + (invest[i] * s_info[j].mod * s_info[i].action[j] / 100);
+				s32b val = s_info[j].value + (invest[i] * s_info[j].mod * s_descriptors[i].action[j] / 100);
 
 				/* It cannot exceed SKILL_MAX */
 				if (val > SKILL_MAX) val = SKILL_MAX;
@@ -581,7 +581,7 @@ void do_cmd_skill()
 			/* Contextual help */
 			if (c == '?')
 			{
-				help_skill(s_info[table[sel][0]].name);
+				help_skill(s_descriptors[table[sel][0]].name);
 			}
 
 			/* Handle boundaries and scrolling */
@@ -817,14 +817,14 @@ static int do_cmd_activate_skill_aux()
 
 	for (size_t i = 1; i < max_s_idx; i++)
 	{
-		if (s_info[i].action_mkey && s_info[i].value && ((!s_info[i].hidden) || (i == SKILL_LEARN)))
+		if (s_descriptors[i].action_mkey && s_info[i].value && ((!s_info[i].hidden) || (i == SKILL_LEARN)))
 		{
 			bool_ next = FALSE;
 
 			/* Already got it ? */
 			for (size_t j = 0; j < p.size(); j++)
 			{
-				if (s_info[i].action_mkey == std::get<1>(p[j]))
+				if (s_descriptors[i].action_mkey == std::get<1>(p[j]))
 				{
 					next = TRUE;
 					break;
@@ -832,8 +832,8 @@ static int do_cmd_activate_skill_aux()
 			}
 			if (next) continue;
 
-			p.push_back(std::make_tuple(s_info[i].action_desc,
-						    s_info[i].action_mkey));
+			p.push_back(std::make_tuple(s_descriptors[i].action_desc,
+			                            s_descriptors[i].action_mkey));
 		}
 	}
 
@@ -965,7 +965,7 @@ void do_cmd_activate_skill()
 		/* Check validity */
 		for (i = 1; i < max_s_idx; i++)
 		{
-			if (s_info[i].value && (s_info[i].action_mkey == x_idx))
+			if (s_info[i].value && (s_descriptors[i].action_mkey == x_idx))
 				break;
 		}
 		for (j = 0; j < max_ab_idx; j++)
@@ -1205,7 +1205,7 @@ void init_skill(s32b value, s32b mod, int i)
 {
 	s_info[i].value = value;
 	s_info[i].mod = mod;
-	s_info[i].hidden = (s_info[i].flags & SKF_HIDDEN)
+	s_info[i].hidden = (s_descriptors[i].flags & SKF_HIDDEN)
 	        ? TRUE
 	        : FALSE
 	        ;
@@ -1283,7 +1283,8 @@ void do_get_new_skill()
 	max_a = 0;
 	for (i = 0; i < max_s_idx; i++)
 	{
-		if (s_info[i].flags & SKF_RANDOM_GAIN) {
+		if (s_descriptors[i].flags & SKF_RANDOM_GAIN)
+		{
 			available_skills[max_a] = i;
 			max_a++;
 		}
@@ -1292,7 +1293,7 @@ void do_get_new_skill()
 	/* Perform the selection */
 	std::vector<s32b> weights;
 	for (i = 0; i < max_a; i++) {
-		weights.push_back(s_info[available_skills[i]].random_gain_chance);
+		weights.push_back(s_descriptors[available_skills[i]].random_gain_chance);
 	}
 
 	std::vector<size_t> indexes = wrs(weights);
@@ -1336,7 +1337,7 @@ void do_get_new_skill()
 
 		skl[i] = s_idx;
 		items.push_back(format("%-40s: +%02ld.%03ld value, +%01d.%03d modifier",
-				       s_ptr->name,
+		                       s_descriptors[s_idx].name,
 				       val[i] / SKILL_STEP,
 				       val[i] % SKILL_STEP,
 				       mod[i] / SKILL_STEP,
@@ -1353,14 +1354,13 @@ void do_get_new_skill()
 		/* Ok ? lets learn ! */
 		if (res > -1)
 		{
-			skill_type *s_ptr;
 			bool_ oppose = FALSE;
 			int oppose_skill = -1;
 
 			/* Check we don't oppose an existing skill */
 			for (i = 0; i < max_s_idx; i++)
 			{
-				if ((s_info[i].action[skl[res]] == SKILL_EXCLUSIVE) &&
+				if ((s_descriptors[i].action[skl[res]] == SKILL_EXCLUSIVE) &&
 				                (s_info[i].value != 0))
 				{
 					oppose = TRUE;
@@ -1383,24 +1383,25 @@ void do_get_new_skill()
 				/* Prepare prompt */
 				msg = format("This skill is mutually exclusive with "
 				             "at least %s, continue?",
-					     s_info[oppose_skill].name);
+				             s_descriptors[oppose_skill].name);
 
 				/* The player rejected the choice */
 				if (!get_check(msg)) continue;
 			}
 
-			s_ptr = &s_info[skl[res]];
+			auto const s_desc = &s_descriptors[skl[res]];
+			auto const s_ptr = &s_info[skl[res]];
 			s_ptr->value += val[res];
 			s_ptr->mod += mod[res];
 			if (mod[res])
 			{
 				msg_format("You can now learn the %s skill.",
-					   s_ptr->name);
+				           s_desc->name);
 			}
 			else
 			{
 				msg_format("Your knowledge of the %s skill increases.",
-					   s_ptr->name);
+				           s_desc->name);
 			}
 			break;
 		}

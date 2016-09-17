@@ -3085,12 +3085,12 @@ errr init_set_info_txt(FILE *fp)
  */
 errr init_s_info_txt(FILE *fp)
 {
-	int i, z, order = 1;
+	int i, order = 1;
 	char buf[1024];
 	char *s;
 
 	/* Current entry */
-	skill_type *s_ptr = NULL;
+	skill_descriptor *s_ptr = NULL;
 
 
 	/* Just before the first record */
@@ -3131,8 +3131,8 @@ errr init_s_info_txt(FILE *fp)
 			s2 = find_skill(sec);
 			if (s2 == -1) return (1);
 
-			s_info[s2].father = s1;
-			s_info[s2].order = order++;
+			s_descriptors[s2].father = s1;
+			s_descriptors[s2].order = order++;
 
 			/* Next... */
 			continue;
@@ -3157,8 +3157,8 @@ errr init_s_info_txt(FILE *fp)
 			s2 = find_skill(sec);
 			if ((s1 == -1) || (s2 == -1)) return (1);
 
-			s_info[s1].action[s2] = SKILL_EXCLUSIVE;
-			s_info[s2].action[s1] = SKILL_EXCLUSIVE;
+			s_descriptors[s1].action[s2] = SKILL_EXCLUSIVE;
+			s_descriptors[s2].action[s1] = SKILL_EXCLUSIVE;
 
 			/* Next... */
 			continue;
@@ -3191,7 +3191,7 @@ errr init_s_info_txt(FILE *fp)
 			s2 = find_skill(sec);
 			if ((s1 == -1) || (s2 == -1)) return (1);
 
-			s_info[s1].action[s2] = -atoi(cval);
+			s_descriptors[s1].action[s2] = -atoi(cval);
 
 			/* Next... */
 			continue;
@@ -3223,7 +3223,7 @@ errr init_s_info_txt(FILE *fp)
 			s2 = find_skill(sec);
 			if ((s1 == -1) || (s2 == -1)) return (1);
 
-			s_info[s1].action[s2] = atoi(cval);
+			s_descriptors[s1].action[s2] = atoi(cval);
 
 			/* Next... */
 			continue;
@@ -3254,20 +3254,11 @@ errr init_s_info_txt(FILE *fp)
 			error_idx = i;
 
 			/* Point at the "info" */
-			s_ptr = &s_info[i];
+			s_ptr = &s_descriptors[i];
 
 			/* Copy name */
 			assert(!s_ptr->name);
 			s_ptr->name = my_strdup(s);
-
-			/* Init */
-			s_ptr->action_mkey = 0;
-			s_ptr->dev = FALSE;
-			s_ptr->random_gain_chance = 100;
-			for (z = 0; z < max_s_idx; z++)
-			{
-				s_ptr->action[z] = 0;
-			}
 
 			/* Next... */
 			continue;

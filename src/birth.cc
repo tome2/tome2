@@ -2782,7 +2782,10 @@ static bool_ player_birth_aux()
 	if (!player_birth_aux_ask()) return (FALSE);
 
 	for (i = 1; i < max_s_idx; i++)
+	{
 		s_info[i].dev = FALSE;
+	}
+
 	for (i = 1; i < max_s_idx; i++)
 	{
 		s32b value = 0, mod = 0;
@@ -2794,14 +2797,18 @@ static bool_ player_birth_aux()
 		/* Develop only revelant branches */
 		if (s_info[i].value || s_info[i].mod)
 		{
-			int z = s_info[i].father;
+			int z = s_descriptors[i].father;
 
 			while (z != -1)
 			{
+				// Mark as developed
 				s_info[z].dev = TRUE;
-				z = s_info[z].father;
+				// Next node up the tree
+				z = s_descriptors[z].father;
 				if (z == 0)
+				{
 					break;
+				}
 			}
 		}
 	}

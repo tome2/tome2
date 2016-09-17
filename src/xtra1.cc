@@ -2972,8 +2972,10 @@ void calc_bonuses(bool_ silent)
 	/* Hide the skills that should auto hide */
 	for (i = 0; i < max_s_idx; i++)
 	{
-		if (s_info[i].flags & SKF_AUTO_HIDE)
+		if (s_descriptors[i].flags & SKF_AUTO_HIDE)
+		{
 			s_info[i].hidden = TRUE;
+		}
 	}
 
 	/* Base Luck */

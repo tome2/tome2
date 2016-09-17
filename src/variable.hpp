@@ -36,6 +36,7 @@
 #include "rune_spell.hpp"
 #include "school_type.hpp"
 #include "set_type_fwd.hpp"
+#include "skill_descriptor_fwd.hpp"
 #include "skill_modifiers_fwd.hpp"
 #include "skill_type_fwd.hpp"
 #include "skills_defs.hpp"
@@ -174,6 +175,7 @@ extern char player_name[32];
 extern char player_base[32];
 extern ability_type *ab_info;
 extern skill_type *s_info;
+extern skill_descriptor *s_descriptors;
 extern vault_type *v_info;
 extern feature_type *f_info;
 extern object_kind *k_info;

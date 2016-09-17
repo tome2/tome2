@@ -510,6 +510,11 @@ ability_type *ab_info;
  */
 skill_type *s_info;
 
+/**
+ * Skill descriptors.
+ */
+skill_descriptor *s_descriptors;
+
 /*
  * Player race arrays
  */

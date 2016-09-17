@@ -344,6 +344,7 @@ namespace {
 		static void allocate()
 		{
 			s_info = new skill_type[max_s_idx];
+			s_descriptors = new skill_descriptor[max_s_idx];
 		}
 
 		static errr parse(FILE *fp)
