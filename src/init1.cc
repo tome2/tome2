@@ -6837,29 +6837,32 @@ static errr process_dungeon_file_aux(char *buf, int *yval, int *xval, int xvalst
 		/* Layout of the wilderness */
 		if (buf[2] == 'D')
 		{
-			int x;
-			char i;
-
 			/* Acquire the text */
 			char *s = buf + 4;
 
 			int y = *yval;
 
-			for (x = 0; x < max_wild_x; x++)
+			for (int x = 0; x < max_wild_x; x++)
 			{
-				if (1 != sscanf(s + x, "%c", &i)) return (1);
-				wild_map[y][x].feat = wildc2i[(int)i];
+				char i;
+				if (1 != sscanf(s + x, "%c", &i))
+				{
+					return (1);
+				}
+
+				auto const wi = wildc2i[(int)i];
+
+				wild_map[y][x].feat = wi;
 
 				/*
 				 * If this is a town/dungeon entrance, note
 				 * its coordinates.  (Have to check for
 				 * duplicate Morias...)
 				 */
-				if (wf_info[wildc2i[(int)i]].entrance &&
-				                wf_info[wildc2i[(int)i]].wild_x == 0)
+				if (wf_info[wi].entrance && wf_info[wi].wild_x == 0)
 				{
-					wf_info[wildc2i[(int)i]].wild_x = x;
-					wf_info[wildc2i[(int)i]].wild_y = y;
+					wf_info[wi].wild_x = x;
+					wf_info[wi].wild_y = y;
 				}
 			}
 
