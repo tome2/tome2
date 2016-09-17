@@ -751,7 +751,7 @@ static bool_ do_extra(ls_flag_t flag)
 	do_bool(&p_ptr->help.enabled, flag);
 	for (std::size_t i = 0; i < HELP_MAX; i++)
 	{
-		do_bool(&(p_ptr->help.activated[i]), flag);
+		do_bool(&p_ptr->help.activated[i], flag);
 	}
 
 	/* More info */

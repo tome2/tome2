@@ -601,13 +601,11 @@ static bool_ triggered_help_hook(void *data, void *in, void *out)
 	    (!p_ptr->help.activated[triggered_help->help_index]) &&
 	    triggered_help->trigger_func(in,out))
 	{
-		int i;
-
 		/* Triggered */
-		p_ptr->help.activated[triggered_help->help_index] = TRUE;
+		p_ptr->help.activated[triggered_help->help_index] = true;
 
 		/* Show the description */
-		for (i = 0; (i < DESC_MAX) && (triggered_help->desc[i] != NULL); i++)
+		for (std::size_t i = 0; (i < DESC_MAX) && (triggered_help->desc[i] != NULL); i++)
 		{
 			cmsg_print(TERM_YELLOW, triggered_help->desc[i]);
 		}
