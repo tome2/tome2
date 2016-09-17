@@ -868,9 +868,9 @@ static void player_wipe(void)
 	}
 
 	/* Wipe the known inscription list */
-	for (i = 0; i < MAX_INSCRIPTIONS; i++)
+	for (auto &inscription_known: p_ptr->inscriptions)
 	{
-		inscription_info[i].know = FALSE;
+		inscription_known = false;
 	}
 
 	/* Wipe the known traps list */

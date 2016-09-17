@@ -3582,9 +3582,10 @@ void do_cmd_read_scroll(void)
 			/* Load screen */
 			screen_load();
 
+			/* Inscriptions become known upon reading */
 			if (o_ptr->sval >= 100)
 			{
-				inscription_info[o_ptr->sval - 100].know = TRUE;
+				p_ptr->inscriptions[o_ptr->sval - 100] = TRUE;
 			}
 
 			used_up = FALSE;

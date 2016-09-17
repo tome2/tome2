@@ -4746,13 +4746,14 @@ void do_cmd_engrave()
 	{
 		if (!strcmp(inscription_info[i].text, buf))
 		{
-			if (inscription_info[i].know)
+			if (p_ptr->inscriptions[i])
 			{
-				/* Save the inscription */
 				cave[p_ptr->py][p_ptr->px].inscription = i;
 			}
 			else
+			{
 				msg_print("You can't use this inscription for now.");
+			}
 		}
 	}
 

@@ -2450,7 +2450,7 @@ static bool do_floor_inscriptions(ls_flag_t flag)
 
 	for (std::size_t i = 0; i < n_inscriptions; i++)
 	{
-		do_bool(&inscription_info[i].know, flag);
+		do_std_bool(&p_ptr->inscriptions[i], flag);
 	}
 
 	return true;

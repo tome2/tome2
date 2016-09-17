@@ -1,6 +1,7 @@
 #pragma once
 
 #include "corrupt.hpp"
+#include "defines.h"
 #include "h-basic.h"
 #include "help_info.hpp"
 #include "inventory.hpp"
@@ -380,6 +381,9 @@ struct player_type
 
 	/* Acquired abilities; indexes into ab_info[] */
 	std::vector<u16b> abilities;
+
+	/* Known inscriptions; true if known, false otherwise. */
+	std::array<bool, MAX_INSCRIPTIONS> inscriptions;
 
 	/* Skills */
 	s16b skill_points = 0;

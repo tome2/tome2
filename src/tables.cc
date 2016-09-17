@@ -2353,52 +2353,44 @@ move_info_type move_info[9] =
  */
 inscription_info_type inscription_info[MAX_INSCRIPTIONS] =
 {
-	{       /* Nothing */
+        {       /* Padding; 0 index is used to signify "no inscription" */
 		"",
 		0,
-		TRUE,
 		0,
 	},
 	{       /* Light up the room(Adunaic) */
 		"ure nimir",   /* sun shine */
 		INSCRIP_EXEC_ENGRAVE | INSCRIP_EXEC_WALK | INSCRIP_EXEC_MONST_WALK,
-		FALSE,
 		30,
 	},
 	{       /* Darkness in room(Adunaic) */
 		"lomi gimli",   /* night stars */
 		INSCRIP_EXEC_ENGRAVE | INSCRIP_EXEC_WALK | INSCRIP_EXEC_MONST_WALK,
-		FALSE,
 		10,
 	},
 	{       /* Storm(Adunaic) */
 		"dulgi bawiba",   /* black winds */
 		INSCRIP_EXEC_ENGRAVE | INSCRIP_EXEC_WALK | INSCRIP_EXEC_MONST_WALK,
-		FALSE,
 		40,
 	},
 	{       /* Protection(Sindarin) */
 		"pedo mellon a minno",   /* say friend and enter */
 		INSCRIP_EXEC_MONST_WALK,
-		FALSE,
 		8,
 	},
 	{       /* Dwarves summoning(Khuzdul) */
 		"Baruk Khazad! Khazad aimenu!",   /* Axes of the Dwarves, the Dwarves are upon you! */
 		INSCRIP_EXEC_ENGRAVE,
-		FALSE,
 		100,
 	},
 	{       /* Open Chasm(Nandorin) */
 		"dunna hrassa",   /* black precipice */
 		INSCRIP_EXEC_MONST_WALK,
-		FALSE,
 		50,
 	},
 	{       /* Blast of Black Fire(Orcish) */
 		"burz ghash ronk",   /* black fire pool */
 		INSCRIP_EXEC_ENGRAVE | INSCRIP_EXEC_WALK | INSCRIP_EXEC_MONST_WALK,
-		FALSE,
 		60,
 	},
 };
