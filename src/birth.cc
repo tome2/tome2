@@ -936,6 +936,15 @@ static void outfit_obj(object_proto const *proto)
 }
 
 
+static void outfit_objs(std::vector<object_proto> const &protos)
+{
+	for (auto const &proto: protos)
+	{
+		outfit_obj(&proto);
+	}
+}
+
+
 /*
  * Give the player an object.
  */
@@ -972,7 +981,6 @@ static void player_outfit_spellbook(cptr spell_name)
  */
 static void player_outfit(void)
 {
-	int i;
 	cptr class_name = spp_ptr->title;
 	cptr subrace_name = rmp_ptr->title;
 
@@ -1160,23 +1168,11 @@ static void player_outfit(void)
 		(void)inven_carry(q_ptr, FALSE);
 	}
 
-	/* Hack -- Give the player some useful objects */
-	for (i = 0; i < rp_ptr->obj_num; i++)
-	{
-		outfit_obj(&rp_ptr->obj[i]);
-	}
-	for (i = 0; i < rmp_ptr->obj_num; i++)
-	{
-		outfit_obj(&rmp_ptr->obj[i]);
-	}
-	for (i = 0; i < cp_ptr->obj_num; i++)
-	{
-		outfit_obj(&cp_ptr->obj[i]);
-	}
-	for (i = 0; i < cp_ptr->spec[p_ptr->pspec].obj_num; i++)
-	{
-		outfit_obj(&cp_ptr->spec[p_ptr->pspec].obj[i]);
-	}
+	/* Outfit the player with starting items */
+	outfit_objs(rp_ptr->object_protos);
+	outfit_objs(rmp_ptr->object_protos);
+	outfit_objs(cp_ptr->object_protos);
+	outfit_objs(cp_ptr->spec[p_ptr->pspec].object_protos);
 }
 
 

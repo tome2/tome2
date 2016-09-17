@@ -44,8 +44,7 @@ struct player_class
 	byte sense_heavy = 0;
 	byte sense_heavy_magic = 0;
 
-	std::array<object_proto, 5> obj;
-	s16b obj_num = 0;
+	std::vector<object_proto> object_protos;
 
 	char body_parts[BODY_MAX] { };                          /* To help to decide what to use when body changing */
 

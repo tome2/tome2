@@ -11,6 +11,7 @@
 #include "skill_modifiers.hpp"
 
 #include <array>
+#include <vector>
 
 /**
  * Player racial descriptior.
@@ -44,8 +45,7 @@ struct player_race
 
 	struct skill_modifiers skill_modifiers;
 
-	std::array<object_proto, 5> obj;
-	s16b obj_num = 0;
+	std::vector<object_proto> object_protos;
 
 	std::array<player_race_ability_type, 10> abilities;     /* Abilitiers to be gained by level(doesnt take prereqs in account) */
 };

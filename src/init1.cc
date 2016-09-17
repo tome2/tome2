@@ -840,7 +840,7 @@ static int read_skill_modifiers(skill_modifiers *skill_modifiers, cptr buf)
 /*
  * Read prototype objects
  */
-static int read_proto_object(object_proto *proto, s16b *num, cptr buf)
+static int read_proto_object(std::vector<object_proto> *protos, cptr buf)
 {
 	int s0, s1, s2, s3, s4;
 
@@ -854,13 +854,14 @@ static int read_proto_object(object_proto *proto, s16b *num, cptr buf)
 		}
 	}
 
-	proto->pval = s4;
-	proto->tval = s0;
-	proto->sval = s1;
-	proto->dd = s2;
-	proto->ds = s3;
+	object_proto proto;
+	proto.pval = s4;
+	proto.tval = s0;
+	proto.sval = s1;
+	proto.dd = s2;
+	proto.ds = s3;
 
-	(*num)++;
+	protos->emplace_back(proto);
 
 	return 0;
 }
@@ -1165,7 +1166,7 @@ errr init_player_info_txt(FILE *fp)
 		/* Process 'O' for "Object birth" */
 		if ((buf[0] == 'R') && (buf[2] == 'O'))
 		{
-			if (read_proto_object(&rp_ptr->obj[rp_ptr->obj_num], &rp_ptr->obj_num, buf + 4))
+			if (read_proto_object(&rp_ptr->object_protos, buf + 4))
 			{
 				return 1;
 			}
@@ -1415,7 +1416,7 @@ errr init_player_info_txt(FILE *fp)
 		/* Process 'O' for "Object birth" */
 		if ((buf[0] == 'S') && (buf[2] == 'O'))
 		{
-			if (read_proto_object(&rmp_ptr->obj[rmp_ptr->obj_num], &rmp_ptr->obj_num, buf + 4))
+			if (read_proto_object(&rmp_ptr->object_protos, buf + 4))
 			{
 				return 1;
 			}
@@ -1505,7 +1506,6 @@ errr init_player_info_txt(FILE *fp)
 			for (z = 0; z < 10; z++)
 				c_ptr->abilities[z].level = -1;
 			cur_ab = 0;
-			c_ptr->obj_num = 0;
 			tit_idx = 0;
 			spec_idx = -1;
 			for (z = 0; z < MAX_SPEC; z++)
@@ -1557,7 +1557,7 @@ errr init_player_info_txt(FILE *fp)
 		/* Process 'O' for "Object birth" */
 		if ((buf[0] == 'C') && (buf[2] == 'O'))
 		{
-			if (read_proto_object(&c_ptr->obj[c_ptr->obj_num], &c_ptr->obj_num, buf + 4))
+			if (read_proto_object(&c_ptr->object_protos, buf + 4))
 			{
 				return 1;
 			}
@@ -1811,7 +1811,6 @@ errr init_player_info_txt(FILE *fp)
 				s_ptr->title = my_strdup(s);
 
 				/* Initialize */
-				s_ptr->obj_num = 0;
 				cur_ab = 0;
 				for (z = 0; z < 10; z++)
 					s_ptr->abilities[z].level = -1;
@@ -1842,7 +1841,7 @@ errr init_player_info_txt(FILE *fp)
 			/* Process 'O' for "Object birth" */
 			if (buf[4] == 'O')
 			{
-				if (read_proto_object(&s_ptr->obj[s_ptr->obj_num], &s_ptr->obj_num, buf + 6))
+				if (read_proto_object(&s_ptr->object_protos, buf + 6))
 				{
 					return 1;
 				}

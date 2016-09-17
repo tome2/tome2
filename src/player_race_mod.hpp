@@ -11,6 +11,7 @@
 #include "skills_defs.hpp"
 
 #include <array>
+#include <vector>
 
 struct player_race_mod
 {
@@ -48,8 +49,7 @@ struct player_race_mod
 
 	struct skill_modifiers skill_modifiers;
 
-	std::array<object_proto, 5> obj;
-	s16b obj_num = 0;
+	std::vector<object_proto> object_protos;
 
 	std::array<player_race_ability_type, 10> abilities;     /* Abilities to be gained by level; doesnt take prereqs in account */
 };

@@ -7,6 +7,7 @@
 #include "skill_modifiers.hpp"
 
 #include <array>
+#include <vector>
 
 /**
  * Player class descriptor.
@@ -18,8 +19,7 @@ struct player_spec
 
 	struct skill_modifiers skill_modifiers;
 
-	std::array<object_proto, 5> obj;
-	s16b obj_num = 0;
+	std::vector<object_proto> object_protos;
 
 	u32b gods = 0;
 
