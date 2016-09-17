@@ -3644,24 +3644,6 @@ static int get_slot(int slot)
  */
 s16b wield_slot_ideal(object_type const *o_ptr, bool_ ideal)
 {
-	/* Theme has restrictions for winged races. */
-	if (game_module_idx == MODULE_THEME)
-	{
-		cptr race_name = rp_ptr->title;
-
-		if (streq(race_name, "Dragon") ||
-		    streq(race_name, "Eagle"))
-		{
-			switch (o_ptr->tval)
-			{
-			case TV_CLOAK:
-			case TV_HARD_ARMOR:
-			case TV_DRAG_ARMOR:
-				return -1;
-			}
-		}
-	}
-
 	/* Slot for equipment */
 	switch (o_ptr->tval)
 	{
