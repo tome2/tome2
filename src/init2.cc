@@ -720,17 +720,6 @@ void create_stores_stock(int t)
 }
 
 /*
- * Initialise wilderness map array
- */
-static errr init_wilderness(void)
-{
-	/* No encounter right now */
-	generate_encounter = FALSE;
-
-	return 0;
-}
-
-/*
  * Initialise some other arrays
  */
 static errr init_other(void)
@@ -1347,10 +1336,6 @@ void init_angband(void)
 	/* Initialise wilderness features array */
 	note("[Initialising arrays... (wilderness features)]");
 	if (init_x_info<wf_info_traits>()) quit("Cannot initialise wilderness features");
-
-	/* Initialise wilderness map array */
-	note("[Initialising arrays... (wilderness map)]");
-	if (init_wilderness()) quit("Cannot initialise wilderness map");
 
 	/* Initialise town array */
 	note("[Initialising arrays... (towns)]");

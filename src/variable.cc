@@ -832,7 +832,7 @@ s16b *max_dlv;
 s16b doppleganger;
 
 /* To allow wilderness encounters */
-bool_ generate_encounter;
+bool_ generate_encounter = FALSE;
 
 /*
  * Such an ugly hack ...
