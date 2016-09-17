@@ -8,6 +8,7 @@
 #include "player_level_flag.hpp"
 #include "player_race_ability_type.hpp"
 #include "player_race_flag_set.hpp"
+#include "player_shared.hpp"
 #include "skill_modifiers.hpp"
 #include "skills_defs.hpp"
 
@@ -22,13 +23,10 @@ struct player_race_mod
 
 	bool_ place = FALSE;                                    /* TRUE = race race modifier, FALSE = Race modifier race */
 
-	s16b r_adj[6] { };                                      /* (+) Racial stat bonuses */
-
 	char luck = '\0';                                       /* Luck */
 	s16b mana = 0;                                          /* Mana % */
 
-	char r_mhp = 0;                                         /* (+) Race mod hit-dice modifier */
-	s16b r_exp = 0;                                         /* (+) Race mod experience factor */
+	player_shared ps;
 
 	char infra = '\0';                                      /* (+) Infra-vision range */
 
@@ -36,8 +34,6 @@ struct player_race_mod
 
 	u32b pclass[2] { };                                     /* Classes allowed */
 	u32b mclass[2] { };                                     /* Classes restricted */
-
-	s16b powers[4] { };                                     /* Powers of the subrace */
 
 	char body_parts[BODY_MAX] { };                          /* To help to decide what to use when body changing */
 
@@ -54,4 +50,3 @@ struct player_race_mod
 
 	std::vector<player_race_ability_type> abilities;        /* Abilities to be gained by level; ignores prereqs */
 };
-

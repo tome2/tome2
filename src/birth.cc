@@ -421,7 +421,7 @@ static void get_stats(void)
 		p_ptr->stat_max[i] = j;
 
 		/* Obtain a "bonus" for "race" and "class" */
-		bonus = rp_ptr->r_adj[i] + rmp_ptr->r_adj[i] + cp_ptr->c_adj[i];
+		bonus = rp_ptr->ps.adj[i] + rmp_ptr->ps.adj[i] + cp_ptr->ps.adj[i];
 
 		/* Start fully healed */
 		p_ptr->stat_cur[i] = p_ptr->stat_max[i];
@@ -452,13 +452,13 @@ static void get_extra(void)
 	p_ptr->max_plv = p_ptr->lev = 1;
 
 	/* Experience factor */
-	p_ptr->expfact = rp_ptr->r_exp + rmp_ptr->r_exp + cp_ptr->c_exp;
+	p_ptr->expfact = rp_ptr->ps.exp + rmp_ptr->ps.exp + cp_ptr->ps.exp;
 
 	/* Initialize quest */
 	p_ptr->inside_quest = 0;
 
 	/* Hitdice */
-	p_ptr->hitdie = rp_ptr->r_mhp + rmp_ptr->r_mhp + cp_ptr->c_mhp;
+	p_ptr->hitdie = rp_ptr->ps.mhp + rmp_ptr->ps.mhp + cp_ptr->ps.mhp;
 
 	/* Initial hitpoints */
 	p_ptr->mhp = p_ptr->hitdie;
@@ -2487,7 +2487,7 @@ static bool_ player_birth_aux_auto()
 			stat_match[i] = 0;
 
 			/* Race/Class bonus */
-			j = rp_ptr->r_adj[i] + rmp_ptr->r_adj[i] + cp_ptr->c_adj[i];
+			j = rp_ptr->ps.adj[i] + rmp_ptr->ps.adj[i] + cp_ptr->ps.adj[i];
 
 			/* Obtain the "maximal" stat */
 			m = adjust_stat(17, j, TRUE);

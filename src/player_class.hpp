@@ -7,6 +7,7 @@
 #include "player_defs.hpp"
 #include "player_level_flag.hpp"
 #include "player_race_flag_set.hpp"
+#include "player_shared.hpp"
 #include "player_spec.hpp"
 #include "skill_modifiers.hpp"
 
@@ -19,12 +20,7 @@ struct player_class
 	char *desc = nullptr;                                /* Small desc of the class */
 	const char *titles[PY_MAX_LEVEL / 5] { };            /* Titles */
 
-	s16b c_adj[6] { };	                             /* Class stat modifier */
-
-	s16b c_mhp = 0;                                      /* Class hit-dice adjustment */
-	s16b c_exp = 0;                                      /* Class experience factor */
-
-	s16b powers[4] { };                                  /* Powers of the class */
+	player_shared ps;
 
 	player_race_flag_set flags;
 

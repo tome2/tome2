@@ -1533,6 +1533,15 @@ static void calc_powers_corruption()
 /* Ugly hack */
 bool_ calc_powers_silent = FALSE;
 
+/* Add in powers */
+static void add_powers(std::vector<s16b> const &powers)
+{
+	for (auto const &p: powers)
+	{
+		p_ptr->powers[p] = TRUE;
+	}
+}
+
 /* Calc the player powers */
 static void calc_powers(void)
 {
@@ -1563,32 +1572,23 @@ static void calc_powers(void)
 		if (!o_ptr->k_idx) continue;
 
 		p = object_power(o_ptr);
-		if (p != -1) p_ptr->powers[p] = TRUE;
+		if (p != -1)
+		{
+			p_ptr->powers[p] = TRUE;
+		}
 	}
 
 	if ((!p_ptr->tim_mimic) && (!p_ptr->body_monster))
 	{
-		/* Add in racial and subracial powers */
-		for (i = 0; i < 4; i++)
-		{
-			p = rp_ptr->powers[i];
-			if (p != -1) p_ptr->powers[p] = TRUE;
-
-			p = rmp_ptr->powers[i];
-			if (p != -1) p_ptr->powers[p] = TRUE;
-		}
+		add_powers(rp_ptr->ps.powers);
+		add_powers(rmp_ptr->ps.powers);
 	}
 	else if (p_ptr->mimic_form)
 	{
 		calc_mimic_power();
 	}
 
-	/* Add in class powers */
-	for (i = 0; i < 4; i++)
-	{
-		p = cp_ptr->powers[i];
-		if (p != -1) p_ptr->powers[p] = TRUE;
-	}
+	add_powers(cp_ptr->ps.powers);
 
 	if (p_ptr->disembodied)
 	{
@@ -3056,7 +3056,7 @@ void calc_bonuses(bool_ silent)
 	for (i = 0; i < 6; i++)
 	{
 		/* Modify the stats for "race" */
-		p_ptr->stat_add[i] += (rp_ptr->r_adj[i] + rmp_ptr->r_adj[i] + cp_ptr->c_adj[i]);
+		p_ptr->stat_add[i] += (rp_ptr->ps.adj[i] + rmp_ptr->ps.adj[i] + cp_ptr->ps.adj[i]);
 	}
 
 

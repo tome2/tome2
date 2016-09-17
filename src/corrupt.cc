@@ -41,16 +41,7 @@ struct corruption_type
 
 static void subrace_add_power(player_race_mod *rmp_ptr, int power)
 {
-	int i;
-
-	for (i=0; i<4; i++)
-	{
-		if (rmp_ptr->powers[i] == -1)
-		{
-			rmp_ptr->powers[i] = power;
-			return;
-		}
-	}
+	rmp_ptr->ps.powers.push_back(power);
 }
 
 static void player_gain_vampire_teeth()
@@ -70,16 +61,16 @@ static void player_gain_vampire_teeth()
 static void player_gain_vampire_strength()
 {
 	player_race_mod *rmp_ptr = &race_mod_info[SUBRACE_SAVE];
-	/* Apply the bonuses/penalities */
-	rmp_ptr->r_mhp = rmp_ptr->r_mhp + 1;
-	rmp_ptr->r_exp = rmp_ptr->r_exp + 100;
 
-	rmp_ptr->r_adj[A_STR] = rmp_ptr->r_adj[A_STR] + 3;
-	rmp_ptr->r_adj[A_INT] = rmp_ptr->r_adj[A_INT] + 2;
-	rmp_ptr->r_adj[A_WIS] = rmp_ptr->r_adj[A_WIS] - 3;
-	rmp_ptr->r_adj[A_DEX] = rmp_ptr->r_adj[A_DEX] - 2;
-	rmp_ptr->r_adj[A_CON] = rmp_ptr->r_adj[A_CON] + 1;
-	rmp_ptr->r_adj[A_CHR] = rmp_ptr->r_adj[A_CHR] - 4;
+	rmp_ptr->ps.mhp += +1;
+	rmp_ptr->ps.exp += +100;
+
+	rmp_ptr->ps.adj[A_STR] += +3;
+	rmp_ptr->ps.adj[A_INT] += +2;
+	rmp_ptr->ps.adj[A_WIS] += -3;
+	rmp_ptr->ps.adj[A_DEX] += -2;
+	rmp_ptr->ps.adj[A_CON] += +1;
+	rmp_ptr->ps.adj[A_CHR] += -4;
 
 	/* be reborn! */
 	do_rebirth();

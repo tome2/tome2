@@ -1022,7 +1022,6 @@ errr init_player_info_txt(FILE *fp)
 			rp_ptr->title = my_strdup(s);
 
 			/* Initialize */
-			rp_ptr->powers[0] = rp_ptr->powers[1] = rp_ptr->powers[2] = rp_ptr->powers[3] = -1;
 			powers = 0;
 			lev = 1;
 
@@ -1092,7 +1091,9 @@ errr init_player_info_txt(FILE *fp)
 
 			rp_ptr->luck = s[6];
 			for (z = 0; z < 6; z++)
-				rp_ptr->r_adj[z] = s[z];
+			{
+				rp_ptr->ps.adj[z] = s[z];
+			}
 
 			/* Next... */
 			continue;
@@ -1114,7 +1115,7 @@ errr init_player_info_txt(FILE *fp)
 
 			if (i == POWER_MAX) return (6);
 
-			rp_ptr->powers[powers++] = i;
+			rp_ptr->ps.powers.push_back(i);
 
 			/* Next... */
 			continue;
@@ -1153,8 +1154,8 @@ errr init_player_info_txt(FILE *fp)
 			if (4 != sscanf(buf + 4, "%d:%d:%d:%d",
 			                &s[0], &s[1], &s[2], &s[3])) return (1);
 
-			rp_ptr->r_mhp = s[0];
-			rp_ptr->r_exp = s[1];
+			rp_ptr->ps.mhp = s[0];
+			rp_ptr->ps.exp = s[1];
 			rp_ptr->infra = s[2];
 			rp_ptr->chart = s[3];
 
@@ -1244,7 +1245,6 @@ errr init_player_info_txt(FILE *fp)
 			rmp_ptr->title = s;
 
 			/* Initialize */
-			rmp_ptr->powers[0] = rmp_ptr->powers[1] = rmp_ptr->powers[2] = rmp_ptr->powers[3] = -1;
 			powers = 0;
 			lev = 1;
 
@@ -1323,7 +1323,9 @@ errr init_player_info_txt(FILE *fp)
 			rmp_ptr->mana = s[7];
 			rmp_ptr->luck = s[6];
 			for (z = 0; z < 6; z++)
-				rmp_ptr->r_adj[z] = s[z];
+			{
+				rmp_ptr->ps.adj[z] = s[z];
+			}
 
 			/* Next... */
 			continue;
@@ -1345,7 +1347,7 @@ errr init_player_info_txt(FILE *fp)
 
 			if (i == POWER_MAX) return (6);
 
-			rmp_ptr->powers[powers++] = i;
+			rmp_ptr->ps.powers.push_back(i);
 
 			/* Next... */
 			continue;
@@ -1384,8 +1386,8 @@ errr init_player_info_txt(FILE *fp)
 			if (3 != sscanf(buf + 4, "%d:%d:%d",
 			                &s[0], &s[1], &s[2])) return (1);
 
-			rmp_ptr->r_mhp = s[0];
-			rmp_ptr->r_exp = s[1];
+			rmp_ptr->ps.mhp = s[0];
+			rmp_ptr->ps.exp = s[1];
 			rmp_ptr->infra = s[2];
 
 			/* Next... */
@@ -1501,7 +1503,6 @@ errr init_player_info_txt(FILE *fp)
 			c_ptr->title = my_strdup(s);
 
 			/* Initialize */
-			c_ptr->powers[0] = c_ptr->powers[1] = c_ptr->powers[2] = c_ptr->powers[3] = -1;
 			powers = 0;
 			lev = 1;
 			tit_idx = 0;
@@ -1605,7 +1606,9 @@ errr init_player_info_txt(FILE *fp)
 			c_ptr->mana = s[6];
 			c_ptr->extra_blows = s[7];
 			for (z = 0; z < 6; z++)
-				c_ptr->c_adj[z] = s[z];
+			{
+				c_ptr->ps.adj[z] = s[z];
+			}
 
 			/* Next... */
 			continue;
@@ -1668,7 +1671,7 @@ errr init_player_info_txt(FILE *fp)
 
 			if (i == POWER_MAX) return (6);
 
-			c_ptr->powers[powers++] = i;
+			c_ptr->ps.powers.push_back(i);
 
 			/* Next... */
 			continue;
@@ -1683,8 +1686,8 @@ errr init_player_info_txt(FILE *fp)
 			if (2 != sscanf(buf + 4, "%d:%d",
 			                &s[0], &s[1])) return (1);
 
-			c_ptr->c_mhp = s[0];
-			c_ptr->c_exp = s[1];
+			c_ptr->ps.mhp = s[0];
+			c_ptr->ps.exp = s[1];
 
 			/* Next... */
 			continue;

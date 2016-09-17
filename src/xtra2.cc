@@ -5310,10 +5310,10 @@ void switch_subrace(int racem, bool_ copy_old)
 void do_rebirth()
 {
 	/* Experience factor */
-	p_ptr->expfact = rp_ptr->r_exp + rmp_ptr->r_exp + cp_ptr->c_exp;
+	p_ptr->expfact = rp_ptr->ps.exp + rmp_ptr->ps.exp + cp_ptr->ps.exp;
 
 	/* Hitdice */
-	p_ptr->hitdie = rp_ptr->r_mhp + rmp_ptr->r_mhp + cp_ptr->c_mhp;
+	p_ptr->hitdie = rp_ptr->ps.mhp + rmp_ptr->ps.mhp + cp_ptr->ps.mhp;
 
 	/* Recalc HP */
 	do_cmd_rerate();

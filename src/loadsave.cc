@@ -424,19 +424,32 @@ static void do_subrace(ls_flag_t flag)
 	do_bool(&sr_ptr->place, flag);
 
 	for (i = 0; i < 6; i++)
-		do_s16b(&sr_ptr->r_adj[i], flag);
+	{
+		do_s16b(&sr_ptr->ps.adj[i], flag);
+	}
 
 	do_byte((byte*)&sr_ptr->luck, flag);
 	do_s16b(&sr_ptr->mana, flag);
 
-	do_byte((byte*)&sr_ptr->r_mhp, flag);
-	do_s16b(&sr_ptr->r_exp, flag);
+	do_byte((byte*)&sr_ptr->ps.mhp, flag);
+	do_s16b(&sr_ptr->ps.exp, flag);
 
 	do_byte((byte*)&sr_ptr->infra, flag);
 
-	for (i = 0; i < 4; i++)
 	{
-		do_s16b(&sr_ptr->powers[i], flag);
+		u16b n = sr_ptr->ps.powers.size();
+
+		do_u16b(&n, flag);
+
+		for (std::size_t i = 0; i < n; i++)
+		{
+			if (flag == ls_flag_t::LOAD)
+			{
+				sr_ptr->ps.powers.push_back(0);
+			}
+
+			do_s16b(&sr_ptr->ps.powers[i], flag);
+		}
 	}
 
 	for (i = 0; i < BODY_MAX; i++)

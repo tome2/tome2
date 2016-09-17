@@ -359,7 +359,7 @@ void do_poly_self(void)
 		while (1)
 		{
 			new_race = rand_int(max_rp_idx);
-			expfact = race_info[new_race].r_exp;
+			expfact = race_info[new_race].ps.exp;
 
 			if ((new_race != p_ptr->prace) && (expfact <= goalexpfact)) break;
 		}
@@ -380,7 +380,7 @@ void do_poly_self(void)
 		rp_ptr = &race_info[p_ptr->prace];
 
 		/* Experience factor */
-		p_ptr->expfact = rp_ptr->r_exp + rmp_ptr->r_exp + cp_ptr->c_exp;
+		p_ptr->expfact = rp_ptr->ps.exp + rmp_ptr->ps.exp + cp_ptr->ps.exp;
 
 		/* Level up if necessary */
 		check_experience();
