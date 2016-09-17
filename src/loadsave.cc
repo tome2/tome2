@@ -149,7 +149,7 @@ static void do_bool(bool_ *f, ls_flag_t flag)
 	}
 }
 
-static void do_bool(bool *x, ls_flag_t flag)
+static void do_std_bool(bool *x, ls_flag_t flag)
 {
 	switch (flag)
 	{
@@ -490,7 +490,7 @@ static void do_spells(int i, ls_flag_t flag)
 	do_byte(&s_ptr->dam_sides, flag);
 	do_byte(&s_ptr->dam_dice, flag);
 	do_byte(&s_ptr->level, flag);
-	do_bool(&s_ptr->untried, flag);
+	do_std_bool(&s_ptr->untried, flag);
 }
 
 
@@ -696,7 +696,7 @@ static bool_ do_extra(ls_flag_t flag)
 		{
 			do_byte(&random_quests[i].type, flag);
 			do_s16b(&random_quests[i].r_idx, flag);
-			do_bool(&random_quests[i].done, flag);
+			do_std_bool(&random_quests[i].done, flag);
 		}
 	}
 
@@ -751,10 +751,10 @@ static bool_ do_extra(ls_flag_t flag)
 	}
 
 	/* Help */
-	do_bool(&p_ptr->help.enabled, flag);
+	do_std_bool(&p_ptr->help.enabled, flag);
 	for (std::size_t i = 0; i < HELP_MAX; i++)
 	{
-		do_bool(&p_ptr->help.activated[i], flag);
+		do_std_bool(&p_ptr->help.activated[i], flag);
 	}
 
 	/* More info */
