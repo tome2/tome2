@@ -1257,10 +1257,6 @@ void self_knowledge(FILE *fff)
 	{
 		info[i++] = "You are protected from evil.";
 	}
-	if (p_ptr->protgood)
-	{
-		info[i++] = "You are protected from good.";
-	}
 	if (p_ptr->shield)
 	{
 		info[i++] = "You are protected by a mystic shield.";
@@ -1883,11 +1879,6 @@ void report_magics(void)
 	{
 		info2[i] = report_magics_aux(p_ptr->protevil);
 		info[i++] = "You are protected from evil";
-	}
-	if (p_ptr->protgood)
-	{
-		info2[i] = report_magics_aux(p_ptr->protgood);
-		info[i++] = "You are protected from good";
 	}
 	if (p_ptr->shield)
 	{

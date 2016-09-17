@@ -2135,18 +2135,6 @@ static void process_world(void)
 		(void)set_protevil(p_ptr->protevil - 1);
 	}
 
-	/* Protection from good */
-	if (p_ptr->protgood)
-	{
-		(void)set_protgood(p_ptr->protgood - 1);
-	}
-
-	/* Protection from undead */
-	if (p_ptr->protundead)
-	{
-		(void)set_protundead(p_ptr->protundead - 1);
-	}
-
 	/* Invulnerability */
 	if (p_ptr->invuln)
 	{

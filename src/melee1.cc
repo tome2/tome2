@@ -292,19 +292,6 @@ bool_ carried_make_attack_normal(int r_idx)
 				continue;
 			}
 
-			/* Hack -- Apply "protection from good" */
-			if ((p_ptr->protgood > 0) &&
-			                (r_ptr->flags & RF_GOOD) &&
-			                (p_ptr->lev >= rlev) &&
-			                ((rand_int(100) + p_ptr->lev) > 50))
-			{
-				/* Message */
-				msg_format("%s is repelled.", sym_name);
-
-				/* Hack -- Next attack */
-				continue;
-			}
-
 			/* Assume no cut or stun */
 			do_cut = do_stun = 0;
 
@@ -1194,7 +1181,7 @@ bool_ carried_make_attack_normal(int r_idx)
  */
 void black_breath_attack(int chance)
 {
-	if (!p_ptr->protundead && randint(chance) == 1)
+	if (randint(chance) == 1)
 	{
 		 msg_print("Your foe calls upon your soul!");
 		 msg_print("You feel the Black Breath slowly draining you of life...");
@@ -1429,19 +1416,6 @@ bool_ make_attack_normal(int m_idx, byte divis)
 			/* Hack -- Apply "protection from evil" */
 			if ((p_ptr->protevil > 0) &&
 			                (r_ptr->flags & RF_EVIL) &&
-			                (p_ptr->lev >= rlev) &&
-			                ((rand_int(100) + p_ptr->lev) > 50))
-			{
-				/* Message */
-				msg_format("%^s is repelled.", m_name);
-
-				/* Hack -- Next attack */
-				continue;
-			}
-
-			/* Hack -- Apply "protection from good" */
-			if ((p_ptr->protgood > 0) &&
-			                (r_ptr->flags & RF_GOOD) &&
 			                (p_ptr->lev >= rlev) &&
 			                ((rand_int(100) + p_ptr->lev) > 50))
 			{

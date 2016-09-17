@@ -935,45 +935,6 @@ bool_ set_protevil(int v)
 }
 
 /*
- * Set "p_ptr->protgood", notice observable changes
- */
-bool_ set_protgood(int v)
-{
-	bool_ notice = set_simple_field(
-		&p_ptr->protgood, v,
-		TERM_WHITE, "You feel safe from good!",
-		TERM_WHITE, "You no longer feel safe from good.");
-
-	if (notice)
-	{
-		/* Handle stuff */
-		handle_stuff();
-	}
-
-	/* Result */
-	return notice;
-}
-
-/*
- * Set "p_ptr->protundead", notice observable changes
- */
-bool_ set_protundead(int v)
-{
-	bool_ notice = set_simple_field(
-		&p_ptr->protundead, v,
-		TERM_WHITE, "You feel safe from undead!",
-		TERM_WHITE, "You no longer feel safe from undead.");
-
-	if (notice) {
-		/* Handle stuff */
-		handle_stuff();
-	}
-
-	/* Result */
-	return notice;
-}
-
-/*
  * Set "p_ptr->set_shadow", notice observable changes
  */
 bool_ set_shadow(int v)

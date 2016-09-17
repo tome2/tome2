@@ -47,8 +47,6 @@ extern bool_ set_blessed(int v);
 extern bool_ set_hero(int v);
 extern bool_ set_shero(int v);
 extern bool_ set_protevil(int v);
-extern bool_ set_protgood(int v);
-extern bool_ set_protundead(int v);
 extern bool_ set_invuln(int v);
 extern bool_ set_tim_invis(int v);
 extern bool_ set_tim_infra(int v);

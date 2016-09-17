@@ -107,8 +107,6 @@ struct player_type
 	s16b stun = 0;                                          /* Timed -- Stun */
 
 	s16b protevil = 0;                                      /* Timed -- Protection from Evil*/
-	s16b protgood = 0;                                      /* Timed -- Protection from Good*/
-	s16b protundead = 0;                                    /* Timed -- Protection from Undead*/
 	s16b invuln = 0;                                        /* Timed -- Invulnerable */
 	s16b hero = 0;	                                        /* Timed -- Heroism */
 	s16b shero = 0;	                                        /* Timed -- Super Heroism */

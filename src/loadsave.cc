@@ -703,7 +703,6 @@ static bool_ do_extra(ls_flag_t flag)
 	do_s16b(&p_ptr->poisoned, flag);
 	do_s16b(&p_ptr->image, flag);
 	do_s16b(&p_ptr->protevil, flag);
-	do_s16b(&p_ptr->protundead, flag);
 	do_s16b(&p_ptr->invuln, flag);
 	do_s16b(&p_ptr->hero, flag);
 	do_s16b(&p_ptr->shero, flag);
@@ -796,7 +795,6 @@ static bool_ do_extra(ls_flag_t flag)
 	do_byte(&p_ptr->allow_one_death, flag);
 
 	do_s16b(&no_breeds, flag);
-	do_s16b(&p_ptr->protgood, flag);
 
 	/* Auxilliary variables */
 	do_u32b(&p_ptr->mimic_extra, flag);
