@@ -1968,24 +1968,6 @@ errr init_player_info_txt(FILE *fp)
 				/* Next... */
 				continue;
 			}
-
-
-			/* Process 'K' for "desired skills" */
-			if (buf[4] == 'K')
-			{
-				long val;
-				char name[200];
-
-				/* Scan for the values */
-				if (2 != sscanf(buf + 6, "%ld:%s",
-				                &val, name)) return (1);
-
-				if ((i = find_skill(name)) == -1) return (1);
-				s_ptr->skill_ideal[i] = val;
-
-				/* Next... */
-				continue;
-			}
 		}
 
 		/* Process 'N' for "New/Number/Name" */
