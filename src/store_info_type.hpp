@@ -17,7 +17,7 @@ struct store_info_type
 
 	s16b max_obj = 0;                        /* Number of items this store can hold */
 
-	u16b owners[4] = { 0 };                  /* List of owners(refers to ow_info) */
+	std::vector<u16b> owners;                /* List of owners; refers to ow_info */
 
 	u16b actions[6] = { 0 };                 /* Actions(refers to ba_info) */
 

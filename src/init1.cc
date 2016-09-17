@@ -5900,13 +5900,23 @@ errr init_st_info_txt(FILE *fp)
 
 			/* Scan for the values */
 			if (4 != sscanf(buf + 2, "%d:%d:%d:%d",
-			                &a1, &a2, &a3, &a4)) return (1);
+			                &a1, &a2, &a3, &a4))
+			{
+				return 1;
+			}
+
+			/* Get a reference to the owners */
+			auto owners = &st_ptr->owners;
 
 			/* Save the values */
-			st_ptr->owners[0] = a1;
-			st_ptr->owners[1] = a2;
-			st_ptr->owners[2] = a3;
-			st_ptr->owners[3] = a4;
+			owners->push_back(a1);
+			owners->push_back(a2);
+			owners->push_back(a3);
+			owners->push_back(a4);
+
+			/* Sort and remove duplicates */
+			std::sort(owners->begin(), owners->end());
+			owners->erase(std::unique(owners->begin(), owners->end()), owners->end());
 
 			/* Next... */
 			continue;

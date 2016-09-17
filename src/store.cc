@@ -1834,24 +1834,21 @@ static bool_ sell_haggle(object_type *o_ptr, s32b *price)
 /*
  * Will the owner retire?
  */
-static bool_ retire_owner_p(void)
+static bool retire_owner_p(void)
 {
 	store_info_type *sti_ptr = &st_info[town_info[p_ptr->town_num].store[cur_store_num].st_idx];
 
-	if ((sti_ptr->owners[0] == sti_ptr->owners[1]) &&
-	                (sti_ptr->owners[0] == sti_ptr->owners[2]) &&
-	                (sti_ptr->owners[0] == sti_ptr->owners[3]))
+	if (sti_ptr->owners.size() > 1)
 	{
-		/* there is no other owner */
-		return FALSE;
+		return false; // No other possible owner
 	}
 
 	if (rand_int(STORE_SHUFFLE) != 0)
 	{
-		return FALSE;
+		return false;
 	}
 
-	return TRUE;
+	return true;
 }
 
 /*
@@ -3399,7 +3396,7 @@ void store_shuffle(int which)
 	/* Pick a new owner */
 	for (auto j = st_ptr->owner; j == st_ptr->owner; )
 	{
-		st_ptr->owner = st_info[st_ptr->st_idx].owners[rand_int(4)];
+		st_ptr->owner = *uniform_element(st_info[st_ptr->st_idx].owners);
 	}
 
 	/* Activate the new owner */
@@ -3522,28 +3519,28 @@ void store_init(int town_num, int store_num)
 {
 	cur_store_num = store_num;
 
-	/* Activate that store */
+	// Activate store
 	st_ptr = &town_info[town_num].store[store_num];
 
+	// Pick an owner. We use 0 for st_info[] which haven't been
+	// initialized, i.e. where there's no entry in st_info.txt.
+	st_ptr->owner = st_info[st_ptr->st_idx].owners.empty()
+	        ? 0
+	        : *uniform_element(st_info[st_ptr->st_idx].owners)
+	        ;
 
-	/* Pick an owner */
-	st_ptr->owner = st_info[st_ptr->st_idx].owners[rand_int(4)];
-
-	/* Activate the new owner */
+	// Activate the new owner
 	ot_ptr = &ow_info[st_ptr->owner];
 
-
-	/* Initialize the store */
+	// Initialize the store
 	st_ptr->store_open = 0;
 
-	/* Nothing in stock */
+	// Nothing in stock
 	st_ptr->stock.reserve(st_ptr->stock_size);
 	st_ptr->stock.clear();
 
-	/*
-	 * MEGA-HACK - Last visit to store is
-	 * BEFORE player birth to enable store restocking
-	 */
+	// MEGA-HACK - Last visit to store is BEFORE player
+	// birth to enable store restocking.
 	st_ptr->last_visit = -100L * STORE_TURNS;
 }
 
