@@ -1347,7 +1347,7 @@ void do_get_new_skill()
 	{
 		char last = 'a' + (LOST_SWORD_NSKILLS-1);
 		char buf[80];
-		sprintf(buf, "Choose a skill to learn(a-%c to choose, ESC to cancel)?", last);
+		sprintf(buf, "Choose a skill to learn (a-%c to choose, ESC to cancel)?", last);
 		res = ask_menu(buf, items);
 
 		/* Ok ? lets learn ! */
