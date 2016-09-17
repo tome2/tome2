@@ -65,3 +65,23 @@ s32b rand_range(s32b a, s32b b);
  * Note: rand_spread(A,D) == rand_range(A-D,A+D)
  */
 s32b rand_spread(s32b a, s32b d);
+
+/**
+ * Choose a random element in from the given container.
+ * The container, C, must fulfill the Container concept
+ * whose iterators fulfill the RandomIterator concept.
+ **/
+template <class C> typename C::const_iterator uniform_element(C const &c)
+{
+	return c.begin() + rand_int(c.size());
+}
+
+/**
+ * Choose a random element in from the given container.
+ * The container, C, must fulfill the Container concept
+ * whose iterators fulfill the RandomIterator concept.
+ **/
+template <class C> typename C::iterator uniform_element(C &c)
+{
+	return c.begin() + rand_int(c.size());
+}
