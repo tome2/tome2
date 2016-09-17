@@ -839,7 +839,7 @@ static int do_cmd_activate_skill_aux()
 
 	for (size_t i = 0; i < max_ab_idx; i++)
 	{
-		if (ab_info[i].action_mkey && ab_info[i].acquired)
+		if (ab_info[i].action_mkey && p_ptr->has_ability(i))
 		{
 			bool_ next = FALSE;
 
@@ -970,7 +970,7 @@ void do_cmd_activate_skill()
 		}
 		for (j = 0; j < max_ab_idx; j++)
 		{
-			if (ab_info[j].acquired && (ab_info[j].action_mkey == x_idx))
+			if (p_ptr->has_ability(j) && (ab_info[j].action_mkey == x_idx))
 				break;
 		}
 
@@ -1436,21 +1436,13 @@ s16b find_ability(cptr name)
 	return ( -1);
 }
 
-/*
- * Do the player have the ability
- */
-bool_ has_ability(int ab)
-{
-	return ab_info[ab].acquired;
-}
-
 /* Do we meet the requirements */
 static bool_ can_learn_ability(int ab)
 {
 	ability_type *ab_ptr = &ab_info[ab];
 	int i;
 
-	if (ab_ptr->acquired)
+	if (p_ptr->has_ability(ab))
 		return FALSE;
 
 	if (p_ptr->skill_points < ab_info[ab].cost)
@@ -1468,15 +1460,19 @@ static bool_ can_learn_ability(int ab)
 		/* Must have ability */
 		if (ab_ptr->need_abilities[i] > -1)
 		{
-			if (!ab_info[ab_ptr->need_abilities[i]].acquired)
+			if (!p_ptr->has_ability(ab_ptr->need_abilities[i]))
+			{
 				return FALSE;
+			}
 		}
 
 		/* Must not have ability */
 		if (ab_ptr->forbid_abilities[i] > -1)
 		{
-			if (ab_info[ab_ptr->forbid_abilities[i]].acquired)
+			if (p_ptr->has_ability(ab_ptr->forbid_abilities[i]))
+			{
 				return FALSE;
+			}
 		}
 	}
 
@@ -1509,12 +1505,12 @@ static void gain_ability(int ab)
 	flush();
 
 	/* Ask we can commit the change */
-	if (msg_box("Learn this ability(this is permanent)? (y/n)", hgt / 2, wid / 2) != 'y')
+	if (msg_box("Learn this ability (this is permanent)? (y/n)", hgt / 2, wid / 2) != 'y')
 	{
 		return;
 	}
 
-	ab_info[ab].acquired = TRUE;
+	p_ptr->gain_ability(ab);
 	p_ptr->skill_points -= ab_info[ab].cost;
 }
 
@@ -1534,7 +1530,7 @@ void dump_abilities(FILE *fff)
 	std::vector<int> table;
 	for (i = 0; i < max_ab_idx; i++)
 	{
-		if (ab_info[i].name && has_ability(i))
+		if (ab_info[i].name && p_ptr->has_ability(i))
 		{
 			table.push_back(i);
 		}
@@ -1592,12 +1588,18 @@ static void print_abilities(const std::vector<int> &table, int sel, int start)
 
 		i = table[j];
 
-		if (ab_info[i].acquired)
+		if (p_ptr->has_ability(i))
+		{
 			color = TERM_L_BLUE;
+		}
 		else if (can_learn_ability(i))
+		{
 			color = TERM_WHITE;
+		}
 		else
+		{
 			color = TERM_L_DARK;
+		}
 
 
 		if (j == sel)
@@ -1610,7 +1612,7 @@ static void print_abilities(const std::vector<int> &table, int sel, int start)
 		c_prt(color, format("%c.%c%s", deb, end, ab_info[i].name),
 		      j + 7 - start, 0);
 
-		if (!ab_info[i].acquired)
+		if (!p_ptr->has_ability(i))
 		{
 			c_prt(color, format("%d", ab_info[i].cost), j + 7 - start, 60);
 		}
@@ -1702,10 +1704,16 @@ void do_cmd_ability()
 			/* gain ability */
 			if (dir == 6) gain_ability(table[sel]);
 
-			/* XXX XXX XXX Wizard mode commands outside of wizard2.c */
+			/* Wizard mode allows any ability */
+			if (wizard && (c == '+'))
+			{
+				p_ptr->gain_ability(table[sel]);
+			}
 
-			if (wizard && (c == '+')) ab_info[table[sel]].acquired = TRUE;
-			if (wizard && (c == '-')) ab_info[table[sel]].acquired = FALSE;
+			if (wizard && (c == '-'))
+			{
+				p_ptr->lose_ability(table[sel]);
+			}
 
 			/* Contextual help */
 			if (c == '?')
@@ -1755,11 +1763,12 @@ void apply_level_abilities(int level)
 		{
 			if (a.level == level)
 			{
-				if ((level > 1) && (!ab_info[a.ability].acquired))
+				if ((level > 1) && (!p_ptr->has_ability(a.ability)))
 				{
 					cmsg_format(TERM_L_GREEN, "You have learned the ability '%s'.", ab_info[a.ability].name);
 				}
-				ab_info[a.ability].acquired = TRUE;
+
+				p_ptr->gain_ability(a.ability);
 			}
 		}
 	};

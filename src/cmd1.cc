@@ -2369,7 +2369,7 @@ void py_attack(int y, int x, int max_blow)
 							/* Hack -- High-level warriors can spread their attacks out
 							 * among weaker foes.
 							 */
-							if ((has_ability(AB_SPREAD_BLOWS)) && (num < num_blow) &&
+							if ((p_ptr->has_ability(AB_SPREAD_BLOWS)) && (num < num_blow) &&
 							                (energy_use))
 							{
 								energy_use = energy_use * num / num_blow;
@@ -2587,7 +2587,7 @@ bool_ player_can_enter(byte feature)
 	{
 		if (p_ptr->fly ||
 		    pass_wall ||
-		    (has_ability(AB_TREE_WALK)) ||
+		    p_ptr->has_ability(AB_TREE_WALK) ||
 		    (p_ptr->mimic_form == resolve_mimic_name("Ent")) ||
 		    ((p_ptr->grace >= 9000) && praying_to(GOD_YAVANNA)))
 			return (TRUE);

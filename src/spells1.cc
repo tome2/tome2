@@ -1322,7 +1322,7 @@ void take_hit(int damage, cptr hit_from)
 	if (p_ptr->chp < 0)
 	{
 		/* Necromancers get a special treatment */
-		if (((!has_ability(AB_UNDEAD_FORM)) || ((p_ptr->necro_extra & CLASS_UNDEAD))))
+		if (((!p_ptr->has_ability(AB_UNDEAD_FORM)) || ((p_ptr->necro_extra & CLASS_UNDEAD))))
 		{
 			/* Hack -- Note death */
 			if (!options->last_words)

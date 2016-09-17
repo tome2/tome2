@@ -146,7 +146,7 @@ static s32b spell_chance_school(s32b s)
 	minfail = adj_mag_fail[stat_ind];
 
 	/* Must have Perfect Casting to get below 5% */
-	if (!(has_ability(AB_PERFECT_CASTING)))
+	if (!(p_ptr->has_ability(AB_PERFECT_CASTING)))
 	{
 		if (minfail < 5) minfail = 5;
 	}

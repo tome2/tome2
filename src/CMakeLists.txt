@@ -57,6 +57,7 @@ SET(SRCS_COMMON
   object_filter.cc
   object_flag_meta.cc
   options.cc
+  player_type.cc
   powers.cc
   q_betwen.cc
   q_bounty.cc

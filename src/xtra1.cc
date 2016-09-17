@@ -2246,8 +2246,8 @@ void calc_body_bonus()
 static int get_extra_blows_ability() {
         /* Count bonus abilities */
         int num = 0;
-        if (has_ability(AB_MAX_BLOW1)) num++;
-        if (has_ability(AB_MAX_BLOW2)) num++;
+	if (p_ptr->has_ability(AB_MAX_BLOW1)) num++;
+	if (p_ptr->has_ability(AB_MAX_BLOW2)) num++;
         return num;
 }
 

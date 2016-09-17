@@ -891,7 +891,7 @@ void SymbolCondition::to_json(json_t *j) const
 
 bool AbilityCondition::is_match(object_type *) const
 {
-	return has_ability(m_ability_idx);
+	return p_ptr->has_ability(m_ability_idx);
 }
 
 std::shared_ptr<Condition> AbilityCondition::from_json(json_t *j)

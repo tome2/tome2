@@ -3623,7 +3623,7 @@ bool_ recharge(int power)
 			/*** Determine Seriousness of Failure ***/
 
 			/* Mages recharge objects more safely. */
-			if (has_ability(AB_PERFECT_CASTING))
+			if (p_ptr->has_ability(AB_PERFECT_CASTING))
 			{
 				/* 10% chance to blow up one rod, otherwise draining. */
 				if (o_ptr->tval == TV_ROD_MAIN)

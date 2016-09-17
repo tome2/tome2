@@ -5318,7 +5318,7 @@ const char *activation_aux(object_type * o_ptr, bool_ doit, int item)
 			msg_print("The stone reveals hidden mysteries...");
 			if (!ident_spell()) break;
 
-			if (has_ability(AB_PERFECT_CASTING))
+			if (p_ptr->has_ability(AB_PERFECT_CASTING))
 			{
 				/* Sufficient mana */
 				if (20 <= p_ptr->csp)

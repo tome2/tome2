@@ -3457,7 +3457,7 @@ static void do_cmd_knowledge_pets(void)
 
 	// Calculate upkeep
 	int show_upkeep = 0;
-	int upkeep_divider = has_ability(AB_PERFECT_CASTING) ? 15 : 20;
+	int upkeep_divider = p_ptr->has_ability(AB_PERFECT_CASTING) ? 15 : 20;
 
 	if (t_friends > 1 + (p_ptr->lev / (upkeep_divider)))
 	{

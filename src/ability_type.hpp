@@ -16,8 +16,6 @@ struct ability_type
 
 	s16b cost;                              /* Skill points cost */
 
-	bool_ acquired;                          /* Do the player actualylg ot it ? */
-
 	/* Prereqs */
 	s16b skills[10];                	/* List of prereq skills(10 max) */
 	s16b skill_levels[10];                  /* List of prereq skills(10 max) */

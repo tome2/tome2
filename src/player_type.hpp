@@ -378,6 +378,9 @@ struct player_type
 	bool_ powers[POWER_MAX] = { FALSE };                    /* Actual powers */
 	bool_ powers_mod[POWER_MAX] = { FALSE };                /* Intrinsinc powers */
 
+	/* Acquired abilities; indexes into ab_info[] */
+	std::vector<u16b> abilities;
+
 	/* Skills */
 	s16b skill_points = 0;
 	s16b skill_last_level = 0;                              /* Prevents gaining skills by losing level and regaining them */
@@ -400,5 +403,20 @@ struct player_type
 
 	bool_ did_nothing = FALSE;                              /* True if the last action wasnt a real action */
 	bool_ leaving = FALSE;                                  /* True if player is leaving */
-};
 
+	/**
+	 * Does the player have the given ability?
+	 */
+	bool has_ability(u16b ability_idx) const;
+
+	/**
+	 * Gain the given ability.
+	 */
+	void gain_ability(u16b ability_idx);
+
+	/**
+	 * Lose the given ability.
+	 */
+	void lose_ability(u16b ability_idx);
+
+};

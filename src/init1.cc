@@ -3419,7 +3419,6 @@ errr init_ab_info_txt(FILE *fp)
 
 			/* Init */
 			ab_ptr->action_mkey = 0;
-			ab_ptr->acquired = FALSE;
 			for (z = 0; z < 10; z++)
 			{
 				ab_ptr->skills[z] = -1;

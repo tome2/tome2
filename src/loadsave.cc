@@ -1,7 +1,6 @@
 #include "loadsave.hpp"
 #include "loadsave.h"
 
-#include "ability_type.hpp"
 #include "artifact_type.hpp"
 #include "birth.hpp"
 #include "cave_type.hpp"
@@ -619,21 +618,7 @@ static bool_ do_extra(ls_flag_t flag)
 	}
 
 	// Abilities
-	{
-		u16b tmp16u = max_ab_idx;
-
-		do_u16b(&tmp16u, flag);
-
-		if ((flag == ls_flag_t::LOAD) && (tmp16u > max_ab_idx))
-		{
-			quit("Too many abilities");
-		}
-
-		for (std::size_t i = 0; i < tmp16u; ++i)
-		{
-			do_bool(&ab_info[i].acquired, flag);
-		}
-	}
+	do_vector(flag, p_ptr->abilities, do_u16b);
 
 	// Miscellaneous
 	do_s16b(&p_ptr->luck_base, flag);

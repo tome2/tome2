@@ -1142,7 +1142,7 @@ static void player_outfit(void)
 	}
 
 	/* Rogues have a better knowledge of traps */
-	if (has_ability(AB_TRAPPING))
+	if (p_ptr->has_ability(AB_TRAPPING))
 	{
 		t_info[TRAP_OF_DAGGER_I].known = randint(50) + 50;
 		t_info[TRAP_OF_POISON_NEEDLE].known = randint(50) + 50;
@@ -3083,8 +3083,7 @@ void player_birth(void)
 	recalc_skills(FALSE);
 
 	/* grab level 1 abilities */
-	for (i = 0; i < max_ab_idx; i++)
-		ab_info[i].acquired = FALSE;
+	p_ptr->abilities.clear();
 	apply_level_abilities(1);
 
 	/* Complete the god */

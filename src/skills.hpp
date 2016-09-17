@@ -22,6 +22,5 @@ extern void init_skill(s32b value, s32b mod, int i);
 extern s16b find_ability(cptr name);
 extern void dump_abilities(FILE *fff);
 extern void do_cmd_ability(void);
-extern bool_ has_ability(int ab);
 extern void apply_level_abilities(int level);
 extern void recalc_skills(bool_ init);
