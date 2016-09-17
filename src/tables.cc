@@ -1418,10 +1418,6 @@ option_type option_info[] =
 	{ &linear_stats, TRUE, 5, 7,
 	  "linear_stats", "Stats are represented in a linear way" },
 
-	{ &inventory_no_move, FALSE, 5, 8,
-	  "inventory_no_move", "In option windows, just omit the select char" },
-
-
 	/*** Birth Options ***/
 
 	{ &preserve, TRUE, 6, 2,

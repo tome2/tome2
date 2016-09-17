@@ -72,7 +72,6 @@ extern bool_ linear_stats;
 extern bool_ player_char_health;
 extern bool_ option_ingame_help;
 extern bool_ auto_more;
-extern bool_ inventory_no_move;
 
 //
 // Option Set 6 - Birth options

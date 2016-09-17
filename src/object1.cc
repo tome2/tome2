@@ -4066,15 +4066,15 @@ static bool item_tester_okay(object_type const *o_ptr, object_filter_t const &fi
 
 
 
-static void show_equip_aux(bool_ mirror, bool_ everything, object_filter_t const &filter);
-static void show_inven_aux(bool_ mirror, bool_ everything, object_filter_t const &filter);
+static void show_equip_aux(bool_ mirror, object_filter_t const &filter);
+static void show_inven_aux(bool_ mirror, object_filter_t const &filter);
 
 /*
  * Choice window "shadow" of the "show_inven()" function
  */
 void display_inven(void)
 {
-	show_inven_aux(TRUE, inventory_no_move, object_filter::True());
+	show_inven_aux(TRUE, object_filter::True());
 }
 
 
@@ -4084,7 +4084,7 @@ void display_inven(void)
  */
 void display_equip(void)
 {
-	show_equip_aux(TRUE, inventory_no_move, object_filter::True());
+	show_equip_aux(TRUE, object_filter::True());
 }
 
 
@@ -4111,7 +4111,7 @@ byte get_item_letter_color(object_type const *o_ptr)
  *
  * Hack -- do not display "trailing" empty slots
  */
-void show_inven_aux(bool_ mirror, bool_ everything, const object_filter_t &filter)
+void show_inven_aux(bool_ mirror, const object_filter_t &filter)
 {
 	int i, j, k, l, z = 0;
 	int row, col, len, lim;
@@ -4165,15 +4165,12 @@ void show_inven_aux(bool_ mirror, bool_ everything, const object_filter_t &filte
 		/* Is this item acceptable? */
 		if (!item_tester_okay(o_ptr, filter))
 		{
-			if ( !everything )
-				continue;
-			out_index[k] = -i - 1;
+			/* Skip to next slot */
+			continue;
 		}
-		else
-		{
-			/* Save the object index */
-			out_index[k] = i + 1;
-		}
+
+		/* Save the object index */
+		out_index[k] = i + 1;
 
 		/* Describe the object */
 		object_desc(o_name, o_ptr, TRUE, 3);
@@ -4273,7 +4270,7 @@ void show_inven_aux(bool_ mirror, bool_ everything, const object_filter_t &filte
 
 static void show_inven(object_filter_t const &filter)
 {
-	show_inven_aux(FALSE, FALSE, filter);
+	show_inven_aux(FALSE, filter);
 }
 
 void show_inven_full()
@@ -4285,7 +4282,7 @@ void show_inven_full()
 
 static void show_equip(object_filter_t const &filter)
 {
-	show_equip_aux(FALSE, FALSE, filter);
+	show_equip_aux(FALSE, filter);
 }
 
 void show_equip_full()
@@ -4298,7 +4295,7 @@ void show_equip_full()
 /*
  * Display the equipment.
  */
-void show_equip_aux(bool_ mirror, bool_ everything, object_filter_t const &filter)
+void show_equip_aux(bool_ mirror, object_filter_t const &filter)
 {
 	int i, j, k, l;
 	int row, col, len, lim, idx;
@@ -4407,17 +4404,16 @@ void show_equip_aux(bool_ mirror, bool_ everything, object_filter_t const &filte
 
 			/* Truncate the description */
 			o_name[lim] = 0;
+
 			/* Is this item acceptable? */
 			if (!item_tester_okay(o_ptr, filter))
 			{
-				if (!everything) continue;
-				out_index[k] = -1;
+				/* Skip to next slot */
+				continue;
 			}
-			else
-			{
-				/* Save the index */
-				out_index[k] = idx;
-			}
+
+			/* Save the index */
+			out_index[k] = idx;
 			out_rindex[k] = i;
 
 			/* Save the color */

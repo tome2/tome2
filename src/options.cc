@@ -70,9 +70,6 @@ bool_ linear_stats;
 bool_ player_char_health;		/* Display the player as a special symbol when in bad health ? */
 bool_ option_ingame_help;		/* Ingame contextual help */
 bool_ auto_more;			/* Auto more */
-bool_ inventory_no_move;		/* In inventory option window, just erase the letters,
-					 * rather that displaying the list without the invalid
-					 * selections */
 
 //
 // Option Set 6 - Birth options
