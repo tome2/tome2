@@ -249,45 +249,30 @@ static void do_string(char *str, int max, ls_flag_t flag)
 	}
 }
 
-static void load_std_string(std::string &s)
-{
-	s.clear();
-	while (true)
-	{
-		byte u8 = sf_get();
-		if (u8)
-		{
-			s += u8;
-		}
-		else
-		{
-			break;
-		}
-	}
-}
-
-static void save_std_string(std::string &s)
-{
-	for (std::size_t i = 0; i < s.length(); i++)
-	{
-		assert(s[i] != 0); // Sanity check; we cannot handle NULs in strings
-		sf_put(s[i]);
-	}
-	sf_put(0); // NUL terminator
-}
-
 static void do_std_string(std::string &s, ls_flag_t flag)
 {
-	switch(flag)
+	// Length prefix.
+	u32b saved_size = s.size();
+	do_u32b(&saved_size, flag);
+	// Convert to size_t
+	std::size_t n = saved_size;
+	// Load/save goes a little differently since we cannot
+	// assume anything about 's' when loading.
+	if (flag == ls_flag_t::LOAD)
 	{
-	case ls_flag_t::LOAD:
-	{
-		load_std_string(s);
-		break;
+		s.clear();
+		s.reserve(n);
+		for (std::size_t i = 0; i < n; i++)
+		{
+			s += sf_get();
+		}
 	}
-	case ls_flag_t::SAVE:
-		save_std_string(s);
-		break;
+	else
+	{
+		for (std::size_t i = 0; i < n; i++)
+		{
+			sf_put(s[i]);
+		}
 	}
 }
 
