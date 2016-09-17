@@ -924,7 +924,9 @@ void cmonster_msg(char a, cptr fmt, ...)
 
 	/* Display */
 	if (options->disturb_other)
+	{
 		cmsg_print(a, buf);
+	}
 	else
 	{
 		message_add(buf, a);
@@ -2038,7 +2040,10 @@ static bool_ monst_spell_monst(int m_idx)
 
 		case SF_TPORT_IDX:
 			{
-				if (dungeon_flags & DF_NO_TELEPORT) break;  /* No teleport on special levels */
+			        if (dungeon_flags & DF_NO_TELEPORT)
+				{
+					break;  /* No teleport on special levels */
+				}
 				else
 				{
 					disturb_on_other();
@@ -2056,9 +2061,15 @@ static bool_ monst_spell_monst(int m_idx)
 
 		case SF_TELE_AWAY_IDX:
 			{
-				if (dungeon_flags & DF_NO_TELEPORT) break;
+			        if (dungeon_flags & DF_NO_TELEPORT)
+				{
+					break;
+				}
 
-				if (!direct) break;
+				if (!direct)
+				{
+					break;
+				}
 				else
 				{
 					bool_ resists_tele = FALSE;

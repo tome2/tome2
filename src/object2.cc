@@ -2673,7 +2673,9 @@ static void a_m_aux_2(object_type *o_ptr, int level, int power)
 	case TV_CLOAK:
 		{
 			if (o_ptr->sval == SV_ELVEN_CLOAK)
+			{
 				o_ptr->pval = randint(4);        /* No cursed elven cloaks...? */
+			}
 			else if (o_ptr->sval == SV_MIMIC_CLOAK)
 			{
 				s32b mimic = find_random_mimic_shape(level, TRUE);
