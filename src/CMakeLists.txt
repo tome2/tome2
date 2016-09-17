@@ -122,6 +122,7 @@ SET(SRCS_TESTS
   ../tests/harness.cc
   ../tests/lua_get_level.cc
   ../tests/flag_set.cc
+  ../tests/grid.cc
 )
 
 ADD_LIBRARY(game
