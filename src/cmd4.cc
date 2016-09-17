@@ -255,10 +255,12 @@ void do_cmd_change_name(void)
  */
 void do_cmd_message_one(void)
 {
-	cptr msg = format("> %s", message_str(0));
+	auto message = message_at(0);
+
+	cptr msg = format("> %s", message.text_with_count().c_str());
 
 	/* Recall one message XXX XXX XXX */
-	display_message(0, 0, strlen(msg), message_color(0), msg);
+	display_message(0, 0, strlen(msg), message.color, msg);
 }
 
 
@@ -286,15 +288,8 @@ void do_cmd_messages(void)
 	u32b q;
 	int wid, hgt;
 
-	char shower[80];
-	char finder[80];
-
-	/* Wipe finder */
-	strcpy(finder, "");
-
-	/* Wipe shower */
-	strcpy(shower, "");
-
+	/* String to highlight */
+	std::string shower;
 
 	/* Total messages */
 	n = message_num();
@@ -323,30 +318,30 @@ void do_cmd_messages(void)
 		/* Dump up to 20 (or more in bigscreen) lines of messages */
 		for (j = 0; (j < (hgt - 4)) && (i + j < n); j++)
 		{
-			cptr msg = message_str(i + j);
-			byte color = message_color(i + j);
+			auto message = message_at(i + j);
+			auto text = message.text_with_count();
+			auto color = message.color;
 
 			/* Apply horizontal scroll */
-			msg = (strlen(msg) >= q) ? (msg + q) : "";
+			text = (text.size() >= q) ? text.substr(q) : "";
 
 			/* Dump the messages, bottom to top */
-			display_message(0, (hgt - 3) - j, strlen(msg), color, msg);
+			display_message(0, (hgt - 3) - j, text.size(), color, text.c_str());
 
 			/* Hilite "shower" */
 			if (shower[0])
 			{
-				cptr str = msg;
-
+				std::size_t pos = 0;
 				/* Display matches */
-				while ((str = strstr(str, shower)) != NULL)
+				while ((pos = text.find(shower, pos)) != std::string::npos)
 				{
-					int len = strlen(shower);
+					std::size_t len = shower.size();
 
 					/* Display the match */
-					Term_putstr(str - msg, (hgt - 3) - j, len, TERM_YELLOW, shower);
+					Term_putstr(pos, (hgt - 3) - j, len, TERM_YELLOW, shower.c_str());
 
 					/* Advance */
-					str += len;
+					pos += len;
 				}
 			}
 		}
@@ -394,7 +389,10 @@ void do_cmd_messages(void)
 			prt("Show: ", hgt - 1, 0);
 
 			/* Get a "shower" string, or continue */
-			if (!askfor_aux(shower, 80)) continue;
+			if (!askfor_aux(&shower, 80))
+			{
+				continue;
+			}
 
 			/* Okay */
 			continue;
@@ -409,18 +407,22 @@ void do_cmd_messages(void)
 			prt("Find: ", hgt - 1, 0);
 
 			/* Get a "finder" string, or continue */
-			if (!askfor_aux(finder, 80)) continue;
+			auto finder = shower;
+			if (!askfor_aux(&finder, 80))
+			{
+				continue;
+			}
 
 			/* Show it */
-			strcpy(shower, finder);
+			shower = finder;
 
 			/* Scan messages */
 			for (z = i + 1; z < n; z++)
 			{
-				cptr msg = message_str(z);
+				auto message = message_at(z);
 
 				/* Search for it */
-				if (strstr(msg, finder))
+				if (message.text_with_count().find(finder) != std::string::npos)
 				{
 					/* New location */
 					i = z;

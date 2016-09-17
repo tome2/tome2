@@ -2352,6 +2352,23 @@ static int complete_command(char *buf, int clen, int mlen)
 }
 
 
+extern bool askfor_aux(std::string *buf, std::size_t max_len)
+{
+	// Buffer
+	char cstr[1024];
+	// Sanity
+	assert(max_len < sizeof(cstr));
+	// Copy into temporary buffer
+	cstr[buf->size()] = '\0';
+	buf->copy(cstr, std::string::npos);
+	// Delegate
+	bool result  = askfor_aux(cstr, max_len);
+	// Copy back
+	(*buf) = cstr;
+	// Done
+	return result;
+}
+
 /*
 * Get some input at the cursor location.
 * Assume the buffer is initialized to a default string.

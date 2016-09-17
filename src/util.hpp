@@ -47,6 +47,7 @@ extern void text_out(cptr str);
 extern void text_out_c(byte a, cptr str);
 extern void clear_from(int row);
 extern int ask_menu(cptr ask, const std::vector<std::string> &items);
+extern bool askfor_aux(std::string *buf, std::size_t max_len);
 extern bool_ askfor_aux(char *buf, int len);
 extern bool_ askfor_aux_with_completion(char *buf, int len);
 extern bool_ get_string(cptr prompt, char *buf, int len);

@@ -43,6 +43,7 @@ SET(SRCS_COMMON
   lua_bind.cc
   melee1.cc
   melee2.cc
+  message.cc
   messages.cc
   mimic.cc
   modules.cc

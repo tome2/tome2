@@ -648,9 +648,6 @@ static errr init_misc(void)
 
 	/*** Prepare the various "bizarre" arrays ***/
 
-	/* Initialize messages subsystem */
-	message_init();
-
 	/* Initialise the values */
 	process_dungeon_file("misc.txt", &ystart, &xstart, 0, 0, TRUE, FALSE);
 

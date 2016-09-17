@@ -1943,43 +1943,38 @@ static bool_ do_inventory(ls_flag_t flag)
 }
 
 
+static void do_message(message &msg, ls_flag_t flag)
+{
+	do_std_string(msg.text, flag);
+	do_u32b(&msg.count, flag);
+	do_byte(&msg.color, flag);
+}
+
 
 /*
  * Read the saved messages
  */
 static void do_messages(ls_flag_t flag)
 {
-	int i;
-	char buf[128];
-	byte color;
-
-	s16b num;
-
-	/* Total */
-	if (flag == ls_flag_t::SAVE) num = message_num();
+	/* Save/load number of messages */
+	s16b num = message_num();
 	do_s16b(&num, flag);
 
 	/* Read the messages */
-	if (flag == ls_flag_t::LOAD)
+	for (int i = 0; i < num; i++)
 	{
-		for (i = 0; i < num; i++)
-		{
-			/* Read the message */
-			do_string(buf, 128, ls_flag_t::LOAD);
-			do_byte(&color, flag);
+		message message;
 
-			/* Save the message */
-			message_add(buf, color);
-		}
-	}
-	if (flag == ls_flag_t::SAVE)
-	{
-		byte holder;
-		for (i = num - 1; i >= 0; i--)
+		if (flag == ls_flag_t::SAVE)
 		{
-			do_string((char *)message_str((s16b)i), 0, ls_flag_t::SAVE);
-			holder = message_color((s16b)i);
-			do_byte(&holder, flag);
+			message = message_at(i);
+		}
+
+		do_message(message, flag);
+
+		if (flag == ls_flag_t::LOAD)
+		{
+			message_add(message);
 		}
 	}
 }

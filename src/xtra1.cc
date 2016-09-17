@@ -1224,8 +1224,11 @@ void fix_message(void)
 		/* Dump messages */
 		for (i = 0; i < h; i++)
 		{
+			auto message = message_at(i);
+			auto text_with_count = message.text_with_count();
+
 			/* Dump the message on the appropriate line */
-			display_message(0, (h - 1) - i, strlen(message_str((s16b)i)), message_color((s16b)i), message_str((s16b)i));
+			display_message(0, (h - 1) - i, text_with_count.size(), message.color, text_with_count.c_str());
 
 			/* Cursor */
 			Term_locate(&x, &y);
