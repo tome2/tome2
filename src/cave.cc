@@ -4473,6 +4473,19 @@ void disturb_on_state()
 
 
 /*
+ * Disturb if option 'disturb_other' is set.
+ */
+void disturb_on_other()
+{
+	if (disturb_other)
+	{
+		disturb(1);
+	}
+}
+
+
+
+/*
  * Return the index of the random quest on this level
  * (or zero)
  */
