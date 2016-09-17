@@ -2324,7 +2324,9 @@ static int get_spellbinder_max()
 
 casting_result meta_spellbinder()
 {
-	if (p_ptr->spellbinder_num != 0)
+	auto spellbinder = &p_ptr->spellbinder;
+
+	if (spellbinder->num != 0)
 	{
 		struct trigger {
 			int idx;
@@ -2339,11 +2341,11 @@ casting_result meta_spellbinder()
 		int trigger_idx = -1;
 		int i;
 
-		assert(p_ptr->spellbinder_trigger >= 0);
+		assert(spellbinder->trigger >= 0);
 
 		for (trigger_idx = 0; triggers[trigger_idx].idx >= 0; trigger_idx++)
 		{
-			if (triggers[trigger_idx].idx == p_ptr->spellbinder_trigger)
+			if (triggers[trigger_idx].idx == spellbinder->trigger)
 			{
 				break;
 			}
@@ -2352,9 +2354,9 @@ casting_result meta_spellbinder()
 		msg_print("The spellbinder is already active.");
 		msg_format("It will trigger at %s.", triggers[trigger_idx].desc);
 		msg_print("With the spells: ");
-		for (i = 0; i < p_ptr->spellbinder_num; i++)
+		for (i = 0; i < spellbinder->num; i++)
 		{ 
-			msg_print(spell_type_name(spell_at(p_ptr->spellbinder[i])));
+			msg_print(spell_type_name(spell_at(spellbinder->spells[i])));
 		}
 
 		/* Doesn't cost anything */
@@ -2373,28 +2375,28 @@ casting_result meta_spellbinder()
 		switch (c)
 		{
 		case 'a':
-			p_ptr->spellbinder_trigger = SPELLBINDER_HP75;
+			spellbinder->trigger = SPELLBINDER_HP75;
 			break;
 		case 'b':
-			p_ptr->spellbinder_trigger = SPELLBINDER_HP50;
+			spellbinder->trigger = SPELLBINDER_HP50;
 			break;
 		case 'c':
-			p_ptr->spellbinder_trigger = SPELLBINDER_HP25;
+			spellbinder->trigger = SPELLBINDER_HP25;
 			break;
 		default:
 			return NO_CAST;
 			
 		}
 
-		p_ptr->spellbinder_num = get_spellbinder_max();
-		i = p_ptr->spellbinder_num;
+		spellbinder->num = get_spellbinder_max();
+		i = spellbinder->num;
 		while (i > 0)
 		{
 			s32b s = get_school_spell("bind", 0);
 			if (s == -1)
 			{
-				p_ptr->spellbinder_trigger = 0;
-				p_ptr->spellbinder_num = 0;
+				spellbinder->trigger = 0;
+				spellbinder->num = 0;
 				return CAST_OBVIOUS;
 			} else {
 				if (spell_type_skill_level(spell_at(s)) > 7 + get_level_s(SPELLBINDER, 35))
@@ -2404,7 +2406,7 @@ casting_result meta_spellbinder()
 				}
 			}
 
-			p_ptr->spellbinder[i] = s;
+			spellbinder->spells[i] = s;
 			i = i - 1;
 		}
 		

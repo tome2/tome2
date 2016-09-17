@@ -568,11 +568,11 @@ static bool_ do_extra(ls_flag_t flag)
 
 
 	/* Save/load spellbinder */
-	do_byte(&p_ptr->spellbinder_num, flag);
-	do_byte(&p_ptr->spellbinder_trigger, flag);
+	do_byte(&p_ptr->spellbinder.num, flag);
+	do_byte(&p_ptr->spellbinder.trigger, flag);
 	for (std::size_t i = 0; i < 4; i++)
 	{
-		do_u32b(&p_ptr->spellbinder[i], flag);
+		do_u32b(&p_ptr->spellbinder.spells[i], flag);
 	}
 
 	// Quests

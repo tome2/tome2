@@ -6,6 +6,7 @@
 #include "inventory.hpp"
 #include "object_type.hpp"
 #include "powers.hpp"
+#include "spellbinder.hpp"
 
 #include <array>
 
@@ -338,9 +339,7 @@ struct player_type
 
 	u32b maintain_sum = 0;                                  /* Do we have partial summons */
 
-	byte spellbinder_num = 0;                               /* Number of spells bound */
-	u32b spellbinder[4] = { 0 };                            /* Spell bounds */
-	byte spellbinder_trigger = 0;                           /* Spellbinder trigger condition */
+	struct spellbinder spellbinder;
 
 	cptr mimic_name = nullptr;
 

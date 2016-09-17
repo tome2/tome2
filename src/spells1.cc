@@ -1203,16 +1203,17 @@ static u16b bolt_pict(int y, int x, int ny, int nx, int typ)
  */
 void spellbinder_trigger()
 {
-	int i;
+	auto spellbinder = &p_ptr->spellbinder;
 
 	cmsg_print(TERM_L_GREEN, "The spellbinder is triggered!");
-	for (i = 0; i < p_ptr->spellbinder_num; i++)
+	for (int i = 0; i < spellbinder->num; i++)
 	{
-		msg_format("Triggering spell %s.", spell_type_name(spell_at(p_ptr->spellbinder[i])));
-		lua_cast_school_spell(p_ptr->spellbinder[i], TRUE);
+		msg_format("Triggering spell %s.", spell_type_name(spell_at(spellbinder->spells[i])));
+		lua_cast_school_spell(spellbinder->spells[i], TRUE);
 	}
-	p_ptr->spellbinder_num = 0;
-	p_ptr->spellbinder_trigger = 0;
+
+	spellbinder->num = 0;
+	spellbinder->trigger = 0;
 }
 
 
@@ -1403,23 +1404,28 @@ void take_hit(int damage, cptr hit_from)
 	percent = p_ptr->chp * 100 / p_ptr->mhp;
 
 	/* Check the spellbinder trigger */
-	if (p_ptr->spellbinder_trigger == SPELLBINDER_HP75)
+	switch (p_ptr->spellbinder.trigger)
 	{
-		/* Trigger ?! */
-		if (percent <= 75)
-			spellbinder_trigger();
-	}
-	else if (p_ptr->spellbinder_trigger == SPELLBINDER_HP50)
-	{
-		/* Trigger ?! */
-		if (percent <= 50)
-			spellbinder_trigger();
-	}
-	else if (p_ptr->spellbinder_trigger == SPELLBINDER_HP25)
-	{
-		/* Trigger ?! */
-		if (percent <= 25)
-			spellbinder_trigger();
+	        case SPELLBINDER_HP75:
+		        if (percent <= 75)
+			{
+				spellbinder_trigger();
+			}
+		        break;
+
+	        case SPELLBINDER_HP50:
+		        if (percent <= 50)
+			{
+				spellbinder_trigger();
+			}
+		        break;
+
+	        case SPELLBINDER_HP25:
+		        if (percent <= 25)
+			{
+				spellbinder_trigger();
+			}
+		        break;
 	}
 
 	/* Melkor acn summon to help you */
