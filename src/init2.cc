@@ -1256,6 +1256,8 @@ void init_angband(void)
 	/* Close it */
 	(void)fd_close(fd);
 
+	// Initialize game structure
+	game = new Game();
 
 	/* Allocate the wilderness */
 	wilderness_ptr = new grid<wilderness_map>();
