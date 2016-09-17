@@ -162,7 +162,6 @@ int wisdom_scale(int max)
  */
 deity_type *god_at(byte god_idx)
 {
-	assert(god_idx >= 0);
 	assert(god_idx < MAX_GODS);
 
 	if (god_idx == 0)

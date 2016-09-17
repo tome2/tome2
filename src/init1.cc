@@ -913,7 +913,6 @@ static int read_ability(std::vector<player_race_ability_type> *abilities, char *
 errr init_player_info_txt(FILE *fp)
 {
 	int i = 0;
-	int powers = 0;
 	int lev = 1;
 	int tit_idx = 0;
 	char buf[1024];
@@ -1022,7 +1021,6 @@ errr init_player_info_txt(FILE *fp)
 			rp_ptr->title = my_strdup(s);
 
 			/* Initialize */
-			powers = 0;
 			lev = 1;
 
 			/* Next... */
@@ -1245,7 +1243,6 @@ errr init_player_info_txt(FILE *fp)
 			rmp_ptr->title = s;
 
 			/* Initialize */
-			powers = 0;
 			lev = 1;
 
 			/* Next... */
@@ -1503,7 +1500,6 @@ errr init_player_info_txt(FILE *fp)
 			c_ptr->title = my_strdup(s);
 
 			/* Initialize */
-			powers = 0;
 			lev = 1;
 			tit_idx = 0;
 
@@ -1911,7 +1907,6 @@ errr init_player_info_txt(FILE *fp)
 			/* Append chars to the name */
 			strcpy(mc_ptr->name, s + 2);
 			mc_ptr->color = color_char_to_attr(s[0]);
-			powers = 0;
 
 			/* Next... */
 			continue;

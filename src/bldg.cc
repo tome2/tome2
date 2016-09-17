@@ -1094,8 +1094,6 @@ bool_ bldg_process_command(const store_type *s_ptr, store_action_type const *ba_
 
 	bool_ paid = FALSE;
 
-	bool_ set_reward = FALSE;
-
 	bool_ recreate = FALSE;
 
 
@@ -1128,8 +1126,6 @@ bool_ bldg_process_command(const store_type *s_ptr, store_action_type const *ba_
 		msg_print(NULL);
 		return FALSE;
 	}
-
-	if (!bcost) set_reward = TRUE;
 
 	switch (bact)
 	{

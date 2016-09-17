@@ -809,7 +809,6 @@ static std::tuple<int, int> choose_monster_power(monster_race const *r_ptr, bool
  */
 static void apply_monster_power(monster_race const *r_ptr, std::size_t monster_spell_idx)
 {
-	assert(monster_spell_idx >= 0);
 	assert(monster_spell_idx < monster_spell_flag_set::nbits);
 
 	/* Shorthand */
