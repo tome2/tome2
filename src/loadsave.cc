@@ -270,30 +270,48 @@ static void do_string(char *str, int max, ls_flag_t flag)
 	}
 }
 
-static void do_std_string(std::string &s, ls_flag_t flag)
+static void save_std_string(std::string const *s)
 {
 	// Length prefix.
-	u32b saved_size = s.size();
-	do_u32b(&saved_size, flag);
+	u32b saved_size = s->size();
+	do_u32b(&saved_size, ls_flag_t::SAVE);
+	// Save each character
+	for (auto c: *s)
+	{
+		sf_put(c);
+	}
+}
+
+static std::string load_std_string()
+{
+	// Length prefix.
+	u32b saved_size;
+	do_u32b(&saved_size, ls_flag_t::LOAD);
 	// Convert to size_t
 	std::size_t n = saved_size;
-	// Load/save goes a little differently since we cannot
-	// assume anything about 's' when loading.
-	if (flag == ls_flag_t::LOAD)
+	// Make sure we reserve space rather than resizing as we go.
+	std::string s;
+	s.reserve(n);
+	// Read each character
+	for (std::size_t i = 0; i < n; i++)
 	{
-		s.clear();
-		s.reserve(n);
-		for (std::size_t i = 0; i < n; i++)
-		{
-			s += sf_get();
-		}
+		s += sf_get();
 	}
-	else
+	// Done
+	return s;
+}
+
+
+static void do_std_string(std::string &s, ls_flag_t flag)
+{
+	switch (flag)
 	{
-		for (std::size_t i = 0; i < n; i++)
-		{
-			sf_put(s[i]);
-		}
+	case ls_flag_t::LOAD:
+		s = load_std_string();
+		break;
+	case ls_flag_t::SAVE:
+		save_std_string(&s);
+		break;
 	}
 }
 
