@@ -498,18 +498,16 @@ static bool_ fireproof_gen_hook(void *, void *, void *)
 
 		/* create essence */
 		{
-			int x, y;
 			object_type forge;
-
 			object_prep(&forge, lookup_kind(settings->tval, fireproof_get_sval()));
 
 			/* mark item */
 			forge.pval2 = fireproof_get_sval();
-			forge.note = quark_add("quest");
+			forge.inscription = "quest";
 
 			/* roll for co-ordinates in top half of map */
-			y = randint(3) + 2;
-			x = randint(45) + 2;
+			int const y = randint(3) + 2;
+			int const x = randint(45) + 2;
 
 			/* drop it */
 			drop_near(&forge, -1, y, x);

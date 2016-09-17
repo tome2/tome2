@@ -1138,16 +1138,13 @@ static void do_item(object_type *o_ptr, ls_flag_t flag)
 	do_s16b(&o_ptr->found_aux3, flag);
 	do_s16b(&o_ptr->found_aux4, flag);
 
+	// Inscription
+	do_std_string(o_ptr->inscription, flag);
+
+	/* Artifact name */
 	if (flag == ls_flag_t::LOAD)
 	{
 		char buf[128];
-		/* Inscription */
-		load_string(buf, 128);
-		if (buf[0])
-		{
-			o_ptr->note = quark_add(buf);
-		}
-		/* Artifact name */
 		load_string(buf, 128);
 		if (buf[0])
 		{
@@ -1156,15 +1153,6 @@ static void do_item(object_type *o_ptr, ls_flag_t flag)
 	}
 	if (flag == ls_flag_t::SAVE)
 	{
-		/* Save the inscription (if any) */
-		if (o_ptr->note)
-		{
-			save_string(quark_str(o_ptr->note));
-		}
-		else
-		{
-			save_string("");
-		}
 		if (o_ptr->art_name)
 		{
 			save_string(quark_str(o_ptr->art_name));

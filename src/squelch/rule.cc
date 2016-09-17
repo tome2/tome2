@@ -238,7 +238,7 @@ bool DestroyRule::do_apply_rule(object_type *o_ptr, int item_idx) const
 	}
 
 	// Never destroy inscribed items
-	if (o_ptr->note)
+	if (!o_ptr->inscription.empty())
 	{
 		return false;
 	}
@@ -317,14 +317,14 @@ void InscribeRule::do_write_tree(TreePrinter *p) const
 bool InscribeRule::do_apply_rule(object_type *o_ptr, int) const
 {
 	// Already inscribed?
-	if (o_ptr->note != 0)
+	if (!o_ptr->inscription.empty())
 	{
 		return false;
 	}
 	
 	// Inscribe
 	msg_format("<Auto-Inscribe {%s}>", m_inscription.c_str());
-	o_ptr->note = quark_add(m_inscription.c_str());
+	o_ptr->inscription = m_inscription;
 	return true;
 }
 

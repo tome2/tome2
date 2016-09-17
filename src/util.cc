@@ -2968,18 +2968,19 @@ void request_command(int shopping)
 	/* Hack -- Scan equipment */
 	for (i = INVEN_WIELD; i < INVEN_TOTAL; i++)
 	{
-		cptr s;
-
 		object_type *o_ptr = &p_ptr->inventory[i];
 
 		/* Skip non-objects */
 		if (!o_ptr->k_idx) continue;
 
 		/* No inscription */
-		if (!o_ptr->note) continue;
+		if (o_ptr->inscription.empty())
+		{
+			continue;
+		}
 
 		/* Obtain the inscription */
-		s = quark_str(o_ptr->note);
+		auto s = o_ptr->inscription.c_str();
 
 		/* Find a '^' */
 		s = strchr(s, '^');

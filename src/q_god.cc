@@ -389,7 +389,7 @@ static void quest_god_generate_relic()
 	object_prep(&relic, lookup_kind(TV_JUNK, get_relic_num()));
 
 	/* inscribe it to prevent automatizer 'accidents' */
-	relic.note = quark_add("quest");
+	relic.inscription = "quest";
 
 	/* If no safe co-ords were found, put it in the players backpack */
 	if (tries == 0)

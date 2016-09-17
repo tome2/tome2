@@ -535,43 +535,48 @@ void fetch(int dir, int wgt, bool_ require_los)
 /*
  * Return the symbiote's name or description.
  */
-cptr symbiote_name(bool_ capitalize)
+std::string symbiote_name(bool capitalize)
 {
 	object_type *o_ptr = &p_ptr->inventory[INVEN_CARRY];
-	static char buf[80];
 
-	/* Make sure there actually is a symbiote there... */
+	std::string buf;
+	buf.reserve(32);
+
+	// Fallback; shouldn't ever be necessary
 	if (!o_ptr->k_idx)
 	{
-		strcpy(buf, "A non-existent symbiote");
+		buf += "A non-existent symbiote";
 	}
 	else
 	{
 		monster_race *r_ptr = &r_info[o_ptr->pval];
-		cptr s = NULL;
+		std::size_t i = 0;
 
 		if (r_ptr->flags & RF_UNIQUE)
 		{
-			/* Unique monster; no preceding "your", and ignore our name. */
-			strncpy(buf, r_ptr->name, sizeof(buf));
+			// Unique monster; no preceding "your" and ignore name
+			buf += r_ptr->name;
 		}
-		else if (o_ptr->note &&
-		                (s = strstr(quark_str(o_ptr->note), "#named ")) != NULL)
+		else if ((i = o_ptr->inscription.find("#named ")) != std::string::npos)
 		{
-			/* We've named it. */
-			strncpy(buf, s + 7, sizeof(buf));
+			// We've named it; extract the name */
+			buf += o_ptr->inscription.substr(i);
 		}
 		else
 		{
-			/* No special cases, just return "Your <monster type>". */
-			strcpy(buf, "your ");
-			strncpy(buf + 5, r_ptr->name, sizeof(buf) - 5);
+			// No special cases; just return "Your <monster type>".
+			buf += "your ";
+			buf += r_ptr->name;
 		}
 	}
 
-	/* Just in case... */
-	buf[sizeof(buf) - 1] = '\0';
-	if (capitalize) buf[0] = toupper(buf[0]);
+	// Capitalize?
+	if (capitalize)
+	{
+		buf[0] = toupper(buf[0]);
+	}
+
+	// Done
 	return buf;
 }
 

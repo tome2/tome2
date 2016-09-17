@@ -2381,12 +2381,9 @@ void curse_equipment(int chance, int heavy_chance)
 	if (changed)
 	{
 		msg_print("There is a malignant black aura surrounding you...");
-		if (o_ptr->note)
+		if (o_ptr->inscription == "uncursed")
 		{
-			if (streq(quark_str(o_ptr->note), "uncursed"))
-			{
-				o_ptr->note = 0;
-			}
+			o_ptr->inscription.clear();
 		}
 	}
 }
@@ -2438,12 +2435,9 @@ void curse_equipment_dg(int chance, int heavy_chance)
 	if (changed)
 	{
 		msg_print("There is a malignant black aura surrounding you...");
-		if (o_ptr->note)
+		if (o_ptr->inscription == "uncursed")
 		{
-			if (streq(quark_str(o_ptr->note), "uncursed"))
-			{
-				o_ptr->note = 0;
-			}
+			o_ptr->inscription.clear();
 		}
 	}
 }

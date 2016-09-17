@@ -1734,7 +1734,10 @@ bool_ object_similar(object_type const *o_ptr, object_type const *j_ptr)
 	if ((o_ptr->ident & (IDENT_CURSED)) != (j_ptr->ident & (IDENT_CURSED))) return (0);
 
 	/* Hack -- require semi-matching "inscriptions" */
-	if (o_ptr->note && j_ptr->note && (o_ptr->note != j_ptr->note)) return (0);
+	if ((!o_ptr->inscription.empty()) && (!j_ptr->inscription.empty()) && (o_ptr->inscription != j_ptr->inscription))
+	{
+		return (0);
+	}
 
 	/* Maximal "stacking" limit */
 	if (total >= MAX_STACK_SIZE) return (0);
@@ -1770,7 +1773,10 @@ void object_absorb(object_type *o_ptr, object_type *j_ptr)
 	if (j_ptr->ident & (IDENT_MENTAL)) o_ptr->ident |= (IDENT_MENTAL);
 
 	/* Hack -- blend "inscriptions" */
-	if (j_ptr->note) o_ptr->note = j_ptr->note;
+	if (!j_ptr->inscription.empty())
+	{
+		o_ptr->inscription = j_ptr->inscription;
+	}
 
 	/* Hack -- could average discounts XXX XXX XXX */
 	/* Hack -- save largest discount XXX XXX XXX */

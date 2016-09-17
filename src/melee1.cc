@@ -231,7 +231,7 @@ bool_ carried_make_attack_normal(int r_idx)
 	int do_cut, do_stun;
 
 	char ddesc[80] = "your symbiote";
-	cptr sym_name = symbiote_name(TRUE);
+	auto sym_name = symbiote_name(true);
 
 	bool_ alive = TRUE;
 
@@ -286,7 +286,7 @@ bool_ carried_make_attack_normal(int r_idx)
 			                ((rand_int(100) + p_ptr->lev) > 50))
 			{
 				/* Message */
-				msg_format("%s is repelled.", sym_name);
+				msg_format("%s is repelled.", sym_name.c_str());
 
 				/* Hack -- Next attack */
 				continue;
@@ -454,7 +454,7 @@ bool_ carried_make_attack_normal(int r_idx)
 			}
 
 			/* Message */
-			if (act) msg_format("%s %s", sym_name, act);
+			if (act) msg_format("%s %s", sym_name.c_str(), act);
 
 
 			/* Roll out the damage */
@@ -1165,7 +1165,7 @@ bool_ carried_make_attack_normal(int r_idx)
 				disturb(1);
 
 				/* Message */
-				msg_format("%s misses you.", sym_name);
+				msg_format("%s misses you.", sym_name.c_str());
 
 				break;
 			}

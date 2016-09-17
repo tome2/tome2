@@ -732,7 +732,7 @@ void do_cmd_uninscribe(void)
 	object_type *o_ptr = get_object(item);
 
 	/* Nothing to remove */
-	if (!o_ptr->note)
+	if (o_ptr->inscription.empty())
 	{
 		msg_print("That item had no inscription to remove.");
 		return;
@@ -742,7 +742,7 @@ void do_cmd_uninscribe(void)
 	msg_print("Inscription removed.");
 
 	/* Remove the incription */
-	o_ptr->note = 0;
+	o_ptr->inscription.clear();
 
 	/* Combine the pack */
 	p_ptr->notice |= (PN_COMBINE);
@@ -778,22 +778,15 @@ void do_cmd_inscribe(void)
 	msg_format("Inscribing %s.", o_name);
 	msg_print(NULL);
 
-	/* Start with nothing */
+	/* Start with old inscription */
 	char out_val[80];
-	strcpy(out_val, "");
-
-	/* Use old inscription */
-	if (o_ptr->note)
-	{
-		/* Start with the old inscription */
-		strcpy(out_val, quark_str(o_ptr->note));
-	}
+	strcpy(out_val, o_ptr->inscription.c_str());
 
 	/* Get a new inscription (possibly empty) */
 	if (get_string("Inscription: ", out_val, sizeof(out_val)))
 	{
 		/* Save the inscription */
-		o_ptr->note = quark_add(out_val);
+		o_ptr->inscription = out_val;
 
 		/* Combine the pack */
 		p_ptr->notice |= (PN_COMBINE);

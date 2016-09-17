@@ -610,16 +610,14 @@ static bool_ pattern_effect(void)
  */
 static void recharged_notice(object_type *o_ptr)
 {
-	char o_name[80];
-
-	cptr s;
-
-
 	/* No inscription */
-	if (!o_ptr->note) return;
+	if (o_ptr->inscription.empty())
+	{
+		return;
+	}
 
 	/* Find a '!' */
-	s = strchr(quark_str(o_ptr->note), '!');
+	auto s = strchr(o_ptr->inscription.c_str(), '!');
 
 	/* Process notification request. */
 	while (s)
@@ -628,6 +626,7 @@ static void recharged_notice(object_type *o_ptr)
 		if (s[1] == '!')
 		{
 			/* Describe (briefly) */
+			char o_name[80];
 			object_desc(o_name, o_ptr, FALSE, 0);
 
 			/* Notify the player */
@@ -1295,7 +1294,7 @@ static void process_world(void)
 		if ((randint(1000) < r_ptr->level - ((p_ptr->lev * 2) + get_skill(SKILL_SYMBIOTIC))))
 		{
 			msg_format("%s breaks free from hypnosis!",
-			           symbiote_name(TRUE));
+			           symbiote_name(true).c_str());
 			carried_make_attack_normal(o_ptr->pval);
 		}
 	}
@@ -2773,11 +2772,9 @@ static void process_world(void)
 			}
 			else
 			{
-				if (p_ptr->wild_mode ||
-				                (o_ptr->note && strchr(quark_str(o_ptr->note), '.')))
+				if (p_ptr->wild_mode || strchr(o_ptr->inscription.c_str(), '.'))
 				{
-					/* Do nothing */
-					/* msg_print("Teleport aborted.") */;
+					/* Suppress teleportation */
 				}
 				else if (get_check("Teleport? "))
 				{

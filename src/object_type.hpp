@@ -3,6 +3,8 @@
 #include "h-basic.h"
 #include "object_flag_set.hpp"
 
+#include <string>
+
 /**
  * Object information for a specific object.
  *
@@ -75,7 +77,8 @@ struct object_type
 
 	byte marked = 0;                         /* Object is marked */
 
-	u16b note = 0;                           /* Inscription index */
+	std::string inscription;                 /* Inscription index */
+
 	u16b art_name = 0;                       /* Artifact name (random artifacts) */
 
 	object_flag_set art_flags;               /* Flags */

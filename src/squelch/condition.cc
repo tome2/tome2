@@ -627,12 +627,8 @@ void ClassCondition::to_json(json_t *j) const
 
 bool InscriptionCondition::is_match(object_type *o_ptr) const
 {
-	if (o_ptr->note == 0)
-	{
-		return false;
-	}
 	return boost::algorithm::icontains(
-		quark_str(o_ptr->note),
+	        o_ptr->inscription,
 		m_inscription);
 }
 

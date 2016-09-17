@@ -622,15 +622,11 @@ static void carried_monster_attack(s16b m_idx, bool_ *fear, bool_ *mdeath,
 {
 	monster_type *t_ptr = &m_list[m_idx];
 
-	monster_race *r_ptr;
-
 	int ap_cnt;
 
 	int ac, rlev, pt;
 
 	char t_name[80];
-
-	cptr sym_name = symbiote_name(TRUE);
 
 	char temp[80];
 
@@ -640,14 +636,12 @@ static void carried_monster_attack(s16b m_idx, bool_ *fear, bool_ *mdeath,
 
 	byte x_saver = t_ptr->fx;
 
-	object_type *o_ptr;
-
-
 	/* Get the carried monster */
-	o_ptr = &p_ptr->inventory[INVEN_CARRY];
+	auto o_ptr = &p_ptr->inventory[INVEN_CARRY];
 	if (!o_ptr->k_idx) return;
 
-	r_ptr = &r_info[o_ptr->pval];
+	/* Get monster race of the symbiote */
+	monster_race *r_ptr = &r_info[o_ptr->pval];
 
 	/* Not allowed to attack */
 	if (r_ptr->flags & RF_NEVER_BLOW) return;
@@ -877,7 +871,9 @@ static void carried_monster_attack(s16b m_idx, bool_ *fear, bool_ *mdeath,
 			{
 				strnfmt(temp, sizeof(temp), act, t_name);
 				if (t_ptr->ml)
-					msg_format("%s %s", sym_name, temp);
+				{
+					msg_format("%s %s", symbiote_name(true).c_str(), temp);
+				}
 
 			}
 
@@ -1092,7 +1088,7 @@ static void carried_monster_attack(s16b m_idx, bool_ *fear, bool_ *mdeath,
 					disturb(1);
 
 					/* Message */
-					msg_format("%s misses %s.", sym_name, t_name);
+					msg_format("%s misses %s.", symbiote_name(true).c_str(), t_name);
 					break;
 				}
 			}
@@ -1102,7 +1098,7 @@ static void carried_monster_attack(s16b m_idx, bool_ *fear, bool_ *mdeath,
 	/* Blink away */
 	if (blinked)
 	{
-		msg_format("You and %s flee laughing!", symbiote_name(FALSE));
+		msg_format("You and %s flee laughing!", symbiote_name(false).c_str());
 
 		teleport_player(MAX_SIGHT * 2 + 5);
 	}

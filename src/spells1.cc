@@ -1281,13 +1281,13 @@ void take_hit(int damage, cptr hit_from)
 	/* Hurt the wielded monster if any */
 	if ((o_ptr->k_idx) && (magik(5 + get_skill(SKILL_SYMBIOTIC))) && (!carried_monster_hit))
 	{
-		cptr sym_name = symbiote_name(TRUE);
+		auto sym_name = symbiote_name(true);
 
 		if (o_ptr->pval2 - damage <= 0)
 		{
 			cmsg_format(TERM_L_RED,
 			            "%s dies from protecting you, you feel very sad...",
-			            sym_name);
+			            sym_name.c_str());
 			inc_stack_size_ex(INVEN_CARRY, -1, OPTIMIZE, NO_DESCRIBE);
 			damage -= o_ptr->pval2;
 			o_ptr->pval2 = 0;
@@ -1295,7 +1295,7 @@ void take_hit(int damage, cptr hit_from)
 		}
 		else
 		{
-			msg_format("%s takes the damage instead of you.", sym_name);
+			msg_format("%s takes the damage instead of you.", sym_name.c_str());
 			o_ptr->pval2 -= damage;
 			monster_take = TRUE;
 		}

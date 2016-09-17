@@ -1526,16 +1526,10 @@ static std::string object_desc_aux(object_type const *o_ptr, int pref, int mode)
 		/* Dagger inscribed {@w0%Smelly} will be named
 		 * Smelly Dagger {@w0} */
 
-		if (o_ptr->note)
+		if (auto str = strchr(o_ptr->inscription.c_str(), '%'))
 		{
-			cptr str = strchr(quark_str(o_ptr->note), '%');
-
-			/* Add the false name */
-			if (str)
-			{
-				t += &str[1];
-				t += ' ';
-			}
+			t += &str[1];
+			t += ' ';
 		}
 
 	}
@@ -1680,16 +1674,10 @@ static std::string object_desc_aux(object_type const *o_ptr, int pref, int mode)
 		/* -TM- Hack -- Add false-artifact names */
 		/* Dagger inscribed {@w0#of Smell} will be named
 		 * Dagger of Smell {@w0} */
-		if (o_ptr->note)
+		if (auto str = strchr(o_ptr->inscription.c_str(), '#'))
 		{
-			cptr str = strchr(quark_str(o_ptr->note), '#');
-
-			/* Add the false name */
-			if (str)
-			{
-				t += ' ';
-				t += &str[1];
-			}
+			t += ' ';
+			t += &str[1];
 		}
 
 		/* Is it a new random artifact ? */
@@ -2061,17 +2049,13 @@ static std::string object_desc_aux(object_type const *o_ptr, int pref, int mode)
 			inscrip.push_back("cursed");
 		}
 
-		/* Use the standard inscription if available */
-		if (o_ptr->note)
+		/* Use the standard inscription if available;
+		   Chop at '#' or '%' if present. The suffix of the
+		   '%' or '#' is handled elsewhere in this function.
+		*/
+		if (auto const pos = o_ptr->inscription.find_first_of("%#") != std::string::npos)
 		{
-			// Chop at '#' or '%' if present. The suffix of the
-			// '%' or '#' is handled elsewhere in this function.
-			std::string note = quark_str(o_ptr->note);
-			auto const pos = note.find_first_of("%#");
-			if (pos > 0)
-			{
-				inscrip.push_back(note.substr(0, pos));
-			}
+			inscrip.push_back(o_ptr->inscription.substr(0, pos));
 		}
 
 		/* Mega-Hack -- note empty wands/staffs */
@@ -4570,18 +4554,17 @@ bool_ verify(cptr prompt, int item)
  */
 static bool_ get_item_allow(int item)
 {
-	cptr s;
-
-	object_type *o_ptr;
-
 	/* Get object */
-	o_ptr = get_object(item);
+	auto o_ptr = get_object(item);
 
 	/* No inscription */
-	if (!o_ptr->note) return (TRUE);
+	if (o_ptr->inscription.empty())
+	{
+		return TRUE;
+	}
 
 	/* Find a '!' */
-	s = strchr(quark_str(o_ptr->note), '!');
+	auto s = strchr(o_ptr->inscription.c_str(), '!');
 
 	/* Process preventions */
 	while (s)
@@ -4631,23 +4614,25 @@ static bool get_item_okay(int i, object_filter_t const &filter)
  */
 static int get_tag(int *cp, char tag)
 {
-	int i;
-	cptr s;
-
-
 	/* Check every object */
-	for (i = 0; i < INVEN_TOTAL; ++i)
+	for (int i = 0; i < INVEN_TOTAL; ++i)
 	{
 		object_type *o_ptr = &p_ptr->inventory[i];
 
 		/* Skip non-objects */
-		if (!o_ptr->k_idx) continue;
+		if (!o_ptr->k_idx)
+		{
+			continue;
+		}
 
 		/* Skip empty inscriptions */
-		if (!o_ptr->note) continue;
+		if (o_ptr->inscription.empty())
+		{
+			continue;
+		}
 
 		/* Find a '@' */
-		s = strchr(quark_str(o_ptr->note), '@');
+		auto s = strchr(o_ptr->inscription.c_str(), '@');
 
 		/* Process all tags */
 		while (s)

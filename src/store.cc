@@ -957,7 +957,7 @@ static int store_carry(object_type *o_ptr)
 	o_ptr->ident |= IDENT_MENTAL;
 
 	/* Erase the inscription */
-	o_ptr->note = 0;
+	o_ptr->inscription.clear();
 
 	/* Check each existing item (try to combine) */
 	for (slot = 0; slot < st_ptr->stock.size(); slot++)
@@ -1979,7 +1979,7 @@ void store_stole(void)
 		msg_format("You steal %s.", o_name);
 
 		/* Erase the inscription */
-		j_ptr->note = 0;
+		j_ptr->inscription.clear();
 
 		/* Give it to the player */
 		int const item_new = inven_carry(j_ptr, FALSE);
@@ -2236,7 +2236,7 @@ void store_purchase(void)
 				msg_format("You bought %s for " FMTs32b " gold.", o_name, price);
 
 				/* Erase the inscription */
-				j_ptr->note = 0;
+				j_ptr->inscription.clear();
 
 				/* Hack -- If a rod or wand, allocate total maximum
 				 * timeouts or charges between those picked up and 
@@ -2481,7 +2481,7 @@ void store_sell(void)
 	/* Remove any inscription for stores */
 	if ((cur_store_num != 7) && !museum)
 	{
-		q_ptr->note = 0;
+		q_ptr->inscription.clear();
 	}
 
 	/* Is there room in the store (or the home?) */
@@ -3400,7 +3400,7 @@ void store_shuffle(int which)
 			o_ptr->discount = 50;
 
 		/* Mega-Hack -- Note that the item is "on sale" */
-		o_ptr->note = quark_add("on sale");
+		o_ptr->inscription = "on sale";
 	}
 }
 

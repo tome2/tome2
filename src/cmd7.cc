@@ -3237,13 +3237,6 @@ void do_cmd_rune_add_mem()
  */
 void do_cmd_rune_carve()
 {
-	rune_spell s_ptr;
-
-	int item, i;
-
-	char out_val[80];
-
-
 	/* Not when confused */
 	if (p_ptr->confused)
 	{
@@ -3263,9 +3256,14 @@ void do_cmd_rune_carve()
 		return;
 	}
 
-	if (!get_runespell(&s_ptr)) return;
+	rune_spell s_ptr;
+	if (!get_runespell(&s_ptr))
+	{
+		return;
+	}
 
 	/* Get an item */
+	int item;
 	if (!get_item(&item,
 		      "Use which runestone? ",
 		      "You have no runestone to use.",
@@ -3282,21 +3280,15 @@ void do_cmd_rune_carve()
 	o_ptr->pval2 = s_ptr.rune2;
 	o_ptr->pval3 = s_ptr.mana;
 
-	/* Start with nothing */
-	strcpy(out_val, "");
-
-	/* Use old inscription */
-	if (o_ptr->note)
-	{
-		/* Start with the old inscription */
-		strcpy(out_val, quark_str(o_ptr->note));
-	}
+	/* Start with old inscription */
+	char out_val[80];
+	strcpy(out_val, o_ptr->inscription.c_str());
 
 	/* Get a new inscription (possibly empty) */
 	if (get_string("Name this runestone: ", out_val, 80))
 	{
 		/* Save the inscription */
-		o_ptr->note = quark_add(out_val);
+		o_ptr->inscription = out_val;
 
 		/* Combine the pack */
 		p_ptr->notice |= (PN_COMBINE);
@@ -3306,7 +3298,7 @@ void do_cmd_rune_carve()
 	}
 
 	/* Delete the runes */
-	for (i = 0; i < INVEN_WIELD; i++)
+	for (int i = 0; i < INVEN_WIELD; i++)
 	{
 		o_ptr = &p_ptr->inventory[i];
 
@@ -4259,7 +4251,7 @@ void do_cmd_symbiotic(void)
 				o_ptr->pval2 += hp;
 				if (o_ptr->pval2 > o_ptr->pval3) o_ptr->pval2 = o_ptr->pval3;
 
-				msg_format("%s is healed.", symbiote_name(TRUE));
+				msg_format("%s is healed.", symbiote_name(true).c_str());
 
 				/* Display the monster hitpoints */
 				p_ptr->redraw |= (PR_FRAME);
