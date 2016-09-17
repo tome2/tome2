@@ -45,7 +45,6 @@
 #include "timer_type_fwd.hpp"
 #include "town_type_fwd.hpp"
 #include "trap_type_fwd.hpp"
-#include "tval_desc.hpp"
 #include "vault_type_fwd.hpp"
 #include "wilderness_type_info_fwd.hpp"
 #include "seed.hpp"
@@ -280,7 +279,6 @@ extern s32b DUNGEON_ASTRAL_WILD_Y;
 extern deity_type deity_info[MAX_GODS];
 extern timer_type *gl_timers;
 extern const char *get_version_string();
-extern tval_desc tvals[];
 extern hist_type *bg;
 extern bool_ arg_wizard;
 extern bool_ arg_force_original;

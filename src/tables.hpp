@@ -69,6 +69,7 @@ extern std::vector<flags_group> const &flags_groups();
 extern power_type powers_type[POWER_MAX];
 extern cptr artifact_names_list;
 extern monster_power monster_powers[MONSTER_POWERS_MAX];
+extern tval_desc tvals[];
 extern tval_desc tval_descs[];
 extern between_exit between_exits[MAX_BETWEEN_EXITS];
 extern int month_day[9];
