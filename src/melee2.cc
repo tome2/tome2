@@ -1127,17 +1127,18 @@ static bool_ monst_spell_monst(int m_idx)
 			{
 				monster_msg("%^s magically %s", m_name, action);
 			}
+
 			// Do the actual summoning
 			int count = 0;
 			for (int k = 0; k < n; k++)
 			{
 				if (friendly)
 				{
-					count += summon_specific_friendly(y, x, rlev, friendly_type, TRUE);
+					count += summon_specific_friendly(m_ptr->fy, m_ptr->fx, rlev, friendly_type, TRUE);
 				}
 				else if (!friendly)
 				{
-					count += summon_specific(y, x, rlev, hostile_type);
+					count += summon_specific(m_ptr->fy, m_ptr->fx, rlev, hostile_type);
 				}
 			}
 			// Message for blinded characters
@@ -2298,11 +2299,11 @@ static bool_ monst_spell_monst(int m_idx)
 				int count = 0;
 				for (int k = 0; k < 8; k++)
 				{
-					count += summon_specific(y, x, rlev, SUMMON_UNIQUE);
+					count += summon_specific(m_ptr->fy, m_ptr->fx, rlev, SUMMON_UNIQUE);
 				}
 				for (int k = 0; k < 8; k++)
 				{
-					count += summon_specific(y, x, rlev, SUMMON_HI_UNDEAD);
+					count += summon_specific(m_ptr->fy, m_ptr->fx, rlev, SUMMON_HI_UNDEAD);
 				}
 				// Message
 				if (blind)
@@ -2702,7 +2703,7 @@ static bool_ make_attack_spell(int m_idx)
 			int count = 0;
 			for (int k = 0; k < n; k++)
 			{
-				count += summon_specific(y, x, rlev, type);
+				count += summon_specific(m_ptr->fy, m_ptr->fx, rlev, type);
 			}
 			// Message for blinded characters
 			if (blind)
@@ -3814,11 +3815,11 @@ static bool_ make_attack_spell(int m_idx)
 				int count = 0;
 				for (int k = 0; k < 8; k++)
 				{
-					count += summon_specific(y, x, rlev, SUMMON_UNIQUE);
+					count += summon_specific(m_ptr->fy, m_ptr->fx, rlev, SUMMON_UNIQUE);
 				}
 				for (int k = 0; k < 8; k++)
 				{
-					count += summon_specific(y, x, rlev, SUMMON_HI_UNDEAD);
+					count += summon_specific(m_ptr->fy, m_ptr->fx, rlev, SUMMON_HI_UNDEAD);
 				}
 				// Message
 				if (blind)
