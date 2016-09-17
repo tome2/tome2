@@ -458,21 +458,7 @@ static void do_subrace(ls_flag_t flag)
 
 	do_char(&sr_ptr->infra, flag);
 
-	{
-		u16b n = sr_ptr->ps.powers.size();
-
-		do_u16b(&n, flag);
-
-		for (std::size_t i = 0; i < n; i++)
-		{
-			if (flag == ls_flag_t::LOAD)
-			{
-				sr_ptr->ps.powers.push_back(0);
-			}
-
-			do_s16b(&sr_ptr->ps.powers[i], flag);
-		}
-	}
+	do_vector(flag, sr_ptr->ps.powers, do_s16b);
 
 	for (i = 0; i < BODY_MAX; i++)
 	{
