@@ -1235,25 +1235,23 @@ static void dump_classes(std::vector<u16b> const &classes, int sel, u32b *restri
 	}
 }
 
-static int dump_specs(int sel)
+static void dump_specs(int sel_)
 {
-	int n = 0;
+	assert(sel_ >= 0);
+	std::size_t sel = sel_;
 
-	char buf[80];
-
-	/* Clean up */
 	clear_from(12);
 
-	for (n = 0; n < MAX_SPEC; n++)
-	{
-		char p2 = ')', p1 = ' ';
+	auto specs = &class_info[p_ptr->pclass].spec;
 
-		/* Found the last one ? */
-		if (!class_info[p_ptr->pclass].spec[n].title) break;
+	for (std::size_t n = 0; n < specs->size(); n++)
+	{
+		char p2 = ')';
+		char p1 = ' ';
 
 		/* Analyze */
 		p_ptr->pspec = n;
-		spp_ptr = &class_info[p_ptr->pclass].spec[p_ptr->pspec];
+		spp_ptr = &(*specs)[p_ptr->pspec];
 
 		if (sel == n)
 		{
@@ -1262,6 +1260,7 @@ static int dump_specs(int sel)
 		}
 
 		/* Display */
+		char buf[80];
 		strnfmt(buf, 80, "%c%c%c %s", p1, I2A(n), p2, spp_ptr->title);
 
 		/* Print some more info */
@@ -1278,20 +1277,26 @@ static int dump_specs(int sel)
 			print_desc(desc.c_str());
 
 			if (spp_ptr->flags & PR_EXPERIMENTAL)
+			{
 				c_put_str(TERM_BLUE, buf, 18 + (n / 4), 1 + 20 * (n % 4));
+			}
 			else
+			{
 				c_put_str(TERM_L_BLUE, buf, 18 + (n / 4), 1 + 20 * (n % 4));
+			}
 		}
 		else
 		{
 			if (spp_ptr->flags & PR_EXPERIMENTAL)
+			{
 				c_put_str(TERM_SLATE, buf, 18 + (n / 4), 1 + 20 * (n % 4));
+			}
 			else
+			{
 				put_str(buf, 18 + (n / 4), 1 + 20 * (n % 4));
+			}
 		}
 	}
-
-	return (n);
 }
 
 static int dump_races(int sel)
@@ -1911,11 +1916,7 @@ static bool_ player_birth_aux_ask()
 		clear_from(15);
 
 		/* Count choices */
-		for (n = 0; n < MAX_SPEC; n++)
-		{
-			/* Found the last one ? */
-			if (!class_info[p_ptr->pclass].spec[n].title) break;
-		}
+		n = class_info[p_ptr->pclass].spec.size();
 
 		/* Only one choice = auto choice */
 		if (n == 1)
@@ -1924,7 +1925,7 @@ static bool_ player_birth_aux_ask()
 		{
 			/* Dump classes spec */
 			sel = 0;
-			n = dump_specs(sel);
+			dump_specs(sel);
 
 			/* Get a class */
 			while (1)

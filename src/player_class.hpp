@@ -11,11 +11,6 @@
 #include "skill_modifiers.hpp"
 
 /**
- * Maximum number of specialties.
- */
-constexpr int MAX_SPEC = 20;
-
-/**
  * Player descriptor and runtime data.
  */
 struct player_class
@@ -49,7 +44,7 @@ struct player_class
 
 	u32b gods = 0;
 
-	std::array<player_spec, MAX_SPEC> spec;
+	std::vector<player_spec> spec;
 
 	std::vector<player_race_ability_type> abilities;        /* Abilities to be gained by level; ignores prereqs */
 };

@@ -916,7 +916,6 @@ errr init_player_info_txt(FILE *fp)
 	int powers = 0;
 	int lev = 1;
 	int tit_idx = 0;
-	int spec_idx = 0;
 	char buf[1024];
 	char *s, *t;
 
@@ -1475,8 +1474,6 @@ errr init_player_info_txt(FILE *fp)
 		/* Process 'N' for "New/Number/Name" */
 		if ((buf[0] == 'C') && (buf[2] == 'N'))
 		{
-			int z;
-
 			/* Find the colon before the name */
 			s = strchr(buf + 4, ':');
 
@@ -1513,9 +1510,6 @@ errr init_player_info_txt(FILE *fp)
 			powers = 0;
 			lev = 1;
 			tit_idx = 0;
-			spec_idx = -1;
-			for (z = 0; z < MAX_SPEC; z++)
-				c_ptr->spec[z].title = 0;
 
 			/* Next... */
 			continue;
@@ -1771,17 +1765,12 @@ errr init_player_info_txt(FILE *fp)
 
 				/* Paranoia -- require a name */
 				if (!*s) return (1);
-				/* Get the index */
-				spec_idx++;
 
-				/* Verify information */
-				if (spec_idx >= MAX_SPEC) return (2);
+				/* Create the spec entry */
+				c_ptr->spec.emplace_back(player_spec());
 
-				/* Point at the "info" */
-				s_ptr = &c_ptr->spec[spec_idx];
-
-				/* Copy title */
-				assert(!s_ptr->title);
+				/* Fill in initial values */
+				s_ptr = &c_ptr->spec.back();
 				s_ptr->title = my_strdup(s);
 
 				/* Next... */
