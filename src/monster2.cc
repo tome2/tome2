@@ -3661,22 +3661,33 @@ void message_pain(int m_idx, int dam)
  */
 void update_smart_learn(int m_idx, int what)
 {
-	monster_type *m_ptr = &m_list[m_idx];
-
 	/* Not allowed to learn */
-	if (!smart_learn) return;
+	if (!smart_learn)
+	{
+		return;
+	}
+
+	/* Fast path for DRS_NONE */
+	if (what == DRS_NONE)
+	{
+		return;
+	}
 
 	/* Get racial flags */
+	auto m_ptr = &m_list[m_idx];
 	auto const r_ptr = m_ptr->race();
 
 	/* Too stupid to learn anything */
-	if (r_ptr->flags & RF_STUPID) return;
+	if (r_ptr->flags & RF_STUPID)
+	{
+		return;
+	}
 
 	/* Not intelligent, only learn sometimes */
-	if (!(r_ptr->flags & RF_SMART) && magik(50)) return;
-
-
-	/* XXX XXX XXX */
+	if (!(r_ptr->flags & RF_SMART) && magik(50))
+	{
+		return;
+	}
 
 	/* Analyze the knowledge */
 	switch (what)

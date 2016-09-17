@@ -2158,6 +2158,7 @@
 /*
  * Some things which induce learning
  */
+#define DRS_NONE         0
 #define DRS_ACID         1
 #define DRS_ELEC         2
 #define DRS_FIRE         3
