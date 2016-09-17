@@ -458,7 +458,7 @@ bool_ artifact_scroll(void)
 	if (!okay)
 	{
 		/* Flush */
-		if (flush_failure) flush();
+		flush_on_failure();
 
 		/* Message */
 		msg_print("The enchantment failed.");

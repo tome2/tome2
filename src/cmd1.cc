@@ -2699,7 +2699,7 @@ static bool_ easy_open_door(int y, int x)
 		else
 		{
 			/* Failure */
-			if (flush_failure) flush();
+			flush_on_failure();
 
 			/* Message */
 			msg_print("You failed to pick the lock.");

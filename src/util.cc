@@ -1221,6 +1221,18 @@ void flush(void)
 
 
 /*
+ * Flush input if the 'flush_failure' option is set.
+ */
+void flush_on_failure()
+{
+	if (flush_failure)
+	{
+		flush();
+	}
+}
+
+
+/*
 * Flush the screen, make a noise
 */
 void bell(void)

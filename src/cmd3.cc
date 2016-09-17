@@ -1595,7 +1595,7 @@ bool_ do_cmd_sense_grid_mana()
 	/* Roll for usage */
 	if ((chance < USE_DEVICE) || (randint(chance) < USE_DEVICE))
 	{
-		if (flush_failure) flush();
+		flush_on_failure();
 		msg_print("You failed to sense the grid's mana.");
 		return FALSE;
 	}

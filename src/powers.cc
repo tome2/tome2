@@ -122,7 +122,7 @@ static bool_ power_chance(power_type *x_ptr)
 		return (TRUE);
 	}
 
-	if (flush_failure) flush();
+	flush_on_failure();
 	msg_print("You've failed to concentrate hard enough.");
 
 	return (FALSE);

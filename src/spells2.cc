@@ -2910,7 +2910,7 @@ bool_ enchant_spell(int num_hit, int num_dam, int num_ac, int num_pval)
 	if (!okay)
 	{
 		/* Flush */
-		if (flush_failure) flush();
+		flush_on_failure();
 
 		/* Message */
 		msg_print("The enchantment failed.");

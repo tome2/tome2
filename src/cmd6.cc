@@ -3750,7 +3750,7 @@ void do_cmd_use_staff(void)
 	/* Roll for usage */
 	if (magik(chance))
 	{
-		if (flush_failure) flush();
+		flush_on_failure();
 		msg_print("You failed to use the staff properly.");
 		return;
 	}
@@ -3758,7 +3758,7 @@ void do_cmd_use_staff(void)
 	/* Notice empty staffs */
 	if (o_ptr->pval <= 0)
 	{
-		if (flush_failure) flush();
+		flush_on_failure();
 		msg_print("The staff has no charges left.");
 		o_ptr->ident |= (IDENT_EMPTY);
 		return;
@@ -3915,7 +3915,7 @@ void do_cmd_aim_wand(void)
 	/* Roll for usage */
 	if (magik(chance))
 	{
-		if (flush_failure) flush();
+		flush_on_failure();
 		msg_print("You failed to use the wand properly.");
 		return;
 	}
@@ -3923,7 +3923,7 @@ void do_cmd_aim_wand(void)
 	/* The wand is already empty! */
 	if (o_ptr->pval <= 0)
 	{
-		if (flush_failure) flush();
+		flush_on_failure();
 		msg_print("The wand has no charges left.");
 		o_ptr->ident |= (IDENT_EMPTY);
 		return;
@@ -4200,7 +4200,7 @@ void do_cmd_zap_rod(void)
 	if ((chance < USE_DEVICE) || (randint(chance) < USE_DEVICE))
 	{
 		/* Flush input if necessary */
-		if (flush_failure) flush();
+		flush_on_failure();
 
 		/* Message */
 		msg_print("You failed to use the rod properly.");
@@ -4218,7 +4218,7 @@ void do_cmd_zap_rod(void)
 	if (o_ptr->timeout < cost)
 	{
 		/* Flush input if necessary */
-		if (flush_failure) flush();
+		flush_on_failure();
 
 		/* Message */
 		msg_print("The rod does not have enough mana yet.");
@@ -4668,7 +4668,7 @@ bool_ brand_bolts(void)
 	}
 
 	/* Flush */
-	if (flush_failure) flush();
+	flush_on_failure();
 
 	/* Fail */
 	msg_print("The fiery enchantment failed.");
@@ -4916,7 +4916,7 @@ void do_cmd_activate(void)
 	/* Roll for usage */
 	if ((chance < USE_DEVICE) || (randint(chance) < USE_DEVICE))
 	{
-		if (flush_failure) flush();
+		flush_on_failure();
 		msg_print("You failed to activate it properly.");
 		return;
 	}

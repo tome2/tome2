@@ -420,7 +420,7 @@ void do_cmd_mindcraft(void)
 	/* Failed spell */
 	if (rand_int(100) < chance)
 	{
-		if (flush_failure) flush();
+		flush_on_failure();
 
 		msg_format("You failed to concentrate hard enough!");
 
@@ -945,7 +945,7 @@ void do_cmd_mimic(void)
 	/* Failed spell */
 	if (rand_int(100) < fail)
 	{
-		if (flush_failure) flush();
+		flush_on_failure();
 
 		msg_format("You failed to concentrate hard enough!");
 
@@ -1576,7 +1576,7 @@ void do_cmd_powermage(void)
 		char sfail[80];
 
 		/* Flush input if told so */
-		if (flush_failure) flush();
+		flush_on_failure();
 
 		/* Insane players can see something strange */
 		if (rand_int(100) < insanity)
@@ -1754,7 +1754,7 @@ void brand_ammo(int brand_type, int bolts_only)
 	}
 	else
 	{
-		if (flush_failure) flush();
+		flush_on_failure();
 		msg_print("The enchantment failed.");
 	}
 }
@@ -2199,7 +2199,7 @@ void do_cmd_necromancer(void)
 	/* Failed spell */
 	if (rand_int(100) < chance)
 	{
-		if (flush_failure) flush();
+		flush_on_failure();
 		msg_format("You failed to concentrate hard enough!");
 
 		if (randint(100) < (chance / 2))
@@ -2581,7 +2581,7 @@ int rune_exec(rune_spell *spell, int cost)
 		char sfail[80];
 
 		/* Flush input if told so */
-		if (flush_failure) flush();
+		flush_on_failure();
 
 		/* Insane players can see something strange */
 		if (rand_int(100) < insanity)
@@ -4060,7 +4060,7 @@ void do_cmd_symbiotic(void)
 	/* Failed spell */
 	if (rand_int(100) < chance)
 	{
-		if (flush_failure) flush();
+		flush_on_failure();
 		msg_format("You failed to concentrate hard enough!");
 	}
 	else

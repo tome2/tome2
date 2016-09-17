@@ -819,7 +819,7 @@ static bool_ do_cmd_open_chest(int y, int x, s16b o_idx)
 			/* We may continue repeating */
 			more = TRUE;
 
-			if (flush_failure) flush();
+			flush_on_failure();
 
 			msg_print("You failed to pick the lock.");
 		}
@@ -1080,7 +1080,7 @@ static bool_ do_cmd_open_aux(int y, int x, int dir)
 		else
 		{
 			/* Failure */
-			if (flush_failure) flush();
+			flush_on_failure();
 
 			/* Message */
 			msg_print("You failed to pick the lock.");
@@ -1879,7 +1879,7 @@ static bool_ do_cmd_disarm_chest(int y, int x, s16b o_idx)
 	{
 		/* We may keep trying */
 		more = TRUE;
-		if (flush_failure) flush();
+		flush_on_failure();
 		msg_print("You failed to disarm the chest.");
 	}
 
@@ -1977,7 +1977,7 @@ static bool_ do_cmd_disarm_aux(int y, int x, int dir, int do_pickup)
 	else if ((i > 5) && (randint(i) > 5))
 	{
 		/* Failure */
-		if (flush_failure) flush();
+		flush_on_failure();
 
 		/* Message */
 		msg_format("You failed to disarm the %s.", name);
@@ -2873,7 +2873,7 @@ void do_cmd_rest(void)
 	if (cave[p_ptr->py][p_ptr->px].feat == FEAT_BETWEEN)
 	{
 		/* 'R&\n' is one of our favourite macros, so we have to do this */
-		if (flush_failure) flush();
+		flush_on_failure();
 
 		/* Tell the player why */
 		msg_print(format("Resting on a %s is too dangerous!",
@@ -2887,7 +2887,7 @@ void do_cmd_rest(void)
 	if (p_ptr->necro_extra & CLASS_UNDEAD)
 	{
 		/* 'R&\n' is one of our favourite macros, so we have to do this */
-		if (flush_failure) flush();
+		flush_on_failure();
 
 		/* Tell the player why */
 		msg_print("Resting is impossible while undead!");
