@@ -1863,9 +1863,6 @@ static void process_world(void)
 		{
 			bool_ old_quick = quick_messages;
 
-			/* Sound */
-			sound(SOUND_DEATH);
-
 			/* Hack -- Note death */
 			if (!last_words)
 			{
@@ -1913,8 +1910,6 @@ static void process_world(void)
 			{
 				bell();
 			}
-
-			sound(SOUND_WARN);
 
 			/* Message */
 			msg_print("*** LOW DEATHPOINT WARNING! ***");
@@ -3182,9 +3177,6 @@ static void process_world(void)
 					p_ptr->leaving = TRUE;
 					p_ptr->wild_mode = FALSE;
 				}
-
-				/* Sound */
-				sound(SOUND_TPLEVEL);
 			}
 		}
 	}
@@ -4189,7 +4181,6 @@ static void process_command(void)
 			if (rand_int(100) < insanity)
 			{
 				get_rnd_line("error.txt", error_m);
-				sound(SOUND_ILLEGAL);
 				msg_print(error_m);
 			}
 			else

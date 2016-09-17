@@ -98,20 +98,6 @@ bool_ mon_take_hit_mon(int s_idx, int m_idx, int dam, bool_ *fear, cptr note)
 			/* Extract monster name */
 			monster_desc(m_name, m_ptr, 0);
 
-			/* Make a sound */
-			if ((r_ptr->flags & RF_DEMON) ||
-			                (r_ptr->flags & RF_UNDEAD) ||
-			                (r_ptr->flags & RF_STUPID) ||
-			                (r_ptr->flags & RF_NONLIVING) ||
-			                (strchr("Evg", r_ptr->d_char)))
-			{
-				sound(SOUND_N_KILL);
-			}
-			else
-			{
-				sound(SOUND_KILL);
-			}
-
 			/* Death by Missile/Spell attack */
 			if (note)
 			{
@@ -1147,7 +1133,6 @@ static bool_ monst_spell_monst(int m_idx)
 				if (!see_either) monster_msg("You hear a strange noise.");
 				else if (blind) monster_msg("%^s makes a strange noise.", m_name);
 				else monster_msg("%^s fires an arrow at %s.", m_name, t_name);
-				sound(SOUND_SHOOT);
 				monst_bolt_monst(m_idx, y, x, GF_ARROW, damroll(1, 6));
 				break;
 			}
@@ -1158,7 +1143,6 @@ static bool_ monst_spell_monst(int m_idx)
 				if (!see_either) monster_msg("You hear a strange noise.");
 				else if (blind) monster_msg("%^s makes a strange noise.", m_name);
 				else monster_msg("%^s fires an arrow at %s.", m_name, t_name);
-				sound(SOUND_SHOOT);
 				monst_bolt_monst(m_idx, y, x, GF_ARROW, damroll(3, 6));
 				break;
 			}
@@ -1170,7 +1154,6 @@ static bool_ monst_spell_monst(int m_idx)
 				if (!see_either) monster_msg("You hear a strange noise.");
 				else if (blind) monster_msg("%^s makes a strange noise.", m_name);
 				else monster_msg("%^s fires a missile at %s.", m_name, t_name);
-				sound(SOUND_SHOOT);
 				monst_bolt_monst(m_idx, y, x, GF_ARROW, damroll(5, 6));
 				break;
 			}
@@ -1181,7 +1164,6 @@ static bool_ monst_spell_monst(int m_idx)
 				else if (disturb_other) disturb(1);
 				if (blind) monster_msg("%^s makes a strange noise.", m_name);
 				else monster_msg("%^s fires a missile at %s.", m_name, t_name);
-				sound(SOUND_SHOOT);
 				monst_bolt_monst(m_idx, y, x, GF_ARROW, damroll(7, 6));
 				break;
 			}
@@ -1192,7 +1174,6 @@ static bool_ monst_spell_monst(int m_idx)
 				if (!see_either) monster_msg("You hear breathing noise.");
 				else if (blind) monster_msg("%^s breathes.", m_name);
 				else monster_msg("%^s breathes acid at %s.", m_name, t_name);
-				sound(SOUND_BREATH);
 				monst_breath_monst(m_idx, y, x, GF_ACID,
 				                   ((m_ptr->hp / 3) > 1600 ? 1600 : (m_ptr->hp / 3)), 0);
 				break;
@@ -1204,7 +1185,6 @@ static bool_ monst_spell_monst(int m_idx)
 				if (!see_either) monster_msg("You hear breathing noise.");
 				else if (blind) monster_msg("%^s breathes.", m_name);
 				else monster_msg("%^s breathes lightning at %s.", m_name, t_name);
-				sound(SOUND_BREATH);
 				monst_breath_monst(m_idx, y, x, GF_ELEC,
 				                   ((m_ptr->hp / 3) > 1600 ? 1600 : (m_ptr->hp / 3)), 0);
 				break;
@@ -1216,7 +1196,6 @@ static bool_ monst_spell_monst(int m_idx)
 				if (!see_either) monster_msg("You hear breathing noise.");
 				else if (blind) monster_msg("%^s breathes.", m_name);
 				else monster_msg("%^s breathes fire at %s.", m_name, t_name);
-				sound(SOUND_BREATH);
 				monst_breath_monst(m_idx, y, x, GF_FIRE,
 				                   ((m_ptr->hp / 3) > 1600 ? 1600 : (m_ptr->hp / 3)), 0);
 				break;
@@ -1228,7 +1207,6 @@ static bool_ monst_spell_monst(int m_idx)
 				if (!see_either) monster_msg("You hear breathing noise.");
 				else if (blind) monster_msg("%^s breathes.", m_name);
 				else monster_msg("%^s breathes frost at %s.", m_name, t_name);
-				sound(SOUND_BREATH);
 				monst_breath_monst(m_idx, y, x, GF_COLD,
 				                   ((m_ptr->hp / 3) > 1600 ? 1600 : (m_ptr->hp / 3)), 0);
 				break;
@@ -1240,7 +1218,6 @@ static bool_ monst_spell_monst(int m_idx)
 				if (!see_either) monster_msg("You hear breathing noise.");
 				else if (blind) monster_msg("%^s breathes.", m_name);
 				else monster_msg("%^s breathes gas at %s.", m_name, t_name);
-				sound(SOUND_BREATH);
 				monst_breath_monst(m_idx, y, x, GF_POIS,
 				                   ((m_ptr->hp / 3) > 800 ? 800 : (m_ptr->hp / 3)), 0);
 				break;
@@ -1252,7 +1229,6 @@ static bool_ monst_spell_monst(int m_idx)
 				if (!see_either) monster_msg("You hear breathing noise.");
 				else if (blind) monster_msg("%^s breathes.", m_name);
 				else monster_msg("%^s breathes nether at %s.", m_name, t_name);
-				sound(SOUND_BREATH);
 				monst_breath_monst(m_idx, y, x, GF_NETHER,
 				                   ((m_ptr->hp / 6) > 550 ? 550 : (m_ptr->hp / 6)), 0);
 				break;
@@ -1264,7 +1240,6 @@ static bool_ monst_spell_monst(int m_idx)
 				if (!see_either) monster_msg("You hear breathing noise.");
 				else if (blind) monster_msg("%^s breathes.", m_name);
 				else monster_msg("%^s breathes light at %s.", m_name, t_name);
-				sound(SOUND_BREATH);
 				monst_breath_monst(m_idx, y, x, GF_LITE,
 				                   ((m_ptr->hp / 6) > 400 ? 400 : (m_ptr->hp / 6)), 0);
 				break;
@@ -1276,7 +1251,6 @@ static bool_ monst_spell_monst(int m_idx)
 				if (!see_either) monster_msg("You hear breathing noise.");
 				else if (blind) monster_msg("%^s breathes.", m_name);
 				else monster_msg("%^s breathes darkness at %s.", m_name, t_name);
-				sound(SOUND_BREATH);
 				monst_breath_monst(m_idx, y, x, GF_DARK,
 				                   ((m_ptr->hp / 6) > 400 ? 400 : (m_ptr->hp / 6)), 0);
 				break;
@@ -1288,7 +1262,6 @@ static bool_ monst_spell_monst(int m_idx)
 				if (!see_either) monster_msg("You hear breathing noise.");
 				else if (blind) monster_msg("%^s breathes.", m_name);
 				else monster_msg("%^s breathes confusion at %s.", m_name, t_name);
-				sound(SOUND_BREATH);
 				monst_breath_monst(m_idx, y, x, GF_CONFUSION,
 				                   ((m_ptr->hp / 6) > 400 ? 400 : (m_ptr->hp / 6)), 0);
 				break;
@@ -1300,7 +1273,6 @@ static bool_ monst_spell_monst(int m_idx)
 				if (!see_either) monster_msg("You hear breathing noise.");
 				else if (blind) monster_msg("%^s breathes.", m_name);
 				else monster_msg("%^s breathes sound at %s.", m_name, t_name);
-				sound(SOUND_BREATH);
 				monst_breath_monst(m_idx, y, x, GF_SOUND,
 				                   ((m_ptr->hp / 6) > 400 ? 400 : (m_ptr->hp / 6)), 0);
 				break;
@@ -1312,7 +1284,6 @@ static bool_ monst_spell_monst(int m_idx)
 				if (!see_either) monster_msg("You hear breathing noise.");
 				else if (blind) monster_msg("%^s breathes.", m_name);
 				else monster_msg("%^s breathes chaos at %s.", m_name, t_name);
-				sound(SOUND_BREATH);
 				monst_breath_monst(m_idx, y, x, GF_CHAOS,
 				                   ((m_ptr->hp / 6) > 600 ? 600 : (m_ptr->hp / 6)), 0);
 				break;
@@ -1324,7 +1295,6 @@ static bool_ monst_spell_monst(int m_idx)
 				if (!see_either) monster_msg("You hear breathing noise.");
 				else if (blind) monster_msg("%^s breathes.", m_name);
 				else monster_msg("%^s breathes disenchantment at %s.", m_name, t_name);
-				sound(SOUND_BREATH);
 				monst_breath_monst(m_idx, y, x, GF_DISENCHANT,
 				                   ((m_ptr->hp / 6) > 500 ? 500 : (m_ptr->hp / 6)), 0);
 				break;
@@ -1336,7 +1306,6 @@ static bool_ monst_spell_monst(int m_idx)
 				if (!see_either) monster_msg("You hear breathing noise.");
 				else if (blind) monster_msg("%^s breathes.", m_name);
 				else monster_msg("%^s breathes nexus at %s.", m_name, t_name);
-				sound(SOUND_BREATH);
 				monst_breath_monst(m_idx, y, x, GF_NEXUS,
 				                   ((m_ptr->hp / 3) > 250 ? 250 : (m_ptr->hp / 3)), 0);
 				break;
@@ -1348,7 +1317,6 @@ static bool_ monst_spell_monst(int m_idx)
 				if (!see_either) monster_msg("You hear breathing noise.");
 				else if (blind) monster_msg("%^s breathes.", m_name);
 				else monster_msg("%^s breathes time at %s.", m_name, t_name);
-				sound(SOUND_BREATH);
 				monst_breath_monst(m_idx, y, x, GF_TIME,
 				                   ((m_ptr->hp / 3) > 150 ? 150 : (m_ptr->hp / 3)), 0);
 				break;
@@ -1360,7 +1328,6 @@ static bool_ monst_spell_monst(int m_idx)
 				if (!see_either) monster_msg("You hear breathing noise.");
 				else if (blind) monster_msg("%^s breathes.", m_name);
 				else monster_msg("%^s breathes inertia at %s.", m_name, t_name);
-				sound(SOUND_BREATH);
 				monst_breath_monst(m_idx, y, x, GF_INERTIA,
 				                   ((m_ptr->hp / 6) > 200 ? 200 : (m_ptr->hp / 6)), 0);
 				break;
@@ -1372,7 +1339,6 @@ static bool_ monst_spell_monst(int m_idx)
 				if (!see_either) monster_msg("You hear breathing noise.");
 				else if (blind) monster_msg("%^s breathes.", m_name);
 				else monster_msg("%^s breathes gravity at %s.", m_name, t_name);
-				sound(SOUND_BREATH);
 				monst_breath_monst(m_idx, y, x, GF_GRAVITY,
 				                   ((m_ptr->hp / 3) > 200 ? 200 : (m_ptr->hp / 3)), 0);
 				break;
@@ -1384,7 +1350,6 @@ static bool_ monst_spell_monst(int m_idx)
 				if (!see_either) monster_msg("You hear breathing noise.");
 				else if (blind) monster_msg("%^s breathes.", m_name);
 				else monster_msg("%^s breathes shards at %s.", m_name, t_name);
-				sound(SOUND_BREATH);
 				monst_breath_monst(m_idx, y, x, GF_SHARDS,
 				                   ((m_ptr->hp / 6) > 400 ? 400 : (m_ptr->hp / 6)), 0);
 				break;
@@ -1396,7 +1361,6 @@ static bool_ monst_spell_monst(int m_idx)
 				if (!see_either) monster_msg("You hear breathing noise.");
 				else if (blind) monster_msg("%^s breathes.", m_name);
 				else monster_msg("%^s breathes plasma at %s.", m_name, t_name);
-				sound(SOUND_BREATH);
 				monst_breath_monst(m_idx, y, x, GF_PLASMA,
 				                   ((m_ptr->hp / 6) > 150 ? 150 : (m_ptr->hp / 6)), 0);
 				break;
@@ -1408,7 +1372,6 @@ static bool_ monst_spell_monst(int m_idx)
 				if (!see_either) monster_msg("You hear breathing noise.");
 				else if (blind) monster_msg("%^s breathes.", m_name);
 				else monster_msg("%^s breathes force at %s.", m_name, t_name);
-				sound(SOUND_BREATH);
 				monst_breath_monst(m_idx, y, x, GF_FORCE,
 				                   ((m_ptr->hp / 6) > 200 ? 200 : (m_ptr->hp / 6)), 0);
 				break;
@@ -1420,7 +1383,6 @@ static bool_ monst_spell_monst(int m_idx)
 				if (!see_either) monster_msg("You hear breathing noise.");
 				else if (blind) monster_msg("%^s breathes.", m_name);
 				else monster_msg("%^s breathes magical energy at %s.", m_name, t_name);
-				sound(SOUND_BREATH);
 				monst_breath_monst(m_idx, y, x, GF_MANA,
 				                   ((m_ptr->hp / 3) > 250 ? 250 : (m_ptr->hp / 3)), 0);
 				break;
@@ -1432,7 +1394,6 @@ static bool_ monst_spell_monst(int m_idx)
 				if (!see_either) monster_msg("You hear someone mumble.");
 				else if (blind) monster_msg("%^s mumbles.", m_name);
 				else monster_msg("%^s casts a ball of radiation at %s.", m_name, t_name);
-				sound(SOUND_BREATH);
 				monst_breath_monst(m_idx, y, x, GF_NUKE,
 				                   (rlev + damroll(10, 6)), 2);
 				break;
@@ -1444,7 +1405,6 @@ static bool_ monst_spell_monst(int m_idx)
 				if (!see_either) monster_msg("You hear breathing noise.");
 				else if (blind) monster_msg("%^s breathes.", m_name);
 				else monster_msg("%^s breathes toxic waste at %s.", m_name, t_name);
-				sound(SOUND_BREATH);
 				monst_breath_monst(m_idx, y, x, GF_NUKE,
 				                   ((m_ptr->hp / 3) > 800 ? 800 : (m_ptr->hp / 3)), 0);
 				break;
@@ -1456,7 +1416,6 @@ static bool_ monst_spell_monst(int m_idx)
 				if (!see_either) monster_msg("You hear someone mumble frighteningly.");
 				else if (blind) monster_msg("%^s mumbles frighteningly.", m_name);
 				else monster_msg("%^s invokes a raw Chaos upon %s.", m_name, t_name);
-				sound(SOUND_BREATH);
 				monst_breath_monst(m_idx, y, x, GF_CHAOS,
 				                   (rlev * 2) + damroll(10, 10), 4);
 				break;
@@ -1468,7 +1427,6 @@ static bool_ monst_spell_monst(int m_idx)
 				if (!see_either) monster_msg("You hear breathing noise.");
 				else if (blind) monster_msg("%^s breathes.", m_name);
 				else monster_msg("%^s breathes disintegration at %s.", m_name, t_name);
-				sound(SOUND_BREATH);
 				monst_breath_monst(m_idx, y, x, GF_DISINTEGRATE,
 				                   ((m_ptr->hp / 3) > 300 ? 300 : (m_ptr->hp / 3)), 0);
 				break;
@@ -5552,7 +5510,6 @@ static bool_ monst_attack_monst(int m_idx, int t_idx)
 
 	if (explode)
 	{
-		sound(SOUND_EXPLODE);
 		mon_take_hit_mon(m_idx, m_idx, m_ptr->hp + 1, &fear, " explodes into tiny shreds.");
 
 		blinked = FALSE;

@@ -1072,9 +1072,6 @@ static bool_ do_cmd_open_aux(int y, int x, int dir)
 			/* Update some things */
 			p_ptr->update |= (PU_VIEW | PU_MONSTERS | PU_MON_LITE);
 
-			/* Sound */
-			sound(SOUND_OPENDOOR);
-
 			/* Experience */
 			gain_exp(1);
 		}
@@ -1104,9 +1101,6 @@ static bool_ do_cmd_open_aux(int y, int x, int dir)
 
 		/* Update some things */
 		p_ptr->update |= (PU_VIEW | PU_MONSTERS | PU_MON_LITE);
-
-		/* Sound */
-		sound(SOUND_OPENDOOR);
 	}
 
 	/* Result */
@@ -1284,9 +1278,6 @@ static bool_ do_cmd_close_aux(int y, int x, int dir)
 
 		/* Update some things */
 		p_ptr->update |= (PU_VIEW | PU_MONSTERS | PU_MON_LITE);
-
-		/* Sound */
-		sound(SOUND_SHUTDOOR);
 	}
 
 	/* Result */
@@ -1499,9 +1490,6 @@ static bool_ do_cmd_tunnel_aux(int y, int x, int dir)
 
 	/* Get grid */
 	c_ptr = &cave[y][x];
-
-	/* Sound */
-	sound(SOUND_DIG);
 
 	/* Titanium */
 	if (f_ptr->flags & FF_PERMANENT)
@@ -1899,7 +1887,6 @@ static bool_ do_cmd_disarm_chest(int y, int x, s16b o_idx)
 	else
 	{
 		msg_print("You set off a trap!");
-		sound(SOUND_FAIL);
 		chest_trap(y, x, o_idx);
 	}
 
@@ -2201,9 +2188,6 @@ static bool_ do_cmd_bash_aux(int y, int x, int dir)
 
 			cave_set_feat(y, x, FEAT_OPEN);
 		}
-
-		/* Sound */
-		sound(SOUND_OPENDOOR);
 
 		/* Hack -- Fall through the door. Can't disarm while falling. */
 		move_player_aux(dir, always_pickup, 0, FALSE);
@@ -3215,10 +3199,6 @@ void do_cmd_fire(void)
 	}
 
 
-	/* Sound */
-	sound(SOUND_SHOOT);
-
-
 	/* Describe the object */
 	object_desc(o_name, q_ptr, FALSE, 3);
 
@@ -3448,9 +3428,6 @@ void do_cmd_fire(void)
 						if (fear && m_ptr->ml)
 						{
 							char m_name[80];
-
-							/* Sound */
-							sound(SOUND_FLEE);
 
 							/* Get the monster name (or "it") */
 							monster_desc(m_name, m_ptr, 0);
@@ -3858,9 +3835,6 @@ void do_cmd_throw(void)
 					{
 						char m_name[80];
 
-						/* Sound */
-						sound(SOUND_FLEE);
-
 						/* Get the monster name (or "it") */
 						monster_desc(m_name, m_ptr, 0);
 
@@ -4184,9 +4158,6 @@ void do_cmd_boomerang(void)
 					if (fear && m_ptr->ml)
 					{
 						char m_name[80];
-
-						/* Sound */
-						sound(SOUND_FLEE);
 
 						/* Get the monster name (or "it") */
 						monster_desc(m_name, m_ptr, 0);

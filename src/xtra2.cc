@@ -2006,9 +2006,6 @@ void check_experience(void)
 			}
 		}
 
-		/* Sound */
-		sound(SOUND_LEVEL);
-
 		/* Message */
 		cmsg_format(TERM_L_GREEN, "Welcome to level %d.", p_ptr->lev);
 
@@ -3096,10 +3093,6 @@ bool_ mon_take_hit(int m_idx, int dam, bool_ *fear, cptr note)
 			get_rnd_line("mondeath.txt", line_got);
 			msg_format("%^s says: %s", m_name, line_got);
 		}
-
-
-		/* Make a sound */
-		sound(SOUND_KILL);
 
 		/* Death by Missile/Spell attack */
 		if (note)

@@ -315,14 +315,12 @@ bool_ carried_make_attack_normal(int r_idx)
 				{
 					act = "hits you.";
 					do_cut = do_stun = 1;
-					sound(SOUND_HIT);
 					break;
 				}
 
 			case RBM_TOUCH:
 				{
 					act = "touches you.";
-					sound(SOUND_TOUCH);
 					break;
 				}
 
@@ -330,7 +328,6 @@ bool_ carried_make_attack_normal(int r_idx)
 				{
 					act = "punches you.";
 					do_stun = 1;
-					sound(SOUND_HIT);
 					break;
 				}
 
@@ -338,7 +335,6 @@ bool_ carried_make_attack_normal(int r_idx)
 				{
 					act = "kicks you.";
 					do_stun = 1;
-					sound(SOUND_HIT);
 					break;
 				}
 
@@ -346,7 +342,6 @@ bool_ carried_make_attack_normal(int r_idx)
 				{
 					act = "claws you.";
 					do_cut = 1;
-					sound(SOUND_CLAW);
 					break;
 				}
 
@@ -354,14 +349,12 @@ bool_ carried_make_attack_normal(int r_idx)
 				{
 					act = "bites you.";
 					do_cut = 1;
-					sound(SOUND_BITE);
 					break;
 				}
 
 			case RBM_STING:
 				{
 					act = "stings you.";
-					sound(SOUND_STING);
 					break;
 				}
 
@@ -375,7 +368,6 @@ bool_ carried_make_attack_normal(int r_idx)
 				{
 					act = "butts you.";
 					do_stun = 1;
-					sound(SOUND_HIT);
 					break;
 				}
 
@@ -383,42 +375,36 @@ bool_ carried_make_attack_normal(int r_idx)
 				{
 					act = "crushes you.";
 					do_stun = 1;
-					sound(SOUND_CRUSH);
 					break;
 				}
 
 			case RBM_ENGULF:
 				{
 					act = "engulfs you.";
-					sound(SOUND_CRUSH);
 					break;
 				}
 
 			case RBM_CHARGE:
 				{
 					act = "charges you.";
-					sound(SOUND_BUY);  /* Note! This is "charges", not "charges at". */
 					break;
 				}
 
 			case RBM_CRAWL:
 				{
 					act = "crawls on you.";
-					sound(SOUND_SLIME);
 					break;
 				}
 
 			case RBM_DROOL:
 				{
 					act = "drools on you.";
-					sound(SOUND_SLIME);
 					break;
 				}
 
 			case RBM_SPIT:
 				{
 					act = "spits on you.";
-					sound(SOUND_SLIME);
 					break;
 				}
 
@@ -437,14 +423,12 @@ bool_ carried_make_attack_normal(int r_idx)
 			case RBM_WAIL:
 				{
 					act = "wails at you.";
-					sound(SOUND_WAIL);
 					break;
 				}
 
 			case RBM_SPORE:
 				{
 					act = "releases spores at you.";
-					sound(SOUND_SLIME);
 					break;
 				}
 
@@ -457,21 +441,18 @@ bool_ carried_make_attack_normal(int r_idx)
 			case RBM_BEG:
 				{
 					act = "begs you for money.";
-					sound(SOUND_MOAN);
 					break;
 				}
 
 			case RBM_INSULT:
 				{
 					act = desc_insult[rand_int(8)];
-					sound(SOUND_MOAN);
 					break;
 				}
 
 			case RBM_MOAN:
 				{
 					act = desc_moan[rand_int(4)];
-					sound(SOUND_MOAN);
 					break;
 				}
 
@@ -481,7 +462,6 @@ bool_ carried_make_attack_normal(int r_idx)
 						act = "sings 'We are a happy family.'";
 					else
 						act = "sings 'I love you, you love me.'";
-					sound(SOUND_SHOW);
 					break;
 				}
 			}
@@ -1483,7 +1463,6 @@ bool_ make_attack_normal(int m_idx, byte divis)
 					act = "hits you.";
 					do_cut = do_stun = 1;
 					touched = TRUE;
-					sound(SOUND_HIT);
 					break;
 				}
 
@@ -1491,7 +1470,6 @@ bool_ make_attack_normal(int m_idx, byte divis)
 				{
 					act = "touches you.";
 					touched = TRUE;
-					sound(SOUND_TOUCH);
 					break;
 				}
 
@@ -1500,7 +1478,6 @@ bool_ make_attack_normal(int m_idx, byte divis)
 					act = "punches you.";
 					touched = TRUE;
 					do_stun = 1;
-					sound(SOUND_HIT);
 					break;
 				}
 
@@ -1509,7 +1486,6 @@ bool_ make_attack_normal(int m_idx, byte divis)
 					act = "kicks you.";
 					touched = TRUE;
 					do_stun = 1;
-					sound(SOUND_HIT);
 					break;
 				}
 
@@ -1518,7 +1494,6 @@ bool_ make_attack_normal(int m_idx, byte divis)
 					act = "claws you.";
 					touched = TRUE;
 					do_cut = 1;
-					sound(SOUND_CLAW);
 					break;
 				}
 
@@ -1527,7 +1502,6 @@ bool_ make_attack_normal(int m_idx, byte divis)
 					act = "bites you.";
 					do_cut = 1;
 					touched = TRUE;
-					sound(SOUND_BITE);
 					break;
 				}
 
@@ -1535,7 +1509,6 @@ bool_ make_attack_normal(int m_idx, byte divis)
 				{
 					act = "stings you.";
 					touched = TRUE;
-					sound(SOUND_STING);
 					break;
 				}
 
@@ -1550,7 +1523,6 @@ bool_ make_attack_normal(int m_idx, byte divis)
 					act = "butts you.";
 					do_stun = 1;
 					touched = TRUE;
-					sound(SOUND_HIT);
 					break;
 				}
 
@@ -1559,7 +1531,6 @@ bool_ make_attack_normal(int m_idx, byte divis)
 					act = "crushes you.";
 					do_stun = 1;
 					touched = TRUE;
-					sound(SOUND_CRUSH);
 					break;
 				}
 
@@ -1567,7 +1538,6 @@ bool_ make_attack_normal(int m_idx, byte divis)
 				{
 					act = "engulfs you.";
 					touched = TRUE;
-					sound(SOUND_CRUSH);
 					break;
 				}
 
@@ -1575,7 +1545,6 @@ bool_ make_attack_normal(int m_idx, byte divis)
 				{
 					act = "charges you.";
 					touched = TRUE;
-					sound(SOUND_BUY);  /* Note! This is "charges", not "charges at". */
 					break;
 				}
 
@@ -1583,21 +1552,18 @@ bool_ make_attack_normal(int m_idx, byte divis)
 				{
 					act = "crawls on you.";
 					touched = TRUE;
-					sound(SOUND_SLIME);
 					break;
 				}
 
 			case RBM_DROOL:
 				{
 					act = "drools on you.";
-					sound(SOUND_SLIME);
 					break;
 				}
 
 			case RBM_SPIT:
 				{
 					act = "spits on you.";
-					sound(SOUND_SLIME);
 					break;
 				}
 
@@ -1617,14 +1583,12 @@ bool_ make_attack_normal(int m_idx, byte divis)
 			case RBM_WAIL:
 				{
 					act = "wails at you.";
-					sound(SOUND_WAIL);
 					break;
 				}
 
 			case RBM_SPORE:
 				{
 					act = "releases spores at you.";
-					sound(SOUND_SLIME);
 					break;
 				}
 
@@ -1637,14 +1601,12 @@ bool_ make_attack_normal(int m_idx, byte divis)
 			case RBM_BEG:
 				{
 					act = "begs you for money.";
-					sound(SOUND_MOAN);
 					break;
 				}
 
 			case RBM_INSULT:
 				{
 					act = desc_insult[rand_int(8)];
-					sound(SOUND_MOAN);
 					break;
 				}
 
@@ -1654,7 +1616,6 @@ bool_ make_attack_normal(int m_idx, byte divis)
 						act = desc_moan[rand_int(3) + 4];
 					else
 						act = desc_moan[rand_int(4)];
-					sound(SOUND_MOAN);
 					break;
 				}
 
@@ -1664,7 +1625,6 @@ bool_ make_attack_normal(int m_idx, byte divis)
 						act = "sings 'We are a happy family.'";
 					else
 						act = "sings 'I love you, you love me.'";
-					sound(SOUND_SHOW);
 					break;
 				}
 			}
@@ -2627,7 +2587,6 @@ bool_ make_attack_normal(int m_idx, byte divis)
 
 			if (explode)
 			{
-				sound(SOUND_EXPLODE);
 				if (mon_take_hit(m_idx, m_ptr->hp + 1, &fear, NULL))
 				{
 					blinked = FALSE;
@@ -2767,7 +2726,6 @@ bool_ make_attack_normal(int m_idx, byte divis)
 	/* Fear */
 	if (m_ptr->ml && fear)
 	{
-		sound (SOUND_FLEE);
 		msg_format("%^s flees in terror!", m_name);
 	}
 

@@ -653,7 +653,6 @@ void do_cmd_destroy(void)
 
 	/* Message */
 	msg_format("You destroy %s.", o_name);
-	sound(SOUND_DESTITEM);
 
 	/* Create an automatizer rule */
 	if (automatizer_create)
@@ -1598,7 +1597,6 @@ bool_ do_cmd_sense_grid_mana()
 	{
 		if (flush_failure) flush();
 		msg_print("You failed to sense the grid's mana.");
-		sound(SOUND_FAIL);
 		return FALSE;
 	}
 

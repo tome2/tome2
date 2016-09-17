@@ -5140,8 +5140,6 @@ void teleport_swap(int dir)
 		}
 		else
 		{
-			sound(SOUND_TELEPORT);
-
 			cave[p_ptr->py][p_ptr->px].m_idx = c_ptr->m_idx;
 
 			/* Update the old location */
@@ -5223,8 +5221,6 @@ void swap_position(int lty, int ltx)
 
 	if (!c_ptr->m_idx)
 	{
-		sound(SOUND_TELEPORT);
-
 		/* Keep trace of the old location */
 		tx = p_ptr->px;
 		ty = p_ptr->py;
@@ -5260,8 +5256,6 @@ void swap_position(int lty, int ltx)
 	else
 	{
 		m_ptr = &m_list[c_ptr->m_idx];
-
-		sound(SOUND_TELEPORT);
 
 		cave[p_ptr->py][p_ptr->px].m_idx = c_ptr->m_idx;
 

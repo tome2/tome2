@@ -5293,8 +5293,6 @@ s16b drop_near(object_type *j_ptr, int chance, int y, int x)
 	if (chance && (by == p_ptr->py) && (bx == p_ptr->px))
 	{
 		msg_print("You feel something roll beneath your feet.");
-		/* Sound */
-		sound(SOUND_DROP);
 	}
 
 	/* XXX XXX XXX */

@@ -424,8 +424,6 @@ void do_cmd_mindcraft(void)
 
 		msg_format("You failed to concentrate hard enough!");
 
-		sound(SOUND_FAIL);
-
 		if (randint(100) < (chance / 2))
 		{
 			/* Backfire */
@@ -463,8 +461,6 @@ void do_cmd_mindcraft(void)
 	/* Successful spells */
 	else
 	{
-		sound(SOUND_ZAP);
-
 		/* spell code */
 		switch (n)
 		{
@@ -953,8 +949,6 @@ void do_cmd_mimic(void)
 
 		msg_format("You failed to concentrate hard enough!");
 
-		sound(SOUND_FAIL);
-
 		if (randint(100) < (fail / 2))
 		{
 			/* Backfire */
@@ -985,8 +979,6 @@ void do_cmd_mimic(void)
 	/* Successful spells */
 	else
 	{
-		sound(SOUND_ZAP);
-
 		/* spell code */
 		switch (n)
 		{
@@ -1599,8 +1591,6 @@ void do_cmd_powermage(void)
 			msg_print("You failed to get the spell off!");
 		}
 
-		sound(SOUND_FAIL);
-
 		/* Let time pass */
 		if (is_magestaff()) energy_use = 80;
 		else energy_use = 100;
@@ -2211,7 +2201,6 @@ void do_cmd_necromancer(void)
 	{
 		if (flush_failure) flush();
 		msg_format("You failed to concentrate hard enough!");
-		sound(SOUND_FAIL);
 
 		if (randint(100) < (chance / 2))
 		{
@@ -2255,8 +2244,6 @@ void do_cmd_necromancer(void)
 	}
 	else
 	{
-		sound(SOUND_ZAP);
-
 		/* spell code */
 		switch (n)
 		{
@@ -2608,8 +2595,6 @@ int rune_exec(rune_spell *spell, int cost)
 		{
 			msg_print("You failed to get the spell off!");
 		}
-
-		sound(SOUND_FAIL);
 
 		if (is_magestaff()) energy_use = 80;
 		else energy_use = 100;
@@ -4077,12 +4062,9 @@ void do_cmd_symbiotic(void)
 	{
 		if (flush_failure) flush();
 		msg_format("You failed to concentrate hard enough!");
-		sound(SOUND_FAIL);
 	}
 	else
 	{
-		sound(SOUND_ZAP);
-
 		/* spell code */
 		switch (n)
 		{

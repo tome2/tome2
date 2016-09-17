@@ -1795,7 +1795,6 @@ static void py_attack_hand(int *k, monster_type *m_ptr, s32b *special)
 		{
 			if (!desc) msg_format("You hit %s in the groin with your knee!",
 				                      m_name);
-			sound(SOUND_PAIN);
 			special_effect = MA_KNEE;
 		}
 		else if (!desc) msg_format(ma_ptr->desc, m_name);
@@ -2142,9 +2141,6 @@ void py_attack(int y, int x, int max_blow)
 					/* Test for hit */
 					if (test_hit_norm(chance, m_ptr->ac, m_ptr->ml))
 					{
-						/* Sound */
-						sound(SOUND_HIT);
-
 						/* Hack -- bare hands do one damage */
 						k = 1;
 
@@ -2511,9 +2507,6 @@ void py_attack(int y, int x, int max_blow)
 					/* Player misses */
 					else
 					{
-						/* Sound */
-						sound(SOUND_MISS);
-
 						backstab = FALSE; 	/* Clumsy! */
 
 						/* Message */
@@ -2535,9 +2528,6 @@ void py_attack(int y, int x, int max_blow)
 	/* Hack -- delay fear messages */
 	if (fear && m_ptr->ml)
 	{
-		/* Sound */
-		sound(SOUND_FLEE);
-
 		/* Message */
 		msg_format("%^s flees in terror!", m_name);
 	}
@@ -2701,9 +2691,6 @@ static bool_ easy_open_door(int y, int x)
 			/* Update some things */
 			p_ptr->update |= (PU_VIEW | PU_MONSTERS | PU_MON_LITE);
 
-			/* Sound */
-			sound(SOUND_OPENDOOR);
-
 			/* Experience */
 			gain_exp(1);
 		}
@@ -2730,9 +2717,6 @@ static bool_ easy_open_door(int y, int x)
 
 		/* Update some things */
 		p_ptr->update |= (PU_VIEW | PU_MONSTERS | PU_MON_LITE);
-
-		/* Sound */
-		sound(SOUND_OPENDOOR);
 	}
 
 	/* Result */
@@ -3086,9 +3070,6 @@ void move_player_aux(int dir, int do_pickup, int run, bool_ disarm)
 					energy_use = 0;
 			}
 		}
-
-		/* Sound */
-		sound(SOUND_HITWALL);
 	}
 
 	/*

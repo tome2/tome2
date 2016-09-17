@@ -178,9 +178,6 @@ static void purchase_analyze(s32b price, s32b value, s32b guess)
 	{
 		/* Comment */
 		msg_print(comment_7a[rand_int(MAX_COMMENT_7A)]);
-
-		/* Sound */
-		sound(SOUND_STORE1);
 	}
 
 	/* Item was cheaper than we thought, and we paid more than necessary */
@@ -188,9 +185,6 @@ static void purchase_analyze(s32b price, s32b value, s32b guess)
 	{
 		/* Comment */
 		msg_print(comment_7b[rand_int(MAX_COMMENT_7B)]);
-
-		/* Sound */
-		sound(SOUND_STORE2);
 	}
 
 	/* Item was a good bargain, and we got away with it */
@@ -198,9 +192,6 @@ static void purchase_analyze(s32b price, s32b value, s32b guess)
 	{
 		/* Comment */
 		msg_print(comment_7c[rand_int(MAX_COMMENT_7C)]);
-
-		/* Sound */
-		sound(SOUND_STORE3);
 	}
 
 	/* Item was a great bargain, and we got away with it */
@@ -208,9 +199,6 @@ static void purchase_analyze(s32b price, s32b value, s32b guess)
 	{
 		/* Comment */
 		msg_print(comment_7d[rand_int(MAX_COMMENT_7D)]);
-
-		/* Sound */
-		sound(SOUND_STORE4);
 	}
 }
 
@@ -2227,9 +2215,6 @@ void store_purchase(void)
 				/* Say "okay" */
 				say_comment_1();
 
-				/* Make a sound */
-				sound(SOUND_BUY);
-
 				/* Spend the money */
 				p_ptr->au -= price;
 
@@ -2523,9 +2508,6 @@ void store_sell(void)
 		{
 			/* Say "okay" */
 			say_comment_1();
-
-			/* Make a sound */
-			sound(SOUND_SELL);
 
 			/* Get some money */
 			p_ptr->au += price;

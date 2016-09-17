@@ -220,9 +220,6 @@ void teleport_player_directed(int rad, int dir)
 
 	}
 
-	/* Sound */
-	sound(SOUND_TELEPORT);
-
 	/* Move player */
 	teleport_player_to(y, x);
 
@@ -329,9 +326,6 @@ void teleport_away(int m_idx, int dis)
 		/* Stop after MAX_TRIES tries */
 		if (tries > MAX_TRIES) return;
 	}
-
-	/* Sound */
-	sound(SOUND_TPOTHER);
 
 	/* Update the new location */
 	cave[ny][nx].m_idx = m_idx;
@@ -448,9 +442,6 @@ static void teleport_to_player(int m_idx)
 	}
 
 	if (attempts < 1) return;
-
-	/* Sound */
-	sound(SOUND_TPOTHER);
 
 	/* Update the new location */
 	cave[ny][nx].m_idx = m_idx;
@@ -570,9 +561,6 @@ void teleport_player(int dis)
 		/* Stop after MAX_TRIES tries */
 		if (tries > MAX_TRIES) return;
 	}
-
-	/* Sound */
-	sound(SOUND_TELEPORT);
 
 	/* Save the old location */
 	oy = p_ptr->py;
@@ -754,9 +742,6 @@ void teleport_monster_to(int m_idx, int ny, int nx)
 		}
 	}
 
-	/* Sound */
-	sound(SOUND_TPOTHER);
-
 	/* Save the old position */
 	oy = m_ptr->fy;
 	ox = m_ptr->fx;
@@ -832,9 +817,6 @@ void teleport_player_to(int ny, int nx)
 			dis++;
 		}
 	}
-
-	/* Sound */
-	sound(SOUND_TELEPORT);
 
 	/* Save the old location */
 	oy = p_ptr->py;
@@ -961,9 +943,6 @@ void teleport_player_level(void)
 		/* Leaving */
 		p_ptr->leaving = TRUE;
 	}
-
-	/* Sound */
-	sound(SOUND_TPLEVEL);
 }
 
 
@@ -1343,9 +1322,6 @@ void take_hit(int damage, cptr hit_from)
 		/* Necromancers get a special treatment */
 		if (((!has_ability(AB_UNDEAD_FORM)) || ((p_ptr->necro_extra & CLASS_UNDEAD))))
 		{
-			/* Sound */
-			sound(SOUND_DEATH);
-
 			/* Hack -- Note death */
 			if (!last_words)
 			{
@@ -1414,8 +1390,6 @@ void take_hit(int damage, cptr hit_from)
 		{
 			bell();
 		}
-
-		sound(SOUND_WARN);
 
 		/* Message */
 		if (p_ptr->necro_extra & CLASS_UNDEAD)
@@ -1514,9 +1488,6 @@ void take_sanity_hit(int damage, cptr hit_from)
 	/* Dead player */
 	if (p_ptr->csane < 0)
 	{
-		/* Sound */
-		sound(SOUND_DEATH);
-
 		/* Hack -- Note death */
 		cmsg_print(TERM_VIOLET, "You turn into an unthinking vegetable.");
 		if (!last_words)
@@ -1558,8 +1529,6 @@ void take_sanity_hit(int damage, cptr hit_from)
 		{
 			bell();
 		}
-
-		sound(SOUND_WARN);
 
 		/* Message */
 		cmsg_print(TERM_RED, "*** LOW SANITY WARNING! ***");
@@ -6864,9 +6833,6 @@ bool_ project_m(int who, int r, int y, int x, int dam, int typ)
 			/* Take note */
 			if ((fear || do_fear) && (m_ptr->ml))
 			{
-				/* Sound */
-				sound(SOUND_FLEE);
-
 				/* Message */
 				msg_format("%^s flees in terror!", m_name);
 			}

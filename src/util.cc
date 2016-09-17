@@ -1239,16 +1239,6 @@ void bell(void)
 }
 
 
-/*
-* Hack -- Make a (relevant?) sound
-*/
-void sound(int val)
-{
-	/* Ignore; sound not currently supported. */
-	return;
-}
-
-
 
 /*
 * Helper function called only from "inkey()"

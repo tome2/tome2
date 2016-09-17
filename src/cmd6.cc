@@ -1002,10 +1002,6 @@ void do_cmd_eat_food(void)
 	/* Get the item */
 	object_type *o_ptr = get_object(item);
 
-	/* Sound */
-	sound(SOUND_EAT);
-
-
 	/* Take a turn */
 	energy_use = 100;
 
@@ -2514,10 +2510,6 @@ void do_cmd_quaff_potion(void)
 	object_type *o_ptr = get_object(item);
 
 
-	/* Sound */
-	sound(SOUND_QUAFF);
-
-
 	/* Take a turn */
 	energy_use = 100;
 
@@ -3620,8 +3612,6 @@ void do_cmd_read_scroll(void)
 	/* Hack -- allow certain scrolls to be "preserved" */
 	if (!used_up) return;
 
-	sound(SOUND_SCROLL);
-
 	/* Destroy scroll */
 	inc_stack_size(item, -1);
 }
@@ -3762,7 +3752,6 @@ void do_cmd_use_staff(void)
 	{
 		if (flush_failure) flush();
 		msg_print("You failed to use the staff properly.");
-		sound(SOUND_FAIL);
 		return;
 	}
 
@@ -3775,9 +3764,6 @@ void do_cmd_use_staff(void)
 		return;
 	}
 
-
-	/* Sound */
-	sound(SOUND_ZAP);
 
 	/* Analyze the staff */
 	activate_stick(o_ptr, &obvious, &use_charge);
@@ -3931,7 +3917,6 @@ void do_cmd_aim_wand(void)
 	{
 		if (flush_failure) flush();
 		msg_print("You failed to use the wand properly.");
-		sound(SOUND_FAIL);
 		return;
 	}
 
@@ -3943,9 +3928,6 @@ void do_cmd_aim_wand(void)
 		o_ptr->ident |= (IDENT_EMPTY);
 		return;
 	}
-
-	/* Sound */
-	sound(SOUND_ZAP);
 
 	/* Analyze the wand */
 	activate_stick(o_ptr, &obvious, &use_charge);
@@ -4223,8 +4205,6 @@ void do_cmd_zap_rod(void)
 		/* Message */
 		msg_print("You failed to use the rod properly.");
 
-		sound(SOUND_FAIL);
-
 		return;
 	}
 
@@ -4248,9 +4228,6 @@ void do_cmd_zap_rod(void)
 
 	/* Increase the timeout by the rod kind's pval. */
 	o_ptr->timeout -= cost;
-
-	/* Sound */
-	sound(SOUND_ZAP);
 
 	/* Analyze the rod */
 	switch (o_ptr->pval)
@@ -4941,7 +4918,6 @@ void do_cmd_activate(void)
 	{
 		if (flush_failure) flush();
 		msg_print("You failed to activate it properly.");
-		sound(SOUND_FAIL);
 		return;
 	}
 
@@ -4979,9 +4955,6 @@ void do_cmd_activate(void)
 
 	/* Activate the item */
 	msg_print("You activate it...");
-
-	/* Sound */
-	sound(SOUND_ZAP);
 
 	/* New mostly unified activation code
 	   This has to be early to allow artifacts to override normal items -- neil */

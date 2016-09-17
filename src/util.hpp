@@ -24,7 +24,6 @@ extern errr fd_read(int fd, char *buf, huge n);
 extern errr fd_write(int fd, cptr buf, huge n);
 extern errr fd_close(int fd);
 extern void flush(void);
-extern void sound(int num);
 extern void move_cursor(int row, int col);
 extern void text_to_ascii(char *buf, cptr str);
 extern void ascii_to_text(char *buf, cptr str);
