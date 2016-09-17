@@ -962,7 +962,6 @@ static bool_ monst_spell_monst(int m_idx)
 	static const monster_spell_flag_set SF_INT_MASK = compute_smart_mask();
 
 	int y = 0, x = 0;
-	int i = 1;
 	char m_name[80], t_name[80];
 	char m_poss[80];
 	char ddesc[80];
@@ -997,20 +996,14 @@ static bool_ monst_spell_monst(int m_idx)
 
 	if ((rand_int(100) >= chance) && (monst_spell_monst_spell == -1)) return (FALSE);
 
-	/* Target location */
-	if (m_ptr->target > -1)
+	/* Make sure monster actually has a target */
+	if (m_ptr->target <= 0)
 	{
-		if (m_ptr->target > 0)
-		{
-			i = m_ptr->target;
-		}
-		else return FALSE;
+		return FALSE;
 	}
-	else return FALSE;
-
 
 	{
-		int t_idx = i;
+		int t_idx = m_ptr->target;
 
 		monster_type *t_ptr = &m_list[t_idx];
 		auto const tr_ptr = t_ptr->race();
