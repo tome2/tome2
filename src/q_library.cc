@@ -8,7 +8,6 @@
 #include "monster_type.hpp"
 #include "object2.hpp"
 #include "player_type.hpp"
-#include "quark.hpp"
 #include "spells3.hpp"
 #include "spells4.hpp"
 #include "tables.hpp"

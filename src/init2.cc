@@ -33,7 +33,6 @@
 #include "player_race.hpp"
 #include "player_race_mod.hpp"
 #include "q_library.hpp"
-#include "quark.hpp"
 #include "randart.hpp"
 #include "randart_part_type.hpp"
 #include "set_type.hpp"
@@ -649,9 +648,6 @@ static errr init_misc(void)
 
 	/*** Prepare the various "bizarre" arrays ***/
 
-	/* Initialize quark subsystem */
-	quark_init();
-
 	/* Initialize messages subsystem */
 	message_init();
 
@@ -791,24 +787,6 @@ static errr init_other(void)
 		/* Allocate one row of the cave */
 		cave[i] = new cave_type[MAX_WID];
 	}
-
-	/*** Pre-allocate the basic "auto-inscriptions" ***/
-
-	/* The "basic" feelings */
-	(void)quark_add("cursed");
-	(void)quark_add("broken");
-	(void)quark_add("average");
-	(void)quark_add("good");
-
-	/* The "extra" feelings */
-	(void)quark_add("excellent");
-	(void)quark_add("worthless");
-	(void)quark_add("special");
-	(void)quark_add("terrible");
-
-	/* Some extra strings */
-	(void)quark_add("uncursed");
-	(void)quark_add("on sale");
 
 	/* Analyze the windows */
 	for (n = 0; n < 8; n++)

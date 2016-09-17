@@ -38,7 +38,6 @@
 #include "player_race.hpp"
 #include "player_race_mod.hpp"
 #include "player_type.hpp"
-#include "quark.hpp"
 #include "set_type.hpp"
 #include "skills.hpp"
 #include "spell_type.hpp"

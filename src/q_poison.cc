@@ -15,7 +15,6 @@
 #include "monster_type.hpp"
 #include "object2.hpp"
 #include "player_type.hpp"
-#include "quark.hpp"
 #include "tables.hpp"
 #include "util.hpp"
 #include "variable.hpp"

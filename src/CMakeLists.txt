@@ -87,7 +87,6 @@ SET(SRCS_COMMON
   q_ultrag.cc
   q_wight.cc
   q_wolves.cc
-  quark.cc
   quest.cc
   randart.cc
   range.cc

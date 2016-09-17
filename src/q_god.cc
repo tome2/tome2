@@ -14,7 +14,6 @@
 #include "monster_spell_flag.hpp"
 #include "object2.hpp"
 #include "player_type.hpp"
-#include "quark.hpp"
 #include "skill_type.hpp"
 #include "tables.hpp"
 #include "util.hpp"

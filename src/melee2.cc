@@ -38,7 +38,6 @@
 #include "object_flag.hpp"
 #include "options.hpp"
 #include "player_type.hpp"
-#include "quark.hpp"
 #include "skills.hpp"
 #include "spells1.hpp"
 #include "spells2.hpp"

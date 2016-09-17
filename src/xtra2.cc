@@ -42,7 +42,6 @@
 #include "player_race_mod.hpp"
 #include "player_type.hpp"
 #include "point.hpp"
-#include "quark.hpp"
 #include "randart.hpp"
 #include "skill_type.hpp"
 #include "skills.hpp"

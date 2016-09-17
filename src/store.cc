@@ -24,7 +24,6 @@
 #include "options.hpp"
 #include "owner_type.hpp"
 #include "player_type.hpp"
-#include "quark.hpp"
 #include "spell_type.hpp"
 #include "skills.hpp"
 #include "spells5.hpp"

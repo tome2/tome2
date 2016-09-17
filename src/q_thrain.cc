@@ -11,7 +11,6 @@
 #include "init1.hpp"
 #include "lua_bind.hpp"
 #include "object_type.hpp"
-#include "quark.hpp"
 #include "randart.hpp"
 #include "messages.hpp"
 #include "monster2.hpp"

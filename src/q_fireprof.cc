@@ -12,7 +12,6 @@
 #include "object_flag.hpp"
 #include "object_type.hpp"
 #include "player_type.hpp"
-#include "quark.hpp"
 #include "tables.hpp"
 #include "traps.hpp"
 #include "util.hpp"

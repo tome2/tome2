@@ -17,7 +17,6 @@
 #include "player_race.hpp"
 #include "player_race_mod.hpp"
 #include "player_type.hpp"
-#include "quark.hpp"
 #include "tables.h"
 #include "tables.hpp"
 #include "timer_type.hpp"

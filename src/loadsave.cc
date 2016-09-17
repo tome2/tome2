@@ -23,7 +23,6 @@
 #include "player_race.hpp"
 #include "player_race_mod.hpp"
 #include "player_type.hpp"
-#include "quark.hpp"
 #include "hooks.hpp"
 #include "skill_type.hpp"
 #include "store_type.hpp"

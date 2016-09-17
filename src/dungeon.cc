@@ -58,7 +58,6 @@
 #include "player_type.hpp"
 #include "powers.hpp"
 #include "quest.hpp"
-#include "quark.hpp"
 #include "skills.hpp"
 #include "spell_type.hpp"
 #include "spells1.hpp"

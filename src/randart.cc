@@ -14,7 +14,6 @@
 #include "object_type.hpp"
 #include "options.hpp"
 #include "player_type.hpp"
-#include "quark.hpp"
 #include "randart_gen_type.hpp"
 #include "randart_part_type.hpp"
 #include "spells2.hpp"

@@ -26,7 +26,6 @@
 #include "object_type.hpp"
 #include "options.hpp"
 #include "player_type.hpp"
-#include "quark.hpp"
 #include "squeltch.hpp"
 #include "store.hpp"
 #include "store_type.hpp"
