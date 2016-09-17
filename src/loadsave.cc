@@ -221,6 +221,48 @@ static void do_string(char *str, int max, ls_flag_t flag)
 	}
 }
 
+static void load_std_string(std::string &s)
+{
+	s.clear();
+	while (true)
+	{
+		byte u8 = sf_get();
+		if (u8)
+		{
+			s += u8;
+		}
+		else
+		{
+			break;
+		}
+	}
+}
+
+static void save_std_string(std::string &s)
+{
+	for (std::size_t i = 0; i < s.length(); i++)
+	{
+		assert(s[i] != 0); // Sanity check; we cannot handle NULs in strings
+		sf_put(s[i]);
+	}
+	sf_put(0); // NUL terminator
+}
+
+static void do_std_string(std::string &s, ls_flag_t flag)
+{
+	switch(flag)
+	{
+	case ls_flag_t::LOAD:
+	{
+		load_std_string(s);
+		break;
+	}
+	case ls_flag_t::SAVE:
+		save_std_string(s);
+		break;
+	}
+}
+
 /*
  * Load/save flag set
  */
@@ -291,29 +333,9 @@ static void do_subrace(ls_flag_t flag)
 {
 	player_race_mod *sr_ptr = &race_mod_info[SUBRACE_SAVE];
 	int i;
-	char buf[81];
 
-	buf[80] = '\0'; // Make sure string is always NUL terminated
-
-	if (flag == ls_flag_t::SAVE)
-	{
-		strncpy(buf, sr_ptr->title, 80);
-	}
-	do_string(buf, 80, flag);
-	if (flag == ls_flag_t::LOAD)
-	{
-		set_subrace_title(sr_ptr, buf);
-	}
-
-	if (flag == ls_flag_t::SAVE)
-	{
-		strncpy(buf, sr_ptr->desc, 80);
-	}
-	do_string(buf, 80, flag);
-	if (flag == ls_flag_t::LOAD)
-	{
-		set_subrace_description(sr_ptr, buf);
-	}
+	do_std_string(sr_ptr->title, flag);
+	do_std_string(sr_ptr->description, flag);
 
 	do_bool(&sr_ptr->place, flag);
 

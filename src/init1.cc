@@ -1241,8 +1241,7 @@ errr init_player_info_txt(FILE *fp)
 			rmp_ptr = &race_mod_info[i];
 
 			/* Copy title */
-			assert(!rmp_ptr->title);
-			rmp_ptr->title = my_strdup(s);
+			rmp_ptr->title = s;
 
 			/* Initialize */
 			rmp_ptr->powers[0] = rmp_ptr->powers[1] = rmp_ptr->powers[2] = rmp_ptr->powers[3] = -1;
@@ -1270,15 +1269,11 @@ errr init_player_info_txt(FILE *fp)
 			}
 
 			/* Description */
-			if (!rmp_ptr->desc)
+			if (!rmp_ptr->description.empty())
 			{
-				rmp_ptr->desc = my_strdup(s);
+				rmp_ptr->description += '\n';
 			}
-			else
-			{
-				/* Append chars to the name */
-				strappend(&rmp_ptr->desc, format("\n%s", s));
-			}
+			rmp_ptr->description += s;
 
 			/* Next... */
 			continue;
@@ -7331,7 +7326,7 @@ static cptr process_dungeon_file_expr(char **sp, char *fp)
 			/* Race Mod */
 			else if (streq(b + 1, "RACEMOD"))
 			{
-				v = rmp_ptr->title;
+				v = rmp_ptr->title.c_str(); // The string SHOULD be stable enough for this
 			}
 
 			/* Class */

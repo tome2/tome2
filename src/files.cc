@@ -900,7 +900,7 @@ static cptr process_pref_file_expr(char **sp, char *fp)
 			/* Race */
 			else if (streq(b + 1, "RACEMOD"))
 			{
-				v = rmp_ptr->title;
+				v = rmp_ptr->title.c_str(); // The string SHOULD be stable enough for this
 			}
 
 			/* Class */

@@ -12,12 +12,13 @@
 #include "skills_defs.hpp"
 
 #include <array>
+#include <string>
 #include <vector>
 
 struct player_race_mod
 {
-	char *title = nullptr;                                  /* Type of race mod */
-	char *desc = nullptr;                                   /* Desc */
+	std::string title;
+	std::string description;
 
 	bool_ place = FALSE;                                    /* TRUE = race race modifier, FALSE = Race modifier race */
 

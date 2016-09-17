@@ -8,8 +8,6 @@
 #include <memory>
 
 extern void do_rebirth(void);
-extern void set_subrace_title(player_race_mod *rmp_ptr, cptr name);
-extern void set_subrace_description(player_race_mod *rmp_ptr, cptr desc);
 extern void switch_subrace(int racem, bool_ copy_old);
 extern void drop_from_wild(void);
 extern bool_ set_roots(int v, s16b ac, s16b dam);

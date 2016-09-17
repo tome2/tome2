@@ -981,8 +981,9 @@ static void player_outfit_spellbook(cptr spell_name)
  */
 static void player_outfit(void)
 {
+	// Shorthand names for convenience
 	cptr class_name = spp_ptr->title;
-	cptr subrace_name = rmp_ptr->title;
+	auto const &subrace_name = rmp_ptr->title;
 
 	/*
 	 * Get an adventurer guide describing a bit of the
@@ -1048,37 +1049,37 @@ static void player_outfit(void)
 		}
 
 		/* Dragons */
-		if (streq(subrace_name, "Red"))
+		if (subrace_name == "Red")
 		{
 			player_outfit_spellbook("Globe of Light");
 		}
-		if (streq(subrace_name, "Black"))
+		if (subrace_name == "Black")
 		{
 			player_outfit_spellbook("Geyser");
 		}
-		if (streq(subrace_name, "Green"))
+		if (subrace_name == "Green")
 		{
 			player_outfit_spellbook("Noxious Cloud");
 		}
-		if (streq(subrace_name, "Blue"))
+		if (subrace_name == "Blue")
 		{
 			player_outfit_spellbook("Stone Skin");
 		}
-		if (streq(subrace_name, "White"))
+		if (subrace_name == "White")
 		{
 			player_outfit_spellbook("Sense Monsters");
 		}
-		if (streq(subrace_name, "Ethereal"))
+		if (subrace_name == "Ethereal")
 		{
 			player_outfit_spellbook("Recharge");
 		}
 
 		/* Demons */
-		if (streq(subrace_name, "(Aewrog)"))
+		if (subrace_name == "(Aewrog)")
 		{
 			player_outfit_spellbook("Charm");
 		}
-		if (streq(subrace_name, "(Narrog)"))
+		if (subrace_name == "(Narrog)")
 		{
 			player_outfit_spellbook("Phase Door");
 		}
@@ -1116,7 +1117,7 @@ static void player_outfit(void)
 		identify_pack_fully();
 	}
 
-	if (streq(rmp_ptr->title, "Vampire"))
+	if (rmp_ptr->title == "Vampire")
 	{
 		player_gain_corruption(CORRUPT_VAMPIRE_TEETH);
 		player_gain_corruption(CORRUPT_VAMPIRE_STRENGTH);
@@ -1382,7 +1383,7 @@ static int dump_rmods(int sel, int *racem, int max)
 
 		/* Display */
 		if (racem[n])
-			strnfmt(buf, 80, "%c%c%c %s", p1, I2A(n), p2, rmp_ptr->title);
+			strnfmt(buf, 80, "%c%c%c %s", p1, I2A(n), p2, rmp_ptr->title.c_str());
 		else
 			strnfmt(buf, 80, "%c%c%c Classical", p1, I2A(n), p2);
 
@@ -1391,7 +1392,7 @@ static int dump_rmods(int sel, int *racem, int max)
 		{
 			std::string desc;
 
-			desc += rmp_ptr->desc;
+			desc += rmp_ptr->description;
 			if (rmp_ptr->flags & PR_EXPERIMENTAL)
 			{
 				desc += "\nEXPERIMENTAL";
@@ -1716,7 +1717,7 @@ static bool_ player_birth_aux_ask()
 					}
 					else if (c == '?')
 					{
-						help_subrace(race_mod_info[racem[sel]].title);
+						help_subrace(race_mod_info[racem[sel]].title.c_str());
 					}
 
 					k = (islower(c) ? A2I(c) : -1);

@@ -5359,42 +5359,16 @@ void switch_subrace(int racem, bool_ copy_old)
 	/* If we switch to the saved subrace, we copy over the old subrace data */
 	if (copy_old && (racem == SUBRACE_SAVE))
 	{
-		// Keep references to owned pointers.
-		auto old_title = race_mod_info[SUBRACE_SAVE].title;
-		auto old_desc = race_mod_info[SUBRACE_SAVE].desc;
+		// Keep old description
+		auto old_desc = race_mod_info[SUBRACE_SAVE].description;
 		// Copy everything
 		race_mod_info[SUBRACE_SAVE] = race_mod_info[p_ptr->pracem];
-		// "Undo" copy of title and description (since they're *owned* pointers)
-		race_mod_info[SUBRACE_SAVE].title = old_title;
-		race_mod_info[SUBRACE_SAVE].desc = old_desc;
-		// Replace subrace title with the title currently held by player.
-		set_subrace_title(&race_mod_info[SUBRACE_SAVE], race_mod_info[p_ptr->pracem].title);
+		// Reinstate description
+		race_mod_info[SUBRACE_SAVE].description = old_desc;
 	}
 
 	p_ptr->pracem = racem;
 	rmp_ptr = &race_mod_info[p_ptr->pracem];
-}
-
-void set_subrace_title(player_race_mod *rmp_ptr, cptr name)
-{
-	// Free old title.
-	free(rmp_ptr->title);
-	// Allocate copy of new title.
-	rmp_ptr->title = strdup(name);
-	if (!rmp_ptr->title) {
-		abort();
-	}
-}
-
-void set_subrace_description(player_race_mod *rmp_ptr, cptr desc)
-{
-	// Free old description
-	free(rmp_ptr->desc);
-	// Allocate copy of new description.
-	rmp_ptr->desc = strdup(desc);
-	if (!rmp_ptr->desc) {
-		abort();
-	}
 }
 
 /*

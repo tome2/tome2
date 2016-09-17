@@ -1016,7 +1016,7 @@ static bool_ grace_delay_trigger()
 static void process_world_gods()
 {
 	const char *race_name = rp_ptr->title;
-	const char *subrace_name = rmp_ptr->title;
+	auto const &subrace_name = rmp_ptr->title;
 
 	if (p_ptr->pgod == GOD_VARDA)
 	{
@@ -1177,7 +1177,7 @@ static void process_world_gods()
 		if (grace_delay_trigger())
 		{
 			/* He loves astral beings  */
-			if (streq(subrace_name, "LostSoul"))
+			if (subrace_name == "LostSoul")
 			{
 				inc_piety(GOD_ALL, 1);
 			}
@@ -1189,7 +1189,7 @@ static void process_world_gods()
 			}
 
 			/* Really hates vampires and demons */
-			if (streq(subrace_name, "Vampire") ||
+			if ((subrace_name == "Vampire") ||
 			    streq(race_name, "Demon"))
 			{
 				inc_piety(GOD_ALL, -10);

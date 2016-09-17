@@ -90,19 +90,13 @@ static void player_gain_vampire()
 {
 	player_race_mod *rmp_ptr = &race_mod_info[SUBRACE_SAVE];
 
-	/* Be a Vampire and be proud of it */
-	cptr title = rmp_ptr->title;
-	if (streq(title, "Vampire"))
+	if (rmp_ptr->title == "Vampire")
 	{
-		title = "Vampire";
 		rmp_ptr->place = FALSE;
-		set_subrace_title(rmp_ptr, title);
 	}
 	else
 	{
-		char buf[512];
-		sprintf(buf, "Vampire %s", title);
-		set_subrace_title(rmp_ptr, buf);
+		rmp_ptr->title = fmt::format("Vampire {}", rmp_ptr->title);
 	}
 
 	/* Bonus/and .. not bonus :) */
