@@ -2685,7 +2685,9 @@ static void build_type4(int by0, int bx0)
  */
 static bool_ vault_aux_jelly(int r_idx)
 {
-	monster_race *r_ptr = &r_info[r_idx];
+	auto const &r_info = game->edit_data.r_info;
+
+	auto r_ptr = &r_info[r_idx];
 
 	/* Decline unique monsters */
 	if (r_ptr->flags & RF_UNIQUE) return (FALSE);
@@ -2706,7 +2708,9 @@ static bool_ vault_aux_jelly(int r_idx)
  */
 static bool_ vault_aux_animal(int r_idx)
 {
-	monster_race *r_ptr = &r_info[r_idx];
+	auto const &r_info = game->edit_data.r_info;
+
+	auto r_ptr = &r_info[r_idx];
 
 	/* Decline unique monsters */
 	if (r_ptr->flags & RF_UNIQUE) return (FALSE);
@@ -2724,7 +2728,9 @@ static bool_ vault_aux_animal(int r_idx)
  */
 static bool_ vault_aux_undead(int r_idx)
 {
-	monster_race *r_ptr = &r_info[r_idx];
+	auto const &r_info = game->edit_data.r_info;
+
+	auto r_ptr = &r_info[r_idx];
 
 	/* Decline unique monsters */
 	if (r_ptr->flags & RF_UNIQUE) return (FALSE);
@@ -2742,7 +2748,9 @@ static bool_ vault_aux_undead(int r_idx)
  */
 static bool_ vault_aux_chapel(int r_idx)
 {
-	monster_race *r_ptr = &r_info[r_idx];
+	auto const &r_info = game->edit_data.r_info;
+
+	auto r_ptr = &r_info[r_idx];
 
 	/* Decline unique monsters */
 	if (r_ptr->flags & RF_UNIQUE) return (FALSE);
@@ -2763,7 +2771,9 @@ static bool_ vault_aux_chapel(int r_idx)
  */
 static bool_ vault_aux_kennel(int r_idx)
 {
-	monster_race *r_ptr = &r_info[r_idx];
+	auto const &r_info = game->edit_data.r_info;
+
+	auto r_ptr = &r_info[r_idx];
 
 	/* Decline unique monsters */
 	if (r_ptr->flags & RF_UNIQUE) return (FALSE);
@@ -2779,7 +2789,9 @@ static bool_ vault_aux_kennel(int r_idx)
  */
 static bool_ vault_aux_treasure(int r_idx)
 {
-	monster_race *r_ptr = &r_info[r_idx];
+	auto const &r_info = game->edit_data.r_info;
+
+	auto r_ptr = &r_info[r_idx];
 
 	/* Decline unique monsters */
 	if (r_ptr->flags & RF_UNIQUE) return (FALSE);
@@ -2811,6 +2823,8 @@ static bool_ vault_aux_clone(int r_idx)
  */
 static bool_ vault_aux_symbol(int r_idx)
 {
+	auto const &r_info = game->edit_data.r_info;
+
 	return ((r_info[r_idx].d_char == (r_info[template_race].d_char))
 		&& !(r_info[r_idx].flags & RF_UNIQUE));
 }
@@ -2821,7 +2835,9 @@ static bool_ vault_aux_symbol(int r_idx)
  */
 static bool_ vault_aux_orc(int r_idx)
 {
-	monster_race *r_ptr = &r_info[r_idx];
+	auto const &r_info = game->edit_data.r_info;
+
+	auto r_ptr = &r_info[r_idx];
 
 	/* Decline unique monsters */
 	if (r_ptr->flags & RF_UNIQUE) return (FALSE);
@@ -2840,7 +2856,9 @@ static bool_ vault_aux_orc(int r_idx)
  */
 static bool_ vault_aux_troll(int r_idx)
 {
-	monster_race *r_ptr = &r_info[r_idx];
+	auto const &r_info = game->edit_data.r_info;
+
+	auto r_ptr = &r_info[r_idx];
 
 	/* Decline unique monsters */
 	if (r_ptr->flags & RF_UNIQUE) return (FALSE);
@@ -2858,7 +2876,9 @@ static bool_ vault_aux_troll(int r_idx)
  */
 static bool_ vault_aux_giant(int r_idx)
 {
-	monster_race *r_ptr = &r_info[r_idx];
+	auto const &r_info = game->edit_data.r_info;
+
+	auto r_ptr = &r_info[r_idx];
 
 	/* Decline unique monsters */
 	if (r_ptr->flags & RF_UNIQUE) return (FALSE);
@@ -2876,7 +2896,9 @@ static bool_ vault_aux_giant(int r_idx)
  */
 static bool_ vault_aux_demon(int r_idx)
 {
-	monster_race *r_ptr = &r_info[r_idx];
+	auto const &r_info = game->edit_data.r_info;
+
+	auto r_ptr = &r_info[r_idx];
 
 	/* Decline unique monsters */
 	if (r_ptr->flags & RF_UNIQUE) return (FALSE);
@@ -2915,6 +2937,8 @@ static bool_ vault_aux_demon(int r_idx)
  */
 static void build_type5(int by0, int bx0)
 {
+	auto const &r_info = game->edit_data.r_info;
+
 	int y, x, y1, x1, y2, x2, xval, yval;
 	int tmp, i;
 	cptr name;
@@ -2979,7 +3003,7 @@ static void build_type5(int by0, int bx0)
 	{
 		while (1)
 		{
-			template_race = randint(max_r_idx - 2);
+			template_race = rand_int(r_info.size());
 
 			/* Reject uniques */
 			if (r_info[template_race].flags & RF_UNIQUE) continue;
@@ -3153,6 +3177,8 @@ static void build_type5(int by0, int bx0)
  */
 static void build_type6(int by0, int bx0)
 {
+	auto const &r_info = game->edit_data.r_info;
+
 	int tmp, what[16];
 	int i, j, y, x, y1, x1, y2, x2, xval, yval;
 	bool_ empty = FALSE;
@@ -3251,7 +3277,7 @@ static void build_type6(int by0, int bx0)
 
 			do
 			{
-				template_race = randint(max_r_idx - 2);
+				template_race = rand_int(r_info.size() - 1);
 			}
 			while ((r_info[template_race].flags & RF_UNIQUE)
 			                || (((r_info[template_race].level) + randint(5)) >
@@ -3322,7 +3348,9 @@ static void build_type6(int by0, int bx0)
 
 		/* Restrict monster selection */
 		get_mon_num_hook = [](int r_idx) -> bool_ {
-			monster_race *r_ptr = &r_info[r_idx];
+			auto const &r_info = game->edit_data.r_info;
+
+			auto r_ptr = &r_info[r_idx];
 
 			/* Decline unique monsters */
 			if (r_ptr->flags & RF_UNIQUE) return (FALSE);
@@ -7619,6 +7647,7 @@ static void supersize_grid_tile(int sy, int sx, int ty, int tx)
 static bool_ cave_gen(void)
 {
 	auto const &d_info = game->edit_data.d_info;
+	auto const &r_info = game->edit_data.r_info;
 
 	auto d_ptr = &d_info[dungeon_type];
 

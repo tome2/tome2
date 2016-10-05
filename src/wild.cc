@@ -1002,10 +1002,11 @@ static void town_borders(int qy, int qx)
 
 static bool_ create_townpeople_hook(int r_idx)
 {
-	monster_race *r_ptr = &r_info[r_idx];
+	auto const &r_info = game->edit_data.r_info;
 
-	if (r_ptr->d_char == 't') return TRUE;
-	else return FALSE;
+	auto r_ptr = &r_info[r_idx];
+
+	return (r_ptr->d_char == 't');
 }
 
 

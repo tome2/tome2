@@ -56,6 +56,7 @@ GENERATE_MONSTER_LOOKUP_FN(get_adventurer, "Adventurer")
 void initialize_random_quests(int n)
 {
 	auto const &d_info = game->edit_data.d_info;
+	auto &r_info = game->edit_data.r_info;
 
 	int step, lvl, i, k;
 	int old_type = dungeon_type;
@@ -437,6 +438,8 @@ static bool_ quest_random_turn_hook(void *, void *, void *)
 
 static bool_ quest_random_feeling_hook(void *, void *, void *)
 {
+	auto const &r_info = game->edit_data.r_info;
+
 	if (!(dungeon_flags & DF_PRINCIPAL)) return (FALSE);
 	if ((dun_level < 1) || (dun_level >= MAX_RANDOM_QUEST)) return (FALSE);
 	if (!random_quests[dun_level].type) return (FALSE);
@@ -616,6 +619,8 @@ static bool_ quest_random_dump_hook(void *, void *in_, void *)
 
 std::string quest_random_describe()
 {
+	auto const &r_info = game->edit_data.r_info;
+
 	// Only emit description if we're actually on a
 	// random quest level.
 	if (!(dungeon_flags & DF_PRINCIPAL)) return "";

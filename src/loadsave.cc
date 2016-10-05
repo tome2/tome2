@@ -1366,6 +1366,8 @@ static bool do_objects(ls_flag_t flag, bool no_companions)
 
 static bool do_monsters(ls_flag_t flag, bool no_companions)
 {
+	auto &r_info = game->edit_data.r_info;
+
 	u16b n_monsters = m_max;
 
 	if (flag == ls_flag_t::SAVE)
@@ -1618,7 +1620,9 @@ bool_ file_exist(cptr buf)
  */
 static void do_lore(std::size_t r_idx, ls_flag_t flag)
 {
-	monster_race *r_ptr = &r_info[r_idx];
+	auto &r_info = game->edit_data.r_info;
+
+	auto r_ptr = &r_info[r_idx];
 
 	do_s16b(&r_ptr->r_pkills, flag);
 	do_s16b(&r_ptr->max_num, flag);
@@ -2082,11 +2086,13 @@ static void do_stores(ls_flag_t flag)
  */
 static bool do_monster_lore(ls_flag_t flag)
 {
-	u16b tmp16u = max_r_idx;
+	auto const &r_info = game->edit_data.r_info;
+
+	u16b tmp16u = r_info.size();
 
 	do_u16b(&tmp16u, flag);
 
-	if ((flag == ls_flag_t::LOAD) && (tmp16u > max_r_idx))
+	if ((flag == ls_flag_t::LOAD) && (tmp16u > r_info.size()))
 	{
 		note("Too many monster races!");
 		return false;

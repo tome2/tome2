@@ -1,6 +1,7 @@
 #include "q_shroom.hpp"
 
 #include "cave.hpp"
+#include "game.hpp"
 #include "hook_chat_in.hpp"
 #include "hook_give_in.hpp"
 #include "hook_monster_death_in.hpp"
@@ -128,6 +129,8 @@ static bool_ quest_shroom_death_hook(void *, void *in_, void *)
 
 static bool_ quest_shroom_give_hook(void *, void *in_, void *)
 {
+	auto const &r_info = game->edit_data.r_info;
+
 	struct hook_give_in *in = static_cast<struct hook_give_in *>(in_);
 	object_type *o_ptr;
 	monster_type *m_ptr;
@@ -213,6 +216,8 @@ static bool_ quest_shroom_give_hook(void *, void *in_, void *)
 
 static void check_dogs_alive(s32b m_idx)
 {
+	auto const &r_info = game->edit_data.r_info;
+
 	if ((r_info[get_grip()].max_num == 0) ||
 	    (r_info[get_wolf()].max_num == 0) ||
 	    (r_info[get_fang()].max_num == 0))

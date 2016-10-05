@@ -2,6 +2,7 @@
 
 #include "cave.hpp"
 #include "cave_type.hpp"
+#include "game.hpp"
 #include "generate.hpp"
 #include "hook_stair_in.hpp"
 #include "hook_quest_finish_in.hpp"
@@ -184,8 +185,10 @@ static bool_ quest_eol_death_hook(void *, void *in_, void *)
 
 static bool_ quest_eol_stair_hook(void *, void *in_, void *)
 {
+	auto const &r_info = game->edit_data.r_info;
+
 	struct hook_stair_in *in = static_cast<struct hook_stair_in *>(in_);
-	monster_race *r_ptr = &r_info[get_eol()];
+	auto r_ptr = &r_info[get_eol()];
 
 	if (p_ptr->inside_quest != QUEST_EOL) return FALSE;
 

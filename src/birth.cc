@@ -720,6 +720,7 @@ static void birth_put_stats(void)
 static void player_wipe(void)
 {
 	auto const &d_info = game->edit_data.d_info;
+	auto &r_info = game->edit_data.r_info;
 
 	/* Wipe special levels */
 	wipe_saved();
@@ -805,9 +806,9 @@ static void player_wipe(void)
 
 
 	/* Reset the "monsters" */
-	for (std::size_t i = 1; i < max_r_idx; i++)
+	for (auto &r_ref: r_info)
 	{
-		monster_race *r_ptr = &r_info[i];
+		auto r_ptr = &r_ref;
 
 		/* Hack -- Reset the counter */
 		r_ptr->cur_num = 0;

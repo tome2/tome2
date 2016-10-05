@@ -1365,10 +1365,12 @@ static void fix_object(void)
 
 static void fix_m_list(void)
 {
+	auto const &r_info = game->edit_data.r_info;
+
 	// Mirror of the r_info array, index by index. We use a
 	// statically allocated value to avoid frequent allocations.
 	static auto r_total_visible =
-	        std::vector<u16b>(max_r_idx, 0);
+		std::vector<u16b>(r_info.size(), 0);
 
 	/* Scan windows */
 	for (std::size_t j = 0; j < 8; j++)
@@ -1404,7 +1406,7 @@ static void fix_m_list(void)
 		}
 
 		/* reset visible count */
-		for (std::size_t i = 1; i < max_r_idx; i++)
+		for (std::size_t i = 1; i < r_info.size(); i++)
 		{
 			r_total_visible[i] = 0;
 		}
@@ -1449,7 +1451,7 @@ static void fix_m_list(void)
 
 			c_prt(TERM_WHITE, format("You can see %d monster%s", c, (c > 1 ? "s:" : ":")), 0, 0);
 
-			for (std::size_t i = 1; i < max_r_idx; i++)
+			for (std::size_t i = 1; i < r_info.size(); i++)
 			{
 				auto const r_ptr = &r_info[i];
 				auto const total_visible = r_total_visible[i];
@@ -1667,6 +1669,8 @@ static void calc_sanity()
  */
 static void calc_mana(void)
 {
+	auto const &r_info = game->edit_data.r_info;
+
 	int msp, levels, cur_wgt, max_wgt;
 
 	levels = p_ptr->lev;
@@ -1687,7 +1691,8 @@ static void calc_mana(void)
 	/* Possessors mana is different */
 	if (p_ptr->body_monster && (!p_ptr->disembodied))
 	{
-		monster_race *r_ptr = &r_info[p_ptr->body_monster];
+		auto r_ptr = &r_info[p_ptr->body_monster];
+
 		int f = 100 / (r_ptr->freq_spell ? r_ptr->freq_spell : 1);
 
 		msp = 21 - f;
@@ -1845,6 +1850,7 @@ static void calc_mana(void)
 void calc_hitpoints(void)
 {
 	auto const &player_hp = game->player_hp;
+	auto const &r_info = game->edit_data.r_info;
 
 	/* Un-inflate "half-hitpoint bonus per level" value */
 	int const bonus = ((int)(adj_con_mhp[p_ptr->stat_ind[A_CON]]) - 128);
@@ -1884,7 +1890,7 @@ void calc_hitpoints(void)
 
 	if (p_ptr->body_monster)
 	{
-		monster_race *r_ptr = &r_info[p_ptr->body_monster];
+		auto r_ptr = &r_info[p_ptr->body_monster];
 		u32b rhp = maxroll(r_ptr->hdice, r_ptr->hside);
 
 		/* Adjust the hp with the possession skill */
@@ -2061,15 +2067,14 @@ int weight_limit(void)
 
 void calc_wield_monster()
 {
-	object_type *o_ptr;
-	monster_race *r_ptr;
+	auto const &r_info = game->edit_data.r_info;
 
 	/* Get the carried monster */
-	o_ptr = &p_ptr->inventory[INVEN_CARRY];
+	auto o_ptr = &p_ptr->inventory[INVEN_CARRY];
 
 	if (o_ptr->k_idx)
 	{
-		r_ptr = &r_info[o_ptr->pval];
+		auto r_ptr = &r_info[o_ptr->pval];
 
 		if (r_ptr->flags & RF_INVISIBLE)
 			p_ptr->invis += 20;
@@ -2090,7 +2095,9 @@ void calc_wield_monster()
  */
 void calc_body()
 {
-	monster_race *r_ptr = &r_info[p_ptr->body_monster];
+	auto const &r_info = game->edit_data.r_info;
+
+	auto r_ptr = &r_info[p_ptr->body_monster];
 	int i, b_weapon, b_legs, b_arms;
 	byte *body_parts, bp[BODY_MAX];
 
@@ -2209,10 +2216,15 @@ void calc_body()
 /* Should be called by every calc_bonus call */
 void calc_body_bonus()
 {
-	monster_race *r_ptr = &r_info[p_ptr->body_monster];
+	auto const &r_info = game->edit_data.r_info;
+
+	auto r_ptr = &r_info[p_ptr->body_monster];
 
 	/* If in the player body nothing have to be done */
-	if (!p_ptr->body_monster) return;
+	if (!p_ptr->body_monster)
+	{
+		return;
+	}
 
 	if (p_ptr->disembodied)
 	{
@@ -2806,6 +2818,7 @@ static bool_ monk_empty_hands(void)
 void calc_bonuses(bool_ silent)
 {
 	auto const &s_descriptors = game->edit_data.s_descriptors;
+	auto const &r_info = game->edit_data.r_info;
 	auto &s_info = game->s_info;
 
 	static bool_ monk_notify_aux = FALSE;

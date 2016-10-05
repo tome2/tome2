@@ -92,7 +92,9 @@ using std::chrono::milliseconds;
  */
 s16b poly_r_idx(int r_idx)
 {
-	monster_race *r_ptr = &r_info[r_idx];
+	auto const &r_info = game->edit_data.r_info;
+
+	auto r_ptr = &r_info[r_idx];
 
 	int i, r;
 
@@ -3812,6 +3814,8 @@ static int raise_ego[MAX_RAISE] =
  */
 static bool_ project_o(int who, int r, int y, int x, int dam, int typ)
 {
+	auto const &r_info = game->edit_data.r_info;
+
 	cave_type *c_ptr = &cave[y][x];
 
 	bool_ obvious = FALSE;
@@ -3864,8 +3868,9 @@ static bool_ project_o(int who, int r, int y, int x, int dam, int typ)
 			{
 				if (o_ptr->tval == TV_CORPSE)
 				{
-					monster_race *r_ptr = &r_info[o_ptr->pval2];
-					s32b dama, radius = 7;
+					auto r_ptr = &r_info[o_ptr->pval2];
+					s32b radius = 7;
+					s32b dama;
 
 					if (r_ptr->flags & RF_FORCE_MAXHP)
 						dama = maxroll(r_ptr->hdice, r_ptr->hside);
@@ -4094,7 +4099,7 @@ static bool_ project_o(int who, int r, int y, int x, int dam, int typ)
 			}
 		case GF_RAISE_DEMON:
 			{
-				monster_race *r_ptr = &r_info[o_ptr->pval2];
+				auto r_ptr = &r_info[o_ptr->pval2];
 				cptr name;
 
 				if (o_ptr->tval != TV_CORPSE) break;
@@ -6907,6 +6912,7 @@ bool_ unsafe = FALSE;
 static bool_ project_p(int who, int r, int y, int x, int dam, int typ, int a_rad)
 {
 	auto const &d_info = game->edit_data.d_info;
+	auto const &r_info = game->edit_data.r_info;
 
 	int k = 0, do_move = 0, a = 0, b = 0, x1 = 0, y1 = 0;
 

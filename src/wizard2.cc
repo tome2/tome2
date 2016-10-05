@@ -1399,15 +1399,17 @@ static void do_cmd_wiz_summon(int num)
  *
  * XXX XXX XXX This function is rather dangerous
  */
-static void do_cmd_wiz_named(int r_idx, bool_ slp)
+static void do_cmd_wiz_named(std::size_t r_idx, bool_ slp)
 {
+	auto const &r_info = game->edit_data.r_info;
+
 	int i, x, y;
 
 	/* Paranoia */
 	/* if (!r_idx) return; */
 
 	/* Prevent illegal monsters */
-	if (r_idx >= max_r_idx) return;
+	if (r_idx >= r_info.size()) return;
 
 	/* Try 10 times */
 	for (i = 0; i < 10; i++)
@@ -1439,15 +1441,17 @@ static void do_cmd_wiz_named(int r_idx, bool_ slp)
  *
  * XXX XXX XXX This function is rather dangerous
  */
-void do_cmd_wiz_named_friendly(int r_idx, bool_ slp)
+void do_cmd_wiz_named_friendly(std::size_t r_idx, bool_ slp)
 {
+	auto const &r_info = game->edit_data.r_info;
+
 	int i, x, y;
 
 	/* Paranoia */
 	/* if (!r_idx) return; */
 
 	/* Prevent illegal monsters */
-	if (r_idx >= max_r_idx) return;
+	if (r_idx >= r_info.size()) return;
 
 	/* Try 10 times */
 	for (i = 0; i < 10; i++)
@@ -1500,6 +1504,8 @@ static void do_cmd_wiz_body(s16b bidx)
 	/* Might create problems with equipment slots. For safety,
 	be nude when calling this function */
 {
+	auto const &r_info = game->edit_data.r_info;
+
 	p_ptr->body_monster = bidx;
 	p_ptr->disembodied = FALSE;
 	p_ptr->chp = maxroll( (&r_info[bidx])->hdice, (&r_info[bidx])->hside);

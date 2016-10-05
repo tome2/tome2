@@ -542,6 +542,8 @@ void fetch(int dir, int wgt, bool_ require_los)
  */
 std::string symbiote_name(bool capitalize)
 {
+	auto const &r_info = game->edit_data.r_info;
+
 	object_type *o_ptr = &p_ptr->inventory[INVEN_CARRY];
 
 	std::string buf;
@@ -554,7 +556,7 @@ std::string symbiote_name(bool capitalize)
 	}
 	else
 	{
-		monster_race *r_ptr = &r_info[o_ptr->pval];
+		auto r_ptr = &r_info[o_ptr->pval];
 		std::size_t i = 0;
 
 		if (r_ptr->flags & RF_UNIQUE)
@@ -1780,6 +1782,8 @@ static int use_monster_power_aux(monster_race const *r_ptr, bool great, bool sym
  */
 int use_symbiotic_power(int r_idx, bool great)
 {
+	auto const &r_info = game->edit_data.r_info;
+
 	monster_race const *r_ptr = &r_info[r_idx];
 	return use_monster_power_aux(r_ptr, great, true, [](monster_power const *) {
 		// Don't need to do anything post-cast.
@@ -1791,6 +1795,8 @@ int use_symbiotic_power(int r_idx, bool great)
  */
 void use_monster_power(int r_idx, bool great)
 {
+	auto const &r_info = game->edit_data.r_info;
+
 	monster_race const *r_ptr = &r_info[r_idx];
 	use_monster_power_aux(r_ptr, great, false, [r_ptr](monster_power const *power) {
 		// Sometimes give a free cast.

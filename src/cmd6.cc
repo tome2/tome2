@@ -154,7 +154,9 @@ static select_by_name_t select_object_by_name(std::string const &prompt)
  */
 static void corpse_effect(object_type *o_ptr, bool_ cutting)
 {
-	monster_race *r_ptr = &r_info[o_ptr->pval2];
+	auto const &r_info = game->edit_data.r_info;
+
+	auto r_ptr = &r_info[o_ptr->pval2];
 
 	/* Assume no bad effects */
 	bool_ harmful = FALSE;
@@ -980,11 +982,11 @@ static object_filter_t const &item_tester_hook_eatable()
  */
 void do_cmd_eat_food(void)
 {
+	auto const &r_info = game->edit_data.r_info;
+
 	int ident, lev, fval = 0;
 
 	object_type *q_ptr, forge;
-
-	monster_race *r_ptr;
 
 	bool_ destroy = TRUE;
 
@@ -1360,7 +1362,7 @@ void do_cmd_eat_food(void)
 	/* Corpses... */
 	else
 	{
-		r_ptr = &r_info[o_ptr->pval2];
+		auto r_ptr = &r_info[o_ptr->pval2];
 
 		/* Analyse the corpse */
 		switch (o_ptr->sval)
@@ -1539,6 +1541,8 @@ void do_cmd_eat_food(void)
  */
 void do_cmd_cut_corpse(void)
 {
+	auto const &r_info = game->edit_data.r_info;
+
 	int item, meat = 0, not_meat = 0;
 
 	/* Get an item */
@@ -1554,7 +1558,7 @@ void do_cmd_cut_corpse(void)
 	/* Get the item */
 	object_type *o_ptr = get_object(item);
 
-	monster_race *r_ptr = &r_info[o_ptr->pval2];
+	auto r_ptr = &r_info[o_ptr->pval2];
 
 	if ((o_ptr->sval != SV_CORPSE_CORPSE) && (o_ptr->sval != SV_CORPSE_HEAD))
 	{
@@ -2869,6 +2873,7 @@ static object_filter_t const &item_tester_hook_readable()
 void do_cmd_read_scroll(void)
 {
 	auto const &d_info = game->edit_data.d_info;
+	auto &r_info = game->edit_data.r_info;
 
 	/* Check some conditions */
 	if (p_ptr->blind)
@@ -2936,12 +2941,12 @@ void do_cmd_read_scroll(void)
 				msg_print("You feel the souls of the dead coming back "
 				          "from the Halls of Mandos.");
 
-				for (int k = 0; k < max_r_idx; k++)
+				for (auto &r_ref: r_info)
 				{
-					monster_race *r_ptr = &r_info[k];
+					auto r_ptr = &r_ref;
 
 					if (r_ptr->flags & RF_UNIQUE &&
-					                !(r_ptr->flags & RF_SPECIAL_GENE))
+							!(r_ptr->flags & RF_SPECIAL_GENE))
 					{
 						r_ptr->max_num = 1;
 					}

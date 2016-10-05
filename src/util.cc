@@ -3328,13 +3328,15 @@ void strlower(char *buf)
  */
 int test_monster_name(cptr name)
 {
-	int i;
+	auto const &r_info = game->edit_data.r_info;
 
-	/* Scan the monsters */
-	for (i = 1; i < max_r_idx; i++)
+	for (std::size_t i = 0; i < r_info.size(); i++)
 	{
-		monster_race *r_ptr = &r_info[i];
-		if (r_ptr->name && iequals(name, r_ptr->name)) return (i);
+		auto r_ptr = &r_info[i];
+		if (r_ptr->name && iequals(name, r_ptr->name))
+		{
+			return (i);
+		}
 	}
 	return (0);
 }

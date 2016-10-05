@@ -12,6 +12,7 @@
 #include "cave_type.hpp"
 #include "cli_comm.hpp"
 #include "files.hpp"
+#include "game.hpp"
 #include "gods.hpp"
 #include "hook_drop_in.hpp"
 #include "hook_wield_in.hpp"
@@ -1220,6 +1221,8 @@ static cptr ident_info[] =
  */
 static bool compare_monster_experience(int w1, int w2)
 {
+	auto const &r_info = game->edit_data.r_info;
+
 	/* Extract experience */
 	s32b z1 = r_info[w1].mexp;
 	s32b z2 = r_info[w2].mexp;
@@ -1237,6 +1240,8 @@ static bool compare_monster_experience(int w1, int w2)
  */
 static bool compare_monster_level(int w1, int w2)
 {
+	auto const &r_info = game->edit_data.r_info;
+
 	/* Extract levels */
 	byte z1 = r_info[w1].level;
 	byte z2 = r_info[w2].level;
@@ -1254,6 +1259,8 @@ static bool compare_monster_level(int w1, int w2)
  */
 static bool compare_player_kills(int w1, int w2)
 {
+	auto const &r_info = game->edit_data.r_info;
+
 	/* Extract player kills */
 	s16b z1 = r_info[w1].r_pkills;
 	s16b z2 = r_info[w2].r_pkills;
@@ -1272,7 +1279,9 @@ static bool compare_player_kills(int w1, int w2)
  */
 static void roff_top(int r_idx)
 {
-	monster_race *r_ptr = &r_info[r_idx];
+	auto const &r_info = game->edit_data.r_info;
+
+	auto r_ptr = &r_info[r_idx];
 
 	byte a1, a2;
 
@@ -1330,7 +1339,7 @@ static void roff_top(int r_idx)
  */
 void do_cmd_query_symbol(void)
 {
-	int i, r_idx;
+	auto const &r_info = game->edit_data.r_info;
 
 	char sym, query;
 
@@ -1358,6 +1367,7 @@ void do_cmd_query_symbol(void)
 	                "or (Ctrl-A, Ctrl-U, Ctrl-N, Ctrl-M):", &sym)) return;
 
 	/* Find that character info, and describe it */
+	std::size_t i;
 	for (i = 0; ident_info[i]; ++i)
 	{
 		if (sym == ident_info[i][0]) break;
@@ -1399,10 +1409,10 @@ void do_cmd_query_symbol(void)
 	prt(buf, 0, 0);
 
 	/* Collect matching monsters */
-	std::vector<u16b> who;
-	for (i = 1; i < max_r_idx; i++)
+	std::vector<std::size_t> who;
+	for (std::size_t i = 1; i < r_info.size(); i++)
 	{
-		monster_race *r_ptr = &r_info[i];
+		auto r_ptr = &r_info[i];
 
 		/* Require non-unique monsters if needed */
 		if (norm && (r_ptr->flags & RF_UNIQUE)) continue;
@@ -1480,7 +1490,7 @@ void do_cmd_query_symbol(void)
 	while (1)
 	{
 		/* Extract a race */
-		r_idx = who[i];
+		auto r_idx = who[i];
 
 		/* Hack -- Auto-recall */
 		monster_race_track(r_idx, 0);

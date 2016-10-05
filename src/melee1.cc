@@ -10,6 +10,7 @@
 
 #include "cave.hpp"
 #include "cmd5.hpp"
+#include "game.hpp"
 #include "gods.hpp"
 #include "mimic.hpp"
 #include "monster2.hpp"
@@ -223,7 +224,9 @@ int get_attack_power(int effect)
  */
 bool_ carried_make_attack_normal(int r_idx)
 {
-	monster_race *r_ptr = &r_info[r_idx];
+	auto const &r_info = game->edit_data.r_info;
+
+	auto r_ptr = &r_info[r_idx];
 
 	int ap_cnt;
 

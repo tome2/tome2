@@ -402,6 +402,8 @@ bool_ cave_valid_bold(int y, int x)
  */
 static void image_monster(byte *ap, char *cp)
 {
+	auto const &r_info = game->edit_data.r_info;
+
 	// Cached state which keeps a list of all the "live" monster race entries.
 	static std::vector<size_t> *instance = nullptr;
 
@@ -411,7 +413,7 @@ static void image_monster(byte *ap, char *cp)
 		// Create the list of "live" indexes
 		instance = new std::vector<size_t>();
 		// Start at 1 to avoid 'player'
-		for (size_t i = 1; i < max_r_idx; i++)
+		for (size_t i = 1; i < r_info.size(); i++)
 		{
 			if (r_info[i].name)
 			{
@@ -847,6 +849,7 @@ static byte darker_attrs[16] =
 static void map_info(int y, int x, byte *ap, char *cp)
 {
 	auto const &st_info = game->edit_data.st_info;
+	auto const &r_info = game->edit_data.r_info;
 
 	byte a;
 
@@ -1240,7 +1243,7 @@ static void map_info(int y, int x, byte *ap, char *cp)
 	if ((y == p_ptr->py) && (x == p_ptr->px) &&
 	                (!p_ptr->invis || p_ptr->see_inv))
 	{
-		monster_race *r_ptr = &r_info[p_ptr->body_monster];
+		auto r_ptr = &r_info[p_ptr->body_monster];
 
 		/* Get the "player" attr */
 		if (!options->avoid_other && (r_ptr->flags & RF_ATTR_MULTI))
@@ -1282,6 +1285,7 @@ static void map_info(int y, int x, byte *ap, char *cp)
 void map_info_default(int y, int x, byte *ap, char *cp)
 {
 	auto const &st_info = game->edit_data.st_info;
+	auto const &r_info = game->edit_data.r_info;
 
 	byte a;
 
@@ -1673,7 +1677,7 @@ void map_info_default(int y, int x, byte *ap, char *cp)
 	                (!p_ptr->invis ||
 	                 (p_ptr->invis && p_ptr->see_inv)))
 	{
-		monster_race *r_ptr = &r_info[p_ptr->body_monster];
+		auto r_ptr = &r_info[p_ptr->body_monster];
 
 		/* Get the "player" attr */
 		if (!avoid_other && (r_ptr->flags & RF_ATTR_MULTI))

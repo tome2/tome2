@@ -20,6 +20,7 @@
 #include "feature_flag.hpp"
 #include "feature_type.hpp"
 #include "files.hpp"
+#include "game.hpp"
 #include "hook_mon_speak_in.hpp"
 #include "hook_monster_ai_in.hpp"
 #include "hook_monster_ai_out.hpp"
@@ -4175,19 +4176,20 @@ static bool_ find_hiding(int m_idx, int *yp, int *xp)
 /* Find an appropriate corpse */
 void find_corpse(monster_type *m_ptr, int *y, int *x)
 {
+	auto const &r_info = game->edit_data.r_info;
+
 	int k, last = -1;
 
 	for (k = 0; k < max_o_idx; k++)
 	{
 		object_type *o_ptr = &o_list[k];
-		monster_race *rt_ptr, *rt2_ptr;
 
 		if (!o_ptr->k_idx) continue;
 
 		if (o_ptr->tval != TV_CORPSE) continue;
 		if ((o_ptr->sval != SV_CORPSE_CORPSE) && (o_ptr->sval != SV_CORPSE_SKELETON)) continue;
 
-		rt_ptr = &r_info[o_ptr->pval2];
+		auto rt_ptr = &r_info[o_ptr->pval2];
 
 		/* Cannot incarnate into a higher level monster */
 		if (rt_ptr->level > m_ptr->level) continue;
@@ -4197,9 +4199,16 @@ void find_corpse(monster_type *m_ptr, int *y, int *x)
 
 		if (last != -1)
 		{
-			rt2_ptr = &r_info[o_list[last].pval2];
-			if (rt_ptr->level > rt2_ptr->level) last = k;
-			else continue;
+			auto rt2_ptr = &r_info[o_list[last].pval2];
+
+			if (rt_ptr->level > rt2_ptr->level)
+			{
+				last = k;
+			}
+			else
+			{
+				continue;
+			}
 		}
 		else
 		{
@@ -4220,6 +4229,8 @@ void find_corpse(monster_type *m_ptr, int *y, int *x)
  */
 static void get_target_monster(int m_idx)
 {
+	auto const &r_info = game->edit_data.r_info;
+
 	monster_type *m_ptr = &m_list[m_idx];
 	int i, t = -1, d = 9999;
 
@@ -4229,7 +4240,7 @@ static void get_target_monster(int m_idx)
 		/* Access the monster */
 		monster_type *t_ptr = &m_list[i];
 		/* hack should call the function for ego monsters ... but no_target i not meant to be added by ego and it speeds up the code */
-		monster_race *rt_ptr = &r_info[t_ptr->r_idx];
+		auto rt_ptr = &r_info[t_ptr->r_idx];
 		int dd;
 
 		/* Ignore "dead" monsters */
@@ -6389,6 +6400,8 @@ void summon_maint(int m_idx)
  */
 void process_monsters(void)
 {
+	auto const &r_info = game->edit_data.r_info;
+
 	int i, e;
 	int fx, fy;
 

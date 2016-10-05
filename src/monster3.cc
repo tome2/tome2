@@ -11,6 +11,7 @@
 #include "cave_type.hpp"
 #include "cmd2.hpp"
 #include "cmd5.hpp"
+#include "game.hpp"
 #include "gods.hpp"
 #include "melee2.hpp"
 #include "monster2.hpp"
@@ -60,7 +61,11 @@ int is_friend(monster_type *m_ptr)
 /* Should they attack each others */
 bool_ is_enemy(monster_type *m_ptr, monster_type *t_ptr)
 {
-	monster_race *r_ptr = &r_info[m_ptr->r_idx], *rt_ptr = &r_info[t_ptr->r_idx];
+	auto const &r_info = game->edit_data.r_info;
+
+	auto r_ptr = &r_info[m_ptr->r_idx];
+	auto rt_ptr = &r_info[t_ptr->r_idx];
+
 	int s1 = is_friend(m_ptr), s2 = is_friend(t_ptr);
 
 	/* Monsters hates breeders */
@@ -146,11 +151,13 @@ bool_ ai_multiply(int m_idx)
 /* Possessor incarnates */
 bool_ ai_possessor(int m_idx, int o_idx)
 {
+	auto &r_info = game->edit_data.r_info;
+
 	object_type *o_ptr = &o_list[o_idx];
 	monster_type *m_ptr = &m_list[m_idx];
 	int r_idx = m_ptr->r_idx, r2_idx = o_ptr->pval2;
 	int i;
-	monster_race *r_ptr = &r_info[r2_idx];
+	auto r_ptr = &r_info[r2_idx];
 	char m_name[80], m_name2[80];
 
 	monster_desc(m_name, m_ptr, 0x00);
@@ -226,9 +233,11 @@ bool_ ai_possessor(int m_idx, int o_idx)
 
 void ai_deincarnate(int m_idx)
 {
+	auto &r_info = game->edit_data.r_info;
+
 	monster_type *m_ptr = &m_list[m_idx];
 	int r2_idx = m_ptr->possessor, r_idx = m_ptr->r_idx;
-	monster_race *r_ptr = &r_info[r2_idx];
+	auto r_ptr = &r_info[r2_idx];
 	int i;
 	char m_name[80];
 
@@ -413,12 +422,14 @@ bool_ do_control_drop(void)
 
 bool_ do_control_magic(void)
 {
+	auto const &r_info = game->edit_data.r_info;
+
 	int i;
 	bool_ flag, redraw;
 	int ask;
 	char choice;
 	char out_val[160];
-	monster_race *r_ptr = &r_info[m_list[p_ptr->control].r_idx];
+	auto r_ptr = &r_info[m_list[p_ptr->control].r_idx];
 	int label;
 
 	if (!p_ptr->control) return FALSE;

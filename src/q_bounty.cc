@@ -22,7 +22,9 @@
 
 static bool_ lua_mon_hook_bounty(int r_idx)
 {
-	monster_race* r_ptr = &r_info[r_idx];
+	auto const &r_info = game->edit_data.r_info;
+
+	auto r_ptr = &r_info[r_idx];
 
 	/* Reject uniques */
 	if (r_ptr->flags & RF_UNIQUE) return (FALSE);

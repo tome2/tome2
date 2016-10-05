@@ -79,11 +79,13 @@ static bool_ do_cmd_bash_altar(int y, int x)
  */
 static bool_ do_cmd_bash_fountain(int y, int x)
 {
+	auto const &r_info = game->edit_data.r_info;
+
 	int bash, temp;
 
 	bool_ more = TRUE;
 
-	monster_race *r_ptr = &r_info[p_ptr->body_monster];
+	auto r_ptr = &r_info[p_ptr->body_monster];
 
 
 	if ((p_ptr->body_monster != 0) && !(r_ptr->flags & RF_BASH_DOOR))
@@ -767,6 +769,8 @@ static void chest_trap(int y, int x, s16b o_idx)
  */
 static bool_ do_cmd_open_chest(int y, int x, s16b o_idx)
 {
+	auto const &r_info = game->edit_data.r_info;
+
 	int i, j;
 
 	bool_ flag = TRUE;
@@ -775,7 +779,7 @@ static bool_ do_cmd_open_chest(int y, int x, s16b o_idx)
 
 	object_type *o_ptr = &o_list[o_idx];
 
-	monster_race *r_ptr = &r_info[p_ptr->body_monster];
+	auto r_ptr = &r_info[p_ptr->body_monster];
 
 
 	if ((p_ptr->body_monster != 0) && !(r_ptr->flags & RF_OPEN_DOOR))
@@ -1011,13 +1015,15 @@ static int coords_to_dir(int y, int x)
  */
 static bool_ do_cmd_open_aux(int y, int x, int dir)
 {
+	auto const &r_info = game->edit_data.r_info;
+
 	int i, j;
 
 	cave_type *c_ptr;
 
 	bool_ more = FALSE;
 
-	monster_race *r_ptr = &r_info[p_ptr->body_monster];
+	auto r_ptr = &r_info[p_ptr->body_monster];
 
 
 	if ((p_ptr->body_monster != 0) && !(r_ptr->flags & RF_OPEN_DOOR))
@@ -1118,6 +1124,8 @@ static bool_ do_cmd_open_aux(int y, int x, int dir)
  */
 void do_cmd_open(void)
 {
+	auto const &r_info = game->edit_data.r_info;
+
 	int y, x, dir;
 
 	s16b o_idx;
@@ -1126,7 +1134,7 @@ void do_cmd_open(void)
 
 	bool_ more = FALSE;
 
-	monster_race *r_ptr = &r_info[p_ptr->body_monster];
+	auto r_ptr = &r_info[p_ptr->body_monster];
 
 
 	if ((p_ptr->body_monster != 0) && !(r_ptr->flags & RF_OPEN_DOOR))
@@ -1242,11 +1250,13 @@ void do_cmd_open(void)
  */
 static bool_ do_cmd_close_aux(int y, int x, int dir)
 {
+	auto const &r_info = game->edit_data.r_info;
+
 	cave_type *c_ptr;
 
 	bool_ more = FALSE;
 
-	monster_race *r_ptr = &r_info[p_ptr->body_monster];
+	auto r_ptr = &r_info[p_ptr->body_monster];
 
 
 	if ((p_ptr->body_monster != 0) && !(r_ptr->flags & RF_OPEN_DOOR))
@@ -2131,13 +2141,15 @@ void do_cmd_disarm(void)
  */
 static bool_ do_cmd_bash_aux(int y, int x, int dir)
 {
+	auto const &r_info = game->edit_data.r_info;
+
 	int bash, temp;
 
 	cave_type *c_ptr;
 
 	bool_ more = FALSE;
 
-	monster_race *r_ptr = &r_info[p_ptr->body_monster];
+	auto r_ptr = &r_info[p_ptr->body_monster];
 
 
 	if ((p_ptr->body_monster != 0) && !(r_ptr->flags & RF_BASH_DOOR))
@@ -2242,13 +2254,15 @@ static bool_ do_cmd_bash_aux(int y, int x, int dir)
  */
 void do_cmd_bash(void)
 {
+	auto const &r_info = game->edit_data.r_info;
+
 	int y, x, dir;
 
 	cave_type *c_ptr;
 
 	bool_ more = FALSE;
 
-	monster_race *r_ptr = &r_info[p_ptr->body_monster];
+	auto r_ptr = &r_info[p_ptr->body_monster];
 
 
 	if ((p_ptr->body_monster != 0) && !(r_ptr->flags & RF_BASH_DOOR))
@@ -4514,6 +4528,8 @@ static void do_cmd_sacrifice_aule()
  */
 void do_cmd_sacrifice(void)
 {
+	auto const &r_info = game->edit_data.r_info;
+
 	byte on_what = cave[p_ptr->py][p_ptr->px].feat;
 
 	/* Check valididty */
@@ -4736,6 +4752,8 @@ std::vector<s16b> show_monster_inven(int m_idx)
  */
 void do_cmd_steal()
 {
+	auto const &r_info = game->edit_data.r_info;
+
 	int dir = 0, item = -1, k = -1;
 
 	bool_ done = FALSE;

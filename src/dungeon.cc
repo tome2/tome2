@@ -775,6 +775,8 @@ static void regenmana(int percent)
  */
 static void regen_monsters(void)
 {
+	auto const &r_info = game->edit_data.r_info;
+
 	int i, frac;
 
 	object_type *o_ptr = &p_ptr->inventory[INVEN_CARRY];
@@ -782,7 +784,7 @@ static void regen_monsters(void)
 
 	if (o_ptr->k_idx)
 	{
-		monster_race *r_ptr = &r_info[o_ptr->pval];
+		auto r_ptr = &r_info[o_ptr->pval];
 
 		/* Allow regeneration (if needed) */
 		if (o_ptr->pval2 < o_ptr->pval3)
@@ -1216,6 +1218,7 @@ static void process_world_gods()
 static void process_world(void)
 {
 	auto const &d_info = game->edit_data.d_info;
+	auto const &r_info = game->edit_data.r_info;
 
 	timer_type *t_ptr;
 
@@ -1291,7 +1294,7 @@ static void process_world(void)
 
 	if (o_ptr->k_idx)
 	{
-		monster_race *r_ptr = &r_info[o_ptr->pval];
+		auto r_ptr = &r_info[o_ptr->pval];
 
 		if ((randint(1000) < r_ptr->level - ((p_ptr->lev * 2) + get_skill(SKILL_SYMBIOTIC))))
 		{

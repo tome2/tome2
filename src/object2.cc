@@ -769,6 +769,8 @@ bool object_tried_p(object_type const *o_ptr)
  */
 static s32b object_value_base(object_type const *o_ptr)
 {
+	auto const &r_info = game->edit_data.r_info;
+
 	object_kind *k_ptr = &k_info[o_ptr->k_idx];
 
 	/* Aware item -- use template cost */
@@ -816,7 +818,7 @@ static s32b object_value_base(object_type const *o_ptr)
 		/* Eggs */
 	case TV_EGG:
 		{
-			monster_race *r_ptr = &r_info[o_ptr->pval2];
+			auto r_ptr = &r_info[o_ptr->pval2];
 
 			/* Pay the monster level */
 			return (r_ptr->level * 100) + 100;
@@ -1070,6 +1072,8 @@ s32b flag_cost(object_type const *o_ptr, int plusses)
  */
 s32b object_value_real(object_type const *o_ptr)
 {
+	auto const &r_info = game->edit_data.r_info;
+
 	s32b value;
 
 	object_kind *k_ptr = &k_info[o_ptr->k_idx];
@@ -1202,7 +1206,7 @@ s32b object_value_real(object_type const *o_ptr)
 		/* Eggs */
 	case TV_EGG:
 		{
-			monster_race *r_ptr = &r_info[o_ptr->pval2];
+			auto r_ptr = &r_info[o_ptr->pval2];
 
 			/* Pay the monster level */
 			value += r_ptr->level * 100;
@@ -3214,6 +3218,8 @@ static int get_stick_max_level(byte tval, int level, int spl)
  */
 static void a_m_aux_4(object_type *o_ptr, int level, int power)
 {
+	auto const &r_info = game->edit_data.r_info;
+
 	s32b bonus_lvl, max_lvl;
 	object_kind *k_ptr = &k_info[o_ptr->k_idx];
 
@@ -3279,14 +3285,18 @@ static void a_m_aux_4(object_type *o_ptr, int level, int power)
 	case TV_CORPSE:
 		{
 			/* Hack -- choose a monster */
-			monster_race* r_ptr;
 			int r_idx = get_mon_num(dun_level);
-			r_ptr = &r_info[r_idx];
+			auto r_ptr = &r_info[r_idx];
 
 			if (!(r_ptr->flags & RF_UNIQUE))
+			{
 				o_ptr->pval2 = r_idx;
+			}
 			else
+			{
 				o_ptr->pval2 = 2;
+			}
+
 			o_ptr->pval3 = 0;
 			break;
 		}
@@ -3294,14 +3304,13 @@ static void a_m_aux_4(object_type *o_ptr, int level, int power)
 	case TV_EGG:
 		{
 			/* Hack -- choose a monster */
-			monster_race* r_ptr;
 			int r_idx, count = 0;
 			bool_ OK = FALSE;
 
 			while ((!OK) && (count < 1000))
 			{
 				r_idx = get_mon_num(dun_level);
-				r_ptr = &r_info[r_idx];
+				auto r_ptr = &r_info[r_idx];
 
 				if (r_ptr->flags & RF_HAS_EGG)
 				{
@@ -3310,9 +3319,13 @@ static void a_m_aux_4(object_type *o_ptr, int level, int power)
 				}
 				count++;
 			}
-			if (count == 1000) o_ptr->pval2 = 940;  /* Blue fire-lizard */
 
-			r_ptr = &r_info[o_ptr->pval2];
+			if (count == 1000)
+			{
+				o_ptr->pval2 = 940;  /* Blue fire-lizard */
+			}
+
+			auto r_ptr = &r_info[o_ptr->pval2];
 			o_ptr->weight = (r_ptr->weight + rand_int(r_ptr->weight) / 100) + 1;
 			o_ptr->pval = r_ptr->weight * 3 + rand_int(r_ptr->weight) + 1;
 			break;
@@ -3321,9 +3334,8 @@ static void a_m_aux_4(object_type *o_ptr, int level, int power)
 	case TV_HYPNOS:
 		{
 			/* Hack -- choose a monster */
-			monster_race* r_ptr;
 			int r_idx = get_mon_num(dun_level);
-			r_ptr = &r_info[r_idx];
+			auto r_ptr = &r_info[r_idx];
 
 			if (!(r_ptr->flags & RF_NEVER_MOVE))
 				o_ptr->pval = r_idx;
@@ -6311,9 +6323,11 @@ s16b floor_carry(int y, int x, object_type *j_ptr)
  */
 void pack_decay(int item)
 {
+	auto const &r_info = game->edit_data.r_info;
+
 	object_type *o_ptr = &p_ptr->inventory[item];
 
-	monster_race *r_ptr = &r_info[o_ptr->pval2];
+	auto r_ptr = &r_info[o_ptr->pval2];
 
 	object_type *i_ptr;
 	object_type object_type_body;
@@ -6396,9 +6410,11 @@ void pack_decay(int item)
  */
 void floor_decay(int item)
 {
+	auto const &r_info = game->edit_data.r_info;
+
 	object_type *o_ptr = &o_list[item];
 
-	monster_race *r_ptr = &r_info[o_ptr->pval2];
+	auto r_ptr = &r_info[o_ptr->pval2];
 
 	object_type *i_ptr;
 	object_type object_type_body;

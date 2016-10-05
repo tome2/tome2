@@ -4097,9 +4097,9 @@ static errr grab_one_monster_spell_flag(monster_spell_flag_set *flags, cptr what
  */
 errr init_r_info_txt(FILE *fp)
 {
-	int i;
+	auto &r_info = game->edit_data.r_info;
+
 	char buf[1024];
-	char *s, *t;
 
 	/* Current entry */
 	monster_race *r_ptr = NULL;
@@ -4128,7 +4128,7 @@ errr init_r_info_txt(FILE *fp)
 		if (buf[0] == 'N')
 		{
 			/* Find the colon before the name */
-			s = strchr(buf + 2, ':');
+			char *s = strchr(buf + 2, ':');
 
 			/* Verify that colon */
 			if (!s) return (1);
@@ -4140,19 +4140,16 @@ errr init_r_info_txt(FILE *fp)
 			if (!*s) return (1);
 
 			/* Get the index */
-			i = atoi(buf + 2);
+			int i = atoi(buf + 2);
 
 			/* Verify information */
 			if (i < error_idx) return (4);
-
-			/* Verify information */
-			if (i >= max_r_idx) return (2);
 
 			/* Save the index */
 			error_idx = i;
 
 			/* Point at the "info" */
-			r_ptr = &r_info[i];
+			r_ptr = &expand_to_fit_index(r_info, i);
 
 			/* Allocate name string. */
 			assert(!r_ptr->name); // Sanity check that we aren't overwriting anything
@@ -4178,11 +4175,8 @@ errr init_r_info_txt(FILE *fp)
 		/* Process 'D' for "Description" */
 		if (buf[0] == 'D')
 		{
-			/* Acquire the text */
-			s = buf + 2;
-
 			/* Append to description */
-			strappend(&r_ptr->text, s);
+			strappend(&r_ptr->text, buf + 2);
 
 			/* Next... */
 			continue;
@@ -4324,7 +4318,9 @@ errr init_r_info_txt(FILE *fp)
 		/* Process 'B' for "Blows" (up to four lines) */
 		if (buf[0] == 'B')
 		{
-			int n1, n2;
+			int i, n1, n2;
+			char *s;
+			char *t;
 
 			/* Find the next empty blow slot (if any) */
 			for (i = 0; i < 4; i++) if (!r_ptr->blow[i].method) break;
@@ -4397,7 +4393,8 @@ errr init_r_info_txt(FILE *fp)
 		/* Process 'S' for "Spell Flags" (multiple lines) */
 		if (buf[0] == 'S')
 		{
-			s = buf + 2;
+			char const *s = buf + 2;
+			int i;
 
 			/* XXX XXX XXX Hack -- Read spell frequency */
 			if (1 == sscanf(s, "1_IN_%d", &i))
@@ -6780,12 +6777,6 @@ static errr process_dungeon_file_aux(char *buf, int *yval, int *xval, int xvalst
 			if (zz[0][0] == 't')
 			{
 				max_real_towns = atoi(zz[1]);
-			}
-
-			/* Maximum r_idx */
-			else if (zz[0][0] == 'R')
-			{
-				max_r_idx = atoi(zz[1]);
 			}
 
 			/* Maximum k_idx */

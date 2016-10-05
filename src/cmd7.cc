@@ -1780,6 +1780,8 @@ void summon_monster(int sumtype)
  */
 void do_cmd_possessor()
 {
+	auto const &r_info = game->edit_data.r_info;
+
 	char ch, ext;
 
 
@@ -3568,6 +3570,8 @@ static object_filter_t const &item_tester_hook_totemable()
  */
 void do_cmd_summoner_extract()
 {
+	auto const &r_info = game->edit_data.r_info;
+
 	object_type forge, *q_ptr;
 
 	/* Not when confused */
@@ -3640,11 +3644,13 @@ void do_cmd_summoner_extract()
 
 void summon_true(int r_idx, int item)
 {
+	auto const &r_info = game->edit_data.r_info;
+
 	int i, status, x = 1, y = 1, rx, ry = 0, chance;
 
 	bool_ used;
 
-	monster_race *r_ptr = &r_info[r_idx];
+	auto r_ptr = &r_info[r_idx];
 
 
 	/* Uniques are less likely to be nice */

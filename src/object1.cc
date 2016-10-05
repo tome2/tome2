@@ -636,6 +636,7 @@ void reset_visuals(void)
 	auto &st_info = game->edit_data.st_info;
 	auto &race_mod_info = game->edit_data.race_mod_info;
 	auto &re_info = game->edit_data.re_info;
+	auto &r_info = game->edit_data.r_info;
 
 	int i;
 
@@ -668,13 +669,11 @@ void reset_visuals(void)
 	}
 
 	/* Extract default attr/char code for monsters */
-	for (i = 0; i < max_r_idx; i++)
+	for (auto &r_ref: r_info)
 	{
-		monster_race *r_ptr = &r_info[i];
-
 		/* Default attr/char */
-		r_ptr->x_attr = r_ptr->d_attr;
-		r_ptr->x_char = r_ptr->d_char;
+		r_ref.x_attr = r_ref.d_attr;
+		r_ref.x_char = r_ref.d_char;
 	}
 
 	/* Reset attr/char code for ego monster overlay graphics */
@@ -1020,6 +1019,7 @@ static object_flag_set compute_pval_mask()
  */
 static std::string object_desc_aux(object_type const *o_ptr, int pref, int mode)
 {
+	auto const &r_info = game->edit_data.r_info;
 	static auto const TR_PVAL_MASK = compute_pval_mask();
 
 	bool_ hack_name = FALSE;
@@ -1300,7 +1300,8 @@ static std::string object_desc_aux(object_type const *o_ptr, int pref, int mode)
 
 	case TV_CORPSE:
 		{
-			monster_race* r_ptr = &r_info[o_ptr->pval2];
+			auto r_ptr = &r_info[o_ptr->pval2];
+
 			modstr = basenm;
 			if (r_ptr->flags & RF_UNIQUE)
 			{
@@ -1315,7 +1316,8 @@ static std::string object_desc_aux(object_type const *o_ptr, int pref, int mode)
 
 	case TV_EGG:
 		{
-			monster_race* r_ptr = &r_info[o_ptr->pval2];
+			auto r_ptr = &r_info[o_ptr->pval2];
+
 			modstr = basenm;
 			basenm = fmt::format("& {} #~", r_ptr->name);
 			break;
@@ -1324,7 +1326,8 @@ static std::string object_desc_aux(object_type const *o_ptr, int pref, int mode)
 	case TV_HYPNOS:
 		{
 			/* We print hit points further down. --dsb */
-			monster_race* r_ptr = &r_info[o_ptr->pval];
+			auto r_ptr = &r_info[o_ptr->pval];
+
 			modstr = basenm;
 			basenm = fmt::format("& {}~", r_ptr->name);
 			break;
@@ -1411,16 +1414,6 @@ static std::string object_desc_aux(object_type const *o_ptr, int pref, int mode)
 	{
 		cptr ego = NULL;
 
-		monster_race* r_ptr;
-		if (o_ptr->tval == TV_CORPSE)
-		{
-			r_ptr = &r_info[o_ptr->pval2];
-		}
-		else
-		{
-			r_ptr = &r_info[o_ptr->pval];
-		}
-
 		/* Grab any ego-item name */
 		if (known && (o_ptr->name2 || o_ptr->name2b) && (o_ptr->tval != TV_ROD_MAIN))
 		{
@@ -1459,12 +1452,15 @@ static std::string object_desc_aux(object_type const *o_ptr, int pref, int mode)
 			t += ' ';
 		}
 
-		else if ((o_ptr->tval == TV_CORPSE) && (r_ptr->flags & RF_UNIQUE))
-		{}
+		else if ((o_ptr->tval == TV_CORPSE) && (r_info[o_ptr->pval2].flags & RF_UNIQUE))
+		{
+			/* Nothing */
+		}
 
-
-		else if ((o_ptr->tval == TV_HYPNOS) && (r_ptr->flags & RF_UNIQUE))
-		{}
+		else if ((o_ptr->tval == TV_HYPNOS) && (r_info[o_ptr->pval].flags & RF_UNIQUE))
+		{
+			/* Nothing */
+		}
 
 		/* Hack -- The only one of its kind */
 		else if (known && artifact_p(o_ptr))

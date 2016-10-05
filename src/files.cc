@@ -219,6 +219,7 @@ errr process_pref_file_aux(char *buf)
 	auto &race_mod_info = game->edit_data.race_mod_info;
 	auto &st_info = game->edit_data.st_info;
 	auto &re_info = game->edit_data.re_info;
+	auto &r_info = game->edit_data.r_info;
 
 	int i, j, n1, n2;
 
@@ -251,17 +252,26 @@ errr process_pref_file_aux(char *buf)
 	{
 		if (tokenize(buf + 2, 3, zz, ':', '/') == 3)
 		{
-			monster_race *r_ptr;
-			i = (huge)strtol(zz[0], NULL, 0);
+			std::size_t i = strtoul(zz[0], NULL, 0);
 			n1 = strtol(zz[1], NULL, 0);
 			n2 = strtol(zz[2], NULL, 0);
-			if (i >= max_r_idx) return (1);
-			r_ptr = &r_info[i];
-			if (n1) r_ptr->x_attr = n1;
+
+			if (i >= r_info.size())
+			{
+				return (1);
+			}
+
+			auto r_ptr = &r_info[i];
+
+			if (n1)
+			{
+				r_ptr->x_attr = n1;
+			}
 			if (n2)
 			{
 				r_ptr->x_char = n2;
 			}
+
 			return (0);
 		}
 	}
@@ -1385,6 +1395,8 @@ static cptr likert(int x, int y)
  */
 static void display_player_various(void)
 {
+	auto const &r_info = game->edit_data.r_info;
+
 	int tmp, tmp2, damdice, damsides, dambonus, blows;
 	int xthn, xthb, xfos, xsrh;
 	int xdis, xdev, xsav, xstl;
@@ -1566,6 +1578,8 @@ static void display_player_various(void)
 
 static object_flag_set wield_monster_flags()
 {
+	auto const &r_info = game->edit_data.r_info;
+
 	object_flag_set flags;
 
 	/* Get the carried monster */
@@ -1603,6 +1617,8 @@ static void apply_lflags(LF const &lflags, object_flag_set *f)
  */
 object_flag_set player_flags()
 {
+	auto const &r_info = game->edit_data.r_info;
+
 	/* Clear */
 	object_flag_set f;
 
@@ -1713,26 +1729,26 @@ object_flag_set player_flags()
 	}
 	else
 	{
-		monster_race *r_ptr = &r_info[p_ptr->body_monster];
+		auto &r_ref = r_info[p_ptr->body_monster];
 
-		if (r_ptr->flags & RF_REFLECTING) f |= TR_REFLECT;
-		if (r_ptr->flags & RF_REGENERATE) f |= TR_REGEN;
-		if (r_ptr->flags & RF_AURA_FIRE) f |= TR_SH_FIRE;
-		if (r_ptr->flags & RF_AURA_ELEC) f |= TR_SH_ELEC;
-		if (r_ptr->flags & RF_PASS_WALL) f |= TR_WRAITH;
-		if (r_ptr->flags & RF_SUSCEP_FIRE) f |= TR_SENS_FIRE;
-		if (r_ptr->flags & RF_IM_ACID) f |= TR_RES_ACID;
-		if (r_ptr->flags & RF_IM_ELEC) f |= TR_RES_ELEC;
-		if (r_ptr->flags & RF_IM_FIRE) f |= TR_RES_FIRE;
-		if (r_ptr->flags & RF_IM_POIS) f |= TR_RES_POIS;
-		if (r_ptr->flags & RF_IM_COLD) f |= TR_RES_COLD;
-		if (r_ptr->flags & RF_RES_NETH) f |= TR_RES_NETHER;
-		if (r_ptr->flags & RF_RES_NEXU) f |= TR_RES_NEXUS;
-		if (r_ptr->flags & RF_RES_DISE) f |= TR_RES_DISEN;
-		if (r_ptr->flags & RF_NO_FEAR) f |= TR_RES_FEAR;
-		if (r_ptr->flags & RF_NO_SLEEP) f |= TR_FREE_ACT;
-		if (r_ptr->flags & RF_NO_CONF) f |= TR_RES_CONF;
-		if (r_ptr->flags & RF_CAN_FLY) f |= TR_FEATHER;
+		if (r_ref.flags & RF_REFLECTING) f |= TR_REFLECT;
+		if (r_ref.flags & RF_REGENERATE) f |= TR_REGEN;
+		if (r_ref.flags & RF_AURA_FIRE) f |= TR_SH_FIRE;
+		if (r_ref.flags & RF_AURA_ELEC) f |= TR_SH_ELEC;
+		if (r_ref.flags & RF_PASS_WALL) f |= TR_WRAITH;
+		if (r_ref.flags & RF_SUSCEP_FIRE) f |= TR_SENS_FIRE;
+		if (r_ref.flags & RF_IM_ACID) f |= TR_RES_ACID;
+		if (r_ref.flags & RF_IM_ELEC) f |= TR_RES_ELEC;
+		if (r_ref.flags & RF_IM_FIRE) f |= TR_RES_FIRE;
+		if (r_ref.flags & RF_IM_POIS) f |= TR_RES_POIS;
+		if (r_ref.flags & RF_IM_COLD) f |= TR_RES_COLD;
+		if (r_ref.flags & RF_RES_NETH) f |= TR_RES_NETHER;
+		if (r_ref.flags & RF_RES_NEXU) f |= TR_RES_NEXUS;
+		if (r_ref.flags & RF_RES_DISE) f |= TR_RES_DISEN;
+		if (r_ref.flags & RF_NO_FEAR) f |= TR_RES_FEAR;
+		if (r_ref.flags & RF_NO_SLEEP) f |= TR_FREE_ACT;
+		if (r_ref.flags & RF_NO_CONF) f |= TR_RES_CONF;
+		if (r_ref.flags & RF_CAN_FLY) f |= TR_FEATHER;
 	}
 
 	f |= p_ptr->xtra_flags;
@@ -2219,6 +2235,8 @@ static void display_player_ben_one(int page)
  */
 void display_player(int mode)
 {
+	auto const &r_info = game->edit_data.r_info;
+
 	int i;
 
 	char buf[80];
@@ -2230,7 +2248,7 @@ void display_player(int mode)
 	/* Standard */
 	if ((mode == 0) || (mode == 1))
 	{
-		monster_race *r_ptr = &r_info[p_ptr->body_monster];
+		auto r_ptr = &r_info[p_ptr->body_monster];
 
 		/* Name, Sex, Race, Class */
 		put_str("Name  :", 2, 1);
@@ -2580,6 +2598,7 @@ errr file_character(cptr name, bool_ full)
 {
 	auto const &d_info = game->edit_data.d_info;
 	auto const &wf_info = game->edit_data.wf_info;
+	auto const &r_info = game->edit_data.r_info;
 
 	int i, x, y;
 	byte a;
@@ -2746,12 +2765,11 @@ errr file_character(cptr name, bool_ full)
 
 	/* Monsters slain */
 	{
-		int k;
 		s32b Total = 0;
 
-		for (k = 1; k < max_r_idx; k++)
+		for (auto const &r_ref: r_info)
 		{
-			monster_race *r_ptr = &r_info[k];
+			auto r_ptr = &r_ref;
 
 			if (r_ptr->flags & RF_UNIQUE)
 			{
@@ -4033,6 +4051,7 @@ void autosave_checkpoint()
 static long total_points(void)
 {
 	auto const &d_info = game->edit_data.d_info;
+	auto const &r_info = game->edit_data.r_info;
 
 	s16b max_dl = 0;
 	long temp, Total = 0;
@@ -4106,9 +4125,9 @@ static long total_points(void)
 		}
 	}
 
-	for (std::size_t k = 1; k < max_r_idx; k++)
+	for (auto const &r_ref: r_info)
 	{
-		monster_race *r_ptr = &r_info[k];
+		auto r_ptr = &r_ref;
 
 		if (r_ptr->flags & RF_UNIQUE)
 		{

@@ -1,5 +1,6 @@
 #include "q_main.hpp"
 
+#include "game.hpp"
 #include "hook_chardump_in.hpp"
 #include "hook_monster_death_in.hpp"
 #include "hook_new_monster_in.hpp"
@@ -30,6 +31,8 @@ static void quest_describe(int q_idx)
 
 static bool_ quest_main_monsters_hook(void *, void *in_, void *)
 {
+	auto const &r_info = game->edit_data.r_info;
+
 	struct hook_new_monster_in *in = static_cast<struct hook_new_monster_in *>(in_);
 	s32b r_idx = in->r_idx;
 
@@ -50,7 +53,9 @@ static bool_ quest_main_monsters_hook(void *, void *in_, void *)
 
 static bool_ quest_morgoth_hook(void *, void *, void *)
 {
-	monster_race *r_ptr = &r_info[get_morgoth()];
+	auto const &r_info = game->edit_data.r_info;
+
+	auto r_ptr = &r_info[get_morgoth()];
 
 	/* Need to kill him */
 	if (!r_ptr->max_num)
@@ -126,7 +131,9 @@ bool_ quest_morgoth_init_hook()
 
 static bool_ quest_sauron_hook(void *, void *, void *)
 {
-	monster_race *r_ptr = &r_info[get_sauron()];
+	auto const &r_info = game->edit_data.r_info;
+
+	auto r_ptr = &r_info[get_sauron()];
 
 	/* Need to kill him */
 	if (!r_ptr->max_num)
@@ -149,10 +156,12 @@ static bool_ quest_sauron_hook(void *, void *, void *)
 
 static bool_ quest_sauron_resurect_hook(void *, void *in_, void *)
 {
+	auto &r_info = game->edit_data.r_info;
+
 	struct hook_monster_death_in *in = static_cast<struct hook_monster_death_in *>(in_);
 	s32b m_idx = in->m_idx;
 	monster_type *m_ptr = &m_list[m_idx];
-	monster_race *r_ptr = &r_info[m_ptr->r_idx];
+	auto r_ptr = &r_info[m_ptr->r_idx];
 
 	if ((r_ptr->flags & RF_NAZGUL) && r_info[get_sauron()].max_num)
 	{
@@ -180,7 +189,9 @@ bool_ quest_sauron_init_hook()
 
 static bool_ quest_necro_hook(void *, void *, void *)
 {
-	monster_race *r_ptr = &r_info[get_necromancer()];
+	auto const &r_info = game->edit_data.r_info;
+
+	auto r_ptr = &r_info[get_necromancer()];
 
 	/* Need to kill him */
 	if (!r_ptr->max_num)

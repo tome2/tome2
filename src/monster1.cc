@@ -1379,7 +1379,9 @@ void display_roff(int r_idx, int ego)
 
 bool_ monster_quest(int r_idx)
 {
-	monster_race *r_ptr = &r_info[r_idx];
+	auto const &r_info = game->edit_data.r_info;
+
+	auto r_ptr = &r_info[r_idx];
 
 	/* Random quests are in the dungeon */
 	if (r_ptr->flags & RF_WILD_ONLY) return FALSE;
@@ -1396,7 +1398,9 @@ bool_ monster_quest(int r_idx)
 
 bool_ monster_dungeon(int r_idx)
 {
-	monster_race *r_ptr = &r_info[r_idx];
+	auto const &r_info = game->edit_data.r_info;
+
+	auto r_ptr = &r_info[r_idx];
 
 	if (!(r_ptr->flags & RF_WILD_ONLY))
 		return TRUE;
@@ -1407,7 +1411,9 @@ bool_ monster_dungeon(int r_idx)
 
 static bool_ monster_ocean(int r_idx)
 {
-	monster_race *r_ptr = &r_info[r_idx];
+	auto const &r_info = game->edit_data.r_info;
+
+	auto r_ptr = &r_info[r_idx];
 
 	if (r_ptr->flags & RF_WILD_OCEAN)
 		return TRUE;
@@ -1418,7 +1424,9 @@ static bool_ monster_ocean(int r_idx)
 
 static bool_ monster_shore(int r_idx)
 {
-	monster_race *r_ptr = &r_info[r_idx];
+	auto const &r_info = game->edit_data.r_info;
+
+	auto r_ptr = &r_info[r_idx];
 
 	if (r_ptr->flags & RF_WILD_SHORE)
 		return TRUE;
@@ -1429,7 +1437,9 @@ static bool_ monster_shore(int r_idx)
 
 static bool_ monster_waste(int r_idx)
 {
-	monster_race *r_ptr = &r_info[r_idx];
+	auto const &r_info = game->edit_data.r_info;
+
+	auto r_ptr = &r_info[r_idx];
 
 	if (r_ptr->flags & RF_WILD_WASTE)
 		return TRUE;
@@ -1440,7 +1450,9 @@ static bool_ monster_waste(int r_idx)
 
 static bool_ monster_town(int r_idx)
 {
-	monster_race *r_ptr = &r_info[r_idx];
+	auto const &r_info = game->edit_data.r_info;
+
+	auto r_ptr = &r_info[r_idx];
 
 	if (r_ptr->flags & RF_WILD_TOWN)
 		return TRUE;
@@ -1451,7 +1463,9 @@ static bool_ monster_town(int r_idx)
 
 static bool_ monster_wood(int r_idx)
 {
-	monster_race *r_ptr = &r_info[r_idx];
+	auto const &r_info = game->edit_data.r_info;
+
+	auto r_ptr = &r_info[r_idx];
 
 	if (r_ptr->flags & RF_WILD_WOOD)
 		return TRUE;
@@ -1462,7 +1476,9 @@ static bool_ monster_wood(int r_idx)
 
 static bool_ monster_volcano(int r_idx)
 {
-	monster_race *r_ptr = &r_info[r_idx];
+	auto const &r_info = game->edit_data.r_info;
+
+	auto r_ptr = &r_info[r_idx];
 
 	if (r_ptr->flags & RF_WILD_VOLCANO)
 		return TRUE;
@@ -1473,7 +1489,9 @@ static bool_ monster_volcano(int r_idx)
 
 static bool_ monster_mountain(int r_idx)
 {
-	monster_race *r_ptr = &r_info[r_idx];
+	auto const &r_info = game->edit_data.r_info;
+
+	auto r_ptr = &r_info[r_idx];
 
 	if (r_ptr->flags & RF_WILD_MOUNTAIN)
 		return TRUE;
@@ -1484,7 +1502,9 @@ static bool_ monster_mountain(int r_idx)
 
 static bool_ monster_grass(int r_idx)
 {
-	monster_race *r_ptr = &r_info[r_idx];
+	auto const &r_info = game->edit_data.r_info;
+
+	auto r_ptr = &r_info[r_idx];
 
 	if (r_ptr->flags & RF_WILD_GRASS)
 		return TRUE;
@@ -1495,7 +1515,9 @@ static bool_ monster_grass(int r_idx)
 
 static bool_ monster_deep_water(int r_idx)
 {
-	monster_race *r_ptr = &r_info[r_idx];
+	auto const &r_info = game->edit_data.r_info;
+
+	auto r_ptr = &r_info[r_idx];
 
 	if (!monster_dungeon(r_idx)) return FALSE;
 
@@ -1508,7 +1530,9 @@ static bool_ monster_deep_water(int r_idx)
 
 static bool_ monster_shallow_water(int r_idx)
 {
-	monster_race *r_ptr = &r_info[r_idx];
+	auto const &r_info = game->edit_data.r_info;
+
+	auto r_ptr = &r_info[r_idx];
 
 	if (!monster_dungeon(r_idx)) return FALSE;
 
@@ -1521,7 +1545,9 @@ static bool_ monster_shallow_water(int r_idx)
 
 static bool_ monster_lava(int r_idx)
 {
-	monster_race *r_ptr = &r_info[r_idx];
+	auto const &r_info = game->edit_data.r_info;
+
+	auto r_ptr = &r_info[r_idx];
 
 	if (!monster_dungeon(r_idx)) return FALSE;
 

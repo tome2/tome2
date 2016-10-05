@@ -2014,6 +2014,8 @@ void do_cmd_macros(void)
  */
 void do_cmd_visuals(void)
 {
+	auto &r_info = game->edit_data.r_info;
+
 	int i;
 
 	FILE *fff;
@@ -2108,9 +2110,9 @@ void do_cmd_visuals(void)
 			fprintf(fff, "# Monster attr/char definitions\n\n");
 
 			/* Dump monsters */
-			for (i = 0; i < max_r_idx; i++)
+			for (std::size_t i = 0; i < r_info.size(); i++)
 			{
-				monster_race *r_ptr = &r_info[i];
+				auto r_ptr = &r_info[i];
 
 				/* Skip non-entries */
 				if (!r_ptr->name) continue;
@@ -2119,7 +2121,7 @@ void do_cmd_visuals(void)
 				fprintf(fff, "# %s\n", r_ptr->name);
 
 				/* Dump the monster attr/char info */
-				fprintf(fff, "R:%d:0x%02X:0x%02X\n\n", i,
+				fprintf(fff, "R:%zu:0x%02X:0x%02X\n\n", i,
 				        static_cast<unsigned int>(r_ptr->x_attr),
 					static_cast<unsigned int>(r_ptr->x_char));
 			}
@@ -2253,7 +2255,7 @@ void do_cmd_visuals(void)
 			/* Hack -- query until done */
 			while (1)
 			{
-				monster_race *r_ptr = &r_info[r];
+				auto r_ptr = &r_info[r];
 
 				byte da = (r_ptr->d_attr);
 				char dc = (r_ptr->d_char);
@@ -2288,8 +2290,8 @@ void do_cmd_visuals(void)
 				if (i == ESCAPE) break;
 
 				/* Analyze */
-				if (i == 'n') r = (r + max_r_idx + 1) % max_r_idx;
-				if (i == 'N') r = (r + max_r_idx - 1) % max_r_idx;
+				if (i == 'n') r = (r + r_info.size() + 1) % r_info.size();
+				if (i == 'N') r = (r + r_info.size() - 1) % r_info.size();
 				if (i == 'a') r_ptr->x_attr = (ca + 1);
 				if (i == 'A') r_ptr->x_attr = (ca - 1);
 				if (i == 'c') r_ptr->x_char = (cc + 1);
@@ -3263,7 +3265,10 @@ void do_cmd_knowledge_traps(void)
 }
 
 
-static int monster_get_race_level(int r_idx) {
+static int monster_get_race_level(int r_idx)
+{
+	auto const &r_info = game->edit_data.r_info;
+
 	/* Hack -- Morgoth is always last */
 	if (r_idx == 862) {
 		return 20000;
@@ -3277,11 +3282,13 @@ static int monster_get_race_level(int r_idx) {
  */
 static void do_cmd_knowledge_uniques(void)
 {
+	auto const &r_info = game->edit_data.r_info;
+
 	// Extract the unique race indexes.
-	std::vector<int> unique_r_idxs;
-	for (int k = 1; k < max_r_idx; k++)
+	std::vector<std::size_t> unique_r_idxs;
+	for (std::size_t k = 1; k < r_info.size(); k++)
 	{
-		monster_race *r_ptr = &r_info[k];
+		auto r_ptr = &r_info[k];
 
 		/* Only print Uniques */
 		if ((r_ptr->flags & RF_UNIQUE) &&
@@ -3295,15 +3302,15 @@ static void do_cmd_knowledge_uniques(void)
 	// Sort races by level.
 	std::sort(std::begin(unique_r_idxs),
 		  std::end(unique_r_idxs),
-		  [](int r_idx1, int r_idx2) -> bool {
+		  [](auto r_idx1, auto r_idx2) -> bool {
 			  return monster_get_race_level(r_idx1) < monster_get_race_level(r_idx2);
 		  });
 
 	// Scan the monster races
 	fmt::MemoryWriter w;
-	for (int r_idx : unique_r_idxs)
+	for (std::size_t r_idx : unique_r_idxs)
 	{
-		monster_race *r_ptr = &r_info[r_idx];
+		auto r_ptr = &r_info[r_idx];
 
 		/* Only print Uniques */
 		if (r_ptr->flags & RF_UNIQUE)
@@ -3488,6 +3495,8 @@ static void do_cmd_knowledge_pets(void)
  */
 static void do_cmd_knowledge_kill_count(void)
 {
+	auto const &r_info = game->edit_data.r_info;
+
 	s32b Total = 0;
 
 	// Buffer
@@ -3496,9 +3505,9 @@ static void do_cmd_knowledge_kill_count(void)
 	// Summary of monsters slain
 	{
 		/* For all monsters */
-		for (int kk = 1; kk < max_r_idx; kk++)
+		for (auto const &r_ref: r_info)
 		{
-			monster_race *r_ptr = &r_info[kk];
+			auto r_ptr = &r_ref;
 
 			if (r_ptr->flags & RF_UNIQUE)
 			{
@@ -3530,9 +3539,9 @@ static void do_cmd_knowledge_kill_count(void)
 	Total = 0;
 
 	/* Scan the monster races */
-	for (int k = 0; k < max_r_idx; k++)
+	for (auto const &r_ref: r_info)
 	{
-		monster_race *r_ptr = &r_info[k];
+		auto r_ptr = &r_ref;
 
 		if (r_ptr->flags & RF_UNIQUE)
 		{

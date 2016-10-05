@@ -2,6 +2,7 @@
 
 #include "cave.hpp"
 #include "cave_type.hpp"
+#include "game.hpp"
 #include "hook_chardump_in.hpp"
 #include "hook_drop_in.hpp"
 #include "hook_init_quest_in.hpp"
@@ -32,7 +33,9 @@ static int wild_locs[4][2] =
 
 static bool_ create_molds_hook(int r_idx)
 {
-	monster_race *r_ptr = &r_info[r_idx];
+	auto const &r_info = game->edit_data.r_info;
+
+	auto r_ptr = &r_info[r_idx];
 
 	if (r_ptr->spells & SF_MULTIPLY) return FALSE;
 

@@ -453,11 +453,6 @@ ego_item_type *e_info;
 trap_type *t_info;
 
 /*
- * The monster race arrays
- */
-monster_race *r_info;
-
-/*
  * The wilderness features arrays
  */
 int wildc2i[256];
@@ -577,11 +572,6 @@ bool_ (*get_obj_num_hook)(int k_idx);
  */
 s32b get_level_max_stick = -1;
 s32b get_level_use_stick = -1;
-
-/*
- * Maximum number of monsters in r_info.txt
- */
-u16b max_r_idx;
 
 /*
  * Maximum number of items in k_info.txt

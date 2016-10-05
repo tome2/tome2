@@ -65,8 +65,10 @@ s32b monster_exp(s16b level)
 /* Monster gain a few levels ? */
 void monster_check_experience(int m_idx, bool_ silent)
 {
+	auto const &r_info = game->edit_data.r_info;
+
 	monster_type *m_ptr = &m_list[m_idx];
-	monster_race *r_ptr = &r_info[m_ptr->r_idx];
+	auto r_ptr = &r_info[m_ptr->r_idx];
 	char m_name[80];
 
 	/* Get the name */
@@ -268,8 +270,10 @@ static int pick_ego_monster(monster_race const *r_ptr)
  */
 std::shared_ptr<monster_race> race_info_idx(int r_idx, int ego)
 {
-	monster_race *r_ptr = &r_info[r_idx];
-	const auto &re_info = game->edit_data.re_info;
+	auto const &re_info = game->edit_data.re_info;
+	auto &r_info = game->edit_data.r_info;
+
+	auto r_ptr = &r_info[r_idx];
 
 	/* We don't need to allocate anything if it's an ordinary monster. */
 	if (!ego) {
@@ -840,7 +844,7 @@ errr get_mon_num_prep(void)
  * Some dungeon types restrict the possible monsters.
  * Return TRUE is the monster is OK and FALSE otherwise
  */
-bool_ apply_rule(monster_race *r_ptr, byte rule)
+static bool_ apply_rule(monster_race const *r_ptr, byte rule)
 {
 	auto const &d_info = game->edit_data.d_info;
 
@@ -893,9 +897,10 @@ bool_ apply_rule(monster_race *r_ptr, byte rule)
 bool_ restrict_monster_to_dungeon(int r_idx)
 {
 	auto const &d_info = game->edit_data.d_info;
+	auto const &r_info = game->edit_data.r_info;
 
 	auto d_ptr = &d_info[dungeon_type];
-	monster_race *r_ptr = &r_info[r_idx];
+	auto r_ptr = &r_info[r_idx];
 
 	/* Select a random rule */
 	byte rule = d_ptr->rule_percents[rand_int(100)];
@@ -940,13 +945,11 @@ bool_ summon_hack = FALSE;
  */
 s16b get_mon_num(int level)
 {
+	auto const &r_info = game->edit_data.r_info;
+
 	int	i, j, p;
-
 	int	r_idx;
-
 	long	value, total;
-
-	monster_race	*r_ptr;
 
 	alloc_entry	*table = alloc_race_table;
 
@@ -996,7 +999,7 @@ s16b get_mon_num(int level)
 		r_idx = table[i].index;
 
 		/* Access the actual race */
-		r_ptr = &r_info[r_idx];
+		auto r_ptr = &r_info[r_idx];
 
 		/* Hack -- "unique" monsters must be "unique" */
 		if ((r_ptr->flags & RF_UNIQUE) &&
@@ -1163,7 +1166,8 @@ s16b get_mon_num(int level)
  */
 void monster_desc(char *desc, monster_type *m_ptr, int mode)
 {
-	const auto &re_info = game->edit_data.re_info;
+	auto const &re_info = game->edit_data.re_info;
+	auto const &r_info = game->edit_data.r_info;
 
 	auto r_ptr = m_ptr->race();
 	char silly_name[80], name[100];
@@ -1196,11 +1200,11 @@ void monster_desc(char *desc, monster_type *m_ptr, int mode)
 	{
 		if (rand_int(2) == 0)
 		{
-			monster_race *hallu_race;
+			monster_race const *hallu_race;
 
 			do
 			{
-				hallu_race = &r_info[randint(max_r_idx - 2)];
+				hallu_race = &*uniform_element(r_info);
 			}
 			while ((!hallu_race->name) || (hallu_race->flags & RF_UNIQUE));
 
@@ -1379,9 +1383,10 @@ void monster_desc(char *desc, monster_type *m_ptr, int mode)
 
 void monster_race_desc(char *desc, int r_idx, int ego)
 {
-	const auto &re_info = game->edit_data.re_info;
+	auto const &re_info = game->edit_data.re_info;
+	auto const &r_info = game->edit_data.r_info;
 
-	monster_race *r_ptr = &r_info[r_idx];
+	auto r_ptr = &r_info[r_idx];
 	char name[80];
 
 	if (ego)
@@ -1985,6 +1990,8 @@ bool_ place_monster_one_no_drop = FALSE;
 static s16b hack_m_idx_ii = 0;
 s16b place_monster_one(int y, int x, int r_idx, int ego, bool_ slp, int status)
 {
+	auto &r_info = game->edit_data.r_info;
+
 	int i;
 	char dummy[5];
 	bool_ add_level = FALSE;
@@ -2054,7 +2061,7 @@ s16b place_monster_one(int y, int x, int r_idx, int ego, bool_ slp, int status)
 
 	/* Check for original monster race flags */
 	{
-		monster_race *r_ptr = &r_info[r_idx];
+		auto r_ptr = &r_info[r_idx];
 
 		/* Paranoia */
 		if (!r_ptr->name)
@@ -2479,7 +2486,7 @@ s16b place_monster_one(int y, int x, int r_idx, int ego, bool_ slp, int status)
 	/* Count monsters on the level */
 	{
 		/* Hack -- we need to modify the REAL r_info, not the fake one */
-		monster_race *r_ptr = &r_info[r_idx];
+		auto r_ptr = &r_info[r_idx];
 
 		/* Hack -- Count the monsters on the level */
 		r_ptr->cur_num++;
@@ -2513,7 +2520,9 @@ s16b place_monster_one(int y, int x, int r_idx, int ego, bool_ slp, int status)
  */
 static bool_ place_monster_group(int y, int x, int r_idx, bool_ slp, int status)
 {
-	monster_race *r_ptr = &r_info[r_idx];
+	auto const &r_info = game->edit_data.r_info;
+
+	auto r_ptr = &r_info[r_idx];
 
 	int old, n, i;
 	int total = 0, extra = 0;
@@ -2608,9 +2617,10 @@ static int place_monster_idx = 0;
  */
 static bool_ place_monster_okay(int r_idx)
 {
-	monster_race *r_ptr = &r_info[place_monster_idx];
+	auto const &r_info = game->edit_data.r_info;
 
-	monster_race *z_ptr = &r_info[r_idx];
+	auto r_ptr = &r_info[place_monster_idx];
+	auto z_ptr = &r_info[r_idx];
 
 	/* Hack - Escorts have to have the same dungeon flag */
 	if (monster_dungeon(place_monster_idx) != monster_dungeon(r_idx)) return (FALSE);
@@ -2652,8 +2662,10 @@ static bool_ place_monster_okay(int r_idx)
  */
 bool_ place_monster_aux(int y, int x, int r_idx, bool_ slp, bool_ grp, int status)
 {
+	auto const &r_info = game->edit_data.r_info;
+
 	int i;
-	monster_race *r_ptr = &r_info[r_idx];
+	auto r_ptr = &r_info[r_idx];
 	bool_ (*old_get_mon_num_hook)(int r_idx);
 
 
@@ -2776,9 +2788,11 @@ bool_ place_monster(int y, int x, bool_ slp, bool_ grp)
 
 bool_ alloc_horde(int y, int x)
 {
+	auto const &r_info = game->edit_data.r_info;
+
 	int r_idx = 0;
-	monster_race * r_ptr = NULL;
-	monster_type * m_ptr;
+	monster_race const *r_ptr = NULL;
+	monster_type *m_ptr;
 	int attempts = 1000;
 
 	set_mon_num2_hook(y, x);
@@ -2907,7 +2921,9 @@ static int summon_specific_type = 0;
  */
 static bool_ summon_specific_okay(int r_idx)
 {
-	monster_race *r_ptr = &r_info[r_idx];
+	auto const &r_info = game->edit_data.r_info;
+
+	auto r_ptr = &r_info[r_idx];
 
 	bool_ okay = FALSE;
 
@@ -3482,7 +3498,9 @@ void monster_swap(int y1, int x1, int y2, int x2)
  */
 static bool_ mutate_monster_okay(int r_idx)
 {
-	monster_race *r_ptr = &r_info[r_idx];
+	auto const &r_info = game->edit_data.r_info;
+
+	auto r_ptr = &r_info[r_idx];
 
 	bool_ okay = FALSE;
 

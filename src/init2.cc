@@ -405,7 +405,7 @@ namespace {
 
 		static void allocate()
 		{
-			r_info = new monster_race[max_r_idx];
+			// Nothing to do
 		}
 
 		static errr parse(FILE *fp)
@@ -722,11 +722,12 @@ void create_stores_stock(int t)
 static errr init_other(void)
 {
 	auto const &d_info = game->edit_data.d_info;
+	auto const &r_info = game->edit_data.r_info;
 
 	/*** Prepare the "dungeon" information ***/
 
 	/* Allocate and Wipe the special gene flags */
-	m_allow_special = make_array<bool_>(max_r_idx);
+	m_allow_special = make_array<bool_>(r_info.size());
 	k_allow_special = make_array<bool_>(max_k_idx);
 	a_allow_special = make_array<bool_>(max_a_idx);
 
@@ -802,11 +803,11 @@ static errr init_other(void)
  */
 static errr init_alloc(void)
 {
+	auto const &r_info = game->edit_data.r_info;
+
 	int i, j;
 
 	object_kind *k_ptr;
-
-	monster_race *r_ptr;
 
 	alloc_entry *table;
 
@@ -915,10 +916,10 @@ static errr init_alloc(void)
 	alloc_race_size = 0;
 
 	/* Scan the monsters */
-	for (i = 1; i < max_r_idx; i++)
+	for (auto &r_ref: r_info)
 	{
 		/* Get the i'th race */
-		r_ptr = &r_info[i];
+		auto r_ptr = &r_ref;
 
 		/* Legal monsters */
 		if (r_ptr->rarity)
@@ -951,10 +952,10 @@ static errr init_alloc(void)
 	table = alloc_race_table;
 
 	/* Scan the monsters */
-	for (i = 1; i < max_r_idx; i++)
+	for (i = 1; i < r_info.size(); i++)
 	{
 		/* Get the i'th race */
-		r_ptr = &r_info[i];
+		auto r_ptr = &r_info[i];
 
 		/* Count valid pairs */
 		if (r_ptr->rarity)
@@ -1017,6 +1018,7 @@ static void init_sets_aux()
 static void init_guardians(void)
 {
 	auto const &d_info = game->edit_data.d_info;
+	auto &r_info = game->edit_data.r_info;
 
 	/* Scan dungeons */
 	for (std::size_t i = 0; i < d_info.size(); i++)
@@ -1026,7 +1028,7 @@ static void init_guardians(void)
 		/* Mark the guadian monster */
 		if (d_ptr->final_guardian)
 		{
-			monster_race *r_ptr = &r_info[d_ptr->final_guardian];
+			auto r_ptr = &r_info[d_ptr->final_guardian];
 
 			r_ptr->flags |= RF_SPECIAL_GENE;
 

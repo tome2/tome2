@@ -3618,6 +3618,8 @@ static cptr look_mon_desc(int m_idx)
  */
 static bool target_able(int m_idx)
 {
+	auto const &r_info = game->edit_data.r_info;
+
 	monster_type *m_ptr = &m_list[m_idx];
 
 	/* Monster must be alive */
@@ -3734,6 +3736,8 @@ static s16b target_pick(point p, int dy, int dx, std::vector<point> const &point
  */
 static bool_ target_set_accept(int y, int x)
 {
+	auto const &r_info = game->edit_data.r_info;
+
 	/* Player grid is always interesting */
 	if ((y == p_ptr->py) && (x == p_ptr->px)) return (TRUE);
 
@@ -3746,7 +3750,7 @@ static bool_ target_set_accept(int y, int x)
 	cave_type *c_ptr = &cave[y][x];
 
 	/* Visible monsters */
-	if (c_ptr->m_idx && c_ptr->m_idx < max_r_idx)
+	if (c_ptr->m_idx && c_ptr->m_idx < static_cast<int>(r_info.size()))
 	{
 
 		monster_type *m_ptr = &m_list[c_ptr->m_idx];
@@ -5152,7 +5156,8 @@ static void clean_wish_name(char *buf, char *name)
  */
 void make_wish(void)
 {
-	const auto &re_info = game->edit_data.re_info;
+	auto const &re_info = game->edit_data.re_info;
+	auto const &r_info = game->edit_data.r_info;
 
 	char name[200], *mname;
 	int mstatus = MSTATUS_ENEMY;
@@ -5216,9 +5221,9 @@ void make_wish(void)
 		mname = name;
 	}
 
-	for (std::size_t i = 1; i < max_r_idx; i++)
+	for (std::size_t i = 1; i < r_info.size(); i++)
 	{
-		monster_race *r_ptr = &r_info[i];
+		auto r_ptr = &r_info[i];
 
 		if (!r_ptr->name) continue;
 

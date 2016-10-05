@@ -620,6 +620,8 @@ void touch_zap_player(monster_type *m_ptr)
 static void carried_monster_attack(s16b m_idx, bool_ *fear, bool_ *mdeath,
                                    int x, int y)
 {
+	auto const &r_info = game->edit_data.r_info;
+
 	monster_type *t_ptr = &m_list[m_idx];
 
 	int ap_cnt;
@@ -641,7 +643,7 @@ static void carried_monster_attack(s16b m_idx, bool_ *fear, bool_ *mdeath,
 	if (!o_ptr->k_idx) return;
 
 	/* Get monster race of the symbiote */
-	monster_race *r_ptr = &r_info[o_ptr->pval];
+	auto r_ptr = &r_info[o_ptr->pval];
 
 	/* Not allowed to attack */
 	if (r_ptr->flags & RF_NEVER_BLOW) return;
@@ -1111,6 +1113,8 @@ static void carried_monster_attack(s16b m_idx, bool_ *fear, bool_ *mdeath,
 static void incarnate_monster_attack(s16b m_idx, bool_ *fear, bool_ *mdeath,
                                      int x, int y)
 {
+	auto const &r_info = game->edit_data.r_info;
+
 	monster_type *t_ptr = &m_list[m_idx];
 
 	auto tr_ptr = t_ptr->race();
@@ -1973,6 +1977,8 @@ static void do_nazgul(int *k, int *num, int num_blow, int weap, std::shared_ptr<
  */
 void py_attack(int y, int x, int max_blow)
 {
+	auto const &r_info = game->edit_data.r_info;
+
 	int num = 0, k, bonus, chance;
 
 	s32b special = 0;
@@ -2536,6 +2542,8 @@ void py_attack(int y, int x, int max_blow)
 
 bool_ player_can_enter(byte feature)
 {
+	auto const &r_info = game->edit_data.r_info;
+
 	bool_ pass_wall;
 
 	bool_ only_wall = FALSE;
@@ -2620,11 +2628,13 @@ bool_ player_can_enter(byte feature)
 
 static bool_ easy_open_door(int y, int x)
 {
+	auto const &r_info = game->edit_data.r_info;
+
 	int i, j;
 
 	cave_type *c_ptr = &cave[y][x];
 
-	monster_race *r_ptr = &r_info[p_ptr->body_monster];
+	auto r_ptr = &r_info[p_ptr->body_monster];
 
 
 	if ((p_ptr->body_monster != 0) && !(r_ptr->flags & RF_OPEN_DOOR))
@@ -2726,6 +2736,7 @@ static bool_ easy_open_door(int y, int x)
 void move_player_aux(int dir, int do_pickup, int run, bool_ disarm)
 {
 	auto const &d_info = game->edit_data.d_info;
+	auto const &r_info = game->edit_data.r_info;
 
 	int y, x, tmp;
 
@@ -2733,7 +2744,7 @@ void move_player_aux(int dir, int do_pickup, int run, bool_ disarm)
 
 	monster_type *m_ptr;
 
-	monster_race *r_ptr = &r_info[p_ptr->body_monster];
+	auto r_ptr = &r_info[p_ptr->body_monster];
 
 	char m_name[80];
 
@@ -4041,6 +4052,8 @@ void run_step(int dir)
  */
 void do_cmd_pet(void)
 {
+	auto const &r_info = game->edit_data.r_info;
+
 	int i = 0;
 
 	int num = 0;
@@ -4301,11 +4314,9 @@ void do_cmd_pet(void)
 			/* Process the monsters (backwards) */
 			for (pet_ctr = m_max - 1; pet_ctr >= 1; pet_ctr--)
 			{
-				monster_race *r_ptr;
-
 				/* Access the monster */
 				m_ptr = &m_list[pet_ctr];
-				r_ptr = &r_info[m_ptr->r_idx];
+				auto r_ptr = &r_info[m_ptr->r_idx];
 
 				if ((!(r_ptr->flags & RF_NO_DEATH)) && ((m_ptr->status == MSTATUS_PET) || (m_ptr->status == MSTATUS_FRIEND)))	/* Get rid of it! */
 				{
@@ -4370,11 +4381,9 @@ void do_cmd_pet(void)
 			/* Process the monsters (backwards) */
 			for (pet_ctr = m_max - 1; pet_ctr >= 1; pet_ctr--)
 			{
-				monster_race *r_ptr;
-
 				/* Access the monster */
 				m_ptr = &m_list[pet_ctr];
-				r_ptr = &r_info[m_ptr->r_idx];
+				auto r_ptr = &r_info[m_ptr->r_idx];
 
 				if ((!(r_ptr->flags & RF_NO_DEATH)) && ((m_ptr->status == MSTATUS_COMPANION)))	/* Get rid of it! */
 				{
@@ -4501,9 +4510,11 @@ void do_cmd_integrate_body()
  */
 bool_ do_cmd_leave_body(bool_ drop_body)
 {
+	auto const &r_info = game->edit_data.r_info;
+
 	object_type *o_ptr, forge;
 
-	monster_race *r_ptr = &r_info[p_ptr->body_monster];
+	auto r_ptr = &r_info[p_ptr->body_monster];
 
 	int i;
 

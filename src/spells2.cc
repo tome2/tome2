@@ -801,6 +801,8 @@ bool_ alchemy(void) /* Turns an object into gold, gain some of its value in a sh
  */
 void self_knowledge(FILE *fff)
 {
+	auto const &r_info = game->edit_data.r_info;
+
 	int i = 0, j, k;
 
 	int iter;  /* Iterator for a loop */
@@ -838,7 +840,7 @@ void self_knowledge(FILE *fff)
 	/* Racial powers... */
 	if (p_ptr->body_monster != 0)
 	{
-		monster_race *r_ptr = &r_info[p_ptr->body_monster];
+		auto r_ptr = &r_info[p_ptr->body_monster];
 
 		if (r_ptr->flags & RF_CHAR_CLEAR ||
 		                r_ptr->flags & RF_ATTR_CLEAR)

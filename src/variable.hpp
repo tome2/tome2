@@ -11,7 +11,6 @@
 #include "ego_item_type_fwd.hpp"
 #include "fate.hpp"
 #include "feature_type_fwd.hpp"
-#include "monster_race_fwd.hpp"
 #include "monster_type_fwd.hpp"
 #include "object_kind_fwd.hpp"
 #include "object_type_fwd.hpp"
@@ -157,7 +156,6 @@ extern feature_type *f_info;
 extern object_kind *k_info;
 extern artifact_type *a_info;
 extern ego_item_type *e_info;
-extern monster_race *r_info;
 extern trap_type *t_info;
 extern int wildc2i[256];
 extern cptr DEFAULT_FEAT_TEXT;
@@ -170,7 +168,6 @@ extern char *ANGBAND_DIR_DNGN;
 extern bool_ (*get_mon_num_hook)(int r_idx);
 extern bool_ (*get_mon_num2_hook)(int r_idx);
 extern bool_ (*get_obj_num_hook)(int k_idx);
-extern u16b max_r_idx;
 extern u16b max_k_idx;
 extern u16b max_f_idx;
 extern u16b max_a_idx;

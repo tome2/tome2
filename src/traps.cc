@@ -2353,6 +2353,8 @@ bool_ mon_hit_trap_aux_staff(int m_idx, object_type *o_ptr)
  */
 bool_ mon_hit_trap_aux_scroll(int m_idx, int sval)
 {
+	auto const &r_info = game->edit_data.r_info;
+
 	monster_type *m_ptr = &m_list[m_idx];
 	int dam = 0, typ = 0;
 	int rad = 0;
@@ -2448,7 +2450,7 @@ bool_ mon_hit_trap_aux_scroll(int m_idx, int sval)
 		break;
 	case SV_SCROLL_GENOCIDE:
 		{
-			monster_race *r_ptr = &r_info[m_ptr->r_idx];
+			auto r_ptr = &r_info[m_ptr->r_idx];
 			genocide_aux(FALSE, r_ptr->d_char);
 			/* although there's no point in a multiple genocide trap... */
 			return (!(r_ptr->flags & RF_UNIQUE));
@@ -2490,6 +2492,8 @@ bool_ mon_hit_trap_aux_wand(int m_idx, object_type *o_ptr)
  */
 bool_ mon_hit_trap_aux_potion(int m_idx, object_type *o_ptr)
 {
+	auto const &r_info = game->edit_data.r_info;
+
 	monster_type *m_ptr = &m_list[m_idx];
 	int dam = 0, typ = 0;
 	int y = m_ptr->fy;
@@ -2613,7 +2617,7 @@ bool_ mon_hit_trap_aux_potion(int m_idx, object_type *o_ptr)
 			break;
 		case SV_POTION_LIFE:
 			{
-				monster_race *r_ptr = &r_info[m_ptr->r_idx];
+				auto r_ptr = &r_info[m_ptr->r_idx];
 				if (r_ptr->flags & RF_UNDEAD)
 				{
 					typ = GF_HOLY_FIRE;
@@ -2645,8 +2649,10 @@ bool_ mon_hit_trap_aux_potion(int m_idx, object_type *o_ptr)
  */
 bool_ mon_hit_trap(int m_idx)
 {
+	auto const &r_info = game->edit_data.r_info;
+
 	monster_type *m_ptr = &m_list[m_idx];
-	monster_race *r_ptr = &r_info[m_ptr->r_idx];
+	auto r_ptr = &r_info[m_ptr->r_idx];
 
 	object_type object_type_body;
 
