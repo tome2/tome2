@@ -4238,8 +4238,6 @@ module_type modules[MAX_MODULES] =
 		},
 		/* Randarts: */
 		{ 30, 20, 20 },
-		/* Max player level: */
-		50,
 		/* Skills: */
 		{ 6, 4, },
 		/* Intro function */
@@ -4260,8 +4258,6 @@ module_type modules[MAX_MODULES] =
 		},
 		/* Randarts: */
 		{ 30, 30, 30 },
-		/* Max player level: */
-		50,
 		/* Skill overage: */
 		{ 6, 5, },
 		/* Intro function */

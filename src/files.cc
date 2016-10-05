@@ -1151,7 +1151,7 @@ static void display_player_middle(void)
 
 	prt_lnum("Max Exp    ", p_ptr->max_exp, 11, 28, TERM_L_GREEN);
 
-	if ((p_ptr->lev >= PY_MAX_LEVEL) || (p_ptr->lev >= max_plev))
+	if (p_ptr->lev >= PY_MAX_LEVEL)
 	{
 		put_str("Exp to Adv.", 12, 28);
 		c_put_str(TERM_L_GREEN, "    *****", 12, 28 + 11);

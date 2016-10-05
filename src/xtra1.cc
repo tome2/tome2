@@ -362,7 +362,7 @@ static void prt_exp(void)
 {
 	char out_val[32];
 
-	if ((p_ptr->lev >= PY_MAX_LEVEL) || (p_ptr->lev >= max_plev))
+	if (p_ptr->lev >= PY_MAX_LEVEL)
 	{
 		(void)sprintf(out_val, "********");
 	}

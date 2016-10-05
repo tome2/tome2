@@ -42,9 +42,6 @@ struct module_type
 		s32b jewelry_chance;
 	} randarts;
 
-	/* Max player level. */
-	int max_plev;
-
 	/* Skills */
 	struct {
 		/* Skill points per level */

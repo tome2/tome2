@@ -195,8 +195,6 @@ static void activate_module(int module_idx)
 	game_module_idx = module_idx;
 
 	/* Do misc inits  */
-	max_plev = module_ptr->max_plev;
-
 	RANDART_WEAPON = module_ptr->randarts.weapon_chance;
 	RANDART_ARMOR = module_ptr->randarts.armor_chance;
 	RANDART_JEWEL = module_ptr->randarts.jewelry_chance;

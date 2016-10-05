@@ -918,7 +918,6 @@ s32b VERSION_PATCH;
 /*
  * Some module info
  */
-s32b max_plev = 50;
 s32b DUNGEON_BASE = 4;
 s32b DUNGEON_DEATH = 28;
 s32b DUNGEON_ASTRAL = 8;

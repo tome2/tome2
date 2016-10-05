@@ -1916,8 +1916,8 @@ void check_experience(void)
 
 
 	/* Gain levels while possible */
-	while ((p_ptr->lev < PY_MAX_LEVEL) && (p_ptr->lev < max_plev) &&
-	                (p_ptr->exp >= (player_exp[p_ptr->lev - 1] * p_ptr->expfact / 100L)))
+	while ((p_ptr->lev < PY_MAX_LEVEL) &&
+	        (p_ptr->exp >= (player_exp[p_ptr->lev - 1] * p_ptr->expfact / 100L)))
 	{
 		/* Gain a level */
 		p_ptr->lev++;

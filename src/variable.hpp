@@ -270,7 +270,6 @@ extern s32b game_module_idx;
 extern s32b VERSION_MAJOR;
 extern s32b VERSION_MINOR;
 extern s32b VERSION_PATCH;
-extern s32b max_plev;
 extern s32b DUNGEON_BASE;
 extern s32b DUNGEON_DEATH;
 extern s32b DUNGEON_ASTRAL;
