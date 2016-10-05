@@ -4851,6 +4851,7 @@ static void activate_valaroma()
 void do_cmd_activate(void)
 {
 	auto const &k_info = game->edit_data.k_info;
+	auto const &a_info = game->edit_data.a_info;
 
 	int item, lev, chance;
 
@@ -5075,6 +5076,7 @@ void do_cmd_activate(void)
 const char *activation_aux(object_type * o_ptr, bool_ doit, int item)
 {
 	auto const &k_info = game->edit_data.k_info;
+	auto const &a_info = game->edit_data.a_info;
 
 	int plev = get_skill(SKILL_DEVICE);
 

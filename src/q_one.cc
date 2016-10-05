@@ -3,6 +3,7 @@
 #include "artifact_type.hpp"
 #include "cave.hpp"
 #include "cave_type.hpp"
+#include "game.hpp"
 #include "gods.hpp"
 #include "hook_calculate_hp_in.hpp"
 #include "hook_calculate_hp_out.hpp"
@@ -232,6 +233,8 @@ static bool_ quest_one_identify_hook(void *, void *in_, void *)
 
 static bool_ quest_one_death_hook(void *, void *in_, void *)
 {
+	auto const &a_info = game->edit_data.a_info;
+
 	struct hook_monster_death_in *in = static_cast<struct hook_monster_death_in *>(in_);
 	s32b m_idx = in->m_idx;
 	s32b r_idx = m_list[m_idx].r_idx;

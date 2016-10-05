@@ -722,6 +722,7 @@ static void player_wipe(void)
 	auto const &d_info = game->edit_data.d_info;
 	auto &r_info = game->edit_data.r_info;
 	auto &k_info = game->edit_data.k_info;
+	auto &a_info = game->edit_data.a_info;
 
 	/* Wipe special levels */
 	wipe_saved();
@@ -784,10 +785,9 @@ static void player_wipe(void)
 	init_randart();
 
 	/* Start with no artifacts made yet */
-	for (std::size_t i = 0; i < max_a_idx; i++)
+	for (auto &a_ref: a_info)
 	{
-		artifact_type *a_ptr = &a_info[i];
-		a_ptr->cur_num = 0;
+		a_ref.cur_num = 0;
 	}
 
 	/* Reset the "objects" */

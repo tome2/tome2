@@ -7671,6 +7671,7 @@ static bool_ cave_gen(void)
 {
 	auto const &d_info = game->edit_data.d_info;
 	auto const &r_info = game->edit_data.r_info;
+	auto const &a_info = game->edit_data.a_info;
 	auto &k_info = game->edit_data.k_info;
 
 	auto d_ptr = &d_info[dungeon_type];
@@ -7924,7 +7925,7 @@ static bool_ cave_gen(void)
 				/* Grant a normal artefact */
 				else if (a_info[fates[i].a_idx].cur_num == 0)
 				{
-					artifact_type *a_ptr = &a_info[fates[i].a_idx];
+					auto a_ptr = &a_info[fates[i].a_idx];
 					s16b I_kind;
 
 					/* Get local object */
@@ -8041,7 +8042,7 @@ static bool_ cave_gen(void)
 		if (m_idx && d_ptr->final_artifact &&
 		                (a_info[d_ptr->final_artifact].cur_num == 0))
 		{
-			artifact_type *a_ptr = &a_info[d_ptr->final_artifact];
+			auto a_ptr = &a_info[d_ptr->final_artifact];
 			object_type *q_ptr, forge, *o_ptr;
 			int I_kind, o_idx;
 
@@ -8358,6 +8359,7 @@ static void generate_grid_mana()
 void generate_cave(void)
 {
 	auto const &d_info = game->edit_data.d_info;
+	auto &a_info = game->edit_data.a_info;
 
 	auto d_ptr = &d_info[dungeon_type];
 	int tester_1, tester_2;

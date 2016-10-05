@@ -475,6 +475,8 @@ static bool_ player_handle_breath_trap(s16b rad, s16b type, u16b trap)
  */
 bool_ player_activate_trap_type(s16b y, s16b x, object_type *i_ptr, s16b item)
 {
+	auto const &a_info = game->edit_data.a_info;
+
 	bool_ ident = FALSE;
 	s16b trap;
 

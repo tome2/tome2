@@ -3,6 +3,7 @@
 #include "artifact_type.hpp"
 #include "cave.hpp"
 #include "cave_type.hpp"
+#include "game.hpp"
 #include "hook_monster_death_in.hpp"
 #include "hook_quest_finish_in.hpp"
 #include "hooks.hpp"
@@ -27,6 +28,8 @@ GENERATE_MONSTER_LOOKUP_FN(get_forest_troll, "Forest troll")
 
 static bool_ quest_troll_gen_hook(void *, void *, void *)
 {
+	auto &a_info = game->edit_data.a_info;
+
 	int x, y;
 	int xstart = 2;
 	int ystart = 2;

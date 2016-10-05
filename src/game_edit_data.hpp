@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ability_type.hpp"
+#include "artifact_type.hpp"
 #include "dungeon_info_type.hpp"
 #include "feature_type.hpp"
 #include "hist_type.hpp"
@@ -48,6 +49,11 @@ struct GameEditData {
 	 * Random artifact generation parameters.
 	 */
 	std::vector<randart_gen_type> ra_gen;
+
+	/**
+	 * Artifacts
+	 */
+	std::vector<artifact_type> a_info;
 
 	/**
 	 * Artifact sets

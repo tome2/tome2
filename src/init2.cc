@@ -325,7 +325,7 @@ namespace {
 
 		static void allocate()
 		{
-			a_info = new artifact_type[max_a_idx];
+			// Nothing to do
 		}
 
 		static errr parse(FILE *fp)
@@ -724,13 +724,14 @@ static errr init_other(void)
 	auto const &d_info = game->edit_data.d_info;
 	auto const &r_info = game->edit_data.r_info;
 	auto const &k_info = game->edit_data.k_info;
+	auto const &a_info = game->edit_data.a_info;
 
 	/*** Prepare the "dungeon" information ***/
 
 	/* Allocate and Wipe the special gene flags */
 	m_allow_special = make_array<bool_>(r_info.size());
 	k_allow_special = make_array<bool_>(k_info.size());
-	a_allow_special = make_array<bool_>(max_a_idx);
+	a_allow_special = make_array<bool_>(a_info.size());
 
 
 	/*** Prepare "vinfo" array ***/
@@ -993,10 +994,11 @@ static errr init_alloc(void)
 static void init_sets_aux()
 {
 	auto const &set_info = game->edit_data.set_info;
+	auto &a_info = game->edit_data.a_info;
 
-	for (std::size_t i = 0; i < max_a_idx; i++)
+	for (auto &a_ref: a_info)
 	{
-		a_info[i].set = -1;
+		a_ref.set = -1;
 	}
 
 	for (std::size_t i = 0; i < set_info.size(); i++)
@@ -1018,6 +1020,7 @@ static void init_guardians(void)
 	auto const &d_info = game->edit_data.d_info;
 	auto &r_info = game->edit_data.r_info;
 	auto &k_info = game->edit_data.k_info;
+	auto &a_info = game->edit_data.a_info;
 
 	/* Scan dungeons */
 	for (std::size_t i = 0; i < d_info.size(); i++)
@@ -1034,7 +1037,7 @@ static void init_guardians(void)
 			/* Mark the final artifact */
 			if (d_ptr->final_artifact)
 			{
-				artifact_type *a_ptr = &a_info[d_ptr->final_artifact];
+				auto a_ptr = &a_info[d_ptr->final_artifact];
 				a_ptr->flags |= TR_SPECIAL_GENE;
 			}
 

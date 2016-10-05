@@ -12,9 +12,6 @@ M:X:101
 # Maximum y size of the wilderness
 M:Y:66
 
-# Maximum number of artifacts in a_info.txt
-M:A:219
-
 # Maximum number of ego-items in e_info.txt
 M:E:200
 

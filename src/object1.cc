@@ -801,6 +801,7 @@ bool_ object_flags_no_set = FALSE;
 object_flag_set object_flags(object_type const *o_ptr)
 {
 	auto const &k_info = game->edit_data.k_info;
+	auto const &a_info = game->edit_data.a_info;
 
 	auto k_ptr = &k_info[o_ptr->k_idx];
 
@@ -810,7 +811,7 @@ object_flag_set object_flags(object_type const *o_ptr)
 	/* Artifact */
 	if (o_ptr->name1)
 	{
-		artifact_type *a_ptr = &a_info[o_ptr->name1];
+		auto a_ptr = &a_info[o_ptr->name1];
 
 		f = a_ptr->flags;
 
@@ -833,6 +834,7 @@ object_flag_set object_flags(object_type const *o_ptr)
 int object_power(object_type *o_ptr)
 {
 	auto const &k_info = game->edit_data.k_info;
+	auto const &a_info = game->edit_data.a_info;
 
 	auto k_ptr = &k_info[o_ptr->k_idx];
 	int power = -1;
@@ -858,9 +860,12 @@ int object_power(object_type *o_ptr)
 	/* Artifact */
 	if (o_ptr->name1)
 	{
-		artifact_type *a_ptr = &a_info[o_ptr->name1];
+		auto a_ptr = &a_info[o_ptr->name1];
 
-		if (power == -1) power = a_ptr->power;
+		if (power == -1)
+		{
+			power = a_ptr->power;
+		}
 	}
 
 	return (power);
@@ -874,6 +879,7 @@ int object_power(object_type *o_ptr)
 object_flag_set object_flags_known(object_type const *o_ptr)
 {
 	auto const &k_info = game->edit_data.k_info;
+	auto const &a_info = game->edit_data.a_info;
 
 	auto k_ptr = &k_info[o_ptr->k_idx];
 
@@ -892,7 +898,7 @@ object_flag_set object_flags_known(object_type const *o_ptr)
 	/* Artifact */
 	if (o_ptr->name1)
 	{
-		artifact_type *a_ptr = &a_info[o_ptr->name1];
+		auto a_ptr = &a_info[o_ptr->name1];
 
 		/* Need full knowledge or spoilers */
 		if ((o_ptr->ident & IDENT_MENTAL))
@@ -1021,6 +1027,7 @@ static std::string object_desc_aux(object_type const *o_ptr, int pref, int mode)
 {
 	auto const &r_info = game->edit_data.r_info;
 	auto const &k_info = game->edit_data.k_info;
+	auto const &a_info = game->edit_data.a_info;
 	static auto const TR_PVAL_MASK = compute_pval_mask();
 
 	bool_ hack_name = FALSE;
@@ -1686,7 +1693,7 @@ static std::string object_desc_aux(object_type const *o_ptr, int pref, int mode)
 		/* Grab any artifact name */
 		else if (o_ptr->name1)
 		{
-			artifact_type *a_ptr = &a_info[o_ptr->name1];
+			auto a_ptr = &a_info[o_ptr->name1];
 
 			/* Unique corpses don't require another name */
 			if (o_ptr->tval != TV_CORPSE)
@@ -2144,6 +2151,7 @@ void object_desc_store(char *buf, object_type *o_ptr, int pref, int mode)
 cptr item_activation(object_type *o_ptr, byte num)
 {
 	auto const &k_info = game->edit_data.k_info;
+	auto const &a_info = game->edit_data.a_info;
 
 	/* Needed hacks */
 	static char rspell[2][80];
@@ -2517,6 +2525,7 @@ bool_ object_out_desc(object_type *o_ptr, FILE *fff, bool_ trim_down, bool_ wait
 	auto const &set_info = game->edit_data.set_info;
 	auto const &st_info = game->edit_data.st_info;
 	auto const &k_info = game->edit_data.k_info;
+	auto const &a_info = game->edit_data.a_info;
 
 	cptr vp[64];
 	byte vc[64];
@@ -2569,7 +2578,7 @@ bool_ object_out_desc(object_type *o_ptr, FILE *fff, bool_ trim_down, bool_ wait
 
 		if (o_ptr->name1 && (!trim_down))
 		{
-			artifact_type *a_ptr = &a_info[o_ptr->name1];
+			auto a_ptr = &a_info[o_ptr->name1];
 
 			text_out_c(TERM_YELLOW, a_ptr->text);
 			text_out("\n");
@@ -4065,6 +4074,8 @@ void display_equip(void)
 /* Get the color of the letter idx */
 byte get_item_letter_color(object_type const *o_ptr)
 {
+	auto const &a_info = game->edit_data.a_info;
+
 	byte color = TERM_WHITE;
 
 	/* Must have knowlegde */
@@ -6129,6 +6140,7 @@ void object_gain_level(object_type *o_ptr)
 bool_ wield_set(s16b a_idx, s16b set_idx, bool_ silent)
 {
 	auto &set_info = game->edit_data.set_info;
+	auto const &a_info = game->edit_data.a_info;
 
 	auto s_ptr = &set_info[set_idx];
 
@@ -6164,6 +6176,7 @@ bool_ wield_set(s16b a_idx, s16b set_idx, bool_ silent)
 bool_ takeoff_set(s16b a_idx, s16b set_idx)
 {
 	auto &set_info = game->edit_data.set_info;
+	auto const &a_info = game->edit_data.a_info;
 
 	auto s_ptr = &set_info[set_idx];
 
@@ -6199,6 +6212,7 @@ bool_ takeoff_set(s16b a_idx, s16b set_idx)
 void apply_set(s16b a_idx, s16b set_idx)
 {
 	auto const &set_info = game->edit_data.set_info;
+	auto const &a_info = game->edit_data.a_info;
 
 	auto s_ptr = &set_info[set_idx];
 
@@ -6230,6 +6244,7 @@ void apply_set(s16b a_idx, s16b set_idx)
 static void apply_flags_set(s16b a_idx, s16b set_idx, object_flag_set *f)
 {
 	auto const &set_info = game->edit_data.set_info;
+	auto const &a_info = game->edit_data.a_info;
 
 	if ( -1 == a_info[a_idx].set)
 	{

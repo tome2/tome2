@@ -1057,6 +1057,7 @@ static bool_ wearable_p(object_type *o_ptr)
 static void do_item(object_type *o_ptr, ls_flag_t flag)
 {
 	auto &k_info = game->edit_data.k_info;
+	auto &a_info = game->edit_data.a_info;
 
 	byte old_dd;
 	byte old_ds;
@@ -1181,10 +1182,8 @@ static void do_item(object_type *o_ptr, ls_flag_t flag)
 	/* Paranoia */
 	if (o_ptr->name1)
 	{
-		artifact_type *a_ptr;
-
 		/* Obtain the artifact info */
-		a_ptr = &a_info[o_ptr->name1];
+		auto a_ptr = &a_info[o_ptr->name1];
 
 		/* Verify that artifact */
 		if (!a_ptr->name) o_ptr->name1 = 0;
@@ -1852,6 +1851,8 @@ static void do_options(ls_flag_t flag)
  */
 static bool_ do_inventory(ls_flag_t flag)
 {
+	auto const &a_info = game->edit_data.a_info;
+
 	if (flag == ls_flag_t::LOAD)
 	{
 		int slot = 0;
@@ -2322,16 +2323,18 @@ static bool do_randarts(ls_flag_t flag)
 
 static bool do_artifacts(ls_flag_t flag)
 {
+	auto &a_info = game->edit_data.a_info;
+
 	u16b n_artifacts;
 
 	if (flag == ls_flag_t::SAVE)
 	{
-		n_artifacts = max_a_idx;
+		n_artifacts = a_info.size();
 	}
 
 	do_u16b(&n_artifacts, flag);
 
-	if ((flag == ls_flag_t::LOAD) && (n_artifacts > max_a_idx))
+	if ((flag == ls_flag_t::LOAD) && (n_artifacts > a_info.size()))
 	{
 		note("Too many artifacts!");
 		return false;

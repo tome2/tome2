@@ -3025,19 +3025,17 @@ void do_cmd_save_screen(void)
 void do_cmd_knowledge_artifacts(void)
 {
 	auto const &k_info = game->edit_data.k_info;
+	auto const &a_info = game->edit_data.a_info;
 
 	int i, z, x, y;
 
 	char base_name[80];
 
 	/* Scan the artifacts */
-	std::unique_ptr<bool_[]> okay(new bool_[max_a_idx]);
-	for (std::size_t k = 0; k < max_a_idx; k++)
+	std::vector<bool_> okay(a_info.size(), FALSE);
+	for (std::size_t k = 0; k < a_info.size(); k++)
 	{
-		artifact_type *a_ptr = &a_info[k];
-
-		/* Default */
-		okay[k] = FALSE;
+		auto a_ptr = &a_info[k];
 
 		/* Skip "empty" artifacts */
 		if (!a_ptr->name) continue;
@@ -3163,9 +3161,9 @@ void do_cmd_knowledge_artifacts(void)
 	fmt::MemoryWriter w;
 
 	/* Scan the artifacts */
-	for (std::size_t k = 0; k < max_a_idx; k++)
+	for (std::size_t k = 0; k < a_info.size(); k++)
 	{
-		artifact_type *a_ptr = &a_info[k];
+		auto a_ptr = &a_info[k];
 
 		/* List "dead" ones */
 		if (!okay[k]) continue;

@@ -150,20 +150,24 @@ void do_cmd_rerate(void)
  */
 static void wiz_create_named_art()
 {
+	auto const &a_info = game->edit_data.a_info;
+
 	object_type forge;
 	object_type *q_ptr;
 	int i, a_idx;
 	cptr p = "Number of the artifact: ";
 	char out_val[80] = "";
-	artifact_type *a_ptr;
 
 	if (!get_string(p, out_val, 4)) return;
 	a_idx = atoi(out_val);
 
 	/* Return if out-of-bounds */
-	if ((a_idx <= 0) || (a_idx >= max_a_idx)) return;
+	if ((a_idx <= 0) || (a_idx >= static_cast<int>(a_info.size())))
+	{
+		return;
+	}
 
-	a_ptr = &a_info[a_idx];
+	auto a_ptr = &a_info[a_idx];
 
 	/* Get local object */
 	q_ptr = &forge;
@@ -821,6 +825,8 @@ static void wiz_reroll_item(object_type *o_ptr)
  */
 static void wiz_statistics(object_type *o_ptr)
 {
+	auto &a_info = game->edit_data.a_info;
+
 	long i, matches, better, worse, other;
 
 	char ch;

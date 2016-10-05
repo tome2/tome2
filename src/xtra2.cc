@@ -2404,6 +2404,7 @@ void monster_death(int m_idx)
 {
 	auto const &d_info = game->edit_data.d_info;
 	auto const &f_info = game->edit_data.f_info;
+	auto &a_info = game->edit_data.a_info;
 
 	monster_type *m_ptr = &m_list[m_idx];
 
@@ -2715,7 +2716,7 @@ void monster_death(int m_idx)
 			{
 				if (a_info[a_idx].cur_num == 0)
 				{
-					artifact_type *a_ptr = &a_info[a_idx];
+					auto a_ptr = &a_info[a_idx];
 
 					/* Get local object */
 					q_ptr = &forge;

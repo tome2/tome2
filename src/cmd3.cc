@@ -206,6 +206,8 @@ bool_ is_slot_ok(int slot)
  */
 void do_cmd_wield(void)
 {
+	auto const &a_info = game->edit_data.a_info;
+
 	int item, slot, num = 1;
 
 	object_type forge;

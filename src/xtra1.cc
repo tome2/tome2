@@ -2820,6 +2820,7 @@ void calc_bonuses(bool_ silent)
 	auto const &s_descriptors = game->edit_data.s_descriptors;
 	auto const &r_info = game->edit_data.r_info;
 	auto &s_info = game->s_info;
+	auto const &a_info = game->edit_data.a_info;
 
 	static bool_ monk_notify_aux = FALSE;
 	int i, j, hold;
@@ -4384,15 +4385,17 @@ bool_ monk_heavy_armor(void)
 
 static int get_artifact_idx(int level)
 {
+	auto const &a_info = game->edit_data.a_info;
+
 	int count = 0, i;
 
 	while (count < 1000)
 	{
-		artifact_type *a_ptr;
 
 		count++;
-		i = randint(max_a_idx - 1);
-		a_ptr = &a_info[i];
+		i = rand_int(a_info.size());
+
+		auto a_ptr = &a_info[i];
 		if (!a_ptr->tval) continue;
 
 		/* It is found/lost */
@@ -4561,6 +4564,8 @@ void gain_fate(byte fate)
 
 std::string fate_desc(int fate)
 {
+	auto const &a_info = game->edit_data.a_info;
+
 	fmt::MemoryWriter w;
 
 	if (fates[fate].serious)
@@ -4590,7 +4595,7 @@ std::string fate_desc(int fate)
 		{
 			object_type *q_ptr, forge;
 			char o_name[80];
-			artifact_type *a_ptr = &a_info[fates[fate].a_idx];
+			auto a_ptr = &a_info[fates[fate].a_idx];
 			int I_kind;
 
 			/* Failed artefact allocation XXX XXX XXX */

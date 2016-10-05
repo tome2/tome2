@@ -380,6 +380,7 @@ void compact_objects(int size)
 void wipe_o_list(void)
 {
 	auto &k_info = game->edit_data.k_info;
+	auto &a_info = game->edit_data.a_info;
 
 	int i;
 
@@ -1090,6 +1091,7 @@ s32b object_value_real(object_type const *o_ptr)
 {
 	auto const &r_info = game->edit_data.r_info;
 	auto const &k_info = game->edit_data.k_info;
+	auto const &a_info = game->edit_data.a_info;
 
 	s32b value;
 
@@ -1118,7 +1120,7 @@ s32b object_value_real(object_type const *o_ptr)
 	/* Artifact */
 	else if (o_ptr->name1)
 	{
-		artifact_type *a_ptr = &a_info[o_ptr->name1];
+		auto a_ptr = &a_info[o_ptr->name1];
 
 		/* Hack -- "worthless" artifacts */
 		if (!a_ptr->cost) return (0L);
@@ -2136,6 +2138,8 @@ static void random_artifact_power(object_type *o_ptr)
 
 void random_artifact_resistance(object_type * o_ptr)
 {
+	auto const &a_info = game->edit_data.a_info;
+
 	auto const art_flags = a_info[o_ptr->name1].flags;
 
 	// Check flags of the 'protype' artifact
@@ -2193,14 +2197,15 @@ void random_artifact_resistance(object_type * o_ptr)
 static bool_ make_artifact_special(object_type *o_ptr)
 {
 	auto const &k_info = game->edit_data.k_info;
+	auto const &a_info = game->edit_data.a_info;
 
 	/* No artifacts in the town */
 	if (!dun_level) return (FALSE);
 
 	/* Check the artifact list (just the "specials") */
-	for (int i = 0; i < max_a_idx; i++)
+	for (std::size_t i = 0; i < a_info.size(); i++)
 	{
-		artifact_type *a_ptr = &a_info[i];
+		auto a_ptr = &a_info[i];
 
 		/* Skip "empty" artifacts */
 		if (!a_ptr->name) continue;
@@ -2273,6 +2278,7 @@ static bool_ make_artifact_special(object_type *o_ptr)
  */
 static bool_ make_artifact(object_type *o_ptr)
 {
+	auto const &a_info = game->edit_data.a_info;
 	auto const &k_info = game->edit_data.k_info;
 
 	/* No artifacts in the town */
@@ -2282,9 +2288,9 @@ static bool_ make_artifact(object_type *o_ptr)
 	if (o_ptr->number != 1) return (FALSE);
 
 	/* Check the artifact list (skip the "specials") */
-	for (int i = 0; i < max_a_idx; i++)
+	for (std::size_t i = 0; i < a_info.size(); i++)
 	{
-		artifact_type *a_ptr = &a_info[i];
+		auto a_ptr = &a_info[i];
 
 		/* Skip "empty" items */
 		if (!a_ptr->name) continue;
@@ -3964,6 +3970,7 @@ void add_random_ego_flag(object_type *o_ptr, ego_flag_set const &fego, bool_ *li
 void apply_magic(object_type *o_ptr, int lev, bool_ okay, bool_ good, bool_ great, boost::optional<int> force_power)
 {
 	auto &k_info = game->edit_data.k_info;
+	auto &a_info = game->edit_data.a_info;
 
 	int i, rolls;
 	auto k_ptr = &k_info[o_ptr->k_idx];
@@ -4102,7 +4109,7 @@ void apply_magic(object_type *o_ptr, int lev, bool_ okay, bool_ good, bool_ grea
 	/* Hack -- analyze artifacts */
 	if (o_ptr->name1)
 	{
-		artifact_type *a_ptr = &a_info[o_ptr->name1];
+		auto a_ptr = &a_info[o_ptr->name1];
 
 		/* Hack -- Mark the artifact as "created" */
 		a_ptr->cur_num = 1;
@@ -4885,6 +4892,7 @@ void place_object(int y, int x, bool_ good, bool_ great, int where)
 {
 	auto const &d_info = game->edit_data.d_info;
 	auto &k_info = game->edit_data.k_info;
+	auto &a_info = game->edit_data.a_info;
 
 	s16b o_idx;
 
@@ -5120,6 +5128,7 @@ s16b drop_near(object_type *j_ptr, int chance, int y, int x)
 {
 	auto const &f_info = game->edit_data.f_info;
 	auto &k_info = game->edit_data.k_info;
+	auto &a_info = game->edit_data.a_info;
 
 	int i, k, d, s;
 
@@ -5550,6 +5559,8 @@ void inven_item_increase(int item, int num)
  */
 bool_ inven_item_optimize(int item)
 {
+	auto const &a_info = game->edit_data.a_info;
+
 	object_type *o_ptr = &p_ptr->inventory[item];
 
 	/* Only optimize real items */

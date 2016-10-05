@@ -2627,6 +2627,8 @@ errr init_k_info_txt(FILE *fp)
  */
 errr init_a_info_txt(FILE *fp)
 {
+	auto &a_info = game->edit_data.a_info;
+
 	int i;
 	char buf[1024];
 	char *s;
@@ -2675,14 +2677,11 @@ errr init_a_info_txt(FILE *fp)
 			/* Verify information */
 			if (i < error_idx) return (4);
 
-			/* Verify information */
-			if (i >= max_a_idx) return (2);
-
 			/* Save the index */
 			error_idx = i;
 
 			/* Point at the "info" */
-			a_ptr = &a_info[i];
+			a_ptr = &expand_to_fit_index(a_info, i);
 
 			/* Copy name */
 			assert(!a_ptr->name);
@@ -6169,6 +6168,7 @@ static errr process_dungeon_file_aux(char *buf, int *yval, int *xval, int xvalst
 {
 	auto &wilderness = game->wilderness;
 	auto &wf_info = game->edit_data.wf_info;
+	auto &a_info = game->edit_data.a_info;
 
 	int i;
 
@@ -6557,11 +6557,10 @@ static errr process_dungeon_file_aux(char *buf, int *yval, int *xval, int xvalst
 			{
 				int I_kind = 0;
 
-				artifact_type *a_ptr = &a_info[artifact_index];
-
-				object_type forge;
+				auto a_ptr = &a_info[artifact_index];
 
 				/* Get local object */
+				object_type forge;
 				object_type *q_ptr = &forge;
 
 				a_allow_special[artifact_index] = TRUE;
@@ -6774,12 +6773,6 @@ static errr process_dungeon_file_aux(char *buf, int *yval, int *xval, int xvalst
 			if (zz[0][0] == 't')
 			{
 				max_real_towns = atoi(zz[1]);
-			}
-
-			/* Maximum a_idx */
-			else if (zz[0][0] == 'A')
-			{
-				max_a_idx = atoi(zz[1]);
 			}
 
 			/* Maximum e_idx */

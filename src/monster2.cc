@@ -431,6 +431,7 @@ static cptr funny_comments[MAX_COMMENT] =
 void delete_monster_idx(int i)
 {
 	auto &k_info = game->edit_data.k_info;
+	auto &a_info = game->edit_data.a_info;
 
 	/* Get location */
 	monster_type *m_ptr = &m_list[i];
@@ -1890,6 +1891,7 @@ void update_monsters(bool_ full)
 void monster_carry(monster_type *m_ptr, int m_idx, object_type *q_ptr)
 {
 	auto &k_info = game->edit_data.k_info;
+	auto &a_info = game->edit_data.a_info;
 
 	object_type *o_ptr;
 
