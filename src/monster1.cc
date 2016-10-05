@@ -1259,6 +1259,8 @@ static void roff_aux(std::shared_ptr<monster_race const> r_ptr)
  */
 static void roff_name(int r_idx, int ego)
 {
+	const auto &re_info = game->edit_data.re_info;
+
 	const auto r_ptr = race_info_idx(r_idx, ego);
 
 	/* Access the chars */

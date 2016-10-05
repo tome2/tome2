@@ -218,6 +218,7 @@ errr process_pref_file_aux(char *buf)
 {
 	auto &race_mod_info = game->edit_data.race_mod_info;
 	auto &st_info = game->edit_data.st_info;
+	auto &re_info = game->edit_data.re_info;
 
 	int i, j, n1, n2;
 
@@ -274,18 +275,27 @@ errr process_pref_file_aux(char *buf)
 		{
 			if (tokenize(buf + 4, 3, zz, ':', '/') == 3)
 			{
-				monster_ego *re_ptr;
-				i = (huge)strtol(zz[0], NULL, 0);
+				std::size_t i = strtoul(zz[0], NULL, 0);
 				n1 = strtol(zz[1], NULL, 0);
 				n2 = strtol(zz[2], NULL, 0);
-				if (i >= max_re_idx) return (1);
-				re_ptr = &re_info[i];
-				if (n1) re_ptr->g_attr = n1;
+
+				if (i >= re_info.size())
+				{
+					return 1;
+				}
+
+				auto re_ptr = &re_info[i];
+
+				if (n1)
+				{
+					re_ptr->g_attr = n1;
+				}
 				if (n2)
 				{
 					re_ptr->g_char = n2;
 				}
-				return (0);
+
+				return 0;
 			}
 		}
 

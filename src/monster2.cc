@@ -172,7 +172,9 @@ s32b modify_aux(s32b a, s32b b, char mod)
 /* Is this ego ok for this monster ? */
 bool_ mego_ok(monster_race const *r_ptr, int ego)
 {
-	monster_ego *re_ptr = &re_info[ego];
+	const auto &re_info = game->edit_data.re_info;
+
+	auto re_ptr = &re_info[ego];
 	bool_ ok = FALSE;
 	int i;
 
@@ -206,10 +208,11 @@ bool_ mego_ok(monster_race const *r_ptr, int ego)
 /* Choose an ego type */
 static int pick_ego_monster(monster_race const *r_ptr)
 {
+	const auto &re_info = game->edit_data.re_info;
+
 	/* Assume no ego */
 	int ego = 0, lvl;
-	int tries = max_re_idx + 10;
-	monster_ego *re_ptr;
+	int tries = re_info.size() + 10;
 
 	if ((!(dungeon_flags & DF_ELVEN)) && (!(dungeon_flags & DF_DWARVEN)))
 	{
@@ -223,8 +226,8 @@ static int pick_ego_monster(monster_race const *r_ptr)
 		while (tries--)
 		{
 			/* Pick one */
-			ego = rand_range(1, max_re_idx - 1);
-			re_ptr = &re_info[ego];
+			ego = rand_range(1, re_info.size() - 1);
+			auto re_ptr = &re_info[ego];
 
 			/*  No hope so far */
 			if (!mego_ok(r_ptr, ego)) continue;
@@ -266,6 +269,7 @@ static int pick_ego_monster(monster_race const *r_ptr)
 std::shared_ptr<monster_race> race_info_idx(int r_idx, int ego)
 {
 	monster_race *r_ptr = &r_info[r_idx];
+	const auto &re_info = game->edit_data.re_info;
 
 	/* We don't need to allocate anything if it's an ordinary monster. */
 	if (!ego) {
@@ -279,7 +283,7 @@ std::shared_ptr<monster_race> race_info_idx(int r_idx, int ego)
 	*nr_ptr = *r_ptr;
 
 	/* Get a reference to the ego monster modifiers */
-	monster_ego *re_ptr = &re_info[ego];
+	auto re_ptr = &re_info[ego];
 
 	/* Adjust the values */
 	for (int i = 0; i < 4; i++)
@@ -1159,6 +1163,8 @@ s16b get_mon_num(int level)
  */
 void monster_desc(char *desc, monster_type *m_ptr, int mode)
 {
+	const auto &re_info = game->edit_data.re_info;
+
 	auto r_ptr = m_ptr->race();
 	char silly_name[80], name[100];
 	bool_ seen, pron;
@@ -1166,13 +1172,15 @@ void monster_desc(char *desc, monster_type *m_ptr, int mode)
 
 	if (m_ptr->ego)
 	{
-		if (re_info[m_ptr->ego].before)
+		auto const &monster_ego = re_info[m_ptr->ego];
+
+		if (monster_ego.before)
 		{
-			sprintf(name, "%s %s", re_info[m_ptr->ego].name, r_ptr->name);
+			sprintf(name, "%s %s", monster_ego.name, r_ptr->name);
 		}
 		else
 		{
-			sprintf(name, "%s %s", r_ptr->name, re_info[m_ptr->ego].name);
+			sprintf(name, "%s %s", r_ptr->name, monster_ego.name);
 		}
 	}
 	else
@@ -1371,18 +1379,22 @@ void monster_desc(char *desc, monster_type *m_ptr, int mode)
 
 void monster_race_desc(char *desc, int r_idx, int ego)
 {
+	const auto &re_info = game->edit_data.re_info;
+
 	monster_race *r_ptr = &r_info[r_idx];
 	char name[80];
 
 	if (ego)
 	{
-		if (re_info[ego].before)
+		auto const &monster_ego = re_info[ego];
+
+		if (monster_ego.before)
 		{
-			sprintf(name, "%s %s", re_info[ego].name, r_ptr->name);
+			sprintf(name, "%s %s", monster_ego.name, r_ptr->name);
 		}
 		else
 		{
-			sprintf(name, "%s %s", r_ptr->name, re_info[ego].name);
+			sprintf(name, "%s %s", r_ptr->name, monster_ego.name);
 		}
 	}
 	else

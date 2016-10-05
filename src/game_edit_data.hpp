@@ -3,6 +3,7 @@
 #include "ability_type.hpp"
 #include "dungeon_info_type.hpp"
 #include "hist_type.hpp"
+#include "monster_ego.hpp"
 #include "owner_type.hpp"
 #include "player_class.hpp"
 #include "player_race.hpp"
@@ -88,6 +89,11 @@ struct GameEditData {
 	 * Player skills
 	 */
 	std::vector<skill_descriptor> s_descriptors;
+
+	/**
+	 * Monster race egos
+	 */
+	std::vector<monster_ego> re_info;
 
 	/**
 	 * Base skills for all characters.

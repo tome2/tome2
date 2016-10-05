@@ -635,6 +635,7 @@ void reset_visuals(void)
 {
 	auto &st_info = game->edit_data.st_info;
 	auto &race_mod_info = game->edit_data.race_mod_info;
+	auto &re_info = game->edit_data.re_info;
 
 	int i;
 
@@ -677,17 +678,15 @@ void reset_visuals(void)
 	}
 
 	/* Reset attr/char code for ego monster overlay graphics */
-	for (i = 0; i < max_re_idx; i++)
+	for (auto &re_ref: re_info)
 	{
-		monster_ego *re_ptr = &re_info[i];
-
 		/* Default attr/char */
-		re_ptr->g_attr = 0;
-		re_ptr->g_char = 0;
+		re_ref.g_attr = 0;
+		re_ref.g_char = 0;
 	}
 
 	/* Reset attr/char code for race modifier overlay graphics */
-	for (player_race_mod &rmp: race_mod_info)
+	for (auto &rmp: race_mod_info)
 	{
 		/* Default attr/char */
 		rmp.g_attr = 0;

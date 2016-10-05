@@ -5151,11 +5151,14 @@ static void clean_wish_name(char *buf, char *name)
  */
 void make_wish(void)
 {
-	char buf[200], name[200], *mname;
-	int i, j, mstatus = MSTATUS_ENEMY;
+	const auto &re_info = game->edit_data.re_info;
+
+	char name[200], *mname;
+	int mstatus = MSTATUS_ENEMY;
 	object_type forge, *o_ptr = &forge;
 
 	/* Make an empty string */
+	char buf[200];
 	buf[0] = 0;
 
 	/* Ask for the wish */
@@ -5207,8 +5210,12 @@ void make_wish(void)
 		else mstatus = MSTATUS_PET;
 		mname = name + 10;
 	}
-	else mname = name;
-	for (i = 1; i < max_r_idx; i++)
+	else
+	{
+		mname = name;
+	}
+
+	for (std::size_t i = 1; i < max_r_idx; i++)
 	{
 		monster_race *r_ptr = &r_info[i];
 
@@ -5224,9 +5231,9 @@ void make_wish(void)
 		if (strstr(mname, buf))
 		{
 			/* try all ego */
-			for (j = max_re_idx - 1; j >= 0; j--)
+			for (std::size_t j = 0; j < re_info.size(); j++)
 			{
-				monster_ego *re_ptr = &re_info[j];
+				auto re_ptr = &re_info[j];
 
 				if (j && !re_ptr->name) continue;
 
@@ -5247,6 +5254,7 @@ void make_wish(void)
 				{
 					sprintf(buf, "%s", r_ptr->name);
 				}
+
 				strlower(buf);
 
 				if (iequals(mname, buf))
@@ -5262,7 +5270,9 @@ void make_wish(void)
 
 					/* Create the monster */
 					if (place_monster_one(wy, wx, i, j, FALSE, mstatus))
+					{
 						msg_print("Your wish becomes truth!");
+					}
 
 					/* Don't search any more */
 					return;

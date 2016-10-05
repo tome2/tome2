@@ -421,7 +421,7 @@ namespace {
 
 		static void allocate()
 		{
-			re_info = new monster_ego[max_re_idx];
+			// Nothing to do
 		}
 
 		static errr parse(FILE *fp)

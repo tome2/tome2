@@ -4433,12 +4433,12 @@ errr init_r_info_txt(FILE *fp)
  */
 errr init_re_info_txt(FILE *fp)
 {
-	int i, j;
+	auto &re_info = game->edit_data.re_info;
+
 	char buf[1024];
 	byte blow_num = 0;
-	int r_char_number = 0, nr_char_number = 0;
-
-	char *s, *t;
+	int r_char_number = 0;
+	int nr_char_number = 0;
 
 	/* Current entry */
 	monster_ego *re_ptr = NULL;
@@ -4466,7 +4466,7 @@ errr init_re_info_txt(FILE *fp)
 		if (buf[0] == 'N')
 		{
 			/* Find the colon before the name */
-			s = strchr(buf + 2, ':');
+			char *s = strchr(buf + 2, ':');
 
 			/* Verify that colon */
 			if (!s) return (1);
@@ -4478,19 +4478,16 @@ errr init_re_info_txt(FILE *fp)
 			if (!*s) return (1);
 
 			/* Get the index */
-			i = atoi(buf + 2);
+			int i = atoi(buf + 2);
 
 			/* Verify information */
 			if (i < error_idx) return (4);
-
-			/* Verify information */
-			if (i >= max_re_idx) return (2);
 
 			/* Save the index */
 			error_idx = i;
 
 			/* Point at the "info" */
-			re_ptr = &re_info[i];
+			re_ptr = &expand_to_fit_index(re_info, i);
 
 			/* Copy name */
 			assert(!re_ptr->name);
@@ -4500,9 +4497,8 @@ errr init_re_info_txt(FILE *fp)
 			blow_num = 0;
 			r_char_number = 0;
 			nr_char_number = 0;
-			for (j = 0; j < 5; j++) re_ptr->r_char[j] = 0;
-			for (j = 0; j < 5; j++) re_ptr->nr_char[j] = 0;
-			for (j = 0; j < 4; j++)
+
+			for (std::size_t j = 0; j < 4; j++)
 			{
 				re_ptr->blow[j].method = 0;
 				re_ptr->blow[j].effect = 0;
@@ -4598,6 +4594,8 @@ errr init_re_info_txt(FILE *fp)
 		{
 			int n1, n2, dice, side;
 			char mdice, mside;
+			char *s;
+			char *t;
 
 			/* Oops, no more slots */
 			if (blow_num == 4) return (1);
@@ -4658,7 +4656,7 @@ errr init_re_info_txt(FILE *fp)
 			char r_char;
 
 			/* Parse every entry */
-			s = buf + 2;
+			char const *s = buf + 2;
 
 			/* XXX XXX XXX Hack -- Read monster symbols */
 			if (1 == sscanf(s, "R_CHAR_%c", &r_char))
@@ -4688,7 +4686,7 @@ errr init_re_info_txt(FILE *fp)
 			char r_char;
 
 			/* Parse every entry */
-			s = buf + 2;
+			char const *s = buf + 2;
 
 			/* XXX XXX XXX Hack -- Read monster symbols */
 			if (1 == sscanf(s, "R_CHAR_%c", &r_char))
@@ -4727,7 +4725,7 @@ errr init_re_info_txt(FILE *fp)
 		/* Process 'O' for "Basic Monster -Flags" (multiple lines) */
 		if (buf[0] == 'O')
 		{
-			s = buf + 2;
+			char const *s = buf + 2;
 
 			/* XXX XXX XXX Hack -- Read no flags */
 			if (!strcmp(s, "MF_ALL"))
@@ -4750,7 +4748,8 @@ errr init_re_info_txt(FILE *fp)
 		/* Process 'S' for "Spell Flags" (multiple lines) */
 		if (buf[0] == 'S')
 		{
-			s = buf + 2;
+			char const *s = buf + 2;
+			int i;
 
 			/* XXX XXX XXX Hack -- Read spell frequency */
 			if (1 == sscanf(s, "1_IN_%d", &i))
@@ -4775,8 +4774,10 @@ errr init_re_info_txt(FILE *fp)
 		if (buf[0] == 'T')
 		{
 			/* Parse every entry */
-			for (s = buf + 2; *s; )
+			for (char *s = buf + 2; *s; )
 			{
+				char *t;
+
 				/* Find the end of this entry */
 				for (t = s; *t && (*t != ' ') && (*t != '|'); ++t) /* loop */;
 
@@ -6787,12 +6788,6 @@ static errr process_dungeon_file_aux(char *buf, int *yval, int *xval, int xvalst
 			else if (zz[0][0] == 'R')
 			{
 				max_r_idx = atoi(zz[1]);
-			}
-
-			/* Maximum re_idx */
-			else if (zz[0][0] == 'r')
-			{
-				max_re_idx = atoi(zz[1]);
 			}
 
 			/* Maximum k_idx */

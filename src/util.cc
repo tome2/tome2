@@ -3339,17 +3339,20 @@ int test_monster_name(cptr name)
 	return (0);
 }
 
-int test_mego_name(cptr name)
+int test_mego_name(cptr needle)
 {
-	int i;
+	const auto &re_info = game->edit_data.re_info;
 
 	/* Scan the monsters */
-	for (i = 1; i < max_re_idx; i++)
+	for (std::size_t i = 0; i < re_info.size(); i++)
 	{
-		monster_ego *re_ptr = &re_info[i];
-		if (re_ptr->name && iequals(name, re_ptr->name)) return (i);
+		auto name = re_info[i].name;
+		if (name && iequals(name, needle))
+		{
+			return i;
+		}
 	}
-	return (0);
+	return 0;
 }
 
 /*
