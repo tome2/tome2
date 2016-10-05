@@ -719,8 +719,7 @@ static void birth_put_stats(void)
  */
 static void player_wipe(void)
 {
-	int i, j;
-
+	auto const &d_info = game->edit_data.d_info;
 
 	/* Wipe special levels */
 	wipe_saved();
@@ -735,9 +734,9 @@ static void player_wipe(void)
 	p_ptr->lives = 0;
 
 	/* Wipe the history */
-	for (i = 0; i < 4; i++)
+	for (std::size_t i = 0; i < 4; i++)
 	{
-		for (j = 0; j < 60; j++)
+		for (std::size_t j = 0; j < 60; j++)
 		{
 			if (j < 59) history[i][j] = ' ';
 			else history[i][j] = '\0';
@@ -745,22 +744,22 @@ static void player_wipe(void)
 	}
 
 	/* Wipe the towns */
-	for (i = 0; i < max_d_idx; i++)
+	for (std::size_t i = 0; i < d_info.size(); i++)
 	{
-		for (j = 0; j < MAX_DUNGEON_DEPTH; j++)
+		for (std::size_t j = 0; j < MAX_DUNGEON_DEPTH; j++)
 		{
 			special_lvl[j][i] = 0;
 		}
 	}
 
 	/* Wipe the towns */
-	for (i = max_real_towns + 1; i < max_towns; i++)
+	for (std::size_t i = max_real_towns + 1; i < max_towns; i++)
 	{
 		town_info[i].flags = 0;
 	}
 
 	/* Wipe the quests */
-	for (i = 0; i < MAX_Q_IDX; i++)
+	for (std::size_t i = 0; i < MAX_Q_IDX; i++)
 	{
 		quest[i].status = QUEST_STATUS_UNTAKEN;
 		for (auto &quest_data : quest[i].data)
@@ -774,7 +773,7 @@ static void player_wipe(void)
 	equip_cnt = 0;
 
 	/* Clear the inventory */
-	for (i = 0; i < INVEN_TOTAL; i++)
+	for (std::size_t i = 0; i < INVEN_TOTAL; i++)
 	{
 		object_wipe(&p_ptr->inventory[i]);
 	}
@@ -783,14 +782,14 @@ static void player_wipe(void)
 	init_randart();
 
 	/* Start with no artifacts made yet */
-	for (i = 0; i < max_a_idx; i++)
+	for (std::size_t i = 0; i < max_a_idx; i++)
 	{
 		artifact_type *a_ptr = &a_info[i];
 		a_ptr->cur_num = 0;
 	}
 
 	/* Reset the "objects" */
-	for (i = 1; i < max_k_idx; i++)
+	for (std::size_t i = 1; i < max_k_idx; i++)
 	{
 		object_kind *k_ptr = &k_info[i];
 
@@ -806,7 +805,7 @@ static void player_wipe(void)
 
 
 	/* Reset the "monsters" */
-	for (i = 1; i < max_r_idx; i++)
+	for (std::size_t i = 1; i < max_r_idx; i++)
 	{
 		monster_race *r_ptr = &r_info[i];
 
@@ -843,7 +842,7 @@ static void player_wipe(void)
 	wizard = 0;
 
 	/* Clear the fate */
-	for (i = 0; i < MAX_FATES; i++)
+	for (std::size_t i = 0; i < MAX_FATES; i++)
 	{
 		fates[i].fate = 0;
 	}
@@ -871,7 +870,7 @@ static void player_wipe(void)
 	doppleganger = 0;
 
 	/* Wipe the recall depths */
-	for (i = 0; i < max_d_idx; i++)
+	for (std::size_t i = 0; i < d_info.size(); i++)
 	{
 		max_dlv[i] = 0;
 	}
@@ -883,7 +882,7 @@ static void player_wipe(void)
 	}
 
 	/* Wipe the known traps list */
-	for (i = 0; i < max_t_idx; i++)
+	for (std::size_t i = 0; i < max_t_idx; i++)
 	{
 		t_info[i].known = 0;
 		t_info[i].ident = FALSE;
@@ -897,7 +896,7 @@ static void player_wipe(void)
 	p_ptr->allow_one_death = 0;
 
 	/* Wipe the power list */
-	for (i = 0; i < POWER_MAX; i++)
+	for (std::size_t i = 0; i < POWER_MAX; i++)
 	{
 		p_ptr->powers_mod[i] = 0;
 	}
@@ -1496,6 +1495,7 @@ static bool_ player_birth_aux_ask()
 	auto &class_info = game->edit_data.class_info;
 	auto const &race_info = game->edit_data.race_info;
 	auto const &race_mod_info = game->edit_data.race_mod_info;
+	auto const &d_info = game->edit_data.d_info;
 
 	int k, n, v, sel;
 
@@ -3055,7 +3055,10 @@ static void init_town(int t_idx)
  */
 void player_birth(void)
 {
-	int i, j, rtown = TOWN_RANDOM;
+	auto &d_info = game->edit_data.d_info;
+
+	/* Starting index for generated towns */
+	std::size_t rtown = TOWN_RANDOM;
 
 	/* Validate the bg[] table */
 	validate_bg();
@@ -3081,9 +3084,11 @@ void player_birth(void)
 	apply_level_abilities(1);
 
 	/* Complete the god */
-	i = p_ptr->pgod;
-	p_ptr->pgod = 0;
-	follow_god(i, TRUE);
+	{
+		byte i = p_ptr->pgod;
+		p_ptr->pgod = 0;
+		follow_god(i, TRUE);
+	}
 
 	/* Select the default melee type */
 	select_default_melee();
@@ -3102,9 +3107,9 @@ void player_birth(void)
 	player_outfit();
 
 	/* Initialize random towns in the dungeons */
-	for (i = 0; i < max_d_idx; i++)
+	for (std::size_t i = 0; i < d_info.size(); i++)
 	{
-		dungeon_info_type *d_ptr = &d_info[i];
+		auto d_ptr = &d_info[i];
 		int num = 0, z;
 
 		d_ptr->t_num = 0;
@@ -3125,15 +3130,17 @@ void player_birth(void)
 
 			while (TRUE)
 			{
-				int j;
 				bool_ ok = TRUE;
 
 				lev = rand_range(d_ptr->mindepth, d_ptr->maxdepth - 1);
 
 				/* Be sure it wasnt already used */
-				for (j = 0; j < num; j++)
+				for (int j = 0; j < num; j++)
 				{
-					if (d_ptr->t_level[j] == lev) ok = FALSE;
+					if (d_ptr->t_level[j] == lev)
+					{
+						ok = FALSE;
+					}
 				}
 
 				/* Ok found one */
@@ -3159,7 +3166,7 @@ void player_birth(void)
 	}
 
 	/* Init the towns */
-	for (i = 1; i < max_towns; i++)
+	for (std::size_t i = 1; i < max_towns; i++)
 	{
 		/* Not destroyed ! yet .. ;) */
 		town_info[i].destroyed = FALSE;
@@ -3170,7 +3177,7 @@ void player_birth(void)
 		create_stores_stock(i);
 
 		/* Init the stores */
-		for (j = 0; j < max_st_idx; j++)
+		for (std::size_t j = 0; j < max_st_idx; j++)
 		{
 			/* Initialize */
 			store_init(i, j);

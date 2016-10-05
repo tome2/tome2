@@ -36,9 +36,6 @@ M:s:10
 # Maximum number of ego-items in e_info.txt
 M:E:200
 
-# Maximum number of dungeon types in d_info.txt
-M:D:31
-
 # Maximum number of trap types in tr_info.txt
 M:U:176
 

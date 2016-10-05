@@ -468,11 +468,6 @@ monster_race *r_info;
 monster_ego *re_info;
 
 /*
- * The dungeon types arrays
- */
-dungeon_info_type *d_info;
-
-/*
  * Player abilities arrays
  */
 ability_type *ab_info;
@@ -653,11 +648,6 @@ u16b max_a_idx;
  * Maximum number of ego-items in e_info.txt
  */
 u16b max_e_idx;
-
-/*
- * Maximum number of dungeon types in d_info.txt
- */
-u16b max_d_idx;
 
 /*
  * Maximum number of stores types in st_info.txt

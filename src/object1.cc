@@ -2481,6 +2481,8 @@ static void describe_device(object_type *o_ptr)
  */
 static cptr object_out_desc_where_found(s16b level, s16b dungeon)
 {
+	auto const &d_info = game->edit_data.d_info;
+
 	static char str[80];
 
 	if (dungeon == DUNGEON_WILDERNESS)

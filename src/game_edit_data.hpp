@@ -1,5 +1,6 @@
 #pragma once
 
+#include "dungeon_info_type.hpp"
 #include "hist_type.hpp"
 #include "owner_type.hpp"
 #include "player_class.hpp"
@@ -17,6 +18,11 @@
  * files.
  */
 struct GameEditData {
+
+	/**
+	 * Dungeons
+	 */
+	std::vector<dungeon_info_type> d_info;
 
 	/**
 	 * Vaults

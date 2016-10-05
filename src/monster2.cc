@@ -838,7 +838,9 @@ errr get_mon_num_prep(void)
  */
 bool_ apply_rule(monster_race *r_ptr, byte rule)
 {
-	dungeon_info_type *d_ptr = &d_info[dungeon_type];
+	auto const &d_info = game->edit_data.d_info;
+
+	auto d_ptr = &d_info[dungeon_type];
 
 	if (d_ptr->rules[rule].mode == DUNGEON_MODE_NONE)
 	{
@@ -886,7 +888,9 @@ bool_ apply_rule(monster_race *r_ptr, byte rule)
 
 bool_ restrict_monster_to_dungeon(int r_idx)
 {
-	dungeon_info_type *d_ptr = &d_info[dungeon_type];
+	auto const &d_info = game->edit_data.d_info;
+
+	auto d_ptr = &d_info[dungeon_type];
 	monster_race *r_ptr = &r_info[r_idx];
 
 	/* Select a random rule */

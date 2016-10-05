@@ -2325,6 +2325,7 @@ void display_player(int mode)
 cptr describe_player_location()
 {
 	auto const &wilderness = game->wilderness;
+	auto const &d_info = game->edit_data.d_info;
 
 	int i;
 	static char desc[80];
@@ -2563,6 +2564,8 @@ static bool_ file_character_check_stores(std::unordered_set<store_type *> *seen_
  */
 errr file_character(cptr name, bool_ full)
 {
+	auto const &d_info = game->edit_data.d_info;
+
 	int i, j, x, y;
 	byte a;
 	char c;
@@ -2691,7 +2694,7 @@ errr file_character(cptr name, bool_ full)
 		fprintf(fff, "\n Always unusual rooms: OFF");
 
 	fprintf(fff, "\n\n Recall Depth:");
-	for (y = 1; y < max_d_idx; y++)
+	for (y = 1; y < static_cast<int>(d_info.size()); y++)
 	{
 		if (max_dlv[y])
 			fprintf(fff, "\n        %s: Level %d (%d')",
@@ -4011,7 +4014,9 @@ void autosave_checkpoint()
  */
 static long total_points(void)
 {
-	s16b max_dl = 0, i, k;
+	auto const &d_info = game->edit_data.d_info;
+
+	s16b max_dl = 0;
 	long temp, Total = 0;
 	long mult = 20; /* was 100. Divided values by 5 because of an overflow error */
 	long comp_death = (p_ptr->companion_killed * 2 / 5);
@@ -4028,9 +4033,13 @@ static long total_points(void)
 	if (mult < 2) mult = 2;  /* At least 10% of the original score */
 	/* mult is now between 2 and 40, i.e. 10% and 200% */
 
-	for (i = 0; i < max_d_idx; i++)
+	for (std::size_t i = 0; i < d_info.size(); i++)
+	{
 		if (max_dlv[i] > max_dl)
+		{
 			max_dl = max_dlv[i];
+		}
+	}
 
 	temp = p_ptr->lev * p_ptr->lev * p_ptr->lev * p_ptr->lev + (100 * max_dl);
 
@@ -4042,7 +4051,7 @@ static long total_points(void)
 	temp += p_ptr->au / 5;
 
 	/* Completing quest increase score */
-	for (i = 0; i < MAX_Q_IDX; i++)
+	for (std::size_t i = 0; i < MAX_Q_IDX; i++)
 	{
 		if (quest[i].status >= QUEST_STATUS_COMPLETED)
 		{
@@ -4056,7 +4065,7 @@ static long total_points(void)
 
 	/* The know objects increase the score */
 	/* Scan the object kinds */
-	for (k = 1; k < max_k_idx; k++)
+	for (std::size_t k = 1; k < max_k_idx; k++)
 	{
 		object_kind *k_ptr = &k_info[k];
 
@@ -4079,7 +4088,7 @@ static long total_points(void)
 		}
 	}
 
-	for (k = 1; k < max_r_idx; k++)
+	for (std::size_t k = 1; k < max_r_idx; k++)
 	{
 		monster_race *r_ptr = &r_info[k];
 
@@ -5132,13 +5141,16 @@ static void kingly(void)
  */
 void wipe_saved()
 {
-	int d, l, od = dungeon_type, ol = dun_level;
+	auto const &d_info = game->edit_data.d_info;
 
-	for (d = 0; d < max_d_idx; d++)
+	int od = dungeon_type;
+	int ol = dun_level;
+
+	for (std::size_t d = 0; d < d_info.size(); d++)
 	{
-		dungeon_info_type *d_ptr = &d_info[d];
+		auto d_ptr = &d_info[d];
 
-		for (l = d_ptr->mindepth; l <= d_ptr->maxdepth; l++)
+		for (auto l = d_ptr->mindepth; l <= d_ptr->maxdepth; l++)
 		{
 			char buf[10];
 

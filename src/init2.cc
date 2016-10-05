@@ -438,7 +438,7 @@ namespace {
 
 		static void allocate()
 		{
-			d_info = new dungeon_info_type[max_d_idx];
+			// Nothing to do
 		}
 
 		static errr parse(FILE *fp)
@@ -717,7 +717,7 @@ void create_stores_stock(int t)
  */
 static errr init_other(void)
 {
-	int i, n;
+	auto const &d_info = game->edit_data.d_info;
 
 	/*** Prepare the "dungeon" information ***/
 
@@ -743,27 +743,27 @@ static errr init_other(void)
 	km_list = new monster_type[max_m_idx];
 
 	/* Allocate and Wipe the max dungeon level */
-	max_dlv = make_array<s16b>(max_d_idx);
+	max_dlv = make_array<s16b>(d_info.size());
 
 	/* Allocate and Wipe the special levels */
-	for (i = 0; i < MAX_DUNGEON_DEPTH; i++)
+	for (std::size_t i = 0; i < MAX_DUNGEON_DEPTH; i++)
 	{
-		special_lvl[i] = make_array<bool_>(max_d_idx);
+		special_lvl[i] = make_array<bool_>(d_info.size());
 	}
 
 	/* Allocate and wipe each line of the cave */
 	cave = new cave_type *[MAX_HGT];
-	for (i = 0; i < MAX_HGT; i++)
+	for (std::size_t i = 0; i < MAX_HGT; i++)
 	{
 		/* Allocate one row of the cave */
 		cave[i] = new cave_type[MAX_WID];
 	}
 
 	/* Analyze the windows */
-	for (n = 0; n < 8; n++)
+	for (std::size_t n = 0; n < 8; n++)
 	{
 		/* Analyze the options */
-		for (i = 0; i < 32; i++)
+		for (std::size_t i = 0; i < 32; i++)
 		{
 			/* Accept */
 			if (window_flag_desc[i])
@@ -1007,12 +1007,12 @@ static void init_sets_aux()
  */
 static void init_guardians(void)
 {
-	int i;
+	auto const &d_info = game->edit_data.d_info;
 
 	/* Scan dungeons */
-	for (i = 0; i < max_d_idx; i++)
+	for (std::size_t i = 0; i < d_info.size(); i++)
 	{
-		dungeon_info_type *d_ptr = &d_info[i];
+		auto d_ptr = &d_info[i];
 
 		/* Mark the guadian monster */
 		if (d_ptr->final_guardian)

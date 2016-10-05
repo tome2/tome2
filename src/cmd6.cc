@@ -18,6 +18,7 @@
 #include "dungeon_info_type.hpp"
 #include "ego_item_type.hpp"
 #include "files.hpp"
+#include "game.hpp"
 #include "hook_eat_in.hpp"
 #include "hook_eat_out.hpp"
 #include "hooks.hpp"
@@ -2867,6 +2868,8 @@ static object_filter_t const &item_tester_hook_readable()
  */
 void do_cmd_read_scroll(void)
 {
+	auto const &d_info = game->edit_data.d_info;
+
 	/* Check some conditions */
 	if (p_ptr->blind)
 	{

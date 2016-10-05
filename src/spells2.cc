@@ -17,6 +17,7 @@
 #include "feature_flag.hpp"
 #include "feature_type.hpp"
 #include "files.hpp"
+#include "game.hpp"
 #include "hook_identify_in.hpp"
 #include "hooks.hpp"
 #include "melee2.hpp"
@@ -6086,6 +6087,8 @@ static void print_dungeon_batch(std::vector<int> const &dungeon_idxs,
 				int start,
 				bool_ mode)
 {
+	auto const &d_info = game->edit_data.d_info;
+
 	char buf[80];
 	int i, j;
 	byte attr;
@@ -6094,7 +6097,7 @@ static void print_dungeon_batch(std::vector<int> const &dungeon_idxs,
 
 	for (i = 0, j = start; i < 20 && j < static_cast<int>(dungeon_idxs.size()); i++, j++)
 	{
-		dungeon_info_type *d_ptr = &d_info[dungeon_idxs[j]];
+		auto d_ptr = &d_info[dungeon_idxs[j]];
 
 		strnfmt(buf, 80, "  %c) %-30s", I2A(i), d_ptr->name);
 		if (mode)
@@ -6117,11 +6120,14 @@ static void print_dungeon_batch(std::vector<int> const &dungeon_idxs,
 
 static int find_dungeon_by_name(char const *name)
 {
+	auto const &d_info = game->edit_data.d_info;
+
 	/* Find the index corresponding to the name */
-	for (int i = 1; i < max_d_idx; i++)
+	for (std::size_t i = 1; i < d_info.size(); i++)
 	{
 		/* Skip non-initialized entries. */
-		if (d_info[i].name == nullptr) {
+		if (d_info[i].name == nullptr)
+		{
 			continue;
 		}
 		if (iequals(name, d_info[i].name))
@@ -6135,6 +6141,8 @@ static int find_dungeon_by_name(char const *name)
 
 static int reset_recall_aux()
 {
+	auto const &d_info = game->edit_data.d_info;
+
 	char which;
 	int start = 0;
 	int ret;
@@ -6142,7 +6150,7 @@ static int reset_recall_aux()
 
 	// Dungeons available for recall
 	std::vector<int> dungeons;
-	for (size_t i = 1; i < max_d_idx; i++)
+	for (size_t i = 1; i < d_info.size(); i++)
 	{
 		/* skip "blocked" dungeons */
 		if (d_info[i].flags & DF_NO_RECALL) continue;
@@ -6259,6 +6267,8 @@ static int reset_recall_aux()
 
 bool_ reset_recall(bool_ no_trepas_max_depth)
 {
+	auto const &d_info = game->edit_data.d_info;
+
 	int dun, depth, max;
 
 	/* Choose dungeon */

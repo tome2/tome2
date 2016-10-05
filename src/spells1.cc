@@ -18,6 +18,7 @@
 #include "files.hpp"
 #include "feature_flag.hpp"
 #include "feature_type.hpp"
+#include "game.hpp"
 #include "gods.hpp"
 #include "melee2.hpp"
 #include "monster2.hpp"
@@ -6905,6 +6906,8 @@ bool_ unsafe = FALSE;
  */
 static bool_ project_p(int who, int r, int y, int x, int dam, int typ, int a_rad)
 {
+	auto const &d_info = game->edit_data.d_info;
+
 	int k = 0, do_move = 0, a = 0, b = 0, x1 = 0, y1 = 0;
 
 	/* Hack -- assume obvious */

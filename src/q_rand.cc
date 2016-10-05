@@ -5,6 +5,7 @@
 #include "cave_type.hpp"
 #include "dungeon_flag.hpp"
 #include "dungeon_info_type.hpp"
+#include "game.hpp"
 #include "generate.hpp"
 #include "hook_build_room1_in.hpp"
 #include "hook_chardump_in.hpp"
@@ -54,6 +55,8 @@ GENERATE_MONSTER_LOOKUP_FN(get_adventurer, "Adventurer")
 
 void initialize_random_quests(int n)
 {
+	auto const &d_info = game->edit_data.d_info;
+
 	int step, lvl, i, k;
 	int old_type = dungeon_type;
 
@@ -81,12 +84,10 @@ void initialize_random_quests(int n)
 
 		random_quest *q_ptr = &random_quests[rl];
 
-		int j;
-
 		/* Find the appropriate dungeon */
-		for (j = 0; j < max_d_idx; j++)
+		for (std::size_t j = 0; j < d_info.size(); j++)
 		{
-			dungeon_info_type *d_ptr = &d_info[j];
+			auto d_ptr = &d_info[j];
 
 			if (!(d_ptr->flags & DF_PRINCIPAL)) continue;
 

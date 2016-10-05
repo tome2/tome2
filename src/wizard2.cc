@@ -1301,6 +1301,8 @@ void do_cmd_wiz_cure_all(void)
  */
 static void do_cmd_wiz_jump(void)
 {
+	auto const &d_info = game->edit_data.d_info;
+
 	/* Ask for level */
 	if (command_arg <= 0)
 	{
@@ -1509,6 +1511,8 @@ static void do_cmd_wiz_body(s16b bidx)
  */
 void do_cmd_debug()
 {
+	auto const &d_info = game->edit_data.d_info;
+
 	int x, y;
 	char cmd;
 
@@ -1569,7 +1573,7 @@ void do_cmd_debug()
 
 		/* Change of Dungeon type */
 	case 'D':
-		if ((command_arg >= 0) && (command_arg < max_d_idx))
+		if ((command_arg >= 0) && (std::size_t(command_arg) < d_info.size()))
 		{
 			dungeon_type = command_arg;
 			dun_level = d_info[dungeon_type].mindepth;

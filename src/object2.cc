@@ -4834,6 +4834,8 @@ bool_ make_object(object_type *j_ptr, bool_ good, bool_ great, obj_theme const &
  */
 void place_object(int y, int x, bool_ good, bool_ great, int where)
 {
+	auto const &d_info = game->edit_data.d_info;
+
 	s16b o_idx;
 
 	cave_type *c_ptr;
@@ -5352,6 +5354,8 @@ s16b drop_near(object_type *j_ptr, int chance, int y, int x)
  */
 void acquirement(int y1, int x1, int num, bool_ great, bool_ known)
 {
+	auto const &d_info = game->edit_data.d_info;
+
 	object_type *i_ptr;
 	object_type object_type_body;
 

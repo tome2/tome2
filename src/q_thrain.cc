@@ -3,6 +3,7 @@
 #include "cave.hpp"
 #include "cave_type.hpp"
 #include "dungeon_info_type.hpp"
+#include "game.hpp"
 #include "generate.hpp"
 #include "hook_build_room1_in.hpp"
 #include "hook_move_in.hpp"
@@ -238,6 +239,8 @@ static bool_ quest_thrain_turn_hook(void *, void *, void *)
 
 bool_ quest_thrain_init_hook()
 {
+	auto const &d_info = game->edit_data.d_info;
+
 	if (!cquest.data[0])
 	{
 		cquest.data[0] = rand_range(d_info[DUNGEON_DOL_GULDUR].mindepth + 1, d_info[DUNGEON_DOL_GULDUR].maxdepth - 1);

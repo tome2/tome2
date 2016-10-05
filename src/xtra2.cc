@@ -2400,6 +2400,8 @@ static void monster_death_gods(int m_idx, monster_type *m_ptr)
  */
 void monster_death(int m_idx)
 {
+	auto const &d_info = game->edit_data.d_info;
+
 	monster_type *m_ptr = &m_list[m_idx];
 
 	auto const r_ptr = m_ptr->race();
@@ -3886,6 +3888,8 @@ bool_ target_object(int y, int x, int mode, cptr info, bool_ *boring,
  */
 static int target_set_aux(int y, int x, int mode, cptr info)
 {
+	auto const &d_info = game->edit_data.d_info;
+
 	cave_type *c_ptr = &cave[y][x];
 
 	cptr s1, s2, s3;

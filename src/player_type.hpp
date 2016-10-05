@@ -169,7 +169,7 @@ struct player_type
 
 	s16b immov_cntr = 0;                                    /* Timed -- Last ``immovable'' command. */
 
-	s16b recall_dungeon = 0;                                /* Recall in which dungeon */
+	byte recall_dungeon = 0;                                /* Recall in which dungeon */
 	s16b word_recall = 0;                                   /* Word of recall counter */
 
 	s32b energy = 0;                                        /* Current energy */

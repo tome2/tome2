@@ -1215,6 +1215,8 @@ static void process_world_gods()
  */
 static void process_world(void)
 {
+	auto const &d_info = game->edit_data.d_info;
+
 	timer_type *t_ptr;
 
 	int x, y, i, j;
@@ -1223,7 +1225,7 @@ static void process_world(void)
 	bool_ cave_no_regen = FALSE;
 	int upkeep_factor = 0;
 
-	dungeon_info_type *d_ptr = &d_info[dungeon_type];
+	auto d_ptr = &d_info[dungeon_type];
 
 	cave_type *c_ptr;
 
@@ -4636,6 +4638,8 @@ static void process_player(void)
  */
 static void dungeon(void)
 {
+	auto const &d_info = game->edit_data.d_info;
+
 	/* Reset various flags */
 	hack_mind = FALSE;
 
@@ -5054,6 +5058,8 @@ static void load_all_pref_files(void)
  */
 void play_game()
 {
+	auto const &d_info = game->edit_data.d_info;
+
 	int i, tmp_dun;
 
 	bool_ cheat_death = FALSE;

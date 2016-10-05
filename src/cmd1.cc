@@ -16,6 +16,7 @@
 #include "feature_flag.hpp"
 #include "feature_type.hpp"
 #include "files.hpp"
+#include "game.hpp"
 #include "gods.hpp"
 #include "hooks.hpp"
 #include "hook_move_in.hpp"
@@ -2724,6 +2725,8 @@ static bool_ easy_open_door(int y, int x)
  */
 void move_player_aux(int dir, int do_pickup, int run, bool_ disarm)
 {
+	auto const &d_info = game->edit_data.d_info;
+
 	int y, x, tmp;
 
 	cave_type *c_ptr = &cave[p_ptr->py][p_ptr->px];

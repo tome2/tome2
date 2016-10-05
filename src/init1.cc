@@ -5113,14 +5113,13 @@ errr grab_one_dungeon_flag(dungeon_flag_set *flags, const char *str)
  */
 errr init_d_info_txt(FILE *fp)
 {
-	int i, j;
+	auto &d_info = game->edit_data.d_info;
+
 	char buf[1024];
 
 	s16b rule_num = 0;
 
 	byte r_char_number = 0;
-
-	char *s;
 
 	/* Current entry */
 	dungeon_info_type *d_ptr = NULL;
@@ -5148,7 +5147,7 @@ errr init_d_info_txt(FILE *fp)
 		if (buf[0] == 'N')
 		{
 			/* Find the colon before the name */
-			s = strchr(buf + 2, ':');
+			char *s = strchr(buf + 2, ':');
 
 			/* Verify that colon */
 			if (!s) return (1);
@@ -5160,19 +5159,16 @@ errr init_d_info_txt(FILE *fp)
 			if (!*s) return (1);
 
 			/* Get the index */
-			i = atoi(buf + 2);
+			int i = atoi(buf + 2);
 
 			/* Verify information */
 			if (i < error_idx) return (4);
-
-			/* Verify information */
-			if (i >= max_d_idx) return (2);
 
 			/* Save the index */
 			error_idx = i;
 
 			/* Point at the "info" */
-			d_ptr = &d_info[i];
+			d_ptr = &expand_to_fit_index(d_info, i);
 
 			/* Copy name */
 			assert(!d_ptr->name);
@@ -5191,14 +5187,15 @@ errr init_d_info_txt(FILE *fp)
 			d_ptr->fill_method = 1;
 			rule_num = -1;
 			r_char_number = 0;
-			for (j = 0; j < 5; j++)
+			for (std::size_t j = 0; j < 5; j++)
 			{
-				int k;
-
 				d_ptr->rules[j].mode = DUNGEON_MODE_NONE;
 				d_ptr->rules[j].percent = 0;
 
-				for (k = 0; k < 5; k++) d_ptr->rules[j].r_char[k] = 0;
+				for (std::size_t k = 0; k < 5; k++)
+				{
+					d_ptr->rules[j].r_char[k] = 0;
+				}
 			}
 
 			/* Set default drop theme */
@@ -5223,7 +5220,7 @@ errr init_d_info_txt(FILE *fp)
 			d_ptr->short_name[2] = buf[4];
 
 			/* Acquire the text */
-			s = buf + 6;
+			char *s = buf + 6;
 
 			/* Append to description */
 			strappend(&d_ptr->text, s);
@@ -5369,8 +5366,15 @@ errr init_d_info_txt(FILE *fp)
 			cptr tmp;
 
 			/* Find the next empty blow slot (if any) */
-			for (i = 0; i < 4; i++) if ((!d_ptr->d_side[i]) &&
-				                            (!d_ptr->d_dice[i])) break;
+			std::size_t i;
+			for (i = 0; i < 4; i++)
+			{
+				if ((!d_ptr->d_side[i]) &&
+					(!d_ptr->d_dice[i]))
+				{
+					break;
+				}
+			}
 
 			/* Oops, no more slots */
 			if (i == 4) return (1);
@@ -5423,7 +5427,8 @@ errr init_d_info_txt(FILE *fp)
 			int artif = 0, monst = 0, obj = 0;
 			int ix = -1, iy = -1, ox = -1, oy = -1;
 			int fill_method;
-			s = buf + 2;
+
+			char const *s = buf + 2;
 
 			/* Read dungeon in/out coords */
 			if (4 == sscanf(s, "WILD_%d_%d__%d_%d", &ix, &iy, &ox, &oy))
@@ -5519,7 +5524,7 @@ errr init_d_info_txt(FILE *fp)
 		if (buf[0] == 'M')
 		{
 			byte r_char;
-			s = buf + 2;
+			char const *s = buf + 2;
 
 			/* Read monster symbols */
 			if (1 == sscanf(s, "R_CHAR_%c", &r_char))
@@ -5546,7 +5551,7 @@ errr init_d_info_txt(FILE *fp)
 		/* Process 'S' for "Spell Flags" (multiple lines) */
 		if (buf[0] == 'S')
 		{
-			s = buf + 2;
+			char const *s = buf + 2;
 
 			/* Parse this entry */
 			if (0 != grab_one_monster_spell_flag(&d_ptr->rules[rule_num].mspells, s))
@@ -6982,12 +6987,6 @@ static errr process_dungeon_file_aux(char *buf, int *yval, int *xval, int xvalst
 			else if (zz[0][0] == 'Y')
 			{
 				wilderness.height(atoi(zz[1]));
-			}
-
-			/* Maximum d_idx */
-			else if (zz[0][0] == 'D')
-			{
-				max_d_idx = atoi(zz[1]);
 			}
 
 			return (0);

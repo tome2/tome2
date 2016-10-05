@@ -422,6 +422,8 @@ static void quest_god_generate_relic()
 
 static void quest_god_set_god_dungeon_attributes_eru()
 {
+	auto &d_info = game->edit_data.d_info;
+
 	/* The Eru temple is based on Meneltarma. */
 
 	/* W: Not too many monsters (they'll be tough though, with big
@@ -482,6 +484,8 @@ static void quest_god_set_god_dungeon_attributes_eru()
 
 static void quest_god_set_god_dungeon_attributes_manwe()
 {
+	auto &d_info = game->edit_data.d_info;
+
 	/* Manwe's lost temple is high in the clouds */
 
 	/* W: Has average number of monsters. */
@@ -544,6 +548,8 @@ static void quest_god_set_god_dungeon_attributes_manwe()
 
 static void quest_god_set_god_dungeon_attributes_tulkas()
 {
+	auto &d_info = game->edit_data.d_info;
+
 	/* Tulkas dungeon is quite normal, possibly a bit boring to be
 	 * honest. Maybe I should add something radical to it.  'The
 	 * house of Tulkas in the midmost of Valmar was a house of
@@ -589,6 +595,8 @@ static void quest_god_set_god_dungeon_attributes_tulkas()
 
 static void quest_god_set_god_dungeon_attributes_melkor()
 {
+	auto &d_info = game->edit_data.d_info;
+
 	/* Melkors dungeon will be dark, fiery and stuff */
 
 	/* Many many monsters! (but prob ADJUST_LEVEL_1_2) */
@@ -642,6 +650,8 @@ static void quest_god_set_god_dungeon_attributes_melkor()
 
 static void quest_god_set_god_dungeon_attributes_yavanna()
 {
+	auto &d_info = game->edit_data.d_info;
+
 	/* Yavannas dungeon will be very natural, tress and stuff. */
 
 	d_info[DUNGEON_GOD].min_m_alloc_level = 22;
@@ -693,6 +703,8 @@ static void quest_god_set_god_dungeon_attributes_yavanna()
 
 static void quest_god_set_god_dungeon_attributes_aule()
 {
+	auto &d_info = game->edit_data.d_info;
+
 	d_info[DUNGEON_GOD].min_m_alloc_level = 24;
 	d_info[DUNGEON_GOD].max_m_alloc_chance = 80;
 
@@ -735,6 +747,8 @@ static void quest_god_set_god_dungeon_attributes_aule()
 
 static void quest_god_set_god_dungeon_attributes_varda()
 {
+	auto &d_info = game->edit_data.d_info;
+
 	/* Varda lives with Manwe, so high in the clouds */
 
 	/* W: Has average number of monsters. */
@@ -794,6 +808,8 @@ static void quest_god_set_god_dungeon_attributes_varda()
 
 static void quest_god_set_god_dungeon_attributes_ulmo()
 {
+	auto &d_info = game->edit_data.d_info;
+
 	/* Ulmo dungeon is basically Tulkas, except with acquatic creatures. */
 
 	/* W: but with lots of monsters */
@@ -839,6 +855,8 @@ static void quest_god_set_god_dungeon_attributes_ulmo()
 
 static void quest_god_set_god_dungeon_attributes_mandos()
 {
+	auto &d_info = game->edit_data.d_info;
+
 	/* Mandos dungeon is basically Tulkas, except with undead. */
 
 	/* W: but with lots of monsters */
@@ -1093,6 +1111,8 @@ static bool_ quest_god_char_dump_hook(void *, void *in_, void *)
 
 static void set_god_dungeon_attributes()
 {
+	auto &d_info = game->edit_data.d_info;
+
 	/* dungeon properties altered according to which god player is worshipping, */
 	if (p_ptr->pgod == GOD_ERU)
 	{
@@ -1138,7 +1158,7 @@ static void set_god_dungeon_attributes()
 	/* W: All dungeons are 5 levels deep, and created at 2/3 of
 	 * the player clvl when the quest is given */
 	{
-		dungeon_info_type *d_ptr = &d_info[DUNGEON_GOD];
+		auto d_ptr = &d_info[DUNGEON_GOD];
 		d_ptr->mindepth = cquest_dun_mindepth;
 		d_ptr->maxdepth = cquest_dun_maxdepth;
 		d_ptr->min_plev = cquest_dun_minplev;

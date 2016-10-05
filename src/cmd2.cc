@@ -164,13 +164,15 @@ static bool ask_leave()
  */
 void do_cmd_go_up(void)
 {
+	auto const &d_info = game->edit_data.d_info;
+
 	bool_ go_up = FALSE, go_up_many = FALSE, prob_traveling = FALSE;
 
 	cave_type *c_ptr;
 
 	int oldl = dun_level;
 
-	dungeon_info_type *d_ptr = &d_info[dungeon_type];
+	auto d_ptr = &d_info[dungeon_type];
 
 
 	/* Player grid */
@@ -358,6 +360,8 @@ static bool_ between_effect(void)
  */
 void do_cmd_go_down(void)
 {
+	auto const &d_info = game->edit_data.d_info;
+
 	cave_type *c_ptr;
 
 	bool_ go_down = FALSE, go_down_many = FALSE, prob_traveling = FALSE;
@@ -368,7 +372,7 @@ void do_cmd_go_down(void)
 
 	int old_dun = dun_level;
 
-	dungeon_info_type *d_ptr = &d_info[dungeon_type];
+	auto d_ptr = &d_info[dungeon_type];
 
 
 	/*  MUST be actived now */
@@ -513,7 +517,7 @@ void do_cmd_go_down(void)
 		{
 			if (d_info[c_ptr->special].min_plev <= p_ptr->lev)
 			{
-				dungeon_info_type *d_ptr = &d_info[c_ptr->special];
+				auto d_ptr = &d_info[c_ptr->special];
 
 				/* Do the lua scripts refuse ? ;) */
 				{
@@ -649,6 +653,8 @@ static s16b chest_check(int y, int x)
  */
 static void chest_death(int y, int x, s16b o_idx)
 {
+	auto const &d_info = game->edit_data.d_info;
+
 	int number;
 
 	bool_ small;
@@ -1458,6 +1464,8 @@ static bool_ twall(int y, int x, byte feat)
  */
 static bool_ do_cmd_tunnel_aux(int y, int x, int dir)
 {
+	auto const &d_info = game->edit_data.d_info;
+
 	int skill_req = 0, skill_req_1pct = 0;
 	cave_type *c_ptr = &cave[y][x];
 
@@ -4223,6 +4231,8 @@ void do_cmd_boomerang(void)
 
 static bool_ tport_vertically(bool_ how)
 {
+	auto const &d_info = game->edit_data.d_info;
+
 	/* quest? */
 	if (p_ptr->inside_quest)
 	{

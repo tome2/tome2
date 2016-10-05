@@ -9,6 +9,7 @@
 #include "levels.hpp"
 
 #include "dungeon_info_type.hpp"
+#include "game.hpp"
 #include "init1.hpp"
 #include "util.hpp"
 #include "util.h"
@@ -78,6 +79,8 @@ static bool_ get_command(const char *file, char comm, char *param)
  */
 int get_branch()
 {
+	auto const &d_info = game->edit_data.d_info;
+
 	char file[20], buf[5];
 
 	sprintf(file, "dun%d.%d", dungeon_type, dun_level - d_info[dungeon_type].mindepth);
@@ -95,6 +98,8 @@ int get_branch()
  */
 int get_fbranch()
 {
+	auto const &d_info = game->edit_data.d_info;
+
 	char file[20], buf[5];
 
 	sprintf(file, "dun%d.%d", dungeon_type, dun_level - d_info[dungeon_type].mindepth);
@@ -112,6 +117,8 @@ int get_fbranch()
  */
 int get_flevel()
 {
+	auto const &d_info = game->edit_data.d_info;
+
 	char file[20], buf[5];
 
 	sprintf(file, "dun%d.%d", dungeon_type, dun_level - d_info[dungeon_type].mindepth);
@@ -129,6 +136,8 @@ int get_flevel()
  */
 bool_ get_dungeon_save(char *buf)
 {
+	auto const &d_info = game->edit_data.d_info;
+
 	char file[20];
 
 	sprintf(file, "dun%d.%d", dungeon_type, dun_level - d_info[dungeon_type].mindepth);
@@ -144,8 +153,9 @@ bool_ get_dungeon_save(char *buf)
  */
 bool_ get_dungeon_generator(char *buf)
 {
-	char file[20];
+	auto const &d_info = game->edit_data.d_info;
 
+	char file[20];
 	sprintf(file, "dun%d.%d", dungeon_type, dun_level - d_info[dungeon_type].mindepth);
 
 	/* Get and return the level */
@@ -159,8 +169,9 @@ bool_ get_dungeon_generator(char *buf)
  */
 bool_ get_dungeon_special(char *buf)
 {
-	char file[20];
+	auto const &d_info = game->edit_data.d_info;
 
+	char file[20];
 	sprintf(file, "dun%d.%d", dungeon_type, dun_level - d_info[dungeon_type].mindepth);
 
 	/* Get and return the level */
@@ -174,8 +185,9 @@ bool_ get_dungeon_special(char *buf)
  */
 bool_ get_dungeon_name(char *buf)
 {
-	char file[20];
+	auto const &d_info = game->edit_data.d_info;
 
+	char file[20];
 	sprintf(file, "dun%d.%d", dungeon_type, dun_level - d_info[dungeon_type].mindepth);
 
 	/* Get and return the level */
@@ -189,6 +201,8 @@ bool_ get_dungeon_name(char *buf)
  */
 void get_level_flags()
 {
+	auto const &d_info = game->edit_data.d_info;
+
 	char file[20];
 	char buf[1024], *s, *t;
 
@@ -226,8 +240,9 @@ void get_level_flags()
  */
 bool_ get_level_desc(char *buf)
 {
-	char file[20];
+	auto const &d_info = game->edit_data.d_info;
 
+	char file[20];
 	sprintf(file, "dun%d.%d", dungeon_type, dun_level - d_info[dungeon_type].mindepth);
 
 	/* Get and return the level */

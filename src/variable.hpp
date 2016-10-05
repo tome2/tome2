@@ -8,7 +8,6 @@
 #include "cave_type_fwd.hpp"
 #include "deity_type.hpp"
 #include "dungeon_flag_set.hpp"
-#include "dungeon_info_type_fwd.hpp"
 #include "effect_type.hpp"
 #include "ego_item_type_fwd.hpp"
 #include "fate.hpp"
@@ -170,7 +169,6 @@ extern artifact_type *a_info;
 extern ego_item_type *e_info;
 extern monster_race *r_info;
 extern monster_ego *re_info;
-extern dungeon_info_type *d_info;
 extern trap_type *t_info;
 extern wilderness_type_info *wf_info;
 extern int wildc2i[256];
@@ -194,7 +192,6 @@ extern u16b max_k_idx;
 extern u16b max_f_idx;
 extern u16b max_a_idx;
 extern u16b max_e_idx;
-extern u16b max_d_idx;
 extern u16b max_o_idx;
 extern u16b max_m_idx;
 extern u16b max_t_idx;

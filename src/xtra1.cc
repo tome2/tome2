@@ -539,8 +539,10 @@ static void prt_sp(void)
  */
 static void prt_depth(int row, int col)
 {
+	auto const &d_info = game->edit_data.d_info;
+
 	char depths[32];
-	dungeon_info_type *d_ptr = &d_info[dungeon_type];
+	auto d_ptr = &d_info[dungeon_type];
 
 	if (p_ptr->wild_mode)
 	{

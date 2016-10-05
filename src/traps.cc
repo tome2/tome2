@@ -19,6 +19,7 @@
 #include "feature_flag.hpp"
 #include "feature_type.hpp"
 #include "files.hpp"
+#include "game.hpp"
 #include "gods.hpp"
 #include "monster2.hpp"
 #include "monster_race.hpp"
@@ -1934,12 +1935,14 @@ void player_activate_door_trap(s16b y, s16b x)
  */
 void place_trap(int y, int x)
 {
+	auto const &d_info = game->edit_data.d_info;
+
 	s16b trap;
 	trap_type *t_ptr;
 	int cnt;
 	u32b flags;
 	cave_type *c_ptr = &cave[y][x];
-	dungeon_info_type *d_ptr = &d_info[dungeon_type];
+	auto d_ptr = &d_info[dungeon_type];
 
 	/* No traps in town or on first level */
 	if (dun_level <= 1) return;

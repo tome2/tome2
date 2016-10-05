@@ -532,6 +532,8 @@ static void note(cptr msg)
 static char loaded_game_module[80];
 static bool_ do_extra(ls_flag_t flag)
 {
+	auto const &d_info = game->edit_data.d_info;
+
 	do_string(player_name, 32, flag);
 
 	do_string(died_from, 80, flag);
@@ -543,14 +545,14 @@ static bool_ do_extra(ls_flag_t flag)
 
 	/* Handle the special levels info */
 	{
-		byte tmp8u = max_d_idx;
+		byte tmp8u = d_info.size();
 		u16b tmp16u = MAX_DUNGEON_DEPTH;
 
 		do_byte(&tmp8u, flag);
 
 		if (flag == ls_flag_t::LOAD)
 		{
-			if (tmp8u > max_d_idx)
+			if (tmp8u > d_info.size())
 			{
 				note(format("Too many dungeon types!", static_cast<int>(tmp8u)));
 			}
@@ -719,7 +721,7 @@ static bool_ do_extra(ls_flag_t flag)
 
 	// Max dungeon levels
 	{
-		byte tmp8u = max_d_idx;
+		byte tmp8u = d_info.size();
 
 		do_byte(&tmp8u, flag);
 
@@ -729,7 +731,7 @@ static bool_ do_extra(ls_flag_t flag)
 
 			do_s16b(&tmp16s, flag);
 
-			if ((flag == ls_flag_t::LOAD) && (i <= max_d_idx))
+			if ((flag == ls_flag_t::LOAD) && (i <= d_info.size()))
 			{
 				max_dlv[i] = tmp16s;
 			}
@@ -794,7 +796,7 @@ static bool_ do_extra(ls_flag_t flag)
 
 	do_s16b(&p_ptr->tim_invis, flag);
 	do_s16b(&p_ptr->word_recall, flag);
-	do_s16b(&p_ptr->recall_dungeon, flag);
+	do_byte(&p_ptr->recall_dungeon, flag);
 	do_s16b(&p_ptr->see_infra, flag);
 	do_s16b(&p_ptr->tim_infra, flag);
 	do_s16b(&p_ptr->oppose_fire, flag);
@@ -2128,6 +2130,8 @@ static bool do_object_lore(ls_flag_t flag)
 
 static bool do_towns(ls_flag_t flag)
 {
+	auto &d_info = game->edit_data.d_info;
+
 	u16b max_towns_ldsv = max_towns;
 
 	do_u16b(&max_towns_ldsv, flag);
@@ -2172,12 +2176,12 @@ static bool do_towns(ls_flag_t flag)
 
 	if (flag == ls_flag_t::SAVE)
 	{
-		max_towns_ldsv = max_d_idx;
+		max_towns_ldsv = d_info.size();
 	}
 
 	do_u16b(&max_towns_ldsv, flag);
 
-	if ((flag == ls_flag_t::LOAD) && (max_towns_ldsv > max_d_idx))
+	if ((flag == ls_flag_t::LOAD) && (max_towns_ldsv > d_info.size()))
 	{
 		note("Too many dungeon types!");
 		return false;

@@ -14,6 +14,7 @@
 #include "dungeon_info_type.hpp"
 #include "feature_type.hpp"
 #include "files.hpp"
+#include "game.hpp"
 #include "hooks.hpp"
 #include "init1.hpp"
 #include "levels.hpp"
@@ -2722,6 +2723,8 @@ static cptr do_cmd_feeling_text[11] =
  */
 void do_cmd_feeling(void)
 {
+	auto const &d_info = game->edit_data.d_info;
+
 	/* Verify the feeling */
 	if (feeling < 0) feeling = 0;
 	if (feeling > 10) feeling = 10;
@@ -2763,7 +2766,7 @@ void do_cmd_feeling(void)
 	{
 		/* This could be simplified with a correct p_ptr->town_num */
 		int i, town_level = 0;
-		dungeon_info_type *d_ptr = &d_info[dungeon_type];
+		auto d_ptr = &d_info[dungeon_type];
 
 		/* Is it a town level ? */
 		for (i = 0; i < TOWN_DUNGEON; i++)
@@ -3625,10 +3628,12 @@ static void do_cmd_knowledge_objects(void)
  */
 static void do_cmd_knowledge_dungeons(void)
 {
+	auto const &d_info = game->edit_data.d_info;
+
 	fmt::MemoryWriter w;
 
 	/* Scan all dungeons */
-	for (int y = 1; y < max_d_idx; y++)
+	for (std::size_t y = 1; y < d_info.size(); y++)
 	{
 		/* The dungeon has a valid recall depth set */
 		if (max_dlv[y])
@@ -3651,12 +3656,14 @@ static void do_cmd_knowledge_dungeons(void)
  */
 void do_cmd_knowledge_towns(void)
 {
+	auto const &d_info = game->edit_data.d_info;
+
 	fmt::MemoryWriter w;
 
 	/* Scan all dungeons */
-	for (int i = 0; i < max_d_idx; i++)
+	for (auto const &d_ref: d_info)
 	{
-		dungeon_info_type *d_ptr = &d_info[i];
+		auto d_ptr = &d_ref;
 
 		/* Scan all dungeon town slots */
 		for (int j = 0; j < TOWN_DUNGEON; j++)

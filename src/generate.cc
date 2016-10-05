@@ -430,6 +430,8 @@ static void place_up_stairs(int y, int x)
  */
 static void place_down_stairs(int y, int x)
 {
+	auto const &d_info = game->edit_data.d_info;
+
 	cave_type *c_ptr = &cave[y][x];
 
 	/*
@@ -456,7 +458,9 @@ static void place_down_stairs(int y, int x)
  */
 static bool_ is_safe_floor(int y, int x)
 {
-	dungeon_info_type *d_ptr = &d_info[dungeon_type];
+	auto const &d_info = game->edit_data.d_info;
+
+	auto d_ptr = &d_info[dungeon_type];
 	byte feat = cave[y][x].feat;
 
 	/* One of the legal floor types */
@@ -886,6 +890,8 @@ static void place_between(int y, int x)
  */
 static void place_random_stairs(int y, int x)
 {
+	auto const &d_info = game->edit_data.d_info;
+
 	/* Paranoia */
 	if (!cave_clean_bold(y, x)) return;
 
@@ -1022,6 +1028,8 @@ static void place_random_door(int y, int x)
  */
 static void alloc_stairs(int feat, int num, int walls, int branch)
 {
+	auto const &d_info = game->edit_data.d_info;
+
 	int y, x, i, j, cnt;
 
 	/* Place "num" stairs */
@@ -1413,6 +1421,8 @@ static void add_river(int feat1, int feat2)
  */
 static void build_streamer(int feat, int chance)
 {
+	auto const &d_info = game->edit_data.d_info;
+
 	int i, tx, ty;
 	int y, x, dir;
 	int dummy = 0;
@@ -6126,6 +6136,8 @@ static void build_type12(int by0, int bx0)
  */
 static void build_tunnel(int row1, int col1, int row2, int col2, bool_ water)
 {
+	auto const &d_info = game->edit_data.d_info;
+
 	int i, y, x;
 	int tmp_row, tmp_col;
 	int row_dir, col_dir;
@@ -6380,6 +6392,8 @@ static void build_tunnel(int row1, int col1, int row2, int col2, bool_ water)
  */
 static int next_to_corr(int y1, int x1)
 {
+	auto const &d_info = game->edit_data.d_info;
+
 	int i, y, x, k = 0;
 
 	cave_type *c_ptr;
@@ -6684,8 +6698,10 @@ static void fill_level(bool_ use_floor, byte smooth);
  */
 bool_ level_generate_dungeon()
 {
+	auto const &d_info = game->edit_data.d_info;
+
 	int i, k, y, x, y1, x1, branch = get_branch();
-	dungeon_info_type *d_ptr = &d_info[dungeon_type];
+	auto d_ptr = &d_info[dungeon_type];
 
 	int max_vault_ok = 2;
 
@@ -7240,7 +7256,9 @@ static void save_all_friends()
  */
 static void init_feat_info(void)
 {
-	dungeon_info_type *d_ptr = &d_info[dungeon_type];
+	auto const &d_info = game->edit_data.d_info;
+
+	auto d_ptr = &d_info[dungeon_type];
 	int i;
 	int cur_depth, max_depth;
 	int p1, p2;
@@ -7346,6 +7364,8 @@ static void init_feat_info(void)
 
 static void fill_level(bool_ use_floor, byte smooth)
 {
+	auto const &d_info = game->edit_data.d_info;
+
 	int y, x;
 	int step;
 	int shift;
@@ -7598,7 +7618,9 @@ static void supersize_grid_tile(int sy, int sx, int ty, int tx)
  */
 static bool_ cave_gen(void)
 {
-	dungeon_info_type *d_ptr = &d_info[dungeon_type];
+	auto const &d_info = game->edit_data.d_info;
+
+	auto d_ptr = &d_info[dungeon_type];
 
 	int max_vault_ok = 2;
 
@@ -8117,6 +8139,8 @@ static bool_ cave_gen(void)
 
 bool_ build_special_level(void)
 {
+	auto const &d_info = game->edit_data.d_info;
+
 	char buf[80];
 	int y, x, ystart = 2, xstart = 2;
 	s16b level;
@@ -8178,6 +8202,8 @@ bool_ build_special_level(void)
  */
 static void wipe_special_level(void)
 {
+	auto const &d_info = game->edit_data.d_info;
+
 	s16b level;
 	char buf[80];
 
@@ -8204,6 +8230,8 @@ static void wipe_special_level(void)
  */
 static void finalise_special_level(void)
 {
+	auto const &d_info = game->edit_data.d_info;
+
 	s16b level;
 	char buf[80];
 
@@ -8274,7 +8302,9 @@ static void generate_grid_mana()
  */
 void generate_cave(void)
 {
-	dungeon_info_type *d_ptr = &d_info[dungeon_type];
+	auto const &d_info = game->edit_data.d_info;
+
+	auto d_ptr = &d_info[dungeon_type];
 	int tester_1, tester_2;
 	int y, x, num, i;
 	bool_ loaded = FALSE;
