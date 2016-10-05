@@ -11,7 +11,6 @@ See below for specific distribution-specific hints, if needed.
 You will need to have the following libraries installed on your system
 somewhere where CMake can find them:
 
-- [jansson](http://www.digip.org/jansson/)
 - [Boost](https://www.boost.org/)
 
 Version requirements may vary somewhat, but usually you should be
@@ -59,7 +58,6 @@ To compile on an Ubuntu install, you'll need at least the
 
 - `cmake`
 - `build-essential`
-- `libjansson-dev`
 - `libboost-all-dev`
 
 packages.
