@@ -2,12 +2,14 @@
 
 #include "h-basic.h"
 
+#include <string>
+
 /**
  * Player background descriptor.
  */
 struct hist_type
 {
-	char *info;                             /* Textual History */
+	std::string info;                       /* Textual History */
 
 	byte roll;			        /* Frequency of this entry */
 	s16b chart;                             /* Chart index */

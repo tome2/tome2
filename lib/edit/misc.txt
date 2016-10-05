@@ -54,9 +54,6 @@ M:O:1024
 # Maximum size for "m_list[]"
 M:M:768
 
-# Maximum number of histories types in p_info.txt
-M:P:H:266
-
 # Maximum number of skills in s_info.txt
 M:k:60
 

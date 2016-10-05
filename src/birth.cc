@@ -58,6 +58,7 @@
 #include "xtra2.hpp"
 #include "z-rand.hpp"
 
+#include <fmt/format.h>
 #include <numeric>
 #include <string>
 
@@ -518,6 +519,8 @@ static void get_extra(void)
  */
 static void get_history(void)
 {
+	auto const &bg = game->edit_data.bg;
+
 	int i, n, chart, roll;
 
 	char *s, *t;
@@ -526,7 +529,10 @@ static void get_history(void)
 
 
 	/* Clear the previous history strings */
-	for (i = 0; i < 4; i++) history[i][0] = '\0';
+	for (i = 0; i < 4; i++)
+	{
+		history[i][0] = '\0';
+	}
 
 	/* Clear the history text */
 	buf[0] = '\0';
@@ -543,12 +549,14 @@ static void get_history(void)
 		/* Roll for nobility */
 		roll = randint(100);
 
-
 		/* Access the proper entry in the table */
-		while ((chart != bg[i].chart) || (roll > bg[i].roll)) i++;
+		while ((chart != bg[i].chart) || (roll > bg[i].roll))
+		{
+			i++;
+		}
 
 		/* Acquire the textual history */
-		(void)strcat(buf, bg[i].info);
+		strcat(buf, bg[i].info.c_str());
 
 		/* Enter the next chart */
 		chart = bg[i].next;
@@ -2941,12 +2949,9 @@ static bool_ player_birth_aux()
 /*
  * Helper function for validate_bg().
  */
-static void validate_bg_aux(int chart, bool_ chart_checked[], char *buf)
+static void validate_bg_aux(int chart, bool_ chart_checked[], std::string &buf)
 {
-	char *s;
-
-	int i;
-
+	auto const &bg = game->edit_data.bg;
 
 	/* Assume the chart does not exist */
 	bool_ chart_exists = FALSE;
@@ -2954,34 +2959,29 @@ static void validate_bg_aux(int chart, bool_ chart_checked[], char *buf)
 	/* Assume the chart is not complete */
 	bool_ chart_complete = FALSE;
 
-	int bg_max = max_bg_idx;
-
 	/* No chart */
 	if (!chart) return;
 
 	/* Already saw this chart */
 	if (chart_checked[chart]) return;
 
-	/* Build a debug message */
-	s = buf + strlen(buf);
-
 	/* XXX XXX XXX */
-	(void) strnfmt(s, -1, "%d --> ", chart);
+	buf += fmt::format("{:d} --> ", chart);
 
 	/* Check each chart */
-	for (i = 0; i < bg_max; i++)
+	for (auto const &hist: bg)
 	{
 		/* Require same chart */
-		if (bg[i].chart != chart) continue;
+		if (hist.chart != chart) continue;
 
 		/* The chart exists */
 		chart_exists = TRUE;
 
 		/* Validate the "next" chart recursively */
-		validate_bg_aux(bg[i].next, chart_checked, buf);
+		validate_bg_aux(hist.next, chart_checked, buf);
 
 		/* Require a terminator */
-		if (bg[i].roll != 100) continue;
+		if (hist.roll != 100) continue;
 
 		/* The chart is complete */
 		chart_complete = TRUE;
@@ -2990,7 +2990,7 @@ static void validate_bg_aux(int chart, bool_ chart_checked[], char *buf)
 	/* Failed: The chart does not exist */
 	if (!chart_exists)
 	{
-		quit_fmt("birth.c: bg[] chart %d does not exist\n%s", chart, buf);
+		quit_fmt("birth.c: bg[] chart %d does not exist\n%s", chart, buf.c_str());
 	}
 
 	/* Failed: The chart is not complete */
@@ -3001,9 +3001,6 @@ static void validate_bg_aux(int chart, bool_ chart_checked[], char *buf)
 
 	/* Remember we saw this chart */
 	chart_checked[chart] = TRUE;
-
-	/* Build a debug message */
-	*s = 0;
 }
 
 
@@ -3027,10 +3024,8 @@ static void validate_bg(void)
 		/* Get the first chart for this race */
 		int chart = race.chart;
 
-		/* Buffer */
-		char buf[1024] = { '\0' };
-
 		/* Validate the chart recursively */
+		std::string buf;
 		validate_bg_aux(chart, chart_checked, buf);
 	}
 }

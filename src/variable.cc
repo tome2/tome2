@@ -774,12 +774,6 @@ DECLARE_FLAG_ZERO_IMPL(dungeon_flag_set, dungeon_flags);
 birther previous_char;
 
 /*
- * Race histories
- */
-hist_type *bg;
-int max_bg_idx;
-
-/*
  * The spell list of schools
  */
 s16b schools_count = 0;

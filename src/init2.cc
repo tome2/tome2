@@ -15,7 +15,6 @@
 #include "generate.hpp"
 #include "gen_evol.hpp"
 #include "gen_maze.hpp"
-#include "hist_type.hpp"
 #include "hooks.hpp"
 #include "init1.hpp"
 #include "lua_bind.hpp"
@@ -551,7 +550,6 @@ namespace {
 
 		static void allocate()
 		{
-			bg = make_array<hist_type>(max_bg_idx);
 			gen_skill = new skill_modifiers;
 		}
 

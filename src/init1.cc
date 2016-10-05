@@ -922,6 +922,7 @@ errr init_player_info_txt(FILE *fp)
 	auto &class_info = game->edit_data.class_info;
 	auto &race_info = game->edit_data.race_info;
 	auto &race_mod_info = game->edit_data.race_mod_info;
+	auto &bg = game->edit_data.bg;
 
 	int lev = 1;
 	int tit_idx = 0;
@@ -962,21 +963,21 @@ errr init_player_info_txt(FILE *fp)
 		/* Process 'H' for "History" */
 		if (buf[0] == 'H')
 		{
-			int idx;
-			char *zz[6];
+			char *zz[5];
 
 			/* Scan for the values */
-			if (tokenize(buf + 2, 6, zz, ':', ':') != 6) return (1);
+			if (tokenize(buf + 2, 5, zz, ':', ':') != 5) return (1);
 
-			idx = atoi(zz[0]);
-			bg[idx].roll = atoi(zz[1]);
-			bg[idx].chart = atoi(zz[2]);
-			bg[idx].next = atoi(zz[3]);
-			bg[idx].bonus = atoi(zz[4]);
+			/* Create new entry */
+			hist_type hist;
+			hist.roll = atoi(zz[0]);
+			hist.chart = atoi(zz[1]);
+			hist.next = atoi(zz[2]);
+			hist.bonus = atoi(zz[3]);
+			hist.info = my_strdup(zz[4]);
 
-			/* Copy text */
-			assert(!bg[idx].info);
-			bg[idx].info = my_strdup(zz[5]);
+			/* Append */
+			bg.emplace_back(hist);
 
 			/* Next... */
 			continue;
@@ -6938,15 +6939,6 @@ static errr process_dungeon_file_aux(char *buf, int *yval, int *xval, int xvalst
 			else if (zz[0][0] == 'O')
 			{
 				max_o_idx = atoi(zz[1]);
-			}
-
-			/* Maximum player types */
-			else if (zz[0][0] == 'P')
-			{
-				if (zz[1][0] == 'H')
-				{
-					max_bg_idx = atoi(zz[2]);
-				}
 			}
 
 			/* Maximum m_idx */

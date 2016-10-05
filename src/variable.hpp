@@ -13,7 +13,6 @@
 #include "ego_item_type_fwd.hpp"
 #include "fate.hpp"
 #include "feature_type_fwd.hpp"
-#include "hist_type_fwd.hpp"
 #include "monster_ego_fwd.hpp"
 #include "monster_race_fwd.hpp"
 #include "monster_type_fwd.hpp"
@@ -225,7 +224,6 @@ extern bool_ *special_lvl[MAX_DUNGEON_DEPTH];
 extern bool_ generate_special_feeling;
 DECLARE_FLAG_ZERO_INTF(dungeon_flag_set, dungeon_flags);
 extern birther previous_char;
-extern int max_bg_idx;
 extern s16b schools_count;
 extern school_type schools[SCHOOLS_MAX];
 extern int project_time;
@@ -248,7 +246,6 @@ extern s32b DUNGEON_ASTRAL_WILD_Y;
 extern deity_type deity_info[MAX_GODS];
 extern timer_type *gl_timers;
 extern const char *get_version_string();
-extern hist_type *bg;
 extern bool_ arg_wizard;
 extern bool_ arg_force_original;
 extern bool_ arg_force_roguelike;

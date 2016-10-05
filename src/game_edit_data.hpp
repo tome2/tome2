@@ -1,5 +1,6 @@
 #pragma once
 
+#include "hist_type.hpp"
 #include "owner_type.hpp"
 #include "player_class.hpp"
 #include "player_race.hpp"
@@ -57,5 +58,10 @@ struct GameEditData {
 	 * Player subraces.
 	 */
 	std::vector<player_race_mod> race_mod_info;
+
+	/**
+	 * Player race histories
+	 */
+	std::vector<hist_type> bg;
 
 };

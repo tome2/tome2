@@ -1662,7 +1662,7 @@ S:E:0:0:0:0:0:0
 ##############################################################################
 ##############################################################################
 # H: Race history
-# H:index:chance:chart:next chart:social class bonus:desc
+# H:chance:chart:next chart:social class bonus:desc
 
 # Dunadan, Human: 1 -> 2 -> 3 -> 50 -> 51 -> 52 -> 53.
 # RohanKnight:   84 -> 85 -> 50 -> 51 -> 52 -> 53.
@@ -1686,341 +1686,341 @@ S:E:0:0:0:0:0:0
 # Kobold:        82 -> 83 -> 80 -> 81 -> 65 -> 66.
 # Deathmold:    100 -> 101 -> 102 -> 103 -> 104.
 
-H:0:10:1:2:25:You are the illegitimate and unacknowledged child 
-H:1:20:1:2:35:You are the illegitimate but acknowledged child 
-H:2:95:1:2:45:You are one of several children 
-H:3:100:1:2:50:You are the first child 
-
-H:4:40:2:3:65:of a Serf.  
-H:5:65:2:3:80:of a Yeoman.  
-H:6:80:2:3:90:of a Townsman.  
-H:7:90:2:3:105:of a Guildsman.  
-H:8:96:2:3:120:of a Landed Knight.  
-H:9:99:2:3:130:of a Noble Lord.  
-H:10:100:2:3:140:of the Royal Blood Line.  
-
-H:11:20:3:50:20:You are the black sheep of the family.  
-H:12:80:3:50:55:You are a credit to the family.  
-H:13:100:3:50:60:You are a well-liked child.  
-
-H:14:25:4:1:40:Your mother was of the Avari.  
-H:15:40:4:1:50:Your father was of the Avari.  
-H:16:65:4:1:60:Your mother was of the Nandor.  
-H:17:80:4:1:60:Your father was of the Nandor.  
-H:18:96:4:1:70:Your mother was of the Sindar.  
-H:19:99:4:1:70:Your father was of the Sindar.  
-H:20:100:4:1:100:Your ancestry traces to Elrond.  
-
-H:21:60:5:6:50:You are one of several children 
-H:22:100:5:6:55:You are the only child 
-
-H:23:40:6:9:40:of an Avarin 
-H:24:70:6:9:50:of a Nandorin 
-H:25:100:6:9:60:of a Sindarin 
-
-H:26:60:7:8:50:You are one of several children 
-H:27:100:7:8:55:You are the only child 
-
-H:28:75:8:9:50:of a Telerin 
-H:29:95:8:9:55:of a Noldorin 
-H:30:100:8:9:60:of a Vanyarin 
-
-H:31:40:9:54:80:Ranger.  
-H:32:70:9:54:90:Archer.  
-H:33:87:9:54:110:Warrior.  
-H:34:95:9:54:125:Mage.  
-H:35:99:9:54:140:Prince.  
-H:36:100:9:54:145:King.  
-
-H:37:85:10:11:45:You are one of several children of a Hobbit 
-H:38:100:10:11:55:You are the only child of a Hobbit 
-
-H:39:20:11:3:55:Bum.  
-H:40:30:11:3:80:Tavern Owner.  
-H:41:40:11:3:90:Miller.  
-H:42:50:11:3:100:Home Owner.  
-H:43:80:11:3:110:Burglar.  
-H:44:95:11:3:115:Warrior.  
-H:45:99:11:3:125:Mage.  
-H:46:100:11:3:140:Clan Elder.  
-
-H:47:85:13:14:45:You are one of several children of a Gnome 
-H:48:100:13:14:55:You are the only child of a Gnome 
-
-H:49:20:14:3:55:Beggar.  
-H:50:50:14:3:70:Braggart.  
-H:51:75:14:3:85:Prankster.  
-H:52:95:14:3:100:Warrior.  
-H:53:100:14:3:125:Mage.  
-
-H:54:25:16:17:40:You are one of two children of a Dwarven 
-H:55:100:16:17:50:You are the only child of a Dwarven 
-
-H:56:10:17:18:60:Thief.  
-H:57:35:17:18:80:Smith.  
-H:58:75:17:18:90:Miner.  
-H:59:90:17:18:110:Warrior.  
-H:60:99:17:18:130:Priest.  
-H:61:100:17:18:150:King.  
-
-H:62:15:18:57:10:You are the black sheep of the family.  
-H:63:85:18:57:50:You are a credit to the family.  
-H:64:100:18:57:55:You are a well liked child.  
-
-H:65:100:20:2:50:You are the adopted child 
-
-H:66:100:22:23:50:You are the offspring of a 
-
-H:67:30:23:24:20:Forest-Troll 
-H:68:60:23:24:25:Cave-Troll 
-H:69:75:23:24:30:Hill-Troll 
-H:70:90:23:24:35:Stone-Troll 
-H:71:95:23:24:40:Snow-Troll 
-H:72:100:23:24:45:Water-Troll 
-
-H:73:25:24:62:50:Worker.  
-H:74:95:24:62:55:Warrior.  
-H:75:99:24:62:65:Shaman.  
-H:76:100:24:62:80:Clan Chief.  
-
-H:77:100:25:26:50:You are one of several children of 
-
-H:78:40:26:27:40:a Snaga 
-H:79:80:26:27:50:an Orc 
-H:80:100:26:27:60:an Uruk 
-
-H:81:30:27:28:20:Slave 
-H:82:60:27:28:50:Archer 
-H:83:90:27:28:60:Warrior 
-H:84:95:27:28:80:Shaman 
-H:85:100:27:28:100:Chieftain 
-
-H:86:30:28:80:50:from the Misty Mountains.  
-H:87:60:28:80:50:from the Grey Mountains.  
-H:88:90:28:80:70:from the orc-hold of Mount Gundabad.  
-H:89:100:28:80:80:from the Pits of Angband.  
-
-H:90:25:29:3:50:You are one of five children of a blue Yeek.  
-H:91:75:29:3:75:You are one of five children of a brown Yeek.  
-H:92:100:29:3:100:You are one of five children of a master Yeek.  
-
-H:93:20:50:51:50:You have dark brown eyes, 
-H:94:60:50:51:50:You have brown eyes, 
-H:95:70:50:51:50:You have hazel eyes, 
-H:96:80:50:51:50:You have green eyes, 
-H:97:90:50:51:50:You have blue eyes, 
-H:98:100:50:51:50:You have blue-gray eyes, 
-
-H:99:70:51:52:50:straight 
-H:100:90:51:52:50:wavy 
-H:101:100:51:52:50:curly 
-
-H:102:30:52:53:50:black hair, 
-H:103:70:52:53:50:brown hair, 
-H:104:80:52:53:50:auburn hair, 
-H:105:90:52:53:50:red hair, 
-H:106:100:52:53:50:blond hair, 
-
-H:107:10:53:0:50:and a very dark complexion.
-H:108:30:53:0:50:and a dark complexion.
-H:109:80:53:0:50:and an average complexion.
-H:110:90:53:0:50:and a fair complexion.
-H:111:100:53:0:50:and a very fair complexion.
-
-H:112:85:54:55:50:You have light grey eyes, 
-H:113:95:54:55:50:You have light blue eyes, 
-H:114:100:54:55:50:You have light green eyes, 
-
-H:115:75:55:56:50:straight 
-H:116:100:55:56:50:wavy 
-
-H:117:75:56:0:50:black hair, and a fair complexion.
-H:118:85:56:0:50:brown hair, and a fair complexion.
-H:119:95:56:0:50:blond hair, and a fair complexion.
-H:120:100:56:0:50:silver hair, and a fair complexion.
-
-H:121:99:57:58:50:You have dark brown eyes, 
-H:122:100:57:58:60:You have glowing red eyes, 
-
-H:123:90:58:59:50:straight 
-H:124:100:58:59:50:wavy 
-
-H:125:75:59:60:50:black hair, 
-H:126:100:59:60:50:brown hair, 
-
-H:127:25:60:61:50:a one foot beard, 
-H:128:60:60:61:51:a two foot beard, 
-H:129:90:60:61:53:a three foot beard, 
-H:130:100:60:61:55:a four foot beard, 
-
-H:131:100:61:0:50:and a dark complexion.
-
-H:132:60:62:63:50:You have slime green eyes, 
-H:133:85:62:63:50:You have puke yellow eyes, 
-H:134:99:62:63:50:You have blue-bloodshot eyes, 
-H:135:100:62:63:55:You have glowing red eyes, 
-
-H:136:33:63:64:50:dirty 
-H:137:66:63:64:50:mangy 
-H:138:100:63:64:50:oily 
-
-H:139:33:64:65:50:sea-weed green hair, 
-H:140:66:64:65:50:bright red hair, 
-H:141:100:64:65:50:dark purple hair, 
-
-H:142:25:65:66:50:and green 
-H:143:50:65:66:50:and blue 
-H:144:75:65:66:50:and white 
-H:145:100:65:66:50:and black 
-
-H:146:33:66:0:50:ulcerous skin.
-H:147:66:66:0:50:scabby skin.
-H:148:100:66:0:50:leprous skin.
-
-H:149:85:69:70:45:You are one of several children of a Dark Elven 
-H:150:100:69:70:55:You are the only child of a Dark Elven 
-
-H:151:50:70:71:60:Warrior.  
-H:152:80:70:71:75:Warlock.  
-H:153:100:70:71:95:Noble.  
-
-H:154:100:71:72:50:You have black eyes, 
-
-H:155:70:72:73:50:straight 
-H:156:90:72:73:50:wavy 
-H:157:100:72:73:50:curly 
-
-H:158:100:73:0:50:black hair and a very dark complexion.
-
-H:159:25:74:20:25:Your mother was an Ogre, but it is unacknowledged.  
-H:160:100:74:20:25:Your father was an Ogre, but it is unacknowledged.  
-
-H:161:90:75:76:50:You are a descendant of Beorn to the 
-H:162:100:75:20:100:Your father was Beorn.  
-
-H:163:13:76:20:55:9th degree.  
-H:164:25:76:20:60:8th degree.  
-H:165:38:76:20:65:7th degree.  
-H:166:50:76:20:70:6th degree.  
-H:167:63:76:20:75:5th degree.  
-H:168:75:76:20:80:4th degree.  
-H:169:88:76:20:85:3rd degree.  
-H:170:100:76:20:90:2nd degree.  
-
-H:171:100:78:79:50:You are one of several children of 
-
-H:172:50:79:80:50:a Brown Yeek.  
-H:173:75:79:80:50:a Blue Yeek.  
-H:174:95:79:80:85:a Master Yeek.  
-H:175:100:79:80:120:Boldor, the King of the Yeeks.  
-
-H:176:25:80:81:50:You have pale eyes, 
-H:177:50:80:81:50:You have glowing eyes, 
-H:178:75:80:81:50:You have tiny black eyes, 
-H:179:100:80:81:50:You have shining black eyes, 
-
-H:180:20:81:65:50:no hair at all, 
-H:181:40:81:65:50:short black hair, 
-H:182:60:81:65:50:long black hair, 
-H:183:80:81:65:50:bright red hair, 
-H:184:100:81:65:50:colourless albino hair, 
-
-H:185:100:82:83:50:You are one of several children of 
-
-H:186:40:83:80:50:a Small Kobold.  
-H:187:75:83:80:55:a Kobold.  
-H:188:95:83:80:65:a Large Kobold.  
-H:189:100:83:80:100:Mughash, the Kobold Lord.  
-
-H:190:85:84:85:45:You are one of several children 
-H:191:100:84:85:50:You are the first child 
-
-H:192:60:85:50:40:of a Serf.  
-H:193:85:85:50:55:of a Devoted Mercenary.  
-H:194:96:85:50:60:of a Landed Knight.  
-H:195:99:85:50:100:of a Marshal of the Riddermark.  
-H:196:100:85:50:120:of a King of the Rohirrim.  
-
-H:197:100:87:88:89:You are one of several children of 
-
-H:198:30:88:18:20:a Petty-Dwarf Slave.  
-H:199:50:88:18:40:a Petty-Dwarf Thief.  
-H:200:70:88:18:60:a Petty-Dwarf Smith.  
-H:201:90:88:18:75:a Petty-Dwarf Miner.  
-H:202:95:88:18:100:a Petty-Dwarf Shaman.  
-H:203:100:88:18:100:Mim, Betrayer of Turin.  
-
-H:204:85:89:90:50:You are one of many Manwe Maia.  
-H:205:100:89:90:60:You are the one of the most famous Manwe Maia.  
-
-H:206:90:90:93:100:Your eagle looks very good.  
-H:207:100:90:93:120:Your eagle is splendid.  
-
-H:208:10:91:92:20:You are a unnoticed minion of 
-H:209:25:91:92:30:You are a minor servant of 
-H:210:45:91:92:40:You are a subject of 
-H:211:65:91:92:50:You have attached yourself to 
-H:212:85:91:92:65:You are associated with 
-H:213:95:91:92:80:You are a notable follower of 
-H:214:100:91:92:100:You are a celebrated assistant to 
-
-H:215:20:92:93:55:Nessa.  
-H:216:40:92:93:60:Vana.  
-H:217:50:92:93:65:Tulkas.  
-H:218:80:92:93:75:Mandos.  
-H:219:90:92:93:80:Nienna.  
-H:220:95:92:93:90:Varda.  
-H:221:100:92:93:95:Manwe.  
-
-H:222:100:93:94:50:In the past you dwelt on earth in the form of 
-
-H:223:25:94:0:50:various animals.
-H:224:55:94:0:55:a spirit of forest and river.
-H:225:70:94:0:60:a beneficent but unseen force.
-H:226:96:94:0:70:a wise and ancient counsellor.
-H:227:100:94:0:80:a Wizard of legend.
-
-H:228:30:95:96:30:You are of an unknown generation of the Ents.  
-H:229:40:95:96:50:You are of the third generation of the Ents.  
-H:230:60:95:96:60:You are of the second generation of the Ents.  
-H:231:100:95:96:80:You are one of the first beings who awoke on Arda.  
-
-H:232:50:96:0:50:You have green skin and inflexible members.
-H:233:100:96:0:50:You have brown skin and inflexible members.
-
-H:234:10:100:101:30:You were born in dirty bilge-water, 
-H:235:20:100:101:35:You were born in dirty straw, 
-H:236:30:100:101:40:You were born in wet mud, 
-H:237:40:100:101:45:You were born in a pile of dust, 
-H:238:50:100:101:50:You were born in sand, 
-H:239:60:100:101:50:You were born in pebbles, 
-H:240:70:100:101:55:You were born in a kobold corpse, 
-H:241:80:100:101:60:You were born in dragon droppings, 
-H:242:90:100:101:65:You were born in a pile of bones, 
-H:243:100:100:101:70:You were born in a corpse of a mighty hero, 
-
-H:244:10:101:102:30:created by rotting flesh.  
-H:245:20:101:102:35:created by a kobold magician.  
-H:246:30:101:102:40:created by a corrupted apprentice.  
-H:247:40:101:102:45:created by a curious mage apprentice.  
-H:248:50:101:102:50:created by an evil Symbiant.  
-H:249:60:101:102:50:created by a practicing Necromancer.  
-H:250:70:101:102:55:created by the Mutant Breeders.  
-H:251:80:101:102:60:created by a curious adventurer.  
-H:252:90:101:102:65:called to life by the Witch-King of Angmar.  
-H:253:100:101:102:70:called to life by Sauron himself.  
-
-H:254:100:102:103:50:Since then you have given life to 
-
-H:255:10:103:104:30:no 
-H:256:20:103:104:35:one weak-willed 
-H:257:30:103:104:40:two 
-H:258:40:103:104:45:three 
-H:259:50:103:104:50:four 
-H:260:60:103:104:50:five 
-H:261:70:103:104:55:about twenty 
-H:262:80:103:104:60:dozens of 
-H:263:90:103:104:65:hundreds of 
-H:264:100:103:104:70:uncounted multitudes of 
-
-H:265:100:104:0:50:foul offspring.
+H:10:1:2:25:You are the illegitimate and unacknowledged child
+H:20:1:2:35:You are the illegitimate but acknowledged child
+H:95:1:2:45:You are one of several children
+H:100:1:2:50:You are the first child
+
+H:40:2:3:65:of a Serf.
+H:65:2:3:80:of a Yeoman.
+H:80:2:3:90:of a Townsman.
+H:90:2:3:105:of a Guildsman.
+H:96:2:3:120:of a Landed Knight.
+H:99:2:3:130:of a Noble Lord.
+H:100:2:3:140:of the Royal Blood Line.
+
+H:20:3:50:20:You are the black sheep of the family.
+H:80:3:50:55:You are a credit to the family.
+H:100:3:50:60:You are a well-liked child.
+
+H:25:4:1:40:Your mother was of the Avari.
+H:40:4:1:50:Your father was of the Avari.
+H:65:4:1:60:Your mother was of the Nandor.
+H:80:4:1:60:Your father was of the Nandor.
+H:96:4:1:70:Your mother was of the Sindar.
+H:99:4:1:70:Your father was of the Sindar.
+H:100:4:1:100:Your ancestry traces to Elrond.
+
+H:60:5:6:50:You are one of several children
+H:100:5:6:55:You are the only child
+
+H:40:6:9:40:of an Avarin
+H:70:6:9:50:of a Nandorin
+H:100:6:9:60:of a Sindarin
+
+H:60:7:8:50:You are one of several children
+H:100:7:8:55:You are the only child
+
+H:75:8:9:50:of a Telerin
+H:95:8:9:55:of a Noldorin
+H:100:8:9:60:of a Vanyarin
+
+H:40:9:54:80:Ranger.
+H:70:9:54:90:Archer.
+H:87:9:54:110:Warrior.
+H:95:9:54:125:Mage.
+H:99:9:54:140:Prince.
+H:100:9:54:145:King.
+
+H:85:10:11:45:You are one of several children of a Hobbit
+H:100:10:11:55:You are the only child of a Hobbit
+
+H:20:11:3:55:Bum.
+H:30:11:3:80:Tavern Owner.
+H:40:11:3:90:Miller.
+H:50:11:3:100:Home Owner.
+H:80:11:3:110:Burglar.
+H:95:11:3:115:Warrior.
+H:99:11:3:125:Mage.
+H:100:11:3:140:Clan Elder.
+
+H:85:13:14:45:You are one of several children of a Gnome
+H:100:13:14:55:You are the only child of a Gnome
+
+H:20:14:3:55:Beggar.
+H:50:14:3:70:Braggart.
+H:75:14:3:85:Prankster.
+H:95:14:3:100:Warrior.
+H:100:14:3:125:Mage.
+
+H:25:16:17:40:You are one of two children of a Dwarven
+H:100:16:17:50:You are the only child of a Dwarven
+
+H:10:17:18:60:Thief.
+H:35:17:18:80:Smith.
+H:75:17:18:90:Miner.
+H:90:17:18:110:Warrior.
+H:99:17:18:130:Priest.
+H:100:17:18:150:King.
+
+H:15:18:57:10:You are the black sheep of the family.
+H:85:18:57:50:You are a credit to the family.
+H:100:18:57:55:You are a well liked child.
+
+H:100:20:2:50:You are the adopted child
+
+H:100:22:23:50:You are the offspring of a
+
+H:30:23:24:20:Forest-Troll
+H:60:23:24:25:Cave-Troll
+H:75:23:24:30:Hill-Troll
+H:90:23:24:35:Stone-Troll
+H:95:23:24:40:Snow-Troll
+H:100:23:24:45:Water-Troll
+
+H:25:24:62:50:Worker.
+H:95:24:62:55:Warrior.
+H:99:24:62:65:Shaman.
+H:100:24:62:80:Clan Chief.
+
+H:100:25:26:50:You are one of several children of
+
+H:40:26:27:40:a Snaga
+H:80:26:27:50:an Orc
+H:100:26:27:60:an Uruk
+
+H:30:27:28:20:Slave
+H:60:27:28:50:Archer
+H:90:27:28:60:Warrior
+H:95:27:28:80:Shaman
+H:100:27:28:100:Chieftain
+
+H:30:28:80:50:from the Misty Mountains.
+H:60:28:80:50:from the Grey Mountains.
+H:90:28:80:70:from the orc-hold of Mount Gundabad.
+H:100:28:80:80:from the Pits of Angband.
+
+H:25:29:3:50:You are one of five children of a blue Yeek.
+H:75:29:3:75:You are one of five children of a brown Yeek.
+H:100:29:3:100:You are one of five children of a master Yeek.
+
+H:20:50:51:50:You have dark brown eyes,
+H:60:50:51:50:You have brown eyes,
+H:70:50:51:50:You have hazel eyes,
+H:80:50:51:50:You have green eyes,
+H:90:50:51:50:You have blue eyes,
+H:100:50:51:50:You have blue-gray eyes,
+
+H:70:51:52:50:straight
+H:90:51:52:50:wavy
+H:100:51:52:50:curly
+
+H:30:52:53:50:black hair,
+H:70:52:53:50:brown hair,
+H:80:52:53:50:auburn hair,
+H:90:52:53:50:red hair,
+H:100:52:53:50:blond hair,
+
+H:10:53:0:50:and a very dark complexion.
+H:30:53:0:50:and a dark complexion.
+H:80:53:0:50:and an average complexion.
+H:90:53:0:50:and a fair complexion.
+H:100:53:0:50:and a very fair complexion.
+
+H:85:54:55:50:You have light grey eyes,
+H:95:54:55:50:You have light blue eyes,
+H:100:54:55:50:You have light green eyes,
+
+H:75:55:56:50:straight
+H:100:55:56:50:wavy
+
+H:75:56:0:50:black hair, and a fair complexion.
+H:85:56:0:50:brown hair, and a fair complexion.
+H:95:56:0:50:blond hair, and a fair complexion.
+H:100:56:0:50:silver hair, and a fair complexion.
+
+H:99:57:58:50:You have dark brown eyes,
+H:100:57:58:60:You have glowing red eyes,
+
+H:90:58:59:50:straight
+H:100:58:59:50:wavy
+
+H:75:59:60:50:black hair,
+H:100:59:60:50:brown hair,
+
+H:25:60:61:50:a one foot beard,
+H:60:60:61:51:a two foot beard,
+H:90:60:61:53:a three foot beard,
+H:100:60:61:55:a four foot beard,
+
+H:100:61:0:50:and a dark complexion.
+
+H:60:62:63:50:You have slime green eyes,
+H:85:62:63:50:You have puke yellow eyes,
+H:99:62:63:50:You have blue-bloodshot eyes,
+H:100:62:63:55:You have glowing red eyes,
+
+H:33:63:64:50:dirty
+H:66:63:64:50:mangy
+H:100:63:64:50:oily
+
+H:33:64:65:50:sea-weed green hair,
+H:66:64:65:50:bright red hair,
+H:100:64:65:50:dark purple hair,
+
+H:25:65:66:50:and green
+H:50:65:66:50:and blue
+H:75:65:66:50:and white
+H:100:65:66:50:and black
+
+H:33:66:0:50:ulcerous skin.
+H:66:66:0:50:scabby skin.
+H:100:66:0:50:leprous skin.
+
+H:85:69:70:45:You are one of several children of a Dark Elven
+H:100:69:70:55:You are the only child of a Dark Elven
+
+H:50:70:71:60:Warrior.
+H:80:70:71:75:Warlock.
+H:100:70:71:95:Noble.
+
+H:100:71:72:50:You have black eyes,
+
+H:70:72:73:50:straight
+H:90:72:73:50:wavy
+H:100:72:73:50:curly
+
+H:100:73:0:50:black hair and a very dark complexion.
+
+H:25:74:20:25:Your mother was an Ogre, but it is unacknowledged.
+H:100:74:20:25:Your father was an Ogre, but it is unacknowledged.
+
+H:90:75:76:50:You are a descendant of Beorn to the
+H:100:75:20:100:Your father was Beorn.
+
+H:13:76:20:55:9th degree.
+H:25:76:20:60:8th degree.
+H:38:76:20:65:7th degree.
+H:50:76:20:70:6th degree.
+H:63:76:20:75:5th degree.
+H:75:76:20:80:4th degree.
+H:88:76:20:85:3rd degree.
+H:100:76:20:90:2nd degree.
+
+H:100:78:79:50:You are one of several children of
+
+H:50:79:80:50:a Brown Yeek.
+H:75:79:80:50:a Blue Yeek.
+H:95:79:80:85:a Master Yeek.
+H:100:79:80:120:Boldor, the King of the Yeeks.
+
+H:25:80:81:50:You have pale eyes,
+H:50:80:81:50:You have glowing eyes,
+H:75:80:81:50:You have tiny black eyes,
+H:100:80:81:50:You have shining black eyes,
+
+H:20:81:65:50:no hair at all,
+H:40:81:65:50:short black hair,
+H:60:81:65:50:long black hair,
+H:80:81:65:50:bright red hair,
+H:100:81:65:50:colourless albino hair,
+
+H:100:82:83:50:You are one of several children of
+
+H:40:83:80:50:a Small Kobold.
+H:75:83:80:55:a Kobold.
+H:95:83:80:65:a Large Kobold.
+H:100:83:80:100:Mughash, the Kobold Lord.
+
+H:85:84:85:45:You are one of several children
+H:100:84:85:50:You are the first child
+
+H:60:85:50:40:of a Serf.
+H:85:85:50:55:of a Devoted Mercenary.
+H:96:85:50:60:of a Landed Knight.
+H:99:85:50:100:of a Marshal of the Riddermark.
+H:100:85:50:120:of a King of the Rohirrim.
+
+H:100:87:88:89:You are one of several children of
+
+H:30:88:18:20:a Petty-Dwarf Slave.
+H:50:88:18:40:a Petty-Dwarf Thief.
+H:70:88:18:60:a Petty-Dwarf Smith.
+H:90:88:18:75:a Petty-Dwarf Miner.
+H:95:88:18:100:a Petty-Dwarf Shaman.
+H:100:88:18:100:Mim, Betrayer of Turin.
+
+H:85:89:90:50:You are one of many Manwe Maia.
+H:100:89:90:60:You are the one of the most famous Manwe Maia.
+
+H:90:90:93:100:Your eagle looks very good.
+H:100:90:93:120:Your eagle is splendid.
+
+H:10:91:92:20:You are a unnoticed minion of
+H:25:91:92:30:You are a minor servant of
+H:45:91:92:40:You are a subject of
+H:65:91:92:50:You have attached yourself to
+H:85:91:92:65:You are associated with
+H:95:91:92:80:You are a notable follower of
+H:100:91:92:100:You are a celebrated assistant to
+
+H:20:92:93:55:Nessa.
+H:40:92:93:60:Vana.
+H:50:92:93:65:Tulkas.
+H:80:92:93:75:Mandos.
+H:90:92:93:80:Nienna.
+H:95:92:93:90:Varda.
+H:100:92:93:95:Manwe.
+
+H:100:93:94:50:In the past you dwelt on earth in the form of
+
+H:25:94:0:50:various animals.
+H:55:94:0:55:a spirit of forest and river.
+H:70:94:0:60:a beneficent but unseen force.
+H:96:94:0:70:a wise and ancient counsellor.
+H:100:94:0:80:a Wizard of legend.
+
+H:30:95:96:30:You are of an unknown generation of the Ents.
+H:40:95:96:50:You are of the third generation of the Ents.
+H:60:95:96:60:You are of the second generation of the Ents.
+H:100:95:96:80:You are one of the first beings who awoke on Arda.
+
+H:50:96:0:50:You have green skin and inflexible members.
+H:100:96:0:50:You have brown skin and inflexible members.
+
+H:10:100:101:30:You were born in dirty bilge-water,
+H:20:100:101:35:You were born in dirty straw,
+H:30:100:101:40:You were born in wet mud,
+H:40:100:101:45:You were born in a pile of dust,
+H:50:100:101:50:You were born in sand,
+H:60:100:101:50:You were born in pebbles,
+H:70:100:101:55:You were born in a kobold corpse,
+H:80:100:101:60:You were born in dragon droppings,
+H:90:100:101:65:You were born in a pile of bones,
+H:100:100:101:70:You were born in a corpse of a mighty hero,
+
+H:10:101:102:30:created by rotting flesh.
+H:20:101:102:35:created by a kobold magician.
+H:30:101:102:40:created by a corrupted apprentice.
+H:40:101:102:45:created by a curious mage apprentice.
+H:50:101:102:50:created by an evil Symbiant.
+H:60:101:102:50:created by a practicing Necromancer.
+H:70:101:102:55:created by the Mutant Breeders.
+H:80:101:102:60:created by a curious adventurer.
+H:90:101:102:65:called to life by the Witch-King of Angmar.
+H:100:101:102:70:called to life by Sauron himself.
+
+H:100:102:103:50:Since then you have given life to
+
+H:10:103:104:30:no
+H:20:103:104:35:one weak-willed
+H:30:103:104:40:two
+H:40:103:104:45:three
+H:50:103:104:50:four
+H:60:103:104:50:five
+H:70:103:104:55:about twenty
+H:80:103:104:60:dozens of
+H:90:103:104:65:hundreds of
+H:100:103:104:70:uncounted multitudes of
+
+H:100:104:0:50:foul offspring.
