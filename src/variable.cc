@@ -787,11 +787,6 @@ s32b project_time_effect = 0;
 effect_type effects[MAX_EFFECTS];
 
 /*
- * General skills set
- */
-skill_modifiers *gen_skill;
-
-/*
  * Table of "cli" macros.
  */
 cli_comm *cli_info;

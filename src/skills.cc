@@ -14,6 +14,7 @@
 #include "cmd3.hpp"
 #include "cmd5.hpp"
 #include "cmd7.hpp"
+#include "game.hpp"
 #include "gods.hpp"
 #include "help.hpp"
 #include "hooks.hpp"
@@ -1198,7 +1199,9 @@ static void augment_skills(s32b *v, s32b *m, skill_modifier const &s)
  */
 void compute_skills(s32b *v, s32b *m, int i)
 {
-	augment_skills(v, m, gen_skill->modifiers[i]);
+	auto const &gen_skill = game->edit_data.gen_skill;
+
+	augment_skills(v, m, gen_skill.modifiers[i]);
 	augment_skills(v, m, rp_ptr->skill_modifiers.modifiers[i]);
 	augment_skills(v, m, rmp_ptr->skill_modifiers.modifiers[i]);
 	augment_skills(v, m, cp_ptr->skill_modifiers.modifiers[i]);

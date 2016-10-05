@@ -923,6 +923,7 @@ errr init_player_info_txt(FILE *fp)
 	auto &race_info = game->edit_data.race_info;
 	auto &race_mod_info = game->edit_data.race_mod_info;
 	auto &bg = game->edit_data.bg;
+	auto &gen_skill = game->edit_data.gen_skill;
 
 	int lev = 1;
 	int tit_idx = 0;
@@ -986,7 +987,7 @@ errr init_player_info_txt(FILE *fp)
 		/* Process 'G:k' for "General skills" */
 		if ((buf[0] == 'G') && (buf[2] == 'k'))
 		{
-			if (read_skill_modifiers(gen_skill, buf + 4))
+			if (read_skill_modifiers(&gen_skill, buf + 4))
 			{
 				return 1;
 			}

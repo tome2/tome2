@@ -64,4 +64,9 @@ struct GameEditData {
 	 */
 	std::vector<hist_type> bg;
 
+	/**
+	 * Base skills for all characters.
+	 */
+	skill_modifiers gen_skill;
+
 };

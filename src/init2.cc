@@ -550,7 +550,7 @@ namespace {
 
 		static void allocate()
 		{
-			gen_skill = new skill_modifiers;
+			// Nothing to do
 		}
 
 		static errr parse(FILE *fp)
