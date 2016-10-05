@@ -28,8 +28,6 @@
 #include "player_race_mod_fwd.hpp"
 #include "player_spec_fwd.hpp"
 #include "player_type_fwd.hpp"
-#include "randart_gen_type_fwd.hpp"
-#include "randart_part_type_fwd.hpp"
 #include "random_artifact.hpp"
 #include "random_quest.hpp"
 #include "school_type.hpp"
@@ -174,8 +172,6 @@ extern feature_type *f_info;
 extern object_kind *k_info;
 extern artifact_type *a_info;
 extern ego_item_type *e_info;
-extern randart_part_type *ra_info;
-extern randart_gen_type ra_gen[30];
 extern monster_race *r_info;
 extern monster_ego *re_info;
 extern dungeon_info_type *d_info;
@@ -208,7 +204,6 @@ extern u16b max_k_idx;
 extern u16b max_f_idx;
 extern u16b max_a_idx;
 extern u16b max_e_idx;
-extern u16b max_ra_idx;
 extern u16b max_d_idx;
 extern u16b max_o_idx;
 extern u16b max_m_idx;

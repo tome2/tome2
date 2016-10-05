@@ -55,6 +55,7 @@
 #include "z-rand.hpp"
 
 #include <boost/algorithm/string/predicate.hpp>
+#include <stdlib.h>
 
 using boost::algorithm::iequals;
 using boost::algorithm::ends_with;
@@ -4013,9 +4014,10 @@ errr init_e_info_txt(FILE *fp)
  */
 errr init_ra_info_txt(FILE *fp)
 {
-	int i, cur_t = 0, j, cur_g = 0;
+	auto &ra_gen = game->edit_data.ra_gen;
+	auto &ra_info = game->edit_data.ra_info;
+
 	char buf[1024];
-	char *s;
 
 	/* Current entry */
 	randart_part_type *ra_ptr = NULL;
@@ -4050,11 +4052,14 @@ errr init_ra_info_txt(FILE *fp)
 			                &chance, &dd, &ds, &plus)) return (1);
 
 			/* Save the values */
-			ra_gen[cur_g].chance = chance;
-			ra_gen[cur_g].dd = dd;
-			ra_gen[cur_g].ds = ds;
-			ra_gen[cur_g].plus = plus;
-			cur_g++;
+			randart_gen_type gen;
+			gen.chance = chance;
+			gen.dd = dd;
+			gen.ds = ds;
+			gen.plus = plus;
+
+			/* Add to data */
+			ra_gen.emplace_back(gen);
 
 			/* Next... */
 			continue;
@@ -4064,30 +4069,16 @@ errr init_ra_info_txt(FILE *fp)
 		if (buf[0] == 'N')
 		{
 			/* Get the index */
-			i = atoi(buf + 2);
+			int i = atoi(buf + 2);
 
 			/* Verify information */
 			if (i < error_idx) return (4);
-
-			/* Verify information */
-			if (i >= max_ra_idx) return (2);
 
 			/* Save the index */
 			error_idx = i;
 
 			/* Point at the "info" */
-			ra_ptr = &ra_info[i];
-
-			/* Needed hack */
-			ra_ptr->power = -1;
-			cur_t = 0;
-
-			for (j = 0; j < 20; j++)
-			{
-				ra_ptr->tval[j] = 255;
-			}
-			ra_ptr->flags = object_flag_set();
-			ra_ptr->fego = ego_flag_set();
+			ra_ptr = &expand_to_fit_index(ra_info, i);
 
 			/* Next... */
 			continue;
@@ -4099,20 +4090,19 @@ errr init_ra_info_txt(FILE *fp)
 		/* Process 'T' for "Tval/Sval" (up to 5 lines) */
 		if (buf[0] == 'T')
 		{
-			int tv, minsv, maxsv;
-
-			if (cur_t == 20) return 1;
-
 			/* Scan for the values */
+			int tv, minsv, maxsv;
 			if (3 != sscanf(buf + 2, "%d:%d:%d",
 			                &tv, &minsv, &maxsv)) return (1);
 
-			/* Save the values */
-			ra_ptr->tval[cur_t] = tv;
-			ra_ptr->min_sval[cur_t] = minsv;
-			ra_ptr->max_sval[cur_t] = maxsv;
+			/* Set up filter */
+			randart_part_type::kind_filter_t filter;
+			filter.tval = tv;
+			filter.min_sval = minsv;
+			filter.max_sval = maxsv;
 
-			cur_t++;
+			/* Add filter */
+			ra_ptr->kind_filter.emplace_back(filter);
 
 			/* Next... */
 			continue;
@@ -4174,18 +4164,21 @@ errr init_ra_info_txt(FILE *fp)
 		/* Process 'Z' for "Granted power" */
 		if (buf[0] == 'Z')
 		{
-			int i;
-
 			/* Acquire the text */
-			s = buf + 2;
+			char const *s = buf + 2;
 
 			/* Find it in the list */
+			std::size_t i;
 			for (i = 0; i < POWER_MAX; i++)
 			{
 				if (iequals(s, powers_type[i].name)) break;
 			}
 
-			if (i == POWER_MAX) return (6);
+			/* Not present? Fail */
+			if (i == POWER_MAX)
+			{
+				return (6);
+			}
 
 			ra_ptr->power = i;
 
@@ -7023,12 +7016,6 @@ static errr process_dungeon_file_aux(char *buf, int *yval, int *xval, int xvalst
 			else if (zz[0][0] == 'E')
 			{
 				max_e_idx = atoi(zz[1]);
-			}
-
-			/* Maximum ra_idx */
-			else if (zz[0][0] == 'Z')
-			{
-				max_ra_idx = atoi(zz[1]);
 			}
 
 			/* Maximum o_idx */

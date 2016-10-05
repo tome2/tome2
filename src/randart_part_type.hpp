@@ -4,14 +4,21 @@
 #include "h-basic.h"
 #include "object_flag_set.hpp"
 
+#include <vector>
+
 /**
  * Random artifact part descriptor.
  */
 struct randart_part_type
 {
-	byte tval[20] { };
-	byte min_sval[20] { };
-	byte max_sval[20] { };
+public:
+	struct kind_filter_t {
+		byte tval;
+		byte min_sval;
+		byte max_sval;
+	};
+
+	std::vector<kind_filter_t> kind_filter;
 
 	byte level = 0;                          /* Minimum level */
 	byte rarity = 0;                         /* Object rarity */
@@ -32,5 +39,6 @@ struct randart_part_type
 
 	object_flag_set aflags;                  /* Antagonistic ego item flags */
 
-	s16b power = 0;                          /* Power granted(if any) */
+	s16b power = -1;                         /* Power granted(if any) */
+
 };

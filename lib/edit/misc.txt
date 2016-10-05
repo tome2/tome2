@@ -12,9 +12,6 @@ M:X:101
 # Maximum y size of the wilderness
 M:Y:66
 
-# Maximum number of randart parts in ra_info.txt
-M:Z:516
-
 # Maximum number of monsters in r_info.txt
 # WARNING ! add one more to the real count for the player ghost !!
 M:R:1078

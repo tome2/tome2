@@ -392,7 +392,7 @@ namespace {
 
 		static void allocate()
 		{
-			ra_info = new randart_part_type[max_ra_idx];
+			// Nothing to do
 		}
 
 		static errr parse(FILE *fp)

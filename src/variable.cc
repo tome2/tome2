@@ -455,12 +455,6 @@ set_type *set_info;
  */
 ego_item_type *e_info;
 
-/*
- * The randart arrays
- */
-randart_part_type *ra_info;
-randart_gen_type ra_gen[30];
-
 /* jk */
 /* the trap-arrays */
 trap_type *t_info;
@@ -687,11 +681,6 @@ u16b max_a_idx;
  * Maximum number of ego-items in e_info.txt
  */
 u16b max_e_idx;
-
-/*
- * Maximum number of randarts in ra_info.txt
- */
-u16b max_ra_idx;
 
 /*
  * Maximum number of dungeon types in d_info.txt

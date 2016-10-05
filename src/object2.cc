@@ -4679,23 +4679,20 @@ static bool_ kind_is_good(int k_idx)
 */
 bool_ kind_is_artifactable(int k_idx)
 {
-	int i, j;
-	object_kind *k_ptr = &k_info[k_idx];
+	auto const &ra_info = game->edit_data.ra_info;
 
+	object_kind *k_ptr = &k_info[k_idx];
 	if (kind_is_good(k_idx))
 	{
-		/* We consider the item artifactable if there is at least one
-		* randart power in ra_info that could be added to this item. */
-		for (i = 0; i < max_ra_idx; i++)
+		// Consider the item artifactable if there is at least one
+		// randart power which could be added to the item.
+		for (auto const &ra_ref: ra_info)
 		{
-			randart_part_type *ra_ptr = &ra_info[i];
-
-			for (j = 0; j < 20; j++)
+			for (auto const &filter: ra_ref.kind_filter)
 			{
-				if (ra_ptr->tval[j] != k_ptr->tval) continue;
-				if (ra_ptr->min_sval[j] > k_ptr->sval) continue;
-				if (ra_ptr->max_sval[j] < k_ptr->sval) continue;
-				/* Winner */
+				if (filter.tval != k_ptr->tval) continue;
+				if (filter.min_sval > k_ptr->sval) continue;
+				if (filter.max_sval < k_ptr->sval) continue;
 				return TRUE;
 			}
 		}

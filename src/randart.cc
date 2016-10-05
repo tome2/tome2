@@ -7,6 +7,8 @@
  */
 
 #include "randart.hpp"
+
+#include "game.hpp"
 #include "mimic.hpp"
 #include "object1.hpp"
 #include "object2.hpp"
@@ -14,16 +16,11 @@
 #include "object_type.hpp"
 #include "options.hpp"
 #include "player_type.hpp"
-#include "randart_gen_type.hpp"
-#include "randart_part_type.hpp"
 #include "spells2.hpp"
 #include "util.hpp"
 #include "variable.h"
 #include "variable.hpp"
 #include "z-rand.hpp"
-
-#include <memory>
-#include <vector>
 
 /* Chance of using syllables to form the name instead of the "template" files */
 #define A_CURSED        13
@@ -32,39 +29,49 @@
 /*
  * Attempt to add a power to a randart
  */
-static bool_ grab_one_power(int *ra_idx, object_type *o_ptr, bool_ good, s16b *max_times)
+static bool_ grab_one_power(int *ra_idx, object_type const *o_ptr, std::vector<s16b> &max_times)
 {
+	auto const &ra_info = game->edit_data.ra_info;
+
+	assert(max_times.size() >= ra_info.size());
+
 	bool_ ret = FALSE;
 
 	std::vector<size_t> ok_ra;
 
 	/* Grab the ok randart */
-	for (size_t i = 0; i < max_ra_idx; i++)
+	for (size_t i = 0; i < ra_info.size(); i++)
 	{
-		randart_part_type *ra_ptr = &ra_info[i];
+		auto ra_ptr = &ra_info[i];
 		bool_ ok = FALSE;
 
 		/* Must have the correct fields */
-		for (size_t j = 0; j < 20; j++)
+		for (auto const &filter: ra_ptr->kind_filter)
 		{
-			if (ra_ptr->tval[j] == o_ptr->tval)
+			if ((filter.tval == o_ptr->tval) &&
+				(filter.min_sval <= o_ptr->sval) &&
+				(o_ptr->sval <= filter.max_sval))
 			{
-				if ((ra_ptr->min_sval[j] <= o_ptr->sval) && (ra_ptr->max_sval[j] >= o_ptr->sval)) ok = TRUE;
+				ok = TRUE;
+				break;
 			}
-
-			if (ok) break;
 		}
-		if ((0 < ra_ptr->max_pval) && (ra_ptr->max_pval < o_ptr->pval)) ok = FALSE;
+
+		if ((0 < ra_ptr->max_pval) && (ra_ptr->max_pval < o_ptr->pval))
+		{
+			ok = FALSE;
+		}
+
 		if (!ok)
 		{
 			/* Doesnt count as a try*/
 			continue;
 		}
 
-		/* Good should be good, bad should be bad */
-		if (good && (ra_ptr->value <= 0)) continue;
-		if ((!good) && (ra_ptr->value > 0)) continue;
+		/* Skip bad powers */
+		if (ra_ptr->value <= 0) continue;
 
+		/* Already chosen the maximum number of times? */
 		if (max_times[i] >= ra_ptr->max) continue;
 
 		/* Must NOT have the antagonic flags */
@@ -78,8 +85,8 @@ static bool_ grab_one_power(int *ra_idx, object_type *o_ptr, bool_ good, s16b *m
 	/* Now test them a few times */
 	for (size_t count = 0; count < ok_ra.size() * 10; count++)
 	{
-		size_t i = ok_ra[rand_int(ok_ra.size())];
-		randart_part_type *ra_ptr = &ra_info[i];
+		size_t i = *uniform_element(ok_ra);
+		auto ra_ptr = &ra_info[i];
 
 		/* XXX XXX Enforce minimum player level (loosely) */
 		if (ra_ptr->level > p_ptr->lev)
@@ -238,8 +245,11 @@ void get_random_name(char * return_name)
 
 bool_ create_artifact(object_type *o_ptr, bool_ a_scroll, bool_ get_name)
 {
+	auto const &ra_gen = game->edit_data.ra_gen;
+	auto const &ra_info = game->edit_data.ra_info;
+
 	char new_name[80];
-	int powers = 0, i;
+	int powers = 0;
 	s32b total_flags, total_power = 0;
 	bool_ a_cursed = FALSE;
 	s16b pval = 0;
@@ -249,35 +259,34 @@ bool_ create_artifact(object_type *o_ptr, bool_ a_scroll, bool_ get_name)
 
 	if ((!a_scroll) && (randint(A_CURSED) == 1)) a_cursed = TRUE;
 
-	i = 0;
-	while (ra_gen[i].chance)
+	for (auto const &g: ra_gen)
 	{
-		powers += damroll(ra_gen[i].dd, ra_gen[i].ds) + ra_gen[i].plus;
-		i++;
+		powers += damroll(g.dd, g.ds) + g.plus;
 	}
 
 	if ((!a_cursed) && (randint(30) == 1)) powers *= 2;
 
 	if (a_cursed) powers /= 2;
 
-	std::unique_ptr<s16b[]> max_times(new s16b[max_ra_idx]);
-	for (int i = 0; i < max_ra_idx; i++) {
-		max_times[i] = 0;
-	}
+	std::vector<s16b> max_times(ra_info.size(), 0);
 
 	/* Main loop */
 	while (powers)
 	{
-		int ra_idx;
-		randart_part_type *ra_ptr;
-
 		powers--;
 
-		if (!grab_one_power(&ra_idx, o_ptr, TRUE, max_times.get())) continue;
+		int ra_idx;
+		if (!grab_one_power(&ra_idx, o_ptr, max_times))
+		{
+			continue;
+		}
 
-		ra_ptr = &ra_info[ra_idx];
+		auto ra_ptr = &ra_info[ra_idx];
 
-		if (wizard) msg_format("Adding randart power: %d", ra_idx);
+		if (wizard)
+		{
+			msg_format("Adding randart power: %d", ra_idx);
+		}
 
 		total_power += ra_ptr->value;
 

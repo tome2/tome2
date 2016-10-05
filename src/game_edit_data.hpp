@@ -1,5 +1,7 @@
 #pragma once
 
+#include "randart_gen_type.hpp"
+#include "randart_part_type.hpp"
 #include "vault_type.hpp"
 
 #include <vector>
@@ -14,5 +16,16 @@ struct GameEditData {
 	 * Vaults
 	 */
 	std::vector<vault_type> v_info;
+
+	/**
+	 * Random artifact part descriptors, i.e. the bits that
+	 * randarts are made up of.
+	 */
+	std::vector<randart_part_type> ra_info;
+
+	/**
+	 * Random artifact generation parameters.
+	 */
+	std::vector<randart_gen_type> ra_gen;
 
 };
