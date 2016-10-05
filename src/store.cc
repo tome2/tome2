@@ -1170,7 +1170,9 @@ static int store_tval = 0, store_level = 0;
  */
 static bool_ kind_is_storeok(int k_idx)
 {
-	object_kind *k_ptr = &k_info[k_idx];
+	auto const &k_info = game->edit_data.k_info;
+
+	auto k_ptr = &k_info[k_idx];
 
 	if (k_info[k_idx].flags & TR_NORM_ART)
 		return ( FALSE );
@@ -1199,6 +1201,7 @@ static bool_ kind_is_storeok(int k_idx)
 static void store_create(void)
 {
 	auto const &st_info = game->edit_data.st_info;
+	auto const &k_info = game->edit_data.k_info;
 
 	int i = 0, tries, level = 0;
 

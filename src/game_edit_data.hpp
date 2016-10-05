@@ -6,6 +6,7 @@
 #include "hist_type.hpp"
 #include "monster_ego.hpp"
 #include "monster_race.hpp"
+#include "object_kind.hpp"
 #include "owner_type.hpp"
 #include "player_class.hpp"
 #include "player_race.hpp"
@@ -52,6 +53,11 @@ struct GameEditData {
 	 * Artifact sets
 	 */
 	std::vector<set_type> set_info;
+
+	/**
+	 * Object kinds
+	 */
+	std::vector<object_kind> k_info;
 
 	/**
 	 * Building actions.

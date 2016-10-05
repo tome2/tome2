@@ -430,6 +430,8 @@ static cptr funny_comments[MAX_COMMENT] =
  */
 void delete_monster_idx(int i)
 {
+	auto &k_info = game->edit_data.k_info;
+
 	/* Get location */
 	monster_type *m_ptr = &m_list[i];
 	int y = m_ptr->fy;
@@ -1887,6 +1889,8 @@ void update_monsters(bool_ full)
 
 void monster_carry(monster_type *m_ptr, int m_idx, object_type *q_ptr)
 {
+	auto &k_info = game->edit_data.k_info;
+
 	object_type *o_ptr;
 
 	/* Get new object */
@@ -1953,8 +1957,10 @@ static int possible_randart[] =
 
 bool_ kind_is_randart(int k_idx)
 {
+	auto const &k_info = game->edit_data.k_info;
+
 	int max;
-	object_kind *k_ptr = &k_info[k_idx];
+	auto k_ptr = &k_info[k_idx];
 
 	if (!kind_is_legal(k_idx)) return (FALSE);
 

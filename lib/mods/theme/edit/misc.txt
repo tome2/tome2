@@ -12,9 +12,6 @@ M:X:101
 # Maximum y size of the wilderness
 M:Y:66
 
-# Maximum number of items in k_info.txt
-M:K:886
-
 # Maximum number of artifacts in a_info.txt
 M:A:257
 

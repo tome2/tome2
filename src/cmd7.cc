@@ -110,6 +110,8 @@ void mindcraft_info(char *p, int power)
  */
 void mimic_info(char *p, int power)
 {
+	auto const &k_info = game->edit_data.k_info;
+
 	int plev = get_skill(SKILL_MIMICRY);
 	object_type *o_ptr = &p_ptr->inventory[INVEN_OUTER];
 
@@ -761,6 +763,8 @@ static int get_mimic_chance(int mimic)
 
 void do_cmd_mimic_lore()
 {
+	auto const &k_info = game->edit_data.k_info;
+
 	int fail;
 
 	object_type	*o_ptr;

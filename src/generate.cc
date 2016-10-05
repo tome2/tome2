@@ -825,19 +825,28 @@ static void place_altar(int y, int x)
  */
 static void place_fountain(int y, int x)
 {
+	auto const &k_info = game->edit_data.k_info;
+
 	cave_type *c_ptr = &cave[y][x];
-	int svals[SV_POTION_LAST + SV_POTION2_LAST + 1], maxsval = 0, k;
+	int svals[SV_POTION_LAST + SV_POTION2_LAST + 1];
+	int maxsval = 0;
 
 	/* List of usable svals */
-	for (k = 1; k < max_k_idx; k++)
+	for (auto const &k_ref: k_info)
 	{
-		object_kind *k_ptr = &k_info[k];
+		auto k_ptr = &k_ref;
 
 		if (((k_ptr->tval == TV_POTION) || (k_ptr->tval == TV_POTION2)) &&
 				(k_ptr->level <= dun_level) && (k_ptr->flags & TR_FOUNTAIN))
 		{
-			if (k_ptr->tval == TV_POTION2) svals[maxsval] = k_ptr->sval + SV_POTION_LAST;
-			else svals[maxsval] = k_ptr->sval;
+			if (k_ptr->tval == TV_POTION2)
+			{
+				svals[maxsval] = k_ptr->sval + SV_POTION_LAST;
+			}
+			else
+			{
+				svals[maxsval] = k_ptr->sval;
+			}
 			maxsval++;
 		}
 	}
@@ -7662,6 +7671,7 @@ static bool_ cave_gen(void)
 {
 	auto const &d_info = game->edit_data.d_info;
 	auto const &r_info = game->edit_data.r_info;
+	auto &k_info = game->edit_data.k_info;
 
 	auto d_ptr = &d_info[dungeon_type];
 

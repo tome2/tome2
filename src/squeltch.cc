@@ -11,6 +11,7 @@
 
 #include "cave_type.hpp"
 #include "files.hpp"
+#include "game.hpp"
 #include "loadsave.hpp"
 #include "lua_bind.hpp"
 #include "object1.hpp"
@@ -58,6 +59,8 @@ static squelch::Automatizer *automatizer = nullptr;
 
 void squeltch_grid(void)
 {
+	auto const &k_info = game->edit_data.k_info;
+
 	if (!automatizer_enabled)
 	{
 		return;

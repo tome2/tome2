@@ -721,6 +721,7 @@ static void player_wipe(void)
 {
 	auto const &d_info = game->edit_data.d_info;
 	auto &r_info = game->edit_data.r_info;
+	auto &k_info = game->edit_data.k_info;
 
 	/* Wipe special levels */
 	wipe_saved();
@@ -790,18 +791,16 @@ static void player_wipe(void)
 	}
 
 	/* Reset the "objects" */
-	for (std::size_t i = 1; i < max_k_idx; i++)
+	for (auto &k_ref: k_info)
 	{
-		object_kind *k_ptr = &k_info[i];
-
 		/* Reset "tried" */
-		k_ptr->tried = FALSE;
+		k_ref.tried = FALSE;
 
 		/* Reset "aware" */
-		k_ptr->aware = FALSE;
+		k_ref.aware = FALSE;
 
 		/* Reset "artifact" */
-		k_ptr->artifact = 0;
+		k_ref.artifact = 0;
 	}
 
 

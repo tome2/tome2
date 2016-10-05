@@ -218,6 +218,8 @@ bool_ is_randhero(int level)
 
 static void do_get_new_obj(int y, int x)
 {
+	auto &k_info = game->edit_data.k_info;
+
 	object_type *q_ptr[3], forge[3];
 	int res, i;
 

@@ -221,6 +221,7 @@ errr process_pref_file_aux(char *buf)
 	auto &re_info = game->edit_data.re_info;
 	auto &r_info = game->edit_data.r_info;
 	auto &f_info = game->edit_data.f_info;
+	auto &k_info = game->edit_data.k_info;
 
 	int i, j, n1, n2;
 
@@ -357,13 +358,21 @@ errr process_pref_file_aux(char *buf)
 	{
 		if (tokenize(buf + 2, 3, zz, ':', '/') == 3)
 		{
-			object_kind *k_ptr;
-			i = (huge)strtol(zz[0], NULL, 0);
+			std::size_t i = strtoul(zz[0], NULL, 0);
 			n1 = strtol(zz[1], NULL, 0);
 			n2 = strtol(zz[2], NULL, 0);
-			if (i >= max_k_idx) return (1);
-			k_ptr = &k_info[i];
-			if (n1) k_ptr->x_attr = n1;
+
+			if (i >= k_info.size())
+			{
+				return (1);
+			}
+
+			auto k_ptr = &k_info[i];
+
+			if (n1)
+			{
+				k_ptr->x_attr = n1;
+			}
 			if (n2)
 			{
 				k_ptr->x_char = n2;
@@ -435,16 +444,23 @@ errr process_pref_file_aux(char *buf)
 	{
 		if (tokenize(buf + 2, 3, zz, ':', '/') == 3)
 		{
-			j = (huge)strtol(zz[0], NULL, 0);
+			j = strtoul(zz[0], NULL, 0);
 			n1 = strtol(zz[1], NULL, 0);
 			n2 = strtol(zz[2], NULL, 0);
-			for (i = 1; i < max_k_idx; i++)
+
+			for (auto &k_ref: k_info)
 			{
-				object_kind *k_ptr = &k_info[i];
+				auto k_ptr = &k_ref;
 				if (k_ptr->tval == j)
 				{
-					if (n1) k_ptr->d_attr = n1;
-					if (n2) k_ptr->d_char = n2;
+					if (n1)
+					{
+						k_ref.d_attr = n1;
+					}
+					if (n2)
+					{
+						k_ref.d_char = n2;
+					}
 				}
 			}
 			return (0);
@@ -4058,6 +4074,7 @@ static long total_points(void)
 {
 	auto const &d_info = game->edit_data.d_info;
 	auto const &r_info = game->edit_data.r_info;
+	auto const &k_info = game->edit_data.k_info;
 
 	s16b max_dl = 0;
 	long temp, Total = 0;
@@ -4106,11 +4123,10 @@ static long total_points(void)
 	/* Death of a companion is BAD */
 	temp /= comp_death;
 
-	/* The know objects increase the score */
-	/* Scan the object kinds */
-	for (std::size_t k = 1; k < max_k_idx; k++)
+	/* The known objects increase the score */
+	for (std::size_t k = 1; k < k_info.size(); k++)
 	{
-		object_kind *k_ptr = &k_info[k];
+		auto k_ptr = &k_info[k];
 
 		/* Hack -- skip artifacts */
 		if (k_ptr->flags & TR_INSTA_ART) continue;

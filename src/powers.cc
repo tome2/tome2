@@ -131,6 +131,7 @@ static bool_ power_chance(power_type *x_ptr)
 static void power_activate(int power)
 {
 	auto const &f_info = game->edit_data.f_info;
+	auto const &k_info = game->edit_data.k_info;
 
 	s16b plev = p_ptr->lev;
 	char ch = 0;

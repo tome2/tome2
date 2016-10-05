@@ -429,11 +429,6 @@ player_spec const *spp_ptr;
 
 
 /*
- * The object kind arrays
- */
-object_kind *k_info;
-
-/*
  * The artifact arrays
  */
 artifact_type *a_info;
@@ -567,11 +562,6 @@ bool_ (*get_obj_num_hook)(int k_idx);
  */
 s32b get_level_max_stick = -1;
 s32b get_level_use_stick = -1;
-
-/*
- * Maximum number of items in k_info.txt
- */
-u16b max_k_idx;
 
 /*
  * Maximum number of artifacts in a_info.txt

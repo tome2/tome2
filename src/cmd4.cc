@@ -2016,6 +2016,7 @@ void do_cmd_visuals(void)
 {
 	auto &r_info = game->edit_data.r_info;
 	auto &f_info = game->edit_data.f_info;
+	auto &k_info = game->edit_data.k_info;
 
 	int i;
 
@@ -2166,9 +2167,9 @@ void do_cmd_visuals(void)
 			fprintf(fff, "# Object attr/char definitions\n\n");
 
 			/* Dump objects */
-			for (i = 0; i < max_k_idx; i++)
+			for (std::size_t k = 0; k < k_info.size(); k++)
 			{
-				object_kind *k_ptr = &k_info[i];
+				object_kind *k_ptr = &k_info[k];
 
 				/* Skip non-entries */
 				if (!k_ptr->name) continue;
@@ -2177,7 +2178,7 @@ void do_cmd_visuals(void)
 				fprintf(fff, "# %s\n", k_ptr->name);
 
 				/* Dump the object attr/char info */
-				fprintf(fff, "K:%d:0x%02X:0x%02X\n\n", i,
+				fprintf(fff, "K:%zu:0x%02X:0x%02X\n\n", k,
 				        (byte)(k_ptr->x_attr), (byte)(k_ptr->x_char));
 			}
 
@@ -2346,8 +2347,8 @@ void do_cmd_visuals(void)
 				if (i == ESCAPE) break;
 
 				/* Analyze */
-				if (i == 'n') k = (k + max_k_idx + 1) % max_k_idx;
-				if (i == 'N') k = (k + max_k_idx - 1) % max_k_idx;
+				if (i == 'n') k = (k + k_info.size() + 1) % k_info.size();
+				if (i == 'N') k = (k + k_info.size() - 1) % k_info.size();
 				if (i == 'a') k_info[k].x_attr = (ca + 1);
 				if (i == 'A') k_info[k].x_attr = (ca - 1);
 				if (i == 'c') k_info[k].x_char = (cc + 1);
@@ -3023,13 +3024,15 @@ void do_cmd_save_screen(void)
  */
 void do_cmd_knowledge_artifacts(void)
 {
-	int i, k, z, x, y;
+	auto const &k_info = game->edit_data.k_info;
+
+	int i, z, x, y;
 
 	char base_name[80];
 
 	/* Scan the artifacts */
 	std::unique_ptr<bool_[]> okay(new bool_[max_a_idx]);
-	for (k = 0; k < max_a_idx; k++)
+	for (std::size_t k = 0; k < max_a_idx; k++)
 	{
 		artifact_type *a_ptr = &a_info[k];
 
@@ -3046,13 +3049,10 @@ void do_cmd_knowledge_artifacts(void)
 		okay[k] = TRUE;
 	}
 
-	std::unique_ptr<bool_[]> okayk(new bool_[max_k_idx]);
-	for (k = 0; k < max_k_idx; k++)
+	std::vector<bool_> okayk(k_info.size(), FALSE);
+	for (std::size_t k = 0; k < k_info.size(); k++)
 	{
-		object_kind *k_ptr = &k_info[k];
-
-		/* Default */
-		okayk[k] = FALSE;
+		auto k_ptr = &k_info[k];
 
 		/* Skip "empty" artifacts */
 		if (!(k_ptr->flags & TR_NORM_ART)) continue;
@@ -3163,7 +3163,7 @@ void do_cmd_knowledge_artifacts(void)
 	fmt::MemoryWriter w;
 
 	/* Scan the artifacts */
-	for (k = 0; k < max_a_idx; k++)
+	for (std::size_t k = 0; k < max_a_idx; k++)
 	{
 		artifact_type *a_ptr = &a_info[k];
 
@@ -3206,7 +3206,7 @@ void do_cmd_knowledge_artifacts(void)
 		w.write("     The {}\n", base_name);
 	}
 
-	for (k = 0; k < max_k_idx; k++)
+	for (std::size_t k = 0; k < k_info.size(); k++)
 	{
 		/* List "dead" ones */
 		if (!okayk[k]) continue;
@@ -3598,12 +3598,14 @@ static void do_cmd_knowledge_kill_count(void)
  */
 static void do_cmd_knowledge_objects(void)
 {
+	auto const &k_info = game->edit_data.k_info;
+
 	fmt::MemoryWriter w;
 
 	/* Scan the object kinds */
-	for (int k = 1; k < max_k_idx; k++)
+	for (std::size_t k = 1; k < k_info.size(); k++)
 	{
-		object_kind *k_ptr = &k_info[k];
+		auto k_ptr = &k_info[k];
 
 		/* Hack -- skip artifacts */
 		if (k_ptr->flags & (TR_INSTA_ART)) continue;

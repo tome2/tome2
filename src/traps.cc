@@ -2659,6 +2659,7 @@ bool_ mon_hit_trap_aux_potion(int m_idx, object_type *o_ptr)
 bool_ mon_hit_trap(int m_idx)
 {
 	auto const &r_info = game->edit_data.r_info;
+	auto const &k_info = game->edit_data.k_info;
 
 	monster_type *m_ptr = &m_list[m_idx];
 	auto r_ptr = &r_info[m_ptr->r_idx];
@@ -3028,7 +3029,7 @@ bool_ mon_hit_trap(int m_idx)
 				if (load_o_ptr->tval == TV_ROD_MAIN)
 				{
 					/* Extract mana cost of the rod tip */
-					object_kind *tip_o_ptr = &k_info[lookup_kind(TV_ROD, load_o_ptr->pval)];
+					auto tip_o_ptr = &k_info[lookup_kind(TV_ROD, load_o_ptr->pval)];
 					auto const tflags = object_flags(load_o_ptr);
 					cost = (tflags & TR_CHEAPNESS) ? tip_o_ptr->pval / 2 : tip_o_ptr->pval;
 					if (cost <= 0) cost = 1;

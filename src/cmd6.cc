@@ -983,6 +983,7 @@ static object_filter_t const &item_tester_hook_eatable()
 void do_cmd_eat_food(void)
 {
 	auto const &r_info = game->edit_data.r_info;
+	auto const &k_info = game->edit_data.k_info;
 
 	int ident, lev, fval = 0;
 
@@ -2497,6 +2498,8 @@ static bool_ quaff_potion(int tval, int sval, int pval, int pval2)
  */
 void do_cmd_quaff_potion(void)
 {
+	auto const &k_info = game->edit_data.k_info;
+
 	int ident, lev;
 
 	/* Get an item */
@@ -2653,13 +2656,13 @@ static void do_cmd_fill_bottle(void)
  */
 void do_cmd_drink_fountain(void)
 {
+	auto const &k_info = game->edit_data.k_info;
+
 	cave_type *c_ptr = &cave[p_ptr->py][p_ptr->px];
 
 	bool_ ident;
 
 	int tval, sval, pval = 0;
-
-	int i;
 
 	char ch;
 
@@ -2697,9 +2700,9 @@ void do_cmd_drink_fountain(void)
 			sval = c_ptr->special - SV_POTION_LAST;
 		}
 
-		for (i = 0; i < max_k_idx; i++)
+		for (auto const &k_ref: k_info)
 		{
-			object_kind *k_ptr = &k_info[i];
+			auto k_ptr = &k_ref;
 
 			if (k_ptr->tval != tval) continue;
 			if (k_ptr->sval != sval) continue;
@@ -2873,6 +2876,7 @@ static object_filter_t const &item_tester_hook_readable()
 void do_cmd_read_scroll(void)
 {
 	auto const &d_info = game->edit_data.d_info;
+	auto const &k_info = game->edit_data.k_info;
 	auto &r_info = game->edit_data.r_info;
 
 	/* Check some conditions */
@@ -4077,13 +4081,13 @@ void zap_combine_rod_tip(object_type *q_ptr, int tip_item)
  */
 void do_cmd_zap_rod(void)
 {
+	auto const &k_info = game->edit_data.k_info;
+
 	int item, ident, chance, dir, lev;
 
 	int cost;
 
 	bool_ require_dir;
-
-	object_kind *tip_ptr;
 
 	/* Hack -- let perception get aborted */
 	bool_ use_charge = TRUE;
@@ -4176,7 +4180,7 @@ void do_cmd_zap_rod(void)
 	ident = FALSE;
 
 	/* Extract the item level */
-	tip_ptr = &k_info[lookup_kind(TV_ROD, o_ptr->pval)];
+	auto tip_ptr = &k_info[lookup_kind(TV_ROD, o_ptr->pval)];
 	lev = k_info[lookup_kind(TV_ROD, o_ptr->pval)].level;
 
 	/* Base chance of success */
@@ -4846,6 +4850,8 @@ static void activate_valaroma()
  */
 void do_cmd_activate(void)
 {
+	auto const &k_info = game->edit_data.k_info;
+
 	int item, lev, chance;
 
 	char ch, spell_choice;
@@ -5068,6 +5074,8 @@ void do_cmd_activate(void)
 
 const char *activation_aux(object_type * o_ptr, bool_ doit, int item)
 {
+	auto const &k_info = game->edit_data.k_info;
+
 	int plev = get_skill(SKILL_DEVICE);
 
 	int i = 0, ii = 0, ij = 0, k, dir, dummy = 0;

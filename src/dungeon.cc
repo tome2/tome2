@@ -134,7 +134,9 @@ static byte value_check_aux1(object_type const *o_ptr)
 
 static byte value_check_aux1_magic(object_type const *o_ptr)
 {
-	object_kind *k_ptr = &k_info[o_ptr->k_idx];
+	auto const &k_info = game->edit_data.k_info;
+
+	auto k_ptr = &k_info[o_ptr->k_idx];
 
 
 	switch (o_ptr->tval)
@@ -223,7 +225,9 @@ static byte value_check_aux2(object_type const *o_ptr)
 
 static byte value_check_aux2_magic(object_type const *o_ptr)
 {
-	object_kind *k_ptr = &k_info[o_ptr->k_idx];
+	auto const &k_info = game->edit_data.k_info;
+
+	auto k_ptr = &k_info[o_ptr->k_idx];
 
 
 	switch (o_ptr->tval)
@@ -4190,6 +4194,7 @@ static void process_command(void)
 static void process_player(void)
 {
 	auto const &f_info = game->edit_data.f_info;
+	auto const &k_info = game->edit_data.k_info;
 
 	int i, j;
 
@@ -4501,7 +4506,7 @@ static void process_player(void)
 				{
 					/* Acquire object -- for speed only base items are allowed to shimmer */
 					object_type *o_ptr = &o_list[i];
-					object_kind *k_ptr = &k_info[o_ptr->k_idx];
+					auto k_ptr = &k_info[o_ptr->k_idx];
 
 					/* Skip dead or carried objects */
 					if ((!o_ptr->k_idx) || (!o_ptr->ix)) continue;

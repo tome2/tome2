@@ -331,14 +331,8 @@ static char scroll_adj[MAX_TITLES][16];
 static byte scroll_col[MAX_TITLES];
 
 
-/*
- * Certain items have a flavor
- * This function is used only by "flavor_init()"
- */
-static byte object_flavor(int k_idx)
+static byte object_flavor(object_kind const *k_ptr)
 {
-	object_kind *k_ptr = &k_info[k_idx];
-
 	/* Analyze the item */
 	switch (k_ptr->tval)
 	{
@@ -390,7 +384,7 @@ static byte object_flavor(int k_idx)
 	}
 
 	/* No flavor */
-	return (0);
+	return 0;
 }
 
 
@@ -400,10 +394,8 @@ static byte object_flavor(int k_idx)
  *
  * XXX XXX XXX Add "EASY_KNOW" flag to "k_info.txt" file
  */
-static bool_ object_easy_know(int i)
+static bool_ object_easy_know(object_kind const *k_ptr)
 {
-	object_kind *k_ptr = &k_info[i];
-
 	/* Analyze the "tval" */
 	switch (k_ptr->tval)
 	{
@@ -507,6 +499,8 @@ static void shuffle_flavors(cptr adj[], byte col[])
  */
 void flavor_init(void)
 {
+	auto &k_info = game->edit_data.k_info;
+
 	/* Hack -- Induce consistant flavors */
 	set_quick_rng(seed_flavor());
 
@@ -599,21 +593,24 @@ void flavor_init(void)
 	set_complex_rng();
 
 	/* Analyze every object */
-	for (std::size_t i = 1; i < max_k_idx; i++)
+	for (auto &k_ref: k_info)
 	{
-		object_kind *k_ptr = &k_info[i];
+		auto k_ptr = &k_ref;
 
 		/* Skip "empty" objects */
 		if (!k_ptr->name) continue;
 
 		/* Extract "flavor" (if any) */
-		k_ptr->flavor = object_flavor(i);
+		k_ptr->flavor = object_flavor(k_ptr);
 
 		/* No flavor yields aware */
-		if ((!k_ptr->flavor) && (k_ptr->tval != TV_ROD_MAIN)) k_ptr->aware = TRUE;
+		if ((!k_ptr->flavor) && (k_ptr->tval != TV_ROD_MAIN))
+		{
+			k_ptr->aware = TRUE;
+		}
 
 		/* Check for "easily known" */
-		k_ptr->easy_know = object_easy_know(i);
+		k_ptr->easy_know = object_easy_know(k_ptr);
 	}
 }
 
@@ -638,6 +635,7 @@ void reset_visuals(void)
 	auto &re_info = game->edit_data.re_info;
 	auto &r_info = game->edit_data.r_info;
 	auto &f_info = game->edit_data.f_info;
+	auto &k_info = game->edit_data.k_info;
 
 	int i;
 
@@ -657,13 +655,11 @@ void reset_visuals(void)
 	}
 
 	/* Extract default attr/char code for objects */
-	for (i = 0; i < max_k_idx; i++)
+	for (auto &k_ref: k_info)
 	{
-		object_kind *k_ptr = &k_info[i];
-
 		/* Default attr/char */
-		k_ptr->x_attr = k_ptr->d_attr;
-		k_ptr->x_char = k_ptr->d_char;
+		k_ref.x_attr = k_ref.d_attr;
+		k_ref.x_char = k_ref.d_char;
 	}
 
 	/* Extract default attr/char code for monsters */
@@ -804,7 +800,9 @@ bool_ object_flags_no_set = FALSE;
  */
 object_flag_set object_flags(object_type const *o_ptr)
 {
-	object_kind *k_ptr = &k_info[o_ptr->k_idx];
+	auto const &k_info = game->edit_data.k_info;
+
+	auto k_ptr = &k_info[o_ptr->k_idx];
 
 	/* Base object */
 	auto f = k_ptr->flags;
@@ -834,7 +832,9 @@ object_flag_set object_flags(object_type const *o_ptr)
 /* Return object granted power */
 int object_power(object_type *o_ptr)
 {
-	object_kind *k_ptr = &k_info[o_ptr->k_idx];
+	auto const &k_info = game->edit_data.k_info;
+
+	auto k_ptr = &k_info[o_ptr->k_idx];
 	int power = -1;
 
 	/* Base object */
@@ -873,7 +873,9 @@ int object_power(object_type *o_ptr)
  */
 object_flag_set object_flags_known(object_type const *o_ptr)
 {
-	object_kind *k_ptr = &k_info[o_ptr->k_idx];
+	auto const &k_info = game->edit_data.k_info;
+
+	auto k_ptr = &k_info[o_ptr->k_idx];
 
 	/* Must be identified */
 	if (!object_known_p(o_ptr))
@@ -1018,6 +1020,7 @@ static object_flag_set compute_pval_mask()
 static std::string object_desc_aux(object_type const *o_ptr, int pref, int mode)
 {
 	auto const &r_info = game->edit_data.r_info;
+	auto const &k_info = game->edit_data.k_info;
 	static auto const TR_PVAL_MASK = compute_pval_mask();
 
 	bool_ hack_name = FALSE;
@@ -1027,7 +1030,7 @@ static std::string object_desc_aux(object_type const *o_ptr, int pref, int mode)
 	bool_ show_weapon = FALSE;
 	bool_ show_armour = FALSE;
 
-	object_kind *k_ptr = &k_info[o_ptr->k_idx];
+	auto k_ptr = &k_info[o_ptr->k_idx];
 
 	/* Extract some flags */
 	auto const flags = object_flags(o_ptr);
@@ -2104,6 +2107,8 @@ void object_desc(char *buf, object_type const *o_ptr, int pref, int mode)
  */
 void object_desc_store(char *buf, object_type *o_ptr, int pref, int mode)
 {
+	auto &k_info = game->edit_data.k_info;
+
 	/* Save the "aware" flag */
 	bool_ hack_aware = k_info[o_ptr->k_idx].aware;
 
@@ -2138,6 +2143,8 @@ void object_desc_store(char *buf, object_type *o_ptr, int pref, int mode)
  */
 cptr item_activation(object_type *o_ptr, byte num)
 {
+	auto const &k_info = game->edit_data.k_info;
+
 	/* Needed hacks */
 	static char rspell[2][80];
 
@@ -2509,6 +2516,7 @@ bool_ object_out_desc(object_type *o_ptr, FILE *fff, bool_ trim_down, bool_ wait
 {
 	auto const &set_info = game->edit_data.set_info;
 	auto const &st_info = game->edit_data.st_info;
+	auto const &k_info = game->edit_data.k_info;
 
 	cptr vp[64];
 	byte vc[64];
@@ -2553,7 +2561,7 @@ bool_ object_out_desc(object_type *o_ptr, FILE *fff, bool_ trim_down, bool_ wait
 	{
 		if (o_ptr->k_idx && (!trim_down))
 		{
-			object_kind *k_ptr = &k_info[o_ptr->k_idx];
+			auto k_ptr = &k_info[o_ptr->k_idx];
 
 			text_out_c(TERM_ORANGE, k_ptr->text);
 			text_out("\n");
@@ -6253,6 +6261,8 @@ static void apply_flags_set(s16b a_idx, s16b set_idx, object_flag_set *f)
 
 byte object_attr(object_type const *o_ptr)
 {
+	auto const &k_info = game->edit_data.k_info;
+
 	if (o_ptr->tval == TV_RANDART)
 	{
 		return random_artifacts[o_ptr->sval].attr;
@@ -6269,6 +6279,8 @@ byte object_attr(object_type const *o_ptr)
 
 byte object_attr_default(object_type *o_ptr)
 {
+	auto const &k_info = game->edit_data.k_info;
+
 	if (o_ptr->tval == TV_RANDART)
 	{
 		return random_artifacts[o_ptr->sval].attr;
@@ -6291,6 +6303,8 @@ byte object_attr_default(object_type *o_ptr)
 
 char object_char(object_type const *o_ptr)
 {
+	auto const &k_info = game->edit_data.k_info;
+
 	if (k_info[o_ptr->k_idx].flavor)
 	{
 		return misc_to_char[k_info[o_ptr->k_idx].flavor];
@@ -6303,6 +6317,8 @@ char object_char(object_type const *o_ptr)
 
 char object_char_default(object_type const *o_ptr)
 {
+	auto const &k_info = game->edit_data.k_info;
+
 	if (k_info[o_ptr->k_idx].flavor)
 	{
 		return misc_to_char[k_info[o_ptr->k_idx].flavor];
@@ -6318,6 +6334,8 @@ char object_char_default(object_type const *o_ptr)
  */
 bool artifact_p(object_type const *o_ptr)
 {
+	auto const &k_info = game->edit_data.k_info;
+
 	return
 		(o_ptr->tval == TV_RANDART) ||
 		(o_ptr->name1 ? true : false) ||

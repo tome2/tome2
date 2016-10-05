@@ -437,6 +437,8 @@ static void image_monster(byte *ap, char *cp)
  */
 static void image_object(byte *ap, char *cp)
 {
+	auto const &k_info = game->edit_data.k_info;
+
 	// Cached state which keeps a list of the "live" object_kind entries.
 	static std::vector<size_t> *instance = nullptr;
 
@@ -446,7 +448,7 @@ static void image_object(byte *ap, char *cp)
 		// Create the list of "live" indexes
 		instance = new std::vector<size_t>();
 		// Filter all the "live" entries
-		for (size_t i = 0; i < max_k_idx; i++)
+		for (size_t i = 0; i < k_info.size(); i++)
 		{
 			if (k_info[i].name)
 			{
@@ -851,6 +853,7 @@ static void map_info(int y, int x, byte *ap, char *cp)
 	auto const &st_info = game->edit_data.st_info;
 	auto const &r_info = game->edit_data.r_info;
 	auto const &f_info = game->edit_data.f_info;
+	auto const &k_info = game->edit_data.k_info;
 
 	byte a;
 
@@ -1281,6 +1284,7 @@ void map_info_default(int y, int x, byte *ap, char *cp)
 	auto const &st_info = game->edit_data.st_info;
 	auto const &r_info = game->edit_data.r_info;
 	auto const &f_info = game->edit_data.f_info;
+	auto const &k_info = game->edit_data.k_info;
 
 	byte a;
 

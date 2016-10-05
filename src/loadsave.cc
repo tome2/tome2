@@ -1056,6 +1056,8 @@ static bool_ wearable_p(object_type *o_ptr)
  */
 static void do_item(object_type *o_ptr, ls_flag_t flag)
 {
+	auto &k_info = game->edit_data.k_info;
+
 	byte old_dd;
 	byte old_ds;
 
@@ -2112,11 +2114,13 @@ static bool do_monster_lore(ls_flag_t flag)
  */
 static bool do_object_lore(ls_flag_t flag)
 {
-	u16b n_kinds = max_k_idx;
+	auto &k_info = game->edit_data.k_info;
+
+	u16b n_kinds = k_info.size();
 
 	do_u16b(&n_kinds, flag);
 
-	if ((flag == ls_flag_t::LOAD) && (n_kinds > max_k_idx))
+	if ((flag == ls_flag_t::LOAD) && (n_kinds > k_info.size()))
 	{
 		note("Too many object kinds!");
 		return false;

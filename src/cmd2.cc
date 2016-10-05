@@ -3558,6 +3558,8 @@ void do_cmd_fire(void)
  */
 void do_cmd_throw(void)
 {
+	auto const &k_info = game->edit_data.k_info;
+
 	int dir;
 
 	s32b special = 0;
@@ -3932,6 +3934,8 @@ void do_cmd_throw(void)
  */
 void do_cmd_boomerang(void)
 {
+	auto const &k_info = game->edit_data.k_info;
+
 	int dir;
 
 	int j, y, x, ny, nx, ty, tx;

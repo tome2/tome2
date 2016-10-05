@@ -3900,6 +3900,7 @@ static int target_set_aux(int y, int x, int mode, cptr info)
 	auto const &st_info = game->edit_data.st_info;
 	auto const &wf_info = game->edit_data.wf_info;
 	auto const &f_info = game->edit_data.f_info;
+	auto const &k_info = game->edit_data.k_info;
 
 	cave_type *c_ptr = &cave[y][x];
 
@@ -5004,13 +5005,15 @@ void set_grace(s32b v)
 
 static bool_ test_object_wish(char *name, object_type *o_ptr, object_type *forge, const char *what)
 {
+	auto &k_info = game->edit_data.k_info;
+
 	int i, j, jb, save_aware;
 	char buf[200];
 
 	/* try all objects, this *IS* a very ugly and slow method :( */
-	for (i = 0; i < max_k_idx; i++)
+	for (i = 0; i < k_info.size(); i++)
 	{
-		object_kind *k_ptr = &k_info[i];
+		auto k_ptr = &k_info[i];
 
 		o_ptr = forge;
 

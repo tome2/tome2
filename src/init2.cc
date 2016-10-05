@@ -293,7 +293,7 @@ namespace {
 
 		static void allocate()
 		{
-			k_info = new object_kind[max_k_idx];
+			// Nothing to do
 		}
 
 		static errr parse(FILE *fp)
@@ -723,12 +723,13 @@ static errr init_other(void)
 {
 	auto const &d_info = game->edit_data.d_info;
 	auto const &r_info = game->edit_data.r_info;
+	auto const &k_info = game->edit_data.k_info;
 
 	/*** Prepare the "dungeon" information ***/
 
 	/* Allocate and Wipe the special gene flags */
 	m_allow_special = make_array<bool_>(r_info.size());
-	k_allow_special = make_array<bool_>(max_k_idx);
+	k_allow_special = make_array<bool_>(k_info.size());
 	a_allow_special = make_array<bool_>(max_a_idx);
 
 
@@ -804,10 +805,7 @@ static errr init_other(void)
 static errr init_alloc(void)
 {
 	auto const &r_info = game->edit_data.r_info;
-
-	int i, j;
-
-	object_kind *k_ptr;
+	auto const &k_info = game->edit_data.k_info;
 
 	alloc_entry *table;
 
@@ -827,12 +825,12 @@ static errr init_alloc(void)
 	alloc_kind_size = 0;
 
 	/* Scan the objects */
-	for (i = 1; i < max_k_idx; i++)
+	for (auto const &k_ref: k_info)
 	{
-		k_ptr = &k_info[i];
+		auto k_ptr = &k_ref;
 
 		/* Scan allocation pairs */
-		for (j = 0; j < ALLOCATION_MAX; j++)
+		for (std::size_t j = 0; j < ALLOCATION_MAX; j++)
 		{
 			/* Count the "legal" entries */
 			if (k_ptr->chance[j])
@@ -847,7 +845,7 @@ static errr init_alloc(void)
 	}
 
 	/* Collect the level indexes */
-	for (i = 1; i < MAX_DEPTH_MONSTER; i++)
+	for (std::size_t i = 1; i < MAX_DEPTH_MONSTER; i++)
 	{
 		/* Group by level */
 		num[i] += num[i - 1];
@@ -866,12 +864,12 @@ static errr init_alloc(void)
 	table = alloc_kind_table;
 
 	/* Scan the objects */
-	for (i = 1; i < max_k_idx; i++)
+	for (std::size_t i = 1; i < k_info.size(); i++)
 	{
-		k_ptr = &k_info[i];
+		auto k_ptr = &k_info[i];
 
 		/* Scan allocation pairs */
-		for (j = 0; j < ALLOCATION_MAX; j++)
+		for (std::size_t j = 0; j < ALLOCATION_MAX; j++)
 		{
 			/* Count the "legal" entries */
 			if (k_ptr->chance[j])
@@ -933,7 +931,7 @@ static errr init_alloc(void)
 	}
 
 	/* Collect the level indexes */
-	for (i = 1; i < MAX_DEPTH_MONSTER; i++)
+	for (std::size_t i = 1; i < MAX_DEPTH_MONSTER; i++)
 	{
 		/* Group by level */
 		num[i] += num[i - 1];
@@ -952,7 +950,7 @@ static errr init_alloc(void)
 	table = alloc_race_table;
 
 	/* Scan the monsters */
-	for (i = 1; i < r_info.size(); i++)
+	for (std::size_t i = 1; i < r_info.size(); i++)
 	{
 		/* Get the i'th race */
 		auto r_ptr = &r_info[i];
@@ -1019,6 +1017,7 @@ static void init_guardians(void)
 {
 	auto const &d_info = game->edit_data.d_info;
 	auto &r_info = game->edit_data.r_info;
+	auto &k_info = game->edit_data.k_info;
 
 	/* Scan dungeons */
 	for (std::size_t i = 0; i < d_info.size(); i++)
@@ -1042,7 +1041,7 @@ static void init_guardians(void)
 			/* Mark the final object */
 			if (d_ptr->final_object)
 			{
-				object_kind *k_ptr = &k_info[d_ptr->final_object];
+				auto k_ptr = &k_info[d_ptr->final_object];
 				k_ptr->flags |= TR_SPECIAL_GENE;
 			}
 

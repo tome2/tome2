@@ -557,6 +557,8 @@ void do_cmd_drop(void)
  */
 void do_cmd_destroy(void)
 {
+	auto const &k_info = game->edit_data.k_info;
+
 	int old_number;
 
 	bool_ force = FALSE;

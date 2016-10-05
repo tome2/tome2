@@ -2300,6 +2300,8 @@ errr init_f_info_txt(FILE *fp)
  */
 errr init_k_info_txt(FILE *fp)
 {
+	auto &k_info = game->edit_data.k_info;
+
 	int i;
 	char buf[1024];
 	char *s, *t;
@@ -2349,14 +2351,11 @@ errr init_k_info_txt(FILE *fp)
 			/* Verify information */
 			if (i <= error_idx) return (4);
 
-			/* Verify information */
-			if (i >= max_k_idx) return (2);
-
 			/* Save the index */
 			error_idx = i;
 
 			/* Point at the "info" */
-			k_ptr = &k_info[i];
+			k_ptr = &expand_to_fit_index(k_info, i);
 
 			/* Advance and Save the name index */
 			assert(!k_ptr->name);
@@ -6775,12 +6774,6 @@ static errr process_dungeon_file_aux(char *buf, int *yval, int *xval, int xvalst
 			if (zz[0][0] == 't')
 			{
 				max_real_towns = atoi(zz[1]);
-			}
-
-			/* Maximum k_idx */
-			else if (zz[0][0] == 'K')
-			{
-				max_k_idx = atoi(zz[1]);
 			}
 
 			/* Maximum a_idx */

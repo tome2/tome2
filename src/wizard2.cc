@@ -413,6 +413,8 @@ static void do_cmd_wiz_change(void)
  */
 static void wiz_display_item(object_type *o_ptr)
 {
+	auto const &k_info = game->edit_data.k_info;
+
 	int i, j = 13;
 	char buf[256];
 
@@ -472,12 +474,8 @@ static void wiz_display_item(object_type *o_ptr)
 /*
  * Strip an "object name" into a buffer
  */
-static void strip_name(char *buf, int k_idx)
+static void strip_name(char *buf, const object_kind *k_ptr)
 {
-	char *t;
-
-	object_kind *k_ptr = &k_info[k_idx];
-
 	cptr str = k_ptr->name;
 
 
@@ -485,6 +483,7 @@ static void strip_name(char *buf, int k_idx)
 	while ((*str == ' ') || (*str == '&')) str++;
 
 	/* Copy useful chars */
+	char *t;
 	for (t = buf; *str; str++)
 	{
 		if (*str != '~') *t++ = *str;
@@ -534,13 +533,13 @@ static void wci_string(cptr string, int num)
  */
 static int wiz_create_itemtype(void)
 {
-	int i, num, max_num;
+	auto const &k_info = game->edit_data.k_info;
+
+	int num, max_num;
 	int tval;
 
 	cptr tval_desc2;
 	char ch;
-
-	int choice[60];
 
 	char buf[160];
 
@@ -580,9 +579,12 @@ static int wiz_create_itemtype(void)
 	Term_clear();
 
 	/* We have to search the whole itemlist. */
-	for (num = 0, i = 1; (num < 60) && (i < max_k_idx); i++)
+	std::vector<std::size_t> choice;
+	choice.reserve(60);
+	std::size_t i;
+	for (num = 0, i = 1; (choice.size() < 60) && (i < k_info.size()); i++)
 	{
-		object_kind *k_ptr = &k_info[i];
+		auto k_ptr = &k_info[i];
 
 		/* Analyze matching items */
 		if (k_ptr->tval == tval)
@@ -590,19 +592,19 @@ static int wiz_create_itemtype(void)
 			/* Hack -- Skip instant artifacts */
 			if (k_ptr->flags & TR_INSTA_ART) continue;
 
-			/* Acquire the "name" of object "i" */
-			strip_name(buf, i);
+			/* Acquire the "name" of object */
+			strip_name(buf, k_ptr);
 
 			/* Print it */
 			wci_string(buf, num);
 
 			/* Remember the object index */
-			choice[num++] = i;
+			choice.push_back(i);
 		}
 	}
 
 	/* Me need to know the maximal possible remembered object_index */
-	max_num = num;
+	max_num = choice.size();
 
 	/* Choose! */
 	if (!get_com(format("What Kind of %s? ", tval_desc2), &ch)) return (0);
@@ -1208,23 +1210,26 @@ static void wiz_create_item(void)
  */
 static void wiz_create_item_2(void)
 {
-	object_type forge;
-	object_type *q_ptr;
-	int a_idx;
+	auto const &k_info = game->edit_data.k_info;
+
 	cptr p = "Number of the object :";
 	char out_val[80] = "";
 
 	if (!get_string(p, out_val, 4)) return;
-	a_idx = atoi(out_val);
+	int k_idx = atoi(out_val);
 
 	/* Return if failed or out-of-bounds */
-	if ((a_idx <= 0) || (a_idx >= max_k_idx)) return;
+	if ((k_idx <= 0) || (k_idx >= static_cast<int>(k_info.size())))
+	{
+		return;
+	}
 
 	/* Get local object */
-	q_ptr = &forge;
+	object_type forge;
+	auto q_ptr = &forge;
 
 	/* Create the item */
-	object_prep(q_ptr, a_idx);
+	object_prep(q_ptr, k_idx);
 
 	/* Apply magic (no messages, no artifacts) */
 	apply_magic(q_ptr, dun_level, FALSE, FALSE, FALSE);
@@ -1354,21 +1359,19 @@ static void do_cmd_wiz_jump(void)
  */
 static void do_cmd_wiz_learn(void)
 {
-	int i;
-
-	object_type forge;
-	object_type *q_ptr;
+	auto const &k_info = game->edit_data.k_info;
 
 	/* Scan every object */
-	for (i = 1; i < max_k_idx; i++)
+	for (std::size_t i = 0; i < k_info.size(); i++)
 	{
-		object_kind *k_ptr = &k_info[i];
+		auto k_ptr = &k_info[i];
 
 		/* Induce awareness */
 		if (k_ptr->level <= command_arg)
 		{
 			/* Get local object */
-			q_ptr = &forge;
+			object_type forge;
+			auto q_ptr = &forge;
 
 			/* Prepare object */
 			object_prep(q_ptr, i);

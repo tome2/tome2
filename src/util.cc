@@ -3363,18 +3363,20 @@ int test_mego_name(cptr needle)
  * returned. Case doesn't matter. -DG-
  */
 
-int test_item_name(cptr name)
+int test_item_name(cptr needle)
 {
-	int i;
+	auto const &k_info = game->edit_data.k_info;
 
-	/* Scan the items */
-	for (i = 1; i < max_k_idx; i++)
+	for (std::size_t i = 0; i < k_info.size(); i++)
 	{
-		object_kind *k_ptr = &k_info[i];
-		/* If name matches, give us the number */
-		if (k_ptr->name && iequals(name, k_ptr->name)) return (i);
+		auto const &name = k_info[i].name;
+		if (name && iequals(needle, name))
+		{
+			return i;
+		}
 	}
-	return (0);
+
+	return 0;
 }
 
 /*

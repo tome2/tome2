@@ -1781,6 +1781,8 @@ typedef int (*inven_func)(object_type *);
  */
 static int inven_damage(inven_func typ, int perc)
 {
+	auto const &k_info = game->edit_data.k_info;
+
 	int i, j, k, amt;
 
 	object_type *o_ptr;
@@ -1827,7 +1829,7 @@ static int inven_damage(inven_func typ, int perc)
 
 				/* Potions smash open */
 				if (k_info[o_ptr->k_idx].tval == TV_POTION)
-		{
+				{
 					(void)potion_smash_effect(0, p_ptr->py, p_ptr->px, o_ptr->sval);
 				}
 
@@ -3816,6 +3818,7 @@ static int raise_ego[MAX_RAISE] =
 static bool_ project_o(int who, int r, int y, int x, int dam, int typ)
 {
 	auto const &r_info = game->edit_data.r_info;
+	auto const &k_info = game->edit_data.k_info;
 
 	cave_type *c_ptr = &cave[y][x];
 

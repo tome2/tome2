@@ -11,7 +11,6 @@
 #include "ego_item_type_fwd.hpp"
 #include "fate.hpp"
 #include "monster_type_fwd.hpp"
-#include "object_kind_fwd.hpp"
 #include "object_type_fwd.hpp"
 #include "options.hpp"
 #include "player_class_fwd.hpp"
@@ -151,7 +150,6 @@ extern player_class const *cp_ptr;
 extern player_spec const *spp_ptr;
 extern char player_name[32];
 extern char player_base[32];
-extern object_kind *k_info;
 extern artifact_type *a_info;
 extern ego_item_type *e_info;
 extern trap_type *t_info;
@@ -166,7 +164,6 @@ extern char *ANGBAND_DIR_DNGN;
 extern bool_ (*get_mon_num_hook)(int r_idx);
 extern bool_ (*get_mon_num2_hook)(int r_idx);
 extern bool_ (*get_obj_num_hook)(int k_idx);
-extern u16b max_k_idx;
 extern u16b max_a_idx;
 extern u16b max_e_idx;
 extern u16b max_o_idx;

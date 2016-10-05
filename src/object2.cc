@@ -240,6 +240,8 @@ static void compact_objects_aux(int i1, int i2)
  */
 void compact_objects(int size)
 {
+	auto const &k_info = game->edit_data.k_info;
+
 	int i, y, x, num;
 
 	int cur_lev, cur_dis, chance;
@@ -269,7 +271,7 @@ void compact_objects(int size)
 		{
 			object_type *o_ptr = &o_list[i];
 
-			object_kind *k_ptr = &k_info[o_ptr->k_idx];
+			auto k_ptr = &k_info[o_ptr->k_idx];
 
 			/* Skip dead objects */
 			if (!o_ptr->k_idx) continue;
@@ -377,6 +379,8 @@ void compact_objects(int size)
  */
 void wipe_o_list(void)
 {
+	auto &k_info = game->edit_data.k_info;
+
 	int i;
 
 	/* Delete the existing objects */
@@ -554,10 +558,11 @@ errr get_obj_num_prep(void)
  */
 s16b get_obj_num(int level)
 {
+	auto const &k_info = game->edit_data.k_info;
+
 	int i, j, p;
 	int k_idx;
 	long value, total;
-	object_kind *k_ptr;
 	alloc_entry *table = alloc_kind_table;
 
 
@@ -589,7 +594,7 @@ s16b get_obj_num(int level)
 		k_idx = table[i].index;
 
 		/* Access the actual kind */
-		k_ptr = &k_info[k_idx];
+		auto k_ptr = &k_info[k_idx];
 
 		/* Hack -- prevent embedded chests */
 		if (opening_chest && (k_ptr->tval == TV_CHEST)) continue;
@@ -720,6 +725,8 @@ void object_known(object_type *o_ptr)
  */
 bool object_known_p(object_type const *o_ptr)
 {
+	auto const &k_info = game->edit_data.k_info;
+
 	return ((o_ptr->ident & (IDENT_KNOWN)) ||
 		(k_info[o_ptr->k_idx].easy_know && k_info[o_ptr->k_idx].aware));
 }
@@ -731,6 +738,8 @@ bool object_known_p(object_type const *o_ptr)
  */
 void object_aware(object_type *o_ptr)
 {
+	auto &k_info = game->edit_data.k_info;
+
 	/* Fully aware of the effects */
 	k_info[o_ptr->k_idx].aware = TRUE;
 }
@@ -740,6 +749,8 @@ void object_aware(object_type *o_ptr)
  */
 bool object_aware_p(object_type const *o_ptr)
 {
+	auto const &k_info = game->edit_data.k_info;
+
 	return k_info[o_ptr->k_idx].aware;
 }
 
@@ -749,6 +760,8 @@ bool object_aware_p(object_type const *o_ptr)
  */
 void object_tried(object_type *o_ptr)
 {
+	auto &k_info = game->edit_data.k_info;
+
 	/* Mark it as tried (even if "aware") */
 	k_info[o_ptr->k_idx].tried = TRUE;
 }
@@ -759,6 +772,8 @@ void object_tried(object_type *o_ptr)
  */
 bool object_tried_p(object_type const *o_ptr)
 {
+	auto const &k_info = game->edit_data.k_info;
+
 	return k_info[o_ptr->k_idx].tried;
 }
 
@@ -770,8 +785,9 @@ bool object_tried_p(object_type const *o_ptr)
 static s32b object_value_base(object_type const *o_ptr)
 {
 	auto const &r_info = game->edit_data.r_info;
+	auto const &k_info = game->edit_data.k_info;
 
-	object_kind *k_ptr = &k_info[o_ptr->k_idx];
+	auto k_ptr = &k_info[o_ptr->k_idx];
 
 	/* Aware item -- use template cost */
 	if ((object_aware_p(o_ptr)) && (o_ptr->tval != TV_EGG)) return (k_ptr->cost);
@@ -1073,10 +1089,11 @@ s32b flag_cost(object_type const *o_ptr, int plusses)
 s32b object_value_real(object_type const *o_ptr)
 {
 	auto const &r_info = game->edit_data.r_info;
+	auto const &k_info = game->edit_data.k_info;
 
 	s32b value;
 
-	object_kind *k_ptr = &k_info[o_ptr->k_idx];
+	auto k_ptr = &k_info[o_ptr->k_idx];
 
 	if (o_ptr->tval == TV_RANDART)
 	{
@@ -1801,22 +1818,22 @@ void object_absorb(object_type *o_ptr, object_type *j_ptr)
  */
 s16b lookup_kind(int tval, int sval)
 {
-	int k;
+	auto const &k_info = game->edit_data.k_info;
 
-	/* Look for it */
-	for (k = 1; k < max_k_idx; k++)
+	for (std::size_t k = 1; k < k_info.size(); k++)
 	{
-		object_kind *k_ptr = &k_info[k];
-
-		/* Found a match */
-		if ((k_ptr->tval == tval) && (k_ptr->sval == sval)) return (k);
+		auto k_ptr = &k_info[k];
+		if ((k_ptr->tval == tval) && (k_ptr->sval == sval))
+		{
+			return k;
+		}
 	}
 
 	/* Oops */
 	if (wizard) msg_format("No object (%d,%d)", tval, sval);
 
 	/* Oops */
-	return (0);
+	return 0;
 }
 
 
@@ -1856,7 +1873,9 @@ static void init_obj_exp(object_type *o_ptr, object_kind const *k_ptr)
  */
 void object_prep(object_type *o_ptr, int k_idx)
 {
-	object_kind *k_ptr = &k_info[k_idx];
+	auto const &k_info = game->edit_data.k_info;
+
+	auto k_ptr = &k_info[k_idx];
 
 	/* Clear the record */
 	object_wipe(o_ptr);
@@ -2173,6 +2192,8 @@ void random_artifact_resistance(object_type * o_ptr)
  */
 static bool_ make_artifact_special(object_type *o_ptr)
 {
+	auto const &k_info = game->edit_data.k_info;
+
 	/* No artifacts in the town */
 	if (!dun_level) return (FALSE);
 
@@ -2252,6 +2273,8 @@ static bool_ make_artifact_special(object_type *o_ptr)
  */
 static bool_ make_artifact(object_type *o_ptr)
 {
+	auto const &k_info = game->edit_data.k_info;
+
 	/* No artifacts in the town */
 	if (!dun_level) return (FALSE);
 
@@ -2322,8 +2345,10 @@ static bool_ make_artifact(object_type *o_ptr)
  */
 static bool_ make_ego_item(object_type *o_ptr, bool_ good)
 {
+	auto const &k_info = game->edit_data.k_info;
+
 	bool_ ret = FALSE;
-	object_kind *k_ptr = &k_info[o_ptr->k_idx];
+	auto k_ptr = &k_info[o_ptr->k_idx];
 
 	if (artifact_p(o_ptr) || o_ptr->name2) return (FALSE);
 
@@ -3219,9 +3244,10 @@ static int get_stick_max_level(byte tval, int level, int spl)
 static void a_m_aux_4(object_type *o_ptr, int level, int power)
 {
 	auto const &r_info = game->edit_data.r_info;
+	auto const &k_info = game->edit_data.k_info;
 
 	s32b bonus_lvl, max_lvl;
-	object_kind *k_ptr = &k_info[o_ptr->k_idx];
+	auto k_ptr = &k_info[o_ptr->k_idx];
 
 	/* Very good */
 	if (power > 1)
@@ -3937,8 +3963,10 @@ void add_random_ego_flag(object_type *o_ptr, ego_flag_set const &fego, bool_ *li
  */
 void apply_magic(object_type *o_ptr, int lev, bool_ okay, bool_ good, bool_ great, boost::optional<int> force_power)
 {
+	auto &k_info = game->edit_data.k_info;
+
 	int i, rolls;
-	object_kind *k_ptr = &k_info[o_ptr->k_idx];
+	auto k_ptr = &k_info[o_ptr->k_idx];
 
 	/* Aply luck */
 	lev += luck( -7, 7);
@@ -4358,9 +4386,11 @@ bool init_match_theme(obj_theme const &theme)
  */
 static bool kind_is_theme(obj_theme const *theme, int k_idx)
 {
+	auto const &k_info = game->edit_data.k_info;
+
 	assert(theme != nullptr);
 
-	object_kind *k_ptr = &k_info[k_idx];
+	auto k_ptr = &k_info[k_idx];
 
 	s32b prob = 0;
 
@@ -4551,7 +4581,9 @@ static bool kind_is_theme(obj_theme const *theme, int k_idx)
  */
 bool_ kind_is_legal(int k_idx)
 {
-	object_kind *k_ptr = &k_info[k_idx];
+	auto const &k_info = game->edit_data.k_info;
+
+	auto k_ptr = &k_info[k_idx];
 
 	if (!kind_is_theme(match_theme, k_idx)) return FALSE;
 
@@ -4595,7 +4627,9 @@ bool_ kind_is_legal(int k_idx)
  */
 static bool_ kind_is_good(int k_idx)
 {
-	object_kind *k_ptr = &k_info[k_idx];
+	auto const &k_info = game->edit_data.k_info;
+
+	auto k_ptr = &k_info[k_idx];
 
 	if (!kind_is_legal(k_idx)) return FALSE;
 
@@ -4692,8 +4726,9 @@ static bool_ kind_is_good(int k_idx)
 bool_ kind_is_artifactable(int k_idx)
 {
 	auto const &ra_info = game->edit_data.ra_info;
+	auto const &k_info = game->edit_data.k_info;
 
-	object_kind *k_ptr = &k_info[k_idx];
+	auto k_ptr = &k_info[k_idx];
 	if (kind_is_good(k_idx))
 	{
 		// Consider the item artifactable if there is at least one
@@ -4731,6 +4766,8 @@ bool_ kind_is_artifactable(int k_idx)
  */
 bool_ make_object(object_type *j_ptr, bool_ good, bool_ great, obj_theme const &theme)
 {
+	auto const &k_info = game->edit_data.k_info;
+
 	int invprob, base;
 
 
@@ -4847,6 +4884,7 @@ bool_ make_object(object_type *j_ptr, bool_ good, bool_ great, obj_theme const &
 void place_object(int y, int x, bool_ good, bool_ great, int where)
 {
 	auto const &d_info = game->edit_data.d_info;
+	auto &k_info = game->edit_data.k_info;
 
 	s16b o_idx;
 
@@ -4955,6 +4993,8 @@ void place_object(int y, int x, bool_ good, bool_ great, int where)
  */
 bool_ make_gold(object_type *j_ptr)
 {
+	auto const &k_info = game->edit_data.k_info;
+
 	int i;
 
 	s32b base;
@@ -5079,6 +5119,7 @@ void place_gold(int y, int x)
 s16b drop_near(object_type *j_ptr, int chance, int y, int x)
 {
 	auto const &f_info = game->edit_data.f_info;
+	auto &k_info = game->edit_data.k_info;
 
 	int i, k, d, s;
 

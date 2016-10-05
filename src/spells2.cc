@@ -3483,6 +3483,8 @@ object_filter_t const &item_tester_hook_recharge()
  */
 bool_ recharge(int power)
 {
+	auto const &k_info = game->edit_data.k_info;
+
 	int recharge_strength, recharge_amount;
 	int lev;
 	bool_ fail = FALSE;

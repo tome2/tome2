@@ -4415,6 +4415,8 @@ static int get_artifact_idx(int level)
 /* Chose a fate */
 void gain_fate(byte fate)
 {
+	auto const &k_info = game->edit_data.k_info;
+
 	int i;
 	int level;
 
@@ -4485,7 +4487,6 @@ void gain_fate(byte fate)
 				{
 					while (TRUE)
 					{
-						object_kind *k_ptr;
 						obj_theme theme;
 
 						/* No themes */
@@ -4506,7 +4507,7 @@ void gain_fate(byte fate)
 						/* Invalidate the cached allocation table */
 						alloc_kind_table_valid = FALSE;
 
-						k_ptr = &k_info[fates[i].o_idx];
+						auto k_ptr = &k_info[fates[i].o_idx];
 
 						if (!(k_ptr->flags & TR_INSTA_ART) && !(k_ptr->flags & TR_NORM_ART)) break;
 					}
