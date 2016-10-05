@@ -275,11 +275,6 @@ namespace {
 
 		static constexpr char const *name = "f_info.txt";
 
-		static void allocate()
-		{
-			// Nothing to do
-		}
-
 		static errr parse(FILE *fp)
 		{
 			return init_f_info_txt(fp);
@@ -290,11 +285,6 @@ namespace {
 	struct k_info_traits {
 
 		static constexpr char const *name = "k_info.txt";
-
-		static void allocate()
-		{
-			// Nothing to do
-		}
 
 		static errr parse(FILE *fp)
 		{
@@ -307,11 +297,6 @@ namespace {
 
 		static constexpr char const *name = "set_info.txt";
 
-		static void allocate()
-		{
-			// Nothing to do
-		}
-
 		static errr parse(FILE *fp)
 		{
 			return init_set_info_txt(fp);
@@ -322,11 +307,6 @@ namespace {
 	struct a_info_traits {
 
 		static constexpr char const *name = "a_info.txt";
-
-		static void allocate()
-		{
-			// Nothing to do
-		}
 
 		static errr parse(FILE *fp)
 		{
@@ -339,11 +319,6 @@ namespace {
 
 		static constexpr char const *name = "s_info.txt";
 
-		static void allocate()
-		{
-			// Nothing to do
-		}
-
 		static errr parse(FILE *fp)
 		{
 			return init_s_info_txt(fp);
@@ -354,11 +329,6 @@ namespace {
 	struct ab_info_traits {
 
 		static constexpr char const *name = "ab_info.txt";
-
-		static void allocate()
-		{
-			// Nothing to do
-		}
 
 		static errr parse(FILE *fp)
 		{
@@ -371,11 +341,6 @@ namespace {
 
 		static constexpr char const *name = "e_info.txt";
 
-		static void allocate()
-		{
-			// Nothing to do
-		}
-
 		static errr parse(FILE *fp)
 		{
 			return init_e_info_txt(fp);
@@ -386,11 +351,6 @@ namespace {
 	struct ra_info_traits {
 
 		static constexpr char const *name = "ra_info.txt";
-
-		static void allocate()
-		{
-			// Nothing to do
-		}
 
 		static errr parse(FILE *fp)
 		{
@@ -403,11 +363,6 @@ namespace {
 
 		static constexpr char const *name = "r_info.txt";
 
-		static void allocate()
-		{
-			// Nothing to do
-		}
-
 		static errr parse(FILE *fp)
 		{
 			return init_r_info_txt(fp);
@@ -418,11 +373,6 @@ namespace {
 	struct re_info_traits {
 
 		static constexpr char const *name = "re_info.txt";
-
-		static void allocate()
-		{
-			// Nothing to do
-		}
 
 		static errr parse(FILE *fp)
 		{
@@ -435,11 +385,6 @@ namespace {
 
 		static constexpr char const *name = "d_info.txt";
 
-		static void allocate()
-		{
-			// Nothing to do
-		}
-
 		static errr parse(FILE *fp)
 		{
 			return init_d_info_txt(fp);
@@ -450,11 +395,6 @@ namespace {
 	struct st_info_traits {
 
 		static constexpr char const *name = "st_info.txt";
-
-		static void allocate()
-		{
-			// Nothing to do
-		}
 
 		static errr parse(FILE *fp)
 		{
@@ -467,11 +407,6 @@ namespace {
 
 		static constexpr char const *name = "ow_info.txt";
 
-		static void allocate()
-		{
-			// Nothing to do
-		}
-
 		static errr parse(FILE *fp)
 		{
 			return init_ow_info_txt(fp);
@@ -482,11 +417,6 @@ namespace {
 	struct ba_info_traits {
 
 		static constexpr char const *name = "ba_info.txt";
-
-		static void allocate()
-		{
-			// Nothing to do
-		}
 
 		static errr parse(FILE *fp)
 		{
@@ -499,11 +429,6 @@ namespace {
 
 		static constexpr char const *name = "wf_info.txt";
 
-		static void allocate()
-		{
-			// Nothing to do
-		}
-
 		static errr parse(FILE *fp)
 		{
 			return init_wf_info_txt(fp);
@@ -514,11 +439,6 @@ namespace {
 	struct tr_info_traits {
 
 		static constexpr char const *name = "tr_info.txt";
-
-		static void allocate()
-		{
-			// Nothing to do
-		}
 
 		static errr parse(FILE *fp)
 		{
@@ -531,11 +451,6 @@ namespace {
 
 		static constexpr char const *name = "v_info.txt";
 
-		static void allocate()
-		{
-			// Nothing to do
-		}
-
 		static errr parse(FILE *fp)
 		{
 			return init_v_info_txt(fp);
@@ -547,11 +462,6 @@ namespace {
 
 		static constexpr char const *name = "p_info.txt";
 
-		static void allocate()
-		{
-			// Nothing to do
-		}
-
 		static errr parse(FILE *fp)
 		{
 			return init_player_info_txt(fp);
@@ -562,9 +472,6 @@ namespace {
 }
 
 template<typename T> static errr init_x_info() {
-
-	/* Allocate the data array */
-	T::allocate();
 
 	/* Build the filename */
 	boost::filesystem::path path(ANGBAND_DIR_EDIT);
