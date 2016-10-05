@@ -967,7 +967,7 @@ static void set_border(int y, int x)
 }
 
 
-static void town_borders(int t_idx, int qy, int qx)
+static void town_borders(int qy, int qx)
 {
 	int y, x;
 
@@ -1012,7 +1012,7 @@ static bool_ create_townpeople_hook(int r_idx)
  * layout, including the size and shape of the buildings, the
  * locations of the doorways, and the location of the stairs.
  */
-static void town_gen_hack(int t_idx, int qy, int qx)
+static void town_gen_hack(int qy, int qx)
 {
 	int y, x, floor;
 	bool_ (*old_get_mon_num_hook)(int r_idx);
@@ -1054,7 +1054,7 @@ static void town_gen_hack(int t_idx, int qy, int qx)
 	}
 
 	/* Generates the town's borders */
-	if (magik(TOWN_NORMAL_FLOOR)) town_borders(t_idx, qy, qx);
+	if (magik(TOWN_NORMAL_FLOOR)) town_borders(qy, qx);
 
 
 	/* Some inhabitants(leveled .. hehe :) */
@@ -1103,7 +1103,7 @@ static void town_gen_hack(int t_idx, int qy, int qx)
 	get_mon_num_prep();
 }
 
-static void town_gen_circle(int t_idx, int qy, int qx)
+static void town_gen_circle(int qy, int qx)
 {
 	int y, x, cy, cx, rad, floor;
 	bool_ (*old_get_mon_num_hook)(int r_idx);
@@ -1235,7 +1235,7 @@ static void town_gen_circle(int t_idx, int qy, int qx)
 }
 
 
-static void town_gen_hidden(int t_idx, int qy, int qx)
+static void town_gen_hidden()
 {
 	/* Get "remaining stores" */
 	auto rooms = get_shops();
@@ -1293,22 +1293,20 @@ static void town_gen_hidden(int t_idx, int qy, int qx)
  */
 void town_gen(int t_idx)
 {
-	int qy, qx;
-
 	/* Level too small to contain a town */
 	if (cur_hgt < SCREEN_HGT) return;
 	if (cur_wid < SCREEN_WID) return;
 
-	/* Center fo the level */
-	qy = (cur_hgt - SCREEN_HGT) / 2;
-	qx = (cur_wid - SCREEN_WID) / 2;
+	/* Center of the level */
+	int qy = (cur_hgt - SCREEN_HGT) / 2;
+	int qx = (cur_wid - SCREEN_WID) / 2;
 
 	/* Build stuff */
 	switch (rand_int(3))
 	{
 	case 0:
 		{
-			town_gen_hack(t_idx, qy, qx);
+			town_gen_hack(qy, qx);
 			if (wizard)
 			{
 				msg_format("Town level(normal) (%d, seed %d)",
@@ -1319,7 +1317,7 @@ void town_gen(int t_idx)
 
 	case 1:
 		{
-			town_gen_circle(t_idx, qy, qx);
+			town_gen_circle(qy, qx);
 			if (wizard)
 			{
 				msg_format("Town level(circle)(%d, seed %d)",
@@ -1330,7 +1328,7 @@ void town_gen(int t_idx)
 
 	case 2:
 		{
-			town_gen_hidden(t_idx, qy, qx);
+			town_gen_hidden();
 			if (wizard)
 			{
 				msg_format("Town level(hidden)(%d, seed %d)",
