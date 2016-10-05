@@ -13,7 +13,7 @@ extern object_flag_set player_flags();
 extern void wipe_saved(void);
 extern s16b tokenize(char *buf, s16b num, char **tokens, char delim1, char delim2);
 extern void display_player(int mode);
-extern cptr describe_player_location(void);
+extern std::string describe_player_location();
 extern errr file_character(cptr name, bool_ full);
 extern errr process_pref_file_aux(char *buf);
 extern errr process_pref_file(cptr name);

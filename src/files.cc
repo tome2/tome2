@@ -60,8 +60,10 @@
 #include "xtra1.hpp"
 #include "z-rand.hpp"
 
+#include <boost/algorithm/string.hpp>
 #include <boost/filesystem.hpp>
 #include <iostream>
+#include <fmt/format.h>
 #include <fstream>
 #include <limits>
 #include <memory>
@@ -2322,28 +2324,28 @@ void display_player(int mode)
  * Describe the player's location -- either by dungeon level, town, or in
  * wilderness with landmark reference.
  */
-cptr describe_player_location()
+std::string describe_player_location()
 {
 	auto const &wilderness = game->wilderness;
 	auto const &d_info = game->edit_data.d_info;
 
-	int i;
-	static char desc[80];
+	std::string desc;
+
 	int pwx = (p_ptr->wild_mode ? p_ptr->px : p_ptr->wilderness_x);
 	int pwy = (p_ptr->wild_mode ? p_ptr->py : p_ptr->wilderness_y);
 	int feat = wilderness(pwx, pwy).feat;
 
 	if (dungeon_type != DUNGEON_WILDERNESS && dun_level > 0)
 	{
-		sprintf(desc, "on level %d of %s", dun_level, d_info[dungeon_type].name.c_str());
+		desc += fmt::format("on level {:d} of {}", dun_level, d_info[dungeon_type].name);
 	}
 	else if (wf_info[feat].terrain_idx == TERRAIN_TOWN)
 	{
-		sprintf(desc, "in the town of %s", wf_info[feat].name);
+		desc += fmt::format("in the town of {}", wf_info[feat].name);
 	}
 	else if (wf_info[feat].entrance)
 	{
-		sprintf(desc, "near %s", wf_info[feat].name);
+		desc += fmt::format("near {}", wf_info[feat].name);
 	}
 	else
 	{
@@ -2382,12 +2384,12 @@ cptr describe_player_location()
 
 		if (!landmark)
 		{
-			sprintf(desc, "in %s", wf_info[feat].text);
+			desc += fmt::format("in {}", wf_info[feat].text);
 		}
 		else if (pwx == lwx && pwy == lwy)
 		{
 			/* Paranoia; this should have been caught above */
-			sprintf(desc, "near %s", wf_info[feat].name);
+			desc += fmt::format("near {}", wf_info[feat].name);
 		}
 		else
 		{
@@ -2409,7 +2411,8 @@ cptr describe_player_location()
 			if (dy * 81 < dx * 31) ns = "";
 			if (dx * 81 < dy * 31) ew = "";
 
-			sprintf(desc, "in %s %s%s of %s",
+			desc += fmt::format(
+				"in {} {}{} of {}",
 				wf_info[feat].text,
 				ns,
 				ew,
@@ -2417,10 +2420,8 @@ cptr describe_player_location()
 		}
 	}
 
-	/* strip trailing whitespace */
-	for (i = 0; desc[i]; ++i);
-	while (desc[--i] == ' ')
-		desc[i] = 0;
+	/* Strip trailing whitespace */
+	boost::trim_right(desc);
 
 	return desc;
 }
@@ -2724,7 +2725,10 @@ errr file_character(cptr name, bool_ full)
 	}
 
 	/* Where we are, if we're alive */
-	if (!death) fprintf(fff, "\n You are currently %s.", describe_player_location());
+	if (!death)
+	{
+		fprintf(fff, "\n You are currently %s.", describe_player_location().c_str());
+	}
 
 	/* Monsters slain */
 	{

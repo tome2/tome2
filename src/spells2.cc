@@ -831,7 +831,7 @@ void self_knowledge(FILE *fff)
 		static char buf[250];
 
 		sprintf(buf, "You are dead, killed by %s %s.",
-		        died_from, describe_player_location());
+			died_from, describe_player_location().c_str());
 		info[i++] = buf;
 	}
 
