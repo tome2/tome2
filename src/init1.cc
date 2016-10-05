@@ -43,7 +43,6 @@
 #include "store_action_type.hpp"
 #include "store_flag.hpp"
 #include "store_info_type.hpp"
-#include "store_type.hpp"
 #include "tables.hpp"
 #include "town_type.hpp"
 #include "trap_type.hpp"
@@ -53,7 +52,6 @@
 #include "variable.h"
 #include "variable.hpp"
 #include "vault_type.hpp"
-#include "wilderness_map.hpp"
 #include "wilderness_type_info.hpp"
 #include "z-rand.hpp"
 

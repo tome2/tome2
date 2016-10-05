@@ -26,10 +26,8 @@
 #include <vector>
 
 /* Chance of using syllables to form the name instead of the "template" files */
-#define TABLE_NAME      45
 #define A_CURSED        13
 #define WEIRD_LUCK      12
-#define ACTIVATION_CHANCE 3
 
 /*
  * Attempt to add a power to a randart
@@ -115,24 +113,6 @@ static bool_ grab_one_power(int *ra_idx, object_type *o_ptr, bool_ good, s16b *m
 	return (ret);
 }
 
-void give_activation_power (object_type * o_ptr)
-{
-	o_ptr->xtra2 = 0;
-	o_ptr->art_flags &= ~TR_ACTIVATE;
-	o_ptr->timeout = 0;
-}
-
-
-int get_activation_power()
-{
-	object_type *o_ptr, forge;
-
-	o_ptr = &forge;
-
-	give_activation_power(o_ptr);
-
-	return o_ptr->xtra2;
-}
 
 #define MIN_NAME_LEN 5
 #define MAX_NAME_LEN 9

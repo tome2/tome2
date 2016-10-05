@@ -278,13 +278,6 @@ char *macro__buf;
 
 
 /*
- * The array of normal options
- */
-u32b option_flag[8];
-u32b option_mask[8];
-
-
-/*
  * The array of window options
  */
 u32b window_flag[8];
