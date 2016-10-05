@@ -29,7 +29,7 @@ the game that you wish to do the command multiple times, unless you press a
 key or are otherwise disturbed.  To enter a "repeat count", type '0', followed
 by the numerical count, followed by the command.  You must type "space" before
 entering certain commands.  Skipping the numerical count yields a count of 99.
-An option allows certain commands (open, disarm, tunnel, etc) to auto-repeat.
+An option allows certain commands (open, tunnel, etc) to auto-repeat.
 
     Some commands will prompt for extra information, such as a direction, an
 inventory or equipment item, a spell, a textual inscription, the symbol of a
@@ -88,7 +88,7 @@ that you can always, for example, use "\" + "." + "6", to specify "run east".
  *****command.txt*1[a  Aim a wand]                           *****command.txt*2[A  Activate an artifact]
  *****command.txt*3[b  Browse a book]                        *****command.txt*4[B  Bash a door]
  *****command.txt*5[c  Close a door]                         *****command.txt*6[C  Character description]
- *****command.txt*7[d  Drop an item]                         *****command.txt*8[D  Disarm a trap]
+ *****command.txt*7[d  Drop an item]                         D  (unused)
  *****command.txt*9[e  Equipment list]                       *****command.txt*10[E  Eat some food]
  *****command.txt*11[f  Fire (shoot) an item]                 *****command.txt*12[F  Fuel your lantern/torch]
  *****command.txt*13[g  Stay still (flip pickup)]             *****command.txt*14[G  Gain new skills]
@@ -149,7 +149,7 @@ that you can always, for example, use "\" + "." + "6", to specify "run east".
  *****command.txt*45[a  Zap a rod (Activate)]                 *****command.txt*2[A  Activate an artifact]
  *****command.txt*95[b  (walk - south west)]                  *****command.txt*95[B  (run - south west)]
  *****command.txt*5[c  Close a door]                         *****command.txt*6[C  Character description]
- *****command.txt*7[d  Drop an item]                         *****command.txt*8[D  Disarm a trap or chest]
+ *****command.txt*7[d  Drop an item]                         D  (unused)
  *****command.txt*9[e  Equipment list]                       *****command.txt*10[E  Eat some food]
  *****command.txt*4[f  Bash a door (force)]                  *****command.txt*12[F  Fuel your lantern/torch]
  *****command.txt*13[g  Stay still (flip pickup)]             *****command.txt*14[G  Gain new skills]
@@ -265,8 +265,8 @@ ESCAPE which are always ignored as commands in case you type the command
 just after the count expires.
 
         You can tell ToME to automatically use a repeat count of 99
-with commands you normally want to repeat (open, disarm, tunnel, bash,
-alter, etc) by setting the "always_repeat" option.
+with commands you normally want to repeat (open, tunnel, bash, alter,
+etc) by setting the "always_repeat" option.
  
  
 #####R===  Selection of Objects ===
@@ -471,7 +471,7 @@ plus the "underlying command" key.  This is followed by the command name
 and "roguelike" keyset key, if different from the underlying command key.
 Then comes a brief description of the command, including information about
 alternative methods of specifying the command in each keyset, when needed.
-Several commands (tunnel, disarm, bash, open) are repeated 99 times if the
+Several commands (tunnel, bash, open) are repeated 99 times if the
 "always_repeat" option is set and no repeat count is given.  Some commands
 use the "repeat count" to automatically repeat the command several times,
 while others use the "repeat count" as an "argument", for example, commands
@@ -651,11 +651,10 @@ for a quantity will convert any "letters" into the maximal legal value.
 [[[[[GOpen a door or chest (o)]
         To open an object such as a door or chest, you must use this
         command.  If the object is locked, you will attempt to pick the
-        lock based on your disarming ability.  If you open a trapped chest
-        without disarming the traps first, the trap will be set off.  Some
-        doors will be jammed shut and may have to be forced open.  You may
-        need several tries to open a door or chest.  Open can take a count,
-        requires a direction, and is affected by the "always_repeat" option.
+        lock based.  Some doors will be jammed shut and may have to be
+        forced open.  You may need several tries to open a door or chest.
+        Open can take a count, requires a direction, and is affected by
+        the "always_repeat" option.
 ~~~~~5
 [[[[[GClose a door (c)]
         Non-intelligent and some other creatures cannot open doors, so
@@ -681,19 +680,12 @@ for a quantity will convert any "letters" into the maximal legal value.
         may permanently break it so that it can never be closed.  Bash or
         Force can take a count, requires a direction, and is affected by
         the "always_repeat" option.
-~~~~~8
-[[[[[GDisarm a trap or chest (D)]
-        You can attempt to disarm traps on the floor or on chests.  If you
-        fail, there is a chance that you will blunder and set it off.  You
-        can only disarm a trap after you have found it (usually with the
-        Search command).  Disarm can take a count, requires a direction,
-        and is affected by the "always_repeat" option.
 ~~~~~63
 [[[[[GAlter (+)]
         This special command allows the use of a single keypress to select
         any of the "obvious" commands above (attack, tunnel, bash, open,
-        disarm, close), and, by using macros or keymaps, to combine this
-        keypress with directions.  In general, this allows the use of the
+        close), and, by using macros or keymaps, to combine this keypress
+        with directions.  In general, this allows the use of the
         "control" key plus the appropriate "direction" key (including the
         roguelike direction keys in roguelike mode) as a kind of generic
         "alter the terrain feature of an adjacent grid" command.  Alter
