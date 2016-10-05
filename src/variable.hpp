@@ -43,7 +43,6 @@
 #include "timer_type_fwd.hpp"
 #include "town_type_fwd.hpp"
 #include "trap_type_fwd.hpp"
-#include "vault_type_fwd.hpp"
 #include "wilderness_type_info_fwd.hpp"
 #include "seed.hpp"
 
@@ -171,7 +170,6 @@ extern char player_base[32];
 extern ability_type *ab_info;
 extern skill_type *s_info;
 extern skill_descriptor *s_descriptors;
-extern vault_type *v_info;
 extern feature_type *f_info;
 extern object_kind *k_info;
 extern artifact_type *a_info;
@@ -207,7 +205,6 @@ extern u16b max_s_idx;
 extern u16b max_r_idx;
 extern u16b max_re_idx;
 extern u16b max_k_idx;
-extern u16b max_v_idx;
 extern u16b max_f_idx;
 extern u16b max_a_idx;
 extern u16b max_e_idx;

@@ -3744,8 +3744,10 @@ static void build_vault(int yval, int xval, int ymax, int xmax, std::string cons
  */
 static void build_type7(int by0, int bx0)
 {
-	vault_type *v_ptr = NULL;
-	int dummy = 0, xval, yval;
+	auto const &v_info = game->edit_data.v_info;
+
+	auto v_ptr(v_info.end());
+	int dummy = 0;
 
 	/* Pick a lesser vault */
 	while (dummy < SAFE_MAX_ATTEMPTS)
@@ -3753,13 +3755,15 @@ static void build_type7(int by0, int bx0)
 		dummy++;
 
 		/* Access a random vault record */
-		v_ptr = &v_info[rand_int(max_v_idx)];
+		v_ptr = uniform_element(v_info);
 
 		/* Accept the first lesser vault */
 		if (v_ptr->typ == 7) break;
 	}
 
 	/* Try to allocate space for room.  If fails, exit */
+	int xval;
+	int yval;
 	if (!room_alloc(v_ptr->wid, v_ptr->hgt, FALSE, by0, bx0, &xval, &yval))
 	{
 		if (options->cheat_room)
@@ -3806,8 +3810,10 @@ static void build_type7(int by0, int bx0)
  */
 static void build_type8(int by0, int bx0)
 {
-	vault_type *v_ptr = NULL;
-	int dummy = 0, xval, yval;
+	auto const &v_info = game->edit_data.v_info;
+
+	auto v_ptr(v_info.end());
+	int dummy = 0;
 
 	/* Pick a lesser vault */
 	while (dummy < SAFE_MAX_ATTEMPTS)
@@ -3815,13 +3821,15 @@ static void build_type8(int by0, int bx0)
 		dummy++;
 
 		/* Access a random vault record */
-		v_ptr = &v_info[rand_int(max_v_idx)];
+		v_ptr = uniform_element(v_info);
 
 		/* Accept the first greater vault */
 		if (v_ptr->typ == 8) break;
 	}
 
 	/* Try to allocate space for room.  If fails, exit */
+	int xval;
+	int yval;
 	if (!room_alloc(v_ptr->wid, v_ptr->hgt, FALSE, by0, bx0, &xval, &yval))
 	{
 		if (options->cheat_room)

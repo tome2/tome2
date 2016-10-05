@@ -51,7 +51,6 @@
 #include "util.h"
 #include "variable.h"
 #include "variable.hpp"
-#include "vault_type.hpp"
 #include "wilderness_type_info.hpp"
 #include "z-rand.hpp"
 
@@ -59,6 +58,20 @@
 
 using boost::algorithm::iequals;
 using boost::algorithm::ends_with;
+
+
+/**
+ * Expand vector such that it has room for an item at index i.
+ * If the vector is already large enough, nothing happens.
+ */
+template <class T> typename std::vector<T>::reference expand_to_fit_index(std::vector<T> &v, std::size_t i)
+{
+	if (v.size() < i + 1)
+	{
+		v.resize(i + 1);
+	}
+	return v[i];
+}
 
 
 /*
@@ -1950,12 +1963,12 @@ errr init_player_info_txt(FILE *fp)
  */
 errr init_v_info_txt(FILE *fp)
 {
-	int i;
 	char buf[1024];
-	char *s;
+
+	auto &v_info = game->edit_data.v_info;
 
 	/* Current entry */
-	vault_type *v_ptr = NULL;
+	vault_type *v_ptr = nullptr;
 
 	/* Just before the first record */
 	error_idx = -1;
@@ -1980,7 +1993,7 @@ errr init_v_info_txt(FILE *fp)
 		if (buf[0] == 'N')
 		{
 			/* Find the colon before the name */
-			s = strchr(buf + 2, ':');
+			char *s = strchr(buf + 2, ':');
 
 			/* Verify that colon */
 			if (!s) return (1);
@@ -1992,23 +2005,16 @@ errr init_v_info_txt(FILE *fp)
 			if (!*s) return (1);
 
 			/* Get the index */
-			i = atoi(buf + 2);
+			int i = atoi(buf + 2);
 
 			/* Verify information */
 			if (i <= error_idx) return (4);
-
-			/* Verify information */
-			if (i >= max_v_idx) return (2);
 
 			/* Save the index */
 			error_idx = i;
 
 			/* Point at the "info" */
-			v_ptr = &v_info[i];
-
-			/* Initialize data -- we ignore the name, it's not
-			 * used for anything */
-			v_ptr->data = my_strdup("");
+			v_ptr = &expand_to_fit_index(v_info, i);
 
 			/* Next... */
 			continue;
@@ -2021,7 +2027,7 @@ errr init_v_info_txt(FILE *fp)
 		if (buf[0] == 'D')
 		{
 			/* Acquire the text */
-			s = buf + 2;
+			cptr s = buf + 2;
 
 			/* Append data */
 			v_ptr->data += s;
@@ -6999,12 +7005,6 @@ static errr process_dungeon_file_aux(char *buf, int *yval, int *xval, int xvalst
 			else if (zz[0][0] == 'K')
 			{
 				max_k_idx = atoi(zz[1]);
-			}
-
-			/* Maximum v_idx */
-			else if (zz[0][0] == 'V')
-			{
-				max_v_idx = atoi(zz[1]);
 			}
 
 			/* Maximum f_idx */

@@ -27,9 +27,6 @@ M:r:14
 # Maximum number of items in k_info.txt
 M:K:886
 
-# Maximum number of vaults in v_info.txt
-M:V:108
-
 # Maximum number of terrain features in f_info.txt
 M:F:249
 

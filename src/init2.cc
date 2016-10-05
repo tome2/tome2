@@ -536,7 +536,7 @@ namespace {
 
 		static void allocate()
 		{
-			v_info = new vault_type[max_v_idx];
+			// Nothing to do
 		}
 
 		static errr parse(FILE *fp)

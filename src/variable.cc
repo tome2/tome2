@@ -431,11 +431,6 @@ player_spec *spp_ptr;
 
 
 /*
- * The vault generation arrays
- */
-vault_type *v_info;
-
-/*
  * The terrain feature arrays
  */
 feature_type *f_info;
@@ -677,11 +672,6 @@ u16b max_re_idx;
  * Maximum number of items in k_info.txt
  */
 u16b max_k_idx;
-
-/*
- * Maximum number of vaults in v_info.txt
- */
-u16b max_v_idx;
 
 /*
  * Maximum number of terrain features in f_info.txt
