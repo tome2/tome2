@@ -1,4 +1,5 @@
 .idea
+*.kdev4
 *.o
 lib*.a
 *.~*
@@ -11,4 +12,5 @@ install_manifest.txt
 Makefile
 compile_commands.json
 /nbproject
+/build
 tome2.cbp
