@@ -91,7 +91,7 @@ s32b rand_spread(s32b a, s32b d);
  **/
 template <class C> typename C::const_iterator uniform_element(C const &c)
 {
-	return c.begin() + rand_int(c.size());
+	return c.cbegin() + rand_int(c.size());
 }
 
 /**
