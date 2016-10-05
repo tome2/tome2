@@ -15,7 +15,6 @@
 #include "gods.hpp"
 #include "hist_type.hpp"
 #include "init2.hpp"
-#include "meta_class_type.hpp"
 #include "monster2.hpp"
 #include "monster_ego.hpp"
 #include "monster_race.hpp"
@@ -55,6 +54,8 @@
 #include "z-rand.hpp"
 
 #include <boost/algorithm/string/predicate.hpp>
+#include <boost/algorithm/string/classification.hpp>
+#include <boost/algorithm/string/split.hpp>
 #include <stdlib.h>
 
 using boost::algorithm::iequals;
@@ -925,18 +926,15 @@ static int read_ability(std::vector<player_race_ability_type> *abilities, char *
  */
 errr init_player_info_txt(FILE *fp)
 {
-	int i = 0;
 	int lev = 1;
 	int tit_idx = 0;
 	char buf[1024];
-	char *s, *t;
 
 	/* Current entry */
 	player_race *rp_ptr = NULL;
 	player_race_mod *rmp_ptr = NULL;
 	player_class *c_ptr = NULL;
 	player_spec *s_ptr = NULL;
-	meta_class_type *mc_ptr = NULL;
 
 
 	/* Just before the first record */
@@ -1003,7 +1001,7 @@ errr init_player_info_txt(FILE *fp)
 		if ((buf[0] == 'R') && (buf[2] == 'N'))
 		{
 			/* Find the colon before the name */
-			s = strchr(buf + 4, ':');
+			char *s = strchr(buf + 4, ':');
 
 			/* Verify that colon */
 			if (!s) return (1);
@@ -1015,7 +1013,7 @@ errr init_player_info_txt(FILE *fp)
 			if (!*s) return (1);
 
 			/* Get the index */
-			i = atoi(buf + 4);
+			int i = atoi(buf + 4);
 
 			/* Verify information */
 			if (i < error_idx) return (4);
@@ -1044,7 +1042,7 @@ errr init_player_info_txt(FILE *fp)
 		if ((buf[0] == 'R') && (buf[2] == 'D'))
 		{
 			/* Acquire the text */
-			s = buf + 4;
+			char const *s = buf + 4;
 
 			if (!rp_ptr->desc)
 			{
@@ -1113,12 +1111,11 @@ errr init_player_info_txt(FILE *fp)
 		/* Process 'Z' for "powers" */
 		if ((buf[0] == 'R') && (buf[2] == 'Z'))
 		{
-			int i;
-
 			/* Acquire the text */
-			s = buf + 4;
+			char const *s = buf + 4;
 
 			/* Find it in the list */
+			int i;
 			for (i = 0; i < POWER_MAX; i++)
 			{
 				if (iequals(s, powers_type[i].name)) break;
@@ -1226,7 +1223,7 @@ errr init_player_info_txt(FILE *fp)
 		if ((buf[0] == 'S') && (buf[2] == 'N'))
 		{
 			/* Find the colon before the name */
-			s = strchr(buf + 4, ':');
+			char *s = strchr(buf + 4, ':');
 
 			/* Verify that colon */
 			if (!s) return (1);
@@ -1238,7 +1235,7 @@ errr init_player_info_txt(FILE *fp)
 			if (!*s) return (1);
 
 			/* Get the index */
-			i = atoi(buf + 4);
+			int i = atoi(buf + 4);
 
 			/* Verify information */
 			if (i < error_idx) return (4);
@@ -1266,7 +1263,7 @@ errr init_player_info_txt(FILE *fp)
 		if ((buf[0] == 'S') && (buf[2] == 'D'))
 		{
 			/* Acquire the text */
-			s = buf + 6;
+			char const *s = buf + 6;
 
 			/* Place */
 			if (buf[4] == 'A')
@@ -1344,12 +1341,11 @@ errr init_player_info_txt(FILE *fp)
 		/* Process 'Z' for "powers" */
 		if ((buf[0] == 'S') && (buf[2] == 'Z'))
 		{
-			int i;
-
 			/* Acquire the text */
-			s = buf + 4;
+			char const *s = buf + 4;
 
 			/* Find it in the list */
+			int i;
 			for (i = 0; i < POWER_MAX; i++)
 			{
 				if (iequals(s, powers_type[i].name)) break;
@@ -1481,25 +1477,26 @@ errr init_player_info_txt(FILE *fp)
 		/* Process 'N' for "New/Number/Name" */
 		if ((buf[0] == 'C') && (buf[2] == 'N'))
 		{
-			/* Find the colon before the name */
-			s = strchr(buf + 4, ':');
+			/* Advance beyond prefix */
+			char *s = strchr(buf + 4, ':');
 
 			/* Verify that colon */
 			if (!s) return (1);
 
-			/* Nuke the colon, advance to the name */
-			*s++ = '\0';
+			/* Extract the suffix */
+			std::string suffix(s + 1);
+			if (suffix.empty()) return (1);
 
-			/* Paranoia -- require a name */
-			if (!*s) return (1);
+			/* Split suffix into fields */
+			std::vector<std::string> fields;
+			boost::algorithm::split(fields, suffix, boost::is_any_of(":"));
 
-			/* Get the index */
-			i = atoi(buf + 4);
+			/* Make sure we have two fields */
+			if (fields.size() < 2) return (1);
 
-			/* Verify information */
+			/* Get the entry index */
+			int i = atoi(buf + 4);
 			if (i < error_idx) return (4);
-
-			/* Verify information */
 			if (i >= max_c_idx) return (2);
 
 			/* Save the index */
@@ -1510,7 +1507,8 @@ errr init_player_info_txt(FILE *fp)
 
 			/* Copy name */
 			assert(!c_ptr->title);
-			c_ptr->title = my_strdup(s);
+			c_ptr->display_order_idx = std::stoi(fields[0]);
+			c_ptr->title = my_strdup(fields[1].c_str());
 
 			/* Initialize */
 			lev = 1;
@@ -1524,7 +1522,7 @@ errr init_player_info_txt(FILE *fp)
 		if ((buf[0] == 'C') && (buf[2] == 'D'))
 		{
 			/* Acquire the text */
-			s = buf + 6;
+			char const *s = buf + 6;
 
 			switch (buf[4])
 			{
@@ -1667,12 +1665,11 @@ errr init_player_info_txt(FILE *fp)
 		/* Process 'Z' for "powers" */
 		if ((buf[0] == 'C') && (buf[2] == 'Z'))
 		{
-			int i;
-
 			/* Acquire the text */
-			s = buf + 4;
+			char const *s = buf + 4;
 
 			/* Find it in the list */
+			int i;
 			for (i = 0; i < POWER_MAX; i++)
 			{
 				if (iequals(s, powers_type[i].name)) break;
@@ -1735,8 +1732,10 @@ errr init_player_info_txt(FILE *fp)
 		if ((buf[0] == 'C') && (buf[2] == 'F'))
 		{
 			/* Parse every entry */
-			for (s = buf + 4; *s; )
+			for (char *s = buf + 4; *s; )
 			{
+				char *t;
+
 				/* Find the end of this entry */
 				for (t = s; *t && (*t != ' ') && (*t != '|'); ++t) /* loop */;
 
@@ -1768,7 +1767,7 @@ errr init_player_info_txt(FILE *fp)
 			if (buf[4] == 'N')
 			{
 				/* Find the colon before the name */
-				s = buf + 6;
+				char const *s = buf + 6;
 
 				/* Paranoia -- require a name */
 				if (!*s) return (1);
@@ -1788,7 +1787,7 @@ errr init_player_info_txt(FILE *fp)
 			if (buf[4] == 'D')
 			{
 				/* Acquire the text */
-				s = buf + 6;
+				char const *s = buf + 6;
 
 				if (!s_ptr->desc)
 				{
@@ -1860,8 +1859,10 @@ errr init_player_info_txt(FILE *fp)
 			if (buf[4] == 'G')
 			{
 				/* Parse every entry */
-				for (s = buf + 6; *s; )
+				for (char *s = buf + 6; *s; )
 				{
+					char *t;
+
 					/* Find the end of this entry */
 					for (t = s; *t && (*t != ' ') && (*t != '|'); ++t) /* loop */;
 
@@ -1885,69 +1886,6 @@ errr init_player_info_txt(FILE *fp)
 				/* Next... */
 				continue;
 			}
-		}
-
-		/* Process 'N' for "New/Number/Name" */
-		if ((buf[0] == 'M') && (buf[2] == 'N'))
-		{
-			/* Find the colon before the name */
-			s = strchr(buf + 4, ':');
-
-			/* Verify that colon */
-			if (!s) return (1);
-
-			/* Nuke the colon, advance to the name */
-			*s++ = '\0';
-
-			/* Paranoia -- require a name */
-			if (!*s) return (1);
-
-			/* Get the index */
-			i = atoi(buf + 4);
-
-			/* Verify information */
-			if (i < error_idx) return (4);
-
-			/* Verify information */
-			if (i >= max_mc_idx) return (2);
-
-			/* Save the index */
-			error_idx = i;
-
-			/* Point at the "info" */
-			mc_ptr = &meta_class_info[i];
-
-			/* Append chars to the name */
-			strcpy(mc_ptr->name, s + 2);
-			mc_ptr->color = color_char_to_attr(s[0]);
-
-			/* Next... */
-			continue;
-		}
-
-		/* Process 'C' for "Classes" */
-		if ((buf[0] == 'M') && (buf[2] == 'C'))
-		{
-			int i;
-
-			/* Acquire the text */
-			s = buf + 4;
-
-			/* Find it in the list */
-			for (i = 0; i < max_c_idx; i++)
-			{
-				if (class_info[i].title && iequals(s, class_info[i].title))
-				{
-					break;
-				}
-			}
-
-			if (i == max_c_idx) return (6);
-
-			mc_ptr->classes.push_back(i);
-
-			/* Next... */
-			continue;
 		}
 
 		/* Oops */
@@ -7030,10 +6968,6 @@ static errr process_dungeon_file_aux(char *buf, int *yval, int *xval, int xvalst
 				else if (zz[1][0] == 'C')
 				{
 					max_c_idx = atoi(zz[2]);
-				}
-				else if (zz[1][0] == 'M')
-				{
-					max_mc_idx = atoi(zz[2]);
 				}
 				else if (zz[1][0] == 'H')
 				{

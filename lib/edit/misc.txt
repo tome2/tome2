@@ -63,9 +63,6 @@ M:P:S:10
 # Maximum number of class types in p_info.txt
 M:P:C:32
 
-# Maximum number of meta class types in p_info.txt
-M:P:M:1
-
 # Maximum number of histories types in p_info.txt
 M:P:H:266
 

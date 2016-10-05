@@ -14,7 +14,6 @@
 #include "fate.hpp"
 #include "feature_type_fwd.hpp"
 #include "hist_type_fwd.hpp"
-#include "meta_class_type_fwd.hpp"
 #include "monster_ego_fwd.hpp"
 #include "monster_race_fwd.hpp"
 #include "monster_type_fwd.hpp"
@@ -174,7 +173,6 @@ extern monster_race *r_info;
 extern monster_ego *re_info;
 extern dungeon_info_type *d_info;
 extern player_class *class_info;
-extern meta_class_type *meta_class_info;
 extern player_race *race_info;
 extern player_race_mod *race_mod_info;
 extern trap_type *t_info;
@@ -206,7 +204,6 @@ extern u16b max_m_idx;
 extern u16b max_t_idx;
 extern u16b max_rp_idx;
 extern u16b max_c_idx;
-extern u16b max_mc_idx;
 extern u16b max_rmp_idx;
 extern u16b max_st_idx;
 extern u16b max_wf_idx;

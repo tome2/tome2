@@ -20,7 +20,6 @@
 #include "init1.hpp"
 #include "lua_bind.hpp"
 #include "messages.hpp"
-#include "meta_class_type.hpp"
 #include "modules.hpp"
 #include "monster_ego.hpp"
 #include "monster_race.hpp"
@@ -556,7 +555,6 @@ namespace {
 			race_mod_info = new player_race_mod[max_rmp_idx];
 			class_info = new player_class[max_c_idx];
 			bg = make_array<hist_type>(max_bg_idx);
-			meta_class_info = new meta_class_type[max_mc_idx];
 			gen_skill = new skill_modifiers;
 		}
 

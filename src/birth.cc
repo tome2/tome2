@@ -24,7 +24,6 @@
 #include "init2.hpp"
 #include "mimic.hpp"
 #include "messages.hpp"
-#include "meta_class_type.hpp"
 #include "modules.hpp"
 #include "monster2.hpp"
 #include "monster_race.hpp"
@@ -1478,7 +1477,7 @@ static bool_ do_quick_start = FALSE;
 
 static bool_ player_birth_aux_ask()
 {
-	int i, k, n, v, sel;
+	int k, n, v, sel;
 
 	int racem[100], max_racem = 0;
 
@@ -1787,52 +1786,29 @@ static bool_ player_birth_aux_ask()
 	}
 	else
 	{
-		int z;
-
-		for (z = 0; z < 2; z++)
-			restrictions[z] = (rp_ptr->choice[z] | rmp_ptr->pclass[z]) & (~rmp_ptr->mclass[z]);
-
-		if (max_mc_idx > 1)
+		for (int z = 0; z < 2; z++)
 		{
-			/* Extra info */
-			Term_putstr(5, 13, -1, TERM_WHITE,
-			            "Your 'class' determines various intrinsic abilities and bonuses.");
+			restrictions[z] = (rp_ptr->choice[z] | rmp_ptr->pclass[z]) & (~rmp_ptr->mclass[z]);
+		}
 
-			/* Get a class type */
-			for (i = 0; i < max_mc_idx; i++)
-				c_put_str(meta_class_info[i].color, format("%c) %s", I2A(i), meta_class_info[i].name), 16 + i, 2);
-			while (1)
+		// Get list of all the classes.
+		std::vector<u16b> class_types;
+		for (std::size_t i = 0; i < max_c_idx; i++)
+		{
+			if (class_info[i].title)
 			{
-				strnfmt(buf, 200, "Choose a class type (a-%c), * for random, = for options: ", I2A(max_mc_idx - 1));
-				put_str(buf, 15, 2);
-				c = inkey();
-				if (c == 'Q') quit(NULL);
-				if (c == 'S') return (FALSE);
-				if (c == '*')
-				{
-					k = rand_int(max_mc_idx);
-					break;
-				}
-				k = (islower(c) ? A2I(c) : (D2I(c) + 26));
-				if ((k >= 0) && (k < max_mc_idx)) break;
-				if (c == '?') do_cmd_help();
-				else if (c == '=')
-				{
-					screen_save();
-					do_cmd_options_aux(6, "Startup Options", FALSE);
-					screen_load();
-				}
-				else bell();
+				class_types.push_back(i);
 			}
 		}
-		else
-		{
-			k = 0;
-		}
 
-		clear_from(15);
-
-		auto const &class_types = meta_class_info[k].classes;
+		// Sort into display order
+		std::stable_sort(
+			class_types.begin(),
+			class_types.end(),
+			[](auto i, auto j) {
+				return class_info[i].display_order_idx < class_info[j].display_order_idx;
+			}
+		);
 
 		/* Count classes */
 		n = class_types.size();

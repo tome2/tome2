@@ -20,6 +20,8 @@ struct player_class
 	char *desc = nullptr;                                /* Small desc of the class */
 	const char *titles[PY_MAX_LEVEL / 5] { };            /* Titles */
 
+	int display_order_idx;                               /* Display order index; lowest first */
+
 	player_shared ps;
 
 	player_race_flag_set flags;

@@ -503,7 +503,6 @@ player_race_mod *race_mod_info;
  * Player class arrays
  */
 player_class *class_info;
-meta_class_type *meta_class_info;
 
 /*
  * The wilderness features arrays
@@ -693,7 +692,6 @@ u16b max_set_idx = 1;
 u16b max_rp_idx;
 u16b max_rmp_idx;
 u16b max_c_idx;
-u16b max_mc_idx;
 
 /*
  * Maximum number of objects in the level
