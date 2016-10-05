@@ -3222,6 +3222,8 @@ static bool_ enter_debug_mode(void)
  */
 static void process_command(void)
 {
+	auto const &wf_info = game->edit_data.wf_info;
+
 	char error_m[80];
 
 	/* Handle repeating the last command */

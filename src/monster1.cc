@@ -1536,6 +1536,8 @@ static bool_ monster_lava(int r_idx)
 
 void set_mon_num_hook(void)
 {
+	auto const &wf_info = game->edit_data.wf_info;
+
 	if (!dun_level)
 	{
 		auto const &wilderness = game->wilderness;

@@ -6000,9 +6000,9 @@ errr init_ow_info_txt(FILE *fp)
  */
 errr init_wf_info_txt(FILE *fp)
 {
-	int i;
+	auto &wf_info = game->edit_data.wf_info;
+
 	char buf[1024];
-	char *s;
 
 	/* Current entry */
 	wilderness_type_info *wf_ptr = NULL;
@@ -6029,7 +6029,7 @@ errr init_wf_info_txt(FILE *fp)
 		if (buf[0] == 'N')
 		{
 			/* Find the colon before the name */
-			s = strchr(buf + 2, ':');
+			char *s = strchr(buf + 2, ':');
 
 			/* Verify that colon */
 			if (!s) return (1);
@@ -6041,19 +6041,16 @@ errr init_wf_info_txt(FILE *fp)
 			if (!*s) return (1);
 
 			/* Get the index */
-			i = atoi(buf + 2);
+			int i = atoi(buf + 2);
 
 			/* Verify information */
 			if (i < error_idx) return (4);
-
-			/* Verify information */
-			if (i >= max_wf_idx) return (2);
 
 			/* Save the index */
 			error_idx = i;
 
 			/* Point at the "info" */
-			wf_ptr = &wf_info[i];
+			wf_ptr = &expand_to_fit_index(wf_info, i);
 
 			/* Copy the name */
 			assert(!wf_ptr->name);
@@ -6070,7 +6067,7 @@ errr init_wf_info_txt(FILE *fp)
 		if (buf[0] == 'D')
 		{
 			/* Acquire the text */
-			s = buf + 2;
+			char *s = buf + 2;
 
 			/* Copy description */
 			assert(!wf_ptr->text);
@@ -6177,6 +6174,7 @@ static dungeon_grid letter[255];
 static errr process_dungeon_file_aux(char *buf, int *yval, int *xval, int xvalstart, int ymax, int xmax, bool_ full)
 {
 	auto &wilderness = game->wilderness;
+	auto &wf_info = game->edit_data.wf_info;
 
 	int i;
 
@@ -6830,12 +6828,6 @@ static errr process_dungeon_file_aux(char *buf, int *yval, int *xval, int xvalst
 			else if (zz[0][0] == 'U')
 			{
 				max_t_idx = atoi(zz[1]);
-			}
-
-			/* Maximum wf_idx */
-			else if (zz[0][0] == 'W')
-			{
-				max_wf_idx = atoi(zz[1]);
 			}
 
 			/* Maximum wilderness x size */

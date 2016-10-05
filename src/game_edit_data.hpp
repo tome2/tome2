@@ -15,6 +15,7 @@
 #include "store_action_type.hpp"
 #include "store_info_type.hpp"
 #include "vault_type.hpp"
+#include "wilderness_type_info.hpp"
 
 #include <vector>
 
@@ -94,6 +95,11 @@ struct GameEditData {
 	 * Monster race egos
 	 */
 	std::vector<monster_ego> re_info;
+
+	/**
+	 * Wilderness features
+	 */
+	std::vector<wilderness_type_info> wf_info;
 
 	/**
 	 * Base skills for all characters.

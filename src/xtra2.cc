@@ -3892,6 +3892,7 @@ static int target_set_aux(int y, int x, int mode, cptr info)
 {
 	auto const &d_info = game->edit_data.d_info;
 	auto const &st_info = game->edit_data.st_info;
+	auto const &wf_info = game->edit_data.wf_info;
 
 	cave_type *c_ptr = &cave[y][x];
 

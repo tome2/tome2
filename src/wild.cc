@@ -157,6 +157,8 @@ static void plasma_recursive(int x1, int y1, int x2, int y2,
 static int generate_area(int y, int x, bool_ border, bool_ corner)
 {
 	auto const &wilderness = game->wilderness;
+	auto const &wf_info = game->edit_data.wf_info;
+
 	int road, entrance;
 	int x1, y1;
 	int hack_floor = 0;
@@ -577,6 +579,8 @@ void wilderness_gen()
 void wilderness_gen_small()
 {
 	auto const &wilderness = game->wilderness;
+	auto const &wf_info = game->edit_data.wf_info;
+
 	int xstart = 0;
 	int ystart = 0;
 

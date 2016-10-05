@@ -501,7 +501,7 @@ namespace {
 
 		static void allocate()
 		{
-			wf_info = new wilderness_type_info[max_wf_idx];
+			// Nothing to do
 		}
 
 		static errr parse(FILE *fp)

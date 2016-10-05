@@ -2340,6 +2340,7 @@ std::string describe_player_location()
 {
 	auto const &wilderness = game->wilderness;
 	auto const &d_info = game->edit_data.d_info;
+	auto const &wf_info = game->edit_data.wf_info;
 
 	std::string desc;
 
@@ -2370,13 +2371,11 @@ std::string describe_player_location()
 		 */
 		int landmark = 0, lwx = 0, lwy = 0;
 		int l_dist = -1;
-		int i;
 
-		for (i = 0; i < max_wf_idx; i++)
+		for (std::size_t i = 0; i < wf_info.size(); i++)
 		{
 			int wx = wf_info[i].wild_x;
 			int wy = wf_info[i].wild_y;
-			int dist;
 
 			/* Skip if not a landmark */
 			if (!wf_info[i].entrance) continue;
@@ -2384,7 +2383,7 @@ std::string describe_player_location()
 			/* Skip if we haven't seen it */
 			if (!wilderness(wx, wy).known) continue;
 
-			dist = distance(wy, wx, pwy, pwx);
+			int dist = distance(wy, wx, pwy, pwx);
 			if (dist < l_dist || l_dist < 0)
 			{
 				landmark = i;
@@ -2525,7 +2524,7 @@ void file_character_print_item(FILE *fff, char label, object_type *obj, bool_ fu
  *
  * Prints out one "store" (for Home and Mathom-house)
  */
-static void file_character_print_store(FILE *fff, wilderness_type_info *place, std::size_t store, bool_ full)
+static void file_character_print_store(FILE *fff, wilderness_type_info const *place, std::size_t store, bool_ full)
 {
 	auto const &st_info = game->edit_data.st_info;
 
@@ -2555,7 +2554,7 @@ static void file_character_print_store(FILE *fff, wilderness_type_info *place, s
  * was not already there.  XXX This is an ugly workaround for the double Gondolin
  * problem.
  */
-static bool_ file_character_check_stores(std::unordered_set<store_type *> *seen_stores, wilderness_type_info *place, int store)
+static bool_ file_character_check_stores(std::unordered_set<store_type *> *seen_stores, wilderness_type_info const *place, int store)
 {
 	town_type *town = &town_info[place->entrance];
 	store_type *st_ptr = &town->store[store];
@@ -2580,8 +2579,9 @@ static bool_ file_character_check_stores(std::unordered_set<store_type *> *seen_
 errr file_character(cptr name, bool_ full)
 {
 	auto const &d_info = game->edit_data.d_info;
+	auto const &wf_info = game->edit_data.wf_info;
 
-	int i, j, x, y;
+	int i, x, y;
 	byte a;
 	char c;
 	int fd = -1;
@@ -2874,12 +2874,12 @@ errr file_character(cptr name, bool_ full)
 	/* Print all homes in the different towns */
 	{
 		std::unordered_set<store_type *> seen_stores;
-		for (j = 0; j < max_wf_idx; j++)
+		for (auto const &wf_ref: wf_info)
 		{
-			if (wf_info[j].feat == FEAT_TOWN &&
-			    file_character_check_stores(&seen_stores, &wf_info[j], 7))
+			if (wf_ref.feat == FEAT_TOWN &&
+			    file_character_check_stores(&seen_stores, &wf_ref, 7))
 			{
-				file_character_print_store(fff, &wf_info[j], 7, full);
+				file_character_print_store(fff, &wf_ref, 7, full);
 			}
 		}
 	}
@@ -2887,12 +2887,12 @@ errr file_character(cptr name, bool_ full)
 	/* Print all Mathom-houses in the different towns */
 	{
 		std::unordered_set<store_type *> seen_stores;
-		for (j = 0; j < max_wf_idx; j++)
+		for (auto const &wf_ref: wf_info)
 		{
-			if (wf_info[j].feat == FEAT_TOWN &&
-			    file_character_check_stores(&seen_stores, &wf_info[j], 57))
+			if (wf_ref.feat == FEAT_TOWN &&
+			    file_character_check_stores(&seen_stores, &wf_ref, 57))
 			{
-				file_character_print_store(fff, &wf_info[j], 57, full);
+				file_character_print_store(fff, &wf_ref, 57, full);
 			}
 		}
 	}

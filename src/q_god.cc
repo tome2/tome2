@@ -294,6 +294,7 @@ std::string quest_god_describe()
 static void quest_god_place_rand_dung()
 {
 	auto &wilderness = game->wilderness;
+	auto const &wf_info = game->edit_data.wf_info;
 
 	int x = -1, y = -1, tries;
 

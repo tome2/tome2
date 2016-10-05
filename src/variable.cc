@@ -460,7 +460,6 @@ monster_race *r_info;
 /*
  * The wilderness features arrays
  */
-wilderness_type_info *wf_info;
 int wildc2i[256];
 
 /*
@@ -618,11 +617,6 @@ u16b max_m_idx;
  * Maximum number of traps in tr_info.txt
  */
 u16b max_t_idx;
-
-/*
- * Maximum number of wilderness features in wf_info.txt
- */
-u16b max_wf_idx;
 
 /*
  * Flags for initialization

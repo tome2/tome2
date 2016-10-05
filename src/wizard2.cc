@@ -82,6 +82,8 @@ static void wiz_align_monster(int status)
  */
 static void teleport_player_town(int town)
 {
+	auto const &wf_info = game->edit_data.wf_info;
+
 	autosave_checkpoint();
 
 	/* Change town */

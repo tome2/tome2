@@ -2523,6 +2523,8 @@ void do_cmd_spike(void)
 
 static void do_cmd_walk_jump(int pickup, bool_ disarm)
 {
+	auto const &wf_info = game->edit_data.wf_info;
+
 	int dir;
 
 	bool_ more = FALSE;
