@@ -2716,7 +2716,6 @@ static char request_command_buffer[256];
 * request_command().  This MUST have at least twice as many characters as
 * there are building actions in the actions[] array in store_info_type.
 */
-#define MAX_IGNORE_KEYMAPS 12
 char request_command_ignore_keymaps[MAX_IGNORE_KEYMAPS];
 
 /*

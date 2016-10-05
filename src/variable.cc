@@ -517,16 +517,6 @@ int wildc2i[256];
 store_info_type *st_info;
 
 /*
- * The building actions types arrays
- */
-store_action_type *ba_info;
-
-/*
- * The owner types arrays
- */
-owner_type *ow_info;
-
-/*
  * Default texts for feature information.
  */
 cptr DEFAULT_FEAT_TEXT = "a wall blocking your way";
@@ -704,16 +694,6 @@ u16b max_rp_idx;
 u16b max_rmp_idx;
 u16b max_c_idx;
 u16b max_mc_idx;
-
-/*
- * Maximum number of actions types in ba_info.txt
- */
-u16b max_ba_idx;
-
-/*
- * Maximum number of owner types in ow_info.txt
- */
-u16b max_ow_idx;
 
 /*
  * Maximum number of objects in the level

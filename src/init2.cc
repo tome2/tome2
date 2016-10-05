@@ -472,7 +472,7 @@ namespace {
 
 		static void allocate()
 		{
-			ow_info = make_array<owner_type>(max_ow_idx);
+			// Nothing to do
 		}
 
 		static errr parse(FILE *fp)
@@ -488,7 +488,7 @@ namespace {
 
 		static void allocate()
 		{
-			ba_info = make_array<store_action_type>(max_ba_idx);
+			// Nothing to do
 		}
 
 		static errr parse(FILE *fp)

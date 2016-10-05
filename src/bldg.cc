@@ -16,6 +16,7 @@
 #include "cave_type.hpp"
 #include "cmd3.hpp"
 #include "files.hpp"
+#include "game.hpp"
 #include "hooks.hpp"
 #include "hook_quest_finish_in.hpp"
 #include "hook_quest_fail_in.hpp"
@@ -53,8 +54,9 @@ static int building_loc = 0;
  */
 static bool_ is_state_aux(store_type const *s_ptr, int state)
 {
-	owner_type *ow_ptr = &ow_info[s_ptr->owner];
+	auto const &ow_info = game->edit_data.ow_info;
 
+	auto ow_ptr = &ow_info[s_ptr->owner];
 
 	/* Check race */
 	if (ow_ptr->races[state][p_ptr->prace / 32] & (1 << p_ptr->prace))
@@ -112,11 +114,12 @@ static void clear_bldg(int min_row, int max_row)
  */
 void show_building(store_type const *s_ptr)
 {
+	auto const &ba_info = game->edit_data.ba_info;
 	store_info_type *st_ptr = &st_info[s_ptr->st_idx];
 
 	for (std::size_t i = 0; i < st_ptr->actions.size(); i++)
 	{
-		store_action_type *ba_ptr = &ba_info[st_ptr->actions[i]];
+		auto ba_ptr = &ba_info[st_ptr->actions[i]];
 
 		byte action_color;
 		char buff[20];
@@ -194,7 +197,7 @@ void show_building(store_type const *s_ptr)
 		strnfmt(tmp_str, 80, " %c", ba_ptr->letter);
 		c_put_str(TERM_YELLOW, tmp_str, 21 + (i / 2), 17 + (30 * (i % 2)));
 
-		strnfmt(tmp_str, 80, ") %s %s", ba_ptr->name, buff);
+		strnfmt(tmp_str, 80, ") %s %s", ba_ptr->name.c_str(), buff);
 		c_put_str(action_color, tmp_str, 21 + (i / 2), 2 + 17 + (30 * (i % 2)));
 	}
 }

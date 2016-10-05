@@ -21,7 +21,6 @@
 #include "object_kind_fwd.hpp"
 #include "object_type_fwd.hpp"
 #include "options.hpp"
-#include "owner_type_fwd.hpp"
 #include "player_class_fwd.hpp"
 #include "player_defs.hpp"
 #include "player_race_fwd.hpp"
@@ -36,7 +35,6 @@
 #include "skill_modifiers_fwd.hpp"
 #include "skill_type_fwd.hpp"
 #include "skills_defs.hpp"
-#include "store_action_type_fwd.hpp"
 #include "store_info_type_fwd.hpp"
 #include "timer_type_fwd.hpp"
 #include "town_type_fwd.hpp"
@@ -183,8 +181,6 @@ extern trap_type *t_info;
 extern wilderness_type_info *wf_info;
 extern int wildc2i[256];
 extern store_info_type *st_info;
-extern store_action_type *ba_info;
-extern owner_type *ow_info;
 extern set_type *set_info;
 extern cptr DEFAULT_FEAT_TEXT;
 extern cptr DEFAULT_FEAT_TUNNEL;
@@ -213,8 +209,6 @@ extern u16b max_c_idx;
 extern u16b max_mc_idx;
 extern u16b max_rmp_idx;
 extern u16b max_st_idx;
-extern u16b max_ba_idx;
-extern u16b max_ow_idx;
 extern u16b max_wf_idx;
 extern u16b max_set_idx;
 extern int init_flags;

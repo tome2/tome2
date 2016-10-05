@@ -5928,9 +5928,9 @@ errr init_st_info_txt(FILE *fp)
  */
 errr init_ba_info_txt(FILE *fp)
 {
-	int i = 0;
+	auto &ba_info = game->edit_data.ba_info;
+
 	char buf[1024];
-	char *s;
 
 	/* Current entry */
 	store_action_type *ba_ptr = NULL;
@@ -5958,7 +5958,7 @@ errr init_ba_info_txt(FILE *fp)
 		if (buf[0] == 'N')
 		{
 			/* Find the colon before the name */
-			s = strchr(buf + 2, ':');
+			char *s = strchr(buf + 2, ':');
 
 			/* Verify that colon */
 			if (!s) return (1);
@@ -5970,23 +5970,19 @@ errr init_ba_info_txt(FILE *fp)
 			if (!*s) return (1);
 
 			/* Get the index */
-			i = atoi(buf + 2);
+			int i = atoi(buf + 2);
 
 			/* Verify information */
 			if (i < error_idx) return (4);
-
-			/* Verify information */
-			if (i >= max_ba_idx) return (2);
 
 			/* Save the index */
 			error_idx = i;
 
 			/* Point at the "info" */
-			ba_ptr = &ba_info[i];
+			ba_ptr = &expand_to_fit_index(ba_info, i);
 
 			/* Copy name */
-			assert(!ba_ptr->name);
-			ba_ptr->name = my_strdup(s);
+			ba_ptr->name = s;
 
 			/* Next... */
 			continue;
@@ -6047,9 +6043,9 @@ errr init_ba_info_txt(FILE *fp)
  */
 errr init_ow_info_txt(FILE *fp)
 {
-	int i;
+	auto &ow_info = game->edit_data.ow_info;
+
 	char buf[1024];
-	char *s;
 
 	/* Current entry */
 	owner_type *ow_ptr = NULL;
@@ -6076,7 +6072,7 @@ errr init_ow_info_txt(FILE *fp)
 		if (buf[0] == 'N')
 		{
 			/* Find the colon before the name */
-			s = strchr(buf + 2, ':');
+			char *s = strchr(buf + 2, ':');
 
 			/* Verify that colon */
 			if (!s) return (1);
@@ -6088,23 +6084,19 @@ errr init_ow_info_txt(FILE *fp)
 			if (!*s) return (1);
 
 			/* Get the index */
-			i = atoi(buf + 2);
+			int i = atoi(buf + 2);
 
 			/* Verify information */
 			if (i < error_idx) return (4);
-
-			/* Verify information */
-			if (i >= max_ow_idx) return (2);
 
 			/* Save the index */
 			error_idx = i;
 
 			/* Point at the "info" */
-			ow_ptr = &ow_info[i];
+			ow_ptr = &expand_to_fit_index(ow_info, i);
 
 			/* Copy name */
-			assert(!ow_ptr->name);
-			ow_ptr->name = my_strdup(s);
+			ow_ptr->name = s;
 
 			/* Next... */
 			continue;
@@ -7067,12 +7059,6 @@ static errr process_dungeon_file_aux(char *buf, int *yval, int *xval, int xvalst
 				max_wf_idx = atoi(zz[1]);
 			}
 
-			/* Maximum ba_idx */
-			else if (zz[0][0] == 'B')
-			{
-				max_ba_idx = atoi(zz[1]);
-			}
-
 			/* Maximum st_idx */
 			else if (zz[0][0] == 'S')
 			{
@@ -7083,12 +7069,6 @@ static errr process_dungeon_file_aux(char *buf, int *yval, int *xval, int xvalst
 			else if (zz[0][0] == 's')
 			{
 				max_set_idx = atoi(zz[1]);
-			}
-
-			/* Maximum ow_idx */
-			else if (zz[0][0] == 'N')
-			{
-				max_ow_idx = atoi(zz[1]);
 			}
 
 			/* Maximum wilderness x size */

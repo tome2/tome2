@@ -1,7 +1,9 @@
 #pragma once
 
+#include "owner_type.hpp"
 #include "randart_gen_type.hpp"
 #include "randart_part_type.hpp"
+#include "store_action_type.hpp"
 #include "vault_type.hpp"
 
 #include <vector>
@@ -27,5 +29,15 @@ struct GameEditData {
 	 * Random artifact generation parameters.
 	 */
 	std::vector<randart_gen_type> ra_gen;
+
+	/**
+	 * Building actions.
+	 */
+	std::vector<store_action_type> ba_info;
+
+	/**
+	 * Building owners.
+	 */
+	std::vector<owner_type> ow_info;
 
 };

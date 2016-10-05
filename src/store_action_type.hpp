@@ -7,11 +7,11 @@
  */
 struct store_action_type
 {
-	const char *name;               /* Name */
+	std::string name;               /* Name */
 
-	s16b costs[3];                  /* Costs for liked people */
-	char letter;                    /* Action letter */
-	char letter_aux;                /* Action letter */
-	s16b action;                    /* Action code */
-	s16b action_restr;              /* Action restriction */
+	std::array<s16b, 3> costs { };  /* Costs for liked people */
+	char letter = '\0';             /* Action letter */
+	char letter_aux = '\0';         /* Action letter */
+	s16b action = 0;                /* Action code */
+	s16b action_restr = 0;          /* Action restriction */
 };

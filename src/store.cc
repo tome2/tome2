@@ -15,6 +15,7 @@
 #include "cmd4.hpp"
 #include "cmd5.hpp"
 #include "files.hpp"
+#include "game.hpp"
 #include "hooks.hpp"
 #include "obj_theme.hpp"
 #include "object1.hpp"
@@ -223,7 +224,7 @@ static store_type *st_ptr = NULL;
 /*
  * We store the current "owner type" here so everyone can access it
  */
-static owner_type *ot_ptr = NULL;
+static owner_type const *ot_ptr = NULL;
 
 
 
@@ -1577,7 +1578,7 @@ void display_store(void)
 	else
 	{
 		/* Put the owner name and race */
-		strnfmt(buf, 80, "%s", ot_ptr->name);
+		strnfmt(buf, 80, "%s", ot_ptr->name.c_str());
 		put_str(buf, 3, 10);
 
 		/* Show the max price in the store (above prices) */
@@ -2757,8 +2758,10 @@ static bool_ leave_store = FALSE;
  * Find building action for command. Returns nullptr if no matching
  * action is found.
  */
-static store_action_type *find_store_action(s16b command_cmd)
+static store_action_type const *find_store_action(s16b command_cmd)
 {
+	auto const &ba_info = game->edit_data.ba_info;
+
 	for (std::size_t i = 0; i < st_info[st_ptr->st_idx].actions.size(); i++)
 	{
 		auto ba_ptr = &ba_info[st_info[st_ptr->st_idx].actions[i]];
@@ -2793,8 +2796,7 @@ static bool_ store_process_command(void)
 	/* Handle repeating the last command */
 	repeat_check();
 
-	store_action_type *ba_ptr =
-	        find_store_action(command_cmd);
+	auto ba_ptr = find_store_action(command_cmd);
 
 	if (ba_ptr)
 	{
@@ -3097,6 +3099,9 @@ static bool_ store_process_command(void)
  */
 void do_cmd_store(void)
 {
+	auto const &ow_info = game->edit_data.ow_info;
+	auto const &ba_info = game->edit_data.ba_info;
+
 	int which;
 	int maintain_num;
 	int tmp_chr;
@@ -3180,7 +3185,7 @@ void do_cmd_store(void)
 	/* Mega-Hack -- Ignore keymaps on store action letters */
 	for (std::size_t i = 0; i < st_info[st_ptr->st_idx].actions.size(); i++)
 	{
-		store_action_type *ba_ptr = &ba_info[st_info[st_ptr->st_idx].actions[i]];
+		auto ba_ptr = &ba_info[st_info[st_ptr->st_idx].actions[i]];
 		request_command_ignore_keymaps[2*i] = ba_ptr->letter;
 		request_command_ignore_keymaps[2*i+1] = ba_ptr->letter_aux;
 	}
@@ -3363,6 +3368,8 @@ void do_cmd_store(void)
  */
 void store_shuffle(int which)
 {
+	auto const &ow_info = game->edit_data.ow_info;
+
 	/* Ignore home */
 	if (which == STORE_HOME) return;
 
@@ -3410,6 +3417,8 @@ void store_shuffle(int which)
  */
 void store_maint(int town_num, int store_num)
 {
+	auto const &ow_info = game->edit_data.ow_info;
+
 	int const old_rating = rating;
 
 	cur_store_num = store_num;
@@ -3500,6 +3509,8 @@ void store_maint(int town_num, int store_num)
  */
 void store_init(int town_num, int store_num)
 {
+	auto const &ow_info = game->edit_data.ow_info;
+
 	cur_store_num = store_num;
 
 	// Activate store
@@ -3540,10 +3551,12 @@ void store_init(int town_num, int store_num)
  */
 void do_cmd_home_trump(void)
 {
+	auto const &ow_info = game->edit_data.ow_info;
+	auto const &ba_info = game->edit_data.ba_info;
+
 	int which;
 	int maintain_num;
 	int tmp_chr;
-	int i;
 	int town_num;
 
 	/* Extract the store code */
@@ -3568,8 +3581,10 @@ void do_cmd_home_trump(void)
 	if (maintain_num)
 	{
 		/* Maintain the store */
-		for (i = 0; i < maintain_num; i++)
+		for (int i = 0; i < maintain_num; i++)
+		{
 			store_maint(town_num, which);
+		}
 
 		/* Save the visit */
 		town_info[town_num].store[which].last_visit = turn;
@@ -3611,10 +3626,10 @@ void do_cmd_home_trump(void)
 	display_store();
 
 	/* Mega-Hack -- Ignore keymaps on store action letters */
-	for (i = 0; i < 6; i++)
+	auto const &st_actions = st_info[st_ptr->st_idx].actions;
+	for (std::size_t i = 0; (i < (MAX_IGNORE_KEYMAPS/2)) && (i < st_actions.size()); i++)
 	{
-		store_action_type *ba_ptr =
-			&ba_info[st_info[st_ptr->st_idx].actions[i]];
+		auto ba_ptr = &ba_info[st_actions[i]];
 		request_command_ignore_keymaps[2*i] = ba_ptr->letter;
 		request_command_ignore_keymaps[2*i+1] = ba_ptr->letter_aux;
 	}

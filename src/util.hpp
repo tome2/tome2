@@ -6,6 +6,8 @@
 #include <vector>
 #include <string>
 
+#define MAX_IGNORE_KEYMAPS 12
+
 extern bool_ input_box(cptr text, int y, int x, char *buf, int max);
 extern void draw_box(int y, int x, int h, int w);
 extern void display_list(int y, int x, int h, int w, cptr title, cptr *list, int max, int begin, int sel, byte sel_color);
@@ -54,7 +56,7 @@ extern bool_ get_string(cptr prompt, char *buf, int len);
 extern bool_ get_check(cptr prompt);
 extern bool_ get_com(cptr prompt, char *command);
 extern s32b get_quantity(cptr prompt, s32b max);
-extern char request_command_ignore_keymaps[];
+extern char request_command_ignore_keymaps[MAX_IGNORE_KEYMAPS];
 extern bool_ request_command_inven_mode;
 extern void request_command(int shopping);
 extern bool_ is_a_vowel(int ch);
