@@ -6136,116 +6136,114 @@ static void process_monster(int m_idx, bool_ is_frien)
 			}
 
 
+			/* Copy list of objects; we need a copy because we're mutating the list. */
+			auto const object_idxs(c_ptr->o_idxs);
+
+			/* Scan all objects in the grid */
+			for (auto const this_o_idx: object_idxs)
 			{
-				/* Copy list of objects; we need a copy because we're mutating the list. */
-				auto const object_idxs(c_ptr->o_idxs);
+				/* Acquire object */
+				object_type * o_ptr = &o_list[this_o_idx];
 
-				/* Scan all objects in the grid */
-				for (auto const this_o_idx: object_idxs)
+				/* Skip gold */
+				if (o_ptr->tval == TV_GOLD) continue;
+
+				/* Incarnate ? */
+				if ((o_ptr->tval == TV_CORPSE) && (r_ptr->flags & RF_POSSESSOR) &&
+						((o_ptr->sval == SV_CORPSE_CORPSE) || (o_ptr->sval == SV_CORPSE_SKELETON)))
 				{
-					/* Acquire object */
-					object_type * o_ptr = &o_list[this_o_idx];
+					if (ai_possessor(m_idx, this_o_idx)) return;
+				}
 
-					/* Skip gold */
-					if (o_ptr->tval == TV_GOLD) continue;
+				/* Take or Kill objects on the floor */
+				/* rr9: Pets will no longer pick up/destroy items */
+				if ((((r_ptr->flags & RF_TAKE_ITEM) &&
+						((is_friend(m_ptr) <= 0) || p_ptr->pet_pickup_items)) ||
+						(r_ptr->flags & RF_KILL_ITEM)) &&
+						(is_friend(m_ptr) <= 0))
+				{
+					char m_name[80];
+					char o_name[80];
 
-					/* Incarnate ? */
-					if ((o_ptr->tval == TV_CORPSE) && (r_ptr->flags & RF_POSSESSOR) &&
-					                ((o_ptr->sval == SV_CORPSE_CORPSE) || (o_ptr->sval == SV_CORPSE_SKELETON)))
+					/* Extract some flags */
+					auto const flags = object_flags(o_ptr);
+
+					/* Acquire the object name */
+					object_desc(o_name, o_ptr, TRUE, 3);
+
+					/* Acquire the monster name */
+					monster_desc(m_name, m_ptr, 0x04);
+
+					/* React to objects that hurt the monster */
+					monster_race_flag_set flg;
+					if (flags & TR_KILL_DEMON) flg |= RF_DEMON;
+					if (flags & TR_KILL_UNDEAD) flg |= RF_UNDEAD;
+					if (flags & TR_SLAY_DRAGON) flg |= RF_DRAGON;
+					if (flags & TR_SLAY_TROLL) flg |= RF_TROLL;
+					if (flags & TR_SLAY_GIANT) flg |= RF_GIANT;
+					if (flags & TR_SLAY_ORC) flg |= RF_ORC;
+					if (flags & TR_SLAY_DEMON) flg |= RF_DEMON;
+					if (flags & TR_SLAY_UNDEAD) flg |= RF_UNDEAD;
+					if (flags & TR_SLAY_ANIMAL) flg |= RF_ANIMAL;
+					if (flags & TR_SLAY_EVIL) flg |= RF_EVIL;
+
+					/* The object cannot be picked up by the monster */
+					if (artifact_p(o_ptr) || (r_ptr->flags & flg))
 					{
-						if (ai_possessor(m_idx, this_o_idx)) return;
+						/* Only give a message for "take_item" */
+						if (r_ptr->flags & RF_TAKE_ITEM)
+						{
+							/* Describe observable situations */
+							if (m_ptr->ml && player_has_los_bold(ny, nx))
+							{
+								/* Dump a message */
+								msg_format("%^s tries to pick up %s, but fails.",
+									   m_name, o_name);
+							}
+						}
 					}
 
-					/* Take or Kill objects on the floor */
-					/* rr9: Pets will no longer pick up/destroy items */
-					if ((((r_ptr->flags & RF_TAKE_ITEM) &&
-					                ((is_friend(m_ptr) <= 0) || p_ptr->pet_pickup_items)) ||
-					                (r_ptr->flags & RF_KILL_ITEM)) &&
-					                (is_friend(m_ptr) <= 0))
+					/* Pick up the item */
+					else if (r_ptr->flags & RF_TAKE_ITEM)
 					{
-						char m_name[80];
-						char o_name[80];
-
-						/* Extract some flags */
-						auto const flags = object_flags(o_ptr);
-
-						/* Acquire the object name */
-						object_desc(o_name, o_ptr, TRUE, 3);
-
-						/* Acquire the monster name */
-						monster_desc(m_name, m_ptr, 0x04);
-
-						/* React to objects that hurt the monster */
-						monster_race_flag_set flg;
-						if (flags & TR_KILL_DEMON) flg |= RF_DEMON;
-						if (flags & TR_KILL_UNDEAD) flg |= RF_UNDEAD;
-						if (flags & TR_SLAY_DRAGON) flg |= RF_DRAGON;
-						if (flags & TR_SLAY_TROLL) flg |= RF_TROLL;
-						if (flags & TR_SLAY_GIANT) flg |= RF_GIANT;
-						if (flags & TR_SLAY_ORC) flg |= RF_ORC;
-						if (flags & TR_SLAY_DEMON) flg |= RF_DEMON;
-						if (flags & TR_SLAY_UNDEAD) flg |= RF_UNDEAD;
-						if (flags & TR_SLAY_ANIMAL) flg |= RF_ANIMAL;
-						if (flags & TR_SLAY_EVIL) flg |= RF_EVIL;
-
-						/* The object cannot be picked up by the monster */
-						if (artifact_p(o_ptr) || (r_ptr->flags & flg))
+						/* Describe observable situations */
+						if (player_has_los_bold(ny, nx))
 						{
-							/* Only give a message for "take_item" */
-							if (r_ptr->flags & RF_TAKE_ITEM)
-							{
-								/* Describe observable situations */
-								if (m_ptr->ml && player_has_los_bold(ny, nx))
-								{
-									/* Dump a message */
-									msg_format("%^s tries to pick up %s, but fails.",
-									           m_name, o_name);
-								}
-							}
+							/* Dump a message */
+							msg_format("%^s picks up %s.", m_name, o_name);
 						}
 
-						/* Pick up the item */
-						else if (r_ptr->flags & RF_TAKE_ITEM)
+						/* Put into inventory of monster */
 						{
-							/* Describe observable situations */
-							if (player_has_los_bold(ny, nx))
-							{
-								/* Dump a message */
-								msg_format("%^s picks up %s.", m_name, o_name);
-							}
+							/* Excise the object */
+							excise_object_idx(this_o_idx);
 
-							/* Put into inventory of monster */
-							{
-								/* Excise the object */
-								excise_object_idx(this_o_idx);
+							/* Forget mark */
+							o_ptr->marked = FALSE;
 
-								/* Forget mark */
-								o_ptr->marked = FALSE;
+							/* Forget location */
+							o_ptr->iy = o_ptr->ix = 0;
 
-								/* Forget location */
-								o_ptr->iy = o_ptr->ix = 0;
+							/* Memorize monster */
+							o_ptr->held_m_idx = m_idx;
 
-								/* Memorize monster */
-								o_ptr->held_m_idx = m_idx;
+							/* Carry object */
+							m_ptr->hold_o_idxs.push_back(this_o_idx);
+						}
+					}
 
-								/* Carry object */
-								m_ptr->hold_o_idxs.push_back(this_o_idx);
-							}
+					/* Destroy the item */
+					else
+					{
+						/* Describe observable situations */
+						if (player_has_los_bold(ny, nx))
+						{
+							/* Dump a message */
+							msg_format("%^s crushes %s.", m_name, o_name);
 						}
 
-						/* Destroy the item */
-						else
-						{
-							/* Describe observable situations */
-							if (player_has_los_bold(ny, nx))
-							{
-								/* Dump a message */
-								msg_format("%^s crushes %s.", m_name, o_name);
-							}
-
-							/* Delete the object */
-							delete_object_idx(this_o_idx);
-						}
+						/* Delete the object */
+						delete_object_idx(this_o_idx);
 					}
 				}
 			}

@@ -2876,101 +2876,99 @@ bool_ object_out_desc(object_type *o_ptr, FILE *fff, bool_ trim_down, bool_ wait
 			text_out("It makes you invisible.  ");
 		}
 
+		vn = 0;
+		if (flags & TR_SUST_STR)
 		{
-			vn = 0;
-			if (flags & TR_SUST_STR)
-			{
-				vp[vn++] = "strength";
-			}
-			if (flags & TR_SUST_INT)
-			{
-				vp[vn++] = "intelligence";
-			}
-			if (flags & TR_SUST_WIS)
-			{
-				vp[vn++] = "wisdom";
-			}
-			if (flags & TR_SUST_DEX)
-			{
-				vp[vn++] = "dexterity";
-			}
-			if (flags & TR_SUST_CON)
-			{
-				vp[vn++] = "constitution";
-			}
-			if (flags & TR_SUST_CHR)
-			{
-				vp[vn++] = "charisma";
-			}
-			/* Describe */
-			if (vn)
-			{
-				int i;
+			vp[vn++] = "strength";
+		}
+		if (flags & TR_SUST_INT)
+		{
+			vp[vn++] = "intelligence";
+		}
+		if (flags & TR_SUST_WIS)
+		{
+			vp[vn++] = "wisdom";
+		}
+		if (flags & TR_SUST_DEX)
+		{
+			vp[vn++] = "dexterity";
+		}
+		if (flags & TR_SUST_CON)
+		{
+			vp[vn++] = "constitution";
+		}
+		if (flags & TR_SUST_CHR)
+		{
+			vp[vn++] = "charisma";
+		}
+		/* Describe */
+		if (vn)
+		{
+			int i;
 
-				/* Intro */
-				text_out("It sustains ");
+			/* Intro */
+			text_out("It sustains ");
 
-				/* List */
-				for (i = 0; i < vn; i++)
-				{
-					/* Connectives */
-					if (i == 0) text_out("your ");
-					else if (i < (vn - 1)) text_out(", ");
-					else text_out(" and ");
+			/* List */
+			for (i = 0; i < vn; i++)
+			{
+				/* Connectives */
+				if (i == 0) text_out("your ");
+				else if (i < (vn - 1)) text_out(", ");
+				else text_out(" and ");
 
-					/* Dump the stat */
-					text_out(vp[i]);
-				}
-				text_out(".  ");
+				/* Dump the stat */
+				text_out(vp[i]);
 			}
+			text_out(".  ");
+		}
 
-			vn = 0;
-			if (flags & TR_IM_ACID)
-			{
-				vc[vn] = TERM_GREEN;
-				vp[vn++] = "acid";
-			}
-			if (flags & TR_IM_ELEC)
-			{
-				vc[vn] = TERM_L_BLUE;
-				vp[vn++] = "electricity";
-			}
-			if (flags & TR_IM_FIRE)
-			{
-				vc[vn] = TERM_RED;
-				vp[vn++] = "fire";
-			}
-			if (flags & TR_IM_COLD)
-			{
-				vc[vn] = TERM_L_WHITE;
-				vp[vn++] = "cold";
-			}
-			if (flags & TR_IM_NETHER)
-			{
-				vc[vn] = TERM_L_GREEN;
-				vp[vn++] = "nether";
-			}
-			/* Describe */
-			if (vn)
-			{
-				int i;
+		vn = 0;
+		if (flags & TR_IM_ACID)
+		{
+			vc[vn] = TERM_GREEN;
+			vp[vn++] = "acid";
+		}
+		if (flags & TR_IM_ELEC)
+		{
+			vc[vn] = TERM_L_BLUE;
+			vp[vn++] = "electricity";
+		}
+		if (flags & TR_IM_FIRE)
+		{
+			vc[vn] = TERM_RED;
+			vp[vn++] = "fire";
+		}
+		if (flags & TR_IM_COLD)
+		{
+			vc[vn] = TERM_L_WHITE;
+			vp[vn++] = "cold";
+		}
+		if (flags & TR_IM_NETHER)
+		{
+			vc[vn] = TERM_L_GREEN;
+			vp[vn++] = "nether";
+		}
+		/* Describe */
+		if (vn)
+		{
+			int i;
 
-				/* Intro */
-				text_out("It provides immunity ");
+			/* Intro */
+			text_out("It provides immunity ");
 
-				/* List */
-				for (i = 0; i < vn; i++)
-				{
-					/* Connectives */
-					if (i == 0) text_out("to ");
-					else if (i < (vn - 1)) text_out(", ");
-					else text_out(" and ");
+			/* List */
+			for (i = 0; i < vn; i++)
+			{
+				/* Connectives */
+				if (i == 0) text_out("to ");
+				else if (i < (vn - 1)) text_out(", ");
+				else text_out(" and ");
 
-					/* Dump the stat */
-					text_out_c(vc[i], vp[i]);
-				}
-				text_out(".  ");
+				/* Dump the stat */
+				text_out_c(vc[i], vp[i]);
 			}
+			text_out(".  ");
 		}
 
 		if (flags & TR_FREE_ACT)
