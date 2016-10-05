@@ -1014,7 +1014,7 @@ static bool_ grace_delay_trigger()
  */
 static void process_world_gods()
 {
-	const char *race_name = rp_ptr->title;
+	auto const &race_name = rp_ptr->title;
 	auto const &subrace_name = rmp_ptr->title;
 
 	if (p_ptr->pgod == GOD_VARDA)
@@ -1027,10 +1027,10 @@ static void process_world_gods()
 				inc_piety(GOD_ALL, 2);
 			}
 
-			if (streq(race_name, "Orc") ||
-			    streq(race_name, "Troll") ||
-			    streq(race_name, "Dragon") ||
-			    streq(race_name, "Demon"))
+			if ((race_name == "Orc") ||
+			    (race_name == "Troll") ||
+			    (race_name == "Dragon") ||
+			    (race_name == "Demon"))
 			{
 				/* Varda hates evil races */
 				inc_piety(GOD_ALL, -2);
@@ -1053,16 +1053,16 @@ static void process_world_gods()
 		{
 			int i;
 			/* Ulmo likes the Edain (except Easterlings) */
-			if (streq(race_name, "Human") ||
-			    streq(race_name, "Dunadan") ||
-			    streq(race_name, "Druadan") ||
-			    streq(race_name, "RohanKnight"))
+			if ((race_name == "Human") ||
+			    (race_name == "Dunadan") ||
+			    (race_name == "Druadan") ||
+			    (race_name == "RohanKnight"))
 			{
 				inc_piety(GOD_ALL, 2);
 			}
-			else if (streq(race_name, "Easterling") ||
-				 streq(race_name, "Demon") ||
-				 streq(race_name, "Orc"))
+			else if ((race_name == "Easterling") ||
+				 (race_name == "Demon") ||
+				 (race_name == "Orc"))
 			{
 				/* hated races */
 				inc_piety(GOD_ALL, -2);
@@ -1097,10 +1097,10 @@ static void process_world_gods()
 
 			/* Aule likes Dwarves and Dark Elves (Eol's
 			 * influence here) */
-			if  (!(streq(race_name, "Dwarf") ||
-			       streq(race_name, "Petty-dwarf") ||
-			       streq(race_name, "Gnome") ||
-			       streq(race_name, "Dark-Elf")))
+			if  (!((race_name == "Dwarf") ||
+			       (race_name == "Petty-dwarf") ||
+			       (race_name == "Gnome") ||
+			       (race_name == "Dark-Elf")))
 			{
 				inc_piety(GOD_ALL, -1);
 			}
@@ -1182,14 +1182,14 @@ static void process_world_gods()
 			}
 
 			/* He likes High Elves only, though, as races */
-			if (!streq(race_name, "High-Elf"))
+			if (!(race_name == "High-Elf"))
 			{
 				inc_piety(GOD_ALL, -1);
 			}
 
 			/* Really hates vampires and demons */
 			if ((subrace_name == "Vampire") ||
-			    streq(race_name, "Demon"))
+			    (race_name == "Demon"))
 			{
 				inc_piety(GOD_ALL, -10);
 			}
@@ -1766,7 +1766,7 @@ static void process_world(void)
 			int dec = 5 - wisdom_scale(3);
 
 			/* Blech what an hideous hack */
-			if (!strcmp(rp_ptr->title, "Ent"))
+			if (!(rp_ptr->title == "Ent"))
 			{
 				dec -= wisdom_scale(2);
 			}
@@ -5016,7 +5016,7 @@ static void load_all_pref_files(void)
 
 
 	/* Access the "race" pref file */
-	sprintf(buf, "%s.prf", rp_ptr->title);
+	sprintf(buf, "%s.prf", rp_ptr->title.c_str());
 
 	/* Process that file */
 	process_pref_file(buf);

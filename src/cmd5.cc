@@ -13,6 +13,7 @@
 #include "cave_type.hpp"
 #include "corrupt.hpp"
 #include "dungeon_flag.hpp"
+#include "game.hpp"
 #include "lua_bind.hpp"
 #include "monster2.hpp"
 #include "monster_race.hpp"
@@ -287,6 +288,8 @@ static void do_poly_wounds()
 
 void do_poly_self(void)
 {
+	auto const &race_info = game->edit_data.race_info;
+
 	int power = p_ptr->lev;
 	int poly_power;
 
@@ -357,22 +360,25 @@ void do_poly_self(void)
 		/* Roll until an appropriate selection is made */
 		while (1)
 		{
-			new_race = rand_int(max_rp_idx);
+			new_race = rand_int(race_info.size());
 			expfact = race_info[new_race].ps.exp;
 
-			if ((new_race != p_ptr->prace) && (expfact <= goalexpfact)) break;
+			if ((new_race != p_ptr->prace) && (expfact <= goalexpfact))
+			{
+				break;
+			}
 		}
 
 		if (effect_msg[0])
 		{
 			msg_format("You turn into a%s %s!",
-				   ((is_a_vowel(*race_info[new_race].title)) ? "n" : ""),
-				   race_info[new_race].title);
+				   (is_a_vowel(race_info[new_race].title[0]) ? "n" : ""),
+				   race_info[new_race].title.c_str());
 		}
 		else
 		{
 			msg_format("You turn into a %s %s!", effect_msg,
-			           race_info[new_race].title);
+				   race_info[new_race].title.c_str());
 		}
 
 		p_ptr->prace = new_race;

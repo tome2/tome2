@@ -214,6 +214,8 @@ s16b tokenize(char *buf, s16b num, char **tokens, char delim1, char delim2)
  */
 errr process_pref_file_aux(char *buf)
 {
+	auto &race_mod_info = game->edit_data.race_mod_info;
+
 	int i, j, n1, n2;
 
 	char *zz[16];
@@ -293,7 +295,7 @@ errr process_pref_file_aux(char *buf)
 				i = (huge)strtol(zz[0], NULL, 0);
 				n1 = strtol(zz[1], NULL, 0);
 				n2 = strtol(zz[2], NULL, 0);
-				if (i >= max_rmp_idx) return (1);
+				if (i >= static_cast<int>(race_mod_info.size())) return (1);
 				rmp_ptr = &race_mod_info[i];
 				if (n1) rmp_ptr->g_attr = n1;
 				if (n2)
@@ -891,7 +893,7 @@ static cptr process_pref_file_expr(char **sp, char *fp)
 			/* Race */
 			else if (streq(b + 1, "RACE"))
 			{
-				v = rp_ptr->title;
+				v = rp_ptr->title.c_str(); // The string SHOULD be stable enough for this
 			}
 
 			/* Race */
@@ -4568,6 +4570,7 @@ static void display_scores_aux(int highscore_fd, int from, int to, int note, hig
  */
 void show_highclass(int building)
 {
+	auto const &race_info = game->edit_data.race_info;
 
 	int i = 0, j, m = 0;
 	int pr, pc, clev;
@@ -4642,7 +4645,7 @@ void show_highclass(int building)
 				((building == 1) && (clev >= PY_MAX_LEVEL)))
 		{
 			sprintf(out_val, "%3d) %s the %s (Level %2d)",
-				(m + 1), the_score.who, race_info[pr].title, clev);
+				(m + 1), the_score.who, race_info[pr].title.c_str(), clev);
 			prt(out_val, (m + 7), 0);
 			m++;
 		}
@@ -4653,7 +4656,7 @@ void show_highclass(int building)
 	if ((building == 1) && (p_ptr->lev >= PY_MAX_LEVEL))
 	{
 		sprintf(out_val, "You) %s the %s (Level %2d)",
-			player_name, race_info[p_ptr->prace].title, p_ptr->lev);
+			player_name, race_info[p_ptr->prace].title.c_str(), p_ptr->lev);
 		prt(out_val, (m + 8), 0);
 	}
 	else if ((building != 1))
@@ -4661,7 +4664,7 @@ void show_highclass(int building)
 		if ((p_ptr->lev > clev) && (p_ptr->pclass == (building - 10)))
 		{
 			sprintf(out_val, "You) %s the %s (Level %2d)",
-				player_name, race_info[p_ptr->prace].title, p_ptr->lev);
+				player_name, race_info[p_ptr->prace].title.c_str(), p_ptr->lev);
 			prt(out_val, (m + 8), 0);
 		}
 	}
@@ -4681,6 +4684,8 @@ void show_highclass(int building)
  */
 void race_score(int race_num)
 {
+	auto const &race_info = game->edit_data.race_info;
+
 	int i = 0, j, m = 0;
 	int pr, clev, lastlev;
 	high_score the_score;
@@ -4690,7 +4695,7 @@ void race_score(int race_num)
 	lastlev = 0;
 
 	/* rr9: TODO - pluralize the race */
-	sprintf(tmp_str, "The Greatest of all the %s", race_info[race_num].title);
+	sprintf(tmp_str, "The Greatest of all the %s", race_info[race_num].title.c_str());
 	prt(tmp_str, 5, 3);
 
 	/* Build the filename */
@@ -4726,7 +4731,7 @@ void race_score(int race_num)
 		{
 			sprintf(out_val, "%3d) %s the %s (Level %3d)",
 			        (m + 1), the_score.who,
-				race_info[pr].title, clev);
+				race_info[pr].title.c_str(), clev);
 			prt(out_val, (m + 7), 0);
 			m++;
 			lastlev = clev;
@@ -4738,7 +4743,7 @@ void race_score(int race_num)
 	if ((p_ptr->prace == race_num) && (p_ptr->lev >= lastlev))
 	{
 		sprintf(out_val, "You) %s the %s (Level %3d)",
-			player_name, race_info[p_ptr->prace].title, p_ptr->lev);
+			player_name, race_info[p_ptr->prace].title.c_str(), p_ptr->lev);
 		prt(out_val, (m + 8), 0);
 	}
 
@@ -4752,15 +4757,17 @@ void race_score(int race_num)
  */
 void race_legends(void)
 {
-	int i, j;
+	auto const &race_info = game->edit_data.race_info;
 
-	for (i = 0; i < max_rp_idx; i++)
+	for (size_t i = 0; i < race_info.size(); i++)
 	{
 		race_score(i);
 		msg_print("Hit any key to continue");
 		msg_print(NULL);
-		for (j = 5; j < 19; j++)
+		for (int j = 5; j < 19; j++)
+		{
 			prt("", j, 0);
+		}
 	}
 }
 

@@ -18,6 +18,7 @@
 #include "ego_item_type.hpp"
 #include "feature_type.hpp"
 #include "files.hpp"
+#include "game.hpp"
 #include "hook_get_in.hpp"
 #include "hooks.hpp"
 #include "lua_bind.hpp"
@@ -632,6 +633,8 @@ void flavor_init(void)
  */
 void reset_visuals(void)
 {
+	auto &race_mod_info = game->edit_data.race_mod_info;
+
 	int i;
 
 	/* Extract some info about terrain features */
@@ -685,13 +688,11 @@ void reset_visuals(void)
 	}
 
 	/* Reset attr/char code for race modifier overlay graphics */
-	for (i = 0; i < max_rmp_idx; i++)
+	for (player_race_mod &rmp: race_mod_info)
 	{
-		player_race_mod *rmp_ptr = &race_mod_info[i];
-
 		/* Default attr/char */
-		rmp_ptr->g_attr = 0;
-		rmp_ptr->g_char = 0;
+		rmp.g_attr = 0;
+		rmp.g_char = 0;
 	}
 
 	/* Reset attr/char code for trap overlay graphics */

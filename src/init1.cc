@@ -703,13 +703,12 @@ static errr grab_one_class_flag(u32b *choice, cptr what)
 
 static errr grab_one_race_allow_flag(u32b *choice, cptr what)
 {
-	int i;
-	cptr s;
+	auto const &race_info = game->edit_data.race_info;
 
 	/* Scan classes flags */
-	for (i = 0; i < max_rp_idx && (s = race_info[i].title); i++)
+	for (std::size_t i = 0; i < race_info.size(); i++)
 	{
-		if (streq(what, s))
+		if (race_info[i].title == what)
 		{
 			(choice[i / 32]) |= (1L << i);
 			return (0);
@@ -921,6 +920,8 @@ static int read_ability(std::vector<player_race_ability_type> *abilities, char *
 errr init_player_info_txt(FILE *fp)
 {
 	auto &class_info = game->edit_data.class_info;
+	auto &race_info = game->edit_data.race_info;
+	auto &race_mod_info = game->edit_data.race_mod_info;
 
 	int lev = 1;
 	int tit_idx = 0;
@@ -1014,18 +1015,15 @@ errr init_player_info_txt(FILE *fp)
 			/* Verify information */
 			if (i < error_idx) return (4);
 
-			/* Verify information */
-			if (i >= max_rp_idx) return (2);
-
 			/* Save the index */
 			error_idx = i;
 
 			/* Point at the "info" */
-			rp_ptr = &race_info[i];
+			rp_ptr = &expand_to_fit_index(race_info, i);
+			assert(rp_ptr->title.empty());
 
 			/* Copy title */
-			assert(!rp_ptr->title);
-			rp_ptr->title = my_strdup(s);
+			rp_ptr->title = s;
 
 			/* Initialize */
 			lev = 1;
@@ -1037,17 +1035,14 @@ errr init_player_info_txt(FILE *fp)
 		/* Process 'D' for "Description" */
 		if ((buf[0] == 'R') && (buf[2] == 'D'))
 		{
-			/* Acquire the text */
-			char const *s = buf + 4;
+			// Need newline?
+			if (!rp_ptr->desc.empty())
+			{
+				rp_ptr->desc += '\n';
+			}
 
-			if (!rp_ptr->desc)
-			{
-				rp_ptr->desc = my_strdup(s);
-			}
-			else
-			{
-				strappend(&rp_ptr->desc, format("\n%s", s));
-			}
+			// Append
+			rp_ptr->desc += (buf + 4);
 
 			/* Next... */
 			continue;
@@ -1236,14 +1231,12 @@ errr init_player_info_txt(FILE *fp)
 			/* Verify information */
 			if (i < error_idx) return (4);
 
-			/* Verify information */
-			if (i >= max_rmp_idx) return (2);
-
 			/* Save the index */
 			error_idx = i;
 
 			/* Point at the "info" */
-			rmp_ptr = &race_mod_info[i];
+			rmp_ptr = &expand_to_fit_index(race_mod_info, i);
+			assert(rmp_ptr->title.empty());
 
 			/* Copy title */
 			rmp_ptr->title = s;
@@ -6950,15 +6943,7 @@ static errr process_dungeon_file_aux(char *buf, int *yval, int *xval, int xvalst
 			/* Maximum player types */
 			else if (zz[0][0] == 'P')
 			{
-				if (zz[1][0] == 'R')
-				{
-					max_rp_idx = atoi(zz[2]);
-				}
-				else if (zz[1][0] == 'S')
-				{
-					max_rmp_idx = atoi(zz[2]);
-				}
-				else if (zz[1][0] == 'H')
+				if (zz[1][0] == 'H')
 				{
 					max_bg_idx = atoi(zz[2]);
 				}
@@ -7204,7 +7189,7 @@ static cptr process_dungeon_file_expr(char **sp, char *fp)
 			/* Race */
 			else if (streq(b + 1, "RACE"))
 			{
-				v = rp_ptr->title;
+				v = rp_ptr->title.c_str(); // The string SHOULD be stable enough for this
 			}
 
 			/* Race Mod */

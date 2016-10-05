@@ -8,6 +8,7 @@
 #include "cli_comm.hpp"
 #include "cmd3.hpp"
 #include "cmd4.hpp"
+#include "game.hpp"
 #include "init1.hpp"
 #include "messages.hpp"
 #include "monster_ego.hpp"
@@ -3422,6 +3423,9 @@ std::string get_day(s32b day_no)
 
 std::string get_player_race_name(int pr, int ps)
 {
+	auto const &race_info = game->edit_data.race_info;
+	auto const &race_mod_info = game->edit_data.race_mod_info;
+
 	if (ps)
 	{
 		if (race_mod_info[ps].place)

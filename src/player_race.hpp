@@ -12,6 +12,7 @@
 #include "skill_modifiers.hpp"
 
 #include <array>
+#include <string>
 #include <vector>
 
 
@@ -20,8 +21,8 @@
  */
 struct player_race
 {
-	const char *title = nullptr;                            /* Type of race */
-	char *desc = nullptr;
+	std::string title;                                      /* Type of race */
+	std::string desc;
 
 	char luck = '\0';                                       /* Luck */
 

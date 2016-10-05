@@ -422,8 +422,8 @@ player_type *p_ptr = nullptr;
  * Pointer to the player tables
  * (sex, race, race mod, class, magic)
  */
-player_race *rp_ptr;
-player_race_mod *rmp_ptr;
+player_race const *rp_ptr;
+player_race_mod const *rmp_ptr;
 player_class const *cp_ptr;
 player_spec const *spp_ptr;
 
@@ -486,16 +486,6 @@ skill_type *s_info;
  * Skill descriptors.
  */
 skill_descriptor *s_descriptors;
-
-/*
- * Player race arrays
- */
-player_race *race_info;
-
-/*
- * Player mod race arrays
- */
-player_race_mod *race_mod_info;
 
 /*
  * The wilderness features arrays
@@ -678,12 +668,6 @@ u16b max_st_idx;
  * Item sets
  */
 u16b max_set_idx = 1;
-
-/*
- * Maximum number of players info in p_info.txt
- */
-u16b max_rp_idx;
-u16b max_rmp_idx;
 
 /*
  * Maximum number of objects in the level

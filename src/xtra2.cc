@@ -5288,9 +5288,11 @@ static void corrupt_corrupted(void)
 /*
  * Change to an other subrace
  */
-void switch_subrace(int racem, bool_ copy_old)
+void switch_subrace(std::size_t racem, bool_ copy_old)
 {
-	if ((racem < 0) && (racem >= max_rmp_idx)) return;
+	auto &race_mod_info = game->edit_data.race_mod_info;
+
+	assert(racem < race_mod_info.size());
 
 	/* If we switch to the saved subrace, we copy over the old subrace data */
 	if (copy_old && (racem == SUBRACE_SAVE))

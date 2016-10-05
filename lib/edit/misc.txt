@@ -54,12 +54,6 @@ M:O:1024
 # Maximum size for "m_list[]"
 M:M:768
 
-# Maximum number of race types in p_info.txt
-M:P:R:22
-
-# Maximum number of subrace types in p_info.txt
-M:P:S:10
-
 # Maximum number of histories types in p_info.txt
 M:P:H:266
 

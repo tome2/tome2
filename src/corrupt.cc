@@ -1,5 +1,6 @@
 #include "corrupt.hpp"
 
+#include "game.hpp"
 #include "init1.hpp"
 #include "object_flag.hpp"
 #include "player_race.hpp"
@@ -46,6 +47,8 @@ static void subrace_add_power(player_race_mod *rmp_ptr, int power)
 
 static void player_gain_vampire_teeth()
 {
+	auto &race_mod_info = game->edit_data.race_mod_info;
+
 	player_race_mod *rmp_ptr = NULL;
 
 	switch_subrace(SUBRACE_SAVE, TRUE);
@@ -60,6 +63,8 @@ static void player_gain_vampire_teeth()
 
 static void player_gain_vampire_strength()
 {
+	auto &race_mod_info = game->edit_data.race_mod_info;
+
 	player_race_mod *rmp_ptr = &race_mod_info[SUBRACE_SAVE];
 
 	rmp_ptr->ps.mhp += +1;
@@ -79,6 +84,8 @@ static void player_gain_vampire_strength()
 
 static void player_gain_vampire()
 {
+	auto &race_mod_info = game->edit_data.race_mod_info;
+
 	player_race_mod *rmp_ptr = &race_mod_info[SUBRACE_SAVE];
 
 	if (rmp_ptr->title == "Vampire")
@@ -694,7 +701,7 @@ static bool_ player_can_gain_corruption(int corruption_idx)
 	if (corruption_idx == CORRUPT_TROLL_BLOOD)
 	{
 		/* Ok trolls should not get this one. never. */
-		if (streq(rp_ptr->title, "Troll"))
+		if (rp_ptr->title == "Troll")
 		{
 			allowed = FALSE;
 		}
@@ -704,7 +711,7 @@ static bool_ player_can_gain_corruption(int corruption_idx)
 
 	if (game_module_idx == MODULE_THEME)
 	{
-		if (streq(rp_ptr->title, "Maia"))
+		if (rp_ptr->title == "Maia")
 		{
 			/* We use a whitelist of corruptions for Maiar */
 			bool_ allow = FALSE;

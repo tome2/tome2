@@ -8,7 +8,7 @@
 #include <memory>
 
 extern void do_rebirth(void);
-extern void switch_subrace(int racem, bool_ copy_old);
+extern void switch_subrace(std::size_t racem, bool_ copy_old);
 extern void drop_from_wild(void);
 extern bool_ set_roots(int v, s16b ac, s16b dam);
 extern bool_ set_project(int v, s16b gf, s16b dam, s16b rad, s16b flag);

@@ -438,6 +438,8 @@ static void do_player_level_flag(player_level_flag *lflag, ls_flag_t flag)
  */
 static void do_subrace(ls_flag_t flag)
 {
+	auto &race_mod_info = game->edit_data.race_mod_info;
+
 	player_race_mod *sr_ptr = &race_mod_info[SUBRACE_SAVE];
 	int i;
 
@@ -2428,6 +2430,8 @@ static bool do_player_hd(ls_flag_t flag)
 static bool_ do_savefile_aux(ls_flag_t flag)
 {
 	auto &class_info = game->edit_data.class_info;
+	auto const &race_info = game->edit_data.race_info;
+	auto const &race_mod_info = game->edit_data.race_mod_info;
 
 	/* Mention the savefile version */
 	if (flag == ls_flag_t::LOAD)

@@ -2,6 +2,8 @@
 
 #include "owner_type.hpp"
 #include "player_class.hpp"
+#include "player_race.hpp"
+#include "player_race_mod.hpp"
 #include "randart_gen_type.hpp"
 #include "randart_part_type.hpp"
 #include "store_action_type.hpp"
@@ -45,5 +47,15 @@ struct GameEditData {
 	 * Player classes.
 	 */
 	std::vector<player_class> class_info;
+
+	/**
+	 * Player races.
+	 */
+	std::vector<player_race> race_info;
+
+	/**
+	 * Player subraces.
+	 */
+	std::vector<player_race_mod> race_mod_info;
 
 };

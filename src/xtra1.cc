@@ -1050,7 +1050,7 @@ static void prt_frame(void)
 	int i;
 
 	/* Race and Class */
-	prt_field(rp_ptr->title, ROW_RACE, COL_RACE);
+	prt_field(rp_ptr->title.c_str(), ROW_RACE, COL_RACE);
 	prt_field(spp_ptr->title, ROW_CLASS, COL_CLASS);
 
 	/* Title */

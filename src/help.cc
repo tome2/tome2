@@ -703,14 +703,14 @@ static context_help_type *find_context_help(context_help_type table[], cptr key)
 /*
  * Racial help
  */
-void help_race(cptr race)
+void help_race(std::string const &race)
 {
-	show_context_help(find_context_help(race_table, race));
+	show_context_help(find_context_help(race_table, race.c_str()));
 }
 
-void help_subrace(cptr subrace)
+void help_subrace(std::string const &subrace)
 {
-	show_context_help(find_context_help(subrace_table, subrace));
+	show_context_help(find_context_help(subrace_table, subrace.c_str()));
 }
 
 void help_class(std::string const &klass)

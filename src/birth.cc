@@ -1303,6 +1303,8 @@ static void dump_specs(int sel_)
 
 static int dump_races(int sel)
 {
+	auto const &race_info = game->edit_data.race_info;
+
 	int n = 0;
 
 	char buf[80];
@@ -1310,7 +1312,7 @@ static int dump_races(int sel)
 	/* Clean up */
 	clear_from(12);
 
-	for (n = 0; n < max_rp_idx; n++)
+	for (n = 0; n < static_cast<int>(race_info.size()); n++)
 	{
 		char p2 = ')', p1 = ' ';
 
@@ -1325,7 +1327,7 @@ static int dump_races(int sel)
 		}
 
 		/* Display */
-		strnfmt(buf, 80, "%c%c%c %s", p1, I2A(n), p2, rp_ptr->title);
+		strnfmt(buf, 80, "%c%c%c %s", p1, I2A(n), p2, rp_ptr->title.c_str());
 
 		/* Print some more info */
 		if (sel == n)
@@ -1360,6 +1362,8 @@ static int dump_races(int sel)
 
 static int dump_rmods(int sel, int *racem, int max)
 {
+	auto const &race_mod_info = game->edit_data.race_mod_info;
+
 	int n = 0;
 
 	char buf[80];
@@ -1482,6 +1486,8 @@ static bool_ do_quick_start = FALSE;
 static bool_ player_birth_aux_ask()
 {
 	auto &class_info = game->edit_data.class_info;
+	auto const &race_info = game->edit_data.race_info;
+	auto const &race_mod_info = game->edit_data.race_mod_info;
 
 	int k, n, v, sel;
 
@@ -1564,8 +1570,10 @@ static bool_ player_birth_aux_ask()
 	else
 	{
 		/* Only one choice = instant choice */
-		if (max_rp_idx == 1)
+		if (race_info.size() == 1)
+		{
 			k = 0;
+		}
 		else
 		{
 			/* Extra info */
@@ -1580,7 +1588,7 @@ static bool_ player_birth_aux_ask()
 			while (1)
 			{
 				strnfmt(buf, 200, "Choose a race (%c-%c), * for a random choice, = for options, 8/2/4/6 for movement: ",
-				        I2A(0), I2A(max_rp_idx - 1));
+					I2A(0), I2A(race_info.size() - 1));
 				put_str(buf, 17, 2);
 
 				c = inkey();
@@ -1588,7 +1596,7 @@ static bool_ player_birth_aux_ask()
 				if (c == 'S') return (FALSE);
 				if (c == '*')
 				{
-					k = rand_int(max_rp_idx);
+					k = rand_int(race_info.size());
 					break;
 				}
 				k = (islower(c) ? A2I(c) : -1);
@@ -1643,7 +1651,7 @@ static bool_ player_birth_aux_ask()
 	rp_ptr = &race_info[p_ptr->prace];
 
 	/* Display */
-	c_put_str(TERM_L_BLUE, rp_ptr->title, RACE_ROW, 9);
+	c_put_str(TERM_L_BLUE, rp_ptr->title.c_str(), RACE_ROW, 9);
 
 	/* Get a random name */
 	if (!do_quick_start) create_random_name(p_ptr->prace, player_name);
@@ -1665,14 +1673,16 @@ static bool_ player_birth_aux_ask()
 	else
 	{
 		/* Only one choice = instant choice */
-		if (max_rmp_idx == 1)
+		if (race_mod_info.size() == 1)
+		{
 			k = 0;
+		}
 		else
 		{
 			for (n = 0; n < 100; n++) racem[n] = 0;
 
 			max_racem = 0;
-			for (n = 0; n < max_rmp_idx; n++)
+			for (n = 0; n < static_cast<int>(race_mod_info.size()); n++)
 			{
 				/* Analyze */
 				p_ptr->pracem = n;
@@ -3002,22 +3012,23 @@ static void validate_bg_aux(int chart, bool_ chart_checked[], char *buf)
  */
 static void validate_bg(void)
 {
-	int i, race;
+	auto const &race_info = game->edit_data.race_info;
 
 	bool_ chart_checked[512];
 
-	char buf[1024];
-
-
-	for (i = 0; i < 512; i++) chart_checked[i] = FALSE;
+	for (std::size_t i = 0; i < 512; i++)
+	{
+		chart_checked[i] = FALSE;
+	}
 
 	/* Check each race */
-	for (race = 0; race < max_rp_idx; race++)
+	for (auto const &race: race_info)
 	{
 		/* Get the first chart for this race */
-		int chart = race_info[race].chart;
+		int chart = race.chart;
 
-		(void) strcpy(buf, "");
+		/* Buffer */
+		char buf[1024] = { '\0' };
 
 		/* Validate the chart recursively */
 		validate_bg_aux(chart, chart_checked, buf);
