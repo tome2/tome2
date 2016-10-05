@@ -762,16 +762,6 @@ static void player_wipe(void)
 		}
 	}
 
-	/* Wipe the rune spells */
-	rune_num = 0;
-	for (i = 0; i < MAX_RUNES; i++)
-	{
-		strcpy(rune_spells[i].name, "");
-		rune_spells[i].type = 0;
-		rune_spells[i].rune2 = 0;
-		rune_spells[i].mana = 0;
-	}
-
 	/* No items */
 	inven_cnt = 0;
 	equip_cnt = 0;

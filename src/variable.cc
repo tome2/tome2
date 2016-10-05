@@ -790,12 +790,6 @@ s32b RANDART_ARMOR;
 s32b RANDART_JEWEL;
 
 /*
- * Runecrafter's selfmade spells.
- */
-rune_spell rune_spells[MAX_RUNES];
-s16b rune_num;
-
-/*
  * Fate.
  */
 fate fates[MAX_FATES];

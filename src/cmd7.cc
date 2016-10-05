@@ -2849,30 +2849,23 @@ void do_cmd_rune(void)
 /*
  * Print a batch of runespells.
  */
-static void print_runespell_batch(int batch, int max)
+static void print_runespell_batch(std::size_t batch, int max)
 {
-	char buff[80];
-
-	rune_spell* spell;
-
-	int i;
-
-	s32b power, powerdiv;
-
-	int p, dp;
-
-
 	prt(format("      %-30s Fail Mana Power", "Name"), 1, 20);
 
+	int i;
 	for (i = 0; i < max; i++)
 	{
-		spell = &rune_spells[batch * 10 + i];
+		auto spell = &p_ptr->rune_spells[batch * 10 + i];
 
-		power = spell->mana;
+		int power = spell->mana;
+		s32b powerdiv;
 		rune_calc_power(&power, &powerdiv);
-		p = power;
-		dp = powerdiv;
 
+		int const p = power;
+		int const dp = powerdiv;
+
+		char buff[80];
 		strnfmt(buff, 80, "  %c) %-30s %4d%% %4d %dd%d ", I2A(i), spell->name,
 		        spell_chance_rune(spell), spell->mana, dp, p);
 
@@ -2887,30 +2880,22 @@ static void print_runespell_batch(int batch, int max)
  * List ten random spells and ask to pick one.
  */
 
-static rune_spell* select_runespell_from_batch(int batch, int *s_idx)
+static rune_spell* select_runespell_from_batch(std::size_t batch, int *s_idx)
 {
-	char tmp[160];
-
-	char out_val[30];
-
-	char which;
-
-	int mut_max = 10;
-
-	rune_spell* ret;
-
+	auto &rune_spells = p_ptr->rune_spells;
 
 	character_icky = TRUE;
 
-	if (rune_num < (batch + 1) * 10)
-	{
-		mut_max = rune_num - batch * 10;
-	}
+	int const mut_max = (rune_spells.size() < (batch + 1) * 10)
+		? rune_spells.size() - batch * 10
+		: 10;
 
-	strnfmt(tmp, 160, "(a-%c, * to list, / to rename, - to comment) Select a power: ",
-	        I2A(mut_max - 1));
-
+	char tmp[160];
+	strnfmt(tmp, 160, "(a-%c, / to rename, - to comment) Select a power: ",
+		I2A(mut_max - 1));
 	prt(tmp, 0, 0);
+
+	rune_spell *ret = nullptr;
 
 	while (1)
 	{
@@ -2918,7 +2903,7 @@ static rune_spell* select_runespell_from_batch(int batch, int *s_idx)
 
 		print_runespell_batch(batch, mut_max);
 
-		which = inkey();
+		char which = inkey();
 
 		Term_load();
 
@@ -2945,6 +2930,7 @@ static rune_spell* select_runespell_from_batch(int batch, int *s_idx)
 
 			if (isalpha(which) && (A2I(which) <= mut_max))
 			{
+				char out_val[30] = { '\0' };
 				strcpy(out_val, rune_spells[batch*10 + A2I(which)].name);
 				if (get_string("Name this power: ", out_val, 29))
 				{
@@ -2983,27 +2969,28 @@ static rune_spell* select_runespell_from_batch(int batch, int *s_idx)
 /*
  * Pick a random spell from a menu
  */
-
-rune_spell* select_runespell(int *s_idx)
+static rune_spell* select_runespell(int *s_idx)
 {
-	char tmp[160];
+	auto const &rune_spells = p_ptr->rune_spells;
 
 	char which;
 
-	int batch_max = (rune_num - 1) / 10;
-
-	if (rune_num == 0)
+	if (rune_spells.empty())
 	{
 		msg_print("There are no runespells you can cast.");
 		return (NULL);
 	}
 
+	std::size_t batch_max = (rune_spells.size() - 1) / 10;
+
 	character_icky = TRUE;
 	Term_save();
 
-	strnfmt(tmp, 160, "(a-%c) Select batch of powers: ", I2A(batch_max));
-
-	prt(tmp, 0, 0);
+	{
+		char tmp[160];
+		strnfmt(tmp, 160, "(a-%c) Select batch of powers: ", I2A(batch_max));
+		prt(tmp, 0, 0);
+	}
 
 	while (1)
 	{
@@ -3025,7 +3012,7 @@ rune_spell* select_runespell(int *s_idx)
 		else
 		{
 			which = tolower(which);
-			if (isalpha(which) && (A2I(which) <= batch_max))
+			if (isalpha(which) && (static_cast<size_t>(A2I(which)) <= batch_max))
 			{
 				Term_load();
 				character_icky = FALSE;
@@ -3044,13 +3031,8 @@ rune_spell* select_runespell(int *s_idx)
  * Cast a memorized runespell
  * Note that the only limits are antimagic & conf, NOT blind
  */
-void do_cmd_rune_cast()
+static void do_cmd_rune_cast()
 {
-	rune_spell *s_ptr;
-
-	int s_idx;
-
-
 	/* Require some mana */
 	if (p_ptr->csp <= 0)
 	{
@@ -3079,6 +3061,8 @@ void do_cmd_rune_cast()
 		return;
 	}
 
+	int s_idx;
+	rune_spell *s_ptr;
 	s_ptr = select_runespell(&s_idx);
 
 	if (s_ptr == NULL) return;
@@ -3188,35 +3172,34 @@ void do_cmd_runestone()
  */
 void do_cmd_rune_add_mem()
 {
-	rune_spell s_ptr;
+	auto &rune_spells = p_ptr->rune_spells;
 
-	rune_spell *ds_ptr = &rune_spells[rune_num];
-
-
-	/* Not when confused */
 	if (p_ptr->confused)
 	{
 		msg_print("You are too confused!");
 		return;
 	}
 
-
-	if (rune_num >= MAX_RUNES)
+	if (rune_spells.size() >= MAX_RUNES)
 	{
 		msg_print("You have already learned the maximum number of runespells!");
 		return;
 	}
 
+	rune_spell s_ptr;
 	if (!get_runespell(&s_ptr)) return;
 
-	ds_ptr->type = s_ptr.type;
-	ds_ptr->rune2 = s_ptr.rune2;
-	ds_ptr->mana = s_ptr.mana;
-	strcpy(ds_ptr->name, "Unnamed Runespell");
+	// Create the new rune spell
+	rune_spell ds;
+	ds.type = s_ptr.type;
+	ds.rune2 = s_ptr.rune2;
+	ds.mana = s_ptr.mana;
+	strcpy(ds.name, "Unnamed Runespell");
 
-	get_string("Name this runespell: ", ds_ptr->name, 29);
+	get_string("Name this runespell: ", ds.name, 29);
 
-	rune_num++;
+	// Add to list
+	rune_spells.emplace_back(ds);
 
 	/* Take a turn */
 	energy_use = 100;
@@ -3325,33 +3308,22 @@ void do_cmd_rune_carve()
  */
 void do_cmd_rune_del()
 {
-	rune_spell *s_ptr;
+	auto &rune_spells = p_ptr->rune_spells;
 
-	int s_idx;
-
-	int i;
-
-
-	/* Not when confused */
 	if (p_ptr->confused)
 	{
 		msg_print("You are too confused!");
 		return;
 	}
 
+	rune_spell *s_ptr;
+	int s_idx;
 	s_ptr = select_runespell(&s_idx);
 
 	if (s_ptr == NULL) return;
 
-	/* Delete and move */
-	for (i = s_idx + 1; i < rune_num; i++)
-	{
-		rune_spells[i - 1].type = rune_spells[i].type;
-		rune_spells[i - 1].rune2 = rune_spells[i].rune2;
-		rune_spells[i - 1].mana = rune_spells[i].mana;
-		strcpy(rune_spells[i - 1].name, rune_spells[i].name);
-	}
-	rune_num--;
+	/* Delete */
+	rune_spells.erase(rune_spells.begin() + s_idx);
 
 	/* Take a turn */
 	energy_use = 100;

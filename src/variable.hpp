@@ -32,7 +32,6 @@
 #include "randart_part_type_fwd.hpp"
 #include "random_artifact.hpp"
 #include "random_quest.hpp"
-#include "rune_spell.hpp"
 #include "school_type.hpp"
 #include "set_type_fwd.hpp"
 #include "skill_descriptor_fwd.hpp"
@@ -235,8 +234,6 @@ extern random_artifact random_artifacts[MAX_RANDARTS];
 extern s32b RANDART_WEAPON;
 extern s32b RANDART_ARMOR;
 extern s32b RANDART_JEWEL;
-extern rune_spell rune_spells[MAX_RUNES];
-extern s16b rune_num;
 extern fate fates[MAX_FATES];
 extern byte dungeon_type;
 extern s16b *max_dlv;
