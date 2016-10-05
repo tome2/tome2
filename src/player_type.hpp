@@ -177,7 +177,6 @@ struct player_type
 	s16b food = 0;                                          /* Current nutrition */
 
 	byte confusing = 0;                                     /* Glowing hands */
-	byte searching = 0;                                     /* Currently searching */
 
 	bool_ old_cumber_armor = FALSE;
 	bool_ old_cumber_glove = FALSE;
@@ -304,12 +303,9 @@ struct player_type
 
 	s16b see_infra;                                         /* Infravision range */
 
-	s16b skill_dis = 0;                                     /* Skill: Disarming */
 	s16b skill_dev = 0;                                     /* Skill: Magic Devices */
 	s16b skill_sav = 0;                                     /* Skill: Saving throw */
 	s16b skill_stl = 0;                                     /* Skill: Stealth factor */
-	s16b skill_srh = 0;                                     /* Skill: Searching ability */
-	s16b skill_fos = 0;                                     /* Skill: Searching frequency */
 	s16b skill_thn = 0;                                     /* Skill: To hit (normal) */
 	s16b skill_thb = 0;                                     /* Skill: To hit (shooting) */
 	s16b skill_tht = 0;                                     /* Skill: To hit (throwing) */

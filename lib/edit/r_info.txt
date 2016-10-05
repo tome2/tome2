@@ -3059,7 +3059,6 @@ S:BA_POIS
 S:BO_COLD
 S:HEAL
 S:SLOW
-S:TRAPS
 D:He's been spying for Saruman. He is a snivelling wretch with no morals. 
 
 N:138:Robin Hood, the Outlaw
@@ -3095,7 +3094,6 @@ F:ZANGBAND
 S:1_IN_5
 S:ARROW_2
 S:HEAL
-S:TRAPS
 D:The legendary archer steals from the rich (you qualify). 
 
 N:139:Nurgling
@@ -9384,7 +9382,6 @@ S:S_MONSTER
 S:S_UNDEAD
 S:TELE_AWAY
 S:TELE_TO
-S:TRAPS
 D:Nobody has ever seen It. 
 
 N:394:Banshee
@@ -9802,7 +9799,6 @@ S:SCARE
 S:SLOW
 S:S_KIN
 S:S_UNDEAD
-S:TRAPS
 D:He is out to have revenge on those who have desecrated his tomb. 
 
 N:410:Gwaihir the Windlord
@@ -10264,7 +10260,6 @@ S:CONF
 S:HASTE
 S:HOLD
 S:SHRIEK
-S:TRAPS
 D:This creature look like a pillar of rock. However, a closer 
 D:inspection reveals a glaring eye and powerful tentacles, 
 D:which crush its prey and feed it to the creature's hungry 
@@ -11824,7 +11819,6 @@ S:HEAL
 S:SCARE
 S:SLOW
 S:S_SPIDER
-S:TRAPS
 D:Shelob is an enormous bloated spider, the last daughter of Ungoliant the 
 D:Unlight.  Her poison is legendary, as is her ego.  She normally guards the 
 D:pass through Cirith Ungol, but occasionally goes out foraging for food to 
@@ -12316,7 +12310,6 @@ S:FORGET
 S:HASTE
 S:HOLD
 S:SCARE
-S:TRAPS
 D:An embodiment of all the cardinal vices, he beholds you scornfully. 
 
 N:498:Chaos master
@@ -12932,7 +12925,6 @@ F:TAKE_ITEM
 S:1_IN_6
 S:ARROW_2
 S:BLINK
-S:TRAPS
 D:Cool and confident, fast and lithe; protect your possessions quickly! 
 
 N:517:The Watcher in the Water
@@ -15484,7 +15476,6 @@ S:BO_ELEC
 S:BO_FIRE
 S:BO_ICEE
 S:HEAL
-S:TRAPS
 D:A Black Numenorean who usurped the throne of Gondor, he is treacherous and 
 D:evil. 
 
@@ -16841,7 +16832,6 @@ S:S_DRAGON
 S:S_MONSTER
 S:S_UNDEAD
 S:TELE_TO
-S:TRAPS
 D:A human figure in robes, he moves with magically improved speed, and his 
 D:hands are ablur with spell casting. 
 
@@ -19050,7 +19040,6 @@ S:BLINK
 S:CONF
 S:TELE_TO
 S:TPORT
-S:TRAPS
 D:A class of its own: you are already too late to protect your possessions - 
 D:and he seems to have studied magic too, and is a master of setting traps. 
 
@@ -20351,7 +20340,6 @@ F:TAKE_ITEM
 F:UNIQUE
 S:1_IN_6
 S:S_BUG
-S:TRAPS
 D:He may not code worth a dime, but he certainly knows how to make money. 
 
 N:733:Santa Claus
@@ -20402,7 +20390,6 @@ S:S_HI_UNDEAD
 S:S_UNDEAD
 S:S_UNIQUE
 S:TELE_AWAY
-S:TRAPS
 D:Why would anybody want to kill Santa Claus? To get all the presents, 
 D:of course! 
 
@@ -20638,7 +20625,6 @@ S:S_HI_DRAGON
 S:S_MONSTER
 S:S_UNDEAD
 S:TELE_TO
-S:TRAPS
 D:A human figure in robes, he moves with magically improved speed, and his 
 D:hands are ablur with spell casting. You stagger at the mighty sound of his 
 D:spells as they echo hollowly through the dungeon. 
@@ -21138,7 +21124,6 @@ S:CAUSE_4
 S:MIND_BLAST
 S:SLOW
 S:S_UNDEAD
-S:TRAPS
 D:A glowing skull possessed by sorcerous power. It need not move, but 
 D:merely blast you with mighty magic. 
 
@@ -22137,7 +22122,6 @@ S:S_HI_DRAGON
 S:S_UNDEAD
 S:TELE_AWAY
 S:TPORT
-S:TRAPS
 D:Originally known as the White, Saruman fell prey to Sauron's wiles. He 
 D:searches forever for the One Ring, to become a mighty Sorcerer-King of the 
 D:world. 
@@ -22170,7 +22154,6 @@ F:TAKE_ITEM
 F:UNIQUE
 S:1_IN_6
 S:TELE_TO
-S:TRAPS
 D:He is a master of disguise, an expert of stealth, a genius at traps, and 
 D:moves with blinding speed. Check your pockets! 
 
@@ -23511,7 +23494,6 @@ S:S_KIN
 S:S_MONSTERS
 S:S_UNDEAD
 S:TELE_TO
-S:TRAPS
 D:A stench of corruption and decay surrounds this sorcerer, who has clearly 
 D:risen from the dead to continue his foul plots and schemes. 
 
@@ -24165,7 +24147,6 @@ S:HOLD
 S:S_HI_DEMON
 S:S_HI_UNDEAD
 S:TELE_TO
-S:TRAPS
 D:The Mouth of Sauron is a mighty spell caster. So old that even he cannot 
 D:remember his own name, his power and evil are undeniable. He believes 
 D:unshakeably that he is unbeatable and laughs as he weaves his awesome 
@@ -24218,7 +24199,6 @@ S:HAND_DOOM
 S:HOLD
 S:S_HI_UNDEAD
 S:TELE_TO
-S:TRAPS
 D:The dark master of the terrible fortress of southern Mirkwood.  It is 
 D:rumoured that this is in fact none other than Sauron in disguise: 
 D:although if this is so, he has yet to reveal his full power - and perhaps 
@@ -26366,7 +26346,6 @@ S:S_RNG
 S:S_THUNDERLORD
 S:TELE_TO
 S:TPORT
-S:TRAPS
 D:He is the master of coding; none can match his skill. He created the 
 D:Variant Maintainer, the RNGs, and the software bugs. Bull Gates is 
 D:nothing next to him. Do not think that since he loves the novels of 
@@ -28273,7 +28252,6 @@ S:S_KIN
 S:S_MONSTERS
 S:TELE_AWAY
 S:TPORT
-S:TRAPS
 D:The wizard who opposed Sauron and, in the end, was the only 
 D:one of the Istari to succeed in his task. Gandalf is very 
 D:wise and specialises in fire magic. 
@@ -29844,7 +29822,6 @@ S:S_ANGEL
 S:S_UNIQUE
 S:TELE_TO
 S:TPORT
-S:TRAPS
 D:A woman of mind-shattering beauty, none can match her beauty. She is perfect, 
 D:and totally evil. She loves nothing but herself and her evil is as 
 D:great as her beauty. No one can stand against her, even DarkGod. 
@@ -31914,7 +31891,6 @@ S:SCARE
 S:SHRIEK
 S:S_KIN
 S:S_MONSTER
-S:TRAPS
 D:A strange creature that disguises itself as an object to lure 
 D:unsuspecting adventurers within reach of its venomous claws. 
 
@@ -32364,7 +32340,6 @@ S:HEAL
 S:SCARE
 S:SHRIEK
 S:TELE_AWAY
-S:TRAPS
 D:Hopefully you will kill this spirit before you realise it exists. 
 
 # Spirit of ickyness
@@ -32616,7 +32591,6 @@ S:ARROW_3
 S:BLINK
 S:CONF
 S:TELE_TO
-S:TRAPS
 D:There is something attractive about this spirit, and it seems 
 D:to have a full purse. 
 

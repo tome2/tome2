@@ -210,7 +210,6 @@ void init_school_books()
 	push_spell(TOME_TRANSLOCATION, RECALL);
 	push_spell(TOME_TRANSLOCATION, TELEAWAY);
 	push_spell(TOME_TRANSLOCATION, TELEPORT);
-	push_spell(TOME_TRANSLOCATION, DISARM);
 	push_spell(TOME_TRANSLOCATION, BLINK);
 
 	/* Create the book of the tree */

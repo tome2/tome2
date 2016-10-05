@@ -59,7 +59,6 @@ extern bool_ make_gold(object_type *j_ptr);
 extern void place_gold(int y, int x);
 extern s16b drop_near(object_type *o_ptr, int chance, int y, int x);
 extern void acquirement(int y1, int x1, int num, bool_ great, bool_ known);
-extern void pick_trap(int y, int x);
 extern void combine_pack(void);
 extern void reorder_pack(void);
 extern void random_artifact_resistance (object_type * o_ptr);

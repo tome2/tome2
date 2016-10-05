@@ -50,7 +50,6 @@
 #include "store_type.hpp"
 #include "tables.hpp"
 #include "town_type.hpp"
-#include "trap_type.hpp"
 #include "util.hpp"
 #include "util.h"
 #include "variable.h"
@@ -222,7 +221,6 @@ errr process_pref_file_aux(char *buf)
 	auto &r_info = game->edit_data.r_info;
 	auto &f_info = game->edit_data.f_info;
 	auto &k_info = game->edit_data.k_info;
-	auto &t_info = game->edit_data.t_info;
 
 	int i, j, n1, n2;
 
@@ -327,34 +325,6 @@ errr process_pref_file_aux(char *buf)
 				if (n2)
 				{
 					rmp_ptr->g_char = n2;
-				}
-				return (0);
-			}
-		}
-
-		/* Process "G:T:<num>:<a>/<c>" -- attr/char for traps */
-		if (buf[2] == 'T')
-		{
-			if (tokenize(buf + 4, 3, zz, ':', '/') == 3)
-			{
-				std::size_t i = strtoul(zz[0], NULL, 0);
-				n1 = strtol(zz[1], NULL, 0);
-				n2 = strtol(zz[2], NULL, 0);
-
-				if (i >= t_info.size())
-				{
-					return 1;
-				}
-
-				auto t_ptr = &t_info[i];
-
-				if (n1)
-				{
-					t_ptr->g_attr = n1;
-				}
-				if (n2)
-				{
-					t_ptr->g_char = n2;
 				}
 				return (0);
 			}
@@ -1310,8 +1280,6 @@ static void display_player_middle(void)
 
 	put_str("Speed           ", 13, 52);
 	speed = p_ptr->pspeed;
-	/* Hack -- Visually "undo" the Search Mode Slowdown */
-	if (p_ptr->searching) speed += 10;
 	if (speed > 110)
 	{
 		char s[11];
@@ -1429,8 +1397,8 @@ static void display_player_various(void)
 	auto const &r_info = game->edit_data.r_info;
 
 	int tmp, tmp2, damdice, damsides, dambonus, blows;
-	int xthn, xthb, xfos, xsrh;
-	int xdis, xdev, xsav, xstl;
+	int xthn, xthb;
+	int xdev, xsav, xstl;
 	cptr desc;
 	int i;
 
@@ -1452,12 +1420,9 @@ static void display_player_various(void)
 	blows = p_ptr->num_blow;
 
 	/* Basic abilities */
-	xdis = p_ptr->skill_dis;
 	xdev = p_ptr->skill_dev;
 	xsav = p_ptr->skill_sav;
 	xstl = p_ptr->skill_stl;
-	xsrh = p_ptr->skill_srh;
-	xfos = p_ptr->skill_fos;
 
 
 	put_str("Fighting    :", 16, 1);
@@ -1477,21 +1442,9 @@ static void display_player_various(void)
 	c_put_str(likert_color, desc, 19, 15);
 
 
-	put_str("Perception  :", 16, 28);
-	desc = likert(xfos, 6);
-	c_put_str(likert_color, desc, 16, 42);
-
-	put_str("Searching   :", 17, 28);
-	desc = likert(xsrh, 6);
-	c_put_str(likert_color, desc, 17, 42);
-
-	put_str("Disarming   :", 18, 28);
-	desc = likert(xdis, 8);
-	c_put_str(likert_color, desc, 18, 42);
-
-	put_str("Magic Device:", 19, 28);
+	put_str("Magic Device:", 20, 1);
 	desc = likert(xdev, 6);
-	c_put_str(likert_color, desc, 19, 42);
+	c_put_str(likert_color, desc, 20, 15);
 
 
 	put_str("Blows/Round:", 16, 55);

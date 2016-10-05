@@ -104,7 +104,6 @@ SET(SRCS_COMMON
   squeltch.cc
   store.cc
   tables.cc
-  traps.cc
   util.cc
   variable.cc
   wild.cc

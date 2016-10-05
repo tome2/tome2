@@ -33,7 +33,6 @@
 #include "spells1.hpp"
 #include "spells4.hpp"
 #include "tables.hpp"
-#include "traps.hpp"
 #include "util.hpp"
 #include "util.h"
 #include "variable.h"
@@ -1145,9 +1144,6 @@ void do_cmd_activate_skill()
 		break;
 	case MKEY_SYMBIOTIC:
 		do_cmd_symbiotic();
-		break;
-	case MKEY_TRAP:
-		do_cmd_set_trap();
 		break;
 	case MKEY_STEAL:
 		do_cmd_steal();

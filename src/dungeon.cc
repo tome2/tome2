@@ -329,7 +329,6 @@ static sense_function_t select_sense(object_type *o_ptr, sense_function_t combat
 	case TV_HARD_ARMOR:
 	case TV_DRAG_ARMOR:
 	case TV_BOOMERANG:
-	case TV_TRAPKIT:
 		{
 			return combat;
 		}
@@ -1674,8 +1673,8 @@ static void process_world(void)
 	}
 
 
-	/* Searching or Resting */
-	if (p_ptr->searching || resting)
+	/* Resting boosts regeneration */
+	if (resting)
 	{
 		regen_amount = regen_amount * 2;
 	}
@@ -3387,7 +3386,7 @@ static void process_command(void)
 		{
 			if (do_control_walk()) break;
 
-			do_cmd_walk(options->always_pickup, TRUE);
+			do_cmd_walk(options->always_pickup);
 
 			break;
 		}
@@ -3397,7 +3396,7 @@ static void process_command(void)
 		{
 			if (do_control_walk()) break;
 
-			do_cmd_walk(!options->always_pickup, TRUE);
+			do_cmd_walk(!options->always_pickup);
 
 			break;
 		}
@@ -3436,23 +3435,6 @@ static void process_command(void)
 			do_cmd_rest();
 			break;
 		}
-
-		/* Search for traps/doors */
-	case 's':
-		{
-			if (p_ptr->control) break;
-			do_cmd_search();
-			break;
-		}
-
-		/* Toggle search mode */
-	case 'S':
-		{
-			if (p_ptr->control) break;
-			do_cmd_toggle_search();
-			break;
-		}
-
 
 		/*** Stairs and Doors and Chests and Traps ***/
 
@@ -3617,15 +3599,6 @@ static void process_command(void)
 			if (!p_ptr->wild_mode) do_cmd_bash();
 			break;
 		}
-
-		/* Disarm a trap or chest */
-	case 'D':
-		{
-			if (p_ptr->control) break;
-			if (!p_ptr->wild_mode) do_cmd_disarm();
-			break;
-		}
-
 
 		/*** Magic and Prayers ***/
 
@@ -4154,12 +4127,7 @@ static void process_command(void)
 			do_cmd_macro_recorder();
 			break;
 		}
-	case CMD_BLUNDER:
-		{
-			if (do_control_walk()) break;
-			do_cmd_walk(options->always_pickup, FALSE);
-			break;
-		}
+
 		/* Hack -- Unknown command */
 	default:
 		{

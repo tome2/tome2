@@ -3750,7 +3750,6 @@ monster_power monster_powers[] =
 		{ SF_TELE_AWAY_IDX, "Teleport Away", 20, FALSE },
 		{ SF_TELE_LEVEL_IDX, "Teleport Level", 20, TRUE },
 		{ SF_DARKNESS_IDX, "Darkness", 3, FALSE },
-		{ SF_TRAPS_IDX, "Create Traps", 10, TRUE },
 		{ SF_RAISE_DEAD_IDX, "Raise the Dead", 400, TRUE },
 		{ SF_S_THUNDERLORD_IDX, "Summon Thunderlords", 90, TRUE },
 		{ SF_S_KIN_IDX, "Summon Kin", 80, FALSE },
@@ -3820,7 +3819,6 @@ tval_desc tvals[] =
         { TV_RUNE1, "Rune 1" },
         { TV_RUNE2, "Rune 2" },
         { TV_JUNK, "Junk" },
-        { TV_TRAPKIT, "Trapping Kit" },
         { 0, NULL }
 };
 
@@ -3922,11 +3920,6 @@ tval_desc tval_descs[] =
 		TV_RING,
 		"Rings are fine pieces of jewelry, usually imbued with "
 		"arcane magics."
-	},
-	{
-		TV_TRAPKIT,
-		"Trapping kits are used with the trapping ability to set "
-		"deadly monster traps."
 	},
 	{
 		TV_STAFF,
@@ -4158,10 +4151,8 @@ gf_name_type gf_names[] =
 	{ GF_GRAVITY, "gravity" },
 	{ GF_KILL_WALL, "wall destruction" },
 	{ GF_KILL_DOOR, "door destruction" },
-	{ GF_KILL_TRAP, "trap destruction" },
 	{ GF_MAKE_WALL, "wall creation" },
 	{ GF_MAKE_DOOR, "door creation" },
-	{ GF_MAKE_TRAP, "trap creation" },
 	{ GF_OLD_CLONE, "clone" },
 	{ GF_OLD_POLY, "polymorph" },
 	{ GF_OLD_HEAL, "healing" },

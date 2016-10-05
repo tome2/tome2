@@ -381,8 +381,7 @@ static void quest_god_generate_relic()
 
 		/* are the coordinates on a floor, not on a permanent feature (eg stairs), and not on a trap ? */
 		if ((f_info[c_ptr->feat].flags & FF_FLOOR) &&
-		    (!(f_info[c_ptr->feat].flags & FF_PERMANENT)) &&
-		    (c_ptr->t_idx == 0))
+		    (!(f_info[c_ptr->feat].flags & FF_PERMANENT)))
 		{
 			break;
 		}

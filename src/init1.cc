@@ -40,8 +40,6 @@
 #include "store_info_type.hpp"
 #include "tables.hpp"
 #include "town_type.hpp"
-#include "trap_type.hpp"
-#include "traps.hpp"
 #include "util.hpp"
 #include "util.h"
 #include "variable.h"
@@ -166,46 +164,6 @@ static cptr r_info_blow_effect[] =
 	"PARASITE",
 	"ABOMINATION",
 	NULL
-};
-
-
-/*
- * Trap flags
- */
-static cptr t_info_flags[] =
-{
-	"CHEST",
-	"DOOR",
-	"FLOOR",
-	"XXX4",
-	"XXX5",
-	"XXX6",
-	"XXX7",
-	"XXX8",
-	"XXX9",
-	"XXX10",
-	"XXX11",
-	"XXX12",
-	"XXX13",
-	"XXX14",
-	"XXX15",
-	"XXX16",
-	"LEVEL1",
-	"LEVEL2",
-	"LEVEL3",
-	"LEVEL4",
-	"XXX21",
-	"XXX22",
-	"XXX23",
-	"XXX24",
-	"XXX25",
-	"XXX26",
-	"XXX27",
-	"XXX28",
-	"XXX29",
-	"XXX30",
-	"XXX31",
-	"XXX32"
 };
 
 
@@ -1370,7 +1328,6 @@ errr init_player_info_txt(FILE *fp)
 				return (1);
 			}
 
-			/* Next... */
 			continue;
 		}
 
@@ -4814,177 +4771,8 @@ errr init_re_info_txt(FILE *fp)
 
 
 /*
- * Grab one flag in an trap_type from a textual string
+ * Grab one flag for a dungeon type from a textual string
  */
-static errr grab_one_trap_type_flag(trap_type *t_ptr, cptr what)
-{
-	if (lookup_flags(what, flag_tie(&t_ptr->flags, t_info_flags)))
-	{
-		return (0);
-	}
-
-	/* Oops */
-	msg_format("Unknown trap_type flag '%s'.", what);
-
-	/* Error */
-	return (1);
-}
-
-
-/*
- * Initialize the "tr_info" array, by parsing an ascii "template" file
- */
-errr init_t_info_txt(FILE *fp)
-{
-	auto &t_info = game->edit_data.t_info;
-
-	int i;
-	char buf[1024];
-	char *s, *t;
-
-	/* Current entry */
-	trap_type *t_ptr = NULL;
-
-	/* Just before the first record */
-	error_idx = -1;
-
-	/* Just before the first line */
-	error_line = -1;
-
-	/* Parse */
-	while (0 == my_fgets(fp, buf, 1024))
-	{
-		/* Advance the line number */
-		error_line++;
-
-		/* Skip comments and blank lines */
-		if (!buf[0] || (buf[0] == '#')) continue;
-
-		/* Verify correct "colon" format */
-		if (buf[1] != ':') return (1);
-
-		/* Process 'N' for "New/Number/Name" */
-		if (buf[0] == 'N')
-		{
-			/* Find the colon before the name */
-			s = strchr(buf + 2, ':');
-
-			/* Verify that colon */
-			if (!s) return (1);
-
-			/* Nuke the colon, advance to the name */
-			*s++ = '\0';
-
-			/* Paranoia -- require a name */
-			if (!*s) return (1);
-
-			/* Get the index */
-			i = atoi(buf + 2);
-
-			/* Verify information */
-			if (i <= error_idx) return (4);
-
-			/* Save the index */
-			error_idx = i;
-
-			/* Point at the "info" */
-			t_ptr = &expand_to_fit_index(t_info, i);
-
-			/* Copy name */
-			t_ptr->name = my_strdup(s);
-
-			/* Initialize */
-			t_ptr->text = my_strdup("");
-
-			/* Next... */
-			continue;
-		}
-
-		/* There better be a current t_ptr */
-		if (!t_ptr) return (3);
-
-
-		/* Process 'I' for "Information" */
-		if (buf[0] == 'I')
-		{
-			int probability, another, p1valinc, difficulty;
-			int minlevel;
-			int dd, ds;
-			char color;
-
-			/* Scan for the values */
-			if (8 != sscanf(buf + 2, "%d:%d:%d:%d:%d:%dd%d:%c",
-			                &difficulty, &probability, &another,
-			                &p1valinc, &minlevel, &dd, &ds,
-			                &color)) return (1);
-
-			t_ptr->difficulty = (byte)difficulty;
-			t_ptr->probability = (s16b)probability;
-			t_ptr->another = (s16b)another;
-			t_ptr->p1valinc = (s16b)p1valinc;
-			t_ptr->minlevel = (byte)minlevel;
-			t_ptr->dd = (s16b)dd;
-			t_ptr->ds = (s16b)ds;
-			t_ptr->color = color_char_to_attr(color);
-
-			/* Next... */
-			continue;
-		}
-
-
-		/* Process 'D' for "Description" */
-		if (buf[0] == 'D')
-		{
-			/* Acquire the text */
-			s = buf + 2;
-
-			/* Append chars to the name */
-			strappend(&t_ptr->text, s);
-
-			/* Next... */
-			continue;
-		}
-
-
-		/* Hack -- Process 'F' for flags */
-		if (buf[0] == 'F')
-		{
-
-			t_ptr->flags = 0;
-
-			/* Parse every entry textually */
-			for (s = buf + 2; *s; )
-			{
-				/* Find the end of this entry */
-				for (t = s; *t && (*t != ' ') && (*t != '|'); ++t) /* loop */;
-
-				/* Nuke and skip any dividers */
-				if (*t)
-				{
-					*t++ = '\0';
-					while (*t == ' ' || *t == '|') t++;
-				}
-
-				/* Parse this entry */
-				if (0 != grab_one_trap_type_flag(t_ptr, s)) return (5);
-
-				/* Start the next entry */
-				s = t;
-			}
-
-			/* Next... */
-			continue;
-		}
-
-
-		/* Oops */
-		return (6);
-	}
-
-	/* Success */
-	return (0);
-}
-
 errr grab_one_dungeon_flag(dungeon_flag_set *flags, const char *str)
 {
 #define DF(tier, index, name) \
@@ -6490,7 +6278,7 @@ static errr process_dungeon_file_aux(char *buf, int *yval, int *xval, int xvalst
 				}
 				else
 				{
-					place_trap(y, x);
+					/* No traps - do nothing */
 				}
 
 				object_level = level;
@@ -6525,10 +6313,9 @@ static errr process_dungeon_file_aux(char *buf, int *yval, int *xval, int xvalst
 					place_object(y, x, TRUE, TRUE, OBJ_FOUND_SPECIAL);
 				}
 			}
-			/* Random trap */
 			else if (random & RANDOM_TRAP)
 			{
-				place_trap(y, x);
+				/* Do nothing */
 			}
 			else if (object_index)
 			{

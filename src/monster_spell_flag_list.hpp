@@ -78,7 +78,6 @@ SF(3,  6, TELE_TO      , false, true , false, false, false, false, false, false,
 SF(3,  7, TELE_AWAY    , false, false, false, false, true , false, true , false, false, false)
 SF(3,  8, TELE_LEVEL   , false, false, false, false, true , false, true , false, false, false)
 SF(3,  9, DARKNESS     , false, true , false, false, false, false, false, false, false, false)
-SF(3, 10, TRAPS        , false, true , false, false, true , false, false, false, false, false)
 SF(3, 11, FORGET       , false, true , false, false, false, false, false, false, false, false)
 SF(3, 12, RAISE_DEAD   , false, false, false, false, false, false, false, false, false, false)
 SF(3, 13, S_BUG        , true , false, false, false, true , false, false, false, false, false)

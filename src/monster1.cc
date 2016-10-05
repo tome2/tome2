@@ -478,7 +478,6 @@ static void roff_aux(std::shared_ptr<monster_race const> r_ptr)
 	if (spells & SF_TELE_LEVEL) vp[vn++] = "teleport level";
 	if (spells & SF_S_THUNDERLORD) vp[vn++] = "summon a Thunderlord";
 	if (spells & SF_DARKNESS) vp[vn++] = "create darkness";
-	if (spells & SF_TRAPS) vp[vn++] = "create traps";
 	if (spells & SF_FORGET) vp[vn++] = "cause amnesia";
 	if (spells & SF_RAISE_DEAD) vp[vn++] = "raise dead";
 	if (spells & SF_S_MONSTER) vp[vn++] = "summon a monster";

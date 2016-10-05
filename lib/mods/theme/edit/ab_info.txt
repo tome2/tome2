@@ -84,13 +84,6 @@ A:102:Far reaching attack
 k:15:Combat
 k:15:Polearm-mastery
 
-N:9:Trapping
-D:Ability to set monster traps
-D:Prereq: Disarming@15
-I:10
-A:14:Set trap
-k:15:Disarming
-
 N:10:Undead Form
 D:Ability to turn into a weak undead being when you "die".
 D:You must then kill enough monsters to absorb enough life energy

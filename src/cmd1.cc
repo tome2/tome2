@@ -41,8 +41,6 @@
 #include "spells2.hpp"
 #include "spells3.hpp"
 #include "tables.hpp"
-#include "traps.hpp"
-#include "trap_type.hpp"
 #include "util.hpp"
 #include "util.h"
 #include "variable.h"
@@ -438,89 +436,6 @@ s16b tot_dam_aux(object_type *o_ptr, int tdam, monster_type *m_ptr,
 
 
 /*
- * Search for hidden things
- */
-void search(void)
-{
-	/* Start with base search ability */
-	int chance = p_ptr->skill_srh;
-
-	/* Penalize various conditions */
-	if (p_ptr->blind || no_lite()) chance = chance / 10;
-	if (p_ptr->confused || p_ptr->image) chance = chance / 10;
-
-	/* Search the nearby grids, which are always in bounds */
-	for (int y = (p_ptr->py - 1); y <= (p_ptr->py + 1); y++)
-	{
-		for (int x = (p_ptr->px - 1); x <= (p_ptr->px + 1); x++)
-		{
-			/* Sometimes, notice things */
-			if (rand_int(100) < chance)
-			{
-				/* Access the grid */
-				cave_type *c_ptr = &cave[y][x];
-
-				/* Invisible trap */
-				if ((c_ptr->t_idx != 0) && !(c_ptr->info & CAVE_TRDT))
-				{
-					/* Pick a trap */
-					pick_trap(y, x);
-
-					/* Message */
-					msg_print("You have found a trap.");
-
-					/* Disturb */
-					disturb(0);
-				}
-
-				/* Secret door */
-				if (c_ptr->feat == FEAT_SECRET)
-				{
-					/* Message */
-					msg_print("You have found a secret door.");
-
-					/* Pick a door XXX XXX XXX */
-					cave_set_feat(y, x, FEAT_DOOR_HEAD + 0x00);
-					cave[y][x].mimic = 0;
-					lite_spot(y, x);
-
-					/* Disturb */
-					disturb(0);
-				}
-
-				/* Scan all objects in the grid */
-				for (auto const o_idx: c_ptr->o_idxs)
-				{
-					object_type * o_ptr = &o_list[o_idx];
-
-					/* Skip non-chests */
-					if (o_ptr->tval != TV_CHEST) continue;
-
-					/* Skip non-trapped chests */
-					if (!o_ptr->pval) continue;
-
-					/* Identify once */
-					if (!object_known_p(o_ptr))
-					{
-						/* Message */
-						msg_print("You have discovered a trap on the chest!");
-
-						/* Know the trap */
-						object_known(o_ptr);
-
-						/* Notice it */
-						disturb(0);
-					}
-				}
-			}
-		}
-	}
-}
-
-
-
-
-/*
  * Player "wants" to pick up an object or gold.
  * Note that we ONLY handle things that can be picked up.
  * See "move_player()" for handling of other things.
@@ -530,36 +445,6 @@ void carry(int pickup)
 	if (!p_ptr->disembodied)
 	{
 		py_pickup_floor(pickup);
-	}
-}
-
-
-/*
- * Handle player hitting a real trap
- */
-static void hit_trap(void)
-{
-	auto &t_info = game->edit_data.t_info;
-
-	bool_ ident = FALSE;
-
-	cave_type *c_ptr;
-
-
-	/* Disturb the player */
-	disturb(0);
-
-	/* Get the cave grid */
-	c_ptr = &cave[p_ptr->py][p_ptr->px];
-	if (c_ptr->t_idx != 0)
-	{
-		ident = player_activate_trap_type(p_ptr->py, p_ptr->px, NULL, -1);
-		if (ident)
-		{
-			t_info[c_ptr->t_idx].ident = TRUE;
-			msg_format("You identified the trap as %s.",
-				   t_info[c_ptr->t_idx].name);
-		}
 	}
 }
 
@@ -2665,7 +2550,7 @@ static bool_ easy_open_door(int y, int x)
 	else if (c_ptr->feat >= FEAT_DOOR_HEAD + 0x01)
 	{
 		/* Disarm factor */
-		i = p_ptr->skill_dis;
+		i = 100;
 
 		/* Penalize some conditions */
 		if (p_ptr->blind || no_lite()) i = i / 10;
@@ -2685,9 +2570,6 @@ static bool_ easy_open_door(int y, int x)
 		{
 			/* Message */
 			msg_print("You have picked the lock.");
-
-			/* Set off trap */
-			if (c_ptr->t_idx != 0) player_activate_door_trap(y, x);
 
 			/* Open the door */
 			cave_set_feat(y, x, FEAT_OPEN);
@@ -2713,9 +2595,6 @@ static bool_ easy_open_door(int y, int x)
 	/* Closed door */
 	else
 	{
-		/* Set off trap */
-		if (c_ptr->t_idx != 0) player_activate_door_trap(y, x);
-
 		/* Open the door */
 		cave_set_feat(y, x, FEAT_OPEN);
 
@@ -2736,7 +2615,7 @@ static bool_ easy_open_door(int y, int x)
  * any monster which might be in the destination grid.  Previously,
  * moving into walls was "free" and did NOT hit invisible monsters.
  */
-void move_player_aux(int dir, int do_pickup, int run, bool_ disarm)
+void move_player_aux(int dir, int do_pickup, int run)
 {
 	auto const &d_info = game->edit_data.d_info;
 	auto const &r_info = game->edit_data.r_info;
@@ -2751,8 +2630,6 @@ void move_player_aux(int dir, int do_pickup, int run, bool_ disarm)
 	auto r_ptr = &r_info[p_ptr->body_monster];
 
 	char m_name[80];
-
-	bool_ old_dtrap, new_dtrap;
 
 	bool_ oktomove = TRUE;
 
@@ -2981,14 +2858,6 @@ void move_player_aux(int dir, int do_pickup, int run, bool_ disarm)
 		oktomove = FALSE;
 	}
 
-	/* Don't step on known traps. */
-	else if (disarm && (c_ptr->info & (CAVE_TRDT)) && !(p_ptr->confused || p_ptr->stun || p_ptr->image))
-	{
-		msg_print("You stop to avoid triggering the trap.");
-		energy_use = 0;
-		oktomove = FALSE;
-	}
-
 	/* Player can't enter ? soo bad for him/her ... */
 	else if (!player_can_enter(c_ptr->feat))
 	{
@@ -3074,37 +2943,6 @@ void move_player_aux(int dir, int do_pickup, int run, bool_ disarm)
 		}
 	}
 
-	/*
-	 * Check trap detection status -- retrieve them here
-	 * because they are used by the movement code as well
-	 */
-	old_dtrap = ((cave[p_ptr->py][p_ptr->px].info & CAVE_DETECT) != 0);
-	new_dtrap = ((cave[y][x].info & CAVE_DETECT) != 0);
-
-	/* Normal movement */
-	if (oktomove && running && options->disturb_detect)
-	{
-		/*
-		 * Disturb the player when about to leave the trap detected
-		 * area
-		 */
-		if (old_dtrap && !new_dtrap)
-		{
-			/* Disturb player */
-			disturb(0);
-
-			/* but don't take a turn */
-			energy_use = 0;
-
-			/* Tell player why */
-			cmsg_print(TERM_VIOLET, "You are about to leave a trap detected zone.");
-			/* Flush */
-			/* msg_print(NULL); */
-
-			oktomove = FALSE;
-		}
-	}
-
 	/* Normal movement */
 	if (oktomove)
 	{
@@ -3138,20 +2976,6 @@ void move_player_aux(int dir, int do_pickup, int run, bool_ disarm)
 		/* Check for new panel (redraw map) */
 		verify_panel();
 
-		/* Check detection status */
-		if (old_dtrap && !new_dtrap)
-		{
-			cmsg_print(TERM_VIOLET, "You leave a trap detected zone.");
-			if (running) msg_print(NULL);
-			p_ptr->redraw |= (PR_FRAME);
-		}
-		else if (!old_dtrap && new_dtrap)
-		{
-			cmsg_print(TERM_L_BLUE, "You enter a trap detected zone.");
-			if (running) msg_print(NULL);
-			p_ptr->redraw |= (PR_FRAME);
-		}
-
 		/* Update stuff */
 		p_ptr->update |= (PU_VIEW | PU_FLOW | PU_MON_LITE);
 
@@ -3178,18 +3002,6 @@ void move_player_aux(int dir, int do_pickup, int run, bool_ disarm)
 			if (running) msg_print(NULL);
 		}
 
-		/* Spontaneous Searching */
-		if ((p_ptr->skill_fos >= 50) || (0 == rand_int(50 - p_ptr->skill_fos)))
-		{
-			search();
-		}
-
-		/* Continuous Searching */
-		if (p_ptr->searching)
-		{
-			search();
-		}
-
 		/* Handle "objects" */
 		carry(do_pickup);
 
@@ -3213,26 +3025,6 @@ void move_player_aux(int dir, int do_pickup, int run, bool_ disarm)
 
 			/* Flush message while running */
 			if (running) msg_print(NULL);
-		}
-
-		/* Discover invisible traps */
-		else if ((c_ptr->t_idx != 0) &&
-		                !(f_info[cave[y][x].feat].flags & FF_DOOR))
-		{
-			/* Disturb */
-			disturb(0);
-
-			if (!(c_ptr->info & (CAVE_TRDT)))
-			{
-				/* Message */
-				msg_print("You found a trap!");
-
-				/* Pick a trap */
-				pick_trap(p_ptr->py, p_ptr->px);
-			}
-
-			/* Hit the trap */
-			hit_trap();
 		}
 
 		/* Execute the inscription */
@@ -3263,9 +3055,9 @@ void move_player_aux(int dir, int do_pickup, int run, bool_ disarm)
 	}
 }
 
-void move_player(int dir, int do_pickup, bool_ disarm)
+void move_player(int dir, int do_pickup)
 {
-	move_player_aux(dir, do_pickup, 0, disarm);
+	move_player_aux(dir, do_pickup, 0);
 }
 
 
@@ -3275,14 +3067,6 @@ void move_player(int dir, int do_pickup, bool_ disarm)
 static int see_obstacle_grid(cave_type *c_ptr)
 {
 	auto const &f_info = game->edit_data.f_info;
-
-	/*
-	 * Hack -- Avoid hitting detected traps, because we cannot rely on
-	 * the CAVE_MARK check below, and traps can be set to nearly
-	 * everything the player can move on to XXX XXX XXX
-	 */
-	if (c_ptr->info & (CAVE_TRDT)) return (TRUE);
-
 
 	/* Hack -- Handle special cases XXX XXX */
 	switch (c_ptr->feat)
@@ -3765,18 +3549,12 @@ static bool_ run_test(void)
 				notice = FALSE;
 			}
 
-			/* A detected trap is interesting */
-			if (c_ptr->info & (CAVE_TRDT)) notice = TRUE;
-
 			/* Interesting feature */
 			if (notice) return (TRUE);
 
 			/* The grid is "visible" */
 			inv = FALSE;
 		}
-
-		/* Mega-Hack -- Maze code removes CAVE_MARK XXX XXX XXX */
-		if (c_ptr->info & (CAVE_TRDT)) return (TRUE);
 
 		/* Analyze unknown grids and floors */
 		if (inv || cave_floor_bold(row, col))
@@ -4050,7 +3828,7 @@ void run_step(int dir)
 
 
 	/* Move the player, using the "pickup" flag */
-	move_player_aux(find_current, options->always_pickup, 1, TRUE);
+	move_player_aux(find_current, options->always_pickup, 1);
 }
 
 

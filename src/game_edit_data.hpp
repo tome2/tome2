@@ -19,7 +19,6 @@
 #include "skill_descriptor.hpp"
 #include "store_action_type.hpp"
 #include "store_info_type.hpp"
-#include "trap_type.hpp"
 #include "vault_type.hpp"
 #include "wilderness_type_info.hpp"
 
@@ -141,10 +140,5 @@ struct GameEditData {
 	 * Player abilities.
 	 */
 	std::vector<ability_type> ab_info;
-
-	/**
-	 * Traps
-	 */
-	std::vector<trap_type> t_info;
 
 };

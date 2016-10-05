@@ -1941,14 +1941,6 @@ A:0/1
 D:This scroll shows nearby objects to you. It only makes you aware of items on the floor,
 D:however, not those carried by creatures.
 
-N:194:Trap Detection
-G:?:d
-I:70:28:0
-W:5:0:5:35
-A:5/1:10/1
-D:This scroll is very helpful, because it reveals the locations of nearby snares and traps which you
-D:might otherwise blunder into.
-
 ##### Extra ammunition #####
 
 N:195:& Sheaf Arrow~
@@ -2020,22 +2012,6 @@ I:70:1:0
 W:5:0:5:0
 A:5/1
 D:This nasty scroll will make a loud noise when read, waking up foes in your vicinity.
-
-N:203:Trap Creation
-G:?:d
-I:70:7:0
-W:10:0:5:0
-A:10/1
-D:If you read this rather annoying scroll, snares and pitfalls will magically be planted all around
-D:you, ready to do nasty things to you once you walk onto them.
-
-N:204:Trap/Door Destruction
-G:?:d
-I:70:39:0
-W:10:0:5:50
-A:10/1
-D:A very specifically destructive spell is written on this scroll. It will smash all traps and all
-D:doors immediately next to you.
 
 N:205:Artifact Creation
 G:?:d
@@ -2908,13 +2884,6 @@ W:30:0:50:100
 A:30/1
 P:0:1d2:0:0:0
 
-N:307:Disarm
-G:_:d
-I:55:8:-1:SPELL=Disarm
-W:2:0:50:100
-A:2/1
-P:0:1d2:0:0:0
-
 N:308:Teleportation
 G:_:d
 I:55:9:-1:SPELL=Teleportation
@@ -3265,18 +3234,6 @@ F:IGNORE_ELEC
 F:IGNORE_FIRE
 D:When fuelled with enough ambient mana, this rod can detect nearby passages.
 
-N:352:Trap Location
-G:-:d
-I:66:29:8
-W:5:0:15:100
-A:5/1:10/1:20/1
-P:0:1d1:0:0:0
-F:IGNORE_ACID
-F:IGNORE_COLD
-F:IGNORE_ELEC
-F:IGNORE_FIRE
-D:Zapping this rod will release a minor detection magic, alerting you of nearby pits and snares.
-
 N:354:Recall
 G:-:d
 I:66:3:80
@@ -3411,18 +3368,6 @@ F:IGNORE_COLD
 F:IGNORE_ELEC
 F:IGNORE_FIRE
 D:This rod of movement will displace its target to another location.
-
-N:365:Disarming
-G:-:d
-I:66:14:50
-W:35:0:15:2100
-A:35/1
-P:0:1d1:0:0:0
-F:IGNORE_ACID
-F:IGNORE_COLD
-F:IGNORE_ELEC
-F:IGNORE_FIRE
-D:This rod will clear a path for you, triggering and thus rendering harmless all traps on the way.
 
 N:366:Lightning Balls
 G:-:d
@@ -5000,26 +4945,6 @@ D:This is a larger version of the curved oriental blade.
 D:Runes of war decorate its golden hilt.
 
 
-### Trapping Kits
-
-N:549:Arrow
-G:`:r
-I:46:2:0
-W:10:0:60:150
-A:10/2:50/2
-F:SHOW_MODS
-D:It must be loaded with arrows, which will be
-D:fired at the monster who triggers the trap.
-
-N:550:Bolt
-G:`:o
-I:46:3:0
-W:20:0:220:300
-A:20/2:50/2
-F:SHOW_MODS
-D:It must be loaded with crossbow bolts, which will
-D:be fired at the monster who triggers the trap.
-
 N:551:& Fauchard~
 G:/:s
 I:22:6:0
@@ -5067,17 +4992,6 @@ D:This is a two-edged dagger with a long blade. A favourite among travellers
 D:and warriors alike, because it can be worn comfortably with plain clothes
 D:as well as armour.
 
-### Trapping Kits
-
-N:555:Catapult
-G:`:R
-I:46:1:0
-W:1:0:50:40
-A:1/2:20/2
-F:SHOW_MODS
-D:It must be loaded with sling bullets, which will
-D:be fired at the monster who triggers the trap.
-
 N:556:& Ring Mail~
 G:[:s
 I:37:2:0
@@ -5116,16 +5030,6 @@ P:4:1d1:0:0:0
 D:Heavy, multi-layered cloth sewn together to cover the body,
 D:with extra padding between layers.
 
-### Trapping Kits
-
-N:560:Fumes
-G:`:G
-I:46:4:0
-W:2:0:20:50
-A:2/2:30/2
-D:It must be loaded with potions, which will splatter
-D:over the monster who triggers the trap.
-
 N:561:& Golden Ring Mail~
 G:(:y
 I:36:15:0
@@ -5134,32 +5038,6 @@ A:35/7
 P:8:1d4:-1:0:0
 D:A suit of non-overlapping thin golden rings sewn onto a soft leather
 D:backing. It looks beautiful, and is worn on special occasions.
-
-### Trapping Kits
-
-N:562:Magic
-G:`:g
-I:46:5:0
-W:5:0:20:50
-A:5/2:40/2
-F:IGNORE_ACID
-F:IGNORE_COLD
-F:IGNORE_ELEC
-F:IGNORE_FIRE
-D:It must be loaded with scrolls, which will release
-D:their spells at the monster who triggers the trap.
-
-N:563:Device
-G:`:v
-I:46:6:0
-W:20:0:20:50
-A:20/2:40/2:60/2
-F:IGNORE_ACID
-F:IGNORE_COLD
-F:IGNORE_ELEC
-F:IGNORE_FIRE
-D:It must be loaded with a magic device (wand, staff, or rod), which
-D:will fire its spell at the monster who triggers the trap.
 
 # XXX
 # XXX

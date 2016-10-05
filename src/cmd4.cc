@@ -34,7 +34,6 @@
 #include "squeltch.hpp"
 #include "tables.hpp"
 #include "town_type.hpp"
-#include "trap_type.hpp"
 #include "util.hpp"
 #include "util.h"
 #include "variable.h"
@@ -3237,35 +3236,6 @@ void do_cmd_knowledge_artifacts(void)
 }
 
 
-/*
- * Check the status of traps
- */
-void do_cmd_knowledge_traps(void)
-{
-	auto const &t_info = game->edit_data.t_info;
-
-	fmt::MemoryWriter w;
-	/* Scan the traps */
-	for (auto const &t_ref: t_info)
-	{
-		/* Get the trap */
-		auto t_ptr = &t_ref;
-
-		/* Skip "empty" traps */
-		if (!t_ptr->name) continue;
-
-		/* Skip unidentified traps */
-		if (!t_ptr->ident) continue;
-
-		/* Hack -- Build the trap name */
-		w.write("     {}\n", t_ptr->name);
-	}
-
-	/* Display the file contents */
-	show_string(w.c_str(), "Traps known");
-}
-
-
 static int monster_get_race_level(int r_idx)
 {
 	auto const &r_info = game->edit_data.r_info;
@@ -3822,12 +3792,11 @@ void do_cmd_knowledge(void)
 		prt("(7) Display current pets", 10, 5);
 		prt("(8) Display current quests", 11, 5);
 		prt("(9) Display current fates", 12, 5);
-		prt("(0) Display known traps", 13, 5);
-		prt("(A) Display known dungeon towns", 14, 5);
-		prt("(B) Display notes", 15, 5);
+		prt("(0) Display known dungeon towns", 13, 5);
+		prt("(A) Display notes", 14, 5);
 
 		/* Prompt */
-		prt("Command: ", 17, 0);
+		prt("Command: ", 16, 0);
 
 		/* Prompt */
 		i = inkey();
@@ -3909,17 +3878,8 @@ void do_cmd_knowledge(void)
 				break;
 			}
 
-			/* Traps */
-		case '0':
-			{
-				do_cmd_knowledge_traps();
-
-				break;
-			}
-
 			/* Dungeon towns */
-		case 'A':
-		case 'a':
+		case '0':
 			{
 				do_cmd_knowledge_towns();
 
@@ -3927,8 +3887,8 @@ void do_cmd_knowledge(void)
 			}
 
 			/* Notes */
-		case 'B':
-		case 'b':
+		case 'A':
+		case 'a':
 			{
 				do_cmd_knowledge_notes();
 

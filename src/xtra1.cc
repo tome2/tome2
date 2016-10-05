@@ -701,12 +701,6 @@ static void prt_state(int row, int col)
 		}
 	}
 
-	/* Searching */
-	else if (p_ptr->searching)
-	{
-		strcpy(text, "Searching ");
-	}
-
 	/* Nothing interesting */
 	else
 	{
@@ -727,9 +721,6 @@ static void prt_speed(int row, int col)
 
 	byte attr = TERM_WHITE;
 	char buf[32] = "";
-
-	/* Hack -- Visually "undo" the Search Mode Slowdown */
-	if (p_ptr->searching) i += 10;
 
 	/* Fast */
 	if (i > 110)
@@ -829,17 +820,6 @@ static void prt_status_line(void)
 	else
 	{
 		put_str("      ", row, col);
-	}
-
-	/* Dtrap */
-	col = 32;
-	if (cave[p_ptr->py][p_ptr->px].info & CAVE_DETECT)
-	{
-		c_put_str(TERM_L_GREEN, "DTrap", row, col);
-	}
-	else
-	{
-		put_str("     ", row, col);
 	}
 
 	/* State */
@@ -2622,12 +2602,6 @@ void apply_flags(object_flag_set const &f, s16b pval, s16b tval, s16b to_h, s16b
 	/* Affect stealth */
 	if (f & TR_STEALTH) p_ptr->skill_stl += pval;
 
-	/* Affect searching ability (factor of five) */
-	if (f & TR_SEARCH) p_ptr->skill_srh += (pval * 5);
-
-	/* Affect searching frequency (factor of five) */
-	if (f & TR_SEARCH) p_ptr->skill_fos += (pval * 5);
-
 	/* Affect infravision */
 	if (f & TR_INFRA) p_ptr->see_infra += pval;
 
@@ -2960,10 +2934,6 @@ void calc_bonuses(bool_ silent)
 	/* Base infravision (purely racial) */
 	p_ptr->see_infra = rp_ptr->infra + rmp_ptr->infra;
 
-
-	/* Base skill -- disarming */
-	p_ptr->skill_dis = 0;
-
 	/* Base skill -- magic devices */
 	p_ptr->skill_dev = 0;
 
@@ -2972,12 +2942,6 @@ void calc_bonuses(bool_ silent)
 
 	/* Base skill -- stealth */
 	p_ptr->skill_stl = 0;
-
-	/* Base skill -- searching ability */
-	p_ptr->skill_srh = 0;
-
-	/* Base skill -- searching frequency */
-	p_ptr->skill_fos = 0;
 
 	/* Base skill -- combat (normal) */
 	p_ptr->skill_thn = 0;
@@ -3296,12 +3260,9 @@ void calc_bonuses(bool_ silent)
 	p_ptr->to_a += tactic_info[(byte)p_ptr->tactic].to_ac;
 
 	p_ptr->skill_stl += tactic_info[(byte)p_ptr->tactic].to_stealth;
-	p_ptr->skill_dis += tactic_info[(byte)p_ptr->tactic].to_disarm;
 	p_ptr->skill_sav += tactic_info[(byte)p_ptr->tactic].to_saving;
 
 	p_ptr->pspeed += move_info[(byte)p_ptr->movement].to_speed;
-	p_ptr->skill_srh += move_info[(byte)p_ptr->movement].to_search;
-	p_ptr->skill_fos += move_info[(byte)p_ptr->movement].to_percep;
 	p_ptr->skill_stl += move_info[(byte)p_ptr->movement].to_stealth;
 
 	/* Apply temporary "stun" */
@@ -3534,9 +3495,6 @@ void calc_bonuses(bool_ silent)
 
 	/* Bloating slows the player down (a little) */
 	if (p_ptr->food >= PY_FOOD_MAX) p_ptr->pspeed -= 10;
-
-	/* Searching slows the player down */
-	if (p_ptr->searching) p_ptr->pspeed -= 10;
 
 	/* Display the speed (if needed) */
 	if (p_ptr->pspeed != old_speed) p_ptr->redraw |= (PR_FRAME);
@@ -3930,10 +3888,6 @@ void calc_bonuses(bool_ silent)
 	/* Affect Skill -- stealth (bonus one) */
 	p_ptr->skill_stl += 1;
 
-	/* Affect Skill -- disarming (DEX and INT) */
-	p_ptr->skill_dis += adj_dex_dis[p_ptr->stat_ind[A_DEX]];
-	p_ptr->skill_dis += adj_int_dis[p_ptr->stat_ind[A_INT]];
-
 	/* Affect Skill -- magic devices (INT) */
 	p_ptr->skill_dev += get_skill_scale(SKILL_DEVICE, 20);
 
@@ -3943,9 +3897,6 @@ void calc_bonuses(bool_ silent)
 	/* Affect Skill -- digging (STR) */
 	p_ptr->skill_dig += adj_str_dig[p_ptr->stat_ind[A_STR]];
 
-	/* Affect Skill -- disarming (skill) */
-	p_ptr->skill_dis += (get_skill_scale(SKILL_DISARMING, 75));
-
 	/* Affect Skill -- magic devices (skill) */
 	p_ptr->skill_dev += (get_skill_scale(SKILL_DEVICE, 150));
 
@@ -3954,12 +3905,6 @@ void calc_bonuses(bool_ silent)
 
 	/* Affect Skill -- stealth (skill) */
 	p_ptr->skill_stl += (get_skill_scale(SKILL_STEALTH, 25));
-
-	/* Affect Skill -- search ability (Sneakiness skill) */
-	p_ptr->skill_srh += (get_skill_scale(SKILL_SNEAK, 35));
-
-	/* Affect Skill -- search frequency (Sneakiness skill) */
-	p_ptr->skill_fos += (get_skill_scale(SKILL_SNEAK, 25));
 
 	/* Affect Skill -- combat (Combat skill + mastery) */
 	p_ptr->skill_thn += (50 * (((7 * get_skill(p_ptr->melee_style)) + (3 * get_skill(SKILL_COMBAT))) / 10) / 10);

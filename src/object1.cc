@@ -47,7 +47,6 @@
 #include "stats.hpp"
 #include "store_info_type.hpp"
 #include "tables.hpp"
-#include "trap_type.hpp"
 #include "util.hpp"
 #include "util.h"
 #include "variable.h"
@@ -636,7 +635,6 @@ void reset_visuals(void)
 	auto &r_info = game->edit_data.r_info;
 	auto &f_info = game->edit_data.f_info;
 	auto &k_info = game->edit_data.k_info;
-	auto &t_info = game->edit_data.t_info;
 
 	/* Extract some info about terrain features */
 	for (auto &f_ref: f_info)
@@ -684,15 +682,6 @@ void reset_visuals(void)
 		rmp.g_attr = 0;
 		rmp.g_char = 0;
 	}
-
-	/* Reset attr/char code for trap overlay graphics */
-	for (auto &t_ref: t_info)
-	{
-		/* Default attr/char */
-		t_ref.g_attr = 0;
-		t_ref.g_char = 0;
-	}
-
 
 	/* Normal symbols */
 	process_pref_file("font.prf");
@@ -1033,7 +1022,6 @@ static std::string object_desc_aux(object_type const *o_ptr, int pref, int mode)
 	auto const &k_info = game->edit_data.k_info;
 	auto const &a_info = game->edit_data.a_info;
 	auto const &e_info = game->edit_data.e_info;
-	auto const &t_info = game->edit_data.t_info;
 	static auto const TR_PVAL_MASK = compute_pval_mask();
 
 	bool_ hack_name = FALSE;
@@ -1094,14 +1082,6 @@ static std::string object_desc_aux(object_type const *o_ptr, int pref, int mode)
 	case TV_AXE:
 		{
 			show_weapon = TRUE;
-			break;
-		}
-
-		/* Trapping Kits */
-	case TV_TRAPKIT:
-		{
-			modstr = basenm;
-			basenm = "& # Trap Set~";
 			break;
 		}
 
@@ -1768,23 +1748,6 @@ static std::string object_desc_aux(object_type const *o_ptr, int pref, int mode)
 		else if (!o_ptr->pval)
 		{
 			t += " (empty)";
-		}
-
-		/* May be "disarmed" */
-		else if (o_ptr->pval < 0)
-		{
-			t += " (disarmed)";
-		}
-
-		/* Describe the traps, if any */
-		else
-		{
-			/* Describe the traps */
-			auto trap_name = (t_info[o_ptr->pval].ident)
-				? t_info[o_ptr->pval].name
-				: "trapped";
-
-			t += fmt::format(" ({})", trap_name);
 		}
 	}
 
@@ -2704,7 +2667,6 @@ bool_ object_out_desc(object_type *o_ptr, FILE *fff, bool_ trim_down, bool_ wait
 		if (flags & TR_DEX) vp[vn++] = "dexterity";
 		if (flags & TR_CON) vp[vn++] = "constitution";
 		if (flags & TR_CHR) vp[vn++] = "charisma";
-		if ((o_ptr->tval != TV_TRAPKIT) && (flags & TR_STEALTH)) vp[vn++] = "stealth";
 		if (flags & TR_SEARCH) vp[vn++] = "searching";
 		if (flags & TR_INFRA) vp[vn++] = "infravision";
 		if (flags & TR_TUNNEL) vp[vn++] = "ability to tunnel";
@@ -2779,11 +2741,6 @@ bool_ object_out_desc(object_type *o_ptr, FILE *fff, bool_ trim_down, bool_ wait
 			else
 				text_out_c(TERM_L_RED, format("%i%%", -percent));
 			text_out(".  ");
-		}
-
-		if ((o_ptr->tval == TV_TRAPKIT) && (flags & TR_STEALTH))
-		{
-			text_out("It is well-hidden. ");
 		}
 
 		vn = 0;
@@ -2919,7 +2876,6 @@ bool_ object_out_desc(object_type *o_ptr, FILE *fff, bool_ trim_down, bool_ wait
 			text_out("It makes you invisible.  ");
 		}
 
-		if (o_ptr->tval != TV_TRAPKIT)
 		{
 			vn = 0;
 			if (flags & TR_SUST_STR)
@@ -3014,45 +2970,6 @@ bool_ object_out_desc(object_type *o_ptr, FILE *fff, bool_ trim_down, bool_ wait
 					text_out_c(vc[i], vp[i]);
 				}
 				text_out(".  ");
-			}
-		}
-		else
-		{
-			if (flags & TR_AUTOMATIC_5)
-			{
-				text_out("It can rearm itself.  ");
-			}
-			if (flags & TR_AUTOMATIC_99)
-			{
-				text_out("It rearms itself.  ");
-			}
-			if (flags & TR_KILL_GHOST)
-			{
-				text_out("It is effective against Ghosts.  ");
-			}
-			if (flags & TR_TELEPORT_TO)
-			{
-				text_out("It can teleport monsters to you.  ");
-			}
-			if (flags & TR_ONLY_DRAGON)
-			{
-				text_out("It can only be set off by dragons.  ");
-			}
-			if (flags & TR_ONLY_DEMON)
-			{
-				text_out("It can only be set off by demons.  ");
-			}
-			if (flags & TR_ONLY_UNDEAD)
-			{
-				text_out("It can only be set off by undead.  ");
-			}
-			if (flags & TR_ONLY_ANIMAL)
-			{
-				text_out("It can only be set off by animals.  ");
-			}
-			if (flags & TR_ONLY_EVIL)
-			{
-				text_out("It can only be set off by evil creatures.  ");
 			}
 		}
 
@@ -5860,12 +5777,6 @@ void py_pickup_floor(int pickup)
 {
 	/* Get the tile */
 	auto c_ptr = &cave[p_ptr->py][p_ptr->px];
-
-	/* Hack -- ignore monster traps */
-	if (c_ptr->feat == FEAT_MON_TRAP)
-	{
-		return;
-	}
 
 	/* Try to grab ammo */
 	pickup_ammo();

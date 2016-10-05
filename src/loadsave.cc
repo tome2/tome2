@@ -30,7 +30,6 @@
 #include "tables.hpp"
 #include "timer_type.hpp"
 #include "town_type.hpp"
-#include "trap_type.hpp"
 #include "util.hpp"
 #include "util.h"
 #include "wilderness_map.hpp"
@@ -851,7 +850,6 @@ static bool_ do_extra(ls_flag_t flag)
 	do_byte(&p_ptr->confusing, flag);
 	do_bool(&p_ptr->black_breath, flag);
 	do_bool(&fate_flag, flag);
-	do_byte(&p_ptr->searching, flag);
 	do_bool(&ambush_flag, flag);
 	do_byte(&p_ptr->allow_one_death, flag);
 
@@ -1039,7 +1037,6 @@ static bool_ wearable_p(object_type *o_ptr)
 	case TV_HYPNOS:
 	case TV_INSTRUMENT:
 	case TV_DAEMON_BOOK:
-	case TV_TRAPKIT:
 	case TV_TOOL:
 		{
 			return (TRUE);
@@ -1246,7 +1243,6 @@ static void do_cave_type(cave_type *c_ptr, ls_flag_t flag)
 	do_byte(&c_ptr->mimic, flag);
 	do_s16b(&c_ptr->special, flag);
 	do_s16b(&c_ptr->special2, flag);
-	do_s16b(&c_ptr->t_idx, flag);
 	do_s16b(&c_ptr->inscription, flag);
 	do_byte(&c_ptr->mana, flag);
 	do_s16b(&c_ptr->effect, flag);
@@ -2380,28 +2376,6 @@ static bool do_fates(ls_flag_t flag)
 	return true;
 }
 
-static bool do_traps(ls_flag_t flag)
-{
-	auto &t_info = game->edit_data.t_info;
-
-	u16b n_traps = t_info.size();
-
-	do_u16b(&n_traps, flag);
-
-	if ((flag == ls_flag_t::LOAD) && (n_traps > t_info.size()))
-	{
-		note("Too many traps!");
-		return false;
-	}
-
-	for (std::size_t i = 0; i < n_traps; i++)
-	{
-		do_bool(&t_info[i].ident, flag);
-	}
-
-	return true;
-}
-
 static bool do_floor_inscriptions(ls_flag_t flag)
 {
 	u16b n_inscriptions = MAX_INSCRIPTIONS;
@@ -2549,11 +2523,6 @@ static bool_ do_savefile_aux(ls_flag_t flag)
 	}
 
 	if (!do_fates(flag))
-	{
-		return FALSE;
-	}
-
-	if (!do_traps(flag))
 	{
 		return FALSE;
 	}

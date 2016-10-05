@@ -12,7 +12,6 @@
 #include "monster2.hpp"
 #include "monster_type.hpp"
 #include "player_type.hpp"
-#include "traps.hpp"
 #include "tables.hpp"
 #include "util.hpp"
 #include "variable.hpp"
@@ -83,19 +82,6 @@ static bool_ quest_haunted_gen_hook(void *, void *, void *)
 			m_idx = place_monster_one(y, x, monster, 0, FALSE, MSTATUS_ENEMY);
 			m_list[m_idx].mflag |= MFLAG_QUEST;
 			--i;
-		}
-	}
-
-	/* Place some random traps */
-	for (i = 10 + damroll(4, 4); i > 0; )
-	{
-		y = rand_int(21) + 3;
-		x = rand_int(31) + 3;
-		auto const flags = f_info[cave[y][x].feat].flags;
-		if (!(flags & FF_PERMANENT) && (flags & FF_FLOOR))
-		{
-			--i;
-			place_trap(y, x);
 		}
 	}
 

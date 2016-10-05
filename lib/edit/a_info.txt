@@ -3708,58 +3708,6 @@ D:This helm, designed by Petty-Dwarves ages ago to act as the brain of a
 D:long lost project, is made of finest glass.  Its light banishes all secrets, 
 D:and makes audible whispers from the deceased.
 
-
-### Trapping Kits ###
-
-### note prices and rarities may have to be adjusted ###
-
-# The Catapult Trap Set of Ahromarwar 
-
-N:161:of Ahromarwar
-I:46:1:3
-W:20:10:40:20000
-P:0:0d0:25:15:30
-F:AUTOMATIC_99
-F:HIDE_TYPE
-F:STEALTH
-F:XTRA_MIGHT
-D:A trap that can almost never be detected.  Its missiles may be mere pebbles, 
-D:but fired at an incredibly high velocity to penetrate even the toughest 
-D:hide or armour.
-
-
-# The Device Trap Set 'Hanisbroner's Surprise'
-
-N:162:'Hanisbroner's Surprise'
-I:46:6:3
-W:20:20:40:20000
-P:0:0d0:0:0:25
-F:AUTOMATIC_99
-F:HIDE_TYPE
-F:STEALTH
-F:TELEPORT_TO
-F:XTRA_SHOTS
-D:A magical trap, armed with a wand.  Unaccountably, its victims keep 
-D:on coming back for more...
-
-
-# The Bolt Trap Set 'Merlion Karc's Demonbane'
-
-N:163:'Merlion Karc's Demonbane'
-I:46:3:2
-W:20:20:200:20000
-P:0:0d0:17:27:37
-F:HIDE_TYPE
-F:ONLY_DEMON
-F:STEALTH
-F:XTRA_MIGHT
-F:XTRA_SHOTS
-D:A snare set not for animals, or people, but for demons alone, and 
-D:enchanted so that whenever the demon sets foot or claw into the 
-D:(hidden) pentagram, its hide is immediately pierced by many magical 
-D:crossbow bolts.
-
-
 # The Broken Sword 'Narsil'
 
 N:164:'Narsil'

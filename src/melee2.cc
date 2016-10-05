@@ -44,7 +44,6 @@
 #include "spells2.hpp"
 #include "stats.hpp"
 #include "tables.hpp"
-#include "traps.hpp"
 #include "util.hpp"
 #include "variable.hpp"
 #include "xtra2.hpp"
@@ -2126,12 +2125,6 @@ static bool_ monst_spell_monst(int m_idx)
 				break;
 			}
 
-		case SF_TRAPS_IDX:
-			{
-				/* Not implemented */
-				break;
-			}
-
 		case SF_FORGET_IDX:
 			{
 				/* Not implemented */
@@ -3625,15 +3618,6 @@ static bool_ make_attack_spell(int m_idx)
 				if (blind) msg_format("%^s mumbles.", m_name);
 				else msg_format("%^s gestures in shadow.", m_name);
 				(void)unlite_area(0, 3);
-				break;
-			}
-
-		case SF_TRAPS_IDX:
-			{
-				disturb(1);
-				if (blind) msg_format("%^s mumbles, and then cackles evilly.", m_name);
-				else msg_format("%^s casts a spell and cackles evilly.", m_name);
-				(void)trap_creation();
 				break;
 			}
 
@@ -5683,13 +5667,6 @@ static void process_monster(int m_idx, bool_ is_frien)
 			do_move = TRUE;
 		}
 
-		/* Floor is trapped? */
-		else if (c_ptr->feat == FEAT_MON_TRAP)
-		{
-			/* Go ahead and move */
-			do_move = TRUE;
-		}
-
 		/* Hack -- check for Glyph of Warding */
 		if ((c_ptr->feat == FEAT_GLYPH) &&
 		                !(r_ptr->flags & RF_NEVER_BLOW))
@@ -6158,12 +6135,7 @@ static void process_monster(int m_idx, bool_ is_frien)
 					disturb(0);
 			}
 
-			/* Check for monster trap */
-			if (c_ptr->feat == FEAT_MON_TRAP)
-			{
-				if (mon_hit_trap(m_idx)) return;
-			}
-			else
+
 			{
 				/* Copy list of objects; we need a copy because we're mutating the list. */
 				auto const object_idxs(c_ptr->o_idxs);

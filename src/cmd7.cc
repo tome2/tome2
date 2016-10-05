@@ -484,7 +484,6 @@ void do_cmd_mindcraft(void)
 				{
 					b = detect_monsters_normal(DEFAULT_RADIUS);
 					if (plev > 14) b |= detect_monsters_invis(DEFAULT_RADIUS);
-					if (plev > 4) b |= detect_traps(DEFAULT_RADIUS);
 				}
 				else
 				{
@@ -3508,7 +3507,7 @@ void do_cmd_unbeliever()
 	/* Select what to do */
 	while (TRUE)
 	{
-		if (!get_com("Disrupt [C]ontinuum or [D]etect Traps", &ch))
+		if (!get_com("Disrupt [C]ontinuum or [D]estroy Doors", &ch))
 		{
 			ext = 0;
 			break;
@@ -3534,20 +3533,18 @@ void do_cmd_unbeliever()
 			break;
 		}
 
-		/* Detect Traps */
+		/* Destroy Doors */
 	case 2:
 		{
 			s16b skill = get_skill(SKILL_ANTIMAGIC);
 
 			if (skill < 25)
 			{
-				msg_print("You cannot use your detection abilities yet.");
+				msg_print("You cannot use your door destruction abilities yet.");
 				break;
 			}
 
-			detect_traps(DEFAULT_RADIUS);
-
-			if (skill >= 35) destroy_doors_touch();
+			destroy_doors_touch();
 
 			break;
 		}

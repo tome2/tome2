@@ -1570,13 +1570,6 @@ static void apply_monster_power(monster_race const *r_ptr, std::size_t monster_s
 			break;
 		}
 
-	case SF_TRAPS_IDX:
-		{
-			trap_creation();
-
-			break;
-		}
-
 	case SF_S_THUNDERLORD_IDX:
 		{
 			for (int k = 0; k < 1; k++)

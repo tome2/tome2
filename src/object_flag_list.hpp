@@ -170,16 +170,6 @@ TR(5, 17, TR_RANDOM_RESIST      , RANDOM_RESIST      , nullptr     , -1, -1, -1,
 TR(5, 18, TR_RANDOM_POWER       , RANDOM_POWER       , nullptr     , -1, -1, -1, BINARY    , 0, false, false)
 TR(5, 19, TR_RANDOM_RES_OR_POWER, RANDOM_RES_OR_POWER, nullptr     , -1, -1, -1, BINARY    , 0, false, false)
 
-TR(6,  0, TR_AUTOMATIC_5        , AUTOMATIC_5        , nullptr     , -1, -1, -1, BINARY    , 0, false, false)
-TR(6,  1, TR_AUTOMATIC_99       , AUTOMATIC_99       , nullptr     , -1, -1, -1, BINARY    , 0, false, false)
-TR(6,  2, TR_KILL_GHOST         , KILL_GHOST         , nullptr     , -1, -1, -1, BINARY    , 0, false, false)
-TR(6,  3, TR_TELEPORT_TO        , TELEPORT_TO        , nullptr     , -1, -1, -1, BINARY    , 0, false, false)
-TR(6,  4, TR_ONLY_DRAGON        , ONLY_DRAGON        , nullptr     , -1, -1, -1, BINARY    , 0, false, false)
-TR(6,  5, TR_ONLY_DEMON         , ONLY_DEMON         , nullptr     , -1, -1, -1, BINARY    , 0, false, false)
-TR(6,  8, TR_ONLY_ANIMAL        , ONLY_ANIMAL        , nullptr     , -1, -1, -1, BINARY    , 0, false, false)
-TR(6,  9, TR_ONLY_UNDEAD        , ONLY_UNDEAD        , nullptr     , -1, -1, -1, BINARY    , 0, false, false)
-TR(6, 10, TR_ONLY_EVIL          , ONLY_EVIL          , nullptr     , -1, -1, -1, BINARY    , 0, false, false)
-
 TR(7,  0, ESP_ORC               , ESP_ORC            , "Orc.ESP"   ,  3,  1,  0, BINARY    , 0, false, true )
 TR(7,  1, ESP_TROLL             , ESP_TROLL          , "Troll.ESP" ,  3,  1,  1, BINARY    , 0, false, true )
 TR(7,  2, ESP_DRAGON            , ESP_DRAGON         , "Dragon.ESP",  3,  1,  2, BINARY    , 0, false, true )

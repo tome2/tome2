@@ -40,7 +40,6 @@
 #include "spells3.hpp"
 #include "spells5.hpp"
 #include "tables.hpp"
-#include "traps.hpp"
 #include "util.hpp"
 #include "variable.hpp"
 #include "wilderness_map.hpp"
@@ -1185,7 +1184,6 @@ s32b object_value_real(object_type const *o_ptr)
 	case TV_AMULET:
 	case TV_RING:
 	case TV_MSTAFF:
-	case TV_TRAPKIT:
 	case TV_INSTRUMENT:
 		{
 			/* No pval */
@@ -1345,7 +1343,6 @@ s32b object_value_real(object_type const *o_ptr)
 	case TV_DAEMON_BOOK:
 	case TV_AXE:
 	case TV_POLEARM:
-	case TV_TRAPKIT:
 		{
 			/* Hack -- negative hit/damage bonuses */
 			if (o_ptr->to_h + o_ptr->to_d < 0 && !value) return (0L);
@@ -1660,7 +1657,6 @@ bool_ object_similar(object_type const *o_ptr, object_type const *j_ptr)
 	case TV_SOFT_ARMOR:
 	case TV_HARD_ARMOR:
 	case TV_DRAG_ARMOR:
-	case TV_TRAPKIT:
 	case TV_DAEMON_BOOK:
 		{
 			/* Fall through */
@@ -2516,7 +2512,7 @@ static void a_m_aux_1(object_type *o_ptr, int level, int power)
 	if (power > 1)
 	{
 		/* Make ego item */
-		if ((rand_int(RANDART_WEAPON) == 1) && (o_ptr->tval != TV_TRAPKIT)) create_artifact(o_ptr, FALSE, TRUE);
+		if (rand_int(RANDART_WEAPON) == 1) create_artifact(o_ptr, FALSE, TRUE);
 		else make_ego_item(o_ptr, TRUE);
 	}
 	else if (power < -1)
@@ -2563,22 +2559,6 @@ static void a_m_aux_1(object_type *o_ptr, int level, int power)
 	/* Some special cases */
 	switch (o_ptr->tval)
 	{
-	case TV_TRAPKIT:
-		{
-			/* Good */
-			if (power > 0) o_ptr->to_a += randint(5);
-
-			/* Very good */
-			if (power > 1) o_ptr->to_a += randint(5);
-
-			/* Bad */
-			if (power < 0) o_ptr->to_a -= randint(5);
-
-			/* Very bad */
-			if (power < -1) o_ptr->to_a -= randint(5);
-
-			break;
-		}
 	case TV_MSTAFF:
 		{
 			if (is_ego_p(o_ptr, EGO_MSTAFF_SPELL))
@@ -3452,9 +3432,6 @@ static void a_m_aux_4(object_type *o_ptr, int level, int power)
 			/* Hack -- skip ruined chests */
 			if (k_info[o_ptr->k_idx].level <= 0) break;
 
-			/* Pick a trap */
-			place_trap_object(o_ptr);
-
 			/* Hack - set pval2 to the number of objects in it */
 			if (o_ptr->pval)
 				o_ptr->pval2 = (o_ptr->sval % SV_CHEST_MIN_LARGE) * 2;
@@ -3514,22 +3491,6 @@ static void a_m_aux_4(object_type *o_ptr, int level, int power)
 			break;
 		}
 
-	}
-}
-
-void trap_hack(object_type *o_ptr)
-{
-	if (o_ptr->tval != TV_TRAPKIT) return;
-
-	switch (o_ptr->sval)
-	{
-	case SV_TRAPKIT_POTION:
-	case SV_TRAPKIT_SCROLL:
-	case SV_TRAPKIT_DEVICE:
-		o_ptr->to_h = 0;
-		o_ptr->to_d = 0;
-	default:
-		return;
 	}
 }
 
@@ -4179,7 +4140,6 @@ void apply_magic(object_type *o_ptr, int lev, bool_ okay, bool_ good, bool_ grea
 	case TV_SHOT:
 	case TV_ARROW:
 	case TV_BOLT:
-	case TV_TRAPKIT:
 		{
 			if (power) a_m_aux_1(o_ptr, lev, power);
 			break;
@@ -4358,9 +4318,6 @@ try_an_other_ego:
 
 			o_ptr->timeout = o_ptr->pval2;
 		}
-
-		/* Remove some unnecessary stuff hack */
-		if (o_ptr->tval == TV_TRAPKIT) trap_hack(o_ptr);
 	}
 }
 
@@ -4573,9 +4530,6 @@ static bool kind_is_theme(obj_theme const *theme, int k_idx)
 	case TV_INSTRUMENT:
 		prob = theme->tools;
 		break;
-	case TV_TRAPKIT:
-		prob = theme->tools;
-		break;
 	}
 
 	/* Roll to see if it can be made */
@@ -4667,7 +4621,6 @@ static bool_ kind_is_good(int k_idx)
 	case TV_HAFTED:
 	case TV_POLEARM:
 	case TV_DIGGING:
-	case TV_TRAPKIT:
 	case TV_MSTAFF:
 	case TV_BOOMERANG:
 		{
@@ -5211,9 +5164,6 @@ s16b drop_near(object_type *j_ptr, int chance, int y, int x)
 			/* Require floor space (or shallow terrain) -KMW- */
 			if (!(f_info[c_ptr->feat].flags & FF_FLOOR)) continue;
 
-			/* No traps */
-			if (c_ptr->t_idx) continue;
-
 			/* No objects */
 			k = 0;
 
@@ -5448,30 +5398,6 @@ void acquirement(int y1, int x1, int num, bool_ great, bool_ known)
 	}
 }
 
-
-
-/*
- * Hack -- instantiate a trap
- *
- * XXX XXX XXX This routine should be redone to reflect trap "level".
- * That is, it does not make sense to have spiked pits at 50 feet.
- * Actually, it is not this routine, but the "trap instantiation"
- * code, which should also check for "trap doors" on quest levels.
- */
-void pick_trap(int y, int x)
-{
-	cave_type *c_ptr = &cave[y][x];
-
-	/* Paranoia */
-	if ((c_ptr->t_idx == 0) || (c_ptr->info & CAVE_TRDT)) return;
-
-	/* Activate the trap */
-	c_ptr->info |= (CAVE_TRDT);
-
-	/* Notice and redraw */
-	note_spot(y, x);
-	lite_spot(y, x);
-}
 
 /*
  * Describe the charges on an item in the inventory.

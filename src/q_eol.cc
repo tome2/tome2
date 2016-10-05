@@ -15,7 +15,6 @@
 #include "object2.hpp"
 #include "player_type.hpp"
 #include "tables.hpp"
-#include "traps.hpp"
 #include "util.hpp"
 #include "variable.hpp"
 #include "z-rand.hpp"
@@ -94,11 +93,6 @@ static bool_ quest_eol_gen_hook(void *, void *, void *)
 				m_allow_special[r_idx] = FALSE;
 				// Mark with the QUEST flag
 				if (m_idx) m_list[m_idx].mflag |= MFLAG_QUEST;
-			}
-
-			if (magik(18))
-			{
-				place_trap(y, x);
 			}
 
 			/* Place player at one end */

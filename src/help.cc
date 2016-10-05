@@ -24,7 +24,7 @@
 #include "variable.hpp"
 
 #define DESC_MAX 14
-#define TRIGGERED_HELP_MAX 18
+#define TRIGGERED_HELP_MAX 17
 
 #define HELP_VOID_JUMPGATE 0
 #define HELP_FOUNTAIN      1
@@ -34,16 +34,15 @@
 #define HELP_GET_RUNE      5
 #define HELP_GET_ROD       6
 #define HELP_GET_ROD_TIP   7
-#define HELP_GET_TRAP_KIT  8
-#define HELP_GET_DEVICE    9
-#define HELP_WILDERNESS   10
-#define HELP_GAME_TOME    11
-#define HELP_GAME_THEME   12
-#define HELP_1ST_LEVEL    13
-#define HELP_20TH_LEVEL   14
-#define HELP_ID_SPELL_ITM 15
-#define HELP_MELEE_SKILLS 16
-#define HELP_MON_ASK_HELP 17
+#define HELP_GET_DEVICE    8
+#define HELP_WILDERNESS    9
+#define HELP_GAME_TOME    10
+#define HELP_GAME_THEME   11
+#define HELP_1ST_LEVEL    12
+#define HELP_20TH_LEVEL   13
+#define HELP_ID_SPELL_ITM 14
+#define HELP_MELEE_SKILLS 15
+#define HELP_MON_ASK_HELP 16
 
 /**
  * Game started?
@@ -200,7 +199,6 @@ context_help_type class_table[] =
 	{ "Priest(Varda)",  "c_pr_varda.txt", 0 },
 	{ "Sniper",         "c_sniper.txt",   0 },
 	{ "Stonewright",    "c_stonewr.txt",  0 },
-	{ "Trapper",        "c_trapper.txt",  0 },
 	{ "Wainrider",      "c_wainrid.txt",  0 },
 	{ "War-mage",       "c_warmage.txt",  0 },
 	/* End of list */
@@ -302,7 +300,6 @@ context_help_type ability_table[] =
 	{ "Ammo creation",       "ability.txt",  7 },
 	{ "Touch of death",      "ability.txt",  8 },
 	{ "Far reaching attack", "ability.txt", 10 },
-	{ "Trapping",            "ability.txt", 11 },
 	{ "Undead Form",         "ability.txt", 12 },
 	{ NULL,                  NULL,           0 },
 };
@@ -350,11 +347,6 @@ static bool_ trigger_get_rod(void *in, void *out) {
 static bool_ trigger_get_rod_tip(void *in, void *out) {
 	hook_get_in *g = (hook_get_in *) in;
 	return (g->o_ptr->tval == TV_ROD);
-}
-
-static bool_ trigger_get_trap_kit(void *in, void *out) {
-	hook_get_in *g = (hook_get_in *) in;
-	return (g->o_ptr->tval == TV_TRAPKIT);
 }
 
 static bool_ trigger_get_magic_device(void *in, void *out) {
@@ -476,16 +468,6 @@ static triggered_help_type triggered_help[TRIGGERED_HELP_MAX] =
 	    "before you can use it. Once it has been attatched (use the 'z' key)",
 	    "you cannot unattach it! The rod tip will determine the effect of",
 	    "the rod. To use your rod, 'z'ap it once it has been assembled.",
-	    NULL
-	  }
-	},
-	{ HELP_GET_TRAP_KIT,
-	  HOOK_GET,
-	  trigger_get_trap_kit,
-	  { "Ooooh, a trapping kit. If you have ability in the trapping skill,",
-	    "you can lay this trap (via the 'm' key) to harm unsuspecting foes.",
-	    "You'll generally need either some ammo or magic device depending",
-	    "on the exact type of trap kit.",
 	    NULL
 	  }
 	},

@@ -4,7 +4,6 @@
 #include "dungeon_flag.hpp"
 #include "feature_flag.hpp"
 #include "feature_type.hpp"
-#include "game.hpp"
 #include "hook_get_in.hpp"
 #include "hooks.hpp"
 #include "lua_bind.hpp"
@@ -14,7 +13,6 @@
 #include "object_type.hpp"
 #include "player_type.hpp"
 #include "tables.hpp"
-#include "traps.hpp"
 #include "util.hpp"
 #include "variable.hpp"
 #include "z-rand.hpp"
@@ -471,8 +469,6 @@ std::string quest_fireproof_describe()
 
 static bool_ fireproof_gen_hook(void *, void *, void *)
 {
-	auto const &f_info = game->edit_data.f_info;
-
 	fireproof_settings const *settings = fireproof_get_settings();
 
 	/* Only if player doing this quest */
@@ -483,8 +479,6 @@ static bool_ fireproof_gen_hook(void *, void *, void *)
 
 	/* Go ahead */
 	{
-		int traps, trap_y, trap_x;
-
 		/* load the map */
 		{
 			int x0 = 2;
@@ -515,46 +509,6 @@ static bool_ fireproof_gen_hook(void *, void *, void *)
 			drop_near(&forge, -1, y, x);
 		}
 
-		/* how many traps to generate */
-		traps = rand_range(10, 30);
-					
-		/* generate the traps */
-		while (traps > 0)
-		{
-			int tries = 0, trap_level = 0;
-
-			/* make sure it's a safe place */
-			while (tries == 0)
-			{
-				/* get grid coordinates */
-				trap_y = randint(19) + 2;
-				trap_x = randint(45) + 2;
-				cave_type *c_ptr = &cave[trap_y][trap_x];
-
-				/* are the coordinates on a stair, or a wall? */
-				if (bool(f_info[c_ptr->feat].flags & FF_PERMANENT) ||
-				    (f_info[c_ptr->feat].flags & FF_FLOOR).empty())
-				{
-					/* try again */
-					tries = 0;
-				}
-				else
-				{
-					/* not a stair, then stop this 'while' */
-					tries = 1;
-				}
-			}
-
-			/* randomise level of trap */
-			trap_level = rand_range(20, 40);
-
-			/* put the trap there */
-			place_trap_leveled(trap_y, trap_x, trap_level);
-
-			/* that's one less trap to place */
-			traps = traps - 1;
-		}
-		
 		return TRUE;
 	}
 }

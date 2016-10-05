@@ -344,7 +344,6 @@ S:BR_CONF
 S:CONF
 S:FORGET
 S:MULTIPLY
-S:TRAPS
 
 # The Maze
 # Levels 25-37

@@ -34,7 +34,6 @@
 #include "spells2.hpp"
 #include "stats.hpp"
 #include "tables.hpp"
-#include "traps.hpp"
 #include "util.hpp"
 #include "util.h"
 #include "variable.h"
@@ -201,11 +200,6 @@ static void power_activate(int power)
 			}
 		}
 		break;
-	case PWR_LAY_TRAP:
-		{
-			do_cmd_set_trap();
-		}
-		break;
 	case PWR_MAGIC_MAP:
 		{
 			msg_print("You sense the world around you.");
@@ -334,7 +328,6 @@ static void power_activate(int power)
 	case PWR_DETECT_TD:
 		{
 			msg_print("You examine your surroundings.");
-			(void)detect_traps(DEFAULT_RADIUS);
 			(void)detect_doors(DEFAULT_RADIUS);
 			(void)detect_stairs(DEFAULT_RADIUS);
 		}

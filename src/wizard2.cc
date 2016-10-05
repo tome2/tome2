@@ -32,7 +32,6 @@
 #include "spells2.hpp"
 #include "stats.hpp"
 #include "tables.hpp"
-#include "traps.hpp"
 #include "util.hpp"
 #include "util.h"
 #include "variable.h"
@@ -1659,11 +1658,6 @@ void do_cmd_debug()
 		gain_random_corruption();
 		break;
 
-		/* Create a trap */
-	case 'R':
-		wiz_place_trap(p_ptr->py, p_ptr->px, command_arg);
-		break;
-
 		/* Summon _friendly_ named monster */
 	case 'N':
 		do_cmd_wiz_named_friendly(command_arg, TRUE);
@@ -1807,7 +1801,6 @@ void do_cmd_debug()
 
 		/* Change the feature of the map */
 	case 'F':
-		msg_format("Trap: %d", cave[p_ptr->py][p_ptr->px].t_idx);
 		msg_format("Old feature: %d", cave[p_ptr->py][p_ptr->px].feat);
 		msg_format("Special: %d", cave[p_ptr->py][p_ptr->px].special);
 		cave_set_feat(p_ptr->py, p_ptr->px, command_arg);
