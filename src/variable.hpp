@@ -261,7 +261,6 @@ extern int project_time;
 extern s32b project_time_effect;
 extern effect_type effects[MAX_EFFECTS];
 extern skill_modifiers *gen_skill;
-extern int max_bact;
 extern bool_ automatizer_enabled;
 extern s16b last_teleportation_y;
 extern s16b last_teleportation_x;

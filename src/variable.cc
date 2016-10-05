@@ -890,11 +890,6 @@ cli_comm *cli_info;
 int cli_total = 0;
 
 /*
- * max_bact, only used so that lua scripts can add new bacts without worrying about the numbers
- */
-int max_bact = 127;
-
-/*
  * Automatizer enabled status
  */
 bool_ automatizer_enabled = FALSE;
