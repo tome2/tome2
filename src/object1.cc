@@ -2514,6 +2514,8 @@ static cptr object_out_desc_where_found(s16b level, s16b dungeon)
  */
 bool_ object_out_desc(object_type *o_ptr, FILE *fff, bool_ trim_down, bool_ wait_for_it)
 {
+	auto const &set_info = game->edit_data.set_info;
+
 	cptr vp[64];
 	byte vc[64];
 	int vn;
@@ -6124,12 +6126,21 @@ void object_gain_level(object_type *o_ptr)
  */
 bool_ wield_set(s16b a_idx, s16b set_idx, bool_ silent)
 {
-	set_type *s_ptr = &set_info[set_idx];
-	int i;
+	auto &set_info = game->edit_data.set_info;
+
+	auto s_ptr = &set_info[set_idx];
 
 	if ( -1 == a_info[a_idx].set) return (FALSE);
+
+	int i;
 	for (i = 0; i < s_ptr->num; i++)
-		if (a_idx == s_ptr->arts[i].a_idx) break;
+	{
+		if (a_idx == s_ptr->arts[i].a_idx)
+		{
+			break;
+		}
+	}
+
 	if (!s_ptr->arts[i].present)
 	{
 		s_ptr->num_use++;
@@ -6144,17 +6155,26 @@ bool_ wield_set(s16b a_idx, s16b set_idx, bool_ silent)
 		}
 		return (TRUE);
 	}
+
 	return (FALSE);
 }
 
 bool_ takeoff_set(s16b a_idx, s16b set_idx)
 {
-	set_type *s_ptr = &set_info[set_idx];
-	int i;
+	auto &set_info = game->edit_data.set_info;
+
+	auto s_ptr = &set_info[set_idx];
 
 	if ( -1 == a_info[a_idx].set) return (FALSE);
+
+	int i;
 	for (i = 0; i < s_ptr->num; i++)
-		if (a_idx == s_ptr->arts[i].a_idx) break;
+	{
+		if (a_idx == s_ptr->arts[i].a_idx)
+		{
+			break;
+		}
+	}
 
 	if (s_ptr->arts[i].present)
 	{
@@ -6170,12 +6190,15 @@ bool_ takeoff_set(s16b a_idx, s16b set_idx)
 
 		return (TRUE);
 	}
+
 	return (FALSE);
 }
 
 void apply_set(s16b a_idx, s16b set_idx)
 {
-	set_type *s_ptr = &set_info[set_idx];
+	auto const &set_info = game->edit_data.set_info;
+
+	auto s_ptr = &set_info[set_idx];
 
 	if ( -1 == a_info[a_idx].set)
 	{
@@ -6185,7 +6208,10 @@ void apply_set(s16b a_idx, s16b set_idx)
 	int i;
 	for (i = 0; i < s_ptr->num; i++)
 	{
-		if (a_idx == s_ptr->arts[i].a_idx) break;
+		if (a_idx == s_ptr->arts[i].a_idx)
+		{
+			break;
+		}
 	}
 
 	if (s_ptr->arts[i].present)
@@ -6201,12 +6227,14 @@ void apply_set(s16b a_idx, s16b set_idx)
 
 static void apply_flags_set(s16b a_idx, s16b set_idx, object_flag_set *f)
 {
+	auto const &set_info = game->edit_data.set_info;
+
 	if ( -1 == a_info[a_idx].set)
 	{
 		return;
 	}
 
-	set_type *s_ptr = &set_info[set_idx];
+	auto s_ptr = &set_info[set_idx];
 
 	int i;
 	for (i = 0; i < s_ptr->num; i++)

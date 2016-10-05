@@ -2872,11 +2872,10 @@ errr init_a_info_txt(FILE *fp)
 */
 errr init_set_info_txt(FILE *fp)
 {
-	int i;
+	auto &set_info = game->edit_data.set_info;
+
 	int cur_art = 0, cur_num = 0;
 	char buf[1024];
-
-	char *s;
 
 	/* Current entry */
 	set_type *set_ptr = NULL;
@@ -2905,7 +2904,7 @@ errr init_set_info_txt(FILE *fp)
 		if (buf[0] == 'N')
 		{
 			/* Find the colon before the name */
-			s = strchr(buf + 2, ':');
+			char *s = strchr(buf + 2, ':');
 
 			/* Verify that colon */
 			if (!s) return (1);
@@ -2917,19 +2916,16 @@ errr init_set_info_txt(FILE *fp)
 			if (!*s) return (1);
 
 			/* Get the index */
-			i = atoi(buf + 2);
+			int i = atoi(buf + 2);
 
 			/* Verify information */
 			if (i < error_idx) return (4);
-
-			/* Verify information */
-			if (i >= max_set_idx) return (2);
 
 			/* Save the index */
 			error_idx = i;
 
 			/* Point at the "info" */
-			set_ptr = &set_info[i];
+			set_ptr = &expand_to_fit_index(set_info, i);
 
 			/* Copy name */
 			assert(!set_ptr->name);
@@ -2946,7 +2942,7 @@ errr init_set_info_txt(FILE *fp)
 		if (buf[0] == 'D')
 		{
 			/* Acquire the text */
-			s = buf + 2;
+			char const *s = buf + 2;
 
 			/* Append chars to the description */
 			strappend(&set_ptr->desc, s);
@@ -6963,12 +6959,6 @@ static errr process_dungeon_file_aux(char *buf, int *yval, int *xval, int xvalst
 			else if (zz[0][0] == 'S')
 			{
 				max_st_idx = atoi(zz[1]);
-			}
-
-			/* Maximum set_idx */
-			else if (zz[0][0] == 's')
-			{
-				max_set_idx = atoi(zz[1]);
 			}
 
 			/* Maximum wilderness x size */

@@ -309,7 +309,7 @@ namespace {
 
 		static void allocate()
 		{
-			set_info = new set_type[max_set_idx];
+			// Nothing to do
 		}
 
 		static errr parse(FILE *fp)
@@ -989,15 +989,20 @@ static errr init_alloc(void)
 /* Init the sets in a_info */
 static void init_sets_aux()
 {
-	int i, j;
+	auto const &set_info = game->edit_data.set_info;
 
-	for (i = 0; i < max_a_idx; i++)
-		a_info[i].set = -1;
-	for (i = 0; i < max_set_idx; i++)
+	for (std::size_t i = 0; i < max_a_idx; i++)
 	{
-		for (j = 0; j < set_info[i].num; j++)
+		a_info[i].set = -1;
+	}
+
+	for (std::size_t i = 0; i < set_info.size(); i++)
+	{
+		auto const &set_ref = set_info[i];
+
+		for (std::size_t j = 0; j < set_ref.num; j++)
 		{
-			a_info[set_info[i].arts[j].a_idx].set = i;
+			a_info[set_ref.arts[j].a_idx].set = i;
 		}
 	}
 }

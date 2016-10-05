@@ -30,9 +30,6 @@ M:F:249
 # Maximum number of artifacts in a_info.txt
 M:A:257
 
-# Maximum number of sets types in set_info.txt
-M:s:17
-
 # Maximum number of ego-items in e_info.txt
 M:E:238
 

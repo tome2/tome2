@@ -8,6 +8,7 @@
 #include "player_race_mod.hpp"
 #include "randart_gen_type.hpp"
 #include "randart_part_type.hpp"
+#include "set_type.hpp"
 #include "store_action_type.hpp"
 #include "vault_type.hpp"
 
@@ -39,6 +40,11 @@ struct GameEditData {
 	 * Random artifact generation parameters.
 	 */
 	std::vector<randart_gen_type> ra_gen;
+
+	/**
+	 * Artifact sets
+	 */
+	std::vector<set_type> set_info;
 
 	/**
 	 * Building actions.

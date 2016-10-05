@@ -444,11 +444,6 @@ object_kind *k_info;
 artifact_type *a_info;
 
 /*
- * The item set arrays
- */
-set_type *set_info;
-
-/*
  * The ego-item arrays
  */
 ego_item_type *e_info;
@@ -653,11 +648,6 @@ u16b max_e_idx;
  * Maximum number of stores types in st_info.txt
  */
 u16b max_st_idx;
-
-/*
- * Item sets
- */
-u16b max_set_idx = 1;
 
 /*
  * Maximum number of objects in the level

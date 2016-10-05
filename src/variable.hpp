@@ -27,7 +27,6 @@
 #include "random_artifact.hpp"
 #include "random_quest.hpp"
 #include "school_type.hpp"
-#include "set_type_fwd.hpp"
 #include "skill_descriptor_fwd.hpp"
 #include "skill_modifiers_fwd.hpp"
 #include "skill_type_fwd.hpp"
@@ -173,7 +172,6 @@ extern trap_type *t_info;
 extern wilderness_type_info *wf_info;
 extern int wildc2i[256];
 extern store_info_type *st_info;
-extern set_type *set_info;
 extern cptr DEFAULT_FEAT_TEXT;
 extern cptr DEFAULT_FEAT_TUNNEL;
 extern cptr DEFAULT_FEAT_BLOCK;
@@ -197,7 +195,6 @@ extern u16b max_m_idx;
 extern u16b max_t_idx;
 extern u16b max_st_idx;
 extern u16b max_wf_idx;
-extern u16b max_set_idx;
 extern int init_flags;
 extern bool_ ambush_flag;
 extern bool_ fate_flag;
