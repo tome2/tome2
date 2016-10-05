@@ -11,7 +11,7 @@
  */
 struct store_info_type
 {
-	const char *name = nullptr;              /* Name */
+	std::string name;                        /* Name */
 
 	std::vector<store_item> items;           /* Table -- Legal item kinds */
 

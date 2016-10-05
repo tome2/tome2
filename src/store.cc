@@ -43,6 +43,7 @@
 #include "z-rand.hpp"
 
 #include <cassert>
+#include <fmt/format.h>
 
 #define STORE_GENERAL_STORE "General Store"
 #define STORE_ARMOURY "Armoury"
@@ -632,7 +633,7 @@ static bool store_will_buy(object_type const *o_ptr)
 {
 	auto const &st_info = game->edit_data.st_info;
 
-	cptr store_name = st_info[st_ptr->st_idx].name;
+	auto const &store_name = st_info[st_ptr->st_idx].name;
 
 	/* Hack -- The Home is simple */
 	if (cur_store_num == 7)
@@ -652,7 +653,7 @@ static bool store_will_buy(object_type const *o_ptr)
 	}
 
 	/* What do stores buy? */
-	if (streq(store_name, STORE_GENERAL_STORE))
+	if ((store_name == STORE_GENERAL_STORE))
 	{
 		switch (o_ptr->tval)
 		{
@@ -670,7 +671,7 @@ static bool store_will_buy(object_type const *o_ptr)
 			return true;
 		}
 	}
-	else if (streq(store_name, STORE_ARMOURY))
+	else if ((store_name == STORE_ARMOURY))
 	{
 		switch (o_ptr->tval)
 		{
@@ -686,7 +687,7 @@ static bool store_will_buy(object_type const *o_ptr)
 			return true;
 		}
 	}
-	else if (streq(store_name, STORE_WEAPONSMITH))
+	else if ((store_name == STORE_WEAPONSMITH))
 	{
 		switch (o_ptr->tval)
 		{
@@ -704,7 +705,7 @@ static bool store_will_buy(object_type const *o_ptr)
 			return true;
 		}
 	}
-	else if (streq(store_name, STORE_TEMPLE))
+	else if ((store_name == STORE_TEMPLE))
 	{
 		switch (o_ptr->tval)
 		{
@@ -743,7 +744,7 @@ static bool store_will_buy(object_type const *o_ptr)
 			return true;
 		}
 	}
-	else if (streq(store_name, STORE_ALCHEMY))
+	else if ((store_name == STORE_ALCHEMY))
 	{
 		switch (o_ptr->tval)
 		{
@@ -754,7 +755,7 @@ static bool store_will_buy(object_type const *o_ptr)
 			return true;
 		}
 	}
-	else if (streq(store_name, STORE_MAGIC))
+	else if ((store_name == STORE_MAGIC))
 	{
 		switch (o_ptr->tval)
 		{
@@ -785,11 +786,11 @@ static bool store_will_buy(object_type const *o_ptr)
 			return true;
 		}
 	}
-	else if (streq(store_name, STORE_BLACK_MARKET))
+	else if ((store_name == STORE_BLACK_MARKET))
 	{
 		return true;
 	}
-	else if (streq(store_name, STORE_BOOKS))
+	else if ((store_name == STORE_BOOKS))
 	{
 		switch (o_ptr->tval)
 		{
@@ -801,11 +802,11 @@ static bool store_will_buy(object_type const *o_ptr)
 			return true;
 		}
 	}
-	else if (streq(store_name, STORE_PETS))
+	else if ((store_name == STORE_PETS))
 	{
 		return (o_ptr->tval == TV_EGG);
 	}
-	else if (streq(store_name, STORE_HUNTING_SUPPLIES))
+	else if ((store_name == STORE_HUNTING_SUPPLIES))
 	{
 		switch (o_ptr->tval)
 		{
@@ -819,7 +820,7 @@ static bool store_will_buy(object_type const *o_ptr)
 			return true;
 		}
 	}
-	else if (streq(store_name, STORE_RUNIC_MAGIC))
+	else if ((store_name == STORE_RUNIC_MAGIC))
 	{
 		switch (o_ptr->tval)
 		{
@@ -828,7 +829,7 @@ static bool store_will_buy(object_type const *o_ptr)
 			return true;
 		}
 	}
-	else if (streq(store_name, STORE_CONSTRUCTION_SUPPLIES))
+	else if ((store_name == STORE_CONSTRUCTION_SUPPLIES))
 	{
 		switch (o_ptr->tval)
 		{
@@ -837,7 +838,7 @@ static bool store_will_buy(object_type const *o_ptr)
 			return true;
 		}
 	}
-	else if (streq(store_name, STORE_MUSIC))
+	else if ((store_name == STORE_MUSIC))
 	{
 		return (o_ptr->tval == TV_INSTRUMENT);
 	}
@@ -1219,7 +1220,7 @@ static void store_create(void)
 		obj_all_done = FALSE;
 
 		/* Magic Shop */
-		if (streq(st_info[st_ptr->st_idx].name, STORE_MAGIC) &&
+		if ((st_info[st_ptr->st_idx].name == STORE_MAGIC) &&
 		    magik(20))
 		{
 			s16b spell;
@@ -1235,7 +1236,7 @@ static void store_create(void)
 		}
 
 		/* Temple */
-		else if (streq(st_info[st_ptr->st_idx].name, STORE_TEMPLE) &&
+		else if ((st_info[st_ptr->st_idx].name == STORE_TEMPLE) &&
 			 magik(20))
 		{
 			s16b spell;
@@ -1581,8 +1582,7 @@ void display_store(void)
 	else if (st_info[st_ptr->st_idx].flags & STF_MUSEUM)
 	{
 		/* Show the name of the store */
-		strnfmt(buf, 80, "%s", st_info[cur_store_num].name);
-		prt(buf, 3, 30);
+		prt(st_info[cur_store_num].name, 3, 30);
 
 		/* Label the item descriptions */
 		put_str("Item Description", 5, 3);
@@ -1599,10 +1599,7 @@ void display_store(void)
 		put_str(buf, 3, 10);
 
 		/* Show the max price in the store (above prices) */
-		strnfmt(buf, 80, "%s (" FMTs16b ")",
-			st_info[cur_store_num].name,
-			ot_ptr->max_cost);
-		prt(buf, 3, 50);
+		prt(fmt::format("{:s} ({:d})", st_info[cur_store_num].name, ot_ptr->max_cost), 3, 50);
 
 		/* Label the item descriptions */
 		put_str("Item Description", 5, 3);

@@ -5669,10 +5669,10 @@ errr init_st_info_txt(FILE *fp)
 
 			/* Point at the "info" */
 			st_ptr = &expand_to_fit_index(st_info, i);
-			assert(!st_ptr->name);
+			assert(st_ptr->name.empty());
 
 			/* Copy name */
-			st_ptr->name = my_strdup(s);
+			st_ptr->name = s;
 
 			/* Next... */
 			continue;

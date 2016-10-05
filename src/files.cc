@@ -2525,7 +2525,7 @@ static void file_character_print_store(FILE *fff, wilderness_type_info *place, s
 	if (st_ptr->stock.size())
 	{
 		/* Header with name of the town */
-		fprintf(fff, "  [%s Inventory - %s]\n\n", st_info[store].name, place->name);
+		fprintf(fff, "  [%s Inventory - %s]\n\n", st_info[store].name.c_str(), place->name);
 
 		/* Dump all available items */
 		for (std::size_t i = 0; i < st_ptr->stock.size(); i++)
