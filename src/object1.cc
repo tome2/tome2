@@ -2503,7 +2503,7 @@ static cptr object_out_desc_where_found(s16b level, s16b dungeon)
 	}
 	else
 	{
-		sprintf(str, "on level %d of %s", level, d_info[dungeon].name);
+		sprintf(str, "on level %d of %s", level, d_info[dungeon].name.c_str());
 	}
 
 	return str;

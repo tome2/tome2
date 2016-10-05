@@ -2335,7 +2335,7 @@ cptr describe_player_location()
 
 	if (dungeon_type != DUNGEON_WILDERNESS && dun_level > 0)
 	{
-		sprintf(desc, "on level %d of %s", dun_level, d_info[dungeon_type].name);
+		sprintf(desc, "on level %d of %s", dun_level, d_info[dungeon_type].name.c_str());
 	}
 	else if (wf_info[feat].terrain_idx == TERRAIN_TOWN)
 	{
@@ -2698,7 +2698,7 @@ errr file_character(cptr name, bool_ full)
 	{
 		if (max_dlv[y])
 			fprintf(fff, "\n        %s: Level %d (%d')",
-				d_info[y].name,
+				d_info[y].name.c_str(),
 			        max_dlv[y], 50 * (max_dlv[y]));
 	}
 	fprintf(fff, "\n");

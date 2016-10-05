@@ -5169,13 +5169,10 @@ errr init_d_info_txt(FILE *fp)
 
 			/* Point at the "info" */
 			d_ptr = &expand_to_fit_index(d_info, i);
+			assert(d_ptr->name.empty());
 
 			/* Copy name */
-			assert(!d_ptr->name);
-			d_ptr->name = my_strdup(s);
-
-			/* Initialize description */
-			d_ptr->text = my_strdup("");
+			d_ptr->name = s;
 
 			/* HACK -- Those ones HAVE to have a set default value */
 			d_ptr->size_x = -1;
@@ -5202,7 +5199,7 @@ errr init_d_info_txt(FILE *fp)
 			d_ptr->objs = obj_theme::defaults();
 
 			/* The default generator */
-			strcpy(d_ptr->generator, "dungeon");
+			d_ptr->generator = "dungeon";
 
 			/* Next... */
 			continue;
@@ -5215,15 +5212,12 @@ errr init_d_info_txt(FILE *fp)
 		if (buf[0] == 'D')
 		{
 			/* Acquire short name */
-			d_ptr->short_name[0] = buf[2];
-			d_ptr->short_name[1] = buf[3];
-			d_ptr->short_name[2] = buf[4];
-
-			/* Acquire the text */
-			char *s = buf + 6;
+			d_ptr->short_name += buf[2];
+			d_ptr->short_name += buf[3];
+			d_ptr->short_name += buf[4];
 
 			/* Append to description */
-			strappend(&d_ptr->text, s);
+			d_ptr->text += (buf + 6);
 
 			/* Next... */
 			continue;
@@ -5312,7 +5306,7 @@ errr init_d_info_txt(FILE *fp)
 		/* Process 'G' for "Generator" (one line only) */
 		if (buf[0] == 'G')
 		{
-			strnfmt(d_ptr->generator, 30, "%s", buf + 2);
+			d_ptr->generator = (buf + 2);
 
 			/* Next... */
 			continue;

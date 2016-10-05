@@ -4200,7 +4200,7 @@ static int target_set_aux(int y, int x, int mode, cptr info)
 		/* Terrain feature if needed */
 		if (boring || (feat >= FEAT_GLYPH))
 		{
-			cptr name;
+			std::string name;
 
 			/* Hack -- special handling for building doors */
 			if (feat == FEAT_SHOP)
@@ -4246,7 +4246,7 @@ static int target_set_aux(int y, int x, int mode, cptr info)
 				auto const &wf = wf_info[wilderness(x, y).feat];
 
 				s3 = "";
-				name = format("%s(%s)", wf.name, wf.text);
+				name = fmt::format("{}({})", wf.name, wf.text);
 			}
 
 			if ((feat == FEAT_FOUNTAIN) && (c_ptr->info & CAVE_IDNT))
@@ -4270,12 +4270,12 @@ static int target_set_aux(int y, int x, int mode, cptr info)
 			/* Display a message */
 			if (!wizard)
 			{
-				sprintf(out_val, "%s%s%s%s [%s]", s1, s2, s3, name, info);
+				sprintf(out_val, "%s%s%s%s [%s]", s1, s2, s3, name.c_str(), info);
 			}
 			else
 			{
 				sprintf(out_val, "%s%s%s%s [%s] (%d:%d:%d)",
-				        s1, s2, s3, name, info,
+					s1, s2, s3, name.c_str(), info,
 				        c_ptr->feat, c_ptr->mimic, c_ptr->special);
 			}
 			prt(out_val, 0, 0);

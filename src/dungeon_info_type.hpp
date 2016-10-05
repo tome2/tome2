@@ -15,11 +15,11 @@ constexpr int TOWN_DUNGEON = 4;
 /* A structure for the != dungeon types */
 struct dungeon_info_type
 {
-	const char *name = nullptr;                   /* Name */
-	char *text = nullptr;                         /* Description */
-	char short_name[3] = { 0 };                   /* Short name */
+	std::string name;                             /* Name */
+	std::string text;                             /* Description */
+	std::string short_name;                       /* Short name */
 
-	char generator[30] = { 0 };                   /* Name of the level generator */
+	std::string generator;                        /* Name of the level generator */
 
 	s16b floor1 = 0;                              /* Floor tile 1 */
 	byte floor_percent1[2] = { 0 };               /* Chance of type 1 */

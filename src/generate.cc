@@ -7633,7 +7633,9 @@ static bool_ cave_gen(void)
 	char generator_name[100];
 
 	if (!get_dungeon_generator(generator_name))
-		strnfmt(generator_name, 99, "%s", d_ptr->generator);
+	{
+		strnfmt(generator_name, sizeof(generator_name)-1, "%s", d_ptr->generator.c_str());
+	}
 
 	/*
 	 * We generate a double dungeon. First we should halve the desired

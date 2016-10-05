@@ -6089,7 +6089,6 @@ static void print_dungeon_batch(std::vector<int> const &dungeon_idxs,
 {
 	auto const &d_info = game->edit_data.d_info;
 
-	char buf[80];
 	int i, j;
 	byte attr;
 
@@ -6099,7 +6098,9 @@ static void print_dungeon_batch(std::vector<int> const &dungeon_idxs,
 	{
 		auto d_ptr = &d_info[dungeon_idxs[j]];
 
-		strnfmt(buf, 80, "  %c) %-30s", I2A(i), d_ptr->name);
+		char buf[80];
+		strnfmt(buf, 80, "  %c) %-30s", I2A(i), d_ptr->name.c_str());
+
 		if (mode)
 		{
 			if (d_ptr->min_plev > p_ptr->lev)
@@ -6125,11 +6126,6 @@ static int find_dungeon_by_name(char const *name)
 	/* Find the index corresponding to the name */
 	for (std::size_t i = 1; i < d_info.size(); i++)
 	{
-		/* Skip non-initialized entries. */
-		if (d_info[i].name == nullptr)
-		{
-			continue;
-		}
 		if (iequals(name, d_info[i].name))
 		{
 			return i;
@@ -6208,7 +6204,8 @@ static int reset_recall_aux()
 		else if (which == '@')
 		{
 			char buf[80];
-			strcpy(buf, d_info[p_ptr->recall_dungeon].name);
+			strcpy(buf, d_info[p_ptr->recall_dungeon].name.c_str());
+
 			if (!get_string("Which dungeon? ", buf, 79)) continue;
 
 			/* Find the index corresponding to the name */
@@ -6281,8 +6278,9 @@ bool_ reset_recall(bool_ no_trepas_max_depth)
 		max = d_info[dun].maxdepth;
 	else
 		max = max_dlv[dun];
+
 	depth = get_quantity(format("Which level in %s(%d-%d)? ",
-				    d_info[dun].name,
+				    d_info[dun].name.c_str(),
 	                            d_info[dun].mindepth, max),
 	                     max);
 

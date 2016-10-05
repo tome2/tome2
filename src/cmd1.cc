@@ -3153,7 +3153,7 @@ void move_player_aux(int dir, int do_pickup, int run, bool_ disarm)
 			/* Mega-hack for dungeon branches */
 			if ((feat == FEAT_MORE) && c_ptr->special)
 			{
-				msg_format("There is %s", d_info[c_ptr->special].text);
+				msg_format("There is %s", d_info[c_ptr->special].text.c_str());
 			}
 			else
 			{

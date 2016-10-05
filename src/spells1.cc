@@ -7010,7 +7010,7 @@ static bool_ project_p(int who, int r, int y, int x, int dam, int typ, int a_rad
 	/* Did the dungeon do it? */
 	if (who == -100)
 	{
-		sprintf(killer, "%s", d_info[dungeon_type].name);
+		sprintf(killer, "%s", d_info[dungeon_type].name.c_str());
 	}
 	if (who == -101)
 	{

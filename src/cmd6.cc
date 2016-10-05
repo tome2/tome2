@@ -2977,7 +2977,7 @@ void do_cmd_read_scroll(void)
 				}
 
 				msg_format("Recall reset to %s at level %d.",
-					   d_info[p_ptr->recall_dungeon].name,
+					   d_info[p_ptr->recall_dungeon].name.c_str(),
 				           max_dlv[p_ptr->recall_dungeon]);
 
 				ident = TRUE;
