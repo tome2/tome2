@@ -2070,9 +2070,15 @@ static std::string object_desc_aux(object_type const *o_ptr, int pref, int mode)
 		}
 
 		/* Note the discount, if any */
-		if ((o_ptr->discount) && inscrip.empty())
+		if ((o_ptr->discount) && o_ptr->inscription.empty())
 		{
 			inscrip.push_back(fmt::format("{:d}% off", o_ptr->discount));
+		}
+
+		/* Append the user's inscription */
+		if (!o_ptr->inscription.empty())
+		{
+			inscrip.push_back(o_ptr->inscription);
 		}
 
 		/* Append the inscription, if any */
