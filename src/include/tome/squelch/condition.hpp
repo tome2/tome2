@@ -3,10 +3,10 @@
 #include "tome/squelch/condition_fwd.hpp"
 
 #include <boost/noncopyable.hpp>
+#include <cstdint>
 #include <functional>
 #include <memory>
-#include <cstdint>
-#include <jansson.h>
+#include <jsoncons/json.hpp>
 
 #include "tome/squelch/cursor_fwd.hpp"
 #include "tome/squelch/tree_printer_fwd.hpp"
@@ -60,7 +60,7 @@ public:
 	}
 
 public:
-	json_t *to_json() const;
+	jsoncons::json to_json() const;
 
 	virtual void add_child(ConditionFactory const &factory) {
 		// Default is to not support children.
@@ -88,16 +88,16 @@ public:
 	/**
 	 * Parse condition from JSON
 	 */
-	static std::shared_ptr<Condition> parse_condition(json_t *);
+	static std::shared_ptr<Condition> parse_condition(jsoncons::json const &);
 
 	/**
 	 * Convert an (optional) condition to JSON.
 	 */
-	static json_t *optional_to_json(std::shared_ptr<Condition> condition);
+	static jsoncons::json optional_to_json(std::shared_ptr<Condition> condition);
 
 protected:
 	virtual void write_tree(TreePrinter *, Cursor *, uint8_t, uint8_t) const = 0;
-	virtual void to_json(json_t *) const = 0;
+	virtual void to_json(jsoncons::json &) const = 0;
 
 	// What do we want to match?
 	match_type match;
@@ -116,12 +116,12 @@ public:
 
 	bool is_match(object_type *) const override;
 
-	static std::shared_ptr<Condition> from_json(json_t *);
+	static std::shared_ptr<Condition> from_json(jsoncons::json const &);
 
 protected:
 	void write_tree(TreePrinter *, Cursor *, uint8_t, uint8_t) const override;
 
-	void to_json(json_t *) const override;
+	void to_json(jsoncons::json &) const override;
 
 private:
 	uint8_t m_tval;
@@ -140,12 +140,12 @@ public:
 
 	bool is_match(object_type *) const override;
 
-	static std::shared_ptr<Condition> from_json(json_t *);
+	static std::shared_ptr<Condition> from_json(jsoncons::json const &);
 
 protected:
 	void write_tree(TreePrinter *, Cursor *, uint8_t, uint8_t) const override;
 
-	void to_json(json_t *) const override;
+	void to_json(jsoncons::json &) const override;
 
 private:
 	std::string m_name;
@@ -164,12 +164,12 @@ public:
 
 	bool is_match(object_type *) const override;
 
-	static std::shared_ptr<Condition> from_json(json_t *);
+	static std::shared_ptr<Condition> from_json(jsoncons::json const &);
 
 protected:
 	void write_tree(TreePrinter *, Cursor *, uint8_t, uint8_t) const override;
 
-	void to_json(json_t *) const override;
+	void to_json(jsoncons::json &) const override;
 
 private:
 	std::string m_contain;
@@ -189,12 +189,12 @@ public:
 
 	bool is_match(object_type *) const override;
 
-	static std::shared_ptr<Condition> from_json(json_t *);
+	static std::shared_ptr<Condition> from_json(jsoncons::json const &);
 
 protected:
 	void write_tree(TreePrinter *, Cursor *, uint8_t, uint8_t) const override;
 
-	void to_json(json_t *) const override;
+	void to_json(jsoncons::json &) const override;
 
 private:
 	uint8_t m_min;
@@ -228,10 +228,10 @@ public:
 	virtual std::shared_ptr<Condition> next_child(Condition *current) override;
 
 	// Parse a list of conditions from JSON property
-	static std::vector< std::shared_ptr<Condition> > parse_conditions(json_t *);
+	static std::vector< std::shared_ptr<Condition> > parse_conditions(jsoncons::json const &);
 
 protected:
-	void to_json(json_t *) const override;
+	void to_json(jsoncons::json &) const override;
 
 protected:
 	std::vector< std::shared_ptr<Condition> > m_conditions;
@@ -248,7 +248,7 @@ public:
 
 	bool is_match(object_type *) const override;
 
-	static std::shared_ptr<Condition> from_json(json_t *);
+	static std::shared_ptr<Condition> from_json(jsoncons::json const &);
 
 protected:
 	void write_tree(TreePrinter *, Cursor *, uint8_t, uint8_t) const override;
@@ -265,7 +265,7 @@ public:
 
 	bool is_match(object_type *) const override;
 
-	static std::shared_ptr<Condition> from_json(json_t *);
+	static std::shared_ptr<Condition> from_json(jsoncons::json const &);
 
 protected:
 	void write_tree(TreePrinter *, Cursor *, uint8_t, uint8_t) const override;
@@ -285,12 +285,12 @@ public:
 public:
 	bool is_match(object_type *) const override;
 
-	static std::shared_ptr<Condition> from_json(json_t *);
+	static std::shared_ptr<Condition> from_json(jsoncons::json const &);
 
 protected:
 	void write_tree(TreePrinter *, Cursor *, uint8_t, uint8_t) const override;
 
-	void to_json(json_t *) const override;
+	void to_json(jsoncons::json &) const override;
 
 private:
 	status_type m_status;
@@ -309,12 +309,12 @@ public:
 
 	bool is_match(object_type *) const override;
 
-	static std::shared_ptr<Condition> from_json(json_t *);
+	static std::shared_ptr<Condition> from_json(jsoncons::json const &);
 
 protected:
 	void write_tree(TreePrinter *, Cursor *, uint8_t, uint8_t) const override;
 
-	void to_json(json_t *) const override;
+	void to_json(jsoncons::json &) const override;
 
 private:
 	std::string m_race;
@@ -333,12 +333,12 @@ public:
 
 	bool is_match(object_type *) const override;
 
-	static std::shared_ptr<Condition> from_json(json_t *);
+	static std::shared_ptr<Condition> from_json(jsoncons::json const &);
 
 protected:
 	void write_tree(TreePrinter *, Cursor *, uint8_t, uint8_t) const override;
 
-	void to_json(json_t *) const override;
+	void to_json(jsoncons::json &) const override;
 
 private:
 	std::string m_subrace;
@@ -357,12 +357,12 @@ public:
 
 	bool is_match(object_type *) const override;
 
-	static std::shared_ptr<Condition> from_json(json_t *);
+	static std::shared_ptr<Condition> from_json(jsoncons::json const &);
 
 protected:
 	void write_tree(TreePrinter *, Cursor *, uint8_t, uint8_t) const override;
 
-	void to_json(json_t *) const override;
+	void to_json(jsoncons::json &) const override;
 
 private:
 	std::string m_class;
@@ -381,12 +381,12 @@ public:
 
 	bool is_match(object_type *) const override;
 
-	static std::shared_ptr<Condition> from_json(json_t *);
+	static std::shared_ptr<Condition> from_json(jsoncons::json const &);
 
 protected:
 	void write_tree(TreePrinter *, Cursor *, uint8_t, uint8_t) const override;
 
-	void to_json(json_t *) const override;
+	void to_json(jsoncons::json &) const override;
 
 private:
 	std::string m_inscription;
@@ -406,12 +406,12 @@ public:
 
 	bool is_match(object_type *) const override;
 
-	static std::shared_ptr<Condition> from_json(json_t *);
+	static std::shared_ptr<Condition> from_json(jsoncons::json const &);
 
 protected:
 	void write_tree(TreePrinter *, Cursor *, uint8_t, uint8_t) const override;
 
-	void to_json(json_t *) const override;
+	void to_json(jsoncons::json &) const override;
 
 private:
 	int m_min;
@@ -432,12 +432,12 @@ public:
 
 	bool is_match(object_type *) const override;
 
-	static std::shared_ptr<Condition> from_json(json_t *);
+	static std::shared_ptr<Condition> from_json(jsoncons::json const &);
 
 protected:
 	void write_tree(TreePrinter *, Cursor *, uint8_t, uint8_t) const override;
 
-	void to_json(json_t *) const override;
+	void to_json(jsoncons::json &) const override;
 
 private:
 	int m_min;
@@ -459,12 +459,12 @@ public:
 
 	bool is_match(object_type *) const override;
 
-	static std::shared_ptr<Condition> from_json(json_t *);
+	static std::shared_ptr<Condition> from_json(jsoncons::json const &);
 
 protected:
 	void write_tree(TreePrinter *, Cursor *, uint8_t, uint8_t) const override;
 
-	void to_json(json_t *) const override;
+	void to_json(jsoncons::json &) const override;
 
 private:
 	uint16_t m_skill_idx;
@@ -485,12 +485,12 @@ public:
 
 	bool is_match(object_type *) const override;
 
-	static std::shared_ptr<Condition> from_json(json_t *);
+	static std::shared_ptr<Condition> from_json(jsoncons::json const &);
 
 protected:
 	void write_tree(TreePrinter *, Cursor *, uint8_t, uint8_t) const override;
 
-	void to_json(json_t *) const override;
+	void to_json(jsoncons::json &) const override;
 
 private:
 	identification_state m_state;
@@ -509,12 +509,12 @@ public:
 
 	bool is_match(object_type *) const override;
 
-	static std::shared_ptr<Condition> from_json(json_t *);
+	static std::shared_ptr<Condition> from_json(jsoncons::json const &);
 
 protected:
 	void write_tree(TreePrinter *, Cursor *, uint8_t, uint8_t) const override;
 
-	void to_json(json_t *) const override;
+	void to_json(jsoncons::json &) const override;
 
 private:
 	char m_symbol;
@@ -533,12 +533,12 @@ public:
 
 	bool is_match(object_type *) const override;
 
-	static std::shared_ptr<Condition> from_json(json_t *);
+	static std::shared_ptr<Condition> from_json(jsoncons::json const &);
 
 protected:
 	void write_tree(TreePrinter *, Cursor *, uint8_t, uint8_t) const override;
 
-	void to_json(json_t *) const override;
+	void to_json(jsoncons::json &) const override;
 
 private:
 	uint16_t m_ability_idx;
@@ -563,10 +563,10 @@ public:
 	virtual std::shared_ptr<Condition> first_child() override;
 
 protected:
-	void to_json(json_t *) const override;
+	void to_json(jsoncons::json &) const override;
 
 	static std::shared_ptr<Condition> parse_single_subcondition(
-		json_t *condition_json);
+		jsoncons::json const &condition_json);
 
 protected:
 	std::shared_ptr<Condition> m_subcondition;
@@ -584,7 +584,7 @@ public:
 
 	bool is_match(object_type *) const override;
 
-	static std::shared_ptr<Condition> from_json(json_t *);
+	static std::shared_ptr<Condition> from_json(jsoncons::json const &);
 
 protected:
 	void write_tree(TreePrinter *, Cursor *, uint8_t, uint8_t) const override;
@@ -603,7 +603,7 @@ public:
 
 	bool is_match(object_type *) const override;
 
-	static std::shared_ptr<Condition> from_json(json_t *);
+	static std::shared_ptr<Condition> from_json(jsoncons::json const &);
 
 protected:
 
@@ -623,7 +623,7 @@ public:
 
 	bool is_match(object_type *) const override;
 
-	static std::shared_ptr<Condition> from_json(json_t *);
+	static std::shared_ptr<Condition> from_json(jsoncons::json const &);
 
 protected:
 	void write_tree(TreePrinter *, Cursor *, uint8_t, uint8_t) const override;

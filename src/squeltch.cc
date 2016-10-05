@@ -30,11 +30,10 @@
 #include "variable.h"
 #include "variable.hpp"
 
-#include <jansson.h>
 #include <algorithm>
-#include <memory>
 #include <deque>
 #include <list>
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -182,14 +181,28 @@ static void automatizer_save_rules()
 		return;
 	}
 
+	// Function for showing a message
+	auto show_message = [hgt, wid](std::string text) {
+		auto n = std::max<std::size_t>(text.size(), 28);
+		while (text.size() < n)
+		{
+			text += ' ';
+		}
+		c_put_str(TERM_WHITE, text.c_str(), hgt/2, wid/2 - 14);
+	};
+
+	// Function for showing an error message
+	auto error = [show_message]() {
+		show_message("Saving rules FAILED!");
+		inkey();
+	};
+
 	// Build the filename
 	path_build(buf, 1024, ANGBAND_DIR_USER, name);
 		
 	if (file_exist(buf))
 	{
-		c_put_str(TERM_WHITE, "File exists, continue?[y/n]",
-			  hgt / 2,
-			  wid / 2 - 14);
+		show_message("File exists, continue? [y/n]");
 		ch = inkey();
 		if ((ch != 'Y') && (ch != 'y'))
 		{
@@ -197,29 +210,32 @@ static void automatizer_save_rules()
 		}
 	}
 
-	// Write to file
+	// Pretty-printing options
+	jsoncons::output_format format;
+	format.indent(2);
+
+	// Convert to a JSON document
+	auto rules_document = automatizer->to_json();
+
+	// Open output stream
+	std::ofstream of(buf, std::ios_base::out | std::ios_base::binary);
+	if (of.fail())
 	{
-		auto rules_json = automatizer->to_json();
-
-		int status = json_dump_file(rules_json.get(), buf,
-					    JSON_INDENT(2) |
-					    JSON_SORT_KEYS);
-		if (status == 0)
-		{
-			c_put_str(TERM_WHITE, "Saved rules in file        ",
-				  hgt / 2,
-				  wid / 2 - 14);
-		}
-		else
-		{
-			c_put_str(TERM_WHITE, "Saving rules failed!       ",
-				  hgt / 2,
-				  wid / 2 - 14);
-		}
-
-		// Wait for keypress
-		inkey();
+		error();
+		return;
 	}
+
+	// Write JSON to output
+	of << jsoncons::pretty_print(rules_document, format);
+	if (of.fail())
+	{
+		error();
+		return;
+	}
+
+	// Success
+	show_message("Saved rules in file");
+	inkey();
 }
 
 static void rename_rule(Rule *rule)
@@ -574,20 +590,21 @@ bool automatizer_load(boost::filesystem::path const &path)
 		return false; // Not fatal; just skip
 	}
 
-	// Parse file
-	json_error_t error;
-	std::shared_ptr<json_t> rules_json(
-		json_load_file(path.c_str(), 0, &error),
-		&json_decref);
-	if (rules_json == nullptr)
+	// Parse into memory
+	jsoncons::json rules_json;
+	try
+	{
+		rules_json = jsoncons::json::parse_file(path.string());
+	}
+	catch (jsoncons::json_exception const &exc)
 	{
 		msg_format("Error parsing automatizer rules from '%s'.", path.c_str());
-		msg_format("Line %d, Column %d", error.line, error.column);
-		msg_print(nullptr);
+		msg_print(exc.what());
 		return false;
 	}
 
-	// Load rules
-	automatizer->load_json(rules_json.get());
+	// We didn't return directly via an exception, so let's extract
+	// the rules.
+	automatizer->load_json(rules_json);
 	return true;
 }

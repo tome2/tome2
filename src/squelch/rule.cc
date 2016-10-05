@@ -41,22 +41,16 @@ std::shared_ptr<Condition> Rule::get_condition() const
 	return m_condition;
 }
 
-json_t *Rule::to_json() const
+jsoncons::json Rule::to_json() const
 {
-	json_t *rule_json = json_object();
-	json_object_set_new(rule_json,
-			    "name",
-			    json_string(m_name.c_str()));
-	json_object_set_new(rule_json,
-			    "action",
-			    json_string(action_mapping().stringify(m_action)));
-	json_object_set_new(rule_json,
-			    "module",
-			    json_string(modules[m_module_idx].meta.name));
-	json_object_set_new(rule_json,
-			    "condition",
-			    Condition::optional_to_json(m_condition));
-	return rule_json;
+	jsoncons::json j;
+
+	j["name"] = jsoncons::json::string_type(m_name);
+	j["action"] = action_mapping().stringify(m_action);
+	j["module"] = modules[m_module_idx].meta.name;
+	j["condition"] = Condition::optional_to_json(m_condition);
+
+	return j;
 }
 
 void Rule::add_new_condition(Cursor *cursor,
@@ -138,23 +132,19 @@ bool Rule::apply_rule(object_type *o_ptr, int item_idx) const
 	return false;
 }
 
-std::shared_ptr<Rule> Rule::parse_rule(json_t *rule_json)
+std::shared_ptr<Rule> Rule::parse_rule(jsoncons::json const &rule_json)
 {
-	if (!json_is_object(rule_json))
+	if (!rule_json.is_object())
 	{
 		msg_print("Rule is not an object");
 		return nullptr;
 	}
 
 	// Retrieve the attributes
-	char *rule_name_s = nullptr;
-	char *rule_action_s = nullptr;
-	char *rule_module_s = nullptr;
-	if (json_unpack(rule_json,
-			"{s:s,s:s,s:s}",
-			"name", &rule_name_s,
-			"action", &rule_action_s,
-			"module", &rule_module_s) < 0)
+	char const *rule_name_s = rule_json.get("name").as<char const *>();
+	char const *rule_action_s = rule_json.get("action").as<char const *>();
+	char const *rule_module_s = rule_json.get("module").as<char const *>();
+	if ((!rule_name_s) || (!rule_action_s) || (!rule_module_s))
 	{
 		msg_print("Rule missing required field(s)");
 		return nullptr;
@@ -178,28 +168,29 @@ std::shared_ptr<Rule> Rule::parse_rule(json_t *rule_json)
 
 	// Parse condition
 	std::shared_ptr<Condition> condition =
-		Condition::parse_condition(json_object_get(rule_json, "condition"));
+		Condition::parse_condition(rule_json.get("condition"));
 
 	// Parse rule
 	switch (action)
 	{
 	case action_type::AUTO_INSCRIBE:
 	{
-		json_t *rule_inscription_j = json_object_get(rule_json, "inscription");
+		auto rule_inscription_j = rule_json.get("inscription");
 
-		if (rule_inscription_j == nullptr)
+		if (rule_inscription_j.is_null())
 		{
 			msg_print("Inscription rule missing 'inscription' attribute");
 			return nullptr;
 		}
-		if (!json_is_string(rule_inscription_j))
+
+		if (!rule_inscription_j.is_string())
 		{
 			msg_print("Inscription rule 'inscription' attribute wrong type");
 			return nullptr;
 		}
 
-		std::string inscription =
-			json_string_value(rule_inscription_j);
+		std::string inscription = rule_inscription_j.as<std::string>();
+
 		return std::make_shared<InscribeRule>(
 			rule_name_s, module_idx, condition, inscription);
 	}
@@ -290,14 +281,10 @@ bool PickUpRule::do_apply_rule(object_type *o_ptr, int item_idx) const
 	return true;
 }
 
-json_t *InscribeRule::to_json() const
+jsoncons::json InscribeRule::to_json() const
 {
-	json_t *j = Rule::to_json();
-
-	json_object_set_new(j,
-			    "inscription",
-			    json_string(m_inscription.c_str()));
-	
+	jsoncons::json j;
+	j["inscription"] = m_inscription;
 	return j;
 }
 

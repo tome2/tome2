@@ -57,12 +57,15 @@ EnumStringMap<identification_state> &identification_state_mapping()
 	return *m;
 }
 
-json_t *Condition::to_json() const
+jsoncons::json Condition::to_json() const
 {
-	json_t *j = json_object();
-	json_object_set_new(j, "type",
-			    json_string(match_mapping().stringify(match)));
+	// Start with an object with only 'type' property
+	jsoncons::json j;
+	j["type"] = match_mapping().stringify(match);
+
+	// Add sub-class properties
 	to_json(j);
+	// Return the completed JSON
 	return j;
 }
 
@@ -85,11 +88,11 @@ void Condition::display(TreePrinter *tree_printer, Cursor *cursor) const
 	tree_printer->dedent();
 }
 
-std::shared_ptr<Condition> Condition::parse_condition(json_t *condition_json)
+std::shared_ptr<Condition> Condition::parse_condition(jsoncons::json const &condition_json)
 {
 	// Parsers for concrete types of conditions.
 	static std::map< match_type,
-		  std::function< std::shared_ptr< Condition > ( json_t * ) > > parsers {
+		  std::function<std::shared_ptr<Condition>(jsoncons::json const &)>> parsers {
 		{ match_type::AND, &AndCondition::from_json },
 		{ match_type::OR, &OrCondition::from_json },
 		{ match_type::NOT, &NotCondition::from_json },
@@ -111,15 +114,13 @@ std::shared_ptr<Condition> Condition::parse_condition(json_t *condition_json)
 		{ match_type::SKILL, &SkillCondition::from_json },
 		{ match_type::ABILITY, &AbilityCondition::from_json } };
 
-	if ((condition_json == nullptr) || json_is_null(condition_json))
+	if (condition_json.is_null())
 	{
 		return nullptr;
 	}
 
-	cptr type_s = nullptr;
-	if (json_unpack(condition_json,
-			"{s:s}",
-			"type", &type_s) < 0)
+	cptr type_s = condition_json.get("type").as<cptr>();
+	if (!type_s)
 	{
 		msg_print("Missing/invalid 'type' in condition");
 		return nullptr;
@@ -143,11 +144,11 @@ std::shared_ptr<Condition> Condition::parse_condition(json_t *condition_json)
 	return nullptr;
 }
 
-json_t *Condition::optional_to_json(std::shared_ptr<Condition> condition)
+jsoncons::json Condition::optional_to_json(std::shared_ptr<Condition> condition)
 {
 	return condition
 		? condition->to_json()
-		: json_null();
+		: jsoncons::json::null_type();
 }
 
 bool TvalCondition::is_match(object_type *o_ptr) const
@@ -155,22 +156,23 @@ bool TvalCondition::is_match(object_type *o_ptr) const
 	return (o_ptr->tval == m_tval);
 }
 
-std::shared_ptr<Condition> TvalCondition::from_json(json_t *j)
+std::shared_ptr<Condition> TvalCondition::from_json(jsoncons::json const &j)
 {
-	int tval;
-
-	if (json_unpack(j, "{s:i}", "tval", &tval) < 0)
+	auto tval_j = j.get("tval");
+	if (!tval_j.is_uinteger())
 	{
 		msg_print("Missing/invalid 'tval' property");
 		return nullptr;
 	}
 
+	int tval = tval_j.as_uint();
+
 	return std::make_shared<TvalCondition>(tval);
 }
 
-void TvalCondition::to_json(json_t *j) const
+void TvalCondition::to_json(jsoncons::json &j) const
 {
-	json_object_set_new(j, "tval", json_integer(m_tval));
+	j["tval"]  = m_tval;
 }
 
 void TvalCondition::write_tree(TreePrinter *p, Cursor *, uint8_t ecol, uint8_t bcol) const
@@ -192,14 +194,16 @@ bool NameCondition::is_match(object_type *o_ptr) const
 	return boost::algorithm::iequals(m_name, buf1);
 }
 
-std::shared_ptr<Condition> NameCondition::from_json(json_t *j)
+std::shared_ptr<Condition> NameCondition::from_json(jsoncons::json const &j)
 {
-	cptr s = nullptr;
-	if (json_unpack(j, "{s:s}", "name", &s) < 0)
+	cptr s = j.get("name").as<cptr>();
+
+	if (!s)
 	{
 		msg_print("Missing/invalid 'name' property");
 		return nullptr;
 	}
+
 	return std::make_shared<NameCondition>(s);
 }
 
@@ -213,9 +217,9 @@ void NameCondition::write_tree(TreePrinter *p, Cursor *cursor, uint8_t ecol, uin
 	p->write(TERM_WHITE, "\n");
 }
 
-void NameCondition::to_json(json_t *j) const
+void NameCondition::to_json(jsoncons::json &j) const
 {
-	json_object_set_new(j, "name", json_string(m_name.c_str()));
+	j["name"] = m_name;
 }
 
 bool ContainCondition::is_match(object_type *o_ptr) const
@@ -225,14 +229,16 @@ bool ContainCondition::is_match(object_type *o_ptr) const
 	return boost::algorithm::icontains(buf1, m_contain);
 }
 
-std::shared_ptr<Condition> ContainCondition::from_json(json_t *j)
+std::shared_ptr<Condition> ContainCondition::from_json(jsoncons::json const &j)
 {
-	cptr s = nullptr;
-	if (json_unpack(j, "{s:s}", "contain", &s) < 0)
+	cptr s = j.get("contain").as<cptr>();
+
+	if (!s)
 	{
 		msg_print("Missing/invalid 'contain' property");
 		return nullptr;
 	}
+
 	return std::make_shared<ContainCondition>(s);
 }
 
@@ -246,9 +252,9 @@ void ContainCondition::write_tree(TreePrinter *p, Cursor *, uint8_t ecol, uint8_
 	p->write(TERM_WHITE, "\n");
 }
 
-void ContainCondition::to_json(json_t *j) const
+void ContainCondition::to_json(jsoncons::json &j) const
 {
-	json_object_set_new(j, "contain", json_string(m_contain.c_str()));
+	j["contain"] = m_contain;
 }
 
 bool SvalCondition::is_match(object_type *o_ptr) const
@@ -258,19 +264,25 @@ bool SvalCondition::is_match(object_type *o_ptr) const
 		(o_ptr->sval <= m_max));
 }
 
-std::shared_ptr<Condition> SvalCondition::from_json(json_t *j)
+std::shared_ptr<Condition> SvalCondition::from_json(jsoncons::json const &j)
 {
-	int min, max;
-
-	if (json_unpack(j, "{s:i,s:i}",
-			"min", &min,
-			"max", &max) < 0)
+	auto min_j = j.get("min");
+	if (!min_j.is_uinteger())
 	{
-		msg_print("Missing/invalid 'min'/'max' properties");
+		msg_print("Missing/invalid 'min' property");
 		return nullptr;
 	}
 
-	return std::make_shared<SvalCondition>(min, max);
+	auto max_j = j.get("max");
+	if (!max_j.is_uinteger())
+	{
+		msg_print("Missing/invalid 'max' property");
+		return nullptr;
+	}
+
+	return std::make_shared<SvalCondition>(
+		min_j.as_uint(),
+		max_j.as_uint());
 }
 
 void SvalCondition::write_tree(TreePrinter *p, Cursor *, uint8_t ecol, uint8_t bcol) const
@@ -284,10 +296,10 @@ void SvalCondition::write_tree(TreePrinter *p, Cursor *, uint8_t ecol, uint8_t b
 	p->write(TERM_WHITE, "\n");
 }
 
-void SvalCondition::to_json(json_t *j) const
+void SvalCondition::to_json(jsoncons::json &j) const
 {
-	json_object_set_new(j, "min", json_integer(m_min));
-	json_object_set_new(j, "max", json_integer(m_max));
+	j["min"] = m_min;
+	j["max"] = m_max;
 }
 
 void GroupingCondition::add_child(ConditionFactory const &factory)
@@ -369,16 +381,15 @@ std::shared_ptr<Condition> GroupingCondition::next_child(Condition *current)
 	return nullptr;
 }
 
-std::vector< std::shared_ptr<Condition> > GroupingCondition::parse_conditions(json_t *j)
+std::vector< std::shared_ptr<Condition> > GroupingCondition::parse_conditions(jsoncons::json const &j)
 {
-	json_t *conditions_j = json_object_get(j, "conditions");
+	auto conditions_j = j.get("conditions");
 
-	if ((conditions_j == nullptr) ||
-	    (json_is_null(conditions_j)))
+	if (conditions_j.is_null())
 	{
 		return std::vector< std::shared_ptr<Condition> >();
 	}
-	else if (!json_is_array(conditions_j))
+	else if (!conditions_j.is_array())
 	{
 		msg_print("'conditions' property has invalid type");
 		return std::vector< std::shared_ptr<Condition> >();
@@ -386,11 +397,8 @@ std::vector< std::shared_ptr<Condition> > GroupingCondition::parse_conditions(js
 	else
 	{
 		std::vector< std::shared_ptr<Condition> > subconditions;
-		for (size_t i = 0; i < json_array_size(conditions_j); i++)
+		for (auto const &subcondition_j: conditions_j.array_value())
 		{
-			json_t *subcondition_j =
-				json_array_get(conditions_j, i);
-
 			std::shared_ptr<Condition> subcondition =
 				parse_condition(subcondition_j);
 
@@ -403,14 +411,16 @@ std::vector< std::shared_ptr<Condition> > GroupingCondition::parse_conditions(js
 	}
 }
 
-void GroupingCondition::to_json(json_t *j) const
+void GroupingCondition::to_json(jsoncons::json &j) const
 {
-	json_t *ja = json_array();
+	// Put all the sub-conditions into an array
+	jsoncons::json::array ja;
 	for (auto condition_p : m_conditions)
 	{
-		json_array_append_new(ja, optional_to_json(condition_p));
+		ja.push_back(optional_to_json(condition_p));
 	}
-	json_object_set_new(j, "conditions", ja);
+	// Add to JSON object
+	j["conditions"] = ja;
 }
 
 bool AndCondition::is_match(object_type *o_ptr) const
@@ -425,7 +435,7 @@ bool AndCondition::is_match(object_type *o_ptr) const
 	return true;
 }
 
-std::shared_ptr<Condition> AndCondition::from_json(json_t *j)
+std::shared_ptr<Condition> AndCondition::from_json(jsoncons::json const &j)
 {
 	auto condition = std::make_shared<AndCondition>();
 	for (auto subcondition : parse_conditions(j))
@@ -458,7 +468,7 @@ bool OrCondition::is_match(object_type *o_ptr) const
 	return false;
 }
 
-std::shared_ptr<Condition> OrCondition::from_json(json_t *j)
+std::shared_ptr<Condition> OrCondition::from_json(jsoncons::json const &j)
 {
 	std::shared_ptr<OrCondition> condition =
 		std::make_shared<OrCondition>();
@@ -487,10 +497,11 @@ bool StatusCondition::is_match(object_type *o_ptr) const
 	return m_status == object_status(o_ptr);
 }
 
-std::shared_ptr<Condition> StatusCondition::from_json(json_t *j)
+std::shared_ptr<Condition> StatusCondition::from_json(jsoncons::json const &j)
 {
-	cptr s;
-	if (json_unpack(j, "{s:s}", "status", &s) < 0)
+	cptr s = j.get("status").as<cptr>();
+
+	if (!s)
 	{
 		msg_print("Missing/invalid 'status' property");
 		return nullptr;
@@ -517,9 +528,9 @@ void StatusCondition::write_tree(TreePrinter *p, Cursor *, uint8_t ecol, uint8_t
 	p->write(TERM_WHITE, "\n");
 }
 
-void StatusCondition::to_json(json_t *j) const
+void StatusCondition::to_json(jsoncons::json &j) const
 {
-	json_object_set_new(j, "status", json_string(status_mapping().stringify(m_status)));
+	j["status"] = status_mapping().stringify(m_status);
 }
 
 bool RaceCondition::is_match(object_type *o_ptr) const
@@ -527,11 +538,11 @@ bool RaceCondition::is_match(object_type *o_ptr) const
 	return boost::algorithm::iequals(m_race, rp_ptr->title);
 }
 
-std::shared_ptr<Condition> RaceCondition::from_json(json_t *j)
+std::shared_ptr<Condition> RaceCondition::from_json(jsoncons::json const &j)
 {
-	cptr s;
+	cptr s = j.get("race").as<cptr>();
 
-	if (json_unpack(j, "{s:s}", "race", &s) < 0)
+	if (!s)
 	{
 		msg_print("Missing/invalid 'race' property");
 		return nullptr;
@@ -551,9 +562,9 @@ void RaceCondition::write_tree(TreePrinter *p, Cursor *, uint8_t ecol, uint8_t b
 	p->write(TERM_WHITE, "\n");
 }
 
-void RaceCondition::to_json(json_t *j) const
+void RaceCondition::to_json(jsoncons::json &j) const
 {
-	json_object_set_new(j, "race", json_string(m_race.c_str()));
+	j["race"] = m_race;
 }
 
 bool SubraceCondition::is_match(object_type *o_ptr) const
@@ -561,11 +572,11 @@ bool SubraceCondition::is_match(object_type *o_ptr) const
 	return boost::algorithm::iequals(m_subrace, rmp_ptr->title);
 }
 
-std::shared_ptr<Condition> SubraceCondition::from_json(json_t *j)
+std::shared_ptr<Condition> SubraceCondition::from_json(jsoncons::json const &j)
 {
-	cptr s;
+	cptr s = j.get("subrace").as<cptr>();
 
-	if (json_unpack(j, "{s:s}", "subrace", &s) < 0)
+	if (!s)
 	{
 		msg_print("Missing/invalid 'subrace' property");
 		return nullptr;
@@ -585,9 +596,9 @@ void SubraceCondition::write_tree(TreePrinter *p, Cursor *, uint8_t ecol, uint8_
 	p->write(TERM_WHITE, "\n");
 }
 
-void SubraceCondition::to_json(json_t *j) const
+void SubraceCondition::to_json(jsoncons::json &j) const
 {
-	json_object_set_new(j, "subrace", json_string(m_subrace.c_str()));
+	j["subrace"] = m_subrace;
 }
 
 bool ClassCondition::is_match(object_type *o_ptr) const
@@ -595,11 +606,11 @@ bool ClassCondition::is_match(object_type *o_ptr) const
 	return boost::algorithm::iequals(m_class, spp_ptr->title);
 }
 
-std::shared_ptr<Condition> ClassCondition::from_json(json_t *j)
+std::shared_ptr<Condition> ClassCondition::from_json(jsoncons::json const &j)
 {
-	cptr s;
+	cptr s = j.get("class").as<cptr>();
 
-	if (json_unpack(j, "{s:s}", "class", &s) < 0)
+	if (!s)
 	{
 		msg_print("Missing/invalid 'class' property");
 		return nullptr;
@@ -619,9 +630,9 @@ void ClassCondition::write_tree(TreePrinter *p, Cursor *, uint8_t ecol, uint8_t 
 	p->write(TERM_WHITE, "\n");
 }
 
-void ClassCondition::to_json(json_t *j) const
+void ClassCondition::to_json(jsoncons::json &j) const
 {
-	json_object_set_new(j, "class", json_string(m_class.c_str()));
+	j["class"] = m_class;
 }
 
 bool InscriptionCondition::is_match(object_type *o_ptr) const
@@ -631,14 +642,16 @@ bool InscriptionCondition::is_match(object_type *o_ptr) const
 		m_inscription);
 }
 
-std::shared_ptr<Condition> InscriptionCondition::from_json(json_t *j)
+std::shared_ptr<Condition> InscriptionCondition::from_json(jsoncons::json const &j)
 {
-	cptr s = nullptr;
-	if (json_unpack(j, "{s:s}", "inscription", &s) < 0)
+	cptr s = j.get("inscription").as<cptr>();
+
+	if (!s)
 	{
 		msg_print("Missing/invalid 'inscription' property");
 		return nullptr;
 	}
+
 	return std::make_shared<InscriptionCondition>(s);
 }
 
@@ -653,9 +666,9 @@ void InscriptionCondition::write_tree(TreePrinter *p, Cursor *, uint8_t ecol, ui
 	p->write(TERM_WHITE, "\n");
 }
 
-void InscriptionCondition::to_json(json_t *j) const
+void InscriptionCondition::to_json(jsoncons::json &j) const
 {
-	json_object_set_new(j, "inscription", json_string(m_inscription.c_str()));
+	j["inscription"] = m_inscription;
 }
 
 bool DiscountCondition::is_match(object_type *o_ptr) const
@@ -665,17 +678,23 @@ bool DiscountCondition::is_match(object_type *o_ptr) const
 		(o_ptr->discount <= m_max));
 }
 
-std::shared_ptr<Condition> DiscountCondition::from_json(json_t *j)
+std::shared_ptr<Condition> DiscountCondition::from_json(jsoncons::json const &j)
 {
-	int min, max;
-
-	if (json_unpack(j, "{s:i,s:i}",
-			"min", &min,
-			"max", &max) < 0)
+	auto min_j = j.get("min");
+	if (!min_j.is_integer())
 	{
-		msg_print("Missing/invalid 'min'/'max' properties");
+		msg_print("Missing/invalid 'min' property");
 		return nullptr;
 	}
+	int min = min_j.as_int();
+
+	auto max_j = j.get("max");
+	if (!max_j.is_integer())
+	{
+		msg_print("Missing/invalid 'max' property");
+		return nullptr;
+	}
+	int max = max_j.as_int();
 
 	return std::make_shared<DiscountCondition>(min, max);
 }
@@ -691,10 +710,10 @@ void DiscountCondition::write_tree(TreePrinter *p, Cursor *, uint8_t ecol, uint8
 	p->write(TERM_WHITE, "\n");
 }
 
-void DiscountCondition::to_json(json_t *j) const
+void DiscountCondition::to_json(jsoncons::json &j) const
 {
-	json_object_set_new(j, "min", json_integer(m_min));
-	json_object_set_new(j, "max", json_integer(m_max));
+	j["min"] = m_min;
+	j["max"] = m_max;
 }
 
 bool LevelCondition::is_match(object_type *) const
@@ -703,16 +722,23 @@ bool LevelCondition::is_match(object_type *) const
 		(p_ptr->lev <= m_max));
 }
 
-std::shared_ptr<Condition> LevelCondition::from_json(json_t *j)
+std::shared_ptr<Condition> LevelCondition::from_json(jsoncons::json const &j)
 {
-	int min, max;
-	if (json_unpack(j, "{s:i,s:i}",
-			"min", &min,
-			"max", &max) < 0)
+	auto min_j = j.get("min");
+	if (!min_j.is_integer())
 	{
-		msg_print("Missing/invalid 'min'/'max' properties");
+		msg_print("Missing/invalid 'min' property");
 		return nullptr;
 	}
+	int min = min_j.as_int();
+
+	auto max_j = j.get("max");
+	if (!max_j.is_integer())
+	{
+		msg_print("Missing/invalid 'max' property");
+		return nullptr;
+	}
+	int max = max_j.as_int();
 
 	return std::make_shared<LevelCondition>(min, max);
 }
@@ -729,10 +755,10 @@ void LevelCondition::write_tree(TreePrinter *p, Cursor *, uint8_t ecol, uint8_t 
 	p->write(TERM_WHITE, "\n");
 }
 
-void LevelCondition::to_json(json_t *j) const
+void LevelCondition::to_json(jsoncons::json &j) const
 {
-	json_object_set_new(j, "min", json_integer(m_min));
-	json_object_set_new(j, "max", json_integer(m_max));
+	j["min"] = m_min;
+	j["max"] = m_max;
 }
 
 bool SkillCondition::is_match(object_type *) const
@@ -742,16 +768,28 @@ bool SkillCondition::is_match(object_type *) const
 		(sk <= m_max));
 }
 
-std::shared_ptr<Condition> SkillCondition::from_json(json_t *j)
+std::shared_ptr<Condition> SkillCondition::from_json(jsoncons::json const &j)
 {
-	cptr s;
-	int min, max;
-	if (json_unpack(j, "{s:i,s:i,s:s}",
-			"min", &min,
-			"max", &max,
-			"name", &s) < 0)
+	auto min_j = j.get("min");
+	if (!min_j.is_integer())
 	{
-		msg_print("Missing/invalid 'min'/'max'/'name' properties");
+		msg_print("Missing/invalid 'min' property");
+		return nullptr;
+	}
+	int min = min_j.as_int();
+
+	auto max_j = j.get("max");
+	if (!max_j.is_integer())
+	{
+		msg_print("Missing/invalid 'max' property");
+		return nullptr;
+	}
+	int max = max_j.as_int();
+
+	auto s = j.get("name").as<cptr>();
+	if (!s)
+	{
+		msg_print("Missing/invalid 'name' property");
 		return nullptr;
 	}
 
@@ -776,14 +814,11 @@ void SkillCondition::write_tree(TreePrinter *p, Cursor *, uint8_t ecol, uint8_t 
 	p->write(TERM_WHITE, "\n");
 }
 
-void SkillCondition::to_json(json_t *j) const
+void SkillCondition::to_json(jsoncons::json &j) const
 {
-	json_object_set_new(j, "name",
-	                    json_string(s_descriptors[m_skill_idx].name));
-	json_object_set_new(j, "min",
-			    json_integer(m_min));
-	json_object_set_new(j, "max",
-			    json_integer(m_max));
+	j["name"] = s_descriptors[m_skill_idx].name;
+	j["min"] = m_min;
+	j["max"] = m_max;
 }
 
 bool StateCondition::is_match(object_type *o_ptr) const
@@ -800,10 +835,11 @@ bool StateCondition::is_match(object_type *o_ptr) const
 	return false;
 }
 
-std::shared_ptr<Condition> StateCondition::from_json(json_t *j)
+std::shared_ptr<Condition> StateCondition::from_json(jsoncons::json const &j)
 {
-	cptr s;
-	if (json_unpack(j, "{s:s}", "state", &s) < 0)
+	cptr s = j.get("state").as<cptr>();
+
+	if (!s)
 	{
 		msg_print("Missing/invalid 'state' property");
 		return nullptr;
@@ -830,11 +866,9 @@ void StateCondition::write_tree(TreePrinter *p, Cursor *, uint8_t ecol, uint8_t 
 	p->write(TERM_WHITE, "\n");
 }
 
-void StateCondition::to_json(json_t *j) const
+void StateCondition::to_json(jsoncons::json &j) const
 {
-	json_object_set_new(j, "state",
-			    json_string(identification_state_mapping().
-					stringify(m_state)));
+	j["state"] = identification_state_mapping().stringify(m_state);
 }
 
 bool SymbolCondition::is_match(object_type *o_ptr) const
@@ -843,21 +877,16 @@ bool SymbolCondition::is_match(object_type *o_ptr) const
 	return k_ptr->d_char == m_symbol;
 }
 
-std::shared_ptr<Condition> SymbolCondition::from_json(json_t *j)
+std::shared_ptr<Condition> SymbolCondition::from_json(jsoncons::json const &j)
 {
-	cptr s_ = nullptr;
-	if (json_unpack(j, "{s:s}", "symbol", &s_) < 0)
+	auto s = j.get("symbol").as<std::string>();
+
+	if (s.empty())
 	{
 		msg_print("Missing/invalid 'symbol' property");
 		return nullptr;
 	}
 
-	std::string s(s_);
-	if (s.empty())
-	{
-		msg_print("Invalid 'symbol' property: Too short");
-		return nullptr;
-	}
 	if (s.size() > 1)
 	{
 		msg_print("Invalid 'symbol' property: Too long");
@@ -878,10 +907,9 @@ void SymbolCondition::write_tree(TreePrinter *p, Cursor *, uint8_t ecol, uint8_t
 	p->write(TERM_WHITE, "\n");
 }
 
-void SymbolCondition::to_json(json_t *j) const
+void SymbolCondition::to_json(jsoncons::json &j) const
 {
-	json_object_set_new(j, "symbol",
-			    json_string(format("%c", m_symbol)));
+	j["symbol"] = format("%c", m_symbol);
 }
 
 bool AbilityCondition::is_match(object_type *) const
@@ -889,10 +917,11 @@ bool AbilityCondition::is_match(object_type *) const
 	return p_ptr->has_ability(m_ability_idx);
 }
 
-std::shared_ptr<Condition> AbilityCondition::from_json(json_t *j)
+std::shared_ptr<Condition> AbilityCondition::from_json(jsoncons::json const &j)
 {
-	cptr a;
-	if (json_unpack(j, "{s:s}", "ability", &a) < 0)
+	cptr a = j.get("ability").as<cptr>();
+
+	if (!a)
 	{
 		msg_print("Missing/invalid 'ability' property");
 		return nullptr;
@@ -918,10 +947,9 @@ void AbilityCondition::write_tree(TreePrinter *p, Cursor *, uint8_t ecol, uint8_
 	p->write(TERM_WHITE, "\n");
 }
 
-void AbilityCondition::to_json(json_t *j) const
+void AbilityCondition::to_json(jsoncons::json &j) const
 {
-	cptr ability_s = ab_info[m_ability_idx].name;
-	json_object_set_new(j, "ability", json_string(ability_s));
+	j["ability"] = ab_info[m_ability_idx].name;
 }
 
 void SingleSubconditionCondition::add_child(std::function< std::shared_ptr<Condition> () > const &factory)
@@ -946,23 +974,20 @@ std::shared_ptr<Condition> SingleSubconditionCondition::first_child()
 	return m_subcondition;
 }
 
-void SingleSubconditionCondition::to_json(json_t *j) const
+void SingleSubconditionCondition::to_json(jsoncons::json &j) const
 {
-	json_object_set_new(j, "condition",
-			    optional_to_json(m_subcondition));
+	j["condition"] = optional_to_json(m_subcondition);
 }
 
-std::shared_ptr<Condition> SingleSubconditionCondition::parse_single_subcondition(json_t *in_json)
+std::shared_ptr<Condition> SingleSubconditionCondition::parse_single_subcondition(jsoncons::json const &in_json)
 {
-	json_t *condition_j =
-		json_object_get(in_json, "condition");
+	auto condition_j = in_json.get("condition");
 
-	if ((condition_j == nullptr) ||
-	    (json_is_null(condition_j)))
+	if (condition_j.is_null())
 	{
 		return nullptr;
 	}
-	else if (!json_is_object(condition_j))
+	else if (!condition_j.is_object())
 	{
 		msg_format("Invalid 'condition' property");
 		return nullptr;
@@ -983,7 +1008,7 @@ bool NotCondition::is_match(object_type *o_ptr) const
 	return !m_subcondition->is_match(o_ptr);
 }
 
-std::shared_ptr<Condition> NotCondition::from_json(json_t *j)
+std::shared_ptr<Condition> NotCondition::from_json(jsoncons::json const &j)
 {
 	return std::make_shared<NotCondition>(parse_single_subcondition(j));
 }
@@ -1016,7 +1041,7 @@ bool InventoryCondition::is_match(object_type *) const
 	return false;
 }
 
-std::shared_ptr<Condition> InventoryCondition::from_json(json_t *j)
+std::shared_ptr<Condition> InventoryCondition::from_json(jsoncons::json const &j)
 {
 	return std::make_shared<InventoryCondition>(
 		parse_single_subcondition(j));
@@ -1052,7 +1077,7 @@ bool EquipmentCondition::is_match(object_type *) const
 	return false;
 }
 
-std::shared_ptr<Condition> EquipmentCondition::from_json(json_t *j)
+std::shared_ptr<Condition> EquipmentCondition::from_json(jsoncons::json const &j)
 {
 	return std::make_shared<EquipmentCondition>(
 		parse_single_subcondition(j));

@@ -12,20 +12,21 @@ namespace squelch {
 /**
  * Parse rules from JSON array
  */
-static std::vector< std::shared_ptr < Rule > > parse_rules(json_t *rules_j)
+static std::vector< std::shared_ptr < Rule > > parse_rules(jsoncons::json const &rules_json)
 {
 	std::vector< std::shared_ptr < Rule > > rules;
 
-	if (!json_is_array(rules_j))
+	if (!rules_json.is_array())
 	{
 		msg_format("Error 'rules' is not an array");
 		return rules;
 	}
 
-	for (size_t i = 0; i < json_array_size(rules_j); i++)
+	auto rules_array = rules_json.array_value();
+
+	for (auto const &rule_value : rules_array)
 	{
-		json_t *rule_j = json_array_get(rules_j, i);
-		auto rule = Rule::parse_rule(rule_j);
+		auto rule = Rule::parse_rule(rule_value);
 		if (rule)
 		{
 			rules.push_back(rule);
@@ -63,25 +64,25 @@ bool Automatizer::apply_rules(object_type *o_ptr, int item_idx) const
 	return false;
 }
 
-std::shared_ptr<json_t> Automatizer::to_json() const
+jsoncons::json Automatizer::to_json() const
 {
-	auto rules_json = std::shared_ptr<json_t>(json_array(), &json_decref);
+	auto document = jsoncons::json::array();
 
 	for (auto rule : m_rules)
 	{
-		json_array_append_new(rules_json.get(), rule->to_json());
+		document.push_back(rule->to_json());
 	}
 
-	return rules_json;
+	return document;
 }
 
-void Automatizer::load_json(json_t *json)
+void Automatizer::load_json(jsoncons::json const &document)
 {
 	// Go through all the found rules
-	auto rules = parse_rules(json);
+	auto rules = parse_rules(document);
 
 	// Load rule
-	for (auto rule : rules)
+	for (auto rule: rules)
 	{
 		append_rule(rule);
 	}

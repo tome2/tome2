@@ -2,8 +2,8 @@
 
 #include <boost/noncopyable.hpp>
 #include <memory>
+#include <jsoncons/json.hpp>
 #include <vector>
-#include <jansson.h>
 
 #include "tome/squelch/rule_fwd.hpp"
 #include "tome/squelch/cursor_fwd.hpp"
@@ -44,15 +44,14 @@ public:
 	bool apply_rules(object_type *o_ptr, int item_idx) const;
 
 	/**
-	 * Build a JSON data structure to represent
-	 * all the rules.
+	 * Build a JSON document to represent all the rules.
 	 */
-        std::shared_ptr<json_t> to_json() const;
+	jsoncons::json to_json() const;
 
 	/**
-	 * Load rules from a JSON data structure.
+	 * Load rules from a JSON document.
 	 */
-	void load_json(json_t *json);
+	void load_json(jsoncons::json const &);
 
 	/**
 	 * Remove currently selected condition or rule.

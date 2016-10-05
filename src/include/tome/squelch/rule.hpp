@@ -1,7 +1,7 @@
 #pragma once
 
-#include <jansson.h>
 #include <memory>
+#include <jsoncons/json.hpp>
 
 #include "tome/squelch/condition_fwd.hpp"
 #include "tome/squelch/cursor_fwd.hpp"
@@ -75,14 +75,14 @@ public:
 	bool apply_rule(object_type *o_ptr, int item_idx) const;
 
 	/**
-	 * Convert rule to JSON
+	 * Convert rule to JSON.
 	 */
-	virtual json_t *to_json() const;
+	virtual jsoncons::json to_json() const;
 
 	/**
 	 * Parse rule from JSON
 	 */
-	static std::shared_ptr<Rule> parse_rule(json_t *);
+	static std::shared_ptr<Rule> parse_rule(jsoncons::json const &);
 
 protected:
 	virtual bool do_apply_rule(object_type *, int) const = 0;
@@ -148,7 +148,7 @@ public:
 		, m_inscription(inscription) {
 	}
 
-	json_t *to_json() const override;
+	jsoncons::json to_json() const override;
 
 protected:
         virtual void do_write_tree(TreePrinter *p) const override;
