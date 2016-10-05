@@ -484,11 +484,6 @@ wilderness_type_info *wf_info;
 int wildc2i[256];
 
 /*
- * The store/building types arrays
- */
-store_info_type *st_info;
-
-/*
  * Default texts for feature information.
  */
 cptr DEFAULT_FEAT_TEXT = "a wall blocking your way";
@@ -643,11 +638,6 @@ u16b max_a_idx;
  * Maximum number of ego-items in e_info.txt
  */
 u16b max_e_idx;
-
-/*
- * Maximum number of stores types in st_info.txt
- */
-u16b max_st_idx;
 
 /*
  * Maximum number of objects in the level

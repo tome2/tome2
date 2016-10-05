@@ -31,7 +31,6 @@
 #include "skill_modifiers_fwd.hpp"
 #include "skill_type_fwd.hpp"
 #include "skills_defs.hpp"
-#include "store_info_type_fwd.hpp"
 #include "timer_type_fwd.hpp"
 #include "town_type_fwd.hpp"
 #include "trap_type_fwd.hpp"
@@ -171,7 +170,6 @@ extern monster_ego *re_info;
 extern trap_type *t_info;
 extern wilderness_type_info *wf_info;
 extern int wildc2i[256];
-extern store_info_type *st_info;
 extern cptr DEFAULT_FEAT_TEXT;
 extern cptr DEFAULT_FEAT_TUNNEL;
 extern cptr DEFAULT_FEAT_BLOCK;
@@ -193,7 +191,6 @@ extern u16b max_e_idx;
 extern u16b max_o_idx;
 extern u16b max_m_idx;
 extern u16b max_t_idx;
-extern u16b max_st_idx;
 extern u16b max_wf_idx;
 extern int init_flags;
 extern bool_ ambush_flag;

@@ -633,6 +633,7 @@ void flavor_init(void)
  */
 void reset_visuals(void)
 {
+	auto &st_info = game->edit_data.st_info;
 	auto &race_mod_info = game->edit_data.race_mod_info;
 
 	int i;
@@ -648,13 +649,11 @@ void reset_visuals(void)
 	}
 
 	/* Extract default attr/char code for stores */
-	for (i = 0; i < max_st_idx; i++)
+	for (auto &st_ref: st_info)
 	{
-		store_info_type *st_ptr = &st_info[i];
-
 		/* Default attr/char */
-		st_ptr->x_attr = st_ptr->d_attr;
-		st_ptr->x_char = st_ptr->d_char;
+		st_ref.x_attr = st_ref.d_attr;
+		st_ref.x_char = st_ref.d_char;
 	}
 
 	/* Extract default attr/char code for objects */
@@ -2515,6 +2514,7 @@ static cptr object_out_desc_where_found(s16b level, s16b dungeon)
 bool_ object_out_desc(object_type *o_ptr, FILE *fff, bool_ trim_down, bool_ wait_for_it)
 {
 	auto const &set_info = game->edit_data.set_info;
+	auto const &st_info = game->edit_data.st_info;
 
 	cptr vp[64];
 	byte vc[64];

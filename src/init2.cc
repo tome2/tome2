@@ -454,7 +454,7 @@ namespace {
 
 		static void allocate()
 		{
-			st_info = new store_info_type[max_st_idx];
+			// Nothing to do
 		}
 
 		static errr parse(FILE *fp)
@@ -666,6 +666,8 @@ static errr init_misc(void)
  */
 static errr init_towns(void)
 {
+	auto const &st_info = game->edit_data.st_info;
+
 	town_info = new town_type[max_towns];
 
 	for (std::size_t i = 1; i < max_towns; i++)
@@ -676,7 +678,7 @@ static errr init_towns(void)
 		}
 
 		/* Fill in each store */
-		for (std::size_t j = 0; j < max_st_idx; j++)
+		for (std::size_t j = 0; j < st_info.size(); j++)
 		{
 			/* Create the store */
 			town_info[i].store.emplace_back(store_type());
@@ -695,11 +697,13 @@ static errr init_towns(void)
 
 void create_stores_stock(int t)
 {
+	auto const &st_info = game->edit_data.st_info;
+
 	town_type *t_ptr = &town_info[t];
 
 	if (t_ptr->stocked) return;
 
-	for (int j = 0; j < max_st_idx; j++)
+	for (std::size_t j = 0; j < st_info.size(); j++)
 	{
 		store_type *st_ptr = &t_ptr->store[j];
 
@@ -709,6 +713,7 @@ void create_stores_stock(int t)
 		/* Reserve space for stock */
 		st_ptr->stock.reserve(st_ptr->stock_size);
 	}
+
 	t_ptr->stocked = TRUE;
 }
 

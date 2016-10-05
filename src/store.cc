@@ -249,6 +249,8 @@ static owner_type const *ot_ptr = NULL;
  */
 static s32b price_item(object_type *o_ptr, int greed, bool_ flip)
 {
+	auto const &st_info = game->edit_data.st_info;
+
 	int factor;
 	int adjust;
 	s32b price;
@@ -572,6 +574,8 @@ static void store_object_absorb(object_type *o_ptr, object_type *j_ptr)
  */
 static bool_ store_check_num(object_type *o_ptr)
 {
+	auto const &st_info = game->edit_data.st_info;
+
 	/* Free space is always usable */
 	if (st_ptr->stock.size() < st_ptr->stock_size)
 	{
@@ -626,6 +630,8 @@ static bool is_blessed(object_type const *o_ptr)
  */
 static bool store_will_buy(object_type const *o_ptr)
 {
+	auto const &st_info = game->edit_data.st_info;
+
 	cptr store_name = st_info[st_ptr->st_idx].name;
 
 	/* Hack -- The Home is simple */
@@ -1074,6 +1080,8 @@ static void store_item_optimize(int item)
  */
 static bool_ black_market_crap(object_type *o_ptr)
 {
+	auto const &st_info = game->edit_data.st_info;
+
 	/* Ego items are never crap */
 	if (o_ptr->name2) return (FALSE);
 
@@ -1083,7 +1091,7 @@ static bool_ black_market_crap(object_type *o_ptr)
 	if (o_ptr->to_d > 0) return (FALSE);
 
 	/* Check all stores */
-	for (std::size_t i = 0; i < max_st_idx; i++)
+	for (std::size_t i = 0; i < st_info.size(); i++)
 	{
 		if (i == STORE_HOME) continue;
 		if (st_info[i].flags & STF_MUSEUM) continue;
@@ -1133,7 +1141,10 @@ static void store_delete(void)
 /* Analyze store flags and return a level */
 int return_level()
 {
-	store_info_type *sti_ptr = &st_info[st_ptr->st_idx];
+	auto const &st_info = game->edit_data.st_info;
+
+	auto sti_ptr = &st_info[st_ptr->st_idx];
+
 	int level;
 
 	if (sti_ptr->flags & STF_RANDOM) level = 0;
@@ -1186,6 +1197,8 @@ static bool_ kind_is_storeok(int k_idx)
  */
 static void store_create(void)
 {
+	auto const &st_info = game->edit_data.st_info;
+
 	int i = 0, tries, level = 0;
 
 	object_type forge;
@@ -1400,6 +1413,8 @@ static void store_create(void)
  */
 static void display_entry(int pos)
 {
+	auto const &st_info = game->edit_data.st_info;
+
 	/* Get the item */
 	auto o_ptr = &st_ptr->stock[pos];
 
@@ -1543,6 +1558,8 @@ void store_prt_gold(void)
  */
 void display_store(void)
 {
+	auto const &st_info = game->edit_data.st_info;
+
 	char buf[80];
 
 
@@ -1825,7 +1842,9 @@ static bool_ sell_haggle(object_type *o_ptr, s32b *price)
  */
 static bool retire_owner_p(void)
 {
-	store_info_type *sti_ptr = &st_info[town_info[p_ptr->town_num].store[cur_store_num].st_idx];
+	auto const &st_info = game->edit_data.st_info;
+
+	auto sti_ptr = &st_info[town_info[p_ptr->town_num].store[cur_store_num].st_idx];
 
 	if (sti_ptr->owners.size() > 1)
 	{
@@ -2070,6 +2089,8 @@ void store_stole(void)
  */
 void store_purchase(void)
 {
+	auto const &st_info = game->edit_data.st_info;
+
 	/* Museum? */
 	if (st_info[st_ptr->st_idx].flags & STF_MUSEUM)
 	{
@@ -2379,6 +2400,8 @@ void store_purchase(void)
  */
 void store_sell(void)
 {
+	auto const &st_info = game->edit_data.st_info;
+
 	int choice;
 	int item, item_pos;
 	int amt;
@@ -2678,6 +2701,8 @@ void store_sell(void)
  */
 void store_examine(void)
 {
+	auto const &st_info = game->edit_data.st_info;
+
 	/* Empty? */
 	if (st_ptr->stock.empty())
 	{
@@ -2760,6 +2785,7 @@ static bool_ leave_store = FALSE;
  */
 static store_action_type const *find_store_action(s16b command_cmd)
 {
+	auto const &st_info = game->edit_data.st_info;
 	auto const &ba_info = game->edit_data.ba_info;
 
 	for (std::size_t i = 0; i < st_info[st_ptr->st_idx].actions.size(); i++)
@@ -3101,6 +3127,7 @@ void do_cmd_store(void)
 {
 	auto const &ow_info = game->edit_data.ow_info;
 	auto const &ba_info = game->edit_data.ba_info;
+	auto const &st_info = game->edit_data.st_info;
 
 	int which;
 	int maintain_num;
@@ -3369,6 +3396,7 @@ void do_cmd_store(void)
 void store_shuffle(int which)
 {
 	auto const &ow_info = game->edit_data.ow_info;
+	auto const &st_info = game->edit_data.st_info;
 
 	/* Ignore home */
 	if (which == STORE_HOME) return;
@@ -3418,6 +3446,7 @@ void store_shuffle(int which)
 void store_maint(int town_num, int store_num)
 {
 	auto const &ow_info = game->edit_data.ow_info;
+	auto const &st_info = game->edit_data.st_info;
 
 	int const old_rating = rating;
 
@@ -3510,6 +3539,7 @@ void store_maint(int town_num, int store_num)
 void store_init(int town_num, int store_num)
 {
 	auto const &ow_info = game->edit_data.ow_info;
+	auto const &st_info = game->edit_data.st_info;
 
 	cur_store_num = store_num;
 
@@ -3553,6 +3583,7 @@ void do_cmd_home_trump(void)
 {
 	auto const &ow_info = game->edit_data.ow_info;
 	auto const &ba_info = game->edit_data.ba_info;
+	auto const &st_info = game->edit_data.st_info;
 
 	int which;
 	int maintain_num;

@@ -888,33 +888,51 @@ static void build_store_hidden(int n, int yy, int xx)
 }
 
 /* Return a list of stores */
-static int get_shops(int *rooms)
+static std::vector<std::size_t> get_shops()
 {
-	int i, n, num = 0;
+	auto const &st_info = game->edit_data.st_info;
 
-	for (n = 0; n < max_st_idx; n++)
-	{
-		rooms[n] = 0;
-	}
+	std::vector<std::size_t> rooms;
 
-	for (n = 0; n < max_st_idx; n++)
+	for (std::size_t n = 0; n < st_info.size(); n++)
 	{
 		int chance = 50;
 
-		if (st_info[n].flags & STF_COMMON) chance += 30;
-		if (st_info[n].flags & STF_RARE) chance -= 20;
-		if (st_info[n].flags & STF_VERY_RARE) chance -= 30;
+		if (st_info[n].flags & STF_COMMON)
+		{
+			chance += 30;
+		}
 
-		if (!magik(chance)) continue;
+		if (st_info[n].flags & STF_RARE)
+		{
+			chance -= 20;
+		}
 
-		for (i = 0; i < num; ++i)
+		if (st_info[n].flags & STF_VERY_RARE)
+		{
+			chance -= 30;
+		}
+
+		if (!magik(chance))
+		{
+			continue;
+		}
+
+		for (std::size_t i = 0; i < rooms.size(); ++i)
+		{
 			if (rooms[i] == n)
+			{
 				continue;
+			}
+		}
 
-		if (st_info[n].flags & STF_RANDOM) rooms[num++] = n;
+		if (st_info[n].flags & STF_RANDOM)
+		{
+			rooms.push_back(n);
+		}
 	}
 
-	return num;
+	return rooms;
 }
 
 /* Generate town borders */
@@ -996,7 +1014,7 @@ static bool_ create_townpeople_hook(int r_idx)
  */
 static void town_gen_hack(int t_idx, int qy, int qx)
 {
-	int y, x, floor, num = 0;
+	int y, x, floor;
 	bool_ (*old_get_mon_num_hook)(int r_idx);
 
 	/* Do we use dungeon floor or normal one */
@@ -1015,8 +1033,7 @@ static void town_gen_hack(int t_idx, int qy, int qx)
 	}
 
 	/* Prepare an Array of "remaining stores", and count them */
-	std::unique_ptr<int[]> rooms(new int[max_st_idx]);
-	num = get_shops(rooms.get());
+	auto rooms = get_shops();
 
 	/* Place two rows of stores */
 	for (y = 0; y < 2; y++)
@@ -1024,10 +1041,14 @@ static void town_gen_hack(int t_idx, int qy, int qx)
 		/* Place four stores per row */
 		for (x = 0; x < 4; x++)
 		{
-			if(--num > -1)
+			if (!rooms.empty())
 			{
+				/* Extract store */
+				auto room = rooms.back();
+				rooms.pop_back();
+
 				/* Build that store at the proper location */
-				build_store(qy, qx, rooms[num], y, x);
+				build_store(qy, qx, room, y, x);
 			}
 		}
 	}
@@ -1084,7 +1105,7 @@ static void town_gen_hack(int t_idx, int qy, int qx)
 
 static void town_gen_circle(int t_idx, int qy, int qx)
 {
-	int y, x, cy, cx, rad, floor, num = 0;
+	int y, x, cy, cx, rad, floor;
 	bool_ (*old_get_mon_num_hook)(int r_idx);
 
 	/* Do we use dungeon floor or normal one */
@@ -1147,9 +1168,8 @@ static void town_gen_circle(int t_idx, int qy, int qx)
 			}
 		}
 
-	/* Prepare an Array of "remaining stores", and count them */
-	std::unique_ptr<int[]> rooms(new int[max_st_idx]);
-	num = get_shops(rooms.get());
+	/* Get "remaining stores" */
+	auto rooms = get_shops();
 
 	/* Place two rows of stores */
 	for (y = 0; y < 2; y++)
@@ -1157,10 +1177,14 @@ static void town_gen_circle(int t_idx, int qy, int qx)
 		/* Place four stores per row */
 		for (x = 0; x < 4; x++)
 		{
-			if(--num > -1)
+			if (!rooms.empty())
 			{
+				/* Extract store */
+				auto room = rooms.back();
+				rooms.pop_back();
+
 				/* Build that store at the proper location */
-				build_store_circle(qy, qx, rooms[num], y, x);
+				build_store_circle(qy, qx, room, y, x);
 			}
 		}
 	}
@@ -1213,31 +1237,38 @@ static void town_gen_circle(int t_idx, int qy, int qx)
 
 static void town_gen_hidden(int t_idx, int qy, int qx)
 {
-	int y, x, n, num = 0, i;
-
-	/* Prepare an Array of "remaining stores", and count them */
-	std::unique_ptr<int[]> rooms(new int[max_st_idx]);
-	num = get_shops(rooms.get());
+	/* Get "remaining stores" */
+	auto rooms = get_shops();
 
 	/* Get a number of stores to place */
-	n = rand_int(num / 2) + (num / 2);
+	std::size_t n = rand_int(rooms.size() / 2) + (rooms.size() / 2);
 
 	/* Place k stores */
-	for (i = 0; i < n; i++)
+	for (std::size_t i = 0; i < n; i++)
 	{
 		/* Find a good spot */
+		int x;
+		int y;
 		while (TRUE)
 		{
 			y = rand_range(1, cur_hgt - 2);
 			x = rand_range(1, cur_wid - 2);
 
-			if (cave_empty_bold(y, x)) break;
+			if (cave_empty_bold(y, x))
+			{
+				break;
+			}
 		}
 
-		if(--num > -1)
+		/* Any stores left? */
+		if (!rooms.empty())
 		{
+			/* Extract store */
+			auto room = rooms.back();
+			rooms.pop_back();
+
 			/* Build that store at the proper location */
-			build_store_hidden(rooms[num], y, x);
+			build_store_hidden(room, y, x);
 		}
 	}
 }

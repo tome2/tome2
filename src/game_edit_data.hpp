@@ -10,6 +10,7 @@
 #include "randart_part_type.hpp"
 #include "set_type.hpp"
 #include "store_action_type.hpp"
+#include "store_info_type.hpp"
 #include "vault_type.hpp"
 
 #include <vector>
@@ -50,6 +51,11 @@ struct GameEditData {
 	 * Building actions.
 	 */
 	std::vector<store_action_type> ba_info;
+
+	/**
+	 * Buildings
+	 */
+	std::vector<store_info_type> st_info;
 
 	/**
 	 * Building owners.

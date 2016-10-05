@@ -3889,6 +3889,7 @@ bool_ target_object(int y, int x, int mode, cptr info, bool_ *boring,
 static int target_set_aux(int y, int x, int mode, cptr info)
 {
 	auto const &d_info = game->edit_data.d_info;
+	auto const &st_info = game->edit_data.st_info;
 
 	cave_type *c_ptr = &cave[y][x];
 

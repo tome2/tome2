@@ -3055,6 +3055,7 @@ static void init_town(int t_idx)
  */
 void player_birth(void)
 {
+	auto const &st_info = game->edit_data.st_info;
 	auto &d_info = game->edit_data.d_info;
 
 	/* Starting index for generated towns */
@@ -3177,7 +3178,7 @@ void player_birth(void)
 		create_stores_stock(i);
 
 		/* Init the stores */
-		for (std::size_t j = 0; j < max_st_idx; j++)
+		for (std::size_t j = 0; j < st_info.size(); j++)
 		{
 			/* Initialize */
 			store_init(i, j);

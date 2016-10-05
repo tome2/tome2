@@ -217,6 +217,7 @@ s16b tokenize(char *buf, s16b num, char **tokens, char delim1, char delim2)
 errr process_pref_file_aux(char *buf)
 {
 	auto &race_mod_info = game->edit_data.race_mod_info;
+	auto &st_info = game->edit_data.st_info;
 
 	int i, j, n1, n2;
 
@@ -376,12 +377,13 @@ errr process_pref_file_aux(char *buf)
 	{
 		if (tokenize(buf + 2, 3, zz, ':', '/') == 3)
 		{
-			store_info_type *st_ptr;
-			i = (huge)strtol(zz[0], NULL, 0);
+			std::size_t i = std::stoul(zz[0], 0, 0);
 			n1 = strtol(zz[1], NULL, 0);
 			n2 = strtol(zz[2], NULL, 0);
-			if (i >= max_st_idx) return (1);
-			st_ptr = &st_info[i];
+
+			if (i >= st_info.size()) return (1);
+
+			auto st_ptr = &st_info[i];
 			if (n1) st_ptr->x_attr = n1;
 			if (n2) st_ptr->x_char = n2;
 			return (0);
@@ -2513,8 +2515,10 @@ void file_character_print_item(FILE *fff, char label, object_type *obj, bool_ fu
  *
  * Prints out one "store" (for Home and Mathom-house)
  */
-void file_character_print_store(FILE *fff, wilderness_type_info *place, int store, bool_ full)
+static void file_character_print_store(FILE *fff, wilderness_type_info *place, std::size_t store, bool_ full)
 {
+	auto const &st_info = game->edit_data.st_info;
+
 	town_type *town = &town_info[place->entrance];
 	store_type *st_ptr = &town->store[store];
 

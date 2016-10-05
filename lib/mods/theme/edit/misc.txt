@@ -39,9 +39,6 @@ M:U:176
 # Maximum number of terrain types in wf_info.txt
 M:W:64
 
-# Maximum number of store types in st_info.txt
-M:S:89
-
 # Maximum size for "o_list[]"
 M:O:1024
 

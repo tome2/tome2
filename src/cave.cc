@@ -4,6 +4,7 @@
 #include "dungeon_flag.hpp"
 #include "feature_flag.hpp"
 #include "feature_type.hpp"
+#include "game.hpp"
 #include "hook_enter_dungeon_in.hpp"
 #include "monster2.hpp"
 #include "monster_race.hpp"
@@ -845,6 +846,8 @@ static byte darker_attrs[16] =
 
 static void map_info(int y, int x, byte *ap, char *cp)
 {
+	auto const &st_info = game->edit_data.st_info;
+
 	byte a;
 
 	byte c;
@@ -1278,6 +1281,8 @@ static void map_info(int y, int x, byte *ap, char *cp)
  */
 void map_info_default(int y, int x, byte *ap, char *cp)
 {
+	auto const &st_info = game->edit_data.st_info;
+
 	byte a;
 
 	byte c;

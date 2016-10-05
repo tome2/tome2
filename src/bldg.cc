@@ -115,7 +115,9 @@ static void clear_bldg(int min_row, int max_row)
 void show_building(store_type const *s_ptr)
 {
 	auto const &ba_info = game->edit_data.ba_info;
-	store_info_type *st_ptr = &st_info[s_ptr->st_idx];
+	auto const &st_info = game->edit_data.st_info;
+
+	auto st_ptr = &st_info[s_ptr->st_idx];
 
 	for (std::size_t i = 0; i < st_ptr->actions.size(); i++)
 	{

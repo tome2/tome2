@@ -2038,6 +2038,8 @@ static void do_timers(ls_flag_t flag)
  */
 static void do_stores(ls_flag_t flag)
 {
+	auto const &st_info = game->edit_data.st_info;
+
 	// Indexes for "real" towns.
 	std::vector<byte> reals;
 	reals.reserve(max_towns);
@@ -2059,9 +2061,9 @@ static void do_stores(ls_flag_t flag)
 	do_vector(flag, reals, do_byte);
 
 	/* Read the stores */
-	u16b n_stores = max_st_idx;
+	u16b n_stores = st_info.size();
 	do_u16b(&n_stores, flag);
-	assert(n_stores <= max_st_idx);
+	assert(n_stores <= st_info.size());
 
 	for (auto const z: reals)
 	{

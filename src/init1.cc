@@ -5617,9 +5617,9 @@ static errr grab_one_store_flag(store_flag_set *flags, cptr what)
  */
 errr init_st_info_txt(FILE *fp)
 {
-	int i = 0;
+	auto &st_info = game->edit_data.st_info;
+
 	char buf[1024];
-	char *s;
 
 	/* Current entry */
 	store_info_type *st_ptr = NULL;
@@ -5647,7 +5647,7 @@ errr init_st_info_txt(FILE *fp)
 		if (buf[0] == 'N')
 		{
 			/* Find the colon before the name */
-			s = strchr(buf + 2, ':');
+			char *s = strchr(buf + 2, ':');
 
 			/* Verify that colon */
 			if (!s) return (1);
@@ -5659,22 +5659,19 @@ errr init_st_info_txt(FILE *fp)
 			if (!*s) return (1);
 
 			/* Get the index */
-			i = atoi(buf + 2);
+			int i = atoi(buf + 2);
 
 			/* Verify information */
 			if (i < error_idx) return (4);
-
-			/* Verify information */
-			if (i >= max_st_idx) return (2);
 
 			/* Save the index */
 			error_idx = i;
 
 			/* Point at the "info" */
-			st_ptr = &st_info[i];
+			st_ptr = &expand_to_fit_index(st_info, i);
+			assert(!st_ptr->name);
 
 			/* Copy name */
-			assert(!st_ptr->name);
 			st_ptr->name = my_strdup(s);
 
 			/* Next... */
@@ -5688,7 +5685,7 @@ errr init_st_info_txt(FILE *fp)
 		if (buf[0] == 'I')
 		{
 			/* Find the colon before the name */
-			s = strchr(buf + 2, ':');
+			char *s = strchr(buf + 2, ':');
 
 			/* Verify that colon */
 			if (!s) return (1);
@@ -6956,12 +6953,6 @@ static errr process_dungeon_file_aux(char *buf, int *yval, int *xval, int xvalst
 			else if (zz[0][0] == 'W')
 			{
 				max_wf_idx = atoi(zz[1]);
-			}
-
-			/* Maximum st_idx */
-			else if (zz[0][0] == 'S')
-			{
-				max_st_idx = atoi(zz[1]);
 			}
 
 			/* Maximum wilderness x size */
