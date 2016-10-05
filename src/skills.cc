@@ -811,6 +811,8 @@ static void print_skill_batch(const std::vector<std::tuple<cptr, int>> &p, int s
 
 static int do_cmd_activate_skill_aux()
 {
+	auto const &ab_info = game->edit_data.ab_info;
+
 	char which;
 	int start = 0;
 	int ret;
@@ -845,7 +847,7 @@ static int do_cmd_activate_skill_aux()
 		}
 	}
 
-	for (size_t i = 0; i < max_ab_idx; i++)
+	for (size_t i = 0; i < ab_info.size(); i++)
 	{
 		if (ab_info[i].action_mkey && p_ptr->has_ability(i))
 		{
@@ -955,6 +957,8 @@ static int do_cmd_activate_skill_aux()
 /* Ask & execute a skill */
 void do_cmd_activate_skill()
 {
+	auto const &ab_info = game->edit_data.ab_info;
+
 	int x_idx;
 	bool_ push = TRUE;
 
@@ -963,26 +967,34 @@ void do_cmd_activate_skill()
 	{
 		push = FALSE;
 	}
-	else if (!command_arg) x_idx = do_cmd_activate_skill_aux();
+	else if (!command_arg)
+	{
+		x_idx = do_cmd_activate_skill_aux();
+	}
 	else
 	{
-		int i, j;
-
 		x_idx = command_arg;
 
 		/* Check validity */
+		int i;
 		for (i = 1; i < max_s_idx; i++)
 		{
 			if (s_info[i].value && (s_descriptors[i].action_mkey == x_idx))
+			{
 				break;
-		}
-		for (j = 0; j < max_ab_idx; j++)
-		{
-			if (p_ptr->has_ability(j) && (ab_info[j].action_mkey == x_idx))
-				break;
+			}
 		}
 
-		if ((j == max_ab_idx) && (i == max_s_idx))
+		std::size_t j;
+		for (j = 0; j < ab_info.size(); j++)
+		{
+			if (p_ptr->has_ability(j) && (ab_info[j].action_mkey == x_idx))
+			{
+				break;
+			}
+		}
+
+		if ((j == ab_info.size()) && (i == max_s_idx))
 		{
 			msg_print("Uh?");
 			return;
@@ -1432,10 +1444,9 @@ void do_get_new_skill()
  */
 s16b find_ability(cptr name)
 {
-	u16b i;
+	auto const &ab_info = game->edit_data.ab_info;
 
-	/* Scan ability list */
-	for (i = 0; i < max_ab_idx; i++)
+	for (std::size_t i = 0; i < ab_info.size(); i++)
 	{
 		if (ab_info[i].name && streq(ab_info[i].name, name))
 		{
@@ -1450,7 +1461,9 @@ s16b find_ability(cptr name)
 /* Do we meet the requirements */
 static bool_ can_learn_ability(int ab)
 {
-	ability_type *ab_ptr = &ab_info[ab];
+	auto const &ab_info = game->edit_data.ab_info;
+
+	auto ab_ptr = &ab_info[ab];
 	int i;
 
 	if (p_ptr->has_ability(ab))
@@ -1503,6 +1516,8 @@ static bool_ can_learn_ability(int ab)
 /* Learn an ability */
 static void gain_ability(int ab)
 {
+	auto const &ab_info = game->edit_data.ab_info;
+
 	int wid, hgt;
 	Term_get_size(&wid, &hgt);
 
@@ -1525,8 +1540,10 @@ static void gain_ability(int ab)
 	p_ptr->skill_points -= ab_info[ab].cost;
 }
 
-static bool compare_abilities(const int ab_idx1, const int ab_idx2)
+static bool compare_abilities(std::size_t ab_idx1, std::size_t ab_idx2)
 {
+	auto const &ab_info = game->edit_data.ab_info;
+
 	return strcmp(ab_info[ab_idx1].name, ab_info[ab_idx2].name) < 0;
 }
 
@@ -1535,11 +1552,11 @@ static bool compare_abilities(const int ab_idx1, const int ab_idx2)
  */
 void dump_abilities(FILE *fff)
 {
-	int i;
+	auto const &ab_info = game->edit_data.ab_info;
 
 	// Find all abilities that the player has.
-	std::vector<int> table;
-	for (i = 0; i < max_ab_idx; i++)
+	std::vector<std::size_t> table;
+	for (std::size_t i = 0; i < ab_info.size(); i++)
 	{
 		if (ab_info[i].name && p_ptr->has_ability(i))
 		{
@@ -1569,8 +1586,10 @@ void dump_abilities(FILE *fff)
 /*
  * Draw the abilities list
  */
-static void print_abilities(const std::vector<int> &table, int sel, int start)
+static void print_abilities(const std::vector<std::size_t> &table, int sel, int start)
 {
+	auto const &ab_info = game->edit_data.ab_info;
+
 	int i, j;
 	int wid, hgt;
 	cptr keys;
@@ -1639,9 +1658,10 @@ static void print_abilities(const std::vector<int> &table, int sel, int start)
  */
 void do_cmd_ability()
 {
+	auto const &ab_info = game->edit_data.ab_info;
+
 	int sel = 0, start = 0;
 	char c;
-	int i;
 	int wid, hgt;
 
 	/* Save the screen */
@@ -1651,8 +1671,8 @@ void do_cmd_ability()
 	Term_clear();
 
 	/* Initialise the abilities list */
-	std::vector<int> table;
-	for (i = 0; i < max_ab_idx; i++)
+	std::vector<std::size_t> table;
+	for (std::size_t i = 0; i < ab_info.size(); i++)
 	{
 		if (ab_info[i].name)
 		{
@@ -1770,6 +1790,8 @@ void apply_level_abilities(int level)
 {
 	auto apply = [level](std::vector<player_race_ability_type> const &abilities) -> void
 	{
+		auto const &ab_info = game->edit_data.ab_info;
+
 		for (auto const &a: abilities)
 		{
 			if (a.level == level)

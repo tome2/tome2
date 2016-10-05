@@ -6,6 +6,7 @@
 #include "tome/squelch/cursor.hpp"
 #include "tome/squelch/tree_printer.hpp"
 #include "../ability_type.hpp"
+#include "../game.hpp"
 #include "../object1.hpp"
 #include "../object2.hpp"
 #include "../object_kind.hpp"
@@ -939,6 +940,8 @@ std::shared_ptr<Condition> AbilityCondition::from_json(jsoncons::json const &j)
 
 void AbilityCondition::write_tree(TreePrinter *p, Cursor *, uint8_t ecol, uint8_t bcol) const
 {
+	auto const &ab_info = game->edit_data.ab_info;
+
 	cptr ability_s = ab_info[m_ability_idx].name;
 
 	p->write(ecol, "You have the ");
@@ -949,6 +952,8 @@ void AbilityCondition::write_tree(TreePrinter *p, Cursor *, uint8_t ecol, uint8_
 
 void AbilityCondition::to_json(jsoncons::json &j) const
 {
+	auto const &ab_info = game->edit_data.ab_info;
+
 	j["ability"] = ab_info[m_ability_idx].name;
 }
 

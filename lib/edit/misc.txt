@@ -47,6 +47,3 @@ M:M:768
 
 # Maximum number of skills in s_info.txt
 M:k:60
-
-# Maximum number of traits in ab_info.txt
-M:b:50

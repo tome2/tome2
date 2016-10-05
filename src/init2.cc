@@ -358,7 +358,7 @@ namespace {
 
 		static void allocate()
 		{
-			ab_info = make_array<ability_type>(max_ab_idx);
+			// Nothing to do
 		}
 
 		static errr parse(FILE *fp)

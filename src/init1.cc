@@ -3279,9 +3279,9 @@ errr init_s_info_txt(FILE *fp)
  */
 errr init_ab_info_txt(FILE *fp)
 {
-	int i, z;
+	auto &ab_info = game->edit_data.ab_info;
+
 	char buf[1024];
-	char *s;
 
 	/* Current entry */
 	ability_type *ab_ptr = NULL;
@@ -3310,7 +3310,7 @@ errr init_ab_info_txt(FILE *fp)
 		if (buf[0] == 'N')
 		{
 			/* Find the colon before the name */
-			s = strchr(buf + 2, ':');
+			char *s = strchr(buf + 2, ':');
 
 			/* Verify that colon */
 			if (!s) return (1);
@@ -3322,16 +3322,13 @@ errr init_ab_info_txt(FILE *fp)
 			if (!*s) return (1);
 
 			/* Get the index */
-			i = atoi(buf + 2);
-
-			/* Verify information */
-			if (i >= max_ab_idx) return (2);
+			int i = atoi(buf + 2);
 
 			/* Save the index */
 			error_idx = i;
 
 			/* Point at the "info" */
-			ab_ptr = &ab_info[i];
+			ab_ptr = &expand_to_fit_index(ab_info, i);
 
 			/* Copy name */
 			assert(!ab_ptr->name);
@@ -3339,13 +3336,13 @@ errr init_ab_info_txt(FILE *fp)
 
 			/* Init */
 			ab_ptr->action_mkey = 0;
-			for (z = 0; z < 10; z++)
+			for (std::size_t z = 0; z < 10; z++)
 			{
 				ab_ptr->skills[z] = -1;
 				ab_ptr->need_abilities[z] = -1;
 				ab_ptr->forbid_abilities[z] = -1;
 			}
-			for (z = 0; z < 6; z++)
+			for (std::size_t z = 0; z < 6; z++)
 			{
 				ab_ptr->stat[z] = -1;
 			}
@@ -3361,7 +3358,7 @@ errr init_ab_info_txt(FILE *fp)
 		if (buf[0] == 'D')
 		{
 			/* Acquire the text */
-			s = buf + 2;
+			char const *s = buf + 2;
 
 			/* Append description */
 			if (!ab_ptr->desc)
@@ -3383,7 +3380,7 @@ errr init_ab_info_txt(FILE *fp)
 			char *txt;
 
 			/* Acquire the text */
-			s = buf + 2;
+			char *s = buf + 2;
 
 			if (NULL == (txt = strchr(s, ':'))) return (1);
 			*txt = '\0';
@@ -3438,8 +3435,14 @@ errr init_ab_info_txt(FILE *fp)
 
 			if (skill == -1) return (1);
 
+			std::size_t z;
 			for (z = 0; z < 10; z++)
-				if (ab_ptr->skills[z] == -1) break;
+			{
+				if (ab_ptr->skills[z] == -1)
+				{
+					break;
+				}
+			}
 
 			if (z < 10)
 			{
@@ -3454,19 +3457,13 @@ errr init_ab_info_txt(FILE *fp)
 		/* Process 'a' for "needed ability" */
 		if (buf[0] == 'a')
 		{
-			s16b ab;
-
-			ab = find_ability(buf + 2);
-
-			if (ab == -1) return (1);
-
-			for (z = 0; z < 10; z++)
-				if (ab_ptr->need_abilities[z] == -1) break;
-
-			if (z < 10)
+			s16b ab = find_ability(buf + 2);
+			if (ab == -1)
 			{
-				ab_ptr->need_abilities[z] = ab;
+				return (1);
 			}
+
+			ab_ptr->need_abilities.push_back(ab);
 
 			/* Next... */
 			continue;
@@ -3521,15 +3518,29 @@ errr init_ab_info_txt(FILE *fp)
 
 			if ((ab1 == -1) || (ab2 == -1)) return (1);
 
+			std::size_t z;
+
 			for (z = 0; z < 10; z++)
-				if (ab_info[ab1].forbid_abilities[z] == -1) break;
+			{
+				if (ab_info[ab1].forbid_abilities[z] == -1)
+				{
+					break;
+				}
+			}
+
 			if (z < 10)
 			{
 				ab_info[ab1].forbid_abilities[z] = ab2;
 			}
 
 			for (z = 0; z < 10; z++)
-				if (ab_info[ab2].forbid_abilities[z] == -1) break;
+			{
+				if (ab_info[ab2].forbid_abilities[z] == -1)
+				{
+					break;
+				}
+			}
+
 			if (z < 10)
 			{
 				ab_info[ab2].forbid_abilities[z] = ab1;
@@ -6899,12 +6910,6 @@ static errr process_dungeon_file_aux(char *buf, int *yval, int *xval, int xvalst
 			{
 				max_s_idx = atoi(zz[1]);
 				if (max_s_idx > MAX_SKILLS) return (1);
-			}
-
-			/* Maximum ab_idx */
-			else if (zz[0][0] == 'b')
-			{
-				max_ab_idx = atoi(zz[1]);
 			}
 
 			/* Maximum k_idx */

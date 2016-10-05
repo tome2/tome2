@@ -1,7 +1,6 @@
 #pragma once
 
 #include "angband.h"
-#include "ability_type_fwd.hpp"
 #include "alloc_entry_fwd.hpp"
 #include "artifact_type_fwd.hpp"
 #include "birther.hpp"
@@ -158,7 +157,6 @@ extern player_class const *cp_ptr;
 extern player_spec const *spp_ptr;
 extern char player_name[32];
 extern char player_base[32];
-extern ability_type *ab_info;
 extern skill_type *s_info;
 extern skill_descriptor *s_descriptors;
 extern feature_type *f_info;
@@ -180,7 +178,6 @@ extern char *ANGBAND_DIR_DNGN;
 extern bool_ (*get_mon_num_hook)(int r_idx);
 extern bool_ (*get_mon_num2_hook)(int r_idx);
 extern bool_ (*get_obj_num_hook)(int k_idx);
-extern u16b max_ab_idx;
 extern u16b max_s_idx;
 extern u16b max_r_idx;
 extern u16b max_re_idx;

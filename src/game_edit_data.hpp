@@ -1,5 +1,6 @@
 #pragma once
 
+#include "ability_type.hpp"
 #include "dungeon_info_type.hpp"
 #include "hist_type.hpp"
 #include "owner_type.hpp"
@@ -86,5 +87,10 @@ struct GameEditData {
 	 * Base skills for all characters.
 	 */
 	skill_modifiers gen_skill;
+
+	/**
+	 * Player abilities.
+	 */
+	std::vector<ability_type> ab_info;
 
 };

@@ -463,11 +463,6 @@ monster_race *r_info;
 monster_ego *re_info;
 
 /*
- * Player abilities arrays
- */
-ability_type *ab_info;
-
-/*
  * Player skills arrays
  */
 skill_type *s_info;
@@ -603,11 +598,6 @@ s32b get_level_use_stick = -1;
  * Maximum number of skills in s_info.txt
  */
 u16b max_s_idx;
-
-/*
- * Maximum number of abilities in ab_info.txt
- */
-u16b max_ab_idx;
 
 /*
  * Maximum number of monsters in r_info.txt
