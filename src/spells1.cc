@@ -8923,136 +8923,125 @@ static void name_spell(random_spell* s_ptr)
 
 void generate_spell(int plev)
 {
-	random_spell* rspell;
-	int dice, sides, chance, mana, power;
-	bool_ destruc_gen = FALSE;
-	bool_ simple_gen = TRUE;
-	bool_ ball_desc = FALSE;
+	auto &random_spells = p_ptr->random_spells;
 
-	if (spell_num == MAX_SPELLS) return;
+	assert(random_spells.size() < MAX_SPELLS);
 
-	rspell = &random_spells[spell_num];
+	bool destruc_gen = false;
+	bool simple_gen = true;
+	bool ball_desc = false;
 
-	power = rand_int(5);
+	// Calculate power, dice, etc.
+	int const power = rand_int(5);
+	int const dice  = std::max(1, (plev / 2) + power);
+	int const sides = std::max(5, plev + power);
+	int const mana  = std::max(1, plev + (plev * power) / 15);
 
-	dice = plev / 2;
-	sides = plev;
-	mana = plev;
+	// Create spell
+	random_spell rspell;
+	rspell.level = plev;
+	rspell.mana = mana;
+	rspell.untried = true;
 
-	/* Make the spell more or less powerful. */
-	dice += power;
-	sides += power;
-	mana += (plev * power) / 15;
+	// Spells are always maximally destructive
+	rspell.proj_flags = PROJECT_KILL | PROJECT_ITEM | PROJECT_GRID;
 
-	/* Stay within reasonable bounds. */
-	if (dice < 1) dice = 1;
+	// Roll the dice as to the "type" of spell
+	int chance = randint(100);
 
-	if (sides < 5) sides = 5;
-
-	if (mana < 1) mana = 1;
-
-	rspell->level = plev;
-	rspell->mana = mana;
-	rspell->untried = true;
-
-	/* Spells are always maximally destructive. */
-	rspell->proj_flags = PROJECT_KILL | PROJECT_ITEM | PROJECT_GRID;
-
-	chance = randint(100);
-
-	/* Hack -- Always start with Magic Missile or derivative at lev. 1 */
+	// We always start with Magic Missile or derivative at level 1
 	if (plev == 1 || chance < 25)
 	{
-		rspell->proj_flags |= PROJECT_STOP;
-                /* Swap dice and sides for better damage */
-		rspell->dam_dice = sides;
-		rspell->dam_sides = dice;
-		rspell->radius = 0;
+		// Swap dice and sides for better damage
+		rspell.proj_flags |= PROJECT_STOP;
+		rspell.dam_dice = sides;
+		rspell.dam_sides = dice;
+		rspell.radius = 0;
 	}
 	else if (chance < 50)
 	{
-		rspell->proj_flags |= PROJECT_BEAM;
-		rspell->dam_dice = dice;
-		rspell->dam_sides = sides;
-		rspell->radius = 0;
+		rspell.proj_flags |= PROJECT_BEAM;
+		rspell.dam_dice = dice;
+		rspell.dam_sides = sides;
+		rspell.radius = 0;
 	}
 	else if (chance < 76)
 	{
-		rspell->proj_flags |= PROJECT_STOP;
-		rspell->radius = dice / 3;
-		rspell->dam_dice = dice;
-		rspell->dam_sides = sides;
-		ball_desc = TRUE;
+		rspell.proj_flags |= PROJECT_STOP;
+		rspell.radius = dice / 3;
+		rspell.dam_dice = dice;
+		rspell.dam_sides = sides;
+		ball_desc = true;
 	}
 	else if (chance < 83)
 	{
-		rspell->proj_flags |= PROJECT_BLAST;
-		rspell->radius = sides / 3;
-		rspell->dam_dice = dice;
-		rspell->dam_sides = sides;
+		rspell.proj_flags |= PROJECT_BLAST;
+		rspell.radius = sides / 3;
+		rspell.dam_dice = dice;
+		rspell.dam_sides = sides;
 
-		destruc_gen = TRUE;
-		simple_gen = FALSE;
+		destruc_gen = true;
+		simple_gen = false;
 	}
 	else if (chance < 90)
 	{
-		rspell->proj_flags |= PROJECT_METEOR_SHOWER;
-                /* Area effect spells do way less damage "per shot" */
-		rspell->dam_dice = dice / 5;
-		rspell->dam_sides = sides / 5;
-		rspell->radius = sides / 3;
-		if (rspell->radius < 4) rspell->radius = 4;
+		// Area effect spells do way less damage "per shot"
+		rspell.proj_flags |= PROJECT_METEOR_SHOWER;
+		rspell.dam_dice = dice / 5;
+		rspell.dam_sides = sides / 5;
+		rspell.radius = std::max(4, sides / 3);
 
-		destruc_gen = TRUE;
+		destruc_gen = true;
 	}
 	else
 	{
-		rspell->proj_flags |= PROJECT_VIEWABLE;
-                /* View spells do less damage */
-		rspell->dam_dice = dice;
-		rspell->dam_sides = sides / 2;
+		// View spells do less damage
+		rspell.proj_flags |= PROJECT_VIEWABLE;
+		rspell.dam_dice = dice;
+		rspell.dam_sides = sides / 2;
 	}
 
-	/* Both a destructive and a simple spell requested --
-	 * pick one or the other. */
+	// Both a destructive and a simple spell requested; pick one or the other
 	if (destruc_gen && simple_gen)
 	{
 		if (magik(25))
 		{
-			simple_gen = FALSE;
+			simple_gen = false;
 		}
 		else
 		{
-			destruc_gen = FALSE;
+			destruc_gen = false;
 		}
 	}
 
-	/* Pick a simple spell */
+	// Choose the appropriate GF
 	if (simple_gen)
 	{
-		rspell->GF = attack_types[rand_int(25)];
+		rspell.GF = attack_types[rand_int(25)];
 	}
-	/* Pick a destructive spell */
 	else
 	{
-		rspell->GF = destructive_attack_types[rand_int(10)];
+		rspell.GF = destructive_attack_types[rand_int(10)];
 	}
 
-	/* Give the spell a name. */
-	name_spell(rspell);
+	// Give the spell a name
+	name_spell(&rspell);
+
+	// Give the spell a description
 	if (ball_desc)
 	{
 		/* 30 character limit on the string! */
-		sprintf(rspell->desc, "Dam: %d, Rad: %d, Pow: %d",
+		sprintf(rspell.desc, "Dam: %d, Rad: %d, Pow: %d",
 			sides, dice, power);
 	}
 	else
 	{
-		sprintf(rspell->desc, "Damage: %dd%d, Power: %d",
+		sprintf(rspell.desc, "Damage: %dd%d, Power: %d",
 			dice, sides, power);
 	}
 
-	spell_num++;
+	// Add
+	random_spells.emplace_back(rspell);
 }
 
 /*

@@ -385,16 +385,19 @@ void recalc_skills(bool_ init)
 	}
 	else
 	{
+		auto const &random_spells = p_ptr->random_spells;
+
 		int thaum_gain = 0;
 
-		/* Gain thaum spells */
-		while (thaum_level < get_skill_scale(SKILL_THAUMATURGY, 100))
+		/* Gain thaum spells while there's more to be gained */
+		while ((thaum_level < get_skill_scale(SKILL_THAUMATURGY, 100)) &&
+		        (random_spells.size() < MAX_SPELLS))
 		{
-			if (spell_num == MAX_SPELLS) break;
 			thaum_level++;
 			generate_spell((thaum_level + 1) / 2);
 			thaum_gain++;
 		}
+
 		if (thaum_gain)
 		{
 			if (thaum_gain == 1)

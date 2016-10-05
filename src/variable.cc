@@ -790,12 +790,6 @@ s32b RANDART_ARMOR;
 s32b RANDART_JEWEL;
 
 /*
- * Random spells.
- */
-random_spell random_spells[MAX_SPELLS];
-s16b spell_num;
-
-/*
  * Runecrafter's selfmade spells.
  */
 rune_spell rune_spells[MAX_RUNES];

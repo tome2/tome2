@@ -7,6 +7,7 @@
 #include "inventory.hpp"
 #include "object_type.hpp"
 #include "powers.hpp"
+#include "random_spell.hpp"
 #include "spellbinder.hpp"
 
 #include <array>
@@ -407,6 +408,11 @@ struct player_type
 
 	bool_ did_nothing = FALSE;                              /* True if the last action wasnt a real action */
 	bool_ leaving = FALSE;                                  /* True if player is leaving */
+
+	/**
+	 * Random spells.
+	 */
+	std::vector<random_spell> random_spells;
 
 	/**
 	 * Does the player have the given ability?

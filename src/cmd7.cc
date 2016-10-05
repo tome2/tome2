@@ -16,6 +16,7 @@
 #include "dungeon_flag.hpp"
 #include "ego_item_type.hpp"
 #include "files.hpp"
+#include "game.hpp"
 #include "hooks.hpp"
 #include "mimic.hpp"
 #include "monster2.hpp"
@@ -1222,7 +1223,7 @@ void do_cmd_pray(void)
 /*
  * Return percentage chance of spell failure.
  */
-int spell_chance_random(random_spell* rspell)
+int spell_chance_random(random_spell const *rspell)
 {
 	int chance, minfail;
 
@@ -1257,18 +1258,16 @@ int spell_chance_random(random_spell* rspell)
  */
 static void print_spell_batch(int batch, int max)
 {
-	char buff[80];
-
-	random_spell* rspell;
-
-	int i;
-
+	auto const &random_spells = p_ptr->random_spells;
 
 	prt(format("      %-30s Lev Fail Mana Damage ", "Name"), 1, 20);
 
+	int i;
 	for (i = 0; i < max; i++)
 	{
-		rspell = &random_spells[batch * 10 + i];
+		auto rspell = &random_spells[batch * 10 + i];
+
+		char buff[80];
 
 		if (rspell->untried)
 		{
@@ -1295,18 +1294,14 @@ static void print_spell_batch(int batch, int max)
 /*
  * List ten random spells and ask to pick one.
  */
-static random_spell* select_spell_from_batch(int batch)
+static random_spell* select_spell_from_batch(std::size_t batch)
 {
+	auto &random_spells = p_ptr->random_spells;
+
 	char tmp[160];
-
 	char out_val[30];
-
 	char which;
-
-	int mut_max = 10;
-
-	random_spell* ret;
-
+	random_spell* ret = nullptr;
 
 	/* Enter "icky" mode */
 	character_icky = TRUE;
@@ -1314,10 +1309,9 @@ static random_spell* select_spell_from_batch(int batch)
 	/* Save the screen */
 	Term_save();
 
-	if (spell_num < (batch + 1) * 10)
-	{
-		mut_max = spell_num - batch * 10;
-	}
+	int const mut_max = (random_spells.size() < (batch + 1) * 10)
+	        ? random_spells.size() - batch * 10
+	        : 10;
 
 	strnfmt(tmp, 160, "(a-%c, A-%c to browse, / to rename, - to comment) Select a power: ",
 	        I2A(mut_max - 1), I2A(mut_max - 1) - 'a' + 'A');
@@ -1447,11 +1441,10 @@ static random_spell* select_spell_from_batch(int batch)
  */
 static random_spell* select_spell()
 {
+	auto const &random_spells = p_ptr->random_spells;
+
 	char tmp[160];
-
 	char which;
-
-	int batch_max = (spell_num - 1) / 10;
 
 	random_spell *ret;
 
@@ -1464,11 +1457,14 @@ static random_spell* select_spell()
 	}
 
 	/* No spells available */
-	if (spell_num == 0)
+	if (random_spells.empty())
 	{
 		msg_print("There are no spells you can cast.");
 		return NULL;
 	}
+
+	/* How many spells in the last batch? */
+	int batch_max = (random_spells.size() - 1) / 10;
 
 	/* Enter "icky" mode */
 	character_icky = TRUE;

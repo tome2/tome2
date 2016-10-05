@@ -845,9 +845,6 @@ static void player_wipe(void)
 	noscore = 0;
 	wizard = 0;
 
-	/* Assume no innate spells */
-	spell_num = 0;
-
 	/* Clear the fate */
 	for (i = 0; i < MAX_FATES; i++)
 	{

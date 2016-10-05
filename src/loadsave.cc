@@ -480,10 +480,8 @@ static void do_subrace(ls_flag_t flag)
 }
 
 
-/* Load/Save the random spells info */
-static void do_spells(int i, ls_flag_t flag)
+static void do_random_spell(random_spell *s_ptr, ls_flag_t flag)
 {
-	random_spell *s_ptr = &random_spells[i];
 	do_string(s_ptr->name, 30, flag);
 	do_string(s_ptr->desc, 30, flag);
 	do_s16b(&s_ptr->mana, flag);
@@ -891,15 +889,11 @@ static bool_ do_extra(ls_flag_t flag)
 	/* The fate */
 	do_bool(&p_ptr->no_mortal, flag);
 
+	/* Random spells */
+	do_vector(flag, p_ptr->random_spells, do_random_spell);
 
 	/* Spells */
 	{
-		do_s16b(&spell_num, flag);
-		for (std::size_t i = 0; i < MAX_SPELLS; i++)
-		{
-			do_spells(i, flag);
-		}
-
 		do_s16b(&rune_num, flag);
 
 		for (std::size_t i = 0; i < MAX_RUNES; i++)
