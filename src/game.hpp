@@ -1,6 +1,8 @@
 #pragma once
 
 #include "game_fwd.hpp"
+
+#include "game_edit_data.hpp"
 #include "grid.hpp"
 #include "h-basic.h"
 #include "player_defs.hpp"
@@ -23,9 +25,9 @@ struct Game {
 	 */
 	std::array<s16b, PY_MAX_LEVEL> player_hp { };
 
-};
+	/**
+	 * Game edit data
+	 */
+	GameEditData edit_data;
 
-/**
- * Game instance
- */
-extern Game *game;
+};
