@@ -449,7 +449,7 @@ void carry(int pickup)
 }
 
 
-void touch_zap_player(monster_type *m_ptr)
+static void touch_zap_player(monster_type *m_ptr)
 {
 	auto r_ptr = m_ptr->race();
 
