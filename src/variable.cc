@@ -10,9 +10,7 @@
 #include "variable.h"
 
 #include "cli_comm_fwd.hpp"
-#include "dungeon_flag_set.hpp"
 #include "player_type.hpp"
-#include "randart_gen_type.hpp"
 #include "skill_modifiers.hpp"
 #include "util.hpp"
 

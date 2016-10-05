@@ -26,20 +26,16 @@
 #include "object_flag.hpp"
 #include "object_flag_meta.hpp"
 #include "object_kind.hpp"
-#include "owner_type.hpp"
 #include "player_class.hpp"
 #include "player_race.hpp"
 #include "player_race_flag.hpp"
 #include "player_race_mod.hpp"
 #include "player_type.hpp"
-#include "randart_gen_type.hpp"
-#include "randart_part_type.hpp"
 #include "set_type.hpp"
 #include "skill_flag.hpp"
 #include "skill_type.hpp"
 #include "skills.hpp"
 #include "spells5.hpp"
-#include "store_action_type.hpp"
 #include "store_flag.hpp"
 #include "store_info_type.hpp"
 #include "tables.hpp"
@@ -56,7 +52,6 @@
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/algorithm/string/classification.hpp>
 #include <boost/algorithm/string/split.hpp>
-#include <stdlib.h>
 
 using boost::algorithm::iequals;
 using boost::algorithm::ends_with;
