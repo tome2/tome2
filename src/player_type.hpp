@@ -415,10 +415,10 @@ struct player_type
 	 */
 	std::vector<random_spell> random_spells;
 
-    /**
-     * Runecrafter's selfmade spells.
-     */
-    std::vector<rune_spell> rune_spells;
+	/**
+	 * Runecrafter's selfmade spells.
+	 */
+	std::vector<rune_spell> rune_spells;
 
 	/**
 	 * Does the player have the given ability?
