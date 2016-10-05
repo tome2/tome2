@@ -60,4 +60,3 @@
 #define SKILL_STUN              57
 #define SKILL_BOULDER           58
 #define SKILL_GEOMANCY          59
-#define MAX_SKILLS              200

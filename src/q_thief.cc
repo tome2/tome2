@@ -3,6 +3,7 @@
 #include "cave.hpp"
 #include "cave_type.hpp"
 #include "dungeon_flag.hpp"
+#include "game.hpp"
 #include "hook_quest_finish_in.hpp"
 #include "hooks.hpp"
 #include "init1.hpp"
@@ -138,6 +139,8 @@ static bool_ quest_thieves_hook(void *, void *, void *)
 
 static bool_ quest_thieves_finish_hook(void *, void *in_, void *)
 {
+	auto const &s_info = game->s_info;
+
 	struct hook_quest_finish_in *in = static_cast<struct hook_quest_finish_in *>(in_);
 	s32b q_idx = in->q_idx;
 

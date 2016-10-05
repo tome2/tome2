@@ -10,6 +10,7 @@
 
 #include "cmd7.hpp"
 #include "corrupt.hpp"
+#include "game.hpp"
 #include "init1.hpp"
 #include "monster2.hpp"
 #include "player_type.hpp"
@@ -85,6 +86,8 @@ s32b lua_get_level(spell_type *spell, s32b lvl, s32b max, s32b min, s32b bonus)
 
 static s32b get_level_device_1(spell_type *spell, s32b max, s32b min)
 {
+	auto const &s_info = game->s_info;
+
 	// Must be in "device" mode.
 	assert(get_level_use_stick > -1);
 	// Delegate

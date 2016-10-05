@@ -1,5 +1,6 @@
 #include "mimic.hpp"
 
+#include "game.hpp"
 #include "object_flag.hpp"
 #include "player_type.hpp"
 #include "skill_type.hpp"
@@ -303,6 +304,8 @@ static s32b mumak_calc()
 
 static s32b bear_calc()
 {
+	auto &s_info = game->s_info;
+
 	p_ptr->pspeed = p_ptr->pspeed - 5 + (p_ptr->mimic_level / 5);
 
 	p_ptr->to_a     = p_ptr->to_a     + 5 + ((p_ptr->mimic_level * 2) / 3);

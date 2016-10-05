@@ -833,7 +833,7 @@ static int read_skill_modifiers(skill_modifiers *skill_modifiers, cptr buf)
 		return 1;
 	}
 
-	auto s = &skill_modifiers->modifiers[i];
+	auto s = &expand_to_fit_index(skill_modifiers->modifiers, i);
 
 	s->basem = monster_ego_modify(v);
 	s->base = val;
@@ -3011,9 +3011,11 @@ errr init_set_info_txt(FILE *fp)
  */
 errr init_s_info_txt(FILE *fp)
 {
-	int i, order = 1;
+	auto &s_descriptors = game->edit_data.s_descriptors;
+	auto &s_info = game->s_info;
+
+	int order = 1;
 	char buf[1024];
-	char *s;
 
 	/* Current entry */
 	skill_descriptor *s_ptr = NULL;
@@ -3083,8 +3085,11 @@ errr init_s_info_txt(FILE *fp)
 			s2 = find_skill(sec);
 			if ((s1 == -1) || (s2 == -1)) return (1);
 
-			s_descriptors[s1].action[s2] = SKILL_EXCLUSIVE;
-			s_descriptors[s2].action[s1] = SKILL_EXCLUSIVE;
+			// The "exclusive" relation is symmetric, so
+			// add summetrically so we don't have to specify
+			// twice in data files.
+			s_descriptors[s1].excludes.push_back(s2);
+			s_descriptors[s2].excludes.push_back(s1);
 
 			/* Next... */
 			continue;
@@ -3117,7 +3122,8 @@ errr init_s_info_txt(FILE *fp)
 			s2 = find_skill(sec);
 			if ((s1 == -1) || (s2 == -1)) return (1);
 
-			s_descriptors[s1].action[s2] = atoi(cval);
+			s_descriptors[s1].increases.emplace_back(
+				std::make_tuple(s2, atoi(cval)));
 
 			/* Next... */
 			continue;
@@ -3127,7 +3133,7 @@ errr init_s_info_txt(FILE *fp)
 		if (buf[0] == 'N')
 		{
 			/* Find the colon before the name */
-			s = strchr(buf + 2, ':');
+			char *s = strchr(buf + 2, ':');
 
 			/* Verify that colon */
 			if (!s) return (1);
@@ -3139,19 +3145,19 @@ errr init_s_info_txt(FILE *fp)
 			if (!*s) return (1);
 
 			/* Get the index */
-			i = atoi(buf + 2);
-
-			/* Verify information */
-			if (i >= max_s_idx) return (2);
+			int i = atoi(buf + 2);
 
 			/* Save the index */
 			error_idx = i;
 
 			/* Point at the "info" */
-			s_ptr = &s_descriptors[i];
+			s_ptr = &expand_to_fit_index(s_descriptors, i);
+			assert(s_ptr->name.empty());
+
+			/* Make sure s_info also expands appropriately */
+			expand_to_fit_index(s_info, i);
 
 			/* Copy name */
-			assert(!s_ptr->name);
 			s_ptr->name = my_strdup(s);
 
 			/* Next... */
@@ -3164,18 +3170,14 @@ errr init_s_info_txt(FILE *fp)
 		/* Process 'D' for "Description" */
 		if (buf[0] == 'D')
 		{
-			/* Acquire the text */
-			s = buf + 2;
+			/* Need newline? */
+			if (!s_ptr->desc.empty())
+			{
+				s_ptr->desc += '\n';
+			}
 
-			/* Description */
-			if (!s_ptr->desc)
-			{
-				s_ptr->desc = my_strdup(s);
-			}
-			else
-			{
-				strappend(&s_ptr->desc, format("\n%s", s));
-			}
+			/* Append */
+			s_ptr->desc += (buf + 2);
 
 			/* Next... */
 			continue;
@@ -3187,15 +3189,15 @@ errr init_s_info_txt(FILE *fp)
 			char *txt;
 
 			/* Acquire the text */
-			s = buf + 2;
+			char const *s = buf + 2;
 
 			if (NULL == (txt = strchr(s, ':'))) return (1);
 			*txt = '\0';
 			txt++;
 
 			/* Copy action description */
-			assert(!s_ptr->action_desc);
-			s_ptr->action_desc = my_strdup(txt);
+			assert(s_ptr->action_desc.empty());
+			s_ptr->action_desc = txt;
 
 			/* Copy mkey index */
 			s_ptr->action_mkey = atoi(s);
@@ -6791,13 +6793,6 @@ static errr process_dungeon_file_aux(char *buf, int *yval, int *xval, int xvalst
 			else if (zz[0][0] == 'r')
 			{
 				max_re_idx = atoi(zz[1]);
-			}
-
-			/* Maximum s_idx */
-			else if (zz[0][0] == 'k')
-			{
-				max_s_idx = atoi(zz[1]);
-				if (max_s_idx > MAX_SKILLS) return (1);
 			}
 
 			/* Maximum k_idx */

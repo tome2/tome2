@@ -420,6 +420,8 @@ bool_ set_oppose_cc(int v)
  */
 bool_ set_mimic(int v, int p, int level)
 {
+	auto &s_info = game->s_info;
+
 	bool_ notice = FALSE;
 
 	/* Hack -- Force good values */

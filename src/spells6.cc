@@ -1,5 +1,6 @@
 #include "spells6.hpp"
 
+#include "game.hpp"
 #include "gods.hpp"
 #include "lua_bind.hpp"
 #include "object2.hpp"
@@ -151,6 +152,8 @@ static bool_ geomancy_depends_satisfied()
 
 long get_provided_levels(school_type *school)
 {
+	auto const &s_info = game->s_info;
+
 	for (auto school_provider: school->providers->v)
 	{
 		if (school_provider.deity_idx == p_ptr->pgod)
@@ -171,6 +174,8 @@ struct get_level_school_callback_data {
 
 static bool get_level_school_callback(struct get_level_school_callback_data *data, int school_idx)
 {
+	auto const &s_info = game->s_info;
+
 	school_type *school = school_at(school_idx);
 	long r = 0, s = 0, p = 0, ok = 0;
 

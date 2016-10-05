@@ -2508,6 +2508,8 @@ static void calc_schools()
 /* Apply corruptions */
 static void calc_corruptions()
 {
+	auto &s_info = game->s_info;
+
 	if (player_has_corruption(CORRUPT_BALROG_AURA))
 	{
 		p_ptr->xtra_flags |= TR_SH_FIRE;
@@ -2802,6 +2804,9 @@ static bool_ monk_empty_hands(void)
  */
 void calc_bonuses(bool_ silent)
 {
+	auto const &s_descriptors = game->edit_data.s_descriptors;
+	auto &s_info = game->s_info;
+
 	static bool_ monk_notify_aux = FALSE;
 	int i, j, hold;
 	int old_speed;
@@ -2976,7 +2981,7 @@ void calc_bonuses(bool_ silent)
 	p_ptr->xtra_flags = object_flag_set();
 
 	/* Hide the skills that should auto hide */
-	for (i = 0; i < max_s_idx; i++)
+	for (std::size_t i = 0; i < s_descriptors.size(); i++)
 	{
 		if (s_descriptors[i].flags & SKF_AUTO_HIDE)
 		{

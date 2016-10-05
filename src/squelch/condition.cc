@@ -806,6 +806,8 @@ std::shared_ptr<Condition> SkillCondition::from_json(jsoncons::json const &j)
 
 void SkillCondition::write_tree(TreePrinter *p, Cursor *, uint8_t ecol, uint8_t bcol) const
 {
+	auto const &s_descriptors = game->edit_data.s_descriptors;
+
 	p->write(ecol, "Your skill in ");
 	p->write(bcol, s_descriptors[m_skill_idx].name);
 	p->write(ecol, " is from ");
@@ -817,6 +819,8 @@ void SkillCondition::write_tree(TreePrinter *p, Cursor *, uint8_t ecol, uint8_t 
 
 void SkillCondition::to_json(jsoncons::json &j) const
 {
+	auto const &s_descriptors = game->edit_data.s_descriptors;
+
 	j["name"] = s_descriptors[m_skill_idx].name;
 	j["min"] = m_min;
 	j["max"] = m_max;

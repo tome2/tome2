@@ -1020,6 +1020,8 @@ static bool_ quest_god_player_level_hook(void *, void *in_, void *)
 
 static bool_ quest_god_get_hook(void *, void *in_, void *)
 {
+	auto &s_info = game->s_info;
+
 	hook_get_in *in = static_cast<hook_get_in *>(in_);
 
 	s32b item = -in->o_idx; /* Note the negation */

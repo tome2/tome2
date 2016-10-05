@@ -463,16 +463,6 @@ monster_race *r_info;
 monster_ego *re_info;
 
 /*
- * Player skills arrays
- */
-skill_type *s_info;
-
-/**
- * Skill descriptors.
- */
-skill_descriptor *s_descriptors;
-
-/*
  * The wilderness features arrays
  */
 wilderness_type_info *wf_info;
@@ -593,11 +583,6 @@ bool_ (*get_obj_num_hook)(int k_idx);
  */
 s32b get_level_max_stick = -1;
 s32b get_level_use_stick = -1;
-
-/*
- * Maximum number of skills in s_info.txt
- */
-u16b max_s_idx;
 
 /*
  * Maximum number of monsters in r_info.txt

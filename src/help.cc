@@ -729,9 +729,9 @@ void help_god(cptr god)
 	}
 }
 
-void help_skill(cptr skill)
+void help_skill(const std::__cxx11::string &skill)
 {
-	show_context_help(find_context_help(skill_table, skill));
+	show_context_help(find_context_help(skill_table, skill.c_str()));
 }
 
 void help_ability(std::string const &ability)

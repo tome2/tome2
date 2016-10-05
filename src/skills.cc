@@ -57,6 +57,8 @@ using boost::algorithm::iequals;
  */
 static void increase_skill(int i, s16b *invest)
 {
+	auto &s_info = game->s_info;
+
 	s32b max_skill_overage;
 
 	/* No skill points to be allocated */
@@ -99,6 +101,8 @@ static void increase_skill(int i, s16b *invest)
  */
 static void decrease_skill(int i, s16b *invest)
 {
+	auto &s_info = game->s_info;
+
 	/* Cannot decrease more */
 	if (!invest[i]) return;
 
@@ -121,14 +125,17 @@ static void decrease_skill(int i, s16b *invest)
  * Given the name of a skill, returns skill index or -1 if no
  * such skill is found
  */
-s16b find_skill(cptr name)
+s16b find_skill(cptr needle)
 {
+	auto const &s_descriptors = game->edit_data.s_descriptors;
+
 	/* Scan skill list */
-	for (int i = 1; i < max_s_idx; i++)
+	for (std::size_t i = 1; i < s_descriptors.size(); i++)
 	{
-		if (s_descriptors[i].name && streq(s_descriptors[i].name, name))
+		auto const &name = s_descriptors[i].name;
+		if (!name.empty() && (name == needle))
 		{
-			return (i);
+			return i;
 		}
 	}
 
@@ -136,15 +143,15 @@ s16b find_skill(cptr name)
 	return -1;
 }
 
-s16b find_skill_i(cptr name)
+s16b find_skill_i(cptr needle)
 {
-	u16b i;
+	auto const &s_descriptors = game->edit_data.s_descriptors;
 
 	/* Scan skill list */
-	for (i = 1; i < max_s_idx; i++)
+	for (std::size_t i = 1; i < s_descriptors.size(); i++)
 	{
-		/* The name matches */
-		if (s_descriptors[i].name && iequals(s_descriptors[i].name, name))
+		auto const &name = s_descriptors[i].name;
+		if (!name.empty() && iequals(name, needle))
 		{
 			return (i);
 		}
@@ -160,6 +167,8 @@ s16b find_skill_i(cptr name)
  */
 s16b get_skill(int skill)
 {
+	auto const &s_info = game->s_info;
+
 	return (s_info[skill].value / SKILL_STEP);
 }
 
@@ -170,7 +179,7 @@ s16b get_skill(int skill)
  */
 s16b get_skill_scale(int skill, u32b scale)
 {
-	s32b temp;
+	auto const &s_info = game->s_info;
 
 	/*
 	* SKILL_STEP shouldn't matter here because the second parameter is
@@ -182,29 +191,35 @@ s16b get_skill_scale(int skill, u32b scale)
 	* formula given above, I verified this works the same by using a tiny
 	* scheme program... -- pelpel
 	*/
-	temp = scale * s_info[skill].value;
+	s32b temp = scale * s_info[skill].value;
 
 	return (temp / SKILL_MAX);
 }
 
-static int get_idx(int i)
+static std::size_t get_idx(int i)
 {
-	for (int j = 1; j < max_s_idx; j++)
+	auto const &s_descriptors = game->edit_data.s_descriptors;
+
+	for (std::size_t j = 1; j < s_descriptors.size(); j++)
 	{
 		if (s_descriptors[j].order == i)
-			return (j);
+		{
+			return j;
+		}
 	}
-	return (0);
+
+	return 0;
 }
 
 static bool_ is_known(int s_idx)
 {
-	int i;
+	auto const &s_descriptors = game->edit_data.s_descriptors;
+	auto const &s_info = game->s_info;
 
 	if (wizard) return TRUE;
 	if (s_info[s_idx].value || s_info[s_idx].mod) return TRUE;
 
-	for (i = 0; i < max_s_idx; i++)
+	for (std::size_t i = 0; i < s_descriptors.size(); i++)
 	{
 		/* It is our child, if we don't know it we continue to search, if we know it it is enough*/
 		if (s_descriptors[i].father == s_idx)
@@ -218,35 +233,51 @@ static bool_ is_known(int s_idx)
 	return FALSE;
 }
 
-static void init_table_aux(int table[MAX_SKILLS][2], int *idx, int father, int lev, bool_ full)
+namespace { // anonymous
+
+struct skill_entry {
+	std::size_t skill_idx;
+	int indent_level;
+};
+
+}
+
+static void init_table_aux(std::vector<skill_entry> *table, int father, int lev, bool_ full)
 {
-	for (int j = 1; j < max_s_idx; j++)
+	auto const &s_descriptors = game->edit_data.s_descriptors;
+	auto const &s_info = game->s_info;
+
+	for (std::size_t j = 1; j < s_descriptors.size(); j++)
 	{
-		int i = get_idx(j);
+		std::size_t i = get_idx(j);
+
 		if (s_descriptors[i].father != father) continue;
 		if (s_info[i].hidden) continue;
 		if (!is_known(i)) continue;
 
-		table[*idx][0] = i;
-		table[*idx][1] = lev;
-		(*idx)++;
+		skill_entry entry;
+		entry.skill_idx = i;
+		entry.indent_level = lev;
+		table->emplace_back(entry);
 
 		if (s_info[i].dev || full)
 		{
-			init_table_aux(table, idx, i, lev + 1, full);
+			init_table_aux(table, i, lev + 1, full);
 		}
 	}
 }
 
-static void init_table(int table[MAX_SKILLS][2], int *max, bool_ full)
+static void init_table(std::vector<skill_entry> *table, bool_ full)
 {
-	*max = 0;
-	init_table_aux(table, max, -1, 0, full);
+	table->clear();
+	init_table_aux(table, -1, 0, full);
 }
 
 static bool has_child(int sel)
 {
-	for (int i = 1; i < max_s_idx; i++)
+	auto const &s_descriptors = game->edit_data.s_descriptors;
+
+	for (std::size_t i = 1; i < s_descriptors.size(); i++)
 	{
 		if ((s_descriptors[i].father == sel) && is_known(i))
 		{
@@ -263,42 +294,51 @@ static bool has_child(int sel)
  */
 void dump_skills(FILE *fff)
 {
-	int i, j, max = 0;
-	int table[MAX_SKILLS][2];
+	auto const &s_descriptors = game->edit_data.s_descriptors;
+	auto const &s_info = game->s_info;
+
 	char buf[80];
 
-	init_table(table, &max, TRUE);
+	std::vector<skill_entry> table;
+	table.reserve(s_descriptors.size());
+	init_table(&table, TRUE);
 
 	fprintf(fff, "\nSkills (points left: %d)", p_ptr->skill_points);
 
-	for (j = 0; j < max; j++)
+	for (auto const &entry: table)
 	{
-		int z;
+		std::size_t i = entry.skill_idx;
+		auto const &skill = s_info[i];
+		auto const &skill_name = s_descriptors[i].name;
 
-		i = table[j][0];
-
-		if ((s_info[i].value == 0) && (i != SKILL_MISC))
+		if ((skill.value == 0) && (i != SKILL_MISC))
 		{
-			if (s_info[i].mod == 0) continue;
+			if (skill.mod == 0)
+			{
+				continue;
+			}
 		}
 
 		sprintf(buf, "\n");
 
-		for (z = 0; z < table[j][1]; z++) strcat(buf, "         ");
+		for (int z = 0; z < entry.indent_level; z++)
+		{
+			strcat(buf, "         ");
+		}
 
 		if (!has_child(i))
 		{
-			strcat(buf, format(" . %s", s_descriptors[i].name));
+			strcat(buf, format(" . %s", skill_name.c_str()));
 		}
 		else
 		{
-			strcat(buf, format(" - %s", s_descriptors[i].name));
+			strcat(buf, format(" - %s", skill_name.c_str()));
 		}
 
 		fprintf(fff, "%-49s%s%06.3f [%05.3f]",
-		        buf, s_info[i].value < 0 ? "-" : " ",
-			static_cast<double>(ABS(s_info[i].value)) / SKILL_STEP,
-		        static_cast<double>(s_info[i].mod) / 1000);
+			buf, skill.value < 0 ? "-" : " ",
+			static_cast<double>(ABS(skill.value)) / SKILL_STEP,
+			static_cast<double>(skill.mod) / 1000);
 	}
 
 	fprintf(fff, "\n");
@@ -308,9 +348,12 @@ void dump_skills(FILE *fff)
 /*
  * Draw the skill tree
  */
-void print_skills(int table[MAX_SKILLS][2], int max, int sel, int start)
+static void print_skills(std::vector<skill_entry> const &table, int sel, int start)
 {
-	int i, j;
+	auto const &s_descriptors = game->edit_data.s_descriptors;
+	auto const &s_info = game->s_info;
+
+	int j;
 	int wid, hgt;
 	cptr keys;
 
@@ -322,52 +365,73 @@ void print_skills(int table[MAX_SKILLS][2], int max, int sel, int start)
 	display_message(0, 1, strlen(keys), TERM_WHITE, keys);
 	c_prt((p_ptr->skill_points) ? TERM_L_BLUE : TERM_L_RED,
 	      format("Skill points left: %d", p_ptr->skill_points), 2, 0);
-	print_desc_aux(s_descriptors[table[sel][0]].desc, 3, 0);
+	print_desc_aux(s_descriptors[table[sel].skill_idx].desc.c_str(), 3, 0);
 
 	for (j = start; j < start + (hgt - 7); j++)
 	{
 		byte color = TERM_WHITE;
 		char deb = ' ', end = ' ';
 
-		if (j >= max) break;
-
-		i = table[j][0];
-
-		if ((s_info[i].value == 0) && (i != SKILL_MISC))
+		if (j >= static_cast<int>(table.size()))
 		{
-			if (s_info[i].mod == 0) color = TERM_L_DARK;
-			else color = TERM_ORANGE;
+			break;
 		}
-		else if (s_info[i].value == SKILL_MAX) color = TERM_L_BLUE;
-		if (s_info[i].hidden) color = TERM_L_RED;
+
+		std::size_t i = table[j].skill_idx;
+		auto const &name = s_descriptors[i].name;
+		auto const &skill = s_info[i];
+
+		if ((skill.value == 0) && (i != SKILL_MISC))
+		{
+			if (skill.mod == 0)
+			{
+				color = TERM_L_DARK;
+			}
+			else
+			{
+				color = TERM_ORANGE;
+			}
+		}
+		else if (skill.value == SKILL_MAX)
+		{
+			color = TERM_L_BLUE;
+		}
+
+		if (skill.hidden)
+		{
+			color = TERM_L_RED;
+		}
+
 		if (j == sel)
 		{
 			color = TERM_L_GREEN;
 			deb = '[';
 			end = ']';
 		}
+
 		if (!has_child(i))
 		{
-			c_prt(color, format("%c.%c%s", deb, end, s_descriptors[i].name),
-			      j + 7 - start, table[j][1] * 4);
+			c_prt(color, format("%c.%c%s", deb, end, name.c_str()),
+			      j + 7 - start, table[j].indent_level * 4);
 		}
-		else if (s_info[i].dev)
+		else if (skill.dev)
 		{
-			c_prt(color, format("%c-%c%s", deb, end, s_descriptors[i].name),
-			      j + 7 - start, table[j][1] * 4);
+			c_prt(color, format("%c-%c%s", deb, end, name.c_str()),
+			      j + 7 - start, table[j].indent_level * 4);
 		}
 		else
 		{
-			c_prt(color, format("%c+%c%s", deb, end, s_descriptors[i].name),
-			      j + 7 - start, table[j][1] * 4);
+			c_prt(color, format("%c+%c%s", deb, end, name.c_str()),
+			      j + 7 - start, table[j].indent_level * 4);
 		}
+
 		c_prt(color,
 		      format("%s%02ld.%03ld [%01d.%03d]",
-		             s_info[i].value < 0 ? "-" : " ",
-			     ABS(s_info[i].value) / SKILL_STEP,
-			     ABS(s_info[i].value) % SKILL_STEP,
-			     ABS(s_info[i].mod) / 1000,
-			     ABS(s_info[i].mod) % 1000),
+			     skill.value < 0 ? "-" : " ",
+			     ABS(skill.value) / SKILL_STEP,
+			     ABS(skill.value) % SKILL_STEP,
+			     ABS(skill.mod) / 1000,
+			     ABS(skill.mod) % 1000),
 		      j + 7 - start, 60);
 	}
 }
@@ -377,6 +441,8 @@ void print_skills(int table[MAX_SKILLS][2], int max, int sel, int start)
  */
 void recalc_skills(bool_ init)
 {
+	auto const &s_info = game->s_info;
+
 	static int thaum_level = 0;
 
 	/* TODO: This should be a hook in ToME's lua */
@@ -429,49 +495,64 @@ void recalc_skills(bool_ init)
 /*
  * Recalc the skill value
  */
-static void recalc_skills_theory(s16b *invest, s32b *base_val, s32b *base_mod, s32b *bonus)
+static void recalc_skills_theory(
+	std::vector<s16b> &invest,
+	std::vector<s32b> const &base_val,
+	std::vector<s32b> const &base_mod,
+	std::vector<s32b> const &bonus)
 {
-	int i, j;
+	auto const &s_descriptors = game->edit_data.s_descriptors;
+	auto &s_info = game->s_info;
 
 	/* First we assign the normal points */
-	for (i = 0; i < max_s_idx; i++)
+	for (std::size_t i = 0; i < s_descriptors.size(); i++)
 	{
 		/* Calc the base */
 		s_info[i].value = base_val[i] + (base_mod[i] * invest[i]) + bonus[i];
 
 		/* It cannot exceed SKILL_MAX */
-		if (s_info[i].value > SKILL_MAX) s_info[i].value = SKILL_MAX;
+		if (s_info[i].value > SKILL_MAX)
+		{
+			s_info[i].value = SKILL_MAX;
+		}
 	}
 
 	/* Then we modify related skills */
-	for (i = 0; i < max_s_idx; i++)
+	for (std::size_t i = 0; i < s_descriptors.size(); i++)
 	{
-		for (j = 1; j < max_s_idx; j++)
+		auto const &s_descriptor = s_descriptors[i];
+
+		// Process all exlusions
+		if (invest[i])
 		{
-			/* Ignore self */
-			if (j == i) continue;
-
-			/* Exclusive skills */
-			if ((s_descriptors[i].action[j] == SKILL_EXCLUSIVE) && invest[i])
+			for (auto exclude_si: s_descriptor.excludes)
 			{
-				/* Turn it off */
-				p_ptr->skill_points += invest[j];
-				invest[j] = 0;
-				s_info[j].value = 0;
+				// Give back skill points invested during this "session"
+				p_ptr->skill_points += invest[exclude_si];
+				invest[exclude_si] = 0;
+
+				// Turn it off
+				s_info[exclude_si].value = 0;
+			}
+		}
+
+		// Add any bonuses
+		for (auto const &increase: s_descriptor.increases)
+		{
+			auto increase_si = std::get<0>(increase);
+			auto increase_pct = std::get<1>(increase);
+
+			/* Increase/decrease by percentage */
+			s32b val = s_info[increase_si].value + (invest[i] * s_info[increase_si].mod * increase_pct / 100);
+
+			/* It cannot exceed SKILL_MAX */
+			if (val > SKILL_MAX)
+			{
+				val = SKILL_MAX;
 			}
 
-			/* Non-exclusive skills */
-			else if (s_descriptors[i].action[j])
-			{
-				/* Increase / decrease with a % */
-				s32b val = s_info[j].value + (invest[i] * s_info[j].mod * s_descriptors[i].action[j] / 100);
-
-				/* It cannot exceed SKILL_MAX */
-				if (val > SKILL_MAX) val = SKILL_MAX;
-
-				/* Save the modified value */
-				s_info[j].value = val;
-			}
+			/* Save the modified value */
+			s_info[increase_si].value = val;
 		}
 	}
 }
@@ -481,10 +562,11 @@ static void recalc_skills_theory(s16b *invest, s32b *base_val, s32b *base_mod, s
  */
 void do_cmd_skill()
 {
-	int sel = 0, start = 0, max;
+	auto const &s_descriptors = game->edit_data.s_descriptors;
+	auto &s_info = game->s_info;
+
+	int sel = 0, start = 0;
 	char c;
-	int table[MAX_SKILLS][2];
-	int i;
 	int wid, hgt;
 	s16b skill_points_save;
 
@@ -493,39 +575,38 @@ void do_cmd_skill()
 	/* Save the screen */
 	screen_save();
 
-	/* Allocate arrays to save skill values */
-	std::unique_ptr<s32b[]> skill_values_save(new s32b[MAX_SKILLS]);
-	std::unique_ptr<s32b[]> skill_mods_save(new s32b[MAX_SKILLS]);
-	std::unique_ptr<s16b[]> skill_invest(new s16b[MAX_SKILLS]);
-	std::unique_ptr<s32b[]> skill_bonus(new s32b[MAX_SKILLS]);
+	/* Allocate arrays to save skill values and track assigned points */
+	std::vector<s32b> skill_values_save; skill_values_save.resize(s_descriptors.size(), 0);
+	std::vector<s32b> skill_mods_save;   skill_mods_save.resize(s_descriptors.size(), 0);
+	std::vector<s16b> skill_invest;      skill_invest.resize(s_descriptors.size(), 0);
+	std::vector<s32b> skill_bonus;       skill_bonus.resize(s_descriptors.size(), 0);
 
 	/* Save skill points */
 	skill_points_save = p_ptr->skill_points;
 
 	/* Save skill values */
-	for (i = 0; i < max_s_idx; i++)
+	for (std::size_t i = 0; i < s_descriptors.size(); i++)
 	{
-		skill_type *s_ptr = &s_info[i];
-
+		auto s_ptr = &s_info[i];
 		skill_values_save[i] = s_ptr->value;
 		skill_mods_save[i] = s_ptr->mod;
-		skill_invest[i] = 0;
-		skill_bonus[i] = 0;
 	}
 
 	/* Clear the screen */
 	Term_clear();
 
 	/* Initialise the skill list */
-	init_table(table, &max, FALSE);
+	std::vector<skill_entry> table;
+	table.reserve(s_descriptors.size());
+	init_table(&table, FALSE);
 
 	while (TRUE)
 	{
 		Term_get_size(&wid, &hgt);
 
 		/* Display list of skills */
-		recalc_skills_theory(skill_invest.get(), skill_values_save.get(), skill_mods_save.get(), skill_bonus.get());
-		print_skills(table, max, sel, start);
+		recalc_skills_theory(skill_invest, skill_values_save, skill_mods_save, skill_bonus);
+		print_skills(table, sel, start);
 
 		/* Wait for user input */
 		c = inkey();
@@ -536,16 +617,21 @@ void do_cmd_skill()
 		/* Expand / collapse list of skills */
 		else if (c == '\r')
 		{
-			s_info[table[sel][0]].dev = !s_info[table[sel][0]].dev;
-
-			init_table(table, &max, FALSE);
+			// Toggle the selected skill
+			s_info[table[sel].skill_idx].dev = !s_info[table[sel].skill_idx].dev;
+			// Re-populate table
+			init_table(&table, FALSE);
 		}
 
 		/* Next page */
 		else if (c == 'n')
 		{
 			sel += (hgt - 7);
-			if (sel >= max) sel = max - 1;
+
+			if (sel >= static_cast<int>(table.size()))
+			{
+				sel = table.size() - 1;
+			}
 		}
 
 		/* Previous page */
@@ -570,31 +656,31 @@ void do_cmd_skill()
 			if (dir == 8) sel--;
 
 			/* Miscellaneous skills cannot be increased/decreased as a group */
-			if ((sel >= 0) && (sel < max) && table[sel][0] == SKILL_MISC) continue;
+			if ((sel >= 0) && (sel < static_cast<int>(table.size())) && table[sel].skill_idx == SKILL_MISC) continue;
 
 			/* Increase the current skill */
-			if (dir == 6) increase_skill(table[sel][0], skill_invest.get());
+			if (dir == 6) increase_skill(table[sel].skill_idx, skill_invest.data());
 
 			/* Decrease the current skill */
-			if (dir == 4) decrease_skill(table[sel][0], skill_invest.get());
+			if (dir == 4) decrease_skill(table[sel].skill_idx, skill_invest.data());
 
 			/* XXX XXX XXX Wizard mode commands outside of wizard2.c */
 
 			/* Increase the skill */
-			if (wizard && (c == '+')) skill_bonus[table[sel][0]] += SKILL_STEP;
+			if (wizard && (c == '+')) skill_bonus[table[sel].skill_idx] += SKILL_STEP;
 
 			/* Decrease the skill */
-			if (wizard && (c == '-')) skill_bonus[table[sel][0]] -= SKILL_STEP;
+			if (wizard && (c == '-')) skill_bonus[table[sel].skill_idx] -= SKILL_STEP;
 
 			/* Contextual help */
 			if (c == '?')
 			{
-				help_skill(s_descriptors[table[sel][0]].name);
+				help_skill(s_descriptors[table[sel].skill_idx].name);
 			}
 
 			/* Handle boundaries and scrolling */
-			if (sel < 0) sel = max - 1;
-			if (sel >= max) sel = 0;
+			if (sel < 0) sel = table.size() - 1;
+			if (sel >= static_cast<int>(table.size())) sel = 0;
 			if (sel < start) start = sel;
 			if (sel >= start + (hgt - 7)) start = sel - (hgt - 7) + 1;
 		}
@@ -616,10 +702,9 @@ void do_cmd_skill()
 			p_ptr->skill_points = skill_points_save;
 
 			/* Restore skill values */
-			for (i = 0; i < max_s_idx; i++)
+			for (std::size_t i = 0; i < s_descriptors.size(); i++)
 			{
-				skill_type *s_ptr = &s_info[i];
-
+				auto s_ptr = &s_info[i];
 				s_ptr->value = skill_values_save[i];
 				s_ptr->mod = skill_mods_save[i];
 			}
@@ -671,9 +756,11 @@ cptr get_melee_name()
 
 s16b get_melee_skills()
 {
-	int i, j = 0;
+	auto const &s_info = game->s_info;
 
-	for (i = 0; i < MAX_MELEE; i++)
+	int j = 0;
+
+	for (std::size_t i = 0; i < MAX_MELEE; i++)
 	{
 		if ((s_info[melee_skills[i]].value > 0) && (!s_info[melee_skills[i]].hidden))
 		{
@@ -784,7 +871,7 @@ void select_default_melee()
 /*
  * Print a batch of skills.
  */
-static void print_skill_batch(const std::vector<std::tuple<std::string const &, int>> &p, int start)
+static void print_skill_batch(const std::vector<std::tuple<std::string, int>> &p, int start)
 {
 	char buff[80];
 	int j = 0;
@@ -812,12 +899,14 @@ static void print_skill_batch(const std::vector<std::tuple<std::string const &, 
 static int do_cmd_activate_skill_aux()
 {
 	auto const &ab_info = game->edit_data.ab_info;
+	auto const &s_descriptors = game->edit_data.s_descriptors;
+	auto const &s_info = game->s_info;
 
 	char which;
 	int start = 0;
 	int ret;
 
-	std::vector<std::tuple<std::string const &,int>> p;
+	std::vector<std::tuple<std::string,int>> p;
 
 	/* More than 1 melee skill ? */
 	if (get_melee_skills() > 1)
@@ -825,7 +914,7 @@ static int do_cmd_activate_skill_aux()
 		p.push_back(std::make_tuple("Change melee mode", 0));
 	}
 
-	for (size_t i = 1; i < max_s_idx; i++)
+	for (size_t i = 1; i < s_descriptors.size(); i++)
 	{
 		if (s_descriptors[i].action_mkey && s_info[i].value && ((!s_info[i].hidden) || (i == SKILL_LEARN)))
 		{
@@ -960,6 +1049,8 @@ static int do_cmd_activate_skill_aux()
 void do_cmd_activate_skill()
 {
 	auto const &ab_info = game->edit_data.ab_info;
+	auto const &s_descriptors = game->edit_data.s_descriptors;
+	auto const &s_info = game->s_info;
 
 	int x_idx;
 	bool_ push = TRUE;
@@ -978,8 +1069,8 @@ void do_cmd_activate_skill()
 		x_idx = command_arg;
 
 		/* Check validity */
-		int i;
-		for (i = 1; i < max_s_idx; i++)
+		std::size_t i;
+		for (i = 1; i < s_descriptors.size(); i++)
 		{
 			if (s_info[i].value && (s_descriptors[i].action_mkey == x_idx))
 			{
@@ -996,7 +1087,7 @@ void do_cmd_activate_skill()
 			}
 		}
 
-		if ((j == ab_info.size()) && (i == max_s_idx))
+		if ((j == ab_info.size()) && (i == s_descriptors.size()))
 		{
 			msg_print("Uh?");
 			return;
@@ -1201,32 +1292,39 @@ bool_ forbid_non_blessed()
 /*
  * Augment skill value/modifier with the given skill_modifiers
  */
-static void augment_skills(s32b *v, s32b *m, skill_modifier const &s)
+static void augment_skills(s32b *v, s32b *m, std::vector<skill_modifier> const &modifiers, std::size_t i)
 {
-	*v = modify_aux(*v, s.base, s.basem);
-	*m = modify_aux(*m, s.mod,  s.modm);
+	if (i < modifiers.size()) // Ignore if the skill has no modifiers.
+	{
+		auto const &s = modifiers[i];
+		*v = modify_aux(*v, s.base, s.basem);
+		*m = modify_aux(*m, s.mod,  s.modm);
+	}
 }
 
 
 /*
  * Gets the base value of a skill, given a race/class/...
  */
-void compute_skills(s32b *v, s32b *m, int i)
+void compute_skills(s32b *v, s32b *m, std::size_t i)
 {
 	auto const &gen_skill = game->edit_data.gen_skill;
 
-	augment_skills(v, m, gen_skill.modifiers[i]);
-	augment_skills(v, m, rp_ptr->skill_modifiers.modifiers[i]);
-	augment_skills(v, m, rmp_ptr->skill_modifiers.modifiers[i]);
-	augment_skills(v, m, cp_ptr->skill_modifiers.modifiers[i]);
-	augment_skills(v, m, spp_ptr->skill_modifiers.modifiers[i]);
+	augment_skills(v, m, gen_skill.modifiers, i);
+	augment_skills(v, m, rp_ptr->skill_modifiers.modifiers, i);
+	augment_skills(v, m, rmp_ptr->skill_modifiers.modifiers, i);
+	augment_skills(v, m, cp_ptr->skill_modifiers.modifiers, i);
+	augment_skills(v, m, spp_ptr->skill_modifiers.modifiers, i);
 }
 
 /*
  * Initialize a skill with given values
  */
-void init_skill(s32b value, s32b mod, int i)
+void init_skill(s32b value, s32b mod, std::size_t i)
 {
+	auto const &s_descriptors = game->edit_data.s_descriptors;
+	auto &s_info = game->s_info;
+
 	s_info[i].value = value;
 	s_info[i].mod = mod;
 	s_info[i].hidden = (s_descriptors[i].flags & SKF_HIDDEN)
@@ -1294,29 +1392,27 @@ static std::vector<size_t> wrs(const std::vector<s32b> &unscaled_weights)
 
 void do_get_new_skill()
 {
-	std::vector<std::string> items;
-	int skl[LOST_SWORD_NSKILLS];
-	s32b val[LOST_SWORD_NSKILLS], mod[LOST_SWORD_NSKILLS];
-	int available_skills[MAX_SKILLS];
-	int max_a = 0, res, i;
+	auto const &s_descriptors = game->edit_data.s_descriptors;
+	auto &s_info = game->s_info;
 
 	/* Check if some skills didn't influence other stuff */
 	recalc_skills(TRUE);
 
 	/* Grab the ones we can gain */
-	max_a = 0;
-	for (i = 0; i < max_s_idx; i++)
+	std::vector<size_t> available_skills;
+	available_skills.reserve(s_descriptors.size());
+	for (std::size_t i = 0; i < s_descriptors.size(); i++)
 	{
 		if (s_descriptors[i].flags & SKF_RANDOM_GAIN)
 		{
-			available_skills[max_a] = i;
-			max_a++;
+			available_skills.push_back(i);
 		}
 	}
 
 	/* Perform the selection */
 	std::vector<s32b> weights;
-	for (i = 0; i < max_a; i++) {
+	for (std::size_t i = 0; i < available_skills.size(); i++)
+	{
 		weights.push_back(s_descriptors[available_skills[i]].random_gain_chance);
 	}
 
@@ -1324,10 +1420,14 @@ void do_get_new_skill()
 	assert(indexes.size() >= LOST_SWORD_NSKILLS);
 
 	/* Extract the information needed from the skills */
-	for (i = 0; i < LOST_SWORD_NSKILLS; i++)
+	int skl[LOST_SWORD_NSKILLS];
+	s32b val[LOST_SWORD_NSKILLS];
+	s32b mod[LOST_SWORD_NSKILLS];
+	std::vector<std::string> items;
+	for (std::size_t i = 0; i < LOST_SWORD_NSKILLS; i++)
 	{
 		s32b s_idx = available_skills[indexes[i]];
-		skill_type *s_ptr = &s_info[s_idx];
+		auto s_ptr = &s_info[s_idx];
 
 		if (s_ptr->mod)
 		{
@@ -1341,7 +1441,9 @@ void do_get_new_skill()
 				val[i] = s_ptr->mod * 1;
 				mod[i] = 100;
 				if (mod[i] + s_ptr->mod > 500)
+				{
 					mod[i] = 500 - s_ptr->mod;
+				}
 			}
 			else
 			{
@@ -1355,41 +1457,56 @@ void do_get_new_skill()
 			val[i] = 1000;
 		}
 
-		if (s_ptr->value + val[i] > SKILL_MAX) {
+		if (s_ptr->value + val[i] > SKILL_MAX)
+		{
 			val[i] = SKILL_MAX - s_ptr->value;
 		}
 
 		skl[i] = s_idx;
 		items.push_back(format("%-40s: +%02ld.%03ld value, +%01d.%03d modifier",
-		                       s_descriptors[s_idx].name,
+				       s_descriptors[s_idx].name.c_str(),
 				       val[i] / SKILL_STEP,
 				       val[i] % SKILL_STEP,
 				       mod[i] / SKILL_STEP,
 				       mod[i] % SKILL_STEP));
 	}
 
+	// Ask for a skill
 	while (TRUE)
 	{
 		char last = 'a' + (LOST_SWORD_NSKILLS-1);
 		char buf[80];
 		sprintf(buf, "Choose a skill to learn (a-%c to choose, ESC to cancel)?", last);
-		res = ask_menu(buf, items);
+		int res = ask_menu(buf, items);
 
 		/* Ok ? lets learn ! */
 		if (res > -1)
 		{
+			std::size_t chosen_skill = skl[res];
+
 			bool_ oppose = FALSE;
 			int oppose_skill = -1;
 
-			/* Check we don't oppose an existing skill */
-			for (i = 0; i < max_s_idx; i++)
+			/* Check we don't oppose a skill the player already has */
+			for (std::size_t i = 0; i < s_descriptors.size(); i++)
 			{
-				if ((s_descriptors[i].action[skl[res]] == SKILL_EXCLUSIVE) &&
-				                (s_info[i].value != 0))
+				auto const &s_descriptor = s_descriptors[i];
+
+				// Only bother if player has skill
+				if (s_info[i].value)
 				{
-					oppose = TRUE;
-					oppose_skill = i;
-					break;
+					// Check if i'th skill opposes the chosen one.
+					auto found = std::find(
+						s_descriptor.excludes.begin(),
+						s_descriptor.excludes.end(),
+						chosen_skill);
+
+					if (found != s_descriptor.excludes.end())
+					{
+						oppose = TRUE;
+						oppose_skill = i;
+						break;
+					}
 				}
 			}
 
@@ -1407,26 +1524,32 @@ void do_get_new_skill()
 				/* Prepare prompt */
 				msg = format("This skill is mutually exclusive with "
 				             "at least %s, continue?",
-				             s_descriptors[oppose_skill].name);
+					     s_descriptors[oppose_skill].name.c_str());
 
-				/* The player rejected the choice */
-				if (!get_check(msg)) continue;
+				/* The player rejected the choice; go back to prompt */
+				if (!get_check(msg))
+				{
+					continue;
+				}
 			}
 
-			auto const s_desc = &s_descriptors[skl[res]];
-			auto const s_ptr = &s_info[skl[res]];
+			auto const s_desc = &s_descriptors[chosen_skill];
+			auto const s_ptr = &s_info[chosen_skill];
+
 			s_ptr->value += val[res];
 			s_ptr->mod += mod[res];
+
 			if (mod[res])
 			{
 				msg_format("You can now learn the %s skill.",
-				           s_desc->name);
+					   s_desc->name.c_str());
 			}
 			else
 			{
 				msg_format("Your knowledge of the %s skill increases.",
-				           s_desc->name);
+					   s_desc->name.c_str());
 			}
+
 			break;
 		}
 	}

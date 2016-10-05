@@ -26,9 +26,7 @@
 #include "random_artifact.hpp"
 #include "random_quest.hpp"
 #include "school_type.hpp"
-#include "skill_descriptor_fwd.hpp"
 #include "skill_modifiers_fwd.hpp"
-#include "skill_type_fwd.hpp"
 #include "skills_defs.hpp"
 #include "timer_type_fwd.hpp"
 #include "town_type_fwd.hpp"
@@ -157,8 +155,6 @@ extern player_class const *cp_ptr;
 extern player_spec const *spp_ptr;
 extern char player_name[32];
 extern char player_base[32];
-extern skill_type *s_info;
-extern skill_descriptor *s_descriptors;
 extern feature_type *f_info;
 extern object_kind *k_info;
 extern artifact_type *a_info;
@@ -178,7 +174,6 @@ extern char *ANGBAND_DIR_DNGN;
 extern bool_ (*get_mon_num_hook)(int r_idx);
 extern bool_ (*get_mon_num2_hook)(int r_idx);
 extern bool_ (*get_obj_num_hook)(int k_idx);
-extern u16b max_s_idx;
 extern u16b max_r_idx;
 extern u16b max_re_idx;
 extern u16b max_k_idx;

@@ -421,10 +421,7 @@ static void do_skill_modifier(skill_modifier *s, ls_flag_t flag)
 
 static void do_skill_modifiers(skill_modifiers *skill_modifiers, ls_flag_t flag)
 {
-	for (std::size_t i = 0; i < MAX_SKILLS; i++)
-	{
-		do_skill_modifier(&skill_modifiers->modifiers[i], flag);
-	}
+	do_vector(flag, skill_modifiers->modifiers, do_skill_modifier);
 }
 
 static void do_player_level_flag(player_level_flag *lflag, ls_flag_t flag)
@@ -533,6 +530,7 @@ static char loaded_game_module[80];
 static bool_ do_extra(ls_flag_t flag)
 {
 	auto const &d_info = game->edit_data.d_info;
+	auto &s_info = game->s_info;
 
 	do_string(player_name, 32, flag);
 
@@ -611,11 +609,11 @@ static bool_ do_extra(ls_flag_t flag)
 		do_s16b(&p_ptr->melee_style, flag);
 		do_s16b(&p_ptr->use_piercing_shots, flag);
 
-		u16b tmp16u = MAX_SKILLS;
+		u16b tmp16u = s_info.size();
 
 		do_u16b(&tmp16u, flag);
 
-		if ((flag == ls_flag_t::LOAD) && (tmp16u != MAX_SKILLS))
+		if ((flag == ls_flag_t::LOAD) && (tmp16u != s_info.size()))
 		{
 			quit("Too few/many skills");
 		}

@@ -6,6 +6,7 @@
 #include "grid.hpp"
 #include "h-basic.h"
 #include "player_defs.hpp"
+#include "skill_type.hpp"
 #include "wilderness_map.hpp"
 
 /**
@@ -29,5 +30,10 @@ struct Game {
 	 * Game edit data
 	 */
 	GameEditData edit_data;
+
+	/**
+	 * Current skill values.
+	 */
+	std::vector<skill_type> s_info;
 
 };

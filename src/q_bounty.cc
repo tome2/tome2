@@ -1,5 +1,6 @@
 #include "q_bounty.hpp"
 
+#include "game.hpp"
 #include "monster2.hpp"
 #include "monster_race.hpp"
 #include "monster_race_flag.hpp"
@@ -108,6 +109,8 @@ bool_ quest_bounty_drop_item()
 
 bool_ quest_bounty_get_item()
 {
+	auto &s_info = game->s_info;
+
 	if (cquest.status != QUEST_STATUS_TAKEN)
 	{
 		msg_print("You do not have any bounty quest yet.");

@@ -10,6 +10,7 @@
 #include "randart_gen_type.hpp"
 #include "randart_part_type.hpp"
 #include "set_type.hpp"
+#include "skill_descriptor.hpp"
 #include "store_action_type.hpp"
 #include "store_info_type.hpp"
 #include "vault_type.hpp"
@@ -82,6 +83,11 @@ struct GameEditData {
 	 * Player race histories
 	 */
 	std::vector<hist_type> bg;
+
+	/**
+	 * Player skills
+	 */
+	std::vector<skill_descriptor> s_descriptors;
 
 	/**
 	 * Base skills for all characters.

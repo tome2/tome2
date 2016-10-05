@@ -2769,9 +2769,10 @@ static bool_ player_birth_aux_auto()
  */
 static bool_ player_birth_aux()
 {
-	char c;
+	auto const &s_descriptors = game->edit_data.s_descriptors;
+	auto &s_info = game->s_info;
 
-	int i, j;
+	char c;
 
 	int y = 0, x = 0;
 
@@ -2780,12 +2781,12 @@ static bool_ player_birth_aux()
 	/* Ask */
 	if (!player_birth_aux_ask()) return (FALSE);
 
-	for (i = 1; i < max_s_idx; i++)
+	for (std::size_t i = 1; i < s_descriptors.size(); i++)
 	{
 		s_info[i].dev = false;
 	}
 
-	for (i = 1; i < max_s_idx; i++)
+	for (std::size_t i = 1; i < s_descriptors.size(); i++)
 	{
 		s32b value = 0, mod = 0;
 
@@ -2845,22 +2846,31 @@ static bool_ player_birth_aux()
 		}
 
 		/* Edit character background */
-		for (i = 0; i < 4; i++)
+		for (std::size_t i = 0; i < 4; i++)
 		{
 			strnfmt(old_history[i], 60, "%s", history[i]);
 		}
-		/* Turn 0 to space */
-		for (i = 0; i < 4; i++)
-		{
-			for (j = 0; history[i][j]; j++) /* loop */;
 
-			for (; j < 59; j++) history[i][j] = ' ';
+		/* Turn NUL to space */
+		for (std::size_t i = 0; i < 4; i++)
+		{
+			std::size_t j = 0;
+
+			// Search for the NUL
+			while (history[i][j++])
+				;;
+
+			// Turn into spaces
+			for (; j < 59; j++)
+			{
+				history[i][j] = ' ';
+			}
 		}
 		display_player(1);
 		c_put_str(TERM_L_GREEN, "(Character Background - Edit Mode)", 15, 20);
 		while (TRUE)
 		{
-			for (i = 0; i < 4; i++)
+			for (std::size_t i = 0; i < 4; i++)
 			{
 				put_str(history[i], i + 16, 10);
 			}
@@ -2897,7 +2907,7 @@ static bool_ player_birth_aux()
 			}
 			else if (c == ESCAPE)
 			{
-				for (i = 0; i < 4; i++)
+				for (std::size_t i = 0; i < 4; i++)
 				{
 					strnfmt(history[i], 60, "%s", old_history[i]);
 					put_str(history[i], i + 16, 10);

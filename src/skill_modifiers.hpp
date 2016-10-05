@@ -3,9 +3,15 @@
 #include "h-basic.h"
 #include "skills_defs.hpp"
 #include "skill_modifier.hpp"
-#include <array>
+
+#include <vector>
 
 struct skill_modifiers
 {
-	std::array<skill_modifier, MAX_SKILLS> modifiers;
+	/**
+	 * Skill modifiers indexed by skill. Note that this vector
+	 * may be shorter than the s_descriptors vector.
+	 */
+	std::vector<skill_modifier> modifiers;
+
 };

@@ -7,6 +7,7 @@
  */
 #include "gods.hpp"
 
+#include "game.hpp"
 #include "player_type.hpp"
 #include "skills.hpp"
 #include "skill_type.hpp"
@@ -79,6 +80,8 @@ static bool_ may_follow_god(int god)
  */
 void follow_god(int god, bool_ silent)
 {
+	auto &s_info = game->s_info;
+
 	/* Poor unbelievers, i'm so mean ... BOUHAHAHA */
 	if (get_skill(SKILL_ANTIMAGIC))
 	{

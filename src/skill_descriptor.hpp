@@ -1,24 +1,31 @@
 #pragma once
 
-#include "skill_descriptor_fwd.hpp"
-
 #include "h-basic.h"
 #include "skill_flag_set.hpp"
 #include "skills_defs.hpp"
+
+#include <vector>
+#include <tuple>
 
 /**
  * Skill descriptor.
  */
 struct skill_descriptor {
 
-	const char *name = nullptr;             /* Name */
-	char *desc = nullptr;                   /* Description */
+	std::string name;                       /* Name */
+	std::string desc;                       /* Description */
 
-	const char *action_desc = nullptr;      /* Action Description */
-
+	std::string action_desc;                /* Action Description */
 	s16b action_mkey = 0;                   /* Action do to */
 
-	s16b action[MAX_SKILLS] = { 0 };        /* List of actions against other skills */
+	std::vector<std::size_t> excludes;      /* List of skills that this skill excludes;
+						   any skill points assigned completely nullify
+						   the listed skills */
+
+	std::vector<std::tuple<std::size_t, int>> increases;
+						/* List of skills the this skill increases,
+						   along with the modifier that gets applied.
+						   The first tuple element is the skill index. */
 
 	s16b father = 0;                        /* Father in the skill tree */
 	s16b order = 0;                         /* Order in the tree */
