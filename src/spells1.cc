@@ -6918,6 +6918,7 @@ static bool_ project_p(int who, int r, int y, int x, int dam, int typ, int a_rad
 	auto const &d_info = game->edit_data.d_info;
 	auto const &r_info = game->edit_data.r_info;
 	auto const &f_info = game->edit_data.f_info;
+	auto const &t_info = game->edit_data.t_info;
 
 	int k = 0, do_move = 0, a = 0, b = 0, x1 = 0, y1 = 0;
 

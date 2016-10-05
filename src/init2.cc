@@ -517,7 +517,7 @@ namespace {
 
 		static void allocate()
 		{
-			t_info = make_array<trap_type>(max_t_idx);
+			// Nothing to do
 		}
 
 		static errr parse(FILE *fp)

@@ -4836,6 +4836,8 @@ static errr grab_one_trap_type_flag(trap_type *t_ptr, cptr what)
  */
 errr init_t_info_txt(FILE *fp)
 {
+	auto &t_info = game->edit_data.t_info;
+
 	int i;
 	char buf[1024];
 	char *s, *t;
@@ -4882,14 +4884,11 @@ errr init_t_info_txt(FILE *fp)
 			/* Verify information */
 			if (i <= error_idx) return (4);
 
-			/* Verify information */
-			if (i >= max_t_idx) return (2);
-
 			/* Save the index */
 			error_idx = i;
 
 			/* Point at the "info" */
-			t_ptr = &t_info[i];
+			t_ptr = &expand_to_fit_index(t_info, i);
 
 			/* Copy name */
 			t_ptr->name = my_strdup(s);
@@ -6784,12 +6783,6 @@ static errr process_dungeon_file_aux(char *buf, int *yval, int *xval, int xvalst
 			else if (zz[0][0] == 'M')
 			{
 				max_m_idx = atoi(zz[1]);
-			}
-
-			/* Maximum tr_idx */
-			else if (zz[0][0] == 'U')
-			{
-				max_t_idx = atoi(zz[1]);
 			}
 
 			/* Maximum wilderness x size */

@@ -24,7 +24,6 @@
 #include "skills_defs.hpp"
 #include "timer_type_fwd.hpp"
 #include "town_type_fwd.hpp"
-#include "trap_type_fwd.hpp"
 #include "seed.hpp"
 
 extern int max_macrotrigger;
@@ -148,7 +147,6 @@ extern player_class const *cp_ptr;
 extern player_spec const *spp_ptr;
 extern char player_name[32];
 extern char player_base[32];
-extern trap_type *t_info;
 extern int wildc2i[256];
 extern cptr DEFAULT_FEAT_TEXT;
 extern cptr DEFAULT_FEAT_TUNNEL;
@@ -162,7 +160,6 @@ extern bool_ (*get_mon_num2_hook)(int r_idx);
 extern bool_ (*get_obj_num_hook)(int k_idx);
 extern u16b max_o_idx;
 extern u16b max_m_idx;
-extern u16b max_t_idx;
 extern int init_flags;
 extern bool_ ambush_flag;
 extern bool_ fate_flag;

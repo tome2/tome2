@@ -854,6 +854,7 @@ static void map_info(int y, int x, byte *ap, char *cp)
 	auto const &r_info = game->edit_data.r_info;
 	auto const &f_info = game->edit_data.f_info;
 	auto const &k_info = game->edit_data.k_info;
+	auto const &t_info = game->edit_data.t_info;
 
 	byte a;
 
@@ -1285,6 +1286,7 @@ void map_info_default(int y, int x, byte *ap, char *cp)
 	auto const &r_info = game->edit_data.r_info;
 	auto const &f_info = game->edit_data.f_info;
 	auto const &k_info = game->edit_data.k_info;
+	auto const &t_info = game->edit_data.t_info;
 
 	byte a;
 

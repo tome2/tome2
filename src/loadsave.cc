@@ -2382,11 +2382,13 @@ static bool do_fates(ls_flag_t flag)
 
 static bool do_traps(ls_flag_t flag)
 {
-	u16b n_traps = max_t_idx;
+	auto &t_info = game->edit_data.t_info;
+
+	u16b n_traps = t_info.size();
 
 	do_u16b(&n_traps, flag);
 
-	if ((flag == ls_flag_t::LOAD) && (n_traps > max_t_idx))
+	if ((flag == ls_flag_t::LOAD) && (n_traps > t_info.size()))
 	{
 		note("Too many traps!");
 		return false;

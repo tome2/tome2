@@ -449,7 +449,9 @@ static bool_ player_handle_missile_trap(s16b num, s16b tval, s16b sval, s16b dd,
  */
 static bool_ player_handle_breath_trap(s16b rad, s16b type, u16b trap)
 {
-	trap_type *t_ptr = &t_info[trap];
+	auto const &t_info = game->edit_data.t_info;
+
+	auto t_ptr = &t_info[trap];
 	bool_ ident;
 	s16b my_dd, my_ds, dam;
 
@@ -1906,6 +1908,7 @@ bool_ player_activate_trap_type(s16b y, s16b x, object_type *i_ptr, s16b item)
 void player_activate_door_trap(s16b y, s16b x)
 {
 	auto const &f_info = game->edit_data.f_info;
+	auto &t_info = game->edit_data.t_info;
 
 	cave_type *c_ptr;
 	bool_ ident = FALSE;
@@ -1945,9 +1948,8 @@ void place_trap(int y, int x)
 {
 	auto const &d_info = game->edit_data.d_info;
 	auto const &f_info = game->edit_data.f_info;
+	auto const &t_info = game->edit_data.t_info;
 
-	s16b trap;
-	trap_type *t_ptr;
 	int cnt;
 	u32b flags;
 	cave_type *c_ptr = &cave[y][x];
@@ -1975,8 +1977,8 @@ void place_trap(int y, int x)
 	cnt = 100;
 	while (cnt--)
 	{
-		trap = randint(max_t_idx - 1);
-		t_ptr = &t_info[trap];
+		std::size_t trap = rand_int(t_info.size());
+		auto t_ptr = &t_info[trap];
 
 		/* No traps below their minlevel */
 		if (t_ptr->minlevel > dun_level) continue;
@@ -2025,8 +2027,8 @@ void place_trap_leveled(int y, int x, int lev)
  */
 void place_trap_object(object_type *o_ptr)
 {
-	s16b trap;
-	trap_type *t_ptr;
+	auto const &t_info = game->edit_data.t_info;
+
 	int cnt;
 
 	/* No traps in town or on first level */
@@ -2041,8 +2043,8 @@ void place_trap_object(object_type *o_ptr)
 	cnt = 100;
 	while (cnt--)
 	{
-		trap = randint(max_t_idx - 1);
-		t_ptr = &t_info[trap];
+		std::size_t trap = rand_int(t_info.size());
+		auto t_ptr = &t_info[trap];
 
 		/* no traps below their minlevel */
 		if (t_ptr->minlevel > dun_level) continue;

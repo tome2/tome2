@@ -723,6 +723,7 @@ static void player_wipe(void)
 	auto &r_info = game->edit_data.r_info;
 	auto &k_info = game->edit_data.k_info;
 	auto &a_info = game->edit_data.a_info;
+	auto &t_info = game->edit_data.t_info;
 
 	/* Wipe special levels */
 	wipe_saved();
@@ -882,10 +883,10 @@ static void player_wipe(void)
 	}
 
 	/* Wipe the known traps list */
-	for (std::size_t i = 0; i < max_t_idx; i++)
+	for (auto &t_ref: t_info)
 	{
-		t_info[i].known = 0;
-		t_info[i].ident = FALSE;
+		t_ref.known = 0;
+		t_ref.ident = FALSE;
 	}
 
 	/* Reset wild_mode to FALSE */
@@ -985,6 +986,8 @@ static void player_outfit_spellbook(cptr spell_name)
  */
 static void player_outfit(void)
 {
+	auto &t_info = game->edit_data.t_info;
+
 	// Shorthand names for convenience
 	cptr class_name = spp_ptr->title;
 	auto const &subrace_name = rmp_ptr->title;

@@ -733,6 +733,8 @@ static void chest_death(int y, int x, s16b o_idx)
  */
 static void chest_trap(int y, int x, s16b o_idx)
 {
+	auto &t_info = game->edit_data.t_info;
+
 	int trap;
 
 	object_type *o_ptr = &o_list[o_idx];
@@ -1846,13 +1848,15 @@ void do_cmd_tunnel(void)
  */
 static bool_ do_cmd_disarm_chest(int y, int x, s16b o_idx)
 {
+	auto const &t_info = game->edit_data.t_info;
+
 	int i, j;
 
 	bool_ more = FALSE;
 
 	object_type *o_ptr = &o_list[o_idx];
 
-	trap_type *t_ptr = &t_info[o_ptr->pval];
+	auto t_ptr = &t_info[o_ptr->pval];
 
 
 	/* Take a turn */
@@ -1924,6 +1928,7 @@ static bool_ do_cmd_disarm_chest(int y, int x, s16b o_idx)
 static bool_ do_cmd_disarm_aux(int y, int x, int dir, int do_pickup)
 {
 	auto const &f_info = game->edit_data.f_info;
+	auto const &t_info = game->edit_data.t_info;
 
 	int i, j, power;
 

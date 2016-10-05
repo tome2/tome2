@@ -539,6 +539,8 @@ void carry(int pickup)
  */
 static void hit_trap(void)
 {
+	auto &t_info = game->edit_data.t_info;
+
 	bool_ ident = FALSE;
 
 	cave_type *c_ptr;

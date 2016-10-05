@@ -636,8 +636,7 @@ void reset_visuals(void)
 	auto &r_info = game->edit_data.r_info;
 	auto &f_info = game->edit_data.f_info;
 	auto &k_info = game->edit_data.k_info;
-
-	int i;
+	auto &t_info = game->edit_data.t_info;
 
 	/* Extract some info about terrain features */
 	for (auto &f_ref: f_info)
@@ -687,13 +686,11 @@ void reset_visuals(void)
 	}
 
 	/* Reset attr/char code for trap overlay graphics */
-	for (i = 0; i < max_t_idx; i++)
+	for (auto &t_ref: t_info)
 	{
-		trap_type *t_ptr = &t_info[i];
-
 		/* Default attr/char */
-		t_ptr->g_attr = 0;
-		t_ptr->g_char = 0;
+		t_ref.g_attr = 0;
+		t_ref.g_char = 0;
 	}
 
 
@@ -1036,6 +1033,7 @@ static std::string object_desc_aux(object_type const *o_ptr, int pref, int mode)
 	auto const &k_info = game->edit_data.k_info;
 	auto const &a_info = game->edit_data.a_info;
 	auto const &e_info = game->edit_data.e_info;
+	auto const &t_info = game->edit_data.t_info;
 	static auto const TR_PVAL_MASK = compute_pval_mask();
 
 	bool_ hack_name = FALSE;

@@ -427,11 +427,6 @@ player_race_mod const *rmp_ptr;
 player_class const *cp_ptr;
 player_spec const *spp_ptr;
 
-
-/* jk */
-/* the trap-arrays */
-trap_type *t_info;
-
 /*
  * The wilderness features arrays
  */
@@ -562,11 +557,6 @@ u16b max_o_idx;
  * Maximum number of monsters in the level
  */
 u16b max_m_idx;
-
-/*
- * Maximum number of traps in tr_info.txt
- */
-u16b max_t_idx;
 
 /*
  * Flags for initialization

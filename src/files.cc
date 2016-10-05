@@ -222,6 +222,7 @@ errr process_pref_file_aux(char *buf)
 	auto &r_info = game->edit_data.r_info;
 	auto &f_info = game->edit_data.f_info;
 	auto &k_info = game->edit_data.k_info;
+	auto &t_info = game->edit_data.t_info;
 
 	int i, j, n1, n2;
 
@@ -336,13 +337,21 @@ errr process_pref_file_aux(char *buf)
 		{
 			if (tokenize(buf + 4, 3, zz, ':', '/') == 3)
 			{
-				trap_type *t_ptr;
-				i = (huge)strtol(zz[0], NULL, 0);
+				std::size_t i = strtoul(zz[0], NULL, 0);
 				n1 = strtol(zz[1], NULL, 0);
 				n2 = strtol(zz[2], NULL, 0);
-				if (i >= max_t_idx) return (1);
-				t_ptr = &t_info[i];
-				if (n1) t_ptr->g_attr = n1;
+
+				if (i >= t_info.size())
+				{
+					return 1;
+				}
+
+				auto t_ptr = &t_info[i];
+
+				if (n1)
+				{
+					t_ptr->g_attr = n1;
+				}
 				if (n2)
 				{
 					t_ptr->g_char = n2;

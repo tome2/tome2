@@ -3242,12 +3242,14 @@ void do_cmd_knowledge_artifacts(void)
  */
 void do_cmd_knowledge_traps(void)
 {
+	auto const &t_info = game->edit_data.t_info;
+
 	fmt::MemoryWriter w;
 	/* Scan the traps */
-	for (int k = 0; k < max_t_idx; k++)
+	for (auto const &t_ref: t_info)
 	{
 		/* Get the trap */
-		trap_type *t_ptr = &t_info[k];
+		auto t_ptr = &t_ref;
 
 		/* Skip "empty" traps */
 		if (!t_ptr->name) continue;

@@ -12,9 +12,6 @@ M:X:101
 # Maximum y size of the wilderness
 M:Y:66
 
-# Maximum number of trap types in tr_info.txt
-M:U:176
-
 # Maximum size for "o_list[]"
 M:O:1024
 
