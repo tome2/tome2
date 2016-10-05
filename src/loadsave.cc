@@ -1058,6 +1058,7 @@ static void do_item(object_type *o_ptr, ls_flag_t flag)
 {
 	auto &k_info = game->edit_data.k_info;
 	auto &a_info = game->edit_data.a_info;
+	auto &e_info = game->edit_data.e_info;
 
 	byte old_dd;
 	byte old_ds;

@@ -835,6 +835,7 @@ int object_power(object_type *o_ptr)
 {
 	auto const &k_info = game->edit_data.k_info;
 	auto const &a_info = game->edit_data.a_info;
+	auto const &e_info = game->edit_data.e_info;
 
 	auto k_ptr = &k_info[o_ptr->k_idx];
 	int power = -1;
@@ -845,15 +846,21 @@ int object_power(object_type *o_ptr)
 	/* Ego-item */
 	if (o_ptr->name2)
 	{
-		ego_item_type *e_ptr = &e_info[o_ptr->name2];
+		auto e_ptr = &e_info[o_ptr->name2];
 
-		if (power == -1) power = e_ptr->power;
+		if (power == -1)
+		{
+			power = e_ptr->power;
+		}
 
 		if (o_ptr->name2b)
 		{
-			ego_item_type *e_ptr = &e_info[o_ptr->name2b];
+			auto e_ptr = &e_info[o_ptr->name2b];
 
-			if (power == -1) power = e_ptr->power;
+			if (power == -1)
+			{
+				power = e_ptr->power;
+			}
 		}
 	}
 
@@ -1028,6 +1035,7 @@ static std::string object_desc_aux(object_type const *o_ptr, int pref, int mode)
 	auto const &r_info = game->edit_data.r_info;
 	auto const &k_info = game->edit_data.k_info;
 	auto const &a_info = game->edit_data.a_info;
+	auto const &e_info = game->edit_data.e_info;
 	static auto const TR_PVAL_MASK = compute_pval_mask();
 
 	bool_ hack_name = FALSE;
@@ -1425,8 +1433,8 @@ static std::string object_desc_aux(object_type const *o_ptr, int pref, int mode)
 		/* Grab any ego-item name */
 		if (known && (o_ptr->name2 || o_ptr->name2b) && (o_ptr->tval != TV_ROD_MAIN))
 		{
-			ego_item_type *e_ptr = &e_info[o_ptr->name2];
-			ego_item_type *e2_ptr = &e_info[o_ptr->name2b];
+			auto e_ptr = &e_info[o_ptr->name2];
+			auto e2_ptr = &e_info[o_ptr->name2b];
 
 			if (e_ptr->before)
 			{
@@ -1509,8 +1517,8 @@ static std::string object_desc_aux(object_type const *o_ptr, int pref, int mode)
 		/* Grab any ego-item name */
 		if (known && (o_ptr->name2 || o_ptr->name2b) && (o_ptr->tval != TV_ROD_MAIN))
 		{
-			ego_item_type *e_ptr = &e_info[o_ptr->name2];
-			ego_item_type *e2_ptr = &e_info[o_ptr->name2b];
+			auto e_ptr = &e_info[o_ptr->name2];
+			auto e2_ptr = &e_info[o_ptr->name2b];
 
 			if (e_ptr->before)
 			{
@@ -1581,8 +1589,8 @@ static std::string object_desc_aux(object_type const *o_ptr, int pref, int mode)
 		/* Grab any ego-item name */
 		if (known && (o_ptr->name2 || o_ptr->name2b) && (o_ptr->tval != TV_ROD_MAIN))
 		{
-			ego_item_type *e_ptr = &e_info[o_ptr->name2];
-			ego_item_type *e2_ptr = &e_info[o_ptr->name2b];
+			auto e_ptr = &e_info[o_ptr->name2];
+			auto e2_ptr = &e_info[o_ptr->name2b];
 
 			if (e_ptr->before)
 			{
@@ -1631,7 +1639,7 @@ static std::string object_desc_aux(object_type const *o_ptr, int pref, int mode)
 
 				if (known && o_ptr->name2)
 				{
-					ego_item_type *e_ptr = &e_info[o_ptr->name2];
+					auto e_ptr = &e_info[o_ptr->name2];
 					t += e_ptr->name;
 				}
 			}
@@ -1706,8 +1714,8 @@ static std::string object_desc_aux(object_type const *o_ptr, int pref, int mode)
 		/* Grab any ego-item name */
 		else if ((o_ptr->name2 || o_ptr->name2b) && (o_ptr->tval != TV_ROD_MAIN))
 		{
-			ego_item_type *e_ptr = &e_info[o_ptr->name2];
-			ego_item_type *e2_ptr = &e_info[o_ptr->name2b];
+			auto e_ptr = &e_info[o_ptr->name2];
+			auto e2_ptr = &e_info[o_ptr->name2b];
 
 			if (o_ptr->name2 && !e_ptr->before)
 			{
@@ -2152,6 +2160,7 @@ cptr item_activation(object_type *o_ptr, byte num)
 {
 	auto const &k_info = game->edit_data.k_info;
 	auto const &a_info = game->edit_data.a_info;
+	auto const &e_info = game->edit_data.e_info;
 
 	/* Needed hacks */
 	static char rspell[2][80];

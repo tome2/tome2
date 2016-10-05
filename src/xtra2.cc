@@ -5007,12 +5007,13 @@ void set_grace(s32b v)
 static bool_ test_object_wish(char *name, object_type *o_ptr, object_type *forge, const char *what)
 {
 	auto &k_info = game->edit_data.k_info;
+	auto const &e_info = game->edit_data.e_info;
 
-	int i, j, jb, save_aware;
+	int save_aware;
 	char buf[200];
 
 	/* try all objects, this *IS* a very ugly and slow method :( */
-	for (i = 0; i < k_info.size(); i++)
+	for (std::size_t i = 0; i < k_info.size(); i++)
 	{
 		auto k_ptr = &k_info[i];
 
@@ -5040,9 +5041,9 @@ static bool_ test_object_wish(char *name, object_type *o_ptr, object_type *forge
 		   (o_ptr->tval == TV_ROD_MAIN && strstr(name, "rod of")))
 		{
 			/* try all ego */
-			for (j = max_e_idx - 1; j >= 0; j--)
+			for (std::size_t j = 0; j < e_info.size(); j++)
 			{
-				ego_item_type *e_ptr = &e_info[j];
+				auto e_ptr = &e_info[j];
 				bool_ ok = FALSE;
 
 				if (j && !e_ptr->name) continue;
@@ -5068,9 +5069,9 @@ static bool_ test_object_wish(char *name, object_type *o_ptr, object_type *forge
 				}
 
 				/* try all ego */
-				for (jb = max_e_idx - 1; jb >= 0; jb--)
+				for (std::size_t jb = 0; jb < e_info.size(); jb++)
 				{
-					ego_item_type *eb_ptr = &e_info[jb];
+					auto eb_ptr = &e_info[jb];
 					bool_ ok = FALSE;
 
 					if (jb && !eb_ptr->name) continue;

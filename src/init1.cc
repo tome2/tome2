@@ -3499,6 +3499,8 @@ static bool_ grab_one_ego_item_flag(object_flag_set *flags, ego_flag_set *ego, c
  */
 errr init_e_info_txt(FILE *fp)
 {
+	auto &e_info = game->edit_data.e_info;
+
 	int i, cur_r = -1, cur_t = 0;
 	char buf[1024];
 	char *s, *t;
@@ -3547,9 +3549,6 @@ errr init_e_info_txt(FILE *fp)
 			/* Verify information */
 			if (i < error_idx) return (4);
 
-			/* Verify information */
-			if (i >= max_e_idx) return (2);
-
 			/* Save the index */
 			error_idx = i;
 
@@ -3558,7 +3557,7 @@ errr init_e_info_txt(FILE *fp)
 			cur_t = 0;
 
 			/* Point at the "info" */
-			e_ptr = &e_info[i];
+			e_ptr = &expand_to_fit_index(e_info, i);
 
 			/* Copy name */
 			assert(!e_ptr->name);
@@ -6773,12 +6772,6 @@ static errr process_dungeon_file_aux(char *buf, int *yval, int *xval, int xvalst
 			if (zz[0][0] == 't')
 			{
 				max_real_towns = atoi(zz[1]);
-			}
-
-			/* Maximum e_idx */
-			else if (zz[0][0] == 'E')
-			{
-				max_e_idx = atoi(zz[1]);
 			}
 
 			/* Maximum o_idx */

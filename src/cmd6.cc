@@ -5077,6 +5077,7 @@ const char *activation_aux(object_type * o_ptr, bool_ doit, int item)
 {
 	auto const &k_info = game->edit_data.k_info;
 	auto const &a_info = game->edit_data.a_info;
+	auto const &e_info = game->edit_data.e_info;
 
 	int plev = get_skill(SKILL_DEVICE);
 

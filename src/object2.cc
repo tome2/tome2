@@ -1092,6 +1092,7 @@ s32b object_value_real(object_type const *o_ptr)
 	auto const &r_info = game->edit_data.r_info;
 	auto const &k_info = game->edit_data.k_info;
 	auto const &a_info = game->edit_data.a_info;
+	auto const &e_info = game->edit_data.e_info;
 
 	s32b value;
 
@@ -1132,7 +1133,7 @@ s32b object_value_real(object_type const *o_ptr)
 	/* Ego-Item */
 	else if (o_ptr->name2)
 	{
-		ego_item_type *e_ptr = &e_info[o_ptr->name2];
+		auto e_ptr = &e_info[o_ptr->name2];
 
 		/* Hack -- "worthless" ego-items */
 		if (!e_ptr->cost) return (0L);
@@ -1142,7 +1143,7 @@ s32b object_value_real(object_type const *o_ptr)
 
 		if (o_ptr->name2b)
 		{
-			ego_item_type *e_ptr = &e_info[o_ptr->name2b];
+			auto e_ptr = &e_info[o_ptr->name2b];
 
 			/* Hack -- "worthless" ego-items */
 			if (!e_ptr->cost) return (0L);
@@ -2352,6 +2353,7 @@ static bool_ make_artifact(object_type *o_ptr)
 static bool_ make_ego_item(object_type *o_ptr, bool_ good)
 {
 	auto const &k_info = game->edit_data.k_info;
+	auto const &e_info = game->edit_data.e_info;
 
 	bool_ ret = FALSE;
 	auto k_ptr = &k_info[o_ptr->k_idx];
@@ -2361,9 +2363,9 @@ static bool_ make_ego_item(object_type *o_ptr, bool_ good)
 	std::vector<size_t> ok_ego;
 
 	/* Grab the ok ego */
-	for (size_t i = 0; i < max_e_idx; i++)
+	for (size_t i = 0; i < e_info.size(); i++)
 	{
-		ego_item_type *e_ptr = &e_info[i];
+		auto e_ptr = &e_info[i];
 		bool_ ok = FALSE;
 
 		/* Skip "empty" items */
@@ -2403,7 +2405,7 @@ static bool_ make_ego_item(object_type *o_ptr, bool_ good)
 	for (size_t i = 0; i < ok_ego.size() * 10; i++)
 	{
 		size_t j = ok_ego[rand_int(ok_ego.size())];
-		ego_item_type *e_ptr = &e_info[j];
+		auto e_ptr = &e_info[j];
 
 		/* XXX XXX Enforce minimum "depth" (loosely) */
 		if (e_ptr->level > dun_level)
@@ -2442,7 +2444,7 @@ static bool_ make_ego_item(object_type *o_ptr, bool_ good)
 		for (size_t i = 0; i < ok_ego.size() * 10; i++)
 		{
 			int j = ok_ego[rand_int(ok_ego.size())]; // Explicit int conversion to avoid warning
-			ego_item_type *e_ptr = &e_info[j];
+			auto e_ptr = &e_info[j];
 
 			/* Cannot be a double ego of the same ego type */
 			if (j == o_ptr->name2) continue;
@@ -3971,6 +3973,7 @@ void apply_magic(object_type *o_ptr, int lev, bool_ okay, bool_ good, bool_ grea
 {
 	auto &k_info = game->edit_data.k_info;
 	auto &a_info = game->edit_data.a_info;
+	auto const &e_info = game->edit_data.e_info;
 
 	int i, rolls;
 	auto k_ptr = &k_info[o_ptr->k_idx];
@@ -4233,7 +4236,6 @@ void apply_magic(object_type *o_ptr, int lev, bool_ okay, bool_ good, bool_ grea
 	/* Hack -- analyze ego-items */
 	else if (o_ptr->name2)
 	{
-		ego_item_type *e_ptr;
 		int j;
 		bool_ limit_blows = FALSE;
 		s16b e_idx;
@@ -4242,7 +4244,7 @@ void apply_magic(object_type *o_ptr, int lev, bool_ okay, bool_ good, bool_ grea
 
 		/* Ok now, THAT is truly ugly */
 try_an_other_ego:
-		e_ptr = &e_info[e_idx];
+		auto e_ptr = &e_info[e_idx];
 
 		/* Hack -- extra powers */
 		for (j = 0; j < FLAG_RARITY_MAX; j++)

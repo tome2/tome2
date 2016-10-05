@@ -3,6 +3,7 @@
 #include "ability_type.hpp"
 #include "artifact_type.hpp"
 #include "dungeon_info_type.hpp"
+#include "ego_item_type.hpp"
 #include "feature_type.hpp"
 #include "hist_type.hpp"
 #include "monster_ego.hpp"
@@ -54,6 +55,11 @@ struct GameEditData {
 	 * Artifacts
 	 */
 	std::vector<artifact_type> a_info;
+
+	/**
+	 * Ego items
+	 */
+	std::vector<ego_item_type> e_info;
 
 	/**
 	 * Artifact sets

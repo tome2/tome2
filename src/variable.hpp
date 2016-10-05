@@ -7,7 +7,6 @@
 #include "deity_type.hpp"
 #include "dungeon_flag_set.hpp"
 #include "effect_type.hpp"
-#include "ego_item_type_fwd.hpp"
 #include "fate.hpp"
 #include "monster_type_fwd.hpp"
 #include "object_type_fwd.hpp"
@@ -149,7 +148,6 @@ extern player_class const *cp_ptr;
 extern player_spec const *spp_ptr;
 extern char player_name[32];
 extern char player_base[32];
-extern ego_item_type *e_info;
 extern trap_type *t_info;
 extern int wildc2i[256];
 extern cptr DEFAULT_FEAT_TEXT;
@@ -162,7 +160,6 @@ extern char *ANGBAND_DIR_DNGN;
 extern bool_ (*get_mon_num_hook)(int r_idx);
 extern bool_ (*get_mon_num2_hook)(int r_idx);
 extern bool_ (*get_obj_num_hook)(int k_idx);
-extern u16b max_e_idx;
 extern u16b max_o_idx;
 extern u16b max_m_idx;
 extern u16b max_t_idx;

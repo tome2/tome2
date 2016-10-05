@@ -428,11 +428,6 @@ player_class const *cp_ptr;
 player_spec const *spp_ptr;
 
 
-/*
- * The ego-item arrays
- */
-ego_item_type *e_info;
-
 /* jk */
 /* the trap-arrays */
 trap_type *t_info;
@@ -557,11 +552,6 @@ bool_ (*get_obj_num_hook)(int k_idx);
  */
 s32b get_level_max_stick = -1;
 s32b get_level_use_stick = -1;
-
-/*
- * Maximum number of ego-items in e_info.txt
- */
-u16b max_e_idx;
 
 /*
  * Maximum number of objects in the level
