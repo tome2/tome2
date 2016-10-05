@@ -637,17 +637,15 @@ void reset_visuals(void)
 	auto &race_mod_info = game->edit_data.race_mod_info;
 	auto &re_info = game->edit_data.re_info;
 	auto &r_info = game->edit_data.r_info;
+	auto &f_info = game->edit_data.f_info;
 
 	int i;
 
 	/* Extract some info about terrain features */
-	for (i = 0; i < max_f_idx; i++)
+	for (auto &f_ref: f_info)
 	{
-		feature_type *f_ptr = &f_info[i];
-
-		/* Assume we will use the underlying values */
-		f_ptr->x_attr = f_ptr->d_attr;
-		f_ptr->x_char = f_ptr->d_char;
+		f_ref.x_attr = f_ref.d_attr;
+		f_ref.x_char = f_ref.d_char;
 	}
 
 	/* Extract default attr/char code for stores */

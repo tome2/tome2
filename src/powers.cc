@@ -17,6 +17,7 @@
 #include "feature_flag.hpp"
 #include "feature_type.hpp"
 #include "files.hpp"
+#include "game.hpp"
 #include "hooks.hpp"
 #include "mimic.hpp"
 #include "monster2.hpp"
@@ -129,6 +130,8 @@ static bool_ power_chance(power_type *x_ptr)
 
 static void power_activate(int power)
 {
+	auto const &f_info = game->edit_data.f_info;
+
 	s16b plev = p_ptr->lev;
 	char ch = 0;
 	int amber_power = 0;

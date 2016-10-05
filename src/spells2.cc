@@ -97,6 +97,8 @@ void grow_things(s16b type, int rad)
  */
 void grow_trees(int rad)
 {
+	auto const &f_info = game->edit_data.f_info;
+
 	int a, i, j;
 
 	for (a = 0; a < rad * rad + 11; a++)
@@ -119,6 +121,8 @@ void grow_trees(int rad)
  */
 void grow_grass(int rad)
 {
+	auto const &f_info = game->edit_data.f_info;
+
 	int a, i, j;
 
 	for (a = 0; a < rad * rad + 11; a++)
@@ -5457,6 +5461,8 @@ bool_ trap_creation(void)
 
 bool_ wall_stone(int y, int x)
 {
+	auto const &f_info = game->edit_data.f_info;
+
 	cave_type *c_ptr = &cave[y][x];
 	int flg = PROJECT_GRID | PROJECT_ITEM;
 	auto const featflags = f_info[c_ptr->feat].flags;
@@ -5993,7 +5999,14 @@ bool_ heal_insanity(int val)
  */
 bool_ passwall(int dir, bool_ safe)
 {
-	int x = p_ptr->px, y = p_ptr->py, ox = p_ptr->px, oy = p_ptr->py, lx = p_ptr->px, ly = p_ptr->py;
+	auto const &f_info = game->edit_data.f_info;
+
+	int x = p_ptr->px;
+	int y = p_ptr->py;
+	int ox = p_ptr->px;
+	int oy = p_ptr->py;
+	int lx = p_ptr->px;
+	int ly = p_ptr->py;
 	cave_type *c_ptr;
 	bool_ ok = FALSE;
 
@@ -6305,6 +6318,8 @@ bool_ reset_recall(bool_ no_trepas_max_depth)
  */
 void create_between_gate(int dist, int y, int x)
 {
+	auto const &f_info = game->edit_data.f_info;
+
 	int ii, ij, plev = get_skill(SKILL_CONVEYANCE);
 
 	if (dungeon_flags & DF_NO_TELEPORT)
@@ -6408,6 +6423,8 @@ static int rotate_dir(int dir, int mov)
 
 void geomancy_random_wall(int y, int x)
 {
+	auto const &f_info = game->edit_data.f_info;
+
 #define TABLE_SIZE 4
 	cave_type *c_ptr = &cave[y][x];
 	int feat = -1;
@@ -6422,7 +6439,8 @@ void geomancy_random_wall(int y, int x)
 	};
 
 	/* Do not destroy permanent things */
-	if (f_info[c_ptr->feat].flags & FF_PERMANENT) {
+	if (f_info[c_ptr->feat].flags & FF_PERMANENT)
+	{
 		return;
 	}
 
@@ -6437,6 +6455,8 @@ void geomancy_random_wall(int y, int x)
 
 void geomancy_random_floor(int y, int x, bool_ kill_wall)
 {
+	auto const &f_info = game->edit_data.f_info;
+
 #define TABLE_SIZE 9
 	cave_type *c_ptr = &cave[y][x];
 	int feat = -1;

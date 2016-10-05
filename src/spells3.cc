@@ -5,6 +5,7 @@
 #include "cmd5.hpp"
 #include "feature_flag.hpp"
 #include "feature_type.hpp"
+#include "game.hpp"
 #include "lua_bind.hpp"
 #include "mimic.hpp"
 #include "monster2.hpp"
@@ -2726,6 +2727,8 @@ const char *mind_stun_info()
 
 casting_result tempo_magelock()
 {
+	auto const &f_info = game->edit_data.f_info;
+
 	if (get_level_s(MAGELOCK, 50) >= 30)
 	{
 		int x,y;

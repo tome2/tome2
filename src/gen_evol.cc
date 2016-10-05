@@ -12,6 +12,7 @@
 #include "cave_type.hpp"
 #include "feature_flag.hpp"
 #include "feature_type.hpp"
+#include "game.hpp"
 #include "generate.hpp"
 #include "levels.hpp"
 #include "player_type.hpp"
@@ -23,6 +24,8 @@
  */
 void evolve_level(bool_ noise)
 {
+	auto const &f_info = game->edit_data.f_info;
+
 	int i, j;
 
 	int cw = 0, cf = 0;

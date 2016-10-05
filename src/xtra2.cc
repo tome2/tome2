@@ -2403,6 +2403,7 @@ static void monster_death_gods(int m_idx, monster_type *m_ptr)
 void monster_death(int m_idx)
 {
 	auto const &d_info = game->edit_data.d_info;
+	auto const &f_info = game->edit_data.f_info;
 
 	monster_type *m_ptr = &m_list[m_idx];
 
@@ -3737,6 +3738,7 @@ static s16b target_pick(point p, int dy, int dx, std::vector<point> const &point
 static bool_ target_set_accept(int y, int x)
 {
 	auto const &r_info = game->edit_data.r_info;
+	auto const &f_info = game->edit_data.f_info;
 
 	/* Player grid is always interesting */
 	if ((y == p_ptr->py) && (x == p_ptr->px)) return (TRUE);
@@ -3897,6 +3899,7 @@ static int target_set_aux(int y, int x, int mode, cptr info)
 	auto const &d_info = game->edit_data.d_info;
 	auto const &st_info = game->edit_data.st_info;
 	auto const &wf_info = game->edit_data.wf_info;
+	auto const &f_info = game->edit_data.f_info;
 
 	cave_type *c_ptr = &cave[y][x];
 

@@ -15,9 +15,6 @@ M:Y:66
 # Maximum number of items in k_info.txt
 M:K:886
 
-# Maximum number of terrain features in f_info.txt
-M:F:249
-
 # Maximum number of artifacts in a_info.txt
 M:A:257
 

@@ -70,15 +70,15 @@ int distance(int y1, int x1, int y2, int x2)
  */
 static bool_ is_wall(cave_type *c_ptr)
 {
-	byte feat;
-
+	auto const &f_info = game->edit_data.f_info;
 
 	/* Handle feature mimics */
-	if (c_ptr->mimic) feat = c_ptr->mimic;
-	else feat = c_ptr->feat;
+	byte const feat = c_ptr->mimic
+		? c_ptr->mimic
+		: c_ptr->feat;
 
 	/* Paranoia */
-	if (feat >= max_f_idx) return FALSE;
+	if (feat >= f_info.size()) return FALSE;
 
 	/* Vanilla floors and doors aren't considered to be walls */
 	if (feat < FEAT_SECRET) return FALSE;
@@ -850,6 +850,7 @@ static void map_info(int y, int x, byte *ap, char *cp)
 {
 	auto const &st_info = game->edit_data.st_info;
 	auto const &r_info = game->edit_data.r_info;
+	auto const &f_info = game->edit_data.f_info;
 
 	byte a;
 
@@ -867,20 +868,13 @@ static void map_info(int y, int x, byte *ap, char *cp)
 	auto info = c_ptr->info;
 
 	/* Feature code */
-	auto feat = c_ptr->feat;
-
-	/* Apply "mimic" field */
-	if (c_ptr->mimic)
-	{
-		feat = c_ptr->mimic;
-	}
-	else
-	{
-		feat = f_info[feat].mimic;
-	}
+	auto const feat = c_ptr->mimic
+		? c_ptr->mimic
+		: f_info[c_ptr->feat].mimic
+		;
 
 	/* Access floor */
-	feature_type *f_ptr = &f_info[feat];
+	auto f_ptr = &f_info[feat];
 
 
 	/**** Layer 1 -- Terrain feature ****/
@@ -1286,6 +1280,7 @@ void map_info_default(int y, int x, byte *ap, char *cp)
 {
 	auto const &st_info = game->edit_data.st_info;
 	auto const &r_info = game->edit_data.r_info;
+	auto const &f_info = game->edit_data.f_info;
 
 	byte a;
 
@@ -1306,17 +1301,9 @@ void map_info_default(int y, int x, byte *ap, char *cp)
 	auto info = c_ptr->info;
 
 	/* Feature code */
-	auto feat = c_ptr->feat;
-
-	/* Apply "mimic" field */
-	if (c_ptr->mimic)
-	{
-		feat = c_ptr->mimic;
-	}
-	else
-	{
-		feat = f_info[feat].mimic;
-	}
+	auto const feat = c_ptr->mimic
+		? c_ptr->mimic
+		: f_info[c_ptr->feat].mimic;
 
 	/* Access floor */
 	feature_type const *f_ptr = &f_info[feat];
@@ -2001,9 +1988,9 @@ static byte priority_table[][2] =
  */
 static byte priority(byte a, char c)
 {
-	int i, p0, p1;
+	auto const &f_info = game->edit_data.f_info;
 
-	feature_type *f_ptr;
+	int i, p0, p1;
 
 	/* Scan the table */
 	for (i = 0; TRUE; i++)
@@ -2018,7 +2005,7 @@ static byte priority(byte a, char c)
 		p0 = priority_table[i][0];
 
 		/* Access the feature */
-		f_ptr = &f_info[p0];
+		auto f_ptr = &f_info[p0];
 
 		/* Check character and attribute, accept matches */
 		if ((f_ptr->x_char == c) && (f_ptr->x_attr == a)) return (p1);
@@ -3566,6 +3553,8 @@ void forget_mon_lite(void)
  */
 void update_mon_lite(void)
 {
+	auto const &f_info = game->edit_data.f_info;
+
 	int i, y, x, d;
 	int fy, fx;
 
@@ -4590,6 +4579,8 @@ bool cave_floor_bold(int y, int x)
  */
 bool cave_floor_grid(cave_type const *c)
 {
+	auto const &f_info = game->edit_data.f_info;
+
 	return (f_info[c->feat].flags & FF_FLOOR) && (c->feat != FEAT_MON_TRAP);
 }
 
@@ -4609,6 +4600,8 @@ bool cave_plain_floor_bold(int y, int x)
  */
 bool cave_plain_floor_grid(cave_type const *c)
 {
+	auto const &f_info = game->edit_data.f_info;
+
 	return
 		(f_info[c->feat].flags & FF_FLOOR) &&
 		!(f_info[c->feat].flags & FF_REMEMBER);
@@ -4635,6 +4628,8 @@ bool cave_sight_bold(int y, int x)
 
 bool cave_sight_grid(cave_type const *c)
 {
+	auto const &f_info = game->edit_data.f_info;
+
 	return !(f_info[c->feat].flags & FF_NO_VISION);
 }
 
@@ -4649,6 +4644,8 @@ bool cave_sight_grid(cave_type const *c)
  */
 bool cave_clean_bold(int y, int x)
 {
+	auto const &f_info = game->edit_data.f_info;
+
 	return
 		(f_info[cave[y][x].feat].flags & FF_FLOOR) &&
 		(cave[y][x].feat != FEAT_MON_TRAP) &&
@@ -4681,6 +4678,8 @@ bool cave_empty_bold(int y, int x)
  */
 bool cave_naked_bold(int y, int x)
 {
+	auto const &f_info = game->edit_data.f_info;
+
 	return
 		(f_info[cave[y][x].feat].flags & FF_FLOOR) &&
 		(cave[y][x].feat != FEAT_MON_TRAP) &&
@@ -4691,6 +4690,8 @@ bool cave_naked_bold(int y, int x)
 
 bool cave_naked_bold2(int y, int x)
 {
+	auto const &f_info = game->edit_data.f_info;
+
 	return
 		(f_info[cave[y][x].feat].flags & FF_FLOOR) &&
 		(cave[y][x].feat != FEAT_MON_TRAP) &&
@@ -4709,6 +4710,8 @@ bool cave_perma_bold(int y, int x)
 
 bool cave_perma_grid(cave_type const *c)
 {
+	auto const &f_info = game->edit_data.f_info;
+
 	return bool(f_info[c->feat].flags & FF_PERMANENT);
 }
 

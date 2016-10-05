@@ -2543,6 +2543,7 @@ void py_attack(int y, int x, int max_blow)
 bool_ player_can_enter(byte feature)
 {
 	auto const &r_info = game->edit_data.r_info;
+	auto const &f_info = game->edit_data.f_info;
 
 	bool_ pass_wall;
 
@@ -2737,6 +2738,7 @@ void move_player_aux(int dir, int do_pickup, int run, bool_ disarm)
 {
 	auto const &d_info = game->edit_data.d_info;
 	auto const &r_info = game->edit_data.r_info;
+	auto const &f_info = game->edit_data.f_info;
 
 	int y, x, tmp;
 
@@ -3020,11 +3022,10 @@ void move_player_aux(int dir, int do_pickup, int run, bool_ disarm)
 			/* Wall (or secret door) */
 			else
 			{
-				int feat;
-
-				if (c_ptr->mimic) feat = c_ptr->mimic;
-				else
-					feat = f_info[c_ptr->feat].mimic;
+				int const feat = c_ptr->mimic
+					? c_ptr->mimic
+					: f_info[c_ptr->feat].mimic
+					;
 
 				msg_format("You feel %s.", f_info[feat].block);
 				c_ptr->info |= (CAVE_MARK);
@@ -3271,6 +3272,8 @@ void move_player(int dir, int do_pickup, bool_ disarm)
  */
 static int see_obstacle_grid(cave_type *c_ptr)
 {
+	auto const &f_info = game->edit_data.f_info;
+
 	/*
 	 * Hack -- Avoid hitting detected traps, because we cannot rely on
 	 * the CAVE_MARK check below, and traps can be set to nearly
@@ -3630,6 +3633,8 @@ static void run_init(int dir)
  */
 static bool_ run_test(void)
 {
+	auto const &f_info = game->edit_data.f_info;
+
 	int prev_dir, new_dir, check_dir = 0;
 
 	int row, col;

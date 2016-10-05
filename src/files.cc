@@ -220,6 +220,7 @@ errr process_pref_file_aux(char *buf)
 	auto &st_info = game->edit_data.st_info;
 	auto &re_info = game->edit_data.re_info;
 	auto &r_info = game->edit_data.r_info;
+	auto &f_info = game->edit_data.f_info;
 
 	int i, j, n1, n2;
 
@@ -377,13 +378,18 @@ errr process_pref_file_aux(char *buf)
 	{
 		if (tokenize(buf + 2, 3, zz, ':', '/') == 3)
 		{
-			feature_type *f_ptr;
-			i = (huge)strtol(zz[0], NULL, 0);
+			std::size_t f_idx = strtoul(zz[0], NULL, 0);
 			n1 = strtol(zz[1], NULL, 0);
 			n2 = strtol(zz[2], NULL, 0);
-			if (i >= max_f_idx) return (1);
-			f_ptr = &f_info[i];
-			if (n1) f_ptr->x_attr = n1;
+
+			if (f_idx >= f_info.size()) return (1);
+
+			auto f_ptr = &f_info[f_idx];
+
+			if (n1)
+			{
+				f_ptr->x_attr = n1;
+			}
 			if (n2)
 			{
 				f_ptr->x_char = n2;

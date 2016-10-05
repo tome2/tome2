@@ -5254,6 +5254,8 @@ static bool_ player_invis(monster_type * m_ptr)
  */
 static void process_monster(int m_idx, bool_ is_frien)
 {
+	auto const &f_info = game->edit_data.f_info;
+
 	int i, d, oy, ox, ny, nx;
 
 	int mm[8];

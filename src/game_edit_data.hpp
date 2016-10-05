@@ -2,6 +2,7 @@
 
 #include "ability_type.hpp"
 #include "dungeon_info_type.hpp"
+#include "feature_type.hpp"
 #include "hist_type.hpp"
 #include "monster_ego.hpp"
 #include "monster_race.hpp"
@@ -101,6 +102,11 @@ struct GameEditData {
 	 * Monster race egos
 	 */
 	std::vector<monster_ego> re_info;
+
+	/*
+	 * Terrain features
+	 */
+	std::vector<feature_type> f_info;
 
 	/**
 	 * Wilderness features

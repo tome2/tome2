@@ -376,6 +376,8 @@ namespace {
  */
 void wilderness_gen()
 {
+	auto const &f_info = game->edit_data.f_info;
+
 	int i, y, x, hack_floor;
 	bool_ daytime;
 	int xstart = 0;
@@ -942,6 +944,8 @@ static std::vector<std::size_t> get_shops()
 /* Generate town borders */
 static void set_border(int y, int x)
 {
+	auto const &f_info = game->edit_data.f_info;
+
 	cave_type *c_ptr;
 
 	/* Paranoia */

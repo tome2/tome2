@@ -898,9 +898,11 @@ static void check_music()
  */
 static void apply_effect(int y, int x)
 {
+	auto const &f_info = game->edit_data.f_info;
+
 	cave_type *c_ptr = &cave[y][x];
 
-	feature_type *f_ptr = &f_info[c_ptr->feat];
+	auto f_ptr = &f_info[c_ptr->feat];
 
 
 	if (f_ptr->d_frequency[0] != 0)
@@ -1219,6 +1221,7 @@ static void process_world(void)
 {
 	auto const &d_info = game->edit_data.d_info;
 	auto const &r_info = game->edit_data.r_info;
+	auto const &f_info = game->edit_data.f_info;
 
 	timer_type *t_ptr;
 
@@ -4186,6 +4189,8 @@ static void process_command(void)
  */
 static void process_player(void)
 {
+	auto const &f_info = game->edit_data.f_info;
+
 	int i, j;
 
 	int speed_use;
@@ -4530,17 +4535,9 @@ static void process_player(void)
 					for (i = panel_col_min; i <= panel_col_max; i++)
 					{
 						cave_type *c_ptr = &cave[j][i];
-						feature_type *f_ptr;
-
-						/* Apply terrain feature mimics */
-						if (c_ptr->mimic)
-						{
-							f_ptr = &f_info[c_ptr->mimic];
-						}
-						else
-						{
-							f_ptr = &f_info[f_info[c_ptr->feat].mimic];
-						}
+						auto f_ptr = c_ptr->mimic
+							? &f_info[c_ptr->mimic]
+							: &f_info[f_info[c_ptr->feat].mimic];
 
 						/* Skip normal features */
 						if (!(f_ptr->flags & FF_ATTR_MULTI))

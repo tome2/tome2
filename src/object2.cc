@@ -5078,6 +5078,8 @@ void place_gold(int y, int x)
  */
 s16b drop_near(object_type *j_ptr, int chance, int y, int x)
 {
+	auto const &f_info = game->edit_data.f_info;
+
 	int i, k, d, s;
 
 	int bs, bn;

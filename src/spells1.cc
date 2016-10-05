@@ -2906,6 +2906,7 @@ static int project_m_y;
 static bool_ project_f(int who, int r, int y, int x, int dam, int typ)
 {
 	cave_type *c_ptr = &cave[y][x];
+	auto const &f_info = game->edit_data.f_info;
 
 	bool_ obvious = FALSE;
 
@@ -6913,6 +6914,7 @@ static bool_ project_p(int who, int r, int y, int x, int dam, int typ, int a_rad
 {
 	auto const &d_info = game->edit_data.d_info;
 	auto const &r_info = game->edit_data.r_info;
+	auto const &f_info = game->edit_data.f_info;
 
 	int k = 0, do_move = 0, a = 0, b = 0, x1 = 0, y1 = 0;
 

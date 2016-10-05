@@ -429,11 +429,6 @@ player_spec const *spp_ptr;
 
 
 /*
- * The terrain feature arrays
- */
-feature_type *f_info;
-
-/*
  * The object kind arrays
  */
 object_kind *k_info;
@@ -577,11 +572,6 @@ s32b get_level_use_stick = -1;
  * Maximum number of items in k_info.txt
  */
 u16b max_k_idx;
-
-/*
- * Maximum number of terrain features in f_info.txt
- */
-u16b max_f_idx;
 
 /*
  * Maximum number of artifacts in a_info.txt

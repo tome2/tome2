@@ -277,7 +277,7 @@ namespace {
 
 		static void allocate()
 		{
-			f_info = new feature_type[max_f_idx];
+			// Nothing to do
 		}
 
 		static errr parse(FILE *fp)

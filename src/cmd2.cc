@@ -1394,6 +1394,8 @@ void do_cmd_close(void)
  */
 static bool_ do_cmd_tunnel_test(int y, int x)
 {
+	auto const &f_info = game->edit_data.f_info;
+
 	/* Must have knowledge(execpt on "forget" levels) */
 	if (!(cave[y][x].info & (CAVE_MARK)))
 	{
@@ -1475,11 +1477,12 @@ static bool_ twall(int y, int x, byte feat)
 static bool_ do_cmd_tunnel_aux(int y, int x, int dir)
 {
 	auto const &d_info = game->edit_data.d_info;
+	auto const &f_info = game->edit_data.f_info;
 
 	int skill_req = 0, skill_req_1pct = 0;
 	cave_type *c_ptr = &cave[y][x];
 
-	feature_type *f_ptr = &f_info[c_ptr->feat];
+	auto f_ptr = &f_info[c_ptr->feat];
 
 	bool_ more = FALSE;
 
@@ -1920,9 +1923,9 @@ static bool_ do_cmd_disarm_chest(int y, int x, s16b o_idx)
  */
 static bool_ do_cmd_disarm_aux(int y, int x, int dir, int do_pickup)
 {
-	int i, j, power;
+	auto const &f_info = game->edit_data.f_info;
 
-	cave_type *c_ptr;
+	int i, j, power;
 
 	cptr name;
 
@@ -1933,7 +1936,7 @@ static bool_ do_cmd_disarm_aux(int y, int x, int dir, int do_pickup)
 	energy_use = 100;
 
 	/* Get grid and contents */
-	c_ptr = &cave[y][x];
+	auto c_ptr = &cave[y][x];
 
 	/* Access trap name */
 	if (t_info[c_ptr->t_idx].ident)
@@ -2353,6 +2356,8 @@ void do_cmd_bash(void)
  */
 void do_cmd_alter(void)
 {
+	auto const &f_info = game->edit_data.f_info;
+
 	int y, x, dir;
 
 	cave_type *c_ptr;
@@ -2890,6 +2895,8 @@ void do_cmd_stay(int pickup)
  */
 void do_cmd_rest(void)
 {
+	auto const &f_info = game->edit_data.f_info;
+
 	/* Can't rest on a Void Jumpgate -- too dangerous */
 	if (cave[p_ptr->py][p_ptr->px].feat == FEAT_BETWEEN)
 	{

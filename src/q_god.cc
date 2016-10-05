@@ -361,6 +361,8 @@ static void quest_god_place_rand_dung()
 
 static void quest_god_generate_relic()
 {
+	auto const &f_info = game->edit_data.f_info;
+
 	int tries = 1000, x = -1, y = -1;
 	object_type relic;
 

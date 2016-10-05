@@ -2015,6 +2015,7 @@ void do_cmd_macros(void)
 void do_cmd_visuals(void)
 {
 	auto &r_info = game->edit_data.r_info;
+	auto &f_info = game->edit_data.f_info;
 
 	int i;
 
@@ -2219,9 +2220,9 @@ void do_cmd_visuals(void)
 			fprintf(fff, "# Feature attr/char definitions\n\n");
 
 			/* Dump features */
-			for (i = 0; i < max_f_idx; i++)
+			for (std::size_t f_idx = 0; f_idx < f_info.size(); f_idx++)
 			{
-				feature_type *f_ptr = &f_info[i];
+				auto f_ptr = &f_info[f_idx];
 
 				/* Skip non-entries */
 				if (!f_ptr->name) continue;
@@ -2230,7 +2231,7 @@ void do_cmd_visuals(void)
 				fprintf(fff, "# %s\n", f_ptr->name);
 
 				/* Dump the feature attr/char info */
-				fprintf(fff, "F:%d:0x%02X:0x%02X\n\n", i,
+				fprintf(fff, "F:%zu:0x%02X:0x%02X\n\n", f_idx,
 				        (byte)(f_ptr->x_attr), (byte)(f_ptr->x_char));
 			}
 
@@ -2365,7 +2366,7 @@ void do_cmd_visuals(void)
 			/* Hack -- query until done */
 			while (1)
 			{
-				feature_type *f_ptr = &f_info[f];
+				auto f_ptr = &f_info[f];
 
 				byte da = f_ptr->d_attr;
 				char dc = f_ptr->d_char;
@@ -2400,8 +2401,8 @@ void do_cmd_visuals(void)
 				if (i == ESCAPE) break;
 
 				/* Analyze */
-				if (i == 'n') f = (f + max_f_idx + 1) % max_f_idx;
-				if (i == 'N') f = (f + max_f_idx - 1) % max_f_idx;
+				if (i == 'n') f = (f + f_info.size() + 1) % f_info.size();
+				if (i == 'N') f = (f + f_info.size() - 1) % f_info.size();
 				if (i == 'a') f_info[f].x_attr = (ca + 1);
 				if (i == 'A') f_info[f].x_attr = (ca - 1);
 				if (i == 'c') f_info[f].x_char = (cc + 1);

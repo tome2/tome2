@@ -104,6 +104,8 @@ bool_ do_player_trap_call_out(void)
 
 static bool_ do_trap_teleport_away(object_type *i_ptr, s16b y, s16b x)
 {
+	auto const &f_info = game->edit_data.f_info;
+
 	bool_ ident = FALSE;
 	char o_name[80];
 
@@ -166,6 +168,8 @@ static bool_ do_trap_teleport_away(object_type *i_ptr, s16b y, s16b x)
  */
 static bool_ player_handle_trap_of_walls(void)
 {
+	auto const &f_info = game->edit_data.f_info;
+
 	bool_ ident;
 
 	s16b dx, dy, cx, cy;
@@ -1899,6 +1903,8 @@ bool_ player_activate_trap_type(s16b y, s16b x, object_type *i_ptr, s16b item)
 
 void player_activate_door_trap(s16b y, s16b x)
 {
+	auto const &f_info = game->edit_data.f_info;
+
 	cave_type *c_ptr;
 	bool_ ident = FALSE;
 
@@ -1936,6 +1942,7 @@ void player_activate_door_trap(s16b y, s16b x)
 void place_trap(int y, int x)
 {
 	auto const &d_info = game->edit_data.d_info;
+	auto const &f_info = game->edit_data.f_info;
 
 	s16b trap;
 	trap_type *t_ptr;
@@ -2055,6 +2062,8 @@ void place_trap_object(object_type *o_ptr)
 /* Dangerous trap placing function */
 void wiz_place_trap(int y, int x, int idx)
 {
+	auto const &f_info = game->edit_data.f_info;
+
 	cave_type *c_ptr = &cave[y][x];
 
 	/* Dangerous enough as it is... */

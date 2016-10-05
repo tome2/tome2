@@ -4,6 +4,7 @@
 #include "dungeon_flag.hpp"
 #include "feature_flag.hpp"
 #include "feature_type.hpp"
+#include "game.hpp"
 #include "hook_get_in.hpp"
 #include "hooks.hpp"
 #include "lua_bind.hpp"
@@ -470,6 +471,8 @@ std::string quest_fireproof_describe()
 
 static bool_ fireproof_gen_hook(void *, void *, void *)
 {
+	auto const &f_info = game->edit_data.f_info;
+
 	fireproof_settings const *settings = fireproof_get_settings();
 
 	/* Only if player doing this quest */

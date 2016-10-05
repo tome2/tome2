@@ -2056,9 +2056,9 @@ static int grab_one_feature_flag(cptr what, feature_flag_set *flags)
  */
 errr init_f_info_txt(FILE *fp)
 {
-	int i;
+	auto &f_info = game->edit_data.f_info;
+
 	char buf[1024];
-	char *s;
 
 	/* Current entry */
 	feature_type *f_ptr = NULL;
@@ -2085,7 +2085,7 @@ errr init_f_info_txt(FILE *fp)
 		if (buf[0] == 'N')
 		{
 			/* Find the colon before the name */
-			s = strchr(buf + 2, ':');
+			char *s = strchr(buf + 2, ':');
 
 			/* Verify that colon */
 			if (!s) return (1);
@@ -2097,19 +2097,16 @@ errr init_f_info_txt(FILE *fp)
 			if (!*s) return (1);
 
 			/* Get the index */
-			i = atoi(buf + 2);
+			int i = atoi(buf + 2);
 
 			/* Verify information */
 			if (i <= error_idx) return (4);
-
-			/* Verify information */
-			if (i >= max_f_idx) return (2);
 
 			/* Save the index */
 			error_idx = i;
 
 			/* Point at the "info" */
-			f_ptr = &f_info[i];
+			f_ptr = &expand_to_fit_index(f_info, i);
 
 			/* Copy name */
 			assert(!f_ptr->name);
@@ -2133,7 +2130,7 @@ errr init_f_info_txt(FILE *fp)
 		if (buf[0] == 'D')
 		{
 			/* Acquire the text */
-			s = buf + 4;
+			const char *s = buf + 4;
 
 			switch (buf[2])
 			{
@@ -2226,6 +2223,7 @@ errr init_f_info_txt(FILE *fp)
 		{
 			int side, dice, freq, type;
 			cptr tmp;
+			int i;
 
 			/* Find the next empty blow slot (if any) */
 			for (i = 0; i < 4; i++) if ((!f_ptr->d_side[i]) &&
@@ -6783,12 +6781,6 @@ static errr process_dungeon_file_aux(char *buf, int *yval, int *xval, int xvalst
 			else if (zz[0][0] == 'K')
 			{
 				max_k_idx = atoi(zz[1]);
-			}
-
-			/* Maximum f_idx */
-			else if (zz[0][0] == 'F')
-			{
-				max_f_idx = atoi(zz[1]);
 			}
 
 			/* Maximum a_idx */

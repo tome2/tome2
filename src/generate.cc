@@ -478,6 +478,8 @@ static bool_ is_safe_floor(int y, int x)
  */
 void place_new_way(int *y, int *x)
 {
+	auto const &f_info = game->edit_data.f_info;
+
 	int xx, yy;
 	int x0, x1, x2;
 	int y0, y1, y2;
@@ -784,7 +786,9 @@ bool_ new_player_spot(int branch)
  */
 static int next_to_walls(int y, int x)
 {
-	int	k = 0;
+	auto const &f_info = game->edit_data.f_info;
+
+	int k = 0;
 
 	if (f_info[cave[y + 1][x].feat].flags & FF_WALL) k++;
 	if (f_info[cave[y - 1][x].feat].flags & FF_WALL) k++;
@@ -1506,6 +1510,8 @@ static void build_streamer(int feat, int chance)
  */
 static void build_streamer2(int feat, int killwall)
 {
+	auto const &f_info = game->edit_data.f_info;
+
 	int i, j, mid, tx, ty;
 	int y, x, dir;
 	int poolchance;
@@ -1723,6 +1729,8 @@ static void destroy_level(void)
  */
 static bool_ get_is_floor(int x, int y)
 {
+	auto const &f_info = game->edit_data.f_info;
+
 	/* Out of bounds */
 	if (!in_bounds(y, x)) return (FALSE);
 
@@ -4298,6 +4306,8 @@ static void fill_hack(int y0, int x0, int y, int x, int xsize, int ysize,
 bool_ generate_fracave(int y0, int x0, int xsize, int ysize,
                       int cutoff, bool_ light, bool_ room)
 {
+	auto const &f_info = game->edit_data.f_info;
+
 	int x, y, i, amount, xhsize, yhsize;
 	cave_type *c_ptr;
 
@@ -6467,6 +6477,8 @@ static int next_to_corr(int y1, int x1)
  */
 static bool_ possible_doorway(int y, int x)
 {
+	auto const &f_info = game->edit_data.f_info;
+
 	/* Count the adjacent corridors */
 	if (next_to_corr(y, x) >= 2)
 	{
@@ -6495,6 +6507,8 @@ static bool_ possible_doorway(int y, int x)
  */
 static void try_doors(int y, int x)
 {
+	auto const &f_info = game->edit_data.f_info;
+
 	bool_ dir_ok[4];
 	int i, k, n;
 	int yy, xx;

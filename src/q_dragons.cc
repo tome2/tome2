@@ -5,6 +5,7 @@
 #include "dungeon_flag.hpp"
 #include "feature_flag.hpp"
 #include "feature_type.hpp"
+#include "game.hpp"
 #include "hook_quest_finish_in.hpp"
 #include "hooks.hpp"
 #include "init1.hpp"
@@ -20,6 +21,8 @@
 
 static bool_ quest_dragons_gen_hook(void *, void *, void *)
 {
+	auto const &f_info = game->edit_data.f_info;
+
 	int x, y, i;
 	int xstart = 2;
 	int ystart = 2;
