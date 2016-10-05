@@ -20,8 +20,6 @@
 # S:level(linear mode):stats
 # a:needed ability
 
-# E:excluding ability:excluding ability
-
 # Do not forget to update misc.txt with an entry like the following :
 # Maximum number of traits in ab_info.txt
 # M:b:50

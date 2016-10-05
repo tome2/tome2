@@ -3334,19 +3334,6 @@ errr init_ab_info_txt(FILE *fp)
 			/* Copy name */
 			ab_ptr->name = s;
 
-			/* Init */
-			ab_ptr->action_mkey = 0;
-			for (std::size_t z = 0; z < 10; z++)
-			{
-				ab_ptr->skills[z] = -1;
-				ab_ptr->need_abilities[z] = -1;
-				ab_ptr->forbid_abilities[z] = -1;
-			}
-			for (std::size_t z = 0; z < 6; z++)
-			{
-				ab_ptr->stat[z] = -1;
-			}
-
 			/* Next... */
 			continue;
 		}
@@ -3415,7 +3402,6 @@ errr init_ab_info_txt(FILE *fp)
 		if (buf[0] == 'k')
 		{
 			char *sec;
-			s16b level, skill;
 
 			/* Scan for the values */
 			if (NULL == (sec = strchr(buf + 2, ':')))
@@ -3426,25 +3412,15 @@ errr init_ab_info_txt(FILE *fp)
 			sec++;
 			if (!*sec) return (1);
 
-			level = atoi(buf + 2);
-			skill = find_skill(sec);
-
+			s16b level = atoi(buf + 2);
+			s16b skill = find_skill(sec);
 			if (skill == -1) return (1);
 
-			std::size_t z;
-			for (z = 0; z < 10; z++)
-			{
-				if (ab_ptr->skills[z] == -1)
-				{
-					break;
-				}
-			}
+			ability_type::skill_requirement req;
+			req.skill_idx = skill;
+			req.level = level;
 
-			if (z < 10)
-			{
-				ab_ptr->skills[z] = skill;
-				ab_ptr->skill_levels[z] = level;
-			}
+			ab_ptr->need_skills.emplace_back(req);
 
 			/* Next... */
 			continue;
@@ -3489,58 +3465,6 @@ errr init_ab_info_txt(FILE *fp)
 			if (stat == 6) return (1);
 
 			ab_ptr->stat[stat] = atoi(buf + 2);
-
-			/* Next... */
-			continue;
-		}
-
-		/* Process 'E' for "Excluding ability" */
-		if (buf[0] == 'E')
-		{
-			char *sec;
-			s16b ab1, ab2;
-
-			/* Scan for the values */
-			if (NULL == (sec = strchr(buf + 2, ':')))
-			{
-				return (1);
-			}
-			*sec = '\0';
-			sec++;
-			if (!*sec) return (1);
-
-			ab1 = find_ability(buf + 2);
-			ab2 = find_ability(sec);
-
-			if ((ab1 == -1) || (ab2 == -1)) return (1);
-
-			std::size_t z;
-
-			for (z = 0; z < 10; z++)
-			{
-				if (ab_info[ab1].forbid_abilities[z] == -1)
-				{
-					break;
-				}
-			}
-
-			if (z < 10)
-			{
-				ab_info[ab1].forbid_abilities[z] = ab2;
-			}
-
-			for (z = 0; z < 10; z++)
-			{
-				if (ab_info[ab2].forbid_abilities[z] == -1)
-				{
-					break;
-				}
-			}
-
-			if (z < 10)
-			{
-				ab_info[ab2].forbid_abilities[z] = ab1;
-			}
 
 			/* Next... */
 			continue;

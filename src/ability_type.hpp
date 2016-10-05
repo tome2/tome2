@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <vector>
 
 #include "h-basic.h"
 
@@ -9,19 +10,38 @@
  */
 struct ability_type
 {
-	std::string name;                       /* Name */
-	std::string desc;                       /* Description */
+public:
+	struct skill_requirement {
+		s16b skill_idx = 0;
+		s16b level = 0;
+	};
 
-	std::string action_desc;                /* Action Description */
+public:
+	std::string name;                             /* Name */
+	std::string desc;                             /* Description */
 
-	s16b action_mkey;                       /* Action do to */
+	std::string action_desc;                      /* Action Description */
 
-	s16b cost;                              /* Skill points cost */
+	s16b action_mkey = 0;                         /* Action do to */
 
-	/* Prereqs */
-	s16b skills[10];                	/* List of prereq skills(10 max) */
-	s16b skill_levels[10];                  /* List of prereq skills(10 max) */
-	s16b stat[6];                		/* List of prereq stats */
-	s16b need_abilities[10];              	/* List of prereq abilities(10 max) */
-	s16b forbid_abilities[10];		/* List of forbidden abilities(10 max) */
+	s16b cost = 0;                                /* Skill points cost */
+
+	std::vector<skill_requirement> need_skills;   /* List of prereq skills */
+
+	s16b stat[6] { };                             /* List of prereq stats */
+
+	std::vector<s16b> need_abilities;             /* List of prereq abilities */
+
+	/**
+	 * Default constructor
+	 */
+	ability_type()
+	{
+		for (auto &stat_ref: stat)
+		{
+			// Requirement is always met unless otherwise specified.
+			stat_ref = -1;
+		}
+	}
+
 };

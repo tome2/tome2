@@ -1462,49 +1462,40 @@ s16b find_ability(cptr name)
 	return ( -1);
 }
 
-/* Do we meet the requirements */
-static bool_ can_learn_ability(int ab)
+/* Do we meet the requirements? */
+static bool can_learn_ability(int ab)
 {
 	auto const &ab_info = game->edit_data.ab_info;
 
 	auto ab_ptr = &ab_info[ab];
-	int i;
 
 	if (p_ptr->has_ability(ab))
+	{
 		return FALSE;
+	}
 
 	if (p_ptr->skill_points < ab_info[ab].cost)
-		return FALSE;
-
-	for (i = 0; i < 10; i++)
 	{
-		/* Must have skill level */
-		if (ab_ptr->skills[i] > -1)
-		{
-			if (get_skill(ab_ptr->skills[i]) < ab_ptr->skill_levels[i])
-				return FALSE;
-		}
+		return FALSE;
+	}
 
-		/* Must have ability */
-		if (ab_ptr->need_abilities[i] > -1)
+	for (auto const &need_skill: ab_ptr->need_skills)
+	{
+		if (get_skill(need_skill.skill_idx) < need_skill.level)
 		{
-			if (!p_ptr->has_ability(ab_ptr->need_abilities[i]))
-			{
-				return FALSE;
-			}
-		}
-
-		/* Must not have ability */
-		if (ab_ptr->forbid_abilities[i] > -1)
-		{
-			if (p_ptr->has_ability(ab_ptr->forbid_abilities[i]))
-			{
-				return FALSE;
-			}
+			return FALSE;
 		}
 	}
 
-	for (i = 0; i < 6; i++)
+	for (auto const &need_ability: ab_ptr->need_abilities)
+	{
+		if (!p_ptr->has_ability(need_ability))
+		{
+			return FALSE;
+		}
+	}
+
+	for (std::size_t i = 0; i < 6; i++)
 	{
 		/* Must have stat */
 		if (ab_ptr->stat[i] > -1)
