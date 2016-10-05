@@ -3329,10 +3329,10 @@ errr init_ab_info_txt(FILE *fp)
 
 			/* Point at the "info" */
 			ab_ptr = &expand_to_fit_index(ab_info, i);
+			assert(ab_ptr->name.empty());
 
 			/* Copy name */
-			assert(!ab_ptr->name);
-			ab_ptr->name = my_strdup(s);
+			ab_ptr->name = s;
 
 			/* Init */
 			ab_ptr->action_mkey = 0;
@@ -3357,18 +3357,14 @@ errr init_ab_info_txt(FILE *fp)
 		/* Process 'D' for "Description" */
 		if (buf[0] == 'D')
 		{
-			/* Acquire the text */
-			char const *s = buf + 2;
+			/* Need newline? */
+			if (!ab_ptr->desc.empty())
+			{
+				ab_ptr->desc += '\n';
+			}
 
-			/* Append description */
-			if (!ab_ptr->desc)
-			{
-				ab_ptr->desc = my_strdup(s);
-			}
-			else
-			{
-				strappend(&ab_ptr->desc, format("\n%s", s));
-			}
+			/* Append */
+			ab_ptr->desc += (buf + 2);
 
 			/* Next... */
 			continue;
@@ -3387,8 +3383,8 @@ errr init_ab_info_txt(FILE *fp)
 			txt++;
 
 			/* Copy name */
-			assert(!ab_ptr->action_desc);
-			ab_ptr->action_desc = my_strdup(txt);
+			assert(ab_ptr->action_desc.empty());
+			ab_ptr->action_desc = txt;
 
 			/* Set mkey */
 			ab_ptr->action_mkey = atoi(s);

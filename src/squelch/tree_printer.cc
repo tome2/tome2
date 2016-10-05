@@ -86,4 +86,9 @@ void TreePrinter::write(uint8_t color, cptr line)
 	}
 }
 
+void TreePrinter::write(uint8_t color, std::string const &line)
+{
+	write(color, line.c_str());
+}
+
 } // namespace

@@ -784,7 +784,7 @@ void select_default_melee()
 /*
  * Print a batch of skills.
  */
-static void print_skill_batch(const std::vector<std::tuple<cptr, int>> &p, int start)
+static void print_skill_batch(const std::vector<std::tuple<std::string const &, int>> &p, int start)
 {
 	char buff[80];
 	int j = 0;
@@ -800,7 +800,7 @@ static void print_skill_batch(const std::vector<std::tuple<cptr, int>> &p, int s
 
 		sprintf(buff, "  %c - %d) %-30s", I2A(j),
 			std::get<1>(p[i]),
-			std::get<0>(p[i]));
+			std::get<0>(p[i]).c_str());
 
 		prt(buff, 2 + j, 20);
 		j++;
@@ -817,7 +817,7 @@ static int do_cmd_activate_skill_aux()
 	int start = 0;
 	int ret;
 
-	std::vector<std::tuple<cptr,int>> p;
+	std::vector<std::tuple<std::string const &,int>> p;
 
 	/* More than 1 melee skill ? */
 	if (get_melee_skills() > 1)
@@ -920,8 +920,10 @@ static int do_cmd_activate_skill_aux()
 			size_t i = 0;
 			for (; i < p.size(); i++)
 			{
-				if (!strcmp(buf, std::get<0>(p[i])))
+				if (std::get<0>(p[i]) == buf)
+				{
 					break;
+				}
 			}
 
 			if (i < p.size())
@@ -1448,7 +1450,9 @@ s16b find_ability(cptr name)
 
 	for (std::size_t i = 0; i < ab_info.size(); i++)
 	{
-		if (ab_info[i].name && streq(ab_info[i].name, name))
+		auto const &ab_name = ab_info[i].name;
+
+		if ((!ab_name.empty()) && (ab_name == name))
 		{
 			return (i);
 		}
@@ -1544,7 +1548,7 @@ static bool compare_abilities(std::size_t ab_idx1, std::size_t ab_idx2)
 {
 	auto const &ab_info = game->edit_data.ab_info;
 
-	return strcmp(ab_info[ab_idx1].name, ab_info[ab_idx2].name) < 0;
+	return ab_info[ab_idx1].name < ab_info[ab_idx2].name;
 }
 
 /*
@@ -1558,7 +1562,7 @@ void dump_abilities(FILE *fff)
 	std::vector<std::size_t> table;
 	for (std::size_t i = 0; i < ab_info.size(); i++)
 	{
-		if (ab_info[i].name && p_ptr->has_ability(i))
+		if ((!ab_info[i].name.empty()) && p_ptr->has_ability(i))
 		{
 			table.push_back(i);
 		}
@@ -1576,7 +1580,7 @@ void dump_abilities(FILE *fff)
 
 		for (int i : table)
 		{
-			fprintf(fff, "\n * %s", ab_info[i].name);
+			fprintf(fff, "\n * %s", ab_info[i].name.c_str());
 		}
 
 		fprintf(fff, "\n");
@@ -1603,7 +1607,7 @@ static void print_abilities(const std::vector<std::size_t> &table, int sel, int 
 	c_prt((p_ptr->skill_points) ? TERM_L_BLUE : TERM_L_RED,
 	      format("Skill points left: %d", p_ptr->skill_points), 2, 0);
 
-	print_desc_aux(ab_info[table[sel]].desc, 3, 0);
+	print_desc_aux(ab_info[table[sel]].desc.c_str(), 3, 0);
 
 	for (j = start; j < start + (hgt - 7); j++)
 	{
@@ -1639,7 +1643,7 @@ static void print_abilities(const std::vector<std::size_t> &table, int sel, int 
 			end = ']';
 		}
 
-		c_prt(color, format("%c.%c%s", deb, end, ab_info[i].name),
+		c_prt(color, format("%c.%c%s", deb, end, ab_info[i].name.c_str()),
 		      j + 7 - start, 0);
 
 		if (!p_ptr->has_ability(i))
@@ -1654,7 +1658,7 @@ static void print_abilities(const std::vector<std::size_t> &table, int sel, int 
 }
 
 /*
- * Interreact with abilitiess
+ * Interreact with abilities
  */
 void do_cmd_ability()
 {
@@ -1674,7 +1678,7 @@ void do_cmd_ability()
 	std::vector<std::size_t> table;
 	for (std::size_t i = 0; i < ab_info.size(); i++)
 	{
-		if (ab_info[i].name)
+		if (!ab_info[i].name.empty())
 		{
 			table.push_back(i);
 		}
@@ -1798,7 +1802,7 @@ void apply_level_abilities(int level)
 			{
 				if ((level > 1) && (!p_ptr->has_ability(a.ability)))
 				{
-					cmsg_format(TERM_L_GREEN, "You have learned the ability '%s'.", ab_info[a.ability].name);
+					cmsg_format(TERM_L_GREEN, "You have learned the ability '%s'.", ab_info[a.ability].name.c_str());
 				}
 
 				p_ptr->gain_ability(a.ability);

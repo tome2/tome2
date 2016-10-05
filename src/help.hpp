@@ -10,4 +10,4 @@ extern void help_subrace(std::string const &subrace);
 extern void help_class(std::string const &klass);
 extern void help_god(cptr god);
 extern void help_skill(cptr skill);
-extern void help_ability(cptr ability);
+extern void help_ability(std::string const &ability);

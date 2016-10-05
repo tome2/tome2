@@ -942,10 +942,8 @@ void AbilityCondition::write_tree(TreePrinter *p, Cursor *, uint8_t ecol, uint8_
 {
 	auto const &ab_info = game->edit_data.ab_info;
 
-	cptr ability_s = ab_info[m_ability_idx].name;
-
 	p->write(ecol, "You have the ");
-	p->write(bcol, ability_s);
+	p->write(bcol, ab_info[m_ability_idx].name);
 	p->write(ecol, " ability");
 	p->write(TERM_WHITE, "\n");
 }

@@ -1,5 +1,7 @@
 #pragma once
 
+#include <string>
+
 #include "h-basic.h"
 
 /**
@@ -7,10 +9,10 @@
  */
 struct ability_type
 {
-	const char *name;                       /* Name */
-	char *desc;                             /* Description */
+	std::string name;                       /* Name */
+	std::string desc;                       /* Description */
 
-	const char *action_desc;                /* Action Description */
+	std::string action_desc;                /* Action Description */
 
 	s16b action_mkey;                       /* Action do to */
 

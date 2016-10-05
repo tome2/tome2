@@ -734,7 +734,7 @@ void help_skill(cptr skill)
 	show_context_help(find_context_help(skill_table, skill));
 }
 
-void help_ability(cptr ability)
+void help_ability(std::string const &ability)
 {
-	show_context_help(find_context_help(ability_table, ability));
+	show_context_help(find_context_help(ability_table, ability.c_str()));
 }

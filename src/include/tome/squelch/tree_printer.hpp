@@ -3,6 +3,7 @@
 
 #include <boost/noncopyable.hpp>
 #include <cstdint>
+#include <string>
 
 namespace squelch {
 
@@ -30,7 +31,8 @@ public:
 
 	void scroll_right();
 
-	void write(uint8_t color, const char *line);
+	void write(uint8_t color, const char *);
+	void write(uint8_t color, std::string const &);
 
 private:
 	int m_indent;
