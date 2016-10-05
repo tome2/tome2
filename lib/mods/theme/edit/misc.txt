@@ -60,9 +60,6 @@ M:P:R:24
 # Maximum number of subrace types in p_info.txt
 M:P:S:26
 
-# Maximum number of class types in p_info.txt
-M:P:C:50
-
 # Maximum number of histories types in p_info.txt
 M:P:H:294
 

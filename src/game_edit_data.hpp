@@ -1,6 +1,7 @@
 #pragma once
 
 #include "owner_type.hpp"
+#include "player_class.hpp"
 #include "randart_gen_type.hpp"
 #include "randart_part_type.hpp"
 #include "store_action_type.hpp"
@@ -39,5 +40,10 @@ struct GameEditData {
 	 * Building owners.
 	 */
 	std::vector<owner_type> ow_info;
+
+	/**
+	 * Player classes.
+	 */
+	std::vector<player_class> class_info;
 
 };

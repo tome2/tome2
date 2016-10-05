@@ -10,6 +10,7 @@
 #include "notes.hpp"
 
 #include "files.hpp"
+#include "game.hpp"
 #include "player_class.hpp"
 #include "player_type.hpp"
 #include "util.hpp"
@@ -113,6 +114,8 @@ void add_note(char *note, char code)
  */
 void add_note_type(int note_number)
 {
+	auto const &class_info = game->edit_data.class_info;
+
 	char true_long_day[50];
 	char buf[1024];
 	time_t ct = time((time_t*)0);

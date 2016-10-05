@@ -4402,6 +4402,8 @@ static void show_info(void)
  */
 static void display_scores_aux(int highscore_fd, int from, int to, int note, high_score *score)
 {
+	auto const &class_info = game->edit_data.class_info;
+
 	int i, j, k, n, place;
 	byte attr;
 	char out_val[256];

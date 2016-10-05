@@ -553,7 +553,6 @@ namespace {
 		{
 			race_info = new player_race[max_rp_idx];
 			race_mod_info = new player_race_mod[max_rmp_idx];
-			class_info = new player_class[max_c_idx];
 			bg = make_array<hist_type>(max_bg_idx);
 			gen_skill = new skill_modifiers;
 		}

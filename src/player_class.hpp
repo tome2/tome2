@@ -16,8 +16,8 @@
  */
 struct player_class
 {
-	const char *title = nullptr;                         /* Type of class */
-	char *desc = nullptr;                                /* Small desc of the class */
+	std::string title;                                   /* Type of class */
+	std::string desc;                                    /* Small desc of the class */
 	const char *titles[PY_MAX_LEVEL / 5] { };            /* Titles */
 
 	int display_order_idx;                               /* Display order index; lowest first */

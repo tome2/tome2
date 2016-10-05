@@ -1176,6 +1176,8 @@ static void player_outfit(void)
 
 static void dump_classes(std::vector<u16b> const &classes, int sel, u32b *restrictions)
 {
+	auto const &class_info = game->edit_data.class_info;
+
 	char buf[80];
 
 	/* Clean up */
@@ -1200,7 +1202,7 @@ static void dump_classes(std::vector<u16b> const &classes, int sel, u32b *restri
 
 		/* Display */
 		strnfmt(buf, 80, "%c%c%c %s%s", p1,
-			(n <= 25) ? I2A(n) : I2D(n - 26), p2, cp_ptr->title, mod);
+			(n <= 25) ? I2A(n) : I2D(n - 26), p2, cp_ptr->title.c_str(), mod);
 
 		/* Print some more info */
 		if (sel == n)
@@ -1235,6 +1237,8 @@ static void dump_classes(std::vector<u16b> const &classes, int sel, u32b *restri
 
 static void dump_specs(int sel_)
 {
+	auto const &class_info = game->edit_data.class_info;
+
 	assert(sel_ >= 0);
 	std::size_t sel = sel_;
 
@@ -1477,6 +1481,8 @@ static bool_ do_quick_start = FALSE;
 
 static bool_ player_birth_aux_ask()
 {
+	auto &class_info = game->edit_data.class_info;
+
 	int k, n, v, sel;
 
 	int racem[100], max_racem = 0;
@@ -1793,19 +1799,16 @@ static bool_ player_birth_aux_ask()
 
 		// Get list of all the classes.
 		std::vector<u16b> class_types;
-		for (std::size_t i = 0; i < max_c_idx; i++)
+		for (std::size_t i = 0; i < class_info.size(); i++)
 		{
-			if (class_info[i].title)
-			{
-				class_types.push_back(i);
-			}
+			class_types.push_back(i);
 		}
 
 		// Sort into display order
 		std::stable_sort(
 			class_types.begin(),
 			class_types.end(),
-			[](auto i, auto j) {
+			[&class_info](auto i, auto j) {
 				return class_info[i].display_order_idx < class_info[j].display_order_idx;
 			}
 		);

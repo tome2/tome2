@@ -424,8 +424,8 @@ player_type *p_ptr = nullptr;
  */
 player_race *rp_ptr;
 player_race_mod *rmp_ptr;
-player_class *cp_ptr;
-player_spec *spp_ptr;
+player_class const *cp_ptr;
+player_spec const *spp_ptr;
 
 
 /*
@@ -496,11 +496,6 @@ player_race *race_info;
  * Player mod race arrays
  */
 player_race_mod *race_mod_info;
-
-/*
- * Player class arrays
- */
-player_class *class_info;
 
 /*
  * The wilderness features arrays
@@ -689,7 +684,6 @@ u16b max_set_idx = 1;
  */
 u16b max_rp_idx;
 u16b max_rmp_idx;
-u16b max_c_idx;
 
 /*
  * Maximum number of objects in the level

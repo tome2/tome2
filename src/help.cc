@@ -713,9 +713,9 @@ void help_subrace(cptr subrace)
 	show_context_help(find_context_help(subrace_table, subrace));
 }
 
-void help_class(cptr klass)
+void help_class(std::string const &klass)
 {
-	show_context_help(find_context_help(class_table, klass));
+	show_context_help(find_context_help(class_table, klass.c_str()));
 }
 
 void help_god(cptr god)

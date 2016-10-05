@@ -682,13 +682,12 @@ static void strappend(char **s, const char *t)
 static bool_ unknown_shut_up = FALSE;
 static errr grab_one_class_flag(u32b *choice, cptr what)
 {
-	int i;
-	cptr s;
+	auto const &class_info = game->edit_data.class_info;
 
 	/* Scan classes flags */
-	for (i = 0; i < max_c_idx && (s = class_info[i].title); i++)
+	for (std::size_t i = 0; i < class_info.size(); i++)
 	{
-		if (streq(what, s))
+		if (class_info[i].title == what)
 		{
 			(choice[i / 32]) |= (1L << i);
 			return (0);
@@ -921,6 +920,8 @@ static int read_ability(std::vector<player_race_ability_type> *abilities, char *
  */
 errr init_player_info_txt(FILE *fp)
 {
+	auto &class_info = game->edit_data.class_info;
+
 	int lev = 1;
 	int tit_idx = 0;
 	char buf[1024];
@@ -1492,18 +1493,17 @@ errr init_player_info_txt(FILE *fp)
 			/* Get the entry index */
 			int i = atoi(buf + 4);
 			if (i < error_idx) return (4);
-			if (i >= max_c_idx) return (2);
 
 			/* Save the index */
 			error_idx = i;
 
 			/* Point at the "info" */
-			c_ptr = &class_info[i];
+			c_ptr = &expand_to_fit_index(class_info, i);
+			assert(c_ptr->title.empty());
 
-			/* Copy name */
-			assert(!c_ptr->title);
+			/* Initialize */
 			c_ptr->display_order_idx = std::stoi(fields[0]);
-			c_ptr->title = my_strdup(fields[1].c_str());
+			c_ptr->title = fields[1];
 
 			/* Initialize */
 			lev = 1;
@@ -1522,15 +1522,13 @@ errr init_player_info_txt(FILE *fp)
 			switch (buf[4])
 			{
 			case '0': /* Class description */
-				if (!c_ptr->desc)
+				// Need newline?
+				if (!c_ptr->desc.empty())
 				{
-
-					c_ptr->desc = my_strdup(s);
+					c_ptr->desc += '\n';
 				}
-				else
-				{
-					strappend(&c_ptr->desc, format("\n%s", s));
-				}
+				// Append
+				c_ptr->desc += s;
 				break;
 
 			case '1': /* Class title */
@@ -6960,10 +6958,6 @@ static errr process_dungeon_file_aux(char *buf, int *yval, int *xval, int xvalst
 				{
 					max_rmp_idx = atoi(zz[2]);
 				}
-				else if (zz[1][0] == 'C')
-				{
-					max_c_idx = atoi(zz[2]);
-				}
 				else if (zz[1][0] == 'H')
 				{
 					max_bg_idx = atoi(zz[2]);
@@ -7222,7 +7216,7 @@ static cptr process_dungeon_file_expr(char **sp, char *fp)
 			/* Class */
 			else if (streq(b + 1, "CLASS"))
 			{
-				v = cp_ptr->title;
+				v = cp_ptr->title.c_str(); // The string SHOULD be stable enough for this
 			}
 
 			/* Player */
