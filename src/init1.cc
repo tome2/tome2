@@ -3091,38 +3091,6 @@ errr init_s_info_txt(FILE *fp)
 		}
 
 
-		/* Process 'O' for "Opposite" */
-		if (buf[0] == 'O')
-		{
-			char *sec, *cval;
-			s16b s1, s2;
-
-			/* Scan for the values */
-			if (NULL == (sec = strchr(buf + 2, ':')))
-			{
-				return (1);
-			}
-			*sec = '\0';
-			sec++;
-			if (!*sec) return (1);
-			if (NULL == (cval = strchr(sec, '%')))
-			{
-				return (1);
-			}
-			*cval = '\0';
-			cval++;
-			if (!*cval) return (1);
-
-			s1 = find_skill(buf + 2);
-			s2 = find_skill(sec);
-			if ((s1 == -1) || (s2 == -1)) return (1);
-
-			s_descriptors[s1].action[s2] = -atoi(cval);
-
-			/* Next... */
-			continue;
-		}
-
 		/* Process 'A' for "Amical/friendly" */
 		if (buf[0] == 'f')
 		{

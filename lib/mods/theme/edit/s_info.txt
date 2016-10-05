@@ -16,7 +16,6 @@
 # A:action mkey:action desc
 
 # E:exclusive skill:exclusive skill
-# O:skill:opposing skill%percent
 # A:skill:friendly skill%percent
 
 # T:father:child
@@ -261,15 +260,6 @@ f:Crossbow-mastery:Combat%7
 f:Boomerang-mastery:Combat%7
 f:Barehand-combat:Combat%50
 f:Boulder-throwing:Combat%40
-
-# No more, let's see how it turns out
-# Sorcery and Weaponmastery aren't exactly friendly to each other
-#O:Sorcery:Weaponmastery%100
-#O:Sorcery:Archery%100
-#O:Sorcery:Barehand-combat%100
-#O:Weaponmastery:Sorcery%100
-#O:Archery:Sorcery%100
-#O:Barehand-combat:Sorcery%100
 
 
 
