@@ -695,7 +695,7 @@ void reset_visuals(void)
 	}
 
 	/* Reset attr/char code for trap overlay graphics */
-	for (i = 0; i < max_rmp_idx; i++)
+	for (i = 0; i < max_t_idx; i++)
 	{
 		trap_type *t_ptr = &t_info[i];
 
