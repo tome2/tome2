@@ -2574,7 +2574,7 @@ bool_ object_out_desc(object_type *o_ptr, FILE *fff, bool_ trim_down, bool_ wait
 
 			if (a_ptr->set != -1)
 			{
-				text_out_c(TERM_GREEN, set_info[a_ptr->set].desc);
+				text_out_c(TERM_GREEN, set_info[a_ptr->set].desc.c_str());
 				text_out("\n");
 			}
 		}
@@ -6151,7 +6151,7 @@ bool_ wield_set(s16b a_idx, s16b set_idx, bool_ silent)
 		}
 		else if ((s_ptr->num_use == s_ptr->num) && (!silent))
 		{
-			cmsg_format(TERM_GREEN, "%s item set completed.", s_ptr->name);
+			cmsg_format(TERM_GREEN, "%s item set completed.", s_ptr->name.c_str());
 		}
 		return (TRUE);
 	}
@@ -6185,7 +6185,7 @@ bool_ takeoff_set(s16b a_idx, s16b set_idx)
 
 		if (s_ptr->num_use == s_ptr->num - 1)
 		{
-			cmsg_format(TERM_GREEN, "%s item set not complete anymore.", s_ptr->name);
+			cmsg_format(TERM_GREEN, "%s item set not complete anymore.", s_ptr->name.c_str());
 		}
 
 		return (TRUE);

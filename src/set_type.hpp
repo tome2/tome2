@@ -1,6 +1,8 @@
 #pragma once
 
 #include <array>
+#include <string>
+
 #include "set_component.hpp"
 
 /**
@@ -8,8 +10,8 @@
  */
 struct set_type
 {
-	const char *name = nullptr;              /* Name */
-	char *desc = nullptr;                    /* Desc */
+	std::string name;                        /* Name */
+	std::string desc;                        /* Desc */
 
 	byte num = 0;                            /* Number of artifacts used */
 	byte num_use = 0;                        /* Number actually worn */

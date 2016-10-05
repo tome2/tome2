@@ -2926,10 +2926,10 @@ errr init_set_info_txt(FILE *fp)
 
 			/* Point at the "info" */
 			set_ptr = &expand_to_fit_index(set_info, i);
+			assert(set_ptr->name.empty());
 
 			/* Copy name */
-			assert(!set_ptr->name);
-			set_ptr->name = my_strdup(s);
+			set_ptr->name = s;
 
 			/* Next... */
 			continue;
@@ -2941,11 +2941,14 @@ errr init_set_info_txt(FILE *fp)
 		/* Process 'D' for "Description" */
 		if (buf[0] == 'D')
 		{
-			/* Acquire the text */
-			char const *s = buf + 2;
+			/* Need newline? */
+			if (!set_ptr->desc.empty())
+			{
+				set_ptr->desc += '\n';
+			}
 
-			/* Append chars to the description */
-			strappend(&set_ptr->desc, s);
+			/* Append */
+			set_ptr->desc += (buf + 2);
 
 			/* Next... */
 			continue;
