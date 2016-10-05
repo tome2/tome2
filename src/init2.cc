@@ -1137,6 +1137,9 @@ void init_angband(void)
 
 	char buf[1024];
 
+	// Initialize game structure
+	game = new Game();
+
 	/* Init some VERY basic stuff, like macro arrays */
 	init_basic();
 
@@ -1245,9 +1248,6 @@ void init_angband(void)
 
 	/* Close it */
 	(void)fd_close(fd);
-
-	// Initialize game structure
-	game = new Game();
 
 	/*** Initialise some arrays ***/
 
