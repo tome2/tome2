@@ -6058,9 +6058,9 @@ bool_ wield_set(s16b a_idx, s16b set_idx, bool_ silent)
 	auto &set_info = game->edit_data.set_info;
 	auto const &a_info = game->edit_data.a_info;
 
-	auto s_ptr = &set_info[set_idx];
-
 	if ( -1 == a_info[a_idx].set) return (FALSE);
+
+	auto s_ptr = &set_info[set_idx];
 
 	int i;
 	for (i = 0; i < s_ptr->num; i++)
@@ -6094,9 +6094,9 @@ bool_ takeoff_set(s16b a_idx, s16b set_idx)
 	auto &set_info = game->edit_data.set_info;
 	auto const &a_info = game->edit_data.a_info;
 
-	auto s_ptr = &set_info[set_idx];
-
 	if ( -1 == a_info[a_idx].set) return (FALSE);
+
+	auto s_ptr = &set_info[set_idx];
 
 	int i;
 	for (i = 0; i < s_ptr->num; i++)
@@ -6130,12 +6130,12 @@ void apply_set(s16b a_idx, s16b set_idx)
 	auto const &set_info = game->edit_data.set_info;
 	auto const &a_info = game->edit_data.a_info;
 
-	auto s_ptr = &set_info[set_idx];
-
 	if ( -1 == a_info[a_idx].set)
 	{
 		return;
 	}
+
+	auto s_ptr = &set_info[set_idx];
 
 	int i;
 	for (i = 0; i < s_ptr->num; i++)
