@@ -556,6 +556,7 @@ static void get_history(void)
 
 		/* Acquire the textual history */
 		strcat(buf, bg[i].info.c_str());
+		strcat(buf, " ");
 
 		/* Enter the next chart */
 		chart = bg[i].next;
