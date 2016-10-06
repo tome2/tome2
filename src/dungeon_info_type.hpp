@@ -6,6 +6,7 @@
 #include "dungeon_flag_set.hpp"
 
 #include <array>
+#include <string>
 
 /**
  * Maximum number of towns per dungeon
