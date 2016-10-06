@@ -585,7 +585,7 @@ static int wiz_create_itemtype(void)
 	std::vector<std::size_t> choice;
 	choice.reserve(60);
 	std::size_t i;
-	for (num = 0, i = 1; (choice.size() < 60) && (i < k_info.size()); i++)
+	for (i = 1; (choice.size() < 60) && (i < k_info.size()); i++)
 	{
 		auto k_ptr = &k_info[i];
 
@@ -599,7 +599,7 @@ static int wiz_create_itemtype(void)
 			strip_name(buf, k_ptr);
 
 			/* Print it */
-			wci_string(buf, num);
+			wci_string(buf, choice.size());
 
 			/* Remember the object index */
 			choice.push_back(i);
