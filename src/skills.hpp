@@ -2,6 +2,8 @@
 
 #include "h-basic.h"
 
+#include <cstddef>
+
 /* Skill functions */
 extern void dump_skills(FILE *fff);
 extern s16b find_skill(cptr name);
