@@ -31,7 +31,6 @@ struct options {
 	bool_ disturb_move = FALSE;              /* Disturb whenever any monster moves */
 	bool_ disturb_near = TRUE;               /* Disturb whenever viewable monster moves */
 	bool_ disturb_panel = TRUE;              /* Disturb whenever map panel changes */
-	bool_ disturb_detect = TRUE;             /* Disturb whenever leaving trap-detected area */
 	bool_ disturb_state = TRUE;              /* Disturn whenever player state changes */
 	bool_ disturb_minor = TRUE;              /* Disturb whenever boring things happen */
 	bool_ disturb_other = FALSE;             /* Disturb whenever various things happen */
@@ -131,7 +130,6 @@ struct options {
 	        { &disturb_move       , 2,  4, "disturb_move"       , "Disturb whenever any monster moves" },
 	        { &disturb_near       , 2,  5, "disturb_near"       , "Disturb whenever viewable monster moves" },
 	        { &disturb_panel      , 2,  6, "disturb_panel"      , "Disturb whenever map panel changes" },
-	        { &disturb_detect     , 2, 21, "disturb_detect"     , "Disturb whenever leaving trap-detected area" },
 	        { &disturb_state      , 2,  7, "disturb_state"      , "Disturb whenever player state changes" },
 	        { &disturb_minor      , 2,  8, "disturb_minor"      , "Disturb whenever boring things happen" },
 	        { &disturb_other      , 2,  9, "disturb_other"      , "Disturb whenever random things happen" },

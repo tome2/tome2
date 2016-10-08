@@ -50,9 +50,6 @@ Y:disturb_near
 # Option 'Disturb whenever map panel changes'
 Y:disturb_panel
 
-# Option 'Disturb whenever leaving trap-detected area'
-Y:disturb_detect
-
 # Option 'Disturb whenever player state changes'
 Y:disturb_state
 

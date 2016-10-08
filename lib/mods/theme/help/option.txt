@@ -150,10 +150,6 @@ off at will during the course of the game.
     This option causes you to be disturbed (stop running) when the screen
     scrolls, as it does when you get close to the edge of the visible screen.
 
-#####GDisturb whenever leaving trap-detected area    [disturb_detect]
-    This option causes you to be disturbed whenever you are leaving
-    a trap-detected area.  This option is strongly recommended.
-
 #####GDisturb whenever player state changes    [disturb_state]
     This option causes you to be disturbed whenever the player state
     changes, including changes in hunger, resistance, confusion, etc.
