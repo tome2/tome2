@@ -2169,16 +2169,16 @@ deity_type deity_info[MAX_GODS] =
 /* as far as I know. */
 tactic_info_type tactic_info[9] =
 {
-	/* hit  dam   ac  stl  dis  sav */
-	{  -10, -10, +15,  +3, +15, +14, "coward" },
-	{   -8,  -8, +10,  +2,  +9,  +9, "meek" },
-	{   -4,  -4,  +5,  +1,  +5,  +5, "wary" },
-	{   -2,  -2,  +2,  +1,  +2,  +2, "careful" },
-	{    0,   0,   0,   0,   0,   0, "normal" },
-	{    2,   2,  -2,  -1,  -2,  -3, "confident" },
-	{    4,   4,  -5,  -2,  -5,  -7, "aggressive" },
-	{    6,   6, -10,  -3, -11, -12, "furious" },
-	{    8,  12, -25,  -5, -18, -18, "berserker" }
+	/* hit  dam   ac  stl  sav */
+	{  -10, -10, +15,  +3, +14, "coward" },
+	{   -8,  -8, +10,  +2,  +9, "meek" },
+	{   -4,  -4,  +5,  +1,  +5, "wary" },
+	{   -2,  -2,  +2,  +1,  +2, "careful" },
+	{    0,   0,   0,   0,   0, "normal" },
+	{    2,   2,  -2,  -1,  -3, "confident" },
+	{    4,   4,  -5,  -2,  -7, "aggressive" },
+	{    6,   6, -10,  -3, -12, "furious" },
+	{    8,  12, -25,  -5, -18, "berserker" }
 };
 
 /*
