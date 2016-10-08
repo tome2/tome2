@@ -67,7 +67,7 @@ can also be viewed from the option menu while playing, but not changed then.
     Allows the player to turn off ToME's *****fatespoi.txt*0[fates] for that character.
 
 #####GItems always sell for 0 gold    [no_selling]
-    Disables selling items back to shops for money. The value of gold found in the  
+    Disables selling items back to shops for money. The value of gold found in the
     dungeon is increased to compensate.
 
 ~~~~~07|Options|Ingame
@@ -110,8 +110,8 @@ off at will during the course of the game.
 
 #####GRepeat obvious commands    [always_repeat]
     Tells the game that when you attempt to open a door or chest, bash
-    a door, tunnel through walls, or disarm traps or chests, that you
-    wish to repeat the command 99 times (see *****command.txt*0["command.txt"]).
+    a door, or tunnel through walls, that you wish to repeat the command
+    99 times (see *****command.txt*0["command.txt"]).
 
 #####GAudible bell (on errors, etc)    [ring_bell]
     Attempt to make a "bell" noise when various errors occur.
@@ -199,13 +199,6 @@ off at will during the course of the game.
     Opens (and unlocks) doors by walking into them.  Also, if you are adjacent
     to only one known door, using the "o"pen command will not prompt you for
     a direction.
-
-#####GAutomatically disarm traps    [easy_disarm]
-    Attempts to disarm traps by walking into/over them.  Also, if you are
-    adjacent to only one known trap, using the "D"isarm command will not
-    prompt you for a direction.  If your disarming ability is particularly
-    low, you should probably not enable this option, because you will often
-    fail to disarm the traps, and sometimes trigger them.
 
 #####GAutomatically tunnel walls    [easy_tunnel]
     Automatically tunnels into walls by walking into them.
@@ -370,6 +363,7 @@ off at will during the course of the game.
     This option forces the game to flush all output after every message
     displayed by the game.  This will give you maximal information, but
     may slow down the game somewhat.
+
 ~~~~~2
 #####GHilite the player with the cursor    [hilite_player]
     Place the visible cursor on the player.  This looks fine on some Unix

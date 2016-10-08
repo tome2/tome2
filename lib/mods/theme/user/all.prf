@@ -77,9 +77,6 @@ X:disturb_pets
 # Option 'Automatically open doors'
 Y:easy_open
 
-# Option 'Automatically disarm traps'
-Y:easy_disarm
-
 # Option 'Automatically tunnel walls'
 Y:easy_tunnel
 
