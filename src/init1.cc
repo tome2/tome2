@@ -3142,7 +3142,7 @@ errr init_s_info_txt(FILE *fp)
 			char *txt;
 
 			/* Acquire the text */
-			char const *s = buf + 2;
+			char *s = buf + 2;
 
 			if (NULL == (txt = strchr(s, ':'))) return (1);
 			*txt = '\0';
