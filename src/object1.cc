@@ -5712,7 +5712,7 @@ static void absorb_gold(cave_type const *c_ptr)
 		object_type *o_ptr = &o_list[this_o_idx];
 
 		/* Hack -- disturb */
-		disturb(0);
+		disturb();
 
 		/* Pick up gold */
 		if (o_ptr->tval == TV_GOLD)

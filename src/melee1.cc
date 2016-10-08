@@ -280,7 +280,7 @@ bool_ carried_make_attack_normal(int r_idx)
 		if (!effect || check_hit(power, rlev))
 		{
 			/* Always disturbing */
-			disturb(1);
+			disturb();
 
 			/* Hack -- Apply "protection from evil" */
 			if ((p_ptr->protevil > 0) &&
@@ -1165,7 +1165,7 @@ bool_ carried_make_attack_normal(int r_idx)
 			case RBM_CHARGE:
 
 				/* Disturbing */
-				disturb(1);
+				disturb();
 
 				/* Message */
 				msg_format("%s misses you.", sym_name.c_str());
@@ -1388,7 +1388,7 @@ bool_ make_attack_normal(int m_idx, byte divis)
 			int chance = p_ptr->dodge_chance - ((rlev * 5) / 6);
 
 			/* Always disturbing */
-			disturb(1);
+			disturb();
 
 			if ((chance > 0) && magik(chance))
 			{
@@ -2681,7 +2681,7 @@ bool_ make_attack_normal(int m_idx, byte divis)
 				if (m_ptr->ml)
 				{
 					/* Disturbing */
-					disturb(1);
+					disturb();
 
 					/* Message */
 					msg_format("%^s misses you.", m_name);

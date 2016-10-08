@@ -585,7 +585,7 @@ static void carried_monster_attack(s16b m_idx, bool_ *fear, bool_ *mdeath,
 		if (!effect || check_hit2(power, rlev, ac))
 		{
 			/* Always disturbing */
-			disturb(1);
+			disturb();
 
 			/* Describe the attack method */
 			switch (method)
@@ -974,7 +974,7 @@ static void carried_monster_attack(s16b m_idx, bool_ *fear, bool_ *mdeath,
 			case RBM_CHARGE:
 				{
 					/* Disturb */
-					disturb(1);
+					disturb();
 
 					/* Message */
 					msg_format("%s misses %s.", symbiote_name(true).c_str(), t_name);
@@ -1079,7 +1079,7 @@ static void incarnate_monster_attack(s16b m_idx, bool_ *fear, bool_ *mdeath,
 		if (!effect || check_hit2(power, rlev, ac))
 		{
 			/* Always disturbing */
-			disturb(1);
+			disturb();
 
 			/* Describe the attack method */
 			switch (method)
@@ -1465,7 +1465,7 @@ static void incarnate_monster_attack(s16b m_idx, bool_ *fear, bool_ *mdeath,
 			case RBM_CHARGE:
 				{
 					/* Disturb */
-					disturb(1);
+					disturb();
 
 					/* Message */
 					msg_format("You miss %s.", t_name);
@@ -1899,7 +1899,7 @@ void py_attack(int y, int x, int max_blow)
 	int weap;
 
 	/* Disturb the player */
-	disturb(0);
+	disturb();
 
 	if (r_info[p_ptr->body_monster].flags & RF_NEVER_BLOW)
 	{
@@ -2864,7 +2864,7 @@ void move_player_aux(int dir, int do_pickup, int run)
 		oktomove = FALSE;
 
 		/* Disturb the player */
-		disturb(0);
+		disturb();
 
 		if (p_ptr->prob_travel)
 		{
@@ -3009,7 +3009,7 @@ void move_player_aux(int dir, int do_pickup, int run)
 		if (c_ptr->feat == FEAT_SHOP)
 		{
 			/* Disturb */
-			disturb(0);
+			disturb();
 
 			/* Hack -- Enter store */
 			command_new = '_';
@@ -3031,7 +3031,7 @@ void move_player_aux(int dir, int do_pickup, int run)
 		else if (c_ptr->inscription)
 		{
 			/* Disturb */
-			disturb(0);
+			disturb();
 
 			msg_format("There is an inscription here: %s",
 			           inscription_info[c_ptr->inscription].text);
@@ -3793,7 +3793,7 @@ void run_step(int dir)
 			msg_print("You cannot run in that direction.");
 
 			/* Disturb */
-			disturb(0);
+			disturb();
 
 			/* Done */
 			return;
@@ -3813,7 +3813,7 @@ void run_step(int dir)
 		if (run_test())
 		{
 			/* Disturb */
-			disturb(0);
+			disturb();
 
 			/* Done */
 			return;

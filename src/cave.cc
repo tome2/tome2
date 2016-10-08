@@ -4330,7 +4330,7 @@ void object_track(object_type *o_ptr)
  *
  * All disturbance cancels repeated commands, resting, and running.
  */
-void disturb(int)
+void disturb()
 {
 	/* Cancel auto-commands */
 	/* command_new = 0; */
@@ -4381,7 +4381,7 @@ void disturb_on_state()
 {
 	if (options->disturb_state)
 	{
-		disturb(0);
+		disturb();
 	}
 }
 
@@ -4394,7 +4394,7 @@ void disturb_on_other()
 {
 	if (options->disturb_other)
 	{
-		disturb(1);
+		disturb();
 	}
 }
 

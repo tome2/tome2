@@ -1117,7 +1117,7 @@ void do_cmd_open(void)
 	}
 
 	/* Cancel repeat unless we may continue */
-	if (!more) disturb(0);
+	if (!more) disturb();
 }
 
 
@@ -1265,7 +1265,7 @@ void do_cmd_close(void)
 	}
 
 	/* Cancel repeat unless we may continue */
-	if (!more) disturb(0);
+	if (!more) disturb();
 }
 
 
@@ -1694,7 +1694,7 @@ void do_cmd_tunnel(void)
 	}
 
 	/* Cancel repetition unless we can continue */
-	if (!more) disturb(0);
+	if (!more) disturb();
 }
 
 /*
@@ -1897,7 +1897,7 @@ void do_cmd_bash(void)
 	}
 
 	/* Unless valid action taken, cancel bash */
-	if (!more) disturb(0);
+	if (!more) disturb();
 }
 
 
@@ -1980,7 +1980,7 @@ void do_cmd_alter(void)
 	}
 
 	/* Cancel repetition unless we can continue */
-	if (!more) disturb(0);
+	if (!more) disturb();
 }
 
 
@@ -2150,7 +2150,7 @@ static void do_cmd_walk_jump(int pickup)
 	}
 
 	/* Cancel repeat unless we may continue */
-	if (!more) disturb(0);
+	if (!more) disturb();
 }
 
 
@@ -2322,7 +2322,7 @@ static void do_cmd_unwalk()
 	}
 
 	/* Cancel repetition unless we can continue */
-	if (!more) disturb(0);
+	if (!more) disturb();
 }
 
 
@@ -2420,7 +2420,7 @@ void do_cmd_stay(int pickup)
 	if (c_ptr->feat == FEAT_SHOP)
 	{
 		/* Disturb */
-		disturb(0);
+		disturb();
 
 		/* Hack -- enter store */
 		command_new = '_';

@@ -3453,7 +3453,7 @@ void verify_panel(void)
 	/* Hack -- optional disturb on "panel change" */
 	if (options->disturb_panel && !options->center_player)
 	{
-		disturb(0);
+		disturb();
 	}
 
 	/* Recalculate the boundaries */

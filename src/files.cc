@@ -3976,7 +3976,7 @@ void do_cmd_save_game(void)
 	if (!is_autosave)
 	{
 		/* Disturb the player */
-		disturb(1);
+		disturb();
 	}
 
 	/* Clear messages */

@@ -36,7 +36,7 @@ extern void scatter(int *yp, int *xp, int y, int x, int d);
 extern void health_track(int m_idx);
 extern void monster_race_track(int r_idx, int ego);
 extern void object_track(object_type *o_ptr);
-extern void disturb(int stop_search);
+extern void disturb();
 extern void disturb_on_state();
 extern void disturb_on_other();
 extern int is_quest(int level);

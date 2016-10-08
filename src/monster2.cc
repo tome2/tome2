@@ -1774,7 +1774,7 @@ void update_mon(int m_idx, bool_ full)
 			{
 				if (options->disturb_pets || (is_friend(m_ptr) <= 0))
 				{
-					disturb(1);
+					disturb();
 				}
 			}
 		}
@@ -1803,7 +1803,7 @@ void update_mon(int m_idx, bool_ full)
 			{
 				if (options->disturb_pets || (is_friend(m_ptr) <= 0))
 				{
-					disturb(1);
+					disturb();
 				}
 			}
 		}
@@ -1833,7 +1833,7 @@ void update_mon(int m_idx, bool_ full)
 			{
 				if (options->disturb_pets || (is_friend(m_ptr) <= 0))
 				{
-					disturb(1);
+					disturb();
 				}
 			}
 
@@ -1857,7 +1857,7 @@ void update_mon(int m_idx, bool_ full)
 			{
 				if (options->disturb_pets || (is_friend(m_ptr) <= 0))
 				{
-					disturb(1);
+					disturb();
 				}
 			}
 		}

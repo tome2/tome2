@@ -233,7 +233,7 @@ void teleport_player_directed(int rad, int dir)
 	if (c_ptr->feat == FEAT_SHOP)
 	{
 		/* Disturb */
-		disturb(0);
+		disturb();
 
 		/* Hack -- enter store */
 		command_new = '_';
@@ -1240,7 +1240,7 @@ void take_hit(int damage, cptr hit_from)
 	if (death) return;
 
 	/* Disturb */
-	disturb(1);
+	disturb();
 
 	/* Apply "invulnerability" */
 	if (p_ptr->invuln && (damage < 9000))
@@ -1478,7 +1478,7 @@ void take_sanity_hit(int damage, cptr hit_from)
 	if (death) return;
 
 	/* Disturb */
-	disturb(1);
+	disturb();
 
 
 	/* Hurt the player */
@@ -6901,7 +6901,7 @@ static bool_ project_p(int who, int r, int y, int x, int dam, int typ, int a_rad
 
 		project(0, 0, t_y, t_x, dam, typ, (PROJECT_STOP | PROJECT_KILL));
 
-		disturb(1);
+		disturb();
 		return TRUE;
 	}
 
@@ -7792,7 +7792,7 @@ static bool_ project_p(int who, int r, int y, int x, int dam, int typ, int a_rad
 
 
 	/* Disturb */
-	disturb(1);
+	disturb();
 
 
 	/* Return "Anything seen?" */
