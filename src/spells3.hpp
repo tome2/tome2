@@ -33,7 +33,6 @@ extern s32b PROBABILITY_TRAVEL;
 
 casting_result  convey_blink();
 const char     *convey_blink_info();
-casting_result  convey_disarm();
 casting_result  convey_teleport();
 const char     *convey_teleport_info();
 casting_result  convey_teleport_away();

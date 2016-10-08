@@ -15,7 +15,6 @@ extern void do_cmd_close(void);
 extern void do_cmd_chat(void);
 extern void do_cmd_give(void);
 extern void do_cmd_tunnel(void);
-extern void do_cmd_disarm(void);
 extern void do_cmd_bash(void);
 extern void do_cmd_alter(void);
 extern void do_cmd_spike(void);
