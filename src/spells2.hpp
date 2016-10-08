@@ -70,7 +70,6 @@ extern bool_ fire_bolt_or_beam(int prob, int typ, int dir, int dam);
 extern bool_ lite_line(int dir);
 extern bool_ drain_life(int dir, int dam);
 extern bool_ wall_to_mud(int dir);
-extern bool_ disarm_trap(int dir);
 extern bool_ wizard_lock(int dir);
 extern bool_ slow_monster(int dir);
 extern bool_ sleep_monster(int dir);
