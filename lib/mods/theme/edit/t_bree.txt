@@ -5,7 +5,7 @@
 ############### Additional default terrain settings ###############
 
 # Default for Quest 1 = entrance is quest entrance
-F:z:8:3:0:0:0:0:0:4
+F:z:8:3:0:0:0:0:4
 
 # Default for Quest 18 = entrance is tree
 F:y:96:3
@@ -15,46 +15,46 @@ F:x:96:3
 
 ############### Quest 4 - Thieves Hideout finished = house ###############
 ?:[EQU $QUEST4 2]
-F:z:74:3:0:0:0:0:0:7
+F:z:74:3:0:0:0:0:7
 ?:[EQU $QUEST4 5]
-F:z:74:3:0:0:0:0:0:7
+F:z:74:3:0:0:0:0:7
 ?:1
 
 ############### Quest 8 - Troll Glade ###############
 ?:[AND [EQU $QUEST8 1] [EQU $DAYTIME 0] ]
-F:y:8:3:0:0:0:0:0:8
+F:y:8:3:0:0:0:0:8
 ?:1
 
 ############### Quest 9 - Wights Grave ###############
 ?:[EQU $QUEST9 1]
-F:x:8:3:0:0:0:0:0:9
+F:x:8:3:0:0:0:0:9
 ?:1
 
 ###### Additionnal buildings #######
 
 # Castle: Plot Bree
-F:B:75:3:0:0:0:0:0:1
+F:B:75:3:0:0:0:0:1
 
 # Mayor's house
-F:b:74:3:0:0:0:0:0:10
+F:b:74:3:0:0:0:0:10
 
 # The Prancing Pony
-F:a:74:3:0:0:0:0:0:58
+F:a:74:3:0:0:0:0:58
 
 # Soothsayer
-F:c:74:3:0:0:0:0:0:12
+F:c:74:3:0:0:0:0:12
 
 # Music Store
-F:d:74:3:0:0:0:0:0:64
+F:d:74:3:0:0:0:0:64
 
 # The Museum
-F:e:74:3:0:0:0:0:0:57
+F:e:74:3:0:0:0:0:57
 
 # Map store
-F:f:74:3:0:0:0:0:0:66
+F:f:74:3:0:0:0:0:66
 
 # The Library
-F:g:74:3:0:0:0:0:0:13
+F:g:74:3:0:0:0:0:13
 
 ############### Town Layout ###############
 

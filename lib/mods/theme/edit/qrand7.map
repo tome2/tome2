@@ -16,9 +16,6 @@ F:G:188:6
 # Door
 F:D:38:6
 
-# Floor with Trap
-F:t:1:8:0:0:0:0:*
-
 # Deep water
 F:W:84:6
 
@@ -26,10 +23,10 @@ F:W:84:6
 F:w:187:6
 
 # Dungeon wayout
-D:ttttt      
-D:tGGGt  ,x, 
-D:tGpGt  x,x 
-D:tGGGt  ,x, 
-D:ttttt      
+D:           
+D: GGG   ,x, 
+D: GpG   x,x 
+D: GGG   ,x, 
+D:           
 D:      ,x,  
 D:           

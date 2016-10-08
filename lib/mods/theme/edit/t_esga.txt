@@ -23,19 +23,19 @@ F:e:241
 ### Buildings ###
 
 #The Dancing Dragon
-F:i:74:3:0:0:0:0:0:73
+F:i:74:3:0:0:0:0:73
 
 #The Master's House
-F:k:74:3:0:0:0:0:0:83
+F:k:74:3:0:0:0:0:83
 
 #The Library
-F:l:74:3:0:0:0:0:0:13
+F:l:74:3:0:0:0:0:13
 
 #The Music Store
-F:m:74:3:0:0:0:0:0:64
+F:m:74:3:0:0:0:0:64
 
 #The Hunter store
-F:n:74:3:0:0:0:0:0:61
+F:n:74:3:0:0:0:0:61
 
 D:######################################################################################################################################################################################################
 D:#WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW#

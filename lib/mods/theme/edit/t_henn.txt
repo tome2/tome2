@@ -20,13 +20,13 @@ F:l:239:3
 ### Buildings ###
 
 # Ranger Conclave
-F:k:74:3:0:0:0:0:0:78
+F:k:74:3:0:0:0:0:78
 
 # Fighters Hall
-F:a:74:3:0:0:0:0:0:17
+F:a:74:3:0:0:0:0:17
 
 # Rangers Guild
-F:b:74:3:0:0:0:0:0:21
+F:b:74:3:0:0:0:0:21
 
 D:######################################################################################################################################################################################################
 D:#hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhWWWWWWWWWWhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh#

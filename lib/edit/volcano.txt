@@ -1,10 +1,10 @@
 # File: volcano.txt
 
 # Stairway to the Hell
-F:$:7:3:0:0:0:0:0:6
+F:$:7:3:0:0:0:0:6
 
 # Hole to the center of the Volcano
-F:>:7:3:0:0:0:0:0:5
+F:>:7:3:0:0:0:0:5
 
 ############### Town Layout ###############
 

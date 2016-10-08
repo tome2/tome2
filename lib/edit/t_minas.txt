@@ -9,66 +9,66 @@
 F:Z:63:3
 
 # Default for Quest 24 = entrance is quest entrance
-F:w:8:3:0:0:0:0:0:24
+F:w:8:3:0:0:0:0:24
 
 #################### Quest 16 - The last Alliance ####################
 
 # Quest 16 finished, reward is a between gate
 ?:[EQU $QUEST16 5]
-F:Z:176:3:0:0:0:0:0:0
+F:Z:176:3:0:0:0:0:0
 
 ?:1
 
 ############### Quest 24 - Haunted House finished = house ###############
 ?:[EQU $QUEST24 2]
-F:w:74:3:0:0:0:0:0:7
+F:w:74:3:0:0:0:0:7
 ?:[EQU $QUEST24 5]
-F:w:74:3:0:0:0:0:0:7
+F:w:74:3:0:0:0:0:7
 ?:1
 
 #################### Buildings ####################
 
 # Library
-F:a:74:3:0:0:0:0:0:60
+F:a:74:3:0:0:0:0:60
 
 # Castle
-F:b:74:3:0:0:0:0:0:14
+F:b:74:3:0:0:0:0:14
 
 # Casino
-F:d:74:3:0:0:0:0:0:15
+F:d:74:3:0:0:0:0:15
 
 # Inn
-F:e:74:3:0:0:0:0:0:11
+F:e:74:3:0:0:0:0:11
 
 # Beastmaster Shanty
-F:f:74:3:0:0:0:0:0:16
+F:f:74:3:0:0:0:0:16
 
 # Fighters hall
-F:g:74:3:0:0:0:0:0:17
+F:g:74:3:0:0:0:0:17
 
 # Tower of Magery
-F:h:74:3:0:0:0:0:0:18
+F:h:74:3:0:0:0:0:18
 
 # Inner temple
-F:i:74:3:0:0:0:0:0:19
+F:i:74:3:0:0:0:0:19
 
 # Paladin guild
-F:j:74:3:0:0:0:0:0:20
+F:j:74:3:0:0:0:0:20
 
 # Ranger guild
-F:k:74:3:0:0:0:0:0:21
+F:k:74:3:0:0:0:0:21
 
 # Thunderlord's Hide
-F:l:74:3:0:0:0:0:0:22
+F:l:74:3:0:0:0:0:22
 
 # Castle: Plot Minas Anor
-F:B:75:3:0:0:0:0:0:5
+F:B:75:3:0:0:0:0:5
 
 # Library Quest
 F:x:63:3
 
 ?:[EQU $QUEST"Library quest" 1]
-F:x:8:3:0:0:0:0:0:"Library quest"
+F:x:8:3:0:0:0:0:"Library quest"
 ?:1
 
 ############### Town Layout ###############

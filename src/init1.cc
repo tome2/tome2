@@ -5921,7 +5921,6 @@ errr init_wf_info_txt(FILE *fp)
 #define RANDOM_OBJECT       0x04
 #define RANDOM_EGO          0x08
 #define RANDOM_ARTIFACT     0x10
-#define RANDOM_TRAP         0x20
 
 
 typedef struct dungeon_grid dungeon_grid;
@@ -5933,7 +5932,6 @@ struct dungeon_grid
 	int	object; 			/* Object */
 	int	ego; 			/* Ego-Item */
 	int	artifact; 		/* Artifact */
-	int	trap; 			/* Trap */
 	int	cave_info; 		/* Flags for CAVE_MARK, CAVE_GLOW, CAVE_ICKY, CAVE_ROOM */
 	int	special; 		/* Reserved for special terrain info */
 	int	random; 			/* Number of the random effect */
@@ -5994,12 +5992,12 @@ static errr process_dungeon_file_aux(char *buf, int *yval, int *xval, int xvalst
 		return (0);
 	}
 
-	/* Process "F:<letter>:<terrain>:<cave_info>:<monster>:<object>:<ego>:<artifact>:<trap>:<special>:<mimic>:<mflag>" -- info for dungeon grid */
+	/* Process "F:<letter>:<terrain>:<cave_info>:<monster>:<object>:<ego>:<artifact>:<special>:<mimic>:<mflag>" -- info for dungeon grid */
 	if (buf[0] == 'F')
 	{
 		int num;
 
-		if ((num = tokenize(buf + 2, 11, zz, ':', '/')) > 1)
+		if ((num = tokenize(buf + 2, 10, zz, ':', '/')) > 1)
 		{
 			int index = zz[0][0];
 
@@ -6009,7 +6007,6 @@ static errr process_dungeon_file_aux(char *buf, int *yval, int *xval, int xvalst
 			letter[index].object = 0;
 			letter[index].ego = 0;
 			letter[index].artifact = 0;
-			letter[index].trap = 0;
 			letter[index].cave_info = 0;
 			letter[index].special = 0;
 			letter[index].random = 0;
@@ -6115,34 +6112,17 @@ static errr process_dungeon_file_aux(char *buf, int *yval, int *xval, int xvalst
 
 			if (num > 7)
 			{
-				if (zz[7][0] == '*')
-				{
-					letter[index].random |= RANDOM_TRAP;
-
-					if (zz[7][1])
-					{
-						zz[7]++;
-						letter[index].trap = atoi(zz[7]);
-					}
-				}
-				else
-					letter[index].trap = atoi(zz[7]);
-			}
-
-			if (num > 8)
-			{
+				char *field = zz[7];
 				/* Quests can be defined by name only */
-				if (zz[8][0] == '"')
+				if (field[0] == '"')
 				{
-					int i;
-
 					/* Hunt & shoot the ending " */
-					i = strlen(zz[8]) - 1;
-					if (zz[8][i] == '"') zz[8][i] = '\0';
+					int i = strlen(field) - 1;
+					if (field[i] == '"') field[i] = '\0';
 					letter[index].special = 0;
 					for (i = 0; i < MAX_Q_IDX; i++)
 					{
-						if (!strcmp(&zz[8][1], quest[i].name))
+						if (!strcmp(&field[1], quest[i].name))
 						{
 							letter[index].special = i;
 							break;
@@ -6150,17 +6130,17 @@ static errr process_dungeon_file_aux(char *buf, int *yval, int *xval, int xvalst
 					}
 				}
 				else
-					letter[index].special = atoi(zz[8]);
+					letter[index].special = atoi(field);
+			}
+
+			if (num > 8)
+			{
+				letter[index].mimic = atoi(zz[8]);
 			}
 
 			if (num > 9)
 			{
-				letter[index].mimic = atoi(zz[9]);
-			}
-
-			if (num > 10)
-			{
-				letter[index].mflag = atoi(zz[10]);
+				letter[index].mflag = atoi(zz[9]);
 			}
 
 			return (0);
@@ -6262,28 +6242,7 @@ static errr process_dungeon_file_aux(char *buf, int *yval, int *xval, int xvalst
 			if (m_idx) m_list[m_idx].mflag |= letter[idx].mflag;
 
 			/* Object (and possible trap) */
-			if ((random & RANDOM_OBJECT) && (random & RANDOM_TRAP))
-			{
-				int level = object_level;
-
-				object_level = quest[p_ptr->inside_quest].level;
-
-				/*
-				 * Random trap and random treasure defined
-				 * 25% chance for trap and 75% chance for object
-				 */
-				if (rand_int(100) < 75)
-				{
-					place_object(y, x, FALSE, FALSE, OBJ_FOUND_SPECIAL);
-				}
-				else
-				{
-					/* No traps - do nothing */
-				}
-
-				object_level = level;
-			}
-			else if (random & RANDOM_OBJECT)
+			if (random & RANDOM_OBJECT)
 			{
 				/* Create an out of deep object */
 				if (object_index)
@@ -6312,10 +6271,6 @@ static errr process_dungeon_file_aux(char *buf, int *yval, int *xval, int xvalst
 				{
 					place_object(y, x, TRUE, TRUE, OBJ_FOUND_SPECIAL);
 				}
-			}
-			else if (random & RANDOM_TRAP)
-			{
-				/* Do nothing */
 			}
 			else if (object_index)
 			{

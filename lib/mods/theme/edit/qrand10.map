@@ -16,9 +16,6 @@ F:G:188:6
 # Door
 F:D:38:6
 
-# Floor with Trap
-F:t:1:2056:0:0:0:0:*
-
 # Deep lava
 F:F:85:12
 
@@ -26,11 +23,11 @@ F:F:85:12
 D:                   
 D:      xxxxxxx      
 D:      xFFFFFx      
-D: xxxxxx,t.ttxxxx   
-D: xFFG,t....t,,,xxx 
-D: xFpG.......t.t.DD 
-D: xFFG,t....t,,,xxx 
-D: xxxxxx,t.ttxxxx   
+D: xxxxxx,....xxxx   
+D: xFFG,......,,,xxx 
+D: xFpG...........DD 
+D: xFFG,......,,,xxx 
+D: xxxxxx,....xxxx   
 D:      xFFFFFx      
 D:      xxxxxxx      
 D:                   

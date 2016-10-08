@@ -8,37 +8,37 @@ F:o:207:3
 ###################### Buildings ########################
 
 # Fighters Hall
-F:f:74:3:0:0:0:0:0:17
+F:f:74:3:0:0:0:0:17
 
 # Paladins Guild
-F:g:74:3:0:0:0:0:0:20
+F:g:74:3:0:0:0:0:20
 
 # Inner Temple
-F:h:74:3:0:0:0:0:0:19
+F:h:74:3:0:0:0:0:19
 
 # Mining Supplies
-F:i:74:3:0:0:0:0:0:59
+F:i:74:3:0:0:0:0:59
 
 # Default for Quest 25 = entrance is quest entrance
-F:w:8:3:0:0:0:0:0:25
+F:w:8:3:0:0:0:0:25
 
 # Seat of Durin
-F:k:74:3:0:0:0:0:0:87
+F:k:74:3:0:0:0:0:87
 
 # Inn
-F:n:74:3:0:0:0:0:0:70
+F:n:74:3:0:0:0:0:70
 
 # Eagles
-F:p:74:3:0:0:0:0:0:22
+F:p:74:3:0:0:0:0:22
 
 # Force dwarven monsters
 f:DWARVEN
 
 ############### Quest 25 - Evil cave finished = house ###############
 ?:[EQU $QUEST25 2]
-F:w:74:3:0:0:0:0:0:7
+F:w:74:3:0:0:0:0:7
 ?:[EQU $QUEST25 5]
-F:w:74:3:0:0:0:0:0:7
+F:w:74:3:0:0:0:0:7
 ?:1
 
 # Town Layout

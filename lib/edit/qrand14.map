@@ -16,9 +16,6 @@ F:G:188:6
 # Door
 F:D:38:6
 
-# Floor with Trap
-F:t:1:8:0:0:0:0:*
-
 # Deep water
 F:W:84:6
 

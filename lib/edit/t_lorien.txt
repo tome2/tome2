@@ -16,63 +16,63 @@ F:x:96:3
 F:v:88:3
 
 # Default for Quest 22 = entrance is quest entrance
-F:w:8:3:0:0:0:0:0:22
+F:w:8:3:0:0:0:0:22
 
 ############### Quest 22 - Wolves hut finished = house ###############
 ?:[EQU $QUEST22 2]
-F:w:74:3:0:0:0:0:0:7
+F:w:74:3:0:0:0:0:7
 ?:[EQU $QUEST22 5]
-F:w:74:3:0:0:0:0:0:7
+F:w:74:3:0:0:0:0:7
 ?:1
 
 ############### Entrance to the Void ###############
 ?:[EQU $QUEST20 1]
-F:v:7:3:0:0:0:0:0:11
+F:v:7:3:0:0:0:0:11
 ?:1
 
 ############### Quest 10 - Spiders of Mirkwood ###############
 # Quest 10 taken, entrance is quest entrance
 ?:[EQU $QUEST10 1]
-F:y:8:3:0:0:0:0:0:10
+F:y:8:3:0:0:0:0:10
 ?:1
 
 ############### Quest - Mage/Fireroof quest ###############
 # Mage/Fireproof Quest taken, entrance is quest entrance
 ?:[EQU $QUEST"Old Mages quest" 1]
-F:z:8:3:0:0:0:0:0:"Old Mages quest"
+F:z:8:3:0:0:0:0:"Old Mages quest"
 ?:1
 
 ###################### Buildings ########################
 
 # The Mirror
-F:a:74:3:0:0:0:0:0:23
+F:a:74:3:0:0:0:0:23
 
 # Castle: Plot Lorien
-F:B:75:3:0:0:0:0:0:2
+F:B:75:3:0:0:0:0:2
 
 # Seat of Ruling
-F:b:74:3:0:0:0:0:0:24
+F:b:74:3:0:0:0:0:24
 
 # Inn
-F:c:74:3:0:0:0:0:0:11
+F:c:74:3:0:0:0:0:11
 
 # Beastmaster Shanty
-F:d:74:3:0:0:0:0:0:16
+F:d:74:3:0:0:0:0:16
 
 # Fighters Hall
-F:f:74:3:0:0:0:0:0:17
+F:f:74:3:0:0:0:0:17
 
 # Wizards Spire
-F:g:74:3:0:0:0:0:0:25
+F:g:74:3:0:0:0:0:25
 
 # Priests Circle
-F:h:74:3:0:0:0:0:0:26
+F:h:74:3:0:0:0:0:26
 
 # Rangers Guild allows Ranger
-F:i:74:3:0:0:0:0:0:21
+F:i:74:3:0:0:0:0:21
 
 # Nest
-F:j:74:3:0:0:0:0:0:22
+F:j:74:3:0:0:0:0:22
 
 # Altars
 F:k:161:3

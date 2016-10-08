@@ -15,7 +15,7 @@ F:$:178:0
 F:%:205:0
 
 # Hidden Door
-F:+:48:0:0:0:0:0:0:0:177
+F:+:48:0:0:0:0:0:0:177
 
 # Normal Door
 F:D:32:0
@@ -28,12 +28,6 @@ F:L:85:0
 
 # Treasure (random) on shallow lava
 F:*:86:0:0:*
-
-# Trap (random) on deep lava
-F:^:85:0:0:0:0:0:*
-
-# Trap (random) on shallow lava
-F:t:86:0:0:0:0:0:*
 
 # up staircase
 F:<:6:0
@@ -194,28 +188,28 @@ D:X          #%%NNLL...JJJ....LL#                                               
 D:X #####    #NNNN...Ljjjjj..LLL#   #############################################..1!!!!...L###  X
 D:X##.LL##   #nNNN...LLJJj.LLLLL#   #L....&!&!&....L%%%%%%%L..mRR%R%%M%MML%LL...DL...!1&..@L%%#  X
 D:X#LL<..#   #nn.LL.LLLL...%%%LL#   #..##########################################LLL....LLL%%%#  X
-D:X##%LL##   #....LLL%%LLL..^LLL#   #.L#                                        #LL2.t..q.LLL##  X
+D:X##%LL##   #....LLL%%LLL..LLLL#   #.L#                                        #LL2....q.LLL##  X
 D:X ###+#    #D##############+#######.L#                                       ##%%.LLLL&L...#   X
-D:X   #!#    #.#            #.......L%%#                                      ##%%LL..2...t.##   X
-D:X   #^#    #.############ ##########+#             XXXXXXXXXX                ##.9.t.LLLLL##    X
+D:X   #!#    #.#            #.......L%%#                                      ##%%LL..2.....##   X
+D:X   #L#    #.############ ##########+#             XXXXXXXXXX                ##.9...LLLLL##    X
 D:X   #.#    #LL%%%%LL...p#      #11111#             X########X     ###############.2..LQ#+#     X
-D:X  ##.#    ############D##     #11211#             X#9....9#X     #o.....t...#  ###^L..#(#     X
+D:X  ##.#    ############D##     #11211#             X#9....9#X     #o.........#  ###LL..#(#     X
 D:X  #L##             ##%%V##    #12221#        XXXXXX#..$$..#XXXXXX#LLLLKkk...#    ###D####     X
-D:X  ##!#            ##.VH^%##   #12221#        X######t....m######X#LLLLkkk.LL#      #.#        X
-D:X   #.#           ##.iH%%hv##  #11211###      X#sSSSrrt%.mVVVLLe#X#.LL.kkk...#     ##.#        X
-D:X ###D#########   #tiI%HHhvL#  #11111+9#      X#rRssRr.%.mVvvm..#X#%...LLL...#    ##Lo######   X
-D:X #.^t^LLL...L##  #.LIH%Hc..#  #########      X#.MmmM..%..MMLLL.#X#%%......L&#   ##.L##EBBB#   X
-D:X #.jJ%%%L....L#  ##..ICCL.##                 X#.L..L..%ttL.....#X########D###   #.####LAAB##  X
+D:X  ##!#            ##.VHL%##   #12221#        X######.....m######X#LLLLkkk.LL#      #.#        X
+D:X   #.#           ##.iH%%hv##  #11211###      X#sSSSrr.%.mVVVLLe#X#.LL.kkk...#     ##.#        X
+D:X ###D#########   #.iI%HHhvL#  #11111+9#      X#rRssRr.%.mVvvm..#X#%...LLL...#    ##Lo######   X
+D:X #.L.LLLL...L##  #.LIH%Hc..#  #########      X#.MmmM..%..MMLLL.#X#%%......L&#   ##.L##EBBB#   X
+D:X #.jJ%%%L....L#  ##..ICCL.##                 X#.L..L..%..L.....#X########D###   #.####LAAB##  X
 D:X #JJJJL%LLL&..#   ##..L.L##                  X#9LLL...%..LL(LLq#X   #..L..#     #.LL..LB%%L#  X
-D:X #J%J..LLL%%LL##   ##.t.##                   X######......######X   #L.####     ###..LL%%%L## X
-D:X #jJJ^..bL%LL..##   ##D#################     XXXXXX#.LUUL.#XXXXXX   #.L#          #.PL%%%@(L# X
-D:X ##....BABLL..L.##   #.uLL^L..L%^^..L%%#          X#.L%%LL#X        #L.####       ###.L%LL..##X
-D:X  ##....B%%L.....##  #################L#          X#LLL..t#X        #..twW#        #L..LL...+pX
+D:X #J%J..LLL%%LL##   ##...##                   X######......######X   #L.####     ###..LL%%%L## X
+D:X #jJJL..bL%LL..##   ##D#################     XXXXXX#.LUUL.#XXXXXX   #.L#          #.PL%%%@(L# X
+D:X ##....BABLL..L.##   #.uLLLL..L%LL..L%%#          X#.L%%LL#X        #L.####       ###.L%LL..##X
+D:X  ##....B%%L.....##  #################L#          X#LLL...#X        #...wW#        #L..LL...+pX
 D:X  ###....LLL...LLL####################.#          X#%L..7.#X        #####L#      ###LL...1###oX
-D:X  #9+L%%L...LLL....D.+..%%oF.%%^..%%LL.#          X#LLLLt.#X            #p#      #%%%!@..## #tX
-D:X  ##################L###.L###..###.L####          X#7tt.LL#X            #.#      #########  #EX
+D:X  #9+L%%L...LLL....D.+..%%oF.%%L..%%LL.#          X#LLLL..#X            #p#      #%%%!@..## #.X
+D:X  ##################L###.L###..###.L####          X#7...LL#X            #.#      #########  #EX
 D:X  ##################.# ##############             X#.LLLL.#X       ######D###################LX
-D:X      ##11!!!&LL.+(#L#                            X#LL%%LL#X       #G..LLL.LL...D..LL....^LLL%X
+D:X      ##11!!!&LL.+(#L#                            X#LL%%LL#X       #G..LLL.LL...D..LL....LLLL%X
 D:X     ##1!!!%%%%Lp###L#                            X#L%%%%Q#X       #..LF....K...##############X
 D:X     ##!!%%%%%LLL..#.#                            XXXXDDXXXX########.LLLL..KKK..####          X
 D:X      ##.LLLLLLL...+.#                               #%%%%%%%%%%%%%+LL7..LL.k..L+o7#          X

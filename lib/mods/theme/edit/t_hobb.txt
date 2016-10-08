@@ -29,16 +29,16 @@ F:m:243:3
 ### Buildings ###
 
 # Farm
-F:f:74:3:0:0:0:0:0:67
+F:f:74:3:0:0:0:0:67
 
 # Green Dragon
-F:g:74:3:0:0:0:0:0:74
+F:g:74:3:0:0:0:0:74
 
 # Bag End
-F:i:74:3:0:0:0:0:0:84
+F:i:74:3:0:0:0:0:84
 
 # Beastmaster
-F:j:74:3:0:0:0:0:0:16
+F:j:74:3:0:0:0:0:16
 
 D:######################################################################################################################################################################################################
 D:#bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbhhhhhhhhhhhhhhhhhhhhhhhhhhihhhhhhhccccchhOOhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh#
