@@ -77,11 +77,6 @@
 # Defines the preferences for the town features
 # You will find there entries as in f_info.txt
 
-# File: tr_info.txt
-# This file comes from Angband64 written by Jurriaan Kalkman
-# and describes the traps items can have
-# You will find traps like 'Summon Fast Quylthulgs Trap' , 'Wisdom Trap' etc.
-
 # File: v_info.txt
 # This file is used to initialize the "vault template" information for the Angband game.
 # You will find vaults like 'The I in the Storm' , 'Greater vault (mortuary temple of sety)' , 
