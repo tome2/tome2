@@ -1207,7 +1207,6 @@
 #define SV_AMULET_ADORNMENT              2
 #define SV_AMULET_SLOW_DIGEST            3
 #define SV_AMULET_RESIST_ACID            4
-#define SV_AMULET_SEARCHING              5
 #define SV_AMULET_BRILLANCE              6
 #define SV_AMULET_CHARISMA               7
 #define SV_AMULET_THE_MAGI               8
@@ -1258,7 +1257,6 @@
 #define SV_RING_RESIST_POIS             20
 #define SV_RING_FREE_ACTION             21
 #define SV_RING_SEE_INVIS               22
-#define SV_RING_SEARCHING               23
 #define SV_RING_STR                     24
 #define SV_RING_INT                     25
 #define SV_RING_DEX                     26

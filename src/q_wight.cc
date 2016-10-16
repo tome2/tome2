@@ -78,7 +78,6 @@ static bool_ quest_wight_gen_hook(void *, void *, void *)
 
 					q_ptr->art_flags |=
 						TR_INT |
-						TR_SEARCH |
 						TR_RES_BLIND |
 						TR_SENS_FIRE |
 						TR_RES_CONF |

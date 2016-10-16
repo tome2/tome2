@@ -1950,12 +1950,6 @@ static std::string object_desc_aux(object_type const *o_ptr, int pref, int mode)
 			t += " to stealth";
 		}
 
-		/* Search */
-		else if (flags & TR_SEARCH)
-		{
-			t += " to searching";
-		}
-
 		/* Infravision */
 		else if (flags & TR_INFRA)
 		{
@@ -2667,7 +2661,6 @@ bool_ object_out_desc(object_type *o_ptr, FILE *fff, bool_ trim_down, bool_ wait
 		if (flags & TR_DEX) vp[vn++] = "dexterity";
 		if (flags & TR_CON) vp[vn++] = "constitution";
 		if (flags & TR_CHR) vp[vn++] = "charisma";
-		if (flags & TR_SEARCH) vp[vn++] = "searching";
 		if (flags & TR_INFRA) vp[vn++] = "infravision";
 		if (flags & TR_TUNNEL) vp[vn++] = "ability to tunnel";
 		if (flags & TR_SPEED) vp[vn++] = "speed";

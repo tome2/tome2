@@ -220,7 +220,6 @@ D:It is one of two items rumoured to defy the Shadow.
 # The Soft Leather Armour 'Hithlomir'
 P:168:2:2
 F:RES_BLIND
-F:SEARCH
 # The Set of Leather Gloves 'Cammithrim'
 P:53:2:2
 F:DEX

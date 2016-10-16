@@ -2393,7 +2393,7 @@ extern std::vector<flags_group> const &flags_groups()
 			"Mind",
 			TERM_YELLOW,
 			7,
-	                TR_INT | TR_SEARCH | TR_SUST_INT | TR_RES_CONF | TR_RES_FEAR |
+			TR_INT | TR_SUST_INT | TR_RES_CONF | TR_RES_FEAR |
 			ESP_ORC | ESP_TROLL | ESP_GIANT | ESP_ANIMAL | ESP_UNIQUE | ESP_SPIDER | ESP_DEMON,
 		},
 		flags_group {

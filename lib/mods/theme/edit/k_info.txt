@@ -1003,7 +1003,6 @@ F:IGNORE_COLD
 F:IGNORE_ELEC
 F:IGNORE_FIRE
 F:LUCK
-F:SEARCH
 F:STEALTH
 f:STEALTH
 D:A wonderfully light cloak coloured in brown and green hues. Its colouring
@@ -1449,16 +1448,6 @@ F:SPEED
 f:SPEED
 D:This wonderful ring grants you additional energy, allowing you to act faster.
 
-N:137:Searching
-G:=:d
-I:45:23:0
-W:5:0:2:250
-A:5/1
-F:HIDE_TYPE
-F:SEARCH
-f:SEARCH
-D:This ring magically improves your attention, so you can detect hidden things better.
-
 # New : It can be activated but at the cost of its destruction
 N:138:Teleportation
 G:=:d
@@ -1679,16 +1668,6 @@ F:HIDE_TYPE
 f:CHR
 D:This amulet grants beauty beyond mere looks.
 
-N:165:Searching
-G:":d
-I:40:5:0
-W:15:0:3:600
-A:15/1
-F:HIDE_TYPE
-F:SEARCH
-f:SEARCH
-D:This amulet grants keen sight, finding things that are hidden.
-
 N:166:Teleportation
 G:":d
 I:40:1:0
@@ -1742,7 +1721,6 @@ F:IGNORE_FIRE
 F:INT
 F:RES_BLIND
 F:RES_CONF
-F:SEARCH
 F:SPELL_CONTAIN
 F:SUST_INT
 F:WIELD_CAST

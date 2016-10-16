@@ -874,7 +874,6 @@ s32b flag_cost(object_type const *o_ptr, int plusses)
 	if (flags & TR_CHAOTIC) total += 10000;
 	if (flags & TR_VAMPIRIC) total += 13000;
 	if (flags & TR_STEALTH) total += (250 * plusses);
-	if (flags & TR_SEARCH) total += (100 * plusses);
 	if (flags & TR_INFRA) total += (150 * plusses);
 	if (flags & TR_TUNNEL) total += (175 * plusses);
 	if ((flags & TR_SPEED) && (plusses > 0))
@@ -1201,7 +1200,6 @@ s32b object_value_real(object_type const *o_ptr)
 
 			/* Give credit for stealth and searching */
 			if (flags & TR_STEALTH) value += (o_ptr->pval * 100L);
-			if (flags & TR_SEARCH) value += (o_ptr->pval * 100L);
 
 			/* Give credit for infra-vision and tunneling */
 			if (flags & TR_INFRA) value += (o_ptr->pval * 50L);
@@ -2896,25 +2894,6 @@ static void a_m_aux_3(object_type *o_ptr, int level, int power)
 				}
 				break;
 
-				/* Searching */
-			case SV_RING_SEARCHING:
-				{
-					/* Bonus to searching */
-					o_ptr->pval = 1 + m_bonus(5, level);
-
-					/* Cursed */
-					if (power < 0)
-					{
-						/* Cursed */
-						o_ptr->ident |= (IDENT_CURSED);
-
-						/* Reverse pval */
-						o_ptr->pval = 0 - (o_ptr->pval);
-					}
-
-					break;
-				}
-
 				/* Flames, Acid, Ice */
 			case SV_RING_FLAMES:
 			case SV_RING_ACID:
@@ -3123,24 +3102,6 @@ static void a_m_aux_3(object_type *o_ptr, int level, int power)
 					if (randint(5) == 1) o_ptr->art_flags |= TR_RES_POIS;
 				}
 				break;
-
-				/* Amulet of searching */
-			case SV_AMULET_SEARCHING:
-				{
-					o_ptr->pval = randint(5) + m_bonus(5, level);
-
-					/* Cursed */
-					if (power < 0)
-					{
-						/* Cursed */
-						o_ptr->ident |= (IDENT_CURSED);
-
-						/* Reverse bonuses */
-						o_ptr->pval = 0 - (o_ptr->pval);
-					}
-
-					break;
-				}
 
 				/* Amulet of the Magi -- never cursed */
 			case SV_AMULET_THE_MAGI:
@@ -3770,24 +3731,21 @@ void add_random_ego_flag(object_type *o_ptr, ego_flag_set const &fego, bool_ *li
 	{
 		/* Add a random pval-affected ability */
 		/* This might cause boots with + to blows */
-		switch (randint(6))
+		switch (randint(5))
 		{
 		case 1:
 			o_ptr->art_flags |= TR_STEALTH;
 			break;
 		case 2:
-			o_ptr->art_flags |= TR_SEARCH;
-			break;
-		case 3:
 			o_ptr->art_flags |= TR_INFRA;
 			break;
-		case 4:
+		case 3:
 			o_ptr->art_flags |= TR_TUNNEL;
 			break;
-		case 5:
+		case 4:
 			o_ptr->art_flags |= TR_SPEED;
 			break;
-		case 6:
+		case 5:
 			o_ptr->art_flags |= TR_BLOWS;
 			break;
 		}

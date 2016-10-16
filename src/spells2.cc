@@ -1596,10 +1596,6 @@ void self_knowledge(FILE *fff)
 	{
 		info[i++] = "Your stealth is affected by your equipment.";
 	}
-	if (flags & TR_SEARCH)
-	{
-		info[i++] = "Your searching ability is affected by your equipment.";
-	}
 	if (flags & TR_INFRA)
 	{
 		info[i++] = "Your infravision is affected by your equipment.";
