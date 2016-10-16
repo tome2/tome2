@@ -54,7 +54,6 @@ Don't forget you can browse the help from the *****help.hlp*02[Main menu].
   *****automat.txt*03[Auto destroy]
   *****automat.txt*02[Auto pick-up]
   *****automat.txt*01[Automatizer]
-    *****defines.txt*82[Defines]
   *****automat.txt*04[Autosquelch]
   *****c_axemas.txt*01[Axemaster]
 ~~~~~66
@@ -160,9 +159,6 @@ Don't forget you can browse the help from the *****help.hlp*02[Main menu].
     *****debug.txt*100[Command List]
     *****debug.txt*111[Command descriptions ]
     *****debug.txt*112[General]
-  *****defines.txt*81[Defines]
-    *****defines.txt*84[Svals]
-    *****defines.txt*85[Tvals]
   *****c_demono.txt*01[Demonologist]
   *****m_demono.txt*02[Demonology Magic]
   *****version.txt*01[Development history]
@@ -526,7 +522,6 @@ Don't forget you can browse the help from the *****help.hlp*02[Main menu].
   *****birth.txt*34[Strength]
   *****c_summon.txt*01[Summoners]
     *****c_summon.txt*03[Summoning]
-  *****defines.txt*12[Svals]
   *****c_swordm.txt*01[Swordmasters]
   *****c_symbia.txt*01[Symbiant]
     *****c_symbia.txt*03[Naming your symbiote]
@@ -549,7 +544,6 @@ Don't forget you can browse the help from the *****help.hlp*02[Main menu].
   *****g_tulkas.txt*01[Tulkas]
     *****c_palad.txt*03[Paladin]
     *****g_tulkas.txt*03[Prayers]
-  *****defines.txt*83[Tvals]
 ~~~~~85
 *****/Uindex.txt*85[U]
   *****m_udun.txt*02[Udun Magic]

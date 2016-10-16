@@ -249,9 +249,8 @@ instead of <tval>23</tval> you could write <tval>TV_SWORD</tval>.
 
 #####GAh that would be better. But where can I find out what all the names, and
 #####Gnumbers of tvalues are?
-Well I've written a *****defines.txt*0[file] which lists tvalues and one which lists svalues for you
-to check on, and you may want to check the objects entry in k_info.txt in your
-lib/edit directory. If you look at the entry for dagger you'll see:
+Have a look at the object entry in k_info.txt in your lib/edit directory. If you
+check the entry for dagger you'll see:
 
 N:43:& Dagger~
 G:|:W
