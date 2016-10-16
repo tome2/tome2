@@ -941,11 +941,11 @@ static std::vector<monster_spell const *> extract_spells(monster_spell_flag_set 
 	auto result = std::vector<monster_spell const *>();
 	result.reserve(spell_flag_set.nbits);
 
-	for (std::size_t k = 0; k < monster_spell_flag_set::nbits; k++)
+	for (auto const &monster_spell: monster_spells())
 	{
-		if (spell_flag_set.bit(k))
+		if (bool(spell_flag_set & monster_spell->flag_set))
 		{
-			result.push_back(monster_spells()[k]);
+			result.push_back(monster_spell);
 		}
 	}
 
