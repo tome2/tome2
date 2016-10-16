@@ -118,10 +118,10 @@ The skills are:
   *****skills.txt*47[Mimicry]             *****skills.txt*33[Mind]               *****skills.txt*41[Mindcraft]          *****skills.txt*42[Monster-lore]       
   *****skills.txt*59[Music]               *****skills.txt*34[Nature]             *****skills.txt*35[Necromancy]         *****skills.txt*07[Polearm-mastery]    
   *****skills.txt*45[Possession]          *****skills.txt*39[Prayer]             *****skills.txt*36[Runecraft]          *****skills.txt*09[Sling-mastery]      
-  *****skills.txt*14[Sneakiness]          *****skills.txt*22[Spell-power]        *****skills.txt*38[Spirituality]       *****skills.txt*23[Sorcery]            
-  *****skills.txt*19[Stealing]            *****skills.txt*15[Stealth]            *****skills.txt*53[Stunning-blows]     *****skills.txt*43[Summoning]          
-  *****skills.txt*03[Sword-mastery]       *****skills.txt*46[Symbiosis]          *****skills.txt*32[Temporal]           *****skills.txt*37[Thaumaturgy]        
-  *****skills.txt*48[Udun]                *****skills.txt*26[Water]              *****skills.txt*02[Weaponmastery]
+  *****skills.txt*22[Spell-power]         *****skills.txt*38[Spirituality]       *****skills.txt*23[Sorcery]            *****skills.txt*19[Stealing]
+  *****skills.txt*15[Stealth]             *****skills.txt*53[Stunning-blows]     *****skills.txt*43[Summoning]          *****skills.txt*03[Sword-mastery]
+  *****skills.txt*46[Symbiosis]           *****skills.txt*32[Temporal]           *****skills.txt*37[Thaumaturgy]        *****skills.txt*48[Udun]
+  *****skills.txt*26[Water]               *****skills.txt*02[Weaponmastery]
 
 
 ~~~~~01|Skills|Combat
@@ -257,12 +257,6 @@ spirituality sub-skills.
 This skill does not affect your ability to use scrolls and potions, but other 
 items that require [Self]Magic-Device are affected. At higher levels you gain 
 the ability to detect traps and disrupt all teleportation.
-~~~~~14|Skills|Sneakiness
-[[[[[BSneakiness]
-The sneakiness skill affects your searching and perception abilities.
-
-Sub-skills of Sneakiness include Stealth, Disarming, Trapping, Backstab,
-Stealing and Dodging.
 ~~~~~15|Skills|Stealth
 [[[[[BStealth]
 This skill is a sub-skill of the Sneakiness skill. It affects your ability
