@@ -2627,9 +2627,26 @@ bool_ enchant(object_type *o_ptr, int n, int eflag)
 	bool_ res = FALSE;
 	auto const a = artifact_p(o_ptr);
 
-
 	/* Extract the flags */
 	auto const flags = object_flags(o_ptr);
+
+	/* Break curse if item is cursed the curse isn't permanent */
+	auto maybe_break_curse = [o_ptr, &flags]()
+	{
+		if (cursed_p(o_ptr) && (!(flags & TR_PERMA_CURSE)))
+		{
+			msg_print("The curse is broken!");
+			o_ptr->ident &= ~(IDENT_CURSED);
+			o_ptr->ident |= (IDENT_SENSE);
+
+			if (o_ptr->art_flags & TR_CURSED)
+				o_ptr->art_flags &= ~TR_CURSED;
+			if (o_ptr->art_flags & TR_HEAVY_CURSE)
+				o_ptr->art_flags &= ~TR_HEAVY_CURSE;
+
+			o_ptr->sense = SENSE_UNCURSED;
+		}
+	};
 
 	/* Large piles resist enchantment */
 	prob = o_ptr->number * 100;
@@ -2660,21 +2677,10 @@ bool_ enchant(object_type *o_ptr, int n, int eflag)
 				o_ptr->to_h++;
 				res = TRUE;
 
-				/* only when you get it above -1 -CFT */
-				if (cursed_p(o_ptr) &&
-						(!(flags & TR_PERMA_CURSE)) &&
-				                (o_ptr->to_h >= 0) && (rand_int(100) < 25))
+				/* break curse? */
+				if ((o_ptr->to_h >= 0) && (rand_int(100) < 25))
 				{
-					msg_print("The curse is broken!");
-					o_ptr->ident &= ~(IDENT_CURSED);
-					o_ptr->ident |= (IDENT_SENSE);
-
-					if (o_ptr->art_flags & TR_CURSED)
-						o_ptr->art_flags &= ~TR_CURSED;
-					if (o_ptr->art_flags & TR_HEAVY_CURSE)
-						o_ptr->art_flags &= ~TR_HEAVY_CURSE;
-
-					o_ptr->sense = SENSE_UNCURSED;
+					maybe_break_curse();
 				}
 			}
 		}
@@ -2691,21 +2697,10 @@ bool_ enchant(object_type *o_ptr, int n, int eflag)
 				o_ptr->to_d++;
 				res = TRUE;
 
-				/* only when you get it above -1 -CFT */
-				if (cursed_p(o_ptr) &&
-						(!(flags & TR_PERMA_CURSE)) &&
-				                (o_ptr->to_d >= 0) && (rand_int(100) < 25))
+				/* break curse? */
+				if ((o_ptr->to_d >= 0) && (rand_int(100) < 25))
 				{
-					msg_print("The curse is broken!");
-					o_ptr->ident &= ~(IDENT_CURSED);
-					o_ptr->ident |= (IDENT_SENSE);
-
-					if (o_ptr->art_flags & TR_CURSED)
-						o_ptr->art_flags &= ~TR_CURSED;
-					if (o_ptr->art_flags & TR_HEAVY_CURSE)
-						o_ptr->art_flags &= ~TR_HEAVY_CURSE;
-
-					o_ptr->sense = SENSE_UNCURSED;
+					maybe_break_curse();
 				}
 			}
 		}
@@ -2723,21 +2718,10 @@ bool_ enchant(object_type *o_ptr, int n, int eflag)
 				o_ptr->pval++;
 				res = TRUE;
 
-				/* only when you get it above -1 -CFT */
-				if (cursed_p(o_ptr) &&
-						(!(flags & TR_PERMA_CURSE)) &&
-				                (o_ptr->pval >= 0) && (rand_int(100) < 25))
+				/* break curse? */
+				if ((o_ptr->pval >= 0) && (rand_int(100) < 25))
 				{
-					msg_print("The curse is broken!");
-					o_ptr->ident &= ~(IDENT_CURSED);
-					o_ptr->ident |= (IDENT_SENSE);
-
-					if (o_ptr->art_flags & TR_CURSED)
-						o_ptr->art_flags &= ~TR_CURSED;
-					if (o_ptr->art_flags & TR_HEAVY_CURSE)
-						o_ptr->art_flags &= ~TR_HEAVY_CURSE;
-
-					o_ptr->sense = SENSE_UNCURSED;
+					maybe_break_curse();
 				}
 			}
 		}
@@ -2754,21 +2738,10 @@ bool_ enchant(object_type *o_ptr, int n, int eflag)
 				o_ptr->to_a++;
 				res = TRUE;
 
-				/* only when you get it above -1 -CFT */
-				if (cursed_p(o_ptr) &&
-						(!(flags & TR_PERMA_CURSE)) &&
-				                (o_ptr->to_a >= 0) && (rand_int(100) < 25))
+				/* break curse? */
+				if ((o_ptr->to_a >= 0) && (rand_int(100) < 25))
 				{
-					msg_print("The curse is broken!");
-					o_ptr->ident &= ~(IDENT_CURSED);
-					o_ptr->ident |= (IDENT_SENSE);
-
-					if (o_ptr->art_flags & TR_CURSED)
-						o_ptr->art_flags &= ~TR_CURSED;
-					if (o_ptr->art_flags & TR_HEAVY_CURSE)
-						o_ptr->art_flags &= ~TR_HEAVY_CURSE;
-
-					o_ptr->sense = SENSE_UNCURSED;
+					maybe_break_curse();
 				}
 			}
 		}
