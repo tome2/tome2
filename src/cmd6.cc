@@ -2302,17 +2302,6 @@ static bool_ quaff_potion(int tval, int sval, int pval, int pval2)
 				(void)detect_objects_gold(DEFAULT_RADIUS);
 				(void)detect_objects_normal(DEFAULT_RADIUS);
 				identify_pack();
-				self_knowledge(NULL);
-				ident = TRUE;
-
-				break;
-			}
-
-		case SV_POTION_SELF_KNOWLEDGE:
-			{
-				msg_print("You begin to know yourself a little better...");
-				msg_print(NULL);
-				self_knowledge(NULL);
 				ident = TRUE;
 
 				break;

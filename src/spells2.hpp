@@ -23,7 +23,6 @@ extern void identify_pack_fully(void);
 extern bool_ remove_curse(void);
 extern bool_ remove_all_curse(void);
 extern bool_ restore_level(void);
-extern void self_knowledge(FILE *fff);
 extern bool_ lose_all_info(void);
 extern bool_ detect_traps(int rad);
 extern bool_ detect_doors(int rad);

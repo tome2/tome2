@@ -877,31 +877,16 @@ const char *demonology_control_demon_info()
 
 casting_result divination_greater_identify()
 {
-	if (get_check("Cast on yourself?"))
-	{
-		self_knowledge(NULL);
-	}
-	else
-	{
-		identify_fully();
-	}
+	identify_fully();
 	return CAST_OBVIOUS;
 }
 
 casting_result divination_identify()
 {
-	if (get_level_s(IDENTIFY, 50) >= 27)
+	if (get_level_s(IDENTIFY, 50) >= 17)
 	{
 		casting_result result = NO_CAST;
 		result = cplus(result, identify_pack());
-		result = cplus(result, fire_ball(GF_IDENTIFY, 0, 1, get_level_s(IDENTIFY, 3)));
-		return result;
-	}
-	else if (get_level_s(IDENTIFY, 50) >= 17)
-	{
-		casting_result result = NO_CAST;
-		result = cplus(result, identify_pack());
-		result = cplus(result, fire_ball(GF_IDENTIFY, 0, 1, 0));
 		return result;
 	}
 	else if (ident_spell())
@@ -3910,10 +3895,6 @@ const char *music_hobbit_melodies_info()
 int music_clairaudience_lasting()
 {
 	set_tim_esp(5);
-	if (get_level_s(MUSIC_MIND, 50) >= 10)
-	{
-		fire_ball(GF_IDENTIFY, 0, 1, 1 + get_level(MUSIC_MIND, 3));
-	}
 	return get_mana(MUSIC_MIND);
 }
 
@@ -4543,7 +4524,6 @@ casting_result varda_evenstar_spell()
 	if (get_level_s(VARDA_EVENSTAR, 50) >= 40)
 	{
 		identify_pack();
-		self_knowledge(NULL);
 	}
 
 	return CAST_OBVIOUS;

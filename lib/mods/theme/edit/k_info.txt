@@ -3956,15 +3956,6 @@ F:FOUNTAIN
 D:This wonderful potion will fully heal you no matter how badly you're hurt, allow drained
 D:abilities to recover and remove various other ailments.
 
-N:421:Self Knowledge
-G:!:d
-I:71:58:0
-W:40:0:4:2000
-A:40/1
-P:0:1d1:0:0:0
-F:FOUNTAIN
-D:A drink of insight that lets you know yourself better.
-
 N:422:*Enlightenment*
 G:!:d
 I:71:57:0

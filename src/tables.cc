@@ -4099,7 +4099,6 @@ gf_name_type gf_names[] =
 	{ GF_JAM_DOOR, "door jamming" },
 	{ GF_DOMINATION, "domination" },
 	{ GF_DISP_GOOD, "dispel good" },
-	{ GF_IDENTIFY, "identification" },
 	{ GF_RAISE, "raise dead" },
 	{ GF_STAR_IDENTIFY, "*identification*" },
 	{ GF_DESTRUCTION, "destruction" },

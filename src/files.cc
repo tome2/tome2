@@ -2794,15 +2794,6 @@ errr file_character(cptr name, bool_ full)
 
 	fprintf (fff, "\n\n");
 
-	/* Emit the self-knowledge lines, even though they duplicate the
-	   information in the grids (below), because they contain information
-	   that's not in the grids (racial abilities, luck, etc.). */
-	if (full)
-	{
-		self_knowledge(fff);
-		fprintf(fff, "\n\n");
-	}
-
 	/* adds and slays */
 	display_player (2);
 	file_character_print_grid(fff, FALSE, TRUE);

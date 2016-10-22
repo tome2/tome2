@@ -1638,11 +1638,6 @@ void do_cmd_debug()
 		do_cmd_wiz_jump();
 		break;
 
-		/* Self-Knowledge */
-	case 'k':
-		self_knowledge(NULL);
-		break;
-
 		/* Learn about objects */
 	case 'l':
 		do_cmd_wiz_learn();

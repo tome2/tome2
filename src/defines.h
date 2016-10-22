@@ -1505,7 +1505,6 @@
 #define SV_POTION_AUGMENTATION          55
 #define SV_POTION_ENLIGHTENMENT         56
 #define SV_POTION_STAR_ENLIGHTENMENT    57
-#define SV_POTION_SELF_KNOWLEDGE        58
 #define SV_POTION_EXPERIENCE            59
 #define SV_POTION_RESISTANCE            60
 #define SV_POTION_CURING                61
@@ -1888,7 +1887,6 @@
 #define GF_JAM_DOOR     88
 #define GF_DOMINATION   89
 #define GF_DISP_GOOD    90
-#define GF_IDENTIFY     91
 #define GF_RAISE        92
 #define GF_STAR_IDENTIFY 93
 #define GF_DESTRUCTION  94

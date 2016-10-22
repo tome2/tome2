@@ -3986,19 +3986,6 @@ static bool_ project_o(int who, int r, int y, int x, int dam, int typ)
 
 				break;
 			}
-		case GF_IDENTIFY:
-			{
-				object_aware(o_ptr);
-				object_known(o_ptr);
-
-				/* Process the appropriate hooks */
-				identify_hooks(0 - this_o_idx, o_ptr, IDENT_NORMAL);
-
-				/* Squelch ! */
-				squeltch_grid();
-
-				break;
-			}
 		case GF_RAISE:
 			{
 				get_pos_player(7, &y, &x);
@@ -4292,7 +4279,6 @@ bool_ project_m(int who, int r, int y, int x, int dam, int typ)
 		case GF_JAM_DOOR:
 		case GF_RAISE:
 		case GF_RAISE_DEMON:
-		case GF_IDENTIFY:
 			break;              /* none of the above anger */
 		case GF_TRAP_DEMONSOUL:
 			if (r_ptr->flags & RF_DEMON)
@@ -7677,14 +7663,6 @@ static bool_ project_p(int who, int r, int y, int x, int dam, int typ, int a_rad
 			break;
 		}
 
-		/* Knowledge */
-	case GF_IDENTIFY:
-		{
-			if (fuzzy) msg_print("You are hit by pure knowledge!");
-			self_knowledge(NULL);
-			break;
-		}
-
 		/* Psi -- ESP */
 	case GF_PSI:
 		{
@@ -8536,7 +8514,6 @@ bool_ potion_smash_effect(int who, int y, int x, int o_sval)
 	case SV_POTION_AUGMENTATION:
 	case SV_POTION_ENLIGHTENMENT:
 	case SV_POTION_STAR_ENLIGHTENMENT:
-	case SV_POTION_SELF_KNOWLEDGE:
 	case SV_POTION_EXPERIENCE:
 	case SV_POTION_RESISTANCE:
 	case SV_POTION_INVULNERABILITY:
