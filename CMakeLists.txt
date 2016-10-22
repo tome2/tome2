@@ -11,33 +11,39 @@ INCLUDE(FindPkgConfig)
 #
 # Basic common compiler flags.
 #
-SET(COMMON_COMPILER_FLAGS "-pipe -Wall -Wextra -Wno-unused-value -Wno-unused-parameter -fsanitize=undefined -fsanitize=address")
+SET(COMMON_COMPILER_FLAGS "-pipe -Wall -Wextra -Wno-unused-value -Wno-unused-parameter")
 
 #
-# GCC/G++ flags
+# Sanitizer flags for debugging
+#
+SET(SANITIZER_FLAGS "-fsanitize=undefined -fsanitize=address")
+
+#
+# C Compiler Flags
+#
+SET(CMAKE_C_FLAGS           "${CMAKE_C_FLAGS} ${COMMON_COMPILER_FLAGS}")
+SET(CMAKE_C_FLAGS_RELEASE   "-O2")
+SET(CMAKE_C_FLAGS_DEBUG     "-O0 -g ${SANITIZER_FLAGS}")
+
+#
+# C++ Compiler Flags
+#
+SET(CMAKE_CXX_FLAGS         "${CMAKE_CXX_FLAGS} ${COMMON_COMPILER_FLAGS} --std=c++14")
+SET(CMAKE_CXX_FLAGS_RELEASE "-O2")
+SET(CMAKE_CXX_FLAGS_DEBUG   "-O0 -g ${SANITIZER_FLAGS} -D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC")
+
+#
+# GCC Flags
 #
 IF(CMAKE_COMPILER_IS_GNUCC)
-  # Let's set sensible options.
-  SET(CMAKE_C_FLAGS         "${CMAKE_C_FLAGS} ${COMMON_COMPILER_FLAGS}")
-  SET(CMAKE_C_FLAGS_RELEASE "-O2")
-  SET(CMAKE_C_FLAGS_DEBUG   "-O0 -g")
-  SET(CMAKE_CXX_FLAGS       "${CMAKE_CXX_FLAGS} ${COMMON_COMPILER_FLAGS} --std=c++14 -D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC")
-  SET(CMAKE_CXX_FLAGS_RELEASE "-O2")
-  SET(CMAKE_CXX_FLAGS_DEBUG   "-O0 -g")
+  # Nothing for now
 ENDIF()
 
 #
 # Clang flags
 #
-IF("${CMAKE_C_COMPILER_ID}" STREQUAL "Clang")
-  SET(CMAKE_C_FLAGS         "${CMAKE_C_FLAGS} ${COMMON_COMPILER_FLAGS}")
-  SET(CMAKE_C_FLAGS_RELEASE "-O2")
-  SET(CMAKE_C_FLAGS_DEBUG   "-O0 -g")
-ENDIF()
 IF("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-  SET(CMAKE_CXX_FLAGS       "${CMAKE_CXX_FLAGS} ${COMMON_COMPILER_FLAGS} --std=c++14 -D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC")
-  SET(CMAKE_CXX_FLAGS_RELEASE "-O2")
-  SET(CMAKE_CXX_FLAGS_DEBUG   "-O0 -g")
+  # Nothing for now
 ENDIF()
 
 # Add standard math library
