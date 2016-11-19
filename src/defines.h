@@ -1204,7 +1204,6 @@
 /* The "sval" codes for TV_AMULET */
 #define SV_AMULET_DOOM                   0
 #define SV_AMULET_TELEPORT               1
-#define SV_AMULET_ADORNMENT              2
 #define SV_AMULET_SLOW_DIGEST            3
 #define SV_AMULET_RESIST_ACID            4
 #define SV_AMULET_BRILLANCE              6

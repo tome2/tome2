@@ -1760,14 +1760,6 @@ F:RES_ACID
 f:RES_ACID
 D:This magical talisman will make the corroding forces of acid less threatening to your health.
 
-N:169:Adornment
-G:":d
-I:40:2:0
-W:10:0:3:20
-A:10/1
-F:EASY_KNOW
-D:This amulet is not magical. It just looks good.
-
 ##### Extra armour #####
 
 N:170:& Double Ring Mail~

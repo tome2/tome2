@@ -1679,8 +1679,6 @@ F:TELEPORT
 f:TELEPORT
 D:This amulet nastily throws you all over the place.
 
-# Replacing Adornment with Protection from Evil from T-Plus by Ingeborg S. Norden
-
 N:169:Protection from Evil
 G:":d
 I:40:2:0
