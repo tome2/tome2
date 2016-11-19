@@ -251,7 +251,7 @@ static void rename_rule(Rule *rule)
 	Term_get_size(&wid, &hgt);
 
 	sprintf(name, "%s", rule->get_name());
-	if (input_box("New name?", hgt / 2, wid / 2, name, sizeof(name)))
+	if (input_box("New name?", hgt / 2, wid / 2, name, sizeof(name) - 1))
 	{
 		rule->set_name(name);
 	}
