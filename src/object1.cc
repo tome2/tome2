@@ -2629,7 +2629,7 @@ bool_ object_out_desc(object_type *o_ptr, FILE *fff, bool_ trim_down, bool_ wait
 				}
 				else
 				{
-					text_out(format("It provides light (radius %d) forever.  ", radius));
+					text_out(format("It provides light (radius %d).  ", radius));
 				}
 			}
 		}
