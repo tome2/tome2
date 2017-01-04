@@ -46,6 +46,11 @@ IF("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
   # Nothing for now
 ENDIF()
 
+#
+# fmt
+#
+ADD_DEFINITIONS(-DFMT_HEADER_ONLY)
+
 # Add standard math library
 SET(LIBS ${LIBS} m)
 

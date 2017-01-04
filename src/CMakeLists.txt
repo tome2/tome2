@@ -8,10 +8,6 @@ INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/../vendor/jsoncons)
 # Add subdirectories
 ADD_SUBDIRECTORY (squelch)
 
-# Sources (vendor)
-SET(SRCS_VENDOR
-  ${CMAKE_CURRENT_SOURCE_DIR}/../vendor/cppformat/format.cc)
-
 # Sources (common)
 SET(SRCS_COMMON
   birth.cc
