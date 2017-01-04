@@ -42,7 +42,6 @@ struct artifact_type
 	byte rarity = 0;                         /* Artifact rarity */
 
 	byte cur_num = 0;                        /* Number created (0 or 1) */
-	byte max_num = 0;                        /* Unused (should be "1") */
 
 	s16b power = 0;                          /* Power granted, if any */
 
