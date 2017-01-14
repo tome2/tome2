@@ -2063,7 +2063,7 @@ static void check_for_save_file(LPSTR cmd_line)
 	game_in_progress = TRUE;
 
 	/* Play game */
-	play_game(FALSE);
+	play_game();
 }
 
 
@@ -2096,7 +2096,7 @@ static void process_menus(WORD wCmd)
 			{
 				game_in_progress = TRUE;
 				Term_flush();
-				play_game(TRUE);
+				play_game();
 				quit(NULL);
 			}
 			break;
@@ -2135,7 +2135,7 @@ ofn.lStructSize = sizeof(OPENFILENAME);
 					validate_file(savefile);
 					game_in_progress = TRUE;
 					Term_flush();
-					play_game(FALSE);
+					play_game();
 					quit(NULL);
 				}
 			}
@@ -3323,7 +3323,7 @@ int FAR PASCAL WinMain(HINSTANCE hInst, HINSTANCE hPrevInst,
 	check_for_save_file(lpCmdLine);
 
 	game_in_progress = TRUE;
-	play_game(FALSE);
+	play_game();
 
 	/* Prompt the user */
 	Term_fresh();
