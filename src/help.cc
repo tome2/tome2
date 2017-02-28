@@ -24,25 +24,24 @@
 #include "variable.hpp"
 
 #define DESC_MAX 14
-#define TRIGGERED_HELP_MAX 17
+#define TRIGGERED_HELP_MAX 16
 
 #define HELP_VOID_JUMPGATE 0
 #define HELP_FOUNTAIN      1
 #define HELP_FOUND_OBJECT  2
 #define HELP_FOUND_ALTAR   3
 #define HELP_FOUND_STAIR   4
-#define HELP_GET_RUNE      5
-#define HELP_GET_ROD       6
-#define HELP_GET_ROD_TIP   7
-#define HELP_GET_DEVICE    8
-#define HELP_WILDERNESS    9
-#define HELP_GAME_TOME    10
-#define HELP_GAME_THEME   11
-#define HELP_1ST_LEVEL    12
-#define HELP_20TH_LEVEL   13
-#define HELP_ID_SPELL_ITM 14
-#define HELP_MELEE_SKILLS 15
-#define HELP_MON_ASK_HELP 16
+#define HELP_GET_ROD       5
+#define HELP_GET_ROD_TIP   6
+#define HELP_GET_DEVICE    7
+#define HELP_WILDERNESS    8
+#define HELP_GAME_TOME     9
+#define HELP_GAME_THEME   10
+#define HELP_1ST_LEVEL    11
+#define HELP_20TH_LEVEL   12
+#define HELP_ID_SPELL_ITM 13
+#define HELP_MELEE_SKILLS 14
+#define HELP_MON_ASK_HELP 15
 
 /**
  * Game started?
@@ -179,7 +178,6 @@ context_help_type class_table[] =
 	{ "Priest(Manwe)",  "c_pr_man.txt",   0 },
 	{ "Ranger",         "c_ranger.txt",   0 },
 	{ "Rogue",          "c_rogue.txt",    0 },
-	{ "Runecrafter",    "c_runecr.txt",   0 },
 	{ "Sorceror",       "c_sorcer.txt",   0 },
 	{ "Summoner",       "c_summon.txt",   0 },
 	{ "Swordmaster",    "c_swordm.txt",   0 },
@@ -267,7 +265,6 @@ context_help_type skill_table[] =
 	{ "Polearm-mastery",     "skills.txt",  7 },
 	{ "Possession",          "skills.txt", 45 },
 	{ "Prayer",              "skills.txt", 39 },
-	{ "Runecraft",           "skills.txt", 36 },
 	{ "Sling-mastery",       "skills.txt",  9 },
 	{ "Sneakiness",          "skills.txt", 14 },
 	{ "Spell-power",         "skills.txt", 22 },
@@ -331,12 +328,6 @@ static bool_ trigger_found_altar(void *in, void *out) {
 static bool_ trigger_found_stairs(void *in, void *out) {
 	hook_move_in *p = (hook_move_in *) in;
 	return (cave[p->y][p->x].feat == FEAT_MORE);
-}
-
-static bool_ trigger_get_rune(void *in, void *out) {
-	hook_get_in *g = (hook_get_in *) in;
-	return ((g->o_ptr->tval == TV_RUNE1) ||
-		(g->o_ptr->tval == TV_RUNE2));
 }
 
 static bool_ trigger_get_rod(void *in, void *out) {
@@ -443,14 +434,6 @@ static triggered_help_type triggered_help[TRIGGERED_HELP_MAX] =
 	  { "Ah, this is a stair, or a way into something. Press > to enter it.",
 	    "But be ready to fight what lies within, for it might not be too friendly.",
 	    NULL }
-	},
-	{ HELP_GET_RUNE,
-	  HOOK_GET,
-	  trigger_get_rune,
-	  { "Ah, a rune! Runes are used with the Runecraft skill to allow you to",
-	    "create spells on your own.",
-	    NULL
-	  }
 	},
 	{ HELP_GET_ROD,
 	  HOOK_GET,

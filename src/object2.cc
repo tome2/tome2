@@ -1505,17 +1505,6 @@ bool_ object_similar(object_type const *o_ptr, object_type const *j_ptr)
 			return FALSE;
 		}
 
-	case TV_RUNE1:
-		{
-			return TRUE;
-		}
-
-	case TV_RUNE2:
-		{
-			if ((o_ptr->sval == RUNE_STONE) || (j_ptr->sval == RUNE_STONE)) return FALSE;
-			else return TRUE;
-		}
-
 	case TV_INSTRUMENT:
 		{
 			return FALSE;
@@ -2559,29 +2548,7 @@ static void a_m_aux_1(object_type *o_ptr, int level, int power)
 	{
 	case TV_MSTAFF:
 		{
-			if (is_ego_p(o_ptr, EGO_MSTAFF_SPELL))
-			{
-				int gf[2], i;
-
-				for (i = 0; i < 2; i++)
-				{
-					int k = 0;
-
-					gf[i] = 0;
-					while (!k)
-					{
-						k = lookup_kind(TV_RUNE1, (gf[i] = rand_int(MAX_GF)));
-					}
-				}
-
-				o_ptr->pval = gf[0] + (gf[1] << 16);
-				o_ptr->pval3 = rand_int(RUNE_MOD_MAX) + (rand_int(RUNE_MOD_MAX) << 16);
-				o_ptr->pval2 = randint(70) + (randint(70) << 8);
-			}
-			else
-			{
-				o_ptr->art_flags |= (TR_SPELL_CONTAIN | TR_WIELD_CAST);
-			}
+			o_ptr->art_flags |= (TR_SPELL_CONTAIN | TR_WIELD_CAST);
 			break;
 		}
 	case TV_BOLT:
@@ -4212,15 +4179,7 @@ try_an_other_ego:
 		/* Spell in it ? No! */
 		if (flags & TR_SPELL_CONTAIN)
 		{
-			/* Mega hack, mage staves of spell cannot SPELL_CONTAIN */
-			if (is_ego_p(o_ptr, EGO_MSTAFF_SPELL))
-			{
-				o_ptr->art_flags &= ~TR_SPELL_CONTAIN;
-			}
-			else
-			{
-				o_ptr->pval2 = -1;
-			}
+			o_ptr->pval2 = -1;
 		}
 
 		/* Cheat -- describe the item */
@@ -4251,15 +4210,7 @@ try_an_other_ego:
 		/* Spell in it ? No! */
 		if (flags & TR_SPELL_CONTAIN)
 		{
-			/* Mega hack, mage staves of spell cannot SPELL_CONTAIN */
-			if (is_ego_p(o_ptr, EGO_MSTAFF_SPELL))
-			{
-				o_ptr->art_flags &= ~TR_SPELL_CONTAIN;
-			}
-			else
-			{
-				o_ptr->pval2 = -1;
-			}
+			o_ptr->pval2 = -1;
 		}
 
 		/* Hacccccccckkkkk attack ! :) -- To prevent som ugly crashs */
@@ -4437,12 +4388,6 @@ static bool kind_is_theme(obj_theme const *theme, int k_idx)
 		prob = theme->magic;
 		break;
 	case TV_RANDART:
-		prob = theme->magic;
-		break;
-	case TV_RUNE1:
-		prob = theme->magic;
-		break;
-	case TV_RUNE2:
 		prob = theme->magic;
 		break;
 	case TV_BOOK:

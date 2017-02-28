@@ -61,12 +61,6 @@
 using boost::algorithm::iequals;
 
 /*
- * Forward declare
- */
-static bool_ activate_spell(object_type * o_ptr, byte choice);
-
-
-/*
  * General function to find an item by its name
  */
 static select_by_name_t select_object_by_name(std::string const &prompt)
@@ -4807,8 +4801,6 @@ void do_cmd_activate(void)
 
 	int item, lev, chance;
 
-	char ch, spell_choice;
-
 	/* Get an item */
 	command_wrk = USE_EQUIP;
 	if (!get_item(&item,
@@ -4892,15 +4884,8 @@ void do_cmd_activate(void)
 	/* Check the recharge */
 	if (o_ptr->timeout)
 	{
-		/* Mage Staff of Spells -- Have another timeout in xtra2 */
-		if (is_ego_p(o_ptr, EGO_MSTAFF_SPELL) && o_ptr->xtra2)
-		{
-			msg_print("It whines, glows and fades...");
-			return;
-		}
-
 		/* Monster eggs */
-		else if (o_ptr->tval == TV_EGG)
+		if (o_ptr->tval == TV_EGG)
 		{
 			msg_print("You resume the development of the egg.");
 			o_ptr->timeout = 0;
@@ -4929,61 +4914,6 @@ void do_cmd_activate(void)
 
 	if ( activation_aux(o_ptr, TRUE, item) == NULL )
 	{
-		/* Window stuff */
-		p_ptr->window |= (PW_INVEN | PW_EQUIP);
-
-		/* Success */
-		return;
-	}
-
-	/* Mage Staff of Spells */
-	if (is_ego_p(o_ptr, EGO_MSTAFF_SPELL))
-	{
-		while (TRUE)
-		{
-			if (!get_com("Use Spell [1] or [2]?", &ch))
-			{
-				return;
-			}
-
-			if (ch == '1')
-			{
-				spell_choice = 1;
-				break;
-			}
-
-			if (ch == '2')
-			{
-				spell_choice = 2;
-				break;
-			}
-		}
-
-		if (spell_choice == 1)
-		{
-			/* Still need to check timeouts because there is another counter */
-			if (o_ptr->timeout)
-			{
-				msg_print("The first spell is still charging!");
-				return;
-			}
-
-			/* Cast spell 1 */
-			activate_spell(o_ptr, spell_choice);
-		}
-		else if (spell_choice == 2)
-		{
-			/* Still need to check timeouts because there is another counter */
-			if (o_ptr->xtra2)
-			{
-				msg_print("The second spell is still charging!");
-				return;
-			}
-
-			/* Cast spell 2 */
-			activate_spell(o_ptr, spell_choice);
-		}
-
 		/* Window stuff */
 		p_ptr->window |= (PW_INVEN | PW_EQUIP);
 
@@ -7750,38 +7680,4 @@ const char *activation_aux(object_type * o_ptr, bool_ doit, int item)
 		o_ptr->timeout = activation_info[o_ptr->pval2].cost / 10;
 
 	return NULL;
-}
-
-
-static bool_ activate_spell(object_type * o_ptr, byte choice)
-{
-	int mana = 0, gf = 0, mod = 0;
-
-	rune_spell s_ptr;
-
-
-	if (choice == 1)
-	{
-		gf = o_ptr->pval & 0xFFFF;
-		mod = o_ptr->pval3 & 0xFFFF;
-		mana = o_ptr->pval2 & 0xFF;
-	}
-	else if (choice == 2)
-	{
-		gf = o_ptr->pval >> 16;
-		mod = o_ptr->pval3 >> 16;
-		mana = o_ptr->pval2 >> 8;
-	}
-
-	s_ptr.type = gf;
-	s_ptr.rune2 = 1 << mod;
-	s_ptr.mana = mana;
-
-	/* Execute */
-	rune_exec(&s_ptr, 0);
-
-	if (choice == 1) o_ptr->timeout = mana * 5;
-	if (choice == 2) o_ptr->xtra2 = mana * 5;
-
-	return (TRUE);
 }

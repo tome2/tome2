@@ -22,9 +22,6 @@ F:c:74:3:0:0:0:0:86
 # Music store
 F:d:74:3:0:0:0:0:64
 
-# Rune Shop
-F:e:74:3:0:0:0:0:62
-
 # Hunting Store
 F:f:74:3:0:0:0:0:61
 
@@ -73,7 +70,7 @@ D:#-------------------------------------------------OVVVVVVVVVVVVVVVVVVVVVVVVVVV
 D:#-------------------------------------------------OVVVVVVVVVVVVVVVVVVVVVVVVVVV.......########................OOOO6###########9OOOOOOOOO#,,,,,,,,#####VVV@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa#
 D:#-------------------------------------------------@VVVVVVVVVVVVVVVVVVVVVVVVVVV.........#cc#...............#####,O#############O,,,,,,#####,,,#####aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa#
 D:#-------------------------------------------------@VVVVV@#######################.......................####,,,,,,O,,#######,OO,,,,,,,,,,,,#####aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa#
-D:#-------------------------------------------------@VVVVV@####,,,,,,,,,,,,OOOOO##....................#####,,,,,,,,,O,###e###O,,,,,,,,,,,#####aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa#
+D:#-------------------------------------------------@VVVVV@####,,,,,,,,,,,,OOOOO##....................#####,,,,,,,,,O,#######O,,,,,,,,,,,#####aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa#
 D:#-------------------------------------------------@VVVVV@####,,#####,,,,O,,,,,##..................###,,,,,,,,,,,,,,OOOOOOOO,,,,,,,,#####aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa#
 D:#-------------------------------------------------@VVVVV@####,,####bOO,O,,,,,,##.................###,,,,,#######,,,,,,,,,,,,,,,,#####aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa#
 D:#-------------------------------------------------@VVVVV@####,,#####,,O,,####,##................aaa##,,,,#######,,,,,,,,,,,,,#####aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa#

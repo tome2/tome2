@@ -29,16 +29,16 @@ typedef struct fireproof_settings fireproof_settings;
 struct fireproof_settings
 {
 	byte tval; /* tval of object to use. */
+	byte sval; /* sval of object to use. */
 	cptr tval_name; /* descriptive name of tval */
 	cptr tval_name_plural; /* descriptive name of tval (plural) */
-	byte sval_max; /* max sval of object to use; sval will be 1<=X<=sval_max. */
 	s32b total_points; /* total number of points awarded */
 };
 
 static fireproof_settings const *fireproof_get_settings()
 {
 	static fireproof_settings fireproof_settings =
-		{ TV_RUNE2, "rune", "runes", 5, 24 };
+		{ TV_SCROLL, SV_SCROLL_FIRE, "scroll", "scrolls", 24 };
 	return &fireproof_settings;
 }
 
@@ -61,22 +61,13 @@ static void set_item_points_remaining(s32b v)
 	cquest.data[0] = settings->total_points - v;
 }
 
-static void fireproof_set_sval(int sval_max)
-{
-	cquest.data[1] = sval_max;
-}
-
-static int fireproof_get_sval()
-{
-	return cquest.data[1];
-}
-
 static bool item_tester_hook_eligible(object_type const *o_ptr)
 {
+	fireproof_settings const *settings = fireproof_get_settings();
 	/* check it's the 'marked' item */
-	return ((o_ptr->tval == fireproof_get_settings()->tval) &&
-	    (o_ptr->sval == fireproof_get_sval()) &&
-	    (o_ptr->pval2 == fireproof_get_sval()));
+	return ((o_ptr->tval == settings->tval) &&
+	    (o_ptr->sval == settings->sval) &&
+	    (o_ptr->pval2 == settings->sval));
 }
 
 static object_filter_t const &item_tester_hook_proofable()
@@ -378,7 +369,7 @@ static bool_ fireproof_get_hook(void *, void *in_, void *)
 	 * generated via random object placement */
 	if ((p_ptr->inside_quest == QUEST_FIREPROOF) &&
 	    (cquest.status != QUEST_STATUS_COMPLETED) &&
-	    (o_ptr->pval2 == fireproof_get_sval()))
+	    (o_ptr->pval2 == fireproof_get_settings()->sval))
 	{
 		/* ok mark the quest 'completed' */
 		cquest.status = QUEST_STATUS_COMPLETED;
@@ -489,16 +480,13 @@ static bool_ fireproof_gen_hook(void *, void *, void *)
 		/* no teleport */
 		dungeon_flags = DF_NO_TELEPORT;
 
-		/* determine type of item */
-		fireproof_set_sval(randint(settings->sval_max));
-
-		/* create essence */
+		/* create quest item */
 		{
 			object_type forge;
-			object_prep(&forge, lookup_kind(settings->tval, fireproof_get_sval()));
+			object_prep(&forge, lookup_kind(settings->tval, settings->sval));
 
 			/* mark item */
-			forge.pval2 = fireproof_get_sval();
+			forge.pval2 = settings->sval;
 			forge.inscription = "quest";
 
 			/* roll for co-ordinates in top half of map */

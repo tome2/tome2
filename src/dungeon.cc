@@ -2815,16 +2815,6 @@ static void process_world(void)
 				j++;
 			}
 		}
-
-		/* Recharge second spell in Mage Staffs of Spells */
-		if (is_ego_p(o_ptr, EGO_MSTAFF_SPELL) && (o_ptr->xtra2 > 0))
-		{
-			/* Recharge */
-			o_ptr->xtra2--;
-
-			/* Notice changes */
-			if (o_ptr->xtra2 == 0) j++;
-		}
 	}
 
 	/* Notice changes */

@@ -36,7 +36,7 @@ extern void show_inven_full();
 extern void show_equip_full();
 extern void toggle_inven_equip(void);
 extern bool_ get_item(int *cp, cptr pmt, cptr str, int mode, object_filter_t const &filter = object_filter::True(), select_by_name_t const &select_by_name = select_by_name_t());
-extern cptr item_activation(object_type *o_ptr,byte num);
+extern cptr item_activation(object_type *o_ptr);
 extern void py_pickup_floor(int pickup);
 extern void object_gain_level(object_type *o_ptr);
 extern byte object_attr(object_type const *o_ptr);

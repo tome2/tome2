@@ -260,7 +260,7 @@ or rogue. Spell casting generally requires a more experienced player that is
 familiar with survival techniques.
 
      *****c_archer.txt*0[Archer]           *****c_mimic.txt*0[Mimic]              *****c_rogue.txt*0[Rogue]
-     *****c_ascet.txt*0[Ascetic]          *****c_mindcr.txt*0[Mindcrafter]        *****c_runecr.txt*0[Runecrafter]
+     *****c_ascet.txt*0[Ascetic]          *****c_mindcr.txt*0[Mindcrafter]
      *****c_assass.txt*0[Assassin]         *****c_monk.txt*0[Monk]               *****c_sorcer.txt*0[Sorceror]
      *****c_axemas.txt*0[Axemaster]        *****c_necro.txt*0[Necromancer]        *****c_stonewr.txt*0[Stonewright]
      *****c_bard.txt*0[Bard]             *****c_palad.txt*0[Paladin]            *****c_swordm.txt*0[Swordmaster]
@@ -558,7 +558,6 @@ are listed in the following table.
            Geomancer     -5      +3       0      +1      -2      +1
            Mage          -5      +3       0      +1      -2      +1
            Necromancer   -5      +3       0      +1      -2      +1
-           Runecrafter   -5      +3       0      +1      -2      +1
            Sorceror      -5      +3       0      +1      -2      +1
            Thaumaturgist -5      +3       0      +1      -2      +1
            Warper        -5      +3       0      +1      -2      +1

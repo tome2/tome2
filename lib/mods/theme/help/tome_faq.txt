@@ -101,13 +101,6 @@ activation can be something very nasty....
 
 To activate it, use the normal Activation command, but when prompted for which 
 item to activate change to the backpack instead of wielded equipment.
-~~~~~11|Runes
-#####G------------------------------------------------------------------------------
-#####GQ: I keep coming across "runes". What are they?
-
-Runes are used to cast and store spells of varying types. *****c_runecr.txt*0[Runecrafters] are the
-class who are most proficient at using these. You can only use them if you 
-have access to the *****skills.txt*36[Runecrafting] skill.
 ~~~~~12|Homes
 #####G------------------------------------------------------------------------------
 #####GQ: Where can I store all my equipment? Theere's not enough room in my

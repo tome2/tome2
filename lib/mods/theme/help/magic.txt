@@ -23,14 +23,13 @@ schools:
 
 Other magical skills, generally being used primarily by characters of a
 specific class, are:
-     *****m_demono.txt*0[Demonology]     *****m_necrom.txt*0[Necromancy]      *****skills.txt*36[Runecraft]
+     *****m_demono.txt*0[Demonology]     *****m_necrom.txt*0[Necromancy]
      *****m_thaum.txt*0[Thaumaturgy]     *****m_geoman.txt*0[Geomancy]
 
 The *****m_demono.txt*0[Demonology] skill is primarily used by *****c_demono.txt*0[Demonologists] for their special
 spells, whereas the *****m_necrom.txt*0[Necromancy] skill is used by *****c_necro.txt*0[Necromancers] for their own set
 of special spells.
-The same goes for *****skills.txt*36[Runecraft], which is used by *****c_runecr.txt*0[Runecrafters] to allow use of more
-difficult runes or rune-combinations. *****m_thaum.txt*0[Thaumaturgy] gives you randomly chosen
+*****m_thaum.txt*0[Thaumaturgy] gives you randomly chosen
 attack spells, and as such each game with it will be different. *****c_geoman.txt*0[Geomancers]
 harness the powers of the elements using *****m_geoman.txt*0[Geomancy].
 

@@ -493,15 +493,6 @@ static void do_random_spell(random_spell *s_ptr, ls_flag_t flag)
 	do_std_bool(&s_ptr->untried, flag);
 }
 
-static void do_rune_spell(rune_spell *s_ptr, ls_flag_t flag)
-{
-	do_string(s_ptr->name, 30, flag);
-	do_s16b(&s_ptr->type, flag);
-	do_s16b(&s_ptr->rune2, flag);
-	do_s16b(&s_ptr->mana, flag);
-}
-
-
 /*
  * Show information on the screen, one line at a time.
  *
@@ -899,9 +890,6 @@ static bool_ do_extra(ls_flag_t flag)
 
 	/* Random spells */
 	do_vector(flag, p_ptr->random_spells, do_random_spell);
-
-	/* Rune spells */
-	do_vector(flag, p_ptr->rune_spells, do_rune_spell);
 
 	/* Random seed for object flavors. */
 	do_seed(&seed_flavor(), flag);

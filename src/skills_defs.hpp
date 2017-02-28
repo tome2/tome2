@@ -36,7 +36,6 @@
 #define SKILL_NECROMANCY        31
 #define SKILL_MIMICRY           32
 #define SKILL_ANTIMAGIC         33
-#define SKILL_RUNECRAFT         34
 /* XXX */
 #define SKILL_STEALTH           36
 /* XXX */

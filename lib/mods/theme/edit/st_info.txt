@@ -897,19 +897,6 @@ O:186:187:188:189
 G:*:w
 W:24
 
-# Rune Shop
-N:62:Runic Magic Shop
-T:100:104:256
-T:100:104:256
-T:100:104:256
-T:50:105:256
-T:50:105:256
-T:50:105:256
-A:0:0:1:2:3:4
-O:190:191:192:193
-G:6:w
-W:24
-
 # based on Mining Supply store in Khazad-Dum
 N:63:Construction Supply Store
 T:100:20:256

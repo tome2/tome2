@@ -1358,23 +1358,6 @@ static std::string object_desc_aux(object_type const *o_ptr, int pref, int mode)
 			break;
 		}
 
-	case TV_RUNE2:
-		{
-			if (o_ptr->sval != RUNE_STONE)
-			{
-				modstr = basenm;
-				basenm = "& Rune~ [#]";
-			}
-			break;
-		}
-
-	case TV_RUNE1:
-		{
-			modstr = basenm;
-			basenm = "& Rune~ [#]";
-			break;
-		}
-
 	case TV_DAEMON_BOOK:
 	case TV_BOOK:
 		{
@@ -1980,16 +1963,6 @@ static std::string object_desc_aux(object_type const *o_ptr, int pref, int mode)
 		}
 	}
 
-	/* Indicate "charging" Mage Staffs XXX XXX XXX */
-	if (known && o_ptr->timeout && (is_ego_p(o_ptr, EGO_MSTAFF_SPELL)))
-	{
-		t += " (charging spell1)";
-	}
-	if (known && o_ptr->xtra2 && (is_ego_p(o_ptr, EGO_MSTAFF_SPELL)))
-	{
-		t += " (charging spell2)";
-	}
-
 
 	/* No more details wanted */
 	if (mode < 3)
@@ -2111,14 +2084,10 @@ void object_desc_store(char *buf, object_type *o_ptr, int pref, int mode)
  * Determine the "Activation" (if any) for an artifact
  * Return a string, or NULL for "no activation"
  */
-cptr item_activation(object_type *o_ptr, byte num)
+cptr item_activation(object_type *o_ptr)
 {
-	auto const &k_info = game->edit_data.k_info;
 	auto const &a_info = game->edit_data.a_info;
 	auto const &e_info = game->edit_data.e_info;
-
-	/* Needed hacks */
-	static char rspell[2][80];
 
 	/* Extract the flags */
 	auto const flags = object_flags(o_ptr);
@@ -2133,29 +2102,6 @@ cptr item_activation(object_type *o_ptr, byte num)
 	 * a name. Thus we eliminate other possibilities instead of checking
 	 * for art_name
 	 */
-
-	if (is_ego_p(o_ptr, EGO_MSTAFF_SPELL))
-	{
-		int gf, mod, mana;
-
-		if (!num)
-		{
-			gf = o_ptr->pval & 0xFFFF;
-			mod = o_ptr->pval3 & 0xFFFF;
-			mana = o_ptr->pval2 & 0xFF;
-		}
-		else
-		{
-			gf = o_ptr->pval >> 16;
-			mod = o_ptr->pval3 >> 16;
-			mana = o_ptr->pval2 >> 8;
-		}
-		sprintf(rspell[num], "runespell(%s, %s, %d) every %d turns",
-			k_info[lookup_kind(TV_RUNE1, gf)].name,
-			k_info[lookup_kind(TV_RUNE2, mod)].name,
-		        mana, mana * 5);
-		return rspell[num];
-	}
 
 	if (o_ptr->tval == TV_EGG)
 	{
@@ -2589,14 +2535,7 @@ bool_ object_out_desc(object_type *o_ptr, FILE *fff, bool_ trim_down, bool_ wait
 		if (flags & TR_ACTIVATE)
 		{
 			text_out("It can be activated for ");
-			if (is_ego_p(o_ptr, EGO_MSTAFF_SPELL))
-			{
-				text_out(item_activation(o_ptr, 0));
-				text_out(" and ");
-				text_out(item_activation(o_ptr, 1));
-			}
-			else
-				text_out(item_activation(o_ptr, 0));
+			text_out(item_activation(o_ptr));
 
 			/* Mega-hack -- get rid of useless line for e.g. randarts */
 			if (flags & TR_ACTIVATE_NO_WIELD)

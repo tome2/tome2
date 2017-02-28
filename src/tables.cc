@@ -3724,8 +3724,6 @@ tval_desc tvals[] =
         { TV_MSTAFF, "Mage Staff" },
         { TV_PARCHMENT, "Parchment" },
         { TV_INSTRUMENT, "Musical Instrument" },
-        { TV_RUNE1, "Rune 1" },
-        { TV_RUNE2, "Rune 2" },
         { TV_JUNK, "Junk" },
         { 0, NULL }
 };
@@ -3884,14 +3882,6 @@ tval_desc tval_descs[] =
 		TV_RANDART,
 		"Those objects are only known of by rumours.  It is said that "
 		"they can be activated for great or strange effects..."
-	},
-	{
-		TV_RUNE1,
-		"Runes are used with the Runecraft skill to create brand new spells."
-	},
-	{
-		TV_RUNE2,
-		"Runes are used with the Runecraft skill to create brand new spells."
 	},
 	{
 		TV_JUNK,

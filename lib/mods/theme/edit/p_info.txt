@@ -232,7 +232,6 @@ C:k:+0:+700:Nature
 C:k:+0:+700:Meta
 C:k:+0:+700:Mind
 C:k:+0:+700:Necromancy
-C:k:+0:+700:Runecraft
 C:k:+0:+700:Thaumaturgy
 C:k:+1000:+550:Spirituality
 C:k:+1000:+200:Combat
@@ -309,7 +308,6 @@ C:a:k:+0:+300:Divination
 C:a:k:+0:+300:Meta
 C:a:k:+0:+300:Mind
 C:a:k:+0:+200:Necromancy
-C:a:k:+0:+200:Runecraft
 C:a:k:+0:+200:Thaumaturgy
 C:a:O:36:2:1d1
 C:a:O:111:50:1d1
@@ -331,17 +329,6 @@ C:a:O:23:4:1d1
 C:a:O:111:50:1d1
 C:a:b:25:Undead Form
 
-C:a:N:Runecrafter
-C:a:D:Runecrafters use the runes found in Middle-earth to create
-C:a:D:finely tuned spells for each specific situation.
-C:a:k:+1000:+50:Magic
-C:a:k:+1000:+300:Runecraft
-C:a:k:+0:-100:Weaponmastery
-C:a:O:111:50:1d1
-C:a:O:105:1:1d1
-C:a:O:104:5:1d1
-C:a:O:23:4:1d1
-
 C:a:N:Thaumaturgist
 C:a:D:Thaumaturgy spells come from within and are different for each character.
 C:a:D:Since attack is the best defence, all their spells are offensive.
@@ -359,7 +346,6 @@ C:a:k:=0:=0:Nature
 C:a:k:=0:=0:Meta
 C:a:k:=0:=0:Mind
 C:a:k:=0:=0:Necromancy
-C:a:k:=0:=0:Runecraft
 C:a:k:+1000:+300:Thaumaturgy
 C:a:k:+0:-100:Weaponmastery
 C:a:k:+0:-150:Magic-Device
@@ -381,7 +367,6 @@ C:a:k:=0:=0:Nature
 C:a:k:=0:=0:Temporal 
 C:a:k:=0:=0:Meta 
 C:a:k:=0:=0:Necromancy 
-C:a:k:=0:=0:Runecraft 
 C:a:k:=0:=0:Thaumaturgy 
 C:a:k:+1000:+300:Divination
 C:a:k:+1000:+300:Mind

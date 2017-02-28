@@ -1127,9 +1127,6 @@ void do_cmd_activate_skill()
 	case MKEY_POWER_MAGE:
 		do_cmd_powermage();
 		break;
-	case MKEY_RUNE:
-		do_cmd_runecrafter();
-		break;
 	case MKEY_FORGING:
 		do_cmd_archer();
 		break;

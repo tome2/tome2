@@ -98,18 +98,6 @@ F:SPELL
 R:50
 F:PVAL_M2
 
-N:4:of Spell
-T:6:0:255
-X:A:24:60
-W:0:2:8:40000
-C:0:0:0:0
-R:100
-F:ACTIVATE
-F:IGNORE_ACID
-F:IGNORE_COLD
-F:IGNORE_ELEC
-F:IGNORE_FIRE
-
 ### Body Armor ###
 
 N:5:of Resist Acid

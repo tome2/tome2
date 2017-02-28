@@ -113,11 +113,6 @@ A:7:Use Necromancy
 F:RANDOM_GAIN
 G:60
 
-N:34:Runecraft
-D:Ability to combine magic runes to create your own spells
-D:Runespells use the dexterity stat
-A:9:Use Runespells
-
 N:43:Thaumaturgy
 D:Ability to gain and cast innate spells
 D:Spells use the intelligence stat
@@ -160,7 +155,6 @@ f:Mind:Magic%10
 f:Udun:Magic%10
 f:Demonology:Magic%10
 f:Necromancy:Magic%4
-f:Runecraft:Magic%12
 f:Thaumaturgy:Magic%6
 
 
@@ -330,7 +324,6 @@ E:Nature:Antimagic
 E:Udun:Antimagic
 E:Sorcery:Antimagic
 E:Demonology:Antimagic
-E:Runecraft:Antimagic
 E:Necromancy:Antimagic
 E:Mindcraft:Antimagic
 E:Music:Antimagic
@@ -437,7 +430,6 @@ T:Magic:Nature
 T:Magic:Udun
 T:Magic:Demonology
 T:Magic:Necromancy
-T:Magic:Runecraft
 T:Magic:Thaumaturgy
 
 T:Geomancy:Fire

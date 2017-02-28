@@ -55,7 +55,6 @@
 #define STORE_BOOKS "Book Store"
 #define STORE_PETS "Pet Shop"
 #define STORE_HUNTING_SUPPLIES "Hunting Supply Store"
-#define STORE_RUNIC_MAGIC "Runic Magic Shop"
 #define STORE_CONSTRUCTION_SUPPLIES "Construction Supply Store"
 #define STORE_MUSIC "Music Store"
 
@@ -816,15 +815,6 @@ static bool store_will_buy(object_type const *o_ptr)
 		case TV_ARROW:
 		case TV_BOW:
 		case TV_POTION2:
-			return true;
-		}
-	}
-	else if ((store_name == STORE_RUNIC_MAGIC))
-	{
-		switch (o_ptr->tval)
-		{
-		case TV_RUNE1:
-		case TV_RUNE2:
 			return true;
 		}
 	}

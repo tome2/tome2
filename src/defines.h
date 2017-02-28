@@ -381,7 +381,6 @@
 #define MKEY_MIMIC              6
 #define MKEY_NECRO              7
 #define MKEY_POWER_MAGE         8
-#define MKEY_RUNE               9
 #define MKEY_FORGING            10
 #define MKEY_INCARNATION        11
 #define MKEY_SUMMON             13
@@ -654,7 +653,6 @@
 #define EGO_MANA                1
 #define EGO_POWER               2
 #define EGO_MANA_POWER          3
-#define EGO_MSTAFF_SPELL        4
 #define EGO_BRAND_POIS          77
 #define EGO_BRAND_ELEC          74
 #define EGO_BRAND_FIRE          75
@@ -972,8 +970,6 @@
 #define TV_HYPNOS       99      /* To wield monsters !:) */
 #define TV_GOLD         100     /* Gold can only be picked up by players */
 #define TV_RANDART      102     /* Random Artifacts */
-#define TV_RUNE1        104      /* Base runes */
-#define TV_RUNE2        105      /* Modifier runes */
 
 #define TV_BOOK         111
 #define TV_SYMBIOTIC_BOOK 112
@@ -2171,19 +2167,6 @@
 #define FATE_FIND_R             4
 #define FATE_FIND_V             5
 #define FATE_DIE                6
-
-/*
- * Runes definition
- */
-#define RUNE_SELF               0x00000001
-#define RUNE_ARROW              0x00000002
-#define RUNE_RAY                0x00000004
-#define RUNE_SPHERE             0x00000008
-#define RUNE_POWER_SURGE        0x00000010
-#define RUNE_ARMAGEDDON         0x00000020
-#define RUNE_MOD_MAX            6
-#define RUNE_STONE              0x000000FF
-
 
 /*
  * Defines of the different dungeon types

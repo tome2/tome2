@@ -8,7 +8,6 @@
 #include "object_type.hpp"
 #include "powers.hpp"
 #include "random_spell.hpp"
-#include "rune_spell.hpp"
 #include "spellbinder.hpp"
 
 #include <array>
@@ -410,11 +409,6 @@ struct player_type
 	 * Random spells.
 	 */
 	std::vector<random_spell> random_spells;
-
-	/**
-	 * Runecrafter's selfmade spells.
-	 */
-	std::vector<rune_spell> rune_spells;
 
 	/**
 	 * Does the player have the given ability?

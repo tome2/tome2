@@ -63,8 +63,7 @@ gets the free points).  For example, a skill point put into Weaponmastery
 raises Combat by 0.5 skill points. This is actually multiplied by the skill
 modifier that your character has in the Combat skill.  For example, a
 Swordmaster investing a skill point into Weaponmastery would have his Combat
-skill raised by 0.5 * [0.900] while a Runecrafter would have his Combat
-skill raised by 0.5 * [0.200].
+skill raised by 0.5 * [0.900].
 
 As well as this, skills are grouped together in similar types. Looking under
 the Combat skill, there are subtypes of Weaponmastery, Archery and Antimagic.
@@ -117,7 +116,7 @@ The skills are:
   *****skills.txt*21[Magic]               *****skills.txt*54[Magic-device]       *****skills.txt*24[Mana]               *****skills.txt*29[Meta]               
   *****skills.txt*47[Mimicry]             *****skills.txt*33[Mind]               *****skills.txt*41[Mindcraft]          *****skills.txt*42[Monster-lore]       
   *****skills.txt*59[Music]               *****skills.txt*34[Nature]             *****skills.txt*35[Necromancy]         *****skills.txt*07[Polearm-mastery]    
-  *****skills.txt*45[Possession]          *****skills.txt*39[Prayer]             *****skills.txt*36[Runecraft]          *****skills.txt*09[Sling-mastery]      
+  *****skills.txt*45[Possession]          *****skills.txt*39[Prayer]             *****skills.txt*09[Sling-mastery]      
   *****skills.txt*22[Spell-power]         *****skills.txt*38[Spirituality]       *****skills.txt*23[Sorcery]            *****skills.txt*19[Stealing]
   *****skills.txt*15[Stealth]             *****skills.txt*53[Stunning-blows]     *****skills.txt*43[Summoning]          *****skills.txt*03[Sword-mastery]
   *****skills.txt*46[Symbiosis]           *****skills.txt*32[Temporal]           *****skills.txt*37[Thaumaturgy]        *****skills.txt*48[Udun]
@@ -305,7 +304,7 @@ ability.
 
 Sub-skills include: Magic-device, Spell-power, Sorcery, Mana, Fire, Water, Air,
 Earth, Meta, Conveyance, Divination, Temporal, Mind, Nature, Udun, Demonology,
-Necromancy, Runecraft, and Thaumaturgy.
+Necromancy, and Thaumaturgy.
 ~~~~~54|Skills|Magic-device
 [[[[[BMagic-device]
 This skill is a sub-skill of the Magic skill. It eases the use of magical
@@ -446,11 +445,6 @@ point on your Necromancy skill adds 0.04 bonus skill points to your Magic skill.
 
 Investing in the Necromancy skill? You might be interested in the 
 *****ability.txt*08[Touch of Death] and *****ability.txt*12[Undead Form] abilities.
-~~~~~36|Skills|Runecraft
-[[[[[BRunecraft]
-This skill is a sub-skill of the Magic skill. This is the base skill of the
-Runecrafter class. Spending 1 skill point on your Runecraft skill adds 0.12
-bonus skill points to your Magic skill.
 ~~~~~37|Skills|Thaumaturgy
 [[[[[BThaumaturgy]
 This skill is a sub-skill of the Magic skill. Each level of *****m_thaum.txt*0[thaumaturgy] gives
