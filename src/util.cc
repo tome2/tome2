@@ -26,11 +26,13 @@
 #include "xtra1.hpp"
 
 #include <boost/algorithm/string/predicate.hpp>
+#include <boost/filesystem/path.hpp>
 #include <chrono>
 #include <sstream>
 #include <thread>
 
 using boost::algorithm::iequals;
+using boost::filesystem::portable_name;
 using std::this_thread::sleep_for;
 using std::chrono::milliseconds;
 
@@ -2533,6 +2535,21 @@ bool_ get_string(cptr prompt, char *buf, int len)
 	prt("", 0, 0);
 
 	/* Result */
+	return (res);
+}
+
+/* Get a safe filename */
+extern bool_ get_filename(cptr prompt, char *buf, int len)
+{
+	bool_ res;
+
+	res = get_string(prompt, buf, len);
+
+	if (!portable_name(buf))
+	{
+		res = false;
+	}
+
 	return (res);
 }
 
