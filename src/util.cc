@@ -2539,7 +2539,7 @@ bool_ get_string(cptr prompt, char *buf, int len)
 }
 
 /* Get a safe filename */
-bool_ get_filename(cptr prompt, char *buf, int len)
+extern bool_ get_filename(cptr prompt, char *buf, int len)
 {
 	bool_ res;
 
