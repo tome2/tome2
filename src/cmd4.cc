@@ -181,7 +181,7 @@ void do_cmd_change_name(void)
 		else if (c == 'f')
 		{
 			strnfmt(tmp, 160, "%s.txt", player_name);
-			if (get_string("Filename(you can post it to http://angband.oook.cz/): ", tmp, 80))
+			if (get_filename("Filename(you can post it to http://angband.oook.cz/): ", tmp, 80))
 			{
 				if (tmp[0] && (tmp[0] != ' '))
 				{

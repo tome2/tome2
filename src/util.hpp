@@ -53,6 +53,7 @@ extern bool askfor_aux(std::string *buf, std::size_t max_len);
 extern bool_ askfor_aux(char *buf, int len);
 extern bool_ askfor_aux_with_completion(char *buf, int len);
 extern bool_ get_string(cptr prompt, char *buf, int len);
+extern bool_ get_filename(cptr prompt, char *buf, int len);
 extern bool_ get_check(cptr prompt);
 extern bool_ get_com(cptr prompt, char *command);
 extern s32b get_quantity(cptr prompt, s32b max);

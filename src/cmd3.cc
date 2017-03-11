@@ -1826,7 +1826,7 @@ void do_cmd_html_dump()
 	if (html)
 	{
 		strcpy(tmp_val, "dummy.htm");
-		if (!get_string("File(you can post it to http://angband.oook.cz/): ", tmp_val, 80))
+		if (!get_filename("File(you can post it to http://angband.oook.cz/): ", tmp_val, 80))
 		{
 			/* Now restore the screen to initial state */
 			Term_load_from(save);
@@ -1837,7 +1837,7 @@ void do_cmd_html_dump()
 	else
 	{
 		strcpy(tmp_val, "dummy.txt");
-		if (!get_string("File: ", tmp_val, 80))
+		if (!get_filename("File: ", tmp_val, 80))
 		{
 			/* Now restore the screen to initial state */
 			Term_load_from(save);
