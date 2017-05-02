@@ -19,7 +19,6 @@
 #include "game.hpp"
 #include "gods.hpp"
 #include "help.hpp"
-#include "hist_type.hpp"
 #include "hooks.hpp"
 #include "init2.hpp"
 #include "mimic.hpp"
@@ -200,12 +199,6 @@ static void save_prev_data(void)
 		previous_char.stat[i] = p_ptr->stat_max[i];
 	}
 	previous_char.luck = p_ptr->luck_base;
-
-	/* Save the history */
-	for (int i = 0; i < 4; i++)
-	{
-		strcpy(previous_char.history[i], history[i]);
-	}
 }
 
 
@@ -230,13 +223,6 @@ static void load_prev_data(bool_ save)
 	}
 	temp.luck = p_ptr->luck_base;
 
-	/* Save the history */
-	for (int i = 0; i < 4; i++)
-	{
-		strcpy(temp.history[i], history[i]);
-	}
-
-
 	/*** Load the previous data ***/
 
 	/* Load the data */
@@ -251,12 +237,6 @@ static void load_prev_data(bool_ save)
 	p_ptr->luck_base = previous_char.luck;
 	p_ptr->luck_max = previous_char.luck;
 
-	/* Load the history */
-	for (int i = 0; i < 4; i++)
-	{
-		strcpy(history[i], previous_char.history[i]);
-	}
-
 
 	/*** Save the current data ***/
 	if (!save) return;
@@ -270,12 +250,6 @@ static void load_prev_data(bool_ save)
 		previous_char.stat[i] = temp.stat[i];
 	}
 	previous_char.luck = temp.luck;
-
-	/* Save the history */
-	for (int i = 0; i < 4; i++)
-	{
-		strcpy(previous_char.history[i], temp.history[i]);
-	}
 }
 
 
@@ -487,102 +461,6 @@ static void get_extra(void)
 
 
 /*
- * Get the racial history, and social class, using the "history charts".
- */
-static void get_history(void)
-{
-	auto const &bg = game->edit_data.bg;
-
-	int i, n, chart, roll;
-
-	char *s, *t;
-
-	char buf[240];
-
-
-	/* Clear the previous history strings */
-	for (i = 0; i < 4; i++)
-	{
-		history[i][0] = '\0';
-	}
-
-	/* Clear the history text */
-	buf[0] = '\0';
-
-	/* Starting place */
-	chart = rp_ptr->chart;
-
-	/* Process the history */
-	while (chart)
-	{
-		/* Start over */
-		i = 0;
-
-		/* Roll for nobility */
-		roll = randint(100);
-
-		/* Access the proper entry in the table */
-		while ((chart != bg[i].chart) || (roll > bg[i].roll))
-		{
-			i++;
-		}
-
-		/* Acquire the textual history */
-		strcat(buf, bg[i].info.c_str());
-		strcat(buf, " ");
-
-		/* Enter the next chart */
-		chart = bg[i].next;
-	}
-
-	/* Skip leading spaces */
-	for (s = buf; *s == ' '; s++) /* loop */;
-
-	/* Get apparent length */
-	n = strlen(s);
-
-	/* Kill trailing spaces */
-	while ((n > 0) && (s[n - 1] == ' ')) s[--n] = '\0';
-
-
-	/* Start at first line */
-	i = 0;
-
-	/* Collect the history */
-	while (TRUE)
-	{
-		/* Extract remaining length */
-		n = strlen(s);
-
-		/* All done */
-		if (n < 60)
-		{
-			/* Save one line of history */
-			strcpy(history[i++], s);
-
-			/* All done */
-			break;
-		}
-
-		/* Find a reasonable break-point */
-		for (n = 60; ((n > 0) && (s[n - 1] != ' ')); n--) /* loop */;
-
-		/* Save next location */
-		t = s + n;
-
-		/* Wipe trailing spaces */
-		while ((n > 0) && (s[n - 1] == ' ')) s[--n] = '\0';
-
-		/* Save one line of history */
-		strcpy(history[i++], s);
-
-		/* Start next line */
-		for (s = t; *s == ' '; s++) /* loop */;
-	}
-}
-
-
-/*
  * Fill the random_artifacts array with relevant info.
  */
 static errr init_randart(void)
@@ -708,16 +586,6 @@ static void player_wipe(void)
 
 	/* Not dead yet */
 	p_ptr->lives = 0;
-
-	/* Wipe the history */
-	for (std::size_t i = 0; i < 4; i++)
-	{
-		for (std::size_t j = 0; j < 60; j++)
-		{
-			if (j < 59) history[i][j] = ' ';
-			else history[i][j] = '\0';
-		}
-	}
 
 	/* Wipe the towns */
 	for (std::size_t i = 0; i < d_info.size(); i++)
@@ -2249,8 +2117,6 @@ static bool_ player_birth_aux_point(void)
 
 	char buf[80];
 
-	int mode = 0;
-
 
 	/* Initialize stats */
 	for (i = 0; i < 6; i++)
@@ -2262,9 +2128,6 @@ static bool_ player_birth_aux_point(void)
 
 	/* Roll for base hitpoints */
 	get_extra();
-
-	/* Roll for social class */
-	get_history();
 
 	/* Get luck */
 	p_ptr->luck_base = rp_ptr->luck + rmp_ptr->luck + rand_range( -5, 5);
@@ -2318,7 +2181,7 @@ static bool_ player_birth_aux_point(void)
 		p_ptr->csp = p_ptr->msp;
 
 		/* Display the player */
-		display_player(mode);
+		display_player(0);
 
 		/* Display the costs header */
 		put_str("Cost", row - 2, col + 32);
@@ -2387,8 +2250,6 @@ static bool_ player_birth_aux_point(void)
 static bool_ player_birth_aux_auto()
 {
 	int i, j, m, v;
-
-	int mode = 0;
 
 	bool_ flag = FALSE;
 
@@ -2607,14 +2468,8 @@ static bool_ player_birth_aux_auto()
 
 		/*** Display ***/
 
-		/* Mode */
-		mode = 0;
-
 		/* Roll for base hitpoints */
 		get_extra();
-
-		/* Roll for social class */
-		get_history();
 
 		/* Roll for gold */
 		get_money();
@@ -2635,15 +2490,13 @@ static bool_ player_birth_aux_auto()
 			p_ptr->csp = p_ptr->msp;
 
 			/* Display the player */
-			display_player(mode);
+			display_player(0);
 
 			/* Prepare a prompt (must squeeze everything in) */
 			Term_gotoxy(2, 23);
 			Term_addch(TERM_WHITE, b1);
 			Term_addstr( -1, TERM_WHITE, "'r' to reroll");
 			if (prev) Term_addstr( -1, TERM_WHITE, ", 'p' for prev");
-			if (mode) Term_addstr( -1, TERM_WHITE, ", 'h' for Misc.");
-			else Term_addstr( -1, TERM_WHITE, ", 'h' for History");
 			Term_addstr( -1, TERM_WHITE, ", or ESC to accept");
 			Term_addch(TERM_WHITE, b2);
 
@@ -2666,13 +2519,6 @@ static bool_ player_birth_aux_auto()
 			if (prev && (c == 'p'))
 			{
 				load_prev_data(TRUE);
-				continue;
-			}
-
-			/* Toggle the display */
-			if ((c == 'H') || (c == 'h'))
-			{
-				mode = ((mode != 0) ? 0 : 1);
 				continue;
 			}
 
@@ -2717,10 +2563,6 @@ static bool_ player_birth_aux()
 	auto &s_info = game->s_info;
 
 	char c;
-
-	int y = 0, x = 0;
-
-	char old_history[4][60];
 
 	/* Ask */
 	if (!player_birth_aux_ask()) return (FALSE);
@@ -2789,92 +2631,9 @@ static bool_ player_birth_aux()
 			if (!player_birth_aux_auto()) return FALSE;
 		}
 
-		/* Edit character background */
-		for (std::size_t i = 0; i < 4; i++)
-		{
-			strnfmt(old_history[i], 60, "%s", history[i]);
-		}
-
-		/* Turn NUL to space */
-		for (std::size_t i = 0; i < 4; i++)
-		{
-			std::size_t j = 0;
-
-			// Search for the NUL
-			while (history[i][j++])
-				;;
-
-			// Turn into spaces
-			for (; j < 59; j++)
-			{
-				history[i][j] = ' ';
-			}
-		}
-		display_player(1);
-		c_put_str(TERM_L_GREEN, "(Character Background - Edit Mode)", 15, 20);
-		while (TRUE)
-		{
-			for (std::size_t i = 0; i < 4; i++)
-			{
-				put_str(history[i], i + 16, 10);
-			}
-			c_put_str(TERM_L_BLUE, format("%c", history[y][x]), y + 16, x + 10);
-
-			/* Place cursor just after cost of current stat */
-			Term_gotoxy(x + 10, y + 16);
-
-			c = inkey();
-
-			if (c == '8')
-			{
-				y--;
-				if (y < 0) y = 3;
-			}
-			else if (c == '2')
-			{
-				y++;
-				if (y > 3) y = 0;
-			}
-			else if (c == '6')
-			{
-				x++;
-				if (x > 59) x = 0;
-			}
-			else if (c == '4')
-			{
-				x--;
-				if (x < 0) x = 59;
-			}
-			else if (c == '\r')
-			{
-				break;
-			}
-			else if (c == ESCAPE)
-			{
-				for (std::size_t i = 0; i < 4; i++)
-				{
-					strnfmt(history[i], 60, "%s", old_history[i]);
-					put_str(history[i], i + 16, 10);
-				}
-				break;
-			}
-			else
-			{
-				history[y][x++] = c;
-				if (x > 58)
-				{
-					x = 0;
-					y++;
-					if (y > 3) y = 0;
-				}
-			}
-		}
-
-
 		/*** Finish up ***/
 
 		/* Get a name, recolor it, prepare savefile */
-
 		get_name();
 
 
@@ -2899,90 +2658,6 @@ static bool_ player_birth_aux()
 	return (TRUE);
 }
 
-
-/*
- * Helper function for validate_bg().
- */
-static void validate_bg_aux(int chart, bool_ chart_checked[], std::string &buf)
-{
-	auto const &bg = game->edit_data.bg;
-
-	/* Assume the chart does not exist */
-	bool_ chart_exists = FALSE;
-
-	/* Assume the chart is not complete */
-	bool_ chart_complete = FALSE;
-
-	/* No chart */
-	if (!chart) return;
-
-	/* Already saw this chart */
-	if (chart_checked[chart]) return;
-
-	/* XXX XXX XXX */
-	buf += fmt::format("{:d} --> ", chart);
-
-	/* Check each chart */
-	for (auto const &hist: bg)
-	{
-		/* Require same chart */
-		if (hist.chart != chart) continue;
-
-		/* The chart exists */
-		chart_exists = TRUE;
-
-		/* Validate the "next" chart recursively */
-		validate_bg_aux(hist.next, chart_checked, buf);
-
-		/* Require a terminator */
-		if (hist.roll != 100) continue;
-
-		/* The chart is complete */
-		chart_complete = TRUE;
-	}
-
-	/* Failed: The chart does not exist */
-	if (!chart_exists)
-	{
-		quit_fmt("birth.c: bg[] chart %d does not exist\n%s", chart, buf.c_str());
-	}
-
-	/* Failed: The chart is not complete */
-	if (!chart_complete)
-	{
-		quit_fmt("birth.c: bg[] chart %d is not complete", chart);
-	}
-
-	/* Remember we saw this chart */
-	chart_checked[chart] = TRUE;
-}
-
-
-/*
- * Verify that the bg[] table is valid.
- */
-static void validate_bg(void)
-{
-	auto const &race_info = game->edit_data.race_info;
-
-	bool_ chart_checked[512];
-
-	for (std::size_t i = 0; i < 512; i++)
-	{
-		chart_checked[i] = FALSE;
-	}
-
-	/* Check each race */
-	for (auto const &race: race_info)
-	{
-		/* Get the first chart for this race */
-		int chart = race.chart;
-
-		/* Validate the chart recursively */
-		std::string buf;
-		validate_bg_aux(chart, chart_checked, buf);
-	}
-}
 
 /*
  * Initialize a random town
@@ -3014,9 +2689,6 @@ void player_birth(void)
 
 	/* Starting index for generated towns */
 	std::size_t rtown = TOWN_RANDOM;
-
-	/* Validate the bg[] table */
-	validate_bg();
 
 	/* Create a new character */
 	while (1)

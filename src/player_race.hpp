@@ -34,8 +34,6 @@ struct player_race
 
 	byte body_parts[BODY_MAX] { };                          /* To help to decide what to use when body changing */
 
-	s16b chart = 0;                                         /* Chart history */
-
 	player_race_flag_set flags;
 
 	std::array<player_level_flag, PY_MAX_LEVEL+1> lflags;

@@ -5,7 +5,6 @@
 #include "dungeon_info_type.hpp"
 #include "ego_item_type.hpp"
 #include "feature_type.hpp"
-#include "hist_type.hpp"
 #include "monster_ego.hpp"
 #include "monster_race.hpp"
 #include "object_kind.hpp"
@@ -100,11 +99,6 @@ struct GameEditData {
 	 * Player subraces.
 	 */
 	std::vector<player_race_mod> race_mod_info;
-
-	/**
-	 * Player race histories
-	 */
-	std::vector<hist_type> bg;
 
 	/**
 	 * Player skills

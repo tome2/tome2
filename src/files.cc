@@ -2205,23 +2205,14 @@ static void display_player_ben_one(int page)
 } // namespace <anonymous>
 
 /*
- * Display the character on the screen (various modes)
- *
- * The top two and bottom two lines are left blank.
- *
- * Mode 0 = standard display with skills
- * Mode 1 = standard display with history
- * Mode 2 = current flags (part 1)
- * Mode 3 = current flags (part 2)
- * Mode 4 = current flags (part 3)
- * Mode 5 = current flags (part 4)
- * Mode 6 = current flags (part 5 -- esp)
+ * Display the character on the screen
  */
 void display_player(int mode)
 {
 	auto const &r_info = game->edit_data.r_info;
 
-	int i;
+	assert(mode >= 0);
+	assert(mode < 5);
 
 	char buf[80];
 
@@ -2230,7 +2221,7 @@ void display_player(int mode)
 	clear_from(0);
 
 	/* Standard */
-	if ((mode == 0) || (mode == 1))
+	if (mode == 0)
 	{
 		auto r_ptr = &r_info[p_ptr->body_monster];
 
@@ -2252,7 +2243,7 @@ void display_player(int mode)
 		c_put_str(TERM_L_BLUE, deity_info[p_ptr->pgod].name, 6, 9);
 
 		/* Display the stats */
-		for (i = 0; i < 6; i++)
+		for (int i = 0; i < 6; i++)
 		{
 			char punctuation = p_ptr->stat_max[i] == 18 + 100 ? '!' : ':';
 			/* Special treatment of "injured" stats */
@@ -2305,30 +2296,15 @@ void display_player(int mode)
 		/* Extra info */
 		display_player_middle();
 
-		/* Display "history" info */
-		if (mode == 1)
-		{
-			put_str("(Character Background)", 15, 25);
-
-			for (i = 0; i < 4; i++)
-			{
-				put_str(history[i], i + 16, 10);
-			}
-		}
-
 		/* Display "various" info */
-		else
-		{
-			put_str("(Miscellaneous Abilities)", 15, 25);
-
-			display_player_various();
-		}
+		put_str("(Miscellaneous Abilities)", 15, 25);
+		display_player_various();
 	}
 
 	/* Special */
 	else
 	{
-		display_player_ben_one(mode - 2);
+		display_player_ben_one(mode - 1);
 	}
 }
 
@@ -2795,19 +2771,19 @@ errr file_character(cptr name, bool_ full)
 	fprintf (fff, "\n\n");
 
 	/* adds and slays */
-	display_player (2);
+	display_player(1);
 	file_character_print_grid(fff, FALSE, TRUE);
 
 	/* sustains and resistances */
-	display_player (3);
+	display_player(2);
 	file_character_print_grid(fff, TRUE, FALSE);
 
 	/* stuff */
-	display_player (4);
+	display_player(3);
 	file_character_print_grid(fff, FALSE, FALSE);
 
 	/* a little bit of stuff */
-	display_player (5);
+	display_player(4);
 	file_character_print_grid(fff, FALSE, FALSE);
 
 	/* Dump corruptions */

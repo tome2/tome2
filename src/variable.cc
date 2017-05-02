@@ -202,11 +202,6 @@ object_type *tracked_object;
 
 
 /*
- * Hack -- Textual "history" for the Player
- */
-char history[4][60];
-
-/*
  * Buffer to hold the current savefile name
  */
 char savefile[1024];

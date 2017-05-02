@@ -725,7 +725,7 @@ C:a:k:+0:+100:Magic-Device
 # R:D:race desc
 # R:S:str:int:wis:dex:con:chr:luck
 # R:K:dis:dev:sav:stl:srh:fos:thn:thb
-# R:P:hitdie:xp%:infra:history chart
+# R:P:hitdie:xp%:infra
 # R:E:weapons:torso:arms:finger:head:legs
 # R:C:allowed classes
 # R:G:race flags
@@ -741,7 +741,7 @@ R:D:Humans are the second born, the Edain.
 R:D:They are the basic race to which all others are compared.
 R:D:Average in ability, they can be any class.
 R:S:0:0:0:0:0:0:0
-R:P:10:100:0:1
+R:P:10:100:0
 R:E:1:1:1:2:1:1
 R:C:Archer
 R:C:Loremaster
@@ -753,7 +753,7 @@ R:C:Warrior
 R:N:1:Half-Elf
 R:D:A crossbreed of elf and human, they get the best of the two races.
 R:S:0:1:1:1:-1:1:0
-R:P:9:110:2:4
+R:P:9:110:2
 R:E:1:1:1:2:1:1
 R:C:Archer
 R:C:Loremaster
@@ -773,7 +773,7 @@ R:D:Elves are the first born, the Eldar.
 R:D:More spiritual than physical beings, they are weaker than humans
 R:D:but are more intelligent.
 R:S:-1:2:2:1:-2:2:0
-R:P:8:120:3:5
+R:P:8:120:3
 R:E:1:1:1:2:1:1
 R:R:1:0
 R:F:RES_LITE
@@ -793,7 +793,7 @@ R:N:3:Hobbit
 R:D:An old but quiet race related to humans.
 R:D:They are small and quite weak but good at many things.
 R:S:-2:2:1:3:2:1:5
-R:P:7:110:4:10
+R:P:7:110:4
 R:E:1:1:1:2:1:1
 R:Z:create food
 R:G:RESIST_BLACK_BREATH
@@ -816,7 +816,7 @@ R:N:4:Gnome
 R:D:Related to dwarves, Gnomes are between Dwarves and Hobbits in size.
 R:D:Very good at magic use, they are poor as fighters.
 R:S:-1:2:0:2:1:-2:2
-R:P:8:135:4:13
+R:P:8:135:4
 R:E:1:1:1:2:1:1
 R:Z:blink
 R:R:1:0
@@ -834,7 +834,7 @@ R:N:5:Dwarf
 R:D:The children of Aule, a strong but small race.
 R:D:Miners and fighters of legend.
 R:S:2:-2:2:-2:2:-3:0
-R:P:11:125:5:16
+R:P:11:125:5
 R:E:1:1:1:2:1:1
 R:Z:find secret passages
 R:R:1:0
@@ -851,7 +851,7 @@ R:k:+500:+000:Archery
 R:N:6:Orc
 R:D:Quite strong but not very smart.
 R:S:2:-1:0:1:1:-4:-3
-R:P:10:110:3:25
+R:P:10:110:3
 R:E:1:1:1:2:1:1
 R:Z:remove fear
 R:R:1:0
@@ -870,7 +870,7 @@ R:N:7:Troll
 R:D:They can bear the light of the sun.
 R:D:They are extremely strong and dumb.
 R:S:4:-4:-2:-4:3:-6:-4
-R:P:12:137:3:22
+R:P:12:137:3
 R:E:1:1:1:2:1:1
 R:Z:berserk
 R:R:1:0
@@ -888,7 +888,7 @@ R:N:8:Dunadan
 R:D:The greatest of the Edain, humans in all respects but
 R:D:stronger, smarter and wiser.
 R:S:1:2:2:2:3:2:2
-R:P:10:180:0:1
+R:P:10:180:0
 R:E:1:1:1:2:1:1
 R:R:1:0
 R:F:REGEN
@@ -910,7 +910,7 @@ R:D:Elves are the first born, the Eldar.
 R:D:High elves are the best of the Eldar, strong, fast, intellectual, though
 R:D:they sometimes lack wisdom.
 R:S:1:3:2:3:1:5:0
-R:P:10:200:4:7
+R:P:10:200:4
 R:E:1:1:1:2:1:1
 R:R:1:0
 R:F:RES_LITE
@@ -931,7 +931,7 @@ R:N:10:Half-Ogre
 R:D:A crossbreed between a human and an ogre.
 R:D:They are similar to half-trolls, strong and dumb.
 R:S:3:-1:-1:-1:3:-3:-2
-R:P:12:130:3:74
+R:P:12:130:3
 R:E:1:1:1:2:1:1
 R:Z:set explosive rune
 R:R:1:0
@@ -949,7 +949,7 @@ R:N:11:Beorning
 R:D:A race of men shapeshifters.
 R:D:They have the unique power of being able to polymorph to bear forms.
 R:S:4:-2:-2:-1:3:-5:1
-R:P:12:150:3:75
+R:P:12:150:3
 R:E:1:1:1:2:1:1
 R:Z:turn into a bear
 R:R:1:0
@@ -969,7 +969,7 @@ R:k:+500:+000:Archery
 R:N:12:Kobold
 R:D:A weaker kind of goblin, related to orcs.
 R:S:1:-1:0:1:0:-4:0
-R:P:9:125:3:82
+R:P:9:125:3
 R:E:1:1:1:2:1:1
 R:Z:poison dart
 R:R:1:0
@@ -987,7 +987,7 @@ R:N:13:Petty-Dwarf
 R:D:A nearly extinct subrace of dwarves.
 R:D:They prefer to live in the darkness.
 R:S:1:-1:2:0:2:-4:-5
-R:P:11:135:5:87
+R:P:11:135:5
 R:E:1:1:1:2:1:1
 R:Z:detect doors and traps
 R:R:1:0
@@ -1006,7 +1006,7 @@ R:D:Elves are the first born, the Eldar.
 R:D:Dark elves are rare on Middle-earth and even though not evil
 R:D:they are not good.
 R:S:-1:3:2:2:-2:1:-2
-R:P:9:150:5:69
+R:P:9:150:5
 R:E:1:1:1:2:1:1
 R:Z:magic missile
 R:R:1:0
@@ -1030,7 +1030,7 @@ R:N:15:Ent
 R:D:Guardian of the forests of Middle-earth, summoned by Yavanna before
 R:D:even the elves awoke. It is said 'Trolls are strong, Ents are STRONGER'.
 R:S:10:-3:2:-5:11:-3:-2
-R:P:14:210:5:95
+R:P:14:210:5
 R:E:1:1:1:2:1:1
 R:Z:grow trees
 R:G:AC_LEVEL
@@ -1063,7 +1063,7 @@ R:N:16:RohanKnight
 R:D:Humans from the land of Rohan, riding the great Mearas.
 R:D:Fast and powerful in battle.
 R:S:4:-2:3:1:4:2:0
-R:P:10:220:0:84
+R:P:10:220:0
 R:E:1:1:1:2:1:1
 R:Z:Rohan Knight's Powers
 R:R:1:3
@@ -1097,7 +1097,7 @@ R:N:17:Thunderlord
 R:D:A thunderlord is a Great Eagle of Manwe, ridden by a Maia of Manwe.
 R:D:They carry the power of wind and thunder.
 R:S:6:2:1:1:3:8:2
-R:P:12:400:0:89
+R:P:12:400:0
 R:E:1:1:1:2:1:1
 R:Z:Thunderlord's Powers
 R:R:1:0
@@ -1130,7 +1130,7 @@ R:N:18:DeathMold
 R:D:A pure mass of evilness, DeathMolds cannot move, but they have much more
 R:D:power than an average race.
 R:S:10:0:10:0:10:-15:-5
-R:P:15:250:10:100
+R:P:15:250:10
 R:E:1:1:1:4:0:0
 R:Z:Death Mold's Powers
 R:G:EXPERIMENTAL
@@ -1151,7 +1151,7 @@ R:k:+2500:+000:Archery
 R:N:19:Yeek
 R:D:The weakest of all the races, bad at everything except gaining levels quickly.
 R:S:-5:-5:-5:-5:-5:-5:-5
-R:P:6:25:2:29
+R:P:6:25:2
 R:E:1:1:1:2:1:1
 R:C:Archer
 R:C:Loremaster
@@ -1169,7 +1169,7 @@ R:N:20:Wood-Elf
 R:D:Elves are the first born, the Eldar.
 R:D:Wood elves live in the great forests of Middle-earth.
 R:S:-3:2:1:5:-4:1:0
-R:P:7:130:4:5
+R:P:7:130:4
 R:E:1:1:1:2:1:1
 R:G:XTRA_MIGHT_BOW
 R:R:1:1
@@ -1193,7 +1193,7 @@ R:N:21:Maia
 R:D:An old race, dating from before the creation of Arda, the Maiar were
 R:D:created by Eru to help the Valar in their task.
 R:S:0:0:0:0:0:0:4
-R:P:10:100:0:91
+R:P:10:100:0
 R:E:1:1:1:2:1:1
 R:G:NO_GOD
 R:R:1:0
@@ -1562,372 +1562,3 @@ S:D:A:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 S:S:0:0:0:0:0:0:0:100
 S:P:0:0:0
 S:E:0:0:0:0:0:0
-
-
-##############################################################################
-##############################################################################
-##############################################################################
-##############################################################################
-# H: Race history
-# H:chance:chart:next chart:social class bonus:desc
-
-# Dunadan, Human: 1 -> 2 -> 3 -> 50 -> 51 -> 52 -> 53.
-# RohanKnight:   84 -> 85 -> 50 -> 51 -> 52 -> 53.
-# Half-Ogre:     74 -> 20 -> 2 -> 3 -> 50 -> 51 -> 52 -> 53.
-# Beorning:      75 -> 76 -> 20 -> 2 -> 3 -> 50 -> 51 -> 52 -> 53.
-# Half-elf:       4 -> 1 -> 2 -> 3 -> 50 -> 51 -> 52 -> 53.
-# Elf,  Wood-elf: 5 -> 6 -> 9 -> 54 -> 55 -> 56.
-# High-elf:       7 -> 8 -> 9 -> 54 -> 55 -> 56.
-# Dark-elf:      69 -> 70 -> 71 -> 72 -> 73.
-# Hobbit:        10 -> 11 -> 3 -> 50 -> 51 -> 52 -> 53.
-# Gnome:         13 -> 14 -> 3 -> 50 -> 51 -> 52 -> 53.
-# Dwarf:         16 -> 17 -> 18 -> 57 -> 58 -> 59 -> 60 -> 61.
-# Petty-Dwarf:   87 -> 88 -> 18 -> 57 -> 58 -> 59 -> 60 -> 61.
-# Thunderlord:   89 -> 90 -> 93 -> 94.
-# Maia:          91 -> 92 -> 93 -> 94.
-# Ent:           95 -> 96.
-# Troll:         22 -> 23 -> 24 -> 62 -> 63 -> 64 -> 65 -> 66.
-# Orc            25 -> 26 -> 27 -> 28 -> 80 -> 81 -> 65 -> 66.
-# Yeek:          29 -> 3 -> 50 -> 51 -> 52 -> 53.
-#   (not used:   78 -> 79 -> 80 -> 81 -> 65 -> 66.)
-# Kobold:        82 -> 83 -> 80 -> 81 -> 65 -> 66.
-# Deathmold:    100 -> 101 -> 102 -> 103 -> 104.
-
-H:10:1:2:25:You are the illegitimate and unacknowledged child
-H:20:1:2:35:You are the illegitimate but acknowledged child
-H:95:1:2:45:You are one of several children
-H:100:1:2:50:You are the first child
-
-H:40:2:3:65:of a Serf.
-H:65:2:3:80:of a Yeoman.
-H:80:2:3:90:of a Townsman.
-H:90:2:3:105:of a Guildsman.
-H:96:2:3:120:of a Landed Knight.
-H:99:2:3:130:of a Noble Lord.
-H:100:2:3:140:of the Royal Blood Line.
-
-H:20:3:50:20:You are the black sheep of the family.
-H:80:3:50:55:You are a credit to the family.
-H:100:3:50:60:You are a well-liked child.
-
-H:25:4:1:40:Your mother was of the Avari.
-H:40:4:1:50:Your father was of the Avari.
-H:65:4:1:60:Your mother was of the Nandor.
-H:80:4:1:60:Your father was of the Nandor.
-H:96:4:1:70:Your mother was of the Sindar.
-H:99:4:1:70:Your father was of the Sindar.
-H:100:4:1:100:Your ancestry traces to Elrond.
-
-H:60:5:6:50:You are one of several children
-H:100:5:6:55:You are the only child
-
-H:40:6:9:40:of an Avarin
-H:70:6:9:50:of a Nandorin
-H:100:6:9:60:of a Sindarin
-
-H:60:7:8:50:You are one of several children
-H:100:7:8:55:You are the only child
-
-H:75:8:9:50:of a Telerin
-H:95:8:9:55:of a Noldorin
-H:100:8:9:60:of a Vanyarin
-
-H:40:9:54:80:Ranger.
-H:70:9:54:90:Archer.
-H:87:9:54:110:Warrior.
-H:95:9:54:125:Mage.
-H:99:9:54:140:Prince.
-H:100:9:54:145:King.
-
-H:85:10:11:45:You are one of several children of a Hobbit
-H:100:10:11:55:You are the only child of a Hobbit
-
-H:20:11:3:55:Bum.
-H:30:11:3:80:Tavern Owner.
-H:40:11:3:90:Miller.
-H:50:11:3:100:Home Owner.
-H:80:11:3:110:Burglar.
-H:95:11:3:115:Warrior.
-H:99:11:3:125:Mage.
-H:100:11:3:140:Clan Elder.
-
-H:85:13:14:45:You are one of several children of a Gnome
-H:100:13:14:55:You are the only child of a Gnome
-
-H:20:14:3:55:Beggar.
-H:50:14:3:70:Braggart.
-H:75:14:3:85:Prankster.
-H:95:14:3:100:Warrior.
-H:100:14:3:125:Mage.
-
-H:25:16:17:40:You are one of two children of a Dwarven
-H:100:16:17:50:You are the only child of a Dwarven
-
-H:10:17:18:60:Thief.
-H:35:17:18:80:Smith.
-H:75:17:18:90:Miner.
-H:90:17:18:110:Warrior.
-H:99:17:18:130:Priest.
-H:100:17:18:150:King.
-
-H:15:18:57:10:You are the black sheep of the family.
-H:85:18:57:50:You are a credit to the family.
-H:100:18:57:55:You are a well liked child.
-
-H:100:20:2:50:You are the adopted child
-
-H:100:22:23:50:You are the offspring of a
-
-H:30:23:24:20:Forest-Troll
-H:60:23:24:25:Cave-Troll
-H:75:23:24:30:Hill-Troll
-H:90:23:24:35:Stone-Troll
-H:95:23:24:40:Snow-Troll
-H:100:23:24:45:Water-Troll
-
-H:25:24:62:50:Worker.
-H:95:24:62:55:Warrior.
-H:99:24:62:65:Shaman.
-H:100:24:62:80:Clan Chief.
-
-H:100:25:26:50:You are one of several children of
-
-H:40:26:27:40:a Snaga
-H:80:26:27:50:an Orc
-H:100:26:27:60:an Uruk
-
-H:30:27:28:20:Slave
-H:60:27:28:50:Archer
-H:90:27:28:60:Warrior
-H:95:27:28:80:Shaman
-H:100:27:28:100:Chieftain
-
-H:30:28:80:50:from the Misty Mountains.
-H:60:28:80:50:from the Grey Mountains.
-H:90:28:80:70:from the orc-hold of Mount Gundabad.
-H:100:28:80:80:from the Pits of Angband.
-
-H:25:29:3:50:You are one of five children of a blue Yeek.
-H:75:29:3:75:You are one of five children of a brown Yeek.
-H:100:29:3:100:You are one of five children of a master Yeek.
-
-H:20:50:51:50:You have dark brown eyes,
-H:60:50:51:50:You have brown eyes,
-H:70:50:51:50:You have hazel eyes,
-H:80:50:51:50:You have green eyes,
-H:90:50:51:50:You have blue eyes,
-H:100:50:51:50:You have blue-gray eyes,
-
-H:70:51:52:50:straight
-H:90:51:52:50:wavy
-H:100:51:52:50:curly
-
-H:30:52:53:50:black hair,
-H:70:52:53:50:brown hair,
-H:80:52:53:50:auburn hair,
-H:90:52:53:50:red hair,
-H:100:52:53:50:blond hair,
-
-H:10:53:0:50:and a very dark complexion.
-H:30:53:0:50:and a dark complexion.
-H:80:53:0:50:and an average complexion.
-H:90:53:0:50:and a fair complexion.
-H:100:53:0:50:and a very fair complexion.
-
-H:85:54:55:50:You have light grey eyes,
-H:95:54:55:50:You have light blue eyes,
-H:100:54:55:50:You have light green eyes,
-
-H:75:55:56:50:straight
-H:100:55:56:50:wavy
-
-H:75:56:0:50:black hair, and a fair complexion.
-H:85:56:0:50:brown hair, and a fair complexion.
-H:95:56:0:50:blond hair, and a fair complexion.
-H:100:56:0:50:silver hair, and a fair complexion.
-
-H:99:57:58:50:You have dark brown eyes,
-H:100:57:58:60:You have glowing red eyes,
-
-H:90:58:59:50:straight
-H:100:58:59:50:wavy
-
-H:75:59:60:50:black hair,
-H:100:59:60:50:brown hair,
-
-H:25:60:61:50:a one foot beard,
-H:60:60:61:51:a two foot beard,
-H:90:60:61:53:a three foot beard,
-H:100:60:61:55:a four foot beard,
-
-H:100:61:0:50:and a dark complexion.
-
-H:60:62:63:50:You have slime green eyes,
-H:85:62:63:50:You have puke yellow eyes,
-H:99:62:63:50:You have blue-bloodshot eyes,
-H:100:62:63:55:You have glowing red eyes,
-
-H:33:63:64:50:dirty
-H:66:63:64:50:mangy
-H:100:63:64:50:oily
-
-H:33:64:65:50:sea-weed green hair,
-H:66:64:65:50:bright red hair,
-H:100:64:65:50:dark purple hair,
-
-H:25:65:66:50:and green
-H:50:65:66:50:and blue
-H:75:65:66:50:and white
-H:100:65:66:50:and black
-
-H:33:66:0:50:ulcerous skin.
-H:66:66:0:50:scabby skin.
-H:100:66:0:50:leprous skin.
-
-H:85:69:70:45:You are one of several children of a Dark Elven
-H:100:69:70:55:You are the only child of a Dark Elven
-
-H:50:70:71:60:Warrior.
-H:80:70:71:75:Warlock.
-H:100:70:71:95:Noble.
-
-H:100:71:72:50:You have black eyes,
-
-H:70:72:73:50:straight
-H:90:72:73:50:wavy
-H:100:72:73:50:curly
-
-H:100:73:0:50:black hair and a very dark complexion.
-
-H:25:74:20:25:Your mother was an Ogre, but it is unacknowledged.
-H:100:74:20:25:Your father was an Ogre, but it is unacknowledged.
-
-H:90:75:76:50:You are a descendant of Beorn to the
-H:100:75:20:100:Your father was Beorn.
-
-H:13:76:20:55:9th degree.
-H:25:76:20:60:8th degree.
-H:38:76:20:65:7th degree.
-H:50:76:20:70:6th degree.
-H:63:76:20:75:5th degree.
-H:75:76:20:80:4th degree.
-H:88:76:20:85:3rd degree.
-H:100:76:20:90:2nd degree.
-
-H:100:78:79:50:You are one of several children of
-
-H:50:79:80:50:a Brown Yeek.
-H:75:79:80:50:a Blue Yeek.
-H:95:79:80:85:a Master Yeek.
-H:100:79:80:120:Boldor, the King of the Yeeks.
-
-H:25:80:81:50:You have pale eyes,
-H:50:80:81:50:You have glowing eyes,
-H:75:80:81:50:You have tiny black eyes,
-H:100:80:81:50:You have shining black eyes,
-
-H:20:81:65:50:no hair at all,
-H:40:81:65:50:short black hair,
-H:60:81:65:50:long black hair,
-H:80:81:65:50:bright red hair,
-H:100:81:65:50:colourless albino hair,
-
-H:100:82:83:50:You are one of several children of
-
-H:40:83:80:50:a Small Kobold.
-H:75:83:80:55:a Kobold.
-H:95:83:80:65:a Large Kobold.
-H:100:83:80:100:Mughash, the Kobold Lord.
-
-H:85:84:85:45:You are one of several children
-H:100:84:85:50:You are the first child
-
-H:60:85:50:40:of a Serf.
-H:85:85:50:55:of a Devoted Mercenary.
-H:96:85:50:60:of a Landed Knight.
-H:99:85:50:100:of a Marshal of the Riddermark.
-H:100:85:50:120:of a King of the Rohirrim.
-
-H:100:87:88:89:You are one of several children of
-
-H:30:88:18:20:a Petty-Dwarf Slave.
-H:50:88:18:40:a Petty-Dwarf Thief.
-H:70:88:18:60:a Petty-Dwarf Smith.
-H:90:88:18:75:a Petty-Dwarf Miner.
-H:95:88:18:100:a Petty-Dwarf Shaman.
-H:100:88:18:100:Mim, Betrayer of Turin.
-
-H:85:89:90:50:You are one of many Manwe Maia.
-H:100:89:90:60:You are the one of the most famous Manwe Maia.
-
-H:90:90:93:100:Your eagle looks very good.
-H:100:90:93:120:Your eagle is splendid.
-
-H:10:91:92:20:You are a unnoticed minion of
-H:25:91:92:30:You are a minor servant of
-H:45:91:92:40:You are a subject of
-H:65:91:92:50:You have attached yourself to
-H:85:91:92:65:You are associated with
-H:95:91:92:80:You are a notable follower of
-H:100:91:92:100:You are a celebrated assistant to
-
-H:20:92:93:55:Nessa.
-H:40:92:93:60:Vana.
-H:50:92:93:65:Tulkas.
-H:80:92:93:75:Mandos.
-H:90:92:93:80:Nienna.
-H:95:92:93:90:Varda.
-H:100:92:93:95:Manwe.
-
-H:100:93:94:50:In the past you dwelt on earth in the form of
-
-H:25:94:0:50:various animals.
-H:55:94:0:55:a spirit of forest and river.
-H:70:94:0:60:a beneficent but unseen force.
-H:96:94:0:70:a wise and ancient counsellor.
-H:100:94:0:80:a Wizard of legend.
-
-H:30:95:96:30:You are of an unknown generation of the Ents.
-H:40:95:96:50:You are of the third generation of the Ents.
-H:60:95:96:60:You are of the second generation of the Ents.
-H:100:95:96:80:You are one of the first beings who awoke on Arda.
-
-H:50:96:0:50:You have green skin and inflexible members.
-H:100:96:0:50:You have brown skin and inflexible members.
-
-H:10:100:101:30:You were born in dirty bilge-water,
-H:20:100:101:35:You were born in dirty straw,
-H:30:100:101:40:You were born in wet mud,
-H:40:100:101:45:You were born in a pile of dust,
-H:50:100:101:50:You were born in sand,
-H:60:100:101:50:You were born in pebbles,
-H:70:100:101:55:You were born in a kobold corpse,
-H:80:100:101:60:You were born in dragon droppings,
-H:90:100:101:65:You were born in a pile of bones,
-H:100:100:101:70:You were born in a corpse of a mighty hero,
-
-H:10:101:102:30:created by rotting flesh.
-H:20:101:102:35:created by a kobold magician.
-H:30:101:102:40:created by a corrupted apprentice.
-H:40:101:102:45:created by a curious mage apprentice.
-H:50:101:102:50:created by an evil Symbiant.
-H:60:101:102:50:created by a practicing Necromancer.
-H:70:101:102:55:created by the Mutant Breeders.
-H:80:101:102:60:created by a curious adventurer.
-H:90:101:102:65:called to life by the Witch-King of Angmar.
-H:100:101:102:70:called to life by Sauron himself.
-
-H:100:102:103:50:Since then you have given life to
-
-H:10:103:104:30:no
-H:20:103:104:35:one weak-willed
-H:30:103:104:40:two
-H:40:103:104:45:three
-H:50:103:104:50:four
-H:60:103:104:50:five
-H:70:103:104:55:about twenty
-H:80:103:104:60:dozens of
-H:90:103:104:65:hundreds of
-H:100:103:104:70:uncounted multitudes of
-
-H:100:104:0:50:foul offspring.

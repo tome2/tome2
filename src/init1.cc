@@ -13,7 +13,6 @@
 #include "files.hpp"
 #include "game.hpp"
 #include "gods.hpp"
-#include "hist_type.hpp"
 #include "init2.hpp"
 #include "monster2.hpp"
 #include "monster_ego.hpp"
@@ -880,7 +879,6 @@ errr init_player_info_txt(FILE *fp)
 	auto &class_info = game->edit_data.class_info;
 	auto &race_info = game->edit_data.race_info;
 	auto &race_mod_info = game->edit_data.race_mod_info;
-	auto &bg = game->edit_data.bg;
 	auto &gen_skill = game->edit_data.gen_skill;
 
 	int lev = 1;
@@ -916,29 +914,6 @@ errr init_player_info_txt(FILE *fp)
 		if (buf[0] == 'I')
 		{
 			error_idx = -1;
-			continue;
-		}
-
-		/* Process 'H' for "History" */
-		if (buf[0] == 'H')
-		{
-			char *zz[5];
-
-			/* Scan for the values */
-			if (tokenize(buf + 2, 5, zz, ':', ':') != 5) return (1);
-
-			/* Create new entry */
-			hist_type hist;
-			hist.roll = atoi(zz[0]);
-			hist.chart = atoi(zz[1]);
-			hist.next = atoi(zz[2]);
-			hist.bonus = atoi(zz[3]);
-			hist.info = my_strdup(zz[4]);
-
-			/* Append */
-			bg.emplace_back(hist);
-
-			/* Next... */
 			continue;
 		}
 
@@ -1107,16 +1082,15 @@ errr init_player_info_txt(FILE *fp)
 		/* Process 'P' for "xtra" */
 		if ((buf[0] == 'R') && (buf[2] == 'P'))
 		{
-			int s[4];
+			int s[3];
 
 			/* Scan for the values */
-			if (4 != sscanf(buf + 4, "%d:%d:%d:%d",
-			                &s[0], &s[1], &s[2], &s[3])) return (1);
+			if (3 != sscanf(buf + 4, "%d:%d:%d",
+					&s[0], &s[1], &s[2])) return (1);
 
 			rp_ptr->ps.mhp = s[0];
 			rp_ptr->ps.exp = s[1];
 			rp_ptr->infra = s[2];
-			rp_ptr->chart = s[3];
 
 			/* Next... */
 			continue;

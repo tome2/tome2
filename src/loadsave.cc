@@ -403,11 +403,6 @@ static void do_quick_start(ls_flag_t flag, birther &previous_char)
 	do_s16b(&previous_char.luck, flag);
 
 	do_bool(&previous_char.quick_ok, flag);
-
-	for (std::size_t i = 0; i < 4; i++)
-	{
-		do_string(previous_char.history[i], 60, flag);
-	}
 }
 
 static void do_skill_modifier(skill_modifier *s, ls_flag_t flag)
@@ -523,11 +518,6 @@ static bool_ do_extra(ls_flag_t flag)
 	do_std_string(game->player_name, flag);
 
 	do_std_string(game->died_from, flag);
-
-	for (std::size_t i = 0; i < 4; i++)
-	{
-		do_string(history[i], 60, flag);
-	}
 
 	/* Handle the special levels info */
 	{
