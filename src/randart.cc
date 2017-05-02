@@ -358,7 +358,7 @@ bool_ create_artifact(object_type *o_ptr, bool_ a_scroll, bool_ get_name)
 			}
 			else
 				/* Default name = of 'player name' */
-				sprintf(new_name, "of '%s'", player_name);
+				sprintf(new_name, "of '%s'", game->player_name.c_str());
 		}
 		else
 		{

@@ -180,7 +180,7 @@ void do_cmd_change_name(void)
 		/* File dump */
 		else if (c == 'f')
 		{
-			strnfmt(tmp, 160, "%s.txt", player_name);
+			strnfmt(tmp, 160, "%s.txt", game->player_name.c_str());
 			if (get_string("Filename(you can post it to http://angband.oook.cz/): ", tmp, 80))
 			{
 				if (tmp[0] && (tmp[0] != ' '))
@@ -1094,9 +1094,6 @@ static errr option_dump(cptr fname)
  */
 static void do_cmd_pref_file_hack(int row)
 {
-	char ftmp[80];
-
-
 	/* Prompt */
 	prt("Command: Load a user pref file", row, 0);
 
@@ -1104,21 +1101,24 @@ static void do_cmd_pref_file_hack(int row)
 	prt("File: ", row + 2, 0);
 
 	/* Default filename */
-	strnfmt(ftmp, 80, "%s.prf", player_base);
+	std::string ftmp = fmt::format("{}.prf", game->player_base);
 
 	/* Ask for a file (or cancel) */
-	if (!askfor_aux(ftmp, 80)) return;
+	if (!askfor_aux(&ftmp, 80))
+	{
+		return;
+	}
 
 	/* Process the given filename */
-	if (process_pref_file(ftmp))
+	if (process_pref_file(ftmp.c_str()))
 	{
 		/* Mention failure */
-		msg_format("Failed to load '%s'!", ftmp);
+		msg_format("Failed to load '%s'!", ftmp.c_str());
 	}
 	else
 	{
 		/* Mention success */
-		msg_format("Loaded '%s'.", ftmp);
+		msg_format("Loaded '%s'.", ftmp.c_str());
 	}
 }
 
@@ -1199,8 +1199,6 @@ void do_cmd_options(void)
 		case 'u':
 		case 'U':
 			{
-				char ftmp[80];
-
 				/* Prompt */
 				prt("Command: Append options to a file", 21, 0);
 
@@ -1208,13 +1206,13 @@ void do_cmd_options(void)
 				prt("File: ", 21, 0);
 
 				/* Default filename */
-				strnfmt(ftmp, 80, "%s.prf", player_base);
+				auto ftmp = fmt::format("{}.prf", game->player_base);
 
 				/* Ask for a file */
-				if (!askfor_aux(ftmp, 80)) continue;
+				if (!askfor_aux(&ftmp, 80)) continue;
 
 				/* Dump the options */
-				if (option_dump(ftmp))
+				if (option_dump(ftmp.c_str()))
 				{
 					/* Failure */
 					msg_print("Failed!");
@@ -1650,17 +1648,8 @@ static errr keymap_dump(cptr fname)
  */
 void do_cmd_macros(void)
 {
-	int i;
-
-	char tmp[1024];
-
-	char buf[1024];
-
-	int mode;
-
-
 	/* Keymap mode */
-	mode = get_keymap_mode();
+	int mode = get_keymap_mode();
 
 
 	/* Enter "icky" mode */
@@ -1673,6 +1662,8 @@ void do_cmd_macros(void)
 	/* Process requests until done */
 	while (1)
 	{
+		char buf[1024];
+
 		/* Clear screen */
 		Term_clear();
 
@@ -1706,7 +1697,7 @@ void do_cmd_macros(void)
 		prt("Command: ", 16, 0);
 
 		/* Get a command */
-		i = inkey();
+		int i = inkey();
 
 		/* Leave */
 		if (i == ESCAPE) break;
@@ -1721,13 +1712,16 @@ void do_cmd_macros(void)
 			prt("File: ", 18, 0);
 
 			/* Default filename */
-			strnfmt(tmp, 1024, "%s.prf", player_name);
+			auto tmp = fmt::format("{}.prf", game->player_name);
 
 			/* Ask for a file */
-			if (!askfor_aux(tmp, 80)) continue;
+			if (!askfor_aux(&tmp, 80))
+			{
+				continue;
+			}
 
 			/* Process the given filename */
-			if (0 != process_pref_file(tmp))
+			if (0 != process_pref_file(tmp.c_str()))
 			{
 				/* Prompt */
 				msg_print("Could not load file!");
@@ -1744,13 +1738,16 @@ void do_cmd_macros(void)
 			prt("File: ", 18, 0);
 
 			/* Default filename */
-			strnfmt(tmp, 1024, "%s.prf", player_name);
+			auto tmp = fmt::format("{}.prf", game->player_name);
 
 			/* Ask for a file */
-			if (!askfor_aux(tmp, 80)) continue;
+			if (!askfor_aux(&tmp, 80))
+			{
+				continue;
+			}
 
 			/* Dump the macros */
-			(void)macro_dump(tmp);
+			macro_dump(tmp.c_str());
 
 			/* Prompt */
 			msg_print("Appended macros.");
@@ -1800,6 +1797,8 @@ void do_cmd_macros(void)
 		/* Create a macro */
 		else if (i == '4')
 		{
+			char tmp[1024];
+
 			/* Prompt */
 			prt("Command: Create a macro", 16, 0);
 
@@ -1861,13 +1860,16 @@ void do_cmd_macros(void)
 			prt("File: ", 18, 0);
 
 			/* Default filename */
-			strnfmt(tmp, 1024, "%s.prf", player_name);
+			auto tmp = fmt::format("{}.prf", game->player_name);
 
 			/* Ask for a file */
-			if (!askfor_aux(tmp, 80)) continue;
+			if (!askfor_aux(&tmp, 80))
+			{
+				continue;
+			}
 
 			/* Dump the macros */
-			(void)keymap_dump(tmp);
+			keymap_dump(tmp.c_str());
 
 			/* Prompt */
 			msg_print("Appended keymaps.");
@@ -1917,6 +1919,8 @@ void do_cmd_macros(void)
 		/* Create a keymap */
 		else if (i == '8')
 		{
+			char tmp[1024];
+
 			/* Prompt */
 			prt("Command: Create a keymap", 16, 0);
 
@@ -1973,6 +1977,8 @@ void do_cmd_macros(void)
 		/* Enter a new action */
 		else if (i == '0')
 		{
+			char tmp[1024];
+
 			/* Prompt */
 			prt("Command: Enter a new action", 16, 0);
 

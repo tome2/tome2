@@ -936,7 +936,7 @@ static cptr process_pref_file_expr(char **sp, char *fp)
 			/* Player */
 			else if (streq(b + 1, "PLAYER"))
 			{
-				v = player_base;
+				v = game->player_base.c_str(); // The string SHOULD be stable enough for this
 			}
 		}
 
@@ -2236,7 +2236,7 @@ void display_player(int mode)
 
 		/* Name, Sex, Race, Class */
 		put_str("Name  :", 2, 1);
-		c_put_str(TERM_L_BLUE, player_name, 2, 9);
+		c_put_str(TERM_L_BLUE, game->player_name.c_str(), 2, 9);
 
 		put_str("Race  :", 3, 1);
 		auto const player_race_name = get_player_race_name(p_ptr->prace, p_ptr->pracem);
@@ -3757,65 +3757,53 @@ void do_cmd_help(void)
 
 
 
-/*
- * Process the player name.
- * Extract a clean "base name".
- * Build the savefile name if needed.
- */
 void process_player_base()
 {
-	char temp[128];
-
-	/* Rename the savefile, using the player_base */
-	(void)sprintf(temp, "%s", player_base);
-
-	/* Build the filename */
-	path_build(savefile, 1024, ANGBAND_DIR_SAVE, temp);
+	path_build(savefile, 1024, ANGBAND_DIR_SAVE, game->player_base.c_str());
 }
 
 void process_player_name(bool_ sf)
 {
-	int i, k = 0;
-	char tmp[50];
-
 	/* Cannot be too long */
-	if (strlen(player_base) > 15)
+	if (game->player_base.size() > 15)
 	{
-		/* Name too long */
-		quit_fmt("The name '%s' is too long!", player_base);
+		quit_fmt("The name '%s' is too long!", game->player_base.c_str());
 	}
 
-	/* Cannot contain "icky" characters */
-	for (i = 0; player_base[i]; i++)
+	/* Cannot contain control characters */
+	for (auto c : game->player_base)
 	{
-		/* No control characters */
-		if (iscntrl(player_base[i]))
+		if (iscntrl(c))
 		{
-			/* Illegal characters */
-			quit_fmt("The name '%s' contains control chars!", player_base);
+			quit_fmt("The name '%s' contains control chars!", game->player_base.c_str());
 		}
 	}
 
 	/* Extract "useful" letters */
-	for (i = 0; player_base[i]; i++)
+	std::string buf;
+	for (auto c : game->player_base)
 	{
-		char c = player_base[i];
-
 		/* Accept some letters */
-		if (isalpha(c) || isdigit(c)) tmp[k++] = c;
+		if (isalpha(c) || isdigit(c))
+		{
+			buf += c;
+		}
 
 		/* Convert space, dot, and underscore to underscore */
-		else if (strchr("@. _", c)) tmp[k++] = '_';
+		else if (strchr("@. _", c))
+		{
+			buf += '_';
+		}
 	}
 
-
 	/* Terminate */
-	tmp[k] = '\0';
-	sprintf(player_base, "%s", tmp);
+	game->player_base = buf;
 
 	/* Require a "base" name */
-	if (!player_base[0]) strcpy(player_base, "PLAYER");
-
+	if (game->player_base.empty())
+	{
+		game->player_base = "PLAYER";
+	}
 
 	/* Change the savefile name */
 	if (sf)
@@ -3852,10 +3840,13 @@ void get_name(void)
 		move_cursor(2, 9);
 
 		/* Save the player name */
-		strcpy(tmp, player_name);
+		strcpy(tmp, game->player_name.c_str());
 
 		/* Get an input, ignore "Escape" */
-		if (askfor_aux(tmp, 31)) strcpy(player_name, tmp);
+		if (askfor_aux(tmp, 31))
+		{
+			game->player_name = tmp;
+		}
 
 		/* Process the player name */
 		process_player_name(FALSE);
@@ -3865,7 +3856,7 @@ void get_name(void)
 	}
 
 	/* Pad the name (to clear junk) */
-	sprintf(tmp, "%-31.31s", player_name);
+	sprintf(tmp, "%-31.31s", game->player_name.c_str());
 
 	/* Re-Draw the name (in light blue) */
 	c_put_str(TERM_L_BLUE, tmp, 2, 9);
@@ -4208,7 +4199,7 @@ static void print_tomb(void)
 		p = cp_ptr->titles[(p_ptr->lev - 1) / 5];
 	}
 
-	center_string(buf, player_name);
+	center_string(buf, game->player_name.c_str());
 	put_str(buf, 6, 11);
 
 	center_string(buf, "the");
@@ -4596,7 +4587,7 @@ void show_highclass(int building)
 	int i = 0, j, m = 0;
 	int pr, pc, clev;
 	high_score the_score;
-	char buf[1024], out_val[256];
+	char buf[1024];
 	int highscore_fd;
 
 	switch (building)
@@ -4655,6 +4646,9 @@ void show_highclass(int building)
 	j = 0;
 	clev = 0;
 
+	auto const format_num = "{:>3d}) {} the {} (Level {:>2d})"; // See also race_score()
+	auto const format_you = "You) {} the {} (Level {:>2d})";
+
 	while ((m < 9) || (j < MAX_HISCORES))
 	{
 		if (highscore_seek(highscore_fd, j)) break;
@@ -4665,9 +4659,9 @@ void show_highclass(int building)
 		if (((pc == (building - 10)) && (building != 1)) ||
 				((building == 1) && (clev >= PY_MAX_LEVEL)))
 		{
-			sprintf(out_val, "%3d) %s the %s (Level %2d)",
-				(m + 1), the_score.who, race_info[pr].title.c_str(), clev);
-			prt(out_val, (m + 7), 0);
+			auto out_val = fmt::format(format_num,
+				(m + 1), the_score.who, race_info[pr].title, clev);
+			prt(out_val.c_str(), (m + 7), 0);
 			m++;
 		}
 		j++;
@@ -4676,17 +4670,21 @@ void show_highclass(int building)
 	/* Now, list the active player if they qualify */
 	if ((building == 1) && (p_ptr->lev >= PY_MAX_LEVEL))
 	{
-		sprintf(out_val, "You) %s the %s (Level %2d)",
-			player_name, race_info[p_ptr->prace].title.c_str(), p_ptr->lev);
-		prt(out_val, (m + 8), 0);
+		auto out_val = fmt::format(format_you,
+			game->player_name,
+			race_info[p_ptr->prace].title,
+			p_ptr->lev);
+		prt(out_val.c_str(), (m + 8), 0);
 	}
 	else if ((building != 1))
 	{
 		if ((p_ptr->lev > clev) && (p_ptr->pclass == (building - 10)))
 		{
-			sprintf(out_val, "You) %s the %s (Level %2d)",
-				player_name, race_info[p_ptr->prace].title.c_str(), p_ptr->lev);
-			prt(out_val, (m + 8), 0);
+			auto out_val = fmt::format(format_you,
+				game->player_name,
+				race_info[p_ptr->prace].title,
+				p_ptr->lev);
+			prt(out_val.c_str(), (m + 8), 0);
 		}
 	}
 
@@ -4710,7 +4708,7 @@ void race_score(int race_num)
 	int i = 0, j, m = 0;
 	int pr, clev, lastlev;
 	high_score the_score;
-	char buf[1024], out_val[256], tmp_str[80];
+	char buf[1024], tmp_str[80];
 	int highscore_fd;
 
 	lastlev = 0;
@@ -4742,6 +4740,9 @@ void race_score(int race_num)
 	m = 0;
 	j = 0;
 
+	auto const format_num = "{:>3d}) {} the {} (Level {:>2d})"; // See also show_highclass()
+	auto const format_you = "You) {} the {} (Level {:>2d})";
+
 	while ((m < 10) && (j < i))
 	{
 		if (highscore_seek(highscore_fd, j)) break;
@@ -4750,10 +4751,12 @@ void race_score(int race_num)
 		clev = atoi(the_score.cur_lev);
 		if (pr == race_num)
 		{
-			sprintf(out_val, "%3d) %s the %s (Level %3d)",
-			        (m + 1), the_score.who,
-				race_info[pr].title.c_str(), clev);
-			prt(out_val, (m + 7), 0);
+			auto out_val = fmt::format(format_num,
+				(m + 1),
+				the_score.who,
+				race_info[pr].title,
+				clev);
+			prt(out_val.c_str(), (m + 7), 0);
 			m++;
 			lastlev = clev;
 		}
@@ -4763,9 +4766,11 @@ void race_score(int race_num)
 	/* add player if qualified */
 	if ((p_ptr->prace == race_num) && (p_ptr->lev >= lastlev))
 	{
-		sprintf(out_val, "You) %s the %s (Level %3d)",
-			player_name, race_info[p_ptr->prace].title.c_str(), p_ptr->lev);
-		prt(out_val, (m + 8), 0);
+		auto out_val = fmt::format(format_you,
+			game->player_name,
+			race_info[p_ptr->prace].title,
+			p_ptr->lev);
+		prt(out_val.c_str(), (m + 8), 0);
 	}
 
 	fd_close(highscore_fd);
@@ -4889,7 +4894,7 @@ static errr top_twenty(void)
 	strftime(the_score.day, 9, "%m/%d/%y", localtime(&ct));
 
 	/* Save the player name (15 chars) */
-	sprintf(the_score.who, "%-.15s", player_name);
+	sprintf(the_score.who, "%-.15s", game->player_name.c_str());
 
 	/* Save the player info XXX XXX XXX */
 	sprintf(the_score.p_r, "%2d", p_ptr->prace);
@@ -4989,7 +4994,7 @@ static errr predict_score(void)
 	strcpy(the_score.day, "TODAY");
 
 	/* Save the player name (15 chars) */
-	sprintf(the_score.who, "%-.15s", player_name);
+	sprintf(the_score.who, "%-.15s", game->player_name.c_str());
 
 	/* Save the player info XXX XXX XXX */
 	sprintf(the_score.p_r, "%2d", p_ptr->prace);
@@ -5138,7 +5143,7 @@ static void kingly(void)
 	/* Display a message */
 	put_str("Veni, Vidi, Vici!", 15, 26);
 	put_str("I came, I saw, I conquered!", 16, 21);
-	put_str(format("All Hail the Mighty %s!", player_name), 17, 22);
+	put_str(format("All Hail the Mighty %s!", game->player_name.c_str()), 17, 22);
 
 	/* Flush input */
 	flush();
@@ -5170,10 +5175,10 @@ void wipe_saved()
 			dungeon_type = d;
 			if (get_dungeon_save(buf))
 			{
-				char tmp[80], name[1024];
+				auto tmp = fmt::format("{}.{}", game->player_base, buf);
 
-				sprintf(tmp, "%s.%s", player_base, buf);
-				path_build(name, 1024, ANGBAND_DIR_SAVE, tmp);
+				char name[1024];
+				path_build(name, 1024, ANGBAND_DIR_SAVE, tmp.c_str());
 
 				/* Remove the dungeon save file */
 				fd_kill(name);
@@ -5234,7 +5239,6 @@ void close_game(void)
 		/* Make a note */
 		{
 			char long_day[30];
-			char buf[80];
 			time_t ct = time((time_t*)NULL);
 
 			/* Get the date */
@@ -5242,11 +5246,13 @@ void close_game(void)
 			         "%Y-%m-%d at %H:%M:%S", localtime(&ct));
 
 			/* Create string */
-			sprintf(buf, "\n%s was killed by %s on %s\n", player_name,
-			        died_from, long_day);
+			auto buf = fmt::format("\n{} was killed by {} on {}\n",
+				game->player_name,
+				died_from,
+				long_day);
 
 			/* Output to the notes file */
-			output_note(buf);
+			output_note(buf.c_str());
 		}
 
 		/* Handle score, show Top scores */

@@ -15,6 +15,16 @@
 struct Game {
 
 	/**
+	 * Player character name
+	 */
+	std::string player_name;
+
+	/*
+	 * Stripped version of "player_name"
+	 */
+	std::string player_base;
+
+	/**
 	 * Wilderness map
 	 */
 	grid<wilderness_map> wilderness;

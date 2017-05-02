@@ -103,73 +103,48 @@ static s32b auto_round;
  */
 static s32b last_round;
 
-/* Human */
-static const char *human_syllable1[] =
-{
-	"Ab", "Ac", "Ad", "Af", "Agr", "Ast", "As", "Al", "Adw", "Adr", "Ar",
-	"B", "Br", "C", "Cr", "Ch", "Cad", "D", "Dr", "Dw", "Ed", "Eth", "Et",
-	"Er", "El", "Eow", "F", "Fr", "G", "Gr", "Gw", "Gal", "Gl", "H", "Ha",
-	"Ib", "Jer", "K", "Ka", "Ked", "L", "Loth", "Lar", "Leg", "M", "Mir",
-	"N", "Nyd", "Ol", "Oc", "On", "P", "Pr", "R", "Rh", "S", "Sev", "T",
-	"Tr", "Th", "V", "Y", "Z", "W", "Wic",
-};
-
-static const char *human_syllable2[] =
-{
-	"a", "ae", "au", "ao", "are", "ale", "ali", "ay", "ardo", "e", "ei",
-	"ea", "eri", "era", "ela", "eli", "enda", "erra", "i", "ia", "ie",
-	"ire", "ira", "ila", "ili", "ira", "igo", "o", "oa", "oi", "oe",
-	"ore", "u", "y",
-};
-
-static const char *human_syllable3[] =
-{
-	"a", "and", "b", "bwyn", "baen", "bard", "c", "ctred", "cred", "ch",
-	"can", "d", "dan", "don", "der", "dric", "dfrid", "dus", "f", "g",
-	"gord", "gan", "l", "li", "lgrin", "lin", "lith", "lath", "loth",
-	"ld", "ldric", "ldan", "m", "mas", "mos", "mar", "mond", "n",
-	"nydd", "nidd", "nnon", "nwan", "nyth", "nad", "nn", "nnor", "nd",
-	"p", "r", "ron", "rd", "s", "sh", "seth", "sean", "t", "th", "tha",
-	"tlan", "trem", "tram", "v", "vudd", "w", "wan", "win", "wyn", "wyr",
-	"wyr", "wyth",
-};
-
 /*
  * Random Name Generator
  * based on a Javascript by Michael Hensley
  * "http://geocities.com/timessquare/castle/6274/"
  */
-static void create_random_name(int race, char *name)
+static std::string create_random_name()
 {
-	const char *syl1, *syl2, *syl3;
-
-	int idx;
-
-
-	/* Paranoia */
-	if (!name) return;
-
-	/* Select the monster type */
-	switch (race)
+	static const std::vector<std::string> human_syllable1
 	{
-		/* Create the monster name */
+		"Ab", "Ac", "Ad", "Af", "Agr", "Ast", "As", "Al", "Adw", "Adr", "Ar",
+		"B", "Br", "C", "Cr", "Ch", "Cad", "D", "Dr", "Dw", "Ed", "Eth", "Et",
+		"Er", "El", "Eow", "F", "Fr", "G", "Gr", "Gw", "Gal", "Gl", "H", "Ha",
+		"Ib", "Jer", "K", "Ka", "Ked", "L", "Loth", "Lar", "Leg", "M", "Mir",
+		"N", "Nyd", "Ol", "Oc", "On", "P", "Pr", "R", "Rh", "S", "Sev", "T",
+		"Tr", "Th", "V", "Y", "Z", "W", "Wic",
+	};
 
-		/* Use human ones */
-	default:
-		{
-			idx = rand_int(sizeof(human_syllable1) / sizeof(char *));
-			syl1 = human_syllable1[idx];
-			idx = rand_int(sizeof(human_syllable2) / sizeof(char *));
-			syl2 = human_syllable2[idx];
-			idx = rand_int(sizeof(human_syllable3) / sizeof(char *));
-			syl3 = human_syllable3[idx];
+	static const std::vector<std::string> human_syllable2
+	{
+		"a", "ae", "au", "ao", "are", "ale", "ali", "ay", "ardo", "e", "ei",
+		"ea", "eri", "era", "ela", "eli", "enda", "erra", "i", "ia", "ie",
+		"ire", "ira", "ila", "ili", "ira", "igo", "o", "oa", "oi", "oe",
+		"ore", "u", "y",
+	};
 
-			break;
-		}
-	}
+	static const std::vector<std::string> human_syllable3
+	{
+		"a", "and", "b", "bwyn", "baen", "bard", "c", "ctred", "cred", "ch",
+		"can", "d", "dan", "don", "der", "dric", "dfrid", "dus", "f", "g",
+		"gord", "gan", "l", "li", "lgrin", "lin", "lith", "lath", "loth",
+		"ld", "ldric", "ldan", "m", "mas", "mos", "mar", "mond", "n",
+		"nydd", "nidd", "nnon", "nwan", "nyth", "nad", "nn", "nnor", "nd",
+		"p", "r", "ron", "rd", "s", "sh", "seth", "sean", "t", "th", "tha",
+		"tlan", "trem", "tram", "v", "vudd", "w", "wan", "win", "wyn", "wyr",
+		"wyr", "wyth",
+	};
 
-	/* Concatenate selected syllables */
-	strnfmt(name, 32, "%s%s%s", syl1, syl2, syl3);
+	auto const &syl1 = *uniform_element(human_syllable1);
+	auto const &syl2 = *uniform_element(human_syllable2);
+	auto const &syl3 = *uniform_element(human_syllable3);
+
+	return syl1 + syl2 + syl3;
 }
 
 
@@ -1488,7 +1463,7 @@ static bool_ player_birth_aux_ask()
 
 	/* Title everything */
 	put_str("Name  :", NAME_ROW, 1);
-	c_put_str(TERM_L_BLUE, player_name, NAME_ROW, 9);
+	c_put_str(TERM_L_BLUE, game->player_name.c_str(), NAME_ROW, 9);
 
 	put_str("Race  :", RACE_ROW, 1);
 
@@ -1631,10 +1606,13 @@ static bool_ player_birth_aux_ask()
 	c_put_str(TERM_L_BLUE, rp_ptr->title.c_str(), RACE_ROW, 9);
 
 	/* Get a random name */
-	if (!do_quick_start) create_random_name(p_ptr->prace, player_name);
+	if (!do_quick_start)
+	{
+		game->player_name = create_random_name();
+	}
 
 	/* Display */
-	c_put_str(TERM_L_BLUE, player_name, NAME_ROW, 9);
+	c_put_str(TERM_L_BLUE, game->player_name.c_str(), NAME_ROW, 9);
 
 	/* Clean up */
 	clear_from(12);
@@ -2539,7 +2517,7 @@ static bool_ player_birth_aux_auto()
 			Term_clear();
 
 			put_str("Name :", 2, 1);
-			c_put_str(TERM_L_BLUE, player_name, 2, 9);
+			c_put_str(TERM_L_BLUE, game->player_name.c_str(), 2, 9);
 
 			put_str("Race :", 3, 1);
 			auto const player_race_name = get_player_race_name(p_ptr->prace, p_ptr->pracem);
@@ -3195,7 +3173,7 @@ int load_savefile_names()
 	FILE *fff;
 	char buf[1024];
 	char tmp[50];
-	char player_base_save[32];
+	std::string player_base_save;
 	int max = 0, fd;
 
 
@@ -3211,7 +3189,7 @@ int load_savefile_names()
 
 
 	/* Save the current 'player_base' */
-	strncpy(player_base_save, player_base, 32);
+	player_base_save = game->player_base;
 
 
 	/*
@@ -3270,7 +3248,7 @@ int load_savefile_names()
 		strcpy(savefile_desc[max], buf + i);
 
 		/* Build platform-dependent savefile name */
-		strncpy(player_base, savefile_names[max], 32);
+		game->player_base = savefile_names[max];
 		process_player_name(TRUE);
 
 		/* Try to open the savefile */
@@ -3287,7 +3265,7 @@ int load_savefile_names()
 	my_fclose(fff);
 
 	/* Restore the values of 'player_base' and 'savefile' */
-	strncpy(player_base, player_base_save, 32);
+	game->player_base  = player_base_save;
 	process_player_name(TRUE);
 
 	return (max);
@@ -3321,14 +3299,14 @@ void save_savefile_names()
 	 */
 	auto const player_race_name = get_player_race_name(p_ptr->prace, p_ptr->pracem);
 	fprintf(fff, "%s@%c%s@%s, the %s %s is %s\n", game_module,
-	        (death) ? '0' : '1', player_base, player_name,
+		(death) ? '0' : '1', game->player_base.c_str(), game->player_name.c_str(),
 		player_race_name.c_str(),
 		spp_ptr->title,
 	        (!death) ? "alive" : "dead");
 
 	for (i = 0; i < max; i++)
 	{
-		if (!strcmp(savefile_names[i], player_base)) continue;
+		if (!strcmp(savefile_names[i], game->player_base.c_str())) continue;
 		fprintf(fff, "%s@%c%s@%s\n", savefile_module[i],
 		        (savefile_alive[i]) ? '1' : '0', savefile_names[i], savefile_desc[i]);
 	}
@@ -3459,22 +3437,20 @@ savefile_try_again:
 		}
 		else if (((k == 0x7F) || (k == '\010')) && (sel >= 2))
 		{
-			char player_base_save[32];
-
 			if (!get_check(format("Really delete '%s'?", savefile_names[savefile_idx[sel - 2]]))) continue;
 
 			/* Save current 'player_base' */
-			strncpy(player_base_save, player_base, 32);
+			std::string player_base_save = game->player_base;
 
 			/* Build platform-dependent save file name */
-			strncpy(player_base, savefile_names[savefile_idx[sel - 2]], 32);
+			game->player_base = savefile_names[savefile_idx[sel - 2]];
 			process_player_name(TRUE);
 
 			/* Remove the savefile */
 			fd_kill(savefile);
 
 			/* Restore 'player_base' and 'savefile' */
-			strncpy(player_base, player_base_save, 32);
+			game->player_base = player_base_save;
 			process_player_name(TRUE);
 
 			/* Reload, gods I hate using goto .. */
@@ -3489,7 +3465,7 @@ savefile_try_again:
 			prt("Enter the name of the savefile that will hold this character: ", 23, 0);
 
 			/* Ask the user for a string */
-			if (!askfor_aux(player_base, 15)) continue;
+			if (!askfor_aux(&game->player_base, 15)) continue;
 
 			/* Process the player name */
 			process_player_name(TRUE);
@@ -3502,7 +3478,7 @@ savefile_try_again:
 			prt("Enter the name of a savefile: ", 23, 0);
 
 			/* Ask the user for a string */
-			if (!askfor_aux(player_base, 15)) continue;
+			if (!askfor_aux(&game->player_base, 15)) continue;
 
 			/* Process the player name */
 			process_player_name(TRUE);
@@ -3518,7 +3494,7 @@ savefile_try_again:
 
 			if ((x < 2) || (x >= max)) continue;
 
-			strnfmt(player_base, 32, "%s", savefile_names[savefile_idx[x - 2]]);
+			game->player_base = savefile_names[savefile_idx[x - 2]];
 
 			/* Process the player name */
 			process_player_name(TRUE);

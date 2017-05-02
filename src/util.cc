@@ -37,23 +37,23 @@ using std::chrono::milliseconds;
 /*
 * Find a default user name from the system.
 */
-void user_name(char *buf, int id)
+std::string user_name()
 {
 #ifdef SET_UID
+	/* Get the user id (?) */
+	int player_uid = getuid();
+
 	struct passwd *pw;
 
 	/* Look up the user name */
-	if ((pw = getpwuid(id)))
+	if ((pw = getpwuid(player_uid)))
 	{
-		(void)strcpy(buf, pw->pw_name);
-		buf[16] = '\0';
-
-		return;
+		return pw->pw_name;
 	}
 #endif /* SET_UID */
 
-	/* Oops.  Hack -- default to "PLAYER" */
-	strcpy(buf, "PLAYER");
+	/* Default to "PLAYER" if we don't have platform support */
+	return "PLAYER";
 }
 
 
@@ -3601,7 +3601,7 @@ void display_list(int y, int x, int h, int w, cptr title, cptr *list, int max, i
 /*
  * Creates an input box
  */
-bool_ input_box(cptr text, int y, int x, char *buf, int max)
+bool input_box(cptr text, int y, int x, char *buf, int max)
 {
 	int smax = strlen(text);
 
@@ -3614,6 +3614,27 @@ bool_ input_box(cptr text, int y, int x, char *buf, int max)
 	Term_gotoxy(x - (smax / 2) + 1, y + 1);
 	return askfor_aux(buf, max);
 }
+
+/*
+ * Creates an input box
+ */
+bool input_box(std::string const &text, int y, int x, std::string *buf, std::size_t max)
+{
+	std::size_t smax = text.size();
+
+	if (max > smax)
+	{
+		smax = max;
+	}
+	smax++;
+
+	draw_box(y - 1, x - (smax / 2), 3, smax);
+	c_put_str(TERM_WHITE, text.c_str(), y, x - (text.size() / 2));
+
+	Term_gotoxy(x - (smax / 2) + 1, y + 1);
+	return askfor_aux(buf, max);
+}
+
 
 /*
  * Creates a msg bbox and ask a question

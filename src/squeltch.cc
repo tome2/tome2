@@ -33,6 +33,7 @@
 
 #include <algorithm>
 #include <deque>
+#include <fmt/format.h>
 #include <list>
 #include <memory>
 #include <string>
@@ -170,16 +171,15 @@ static int create_new_rule()
 
 static void automatizer_save_rules()
 {
-	char name[30] = { '\0' };
 	char buf[1025];
 	char ch;
 	int hgt, wid;
 
 	Term_get_size(&wid, &hgt);
 
-	sprintf(name, "%s.atm", player_name);
+	std::string name = fmt::format("{}.atm", game->player_name);
 
-	if (!input_box("Save name?", hgt / 2, wid / 2, name, sizeof(name)))
+	if (!input_box("Save name?", hgt / 2, wid / 2, &name, 30))
 	{
 		return;
 	}
@@ -201,7 +201,7 @@ static void automatizer_save_rules()
 	};
 
 	// Build the filename
-	path_build(buf, 1024, ANGBAND_DIR_USER, name);
+	path_build(buf, 1024, ANGBAND_DIR_USER, name.c_str());
 		
 	if (file_exist(buf))
 	{

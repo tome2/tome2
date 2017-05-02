@@ -145,8 +145,6 @@ extern player_race const *rp_ptr;
 extern player_race_mod const *rmp_ptr;
 extern player_class const *cp_ptr;
 extern player_spec const *spp_ptr;
-extern char player_name[32];
-extern char player_base[32];
 extern int wildc2i[256];
 extern cptr DEFAULT_FEAT_TEXT;
 extern cptr DEFAULT_FEAT_TUNNEL;

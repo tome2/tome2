@@ -6749,7 +6749,7 @@ static cptr process_dungeon_file_expr(char **sp, char *fp)
 			/* Player */
 			else if (streq(b + 1, "PLAYER"))
 			{
-				v = player_base;
+				v = game->player_base.c_str(); // The string SHOULD be stable enough for this
 			}
 
 			/* Town */

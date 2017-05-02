@@ -8,7 +8,8 @@
 
 #define MAX_IGNORE_KEYMAPS 12
 
-extern bool_ input_box(cptr text, int y, int x, char *buf, int max);
+extern bool input_box(cptr text, int y, int x, char *buf, int max);
+extern bool input_box(std::string const &text, int y, int x, std::string *buf, std::size_t max);
 extern void draw_box(int y, int x, int h, int w);
 extern void display_list(int y, int x, int h, int w, cptr title, cptr *list, int max, int begin, int sel, byte sel_color);
 extern std::string get_player_race_name(int pr, int ps);
@@ -78,4 +79,4 @@ extern bool in_bounds2(int y, int x);
 extern bool panel_contains(int y, int x);
 extern errr path_parse(char *buf, int max, cptr file);
 extern void pause_line(int row);
-extern void user_name(char *buf, int id);
+extern std::string user_name();

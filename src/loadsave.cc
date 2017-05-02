@@ -520,7 +520,7 @@ static bool_ do_extra(ls_flag_t flag)
 	auto const &d_info = game->edit_data.d_info;
 	auto &s_info = game->s_info;
 
-	do_string(player_name, 32, flag);
+	do_std_string(game->player_name, flag);
 
 	do_string(died_from, 80, flag);
 
@@ -1566,7 +1566,7 @@ void save_dungeon(void)
 	if (!get_dungeon_save(buf) || (!dun_level)) return;
 
 	/* Construct filename */
-	sprintf(tmp, "%s.%s", player_base, buf);
+	sprintf(tmp, "%s.%s", game->player_base.c_str(), buf);
 	path_build(name, 1024, ANGBAND_DIR_SAVE, tmp);
 
 	/* Open the file */
@@ -1973,7 +1973,7 @@ bool_ load_dungeon(char *ext)
 	s16b old_dun = dun_level;
 
 	/* Construct name */
-	sprintf(tmp, "%s.%s", player_base, ext);
+	sprintf(tmp, "%s.%s", game->player_base.c_str(), ext);
 	path_build(name, 1024, ANGBAND_DIR_SAVE, tmp);
 
 	/* Open the file */

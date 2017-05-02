@@ -202,16 +202,6 @@ object_type *tracked_object;
 
 
 /*
- * Current player's character name
- */
-char player_name[32];
-
-/*
- * Stripped version of "player_name"
- */
-char player_base[32];
-
-/*
  * What killed the player
  */
 char died_from[80];

@@ -76,16 +76,6 @@ static void init_save_dir(void)
 	}
 }
 
-static void init_player_name()
-{
-	/* Get the user id (?) */
-	int player_uid = getuid();
-
-	/* Acquire the "user name" as a default player name */
-	user_name(player_name, player_uid);
-}
-
-
 /*
  * Initialize and verify the file paths, and the score file.
  *
@@ -139,7 +129,7 @@ int main_real(int argc, char *argv[], char const *platform_sys, int (*init_platf
 	init_file_paths_with_env();
 
 	/* Initialize the player name */
-	init_player_name();
+	game->player_name = user_name();
 
 	/* Make sure save directory exists */
 	init_save_dir();
@@ -179,8 +169,8 @@ int main_real(int argc, char *argv[], char const *platform_sys, int (*init_platf
 		case 'U':
 			{
 				if (!argv[i][2]) goto usage;
-				strcpy(player_name, &argv[i][2]);
-				strcpy(player_base, &argv[i][2]);
+				game->player_name = &argv[i][2];
+				game->player_base = &argv[i][2];
 				no_begin_screen = TRUE;
 				break;
 			}

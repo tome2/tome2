@@ -4983,6 +4983,7 @@ static void load_all_pref_files(void)
 {
 	char buf[1024];
 
+	std::string const &player_name = game->player_name;
 
 	/* Access the "race" pref file */
 	sprintf(buf, "%s.prf", rp_ptr->title.c_str());
@@ -4997,7 +4998,7 @@ static void load_all_pref_files(void)
 	process_pref_file(buf);
 
 	/* Access the "character" pref file */
-	sprintf(buf, "%s.prf", player_name);
+	sprintf(buf, "%s.prf", player_name.c_str());
 
 	/* Process that file */
 	process_pref_file(buf);
@@ -5008,7 +5009,7 @@ static void load_all_pref_files(void)
 	 * the providence of rules and such to avoid the same
 	 * duplication problems as caused when saving macros/keymaps. */
 	boost::filesystem::path userDirectory(ANGBAND_DIR_USER);
-	if (automatizer_load(userDirectory / (std::string(player_name) + ".atm")))
+	if (automatizer_load(userDirectory / (player_name + ".atm")))
 	{
 		// Done
 	}
