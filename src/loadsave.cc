@@ -385,7 +385,7 @@ static void do_seed(seed_t *seed, ls_flag_t flag)
 /*
  * Load/Save quick start data
  */
-static void do_quick_start(ls_flag_t flag)
+static void do_quick_start(ls_flag_t flag, birther &previous_char)
 {
 	do_s16b(&previous_char.race, flag);
 	do_s16b(&previous_char.rmod, flag);
@@ -567,7 +567,7 @@ static bool_ do_extra(ls_flag_t flag)
 	do_bool(&generate_special_feeling, flag);
 
 	/* Load the quick start data */
-	do_quick_start(flag);
+	do_quick_start(flag, game->previous_char);
 
 	/* Load/save the special subrace */
 	do_subrace(flag);

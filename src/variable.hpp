@@ -179,7 +179,6 @@ extern random_quest random_quests[MAX_RANDOM_QUEST];
 extern bool_ *special_lvl[MAX_DUNGEON_DEPTH];
 extern bool_ generate_special_feeling;
 DECLARE_FLAG_ZERO_INTF(dungeon_flag_set, dungeon_flags);
-extern birther previous_char;
 extern s16b schools_count;
 extern school_type schools[SCHOOLS_MAX];
 extern int project_time;

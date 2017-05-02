@@ -177,8 +177,7 @@ void print_desc(cptr txt)
  */
 static void save_prev_data(void)
 {
-	int i;
-
+	auto &previous_char = game->previous_char;
 
 	/*** Save the current data ***/
 
@@ -196,14 +195,14 @@ static void save_prev_data(void)
 	previous_char.au = p_ptr->au;
 
 	/* Save the stats */
-	for (i = 0; i < 6; i++)
+	for (int i = 0; i < 6; i++)
 	{
 		previous_char.stat[i] = p_ptr->stat_max[i];
 	}
 	previous_char.luck = p_ptr->luck_base;
 
 	/* Save the history */
-	for (i = 0; i < 4; i++)
+	for (int i = 0; i < 4; i++)
 	{
 		strcpy(previous_char.history[i], history[i]);
 	}
@@ -215,8 +214,7 @@ static void save_prev_data(void)
  */
 static void load_prev_data(bool_ save)
 {
-	int i;
-
+	auto &previous_char = game->previous_char;
 	birther temp;
 
 
@@ -226,14 +224,14 @@ static void load_prev_data(bool_ save)
 	temp.au = p_ptr->au;
 
 	/* Save the stats */
-	for (i = 0; i < 6; i++)
+	for (int i = 0; i < 6; i++)
 	{
 		temp.stat[i] = p_ptr->stat_max[i];
 	}
 	temp.luck = p_ptr->luck_base;
 
 	/* Save the history */
-	for (i = 0; i < 4; i++)
+	for (int i = 0; i < 4; i++)
 	{
 		strcpy(temp.history[i], history[i]);
 	}
@@ -245,7 +243,7 @@ static void load_prev_data(bool_ save)
 	p_ptr->au = previous_char.au;
 
 	/* Load the stats */
-	for (i = 0; i < 6; i++)
+	for (int i = 0; i < 6; i++)
 	{
 		p_ptr->stat_max[i] = previous_char.stat[i];
 		p_ptr->stat_cur[i] = previous_char.stat[i];
@@ -254,7 +252,7 @@ static void load_prev_data(bool_ save)
 	p_ptr->luck_max = previous_char.luck;
 
 	/* Load the history */
-	for (i = 0; i < 4; i++)
+	for (int i = 0; i < 4; i++)
 	{
 		strcpy(history[i], previous_char.history[i]);
 	}
@@ -267,14 +265,14 @@ static void load_prev_data(bool_ save)
 	previous_char.au = temp.au;
 
 	/* Save the stats */
-	for (i = 0; i < 6; i++)
+	for (int i = 0; i < 6; i++)
 	{
 		previous_char.stat[i] = temp.stat[i];
 	}
 	previous_char.luck = temp.luck;
 
 	/* Save the history */
-	for (i = 0; i < 4; i++)
+	for (int i = 0; i < 4; i++)
 	{
 		strcpy(previous_char.history[i], temp.history[i]);
 	}
@@ -1484,7 +1482,7 @@ static bool_ player_birth_aux_ask()
 
 	/*** Quick Start ***/
 
-	if (previous_char.quick_ok)
+	if (game->previous_char.quick_ok)
 	{
 		/* Choose */
 		while (1)
@@ -1514,10 +1512,9 @@ static bool_ player_birth_aux_ask()
 
 
 	/*** Player race ***/
-
 	if (do_quick_start)
 	{
-		k = previous_char.race;
+		k = game->previous_char.race;
 	}
 	else
 	{
@@ -1621,7 +1618,7 @@ static bool_ player_birth_aux_ask()
 	/*** Player race mod ***/
 	if (do_quick_start)
 	{
-		k = previous_char.rmod;
+		k = game->previous_char.rmod;
 		p_ptr->pracem = k;
 		rmp_ptr = &race_mod_info[p_ptr->pracem];
 	}
@@ -1748,10 +1745,10 @@ static bool_ player_birth_aux_ask()
 	/*** Player class ***/
 	if (do_quick_start)
 	{
-		k = previous_char.pclass;
+		k = game->previous_char.pclass;
 		p_ptr->pclass = k;
 		cp_ptr = &class_info[p_ptr->pclass];
-		k = previous_char.spec;
+		k = game->previous_char.spec;
 		p_ptr->pspec = k;
 		spp_ptr = &class_info[p_ptr->pclass].spec[p_ptr->pspec];
 	}
@@ -1943,9 +1940,9 @@ static bool_ player_birth_aux_ask()
 	/*** Player god ***/
 	if (do_quick_start)
 	{
-		k = previous_char.god;
+		k = game->previous_char.god;
 		p_ptr->pgod = k;
-		set_grace(previous_char.grace);
+		set_grace(game->previous_char.grace);
 	}
 	else if (race_flags_p(PR_NO_GOD))
 	{
@@ -2120,7 +2117,7 @@ static bool_ player_birth_aux_ask()
 	{
 		if (do_quick_start)
 		{
-			v = previous_char.quests;
+			v = game->previous_char.quests;
 		}
 		else
 		{
@@ -2895,7 +2892,7 @@ static bool_ player_birth_aux()
 	}
 
 	/* Save this for the next character */
-	previous_char.quick_ok = TRUE;
+	game->previous_char.quick_ok = TRUE;
 	save_prev_data();
 
 	/* Accept */

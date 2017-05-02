@@ -623,11 +623,6 @@ bool_ generate_special_feeling = FALSE;
 DECLARE_FLAG_ZERO_IMPL(dungeon_flag_set, dungeon_flags);
 
 /*
- * The last character displayed
- */
-birther previous_char;
-
-/*
  * The spell list of schools
  */
 s16b schools_count = 0;

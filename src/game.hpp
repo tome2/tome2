@@ -2,6 +2,7 @@
 
 #include "game_fwd.hpp"
 
+#include "birther.hpp"
 #include "game_edit_data.hpp"
 #include "grid.hpp"
 #include "h-basic.h"
@@ -28,6 +29,11 @@ struct Game {
 	 * What did the player die from?
 	 */
 	std::string died_from;
+
+	/**
+	 * Previous character
+	 */
+	birther previous_char;
 
 	/**
 	 * Wilderness map
