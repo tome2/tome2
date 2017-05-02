@@ -6794,10 +6794,6 @@ bool_ project_m(int who, int r, int y, int x, int dam, int typ)
 }
 
 
-/* Is the spell unsafe for the player ? */
-bool_ unsafe = FALSE;
-
-
 /*
  * Helper function for "project()" below.
  *
@@ -6851,7 +6847,7 @@ static bool_ project_p(int who, int r, int y, int x, int dam, int typ, int a_rad
 	if ((x != p_ptr->px) || (y != p_ptr->py)) return (FALSE);
 
 	/* Player cannot hurt himself */
-	if ((!who) && (!unsafe)) return (FALSE);
+	if (!who) return (FALSE);
 
 	/* Bolt attack from a monster */
 	if ((!a_rad) && get_skill(SKILL_DODGE) && (who > 0))
@@ -7557,30 +7553,26 @@ static bool_ project_p(int who, int r, int y, int x, int dam, int typ, int a_rad
 			if (dungeon_flags & DF_NO_TELEPORT) break; /* No teleport on special levels */
 			if (fuzzy) msg_print("You are hit by something heavy!");
 			msg_print("Gravity warps around you.");
-			if (!unsafe)
+
+			teleport_player(5);
+			if (!p_ptr->ffall)
+				(void)set_slow(p_ptr->slow + rand_int(4) + 4);
+			if (!(p_ptr->resist_sound || p_ptr->ffall))
 			{
-				teleport_player(5);
-				if (!p_ptr->ffall)
-					(void)set_slow(p_ptr->slow + rand_int(4) + 4);
-				if (!(p_ptr->resist_sound || p_ptr->ffall))
-				{
-					int k = (randint((dam > 90) ? 35 : (dam / 3 + 5)));
-					(void)set_stun(p_ptr->stun + k);
-				}
-				if (p_ptr->ffall)
-				{
-					dam = (dam * 2) / 3;
-				}
-
-				if ((!p_ptr->ffall) || (randint(13) == 1))
-				{
-					inven_damage(set_cold_destroy, 2);
-				}
-
-				take_hit(dam, killer);
+				int k = (randint((dam > 90) ? 35 : (dam / 3 + 5)));
+				(void)set_stun(p_ptr->stun + k);
 			}
-			else
-				teleport_player(dam);
+			if (p_ptr->ffall)
+			{
+				dam = (dam * 2) / 3;
+			}
+
+			if ((!p_ptr->ffall) || (randint(13) == 1))
+			{
+				inven_damage(set_cold_destroy, 2);
+			}
+
+			take_hit(dam, killer);
 			break;
 		}
 

@@ -32,5 +32,4 @@ void do_poly_self(void);
 void corrupt_player(void);
 std::string name_spell(random_spell const *);
 void generate_spell(int plev);
-extern bool_ unsafe;
 s16b do_poly_monster(int y, int x);
