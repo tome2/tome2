@@ -121,18 +121,14 @@ void squeltch_inventory(void)
 
 static int create_new_rule()
 {
-	char name[20] = { '\0' };
-	int wid = 0, hgt = 0;
+	std::string name = "No name";
 
-	Term_get_size(&wid, &hgt);
-
-	sprintf(name, "%s", "No name");
-	if (!input_box("Name?", hgt / 2, wid / 2, name, sizeof(name)))
+	if (!input_box_auto("Name?", &name, 20))
 	{
 		return -1;
 	}
 
-	char typ = lua_msg_box("[D]estroy, [P]ickup, [I]nscribe?");
+	char typ = msg_box_auto("[D]estroy, [P]ickup, [I]nscribe?");
 
 	std::shared_ptr<Rule> rule;
 	switch (typ)
@@ -150,15 +146,13 @@ static int create_new_rule()
 	case 'i':
 	case 'I':
 	{
-		cptr i = lua_input_box("Inscription?", 79);
-		if ((i == nullptr) || (strlen(i) == 0))
+		auto s = input_box_auto("Inscription?", 79);
+		if (s.empty())
 		{
 			return -1;
 		}
 
-		rule = std::make_shared<InscribeRule>(
-			name, game_module_idx, nullptr, std::string(i));
-
+		rule = std::make_shared<InscribeRule>(name, game_module_idx, nullptr, s);
 		break;
 	}
 
@@ -179,7 +173,7 @@ static void automatizer_save_rules()
 
 	std::string name = fmt::format("{}.atm", game->player_name);
 
-	if (!input_box("Save name?", hgt / 2, wid / 2, &name, 30))
+	if (!input_box_auto("Save name?", &name, 30))
 	{
 		return;
 	}
@@ -243,17 +237,12 @@ static void automatizer_save_rules()
 
 static void rename_rule(Rule *rule)
 {
-	char name[16];
-	int wid, hgt;
-
 	assert(rule != nullptr);
 
-	Term_get_size(&wid, &hgt);
-
-	sprintf(name, "%s", rule->get_name());
-	if (input_box("New name?", hgt / 2, wid / 2, name, sizeof(name) - 1))
+	std::string name = rule->get_name();
+	if (input_box_auto("New name?", &name, 16))
 	{
-		rule->set_name(name);
+		rule->set_name(name.c_str());
 	}
 }
 
@@ -261,18 +250,15 @@ static void rename_rule(Rule *rule)
 #define ACTIVE_RULE     1
 void do_cmd_automatizer()
 {
-	int wid = 0, hgt = 0;
 	int active = ACTIVE_LIST;
 	cptr keys;
 	cptr keys2;
 	cptr keys3;
 	std::vector<cptr> rule_names;
 
-	Term_get_size(&wid, &hgt);
-
 	if (!automatizer_enabled)
 	{
-		if (msg_box("Automatizer is currently disabled, enable it? (y/n)", hgt / 2, wid / 2) == 'y')
+		if (msg_box_auto("Automatizer is currently disabled, enable it? (y/n)") == 'y')
 		{
 			automatizer_enabled = TRUE;
 		}
@@ -287,6 +273,8 @@ void do_cmd_automatizer()
 	while (1)
 	{
 		Term_clear();
+
+		int wid, hgt;
 		Term_get_size(&wid, &hgt);
 
 		automatizer->get_rule_names(&rule_names);

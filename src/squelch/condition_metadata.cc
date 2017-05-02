@@ -14,8 +14,8 @@ namespace squelch {
 
 static std::shared_ptr<Condition> create_condition_name()
 {
-	cptr s = lua_input_box("Object name to match?", 79);
-	if (strlen(s) == 0)
+	auto s = input_box_auto("Object name to match?", 79);
+	if (s.empty())
 	{
 		return nullptr;
 	}
@@ -25,8 +25,8 @@ static std::shared_ptr<Condition> create_condition_name()
 
 static std::shared_ptr<Condition> create_condition_contain()
 {
-	cptr s = lua_input_box("Word to find in object name?", 79);
-	if (strlen(s) == 0)
+	auto s = input_box_auto("Word to find in object name?", 79);
+	if (s.empty())
 	{
 		return nullptr;
 	}
@@ -36,8 +36,8 @@ static std::shared_ptr<Condition> create_condition_contain()
 
 static std::shared_ptr<Condition> create_condition_inscribed()
 {
-	cptr s = lua_input_box("Word to find in object inscription?", 79);
-	if (strlen(s) == 0)
+	auto s = input_box_auto("Word to find in object inscription?", 79);
+	if (s.empty() == 0)
 	{
 		return nullptr;
 	}
@@ -50,16 +50,16 @@ static std::shared_ptr<Condition> create_condition_discount()
 	int min, max;
 
 	{
-		cptr s = lua_input_box("Min discount?", 79);
-		if (sscanf(s, "%d", &min) < 1)
+		auto s = input_box_auto("Min discount?", 79);
+		if (sscanf(s.c_str(), "%d", &min) < 1)
 		{
 			return nullptr;
 		}
 	}
 
 	{
-		cptr s = lua_input_box("Max discount?", 79);
-		if (sscanf(s, "%d", &max) < 1)
+		auto s = input_box_auto("Max discount?", 79);
+		if (sscanf(s.c_str(), "%d", &max) < 1)
 		{
 			return nullptr;
 		}
@@ -70,22 +70,20 @@ static std::shared_ptr<Condition> create_condition_discount()
 
 static std::shared_ptr<Condition> create_condition_symbol()
 {
-	char c;
-	cptr s = lua_input_box("Symbol to match?", 1);
-	if (sscanf(s, "%c", &c) < 1)
+	auto s = input_box_auto("Symbol to match?", 1);
+	if (s.empty())
 	{
 		return nullptr;
 	}
 
-	return std::make_shared<SymbolCondition>(c);
+	return std::make_shared<SymbolCondition>(s[0]);
 }
 
 static std::shared_ptr<Condition> create_condition_status()
 {
 	status_type status;
-	char c;
 
-	c = lua_msg_box("[t]errible, [v]ery bad, [b]ad, "
+	auto c = msg_box_auto("[t]errible, [v]ery bad, [b]ad, "
 			"[a]verage, [G]ood, [V]ery good, [S]pecial?");
 
 	switch (c)
@@ -105,7 +103,7 @@ static std::shared_ptr<Condition> create_condition_status()
 
 static std::shared_ptr<Condition> create_condition_state()
 {
-	char c = lua_msg_box("[i]dentified, [n]on identified?");
+	char c = msg_box_auto("[i]dentified, [n]on identified?");
 
 	identification_state s;
 	switch (c)
@@ -125,9 +123,9 @@ static bool in_byte_range(int x)
 
 static std::shared_ptr<Condition> create_condition_tval()
 {
-	cptr s = lua_input_box("Tval to match?", 79);
+	auto s = input_box_auto("Tval to match?", 79);
 	int tval;
-	if (sscanf(s, "%d", &tval) < 1)
+	if (sscanf(s.c_str(), "%d", &tval) < 1)
 	{
 		return nullptr;
 	}
@@ -145,8 +143,8 @@ static std::shared_ptr<Condition> create_condition_sval()
 	int sval_min, sval_max;
 
 	{
-		cptr s = lua_input_box("Min sval?", 79);
-		if ((sscanf(s, "%d", &sval_min) < 1) ||
+		auto s = input_box_auto("Min sval?", 79);
+		if ((sscanf(s.c_str(), "%d", &sval_min) < 1) ||
 		    (!in_byte_range(sval_min)))
 		{
 			return nullptr;
@@ -154,8 +152,8 @@ static std::shared_ptr<Condition> create_condition_sval()
 	}
 
 	{
-		cptr s = lua_input_box("Max sval?", 79);
-		if ((sscanf(s, "%d", &sval_max) < 1) ||
+		auto s = input_box_auto("Max sval?", 79);
+		if ((sscanf(s.c_str(), "%d", &sval_max) < 1) ||
 		    (!in_byte_range(sval_max)))
 		{
 			return nullptr;
@@ -167,8 +165,8 @@ static std::shared_ptr<Condition> create_condition_sval()
 
 static std::shared_ptr<Condition> create_condition_race()
 {
-	cptr s = lua_input_box("Player race to match?", 79);
-	if (strlen(s) == 0)
+	auto s = input_box_auto("Player race to match?", 79);
+	if (s.empty())
 	{
 		return nullptr;
 	}
@@ -178,8 +176,8 @@ static std::shared_ptr<Condition> create_condition_race()
 
 static std::shared_ptr<Condition> create_condition_subrace()
 {
-	cptr s = lua_input_box("Player subrace to match?", 79);
-	if (strlen(s) == 0)
+	auto s = input_box_auto("Player subrace to match?", 79);
+	if (s.empty())
 	{
 		return nullptr;
 	}
@@ -189,8 +187,8 @@ static std::shared_ptr<Condition> create_condition_subrace()
 
 static std::shared_ptr<Condition> create_condition_class()
 {
-	cptr s = lua_input_box("Player class to match?", 79);
-	if (strlen(s) == 0)
+	auto s = input_box_auto("Player class to match?", 79);
+	if (s.empty())
 	{
 		return nullptr;
 	}
@@ -203,16 +201,16 @@ static std::shared_ptr<Condition> create_condition_level()
 	int min, max;
 
 	{
-		cptr s = lua_input_box("Min player level?", 79);
-		if (sscanf(s, "%d", &min) < 1)
+		auto s = input_box_auto("Min player level?", 79);
+		if (sscanf(s.c_str(), "%d", &min) < 1)
 		{
 			return nullptr;
 		}
 	}
 
 	{
-		cptr s = lua_input_box("Max player level?", 79);
-		if (sscanf(s, "%d", &max) < 1)
+		auto s = input_box_auto("Max player level?", 79);
+		if (sscanf(s.c_str(), "%d", &max) < 1)
 		{
 			return nullptr;
 		}
@@ -226,16 +224,16 @@ static std::shared_ptr<Condition> create_condition_skill()
 	int min, max;
 
 	{
-		cptr s = lua_input_box("Min skill level?", 79);
-		if (sscanf(s, "%d", &min) < 1)
+		auto s = input_box_auto("Min skill level?", 79);
+		if (sscanf(s.c_str(), "%d", &min) < 1)
 		{
 			return nullptr;
 		}
 	}
 
 	{
-		cptr s = lua_input_box("Max skill level?", 79);
-		if (sscanf(s, "%d", &max) < 1)
+		auto s = input_box_auto("Max skill level?", 79);
+		if (sscanf(s.c_str(), "%d", &max) < 1)
 		{
 			return nullptr;
 		}
@@ -243,13 +241,13 @@ static std::shared_ptr<Condition> create_condition_skill()
 
 	s16b skill_idx;
 	{
-		cptr s = lua_input_box("Skill name?", 79);
-		if (strlen(s) == 0)
+		auto s = input_box_auto("Skill name?", 79);
+		if (s.empty() == 0)
 		{
 			return nullptr;
 		}
 
-		skill_idx = find_skill_i(s);
+		skill_idx = find_skill_i(s.c_str());
 		if (skill_idx < 0)
 		{
 			return nullptr;
@@ -261,13 +259,13 @@ static std::shared_ptr<Condition> create_condition_skill()
 
 static std::shared_ptr<Condition> create_condition_ability()
 {
-	cptr s = lua_input_box("Ability name?", 79);
-	if (strlen(s) == 0)
+	auto s = input_box_auto("Ability name?", 79);
+	if (s.empty() == 0)
 	{
 		return nullptr;
 	}
 
-	s16b ai = find_ability(s);
+	s16b ai = find_ability(s.c_str());
 	if (ai < 0)
 	{
 		return nullptr;

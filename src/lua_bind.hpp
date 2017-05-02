@@ -24,9 +24,6 @@ extern s32b get_level_use_stick;
 extern void get_map_size(const char *name, int *ysize, int *xsize);
 extern void load_map(const char *name, int *y, int *x);
 
-extern char *lua_input_box(cptr title, int max);
-extern char lua_msg_box(cptr title);
-
 extern void increase_mana(int delta);
 
 extern timer_type *TIMER_AGGRAVATE_EVIL;

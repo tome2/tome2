@@ -8,8 +8,9 @@
 
 #define MAX_IGNORE_KEYMAPS 12
 
-extern bool input_box(cptr text, int y, int x, char *buf, int max);
 extern bool input_box(std::string const &text, int y, int x, std::string *buf, std::size_t max);
+extern std::string input_box_auto(std::string const &title, std::size_t max);
+extern bool input_box_auto(std::string const &prompt, std::string *buf, std::size_t max);
 extern void draw_box(int y, int x, int h, int w);
 extern void display_list(int y, int x, int h, int w, cptr title, cptr *list, int max, int begin, int sel, byte sel_color);
 extern std::string get_player_race_name(int pr, int ps);
@@ -67,7 +68,7 @@ extern void strlower(char *buf);
 extern int test_monster_name(cptr name);
 extern int test_mego_name(cptr name);
 extern int test_item_name(cptr name);
-extern char msg_box(cptr text, int y, int x);
+extern char msg_box_auto(std::string const &title);
 extern timer_type *new_timer(void (*callback)(), s32b delay);
 extern int get_keymap_mode();
 extern void repeat_push(int what);

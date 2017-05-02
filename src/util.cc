@@ -3598,59 +3598,40 @@ void display_list(int y, int x, int h, int w, cptr title, cptr *list, int max, i
 	}
 }
 
-/*
- * Creates an input box
- */
-bool input_box(cptr text, int y, int x, char *buf, int max)
+bool input_box_auto(std::string const &prompt, std::string *buf, std::size_t max)
 {
-	int smax = strlen(text);
+	int wid, hgt;
+	Term_get_size(&wid, &hgt);
 
-	if (max > smax) smax = max;
-	smax++;
+	auto const y = hgt / 2;
+	auto const x = wid / 2;
+
+	auto const smax = std::max(prompt.size(), max) + 1;
 
 	draw_box(y - 1, x - (smax / 2), 3, smax);
-	c_put_str(TERM_WHITE, text, y, x - (strlen(text) / 2));
+	c_put_str(TERM_WHITE, prompt.c_str(), y, x - (prompt.size() / 2));
 
 	Term_gotoxy(x - (smax / 2) + 1, y + 1);
 	return askfor_aux(buf, max);
 }
 
-/*
- * Creates an input box
- */
-bool input_box(std::string const &text, int y, int x, std::string *buf, std::size_t max)
+std::string input_box_auto(std::string const &title, std::size_t max)
 {
-	std::size_t smax = text.size();
-
-	if (max > smax)
-	{
-		smax = max;
-	}
-	smax++;
-
-	draw_box(y - 1, x - (smax / 2), 3, smax);
-	c_put_str(TERM_WHITE, text.c_str(), y, x - (text.size() / 2));
-
-	Term_gotoxy(x - (smax / 2) + 1, y + 1);
-	return askfor_aux(buf, max);
+	std::string buf;
+	input_box_auto(title, &buf, max);
+	return buf;
 }
 
-
-/*
- * Creates a msg bbox and ask a question
- */
-char msg_box(cptr text, int y, int x)
+char msg_box_auto(std::string const &text)
 {
-	if (x == -1)
-	{
-		int wid = 0, hgt = 0;
-		Term_get_size(&wid, &hgt);
-		x = wid / 2;
-		y = hgt / 2;
-	}
+	int wid, hgt;
+	Term_get_size(&wid, &hgt);
 
-	draw_box(y - 1, x - ((strlen(text) + 1) / 2), 2, strlen(text) + 1);
-	c_put_str(TERM_WHITE, text, y, x - ((strlen(text) + 1) / 2) + 1);
+	auto const y = hgt / 2;
+	auto const x = wid / 2;
+
+	draw_box(y - 1, x - ((text.size() + 1) / 2), 2, text.size() + 1);
+	c_put_str(TERM_WHITE, text.c_str(), y, x - ((text.size() + 1) / 2) + 1);
 	return inkey();
 }
 

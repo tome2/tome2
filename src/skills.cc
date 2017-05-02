@@ -44,6 +44,7 @@
 #include <boost/algorithm/string/predicate.hpp>
 #include <cassert>
 #include <cmath>
+#include <fmt/format.h>
 #include <memory>
 #include <vector>
 #include <tuple>
@@ -73,15 +74,11 @@ static void increase_skill(int i, s16b *invest)
 	max_skill_overage = modules[game_module_idx].skills.max_skill_overage;
 	if (((s_info[i].value + s_info[i].mod) / SKILL_STEP) >= (p_ptr->lev + max_skill_overage + 1))
 	{
-		int hgt, wid;
-		char buf[256];
-
-		sprintf(buf,
-			"Cannot raise a skill value above " FMTs32b " + player level.",
-			max_skill_overage);
-
-		Term_get_size(&wid, &hgt);
-		msg_box(buf, hgt / 2, wid / 2);
+		msg_box_auto(
+			fmt::format(
+				"Cannot raise a skill value above {} + player level.",
+				max_skill_overage
+			));
 		return;
 	}
 
@@ -693,7 +690,7 @@ void do_cmd_skill()
 		flush();
 
 		/* Ask we can commit the change */
-		if (msg_box("Save and use these skill values? (y/n)", hgt / 2, wid / 2) != 'y')
+		if (msg_box_auto("Save and use these skill values? (y/n)") != 'y')
 		{
 			/* User declines -- restore the skill values before exiting */
 
@@ -1629,12 +1626,9 @@ static void gain_ability(int ab)
 {
 	auto const &ab_info = game->edit_data.ab_info;
 
-	int wid, hgt;
-	Term_get_size(&wid, &hgt);
-
 	if (!can_learn_ability(ab))
 	{
-		msg_box("You cannot learn this ability.", hgt / 2, wid / 2);
+		msg_box_auto("You cannot learn this ability.");
 		return;
 	}
 
@@ -1642,7 +1636,7 @@ static void gain_ability(int ab)
 	flush();
 
 	/* Ask we can commit the change */
-	if (msg_box("Learn this ability (this is permanent)? (y/n)", hgt / 2, wid / 2) != 'y')
+	if (msg_box_auto("Learn this ability (this is permanent)? (y/n)") != 'y')
 	{
 		return;
 	}

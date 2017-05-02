@@ -230,31 +230,6 @@ void load_map(const char *name, int *y, int *x)
 	process_dungeon_file(name, y, x, cur_hgt, cur_wid, TRUE, TRUE);
 }
 
-/*
- * Some misc functions
- */
-char *lua_input_box(cptr title, int max)
-{
-	static char buf[80];
-	int wid, hgt;
-
-	strcpy(buf, "");
-	Term_get_size(&wid, &hgt);
-	if (!input_box(title, hgt / 2, wid / 2, buf, (max > 79) ? 79 : max))
-		return buf;
-	return buf;
-}
-
-char lua_msg_box(cptr title)
-{
-	int wid, hgt;
-
-	Term_get_size(&wid, &hgt);
-	return msg_box(title, hgt / 2, wid / 2);
-}
-
-
-
 void increase_mana(int delta)
 {
 	p_ptr->csp += delta;
