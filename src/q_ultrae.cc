@@ -2,7 +2,7 @@
 
 #define cquest (quest[QUEST_ULTRA_EVIL])
 
-bool_ quest_ultra_evil_init_hook()
+void quest_ultra_evil_init_hook()
 {
-	return FALSE;
+	// Initialized by other hook.
 }

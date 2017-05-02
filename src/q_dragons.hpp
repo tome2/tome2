@@ -2,4 +2,4 @@
 
 #include "h-basic.h"
 
-bool_ quest_dragons_init_hook();
+void quest_dragons_init_hook();

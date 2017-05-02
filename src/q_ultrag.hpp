@@ -2,4 +2,4 @@
 
 #include "h-basic.h"
 
-bool_ quest_ultra_good_init_hook();
+void quest_ultra_good_init_hook();

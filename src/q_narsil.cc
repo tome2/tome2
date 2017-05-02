@@ -14,7 +14,7 @@
 
 #define cquest (quest[QUEST_NARSIL])
 
-static bool_ quest_narsil_move_hook(void *, void *in_, void *)
+static bool quest_narsil_move_hook(void *, void *in_, void *)
 {
 	struct hook_move_in *in = static_cast<struct hook_move_in *>(in_);
 	s32b y = in->y;
@@ -23,10 +23,16 @@ static bool_ quest_narsil_move_hook(void *, void *in_, void *)
 	int i;
 	object_type *o_ptr;
 
-	if (cquest.status != QUEST_STATUS_TAKEN) return FALSE;
+	if (cquest.status != QUEST_STATUS_TAKEN)
+	{
+		return false;
+	}
 
 	/* The castle of Aragorn */
-	if ((c_ptr->feat != FEAT_SHOP) || (c_ptr->special != 14)) return FALSE;
+	if ((c_ptr->feat != FEAT_SHOP) || (c_ptr->special != 14))
+	{
+		return false;
+	}
 
 	/* Look out for Narsil */
 	for (i = 0; i < INVEN_TOTAL; i++)
@@ -38,7 +44,10 @@ static bool_ quest_narsil_move_hook(void *, void *in_, void *)
 		if (o_ptr->name1 == ART_NARSIL) break;
 	}
 
-	if (i == INVEN_TOTAL) return FALSE;
+	if (i == INVEN_TOTAL)
+	{
+		return false;
+	}
 
 	cmsg_print(TERM_YELLOW, "I heard that the broken sword had been found!");
 	cmsg_print(TERM_YELLOW, "I thought it was only a rumor... until now.");
@@ -65,10 +74,10 @@ static bool_ quest_narsil_move_hook(void *, void *in_, void *)
 	del_hook_new(HOOK_MOVE, quest_narsil_move_hook);
 	process_hooks_restart = TRUE;
 
-	return TRUE;
+	return true;
 }
 
-static bool_ quest_narsil_dump_hook(void *, void *in_, void *)
+static bool quest_narsil_dump_hook(void *, void *in_, void *)
 {
 	struct hook_chardump_in *in = static_cast<struct hook_chardump_in *>(in_);
 	FILE *f = in->file;
@@ -77,10 +86,10 @@ static bool_ quest_narsil_dump_hook(void *, void *in_, void *)
 	{
 		fprintf(f, "\n The sword that was broken is now reforged.");
 	}
-	return (FALSE);
+	return false;
 }
 
-static bool_ quest_narsil_identify_hook(void *, void *in_, void *)
+static bool quest_narsil_identify_hook(void *, void *in_, void *)
 {
 	struct hook_identify_in *in = static_cast<struct hook_identify_in *>(in_);
 
@@ -104,10 +113,10 @@ static bool_ quest_narsil_identify_hook(void *, void *in_, void *)
 		}
 	}
 
-	return (FALSE);
+	return false;
 }
 
-bool_ quest_narsil_init_hook()
+void quest_narsil_init_hook()
 {
 	if ((cquest.status >= QUEST_STATUS_TAKEN) && (cquest.status < QUEST_STATUS_FINISHED))
 	{
@@ -118,5 +127,4 @@ bool_ quest_narsil_init_hook()
 		add_hook_new(HOOK_IDENTIFY, quest_narsil_identify_hook, "narsil_id", NULL);
 	}
 	add_hook_new(HOOK_CHAR_DUMP, quest_narsil_dump_hook, "narsil_dump", NULL);
-	return (FALSE);
 }

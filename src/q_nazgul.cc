@@ -22,13 +22,16 @@
 
 GENERATE_MONSTER_LOOKUP_FN(get_uvatha, "Uvatha the Horseman")
 
-static bool_ quest_nazgul_gen_hook(void *, void *in_, void *)
+static bool quest_nazgul_gen_hook(void *, void *in_, void *)
 {
 	struct hook_wild_gen_in *in = static_cast<struct hook_wild_gen_in *>(in_);
 	int m_idx, x = 1, y = 1, tries = 10000;
 	bool_ small = in->small;
 
-	if ((cquest.status != QUEST_STATUS_TAKEN) || (small) || (p_ptr->town_num != 1)) return (FALSE);
+	if ((cquest.status != QUEST_STATUS_TAKEN) || (small) || (p_ptr->town_num != 1))
+	{
+		return false;
+	}
 
 	/* Find a good position */
 	while (tries)
@@ -54,16 +57,19 @@ static bool_ quest_nazgul_gen_hook(void *, void *in_, void *)
 
 	if (m_idx) m_list[m_idx].mflag |= MFLAG_QUEST;
 
-	return FALSE;
+	return false;
 }
 
-static bool_ quest_nazgul_finish_hook(void *, void *in_, void *)
+static bool quest_nazgul_finish_hook(void *, void *in_, void *)
 {
 	struct hook_quest_finish_in *in = static_cast<struct hook_quest_finish_in *>(in_);
 	s32b q_idx = in->q_idx;
 	object_type forge, *q_ptr;
 
-	if (q_idx != QUEST_NAZGUL) return FALSE;
+	if (q_idx != QUEST_NAZGUL)
+	{
+		return false;
+	}
 
 	c_put_str(TERM_YELLOW, "I believe he will not come back! Thank you.", 8, 0);
 	c_put_str(TERM_YELLOW, "Some time ago a ranger gave me this.", 9, 0);
@@ -84,10 +90,10 @@ static bool_ quest_nazgul_finish_hook(void *, void *in_, void *)
 	del_hook_new(HOOK_QUEST_FINISH, quest_nazgul_finish_hook);
 	process_hooks_restart = TRUE;
 
-	return TRUE;
+	return true;
 }
 
-static bool_ quest_nazgul_dump_hook(void *, void *in_, void *)
+static bool quest_nazgul_dump_hook(void *, void *in_, void *)
 {
 	struct hook_chardump_in *in = static_cast<struct hook_chardump_in *>(in_);
 	FILE *f = in->file;
@@ -96,42 +102,53 @@ static bool_ quest_nazgul_dump_hook(void *, void *in_, void *)
 	{
 		fprintf(f, "\n You saved Bree from a dreadful Nazgul.");
 	}
-	return (FALSE);
+	return false;
 }
 
-static bool_ quest_nazgul_forbid_hook(void *, void *in_, void *)
+static bool quest_nazgul_forbid_hook(void *, void *in_, void *)
 {
 	struct hook_init_quest_in *in = static_cast<struct hook_init_quest_in *>(in_);
 	s32b q_idx = in->q_idx;
 
-	if (q_idx != QUEST_NAZGUL) return (FALSE);
+	if (q_idx != QUEST_NAZGUL)
+	{
+		return false;
+	}
 
 	if (p_ptr->lev < 30)
 	{
 		c_put_str(TERM_WHITE, "I fear you are not ready for the next quest, come back later.", 8, 0);
-		return (TRUE);
+		return true;
 	}
-	return (FALSE);
+
+	return false;
 }
 
-static bool_ quest_nazgul_death_hook(void *, void *in_, void *)
+static bool quest_nazgul_death_hook(void *, void *in_, void *)
 {
 	struct hook_monster_death_in *in = static_cast<struct hook_monster_death_in *>(in_);
 	s32b m_idx = in->m_idx;
 	s32b r_idx = m_list[m_idx].r_idx;
 
-	if (cquest.status != QUEST_STATUS_TAKEN) return (FALSE);
-	if (r_idx != get_uvatha()) return (FALSE);
+	if (cquest.status != QUEST_STATUS_TAKEN)
+	{
+		return false;
+	}
+
+	if (r_idx != get_uvatha())
+	{
+		return false;
+	}
 
 	cquest.status = QUEST_STATUS_COMPLETED;
 
 	del_hook_new(HOOK_MONSTER_DEATH, quest_nazgul_death_hook);
 	process_hooks_restart = TRUE;
 
-	return (FALSE);
+	return false;
 }
 
-bool_ quest_nazgul_init_hook()
+void quest_nazgul_init_hook()
 {
 	if ((cquest.status >= QUEST_STATUS_TAKEN) && (cquest.status < QUEST_STATUS_FINISHED))
 	{
@@ -141,5 +158,4 @@ bool_ quest_nazgul_init_hook()
 	}
 	add_hook_new(HOOK_CHAR_DUMP,  quest_nazgul_dump_hook,   "nazgul_dump", NULL);
 	add_hook_new(HOOK_INIT_QUEST, quest_nazgul_forbid_hook, "nazgul_forbid", NULL);
-	return (FALSE);
 }

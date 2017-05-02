@@ -29,7 +29,7 @@ static void quest_describe(int q_idx)
 	}
 }
 
-static bool_ quest_main_monsters_hook(void *, void *in_, void *)
+static bool quest_main_monsters_hook(void *, void *in_, void *)
 {
 	auto const &r_info = game->edit_data.r_info;
 
@@ -40,18 +40,24 @@ static bool_ quest_main_monsters_hook(void *, void *in_, void *)
 	if (r_idx == get_sauron())
 	{
 		/* No Sauron until Necromancer dies */
-		if (r_info[get_necromancer()].max_num) return TRUE;
+		if (r_info[get_necromancer()].max_num)
+		{
+			return true;
+		}
 	}
 	/* Morgoth */
 	else if (r_idx == get_morgoth())
 	{
 		/* No Morgoth until Sauron dies */
-		if (r_info[get_sauron()].max_num) return TRUE;
+		if (r_info[get_sauron()].max_num)
+		{
+			return true;
+		}
 	}
-	return FALSE;
+	return false;
 }
 
-static bool_ quest_morgoth_hook(void *, void *, void *)
+static bool quest_morgoth_hook(void *, void *, void *)
 {
 	auto const &r_info = game->edit_data.r_info;
 
@@ -100,10 +106,10 @@ static bool_ quest_morgoth_hook(void *, void *, void *)
 			*(quest[QUEST_MORGOTH].plot) = QUEST_ULTRA_EVIL;
 		quest[*(quest[QUEST_MORGOTH].plot)].init();
 	}
-	return (FALSE);
+	return false;
 }
 
-static bool_ quest_morgoth_dump_hook(void *, void *in_, void *)
+static bool quest_morgoth_dump_hook(void *, void *in_, void *)
 {
 	struct hook_chardump_in *in = static_cast<struct hook_chardump_in *>(in_);
 	FILE *f = in->file;
@@ -111,14 +117,18 @@ static bool_ quest_morgoth_dump_hook(void *, void *in_, void *)
 	if (quest[QUEST_MORGOTH].status >= QUEST_STATUS_COMPLETED)
 	{
 		if (quest[QUEST_ONE].status == QUEST_STATUS_FINISHED)
+		{
 			fprintf(f, "\n You saved Arda and became a famed hero.");
+		}
 		else
+		{
 			fprintf(f, "\n You became a new force of darkness and enslaved all free people.");
+		}
 	}
-	return (FALSE);
+	return false;
 }
 
-bool_ quest_morgoth_init_hook()
+void quest_morgoth_init_hook()
 {
 	if ((quest[QUEST_MORGOTH].status >= QUEST_STATUS_TAKEN) && (quest[QUEST_MORGOTH].status < QUEST_STATUS_FINISHED))
 	{
@@ -126,10 +136,9 @@ bool_ quest_morgoth_init_hook()
 	}
 	add_hook_new(HOOK_CHAR_DUMP,   quest_morgoth_dump_hook,  "morgoth_dump",     NULL);
 	add_hook_new(HOOK_NEW_MONSTER, quest_main_monsters_hook, "main_new_monster", NULL);
-	return (FALSE);
 }
 
-static bool_ quest_sauron_hook(void *, void *, void *)
+static bool quest_sauron_hook(void *, void *, void *)
 {
 	auto const &r_info = game->edit_data.r_info;
 
@@ -151,10 +160,11 @@ static bool_ quest_sauron_hook(void *, void *, void *)
 
 		process_hooks_restart = TRUE;
 	}
-	return (FALSE);
+
+	return false;
 }
 
-static bool_ quest_sauron_resurect_hook(void *, void *in_, void *)
+static bool quest_sauron_resurrect_hook(void *, void *in_, void *)
 {
 	auto &r_info = game->edit_data.r_info;
 
@@ -173,21 +183,20 @@ static bool_ quest_sauron_resurect_hook(void *, void *in_, void *)
 		msg_print("Sauron will not be permanently defeated until the One Ring is either destroyed or used...");
 		r_ptr->max_num = 1;
 	}
-	return FALSE;
+	return false;
 }
 
-bool_ quest_sauron_init_hook()
+void quest_sauron_init_hook()
 {
 	if ((quest[QUEST_SAURON].status >= QUEST_STATUS_TAKEN) && (quest[QUEST_SAURON].status < QUEST_STATUS_FINISHED))
 	{
 		add_hook_new(HOOK_MONSTER_DEATH, quest_sauron_hook, "sauron_death", NULL);
 	}
 	add_hook_new(HOOK_NEW_MONSTER,   quest_main_monsters_hook,   "main_new_monster",      NULL);
-	add_hook_new(HOOK_MONSTER_DEATH, quest_sauron_resurect_hook, "sauron_resurect_death", NULL);
-	return (FALSE);
+	add_hook_new(HOOK_MONSTER_DEATH, quest_sauron_resurrect_hook, "sauron_resurect_death", NULL);
 }
 
-static bool_ quest_necro_hook(void *, void *, void *)
+static bool quest_necro_hook(void *, void *, void *)
 {
 	auto const &r_info = game->edit_data.r_info;
 
@@ -208,15 +217,15 @@ static bool_ quest_necro_hook(void *, void *, void *)
 		del_hook_new(HOOK_MONSTER_DEATH, quest_necro_hook);
 		process_hooks_restart = TRUE;
 	}
-	return (FALSE);
+
+	return false;
 }
 
-bool_ quest_necro_init_hook()
+void quest_necro_init_hook()
 {
 	if ((quest[QUEST_NECRO].status >= QUEST_STATUS_TAKEN) && (quest[QUEST_NECRO].status < QUEST_STATUS_FINISHED))
 	{
 		add_hook_new(HOOK_MONSTER_DEATH, quest_necro_hook, "necro_death", NULL);
 	}
 	add_hook_new(HOOK_NEW_MONSTER, quest_main_monsters_hook, "main_new_monster", NULL);
-	return (FALSE);
 }

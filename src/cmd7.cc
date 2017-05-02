@@ -844,7 +844,7 @@ void do_cmd_mimic_lore()
 	p_ptr->update |= (PU_BONUS);
 }
 
-static bool_ mimic_forbid_travel(void *, void *, void *)
+static bool mimic_forbid_travel(void *, void *, void *)
 {
 	u32b value = p_ptr->mimic_extra >> 16;
 	u32b att = p_ptr->mimic_extra & 0xFFFF;
@@ -852,10 +852,10 @@ static bool_ mimic_forbid_travel(void *, void *, void *)
 	if(value > 0 && (att & CLASS_ARMS || att & CLASS_LEGS))
 	{
 		msg_print("You had best not travel with your extra limbs.");
-		return TRUE;
+		return true;
 	}
 
-	return FALSE;
+	return false;
 }
 
 /*

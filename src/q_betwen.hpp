@@ -2,4 +2,4 @@
 
 #include "h-basic.h"
 
-bool_ quest_between_init_hook();
+void quest_between_init_hook();

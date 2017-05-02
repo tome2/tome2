@@ -19,7 +19,7 @@
 
 #define cquest (quest[QUEST_HAUNTED])
 
-static bool_ quest_haunted_gen_hook(void *, void *, void *)
+static bool quest_haunted_gen_hook(void *, void *, void *)
 {
 	auto const &f_info = game->edit_data.f_info;
 
@@ -27,7 +27,10 @@ static bool_ quest_haunted_gen_hook(void *, void *, void *)
 	int xstart = 2;
 	int ystart = 2;
 
-	if (p_ptr->inside_quest != QUEST_HAUNTED) return FALSE;
+	if (p_ptr->inside_quest != QUEST_HAUNTED)
+	{
+		return false;
+	}
 
 	/* Just in case we didnt talk the the mayor */
 	if (cquest.status == QUEST_STATUS_UNTAKEN)
@@ -87,14 +90,17 @@ static bool_ quest_haunted_gen_hook(void *, void *, void *)
 
 	process_hooks_restart = TRUE;
 
-	return TRUE;
+	return true;
 }
 
-static bool_ quest_haunted_death_hook(void *, void *, void *)
+static bool quest_haunted_death_hook(void *, void *, void *)
 {
 	int i, mcnt = 0;
 
-	if (p_ptr->inside_quest != QUEST_HAUNTED) return FALSE;
+	if (p_ptr->inside_quest != QUEST_HAUNTED)
+	{
+		return false;
+	}
 
 	/* Process the monsters (backwards) */
 	for (i = m_max - 1; i >= 1; i--)
@@ -103,9 +109,15 @@ static bool_ quest_haunted_death_hook(void *, void *, void *)
 		monster_type *m_ptr = &m_list[i];
 
 		/* Ignore "dead" monsters */
-		if (!m_ptr->r_idx) continue;
+		if (!m_ptr->r_idx)
+		{
+			continue;
+		}
 
-		if (m_ptr->status <= MSTATUS_ENEMY) mcnt++;
+		if (m_ptr->status <= MSTATUS_ENEMY)
+		{
+			mcnt++;
+		}
 	}
 
 	/* Nobody left ? */
@@ -118,17 +130,21 @@ static bool_ quest_haunted_death_hook(void *, void *, void *)
 		process_hooks_restart = TRUE;
 
 		cmsg_print(TERM_YELLOW, "Minas Anor is safer now.");
-		return (FALSE);
+		return false;
 	}
-	return FALSE;
+
+	return false;
 }
 
-static bool_ quest_haunted_finish_hook(void *, void *in_, void *)
+static bool quest_haunted_finish_hook(void *, void *in_, void *)
 {
 	struct hook_quest_finish_in *in = static_cast<struct hook_quest_finish_in *>(in_);
 	s32b q_idx = in->q_idx;
 
-	if (q_idx != QUEST_HAUNTED) return FALSE;
+	if (q_idx != QUEST_HAUNTED)
+	{
+		return false;
+	}
 
 	c_put_str(TERM_YELLOW, "Thank you for saving us!", 8, 0);
 	c_put_str(TERM_YELLOW, "You can use the building as your house as a reward.", 9, 0);
@@ -136,10 +152,10 @@ static bool_ quest_haunted_finish_hook(void *, void *in_, void *)
 	/* Continue the plot */
 	*(quest[q_idx].plot) = QUEST_BETWEEN;
 
-	return TRUE;
+	return true;
 }
 
-bool_ quest_haunted_init_hook()
+void quest_haunted_init_hook()
 {
 	if ((cquest.status >= QUEST_STATUS_UNTAKEN) && (cquest.status < QUEST_STATUS_FINISHED))
 	{
@@ -147,5 +163,4 @@ bool_ quest_haunted_init_hook()
 		add_hook_new(HOOK_QUEST_FINISH,  quest_haunted_finish_hook, "haunted_finish",        NULL);
 		add_hook_new(HOOK_GEN_QUEST,     quest_haunted_gen_hook,    "haunted_geb",           NULL);
 	}
-	return (FALSE);
 }

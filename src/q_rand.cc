@@ -404,51 +404,60 @@ static void hero_death(s32b m_idx, s32b r_idx)
 	}
 }
 
-static bool_ quest_random_death_hook(void *, void *in_, void *)
+static bool quest_random_death_hook(void *, void *in_, void *)
 {
 	struct hook_monster_death_in *in = static_cast<struct hook_monster_death_in *>(in_);
 	s32b m_idx = in->m_idx;
 	int r_idx = m_list[m_idx].r_idx;
 
-	if (!(dungeon_flags & DF_PRINCIPAL)) return (FALSE);
-	if ((dun_level < 1) || (dun_level >= MAX_RANDOM_QUEST)) return (FALSE);
-	if (!random_quests[dun_level].type) return (FALSE);
-	if (random_quests[dun_level].done) return (FALSE);
-	if (p_ptr->inside_quest) return (FALSE);
-	if (random_quests[dun_level].r_idx != r_idx) return (FALSE);
-
-	if (!(m_list[m_idx].mflag & MFLAG_QUEST)) return (FALSE);
+	if ((!(dungeon_flags & DF_PRINCIPAL)) ||
+	    ((dun_level < 1) || (dun_level >= MAX_RANDOM_QUEST)) ||
+	    (!random_quests[dun_level].type) ||
+	    (random_quests[dun_level].done) ||
+	    (p_ptr->inside_quest) ||
+	    (random_quests[dun_level].r_idx != r_idx) ||
+	    (!(m_list[m_idx].mflag & MFLAG_QUEST)))
+	{
+		return false;
+	}
 
 	/* Killed enough ?*/
 	quest[QUEST_RANDOM].data[0]++;
 	if (quest[QUEST_RANDOM].data[0] == random_quests[dun_level].type)
 	{
 		if (is_randhero(dun_level))
+		{
 			hero_death(m_idx, r_idx);
+		}
 		else
+		{
 			princess_death(m_idx, r_idx);
+		}
 	}
 
-	return (FALSE);
+	return false;
 }
 
-static bool_ quest_random_turn_hook(void *, void *, void *)
+static bool quest_random_turn_hook(void *, void *, void *)
 {
 	quest[QUEST_RANDOM].data[0] = 0;
 	quest[QUEST_RANDOM].data[1] = 0;
-	return (FALSE);
+	return false;
 }
 
-static bool_ quest_random_feeling_hook(void *, void *, void *)
+static bool quest_random_feeling_hook(void *, void *, void *)
 {
 	auto const &r_info = game->edit_data.r_info;
 
-	if (!(dungeon_flags & DF_PRINCIPAL)) return (FALSE);
-	if ((dun_level < 1) || (dun_level >= MAX_RANDOM_QUEST)) return (FALSE);
-	if (!random_quests[dun_level].type) return (FALSE);
-	if (random_quests[dun_level].done) return (FALSE);
-	if (p_ptr->inside_quest) return (FALSE);
-	if (!dun_level) return (FALSE);
+	if ((!(dungeon_flags & DF_PRINCIPAL)) ||
+	    ((dun_level < 1) || (dun_level >= MAX_RANDOM_QUEST)) ||
+	    (!random_quests[dun_level].type) ||
+	    (random_quests[dun_level].done) ||
+	    (p_ptr->inside_quest) ||
+	    (!dun_level))
+	{
+		return false;
+	}
 
 	if (is_randhero(dun_level))
 	{
@@ -456,22 +465,25 @@ static bool_ quest_random_feeling_hook(void *, void *, void *)
 		cmsg_format(TERM_YELLOW, "'Oh, please help me! A horrible %s stole my sword! I'm nothing without it.'", r_info[random_quests[dun_level].r_idx].name);
 	}
 	else
+	{
 		cmsg_format(TERM_YELLOW, "You hear someone shouting: 'Leave me alone, stupid %s'", r_info[random_quests[dun_level].r_idx].name);
-	return (FALSE);
+	}
+	return false;
 }
 
-static bool_ quest_random_gen_hero_hook(void *, void *, void *)
+static bool quest_random_gen_hero_hook(void *, void *, void *)
 {
-	int i;
+	if ((!(dungeon_flags & DF_PRINCIPAL)) ||
+	    ((dun_level < 1) || (dun_level >= MAX_RANDOM_QUEST)) ||
+	    (!random_quests[dun_level].type) ||
+	    (random_quests[dun_level].done) ||
+	    (p_ptr->inside_quest) ||
+	    (!is_randhero(dun_level)))
+	{
+		return false;
+	}
 
-	if (!(dungeon_flags & DF_PRINCIPAL)) return (FALSE);
-	if ((dun_level < 1) || (dun_level >= MAX_RANDOM_QUEST)) return (FALSE);
-	if (!random_quests[dun_level].type) return (FALSE);
-	if (random_quests[dun_level].done) return (FALSE);
-	if (p_ptr->inside_quest) return (FALSE);
-	if (!is_randhero(dun_level)) return (FALSE);
-
-	i = random_quests[dun_level].type;
+	int i = random_quests[dun_level].type;
 
 	m_allow_special[random_quests[dun_level].r_idx] = TRUE;
 	while (i)
@@ -488,10 +500,10 @@ static bool_ quest_random_gen_hero_hook(void *, void *, void *)
 	}
 	m_allow_special[random_quests[dun_level].r_idx] = FALSE;
 
-	return (FALSE);
+	return false;
 }
 
-static bool_ quest_random_gen_hook(void *, void *in_, void *)
+static bool quest_random_gen_hook(void *, void *in_, void *)
 {
 	struct hook_build_room1_in *in = static_cast<struct hook_build_room1_in *>(in_);
 	s32b bx0 = in->x;
@@ -502,19 +514,25 @@ static bool_ quest_random_gen_hook(void *, void *in_, void *)
 	int y2, x2, yval, xval;
 	int y1, x1, xsize, ysize;
 
-	if (!(dungeon_flags & DF_PRINCIPAL)) return (FALSE);
-	if ((dun_level < 1) || (dun_level >= MAX_RANDOM_QUEST)) return (FALSE);
-	if (!random_quests[dun_level].type) return (FALSE);
-	if (random_quests[dun_level].done) return (FALSE);
-	if (p_ptr->inside_quest) return (FALSE);
-	if (quest[QUEST_RANDOM].data[1]) return (FALSE);
-	if (is_randhero(dun_level)) return (FALSE);
+	if ((!(dungeon_flags & DF_PRINCIPAL)) ||
+	    ((dun_level < 1) || (dun_level >= MAX_RANDOM_QUEST)) ||
+	    (!random_quests[dun_level].type)  ||
+	    (random_quests[dun_level].done)  ||
+	    (p_ptr->inside_quest)  ||
+	    (quest[QUEST_RANDOM].data[1]) ||
+	    (is_randhero(dun_level)))
+	{
+		return false;
+	}
 
 	/* Pick a room size */
 	get_map_size(format("qrand%d.map", random_quests[dun_level].type), &ysize, &xsize);
 
 	/* Try to allocate space for room.  If fails, exit */
-	if (!room_alloc(xsize + 2, ysize + 2, FALSE, by0, bx0, &xval, &yval)) return FALSE;
+	if (!room_alloc(xsize + 2, ysize + 2, FALSE, by0, bx0, &xval, &yval))
+	{
+		return false;
+	}
 
 	/* Get corner values */
 	y1 = yval - ysize / 2;
@@ -546,24 +564,23 @@ static bool_ quest_random_gen_hook(void *, void *in_, void *)
 	process_dungeon_file(format("qrand%d.map", random_quests[dun_level].type), &ystart, &xstart, cur_hgt, cur_wid, TRUE, TRUE);
 
 	for (x = x1; x < xstart; x++)
+	{
 		for (y = y1; y < ystart; y++)
 		{
 			cave[y][x].info |= CAVE_ICKY | CAVE_ROOM;
 			if (cave[y][x].feat == FEAT_MARKER)
 			{
-				monster_type *m_ptr;
-				int i;
-
 				m_allow_special[random_quests[dun_level].r_idx] = TRUE;
-				i = place_monster_one(y, x, random_quests[dun_level].r_idx, 0, FALSE, MSTATUS_ENEMY);
+				int i = place_monster_one(y, x, random_quests[dun_level].r_idx, 0, FALSE, MSTATUS_ENEMY);
 				m_allow_special[random_quests[dun_level].r_idx] = FALSE;
 				if (i)
 				{
-					m_ptr = &m_list[i];
+					auto m_ptr = &m_list[i];
 					m_ptr->mflag |= MFLAG_QUEST;
 				}
 			}
 		}
+	}
 
 	/* Dont try another one for this generation */
 	quest[QUEST_RANDOM].data[1] = 1;
@@ -571,10 +588,10 @@ static bool_ quest_random_gen_hook(void *, void *in_, void *)
 	/* Boost level feeling a bit - a la pits */
 	rating += 10;
 
-	return (TRUE);
+	return true;
 }
 
-static bool_ quest_random_dump_hook(void *, void *in_, void *)
+static bool quest_random_dump_hook(void *, void *in_, void *)
 {
 	static const char *number[] = { "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten" };
 	struct hook_chardump_in *in = static_cast<struct hook_chardump_in *>(in_);
@@ -617,7 +634,7 @@ static bool_ quest_random_dump_hook(void *, void *in_, void *)
 			fprintf(f, "\n You haven't completed a single lost sword quest.");
 	}
 
-	return (FALSE);
+	return false;
 }
 
 std::string quest_random_describe()
@@ -626,12 +643,15 @@ std::string quest_random_describe()
 
 	// Only emit description if we're actually on a
 	// random quest level.
-	if (!(dungeon_flags & DF_PRINCIPAL)) return "";
-	if ((dun_level < 1) || (dun_level >= MAX_RANDOM_QUEST)) return "";
-	if (!random_quests[dun_level].type) return "";
-	if (random_quests[dun_level].done) return "";
-	if (p_ptr->inside_quest) return "";
-	if (!dun_level) return "";
+	if ((!(dungeon_flags & DF_PRINCIPAL)) ||
+	    ((dun_level < 1) || (dun_level >= MAX_RANDOM_QUEST)) ||
+	    (!random_quests[dun_level].type) ||
+	    (random_quests[dun_level].done) ||
+	    (p_ptr->inside_quest) ||
+	    (!dun_level))
+	{
+		return "";
+	}
 
 	fmt::MemoryWriter w;
 
@@ -655,7 +675,7 @@ std::string quest_random_describe()
 	return w.str();
 }
 
-bool_ quest_random_init_hook()
+void quest_random_init_hook()
 {
 	add_hook_new(HOOK_MONSTER_DEATH, quest_random_death_hook,    "rand_death",     NULL);
 	add_hook_new(HOOK_NEW_LEVEL,     quest_random_turn_hook,     "rand_new_lvl",   NULL);
@@ -664,5 +684,4 @@ bool_ quest_random_init_hook()
 	add_hook_new(HOOK_BUILD_ROOM1,   quest_random_gen_hook,      "rand_gen",       NULL);
 	add_hook_new(HOOK_FEELING,       quest_random_feeling_hook,  "rand_feel",      NULL);
 	add_hook_new(HOOK_CHAR_DUMP,     quest_random_dump_hook,     "rand_dump",      NULL);
-	return (FALSE);
 }

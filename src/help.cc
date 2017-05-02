@@ -558,7 +558,7 @@ static triggered_help_type triggered_help[TRIGGERED_HELP_MAX] =
 	}
 };
 
-static bool_ triggered_help_hook(void *data, void *in, void *out)
+static bool triggered_help_hook(void *data, void *in, void *out)
 {
 	triggered_help_type *triggered_help = (triggered_help_type *) data;
 	/* Not triggered before and trigger now? */
@@ -576,13 +576,13 @@ static bool_ triggered_help_hook(void *data, void *in, void *out)
 		}
 	}
 	/* Don't stop processing */
-	return FALSE;
+	return false;
 }
 
-static bool_ hook_game_start(void *data, void *in, void *out)
+static bool hook_game_start(void *data, void *in, void *out)
 {
 	game_started = TRUE;
-	return FALSE;
+	return false;
 }
 
 static void setup_triggered_help_hook(int i)

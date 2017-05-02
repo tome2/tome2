@@ -312,12 +312,12 @@ static void library_quest_fill_book()
 	screen_load();
 }
 
-static bool_ quest_library_gen_hook(void *, void *, void *)
+static bool quest_library_gen_hook(void *, void *, void *)
 {
 	/* Only if player doing this quest */
 	if (p_ptr->inside_quest != QUEST_LIBRARY)
 	{
-		return FALSE;
+		return false;
 	}
 
 	{
@@ -352,46 +352,41 @@ static bool_ quest_library_gen_hook(void *, void *, void *)
 	library_quest_place_nrandom(
 		10, 10, 37, 67, MONSTER_MITHRIL_GOLEM, 1);
 
-	return TRUE;
+	return true;
 }
 
-static bool_ quest_library_stair_hook(void *, void *, void *)
+static bool quest_library_stair_hook(void *, void *, void *)
 {
-	bool_ ret;
-
 	/* only ask this if player about to go up stairs of quest and hasn't won yet */
 	if ((p_ptr->inside_quest != QUEST_LIBRARY) ||
 	    (cquest.status == QUEST_STATUS_COMPLETED))
 	{
-		return FALSE;
+		return false;
 	}
 
 	if (cave[p_ptr->py][p_ptr->px].feat != FEAT_LESS)
 	{
-		return FALSE;
+		return false;
 	}
 
 	/* flush all pending input */
 	flush();
 
 	/* confirm */
-	ret = get_check("Really abandon the quest?");
-
-	/* if yes, then */
-	if (ret == TRUE)
+	if (get_check("Really abandon the quest?"))
 	{
 		/* fail the quest */
 		cquest.status = QUEST_STATUS_FAILED;
-		return FALSE;
+		return false;
 	}
 	else
 	{
 		/* if no, they stay in the quest */
-		return TRUE;
+		return true;
 	}
 }
 
-static bool_ quest_library_monster_death_hook(void *, void *, void *)
+static bool quest_library_monster_death_hook(void *, void *, void *)
 {
 	int i, count = -1;
 
@@ -399,7 +394,7 @@ static bool_ quest_library_monster_death_hook(void *, void *, void *)
 	if ((p_ptr->inside_quest != QUEST_LIBRARY) ||
 	    (cquest.status == QUEST_STATUS_COMPLETED))
 	{
-		return FALSE;
+		return false;
 	}
 
 	/* Count all the enemies left alive */
@@ -421,7 +416,7 @@ static bool_ quest_library_monster_death_hook(void *, void *, void *)
 	}
 
 	/* Normal processing */
-	return FALSE;
+	return false;
 }
 
 void quest_library_building(bool_ *paid, bool_ *recreate)
@@ -500,7 +495,7 @@ std::string quest_library_describe()
 	return w.str();
 }
 
-bool_ quest_library_init_hook()
+void quest_library_init_hook()
 {
 	/* Only need hooks if the quest is unfinished. */
 	if ((cquest.status >= QUEST_STATUS_UNTAKEN) &&
@@ -516,8 +511,4 @@ bool_ quest_library_init_hook()
 	{
 		quest_library_finalize_book();
 	}
-
-	return FALSE;
 }
-
-#undef print_hook

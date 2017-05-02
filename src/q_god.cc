@@ -901,13 +901,13 @@ static void quest_god_set_god_dungeon_attributes_mandos()
 	d_info[DUNGEON_GOD].rules[0].mflags = RF_UNDEAD | RF_EVIL;
 }
 
-static bool_ quest_god_level_end_gen_hook(void *, void *, void *)
+static bool quest_god_level_end_gen_hook(void *, void *, void *)
 {
 	/* Check for dungeon */
 	if ((dungeon_type != DUNGEON_GOD) ||
 	    (cquest.status == QUEST_STATUS_UNTAKEN))
 	{
-		return FALSE;
+		return false;
 	}
 
 	/* if the relic has been created at this point, then it was
@@ -955,17 +955,17 @@ static bool_ quest_god_level_end_gen_hook(void *, void *, void *)
 		}
 	}
 
-	return FALSE;
+	return false;
 }
 
-static bool_ quest_god_player_level_hook(void *, void *in_, void *)
+static bool quest_god_player_level_hook(void *, void *in_, void *)
 {
 	struct hook_player_level_in *in = static_cast<struct hook_player_level_in *>(in_);
 	s32b gained = in->gained_levels;
 
 	if (gained <= 0)
 	{
-		return FALSE;
+		return false;
 	}
 
 	/* check player is worshipping a god, not already on a god quest. */
@@ -984,7 +984,7 @@ static bool_ quest_god_player_level_hook(void *, void *in_, void *)
 		{
 			cquest_dun_minplev = p_ptr->lev;
 		}
-		return FALSE;
+		return false;
 	}
 	else
 	{
@@ -1017,10 +1017,10 @@ static bool_ quest_god_player_level_hook(void *, void *in_, void *)
 		cquest_dun_maxdepth = cquest_dun_mindepth + 4;
 	}
 
-	return FALSE;
+	return false;
 }
 
-static bool_ quest_god_get_hook(void *, void *in_, void *)
+static bool quest_god_get_hook(void *, void *in_, void *)
 {
 	auto &s_info = game->s_info;
 
@@ -1071,13 +1071,13 @@ static bool_ quest_god_get_hook(void *, void *in_, void *)
 
 		/* Prevent further processing of 'take' action; we've
 		   destroyed the item. */
-		return TRUE;
+		return true;
 	}
 
-	return FALSE;
+	return false;
 }
 
-static bool_ quest_god_char_dump_hook(void *, void *in_, void *)
+static bool quest_god_char_dump_hook(void *, void *in_, void *)
 {
 	struct hook_chardump_in *in = static_cast<struct hook_chardump_in *>(in_);
 	FILE *f = in->file;
@@ -1110,7 +1110,7 @@ static bool_ quest_god_char_dump_hook(void *, void *in_, void *)
 		fprintf(f, "\n You found %s of the relic pieces%s.", relics_text, append_text);
 	}
 
-	return FALSE;
+	return false;
 }
 
 static void set_god_dungeon_attributes()
@@ -1181,26 +1181,26 @@ static void quest_god_dungeon_setup(int d_idx)
 	set_god_dungeon_attributes();
 }
 
-static bool_ quest_god_enter_dungeon_hook(void *, void *in_, void *)
+static bool quest_god_enter_dungeon_hook(void *, void *in_, void *)
 {
 	struct hook_enter_dungeon_in *in = static_cast<struct hook_enter_dungeon_in *>(in_);
 	quest_god_dungeon_setup(in->d_idx);
-	return FALSE;
+	return false;
 }
 
-static bool_ quest_god_gen_level_begin_hook(void *, void *, void *)
+static bool quest_god_gen_level_begin_hook(void *, void *, void *)
 {
 	quest_god_dungeon_setup(dungeon_type);
-	return FALSE;
+	return false;
 }
 
-static bool_ quest_god_stair_hook(void *, void *, void *)
+static bool quest_god_stair_hook(void *, void *, void *)
 {
 	quest_god_dungeon_setup(dungeon_type);
-	return FALSE;
+	return false;
 }
 
-static bool_ quest_god_birth_objects_hook(void *, void *, void *)
+static bool quest_god_birth_objects_hook(void *, void *, void *)
 {
 	cquest_quests_given = 0;
 	cquest_relics_found = 0;
@@ -1210,10 +1210,10 @@ static bool_ quest_god_birth_objects_hook(void *, void *, void *)
 	cquest_relic_gen_tries = 0;
 	cquest_relic_generated = FALSE;
 
-	return FALSE;
+	return false;
 }
 
-bool_ quest_god_init_hook()
+void quest_god_init_hook()
 {
 	/* Only need hooks if the quest is unfinished. */
 	if ((cquest.status >= QUEST_STATUS_UNTAKEN) &&
@@ -1231,6 +1231,4 @@ bool_ quest_god_init_hook()
 	/* Need this to re-initialize at birth; the quest data is
 	 * zeroed which isn't quite right. */
 	add_hook_new(HOOK_BIRTH_OBJECTS, quest_god_birth_objects_hook, "q_god_birth_objects", NULL);
-	
-	return FALSE;
 }

@@ -13,13 +13,16 @@
 
 #define cquest (quest[QUEST_NIRNAETH])
 
-static bool_ quest_nirnaeth_gen_hook(void *, void *, void *)
+static bool quest_nirnaeth_gen_hook(void *, void *, void *)
 {
 	int x, y;
 	int xstart = 2;
 	int ystart = 2;
 
-	if (p_ptr->inside_quest != QUEST_NIRNAETH) return FALSE;
+	if (p_ptr->inside_quest != QUEST_NIRNAETH)
+	{
+		return false;
+	}
 
 	/* Start with perm walls */
 	for (y = 0; y < cur_hgt; y++)
@@ -44,20 +47,25 @@ static bool_ quest_nirnaeth_gen_hook(void *, void *, void *)
 	cquest.data[0] = 0;
 	cquest.data[1] = 0;
 	for (x = 2; x < xstart; x++)
+	{
 		for (y = 2; y < ystart; y++)
 		{
 			if (cave[y][x].m_idx) cquest.data[0]++;
 		}
+	}
 
-	return TRUE;
+	return true;
 }
 
-static bool_ quest_nirnaeth_finish_hook(void *, void *in_, void *)
+static bool quest_nirnaeth_finish_hook(void *, void *in_, void *)
 {
 	struct hook_quest_finish_in *in = static_cast<struct hook_quest_finish_in *>(in_);
 	s32b q_idx = in->q_idx;
 
-	if (q_idx != QUEST_NIRNAETH) return FALSE;
+	if (q_idx != QUEST_NIRNAETH)
+	{
+		return false;
+	}
 
 	/* Killed at least 2/3 of them ? better reward ! */
 	if (cquest.data[1] >= (2 * cquest.data[0] / 3))
@@ -86,33 +94,39 @@ static bool_ quest_nirnaeth_finish_hook(void *, void *in_, void *)
 	del_hook_new(HOOK_QUEST_FINISH, quest_nirnaeth_finish_hook);
 	process_hooks_restart = TRUE;
 
-	return TRUE;
+	return true;
 }
 
-static bool_ quest_nirnaeth_death_hook(void *, void *, void *)
+static bool quest_nirnaeth_death_hook(void *, void *, void *)
 {
 	if (p_ptr->inside_quest != QUEST_NIRNAETH) return FALSE;
 
 	cquest.data[1]++;
 
-	return FALSE;
+	return false;
 }
 
-static bool_ quest_nirnaeth_stair_hook(void *, void *, void *)
+static bool quest_nirnaeth_stair_hook(void *, void *, void *)
 {
-	if (p_ptr->inside_quest != QUEST_NIRNAETH) return FALSE;
+	if (p_ptr->inside_quest != QUEST_NIRNAETH)
+	{
+		return false;
+	}
 
-	if (cave[p_ptr->py][p_ptr->px].feat != FEAT_LESS) return (FALSE);
+	if (cave[p_ptr->py][p_ptr->px].feat != FEAT_LESS)
+	{
+		return false;
+	}
 
 	cmsg_print(TERM_YELLOW, "You found a way out!");
 	cquest.status = QUEST_STATUS_COMPLETED;
 
 	del_hook_new(HOOK_STAIR, quest_nirnaeth_stair_hook);
 	process_hooks_restart = TRUE;
-	return (FALSE);
+	return false;
 }
 
-bool_ quest_nirnaeth_init_hook()
+void quest_nirnaeth_init_hook()
 {
 	if ((cquest.status >= QUEST_STATUS_TAKEN) && (cquest.status < QUEST_STATUS_FINISHED))
 	{
@@ -121,5 +135,4 @@ bool_ quest_nirnaeth_init_hook()
 		add_hook_new(HOOK_STAIR,         quest_nirnaeth_stair_hook,  "nirnaeth_stair",  NULL);
 		add_hook_new(HOOK_QUEST_FINISH,  quest_nirnaeth_finish_hook, "nirnaeth_finish", NULL);
 	}
-	return (FALSE);
 }

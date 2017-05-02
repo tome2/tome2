@@ -26,7 +26,7 @@ GENERATE_MONSTER_LOOKUP_FN(get_tom, "Tom the Stone Troll")
 GENERATE_MONSTER_LOOKUP_FN(get_stone_troll, "Stone troll")
 GENERATE_MONSTER_LOOKUP_FN(get_forest_troll, "Forest troll")
 
-static bool_ quest_troll_gen_hook(void *, void *, void *)
+static bool quest_troll_gen_hook(void *, void *, void *)
 {
 	auto &a_info = game->edit_data.a_info;
 
@@ -34,7 +34,10 @@ static bool_ quest_troll_gen_hook(void *, void *, void *)
 	int xstart = 2;
 	int ystart = 2;
 
-	if (p_ptr->inside_quest != QUEST_TROLL) return FALSE;
+	if (p_ptr->inside_quest != QUEST_TROLL)
+	{
+		return false;
+	}
 
 	/* Start with perm walls */
 	for (y = 0; y < cur_hgt; y++)
@@ -113,15 +116,18 @@ static bool_ quest_troll_gen_hook(void *, void *, void *)
 
 	/* Reinitialize the ambush ... hehehe */
 	cquest.data[0] = FALSE;
-	return TRUE;
+	return true;
 }
 
-static bool_ quest_troll_finish_hook(void *, void *in_, void *)
+static bool quest_troll_finish_hook(void *, void *in_, void *)
 {
 	struct hook_quest_finish_in *in = static_cast<struct hook_quest_finish_in *>(in_);
 	s32b q_idx = in->q_idx;
 
-	if (q_idx != QUEST_TROLL) return FALSE;
+	if (q_idx != QUEST_TROLL)
+	{
+		return false;
+	}
 
 	c_put_str(TERM_YELLOW, "I heard about your noble deeds.", 8, 0);
 	c_put_str(TERM_YELLOW, "Keep what you found... may it serve you well.", 9, 0);
@@ -133,17 +139,20 @@ static bool_ quest_troll_finish_hook(void *, void *in_, void *)
 	del_hook_new(HOOK_QUEST_FINISH, quest_troll_finish_hook);
 	process_hooks_restart = TRUE;
 
-	return TRUE;
+	return true;
 }
 
-static bool_ quest_troll_death_hook(void *, void *in_, void *)
+static bool quest_troll_death_hook(void *, void *in_, void *)
 {
 	struct hook_monster_death_in *in = static_cast<struct hook_monster_death_in *>(in_);
 	s32b m_idx = in->m_idx;
 	s32b r_idx = m_list[m_idx].r_idx;
 	int x, y, xstart = 2, ystart = 2;
 
-	if (p_ptr->inside_quest != QUEST_TROLL) return FALSE;
+	if (p_ptr->inside_quest != QUEST_TROLL)
+	{
+		return false;
+	}
 
 	if (r_idx == get_tom())
 	{
@@ -154,19 +163,23 @@ static bool_ quest_troll_death_hook(void *, void *in_, void *)
 		cquest.status = QUEST_STATUS_COMPLETED;
 		del_hook_new(HOOK_MONSTER_DEATH, quest_troll_death_hook);
 		process_hooks_restart = TRUE;
-		return (FALSE);
+		return false;
 	}
 
 	init_flags = INIT_GET_SIZE;
 	process_dungeon_file("trolls.map", &ystart, &xstart, cur_hgt, cur_wid, TRUE, TRUE);
 
-	if (cquest.data[0]) return FALSE;
+	if (cquest.data[0])
+	{
+		return false;
+	}
 
 	cquest.data[0] = TRUE;
 
 	msg_print("Oops, seems like an ambush...");
 
 	for (x = 3; x < xstart; x++)
+	{
 		for (y = 3; y < ystart; y++)
 		{
 			cave_type *c_ptr = &cave[y][x];
@@ -181,11 +194,12 @@ static bool_ quest_troll_death_hook(void *, void *in_, void *)
 				place_monster_one(y, x, r_idx, 0, FALSE, MSTATUS_ENEMY);
 			}
 		}
+	}
 
-	return FALSE;
+	return false;
 }
 
-bool_ quest_troll_init_hook()
+void quest_troll_init_hook()
 {
 	if ((cquest.status >= QUEST_STATUS_TAKEN) && (cquest.status < QUEST_STATUS_FINISHED))
 	{
@@ -193,5 +207,4 @@ bool_ quest_troll_init_hook()
 		add_hook_new(HOOK_GEN_QUEST,     quest_troll_gen_hook,    "troll_gen",    NULL);
 		add_hook_new(HOOK_QUEST_FINISH,  quest_troll_finish_hook, "troll_finish", NULL);
 	}
-	return (FALSE);
 }

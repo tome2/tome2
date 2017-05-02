@@ -359,7 +359,7 @@ void quest_fireproof_building(bool_ *paid, bool_ *recreate)
 	}
 }
 
-static bool_ fireproof_get_hook(void *, void *in_, void *)
+static bool fireproof_get_hook(void *, void *in_, void *)
 {
 	struct hook_get_in *in = static_cast<struct hook_get_in *>(in_);
 	object_type *o_ptr = in->o_ptr;
@@ -376,17 +376,17 @@ static bool_ fireproof_get_hook(void *, void *in_, void *)
 		cmsg_print(TERM_YELLOW, "Fine! Looks like you've found it.");
 	}
 
-	return FALSE;
+	return false;
 }
 
-static bool_ fireproof_stair_hook(void *, void *, void *)
+static bool fireproof_stair_hook(void *, void *, void *)
 {
 	/* only ask this if player about to go up stairs of quest and
 	 * hasn't retrieved item */
 	if ((p_ptr->inside_quest != QUEST_FIREPROOF) ||
 	    (cquest.status == QUEST_STATUS_COMPLETED))
 	{
-		return FALSE;
+		return false;
 	}
 	else
 	{
@@ -394,7 +394,7 @@ static bool_ fireproof_stair_hook(void *, void *, void *)
 
 		if (cave[p_ptr->py][p_ptr->px].feat != FEAT_LESS)
 		{
-			return FALSE;
+			return false;
 		}
 
 		/* flush all pending input */
@@ -408,12 +408,12 @@ static bool_ fireproof_stair_hook(void *, void *, void *)
 		{
 			/* fail the quest */
 			cquest.status = QUEST_STATUS_FAILED;
-			return FALSE;
+			return false;
 		}
 		else
 		{
 			/* if no, they stay in the quest */
-			return TRUE;
+			return true;
 		}
 	}
 }
@@ -458,14 +458,14 @@ std::string quest_fireproof_describe()
 	return w.str();
 }
 
-static bool_ fireproof_gen_hook(void *, void *, void *)
+static bool fireproof_gen_hook(void *, void *, void *)
 {
 	fireproof_settings const *settings = fireproof_get_settings();
 
 	/* Only if player doing this quest */
 	if (p_ptr->inside_quest != QUEST_FIREPROOF)
 	{
-		return FALSE;
+		return false;
 	}
 
 	/* Go ahead */
@@ -497,11 +497,11 @@ static bool_ fireproof_gen_hook(void *, void *, void *)
 			drop_near(&forge, -1, y, x);
 		}
 
-		return TRUE;
+		return true;
 	}
 }
 
-bool_ quest_fireproof_init_hook()
+void quest_fireproof_init_hook()
 {
 	/* Only need hooks if the quest is unfinished. */
 	if ((cquest.status >= QUEST_STATUS_UNTAKEN) &&
@@ -511,8 +511,4 @@ bool_ quest_fireproof_init_hook()
 		add_hook_new(HOOK_GET      , fireproof_get_hook  , "fireproof_get_hook",   NULL);
 		add_hook_new(HOOK_STAIR    , fireproof_stair_hook, "fireproof_stair_hook", NULL);
 	}
-
-	return FALSE;
 }
-
-#undef print_hook

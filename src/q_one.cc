@@ -27,7 +27,7 @@
 
 #define cquest (quest[QUEST_ONE])
 
-static bool_ quest_one_move_hook(void *, void *in_, void *)
+static bool quest_one_move_hook(void *, void *in_, void *)
 {
 	struct hook_move_in *in = static_cast<struct hook_move_in *>(in_);
 	s32b y = in->y;
@@ -36,10 +36,16 @@ static bool_ quest_one_move_hook(void *, void *in_, void *)
 
 	if (cquest.status == QUEST_STATUS_UNTAKEN)
 	{
-		if (quest[QUEST_NECRO].status < QUEST_STATUS_FINISHED) return (FALSE);
+		if (quest[QUEST_NECRO].status < QUEST_STATUS_FINISHED)
+		{
+			return false;
+		}
 
 		/* The mirror of Galadriel */
-		if ((c_ptr->feat != FEAT_SHOP) || (c_ptr->special != 23)) return (FALSE);
+		if ((c_ptr->feat != FEAT_SHOP) || (c_ptr->special != 23))
+		{
+			return false;
+		}
 
 		cmsg_print(TERM_YELLOW, "You meet Galadriel; she seems worried.");
 		cmsg_print(TERM_YELLOW, "'So it was Sauron that lurked in Dol Guldur...'");
@@ -85,22 +91,32 @@ static bool_ quest_one_move_hook(void *, void *in_, void *)
 		cquest.status = QUEST_STATUS_TAKEN;
 		cquest.init();
 
-		return TRUE;
+		return true;
 	}
 
-	return FALSE;
+	return false;
 }
 
-static bool_ quest_one_drop_hook(void *, void *in_, void *)
+static bool quest_one_drop_hook(void *, void *in_, void *)
 {
 	struct hook_drop_in *in = static_cast<struct hook_drop_in *>(in_);
 	s32b o_idx = in->o_idx;
 	object_type *o_ptr = &p_ptr->inventory[o_idx];
 
-	if (cquest.status != QUEST_STATUS_TAKEN) return FALSE;
+	if (cquest.status != QUEST_STATUS_TAKEN)
+	{
+		return false;
+	}
 
-	if (o_ptr->name1 != ART_POWER) return FALSE;
-	if (cave[p_ptr->py][p_ptr->px].feat != FEAT_GREAT_FIRE) return FALSE;
+	if (o_ptr->name1 != ART_POWER)
+	{
+		return false;
+	}
+
+	if (cave[p_ptr->py][p_ptr->px].feat != FEAT_GREAT_FIRE)
+	{
+		return false;
+	}
 
 	cmsg_print(TERM_YELLOW, "You throw the One Ring into the #RGreat Fire#y; it is rapidly consumed");
 	cmsg_print(TERM_YELLOW, "by the searing flames.");
@@ -117,32 +133,44 @@ static bool_ quest_one_drop_hook(void *, void *in_, void *)
 	quest[*(quest[QUEST_ONE].plot)].status = QUEST_STATUS_TAKEN;
 	quest[*(quest[QUEST_ONE].plot)].init();
 
-	return TRUE;
+	return true;
 }
 
-static bool_ quest_one_wield_hook(void *, void *in_, void *)
+static bool quest_one_wield_hook(void *, void *in_, void *)
 {
 	struct hook_wield_in *in = static_cast<struct hook_wield_in *>(in_);
 	object_type *o_ptr = in->o_ptr;
 
-	if (cquest.status != QUEST_STATUS_TAKEN) return FALSE;
+	if (cquest.status != QUEST_STATUS_TAKEN)
+	{
+		return false;
+	}
 
-	if (o_ptr->name1 != ART_POWER) return FALSE;
+	if (o_ptr->name1 != ART_POWER)
+	{
+		return false;
+	}
 
-	/* Flush input */
+	// Make sure player is **really** warned
 	flush();
+	if (!get_check("You were warned not to wear it; are you sure?"))
+	{
+		return true;
+	}
 
-	if (!get_check("You were warned not to wear it; are you sure?")) return TRUE;
-	/* Flush input */
 	flush();
+	if (!get_check("You were warned not to wear it; are you *REALLY* sure?"))
+	{
+		return true;
+	}
 
-	if (!get_check("You were warned not to wear it; are you *REALLY* sure?")) return TRUE;
-
-	/* Flush input */
 	flush();
+	if (!get_check("You were *WARNED* not to wear it; are you *R*E*A*L*L*Y* sure?"))
+	{
+		return true;
+	}
 
-	if (!get_check("You were *WARNED* not to wear it; are you *R*E*A*L*L*Y* sure?")) return TRUE;
-
+	// Ok, that's enough warning
 	cmsg_print(TERM_YELLOW, "As you put it on your finger you feel #Ddark powers #ysapping your soul.");
 	cmsg_print(TERM_YELLOW, "The ring firmly binds to your finger!");
 	cmsg_print(TERM_YELLOW, "You feel you are drawn to the shadow world! Your material form weakens.");
@@ -172,10 +200,10 @@ static bool_ quest_one_wield_hook(void *, void *in_, void *)
 	/* Ok lets reset the lives counter */
 	p_ptr->lives = 0;
 
-	return FALSE;
+	return false;
 }
 
-static bool_ quest_one_hp_hook(void *, void *in_, void *out_)
+static bool quest_one_hp_hook(void *, void *in_, void *out_)
 {
 	struct hook_calculate_hp_in *in = static_cast<struct hook_calculate_hp_in *>(in_);
 	struct hook_calculate_hp_out *out = static_cast<struct hook_calculate_hp_out *>(out_);
@@ -185,15 +213,18 @@ static bool_ quest_one_hp_hook(void *, void *in_, void *out_)
 		s32b mhp = in->mhp;
 
 		for (int i = 0; i < p_ptr->lives + 1; i++)
+		{
 			mhp = (mhp * 2) / 3;
+		}
 
 		out->mhp = mhp;
-		return (TRUE);
+		return true;
 	}
-	return (FALSE);
+
+	return false;
 }
 
-static bool_ quest_one_die_hook(void *, void *, void *)
+static bool quest_one_die_hook(void *, void *, void *)
 {
 	if (cquest.status == QUEST_STATUS_FAILED_DONE)
 	{
@@ -201,7 +232,7 @@ static bool_ quest_one_die_hook(void *, void *, void *)
 		{
 			cmsg_print(TERM_YELLOW, "You feel the power of the One Ring sustaining your life,");
 			cmsg_print(TERM_YELLOW, "but it drags you even more into the shadow world.");
-			return (TRUE);
+			return true;
 		}
 		else
 		{
@@ -210,10 +241,10 @@ static bool_ quest_one_die_hook(void *, void *, void *)
 			game->died_from = "being drawn to the shadow world";
 		}
 	}
-	return (FALSE);
+	return false;
 }
 
-static bool_ quest_one_identify_hook(void *, void *in_, void *)
+static bool quest_one_identify_hook(void *, void *in_, void *)
 {
 	struct hook_identify_in *in = static_cast<struct hook_identify_in *>(in_);
 	object_type *o_ptr = in->o_ptr;
@@ -228,46 +259,52 @@ static bool_ quest_one_identify_hook(void *, void *in_, void *)
 		}
 	}
 
-	return (FALSE);
+	return false;
 }
 
-static bool_ quest_one_death_hook(void *, void *in_, void *)
+static bool quest_one_death_hook(void *, void *in_, void *)
 {
 	auto const &a_info = game->edit_data.a_info;
 
 	struct hook_monster_death_in *in = static_cast<struct hook_monster_death_in *>(in_);
 	s32b m_idx = in->m_idx;
 	s32b r_idx = m_list[m_idx].r_idx;
-	bool_ ok = FALSE;
+	bool ok = false;
 
-	if (a_info[ART_POWER].cur_num) return FALSE;
+	if (a_info[ART_POWER].cur_num)
+	{
+		return false;
+	}
 
 	/* Paranoia */
-	if (cquest.status != QUEST_STATUS_TAKEN) return (FALSE);
+	if (cquest.status != QUEST_STATUS_TAKEN)
+	{
+		return false;
+	}
 
 	if (magik(30) && (r_idx == test_monster_name("Sauron, the Sorcerer")))
 	{
-		ok = TRUE;
+		ok = true;
 	}
 	else if (magik(10) && (r_idx == test_monster_name("Ar-Pharazon the Golden")))
 	{
-		ok = TRUE;
+		ok = true;
 	}
 	else if (magik(10) && (r_idx == test_monster_name("Shelob, Spider of Darkness")))
 	{
-		ok = TRUE;
+		ok = true;
 	}
 	else if (magik(10) && (r_idx == test_monster_name("The Watcher in the Water")))
 	{
-		ok = TRUE;
+		ok = true;
 	}
 	else if (magik(10) && (r_idx == test_monster_name("Glaurung, Father of the Dragons")))
 	{
-		ok = TRUE;
+		ok = true;
 	}
 	else if (magik(10) && (r_idx == test_monster_name("Feagwath, the Undead Sorcerer")))
 	{
-		ok = TRUE;
+		ok = true;
 	}
 
 	if (ok)
@@ -290,7 +327,10 @@ static bool_ quest_one_death_hook(void *, void *in_, void *)
 		for (i = 0; i < INVEN_PACK; i++)
 		{
 			/* Skip non-objects */
-			if (!p_ptr->inventory[i].k_idx) break;
+			if (!p_ptr->inventory[i].k_idx)
+			{
+				break;
+			}
 		}
 		/* Arg, no space ! */
 		if (i == INVEN_PACK)
@@ -310,10 +350,10 @@ static bool_ quest_one_death_hook(void *, void *in_, void *)
 		inven_carry(q_ptr, FALSE);
 	}
 
-	return (FALSE);
+	return false;
 }
 
-static bool_ quest_one_dump_hook(void *, void *in_, void *)
+static bool quest_one_dump_hook(void *, void *in_, void *)
 {
 	struct hook_chardump_in *in = static_cast<struct hook_chardump_in *>(in_);
 	FILE *f = in->file;
@@ -326,16 +366,22 @@ static bool_ quest_one_dump_hook(void *, void *in_, void *)
 	{
 		fprintf(f, "\n You fell under the evil influence of the One Ring and decided to wear it.");
 	}
-	return (FALSE);
+	return false;
 }
 
-static bool_ quest_one_gen_hook(void *, void *, void *)
+static bool quest_one_gen_hook(void *, void *, void *)
 {
 	s32b x, y, tries = 10000;
 
 	/* Paranoia */
-	if (cquest.status != QUEST_STATUS_TAKEN) return (FALSE);
-	if ((dungeon_type != DUNGEON_ANGBAND) || (dun_level != 99)) return (FALSE);
+	if (cquest.status != QUEST_STATUS_TAKEN)
+	{
+		return false;
+	}
+	if ((dungeon_type != DUNGEON_ANGBAND) || (dun_level != 99))
+	{
+		return false;
+	}
 
 	/* Find a good position */
 	while (tries)
@@ -357,10 +403,10 @@ static bool_ quest_one_gen_hook(void *, void *, void *)
 		if (m_idx) m_list[m_idx].mflag |= MFLAG_QUEST;
 	}
 
-	return (FALSE);
+	return false;
 }
 
-bool_ quest_one_init_hook()
+void quest_one_init_hook()
 {
 	if ((cquest.status >= QUEST_STATUS_TAKEN) && (cquest.status < QUEST_STATUS_FINISHED))
 	{
@@ -377,5 +423,4 @@ bool_ quest_one_init_hook()
 	add_hook_new(HOOK_CHAR_DUMP, quest_one_dump_hook, "one_dump", NULL);
 	add_hook_new(HOOK_CALC_HP,   quest_one_hp_hook,   "one_hp",   NULL);
 	add_hook_new(HOOK_DIE,       quest_one_die_hook,  "one_die",  NULL);
-	return (FALSE);
 }

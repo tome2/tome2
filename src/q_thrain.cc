@@ -30,33 +30,52 @@ GENERATE_MONSTER_LOOKUP_FN(get_thrain, "Thrain, the King Under the Mountain")
 GENERATE_MONSTER_LOOKUP_FN(get_dwar, "Dwar, Dog Lord of Waw")
 GENERATE_MONSTER_LOOKUP_FN(get_hoarmurath, "Hoarmurath of Dir")
 
-static bool_ quest_thrain_death_hook(void *, void *in_, void *)
+static bool quest_thrain_death_hook(void *, void *in_, void *)
 {
 	struct hook_monster_death_in *in = static_cast<struct hook_monster_death_in *>(in_);
 	s32b m_idx = in->m_idx;
 	int r, x, y;
 	monster_type *m_ptr;
 
-	if ((cquest.status >= QUEST_STATUS_FINISHED) || (dun_level !=cquest.data[0]) || (dungeon_type != DUNGEON_DOL_GULDUR)) return (FALSE);
+	if ((cquest.status >= QUEST_STATUS_FINISHED) || (dun_level !=cquest.data[0]) || (dungeon_type != DUNGEON_DOL_GULDUR))
+	{
+		return false;
+	}
+
 	m_ptr = &m_list[m_idx];
-	if ((m_ptr->r_idx != get_dwar()) && (m_ptr->r_idx != get_hoarmurath())) return (FALSE);
+	if ((m_ptr->r_idx != get_dwar()) && (m_ptr->r_idx != get_hoarmurath()))
+	{
+		return false;
+	}
 
 	cquest.data[2]++;
 
-	if (cquest.data[2] < 2) return (FALSE);
+	if (cquest.data[2] < 2)
+	{
+		return false;
+	}
 
 	cmsg_print(TERM_YELLOW, "The magic hiding the room dissipates.");
 	for (x = 0; x < cur_wid; x++)
+	{
 		for (y = 0; y < cur_hgt; y++)
 		{
 			cave_type *c_ptr = &cave[y][x];
 
-			if (c_ptr->mimic != 61) continue;
-			if (!(c_ptr->info & CAVE_FREE)) continue;
+			if (c_ptr->mimic != 61)
+			{
+				continue;
+			}
+
+			if (!(c_ptr->info & CAVE_FREE))
+			{
+				continue;
+			}
 
 			c_ptr->mimic = 0;
 			lite_spot(y, x);
 		}
+	}
 
 	cquest.status = QUEST_STATUS_FINISHED;
 	cmsg_print(TERM_YELLOW, "Thrain speaks:");
@@ -72,7 +91,10 @@ static bool_ quest_thrain_death_hook(void *, void *in_, void *)
 		monster_type *m_ptr = &m_list[r];
 
 		/* Ignore "dead" monsters */
-		if (!m_ptr->r_idx) continue;
+		if (!m_ptr->r_idx)
+		{
+			continue;
+		}
 
 		/* Is it the princess? */
 		if (m_ptr->r_idx == get_thrain())
@@ -114,10 +136,10 @@ static bool_ quest_thrain_death_hook(void *, void *in_, void *)
 	del_hook_new(HOOK_MONSTER_DEATH, quest_thrain_death_hook);
 	process_hooks_restart = TRUE;
 
-	return (FALSE);
+	return false;
 }
 
-static bool_ quest_thrain_gen_hook(void *, void *in_, void *)
+static bool quest_thrain_gen_hook(void *, void *in_, void *)
 {
 	struct hook_build_room1_in *in = static_cast<struct hook_build_room1_in *>(in_);
 	s32b bx0 = in->x;
@@ -128,16 +150,16 @@ static bool_ quest_thrain_gen_hook(void *, void *in_, void *)
 	int y2, x2, yval, xval;
 	int y1, x1, xsize, ysize;
 
-	if (dungeon_type != DUNGEON_DOL_GULDUR) return (FALSE);
-	if (cquest.data[0] != dun_level) return (FALSE);
-	if (cquest.data[1]) return (FALSE);
-	if ((cquest.status < QUEST_STATUS_TAKEN) || (cquest.status >= QUEST_STATUS_FINISHED)) return (FALSE);
+	if (dungeon_type != DUNGEON_DOL_GULDUR) return false;
+	if (cquest.data[0] != dun_level) return false;
+	if (cquest.data[1]) return false;
+	if ((cquest.status < QUEST_STATUS_TAKEN) || (cquest.status >= QUEST_STATUS_FINISHED)) return false;
 
 	/* Pick a room size */
 	get_map_size("thrain.map", &ysize, &xsize);
 
 	/* Try to allocate space for room.  If fails, exit */
-	if (!room_alloc(xsize + 2, ysize + 2, FALSE, by0, bx0, &xval, &yval)) return FALSE;
+	if (!room_alloc(xsize + 2, ysize + 2, FALSE, by0, bx0, &xval, &yval)) return false;
 
 	/* Get corner values */
 	y1 = yval - ysize / 2;
@@ -185,37 +207,38 @@ static bool_ quest_thrain_gen_hook(void *, void *in_, void *)
 	/* Don't try another one for this generation */
 	cquest.data[1] = 1;
 
-	return (TRUE);
+	return true;
 }
 
-static bool_ quest_thrain_feeling_hook(void *, void *, void *)
+static bool quest_thrain_feeling_hook(void *, void *, void *)
 {
-	if (dungeon_type != DUNGEON_DOL_GULDUR) return (FALSE);
-	if (cquest.data[0] != dun_level) return (FALSE);
-	if (cquest.status != QUEST_STATUS_UNTAKEN) return (FALSE);
+	if (dungeon_type != DUNGEON_DOL_GULDUR) return false;
+	if (cquest.data[0] != dun_level) return false;
+	if (cquest.status != QUEST_STATUS_UNTAKEN) return false;
 
 	cmsg_format(TERM_YELLOW, "You hear someone shouting under the torture.");
 	cquest.status = QUEST_STATUS_TAKEN;
 	cquest.init();
 
-	return (FALSE);
+	return false;
 }
 
-static bool_ quest_thrain_move_hook(void *, void *in_, void *)
+static bool quest_thrain_move_hook(void *, void *in_, void *)
 {
 	struct hook_move_in *in = static_cast<struct hook_move_in *>(in_);
 	s32b y = in->y;
 	s32b x = in->x;
 	cave_type *c_ptr = &cave[y][x];
 
-	if (dungeon_type != DUNGEON_DOL_GULDUR) return (FALSE);
-	if (cquest.data[0] != dun_level) return (FALSE);
-	if ((cquest.status < QUEST_STATUS_TAKEN) || (cquest.status >= QUEST_STATUS_FINISHED)) return (FALSE);
-	if (!(c_ptr->info & CAVE_FREE)) return (FALSE);
-	if (c_ptr->mimic != 61) return (FALSE);
+	if (dungeon_type != DUNGEON_DOL_GULDUR) return false;
+	if (cquest.data[0] != dun_level) return false;
+	if ((cquest.status < QUEST_STATUS_TAKEN) || (cquest.status >= QUEST_STATUS_FINISHED)) return false;
+	if (!(c_ptr->info & CAVE_FREE)) return false;
+	if (c_ptr->mimic != 61) return false;
 
 	cmsg_print(TERM_YELLOW, "The magic hiding the room dissipates.");
 	for (x = 0; x < cur_wid; x++)
+	{
 		for (y = 0; y < cur_hgt; y++)
 		{
 			c_ptr = &cave[y][x];
@@ -226,18 +249,19 @@ static bool_ quest_thrain_move_hook(void *, void *in_, void *)
 			c_ptr->mimic = 0;
 			lite_spot(y, x);
 		}
+	}
 
-	return (FALSE);
+	return false;
 }
 
-static bool_ quest_thrain_turn_hook(void *, void *, void *)
+static bool quest_thrain_turn_hook(void *, void *, void *)
 {
 	cquest.data[1] = 0;
 	cquest.data[2] = 0;
-	return (FALSE);
+	return false;
 }
 
-bool_ quest_thrain_init_hook()
+void quest_thrain_init_hook()
 {
 	auto const &d_info = game->edit_data.d_info;
 
@@ -261,5 +285,4 @@ bool_ quest_thrain_init_hook()
 		add_hook_new(HOOK_FEELING,       quest_thrain_feeling_hook, "thrain_feel",      NULL);
 		add_hook_new(HOOK_MONSTER_DEATH, quest_thrain_death_hook,   "thrain_death",     NULL);
 	}
-	return (FALSE);
 }

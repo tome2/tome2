@@ -19,7 +19,7 @@
 
 #define cquest (quest[QUEST_DRAGONS])
 
-static bool_ quest_dragons_gen_hook(void *, void *, void *)
+static bool quest_dragons_gen_hook(void *, void *, void *)
 {
 	auto const &f_info = game->edit_data.f_info;
 
@@ -107,7 +107,7 @@ static bool_ quest_dragons_gen_hook(void *, void *, void *)
 	return TRUE;
 }
 
-static bool_ quest_dragons_death_hook(void *, void *, void *)
+static bool quest_dragons_death_hook(void *, void *, void *)
 {
 	int i, mcnt = 0;
 
@@ -120,9 +120,15 @@ static bool_ quest_dragons_death_hook(void *, void *, void *)
 		monster_type *m_ptr = &m_list[i];
 
 		/* Ignore "dead" monsters */
-		if (!m_ptr->r_idx) continue;
+		if (!m_ptr->r_idx)
+		{
+			continue;
+		}
 
-		if (m_ptr->status <= MSTATUS_ENEMY) mcnt++;
+		if (m_ptr->status <= MSTATUS_ENEMY)
+		{
+			mcnt++;
+		}
 	}
 
 	/* Nobody left ? */
@@ -134,17 +140,21 @@ static bool_ quest_dragons_death_hook(void *, void *, void *)
 		process_hooks_restart = TRUE;
 
 		cmsg_print(TERM_YELLOW, "Gondolin is safer now.");
-		return (FALSE);
+		return false;
 	}
-	return FALSE;
+
+	return false;
 }
 
-static bool_ quest_dragons_finish_hook(void *, void *in_, void *)
+static bool quest_dragons_finish_hook(void *, void *in_, void *)
 {
 	struct hook_quest_finish_in *in = static_cast<struct hook_quest_finish_in *>(in_);
 	s32b q_idx = in->q_idx;
 
-	if (q_idx != QUEST_DRAGONS) return FALSE;
+	if (q_idx != QUEST_DRAGONS)
+	{
+		return false;
+	}
 
 	c_put_str(TERM_YELLOW, "Thank you for killing the dragons!", 8, 0);
 	c_put_str(TERM_YELLOW, "You can use the cave as your house as a reward.", 9, 0);
@@ -152,10 +162,10 @@ static bool_ quest_dragons_finish_hook(void *, void *in_, void *)
 	/* Continue the plot */
 	*(quest[q_idx].plot) = QUEST_EOL;
 
-	return TRUE;
+	return true;
 }
 
-bool_ quest_dragons_init_hook()
+void quest_dragons_init_hook()
 {
 	if ((cquest.status >= QUEST_STATUS_UNTAKEN) && (cquest.status < QUEST_STATUS_FINISHED))
 	{
@@ -163,5 +173,4 @@ bool_ quest_dragons_init_hook()
 		add_hook_new(HOOK_QUEST_FINISH,  quest_dragons_finish_hook, "dragons_finish",        NULL);
 		add_hook_new(HOOK_GEN_QUEST,     quest_dragons_gen_hook,    "dragons_geb",           NULL);
 	}
-	return (FALSE);
 }

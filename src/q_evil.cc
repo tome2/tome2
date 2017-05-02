@@ -19,7 +19,7 @@
 
 #define cquest (quest[QUEST_EVIL])
 
-static bool_ quest_evil_gen_hook(void *, void *, void *)
+static bool quest_evil_gen_hook(void *, void *, void *)
 {
 	auto const &f_info = game->edit_data.f_info;
 
@@ -27,11 +27,16 @@ static bool_ quest_evil_gen_hook(void *, void *, void *)
 	int xstart = 2;
 	int ystart = 2;
 
-	if (p_ptr->inside_quest != QUEST_EVIL) return FALSE;
+	if (p_ptr->inside_quest != QUEST_EVIL)
+	{
+		return false;
+	}
 
 	/* Just in case we didnt talk the the mayor */
 	if (cquest.status == QUEST_STATUS_UNTAKEN)
+	{
 		cquest.status = QUEST_STATUS_TAKEN;
+	}
 
 	/* Start with perm walls */
 	for (y = 0; y < cur_hgt; y++)
@@ -70,14 +75,17 @@ static bool_ quest_evil_gen_hook(void *, void *, void *)
 
 	process_hooks_restart = TRUE;
 
-	return TRUE;
+	return true;
 }
 
-static bool_ quest_evil_death_hook(void *, void *, void *)
+static bool quest_evil_death_hook(void *, void *, void *)
 {
 	int i, mcnt = 0;
 
-	if (p_ptr->inside_quest != QUEST_EVIL) return FALSE;
+	if (p_ptr->inside_quest != QUEST_EVIL)
+	{
+		return false;
+	}
 
 	/* Process the monsters (backwards) */
 	for (i = m_max - 1; i >= 1; i--)
@@ -103,17 +111,20 @@ static bool_ quest_evil_death_hook(void *, void *, void *)
 		process_hooks_restart = TRUE;
 
 		cmsg_print(TERM_YELLOW, "Khazad-Dum is safer now.");
-		return (FALSE);
+		return false;
 	}
-	return FALSE;
+	return false;
 }
 
-static bool_ quest_evil_finish_hook(void *, void *in_, void *)
+static bool quest_evil_finish_hook(void *, void *in_, void *)
 {
 	struct hook_quest_finish_in *in = static_cast<struct hook_quest_finish_in *>(in_);
 	s32b q_idx = in->q_idx;
 
-	if (q_idx != QUEST_EVIL) return FALSE;
+	if (q_idx != QUEST_EVIL)
+	{
+		return false;
+	}
 
 	c_put_str(TERM_YELLOW, "Thank you for saving us!", 8, 0);
 	c_put_str(TERM_YELLOW, "You can use the cave as your house as a reward.", 9, 0);
@@ -121,10 +132,10 @@ static bool_ quest_evil_finish_hook(void *, void *in_, void *)
 	/* End the plot */
 	*(quest[q_idx].plot) = QUEST_NULL;
 
-	return TRUE;
+	return true;
 }
 
-bool_ quest_evil_init_hook()
+void quest_evil_init_hook()
 {
 	if ((cquest.status >= QUEST_STATUS_UNTAKEN) && (cquest.status < QUEST_STATUS_FINISHED))
 	{
@@ -132,5 +143,4 @@ bool_ quest_evil_init_hook()
 		add_hook_new(HOOK_QUEST_FINISH,  quest_evil_finish_hook, "evil_finish",        NULL);
 		add_hook_new(HOOK_GEN_QUEST,     quest_evil_gen_hook,    "evil_geb",           NULL);
 	}
-	return (FALSE);
 }

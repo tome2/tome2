@@ -19,13 +19,16 @@
 
 #define cquest (quest[QUEST_INVASION])
 
-static bool_ quest_invasion_gen_hook(void *, void *, void *)
+static bool quest_invasion_gen_hook(void *, void *, void *)
 {
 	int x, y;
 	int xstart = 2;
 	int ystart = 2;
 
-	if (p_ptr->inside_quest != QUEST_INVASION) return FALSE;
+	if (p_ptr->inside_quest != QUEST_INVASION)
+	{
+		return false;
+	}
 
 	/* Start with perm walls */
 	for (y = 0; y < cur_hgt; y++)
@@ -47,6 +50,7 @@ static bool_ quest_invasion_gen_hook(void *, void *, void *)
 	process_dungeon_file("maeglin.map", &ystart, &xstart, cur_hgt, cur_wid, TRUE, TRUE);
 
 	for (x = 3; x < xstart; x++)
+	{
 		for (y = 3; y < ystart; y++)
 		{
 			if (cave[y][x].feat == FEAT_MARKER)
@@ -58,18 +62,22 @@ static bool_ quest_invasion_gen_hook(void *, void *, void *)
 				cave_set_feat(p_ptr->py, p_ptr->px, FEAT_LESS);
 			}
 		}
+	}
 
-	return TRUE;
+	return true;
 }
 
-static bool_ quest_invasion_ai_hook(void *, void *in_, void *out_)
+static bool quest_invasion_ai_hook(void *, void *in_, void *out_)
 {
 	struct hook_monster_ai_in *in = static_cast<struct hook_monster_ai_in *>(in_);
 	struct hook_monster_ai_out *out = static_cast<struct hook_monster_ai_out *>(out_);
 	monster_type *m_ptr = in->m_ptr;
 	s32b m_idx = in->m_idx;
 
-	if (p_ptr->inside_quest != QUEST_INVASION) return FALSE;
+	if (p_ptr->inside_quest != QUEST_INVASION)
+	{
+		return false;
+	}
 
 	/* Ugly but thats better than a call to test_monster_name which is SLOW */
 	if (m_ptr->r_idx == 825)
@@ -82,26 +90,26 @@ static bool_ quest_invasion_ai_hook(void *, void *in_, void *out_)
 			cmsg_print(TERM_YELLOW, "Maeglin found the way to Gondolin! All hope is lost now!");
 			cquest.status = QUEST_STATUS_FAILED;
 			town_info[2].destroyed = TRUE;
-			return (FALSE);
+			return false;
 		}
 
 		/* Attack or flee ?*/
 		if (distance(m_ptr->fy, m_ptr->fx, p_ptr->py, p_ptr->px) <= 2)
 		{
-			return (FALSE);
+			return false;
 		}
 		else
 		{
 			out->y = cquest.data[0];
 			out->x = cquest.data[1];
-			return (TRUE);
+			return true;
 		}
 	}
 
-	return (FALSE);
+	return false;
 }
 
-static bool_ quest_invasion_turn_hook(void *, void *, void *)
+static bool quest_invasion_turn_hook(void *, void *, void *)
 {
 	if (cquest.status != QUEST_STATUS_UNTAKEN) return (FALSE);
 	if (p_ptr->lev < 45) return (FALSE);
@@ -124,10 +132,10 @@ static bool_ quest_invasion_turn_hook(void *, void *, void *)
 	del_hook_new(HOOK_END_TURN, quest_invasion_turn_hook);
 	process_hooks_restart = TRUE;
 
-	return (FALSE);
+	return false;
 }
 
-static bool_ quest_invasion_dump_hook(void *, void *in_, void *)
+static bool quest_invasion_dump_hook(void *, void *in_, void *)
 {
 	struct hook_chardump_in *in = static_cast<struct hook_chardump_in *>(in_);
 	FILE *f = in->file;
@@ -140,16 +148,19 @@ static bool_ quest_invasion_dump_hook(void *, void *in_, void *)
 	{
 		fprintf(f, "\n You saved Gondolin from destruction.");
 	}
-	return (FALSE);
+	return false;
 }
 
-static bool_ quest_invasion_death_hook(void *, void *in_, void *)
+static bool quest_invasion_death_hook(void *, void *in_, void *)
 {
 	struct hook_monster_death_in *in = static_cast<struct hook_monster_death_in *>(in_);
 	s32b m_idx = in->m_idx;
 	s32b r_idx = m_list[m_idx].r_idx;
 
-	if (p_ptr->inside_quest != QUEST_INVASION) return FALSE;
+	if (p_ptr->inside_quest != QUEST_INVASION)
+	{
+		return false;
+	}
 
 	if (r_idx == test_monster_name("Maeglin, the Traitor of Gondolin"))
 	{
@@ -159,13 +170,13 @@ static bool_ quest_invasion_death_hook(void *, void *in_, void *)
 		del_hook_new(HOOK_MONSTER_DEATH, quest_invasion_death_hook);
 		process_hooks_restart = TRUE;
 
-		return (FALSE);
+		return false;
 	}
 
-	return FALSE;
+	return false;
 }
 
-static bool_ quest_invasion_stair_hook(void *, void *in_, void *)
+static bool quest_invasion_stair_hook(void *, void *in_, void *)
 {
 	struct hook_stair_in *in = static_cast<struct hook_stair_in *>(in_);
 
@@ -201,13 +212,13 @@ static bool_ quest_invasion_stair_hook(void *, void *in_, void *)
 		}
 		del_hook_new(HOOK_STAIR, quest_invasion_stair_hook);
 		process_hooks_restart = TRUE;
-		return (FALSE);
+		return false;
 	}
 
-	return TRUE;
+	return true;
 }
 
-bool_ quest_invasion_init_hook()
+void quest_invasion_init_hook()
 {
 	add_hook_new(HOOK_END_TURN,  quest_invasion_turn_hook, "invasion_turn", NULL);
 	add_hook_new(HOOK_CHAR_DUMP, quest_invasion_dump_hook, "invasion_dump", NULL);
@@ -218,5 +229,4 @@ bool_ quest_invasion_init_hook()
 		add_hook_new(HOOK_MONSTER_DEATH, quest_invasion_death_hook, "invasion_death", NULL);
 		add_hook_new(HOOK_STAIR,         quest_invasion_stair_hook, "invasion_stair", NULL);
 	}
-	return (FALSE);
 }

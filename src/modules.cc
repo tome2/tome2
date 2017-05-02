@@ -557,7 +557,7 @@ exit:
 	screen_load();
 }
 
-static bool_ auto_stat_gain_hook(void *data, void *in, void *out)
+static bool auto_stat_gain_hook(void *data, void *in, void *out)
 {
 	while (p_ptr->last_rewarded_level * 5 <= p_ptr->lev)
 	{
@@ -571,10 +571,10 @@ static bool_ auto_stat_gain_hook(void *data, void *in, void *out)
 		p_ptr->last_rewarded_level += 1;
 	}
 
-	return FALSE;
+	return false;
 }
 
-static bool_ drunk_takes_wine(void *data, void *in_, void *out)
+static bool drunk_takes_wine(void *, void *in_, void *)
 {
 	hook_give_in *in = (hook_give_in *) in_;
 	monster_type *m_ptr = &m_list[in->m_idx];
@@ -604,7 +604,7 @@ static bool_ drunk_takes_wine(void *data, void *in_, void *out)
 	}
 }
 
-static bool_ hobbit_food(void *data, void *in_, void *out)
+static bool hobbit_food(void *, void *in_, void *)
 {
 	hook_give_in *in = (hook_give_in *) in_;
 	monster_type *m_ptr = &m_list[in->m_idx];
@@ -617,15 +617,15 @@ static bool_ hobbit_food(void *data, void *in_, void *out)
 
 		inc_stack_size_ex(in->item, -1, OPTIMIZE, NO_DESCRIBE);
 
-		return TRUE;
+		return true;
 	}
 	else
 	{
-		return FALSE;
+		return false;
 	}
 }
 
-static bool_ smeagol_ring(void *data, void *in_, void *out)
+static bool smeagol_ring(void *data, void *in_, void *out)
 {
 	hook_give_in *in = (hook_give_in *) in_;
 	monster_type *m_ptr = &m_list[in->m_idx];
@@ -638,15 +638,15 @@ static bool_ smeagol_ring(void *data, void *in_, void *out)
 
 		inc_stack_size_ex(in->item, -1, OPTIMIZE, NO_DESCRIBE);
 
-		return TRUE;
+		return true;
 	}
 	else
 	{
-		return FALSE;
+		return false;
 	}
 }
 
-static bool_ longbottom_leaf(void *data, void *in_, void *out_)
+static bool longbottom_leaf(void *, void *in_, void *)
 {
 	hook_eat_in *in = (hook_eat_in *) in_;
 
@@ -655,13 +655,13 @@ static bool_ longbottom_leaf(void *data, void *in_, void *out_)
 	{
 		msg_print("What a stress reliever!");
 		heal_insanity(1000);
-		return TRUE;
+		return true;
 	}
 
-	return FALSE;
+	return false;
 }
 
-static bool_ food_vessel(void *data, void *in_, void *out)
+static bool food_vessel(void *, void *in_, void *ut)
 {
 	hook_eat_in *in = (hook_eat_in *) in_;
 
@@ -675,16 +675,16 @@ static bool_ food_vessel(void *data, void *in_, void *out)
 		forge.ident |= IDENT_MENTAL | IDENT_KNOWN;
 		inven_carry(&forge, FALSE);
 
-		return TRUE;
+		return true;
 	}
 
-	return FALSE;
+	return false;
 }
 
 /*
  * Player must have appropriate keys to enter Erebor.
  */
-static bool_ erebor_stair(void *data, void *in_, void *out_)
+static bool erebor_stair(void *, void *in_, void *out_)
 {
 	hook_stair_in *in = (hook_stair_in *) in_;
 	hook_stair_out *out = (hook_stair_out *) out_;
@@ -719,13 +719,13 @@ static bool_ erebor_stair(void *data, void *in_, void *out_)
 		}
 	}
 
-	return FALSE;
+	return false;
 }
 
 /*
  * Orthanc requires a key.
  */
-static bool_ orthanc_stair(void *data, void *in_, void *out_)
+static bool orthanc_stair(void *, void *in_, void *out_)
 {
 	hook_stair_in *in = (hook_stair_in *) in_;
 	hook_stair_out *out = (hook_stair_out *) out_;
@@ -757,13 +757,13 @@ static bool_ orthanc_stair(void *data, void *in_, void *out_)
 		}
 	}
 
-	return FALSE;
+	return false;
 }
 
 /*
  * Movement from Theme
  */
-static bool_ theme_push_past(void *data, void *in_, void *out_)
+static bool theme_push_past(void *data, void *in_, void *out_)
 {
 	hook_move_in *p = (hook_move_in *) in_;
 	cave_type *c_ptr = &cave[p->y][p->x];
@@ -796,19 +796,19 @@ static bool_ theme_push_past(void *data, void *in_, void *out_)
 				msg_print(format("%s is in your way!", buf));
 				energy_use = 0;
 
-				return TRUE;
+				return true;
 			}
 		}
 	}
 
-	return FALSE;
+	return false;
 }
 
 /*
  * Check if monster race is in list. The list is terminated
  * with a -1.
  */
-static bool_ race_in_list(int r_idx, int race_idxs[])
+static bool race_in_list(int r_idx, int race_idxs[])
 {
 	int i;
 
@@ -816,11 +816,11 @@ static bool_ race_in_list(int r_idx, int race_idxs[])
 	{
 		if (r_idx == race_idxs[i])
 		{
-			return TRUE;
+			return true;
 		}
 	}
 
-	return FALSE;
+	return false;
 }
 
 /*
@@ -1155,11 +1155,9 @@ s16b *theme_race_status(int r_idx)
 	return NULL;
 }
 
-static bool_ theme_level_end_gen(void *data, void *in, void *out)
+static bool theme_level_end_gen(void *, void *, void *)
 {
-	int i = 0;
-
-	for (i = 0; i < m_max; i++)
+	for (int i = 0; i < m_max; i++)
 	{
 		monster_type *m_ptr = &m_list[i];
 		int r_idx = m_ptr->r_idx;
@@ -1170,10 +1168,10 @@ static bool_ theme_level_end_gen(void *data, void *in, void *out)
 		}
 	}
 
-	return FALSE;
+	return false;
 }
 
-static bool_ theme_new_monster_end(void *data, void *in_, void *out)
+static bool theme_new_monster_end(void *, void *in_, void *)
 {
 	hook_new_monster_end_in *in = (hook_new_monster_end_in *) in_;
 	s16b *status = theme_race_status(in->m_ptr->r_idx);
@@ -1183,7 +1181,7 @@ static bool_ theme_new_monster_end(void *data, void *in_, void *out)
 		in->m_ptr->status = *status;
 	}
 
-	return FALSE;
+	return false;
 }
 
 void init_hooks_module()

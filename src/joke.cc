@@ -22,7 +22,7 @@ static void gen_joke_place_monster(int r_idx)
 	}
 }
 
-bool_ gen_joke_monsters(void *data, void *in, void *out)
+bool gen_joke_monsters(void *data, void *in, void *out)
 {
 	if (options->joke_monsters)
 	{

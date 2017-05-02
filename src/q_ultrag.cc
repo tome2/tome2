@@ -20,7 +20,7 @@
 
 #define cquest (quest[QUEST_ULTRA_GOOD])
 
-static bool_ quest_ultra_good_move_hook(void *, void *in_, void *)
+static bool quest_ultra_good_move_hook(void *, void *in_, void *)
 {
 	struct hook_move_in *in = static_cast<struct hook_move_in *>(in_);
 	s32b y = in->y;
@@ -29,10 +29,16 @@ static bool_ quest_ultra_good_move_hook(void *, void *in_, void *)
 
 	if (cquest.status == QUEST_STATUS_UNTAKEN)
 	{
-		if (quest[QUEST_MORGOTH].status < QUEST_STATUS_FINISHED) return (FALSE);
+		if (quest[QUEST_MORGOTH].status < QUEST_STATUS_FINISHED)
+		{
+			return false;
+		}
 
 		/* The mirror of Galadriel */
-		if ((c_ptr->feat != FEAT_SHOP) || (c_ptr->special != 23)) return (FALSE);
+		if ((c_ptr->feat != FEAT_SHOP) || (c_ptr->special != 23))
+		{
+			return false;
+		}
 
 		auto old_quick_messages = options->quick_messages;
 		options->quick_messages = FALSE;
@@ -85,33 +91,37 @@ static bool_ quest_ultra_good_move_hook(void *, void *in_, void *)
 
 		options->quick_messages = old_quick_messages;
 
-		return TRUE;
+		return true;
 	}
 
-	return FALSE;
+	return false;
 }
 
-static bool_ quest_ultra_good_stair_hook(void *, void *in_, void *)
+static bool quest_ultra_good_stair_hook(void *, void *in_, void *)
 {
 	struct hook_stair_in *in = static_cast<struct hook_stair_in *>(in_);
 	stairs_direction dir = in->direction;
 
 	if (dungeon_type != DUNGEON_VOID)
-		return FALSE;
+	{
+		return false;
+	}
 
 	/* Cant leave */
 	if ((dir == STAIRS_UP) && (dun_level == 128))
 	{
 		cmsg_print(TERM_YELLOW, "The portal to Arda is now closed.");
-		return TRUE;
+		return true;
 	}
+
 	/* there is no coming back */
 	if ((dir == STAIRS_UP) && (dun_level == 150))
 	{
 		cmsg_print(TERM_YELLOW, "The barrier seems to be impenetrable from this side.");
 		cmsg_print(TERM_YELLOW, "You will have to move on.");
-		return TRUE;
+		return true;
 	}
+
 	/* Cant enter without the flame imperishable */
 	if ((dir == STAIRS_DOWN) && (dun_level == 149))
 	{
@@ -123,7 +133,10 @@ static bool_ quest_ultra_good_stair_hook(void *, void *in_, void *)
 		{
 			object_type *o_ptr = get_object(i);
 
-			if (!o_ptr->k_idx) continue;
+			if (!o_ptr->k_idx)
+			{
+				continue;
+			}
 
 			auto const flags = object_flags(o_ptr);
 
@@ -148,19 +161,21 @@ static bool_ quest_ultra_good_stair_hook(void *, void *in_, void *)
 		}
 	}
 
-	return FALSE;
+	return false;
 }
 
-static bool_ quest_ultra_good_recall_hook(void *, void *, void *)
+static bool quest_ultra_good_recall_hook(void *, void *, void *)
 {
 	if ((dungeon_type != DUNGEON_VOID) && (dungeon_type != DUNGEON_NETHER_REALM))
-		return FALSE;
+	{
+		return false;
+	}
 
 	cmsg_print(TERM_YELLOW, "You cannot recall. The portal to Arda is closed.");
-	return TRUE;
+	return true;
 }
 
-static bool_ quest_ultra_good_death_hook(void *, void *in_, void *)
+static bool quest_ultra_good_death_hook(void *, void *in_, void *)
 {
 	struct hook_monster_death_in *in = static_cast<struct hook_monster_death_in *>(in_);
 	s32b m_idx = in->m_idx;
@@ -226,7 +241,10 @@ static bool_ quest_ultra_good_death_hook(void *, void *in_, void *)
 		for (i = 0; i < INVEN_PACK; i++)
 		{
 			/* Skip non-objects */
-			if (!p_ptr->inventory[i].k_idx) break;
+			if (!p_ptr->inventory[i].k_idx)
+			{
+				break;
+			}
 		}
 		/* Arg, no space ! */
 		if (i == INVEN_PACK)
@@ -245,10 +263,11 @@ static bool_ quest_ultra_good_death_hook(void *, void *in_, void *)
 		cmsg_format(TERM_VIOLET, "You feel the urge to pick up the Flame Imperishable.");
 		inven_carry(q_ptr, FALSE);
 	}
-	return (FALSE);
+
+	return false;
 }
 
-static bool_ quest_ultra_good_dump_hook(void *, void *in_, void *)
+static bool quest_ultra_good_dump_hook(void *, void *in_, void *)
 {
 	struct hook_chardump_in *in = static_cast<struct hook_chardump_in *>(in_);
 	FILE *f = in->file;
@@ -271,11 +290,12 @@ static bool_ quest_ultra_good_dump_hook(void *, void *in_, void *)
 			}
 		}
 	}
-	return (FALSE);
+
+	return false;
 }
 
 
-bool_ quest_ultra_good_init_hook()
+void quest_ultra_good_init_hook()
 {
 	if ((cquest.status >= QUEST_STATUS_TAKEN) && (cquest.status < QUEST_STATUS_FINISHED))
 	{
@@ -288,5 +308,4 @@ bool_ quest_ultra_good_init_hook()
 		add_hook_new(HOOK_MOVE, quest_ultra_good_move_hook, "ultrag_move", NULL);
 	}
 	add_hook_new(HOOK_CHAR_DUMP, quest_ultra_good_dump_hook, "ultrag_dump", NULL);
-	return (FALSE);
 }

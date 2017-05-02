@@ -19,7 +19,7 @@
 
 #define cquest (quest[QUEST_BETWEEN])
 
-static bool_ quest_between_move_hook(void *, void *in_, void *)
+static bool quest_between_move_hook(void *, void *in_, void *)
 {
 	struct hook_move_in *in = static_cast<struct hook_move_in *>(in_);
 	s32b y = in->y;
@@ -28,7 +28,10 @@ static bool_ quest_between_move_hook(void *, void *in_, void *)
 
 	c_ptr = &cave[y][x];
 
-	if (cquest.status != QUEST_STATUS_TAKEN) return FALSE;
+	if (cquest.status != QUEST_STATUS_TAKEN)
+	{
+		return false;
+	}
 
 	/* The tower of Turgon */
 	if ((c_ptr->feat == FEAT_SHOP) && (c_ptr->special == 27))
@@ -38,19 +41,28 @@ static bool_ quest_between_move_hook(void *, void *in_, void *)
 
 		cquest.status = QUEST_STATUS_COMPLETED;
 
-		return TRUE;
+		return true;
 	}
 
 	/* Only 1 ambush */
-	if (cquest.data[0]) return (FALSE);
+	if (cquest.data[0])
+	{
+		return false;
+	}
 
 	if (!p_ptr->wild_mode)
 	{
-		if (p_ptr->wilderness_y > 19) return (FALSE);
+		if (p_ptr->wilderness_y > 19)
+		{
+			return false;
+		}
 	}
 	else
 	{
-		if (p_ptr->py > 19) return (FALSE);
+		if (p_ptr->py > 19)
+		{
+			return false;
+		}
 	}
 
 	/* Mark as entered */
@@ -64,16 +76,19 @@ static bool_ quest_between_move_hook(void *, void *in_, void *)
 	cmsg_print(TERM_YELLOW, "Trone steps forth and speaks: 'The secret of the Void Jumpgates");
 	cmsg_print(TERM_YELLOW, "will not be used by any but the thunderlords!'");
 
-	return FALSE;
+	return false;
 }
 
-static bool_ quest_between_gen_hook(void *, void *, void *)
+static bool quest_between_gen_hook(void *, void *, void *)
 {
 	int x, y;
 	int xstart = 2;
 	int ystart = 2;
 
-	if (p_ptr->inside_quest != QUEST_BETWEEN) return FALSE;
+	if (p_ptr->inside_quest != QUEST_BETWEEN)
+	{
+		return false;
+	}
 
 	/* Start with perm walls */
 	for (y = 0; y < cur_hgt; y++)
@@ -99,16 +114,16 @@ static bool_ quest_between_gen_hook(void *, void *, void *)
 
 	dungeon_flags |= DF_NO_GENO;
 
-	return TRUE;
+	return true;
 }
 
-static bool_ quest_between_finish_hook(void *, void *in_, void *)
+static bool quest_between_finish_hook(void *, void *in_, void *)
 {
 	struct hook_quest_finish_in *in = static_cast<struct hook_quest_finish_in *>(in_);
 	s32b q_idx = in->q_idx;
 	object_type forge, *q_ptr;
 
-	if (q_idx != QUEST_BETWEEN) return FALSE;
+	if (q_idx != QUEST_BETWEEN) return false;
 
 	c_put_str(TERM_YELLOW, "Ah you finally arrived, I hope your travel wasn't too hard.", 8, 0);
 	c_put_str(TERM_YELLOW, "As a reward you can freely use the Void Jumpgates for quick travel.", 9, 0);
@@ -137,14 +152,17 @@ static bool_ quest_between_finish_hook(void *, void *in_, void *)
 	del_hook_new(HOOK_QUEST_FINISH, quest_between_finish_hook);
 	process_hooks_restart = TRUE;
 
-	return TRUE;
+	return true;
 }
 
-static bool_ quest_between_death_hook(void *, void *, void *)
+static bool quest_between_death_hook(void *, void *, void *)
 {
 	int i, mcnt = 0;
 
-	if (p_ptr->inside_quest != QUEST_BETWEEN) return FALSE;
+	if (p_ptr->inside_quest != QUEST_BETWEEN)
+	{
+		return false;
+	}
 
 	for (i = m_max - 1; i >= 1; i--)
 	{
@@ -163,14 +181,14 @@ static bool_ quest_between_death_hook(void *, void *, void *)
 		cave_set_feat(p_ptr->py, p_ptr->px, FEAT_LESS);
 		cave[p_ptr->py][p_ptr->px].special = 0;
 
-		return FALSE;
+		return false;
 	}
 
 
-	return FALSE;
+	return false;
 }
 
-static bool_ quest_between_dump_hook(void *, void *in_, void *)
+static bool quest_between_dump_hook(void *, void *in_, void *)
 {
 	struct hook_chardump_in *in = static_cast<struct hook_chardump_in *>(in_);
 	FILE *f = in->file;
@@ -180,10 +198,10 @@ static bool_ quest_between_dump_hook(void *, void *in_, void *)
 		fprintf(f, "\n You established a permanent void jumpgates liaison between Minas Anor and Gondolin,");
 		fprintf(f, "\n  thus allowing the last alliance to exist.");
 	}
-	return (FALSE);
+	return false;
 }
 
-static bool_ quest_between_forbid_hook(void *, void *in_, void *)
+static bool quest_between_forbid_hook(void *, void *in_, void *)
 {
 	hook_init_quest_in *in = static_cast<struct hook_init_quest_in *>(in_);
 	s32b q_idx = in->q_idx;
@@ -193,12 +211,12 @@ static bool_ quest_between_forbid_hook(void *, void *in_, void *)
 	if (p_ptr->lev < 45)
 	{
 		c_put_str(TERM_WHITE, "I fear you are not ready for the next quest, come back later.", 8, 0);
-		return (TRUE);
+		return true;
 	}
-	return (FALSE);
+	return false;
 }
 
-bool_ quest_between_init_hook()
+void quest_between_init_hook()
 {
 	if ((cquest.status >= QUEST_STATUS_TAKEN) && (cquest.status < QUEST_STATUS_FINISHED))
 	{
@@ -209,5 +227,4 @@ bool_ quest_between_init_hook()
 	}
 	add_hook_new(HOOK_CHAR_DUMP,  quest_between_dump_hook,   "between_dump",   NULL);
 	add_hook_new(HOOK_INIT_QUEST, quest_between_forbid_hook, "between_forbid", NULL);
-	return (FALSE);
 }

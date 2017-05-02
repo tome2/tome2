@@ -21,7 +21,7 @@ struct quest_type
 
 	s16b *plot;             /* Which plot does it belongs to? */
 
-	bool_ (*init)();        /* Function that takes care of generating hardcoded quests */
+	void (*init)();        /* Function that takes care of generating hardcoded quests */
 
 	s32b data[9];           /* Various datas used by the quests */
 

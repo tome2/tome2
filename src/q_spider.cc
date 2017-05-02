@@ -16,13 +16,16 @@
 
 #define cquest (quest[QUEST_SPIDER])
 
-static bool_ quest_spider_gen_hook(void *, void *, void *)
+static bool quest_spider_gen_hook(void *, void *, void *)
 {
 	int x, y;
 	int xstart = 2;
 	int ystart = 2;
 
-	if (p_ptr->inside_quest != QUEST_SPIDER) return FALSE;
+	if (p_ptr->inside_quest != QUEST_SPIDER)
+	{
+		return false;
+	}
 
 	/* Start with perm walls */
 	for (y = 0; y < cur_hgt; y++)
@@ -43,14 +46,17 @@ static bool_ quest_spider_gen_hook(void *, void *, void *)
 	init_flags = INIT_CREATE_DUNGEON;
 	process_dungeon_file("spiders.map", &ystart, &xstart, cur_hgt, cur_wid, TRUE, TRUE);
 
-	return TRUE;
+	return true;
 }
 
-static bool_ quest_spider_death_hook(void *, void *, void *)
+static bool quest_spider_death_hook(void *, void *, void *)
 {
 	int i, mcnt = 0;
 
-	if (p_ptr->inside_quest != QUEST_SPIDER) return FALSE;
+	if (p_ptr->inside_quest != QUEST_SPIDER)
+	{
+		return false;
+	}
 
 	for (i = m_max - 1; i >= 1; i--)
 	{
@@ -58,9 +64,15 @@ static bool_ quest_spider_death_hook(void *, void *, void *)
 		monster_type *m_ptr = &m_list[i];
 
 		/* Ignore "dead" monsters */
-		if (!m_ptr->r_idx) continue;
+		if (!m_ptr->r_idx)
+		{
+			continue;
+		}
 
-		if (m_ptr->status <= MSTATUS_ENEMY) mcnt++;
+		if (m_ptr->status <= MSTATUS_ENEMY)
+		{
+			mcnt++;
+		}
 	}
 
 	if (mcnt <= 1)
@@ -79,19 +91,22 @@ static bool_ quest_spider_death_hook(void *, void *, void *)
 		del_hook_new(HOOK_MONSTER_DEATH, quest_spider_death_hook);
 		process_hooks_restart = TRUE;
 
-		return (FALSE);
+		return false;
 	}
 
-	return (FALSE);
+	return false;
 }
 
-static bool_ quest_spider_finish_hook(void *, void *in_, void *)
+static bool quest_spider_finish_hook(void *, void *in_, void *)
 {
 	struct hook_quest_finish_in *in = static_cast<struct hook_quest_finish_in *>(in_);
 	object_type forge, *q_ptr;
 	s32b q_idx = in->q_idx;
 
-	if (q_idx != QUEST_SPIDER) return FALSE;
+	if (q_idx != QUEST_SPIDER)
+	{
+		return false;
+	}
 
 	c_put_str(TERM_YELLOW, "All of us praise your mighty deed in driving back the", 8, 0);
 	c_put_str(TERM_YELLOW, "menace. Take this as a reward.", 9, 0);
@@ -112,10 +127,10 @@ static bool_ quest_spider_finish_hook(void *, void *in_, void *)
 	del_hook_new(HOOK_QUEST_FINISH, quest_spider_finish_hook);
 	process_hooks_restart = TRUE;
 
-	return TRUE;
+	return true;
 }
 
-bool_ quest_spider_init_hook()
+void quest_spider_init_hook()
 {
 	if ((cquest.status >= QUEST_STATUS_TAKEN) && (cquest.status < QUEST_STATUS_FINISHED))
 	{
@@ -123,5 +138,4 @@ bool_ quest_spider_init_hook()
 		add_hook_new(HOOK_GEN_QUEST,     quest_spider_gen_hook,    "spider_gen",    NULL);
 		add_hook_new(HOOK_QUEST_FINISH,  quest_spider_finish_hook, "spider_finish", NULL);
 	}
-	return (FALSE);
 }

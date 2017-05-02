@@ -25,13 +25,16 @@
 GENERATE_MONSTER_LOOKUP_FN(get_melinda_proudfoot, "Melinda Proudfoot")
 GENERATE_MONSTER_LOOKUP_FN(get_merton_proudfoot, "Merton Proudfoot, the lost hobbit")
 
-static bool_ quest_hobbit_town_gen_hook(void *, void *in_, void *)
+static bool quest_hobbit_town_gen_hook(void *, void *in_, void *)
 {
 	struct hook_wild_gen_in *in = static_cast<struct hook_wild_gen_in *>(in_);
 	int x = 1, y = 1, tries = 10000;
 	bool_ small = in->small;
 
-	if ((turn < (cquest.data[1] + (DAY * 10L))) || (cquest.status > QUEST_STATUS_COMPLETED) || (small) || (p_ptr->town_num != 1)) return (FALSE);
+	if ((turn < (cquest.data[1] + (DAY * 10L))) || (cquest.status > QUEST_STATUS_COMPLETED) || (small) || (p_ptr->town_num != 1))
+	{
+		return false;
+	}
 
 	/* Find a good position */
 	while (tries)
@@ -55,14 +58,17 @@ static bool_ quest_hobbit_town_gen_hook(void *, void *in_, void *)
 	place_monster_one(y, x, r_idx, 0, FALSE, MSTATUS_ENEMY);
 	m_allow_special[r_idx] = FALSE;
 
-	return FALSE;
+	return false;
 }
 
-static bool_ quest_hobbit_gen_hook(void *, void *, void *)
+static bool quest_hobbit_gen_hook(void *, void *, void *)
 {
 	int x = 1, y = 1, tries = 10000;
 
-	if ((cquest.status != QUEST_STATUS_TAKEN) || (dun_level != cquest.data[0]) || (dungeon_type != DUNGEON_MAZE)) return FALSE;
+	if ((cquest.status != QUEST_STATUS_TAKEN) || (dun_level != cquest.data[0]) || (dungeon_type != DUNGEON_MAZE))
+	{
+		return false;
+	}
 
 	/* Find a good position */
 	while (tries)
@@ -84,10 +90,10 @@ static bool_ quest_hobbit_gen_hook(void *, void *, void *)
 	place_monster_one(y, x, r_idx, 0, FALSE, MSTATUS_FRIEND);
 	m_allow_special[r_idx] = FALSE;
 
-	return FALSE;
+	return false;
 }
 
-static bool_ quest_hobbit_give_hook(void *, void *in_, void *)
+static bool quest_hobbit_give_hook(void *, void *in_, void *)
 {
 	struct hook_give_in *in = static_cast<struct hook_give_in *>(in_);
 	object_type *o_ptr;
@@ -98,9 +104,9 @@ static bool_ quest_hobbit_give_hook(void *, void *in_, void *)
 	o_ptr = &p_ptr->inventory[item];
 	m_ptr = &m_list[m_idx];
 
-	if (m_ptr->r_idx != get_merton_proudfoot()) return (FALSE);
+	if (m_ptr->r_idx != get_merton_proudfoot()) return false;
 
-	if ((o_ptr->tval != TV_SCROLL) || (o_ptr->sval != SV_SCROLL_WORD_OF_RECALL)) return (FALSE);
+	if ((o_ptr->tval != TV_SCROLL) || (o_ptr->sval != SV_SCROLL_WORD_OF_RECALL)) return false;
 
 	msg_print("'Oh, thank you, noble one!'");
 	msg_print("Merton Proudfoot reads the scroll and is recalled to the safety of his home.");
@@ -114,27 +120,27 @@ static bool_ quest_hobbit_give_hook(void *, void *in_, void *)
 	del_hook_new(HOOK_GIVE, quest_hobbit_give_hook);
 	process_hooks_restart = TRUE;
 
-	return TRUE;
+	return true;
 }
 
-static bool_ quest_hobbit_speak_hook(void *, void *in_, void *)
+static bool quest_hobbit_speak_hook(void *, void *in_, void *)
 {
 	struct hook_mon_speak_in *in = static_cast<struct hook_mon_speak_in *>(in_);
 	s32b m_idx = in->m_idx;
 
 	if (m_list[m_idx].r_idx != get_melinda_proudfoot())
 	{
-		return (FALSE);
+		return false;
 	}
 
 	if (cquest.status < QUEST_STATUS_COMPLETED)
 	{
 		msg_format("%^s begs for your help.", in->m_name);
 	}
-	return (TRUE);
+	return true;
 }
 
-static bool_ quest_hobbit_chat_hook(void *, void *in_, void *)
+static bool quest_hobbit_chat_hook(void *, void *in_, void *)
 {
 	struct hook_chat_in *in = static_cast<struct hook_chat_in *>(in_);
 	s32b m_idx = in->m_idx;
@@ -142,7 +148,10 @@ static bool_ quest_hobbit_chat_hook(void *, void *in_, void *)
 
 	m_ptr = &m_list[m_idx];
 
-	if (m_ptr->r_idx != get_melinda_proudfoot()) return (FALSE);
+	if (m_ptr->r_idx != get_melinda_proudfoot())
+	{
+		return false;
+	}
 
 	if (cquest.status < QUEST_STATUS_COMPLETED)
 	{
@@ -176,17 +185,17 @@ static bool_ quest_hobbit_chat_hook(void *, void *in_, void *)
 		process_hooks_restart = TRUE;
 		delete_monster_idx(m_idx);
 
-		return TRUE;
+		return true;
 	}
 	else
 	{
 		msg_print("Thanks again.");
 	}
 
-	return TRUE;
+	return true;
 }
 
-static bool_ quest_hobbit_dump_hook(void *, void *in_, void *)
+static bool quest_hobbit_dump_hook(void *, void *in_, void *)
 {
 	struct hook_chardump_in *in = static_cast<struct hook_chardump_in *>(in_);
 	FILE *f = in->file;
@@ -195,10 +204,10 @@ static bool_ quest_hobbit_dump_hook(void *, void *in_, void *)
 	{
 		fprintf(f, "\n You saved a young hobbit from an horrible fate.");
 	}
-	return (FALSE);
+	return false;
 }
 
-bool_ quest_hobbit_init_hook()
+void quest_hobbit_init_hook()
 {
 	/* Get a level to place the hobbit */
 	if (!cquest.data[0])
@@ -226,5 +235,4 @@ bool_ quest_hobbit_init_hook()
 		add_hook_new(HOOK_CHAT,      quest_hobbit_chat_hook,     "hobbit_chat",     NULL);
 	}
 	add_hook_new(HOOK_CHAR_DUMP, quest_hobbit_dump_hook, "hobbit_dump", NULL);
-	return (FALSE);
 }

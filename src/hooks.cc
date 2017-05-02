@@ -81,7 +81,7 @@ void del_hook_new(int h_idx, hook_func_t hook_func)
 	}
 }
 
-bool_ process_hooks_new(int h_idx, void *in, void *out)
+bool process_hooks_new(int h_idx, void *in, void *out)
 {
 	auto const &hooks = hooks_instance()[h_idx];
 
@@ -94,7 +94,7 @@ bool_ process_hooks_new(int h_idx, void *in, void *out)
 		   returns TRUE */
 		if (hook_data.invoke(in, out))
 		{
-			return TRUE;
+			return true;
 		}
 
 		/* Should we restart processing at the beginning? */
@@ -109,5 +109,5 @@ bool_ process_hooks_new(int h_idx, void *in, void *out)
 		}
 	}
 
-	return FALSE;
+	return false;
 }
