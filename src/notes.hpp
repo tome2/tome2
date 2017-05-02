@@ -1,6 +1,6 @@
 #pragma once
 
-extern void show_notes_file(void);
-extern void output_note(char const *final_note);
-extern void add_note(char *note, char code);
-extern void add_note_type(int note_number);
+void show_notes_file(void);
+void output_note(char const *final_note);
+void add_note(char *note, char code);
+void add_note_type(int note_number);

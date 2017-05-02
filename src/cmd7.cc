@@ -3296,7 +3296,7 @@ void do_cmd_create_boulder()
 /*
  * Clamp failure chance
  */
-extern int clamp_failure_chance(int chance, int minfail)
+int clamp_failure_chance(int chance, int minfail)
 {
 	if (minfail < 0) minfail = 0;
 

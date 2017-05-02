@@ -8,16 +8,16 @@
 #include <string>
 #include <vector>
 
-extern bool_ is_magestaff(void);
-extern void do_cmd_browse_aux(object_type *o_ptr);
-extern void do_cmd_browse(void);
-extern void fetch(int dir, int wgt, bool_ require_los);
-extern void do_poly_self(void);
-extern std::string symbiote_name(bool capitalize);
-extern int use_symbiotic_power(int r_idx, bool great);
-extern void use_monster_power(int r_idx, bool great);
-extern bool_ is_ok_spell(s32b spell_idx, s32b pval);
-extern s32b get_school_spell(cptr do_what, s16b force_book);
-extern void do_cmd_copy_spell(void);
-extern void cast_school_spell(void);
-extern std::vector<monster_power const *> extract_monster_powers(monster_race const *r_ptr, bool great);
+bool_ is_magestaff(void);
+void do_cmd_browse_aux(object_type *o_ptr);
+void do_cmd_browse(void);
+void fetch(int dir, int wgt, bool_ require_los);
+void do_poly_self(void);
+std::string symbiote_name(bool capitalize);
+int use_symbiotic_power(int r_idx, bool great);
+void use_monster_power(int r_idx, bool great);
+bool_ is_ok_spell(s32b spell_idx, s32b pval);
+s32b get_school_spell(cptr do_what, s16b force_book);
+void do_cmd_copy_spell(void);
+void cast_school_spell(void);
+std::vector<monster_power const *> extract_monster_powers(monster_race const *r_ptr, bool great);

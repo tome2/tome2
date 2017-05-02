@@ -1,6 +1,6 @@
 #pragma once
 
-extern void do_cmd_power();
+void do_cmd_power();
 
 /*
  * Powers (mutation, activations, ...)

@@ -21,19 +21,19 @@ extern void (*quit_aux)(cptr);
 
 
 /* Test equality, prefix, suffix */
-extern bool_ streq(cptr s, cptr t);
-extern bool_ prefix(cptr s, cptr t);
-extern bool_ suffix(cptr s, cptr t);
+bool_ streq(cptr s, cptr t);
+bool_ prefix(cptr s, cptr t);
+bool_ suffix(cptr s, cptr t);
 
 
 /* Capitalize the first letter of string. Ignores whitespace at the start of string. */
-extern void capitalize(char *s);
+void capitalize(char *s);
 
 /* Print an error message */
-extern void plog(cptr str);
+void plog(cptr str);
 
 /* Exit, with optional message */
-extern void quit(cptr str);
+void quit(cptr str);
 
 
 #ifdef __cplusplus

@@ -2,5 +2,5 @@
 
 #include <vector>
 
-extern void sense_inventory();
-extern void sense_objects(std::vector<int> const &object_idxs);
+void sense_inventory();
+void sense_objects(std::vector<int> const &object_idxs);

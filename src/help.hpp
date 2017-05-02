@@ -4,10 +4,10 @@
 
 #include <string>
 
-extern void init_hooks_help();
-extern void help_race(std::string const &race);
-extern void help_subrace(std::string const &subrace);
-extern void help_class(std::string const &klass);
-extern void help_god(cptr god);
-extern void help_skill(std::string const &skill);
-extern void help_ability(std::string const &ability);
+void init_hooks_help();
+void help_race(std::string const &race);
+void help_subrace(std::string const &subrace);
+void help_class(std::string const &klass);
+void help_god(cptr god);
+void help_skill(std::string const &skill);
+void help_ability(std::string const &ability);

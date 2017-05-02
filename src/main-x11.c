@@ -555,7 +555,7 @@ int Term_queue_space(void)
  *
  * NB: The keys added here will be interpreted by any macros or keymaps.
  */
-errr type_string(char *str, uint len)
+static errr type_string(char *str, uint len)
 {
 	char *s;
 
@@ -1739,8 +1739,6 @@ error:
 	/* Send whatever event we're left with. */
 	XSendEvent(DPY, rq->requestor, FALSE, NoEventMask, &event);
 }
-
-extern errr type_string(char *str, uint len);
 
 /*
  * Add the contents of the PRIMARY buffer to the input queue.

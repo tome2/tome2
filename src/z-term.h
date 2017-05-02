@@ -220,46 +220,46 @@ extern term *Term;
 
 /**** Available Functions ****/
 
-extern errr Term_xtra(int n, int v);
+errr Term_xtra(int n, int v);
 
-extern void Term_queue_char(int x, int y, byte a, char c);
-extern void Term_queue_chars(int x, int y, int n, byte a, cptr s);
+void Term_queue_char(int x, int y, byte a, char c);
+void Term_queue_chars(int x, int y, int n, byte a, cptr s);
 
-extern errr Term_fresh(void);
-extern errr Term_set_cursor(int v);
-extern errr Term_gotoxy(int x, int y);
-extern errr Term_draw(int x, int y, byte a, char c);
-extern errr Term_addch(byte a, char c);
-extern errr Term_addstr(int n, byte a, cptr s);
-extern errr Term_putch(int x, int y, byte a, char c);
-extern errr Term_putstr(int x, int y, int n, byte a, cptr s);
-extern errr Term_erase(int x, int y, int n);
-extern errr Term_clear(void);
-extern errr Term_redraw(void);
-extern errr Term_redraw_section(int x1, int y1, int x2, int y2);
-extern void Term_bell();
+errr Term_fresh(void);
+errr Term_set_cursor(int v);
+errr Term_gotoxy(int x, int y);
+errr Term_draw(int x, int y, byte a, char c);
+errr Term_addch(byte a, char c);
+errr Term_addstr(int n, byte a, cptr s);
+errr Term_putch(int x, int y, byte a, char c);
+errr Term_putstr(int x, int y, int n, byte a, cptr s);
+errr Term_erase(int x, int y, int n);
+errr Term_clear(void);
+errr Term_redraw(void);
+errr Term_redraw_section(int x1, int y1, int x2, int y2);
+void Term_bell();
 
-extern errr Term_get_cursor(int *v);
-extern errr Term_get_size(int *w, int *h);
-extern errr Term_locate(int *x, int *y);
-extern errr Term_what(int x, int y, byte *a, char *c);
+errr Term_get_cursor(int *v);
+errr Term_get_size(int *w, int *h);
+errr Term_locate(int *x, int *y);
+errr Term_what(int x, int y, byte *a, char *c);
 
-extern errr Term_flush(void);
-extern errr Term_keypress(int k);
-extern errr Term_key_push(int k);
-extern errr Term_inkey(char *ch, bool_ wait, bool_ take);
+errr Term_flush(void);
+errr Term_keypress(int k);
+errr Term_key_push(int k);
+errr Term_inkey(char *ch, bool_ wait, bool_ take);
 
-extern errr Term_save(void);
-extern term_win* Term_save_to(void);
-extern errr Term_load(void);
-extern errr Term_load_from(term_win *save);
+errr Term_save(void);
+term_win* Term_save_to(void);
+errr Term_load(void);
+errr Term_load_from(term_win *save);
 
-extern errr Term_resize(int w, int h);
+errr Term_resize(int w, int h);
 
-extern errr Term_activate(term *t);
+errr Term_activate(term *t);
 
-extern errr term_nuke(term *t);
-extern errr term_init(term *t, int w, int h, int k);
+errr term_nuke(term *t);
+errr term_init(term *t, int w, int h, int k);
 
 #ifdef __cplusplus
 } /* extern "C" */

@@ -3,23 +3,23 @@
 #include "h-basic.h"
 #include "object_type_fwd.hpp"
 
-extern void do_cmd_pray(void);
-extern void do_cmd_create_boulder(void);
-extern void necro_info(char *p, int power);
-extern void mindcraft_info(char *p, int power);
-extern void symbiotic_info(char *p, int power);
-extern void mimic_info(char *p, int power);
-extern void do_cmd_summoner(void);
-extern void do_cmd_mindcraft(void);
-extern void do_cmd_mimic(void);
-extern void use_ability_blade(void);
-extern void do_cmd_beastmaster(void);
-extern void do_cmd_powermage(void);
-extern void do_cmd_possessor(void);
-extern void do_cmd_archer(void);
-extern void do_cmd_set_piercing(void);
-extern void do_cmd_necromancer(void);
-extern void do_cmd_unbeliever(void);
-extern void do_cmd_symbiotic(void);
-extern s32b sroot(s32b n);
-extern int clamp_failure_chance(int chance, int minfail);
+void do_cmd_pray(void);
+void do_cmd_create_boulder(void);
+void necro_info(char *p, int power);
+void mindcraft_info(char *p, int power);
+void symbiotic_info(char *p, int power);
+void mimic_info(char *p, int power);
+void do_cmd_summoner(void);
+void do_cmd_mindcraft(void);
+void do_cmd_mimic(void);
+void use_ability_blade(void);
+void do_cmd_beastmaster(void);
+void do_cmd_powermage(void);
+void do_cmd_possessor(void);
+void do_cmd_archer(void);
+void do_cmd_set_piercing(void);
+void do_cmd_necromancer(void);
+void do_cmd_unbeliever(void);
+void do_cmd_symbiotic(void);
+s32b sroot(s32b n);
+int clamp_failure_chance(int chance, int minfail);

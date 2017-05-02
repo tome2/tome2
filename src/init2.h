@@ -5,8 +5,8 @@
 extern "C" {
 #endif
 
-extern void init_file_paths(char *path);
-extern void init_angband(void);
+void init_file_paths(char *path);
+void init_angband(void);
 
 #ifdef __cplusplus
 } // extern "C"

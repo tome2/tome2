@@ -2349,7 +2349,7 @@ static int complete_command(char *buf, int clen, int mlen)
 }
 
 
-extern bool askfor_aux(std::string *buf, std::size_t max_len)
+bool askfor_aux(std::string *buf, std::size_t max_len)
 {
 	// Buffer
 	char cstr[1024];

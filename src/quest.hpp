@@ -1,3 +1,3 @@
 #pragma once
 
-extern void init_hooks_quests();
+void init_hooks_quests();

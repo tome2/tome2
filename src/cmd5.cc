@@ -225,7 +225,7 @@ static void browse_school_spell(int book, int spell_idx, object_type *o_ptr)
  * and in the dark, primarily to allow browsing in stores.
  */
 
-extern void do_cmd_browse_aux(object_type *o_ptr)
+void do_cmd_browse_aux(object_type *o_ptr)
 {
 	auto const flags = object_flags(o_ptr);
 

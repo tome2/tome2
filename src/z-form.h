@@ -21,16 +21,16 @@ extern "C" {
 /**** Available Functions ****/
 
 /* Format arguments into given bounded-length buffer */
-extern uint vstrnfmt(char *buf, uint max, cptr fmt, va_list vp);
+uint vstrnfmt(char *buf, uint max, cptr fmt, va_list vp);
 
 /* Simple interface to "vstrnfmt()" */
-extern uint strnfmt(char *buf, uint max, cptr fmt, ...);
+uint strnfmt(char *buf, uint max, cptr fmt, ...);
 
 /* Simple interface to "vformat()" */
-extern char *format(cptr fmt, ...);
+char *format(cptr fmt, ...);
 
 /* Vararg interface to "quit()", using "format()" */
-extern void quit_fmt(cptr fmt, ...);
+void quit_fmt(cptr fmt, ...);
 
 #ifdef __cplusplus
 } /* extern "C" */

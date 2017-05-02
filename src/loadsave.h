@@ -7,9 +7,8 @@
 extern "C" {
 #endif
 
-/* loadsave.c */
-extern void save_dungeon(void);
-extern bool_ save_player(void);
+void save_dungeon(void);
+bool_ save_player(void);
 
 #ifdef __cplusplus
 } // extern "C"

@@ -2,5 +2,5 @@
 
 #include "h-basic.h"
 
-extern bool_ level_generate_life();
-extern void evolve_level(bool_ noise);
+bool_ level_generate_life();
+void evolve_level(bool_ noise);

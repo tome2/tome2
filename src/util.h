@@ -7,12 +7,12 @@
 extern "C" {
 #endif
 
-extern errr path_build(char *buf, int max, cptr path, cptr file);
-extern void bell(void);
-extern errr macro_add(cptr pat, cptr act);
-extern sint macro_find_exact(cptr pat);
-extern char inkey(void);
-extern void prt(cptr str, int row, int col);
+errr path_build(char *buf, int max, cptr path, cptr file);
+void bell(void);
+errr macro_add(cptr pat, cptr act);
+sint macro_find_exact(cptr pat);
+char inkey(void);
+void prt(cptr str, int row, int col);
 
 #ifdef __cplusplus
 } // extern "C"

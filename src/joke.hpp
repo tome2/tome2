@@ -2,4 +2,4 @@
 
 #include "h-basic.h"
 
-extern bool_ gen_joke_monsters(void *data, void *in, void *out);
+bool_ gen_joke_monsters(void *data, void *in, void *out);

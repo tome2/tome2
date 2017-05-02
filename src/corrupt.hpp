@@ -2,12 +2,12 @@
 
 #include <string>
 
-extern void gain_random_corruption();
-extern std::string dump_corruptions(bool color, bool header);
-extern void lose_corruption();
-extern bool_ player_has_corruption(int corruption_idx);
-extern void player_gain_corruption(int corruption_idx);
-extern s16b get_corruption_power(int corruption_idx);
+void gain_random_corruption();
+std::string dump_corruptions(bool color, bool header);
+void lose_corruption();
+bool_ player_has_corruption(int corruption_idx);
+void player_gain_corruption(int corruption_idx);
+s16b get_corruption_power(int corruption_idx);
 
 /*
  * Corruptions

@@ -2332,7 +2332,7 @@ cptr sense_desc[] =
  * Flags 4,
  * ESP,
  */
-extern std::vector<flags_group> const &flags_groups()
+std::vector<flags_group> const &flags_groups()
 {
 	static auto *instance = new std::vector<flags_group> {
 		flags_group {

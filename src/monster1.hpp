@@ -1,5 +1,5 @@
 #pragma once
 
-extern void screen_roff(int r_idx, int ego);
-extern void display_roff(int r_idx, int ego);
-extern void monster_description_out(int r_idx, int ego);
+void screen_roff(int r_idx, int ego);
+void display_roff(int r_idx, int ego);
+void monster_description_out(int r_idx, int ego);

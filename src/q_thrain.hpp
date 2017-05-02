@@ -2,4 +2,4 @@
 
 #include "h-basic.h"
 
-extern bool_ quest_thrain_init_hook();
+bool_ quest_thrain_init_hook();
