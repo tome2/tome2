@@ -11,6 +11,7 @@
 #include "birth.hpp"
 #include "dungeon.h"
 #include "files.hpp"
+#include "game.hpp"
 #include "init2.h"
 #include "modules.hpp"
 #include "util.h"
@@ -130,6 +131,9 @@ int main_real(int argc, char *argv[], char const *platform_sys, int (*init_platf
 	int i;
 
 	bool_ args = TRUE;
+
+	// Initialize game structure
+	game = new Game();
 
 	/* Get the file paths */
 	init_file_paths_with_env();
