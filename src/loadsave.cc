@@ -2266,31 +2266,20 @@ static bool do_wilderness(ls_flag_t flag)
 	return true;
 }
 
+static void do_randart(random_artifact *ra_ptr, ls_flag_t flag)
+{
+	do_std_string(ra_ptr->name_full, flag);
+	do_std_string(ra_ptr->name_short, flag);
+	do_byte(&ra_ptr->level, flag);
+	do_byte(&ra_ptr->attr, flag);
+	do_u32b(&ra_ptr->cost, flag);
+	do_byte(&ra_ptr->activation, flag);
+	do_byte(&ra_ptr->generated, flag);
+}
+
 static bool do_randarts(ls_flag_t flag)
 {
-	u16b n_randarts = MAX_RANDARTS;
-
-	do_u16b(&n_randarts, flag);
-
-	if ((flag == ls_flag_t::LOAD) && (n_randarts > MAX_RANDARTS))
-	{
-		note("Too many random artifacts!");
-		return false;
-	}
-
-	for (std::size_t i = 0; i < n_randarts; i++)
-	{
-		random_artifact *ra_ptr = &random_artifacts[i];
-
-		do_string(ra_ptr->name_full, 80, flag);
-		do_string(ra_ptr->name_short, 80, flag);
-		do_byte(&ra_ptr->level, flag);
-		do_byte(&ra_ptr->attr, flag);
-		do_u32b(&ra_ptr->cost, flag);
-		do_byte(&ra_ptr->activation, flag);
-		do_byte(&ra_ptr->generated, flag);
-	}
-
+	do_vector(flag, game->random_artifacts, do_randart);
 	return true;
 }
 

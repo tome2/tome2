@@ -1022,6 +1022,7 @@ static std::string object_desc_aux(object_type const *o_ptr, int pref, int mode)
 	auto const &k_info = game->edit_data.k_info;
 	auto const &a_info = game->edit_data.a_info;
 	auto const &e_info = game->edit_data.e_info;
+	auto const &random_artifacts = game->random_artifacts;
 	static auto const TR_PVAL_MASK = compute_pval_mask();
 
 	bool_ hack_name = FALSE;
@@ -6125,6 +6126,7 @@ static void apply_flags_set(s16b a_idx, s16b set_idx, object_flag_set *f)
 byte object_attr(object_type const *o_ptr)
 {
 	auto const &k_info = game->edit_data.k_info;
+	auto const &random_artifacts = game->random_artifacts;
 
 	if (o_ptr->tval == TV_RANDART)
 	{
@@ -6143,6 +6145,7 @@ byte object_attr(object_type const *o_ptr)
 byte object_attr_default(object_type *o_ptr)
 {
 	auto const &k_info = game->edit_data.k_info;
+	auto const &random_artifacts = game->random_artifacts;
 
 	if (o_ptr->tval == TV_RANDART)
 	{

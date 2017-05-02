@@ -400,7 +400,7 @@ void wipe_o_list()
 				/* Mega-Hack -- Preserve the artifact */
 				if (o_ptr->tval == TV_RANDART)
 				{
-					random_artifacts[o_ptr->sval].generated = FALSE;
+					game->random_artifacts[o_ptr->sval].generated = FALSE;
 				}
 				else if (k_info[o_ptr->k_idx].flags & TR_NORM_ART)
 				{
@@ -1098,7 +1098,7 @@ s32b object_value_real(object_type const *o_ptr)
 
 	if (o_ptr->tval == TV_RANDART)
 	{
-		return random_artifacts[o_ptr->sval].cost;
+		return game->random_artifacts[o_ptr->sval].cost;
 	}
 
 	/* Hack -- "worthless" items */
@@ -1998,20 +1998,21 @@ s16b m_bonus(int max, int level)
  */
 static void finalize_randart(object_type* o_ptr, int lev)
 {
-	int r;
-	int i = 0;
-	bool_ flag = TRUE;
+	auto &random_artifacts = game->random_artifacts;
 
 	/* Paranoia */
-	if (o_ptr->tval != TV_RANDART) return;
-
-	while (flag)
+	if (o_ptr->tval != TV_RANDART)
 	{
-		r = rand_int(MAX_RANDARTS);
+		return;
+	}
+
+	for (int i = 0; ; i++)
+	{
+		auto const r = rand_int(MAX_RANDARTS);
 
 		if (!(random_artifacts[r].generated) || i > 2000)
 		{
-			random_artifact* ra_ptr = &random_artifacts[r];
+			auto ra_ptr = &random_artifacts[r];
 
 			o_ptr->sval = r;
 			o_ptr->pval2 = ra_ptr->activation;
@@ -2019,10 +2020,8 @@ static void finalize_randart(object_type* o_ptr, int lev)
 
 			ra_ptr->level = lev;
 			ra_ptr->generated = TRUE;
-			flag = FALSE;
+			return;
 		}
-
-		i++;
 	}
 }
 
@@ -4751,6 +4750,7 @@ void place_object(int y, int x, bool_ good, bool_ great, int where)
 	auto const &d_info = game->edit_data.d_info;
 	auto &k_info = game->edit_data.k_info;
 	auto &a_info = game->edit_data.a_info;
+	auto &random_artifacts = game->random_artifacts;
 
 	s16b o_idx;
 
@@ -4987,6 +4987,7 @@ s16b drop_near(object_type *j_ptr, int chance, int y, int x)
 	auto const &f_info = game->edit_data.f_info;
 	auto &k_info = game->edit_data.k_info;
 	auto &a_info = game->edit_data.a_info;
+	auto &random_artifacts = game->random_artifacts;
 
 	int i, k, d, s;
 

@@ -4839,7 +4839,7 @@ void do_cmd_activate()
 	{
 		if (o_ptr->tval == TV_RANDART)
 		{
-			lev = random_artifacts[o_ptr->sval].level;
+			lev = game->random_artifacts[o_ptr->sval].level;
 		}
 		else
 		{

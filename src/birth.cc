@@ -56,6 +56,7 @@
 #include "xtra2.hpp"
 #include "z-rand.hpp"
 
+#include <algorithm>
 #include <fmt/format.h>
 #include <numeric>
 #include <string>
@@ -465,33 +466,28 @@ static void get_extra()
  */
 static errr init_randart()
 {
-	int i;
-
-	long cost;
-
-	random_artifact* ra_ptr;
-
 	char buf[80];
 
-
-	for (i = 0; i < MAX_RANDARTS; i++)
+	for (int i = 0; i < MAX_RANDARTS; i++)
 	{
-		ra_ptr = &random_artifacts[i];
+		// Generate a 'cost'
+		auto cost = randnor(0, 250);
+		if (cost < 0)
+		{
+			cost = 0;
+		}
 
-		strcpy(ra_ptr->name_short,
-		       get_line("rart_s.txt", ANGBAND_DIR_FILE, buf, i));
-		strcpy(ra_ptr->name_full,
-		       get_line("rart_f.txt", ANGBAND_DIR_FILE, buf, i));
+		// Generate the random artifact
+		random_artifact ra;
+		ra.name_short = get_line("rart_s.txt", ANGBAND_DIR_FILE, buf, i);
+		ra.name_full = get_line("rart_f.txt", ANGBAND_DIR_FILE, buf, i);
+		ra.attr = randint(15);
+		ra.activation = rand_int(MAX_T_ACT);
+		ra.generated = FALSE;
+		ra.cost = cost;
 
-		ra_ptr->attr = randint(15);
-		ra_ptr->activation = rand_int(MAX_T_ACT);
-		ra_ptr->generated = FALSE;
-
-		cost = randnor(0, 250);
-
-		if (cost < 0) cost = 0;
-
-		ra_ptr->cost = cost;
+		// Push
+		game->random_artifacts.push_back(ra);
 	}
 
 	return 0;

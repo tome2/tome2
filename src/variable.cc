@@ -558,8 +558,6 @@ bool_ carried_monster_hit = FALSE;
 /*
  * Random artifacts.
  */
-random_artifact random_artifacts[MAX_RANDARTS];
-/* These three used to be constants but now are set by modules */
 s32b RANDART_WEAPON;
 s32b RANDART_ARMOR;
 s32b RANDART_JEWEL;

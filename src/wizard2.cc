@@ -825,6 +825,7 @@ static void wiz_reroll_item(object_type *o_ptr)
 static void wiz_statistics(object_type *o_ptr)
 {
 	auto &a_info = game->edit_data.a_info;
+	auto &random_artifacts = game->random_artifacts;
 
 	long i, matches, better, worse, other;
 

@@ -270,7 +270,7 @@ static void do_get_new_obj(int y, int x)
 			/* Mega-Hack -- Preserve the artifact */
 			if (o_ptr->tval == TV_RANDART)
 			{
-				random_artifacts[o_ptr->sval].generated = FALSE;
+				game->random_artifacts[o_ptr->sval].generated = FALSE;
 			}
 			else if (k_info[o_ptr->k_idx].flags & TR_NORM_ART)
 			{

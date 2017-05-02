@@ -17,7 +17,6 @@
 #include "player_race_mod_fwd.hpp"
 #include "player_spec_fwd.hpp"
 #include "player_type_fwd.hpp"
-#include "random_artifact.hpp"
 #include "random_quest.hpp"
 #include "school_type.hpp"
 #include "skill_modifiers_fwd.hpp"
@@ -161,7 +160,6 @@ extern bool_ ambush_flag;
 extern bool_ fate_flag;
 extern s16b no_breeds;
 extern bool_ carried_monster_hit;
-extern random_artifact random_artifacts[MAX_RANDARTS];
 extern s32b RANDART_WEAPON;
 extern s32b RANDART_ARMOR;
 extern s32b RANDART_JEWEL;

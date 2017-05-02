@@ -432,6 +432,7 @@ void delete_monster_idx(int i)
 {
 	auto &k_info = game->edit_data.k_info;
 	auto &a_info = game->edit_data.a_info;
+	auto &random_artifacts = game->random_artifacts;
 
 	/* Get location */
 	monster_type *m_ptr = &m_list[i];
@@ -1892,8 +1893,7 @@ void monster_carry(monster_type *m_ptr, int m_idx, object_type *q_ptr)
 {
 	auto &k_info = game->edit_data.k_info;
 	auto &a_info = game->edit_data.a_info;
-
-	object_type *o_ptr;
+	auto &random_artifacts = game->random_artifacts;
 
 	/* Get new object */
 	int o_idx = o_pop();
@@ -1901,7 +1901,7 @@ void monster_carry(monster_type *m_ptr, int m_idx, object_type *q_ptr)
 	if (o_idx)
 	{
 		/* Get the item */
-		o_ptr = &o_list[o_idx];
+		object_type *o_ptr = &o_list[o_idx];
 
 		/* Structure copy */
 		object_copy(o_ptr, q_ptr);
