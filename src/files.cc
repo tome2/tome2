@@ -3911,7 +3911,7 @@ void do_cmd_suicide(void)
 	p_ptr->leaving = TRUE;
 
 	/* Cause of death */
-	(void)strcpy(died_from, "Quitting");
+	game->died_from = "Quitting";
 }
 
 
@@ -3974,7 +3974,7 @@ void do_cmd_save_game(void)
 	Term_fresh();
 
 	/* The player is not dead */
-	(void)strcpy(died_from, "(saved)");
+	game->died_from = "(saved)";
 
 	/* Save the player */
 	if (save_player())
@@ -3994,7 +3994,7 @@ void do_cmd_save_game(void)
 	Term_fresh();
 
 	/* Note that the player is not dead */
-	(void)strcpy(died_from, "(alive and well)");
+	game->died_from = "(alive and well)";
 }
 
 /*
@@ -4125,50 +4125,26 @@ static long total_points(void)
 }
 
 
-
-/*
- * Centers a string within a 31 character string                -JWT-
- */
-static void center_string(char *buf, cptr str)
-{
-	int i, j;
-
-	/* Total length */
-	i = strlen(str);
-
-	/* Necessary border */
-	j = 15 - i / 2;
-
-	/* Mega-Hack */
-	(void)sprintf(buf, "%*s%s%*s", j, "", str, 31 - i - j, "");
-}
-
-
 /*
  * Display a "tomb-stone"
  */
 static void print_tomb(void)
 {
-	cptr p;
-
-	char tmp[160];
-
-	char buf[1024];
-	char dummy[80];
-
-	FILE *fp;
-
 	time_t ct = time(nullptr);
 
+	auto center = [](std::string const &s) -> std::string {
+		return fmt::format("{:^31s}", s);
+	};
 
 	/* Clear screen */
 	Term_clear();
 
 	/* Build the filename */
+	char buf[1024];
 	path_build(buf, 1024, ANGBAND_DIR_FILE, "dead.txt");
 
 	/* Open the News file */
-	fp = my_fopen(buf, "r");
+	FILE *fp = my_fopen(buf, "r");
 
 	/* Dump */
 	if (fp)
@@ -4186,65 +4162,26 @@ static void print_tomb(void)
 		my_fclose(fp);
 	}
 
-
-	/* King or Queen */
+	std::string p_title;
 	if (total_winner || (p_ptr->lev > PY_MAX_LEVEL))
 	{
-		p = "Magnificent";
-	}
-
-	/* Normal */
-	else
-	{
-		p = cp_ptr->titles[(p_ptr->lev - 1) / 5];
-	}
-
-	center_string(buf, game->player_name.c_str());
-	put_str(buf, 6, 11);
-
-	center_string(buf, "the");
-	put_str(buf, 7, 11);
-
-	center_string(buf, p);
-	put_str(buf, 8, 11);
-
-
-	center_string(buf, spp_ptr->title);
-	put_str(buf, 10, 11);
-
-	(void)sprintf(tmp, "Level: %d", (int)p_ptr->lev);
-	center_string(buf, tmp);
-	put_str(buf, 11, 11);
-
-	(void)sprintf(tmp, "Exp: %ld", (long)p_ptr->exp);
-	center_string(buf, tmp);
-	put_str(buf, 12, 11);
-
-	(void)sprintf(tmp, "AU: %ld", (long)p_ptr->au);
-	center_string(buf, tmp);
-	put_str(buf, 13, 11);
-
-	(void)sprintf(tmp, "Killed on Level %d", dun_level);
-	center_string(buf, tmp);
-	put_str(buf, 14, 11);
-
-
-	if (strlen(died_from) > 24)
-	{
-		strncpy(dummy, died_from, 24);
-		dummy[24] = '\0';
-		(void)sprintf(tmp, "by %s.", dummy);
+		p_title = "Magnificent";
 	}
 	else
-		(void)sprintf(tmp, "by %s.", died_from);
+	{
+		p_title = cp_ptr->titles[(p_ptr->lev - 1) / 5];
+	}
 
-	center_string(buf, tmp);
-	put_str(buf, 15, 11);
-
-
-	(void)sprintf(tmp, "%-.24s", ctime(&ct));
-	center_string(buf, tmp);
-	put_str(buf, 17, 11);
+	put_str(center(game->player_name), 6, 11);
+	put_str(center("the"), 7, 11);
+	put_str(center(p_title), 8, 11);
+	put_str(center(spp_ptr->title), 10, 11);
+	put_str(center(fmt::format("Level: {}", p_ptr->lev)), 11, 11);
+	put_str(center(fmt::format("Exp: {}", p_ptr->exp)), 12, 11);
+	put_str(center(fmt::format("AU: {}", p_ptr->au)), 13, 11);
+	put_str(center(fmt::format("Killed on Level {}", dun_level)), 14, 11);
+	put_str(center(fmt::format("by {}.", game->died_from.substr(0, 24))), 15, 11);
+	put_str(center(std::string(ctime(&ct)).substr(0, 24)), 17, 11);
 }
 
 
@@ -4850,17 +4787,8 @@ static errr top_twenty(void)
 		goto out;
 	}
 
-	/* Interupted */
-	if (!total_winner && streq(died_from, "Interrupting"))
-	{
-		msg_print("Score not registered due to interruption.");
-		msg_print(NULL);
-		display_scores_aux(highscore_fd, 0, 10, -1, NULL);
-		goto out;
-	}
-
 	/* Quitter */
-	if (!total_winner && streq(died_from, "Quitting"))
+	if (!total_winner && (game->died_from == "Quitting"))
 	{
 		msg_print("Score not registered due to quitting.");
 		msg_print(NULL);
@@ -4911,7 +4839,7 @@ static errr top_twenty(void)
 	sprintf(the_score.inside_quest, "%3d", p_ptr->inside_quest);
 
 	/* Save the cause of death (31 chars) */
-	sprintf(the_score.how, "%-.31s", died_from);
+	sprintf(the_score.how, "%-.31s", game->died_from.c_str());
 
 
 	/* Add a new entry to the score list, see where it went */
@@ -5110,7 +5038,7 @@ static void kingly(void)
 	dun_level = 0;
 
 	/* Fake death */
-	(void)strcpy(died_from, "Ripe Old Age");
+	game->died_from = "Ripe Old Age";
 
 	/* Restore the experience */
 	p_ptr->exp = p_ptr->max_exp;
@@ -5248,7 +5176,7 @@ void close_game(void)
 			/* Create string */
 			auto buf = fmt::format("\n{} was killed by {} on {}\n",
 				game->player_name,
-				died_from,
+				game->died_from,
 				long_day);
 
 			/* Output to the notes file */

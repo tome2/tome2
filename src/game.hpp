@@ -25,6 +25,11 @@ struct Game {
 	std::string player_base;
 
 	/**
+	 * What did the player die from?
+	 */
+	std::string died_from;
+
+	/**
 	 * Wilderness map
 	 */
 	grid<wilderness_map> wilderness;

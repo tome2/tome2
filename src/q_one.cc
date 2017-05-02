@@ -207,7 +207,7 @@ static bool_ quest_one_die_hook(void *, void *, void *)
 		{
 			cmsg_print(TERM_YELLOW, "The One Ring finally drags you totally to the shadow world.");
 			cmsg_print(TERM_YELLOW, "Your mortal existence ends there.");
-			strcpy(died_from, "being drawn to the shadow world");
+			game->died_from = "being drawn to the shadow world";
 		}
 	}
 	return (FALSE);

@@ -1890,10 +1890,12 @@ static void process_world(void)
 				msg_print(death_message);
 			}
 
-			/* Note cause of death */
-			(void)strcpy(died_from, "being undead too long");
-
-			if (p_ptr->image) strcat(died_from, "(?)");
+			/* Note cause of death; hallucinating characters don't get to know. */
+			game->died_from = "being undead too long";
+			if (p_ptr->image)
+			{
+				game->died_from = "(?)";
+			}
 
 			/* No longer a winner */
 			total_winner = FALSE;
@@ -5390,8 +5392,8 @@ void play_game()
 					p_ptr->word_recall = 0;
 				}
 
-				/* Note cause of death XXX XXX XXX */
-				(void)strcpy(died_from, "Cheating death");
+				/* Note cause of death */
+				game->died_from = "Cheating death";
 
 				/* Do not die */
 				death = FALSE;

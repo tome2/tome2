@@ -1334,9 +1334,11 @@ void take_hit(int damage, cptr hit_from)
 			}
 
 			/* Note cause of death */
-			(void)strcpy(died_from, hit_from);
-
-			if (p_ptr->image) strcat(died_from, "(?)");
+			game->died_from = hit_from;
+			if (p_ptr->image)
+			{
+				game->died_from = "(?)";
+			}
 
 			/* Leaving */
 			p_ptr->leaving = TRUE;
@@ -1508,9 +1510,11 @@ void take_sanity_hit(int damage, cptr hit_from)
 		}
 
 		/* Note cause of death */
-		(void)strcpy(died_from, hit_from);
-
-		if (p_ptr->image) strcat(died_from, "(?)");
+		game->died_from = hit_from;
+		if (p_ptr->image)
+		{
+			game->died_from = "(?)";
+		}
 
 		/* Leaving */
 		p_ptr->leaving = TRUE;

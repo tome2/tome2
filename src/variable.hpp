@@ -105,7 +105,6 @@ extern s16b health_who;
 extern s16b monster_race_idx;
 extern s16b monster_ego_idx;
 extern object_type *tracked_object;
-extern char died_from[80];
 extern char history[4][60];
 extern s16b lite_n;
 extern s16b lite_y[LITE_MAX];

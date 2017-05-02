@@ -202,11 +202,6 @@ object_type *tracked_object;
 
 
 /*
- * What killed the player
- */
-char died_from[80];
-
-/*
  * Hack -- Textual "history" for the Player
  */
 char history[4][60];

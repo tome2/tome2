@@ -522,7 +522,7 @@ static bool_ do_extra(ls_flag_t flag)
 
 	do_std_string(game->player_name, flag);
 
-	do_string(died_from, 80, flag);
+	do_std_string(game->died_from, flag);
 
 	for (std::size_t i = 0; i < 4; i++)
 	{
@@ -2752,7 +2752,7 @@ bool_ load_player(void)
 		if (p_ptr->chp >= 0)
 		{
 			/* Reset cause of death */
-			(void)strcpy(died_from, "(alive and well)");
+			game->died_from = "(alive and well)";
 		}
 
 		/* Success */
