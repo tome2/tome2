@@ -480,8 +480,6 @@ static void do_subrace(ls_flag_t flag)
 
 static void do_random_spell(random_spell *s_ptr, ls_flag_t flag)
 {
-	do_string(s_ptr->name, 30, flag);
-	do_string(s_ptr->desc, 30, flag);
 	do_s16b(&s_ptr->mana, flag);
 	do_s16b(&s_ptr->fail, flag);
 	do_u32b(&s_ptr->proj_flags, flag);

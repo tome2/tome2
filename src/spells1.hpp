@@ -1,6 +1,9 @@
 #pragma once
 
+#include <string>
+
 #include "h-basic.h"
+#include "random_spell_fwd.hpp"
 
 extern byte spell_color(int type);
 extern s16b poly_r_idx(int r_idx);
@@ -27,6 +30,7 @@ extern bool_ project(int who, int rad, int y, int x, int dam, int typ, int flg);
 extern bool_ potion_smash_effect(int who, int y, int x, int o_sval);
 extern void do_poly_self(void);
 extern void corrupt_player(void);
+extern std::string name_spell(random_spell const *);
 extern void generate_spell(int plev);
 extern bool_ unsafe;
 extern s16b do_poly_monster(int y, int x);

@@ -50,6 +50,7 @@
 #include "z-rand.hpp"
 
 #include <chrono>
+#include <fmt/format.h>
 #include <thread>
 
 using std::this_thread::sleep_for;
@@ -8775,8 +8776,7 @@ static void describe_attack_fully(int type, char* r)
  * Give a randomly-generated spell a name.
  * Note that it only describes the first effect!
  */
-
-static void name_spell(random_spell* s_ptr)
+std::string name_spell(random_spell const *s_ptr)
 {
 	char buff[30];
 	cptr buff2 = "???";
@@ -8807,7 +8807,7 @@ static void name_spell(random_spell* s_ptr)
 	}
 
 	describe_attack_fully(s_ptr->GF, buff);
-	strnfmt(s_ptr->name, 30, "%s - %s", buff2, buff);
+	return fmt::format("{:s} - {:s}", buff2, buff);
 }
 
 void generate_spell(int plev)
@@ -8911,22 +8911,6 @@ void generate_spell(int plev)
 	else
 	{
 		rspell.GF = destructive_attack_types[rand_int(10)];
-	}
-
-	// Give the spell a name
-	name_spell(&rspell);
-
-	// Give the spell a description
-	if (ball_desc)
-	{
-		/* 30 character limit on the string! */
-		sprintf(rspell.desc, "Dam: %d, Rad: %d, Pow: %d",
-			sides, dice, power);
-	}
-	else
-	{
-		sprintf(rspell.desc, "Damage: %dd%d, Power: %d",
-			dice, sides, power);
 	}
 
 	// Add

@@ -42,6 +42,8 @@
 #include "xtra2.hpp"
 #include "z-rand.hpp"
 
+#include <fmt/format.h>
+
 /*
  * Describe class powers of Mindcrafters
  *
@@ -1270,18 +1272,19 @@ static void print_spell_batch(int batch, int max)
 	{
 		auto rspell = &random_spells[batch * 10 + i];
 
-		char buff[80];
+		std::string buff;
+		std::string name = name_spell(rspell);
 
 		if (rspell->untried)
 		{
-			strnfmt(buff, 80, "  %c) %-30s  (Spell untried)  ",
-			        I2A(i), rspell->name);
+			buff = fmt::format("  {:c}) {:<30}  (Spell untried)  ",
+				(char) I2A(i), name);
 
 		}
 		else
 		{
-			strnfmt(buff, 80, "  %c) %-30s %3d %4d%% %3d %3dd%d ",
-			        I2A(i), rspell->name,
+			buff = fmt::format("  {:c}) {:<30} {:>3d} {:>4d}% {:>3d} {:>3d}d{:d} ",
+				(char) I2A(i), name,
 			        rspell->level, spell_chance_random(rspell), rspell->mana,
 			        rspell->dam_dice, rspell->dam_sides);
 		}
@@ -1302,7 +1305,6 @@ static random_spell* select_spell_from_batch(std::size_t batch)
 	auto &random_spells = p_ptr->random_spells;
 
 	char tmp[160];
-	char out_val[30];
 	char which;
 	random_spell* ret = nullptr;
 
@@ -1316,8 +1318,8 @@ static random_spell* select_spell_from_batch(std::size_t batch)
 	        ? random_spells.size() - batch * 10
 	        : 10;
 
-	strnfmt(tmp, 160, "(a-%c, A-%c to browse, / to rename, - to comment) Select a power: ",
-	        I2A(mut_max - 1), I2A(mut_max - 1) - 'a' + 'A');
+	strnfmt(tmp, 160, "(a-%c) Select a power: ",
+		I2A(mut_max - 1));
 
 	prt(tmp, 0, 0);
 
@@ -1356,65 +1358,7 @@ static random_spell* select_spell_from_batch(std::size_t batch)
 			continue;
 		}
 
-		/* Rename */
-		if (which == '/')
-		{
-			prt("Rename which power: ", 0, 0);
-			which = tolower(inkey());
-
-			if (isalpha(which) && (A2I(which) <= mut_max))
-			{
-				strcpy(out_val, random_spells[batch*10 + A2I(which)].name);
-				if (get_string("Name this power: ", out_val, 29))
-				{
-					strcpy(random_spells[batch*10 + A2I(which)].name, out_val);
-				}
-				prt(tmp, 0, 0);
-			}
-			else
-			{
-				bell();
-				prt(tmp, 0, 0);
-			}
-
-			/* Wait for next command */
-			continue;
-		}
-
-		/* Comment */
-		if (which == '-')
-		{
-			prt("Comment which power: ", 0, 0);
-			which = tolower(inkey());
-
-			if (isalpha(which) && (A2I(which) <= mut_max))
-			{
-				strcpy(out_val, random_spells[batch*10 + A2I(which)].desc);
-				if (get_string("Comment this power: ", out_val, 29))
-				{
-					strcpy(random_spells[batch*10 + A2I(which)].desc, out_val);
-				}
-				prt(tmp, 0, 0);
-			}
-			else
-			{
-				bell();
-				prt(tmp, 0, 0);
-			}
-
-			/* Wait for next command */
-			continue;
-		}
-
-		if (isalpha(which) && isupper(which))
-		{
-			which = tolower(which);
-			c_prt(TERM_L_BLUE, format("%s : %s", random_spells[batch*10 + A2I(which)].name, random_spells[batch*10 + A2I(which)].desc), 0, 0);
-			inkey();
-			prt(tmp, 0, 0);
-			continue;
-		}
-		else if (isalpha(which) && (A2I(which) < mut_max))
+		if (isalpha(which) && (A2I(which) < mut_max))
 		{
 			/* Pick the power */
 			ret = &random_spells[batch * 10 + A2I(which)];
