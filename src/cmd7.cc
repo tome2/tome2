@@ -347,7 +347,7 @@ static bool_ get_magic_power(int *sn, magic_power *powers, int max_powers,
  * do_cmd_cast calls this function if the player's class
  * is 'mindcrafter'.
  */
-void do_cmd_mindcraft(void)
+void do_cmd_mindcraft()
 {
 	int n = 0, b = 0;
 
@@ -629,7 +629,7 @@ void do_cmd_mindcraft(void)
 				}
 				else
 				{
-					(void)mindblast_monsters(plev * ((plev - 5) / 10 + 1));
+					mindblast_monsters(plev * ((plev - 5) / 10 + 1));
 				}
 
 				break;
@@ -656,11 +656,11 @@ void do_cmd_mindcraft(void)
 				if (!p_ptr->fast)
 				{
 					/* Haste */
-					(void)set_fast(b, plev / 5);
+					set_fast(b, plev / 5);
 				}
 				else
 				{
-					(void)set_fast(p_ptr->fast + b, plev / 5);
+					set_fast(p_ptr->fast + b, plev / 5);
 				}
 
 				break;
@@ -724,7 +724,7 @@ void do_cmd_mindcraft(void)
 		msg_print("You faint from the effort!");
 
 		/* Hack -- Bypass free action */
-		(void)set_paralyzed(randint(5 * oops + 1));
+		set_paralyzed(randint(5 * oops + 1));
 
 		/* Damage WIS (possibly permanently) */
 		if (rand_int(100) < 50)
@@ -735,7 +735,7 @@ void do_cmd_mindcraft(void)
 			msg_print("You have damaged your mind!");
 
 			/* Reduce constitution */
-			(void)dec_stat(A_WIS, 15 + randint(10), perm);
+			dec_stat(A_WIS, 15 + randint(10), perm);
 		}
 	}
 
@@ -862,7 +862,7 @@ static bool_ mimic_forbid_travel(void *, void *, void *)
  * do_cmd_cast calls this function if the player's class
  * is 'mimic'.
  */
-void do_cmd_mimic(void)
+void do_cmd_mimic()
 {
 	int n = 0, b = 0;
 
@@ -1131,7 +1131,7 @@ void do_cmd_mimic(void)
 		msg_print("You faint from the effort!");
 
 		/* Hack -- Bypass free action */
-		(void)set_paralyzed(randint(5 * oops + 1));
+		set_paralyzed(randint(5 * oops + 1));
 
 		/* Damage WIS (possibly permanently) */
 		if (rand_int(100) < 50)
@@ -1142,7 +1142,7 @@ void do_cmd_mimic(void)
 			msg_print("You have damaged your mind!");
 
 			/* Reduce constitution */
-			(void)dec_stat(A_DEX, 15 + randint(10), perm);
+			dec_stat(A_DEX, 15 + randint(10), perm);
 		}
 	}
 
@@ -1158,7 +1158,7 @@ void do_cmd_mimic(void)
  * do_cmd_cast calls this function if the player's class
  * is 'beastmaster'.
  */
-void do_cmd_beastmaster(void)
+void do_cmd_beastmaster()
 {
 	int plev = p_ptr->lev, i, num;
 
@@ -1200,7 +1200,7 @@ void do_cmd_beastmaster(void)
 /*
  * Command to ask favors from your god.
  */
-void do_cmd_pray(void)
+void do_cmd_pray()
 {
 	if (p_ptr->pgod == GOD_NONE)
 	{
@@ -1472,7 +1472,7 @@ static random_spell* select_spell()
 }
 
 
-void do_cmd_powermage(void)
+void do_cmd_powermage()
 {
 	random_spell *s_ptr;
 
@@ -1820,7 +1820,7 @@ static object_filter_t const &item_tester_hook_convertible()
  * do_cmd_cast calls this function if the player's class
  * is 'archer'.
  */
-void do_cmd_archer(void)
+void do_cmd_archer()
 {
 	int ext = 0;
 	char ch;
@@ -1912,11 +1912,11 @@ void do_cmd_archer(void)
 			q_ptr->discount = 90;
 			q_ptr->found = OBJ_FOUND_SELFMADE;
 
-			(void)inven_carry(q_ptr, FALSE);
+			inven_carry(q_ptr, FALSE);
 
 			msg_print("You make some ammo.");
 
-			(void)wall_to_mud(dir);
+			wall_to_mud(dir);
 			p_ptr->update |= (PU_VIEW | PU_FLOW | PU_MON_LITE);
 			p_ptr->window |= (PW_OVERHEAD);
 		}
@@ -1955,7 +1955,7 @@ void do_cmd_archer(void)
 
 		inc_stack_size(item, -1);
 
-		(void)inven_carry(q_ptr, FALSE);
+		inven_carry(q_ptr, FALSE);
 	}
 
 	/**********Create bolts*********/
@@ -1991,14 +1991,14 @@ void do_cmd_archer(void)
 
 		inc_stack_size(item, -1);
 
-		(void)inven_carry(q_ptr, FALSE);
+		inven_carry(q_ptr, FALSE);
 	}
 }
 
 /*
  * Control whether shots are allowed to pierce
  */
-void do_cmd_set_piercing(void)
+void do_cmd_set_piercing()
 {
 	char ch;
 	char com[80];
@@ -2068,7 +2068,7 @@ void necro_info(char *p, int power)
 /*
  * Cast a Necromancy spell
  */
-void do_cmd_necromancer(void)
+void do_cmd_necromancer()
 {
 	int n = 0, b = 0;
 	int chance;
@@ -2252,7 +2252,7 @@ void do_cmd_necromancer(void)
 
 				object_aware(o_ptr);
 				object_known(o_ptr);
-				(void)inven_carry(o_ptr, FALSE);
+				inven_carry(o_ptr, FALSE);
 
 				k_allow_special[k_idx] = FALSE;
 
@@ -2342,7 +2342,7 @@ void do_cmd_necromancer(void)
 		msg_print("You faint from the effort!");
 
 		/* Hack -- Bypass free action */
-		(void)set_paralyzed(randint(5 * oops + 1));
+		set_paralyzed(randint(5 * oops + 1));
 
 		/* Damage CON (possibly permanently) */
 		if (rand_int(100) < 50)
@@ -2353,7 +2353,7 @@ void do_cmd_necromancer(void)
 			msg_print("You have damaged your body!");
 
 			/* Reduce constitution */
-			(void)dec_stat(A_CON, 15 + randint(10), perm);
+			dec_stat(A_CON, 15 + randint(10), perm);
 		}
 	}
 
@@ -2553,7 +2553,7 @@ void do_cmd_summoner_extract()
 	object_aware(q_ptr);
 	object_known(q_ptr);
 	q_ptr->ident |= IDENT_MENTAL;
-	(void)inven_carry(q_ptr, FALSE);
+	inven_carry(q_ptr, FALSE);
 
 	msg_print("You extract a totem from the dead corpse.");
 	energy_use += 100;
@@ -2731,7 +2731,7 @@ void do_cmd_summoner_summon()
 }
 
 
-void do_cmd_summoner(void)
+void do_cmd_summoner()
 {
 	int ext = 0;
 
@@ -2805,7 +2805,7 @@ void do_cmd_summoner(void)
 /*
  * Dodge Chance Feedback.
  */
-void use_ability_blade(void)
+void use_ability_blade()
 {
 	int chance = p_ptr->dodge_chance - ((dun_level * 5) / 6);
 
@@ -2871,7 +2871,7 @@ void symbiotic_info(char *p, int power)
 /*
  * Cast a symbiotic spell
  */
-void do_cmd_symbiotic(void)
+void do_cmd_symbiotic()
 {
 	int n = 0;
 	int chance;
@@ -3223,7 +3223,7 @@ void do_cmd_symbiotic(void)
 		msg_print("You faint from the effort!");
 
 		/* Hack -- Bypass free action */
-		(void)set_paralyzed(randint(5 * oops + 1));
+		set_paralyzed(randint(5 * oops + 1));
 
 		/* Damage CON (possibly permanently) */
 		if (rand_int(100) < 50)
@@ -3234,7 +3234,7 @@ void do_cmd_symbiotic(void)
 			msg_print("You have damaged your body!");
 
 			/* Reduce constitution */
-			(void)dec_stat(A_CHR, 15 + randint(10), perm);
+			dec_stat(A_CHR, 15 + randint(10), perm);
 		}
 	}
 
@@ -3267,7 +3267,7 @@ void do_cmd_create_boulder()
 		object_type forge;
 		object_type *q_ptr;
 
-		(void)wall_to_mud(dir);
+		wall_to_mud(dir);
 
 		/* Get local object */
 		q_ptr = &forge;
@@ -3281,7 +3281,7 @@ void do_cmd_create_boulder()
 		q_ptr->discount = 90;
 		q_ptr->found = OBJ_FOUND_SELFMADE;
 
-		(void)inven_carry(q_ptr, FALSE);
+		inven_carry(q_ptr, FALSE);
 
 		msg_print("You make some boulders.");
 

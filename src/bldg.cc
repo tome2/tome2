@@ -551,7 +551,7 @@ static bool_ inn_comm(int cmd)
 			{
 				msg_print("The barkeep gives you some gruel and a beer.");
 				msg_print(NULL);
-				(void) set_food(PY_FOOD_MAX - 1);
+				set_food(PY_FOOD_MAX - 1);
 			}
 			else
 				msg_print("You're a vampire and I don't have any food for you!");
@@ -754,7 +754,7 @@ static bool_ castle_quest(int y, int x)
 /*
  * Displaying town history -KMW-
  */
-static void town_history(void)
+static void town_history()
 {
 	/* Save screen */
 	screen_save();
@@ -902,7 +902,7 @@ static bool item_tester_hook_melee_weapon(object_type const *o_ptr)
 /*
  * compare_weapons -KMW-
  */
-static bool_ compare_weapons(void)
+static bool_ compare_weapons()
 {
 	int item, i;
 
@@ -1080,7 +1080,7 @@ static bool_ fix_item(int istart, int iend, int ispecific, bool_ iac)
 /*
  * Research Item
  */
-static bool_ research_item(void)
+static bool_ research_item()
 {
 	clear_bldg(5, 18);
 	return (identify_fully());
@@ -1425,7 +1425,7 @@ bool_ bldg_process_command(const store_type *s_ptr, store_action_type const *ba_
 /*
  * Enter quest level
  */
-void enter_quest(void)
+void enter_quest()
 {
 	if (!(cave[p_ptr->py][p_ptr->px].feat == FEAT_QUEST_ENTER))
 	{

@@ -855,7 +855,7 @@ void teleport_player_to(int ny, int nx)
 /*
  * Teleport the player one level up or down (random when legal)
  */
-void teleport_player_level(void)
+void teleport_player_level()
 {
 	/* No effect in arena or quest */
 	if (p_ptr->inside_quest)
@@ -1329,7 +1329,7 @@ void take_hit(int damage, cptr hit_from)
 			}
 			else
 			{
-				(void)get_rnd_line("death.txt", death_message);
+				get_rnd_line("death.txt", death_message);
 				cmsg_print(TERM_RED, death_message);
 			}
 
@@ -1505,7 +1505,7 @@ void take_sanity_hit(int damage, cptr hit_from)
 		}
 		else
 		{
-			(void)get_rnd_line("death.txt", death_message);
+			get_rnd_line("death.txt", death_message);
 			cmsg_print(TERM_RED, death_message);
 		}
 
@@ -1828,7 +1828,7 @@ static int inven_damage(inven_func typ, int perc)
 				/* Potions smash open */
 				if (k_info[o_ptr->k_idx].tval == TV_POTION)
 				{
-					(void)potion_smash_effect(0, p_ptr->py, p_ptr->px, o_ptr->sval);
+					potion_smash_effect(0, p_ptr->py, p_ptr->px, o_ptr->sval);
 				}
 
 				/*
@@ -1865,7 +1865,7 @@ static int inven_damage(inven_func typ, int perc)
  *
  * If any armor is damaged (or resists), the player takes less damage.
  */
-static int minus_ac(void)
+static int minus_ac()
 {
 	object_type *o_ptr = NULL;
 
@@ -1949,7 +1949,7 @@ void acid_dam(int dam, cptr kb_str)
 
 	if ((!(p_ptr->oppose_acid || p_ptr->resist_acid)) &&
 	                randint(HURT_CHANCE) == 1)
-		(void) do_dec_stat(A_CHR, STAT_DEC_NORMAL);
+		do_dec_stat(A_CHR, STAT_DEC_NORMAL);
 
 	/* If any armor gets hit, defend the player */
 	if (minus_ac()) dam = (dam + 1) / 2;
@@ -1979,7 +1979,7 @@ void elec_dam(int dam, cptr kb_str)
 
 	if ((!(p_ptr->oppose_elec || p_ptr->resist_elec)) &&
 	                randint(HURT_CHANCE) == 1)
-		(void) do_dec_stat(A_DEX, STAT_DEC_NORMAL);
+		do_dec_stat(A_DEX, STAT_DEC_NORMAL);
 
 	/* Take damage */
 	take_hit(dam, kb_str);
@@ -2009,7 +2009,7 @@ void fire_dam(int dam, cptr kb_str)
 
 	if ((!(p_ptr->oppose_fire || p_ptr->resist_fire)) &&
 	                randint(HURT_CHANCE) == 1)
-		(void) do_dec_stat(A_STR, STAT_DEC_NORMAL);
+		do_dec_stat(A_STR, STAT_DEC_NORMAL);
 
 
 	/* Take damage */
@@ -2037,7 +2037,7 @@ void cold_dam(int dam, cptr kb_str)
 
 	if ((!(p_ptr->oppose_cold || p_ptr->resist_cold)) &&
 	                randint(HURT_CHANCE) == 1)
-		(void) do_dec_stat(A_STR, STAT_DEC_NORMAL);
+		do_dec_stat(A_STR, STAT_DEC_NORMAL);
 
 	/* Take damage */
 	take_hit(dam, kb_str);
@@ -2356,7 +2356,7 @@ bool_ apply_disenchant(int mode)
 }
 
 
-void corrupt_player(void)
+void corrupt_player()
 {
 	int max1, cur1, max2, cur2, ii, jj;
 
@@ -3692,7 +3692,7 @@ static bool_ project_f(int who, int r, int y, int x, int dam, int typ)
 		if (!p_ptr->resist_blind && !p_ptr->resist_lite)
 		{
 			/* Become blind */
-			(void)set_blind(p_ptr->blind + 10 + randint(10));
+			set_blind(p_ptr->blind + 10 + randint(10));
 		}
 	}
 
@@ -4080,7 +4080,7 @@ static bool_ project_o(int who, int r, int y, int x, int dam, int typ)
 				/* Potions produce effects when 'shattered' */
 				if (is_potion)
 				{
-					(void)potion_smash_effect(who, y, x, o_sval);
+					potion_smash_effect(who, y, x, o_sval);
 				}
 
 
@@ -5126,7 +5126,7 @@ bool_ project_m(int who, int r, int y, int x, int dam, int typ)
 								}
 							default:
 								if (!p_ptr->free_act)
-									(void)set_paralyzed(randint(dam));
+									set_paralyzed(randint(dam));
 								break;
 							}
 						}
@@ -7069,7 +7069,7 @@ static bool_ project_p(int who, int r, int y, int x, int dam, int typ, int a_rad
 			if (!p_ptr->resist_sound)
 			{
 				int k = (randint((dam > 40) ? 35 : (dam * 3 / 4 + 5)));
-				(void)set_stun(p_ptr->stun + k);
+				set_stun(p_ptr->stun + k);
 			}
 
 			if (!(p_ptr->resist_fire ||
@@ -7154,11 +7154,11 @@ static bool_ project_p(int who, int r, int y, int x, int dam, int typ, int a_rad
 			}
 			if (!p_ptr->resist_conf)
 			{
-				(void)set_confused(p_ptr->confused + rand_int(20) + 10);
+				set_confused(p_ptr->confused + rand_int(20) + 10);
 			}
 			if (!p_ptr->resist_chaos)
 			{
-				(void)set_image(p_ptr->image + randint(10));
+				set_image(p_ptr->image + randint(10));
 			}
 			if (!p_ptr->resist_neth && !p_ptr->resist_chaos)
 			{
@@ -7197,7 +7197,7 @@ static bool_ project_p(int who, int r, int y, int x, int dam, int typ, int a_rad
 			}
 			else
 			{
-				(void)set_cut(p_ptr->cut + dam);
+				set_cut(p_ptr->cut + dam);
 			}
 
 			if ((!p_ptr->resist_shard) || (randint(13) == 1))
@@ -7221,7 +7221,7 @@ static bool_ project_p(int who, int r, int y, int x, int dam, int typ, int a_rad
 			else
 			{
 				int k = (randint((dam > 90) ? 35 : (dam / 3 + 5)));
-				(void)set_stun(p_ptr->stun + k);
+				set_stun(p_ptr->stun + k);
 			}
 
 			if ((!p_ptr->resist_sound) || (randint(13) == 1))
@@ -7244,7 +7244,7 @@ static bool_ project_p(int who, int r, int y, int x, int dam, int typ, int a_rad
 			}
 			if (!p_ptr->resist_conf)
 			{
-				(void)set_confused(p_ptr->confused + randint(20) + 10);
+				set_confused(p_ptr->confused + randint(20) + 10);
 			}
 			take_hit(dam, killer);
 			break;
@@ -7261,7 +7261,7 @@ static bool_ project_p(int who, int r, int y, int x, int dam, int typ, int a_rad
 			}
 			else
 			{
-				(void)apply_disenchant(0);
+				apply_disenchant(0);
 			}
 			take_hit(dam, killer);
 			break;
@@ -7290,7 +7290,7 @@ static bool_ project_p(int who, int r, int y, int x, int dam, int typ, int a_rad
 			if (fuzzy) msg_print("You are hit by kinetic force!");
 			if (!p_ptr->resist_sound)
 			{
-				(void)set_stun(p_ptr->stun + randint(20));
+				set_stun(p_ptr->stun + randint(20));
 				/*
 				 * If fired by player, try pushing monster.
 				 * First get vector from player to monster.
@@ -7380,7 +7380,7 @@ static bool_ project_p(int who, int r, int y, int x, int dam, int typ, int a_rad
 			if (fuzzy) msg_print("There is an explosion!");
 			if (!p_ptr->resist_sound)
 			{
-				(void)set_stun(p_ptr->stun + randint(20));
+				set_stun(p_ptr->stun + randint(20));
 			}
 			if (p_ptr->resist_shard)
 			{
@@ -7388,7 +7388,7 @@ static bool_ project_p(int who, int r, int y, int x, int dam, int typ, int a_rad
 			}
 			else
 			{
-				(void)set_cut(p_ptr-> cut + ( dam / 2) );
+				set_cut(p_ptr-> cut + ( dam / 2) );
 			}
 
 			if ((!p_ptr->resist_shard) || (randint(12) == 1))
@@ -7404,7 +7404,7 @@ static bool_ project_p(int who, int r, int y, int x, int dam, int typ, int a_rad
 	case GF_INERTIA:
 		{
 			if (fuzzy) msg_print("You are hit by something slow!");
-			(void)set_slow(p_ptr->slow + rand_int(4) + 4);
+			set_slow(p_ptr->slow + rand_int(4) + 4);
 			take_hit(dam, killer);
 			break;
 		}
@@ -7420,7 +7420,7 @@ static bool_ project_p(int who, int r, int y, int x, int dam, int typ, int a_rad
 			}
 			else if (!blind && !p_ptr->resist_blind)
 			{
-				(void)set_blind(p_ptr->blind + randint(5) + 2);
+				set_blind(p_ptr->blind + randint(5) + 2);
 			}
 			if (p_ptr->sensible_lite)
 			{
@@ -7455,7 +7455,7 @@ static bool_ project_p(int who, int r, int y, int x, int dam, int typ, int a_rad
 			}
 			else if (!blind && !p_ptr->resist_blind)
 			{
-				(void)set_blind(p_ptr->blind + randint(5) + 2);
+				set_blind(p_ptr->blind + randint(5) + 2);
 			}
 			if (p_ptr->wraith_form) hp_player(dam);
 			else take_hit(dam, killer);
@@ -7556,11 +7556,11 @@ static bool_ project_p(int who, int r, int y, int x, int dam, int typ, int a_rad
 
 			teleport_player(5);
 			if (!p_ptr->ffall)
-				(void)set_slow(p_ptr->slow + rand_int(4) + 4);
+				set_slow(p_ptr->slow + rand_int(4) + 4);
 			if (!(p_ptr->resist_sound || p_ptr->ffall))
 			{
 				int k = (randint((dam > 90) ? 35 : (dam / 3 + 5)));
-				(void)set_stun(p_ptr->stun + k);
+				set_stun(p_ptr->stun + k);
 			}
 			if (p_ptr->ffall)
 			{
@@ -7587,7 +7587,7 @@ static bool_ project_p(int who, int r, int y, int x, int dam, int typ, int a_rad
 	case GF_OLD_HEAL:
 		{
 			if (fuzzy) msg_print("You are hit by something invigorating!");
-			(void)hp_player(dam);
+			hp_player(dam);
 			dam = 0;
 			break;
 		}
@@ -7595,7 +7595,7 @@ static bool_ project_p(int who, int r, int y, int x, int dam, int typ, int a_rad
 	case GF_OLD_SPEED:
 		{
 			if (fuzzy) msg_print("You are hit by something!");
-			(void)set_fast(p_ptr->fast + randint(5), 10);
+			set_fast(p_ptr->fast + randint(5), 10);
 			dam = 0;
 			break;
 		}
@@ -7603,7 +7603,7 @@ static bool_ project_p(int who, int r, int y, int x, int dam, int typ, int a_rad
 	case GF_OLD_SLOW:
 		{
 			if (fuzzy) msg_print("You are hit by something slow!");
-			(void)set_slow(p_ptr->slow + rand_int(4) + 4);
+			set_slow(p_ptr->slow + rand_int(4) + 4);
 			break;
 		}
 
@@ -7645,11 +7645,11 @@ static bool_ project_p(int who, int r, int y, int x, int dam, int typ, int a_rad
 			cold_dam(dam, killer);
 			if (!p_ptr->resist_shard)
 			{
-				(void)set_cut(p_ptr->cut + damroll(5, 8));
+				set_cut(p_ptr->cut + damroll(5, 8));
 			}
 			if (!p_ptr->resist_sound)
 			{
-				(void)set_stun(p_ptr->stun + randint(15));
+				set_stun(p_ptr->stun + randint(15));
 			}
 
 			if ((!(p_ptr->resist_cold || p_ptr->oppose_cold)) || (randint(12) == 1))
@@ -8601,12 +8601,12 @@ bool_ potion_smash_effect(int who, int y, int x, int o_sval)
 		;
 	}
 
-	(void) project(who, radius, y, x, dam, dt,
+	project(who, radius, y, x, dam, dt,
 	               (PROJECT_JUMP | PROJECT_ITEM | PROJECT_KILL));
 
 	// Silence warning. We may want to introuce an actual implementation
 	// and I want to preserve the original "ident" values if we do so.
-	(void) ident;
+	ident;
 
 	/* XXX	those potions that explode need to become "known" */
 	return angry;

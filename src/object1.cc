@@ -496,7 +496,7 @@ static void shuffle_flavors(cptr adj[], byte col[])
  *
  * Note that the "hacked seed" may provide an RNG with alternating parity!
  */
-void flavor_init(void)
+void flavor_init()
 {
 	auto &k_info = game->edit_data.k_info;
 
@@ -627,7 +627,7 @@ void flavor_init(void)
  *
  * The "prefs" parameter is no longer meaningful.  XXX XXX XXX
  */
-void reset_visuals(void)
+void reset_visuals()
 {
 	auto &st_info = game->edit_data.st_info;
 	auto &race_mod_info = game->edit_data.race_mod_info;
@@ -3908,7 +3908,7 @@ static void show_inven_aux(bool_ mirror, object_filter_t const &filter);
 /*
  * Choice window "shadow" of the "show_inven()" function
  */
-void display_inven(void)
+void display_inven()
 {
 	show_inven_aux(TRUE, object_filter::True());
 }
@@ -3918,7 +3918,7 @@ void display_inven(void)
 /*
  * Choice window "shadow" of the "show_equip()" function
  */
-void display_equip(void)
+void display_equip()
 {
 	show_equip_aux(TRUE, object_filter::True());
 }
@@ -4018,7 +4018,7 @@ void show_inven_aux(bool_ mirror, const object_filter_t &filter)
 
 		/* Save the object color, and description */
 		out_color[k] = tval_to_attr[o_ptr->tval % 128];
-		(void)strcpy(out_desc[k], o_name);
+		strcpy(out_desc[k], o_name);
 
 		/* Find the predicted "line length" */
 		l = strlen(out_desc[k]) + 5;
@@ -4211,7 +4211,7 @@ void show_equip_aux(bool_ mirror, object_filter_t const &filter)
 
 				/* Save the color */
 				out_color[k] = TERM_L_RED;
-				(void)strcpy(out_desc[k], o_name);
+				strcpy(out_desc[k], o_name);
 				continue;
 			}
 		}
@@ -4231,7 +4231,7 @@ void show_equip_aux(bool_ mirror, object_filter_t const &filter)
 
 			/* Save the color */
 			out_color[k] = TERM_L_BLUE;
-			(void)strcpy(out_desc[k], o_name);
+			strcpy(out_desc[k], o_name);
 		}
 		else
 		{
@@ -4256,7 +4256,7 @@ void show_equip_aux(bool_ mirror, object_filter_t const &filter)
 
 			/* Save the color */
 			out_color[k] = tval_to_attr[o_ptr->tval % 128];
-			(void)strcpy(out_desc[k], o_name);
+			strcpy(out_desc[k], o_name);
 		}
 
 		/* Extract the maximal length (see below) */
@@ -4318,7 +4318,7 @@ void show_equip_aux(bool_ mirror, object_filter_t const &filter)
 		/* Use labels */
 		{
 			/* Mention the use */
-			(void)sprintf(tmp_val, "%-14s: ", mention_use(out_rindex[j]));
+			sprintf(tmp_val, "%-14s: ", mention_use(out_rindex[j]));
 			put_str(tmp_val, row + j, col + 5);
 
 			/* Display the entry itself */
@@ -4361,7 +4361,7 @@ void show_equip_aux(bool_ mirror, object_filter_t const &filter)
 /*
  * Flip "inven" and "equip" in any sub-windows
  */
-void toggle_inven_equip(void)
+void toggle_inven_equip()
 {
 	int j;
 
@@ -4417,7 +4417,7 @@ bool_ verify(cptr prompt, int item)
 	object_desc(o_name, o_ptr, TRUE, 3);
 
 	/* Prompt */
-	(void)sprintf(out_val, "%s %s? ", prompt, o_name);
+	sprintf(out_val, "%s %s? ", prompt, o_name);
 
 	/* Query */
 	return (get_check(out_val));

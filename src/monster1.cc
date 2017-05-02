@@ -1559,7 +1559,7 @@ static bool_ monster_lava(int r_idx)
 }
 
 
-void set_mon_num_hook(void)
+void set_mon_num_hook()
 {
 	auto const &wf_info = game->edit_data.wf_info;
 

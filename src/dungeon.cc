@@ -292,7 +292,7 @@ static byte value_check_aux2_magic(object_type const *o_ptr)
 /*
  * Can a player be resurrected?
  */
-static bool_ granted_resurrection(void)
+static bool_ granted_resurrection()
 {
 	if (praying_to(GOD_ERU))
 	{
@@ -480,7 +480,7 @@ void sense_objects(std::vector<int> const &object_idxs)
 	squeltch_inventory();
 }
 
-void sense_inventory(void)
+void sense_inventory()
 {
 	static std::vector<int> idxs;
 	// Initialize static vector if necessary
@@ -498,7 +498,7 @@ void sense_inventory(void)
 /*
  * Go to any level (ripped off from wiz_jump)
  */
-static void pattern_teleport(void)
+static void pattern_teleport()
 {
 	/* Ask for level */
 	if (get_check("Teleport level? "))
@@ -551,27 +551,27 @@ static void pattern_teleport(void)
 /*
  * Returns TRUE if we are on the Straight Road...
  */
-static bool_ pattern_effect(void)
+static bool_ pattern_effect()
 {
 	if ((cave[p_ptr->py][p_ptr->px].feat < FEAT_PATTERN_START) ||
 	                (cave[p_ptr->py][p_ptr->px].feat > FEAT_PATTERN_XTRA2)) return (FALSE);
 
 	if (cave[p_ptr->py][p_ptr->px].feat == FEAT_PATTERN_END)
 	{
-		(void)set_poisoned(0);
-		(void)set_image(0);
-		(void)set_stun(0);
-		(void)set_cut(0);
-		(void)set_blind(0);
-		(void)set_afraid(0);
-		(void)do_res_stat(A_STR, TRUE);
-		(void)do_res_stat(A_INT, TRUE);
-		(void)do_res_stat(A_WIS, TRUE);
-		(void)do_res_stat(A_DEX, TRUE);
-		(void)do_res_stat(A_CON, TRUE);
-		(void)do_res_stat(A_CHR, TRUE);
-		(void)restore_level();
-		(void)hp_player(1000);
+		set_poisoned(0);
+		set_image(0);
+		set_stun(0);
+		set_cut(0);
+		set_blind(0);
+		set_afraid(0);
+		do_res_stat(A_STR, TRUE);
+		do_res_stat(A_INT, TRUE);
+		do_res_stat(A_WIS, TRUE);
+		do_res_stat(A_DEX, TRUE);
+		do_res_stat(A_CON, TRUE);
+		do_res_stat(A_CHR, TRUE);
+		restore_level();
+		hp_player(1000);
 		cave_set_feat(p_ptr->py, p_ptr->px, FEAT_PATTERN_OLD);
 		msg_print("This section of the Straight Road looks less powerful.");
 	}
@@ -776,7 +776,7 @@ static void regenmana(int percent)
  *
  * XXX XXX XXX Should probably be done during monster turns.
  */
-static void regen_monsters(void)
+static void regen_monsters()
 {
 	auto const &r_info = game->edit_data.r_info;
 
@@ -1220,7 +1220,7 @@ static void process_world_gods()
  * Note that a single movement in the overhead wilderness mode
  * consumes 132 times as much energy as a normal one...
  */
-static void process_world(void)
+static void process_world()
 {
 	auto const &d_info = game->edit_data.d_info;
 	auto const &r_info = game->edit_data.r_info;
@@ -1413,7 +1413,7 @@ static void process_world(void)
 		/* Make a new monster */
 		if (!(dungeon_flags & DF_NO_NEW_MONSTER))
 		{
-			(void)alloc_monster(MAX_SIGHT + 5, FALSE);
+			alloc_monster(MAX_SIGHT + 5, FALSE);
 		}
 	}
 
@@ -1601,7 +1601,7 @@ static void process_world(void)
 			if (i < 1) i = 1;
 
 			/* Digest some food */
-			(void)set_food(p_ptr->food - i);
+			set_food(p_ptr->food - i);
 		}
 	}
 
@@ -1609,7 +1609,7 @@ static void process_world(void)
 	else
 	{
 		/* Digest a lot of food */
-		(void)set_food(p_ptr->food - 100);
+		set_food(p_ptr->food - 100);
 	}
 
 	/* Starve to death (slowly) */
@@ -1653,7 +1653,7 @@ static void process_world(void)
 				disturb();
 
 				/* Hack -- faint (bypass free action) */
-				(void)set_paralyzed(1 + rand_int(5));
+				set_paralyzed(1 + rand_int(5));
 			}
 		}
 	}
@@ -1841,19 +1841,19 @@ static void process_world(void)
 	/* Hack -- Hallucinating */
 	if (p_ptr->image)
 	{
-		(void)set_image(p_ptr->image - 1);
+		set_image(p_ptr->image - 1);
 	}
 
 	/* Holy Aura */
 	if (p_ptr->holy)
 	{
-		(void)set_holy(p_ptr->holy - 1);
+		set_holy(p_ptr->holy - 1);
 	}
 
 	/* Soul absorbtion */
 	if (p_ptr->absorb_soul)
 	{
-		(void)set_absorb_soul(p_ptr->absorb_soul - 1);
+		set_absorb_soul(p_ptr->absorb_soul - 1);
 	}
 
 	/* Undead loose Death Points */
@@ -1886,7 +1886,7 @@ static void process_world(void)
 			{
 				char death_message[80];
 
-				(void)get_rnd_line("death.txt", death_message);
+				get_rnd_line("death.txt", death_message);
 				msg_print(death_message);
 			}
 
@@ -1935,29 +1935,29 @@ static void process_world(void)
 	/* True Strike */
 	if (p_ptr->strike)
 	{
-		(void)set_strike(p_ptr->strike - 1);
+		set_strike(p_ptr->strike - 1);
 	}
 
 	/* Timed project */
 	if (p_ptr->tim_project)
 	{
-		(void)set_project(p_ptr->tim_project - 1, p_ptr->tim_project_gf, p_ptr->tim_project_dam, p_ptr->tim_project_rad, p_ptr->tim_project_flag);
+		set_project(p_ptr->tim_project - 1, p_ptr->tim_project_gf, p_ptr->tim_project_dam, p_ptr->tim_project_rad, p_ptr->tim_project_flag);
 	}
 
 	/* Timed roots */
 	if (p_ptr->tim_roots)
 	{
-		(void)set_roots(p_ptr->tim_roots - 1, p_ptr->tim_roots_ac, p_ptr->tim_roots_dam);
+		set_roots(p_ptr->tim_roots - 1, p_ptr->tim_roots_ac, p_ptr->tim_roots_dam);
 	}
 
 	/* Timed breath */
 	if (p_ptr->tim_water_breath)
 	{
-		(void)set_tim_breath(p_ptr->tim_water_breath - 1, FALSE);
+		set_tim_breath(p_ptr->tim_water_breath - 1, FALSE);
 	}
 	if (p_ptr->tim_magic_breath)
 	{
-		(void)set_tim_breath(p_ptr->tim_magic_breath - 1, TRUE);
+		set_tim_breath(p_ptr->tim_magic_breath - 1, TRUE);
 	}
 
 	/* Timed precognition */
@@ -1969,41 +1969,41 @@ static void process_world(void)
 	/* Timed regen */
 	if (p_ptr->tim_regen)
 	{
-		(void)set_tim_regen(p_ptr->tim_regen - 1, p_ptr->tim_regen_pow);
+		set_tim_regen(p_ptr->tim_regen - 1, p_ptr->tim_regen_pow);
 	}
 
 	/* Timed Disrupt shield */
 	if (p_ptr->disrupt_shield)
 	{
-		(void)set_disrupt_shield(p_ptr->disrupt_shield - 1);
+		set_disrupt_shield(p_ptr->disrupt_shield - 1);
 	}
 
 	/* Timed Parasite */
 	if (p_ptr->parasite)
 	{
-		(void)set_parasite(p_ptr->parasite - 1, p_ptr->parasite_r_idx);
+		set_parasite(p_ptr->parasite - 1, p_ptr->parasite_r_idx);
 	}
 
 	/* Timed Reflection */
 	if (p_ptr->tim_reflect)
 	{
-		(void)set_tim_reflect(p_ptr->tim_reflect - 1);
+		set_tim_reflect(p_ptr->tim_reflect - 1);
 	}
 
 	/* Timed Prob Travel */
 	if (p_ptr->prob_travel)
 	{
-		(void)set_prob_travel(p_ptr->prob_travel - 1);
+		set_prob_travel(p_ptr->prob_travel - 1);
 	}
 
 	/* Timed Levitation */
 	if (p_ptr->tim_ffall)
 	{
-		(void)set_tim_ffall(p_ptr->tim_ffall - 1);
+		set_tim_ffall(p_ptr->tim_ffall - 1);
 	}
 	if (p_ptr->tim_fly)
 	{
-		(void)set_tim_fly(p_ptr->tim_fly - 1);
+		set_tim_fly(p_ptr->tim_fly - 1);
 	}
 
 	/* Thunderstorm */
@@ -2045,37 +2045,37 @@ static void process_world(void)
 			        PROJECT_KILL | PROJECT_ITEM | PROJECT_HIDE);
 		}
 
-		(void)set_tim_thunder(p_ptr->tim_thunder - 1, p_ptr->tim_thunder_p1, p_ptr->tim_thunder_p2);
+		set_tim_thunder(p_ptr->tim_thunder - 1, p_ptr->tim_thunder_p1, p_ptr->tim_thunder_p2);
 	}
 
 	/* Poisonned hands */
 	if (p_ptr->tim_poison)
 	{
-		(void)set_poison(p_ptr->tim_poison - 1);
+		set_poison(p_ptr->tim_poison - 1);
 	}
 
 	/* Brightness */
 	if (p_ptr->tim_lite)
 	{
-		(void)set_lite(p_ptr->tim_lite - 1);
+		set_lite(p_ptr->tim_lite - 1);
 	}
 
 	/* Blindness */
 	if (p_ptr->blind)
 	{
-		(void)set_blind(p_ptr->blind - 1);
+		set_blind(p_ptr->blind - 1);
 	}
 
 	/* Timed no_breeds */
 	if (no_breeds)
 	{
-		(void)set_no_breeders(no_breeds - 1);
+		set_no_breeders(no_breeds - 1);
 	}
 
 	/* Timed mimic */
 	if (p_ptr->tim_mimic)
 	{
-		(void)set_mimic(p_ptr->tim_mimic - 1, p_ptr->mimic_form, p_ptr->mimic_level);
+		set_mimic(p_ptr->tim_mimic - 1, p_ptr->mimic_form, p_ptr->mimic_level);
 	}
 
 	/* Timed special move commands */
@@ -2087,25 +2087,25 @@ static void process_world(void)
 	/* Timed invisibility */
 	if (p_ptr->tim_invisible)
 	{
-		(void)set_invis(p_ptr->tim_invisible - 1, p_ptr->tim_inv_pow);
+		set_invis(p_ptr->tim_invisible - 1, p_ptr->tim_inv_pow);
 	}
 
 	/* Times see-invisible */
 	if (p_ptr->tim_invis)
 	{
-		(void)set_tim_invis(p_ptr->tim_invis - 1);
+		set_tim_invis(p_ptr->tim_invis - 1);
 	}
 
 	/* Timed esp */
 	if (p_ptr->tim_esp)
 	{
-		(void)set_tim_esp(p_ptr->tim_esp - 1);
+		set_tim_esp(p_ptr->tim_esp - 1);
 	}
 
 	/* Timed infra-vision */
 	if (p_ptr->tim_infra)
 	{
-		(void)set_tim_infra(p_ptr->tim_infra - 1);
+		set_tim_infra(p_ptr->tim_infra - 1);
 	}
 
 	/* Paralysis */
@@ -2117,109 +2117,109 @@ static void process_world(void)
 	/* Confusion */
 	if (p_ptr->confused)
 	{
-		(void)set_confused(p_ptr->confused - 1);
+		set_confused(p_ptr->confused - 1);
 	}
 
 	/* Afraid */
 	if (p_ptr->afraid)
 	{
-		(void)set_afraid(p_ptr->afraid - 1);
+		set_afraid(p_ptr->afraid - 1);
 	}
 
 	/* Fast */
 	if (p_ptr->fast)
 	{
-		(void)set_fast(p_ptr->fast - 1, p_ptr->speed_factor);
+		set_fast(p_ptr->fast - 1, p_ptr->speed_factor);
 	}
 
 	/* Light speed */
 	if (p_ptr->lightspeed)
 	{
-		(void)set_light_speed(p_ptr->lightspeed - 1);
+		set_light_speed(p_ptr->lightspeed - 1);
 	}
 
 	/* Slow */
 	if (p_ptr->slow)
 	{
-		(void)set_slow(p_ptr->slow - 1);
+		set_slow(p_ptr->slow - 1);
 	}
 
 	/* Protection from evil */
 	if (p_ptr->protevil)
 	{
-		(void)set_protevil(p_ptr->protevil - 1);
+		set_protevil(p_ptr->protevil - 1);
 	}
 
 	/* Invulnerability */
 	if (p_ptr->invuln)
 	{
-		(void)set_invuln(p_ptr->invuln - 1);
+		set_invuln(p_ptr->invuln - 1);
 	}
 
 	/* Wraith form */
 	if (p_ptr->tim_wraith)
 	{
-		(void)set_shadow(p_ptr->tim_wraith - 1);
+		set_shadow(p_ptr->tim_wraith - 1);
 	}
 
 	/* Heroism */
 	if (p_ptr->hero)
 	{
-		(void)set_hero(p_ptr->hero - 1);
+		set_hero(p_ptr->hero - 1);
 	}
 
 	/* Super Heroism */
 	if (p_ptr->shero)
 	{
-		(void)set_shero(p_ptr->shero - 1);
+		set_shero(p_ptr->shero - 1);
 	}
 
 	/* Blessed */
 	if (p_ptr->blessed)
 	{
-		(void)set_blessed(p_ptr->blessed - 1);
+		set_blessed(p_ptr->blessed - 1);
 	}
 
 	/* Shield */
 	if (p_ptr->shield)
 	{
-		(void)set_shield(p_ptr->shield - 1, p_ptr->shield_power, p_ptr->shield_opt, p_ptr->shield_power_opt, p_ptr->shield_power_opt2);
+		set_shield(p_ptr->shield - 1, p_ptr->shield_power, p_ptr->shield_opt, p_ptr->shield_power_opt, p_ptr->shield_power_opt2);
 	}
 
 	/* Oppose Acid */
 	if (p_ptr->oppose_acid)
 	{
-		(void)set_oppose_acid(p_ptr->oppose_acid - 1);
+		set_oppose_acid(p_ptr->oppose_acid - 1);
 	}
 
 	/* Oppose Lightning */
 	if (p_ptr->oppose_elec)
 	{
-		(void)set_oppose_elec(p_ptr->oppose_elec - 1);
+		set_oppose_elec(p_ptr->oppose_elec - 1);
 	}
 
 	/* Oppose Fire */
 	if (p_ptr->oppose_fire)
 	{
-		(void)set_oppose_fire(p_ptr->oppose_fire - 1);
+		set_oppose_fire(p_ptr->oppose_fire - 1);
 	}
 
 	/* Oppose Cold */
 	if (p_ptr->oppose_cold)
 	{
-		(void)set_oppose_cold(p_ptr->oppose_cold - 1);
+		set_oppose_cold(p_ptr->oppose_cold - 1);
 	}
 
 	/* Oppose Poison */
 	if (p_ptr->oppose_pois)
 	{
-		(void)set_oppose_pois(p_ptr->oppose_pois - 1);
+		set_oppose_pois(p_ptr->oppose_pois - 1);
 	}
 
 	/* Oppose Chaos & Confusion */
 	if (p_ptr->oppose_cc)
 	{
-		(void)set_oppose_cc(p_ptr->oppose_cc - 1);
+		set_oppose_cc(p_ptr->oppose_cc - 1);
 	}
 
 	/* Timed mimicry */
@@ -2261,7 +2261,7 @@ static void process_world(void)
 		int adjust = (adj_con_fix[p_ptr->stat_ind[A_CON]] + 1);
 
 		/* Apply some healing */
-		(void)set_poisoned(p_ptr->poisoned - adjust);
+		set_poisoned(p_ptr->poisoned - adjust);
 	}
 
 	/* Stun */
@@ -2270,7 +2270,7 @@ static void process_world(void)
 		int adjust = (adj_con_fix[p_ptr->stat_ind[A_CON]] + 1);
 
 		/* Apply some healing */
-		(void)set_stun(p_ptr->stun - adjust);
+		set_stun(p_ptr->stun - adjust);
 	}
 
 	/* Cut */
@@ -2282,7 +2282,7 @@ static void process_world(void)
 		if (p_ptr->cut > 1000) adjust = 0;
 
 		/* Apply some healing */
-		(void)set_cut(p_ptr->cut - adjust);
+		set_cut(p_ptr->cut - adjust);
 	}
 
 	/* Hack - damage done by the dungeon -SC- */
@@ -2657,7 +2657,7 @@ static void process_world(void)
 		{
 			p_ptr->exp -= 1 + plev / 5;
 			p_ptr->max_exp -= 1 + plev / 5;
-			(void)do_dec_stat(rand_int(6), STAT_DEC_NORMAL);
+			do_dec_stat(rand_int(6), STAT_DEC_NORMAL);
 			check_experience();
 		}
 	}
@@ -3162,7 +3162,7 @@ static void process_world(void)
 /*
  * Verify use of "wizard" mode
  */
-static bool_ enter_wizard_mode(void)
+static bool_ enter_wizard_mode()
 {
 	/* Ask first time, but not while loading a dead char with the -w option */
 	if (!noscore && !(p_ptr->chp < 0))
@@ -3190,7 +3190,7 @@ static bool_ enter_wizard_mode(void)
 /*
  * Verify use of "debug" commands
  */
-static bool_ enter_debug_mode(void)
+static bool_ enter_debug_mode()
 {
 	/* Ask first time */
 	if (!noscore && !wizard)
@@ -3221,7 +3221,7 @@ static bool_ enter_debug_mode(void)
  *
  * XXX XXX XXX Make some "blocks"
  */
-static void process_command(void)
+static void process_command()
 {
 	auto const &wf_info = game->edit_data.wf_info;
 
@@ -4151,7 +4151,7 @@ static void process_command(void)
  * must come first just in case somebody manages to corrupt
  * the savefiles by clever use of menu commands or something.
  */
-static void process_player(void)
+static void process_player()
 {
 	auto const &f_info = game->edit_data.f_info;
 	auto const &k_info = game->edit_data.k_info;
@@ -4603,7 +4603,7 @@ static void process_player(void)
  * This function will not exit until the level is completed,
  * the user dies, or the game is terminated.
  */
-static void dungeon(void)
+static void dungeon()
 {
 	auto const &d_info = game->edit_data.d_info;
 
@@ -4981,7 +4981,7 @@ static void dungeon(void)
 /*
  * Load some "user pref files"
  */
-static void load_all_pref_files(void)
+static void load_all_pref_files()
 {
 	char buf[1024];
 
@@ -5055,7 +5055,7 @@ void play_game()
 
 
 	/* Hack -- turn off the cursor */
-	(void)Term_set_cursor(0);
+	Term_set_cursor(0);
 
 	/* Character list */
 	bool_ new_game = FALSE;
@@ -5363,14 +5363,14 @@ void play_game()
 				p_ptr->csp_frac = 0;
 
 				/* Hack -- Healing */
-				(void)set_blind(0);
-				(void)set_confused(0);
-				(void)set_poisoned(0);
-				(void)set_afraid(0);
-				(void)set_paralyzed(0);
-				(void)set_image(0);
-				(void)set_stun(0);
-				(void)set_cut(0);
+				set_blind(0);
+				set_confused(0);
+				set_poisoned(0);
+				set_afraid(0);
+				set_paralyzed(0);
+				set_image(0);
+				set_stun(0);
+				set_cut(0);
 
 				/* accounting for a new ailment. -LM- */
 				p_ptr->black_breath = FALSE;
@@ -5379,7 +5379,7 @@ void play_game()
 				p_ptr->necro_extra &= ~CLASS_UNDEAD;
 
 				/* Hack -- Prevent starvation */
-				(void)set_food(PY_FOOD_MAX - 1);
+				set_food(PY_FOOD_MAX - 1);
 
 				/* Hack -- cancel recall */
 				if (p_ptr->word_recall)

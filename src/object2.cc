@@ -54,7 +54,7 @@
 /*
  * Calculate the player's total inventory weight.
  */
-s32b calc_total_weight(void)
+s32b calc_total_weight()
 {
 	int i;
 	s32b total;
@@ -376,7 +376,7 @@ void compact_objects(int size)
  * clear those fields for grids/monsters containing objects,
  * and we clear it once for every such object.
  */
-void wipe_o_list(void)
+void wipe_o_list()
 {
 	auto &k_info = game->edit_data.k_info;
 	auto &a_info = game->edit_data.a_info;
@@ -457,7 +457,7 @@ void wipe_o_list(void)
  * This routine should almost never fail, but in case it does,
  * we must be sure to handle "failure" of this routine.
  */
-s16b o_pop(void)
+s16b o_pop()
 {
 	int i;
 
@@ -510,7 +510,7 @@ s16b o_pop(void)
 /*
  * Apply a "object restriction function" to the "object allocation table"
  */
-errr get_obj_num_prep(void)
+errr get_obj_num_prep()
 {
 	int i;
 
@@ -5973,7 +5973,7 @@ void inven_drop(int item, int amt, int dy, int dx, bool_ silent)
  *
  * Note special handling of the "overflow" slot
  */
-void combine_pack(void)
+void combine_pack()
 {
 	int i, j, k;
 	object_type *o_ptr;
@@ -6040,7 +6040,7 @@ void combine_pack(void)
  *
  * Note special handling of the "overflow" slot
  */
-void reorder_pack(void)
+void reorder_pack()
 {
 	int i, j, k;
 	s32b o_value;

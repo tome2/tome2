@@ -307,7 +307,7 @@ void ai_deincarnate(int m_idx)
 }
 
 /* Returns if a new companion is allowed */
-bool_ can_create_companion(void)
+bool_ can_create_companion()
 {
 	int i, mcnt = 0;
 
@@ -328,7 +328,7 @@ bool_ can_create_companion(void)
 
 
 /* Player controlled monsters */
-bool_ do_control_walk(void)
+bool_ do_control_walk()
 {
 	/* Get a "repeated" direction */
 	if (p_ptr->control)
@@ -349,18 +349,18 @@ bool_ do_control_walk(void)
 		return FALSE;
 }
 
-bool_ do_control_inven(void)
+bool_ do_control_inven()
 {
 	if (!p_ptr->control) return FALSE;
 	screen_save();
 	prt("Carried items", 0, 0);
-	(void) show_monster_inven(p_ptr->control);
+	show_monster_inven(p_ptr->control);
 	inkey();
 	screen_load();
 	return TRUE;
 }
 
-bool_ do_control_pickup(void)
+bool_ do_control_pickup()
 {
 	if (!p_ptr->control) return FALSE;
 
@@ -411,7 +411,7 @@ bool_ do_control_pickup(void)
 	return TRUE;
 }
 
-bool_ do_control_drop(void)
+bool_ do_control_drop()
 {
 	monster_type *m_ptr = &m_list[p_ptr->control];
 
@@ -420,7 +420,7 @@ bool_ do_control_drop(void)
 	return TRUE;
 }
 
-bool_ do_control_magic(void)
+bool_ do_control_magic()
 {
 	auto const &r_info = game->edit_data.r_info;
 

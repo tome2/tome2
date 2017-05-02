@@ -143,7 +143,7 @@ static bool_ quest_poison_finish_hook(void *, void *in_, void *)
 	object_aware(q_ptr);
 	object_known(q_ptr);
 	q_ptr->ident |= IDENT_STOREB;
-	(void)inven_carry(q_ptr, FALSE);
+	inven_carry(q_ptr, FALSE);
 
 	/* Continue the plot */
 	*(quest[q_idx].plot) = QUEST_NULL;
@@ -182,7 +182,7 @@ static bool_ quest_poison_quest_hook(void *, void *in_, void *)
 	q_ptr->ident |= IDENT_STOREB;
 	q_ptr->inscription = "quest";
 
-	(void)inven_carry(q_ptr, FALSE);
+	inven_carry(q_ptr, FALSE);
 
 	del_hook_new(HOOK_INIT_QUEST, quest_poison_quest_hook);
 	process_hooks_restart = TRUE;

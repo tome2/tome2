@@ -205,7 +205,7 @@ bool_ hp_player(int num)
 /*
  * Leave a "glyph of warding" which prevents monster movement
  */
-void warding_glyph(void)
+void warding_glyph()
 {
 	/* XXX XXX XXX */
 	if (!cave_clean_bold(p_ptr->py, p_ptr->px))
@@ -218,7 +218,7 @@ void warding_glyph(void)
 	cave_set_feat(p_ptr->py, p_ptr->px, FEAT_GLYPH);
 }
 
-void explosive_rune(void)
+void explosive_rune()
 {
 	/* XXX XXX XXX */
 	if (!cave_clean_bold(p_ptr->py, p_ptr->px))
@@ -476,7 +476,7 @@ void identify_hooks(int i, object_type *o_ptr, identify_mode mode)
  * Identify everything being carried.
  * Done by a potion of "self knowledge".
  */
-bool_ identify_pack(void)
+bool_ identify_pack()
 {
 	int i;
 
@@ -518,7 +518,7 @@ static void make_item_fully_identified(object_type *o_ptr)
  * Identify everything being carried.
  * Done by a potion of "self knowledge".
  */
-void identify_pack_fully(void)
+void identify_pack_fully()
 {
 	int i;
 
@@ -641,7 +641,7 @@ static int remove_curse_aux(int all)
 /*
  * Remove most curses
  */
-bool_ remove_curse(void)
+bool_ remove_curse()
 {
 	return (remove_curse_aux(FALSE) ? TRUE : FALSE);
 }
@@ -649,7 +649,7 @@ bool_ remove_curse(void)
 /*
  * Remove all curses
  */
-bool_ remove_all_curse(void)
+bool_ remove_all_curse()
 {
 	return (remove_curse_aux(TRUE) ? TRUE : FALSE);
 }
@@ -659,7 +659,7 @@ bool_ remove_all_curse(void)
 /*
  * Restores any drained experience
  */
-bool_ restore_level(void)
+bool_ restore_level()
 {
 	/* Restore experience */
 	if (p_ptr->exp < p_ptr->max_exp)
@@ -682,7 +682,7 @@ bool_ restore_level(void)
 }
 
 
-bool_ alchemy(void) /* Turns an object into gold, gain some of its value in a shop */
+bool_ alchemy() /* Turns an object into gold, gain some of its value in a shop */
 {
 	int item, amt = 1;
 	int old_number;
@@ -834,7 +834,7 @@ static cptr report_magic_durations[] =
 };
 
 
-void report_magics(void)
+void report_magics()
 {
 	int i = 0, j, k;
 
@@ -981,7 +981,7 @@ void report_magics(void)
 /*
  * Forget everything
  */
-bool_ lose_all_info(void)
+bool_ lose_all_info()
 {
 	int i;
 
@@ -1489,7 +1489,7 @@ bool_ detect_all(int rad)
 /*
  * Create stairs at the player location
  */
-void stair_creation(void)
+void stair_creation()
 {
 	/* XXX XXX XXX */
 	if (!cave_valid_bold(p_ptr->py, p_ptr->px))
@@ -2181,7 +2181,7 @@ static void note_found_object(object_type *o_ptr)
  * This routine does *not* automatically combine objects.
  * Returns TRUE if something was identified, else FALSE.
  */
-bool_ ident_spell(void)
+bool_ ident_spell()
 {
 	/* Get an item */
 	int item;
@@ -2241,7 +2241,7 @@ bool_ ident_spell(void)
 /*
  * Identify all objects in the level
  */
-bool_ ident_all(void)
+bool_ ident_all()
 {
 	int i;
 
@@ -2281,7 +2281,7 @@ static bool item_tester_hook_no_mental(object_type const *o_ptr)
  * Fully "identify" an object in the inventory  -BEN-
  * This routine returns TRUE if an item was identified.
  */
-bool_ identify_fully(void)
+bool_ identify_fully()
 {
 	/* Get an item */
 	int item;
@@ -3186,7 +3186,7 @@ void destroy_area(int y1, int x1, int r)
 		if (!p_ptr->resist_blind && !p_ptr->resist_lite)
 		{
 			/* Become blind */
-			(void)set_blind(p_ptr->blind + 10 + randint(10));
+			set_blind(p_ptr->blind + 10 + randint(10));
 		}
 	}
 
@@ -3361,14 +3361,14 @@ void earthquake(int cy, int cx, int r)
 				{
 					msg_print("You are bashed by rubble!");
 					damage = damroll(10, 4);
-					(void)set_stun(p_ptr->stun + randint(50));
+					set_stun(p_ptr->stun + randint(50));
 					break;
 				}
 			case 3:
 				{
 					msg_print("You are crushed between the floor and ceiling!");
 					damage = damroll(10, 4);
-					(void)set_stun(p_ptr->stun + randint(50));
+					set_stun(p_ptr->stun + randint(50));
 					break;
 				}
 			}
@@ -3625,7 +3625,7 @@ void earthquake(int cy, int cx, int r)
  * NORMAL monsters wake up 1/4 the time when illuminated
  * STUPID monsters wake up 1/10 the time when illuminated
  */
-static void cave_temp_room_lite(void)
+static void cave_temp_room_lite()
 {
 	int i;
 
@@ -3719,7 +3719,7 @@ static void cave_temp_room_lite(void)
  *
  * Also, process all affected monsters
  */
-static void cave_temp_room_unlite(void)
+static void cave_temp_room_unlite()
 {
 	int i;
 
@@ -3887,7 +3887,7 @@ bool_ lite_area(int dam, int rad)
 	}
 
 	/* Hook into the "project()" function */
-	(void)project(0, rad, p_ptr->py, p_ptr->px, dam, GF_LITE_WEAK, flg);
+	project(0, rad, p_ptr->py, p_ptr->px, dam, GF_LITE_WEAK, flg);
 
 	/* Lite up the room */
 	lite_room(p_ptr->py, p_ptr->px);
@@ -3912,7 +3912,7 @@ bool_ unlite_area(int dam, int rad)
 	}
 
 	/* Hook into the "project()" function */
-	(void)project(0, rad, p_ptr->py, p_ptr->px, dam, GF_DARK_WEAK, flg);
+	project(0, rad, p_ptr->py, p_ptr->px, dam, GF_DARK_WEAK, flg);
 
 	/* Lite up the room */
 	unlite_room(p_ptr->py, p_ptr->px);
@@ -4369,20 +4369,20 @@ bool_ wall_stone(int y, int x)
 }
 
 
-bool_ destroy_doors_touch(void)
+bool_ destroy_doors_touch()
 {
 	int flg = PROJECT_GRID | PROJECT_ITEM | PROJECT_HIDE;
 	return (project(0, 1, p_ptr->py, p_ptr->px, 0, GF_KILL_DOOR, flg));
 }
 
-bool_ sleep_monsters_touch(void)
+bool_ sleep_monsters_touch()
 {
 	int flg = PROJECT_KILL | PROJECT_HIDE;
 	return (project(0, 1, p_ptr->py, p_ptr->px, p_ptr->lev, GF_OLD_SLEEP, flg));
 }
 
 
-void call_chaos(void)
+void call_chaos()
 {
 	int Chaos_type, dummy, dir;
 	int plev = p_ptr->lev;
@@ -4431,7 +4431,7 @@ void call_chaos(void)
 }
 
 
-static void activate_hi_summon(void)
+static void activate_hi_summon()
 {
 	int i;
 
@@ -4441,57 +4441,57 @@ static void activate_hi_summon(void)
 		{
 		case 1:
 		case 2:
-			(void) summon_specific(p_ptr->py, p_ptr->px, dun_level, SUMMON_ANT);
+			summon_specific(p_ptr->py, p_ptr->px, dun_level, SUMMON_ANT);
 			break;
 		case 3:
 		case 4:
-			(void) summon_specific(p_ptr->py, p_ptr->px, dun_level, SUMMON_SPIDER);
+			summon_specific(p_ptr->py, p_ptr->px, dun_level, SUMMON_SPIDER);
 			break;
 		case 5:
 		case 6:
-			(void) summon_specific(p_ptr->py, p_ptr->px, dun_level, SUMMON_HOUND);
+			summon_specific(p_ptr->py, p_ptr->px, dun_level, SUMMON_HOUND);
 			break;
 		case 7:
 		case 8:
-			(void) summon_specific(p_ptr->py, p_ptr->px, dun_level, SUMMON_HYDRA);
+			summon_specific(p_ptr->py, p_ptr->px, dun_level, SUMMON_HYDRA);
 			break;
 		case 9:
 		case 10:
-			(void) summon_specific(p_ptr->py, p_ptr->px, dun_level, SUMMON_ANGEL);
+			summon_specific(p_ptr->py, p_ptr->px, dun_level, SUMMON_ANGEL);
 			break;
 		case 11:
 		case 12:
-			(void) summon_specific(p_ptr->py, p_ptr->px, dun_level, SUMMON_UNDEAD);
+			summon_specific(p_ptr->py, p_ptr->px, dun_level, SUMMON_UNDEAD);
 			break;
 		case 13:
 		case 14:
-			(void) summon_specific(p_ptr->py, p_ptr->px, dun_level, SUMMON_DRAGON);
+			summon_specific(p_ptr->py, p_ptr->px, dun_level, SUMMON_DRAGON);
 			break;
 		case 15:
 		case 16:
-			(void) summon_specific(p_ptr->py, p_ptr->px, dun_level, SUMMON_DEMON);
+			summon_specific(p_ptr->py, p_ptr->px, dun_level, SUMMON_DEMON);
 			break;
 		case 17:
-			(void) summon_specific(p_ptr->py, p_ptr->px, dun_level, SUMMON_WRAITH);
+			summon_specific(p_ptr->py, p_ptr->px, dun_level, SUMMON_WRAITH);
 			break;
 		case 18:
 		case 19:
-			(void) summon_specific(p_ptr->py, p_ptr->px, dun_level, SUMMON_UNIQUE);
+			summon_specific(p_ptr->py, p_ptr->px, dun_level, SUMMON_UNIQUE);
 			break;
 		case 20:
 		case 21:
-			(void) summon_specific(p_ptr->py, p_ptr->px, dun_level, SUMMON_HI_UNDEAD);
+			summon_specific(p_ptr->py, p_ptr->px, dun_level, SUMMON_HI_UNDEAD);
 			break;
 		case 22:
 		case 23:
-			(void) summon_specific(p_ptr->py, p_ptr->px, dun_level, SUMMON_HI_DRAGON);
+			summon_specific(p_ptr->py, p_ptr->px, dun_level, SUMMON_HI_DRAGON);
 			break;
 		case 24:
 		case 25:
-			(void) summon_specific(p_ptr->py, p_ptr->px, 100, SUMMON_HI_DEMON);
+			summon_specific(p_ptr->py, p_ptr->px, 100, SUMMON_HI_DEMON);
 			break;
 		default:
-			(void) summon_specific(p_ptr->py, p_ptr->px, (((dun_level * 3) / 2) + 5), 0);
+			summon_specific(p_ptr->py, p_ptr->px, (((dun_level * 3) / 2) + 5), 0);
 		}
 	}
 }
@@ -4502,7 +4502,7 @@ static void activate_hi_summon(void)
  * rr9: Stop the nasty things when a Cyberdemon is summoned
  * or the player gets paralyzed.
  */
-void activate_ty_curse(void)
+void activate_ty_curse()
 {
 	int i = 0;
 	bool_ stop_ty = FALSE;
@@ -4524,7 +4524,7 @@ void activate_ty_curse(void)
 			activate_hi_summon();
 			if (randint(6) != 1) break;
 case 7: case 8: case 9: case 18:
-			(void) summon_specific(p_ptr->py, p_ptr->px, dun_level, 0);
+			summon_specific(p_ptr->py, p_ptr->px, dun_level, 0);
 			if (randint(6) != 1) break;
 case 10: case 11: case 12:
 			msg_print("You feel your life draining away...");
@@ -4546,7 +4546,7 @@ case 13: case 14: case 15: case 19: case 20:
 			}
 			if (randint(6) != 1) break;
 case 21: case 22: case 23:
-			(void)do_dec_stat((randint(6)) - 1, STAT_DEC_NORMAL);
+			do_dec_stat((randint(6)) - 1, STAT_DEC_NORMAL);
 			if (randint(6) != 1) break;
 		case 24:
 			msg_print("Huh? Who am I? What am I doing here?");
@@ -4567,7 +4567,7 @@ case 21: case 22: case 23:
 			{
 				do
 				{
-					(void)do_dec_stat(i, STAT_DEC_NORMAL);
+					do_dec_stat(i, STAT_DEC_NORMAL);
 				}
 				while (randint(2) == 1);
 
@@ -4581,7 +4581,7 @@ case 21: case 22: case 23:
 /*
  * Activate the ultra evil Dark God curse
  */
-void activate_dg_curse(void)
+void activate_dg_curse()
 {
 	int i = 0;
 	bool_ stop_dg = FALSE;
@@ -4648,7 +4648,7 @@ void activate_dg_curse(void)
 		case 21:
 		case 22:
 		case 23:
-			(void)do_dec_stat((randint(6)) - 1, STAT_DEC_PERMANENT);
+			do_dec_stat((randint(6)) - 1, STAT_DEC_PERMANENT);
 			if (randint(7) != 1) break;
 		case 24:
 			msg_print("Huh? Who am I? What am I doing here?");
@@ -4679,7 +4679,7 @@ case 27: case 28: case 29:
 			{
 				do
 				{
-					(void)do_dec_stat(i, STAT_DEC_NORMAL);
+					do_dec_stat(i, STAT_DEC_NORMAL);
 				}
 				while (randint(2) == 1);
 
@@ -4691,14 +4691,14 @@ case 27: case 28: case 29:
 }
 
 
-void summon_cyber(void)
+void summon_cyber()
 {
 	int i;
 	int max_cyber = (dun_level / 50) + randint(6);
 
 	for (i = 0; i < max_cyber; i++)
 	{
-		(void)summon_specific(p_ptr->py, p_ptr->px, 100, SUMMON_HI_DEMON);
+		summon_specific(p_ptr->py, p_ptr->px, 100, SUMMON_HI_DEMON);
 	}
 }
 
@@ -4709,7 +4709,7 @@ static void summon_dragon_riders()
 
 	for (i = 0; i < max_dr; i++)
 	{
-		(void)summon_specific(p_ptr->py, p_ptr->px, 100, SUMMON_THUNDERLORD);
+		summon_specific(p_ptr->py, p_ptr->px, 100, SUMMON_THUNDERLORD);
 	}
 }
 
@@ -4797,7 +4797,7 @@ bool_ charm_animal(int dir, int plev)
 	return (project_hook(GF_CONTROL_ANIMAL, dir, plev, flg));
 }
 
-void change_wild_mode(void)
+void change_wild_mode()
 {
 	if (p_ptr->immovable && !p_ptr->wild_mode)
 	{
@@ -4819,7 +4819,7 @@ void change_wild_mode(void)
 }
 
 
-void alter_reality(void)
+void alter_reality()
 {
 	msg_print("The world changes!");
 

@@ -70,7 +70,7 @@
 
 using boost::algorithm::iequals;
 
-static void corrupt_corrupted(void);
+static void corrupt_corrupted();
 
 /*
  * Set "p_ptr->parasite" and "p_ptr->parasite_r_idx"
@@ -1373,25 +1373,25 @@ bool_ set_stun(int v)
 			{
 				if (!p_ptr->sustain_int)
 				{
-					(void) do_dec_stat(A_INT, STAT_DEC_NORMAL);
+					do_dec_stat(A_INT, STAT_DEC_NORMAL);
 				}
 				if (!p_ptr->sustain_wis)
 				{
-					(void) do_dec_stat(A_WIS, STAT_DEC_NORMAL);
+					do_dec_stat(A_WIS, STAT_DEC_NORMAL);
 				}
 			}
 			else if (randint(2) == 1)
 			{
 				if (!p_ptr->sustain_int)
 				{
-					(void) do_dec_stat(A_INT, STAT_DEC_NORMAL);
+					do_dec_stat(A_INT, STAT_DEC_NORMAL);
 				}
 			}
 			else
 			{
 				if (!p_ptr->sustain_wis)
 				{
-					(void) do_dec_stat(A_WIS, STAT_DEC_NORMAL);
+					do_dec_stat(A_WIS, STAT_DEC_NORMAL);
 				}
 			}
 		}
@@ -1865,7 +1865,7 @@ bool_ set_food(int v)
 /*
  * Advance experience levels and print experience
  */
-void check_experience(void)
+void check_experience()
 {
 	int gained = 0;
 	bool_ level_corruption = FALSE;
@@ -2588,7 +2588,7 @@ void monster_death(int m_idx)
 	else if (strstr(r_ptr->name, "Unmaker"))
 	{
 		int flg = PROJECT_GRID | PROJECT_ITEM | PROJECT_KILL;
-		(void)project(m_idx, 6, y, x, 100, GF_CHAOS, flg);
+		project(m_idx, 6, y, x, 100, GF_CHAOS, flg);
 	}
 	/* Pink horrors are replaced with 2 Blue horrors */
 	else if (strstr(r_ptr->name, "ink horror"))
@@ -3255,7 +3255,7 @@ void get_screen_size(int *wid_p, int *hgt_p)
  * Calculates current boundaries
  * Called below.
  */
-static void panel_bounds(void)
+static void panel_bounds()
 {
 	int wid, hgt;
 
@@ -3338,7 +3338,7 @@ bool_ change_panel(int dy, int dx)
  *
  * The map is reprinted if necessary, and "TRUE" is returned.
  */
-void verify_panel(void)
+void verify_panel()
 {
 	int y = p_ptr->py;
 	int x = p_ptr->px;
@@ -3473,7 +3473,7 @@ void verify_panel(void)
 /*
  * Map resizing whenever the main term changes size
  */
-void resize_map(void)
+void resize_map()
 {
 	/* Only if the dungeon exists */
 	if (!character_dungeon) return;
@@ -3522,7 +3522,7 @@ void resize_map(void)
 /*
  * Redraw a term when it is resized
  */
-void resize_window(void)
+void resize_window()
 {
 	/* Only if the dungeon exists */
 	if (!character_dungeon) return;
@@ -3656,7 +3656,7 @@ static bool target_able(int m_idx)
  *
  * We return TRUE if the target is "okay" and FALSE otherwise.
  */
-bool_ target_okay(void)
+bool_ target_okay()
 {
 	/* Accept stationary targets */
 	if (target_who < 0) return (TRUE);
@@ -5130,7 +5130,7 @@ static void clean_wish_name(char *buf, char *name)
 /*
  * Allow the player to make a wish
  */
-void make_wish(void)
+void make_wish()
 {
 	auto const &re_info = game->edit_data.re_info;
 	auto const &r_info = game->edit_data.r_info;
@@ -5269,7 +5269,7 @@ void make_wish(void)
  * Corrupted have a 1/3 chance of losing a mutation each time this is called, 
  * assuming they have any in the first place
  */
-static void corrupt_corrupted(void)
+static void corrupt_corrupted()
 {
 	if (magik(45))
 	{

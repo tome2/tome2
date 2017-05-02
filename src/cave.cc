@@ -358,7 +358,7 @@ bool_ los(int y1, int x1, int y2, int x2)
 /*
  * Returns true if the player's grid is dark
  */
-bool_ no_lite(void)
+bool_ no_lite()
 {
 	return (!player_can_see_bold(p_ptr->py, p_ptr->px));
 }
@@ -1781,17 +1781,17 @@ void lite_spot(int y, int x)
  * of both "lite_spot()" and "print_rel()", and that we use the
  * "lite_spot()" function to display the player grid, if needed.
  */
-void prt_map(void)
+void prt_map()
 {
 	int x, y;
 
 	int v;
 
 	/* Access the cursor state */
-	(void)Term_get_cursor(&v);
+	Term_get_cursor(&v);
 
 	/* Hide the cursor */
-	(void)Term_set_cursor(0);
+	Term_set_cursor(0);
 
 	/* Dump the map */
 	for (y = panel_row_min; y <= panel_row_max; y++)
@@ -1814,7 +1814,7 @@ void prt_map(void)
 	lite_spot(p_ptr->py, p_ptr->px);
 
 	/* Restore the cursor */
-	(void)Term_set_cursor(v);
+	Term_set_cursor(v);
 }
 
 
@@ -2098,7 +2098,7 @@ void display_map(int *cy, int *cx)
  *
  * Currently, the "player" is displayed on the map.  XXX XXX XXX
  */
-void do_cmd_view_map(void)
+void do_cmd_view_map()
 {
 	int cy, cx;
 	int wid, hgt;
@@ -2761,7 +2761,7 @@ static void vinfo_init_aux(vinfo_hack *hack, int y, int x, long m)
  * a number which is too high, running this function, and using the
  * error messages to obtain the correct values.
  */
-errr vinfo_init(void)
+errr vinfo_init()
 {
 	int i, y, x;
 
@@ -2983,7 +2983,7 @@ errr vinfo_init(void)
 /*
  * Forget the "CAVE_VIEW" grids, redrawing as needed
  */
-void forget_view(void)
+void forget_view()
 {
 	int i;
 
@@ -3091,7 +3091,7 @@ void forget_view(void)
  * special grids.  Because the actual number of required grids is bizarre,
  * we simply allocate twice as many as we would normally need.  XXX XXX XXX
  */
-void update_view(void)
+void update_view()
 {
 	int i, o;
 	int y, x;
@@ -3410,7 +3410,7 @@ void update_view(void)
 /*
  * Clear monster light 
  */
-void forget_mon_lite(void)
+void forget_mon_lite()
 {
 	int i, y, x;
 
@@ -3475,7 +3475,7 @@ void forget_mon_lite(void)
  * or brighter light, and it doesn't work well with PernAngband's already
  * colourful terrain features in aesthetically pleasing ways... -- pelpel
  */
-void update_mon_lite(void)
+void update_mon_lite()
 {
 	auto const &f_info = game->edit_data.f_info;
 
@@ -3791,7 +3791,7 @@ static void update_flow_aux(int y, int x, int n)
  * We do not need a priority queue because the cost from grid
  * to grid is always "one" and we process them in order.
  */
-void update_flow(void)
+void update_flow()
 {
 	int x, y, d;
 
@@ -3859,7 +3859,7 @@ void update_flow(void)
 /*
  * Hack -- map the current panel (plus some) ala "magic mapping"
  */
-void map_area(void)
+void map_area()
 {
 	/* Scan the whole map */
 	for (int y = 1; y < cur_hgt - 1; y++)
@@ -3919,7 +3919,7 @@ void map_area(void)
  * since this would prevent the use of "view_torch_grids" as a method to
  * keep track of what grids have been observed directly.
  */
-void wiz_lite(void)
+void wiz_lite()
 {
 	int i, y, x;
 
@@ -4002,7 +4002,7 @@ void wiz_lite(void)
 	p_ptr->window |= (PW_OVERHEAD);
 }
 
-void wiz_lite_extra(void)
+void wiz_lite_extra()
 {
 	int y, x;
 	for (y = 0; y < cur_hgt; y++)
@@ -4018,7 +4018,7 @@ void wiz_lite_extra(void)
 /*
  * Forget the dungeon map (ala "Thinking of Maud...").
  */
-void wiz_dark(void)
+void wiz_dark()
 {
 	int i, y, x;
 

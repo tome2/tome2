@@ -174,7 +174,7 @@ void build_prob(cptr learn)
  * set.  Relies on European vowels (a, e, i, o, u).  The generated name should
  * be copied/used before calling this function again.
  */
-static char *make_word(void)
+static char *make_word()
 {
 	static char word_buf[90];
 	int r, totalfreq;
@@ -391,7 +391,7 @@ bool_ create_artifact(object_type *o_ptr, bool_ a_scroll, bool_ get_name)
 }
 
 
-bool_ artifact_scroll(void)
+bool_ artifact_scroll()
 {
 	bool_ okay = FALSE;
 

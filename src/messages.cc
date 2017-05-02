@@ -19,7 +19,7 @@ static boost::circular_buffer<message> *buffer()
 	return instance;
 }
 
-s16b message_num(void)
+s16b message_num()
 {
 	return buffer()->size();
 }

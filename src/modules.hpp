@@ -2,7 +2,7 @@
 
 #include "h-basic.h"
 
-bool_ select_module(void);
+bool_ select_module();
 bool_ module_savefile_loadable(cptr savefile_mod);
 void tome_intro();
 void theme_intro();

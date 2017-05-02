@@ -125,7 +125,7 @@ static bool_ quest_eol_finish_hook(void *, void *in_, void *)
 	object_aware(q_ptr);
 	object_known(q_ptr);
 	q_ptr->ident |= IDENT_STOREB;
-	(void)inven_carry(q_ptr, FALSE);
+	inven_carry(q_ptr, FALSE);
 
 	/* Continue the plot */
 	*(quest[q_idx].plot) = QUEST_NIRNAETH;

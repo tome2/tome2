@@ -168,7 +168,7 @@ static bool_ quest_hobbit_chat_hook(void *, void *in_, void *)
 		object_aware(q_ptr);
 		object_known(q_ptr);
 		q_ptr->ident |= IDENT_STOREB;
-		(void)inven_carry(q_ptr, FALSE);
+		inven_carry(q_ptr, FALSE);
 
 		cquest.status = QUEST_STATUS_FINISHED;
 

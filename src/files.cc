@@ -1045,7 +1045,7 @@ errr process_pref_file(cptr name)
 		if (buf[0] == '%')
 		{
 			/* Process that file if allowed */
-			(void)process_pref_file(buf + 2);
+			process_pref_file(buf + 2);
 
 			/* Continue */
 			continue;
@@ -1088,7 +1088,7 @@ static void prt_lnum(cptr header, s32b num, int row, int col, byte color)
 	char out_val[32];
 
 	put_str(header, row, col);
-	(void)sprintf(out_val, "%9ld", (long)num);
+	sprintf(out_val, "%9ld", (long)num);
 	c_put_str(color, out_val, row, col + len);
 }
 
@@ -1104,7 +1104,7 @@ static void prt_num(cptr header, int num, int row, int col, byte color,
 
 	put_str(header, row, col);
 	put_str(space, row, col + len);
-	(void)sprintf(out_val, "%6ld", (long)num);
+	sprintf(out_val, "%6ld", (long)num);
 	c_put_str(color, out_val, row, col + len + strlen(space));
 }
 
@@ -1119,7 +1119,7 @@ static void prt_str(cptr header, cptr str, int row, int col, byte color)
 
 	put_str(header, row, col);
 	put_str("   ", row, col + len);
-	(void)sprintf(out_val, "%6s", str);
+	sprintf(out_val, "%6s", str);
 	c_put_str(color, out_val, row, col + len + 3);
 }
 
@@ -1130,7 +1130,7 @@ static void prt_str(cptr header, cptr str, int row, int col, byte color)
  * For this to look right, the following should be spaced the
  * same as in the prt_lnum code... -CFT
  */
-static void display_player_middle(void)
+static void display_player_middle()
 {
 	int show_tohit = p_ptr->dis_to_h;
 	int show_todam = p_ptr->dis_to_d;
@@ -1207,10 +1207,10 @@ static void display_player_middle(void)
 		{
 			color = TERM_L_RED;
 		}
-		(void)sprintf(num, "%6ld", (long)p_ptr->chp);
+		sprintf(num, "%6ld", (long)p_ptr->chp);
 		c_put_str(color, num, 9, 65);
 		put_str("/", 9, 71);
-		(void)sprintf(num, "%6ld", (long)p_ptr->mhp);
+		sprintf(num, "%6ld", (long)p_ptr->mhp);
 		c_put_str(TERM_L_BLUE, num, 9, 72);
 	}
 	else
@@ -1228,10 +1228,10 @@ static void display_player_middle(void)
 		{
 			color = TERM_RED;
 		}
-		(void)sprintf(num, "%6ld", (long)p_ptr->chp);
+		sprintf(num, "%6ld", (long)p_ptr->chp);
 		c_put_str(color, num, 9, 65);
 		put_str("/", 9, 71);
-		(void)sprintf(num, "%6ld", (long)p_ptr->mhp);
+		sprintf(num, "%6ld", (long)p_ptr->mhp);
 		c_put_str(TERM_L_GREEN, num, 9, 72);
 	}
 
@@ -1248,10 +1248,10 @@ static void display_player_middle(void)
 	{
 		color = TERM_RED;
 	}
-	(void)sprintf(num, "%6ld", (long)p_ptr->csp);
+	sprintf(num, "%6ld", (long)p_ptr->csp);
 	c_put_str(color, num, 10, 65);
 	put_str("/", 10, 71);
-	(void)sprintf(num, "%6ld", (long)p_ptr->msp);
+	sprintf(num, "%6ld", (long)p_ptr->msp);
 	c_put_str(TERM_L_GREEN, num, 10, 72);
 
 	put_str("Sanity       ", 11, 52);
@@ -1267,10 +1267,10 @@ static void display_player_middle(void)
 	{
 		color = TERM_RED;
 	}
-	(void)sprintf(num, "%6ld", (long)p_ptr->csane);
+	sprintf(num, "%6ld", (long)p_ptr->csane);
 	c_put_str(color, num, 11, 65);
 	put_str("/", 11, 71);
-	(void)sprintf(num, "%6ld", (long)p_ptr->msane);
+	sprintf(num, "%6ld", (long)p_ptr->msane);
 	c_put_str(TERM_L_GREEN, num, 11, 72);
 
 	if (p_ptr->pgod != GOD_NONE)
@@ -1283,13 +1283,13 @@ static void display_player_middle(void)
 	if (speed > 110)
 	{
 		char s[11];
-		(void)sprintf(s, "Fast (+%d)", speed - 110);
+		sprintf(s, "Fast (+%d)", speed - 110);
 		c_put_str(TERM_L_GREEN, s, 13, (speed >= 120) ? 68 : 69);
 	}
 	else if (speed < 110)
 	{
 		char s[11];
-		(void)sprintf(s, "Slow (-%d)", 110 - speed);
+		sprintf(s, "Slow (-%d)", 110 - speed);
 		c_put_str(TERM_L_UMBER, s, 13, (speed <= 100) ? 68 : 69);
 	}
 	else
@@ -1392,7 +1392,7 @@ static cptr likert(int x, int y)
  *
  * This code is "imitated" elsewhere to "dump" a character sheet.
  */
-static void display_player_various(void)
+static void display_player_various()
 {
 	auto const &r_info = game->edit_data.r_info;
 
@@ -2454,7 +2454,7 @@ static void file_character_print_grid(FILE *fff, bool_ show_gaps, bool_ show_leg
 	{
 		for (x = 0; x < 40; x++)
 		{
-			(void)(Term_what(x, y, &a, &c));
+			(Term_what(x, y, &a, &c));
 			buf[x] = c;
 		}
 
@@ -2467,7 +2467,7 @@ static void file_character_print_grid(FILE *fff, bool_ show_gaps, bool_ show_leg
 	{
 		for (x = 40; x < 80; x++)
 		{
-			(void)(Term_what(x, y, &a, &c));
+			(Term_what(x, y, &a, &c));
 			buf[x - 40] = c;
 		}
 
@@ -2579,10 +2579,10 @@ errr file_character(cptr name, bool_ full)
 		char out_val[160];
 
 		/* Close the file */
-		(void)fd_close(fd);
+		fd_close(fd);
 
 		/* Build query */
-		(void)sprintf(out_val, "Replace existing file %s? ", buf);
+		sprintf(out_val, "Replace existing file %s? ", buf);
 
 		/* Ask */
 		if (get_check(out_val)) fd = -1;
@@ -2617,7 +2617,7 @@ errr file_character(cptr name, bool_ full)
 		for (x = 0; x < 79; x++)
 		{
 			/* Get the attr/char */
-			(void)(Term_what(x, y, &a, &c));
+			(Term_what(x, y, &a, &c));
 
 			/* Dump it */
 			buf[x] = c;
@@ -2640,7 +2640,7 @@ errr file_character(cptr name, bool_ full)
 		for (x = 0; x < 79; x++)
 		{
 			/* Get the attr/char */
-			(void)(Term_what(x, y, &a, &c));
+			(Term_what(x, y, &a, &c));
 
 			/* Dump it */
 			buf[x] = c;
@@ -3381,7 +3381,7 @@ static bool_ show_file_aux(cptr name, cptr what, int line)
 		{
 			/* Get "h_ptr->shower" */
 			prt("Show: ", hgt - 1, 0);
-			(void)askfor_aux(h_ptr->shower, 80);
+			askfor_aux(h_ptr->shower, 80);
 		}
 
 		/* Hack -- try finding */
@@ -3718,7 +3718,7 @@ void html_screenshot(cptr name)
 /*
  * Peruse the On-Line-Help
  */
-void do_cmd_help(void)
+void do_cmd_help()
 {
 	/* Save screen */
 	screen_save();
@@ -3799,7 +3799,7 @@ void process_player_name(bool_ sf)
  *
  * What a horrible name for a global function.  XXX XXX XXX
  */
-void get_name(void)
+void get_name()
 {
 	char tmp[32];
 
@@ -3846,7 +3846,7 @@ void get_name(void)
 /*
  * Hack -- commit suicide
  */
-void do_cmd_suicide(void)
+void do_cmd_suicide()
 {
 	int i;
 
@@ -3923,7 +3923,7 @@ void remove_cave_view(bool_ remove)
 /*
  * Save the game
  */
-void do_cmd_save_game(void)
+void do_cmd_save_game()
 {
 	remove_cave_view(TRUE);
 
@@ -3990,7 +3990,7 @@ void autosave_checkpoint()
 /*
  * Hack -- Calculates the total number of points earned                -JWT-
  */
-static long total_points(void)
+static long total_points()
 {
 	auto const &d_info = game->edit_data.d_info;
 	auto const &r_info = game->edit_data.r_info;
@@ -4104,7 +4104,7 @@ static long total_points(void)
 /*
  * Display a "tomb-stone"
  */
-static void print_tomb(void)
+static void print_tomb()
 {
 	time_t ct = time(nullptr);
 
@@ -4164,7 +4164,7 @@ static void print_tomb(void)
 /*
  * Display some character info
  */
-static void show_info(void)
+static void show_info()
 {
 	/* Hack -- Know everything in the inven/equip */
 	for (auto &o_ref: p_ptr->inventory)
@@ -4235,7 +4235,7 @@ static void show_info(void)
 		Term_save();
 
 		/* Dump a character file */
-		(void)file_character(out_val, TRUE);
+		file_character(out_val, TRUE);
 
 		/* Load screen */
 		Term_load();
@@ -4694,7 +4694,7 @@ void race_score(int race_num)
  * Race Legends
  * -KMW-
  */
-void race_legends(void)
+void race_legends()
 {
 	auto const &race_info = game->edit_data.race_info;
 
@@ -4717,7 +4717,7 @@ void race_legends(void)
  * Enters a players name on a hi-score table, if "legal", and in any
  * case, displays some relevant portion of the high score list.
  */
-static errr top_twenty(void)
+static errr top_twenty()
 {
 	int j;
 
@@ -4850,7 +4850,7 @@ out:
 /*
  * Predict the players location, and display it.
  */
-static errr predict_score(void)
+static errr predict_score()
 {
 	int j;
 
@@ -4989,7 +4989,7 @@ void predict_score_gui(bool_ *initialized_p, bool_ *game_in_progress_p)
 	}
 
 	/* Close the high score file */
-	(void)fd_close(highscore_fd);
+	fd_close(highscore_fd);
 
 	/* Forget the fd */
 	highscore_fd = -1;
@@ -5008,7 +5008,7 @@ void predict_score_gui(bool_ *initialized_p, bool_ *game_in_progress_p)
 /*
  * Change the player into a King!                        -RAK-
  */
-static void kingly(void)
+static void kingly()
 {
 	/* Hack -- retire in town */
 	dun_level = 0;
@@ -5100,7 +5100,7 @@ void wipe_saved()
  *
  * This function is called only from "main.c" and "signals.c".
  */
-void close_game(void)
+void close_game()
 {
 	/* Handle stuff */
 	handle_stuff();

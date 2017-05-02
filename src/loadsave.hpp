@@ -4,4 +4,4 @@
 
 bool_ file_exist(cptr buf);
 bool_ load_dungeon(char *ext);
-bool_ load_player(void);
+bool_ load_player();

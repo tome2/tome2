@@ -96,7 +96,7 @@ static cptr comment_4b[MAX_COMMENT_4B] =
 /*
  * Successful haggle.
  */
-static void say_comment_1(void)
+static void say_comment_1()
 {
 	char rumour[80];
 
@@ -114,7 +114,7 @@ static void say_comment_1(void)
 /*
  * Kick 'da bum out.					-RAK-
  */
-static void say_comment_4(void)
+static void say_comment_4()
 {
 	msg_print(comment_4a[rand_int(MAX_COMMENT_4A)]);
 	msg_print(comment_4b[rand_int(MAX_COMMENT_4B)]);
@@ -1103,7 +1103,7 @@ static bool_ black_market_crap(object_type *o_ptr)
  * Attempt to delete (some of) a random item from the store
  * Hack -- we attempt to "maintain" piles of items when possible.
  */
-static void store_delete(void)
+static void store_delete()
 {
 	/* Pick a random slot */
 	int const what = rand_int(st_ptr->stock.size());
@@ -1187,7 +1187,7 @@ static bool_ kind_is_storeok(int k_idx)
  *
  * Should we check for "permission" to have the given item?
  */
-static void store_create(void)
+static void store_create()
 {
 	auto const &st_info = game->edit_data.st_info;
 	auto const &k_info = game->edit_data.k_info;
@@ -1392,7 +1392,7 @@ static void store_create(void)
 		}
 
 		/* Attempt to carry the (known) item */
-		(void)store_carry(q_ptr);
+		store_carry(q_ptr);
 
 		/* Definitely done */
 		break;
@@ -1497,7 +1497,7 @@ static void display_entry(int pos)
  * Displays a store's inventory 		-RAK-
  * All prices are listed as "per individual object".  -BEN-
  */
-static void display_inventory(void)
+static void display_inventory()
 {
 	int k;
 
@@ -1535,7 +1535,7 @@ static void display_inventory(void)
 /*
  * Displays players gold					-RAK-
  */
-void store_prt_gold(void)
+void store_prt_gold()
 {
 	char out_val[64];
 
@@ -1549,7 +1549,7 @@ void store_prt_gold(void)
 /*
  * Displays store (after clearing screen)		-RAK-
  */
-void display_store(void)
+void display_store()
 {
 	auto const &st_info = game->edit_data.st_info;
 
@@ -1829,7 +1829,7 @@ static bool_ sell_haggle(object_type *o_ptr, s32b *price)
 /*
  * Will the owner retire?
  */
-static bool retire_owner_p(void)
+static bool retire_owner_p()
 {
 	auto const &st_info = game->edit_data.st_info;
 
@@ -1876,7 +1876,7 @@ static void adjust_store_top_item_removed()
 /*
  * Stole an item from a store                   -DG-
  */
-void store_stole(void)
+void store_stole()
 {
 	if (cur_store_num == 7)
 	{
@@ -2076,7 +2076,7 @@ void store_stole(void)
 /*
  * Buy an item from a store 			-RAK-
  */
-void store_purchase(void)
+void store_purchase()
 {
 	auto const &st_info = game->edit_data.st_info;
 
@@ -2387,7 +2387,7 @@ void store_purchase(void)
 /*
  * Sell an item to the store (or home)
  */
-void store_sell(void)
+void store_sell()
 {
 	auto const &st_info = game->edit_data.st_info;
 
@@ -2688,7 +2688,7 @@ void store_sell(void)
 /*
  * Examine an item in a store			   -JDL-
  */
-void store_examine(void)
+void store_examine()
 {
 	auto const &st_info = game->edit_data.st_info;
 
@@ -2804,7 +2804,7 @@ static store_action_type const *find_store_action(s16b command_cmd)
  * must disable some commands which are allowed in the dungeon
  * but not in the stores, to prevent chaos.
  */
-static bool_ store_process_command(void)
+static bool_ store_process_command()
 {
 	bool_ recreate = FALSE;
 
@@ -3112,7 +3112,7 @@ static bool_ store_process_command(void)
  * into other commands, normally, we convert "p" (pray) and "m"
  * (cast magic) into "g" (get), and "s" (search) into "d" (drop).
  */
-void do_cmd_store(void)
+void do_cmd_store()
 {
 	auto const &ow_info = game->edit_data.ow_info;
 	auto const &ba_info = game->edit_data.ba_info;
@@ -3568,7 +3568,7 @@ void store_init(int town_num, int store_num)
  * into other commands, normally, we convert "p" (pray) and "m"
  * (cast magic) into "g" (get), and "s" (search) into "d" (drop).
  */
-void do_cmd_home_trump(void)
+void do_cmd_home_trump()
 {
 	auto const &ow_info = game->edit_data.ow_info;
 	auto const &ba_info = game->edit_data.ba_info;

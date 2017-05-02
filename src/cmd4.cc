@@ -60,7 +60,7 @@
  * selecting various things, such as graphics mode, so it must call
  * the "TERM_XTRA_REACT" hook before redrawing the windows.
  */
-void do_cmd_redraw(void)
+void do_cmd_redraw()
 {
 	int j;
 
@@ -131,7 +131,7 @@ void do_cmd_redraw(void)
 /*
  * Hack -- change name
  */
-void do_cmd_change_name(void)
+void do_cmd_change_name()
 {
 	char	c;
 
@@ -205,11 +205,11 @@ void do_cmd_change_name(void)
 			/* Change tactic */
 			if (c == 't')
 			{
-				(void)do_cmd_change_tactic( -1);
+				do_cmd_change_tactic( -1);
 			}
 			else if (c == 'T')
 			{
-				(void)do_cmd_change_tactic(1);
+				do_cmd_change_tactic(1);
 			}
 
 			/* Change movement */
@@ -253,7 +253,7 @@ void do_cmd_change_name(void)
 /*
  * Recall the most recent message
  */
-void do_cmd_message_one(void)
+void do_cmd_message_one()
 {
 	auto message = message_at(0);
 
@@ -282,7 +282,7 @@ void do_cmd_message_one(void)
  *
  * Now taking advantages of big-screen. -pav-
  */
-void do_cmd_messages(void)
+void do_cmd_messages()
 {
 	int i, j, k, n;
 	u32b q;
@@ -815,7 +815,7 @@ void do_cmd_options_aux(int page, cptr info, bool_ read_only)
 /*
  * Modify the "window" options
  */
-static void do_cmd_options_win(void)
+static void do_cmd_options_win()
 {
 	int i, j, d;
 
@@ -1129,7 +1129,7 @@ static void do_cmd_pref_file_hack(int row)
  * The user must use the "Ctrl-R" command to "adapt" to changes
  * in any options which control "visual" aspects of the game.
  */
-void do_cmd_options(void)
+void do_cmd_options()
 {
 	int k;
 
@@ -1405,7 +1405,7 @@ void do_cmd_options(void)
  *
  * XXX XXX XXX Allow absolute file names?
  */
-void do_cmd_pref(void)
+void do_cmd_pref()
 {
 	char buf[80];
 
@@ -1417,7 +1417,7 @@ void do_cmd_pref(void)
 	if (!get_string("Pref: ", buf, 80)) return;
 
 	/* Process that pref command */
-	(void)process_pref_file_aux(buf);
+	process_pref_file_aux(buf);
 }
 
 
@@ -1646,7 +1646,7 @@ static errr keymap_dump(cptr fname)
  *
  * Could use some helpful instructions on this page.  XXX XXX XXX
  */
-void do_cmd_macros(void)
+void do_cmd_macros()
 {
 	/* Keymap mode */
 	int mode = get_keymap_mode();
@@ -2017,7 +2017,7 @@ void do_cmd_macros(void)
 /*
  * Interact with "visuals"
  */
-void do_cmd_visuals(void)
+void do_cmd_visuals()
 {
 	auto &r_info = game->edit_data.r_info;
 	auto &f_info = game->edit_data.f_info;
@@ -2085,7 +2085,7 @@ void do_cmd_visuals(void)
 			if (!askfor_aux(tmp, 70)) continue;
 
 			/* Process the given filename */
-			(void)process_pref_file(tmp);
+			process_pref_file(tmp);
 		}
 
 		/* Dump monster attr/chars */
@@ -2453,7 +2453,7 @@ void do_cmd_visuals(void)
 /*
  * Interact with "colors"
  */
-void do_cmd_colors(void)
+void do_cmd_colors()
 {
 	int i;
 
@@ -2510,7 +2510,7 @@ void do_cmd_colors(void)
 			if (!askfor_aux(tmp, 70)) continue;
 
 			/* Process the given filename */
-			(void)process_pref_file(tmp);
+			process_pref_file(tmp);
 
 			/* Mega-Hack -- react to changes */
 			Term_xtra(TERM_XTRA_REACT, 0);
@@ -2675,7 +2675,7 @@ void do_cmd_colors(void)
  * Take notes.  There are two ways this can happen, either in the message
  * recall or a file.
  */
-void do_cmd_note(void)
+void do_cmd_note()
 {
 	char buf[80];
 
@@ -2696,7 +2696,7 @@ void do_cmd_note(void)
 /*
  * Mention the current version
  */
-void do_cmd_version(void)
+void do_cmd_version()
 {
 	/* Silly message */
 	msg_format("You are playing %s made by %s (%s).",
@@ -2730,7 +2730,7 @@ static cptr do_cmd_feeling_text[11] =
  * Note that "feeling" is set to zero unless some time has passed.
  * Note that this is done when the level is GENERATED, not entered.
  */
-void do_cmd_feeling(void)
+void do_cmd_feeling()
 {
 	auto const &d_info = game->edit_data.d_info;
 
@@ -2802,7 +2802,7 @@ static char hack[17] = "dwsorgbuDWvyRGBU";
 /*
  * Hack -- load a screen dump from a file
  */
-void do_cmd_load_screen(void)
+void do_cmd_load_screen()
 {
 	int i, y, x;
 
@@ -2890,7 +2890,7 @@ void do_cmd_load_screen(void)
 		for (x = 0; x < len; x++)
 		{
 			/* Get the attr/char */
-			(void)(Term_what(x, y, &a, &c));
+			(Term_what(x, y, &a, &c));
 
 			/* Look up the attr */
 			for (i = 0; i < 16; i++)
@@ -2926,7 +2926,7 @@ void do_cmd_load_screen(void)
 /*
  * Hack -- save a screen dump to a file
  */
-void do_cmd_save_screen(void)
+void do_cmd_save_screen()
 {
 	int y, x;
 	int wid, hgt;
@@ -2966,7 +2966,7 @@ void do_cmd_save_screen(void)
 		for (x = 0; x < wid; x++)
 		{
 			/* Get the attr/char */
-			(void)(Term_what(x, y, &a, &c));
+			(Term_what(x, y, &a, &c));
 
 			/* Dump it */
 			buf[x] = c;
@@ -2990,7 +2990,7 @@ void do_cmd_save_screen(void)
 		for (x = 0; x < wid; x++)
 		{
 			/* Get the attr/char */
-			(void)(Term_what(x, y, &a, &c));
+			(Term_what(x, y, &a, &c));
 
 			/* Dump it */
 			buf[x] = hack[a & 0x0F];
@@ -3027,7 +3027,7 @@ void do_cmd_save_screen(void)
 /*
  * Check the status of "artifacts"
  */
-void do_cmd_knowledge_artifacts(void)
+void do_cmd_knowledge_artifacts()
 {
 	auto const &k_info = game->edit_data.k_info;
 	auto const &a_info = game->edit_data.a_info;
@@ -3257,7 +3257,7 @@ static int monster_get_race_level(int r_idx)
 /*
  * Display known uniques
  */
-static void do_cmd_knowledge_uniques(void)
+static void do_cmd_knowledge_uniques()
 {
 	auto const &r_info = game->edit_data.r_info;
 
@@ -3409,7 +3409,7 @@ static void plural_aux(char *name)
 /*
  * Display current pets
  */
-static void do_cmd_knowledge_pets(void)
+static void do_cmd_knowledge_pets()
 {
 	int t_friends = 0;
 	int t_levels = 0;
@@ -3470,7 +3470,7 @@ static void do_cmd_knowledge_pets(void)
 /*
  * Total kill count
  */
-static void do_cmd_knowledge_kill_count(void)
+static void do_cmd_knowledge_kill_count()
 {
 	auto const &r_info = game->edit_data.r_info;
 
@@ -3572,7 +3572,7 @@ static void do_cmd_knowledge_kill_count(void)
 /*
  * Display known objects
  */
-static void do_cmd_knowledge_objects(void)
+static void do_cmd_knowledge_objects()
 {
 	auto const &k_info = game->edit_data.k_info;
 
@@ -3614,7 +3614,7 @@ static void do_cmd_knowledge_objects(void)
 /*
  * List recall depths
  */
-static void do_cmd_knowledge_dungeons(void)
+static void do_cmd_knowledge_dungeons()
 {
 	auto const &d_info = game->edit_data.d_info;
 
@@ -3642,7 +3642,7 @@ static void do_cmd_knowledge_dungeons(void)
 /*
  * List known towns
  */
-void do_cmd_knowledge_towns(void)
+void do_cmd_knowledge_towns()
 {
 	auto const &d_info = game->edit_data.d_info;
 
@@ -3680,7 +3680,7 @@ void do_cmd_knowledge_towns(void)
 /*
  * List corruptions
  */
-static void do_cmd_knowledge_corruptions(void)
+static void do_cmd_knowledge_corruptions()
 {
 	show_string(dump_corruptions(true, false).c_str(), "Corruptions");
 }
@@ -3689,7 +3689,7 @@ static void do_cmd_knowledge_corruptions(void)
 /*
  * Print quest status of all active quests
  */
-static void do_cmd_knowledge_quests(void)
+static void do_cmd_knowledge_quests()
 {
 	/* Figure out display order of quests */
 	int order[MAX_Q_IDX];
@@ -3746,7 +3746,7 @@ static void do_cmd_knowledge_quests(void)
 /*
  * Print fate status
  */
-static void do_cmd_knowledge_fates(void)
+static void do_cmd_knowledge_fates()
 {
 	show_string(dump_fates().c_str(), "Fate status");
 }
@@ -3755,7 +3755,7 @@ static void do_cmd_knowledge_fates(void)
 /*
  * Print the note file
  */
-void do_cmd_knowledge_notes(void)
+void do_cmd_knowledge_notes()
 {
 	/* Spawn */
 	show_notes_file();
@@ -3768,7 +3768,7 @@ void do_cmd_knowledge_notes(void)
 /*
  * Interact with "knowledge"
  */
-void do_cmd_knowledge(void)
+void do_cmd_knowledge()
 {
 	int i;
 
@@ -3926,7 +3926,7 @@ void do_cmd_knowledge(void)
  * Check on the status of an active quest -KMW-
  * TODO: Spill out status when not a simple kill # monster.
  */
-void do_cmd_checkquest(void)
+void do_cmd_checkquest()
 {
 	/* Enter "icky" mode */
 	character_icky = TRUE;

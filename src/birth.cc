@@ -174,7 +174,7 @@ void print_desc(cptr txt)
 /*
  * Save the current data for later
  */
-static void save_prev_data(void)
+static void save_prev_data()
 {
 	auto &previous_char = game->previous_char;
 
@@ -318,7 +318,7 @@ static int adjust_stat(int value, int amount, int auto_roll)
  *
  * For efficiency, we include a chunk of "calc_bonuses()".
  */
-static void get_stats(void)
+static void get_stats()
 {
 	int i, j;
 
@@ -434,7 +434,7 @@ void roll_player_hp()
 /*
  * Roll for some info that the auto-roller ignores
  */
-static void get_extra(void)
+static void get_extra()
 {
 	/* Level one */
 	p_ptr->max_plv = p_ptr->lev = 1;
@@ -463,7 +463,7 @@ static void get_extra(void)
 /*
  * Fill the random_artifacts array with relevant info.
  */
-static errr init_randart(void)
+static errr init_randart()
 {
 	int i;
 
@@ -502,7 +502,7 @@ static errr init_randart(void)
 /*
  * Get the player's starting money
  */
-static void get_money(void)
+static void get_money()
 {
 	/* Starting gold */
 	int gold = randint(100) + 300;
@@ -531,7 +531,7 @@ static void get_money(void)
  *
  * See 'display_player()' for basic method.
  */
-static void birth_put_stats(void)
+static void birth_put_stats()
 {
 	int i, p;
 
@@ -568,7 +568,7 @@ static void birth_put_stats(void)
 /*
  * Clear all the global "character" data
  */
-static void player_wipe(void)
+static void player_wipe()
 {
 	auto const &d_info = game->edit_data.d_info;
 	auto &r_info = game->edit_data.r_info;
@@ -770,7 +770,7 @@ static void outfit_obj(object_proto const *proto)
 
 	object_aware(q_ptr);
 	object_known(q_ptr);
-	(void)inven_carry(q_ptr, FALSE);
+	inven_carry(q_ptr, FALSE);
 }
 
 
@@ -794,7 +794,7 @@ static void player_outfit_object(int qty, int tval, int sval)
 	q_ptr->number = qty;
 	object_aware(q_ptr);
 	object_known(q_ptr);
-	(void)inven_carry(q_ptr, FALSE);
+	inven_carry(q_ptr, FALSE);
 }
 
 
@@ -817,7 +817,7 @@ static void player_outfit_spellbook(cptr spell_name)
  *
  * Having an item makes the player "aware" of its purpose.
  */
-static void player_outfit(void)
+static void player_outfit()
 {
 	// Shorthand names for convenience
 	cptr class_name = spp_ptr->title;
@@ -980,7 +980,7 @@ static void player_outfit(void)
 		q_ptr->timeout = rand_range(3, 7) * 500;
 		object_aware(q_ptr);
 		object_known(q_ptr);
-		(void)inven_carry(q_ptr, FALSE);
+		inven_carry(q_ptr, FALSE);
 	}
 
 	/* Outfit the player with starting items */
@@ -2099,7 +2099,7 @@ static const int birth_stat_costs[(18-10) + 1] =
  *
  * Taken from V 2.9.0
  */
-static bool_ player_birth_aux_point(void)
+static bool_ player_birth_aux_point()
 {
 	int i;
 
@@ -2682,7 +2682,7 @@ static void init_town(int t_idx)
  * Note that we may be called with "junk" leftover in the various
  * fields, so we must be sure to clear them first.
  */
-void player_birth(void)
+void player_birth()
 {
 	auto const &st_info = game->edit_data.st_info;
 	auto &d_info = game->edit_data.d_info;

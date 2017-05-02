@@ -1100,7 +1100,7 @@ bool_ carried_make_attack_normal(int r_idx)
 				}
 
 				/* Apply the cut */
-				if (k) (void)set_cut(p_ptr->cut + k);
+				if (k) set_cut(p_ptr->cut + k);
 			}
 
 			/* Handle stun */
@@ -1141,7 +1141,7 @@ bool_ carried_make_attack_normal(int r_idx)
 				}
 
 				/* Apply the stun */
-				if (k) (void)set_stun(p_ptr->stun + k);
+				if (k) set_stun(p_ptr->stun + k);
 			}
 		}
 
@@ -2518,7 +2518,7 @@ bool_ make_attack_normal(int m_idx, byte divis)
 				}
 
 				/* Apply the cut */
-				if (k) (void)set_cut(p_ptr->cut + k);
+				if (k) set_cut(p_ptr->cut + k);
 			}
 
 			/* Handle stun */
@@ -2559,7 +2559,7 @@ bool_ make_attack_normal(int m_idx, byte divis)
 				}
 
 				/* Apply the stun */
-				if (k) (void)set_stun(p_ptr->stun + k);
+				if (k) set_stun(p_ptr->stun + k);
 			}
 
 			if (explode)

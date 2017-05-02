@@ -1594,7 +1594,7 @@ static void build_streamer2(int feat, int killwall)
 /*
  * Build a destroyed level
  */
-static void destroy_level(void)
+static void destroy_level()
 {
 	int y1, x1, y, x, k, t, n;
 
@@ -1865,7 +1865,7 @@ static void vault_monsters(int y1, int x1, int num)
 
 			/* Place the monster (allow groups) */
 			monster_level = dun_level + 2;
-			(void)place_monster(y, x, TRUE, TRUE);
+			place_monster(y, x, TRUE, TRUE);
 			monster_level = dun_level;
 		}
 	}
@@ -3030,7 +3030,7 @@ static void build_type5(int by0, int bx0)
 			int r_idx = what[rand_int(64)];
 
 			/* Place that "random" monster (no groups) */
-			(void)place_monster_aux(y, x, r_idx, FALSE, FALSE, MSTATUS_ENEMY);
+			place_monster_aux(y, x, r_idx, FALSE, FALSE, MSTATUS_ENEMY);
 		}
 	}
 }
@@ -4435,7 +4435,7 @@ bool_ generate_fracave(int y0, int x0, int xsize, int ysize,
 /*
  * Makes a cave system in the center of the dungeon
  */
-static void build_cavern(void)
+static void build_cavern()
 {
 	int grd, roug, cutoff, xsize, ysize, x0, y0;
 	bool_ done, light, room;
@@ -6868,7 +6868,7 @@ bool_ level_generate_dungeon()
 	while (dun->cent_n == 0)
 	{
 		/* ...force the creation of a small rectangular room */
-		(void)room_build(0, 0, 1);
+		room_build(0, 0, 1);
 	}
 
 	/* Hack -- Scramble the room order */
@@ -7184,7 +7184,7 @@ static void save_all_friends()
  * *hint* *hint* with this made extern, and we no longer have to
  * store fill_type and floor_type in the savefile...
  */
-static void init_feat_info(void)
+static void init_feat_info()
 {
 	auto const &d_info = game->edit_data.d_info;
 
@@ -7546,7 +7546,7 @@ static void supersize_grid_tile(int sy, int sx, int ty, int tx)
  *
  * Note that "dun_body" adds about 4000 bytes of memory to the stack.
  */
-static bool_ cave_gen(void)
+static bool_ cave_gen()
 {
 	auto const &d_info = game->edit_data.d_info;
 	auto const &r_info = game->edit_data.r_info;
@@ -7696,7 +7696,7 @@ static bool_ cave_gen(void)
 		/* Put some monsters in the dungeon */
 		for (i = i + k; i > 0; i--)
 		{
-			(void)alloc_monster(0, TRUE);
+			alloc_monster(0, TRUE);
 		}
 	}
 
@@ -8066,7 +8066,7 @@ static bool_ cave_gen(void)
 /* Mega-Hack */
 #define REGEN_HACK 0x02
 
-bool_ build_special_level(void)
+bool_ build_special_level()
 {
 	auto const &d_info = game->edit_data.d_info;
 
@@ -8129,7 +8129,7 @@ bool_ build_special_level(void)
  * Prepare regeneration of a special level, which should not happen,
  * but just in case...
  */
-static void wipe_special_level(void)
+static void wipe_special_level()
 {
 	auto const &d_info = game->edit_data.d_info;
 
@@ -8157,7 +8157,7 @@ static void wipe_special_level(void)
 /*
  * Finalise generation of a special level
  */
-static void finalise_special_level(void)
+static void finalise_special_level()
 {
 	auto const &d_info = game->edit_data.d_info;
 
@@ -8229,7 +8229,7 @@ static void generate_grid_mana()
  *
  * Hack -- allow auto-scumming via a gameplay option.
  */
-void generate_cave(void)
+void generate_cave()
 {
 	auto const &d_info = game->edit_data.d_info;
 	auto &a_info = game->edit_data.a_info;

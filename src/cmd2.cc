@@ -60,7 +60,7 @@
 using std::this_thread::sleep_for;
 using std::chrono::milliseconds;
 
-void do_cmd_immovable_special(void);
+void do_cmd_immovable_special();
 
 /*
  * Try to bash an altar
@@ -162,7 +162,7 @@ static bool ask_leave()
 /*
  * Go up one level
  */
-void do_cmd_go_up(void)
+void do_cmd_go_up()
 {
 	auto const &d_info = game->edit_data.d_info;
 
@@ -314,7 +314,7 @@ void do_cmd_go_up(void)
 /*
  * Returns TRUE if we are in the Between...
  */
-static bool_ between_effect(void)
+static bool_ between_effect()
 {
 	byte bx, by;
 
@@ -358,7 +358,7 @@ static bool_ between_effect(void)
 /*
  * Go down one level
  */
-void do_cmd_go_down(void)
+void do_cmd_go_down()
 {
 	auto const &d_info = game->edit_data.d_info;
 
@@ -1005,7 +1005,7 @@ static bool_ do_cmd_open_aux(int y, int x, int dir)
  *
  * Unlocking a locked door/chest is worth one experience point.
  */
-void do_cmd_open(void)
+void do_cmd_open()
 {
 	auto const &r_info = game->edit_data.r_info;
 
@@ -1180,7 +1180,7 @@ static bool_ do_cmd_close_aux(int y, int x, int dir)
 /*
  * Close an open door.
  */
-void do_cmd_close(void)
+void do_cmd_close()
 {
 	int y, x, dir;
 
@@ -1631,7 +1631,7 @@ static bool_ do_cmd_tunnel_aux(int y, int x, int dir)
  * Digging is very difficult without a "digger" weapon, but can be
  * accomplished by strong players using heavy weapons.
  */
-void do_cmd_tunnel(void)
+void do_cmd_tunnel()
 {
 	int y, x, dir;
 
@@ -1791,7 +1791,7 @@ static bool_ do_cmd_bash_aux(int y, int x, int dir)
 		msg_print("You are off-balance.");
 
 		/* Hack -- Lose balance ala paralysis */
-		(void)set_paralyzed(2 + rand_int(2));
+		set_paralyzed(2 + rand_int(2));
 	}
 
 	/* Result */
@@ -1813,7 +1813,7 @@ static bool_ do_cmd_bash_aux(int y, int x, int dir)
  *
  * Creatures can also open or bash doors, see elsewhere.
  */
-void do_cmd_bash(void)
+void do_cmd_bash()
 {
 	auto const &r_info = game->edit_data.r_info;
 
@@ -1912,7 +1912,7 @@ void do_cmd_bash(void)
  * This command must always take a turn, to prevent free detection
  * of invisible monsters.
  */
-void do_cmd_alter(void)
+void do_cmd_alter()
 {
 	auto const &f_info = game->edit_data.f_info;
 
@@ -2024,7 +2024,7 @@ static bool_ get_spike(int *ip)
  *
  * This command may NOT be repeated
  */
-void do_cmd_spike(void)
+void do_cmd_spike()
 {
 	int y, x, dir, item;
 
@@ -2372,7 +2372,7 @@ void do_cmd_run_run()
 /*
  * Start running.
  */
-void do_cmd_run(void)
+void do_cmd_run()
 {
 	if (p_ptr->immovable)
 	{
@@ -2430,7 +2430,7 @@ void do_cmd_stay(int pickup)
 /*
  * Resting allows a player to safely restore his hp	-RAK-
  */
-void do_cmd_rest(void)
+void do_cmd_rest()
 {
 	auto const &f_info = game->edit_data.f_info;
 
@@ -2659,7 +2659,7 @@ int get_shooter_mult(object_type *o_ptr)
  *
  * Note that Bows of "Extra Shots" give an extra shot.
  */
-void do_cmd_fire(void)
+void do_cmd_fire()
 {
 	int dir, item;
 
@@ -3090,7 +3090,7 @@ void do_cmd_fire(void)
  * to hit bonus of the weapon to have an effect?  Should it ever cause
  * the item to be destroyed?  Should it do any damage at all?
  */
-void do_cmd_throw(void)
+void do_cmd_throw()
 {
 	auto const &k_info = game->edit_data.k_info;
 
@@ -3466,7 +3466,7 @@ void do_cmd_throw(void)
  * to hit bonus of the weapon to have an effect?  Should it ever cause
  * the item to be destroyed?  Should it do any damage at all?
  */
-void do_cmd_boomerang(void)
+void do_cmd_boomerang()
 {
 	auto const &k_info = game->edit_data.k_info;
 
@@ -3841,7 +3841,7 @@ static bool_ tport_vertically(bool_ how)
  * Do a special ``movement'' action. Meant to be used for ``immovable''
  * characters.
  */
-void do_cmd_immovable_special(void)
+void do_cmd_immovable_special()
 {
 	int i, ii, ij, dir;
 
@@ -4071,7 +4071,7 @@ static void do_cmd_sacrifice_aule()
  * Handle sacrifices.
  * Grace is increased by value of sacrifice.
  */
-void do_cmd_sacrifice(void)
+void do_cmd_sacrifice()
 {
 	auto const &r_info = game->edit_data.r_info;
 

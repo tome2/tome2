@@ -5,4 +5,4 @@
 
 void build_prob(cptr learn);
 bool_ create_artifact(object_type *o_ptr, bool_ a_scroll, bool_ get_name);
-bool_ artifact_scroll(void);
+bool_ artifact_scroll();

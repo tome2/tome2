@@ -4,14 +4,14 @@
 #include "monster_type_fwd.hpp"
 
 void dump_companions(FILE *outfile);
-void do_cmd_companion(void);
-bool_ do_control_reconnect(void);
-bool_ do_control_drop(void);
-bool_ do_control_magic(void);
-bool_ do_control_pickup(void);
-bool_ do_control_inven(void);
-bool_ do_control_walk(void);
-bool_ can_create_companion(void);
+void do_cmd_companion();
+bool_ do_control_reconnect();
+bool_ do_control_drop();
+bool_ do_control_magic();
+bool_ do_control_pickup();
+bool_ do_control_inven();
+bool_ do_control_walk();
+bool_ can_create_companion();
 void ai_deincarnate(int m_idx);
 bool_ ai_possessor(int m_idx, int o_idx);
 bool_ ai_multiply(int m_idx);

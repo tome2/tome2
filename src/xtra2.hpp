@@ -7,9 +7,9 @@
 
 #include <memory>
 
-void do_rebirth(void);
+void do_rebirth();
 void switch_subrace(std::size_t racem, bool_ copy_old);
-void drop_from_wild(void);
+void drop_from_wild();
 bool_ set_roots(int v, s16b ac, s16b dam);
 bool_ set_project(int v, s16b gf, s16b dam, s16b rad, s16b flag);
 bool_ set_parasite(int v, int r);
@@ -60,7 +60,7 @@ bool_ set_oppose_cc(int v);
 bool_ set_stun(int v);
 bool_ set_cut(int v);
 bool_ set_food(int v);
-void check_experience(void);
+void check_experience();
 void check_experience_obj(object_type *o_ptr);
 void gain_exp(s32b amount);
 void lose_exp(s32b amount);
@@ -68,8 +68,8 @@ int get_coin_type(std::shared_ptr<monster_race const> r_ptr);
 void monster_death(int m_idx);
 bool_ mon_take_hit(int m_idx, int dam, bool_ *fear, cptr note);
 bool_ change_panel(int dy, int dx);
-void verify_panel(void);
-bool_ target_okay(void);
+void verify_panel();
+bool_ target_okay();
 bool_ target_set(int mode);
 bool_ get_aim_dir(int *dp);
 bool_ get_rep_dir(int *dp);
@@ -77,13 +77,13 @@ bool_ set_shadow(int v);
 bool_ set_tim_esp(int v);
 bool_ tgp_pt(int *x, int * y);
 bool_ tgt_pt (int *x, int *y);
-void do_poly_self(void);
-bool_ curse_weapon(void);
-bool_ curse_armor(void);
-void make_wish(void);
+void do_poly_self();
+bool_ curse_weapon();
+bool_ curse_armor();
+void make_wish();
 void create_between_gate(int dist, int y, int x);
 
 extern "C" {
-	void resize_map(void);
-	void resize_window(void);
+	void resize_map();
+	void resize_window();
 }

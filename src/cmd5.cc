@@ -239,7 +239,7 @@ void do_cmd_browse_aux(object_type *o_ptr)
 	}
 }
 
-void do_cmd_browse(void)
+void do_cmd_browse()
 {
 	/* Get an item */
 	int item;
@@ -286,7 +286,7 @@ static void do_poly_wounds()
 	}
 }
 
-void do_poly_self(void)
+void do_poly_self()
 {
 	auto const &race_info = game->edit_data.race_info;
 
@@ -314,14 +314,14 @@ void do_poly_self(void)
 			{
 				if ( rand_int(2) == 0)
 				{
-					(void)dec_stat(tmp, randint(6) + 6, (rand_int(3) == 0));
+					dec_stat(tmp, randint(6) + 6, (rand_int(3) == 0));
 					power -= 1;
 				}
 				tmp++;
 			}
 
 			/* Deformities are discriminated against! */
-			(void)dec_stat(A_CHR, randint(6), TRUE);
+			dec_stat(A_CHR, randint(6), TRUE);
 
 			if (effect_msg[0])
 			{
@@ -409,7 +409,7 @@ void do_poly_self(void)
 		msg_print("Your internal organs are rearranged!");
 		while (tmp < 6)
 		{
-			(void)dec_stat(tmp, randint(6) + 6, (rand_int(3) == 0));
+			dec_stat(tmp, randint(6) + 6, (rand_int(3) == 0));
 			tmp++;
 		}
 		if (rand_int(6) == 0)
@@ -1438,11 +1438,11 @@ static void apply_monster_power(monster_race const *r_ptr, std::size_t monster_s
 		{
 			if (!p_ptr->fast)
 			{
-				(void)set_fast(randint(20 + (plev) ) + plev, 10);
+				set_fast(randint(20 + (plev) ) + plev, 10);
 			}
 			else
 			{
-				(void)set_fast(p_ptr->fast + randint(5), 10);
+				set_fast(p_ptr->fast + randint(5), 10);
 			}
 
 			break;
@@ -1541,7 +1541,7 @@ static void apply_monster_power(monster_race const *r_ptr, std::size_t monster_s
 			int dir;
 			if (!get_aim_dir(&dir)) break;
 
-			(void)fire_beam(GF_AWAY_ALL, dir, plev);
+			fire_beam(GF_AWAY_ALL, dir, plev);
 
 			break;
 		}
@@ -1561,7 +1561,7 @@ static void apply_monster_power(monster_race const *r_ptr, std::size_t monster_s
 
 	case SF_DARKNESS_IDX:
 		{
-			(void)project( -1, 3, p_ptr->py, p_ptr->px, 0, GF_DARK_WEAK,
+			project( -1, 3, p_ptr->py, p_ptr->px, 0, GF_DARK_WEAK,
 				       PROJECT_GRID | PROJECT_KILL);
 
 			/* Unlite the room */

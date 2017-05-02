@@ -189,7 +189,7 @@ static void prt_field(cptr info, int row, int col)
 /*
  * Prints players max/cur piety
  */
-static void prt_piety(void)
+static void prt_piety()
 {
 	char tmp[32];
 
@@ -208,7 +208,7 @@ static void prt_piety(void)
 /*
  * Prints the player's current sanity.
  */
-static void prt_sane(void)
+static void prt_sane()
 {
 	char tmp[32];
 	byte color;
@@ -294,7 +294,7 @@ static void prt_stat(int stat)
 /*
  * Prints "title", including "wizard" or "winner" as needed.
  */
-static void prt_title(void)
+static void prt_title()
 {
 	cptr p = "";
 
@@ -336,7 +336,7 @@ static void prt_title(void)
 /*
  * Prints level
  */
-static void prt_level(void)
+static void prt_level()
 {
 	char tmp[32];
 
@@ -358,17 +358,17 @@ static void prt_level(void)
 /*
  * Display the experience
  */
-static void prt_exp(void)
+static void prt_exp()
 {
 	char out_val[32];
 
 	if (p_ptr->lev >= PY_MAX_LEVEL)
 	{
-		(void)sprintf(out_val, "********");
+		sprintf(out_val, "********");
 	}
 	else
 	{
-		(void)sprintf(out_val, "%8ld", (long)(player_exp[p_ptr->lev - 1] * p_ptr->expfact / 100L) - p_ptr->exp);
+		sprintf(out_val, "%8ld", (long)(player_exp[p_ptr->lev - 1] * p_ptr->expfact / 100L) - p_ptr->exp);
 	}
 
 	if (p_ptr->exp >= p_ptr->max_exp)
@@ -387,7 +387,7 @@ static void prt_exp(void)
 /*
  * Prints current gold
  */
-static void prt_gold(void)
+static void prt_gold()
 {
 	char tmp[32];
 
@@ -401,7 +401,7 @@ static void prt_gold(void)
 /*
  * Prints current AC
  */
-static void prt_ac(void)
+static void prt_ac()
 {
 	char tmp[32];
 
@@ -414,7 +414,7 @@ static void prt_ac(void)
 /*
  * Prints Cur/Max hit points
  */
-static void prt_hp(void)
+static void prt_hp()
 {
 	char tmp[32];
 
@@ -470,7 +470,7 @@ static void prt_hp(void)
 /*
  * Prints Cur/Max monster hit points
  */
-static void prt_mh(void)
+static void prt_mh()
 {
 	char tmp[32];
 
@@ -509,7 +509,7 @@ static void prt_mh(void)
 /*
  * Prints players max/cur spell points
  */
-static void prt_sp(void)
+static void prt_sp()
 {
 	char tmp[32];
 	byte color;
@@ -578,7 +578,7 @@ static void prt_depth(int row, int col)
 	{
 		if (dungeon_flags & DF_TOWER)
 		{
-			(void)strnfmt(depths, 32, "%c%c%c -%d",
+			strnfmt(depths, 32, "%c%c%c -%d",
 			              d_ptr->short_name[0],
 			              d_ptr->short_name[1],
 			              d_ptr->short_name[2],
@@ -586,7 +586,7 @@ static void prt_depth(int row, int col)
 		}
 		else
 		{
-			(void)strnfmt(depths, 32, "%c%c%c %d",
+			strnfmt(depths, 32, "%c%c%c %d",
 			              d_ptr->short_name[0],
 			              d_ptr->short_name[1],
 			              d_ptr->short_name[2],
@@ -693,11 +693,11 @@ static void prt_state(int row, int col)
 	{
 		if (command_rep > 999)
 		{
-			(void)sprintf(text, "Rep. %3d00", command_rep / 100);
+			sprintf(text, "Rep. %3d00", command_rep / 100);
 		}
 		else
 		{
-			(void)sprintf(text, "Repeat %3d", command_rep);
+			sprintf(text, "Repeat %3d", command_rep);
 		}
 	}
 
@@ -745,7 +745,7 @@ static void prt_speed(int row, int col)
 /*
  * Prints status line
  */
-static void prt_status_line(void)
+static void prt_status_line()
 {
 	int wid, hgt;
 	Term_get_size(&wid, &hgt);
@@ -848,7 +848,7 @@ static void prt_status_line(void)
 
 
 
-static void prt_cut(void)
+static void prt_cut()
 {
 	int c = p_ptr->cut;
 	int hgt;
@@ -892,7 +892,7 @@ static void prt_cut(void)
 
 
 
-static void prt_stun(void)
+static void prt_stun()
 {
 	int s = p_ptr->stun;
 	int hgt;
@@ -934,7 +934,7 @@ static void prt_stun(void)
  * Auto-track current target monster when bored.  Note that the
  * health-bar stops tracking any monster that "disappears".
  */
-static void health_redraw(void)
+static void health_redraw()
 {
 	int hgt;
 	Term_get_size(nullptr, &hgt);
@@ -1028,7 +1028,7 @@ static void health_redraw(void)
 /*
  * Display basic info (mostly left of map)
  */
-static void prt_frame(void)
+static void prt_frame()
 {
 	int i;
 
@@ -1082,7 +1082,7 @@ static void prt_frame(void)
 /*
  * Hack -- display inventory in sub-windows
  */
-static void fix_inven(void)
+static void fix_inven()
 {
 	int j;
 
@@ -1116,7 +1116,7 @@ static void fix_inven(void)
 /*
  * Hack -- display equipment in sub-windows
  */
-static void fix_equip(void)
+static void fix_equip()
 {
 	int j;
 
@@ -1148,7 +1148,7 @@ static void fix_equip(void)
 /*
  * Hack -- display character in sub-windows
  */
-static void fix_player(void)
+static void fix_player()
 {
 	int j;
 
@@ -1184,7 +1184,7 @@ static void fix_player(void)
  *
  * XXX XXX XXX Adjust for width and split messages
  */
-void fix_message(void)
+void fix_message()
 {
 	int j, i;
 	int w, h;
@@ -1237,7 +1237,7 @@ void fix_message(void)
  *
  * Note that the "player" symbol does NOT appear on the map.
  */
-static void fix_overhead(void)
+static void fix_overhead()
 {
 	int j;
 
@@ -1272,7 +1272,7 @@ static void fix_overhead(void)
 /*
  * Hack -- display monster recall in sub-windows
  */
-static void fix_monster(void)
+static void fix_monster()
 {
 	int j;
 
@@ -1308,7 +1308,7 @@ static void fix_monster(void)
 /*
  * Hack -- display object recall in sub-windows
  */
-static void fix_object(void)
+static void fix_object()
 {
 	int j;
 
@@ -1343,7 +1343,7 @@ static void fix_object(void)
 
 /* Show the monster list in a window */
 
-static void fix_m_list(void)
+static void fix_m_list()
 {
 	auto const &r_info = game->edit_data.r_info;
 
@@ -1427,7 +1427,7 @@ static void fix_m_list(void)
 		{
 			int w, h, num = 0;
 
-			(void)Term_get_size(&w, &h);
+			Term_get_size(&w, &h);
 
 			c_prt(TERM_WHITE, format("You can see %d monster%s", c, (c > 1 ? "s:" : ":")), 0, 0);
 
@@ -1534,7 +1534,7 @@ static void add_powers(std::vector<s16b> const &powers)
 }
 
 /* Calc the player powers */
-static void calc_powers(void)
+static void calc_powers()
 {
 	int i, p = 0;
 	bool_ old_powers[POWER_MAX];
@@ -1647,7 +1647,7 @@ static void calc_sanity()
  *
  * This function induces status messages.
  */
-static void calc_mana(void)
+static void calc_mana()
 {
 	auto const &r_info = game->edit_data.r_info;
 
@@ -1827,7 +1827,7 @@ static void calc_mana(void)
  * Calculate the players (maximal) hit points
  * Adjust current hitpoints if necessary
  */
-void calc_hitpoints(void)
+void calc_hitpoints()
 {
 	auto const &player_hp = game->player_hp;
 	auto const &r_info = game->edit_data.r_info;
@@ -1951,7 +1951,7 @@ static void calc_torch_gods()
  * SWD: Experimental modification: multiple light sources have additive effect.
  *
  */
-static void calc_torch(void)
+static void calc_torch()
 {
 	int i;
 	object_type *o_ptr;
@@ -2034,7 +2034,7 @@ static void calc_torch(void)
 /*
  * Computes current weight limit.
  */
-int weight_limit(void)
+int weight_limit()
 {
 	int i;
 
@@ -2746,7 +2746,7 @@ static void apply_lflags(LF const &lflags)
 /**
  * Are barehand fighter's hands empty?
  */
-static bool_ monk_empty_hands(void)
+static bool_ monk_empty_hands()
 {
 	int i;
 	object_type *o_ptr;
@@ -4040,7 +4040,7 @@ void calc_bonuses(bool_ silent)
 /*
  * Handle "p_ptr->notice"
  */
-void notice_stuff(void)
+void notice_stuff()
 {
 	/* Notice stuff */
 	if (!p_ptr->notice) return;
@@ -4065,7 +4065,7 @@ void notice_stuff(void)
 /*
  * Handle "p_ptr->update"
  */
-void update_stuff(void)
+void update_stuff()
 {
 	/* Update stuff */
 	if (!p_ptr->update) return;
@@ -4172,7 +4172,7 @@ void update_stuff(void)
 /*
  * Handle "p_ptr->redraw"
  */
-void redraw_stuff(void)
+void redraw_stuff()
 {
 	/* Redraw stuff */
 	if (!p_ptr->redraw) return;
@@ -4213,7 +4213,7 @@ void redraw_stuff(void)
 /*
  * Handle "p_ptr->window"
  */
-void window_stuff(void)
+void window_stuff()
 {
 	int j;
 
@@ -4298,7 +4298,7 @@ void window_stuff(void)
 /*
  * Handle "p_ptr->update" and "p_ptr->redraw" and "p_ptr->window"
  */
-void handle_stuff(void)
+void handle_stuff()
 {
 	/* Update stuff */
 	if (p_ptr->update) update_stuff();
@@ -4311,7 +4311,7 @@ void handle_stuff(void)
 }
 
 
-bool_ monk_heavy_armor(void)
+bool_ monk_heavy_armor()
 {
 	u16b monk_arm_wgt = 0;
 

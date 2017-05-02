@@ -711,7 +711,7 @@ void compact_monsters(int size)
  * This is an efficient method of simulating multiple calls to the
  * "delete_monster()" function, with no visual effects.
  */
-void wipe_m_list(void)
+void wipe_m_list()
 {
 	int i;
 
@@ -759,7 +759,7 @@ void wipe_m_list(void)
  *
  * This routine should almost never fail, but it *can* happen.
  */
-s16b m_pop(void)
+s16b m_pop()
 {
 	int i;
 
@@ -813,7 +813,7 @@ s16b m_pop(void)
 /*
  * Apply a "monster restriction function" to the "monster allocation table"
  */
-errr get_mon_num_prep(void)
+errr get_mon_num_prep()
 {
 	int i;
 
@@ -1327,7 +1327,7 @@ void monster_desc(char *desc, monster_type *m_ptr, int mode)
 		}
 
 		/* Copy the result */
-		(void)strcpy(desc, res);
+		strcpy(desc, res);
 	}
 
 
@@ -1348,7 +1348,7 @@ void monster_desc(char *desc, monster_type *m_ptr, int mode)
 		if ((r_ptr->flags & RF_UNIQUE) && !(p_ptr->image))
 		{
 			/* Start with the name (thus nominative and objective) */
-			(void)strcpy(desc, name);
+			strcpy(desc, name);
 		}
 
 		/* It could be an indefinite monster */
@@ -1357,8 +1357,8 @@ void monster_desc(char *desc, monster_type *m_ptr, int mode)
 			/* XXX Check plurality for "some" */
 
 			/* Indefinite monsters need an indefinite article */
-			(void)strcpy(desc, is_a_vowel(name[0]) ? "an " : "a ");
-			(void)strcat(desc, name);
+			strcpy(desc, is_a_vowel(name[0]) ? "an " : "a ");
+			strcat(desc, name);
 		}
 
 		/* It could be a normal, definite, monster */
@@ -1366,11 +1366,11 @@ void monster_desc(char *desc, monster_type *m_ptr, int mode)
 		{
 			/* Definite monsters need a definite article */
 			if (m_ptr->status >= MSTATUS_PET)
-				(void)strcpy(desc, "your ");
+				strcpy(desc, "your ");
 			else
-				(void)strcpy(desc, "the ");
+				strcpy(desc, "the ");
 
-			(void)strcat(desc, name);
+			strcat(desc, name);
 		}
 
 		/* Handle the Possessive as a special afterthought */
@@ -1379,7 +1379,7 @@ void monster_desc(char *desc, monster_type *m_ptr, int mode)
 			/* XXX Check for trailing "s" */
 
 			/* Simply append "apostrophe" and "s" */
-			(void)strcat(desc, "'s");
+			strcat(desc, "'s");
 		}
 	}
 }
@@ -1414,16 +1414,16 @@ void monster_race_desc(char *desc, int r_idx, int ego)
 	if (r_ptr->flags & RF_UNIQUE)
 	{
 		/* Start with the name (thus nominative and objective) */
-		(void)strcpy(desc, name);
+		strcpy(desc, name);
 	}
 
 	/* It could be a normal, definite, monster */
 	else
 	{
 		/* Definite monsters need a definite article */
-		(void)strcpy(desc, is_a_vowel(name[0]) ? "an " : "a ");
+		strcpy(desc, is_a_vowel(name[0]) ? "an " : "a ");
 
-		(void)strcat(desc, name);
+		strcat(desc, name);
 	}
 }
 
@@ -1510,11 +1510,11 @@ static void sanity_blast(monster_type * m_ptr, bool_ necro)
 	{
 		if (!p_ptr->resist_conf)
 		{
-			(void)set_confused(p_ptr->confused + rand_int(4) + 4);
+			set_confused(p_ptr->confused + rand_int(4) + 4);
 		}
 		if ((!p_ptr->resist_chaos) && (randint(3) == 1))
 		{
-			(void) set_image(p_ptr->image + rand_int(250) + 150);
+			set_image(p_ptr->image + rand_int(250) + 150);
 		}
 		return;
 	}
@@ -1531,19 +1531,19 @@ static void sanity_blast(monster_type * m_ptr, bool_ necro)
 	{
 		if (!p_ptr->resist_conf)
 		{
-			(void)set_confused(p_ptr->confused + rand_int(4) + 4);
+			set_confused(p_ptr->confused + rand_int(4) + 4);
 		}
 		if (!p_ptr->free_act)
 		{
-			(void)set_paralyzed(rand_int(4) + 4);
+			set_paralyzed(rand_int(4) + 4);
 		}
 		while (rand_int(100) > p_ptr->skill_sav)
-			(void)do_dec_stat(A_INT, STAT_DEC_NORMAL);
+			do_dec_stat(A_INT, STAT_DEC_NORMAL);
 		while (rand_int(100) > p_ptr->skill_sav)
-			(void)do_dec_stat(A_WIS, STAT_DEC_NORMAL);
+			do_dec_stat(A_WIS, STAT_DEC_NORMAL);
 		if (!p_ptr->resist_chaos)
 		{
-			(void) set_image(p_ptr->image + rand_int(250) + 150);
+			set_image(p_ptr->image + rand_int(250) + 150);
 		}
 		return;
 	}
@@ -2689,7 +2689,7 @@ bool_ place_monster_aux(int y, int x, int r_idx, bool_ slp, bool_ grp, int statu
 	if (r_ptr->flags & RF_FRIENDS)
 	{
 		/* Attempt to place a group */
-		(void)place_monster_group(y, x, r_idx, slp, status);
+		place_monster_group(y, x, r_idx, slp, status);
 	}
 
 
@@ -2743,7 +2743,7 @@ bool_ place_monster_aux(int y, int x, int r_idx, bool_ slp, bool_ grp, int statu
 			                (r_ptr->flags & RF_ESCORTS))
 			{
 				/* Place a group of monsters */
-				(void)place_monster_group(ny, nx, z, slp, status);
+				place_monster_group(ny, nx, z, slp, status);
 			}
 		}
 
@@ -2847,7 +2847,7 @@ bool_ alloc_horde(int y, int x)
 
 	for (attempts = randint(10) + 5; attempts; attempts--)
 	{
-		(void) summon_specific(m_ptr->fy, m_ptr->fx, dun_level, SUMMON_KIN);
+		summon_specific(m_ptr->fy, m_ptr->fx, dun_level, SUMMON_KIN);
 	}
 
 	return TRUE;

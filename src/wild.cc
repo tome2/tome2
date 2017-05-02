@@ -554,7 +554,7 @@ void wilderness_gen()
 		for (i = 0; i < lim; i++)
 		{
 			/* Make a resident */
-			(void)alloc_monster((generate_encounter == TRUE) ? 0 : 3, (generate_encounter == TRUE) ? FALSE : TRUE);
+			alloc_monster((generate_encounter == TRUE) ? 0 : 3, (generate_encounter == TRUE) ? FALSE : TRUE);
 		}
 
 		if (generate_encounter) ambush_flag = TRUE;

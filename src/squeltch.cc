@@ -58,7 +58,7 @@ using squelch::StatusCondition;
 
 static squelch::Automatizer *automatizer = nullptr;
 
-void squeltch_grid(void)
+void squeltch_grid()
 {
 	auto const &k_info = game->edit_data.k_info;
 
@@ -87,7 +87,7 @@ void squeltch_grid(void)
 	}
 }
 
-void squeltch_inventory(void)
+void squeltch_inventory()
 {
 	if (!automatizer_enabled)
 	{

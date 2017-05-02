@@ -7,8 +7,8 @@
 extern "C" {
 #endif
 
-void save_dungeon(void);
-bool_ save_player(void);
+void save_dungeon();
+bool_ save_player();
 
 #ifdef __cplusplus
 } // extern "C"

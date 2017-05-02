@@ -8,10 +8,10 @@ extern "C" {
 #endif
 
 errr path_build(char *buf, int max, cptr path, cptr file);
-void bell(void);
+void bell();
 errr macro_add(cptr pat, cptr act);
 sint macro_find_exact(cptr pat);
-char inkey(void);
+char inkey();
 void prt(cptr str, int row, int col);
 
 #ifdef __cplusplus

@@ -3417,7 +3417,7 @@ static void run_init(int dir)
  *
  * Return TRUE if the running should be stopped
  */
-static bool_ run_test(void)
+static bool_ run_test()
 {
 	auto const &f_info = game->edit_data.f_info;
 
@@ -3835,7 +3835,7 @@ void run_step(int dir)
 /*
  * Issue a pet command
  */
-void do_cmd_pet(void)
+void do_cmd_pet()
 {
 	auto const &r_info = game->edit_data.r_info;
 

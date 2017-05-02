@@ -47,7 +47,7 @@ static void quit_hook(cptr s)
  * home directory or try to create it if it doesn't exist.
  * Returns FALSE if all the attempts fail.
  */
-static void init_save_dir(void)
+static void init_save_dir()
 {
 	char dirpath[1024];
 	char versionpath[1024];

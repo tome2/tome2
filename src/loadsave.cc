@@ -94,7 +94,7 @@ struct option_value {
  * not to save it. There's no point. -- takkaria
  */
 
-static byte sf_get(void)
+static byte sf_get()
 {
 	byte c;
 
@@ -108,7 +108,7 @@ static byte sf_get(void)
 
 static void sf_put(byte v)
 {
-	(void)putc((int)v, fff);
+	putc((int)v, fff);
 }
 
 /*
@@ -1547,7 +1547,7 @@ static bool_ do_dungeon(ls_flag_t flag, bool no_companions)
 }
 
 /* Save the current persistent dungeon -SC- */
-void save_dungeon(void)
+void save_dungeon()
 {
 	char tmp[16];
 	char name[1024], buf[5];
@@ -2579,7 +2579,7 @@ static bool_ do_savefile_aux(ls_flag_t flag)
 /*
  * Actually read the savefile
  */
-static errr rd_savefile(void)
+static errr rd_savefile()
 {
 	errr err = 0;
 
@@ -2617,7 +2617,7 @@ static errr rd_savefile(void)
  * Note that we always try to load the "current" savefile, even if
  * there is no such file, so we must check for "empty" savefile names.
  */
-bool_ load_player(void)
+bool_ load_player()
 {
 	errr err = 0;
 
@@ -2780,7 +2780,7 @@ static bool_ save_player_aux(char *name)
 	if (fd >= 0)
 	{
 		/* Close the "fd" */
-		(void)fd_close(fd);
+		fd_close(fd);
 
 		/* Open the savefile */
 		fff = my_fopen(name, "wb");
@@ -2799,7 +2799,7 @@ static bool_ save_player_aux(char *name)
 		if (!ok)
 		{
 			/* Remove "broken" files */
-			(void)fd_kill(name);
+			fd_kill(name);
 		}
 	}
 
@@ -2813,7 +2813,7 @@ static bool_ save_player_aux(char *name)
 /*
  * Attempt to save the player in a savefile
  */
-bool_ save_player(void)
+bool_ save_player()
 {
 	int result = FALSE;
 	char safe[1024];

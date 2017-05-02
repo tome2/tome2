@@ -6910,7 +6910,7 @@ errr process_dungeon_file(cptr name, int *yval, int *xval, int ymax, int xmax, b
 		if (buf[0] == '%')
 		{
 			/* Process that file if allowed */
-			(void)process_dungeon_file(buf + 2, yval, xval, ymax, xmax, FALSE, full);
+			process_dungeon_file(buf + 2, yval, xval, ymax, xmax, FALSE, full);
 
 			/* Continue */
 			continue;

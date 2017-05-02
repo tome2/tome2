@@ -607,7 +607,7 @@ static void bolt(int m_idx, int typ, int dam_hp)
 	int flg = PROJECT_STOP | PROJECT_KILL;
 
 	/* Target the player with a bolt attack */
-	(void)project(m_idx, 0, p_ptr->py, p_ptr->px, dam_hp, typ, flg);
+	project(m_idx, 0, p_ptr->py, p_ptr->px, dam_hp, typ, flg);
 }
 
 
@@ -837,7 +837,7 @@ static void breath(int m_idx, int typ, int dam_hp, int rad)
 	if (rad < 1) rad = (r_ptr->flags & RF_POWERFUL) ? 3 : 2;
 
 	/* Target the player with a ball attack */
-	(void)project(m_idx, rad, p_ptr->py, p_ptr->px, dam_hp, typ, flg);
+	project(m_idx, rad, p_ptr->py, p_ptr->px, dam_hp, typ, flg);
 }
 
 
@@ -856,7 +856,7 @@ static void monst_breath_monst(int m_idx, int y, int x, int typ, int dam_hp, int
 	/* Determine the radius of the blast */
 	if (rad < 1) rad = (r_ptr->flags & RF_POWERFUL) ? 3 : 2;
 
-	(void)project(m_idx, rad, y, x, dam_hp, typ, flg);
+	project(m_idx, rad, y, x, dam_hp, typ, flg);
 }
 
 
@@ -869,7 +869,7 @@ static void monst_bolt_monst(int m_idx, int y, int x, int typ, int dam_hp)
 {
 	int flg = PROJECT_STOP | PROJECT_KILL;
 
-	(void)project(m_idx, 0, y, x, dam_hp, typ, flg);
+	project(m_idx, 0, y, x, dam_hp, typ, flg);
 }
 
 
@@ -883,7 +883,7 @@ static void monster_msg(cptr fmt, ...)
 	va_start(vp, fmt);
 
 	/* Format the args, save the length */
-	(void)vstrnfmt(buf, 1024, fmt, vp);
+	vstrnfmt(buf, 1024, fmt, vp);
 
 	/* End the Varargs Stuff */
 	va_end(vp);
@@ -916,7 +916,7 @@ void cmonster_msg(char a, cptr fmt, ...)
 	va_start(vp, fmt);
 
 	/* Format the args, save the length */
-	(void)vstrnfmt(buf, 1024, fmt, vp);
+	vstrnfmt(buf, 1024, fmt, vp);
 
 	/* End the Varargs Stuff */
 	va_end(vp);
@@ -2119,7 +2119,7 @@ static bool_ monst_spell_monst(int m_idx)
 				else monster_msg("%^s gestures in shadow.", m_name);
 				if (seen)
 					monster_msg("%^s is surrounded by darkness.", t_name);
-				(void)project(m_idx, 3, y, x, 0, GF_DARK_WEAK, PROJECT_GRID | PROJECT_KILL);
+				project(m_idx, 3, y, x, 0, GF_DARK_WEAK, PROJECT_GRID | PROJECT_KILL);
 				/* Lite up the room */
 				unlite_room(y, x);
 				break;
@@ -3103,12 +3103,12 @@ static bool_ make_attack_spell(int m_idx)
 
 					if (!p_ptr->resist_conf)
 					{
-						(void)set_confused(p_ptr->confused + rand_int(4) + 4);
+						set_confused(p_ptr->confused + rand_int(4) + 4);
 					}
 
 					if ((!p_ptr->resist_chaos) && (randint(3) == 1))
 					{
-						(void) set_image(p_ptr->image + rand_int(250) + 150);
+						set_image(p_ptr->image + rand_int(250) + 150);
 					}
 
 					take_sanity_hit(damroll(8, 8), ddesc);
@@ -3138,26 +3138,26 @@ static bool_ make_attack_spell(int m_idx)
 					take_sanity_hit(damroll(12, 15), ddesc);
 					if (!p_ptr->resist_blind)
 					{
-						(void)set_blind(p_ptr->blind + 8 + rand_int(8));
+						set_blind(p_ptr->blind + 8 + rand_int(8));
 					}
 					if (!p_ptr->resist_conf)
 					{
-						(void)set_confused(p_ptr->confused + rand_int(4) + 4);
+						set_confused(p_ptr->confused + rand_int(4) + 4);
 					}
 					if (!p_ptr->free_act)
 					{
-						(void)set_paralyzed(rand_int(4) + 4);
+						set_paralyzed(rand_int(4) + 4);
 					}
-					(void)set_slow(p_ptr->slow + rand_int(4) + 4);
+					set_slow(p_ptr->slow + rand_int(4) + 4);
 
 					while (rand_int(100) > p_ptr->skill_sav)
-						(void)do_dec_stat(A_INT, STAT_DEC_NORMAL);
+						do_dec_stat(A_INT, STAT_DEC_NORMAL);
 					while (rand_int(100) > p_ptr->skill_sav)
-						(void)do_dec_stat(A_WIS, STAT_DEC_NORMAL);
+						do_dec_stat(A_WIS, STAT_DEC_NORMAL);
 
 					if (!p_ptr->resist_chaos)
 					{
-						(void) set_image(p_ptr->image + rand_int(250) + 150);
+						set_image(p_ptr->image + rand_int(250) + 150);
 					}
 				}
 				break;
@@ -3226,7 +3226,7 @@ static bool_ make_attack_spell(int m_idx)
 				else
 				{
 					take_hit(damroll(15, 15), ddesc);
-					(void)set_cut(p_ptr->cut + damroll(10, 10));
+					set_cut(p_ptr->cut + damroll(10, 10));
 				}
 				break;
 			}
@@ -3358,7 +3358,7 @@ static bool_ make_attack_spell(int m_idx)
 				}
 				else
 				{
-					(void)set_afraid(p_ptr->afraid + rand_int(4) + 4);
+					set_afraid(p_ptr->afraid + rand_int(4) + 4);
 				}
 				update_smart_learn(m_idx, DRS_FEAR);
 				break;
@@ -3379,7 +3379,7 @@ static bool_ make_attack_spell(int m_idx)
 				}
 				else
 				{
-					(void)set_blind(12 + rand_int(4));
+					set_blind(12 + rand_int(4));
 				}
 				update_smart_learn(m_idx, DRS_BLIND);
 				break;
@@ -3400,7 +3400,7 @@ static bool_ make_attack_spell(int m_idx)
 				}
 				else
 				{
-					(void)set_confused(p_ptr->confused + rand_int(4) + 4);
+					set_confused(p_ptr->confused + rand_int(4) + 4);
 				}
 				update_smart_learn(m_idx, DRS_CONF);
 				break;
@@ -3420,7 +3420,7 @@ static bool_ make_attack_spell(int m_idx)
 				}
 				else
 				{
-					(void)set_slow(p_ptr->slow + rand_int(4) + 4);
+					set_slow(p_ptr->slow + rand_int(4) + 4);
 				}
 				update_smart_learn(m_idx, DRS_FREE);
 				break;
@@ -3441,7 +3441,7 @@ static bool_ make_attack_spell(int m_idx)
 				}
 				else
 				{
-					(void)set_paralyzed(rand_int(4) + 4);
+					set_paralyzed(rand_int(4) + 4);
 				}
 				update_smart_learn(m_idx, DRS_FREE);
 				break;
@@ -3617,7 +3617,7 @@ static bool_ make_attack_spell(int m_idx)
 				disturb();
 				if (blind) msg_format("%^s mumbles.", m_name);
 				else msg_format("%^s gestures in shadow.", m_name);
-				(void)unlite_area(0, 3);
+				unlite_area(0, 3);
 				break;
 			}
 
@@ -4443,7 +4443,7 @@ static bool_ get_moves(int m_idx, int *mm)
 				if (options->flow_by_sound)
 				{
 					/* Adjust movement */
-					(void)get_fear_moves_aux(m_idx, &y, &x);
+					get_fear_moves_aux(m_idx, &y, &x);
 				}
 			}
 		}
@@ -5974,7 +5974,7 @@ static void process_monster(int m_idx, bool_ is_frien)
 		if (do_move && (ny == p_ptr->py) && (nx == p_ptr->px))
 		{
 			/* Do the attack */
-			(void)make_attack_normal(m_idx, 1);
+			make_attack_normal(m_idx, 1);
 
 			/* Do not move */
 			do_move = FALSE;
@@ -6370,7 +6370,7 @@ void summon_maint(int m_idx)
  * changes (flags, attacks, spells), we induce a redraw of the monster
  * recall window.
  */
-void process_monsters(void)
+void process_monsters()
 {
 	auto const &r_info = game->edit_data.r_info;
 

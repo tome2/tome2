@@ -116,7 +116,7 @@ static void teleport_player_town(int town)
 /*
  * Hack -- Rerate Hitpoints
  */
-void do_cmd_rerate(void)
+void do_cmd_rerate()
 {
 	auto &player_hp = game->player_hp;
 
@@ -220,14 +220,14 @@ static void do_cmd_summon_horde()
 		if (cave_naked_bold(wy, wx)) break;
 	}
 
-	(void)alloc_horde(wy, wx);
+	alloc_horde(wy, wx);
 }
 
 
 /*
  * Hack -- Teleport to the target
  */
-static void do_cmd_wiz_bamf(void)
+static void do_cmd_wiz_bamf()
 {
 	/* Must have a target */
 	if (!target_who) return;
@@ -240,7 +240,7 @@ static void do_cmd_wiz_bamf(void)
 /*
  * Aux function for "do_cmd_wiz_change()".	-RAK-
  */
-static void do_cmd_wiz_change_aux(void)
+static void do_cmd_wiz_change_aux()
 {
 	int i;
 	int tmp_int;
@@ -343,7 +343,7 @@ static void do_cmd_wiz_change_aux(void)
 /*
  * Change various "permanent" player variables.
  */
-static void do_cmd_wiz_change(void)
+static void do_cmd_wiz_change()
 {
 	/* Interact */
 	do_cmd_wiz_change_aux();
@@ -534,7 +534,7 @@ static void wci_string(cptr string, int num)
  *
  * List up to 50 choices in three columns
  */
-static int wiz_create_itemtype(void)
+static int wiz_create_itemtype()
 {
 	auto const &k_info = game->edit_data.k_info;
 
@@ -1036,7 +1036,7 @@ static void wiz_quantity_item(object_type *o_ptr)
  *   - Change properties (via wiz_tweak_item)
  *   - Change the number of items (via wiz_quantity_item)
  */
-static void do_cmd_wiz_play(void)
+static void do_cmd_wiz_play()
 {
 	/* Get an item */
 	int item;
@@ -1167,7 +1167,7 @@ static void do_cmd_wiz_play(void)
  * Hack -- this routine always makes a "dungeon object", and applies
  * magic to it, and attempts to decline cursed items.
  */
-static void wiz_create_item(void)
+static void wiz_create_item()
 {
 	object_type	forge;
 	object_type *q_ptr;
@@ -1213,7 +1213,7 @@ static void wiz_create_item(void)
 /*
  * As above, but takes the k_idx as a parameter instead of using menus.
  */
-static void wiz_create_item_2(void)
+static void wiz_create_item_2()
 {
 	auto const &k_info = game->edit_data.k_info;
 
@@ -1250,23 +1250,23 @@ static void wiz_create_item_2(void)
 /*
  * Cure everything instantly
  */
-void do_cmd_wiz_cure_all(void)
+void do_cmd_wiz_cure_all()
 {
 	object_type *o_ptr;
 
 	/* Remove curses */
-	(void)remove_all_curse();
+	remove_all_curse();
 
 	/* Restore stats */
-	(void)res_stat(A_STR, TRUE);
-	(void)res_stat(A_INT, TRUE);
-	(void)res_stat(A_WIS, TRUE);
-	(void)res_stat(A_CON, TRUE);
-	(void)res_stat(A_DEX, TRUE);
-	(void)res_stat(A_CHR, TRUE);
+	res_stat(A_STR, TRUE);
+	res_stat(A_INT, TRUE);
+	res_stat(A_WIS, TRUE);
+	res_stat(A_CON, TRUE);
+	res_stat(A_DEX, TRUE);
+	res_stat(A_CHR, TRUE);
 
 	/* Restore the level */
-	(void)restore_level();
+	restore_level();
 
 	/* Heal the player */
 	p_ptr->chp = p_ptr->mhp;
@@ -1289,19 +1289,19 @@ void do_cmd_wiz_cure_all(void)
 	p_ptr->csp_frac = 0;
 
 	/* Cure stuff */
-	(void)set_blind(0);
-	(void)set_confused(0);
-	(void)set_poisoned(0);
-	(void)set_afraid(0);
-	(void)set_paralyzed(0);
-	(void)set_image(0);
-	(void)set_stun(0);
-	(void)set_cut(0);
-	(void)set_slow(0);
+	set_blind(0);
+	set_confused(0);
+	set_poisoned(0);
+	set_afraid(0);
+	set_paralyzed(0);
+	set_image(0);
+	set_stun(0);
+	set_cut(0);
+	set_slow(0);
 	p_ptr->black_breath = FALSE;
 
 	/* No longer hungry */
-	(void)set_food(PY_FOOD_MAX - 1);
+	set_food(PY_FOOD_MAX - 1);
 
 	/* Redraw everything */
 	do_cmd_redraw();
@@ -1311,7 +1311,7 @@ void do_cmd_wiz_cure_all(void)
 /*
  * Go to any level
  */
-static void do_cmd_wiz_jump(void)
+static void do_cmd_wiz_jump()
 {
 	auto const &d_info = game->edit_data.d_info;
 
@@ -1362,7 +1362,7 @@ static void do_cmd_wiz_jump(void)
 /*
  * Become aware of a lot of objects
  */
-static void do_cmd_wiz_learn(void)
+static void do_cmd_wiz_learn()
 {
 	auto const &k_info = game->edit_data.k_info;
 
@@ -1397,7 +1397,7 @@ static void do_cmd_wiz_summon(int num)
 
 	for (i = 0; i < num; i++)
 	{
-		(void)summon_specific(p_ptr->py, p_ptr->px, dun_level, 0);
+		summon_specific(p_ptr->py, p_ptr->px, dun_level, 0);
 	}
 }
 
@@ -1490,7 +1490,7 @@ void do_cmd_wiz_named_friendly(std::size_t r_idx, bool_ slp)
 /*
  * Hack -- Delete all nearby monsters
  */
-static void do_cmd_wiz_zap(void)
+static void do_cmd_wiz_zap()
 {
 	int i;
 
@@ -1630,7 +1630,7 @@ void do_cmd_debug()
 
 		/* Identify */
 	case 'i':
-		(void)ident_spell();
+		ident_spell();
 		break;
 
 		/* Go up or down in the dungeon */

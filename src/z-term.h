@@ -150,7 +150,7 @@ struct term
 
 	errr (*text_hook)(int x, int y, int n, byte a, cptr s);
 
-	void (*resize_hook)(void);
+	void (*resize_hook)();
 
 };
 
@@ -225,7 +225,7 @@ errr Term_xtra(int n, int v);
 void Term_queue_char(int x, int y, byte a, char c);
 void Term_queue_chars(int x, int y, int n, byte a, cptr s);
 
-errr Term_fresh(void);
+errr Term_fresh();
 errr Term_set_cursor(int v);
 errr Term_gotoxy(int x, int y);
 errr Term_draw(int x, int y, byte a, char c);
@@ -234,8 +234,8 @@ errr Term_addstr(int n, byte a, cptr s);
 errr Term_putch(int x, int y, byte a, char c);
 errr Term_putstr(int x, int y, int n, byte a, cptr s);
 errr Term_erase(int x, int y, int n);
-errr Term_clear(void);
-errr Term_redraw(void);
+errr Term_clear();
+errr Term_redraw();
 errr Term_redraw_section(int x1, int y1, int x2, int y2);
 void Term_bell();
 
@@ -244,14 +244,14 @@ errr Term_get_size(int *w, int *h);
 errr Term_locate(int *x, int *y);
 errr Term_what(int x, int y, byte *a, char *c);
 
-errr Term_flush(void);
+errr Term_flush();
 errr Term_keypress(int k);
 errr Term_key_push(int k);
 errr Term_inkey(char *ch, bool_ wait, bool_ take);
 
-errr Term_save(void);
-term_win* Term_save_to(void);
-errr Term_load(void);
+errr Term_save();
+term_win* Term_save_to();
+errr Term_load();
 errr Term_load_from(term_win *save);
 
 errr Term_resize(int w, int h);

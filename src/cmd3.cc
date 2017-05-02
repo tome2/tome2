@@ -49,7 +49,7 @@
 /*
  * Display p_ptr->inventory
  */
-void do_cmd_inven(void)
+void do_cmd_inven()
 {
 	char out_val[160];
 
@@ -104,7 +104,7 @@ void do_cmd_inven(void)
 /*
  * Display equipment
  */
-void do_cmd_equip(void)
+void do_cmd_equip()
 {
 	char out_val[160];
 
@@ -204,7 +204,7 @@ bool_ is_slot_ok(int slot)
 /*
  * Wield or wear a single item from the pack or floor
  */
-void do_cmd_wield(void)
+void do_cmd_wield()
 {
 	auto const &a_info = game->edit_data.a_info;
 
@@ -347,7 +347,7 @@ void do_cmd_wield(void)
 		if (o_ptr->k_idx)
 		{
 			/* Take off existing item */
-			(void)inven_takeoff(slot, 255, FALSE);
+			inven_takeoff(slot, 255, FALSE);
 		}
 	}
 	else
@@ -357,7 +357,7 @@ void do_cmd_wield(void)
 			if (!object_similar(o_ptr, q_ptr))
 			{
 				/* Take off existing item */
-				(void)inven_takeoff(slot, 255, FALSE);
+				inven_takeoff(slot, 255, FALSE);
 			}
 			else
 			{
@@ -449,7 +449,7 @@ void do_cmd_wield(void)
 /*
  * Take off an item
  */
-void do_cmd_takeoff(void)
+void do_cmd_takeoff()
 {
 	/* Get an item */
 	int item;
@@ -479,7 +479,7 @@ void do_cmd_takeoff(void)
 	energy_use = 50;
 
 	/* Take off the item */
-	(void)inven_takeoff(item, 255, FALSE);
+	inven_takeoff(item, 255, FALSE);
 
 	/* Recalculate hitpoint */
 	p_ptr->update |= (PU_HP);
@@ -491,7 +491,7 @@ void do_cmd_takeoff(void)
 /*
  * Drop an item
  */
-void do_cmd_drop(void)
+void do_cmd_drop()
 {
 	/* Get an item */
 	int item;
@@ -557,7 +557,7 @@ void do_cmd_drop(void)
 /*
  * Destroy an item
  */
-void do_cmd_destroy(void)
+void do_cmd_destroy()
 {
 	auto const &k_info = game->edit_data.k_info;
 
@@ -688,7 +688,7 @@ void do_cmd_destroy(void)
 /*
  * Observe an item which has been *identify*-ed
  */
-void do_cmd_observe(void)
+void do_cmd_observe()
 {
 	/* Get an item */
 	int item;
@@ -720,7 +720,7 @@ void do_cmd_observe(void)
  * Remove the inscription from an object
  * XXX Mention item (when done)?
  */
-void do_cmd_uninscribe(void)
+void do_cmd_uninscribe()
 {
 	/* Get an item */
 	int item;
@@ -759,7 +759,7 @@ void do_cmd_uninscribe(void)
 /*
  * Inscribe an object with a comment
  */
-void do_cmd_inscribe(void)
+void do_cmd_inscribe()
 {
 	/* Get an item */
 	int item;
@@ -820,7 +820,7 @@ static object_filter_t const &item_tester_refill_lantern()
 /*
  * Refill the players lamp (from the pack or floor)
  */
-static void do_cmd_refill_lamp(void)
+static void do_cmd_refill_lamp()
 {
 	/* Get an item */
 	int item;
@@ -883,7 +883,7 @@ static object_filter_t const &item_tester_refill_torch()
 /*
  * Refuel the players torch (from the pack or floor)
  */
-static void do_cmd_refill_torch(void)
+static void do_cmd_refill_torch()
 {
 	/* Get an item */
 	int item;
@@ -935,7 +935,7 @@ static void do_cmd_refill_torch(void)
 /*
  * Refill the players lamp, or restock his torches
  */
-void do_cmd_refill(void)
+void do_cmd_refill()
 {
 	/* Get the light */
 	auto o_ptr = &p_ptr->inventory[INVEN_LITE];
@@ -978,7 +978,7 @@ void do_cmd_refill(void)
 /*
  * Target command
  */
-void do_cmd_target(void)
+void do_cmd_target()
 {
 	/* Target set */
 	if (target_set(TARGET_KILL))
@@ -998,7 +998,7 @@ void do_cmd_target(void)
 /*
  * Look command
  */
-void do_cmd_look(void)
+void do_cmd_look()
 {
 	/* Look around */
 	if (target_set(TARGET_LOOK))
@@ -1012,7 +1012,7 @@ void do_cmd_look(void)
 /*
  * Allow the player to examine other sectors on the map
  */
-void do_cmd_locate(void)
+void do_cmd_locate()
 {
 	int dir, y1, x1, y2, x2;
 	int panel_hgt, panel_wid;
@@ -1341,7 +1341,7 @@ static void roff_top(int r_idx)
  *
  * Note that the player ghosts are ignored. XXX XXX XXX
  */
-void do_cmd_query_symbol(void)
+void do_cmd_query_symbol()
 {
 	auto const &r_info = game->edit_data.r_info;
 
@@ -1740,7 +1740,7 @@ static bool_ get_string_cli(cptr prompt, char *buf, int len)
  *
  * See defines.h for a list of the codes used.
  */
-void do_cmd_cli(void)
+void do_cmd_cli()
 {
 	char buff[80];
 

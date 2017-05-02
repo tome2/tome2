@@ -21,14 +21,14 @@
 /*
  * Show the notes file on the screen
  */
-void show_notes_file(void)
+void show_notes_file()
 {
 	char basename[13];
 	char buf[1024];
 	char caption[10 + 13];
 
 	/* Hack -- extract first 8 characters of name and append an extension */
-	(void)strnfmt(basename, sizeof(basename), "%.8s.nte", game->player_base.c_str());
+	strnfmt(basename, sizeof(basename), "%.8s.nte", game->player_base.c_str());
 	basename[sizeof(basename) - 1] = '\0';
 
 	/* Build the path */
@@ -55,7 +55,7 @@ void output_note(const char *final_note)
 	char buf[1024];
 
 	/* Hack -- extract first 8 characters of name and append an extension */
-	(void)strnfmt(basename, sizeof(basename), "%.8s.nte", game->player_base.c_str());
+	strnfmt(basename, sizeof(basename), "%.8s.nte", game->player_base.c_str());
 	basename[sizeof(basename) - 1] = '\0';
 
 	/* Build the path */

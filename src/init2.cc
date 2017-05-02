@@ -528,7 +528,7 @@ static void init_basic()
 /*
  * Initialise misc. values
  */
-static errr init_misc(void)
+static errr init_misc()
 {
 	int xstart = 0;
 	int ystart = 0;
@@ -558,7 +558,7 @@ static errr init_misc(void)
 /*
  * Initialise town array
  */
-static errr init_towns(void)
+static errr init_towns()
 {
 	auto const &st_info = game->edit_data.st_info;
 
@@ -614,7 +614,7 @@ void create_stores_stock(int t)
 /*
  * Initialise some other arrays
  */
-static errr init_other(void)
+static errr init_other()
 {
 	auto const &d_info = game->edit_data.d_info;
 	auto const &r_info = game->edit_data.r_info;
@@ -632,7 +632,7 @@ static errr init_other(void)
 	/*** Prepare "vinfo" array ***/
 
 	/* Used by "update_view()" */
-	(void)vinfo_init();
+	vinfo_init();
 
 
 	/* Allocate and Wipe the object list */
@@ -687,7 +687,7 @@ static errr init_other(void)
 	/*** Pre-allocate space for the "format()" buffer ***/
 
 	/* Hack -- Just call the "format()" function */
-	(void)format("%s (%s).", "Dark God <darkgod@t-o-m-e.net>", MAINTAINER);
+	format("%s (%s).", "Dark God <darkgod@t-o-m-e.net>", MAINTAINER);
 
 	/* Success */
 	return (0);
@@ -698,7 +698,7 @@ static errr init_other(void)
 /*
  * Initialise some other arrays
  */
-static errr init_alloc(void)
+static errr init_alloc()
 {
 	auto const &r_info = game->edit_data.r_info;
 	auto const &k_info = game->edit_data.k_info;
@@ -910,7 +910,7 @@ static void init_sets_aux()
 /*
  * Mark guardians and their artifacts with SPECIAL_GENE flag
  */
-static void init_guardians(void)
+static void init_guardians()
 {
 	auto const &d_info = game->edit_data.d_info;
 	auto &r_info = game->edit_data.r_info;
@@ -1026,7 +1026,7 @@ static void init_angband_aux(cptr why)
  * Note that the "graf-xxx.prf" file must be loaded separately,
  * if needed, in the first (?) pass through "TERM_XTRA_REACT".
  */
-void init_angband(void)
+void init_angband()
 {
 	int fd = -1;
 
@@ -1083,7 +1083,7 @@ void init_angband(void)
 	}
 
 	/* Close it */
-	(void)fd_close(fd);
+	fd_close(fd);
 
 
 	/*** Display the "news" file ***/
@@ -1145,7 +1145,7 @@ void init_angband(void)
 	}
 
 	/* Close it */
-	(void)fd_close(fd);
+	fd_close(fd);
 
 	/*** Initialise some arrays ***/
 

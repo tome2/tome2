@@ -125,7 +125,7 @@ errr path_parse(char *buf, int max, cptr file)
 
 	if (!u) return (1);
 
-	(void)strcpy(buf, u);
+	strcpy(buf, u);
 #else
 	/* Look up password data for user */
 	pw = getpwuid(getuid());
@@ -134,11 +134,11 @@ errr path_parse(char *buf, int max, cptr file)
 	if (!pw) return (1);
 
 	/* Make use of the info */
-	(void)strcpy(buf, pw->pw_dir);
+	strcpy(buf, pw->pw_dir);
 #endif
 
 	/* Append the rest of the filename, if any */
-	if (s) (void)strcat(buf, s);
+	if (s) strcat(buf, s);
 
 	/* Success */
 	return (0);
@@ -344,7 +344,7 @@ errr fd_kill(cptr file)
 	if (path_parse(buf, 1024, file)) return ( -1);
 
 	/* Remove */
-	(void)remove(buf);
+	remove(buf);
 
 	/* XXX XXX XXX */
 	return (0);
@@ -366,7 +366,7 @@ errr fd_move(cptr file, cptr what)
 	if (path_parse(aux, 1024, what)) return ( -1);
 
 	/* Rename */
-	(void)rename(buf, aux);
+	rename(buf, aux);
 
 	/* XXX XXX XXX */
 	return (0);
@@ -514,7 +514,7 @@ errr fd_close(int fd)
 	if (fd < 0) return ( -1);
 
 	/* Close */
-	(void)close(fd);
+	close(fd);
 
 	/* XXX XXX XXX */
 	return (0);
@@ -1213,7 +1213,7 @@ static bool_ parse_under = FALSE;
 * This is not only more efficient, but also necessary to make sure
 * that various "inkey()" codes are not "lost" along the way.
 */
-void flush(void)
+void flush()
 {
 	/* Do it later */
 	flush_later = TRUE;
@@ -1235,7 +1235,7 @@ void flush_on_failure()
 /*
 * Flush the screen, make a noise
 */
-void bell(void)
+void bell()
 {
 	/* Mega-Hack -- Flush the output */
 	Term_fresh();
@@ -1269,7 +1269,7 @@ void bell(void)
 * macro trigger, 500 milliseconds must pass before the key sequence is
 * known not to be that macro trigger.  XXX XXX XXX
 */
-static char inkey_aux(void)
+static char inkey_aux()
 {
 	int k = 0, n, p = 0, w = 0;
 
@@ -1281,7 +1281,7 @@ static char inkey_aux(void)
 
 
 	/* Wait for a keypress */
-	(void)(Term_inkey(&ch, TRUE, TRUE));
+	(Term_inkey(&ch, TRUE, TRUE));
 
 
 	/* End "macro action" */
@@ -1358,7 +1358,7 @@ static char inkey_aux(void)
 		}
 
 		/* Wait for (and remove) a pending key */
-		(void)Term_inkey(&ch, TRUE, TRUE);
+		Term_inkey(&ch, TRUE, TRUE);
 
 		/* Return the key */
 		return (ch);
@@ -1503,13 +1503,13 @@ static char inkey_real(bool_ inkey_scan)
 
 
 	/* Access cursor state */
-	(void)Term_get_cursor(&v);
+	Term_get_cursor(&v);
 
 	/* Show the cursor if waiting, except sometimes in "command" mode */
 	if (!inkey_scan && (!inkey_flag || options->hilite_player || character_icky))
 	{
 		/* Show the cursor */
-		(void)Term_set_cursor(1);
+		Term_set_cursor(1);
 	}
 
 
@@ -1669,7 +1669,7 @@ static char inkey_real(bool_ inkey_scan)
 	return (ch);
 }
 
-char inkey(void) {
+char inkey() {
 	return inkey_real(FALSE);
 }
 
@@ -1904,7 +1904,7 @@ static int screen_depth = 0;
  *
  * This function must match exactly one call to "screen_load()".
  */
-void screen_save(void)
+void screen_save()
 {
 	/* Hack -- Flush messages */
 	msg_print(NULL);
@@ -1922,7 +1922,7 @@ void screen_save(void)
  *
  * This function must match exactly one call to "screen_save()".
  */
-void screen_load(void)
+void screen_load()
 {
 	/* Hack -- Flush messages */
 	msg_print(NULL);
@@ -1948,7 +1948,7 @@ void msg_format(cptr fmt, ...)
 	va_start(vp, fmt);
 
 	/* Format the args, save the length */
-	(void)vstrnfmt(buf, 1024, fmt, vp);
+	vstrnfmt(buf, 1024, fmt, vp);
 
 	/* End the Varargs Stuff */
 	va_end(vp);
@@ -1967,7 +1967,7 @@ void cmsg_format(byte color, cptr fmt, ...)
 	va_start(vp, fmt);
 
 	/* Format the args, save the length */
-	(void)vstrnfmt(buf, 1024, fmt, vp);
+	vstrnfmt(buf, 1024, fmt, vp);
 
 	/* End the Varargs Stuff */
 	va_end(vp);
@@ -2051,10 +2051,10 @@ void text_out_to_screen(byte a, cptr str)
 
 
 	/* Obtain the size */
-	(void)Term_get_size(&wid, &h);
+	Term_get_size(&wid, &h);
 
 	/* Obtain the cursor */
-	(void)Term_locate(&x, &y);
+	Term_locate(&x, &y);
 
 	/* Wrapping boundary */
 	wrap = wid;
@@ -2161,7 +2161,7 @@ void text_out_to_file(byte a, cptr str)
 	cptr s = str;
 
 	/* Unused parameter */
-	(void)a;
+	a;
 
 	/* Process the string */
 	while (*s)
@@ -2909,7 +2909,7 @@ void request_command(int shopping)
 		if (cmd == '\\')
 		{
 			/* Get a real command */
-			(void)get_com("Command: ", &cmd_char);
+			get_com("Command: ", &cmd_char);
 
 			cmd = cmd_char;
 
@@ -3137,7 +3137,7 @@ bool_ repeat_pull(int *what)
 	return (TRUE);
 }
 
-void repeat_check(void)
+void repeat_check()
 {
 	int what;
 
