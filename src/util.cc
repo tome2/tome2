@@ -3580,21 +3580,22 @@ void draw_box(int y, int x, int h, int w)
 /*
  * Displays a scrollable boxed list with a selected item
  */
-void display_list(int y, int x, int h, int w, cptr title, cptr *list, int max, int begin, int sel, byte sel_color)
+void display_list(int y, int x, int h, int w, cptr title, std::vector<std::string> const &list, std::size_t begin, std::size_t sel, byte sel_color)
 {
-	int i;
-
 	draw_box(y, x, h, w);
 	c_put_str(TERM_L_BLUE, title, y, x + ((w - strlen(title)) / 2));
 
-	for (i = 0; i < h - 1; i++)
+	for (int i = 0; i < h - 1; i++)
 	{
 		byte color = TERM_WHITE;
 
-		if (i + begin >= max) break;
+		if (i + begin >= list.size())
+		{
+			break;
+		}
 
 		if (i + begin == sel) color = sel_color;
-		c_put_str(color, list[i + begin], y + 1 + i, x + 1);
+		c_put_str(color, list[i + begin].c_str(), y + 1 + i, x + 1);
 	}
 }
 

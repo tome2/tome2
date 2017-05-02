@@ -277,9 +277,9 @@ void do_cmd_automatizer()
 		int wid, hgt;
 		Term_get_size(&wid, &hgt);
 
-		automatizer->get_rule_names(&rule_names);
+		auto rule_names = automatizer->get_rule_names();
 
-		display_list(0, 0, hgt - 1, 15, "Rules", rule_names.data(), automatizer->rules_count(), automatizer->rules_begin(), automatizer->selected_rule(), (active == ACTIVE_LIST) ? TERM_L_GREEN : TERM_GREEN);
+		display_list(0, 0, hgt - 1, 15, "Rules", rule_names, automatizer->rules_begin(), automatizer->selected_rule(), (active == ACTIVE_LIST) ? TERM_L_GREEN : TERM_GREEN);
 
 		draw_box(0, 15, hgt - 4, wid - 1 - 15);
 		if (active == ACTIVE_RULE)

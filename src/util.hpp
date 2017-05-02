@@ -12,7 +12,7 @@ extern bool input_box(std::string const &text, int y, int x, std::string *buf, s
 extern std::string input_box_auto(std::string const &title, std::size_t max);
 extern bool input_box_auto(std::string const &prompt, std::string *buf, std::size_t max);
 extern void draw_box(int y, int x, int h, int w);
-extern void display_list(int y, int x, int h, int w, cptr title, cptr *list, int max, int begin, int sel, byte sel_color);
+extern void display_list(int y, int x, int h, int w, cptr title, std::vector<std::string> const &list, std::size_t begin, std::size_t sel, byte sel_color);
 extern std::string get_player_race_name(int pr, int ps);
 extern std::string get_day(s32b day);
 extern s32b bst(s32b what, s32b t);

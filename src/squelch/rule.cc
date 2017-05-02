@@ -25,15 +25,14 @@ EnumStringMap<action_type> &action_mapping()
 	return *m;
 }
 
-void Rule::set_name(const char *new_name)
+void Rule::set_name(std::string const &new_name)
 {
-	assert(new_name != nullptr);
 	m_name = new_name;
 }
 
-const char *Rule::get_name() const
+std::string Rule::get_name() const
 {
-	return m_name.c_str();
+	return m_name;
 }
 
 std::shared_ptr<Condition> Rule::get_condition() const

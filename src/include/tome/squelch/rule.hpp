@@ -40,12 +40,12 @@ public:
 	/**
 	 * Set the name of the rule
 	 */
-	void set_name(const char *new_name);
+	void set_name(const std::string &new_name);
 
 	/**
 	 * Get the name of the rule
 	 */
-	const char *get_name() const;
+	std::string get_name() const;
 
 	/**
 	 * Get condition

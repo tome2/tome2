@@ -392,7 +392,7 @@ std::shared_ptr<Condition> new_condition_interactive()
 		match_type::INVENTORY,
 		match_type::EQUIPMENT
 	};
-	static std::vector<const char *> condition_type_names;
+	static std::vector<std::string> condition_type_names;
 
 	// Fill in types names?
 	if (condition_type_names.empty())
@@ -412,7 +412,7 @@ std::shared_ptr<Condition> new_condition_interactive()
 		Term_clear();
 		Term_get_size(&wid, &hgt);
 
-		display_list(0, 0, hgt - 1, 15, "Rule types", condition_type_names.data(), condition_types.size(), begin, sel, TERM_L_GREEN);
+		display_list(0, 0, hgt - 1, 15, "Rule types", condition_type_names, begin, sel, TERM_L_GREEN);
 
 		display_desc(condition_types[sel]);
 

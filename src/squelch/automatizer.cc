@@ -205,13 +205,14 @@ void Automatizer::add_new_condition(std::function<std::shared_ptr<Condition> ()>
 		factory);
 }
 
-void Automatizer::get_rule_names(std::vector<const char *> *names) const
+std::vector<std::string> Automatizer::get_rule_names() const
 {
-	names->resize(m_rules.size());
-	for (size_t i = 0; i < m_rules.size(); i++)
+	std::vector<std::string> names(m_rules.size());
+	for (auto const &rule: m_rules)
 	{
-		(*names)[i] = m_rules.at(i)->get_name();
+		names.push_back(rule->get_name());
 	}
+	return names;
 }
 
 int Automatizer::rules_count() const

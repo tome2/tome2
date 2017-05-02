@@ -114,10 +114,9 @@ public:
 	void add_new_condition(std::function<std::shared_ptr<Condition> ()> factory);
 
 	/**
-	 * Get rule names. The names are not stable across multiple
-	 * calls to methods on this class.
+	 * Get rule names.
 	 */
-	void get_rule_names(std::vector<const char *> *names) const;
+	std::vector<std::string> get_rule_names() const;
 
 	/**
 	 * Get current number of rules.
