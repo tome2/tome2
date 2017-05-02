@@ -1976,29 +1976,25 @@ void cmsg_format(byte color, cptr fmt, ...)
 	cmsg_print(color, buf);
 }
 
-
-
-/*
-* Display a string on the screen using an attribute.
-*
-* At the given location, using the given attribute, if allowed,
-* add the given string.  Do not clear the line.
-*/
 void c_put_str(byte attr, cptr str, int row, int col)
 {
-	/* Position cursor, Dump the attr/text */
 	Term_putstr(col, row, -1, attr, str);
 }
 
-/*
-* As above, but in "white"
-*/
+void c_put_str(byte attr, std::string const &str, int row, int col)
+{
+	Term_putstr(col, row, -1, attr, str.c_str());
+}
+
 void put_str(cptr str, int row, int col)
 {
-	/* Spawn */
 	Term_putstr(col, row, -1, TERM_WHITE, str);
 }
 
+void put_str(std::string const &str, int row, int col)
+{
+	Term_putstr(col, row, -1, TERM_WHITE, str.c_str());
+}
 
 
 /*
