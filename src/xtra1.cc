@@ -3744,9 +3744,6 @@ void calc_bonuses(bool_ silent)
 	/* Affect Skill -- stealth (bonus one) */
 	p_ptr->skill_stl += 1;
 
-	/* Affect Skill -- magic devices (INT) */
-	p_ptr->skill_dev += get_skill_scale(SKILL_DEVICE, 20);
-
 	/* Affect Skill -- saving throw (WIS) */
 	p_ptr->skill_sav += adj_wis_sav[p_ptr->stat_ind[A_WIS]];
 
