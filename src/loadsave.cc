@@ -46,6 +46,25 @@
 static u32b vernum; /* Version flag */
 static FILE *fff; 	/* Local savefile ptr */
 
+/*
+ * Show information on the screen, one line at a time.
+ *
+ * Avoid the top two lines, to avoid interference with "msg_print()".
+ */
+static void note(cptr msg)
+{
+	static int y = 2;
+
+	/* Draw the message */
+	prt(msg, y, 0);
+
+	/* Advance one line (wrap if needed) */
+	if (++y >= 24) y = 2;
+
+	/* Flush it */
+	Term_fresh();
+}
+
 /**
  * Load/save flag
  */
@@ -281,6 +300,28 @@ template<typename T, typename F> void do_vector(ls_flag_t flag, std::vector<T> &
 	}
 }
 
+template<typename A, typename F> void do_array(std::string const &what, ls_flag_t flag, A &array, std::size_t size, F f)
+{
+	// Save/load size.
+	u32b n = size;
+	do_u32b(&n, flag);
+
+	// Check that we don't overflow the array.
+	if (flag == ls_flag_t::LOAD)
+	{
+		if (n > size)
+		{
+			note(fmt::format("Too many {:s}: {:d} > {:d}! Game may act strangely or crash.", what, n, size).c_str());
+		}
+	}
+
+	// Load/save the contents of the array.
+	for (std::size_t i = 0; i < n; i++)
+	{
+		f(&array[i], flag);
+	}
+}
+
 static void do_bytes(ls_flag_t flag, std::uint8_t *buf, std::size_t n)
 {
 	for (std::size_t i = 0; i < n; i++)
@@ -414,26 +455,6 @@ static void do_random_spell(random_spell *s_ptr, ls_flag_t flag)
 }
 
 /*
- * Show information on the screen, one line at a time.
- *
- * Avoid the top two lines, to avoid interference with "msg_print()".
- */
-static void note(cptr msg)
-{
-	static int y = 2;
-
-	/* Draw the message */
-	prt(msg, y, 0);
-
-	/* Advance one line (wrap if needed) */
-	if (++y >= 24) y = 2;
-
-	/* Flush it */
-	Term_fresh();
-}
-
-
-/*
  * Misc. other data
  */
 static bool_ do_extra(ls_flag_t flag)
@@ -513,22 +534,14 @@ static bool_ do_extra(ls_flag_t flag)
 		do_s16b(&p_ptr->melee_style, flag);
 		do_s16b(&p_ptr->use_piercing_shots, flag);
 
-		u16b tmp16u = s_info.size();
-
-		do_u16b(&tmp16u, flag);
-
-		if ((flag == ls_flag_t::LOAD) && (tmp16u != s_info.size()))
-		{
-			quit("Too few/many skills");
-		}
-
-		for (std::size_t i = 0; i < tmp16u; i++)
-		{
-			do_s32b(&s_info[i].value, flag);
-			do_s32b(&s_info[i].mod, flag);
-			do_std_bool(&s_info[i].dev, flag);
-			do_std_bool(&s_info[i].hidden, flag);
-		}
+		do_array("skills", flag, s_info, s_info.size(),
+			[](auto skill, auto flag) -> void {
+				do_s32b(&skill->value, flag);
+				do_s32b(&skill->mod, flag);
+				do_std_bool(&skill->dev, flag);
+				do_std_bool(&skill->hidden, flag);
+			}
+		);
 	}
 
 	// Abilities
@@ -555,46 +568,21 @@ static bool_ do_extra(ls_flag_t flag)
 	do_byte(&p_ptr->spellbinder.trigger, flag);
 	do_vector(flag, p_ptr->spellbinder.spell_idxs, do_u32b);
 
-	// Quests
-	{
-		byte tmp8u;
+	// Quest status
+	do_array("plot quests", flag, plots, MAX_PLOTS,
+		[](auto plot, auto flag) -> void {
+			do_s16b(plot, flag);
+		}
+	);
 
-		// Number of quests
-		if (flag == ls_flag_t::SAVE)
-		{
-			tmp8u = MAX_PLOTS;
+	// Random quests
+	do_array("random quests", flag, random_quests, MAX_RANDOM_QUEST,
+		[](auto q, auto flag) -> void {
+			do_byte(&q->type, flag);
+			do_s16b(&q->r_idx, flag);
+			do_std_bool(&q->done, flag);
 		}
-		do_byte(&tmp8u, flag);
-		if ((flag == ls_flag_t::LOAD) && (tmp8u > MAX_PLOTS))
-		{
-			quit(format("Too many plots, %d %d", tmp8u, MAX_PLOTS));
-		}
-
-		// Quest status
-		for (std::size_t i = 0; i < tmp8u; i++)
-		{
-			do_s16b(&plots[i], flag);
-		}
-
-		// Number of random quests
-		if (flag == ls_flag_t::SAVE)
-		{
-			tmp8u = MAX_RANDOM_QUEST;
-		}
-		do_byte(&tmp8u, flag);
-		if ((flag == ls_flag_t::LOAD) && (tmp8u > MAX_RANDOM_QUEST))
-		{
-			quit("Too many random quests");
-		}
-
-		// Random quest data
-		for (std::size_t i = 0; i < tmp8u; i++)
-		{
-			do_byte(&random_quests[i].type, flag);
-			do_s16b(&random_quests[i].r_idx, flag);
-			do_std_bool(&random_quests[i].done, flag);
-		}
-	}
+	);
 
 	do_s16b(&p_ptr->oldpx, flag);
 	do_s16b(&p_ptr->oldpy, flag);
@@ -733,22 +721,11 @@ static bool_ do_extra(ls_flag_t flag)
 	do_s32b(&p_ptr->inertia_controlled_spell, flag);
 	do_s16b(&p_ptr->last_rewarded_level, flag);
 
-	// Corruptions
-	{
-		u16b tmp16u = CORRUPTIONS_MAX;
-
-		do_u16b(&tmp16u, flag);
-
-		if (tmp16u > CORRUPTIONS_MAX)
-		{
-			quit("Too many corruptions");
+	do_array("corruptions", flag, p_ptr->corruptions, CORRUPTIONS_MAX,
+		[](auto corruption, auto flag) -> void {
+			do_bool(corruption, flag);
 		}
-
-		for (std::size_t i = 0; i < tmp16u; i++)
-		{
-			do_bool(&p_ptr->corruptions[i], flag);
-		}
-	}
+	);
 
 	do_bool(&p_ptr->corrupt_anti_teleport_stopped, flag);
 
@@ -774,21 +751,11 @@ static bool_ do_extra(ls_flag_t flag)
 	do_bool(&p_ptr->astral, flag);
 
 	// Powers
-	{
-		u16b tmp16u = POWER_MAX;
-
-		do_u16b(&tmp16u, flag);
-
-		if ((flag == ls_flag_t::LOAD) && (tmp16u != POWER_MAX))
-		{
-			quit("Too few/many powers!");
+	do_array("powers", flag, p_ptr->powers_mod, POWER_MAX,
+		[](auto pwr, auto flag) -> void {
+			do_bool(pwr, flag);
 		}
-
-		for (std::size_t i = 0; i < POWER_MAX; i++)
-		{
-			do_bool(&p_ptr->powers_mod[i], flag);
-		}
-	}
+	);
 
 	/* The tactic */
 	do_char(&p_ptr->tactic, flag);
@@ -872,13 +839,14 @@ static void do_monster(monster_type *m_ptr, ls_flag_t flag)
 	}
 
 	/* Attacks */
-	for (std::size_t i = 0; i < 4; i++)
-	{
-		do_byte(&m_ptr->blow[i].method, flag);
-		do_byte(&m_ptr->blow[i].effect, flag);
-		do_byte(&m_ptr->blow[i].d_dice, flag);
-		do_byte(&m_ptr->blow[i].d_side, flag);
-	}
+	do_array("attacks", flag, m_ptr->blow, 4,
+		[](auto blow, auto flag) {
+			do_byte(&blow->method, flag);
+			do_byte(&blow->effect, flag);
+			do_byte(&blow->d_dice, flag);
+			do_byte(&blow->d_side, flag);
+		}
+	);
 }
 
 
@@ -1341,24 +1309,14 @@ static bool do_monsters(ls_flag_t flag, bool no_companions)
 
 	/* Save/load pets */
 	{
-		u16b tmp16u = (flag == ls_flag_t::SAVE && !no_companions) ? max_m_idx : 0;
+		const std::size_t sz =
+			(flag == ls_flag_t::SAVE && !no_companions) ? max_m_idx : 0;
 
-		do_u16b(&tmp16u, flag);
-
-		if ((flag == ls_flag_t::LOAD) && (tmp16u > max_m_idx))
-		{
-			note("Too many monster entries!");
-			return false;
-		}
-
-		for (std::size_t i = 1; i < tmp16u; i++)
-		{
-			/* Acquire monster */
-			auto m_ptr = &km_list[i];
-
-			/* Read the monster */
-			do_monster(m_ptr, flag);
-		}
+		do_array("pets", flag, km_list, sz,
+			[](auto m_ptr, auto flag) {
+				do_monster(m_ptr, flag);
+			}
+		);
 	}
 
 	return true;
@@ -1390,26 +1348,17 @@ static bool_ do_dungeon(ls_flag_t flag, bool no_companions)
 	do_s16b(&last_teleportation_y, flag);
 
 	/* Spell effects */
-	{
-		u16b n_effects = MAX_EFFECTS;
-		do_u16b(&n_effects, flag);
-
-		if ((flag == ls_flag_t::LOAD) && (n_effects > MAX_EFFECTS))
-		{
-			quit("Too many spell effects");
+	do_array("spell effects", flag, effects, MAX_EFFECTS,
+		[](auto effect, auto flag) -> void {
+			do_s16b(&effect->type, flag);
+			do_s16b(&effect->dam, flag);
+			do_s16b(&effect->time, flag);
+			do_u32b(&effect->flags, flag);
+			do_s16b(&effect->cx, flag);
+			do_s16b(&effect->cy, flag);
+			do_s16b(&effect->rad, flag);
 		}
-
-		for (std::size_t i = 0; i < n_effects; ++i)
-		{
-			do_s16b(&effects[i].type, flag);
-			do_s16b(&effects[i].dam, flag);
-			do_s16b(&effects[i].time, flag);
-			do_u32b(&effects[i].flags, flag);
-			do_s16b(&effects[i].cx, flag);
-			do_s16b(&effects[i].cy, flag);
-			do_s16b(&effects[i].rad, flag);
-		}
-	}
+	);
 
 	/* To prevent bugs with evolving dungeons */
 	for (std::size_t i = 0; i < 100; i++)
@@ -1478,22 +1427,6 @@ void save_dungeon()
 
 	my_fclose(fff);
 }
-
-/*
- * Handle monster lore
- */
-static void do_lore(std::size_t r_idx, ls_flag_t flag)
-{
-	auto &r_info = game->edit_data.r_info;
-
-	auto r_ptr = &r_info[r_idx];
-
-	do_s16b(&r_ptr->r_pkills, flag);
-	do_s16b(&r_ptr->max_num, flag);
-	do_bool(&r_ptr->on_saved, flag);
-}
-
-
 
 
 /*
@@ -1954,22 +1887,15 @@ static void do_stores(ls_flag_t flag)
  */
 static bool do_monster_lore(ls_flag_t flag)
 {
-	auto const &r_info = game->edit_data.r_info;
+	auto &r_info = game->edit_data.r_info;
 
-	u16b tmp16u = r_info.size();
-
-	do_u16b(&tmp16u, flag);
-
-	if ((flag == ls_flag_t::LOAD) && (tmp16u > r_info.size()))
-	{
-		note("Too many monster races!");
-		return false;
-	}
-
-	for (std::size_t i = 0; i < tmp16u; i++)
-	{
-		do_lore(i, flag);
-	}
+	do_array("monster races", flag, r_info, r_info.size(),
+		[](auto r_ptr, auto flag) -> void {
+			do_s16b(&r_ptr->r_pkills, flag);
+			do_s16b(&r_ptr->max_num, flag);
+			do_bool(&r_ptr->on_saved, flag);
+		}
+	);
 
 	return true;
 }
@@ -1982,23 +1908,13 @@ static bool do_object_lore(ls_flag_t flag)
 {
 	auto &k_info = game->edit_data.k_info;
 
-	u16b n_kinds = k_info.size();
-
-	do_u16b(&n_kinds, flag);
-
-	if ((flag == ls_flag_t::LOAD) && (n_kinds > k_info.size()))
-	{
-		note("Too many object kinds!");
-		return false;
-	}
-
-	for (std::size_t i = 0; i < n_kinds; i++)
-	{
-		object_kind *k_ptr = &k_info[i];
-		do_bool(&k_ptr->aware, flag);
-		do_bool(&k_ptr->tried, flag);
-		do_bool(&k_ptr->artifact, flag);
-	}
+	do_array("object kinds", flag, k_info, k_info.size(),
+		[](auto k_ptr, auto flag) -> void {
+			do_bool(&k_ptr->aware, flag);
+			do_bool(&k_ptr->tried, flag);
+			do_bool(&k_ptr->artifact, flag);
+		}
+	);
 
 	return true;
 }
@@ -2088,32 +2004,21 @@ static bool do_towns(ls_flag_t flag)
 
 static bool do_quests(ls_flag_t flag)
 {
-	u16b max_quests_ldsv = MAX_Q_IDX;
-
-	do_u16b(&max_quests_ldsv, flag);
-
-	if ((flag == ls_flag_t::LOAD) && (max_quests_ldsv != MAX_Q_IDX))
-	{
-		note("Invalid number of quests!");
-		return false;
-	}
-
-	for (std::size_t i = 0; i < MAX_Q_IDX; i++)
-	{
-		auto q = &quest[i];
-
-		do_s16b(&q->status, flag);
-		for (auto &quest_data : q->data)
-		{
-			do_s32b(&quest_data, flag);
+	do_array("quests", flag, quest, MAX_Q_IDX,
+		[](auto q, auto flag) {
+			// Load/save the data
+			do_s16b(&q->status, flag);
+			for (auto &quest_data : q->data)
+			{
+				do_s32b(&quest_data, flag);
+			}
+			// Initialize if necessary
+			if ((flag == ls_flag_t::LOAD) && (q->init != NULL))
+			{
+				q->init();
+			}
 		}
-
-		// Initialize the quest if necessary
-		if ((flag == ls_flag_t::LOAD) && (q->init != NULL))
-		{
-			q->init();
-		}
-	}
+	);
 
 	return true;
 }
@@ -2179,75 +2084,43 @@ static bool do_artifacts(ls_flag_t flag)
 {
 	auto &a_info = game->edit_data.a_info;
 
-	u16b n_artifacts;
-
-	if (flag == ls_flag_t::SAVE)
-	{
-		n_artifacts = a_info.size();
-	}
-
-	do_u16b(&n_artifacts, flag);
-
-	if ((flag == ls_flag_t::LOAD) && (n_artifacts > a_info.size()))
-	{
-		note("Too many artifacts!");
-		return false;
-	}
-
-	for (std::size_t i = 0; i < n_artifacts; i++)
-	{
-		do_byte(&(&a_info[i])->cur_num, flag);
-	}
+	do_array("artifacts", flag, a_info, a_info.size(),
+		[](auto a_ptr, auto flag) {
+			do_byte(&a_ptr->cur_num, flag);
+		}
+	);
 
 	return true;
 }
 
 static bool do_fates(ls_flag_t flag)
 {
-	u16b n_fates = MAX_FATES;
-
-	do_u16b(&n_fates, flag);
-
-	if ((flag == ls_flag_t::LOAD) && (n_fates > MAX_FATES))
-	{
-		note("Too many fates!");
-		return false;
-	}
-
-	for (std::size_t i = 0; i < n_fates; i++)
-	{
-		auto fate = &fates[i];
-		do_byte(&fate->fate, flag);
-		do_byte(&fate->level, flag);
-		do_byte(&fate->serious, flag);
-		do_s16b(&fate->o_idx, flag);
-		do_s16b(&fate->e_idx, flag);
-		do_s16b(&fate->a_idx, flag);
-		do_s16b(&fate->v_idx, flag);
-		do_s16b(&fate->r_idx, flag);
-		do_s16b(&fate->count, flag);
-		do_s16b(&fate->time, flag);
-		do_bool(&fate->know, flag);
-	}
+	do_array("fates", flag, fates, MAX_FATES,
+		[](auto fate, auto flag) {
+			do_byte(&fate->fate, flag);
+			do_byte(&fate->level, flag);
+			do_byte(&fate->serious, flag);
+			do_s16b(&fate->o_idx, flag);
+			do_s16b(&fate->e_idx, flag);
+			do_s16b(&fate->a_idx, flag);
+			do_s16b(&fate->v_idx, flag);
+			do_s16b(&fate->r_idx, flag);
+			do_s16b(&fate->count, flag);
+			do_s16b(&fate->time, flag);
+			do_bool(&fate->know, flag);
+		}
+	);
 
 	return true;
 }
 
 static bool do_floor_inscriptions(ls_flag_t flag)
 {
-	u16b n_inscriptions = MAX_INSCRIPTIONS;
-	do_u16b(&n_inscriptions, flag);
-
-	if ((flag == ls_flag_t::LOAD) && (n_inscriptions > MAX_INSCRIPTIONS))
-	{
-		note("Too many inscriptions!");
-		return false;
-	}
-
-	for (std::size_t i = 0; i < n_inscriptions; i++)
-	{
-		do_std_bool(&p_ptr->inscriptions[i], flag);
-	}
+	do_array("inscriptions", flag, p_ptr->inscriptions, MAX_INSCRIPTIONS,
+		[](auto i_ptr, auto flag) {
+			do_std_bool(i_ptr, flag);
+		}
+	);
 
 	return true;
 }
@@ -2256,20 +2129,11 @@ static bool do_player_hd(ls_flag_t flag)
 {
 	auto &player_hp = game->player_hp;
 
-	u16b max_level = PY_MAX_LEVEL;
-
-	do_u16b(&max_level, flag);
-
-	if ((flag == ls_flag_t::LOAD) && (max_level > PY_MAX_LEVEL))
-	{
-		note("Too many hitpoint entries!");
-		return false;
-	}
-
-	for (std::size_t i = 0; i < max_level; i++)
-	{
-		do_s16b(&player_hp[i], flag);
-	}
+	do_array("hit dice entries", flag, player_hp, PY_MAX_LEVEL,
+		[](auto hp_ptr, auto flag) {
+			do_s16b(hp_ptr, flag);
+		}
+	);
 
 	return true;
 }
