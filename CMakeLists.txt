@@ -1,6 +1,6 @@
 # Project definition.
 PROJECT (tome2)
-CMAKE_MINIMUM_REQUIRED (VERSION 2.8)
+CMAKE_MINIMUM_REQUIRED (VERSION 3.1)
 
 # We want a readable feature summary.
 INCLUDE(FeatureSummary)
@@ -57,7 +57,8 @@ SET(LIBS ${LIBS} m)
 #
 # BOOST
 #
-FIND_PACKAGE(Boost 1.54.0 REQUIRED COMPONENTS system filesystem)
+FIND_PACKAGE(Boost 1.54.0 COMPONENTS system filesystem)
+SET_PACKAGE_PROPERTIES(Boost PROPERTIES TYPE REQUIRED)
 
 IF(Boost_FOUND)
   ADD_DEFINITIONS(-DBOOST_FILESYSTEM_NO_DEPRECATED)
@@ -80,27 +81,12 @@ FIND_PACKAGE(GTK2)
 #
 FIND_PACKAGE(SDL)
 IF(SDL_FOUND)
-  # This is a bit roundabout, but we're working around
-  # the FindSDL_* scripts not respecting the REQUIRED
-  # flag.
-  #
-  # the SDL port also requires SDL_image and SDL_ttf
+  # We assume that if we want to compile for SDL that
+  # any required dependencies should be installed.
   FIND_PACKAGE(SDL_image)
   FIND_PACKAGE(SDL_ttf)
-  IF(SDLIMAGE_FOUND AND SDLTTF_FOUND)
-    # Handled in src/CMakeLists.txt
-  ELSE()
-    # Let user know that (and why) we haven't enabled SDL.
-    IF(SDLIMAGE_FOUND)
-      MESSAGE(STATUS "Found SDL and SDL_image, but not SDL_ttf!")
-    ELSEIF(SDLTTF_FOUND)
-      MESSAGE(STATUS "Found SDL and SDL_ttf, but not SDL_image!")
-    ELSE()
-      MESSAGE(STATUS "Found SDL, but not SDL_image nor SDL_ttf!")
-    ENDIF()
-    # add info about finding but not enabling SDL
-    SET_FEATURE_INFO(SDL "not enabled")
-  ENDIF()
+  SET_PACKAGE_PROPERTIES(SDL_image PROPERTIES TYPE REQUIRED)
+  SET_PACKAGE_PROPERTIES(SDL_ttf PROPERTIES TYPE REQUIRED)
 ENDIF()
 
 #
@@ -128,7 +114,7 @@ ENDIF()
 ADD_DEFINITIONS(-DDEFAULT_PATH="${DEFAULT_PATH}")
 
 # Print out a summary of features.
-PRINT_ENABLED_FEATURES()
+FEATURE_SUMMARY(FATAL_ON_MISSING_REQUIRED_PACKAGES WHAT PACKAGES_FOUND PACKAGES_NOT_FOUND)
 
 # Add the source subdirectory.
 ADD_SUBDIRECTORY (src)
