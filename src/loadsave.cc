@@ -39,6 +39,7 @@
 #include "z-rand.hpp"
 
 #include <cassert>
+#include <fmt/format.h>
 #include <memory>
 
 static u32b vernum; /* Version flag */
@@ -483,7 +484,6 @@ static void note(cptr msg)
 /*
  * Misc. other data
  */
-static char loaded_game_module[80];
 static bool_ do_extra(ls_flag_t flag)
 {
 	auto const &d_info = game->edit_data.d_info;
@@ -863,21 +863,6 @@ static bool_ do_extra(ls_flag_t flag)
 
 	/* Write death */
 	do_bool(&death, flag);
-
-	/* Incompatible module? */
-	if (flag == ls_flag_t::LOAD)
-	{
-		s32b ok;
-
-		ok = module_savefile_loadable(loaded_game_module);
-
-		/* Argh bad game module! */
-		if (!ok)
-		{
-			note(format("Bad game module. Savefile was saved with module '%s' but game is '%s'.", loaded_game_module, game_module));
-			return (FALSE);
-		}
-	}
 
 	/* Level feeling */
 	do_s16b(&feeling, flag);
@@ -2393,11 +2378,27 @@ static bool_ do_savefile_aux(ls_flag_t flag)
 	}
 
 	/* Game module */
-	if (flag == ls_flag_t::SAVE)
 	{
-		strcpy(loaded_game_module, game_module);
+		std::string loaded_game_module;
+
+		if (flag == ls_flag_t::SAVE)
+		{
+			loaded_game_module = game_module;
+		}
+		do_std_string(loaded_game_module, flag);
+
+		// Check for incompatible module
+		if (flag == ls_flag_t::LOAD)
+		{
+			if (!module_savefile_loadable(loaded_game_module))
+			{
+				note(fmt::format("Bad game module. Savefile was saved with module '{:s}' but game is '{:s}'.",
+					loaded_game_module,
+					game_module).c_str());
+				return FALSE;
+			}
+		}
 	}
-	do_string(loaded_game_module, 80, flag);
 
 	/* Timers */
 	do_timers(flag);

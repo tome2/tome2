@@ -232,9 +232,9 @@ static void init_module(module_type *module_ptr)
 	}
 }
 
-bool_ module_savefile_loadable(cptr savefile_mod)
+bool module_savefile_loadable(std::string const &tag)
 {
-	return (strcmp(savefile_mod, modules[game_module_idx].meta.save_file_tag) == 0);
+	return tag == modules[game_module_idx].meta.save_file_tag;
 }
 
 /* Did the player force a module on command line */
