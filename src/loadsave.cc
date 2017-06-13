@@ -44,20 +44,6 @@
 static u32b vernum; /* Version flag */
 static FILE *fff; 	/* Local savefile ptr */
 
-/*
- * Savefile version
- */
-static byte sf_major;
-static byte sf_minor;
-static byte sf_patch;
-
-/*
- * Savefile information
- */
-static u32b sf_when;                   /* Time when savefile created */
-static u16b sf_lives;                  /* Number of past "lives" with this file */
-static u16b sf_saves;                  /* Number of "saves" during this life */
-
 /**
  * Load/save flag
  */
@@ -2401,11 +2387,6 @@ static bool_ do_savefile_aux(ls_flag_t flag)
 			return FALSE;
 		}
 	}
-	if (flag == ls_flag_t::SAVE)
-	{
-		sf_when = time((time_t *) 0); 	/* Note when file was saved */
-		sf_saves++; 				/* Increment the saves ctr */
-	}
 
 	/* Handle version bytes */
 	if (flag == ls_flag_t::LOAD)
@@ -2420,15 +2401,6 @@ static bool_ do_savefile_aux(ls_flag_t flag)
 		saver = SAVEFILE_VERSION;
 		do_u32b(&saver, flag);
 	}
-
-	/* Time of last save */
-	do_u32b(&sf_when, flag);
-
-	/* Number of past lives */
-	do_u16b(&sf_lives, flag);
-
-	/* Number of times saved */
-	do_u16b(&sf_saves, flag);
 
 	/* Game module */
 	if (flag == ls_flag_t::SAVE)
@@ -2668,12 +2640,6 @@ bool_ load_player()
 	/* Process file */
 	if (!err)
 	{
-
-		/* Extract version */
-		sf_major = VERSION_MAJOR;
-		sf_minor = VERSION_MINOR;
-		sf_patch = VERSION_PATCH;
-
 		/* Clear screen */
 		Term_clear();
 
@@ -2714,9 +2680,6 @@ bool_ load_player()
 				return (TRUE);
 			}
 
-			/* Count lives */
-			sf_lives++;
-
 			/* Forget turns */
 			turn = old_turn = 0;
 
@@ -2740,8 +2703,8 @@ bool_ load_player()
 
 
 	/* Message */
-	msg_format("Error (%s) reading %d.%d.%d savefile.",
-	           what, sf_major, sf_minor, sf_patch);
+	msg_format("Error (%s) reading savefile (version " FMTu32b ").",
+		   what, vernum);
 	msg_print(NULL);
 
 	/* Oops */
