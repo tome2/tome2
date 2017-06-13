@@ -1024,15 +1024,6 @@ s16b get_mon_num(int level)
 			continue;
 		}
 
-		if(in_tome)
-		{
-			/* Zangbandish monsters not allowed */
-			if (r_ptr->flags & RF_ZANGBAND) continue;
-
-			/* Lovecraftian monsters not allowed */
-			if (r_ptr->flags & RF_CTHANGBAND) continue;
-		}
-
 		/* Joke monsters allowed ? or not ? */
 		if (!options->joke_monsters && (r_ptr->flags & RF_JOKEANGBAND)) continue;
 
