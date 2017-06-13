@@ -57,6 +57,7 @@
 #include "z-rand.hpp"
 
 #include <algorithm>
+#include <boost/filesystem.hpp>
 #include <fmt/format.h>
 #include <numeric>
 #include <string>
@@ -3132,6 +3133,10 @@ savefile_try_again:
 			continue;
 		}
 
+		//
+		// React
+		//
+
 		if (k == 'a')
 		{
 			/* Display prompt */
@@ -3143,7 +3148,34 @@ savefile_try_again:
 			/* Process the player name */
 			process_player_name(TRUE);
 
-			return (TRUE);
+			// If the savefile already exists, we do *NOT* want to
+			// create a new game, so we'll need to return FALSE for
+			// that.
+			if (boost::filesystem::exists(savefile))
+			{
+				// Show a message so user doesn't get confused.
+				msg_print(NULL);
+
+				// Prompt for it
+				prt(fmt::format(
+					"Character '{}' already exists! Press any key to load.",
+					game->player_base),
+					0, 0);
+
+				// Wait
+				inkey();
+
+				// Erase the prompt
+				prt("", 0, 0);
+
+				// Load character
+				return FALSE;
+			}
+			else
+			{
+				// Start new game
+				return TRUE;
+			}
 		}
 		if (k == 'b')
 		{
