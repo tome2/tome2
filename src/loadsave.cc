@@ -66,20 +66,8 @@ struct option_value {
 
 
 /*
- * Basic byte-level reading from savefile. This provides a single point
- * of interface to the pseudoencryption that ToME (and Angband)
- * uses. I'm thinking about if it might be faster/better to modify all
- * the do_* functions to directly do this stuff -- it'd make the code
- * somewhat uglier to maintain, but concievably might be much faster. Or
- * is it better maybe to scrap the pseudoencryption entirely and adopt
- * some other means of obfuscation, should it still prove useful in any
- * way? -- Improv
- *
- * What's the point of encryption on savefiles anyway? If I wanted to
- * make a cheater savefile, I'd activate debug mode, and hack the game
- * not to save it. There's no point. -- takkaria
+ * Basic byte-level reading from savefile.
  */
-
 static byte sf_get()
 {
 	byte c;
