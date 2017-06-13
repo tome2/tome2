@@ -196,55 +196,6 @@ static void do_s32b(s32b *ip, ls_flag_t flag)
 	do_u32b((u32b *)ip, flag);
 }
 
-static void save_string(const char *str)
-{
-	while (*str)
-	{
-		do_byte((byte*)str, ls_flag_t::SAVE);
-		str++;
-	}
-	do_byte((byte*)str, ls_flag_t::SAVE);
-}
-
-static void load_string(char *str, int max)
-{
-	int i;
-
-	/* Read the string */
-	for (i = 0; TRUE; i++)
-	{
-		byte tmp8u;
-
-		/* Read a byte */
-		do_byte(&tmp8u, ls_flag_t::LOAD);
-
-		/* Collect string while legal */
-		if (i < max) str[i] = tmp8u;
-
-		/* End of string */
-		if (!tmp8u) break;
-	}
-	/* Terminate */
-	str[max - 1] = '\0';
-}
-
-static void do_string(char *str, int max, ls_flag_t flag)
-/* Max is ignored for writing */
-{
-	switch(flag) {
-	case ls_flag_t::LOAD:
-	{
-		load_string(str, max);
-		return;
-	}
-	case ls_flag_t::SAVE:
-	{
-		save_string(str);
-		return;
-	}
-	}
-}
-
 static void save_std_string(std::string const *s)
 {
 	// Length prefix.
