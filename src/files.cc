@@ -2691,9 +2691,9 @@ errr file_character(cptr name, bool_ full)
 	for (y = 1; y < static_cast<int>(d_info.size()); y++)
 	{
 		if (max_dlv[y])
-			fprintf(fff, "\n        %s: Level %d (%d')",
+			fprintf(fff, "\n        %s: Level %d",
 				d_info[y].name.c_str(),
-			        max_dlv[y], 50 * (max_dlv[y]));
+				max_dlv[y]);
 	}
 	fprintf(fff, "\n");
 

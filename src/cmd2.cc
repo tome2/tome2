@@ -3902,8 +3902,8 @@ void do_cmd_immovable_special()
 		/* Give some choices */
 		prt("(a) Teleport to a specific place.", 4, 5);
 		prt("(b) Fetch an item.", 5, 5);
-		prt("(c) Go up 50'", 6, 5);
-		prt("(d) Go down 50'", 7, 5);
+		prt("(c) Go up one level", 6, 5);
+		prt("(d) Go down one level", 7, 5);
 
 		/* Prompt */
 		prt("Command: ", 9, 0);

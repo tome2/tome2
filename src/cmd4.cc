@@ -3630,10 +3630,10 @@ static void do_cmd_knowledge_dungeons()
 		if (max_dlv[y])
 		{
 			/* Describe the recall depth */
-			w.write("       {}{}: Level {} ({}')\n",
+			w.write("       {}{}: Level {}\n",
 				(p_ptr->recall_dungeon == y) ? '*' : ' ',
 				d_info[y].name,
-				max_dlv[y], 50 * (max_dlv[y]));
+				max_dlv[y]);
 		}
 	}
 
@@ -3668,10 +3668,9 @@ void do_cmd_knowledge_towns()
 			if (!(town_info[town_idx].flags & (TOWN_KNOWN))) continue;
 
 			/* Describe the dungeon town */
-			w.write("        {}: Level {} ({}')\n",
+			w.write("        {}: Level {}\n",
 				d_ptr->name,
-				d_ptr->t_level[j],
-				50 * d_ptr->t_level[j]);
+				d_ptr->t_level[j]);
 		}
 	}
 
