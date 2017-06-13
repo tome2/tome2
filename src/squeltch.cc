@@ -197,7 +197,7 @@ static void automatizer_save_rules()
 	// Build the filename
 	path_build(buf, 1024, ANGBAND_DIR_USER, name.c_str());
 		
-	if (file_exist(buf))
+	if (boost::filesystem::exists(buf))
 	{
 		show_message("File exists, continue? [y/n]");
 		ch = inkey();

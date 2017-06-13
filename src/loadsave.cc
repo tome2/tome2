@@ -38,6 +38,7 @@
 #include "xtra2.hpp"
 #include "z-rand.hpp"
 
+#include <boost/filesystem.hpp>
 #include <cassert>
 #include <fmt/format.h>
 #include <memory>
@@ -1478,27 +1479,6 @@ void save_dungeon()
 	my_fclose(fff);
 }
 
-bool_ file_exist(cptr buf)
-{
-	int fd;
-	bool_ result;
-
-	/* Open savefile */
-	fd = fd_open(buf, O_RDONLY);
-
-	/* File exists */
-	if (fd >= 0)
-	{
-		fd_close(fd);
-		result = TRUE;
-	}
-	else
-		result = FALSE;
-
-	return result;
-}
-
-
 /*
  * Handle monster lore
  */
@@ -2540,7 +2520,7 @@ bool_ load_player()
 	/* XXX XXX XXX Fix this */
 
 	/* Verify the existance of the savefile */
-	if (!file_exist(savefile))
+	if (!boost::filesystem::exists(savefile))
 	{
 		/* Give a message */
 		msg_format("Savefile does not exist: %s", savefile);
