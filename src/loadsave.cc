@@ -1592,13 +1592,19 @@ static void do_options(ls_flag_t flag)
 		/*** Window Options ***/
 
 		/* Read the window flags */
-		for (n = 0; n < 8; n++) do_u32b(&oflag[n], flag);
+		for (n = 0; n < ANGBAND_TERM_MAX; n++)
+		{
+			do_u32b(&oflag[n], flag);
+		}
 
 		/* Read the window masks */
-		for (n = 0; n < 8; n++) do_u32b(&mask[n], flag);
+		for (n = 0; n < ANGBAND_TERM_MAX; n++)
+		{
+			do_u32b(&mask[n], flag);
+		}
 
 		/* Analyze the options */
-		for (n = 0; n < 8; n++)
+		for (n = 0; n < ANGBAND_TERM_MAX; n++)
 		{
 			/* Analyze the options */
 			for (i = 0; i < 32; i++)
@@ -1633,10 +1639,16 @@ static void do_options(ls_flag_t flag)
 		/*** Window options ***/
 
 		/* Dump the flags */
-		for (i = 0; i < 8; i++) do_u32b(&window_flag[i], flag);
+		for (i = 0; i < ANGBAND_TERM_MAX; i++)
+		{
+			do_u32b(&window_flag[i], flag);
+		}
 
 		/* Dump the masks */
-		for (i = 0; i < 8; i++) do_u32b(&window_mask[i], flag);
+		for (i = 0; i < ANGBAND_TERM_MAX; i++)
+		{
+			do_u32b(&window_mask[i], flag);
+		}
 	}
 }
 

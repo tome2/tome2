@@ -258,8 +258,8 @@ char *macro__buf;
 /*
  * The array of window options
  */
-u32b window_flag[8];
-u32b window_mask[8];
+u32b window_flag[ANGBAND_TERM_MAX];
+u32b window_mask[ANGBAND_TERM_MAX];
 
 
 /*

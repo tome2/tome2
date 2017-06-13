@@ -834,7 +834,7 @@ static void do_cmd_options_win()
 
 
 	/* Memorize old flags */
-	for (j = 0; j < 8; j++)
+	for (j = 0; j < ANGBAND_TERM_MAX; j++)
 	{
 		/* Acquire current flags */
 		old_flag[j] = window_flag[j];
@@ -851,7 +851,7 @@ static void do_cmd_options_win()
 		prt("Window Flags (<dir>, t, y, n, ESC) ", 0, 0);
 
 		/* Display the windows */
-		for (j = 0; j < 8; j++)
+		for (j = 0; j < ANGBAND_TERM_MAX; j++)
 		{
 			byte a = TERM_WHITE;
 
@@ -881,7 +881,7 @@ static void do_cmd_options_win()
 			Term_putstr(0, i + 5, -1, a, str);
 
 			/* Display the windows */
-			for (j = 0; j < 8; j++)
+			for (j = 0; j < ANGBAND_TERM_MAX; j++)
 			{
 				byte a = TERM_WHITE;
 
@@ -918,7 +918,7 @@ static void do_cmd_options_win()
 		case 't':
 			{
 				/* Clear windows */
-				for (j = 0; j < 8; j++)
+				for (j = 0; j < ANGBAND_TERM_MAX; j++)
 				{
 					window_flag[j] &= ~(1L << y);
 				}
@@ -968,7 +968,7 @@ static void do_cmd_options_win()
 	}
 
 	/* Notice changes */
-	for (j = 0; j < 8; j++)
+	for (j = 0; j < ANGBAND_TERM_MAX; j++)
 	{
 		term *old = Term;
 

@@ -4367,7 +4367,7 @@ void toggle_inven_equip()
 	int j;
 
 	/* Scan windows */
-	for (j = 0; j < 8; j++)
+	for (j = 0; j < ANGBAND_TERM_MAX; j++)
 	{
 		/* Unused */
 		if (!angband_term[j]) continue;
@@ -4855,7 +4855,7 @@ static bool_ get_item_floor(int *cp, cptr pmt, cptr str, int mode, object_filter
 			int ne = 0;
 
 			/* Scan windows */
-			for (j = 0; j < 8; j++)
+			for (j = 0; j < ANGBAND_TERM_MAX; j++)
 			{
 				/* Unused */
 				if (!angband_term[j]) continue;
