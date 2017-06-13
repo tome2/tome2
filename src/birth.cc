@@ -2825,11 +2825,11 @@ void player_birth()
 
 
 
-char savefile_module[46][80];
-char savefile_names[46][30];
-char savefile_desc[46][80];
-bool_ savefile_alive[46];
-int savefile_idx[46];
+static char savefile_module[46][80];
+static char savefile_names[46][30];
+static char savefile_desc[46][80];
+static bool_ savefile_alive[46];
+static int savefile_idx[46];
 
 /*
  * Grab all the names from an index
