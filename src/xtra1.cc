@@ -1079,15 +1079,16 @@ static void prt_frame()
 }
 
 
-/*
- * Hack -- display inventory in sub-windows
+/**
+ * Fix up each terminal based on whether a window flag
+ * is set.
  */
-static void fix_inven()
-{
-	int j;
+namespace { // anonymous
 
-	/* Scan windows */
-	for (j = 0; j < ANGBAND_TERM_MAX; j++)
+template <typename F>
+static void fixup_display(u32b mask, F callback)
+{
+	for (int j = 0; j < ANGBAND_TERM_MAX; j++)
 	{
 		term *old = Term;
 
@@ -1095,13 +1096,13 @@ static void fix_inven()
 		if (!angband_term[j]) continue;
 
 		/* No relevant flags */
-		if (!(window_flag[j] & (PW_INVEN))) continue;
+		if (!(window_flag[j] & mask)) continue;
 
 		/* Activate */
 		Term_activate(angband_term[j]);
 
-		/* Display inventory */
-		display_inven();
+		/* Apply fixup callback */
+		callback();
 
 		/* Fresh */
 		Term_fresh();
@@ -1111,38 +1112,23 @@ static void fix_inven()
 	}
 }
 
+} // namespace anonymous
 
+
+/*
+ * Hack -- display inventory in sub-windows
+ */
+static void fix_inven()
+{
+	fixup_display(PW_INVEN, display_inven);
+}
 
 /*
  * Hack -- display equipment in sub-windows
  */
 static void fix_equip()
 {
-	int j;
-
-	/* Scan windows */
-	for (j = 0; j < ANGBAND_TERM_MAX; j++)
-	{
-		term *old = Term;
-
-		/* No window */
-		if (!angband_term[j]) continue;
-
-		/* No relevant flags */
-		if (!(window_flag[j] & (PW_EQUIP))) continue;
-
-		/* Activate */
-		Term_activate(angband_term[j]);
-
-		/* Display equipment */
-		display_equip();
-
-		/* Fresh */
-		Term_fresh();
-
-		/* Restore */
-		Term_activate(old);
-	}
+	fixup_display(PW_EQUIP, display_equip);
 }
 
 /*
@@ -1150,31 +1136,9 @@ static void fix_equip()
  */
 static void fix_player()
 {
-	int j;
-
-	/* Scan windows */
-	for (j = 0; j < ANGBAND_TERM_MAX; j++)
-	{
-		term *old = Term;
-
-		/* No window */
-		if (!angband_term[j]) continue;
-
-		/* No relevant flags */
-		if (!(window_flag[j] & (PW_PLAYER))) continue;
-
-		/* Activate */
-		Term_activate(angband_term[j]);
-
-		/* Display player */
+	fixup_display(PW_PLAYER, [] {
 		display_player(0);
-
-		/* Fresh */
-		Term_fresh();
-
-		/* Restore */
-		Term_activate(old);
-	}
+	});
 }
 
 
@@ -1188,29 +1152,13 @@ void fix_message()
 {
 	auto const &messages = game->messages;
 
-	int j, i;
-	int w, h;
-	int x, y;
-
-	/* Scan windows */
-	for (j = 0; j < ANGBAND_TERM_MAX; j++)
-	{
-		term *old = Term;
-
-		/* No window */
-		if (!angband_term[j]) continue;
-
-		/* No relevant flags */
-		if (!(window_flag[j] & (PW_MESSAGE))) continue;
-
-		/* Activate */
-		Term_activate(angband_term[j]);
-
+	fixup_display(PW_MESSAGE, [&messages] {
 		/* Get size */
+		int w, h;
 		Term_get_size(&w, &h);
 
 		/* Dump messages */
-		for (i = 0; i < h; i++)
+		for (int i = 0; i < h; i++)
 		{
 			auto message = messages.at(i);
 			auto text_with_count = message.text_with_count();
@@ -1219,18 +1167,13 @@ void fix_message()
 			display_message(0, (h - 1) - i, text_with_count.size(), message.color, text_with_count.c_str());
 
 			/* Cursor */
+			int x, y;
 			Term_locate(&x, &y);
 
 			/* Clear to end of line */
 			Term_erase(x, y, 255);
 		}
-
-		/* Fresh */
-		Term_fresh();
-
-		/* Restore */
-		Term_activate(old);
-	}
+	});
 }
 
 
@@ -1241,33 +1184,10 @@ void fix_message()
  */
 static void fix_overhead()
 {
-	int j;
-
-	int cy, cx;
-
-	/* Scan windows */
-	for (j = 0; j < ANGBAND_TERM_MAX; j++)
-	{
-		term *old = Term;
-
-		/* No window */
-		if (!angband_term[j]) continue;
-
-		/* No relevant flags */
-		if (!(window_flag[j] & (PW_OVERHEAD))) continue;
-
-		/* Activate */
-		Term_activate(angband_term[j]);
-
-		/* Redraw map */
+	fixup_display(PW_OVERHEAD, [] {
+		int cy, cx;
 		display_map(&cy, &cx);
-
-		/* Fresh */
-		Term_fresh();
-
-		/* Restore */
-		Term_activate(old);
-	}
+	});
 }
 
 
@@ -1276,34 +1196,13 @@ static void fix_overhead()
  */
 static void fix_monster()
 {
-	int j;
-
-	/* Scan windows */
-	for (j = 0; j < ANGBAND_TERM_MAX; j++)
-	{
-		term *old = Term;
-
-		/* No window */
-		if (!angband_term[j]) continue;
-
-		/* No relevant flags */
-		if (!(window_flag[j] & (PW_MONSTER))) continue;
-
-		/* Activate */
-		Term_activate(angband_term[j]);
-
+	fixup_display(PW_MONSTER, [] {
 		/* Display monster race info */
 		if (monster_race_idx)
 		{
 			display_roff(monster_race_idx, monster_ego_idx);
 		}
-
-		/* Fresh */
-		Term_fresh();
-
-		/* Restore */
-		Term_activate(old);
-	}
+	});
 }
 
 
@@ -1312,35 +1211,17 @@ static void fix_monster()
  */
 static void fix_object()
 {
-	int j;
-
-	/* Scan windows */
-	for (j = 0; j < ANGBAND_TERM_MAX; j++)
-	{
-		term *old = Term;
-
-		/* No window */
-		if (!angband_term[j]) continue;
-
-		/* No relevant flags */
-		if (!(window_flag[j] & (PW_OBJECT))) continue;
-
-		/* Activate */
-		Term_activate(angband_term[j]);
-
+	fixup_display(PW_OBJECT, [] {
 		/* Clear */
 		Term_clear();
 
 		/* Display object info */
-		if (tracked_object)
-			if (!object_out_desc(tracked_object, NULL, FALSE, FALSE)) text_out("You see nothing special.");
-
-		/* Fresh */
-		Term_fresh();
-
-		/* Restore */
-		Term_activate(old);
-	}
+		if (tracked_object &&
+			!object_out_desc(tracked_object, NULL, FALSE, FALSE))
+		{
+			text_out("You see nothing special.");
+		}
+	});
 }
 
 /* Show the monster list in a window */
@@ -1354,22 +1235,7 @@ static void fix_m_list()
 	static auto r_total_visible =
 		std::vector<u16b>(r_info.size(), 0);
 
-	/* Scan windows */
-	for (std::size_t j = 0; j < ANGBAND_TERM_MAX; j++)
-	{
-		term *old = Term;
-
-		int c = 0;
-
-		/* No window */
-		if (!angband_term[j]) continue;
-
-		/* No relevant flags */
-		if (!(window_flag[j] & (PW_M_LIST))) continue;
-
-		/* Activate */
-		Term_activate(angband_term[j]);
-
+	fixup_display(PW_M_LIST, [&r_info] {
 		/* Clear */
 		Term_clear();
 
@@ -1377,13 +1243,6 @@ static void fix_m_list()
 		if (p_ptr->image)
 		{
 			c_prt(TERM_WHITE, "You can not see clearly", 0, 0);
-
-			/* Fresh */
-			Term_fresh();
-
-			/* Restore */
-			Term_activate(old);
-
 			return;
 		}
 
@@ -1394,6 +1253,7 @@ static void fix_m_list()
 		}
 
 		/* Count up the number visible in each race */
+		int c = 0;
 		for (std::size_t i = 1; i < static_cast<u16b>(m_max); i++)
 		{
 			auto const m_ptr = &m_list[i];
@@ -1490,13 +1350,7 @@ static void fix_m_list()
 		{
 			c_prt(TERM_WHITE, "You see no monsters.", 0, 0);
 		}
-
-		/* Fresh */
-		Term_fresh();
-
-		/* Restore */
-		Term_activate(old);
-	}
+	});
 }
 
 
