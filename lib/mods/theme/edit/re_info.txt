@@ -199,7 +199,6 @@ B:*:*:+0d+1
 B:*:*:+0d+1
 B:*:*:+0d+1
 B:*:*:+0d+1
-F:BASEANGBAND
 F:R_CHAR_k
 F:R_CHAR_o
 F:R_CHAR_y
@@ -216,7 +215,6 @@ B:*:*:+1d+2
 B:*:*:+1d+2
 B:*:*:+1d+2
 B:*:*:+1d+2
-F:BASEANGBAND
 F:R_CHAR_O
 F:R_CHAR_P
 F:R_CHAR_T
@@ -229,7 +227,6 @@ N:7:Shaman
 G:*:r
 I:+0:%90d%100:+10:%90:+0
 W:+2:1:%90:%120:A
-F:BASEANGBAND
 F:R_CHAR_k
 F:R_CHAR_n
 F:R_CHAR_o
@@ -247,7 +244,6 @@ N:8:Priest
 G:*:G
 I:+0:%90d%100:+10:%90:+0
 W:+3:2:%90:%120:A
-F:BASEANGBAND
 F:R_CHAR_O
 F:R_CHAR_P
 F:R_CHAR_T
@@ -271,7 +267,6 @@ B:*:*:+0d+0
 B:*:*:+0d+0
 B:HIT:HURT:=2d=8
 B:HIT:HURT:=2d=8
-F:BASEANGBAND
 F:R_CHAR_O
 M:DROP_1D2
 M:FORCE_MAXHP
@@ -289,7 +284,6 @@ N:10:Archer
 G:*:W
 I:+0:+0d+0:+0:+0:+0
 W:+1:1:%100:%110:A
-F:BASEANGBAND
 F:R_CHAR_O
 F:R_CHAR_k
 F:R_CHAR_o
