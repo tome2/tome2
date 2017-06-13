@@ -1754,7 +1754,6 @@
 #define PW_OVERHEAD     0x00000080L     /* Display overhead view */
 #define PW_MONSTER      0x00000100L     /* Display monster recall */
 #define PW_OBJECT       0x00000200L     /* Display object recall */
-#define PW_SNAPSHOT     0x00000800L     /* Display snap-shot */
 
 
 /* jk */
