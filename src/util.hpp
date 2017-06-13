@@ -35,6 +35,7 @@ void ascii_to_text(char *buf, cptr str);
 char inkey_scan();
 void display_message(int x, int y, int split, byte color, cptr t);
 void cmsg_print(byte color, cptr msg);
+void cmsg_print(byte color, std::string const &msg);
 void msg_print(cptr msg);
 void cmsg_format(byte color, cptr fmt, ...);
 void msg_format(cptr fmt, ...);

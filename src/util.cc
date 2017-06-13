@@ -1886,6 +1886,11 @@ void cmsg_print(byte color, cptr msg)
 	if (options->fresh_message) Term_fresh();
 }
 
+void cmsg_print(byte color, std::string const &msg)
+{
+	cmsg_print(color, msg.c_str());
+}
+
 /* Hack -- for compatibility and easy sake */
 void msg_print(cptr msg)
 {
