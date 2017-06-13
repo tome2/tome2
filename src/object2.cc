@@ -512,26 +512,23 @@ s16b o_pop()
  */
 errr get_obj_num_prep()
 {
-	int i;
-
-	/* Get the entry */
-	alloc_entry *table = alloc_kind_table;
+	auto &alloc = game->alloc;
 
 	/* Scan the allocation table */
-	for (i = 0; i < alloc_kind_size; i++)
+	for (auto &&entry: alloc.kind_table)
 	{
 		/* Accept objects which pass the restriction, if any */
-		if (!get_obj_num_hook || (*get_obj_num_hook)(table[i].index))
+		if (!get_obj_num_hook || (*get_obj_num_hook)(entry.index))
 		{
 			/* Accept this object */
-			table[i].prob2 = table[i].prob1;
+			entry.prob2 = entry.prob1;
 		}
 
 		/* Do not use this object */
 		else
 		{
 			/* Decline this object */
-			table[i].prob2 = 0;
+			entry.prob2 = 0;
 		}
 	}
 
@@ -559,11 +556,12 @@ errr get_obj_num_prep()
 s16b get_obj_num(int level)
 {
 	auto const &k_info = game->edit_data.k_info;
+	auto &alloc = game->alloc;
 
-	int i, j, p;
+	std::size_t i, j;
+	int p;
 	int k_idx;
 	long value, total;
-	alloc_entry *table = alloc_kind_table;
 
 
 	/* Boost level */
@@ -582,16 +580,18 @@ s16b get_obj_num(int level)
 	total = 0L;
 
 	/* Process probabilities */
-	for (i = 0; i < alloc_kind_size; i++)
+	for (i = 0; i < alloc.kind_table.size(); i++)
 	{
+		auto &entry = alloc.kind_table[i];
+
 		/* Objects are sorted by depth */
-		if (table[i].level > level) break;
+		if (entry.level > level) break;
 
 		/* Default */
-		table[i].prob3 = 0;
+		entry.prob3 = 0;
 
 		/* Access the index */
-		k_idx = table[i].index;
+		k_idx = entry.index;
 
 		/* Access the actual kind */
 		auto k_ptr = &k_info[k_idx];
@@ -600,32 +600,35 @@ s16b get_obj_num(int level)
 		if (opening_chest && (k_ptr->tval == TV_CHEST)) continue;
 
 		/* Accept */
-		table[i].prob3 = table[i].prob2;
+		entry.prob3 = entry.prob2;
 
 		/* Total */
-		total += table[i].prob3;
+		total += entry.prob3;
 	}
 
 	/* No legal objects */
 	if (total <= 0) return (0);
 
-
 	/* Pick an object */
 	value = rand_int(total);
 
 	/* Find the object */
-	for (i = 0; i < alloc_kind_size; i++)
+	for (i = 0; i < alloc.kind_table.size(); i++)
 	{
+		auto &entry = alloc.kind_table[i];
+
 		/* Found the entry */
-		if (value < table[i].prob3) break;
+		if (value < entry.prob3) break;
 
 		/* Decrement */
-		value = value - table[i].prob3;
+		value = value - entry.prob3;
 	}
-
 
 	/* Power boost */
 	p = rand_int(100);
+
+	/* Shorthand */
+	auto &table = alloc.kind_table;
 
 	/* Try for a "better" object once (50%) or twice (10%) */
 	if (p < 60)
@@ -637,8 +640,9 @@ s16b get_obj_num(int level)
 		value = rand_int(total);
 
 		/* Find the monster */
-		for (i = 0; i < alloc_kind_size; i++)
+		for (i = 0; i < table.size(); i++)
 		{
+
 			/* Found the entry */
 			if (value < table[i].prob3) break;
 
@@ -660,7 +664,7 @@ s16b get_obj_num(int level)
 		value = rand_int(total);
 
 		/* Find the object */
-		for (i = 0; i < alloc_kind_size; i++)
+		for (i = 0; i < table.size(); i++)
 		{
 			/* Found the entry */
 			if (value < table[i].prob3) break;
@@ -4631,6 +4635,7 @@ bool_ kind_is_artifactable(int k_idx)
 bool_ make_object(object_type *j_ptr, bool_ good, bool_ great, obj_theme const &theme)
 {
 	auto const &k_info = game->edit_data.k_info;
+	auto &alloc = game->alloc;
 
 	int invprob, base;
 
@@ -4649,7 +4654,7 @@ bool_ make_object(object_type *j_ptr, bool_ good, bool_ great, obj_theme const &
 		if (init_match_theme(theme))
 		{
 			/* Invalidate the cached allocation table */
-			alloc_kind_table_valid = FALSE;
+			alloc.kind_table_valid = false;
 		}
 
 		/* Good objects */
@@ -4663,7 +4668,7 @@ bool_ make_object(object_type *j_ptr, bool_ good, bool_ great, obj_theme const &
 		}
 
 		/* Normal objects -- only when the cache is invalidated */
-		else if (!alloc_kind_table_valid)
+		else if (!alloc.kind_table_valid)
 		{
 			/* Activate normal restriction */
 			get_obj_num_hook = kind_is_legal;
@@ -4672,7 +4677,7 @@ bool_ make_object(object_type *j_ptr, bool_ good, bool_ great, obj_theme const &
 			get_obj_num_prep();
 
 			/* The table is synchronised */
-			alloc_kind_table_valid = TRUE;
+			alloc.kind_table_valid = true;
 		}
 
 		/* Pick a random object */
@@ -4688,7 +4693,7 @@ bool_ make_object(object_type *j_ptr, bool_ good, bool_ great, obj_theme const &
 			get_obj_num_prep();
 
 			/* The table is synchronised */
-			alloc_kind_table_valid = TRUE;
+			alloc.kind_table_valid = true;
 		}
 
 		/* Handle failure */

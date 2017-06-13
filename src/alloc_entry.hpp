@@ -11,10 +11,10 @@
  */
 struct alloc_entry
 {
-	s16b index;		/* The actual index */
+	s16b index = -1;        /* The actual index */
 
-	byte level;		/* Base dungeon level */
-	byte prob1;		/* Probability, pass 1 */
-	byte prob2;		/* Probability, pass 2 */
-	byte prob3;		/* Probability, pass 3 */
+	byte level = 0;         /* Base dungeon level */
+	byte prob1 = 0;         /* Probability, pass 1 */
+	byte prob2 = 0;         /* Probability, pass 2 */
+	byte prob3 = 0;         /* Probability, pass 3 */
 };

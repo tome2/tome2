@@ -816,27 +816,24 @@ s16b m_pop()
  */
 errr get_mon_num_prep()
 {
-	int i;
+	auto &alloc = game->alloc;
 
 	/* Scan the allocation table */
-	for (i = 0; i < alloc_race_size; i++)
+	for (auto &&entry: alloc.race_table)
 	{
-		/* Get the entry */
-		alloc_entry *entry = &alloc_race_table[i];
-
 		/* Accept monsters which pass the restriction, if any */
-		if ((!get_mon_num_hook || (*get_mon_num_hook)(entry->index)) &&
-		                (!get_mon_num2_hook || (*get_mon_num2_hook)(entry->index)))
+		if ((!get_mon_num_hook || (*get_mon_num_hook)(entry.index)) &&
+				(!get_mon_num2_hook || (*get_mon_num2_hook)(entry.index)))
 		{
 			/* Accept this monster */
-			entry->prob2 = entry->prob1;
+			entry.prob2 = entry.prob1;
 		}
 
 		/* Do not use this monster */
 		else
 		{
 			/* Decline this monster */
-			entry->prob2 = 0;
+			entry.prob2 = 0;
 		}
 	}
 
@@ -950,12 +947,12 @@ bool_ summon_hack = FALSE;
 s16b get_mon_num(int level)
 {
 	auto const &r_info = game->edit_data.r_info;
+	auto &alloc = game->alloc;
 
-	int	i, j, p;
-	int	r_idx;
-	long	value, total;
-
-	alloc_entry	*table = alloc_race_table;
+	std::size_t i, j;
+	int p;
+	int r_idx;
+	long value, total;
 
 	int in_tome;
 
@@ -991,16 +988,18 @@ s16b get_mon_num(int level)
 	in_tome = strcmp(game_module, "ToME") == 0;
 
 	/* Process probabilities */
-	for (i = 0; i < alloc_race_size; i++)
+	for (i = 0; i < alloc.race_table.size(); i++)
 	{
+		auto &entry = alloc.race_table[i];
+
 		/* Monsters are sorted by depth */
-		if (table[i].level > level) break;
+		if (entry.level > level) break;
 
 		/* Default */
-		table[i].prob3 = 0;
+		entry.prob3 = 0;
 
 		/* Access the "r_idx" of the chosen monster */
-		r_idx = table[i].index;
+		r_idx = entry.index;
 
 		/* Access the actual race */
 		auto r_ptr = &r_info[r_idx];
@@ -1031,10 +1030,10 @@ s16b get_mon_num(int level)
 		if (!summon_hack && !restrict_monster_to_dungeon(r_idx) && dun_level) continue;
 
 		/* Accept */
-		table[i].prob3 = table[i].prob2;
+		entry.prob3 = entry.prob2;
 
 		/* Total */
-		total += table[i].prob3;
+		total += entry.prob3;
 	}
 
 	/* No legal monsters */
@@ -1045,18 +1044,23 @@ s16b get_mon_num(int level)
 	value = rand_int(total);
 
 	/* Find the monster */
-	for (i = 0; i < alloc_race_size; i++)
+	for (i = 0; i < alloc.race_table.size(); i++)
 	{
+		auto &entry = alloc.race_table[i];
+
 		/* Found the entry */
-		if (value < table[i].prob3) break;
+		if (value < entry.prob3) break;
 
 		/* Decrement */
-		value = value - table[i].prob3;
+		value = value - entry.prob3;
 	}
 
 
 	/* Power boost */
 	p = rand_int(100);
+
+	/* Shorthand */
+	auto &table = alloc.race_table;
 
 	/* Try for a "harder" monster once (50%) or twice (10%) */
 	if (p < 60)
@@ -1068,7 +1072,7 @@ s16b get_mon_num(int level)
 		value = rand_int(total);
 
 		/* Find the monster */
-		for (i = 0; i < alloc_race_size; i++)
+		for (i = 0; i < table.size(); i++)
 		{
 			/* Found the entry */
 			if (value < table[i].prob3) break;
@@ -1091,7 +1095,7 @@ s16b get_mon_num(int level)
 		value = rand_int(total);
 
 		/* Find the monster */
-		for (i = 0; i < alloc_race_size; i++)
+		for (i = 0; i < table.size(); i++)
 		{
 			/* Found the entry */
 			if (value < table[i].prob3) break;
@@ -1990,6 +1994,7 @@ static s16b hack_m_idx_ii = 0;
 s16b place_monster_one(int y, int x, int r_idx, int ego, bool_ slp, int status)
 {
 	auto &r_info = game->edit_data.r_info;
+	auto &alloc = game->alloc;
 
 	int i;
 	char dummy[5];
@@ -2316,7 +2321,7 @@ s16b place_monster_one(int y, int x, int r_idx, int ego, bool_ slp, int status)
 			}
 
 			/* Invalidate the cached allocation table */
-			alloc_kind_table_valid = FALSE;
+			alloc.kind_table_valid = false;
 
 			if (tries)
 			{

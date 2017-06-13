@@ -702,8 +702,7 @@ static errr init_alloc()
 {
 	auto const &r_info = game->edit_data.r_info;
 	auto const &k_info = game->edit_data.k_info;
-
-	alloc_entry *table;
+	auto &alloc = game->alloc;
 
 	s16b num[MAX_DEPTH_MONSTER];
 
@@ -717,10 +716,8 @@ static errr init_alloc()
 	/* Clear the "num" array */
 	memset(num, 0, MAX_DEPTH_MONSTER * sizeof(s16b));
 
-	/* Size of "alloc_kind_table" */
-	alloc_kind_size = 0;
-
 	/* Scan the objects */
+	std::size_t kind_size = 0;
 	for (auto const &k_ref: k_info)
 	{
 		auto k_ptr = &k_ref;
@@ -732,7 +729,7 @@ static errr init_alloc()
 			if (k_ptr->chance[j])
 			{
 				/* Count the entries */
-				alloc_kind_size++;
+				kind_size++;
 
 				/* Group by level */
 				num[k_ptr->locale[j]]++;
@@ -754,10 +751,8 @@ static errr init_alloc()
 	/*** Initialise object allocation info ***/
 
 	/* Allocate the alloc_kind_table */
-	alloc_kind_table = make_array<alloc_entry>(alloc_kind_size);
-
-	/* Access the table entry */
-	table = alloc_kind_table;
+	alloc.kind_table.clear();
+	alloc.kind_table.resize(kind_size);
 
 	/* Scan the objects */
 	for (std::size_t i = 1; i < k_info.size(); i++)
@@ -785,11 +780,12 @@ static errr init_alloc()
 				z = y + aux[x];
 
 				/* Load the entry */
-				table[z].index = i;
-				table[z].level = x;
-				table[z].prob1 = p;
-				table[z].prob2 = p;
-				table[z].prob3 = p;
+				auto &entry = alloc.kind_table[z];
+				entry.index = i;
+				entry.level = x;
+				entry.prob1 = p;
+				entry.prob2 = p;
+				entry.prob3 = p;
 
 				/* Another entry complete for this locale */
 				aux[x]++;
@@ -806,10 +802,8 @@ static errr init_alloc()
 	/* Clear the "num" array */
 	memset(num, 0, MAX_DEPTH_MONSTER * sizeof(s16b));
 
-	/* Size of "alloc_race_table" */
-	alloc_race_size = 0;
-
 	/* Scan the monsters */
+	std::size_t race_size = 0;
 	for (auto &r_ref: r_info)
 	{
 		/* Get the i'th race */
@@ -819,7 +813,7 @@ static errr init_alloc()
 		if (r_ptr->rarity)
 		{
 			/* Count the entries */
-			alloc_race_size++;
+			race_size++;
 
 			/* Group by level */
 			num[r_ptr->level]++;
@@ -840,10 +834,8 @@ static errr init_alloc()
 	/*** Initialise monster allocation info ***/
 
 	/* Allocate the alloc_race_table */
-	alloc_race_table = make_array<alloc_entry>(alloc_race_size);
-
-	/* Access the table entry */
-	table = alloc_race_table;
+	alloc.race_table.clear();
+	alloc.race_table.resize(race_size);
 
 	/* Scan the monsters */
 	for (std::size_t i = 1; i < r_info.size(); i++)
@@ -869,11 +861,12 @@ static errr init_alloc()
 			z = y + aux[x];
 
 			/* Load the entry */
-			table[z].index = i;
-			table[z].level = x;
-			table[z].prob1 = p;
-			table[z].prob2 = p;
-			table[z].prob3 = p;
+			auto &entry = alloc.race_table[z];
+			entry.index = i;
+			entry.level = x;
+			entry.prob1 = p;
+			entry.prob2 = p;
+			entry.prob3 = p;
 
 			/* Another entry complete for this locale */
 			aux[x]++;

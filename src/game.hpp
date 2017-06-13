@@ -2,6 +2,7 @@
 
 #include "game_fwd.hpp"
 
+#include "alloc.hpp"
 #include "birther.hpp"
 #include "game_edit_data.hpp"
 #include "grid.hpp"
@@ -48,6 +49,11 @@ struct Game {
 	 * Random artifacts
 	 */
 	std::vector<random_artifact> random_artifacts;
+
+	/**
+	 * Allocations
+	 */
+	Alloc alloc;
 
 	/**
 	 * Player's un-adjusted HP at every level.

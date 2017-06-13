@@ -7552,6 +7552,7 @@ static bool_ cave_gen()
 	auto const &r_info = game->edit_data.r_info;
 	auto const &a_info = game->edit_data.a_info;
 	auto &k_info = game->edit_data.k_info;
+	auto &alloc = game->alloc;
 
 	auto d_ptr = &d_info[dungeon_type];
 
@@ -7783,7 +7784,7 @@ static bool_ cave_gen()
 					get_obj_num_hook = kind_is_legal;
 
 					/* Invalidate the allocation table */
-					alloc_kind_table_valid = FALSE;
+					alloc.kind_table_valid = false;
 
 					/* Get a local object */
 					q_ptr = &forge;

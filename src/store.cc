@@ -1191,6 +1191,7 @@ static void store_create()
 {
 	auto const &st_info = game->edit_data.st_info;
 	auto const &k_info = game->edit_data.k_info;
+	auto &alloc = game->alloc;
 
 	int i = 0, tries, level = 0;
 
@@ -1265,7 +1266,7 @@ static void store_create()
 			i = get_obj_num(level);
 
 			/* Invalidate the cached allocation table */
-			alloc_kind_table_valid = FALSE;
+			alloc.kind_table_valid = false;
 
 			/* Handle failure */
 			if (!i) continue;
@@ -1317,7 +1318,7 @@ static void store_create()
 				i = get_obj_num(level);
 
 				/* Invalidate the cached allocation table */
-				alloc_kind_table_valid = FALSE;
+				alloc.kind_table_valid = false;
 			}
 
 			if (!i) continue;

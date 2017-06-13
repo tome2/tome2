@@ -4220,6 +4220,7 @@ static int get_artifact_idx(int level)
 void gain_fate(byte fate)
 {
 	auto const &k_info = game->edit_data.k_info;
+	auto &alloc = game->alloc;
 
 	int i;
 	int level;
@@ -4309,7 +4310,7 @@ void gain_fate(byte fate)
 						fates[i].o_idx = get_obj_num(max_dlv[dungeon_type] + randint(10));
 
 						/* Invalidate the cached allocation table */
-						alloc_kind_table_valid = FALSE;
+						alloc.kind_table_valid = false;
 
 						auto k_ptr = &k_info[fates[i].o_idx];
 
