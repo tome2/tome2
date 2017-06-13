@@ -312,12 +312,17 @@ static bool quest_poison_drop_hook(void *, void *in_, void *)
 
 void quest_poison_init_hook()
 {
+	auto &messages = game->messages;
+
 	/* Get a place to place the poison */
 	if (!cquest.data[1])
 	{
 		cquest.data[1] = TRUE;
 		cquest.data[0] = rand_int(4);
-		if (wizard) message_add(format("Wilderness poison %d, %d", wild_locs[cquest.data[0]][0], wild_locs[cquest.data[0]][1]), TERM_BLUE);
+		if (wizard)
+		{
+			messages.add(format("Wilderness poison %d, %d", wild_locs[cquest.data[0]][0], wild_locs[cquest.data[0]][1]), TERM_BLUE);
+		}
 	}
 
 	if ((cquest.status >= QUEST_STATUS_TAKEN) && (cquest.status < QUEST_STATUS_FINISHED))

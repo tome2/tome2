@@ -1905,8 +1905,10 @@ static void do_message(message &msg, ls_flag_t flag)
  */
 static void do_messages(ls_flag_t flag)
 {
+	auto &messages = game->messages;
+
 	/* Save/load number of messages */
-	s16b num = message_num();
+	s16b num = messages.size();
 	do_s16b(&num, flag);
 
 	/* Read the messages */
@@ -1916,14 +1918,14 @@ static void do_messages(ls_flag_t flag)
 
 		if (flag == ls_flag_t::SAVE)
 		{
-			message = message_at(i);
+			message = messages.at(i);
 		}
 
 		do_message(message, flag);
 
 		if (flag == ls_flag_t::LOAD)
 		{
-			message_add(message);
+			messages.add(message);
 		}
 	}
 }

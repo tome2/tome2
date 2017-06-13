@@ -894,6 +894,8 @@ static void monster_msg(cptr fmt, ...)
 
 void monster_msg_simple(cptr s)
 {
+	auto &messages = game->messages;
+
 	/* Display */
 	if (options->disturb_other)
 	{
@@ -901,7 +903,7 @@ void monster_msg_simple(cptr s)
 	}
 	else
 	{
-		message_add(s, TERM_WHITE);
+		messages.add(s, TERM_WHITE);
 		p_ptr->window |= PW_MESSAGE;
 	}
 }
@@ -910,6 +912,7 @@ void cmonster_msg(char a, cptr fmt, ...)
 {
 	va_list vp;
 
+	auto &messages = game->messages;
 	char buf[1024];
 
 	/* Begin the Varargs Stuff */
@@ -928,7 +931,7 @@ void cmonster_msg(char a, cptr fmt, ...)
 	}
 	else
 	{
-		message_add(buf, a);
+		messages.add(buf, a);
 		p_ptr->window |= PW_MESSAGE;
 	}
 }

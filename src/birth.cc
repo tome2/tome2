@@ -2682,6 +2682,7 @@ void player_birth()
 {
 	auto const &st_info = game->edit_data.st_info;
 	auto &d_info = game->edit_data.d_info;
+	auto &messages = game->messages;
 
 	/* Starting index for generated towns */
 	std::size_t rtown = TOWN_RANDOM;
@@ -2720,11 +2721,11 @@ void player_birth()
 	add_note_type(NOTE_BIRTH);
 
 	/* Note player birth in the message recall */
-	message_add(" ", TERM_L_BLUE);
-	message_add("  ", TERM_L_BLUE);
-	message_add("====================", TERM_L_BLUE);
-	message_add("  ", TERM_L_BLUE);
-	message_add(" ", TERM_L_BLUE);
+	messages.add(" ", TERM_L_BLUE);
+	messages.add("  ", TERM_L_BLUE);
+	messages.add("====================", TERM_L_BLUE);
+	messages.add("  ", TERM_L_BLUE);
+	messages.add(" ", TERM_L_BLUE);
 
 	/* Hack -- outfit the player */
 	player_outfit();
@@ -2773,7 +2774,7 @@ void player_birth()
 
 			if (wizard)
 			{
-				message_add(format("Random dungeon town: d_idx:%d, lev:%d", i, lev), TERM_WHITE);
+				messages.add(format("Random dungeon town: d_idx:%d, lev:%d", i, lev), TERM_WHITE);
 			}
 
 			/* Create the town */

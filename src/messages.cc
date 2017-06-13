@@ -1,54 +1,41 @@
 #include "messages.hpp"
 
-#include <boost/circular_buffer.hpp>
+#include "game.hpp"
+
 #include <fmt/format.h>
 #include <string>
 
-/*
- * OPTION: Maximum number of messages to remember (see "io.c")
- * Default: assume maximal memorization of 2048 total messages
- */
-#define MESSAGE_MAX     2048
-
-/**
- * Circular buffer for the messages
- */
-static boost::circular_buffer<message> *buffer()
+s16b messages::size() const
 {
-	static auto *instance = new boost::circular_buffer<message>(MESSAGE_MAX);
-	return instance;
+	return buffer.size();
 }
 
-s16b message_num()
-{
-	return buffer()->size();
-}
-
-message const &message_at(int age)
+message const &messages::at(int age) const
 {
 	assert(age >= 0);
-	assert(age < message_num());
+	assert(age < size());
 
 	// Age indexes backward through history and is zero-based, so...
-	std::size_t i = buffer()->size() - 1 - age;
+	std::size_t i = buffer.size() - 1 - age;
 
 	// Get the message
-	return buffer()->at(i);
+	return buffer.at(i);
 }
 
-void message_add(cptr str, byte color)
+void messages::add(cptr msg, byte color)
 {
-	assert(str != nullptr);
+	assert(msg != nullptr);
+	add(std::string(msg), color);
+}
 
-	// Shorthand to avoid syntactic clutter
-	auto buf = buffer();
-
+void messages::add(std::string const &msg, byte color)
+{
 	// If the message is the same as the last message,
 	// we just increment the counter instead of adding
 	// the message.
-	if ((!buf->empty()) && (buf->back().text == str))
+	if ((!buffer.empty()) && (buffer.back().text == msg))
 	{
-		buf->back().count += 1;
+		buffer.back().count += 1;
 		return;
 	}
 
@@ -56,11 +43,11 @@ void message_add(cptr str, byte color)
 	message message;
 	message.color = color;
 	message.count = 1;
-	message.text = str;
-	buf->push_back(message);
+	message.text = msg;
+	buffer.push_back(message);
 }
 
-void message_add(message const &message)
+void messages::add(message const &m)
 {
-	buffer()->push_back(message);
+	buffer.push_back(m);
 }

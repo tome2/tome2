@@ -6,10 +6,13 @@
 #include "game_edit_data.hpp"
 #include "grid.hpp"
 #include "h-basic.h"
+#include "messages.hpp"
 #include "player_defs.hpp"
 #include "random_artifact.hpp"
 #include "skill_type.hpp"
 #include "wilderness_map.hpp"
+
+#include <boost/circular_buffer.hpp>
 
 /**
  * All structures for the game itself.
@@ -52,6 +55,11 @@ struct Game {
 	 * and restoring them back, &c.
 	 */
 	std::array<s16b, PY_MAX_LEVEL> player_hp { };
+
+	/**
+	 * Message buffer.
+	 */
+	messages messages { 2048 };
 
 	/**
 	 * Game edit data

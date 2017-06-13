@@ -319,6 +319,8 @@ static bool quest_shroom_chat_hook(void *, void *in_, void *)
 
 void quest_shroom_init_hook()
 {
+	auto &messages = game->messages;
+
 	/* Get a number of 'shrooms */
 	if (!cquest.data[1])
 	{
@@ -326,7 +328,7 @@ void quest_shroom_init_hook()
 		cquest.data[1] = rand_range(7, 14);
 		if (wizard)
 		{
-			message_add(format("Shrooms number %d", cquest.data[1]), TERM_BLUE);
+			messages.add(format("Shrooms number %d", cquest.data[1]), TERM_BLUE);
 		}
 	}
 

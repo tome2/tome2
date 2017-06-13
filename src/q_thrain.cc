@@ -264,13 +264,14 @@ static bool quest_thrain_turn_hook(void *, void *, void *)
 void quest_thrain_init_hook()
 {
 	auto const &d_info = game->edit_data.d_info;
+	auto &messages = game->messages;
 
 	if (!cquest.data[0])
 	{
 		cquest.data[0] = rand_range(d_info[DUNGEON_DOL_GULDUR].mindepth + 1, d_info[DUNGEON_DOL_GULDUR].maxdepth - 1);
 		if (wizard)
 		{
-			message_add(format("Thrain lvl %d", cquest.data[0]), TERM_BLUE);
+			messages.add(format("Thrain lvl %d", cquest.data[0]), TERM_BLUE);
 		}
 	}
 	if ((cquest.status >= QUEST_STATUS_TAKEN) && (cquest.status < QUEST_STATUS_FINISHED))

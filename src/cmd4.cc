@@ -255,7 +255,9 @@ void do_cmd_change_name()
  */
 void do_cmd_message_one()
 {
-	auto message = message_at(0);
+	auto const &messages = game->messages;
+
+	auto message = messages.at(0);
 
 	cptr msg = format("> %s", message.text_with_count().c_str());
 
@@ -284,21 +286,19 @@ void do_cmd_message_one()
  */
 void do_cmd_messages()
 {
-	int i, j, k, n;
-	u32b q;
-	int wid, hgt;
+	auto const &messages = game->messages;
 
 	/* String to highlight */
 	std::string shower;
 
 	/* Total messages */
-	n = message_num();
+	const int n = messages.size();
 
 	/* Start on first message */
-	i = 0;
+	int i = 0;
 
 	/* Start at leftmost edge */
-	q = 0;
+	u32b q = 0;
 
 	/* Enter "icky" mode */
 	character_icky = TRUE;
@@ -313,12 +313,15 @@ void do_cmd_messages()
 		Term_clear();
 
 		/* Retrieve current screen size */
+		int wid;
+		int hgt;
 		Term_get_size(&wid, &hgt);
 
 		/* Dump up to 20 (or more in bigscreen) lines of messages */
+		int j;
 		for (j = 0; (j < (hgt - 4)) && (i + j < n); j++)
 		{
-			auto message = message_at(i + j);
+			auto message = messages.at(i + j);
 			auto text = message.text_with_count();
 			auto color = message.color;
 
@@ -354,7 +357,7 @@ void do_cmd_messages()
 		prt("[Press 'p' for older, 'n' for newer, ..., or ESCAPE]", hgt - 1, 0);
 
 		/* Get a command */
-		k = inkey();
+		const auto k = inkey();
 
 		/* Exit on Escape */
 		if (k == ESCAPE) break;
@@ -419,7 +422,7 @@ void do_cmd_messages()
 			/* Scan messages */
 			for (z = i + 1; z < n; z++)
 			{
-				auto message = message_at(z);
+				auto message = messages.at(z);
 
 				/* Search for it */
 				if (message.text_with_count().find(finder) != std::string::npos)

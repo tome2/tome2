@@ -1758,15 +1758,15 @@ void display_message(int x, int y, int split, byte color, cptr t)
 */
 void cmsg_print(byte color, cptr msg)
 {
-	static int p = 0;
+	auto &messages = game->messages;
 
-	int n;
-	int wid;
+	static int p = 0;
 
 	char *t;
 
 	char buf[1024];
 
+	int wid;
 	Term_get_size(&wid, nullptr);
 	int lim = wid - 8;
 
@@ -1774,7 +1774,7 @@ void cmsg_print(byte color, cptr msg)
 	if (!msg_flag) p = 0;
 
 	/* Message Length */
-	n = (msg ? strlen(msg) : 0);
+	int n = (msg ? strlen(msg) : 0);
 
 	/* Hack -- flush when requested or needed */
 	if (p && (!msg || ((p + n) > lim)))
@@ -1798,7 +1798,10 @@ void cmsg_print(byte color, cptr msg)
 
 
 	/* Memorize the message */
-	if (character_generated) message_add(msg, color);
+	if (character_generated)
+	{
+		messages.add(msg, color);
+	}
 
 	/* Handle "auto_more" */
 	if (options->auto_more)
@@ -1866,9 +1869,6 @@ void cmsg_print(byte color, cptr msg)
 
 	/* Display the tail of the message */
 	display_message(p, 0, n, color, t);
-
-	/* Memorize the tail */
-	/* if (character_generated) message_add(t); */
 
 	/* Window stuff */
 	if (p_ptr)

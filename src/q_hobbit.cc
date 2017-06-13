@@ -1,6 +1,7 @@
 #include "q_hobbit.hpp"
 
 #include "cave.hpp"
+#include "game.hpp"
 #include "hook_chardump_in.hpp"
 #include "hook_chat_in.hpp"
 #include "hook_give_in.hpp"
@@ -209,6 +210,8 @@ static bool quest_hobbit_dump_hook(void *, void *in_, void *)
 
 void quest_hobbit_init_hook()
 {
+	auto &messages = game->messages;
+
 	/* Get a level to place the hobbit */
 	if (!cquest.data[0])
 	{
@@ -216,7 +219,7 @@ void quest_hobbit_init_hook()
 		cquest.data[1] = turn;
 		if (wizard)
 		{
-			message_add(format("Hobbit level %d", cquest.data[0]), TERM_BLUE);
+			messages.add(format("Hobbit level %d", cquest.data[0]), TERM_BLUE);
 		}
 	}
 

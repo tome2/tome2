@@ -57,6 +57,7 @@ void initialize_random_quests(int n)
 {
 	auto const &d_info = game->edit_data.d_info;
 	auto &r_info = game->edit_data.r_info;
+	auto &messages = game->messages;
 
 	int step, lvl, i, k;
 	int old_type = dungeon_type;
@@ -173,7 +174,7 @@ void initialize_random_quests(int n)
 		{
 			if (wizard)
 			{
-				message_add(format("Could not find quest monster on lvl %d", rl), TERM_RED);
+				messages.add(format("Could not find quest monster on lvl %d", rl), TERM_RED);
 			}
 			q_ptr->type = 0;
 		}
@@ -188,8 +189,7 @@ void initialize_random_quests(int n)
 
 			if (wizard)
 			{
-				message_add(format("Quest for %d on lvl %d",
-						   q_ptr->r_idx, rl), TERM_RED);
+				messages.add(format("Quest for %d on lvl %d", q_ptr->r_idx, rl), TERM_RED);
 			}
 		}
 

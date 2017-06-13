@@ -1186,6 +1186,8 @@ static void fix_player()
  */
 void fix_message()
 {
+	auto const &messages = game->messages;
+
 	int j, i;
 	int w, h;
 	int x, y;
@@ -1210,7 +1212,7 @@ void fix_message()
 		/* Dump messages */
 		for (i = 0; i < h; i++)
 		{
-			auto message = message_at(i);
+			auto message = messages.at(i);
 			auto text_with_count = message.text_with_count();
 
 			/* Dump the message on the appropriate line */
