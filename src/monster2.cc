@@ -1706,7 +1706,7 @@ void update_mon(int m_idx, bool_ full)
 			can_esp |= ((p_ptr->computed_flags & ESP_THUNDERLORD) && (r_ptr->flags & RF_THUNDERLORD));
 			can_esp |= ((p_ptr->computed_flags & ESP_GOOD) && (r_ptr->flags & RF_GOOD));
 			can_esp |= ((p_ptr->computed_flags & ESP_NONLIVING) && (r_ptr->flags & RF_NONLIVING));
-			can_esp |= ((p_ptr->computed_flags & ESP_UNIQUE) && ((r_ptr->flags & RF_UNIQUE) || (r_ptr->flags & RF_UNIQUE_4)));
+			can_esp |= ((p_ptr->computed_flags & ESP_UNIQUE) && ((r_ptr->flags & RF_UNIQUE)));
 			can_esp |= bool(p_ptr->computed_flags & ESP_ALL);
 
 			/* Only do this when we can really detect monster */
