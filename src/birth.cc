@@ -1537,11 +1537,19 @@ static bool_ player_birth_aux_ask()
 					if (c == 'S') return (FALSE);
 					if (c == '*')
 					{
-						do
-						{
-							k = rand_int(max_racem);
+						// Which choices are legal?
+						std::vector<int> valid_choices(max_racem);
+						for (int i = 0; i < max_racem; i++) {
+							if ((BIT(racem[i]) & rmp_ptr->choice[racem[i] / 32]))
+							{
+								valid_choices.push_back(i);
+							}
 						}
-						while (!(BIT(racem[k]) & rmp_ptr->choice[racem[k] / 32]));
+
+						// Choose
+						assert(!valid_choices.empty());
+						k = *uniform_element(valid_choices);
+
 						break;
 					}
 					else if (c == '?')
