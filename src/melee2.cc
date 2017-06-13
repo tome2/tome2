@@ -56,7 +56,6 @@
 
 #define FOLLOW_DISTANCE 6
 
-static void cmonster_msg(char a, cptr fmt, ...);
 
 /*
  * Based on mon_take_hit... all monster attacks on
@@ -65,6 +64,28 @@ static void cmonster_msg(char a, cptr fmt, ...);
 bool_ mon_take_hit_mon(int s_idx, int m_idx, int dam, bool_ *fear, cptr note)
 {
 	monster_type *m_ptr = &m_list[m_idx], *s_ptr = &m_list[s_idx];
+
+	/* Output */
+	auto cmonster_msg = [m_ptr](std::string const &suffix) {
+		auto &messages = game->messages;
+		// Build monster name
+		char m_name[80];
+		monster_desc(m_name, m_ptr, 0);
+		capitalize(m_name);
+		// Add suffix
+		auto msg = std::string(m_name);
+		msg += suffix;
+		// Display
+		if (options->disturb_other)
+		{
+			cmsg_print(TERM_L_RED, msg);
+		}
+		else
+		{
+			messages.add(msg, TERM_L_RED);
+			p_ptr->window |= PW_MESSAGE;
+		}
+	};
 
 	/* Redraw (later) if needed */
 	if (health_who == m_idx) p_ptr->redraw |= (PR_FRAME);
@@ -89,18 +110,17 @@ bool_ mon_take_hit_mon(int s_idx, int m_idx, int dam, bool_ *fear, cptr note)
 		}
 		else
 		{
-			char m_name[80];
 			s32b dive = s_ptr->level;
 
-			if (!dive) dive = 1;
-
-			/* Extract monster name */
-			monster_desc(m_name, m_ptr, 0);
+			if (!dive)
+			{
+				dive = 1;
+			}
 
 			/* Death by Missile/Spell attack */
 			if (note)
 			{
-				cmonster_msg(TERM_L_RED, "%^s%s", m_name, note);
+				cmonster_msg(note);
 			}
 			/* Death by Physical attack -- living monster */
 			else if (!m_ptr->ml)
@@ -114,11 +134,11 @@ bool_ mon_take_hit_mon(int s_idx, int m_idx, int dam, bool_ *fear, cptr note)
 			                (r_ptr->flags & RF_NONLIVING) ||
 			                (strchr("Evg", r_ptr->d_char)))
 			{
-				cmonster_msg(TERM_L_RED, "%^s is destroyed.", m_name);
+				cmonster_msg(" is destroyed.");
 			}
 			else
 			{
-				cmonster_msg(TERM_L_RED, "%^s is killed.", m_name);
+				cmonster_msg(" is killed.");
 			}
 
 			dive = r_ptr->mexp * m_ptr->level / dive;
@@ -904,34 +924,6 @@ void monster_msg_simple(cptr s)
 	else
 	{
 		messages.add(s, TERM_WHITE);
-		p_ptr->window |= PW_MESSAGE;
-	}
-}
-
-void cmonster_msg(char a, cptr fmt, ...)
-{
-	va_list vp;
-
-	auto &messages = game->messages;
-	char buf[1024];
-
-	/* Begin the Varargs Stuff */
-	va_start(vp, fmt);
-
-	/* Format the args, save the length */
-	vstrnfmt(buf, 1024, fmt, vp);
-
-	/* End the Varargs Stuff */
-	va_end(vp);
-
-	/* Display */
-	if (options->disturb_other)
-	{
-		cmsg_print(a, buf);
-	}
-	else
-	{
-		messages.add(buf, a);
 		p_ptr->window |= PW_MESSAGE;
 	}
 }
