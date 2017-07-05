@@ -5,12 +5,12 @@
 #include <fmt/format.h>
 #include <string>
 
-s16b messages::size() const
+s16b Messages::size() const
 {
 	return buffer.size();
 }
 
-message const &messages::at(int age) const
+message const &Messages::at(int age) const
 {
 	assert(age >= 0);
 	assert(age < size());
@@ -22,13 +22,13 @@ message const &messages::at(int age) const
 	return buffer.at(i);
 }
 
-void messages::add(cptr msg, byte color)
+void Messages::add(cptr msg, byte color)
 {
 	assert(msg != nullptr);
 	add(std::string(msg), color);
 }
 
-void messages::add(std::string const &msg, byte color)
+void Messages::add(std::string const &msg, byte color)
 {
 	// If the message is the same as the last message,
 	// we just increment the counter instead of adding
@@ -47,7 +47,7 @@ void messages::add(std::string const &msg, byte color)
 	buffer.push_back(message);
 }
 
-void messages::add(message const &m)
+void Messages::add(message const &m)
 {
 	buffer.push_back(m);
 }

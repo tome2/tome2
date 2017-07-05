@@ -8,7 +8,7 @@
 /**
  * Game message buffer
  */
-struct messages final {
+class Messages final {
 
 private:
 	boost::circular_buffer<message> buffer;
@@ -19,7 +19,7 @@ public:
 	 * Create message buffer with space for given
 	 * number of messages.
 	 */
-	explicit messages(std::size_t n)
+	explicit Messages(std::size_t n)
 		: buffer(n)
 	{
 	}

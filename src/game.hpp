@@ -65,7 +65,7 @@ struct Game {
 	/**
 	 * Message buffer.
 	 */
-	messages messages { 2048 };
+	Messages messages { 2048 };
 
 	/**
 	 * Game edit data
