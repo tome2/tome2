@@ -207,7 +207,8 @@ void Automatizer::add_new_condition(std::function<std::shared_ptr<Condition> ()>
 
 std::vector<std::string> Automatizer::get_rule_names() const
 {
-	std::vector<std::string> names(m_rules.size());
+	std::vector<std::string> names;
+	names.reserve(m_rules.size());
 	for (auto const &rule: m_rules)
 	{
 		names.push_back(rule->get_name());
