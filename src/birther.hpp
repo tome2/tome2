@@ -19,7 +19,6 @@ struct birther
 
 	byte god;
 	s32b grace;
-	s32b god_favor;
 
 	s32b au;
 
