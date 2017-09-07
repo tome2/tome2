@@ -2447,7 +2447,7 @@ static void stop_inertia_controlled_spell()
 	assert(TIMER_INERTIA_CONTROL != NULL);
 
 	p_ptr->inertia_controlled_spell = -1;
-	TIMER_INERTIA_CONTROL->enabled = FALSE;
+	TIMER_INERTIA_CONTROL->disable();
 	p_ptr->update = p_ptr->update | PU_MANA;
 }
 
@@ -2492,9 +2492,8 @@ casting_result meta_inertia_control()
 	}
 
 	p_ptr->inertia_controlled_spell = s;
-	TIMER_INERTIA_CONTROL->enabled = TRUE;
-	TIMER_INERTIA_CONTROL->delay = delay;
-	TIMER_INERTIA_CONTROL->countdown = delay;
+	TIMER_INERTIA_CONTROL->set_delay_and_reset(delay);
+	TIMER_INERTIA_CONTROL->enable();
 	p_ptr->update |= PU_MANA;
 	msg_format("Inertia flow controlling spell %s.", spell_type_name(spell_at(s)));
 	return CAST_OBVIOUS;

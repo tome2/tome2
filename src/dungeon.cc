@@ -1225,8 +1225,7 @@ static void process_world()
 	auto const &d_info = game->edit_data.d_info;
 	auto const &r_info = game->edit_data.r_info;
 	auto const &f_info = game->edit_data.f_info;
-
-	timer_type *t_ptr;
+	auto &timers = game->timers;
 
 	int x, y, i, j;
 
@@ -1269,18 +1268,10 @@ static void process_world()
 		check_music();
 	}
 
-	/* Handle the timers */
-	for (t_ptr = gl_timers; t_ptr != NULL; t_ptr = t_ptr->next)
+	/* Process timers */
+	for (auto &&timer: timers)
 	{
-		if (!t_ptr->enabled) continue;
-
-		t_ptr->countdown--;
-		if (!t_ptr->countdown)
-		{
-			t_ptr->countdown = t_ptr->delay;
-			assert(t_ptr->callback != NULL);
-			t_ptr->callback();
-		}
+		timer->count_down();
 	}
 
 	/* Check the fate */

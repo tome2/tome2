@@ -11,6 +11,7 @@
 #include "player_defs.hpp"
 #include "random_artifact.hpp"
 #include "skill_type.hpp"
+#include "timer_type_fwd.hpp"
 #include "wilderness_map.hpp"
 
 #include <boost/circular_buffer.hpp>
@@ -76,5 +77,10 @@ struct Game {
 	 * Current skill values.
 	 */
 	std::vector<skill_type> s_info;
+
+	/**
+	 * Timers
+	 */
+	std::vector<timer_type *> timers;
 
 };

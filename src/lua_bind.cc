@@ -249,7 +249,7 @@ timer_type *TIMER_AGGRAVATE_EVIL = 0;
 
 void timer_aggravate_evil_enable()
 {
-    	TIMER_AGGRAVATE_EVIL->enabled = TRUE;
+	TIMER_AGGRAVATE_EVIL->enable();
 }
 
 void timer_aggravate_evil_callback()

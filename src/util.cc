@@ -3642,19 +3642,10 @@ char msg_box_auto(std::string const &text)
  */
 timer_type *new_timer(void (*callback)(), s32b delay)
 {
-	timer_type *t_ptr = new timer_type();
+	auto &timers = game->timers;
 
-	static_assert(std::is_pod<timer_type>::value, "Cannot memset a non-POD type");
-	memset(t_ptr, 0, sizeof(timer_type));
-
-	t_ptr->next = gl_timers;
-	gl_timers = t_ptr;
-
-	t_ptr->callback = callback;
-	t_ptr->delay = delay;
-	t_ptr->countdown = delay;
-	t_ptr->enabled = FALSE;
-
+	timer_type *t_ptr = new timer_type(callback, delay);
+	timers.push_back(t_ptr);
 	return t_ptr;
 }
 

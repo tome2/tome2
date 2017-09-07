@@ -636,12 +636,6 @@ s32b DUNGEON_ASTRAL = 8;
 s32b DUNGEON_ASTRAL_WILD_X = 45;
 s32b DUNGEON_ASTRAL_WILD_Y = 19;
 
-/*
- * Timers
- */
-timer_type *gl_timers = NULL;
-
-
 /**
  * Get the version string.
  */

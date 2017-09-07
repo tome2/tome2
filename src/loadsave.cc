@@ -1838,13 +1838,11 @@ bool_ load_dungeon(char *ext)
  */
 static void do_timers(ls_flag_t flag)
 {
-	timer_type *t_ptr;
-
-	for (t_ptr = gl_timers; t_ptr != NULL; t_ptr = t_ptr->next)
+	for (auto &&t_ptr: game->timers)
 	{
-		do_bool(&t_ptr->enabled, flag);
-		do_s32b(&t_ptr->delay, flag);
-		do_s32b(&t_ptr->countdown, flag);
+		do_std_bool(&t_ptr->m_enabled, flag);
+		do_s32b(&t_ptr->m_delay, flag);
+		do_s32b(&t_ptr->m_countdown, flag);
 	}
 }
 
