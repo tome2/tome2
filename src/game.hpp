@@ -14,8 +14,6 @@
 #include "timer_type_fwd.hpp"
 #include "wilderness_map.hpp"
 
-#include <boost/circular_buffer.hpp>
-
 /**
  * All structures for the game itself.
  */
