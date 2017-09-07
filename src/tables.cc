@@ -4116,7 +4116,7 @@ module_type modules[MAX_MODULES] =
 {
 	{ 
 		{ "ToME",
-		  { 2, 4, 0 },
+		  { 2, 4, 1 },
 		  { "DarkGod", "darkgod@t-o-m-e.net" },
 		  "The Tales of Middle-earth, the standard and official game.\n"
 		  "You are set on a quest to investigate the old tower of Dol Guldur.\n"
