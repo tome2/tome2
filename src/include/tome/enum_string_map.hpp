@@ -29,20 +29,20 @@ public:
 		assert(bimap.size() == in.size());
 	}
 
-	const char *stringify(E e) {
+	const char *stringify(E e) const {
 		auto i = bimap.left.find(e);
 		assert(i != bimap.left.end() && "Missing mapping for enumerated value");
 		return i->second.c_str();
 	}
 
-	E parse(const char *s) {
+	E parse(const char *s) const {
 		E e;
 		bool result = parse(s, &e);
 		assert(result && "Missing string->enum mapping");
 		return e;
 	}
 
-	bool parse(const char *s, E *e) {
+	bool parse(const char *s, E *e) const {
 		auto i = bimap.right.find(s);
 		if (i == bimap.right.end())
 		{
