@@ -1,12 +1,38 @@
-T.O.M.E 2.4.x (ah)
+T.o.M.E 2.4.0 (ah)
 
 Game:
 
-- Removed Alchemist class from ToME module. They were
-  horribly broken and encouraged only scummy play. They
-  were also indirectly responsible for a lot of items
-  that were junk to every other character class.
+- Removed traps and related skills. (Thanks to "miramor" for doing
+  most of the actual work on this.)
+- Removed Alchemist class from ToME module. They were horribly broken
+  and encouraged only scummy play. They were also indirectly
+  responsible for a lot of items that were junk to every other
+  character class.
+- Remove Runecrafer class.
 - Increased size of the home drastically.
+- Fix "far reaching attack" skill. (Thanks to "miramor".)
+- Remove pointless player stats such as "gender", "age", "height",
+  etc.
+- Disallow casting for Posessors when they don't have enought SP.
+  (aka "Remove system shock".)
+- Magic Mapping now maps the whole level instead of only the display
+  region.
+- Summoned monsters appear around summoner instead of player.
+- Remove various mostly inconsequential options.
+- Use PCG random number generator instead of the old custom one.
+- Grant player full monster knowledge.
+- Theme: Fix final guardian artifact for Land of Mountains.
+- Theme: Remove armor restriction for Eagle/Dragon races.
+
+Build:
+
+- Use C++14.
+- Use (vendored) "cppformat" for string formatting.
+- Use (vendored) "jsoncons" instead of "jansson".
+- Produce individual executables for each of the supported platforms
+  instead of a single executable.
+
+
 
 T.o.M.E 2.3.10 (ah)
 
