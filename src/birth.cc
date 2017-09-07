@@ -571,6 +571,7 @@ static void player_wipe()
 	auto &r_info = game->edit_data.r_info;
 	auto &k_info = game->edit_data.k_info;
 	auto &a_info = game->edit_data.a_info;
+	auto &level_markers = game->level_markers;
 
 	/* Wipe special levels */
 	wipe_saved();
@@ -585,11 +586,11 @@ static void player_wipe()
 	p_ptr->lives = 0;
 
 	/* Wipe the towns */
-	for (std::size_t i = 0; i < d_info.size(); i++)
+	for (auto &&i: level_markers)
 	{
-		for (std::size_t j = 0; j < MAX_DUNGEON_DEPTH; j++)
+		for (auto &&j: i)
 		{
-			special_lvl[j][i] = 0;
+			j = level_marker::NORMAL;
 		}
 	}
 

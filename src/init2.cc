@@ -620,6 +620,7 @@ static errr init_other()
 	auto const &r_info = game->edit_data.r_info;
 	auto const &k_info = game->edit_data.k_info;
 	auto const &a_info = game->edit_data.a_info;
+	auto &level_markers = game->level_markers;
 
 	/*** Prepare the "dungeon" information ***/
 
@@ -647,11 +648,8 @@ static errr init_other()
 	/* Allocate and Wipe the max dungeon level */
 	max_dlv = make_array<s16b>(d_info.size());
 
-	/* Allocate and Wipe the special levels */
-	for (std::size_t i = 0; i < MAX_DUNGEON_DEPTH; i++)
-	{
-		special_lvl[i] = make_array<bool_>(d_info.size());
-	}
+	/* Allocate level markers */
+	level_markers.resize(boost::extents[MAX_DUNGEON_DEPTH][d_info.size()]);
 
 	/* Allocate and wipe each line of the cave */
 	cave = new cave_type *[MAX_HGT];

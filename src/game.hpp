@@ -7,12 +7,15 @@
 #include "game_edit_data.hpp"
 #include "grid.hpp"
 #include "h-basic.h"
+#include "level_marker.hpp"
 #include "messages.hpp"
 #include "player_defs.hpp"
 #include "random_artifact.hpp"
 #include "skill_type.hpp"
 #include "timer_type_fwd.hpp"
 #include "wilderness_map.hpp"
+
+#include <boost/multi_array.hpp>
 
 /**
  * All structures for the game itself.
@@ -80,5 +83,15 @@ struct Game {
 	 * Timers
 	 */
 	std::vector<timer_type *> timers;
+
+	/**
+	 * Level markers for 'special' levels.
+	 */
+	boost::multi_array<level_marker, 2> level_markers { };
+
+	/**
+	 * Generate a special level feeling?
+	 */
+	bool generate_special_feeling = false;
 
 };

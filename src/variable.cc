@@ -577,12 +577,6 @@ s16b plots[MAX_PLOTS];
 random_quest random_quests[MAX_RANDOM_QUEST];
 
 /*
- * Special levels
- */
-bool_ *special_lvl[MAX_DUNGEON_DEPTH];
-bool_ generate_special_feeling = FALSE;
-
-/*
  * Dungeon flags
  */
 DECLARE_FLAG_ZERO_IMPL(dungeon_flag_set, dungeon_flags);

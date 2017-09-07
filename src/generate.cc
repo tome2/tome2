@@ -8070,17 +8070,27 @@ static bool_ cave_gen()
 bool_ build_special_level()
 {
 	auto const &d_info = game->edit_data.d_info;
-
-	char buf[80];
-	int y, x, ystart = 2, xstart = 2;
-	s16b level;
+	auto &level_markers = game->level_markers;
 
 	/* No special levels on the surface */
-	if (!dun_level) return FALSE;
+	if (!dun_level)
+	{
+		return FALSE;
+	}
 
-	level = dun_level - d_info[dungeon_type].mindepth;
-	if ((!get_dungeon_save(buf)) && (special_lvl[level][dungeon_type])) return FALSE;
-	if (!get_dungeon_special(buf)) return FALSE;
+	auto const level = dun_level - d_info[dungeon_type].mindepth;
+
+	char buf[80];
+
+	if ((!get_dungeon_save(buf)) && !is_normal_level(level_markers[level][dungeon_type]))
+	{
+		return FALSE;
+	}
+
+	if (!get_dungeon_special(buf))
+	{
+		return FALSE;
+	}
 
 	/* Big town */
 	cur_hgt = MAX_HGT;
@@ -8095,9 +8105,9 @@ bool_ build_special_level()
 	panel_col_min = max_panel_cols * (SCREEN_WID / 2);
 
 	/* Start with perm walls */
-	for (y = 0; y < cur_hgt; y++)
+	for (int y = 0; y < cur_hgt; y++)
 	{
-		for (x = 0; x < cur_wid; x++)
+		for (int x = 0; x < cur_wid; x++)
 		{
 			cave_set_feat(y, x, FEAT_PERM_SOLID);
 		}
@@ -8109,10 +8119,12 @@ bool_ build_special_level()
 	get_mon_num_prep();
 
 	init_flags = INIT_CREATE_DUNGEON | INIT_POSITION;
+	int ystart = 2;
+	int xstart = 2;
 	process_dungeon_file(buf, &ystart, &xstart, cur_hgt, cur_wid, TRUE, TRUE);
 
-	special_lvl[level][dungeon_type] = REGEN_HACK;
-	generate_special_feeling = TRUE;
+	game->level_markers[level][dungeon_type] = level_marker::REGENERATE;
+	game->generate_special_feeling = true;
 
 	/* Special feeling because it's special */
 	good_item_flag = TRUE;
@@ -8133,26 +8145,36 @@ bool_ build_special_level()
 static void wipe_special_level()
 {
 	auto const &d_info = game->edit_data.d_info;
-
-	s16b level;
-	char buf[80];
+	auto &level_markers = game->level_markers;
 
 	/* No special levels on the surface */
-	if (!dun_level) return;
+	if (!dun_level)
+	{
+		return;
+	}
 
+	/* Fire off hooks */
 	process_hooks_new(HOOK_LEVEL_REGEN, NULL, NULL);
 
 	/* Calculate relative depth */
-	level = dun_level - d_info[dungeon_type].mindepth;
+	auto const level = dun_level - d_info[dungeon_type].mindepth;
 
-	/* No special level at this depth */
-	if ((!get_dungeon_save(buf)) &&
-	                special_lvl[level][dungeon_type]) return;
-	if (!get_dungeon_special(buf)) return;
+	/* No special level at this depth? */
+	char buf[80];
+	if ((!get_dungeon_save(buf)) && !is_normal_level(level_markers[level][dungeon_type]))
+	{
+		return;
+	}
+	if (!get_dungeon_special(buf))
+	{
+		return;
+	}
 
 	/* Clear the Mega-Hack flag */
-	if (special_lvl[level][dungeon_type] == REGEN_HACK)
-		special_lvl[level][dungeon_type] = FALSE;
+	if (level_markers[level][dungeon_type] == level_marker::REGENERATE)
+	{
+		level_markers[level][dungeon_type] = level_marker::NORMAL;
+	}
 }
 
 /*
@@ -8161,26 +8183,36 @@ static void wipe_special_level()
 static void finalise_special_level()
 {
 	auto const &d_info = game->edit_data.d_info;
-
-	s16b level;
-	char buf[80];
+	auto &level_markers = game->level_markers;
 
 	/* No special levels on the surface */
-	if (!dun_level) return;
+	if (!dun_level)
+	{
+		return;
+	}
 
+	/* Fire hooks */
 	process_hooks_new(HOOK_LEVEL_END_GEN, NULL, NULL);
 
 	/* Calculate relative depth */
-	level = dun_level - d_info[dungeon_type].mindepth;
+	auto const level = dun_level - d_info[dungeon_type].mindepth;
 
-	/* No special level at this depth */
-	if ((!get_dungeon_save(buf)) &&
-	                special_lvl[level][dungeon_type]) return;
-	if (!get_dungeon_special(buf)) return;
+	/* No special level at this depth? */
+	char buf[80];
+	if ((!get_dungeon_save(buf)) && !is_normal_level(level_markers[level][dungeon_type]))
+	{
+		return;
+	}
+	if (!get_dungeon_special(buf))
+	{
+		return;
+	}
 
 	/* Set the "generated" flag */
-	if (special_lvl[level][dungeon_type] == REGEN_HACK)
-		special_lvl[level][dungeon_type] = TRUE;
+	if (level_markers[level][dungeon_type] == level_marker::REGENERATE)
+	{
+		level_markers[level][dungeon_type] = level_marker::SPECIAL;
+	}
 }
 
 /*
@@ -8234,6 +8266,7 @@ void generate_cave()
 {
 	auto const &d_info = game->edit_data.d_info;
 	auto &a_info = game->edit_data.a_info;
+	auto const &level_markers = game->level_markers;
 
 	auto d_ptr = &d_info[dungeon_type];
 	int tester_1, tester_2;
@@ -8244,7 +8277,7 @@ void generate_cave()
 
 	/* The dungeon is not ready */
 	character_dungeon = FALSE;
-	generate_special_feeling = FALSE;
+	game->generate_special_feeling = false;
 
 	/* Initialize the flags with the basic dungeon flags */
 	if (!dun_level)
@@ -8302,8 +8335,8 @@ void generate_cave()
 	/* No saved level -- generate new one */
 	if (!loaded)
 	{
-		if (!get_dungeon_special(buf) ||
-		                !special_lvl[dun_level - d_info[dungeon_type].mindepth][dungeon_type])
+		auto const level = dun_level - d_info[dungeon_type].mindepth;
+		if (!get_dungeon_special(buf) || is_normal_level(level_markers[level][dungeon_type]))
 		{
 			get_level_flags();
 		}

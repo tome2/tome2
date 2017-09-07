@@ -454,6 +454,28 @@ static void do_random_spell(random_spell *s_ptr, ls_flag_t flag)
 	do_std_bool(&s_ptr->untried, flag);
 }
 
+static void do_level_marker(level_marker *marker, ls_flag_t flag)
+{
+	std::string v;
+
+	if (flag == ls_flag_t::SAVE)
+	{
+		v = level_marker_values().stringify(*marker);
+	}
+
+	do_std_string(v, flag);
+
+	if (flag == ls_flag_t::LOAD)
+	{
+		bool valid = level_marker_values().parse(v.c_str(), marker);
+		if (!valid)
+		{
+			note(fmt::format("Bad level marker: {}!", v).c_str());
+			abort();
+		}
+	}
+}
+
 /*
  * Misc. other data
  */
@@ -496,12 +518,12 @@ static bool_ do_extra(ls_flag_t flag)
 		{
 			for (std::size_t j = 0; j < tmp16u; j++)
 			{
-				do_bool(&special_lvl[j][i], flag);
+				do_level_marker(&game->level_markers[j][i], flag);
 			}
 		}
 	}
 
-	do_bool(&generate_special_feeling, flag);
+	do_std_bool(&game->generate_special_feeling, flag);
 
 	/* Load the quick start data */
 	do_quick_start(flag, game->previous_char);

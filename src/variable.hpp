@@ -168,8 +168,6 @@ extern bool_ *k_allow_special;
 extern bool_ *a_allow_special;
 extern s16b plots[MAX_PLOTS];
 extern random_quest random_quests[MAX_RANDOM_QUEST];
-extern bool_ *special_lvl[MAX_DUNGEON_DEPTH];
-extern bool_ generate_special_feeling;
 DECLARE_FLAG_ZERO_INTF(dungeon_flag_set, dungeon_flags);
 extern s16b schools_count;
 extern school_type schools[SCHOOLS_MAX];
