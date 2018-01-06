@@ -419,6 +419,8 @@ void do_cmd_automatizer()
 			}
 			else if (c == 'a')
 			{
+				if (!automatizer->selected_rule())
+					continue;
 				automatizer->add_new_condition(
 					squelch::new_condition_interactive);
 			}
