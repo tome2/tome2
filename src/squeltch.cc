@@ -434,7 +434,7 @@ void do_cmd_automatizer()
 				int new_sel =
 					automatizer->remove_current_selection();
 
-				if (new_sel == -1)
+				if (!new_sel)
 				{
 					active = ACTIVE_LIST;
 				}
