@@ -320,6 +320,7 @@ void schools_init()
 
 	{
 		school_type *school = sorcery_school_new(&SCHOOL_EARTH, "Earth", SKILL_EARTH);
+		school_god(school, GOD_AULE, 1, 3);
 		school_god(school, GOD_TULKAS, 4, 5);
 		school_god(school, GOD_YAVANNA, 1, 2);
 	}
