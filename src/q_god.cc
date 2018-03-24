@@ -235,6 +235,7 @@ static std::string make_directions(bool feel_it)
 	const char *home1 = NULL;
 	const char *home2 = NULL;
 	cptr feel_it_str = feel_it ? ", I can feel it.'" : ".";
+	std::string dir_string;
 
 	get_home_coordinates(
 		&home1_y, &home1_x, &home1,
@@ -246,33 +247,36 @@ static std::string make_directions(bool feel_it)
 	/* Build the message */
 	if (home1_axis.empty())
 	{
-		return fmt::format("The temple lies very close to {}, ",
+		dir_string = fmt::format("The temple lies very close to {},",
 			home1);
 	}
 	else
 	{
 		auto home1_distance = approximate_distance(home1_y, home1_x, cquest_dung_y, cquest_dung_x);
-		return fmt::format("The temple lies {} to the {} of {}, ",
+		dir_string = fmt::format("The temple lies {} to the {} of {},",
 			home1_distance,
 			home1_axis,
 			home1);
 	}
 
+	dir_string += feel_it ? " " : "\n";
+
 	if (home2_axis.empty())
 	{
-		return fmt::format("and very close to {}{}",
+		dir_string += fmt::format("and very close to {}{}",
 			home2,
 			feel_it_str);
 	}
 	else
 	{
 		auto home2_distance = approximate_distance(home2_y, home2_x, cquest_dung_y, cquest_dung_x);
-		return fmt::format("and {} to the {} of {}{}",
+		dir_string += fmt::format("and {} to the {} of {}{}",
 			home2_distance,
 			home2_axis,
 			home2,
 			feel_it_str);
 	}
+	return dir_string;
 }
 
 std::string quest_god_describe()
