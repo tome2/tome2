@@ -4143,42 +4143,6 @@ static void print_tomb()
  */
 static void show_info()
 {
-	/* Hack -- Know everything in the inven/equip */
-	for (auto &o_ref: p_ptr->inventory)
-	{
-		auto o_ptr = &o_ref;
-
-		/* Skip non-objects */
-		if (!o_ptr->k_ptr)
-		{
-			continue;
-		}
-
-		/* Aware and Known */
-		object_aware(o_ptr);
-		object_known(o_ptr);
-	}
-
-	/* Hack -- Know everything in the home */
-	for (int i = 1; i < max_towns; i++)
-	{
-		auto st_ptr = &town_info[i].store[7];
-		for (auto &o_ref: st_ptr->stock)
-		{
-			auto o_ptr = &o_ref;
-
-			/* Skip non-objects */
-			if (!o_ptr->k_ptr)
-			{
-				continue;
-			}
-
-			/* Aware and Known */
-			object_aware(o_ptr);
-			object_known(o_ptr);
-		}
-	}
-
 	/* Hack -- Recalculate bonuses */
 	p_ptr->update |= (PU_BONUS);
 
