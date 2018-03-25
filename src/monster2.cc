@@ -794,7 +794,7 @@ s16b m_pop()
 /*
  * Apply a "monster restriction function" to the "monster allocation table"
  */
-errr get_mon_num_prep()
+void get_mon_num_prep()
 {
 	auto &alloc = game->alloc;
 
@@ -818,9 +818,6 @@ errr get_mon_num_prep()
 			entry.prob2 = 0;
 		}
 	}
-
-	/* Success */
-	return (0);
 }
 
 /*

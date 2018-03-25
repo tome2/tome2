@@ -19,7 +19,7 @@ void delete_monster(int y, int x);
 void compact_monsters(int size);
 void wipe_m_list();
 s16b m_pop();
-errr get_mon_num_prep();
+void get_mon_num_prep();
 s16b get_mon_num(int level);
 void monster_desc(char *desc, monster_type *m_ptr, int mode);
 void monster_race_desc(char *desc, int r_idx, int ego);
