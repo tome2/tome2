@@ -795,74 +795,6 @@ static const char *process_pref_file_expr(char **sp, char *fp)
 			}
 		}
 
-		/* Function: LEQ */
-		else if (streq(t, "LEQ"))
-		{
-			v = "1";
-			if (*s && (f != b2))
-			{
-				t = process_pref_file_expr(&s, &f);
-			}
-			while (*s && (f != b2))
-			{
-				p = t;
-				t = process_pref_file_expr(&s, &f);
-				if (*t && (strcmp(p, t) > 0)) v = "0";
-			}
-		}
-
-		/* Function: GEQ */
-		else if (streq(t, "GEQ"))
-		{
-			v = "1";
-			if (*s && (f != b2))
-			{
-				t = process_pref_file_expr(&s, &f);
-			}
-			while (*s && (f != b2))
-			{
-				p = t;
-				t = process_pref_file_expr(&s, &f);
-				if (*t && (strcmp(p, t) < 0)) v = "0";
-			}
-		}
-
-		/* Function: LEQN */
-		else if (streq(t, "LEQN"))
-		{
-			int n = 0;
-			v = "1";
-			if (*s && (f != b2))
-			{
-				t = process_pref_file_expr(&s, &f);
-				n = atoi(t);
-			}
-			while (*s && (f != b2))
-			{
-				p = t;
-				t = process_pref_file_expr(&s, &f);
-				if (*t && (atoi(t) < n)) v = "0";
-			}
-		}
-
-		/* Function: GEQN */
-		else if (streq(t, "GEQN"))
-		{
-			int n = 0;
-			v = "1";
-			if (*s && (f != b2))
-			{
-				t = process_pref_file_expr(&s, &f);
-				n = atoi(t);
-			}
-			while (*s && (f != b2))
-			{
-				p = t;
-				t = process_pref_file_expr(&s, &f);
-				if (*t && (atoi(t) > n)) v = "0";
-			}
-		}
-
 		/* Function SKILL */
 		else if (streq(t, "SKILL"))
 		{
@@ -913,30 +845,6 @@ static const char *process_pref_file_expr(char **sp, char *fp)
 			if (streq(b + 1, "SYS"))
 			{
 				v = ANGBAND_SYS;
-			}
-
-			/* Race */
-			else if (streq(b + 1, "RACE"))
-			{
-				v = rp_ptr->title.c_str(); // The string SHOULD be stable enough for this
-			}
-
-			/* Race */
-			else if (streq(b + 1, "RACEMOD"))
-			{
-				v = rmp_ptr->title.c_str(); // The string SHOULD be stable enough for this
-			}
-
-			/* Class */
-			else if (streq(b + 1, "CLASS"))
-			{
-				v = spp_ptr->title;
-			}
-
-			/* Player */
-			else if (streq(b + 1, "PLAYER"))
-			{
-				v = game->player_base.c_str(); // The string SHOULD be stable enough for this
 			}
 		}
 

@@ -1788,13 +1788,7 @@ AND     - logical AND
 IOR     - inclusive OR
 EQU     - (string) equals
 NOT     - logical negation
-LEQ     - (string) less than or equal to
-GEQ     - (string) greater than or equal to
 [,]     - group expressions
-$CLASS  - current class
-$GRAF   - 3-letter graphics abbr in "graf-***.prf" (old, new)
-$PLAYER - current player name
-$RACE   - current race
 $SYS    - 3-letter system abbr in "pref-***.prf" (ami, mac, win,...)
 
 0 - false
@@ -1805,10 +1799,10 @@ encountered until the next conditional pref line are skipped.
 
 This isn't an actual command. It only works in pref files.
 
-The variables $CLASS, $GRAF, $PLAYER, $RACE, $PLAYER, $SYS and the
-string values they take on are case sensitive. The values also can't
-contain spaces. These constraints on the values hold when they are
-used in a pref file, but might not when used as pref filenames.
+The variable $SYS and the string value it may take on are case
+sensitive. The values also can't contain spaces. These constraints on
+the values hold when they are used in a pref file, but might not when
+used as pref filenames.
 
 This can be "turned back on" using the pref line "?:1", which is
 generally the last line in a file which contains conditional macros,

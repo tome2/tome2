@@ -6623,38 +6623,6 @@ static const char *process_dungeon_file_expr(char **sp, char *fp)
 			}
 		}
 
-		/* Function: LEQ */
-		else if (streq(t, "LEQ"))
-		{
-			v = "1";
-			if (*s && (f != b2))
-			{
-				t = process_dungeon_file_expr(&s, &f);
-			}
-			while (*s && (f != b2))
-			{
-				p = t;
-				t = process_dungeon_file_expr(&s, &f);
-				if (*t && (strcmp(p, t) > 0)) v = "0";
-			}
-		}
-
-		/* Function: GEQ */
-		else if (streq(t, "GEQ"))
-		{
-			v = "1";
-			if (*s && (f != b2))
-			{
-				t = process_dungeon_file_expr(&s, &f);
-			}
-			while (*s && (f != b2))
-			{
-				p = t;
-				t = process_dungeon_file_expr(&s, &f);
-				if (*t && (strcmp(p, t) < 0)) v = "0";
-			}
-		}
-
 		/* Oops */
 		else
 		{
@@ -6700,38 +6668,8 @@ static const char *process_dungeon_file_expr(char **sp, char *fp)
 		/* Variable */
 		if (*b == '$')
 		{
-			/* System */
-			if (streq(b + 1, "SYS"))
-			{
-				v = ANGBAND_SYS;
-			}
-
-			/* Race */
-			else if (streq(b + 1, "RACE"))
-			{
-				v = rp_ptr->title.c_str(); // The string SHOULD be stable enough for this
-			}
-
-			/* Race Mod */
-			else if (streq(b + 1, "RACEMOD"))
-			{
-				v = rmp_ptr->title.c_str(); // The string SHOULD be stable enough for this
-			}
-
-			/* Class */
-			else if (streq(b + 1, "CLASS"))
-			{
-				v = cp_ptr->title.c_str(); // The string SHOULD be stable enough for this
-			}
-
-			/* Player */
-			else if (streq(b + 1, "PLAYER"))
-			{
-				v = game->player_base.c_str(); // The string SHOULD be stable enough for this
-			}
-
 			/* Town */
-			else if (streq(b + 1, "TOWN"))
+			if (streq(b + 1, "TOWN"))
 			{
 				strnfmt(pref_tmp_value, 8, "%d", p_ptr->town_num);
 				v = pref_tmp_value;
@@ -6741,13 +6679,6 @@ static const char *process_dungeon_file_expr(char **sp, char *fp)
 			else if (prefix(b + 1, "TOWN_DESTROY"))
 			{
 				strnfmt(pref_tmp_value, 8, "%d", town_info[atoi(b + 13)].destroyed);
-				v = pref_tmp_value;
-			}
-
-			/* Current quest number */
-			else if (streq(b + 1, "QUEST_NUMBER"))
-			{
-				strnfmt(pref_tmp_value, 8, "%d", p_ptr->inside_quest);
 				v = pref_tmp_value;
 			}
 
@@ -6797,17 +6728,6 @@ static const char *process_dungeon_file_expr(char **sp, char *fp)
 				v = pref_tmp_value;
 			}
 
-			/* Variant name */
-			else if (streq(b + 1, "VARIANT"))
-			{
-				v = "ToME";
-			}
-
-			/* Wilderness */
-			else if (streq(b + 1, "WILDERNESS"))
-			{
-				v = "NORMAL";
-			}
 		}
 
 		/* Constant */
