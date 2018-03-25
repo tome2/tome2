@@ -3568,51 +3568,6 @@ static void do_cmd_knowledge_kill_count()
 
 
 /*
- * Display known objects
- */
-static void do_cmd_knowledge_objects()
-{
-	auto const &k_info = game->edit_data.k_info;
-	auto const k_info_keys = game->edit_data.k_info_keys();
-
-	fmt::MemoryWriter w;
-
-	for (auto const &k: k_info_keys)
-	{
-		auto k_ptr = k_info.at(k);
-
-		/* Hack -- skip artifacts */
-		if (k_ptr->flags & TR_INSTA_ART)
-		{
-			continue;
-		}
-
-		/* List known flavored objects */
-		if (k_ptr->flavor && k_ptr->aware)
-		{
-			object_type object_type_body;
-
-			/* Get local object */
-			object_type *i_ptr = &object_type_body;
-
-			/* Create fake object */
-			object_prep(i_ptr, k);
-
-			/* Describe the object */
-			char o_name[80];
-			object_desc_store(o_name, i_ptr, FALSE, 0);
-
-			/* Print a message */
-			w.write("     {}\n", o_name);
-		}
-	}
-
-	// Display
-	show_string(w.c_str(), "Known Objects");
-}
-
-
-/*
  * List recall depths
  */
 static void do_cmd_knowledge_dungeons()
@@ -3791,15 +3746,14 @@ void do_cmd_knowledge()
 		/* Give some choices */
 		prt("(1) Display known artifacts", 4, 5);
 		prt("(2) Display known uniques", 5, 5);
-		prt("(3) Display known objects", 6, 5);
-		prt("(4) Display kill count", 7, 5);
-		prt("(5) Display recall depths", 8, 5);
-		prt("(6) Display corruptions", 9, 5);
-		prt("(7) Display current pets", 10, 5);
-		prt("(8) Display current quests", 11, 5);
-		prt("(9) Display current fates", 12, 5);
-		prt("(0) Display known dungeon towns", 13, 5);
-		prt("(A) Display notes", 14, 5);
+		prt("(3) Display kill count", 7, 5);
+		prt("(4) Display recall depths", 8, 5);
+		prt("(5) Display corruptions", 9, 5);
+		prt("(6) Display current pets", 10, 5);
+		prt("(7) Display current quests", 11, 5);
+		prt("(8) Display current fates", 12, 5);
+		prt("(9) Display known dungeon towns", 13, 5);
+		prt("(0) Display notes", 14, 5);
 
 		/* Prompt */
 		prt("Command: ", 16, 0);
@@ -3828,16 +3782,8 @@ void do_cmd_knowledge()
 				break;
 			}
 
-			/* Objects */
-		case '3':
-			{
-				do_cmd_knowledge_objects();
-
-				break;
-			}
-
 			/* Kill count  */
-		case '4':
+		case '3':
 			{
 				do_cmd_knowledge_kill_count();
 
@@ -3845,7 +3791,7 @@ void do_cmd_knowledge()
 			}
 
 			/* Recall depths */
-		case '5':
+		case '4':
 			{
 				do_cmd_knowledge_dungeons();
 
@@ -3853,7 +3799,7 @@ void do_cmd_knowledge()
 			}
 
 			/* corruptions */
-		case '6':
+		case '5':
 			{
 				do_cmd_knowledge_corruptions();
 
@@ -3861,7 +3807,7 @@ void do_cmd_knowledge()
 			}
 
 			/* Pets */
-		case '7':
+		case '6':
 			{
 				do_cmd_knowledge_pets();
 
@@ -3869,7 +3815,7 @@ void do_cmd_knowledge()
 			}
 
 			/* Quests */
-		case '8':
+		case '7':
 			{
 				do_cmd_knowledge_quests();
 
@@ -3877,7 +3823,7 @@ void do_cmd_knowledge()
 			}
 
 			/* Fates */
-		case '9':
+		case '8':
 			{
 				do_cmd_knowledge_fates();
 
@@ -3885,7 +3831,7 @@ void do_cmd_knowledge()
 			}
 
 			/* Dungeon towns */
-		case '0':
+		case '9':
 			{
 				do_cmd_knowledge_towns();
 
@@ -3893,8 +3839,7 @@ void do_cmd_knowledge()
 			}
 
 			/* Notes */
-		case 'A':
-		case 'a':
+		case '0':
 			{
 				do_cmd_knowledge_notes();
 
