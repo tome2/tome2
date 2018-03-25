@@ -36,7 +36,6 @@
  */
 struct object_type
 {
-	s16b k_idx = 0;                          /* Kind index (zero if "dead") */
 	std::shared_ptr<object_kind> k_ptr;
 
 	byte iy = 0;                             /* Y-position on map, or zero */

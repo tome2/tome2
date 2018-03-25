@@ -2285,7 +2285,7 @@ errr init_k_info_txt(FILE *fp)
 			error_idx = i;
 
 			/* Point at the "info"; automatically creates an entry */
-			k_info.emplace(std::make_pair(i, std::make_shared<object_kind>()));
+			k_info.emplace(std::make_pair(i, std::make_shared<object_kind>(i)));
 			k_ptr = k_info[i];
 			k_ptr->name = s;
 

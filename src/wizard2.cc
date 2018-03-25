@@ -431,8 +431,10 @@ static void wiz_display_item(object_type *o_ptr)
 	prt(buf, 2, j);
 
 	prt(format("kind = %-5d  level = %-4d  tval = %-5d  sval = %-5d",
-	           o_ptr->k_idx, o_ptr->k_ptr->level,
-	           o_ptr->tval, o_ptr->sval), 4, j);
+		   o_ptr->k_ptr->idx,
+		   o_ptr->k_ptr->level,
+		   o_ptr->tval,
+		   o_ptr->sval), 4, j);
 
 	prt(format("number = %-3d  wgt = %-6d  ac = %-5d    damage = %dd%d",
 	           o_ptr->number, o_ptr->weight,
@@ -728,6 +730,8 @@ static void wiz_reroll_item(object_type *o_ptr)
 	/* Hack -- leave artifacts alone */
 	if (artifact_p(o_ptr)) return;
 
+	/* Get the kind index */
+	auto const k_idx = o_ptr->k_ptr->idx;
 
 	/* Get local object */
 	q_ptr = &forge;
@@ -759,35 +763,35 @@ static void wiz_reroll_item(object_type *o_ptr)
 		/* Apply bad magic, but first clear object */
 		else if (ch == 'b' || ch == 'B')
 		{
-			object_prep(q_ptr, o_ptr->k_idx);
+			object_prep(q_ptr, k_idx);
 			apply_magic(q_ptr, dun_level, FALSE, FALSE, FALSE, boost::make_optional(-2));
 		}
 
 		/* Apply normal magic, but first clear object */
 		else if (ch == 'n' || ch == 'N')
 		{
-			object_prep(q_ptr, o_ptr->k_idx);
+			object_prep(q_ptr, k_idx);
 			apply_magic(q_ptr, dun_level, FALSE, FALSE, FALSE);
 		}
 
 		/* Apply good magic, but first clear object */
 		else if (ch == 'g' || ch == 'g')
 		{
-			object_prep(q_ptr, o_ptr->k_idx);
+			object_prep(q_ptr, k_idx);
 			apply_magic(q_ptr, dun_level, FALSE, TRUE, FALSE);
 		}
 
 		/* Apply great magic, but first clear object */
 		else if (ch == 'e' || ch == 'e')
 		{
-			object_prep(q_ptr, o_ptr->k_idx);
+			object_prep(q_ptr, k_idx);
 			apply_magic(q_ptr, dun_level, FALSE, TRUE, TRUE);
 		}
 
 		/* Apply great magic, but first clear object */
 		else if (ch == 'r' || ch == 'r')
 		{
-			object_prep(q_ptr, o_ptr->k_idx);
+			object_prep(q_ptr, k_idx);
 			create_artifact(q_ptr, FALSE, TRUE);
 		}
 	}
@@ -1122,7 +1126,7 @@ static void do_cmd_wiz_play()
 		{
 			int e = q_ptr->name2, eb = q_ptr->name2b;
 
-			object_prep(q_ptr, q_ptr->k_idx);
+			object_prep(q_ptr, q_ptr->k_ptr->idx);
 			q_ptr->name2 = e;
 			q_ptr->name2b = eb;
 			apply_magic(q_ptr, dun_level, FALSE, FALSE, FALSE);

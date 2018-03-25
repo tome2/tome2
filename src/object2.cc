@@ -1869,7 +1869,6 @@ void object_prep(object_type *o_ptr, int k_idx)
 	object_wipe(o_ptr);
 
 	/* Save the kind index */
-	o_ptr->k_idx = k_idx;
 	o_ptr->k_ptr = k_ptr;
 
 	/* Efficiency -- tval/sval */

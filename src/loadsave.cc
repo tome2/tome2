@@ -995,13 +995,22 @@ static void do_item(object_type *o_ptr, ls_flag_t flag)
 {
 	auto &a_info = game->edit_data.a_info;
 	auto &e_info = game->edit_data.e_info;
+	auto &k_info = game->edit_data.k_info;
 
 	byte old_dd;
 	byte old_ds;
 
 	/* Kind */
-	do_s16b(&o_ptr->k_idx, flag);
-	o_ptr->k_ptr = game->edit_data.k_info.at(o_ptr->k_idx);
+	if (flag == ls_flag_t::SAVE)
+	{
+		do_s16b(&o_ptr->k_ptr->idx, flag);
+	}
+	if (flag == ls_flag_t::LOAD)
+	{
+		s16b k_idx;
+		do_s16b(&k_idx, flag);
+		o_ptr->k_ptr = k_info.at(k_idx);
+	}
 
 	/* Location */
 	do_byte(&o_ptr->iy, flag);

@@ -17,6 +17,8 @@ constexpr int ALLOCATION_MAX = 8;
  */
 struct object_kind
 {
+	s16b idx;                                /* Index */
+
 	std::string name;                        /* Name */
 	std::string text;                        /* Text */
 
@@ -74,4 +76,11 @@ struct object_kind
 	bool_ artifact = 0;                      /* Is it a normal artifact(already generated) */
 
 	s16b power = -1;                         /* Power granted(if any) */
+
+public:
+	explicit object_kind(s16b idx_)
+		: idx(idx_)
+	{
+	}
+
 };

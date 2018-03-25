@@ -3093,7 +3093,7 @@ void do_cmd_knowledge_artifacts()
 				/* Note the artifact */
 				if (o_ptr->k_ptr->flags & TR_NORM_ART)
 				{
-					okayk.erase(o_ptr->k_idx);
+					okayk.erase(o_ptr->k_ptr->idx);
 				}
 				else
 				{
@@ -3124,7 +3124,7 @@ void do_cmd_knowledge_artifacts()
 			/* Note the artifact */
 			if (o_ptr->k_ptr->flags & TR_NORM_ART)
 			{
-				okayk.erase(o_ptr->k_idx);
+				okayk.erase(o_ptr->k_ptr->idx);
 			}
 			else
 			{
@@ -3153,7 +3153,7 @@ void do_cmd_knowledge_artifacts()
 		/* Note the artifact */
 		if (o_ptr->k_ptr->flags & TR_NORM_ART)
 		{
-			okayk.erase(o_ptr->k_idx);
+			okayk.erase(o_ptr->k_ptr->idx);
 		}
 		else
 		{
