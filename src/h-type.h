@@ -49,11 +49,6 @@ extern "C" {
 
 /* A simple pointer (to unmodifiable strings) */
 typedef const char *cptr;
-typedef char *mcptr;
-
-
-/* Since float's are silly, hard code real numbers as doubles */
-typedef double real;
 
 
 /* Error codes for function return values */
