@@ -1189,35 +1189,20 @@
 #define SV_LITE_DWARVEN                  3
 #define SV_LITE_FEANORIAN                4
 #define SV_LITE_GALADRIEL                100
-#define SV_LITE_ELENDIL                  101
-#define SV_LITE_THRAIN                   102
 #define SV_LITE_UNDEATH                  103
-#define SV_LITE_PALANTIR                 104
-#define SV_ANCHOR_SPACETIME              105
 #define SV_STONE_LORE                    106
 
 
 /* The "sval" codes for TV_AMULET */
 #define SV_AMULET_DOOM                   0
-#define SV_AMULET_TELEPORT               1
-#define SV_AMULET_SLOW_DIGEST            3
-#define SV_AMULET_RESIST_ACID            4
 #define SV_AMULET_BRILLANCE              6
 #define SV_AMULET_CHARISMA               7
 #define SV_AMULET_THE_MAGI               8
 #define SV_AMULET_REFLECTION             9
-#define SV_AMULET_CARLAMMAS             10
-#define SV_AMULET_INGWE                 11
-#define SV_AMULET_DWARVES               12
 #define SV_AMULET_NO_MAGIC              13
 #define SV_AMULET_NO_TELE               14
 #define SV_AMULET_RESISTANCE            15
-#define SV_AMULET_NOTHING               16
 #define SV_AMULET_SERPENT               17
-#define SV_AMULET_TORIS_MEJISTOS        18
-#define SV_AMULET_ELESSAR               19
-#define SV_AMULET_EVENSTAR              20
-#define SV_AMULET_SUSTENANCE            21
 #define SV_AMULET_TELEPATHY             22
 #define SV_AMULET_TRICKERY              23
 #define SV_AMULET_WEAPONMASTERY         24
@@ -1225,33 +1210,16 @@
 #define SV_AMULET_INFRA                 26
 #define SV_AMULET_SPELL                 27
 #define SV_AMULET_WISDOM                28
-#define SV_AMULET_RESIST_ELEC           29
-#define SV_AMULET_REGEN                 30
 
 /* The sval codes for TV_RING */
 #define SV_RING_WOE                      0
-#define SV_RING_AGGRAVATION              1
 #define SV_RING_WEAKNESS                 2
 #define SV_RING_STUPIDITY                3
-#define SV_RING_TELEPORTATION            4
 #define SV_RING_SPECIAL                  5
-#define SV_RING_SLOW_DIGESTION           6
-#define SV_RING_FEATHER_FALL             7
-#define SV_RING_RESIST_FIRE              8
-#define SV_RING_RESIST_COLD              9
-#define SV_RING_SUSTAIN_STR             10
-#define SV_RING_SUSTAIN_INT             11
-#define SV_RING_SUSTAIN_WIS             12
-#define SV_RING_SUSTAIN_CON             13
-#define SV_RING_SUSTAIN_DEX             14
-#define SV_RING_SUSTAIN_CHR             15
 #define SV_RING_PROTECTION              16
 #define SV_RING_ACID                    17
 #define SV_RING_FLAMES                  18
 #define SV_RING_ICE                     19
-#define SV_RING_RESIST_POIS             20
-#define SV_RING_FREE_ACTION             21
-#define SV_RING_SEE_INVIS               22
 #define SV_RING_STR                     24
 #define SV_RING_INT                     25
 #define SV_RING_DEX                     26
@@ -1260,90 +1228,11 @@
 #define SV_RING_DAMAGE                  29
 #define SV_RING_SLAYING                 30
 #define SV_RING_SPEED                   31
-#define SV_RING_BARAHIR                 32
-#define SV_RING_TULKAS                  33
-#define SV_RING_NARYA                   34
-#define SV_RING_NENYA                   35
-#define SV_RING_VILYA                   36
 #define SV_RING_POWER                   37
-#define SV_RING_RES_FEAR                38
-#define SV_RING_RES_LD                  39
-#define SV_RING_RES_NETHER              40
-#define SV_RING_RES_NEXUS               41
-#define SV_RING_RES_SOUND               42
-#define SV_RING_RES_CONFUSION           43
-#define SV_RING_RES_SHARDS              44
-#define SV_RING_RES_DISENCHANT          45
-#define SV_RING_RES_CHAOS               46
-#define SV_RING_RES_BLINDNESS           47
 #define SV_RING_LORDLY                  48
 #define SV_RING_ATTACKS                 49
-#define SV_RING_NOTHING                 50
-#define SV_RING_PRECONITION             51
-#define SV_RING_FLAR                    52
 #define SV_RING_INVIS                   53
-#define SV_RING_FLYING                  54
-#define SV_RING_WRAITH                  55
-#define SV_RING_ELEC                    56
-#define SV_RING_DURIN                   57
-#define SV_RING_SPELL                   58
 #define SV_RING_CRIT                    59
-
-/* The "sval" codes for TV_STAFF */
-#define SV_STAFF_SCHOOL                 1
-#define SV_STAFF_NOTHING                2
-
-/* needed for monster traps */
-#define SV_STAFF_LIGHT                  3
-#define SV_STAFF_FIERY_SHIELD           4
-#define SV_STAFF_REMOVE_CURSES          5
-#define SV_STAFF_WINGS_WIND             6
-#define SV_STAFF_SHAKE                  7
-#define SV_STAFF_DISARM                 8
-#define SV_STAFF_TELEPORTATION          9
-#define SV_STAFF_PROBABILITY_TRAVEL    10
-#define SV_STAFF_RECOVERY              11
-#define SV_STAFF_HEALING               12
-#define SV_STAFF_VISION                13
-#define SV_STAFF_IDENTIFY              14
-#define SV_STAFF_SENSE_HIDDEN          15
-#define SV_STAFF_REVEAL_WAYS           16
-#define SV_STAFF_SENSE_MONSTER         17
-#define SV_STAFF_GENOCIDE              18
-#define SV_STAFF_SUMMON                19
-#define SV_STAFF_WISH                  20
-#define SV_STAFF_MANA                  21
-#define SV_STAFF_MITHRANDIR            22
-
-/* The "sval" codes for TV_WAND */
-#define SV_WAND_SCHOOL                  1
-#define SV_WAND_NOTHING                 2
-
-/* needed for monster traps */
-#define SV_WAND_MANATHRUST              3
-#define SV_WAND_FIREFLASH               4
-#define SV_WAND_FIREWALL                5
-#define SV_WAND_TIDAL_WAVE              6
-#define SV_WAND_ICE_STORM               7
-#define SV_WAND_NOXIOUS_CLOUD           8
-#define SV_WAND_POISON_BLOOD            9
-#define SV_WAND_THUNDERSTORM           10
-#define SV_WAND_DIG                    11
-#define SV_WAND_STONE_PRISON           12
-#define SV_WAND_STRIKE                 13
-#define SV_WAND_TELEPORT_AWAY          14
-#define SV_WAND_SUMMON_ANIMAL          15
-#define SV_WAND_MAGELOCK               16
-#define SV_WAND_SLOW_MONSTER           17
-#define SV_WAND_SPEED                  18
-#define SV_WAND_BANISHMENT             19
-#define SV_WAND_DISPERSE_MAGIC         20
-#define SV_WAND_CHARM                  21
-#define SV_WAND_CONFUSE                22
-#define SV_WAND_DEMON_BLADE            23
-#define SV_WAND_HEAL_MONSTER           24
-#define SV_WAND_HASTE_MONSTER          25
-#define SV_WAND_THRAIN                 26
 
 /* The "sval" codes for TV_ROD(Rod Tips) */
 #define SV_ROD_NOTHING                   0
@@ -1378,14 +1267,7 @@
 /* The "sval" codes for TV_ROD_MAIN(Rods) */
 /* Note that the sval is the max mana capacity of the rod */
 
-#define SV_ROD_WOODEN                   10
-#define SV_ROD_COPPER                   20
-#define SV_ROD_IRON                     50
-#define SV_ROD_ALUMINIUM                75
 #define SV_ROD_SILVER                   100
-#define SV_ROD_GOLDEN                   125
-#define SV_ROD_MITHRIL                  160
-#define SV_ROD_ADMANTITE                200
 
 
 /* The "sval" codes for TV_SCROLL */
