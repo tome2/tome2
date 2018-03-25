@@ -31,7 +31,6 @@ extern "C" {
  * On Sparc's, a uint takes 4 bytes (2 is legal)
  * On Sparc's, a long takes 4 bytes (8 is legal)
  * On Sparc's, a huge takes 4 bytes (8 is legal)
- * On Sparc's, a vptr takes 4 bytes (8 is legal)
  * On Sparc's, a real takes 8 bytes (4 is legal)
  *
  * Note that some files have already been included by "h-include.h"
@@ -47,9 +46,6 @@ extern "C" {
 
 /*** Special 4 letter names for some standard types ***/
 
-
-/* A standard pointer (to "void" because ANSI C says so) */
-typedef void *vptr;
 
 /* A simple pointer (to unmodifiable strings) */
 typedef const char *cptr;
@@ -140,7 +136,6 @@ typedef s16b *s16b_ptr;
 typedef u16b *u16b_ptr;
 typedef s32b *s32b_ptr;
 typedef u32b *u32b_ptr;
-typedef vptr *vptr_ptr;
 typedef cptr *cptr_ptr;
 
 
@@ -155,28 +150,7 @@ typedef bool_	(*func_bool)();
 typedef sint	(*func_sint)();
 typedef uint	(*func_uint)();
 typedef real	(*func_real)();
-typedef vptr	(*func_vptr)();
 typedef cptr	(*func_cptr)();
-
-
-
-/*** Pointers to Functions of special types (for various purposes) ***/
-
-/* A generic function takes a user data and a special data */
-typedef errr	(*func_gen)(vptr, vptr);
-
-/* An equality testing function takes two things to compare (bool) */
-typedef bool_	(*func_eql)(vptr, vptr);
-
-/* A comparison function takes two things and to compare (-1,0,+1) */
-typedef sint	(*func_cmp)(vptr, vptr);
-
-/* A hasher takes a thing (and a max hash size) to hash (0 to siz - 1) */
-typedef uint	(*func_hsh)(vptr, uint);
-
-/* A key extractor takes a thing and returns (a pointer to) some key */
-typedef vptr	(*func_key)(vptr);
-
 
 
 #ifdef __cplusplus

@@ -48,7 +48,7 @@
  *   Save the current length into (*np).
  *   No legal modifiers.
  *
- * Format("%p", vptr v)
+ * Format("%p", (void *) v)
  *   Append the pointer "v" (implementation varies).
  *   No legal modifiers.
  *
@@ -97,7 +97,7 @@
  *   Do not use the "+" or "0" flags.
  *   Note that a "NULL" value of "s" is converted to the empty string.
  *
- * Format("%V", vptr v)
+ * Format("%V", (void *) v)
  *   Note -- possibly significant mode flag
  *
  *
@@ -486,10 +486,8 @@ uint vstrnfmt(char *buf, uint max, cptr fmt, va_list vp)
 			/* Pointer -- implementation varies */
 		case 'p':
 			{
-				vptr arg;
-
 				/* Access next argument */
-				arg = va_arg(vp, vptr);
+				void *arg = va_arg(vp, void *);
 
 				/* Format the argument */
 				sprintf(tmp, aux, arg);

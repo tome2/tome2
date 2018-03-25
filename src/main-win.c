@@ -1672,7 +1672,7 @@ static void term_data_link(term_data *td)
 	t->text_hook = Term_text_win;
 
 	/* Remember where we came from */
-	t->data = (vptr)(td);
+	t->data = (void *)(td);
 }
 
 

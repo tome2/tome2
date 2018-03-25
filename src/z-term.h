@@ -114,7 +114,7 @@ typedef struct term term;
 
 struct term
 {
-	vptr data;
+	void *data;
 
 	bool_ active_flag;
 	bool_ mapped_flag;
