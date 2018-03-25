@@ -84,6 +84,13 @@ public:
 	 */
 	static std::shared_ptr<Rule> parse_rule(jsoncons::json const &);
 
+	/**
+	 * Destructor.
+	 */
+	virtual ~Rule()
+	{
+	};
+
 protected:
 	virtual bool do_apply_rule(object_type *, int) const = 0;
 	virtual void do_write_tree(TreePrinter *p) const = 0;
