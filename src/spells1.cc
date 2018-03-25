@@ -3970,17 +3970,6 @@ static bool_ project_o(int who, int r, int y, int x, int dam, int typ)
 
 				break;
 			}
-		case GF_STAR_IDENTIFY:
-			{
-				/* Identify it fully */
-				object_aware(o_ptr);
-				object_known(o_ptr);
-
-				/* Squelch ! */
-				squeltch_grid();
-
-				break;
-			}
 		case GF_RAISE:
 			{
 				get_pos_player(7, &y, &x);

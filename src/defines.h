@@ -1762,7 +1762,6 @@
 #define GF_DOMINATION   89
 #define GF_DISP_GOOD    90
 #define GF_RAISE        92
-#define GF_STAR_IDENTIFY 93
 #define GF_DESTRUCTION  94
 #define GF_STUN_CONF    95
 #define GF_STUN_DAM     96

@@ -3623,7 +3623,6 @@ gf_name_type gf_names[] =
 	{ GF_DOMINATION, "domination" },
 	{ GF_DISP_GOOD, "dispel good" },
 	{ GF_RAISE, "raise dead" },
-	{ GF_STAR_IDENTIFY, "*identification*" },
 	{ GF_DESTRUCTION, "destruction" },
 	{ GF_STUN_CONF, "stunning and confusion" },
 	{ GF_STUN_DAM, "stunning and damage" },
