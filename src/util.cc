@@ -1011,7 +1011,7 @@ static bool_ macro__use[256];
 /*
 * Find the macro (if any) which exactly matches the given pattern
 */
-sint macro_find_exact(cptr pat)
+int macro_find_exact(cptr pat)
 {
 	int i;
 
@@ -1039,7 +1039,7 @@ sint macro_find_exact(cptr pat)
 /*
 * Find the first macro (if any) which contains the given pattern
 */
-static sint macro_find_check(cptr pat)
+static int macro_find_check(cptr pat)
 {
 	int i;
 
@@ -1067,7 +1067,7 @@ static sint macro_find_check(cptr pat)
 /*
 * Find the first macro (if any) which contains the given pattern and more
 */
-static sint macro_find_maybe(cptr pat)
+static int macro_find_maybe(cptr pat)
 {
 	int i;
 
@@ -1098,7 +1098,7 @@ static sint macro_find_maybe(cptr pat)
 /*
 * Find the longest macro (if any) which starts with the given pattern
 */
-static sint macro_find_ready(cptr pat)
+static int macro_find_ready(cptr pat)
 {
 	int i, t, n = -1, s = -1;
 

@@ -82,9 +82,6 @@ typedef unsigned char byte;
 typedef char bool_;
 
 
-/* A signed, standard integer (at least 2 bytes) */
-typedef int sint;
-
 /* An unsigned, "standard" integer (often pre-defined) */
 typedef unsigned int uint;
 
