@@ -101,10 +101,8 @@ G:3:w
 W:24
 
 N:3:Temple
-I:100:& Nunchaku~
 I:100:& Quarterstaff~
 I:100:& Mace~
-I:100:& Bo Staff~
 I:100:& War Hammer~
 I:100:& Lucerne Hammer~
 I:100:& Morning Star~
@@ -220,7 +218,6 @@ I:100:Slow Digestion
 T:100:40:3
 I:100:Acid Resistance
 I:100:Lightning Resistance
-I:100:Searching
 I:100:Cure Light Wounds
 # Rods
 I:25:& Wooden Rod~ of#

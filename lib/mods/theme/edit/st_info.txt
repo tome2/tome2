@@ -214,7 +214,6 @@ I:100:Protection
 I:100:Charisma
 I:100:Slow Digestion
 T:100:40:7
-I:100:Searching
 I:100:Cure Light Wounds
 # Rods
 I:25:& Wooden Rod~ of#
@@ -914,8 +913,8 @@ W:24
 
 # Music store
 N:64:Music Store
-I:20:& Horn~ 
-I:20:& Drum~ 
+I:20:& Horn~
+I:20:& Drum~
 I:20:& Harp~
 A:0:0:1:2:3:4
 O:194:195:196:197
