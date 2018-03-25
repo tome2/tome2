@@ -62,7 +62,6 @@ extern move_info_type move_info[9];
 extern tactic_info_type tactic_info[9];
 extern activation activation_info[MAX_T_ACT];
 extern inscription_info_type inscription_info[MAX_INSCRIPTIONS];
-extern cptr sense_desc[];
 std::vector<flags_group> const &flags_groups();
 extern cptr artifact_names_list;
 extern monster_power monster_powers[MONSTER_POWERS_MAX];

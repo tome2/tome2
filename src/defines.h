@@ -1832,7 +1832,6 @@
 /*
  * Special Object Flags
  */
-#define IDENT_SENSE             0x01    /* Item has been "sensed" */
 #define IDENT_EMPTY             0x04    /* Item charges are known */
 #define IDENT_KNOWN             0x08    /* Item abilities are known */
 #define IDENT_STOREB            0x10    /* Item is storebought !!!! */
@@ -2125,19 +2124,6 @@
 #define STORE_HATED     0
 #define STORE_LIKED     1
 #define STORE_NORMAL    2
-
-/* Pseudo-id defines */
-#define SENSE_NONE                      0
-#define SENSE_CURSED			1
-#define SENSE_AVERAGE			2
-#define SENSE_GOOD_LIGHT		3
-#define SENSE_GOOD_HEAVY		4
-#define SENSE_EXCELLENT			5
-#define SENSE_WORTHLESS			6
-#define SENSE_TERRIBLE			7
-#define SENSE_SPECIAL			8
-#define SENSE_BROKEN			9
-#define SENSE_UNCURSED			10
 
 /* Wilderness map related */
 #define WILDERNESS_SEE_RADIUS   3       /* The amount of wilderness seen around the player */

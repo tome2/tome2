@@ -559,15 +559,9 @@ static bool_ remove_curse_object(object_type *o_ptr, bool_ all)
 	/* Uncurse it */
 	o_ptr->ident &= ~(IDENT_CURSED);
 
-	/* Hack -- Assume felt */
-	o_ptr->ident |= (IDENT_SENSE);
-
 	/* Strip curse flags */
 	o_ptr->art_flags &= ~TR_CURSED;
 	o_ptr->art_flags &= ~TR_HEAVY_CURSE;
-
-	/* Take note */
-	o_ptr->sense = SENSE_UNCURSED;
 
 	/* Reverse the curse effect */
 	/* jk - scrolls of *remove curse* have a 1 in (55-level chance to */
@@ -721,25 +715,8 @@ bool_ alchemy() /* Turns an object into gold, gain some of its value in a shop *
 	/* Artifacts cannot be destroyed */
 	if (artifact_p(o_ptr))
 	{
-		byte feel = SENSE_SPECIAL;
-
 		/* Message */
 		msg_format("You fail to turn %s to gold!", o_name);
-
-		/* Hack -- Handle icky artifacts */
-		if (cursed_p(o_ptr)) feel = SENSE_TERRIBLE;
-
-		/* Hack -- inscribe the artifact */
-		o_ptr->sense = feel;
-
-		/* We have "felt" it (again) */
-		o_ptr->ident |= (IDENT_SENSE);
-
-		/* Combine the pack */
-		p_ptr->notice |= (PN_COMBINE);
-
-		/* Window stuff */
-		p_ptr->window |= (PW_INVEN | PW_EQUIP);
 
 		/* Done */
 		return FALSE;
@@ -982,17 +959,11 @@ bool_ lose_all_info()
 		/* Allow "protection" by the MENTAL flag */
 		if (o_ptr->ident & (IDENT_MENTAL)) continue;
 
-		/* Remove sensing */
-		o_ptr->sense = SENSE_NONE;
-
 		/* Hack -- Clear the "empty" flag */
 		o_ptr->ident &= ~(IDENT_EMPTY);
 
 		/* Hack -- Clear the "known" flag */
 		o_ptr->ident &= ~(IDENT_KNOWN);
-
-		/* Hack -- Clear the "felt" flag */
-		o_ptr->ident &= ~(IDENT_SENSE);
 	}
 
 	/* Recalculate bonuses */
@@ -1631,14 +1602,11 @@ bool_ enchant(object_type *o_ptr, int n, int eflag)
 		{
 			msg_print("The curse is broken!");
 			o_ptr->ident &= ~(IDENT_CURSED);
-			o_ptr->ident |= (IDENT_SENSE);
 
 			if (o_ptr->art_flags & TR_CURSED)
 				o_ptr->art_flags &= ~TR_CURSED;
 			if (o_ptr->art_flags & TR_HEAVY_CURSE)
 				o_ptr->art_flags &= ~TR_HEAVY_CURSE;
-
-			o_ptr->sense = SENSE_UNCURSED;
 		}
 	};
 

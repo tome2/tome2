@@ -88,8 +88,6 @@ struct object_type
 
 	s16b held_m_idx = 0;                     /* Monster holding the object; if any */
 
-	byte sense = 0;                          /* Pseudo-id status */
-
 	byte found = 0;                          /* How did we find it */
 	s16b found_aux1 = 0;                     /* Stores info for found */
 	s16b found_aux2 = 0;                     /* Stores info for found */

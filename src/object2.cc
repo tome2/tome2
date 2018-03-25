@@ -713,12 +713,6 @@ void object_known(object_type *o_ptr)
 	auto previously_known = object_known_p(o_ptr);
 	bool previously_fully_known = o_ptr->ident & IDENT_MENTAL;
 
-	/* No Sensing */
-	o_ptr->sense = SENSE_NONE;
-
-	/* Clear the "Felt" info */
-	o_ptr->ident &= ~(IDENT_SENSE);
-
 	/* Clear the "Empty" info */
 	o_ptr->ident &= ~(IDENT_EMPTY);
 
@@ -1407,8 +1401,8 @@ s32b object_value(object_type const *o_ptr)
 	/* Known items -- acquire the actual value */
 	else
 	{
-		/* Hack -- Felt cursed items */
-		if ((o_ptr->ident & (IDENT_SENSE)) && cursed_p(o_ptr)) return (0L);
+		/* Cursed items */
+		if (cursed_p(o_ptr)) return (0L);
 
 		/* Base value (see above) */
 		value = object_value_base(o_ptr);

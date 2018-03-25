@@ -30,18 +30,7 @@ status_type object_status(object_type *o_ptr)
 {
 	if (!object_known_p(o_ptr))
 	{
-		switch (o_ptr->sense)
-		{
-		case SENSE_CURSED: return status_type::BAD;
-		case SENSE_WORTHLESS: return status_type::VERY_BAD;
-		case SENSE_AVERAGE: return status_type::AVERAGE;
-		case SENSE_GOOD_LIGHT: return status_type::GOOD;
-		case SENSE_GOOD_HEAVY: return status_type::GOOD;
-		case SENSE_EXCELLENT: return status_type::VERY_GOOD;
-		case SENSE_SPECIAL: return status_type::SPECIAL;
-		case SENSE_TERRIBLE: return status_type::TERRIBLE;
-		default: return status_type::NONE;
-		}
+		return status_type::NONE;
 	}
 	else
 	{

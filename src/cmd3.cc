@@ -257,7 +257,7 @@ void do_cmd_wield()
 	}
 
 	if ((cursed_p(o_ptr)) && (options->wear_confirm)
-	                && (object_known_p(o_ptr) || (o_ptr->ident & (IDENT_SENSE))))
+			&& (object_known_p(o_ptr)))
 	{
 		char dummy[512];
 
@@ -421,10 +421,6 @@ void do_cmd_wield()
 	{
 		/* Warn the player */
 		msg_print("Oops! It feels deathly cold!");
-
-		/* Note the curse */
-		o_ptr->ident |= (IDENT_SENSE);
-		o_ptr->sense = SENSE_CURSED;
 	}
 
 	/* Take care of item sets */
@@ -634,27 +630,11 @@ void do_cmd_destroy()
 	/* Artifacts cannot be destroyed */
 	if (artifact_p(o_ptr))
 	{
-		byte feel = SENSE_SPECIAL;
-
+		/* Don't use any energy */
 		energy_use = 0;
 
 		/* Message */
 		msg_format("You cannot destroy %s.", o_name);
-
-		/* Hack -- Handle icky artifacts */
-		if (cursed_p(o_ptr)) feel = SENSE_TERRIBLE;
-
-		/* Hack -- inscribe the artifact */
-		o_ptr->sense = feel;
-
-		/* We have "felt" it (again) */
-		o_ptr->ident |= (IDENT_SENSE);
-
-		/* Combine the pack */
-		p_ptr->notice |= (PN_COMBINE);
-
-		/* Window stuff */
-		p_ptr->window |= (PW_INVEN | PW_EQUIP);
 
 		/* Done */
 		return;

@@ -2299,24 +2299,6 @@ inscription_info_type inscription_info[MAX_INSCRIPTIONS] =
 };
 
 /*
- * Inscriptions for pseudo-id
- */
-cptr sense_desc[] =
-{
-	"whoops",
-	"cursed",
-	"average",
-	"good",
-	"good",
-	"excellent",
-	"worthless",
-	"terrible",
-	"special",
-	"broken",
-	""
-};
-
-/*
  * Flag groups used for art creation, level gaining weapons, ...
  * -----
  * Name,

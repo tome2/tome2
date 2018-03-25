@@ -1154,9 +1154,6 @@ static void do_item(object_type *o_ptr, ls_flag_t flag)
 	do_byte(&o_ptr->elevel, flag);
 	do_s32b(&o_ptr->exp, flag);
 
-	/* Read the pseudo-id */
-	do_byte(&o_ptr->sense, flag);
-
 	/* Read the found info */
 	do_byte(&o_ptr->found, flag);
 	do_s16b(&o_ptr->found_aux1, flag);

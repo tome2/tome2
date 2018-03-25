@@ -13,7 +13,6 @@
 #include "cave_type.hpp"
 #include "cmd2.hpp"
 #include "cmd6.hpp"
-#include "dungeon.hpp"
 #include "dungeon_info_type.hpp"
 #include "ego_item_type.hpp"
 #include "feature_type.hpp"
@@ -1977,12 +1976,6 @@ static std::string object_desc_aux(object_type const *o_ptr, int pref, int mode)
 	/* Inscribe */
 	{
 		std::vector<std::string> inscrip;
-
-		/* Sensed stuff */
-		if ((o_ptr->ident & (IDENT_SENSE)) && sense_desc[o_ptr->sense] && sense_desc[o_ptr->sense][0] != '\0')
-		{
-			inscrip.push_back(sense_desc[o_ptr->sense]);
-		}
 
 		/* Hack - Note "cursed" if the item is 'known' and cursed */
 		if (cursed_p(o_ptr) && known && inscrip.empty())
@@ -5476,10 +5469,6 @@ int wear_ammo(object_type *o_ptr)
 	{
 		/* Warn the player */
 		msg_print("Oops! It feels deathly cold!");
-
-		/* Note the curse */
-		o_ptr->ident |= (IDENT_SENSE);
-		o_ptr->sense = SENSE_CURSED;
 	}
 
 	/* Recalculate bonuses */
@@ -5634,9 +5623,6 @@ void object_pickup(int this_o_idx)
 
 			/* Delete the object */
 			delete_object_idx(this_o_idx);
-
-                        /* Sense object. */
-                        sense_inventory();
 		}
 	}
 }
@@ -5704,9 +5690,6 @@ static void sense_floor(cave_type const *c_ptr)
 		object_aware(o_ptr);
 		object_known(o_ptr);
 	}
-
-	/* Sense floor tile */
-	sense_objects(floor_object_idxs);
 }
 
 void py_pickup_floor(int pickup)
