@@ -798,12 +798,14 @@ errr get_mon_num_prep()
 {
 	auto &alloc = game->alloc;
 
+	auto const &r_info = game->edit_data.r_info;
+
 	/* Scan the allocation table */
 	for (auto &&entry: alloc.race_table)
 	{
 		/* Accept monsters which pass the restriction, if any */
-		if ((!get_mon_num_hook || (*get_mon_num_hook)(entry.index)) &&
-				(!get_mon_num2_hook || (*get_mon_num2_hook)(entry.index)))
+		if ((!get_mon_num_hook || (*get_mon_num_hook)(&r_info[entry.index])) &&
+				(!get_mon_num2_hook || (*get_mon_num2_hook)(&r_info[entry.index])))
 		{
 			/* Accept this monster */
 			entry.prob2 = entry.prob1;
@@ -2597,32 +2599,27 @@ static bool_ place_monster_group(int y, int x, int r_idx, bool_ slp, int status)
 /*
  * Hack -- help pick an escort type
  */
-static int place_monster_idx = 0;
+static monster_race const *place_monster_ptr = nullptr;
 
 /*
  * Hack -- help pick an escort type
  */
-static bool place_monster_okay(int r_idx)
+static bool place_monster_okay(monster_race const *r_ptr)
 {
-	auto const &r_info = game->edit_data.r_info;
-
-	auto r_ptr = &r_info[place_monster_idx];
-	auto z_ptr = &r_info[r_idx];
-
 	/* Hack - Escorts have to have the same dungeon flag */
-	if (monster_dungeon(place_monster_idx) != monster_dungeon(r_idx)) return false;
+	if (monster_dungeon(place_monster_ptr) != monster_dungeon(r_ptr)) return false;
 
 	/* Require similar "race" */
-	if (z_ptr->d_char != r_ptr->d_char) return false;
+	if (r_ptr->d_char != place_monster_ptr->d_char) return false;
 
 	/* Skip more advanced monsters */
-	if (z_ptr->level > r_ptr->level) return false;
+	if (r_ptr->level > place_monster_ptr->level) return false;
 
 	/* Skip unique monsters */
-	if (z_ptr->flags & RF_UNIQUE) return false;
+	if (r_ptr->flags & RF_UNIQUE) return false;
 
 	/* Paranoia -- Skip identical monsters */
-	if (place_monster_idx == r_idx) return false;
+	if (place_monster_ptr == r_ptr) return false;
 
 	/* Okay */
 	return true;
@@ -2653,7 +2650,7 @@ bool_ place_monster_aux(int y, int x, int r_idx, bool_ slp, bool_ grp, int statu
 
 	int i;
 	auto r_ptr = &r_info[r_idx];
-	bool (*old_get_mon_num_hook)(int r_idx);
+	bool (*old_get_mon_num_hook)(monster_race const *);
 
 
 	/* Place one monster, or fail */
@@ -2678,7 +2675,7 @@ bool_ place_monster_aux(int y, int x, int r_idx, bool_ slp, bool_ grp, int statu
 		old_get_mon_num_hook = get_mon_num_hook;
 
 		/* Set the escort index */
-		place_monster_idx = r_idx;
+		place_monster_ptr = &r_info[r_idx];
 
 		/* Set the escort hook */
 		get_mon_num_hook = place_monster_okay;
@@ -2906,14 +2903,10 @@ static int summon_specific_type = 0;
 /*
  * Hack -- help decide if a monster race is "okay" to summon
  */
-static bool summon_specific_okay(int r_idx)
+static bool summon_specific_okay(monster_race const *r_ptr)
 {
-	auto const &r_info = game->edit_data.r_info;
-
-	auto r_ptr = &r_info[r_idx];
-
 	/* Hack - Only summon dungeon monsters */
-	if (!monster_dungeon(r_idx)) return false;
+	if (!monster_dungeon(r_ptr)) return false;
 
 	/* Hack -- no specific type specified */
 	if (!summon_specific_type) return true;
@@ -3183,7 +3176,7 @@ bool_ summon_specific(int y1, int x1, int lev, int type)
 {
 	int i, x, y, r_idx;
 	bool_ Group_ok = TRUE;
-	bool (*old_get_mon_num_hook)(int r_idx);
+	bool (*old_get_mon_num_hook)(monster_race const *);
 
 	/* Look for a location */
 	for (i = 0; i < 20; ++i)
@@ -3267,7 +3260,7 @@ bool_ summon_specific(int y1, int x1, int lev, int type)
 bool_ summon_specific_friendly(int y1, int x1, int lev, int type, bool_ Group_ok)
 {
 	int i, x, y, r_idx;
-	bool (*old_get_mon_num_hook)(int r_idx);
+	bool (*old_get_mon_num_hook)(monster_race const *);
 
 	/* Look for a location */
 	for (i = 0; i < 20; ++i)
@@ -3443,13 +3436,10 @@ void monster_swap(int y1, int x1, int y2, int x2)
 /*
  * Hack -- help decide if a monster race is "okay" to summon
  */
-static bool mutate_monster_okay(int r_idx)
+static bool mutate_monster_okay(monster_race const *r_ptr)
 {
-	auto const &r_info = game->edit_data.r_info;
-	auto r_ptr = &r_info[r_idx];
-
 	/* Hack - Only summon dungeon monsters */
-	if (!monster_dungeon(r_idx)) return false;
+	if (!monster_dungeon(r_ptr)) return false;
 
 	return ((r_ptr->d_char == summon_kin_type) && !(r_ptr->flags & RF_UNIQUE)
 	        && (r_ptr->level >= dun_level));
@@ -3490,7 +3480,7 @@ bool_ multiply_monster(int m_idx, bool_ charm, bool_ clone)
 		/* It can mutate into a nastier monster */
 		if ((rand_int(100) < 3) && (!clone))
 		{
-			bool (*old_get_mon_num_hook)(int r_idx);
+			bool (*old_get_mon_num_hook)(monster_race const *);
 
 			/* Backup the old hook */
 			old_get_mon_num_hook = get_mon_num_hook;

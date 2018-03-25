@@ -20,11 +20,8 @@
 
 #define bounty_quest_monster (cquest.data[0])
 
-static bool lua_mon_hook_bounty(int r_idx)
+static bool lua_mon_hook_bounty(monster_race const *r_ptr)
 {
-	auto const &r_info = game->edit_data.r_info;
-	auto r_ptr = &r_info[r_idx];
-
 	/* Reject uniques */
 	if (r_ptr->flags & RF_UNIQUE) return false;
 

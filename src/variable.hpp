@@ -8,6 +8,7 @@
 #include "dungeon_flag_set.hpp"
 #include "effect_type.hpp"
 #include "fate.hpp"
+#include "monster_race_fwd.hpp"
 #include "monster_type_fwd.hpp"
 #include "object_type_fwd.hpp"
 #include "options.hpp"
@@ -144,8 +145,8 @@ extern char *ANGBAND_DIR;
 extern char *ANGBAND_DIR_MODULES;
 extern char *ANGBAND_DIR_CORE;
 extern char *ANGBAND_DIR_DNGN;
-extern bool (*get_mon_num_hook)(int r_idx);
-extern bool (*get_mon_num2_hook)(int r_idx);
+extern bool (*get_mon_num_hook)(monster_race const *);
+extern bool (*get_mon_num2_hook)(monster_race const *);
 extern bool_ (*get_obj_num_hook)(int k_idx);
 extern u16b max_o_idx;
 extern u16b max_m_idx;

@@ -1004,11 +1004,8 @@ static void town_borders(int qy, int qx)
 	}
 }
 
-static bool create_townpeople_hook(int r_idx)
+static bool create_townpeople_hook(monster_race const *r_ptr)
 {
-	auto const &r_info = game->edit_data.r_info;
-	auto r_ptr = &r_info[r_idx];
-
 	return (r_ptr->d_char == 't');
 }
 
@@ -1023,7 +1020,7 @@ static bool create_townpeople_hook(int r_idx)
 static void town_gen_hack(int qy, int qx)
 {
 	int y, x, floor;
-	bool (*old_get_mon_num_hook)(int r_idx);
+	bool (*old_get_mon_num_hook)(monster_race const *);
 
 	/* Do we use dungeon floor or normal one */
 	if (magik(TOWN_NORMAL_FLOOR)) floor = FEAT_FLOOR;
@@ -1114,7 +1111,7 @@ static void town_gen_hack(int qy, int qx)
 static void town_gen_circle(int qy, int qx)
 {
 	int y, x, cy, cx, rad, floor;
-	bool (*old_get_mon_num_hook)(int r_idx);
+	bool (*old_get_mon_num_hook)(monster_race const *);
 
 	/* Do we use dungeon floor or normal one */
 	if (magik(TOWN_NORMAL_FLOOR)) floor = FEAT_FLOOR;

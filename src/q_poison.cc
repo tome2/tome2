@@ -31,23 +31,21 @@ static int wild_locs[4][2] =
 	{ 34, 48, },
 };
 
-static bool create_molds_hook(int r_idx)
+static bool create_molds_hook(monster_race const *r_ptr)
 {
-	auto const &r_info = game->edit_data.r_info;
-	auto r_ptr = &r_info[r_idx];
-
 	if (r_ptr->spells & SF_MULTIPLY) return false;
 
 	if (r_ptr->d_char == 'm') return true;
-	else if (r_ptr->d_char == ',') return true;
-	else if (r_ptr->d_char == 'e') return true;
-	else return false;
+	if (r_ptr->d_char == ',') return true;
+	if (r_ptr->d_char == 'e') return true;
+
+	return false;
 }
 
 static bool quest_poison_gen_hook(void *, void *, void *)
 {
 	int cy = 1, cx = 1, x, y, tries = 10000, r_idx;
-	bool (*old_get_mon_num_hook)(int r_idx);
+	bool (*old_get_mon_num_hook)(monster_race const *);
 
 	if (cquest.status != QUEST_STATUS_TAKEN)
 	{
