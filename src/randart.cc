@@ -294,12 +294,6 @@ bool_ create_artifact(object_type *o_ptr, bool_ a_scroll, bool_ get_name)
 
 		add_random_ego_flag(o_ptr, ra_ptr->fego, &limit_blows);
 
-		/* get flags */
-		auto const flags = object_flags(o_ptr);
-
-		/* Hack -- acquire "cursed" flag */
-		if (flags & TR_CURSED) o_ptr->ident |= (IDENT_CURSED);
-
 		/* Hack -- obtain bonuses */
 		if (ra_ptr->max_to_h > 0) o_ptr->to_h += randint(ra_ptr->max_to_h);
 		if (ra_ptr->max_to_h < 0) o_ptr->to_h -= randint( -ra_ptr->max_to_h);

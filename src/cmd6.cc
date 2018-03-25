@@ -2533,10 +2533,7 @@ static void curse_armor()
 		o_ptr->ac = 0;
 		o_ptr->dd = 0;
 		o_ptr->ds = 0;
-		o_ptr->art_flags = object_flag_set();
-
-		/* Curse it */
-		o_ptr->ident |= (IDENT_CURSED);
+		o_ptr->art_flags = TR_CURSED;
 
 		/* Recalculate bonuses */
 		p_ptr->update |= (PU_BONUS);
@@ -2591,11 +2588,7 @@ static void curse_weapon()
 		o_ptr->ac = 0;
 		o_ptr->dd = 0;
 		o_ptr->ds = 0;
-		o_ptr->art_flags = object_flag_set();
-
-
-		/* Curse it */
-		o_ptr->ident |= (IDENT_CURSED);
+		o_ptr->art_flags = TR_CURSED;
 
 		/* Recalculate bonuses */
 		p_ptr->update |= (PU_BONUS);

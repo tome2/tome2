@@ -556,9 +556,6 @@ static bool_ remove_curse_object(object_type *o_ptr, bool_ all)
 	/* Perma-Cursed Items can NEVER be uncursed */
 	if (flags & TR_PERMA_CURSE) return FALSE;
 
-	/* Uncurse it */
-	o_ptr->ident &= ~(IDENT_CURSED);
-
 	/* Strip curse flags */
 	o_ptr->art_flags &= ~TR_CURSED;
 	o_ptr->art_flags &= ~TR_HEAVY_CURSE;
@@ -1598,12 +1595,7 @@ bool_ enchant(object_type *o_ptr, int n, int eflag)
 		if (cursed_p(o_ptr) && (!(flags & TR_PERMA_CURSE)))
 		{
 			msg_print("The curse is broken!");
-			o_ptr->ident &= ~(IDENT_CURSED);
-
-			if (o_ptr->art_flags & TR_CURSED)
-				o_ptr->art_flags &= ~TR_CURSED;
-			if (o_ptr->art_flags & TR_HEAVY_CURSE)
-				o_ptr->art_flags &= ~TR_HEAVY_CURSE;
+			o_ptr->art_flags &= ~(TR_CURSED | TR_HEAVY_CURSE);
 		}
 	};
 
@@ -1795,7 +1787,6 @@ void curse_artifact(object_type * o_ptr)
 	if (randint(3) == 1) o_ptr-> art_flags |= TR_BLACK_BREATH;
 	if (randint(2) == 1) o_ptr-> art_flags |= TR_TELEPORT;
 	else if (randint(3) == 1) o_ptr->art_flags |= TR_NO_TELE;
-	o_ptr->ident |= IDENT_CURSED;
 }
 
 

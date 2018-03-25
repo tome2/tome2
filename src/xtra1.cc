@@ -4469,7 +4469,10 @@ std::string fate_desc(int fate)
 				q_ptr->weight = a_ptr->weight;
 
 				/* Hack -- acquire "cursed" flag */
-				if (a_ptr->flags & (TR_CURSED)) q_ptr->ident |= (IDENT_CURSED);
+				if (a_ptr->flags & TR_CURSED)
+				{
+					q_ptr->art_flags |= TR_CURSED;
+				}
 
 				random_artifact_resistance(q_ptr);
 

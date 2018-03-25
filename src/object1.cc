@@ -6217,9 +6217,9 @@ bool is_ego_p(object_type const *o_ptr, s16b ego)
 }
 
 /**
- * Is the given object identified as cursed?
+ * Is the given object cursed?
  */
 bool cursed_p(object_type const *o_ptr)
 {
-	return o_ptr->ident & (IDENT_CURSED);
+	return bool(o_ptr->art_flags & TR_CURSED);
 }

@@ -869,15 +869,15 @@ s32b flag_cost(object_type const *o_ptr, int plusses)
 	if (flags & TR_DRAIN_EXP) total -= 12500;
 	if (flags & TR_TELEPORT)
 	{
-		if (o_ptr->ident & IDENT_CURSED)
+		if (o_ptr->art_flags & TR_CURSED)
 			total -= 7500;
 		else
 			total += 250;
 	}
 	if (flags & TR_AGGRAVATE) total -= 10000;
 	if (flags & TR_BLESSED) total += 750;
-	if ((flags & TR_CURSED) && (o_ptr->ident & IDENT_CURSED)) total -= 5000;
-	if ((flags & TR_HEAVY_CURSE) && (o_ptr->ident & IDENT_CURSED)) total -= 12500;
+	if (flags & TR_CURSED) total -= 5000;
+	if (flags & TR_HEAVY_CURSE) total -= 12500;
 	if (flags & TR_PERMA_CURSE) total -= 15000;
 	if (flags & TR_FEATHER) total += 1250;
 	if (flags & TR_FLY) total += 10000;
@@ -1622,9 +1622,6 @@ bool_ object_similar(object_type const *o_ptr, object_type const *j_ptr)
 		return (0);
 	}
 
-	/* Hack -- Require identical "cursed" status */
-	if ((o_ptr->ident & (IDENT_CURSED)) != (j_ptr->ident & (IDENT_CURSED))) return (0);
-
 	/* Hack -- require semi-matching "inscriptions" */
 	if ((!o_ptr->inscription.empty()) && (!j_ptr->inscription.empty()) && (o_ptr->inscription != j_ptr->inscription))
 	{
@@ -1779,7 +1776,7 @@ void object_prep(object_type *o_ptr, int k_idx)
 	/* Hack -- cursed items are always "cursed" */
 	if (k_ptr->flags & TR_CURSED)
 	{
-		o_ptr->ident |= (IDENT_CURSED);
+		o_ptr->art_flags |= TR_CURSED;
 	}
 
 	/* Hack give a basic exp/exp level to an object that needs it */
@@ -2428,7 +2425,10 @@ static void a_m_aux_1(object_type *o_ptr, int level, int power)
 		}
 
 		/* Cursed (if "bad") */
-		if (o_ptr->to_h + o_ptr->to_d < 0) o_ptr->ident |= (IDENT_CURSED);
+		if (o_ptr->to_h + o_ptr->to_d < 0)
+		{
+			o_ptr->art_flags |= TR_CURSED;
+		}
 	}
 
 	/* Some special cases */
@@ -2537,7 +2537,10 @@ static void a_m_aux_2(object_type *o_ptr, int level, int power)
 		}
 
 		/* Cursed (if "bad") */
-		if (o_ptr->to_a < 0) o_ptr->ident |= (IDENT_CURSED);
+		if (o_ptr->to_a < 0)
+		{
+			o_ptr->art_flags |= TR_CURSED;
+		}
 	}
 
 	/* Analyze type */
@@ -2651,7 +2654,7 @@ static void a_m_aux_3(object_type *o_ptr, int level, int power)
 					if (power < 0)
 					{
 						/* Cursed */
-						o_ptr->ident |= (IDENT_CURSED);
+						o_ptr->art_flags |= TR_CURSED;
 
 						/* Reverse pval */
 						o_ptr->pval = 0 - (o_ptr->pval);
@@ -2671,7 +2674,7 @@ static void a_m_aux_3(object_type *o_ptr, int level, int power)
 					if (power < 0)
 					{
 						/* Cursed */
-						o_ptr->ident |= (IDENT_CURSED);
+						o_ptr->art_flags |= TR_CURSED;
 
 						/* Reverse pval */
 						o_ptr->pval = 0 - (o_ptr->pval);
@@ -2693,7 +2696,7 @@ static void a_m_aux_3(object_type *o_ptr, int level, int power)
 					if (power < 0)
 					{
 						/* Cursed */
-						o_ptr->ident |= (IDENT_CURSED);
+						o_ptr->art_flags |= TR_CURSED;
 
 						/* Reverse pval */
 						o_ptr->pval = 0 - (o_ptr->pval);
@@ -2715,7 +2718,7 @@ static void a_m_aux_3(object_type *o_ptr, int level, int power)
 					if (power < 0)
 					{
 						/* Cursed */
-						o_ptr->ident |= (IDENT_CURSED);
+						o_ptr->art_flags |= TR_CURSED;
 
 						/* Reverse pval */
 						o_ptr->pval = 0 - (o_ptr->pval);
@@ -2764,7 +2767,7 @@ static void a_m_aux_3(object_type *o_ptr, int level, int power)
 			case SV_RING_STUPIDITY:
 				{
 					/* Cursed */
-					o_ptr->ident |= (IDENT_CURSED);
+					o_ptr->art_flags |= TR_CURSED;
 
 					/* Penalize */
 					o_ptr->pval = 0 - (1 + m_bonus(5, level));
@@ -2776,7 +2779,7 @@ static void a_m_aux_3(object_type *o_ptr, int level, int power)
 			case SV_RING_WOE:
 				{
 					/* Cursed */
-					o_ptr->ident |= (IDENT_CURSED);
+					o_ptr->art_flags |= TR_CURSED;
 
 					/* Penalize */
 					o_ptr->to_a = 0 - (5 + m_bonus(10, level));
@@ -2795,7 +2798,7 @@ static void a_m_aux_3(object_type *o_ptr, int level, int power)
 					if (power < 0)
 					{
 						/* Cursed */
-						o_ptr->ident |= (IDENT_CURSED);
+						o_ptr->art_flags |= TR_CURSED;
 
 						/* Reverse bonus */
 						o_ptr->to_d = 0 - (o_ptr->to_d);
@@ -2814,7 +2817,7 @@ static void a_m_aux_3(object_type *o_ptr, int level, int power)
 					if (power < 0)
 					{
 						/* Cursed */
-						o_ptr->ident |= (IDENT_CURSED);
+						o_ptr->art_flags |= TR_CURSED;
 
 						/* Reverse tohit */
 						o_ptr->to_h = 0 - (o_ptr->to_h);
@@ -2833,7 +2836,7 @@ static void a_m_aux_3(object_type *o_ptr, int level, int power)
 					if (power < 0)
 					{
 						/* Cursed */
-						o_ptr->ident |= (IDENT_CURSED);
+						o_ptr->art_flags |= TR_CURSED;
 
 						/* Reverse toac */
 						o_ptr->to_a = 0 - (o_ptr->to_a);
@@ -2853,7 +2856,7 @@ static void a_m_aux_3(object_type *o_ptr, int level, int power)
 					if (power < 0)
 					{
 						/* Cursed */
-						o_ptr->ident |= (IDENT_CURSED);
+						o_ptr->art_flags |= TR_CURSED;
 
 						/* Reverse bonuses */
 						o_ptr->to_h = 0 - (o_ptr->to_h);
@@ -2913,7 +2916,7 @@ static void a_m_aux_3(object_type *o_ptr, int level, int power)
 					if (power < 0)
 					{
 						/* Cursed */
-						o_ptr->ident |= (IDENT_CURSED);
+						o_ptr->art_flags |= TR_CURSED;
 
 						/* Reverse bonuses */
 						o_ptr->pval = 0 - (o_ptr->pval);
@@ -2932,7 +2935,7 @@ static void a_m_aux_3(object_type *o_ptr, int level, int power)
 					if (power < 0)
 					{
 						/* Cursed */
-						o_ptr->ident |= (IDENT_CURSED);
+						o_ptr->art_flags |= TR_CURSED;
 
 						/* Reverse bonuses */
 						o_ptr->pval = 0 - (o_ptr->pval);
@@ -2946,7 +2949,7 @@ static void a_m_aux_3(object_type *o_ptr, int level, int power)
 				{
 					if (power < 0)
 					{
-						o_ptr->ident |= (IDENT_CURSED);
+						o_ptr->art_flags |= TR_CURSED;
 					}
 					break;
 				}
@@ -2981,7 +2984,7 @@ static void a_m_aux_3(object_type *o_ptr, int level, int power)
 			case SV_AMULET_DOOM:
 				{
 					/* Cursed */
-					o_ptr->ident |= (IDENT_CURSED);
+					o_ptr->art_flags |= TR_CURSED;
 
 					/* Penalize */
 					o_ptr->pval = 0 - (randint(5) + m_bonus(5, level));
@@ -3908,9 +3911,6 @@ void apply_magic(object_type *o_ptr, int lev, bool_ okay, bool_ good, bool_ grea
 		o_ptr->weight = a_ptr->weight;
 		o_ptr->number = 1;
 
-		/* Hack -- extract the "cursed" flag */
-		if (a_ptr->flags & TR_CURSED) o_ptr->ident |= (IDENT_CURSED);
-
 		/* Mega-Hack -- increase the rating */
 		rating += 10;
 
@@ -4046,9 +4046,6 @@ try_an_other_ego:
 		/* get flags */
 		auto const flags = object_flags(o_ptr);
 
-		/* Hack -- acquire "cursed" flag */
-		if (flags & TR_CURSED) o_ptr->ident |= (IDENT_CURSED);
-
 		/* Hack -- obtain bonuses */
 		if (e_ptr->max_to_h > 0) o_ptr->to_h += randint(e_ptr->max_to_h);
 		if (e_ptr->max_to_h < 0) o_ptr->to_h -= randint( -e_ptr->max_to_h);
@@ -4090,7 +4087,10 @@ try_an_other_ego:
 		auto k_ptr = o_ptr->k_ptr;
 
 		/* Hack -- acquire "cursed" flag */
-		if (k_ptr->flags & TR_CURSED) o_ptr->ident |= (IDENT_CURSED);
+		if (k_ptr->flags & TR_CURSED)
+		{
+			o_ptr->art_flags |= TR_CURSED;
+		}
 
 		/* Extract some flags */
 		auto const flags = object_flags(o_ptr);

@@ -5,6 +5,7 @@
 #include "../object1.hpp"
 #include "../object2.hpp"
 #include "../object_type.hpp"
+#include "../object_flag.hpp"
 #include "../variable.hpp"
 
 namespace squelch {
@@ -38,7 +39,7 @@ status_type object_status(object_type *o_ptr)
 
 		if (artifact_p(o_ptr))
 		{
-			if (!(o_ptr->ident & IDENT_CURSED))
+			if (!(o_ptr->art_flags & TR_CURSED))
 			{
 				return status_type::SPECIAL;
 			}
@@ -50,7 +51,7 @@ status_type object_status(object_type *o_ptr)
 		else if ((o_ptr->name2 > 0) ||
 			 (o_ptr->name2b > 0))
 		{
-			if (!(o_ptr->ident & IDENT_CURSED))
+			if (!(o_ptr->art_flags & TR_CURSED))
 			{
 				return status_type::VERY_GOOD;
 			}

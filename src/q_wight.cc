@@ -93,8 +93,6 @@ static bool quest_wight_gen_hook(void *, void *, void *)
 						TR_CURSED |
 						TR_HEAVY_CURSE;
 
-					q_ptr->ident |= IDENT_CURSED;
-
 					if (randint(2) == 1)
 					{
 						q_ptr->art_flags |= TR_SPELL;

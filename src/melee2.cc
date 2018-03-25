@@ -2361,14 +2361,12 @@ void curse_equipment(int chance, int heavy_chance)
 			changed = TRUE;
 		o_ptr->art_flags |= TR_HEAVY_CURSE;
 		o_ptr->art_flags |= TR_CURSED;
-		o_ptr->ident |= IDENT_CURSED;
 	}
 	else
 	{
-		if (!(o_ptr->ident & IDENT_CURSED))
+		if (!(o_ptr->art_flags & TR_CURSED))
 			changed = TRUE;
 		o_ptr->art_flags |= TR_CURSED;
-		o_ptr->ident |= IDENT_CURSED;
 	}
 
 	if (changed)
@@ -2419,15 +2417,13 @@ void curse_equipment_dg(int chance, int heavy_chance)
 		o_ptr->art_flags |= TR_HEAVY_CURSE;
 		o_ptr->art_flags |= TR_CURSED;
 		o_ptr->art_flags |= TR_DG_CURSE;
-		o_ptr->ident |= IDENT_CURSED;
 	}
 	else
 	{
-		if (!(o_ptr->ident & IDENT_CURSED))
+		if (!(flags & TR_CURSED))
 			changed = TRUE;
 		o_ptr->art_flags |= TR_CURSED;
 		o_ptr->art_flags |= TR_DG_CURSE;
-		o_ptr->ident |= IDENT_CURSED;
 	}
 
 	if (changed)

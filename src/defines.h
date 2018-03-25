@@ -1831,7 +1831,6 @@
 #define IDENT_KNOWN             0x08    /* Item abilities are known */
 #define IDENT_STOREB            0x10    /* Item is storebought !!!! */
 #define IDENT_MENTAL            0x20    /* Item information is known */
-#define IDENT_CURSED            0x40    /* Item is temporarily cursed */
 
 
 

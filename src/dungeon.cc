@@ -2363,14 +2363,14 @@ static void process_world()
 			activate_dg_curse();
 
 			/* The object recurse itself ! */
-			o_ptr->ident |= IDENT_CURSED;
+			o_ptr->art_flags |= TR_CURSED;
 		}
 
 		/* Auto Curse */
 		if ((flags & TR_AUTO_CURSE) && (rand_int(AUTO_CURSE_CHANCE) == 0))
 		{
 			/* The object recurse itself ! */
-			o_ptr->ident |= IDENT_CURSED;
+			o_ptr->art_flags |= TR_CURSED;
 		}
 
 		/*
@@ -2379,7 +2379,7 @@ static void process_world()
 		 */
 		if ((flags & TR_TELEPORT) && (rand_int(100) < 1))
 		{
-			if ((o_ptr->ident & IDENT_CURSED) && !p_ptr->anti_tele)
+			if ((o_ptr->art_flags & TR_CURSED) && !p_ptr->anti_tele)
 			{
 				disturb();
 
