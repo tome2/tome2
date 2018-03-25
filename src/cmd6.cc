@@ -20,7 +20,6 @@
 #include "files.hpp"
 #include "game.hpp"
 #include "hook_eat_in.hpp"
-#include "hook_eat_out.hpp"
 #include "hooks.hpp"
 #include "lua_bind.hpp"
 #include "mimic.hpp"
@@ -1004,8 +1003,7 @@ void do_cmd_eat_food()
 
 	/* Scripted foods */
 	hook_eat_in in = { o_ptr };
-	hook_eat_out out = { FALSE };
-	if (process_hooks_new(HOOK_EAT, &in, &out))
+	if (process_hooks_new(HOOK_EAT, &in, nullptr))
 	{
 		// Do nothing
 	}
