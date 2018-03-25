@@ -164,7 +164,6 @@ extern s16b *max_dlv;
 extern s16b doppleganger;
 extern bool_ generate_encounter;
 extern bool_ *m_allow_special;
-extern bool_ *k_allow_special;
 extern bool_ *a_allow_special;
 extern s16b plots[MAX_PLOTS];
 extern random_quest random_quests[MAX_RANDOM_QUEST];

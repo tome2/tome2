@@ -65,6 +65,8 @@ struct object_kind
 
 	bool_ tried = 0;                         /* The player has "tried" one of the items */
 
+	bool_ allow_special = 0;
+
 	byte btval = 0;                          /* Become Object type */
 	byte bsval = 0;                          /* Become Object sub type */
 	bool_ artifact = 0;                      /* Is it a normal artifact(already generated) */

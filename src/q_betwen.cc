@@ -3,6 +3,7 @@
 #include "cave.hpp"
 #include "dungeon_flag.hpp"
 #include "cave_type.hpp"
+#include "game.hpp"
 #include "hook_chardump_in.hpp"
 #include "hook_init_quest_in.hpp"
 #include "hook_move_in.hpp"
@@ -18,6 +19,14 @@
 #include "variable.hpp"
 
 #define cquest (quest[QUEST_BETWEEN])
+
+static object_kind *get_golden_horn()
+{
+	static auto &k_info = game->edit_data.k_info;
+	static auto &k_golden_horn = k_info[test_item_name("& Golden Horn~ of the Thunderlords")];
+
+	return &k_golden_horn;
+}
 
 static bool quest_between_move_hook(void *, void *in_, void *)
 {
@@ -137,9 +146,9 @@ static bool quest_between_finish_hook(void *, void *in_, void *)
 
 
 	/* Mega-Hack -- Actually create the Golden Horn of the Thunderlords */
-	k_allow_special[test_item_name("& Golden Horn~ of the Thunderlords")] = TRUE;
+	get_golden_horn()->allow_special = TRUE;
 	apply_magic(q_ptr, -1, TRUE, TRUE, TRUE);
-	k_allow_special[test_item_name("& Golden Horn~ of the Thunderlords")] = FALSE;
+	get_golden_horn()->allow_special = FALSE;
 	object_aware(q_ptr);
 	object_known(q_ptr);
 	q_ptr->discount = 100;

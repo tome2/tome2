@@ -2070,6 +2070,8 @@ void necro_info(char *p, int power)
  */
 void do_cmd_necromancer()
 {
+	auto &k_info = game->edit_data.k_info;
+
 	int n = 0, b = 0;
 	int chance;
 	int dir;
@@ -2238,7 +2240,7 @@ void do_cmd_necromancer()
 				object_type forge, *o_ptr = &forge;
 				int k_idx = test_item_name("& Necromantic Teeth~");
 
-				k_allow_special[k_idx] = TRUE;
+				k_info[k_idx].allow_special = TRUE;
 
 				object_prep(o_ptr, k_idx);
 				apply_magic(o_ptr, plev * 2, TRUE, TRUE, TRUE);
@@ -2254,7 +2256,7 @@ void do_cmd_necromancer()
 				object_known(o_ptr);
 				inven_carry(o_ptr, FALSE);
 
-				k_allow_special[k_idx] = FALSE;
+				k_info[k_idx].allow_special = FALSE;
 
 				break;
 			}

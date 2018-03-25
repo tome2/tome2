@@ -3883,7 +3883,7 @@ void apply_magic(object_type *o_ptr, int lev, bool_ okay, bool_ good, bool_ grea
 		/* Ahah! we tried to trick us !! */
 		if (k_ptr->artifact ||
 				((k_ptr->flags & TR_SPECIAL_GENE) &&
-		                 (!k_allow_special[o_ptr->k_idx])))
+				 (!k_info[o_ptr->k_idx].allow_special)))
 		{
 			object_prep(o_ptr, lookup_kind(k_ptr->btval, k_ptr->bsval));
 			if (wizard) msg_print("We've been tricked!");
@@ -4458,8 +4458,7 @@ bool_ kind_is_legal(int k_idx)
 
 	if (k_ptr->flags & TR_SPECIAL_GENE)
 	{
-		if (k_allow_special[k_idx]) return TRUE;
-		else return FALSE;
+		return k_info[k_idx].allow_special;
 	}
 
 	/* No 2 times the same normal artifact */

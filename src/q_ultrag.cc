@@ -2,6 +2,7 @@
 
 #include "cave.hpp"
 #include "cave_type.hpp"
+#include "game.hpp"
 #include "hook_chardump_in.hpp"
 #include "hook_move_in.hpp"
 #include "hook_stair_in.hpp"
@@ -11,6 +12,7 @@
 #include "object1.hpp"
 #include "object2.hpp"
 #include "object_flag.hpp"
+#include "object_kind.hpp"
 #include "object_type.hpp"
 #include "options.hpp"
 #include "player_type.hpp"
@@ -19,6 +21,14 @@
 #include "variable.hpp"
 
 #define cquest (quest[QUEST_ULTRA_GOOD])
+
+static object_kind *get_flame_imperishable()
+{
+	static auto &k_info = game->edit_data.k_info;
+	static auto &k_flame_imperishable = k_info[test_item_name("& Flame~ Imperishable")];
+
+	return &k_flame_imperishable;
+}
 
 static bool quest_ultra_good_move_hook(void *, void *in_, void *)
 {
@@ -226,9 +236,9 @@ static bool quest_ultra_good_death_hook(void *, void *in_, void *)
 		object_prep(q_ptr, lookup_kind(TV_JUNK, 255));
 
 		/* Mega-Hack -- Actually create the Flame Imperishable */
-		k_allow_special[296] = TRUE;
+		get_flame_imperishable()->allow_special = TRUE;
 		apply_magic(q_ptr, -1, TRUE, TRUE, TRUE);
-		k_allow_special[296] = FALSE;
+		get_flame_imperishable()->allow_special = FALSE;
 
 		/* Identify it fully */
 		object_aware(q_ptr);

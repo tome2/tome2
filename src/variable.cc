@@ -563,7 +563,6 @@ bool_ generate_encounter = FALSE;
  * Such an ugly hack ...
  */
 bool_ *m_allow_special;
-bool_ *k_allow_special;
 bool_ *a_allow_special;
 
 /*

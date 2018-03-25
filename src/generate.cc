@@ -7985,7 +7985,7 @@ static bool_ cave_gen()
 				/* Get local object */
 				q_ptr = &forge;
 
-				k_allow_special[d_ptr->final_object] = TRUE;
+				k_info[d_ptr->final_object].allow_special = TRUE;
 
 				/* Wipe the object */
 				object_wipe(q_ptr);
@@ -8001,7 +8001,7 @@ static bool_ cave_gen()
 				q_ptr->found_aux3 = dungeon_type;
 				q_ptr->found_aux4 = level_or_feat(dungeon_type, dun_level);
 
-				k_allow_special[d_ptr->final_object] = FALSE;
+				k_info[d_ptr->final_object].allow_special = FALSE;
 
 				k_info[d_ptr->final_object].artifact = TRUE;
 

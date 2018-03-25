@@ -5927,6 +5927,7 @@ static errr process_dungeon_file_aux(char *buf, int *yval, int *xval, int xvalst
 	auto &wilderness = game->wilderness;
 	auto &wf_info = game->edit_data.wf_info;
 	auto &a_info = game->edit_data.a_info;
+	auto &k_info = game->edit_data.k_info;
 
 	int i;
 
@@ -6251,7 +6252,7 @@ static errr process_dungeon_file_aux(char *buf, int *yval, int *xval, int xvalst
 				/* Get local object */
 				object_type *o_ptr = &object_type_body;
 
-				k_allow_special[object_index] = TRUE;
+				k_info[object_index].allow_special = TRUE;
 
 				/* Create the item */
 				object_prep(o_ptr, object_index);
@@ -6261,7 +6262,7 @@ static errr process_dungeon_file_aux(char *buf, int *yval, int *xval, int xvalst
 
 				o_ptr->found = OBJ_FOUND_SPECIAL;
 
-				k_allow_special[object_index] = FALSE;
+				k_info[object_index].allow_special = FALSE;
 
 				drop_near(o_ptr, -1, y, x);
 			}

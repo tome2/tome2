@@ -618,7 +618,6 @@ static errr init_other()
 {
 	auto const &d_info = game->edit_data.d_info;
 	auto const &r_info = game->edit_data.r_info;
-	auto const &k_info = game->edit_data.k_info;
 	auto const &a_info = game->edit_data.a_info;
 	auto &level_markers = game->level_markers;
 
@@ -626,7 +625,6 @@ static errr init_other()
 
 	/* Allocate and Wipe the special gene flags */
 	m_allow_special = make_array<bool_>(r_info.size());
-	k_allow_special = make_array<bool_>(k_info.size());
 	a_allow_special = make_array<bool_>(a_info.size());
 
 
