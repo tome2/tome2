@@ -439,8 +439,8 @@ static void wiz_display_item(object_type *o_ptr)
 	prt(format("name1 = %-4d  name2 = %-4d  cost = %ld  pval2 = %-5d",
 	           o_ptr->name1, o_ptr->name2, (long)object_value(o_ptr), o_ptr->pval2), 7, j);
 
-	prt(format("ident = %04x  timeout = %-d",
-	           o_ptr->ident, o_ptr->timeout), 8, j);
+	prt(format("ident = %1d  timeout = %-d",
+		   int(o_ptr->identified), o_ptr->timeout), 8, j);
 
 	/* Print all the flags which are set */
 	prt("Flags:", 10, j);

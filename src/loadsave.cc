@@ -1134,7 +1134,7 @@ static void do_item(object_type *o_ptr, ls_flag_t flag)
 		do_byte(&o_ptr->ds, ls_flag_t::SAVE);
 	}
 
-	do_byte(&o_ptr->ident, flag);
+	do_std_bool(&o_ptr->identified, flag);
 
 	do_byte(&o_ptr->marked, flag);
 

@@ -75,7 +75,7 @@ struct object_type
 
 	s16b timeout = 0;                        /* Timeout Counter */
 
-	byte ident = 0;                          /* Special flags  */
+	bool identified = false;                 /* Has the object been identified? */
 
 	byte marked = 0;                         /* Object is marked */
 

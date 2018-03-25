@@ -1815,15 +1815,6 @@
 /* High resist */
 #define EGO_XTRA_POWER          2
 
-/*** Object flag values ***/
-
-
-/*
- * Special Object Flags
- */
-#define IDENT_KNOWN             0x08    /* Item abilities are known */
-
-
 
 /*
  * Special Monster Flags

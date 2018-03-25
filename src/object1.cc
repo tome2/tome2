@@ -1727,29 +1727,20 @@ void object_desc(char *buf, object_type const *o_ptr, int pref, int mode)
  */
 void object_desc_store(char *buf, object_type *o_ptr, int pref, int mode)
 {
-	/* Save the "aware" flag */
-	bool_ hack_aware = o_ptr->k_ptr->aware;
+	/* Save the identification status */
+	bool_ saved_aware = o_ptr->k_ptr->aware;
+	auto saved_identified = o_ptr->identified;
 
-	/* Save the "known" flag */
-	bool_ hack_known = (o_ptr->ident & (IDENT_KNOWN)) ? TRUE : FALSE;
-
-
-	/* Set the "known" flag */
-	o_ptr->ident |= (IDENT_KNOWN);
-
-	/* Force "aware" for description */
+	/* Force full identification for description */
+	o_ptr->identified = true;
 	o_ptr->k_ptr->aware = TRUE;
-
 
 	/* Describe the object */
 	object_desc(buf, o_ptr, pref, mode);
 
-
-	/* Restore "aware" flag */
-	o_ptr->k_ptr->aware = hack_aware;
-
-	/* Clear the known flag */
-	if (!hack_known) o_ptr->ident &= ~(IDENT_KNOWN);
+	/* Restore identification status */
+	o_ptr->k_ptr->aware = saved_aware;
+	o_ptr->identified = saved_identified;
 }
 
 

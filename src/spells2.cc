@@ -2340,7 +2340,7 @@ bool_ recharge(int power)
 			if (!(flags & TR_RECHARGE))
 			{
 				/* Hack -- we no longer "know" the item */
-				o_ptr->ident &= ~(IDENT_KNOWN);
+				o_ptr->identified = false;
 			}
 		}
 	}

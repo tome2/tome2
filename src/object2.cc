@@ -712,8 +712,8 @@ void object_known(object_type *o_ptr)
 {
 	auto previously_known = object_known_p(o_ptr);
 
-	/* Mark the item as fully known */
-	o_ptr->ident |= IDENT_KNOWN;
+	/* Mark the item as identified */
+	o_ptr->identified = true;
 
 	/* If the status changed, then we invoke the hook */
 	if (!previously_known)
@@ -731,7 +731,7 @@ void object_known(object_type *o_ptr)
  */
 bool object_known_p(object_type const *o_ptr)
 {
-	return ((o_ptr->ident & IDENT_KNOWN) ||
+	return (o_ptr->identified ||
 		(o_ptr->k_ptr && o_ptr->k_ptr->easy_know && o_ptr->k_ptr->aware));
 }
 

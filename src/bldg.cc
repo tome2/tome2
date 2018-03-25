@@ -1018,7 +1018,7 @@ static bool_ fix_item(int istart, int iend, int ispecific, bool_ iac)
 		{
 			object_desc(tmp_str, o_ptr, FALSE, 1);
 
-			if ((o_ptr->name1 && (o_ptr->ident & 0x08)))
+			if (o_ptr->name1 && o_ptr->identified)
 				strnfmt(out_val, 80, "%-40s: beyond our skills!", tmp_str);
 			else if (o_ptr->name1)
 				strnfmt(out_val, 80, "%-40s: in fine condition", tmp_str);
