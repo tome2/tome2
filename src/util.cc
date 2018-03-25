@@ -580,7 +580,7 @@ void move_cursor(int row, int col)
 /*
 * Convert a decimal to a single digit octal number
 */
-static char octify(uint i)
+static char octify(unsigned int i)
 {
 	return (hexsym[i % 8]);
 }
@@ -588,7 +588,7 @@ static char octify(uint i)
 /*
 * Convert a decimal to a single digit hex number
 */
-static char hexify(uint i)
+static char hexify(unsigned int i)
 {
 	return (hexsym[i % 16]);
 }

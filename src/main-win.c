@@ -325,19 +325,19 @@ struct _term_data
 	DWORD dwStyle;
 	DWORD dwExStyle;
 
-	uint keys;
+	unsigned int keys;
 
-	uint rows;
-	uint cols;
+	unsigned int rows;
+	unsigned int cols;
 
-	uint pos_x;
-	uint pos_y;
-	uint size_wid;
-	uint size_hgt;
-	uint size_ow1;
-	uint size_oh1;
-	uint size_ow2;
-	uint size_oh2;
+	unsigned int pos_x;
+	unsigned int pos_y;
+	unsigned int size_wid;
+	unsigned int size_hgt;
+	unsigned int size_ow1;
+	unsigned int size_oh1;
+	unsigned int size_ow2;
+	unsigned int size_oh2;
 
 	bool_ size_hack;
 
@@ -353,11 +353,11 @@ struct _term_data
 
 	HFONT font_id;
 
-	uint font_wid;
-	uint font_hgt;
+	unsigned int font_wid;
+	unsigned int font_hgt;
 
-	uint tile_wid;
-	uint tile_hgt;
+	unsigned int tile_wid;
+	unsigned int tile_hgt;
 };
 
 
@@ -2620,8 +2620,8 @@ LRESULT FAR PASCAL AngbandWndProc(HWND hWnd, UINT uMsg,
 
 			case SIZE_RESTORED:
 				{
-					uint cols = (LOWORD(lParam) - td->size_ow1 - td->size_ow2) / td->tile_wid;
-					uint rows = (HIWORD(lParam) - td->size_oh1 - td->size_oh2) / td->tile_hgt;
+					unsigned int cols = (LOWORD(lParam) - td->size_ow1 - td->size_ow2) / td->tile_wid;
+					unsigned int rows = (HIWORD(lParam) - td->size_oh1 - td->size_oh2) / td->tile_hgt;
 
 					/* New size */
 					if ((td->cols != cols) || (td->rows != rows))

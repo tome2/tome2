@@ -184,18 +184,18 @@ struct _term_data
 	term t;					/* the term structure, defined in z-term.h */
 	cptr name;				/* name of this term sub-window */
 
-	uint rows, cols;		/* row/column count */
+	unsigned int rows, cols;		/* row/column count */
 	SDL_Rect rect;			/* the bounding rectangle for the entire box;
 								includes border and empty space as well */
 							/* this rectangle is in screen coordinates */
 
 	int border_thick;		/* thickness of border to draw around window */
 	int border_color;		/* current color of the border */	
-	uint cushion_x_top, cushion_x_bot, cushion_y_top, cushion_y_bot;
+	unsigned int cushion_x_top, cushion_x_bot, cushion_y_top, cushion_y_bot;
 							/* empty space cushion between border and tiles */
 	
-	uint tile_width;		/* the width of each tile (graphic or otherwise)*/
-	uint tile_height;		/* the height of each tile (graphic or otherwise)*/
+	unsigned int tile_width;		/* the width of each tile (graphic or otherwise)*/
+	unsigned int tile_height;		/* the height of each tile (graphic or otherwise)*/
 
 	SDL_Surface	*surf;		/* the surface that graphics for this screen are
 								rendered to before blitting to main screen */	

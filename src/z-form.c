@@ -177,7 +177,7 @@
  * the given buffer to a length of zero, and return a "length" of zero.
  * The contents of "buf", except for "buf[0]", may then be undefined.
  */
-uint vstrnfmt(char *buf, uint max, cptr fmt, va_list vp)
+unsigned int vstrnfmt(char *buf, unsigned int max, cptr fmt, va_list vp)
 {
 	cptr s;
 
@@ -188,10 +188,10 @@ uint vstrnfmt(char *buf, uint max, cptr fmt, va_list vp)
 	bool_ do_xtra;
 
 	/* Bytes used in buffer */
-	uint n;
+	unsigned int n;
 
 	/* Bytes used in format sequence */
-	uint q;
+	unsigned int q;
 
 	/* Format sequence */
 	char aux[128];
@@ -578,7 +578,7 @@ static char *vformat(cptr fmt, va_list vp)
 	/* Keep going until successful */
 	while (1)
 	{
-		uint len;
+		unsigned int len;
 
 		/* Build the string */
 		len = vstrnfmt(format_buf, format_len, fmt, vp);
@@ -605,9 +605,9 @@ static char *vformat(cptr fmt, va_list vp)
 /*
  * Do a vstrnfmt (see above) into a buffer of a given size.
  */
-uint strnfmt(char *buf, uint max, cptr fmt, ...)
+unsigned int strnfmt(char *buf, unsigned int max, cptr fmt, ...)
 {
-	uint len;
+	unsigned int len;
 
 	va_list vp;
 

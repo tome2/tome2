@@ -952,7 +952,7 @@ static gboolean keypress_event_handler(
 
 
 	/* Handle a few standard keys (bypass modifiers) XXX XXX XXX */
-	switch ((uint) event->keyval)
+	switch ((unsigned int) event->keyval)
 	{
 	case GDK_Escape:
 		{

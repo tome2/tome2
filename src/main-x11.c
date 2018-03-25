@@ -270,9 +270,9 @@ struct metadpy
 
 	int fd;
 
-	uint width;
-	uint height;
-	uint depth;
+	unsigned int width;
+	unsigned int height;
+	unsigned int depth;
 
 	Pixell black;
 	Pixell white;
@@ -281,11 +281,11 @@ struct metadpy
 	Pixell fg;
 	Pixell zg;
 
-uint mono:
+unsigned int mono:
 	1;
-uint color:
+unsigned int color:
 	1;
-uint nuke:
+unsigned int nuke:
 	1;
 };
 
@@ -330,23 +330,23 @@ struct infowin
 
 	byte byte1;
 
-uint mapped:
+unsigned int mapped:
 	1;
-uint redraw:
+unsigned int redraw:
 	1;
-uint resize:
-	1;
-
-uint nuke:
+unsigned int resize:
 	1;
 
-uint flag1:
+unsigned int nuke:
 	1;
-uint flag2:
+
+unsigned int flag1:
 	1;
-uint flag3:
+unsigned int flag2:
 	1;
-uint flag4:
+unsigned int flag3:
+	1;
+unsigned int flag4:
 	1;
 };
 
@@ -374,11 +374,11 @@ struct infoclr
 	Pixell fg;
 	Pixell bg;
 
-uint code:
+unsigned int code:
 	4;
-uint stip:
+unsigned int stip:
 	1;
-uint nuke:
+unsigned int nuke:
 	1;
 };
 
@@ -413,9 +413,9 @@ struct infofnt
 
 	byte off;
 
-uint mono:
+unsigned int mono:
 	1;
-uint nuke:
+unsigned int nuke:
 	1;
 };
 
@@ -555,7 +555,7 @@ int Term_queue_space(void)
  *
  * NB: The keys added here will be interpreted by any macros or keymaps.
  */
-static errr type_string(char *str, uint len)
+static errr type_string(char *str, unsigned int len)
 {
 	char *s;
 
@@ -1339,7 +1339,7 @@ static void react_keypress(XKeyEvent *xev)
 {
 	int i, n, mc, ms, mo, mx;
 
-	uint ks1;
+	unsigned int ks1;
 
 	XKeyEvent *ev = (XKeyEvent*)(xev);
 
@@ -1361,7 +1361,7 @@ static void react_keypress(XKeyEvent *xev)
 
 
 	/* Hack -- convert into an unsigned int */
-	ks1 = (uint)(ks);
+	ks1 = (unsigned int)(ks);
 
 	/* Extract four "modifier flags" */
 	mc = (ev->state & ControlMask) ? TRUE : FALSE;
@@ -1786,7 +1786,7 @@ static void paste_x11_accept(const XSelectionEvent *ptr)
 		                != Success) break;
 
 		/* Paste the text. */
-		err = type_string((char*)data, (uint)nitems);
+		err = type_string((char*)data, (unsigned int)nitems);
 
 		/* Free the data pasted. */
 		XFree(data);

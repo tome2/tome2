@@ -21,10 +21,10 @@ extern "C" {
 /**** Available Functions ****/
 
 /* Format arguments into given bounded-length buffer */
-uint vstrnfmt(char *buf, uint max, cptr fmt, va_list vp);
+unsigned int vstrnfmt(char *buf, unsigned int max, cptr fmt, va_list vp);
 
 /* Simple interface to "vstrnfmt()" */
-uint strnfmt(char *buf, uint max, cptr fmt, ...);
+unsigned int strnfmt(char *buf, unsigned int max, cptr fmt, ...);
 
 /* Simple interface to "vformat()" */
 char *format(cptr fmt, ...);

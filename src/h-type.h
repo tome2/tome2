@@ -18,7 +18,7 @@ extern "C" {
  * Thus, almost every three letter word is a legal variable.
  * But beware of certain reserved words ('for' and 'if' and 'do').
  *
- * Note that the type used in structures for bit flags should be uint.
+ * Note that the type used in structures for bit flags should be unsigned int.
  * As long as these bit flags are sequential, they will be space smart.
  *
  * Note that on some machines, apparently "signed char" is illegal.
@@ -28,14 +28,12 @@ extern "C" {
  * It must be true that sbig/ubig takes exactly 4 bytes
  *
  * On Sparc's, a sint takes 4 bytes (2 is legal)
- * On Sparc's, a uint takes 4 bytes (2 is legal)
  * On Sparc's, a long takes 4 bytes (8 is legal)
  * On Sparc's, a huge takes 4 bytes (8 is legal)
  * On Sparc's, a real takes 8 bytes (4 is legal)
  *
  * Note that some files have already been included by "h-include.h"
  * These include <stdio.h> and <sys/types>, which define some types
- * In particular, uint is defined so we do not have to define it
  *
  * Also, see <limits.h> for min/max values for sind, uind, long, huge
  * (SHRT_MIN, SHRT_MAX, USHRT_MAX, LONG_MIN, LONG_MAX, ULONG_MAX)
@@ -57,12 +55,6 @@ typedef int errr;
 
 
 /*
- * Hack -- prevent problems with non-MACINTOSH
- */
-#undef uint
-#define uint uint_hack
-
-/*
  * Hack -- prevent problems with WINDOWS
  */
 #undef huge
@@ -76,9 +68,6 @@ typedef unsigned char byte;
 /* Simple True/False type */
 typedef char bool_;
 
-
-/* An unsigned, "standard" integer (often pre-defined) */
-typedef unsigned int uint;
 
 /* The largest possible unsigned integer */
 typedef unsigned long huge;
