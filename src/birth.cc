@@ -3024,9 +3024,9 @@ static void dump_savefiles(int sel, int max)
 
 
 /* Asks for new game or load game */
-bool_ no_begin_screen = FALSE;
+bool no_begin_screen = FALSE;
 
-bool_ begin_screen()
+bool begin_screen()
 {
 	int m, k, sel, max;
 

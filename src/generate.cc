@@ -8141,7 +8141,7 @@ void generate_cave()
 	s16b town_level = 0;
 
 	/* The dungeon is not ready */
-	character_dungeon = FALSE;
+	character_dungeon = false;
 	game->generate_special_feeling = false;
 
 	/* Initialize the flags with the basic dungeon flags */
@@ -8546,7 +8546,7 @@ void generate_cave()
 	}
 
 	/* The dungeon is ready */
-	character_dungeon = TRUE;
+	character_dungeon = true;
 
 	/* Remember when this level was "created" */
 	old_turn = turn;

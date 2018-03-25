@@ -3478,7 +3478,10 @@ void verify_panel()
 void resize_map()
 {
 	/* Only if the dungeon exists */
-	if (!character_dungeon) return;
+	if (!character_dungeon)
+	{
+		return;
+	}
 
 	/* Mega-Hack -- No panel yet, assume illegal panel */
 	panel_row_min = cur_hgt;
@@ -3527,7 +3530,10 @@ void resize_map()
 void resize_window()
 {
 	/* Only if the dungeon exists */
-	if (!character_dungeon) return;
+	if (!character_dungeon)
+	{
+		return;
+	}
 
 	/* Hack -- Activate the Angband window for the redraw */
 	Term_activate(&term_screen[0]);

@@ -34,11 +34,11 @@ bool_ arg_force_roguelike; 	/* Command arg -- Request roguelike keyset */
  */
 
 bool_ character_generated; 	/* The character exists */
-bool_ character_dungeon; 		/* The character has a dungeon */
-bool_ character_loaded; 		/* The character was loaded from a savefile */
+bool character_dungeon; 		/* The character has a dungeon */
+bool character_loaded; 		/* The character was loaded from a savefile */
 
 bool_ character_icky; 		/* The game is in an icky full screen mode */
-bool_ character_xtra; 		/* The game is in an icky startup mode */
+bool character_xtra; 		/* The game is in an icky startup mode */
 
 seed_t &seed_flavor()
 {

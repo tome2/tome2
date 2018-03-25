@@ -91,17 +91,16 @@
 /*
  * Can a player be resurrected?
  */
-static bool_ granted_resurrection()
+static bool granted_resurrection()
 {
 	if (praying_to(GOD_ERU))
 	{
 		if (p_ptr->grace > 100000)
 		{
-			if (magik(70)) return (TRUE);
-			else return (FALSE);
+			return magik(70);
 		}
 	}
-	return (FALSE);
+	return false;
 }
 
 /*
@@ -160,10 +159,13 @@ static void pattern_teleport()
 /*
  * Returns TRUE if we are on the Straight Road...
  */
-static bool_ pattern_effect()
+static bool pattern_effect()
 {
 	if ((cave[p_ptr->py][p_ptr->px].feat < FEAT_PATTERN_START) ||
-	                (cave[p_ptr->py][p_ptr->px].feat > FEAT_PATTERN_XTRA2)) return (FALSE);
+			(cave[p_ptr->py][p_ptr->px].feat > FEAT_PATTERN_XTRA2))
+	{
+		return false;
+	}
 
 	if (cave[p_ptr->py][p_ptr->px].feat == FEAT_PATTERN_END)
 	{
@@ -212,7 +214,7 @@ static bool_ pattern_effect()
 			take_hit(damroll(1, 3), "walking the Straight Road");
 	}
 
-	return (TRUE);
+	return true;
 }
 
 
@@ -552,7 +554,7 @@ static void apply_effect(int y, int x)
 
 
 /* XXX XXX XXX */
-static bool_ is_recall = FALSE;
+static bool is_recall = false;
 
 
 /*
@@ -601,10 +603,7 @@ static void process_world_corruptions()
 }
 
 
-/*
- * Shim for accessing Lua variable.
- */
-static bool_ grace_delay_trigger()
+static bool grace_delay_trigger()
 {
 	p_ptr->grace_delay++;
 
@@ -613,12 +612,12 @@ static bool_ grace_delay_trigger()
 		/* reset */
 		p_ptr->grace_delay = 0;
 		/* triggered */
-		return TRUE;
+		return true;
 	}
 	else
 	{
 		/* not triggered */
-		return FALSE;
+		return false;
 	}
 }
 
@@ -853,7 +852,7 @@ static void process_world()
 	int x, y, i, j;
 
 	int regen_amount;
-	bool_ cave_no_regen = FALSE;
+	bool cave_no_regen = false;
 	int upkeep_factor = 0;
 
 	auto d_ptr = &d_info[dungeon_type];
@@ -945,13 +944,8 @@ static void process_world()
 		/* Hack -- Daybreak/Nighfall in town */
 		if ((turn % ((10L * DAY) / 2)) == 0)
 		{
-			bool_ dawn;
-
-			/* Check for dawn */
-			dawn = ((turn % (10L * DAY)) == 0);
-
 			/* Day breaks */
-			if (dawn)
+			if (((turn % (10L * DAY)) == 0))
 			{
 				/* Message */
 				msg_print("The sun has risen.");
@@ -1055,7 +1049,7 @@ static void process_world()
 				/* Take damage */
 				msg_print("The sun's rays scorch your undead flesh!");
 				take_hit(1, "sunlight");
-				cave_no_regen = TRUE;
+				cave_no_regen = true;
 				drop_from_wild();
 			}
 		}
@@ -1071,7 +1065,7 @@ static void process_world()
 
 			msg_format("The %s scorches your undead flesh!", o_name);
 
-			cave_no_regen = TRUE;
+			cave_no_regen = true;
 
 			/* Get an object description */
 			object_desc(o_name, o_ptr, TRUE, 0);
@@ -1092,7 +1086,7 @@ static void process_world()
 			/* Take damage */
 			msg_print("You are drowning!");
 			take_hit(randint(p_ptr->lev), "drowning");
-			cave_no_regen = TRUE;
+			cave_no_regen = true;
 		}
 	}
 
@@ -1123,7 +1117,7 @@ static void process_world()
 		{
 			int amt = 1 + ((p_ptr->lev) / 5);
 
-			cave_no_regen = TRUE;
+			cave_no_regen = true;
 			if (amt > p_ptr->chp - 1) amt = p_ptr->chp - 1;
 			take_hit(amt, " walls ...");
 		}
@@ -1275,7 +1269,7 @@ static void process_world()
 	/* Are we walking the pattern? */
 	if (!p_ptr->wild_mode && pattern_effect())
 	{
-		cave_no_regen = TRUE;
+		cave_no_regen = true;
 	}
 	else
 	{
@@ -2171,7 +2165,7 @@ static void process_world()
 	 */
 	if (((turn % 3000) == 0) && p_ptr->black_breath)
 	{
-		bool_ be_silent = FALSE;
+		bool be_silent = false;
 
 		/* check all equipment for the Black Breath flag. */
 		for (i = INVEN_WIELD; i < INVEN_TOTAL; i++)
@@ -2188,11 +2182,14 @@ static void process_world()
 			auto const flags = object_flags(o_ptr);
 
 			/* No messages if object has the flag, to avoid annoyance. */
-			if (flags & TR_BLACK_BREATH) be_silent = TRUE;
+			if (flags & TR_BLACK_BREATH)
+			{
+				be_silent = true;
+			}
 
 		}
-		/* If we are allowed to speak, warn and disturb. */
 
+		/* If we are allowed to speak, warn and disturb. */
 		if (!be_silent)
 		{
 			cmsg_print(TERM_L_DARK, "The Black Breath saps your soul!");
@@ -2755,7 +2752,7 @@ static void process_world()
 					dungeon_type = DUNGEON_WILDERNESS;
 					dun_level = 0;
 
-					is_recall = TRUE;
+					is_recall = true;
 
 					p_ptr->inside_quest = 0;
 					p_ptr->leaving = TRUE;
@@ -2774,7 +2771,7 @@ static void process_world()
 					p_ptr->oldpy = p_ptr->py;
 
 					/* Leaving */
-					is_recall = TRUE;
+					is_recall = true;
 
 					p_ptr->leaving = TRUE;
 					p_ptr->wild_mode = FALSE;
@@ -3822,26 +3819,29 @@ static void process_player()
 		/* Complete resting */
 		else if (resting == -2)
 		{
-			bool_ stop = TRUE;
+			bool stop = true;
 			object_type *o_ptr;
 
 			/* Get the carried monster */
 			o_ptr = &p_ptr->inventory[INVEN_CARRY];
 
 			/* Stop resting */
-			if ((!p_ptr->drain_life) && (p_ptr->chp != p_ptr->mhp)) stop = FALSE;
-			if ((!p_ptr->drain_mana) && (p_ptr->csp != p_ptr->msp)) stop = FALSE;
-			if (o_ptr->pval2 < o_ptr->pval3) stop = FALSE;
-			if (p_ptr->blind || p_ptr->confused) stop = FALSE;
-			if (p_ptr->poisoned || p_ptr->afraid) stop = FALSE;
-			if (p_ptr->stun || p_ptr->cut) stop = FALSE;
-			if (p_ptr->slow || p_ptr->paralyzed) stop = FALSE;
-			if (p_ptr->image || p_ptr->word_recall) stop = FALSE;
-			if (p_ptr->immov_cntr != 0) stop = FALSE;
+			if ((!p_ptr->drain_life) && (p_ptr->chp != p_ptr->mhp)) stop = false;
+			if ((!p_ptr->drain_mana) && (p_ptr->csp != p_ptr->msp)) stop = false;
+			if (o_ptr->pval2 < o_ptr->pval3) stop = false;
+			if (p_ptr->blind || p_ptr->confused) stop = false;
+			if (p_ptr->poisoned || p_ptr->afraid) stop = false;
+			if (p_ptr->stun || p_ptr->cut) stop = false;
+			if (p_ptr->slow || p_ptr->paralyzed) stop = false;
+			if (p_ptr->image || p_ptr->word_recall) stop = false;
+			if (p_ptr->immov_cntr != 0) stop = false;
 
 			for (i = 0; i < 6; i++)
 			{
-				if (p_ptr->stat_cnt[i] > 0) stop = FALSE;
+				if (p_ptr->stat_cnt[i] > 0)
+				{
+					stop = false;
+				}
 			}
 
 			if (stop)
@@ -4334,7 +4334,7 @@ static void dungeon()
 
 
 	/* Enter "xtra" mode */
-	character_xtra = TRUE;
+	character_xtra = true;
 
 	/* Window stuff */
 	p_ptr->window |= (PW_INVEN | PW_EQUIP | PW_PLAYER);
@@ -4376,7 +4376,7 @@ static void dungeon()
 	redraw_stuff();
 
 	/* Leave "xtra" mode */
-	character_xtra = FALSE;
+	character_xtra = false;
 
 	/* Update stuff */
 	p_ptr->update |= (PU_BONUS | PU_HP | PU_MANA | PU_SPELLS | PU_POWERS | PU_BODY);
@@ -4590,7 +4590,7 @@ static void dungeon()
 		dungeon_type = DUNGEON_WILDERNESS;
 	}
 
-	is_recall = FALSE;
+	is_recall = false;
 }
 
 
@@ -4648,7 +4648,7 @@ void play_game()
 
 	int i, tmp_dun;
 
-	bool_ cheat_death = FALSE;
+	bool cheat_death = FALSE;
 
 	/* Initialize player */
 	p_ptr = new player_type();
@@ -4676,9 +4676,12 @@ void play_game()
 	Term_set_cursor(0);
 
 	/* Character list */
-	bool_ new_game = FALSE;
-	if (!no_begin_screen) new_game = begin_screen();
-	no_begin_screen = FALSE;
+	bool new_game = false;
+	if (!no_begin_screen)
+	{
+		new_game = begin_screen();
+	}
+	no_begin_screen = false;
 
 	/* Attempt to load */
 	if (!load_player())
@@ -4691,10 +4694,10 @@ void play_game()
 	if (!character_loaded)
 	{
 		/* Make new player */
-		new_game = TRUE;
+		new_game = true;
 
 		/* The dungeon is not ready */
-		character_dungeon = FALSE;
+		character_dungeon = false;
 	}
 
 	/* Process old character */
@@ -4714,7 +4717,7 @@ void play_game()
 		modules[game_module_idx].intro();
 
 		/* The dungeon is not ready */
-		character_dungeon = FALSE;
+		character_dungeon = false;
 
 		/* Set the seed for flavors */
 		seed_flavor() = seed_t::system();
@@ -4917,18 +4920,18 @@ void play_game()
 		/* Accidental Death */
 		if (alive && death)
 		{
-			cheat_death = FALSE;
+			cheat_death = false;
 
 			/* Can we die ? please let us die ! */
 			if (process_hooks_new(HOOK_DIE, NULL, NULL))
 			{
-				cheat_death = TRUE;
+				cheat_death = true;
 			}
 
 			/* Deus ex machina */
 			else if (granted_resurrection())
 			{
-				cheat_death = TRUE;
+				cheat_death = true;
 				p_ptr->grace = -200000;
 				cmsg_format(TERM_L_GREEN,
 				            "The power of %s raises you back from the grave!",
@@ -4939,7 +4942,7 @@ void play_game()
 			/* Blood of life */
 			else if (p_ptr->allow_one_death > 0)
 			{
-				cheat_death = TRUE;
+				cheat_death = true;
 
 				/* Lose one extra life */
 				p_ptr->allow_one_death--;
@@ -4952,7 +4955,7 @@ void play_game()
 			/* Cheat death option */
 			else if ((wizard || options->cheat_live) && !get_check("Die? "))
 			{
-				cheat_death = TRUE;
+				cheat_death = true;
 
 				/* Mark savefile */
 				noscore |= 0x0001;

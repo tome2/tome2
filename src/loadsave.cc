@@ -1572,7 +1572,10 @@ static bool_ do_dungeon(ls_flag_t flag, bool no_companions)
 	/*** Success ***/
 
 	/* The dungeon is ready */
-	if (flag == ls_flag_t::LOAD) character_dungeon = TRUE;
+	if (flag == ls_flag_t::LOAD)
+	{
+		character_dungeon = true;
+	}
 
 	/* Success */
 	return (TRUE);
@@ -2641,7 +2644,7 @@ bool_ load_player()
 			if (arg_wizard && !total_winner)
 			{
 				/* A character was loaded */
-				character_loaded = TRUE;
+				character_loaded = true;
 
 				/* Done */
 				return (TRUE);
@@ -2655,7 +2658,7 @@ bool_ load_player()
 		}
 
 		/* A character was loaded */
-		character_loaded = TRUE;
+		character_loaded = true;
 
 		/* Still alive */
 		if (p_ptr->chp >= 0)
@@ -2766,7 +2769,7 @@ bool_ save_player()
 		fd_kill(temp);
 
 		/* Hack -- Pretend the character was loaded */
-		character_loaded = TRUE;
+		character_loaded = true;
 
 		/* Success */
 		result = TRUE;
