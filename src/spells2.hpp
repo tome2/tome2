@@ -17,7 +17,7 @@ void explosive_rune();
 bool_ do_dec_stat(int stat, int mode);
 bool_ do_res_stat(int stat, bool_ full);
 bool_ do_inc_stat(int stat);
-void identify_hooks(int i, object_type *o_ptr, identify_mode type);
+void identify_hooks(object_type *o_ptr, identify_mode type);
 bool_ identify_pack();
 void identify_pack_fully();
 bool_ remove_curse();

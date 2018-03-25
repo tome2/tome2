@@ -464,7 +464,7 @@ bool_ do_inc_stat(int stat)
 /*
  * Process all identify hooks
  */
-void identify_hooks(int i, object_type *o_ptr, identify_mode mode)
+void identify_hooks(object_type *o_ptr, identify_mode mode)
 {
 	/* Process the appropriate hooks */
 	hook_identify_in in = { o_ptr, mode };
@@ -494,7 +494,7 @@ bool_ identify_pack()
 		object_known(o_ptr);
 
 		/* Process the appropriate hooks */
-		identify_hooks(i, o_ptr, IDENT_NORMAL);
+		identify_hooks(o_ptr, IDENT_NORMAL);
 	}
 
 	p_ptr->notice |= (PN_COMBINE | PN_REORDER);
@@ -537,7 +537,7 @@ void identify_pack_fully()
 		make_item_fully_identified(o_ptr);
 
 		/* Process the appropriate hooks */
-		identify_hooks(i, o_ptr, IDENT_FULL);
+		identify_hooks(o_ptr, IDENT_FULL);
 	}
 
 	p_ptr->update |= (PU_BONUS);
@@ -2236,7 +2236,7 @@ bool_ ident_spell()
 	note_found_object(o_ptr);
 
 	/* Process the appropriate hooks */
-	identify_hooks(item, o_ptr, IDENT_NORMAL);
+	identify_hooks(o_ptr, IDENT_NORMAL);
 
 	/* Something happened */
 	return (TRUE);
@@ -2264,7 +2264,7 @@ bool_ ident_all()
 		note_found_object(o_ptr);
 
 		/* Process the appropriate hooks */
-		identify_hooks(-i, o_ptr, IDENT_NORMAL);
+		identify_hooks(o_ptr, IDENT_NORMAL);
 	}
 
 	/* Something happened */
@@ -2341,7 +2341,7 @@ bool_ identify_fully()
 	object_out_desc(o_ptr, NULL, FALSE, TRUE);
 
 	/* Process the appropriate hooks */
-	identify_hooks(item, o_ptr, IDENT_FULL);
+	identify_hooks(o_ptr, IDENT_FULL);
 
 	/* Success */
 	return (TRUE);

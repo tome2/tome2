@@ -3980,7 +3980,7 @@ static bool_ project_o(int who, int r, int y, int x, int dam, int typ)
 				o_ptr->ident |= (IDENT_MENTAL);
 
 				/* Process the appropriate hooks */
-				identify_hooks(0 - this_o_idx, o_ptr, IDENT_FULL);
+				identify_hooks(o_ptr, IDENT_FULL);
 
 				/* Squelch ! */
 				squeltch_grid();
