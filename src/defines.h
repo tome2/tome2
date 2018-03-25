@@ -1182,9 +1182,6 @@
 #define SV_LITE_TORCH_EVER               2
 #define SV_LITE_DWARVEN                  3
 #define SV_LITE_FEANORIAN                4
-#define SV_LITE_GALADRIEL                100
-#define SV_LITE_UNDEATH                  103
-#define SV_STONE_LORE                    106
 
 
 /* The "sval" codes for TV_AMULET */

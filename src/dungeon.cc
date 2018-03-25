@@ -821,15 +821,20 @@ static void process_world_gods()
 }
 
 /**
- * Is the light source harmful for creatures sensitive to light?
+ * Is the light source safe for creatures sensitive to light?
  */
-static bool is_light_harmful(object_type const *o_ptr)
+static bool is_light_safe(object_type const *o_ptr)
 {
-	return
-		(o_ptr->tval != 0) &&
-		(o_ptr->sval >= SV_LITE_GALADRIEL) &&
-		(o_ptr->sval <= SV_STONE_LORE) &&
-		(o_ptr->sval != SV_LITE_UNDEATH);
+	// Get the flags of the object; we don't bother with sets since we're only
+	// interested in "innate" flags on the light source itself.
+	object_flags_no_set = TRUE;
+	auto flags = object_flags(o_ptr);
+	object_flags_no_set = FALSE;
+
+	// We only allow really badly cursed items. This is to provide
+	// an "out" in case of severely bad luck, but these lights cannot
+	// be used for any non-trivial length of time.
+	return (flags | TR_TY_CURSE) && (flags | TR_DG_CURSE);
 }
 
 /*
@@ -1055,7 +1060,7 @@ static void process_world()
 			}
 		}
 
-		if (is_light_harmful(&p_ptr->inventory[INVEN_LITE]))
+		if (!is_light_safe(&p_ptr->inventory[INVEN_LITE]))
 		{
 			object_type * o_ptr = &p_ptr->inventory[INVEN_LITE];
 			char o_name [80];
@@ -3083,7 +3088,7 @@ static void process_command()
 				msg_print("You can't travel during the day!");
 			}
 			else if (p_ptr->sensible_lite &&
-					is_light_harmful(&p_ptr->inventory[INVEN_LITE]))
+					!is_light_safe(&p_ptr->inventory[INVEN_LITE]))
 			{
 				msg_print("Travel with your present light would be unsafe.");
 			}
