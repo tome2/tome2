@@ -69,10 +69,6 @@ N:13:Game rules
 C:0:0:0
 I:13:0:r
 
-N:14:Research item
-C:1400:1300:1200
-I:1:0:a
-
 N:15:Town history
 C:0:0:0
 I:2:0:h
@@ -108,10 +104,6 @@ I:24:0:a
 N:26:Recharge item
 C:350:300:75
 I:25:0:r
-
-N:27:Identify possessions
-C:900:800:100
-I:26:0:i
 
 N:28:Healing prayer
 C:600:400:0
@@ -166,11 +158,6 @@ I:42:0:v
 N:44:Research item
 C:1500:1500:1500
 I:1:0:a
-
-#for Star-Dome
-N:46:Identify possessions
-C:1200:1000:250
-I:26:0:i
 
 #for Star-Dome
 N:47:Recharge item

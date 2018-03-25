@@ -1968,7 +1968,6 @@
 /*
  * Buildings actions
  */
-#define BACT_RESEARCH_ITEM           1
 #define BACT_TOWN_HISTORY            2
 #define BACT_RACE_LEGENDS            3
 #define BACT_KING_LEGENDS            5
@@ -1984,7 +1983,6 @@
 #define BACT_ENCHANT_WEAPON         23
 #define BACT_ENCHANT_ARMOR          24
 #define BACT_RECHARGE               25
-#define BACT_IDENTS                 26
 #define BACT_HEALING                28
 #define BACT_RESTORE                29
 #define BACT_ENCHANT_ARROWS         30

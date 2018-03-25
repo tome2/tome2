@@ -1078,17 +1078,6 @@ static bool_ fix_item(int istart, int iend, int ispecific, bool_ iac)
 
 
 /*
- * Research Item
- */
-static bool_ research_item()
-{
-	clear_bldg(5, 18);
-	return (identify_fully());
-}
-
-
-
-/*
  * Execute a building command
  */
 bool_ bldg_process_command(const store_type *s_ptr, store_action_type const *ba_ptr)
@@ -1134,12 +1123,6 @@ bool_ bldg_process_command(const store_type *s_ptr, store_action_type const *ba_
 
 	switch (bact)
 	{
-	case BACT_RESEARCH_ITEM:
-		{
-			paid = research_item();
-			break;
-		}
-
 	case BACT_TOWN_HISTORY:
 		{
 			town_history();
@@ -1230,16 +1213,6 @@ bool_ bldg_process_command(const store_type *s_ptr, store_action_type const *ba_
 	case BACT_RECHARGE:
 		{
 			if (recharge(80)) paid = TRUE;
-			break;
-		}
-
-		/* needs work */
-	case BACT_IDENTS:
-		{
-			identify_pack();
-			msg_print("Your possessions have been identified.");
-			msg_print(NULL);
-			paid = TRUE;
 			break;
 		}
 
