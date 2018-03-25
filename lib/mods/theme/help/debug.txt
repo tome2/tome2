@@ -23,7 +23,7 @@ will not be scored if you use debug commands.
  *****debug.txt*17[i  Identify]                             I  (unused)
  *****debug.txt*19[j  Jump to other level]                  J  (unused)
  *****debug.txt*21[k  Check attributes]                     K  (unused)
- *****debug.txt*23[l  Learn about objects]                  L  (unused)
+ l  (unused)                                                L  (unused)
  *****debug.txt*25[m  Magic Mapping]                        *****debug.txt*26[M  Gain corruption]
  *****debug.txt*27[n  Summon named monster]                 *****debug.txt*28[N  Summon _friendly_ named monster]
  *****debug.txt*29[o  Edit object attributes]               O  (unused)
@@ -145,9 +145,6 @@ maximal legal value.
 ~~~~~21
 [[[[[GCheck attributes (k)]
         Displays your characters attributes.
-~~~~~23
-[[[[[GLearn about objects (l)]
-        Make you know about all objects. Not sure how this works.
 ~~~~~25
 [[[[[GMagic Mapping (m)]
         Like a Scroll of Magic mapping.

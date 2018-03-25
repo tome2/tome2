@@ -1370,35 +1370,6 @@ static void do_cmd_wiz_jump()
 
 
 /*
- * Become aware of a lot of objects
- */
-static void do_cmd_wiz_learn()
-{
-	auto const &k_info = game->edit_data.k_info;
-
-	/* Scan every object */
-	for (auto const &k_entry: k_info)
-	{
-		auto const &k_ptr = k_entry.second;
-
-		/* Induce awareness */
-		if (k_ptr->level <= command_arg)
-		{
-			/* Get local object */
-			object_type forge;
-			auto q_ptr = &forge;
-
-			/* Prepare object */
-			object_prep(q_ptr, k_entry.first);
-
-			/* Awareness */
-			object_aware(q_ptr);
-		}
-	}
-}
-
-
-/*
  * Summon some creatures
  */
 static void do_cmd_wiz_summon(int num)
@@ -1646,11 +1617,6 @@ void do_cmd_debug()
 		/* Go up or down in the dungeon */
 	case 'j':
 		do_cmd_wiz_jump();
-		break;
-
-		/* Learn about objects */
-	case 'l':
-		do_cmd_wiz_learn();
 		break;
 
 		/* Magic Mapping */
