@@ -2,6 +2,9 @@
 
 #include "h-basic.h"
 
+#include <array>
+#include <string>
+
 /**
  * Store/building actions.
  */
