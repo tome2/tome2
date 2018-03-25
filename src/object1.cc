@@ -2183,7 +2183,6 @@ void display_weapon_damage(object_type *o_ptr)
 {
 	object_type forge, *old_ptr = &forge;
 	bool_ first = TRUE;
-	bool_ full = o_ptr->ident & (IDENT_MENTAL);
 
 	/* Extract the flags */
 	auto const flags = object_flags(o_ptr);
@@ -2197,23 +2196,26 @@ void display_weapon_damage(object_type *o_ptr)
 	text_out_c(TERM_L_GREEN, format("%d ", p_ptr->num_blow));
 	text_out(format("blow%s and do an average damage per turn of ", (p_ptr->num_blow) ? "s" : ""));
 
-	if (full && (flags & TR_SLAY_ANIMAL)) output_dam(o_ptr, 2, 0, "animals", NULL, &first);
-	if (full && (flags & TR_SLAY_EVIL)) output_dam(o_ptr, 2, 0, "evil creatures", NULL, &first);
-	if (full && (flags & TR_SLAY_ORC)) output_dam(o_ptr, 3, 0, "orcs", NULL, &first);
-	if (full && (flags & TR_SLAY_TROLL)) output_dam(o_ptr, 3, 0, "trolls", NULL, &first);
-	if (full && (flags & TR_SLAY_GIANT)) output_dam(o_ptr, 3, 0, "giants", NULL, &first);
-	if (full && (flags & TR_KILL_DRAGON)) output_dam(o_ptr, 5, 0, "dragons", NULL, &first);
-	else if (full && (flags & TR_SLAY_DRAGON)) output_dam(o_ptr, 3, 0, "dragons", NULL, &first);
-	if (full && (flags & TR_KILL_UNDEAD)) output_dam(o_ptr, 5, 0, "undead", NULL, &first);
-	else if (full && (flags & TR_SLAY_UNDEAD)) output_dam(o_ptr, 3, 0, "undead", NULL, &first);
-	if (full && (flags & TR_KILL_DEMON)) output_dam(o_ptr, 5, 0, "demons", NULL, &first);
-	else if (full && (flags & TR_SLAY_DEMON)) output_dam(o_ptr, 3, 0, "demons", NULL, &first);
+	if (flags & TR_SLAY_ANIMAL) output_dam(o_ptr, 2, 0, "animals", NULL, &first);
+	if (flags & TR_SLAY_EVIL) output_dam(o_ptr, 2, 0, "evil creatures", NULL, &first);
+	if (flags & TR_SLAY_ORC) output_dam(o_ptr, 3, 0, "orcs", NULL, &first);
+	if (flags & TR_SLAY_TROLL) output_dam(o_ptr, 3, 0, "trolls", NULL, &first);
+	if (flags & TR_SLAY_GIANT) output_dam(o_ptr, 3, 0, "giants", NULL, &first);
 
-	if (full && (flags & TR_BRAND_FIRE)) output_dam(o_ptr, 3, 6, "non fire resistant creatures", "fire susceptible creatures", &first);
-	if (full && (flags & TR_BRAND_COLD)) output_dam(o_ptr, 3, 6, "non cold resistant creatures", "cold susceptible creatures", &first);
-	if (full && (flags & TR_BRAND_ELEC)) output_dam(o_ptr, 3, 6, "non lightning resistant creatures", "lightning susceptible creatures", &first);
-	if (full && (flags & TR_BRAND_ACID)) output_dam(o_ptr, 3, 6, "non acid resistant creatures", "acid susceptible creatures", &first);
-	if (full && (flags & TR_BRAND_POIS)) output_dam(o_ptr, 3, 6, "non poison resistant creatures", "poison susceptible creatures", &first);
+	if (flags & TR_KILL_DRAGON) output_dam(o_ptr, 5, 0, "dragons", NULL, &first);
+	else if (flags & TR_SLAY_DRAGON) output_dam(o_ptr, 3, 0, "dragons", NULL, &first);
+
+	if (flags & TR_KILL_UNDEAD) output_dam(o_ptr, 5, 0, "undead", NULL, &first);
+	else if (flags & TR_SLAY_UNDEAD) output_dam(o_ptr, 3, 0, "undead", NULL, &first);
+
+	if (flags & TR_KILL_DEMON) output_dam(o_ptr, 5, 0, "demons", NULL, &first);
+	else if (flags & TR_SLAY_DEMON) output_dam(o_ptr, 3, 0, "demons", NULL, &first);
+
+	if (flags & TR_BRAND_FIRE) output_dam(o_ptr, 3, 6, "non fire resistant creatures", "fire susceptible creatures", &first);
+	if (flags & TR_BRAND_COLD) output_dam(o_ptr, 3, 6, "non cold resistant creatures", "cold susceptible creatures", &first);
+	if (flags & TR_BRAND_ELEC) output_dam(o_ptr, 3, 6, "non lightning resistant creatures", "lightning susceptible creatures", &first);
+	if (flags & TR_BRAND_ACID) output_dam(o_ptr, 3, 6, "non acid resistant creatures", "acid susceptible creatures", &first);
+	if (flags & TR_BRAND_POIS) output_dam(o_ptr, 3, 6, "non poison resistant creatures", "poison susceptible creatures", &first);
 
 	output_dam(o_ptr, 1, 0, (first) ? "all monsters" : "other monsters", NULL, &first);
 
@@ -2282,7 +2284,6 @@ void display_ammo_damage(object_type *o_ptr)
 {
 	bool_ first = TRUE;
 	int i;
-	bool_ full = o_ptr->ident & (IDENT_MENTAL);
 
 	/* Extract the flags */
 	auto const flags = object_flags(o_ptr);
@@ -2291,23 +2292,27 @@ void display_ammo_damage(object_type *o_ptr)
 		text_out("\nUsing it you would do an average damage per throw of ");
 	else
 		text_out("\nUsing it with your current shooter you would do an average damage per shot of ");
-	if (full && (flags & TR_SLAY_ANIMAL)) output_ammo_dam(o_ptr, 2, 0, "animals", NULL, &first);
-	if (full && (flags & TR_SLAY_EVIL)) output_ammo_dam(o_ptr, 2, 0, "evil creatures", NULL, &first);
-	if (full && (flags & TR_SLAY_ORC)) output_ammo_dam(o_ptr, 3, 0, "orcs", NULL, &first);
-	if (full && (flags & TR_SLAY_TROLL)) output_ammo_dam(o_ptr, 3, 0, "trolls", NULL, &first);
-	if (full && (flags & TR_SLAY_GIANT)) output_ammo_dam(o_ptr, 3, 0, "giants", NULL, &first);
-	if (full && (flags & TR_KILL_DRAGON)) output_ammo_dam(o_ptr, 5, 0, "dragons", NULL, &first);
-	else if (full && (flags & TR_SLAY_DRAGON)) output_ammo_dam(o_ptr, 3, 0, "dragons", NULL, &first);
-	if (full && (flags & TR_KILL_UNDEAD)) output_ammo_dam(o_ptr, 5, 0, "undeads", NULL, &first);
-	else if (full && (flags & TR_SLAY_UNDEAD)) output_ammo_dam(o_ptr, 3, 0, "undeads", NULL, &first);
-	if (full && (flags & TR_KILL_DEMON)) output_ammo_dam(o_ptr, 5, 0, "demons", NULL, &first);
-	else if (full && (flags & TR_SLAY_DEMON)) output_ammo_dam(o_ptr, 3, 0, "demons", NULL, &first);
 
-	if (full && (flags & TR_BRAND_FIRE)) output_ammo_dam(o_ptr, 3, 6, "non fire resistant creatures", "fire susceptible creatures", &first);
-	if (full && (flags & TR_BRAND_COLD)) output_ammo_dam(o_ptr, 3, 6, "non cold resistant creatures", "cold susceptible creatures", &first);
-	if (full && (flags & TR_BRAND_ELEC)) output_ammo_dam(o_ptr, 3, 6, "non lightning resistant creatures", "lightning susceptible creatures", &first);
-	if (full && (flags & TR_BRAND_ACID)) output_ammo_dam(o_ptr, 3, 6, "non acid resistant creatures", "acid susceptible creatures", &first);
-	if (full && (flags & TR_BRAND_POIS)) output_ammo_dam(o_ptr, 3, 6, "non poison resistant creatures", "poison susceptible creatures", &first);
+	if (flags & TR_SLAY_ANIMAL) output_ammo_dam(o_ptr, 2, 0, "animals", NULL, &first);
+	if (flags & TR_SLAY_EVIL) output_ammo_dam(o_ptr, 2, 0, "evil creatures", NULL, &first);
+	if (flags & TR_SLAY_ORC) output_ammo_dam(o_ptr, 3, 0, "orcs", NULL, &first);
+	if (flags & TR_SLAY_TROLL) output_ammo_dam(o_ptr, 3, 0, "trolls", NULL, &first);
+	if (flags & TR_SLAY_GIANT) output_ammo_dam(o_ptr, 3, 0, "giants", NULL, &first);
+
+	if (flags & TR_KILL_DRAGON) output_ammo_dam(o_ptr, 5, 0, "dragons", NULL, &first);
+	else if (flags & TR_SLAY_DRAGON) output_ammo_dam(o_ptr, 3, 0, "dragons", NULL, &first);
+
+	if (flags & TR_KILL_UNDEAD) output_ammo_dam(o_ptr, 5, 0, "undeads", NULL, &first);
+	else if (flags & TR_SLAY_UNDEAD) output_ammo_dam(o_ptr, 3, 0, "undeads", NULL, &first);
+
+	if (flags & TR_KILL_DEMON) output_ammo_dam(o_ptr, 5, 0, "demons", NULL, &first);
+	else if (flags & TR_SLAY_DEMON) output_ammo_dam(o_ptr, 3, 0, "demons", NULL, &first);
+
+	if (flags & TR_BRAND_FIRE) output_ammo_dam(o_ptr, 3, 6, "non fire resistant creatures", "fire susceptible creatures", &first);
+	if (flags & TR_BRAND_COLD) output_ammo_dam(o_ptr, 3, 6, "non cold resistant creatures", "cold susceptible creatures", &first);
+	if (flags & TR_BRAND_ELEC) output_ammo_dam(o_ptr, 3, 6, "non lightning resistant creatures", "lightning susceptible creatures", &first);
+	if (flags & TR_BRAND_ACID) output_ammo_dam(o_ptr, 3, 6, "non acid resistant creatures", "acid susceptible creatures", &first);
+	if (flags & TR_BRAND_POIS) output_ammo_dam(o_ptr, 3, 6, "non poison resistant creatures", "poison susceptible creatures", &first);
 
 	output_ammo_dam(o_ptr, 1, 0, (first) ? "all monsters" : "other monsters", NULL, &first);
 	text_out(". ");
