@@ -959,9 +959,6 @@ bool_ lose_all_info()
 		/* Allow "protection" by the MENTAL flag */
 		if (o_ptr->ident & (IDENT_MENTAL)) continue;
 
-		/* Hack -- Clear the "empty" flag */
-		o_ptr->ident &= ~(IDENT_EMPTY);
-
 		/* Hack -- Clear the "known" flag */
 		o_ptr->ident &= ~(IDENT_KNOWN);
 	}
@@ -2446,9 +2443,6 @@ bool_ recharge(int power)
 				/* Hack -- we no longer "know" the item */
 				o_ptr->ident &= ~(IDENT_KNOWN);
 			}
-
-			/* Hack -- we no longer think the item is empty */
-			o_ptr->ident &= ~(IDENT_EMPTY);
 		}
 	}
 

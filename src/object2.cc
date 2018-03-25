@@ -713,9 +713,6 @@ void object_known(object_type *o_ptr)
 	auto previously_known = object_known_p(o_ptr);
 	bool previously_fully_known = o_ptr->ident & IDENT_MENTAL;
 
-	/* Clear the "Empty" info */
-	o_ptr->ident &= ~(IDENT_EMPTY);
-
 	/* Mark the item as fully known */
 	o_ptr->ident |= IDENT_KNOWN;
 	o_ptr->ident |= IDENT_MENTAL;
@@ -1536,11 +1533,8 @@ bool_ object_similar(object_type const *o_ptr, object_type const *j_ptr)
 		/* Staffs */
 	case TV_STAFF:
 		{
-			/* Require either knowledge or known empty for both staffs. */
-			if ((!(o_ptr->ident & (IDENT_EMPTY)) &&
-			                !object_known_p(o_ptr)) ||
-			                (!(j_ptr->ident & (IDENT_EMPTY)) &&
-			                 !object_known_p(j_ptr))) return (0);
+			/* Require knowledge for both staffs. */
+			if ((!object_known_p(o_ptr)) || (!object_known_p(j_ptr))) return (0);
 
 			/* Require identical charges, since staffs are bulky. */
 			if (o_ptr->pval != j_ptr->pval) return (0);
@@ -1570,12 +1564,8 @@ bool_ object_similar(object_type const *o_ptr, object_type const *j_ptr)
 		/* Wands */
 	case TV_WAND:
 		{
-
-			/* Require either knowledge or known empty for both wands. */
-			if ((!(o_ptr->ident & (IDENT_EMPTY)) &&
-			                !object_known_p(o_ptr)) ||
-			                (!(j_ptr->ident & (IDENT_EMPTY)) &&
-			                 !object_known_p(j_ptr))) return (0);
+			/* Require knowledge for both wands. */
+			if ((!object_known_p(o_ptr)) || !object_known_p(j_ptr)) return (0);
 
 			/* Beware artifatcs should not combibne with "lesser" thing */
 			if (o_ptr->name1 != j_ptr->name1) return (0);

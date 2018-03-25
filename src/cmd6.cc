@@ -3408,7 +3408,6 @@ void do_cmd_use_staff()
 	{
 		flush_on_failure();
 		msg_print("The staff has no charges left.");
-		o_ptr->ident |= (IDENT_EMPTY);
 		return;
 	}
 
@@ -3566,7 +3565,6 @@ void do_cmd_aim_wand()
 	{
 		flush_on_failure();
 		msg_print("The wand has no charges left.");
-		o_ptr->ident |= (IDENT_EMPTY);
 		return;
 	}
 

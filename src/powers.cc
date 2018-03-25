@@ -909,7 +909,6 @@ static void power_activate(int power)
 				{
 					msg_print("There's no energy there to absorb!");
 				}
-				o_ptr->ident |= IDENT_EMPTY;
 			}
 
 			if (p_ptr->csp > p_ptr->msp)

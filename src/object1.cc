@@ -1992,12 +1992,6 @@ static std::string object_desc_aux(object_type const *o_ptr, int pref, int mode)
 			inscrip.push_back(o_ptr->inscription.substr(0, pos));
 		}
 
-		/* Mega-Hack -- note empty wands/staffs */
-		if (!known && (o_ptr->ident & (IDENT_EMPTY)))
-		{
-			inscrip.push_back("empty");
-		}
-
 		/* Note the discount, if any */
 		if ((o_ptr->discount) && o_ptr->inscription.empty())
 		{
