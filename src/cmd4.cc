@@ -2753,7 +2753,7 @@ void do_cmd_feeling()
 	{
 		char buf[1024];
 
-		if (get_dungeon_save(buf) || game->generate_special_feeling || (dungeon_flags & DF_DESC_ALWAYS))
+		if (get_dungeon_save(buf) || game->generate_special_feeling)
 		{
 			if (!get_level_desc(buf)) msg_print("Someone forgot to describe this level!");
 			else msg_print(buf);
