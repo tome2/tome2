@@ -1454,7 +1454,7 @@ errr Term_inkey(char *ch, bool_ wait, bool_ take)
  *
  * Every "Term_save()" should match exactly one "Term_load()"
  */
-errr Term_save(void)
+errr Term_save()
 {
 	int w = Term->wid;
 	int h = Term->hgt;
@@ -1479,7 +1479,7 @@ errr Term_save(void)
 /*
  * Same as before but can save more than once
  */
-term_win* Term_save_to(void)
+term_win* Term_save_to()
 {
 	int w = Term->wid;
 	int h = Term->hgt;
@@ -1503,7 +1503,7 @@ term_win* Term_save_to(void)
  *
  * Every "Term_save()" should match exactly one "Term_load()"
  */
-errr Term_load(void)
+errr Term_load()
 {
 	int y;
 

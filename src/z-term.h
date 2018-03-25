@@ -249,9 +249,9 @@ errr Term_keypress(int k);
 errr Term_key_push(int k);
 errr Term_inkey(char *ch, bool_ wait, bool_ take);
 
-errr Term_save();
-term_win* Term_save_to();
-errr Term_load();
+errr Term_save(void);
+term_win* Term_save_to(void);
+errr Term_load(void);
 errr Term_load_from(term_win *save);
 
 errr Term_resize(int w, int h);
