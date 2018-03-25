@@ -103,3 +103,21 @@ template <class C> typename C::iterator uniform_element(C &c)
 {
 	return std::next(std::begin(c), rand_int(c.size()));
 }
+
+/**
+ * Shuffle contents of given random-access container.
+ */
+template <class C> void shuffle(C &c)
+{
+	if (c.empty())
+	{
+		return;
+	}
+
+	auto n = c.size();
+
+	for (auto i = n - 1; i > 0; i--)
+	{
+		std::swap(c[i], c[rand_int(i + 1)]);
+	}
+}
