@@ -3482,14 +3482,12 @@ between_exit between_exits[MAX_BETWEEN_EXITS] =
 {
 	{
 		1,
-		FALSE,
 		49, 11,
 		119, 25,
 		0, 0
 	},
 	{
 		0,
-		FALSE,
 		60, 56,
 		10, 35,
 		0, 0
@@ -3497,7 +3495,6 @@ between_exit between_exits[MAX_BETWEEN_EXITS] =
 	/* Theme: Minas Tirith -> Gondolin link */
 	{
 		0,
-		FALSE,
 		3, 11,
 		119, 25,
 		0, 0
