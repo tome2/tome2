@@ -820,6 +820,18 @@ static void process_world_gods()
 
 }
 
+/**
+ * Is the light source harmful for creatures sensitive to light?
+ */
+static bool is_light_harmful(object_type const *o_ptr)
+{
+	return
+		(o_ptr->tval != 0) &&
+		(o_ptr->sval >= SV_LITE_GALADRIEL) &&
+		(o_ptr->sval <= SV_STONE_LORE) &&
+		(o_ptr->sval != SV_LITE_UNDEATH);
+}
+
 /*
  * Handle certain things once every 10 game turns
  *
@@ -1043,10 +1055,7 @@ static void process_world()
 			}
 		}
 
-		if ((p_ptr->inventory[INVEN_LITE].tval != 0) &&
-		                (p_ptr->inventory[INVEN_LITE].sval >= SV_LITE_GALADRIEL) &&
-		                (p_ptr->inventory[INVEN_LITE].sval <= SV_STONE_LORE) &&
-		                (p_ptr->inventory[INVEN_LITE].sval != SV_LITE_UNDEATH))
+		if (is_light_harmful(&p_ptr->inventory[INVEN_LITE]))
 		{
 			object_type * o_ptr = &p_ptr->inventory[INVEN_LITE];
 			char o_name [80];
@@ -3053,9 +3062,6 @@ static void process_command()
 		/* Go up staircase */
 	case '<':
 		{
-			/* Get the light being wielded */
-			auto o_ptr = &p_ptr->inventory[INVEN_LITE];
-
 			/* Cannot move if rooted in place */
 			if (p_ptr->tim_roots) break;
 
@@ -3077,10 +3083,7 @@ static void process_command()
 				msg_print("You can't travel during the day!");
 			}
 			else if (p_ptr->sensible_lite &&
-			                (o_ptr->tval != 0) &&
-			                (o_ptr->sval >= SV_LITE_GALADRIEL) &&
-			                (o_ptr->sval <= SV_STONE_LORE) &&
-			                (o_ptr->sval != SV_LITE_UNDEATH))
+					is_light_harmful(&p_ptr->inventory[INVEN_LITE]))
 			{
 				msg_print("Travel with your present light would be unsafe.");
 			}
