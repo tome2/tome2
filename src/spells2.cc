@@ -464,10 +464,10 @@ bool_ do_inc_stat(int stat)
 /*
  * Process all identify hooks
  */
-void identify_hooks(object_type *o_ptr, identify_mode mode)
+void identify_hooks(object_type *o_ptr)
 {
 	/* Process the appropriate hooks */
-	hook_identify_in in = { o_ptr, mode };
+	hook_identify_in in = { o_ptr };
 	process_hooks_new(HOOK_IDENTIFY, &in, NULL);
 }
 
@@ -500,19 +500,6 @@ bool_ identify_pack()
 }
 
 /*
- * common portions of identify_fully and identify_pack_fully
- */
-static void make_item_fully_identified(object_type *o_ptr)
-{
-	/* Identify it fully */
-	object_aware(o_ptr);
-	object_known(o_ptr);
-
-	/* Mark the item as fully known */
-	o_ptr->ident |= (IDENT_MENTAL);
-}
-
-/*
  * Identify everything being carried.
  * Done by a potion of "self knowledge".
  */
@@ -531,10 +518,8 @@ void identify_pack_fully()
 			continue;
 		}
 
-		make_item_fully_identified(o_ptr);
-
-		/* Process the appropriate hooks */
-		identify_hooks(o_ptr, IDENT_FULL);
+		object_aware(o_ptr);
+		object_known(o_ptr);
 	}
 
 	p_ptr->update |= (PU_BONUS);
@@ -2293,7 +2278,8 @@ bool_ identify_fully()
 	object_type *o_ptr = get_object(item);
 
 	/* Do the identification */
-	make_item_fully_identified(o_ptr);
+	object_aware(o_ptr);
+	object_known(o_ptr);
 
 	/* Recalculate bonuses */
 	p_ptr->update |= (PU_BONUS);
@@ -2330,9 +2316,6 @@ bool_ identify_fully()
 
 	/* Describe it fully */
 	object_out_desc(o_ptr, NULL, FALSE, TRUE);
-
-	/* Process the appropriate hooks */
-	identify_hooks(o_ptr, IDENT_FULL);
 
 	/* Success */
 	return (TRUE);

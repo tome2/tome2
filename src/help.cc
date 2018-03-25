@@ -371,14 +371,12 @@ static bool_ trigger_20th_level(void *in, void *out) {
 static bool_ trigger_identify_spell_item(void *in_, void *out) {
 	hook_identify_in *in = (hook_identify_in *) in_;
 
-	if (in->mode == IDENT_FULL)
+	auto const f = object_flags(in->o_ptr);
+	if (f & TR_SPELL_CONTAIN)
 	{
-		auto const f = object_flags(in->o_ptr);
-		if (f & TR_SPELL_CONTAIN)
-		{
-			return TRUE;
-		}
+		return TRUE;
 	}
+
 	return FALSE;
 }
 

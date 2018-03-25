@@ -3976,12 +3976,6 @@ static bool_ project_o(int who, int r, int y, int x, int dam, int typ)
 				object_aware(o_ptr);
 				object_known(o_ptr);
 
-				/* Mark the item as fully known */
-				o_ptr->ident |= (IDENT_MENTAL);
-
-				/* Process the appropriate hooks */
-				identify_hooks(o_ptr, IDENT_FULL);
-
 				/* Squelch ! */
 				squeltch_grid();
 

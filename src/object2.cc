@@ -711,6 +711,7 @@ s16b get_obj_num(int level)
 void object_known(object_type *o_ptr)
 {
 	auto previously_known = object_known_p(o_ptr);
+	bool previously_fully_known = o_ptr->ident & IDENT_MENTAL;
 
 	/* No Sensing */
 	o_ptr->sense = SENSE_NONE;
@@ -721,13 +722,14 @@ void object_known(object_type *o_ptr)
 	/* Clear the "Empty" info */
 	o_ptr->ident &= ~(IDENT_EMPTY);
 
-	/* Now we know about the item */
-	o_ptr->ident |= (IDENT_KNOWN);
+	/* Mark the item as fully known */
+	o_ptr->ident |= IDENT_KNOWN;
+	o_ptr->ident |= IDENT_MENTAL;
 
 	/* If the status changed, then we invoke the hook */
-	if (!previously_known)
+	if ((!previously_known) || (!previously_fully_known))
 	{
-		identify_hooks(o_ptr, IDENT_NORMAL);
+		identify_hooks(o_ptr);
 	}
 }
 

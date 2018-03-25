@@ -1,7 +1,6 @@
 #pragma once
 
 #include "h-basic.h"
-#include "identify_mode.hpp"
 #include "monster_race_flag_set.hpp"
 #include "object_filter.hpp"
 #include "object_type_fwd.hpp"
@@ -17,7 +16,7 @@ void explosive_rune();
 bool_ do_dec_stat(int stat, int mode);
 bool_ do_res_stat(int stat, bool_ full);
 bool_ do_inc_stat(int stat);
-void identify_hooks(object_type *o_ptr, identify_mode type);
+void identify_hooks(object_type *o_ptr);
 bool_ identify_pack();
 void identify_pack_fully();
 bool_ remove_curse();
