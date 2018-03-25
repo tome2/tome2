@@ -362,12 +362,12 @@ template<typename M, typename FK, typename FV> void do_fixed_map(ls_flag_t flag,
 			// value.
 			if (map.count(key))
 			{
-				fv(&map.at(key), flag);
+				fv(map.at(key), flag);
 			}
 			else
 			{
 				typename M::mapped_type v;
-				fv(&v, flag);
+				fv(v, flag);
 			}
 		}
 	}
@@ -380,7 +380,7 @@ template<typename M, typename FK, typename FV> void do_fixed_map(ls_flag_t flag,
 			auto key = entry.first;
 			auto value = entry.second;
 			fk(&key, flag);
-			fv(&value, flag);
+			fv(value, flag);
 		}
 	}
 }
@@ -993,7 +993,6 @@ static bool_ wearable_p(object_type *o_ptr)
  */
 static void do_item(object_type *o_ptr, ls_flag_t flag)
 {
-	auto &k_info = game->edit_data.k_info;
 	auto &a_info = game->edit_data.a_info;
 	auto &e_info = game->edit_data.e_info;
 
@@ -1002,6 +1001,7 @@ static void do_item(object_type *o_ptr, ls_flag_t flag)
 
 	/* Kind */
 	do_s16b(&o_ptr->k_idx, flag);
+	o_ptr->k_ptr = game->edit_data.k_info.at(o_ptr->k_idx);
 
 	/* Location */
 	do_byte(&o_ptr->iy, flag);
@@ -1092,7 +1092,7 @@ static void do_item(object_type *o_ptr, ls_flag_t flag)
 	/*********** END OF ls_flag_t::SAVE ***************/
 
 	/* Obtain the "kind" template */
-	object_kind *k_ptr = &k_info.at(o_ptr->k_idx);
+	auto k_ptr = o_ptr->k_ptr;
 
 	/* Obtain tval/sval from k_info */
 	o_ptr->tval = k_ptr->tval;
@@ -1781,7 +1781,7 @@ static bool_ do_inventory(ls_flag_t flag)
 			do_item(q_ptr, ls_flag_t::LOAD);
 
 			/* Hack -- verify item */
-			if (!q_ptr->k_idx) return (FALSE);
+			if (!q_ptr->k_ptr) return (FALSE);
 
 			/* Wield equipment */
 			if (n >= INVEN_WIELD)
@@ -1828,7 +1828,7 @@ static bool_ do_inventory(ls_flag_t flag)
 		for (u16b i = 0; i < INVEN_TOTAL; i++)
 		{
 			object_type *o_ptr = &p_ptr->inventory[i];
-			if (!o_ptr->k_idx) continue;
+			if (!o_ptr->k_ptr) continue;
 			do_u16b(&i, flag);
 			do_item(o_ptr, flag);
 		}
@@ -2007,7 +2007,7 @@ static bool do_object_lore(ls_flag_t flag)
 	auto &k_info = game->edit_data.k_info;
 
 	do_fixed_map(flag, k_info, do_int,
-		[](object_kind *k_ptr, auto flag) -> void {
+		[](std::shared_ptr<object_kind> k_ptr, auto flag) -> void {
 			do_bool(&k_ptr->aware, flag);
 			do_bool(&k_ptr->tried, flag);
 			do_bool(&k_ptr->artifact, flag);

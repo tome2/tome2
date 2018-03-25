@@ -103,7 +103,7 @@ bool_ is_magestaff()
 		object_type *o_ptr = &p_ptr->inventory[INVEN_WIELD + i];
 
 		/* Wielding a mage staff */
-		if ((o_ptr->k_idx) && (o_ptr->tval == TV_MSTAFF)) return (TRUE);
+		if ((o_ptr->k_ptr) && (o_ptr->tval == TV_MSTAFF)) return (TRUE);
 
 		/* Next slot */
 		i++;
@@ -550,7 +550,7 @@ std::string symbiote_name(bool capitalize)
 	buf.reserve(32);
 
 	// Fallback; shouldn't ever be necessary
-	if (!o_ptr->k_idx)
+	if (!o_ptr->k_ptr)
 	{
 		buf += "A non-existent symbiote";
 	}

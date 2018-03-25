@@ -2991,7 +2991,10 @@ void request_command(int shopping)
 		object_type *o_ptr = &p_ptr->inventory[i];
 
 		/* Skip non-objects */
-		if (!o_ptr->k_idx) continue;
+		if (!o_ptr->k_ptr)
+		{
+			continue;
+		}
 
 		/* No inscription */
 		if (o_ptr->inscription.empty())
@@ -3372,8 +3375,7 @@ int test_item_name(cptr needle)
 
 	for (auto const &k_entry: k_info)
 	{
-		auto const &name = k_entry.second.name;
-		if (iequals(needle, name))
+		if (iequals(needle, k_entry.second->name))
 		{
 			return k_entry.first;
 		}

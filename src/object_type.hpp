@@ -2,7 +2,9 @@
 
 #include "h-basic.h"
 #include "object_flag_set.hpp"
+#include "object_kind_fwd.hpp"
 
+#include <memory>
 #include <string>
 
 /**
@@ -35,6 +37,7 @@
 struct object_type
 {
 	s16b k_idx = 0;                          /* Kind index (zero if "dead") */
+	std::shared_ptr<object_kind> k_ptr;
 
 	byte iy = 0;                             /* Y-position on map, or zero */
 	byte ix = 0;                             /* X-position on map, or zero */

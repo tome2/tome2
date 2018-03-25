@@ -218,7 +218,6 @@ bool_ is_randhero(int level)
 
 static void do_get_new_obj(int y, int x)
 {
-	auto &k_info = game->edit_data.k_info;
 	auto &a_info = game->edit_data.a_info;
 
 	object_type *q_ptr[3], forge[3];
@@ -272,9 +271,9 @@ static void do_get_new_obj(int y, int x)
 			{
 				game->random_artifacts[o_ptr->sval].generated = FALSE;
 			}
-			else if (k_info.at(o_ptr->k_idx).flags & TR_NORM_ART)
+			else if (o_ptr->k_ptr->flags & TR_NORM_ART)
 			{
-				k_info.at(o_ptr->k_idx).artifact = FALSE;
+				o_ptr->k_ptr->artifact = FALSE;
 			}
 			else if (o_ptr->name1)
 			{

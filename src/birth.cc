@@ -632,10 +632,10 @@ static void player_wipe()
 	/* Reset the "objects" */
 	for (auto &k_entry: k_info)
 	{
-		auto &k_ref = k_entry.second;
-		k_ref.tried = FALSE;
-		k_ref.aware = FALSE;
-		k_ref.artifact = 0;
+		auto k_ptr = k_entry.second;
+		k_ptr->tried = FALSE;
+		k_ptr->aware = FALSE;
+		k_ptr->artifact = 0;
 	}
 
 

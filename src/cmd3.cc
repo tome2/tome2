@@ -171,9 +171,15 @@ static bool item_tester_hook_wear(object_type const *o_ptr)
 		{
 			object_type *q_ptr = &p_ptr->inventory[i];
 
-			if (!q_ptr->k_idx) continue;
+			if (!q_ptr->k_ptr)
+			{
+				continue;
+			}
 
-			if (object_flags(q_ptr) & TR_ULTIMATE) return (FALSE);
+			if (object_flags(q_ptr) & TR_ULTIMATE)
+			{
+				return (FALSE);
+			}
 		}
 	}
 
@@ -277,8 +283,8 @@ void do_cmd_wield()
 
 	/* Two handed weapons can't be wielded with a shield */
 	if ((is_slot_ok(slot - INVEN_WIELD + INVEN_ARM)) &&
-			(flags & TR_MUST2H) &&
-	                (p_ptr->inventory[slot - INVEN_WIELD + INVEN_ARM].k_idx != 0))
+		(flags & TR_MUST2H) &&
+		(p_ptr->inventory[slot - INVEN_WIELD + INVEN_ARM].k_ptr))
 	{
 		object_desc(o_name, o_ptr, FALSE, 0);
 		msg_format("You cannot wield your %s with a shield.", o_name);
@@ -293,8 +299,9 @@ void do_cmd_wield()
 		auto const i_flags = object_flags(i_ptr);
 
 		/* Prevent shield from being put on if wielding 2H */
-		if ((i_flags & TR_MUST2H) && (i_ptr->k_idx) &&
-		                (p_ptr->body_parts[slot - INVEN_WIELD] == INVEN_ARM))
+		if ((i_flags & TR_MUST2H) &&
+			i_ptr->k_ptr &&
+			(p_ptr->body_parts[slot - INVEN_WIELD] == INVEN_ARM))
 		{
 			object_desc(o_name, o_ptr, FALSE, 0);
 			msg_format("You cannot wield your %s with a two-handed weapon.", o_name);
@@ -302,7 +309,7 @@ void do_cmd_wield()
 		}
 
 		if ((p_ptr->body_parts[slot - INVEN_WIELD] == INVEN_ARM) &&
-		                (i_flags & TR_COULD2H))
+			(i_flags & TR_COULD2H))
 		{
 			if (!get_check("Are you sure you want to restrict your fighting? "))
 			{
@@ -312,8 +319,8 @@ void do_cmd_wield()
 	}
 
 	if ((is_slot_ok(slot - INVEN_WIELD + INVEN_ARM)) &&
-	                (p_ptr->inventory[slot - INVEN_WIELD + INVEN_ARM].k_idx != 0) &&
-			(flags & TR_COULD2H))
+		p_ptr->inventory[slot - INVEN_WIELD + INVEN_ARM].k_ptr &&
+		(flags & TR_COULD2H))
 	{
 		if (!get_check("Are you sure you want to use this weapon with a shield?"))
 		{
@@ -344,7 +351,7 @@ void do_cmd_wield()
 	/* Take off existing item */
 	if (slot != INVEN_AMMO)
 	{
-		if (o_ptr->k_idx)
+		if (o_ptr->k_ptr)
 		{
 			/* Take off existing item */
 			inven_takeoff(slot, 255, FALSE);
@@ -352,7 +359,7 @@ void do_cmd_wield()
 	}
 	else
 	{
-		if (o_ptr->k_idx)
+		if (o_ptr->k_ptr)
 		{
 			if (!object_similar(o_ptr, q_ptr))
 			{
@@ -559,8 +566,6 @@ void do_cmd_drop()
  */
 void do_cmd_destroy()
 {
-	auto const &k_info = game->edit_data.k_info;
-
 	int old_number;
 
 	bool_ force = FALSE;
@@ -677,7 +682,7 @@ void do_cmd_destroy()
 	/* Eru wont be happy */
 	if (flags & TR_BLESSED)
 	{
-		inc_piety(GOD_ERU, -10 * k_info.at(o_ptr->k_idx).level);
+		inc_piety(GOD_ERU, -10 * o_ptr->k_ptr->level);
 	}
 
 	/* Eliminate the item */

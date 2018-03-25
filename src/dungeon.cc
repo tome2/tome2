@@ -134,10 +134,7 @@ static byte value_check_aux1(object_type const *o_ptr)
 
 static byte value_check_aux1_magic(object_type const *o_ptr)
 {
-	auto const &k_info = game->edit_data.k_info;
-
-	auto k_ptr = &k_info.at(o_ptr->k_idx);
-
+	auto const &k_ptr = o_ptr->k_ptr;
 
 	switch (o_ptr->tval)
 	{
@@ -225,10 +222,7 @@ static byte value_check_aux2(object_type const *o_ptr)
 
 static byte value_check_aux2_magic(object_type const *o_ptr)
 {
-	auto const &k_info = game->edit_data.k_info;
-
-	auto k_ptr = &k_info.at(o_ptr->k_idx);
-
+	auto k_ptr = o_ptr->k_ptr;
 
 	switch (o_ptr->tval)
 	{
@@ -415,13 +409,22 @@ void sense_objects(std::vector<int> const &object_idxs)
 		object_type *o_ptr = get_object(i);
 
 		/* Skip empty slots */
-		if (!o_ptr->k_idx) continue;
+		if (!o_ptr->k_ptr)
+		{
+			continue;
+		}
 
 		/* We know about it already, do not tell us again */
-		if (o_ptr->ident & (IDENT_SENSE)) continue;
+		if (o_ptr->ident & IDENT_SENSE)
+		{
+			continue;
+		}
 
 		/* It is fully known, no information needed */
-		if (object_known_p(o_ptr)) continue;
+		if (object_known_p(o_ptr))
+		{
+			continue;
+		}
 
 		/* Select appropriate sensing function, if any */
 		sense_function_t sense = select_sense(o_ptr, feel_combat, feel_magic);
@@ -780,12 +783,9 @@ static void regen_monsters()
 {
 	auto const &r_info = game->edit_data.r_info;
 
-	int i, frac;
+	auto o_ptr = &p_ptr->inventory[INVEN_CARRY];
 
-	object_type *o_ptr = &p_ptr->inventory[INVEN_CARRY];
-
-
-	if (o_ptr->k_idx)
+	if (o_ptr->k_ptr)
 	{
 		auto r_ptr = &r_info[o_ptr->pval];
 
@@ -793,7 +793,7 @@ static void regen_monsters()
 		if (o_ptr->pval2 < o_ptr->pval3)
 		{
 			/* Hack -- Base regeneration */
-			frac = o_ptr->pval3 / 100;
+			int frac = o_ptr->pval3 / 100;
 
 			/* Hack -- Minimal regeneration rate */
 			if (!frac) frac = 1;
@@ -814,7 +814,7 @@ static void regen_monsters()
 	}
 
 	/* Regenerate everyone */
-	for (i = 1; i < m_max; i++)
+	for (int i = 1; i < m_max; i++)
 	{
 		/* Check the i'th monster */
 		monster_type *m_ptr = &m_list[i];
@@ -829,7 +829,7 @@ static void regen_monsters()
 		if (m_ptr->hp < m_ptr->maxhp)
 		{
 			/* Hack -- Base regeneration */
-			frac = m_ptr->maxhp / 100;
+			int frac = m_ptr->maxhp / 100;
 
 			/* Hack -- Minimal regeneration rate */
 			if (!frac) frac = 1;
@@ -1289,7 +1289,7 @@ static void process_world()
 	/*** Is the wielded monsters still hypnotised ***/
 	o_ptr = &p_ptr->inventory[INVEN_CARRY];
 
-	if (o_ptr->k_idx)
+	if (o_ptr->k_ptr)
 	{
 		auto r_ptr = &r_info[o_ptr->pval];
 
@@ -1583,7 +1583,10 @@ static void process_world()
 			auto const flags = object_flags(o_ptr);
 
 			/* Hitpoints multiplier consume a lot of food */
-			if (o_ptr->k_idx && (flags & TR_LIFE)) i += o_ptr->pval * 5;
+			if (o_ptr->k_ptr && (flags & TR_LIFE))
+			{
+				i += o_ptr->pval * 5;
+			}
 
 			/* Slow digestion takes less food */
 			if (p_ptr->slow_digest) i -= 10;
@@ -2556,7 +2559,10 @@ static void process_world()
 			o_ptr = &p_ptr->inventory[i];
 
 			/* Skip non-objects */
-			if (!o_ptr->k_idx) continue;
+			if (!o_ptr->k_ptr)
+			{
+				continue;
+			}
 
 			/* Extract the item flags */
 			auto const flags = object_flags(o_ptr);
@@ -2790,7 +2796,10 @@ static void process_world()
 
 
 		/* Skip non-objects */
-		if (!o_ptr->k_idx) continue;
+		if (!o_ptr->k_ptr)
+		{
+			continue;
+		}
 
 		/* Hack: Skip wielded lights that need fuel (already handled above) */
 		if ((i == INVEN_LITE) && (o_ptr->tval == TV_LITE) && (flags & TR_FUEL_LITE)) continue;
@@ -2823,7 +2832,10 @@ static void process_world()
 		o_ptr = &p_ptr->inventory[i];
 
 		/* Skip non-objects */
-		if (!o_ptr->k_idx) continue;
+		if (!o_ptr->k_ptr)
+		{
+			continue;
+		}
 
 		/* Examine the rod */
 		auto const flags = object_flags(o_ptr);
@@ -2958,7 +2970,10 @@ static void process_world()
 		o_ptr = &o_list[i];
 
 		/* Skip dead objects */
-		if (!o_ptr->k_idx) continue;
+		if (!o_ptr->k_ptr)
+		{
+			continue;
+		}
 
 		/* Examine the rod */
 		auto const flags = object_flags(o_ptr);
@@ -4145,7 +4160,6 @@ static void process_command()
 static void process_player()
 {
 	auto const &f_info = game->edit_data.f_info;
-	auto const &k_info = game->edit_data.k_info;
 
 	int i, j;
 
@@ -4278,16 +4292,12 @@ static void process_player()
 		if (options->fresh_before) Term_fresh();
 
 		/* Hack -- Pack Overflow */
-		if (p_ptr->inventory[INVEN_PACK].k_idx)
+		if (p_ptr->inventory[INVEN_PACK].k_ptr)
 		{
 			int item = INVEN_PACK;
 
-			char o_name[80];
-
-			object_type *o_ptr;
-
 			/* Access the slot to be dropped */
-			o_ptr = &p_ptr->inventory[item];
+			auto o_ptr = &p_ptr->inventory[item];
 
 			/* Disturbing */
 			disturb();
@@ -4296,6 +4306,7 @@ static void process_player()
 			msg_print("Your pack overflows!");
 
 			/* Describe */
+			char o_name[80];
 			object_desc(o_name, o_ptr, TRUE, 3);
 
 			/* Message */
@@ -4457,13 +4468,12 @@ static void process_player()
 				{
 					/* Acquire object -- for speed only base items are allowed to shimmer */
 					object_type *o_ptr = &o_list[i];
-					auto k_ptr = &k_info.at(o_ptr->k_idx);
 
 					/* Skip dead or carried objects */
-					if ((!o_ptr->k_idx) || (!o_ptr->ix)) continue;
+					if ((!o_ptr->k_ptr) || (!o_ptr->ix)) continue;
 
 					/* Skip non-multi-hued monsters */
-					if (!(k_ptr->flags & TR_ATTR_MULTI)) continue;
+					if (!(o_ptr->k_ptr->flags & TR_ATTR_MULTI)) continue;
 
 					/* Reset the flag */
 					shimmer_objects = TRUE;

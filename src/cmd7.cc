@@ -112,8 +112,6 @@ void mindcraft_info(char *p, int power)
  */
 void mimic_info(char *p, int power)
 {
-	auto const &k_info = game->edit_data.k_info;
-
 	int plev = get_skill(SKILL_MIMICRY);
 	object_type *o_ptr = &p_ptr->inventory[INVEN_OUTER];
 
@@ -124,7 +122,7 @@ void mimic_info(char *p, int power)
 	switch (power)
 	{
 	case 0:
-		strnfmt(p, 80, " dur %d", k_info.at(o_ptr->k_idx).pval2 + get_skill_scale(SKILL_MIMICRY, 1000));
+		strnfmt(p, 80, " dur %d", o_ptr->k_ptr->pval2 + get_skill_scale(SKILL_MIMICRY, 1000));
 		break;
 	case 1:
 		strnfmt(p, 80, " dur %d+d20", 10 + plev);
@@ -764,13 +762,6 @@ static int get_mimic_chance(int mimic)
 
 void do_cmd_mimic_lore()
 {
-	auto const &k_info = game->edit_data.k_info;
-
-	int fail;
-
-	object_type	*o_ptr;
-
-
 	/* Player has to be able to see */
 	if (p_ptr->blind || no_lite())
 	{
@@ -797,7 +788,7 @@ void do_cmd_mimic_lore()
 	/* Not in mimic forms -- Allow transformations */
 	else
 	{
-		o_ptr = &p_ptr->inventory[INVEN_OUTER];
+		object_type const *o_ptr = &p_ptr->inventory[INVEN_OUTER];
 
 		if ((o_ptr->tval != TV_CLOAK) || (o_ptr->sval != SV_MIMIC_CLOAK))
 		{
@@ -806,7 +797,7 @@ void do_cmd_mimic_lore()
 		}
 
 		/* Calculate failure rate */
-		fail = get_mimic_chance(o_ptr->pval2);
+		auto const fail = get_mimic_chance(o_ptr->pval2);
 
 		if (fail > 75)
 		{
@@ -832,7 +823,7 @@ void do_cmd_mimic_lore()
 		/* Success */
 		else
 		{
-			set_mimic(k_info.at(o_ptr->k_idx).pval2 + get_skill_scale(SKILL_MIMICRY, 1000), o_ptr->pval2, get_skill(SKILL_MIMICRY));
+			set_mimic(o_ptr->k_ptr->pval2 + get_skill_scale(SKILL_MIMICRY, 1000), o_ptr->pval2, get_skill(SKILL_MIMICRY));
 		}
 	}
 
@@ -2240,7 +2231,7 @@ void do_cmd_necromancer()
 				object_type forge, *o_ptr = &forge;
 				int k_idx = test_item_name("& Necromantic Teeth~");
 
-				k_info[k_idx].allow_special = TRUE;
+				k_info[k_idx]->allow_special = TRUE;
 
 				object_prep(o_ptr, k_idx);
 				apply_magic(o_ptr, plev * 2, TRUE, TRUE, TRUE);
@@ -2256,7 +2247,7 @@ void do_cmd_necromancer()
 				object_known(o_ptr);
 				inven_carry(o_ptr, FALSE);
 
-				k_info[k_idx].allow_special = FALSE;
+				k_info[k_idx]->allow_special = FALSE;
 
 				break;
 			}
@@ -3086,7 +3077,7 @@ void do_cmd_symbiotic()
 			{
 				s32b percent1, percent2;
 
-				if (!o_ptr->k_idx)
+				if (!o_ptr->k_ptr)
 				{
 					msg_print("You are not in symbiosis.");
 					break;
@@ -3117,7 +3108,7 @@ void do_cmd_symbiotic()
 			/* Minor Symbiotic Powers */
 		case 4:
 			{
-				if (!o_ptr->k_idx)
+				if (!o_ptr->k_ptr)
 				{
 					msg_print("You are not in symbiosis.");
 					break;
@@ -3132,17 +3123,20 @@ void do_cmd_symbiotic()
 			/* Heal Symbiote */
 		case 5:
 			{
-				int hp;
-
-				if (!o_ptr->k_idx)
+				if (!o_ptr->k_ptr)
 				{
 					msg_print("You are not in symbiosis.");
 					break;
 				}
 
-				hp = o_ptr->pval3 * (15 + get_skill_scale(SKILL_SYMBIOTIC, 35)) / 100;
+				int const hp =
+					o_ptr->pval3 * (15 + get_skill_scale(SKILL_SYMBIOTIC, 35)) / 100;
+
 				o_ptr->pval2 += hp;
-				if (o_ptr->pval2 > o_ptr->pval3) o_ptr->pval2 = o_ptr->pval3;
+				if (o_ptr->pval2 > o_ptr->pval3)
+				{
+					o_ptr->pval2 = o_ptr->pval3;
+				}
 
 				msg_format("%s is healed.", symbiote_name(true).c_str());
 
@@ -3156,13 +3150,13 @@ void do_cmd_symbiotic()
 			/* Major Symbiotic Powers */
 		case 6:
 			{
-				if (!o_ptr->k_idx)
+				if (!o_ptr->k_ptr)
 				{
 					msg_print("You are not in symbiosis.");
 					break;
 				}
 
-				if(0 > use_symbiotic_power(o_ptr->pval, true))
+				if (0 > use_symbiotic_power(o_ptr->pval, true))
 					return;
 
 				break;

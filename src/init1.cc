@@ -2238,8 +2238,7 @@ errr init_k_info_txt(FILE *fp)
 	char *s, *t;
 
 	/* Current entry */
-	object_kind *k_ptr = NULL;
-
+	std::shared_ptr<object_kind> k_ptr;
 
 	/* Just before the first record */
 	error_idx = -1;
@@ -2286,7 +2285,8 @@ errr init_k_info_txt(FILE *fp)
 			error_idx = i;
 
 			/* Point at the "info"; automatically creates an entry */
-			k_ptr = &k_info[i];
+			k_info.emplace(std::make_pair(i, std::make_shared<object_kind>()));
+			k_ptr = k_info[i];
 			k_ptr->name = s;
 
 			/* Next... */
@@ -6244,7 +6244,7 @@ static errr process_dungeon_file_aux(char *buf, int *yval, int *xval, int xvalst
 				/* Get local object */
 				object_type *o_ptr = &object_type_body;
 
-				k_info[object_index].allow_special = TRUE;
+				k_info[object_index]->allow_special = TRUE;
 
 				/* Create the item */
 				object_prep(o_ptr, object_index);
@@ -6254,7 +6254,7 @@ static errr process_dungeon_file_aux(char *buf, int *yval, int *xval, int xvalst
 
 				o_ptr->found = OBJ_FOUND_SPECIAL;
 
-				k_info[object_index].allow_special = FALSE;
+				k_info[object_index]->allow_special = FALSE;
 
 				drop_near(o_ptr, -1, y, x);
 			}

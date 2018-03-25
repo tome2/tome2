@@ -1370,8 +1370,8 @@ static bool_ do_cmd_tunnel_aux(int y, int x, int dir)
 	/* Must be have something to dig with (except for sandwalls) */
 	if ((c_ptr->feat < FEAT_SANDWALL) || (c_ptr->feat > FEAT_SANDWALL_K))
 	{
-		if (!p_ptr->inventory[INVEN_TOOL].k_idx ||
-		                (p_ptr->inventory[INVEN_TOOL].tval != TV_DIGGING))
+		auto o_ptr = &p_ptr->inventory[INVEN_TOOL];
+		if (!o_ptr->k_ptr || (o_ptr->tval != TV_DIGGING))
 		{
 			msg_print("You need to have a shovel or pick in your tool slot.");
 
@@ -1999,8 +1999,10 @@ static bool_ get_spike(int *ip)
 	{
 		object_type *o_ptr = &p_ptr->inventory[i];
 
-		/* Skip non-objects */
-		if (!o_ptr->k_idx) continue;
+		if (!o_ptr->k_ptr)
+		{
+			continue;
+		}
 
 		/* Check the "tval" code */
 		if (o_ptr->tval == TV_SPIKE)
@@ -2717,7 +2719,7 @@ void do_cmd_fire()
 	item = INVEN_AMMO;
 
 	/* If nothing correct try to choose from the backpack */
-	if ((p_ptr->tval_ammo != o_ptr->tval) || (!o_ptr->k_idx))
+	if ((p_ptr->tval_ammo != o_ptr->tval) || (!o_ptr->k_ptr))
 	{
 		/* Get an item */
 		if (!get_item(&item,
@@ -3092,8 +3094,6 @@ void do_cmd_fire()
  */
 void do_cmd_throw()
 {
-	auto const &k_info = game->edit_data.k_info;
-
 	int dir;
 
 	s32b special = 0;
@@ -3377,7 +3377,7 @@ void do_cmd_throw()
 					if (special) attack_special(m_ptr, special, tdam);
 
 					/* Anger friends */
-					if (!(k_info.at(q_ptr->k_idx).tval == TV_POTION))
+					if (!(q_ptr->k_ptr->tval == TV_POTION))
 					{
 						char m_name[80];
 						monster_desc(m_name, m_ptr, 0);
@@ -3417,7 +3417,7 @@ void do_cmd_throw()
 	j = (hit_body ? breakage_chance(q_ptr) : 0);
 
 	/* Potions smash open */
-	if (k_info.at(q_ptr->k_idx).tval == TV_POTION)
+	if (q_ptr->k_ptr->tval == TV_POTION)
 	{
 		if ((hit_body) || (hit_wall) || (randint(100) < j))
 		{
@@ -3468,8 +3468,6 @@ void do_cmd_throw()
  */
 void do_cmd_boomerang()
 {
-	auto const &k_info = game->edit_data.k_info;
-
 	int dir;
 
 	int j, y, x, ny, nx, ty, tx;
@@ -3703,7 +3701,7 @@ void do_cmd_boomerang()
 					if (special) attack_special(m_ptr, special, tdam);
 
 					/* Anger friends */
-					if (!(k_info.at(q_ptr->k_idx).tval == TV_POTION))
+					if (!(q_ptr->k_ptr->tval == TV_POTION))
 					{
 						char m_name[80];
 						monster_desc(m_name, m_ptr, 0);
@@ -4467,7 +4465,7 @@ void do_cmd_steal()
 		}
 
 		/* Delete source item */
-		o_list[item].k_idx = 0;
+		o_list[item].k_ptr.reset();
 	}
 
 	screen_load();

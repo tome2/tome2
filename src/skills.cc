@@ -810,7 +810,7 @@ static void choose_melee()
 
 		for (i = INVEN_WIELD; p_ptr->body_parts[i - INVEN_WIELD] == INVEN_WIELD; i++)
 		{
-			if (p_ptr->inventory[i].k_idx)
+			if (p_ptr->inventory[i].k_ptr)
 			{
 				if (cursed_p(&p_ptr->inventory[i]))
 				{
@@ -1194,7 +1194,7 @@ void do_cmd_activate_skill()
 		}
 
 		o_ptr = get_object(INVEN_WIELD);
-		if ((o_ptr->k_idx <= 0) ||
+		if ((!o_ptr->k_ptr) ||
 		    (o_ptr->tval != TV_MSTAFF))
 		{
 			msg_print("You must wield a magestaff to use Geomancy.");

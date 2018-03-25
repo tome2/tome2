@@ -346,7 +346,7 @@ errr process_pref_file_aux(char *buf)
 				return (1);
 			}
 
-			auto k_ptr = &k_info.at(i);
+			auto k_ptr = k_info.at(i);
 
 			if (n1)
 			{
@@ -429,16 +429,16 @@ errr process_pref_file_aux(char *buf)
 
 			for (auto &k_entry: k_info)
 			{
-				auto &k_ref = k_entry.second;
-				if (k_ref.tval == j)
+				auto k_ptr = k_entry.second;
+				if (k_ptr->tval == j)
 				{
 					if (n1)
 					{
-						k_ref.d_attr = n1;
+						k_ptr->d_attr = n1;
 					}
 					if (n2)
 					{
-						k_ref.d_char = n2;
+						k_ptr->d_char = n2;
 					}
 				}
 			}
@@ -1568,18 +1568,29 @@ static object_flag_set wield_monster_flags()
 
 	/* Get the carried monster */
 	auto o_ptr = &p_ptr->inventory[INVEN_CARRY];
-	if (o_ptr->k_idx)
+	if (o_ptr->k_ptr)
 	{
 		auto r_ptr = &r_info[o_ptr->pval];
 
 		if (r_ptr->flags & RF_INVISIBLE)
+		{
 			flags |= TR_INVIS;
+		}
+
 		if (r_ptr->flags & RF_REFLECTING)
+		{
 			flags |= TR_REFLECT;
+		}
+
 		if (r_ptr->flags & RF_CAN_FLY)
+		{
 			flags |= TR_FEATHER;
+		}
+
 		if (r_ptr->flags & RF_AQUATIC)
+		{
 			flags |= TR_WATER_BREATH;
+		}
 	}
 
 	return flags;
@@ -4046,10 +4057,13 @@ static long total_points()
 	/* The known objects increase the score */
 	for (auto const &k_entry: k_info)
 	{
-		auto k_ptr = &k_entry.second;
+		auto k_ptr = k_entry.second;
 
 		/* Hack -- skip artifacts */
-		if (k_ptr->flags & TR_INSTA_ART) continue;
+		if (k_ptr->flags & TR_INSTA_ART)
+		{
+			continue;
+		}
 
 		/* List known flavored objects */
 		if (k_ptr->flavor && k_ptr->aware)
@@ -4172,7 +4186,10 @@ static void show_info()
 		auto o_ptr = &o_ref;
 
 		/* Skip non-objects */
-		if (!o_ptr->k_idx) continue;
+		if (!o_ptr->k_ptr)
+		{
+			continue;
+		}
 
 		/* Aware and Known */
 		object_aware(o_ptr);
@@ -4188,7 +4205,10 @@ static void show_info()
 			auto o_ptr = &o_ref;
 
 			/* Skip non-objects */
-			if (!o_ptr->k_idx) continue;
+			if (!o_ptr->k_ptr)
+			{
+				continue;
+			}
 
 			/* Aware and Known */
 			object_aware(o_ptr);

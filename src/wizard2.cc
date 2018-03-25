@@ -416,8 +416,6 @@ static void do_cmd_wiz_change()
  */
 static void wiz_display_item(object_type *o_ptr)
 {
-	auto const &k_info = game->edit_data.k_info;
-
 	int i, j = 13;
 	char buf[256];
 
@@ -433,7 +431,7 @@ static void wiz_display_item(object_type *o_ptr)
 	prt(buf, 2, j);
 
 	prt(format("kind = %-5d  level = %-4d  tval = %-5d  sval = %-5d",
-	           o_ptr->k_idx, k_info.at(o_ptr->k_idx).level,
+	           o_ptr->k_idx, o_ptr->k_ptr->level,
 	           o_ptr->tval, o_ptr->sval), 4, j);
 
 	prt(format("number = %-3d  wgt = %-6d  ac = %-5d    damage = %dd%d",
@@ -587,13 +585,16 @@ static int wiz_create_itemtype()
 	choice.reserve(60);
 	for (auto &k_entry: k_info)
 	{
-		auto k_ptr = &k_entry.second;
+		auto const &k_ptr = k_entry.second;
 
 		/* Analyze matching items */
 		if (k_ptr->tval == tval)
 		{
 			/* Hack -- Skip instant artifacts */
-			if (k_ptr->flags & TR_INSTA_ART) continue;
+			if (k_ptr->flags & TR_INSTA_ART)
+			{
+				continue;
+			}
 
 			/* Acquire the "name" of object */
 			auto buf = strip_name(k_ptr->name);
@@ -1284,7 +1285,7 @@ void do_cmd_wiz_cure_all()
 	/* Heal the player monster */
 	/* Get the carried monster */
 	o_ptr = &p_ptr->inventory[INVEN_CARRY];
-	if (o_ptr->k_idx)
+	if (o_ptr->k_ptr)
 	{
 		o_ptr->pval2 = o_ptr->pval3;
 	}
@@ -1374,7 +1375,7 @@ static void do_cmd_wiz_learn()
 	/* Scan every object */
 	for (auto const &k_entry: k_info)
 	{
-		auto const k_ptr = &k_entry.second;
+		auto const &k_ptr = k_entry.second;
 
 		/* Induce awareness */
 		if (k_ptr->level <= command_arg)

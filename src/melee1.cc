@@ -1729,7 +1729,10 @@ bool_ make_attack_normal(int m_idx, byte divis)
 						o_ptr = &p_ptr->inventory[i];
 
 						/* Skip non-objects */
-						if (!o_ptr->k_idx) continue;
+						if (!o_ptr->k_ptr)
+						{
+							continue;
+						}
 
 						/* Drain charged wands/staffs
 						   Hack -- don't let artifacts get drained */
@@ -1867,10 +1870,16 @@ bool_ make_attack_normal(int m_idx, byte divis)
 						o_ptr = &p_ptr->inventory[i];
 
 						/* Skip non-objects */
-						if (!o_ptr->k_idx) continue;
+						if (!o_ptr->k_ptr)
+						{
+							continue;
+						}
 
 						/* Skip artifacts */
-						if (artifact_p(o_ptr)) continue;
+						if (artifact_p(o_ptr))
+						{
+							continue;
+						}
 
 						/* Get a description */
 						object_desc(o_name, o_ptr, FALSE, 3);
@@ -1950,7 +1959,10 @@ bool_ make_attack_normal(int m_idx, byte divis)
 						o_ptr = &p_ptr->inventory[i];
 
 						/* Skip non-objects */
-						if (!o_ptr->k_idx) continue;
+						if (!o_ptr->k_ptr)
+						{
+							continue;
+						}
 
 						/* Skip non-food objects */
 						if (o_ptr->tval != TV_FOOD) continue;

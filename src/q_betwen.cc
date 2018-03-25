@@ -20,12 +20,12 @@
 
 #define cquest (quest[QUEST_BETWEEN])
 
-static object_kind *get_golden_horn()
+static std::shared_ptr<object_kind> get_golden_horn()
 {
 	static auto &k_info = game->edit_data.k_info;
 	static auto &k_golden_horn = k_info[test_item_name("& Golden Horn~ of the Thunderlords")];
 
-	return &k_golden_horn;
+	return k_golden_horn;
 }
 
 static bool quest_between_move_hook(void *, void *in_, void *)

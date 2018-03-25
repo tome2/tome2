@@ -488,7 +488,7 @@ static bool_ store_object_similar(object_type const *o_ptr, object_type *j_ptr)
 	if (o_ptr == j_ptr) return (0);
 
 	/* Different objects cannot be stacked */
-	if (o_ptr->k_idx != j_ptr->k_idx) return (0);
+	if (o_ptr->k_ptr != j_ptr->k_ptr) return (0);
 
 	/* Different charges (etc) cannot be stacked, unless wands or rods. */
 	if ((o_ptr->pval != j_ptr->pval) && (o_ptr->tval != TV_WAND)) return (0);
@@ -1050,7 +1050,7 @@ static void store_item_optimize(int item)
 	auto const o_ptr = &st_ptr->stock[item];
 
 	/* Must exist */
-	if (!o_ptr->k_idx) return;
+	if (!o_ptr->k_ptr) return;
 
 	/* Must have no items */
 	if (o_ptr->number) return;
@@ -1090,7 +1090,10 @@ static bool_ black_market_crap(object_type *o_ptr)
 		for (auto const &stock_obj: town_info[p_ptr->town_num].store[i].stock)
 		{
 			/* Duplicate item "type", assume crappy */
-			if (o_ptr->k_idx == stock_obj.k_idx) return (TRUE);
+			if (o_ptr->k_ptr == stock_obj.k_ptr)
+			{
+				return (TRUE);
+			}
 		}
 	}
 
@@ -1161,12 +1164,12 @@ static bool_ kind_is_storeok(int k_idx)
 {
 	auto const &k_info = game->edit_data.k_info;
 
-	auto k_ptr = &k_info.at(k_idx);
+	auto k_ptr = k_info.at(k_idx);
 
-	if (k_info.at(k_idx).flags & TR_NORM_ART)
+	if (k_ptr->flags & TR_NORM_ART)
 		return ( FALSE );
 
-	if (k_info.at(k_idx).flags & TR_INSTA_ART)
+	if (k_ptr->flags & TR_INSTA_ART)
 		return ( FALSE );
 
 	if (!kind_is_legal(k_idx)) return FALSE;
@@ -1184,7 +1187,7 @@ struct is_artifact_p : public boost::static_visitor<bool> {
 	bool operator ()(store_item_filter_by_k_idx f) const
 	{
 		auto const &k_info = game->edit_data.k_info;
-		return bool(k_info.at(f.k_idx).flags & TR_NORM_ART);
+		return bool(k_info.at(f.k_idx)->flags & TR_NORM_ART);
 	}
 
 	bool operator ()(store_item_filter_by_tval) const
@@ -1373,13 +1376,18 @@ static void store_create()
 		/* Only if not already done */
 		if (!obj_all_done)
 		{
+			auto k_ptr = k_info.at(k_idx);
 			/* Don't allow k_info artifacts */
-			if (k_info.at(k_idx).flags & TR_NORM_ART)
+			if (k_ptr->flags & TR_NORM_ART)
+			{
 				continue;
+			}
 
 			/* Don't allow artifacts */
-			if (k_info.at(k_idx).flags & TR_INSTA_ART)
+			if (k_ptr->flags & TR_INSTA_ART)
+			{
 				continue;
+			}
 
 			/* Get local object */
 			q_ptr = &forge;
@@ -1396,7 +1404,7 @@ static void store_create()
 				auto const flags = object_flags(q_ptr);
 				if (flags & TR_FUEL_LITE)
 				{
-					q_ptr->timeout = k_info.at(q_ptr->k_idx).pval2;
+					q_ptr->timeout = q_ptr->k_ptr->pval2;
 				}
 			}
 
@@ -1472,7 +1480,10 @@ static void display_entry(int pos)
 		byte a = object_attr(o_ptr);
 		char c = object_char(o_ptr);
 
-		if (!o_ptr->k_idx) c = ' ';
+		if (!o_ptr->k_ptr)
+		{
+			c = ' ';
+		}
 
 		Term_draw(cur_col, i + 6, a, c);
 		cur_col += 2;
@@ -3302,7 +3313,7 @@ void do_cmd_store()
 		handle_stuff();
 
 		/* XXX XXX XXX Pack Overflow */
-		if (p_ptr->inventory[INVEN_PACK].k_idx)
+		if (p_ptr->inventory[INVEN_PACK].k_ptr)
 		{
 			int item = INVEN_PACK;
 
@@ -3331,24 +3342,18 @@ void do_cmd_store()
 			/* Hack -- Drop items into the home */
 			else
 			{
-				int item_pos;
-
-				object_type forge;
-				object_type *q_ptr;
-
-				char o_name[80];
-
-
 				/* Give a message */
 				msg_print("Your pack overflows!");
 
 				/* Get local object */
-				q_ptr = &forge;
+				object_type forge;
+				auto q_ptr = &forge;
 
 				/* Grab a copy of the item */
 				object_copy(q_ptr, o_ptr);
 
 				/* Describe it */
+				char o_name[80];
 				object_desc(o_name, q_ptr, TRUE, 3);
 
 				/* Message */
@@ -3361,7 +3366,7 @@ void do_cmd_store()
 				handle_stuff();
 
 				/* Let the home carry it */
-				item_pos = home_carry(q_ptr);
+				int item_pos = home_carry(q_ptr);
 
 				/* Redraw the home */
 				if (item_pos >= 0)
@@ -3762,7 +3767,7 @@ void do_cmd_home_trump()
 		handle_stuff();
 
 		/* XXX XXX XXX Pack Overflow */
-		if (p_ptr->inventory[INVEN_PACK].k_idx)
+		if (p_ptr->inventory[INVEN_PACK].k_ptr)
 		{
 			int item = INVEN_PACK;
 
@@ -3791,24 +3796,18 @@ void do_cmd_home_trump()
 			/* Hack -- Drop items into the home */
 			else
 			{
-				int item_pos;
-
-				object_type forge;
-				object_type *q_ptr;
-
-				char o_name[80];
-
-
 				/* Give a message */
 				msg_print("Your pack overflows!");
 
 				/* Get local object */
-				q_ptr = &forge;
+				object_type forge;
+				auto q_ptr = &forge;
 
 				/* Grab a copy of the item */
 				object_copy(q_ptr, o_ptr);
 
 				/* Describe it */
+				char o_name[80];
 				object_desc(o_name, q_ptr, TRUE, 3);
 
 				/* Message */
@@ -3821,7 +3820,7 @@ void do_cmd_home_trump()
 				handle_stuff();
 
 				/* Let the home carry it */
-				item_pos = home_carry(q_ptr);
+				int const item_pos = home_carry(q_ptr);
 
 				/* Redraw the home */
 				if (item_pos >= 0)

@@ -330,7 +330,7 @@ static char scroll_adj[MAX_TITLES][16];
 static byte scroll_col[MAX_TITLES];
 
 
-static byte object_flavor(object_kind const *k_ptr)
+static byte object_flavor(std::shared_ptr<object_kind> k_ptr)
 {
 	/* Analyze the item */
 	switch (k_ptr->tval)
@@ -393,7 +393,7 @@ static byte object_flavor(object_kind const *k_ptr)
  *
  * XXX XXX XXX Add "EASY_KNOW" flag to "k_info.txt" file
  */
-static bool_ object_easy_know(object_kind const *k_ptr)
+static bool_ object_easy_know(std::shared_ptr<object_kind> k_ptr)
 {
 	/* Analyze the "tval" */
 	switch (k_ptr->tval)
@@ -594,7 +594,7 @@ void flavor_init()
 	/* Analyze every object */
 	for (auto &k_entry: k_info)
 	{
-		auto k_ptr = &k_entry.second;
+		auto const &k_ptr = k_entry.second;
 
 		/* Extract "flavor" (if any) */
 		k_ptr->flavor = object_flavor(k_ptr);
@@ -651,11 +651,11 @@ void reset_visuals()
 	/* Extract default attr/char code for objects */
 	for (auto &k_entry: k_info)
 	{
-		auto &k_ref = k_entry.second;
+		auto k_ptr = k_entry.second;
 
 		/* Default attr/char */
-		k_ref.x_attr = k_ref.d_attr;
-		k_ref.x_char = k_ref.d_char;
+		k_ptr->x_attr = k_ptr->d_attr;
+		k_ptr->x_char = k_ptr->d_char;
 	}
 
 	/* Extract default attr/char code for monsters */
@@ -785,13 +785,15 @@ bool_ object_flags_no_set = FALSE;
  */
 object_flag_set object_flags(object_type const *o_ptr)
 {
-	auto const &k_info = game->edit_data.k_info;
 	auto const &a_info = game->edit_data.a_info;
 
-	auto k_ptr = &k_info.at(o_ptr->k_idx);
+	if (!o_ptr->k_ptr)
+	{
+		return object_flag_set();
+	}
 
 	/* Base object */
-	auto f = k_ptr->flags;
+	auto f = o_ptr->k_ptr->flags;
 
 	/* Artifact */
 	if (o_ptr->name1)
@@ -818,15 +820,11 @@ object_flag_set object_flags(object_type const *o_ptr)
 /* Return object granted power */
 int object_power(object_type *o_ptr)
 {
-	auto const &k_info = game->edit_data.k_info;
 	auto const &a_info = game->edit_data.a_info;
 	auto const &e_info = game->edit_data.e_info;
 
-	auto k_ptr = &k_info.at(o_ptr->k_idx);
-	int power = -1;
-
 	/* Base object */
-	power = k_ptr->power;
+	int power = o_ptr->k_ptr->power;
 
 	/* Ego-item */
 	if (o_ptr->name2)
@@ -870,16 +868,15 @@ int object_power(object_type *o_ptr)
  */
 object_flag_set object_flags_known(object_type const *o_ptr)
 {
-	auto const &k_info = game->edit_data.k_info;
 	auto const &a_info = game->edit_data.a_info;
-
-	auto k_ptr = &k_info.at(o_ptr->k_idx);
 
 	/* Must be identified */
 	if (!object_known_p(o_ptr))
 	{
 		return object_flag_set();
 	}
+
+	auto k_ptr = o_ptr->k_ptr;
 
 	/* Base object */
 	auto flags = k_ptr->flags;
@@ -1031,7 +1028,7 @@ static std::string object_desc_aux(object_type const *o_ptr, int pref, int mode)
 	bool_ show_weapon = FALSE;
 	bool_ show_armour = FALSE;
 
-	auto k_ptr = &k_info.at(o_ptr->k_idx);
+	auto k_ptr = o_ptr->k_ptr;
 
 	/* Extract some flags */
 	auto const flags = object_flags(o_ptr);
@@ -1046,7 +1043,13 @@ static std::string object_desc_aux(object_type const *o_ptr, int pref, int mode)
 	auto const indexx = o_ptr->sval;
 
 	/* Extract default "base" string */
-	std::string basenm(k_ptr->name);
+	std::string k_name;
+	if (k_ptr)
+	{
+		k_name = k_ptr->name;
+	}
+
+	std::string basenm(k_name);
 
 	/* Assume no "modifier" string */
 	std::string modstr;
@@ -1120,7 +1123,7 @@ static std::string object_desc_aux(object_type const *o_ptr, int pref, int mode)
 
 			if (known && o_ptr->artifact_name.empty() && artifact_p(o_ptr))
 			{
-				basenm = k_ptr->name;
+				basenm = k_name;
 			}
 
 			break;
@@ -1143,7 +1146,7 @@ static std::string object_desc_aux(object_type const *o_ptr, int pref, int mode)
 
 			if (known && o_ptr->artifact_name.empty() && artifact_p(o_ptr))
 			{
-				basenm = k_ptr->name;
+				basenm = k_name;
 			}
 
 			break;
@@ -1192,7 +1195,7 @@ static std::string object_desc_aux(object_type const *o_ptr, int pref, int mode)
 
 	case TV_ROD_MAIN:
 		{
-			modstr = k_info.at(lookup_kind(TV_ROD, o_ptr->pval)).name;
+			modstr = k_info.at(lookup_kind(TV_ROD, o_ptr->pval))->name;
 			break;
 		}
 
@@ -1361,7 +1364,7 @@ static std::string object_desc_aux(object_type const *o_ptr, int pref, int mode)
 	case TV_DAEMON_BOOK:
 	case TV_BOOK:
 		{
-			basenm = k_ptr->name;
+			basenm = k_name;
 			if (o_ptr->sval == 255)
 			{
 				modstr = spell_type_name(spell_at(o_ptr->pval));
@@ -1377,7 +1380,7 @@ static std::string object_desc_aux(object_type const *o_ptr, int pref, int mode)
 	/* Mega Hack */
 	if ((!hack_name) && known && (k_ptr->flags & TR_FULL_NAME))
 	{
-		basenm = k_ptr->name;
+		basenm = k_name;
 	}
 
 	/* Copy of the base string _without_ a prefix */
@@ -1634,7 +1637,7 @@ static std::string object_desc_aux(object_type const *o_ptr, int pref, int mode)
 		}
 		else
 		{
-			t += k_ptr->name;
+			t += k_name;
 		}
 	}
 
@@ -2050,10 +2053,8 @@ void object_desc(char *buf, object_type const *o_ptr, int pref, int mode)
  */
 void object_desc_store(char *buf, object_type *o_ptr, int pref, int mode)
 {
-	auto &k_info = game->edit_data.k_info;
-
 	/* Save the "aware" flag */
-	bool_ hack_aware = k_info.at(o_ptr->k_idx).aware;
+	bool_ hack_aware = o_ptr->k_ptr->aware;
 
 	/* Save the "known" flag */
 	bool_ hack_known = (o_ptr->ident & (IDENT_KNOWN)) ? TRUE : FALSE;
@@ -2063,7 +2064,7 @@ void object_desc_store(char *buf, object_type *o_ptr, int pref, int mode)
 	o_ptr->ident |= (IDENT_KNOWN);
 
 	/* Force "aware" for description */
-	k_info.at(o_ptr->k_idx).aware = TRUE;
+	o_ptr->k_ptr->aware = TRUE;
 
 
 	/* Describe the object */
@@ -2071,7 +2072,7 @@ void object_desc_store(char *buf, object_type *o_ptr, int pref, int mode)
 
 
 	/* Restore "aware" flag */
-	k_info.at(o_ptr->k_idx).aware = hack_aware;
+	o_ptr->k_ptr->aware = hack_aware;
 
 	/* Clear the known flag */
 	if (!hack_known) o_ptr->ident &= ~(IDENT_KNOWN);
@@ -2434,7 +2435,6 @@ bool_ object_out_desc(object_type *o_ptr, FILE *fff, bool_ trim_down, bool_ wait
 {
 	auto const &set_info = game->edit_data.set_info;
 	auto const &st_info = game->edit_data.st_info;
-	auto const &k_info = game->edit_data.k_info;
 	auto const &a_info = game->edit_data.a_info;
 
 	cptr vp[64];
@@ -2478,11 +2478,9 @@ bool_ object_out_desc(object_type *o_ptr, FILE *fff, bool_ trim_down, bool_ wait
 
 	if (object_known_p(o_ptr))
 	{
-		if (o_ptr->k_idx && (!trim_down))
+		if (o_ptr->k_ptr && (!trim_down))
 		{
-			auto k_ptr = &k_info.at(o_ptr->k_idx);
-
-			text_out_c(TERM_ORANGE, k_ptr->text);
+			text_out_c(TERM_ORANGE, o_ptr->k_ptr->text);
 			text_out("\n");
 		}
 
@@ -3434,7 +3432,7 @@ static s16b label_to_inven(int c)
 	if ((i < 0) || (i > INVEN_PACK)) return ( -1);
 
 	/* Empty slots can never be chosen */
-	if (!p_ptr->inventory[i].k_idx) return ( -1);
+	if (!p_ptr->inventory[i].k_ptr) return ( -1);
 
 	/* Return the index */
 	return (i);
@@ -3456,7 +3454,7 @@ static s16b label_to_equip(int c)
 	if ((i < INVEN_WIELD) || (i >= INVEN_TOTAL)) return ( -1);
 
 	/* Empty slots can never be chosen */
-	if (!p_ptr->inventory[i].k_idx) return ( -1);
+	if (!p_ptr->inventory[i].k_ptr) return ( -1);
 
 	/* Return the index */
 	return (i);
@@ -3479,7 +3477,10 @@ static int get_slot(int slot)
 			if (p_ptr->body_parts[slot + i - INVEN_WIELD])
 			{
 				/* Free ? return the slot */
-				if (!p_ptr->inventory[slot + i].k_idx) return (slot + i);
+				if (!p_ptr->inventory[slot + i].k_ptr)
+				{
+					return (slot + i);
+				}
 			}
 			else break;
 
@@ -3578,60 +3579,73 @@ s16b wield_slot_ideal(object_type const *o_ptr, bool_ ideal)
 
 	case TV_SHOT:
 		{
+			auto quiver_ptr = &p_ptr->inventory[INVEN_AMMO];
+			auto launcher_ptr = &p_ptr->inventory[INVEN_BOW];
+
 			if (ideal)
 			{
 				return INVEN_AMMO;
 			}
-			else if (p_ptr->inventory[INVEN_AMMO].k_idx &&
-			         object_similar(o_ptr, &p_ptr->inventory[INVEN_AMMO]) &&
-			         p_ptr->inventory[INVEN_AMMO].number + o_ptr->number < MAX_STACK_SIZE)
+			else if (quiver_ptr->k_ptr &&
+				 object_similar(o_ptr, quiver_ptr) &&
+				 quiver_ptr->number + o_ptr->number < MAX_STACK_SIZE)
 			{
 				return get_slot(INVEN_AMMO);
 			}
-			else if ((p_ptr->inventory[INVEN_BOW].k_idx) && (p_ptr->inventory[INVEN_BOW].tval == TV_BOW))
+			else if (launcher_ptr->k_ptr &&
+				(launcher_ptr->tval == TV_BOW) &&
+				(launcher_ptr->sval < 10))
 			{
-				if (p_ptr->inventory[INVEN_BOW].sval < 10)
-					return get_slot(INVEN_AMMO);
+				return get_slot(INVEN_AMMO);
 			}
 			return -1;
 		}
 
 	case TV_ARROW:
 		{
+			auto quiver_ptr = &p_ptr->inventory[INVEN_AMMO];
+			auto launcher_ptr = &p_ptr->inventory[INVEN_BOW];
+
 			if (ideal)
 			{
 				return INVEN_AMMO;
 			}
-			else if (p_ptr->inventory[INVEN_AMMO].k_idx &&
-			         object_similar(o_ptr, &p_ptr->inventory[INVEN_AMMO]) &&
-			         p_ptr->inventory[INVEN_AMMO].number + o_ptr->number < MAX_STACK_SIZE)
+			else if (quiver_ptr->k_ptr &&
+				object_similar(o_ptr, quiver_ptr) &&
+				quiver_ptr->number + o_ptr->number < MAX_STACK_SIZE)
 			{
 				return get_slot(INVEN_AMMO);
 			}
-			else if ((p_ptr->inventory[INVEN_BOW].k_idx) && (p_ptr->inventory[INVEN_BOW].tval == TV_BOW))
+			else if (launcher_ptr->k_ptr &&
+				(launcher_ptr->tval == TV_BOW) &&
+				(launcher_ptr->sval >= 10) &&
+				(launcher_ptr->sval < 20))
 			{
-				if ((p_ptr->inventory[INVEN_BOW].sval >= 10) && (p_ptr->inventory[INVEN_BOW].sval < 20))
-					return get_slot(INVEN_AMMO);
+				return get_slot(INVEN_AMMO);
 			}
 			return -1;
 		}
 
 	case TV_BOLT:
 		{
+			auto quiver_ptr = &p_ptr->inventory[INVEN_AMMO];
+			auto launcher_ptr = &p_ptr->inventory[INVEN_BOW];
+
 			if (ideal)
 			{
 				return INVEN_AMMO;
 			}
-			else if (p_ptr->inventory[INVEN_AMMO].k_idx &&
-			         object_similar(o_ptr, &p_ptr->inventory[INVEN_AMMO]) &&
-			         p_ptr->inventory[INVEN_AMMO].number + o_ptr->number < MAX_STACK_SIZE)
+			else if (quiver_ptr->k_ptr &&
+				 object_similar(o_ptr, quiver_ptr) &&
+				 quiver_ptr->number + o_ptr->number < MAX_STACK_SIZE)
 			{
 				return get_slot(INVEN_AMMO);
 			}
-			else if ((p_ptr->inventory[INVEN_BOW].k_idx) && (p_ptr->inventory[INVEN_BOW].tval == TV_BOW))
+			else if ((launcher_ptr->k_ptr) &&
+				 (launcher_ptr->tval == TV_BOW) &&
+				 (launcher_ptr->sval >= 20))
 			{
-				if (p_ptr->inventory[INVEN_BOW].sval >= 20)
-					return get_slot(INVEN_AMMO);
+				return get_slot(INVEN_AMMO);
 			}
 			return -1;
 		}
@@ -3884,7 +3898,7 @@ static bool item_tester_okay(object_type const *o_ptr, object_filter_t const &fi
 	}
 
 	/* Require an item */
-	if (!o_ptr->k_idx)
+	if (!o_ptr->k_ptr)
 	{
 		return false;
 	}
@@ -3989,7 +4003,10 @@ void show_inven_aux(bool_ mirror, const object_filter_t &filter)
 		o_ptr = &p_ptr->inventory[i];
 
 		/* Skip non-objects */
-		if (!o_ptr->k_idx) continue;
+		if (!o_ptr->k_ptr)
+		{
+			continue;
+		}
 
 		/* Track */
 		z = i + 1;
@@ -4067,7 +4084,10 @@ void show_inven_aux(bool_ mirror, const object_filter_t &filter)
 			byte a = object_attr(o_ptr);
 			char c = object_char(o_ptr);
 
-			if (!o_ptr->k_idx) c = ' ';
+			if (!o_ptr->k_ptr)
+			{
+				c = ' ';
+			}
 
 			Term_draw(col + 3, row + j, a, c);
 		}
@@ -4185,8 +4205,8 @@ void show_equip_aux(bool_ mirror, object_filter_t const &filter)
 
 		/* Inform the player that he/she can't use a shield */
 		if ((p_ptr->body_parts[i - INVEN_WIELD] == INVEN_ARM) &&
-		                !o_ptr->k_idx &&
-		                p_ptr->inventory[i - INVEN_ARM + INVEN_WIELD].k_idx)
+			!o_ptr->k_ptr &&
+			p_ptr->inventory[i - INVEN_ARM + INVEN_WIELD].k_ptr)
 		{
 			object_type *q_ptr = &p_ptr->inventory[i - INVEN_ARM + INVEN_WIELD];
 			char q_name[80];
@@ -4217,7 +4237,7 @@ void show_equip_aux(bool_ mirror, object_filter_t const &filter)
 		}
 
 		if ((p_ptr->body_parts[i - INVEN_WIELD] == INVEN_WIELD) &&
-		                !o_ptr->k_idx)
+			!o_ptr->k_ptr)
 		{
 			sprintf(o_name, "(%s)", get_melee_name());
 
@@ -4310,7 +4330,10 @@ void show_equip_aux(bool_ mirror, object_filter_t const &filter)
 			byte a = object_attr(o_ptr);
 			char c = object_char(o_ptr);
 
-			if (!o_ptr->k_idx) c = ' ';
+			if (!o_ptr->k_ptr)
+			{
+				c = ' ';
+			}
 
 			Term_draw(col + 3, row + j, a, c);
 		}
@@ -4497,7 +4520,7 @@ static int get_tag(int *cp, char tag)
 		object_type *o_ptr = &p_ptr->inventory[i];
 
 		/* Skip non-objects */
-		if (!o_ptr->k_idx)
+		if (!o_ptr->k_ptr)
 		{
 			continue;
 		}
@@ -6124,39 +6147,45 @@ static void apply_flags_set(s16b a_idx, s16b set_idx, object_flag_set *f)
 
 byte object_attr(object_type const *o_ptr)
 {
-	auto const &k_info = game->edit_data.k_info;
 	auto const &random_artifacts = game->random_artifacts;
 
 	if (o_ptr->tval == TV_RANDART)
 	{
 		return random_artifacts[o_ptr->sval].attr;
 	}
-	else if (k_info.at(o_ptr->k_idx).flavor)
+	else if (!o_ptr->k_ptr)
 	{
-		return misc_to_attr[k_info.at(o_ptr->k_idx).flavor];
+		return 0;
+	}
+	else if (o_ptr->k_ptr->flavor)
+	{
+		return misc_to_attr[o_ptr->k_ptr->flavor];
 	}
 	else
 	{
-		return k_info.at(o_ptr->k_idx).x_attr;
+		return o_ptr->k_ptr->x_attr;
 	}
 }
 
 byte object_attr_default(object_type *o_ptr)
 {
-	auto const &k_info = game->edit_data.k_info;
 	auto const &random_artifacts = game->random_artifacts;
 
 	if (o_ptr->tval == TV_RANDART)
 	{
 		return random_artifacts[o_ptr->sval].attr;
 	}
-	else if (k_info.at(o_ptr->k_idx).flavor)
+	else if (!o_ptr->k_ptr)
 	{
-		return misc_to_attr[k_info.at(o_ptr->k_idx).flavor];
+		return 0;
+	}
+	else if (o_ptr->k_ptr->flavor)
+	{
+		return misc_to_attr[o_ptr->k_ptr->flavor];
 	}
 	else
 	{
-		return k_info.at(o_ptr->k_idx).d_attr;
+		return o_ptr->k_ptr->d_attr;
 	}
 }
 
@@ -6168,29 +6197,35 @@ byte object_attr_default(object_type *o_ptr)
 
 char object_char(object_type const *o_ptr)
 {
-	auto const &k_info = game->edit_data.k_info;
-
-	if (k_info.at(o_ptr->k_idx).flavor)
+	if (!o_ptr->k_ptr)
 	{
-		return misc_to_char[k_info.at(o_ptr->k_idx).flavor];
+		return '\0';
+	}
+
+	if (o_ptr->k_ptr->flavor)
+	{
+		return misc_to_char[o_ptr->k_ptr->flavor];
 	}
 	else
 	{
-		return k_info.at(o_ptr->k_idx).x_char;
+		return o_ptr->k_ptr->x_char;
 	}
 }
 
 char object_char_default(object_type const *o_ptr)
 {
-	auto const &k_info = game->edit_data.k_info;
-
-	if (k_info.at(o_ptr->k_idx).flavor)
+	if (!o_ptr->k_ptr)
 	{
-		return misc_to_char[k_info.at(o_ptr->k_idx).flavor];
+		return '\0';
+	}
+
+	if (o_ptr->k_ptr->flavor)
+	{
+		return misc_to_char[o_ptr->k_ptr->flavor];
 	}
 	else
 	{
-		return k_info.at(o_ptr->k_idx).d_char;
+		return o_ptr->k_ptr->d_char;
 	}
 }
 
@@ -6199,13 +6234,11 @@ char object_char_default(object_type const *o_ptr)
  */
 bool artifact_p(object_type const *o_ptr)
 {
-	auto const &k_info = game->edit_data.k_info;
-
 	return
 		(o_ptr->tval == TV_RANDART) ||
 		(o_ptr->name1 ? true : false) ||
 	        (!o_ptr->artifact_name.empty()) ||
-		((k_info.at(o_ptr->k_idx).flags & TR_NORM_ART) ? true : false);
+		((o_ptr->k_ptr && (o_ptr->k_ptr->flags & TR_NORM_ART)) ? true : false);
 }
 
 /**

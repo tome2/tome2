@@ -478,15 +478,16 @@ void identify_hooks(int i, object_type *o_ptr, identify_mode mode)
  */
 bool_ identify_pack()
 {
-	int i;
-
 	/* Simply identify and know every item */
-	for (i = 0; i < INVEN_TOTAL; i++)
+	for (int i = 0; i < INVEN_TOTAL; i++)
 	{
 		object_type *o_ptr = &p_ptr->inventory[i];
 
 		/* Skip non-objects */
-		if (!o_ptr->k_idx) continue;
+		if (!o_ptr->k_ptr)
+		{
+			continue;
+		}
 
 		/* Aware and Known */
 		object_aware(o_ptr);
@@ -528,7 +529,10 @@ void identify_pack_fully()
 		object_type *o_ptr = &p_ptr->inventory[i];
 
 		/* Skip non-objects */
-		if (!o_ptr->k_idx) continue;
+		if (!o_ptr->k_ptr)
+		{
+			continue;
+		}
 
 		make_item_fully_identified(o_ptr);
 
@@ -556,7 +560,7 @@ static int enchant_table[16] =
 static bool_ remove_curse_object(object_type *o_ptr, bool_ all)
 {
 	/* Skip non-objects */
-	if (!o_ptr->k_idx) return FALSE;
+	if (!o_ptr->k_ptr) return FALSE;
 
 	/* Uncursed already */
 	if (!cursed_p(o_ptr)) return FALSE;
@@ -991,7 +995,7 @@ bool_ lose_all_info()
 		object_type *o_ptr = &p_ptr->inventory[i];
 
 		/* Skip non-objects */
-		if (!o_ptr->k_idx) continue;
+		if (!o_ptr->k_ptr) continue;
 
 		/* Allow "protection" by the MENTAL flag */
 		if (o_ptr->ident & (IDENT_MENTAL)) continue;
@@ -1299,7 +1303,7 @@ template <typename P> bool detect_objects_fn(int radius, const char *object_mess
 		object_type *o_ptr = &o_list[i];
 
 		/* Skip dead objects */
-		if (!o_ptr->k_idx) continue;
+		if (!o_ptr->k_ptr) continue;
 
 		/* Location */
 		int y, x;
@@ -2387,8 +2391,6 @@ object_filter_t const &item_tester_hook_recharge()
  */
 bool_ recharge(int power)
 {
-	auto const &k_info = game->edit_data.k_info;
-
 	int recharge_strength, recharge_amount;
 	int lev;
 	bool_ fail = FALSE;
@@ -2414,7 +2416,7 @@ bool_ recharge(int power)
 	auto const flags = object_flags(o_ptr);
 
 	/* Extract the object "level" */
-	lev = k_info.at(o_ptr->k_idx).level;
+	lev = o_ptr->k_ptr->level;
 
 	/* Recharge a rod */
 	if (o_ptr->tval == TV_ROD_MAIN)
@@ -4655,7 +4657,7 @@ void activate_dg_curse()
 			lose_all_info();
 			break;
 case 27: case 28: case 29:
-			if (p_ptr->inventory[INVEN_WIELD].k_idx)
+			if (p_ptr->inventory[INVEN_WIELD].k_ptr)
 			{
 				msg_print("Your weapon now seems useless...");
 				p_ptr->inventory[INVEN_WIELD].art_flags = TR_NEVER_BLOW;

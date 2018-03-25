@@ -832,7 +832,7 @@ static void place_fountain(int y, int x)
 	/* List of usable svals */
 	for (auto const &k_entry: k_info)
 	{
-		auto k_ptr = &k_entry.second;
+		auto const &k_ptr = k_entry.second;
 
 		if (((k_ptr->tval == TV_POTION) || (k_ptr->tval == TV_POTION2)) &&
 				(k_ptr->level <= dun_level) && (k_ptr->flags & TR_FOUNTAIN))
@@ -7970,53 +7970,54 @@ static bool_ cave_gen()
 			}
 		}
 
-		if (m_idx && d_ptr->final_object &&
-		                (k_info.at(d_ptr->final_object).artifact == FALSE))
+		if (m_idx && d_ptr->final_object)
 		{
-			object_type *q_ptr, forge, *o_ptr;
-			int o_idx;
+			auto k_ptr = k_info.at(d_ptr->final_object);
 
-			/* Get new object */
-			o_idx = o_pop();
-
-			/* Proceed only if there's an object slot available */
-			if (o_idx)
+			if (k_ptr->artifact == FALSE)
 			{
-				/* Get local object */
-				q_ptr = &forge;
+				/* Get new object */
+				int o_idx = o_pop();
 
-				k_info[d_ptr->final_object].allow_special = TRUE;
+				/* Proceed only if there's an object slot available */
+				if (o_idx)
+				{
+					/* Get local object */
+					object_type forge;
+					object_type *q_ptr = &forge;
 
-				/* Wipe the object */
-				object_wipe(q_ptr);
+					k_info[d_ptr->final_object]->allow_special = TRUE;
 
-				/* Create the final object */
-				object_prep(q_ptr, d_ptr->final_object);
-				apply_magic(q_ptr, 1, FALSE, FALSE, FALSE);
+					/* Wipe the object */
+					object_wipe(q_ptr);
 
-				/* Where it is found ? */
-				q_ptr->found = OBJ_FOUND_MONSTER;
-				q_ptr->found_aux1 = d_ptr->final_guardian;
-				q_ptr->found_aux2 = 0;
-				q_ptr->found_aux3 = dungeon_type;
-				q_ptr->found_aux4 = level_or_feat(dungeon_type, dun_level);
+					/* Create the final object */
+					object_prep(q_ptr, d_ptr->final_object);
+					apply_magic(q_ptr, 1, FALSE, FALSE, FALSE);
 
-				k_info[d_ptr->final_object].allow_special = FALSE;
+					/* Where it is found ? */
+					q_ptr->found = OBJ_FOUND_MONSTER;
+					q_ptr->found_aux1 = d_ptr->final_guardian;
+					q_ptr->found_aux2 = 0;
+					q_ptr->found_aux3 = dungeon_type;
+					q_ptr->found_aux4 = level_or_feat(dungeon_type, dun_level);
 
-				k_info.at(d_ptr->final_object).artifact = TRUE;
+					k_ptr->allow_special = FALSE;
+					k_ptr->artifact = TRUE;
 
-				/* Get the item */
-				o_ptr = &o_list[o_idx];
+					/* Get the item */
+					object_type *o_ptr = &o_list[o_idx];
 
-				/* Structure copy */
-				object_copy(o_ptr, q_ptr);
+					/* Structure copy */
+					object_copy(o_ptr, q_ptr);
 
-				/* Build a stack */
-				o_ptr->held_m_idx = m_idx;
-				o_ptr->ix = 0;
-				o_ptr->iy = 0;
+					/* Build a stack */
+					o_ptr->held_m_idx = m_idx;
+					o_ptr->ix = 0;
+					o_ptr->iy = 0;
 
-				m_list[m_idx].hold_o_idxs.push_back(o_idx);
+					m_list[m_idx].hold_o_idxs.push_back(o_idx);
+				}
 			}
 		}
 	}

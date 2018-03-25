@@ -2172,7 +2172,7 @@ void do_cmd_visuals()
 			/* Dump objects */
 			for (auto const &k_entry: k_info)
 			{
-				auto const k_ptr = &k_entry.second;
+				auto const k_ptr = k_entry.second;
 
 				/* Dump a comment */
 				fprintf(fff, "# %s\n", k_ptr->name.c_str());
@@ -2315,7 +2315,7 @@ void do_cmd_visuals()
 			/* Hack -- query until done */
 			while (1)
 			{
-				object_kind *k_ptr = &k_info.at(k_info_keys[k_idx]);
+				auto k_ptr = k_info.at(k_info_keys[k_idx]);
 
 				byte da = k_ptr->d_attr;
 				char dc = k_ptr->d_char;
@@ -3056,7 +3056,7 @@ void do_cmd_knowledge_artifacts()
 	std::unordered_set<int> okayk;
 	for (auto const &k_entry: k_info)
 	{
-		auto k_ptr = &k_entry.second;
+		auto k_ptr = k_entry.second;
 
 		/* Skip "empty" artifacts */
 		if (!(k_ptr->flags & TR_NORM_ART)) continue;
@@ -3091,7 +3091,7 @@ void do_cmd_knowledge_artifacts()
 				if (object_known_p(o_ptr)) continue;
 
 				/* Note the artifact */
-				if (k_info.at(o_ptr->k_idx).flags & TR_NORM_ART)
+				if (o_ptr->k_ptr->flags & TR_NORM_ART)
 				{
 					okayk.erase(o_ptr->k_idx);
 				}
@@ -3109,10 +3109,8 @@ void do_cmd_knowledge_artifacts()
 		/* Scan all objects the monster carries */
 		for (auto const this_o_idx: m_list[i].hold_o_idxs)
 		{
-			object_type * o_ptr;
-
 			/* Acquire object */
-			o_ptr = &o_list[this_o_idx];
+			auto o_ptr = &o_list[this_o_idx];
 
 			/* Ignore random artifacts */
 			if (o_ptr->tval == TV_RANDART) continue;
@@ -3124,7 +3122,7 @@ void do_cmd_knowledge_artifacts()
 			if (object_known_p(o_ptr)) continue;
 
 			/* Note the artifact */
-			if (k_info.at(o_ptr->k_idx).flags & TR_NORM_ART)
+			if (o_ptr->k_ptr->flags & TR_NORM_ART)
 			{
 				okayk.erase(o_ptr->k_idx);
 			}
@@ -3138,10 +3136,10 @@ void do_cmd_knowledge_artifacts()
 	/* Check the p_ptr->inventory and equipment */
 	for (i = 0; i < INVEN_TOTAL; i++)
 	{
-		object_type *o_ptr = &p_ptr->inventory[i];
+		auto o_ptr = &p_ptr->inventory[i];
 
 		/* Ignore non-objects */
-		if (!o_ptr->k_idx) continue;
+		if (!o_ptr->k_ptr) continue;
 
 		/* Ignore random artifacts */
 		if (o_ptr->tval == TV_RANDART) continue;
@@ -3153,7 +3151,7 @@ void do_cmd_knowledge_artifacts()
 		if (object_known_p(o_ptr)) continue;
 
 		/* Note the artifact */
-		if (k_info.at(o_ptr->k_idx).flags & TR_NORM_ART)
+		if (o_ptr->k_ptr->flags & TR_NORM_ART)
 		{
 			okayk.erase(o_ptr->k_idx);
 		}
@@ -3581,7 +3579,7 @@ static void do_cmd_knowledge_objects()
 
 	for (auto const &k: k_info_keys)
 	{
-		auto k_ptr = &k_info.at(k);
+		auto k_ptr = k_info.at(k);
 
 		/* Hack -- skip artifacts */
 		if (k_ptr->flags & TR_INSTA_ART)

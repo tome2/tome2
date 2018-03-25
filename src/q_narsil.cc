@@ -37,11 +37,17 @@ static bool quest_narsil_move_hook(void *, void *in_, void *)
 	/* Look out for Narsil */
 	for (i = 0; i < INVEN_TOTAL; i++)
 	{
-		o_ptr = get_object(i);
+		o_ptr = &p_ptr->inventory[i];
 
-		if (!o_ptr->k_idx) continue;
+		if (!o_ptr->k_ptr)
+		{
+			continue;
+		}
 
-		if (o_ptr->name1 == ART_NARSIL) break;
+		if (o_ptr->name1 == ART_NARSIL)
+		{
+			break;
+		}
 	}
 
 	if (i == INVEN_TOTAL)

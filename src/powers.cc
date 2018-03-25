@@ -130,7 +130,6 @@ static bool_ power_chance(power_type *x_ptr)
 static void power_activate(int power)
 {
 	auto const &f_info = game->edit_data.f_info;
-	auto const &k_info = game->edit_data.k_info;
 
 	s16b plev = p_ptr->lev;
 	char ch = 0;
@@ -804,10 +803,20 @@ static void power_activate(int power)
 			{
 				object_type *o_ptr = &p_ptr->inventory[i];
 
-				if (!o_ptr->k_idx) continue;
-				if (!cursed_p(o_ptr)) continue;
+				if (!o_ptr->k_ptr)
+				{
+					continue;
+				}
 
-				if (!o_ptr->sense) o_ptr->sense = SENSE_CURSED;
+				if (!cursed_p(o_ptr))
+				{
+					continue;
+				}
+
+				if (!o_ptr->sense)
+				{
+					o_ptr->sense = SENSE_CURSED;
+				}
 			}
 		}
 		break;
@@ -887,7 +896,7 @@ static void power_activate(int power)
 
 			o_ptr = get_object(item);
 
-			lev = k_info.at(o_ptr->k_idx).level;
+			lev = o_ptr->k_ptr->level;
 
 			if (o_ptr->tval == TV_ROD_MAIN)
 			{

@@ -716,7 +716,7 @@ static errr init_alloc()
 	std::size_t kind_size = 0;
 	for (auto const &k_entry: k_info)
 	{
-		auto k_ptr = &k_entry.second;
+		auto const &k_ptr = k_entry.second;
 
 		/* Scan allocation pairs */
 		for (std::size_t j = 0; j < ALLOCATION_MAX; j++)
@@ -753,7 +753,7 @@ static errr init_alloc()
 	/* Scan the objects */
 	for (auto const &k_entry: k_info)
 	{
-		auto const k_ptr = &k_entry.second;
+		auto const &k_ptr = k_entry.second;
 
 		/* Scan allocation pairs */
 		for (std::size_t j = 0; j < ALLOCATION_MAX; j++)
@@ -928,7 +928,7 @@ static void init_guardians()
 			/* Mark the final object */
 			if (d_ptr->final_object)
 			{
-				auto k_ptr = &k_info.at(d_ptr->final_object);
+				auto const &k_ptr = k_info.at(d_ptr->final_object);
 				k_ptr->flags |= TR_SPECIAL_GENE;
 			}
 

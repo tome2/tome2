@@ -439,9 +439,9 @@ static void image_object(byte *ap, char *cp)
 	auto const &k_info = game->edit_data.k_info;
 
 	// Select an object kind at random
-	auto const &k_ref = uniform_element(k_info)->second;
-	*cp = k_ref.x_char;
-	*ap = k_ref.x_attr;
+	auto const &k_ptr = uniform_element(k_info)->second;
+	*cp = k_ptr->x_char;
+	*ap = k_ptr->x_attr;
 }
 
 
@@ -831,7 +831,6 @@ static void map_info(int y, int x, byte *ap, char *cp)
 	auto const &st_info = game->edit_data.st_info;
 	auto const &r_info = game->edit_data.r_info;
 	auto const &f_info = game->edit_data.f_info;
-	auto const &k_info = game->edit_data.k_info;
 
 	byte a;
 
@@ -1038,7 +1037,7 @@ static void map_info(int y, int x, byte *ap, char *cp)
 			*ap = object_attr(o_ptr);
 
 			/* Multi-hued attr */
-			if (!options->avoid_other && (k_info.at(o_ptr->k_idx).flags & TR_ATTR_MULTI))
+			if (!options->avoid_other && (o_ptr->k_ptr->flags & TR_ATTR_MULTI))
 			{
 				*ap = get_shimmer_color();
 			}
@@ -1074,7 +1073,7 @@ static void map_info(int y, int x, byte *ap, char *cp)
 				*ap = object_attr(o_ptr);
 
 				/* Multi-hued attr */
-				if (!options->avoid_other && (k_info.at(o_ptr->k_idx).flags & TR_ATTR_MULTI))
+				if (!options->avoid_other && (o_ptr->k_ptr->flags & TR_ATTR_MULTI))
 				{
 					*ap = get_shimmer_color();
 				}
@@ -1223,7 +1222,6 @@ void map_info_default(int y, int x, byte *ap, char *cp)
 	auto const &st_info = game->edit_data.st_info;
 	auto const &r_info = game->edit_data.r_info;
 	auto const &f_info = game->edit_data.f_info;
-	auto const &k_info = game->edit_data.k_info;
 
 	byte a;
 
@@ -1428,7 +1426,7 @@ void map_info_default(int y, int x, byte *ap, char *cp)
 			*ap = object_attr_default(o_ptr);
 
 			/* Multi-hued attr */
-			if (!avoid_other && (k_info.at(o_ptr->k_idx).flags & TR_ATTR_MULTI))
+			if (!avoid_other && (o_ptr->k_ptr->flags & TR_ATTR_MULTI))
 			{
 				*ap = get_shimmer_color();
 			}
@@ -1464,7 +1462,7 @@ void map_info_default(int y, int x, byte *ap, char *cp)
 				*ap = object_attr_default(o_ptr);
 
 				/* Multi-hued attr */
-				if (!avoid_other && (k_info.at(o_ptr->k_idx).flags & TR_ATTR_MULTI))
+				if (!avoid_other && (o_ptr->k_ptr->flags & TR_ATTR_MULTI))
 				{
 					*ap = get_shimmer_color();
 				}
@@ -3909,7 +3907,7 @@ void wiz_lite()
 		object_type *o_ptr = &o_list[i];
 
 		/* Skip dead objects */
-		if (!o_ptr->k_idx) continue;
+		if (!o_ptr->k_ptr) continue;
 
 		/* Skip held objects */
 		if (o_ptr->held_m_idx) continue;
@@ -4020,7 +4018,7 @@ void wiz_dark()
 		object_type *o_ptr = &o_list[i];
 
 		/* Skip dead objects */
-		if (!o_ptr->k_idx) continue;
+		if (!o_ptr->k_ptr) continue;
 
 		/* Skip held objects */
 		if (o_ptr->held_m_idx) continue;

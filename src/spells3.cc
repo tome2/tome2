@@ -2940,8 +2940,6 @@ static object_filter_t const &udun_object_is_drainable()
 
 casting_result udun_drain()
 {
-	auto const &k_info = game->edit_data.k_info;
-
 	/* Ask for an item */
 	int item;
 	if (!get_item(&item,
@@ -2961,10 +2959,8 @@ casting_result udun_drain()
 	case TV_STAFF:
 	case TV_WAND:
 	{
-		auto k_ptr = &k_info.at(o_ptr->k_idx);
-
 		/* Generate mana */
-		increase_mana(o_ptr->pval * k_ptr->level * o_ptr->number);
+		increase_mana(o_ptr->pval * o_ptr->k_ptr->level * o_ptr->number);
 
 		/* Destroy it */
 		inc_stack_size(item, -99);

@@ -21,7 +21,7 @@ bool_ kind_is_legal(int k_idx);
 void inven_item_charges(int item);
 void inven_item_describe(int item);
 void inven_item_increase(int item, int num);
-bool_ inven_item_optimize(int item);
+void inven_item_optimize(int item);
 void floor_item_charges(int item);
 void floor_item_describe(int item);
 void floor_item_increase(int item, int num);

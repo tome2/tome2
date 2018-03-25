@@ -146,7 +146,7 @@ static bool_ geomancy_depends_satisfied()
 	o_ptr = get_object(INVEN_WIELD);
 
 	return ((o_ptr != NULL) &&
-		(o_ptr->k_idx > 0) &&
+		(o_ptr->k_ptr) &&
 		(o_ptr->tval == TV_MSTAFF));
 }
 

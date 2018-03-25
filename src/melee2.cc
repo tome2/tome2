@@ -2331,12 +2331,17 @@ void curse_equipment(int chance, int heavy_chance)
 	object_type * o_ptr =
 		&p_ptr->inventory[rand_range(INVEN_WIELD, INVEN_TOTAL - 1)];
 
-	if (randint(100) > chance) return;
+	if (randint(100) > chance)
+	{
+		return;
+	}
 
-	if (!(o_ptr->k_idx)) return;
+	if (!o_ptr->k_ptr)
+	{
+		return;
+	}
 
 	auto const flags = object_flags(o_ptr);
-
 
 	/* Extra, biased saving throw for blessed items */
 	if ((flags & TR_BLESSED) && (randint(888) > chance))
@@ -2384,12 +2389,17 @@ void curse_equipment_dg(int chance, int heavy_chance)
 	object_type * o_ptr =
 		&p_ptr->inventory[rand_range(INVEN_WIELD, INVEN_TOTAL - 1)];
 
-	if (randint(100) > chance) return;
+	if (randint(100) > chance)
+	{
+		return;
+	}
 
-	if (!(o_ptr->k_idx)) return;
+	if (!o_ptr->k_ptr)
+	{
+		return;
+	}
 
 	auto const flags = object_flags(o_ptr);
-
 
 	/* Extra, biased saving throw for blessed items */
 	if ((flags & TR_BLESSED) && (randint(888) > chance))
@@ -4157,24 +4167,40 @@ void find_corpse(monster_type *m_ptr, int *y, int *x)
 {
 	auto const &r_info = game->edit_data.r_info;
 
-	int k, last = -1;
+	int last = -1;
 
-	for (k = 0; k < max_o_idx; k++)
+	for (int k = 0; k < max_o_idx; k++)
 	{
 		object_type *o_ptr = &o_list[k];
 
-		if (!o_ptr->k_idx) continue;
+		if (!o_ptr->k_ptr)
+		{
+			continue;
+		}
 
-		if (o_ptr->tval != TV_CORPSE) continue;
-		if ((o_ptr->sval != SV_CORPSE_CORPSE) && (o_ptr->sval != SV_CORPSE_SKELETON)) continue;
+		if (o_ptr->tval != TV_CORPSE)
+		{
+			continue;
+		}
+
+		if ((o_ptr->sval != SV_CORPSE_CORPSE) && (o_ptr->sval != SV_CORPSE_SKELETON))
+		{
+			continue;
+		}
 
 		auto rt_ptr = &r_info[o_ptr->pval2];
 
 		/* Cannot incarnate into a higher level monster */
-		if (rt_ptr->level > m_ptr->level) continue;
+		if (rt_ptr->level > m_ptr->level)
+		{
+			continue;
+		}
 
 		/* Must be in LOS */
-		if (!los(m_ptr->fy, m_ptr->fx, o_ptr->iy, o_ptr->ix)) continue;
+		if (!los(m_ptr->fy, m_ptr->fx, o_ptr->iy, o_ptr->ix))
+		{
+			continue;
+		}
 
 		if (last != -1)
 		{

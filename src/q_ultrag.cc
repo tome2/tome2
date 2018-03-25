@@ -22,12 +22,12 @@
 
 #define cquest (quest[QUEST_ULTRA_GOOD])
 
-static object_kind *get_flame_imperishable()
+static std::shared_ptr<object_kind> get_flame_imperishable()
 {
 	static auto &k_info = game->edit_data.k_info;
 	static auto &k_flame_imperishable = k_info[test_item_name("& Flame~ Imperishable")];
 
-	return &k_flame_imperishable;
+	return k_flame_imperishable;
 }
 
 static bool quest_ultra_good_move_hook(void *, void *in_, void *)
@@ -141,9 +141,9 @@ static bool quest_ultra_good_stair_hook(void *, void *in_, void *)
 		/* Now look for an ULTIMATE artifact, that is, one imbued with the flame */
 		for (i = INVEN_WIELD; i < INVEN_TOTAL; i++)
 		{
-			object_type *o_ptr = get_object(i);
+			auto o_ptr = &p_ptr->inventory[i];
 
-			if (!o_ptr->k_idx)
+			if (!o_ptr->k_ptr)
 			{
 				continue;
 			}
@@ -251,7 +251,7 @@ static bool quest_ultra_good_death_hook(void *, void *in_, void *)
 		for (i = 0; i < INVEN_PACK; i++)
 		{
 			/* Skip non-objects */
-			if (!p_ptr->inventory[i].k_idx)
+			if (!p_ptr->inventory[i].k_ptr)
 			{
 				break;
 			}

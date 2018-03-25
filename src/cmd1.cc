@@ -527,7 +527,10 @@ static void carried_monster_attack(s16b m_idx, bool_ *fear, bool_ *mdeath,
 
 	/* Get the carried monster */
 	auto o_ptr = &p_ptr->inventory[INVEN_CARRY];
-	if (!o_ptr->k_idx) return;
+	if (!o_ptr->k_ptr)
+	{
+		return;
+	}
 
 	/* Get monster race of the symbiote */
 	auto r_ptr = &r_info[o_ptr->pval];
@@ -2080,7 +2083,7 @@ void py_attack(int y, int x, int max_blow)
 							py_attack_hand(&k, m_ptr, &special);
 						}
 						/* Handle normal weapon */
-						else if (o_ptr->k_idx)
+						else if (o_ptr->k_ptr)
 						{
 							k = damroll(o_ptr->dd, o_ptr->ds);
 							k = tot_dam_aux(o_ptr, k, m_ptr, &special);
@@ -4297,23 +4300,17 @@ bool_ do_cmd_leave_body(bool_ drop_body)
 {
 	auto const &r_info = game->edit_data.r_info;
 
-	object_type *o_ptr, forge;
-
-	auto r_ptr = &r_info[p_ptr->body_monster];
-
-	int i;
-
-
 	if (p_ptr->disembodied)
 	{
 		msg_print("You are already disembodied.");
 		return FALSE;
 	}
 
-	for (i = INVEN_WIELD; i < INVEN_TOTAL; i++)
+	for (int i = INVEN_WIELD; i < INVEN_TOTAL; i++)
 	{
-		if (p_ptr->body_parts[i - INVEN_WIELD] && p_ptr->inventory[i].k_idx &&
-		                cursed_p(&p_ptr->inventory[i]))
+		if (p_ptr->body_parts[i - INVEN_WIELD] &&
+			p_ptr->inventory[i].k_ptr &&
+			cursed_p(&p_ptr->inventory[i]))
 		{
 			msg_print("A cursed object is preventing you from leaving your body.");
 			return FALSE;
@@ -4324,7 +4321,10 @@ bool_ do_cmd_leave_body(bool_ drop_body)
 	{
 		if (magik(25 + get_skill_scale(SKILL_POSSESSION, 25) + get_skill(SKILL_PRESERVATION)))
 		{
-			o_ptr = &forge;
+			auto r_ptr = &r_info[p_ptr->body_monster];
+
+			object_type forge;
+			auto o_ptr = &forge;
 			object_prep(o_ptr, lookup_kind(TV_CORPSE, SV_CORPSE_CORPSE));
 			o_ptr->number = 1;
 			o_ptr->pval = 0;

@@ -430,7 +430,6 @@ static cptr funny_comments[MAX_COMMENT] =
  */
 void delete_monster_idx(int i)
 {
-	auto &k_info = game->edit_data.k_info;
 	auto &a_info = game->edit_data.a_info;
 	auto &random_artifacts = game->random_artifacts;
 
@@ -499,9 +498,9 @@ void delete_monster_idx(int i)
 				{
 					random_artifacts[o_ptr->sval].generated = FALSE;
 				}
-				else if (k_info.at(o_ptr->k_idx).flags & TR_NORM_ART)
+				else if (o_ptr->k_ptr->flags & TR_NORM_ART)
 				{
-					k_info.at(o_ptr->k_idx).artifact = FALSE;
+					o_ptr->k_ptr->artifact = FALSE;
 				}
 				else
 				{
@@ -1886,7 +1885,6 @@ void update_monsters(bool_ full)
 
 void monster_carry(monster_type *m_ptr, int m_idx, object_type *q_ptr)
 {
-	auto &k_info = game->edit_data.k_info;
 	auto &a_info = game->edit_data.a_info;
 	auto &random_artifacts = game->random_artifacts;
 
@@ -1916,9 +1914,9 @@ void monster_carry(monster_type *m_ptr, int m_idx, object_type *q_ptr)
 		{
 			a_info[q_ptr->name1].cur_num = 0;
 		}
-		else if (k_info.at(q_ptr->k_idx).flags & TR_NORM_ART)
+		else if (q_ptr->k_ptr->flags & TR_NORM_ART)
 		{
-			k_info.at(q_ptr->k_idx).artifact = 0;
+			q_ptr->k_ptr->artifact = 0;
 		}
 		else if (q_ptr->tval == TV_RANDART)
 		{
@@ -1952,20 +1950,24 @@ static int possible_randart[] =
 };
 
 
-bool_ kind_is_randart(int k_idx)
+static bool kind_is_randart(int k_idx)
 {
 	auto const &k_info = game->edit_data.k_info;
 
-	int max;
-	auto k_ptr = &k_info.at(k_idx);
-
-	if (!kind_is_legal(k_idx)) return (FALSE);
-
-	for (max = 0; possible_randart[max] != -1; max++)
+	if (!kind_is_legal(k_idx))
 	{
-		if (k_ptr->tval == possible_randart[max]) return (TRUE);
+		return false;
 	}
-	return (FALSE);
+
+	for (int max = 0; possible_randart[max] != -1; max++)
+	{
+		if (k_info.at(k_idx)->tval == possible_randart[max])
+		{
+			return true;
+		}
+	}
+
+	return false;
 }
 
 /*

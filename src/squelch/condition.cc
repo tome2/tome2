@@ -878,9 +878,7 @@ void StateCondition::to_json(jsoncons::json &j) const
 
 bool SymbolCondition::is_match(object_type *o_ptr) const
 {
-	auto const &k_info = game->edit_data.k_info;
-
-	return k_info.at(o_ptr->k_idx).d_char == m_symbol;
+	return o_ptr->k_ptr->d_char == m_symbol;
 }
 
 std::shared_ptr<Condition> SymbolCondition::from_json(jsoncons::json const &j)

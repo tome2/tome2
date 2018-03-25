@@ -327,7 +327,7 @@ static bool quest_one_death_hook(void *, void *in_, void *)
 		for (i = 0; i < INVEN_PACK; i++)
 		{
 			/* Skip non-objects */
-			if (!p_ptr->inventory[i].k_idx)
+			if (!p_ptr->inventory[i].k_ptr)
 			{
 				break;
 			}

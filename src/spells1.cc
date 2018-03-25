@@ -1276,7 +1276,7 @@ void take_hit(int damage, cptr hit_from)
 	}
 
 	/* Hurt the wielded monster if any */
-	if ((o_ptr->k_idx) && (magik(5 + get_skill(SKILL_SYMBIOTIC))) && (!carried_monster_hit))
+	if (o_ptr->k_ptr && (magik(5 + get_skill(SKILL_SYMBIOTIC))) && (!carried_monster_hit))
 	{
 		auto sym_name = symbiote_name(true);
 
@@ -1779,25 +1779,21 @@ typedef int (*inven_func)(object_type *);
  */
 static int inven_damage(inven_func typ, int perc)
 {
-	auto const &k_info = game->edit_data.k_info;
-
-	int i, j, k, amt;
-
-	object_type *o_ptr;
-
-	char o_name[80];
-
+	int j, k, amt;
 
 	/* Count the casualties */
 	k = 0;
 
 	/* Scan through the slots backwards */
-	for (i = 0; i < INVEN_PACK; i++)
+	for (int i = 0; i < INVEN_PACK; i++)
 	{
-		o_ptr = &p_ptr->inventory[i];
+		object_type *o_ptr = &p_ptr->inventory[i];
 
 		/* Skip non-objects */
-		if (!o_ptr->k_idx) continue;
+		if (!o_ptr->k_ptr)
+		{
+			continue;
+		}
 
 		/* Hack -- for now, skip artifacts */
 		if (artifact_p(o_ptr)) continue;
@@ -1815,6 +1811,7 @@ static int inven_damage(inven_func typ, int perc)
 			if (amt)
 			{
 				/* Get a description */
+				char o_name[80];
 				object_desc(o_name, o_ptr, FALSE, 3);
 
 				/* Message */
@@ -1826,7 +1823,7 @@ static int inven_damage(inven_func typ, int perc)
 						           ((amt > 1) ? "were" : "was"));
 
 				/* Potions smash open */
-				if (k_info.at(o_ptr->k_idx).tval == TV_POTION)
+				if (o_ptr->k_ptr->tval == TV_POTION)
 				{
 					potion_smash_effect(0, p_ptr->py, p_ptr->px, o_ptr->sval);
 				}
@@ -1896,7 +1893,7 @@ static int minus_ac()
 	}
 
 	/* Nothing to damage */
-	if (!o_ptr->k_idx) return (FALSE);
+	if (!o_ptr->k_ptr) return (FALSE);
 
 	/* No damage left to be done */
 	if (o_ptr->ac + o_ptr->to_a <= 0) return (FALSE);
@@ -2300,7 +2297,7 @@ bool_ apply_disenchant(int mode)
 	o_ptr = &p_ptr->inventory[t];
 
 	/* No item, nothing happens */
-	if (!o_ptr->k_idx) return (FALSE);
+	if (!o_ptr->k_ptr) return (FALSE);
 
 
 	/* Nothing to disenchant */
@@ -3737,7 +3734,6 @@ static int raise_ego[MAX_RAISE] =
 static bool_ project_o(int who, int r, int y, int x, int dam, int typ)
 {
 	auto const &r_info = game->edit_data.r_info;
-	auto const &k_info = game->edit_data.k_info;
 
 	cave_type *c_ptr = &cave[y][x];
 
@@ -4071,7 +4067,7 @@ static bool_ project_o(int who, int r, int y, int x, int dam, int typ)
 				}
 
 				o_sval = o_ptr->sval;
-				is_potion = ((k_info.at(o_ptr->k_idx).tval == TV_POTION) || (k_info.at(o_ptr->k_idx).tval == TV_POTION2));
+				is_potion = ((o_ptr->k_ptr->tval == TV_POTION) || (o_ptr->k_ptr->tval == TV_POTION2));
 
 
 				/* Delete the object */

@@ -60,8 +60,6 @@ static squelch::Automatizer *automatizer = nullptr;
 
 void squeltch_grid()
 {
-	auto const &k_info = game->edit_data.k_info;
-
 	if (!automatizer_enabled)
 	{
 		return;
@@ -77,7 +75,7 @@ void squeltch_grid()
 		object_type * o_ptr = &o_list[this_o_idx];
 
 		// We've now seen one of these
-		if (!k_info.at(o_ptr->k_idx).flavor)
+		if (!o_ptr->k_ptr->flavor)
 		{
 			object_aware(o_ptr);
 		}
@@ -103,7 +101,7 @@ void squeltch_inventory()
 		for (int i = 0; i < INVEN_PACK; i++)
 		{
 			object_type *o_ptr = &p_ptr->inventory[i];
-			if ((o_ptr->k_idx > 0) && automatizer->apply_rules(o_ptr, i))
+			if (o_ptr->k_ptr && automatizer->apply_rules(o_ptr, i))
 			{
 				// We have changes
 				changed = true;

@@ -70,7 +70,7 @@ static bool quest_thieves_gen_hook(void *, void *, void *)
 		{
 			object_type *o_ptr = &p_ptr->inventory[x];
 
-			if (!o_ptr->k_idx)
+			if (!o_ptr->k_ptr)
 			{
 				continue;
 			}

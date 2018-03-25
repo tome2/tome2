@@ -1414,9 +1414,12 @@ static void calc_powers()
 	/* Add objects powers */
 	for (i = INVEN_WIELD; i < INVEN_TOTAL; i++)
 	{
-		object_type *o_ptr = &p_ptr->inventory[i];
+		auto o_ptr = &p_ptr->inventory[i];
 
-		if (!o_ptr->k_idx) continue;
+		if (!o_ptr->k_ptr)
+		{
+			continue;
+		}
 
 		p = object_power(o_ptr);
 		if (p != -1)
@@ -1565,10 +1568,10 @@ static void calc_mana()
 		auto const flags = object_flags(o_ptr);
 
 		/* Normal gloves hurt mage-type spells */
-		if (o_ptr->k_idx &&
-				!(flags & TR_FREE_ACT) &&
-				!((flags & TR_DEX) && (o_ptr->pval > 0)) &&
-				!(flags & TR_SPELL_CONTAIN))
+		if (o_ptr->k_ptr &&
+			!(flags & TR_FREE_ACT) &&
+			!((flags & TR_DEX) && (o_ptr->pval > 0)) &&
+			!(flags & TR_SPELL_CONTAIN))
 		{
 			/* Encumbered */
 			p_ptr->cumber_glove = TRUE;
@@ -1821,7 +1824,10 @@ static void calc_torch()
 		o_ptr = &p_ptr->inventory[i];
 
 		/* Skip empty slots */
-		if (!o_ptr->k_idx) continue;
+		if (!o_ptr->k_ptr)
+		{
+			continue;
+		}
 
 		/* Extract the flags */
 		auto const flags = object_flags(o_ptr);
@@ -1908,7 +1914,7 @@ void calc_wield_monster()
 	/* Get the carried monster */
 	auto o_ptr = &p_ptr->inventory[INVEN_CARRY];
 
-	if (o_ptr->k_idx)
+	if (o_ptr->k_ptr)
 	{
 		auto r_ptr = &r_info[o_ptr->pval];
 
@@ -2041,7 +2047,7 @@ void calc_body()
 	/* Ok now if the player lost a body part, he must drop the object he had on it */
 	for (i = 0; i < INVEN_TOTAL - INVEN_WIELD; i++)
 	{
-		if ((!p_ptr->body_parts[i]) && (p_ptr->inventory[i + INVEN_WIELD].k_idx))
+		if ((!p_ptr->body_parts[i]) && p_ptr->inventory[i + INVEN_WIELD].k_ptr)
 		{
 			/* Drop it NOW ! */
 			inven_takeoff(i + INVEN_WIELD, 255, TRUE);
@@ -2129,7 +2135,7 @@ int get_weaponmastery_skill()
 	{
 		o_ptr = &p_ptr->inventory[INVEN_WIELD + i];
 
-		if (!o_ptr->k_idx)
+		if (!o_ptr->k_ptr)
 		{
 			i++;
 			continue;
@@ -2604,19 +2610,19 @@ static void apply_lflags(LF const &lflags)
  */
 static bool_ monk_empty_hands()
 {
-	int i;
-	object_type *o_ptr;
-
-	if (p_ptr->melee_style != SKILL_HAND) return FALSE;
-
-	i = 0;
-	while (p_ptr->body_parts[i] == INVEN_WIELD)
+	if (p_ptr->melee_style != SKILL_HAND)
 	{
-		o_ptr = &p_ptr->inventory[INVEN_WIELD + i];
+		return FALSE;
+	}
 
-		if (o_ptr->k_idx) return FALSE;
+	for (int i = 0; p_ptr->body_parts[i] == INVEN_WIELD; i++)
+	{
+		auto o_ptr = &p_ptr->inventory[INVEN_WIELD + i];
 
-		i++;
+		if (o_ptr->k_ptr)
+		{
+			return FALSE;
+		}
 	}
 
 	return TRUE;
@@ -2914,7 +2920,10 @@ void calc_bonuses(bool_ silent)
 		o_ptr = &p_ptr->inventory[i];
 
 		/* Skip non-objects */
-		if (!o_ptr->k_idx) continue;
+		if (!o_ptr->k_ptr)
+		{
+			continue;
+		}
 
 		/* Extract the item flags */
 		object_flags_no_set = TRUE;
@@ -2976,32 +2985,32 @@ void calc_bonuses(bool_ silent)
 	/* Monks get extra ac for armour _not worn_ */
 	if ((p_ptr->melee_style == SKILL_HAND) && !(monk_heavy_armor()))
 	{
-		if (!(p_ptr->inventory[INVEN_BODY].k_idx))
+		if (!(p_ptr->inventory[INVEN_BODY].k_ptr))
 		{
 			p_ptr->to_a += get_skill_scale(SKILL_HAND, 75);
 			p_ptr->dis_to_a += get_skill_scale(SKILL_HAND, 75);
 		}
-		if (!(p_ptr->inventory[INVEN_OUTER].k_idx) && (get_skill(SKILL_HAND) > 15))
+		if (!(p_ptr->inventory[INVEN_OUTER].k_ptr) && (get_skill(SKILL_HAND) > 15))
 		{
 			p_ptr->to_a += ((get_skill(SKILL_HAND) - 13) / 3);
 			p_ptr->dis_to_a += ((get_skill(SKILL_HAND) - 13) / 3);
 		}
-		if (!(p_ptr->inventory[INVEN_ARM].k_idx) && (get_skill(SKILL_HAND) > 10))
+		if (!(p_ptr->inventory[INVEN_ARM].k_ptr) && (get_skill(SKILL_HAND) > 10))
 		{
 			p_ptr->to_a += ((get_skill(SKILL_HAND) - 8) / 3);
 			p_ptr->dis_to_a += ((get_skill(SKILL_HAND) - 8) / 3);
 		}
-		if (!(p_ptr->inventory[INVEN_HEAD].k_idx) && (get_skill(SKILL_HAND) > 4))
+		if (!(p_ptr->inventory[INVEN_HEAD].k_ptr) && (get_skill(SKILL_HAND) > 4))
 		{
 			p_ptr->to_a += (get_skill(SKILL_HAND) - 2) / 3;
 			p_ptr->dis_to_a += (get_skill(SKILL_HAND) - 2) / 3;
 		}
-		if (!(p_ptr->inventory[INVEN_HANDS].k_idx))
+		if (!(p_ptr->inventory[INVEN_HANDS].k_ptr))
 		{
 			p_ptr->to_a += (get_skill(SKILL_HAND) / 2);
 			p_ptr->dis_to_a += (get_skill(SKILL_HAND) / 2);
 		}
-		if (!(p_ptr->inventory[INVEN_FEET].k_idx))
+		if (!(p_ptr->inventory[INVEN_FEET].k_ptr))
 		{
 			p_ptr->to_a += (get_skill(SKILL_HAND) / 3);
 			p_ptr->dis_to_a += (get_skill(SKILL_HAND) / 3);
@@ -3426,7 +3435,7 @@ void calc_bonuses(bool_ silent)
 	}
 
 	/* Compute "extra shots" if needed */
-	if (o_ptr->k_idx && !p_ptr->heavy_shoot)
+	if (o_ptr->k_ptr && !p_ptr->heavy_shoot)
 	{
 		int archery = get_archery_skill();
 
@@ -3469,7 +3478,7 @@ void calc_bonuses(bool_ silent)
 	o_ptr = &p_ptr->inventory[INVEN_TOOL];
 
 	/* Boost digging skill by tool weight */
-	if (o_ptr->k_idx && (o_ptr->tval == TV_DIGGING))
+	if (o_ptr->k_ptr && (o_ptr->tval == TV_DIGGING))
 	{
 		p_ptr->skill_dig += (o_ptr->weight / 10);
 	}
@@ -3481,7 +3490,7 @@ void calc_bonuses(bool_ silent)
 	p_ptr->heavy_wield = FALSE;
 
 	/* Normal weapons */
-	if (o_ptr->k_idx && !p_ptr->heavy_wield)
+	if (o_ptr->k_ptr && !p_ptr->heavy_wield)
 	{
 		int str_index, dex_index;
 
@@ -3667,7 +3676,7 @@ void calc_bonuses(bool_ silent)
 		o_ptr = &p_ptr->inventory[INVEN_WIELD + i];
 
 		/* 2handed weapon and shield = less damage */
-		if (p_ptr->inventory[INVEN_WIELD + i].k_idx && p_ptr->inventory[INVEN_ARM + i].k_idx)
+		if (o_ptr->k_ptr && p_ptr->inventory[INVEN_ARM + i].k_ptr)
 		{
 			auto const flags = object_flags(&p_ptr->inventory[INVEN_WIELD + i]);
 			if (flags & TR_COULD2H)
@@ -3687,8 +3696,10 @@ void calc_bonuses(bool_ silent)
 		}
 
 		/* Priest weapon penalty for non-blessed edged weapons */
-		if (((forbid_non_blessed()) && (!p_ptr->bless_blade) &&
-		                ((o_ptr->tval == TV_AXE) || (o_ptr->tval == TV_SWORD) || (o_ptr->tval == TV_POLEARM))) && (o_ptr->k_idx))
+		if (((forbid_non_blessed()) &&
+			(!p_ptr->bless_blade) &&
+			((o_ptr->tval == TV_AXE) || (o_ptr->tval == TV_SWORD) || (o_ptr->tval == TV_POLEARM))) &&
+			o_ptr->k_ptr)
 		{
 			/* Reduce the real bonuses */
 			p_ptr->to_h -= 15;
@@ -3707,7 +3718,8 @@ void calc_bonuses(bool_ silent)
 		{
 			int malus = get_skill_scale(SKILL_SORCERY, 100);
 
-			if ((o_ptr->tval != TV_MSTAFF) && (o_ptr->k_idx))
+			if ((o_ptr->tval != TV_MSTAFF) &&
+				o_ptr->k_ptr)
 			{
 				/* Reduce the real bonuses */
 				p_ptr->to_h -= malus;
@@ -3793,7 +3805,7 @@ void calc_bonuses(bool_ silent)
 		{
 			msg_print("You have trouble wielding such a heavy bow.");
 		}
-		else if (p_ptr->inventory[INVEN_BOW].k_idx)
+		else if (p_ptr->inventory[INVEN_BOW].k_ptr)
 		{
 			msg_print("You have no trouble wielding your bow.");
 		}
@@ -3819,7 +3831,7 @@ void calc_bonuses(bool_ silent)
 		{
 			msg_print("You have trouble wielding such a heavy weapon.");
 		}
-		else if (p_ptr->inventory[INVEN_WIELD].k_idx)
+		else if (p_ptr->inventory[INVEN_WIELD].k_ptr)
 		{
 			msg_print("You have no trouble wielding your weapon.");
 		}
@@ -3845,7 +3857,7 @@ void calc_bonuses(bool_ silent)
 		{
 			msg_print("You do not feel comfortable with your weapon.");
 		}
-		else if (p_ptr->inventory[INVEN_WIELD].k_idx)
+		else if (p_ptr->inventory[INVEN_WIELD].k_ptr)
 		{
 			msg_print("You feel comfortable with your weapon.");
 		}
@@ -4309,9 +4321,13 @@ void gain_fate(byte fate)
 						/* Invalidate the cached allocation table */
 						alloc.kind_table_valid = false;
 
-						auto k_ptr = &k_info.at(fates[i].o_idx);
+						auto const &k_ptr = k_info.at(fates[i].o_idx);
 
-						if (!(k_ptr->flags & TR_INSTA_ART) && !(k_ptr->flags & TR_NORM_ART)) break;
+						if (!(k_ptr->flags & TR_INSTA_ART)
+							&& !(k_ptr->flags & TR_NORM_ART))
+						{
+							break;
+						}
 					}
 					level = rand_range(max_dlv[dungeon_type] - 20, max_dlv[dungeon_type] + 20);
 					fates[i].level = (level < 1) ? 1 : (level > 98) ? 98 : level;

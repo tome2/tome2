@@ -77,7 +77,7 @@ static select_by_name_t select_object_by_name(std::string const &prompt)
 		{
 			object_type *o_ptr = get_object(i);
 			// Must have an actual item in the slot
-			if (!o_ptr->k_idx)
+			if (!o_ptr->k_ptr)
 			{
 				continue;
 			}
@@ -977,7 +977,6 @@ static object_filter_t const &item_tester_hook_eatable()
 void do_cmd_eat_food()
 {
 	auto const &r_info = game->edit_data.r_info;
-	auto const &k_info = game->edit_data.k_info;
 
 	int ident, lev, fval = 0;
 
@@ -1007,7 +1006,7 @@ void do_cmd_eat_food()
 	ident = FALSE;
 
 	/* Object level */
-	lev = k_info.at(o_ptr->k_idx).level;
+	lev = o_ptr->k_ptr->level;
 
 	/* Scripted foods */
 	hook_eat_in in = { o_ptr };
@@ -2480,8 +2479,6 @@ static bool_ quaff_potion(int tval, int sval, int pval, int pval2)
  */
 void do_cmd_quaff_potion()
 {
-	auto const &k_info = game->edit_data.k_info;
-
 	int ident, lev;
 
 	/* Get an item */
@@ -2507,7 +2504,7 @@ void do_cmd_quaff_potion()
 	ident = FALSE;
 
 	/* Object level */
-	lev = k_info.at(o_ptr->k_idx).level;
+	lev = o_ptr->k_ptr->level;
 
 	/* Demon Breath corruption can spoil potions. */
 	if (player_has_corruption(CORRUPT_DEMON_BREATH) && magik(9))
@@ -2684,7 +2681,7 @@ void do_cmd_drink_fountain()
 
 		for (auto const &k_entry: k_info)
 		{
-			auto k_ptr = &k_entry.second;
+			auto const &k_ptr = k_entry.second;
 
 			if (k_ptr->tval != tval) continue;
 			if (k_ptr->sval != sval) continue;
@@ -2713,19 +2710,17 @@ void do_cmd_drink_fountain()
  */
 bool_ curse_armor()
 {
-	object_type *o_ptr;
-
-	char o_name[80];
-
-
 	/* Curse the body armor */
-	o_ptr = &p_ptr->inventory[INVEN_BODY];
+	auto o_ptr = &p_ptr->inventory[INVEN_BODY];
 
 	/* Nothing to curse */
-	if (!o_ptr->k_idx) return (FALSE);
-
+	if (!o_ptr->k_ptr)
+	{
+		return FALSE;
+	}
 
 	/* Describe */
+	char o_name[80];
 	object_desc(o_name, o_ptr, FALSE, 3);
 
 	/* Attempt a saving throw for artifacts */
@@ -2775,19 +2770,17 @@ bool_ curse_armor()
  */
 bool_ curse_weapon()
 {
-	object_type *o_ptr;
-
-	char o_name[80];
-
-
 	/* Curse the weapon */
-	o_ptr = &p_ptr->inventory[INVEN_WIELD];
+	auto o_ptr = &p_ptr->inventory[INVEN_WIELD];
 
 	/* Nothing to curse */
-	if (!o_ptr->k_idx) return (FALSE);
-
+	if (!o_ptr->k_ptr)
+	{
+		return (FALSE);
+	}
 
 	/* Describe */
+	char o_name[80];
 	object_desc(o_name, o_ptr, FALSE, 3);
 
 	/* Attempt a saving throw */
@@ -2858,7 +2851,6 @@ static object_filter_t const &item_tester_hook_readable()
 void do_cmd_read_scroll()
 {
 	auto const &d_info = game->edit_data.d_info;
-	auto const &k_info = game->edit_data.k_info;
 	auto &r_info = game->edit_data.r_info;
 
 	/* Check some conditions */
@@ -2902,7 +2894,7 @@ void do_cmd_read_scroll()
 	int ident = FALSE;
 
 	/* Object level */
-	int lev = k_info.at(o_ptr->k_idx).level;
+	int lev = o_ptr->k_ptr->level;
 
 	/* Assume the scroll will get used up */
 	int used_up = TRUE;
@@ -4140,7 +4132,7 @@ void do_cmd_zap_rod()
 	ident = FALSE;
 
 	/* Extract the item level */
-	auto const tip_ptr = &k_info.at(lookup_kind(TV_ROD, o_ptr->pval));
+	auto const &tip_ptr = k_info.at(lookup_kind(TV_ROD, o_ptr->pval));
 	auto const lev = tip_ptr->level;
 
 	/* Base chance of success */
@@ -4796,7 +4788,6 @@ static void activate_valaroma()
  */
 void do_cmd_activate()
 {
-	auto const &k_info = game->edit_data.k_info;
 	auto const &a_info = game->edit_data.a_info;
 
 	int item, lev, chance;
@@ -4832,7 +4823,7 @@ void do_cmd_activate()
 	energy_use = 100;
 
 	/* Extract the item level */
-	lev = k_info.at(o_ptr->k_idx).level;
+	lev = o_ptr->k_ptr->level;
 
 	/* Hack -- Use artifact level instead */
 	if (artifact_p(o_ptr))
@@ -4957,7 +4948,6 @@ void do_cmd_activate()
 
 const char *activation_aux(object_type * o_ptr, bool_ doit, int item)
 {
-	auto const &k_info = game->edit_data.k_info;
 	auto const &a_info = game->edit_data.a_info;
 	auto const &e_info = game->edit_data.e_info;
 
@@ -4991,7 +4981,7 @@ const char *activation_aux(object_type * o_ptr, bool_ doit, int item)
 
 	/* Intrinsic to item type (rings of Ice, etc) */
 	if (!spell)
-		spell = k_info.at(o_ptr->k_idx).activate;
+		spell = o_ptr->k_ptr->activate;
 
 	/* Complain about mis-configured .txt files? */
 	if (!spell)

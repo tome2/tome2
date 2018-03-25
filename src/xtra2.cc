@@ -3090,7 +3090,7 @@ bool_ mon_take_hit(int m_idx, int dam, bool_ *fear, cptr note)
 			auto const flags = object_flags(o_ptr);
 
 			/* Can the weapon gain levels ? */
-			if ((o_ptr->k_idx) && (flags & TR_LEVELS))
+			if (o_ptr->k_ptr && (flags & TR_LEVELS))
 			{
 				/* Give some experience for the kill */
 				const int new_exp = ((long)r_ptr->mexp * m_ptr->level) / (div * 2);
@@ -4248,7 +4248,7 @@ static int target_set_aux(int y, int x, int mode, cptr info_)
 					sv = c_ptr->special - SV_POTION_LAST;
 				}
 
-				info = k_info.at(lookup_kind(tv, sv)).name;
+				info = k_info.at(lookup_kind(tv, sv))->name;
 			}
 
 			/* Display a message */
@@ -4985,7 +4985,7 @@ static bool_ test_object_wish(char *name, object_type *o_ptr, object_type *forge
 
 	for (auto &k_entry: k_info)
 	{
-		auto k_ptr = &k_entry.second;
+		auto k_ptr = k_entry.second;
 
 		o_ptr = forge;
 
