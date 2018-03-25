@@ -2273,6 +2273,11 @@ void text_out(cptr str)
 	text_out_c(TERM_WHITE, str);
 }
 
+void text_out(std::string const &str)
+{
+	text_out_c(TERM_WHITE, str);
+}
+
 
 /*
  * Output text to the screen (in color) or to a file depending on the

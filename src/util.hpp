@@ -51,6 +51,7 @@ void prt(std::string const &s, int row, int col);
 void text_out_to_screen(byte a, cptr str);
 void text_out_to_file(byte a, cptr str);
 void text_out(cptr str);
+void text_out(std::string const &str);
 void text_out_c(byte a, cptr str);
 void text_out_c(byte a, std::string const &str);
 void clear_from(int row);
