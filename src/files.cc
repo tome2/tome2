@@ -1132,35 +1132,30 @@ static void prt_str(cptr header, cptr str, int row, int col, byte color)
  */
 static void display_player_middle()
 {
-	int show_tohit = p_ptr->dis_to_h;
-	int show_todam = p_ptr->dis_to_d;
-
-	object_type *o_ptr = &p_ptr->inventory[INVEN_WIELD];
 	char num[7];
 	byte color;
 	int speed;
 
 
-	/* Hack -- add in weapon info if known */
-	if (object_known_p(o_ptr)) show_tohit = p_ptr->dis_to_h + p_ptr->to_h_melee + o_ptr->to_h;
-	else show_tohit = p_ptr->dis_to_h + p_ptr->to_h_melee;
-	if (object_known_p(o_ptr)) show_todam = p_ptr->dis_to_d + p_ptr->to_d_melee + o_ptr->to_d;
-	else show_todam = p_ptr->dis_to_d + p_ptr->to_d_melee;
+	/* Dump the melee bonuses to hit/dam */
+	{
+		auto const o_ptr = &p_ptr->inventory[INVEN_WIELD];
+		int show_tohit = p_ptr->dis_to_h + p_ptr->to_h_melee + o_ptr->to_h;
+		int show_todam = p_ptr->dis_to_d + p_ptr->to_d_melee + o_ptr->to_d;
 
-	/* Dump the bonuses to hit/dam */
-	prt_num("+ To Melee Hit   ", show_tohit, 9, 1, TERM_L_BLUE, "   ");
-	prt_num("+ To Melee Damage", show_todam, 10, 1, TERM_L_BLUE, "   ");
+		prt_num("+ To Melee Hit   ", show_tohit, 9, 1, TERM_L_BLUE, "   ");
+		prt_num("+ To Melee Damage", show_todam, 10, 1, TERM_L_BLUE, "   ");
+	}
 
-	o_ptr = &p_ptr->inventory[INVEN_BOW];
+	/* Dump the ranged bonuses to hit/dam */
+	{
+		auto const o_ptr = &p_ptr->inventory[INVEN_BOW];
+		int show_tohit = p_ptr->dis_to_h + p_ptr->to_h_ranged + o_ptr->to_h;
+		int show_todam = p_ptr->to_d_ranged + o_ptr->to_d;
 
-	/* Hack -- add in weapon info if known */
-	if (object_known_p(o_ptr)) show_tohit = p_ptr->dis_to_h + p_ptr->to_h_ranged + o_ptr->to_h;
-	else show_tohit = p_ptr->dis_to_h + p_ptr->to_h_ranged;
-	if (object_known_p(o_ptr)) show_todam = p_ptr->to_d_ranged + o_ptr->to_d;
-	else show_todam = p_ptr->to_d_ranged;
-
-	prt_num("+ To Ranged Hit   ", show_tohit, 11, 1, TERM_L_BLUE, "  ");
-	prt_num("+ To Ranged Damage", show_todam, 12, 1, TERM_L_BLUE, "  ");
+		prt_num("+ To Ranged Hit   ", show_tohit, 11, 1, TERM_L_BLUE, "  ");
+		prt_num("+ To Ranged Damage", show_todam, 12, 1, TERM_L_BLUE, "  ");
+	}
 
 	/* Dump the total armor class */
 	prt_str("  AC             ", format("%d+%d", p_ptr->ac, p_ptr->dis_to_a), 13, 1, TERM_L_BLUE);
@@ -1518,7 +1513,7 @@ static void display_player_various()
 		/* Access the first weapon */
 		o_ptr = &p_ptr->inventory[INVEN_WIELD];
 
-		if (object_known_p(o_ptr)) dambonus += o_ptr->to_d;
+		dambonus += o_ptr->to_d;
 
 		damdice = o_ptr->dd;
 		damsides = o_ptr->ds;
@@ -2494,18 +2489,14 @@ static void file_character_print_grid(FILE *fff, bool_ show_gaps, bool_ show_leg
  *
  * Outputs one item (for Inventory, Equipment, Home, and Mathom-house)
  */
-void file_character_print_item(FILE *fff, char label, object_type *obj, bool_ full)
+static void file_character_print_item(FILE *fff, char label, object_type *obj)
 {
 	static char o_name[80];
 	static cptr paren = ")";
+
 	object_desc(o_name, obj, TRUE, 3);
 	fprintf(fff, "%c%s %s\n", label, paren, o_name);
-
-	if ((artifact_p(obj) || ego_item_p(obj) || obj->tval == TV_RING || obj->tval == TV_AMULET || full) &&
-	                (obj->ident & IDENT_MENTAL))
-	{
-		object_out_desc(obj, fff, TRUE, TRUE);
-	}
+	object_out_desc(obj, fff, TRUE, TRUE);
 }
 
 /*
@@ -2513,7 +2504,7 @@ void file_character_print_item(FILE *fff, char label, object_type *obj, bool_ fu
  *
  * Prints out one "store" (for Home and Mathom-house)
  */
-static void file_character_print_store(FILE *fff, wilderness_type_info const *place, std::size_t store, bool_ full)
+static void file_character_print_store(FILE *fff, wilderness_type_info const *place, std::size_t store)
 {
 	auto const &st_info = game->edit_data.st_info;
 
@@ -2528,7 +2519,7 @@ static void file_character_print_store(FILE *fff, wilderness_type_info const *pl
 		/* Dump all available items */
 		for (std::size_t i = 0; i < st_ptr->stock.size(); i++)
 		{
-			file_character_print_item(fff, I2A(i%24), &st_ptr->stock[i], full);
+			file_character_print_item(fff, I2A(i%24), &st_ptr->stock[i]);
 		}
 
 		/* Add an empty line */
@@ -2565,7 +2556,7 @@ static bool_ file_character_check_stores(std::unordered_set<store_type *> *seen_
  * XXX XXX XXX Allow the "full" flag to dump additional info,
  * and trigger its usage from various places in the code.
  */
-errr file_character(cptr name, bool_ full)
+errr file_character(cptr name)
 {
 	auto const &d_info = game->edit_data.d_info;
 	auto const &wf_info = game->edit_data.wf_info;
@@ -2838,7 +2829,7 @@ errr file_character(cptr name, bool_ full)
 		{
 			if (!p_ptr->body_parts[i - INVEN_WIELD]) continue;
 
-			file_character_print_item(fff, index_to_label(i), &p_ptr->inventory[i], full);
+			file_character_print_item(fff, index_to_label(i), &p_ptr->inventory[i]);
 		}
 		fprintf(fff, "\n\n");
 	}
@@ -2847,7 +2838,7 @@ errr file_character(cptr name, bool_ full)
 	fprintf(fff, "  [Character Inventory]\n\n");
 	for (i = 0; i < INVEN_PACK; i++)
 	{
-		file_character_print_item(fff, index_to_label(i), &p_ptr->inventory[i], full);
+		file_character_print_item(fff, index_to_label(i), &p_ptr->inventory[i]);
 	}
 	fprintf(fff, "\n\n");
 
@@ -2859,7 +2850,7 @@ errr file_character(cptr name, bool_ full)
 			if (wf_ref.feat == FEAT_TOWN &&
 			    file_character_check_stores(&seen_stores, &wf_ref, 7))
 			{
-				file_character_print_store(fff, &wf_ref, 7, full);
+				file_character_print_store(fff, &wf_ref, 7);
 			}
 		}
 	}
@@ -2872,7 +2863,7 @@ errr file_character(cptr name, bool_ full)
 			if (wf_ref.feat == FEAT_TOWN &&
 			    file_character_check_stores(&seen_stores, &wf_ref, 57))
 			{
-				file_character_print_store(fff, &wf_ref, 57, full);
+				file_character_print_store(fff, &wf_ref, 57);
 			}
 		}
 	}
@@ -4255,7 +4246,7 @@ static void show_info()
 		Term_save();
 
 		/* Dump a character file */
-		file_character(out_val, TRUE);
+		file_character(out_val);
 
 		/* Load screen */
 		Term_load();

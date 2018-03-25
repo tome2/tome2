@@ -2980,7 +2980,7 @@ void calc_bonuses(bool_ silent)
 		p_ptr->to_a += o_ptr->to_a;
 
 		/* Apply the mental bonuses to armor class, if known */
-		if (object_known_p(o_ptr)) p_ptr->dis_to_a += o_ptr->to_a;
+		p_ptr->dis_to_a += o_ptr->to_a;
 
 		/* Hack -- do not apply "weapon" bonuses */
 		if (p_ptr->body_parts[i - INVEN_WIELD] == INVEN_WIELD) continue;
@@ -2999,8 +2999,8 @@ void calc_bonuses(bool_ silent)
 		p_ptr->to_d += o_ptr->to_d;
 
 		/* Apply the mental bonuses tp hit/damage, if known */
-		if (object_known_p(o_ptr)) p_ptr->dis_to_h += o_ptr->to_h;
-		if (object_known_p(o_ptr)) p_ptr->dis_to_d += o_ptr->to_d;
+		p_ptr->dis_to_h += o_ptr->to_h;
+		p_ptr->dis_to_d += o_ptr->to_d;
 	}
 
 	/* Monks get extra ac for armour _not worn_ */

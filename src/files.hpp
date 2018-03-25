@@ -14,7 +14,7 @@ void wipe_saved();
 s16b tokenize(char *buf, s16b num, char **tokens, char delim1, char delim2);
 void display_player(int mode);
 std::string describe_player_location();
-errr file_character(cptr name, bool_ full);
+errr file_character(cptr name);
 errr process_pref_file_aux(char *buf);
 errr process_pref_file(cptr name);
 void show_string(const char *lines, const char *title, int line = 0);
