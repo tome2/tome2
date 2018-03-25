@@ -221,7 +221,7 @@ void get_map_size(const char *name, int *ysize, int *xsize)
 void load_map(const char *name, int *y, int *x)
 {
 	/* Set the correct monster hook */
-	set_mon_num_hook();
+	reset_get_monster_hook();
 
 	/* Prepare allocation table */
 	get_mon_num_prep();

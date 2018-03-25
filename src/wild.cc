@@ -391,7 +391,7 @@ void wilderness_gen()
 	y = p_ptr->wilderness_y;
 
 	/* Set the correct monster hook */
-	set_mon_num_hook();
+	reset_get_monster_hook();
 
 	/* Prepare allocation table */
 	get_mon_num_prep();
@@ -1020,7 +1020,7 @@ static bool create_townpeople_hook(monster_race const *r_ptr)
 static void town_gen_hack(int qy, int qx)
 {
 	int y, x, floor;
-	bool (*old_get_mon_num_hook)(monster_race const *);
+	bool (*old_get_monster_hook)(monster_race const *);
 
 	/* Do we use dungeon floor or normal one */
 	if (magik(TOWN_NORMAL_FLOOR)) floor = FEAT_FLOOR;
@@ -1065,10 +1065,10 @@ static void town_gen_hack(int qy, int qx)
 	/* Some inhabitants(leveled .. hehe :) */
 
 	/* Backup the old hook */
-	old_get_mon_num_hook = get_mon_num_hook;
+	old_get_monster_hook = get_monster_hook;
 
 	/* Require "okay" monsters */
-	get_mon_num_hook = create_townpeople_hook;
+	get_monster_hook = create_townpeople_hook;
 
 	/* Prepare allocation table */
 	get_mon_num_prep();
@@ -1102,7 +1102,7 @@ static void town_gen_hack(int qy, int qx)
 		}
 
 	/* Reset restriction */
-	get_mon_num_hook = old_get_mon_num_hook;
+	get_monster_hook = old_get_monster_hook;
 
 	/* Prepare allocation table */
 	get_mon_num_prep();
@@ -1111,7 +1111,7 @@ static void town_gen_hack(int qy, int qx)
 static void town_gen_circle(int qy, int qx)
 {
 	int y, x, cy, cx, rad, floor;
-	bool (*old_get_mon_num_hook)(monster_race const *);
+	bool (*old_get_monster_hook)(monster_race const *);
 
 	/* Do we use dungeon floor or normal one */
 	if (magik(TOWN_NORMAL_FLOOR)) floor = FEAT_FLOOR;
@@ -1197,10 +1197,10 @@ static void town_gen_circle(int qy, int qx)
 	/* Some inhabitants(leveled .. hehe :) */
 
 	/* Backup the old hook */
-	old_get_mon_num_hook = get_mon_num_hook;
+	old_get_monster_hook = get_monster_hook;
 
 	/* Require "okay" monsters */
-	get_mon_num_hook = create_townpeople_hook;
+	get_monster_hook = create_townpeople_hook;
 
 	/* Prepare allocation table */
 	get_mon_num_prep();
@@ -1233,7 +1233,7 @@ static void town_gen_circle(int qy, int qx)
 		}
 
 	/* Reset restriction */
-	get_mon_num_hook = old_get_mon_num_hook;
+	get_monster_hook = old_get_monster_hook;
 
 	/* Prepare allocation table */
 	get_mon_num_prep();

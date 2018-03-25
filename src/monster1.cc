@@ -1469,7 +1469,7 @@ static bool monster_lava(monster_race const *r_ptr)
 }
 
 
-void set_mon_num_hook()
+void reset_get_monster_hook()
 {
 	auto const &wf_info = game->edit_data.wf_info;
 
@@ -1479,38 +1479,38 @@ void set_mon_num_hook()
 		switch (wf_info[wilderness(p_ptr->wilderness_x, p_ptr->wilderness_y).feat].terrain_idx)
 		{
 		case TERRAIN_TOWN:
-			get_mon_num_hook = monster_town;
+			get_monster_hook = monster_town;
 			break;
 		case TERRAIN_DEEP_WATER:
-			get_mon_num_hook = monster_ocean;
+			get_monster_hook = monster_ocean;
 			break;
 		case TERRAIN_SHALLOW_WATER:
-			get_mon_num_hook = monster_shore;
+			get_monster_hook = monster_shore;
 			break;
 		case TERRAIN_DIRT:
-			get_mon_num_hook = monster_waste;
+			get_monster_hook = monster_waste;
 			break;
 		case TERRAIN_GRASS:
-			get_mon_num_hook = monster_grass;
+			get_monster_hook = monster_grass;
 			break;
 		case TERRAIN_TREES:
-			get_mon_num_hook = monster_wood;
+			get_monster_hook = monster_wood;
 			break;
 		case TERRAIN_SHALLOW_LAVA:
 		case TERRAIN_DEEP_LAVA:
-			get_mon_num_hook = monster_volcano;
+			get_monster_hook = monster_volcano;
 			break;
 		case TERRAIN_MOUNTAIN:
-			get_mon_num_hook = monster_mountain;
+			get_monster_hook = monster_mountain;
 			break;
 		default:
-			get_mon_num_hook = monster_dungeon;
+			get_monster_hook = monster_dungeon;
 			break;
 		}
 	}
 	else
 	{
-		get_mon_num_hook = monster_dungeon;
+		get_monster_hook = monster_dungeon;
 	}
 }
 
@@ -1559,23 +1559,23 @@ bool_ monster_can_cross_terrain(byte feat, std::shared_ptr<monster_race> r_ptr)
 }
 
 
-void set_mon_num2_hook(int y, int x)
+void set_monster_aux_hook(int y, int x)
 {
 	/* Set the monster list */
 	switch (cave[y][x].feat)
 	{
 	case FEAT_SHAL_WATER:
-		get_mon_num2_hook = monster_shallow_water;
+		get_monster_aux_hook = monster_shallow_water;
 		break;
 	case FEAT_DEEP_WATER:
-		get_mon_num2_hook = monster_deep_water;
+		get_monster_aux_hook = monster_deep_water;
 		break;
 	case FEAT_DEEP_LAVA:
 	case FEAT_SHAL_LAVA:
-		get_mon_num2_hook = monster_lava;
+		get_monster_aux_hook = monster_lava;
 		break;
 	default:
-		get_mon_num2_hook = NULL;
+		get_monster_aux_hook = NULL;
 		break;
 	}
 }

@@ -2025,7 +2025,7 @@ static bool_ player_birth_aux_ask()
 	}
 
 	/* Set the quest monster hook */
-	get_mon_num_hook = monster_quest;
+	get_monster_hook = monster_quest;
 
 	/* Prepare allocation table */
 	get_mon_num_prep();

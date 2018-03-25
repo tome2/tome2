@@ -45,7 +45,7 @@ static bool create_molds_hook(monster_race const *r_ptr)
 static bool quest_poison_gen_hook(void *, void *, void *)
 {
 	int cy = 1, cx = 1, x, y, tries = 10000, r_idx;
-	bool (*old_get_mon_num_hook)(monster_race const *);
+	bool (*old_get_monster_hook)(monster_race const *);
 
 	if (cquest.status != QUEST_STATUS_TAKEN)
 	{
@@ -84,10 +84,10 @@ static bool quest_poison_gen_hook(void *, void *, void *)
 	/* Place the baddies */
 
 	/* Backup the old hook */
-	old_get_mon_num_hook = get_mon_num_hook;
+	old_get_monster_hook = get_monster_hook;
 
 	/* Require "okay" monsters */
-	get_mon_num_hook = create_molds_hook;
+	get_monster_hook = create_molds_hook;
 
 	/* Prepare allocation table */
 	get_mon_num_prep();
@@ -141,7 +141,7 @@ static bool quest_poison_gen_hook(void *, void *, void *)
 	}
 
 	/* Reset restriction */
-	get_mon_num_hook = old_get_mon_num_hook;
+	get_monster_hook = old_get_monster_hook;
 
 	/* Prepare allocation table */
 	get_mon_num_prep();

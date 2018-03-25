@@ -50,7 +50,7 @@ static bool quest_troll_gen_hook(void *, void *, void *)
 	dun_level = quest[p_ptr->inside_quest].level;
 
 	/* Set the correct monster hook */
-	set_mon_num_hook();
+	reset_get_monster_hook();
 
 	/* Prepare allocation table */
 	get_mon_num_prep();

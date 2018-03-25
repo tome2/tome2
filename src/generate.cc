@@ -2733,7 +2733,7 @@ static bool vault_aux_demon(monster_race const *r_ptr)
  * races, to allow the nest creation to fail instead of having "holes".
  *
  * Note the use of the "get_mon_num_prep()" function, and the special
- * "get_mon_num_hook()" restriction function, to prepare the "monster
+ * "get_monster_hook()" restriction function, to prepare the "monster
  * allocation table" in such a way as to optimize the selection of
  * "appropriate" non-unique monsters for the nest.
  *
@@ -2755,7 +2755,7 @@ static void build_type5(int by0, int bx0)
 	int tmp, i;
 	const char *name;
 	bool_ empty = FALSE;
-	bool (*old_get_mon_num_hook)(monster_race const *);
+	bool (*old_get_monster_hook)(monster_race const *);
 	s16b what[64];
 
 	/* Try to allocate space for room.  If fails, exit */
@@ -2809,7 +2809,7 @@ static void build_type5(int by0, int bx0)
 	/* Hack -- Choose a nest type */
 	tmp = randint(dun_level);
 
-	old_get_mon_num_hook = get_mon_num_hook;
+	old_get_monster_hook = get_monster_hook;
 
 	if ((tmp < 25) && (rand_int(2) != 0))
 	{
@@ -2831,12 +2831,12 @@ static void build_type5(int by0, int bx0)
 		if ((dun_level >= (25 + randint(15))) && (rand_int(2) != 0))
 		{
 			name = "symbol clone";
-			get_mon_num_hook = vault_aux_symbol;
+			get_monster_hook = vault_aux_symbol;
 		}
 		else
 		{
 			name = "clone";
-			get_mon_num_hook = vault_aux_clone;
+			get_monster_hook = vault_aux_clone;
 		}
 	}
 	else if (tmp < 25)
@@ -2846,13 +2846,13 @@ static void build_type5(int by0, int bx0)
 		name = "jelly";
 
 		/* Restrict to jelly */
-		get_mon_num_hook = vault_aux_jelly;
+		get_monster_hook = vault_aux_jelly;
 	}
 
 	else if (tmp < 50)
 	{
 		name = "treasure";
-		get_mon_num_hook = vault_aux_treasure;
+		get_monster_hook = vault_aux_treasure;
 	}
 
 	/* Monster nest (animal) */
@@ -2861,7 +2861,7 @@ static void build_type5(int by0, int bx0)
 		if (rand_int(3) == 0)
 		{
 			name = "kennel";
-			get_mon_num_hook = vault_aux_kennel;
+			get_monster_hook = vault_aux_kennel;
 		}
 		else
 		{
@@ -2869,7 +2869,7 @@ static void build_type5(int by0, int bx0)
 			name = "animal";
 
 			/* Restrict to animal */
-			get_mon_num_hook = vault_aux_animal;
+			get_monster_hook = vault_aux_animal;
 		}
 	}
 
@@ -2879,7 +2879,7 @@ static void build_type5(int by0, int bx0)
 		if (rand_int(3) == 0)
 		{
 			name = "chapel";
-			get_mon_num_hook = vault_aux_chapel;
+			get_monster_hook = vault_aux_chapel;
 		}
 		else
 		{
@@ -2887,7 +2887,7 @@ static void build_type5(int by0, int bx0)
 			name = "undead";
 
 			/* Restrict to undead */
-			get_mon_num_hook = vault_aux_undead;
+			get_monster_hook = vault_aux_undead;
 		}
 	}
 
@@ -2905,7 +2905,7 @@ static void build_type5(int by0, int bx0)
 	}
 
 	/* Remove restriction */
-	get_mon_num_hook = old_get_mon_num_hook;
+	get_monster_hook = old_get_monster_hook;
 
 	/* Prepare allocation table */
 	get_mon_num_prep();
@@ -2978,7 +2978,7 @@ static void build_type5(int by0, int bx0)
  * be present in many of the dragon pits, if they have the proper breath.
  *
  * Note the use of the "get_mon_num_prep()" function, and the special
- * "get_mon_num_hook()" restriction function, to prepare the "monster
+ * "get_monster_hook()" restriction function, to prepare the "monster
  * allocation table" in such a way as to optimize the selection of
  * "appropriate" non-unique monsters for the pit.
  *
@@ -2995,7 +2995,7 @@ static void build_type6(int by0, int bx0)
 	int i, j, y, x, y1, x1, y2, x2, xval, yval;
 	bool_ empty = FALSE;
 	const char *name;
-	bool (*old_get_mon_num_hook)(monster_race const *);
+	bool (*old_get_monster_hook)(monster_race const *);
 
 	/* Try to allocate space for room.  If fails, exit */
 	if (!room_alloc(25, 11, TRUE, by0, bx0, &xval, &yval)) return;
@@ -3048,7 +3048,7 @@ static void build_type6(int by0, int bx0)
 	/* Choose a pit type */
 	tmp = randint(dun_level);
 
-	old_get_mon_num_hook = get_mon_num_hook;
+	old_get_monster_hook = get_monster_hook;
 
 	/* Orc pit */
 	if (tmp < 20)
@@ -3057,7 +3057,7 @@ static void build_type6(int by0, int bx0)
 		name = "orc";
 
 		/* Restrict monster selection */
-		get_mon_num_hook = vault_aux_orc;
+		get_monster_hook = vault_aux_orc;
 	}
 
 	/* Troll pit */
@@ -3067,7 +3067,7 @@ static void build_type6(int by0, int bx0)
 		name = "troll";
 
 		/* Restrict monster selection */
-		get_mon_num_hook = vault_aux_troll;
+		get_monster_hook = vault_aux_troll;
 	}
 
 	/* Giant pit */
@@ -3077,7 +3077,7 @@ static void build_type6(int by0, int bx0)
 		name = "giant";
 
 		/* Restrict monster selection */
-		get_mon_num_hook = vault_aux_giant;
+		get_monster_hook = vault_aux_giant;
 	}
 
 	else if (tmp < 70)
@@ -3096,12 +3096,12 @@ static void build_type6(int by0, int bx0)
 				    (dun_level + randint(5))));
 
 			/* Restrict selection */
-			get_mon_num_hook = vault_aux_symbol;
+			get_monster_hook = vault_aux_symbol;
 		}
 		else
 		{
 			name = "ordered chapel";
-			get_mon_num_hook = vault_aux_chapel;
+			get_monster_hook = vault_aux_chapel;
 		}
 
 	}
@@ -3109,7 +3109,7 @@ static void build_type6(int by0, int bx0)
 	/* Dragon pit */
 	else if (tmp < 80)
 	{
-		/* Hack - get_mon_num_hook needs a plain function */
+		/* Hack - get_monster_hook needs a plain function */
 		static monster_spell_flag_set mask;
 
 		/* Pick dragon type */
@@ -3159,7 +3159,7 @@ static void build_type6(int by0, int bx0)
 		}
 
 		/* Restrict monster selection */
-		get_mon_num_hook = [](monster_race const *r_ptr) -> bool {
+		get_monster_hook = [](monster_race const *r_ptr) -> bool {
 			/* Decline unique monsters */
 			if (r_ptr->flags & RF_UNIQUE) return false;
 
@@ -3181,7 +3181,7 @@ static void build_type6(int by0, int bx0)
 		name = "demon";
 
 		/* Restrict monster selection */
-		get_mon_num_hook = vault_aux_demon;
+		get_monster_hook = vault_aux_demon;
 	}
 
 	/* Prepare allocation table */
@@ -3198,7 +3198,7 @@ static void build_type6(int by0, int bx0)
 	}
 
 	/* Remove restriction */
-	get_mon_num_hook = old_get_mon_num_hook;
+	get_monster_hook = old_get_monster_hook;
 
 	/* Prepare allocation table */
 	get_mon_num_prep();
@@ -7489,7 +7489,7 @@ static bool_ cave_gen()
 	init_feat_info();
 
 	/* Set the correct monster hook */
-	set_mon_num_hook();
+	reset_get_monster_hook();
 
 	/* Prepare allocation table */
 	get_mon_num_prep();
@@ -8017,7 +8017,7 @@ bool_ build_special_level()
 		}
 	}
 	/* Set the correct monster hook */
-	set_mon_num_hook();
+	reset_get_monster_hook();
 
 	/* Prepare allocation table */
 	get_mon_num_prep();

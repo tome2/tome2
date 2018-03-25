@@ -59,14 +59,14 @@ static int get_new_bounty_monster(int lev)
 	 * Set up the hooks -- no bounties on uniques or monsters
 	 * with no corpses
 	 */
-	get_mon_num_hook = lua_mon_hook_bounty;
+	get_monster_hook = lua_mon_hook_bounty;
 	get_mon_num_prep();
 
 	/* Set up the quest monster. */
 	r_idx = get_mon_num(lev);
 
 	/* Undo the filters */
-	get_mon_num_hook = NULL;
+	get_monster_hook = NULL;
 	get_mon_num_prep();
 
 	return r_idx;

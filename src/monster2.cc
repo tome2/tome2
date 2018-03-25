@@ -804,8 +804,8 @@ errr get_mon_num_prep()
 	for (auto &&entry: alloc.race_table)
 	{
 		/* Accept monsters which pass the restriction, if any */
-		if ((!get_mon_num_hook || (*get_mon_num_hook)(&r_info[entry.index])) &&
-				(!get_mon_num2_hook || (*get_mon_num2_hook)(&r_info[entry.index])))
+		if ((!get_monster_hook || (*get_monster_hook)(&r_info[entry.index])) &&
+				(!get_monster_aux_hook || (*get_monster_aux_hook)(&r_info[entry.index])))
 		{
 			/* Accept this monster */
 			entry.prob2 = entry.prob1;
@@ -2650,7 +2650,7 @@ bool_ place_monster_aux(int y, int x, int r_idx, bool_ slp, bool_ grp, int statu
 
 	int i;
 	auto r_ptr = &r_info[r_idx];
-	bool (*old_get_mon_num_hook)(monster_race const *);
+	bool (*old_get_monster_hook)(monster_race const *);
 
 
 	/* Place one monster, or fail */
@@ -2672,13 +2672,13 @@ bool_ place_monster_aux(int y, int x, int r_idx, bool_ slp, bool_ grp, int statu
 	/* Escorts for certain monsters */
 	if (r_ptr->flags & RF_ESCORT)
 	{
-		old_get_mon_num_hook = get_mon_num_hook;
+		old_get_monster_hook = get_monster_hook;
 
 		/* Set the escort index */
 		place_monster_ptr = &r_info[r_idx];
 
 		/* Set the escort hook */
-		get_mon_num_hook = place_monster_okay;
+		get_monster_hook = place_monster_okay;
 
 		/* Prepare allocation table */
 		get_mon_num_prep();
@@ -2694,7 +2694,7 @@ bool_ place_monster_aux(int y, int x, int r_idx, bool_ slp, bool_ grp, int statu
 			/* Require empty grids */
 			if (!cave_empty_bold(ny, nx)) continue;
 
-			set_mon_num2_hook(ny, nx);
+			set_monster_aux_hook(ny, nx);
 
 			/* Prepare allocation table */
 			get_mon_num_prep();
@@ -2703,7 +2703,7 @@ bool_ place_monster_aux(int y, int x, int r_idx, bool_ slp, bool_ grp, int statu
 			z = get_mon_num(r_ptr->level);
 
 			/* Reset restriction */
-			get_mon_num2_hook = NULL;
+			get_monster_aux_hook = NULL;
 
 			/* Prepare allocation table */
 			get_mon_num_prep();
@@ -2724,7 +2724,7 @@ bool_ place_monster_aux(int y, int x, int r_idx, bool_ slp, bool_ grp, int statu
 		}
 
 		/* Reset restriction */
-		get_mon_num_hook = old_get_mon_num_hook;
+		get_monster_hook = old_get_monster_hook;
 
 		/* Prepare allocation table */
 		get_mon_num_prep();
@@ -2745,7 +2745,7 @@ bool_ place_monster(int y, int x, bool_ slp, bool_ grp)
 	int r_idx;
 
 	/* Set monster restriction */
-	set_mon_num2_hook(y, x);
+	set_monster_aux_hook(y, x);
 
 	/* Prepare allocation table */
 	get_mon_num_prep();
@@ -2754,7 +2754,7 @@ bool_ place_monster(int y, int x, bool_ slp, bool_ grp)
 	r_idx = get_mon_num(monster_level);
 
 	/* Reset restriction */
-	get_mon_num2_hook = NULL;
+	get_monster_aux_hook = NULL;
 
 	/* Prepare allocation table */
 	get_mon_num_prep();
@@ -2779,7 +2779,7 @@ bool_ alloc_horde(int y, int x)
 	monster_type *m_ptr;
 	int attempts = 1000;
 
-	set_mon_num2_hook(y, x);
+	set_monster_aux_hook(y, x);
 
 	/* Prepare allocation table */
 	get_mon_num_prep();
@@ -2799,7 +2799,7 @@ bool_ alloc_horde(int y, int x)
 			break;
 	}
 
-	get_mon_num2_hook = NULL;
+	get_monster_aux_hook = NULL;
 
 	/* Prepare allocation table */
 	get_mon_num_prep();
@@ -3176,7 +3176,7 @@ bool_ summon_specific(int y1, int x1, int lev, int type)
 {
 	int i, x, y, r_idx;
 	bool_ Group_ok = TRUE;
-	bool (*old_get_mon_num_hook)(monster_race const *);
+	bool (*old_get_monster_hook)(monster_race const *);
 
 	/* Look for a location */
 	for (i = 0; i < 20; ++i)
@@ -3213,10 +3213,10 @@ bool_ summon_specific(int y1, int x1, int lev, int type)
 	summon_specific_type = type;
 
 	/* Backup the old hook */
-	old_get_mon_num_hook = get_mon_num_hook;
+	old_get_monster_hook = get_monster_hook;
 
 	/* Require "okay" monsters */
-	get_mon_num_hook = summon_specific_okay;
+	get_monster_hook = summon_specific_okay;
 
 	/* Prepare allocation table */
 	get_mon_num_prep();
@@ -3228,7 +3228,7 @@ bool_ summon_specific(int y1, int x1, int lev, int type)
 	summon_hack = FALSE;
 
 	/* Reset restriction */
-	get_mon_num_hook = old_get_mon_num_hook;
+	get_monster_hook = old_get_monster_hook;
 
 	/* Prepare allocation table */
 	get_mon_num_prep();
@@ -3260,7 +3260,7 @@ bool_ summon_specific(int y1, int x1, int lev, int type)
 bool_ summon_specific_friendly(int y1, int x1, int lev, int type, bool_ Group_ok)
 {
 	int i, x, y, r_idx;
-	bool (*old_get_mon_num_hook)(monster_race const *);
+	bool (*old_get_monster_hook)(monster_race const *);
 
 	/* Look for a location */
 	for (i = 0; i < 20; ++i)
@@ -3293,13 +3293,13 @@ bool_ summon_specific_friendly(int y1, int x1, int lev, int type, bool_ Group_ok
 	/* Failure */
 	if (i == 20) return (FALSE);
 
-	old_get_mon_num_hook = get_mon_num_hook;
+	old_get_monster_hook = get_monster_hook;
 
 	/* Save the "summon" type */
 	summon_specific_type = type;
 
 	/* Require "okay" monsters */
-	get_mon_num_hook = summon_specific_okay;
+	get_monster_hook = summon_specific_okay;
 
 	/* Prepare allocation table */
 	get_mon_num_prep();
@@ -3308,7 +3308,7 @@ bool_ summon_specific_friendly(int y1, int x1, int lev, int type, bool_ Group_ok
 	r_idx = get_mon_num((dun_level + lev) / 2 + 5);
 
 	/* Reset restriction */
-	get_mon_num_hook = old_get_mon_num_hook;
+	get_monster_hook = old_get_monster_hook;
 
 	/* Prepare allocation table */
 	get_mon_num_prep();
@@ -3480,13 +3480,13 @@ bool_ multiply_monster(int m_idx, bool_ charm, bool_ clone)
 		/* It can mutate into a nastier monster */
 		if ((rand_int(100) < 3) && (!clone))
 		{
-			bool (*old_get_mon_num_hook)(monster_race const *);
+			bool (*old_get_monster_hook)(monster_race const *);
 
 			/* Backup the old hook */
-			old_get_mon_num_hook = get_mon_num_hook;
+			old_get_monster_hook = get_monster_hook;
 
 			/* Require "okay" monsters */
-			get_mon_num_hook = mutate_monster_okay;
+			get_monster_hook = mutate_monster_okay;
 
 			/* Prepare allocation table */
 			get_mon_num_prep();
@@ -3497,7 +3497,7 @@ bool_ multiply_monster(int m_idx, bool_ charm, bool_ clone)
 			new_race = get_mon_num(dun_level + 5);
 
 			/* Reset restriction */
-			get_mon_num_hook = old_get_mon_num_hook;
+			get_monster_hook = old_get_monster_hook;
 
 			/* Prepare allocation table */
 			get_mon_num_prep();

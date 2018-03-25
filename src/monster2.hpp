@@ -45,6 +45,6 @@ s16b player_place(int y, int x);
 void monster_drop_carried_objects(monster_type *m_ptr);
 bool monster_dungeon(monster_race const *r_ptr);
 bool monster_quest(monster_race const *r_ptr);
-void set_mon_num_hook();
-void set_mon_num2_hook(int y, int x);
+void reset_get_monster_hook();
+void set_monster_aux_hook(int y, int x);
 bool_ monster_can_cross_terrain(byte feat, std::shared_ptr<monster_race> r_ptr);
