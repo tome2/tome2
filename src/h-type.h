@@ -121,19 +121,6 @@ typedef unsigned long u32b;
 #endif
 
 
-/*** Pointers to Functions with simple return types and any args ***/
-
-typedef void	(*func_void)();
-typedef errr	(*func_errr)();
-typedef char	(*func_char)();
-typedef byte	(*func_byte)();
-typedef bool_	(*func_bool)();
-typedef sint	(*func_sint)();
-typedef uint	(*func_uint)();
-typedef real	(*func_real)();
-typedef cptr	(*func_cptr)();
-
-
 #ifdef __cplusplus
 } // extern "C"
 #endif
