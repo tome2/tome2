@@ -3445,12 +3445,11 @@ void unset_stick_mode()
 /*
  * Activate a device
  */
-static void activate_stick(object_type *o_ptr, bool_ *obvious, bool_ *use_charge)
+static void activate_stick(object_type *o_ptr, bool_ *use_charge)
 {
 	spell_type *spell = spell_at(o_ptr->pval2);
 	casting_result ret;
 
-	assert(obvious != NULL);
 	assert(use_charge != NULL);
 
 	set_stick_mode(o_ptr);
@@ -3461,15 +3460,12 @@ static void activate_stick(object_type *o_ptr, bool_ *obvious, bool_ *use_charge
 	{
 	case NO_CAST:
 		*use_charge = FALSE;
-		*obvious = FALSE;
 		break;
 	case CAST_HIDDEN:
 		*use_charge = TRUE;
-		*obvious = FALSE;
 		break;
 	case CAST_OBVIOUS:
 		*use_charge = TRUE;
-		*obvious = TRUE;
 		break;
 	default:
 		assert(FALSE);
@@ -3486,7 +3482,7 @@ static void activate_stick(object_type *o_ptr, bool_ *obvious, bool_ *use_charge
  */
 void do_cmd_use_staff()
 {
-	bool_ obvious, use_charge;
+	bool_ use_charge;
 
 	/* No magic */
 	if (p_ptr->antimagic)
@@ -3567,7 +3563,7 @@ void do_cmd_use_staff()
 
 
 	/* Analyze the staff */
-	activate_stick(o_ptr, &obvious, &use_charge);
+	activate_stick(o_ptr, &use_charge);
 
 	/* Combine / Reorder the pack (later) */
 	p_ptr->notice |= (PN_COMBINE | PN_REORDER);
@@ -3579,17 +3575,13 @@ void do_cmd_use_staff()
 	/* Window stuff */
 	p_ptr->window |= (PW_INVEN | PW_EQUIP | PW_PLAYER);
 
+	/* Identify */
+	object_aware(o_ptr);
 
 	/* Hack -- some uses are "free" */
 	if (!use_charge)
 	{
 		return;
-	}
-
-	/* An identification was made */
-	if (obvious)
-	{
-		object_aware(o_ptr);
 	}
 
 	/* Use a single charge */
@@ -3657,7 +3649,7 @@ void do_cmd_use_staff()
  */
 void do_cmd_aim_wand()
 {
-	bool_ obvious, use_charge;
+	bool_ use_charge;
 
 	/* No magic */
 	if (p_ptr->antimagic)
@@ -3731,7 +3723,7 @@ void do_cmd_aim_wand()
 	}
 
 	/* Analyze the wand */
-	activate_stick(o_ptr, &obvious, &use_charge);
+	activate_stick(o_ptr, &use_charge);
 
 	/* Combine / Reorder the pack (later) */
 	p_ptr->notice |= (PN_COMBINE | PN_REORDER);
@@ -3739,16 +3731,13 @@ void do_cmd_aim_wand()
 	/* Mark it as tried */
 	object_tried(o_ptr);
 
+	/* Identify */
+	object_aware(o_ptr);
+
 	/* Hack -- some uses are "free" */
 	if (!use_charge)
 	{
 		return;
-	}
-
-	/* An identification was made */
-	if (obvious)
-	{
-		object_aware(o_ptr);
 	}
 
 	/* Window stuff */
