@@ -316,7 +316,7 @@ errr process_pref_file_aux(char *buf)
 			if (tokenize(buf + 4, 3, zz, ':', '/') == 3)
 			{
 				player_race_mod *rmp_ptr;
-				i = (huge)strtol(zz[0], NULL, 0);
+				i = strtol(zz[0], NULL, 0);
 				n1 = strtol(zz[1], NULL, 0);
 				n2 = strtol(zz[2], NULL, 0);
 				if (i >= static_cast<int>(race_mod_info.size())) return (1);

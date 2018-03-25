@@ -255,9 +255,9 @@ errr my_fclose(FILE *fff)
 *
 * Process tabs, strip internal non-printables
 */
-errr my_fgets(FILE *fff, char *buf, huge n)
+errr my_fgets(FILE *fff, char *buf, unsigned long n)
 {
-	huge i = 0;
+	unsigned long i = 0;
 
 	while (TRUE)
 	{
@@ -418,7 +418,7 @@ return (open(buf, flags | O_BINARY, 0));
 /*
 * Hack -- attempt to seek on a file descriptor
 */
-errr fd_seek(int fd, huge n)
+errr fd_seek(int fd, unsigned long n)
 {
 	s32b p;
 
@@ -432,7 +432,7 @@ errr fd_seek(int fd, huge n)
 	if (p < 0) return (1);
 
 	/* Failure */
-	if ((huge)p != n) return (1);
+	if ((unsigned long)p != n) return (1);
 
 	/* Success */
 	return (0);
@@ -442,7 +442,7 @@ errr fd_seek(int fd, huge n)
 /*
 * Hack -- attempt to read data from a file descriptor
 */
-errr fd_read(int fd, char *buf, huge n)
+errr fd_read(int fd, char *buf, unsigned long n)
 {
 	/* Verify the fd */
 	if (fd < 0) return ( -1);
@@ -465,7 +465,7 @@ errr fd_read(int fd, char *buf, huge n)
 #endif
 
 	/* Read the final piece */
-	if ((huge)read(fd, buf, n) != n) return (1);
+	if ((unsigned long)read(fd, buf, n) != n) return (1);
 
 	/* Success */
 	return (0);
@@ -475,7 +475,7 @@ errr fd_read(int fd, char *buf, huge n)
 /*
 * Hack -- Attempt to write data to a file descriptor
 */
-errr fd_write(int fd, cptr buf, huge n)
+errr fd_write(int fd, cptr buf, unsigned long n)
 {
 	/* Verify the fd */
 	if (fd < 0) return ( -1);
@@ -498,7 +498,7 @@ errr fd_write(int fd, cptr buf, huge n)
 #endif
 
 	/* Write the final piece */
-	if ((huge)write(fd, buf, n) != n) return (1);
+	if ((unsigned long)write(fd, buf, n) != n) return (1);
 
 	/* Success */
 	return (0);

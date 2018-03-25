@@ -7,7 +7,7 @@
 int highscore_seek(int highscore_fd, int i)
 {
 	/* Seek for the requested record */
-	return (fd_seek(highscore_fd, (huge)(i) * sizeof(high_score)));
+	return (fd_seek(highscore_fd, (unsigned long)(i) * sizeof(high_score)));
 }
 
 errr highscore_read(int highscore_fd, high_score *score)

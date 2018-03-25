@@ -29,15 +29,10 @@ extern "C" {
  *
  * On Sparc's, a sint takes 4 bytes (2 is legal)
  * On Sparc's, a long takes 4 bytes (8 is legal)
- * On Sparc's, a huge takes 4 bytes (8 is legal)
  * On Sparc's, a real takes 8 bytes (4 is legal)
  *
  * Note that some files have already been included by "h-include.h"
  * These include <stdio.h> and <sys/types>, which define some types
- *
- * Also, see <limits.h> for min/max values for sind, uind, long, huge
- * (SHRT_MIN, SHRT_MAX, USHRT_MAX, LONG_MIN, LONG_MAX, ULONG_MAX)
- * These limits should be verified and coded into "h-constant.h".
  */
 
 
@@ -54,12 +49,6 @@ typedef const char *cptr;
 typedef int errr;
 
 
-/*
- * Hack -- prevent problems with WINDOWS
- */
-#undef huge
-#define huge huge_hack
-
 /* Note that unsigned values can cause math problems */
 /* An unsigned byte of memory */
 typedef unsigned char byte;
@@ -67,10 +56,6 @@ typedef unsigned char byte;
 /* Note that a bool is smaller than a full "int" */
 /* Simple True/False type */
 typedef char bool_;
-
-
-/* The largest possible unsigned integer */
-typedef unsigned long huge;
 
 
 /* Signed/Unsigned 16 bit value */
