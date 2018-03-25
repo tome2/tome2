@@ -1839,22 +1839,6 @@ A:15/1
 D:This scroll will try to enchant a piece of armour in your possession, making it more effective
 D:in protecting you. Highly enchanted armour is likely not to accept this enchantment, however.
 
-N:176:Identify
-G:?:d
-I:70:12:0
-W:1:0:5:50
-A:1/1:5/1:10/1:30/1
-D:If you read this scroll, the identity of an item you specify will be laid open to you.
-
-N:177:*Identify*
-G:?:d
-I:70:13:0
-W:30:0:5:1000
-A:30/1:50/2:80/1:100/1
-D:This scroll will allow you to gain insight into an object's special properties.
-D:Only the highly magical objects, like rare rings and amulets or very unusual weapons
-D:and armour possess abilities which warrant the use of this magic.
-
 N:178:Rumour
 G:?:d
 I:70:51:0

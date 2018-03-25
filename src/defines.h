@@ -1281,8 +1281,6 @@
 #define SV_SCROLL_TELEPORT               9
 #define SV_SCROLL_TELEPORT_LEVEL        10
 #define SV_SCROLL_WORD_OF_RECALL        11
-#define SV_SCROLL_IDENTIFY              12
-#define SV_SCROLL_STAR_IDENTIFY         13
 #define SV_SCROLL_REMOVE_CURSE          14
 #define SV_SCROLL_STAR_REMOVE_CURSE     15
 #define SV_SCROLL_ENCHANT_ARMOR         16

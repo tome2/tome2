@@ -151,10 +151,6 @@ N:4:Alchemy shop
 I:100:Enchant Weapon To-Hit
 I:100:Enchant Weapon To-Dam
 I:100:Enchant Armour
-I:100:Identify
-I:100:Identify
-I:100:Identify
-I:100:Identify
 I:100:Light
 I:100:Phase Door
 I:100:Phase Door
@@ -180,13 +176,6 @@ I:100:Restore Dexterity
 #I:100:Restore Constitution
 T:100:71:46
 I:100:Restore Charisma
-I:100:Identify
-I:100:*Identify*
-I:100:*Identify*
-I:100:*Identify*
-I:100:*Identify*
-I:100:*Identify*
-I:100:*Identify*
 I:100:Light
 #I:100:Restore Strength
 T:100:71:42
@@ -312,11 +301,6 @@ F:RANDOM
 W:2
 
 N:13:Library
-I:100:Identify
-I:100:Identify
-I:100:Identify
-I:100:Identify
-I:100:Identify
 # starting parchment
 T:40:8:20
 # Khuzdul
@@ -462,7 +446,6 @@ G:+:U
 W:0
 
 N:28:Library
-I:100:Identify
 # starting parchment
 T:40:8:20
 # Khuzdul
@@ -849,12 +832,6 @@ W:24
 ## Library quest in Minas Anor
 
 N:60:Library
-I:100:Identify
-I:100:Identify
-I:100:Identify
-I:100:Identify
-I:100:Identify
-I:100:Identify
 # starting parchment
 T:40:8:20
 # Khuzdul
