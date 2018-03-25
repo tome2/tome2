@@ -1,12 +1,17 @@
 # Project definition.
 PROJECT (tome2)
-CMAKE_MINIMUM_REQUIRED (VERSION 3.1)
+CMAKE_MINIMUM_REQUIRED (VERSION 3.5)
 
 # We want a readable feature summary.
 INCLUDE(FeatureSummary)
 
 # pkg-config support
 INCLUDE(FindPkgConfig)
+
+#
+# C++ standard
+#
+SET(CMAKE_CXX_STANDARD 14)
 
 #
 # Basic common compiler flags.
@@ -28,7 +33,7 @@ SET(CMAKE_C_FLAGS_DEBUG     "-O0 -g ${SANITIZER_FLAGS}")
 #
 # C++ Compiler Flags
 #
-SET(CMAKE_CXX_FLAGS         "${CMAKE_CXX_FLAGS} ${COMMON_COMPILER_FLAGS} --std=c++14")
+SET(CMAKE_CXX_FLAGS         "${CMAKE_CXX_FLAGS} ${COMMON_COMPILER_FLAGS}")
 SET(CMAKE_CXX_FLAGS_RELEASE "-O2")
 SET(CMAKE_CXX_FLAGS_DEBUG   "-O0 -g ${SANITIZER_FLAGS} -D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC")
 
