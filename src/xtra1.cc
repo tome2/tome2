@@ -2591,11 +2591,6 @@ void apply_flags(object_flag_set const &f, s16b pval, s16b tval, s16b to_h, s16b
 		if (tmp > 0) p_ptr->antimagic_dis += tmp;
 	}
 
-	if (f & TR_AUTO_ID)
-	{
-		p_ptr->auto_id = TRUE;
-	}
-
 	/* The new code implementing Tolkien's concept of "Black Breath"
 	 * takes advantage of the existing drain_exp character flag, renamed
 	 * "black_breath". This flag can also be set by a unlucky blow from
@@ -2759,7 +2754,6 @@ void calc_bonuses(bool_ silent)
 	p_ptr->drain_life = 0;
 	p_ptr->bless_blade = FALSE;
 	p_ptr->xtra_might = 0;
-	p_ptr->auto_id = FALSE;
 	p_ptr->impact = FALSE;
 	p_ptr->see_inv = FALSE;
 	p_ptr->free_act = FALSE;

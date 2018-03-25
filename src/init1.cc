@@ -323,7 +323,7 @@ static const char *activation_names[] =
 	"EOL",                  /*  31*/
 	"UMBAR",                /*  32*/
 	"NUMENOR",              /*  33*/
-	"KNOWLEDGE",            /*  34*/
+	"XXX34",
 	"UNDEATH",              /*  35*/
 	"THRAIN",               /*  36*/
 	"BARAHIR",              /*  37*/

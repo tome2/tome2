@@ -85,6 +85,5 @@ F:IM_FIRE
 F:SH_ELEC
 # The demonhorn of Gothmog
 P:183:3:0
-F:AUTO_ID
 F:ESP_EVIL
 F:ESP_GOOD

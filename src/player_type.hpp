@@ -275,7 +275,6 @@ struct player_type
 	bool_ bless_blade = FALSE;                              /* Blessed blade */
 	byte xtra_might = 0;                                    /* Extra might bow */
 	bool_ impact = FALSE;                                   /* Earthquake blows */
-	bool_ auto_id = FALSE;                                  /* Auto id items */
 
 	s16b invis = 0;                                         /* Invisibility */
 

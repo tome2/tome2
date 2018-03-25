@@ -3159,11 +3159,6 @@ bool_ object_out_desc(object_type *o_ptr, FILE *fff, bool_ trim_down, bool_ wait
 		{
 			text_out("It has been blessed by the gods.  ");
 		}
-		if (flags & TR_AUTO_ID)
-		{
-			text_out("It identifies all items for you.  ");
-		}
-
 		if (flags & TR_TELEPORT)
 		{
 			text_out("It induces random teleportation.  ");
@@ -5591,12 +5586,6 @@ void object_pickup(int this_o_idx)
 	/* Access the item */
 	o_ptr = &o_list[this_o_idx];
 
-	if (p_ptr->auto_id)
-	{
-		object_aware(o_ptr);
-		object_known(o_ptr);
-	}
-
 	/* Describe the object */
 	object_desc(o_name, o_ptr, TRUE, 3);
 
@@ -5706,19 +5695,6 @@ static void sense_floor(cave_type const *c_ptr)
 			// Note the "-"! We need it for get_object()
 			// lookups to function correctly.
 			floor_object_idxs.push_back(0 - this_o_idx);
-		}
-	}
-
-	/* Mega Hack -- If we have auto-Id, do an ID sweep *before* squleching,
-	 * so that we don't have to walk over things twice to get them
-	 * squelched.  --dsb */
-	if (p_ptr->auto_id)
-	{
-		for (auto const o_idx: floor_object_idxs)
-		{
-			object_type *o_ptr = get_object(o_idx);
-			object_aware(o_ptr);
-			object_known(o_ptr);
 		}
 	}
 

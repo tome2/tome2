@@ -3653,23 +3653,6 @@ D:Crafted of purest ice and held solid by powerful spells, this icy axe
 D:delivers a chill of death to its victims.
 
 
-# The Iron Helm of Knowledge
-
-N:160:of Knowledge
-I:32:5:-6
-W:20:5:75:100000
-P:6:1d3:0:0:20
-F:ACTIVATE
-F:AUTO_ID
-F:HIDE_TYPE
-F:LITE1
-F:LUCK
-F:SPECIAL_GENE
-a:KNOWLEDGE
-D:This helm, designed by Petty-Dwarves ages ago to act as the brain of a 
-D:long lost project, is made of finest glass.  Its light banishes all secrets, 
-D:and makes audible whispers from the deceased.
-
 # The Broken Sword 'Narsil'
 
 N:164:'Narsil'

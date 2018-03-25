@@ -735,7 +735,6 @@
 #define ACT_FUNDIN              30
 #define ACT_EOL                 31
 #define ACT_UMBAR               32
-#define ACT_KNOWLEDGE           34
 #define ACT_UNDEATH             35
 #define ACT_THRAIN              36
 #define ACT_BARAHIR             37

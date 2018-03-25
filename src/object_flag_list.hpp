@@ -141,7 +141,6 @@ TR(4, 21, TR_EASY_USE           , EASY_USE           , nullptr     , -1, -1, -1,
 TR(4, 22, TR_IM_NETHER          , IM_NETHER          , "Imm Neth"  ,  1,  1, 12, TERNARY(2), 1, false, false)
 TR(4, 23, TR_RECHARGED          , RECHARGED          , nullptr     , -1, -1, -1, BINARY    , 0, false, false)
 TR(4, 24, TR_ULTIMATE           , ULTIMATE           , nullptr     , -1, -1, -1, BINARY    , 0, false, false)
-TR(4, 25, TR_AUTO_ID            , AUTO_ID            , nullptr     , -1, -1, -1, BINARY    , 0, false, false)
 TR(4, 26, TR_LITE2              , LITE2              , "Lite"      ,  2,  0, 13, FIXED(2)  , 0, false, false)
 TR(4, 27, TR_LITE3              , LITE3              , "Lite"      ,  2,  0, 13, FIXED(3)  , 0, false, false)
 TR(4, 28, TR_FUEL_LITE          , FUEL_LITE          , nullptr     , -1, -1, -1, BINARY    , 0, false, false)

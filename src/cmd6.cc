@@ -5070,17 +5070,6 @@ const char *activation_aux(object_type * o_ptr, bool_ doit, int item)
 			break;
 		}
 
-	case ACT_KNOWLEDGE:
-		{
-			if (!doit) return "whispers from beyond(sanity drain) every 100+d200 turns";
-			identify_fully();
-			take_sanity_hit(damroll(10, 7), "the sounds of the dead");
-
-			o_ptr->timeout = rand_int(200) + 100;
-
-			break;
-		}
-
 	case ACT_UNDEATH:
 		{
 			if (!doit) return "ruination every 10+d10 turns";

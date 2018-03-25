@@ -312,7 +312,7 @@ M:UNDEAD
 
 # The Illusory Castle
 # levels 35-52
-# Guarded by The Glass Golem guarding The Helm of Knowledge
+# Guarded by The Glass Golem
 N:17:Illusory Castle
 D:Ill:an entrance to the Illusory Castle.
 W:35:52:10:24:100
@@ -321,7 +321,6 @@ A:56:50:189:50:56:0:57:58
 O:50:10:20:20
 E:6d2:6:CONFUSION
 F:FILL_METHOD_1
-F:FINAL_ARTIFACT_160
 F:FINAL_GUARDIAN_1033
 F:NO_STREAMERS
 F:RANDOM_TOWNS
