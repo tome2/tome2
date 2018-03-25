@@ -6167,7 +6167,7 @@ byte object_attr(object_type const *o_ptr)
 	}
 }
 
-byte object_attr_default(object_type *o_ptr)
+byte object_attr_default(object_type const *o_ptr)
 {
 	auto const &random_artifacts = game->random_artifacts;
 

@@ -40,7 +40,7 @@ cptr item_activation(object_type *o_ptr);
 void py_pickup_floor(int pickup);
 void object_gain_level(object_type *o_ptr);
 byte object_attr(object_type const *o_ptr);
-byte object_attr_default(object_type *o_ptr);
+byte object_attr_default(object_type const *o_ptr);
 char object_char(object_type const *o_ptr);
 char object_char_default(object_type const *o_ptr);
 bool artifact_p(object_type const *o_ptr);
