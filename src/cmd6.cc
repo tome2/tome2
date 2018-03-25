@@ -2422,12 +2422,6 @@ static void do_cmd_fill_bottle()
 	object_prep(q_ptr, lookup_kind(tval, sval));
 	q_ptr->number = amt;
 
-	if (c_ptr->info & CAVE_IDNT)
-	{
-		object_aware(q_ptr);
-		object_known(q_ptr);
-	}
-
 	inven_carry(q_ptr, TRUE);
 
 	c_ptr->special2 -= amt;
@@ -2508,8 +2502,6 @@ void do_cmd_drink_fountain()
 		{
 			cave_set_feat(p_ptr->py, p_ptr->px, FEAT_EMPTY_FOUNTAIN);
 		}
-
-		c_ptr->info |= CAVE_IDNT;
 	}
 }
 

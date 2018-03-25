@@ -4233,7 +4233,7 @@ static int target_set_aux(int y, int x, int mode, cptr info_)
 				name = fmt::format("{}({})", wf.name, wf.text);
 			}
 
-			if ((feat == FEAT_FOUNTAIN) && (c_ptr->info & CAVE_IDNT))
+			if (feat == FEAT_FOUNTAIN)
 			{
 				int tv, sv;
 

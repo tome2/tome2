@@ -1474,7 +1474,6 @@
 #define CAVE_VIEW       0x0020    /* view flag */
 #define CAVE_TEMP       0x0040    /* temp flag */
 #define CAVE_WALL       0x0080    /* wall flag */
-#define CAVE_IDNT       0x0200    /* grid identified (fountains) */
 #define CAVE_SPEC       0x0400    /* special mark(quests) */
 #define CAVE_FREE       0x0800    /* no random generation on it */
 #define CAVE_PLIT       0x2000    /* Player lit grid */
