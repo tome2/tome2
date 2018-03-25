@@ -2287,16 +2287,7 @@ errr init_k_info_txt(FILE *fp)
 
 			/* Point at the "info"; automatically creates an entry */
 			k_ptr = &k_info[i];
-
-			/* Advance and Save the name index */
-			assert(!k_ptr->name);
-			k_ptr->name = my_strdup(s);
-
-			/* Ensure empty description */
-			k_ptr->text = my_strdup("");
-
-			/* Needed hack */
-			k_ptr->power = -1;
+			k_ptr->name = s;
 
 			/* Next... */
 			continue;
@@ -2311,14 +2302,12 @@ errr init_k_info_txt(FILE *fp)
 			/* Acquire the text */
 			s = buf + 2;
 
-			if (!k_ptr->text)
+			if (!k_ptr->text.empty())
 			{
-				k_ptr->text = my_strdup(s);
+				k_ptr->text += '\n';
 			}
-			else
-			{
-				strappend(&k_ptr->text, format("\n%s", s));
-			}
+
+			k_ptr->text += s;
 
 			/* Next... */
 			continue;

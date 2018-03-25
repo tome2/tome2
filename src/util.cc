@@ -2283,7 +2283,10 @@ void text_out_c(byte a, cptr str)
 	text_out_hook(a, str);
 }
 
-
+void text_out_c(byte a, std::string const &str)
+{
+	text_out_c(a, str.c_str());
+}
 
 
 /*
@@ -3370,7 +3373,7 @@ int test_item_name(cptr needle)
 	for (auto const &k_entry: k_info)
 	{
 		auto const &name = k_entry.second.name;
-		if (name && iequals(needle, name))
+		if (iequals(needle, name))
 		{
 			return k_entry.first;
 		}

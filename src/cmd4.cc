@@ -2174,11 +2174,8 @@ void do_cmd_visuals()
 			{
 				auto const k_ptr = &k_entry.second;
 
-				/* Skip non-entries */
-				if (!k_ptr->name) continue;
-
 				/* Dump a comment */
-				fprintf(fff, "# %s\n", k_ptr->name);
+				fprintf(fff, "# %s\n", k_ptr->name.c_str());
 
 				/* Dump the object attr/char info */
 				fprintf(fff, "K:%d:0x%02X:0x%02X\n\n", k_entry.first,
@@ -2328,7 +2325,7 @@ void do_cmd_visuals()
 				/* Label the object */
 				Term_putstr(5, 17, -1, TERM_WHITE,
 				            format("Object = %d, Name = %-40.40s",
-						   k_info_keys[k_idx], k_ptr->name));
+						   k_info_keys[k_idx], k_ptr->name.c_str()));
 
 				/* Label the Default values */
 				Term_putstr(10, 19, -1, TERM_WHITE,

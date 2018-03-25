@@ -477,23 +477,27 @@ static void wiz_display_item(object_type *o_ptr)
 /*
  * Strip an "object name" into a buffer
  */
-static void strip_name(char *buf, const object_kind *k_ptr)
+static std::string strip_name(std::string const &str)
 {
-	cptr str = k_ptr->name;
-
-
 	/* Skip past leading characters */
-	while ((*str == ' ') || (*str == '&')) str++;
-
-	/* Copy useful chars */
-	char *t;
-	for (t = buf; *str; str++)
+	std::size_t i = 0;
+	while ((str[i] == ' ') || (str[i] == '&'))
 	{
-		if (*str != '~') *t++ = *str;
+		i++;
 	}
 
-	/* Terminate the new name */
-	*t = '\0';
+	/* Copy useful chars */
+	std::string buf;
+	buf.reserve(str.size() - i);
+	for (; i < str.size(); i++)
+	{
+		if (str[i] != '~')
+		{
+			buf += str[i];
+		}
+	}
+
+	return buf;
 }
 
 
@@ -544,9 +548,6 @@ static int wiz_create_itemtype()
 	cptr tval_desc2;
 	char ch;
 
-	char buf[160];
-
-
 	/* Clear screen */
 	Term_clear();
 
@@ -595,10 +596,10 @@ static int wiz_create_itemtype()
 			if (k_ptr->flags & TR_INSTA_ART) continue;
 
 			/* Acquire the "name" of object */
-			strip_name(buf, k_ptr);
+			auto buf = strip_name(k_ptr->name);
 
 			/* Print it */
-			wci_string(buf, choice.size());
+			wci_string(buf.c_str(), choice.size());
 
 			/* Remember the object index */
 			choice.push_back(k_entry.first);

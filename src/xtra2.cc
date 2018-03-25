@@ -3891,13 +3891,15 @@ bool_ target_object(int y, int x, int mode, cptr info, bool_ *boring,
  *
  * This function must handle blindness/hallucination.
  */
-static int target_set_aux(int y, int x, int mode, cptr info)
+static int target_set_aux(int y, int x, int mode, cptr info_)
 {
 	auto const &d_info = game->edit_data.d_info;
 	auto const &st_info = game->edit_data.st_info;
 	auto const &wf_info = game->edit_data.wf_info;
 	auto const &f_info = game->edit_data.f_info;
 	auto const &k_info = game->edit_data.k_info;
+
+	std::string info(info_);
 
 	cave_type *c_ptr = &cave[y][x];
 
@@ -3943,7 +3945,7 @@ static int target_set_aux(int y, int x, int mode, cptr info)
 			cptr name = "something strange";
 
 			/* Display a message */
-			sprintf(out_val, "%s%s%s%s [%s]", s1, s2, s3, name, info);
+			sprintf(out_val, "%s%s%s%s [%s]", s1, s2, s3, name, info.c_str());
 			prt(out_val, 0, 0);
 			move_cursor_relative(y, x);
 			query = inkey();
@@ -3970,7 +3972,7 @@ static int target_set_aux(int y, int x, int mode, cptr info)
 
 				if (o_ptr->marked)
 				{
-					if (target_object(y, x, mode, info, &boring, o_ptr, out_val, &s1, &s2, &s3, &query))
+					if (target_object(y, x, mode, info.c_str(), &boring, o_ptr, out_val, &s1, &s2, &s3, &query))
 					{
 						break;
 					}
@@ -4014,7 +4016,7 @@ static int target_set_aux(int y, int x, int mode, cptr info)
 							screen_roff(m_ptr->r_idx, m_ptr->ego);
 
 							/* Hack -- Complete the prompt (again) */
-							Term_addstr( -1, TERM_WHITE, format("  [r,%s]", info));
+							Term_addstr( -1, TERM_WHITE, format("  [r,%s]", info.c_str()));
 
 							/* Command */
 							query = inkey();
@@ -4058,7 +4060,8 @@ static int target_set_aux(int y, int x, int mode, cptr info)
 								(m_ptr->csleep) ? ", asleep" : "",
 							        (m_ptr->mflag & MFLAG_QUEST) ? ", quest" : "",
 							        (m_ptr->smart & SM_CLONED ? " (clone)" : ""),
-							        (mstat), info);
+								(mstat),
+								info.c_str());
 
 							prt(out_val, 0, 0);
 
@@ -4105,7 +4108,7 @@ static int target_set_aux(int y, int x, int mode, cptr info)
 						object_desc(o_name, o_ptr, TRUE, 3);
 
 						/* Describe the object */
-						sprintf(out_val, "%s%s%s%s [%s]", s1, s2, s3, o_name, info);
+						sprintf(out_val, "%s%s%s%s [%s]", s1, s2, s3, o_name, info.c_str());
 						prt(out_val, 0, 0);
 						move_cursor_relative(y, x);
 						query = inkey();
@@ -4148,7 +4151,7 @@ static int target_set_aux(int y, int x, int mode, cptr info)
 				object_type *o_ptr = &o_list[this_o_idx];
 
 				/* Describe it */
-				if (o_ptr->marked && target_object(y, x, mode, info, &boring, o_ptr, out_val, &s1, &s2, &s3, &query))
+				if (o_ptr->marked && target_object(y, x, mode, info.c_str(), &boring, o_ptr, out_val, &s1, &s2, &s3, &query))
 				{
 					break;
 				}
@@ -4251,12 +4254,12 @@ static int target_set_aux(int y, int x, int mode, cptr info)
 			/* Display a message */
 			if (!wizard)
 			{
-				sprintf(out_val, "%s%s%s%s [%s]", s1, s2, s3, name.c_str(), info);
+				sprintf(out_val, "%s%s%s%s [%s]", s1, s2, s3, name.c_str(), info.c_str());
 			}
 			else
 			{
 				sprintf(out_val, "%s%s%s%s [%s] (%d:%d:%d)",
-					s1, s2, s3, name.c_str(), info,
+					s1, s2, s3, name.c_str(), info.c_str(),
 				        c_ptr->feat, c_ptr->mimic, c_ptr->special);
 			}
 			prt(out_val, 0, 0);
@@ -4986,7 +4989,6 @@ static bool_ test_object_wish(char *name, object_type *o_ptr, object_type *forge
 
 		o_ptr = forge;
 
-		if (!k_ptr->name) continue;
 		if (k_ptr->flags & TR_NORM_ART) continue;
 		if (k_ptr->flags & TR_INSTA_ART) continue;
 		if (k_ptr->tval == TV_GOLD) continue;

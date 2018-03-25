@@ -3,6 +3,8 @@
 #include "h-basic.h"
 #include "object_flag_set.hpp"
 
+#include <string>
+
 /**
  * Size of allocation table for objects
  */
@@ -15,8 +17,8 @@ constexpr int ALLOCATION_MAX = 8;
  */
 struct object_kind
 {
-	const char *name = nullptr;              /* Name */
-	char *text = nullptr;                    /* Text */
+	std::string name;                        /* Name */
+	std::string text;                        /* Text */
 
 	byte tval = 0;                           /* Object type */
 	byte sval = 0;                           /* Object sub type */
@@ -71,5 +73,5 @@ struct object_kind
 	byte bsval = 0;                          /* Become Object sub type */
 	bool_ artifact = 0;                      /* Is it a normal artifact(already generated) */
 
-	s16b power = 0;                          /* Power granted(if any) */
+	s16b power = -1;                         /* Power granted(if any) */
 };

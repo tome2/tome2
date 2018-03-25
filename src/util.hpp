@@ -52,6 +52,7 @@ void text_out_to_screen(byte a, cptr str);
 void text_out_to_file(byte a, cptr str);
 void text_out(cptr str);
 void text_out_c(byte a, cptr str);
+void text_out_c(byte a, std::string const &str);
 void clear_from(int row);
 int ask_menu(cptr ask, const std::vector<std::string> &items);
 bool askfor_aux(std::string *buf, std::size_t max_len);
