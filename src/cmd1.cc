@@ -561,7 +561,7 @@ static void carried_monster_attack(s16b m_idx, bool_ *fear, bool_ *mdeath,
 		int power = 0;
 		int damage = 0;
 
-		cptr act = NULL;
+		const char *act = NULL;
 
 		/* Extract the attack infomation */
 		int effect = r_ptr->blow[ap_cnt].effect;
@@ -1055,7 +1055,7 @@ static void incarnate_monster_attack(s16b m_idx, bool_ *fear, bool_ *mdeath,
 		int power = 0;
 		int damage = 0;
 
-		cptr act = NULL;
+		const char *act = NULL;
 
 		/* Extract the attack infomation */
 		int effect = r_ptr->blow[ap_cnt].effect;
@@ -3021,8 +3021,8 @@ void move_player_aux(int dir, int do_pickup, int run)
 		else if (cave[y][x].feat >= FEAT_ALTAR_HEAD &&
 		                cave[y][x].feat <= FEAT_ALTAR_TAIL)
 		{
-			cptr name = f_info[cave[y][x].feat].name;
-			cptr pref = (is_a_vowel(name[0])) ? "an" : "a";
+			const char *name = f_info[cave[y][x].feat].name;
+			const char *pref = (is_a_vowel(name[0])) ? "an" : "a";
 
 			msg_format("You see %s %s.", pref, name);
 

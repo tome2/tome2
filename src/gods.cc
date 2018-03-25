@@ -194,7 +194,7 @@ bool_ god_enabled(struct deity_type *deity)
 }
 
 /* Find a god by name */
-int find_god(cptr name)
+int find_god(const char *name)
 {
 	int i;
 

@@ -51,7 +51,7 @@ static FILE *fff; 	/* Local savefile ptr */
  *
  * Avoid the top two lines, to avoid interference with "msg_print()".
  */
-static void note(cptr msg)
+static void note(const char *msg)
 {
 	static int y = 2;
 
@@ -2549,7 +2549,7 @@ bool_ load_player()
 {
 	errr err = 0;
 
-	cptr what = "generic";
+	const char *what = "generic";
 
 	/* Paranoia */
 	turn = 0;

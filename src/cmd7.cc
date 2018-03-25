@@ -238,7 +238,7 @@ static bool_ get_magic_power(int *sn, magic_power *powers, int max_powers,
 
 	char out_val[160];
 
-	cptr p = "power";
+	const char *p = "power";
 
 	magic_power spell;
 
@@ -2642,7 +2642,8 @@ void do_cmd_summoner_summon()
 {
 	int item, x = 1, y = 1, rx, ry, m_idx = 0, i;
 
-	cptr q, s;
+	const char *q;
+	const char *s;
 
 	monster_type *m_ptr;
 

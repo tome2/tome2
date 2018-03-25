@@ -149,7 +149,7 @@ static std::string create_random_name()
 }
 
 
-void print_desc_aux(cptr txt, int y, int xx)
+void print_desc_aux(const char *txt, int y, int xx)
 {
 	int i = -1, x = xx;
 
@@ -168,7 +168,7 @@ void print_desc_aux(cptr txt, int y, int xx)
 	}
 }
 
-void print_desc(cptr txt)
+void print_desc(const char *txt)
 {
 	print_desc_aux(txt, 12, 1);
 }
@@ -785,7 +785,7 @@ static void player_outfit_object(int qty, int tval, int sval)
 /*
  * Give player a spell book.
  */
-static void player_outfit_spellbook(cptr spell_name)
+static void player_outfit_spellbook(const char *spell_name)
 {
 	if (auto spell_idx = find_spell(spell_name))
 	{
@@ -810,7 +810,7 @@ static void player_outfit_spellbook(cptr spell_name)
 static void player_outfit()
 {
 	// Shorthand names for convenience
-	cptr class_name = spp_ptr->title;
+	const char *class_name = spp_ptr->title;
 	auto const &subrace_name = rmp_ptr->title;
 
 	/*
@@ -988,7 +988,7 @@ static void dump_classes(std::vector<u16b> const &classes, int sel, u32b *restri
 
 	for (int n = 0; n < n_max; n++)
 	{
-		cptr mod = "";
+		const char *mod = "";
 		char p2 = ')', p1 = ' ';
 
 		/* Analyze */
@@ -1227,7 +1227,7 @@ static int dump_gods(int sel, int *choice, int max)
 {
 	int i, j;
 	char buf[80];
-	cptr str;
+	const char *str;
 
 	/* Clean up */
 	clear_from(12);

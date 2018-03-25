@@ -36,14 +36,6 @@ extern "C" {
  */
 
 
-
-/*** Special 4 letter names for some standard types ***/
-
-
-/* A simple pointer (to unmodifiable strings) */
-typedef const char *cptr;
-
-
 /* Error codes for function return values */
 /* Success = 0, Failure = -N, Problem = +N */
 typedef int errr;

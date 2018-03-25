@@ -306,7 +306,7 @@ struct dun_data
 typedef struct level_generator_type level_generator_type;
 struct level_generator_type
 {
-	cptr name;
+	const char *name;
 	bool_ (*generator)();
 
 	struct level_generator_type *next;
@@ -317,7 +317,7 @@ static level_generator_type *level_generators = NULL;
 /*
  * Add a new generator
  */
-void add_level_generator(cptr name, bool_ (*generator)())
+void add_level_generator(const char *name, bool_ (*generator)())
 {
 	assert(name != nullptr);
 
@@ -2846,7 +2846,7 @@ static void build_type5(int by0, int bx0)
 
 	int y, x, y1, x1, y2, x2, xval, yval;
 	int tmp, i;
-	cptr name;
+	const char *name;
 	bool_ empty = FALSE;
 	bool_ (*old_get_mon_num_hook)(int r_idx);
 	s16b what[64];
@@ -3087,7 +3087,7 @@ static void build_type6(int by0, int bx0)
 	int tmp, what[16];
 	int i, j, y, x, y1, x1, y2, x2, xval, yval;
 	bool_ empty = FALSE;
-	cptr name;
+	const char *name;
 	bool_ (*old_get_mon_num_hook)(int r_idx);
 
 	/* Try to allocate space for room.  If fails, exit */
@@ -8347,7 +8347,7 @@ void generate_cave()
 		{
 			bool_ okay = TRUE;
 
-			cptr why = NULL;
+			const char *why = NULL;
 
 			/* No effects */
 			for (i = 0; i < MAX_EFFECTS; i++)

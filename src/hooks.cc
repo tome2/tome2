@@ -60,7 +60,7 @@ static std::vector<hook_data>::iterator find_hook(std::vector<hook_data> &hooks,
 			    });
 }
 
-void add_hook_new(int h_idx, hook_func_t hook_func, cptr name, void *data)
+void add_hook_new(int h_idx, hook_func_t hook_func, const char *name, void *data)
 {
 	auto &hooks = hooks_instance()[h_idx];
 	// Only insert if not already present.

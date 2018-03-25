@@ -2207,7 +2207,7 @@ void do_cmd_rest()
 	/* Prompt for time if needed */
 	if (command_arg <= 0)
 	{
-		cptr p = "Rest (0-9999, '*' for HP/SP, '&' as needed): ";
+		const char *p = "Rest (0-9999, '*' for HP/SP, '&' as needed): ";
 
 		char out_val[80];
 
@@ -2641,7 +2641,7 @@ void do_cmd_fire()
 					bool_ fear = FALSE;
 
 					/* Assume a default death */
-					cptr note_dies = " dies.";
+					const char *note_dies = " dies.";
 
 					/* Some monsters get "destroyed" */
 					if ((r_ptr->flags & RF_DEMON) ||
@@ -3051,7 +3051,7 @@ void do_cmd_throw()
 				bool_ fear = FALSE;
 
 				/* Assume a default death */
-				cptr note_dies = " dies.";
+				const char *note_dies = " dies.";
 
 				/* Some monsters get "destroyed" */
 				if ((r_ptr->flags & RF_DEMON) ||
@@ -3375,7 +3375,7 @@ void do_cmd_boomerang()
 				bool_ fear = FALSE;
 
 				/* Assume a default death */
-				cptr note_dies = " dies.";
+				const char *note_dies = " dies.";
 
 				/* Some monsters get "destroyed" */
 				if ((r_ptr->flags & RF_DEMON) ||

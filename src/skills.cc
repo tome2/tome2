@@ -121,7 +121,7 @@ static void decrease_skill(int i, s16b *invest)
  * Given the name of a skill, returns skill index or -1 if no
  * such skill is found
  */
-s16b find_skill(cptr needle)
+s16b find_skill(const char *needle)
 {
 	auto const &s_descriptors = game->edit_data.s_descriptors;
 
@@ -139,7 +139,7 @@ s16b find_skill(cptr needle)
 	return -1;
 }
 
-s16b find_skill_i(cptr needle)
+s16b find_skill_i(const char *needle)
 {
 	auto const &s_descriptors = game->edit_data.s_descriptors;
 
@@ -351,7 +351,7 @@ static void print_skills(std::vector<skill_entry> const &table, int sel, int sta
 
 	int j;
 	int wid, hgt;
-	cptr keys;
+	const char *keys;
 
 	Term_clear();
 	Term_get_size(&wid, &hgt);
@@ -745,7 +745,7 @@ s16b get_melee_skill()
 	return (0);
 }
 
-cptr get_melee_name()
+const char *get_melee_name()
 {
 	return melee_names[get_melee_skill()];
 }
@@ -1503,7 +1503,7 @@ void do_get_new_skill()
 			/* Ok we oppose, so be sure */
 			if (oppose)
 			{
-				cptr msg;
+				const char *msg;
 
 				/*
 				 * Because this is SO critical a question, we must flush
@@ -1557,7 +1557,7 @@ void do_get_new_skill()
  * Given the name of an ability, returns ability index or -1 if no
  * such ability is found
  */
-s16b find_ability(cptr name)
+s16b find_ability(const char *name)
 {
 	auto const &ab_info = game->edit_data.ab_info;
 
@@ -1697,7 +1697,7 @@ static void print_abilities(const std::vector<std::size_t> &table, int sel, int 
 
 	int i, j;
 	int wid, hgt;
-	cptr keys;
+	const char *keys;
 
 	Term_clear();
 	Term_get_size(&wid, &hgt);

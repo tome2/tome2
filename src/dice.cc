@@ -13,7 +13,7 @@ void dice_init(dice_type *dice, long base, long num, long sides)
 	dice->sides = sides;
 }
 
-bool_ dice_parse(dice_type *dice, cptr s)
+bool_ dice_parse(dice_type *dice, const char *s)
 {
 	long base, num, sides;
 
@@ -50,7 +50,7 @@ bool_ dice_parse(dice_type *dice, cptr s)
 	return FALSE;
 }
 
-void dice_parse_checked(dice_type *dice, cptr s)
+void dice_parse_checked(dice_type *dice, const char *s)
 {
 	bool_ result = dice_parse(dice, s);
 	if (!result)

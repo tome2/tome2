@@ -25,10 +25,10 @@ struct option_type
 	/**
 	 * Textual name.
 	 */
-	cptr o_text;
+	const char *o_text;
 
 	/**
 	 * Textual description
 	 */
-	cptr o_desc;
+	const char *o_desc;
 };

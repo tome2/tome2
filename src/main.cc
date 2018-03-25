@@ -25,7 +25,7 @@
  *
  * Close down, then fall back into "quit()".
  */
-static void quit_hook(cptr s)
+static void quit_hook(const char *s)
 {
 	int j;
 
@@ -96,7 +96,7 @@ static void init_file_paths_with_env()
 	char path[1024];
 
 	/* Get the environment variable */
-	cptr tail = getenv("TOME_PATH");
+	const char *tail = getenv("TOME_PATH");
 
 	/* Use the angband_path, or a default */
 	strcpy(path, tail ? tail : DEFAULT_PATH);

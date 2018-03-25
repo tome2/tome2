@@ -13,27 +13,27 @@ extern "C" {
 
 
 /* Aux functions */
-extern void (*plog_aux)(cptr);
-extern void (*quit_aux)(cptr);
+extern void (*plog_aux)(const char *);
+extern void (*quit_aux)(const char *);
 
 
 /**** Available Functions ****/
 
 
 /* Test equality, prefix, suffix */
-bool_ streq(cptr s, cptr t);
-bool_ prefix(cptr s, cptr t);
-bool_ suffix(cptr s, cptr t);
+bool_ streq(const char *s, const char *t);
+bool_ prefix(const char *s, const char *t);
+bool_ suffix(const char *s, const char *t);
 
 
 /* Capitalize the first letter of string. Ignores whitespace at the start of string. */
 void capitalize(char *s);
 
 /* Print an error message */
-void plog(cptr str);
+void plog(const char *str);
 
 /* Exit, with optional message */
-void quit(cptr str);
+void quit(const char *str);
 
 
 #ifdef __cplusplus

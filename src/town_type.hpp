@@ -11,7 +11,7 @@
  */
 struct town_type
 {
-	cptr name = nullptr;
+	const char *name = nullptr;
 
 	seed_t seed = seed_t::system();  /* Seed for RNG */
 

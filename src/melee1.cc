@@ -108,7 +108,7 @@ static int check_hit(int power, int level)
 /*
  * Hack -- possible "insult" messages
  */
-static cptr desc_insult[] =
+static const char *desc_insult[] =
 {
 	"insults you!",
 	"insults your mother!",
@@ -125,7 +125,7 @@ static cptr desc_insult[] =
 /*
  * Hack -- possible "insult" messages
  */
-static cptr desc_moan[] =
+static const char *desc_moan[] =
 {
 	"seems sad about something.",
 	"asks if you have seen his dogs.",
@@ -253,7 +253,7 @@ bool_ carried_make_attack_normal(int r_idx)
 		int power = 0;
 		int damage = 0;
 
-		cptr act = NULL;
+		const char *act = NULL;
 
 		/* Extract the attack infomation */
 		int effect = r_ptr->blow[ap_cnt].effect;
@@ -1255,7 +1255,7 @@ bool_ make_attack_normal(int m_idx, byte divis)
 		int power = 0;
 		int damage = 0;
 
-		cptr act = NULL;
+		const char *act = NULL;
 
 		/* Extract the attack infomation */
 		int effect = m_ptr->blow[ap_cnt].effect;

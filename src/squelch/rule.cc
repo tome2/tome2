@@ -151,17 +151,17 @@ std::shared_ptr<Rule> Rule::parse_rule(jsoncons::json const &rule_json)
 
 	// Convert attributes
 	action_type action;
-	if (!action_mapping().parse((cptr) rule_action_s, &action))
+	if (!action_mapping().parse(rule_action_s, &action))
 	{
 		msg_format("Invalid rule action '%s'", rule_action_s);
 		return nullptr;
 	}
 
-	int module_idx = find_module((cptr) rule_module_s);
+	int module_idx = find_module(rule_module_s);
 	if (module_idx < 0)
 	{
 		msg_format("Skipping rule for unrecognized module '%s'",
-			   (cptr) rule_module_s);
+			   rule_module_s);
 		return nullptr;
 	}
 

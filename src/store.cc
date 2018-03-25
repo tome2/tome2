@@ -62,7 +62,7 @@
 
 #define MAX_COMMENT_1	6
 
-static cptr comment_1[MAX_COMMENT_1] =
+static const char *comment_1[MAX_COMMENT_1] =
 {
 	"Okay.",
 	"Fine.",
@@ -74,7 +74,7 @@ static cptr comment_1[MAX_COMMENT_1] =
 
 #define MAX_COMMENT_4A	4
 
-static cptr comment_4a[MAX_COMMENT_4A] =
+static const char *comment_4a[MAX_COMMENT_4A] =
 {
 	"Enough!  You have abused me once too often!",
 	"Arghhh!  I have had enough abuse for one day!",
@@ -84,7 +84,7 @@ static cptr comment_4a[MAX_COMMENT_4A] =
 
 #define MAX_COMMENT_4B	4
 
-static cptr comment_4b[MAX_COMMENT_4B] =
+static const char *comment_4b[MAX_COMMENT_4B] =
 {
 	"Leave my store!",
 	"Get out of my sight!",
@@ -128,7 +128,7 @@ static void say_comment_4()
 
 #define MAX_COMMENT_7A	4
 
-static cptr comment_7a[MAX_COMMENT_7A] =
+static const char *comment_7a[MAX_COMMENT_7A] =
 {
 	"Arrgghh!",
 	"You moron!",
@@ -138,7 +138,7 @@ static cptr comment_7a[MAX_COMMENT_7A] =
 
 #define MAX_COMMENT_7B	4
 
-static cptr comment_7b[MAX_COMMENT_7B] =
+static const char *comment_7b[MAX_COMMENT_7B] =
 {
 	"Darn!",
 	"You fiend!",
@@ -148,7 +148,7 @@ static cptr comment_7b[MAX_COMMENT_7B] =
 
 #define MAX_COMMENT_7C	4
 
-static cptr comment_7c[MAX_COMMENT_7C] =
+static const char *comment_7c[MAX_COMMENT_7C] =
 {
 	"Cool!",
 	"You've made my day!",
@@ -158,7 +158,7 @@ static cptr comment_7c[MAX_COMMENT_7C] =
 
 #define MAX_COMMENT_7D	4
 
-static cptr comment_7d[MAX_COMMENT_7D] =
+static const char *comment_7d[MAX_COMMENT_7D] =
 {
 	"Yippee!",
 	"I think I'll retire!",
@@ -1661,7 +1661,7 @@ void display_store()
 /*
  * Get the ID of a store item and return its value	-RAK-
  */
-static int get_stock(int *com_val, cptr pmt, int i, int j)
+static int get_stock(int *com_val, const char *pmt, int i, int j)
 {
 	char	command;
 
@@ -1731,10 +1731,10 @@ static int get_stock(int *com_val, cptr pmt, int i, int j)
  *
  * @return TRUE if 'yes' was selected, otherwise returns FALSE.
  */
-static bool_ prompt_yesno(cptr prompt)
+static bool_ prompt_yesno(const char *prompt)
 {
-	cptr allowed = "yn\r\n";
-	cptr yes = "y\r\n";
+	const char *allowed = "yn\r\n";
+	const char *yes = "y\r\n";
 	char buf[128];
 	bool_ ret;
 
@@ -2451,7 +2451,8 @@ void store_sell()
 	bool museum = bool(st_info[st_ptr->st_idx].flags & STF_MUSEUM);
 
 	/* Prepare prompt */
-	cptr q, s;
+	const char *q;
+	const char *s;
 	if (cur_store_num == STORE_HOME)
 	{
 		q = "Drop which item? ";

@@ -9,8 +9,8 @@
  */
 struct monster_power
 {
-	u32b    monster_spell_index;
-	cptr    name;           /* Name of it */
-	int     mana;           /* Mana needed */
-	bool_    great;          /* Need the use of great spells */
+	u32b monster_spell_index;
+	const char *name;           /* Name of it */
+	int mana;           /* Mana needed */
+	bool_ great;          /* Need the use of great spells */
 };

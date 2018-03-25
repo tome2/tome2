@@ -50,7 +50,7 @@ school_type *school_at(int index)
 	return &schools[index];
 }
 
-static void school_init(school_type *school, cptr name, s16b skill)
+static void school_init(school_type *school, const char *name, s16b skill)
 {
 	assert(school != NULL);
 
@@ -64,7 +64,7 @@ static void school_init(school_type *school, cptr name, s16b skill)
 	school->deity_idx = -1;
 }
 
-static school_type *school_new(s32b *school_idx, cptr name, s16b skill)
+static school_type *school_new(s32b *school_idx, const char *name, s16b skill)
 {
 	assert(schools_count < SCHOOLS_MAX);
 
@@ -77,7 +77,7 @@ static school_type *school_new(s32b *school_idx, cptr name, s16b skill)
 	return school;
 }
 
-static school_type *sorcery_school_new(s32b *school_idx, cptr name, s16b skill)
+static school_type *sorcery_school_new(s32b *school_idx, const char *name, s16b skill)
 {
 	school_type *school = school_new(school_idx, name, skill);
 	school->spell_power = TRUE;

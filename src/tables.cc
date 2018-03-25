@@ -1057,7 +1057,7 @@ s32b player_exp[PY_MAX_LEVEL] =
 /*
  * Hack -- the "basic" color names (see "TERM_xxx")
  */
-cptr color_names[16] =
+const char *color_names[16] =
 {
 	"Dark",
 	"White",
@@ -1081,7 +1081,7 @@ cptr color_names[16] =
 /*
  * Abbreviations of healthy stats
  */
-cptr stat_names[6] =
+const char *stat_names[6] =
 {
 	"STR", "INT", "WIS", "DEX", "CON", "CHR"
 };
@@ -1089,7 +1089,7 @@ cptr stat_names[6] =
 /*
  * Abbreviations of damaged stats
  */
-cptr stat_names_reduced[6] =
+const char *stat_names_reduced[6] =
 {
 	"Str", "Int", "Wis", "Dex", "Con", "Chr"
 };
@@ -1109,7 +1109,7 @@ cptr stat_names_reduced[6] =
  * The "ctrl-g" command (or pseudo-command) should perhaps grab a snapshot
  * of the main screen into any interested windows.
  */
-cptr window_flag_desc[32] =
+const char *window_flag_desc[32] =
 {
 	"Display inven/equip",
 	"Display equip/inven",
@@ -1147,7 +1147,7 @@ cptr window_flag_desc[32] =
 
 
 /* Names used for random artifact name generation */
-cptr artifact_names_list =
+const char *artifact_names_list =
 	"adanedhel\n"
 	"adurant\n"
 	"aeglos\n"
@@ -1773,15 +1773,6 @@ martial_arts ma_blows[MAX_MA] =
 	{ "You hit %s with a Crushing Blow.", 48, 35, 20, 12, MA_STUN, 18 },
 };
 
-/*
- *   cptr    desc;      A verbose attack description
- *   int     min_level; Minimum level to use
- *   int     chance;    Chance of 'success
- *   int     dd;        Damage dice
- *   int     ds;        Damage sides
- *   s16b    effect;    Special effects
- *   s16b    power;     Special effects power
- */
 martial_arts bear_blows[MAX_BEAR] =
 {
 	{ "You claw %s.", 1, 0, 3, 4, MA_STUN, 4 },

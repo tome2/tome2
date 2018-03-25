@@ -704,9 +704,9 @@ errr process_pref_file_aux(char *buf)
  * Output:
  *   result
  */
-static cptr process_pref_file_expr(char **sp, char *fp)
+static const char *process_pref_file_expr(char **sp, char *fp)
 {
-	cptr v;
+	const char *v;
 
 	char *b;
 	char *s;
@@ -968,7 +968,7 @@ static cptr process_pref_file_expr(char **sp, char *fp)
  * We also accept the special "?" and "%" directives, which
  * allow conditional evaluation and filename inclusion.
  */
-errr process_pref_file(cptr name)
+errr process_pref_file(const char *name)
 {
 	FILE *fp;
 
@@ -1021,7 +1021,7 @@ errr process_pref_file(cptr name)
 		if ((buf[0] == '?') && (buf[1] == ':'))
 		{
 			char f;
-			cptr v;
+			const char *v;
 			char *s;
 
 			/* Start */
@@ -1082,7 +1082,7 @@ errr process_pref_file(cptr name)
  * Print long number with header at given row, column
  * Use the color for the number, not the header
  */
-static void prt_lnum(cptr header, s32b num, int row, int col, byte color)
+static void prt_lnum(const char *header, s32b num, int row, int col, byte color)
 {
 	int len = strlen(header);
 	char out_val[32];
@@ -1096,8 +1096,8 @@ static void prt_lnum(cptr header, s32b num, int row, int col, byte color)
 /*
  * Print number with header at given row, column
  */
-static void prt_num(cptr header, int num, int row, int col, byte color,
-                    cptr space)
+static void prt_num(const char *header, int num, int row, int col, byte color,
+                    const char *space)
 {
 	int len = strlen(header);
 	char out_val[32];
@@ -1112,7 +1112,7 @@ static void prt_num(cptr header, int num, int row, int col, byte color,
 /*
  * Print str with header at given row, column
  */
-static void prt_str(cptr header, cptr str, int row, int col, byte color)
+static void prt_str(const char *header, const char *str, int row, int col, byte color)
 {
 	int len = strlen(header);
 	char out_val[32];
@@ -1305,7 +1305,7 @@ static byte likert_color = TERM_WHITE;
 /*
  * Returns a "rating" of x depending on y
  */
-static cptr likert(int x, int y)
+static const char *likert(int x, int y)
 {
 	static char dummy[20] = "";
 
@@ -1394,7 +1394,7 @@ static void display_player_various()
 	int tmp, tmp2, damdice, damsides, dambonus, blows;
 	int xthn, xthb;
 	int xdev, xsav, xstl;
-	cptr desc;
+	const char *desc;
 	int i;
 
 	object_type *o_ptr;
@@ -2398,8 +2398,8 @@ std::string describe_player_location()
 			 */
 			int dx = pwx - lwx;
 			int dy = pwy - lwy;
-			cptr ns = (dy > 0 ? "south" : "north");
-			cptr ew = (dx > 0 ? "east" : "west");
+			const char *ns = (dy > 0 ? "south" : "north");
+			const char *ew = (dx > 0 ? "east" : "west");
 
 			dx = (dx < 0 ? -dx : dx);
 			dy = (dy < 0 ? -dy : dy);
@@ -2449,7 +2449,7 @@ static bool_ file_character_print_grid_check_row(const char *buf)
  */
 static void file_character_print_grid(FILE *fff, bool_ show_gaps, bool_ show_legend)
 {
-	static cptr blank_line = "                                        ";
+	static const char *blank_line = "                                        ";
 	static char buf[1024];
 	byte a;
 	char c;
@@ -2492,7 +2492,7 @@ static void file_character_print_grid(FILE *fff, bool_ show_gaps, bool_ show_leg
 static void file_character_print_item(FILE *fff, char label, object_type *obj)
 {
 	static char o_name[80];
-	static cptr paren = ")";
+	static const char *paren = ")";
 
 	object_desc(o_name, obj, TRUE, 3);
 	fprintf(fff, "%c%s %s\n", label, paren, o_name);
@@ -2556,7 +2556,7 @@ static bool_ file_character_check_stores(std::unordered_set<store_type *> *seen_
  * XXX XXX XXX Allow the "full" flag to dump additional info,
  * and trigger its usage from various places in the code.
  */
-errr file_character(cptr name)
+errr file_character(const char *name)
 {
 	auto const &d_info = game->edit_data.d_info;
 	auto const &wf_info = game->edit_data.wf_info;
@@ -2707,7 +2707,7 @@ errr file_character(cptr name)
 
 	{
 		char desc[80];
-		cptr mimic;
+		const char *mimic;
 
 		monster_race_desc(desc, p_ptr->body_monster, 0);
 		fprintf(fff, "\n Your body %s %s.", (death ? "was" : "is"), desc);
@@ -2925,7 +2925,7 @@ struct hyperlink
 
 typedef struct hyperlink hyperlink_type;
 
-static bool_ show_file_aux(cptr name, cptr what, int line)
+static bool_ show_file_aux(const char *name, const char *what, int line)
 {
 	int i, k, x;
 
@@ -2950,7 +2950,7 @@ static bool_ show_file_aux(cptr name, cptr what, int line)
 	FILE *fff = NULL;
 
 	/* Find this string (if any) */
-	cptr find = NULL;
+	const char *find = NULL;
 
 	/* Pointer to general buffer in the above */
 	char *buf;
@@ -3318,7 +3318,7 @@ static bool_ show_file_aux(cptr name, cptr what, int line)
 			/* Hilite "h_ptr->shower" */
 			if (h_ptr->shower[0])
 			{
-				cptr str = buf;
+				const char *str = buf;
 
 				/* Display matches */
 				while ((str = strstr(str, h_ptr->shower)) != NULL)
@@ -3524,7 +3524,7 @@ void show_string(const char *lines, const char *title, int line)
 	fd_kill(file_name.c_str());
 }
 
-void show_file(cptr name, cptr what, int line)
+void show_file(const char *name, const char *what, int line)
 {
 	show_file_aux(name, what, line);
 }
@@ -3581,7 +3581,7 @@ static void cmovie_clean_line(int y, char *abuf, char *cbuf)
 }
 
 /* Take an help file screenshot(yes yes I know..) */
-void help_file_screenshot(cptr name)
+void help_file_screenshot(const char *name)
 {
 	int y, x;
 	int wid, hgt;
@@ -3634,7 +3634,7 @@ void help_file_screenshot(cptr name)
 }
 
 /* Take an html screenshot */
-void html_screenshot(cptr name)
+void html_screenshot(const char *name)
 {
 	int y, x;
 	int wid, hgt;
@@ -4332,7 +4332,9 @@ static void display_scores_aux(int highscore_fd, int from, int to, int note, hig
 		{
 			int pcs, pr, ps, pc, clev, mlev, cdun, mdun;
 
-			cptr gold, when, aged;
+			const char *gold;
+			const char *when;
+			const char *aged;
 
 			int in_quest;
 
@@ -5210,7 +5212,7 @@ errr get_rnd_line(const char *file_name, char *output)
  *
  * Caution: 'linbuf' should be at least 80 byte long.
  */
-char *get_line(const char* fname, cptr fdir, char *linbuf, int line)
+char *get_line(const char* fname, const char *fdir, char *linbuf, int line)
 {
 	FILE* fp;
 	int i;

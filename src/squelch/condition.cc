@@ -110,7 +110,7 @@ std::shared_ptr<Condition> Condition::parse_condition(jsoncons::json const &cond
 		return nullptr;
 	}
 
-	cptr type_s = condition_json.get("type").as<cptr>();
+	const char *type_s = condition_json.get("type").as<const char *>();
 	if (!type_s)
 	{
 		msg_print("Missing/invalid 'type' in condition");
@@ -187,7 +187,7 @@ bool NameCondition::is_match(object_type *o_ptr) const
 
 std::shared_ptr<Condition> NameCondition::from_json(jsoncons::json const &j)
 {
-	cptr s = j.get("name").as<cptr>();
+	const char *s = j.get("name").as<const char *>();
 
 	if (!s)
 	{
@@ -222,7 +222,7 @@ bool ContainCondition::is_match(object_type *o_ptr) const
 
 std::shared_ptr<Condition> ContainCondition::from_json(jsoncons::json const &j)
 {
-	cptr s = j.get("contain").as<cptr>();
+	const char *s = j.get("contain").as<const char *>();
 
 	if (!s)
 	{
@@ -490,7 +490,7 @@ bool StatusCondition::is_match(object_type *o_ptr) const
 
 std::shared_ptr<Condition> StatusCondition::from_json(jsoncons::json const &j)
 {
-	cptr s = j.get("status").as<cptr>();
+	const char *s = j.get("status").as<const char *>();
 
 	if (!s)
 	{
@@ -531,7 +531,7 @@ bool RaceCondition::is_match(object_type *o_ptr) const
 
 std::shared_ptr<Condition> RaceCondition::from_json(jsoncons::json const &j)
 {
-	cptr s = j.get("race").as<cptr>();
+	const char *s = j.get("race").as<const char *>();
 
 	if (!s)
 	{
@@ -565,7 +565,7 @@ bool SubraceCondition::is_match(object_type *o_ptr) const
 
 std::shared_ptr<Condition> SubraceCondition::from_json(jsoncons::json const &j)
 {
-	cptr s = j.get("subrace").as<cptr>();
+	const char *s = j.get("subrace").as<const char *>();
 
 	if (!s)
 	{
@@ -599,7 +599,7 @@ bool ClassCondition::is_match(object_type *o_ptr) const
 
 std::shared_ptr<Condition> ClassCondition::from_json(jsoncons::json const &j)
 {
-	cptr s = j.get("class").as<cptr>();
+	const char *s = j.get("class").as<const char *>();
 
 	if (!s)
 	{
@@ -635,7 +635,7 @@ bool InscriptionCondition::is_match(object_type *o_ptr) const
 
 std::shared_ptr<Condition> InscriptionCondition::from_json(jsoncons::json const &j)
 {
-	cptr s = j.get("inscription").as<cptr>();
+	const char *s = j.get("inscription").as<const char *>();
 
 	if (!s)
 	{
@@ -777,7 +777,7 @@ std::shared_ptr<Condition> SkillCondition::from_json(jsoncons::json const &j)
 	}
 	int max = max_j.as_int();
 
-	auto s = j.get("name").as<cptr>();
+	auto s = j.get("name").as<const char *>();
 	if (!s)
 	{
 		msg_print("Missing/invalid 'name' property");
@@ -863,7 +863,7 @@ bool AbilityCondition::is_match(object_type *) const
 
 std::shared_ptr<Condition> AbilityCondition::from_json(jsoncons::json const &j)
 {
-	cptr a = j.get("ability").as<cptr>();
+	const char *a = j.get("ability").as<const char *>();
 
 	if (!a)
 	{

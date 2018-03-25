@@ -47,7 +47,7 @@ using std::chrono::milliseconds;
 /*
  * Check and create if needed the directory dirpath
  */
-bool_ private_check_user_directory(cptr dirpath)
+bool_ private_check_user_directory(const char *dirpath)
 {
 	/* Is this used anywhere else in *bands? */
 	struct stat stat_buf;
@@ -84,7 +84,7 @@ bool_ private_check_user_directory(cptr dirpath)
 	}
 }
 
-static void module_reset_dir_aux(char **dir, cptr new_path)
+static void module_reset_dir_aux(char **dir, const char *new_path)
 {
 	char buf[1024];
 
@@ -99,7 +99,7 @@ static void module_reset_dir_aux(char **dir, cptr new_path)
 		quit(format("Unable to create module dir %s\n", *dir));
 }
 
-static void module_reset_dir(cptr dir, cptr new_path)
+static void module_reset_dir(const char *dir, const char *new_path)
 {
 	char **d = 0;
 	char buf[1025];
@@ -217,7 +217,7 @@ static void activate_module(int module_idx)
 static void init_module(module_type *module_ptr)
 {
 	/* Set up module directories? */
-	cptr dir = module_ptr->meta.module_dir;
+	const char *dir = module_ptr->meta.module_dir;
 	if (dir) {
 		module_reset_dir("core", dir);
 		module_reset_dir("data", dir);
@@ -238,10 +238,10 @@ bool module_savefile_loadable(std::string const &tag)
 }
 
 /* Did the player force a module on command line */
-cptr force_module = NULL;
+const char *force_module = NULL;
 
 /* Find module index by name. Returns -1 if matching module not found */
-int find_module(cptr name)
+int find_module(const char *name)
 {
 	int i = 0;
 
@@ -363,7 +363,7 @@ bool_ select_module()
 	return (FALSE);
 }
 
-static bool_ dleft(byte c, cptr str, int y, int o)
+static bool_ dleft(byte c, const char *str, int y, int o)
 {
 	int i = strlen(str);
 	int x = 39 - (strlen(str) / 2) + o;
@@ -398,7 +398,7 @@ static bool_ dleft(byte c, cptr str, int y, int o)
 	return FALSE;
 }
 
-static bool_ dright(byte c, cptr str, int y, int o)
+static bool_ dright(byte c, const char *str, int y, int o)
 {
 	int n = strlen(str); // Conversion to int to avoid warnings
 	int x = 39 - (n / 2) + o;
@@ -432,9 +432,9 @@ static bool_ dright(byte c, cptr str, int y, int o)
 typedef struct intro_text intro_text;
 struct intro_text
 {
-	bool_ (*drop_func)(byte, cptr, int, int);
+	bool_ (*drop_func)(byte, const char *, int, int);
 	byte color;
-	cptr text;
+	const char *text;
 	int y0;
 	int x0;
 };

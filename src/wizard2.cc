@@ -154,7 +154,7 @@ static void wiz_create_named_art()
 	object_type forge;
 	object_type *q_ptr;
 	int i, a_idx;
-	cptr p = "Number of the artifact: ";
+	const char *p = "Number of the artifact: ";
 	char out_val[80] = "";
 
 	if (!get_string(p, out_val, 4)) return;
@@ -507,7 +507,7 @@ static char head[4] = { 'a', 'A', '0', ':' };
  * Trims characters from the beginning until it fits in the space
  * before the next row or the edge of the screen.
  */
-static void wci_string(cptr string, int num)
+static void wci_string(const char *string, int num)
 {
 	int row = 2 + (num % 20), col = 30 * (num / 20);
 	int ch = head[num / 20] + (num % 20), max_len = 0;
@@ -538,7 +538,7 @@ static int wiz_create_itemtype()
 	int num, max_num;
 	int tval;
 
-	cptr tval_desc2;
+	const char *tval_desc2;
 	char ch;
 
 	/* Clear screen */
@@ -631,7 +631,7 @@ static int wiz_create_itemtype()
  */
 static void wiz_tweak_item(object_type *o_ptr)
 {
-	cptr p;
+	const char *p;
 	char tmp_val[80];
 
 	/* Extract the flags */
@@ -839,7 +839,7 @@ static void wiz_statistics(object_type *o_ptr)
 	object_type forge;
 	object_type	*q_ptr;
 
-	cptr q = "Rolls: %ld, Matches: %ld, Better: %ld, Worse: %ld, Other: %ld";
+	const char *q = "Rolls: %ld, Matches: %ld, Better: %ld, Worse: %ld, Other: %ld";
 
 	/* XXX XXX XXX Mega-Hack -- allow multiple artifacts */
 	if (artifact_p(o_ptr))
@@ -858,7 +858,7 @@ static void wiz_statistics(object_type *o_ptr)
 	/* Interact */
 	while (TRUE)
 	{
-		cptr pmt = "Roll for [n]ormal, [g]ood, or [e]xcellent treasure? ";
+		const char *pmt = "Roll for [n]ormal, [g]ood, or [e]xcellent treasure? ";
 
 		/* Display item */
 		wiz_display_item(o_ptr);
@@ -1220,7 +1220,7 @@ static void wiz_create_item_2()
 {
 	auto const &k_info = game->edit_data.k_info;
 
-	cptr p = "Number of the object :";
+	const char *p = "Number of the object :";
 	char out_val[80] = "";
 
 	if (!get_string(p, out_val, 4)) return;

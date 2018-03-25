@@ -9,7 +9,7 @@
 s32b monster_exp(s16b level);
 void monster_set_level(int m_idx, int level);
 s32b modify_aux(s32b a, s32b b, char mod);
-void monster_msg_simple(cptr s);
+void monster_msg_simple(const char *s);
 bool_ mego_ok(monster_race const *r_ptr, int ego);
 void monster_check_experience(int m_idx, bool_ silent);
 void monster_gain_exp(int m_idx, u32b exp, bool_ silent);

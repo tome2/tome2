@@ -182,7 +182,7 @@ typedef struct _term_data term_data;
 struct _term_data
 {
 	term t;					/* the term structure, defined in z-term.h */
-	cptr name;				/* name of this term sub-window */
+	const char *name;				/* name of this term sub-window */
 
 	unsigned int rows, cols;		/* row/column count */
 	SDL_Rect rect;			/* the bounding rectangle for the entire box;
@@ -263,7 +263,7 @@ void dumpWindowSettings(void);
 	
 /* SDL Quitting function... declare a few functions first.*/
 void killFontAndAlphabet(void);
-static void sdl_quit(cptr string)
+static void sdl_quit(const char *string)
 {
 	printf("sdl_quit called.\n");
 	printf("message: %s\n",string);
@@ -1623,7 +1623,7 @@ static errr term_data_init(term_data *td, int i)
 {
 	term *t = &(td->t);
 	char env_var[80];
-	cptr val;
+	const char *val;
 
 	
 	/***** load position, size information */

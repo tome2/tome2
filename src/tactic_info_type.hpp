@@ -12,5 +12,5 @@ struct tactic_info_type
 	s16b to_ac;
 	s16b to_stealth;
 	s16b to_saving;
-	cptr name;
+	const char *name;
 };

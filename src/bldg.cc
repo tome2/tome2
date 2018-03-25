@@ -324,7 +324,7 @@ static bool_ gamble_comm(int cmd)
 
 	char out_val[160], tmp_str[80], again;
 
-	cptr p;
+	const char *p;
 
 
 	screen_save();

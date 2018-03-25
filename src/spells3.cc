@@ -1631,7 +1631,7 @@ typedef struct geo_summon geo_summon;
 struct geo_summon {
 	s16b feat;
 	s16b skill_idx;
-	cptr *summon_names;
+	const char **summon_names;
 };
 
 geo_summon *geomancy_find_summon(geo_summon summons[], int feat)
@@ -1648,7 +1648,7 @@ geo_summon *geomancy_find_summon(geo_summon summons[], int feat)
 	return NULL;
 }
 
-int geomancy_count_elements(cptr *elements)
+int geomancy_count_elements(const char **elements)
 {
 	int i;
 	for (i = 0; elements[i] != NULL; i++)
@@ -1662,25 +1662,25 @@ casting_result geomancy_elemental_minion()
 	int dir = 0;
 	int x = 0, y = 0;
 	geo_summon *summon_ptr = NULL;
-	cptr earth_summons[] = {
+	const char *earth_summons[] = {
 		"Earth elemental",
 		"Xorn",
 		"Xaren",
 		NULL
 	};
-	cptr air_summons[] = {
+	const char *air_summons[] = {
 		"Air elemental",
 		"Ancient blue dragon",
 		"Great Storm Wyrm",
 		"Sky Drake",
 		NULL
 	};
-	cptr fire_summons[] = {
+	const char *fire_summons[] = {
 		"Fire elemental",
 		"Ancient red dragon",
 		NULL
 	};
-	cptr water_summons[] = {
+	const char *water_summons[] = {
 		"Water elemental",
 		"Water troll",
 		"Water demon",
@@ -1730,7 +1730,7 @@ casting_result geomancy_elemental_minion()
 	}
 	else
 	{
-		cptr *names = summon_ptr->summon_names;
+		const char **names = summon_ptr->summon_names;
 		int max = get_skill_scale(summon_ptr->skill_idx,
 					  geomancy_count_elements(names));
 		int r_idx = test_monster_name(names[rand_int(max)]);
@@ -2228,7 +2228,7 @@ casting_result meta_spellbinder()
 	{
 		struct trigger {
 			int idx;
-			cptr desc;
+			const char *desc;
 		};
 		struct trigger triggers[] = {
 			{ SPELLBINDER_HP75, "75% HP", },

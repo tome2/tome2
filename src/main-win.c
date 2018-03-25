@@ -318,7 +318,7 @@ struct _term_data
 {
 	term t;
 
-	cptr s;
+	const char *s;
 
 	HWND w;
 
@@ -347,9 +347,9 @@ struct _term_data
 
 	bool_ bizarre;
 
-	cptr font_want;
+	const char *font_want;
 
-	cptr font_file;
+	const char *font_file;
 
 	HFONT font_id;
 
@@ -434,24 +434,24 @@ static HWND hwndSaver;
 /*
  * Full path to ANGBAND.INI
  */
-static cptr ini_file = NULL;
+static const char *ini_file = NULL;
 
 /*
  * Name of application
  */
-static cptr AppName = "ANGBAND";
+static const char *AppName = "ANGBAND";
 
 /*
  * Name of sub-window type
  */
-static cptr AngList = "AngList";
+static const char *AngList = "AngList";
 
 /*
  * Directory names
  */
-static cptr ANGBAND_DIR_XTRA_FONT;
-static cptr ANGBAND_DIR_XTRA_GRAF;
-static cptr ANGBAND_DIR_XTRA_HELP;
+static const char *ANGBAND_DIR_XTRA_FONT;
+static const char *ANGBAND_DIR_XTRA_GRAF;
+static const char *ANGBAND_DIR_XTRA_HELP;
 
 
 /*
@@ -525,9 +525,9 @@ static byte ignore_key_list[] = {
 /*
  * Hack -- given a pathname, point at the filename
  */
-static cptr extract_file_name(cptr s)
+static const char *extract_file_name(const char *s)
 {
-	cptr p;
+	const char *p;
 
 	/* Start at the end */
 	p = s + strlen(s) - 1;
@@ -588,7 +588,7 @@ static char *analyze_font(char *path, int *wp, int *hp)
 /*
  * Check for existance of a file
  */
-static bool_ check_file(cptr s)
+static bool_ check_file(const char *s)
 {
 	char path[1024];
 
@@ -637,7 +637,7 @@ static bool_ check_file(cptr s)
 /*
  * Check for existance of a directory
  */
-static bool_ check_dir(cptr s)
+static bool_ check_dir(const char *s)
 {
 	int i;
 
@@ -694,7 +694,7 @@ static bool_ check_dir(cptr s)
 /*
  * Validate a file
  */
-static void validate_file(cptr s)
+static void validate_file(const char *s)
 {
 	/* Verify or fail */
 	if (!check_file(s))
@@ -707,7 +707,7 @@ static void validate_file(cptr s)
 /*
  * Validate a directory
  */
-static void validate_dir(cptr s)
+static void validate_dir(const char *s)
 {
 	/* Verify or fail */
 	if (!check_dir(s))
@@ -784,7 +784,7 @@ static void term_getsize(term_data *td)
 /*
  * Write the "prefs" for a single term
  */
-static void save_prefs_aux(term_data *td, cptr sec_name)
+static void save_prefs_aux(term_data *td, const char *sec_name)
 {
 	char buf[1024];
 
@@ -860,7 +860,7 @@ static void save_prefs(void)
 /*
  * Load the "prefs" for a single term
  */
-static void load_prefs_aux(term_data *td, cptr sec_name)
+static void load_prefs_aux(term_data *td, const char *sec_name)
 {
 	char tmp[1024];
 
@@ -1066,7 +1066,7 @@ static void term_window_resize(term_data *td)
  *
  * Note that the "font name" must be capitalized!!!
  */
-static errr term_force_font(term_data *td, cptr path)
+static errr term_force_font(term_data *td, const char *path)
 {
 	int i;
 
@@ -2994,7 +2994,7 @@ WPARAM wParam, LPARAM lParam)
 /*
  * Display warning message (see "z-util.c")
  */
-static void hack_plog(cptr str)
+static void hack_plog(const char *str)
 {
 	/* Give a warning */
 	if (str)
@@ -3008,7 +3008,7 @@ static void hack_plog(cptr str)
 /*
  * Display error message and quit (see "z-util.c")
  */
-static void hack_quit(cptr str)
+static void hack_quit(const char *str)
 {
 	/* Give a warning */
 	if (str)
@@ -3035,7 +3035,7 @@ static void hack_quit(cptr str)
 /*
  * Display warning message (see "z-util.c")
  */
-static void hook_plog(cptr str)
+static void hook_plog(const char *str)
 {
 	/* Warning */
 	if (str)
@@ -3049,7 +3049,7 @@ static void hook_plog(cptr str)
 /*
  * Display error message and quit (see "z-util.c")
  */
-static void hook_quit(cptr str)
+static void hook_quit(const char *str)
 {
 	int i;
 

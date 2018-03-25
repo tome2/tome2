@@ -1224,7 +1224,7 @@ void spellbinder_trigger()
  * the game when he dies, since the "You die." message is shown before
  * setting the player to "dead".
  */
-void take_hit(int damage, cptr hit_from)
+void take_hit(int damage, const char *hit_from)
 {
 	object_type *o_ptr = &p_ptr->inventory[INVEN_CARRY];
 	int old_chp = p_ptr->chp;
@@ -1468,7 +1468,7 @@ void take_hit(int damage, cptr hit_from)
 
 
 /* Decrease player's sanity. This is a copy of the function above. */
-void take_sanity_hit(int damage, cptr hit_from)
+void take_sanity_hit(int damage, const char *hit_from)
 {
 	int old_csane = p_ptr->csane;
 
@@ -1921,7 +1921,7 @@ static int minus_ac()
 /*
  * Hurt the player with Acid
  */
-void acid_dam(int dam, cptr kb_str)
+void acid_dam(int dam, const char *kb_str)
 {
 	int inv = (dam < 30) ? 1 : (dam < 60) ? 2 : 3;
 
@@ -1951,7 +1951,7 @@ void acid_dam(int dam, cptr kb_str)
 /*
  * Hurt the player with electricity
  */
-void elec_dam(int dam, cptr kb_str)
+void elec_dam(int dam, const char *kb_str)
 {
 	int inv = (dam < 30) ? 1 : (dam < 60) ? 2 : 3;
 
@@ -1980,7 +1980,7 @@ void elec_dam(int dam, cptr kb_str)
 /*
  * Hurt the player with Fire
  */
-void fire_dam(int dam, cptr kb_str)
+void fire_dam(int dam, const char *kb_str)
 {
 	int inv = (dam < 30) ? 1 : (dam < 60) ? 2 : 3;
 
@@ -2009,7 +2009,7 @@ void fire_dam(int dam, cptr kb_str)
 /*
  * Hurt the player with Cold
  */
-void cold_dam(int dam, cptr kb_str)
+void cold_dam(int dam, const char *kb_str)
 {
 	int inv = (dam < 30) ? 1 : (dam < 60) ? 2 : 3;
 
@@ -3753,7 +3753,7 @@ static bool_ project_o(int who, int r, int y, int x, int dam, int typ)
 		bool_ plural = FALSE;
 		bool_ do_kill = FALSE;
 
-		cptr note_kill = NULL;
+		const char *note_kill = NULL;
 
 		/* Acquire object */
 		object_type * o_ptr = &o_list[this_o_idx];
@@ -3949,7 +3949,7 @@ static bool_ project_o(int who, int r, int y, int x, int dam, int typ)
 		case GF_RAISE_DEMON:
 			{
 				auto r_ptr = &r_info[o_ptr->pval2];
-				cptr name;
+				const char *name;
 
 				if (o_ptr->tval != TV_CORPSE) break;
 
@@ -4150,10 +4150,10 @@ bool_ project_m(int who, int r, int y, int x, int dam, int typ)
 	char m_name[80];
 
 	/* Assume no note */
-	cptr note = NULL;
+	const char *note = NULL;
 
 	/* Assume a default death */
-	cptr note_dies = " dies.";
+	const char *note_dies = " dies.";
 
 
 	/* Nobody here */
@@ -6780,7 +6780,7 @@ static bool_ project_p(int who, int r, int y, int x, int dam, int typ, int a_rad
 	char killer[80];
 
 	/* Hack -- messages */
-	cptr act = NULL;
+	const char *act = NULL;
 
 
 	/* Player is not here */
@@ -8715,7 +8715,7 @@ static void describe_attack_fully(int type, char* r)
 std::string name_spell(random_spell const *s_ptr)
 {
 	char buff[30];
-	cptr buff2 = "???";
+	const char *buff2 = "???";
 
 	if (s_ptr->proj_flags & PROJECT_STOP && s_ptr->radius == 0)
 	{

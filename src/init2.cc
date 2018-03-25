@@ -240,7 +240,7 @@ s16b error_line;
 /*
  * Standard error message text
  */
-static cptr err_str[9] =
+static const char *err_str[9] =
 {
 	NULL,
 	"parse error",
@@ -257,7 +257,7 @@ static cptr err_str[9] =
 /*
  * Hack -- take notes on line 23
  */
-static void note(cptr str)
+static void note(const char *str)
 {
 	Term_erase(0, 23, 255);
 	Term_putstr(20, 23, -1, TERM_WHITE, str);
@@ -484,7 +484,7 @@ template<typename T> static errr init_x_info() {
 	if (err)
 	{
 		/* Error string */
-		cptr oops = (((err > 0) && (err < 8)) ? err_str[err] : "unknown");
+		const char *oops = (((err > 0) && (err < 8)) ? err_str[err] : "unknown");
 
 		/* Oops */
 		msg_format("Error %d at line %d of '%s'.", err, error_line, T::name);
@@ -948,7 +948,7 @@ static void init_guardians()
  * may or may not be initialised, but the "plog()" and "quit()"
  * functions are "supposed" to work under any conditions.
  */
-static void init_angband_aux(cptr why)
+static void init_angband_aux(const char *why)
 {
 	/* Why */
 	plog(why);

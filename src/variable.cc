@@ -133,7 +133,7 @@ FILE *text_out_file = NULL;
  * Hack -- function hook to output (colored) text to the
  * screen or to a file.
  */
-void (*text_out_hook)(byte a, cptr str) = text_out_to_screen;
+void (*text_out_hook)(byte a, const char *str) = text_out_to_screen;
 
 
 /*
@@ -385,15 +385,15 @@ int wildc2i[256];
 /*
  * Default texts for feature information.
  */
-cptr DEFAULT_FEAT_TEXT = "a wall blocking your way";
-cptr DEFAULT_FEAT_TUNNEL = "You cannot tunnel through that.";
-cptr DEFAULT_FEAT_BLOCK = DEFAULT_FEAT_TEXT;
+const char *DEFAULT_FEAT_TEXT = "a wall blocking your way";
+const char *DEFAULT_FEAT_TUNNEL = "You cannot tunnel through that.";
+const char *DEFAULT_FEAT_BLOCK = DEFAULT_FEAT_TEXT;
 
 /*
  * Hack -- The special Angband "System Suffix"
  * This variable is used to choose an appropriate "pref-xxx" file
  */
-cptr ANGBAND_SYS = "xxx";
+const char *ANGBAND_SYS = "xxx";
 
 /*
  * Path name: The main "lib" directory
@@ -612,7 +612,7 @@ s16b last_teleportation_x = -1;
 /*
  * The current game module
  */
-cptr game_module;
+const char *game_module;
 s32b game_module_idx;
 s32b VERSION_MAJOR;
 s32b VERSION_MINOR;

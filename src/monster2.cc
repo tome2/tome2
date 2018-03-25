@@ -356,7 +356,7 @@ std::shared_ptr<monster_race> race_info_idx(int r_idx, int ego)
 	return nr_ptr;
 }
 
-static cptr horror_desc[MAX_HORROR] =
+static const char *horror_desc[MAX_HORROR] =
 {
 	"abominable",
 	"abysmal",
@@ -383,7 +383,7 @@ static cptr horror_desc[MAX_HORROR] =
 	"unspeakable",
 };
 
-static cptr funny_desc[MAX_FUNNY] =
+static const char *funny_desc[MAX_FUNNY] =
 {
 	"silly",
 	"hilarious",
@@ -413,7 +413,7 @@ static cptr funny_desc[MAX_FUNNY] =
 	"preposterous",
 };
 
-static cptr funny_comments[MAX_COMMENT] =
+static const char *funny_comments[MAX_COMMENT] =
 {
 	"Wow, cosmic, man!",
 	"Rad!",
@@ -1218,7 +1218,7 @@ void monster_desc(char *desc, monster_type *m_ptr, int mode)
 
 
 		/* Assume simple result */
-		cptr res = "it";
+		const char *res = "it";
 
 		/* Brute force: split on the possibilities */
 		switch (kind | (mode & 0x07))
@@ -3581,7 +3581,7 @@ bool_ multiply_monster(int m_idx, bool_ charm, bool_ clone)
  * Technically should attempt to treat "Beholder"'s as jelly's
  */
 bool_ hack_message_pain_may_silent = FALSE;
-void message_pain_hook(cptr message, cptr name)
+void message_pain_hook(const char *message, const char *name)
 {
 	std::string buf;
 	buf += name;

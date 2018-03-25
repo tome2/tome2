@@ -222,7 +222,7 @@ void do_cmd_wield()
 
 	object_type *i_ptr;
 
-	cptr act;
+	const char *act;
 
 	char o_name[80];
 
@@ -1104,7 +1104,7 @@ void do_cmd_locate()
  * The table of "symbol info" -- each entry is a string of the form
  * "X:desc" where "X" is the trigger, and "desc" is the "info".
  */
-static cptr ident_info[] =
+static const char *ident_info[] =
 {
 	" :A dark grid",
 	"!:A potion (or oil)",
@@ -1611,7 +1611,7 @@ bool_ do_cmd_sense_grid_mana()
 /*
  * Try to add a CLI action.
  */
-void cli_add(cptr active, cptr trigger, cptr descr)
+void cli_add(const char *active, const char *trigger, const char *descr)
 {
 	s16b num;
 	cli_comm *cli_ptr, *old_ptr;
@@ -1647,7 +1647,7 @@ void cli_add(cptr active, cptr trigger, cptr descr)
 	if (strchr(trigger, '\''))
 	{
 		char temp[80], *t;
-		cptr s;
+		const char *s;
 		for (s = trigger, t = temp; ; s++, t++)
 		{
 			/* tokenize() causes each ' to be followed by another character,
@@ -1692,7 +1692,7 @@ void cli_add(cptr active, cptr trigger, cptr descr)
 /*
  * Get a string using CLI completion.
  */
-static bool_ get_string_cli(cptr prompt, char *buf, int len)
+static bool_ get_string_cli(const char *prompt, char *buf, int len)
 {
 	bool_ res;
 

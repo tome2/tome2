@@ -24,8 +24,8 @@
 /*
  * Pronoun arrays, by gender.
  */
-static cptr wd_he[3] = { "it", "he", "she" };
-static cptr wd_his[3] = { "its", "his", "her" };
+static const char *wd_he[3] = { "it", "he", "she" };
+static const char *wd_his[3] = { "its", "his", "her" };
 
 
 /*
@@ -55,14 +55,15 @@ static void roff_aux(std::shared_ptr<monster_race const> r_ptr)
 
 	int m, n, r;
 
-	cptr p, q;
+	const char *p;
+	const char *q;
 
 	bool_ breath = FALSE;
 	bool_ magic = FALSE;
 
-	int	vn = 0;
+	int vn = 0;
 	byte color[64];
-	cptr	vp[64];
+	const char *vp[64];
 
 	/* Shorthand */
 	auto const flags = r_ptr->flags;
@@ -824,7 +825,7 @@ static void roff_aux(std::shared_ptr<monster_race const> r_ptr)
 
 	/* How aware is it? */
 	{
-		cptr act;
+		const char *act;
 
 		if (r_ptr->sleep > 200)
 		{

@@ -21,16 +21,16 @@ extern "C" {
 /**** Available Functions ****/
 
 /* Format arguments into given bounded-length buffer */
-unsigned int vstrnfmt(char *buf, unsigned int max, cptr fmt, va_list vp);
+unsigned int vstrnfmt(char *buf, unsigned int max, const char *fmt, va_list vp);
 
 /* Simple interface to "vstrnfmt()" */
-unsigned int strnfmt(char *buf, unsigned int max, cptr fmt, ...);
+unsigned int strnfmt(char *buf, unsigned int max, const char *fmt, ...);
 
 /* Simple interface to "vformat()" */
-char *format(cptr fmt, ...);
+char *format(const char *fmt, ...);
 
 /* Vararg interface to "quit()", using "format()" */
-void quit_fmt(cptr fmt, ...);
+void quit_fmt(const char *fmt, ...);
 
 #ifdef __cplusplus
 } /* extern "C" */

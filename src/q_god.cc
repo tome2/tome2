@@ -234,7 +234,7 @@ static std::string make_directions(bool feel_it)
 	int home2_y, home2_x;
 	const char *home1 = NULL;
 	const char *home2 = NULL;
-	cptr feel_it_str = feel_it ? ", I can feel it.'" : ".";
+	const char *feel_it_str = feel_it ? ", I can feel it.'" : ".";
 	std::string dir_string;
 
 	get_home_coordinates(
@@ -1090,7 +1090,7 @@ static bool quest_god_char_dump_hook(void *, void *in_, void *)
 	{
 		int relics = cquest_relics_found;
 		char relics_text[128];
-		cptr append_text = "";
+		const char *append_text = "";
 
 		snprintf(relics_text, sizeof(relics_text), "%d", relics);
 

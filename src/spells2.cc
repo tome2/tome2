@@ -230,7 +230,7 @@ void explosive_rune()
 /*
  * Array of stat "descriptions"
  */
-static cptr desc_stat_pos[] =
+static const char *desc_stat_pos[] =
 {
 	"strong",
 	"smart",
@@ -244,7 +244,7 @@ static cptr desc_stat_pos[] =
  * Array of long descriptions of stat
  */
 
-static cptr long_desc_stat[] =
+static const char *long_desc_stat[] =
 {
 	"strength",
 	"intelligence",
@@ -257,7 +257,7 @@ static cptr long_desc_stat[] =
 /*
  * Array of stat "descriptions"
  */
-static cptr desc_stat_neg[] =
+static const char *desc_stat_neg[] =
 {
 	"weak",
 	"stupid",
@@ -772,7 +772,7 @@ static int report_magics_aux(int dur)
 	}
 }
 
-static cptr report_magic_durations[] =
+static const char *report_magic_durations[] =
 {
 	"for a short time",
 	"for a little while",
@@ -791,7 +791,7 @@ void report_magics()
 
 	char Dummy[80];
 
-	cptr info[128];
+	const char *info[128];
 	int info2[128];
 
 	if (p_ptr->blind)
@@ -1191,7 +1191,7 @@ template<typename P> static bool detect_monsters_fn(int radius, P p) {
 /*
  * Detect all (string) monsters on current panel
  */
-static bool_ detect_monsters_string(cptr chars, int rad)
+static bool_ detect_monsters_string(const char *chars, int rad)
 {
 	auto predicate = [chars](monster_race *r_ptr) -> bool {
 		return strchr(chars, r_ptr->d_char);
@@ -1700,7 +1700,8 @@ bool_ enchant_spell(int num_hit, int num_dam, int num_ac, int num_pval)
 	int item;
 	bool_ okay = FALSE;
 	char o_name[80];
-	cptr q, s;
+	const char *q;
+	const char *s;
 
 
 	/* Assume enchant weapon */
@@ -2642,7 +2643,7 @@ void aggravate_monsters(int who)
 /*
  * Generic genocide race selection
  */
-static bool get_genocide_race(cptr msg, char *typ)
+static bool get_genocide_race(const char *msg, char *typ)
 {
 	int i, j;
 	cave_type *c_ptr;

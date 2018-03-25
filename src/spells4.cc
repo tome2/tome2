@@ -59,7 +59,7 @@ static bool_ uses_piety_to_cast(int s)
 }
 
 /** Describe what type of energy the spell uses for casting */
-cptr get_power_name(s32b s)
+const char *get_power_name(s32b s)
 {
 	return uses_piety_to_cast(s) ? "piety" : "mana";
 }
@@ -413,13 +413,13 @@ static std::string spell_school_name(spell_type *spell)
 	return buf.str();
 }
 
-int print_spell(cptr label_, byte color, int y, s32b s)
+int print_spell(const char *label_, byte color, int y, s32b s)
 {
 	s32b level;
 	bool_ na;
 	spell_type *spell = spell_at(s);
-	cptr spell_info = spell_type_info(spell);
-	cptr label = (label_ == NULL) ? "" : label_;
+	const char *spell_info = spell_type_info(spell);
+	const char *label = (label_ == NULL) ? "" : label_;
 	char level_str[8] = "n/a";
 	char buf[128];
 

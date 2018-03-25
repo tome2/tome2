@@ -12,7 +12,7 @@
 static s16b school_spells_count = 0;
 static struct spell_type *school_spells[SCHOOL_SPELLS_MAX];
 
-static spell_type *spell_new(s32b *index, cptr name)
+static spell_type *spell_new(s32b *index, const char *name)
 {
 	assert(school_spells_count < SCHOOL_SPELLS_MAX);
 
@@ -24,7 +24,7 @@ static spell_type *spell_new(s32b *index, cptr name)
 	return spell;
 }
 
-static cptr no_info()
+static const char *no_info()
 {
 	return "";
 }
@@ -37,7 +37,7 @@ spell_type *spell_at(s32b index)
 	return school_spells[index];
 }
 
-boost::optional<int> find_spell(cptr name)
+boost::optional<int> find_spell(const char *name)
 {
 	int i;
 

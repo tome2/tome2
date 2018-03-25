@@ -6,7 +6,7 @@
 extern "C" {
 #endif
 
-extern cptr ANGBAND_SYS;
+extern const char *ANGBAND_SYS;
 extern char *ANGBAND_DIR_SAVE;
 extern char *ANGBAND_DIR_DATA;
 extern char *ANGBAND_DIR_EDIT;

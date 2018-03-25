@@ -5,7 +5,7 @@
 
 struct school_type
 {
-	cptr name;                      /* Name */
+	const char *name;               /* Name */
 	s16b skill;                     /* Skill used for that school */
 	bool_ spell_power;              /* Does spell power affect spells in this school? */
 	bool_ sorcery;                  /* Does Sorcery affect this school? */

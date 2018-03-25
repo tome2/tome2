@@ -404,7 +404,7 @@ struct infofnt
 {
 	XFontStruct *info;
 
-	cptr name;
+	const char *name;
 
 	s16b wid;
 	s16b twid;
@@ -603,7 +603,7 @@ static errr type_string(char *str, unsigned int len)
  *
  * Return -1 if no Display given, and none can be opened.
  */
-static errr Metadpy_init_2(Display *dpy, cptr name)
+static errr Metadpy_init_2(Display *dpy, const char *name)
 {
 	metadpy *m = Metadpy;
 
@@ -708,7 +708,7 @@ static errr Metadpy_do_beep(void)
 /*
  * Set the name (in the title bar) of Infowin
  */
-static errr Infowin_set_name(cptr name)
+static errr Infowin_set_name(const char *name)
 {
 	Status st;
 	XTextProperty tp;
@@ -897,7 +897,7 @@ static errr Infowin_wipe(void)
  * Pairs of values, first is texttual name, second is the string
  * holding the decimal value that the operation corresponds to.
  */
-static cptr opcode_pairs[] =
+static const char *opcode_pairs[] =
 {
 	"cpy", "3",
 	"xor", "6",
@@ -933,7 +933,7 @@ static cptr opcode_pairs[] =
  *	0-15: if 'str' is a valid Operation
  *	-1:   if 'str' could not be parsed
  */
-static int Infoclr_Opcode(cptr str)
+static int Infoclr_Opcode(const char *str)
 {
 	register int i;
 
@@ -1094,7 +1094,7 @@ static errr Infofnt_prepare(XFontStruct *info)
  * Inputs:
  *	name: The name of the requested Font
  */
-static errr Infofnt_init_data(cptr name)
+static errr Infofnt_init_data(const char *name)
 {
 	XFontStruct *info;
 
@@ -1140,7 +1140,7 @@ static errr Infofnt_init_data(cptr name)
 /*
  * Standard Text
  */
-static errr Infofnt_text_std(int x, int y, cptr str, int len)
+static errr Infofnt_text_std(int x, int y, const char *str, int len)
 {
 	int i;
 
@@ -1203,7 +1203,7 @@ static errr Infofnt_text_std(int x, int y, cptr str, int len)
 /*
  * Painting where text would be
  */
-static errr Infofnt_text_non(int x, int y, cptr str, int len)
+static errr Infofnt_text_non(int x, int y, const char *str, int len)
 {
 	int w, h;
 
@@ -2198,7 +2198,7 @@ static errr Term_curs_x11(int x, int y)
 /*
  * Draw some textual characters.
  */
-static errr Term_text_x11(int x, int y, int n, byte a, cptr s)
+static errr Term_text_x11(int x, int y, int n, byte a, const char *s)
 {
 	/* Draw the text */
 	Infoclr_set(clr[a]);
@@ -2221,9 +2221,9 @@ static errr term_data_init(term_data *td, int i)
 {
 	term *t = &td->t;
 
-	cptr name = angband_term_name[i];
+	const char *name = angband_term_name[i];
 
-	cptr font;
+	const char *font;
 
 	int x = 0;
 	int y = 0;
@@ -2238,7 +2238,7 @@ static errr term_data_init(term_data *td, int i)
 
 	char buf[80];
 
-	cptr str;
+	const char *str;
 
 	int val;
 
@@ -2477,7 +2477,7 @@ errr init_x11(int argc, char *argv[])
 {
 	int i;
 
-	cptr dpy_name = "";
+	const char *dpy_name = "";
 
 	int num_term = 1;
 

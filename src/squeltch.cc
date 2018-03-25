@@ -249,10 +249,10 @@ static void rename_rule(Rule *rule)
 void do_cmd_automatizer()
 {
 	int active = ACTIVE_LIST;
-	cptr keys;
-	cptr keys2;
-	cptr keys3;
-	std::vector<cptr> rule_names;
+	const char *keys;
+	const char *keys2;
+	const char *keys3;
+	std::vector<const char *> rule_names;
 
 	if (!automatizer_enabled)
 	{

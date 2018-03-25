@@ -17,7 +17,7 @@ std::string symbiote_name(bool capitalize);
 int use_symbiotic_power(int r_idx, bool great);
 void use_monster_power(int r_idx, bool great);
 bool_ is_ok_spell(s32b spell_idx, s32b pval);
-s32b get_school_spell(cptr do_what, s16b force_book);
+s32b get_school_spell(const char *do_what, s16b force_book);
 void do_cmd_copy_spell();
 void cast_school_spell();
 std::vector<monster_power const *> extract_monster_powers(monster_race const *r_ptr, bool great);

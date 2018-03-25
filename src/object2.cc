@@ -5664,7 +5664,7 @@ s16b inven_takeoff(int item, int amt, bool_ force_drop)
 
 	object_type *o_ptr;
 
-	cptr act;
+	const char *act;
 
 	char o_name[80];
 

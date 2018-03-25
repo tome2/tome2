@@ -1893,7 +1893,7 @@ bool_ is_ok_spell(s32b spell_idx, s32b pval)
 /*
  * Get a spell from a book
  */
-s32b get_school_spell(cptr do_what, s16b force_book)
+s32b get_school_spell(const char *do_what, s16b force_book)
 {
 	int i, item;
 	s32b spell = -1;

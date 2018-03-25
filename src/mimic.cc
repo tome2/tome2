@@ -25,10 +25,10 @@ typedef struct mimic_form_type mimic_form_type;
 struct mimic_form_type
 {
 	int modules[3]; /* Modules where this mimicry form is available; terminated with a -1 entry */
-	cptr name;     /* Name of mimicry form */
-	cptr obj_name; /* Object mimicry form name */
-	cptr desc;     /* Description */
-	cptr realm;    /* Realm of mimicry */
+	const char *name;     /* Name of mimicry form */
+	const char *obj_name; /* Object mimicry form name */
+	const char *desc;     /* Description */
+	const char *realm;    /* Realm of mimicry */
 	bool_ limit;   /* If true, the form is not available except through special means */
 	byte level;
 	byte rarity;
@@ -618,7 +618,7 @@ static mimic_form_type *get_mimic_form(int mf_idx)
 /*
  * Find a mimic by name
  */
-s16b resolve_mimic_name(cptr name)
+s16b resolve_mimic_name(const char *name)
 {
 	for (s16b i = 0; i < MIMIC_FORMS_MAX; i++)
 	{
@@ -666,7 +666,7 @@ s16b find_random_mimic_shape(byte level, bool_ limit)
 /*
  * Get mimic name
  */
-cptr get_mimic_name(s16b mf_idx)
+const char *get_mimic_name(s16b mf_idx)
 {
 	return get_mimic_form(mf_idx)->name;
 }
@@ -674,7 +674,7 @@ cptr get_mimic_name(s16b mf_idx)
 /*
  * Get mimic object name
  */
-cptr get_mimic_object_name(s16b mf_idx)
+const char *get_mimic_object_name(s16b mf_idx)
 {
 	return get_mimic_form(mf_idx)->obj_name;
 }

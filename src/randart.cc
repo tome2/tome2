@@ -134,7 +134,7 @@ static long ltotal[S_WORD + 1][S_WORD + 1];
  * probability tables which are used later on for letter selection.  It
  * relies on the ASCII character set.
  */
-void build_prob(cptr learn)
+void build_prob(const char *learn)
 {
 	int c_prev, c_cur, c_next;
 

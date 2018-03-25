@@ -56,18 +56,18 @@ void spell_type_set_difficulty(spell_type *spell, byte skill_level, s32b failure
 void spell_type_set_mana(spell_type *spell, s32b min, s32b max);
 void spell_type_set_castable_while_blind(spell_type *spell, bool_ value);
 void spell_type_set_castable_while_confused(spell_type *spell, bool_ value);
-void spell_type_describe(spell_type *spell, cptr line);
+void spell_type_describe(spell_type *spell, const char *line);
 
 void spell_type_add_school(spell_type *spell, s32b school_idx);
 
-void spell_type_set_device_charges(spell_type *spell, cptr charges_s);
+void spell_type_set_device_charges(spell_type *spell, const char *charges_s);
 void spell_type_add_device_allocation(spell_type *spell, device_allocation *a);
 
-spell_type *spell_type_new(cptr name);
+spell_type *spell_type_new(const char *name);
 
 int spell_type_produce_effect_lasting(spell_type *spell);
 casting_result spell_type_produce_effect(spell_type *spell);
-cptr spell_type_name(spell_type *spell);
+const char *spell_type_name(spell_type *spell);
 int spell_type_skill_level(spell_type *spell);
 long spell_type_roll_charges(spell_type *spell);
 struct device_allocation *spell_type_device_allocation(spell_type *spell, byte tval);
@@ -80,7 +80,7 @@ std::vector<s32b> const spell_type_get_schools(spell_type *spell);
 bool_ spell_type_inertia(spell_type *spell, s32b *difficulty, s32b *delay);
 s32b spell_type_failure_rate(spell_type *spell);
 s16b spell_type_casting_stat(spell_type *spell);
-cptr spell_type_info(spell_type *spell);
+const char *spell_type_info(spell_type *spell);
 void spell_type_mana_range(spell_type *spell, struct range_type *range);
 bool_ spell_type_dependencies_satisfied(spell_type *spell);
 void spell_type_description_foreach(spell_type *spell, std::function<void (std::string const &text)>);

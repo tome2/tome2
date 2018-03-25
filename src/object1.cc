@@ -1750,7 +1750,7 @@ void object_desc_store(char *buf, object_type *o_ptr, int pref, int mode)
  * Determine the "Activation" (if any) for an artifact
  * Return a string, or NULL for "no activation"
  */
-cptr item_activation(object_type *o_ptr)
+const char *item_activation(object_type *o_ptr)
 {
 	auto const &a_info = game->edit_data.a_info;
 	auto const &e_info = game->edit_data.e_info;
@@ -1822,7 +1822,7 @@ static void check_first(bool_ *first)
 /*
  * Display the damage done with a multiplier
  */
-void output_dam(object_type *o_ptr, int mult, int mult2, cptr against, cptr against2, bool_ *first)
+void output_dam(object_type *o_ptr, int mult, int mult2, const char *against, const char *against2, bool_ *first)
 {
 	int dam;
 
@@ -1913,7 +1913,7 @@ void display_weapon_damage(object_type *o_ptr)
 /*
  * Display the ammo damage done with a multiplier
  */
-void output_ammo_dam(object_type *o_ptr, int mult, int mult2, cptr against, cptr against2, bool_ *first)
+void output_ammo_dam(object_type *o_ptr, int mult, int mult2, const char *against, const char *against2, bool_ *first)
 {
 	int dam;
 	object_type *b_ptr = &p_ptr->inventory[INVEN_BOW];
@@ -2067,7 +2067,7 @@ static void describe_device(object_type *o_ptr)
  * Print the level something was found on
  *
  */
-static cptr object_out_desc_where_found(s16b level, s16b dungeon)
+static const char *object_out_desc_where_found(s16b level, s16b dungeon)
 {
 	auto const &d_info = game->edit_data.d_info;
 	auto const &wf_info = game->edit_data.wf_info;
@@ -2107,7 +2107,7 @@ bool_ object_out_desc(object_type *o_ptr, FILE *fff, bool_ trim_down, bool_ wait
 	auto const &st_info = game->edit_data.st_info;
 	auto const &a_info = game->edit_data.a_info;
 
-	cptr vp[64];
+	const char *vp[64];
 	byte vc[64];
 	int vn;
 
@@ -3343,9 +3343,9 @@ s16b wield_slot(object_type const *o_ptr)
 /*
  * Return a string mentioning how a given item is carried
  */
-static cptr mention_use(int i)
+static const char *mention_use(int i)
 {
-	cptr p;
+	const char *p;
 
 	/* Examine the location */
 	switch (i)
@@ -3446,9 +3446,9 @@ static cptr mention_use(int i)
  * Return a string describing how a given item is being worn.
  * Currently, only used for items in the equipment, not inventory.
  */
-cptr describe_use(int i)
+const char *describe_use(int i)
 {
-	cptr p = nullptr;
+	const char *p = nullptr;
 
 	switch (i)
 	{
@@ -4082,7 +4082,7 @@ void toggle_inven_equip()
  *
  * The item can be negative to mean "item on floor".
  */
-bool_ verify(cptr prompt, int item)
+bool_ verify(const char *prompt, int item)
 {
 	char o_name[80];
 
@@ -4367,7 +4367,7 @@ static void show_floor(int y, int x, object_filter_t const &filter)
  * This version of get_item() is called by get_item() when
  * the easy_floor is on.
  */
-static bool_ get_item_floor(int *cp, cptr pmt, cptr str, int mode, object_filter_t const &filter, select_by_name_t const &select_by_name)
+static bool_ get_item_floor(int *cp, const char *pmt, const char *str, int mode, object_filter_t const &filter, select_by_name_t const &select_by_name)
 {
 	char n1 = 0, n2 = 0, which = ' ';
 
@@ -5082,7 +5082,7 @@ static bool_ get_item_floor(int *cp, cptr pmt, cptr str, int mode, object_filter
  * We always erase the prompt when we are done, leaving a blank line,
  * or a warning message, if appropriate, if no items are available.
  */
-bool_ get_item(int *cp, cptr pmt, cptr str, int mode, object_filter_t const &filter, select_by_name_t const &select_by_name)
+bool_ get_item(int *cp, const char *pmt, const char *str, int mode, object_filter_t const &filter, select_by_name_t const &select_by_name)
 {
 	automatizer_create = FALSE;
 	return get_item_floor(cp, pmt, str, mode, filter, select_by_name);
@@ -5447,8 +5447,8 @@ void py_pickup_floor(int pickup)
 		else
 		{
 			/* Prompt for the item to pick up */
-			cptr q = "Get which item? ";
-			cptr s = "You have no room in your pack for any of the items here.";
+			const char *q = "Get which item? ";
+			const char *s = "You have no room in your pack for any of the items here.";
 			int item;
 			if (get_item(&item, q, s, (USE_FLOOR), item_tester_hook_getable))
 			{

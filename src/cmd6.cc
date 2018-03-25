@@ -1609,7 +1609,7 @@ void do_cmd_cure_meat()
 	/* Take a turn */
 	energy_use = 100;
 
-	cptr q = "You soak the meat.";
+	const char *q = "You soak the meat.";
 
 	switch (i_ptr->sval)
 	{
@@ -3210,7 +3210,7 @@ void do_cmd_read_scroll()
 			screen_save();
 
 			/* Get the filename */
-			cptr q = format("book-%d.txt", o_ptr->sval);
+			const char *q = format("book-%d.txt", o_ptr->sval);
 
 			/* Peruse the help file */
 			show_file(q, NULL);

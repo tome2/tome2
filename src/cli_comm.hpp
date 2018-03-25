@@ -7,7 +7,7 @@
  */
 struct cli_comm
 {
-	cptr comm;	/* Extended name of the command. */
-	cptr descrip;	/* Description of the command. */
+	const char *comm;	/* Extended name of the command. */
+	const char *descrip;	/* Description of the command. */
 	s16b key;	/* Key to convert command to. */
 };

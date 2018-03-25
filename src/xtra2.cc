@@ -151,9 +151,9 @@ static bool_ set_simple_field(
 	s16b *p_field,
 	s16b v,
 	byte activate_color,
-	cptr activate_msg,
+	const char *activate_msg,
 	byte deactivate_color,
-	cptr deactivate_msg)
+	const char *deactivate_msg)
 {
 	bool_ notice = FALSE;
 
@@ -2072,7 +2072,7 @@ void lose_exp(s32b amount)
  */
 int get_coin_type(std::shared_ptr<monster_race const> r_ptr)
 {
-	cptr name = r_ptr->name;
+	const char *name = r_ptr->name;
 
 	/* Analyze "coin" monsters */
 	if (r_ptr->d_char == '$')
@@ -2186,7 +2186,7 @@ void place_corpse(monster_type *m_ptr)
  * Check if monster race is in a given list. The list
  * must be NULL-terminated.
  */
-static bool_ monster_race_in_list_p(monster_type *m_ptr, cptr races[])
+static bool_ monster_race_in_list_p(monster_type *m_ptr, const char *races[])
 {
 	int i=0;
 	for (i=0; races[i] != NULL; i++)
@@ -2208,7 +2208,7 @@ static void monster_death_gods(int m_idx, monster_type *m_ptr)
 	{
 		/* TODO: This should really be a racial flag
 		   which can be added to the r_info file. */
-		cptr DWARVES[] = {
+		const char *DWARVES[] = {
 			"Petty-dwarf",
 			"Petty-dwarf mage",
 			"Dark dwarven warrior",
@@ -2218,7 +2218,7 @@ static void monster_death_gods(int m_idx, monster_type *m_ptr)
 			"Dwarven warrior",
 			NULL,
 		};
-		cptr UNIQUE_DWARVES[] = {
+		const char *UNIQUE_DWARVES[] = {
 			"Nar, the Dwarf",
 			"Naugladur, Lord of Nogrod",
 			"Telchar the Smith",
@@ -2245,7 +2245,7 @@ static void monster_death_gods(int m_idx, monster_type *m_ptr)
 	if (p_ptr->pgod == GOD_ULMO)
 	{
 		/* He doesn't like it if you kill these monsters */
-		cptr MINOR_RACES[] = {
+		const char *MINOR_RACES[] = {
 			"Swordfish",
 			"Barracuda",
 			"Globefish",
@@ -2276,7 +2276,7 @@ static void monster_death_gods(int m_idx, monster_type *m_ptr)
 			NULL,
 		};
 		/* These monsters earn higher penalties */
-		cptr MAJOR_RACES[] = {
+		const char *MAJOR_RACES[] = {
 			"Seahorse",
 			"Aquatic elven warrior",
 			"Aquatic elven mage",
@@ -2298,7 +2298,7 @@ static void monster_death_gods(int m_idx, monster_type *m_ptr)
 
 	if (p_ptr->pgod == GOD_MANDOS)
 	{
-		cptr MINOR_BONUS_RACES[] = {
+		const char *MINOR_BONUS_RACES[] = {
 			"Vampire",
 			"Master vampire",
 			"Oriental vampire",
@@ -2312,12 +2312,12 @@ static void monster_death_gods(int m_idx, monster_type *m_ptr)
 			"Elder vampire",
 			NULL,
 		};
-		cptr MAJOR_BONUS_RACES[] = {
+		const char *MAJOR_BONUS_RACES[] = {
 			"Vampire elf",
 			"Thuringwethil, the Vampire Messenger",
 			NULL,
 		};
-		cptr MINOR_PENALTY[] = {
+		const char *MINOR_PENALTY[] = {
 			"Dark elf",
 			"Dark elven druid",
 			"Eol, the Dark Elf",
@@ -2330,7 +2330,7 @@ static void monster_death_gods(int m_idx, monster_type *m_ptr)
 			"Dark elven sorcerer",
 			NULL,
 		};
-		cptr MEDIUM_PENALTY[] = {
+		const char *MEDIUM_PENALTY[] = {
 			"Glorfindel of Rivendell",
 			"Finrod Felagund",
 			"Thranduil, King of the Wood Elves",
@@ -2340,7 +2340,7 @@ static void monster_death_gods(int m_idx, monster_type *m_ptr)
 			"Elven archer",
 			NULL,
 		};
-		cptr MAJOR_PENALTY[] = {
+		const char *MAJOR_PENALTY[] = {
 			"Child spirit",
 			"Young spirit",
 			"Mature spirit",
@@ -2973,7 +2973,7 @@ void monster_death(int m_idx)
  * monster worth more than subsequent monsters.  This would also need
  * to induce changes in the monster recall code.
  */
-bool_ mon_take_hit(int m_idx, int dam, bool_ *fear, cptr note)
+bool_ mon_take_hit(int m_idx, int dam, bool_ *fear, const char *note)
 {
 	monster_type *m_ptr = &m_list[m_idx];
 	auto const r_idx = m_ptr->r_idx;
@@ -3556,7 +3556,7 @@ void resize_window()
 /*
  * Monster health description
  */
-static cptr look_mon_desc(int m_idx)
+static const char *look_mon_desc(int m_idx)
 {
 	bool_ living = TRUE;
 
@@ -3837,8 +3837,8 @@ static std::vector<point> target_set_prepare(int mode)
 }
 
 
-bool_ target_object(int y, int x, int mode, cptr info, bool_ *boring,
-                   object_type *o_ptr, char *out_val, cptr *s1, cptr *s2, cptr *s3,
+bool_ target_object(int y, int x, int mode, const char *info, bool_ *boring,
+                   object_type *o_ptr, char *out_val, const char **s1, const char **s2, const char **s3,
                    int *query)
 {
 	char o_name[80];
@@ -3893,7 +3893,7 @@ bool_ target_object(int y, int x, int mode, cptr info, bool_ *boring,
  *
  * This function must handle blindness/hallucination.
  */
-static int target_set_aux(int y, int x, int mode, cptr info_)
+static int target_set_aux(int y, int x, int mode, const char *info_)
 {
 	auto const &d_info = game->edit_data.d_info;
 	auto const &st_info = game->edit_data.st_info;
@@ -3905,7 +3905,9 @@ static int target_set_aux(int y, int x, int mode, cptr info_)
 
 	cave_type *c_ptr = &cave[y][x];
 
-	cptr s1, s2, s3;
+	const char *s1;
+	const char *s2;
+	const char *s3;
 
 	bool_ boring;
 
@@ -3944,7 +3946,7 @@ static int target_set_aux(int y, int x, int mode, cptr info_)
 		/* Hack -- hallucination */
 		if (p_ptr->image)
 		{
-			cptr name = "something strange";
+			const char *name = "something strange";
 
 			/* Display a message */
 			sprintf(out_val, "%s%s%s%s [%s]", s1, s2, s3, name, info.c_str());
@@ -4031,7 +4033,7 @@ static int target_set_aux(int y, int x, int mode, cptr info_)
 						/* Normal */
 						else
 						{
-							cptr mstat;
+							const char *mstat;
 
 							switch (m_ptr->status)
 							{
@@ -4709,7 +4711,7 @@ bool_ get_aim_dir(int *dp)
 
 	char command;
 
-	cptr p;
+	const char *p;
 
 	if (repeat_pull(dp))
 	{

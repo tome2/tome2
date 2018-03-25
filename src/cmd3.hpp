@@ -3,7 +3,7 @@
 #include "h-basic.h"
 
 void do_cmd_html_dump();
-void cli_add(cptr active, cptr trigger, cptr descr);
+void cli_add(const char *active, const char *trigger, const char *descr);
 void do_cmd_cli();
 void do_cmd_cli_help();
 void do_cmd_inven();

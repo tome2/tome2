@@ -145,7 +145,8 @@ static void power_activate(int power)
 	object_type *q_ptr;
 	object_type forge;
 	int ii = 0, ij = 0;
-	cptr q, s;
+	const char *q;
+	const char *s;
 	int x, y;
 	cave_type *c_ptr;
 
@@ -601,7 +602,8 @@ static void power_activate(int power)
 			int item, x, y, d;
 			object_type *o_ptr;
 
-			cptr q, s;
+			const char *q;
+			const char *s;
 
 			/* Get an item */
 			q = "Awaken which monster? ";

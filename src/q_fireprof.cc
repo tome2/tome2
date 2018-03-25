@@ -30,8 +30,8 @@ struct fireproof_settings
 {
 	byte tval; /* tval of object to use. */
 	byte sval; /* sval of object to use. */
-	cptr tval_name; /* descriptive name of tval */
-	cptr tval_name_plural; /* descriptive name of tval (plural) */
+	const char *tval_name; /* descriptive name of tval */
+	const char *tval_name_plural; /* descriptive name of tval (plural) */
 	s32b total_points; /* total number of points awarded */
 };
 

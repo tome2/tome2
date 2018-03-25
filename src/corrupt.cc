@@ -25,11 +25,11 @@ struct corruption_type
 {
 	int  modules[3]; /* Modules where this corruption is available; terminated with -1 entry */
 	byte color;
-	cptr group;
-	cptr name;
-	cptr get_text;
-	cptr lose_text; /* If NULL, the corruption is NOT removable by any means */
-	cptr desc;
+	const char *group;
+	const char *name;
+	const char *get_text;
+	const char *lose_text; /* If NULL, the corruption is NOT removable by any means */
+	const char *desc;
 	s16b depends[5]; /* terminated by a -1 entry */
 	s16b opposes[5]; /* terminated by a -1 entry */
 	void (*gain_callback)(); /* callback to invoke when gained */

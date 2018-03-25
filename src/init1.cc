@@ -92,7 +92,7 @@ template <class T> typename std::vector<T>::reference expand_to_fit_index(std::v
 /*
  * Monster Blow Methods
  */
-static cptr r_info_blow_method[] =
+static const char *r_info_blow_method[] =
 {
 	"*",
 	"HIT",
@@ -126,7 +126,7 @@ static cptr r_info_blow_method[] =
 /*
  * Monster Blow Effects
  */
-static cptr r_info_blow_effect[] =
+static const char *r_info_blow_effect[] =
 {
 	"*",
 	"HURT",
@@ -183,13 +183,13 @@ namespace detail {
 template <size_t N> struct flag_tie_impl {
 private:
 	u32b *m_mask;
-	cptr (&m_flags)[N];
+	const char *(&m_flags)[N];
 public:
-	flag_tie_impl(u32b *mask, cptr (&flags)[N]): m_mask(mask), m_flags(flags) {
+	flag_tie_impl(u32b *mask, const char *(&flags)[N]): m_mask(mask), m_flags(flags) {
 		// Empty
 	}
 
-	bool match(cptr flag) {
+	bool match(const char *flag) {
 		for (unsigned int i = 0; i < N; i++)
 		{
 			if (streq(flag, m_flags[i]))
@@ -208,7 +208,7 @@ public:
  * Tie a flags value pointer and its corresponding array
  * of text strings.
  */
-template<size_t N> detail::flag_tie_impl<N> flag_tie(u32b *mask, cptr (&flags)[N]) {
+template<size_t N> detail::flag_tie_impl<N> flag_tie(u32b *mask, const char *(&flags)[N]) {
 	static_assert(N <= 32, "Array too large to represent result");
 	return detail::flag_tie_impl<N>(mask, flags);
 }
@@ -216,7 +216,7 @@ template<size_t N> detail::flag_tie_impl<N> flag_tie(u32b *mask, cptr (&flags)[N
 /**
  * Look up flag in array of flags.
  */
-template<size_t N> bool lookup_flags(cptr)
+template<size_t N> bool lookup_flags(const char *)
 {
 	// Base case: No match
 	return false;
@@ -225,7 +225,7 @@ template<size_t N> bool lookup_flags(cptr)
 /**
  * Look up flag in array of flags.
  */
-template<size_t N, typename... Pairs> bool lookup_flags(cptr flag, detail::flag_tie_impl<N> tie, Pairs&&...rest) {
+template<size_t N, typename... Pairs> bool lookup_flags(const char *flag, detail::flag_tie_impl<N> tie, Pairs&&...rest) {
 	// Inductive case: Check against current "tie"
 	if (tie.match(flag)) {
 		// Match
@@ -245,7 +245,7 @@ template<size_t N, typename... Pairs> bool lookup_flags(cptr flag, detail::flag_
  */
 static struct
 {
-cptr name;
+const char *name;
 int feat;
 }
 d_info_dtypes[] =
@@ -638,7 +638,7 @@ static void strappend(char **s, const char *t)
  * Grab one race flag from a textual string
  */
 static bool_ unknown_shut_up = FALSE;
-static errr grab_one_class_flag(u32b *choice, cptr what)
+static errr grab_one_class_flag(u32b *choice, const char *what)
 {
 	auto const &class_info = game->edit_data.class_info;
 
@@ -659,7 +659,7 @@ static errr grab_one_class_flag(u32b *choice, cptr what)
 	return (1);
 }
 
-static errr grab_one_race_allow_flag(u32b *choice, cptr what)
+static errr grab_one_race_allow_flag(u32b *choice, const char *what)
 {
 	auto const &race_info = game->edit_data.race_info;
 
@@ -683,7 +683,7 @@ static errr grab_one_race_allow_flag(u32b *choice, cptr what)
 /*
  * Grab one flag from a textual string
  */
-static errr grab_one_skill_flag(skill_flag_set *flags, cptr what)
+static errr grab_one_skill_flag(skill_flag_set *flags, const char *what)
 {
 #define SKF(tier, index, name) \
 	if (streq(what, #name)) \
@@ -703,7 +703,7 @@ static errr grab_one_skill_flag(skill_flag_set *flags, cptr what)
 /*
  * Grab one flag from a textual string
  */
-static errr grab_one_player_race_flag(player_race_flag_set *flags, cptr what)
+static errr grab_one_player_race_flag(player_race_flag_set *flags, const char *what)
 {
 #define PR(tier, index, name) \
 	if (streq(what, #name)) \
@@ -740,7 +740,7 @@ static int get_activation(char *activation)
 /*
  * Convert string to object_flag_set value
  */
-static object_flag_set object_flag_set_from_string(cptr what)
+static object_flag_set object_flag_set_from_string(const char *what)
 {
 	for (auto const flag_meta: object_flags_meta())
 	{
@@ -756,7 +756,7 @@ static object_flag_set object_flag_set_from_string(cptr what)
 /*
  * Grab one flag in an object_kind from a textual string
  */
-static errr grab_object_flag(object_flag_set *flags, cptr what)
+static errr grab_object_flag(object_flag_set *flags, const char *what)
 {
 	if (object_flag_set f = object_flag_set_from_string(what))
 	{
@@ -774,7 +774,7 @@ static errr grab_object_flag(object_flag_set *flags, cptr what)
 /*
  * Read skill values
  */
-static int read_skill_modifiers(skill_modifiers *skill_modifiers, cptr buf)
+static int read_skill_modifiers(skill_modifiers *skill_modifiers, const char *buf)
 {
 	long val, mod;
 	char v, m;
@@ -805,7 +805,7 @@ static int read_skill_modifiers(skill_modifiers *skill_modifiers, cptr buf)
 /*
  * Read prototype objects
  */
-static int read_proto_object(std::vector<object_proto> *protos, cptr buf)
+static int read_proto_object(std::vector<object_proto> *protos, const char *buf)
 {
 	int s0, s1, s2, s3, s4;
 
@@ -1902,7 +1902,7 @@ errr init_v_info_txt(FILE *fp)
 		if (buf[0] == 'D')
 		{
 			/* Acquire the text */
-			cptr s = buf + 2;
+			const char *s = buf + 2;
 
 			/* Append data */
 			v_ptr->data += s;
@@ -1980,7 +1980,7 @@ errr init_v_info_txt(FILE *fp)
 /*
  * Grab one flag in an feature_type from a textual string
  */
-static int grab_one_feature_flag(cptr what, feature_flag_set *flags)
+static int grab_one_feature_flag(const char *what, feature_flag_set *flags)
 {
 #define FF(tier, index, name) \
 	if (streq(what, #name)) \
@@ -2170,7 +2170,7 @@ errr init_f_info_txt(FILE *fp)
 		if (buf[0] == 'E')
 		{
 			int side, dice, freq, type;
-			cptr tmp;
+			const char *tmp;
 			int i;
 
 			/* Find the next empty blow slot (if any) */
@@ -3404,7 +3404,7 @@ static ego_flag_set lookup_ego_flag(const char *what)
  *
  * We explicitly allow nullptr for the "ego" parameter.
  */
-static bool_ grab_one_ego_item_flag(object_flag_set *flags, ego_flag_set *ego, cptr what)
+static bool_ grab_one_ego_item_flag(object_flag_set *flags, ego_flag_set *ego, const char *what)
 {
 	/* Lookup as an object_flag */
 	if (auto f = object_flag_set_from_string(what))
@@ -3974,7 +3974,7 @@ errr init_ra_info_txt(FILE *fp)
 }
 
 
-static errr grab_monster_race_flag(monster_race_flag_set *flags, cptr what)
+static errr grab_monster_race_flag(monster_race_flag_set *flags, const char *what)
 {
 #define RF(tier, index, name) \
 	if (streq(what, #name)) \
@@ -3996,7 +3996,7 @@ static errr grab_monster_race_flag(monster_race_flag_set *flags, cptr what)
 /*
  * Grab one (spell) flag in a monster_race from a textual string
  */
-static errr grab_one_monster_spell_flag(monster_spell_flag_set *flags, cptr what)
+static errr grab_one_monster_spell_flag(monster_spell_flag_set *flags, const char *what)
 {
 	for (auto const &monster_spell: monster_spells())
 	{
@@ -5008,7 +5008,7 @@ errr init_d_info_txt(FILE *fp)
 		if (buf[0] == 'E')
 		{
 			int side, dice, freq, type;
-			cptr tmp;
+			const char *tmp;
 
 			/* Find the next empty blow slot (if any) */
 			std::size_t i;
@@ -5219,7 +5219,7 @@ errr init_d_info_txt(FILE *fp)
 /*
  * Grab one race flag from a textual string
  */
-static errr grab_one_race_flag(owner_type *ow_ptr, int state, cptr what)
+static errr grab_one_race_flag(owner_type *ow_ptr, int state, const char *what)
 {
 	/* Scan race flags */
 	unknown_shut_up = TRUE;
@@ -5247,7 +5247,7 @@ static errr grab_one_race_flag(owner_type *ow_ptr, int state, cptr what)
 /*
  * Grab one store flag from a textual string
  */
-static errr grab_one_store_flag(store_flag_set *flags, cptr what)
+static errr grab_one_store_flag(store_flag_set *flags, const char *what)
 {
 #define STF(tier, index, name) \
 	if (streq(what, #name)) { \
@@ -6531,10 +6531,10 @@ static errr process_dungeon_file_aux(char *buf, int *yval, int *xval, int xvalst
 /*
  * Helper function for "process_dungeon_file()"
  */
-static cptr process_dungeon_file_expr(char **sp, char *fp)
+static const char *process_dungeon_file_expr(char **sp, char *fp)
 {
 	static char pref_tmp_value[8];
-	cptr v;
+	const char *v;
 
 	char *b;
 	char *s;
@@ -6828,7 +6828,7 @@ static cptr process_dungeon_file_expr(char **sp, char *fp)
 }
 
 
-errr process_dungeon_file(cptr name, int *yval, int *xval, int ymax, int xmax, bool_ init, bool_ full)
+errr process_dungeon_file(const char *name, int *yval, int *xval, int ymax, int xmax, bool_ init, bool_ full)
 {
 	FILE *fp = 0;
 
@@ -6890,7 +6890,7 @@ errr process_dungeon_file(cptr name, int *yval, int *xval, int ymax, int xmax, b
 		if ((buf[0] == '?') && (buf[1] == ':'))
 		{
 			char f;
-			cptr v;
+			const char *v;
 			char *s;
 
 			/* Start */

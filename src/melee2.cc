@@ -61,7 +61,7 @@
  * Based on mon_take_hit... all monster attacks on
  * other monsters should use
  */
-bool_ mon_take_hit_mon(int s_idx, int m_idx, int dam, bool_ *fear, cptr note)
+bool_ mon_take_hit_mon(int s_idx, int m_idx, int dam, bool_ *fear, const char *note)
 {
 	monster_type *m_ptr = &m_list[m_idx], *s_ptr = &m_list[s_idx];
 
@@ -893,7 +893,7 @@ static void monst_bolt_monst(int m_idx, int y, int x, int typ, int dam_hp)
 }
 
 
-static void monster_msg(cptr fmt, ...)
+static void monster_msg(const char *fmt, ...)
 {
 	va_list vp;
 
@@ -912,7 +912,7 @@ static void monster_msg(cptr fmt, ...)
 	monster_msg_simple(buf);
 }
 
-void monster_msg_simple(cptr s)
+void monster_msg_simple(const char *s)
 {
 	auto &messages = game->messages;
 
@@ -4714,7 +4714,7 @@ static bool_ monst_attack_monst(int m_idx, int t_idx)
 		int power = 0;
 		int damage = 0;
 
-		cptr act = NULL;
+		const char *act = NULL;
 
 		/* Extract the attack infomation */
 		int effect = m_ptr->blow[ap_cnt].effect;

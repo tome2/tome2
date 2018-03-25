@@ -332,7 +332,7 @@ struct player_type
 
 	struct spellbinder spellbinder;
 
-	cptr mimic_name = nullptr;
+	const char *mimic_name = nullptr;
 
 	char tactic = '\0';                                     /* from 128-4 "extremely coward" to, 128+4 "berserker" */
 	char movement = '\0';                                   /* base movement way */

@@ -19,7 +19,7 @@
  */
 struct spell_type
 {
-	cptr name;                      /* Name */
+	const char *name;                      /* Name */
 	byte skill_level;               /* Required level (to learn) */
 	std::vector<std::string> m_description;       /* List of strings */
 
@@ -53,7 +53,7 @@ struct spell_type
 
 public:
 
-	spell_type(cptr _name)
+	spell_type(const char *_name)
 		: name(_name)
 		, skill_level(0)
 		, m_description()
@@ -246,7 +246,7 @@ void spell_type_set_castable_while_confused(spell_type *spell, bool_ value)
 	spell->castable_while_confused = value;
 }
 
-void spell_type_describe(spell_type *spell, cptr line)
+void spell_type_describe(spell_type *spell, const char *line)
 {
 	assert(spell != NULL);
 
@@ -258,7 +258,7 @@ void spell_type_add_school(spell_type *spell, s32b school_idx)
 	school_idx_add_new(spell, school_idx);
 }
 
-void spell_type_set_device_charges(spell_type *spell, cptr charges_s)
+void spell_type_set_device_charges(spell_type *spell, const char *charges_s)
 {
 	assert(spell != NULL);
 
@@ -272,7 +272,7 @@ void spell_type_add_device_allocation(spell_type *spell, struct device_allocatio
 	spell->m_device_allocation.push_back(a);
 }
 
-spell_type *spell_type_new(cptr name)
+spell_type *spell_type_new(const char *name)
 {
 	spell_type *spell = new spell_type(name);
 	assert(spell != NULL);
@@ -291,7 +291,7 @@ casting_result spell_type_produce_effect(spell_type *spell)
 	return spell->effect_func();
 }
 
-cptr spell_type_name(spell_type *spell)
+const char *spell_type_name(spell_type *spell)
 {
 	assert(spell != NULL);
 
@@ -390,7 +390,7 @@ bool_ spell_type_inertia(spell_type *spell, s32b *difficulty, s32b *delay)
 	return TRUE;
 }
 
-cptr spell_type_info(spell_type *spell)
+const char *spell_type_info(spell_type *spell)
 {
 	assert(spell != NULL);
 	

@@ -420,7 +420,7 @@ void Term_queue_char(int x, int y, byte a, char c)
  * a valid location, so the first "n" characters of "s" can all be added
  * starting at (x,y) without causing any illegal operations.
  */
-void Term_queue_chars(int x, int y, int n, byte a, cptr s)
+void Term_queue_chars(int x, int y, int n, byte a, const char *s)
 {
 	int x1 = -1, x2 = -1;
 
@@ -985,7 +985,7 @@ errr Term_addch(byte a, char c)
  * positive value, future calls to either function will
  * return negative ones.
  */
-errr Term_addstr(int n, byte a, cptr s)
+errr Term_addstr(int n, byte a, const char *s)
 {
 	int k;
 
@@ -1040,7 +1040,7 @@ errr Term_putch(int x, int y, byte a, char c)
 /*
  * Move to a location and, using an attr, add a string
  */
-errr Term_putstr(int x, int y, int n, byte a, cptr s)
+errr Term_putstr(int x, int y, int n, byte a, const char *s)
 {
 	errr res;
 

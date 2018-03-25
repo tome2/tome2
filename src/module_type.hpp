@@ -10,7 +10,7 @@ struct module_type
 	/* Metadata about the module: author, description, etc. */
 	struct {
 		/* Module name */
-		cptr name;
+		const char *name;
 
 		/* Module version number */
 		struct {
@@ -21,18 +21,18 @@ struct module_type
 
 		/* Module author */
 		struct {
-			cptr name;
-			cptr email;
+			const char *name;
+			const char *email;
 		} author;
 
 		/* Module description */
-		cptr desc;
+		const char *desc;
 
 		/* Save file tag */
-		cptr save_file_tag;
+		const char *save_file_tag;
 
 		/* Module directory */
-		cptr module_dir;
+		const char *module_dir;
 	} meta;
 
 	/* Random artifact generation chances */

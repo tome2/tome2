@@ -61,7 +61,7 @@ struct triggered_help_type
 	/* Trigger function */
 	bool_ (*trigger_func)(void *in, void *out);
 	/* Description; NULL terminated */
-	cptr desc[DESC_MAX];
+	const char *desc[DESC_MAX];
 };
 
 /**
@@ -70,8 +70,8 @@ struct triggered_help_type
 typedef struct context_help_type context_help_type;
 struct context_help_type
 {
-	cptr key;       /* Lookup key */
-	cptr file_name; /* Name of help file */
+	const char *key;       /* Lookup key */
+	const char *file_name; /* Name of help file */
 	int anchor;     /* Anchor in file */
 };
 
@@ -643,7 +643,7 @@ static void show_context_help(context_help_type *context_help)
 /*
  * Find context help
  */
-static context_help_type *find_context_help(context_help_type table[], cptr key)
+static context_help_type *find_context_help(context_help_type table[], const char *key)
 {
 	int i;
 
@@ -681,7 +681,7 @@ void help_class(std::string const &klass)
 	show_context_help(find_context_help(class_table, klass.c_str()));
 }
 
-void help_god(cptr god)
+void help_god(const char *god)
 {
 	context_help_type *context_help =
 		find_context_help(god_table, god);

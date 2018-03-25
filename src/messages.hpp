@@ -41,7 +41,7 @@ public:
 	/**
 	 * Add a message.
 	 */
-	void add(cptr msg, byte color);
+	void add(const char *msg, byte color);
 
 	/**
 	 * Add a message.

@@ -10,7 +10,7 @@
 /*
  * Determine if string "t" is equal to string "t"
  */
-bool_ streq(cptr a, cptr b)
+bool_ streq(const char *a, const char *b)
 {
 	if ((a == NULL) && (b == NULL)) { return TRUE; }
 	if (a == NULL) { return FALSE; }
@@ -22,7 +22,7 @@ bool_ streq(cptr a, cptr b)
 /*
  * Determine if string "t" is a suffix of string "s"
  */
-bool_ suffix(cptr s, cptr t)
+bool_ suffix(const char *s, const char *t)
 {
 	int tlen = strlen(t);
 	int slen = strlen(s);
@@ -61,13 +61,13 @@ void capitalize(char *s)
 /*
  * Redefinable "plog" action
  */
-void (*plog_aux)(cptr) = NULL;
+void (*plog_aux)(const char *) = NULL;
 
 /*
  * Print (or log) a "warning" message (ala "perror()")
  * Note the use of the (optional) "plog_aux" hook.
  */
-void plog(cptr str)
+void plog(const char *str)
 {
 	/* Use the "alternative" function if possible */
 	if (plog_aux) (*plog_aux)(str);
@@ -81,7 +81,7 @@ void plog(cptr str)
 /*
  * Redefinable "quit" action
  */
-void (*quit_aux)(cptr) = NULL;
+void (*quit_aux)(const char *) = NULL;
 
 /*
  * Exit (ala "exit()").  If 'str' is NULL, do "exit(0)".
@@ -89,7 +89,7 @@ void (*quit_aux)(cptr) = NULL;
  * Otherwise, plog() 'str' and exit with an error code of -1.
  * But always use 'quit_aux', if set, before anything else.
  */
-void quit(cptr str)
+void quit(const char *str)
 {
 	/* Attempt to use the aux function */
 	if (quit_aux) (*quit_aux)(str);

@@ -161,10 +161,10 @@ static bool_ use_backing_store = TRUE;
 /*
  * Look up some environment variables to find font name for each window.
  */
-static cptr get_default_font(int term)
+static const char *get_default_font(int term)
 {
 	char buf[64];
-	cptr font_name;
+	const char *font_name;
 
 	/* Window specific font name */
 	strnfmt(buf, 64, "ANGBAND_X11_FONT_%s", angband_term_name[term]);
@@ -349,7 +349,7 @@ static errr Term_wipe_gtk(int x, int y, int n)
 /*
  * Draw some textual characters.
  */
-static errr Term_text_gtk(int x, int y, int n, byte a, cptr s)
+static errr Term_text_gtk(int x, int y, int n, byte a, const char *s)
 {
 	term_data *td = (term_data*)(Term->data);
 
@@ -681,7 +681,7 @@ static void save_game_gtk(void)
 /*
  * Display message in a modal dialog
  */
-static void gtk_message(cptr msg)
+static void gtk_message(const char *msg)
 {
 	GtkWidget *dialog, *label, *ok_button;
 
@@ -721,7 +721,7 @@ static void gtk_message(cptr msg)
 /*
  * Hook to tell the user something important
  */
-static void hook_plog(cptr str)
+static void hook_plog(const char *str)
 {
 	/* Warning message */
 	gtk_message(str);
@@ -785,7 +785,7 @@ static void destroy_sub_event_handler(
  * Load fond specified by an XLFD fontname and
  * set up related term_data members
  */
-static void load_font(term_data *td, cptr fontname)
+static void load_font(term_data *td, const char *fontname)
 {
 	GdkFont *old = td->font;
 
@@ -1472,7 +1472,7 @@ static void free_menu_paths(void)
  * Find widget corresponding to path name
  * return NULL on error
  */
-static GtkWidget *get_widget_from_path(cptr path)
+static GtkWidget *get_widget_from_path(const char *path)
 {
 	GtkItemFactory *item_factory;
 	GtkWidget *widget;
@@ -1497,7 +1497,7 @@ static GtkWidget *get_widget_from_path(cptr path)
 /*
  * Enable/disable a menu item
  */
-void enable_menu_item(cptr path, bool_ enabled)
+void enable_menu_item(const char *path, bool_ enabled)
 {
 	GtkWidget *widget;
 
@@ -1519,7 +1519,7 @@ void enable_menu_item(cptr path, bool_ enabled)
 /*
  * Check/uncheck a menu item. The item should be of the GtkCheckMenuItem type
  */
-void check_menu_item(cptr path, bool_ checked)
+void check_menu_item(const char *path, bool_ checked)
 {
 	GtkWidget *widget;
 
@@ -1745,7 +1745,7 @@ static void add_menu_update_callbacks()
 static void init_gtk_window(term_data *td, int i)
 {
 	GtkWidget *menu_bar = NULL, *box;
-	cptr font;
+	const char *font;
 
 	bool_ main_window = (i == 0) ? TRUE : FALSE;
 
@@ -1878,7 +1878,7 @@ static void init_gtk_window(term_data *td, int i)
 /*
  * To be hooked into quit(). See z-util.c
  */
-static void hook_quit(cptr str)
+static void hook_quit(const char *str)
 {
 	/* Free menu paths dynamically allocated */
 	free_menu_paths();

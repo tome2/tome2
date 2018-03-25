@@ -260,7 +260,7 @@ void do_cmd_message_one()
 
 	auto message = messages.at(0);
 
-	cptr msg = format("> %s", message.text_with_count().c_str());
+	const char *msg = format("> %s", message.text_with_count().c_str());
 
 	/* Recall one message XXX XXX XXX */
 	display_message(0, 0, strlen(msg), message.color, msg);
@@ -628,7 +628,7 @@ static void interact_with_options(std::vector<option_type> const &options, char 
 /*
  * Interact with some options for cheating
  */
-static void do_cmd_options_cheat(cptr info)
+static void do_cmd_options_cheat(const char *info)
 {
 	// Interact
 	interact_with_options(options->cheat_options, info, interaction_mode_t::READ_WRITE);
@@ -665,7 +665,7 @@ s16b toggle_frequency(s16b current)
 /*
  * Interact with some options for cheating
  */
-static void do_cmd_options_autosave(cptr info)
+static void do_cmd_options_autosave(const char *info)
 {
 	char ch;
 
@@ -794,7 +794,7 @@ static void do_cmd_options_autosave(cptr info)
 /*
  * Interact with some options
  */
-void do_cmd_options_aux(int page, cptr info, bool_ read_only)
+void do_cmd_options_aux(int page, const char *info, bool_ read_only)
 {
 	// Scrape together all the options from the relevant page.
 	std::vector<option_type> page_options;
@@ -856,7 +856,7 @@ static void do_cmd_options_win()
 		{
 			byte a = TERM_WHITE;
 
-			cptr s = angband_term_name[j];
+			const char *s = angband_term_name[j];
 
 			/* Use color */
 			if (j == x) a = TERM_L_BLUE;
@@ -870,7 +870,7 @@ static void do_cmd_options_win()
 		{
 			byte a = TERM_WHITE;
 
-			cptr str = window_flag_desc[i];
+			const char *str = window_flag_desc[i];
 
 			/* Use color */
 			if (i == y) a = TERM_L_BLUE;
@@ -998,7 +998,7 @@ static void do_cmd_options_win()
  * Write all current options to the given preference file in the
  * lib/user directory. Modified from KAmband 1.8.
  */
-static errr option_dump(cptr fname)
+static errr option_dump(const char *fname)
 {
 	int i, j;
 
@@ -1428,7 +1428,7 @@ void do_cmd_pref()
 /*
  * Hack -- append all current macros to the given file
  */
-static errr macro_dump(cptr fname)
+static errr macro_dump(const char *fname)
 {
 	int i;
 
@@ -1575,7 +1575,7 @@ static void do_cmd_macro_aux_keymap(char *buf)
 /*
  * Hack -- append all keymaps to the given file
  */
-static errr keymap_dump(cptr fname)
+static errr keymap_dump(const char *fname)
 {
 	int i;
 
@@ -1609,7 +1609,7 @@ static errr keymap_dump(cptr fname)
 	/* Dump them */
 	for (i = 0; i < 256; i++)
 	{
-		cptr act;
+		const char *act;
 
 		/* Loop up the keymap */
 		act = keymap_act[mode][i];
@@ -1882,7 +1882,7 @@ void do_cmd_macros()
 		/* Query a keymap */
 		else if (i == '7')
 		{
-			cptr act;
+			const char *act;
 
 			/* Prompt */
 			prt("Command: Query a keymap", 16, 0);
@@ -2553,7 +2553,7 @@ void do_cmd_colors()
 				int gv = angband_color_table[i][2];
 				int bv = angband_color_table[i][3];
 
-				cptr name = "unknown";
+				const char *name = "unknown";
 
 				/* Skip non-entries */
 				if (!kv && !rv && !gv && !bv) continue;
@@ -2590,7 +2590,7 @@ void do_cmd_colors()
 			/* Hack -- query until done */
 			while (1)
 			{
-				cptr name;
+				const char *name;
 
 				/* Clear */
 				clear_from(10);
@@ -2708,7 +2708,7 @@ void do_cmd_version()
 /*
  * Array of feeling strings
  */
-static cptr do_cmd_feeling_text[11] =
+static const char *do_cmd_feeling_text[11] =
 {
 	"Looks like any other level.",
 	"You feel there is something special about this level.",
@@ -3328,10 +3328,10 @@ static void plural_aux(char *name)
 	/* "someone of something" */
 	else if (strstr(name, " of "))
 	{
-		cptr aider = strstr(name, " of ");
+		const char *aider = strstr(name, " of ");
 		char dummy[80];
 		int i = 0;
-		cptr ctr = name;
+		const char *ctr = name;
 
 		while (ctr < aider)
 		{

@@ -94,11 +94,11 @@ std::string user_name()
 * But leading tilde symbols must be handled in a special way
 * Replace "~/" by the home directory of the current user
 */
-errr path_parse(char *buf, int max, cptr file)
+errr path_parse(char *buf, int max, const char *file)
 {
-	cptr	u, s;
-	struct passwd	*pw;
-
+	const char *u;
+	const char *s;
+	struct passwd *pw;
 
 	/* Assume no result */
 	buf[0] = '\0';
@@ -154,7 +154,7 @@ errr path_parse(char *buf, int max, cptr file)
 * This requires no special processing on simple machines,
 * except for verifying the size of the filename.
 */
-errr path_parse(char *buf, int max, cptr file)
+errr path_parse(char *buf, int max, const char *file)
 {
 	/* Accept the filename */
 	strnfmt(buf, max, "%s", file);
@@ -180,7 +180,7 @@ errr path_parse(char *buf, int max, cptr file)
 * Note that this function yields a path which must be "parsed"
 * using the "parse" function above.
 */
-errr path_build(char *buf, int max, cptr path, cptr file)
+errr path_build(char *buf, int max, const char *path, const char *file)
 {
 	/* Special file */
 	if (file[0] == '~')
@@ -218,7 +218,7 @@ errr path_build(char *buf, int max, cptr path, cptr file)
 /*
 * Hack -- replacement for "fopen()"
 */
-FILE *my_fopen(cptr file, cptr mode)
+FILE *my_fopen(const char *file, const char *mode)
 {
 
 	char buf[1024];
@@ -336,7 +336,7 @@ errr my_fgets(FILE *fff, char *buf, unsigned long n)
 /*
 * Hack -- attempt to delete a file
 */
-errr fd_kill(cptr file)
+errr fd_kill(const char *file)
 {
 	char buf[1024];
 
@@ -354,7 +354,7 @@ errr fd_kill(cptr file)
 /*
 * Hack -- attempt to move a file
 */
-errr fd_move(cptr file, cptr what)
+errr fd_move(const char *file, const char *what)
 {
 	char buf[1024];
 	char aux[1024];
@@ -381,7 +381,7 @@ errr fd_move(cptr file, cptr what)
 * Note that we assume that the file should be "binary"
 *
 */
-int fd_make(cptr file, int mode)
+int fd_make(const char *file, int mode)
 {
 	char buf[1024];
 
@@ -401,7 +401,7 @@ return (open(buf, O_CREAT | O_EXCL | O_WRONLY | O_BINARY, mode));
 *
 * Note that we assume that the file should be "binary"
 */
-int fd_open(cptr file, int flags)
+int fd_open(const char *file, int flags)
 {
 	char buf[1024];
 
@@ -475,7 +475,7 @@ errr fd_read(int fd, char *buf, unsigned long n)
 /*
 * Hack -- Attempt to write data to a file descriptor
 */
-errr fd_write(int fd, cptr buf, unsigned long n)
+errr fd_write(int fd, const char *buf, unsigned long n)
 {
 	/* Verify the fd */
 	if (fd < 0) return ( -1);
@@ -615,15 +615,15 @@ static int dehex(char c)
 }
 
 
-static void trigger_text_to_ascii(char **bufptr, cptr *strptr)
+static void trigger_text_to_ascii(char **bufptr, const char **strptr)
 {
 	char *s = *bufptr;
-	cptr str = *strptr;
+	const char *str = *strptr;
 	bool_ mod_status[MAX_MACRO_MOD];
 
 	int i, len = 0;
 	int shiftstatus = 0;
-	cptr key_code;
+	const char *key_code;
 
 	if (macro_template == NULL)
 		return;
@@ -713,7 +713,7 @@ static void trigger_text_to_ascii(char **bufptr, cptr *strptr)
 * parsing "\xFF" into a (signed) char.  Whoever thought of making
 * the "sign" of a "char" undefined is a complete moron.  Oh well.
 */
-void text_to_ascii(char *buf, cptr str)
+void text_to_ascii(char *buf, const char *str)
 {
 	char *s = buf;
 
@@ -838,13 +838,13 @@ void text_to_ascii(char *buf, cptr str)
 }
 
 
-bool_ trigger_ascii_to_text(char **bufptr, cptr *strptr)
+static bool_ trigger_ascii_to_text(char **bufptr, const char **strptr)
 {
 	char *s = *bufptr;
-	cptr str = *strptr;
+	const char *str = *strptr;
 	char key_code[100];
 	int i;
-	cptr tmp;
+	const char *tmp;
 
 	if (macro_template == NULL)
 		return FALSE;
@@ -903,7 +903,7 @@ bool_ trigger_ascii_to_text(char **bufptr, cptr *strptr)
 /*
 * Hack -- convert a string into a printable form
 */
-void ascii_to_text(char *buf, cptr str)
+void ascii_to_text(char *buf, const char *str)
 {
 	char *s = buf;
 
@@ -1011,7 +1011,7 @@ static bool_ macro__use[256];
 /*
 * Find the macro (if any) which exactly matches the given pattern
 */
-int macro_find_exact(cptr pat)
+int macro_find_exact(const char *pat)
 {
 	int i;
 
@@ -1039,7 +1039,7 @@ int macro_find_exact(cptr pat)
 /*
 * Find the first macro (if any) which contains the given pattern
 */
-static int macro_find_check(cptr pat)
+static int macro_find_check(const char *pat)
 {
 	int i;
 
@@ -1067,7 +1067,7 @@ static int macro_find_check(cptr pat)
 /*
 * Find the first macro (if any) which contains the given pattern and more
 */
-static int macro_find_maybe(cptr pat)
+static int macro_find_maybe(const char *pat)
 {
 	int i;
 
@@ -1098,7 +1098,7 @@ static int macro_find_maybe(cptr pat)
 /*
 * Find the longest macro (if any) which starts with the given pattern
 */
-static int macro_find_ready(cptr pat)
+static int macro_find_ready(const char *pat)
 {
 	int i, t, n = -1, s = -1;
 
@@ -1144,7 +1144,7 @@ static int macro_find_ready(cptr pat)
 * with some kind of "powerful keymap" ability, but this might make it hard
 * to change the "roguelike" option from inside the game.  XXX XXX XXX
 */
-errr macro_add(cptr pat, cptr act)
+errr macro_add(const char *pat, const char *act)
 {
 	int n;
 
@@ -1275,7 +1275,8 @@ static char inkey_aux()
 
 	char ch;
 
-	cptr pat, act;
+	const char *pat;
+	const char *act;
 
 	char buf[1024];
 
@@ -1413,7 +1414,7 @@ static char inkey_aux()
 * trigger any macros, and cannot be bypassed by the Borg.  It is used
 * in Angband to handle "keymaps".
 */
-static cptr inkey_next = NULL;
+static const char *inkey_next = NULL;
 
 bool_ inkey_flag = FALSE;
 
@@ -1702,7 +1703,7 @@ static void msg_flush(int x)
 }
 
 /* Display a message */
-void display_message(int x, int y, int split, byte color, cptr t)
+void display_message(int x, int y, int split, byte color, const char *t)
 {
 	int i = 0, j = 0;
 
@@ -1756,7 +1757,7 @@ void display_message(int x, int y, int split, byte color, cptr t)
 * XXX XXX XXX Note that "msg_print(NULL)" will clear the top line
 * even if no messages are pending.  This is probably a hack.
 */
-void cmsg_print(byte color, cptr msg)
+void cmsg_print(byte color, const char *msg)
 {
 	auto &messages = game->messages;
 
@@ -1892,7 +1893,7 @@ void cmsg_print(byte color, std::string const &msg)
 }
 
 /* Hack -- for compatibility and easy sake */
-void msg_print(cptr msg)
+void msg_print(const char *msg)
 {
 	cmsg_print(TERM_WHITE, msg);
 }
@@ -1943,7 +1944,7 @@ void screen_load()
 /*
 * Display a formatted message, using "vstrnfmt()" and "msg_print()".
 */
-void msg_format(cptr fmt, ...)
+void msg_format(const char *fmt, ...)
 {
 	va_list vp;
 
@@ -1962,7 +1963,7 @@ void msg_format(cptr fmt, ...)
 	cmsg_print(TERM_WHITE, buf);
 }
 
-void cmsg_format(byte color, cptr fmt, ...)
+void cmsg_format(byte color, const char *fmt, ...)
 {
 	va_list vp;
 
@@ -1981,7 +1982,7 @@ void cmsg_format(byte color, cptr fmt, ...)
 	cmsg_print(color, buf);
 }
 
-void c_put_str(byte attr, cptr str, int row, int col)
+void c_put_str(byte attr, const char *str, int row, int col)
 {
 	Term_putstr(col, row, -1, attr, str);
 }
@@ -1991,7 +1992,7 @@ void c_put_str(byte attr, std::string const &str, int row, int col)
 	Term_putstr(col, row, -1, attr, str.c_str());
 }
 
-void put_str(cptr str, int row, int col)
+void put_str(const char *str, int row, int col)
 {
 	Term_putstr(col, row, -1, TERM_WHITE, str);
 }
@@ -2006,7 +2007,7 @@ void put_str(std::string const &str, int row, int col)
 * Display a string on the screen using an attribute, and clear
 * to the end of the line.
 */
-void c_prt(byte attr, cptr str, int row, int col)
+void c_prt(byte attr, const char *str, int row, int col)
 {
 	/* Clear line, position cursor */
 	Term_erase(col, row, 255);
@@ -2020,7 +2021,7 @@ void c_prt(byte attr, std::string const &s, int row, int col)
 	c_prt(attr, s.c_str(), row, col);
 }
 
-void prt(cptr str, int row, int col)
+void prt(const char *str, int row, int col)
 {
 	c_prt(TERM_WHITE, str, row, col);
 }
@@ -2044,7 +2045,7 @@ void prt(std::string const &s, int row, int col)
  * This function will correctly handle any width up to the maximum legal
  * value of 256, though it works best for a standard 80 character width.
  */
-void text_out_to_screen(byte a, cptr str)
+void text_out_to_screen(byte a, const char *str)
 {
 	int x, y;
 
@@ -2052,7 +2053,7 @@ void text_out_to_screen(byte a, cptr str)
 
 	int wrap;
 
-	cptr s;
+	const char *s;
 
 
 	/* Obtain the size */
@@ -2154,7 +2155,7 @@ void text_out_to_screen(byte a, cptr str)
  * You must be careful to end all file output with a newline character
  * to "flush" the stored line position.
  */
-void text_out_to_file(byte a, cptr str)
+void text_out_to_file(byte a, const char *str)
 {
 	/* Current position on the line */
 	static int pos = 0;
@@ -2163,7 +2164,7 @@ void text_out_to_file(byte a, cptr str)
 	int wrap = 75;
 
 	/* Current location within "str" */
-	cptr s = str;
+	const char *s = str;
 
 	/* Unused parameter */
 	a;
@@ -2268,7 +2269,7 @@ void text_out_to_file(byte a, cptr str)
  * Output text to the screen or to a file depending on the selected
  * text_out hook.
  */
-void text_out(cptr str)
+void text_out(const char *str)
 {
 	text_out_c(TERM_WHITE, str);
 }
@@ -2283,7 +2284,7 @@ void text_out(std::string const &str)
  * Output text to the screen (in color) or to a file depending on the
  * selected hook.
  */
-void text_out_c(byte a, cptr str)
+void text_out_c(byte a, const char *str)
 {
 	text_out_hook(a, str);
 }
@@ -2525,7 +2526,7 @@ bool_ askfor_aux_with_completion(char *buf, int len)
 *
 * We clear the input, and return FALSE, on "ESCAPE".
 */
-bool_ get_string(cptr prompt, char *buf, int len)
+bool_ get_string(const char *prompt, char *buf, int len)
 {
 	bool_ res;
 
@@ -2553,7 +2554,7 @@ bool_ get_string(cptr prompt, char *buf, int len)
 *
 * Note that "[y/n]" is appended to the prompt.
 */
-bool_ get_check(cptr prompt)
+bool_ get_check(const char *prompt)
 {
 	int i;
 
@@ -2596,7 +2597,7 @@ bool_ get_check(cptr prompt)
 *
 * Returns TRUE unless the character is "Escape"
 */
-bool_ get_com(cptr prompt, char *command)
+bool_ get_com(const char *prompt, char *command)
 {
 	/* Paranoia XXX XXX XXX */
 	msg_print(NULL);
@@ -2623,7 +2624,7 @@ bool_ get_com(cptr prompt, char *command)
 *
 * Hack -- allow "command_arg" to specify a quantity
 */
-s32b get_quantity(cptr prompt, s32b max)
+s32b get_quantity(const char *prompt, s32b max)
 {
 	s32b amt;
 	int aamt;
@@ -2763,7 +2764,7 @@ void request_command(int shopping)
 
 	int mode;
 
-	cptr act;
+	const char *act;
 
 
 	/* Keymap mode */
@@ -3078,9 +3079,9 @@ int get_keymap_dir(char ch)
 
 	int mode;
 
-	cptr act;
+	const char *act;
 
-	cptr s;
+	const char *s;
 
 
 	/* Already a direction? */
@@ -3338,7 +3339,7 @@ void strlower(char *buf)
  * must exactly match (look out for commas and the like!), or else 0 is
  * returned. Case doesn't matter. -GSN-
  */
-int test_monster_name(cptr name)
+int test_monster_name(const char *name)
 {
 	auto const &r_info = game->edit_data.r_info;
 
@@ -3353,7 +3354,7 @@ int test_monster_name(cptr name)
 	return (0);
 }
 
-int test_mego_name(cptr needle)
+int test_mego_name(const char *needle)
 {
 	const auto &re_info = game->edit_data.re_info;
 
@@ -3374,7 +3375,7 @@ int test_mego_name(cptr needle)
  * must exactly match (look out for commas and the like!), or else -1 is
  * returned. Case doesn't matter. -DG-
  */
-int test_item_name(cptr needle)
+int test_item_name(const char *needle)
 {
 	auto const &k_info = game->edit_data.k_info;
 
@@ -3463,7 +3464,7 @@ std::string get_player_race_name(int pr, int ps)
 /*
  * Ask to select an item in a list
  */
-int ask_menu(cptr ask, const std::vector<std::string> &items)
+int ask_menu(const char *ask, const std::vector<std::string> &items)
 {
 	int ret = -1, i, start = 0;
 	char c;
@@ -3540,7 +3541,7 @@ int ask_menu(cptr ask, const std::vector<std::string> &items)
 /*
  * Determine if string "t" is a prefix of string "s"
  */
-bool_ prefix(cptr s, cptr t)
+bool_ prefix(const char *s, const char *t)
 {
 	/* Paranoia */
 	if (!s || !t)
@@ -3590,7 +3591,7 @@ void draw_box(int y, int x, int h, int w)
 /*
  * Displays a scrollable boxed list with a selected item
  */
-void display_list(int y, int x, int h, int w, cptr title, std::vector<std::string> const &list, std::size_t begin, std::size_t sel, byte sel_color)
+void display_list(int y, int x, int h, int w, const char *title, std::vector<std::string> const &list, std::size_t begin, std::size_t sel, byte sel_color)
 {
 	draw_box(y, x, h, w);
 	c_put_str(TERM_L_BLUE, title, y, x + ((w - strlen(title)) / 2));

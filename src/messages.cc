@@ -22,7 +22,7 @@ message const &Messages::at(int age) const
 	return buffer.at(i);
 }
 
-void Messages::add(cptr msg, byte color)
+void Messages::add(const char *msg, byte color)
 {
 	assert(msg != nullptr);
 	add(std::string(msg), color);
