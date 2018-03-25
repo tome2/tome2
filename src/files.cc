@@ -3996,7 +3996,6 @@ static long total_points()
 {
 	auto const &d_info = game->edit_data.d_info;
 	auto const &r_info = game->edit_data.r_info;
-	auto const &k_info = game->edit_data.k_info;
 
 	s16b max_dl = 0;
 	long temp, Total = 0;
