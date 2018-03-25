@@ -943,23 +943,6 @@ void report_magics()
  */
 bool_ lose_all_info()
 {
-	int i;
-
-	/* Forget info about objects */
-	for (i = 0; i < INVEN_TOTAL; i++)
-	{
-		object_type *o_ptr = &p_ptr->inventory[i];
-
-		/* Skip non-objects */
-		if (!o_ptr->k_ptr) continue;
-
-		/* Allow "protection" by the MENTAL flag */
-		if (o_ptr->ident & (IDENT_MENTAL)) continue;
-
-		/* Hack -- Clear the "known" flag */
-		o_ptr->ident &= ~(IDENT_KNOWN);
-	}
-
 	/* Recalculate bonuses */
 	p_ptr->update |= (PU_BONUS);
 
@@ -2210,7 +2193,7 @@ bool_ ident_all()
  */
 static bool item_tester_hook_no_mental(object_type const *o_ptr)
 {
-	return ((o_ptr->ident & (IDENT_MENTAL)) ? false : true);
+	return ((o_ptr->ident & IDENT_KNOWN) ? false : true);
 }
 
 /*

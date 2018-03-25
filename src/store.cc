@@ -947,9 +947,6 @@ static int store_carry(object_type *o_ptr)
 		return -1;
 	}
 
-	/* All store items are fully *identified* */
-	o_ptr->ident |= IDENT_MENTAL;
-
 	/* Erase the inscription */
 	o_ptr->inscription.clear();
 
@@ -2661,7 +2658,6 @@ void store_sell()
 		/* Identify it */
 		object_aware(q_ptr);
 		object_known(q_ptr);
-		q_ptr->ident |= IDENT_MENTAL;
 
 		/*
 		 * Hack -- Allocate charges between those wands or rods sold 
@@ -2774,14 +2770,6 @@ void store_examine()
 	if (wizard)
 	{
 		drop_near(o_ptr, -1, p_ptr->py, p_ptr->px);
-	}
-
-	/* Require full knowledge */
-	if (!(o_ptr->ident & (IDENT_MENTAL)))
-	{
-		/* This can only happen in the home */
-		msg_print("You have no special knowledge about that item.");
-		return;
 	}
 
 	/* Description */

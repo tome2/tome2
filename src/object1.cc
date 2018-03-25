@@ -646,19 +646,11 @@ object_flag_set object_flags_known(object_type const *o_ptr)
 	{
 		auto a_ptr = &a_info[o_ptr->name1];
 
-		/* Need full knowledge or spoilers */
-		if ((o_ptr->ident & IDENT_MENTAL))
-		{
-			flags = a_ptr->flags;
+		flags = a_ptr->flags;
 
-			if ((!object_flags_no_set) && (a_ptr->set != -1))
-			{
-				apply_flags_set(o_ptr->name1, a_ptr->set, &flags);
-			}
-		}
-		else
+		if ((!object_flags_no_set) && (a_ptr->set != -1))
 		{
-			flags = object_flag_set();
+			apply_flags_set(o_ptr->name1, a_ptr->set, &flags);
 		}
 
 		flags |= a_ptr->oflags;
@@ -667,19 +659,8 @@ object_flag_set object_flags_known(object_type const *o_ptr)
 	/* Random artifact or ego item! */
 	if (o_ptr->art_flags)
 	{
-		/* Need full knowledge or spoilers */
-		if ((o_ptr->ident & IDENT_MENTAL))
-		{
-			flags |= o_ptr->art_flags;
-		}
-
+		flags |= o_ptr->art_flags;
 		flags |= o_ptr->art_oflags;
-	}
-
-	/* Full knowledge for *identified* objects */
-	if (!(o_ptr->ident & IDENT_MENTAL))
-	{
-		return flags;
 	}
 
 	/* Extra powers */
@@ -2142,14 +2123,7 @@ bool_ object_out_desc(object_type *o_ptr, FILE *fff, bool_ trim_down, bool_ wait
 	object_flag_set flags;
 
 	/* Extract the flags */
-	if ((!(o_ptr->ident & (IDENT_MENTAL))) && (!fff))
-	{
-		flags = o_ptr->art_oflags;
-	}
-	else
-	{
-		flags = object_flags(o_ptr);
-	}
+	flags = object_flags(o_ptr);
 
 	if (fff)
 	{
@@ -3005,10 +2979,9 @@ bool_ object_out_desc(object_type *o_ptr, FILE *fff, bool_ trim_down, bool_ wait
 			}
 		}
 
-		if (!object_known_p(o_ptr))
+		if (!object_known_p(o_ptr)) {
 			text_out("\nYou might need to identify the item to know some more about it...");
-		else if (!(o_ptr->ident & (IDENT_MENTAL)))
-			text_out("\nYou might need to *identify* the item to know more about it...");
+		}
 	}
 
 	/* Copying how others seem to do it. -- neil */
@@ -3645,7 +3618,7 @@ byte get_item_letter_color(object_type const *o_ptr)
 	if (ego_item_p(o_ptr)) color = TERM_L_BLUE;
 	if (artifact_p(o_ptr)) color = TERM_YELLOW;
 	if (o_ptr->name1 && ( -1 != a_info[o_ptr->name1].set)) color = TERM_GREEN;
-	if (o_ptr->name1 && (a_info[o_ptr->name1].flags & TR_ULTIMATE) && (o_ptr->ident & (IDENT_MENTAL))) color = TERM_VIOLET;
+	if (o_ptr->name1 && (a_info[o_ptr->name1].flags & TR_ULTIMATE)) color = TERM_VIOLET;
 
 	return (color);
 }

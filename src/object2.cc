@@ -704,14 +704,12 @@ s16b get_obj_num(int level)
 void object_known(object_type *o_ptr)
 {
 	auto previously_known = object_known_p(o_ptr);
-	bool previously_fully_known = o_ptr->ident & IDENT_MENTAL;
 
 	/* Mark the item as fully known */
 	o_ptr->ident |= IDENT_KNOWN;
-	o_ptr->ident |= IDENT_MENTAL;
 
 	/* If the status changed, then we invoke the hook */
-	if ((!previously_known) || (!previously_fully_known))
+	if (!previously_known)
 	{
 		identify_hooks(o_ptr);
 	}
@@ -1635,9 +1633,6 @@ void object_absorb(object_type *o_ptr, object_type *j_ptr)
 
 	/* Hack -- blend "known" status */
 	if (object_known_p(j_ptr)) object_known(o_ptr);
-
-	/* Hack -- blend "mental" status */
-	if (j_ptr->ident & (IDENT_MENTAL)) o_ptr->ident |= (IDENT_MENTAL);
 
 	/* Hack -- blend "inscriptions" */
 	if (!j_ptr->inscription.empty())

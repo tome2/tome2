@@ -244,9 +244,6 @@ static bool quest_ultra_good_death_hook(void *, void *in_, void *)
 		object_aware(q_ptr);
 		object_known(q_ptr);
 
-		/* Mark the item as fully known */
-		q_ptr->ident |= (IDENT_MENTAL);
-
 		/* Find a space */
 		for (i = 0; i < INVEN_PACK; i++)
 		{
