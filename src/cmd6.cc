@@ -6058,27 +6058,6 @@ const char *activation_aux(object_type * o_ptr, bool_ doit, int item)
 			break;
 		}
 
-	case ACT_ID_FULL:
-		{
-			if (!doit) return "identify true every 750 turns";
-			msg_print("It glows yellow...");
-			identify_fully();
-
-			o_ptr->timeout = 750;
-
-			break;
-		}
-
-	case ACT_ID_PLAIN:
-		{
-			if (!doit) return "identify spell every 10 turns";
-			if (!ident_spell()) break;
-
-			o_ptr->timeout = 10;
-
-			break;
-		}
-
 	case ACT_RUNE_EXPLO:
 		{
 			if (!doit) return "explosive rune every 200 turns";

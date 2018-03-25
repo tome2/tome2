@@ -2795,7 +2795,7 @@ F:SLAY_EVIL
 F:SPELL_CONTAIN
 F:WIELD_CAST
 F:WIS
-a:ID_PLAIN
+a:DETECT_ALL
 D:The radiant golden staff of an Istari of legend, this wizard's companion 
 D:grants keen sight and the knowledge of many hidden things.
 

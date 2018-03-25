@@ -809,8 +809,6 @@
 #define ACT_MAP_LIGHT           112
 #define ACT_DETECT_ALL          113
 #define ACT_DETECT_XTRA         114
-#define ACT_ID_FULL             115
-#define ACT_ID_PLAIN            116
 #define ACT_RUNE_EXPLO          117
 #define ACT_RUNE_PROT           118
 #define ACT_SATIATE             119

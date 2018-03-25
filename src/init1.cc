@@ -404,8 +404,8 @@ static const char *activation_names[] =
 	"MAP_LIGHT",            /*  112*/
 	"DETECT_ALL",           /*  113*/
 	"DETECT_XTRA",          /*  114*/
-	"ID_FULL",              /*  115*/
-	"ID_PLAIN",             /*  116*/
+	"XXX115",               /*  115*/
+	"XXX116",               /*  116*/
 	"RUNE_EXPLO",           /*  117*/
 	"RUNE_PROT",            /*  118*/
 	"SATIATE",              /*  119*/
