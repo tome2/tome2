@@ -39,7 +39,6 @@ bool_ enchant(object_type *o_ptr, int n, int eflag);
 bool_ enchant_spell(int num_hit, int num_dam, int num_ac, int num_pval);
 bool_ ident_spell();
 bool_ ident_all();
-bool_ identify_fully();
 bool_ recharge(int num);
 void aggravate_monsters(int who);
 void genocide();

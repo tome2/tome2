@@ -6008,12 +6008,11 @@ const char *activation_aux(object_type * o_ptr, bool_ doit, int item)
 
 	case ACT_DETECT_XTRA:
 		{
-			if (!doit) return "detection and identify true every 1000 turns";
+			if (!doit) return "detection every 500 turns";
 			msg_print("It glows brightly...");
 			detect_all(DEFAULT_RADIUS);
-			identify_fully();
 
-			o_ptr->timeout = 1000;
+			o_ptr->timeout = 500;
 
 			break;
 		}
