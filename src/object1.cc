@@ -6122,31 +6122,27 @@ static void apply_flags_set(s16b a_idx, s16b set_idx, object_flag_set *f)
 	}
 }
 
-/*
- * Return the "attr" for a given item.
- * Use "flavor" if available.
- * Default to user definitions.
- */
-
 byte object_attr(object_type const *o_ptr)
 {
 	auto const &random_artifacts = game->random_artifacts;
+
+	auto k_ptr = o_ptr->k_ptr;
 
 	if (o_ptr->tval == TV_RANDART)
 	{
 		return random_artifacts[o_ptr->sval].attr;
 	}
-	else if (!o_ptr->k_ptr)
+	else if (!k_ptr)
 	{
 		return 0;
 	}
-	else if (o_ptr->k_ptr->flavor)
+	else if (k_ptr->flavor)
 	{
-		return misc_to_attr[o_ptr->k_ptr->flavor];
+		return misc_to_attr[k_ptr->flavor];
 	}
 	else
 	{
-		return o_ptr->k_ptr->x_attr;
+		return k_ptr->x_attr;
 	}
 }
 
@@ -6154,61 +6150,59 @@ byte object_attr_default(object_type const *o_ptr)
 {
 	auto const &random_artifacts = game->random_artifacts;
 
+	auto k_ptr = o_ptr->k_ptr;
+
 	if (o_ptr->tval == TV_RANDART)
 	{
 		return random_artifacts[o_ptr->sval].attr;
 	}
-	else if (!o_ptr->k_ptr)
+	else if (!k_ptr)
 	{
 		return 0;
 	}
-	else if (o_ptr->k_ptr->flavor)
+	else if (k_ptr->flavor)
 	{
-		return misc_to_attr[o_ptr->k_ptr->flavor];
+		return misc_to_attr[k_ptr->flavor];
 	}
 	else
 	{
-		return o_ptr->k_ptr->d_attr;
+		return k_ptr->d_attr;
 	}
 }
 
-/*
- * Return the "char" for a given item.
- * Use "flavor" if available.
- * Default to user definitions.
- */
-
 char object_char(object_type const *o_ptr)
 {
-	if (!o_ptr->k_ptr)
+	auto k_ptr = o_ptr->k_ptr;
+
+	if (!k_ptr)
 	{
 		return '\0';
 	}
-
-	if (o_ptr->k_ptr->flavor)
+	else if (k_ptr->flavor)
 	{
-		return misc_to_char[o_ptr->k_ptr->flavor];
+		return misc_to_char[k_ptr->flavor];
 	}
 	else
 	{
-		return o_ptr->k_ptr->x_char;
+		return k_ptr->x_char;
 	}
 }
 
 char object_char_default(object_type const *o_ptr)
 {
-	if (!o_ptr->k_ptr)
+	auto k_ptr = o_ptr->k_ptr;
+
+	if (!k_ptr)
 	{
 		return '\0';
 	}
-
-	if (o_ptr->k_ptr->flavor)
+	else if (k_ptr->flavor)
 	{
-		return misc_to_char[o_ptr->k_ptr->flavor];
+		return misc_to_char[k_ptr->flavor];
 	}
 	else
 	{
-		return o_ptr->k_ptr->d_char;
+		return k_ptr->d_char;
 	}
 }
 
