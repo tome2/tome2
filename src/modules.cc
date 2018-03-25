@@ -672,7 +672,6 @@ static bool food_vessel(void *, void *in_, void *ut)
 
 		object_prep(&forge, lookup_kind(TV_JUNK, 3));
 
-		forge.ident |= IDENT_MENTAL | IDENT_KNOWN;
 		inven_carry(&forge, FALSE);
 
 		return true;

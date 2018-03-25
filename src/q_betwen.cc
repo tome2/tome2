@@ -149,10 +149,8 @@ static bool quest_between_finish_hook(void *, void *in_, void *)
 	get_golden_horn()->allow_special = TRUE;
 	apply_magic(q_ptr, -1, TRUE, TRUE, TRUE);
 	get_golden_horn()->allow_special = FALSE;
-	object_aware(q_ptr);
-	object_known(q_ptr);
+
 	q_ptr->discount = 100;
-	q_ptr->ident |= IDENT_STOREB;
 	inven_carry(q_ptr, FALSE);
 
 	/* Continue the plot */

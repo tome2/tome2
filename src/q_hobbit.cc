@@ -175,9 +175,6 @@ static bool quest_hobbit_chat_hook(void *, void *in_, void *)
 		object_prep(q_ptr, lookup_kind(TV_ROD, SV_ROD_RECALL));
 		q_ptr->number = 1;
 		q_ptr->found = OBJ_FOUND_REWARD;
-		object_aware(q_ptr);
-		object_known(q_ptr);
-		q_ptr->ident |= IDENT_STOREB;
 		inven_carry(q_ptr, FALSE);
 
 		cquest.status = QUEST_STATUS_FINISHED;

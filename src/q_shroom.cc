@@ -218,10 +218,7 @@ static bool quest_shroom_give_hook(void *, void *in_, void *)
 		q_ptr->number = 1;
 		q_ptr->name1 = 149;
 		apply_magic(q_ptr, -1, TRUE, TRUE, TRUE);
-		object_aware(q_ptr);
-		object_known(q_ptr);
 		q_ptr->discount = 100;
-		q_ptr->ident |= IDENT_STOREB;
 		inven_carry(q_ptr, FALSE);
 
 		delete_monster_idx(m_idx);

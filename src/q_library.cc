@@ -452,8 +452,6 @@ void quest_library_building(bool_ *paid, bool_ *recreate)
 				object_prep(q_ptr, lookup_kind(TV_BOOK, 61));
 				q_ptr->artifact_name = game->player_name;
 				q_ptr->found = OBJ_FOUND_REWARD;
-				object_aware(q_ptr);
-				object_known(q_ptr);
 				inven_carry(q_ptr, FALSE);
 			}
 

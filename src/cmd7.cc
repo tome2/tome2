@@ -1889,9 +1889,7 @@ void do_cmd_archer()
 				q_ptr->number = (byte)rand_range(15, 30);
 			else
 				q_ptr->number = 1;
-			object_aware(q_ptr);
-			object_known(q_ptr);
-			q_ptr->ident |= IDENT_MENTAL;
+
 			apply_magic(q_ptr, dun_level, TRUE, TRUE, (magik(20)) ? TRUE : FALSE);
 			q_ptr->discount = 90;
 			q_ptr->found = OBJ_FOUND_SELFMADE;
@@ -1928,9 +1926,7 @@ void do_cmd_archer()
 			q_ptr->number = (byte)rand_range(15, 30);
 		else
 			q_ptr->number = 1;
-		object_aware(q_ptr);
-		object_known(q_ptr);
-		q_ptr->ident |= IDENT_MENTAL;
+
 		apply_magic(q_ptr, dun_level, TRUE, TRUE, (magik(20)) ? TRUE : FALSE);
 		q_ptr->discount = 90;
 		q_ptr->found = OBJ_FOUND_SELFMADE;
@@ -1964,9 +1960,7 @@ void do_cmd_archer()
 			q_ptr->number = (byte)rand_range(15, 30);
 		else
 			q_ptr->number = 1;
-		object_aware(q_ptr);
-		object_known(q_ptr);
-		q_ptr->ident |= IDENT_MENTAL;
+
 		apply_magic(q_ptr, dun_level, TRUE, TRUE, (magik(20)) ? TRUE : FALSE);
 		q_ptr->discount = 90;
 		q_ptr->found = OBJ_FOUND_SELFMADE;
@@ -2233,11 +2227,8 @@ void do_cmd_necromancer()
 				o_ptr->timeout = dur;
 
 				/* These objects are "storebought" */
-				o_ptr->ident |= IDENT_MENTAL;
 				o_ptr->number = 1;
 
-				object_aware(o_ptr);
-				object_known(o_ptr);
 				inven_carry(o_ptr, FALSE);
 
 				k_info[k_idx]->allow_special = FALSE;
@@ -2536,9 +2527,6 @@ void do_cmd_summoner_extract()
 	q_ptr->pval2 = 0;
 	q_ptr->number = 1;
 	q_ptr->found = OBJ_FOUND_SELFMADE;
-	object_aware(q_ptr);
-	object_known(q_ptr);
-	q_ptr->ident |= IDENT_MENTAL;
 	inven_carry(q_ptr, FALSE);
 
 	msg_print("You extract a totem from the dead corpse.");
@@ -3264,9 +3252,6 @@ void do_cmd_create_boulder()
 		/* Hack -- Give the player some shots */
 		object_prep(q_ptr, lookup_kind(TV_JUNK, SV_BOULDER));
 		q_ptr->number = (byte)rand_range(2, 5);
-		object_aware(q_ptr);
-		object_known(q_ptr);
-		q_ptr->ident |= IDENT_MENTAL;
 		q_ptr->discount = 90;
 		q_ptr->found = OBJ_FOUND_SELFMADE;
 

@@ -1273,13 +1273,9 @@ void do_cmd_eat_food()
 			{
 				msg_print("That tastes good.");
 
-
 				q_ptr = &forge;
 				object_prep(q_ptr, lookup_kind(TV_BOTTLE, 1));
 				q_ptr->number = 1;
-				object_aware(q_ptr);
-				object_known(q_ptr);
-				q_ptr->ident |= IDENT_STOREB;
 				inven_carry(q_ptr, FALSE);
 
 				break;

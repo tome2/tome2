@@ -128,9 +128,6 @@ static bool quest_eol_finish_hook(void *, void *in_, void *)
 	q_ptr->name2 = EGO_LITE_MAGI;
 	apply_magic(q_ptr, 1, FALSE, FALSE, FALSE);
 	q_ptr->number = 1;
-	object_aware(q_ptr);
-	object_known(q_ptr);
-	q_ptr->ident |= IDENT_STOREB;
 	inven_carry(q_ptr, FALSE);
 
 	/* Continue the plot */

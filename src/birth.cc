@@ -754,11 +754,8 @@ static void outfit_obj(object_proto const *proto)
 	}
 
 	/* These objects are "storebought" */
-	q_ptr->ident |= IDENT_MENTAL;
 	q_ptr->number = damroll(proto->dd, proto->ds);
 
-	object_aware(q_ptr);
-	object_known(q_ptr);
 	inven_carry(q_ptr, FALSE);
 }
 
@@ -781,8 +778,6 @@ static void player_outfit_object(int qty, int tval, int sval)
 	object_type *q_ptr = &forge;
 	object_prep(q_ptr, lookup_kind(tval, sval));
 	q_ptr->number = qty;
-	object_aware(q_ptr);
-	object_known(q_ptr);
 	inven_carry(q_ptr, FALSE);
 }
 
@@ -798,7 +793,6 @@ static void player_outfit_spellbook(cptr spell_name)
 		object_type *q_ptr = &forge;
 		object_prep(q_ptr, lookup_kind(TV_BOOK, 255));
 		q_ptr->pval = *spell_idx;
-		q_ptr->ident |= IDENT_MENTAL | IDENT_KNOWN;
 		inven_carry(q_ptr, FALSE);
 	}
 	else
@@ -938,7 +932,6 @@ static void player_outfit()
 		
 		object_prep(q_ptr, lookup_kind(TV_CLOAK, SV_MIMIC_CLOAK));
 		q_ptr->pval2 = resolve_mimic_name("Mouse");
-		q_ptr->ident |= IDENT_MENTAL | IDENT_KNOWN;
 		inven_carry(q_ptr, FALSE);
 	}
 
@@ -946,9 +939,6 @@ static void player_outfit()
 	{
 		/* Give everyone a scroll of WoR. */
 		player_outfit_object(1, TV_SCROLL, SV_SCROLL_WORD_OF_RECALL);
-
-		/* Identify everything in pack. */
-		identify_pack_fully();
 	}
 
 	if (rmp_ptr->title == "Vampire")
@@ -974,8 +964,6 @@ static void player_outfit()
 		object_prep(q_ptr, lookup_kind(TV_LITE, SV_LITE_TORCH));
 		q_ptr->number = (byte)rand_range(3, 7);
 		q_ptr->timeout = rand_range(3, 7) * 500;
-		object_aware(q_ptr);
-		object_known(q_ptr);
 		inven_carry(q_ptr, FALSE);
 	}
 

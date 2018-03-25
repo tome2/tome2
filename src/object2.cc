@@ -5597,6 +5597,23 @@ bool_ inven_carry_okay(object_type const *o_ptr)
 	return (FALSE);
 }
 
+/**
+ * Find an empty slot in the player's inventory.
+ */
+static boost::optional<int> find_empty_slot()
+{
+	for (int i = 0; i < INVEN_PACK; i++)
+	{
+		auto o_ptr = &p_ptr->inventory[i];
+
+		if (!o_ptr->k_ptr)
+		{
+			return i;
+		}
+	}
+
+	return boost::none;
+}
 
 /*
  * Add an item to the players inventory, and return the slot used.
@@ -5620,17 +5637,19 @@ bool_ inven_carry_okay(object_type const *o_ptr)
  */
 s16b inven_carry(object_type *o_ptr, bool_ final)
 {
-	int i, j, k;
+	// Auto-identify the item before we put it in the pack.
+	object_aware(o_ptr);
+
+	// Index of last item
 	int n = -1;
-	object_type *j_ptr;
 
 	/* Not final */
 	if (!final)
 	{
 		/* Check for combining */
-		for (j = 0; j < INVEN_PACK; j++)
+		for (int j = 0; j < INVEN_PACK; j++)
 		{
-			j_ptr = &p_ptr->inventory[j];
+			auto j_ptr = &p_ptr->inventory[j];
 
 			/* Skip non-objects */
 			if (!j_ptr->k_ptr)
@@ -5659,42 +5678,27 @@ s16b inven_carry(object_type *o_ptr, bool_ final)
 		}
 	}
 
-
 	/* Paranoia */
 	if (inven_cnt > INVEN_PACK)
 	{
 		return ( -1);
 	}
 
-
 	/* Find an empty slot */
-	for (j = 0; j <= INVEN_PACK; j++)
-	{
-		j_ptr = &p_ptr->inventory[j];
-
-		/* Use it if found */
-		if (!j_ptr->k_ptr)
-		{
-			break;
-		}
-	}
-
-	/* Use that slot */
-	i = j;
-
+	auto i = find_empty_slot()
+		.get_value_or(INVEN_PACK);
 
 	/* Hack -- pre-reorder the pack */
 	if (!final && (i < INVEN_PACK))
 	{
-		s32b o_value, j_value;
-
 		/* Get the "value" of the item */
-		o_value = object_value(o_ptr);
+		s32b o_value = object_value(o_ptr);
 
 		/* Scan every occupied slot */
+		int j;
 		for (j = 0; j < INVEN_PACK; j++)
 		{
-			j_ptr = &p_ptr->inventory[j];
+			auto j_ptr = &p_ptr->inventory[j];
 
 			/* Use empty slots */
 			if (!j_ptr->k_ptr)
@@ -5727,7 +5731,7 @@ s16b inven_carry(object_type *o_ptr, bool_ final)
 			}
 
 			/* Determine the "value" of the pack item */
-			j_value = object_value(j_ptr);
+			s32b j_value = object_value(j_ptr);
 
 			/* Objects sort by decreasing value */
 			if (o_value > j_value) break;
@@ -5738,7 +5742,7 @@ s16b inven_carry(object_type *o_ptr, bool_ final)
 		i = j;
 
 		/* Slide objects */
-		for (k = n; k >= i; k--)
+		for (int k = n; k >= i; k--)
 		{
 			/* Hack -- Slide the item */
 			object_copy(&p_ptr->inventory[k + 1], &p_ptr->inventory[k]);

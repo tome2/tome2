@@ -172,9 +172,7 @@ static bool quest_poison_finish_hook(void *, void *in_, void *)
 	q_ptr->number = 1;
 	q_ptr->name2 = EGO_ELVENKIND;
 	apply_magic(q_ptr, 1, FALSE, FALSE, FALSE);
-	object_aware(q_ptr);
-	object_known(q_ptr);
-	q_ptr->ident |= IDENT_STOREB;
+
 	inven_carry(q_ptr, FALSE);
 
 	/* Continue the plot */
@@ -212,9 +210,6 @@ static bool quest_poison_quest_hook(void *, void *in_, void *)
 	q_ptr = &forge;
 	object_prep(q_ptr, lookup_kind(TV_POTION2, SV_POTION2_CURE_WATER));
 	q_ptr->number = 99;
-	object_aware(q_ptr);
-	object_known(q_ptr);
-	q_ptr->ident |= IDENT_STOREB;
 	q_ptr->inscription = "quest";
 
 	inven_carry(q_ptr, FALSE);

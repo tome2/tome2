@@ -79,9 +79,6 @@ static bool quest_nazgul_finish_hook(void *, void *in_, void *)
 	object_prep(q_ptr, lookup_kind(TV_FOOD, SV_FOOD_ATHELAS));
 	q_ptr->found = OBJ_FOUND_REWARD;
 	q_ptr->number = 6;
-	object_aware(q_ptr);
-	object_known(q_ptr);
-	q_ptr->ident |= IDENT_STOREB;
 	inven_carry(q_ptr, FALSE);
 
 	/* End the plot */
