@@ -18,6 +18,7 @@
 #include "wilderness_map.hpp"
 
 #include <boost/multi_array.hpp>
+#include <unordered_map>
 
 /**
  * All structures for the game itself.
@@ -93,6 +94,11 @@ struct Game {
 	 * Timers
 	 */
 	std::vector<timer_type *> timers;
+
+	/**
+	 * Level generators
+	 */
+	std::unordered_map<std::string, std::function<bool()>> level_generators;
 
 	/**
 	 * Level markers for 'special' levels.

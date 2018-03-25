@@ -143,7 +143,7 @@ static void dig(maze_row *maze, int y, int x, int d)
 }
 
 
-bool_ level_generate_maze()
+bool level_generate_maze()
 {
 	int i, j, d;
 	int y, dy = 0;
@@ -288,7 +288,9 @@ bool_ level_generate_maze()
 
 	/* Determine the character location */
 	if (!new_player_spot(get_branch()))
-		return FALSE;
+	{
+		return false;
+	}
 
-	return TRUE;
+	return true;
 }

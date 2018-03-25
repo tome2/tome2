@@ -300,38 +300,6 @@ struct dun_data
 };
 
 /*
- * Level generator type
- */
-
-typedef struct level_generator_type level_generator_type;
-struct level_generator_type
-{
-	const char *name;
-	bool_ (*generator)();
-
-	struct level_generator_type *next;
-};
-
-static level_generator_type *level_generators = NULL;
-
-/*
- * Add a new generator
- */
-void add_level_generator(const char *name, bool_ (*generator)())
-{
-	assert(name != nullptr);
-
-	level_generator_type *g = new level_generator_type;
-
-	g->name = strdup(name);
-	g->generator = generator;
-
-	g->next = level_generators;
-	level_generators = g;
-}
-
-
-/*
  * Dungeon generation data -- see "cave_gen()"
  */
 static dun_data *dun;
@@ -6529,7 +6497,7 @@ static void fill_level(bool_ use_floor, byte smooth);
 /*
  * Generate a normal dungeon level
  */
-bool_ level_generate_dungeon()
+bool level_generate_dungeon()
 {
 	auto const &d_info = game->edit_data.d_info;
 
@@ -7026,9 +6994,11 @@ bool_ level_generate_dungeon()
 
 	/* Determine the character location */
 	if (!new_player_spot(branch))
-		return FALSE;
+	{
+		return false;
+	}
 
-	return TRUE;
+	return true;
 }
 
 /*
@@ -7449,7 +7419,7 @@ static void supersize_grid_tile(int sy, int sx, int ty, int tx)
  *
  * Note that "dun_body" adds about 4000 bytes of memory to the stack.
  */
-static bool_ cave_gen()
+static bool cave_gen()
 {
 	auto const &d_info = game->edit_data.d_info;
 	auto const &r_info = game->edit_data.r_info;
@@ -7462,8 +7432,6 @@ static bool_ cave_gen()
 	int max_vault_ok = 2;
 
 	bool_ empty_level = FALSE;
-
-	level_generator_type *generator;
 
 	dun_data dun_body;
 
@@ -7511,19 +7479,12 @@ static bool_ cave_gen()
 	set_bounders(empty_level);
 
 	/*
-	 * Call the good level generator
+	 * Call level generator
 	 */
-	generator = level_generators;
-	while (generator)
+	auto &generator = game->level_generators.at(generator_name);
+	if (!generator())
 	{
-		if (!strcmp(generator->name, generator_name))
-		{
-			if (!generator->generator())
-				return FALSE;
-			break;
-		}
-
-		generator = generator->next;
+		return false;
 	}
 
 	/* Generate stairs */
@@ -7959,7 +7920,7 @@ static bool_ cave_gen()
 		p_ptr->px *= 2;
 	}
 
-	return TRUE;
+	return true;
 }
 
 

@@ -138,7 +138,7 @@ void evolve_level(bool noise)
 }
 
 
-bool_ level_generate_life()
+bool level_generate_life()
 {
 	int i, j;
 
@@ -158,7 +158,9 @@ bool_ level_generate_life()
 
 	/* Determine the character location */
 	if (!new_player_spot(get_branch()))
-		return FALSE;
+	{
+		return false;
+	}
 
-	return TRUE;
+	return true;
 }

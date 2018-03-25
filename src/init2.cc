@@ -676,9 +676,12 @@ static errr init_other()
 	/*
 	 * Install the various level generators
 	 */
-	add_level_generator("dungeon", level_generate_dungeon);
-	add_level_generator("maze", level_generate_maze);
-	add_level_generator("life", level_generate_life);
+	{
+		auto &g = game->level_generators;
+		g.insert({ "dungeon", level_generate_dungeon });
+		g.insert({ "maze", level_generate_maze });
+		g.insert({ "life", level_generate_life });
+	}
 
 	/*** Pre-allocate space for the "format()" buffer ***/
 
