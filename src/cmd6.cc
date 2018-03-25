@@ -3860,7 +3860,7 @@ void do_cmd_zap_rod()
 {
 	auto const &k_info = game->edit_data.k_info;
 
-	int item, ident, chance, dir;
+	int item, chance, dir;
 
 	int cost;
 
@@ -3952,9 +3952,6 @@ void do_cmd_zap_rod()
 		energy_use /= 2;
 	}
 
-	/* Not identified yet */
-	ident = FALSE;
-
 	/* Extract the item level */
 	auto const &tip_ptr = k_info.at(lookup_kind(TV_ROD, o_ptr->pval));
 	auto const lev = tip_ptr->level;
@@ -4023,26 +4020,24 @@ void do_cmd_zap_rod()
 	{
 	case SV_ROD_HOME:
 		{
-			ident = TRUE;
-
 			do_cmd_home_trump();
-
 			break;
 		}
 
 	case SV_ROD_DETECT_DOOR:
 		{
-			if (detect_doors(DEFAULT_RADIUS)) ident = TRUE;
-			if (detect_stairs(DEFAULT_RADIUS)) ident = TRUE;
+			detect_doors(DEFAULT_RADIUS);
+			detect_stairs(DEFAULT_RADIUS);
 
 			break;
 		}
 
 	case SV_ROD_IDENTIFY:
 		{
-			ident = TRUE;
-
-			if (!ident_spell()) use_charge = FALSE;
+			if (!ident_spell())
+			{
+				use_charge = FALSE;
+			}
 
 			break;
 		}
@@ -4056,8 +4051,6 @@ void do_cmd_zap_rod()
 			else
 			{
 				recall_player(21, 15);
-
-				ident = TRUE;
 			}
 
 			break;
@@ -4065,60 +4058,50 @@ void do_cmd_zap_rod()
 
 	case SV_ROD_ILLUMINATION:
 		{
-			if (lite_area(damroll(2, 8), 2)) ident = TRUE;
-
+			lite_area(damroll(2, 8), 2);
 			break;
 		}
 
 	case SV_ROD_MAPPING:
 		{
 			map_area();
-
-			ident = TRUE;
-
 			break;
 		}
 
 	case SV_ROD_DETECTION:
 		{
 			detect_all(DEFAULT_RADIUS);
-
-			ident = TRUE;
-
 			break;
 		}
 
 	case SV_ROD_CURING:
 		{
-			if (set_blind(0)) ident = TRUE;
-			if (set_poisoned(0)) ident = TRUE;
-			if (set_confused(0)) ident = TRUE;
-			if (set_stun(0)) ident = TRUE;
-			if (set_cut(0)) ident = TRUE;
-			if (set_image(0)) ident = TRUE;
-
+			set_blind(0);
+			set_poisoned(0);
+			set_confused(0);
+			set_stun(0);
+			set_cut(0);
+			set_image(0);
 			break;
 		}
 
 	case SV_ROD_HEALING:
 		{
-			if (hp_player(500)) ident = TRUE;
-			if (set_stun(0)) ident = TRUE;
-			if (set_cut(0)) ident = TRUE;
-
+			hp_player(500);
+			set_stun(0);
+			set_cut(0);
 			break;
 		}
 
 	case SV_ROD_RESTORATION:
 		{
-			if (restore_level()) ident = TRUE;
-			if (do_res_stat(A_STR, TRUE)) ident = TRUE;
-			if (do_res_stat(A_INT, TRUE)) ident = TRUE;
-			if (do_res_stat(A_WIS, TRUE)) ident = TRUE;
-			if (do_res_stat(A_DEX, TRUE)) ident = TRUE;
-			if (do_res_stat(A_CON, TRUE)) ident = TRUE;
-			if (do_res_stat(A_CHR, TRUE)) ident = TRUE;
-
+			restore_level();
+			do_res_stat(A_STR, TRUE);
+			do_res_stat(A_INT, TRUE);
+			do_res_stat(A_WIS, TRUE);
+			do_res_stat(A_DEX, TRUE);
+			do_res_stat(A_CON, TRUE);
+			do_res_stat(A_CHR, TRUE);
 			break;
 		}
 
@@ -4126,20 +4109,18 @@ void do_cmd_zap_rod()
 		{
 			if (!p_ptr->fast)
 			{
-				if (set_fast(randint(30) + 15, 10)) ident = TRUE;
+				set_fast(randint(30) + 15, 10);
 			}
 			else
 			{
 				set_fast(p_ptr->fast + 5, 10);
 			}
-
 			break;
 		}
 
 	case SV_ROD_TELEPORT_AWAY:
 		{
-			if (teleport_monster(dir)) ident = TRUE;
-
+			teleport_monster(dir);
 			break;
 		}
 
@@ -4147,118 +4128,84 @@ void do_cmd_zap_rod()
 		{
 			msg_print("A line of blue shimmering light appears.");
 			lite_line(dir);
-
-			ident = TRUE;
-
 			break;
 		}
 
 	case SV_ROD_SLEEP_MONSTER:
 		{
-			if (sleep_monster(dir)) ident = TRUE;
-
+			sleep_monster(dir);
 			break;
 		}
 
 	case SV_ROD_SLOW_MONSTER:
 		{
-			if (slow_monster(dir)) ident = TRUE;
-
+			slow_monster(dir);
 			break;
 		}
 
 	case SV_ROD_DRAIN_LIFE:
 		{
-			if (drain_life(dir, 75)) ident = TRUE;
-
+			drain_life(dir, 75);
 			break;
 		}
 
 	case SV_ROD_POLYMORPH:
 		{
-			if (poly_monster(dir)) ident = TRUE;
-
+			poly_monster(dir);
 			break;
 		}
 
 	case SV_ROD_ACID_BOLT:
 		{
 			fire_bolt_or_beam(10, GF_ACID, dir, damroll(6, 8));
-
-			ident = TRUE;
-
 			break;
 		}
 
 	case SV_ROD_ELEC_BOLT:
 		{
 			fire_bolt_or_beam(10, GF_ELEC, dir, damroll(3, 8));
-
-			ident = TRUE;
-
 			break;
 		}
 
 	case SV_ROD_FIRE_BOLT:
 		{
 			fire_bolt_or_beam(10, GF_FIRE, dir, damroll(8, 8));
-
-			ident = TRUE;
-
 			break;
 		}
 
 	case SV_ROD_COLD_BOLT:
 		{
 			fire_bolt_or_beam(10, GF_COLD, dir, damroll(5, 8));
-
-			ident = TRUE;
-
 			break;
 		}
 
 	case SV_ROD_ACID_BALL:
 		{
 			fire_ball(GF_ACID, dir, 60, 2);
-
-			ident = TRUE;
-
 			break;
 		}
 
 	case SV_ROD_ELEC_BALL:
 		{
 			fire_ball(GF_ELEC, dir, 32, 2);
-
-			ident = TRUE;
-
 			break;
 		}
 
 	case SV_ROD_FIRE_BALL:
 		{
 			fire_ball(GF_FIRE, dir, 72, 2);
-
-			ident = TRUE;
-
 			break;
 		}
 
 	case SV_ROD_COLD_BALL:
 		{
 			fire_ball(GF_COLD, dir, 48, 2);
-
-			ident = TRUE;
-
 			break;
 		}
 
 	case SV_ROD_HAVOC:
 		{
 			call_chaos();
-
-			ident = TRUE;
-
 			break;
 		}
 
@@ -4273,8 +4220,8 @@ void do_cmd_zap_rod()
 	/* Tried the object */
 	object_tried(o_ptr);
 
-	/* Successfully determined the object function */
-	if (ident && !object_aware_p(o_ptr))
+	/* Identify */
+	if (!object_aware_p(o_ptr))
 	{
 		object_aware(o_ptr);
 		gain_exp((lev + (p_ptr->lev >> 1)) / p_ptr->lev);
