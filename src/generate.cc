@@ -830,9 +830,9 @@ static void place_fountain(int y, int x)
 	int maxsval = 0;
 
 	/* List of usable svals */
-	for (auto const &k_ref: k_info)
+	for (auto const &k_entry: k_info)
 	{
-		auto k_ptr = &k_ref;
+		auto k_ptr = &k_entry.second;
 
 		if (((k_ptr->tval == TV_POTION) || (k_ptr->tval == TV_POTION2)) &&
 				(k_ptr->level <= dun_level) && (k_ptr->flags & TR_FOUNTAIN))
@@ -7971,7 +7971,7 @@ static bool_ cave_gen()
 		}
 
 		if (m_idx && d_ptr->final_object &&
-		                (k_info[d_ptr->final_object].artifact == FALSE))
+		                (k_info.at(d_ptr->final_object).artifact == FALSE))
 		{
 			object_type *q_ptr, forge, *o_ptr;
 			int o_idx;
@@ -8003,7 +8003,7 @@ static bool_ cave_gen()
 
 				k_info[d_ptr->final_object].allow_special = FALSE;
 
-				k_info[d_ptr->final_object].artifact = TRUE;
+				k_info.at(d_ptr->final_object).artifact = TRUE;
 
 				/* Get the item */
 				o_ptr = &o_list[o_idx];

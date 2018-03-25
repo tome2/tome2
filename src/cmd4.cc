@@ -47,6 +47,7 @@
 #include <memory>
 #include <numeric>
 #include <string>
+#include <unordered_set>
 #include <vector>
 
 /*
@@ -2026,14 +2027,8 @@ void do_cmd_visuals()
 	auto &f_info = game->edit_data.f_info;
 	auto &k_info = game->edit_data.k_info;
 
-	int i;
-
-	FILE *fff;
-
 	char tmp[160];
-
 	char buf[1024];
-
 
 	/* Enter "icky" mode */
 	character_icky = TRUE;
@@ -2067,7 +2062,7 @@ void do_cmd_visuals()
 		prt("Command: ", 15, 0);
 
 		/* Prompt */
-		i = inkey();
+		int i = inkey();
 
 		/* Done */
 		if (i == ESCAPE) break;
@@ -2110,7 +2105,7 @@ void do_cmd_visuals()
 			path_build(buf, 1024, ANGBAND_DIR_USER, tmp);
 
 			/* Append to the file */
-			fff = my_fopen(buf, "a");
+			FILE *fff = my_fopen(buf, "a");
 
 			/* Failure */
 			if (!fff) continue;
@@ -2165,7 +2160,7 @@ void do_cmd_visuals()
 			path_build(buf, 1024, ANGBAND_DIR_USER, tmp);
 
 			/* Append to the file */
-			fff = my_fopen(buf, "a");
+			FILE *fff = my_fopen(buf, "a");
 
 			/* Failure */
 			if (!fff) continue;
@@ -2175,9 +2170,9 @@ void do_cmd_visuals()
 			fprintf(fff, "# Object attr/char definitions\n\n");
 
 			/* Dump objects */
-			for (std::size_t k = 0; k < k_info.size(); k++)
+			for (auto const &k_entry: k_info)
 			{
-				object_kind *k_ptr = &k_info[k];
+				auto const k_ptr = &k_entry.second;
 
 				/* Skip non-entries */
 				if (!k_ptr->name) continue;
@@ -2186,7 +2181,7 @@ void do_cmd_visuals()
 				fprintf(fff, "# %s\n", k_ptr->name);
 
 				/* Dump the object attr/char info */
-				fprintf(fff, "K:%zu:0x%02X:0x%02X\n\n", k,
+				fprintf(fff, "K:%d:0x%02X:0x%02X\n\n", k_entry.first,
 				        (byte)(k_ptr->x_attr), (byte)(k_ptr->x_char));
 			}
 
@@ -2219,7 +2214,7 @@ void do_cmd_visuals()
 			path_build(buf, 1024, ANGBAND_DIR_USER, tmp);
 
 			/* Append to the file */
-			fff = my_fopen(buf, "a");
+			FILE *fff = my_fopen(buf, "a");
 
 			/* Failure */
 			if (!fff) continue;
@@ -2312,7 +2307,10 @@ void do_cmd_visuals()
 		/* Modify object attr/chars */
 		else if (i == '7')
 		{
-			static int k = 0;
+			static auto const k_info_keys =
+				game->edit_data.k_info_keys();
+
+			static int k_idx = 0;
 
 			/* Prompt */
 			prt("Command: Change object attr/chars", 15, 0);
@@ -2320,7 +2318,7 @@ void do_cmd_visuals()
 			/* Hack -- query until done */
 			while (1)
 			{
-				object_kind *k_ptr = &k_info[k];
+				object_kind *k_ptr = &k_info.at(k_info_keys[k_idx]);
 
 				byte da = k_ptr->d_attr;
 				char dc = k_ptr->d_char;
@@ -2330,7 +2328,7 @@ void do_cmd_visuals()
 				/* Label the object */
 				Term_putstr(5, 17, -1, TERM_WHITE,
 				            format("Object = %d, Name = %-40.40s",
-						   k, k_ptr->name));
+						   k_info_keys[k_idx], k_ptr->name));
 
 				/* Label the Default values */
 				Term_putstr(10, 19, -1, TERM_WHITE,
@@ -2355,12 +2353,12 @@ void do_cmd_visuals()
 				if (i == ESCAPE) break;
 
 				/* Analyze */
-				if (i == 'n') k = (k + k_info.size() + 1) % k_info.size();
-				if (i == 'N') k = (k + k_info.size() - 1) % k_info.size();
-				if (i == 'a') k_info[k].x_attr = (ca + 1);
-				if (i == 'A') k_info[k].x_attr = (ca - 1);
-				if (i == 'c') k_info[k].x_char = (cc + 1);
-				if (i == 'C') k_info[k].x_char = (cc - 1);
+				if (i == 'n') k_idx = (k_idx + k_info_keys.size() + 1) % k_info_keys.size();
+				if (i == 'N') k_idx = (k_idx + k_info_keys.size() - 1) % k_info_keys.size();
+				if (i == 'a') k_ptr->x_attr = (ca + 1);
+				if (i == 'A') k_ptr->x_attr = (ca - 1);
+				if (i == 'c') k_ptr->x_char = (cc + 1);
+				if (i == 'C') k_ptr->x_char = (cc - 1);
 			}
 		}
 
@@ -3035,12 +3033,15 @@ void do_cmd_knowledge_artifacts()
 	auto const &k_info = game->edit_data.k_info;
 	auto const &a_info = game->edit_data.a_info;
 
+	auto const k_info_keys = game->edit_data.k_info_keys();
+
 	int i, z, x, y;
 
 	char base_name[80];
 
 	/* Scan the artifacts */
 	std::vector<bool_> okay(a_info.size(), FALSE);
+
 	for (std::size_t k = 0; k < a_info.size(); k++)
 	{
 		auto a_ptr = &a_info[k];
@@ -3055,10 +3056,10 @@ void do_cmd_knowledge_artifacts()
 		okay[k] = TRUE;
 	}
 
-	std::vector<bool_> okayk(k_info.size(), FALSE);
-	for (std::size_t k = 0; k < k_info.size(); k++)
+	std::unordered_set<int> okayk;
+	for (auto const &k_entry: k_info)
 	{
-		auto k_ptr = &k_info[k];
+		auto k_ptr = &k_entry.second;
 
 		/* Skip "empty" artifacts */
 		if (!(k_ptr->flags & TR_NORM_ART)) continue;
@@ -3067,7 +3068,7 @@ void do_cmd_knowledge_artifacts()
 		if (!k_ptr->artifact) continue;
 
 		/* Assume okay */
-		okayk[k] = TRUE;
+		okayk.insert(k_entry.first);
 	}
 
 	/* Check the dungeon */
@@ -3093,9 +3094,9 @@ void do_cmd_knowledge_artifacts()
 				if (object_known_p(o_ptr)) continue;
 
 				/* Note the artifact */
-				if (k_info[o_ptr->k_idx].flags & TR_NORM_ART)
+				if (k_info.at(o_ptr->k_idx).flags & TR_NORM_ART)
 				{
-					okayk[o_ptr->k_idx] = FALSE;
+					okayk.erase(o_ptr->k_idx);
 				}
 				else
 				{
@@ -3126,9 +3127,9 @@ void do_cmd_knowledge_artifacts()
 			if (object_known_p(o_ptr)) continue;
 
 			/* Note the artifact */
-			if (k_info[o_ptr->k_idx].flags & TR_NORM_ART)
+			if (k_info.at(o_ptr->k_idx).flags & TR_NORM_ART)
 			{
-				okayk[o_ptr->k_idx] = FALSE;
+				okayk.erase(o_ptr->k_idx);
 			}
 			else
 			{
@@ -3155,9 +3156,9 @@ void do_cmd_knowledge_artifacts()
 		if (object_known_p(o_ptr)) continue;
 
 		/* Note the artifact */
-		if (k_info[o_ptr->k_idx].flags & TR_NORM_ART)
+		if (k_info.at(o_ptr->k_idx).flags & TR_NORM_ART)
 		{
-			okayk[o_ptr->k_idx] = FALSE;
+			okayk.erase(o_ptr->k_idx);
 		}
 		else
 		{
@@ -3212,29 +3213,28 @@ void do_cmd_knowledge_artifacts()
 		w.write("     The {}\n", base_name);
 	}
 
-	for (std::size_t k = 0; k < k_info.size(); k++)
+	for (auto const &k: k_info_keys)
 	{
 		/* List "dead" ones */
-		if (!okayk[k]) continue;
+		if (!okayk.count(k))
+		{
+			continue;
+		}
 
 		/* Paranoia */
 		strcpy(base_name, "Unknown Artifact");
 
-		/* Real object */
-		if (k)
-		{
-			object_type forge;
-			object_type *q_ptr;
+		object_type forge;
+		object_type *q_ptr;
 
-			/* Get local object */
-			q_ptr = &forge;
+		/* Get local object */
+		q_ptr = &forge;
 
-			/* Create fake object */
-			object_prep(q_ptr, k);
+		/* Create fake object */
+		object_prep(q_ptr, k);
 
-			/* Describe the artifact */
-			object_desc_store(base_name, q_ptr, FALSE, 0);
-		}
+		/* Describe the artifact */
+		object_desc_store(base_name, q_ptr, FALSE, 0);
 
 		/* Hack -- Build the artifact name */
 		w.write("     The {}\n", base_name);
@@ -3578,16 +3578,19 @@ static void do_cmd_knowledge_kill_count()
 static void do_cmd_knowledge_objects()
 {
 	auto const &k_info = game->edit_data.k_info;
+	auto const k_info_keys = game->edit_data.k_info_keys();
 
 	fmt::MemoryWriter w;
 
-	/* Scan the object kinds */
-	for (std::size_t k = 1; k < k_info.size(); k++)
+	for (auto const &k: k_info_keys)
 	{
-		auto k_ptr = &k_info[k];
+		auto k_ptr = &k_info.at(k);
 
 		/* Hack -- skip artifacts */
-		if (k_ptr->flags & (TR_INSTA_ART)) continue;
+		if (k_ptr->flags & TR_INSTA_ART)
+		{
+			continue;
+		}
 
 		/* List known flavored objects */
 		if (k_ptr->flavor && k_ptr->aware)

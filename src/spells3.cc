@@ -2961,7 +2961,7 @@ casting_result udun_drain()
 	case TV_STAFF:
 	case TV_WAND:
 	{
-		auto k_ptr = &k_info[o_ptr->k_idx];
+		auto k_ptr = &k_info.at(o_ptr->k_idx);
 
 		/* Generate mana */
 		increase_mana(o_ptr->pval * k_ptr->level * o_ptr->number);

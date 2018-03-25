@@ -1007,7 +1007,7 @@ void do_cmd_eat_food()
 	ident = FALSE;
 
 	/* Object level */
-	lev = k_info[o_ptr->k_idx].level;
+	lev = k_info.at(o_ptr->k_idx).level;
 
 	/* Scripted foods */
 	hook_eat_in in = { o_ptr };
@@ -2507,7 +2507,7 @@ void do_cmd_quaff_potion()
 	ident = FALSE;
 
 	/* Object level */
-	lev = k_info[o_ptr->k_idx].level;
+	lev = k_info.at(o_ptr->k_idx).level;
 
 	/* Demon Breath corruption can spoil potions. */
 	if (player_has_corruption(CORRUPT_DEMON_BREATH) && magik(9))
@@ -2682,9 +2682,9 @@ void do_cmd_drink_fountain()
 			sval = c_ptr->special - SV_POTION_LAST;
 		}
 
-		for (auto const &k_ref: k_info)
+		for (auto const &k_entry: k_info)
 		{
-			auto k_ptr = &k_ref;
+			auto k_ptr = &k_entry.second;
 
 			if (k_ptr->tval != tval) continue;
 			if (k_ptr->sval != sval) continue;
@@ -2902,7 +2902,7 @@ void do_cmd_read_scroll()
 	int ident = FALSE;
 
 	/* Object level */
-	int lev = k_info[o_ptr->k_idx].level;
+	int lev = k_info.at(o_ptr->k_idx).level;
 
 	/* Assume the scroll will get used up */
 	int used_up = TRUE;
@@ -4044,7 +4044,7 @@ void do_cmd_zap_rod()
 {
 	auto const &k_info = game->edit_data.k_info;
 
-	int item, ident, chance, dir, lev;
+	int item, ident, chance, dir;
 
 	int cost;
 
@@ -4140,8 +4140,8 @@ void do_cmd_zap_rod()
 	ident = FALSE;
 
 	/* Extract the item level */
-	auto tip_ptr = &k_info[lookup_kind(TV_ROD, o_ptr->pval)];
-	lev = k_info[lookup_kind(TV_ROD, o_ptr->pval)].level;
+	auto const tip_ptr = &k_info.at(lookup_kind(TV_ROD, o_ptr->pval));
+	auto const lev = tip_ptr->level;
 
 	/* Base chance of success */
 	chance = p_ptr->skill_dev;
@@ -4832,7 +4832,7 @@ void do_cmd_activate()
 	energy_use = 100;
 
 	/* Extract the item level */
-	lev = k_info[o_ptr->k_idx].level;
+	lev = k_info.at(o_ptr->k_idx).level;
 
 	/* Hack -- Use artifact level instead */
 	if (artifact_p(o_ptr))
@@ -4991,7 +4991,7 @@ const char *activation_aux(object_type * o_ptr, bool_ doit, int item)
 
 	/* Intrinsic to item type (rings of Ice, etc) */
 	if (!spell)
-		spell = k_info[o_ptr->k_idx].activate;
+		spell = k_info.at(o_ptr->k_idx).activate;
 
 	/* Complain about mis-configured .txt files? */
 	if (!spell)

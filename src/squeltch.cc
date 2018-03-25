@@ -77,7 +77,7 @@ void squeltch_grid()
 		object_type * o_ptr = &o_list[this_o_idx];
 
 		// We've now seen one of these
-		if (!k_info[o_ptr->k_idx].flavor)
+		if (!k_info.at(o_ptr->k_idx).flavor)
 		{
 			object_aware(o_ptr);
 		}

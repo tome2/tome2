@@ -2285,8 +2285,8 @@ errr init_k_info_txt(FILE *fp)
 			/* Save the index */
 			error_idx = i;
 
-			/* Point at the "info" */
-			k_ptr = &expand_to_fit_index(k_info, i);
+			/* Point at the "info"; automatically creates an entry */
+			k_ptr = &k_info[i];
 
 			/* Advance and Save the name index */
 			assert(!k_ptr->name);
@@ -5354,7 +5354,12 @@ errr init_st_info_txt(FILE *fp)
 			/* Add to items array */
 			auto chance = atoi(buf + 2);
 			int k_idx = test_item_name(s);
-			assert(k_idx >= 0);
+
+			if (k_idx < 0)
+			{
+				msg_format("Unknown k_info entry: [%s].", s);
+				return 1;
+			}
 
 			st_ptr->items.emplace_back(
 				store_item::k_idx(k_idx, chance));

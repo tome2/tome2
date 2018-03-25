@@ -1826,7 +1826,7 @@ static int inven_damage(inven_func typ, int perc)
 						           ((amt > 1) ? "were" : "was"));
 
 				/* Potions smash open */
-				if (k_info[o_ptr->k_idx].tval == TV_POTION)
+				if (k_info.at(o_ptr->k_idx).tval == TV_POTION)
 				{
 					potion_smash_effect(0, p_ptr->py, p_ptr->px, o_ptr->sval);
 				}
@@ -4071,7 +4071,7 @@ static bool_ project_o(int who, int r, int y, int x, int dam, int typ)
 				}
 
 				o_sval = o_ptr->sval;
-				is_potion = ((k_info[o_ptr->k_idx].tval == TV_POTION) || (k_info[o_ptr->k_idx].tval == TV_POTION2));
+				is_potion = ((k_info.at(o_ptr->k_idx).tval == TV_POTION) || (k_info.at(o_ptr->k_idx).tval == TV_POTION2));
 
 
 				/* Delete the object */

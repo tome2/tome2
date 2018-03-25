@@ -26,6 +26,7 @@ SET(SRCS_COMMON
   dungeon.cc
   files.cc
   game.cc
+  game_edit_data.cc
   gen_evol.cc
   gen_maze.cc
   generate.cc

@@ -272,9 +272,9 @@ static void do_get_new_obj(int y, int x)
 			{
 				game->random_artifacts[o_ptr->sval].generated = FALSE;
 			}
-			else if (k_info[o_ptr->k_idx].flags & TR_NORM_ART)
+			else if (k_info.at(o_ptr->k_idx).flags & TR_NORM_ART)
 			{
-				k_info[o_ptr->k_idx].artifact = FALSE;
+				k_info.at(o_ptr->k_idx).artifact = FALSE;
 			}
 			else if (o_ptr->name1)
 			{

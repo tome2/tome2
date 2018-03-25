@@ -3360,24 +3360,23 @@ int test_mego_name(cptr needle)
 
 /*
  * Given item name as string, return the index in k_info array. Name
- * must exactly match (look out for commas and the like!), or else 0 is
+ * must exactly match (look out for commas and the like!), or else -1 is
  * returned. Case doesn't matter. -DG-
  */
-
 int test_item_name(cptr needle)
 {
 	auto const &k_info = game->edit_data.k_info;
 
-	for (std::size_t i = 0; i < k_info.size(); i++)
+	for (auto const &k_entry: k_info)
 	{
-		auto const &name = k_info[i].name;
+		auto const &name = k_entry.second.name;
 		if (name && iequals(needle, name))
 		{
-			return i;
+			return k_entry.first;
 		}
 	}
 
-	return 0;
+	return -1;
 }
 
 /*

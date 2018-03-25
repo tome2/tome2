@@ -677,7 +677,7 @@ void do_cmd_destroy()
 	/* Eru wont be happy */
 	if (flags & TR_BLESSED)
 	{
-		inc_piety(GOD_ERU, -10 * k_info[o_ptr->k_idx].level);
+		inc_piety(GOD_ERU, -10 * k_info.at(o_ptr->k_idx).level);
 	}
 
 	/* Eliminate the item */

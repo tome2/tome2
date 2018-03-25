@@ -630,15 +630,11 @@ static void player_wipe()
 	}
 
 	/* Reset the "objects" */
-	for (auto &k_ref: k_info)
+	for (auto &k_entry: k_info)
 	{
-		/* Reset "tried" */
+		auto &k_ref = k_entry.second;
 		k_ref.tried = FALSE;
-
-		/* Reset "aware" */
 		k_ref.aware = FALSE;
-
-		/* Reset "artifact" */
 		k_ref.artifact = 0;
 	}
 

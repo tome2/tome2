@@ -1161,12 +1161,12 @@ static bool_ kind_is_storeok(int k_idx)
 {
 	auto const &k_info = game->edit_data.k_info;
 
-	auto k_ptr = &k_info[k_idx];
+	auto k_ptr = &k_info.at(k_idx);
 
-	if (k_info[k_idx].flags & TR_NORM_ART)
+	if (k_info.at(k_idx).flags & TR_NORM_ART)
 		return ( FALSE );
 
-	if (k_info[k_idx].flags & TR_INSTA_ART)
+	if (k_info.at(k_idx).flags & TR_INSTA_ART)
 		return ( FALSE );
 
 	if (!kind_is_legal(k_idx)) return FALSE;
@@ -1184,7 +1184,7 @@ struct is_artifact_p : public boost::static_visitor<bool> {
 	bool operator ()(store_item_filter_by_k_idx f) const
 	{
 		auto const &k_info = game->edit_data.k_info;
-		return bool(k_info[f.k_idx].flags & TR_NORM_ART);
+		return bool(k_info.at(f.k_idx).flags & TR_NORM_ART);
 	}
 
 	bool operator ()(store_item_filter_by_tval) const
@@ -1374,11 +1374,11 @@ static void store_create()
 		if (!obj_all_done)
 		{
 			/* Don't allow k_info artifacts */
-			if (k_info[k_idx].flags & TR_NORM_ART)
+			if (k_info.at(k_idx).flags & TR_NORM_ART)
 				continue;
 
 			/* Don't allow artifacts */
-			if (k_info[k_idx].flags & TR_INSTA_ART)
+			if (k_info.at(k_idx).flags & TR_INSTA_ART)
 				continue;
 
 			/* Get local object */
@@ -1396,7 +1396,7 @@ static void store_create()
 				auto const flags = object_flags(q_ptr);
 				if (flags & TR_FUEL_LITE)
 				{
-					q_ptr->timeout = k_info[q_ptr->k_idx].pval2;
+					q_ptr->timeout = k_info.at(q_ptr->k_idx).pval2;
 				}
 			}
 

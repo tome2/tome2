@@ -216,6 +216,23 @@ static void do_s32b(s32b *ip, ls_flag_t flag)
 	do_u32b((u32b *)ip, flag);
 }
 
+static void do_int(int *sz, ls_flag_t flag)
+{
+	u32b x;
+
+	if (flag == ls_flag_t::SAVE)
+	{
+		x = *sz;
+	}
+
+	do_u32b(&x, flag);
+
+	if (flag == ls_flag_t::LOAD)
+	{
+		*sz = x;
+	}
+}
+
 static void save_std_string(std::string const *s)
 {
 	// Length prefix.
@@ -319,6 +336,52 @@ template<typename A, typename F> void do_array(std::string const &what, ls_flag_
 	for (std::size_t i = 0; i < n; i++)
 	{
 		f(&array[i], flag);
+	}
+}
+
+template<typename M, typename FK, typename FV> void do_fixed_map(ls_flag_t flag, M &map, FK fk, FV fv)
+{
+	// Since our file format is currently quite inflexible, we'll
+	// have to prefix with the size of the map and store everything
+	// as key-value pairs.
+	u32b n = map.size();
+	do_u32b(&n, flag);
+
+	if (flag == ls_flag_t::LOAD)
+	{
+		// Read each of the n entries. We ignore data for keys
+		// which no longer exist. This is pretty common if e.g.
+		// game data gets removed.
+		for (std::size_t i = 0; i < n; i++)
+		{
+			// Read key
+			typename M::key_type key;
+			fk(&key, flag);
+			// If the key is present, we'll update the value
+			// by reading. Otherwise just read into a dummy
+			// value.
+			if (map.count(key))
+			{
+				fv(&map.at(key), flag);
+			}
+			else
+			{
+				typename M::mapped_type v;
+				fv(&v, flag);
+			}
+		}
+	}
+
+	if (flag == ls_flag_t::SAVE)
+	{
+		// Write each of the n entries.
+		for (auto &entry: map)
+		{
+			auto key = entry.first;
+			auto value = entry.second;
+			fk(&key, flag);
+			fv(&value, flag);
+		}
 	}
 }
 
@@ -1029,7 +1092,7 @@ static void do_item(object_type *o_ptr, ls_flag_t flag)
 	/*********** END OF ls_flag_t::SAVE ***************/
 
 	/* Obtain the "kind" template */
-	object_kind *k_ptr = &k_info[o_ptr->k_idx];
+	object_kind *k_ptr = &k_info.at(o_ptr->k_idx);
 
 	/* Obtain tval/sval from k_info */
 	o_ptr->tval = k_ptr->tval;
@@ -1940,8 +2003,8 @@ static bool do_object_lore(ls_flag_t flag)
 {
 	auto &k_info = game->edit_data.k_info;
 
-	do_array("object kinds", flag, k_info, k_info.size(),
-		[](auto k_ptr, auto flag) -> void {
+	do_fixed_map(flag, k_info, do_int,
+		[](object_kind *k_ptr, auto flag) -> void {
 			do_bool(&k_ptr->aware, flag);
 			do_bool(&k_ptr->tried, flag);
 			do_bool(&k_ptr->artifact, flag);

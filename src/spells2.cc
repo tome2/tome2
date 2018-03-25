@@ -2414,7 +2414,7 @@ bool_ recharge(int power)
 	auto const flags = object_flags(o_ptr);
 
 	/* Extract the object "level" */
-	lev = k_info[o_ptr->k_idx].level;
+	lev = k_info.at(o_ptr->k_idx).level;
 
 	/* Recharge a rod */
 	if (o_ptr->tval == TV_ROD_MAIN)

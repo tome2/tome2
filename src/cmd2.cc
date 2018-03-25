@@ -3377,7 +3377,7 @@ void do_cmd_throw()
 					if (special) attack_special(m_ptr, special, tdam);
 
 					/* Anger friends */
-					if (!(k_info[q_ptr->k_idx].tval == TV_POTION))
+					if (!(k_info.at(q_ptr->k_idx).tval == TV_POTION))
 					{
 						char m_name[80];
 						monster_desc(m_name, m_ptr, 0);
@@ -3417,7 +3417,7 @@ void do_cmd_throw()
 	j = (hit_body ? breakage_chance(q_ptr) : 0);
 
 	/* Potions smash open */
-	if (k_info[q_ptr->k_idx].tval == TV_POTION)
+	if (k_info.at(q_ptr->k_idx).tval == TV_POTION)
 	{
 		if ((hit_body) || (hit_wall) || (randint(100) < j))
 		{
@@ -3703,7 +3703,7 @@ void do_cmd_boomerang()
 					if (special) attack_special(m_ptr, special, tdam);
 
 					/* Anger friends */
-					if (!(k_info[q_ptr->k_idx].tval == TV_POTION))
+					if (!(k_info.at(q_ptr->k_idx).tval == TV_POTION))
 					{
 						char m_name[80];
 						monster_desc(m_name, m_ptr, 0);

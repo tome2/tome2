@@ -438,31 +438,10 @@ static void image_object(byte *ap, char *cp)
 {
 	auto const &k_info = game->edit_data.k_info;
 
-	// Cached state which keeps a list of the "live" object_kind entries.
-	static std::vector<size_t> *instance = nullptr;
-
-	// First-time initialization
-	if (!instance)
-	{
-		// Create the list of "live" indexes
-		instance = new std::vector<size_t>();
-		// Filter all the "live" entries
-		for (size_t i = 0; i < k_info.size(); i++)
-		{
-			if (k_info[i].name)
-			{
-				instance->push_back(i);
-			}
-		}
-	}
-
-	// Sanity check
-	assert(instance != nullptr);
-
 	// Select an object kind at random
-	int n = rand_int(instance->size());
-	*cp = k_info[(*instance)[n]].x_char;
-	*ap = k_info[(*instance)[n]].x_attr;
+	auto const &k_ref = uniform_element(k_info)->second;
+	*cp = k_ref.x_char;
+	*ap = k_ref.x_attr;
 }
 
 
@@ -1059,7 +1038,7 @@ static void map_info(int y, int x, byte *ap, char *cp)
 			*ap = object_attr(o_ptr);
 
 			/* Multi-hued attr */
-			if (!options->avoid_other && (k_info[o_ptr->k_idx].flags & TR_ATTR_MULTI))
+			if (!options->avoid_other && (k_info.at(o_ptr->k_idx).flags & TR_ATTR_MULTI))
 			{
 				*ap = get_shimmer_color();
 			}
@@ -1095,7 +1074,7 @@ static void map_info(int y, int x, byte *ap, char *cp)
 				*ap = object_attr(o_ptr);
 
 				/* Multi-hued attr */
-				if (!options->avoid_other && (k_info[o_ptr->k_idx].flags & TR_ATTR_MULTI))
+				if (!options->avoid_other && (k_info.at(o_ptr->k_idx).flags & TR_ATTR_MULTI))
 				{
 					*ap = get_shimmer_color();
 				}
@@ -1449,7 +1428,7 @@ void map_info_default(int y, int x, byte *ap, char *cp)
 			*ap = object_attr_default(o_ptr);
 
 			/* Multi-hued attr */
-			if (!avoid_other && (k_info[o_ptr->k_idx].flags & TR_ATTR_MULTI))
+			if (!avoid_other && (k_info.at(o_ptr->k_idx).flags & TR_ATTR_MULTI))
 			{
 				*ap = get_shimmer_color();
 			}
@@ -1485,7 +1464,7 @@ void map_info_default(int y, int x, byte *ap, char *cp)
 				*ap = object_attr_default(o_ptr);
 
 				/* Multi-hued attr */
-				if (!avoid_other && (k_info[o_ptr->k_idx].flags & TR_ATTR_MULTI))
+				if (!avoid_other && (k_info.at(o_ptr->k_idx).flags & TR_ATTR_MULTI))
 				{
 					*ap = get_shimmer_color();
 				}

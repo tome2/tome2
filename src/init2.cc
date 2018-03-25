@@ -714,9 +714,9 @@ static errr init_alloc()
 
 	/* Scan the objects */
 	std::size_t kind_size = 0;
-	for (auto const &k_ref: k_info)
+	for (auto const &k_entry: k_info)
 	{
-		auto k_ptr = &k_ref;
+		auto k_ptr = &k_entry.second;
 
 		/* Scan allocation pairs */
 		for (std::size_t j = 0; j < ALLOCATION_MAX; j++)
@@ -751,9 +751,9 @@ static errr init_alloc()
 	alloc.kind_table.resize(kind_size);
 
 	/* Scan the objects */
-	for (std::size_t i = 1; i < k_info.size(); i++)
+	for (auto const &k_entry: k_info)
 	{
-		auto k_ptr = &k_info[i];
+		auto const k_ptr = &k_entry.second;
 
 		/* Scan allocation pairs */
 		for (std::size_t j = 0; j < ALLOCATION_MAX; j++)
@@ -777,7 +777,7 @@ static errr init_alloc()
 
 				/* Load the entry */
 				auto &entry = alloc.kind_table[z];
-				entry.index = i;
+				entry.index = k_entry.first;
 				entry.level = x;
 				entry.prob1 = p;
 				entry.prob2 = p;
@@ -928,7 +928,7 @@ static void init_guardians()
 			/* Mark the final object */
 			if (d_ptr->final_object)
 			{
-				auto k_ptr = &k_info[d_ptr->final_object];
+				auto k_ptr = &k_info.at(d_ptr->final_object);
 				k_ptr->flags |= TR_SPECIAL_GENE;
 			}
 

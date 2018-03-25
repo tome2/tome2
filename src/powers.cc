@@ -887,7 +887,7 @@ static void power_activate(int power)
 
 			o_ptr = get_object(item);
 
-			lev = k_info[o_ptr->k_idx].level;
+			lev = k_info.at(o_ptr->k_idx).level;
 
 			if (o_ptr->tval == TV_ROD_MAIN)
 			{

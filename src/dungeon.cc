@@ -136,7 +136,7 @@ static byte value_check_aux1_magic(object_type const *o_ptr)
 {
 	auto const &k_info = game->edit_data.k_info;
 
-	auto k_ptr = &k_info[o_ptr->k_idx];
+	auto k_ptr = &k_info.at(o_ptr->k_idx);
 
 
 	switch (o_ptr->tval)
@@ -227,7 +227,7 @@ static byte value_check_aux2_magic(object_type const *o_ptr)
 {
 	auto const &k_info = game->edit_data.k_info;
 
-	auto k_ptr = &k_info[o_ptr->k_idx];
+	auto k_ptr = &k_info.at(o_ptr->k_idx);
 
 
 	switch (o_ptr->tval)
@@ -4457,7 +4457,7 @@ static void process_player()
 				{
 					/* Acquire object -- for speed only base items are allowed to shimmer */
 					object_type *o_ptr = &o_list[i];
-					auto k_ptr = &k_info[o_ptr->k_idx];
+					auto k_ptr = &k_info.at(o_ptr->k_idx);
 
 					/* Skip dead or carried objects */
 					if ((!o_ptr->k_idx) || (!o_ptr->ix)) continue;

@@ -499,9 +499,9 @@ void delete_monster_idx(int i)
 				{
 					random_artifacts[o_ptr->sval].generated = FALSE;
 				}
-				else if (k_info[o_ptr->k_idx].flags & TR_NORM_ART)
+				else if (k_info.at(o_ptr->k_idx).flags & TR_NORM_ART)
 				{
-					k_info[o_ptr->k_idx].artifact = FALSE;
+					k_info.at(o_ptr->k_idx).artifact = FALSE;
 				}
 				else
 				{
@@ -1916,9 +1916,9 @@ void monster_carry(monster_type *m_ptr, int m_idx, object_type *q_ptr)
 		{
 			a_info[q_ptr->name1].cur_num = 0;
 		}
-		else if (k_info[q_ptr->k_idx].flags & TR_NORM_ART)
+		else if (k_info.at(q_ptr->k_idx).flags & TR_NORM_ART)
 		{
-			k_info[q_ptr->k_idx].artifact = 0;
+			k_info.at(q_ptr->k_idx).artifact = 0;
 		}
 		else if (q_ptr->tval == TV_RANDART)
 		{
@@ -1957,7 +1957,7 @@ bool_ kind_is_randart(int k_idx)
 	auto const &k_info = game->edit_data.k_info;
 
 	int max;
-	auto k_ptr = &k_info[k_idx];
+	auto k_ptr = &k_info.at(k_idx);
 
 	if (!kind_is_legal(k_idx)) return (FALSE);
 

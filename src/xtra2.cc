@@ -4245,7 +4245,7 @@ static int target_set_aux(int y, int x, int mode, cptr info)
 					sv = c_ptr->special - SV_POTION_LAST;
 				}
 
-				info = k_info[lookup_kind(tv, sv)].name;
+				info = k_info.at(lookup_kind(tv, sv)).name;
 			}
 
 			/* Display a message */
@@ -4980,10 +4980,9 @@ static bool_ test_object_wish(char *name, object_type *o_ptr, object_type *forge
 	int save_aware;
 	char buf[200];
 
-	/* try all objects, this *IS* a very ugly and slow method :( */
-	for (std::size_t i = 0; i < k_info.size(); i++)
+	for (auto &k_entry: k_info)
 	{
-		auto k_ptr = &k_info[i];
+		auto k_ptr = &k_entry.second;
 
 		o_ptr = forge;
 
@@ -4992,7 +4991,7 @@ static bool_ test_object_wish(char *name, object_type *o_ptr, object_type *forge
 		if (k_ptr->flags & TR_INSTA_ART) continue;
 		if (k_ptr->tval == TV_GOLD) continue;
 
-		object_prep(o_ptr, i);
+		object_prep(o_ptr, k_entry.first);
 		o_ptr->name1 = 0;
 		o_ptr->name2 = 0;
 		apply_magic(o_ptr, dun_level, FALSE, FALSE, FALSE);
@@ -5066,7 +5065,7 @@ static bool_ test_object_wish(char *name, object_type *o_ptr, object_type *forge
 						}
 					}
 
-					object_prep(o_ptr, i);
+					object_prep(o_ptr, k_entry.first);
 					o_ptr->name1 = 0;
 					o_ptr->name2 = j;
 					o_ptr->name2b = jb;

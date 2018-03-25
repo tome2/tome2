@@ -4309,7 +4309,7 @@ void gain_fate(byte fate)
 						/* Invalidate the cached allocation table */
 						alloc.kind_table_valid = false;
 
-						auto k_ptr = &k_info[fates[i].o_idx];
+						auto k_ptr = &k_info.at(fates[i].o_idx);
 
 						if (!(k_ptr->flags & TR_INSTA_ART) && !(k_ptr->flags & TR_NORM_ART)) break;
 					}

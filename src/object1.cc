@@ -592,12 +592,9 @@ void flavor_init()
 	set_complex_rng();
 
 	/* Analyze every object */
-	for (auto &k_ref: k_info)
+	for (auto &k_entry: k_info)
 	{
-		auto k_ptr = &k_ref;
-
-		/* Skip "empty" objects */
-		if (!k_ptr->name) continue;
+		auto k_ptr = &k_entry.second;
 
 		/* Extract "flavor" (if any) */
 		k_ptr->flavor = object_flavor(k_ptr);
@@ -652,8 +649,10 @@ void reset_visuals()
 	}
 
 	/* Extract default attr/char code for objects */
-	for (auto &k_ref: k_info)
+	for (auto &k_entry: k_info)
 	{
+		auto &k_ref = k_entry.second;
+
 		/* Default attr/char */
 		k_ref.x_attr = k_ref.d_attr;
 		k_ref.x_char = k_ref.d_char;
@@ -789,7 +788,7 @@ object_flag_set object_flags(object_type const *o_ptr)
 	auto const &k_info = game->edit_data.k_info;
 	auto const &a_info = game->edit_data.a_info;
 
-	auto k_ptr = &k_info[o_ptr->k_idx];
+	auto k_ptr = &k_info.at(o_ptr->k_idx);
 
 	/* Base object */
 	auto f = k_ptr->flags;
@@ -823,7 +822,7 @@ int object_power(object_type *o_ptr)
 	auto const &a_info = game->edit_data.a_info;
 	auto const &e_info = game->edit_data.e_info;
 
-	auto k_ptr = &k_info[o_ptr->k_idx];
+	auto k_ptr = &k_info.at(o_ptr->k_idx);
 	int power = -1;
 
 	/* Base object */
@@ -874,7 +873,7 @@ object_flag_set object_flags_known(object_type const *o_ptr)
 	auto const &k_info = game->edit_data.k_info;
 	auto const &a_info = game->edit_data.a_info;
 
-	auto k_ptr = &k_info[o_ptr->k_idx];
+	auto k_ptr = &k_info.at(o_ptr->k_idx);
 
 	/* Must be identified */
 	if (!object_known_p(o_ptr))
@@ -1032,7 +1031,7 @@ static std::string object_desc_aux(object_type const *o_ptr, int pref, int mode)
 	bool_ show_weapon = FALSE;
 	bool_ show_armour = FALSE;
 
-	auto k_ptr = &k_info[o_ptr->k_idx];
+	auto k_ptr = &k_info.at(o_ptr->k_idx);
 
 	/* Extract some flags */
 	auto const flags = object_flags(o_ptr);
@@ -1193,7 +1192,7 @@ static std::string object_desc_aux(object_type const *o_ptr, int pref, int mode)
 
 	case TV_ROD_MAIN:
 		{
-			modstr = k_info[lookup_kind(TV_ROD, o_ptr->pval)].name;
+			modstr = k_info.at(lookup_kind(TV_ROD, o_ptr->pval)).name;
 			break;
 		}
 
@@ -2054,7 +2053,7 @@ void object_desc_store(char *buf, object_type *o_ptr, int pref, int mode)
 	auto &k_info = game->edit_data.k_info;
 
 	/* Save the "aware" flag */
-	bool_ hack_aware = k_info[o_ptr->k_idx].aware;
+	bool_ hack_aware = k_info.at(o_ptr->k_idx).aware;
 
 	/* Save the "known" flag */
 	bool_ hack_known = (o_ptr->ident & (IDENT_KNOWN)) ? TRUE : FALSE;
@@ -2064,7 +2063,7 @@ void object_desc_store(char *buf, object_type *o_ptr, int pref, int mode)
 	o_ptr->ident |= (IDENT_KNOWN);
 
 	/* Force "aware" for description */
-	k_info[o_ptr->k_idx].aware = TRUE;
+	k_info.at(o_ptr->k_idx).aware = TRUE;
 
 
 	/* Describe the object */
@@ -2072,7 +2071,7 @@ void object_desc_store(char *buf, object_type *o_ptr, int pref, int mode)
 
 
 	/* Restore "aware" flag */
-	k_info[o_ptr->k_idx].aware = hack_aware;
+	k_info.at(o_ptr->k_idx).aware = hack_aware;
 
 	/* Clear the known flag */
 	if (!hack_known) o_ptr->ident &= ~(IDENT_KNOWN);
@@ -2481,7 +2480,7 @@ bool_ object_out_desc(object_type *o_ptr, FILE *fff, bool_ trim_down, bool_ wait
 	{
 		if (o_ptr->k_idx && (!trim_down))
 		{
-			auto k_ptr = &k_info[o_ptr->k_idx];
+			auto k_ptr = &k_info.at(o_ptr->k_idx);
 
 			text_out_c(TERM_ORANGE, k_ptr->text);
 			text_out("\n");
@@ -6132,13 +6131,13 @@ byte object_attr(object_type const *o_ptr)
 	{
 		return random_artifacts[o_ptr->sval].attr;
 	}
-	else if (k_info[o_ptr->k_idx].flavor)
+	else if (k_info.at(o_ptr->k_idx).flavor)
 	{
-		return misc_to_attr[k_info[o_ptr->k_idx].flavor];
+		return misc_to_attr[k_info.at(o_ptr->k_idx).flavor];
 	}
 	else
 	{
-		return k_info[o_ptr->k_idx].x_attr;
+		return k_info.at(o_ptr->k_idx).x_attr;
 	}
 }
 
@@ -6151,13 +6150,13 @@ byte object_attr_default(object_type *o_ptr)
 	{
 		return random_artifacts[o_ptr->sval].attr;
 	}
-	else if (k_info[o_ptr->k_idx].flavor)
+	else if (k_info.at(o_ptr->k_idx).flavor)
 	{
-		return misc_to_attr[k_info[o_ptr->k_idx].flavor];
+		return misc_to_attr[k_info.at(o_ptr->k_idx).flavor];
 	}
 	else
 	{
-		return k_info[o_ptr->k_idx].d_attr;
+		return k_info.at(o_ptr->k_idx).d_attr;
 	}
 }
 
@@ -6171,13 +6170,13 @@ char object_char(object_type const *o_ptr)
 {
 	auto const &k_info = game->edit_data.k_info;
 
-	if (k_info[o_ptr->k_idx].flavor)
+	if (k_info.at(o_ptr->k_idx).flavor)
 	{
-		return misc_to_char[k_info[o_ptr->k_idx].flavor];
+		return misc_to_char[k_info.at(o_ptr->k_idx).flavor];
 	}
 	else
 	{
-		return k_info[o_ptr->k_idx].x_char;
+		return k_info.at(o_ptr->k_idx).x_char;
 	}
 }
 
@@ -6185,13 +6184,13 @@ char object_char_default(object_type const *o_ptr)
 {
 	auto const &k_info = game->edit_data.k_info;
 
-	if (k_info[o_ptr->k_idx].flavor)
+	if (k_info.at(o_ptr->k_idx).flavor)
 	{
-		return misc_to_char[k_info[o_ptr->k_idx].flavor];
+		return misc_to_char[k_info.at(o_ptr->k_idx).flavor];
 	}
 	else
 	{
-		return k_info[o_ptr->k_idx].d_char;
+		return k_info.at(o_ptr->k_idx).d_char;
 	}
 }
 
@@ -6206,7 +6205,7 @@ bool artifact_p(object_type const *o_ptr)
 		(o_ptr->tval == TV_RANDART) ||
 		(o_ptr->name1 ? true : false) ||
 	        (!o_ptr->artifact_name.empty()) ||
-		((k_info[o_ptr->k_idx].flags & TR_NORM_ART) ? true : false);
+		((k_info.at(o_ptr->k_idx).flags & TR_NORM_ART) ? true : false);
 }
 
 /**

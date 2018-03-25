@@ -341,12 +341,12 @@ errr process_pref_file_aux(char *buf)
 			n1 = strtol(zz[1], NULL, 0);
 			n2 = strtol(zz[2], NULL, 0);
 
-			if (i >= k_info.size())
+			if (!k_info.count(i))
 			{
 				return (1);
 			}
 
-			auto k_ptr = &k_info[i];
+			auto k_ptr = &k_info.at(i);
 
 			if (n1)
 			{
@@ -427,10 +427,10 @@ errr process_pref_file_aux(char *buf)
 			n1 = strtol(zz[1], NULL, 0);
 			n2 = strtol(zz[2], NULL, 0);
 
-			for (auto &k_ref: k_info)
+			for (auto &k_entry: k_info)
 			{
-				auto k_ptr = &k_ref;
-				if (k_ptr->tval == j)
+				auto &k_ref = k_entry.second;
+				if (k_ref.tval == j)
 				{
 					if (n1)
 					{
@@ -4044,9 +4044,9 @@ static long total_points()
 	temp /= comp_death;
 
 	/* The known objects increase the score */
-	for (std::size_t k = 1; k < k_info.size(); k++)
+	for (auto const &k_entry: k_info)
 	{
-		auto k_ptr = &k_info[k];
+		auto k_ptr = &k_entry.second;
 
 		/* Hack -- skip artifacts */
 		if (k_ptr->flags & TR_INSTA_ART) continue;
@@ -4061,7 +4061,7 @@ static long total_points()
 			i_ptr = &object_type_body;
 
 			/* Create fake object */
-			object_prep(i_ptr, k);
+			object_prep(i_ptr, k_entry.first);
 
 			temp += object_value_real(i_ptr);
 		}

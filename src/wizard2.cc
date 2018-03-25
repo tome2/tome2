@@ -433,7 +433,7 @@ static void wiz_display_item(object_type *o_ptr)
 	prt(buf, 2, j);
 
 	prt(format("kind = %-5d  level = %-4d  tval = %-5d  sval = %-5d",
-	           o_ptr->k_idx, k_info[o_ptr->k_idx].level,
+	           o_ptr->k_idx, k_info.at(o_ptr->k_idx).level,
 	           o_ptr->tval, o_ptr->sval), 4, j);
 
 	prt(format("number = %-3d  wgt = %-6d  ac = %-5d    damage = %dd%d",
@@ -584,10 +584,9 @@ static int wiz_create_itemtype()
 	/* We have to search the whole itemlist. */
 	std::vector<std::size_t> choice;
 	choice.reserve(60);
-	std::size_t i;
-	for (i = 1; (choice.size() < 60) && (i < k_info.size()); i++)
+	for (auto &k_entry: k_info)
 	{
-		auto k_ptr = &k_info[i];
+		auto k_ptr = &k_entry.second;
 
 		/* Analyze matching items */
 		if (k_ptr->tval == tval)
@@ -602,7 +601,11 @@ static int wiz_create_itemtype()
 			wci_string(buf, choice.size());
 
 			/* Remember the object index */
-			choice.push_back(i);
+			choice.push_back(k_entry.first);
+			if (choice.size() >= 60)
+			{
+				break;
+			}
 		}
 	}
 
@@ -1225,7 +1228,7 @@ static void wiz_create_item_2()
 	int k_idx = atoi(out_val);
 
 	/* Return if failed or out-of-bounds */
-	if ((k_idx <= 0) || (k_idx >= static_cast<int>(k_info.size())))
+	if (!k_info.count(k_idx))
 	{
 		return;
 	}
@@ -1368,9 +1371,9 @@ static void do_cmd_wiz_learn()
 	auto const &k_info = game->edit_data.k_info;
 
 	/* Scan every object */
-	for (std::size_t i = 0; i < k_info.size(); i++)
+	for (auto const &k_entry: k_info)
 	{
-		auto k_ptr = &k_info[i];
+		auto const k_ptr = &k_entry.second;
 
 		/* Induce awareness */
 		if (k_ptr->level <= command_arg)
@@ -1380,7 +1383,7 @@ static void do_cmd_wiz_learn()
 			auto q_ptr = &forge;
 
 			/* Prepare object */
-			object_prep(q_ptr, i);
+			object_prep(q_ptr, k_entry.first);
 
 			/* Awareness */
 			object_aware(q_ptr);
