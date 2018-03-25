@@ -923,9 +923,7 @@
 #define TV_BOTTLE        2      /* Empty bottles ('!') */
 #define TV_SPIKE         5      /* Spikes ('~') */
 #define TV_MSTAFF        6      /* Mage Staffs */
-#define TV_CHEST         7      /* Chests ('~') */
 #define TV_PARCHMENT     8      /* Parchments from Kamband */
-#define TV_PARCHEMENT    8      /* compatibility define */
 #define TV_CORPSE        9      /* Monster corpses */
 #define TV_EGG          10      /* Monster Eggs */
 #define TV_JUNK         11      /* Sticks, Pottery, etc ('~') */
@@ -1447,11 +1445,6 @@
  * Special "sval" limit -- first "aimed" rod
  */
 #define SV_ROD_MIN_DIRECTION    12
-
-/*
- * Special "sval" limit -- first "large" chest
- */
-#define SV_CHEST_MIN_LARGE      4
 
 /*
  * Special "sval" limit -- last "good" magic/prayer book

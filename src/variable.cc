@@ -95,8 +95,6 @@ bool_ inkey_base; 		/* See the "inkey()" function */
 
 s16b coin_type; 			/* Hack -- force coin type */
 
-bool_ opening_chest; 		/* Hack -- prevent chest generation */
-
 bool_ shimmer_monsters;           /* Hack -- optimize multi-hued monsters */
 bool_ shimmer_objects;            /* Hack -- optimize multi-hued objects */
 

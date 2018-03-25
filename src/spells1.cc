@@ -1590,12 +1590,6 @@ static bool_ hates_acid(object_type *o_ptr)
 			return (TRUE);
 		}
 
-		/* Ouch */
-	case TV_CHEST:
-		{
-			return (TRUE);
-		}
-
 		/* Junk is useless */
 	case TV_SKELETON:
 	case TV_BOTTLE:
@@ -1661,12 +1655,6 @@ static bool_ hates_fire(object_type *o_ptr)
 	case TV_BOOK:
 	case TV_SYMBIOTIC_BOOK:
 	case TV_MUSIC_BOOK:
-		{
-			return (TRUE);
-		}
-
-		/* Chests */
-	case TV_CHEST:
 		{
 			return (TRUE);
 		}
@@ -3941,33 +3929,6 @@ static bool_ project_o(int who, int r, int y, int x, int dam, int typ)
 					do_kill = TRUE;
 					note_kill = (plural ? " are destroyed!" : " is destroyed!");
 				}
-				break;
-			}
-
-			/* Unlock chests */
-		case GF_KILL_DOOR:
-			{
-				/* Chests are noticed only if trapped or locked */
-				if (o_ptr->tval == TV_CHEST)
-				{
-					/* Disarm/Unlock traps */
-					if (o_ptr->pval > 0)
-					{
-						/* Disarm or Unlock */
-						o_ptr->pval = (0 - o_ptr->pval);
-
-						/* Identify */
-						object_known(o_ptr);
-
-						/* Notice */
-						if (o_ptr->marked)
-						{
-							msg_print("Click!");
-							obvious = TRUE;
-						}
-					}
-				}
-
 				break;
 			}
 		case GF_RAISE:

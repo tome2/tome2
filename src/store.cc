@@ -538,9 +538,6 @@ static bool_ store_object_similar(object_type const *o_ptr, object_type *j_ptr)
 	if (o_ptr->dd	!= j_ptr->dd) return (0);
 	if (o_ptr->ds	!= j_ptr->ds) return (0);
 
-	/* Hack -- Never stack chests */
-	if (o_ptr->tval == TV_CHEST) return (0);
-
 	/* Require matching discounts */
 	if (o_ptr->discount != j_ptr->discount) return (0);
 
@@ -1415,9 +1412,6 @@ static void store_create()
 
 		/* Mark it storebought */
 		q_ptr->ident |= IDENT_STOREB;
-
-		/* Mega-Hack -- no chests in stores */
-		if (q_ptr->tval == TV_CHEST) continue;
 
 		/* Prune the black market */
 		if (st_info[st_ptr->st_idx].flags & STF_ALL_ITEM)

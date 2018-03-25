@@ -3044,65 +3044,6 @@ D:A thick book with solid leather binding. It looks entirely
 D:unremarkable, but as you hold it, you feel strangely able 
 D:to learn the inner workings of things and creatures.
 
-##### Chests #####
-
-N:338:& Small wooden chest~
-G:~:s
-I:7:1:0
-W:5:0:250:20
-A:5/1
-P:0:2d3:0:0:0
-D:A small wooden box, locked and possibly trapped.
-
-N:339:& Large wooden chest~
-G:~:s
-I:7:5:0
-W:15:0:500:60
-A:15/1
-P:0:2d5:0:0:0
-D:A large wooden box, locked and possibly trapped
-
-N:340:& Small iron chest~
-G:~:s
-I:7:2:0
-W:25:0:300:100
-A:25/1
-P:0:2d4:0:0:0
-D:A small rectangular container made of wood and reinforced with iron corners and latches.
-D:It is locked and possibly trapped.
-
-N:341:& Large iron chest~
-G:~:s
-I:7:6:0
-W:35:0:1000:150
-A:35/1
-P:0:2d6:0:0:0
-D:A large container made of wood, with a heavy iron lock, and probably a trap.
-
-N:342:& Small steel chest~
-G:~:s
-I:7:3:0
-W:45:0:500:200
-A:45/1
-P:0:2d4:0:0:0
-D:A small wooden box with strong steel locks and reinforcements. It's likely to be trapped.
-
-N:343:& Large steel chest~
-G:~:s
-I:7:7:0
-W:55:0:1000:250
-A:55/1
-P:0:2d6:0:0:0
-D:A nearly indestructible chest of wood and steel. The lock doesn't look impenetrable, but it
-D:might be trapped.
-
-N:344:& Ruined chest~
-G:~:s
-I:7:0:0
-W:0:0:250:0
-A:75/1
-D:A broken, empty chest.
-
 ##### Various Stuff #####
 
 N:345:& Iron Spike~

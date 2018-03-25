@@ -21,9 +21,8 @@ EnumStringMap<status_type> &status_mapping()
 		{ status_type::VERY_GOOD, "very good" },
 		{ status_type::SPECIAL, "special" },
 		{ status_type::TERRIBLE, "terrible" },
-		{ status_type::NONE, "none" },
-		{ status_type::CHEST_EMPTY, "(empty chest)" },
-		{ status_type::CHEST_DISARMED, "(disarmed chest)" } };
+		{ status_type::NONE, "none" }
+	};
 	return *m;
 }
 
@@ -112,21 +111,6 @@ status_type object_status(object_type *o_ptr)
 			if (o_ptr->pval < 0)
 			{
 				return status_type::BAD;
-			}
-			else
-			{
-				return status_type::AVERAGE;
-			}
-		}
-		else if (o_ptr->tval == TV_CHEST)
-		{
-			if (o_ptr->pval == 0)
-			{
-				return status_type::CHEST_EMPTY;
-			}
-			else if (o_ptr->pval < 0)
-			{
-				return status_type::CHEST_DISARMED;
 			}
 			else
 			{

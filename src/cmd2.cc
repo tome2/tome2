@@ -556,204 +556,6 @@ void do_cmd_go_down()
 }
 
 /*
- * Determine if a grid contains a chest
- */
-static s16b chest_check(int y, int x)
-{
-	cave_type *c_ptr = &cave[y][x];
-
-	/* Scan all objects in the grid */
-	for (auto const this_o_idx: c_ptr->o_idxs)
-	{
-		object_type * o_ptr;
-
-		/* Acquire object */
-		o_ptr = &o_list[this_o_idx];
-
-		/* Skip unknown chests XXX XXX */
-		/* if (!o_ptr->marked) continue; */
-
-		/* Check for chest */
-		if (o_ptr->tval == TV_CHEST) return (this_o_idx);
-	}
-
-	/* No chest */
-	return (0);
-}
-
-
-/*
- * Allocates objects upon opening a chest    -BEN-
- *
- * Disperse treasures from the given chest, centered at (x,y).
- *
- * Small chests often contain "gold", while Large chests always contain
- * items.  Wooden chests contain 2 items, Iron chests contain 4 items,
- * and Steel chests contain 6 items.  The "value" of the items in a
- * chest is based on the "power" of the chest, which is in turn based
- * on the level on which the chest is generated.
- */
-static void chest_death(int y, int x, s16b o_idx)
-{
-	auto const &d_info = game->edit_data.d_info;
-
-	int number;
-
-	bool_ small;
-
-	object_type forge;
-	object_type *q_ptr;
-
-	object_type *o_ptr = &o_list[o_idx];
-
-
-	/* Small chests often hold "gold" */
-	small = (o_ptr->sval < SV_CHEST_MIN_LARGE);
-
-	/* Determine how much to drop (see above) */
-	number = (o_ptr->sval % SV_CHEST_MIN_LARGE) * 2;
-
-	/* Zero pval means empty chest */
-	if (!o_ptr->pval) number = 0;
-
-	/* Opening a chest */
-	opening_chest = TRUE;
-
-	/* Determine the "value" of the items */
-	object_level = ABS(o_ptr->pval) + 10;
-
-	/* Drop some objects (non-chests) */
-	for (; number > 0; --number)
-	{
-		/* Get local object */
-		q_ptr = &forge;
-
-		/* Wipe the object */
-		object_wipe(q_ptr);
-
-		/* Small chests often drop gold */
-		if (small && (rand_int(100) < 75))
-		{
-			/* Make some gold */
-			if (!make_gold(q_ptr)) continue;
-		}
-
-		/* Otherwise drop an item */
-		else
-		{
-			/* Make an object */
-			if (!make_object(q_ptr, FALSE, FALSE, d_info[dungeon_type].objs))
-				continue;
-		}
-
-		/* Drop it in the dungeon */
-		drop_near(q_ptr, -1, y, x);
-	}
-
-	/* Reset the object level */
-	object_level = dun_level;
-
-	/* No longer opening a chest */
-	opening_chest = FALSE;
-
-	/* Empty */
-	o_ptr->pval = 0;
-	o_ptr->pval2 = 0;
-
-	/* Known */
-	object_known(o_ptr);
-}
-
-
-/*
- * Attempt to open the given chest at the given location
- *
- * Assume there is no monster blocking the destination
- *
- * Returns TRUE if repeated commands may continue
- */
-static bool_ do_cmd_open_chest(int y, int x, s16b o_idx)
-{
-	auto const &r_info = game->edit_data.r_info;
-
-	int i, j;
-
-	bool_ flag = TRUE;
-
-	bool_ more = FALSE;
-
-	object_type *o_ptr = &o_list[o_idx];
-
-	auto r_ptr = &r_info[p_ptr->body_monster];
-
-
-	if ((p_ptr->body_monster != 0) && !(r_ptr->flags & RF_OPEN_DOOR))
-	{
-		msg_print("You cannot open chests.");
-
-		return (FALSE);
-	}
-
-	/* Take a turn */
-	energy_use = 100;
-
-	/* Attempt to unlock it */
-	if (o_ptr->pval > 0)
-	{
-		/* Assume locked, and thus not open */
-		flag = FALSE;
-
-		/* Get the "disarm" factor */
-		i = 100;
-
-		/* Penalize some conditions */
-		if (p_ptr->blind || no_lite()) i = i / 10;
-		if (p_ptr->confused || p_ptr->image) i = i / 10;
-
-		/* Extract the difficulty */
-		j = i - o_ptr->pval;
-
-		/* Always have a small chance of success */
-		if (j < 2) j = 2;
-
-		/* Success -- May still have traps */
-		if (rand_int(100) < j)
-		{
-			msg_print("You have picked the lock.");
-			gain_exp(1);
-			flag = TRUE;
-		}
-
-		/* Failure -- Keep trying */
-		else
-		{
-			/* We may continue repeating */
-			more = TRUE;
-
-			flush_on_failure();
-
-			msg_print("You failed to pick the lock.");
-		}
-	}
-
-	/* Allowed to open */
-	if (flag)
-	{
-		/* Let the Chest drop items */
-		chest_death(y, x, o_idx);
-	}
-
-	/* Result */
-	return (more);
-}
-
-
-/*
- * Original code by TNB, improvement for Angband 2.9.3 by rr9
- * Slightly modified for ToME because of its trap implementation
- */
-
-/*
  * Return TRUE if the given grid is an open door
  */
 static bool_ is_open(cave_type *c_ptr)
@@ -816,50 +618,6 @@ static int count_feats(int *y, int *x, bool_ (*test) (cave_type *c_ptr),
 
 		/* Remember the location. Only meaningful if there's
 		   exactly one match */
-		*y = yy;
-		*x = xx;
-	}
-
-	/* All done */
-	return (count);
-}
-
-
-/*
- * Return the number of chests around (or under) the character.
- * If requested, count only trapped chests.
- */
-static int count_chests(int *y, int *x, bool_ trapped)
-{
-	int d, count, o_idx;
-
-	object_type *o_ptr;
-
-
-	/* Count how many matches */
-	count = 0;
-
-	/* Check around (and under) the character */
-	for (d = 0; d < 9; d++)
-	{
-
-		/* Extract adjacent (legal) location */
-		int yy = p_ptr->py + ddy_ddd[d];
-		int xx = p_ptr->px + ddx_ddd[d];
-
-		/* No (visible) chest is there */
-		if ((o_idx = chest_check(yy, xx)) == 0) continue;
-
-		/* Grab the object */
-		o_ptr = &o_list[o_idx];
-
-		/* Already open */
-		if (o_ptr->pval == 0) continue;
-
-		/* OK */
-		++count;
-
-		/* Remember the location. Only useful if only one match */
 		*y = yy;
 		*x = xx;
 	}
@@ -1011,8 +769,6 @@ void do_cmd_open()
 
 	int y, x, dir;
 
-	s16b o_idx;
-
 	cave_type *c_ptr;
 
 	bool_ more = FALSE;
@@ -1029,16 +785,11 @@ void do_cmd_open()
 
 	/* Pick a direction if there's an obvious target */
 	{
-		int num_doors, num_chests;
-
 		/* Count closed doors (locked or jammed) */
-		num_doors = count_feats(&y, &x, is_closed, FALSE);
-
-		/* Count chests (locked) */
-		num_chests = count_chests(&y, &x, FALSE);
+		const int num_doors = count_feats(&y, &x, is_closed, FALSE);
 
 		/* There is nothing the player can open */
-		if ((num_doors + num_chests) == 0)
+		if (num_doors == 0)
 		{
 			/* Message */
 			msg_print("You see nothing there to open.");
@@ -1048,7 +799,7 @@ void do_cmd_open()
 		}
 
 		/* Set direction if there is only one target */
-		else if ((num_doors + num_chests) == 1)
+		else if (num_doors == 1)
 		{
 			command_dir = coords_to_dir(y, x);
 		}
@@ -1077,12 +828,9 @@ void do_cmd_open()
 		/* Get requested grid */
 		c_ptr = &cave[y][x];
 
-		/* Check for chest */
-		o_idx = chest_check(y, x);
-
 		/* Nothing useful */
 		if (!((c_ptr->feat >= FEAT_DOOR_HEAD) &&
-		                (c_ptr->feat <= FEAT_DOOR_TAIL)) && !o_idx)
+				(c_ptr->feat <= FEAT_DOOR_TAIL)))
 		{
 			/* Message */
 			msg_print("You see nothing there to open.");
@@ -1099,13 +847,6 @@ void do_cmd_open()
 
 			/* Attack */
 			py_attack(y, x, -1);
-		}
-
-		/* Handle chests */
-		else if (o_idx)
-		{
-			/* Open the chest */
-			more = do_cmd_open_chest(y, x, o_idx);
 		}
 
 		/* Handle doors */

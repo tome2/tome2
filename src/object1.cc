@@ -820,7 +820,6 @@ static std::string object_desc_aux(object_type const *o_ptr, int pref, int mode)
 	case TV_JUNK:
 	case TV_SPIKE:
 	case TV_FLASK:
-	case TV_CHEST:
 	case TV_INSTRUMENT:
 	case TV_TOOL:
 	case TV_DIGGING:
@@ -1447,22 +1446,6 @@ static std::string object_desc_aux(object_type const *o_ptr, int pref, int mode)
 			? std::to_string(calc_object_need_exp(o_ptr) - o_ptr->exp)
 			: "*****";
 		t += fmt::format(" (E:{}, L:{})", need_exp, o_ptr->elevel);
-	}
-
-	/* Hack -- Chests must be described in detail */
-	if (o_ptr->tval == TV_CHEST)
-	{
-		/* Not searched yet */
-		if (!known)
-		{
-			/* Nothing */
-		}
-
-		/* May be "empty" */
-		else if (!o_ptr->pval)
-		{
-			t += " (empty)";
-		}
 	}
 
 

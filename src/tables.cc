@@ -3233,7 +3233,6 @@ tval_desc tvals[] =
         { TV_DAEMON_BOOK, "Daemon Book" },
         { TV_SPIKE, "Spikes" },
         { TV_DIGGING, "Digger" },
-        { TV_CHEST, "Chest" },
         { TV_FOOD, "Food" },
         { TV_FLASK, "Flask" },
         { TV_MSTAFF, "Mage Staff" },

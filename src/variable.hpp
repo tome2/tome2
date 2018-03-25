@@ -65,7 +65,6 @@ extern u16b has_won;
 extern u16b noscore;
 extern bool_ inkey_base;
 extern s16b coin_type;
-extern bool_ opening_chest;
 extern bool_ shimmer_monsters;
 extern bool_ shimmer_objects;
 extern bool_ repair_monsters;

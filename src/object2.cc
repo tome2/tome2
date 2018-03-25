@@ -559,7 +559,6 @@ errr get_obj_num_prep()
  */
 s16b get_obj_num(int level)
 {
-	auto const &k_info = game->edit_data.k_info;
 	auto &alloc = game->alloc;
 
 	std::size_t i, j;
@@ -596,12 +595,6 @@ s16b get_obj_num(int level)
 
 		/* Access the index */
 		k_idx = entry.index;
-
-		/* Access the actual kind */
-		auto const &k_ptr = k_info.at(k_idx);
-
-		/* Hack -- prevent embedded chests */
-		if (opening_chest && (k_ptr->tval == TV_CHEST)) continue;
 
 		/* Accept */
 		entry.prob3 = entry.prob2;
@@ -1382,13 +1375,6 @@ bool_ object_similar(object_type const *o_ptr, object_type const *j_ptr)
 			}
 
 			return (TRUE);
-		}
-
-		/* Chests */
-	case TV_CHEST:
-		{
-			/* Never okay */
-			return (0);
 		}
 
 	case TV_RANDART:
@@ -3248,16 +3234,6 @@ static void a_m_aux_4(object_type *o_ptr, int level, int power)
 			break;
 		}
 
-	case TV_CHEST:
-		{
-			/* Hack -- skip ruined chests */
-			if (o_ptr->k_ptr->level <= 0) break;
-
-			/* Hack - set pval2 to the number of objects in it */
-			if (o_ptr->pval)
-				o_ptr->pval2 = (o_ptr->sval % SV_CHEST_MIN_LARGE) * 2;
-			break;
-		}
 	case TV_POTION:
 		if (o_ptr->sval == SV_POTION_BLOOD)
 		{
@@ -4191,9 +4167,6 @@ static bool kind_is_theme(obj_theme const *theme, std::shared_ptr<object_kind co
 				      theme->magic + theme->tools);
 			break;
 		}
-	case TV_CHEST:
-		prob = theme->treasure;
-		break;
 	case TV_CROWN:
 		prob = theme->treasure;
 		break;

@@ -1,6 +1,7 @@
 #ifndef H_e3f9ebbe_ff9a_4687_a847_6101f094b483
 #define H_e3f9ebbe_ff9a_4687_a847_6101f094b483
 
+#include "object_type_fwd.hpp"
 #include "tome/enum_string_map.hpp"
 
 namespace squelch {
@@ -11,7 +12,8 @@ namespace squelch {
  */
 enum class status_type {
 	BAD    , VERY_BAD, AVERAGE, GOOD,        VERY_GOOD,
-	SPECIAL, TERRIBLE, NONE,    CHEST_EMPTY, CHEST_DISARMED };
+	SPECIAL, TERRIBLE, NONE
+};
 
 /**
  * Bidirectional map between status_type values and strings.
