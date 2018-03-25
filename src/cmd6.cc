@@ -3213,13 +3213,13 @@ void do_cmd_read_scroll()
 
 		case SV_SCROLL_ACQUIREMENT:
 			{
-				acquirement(p_ptr->py, p_ptr->px, 1, TRUE, FALSE);
+				acquirement(p_ptr->py, p_ptr->px, 1, TRUE);
 				break;
 			}
 
 		case SV_SCROLL_STAR_ACQUIREMENT:
 			{
-				acquirement(p_ptr->py, p_ptr->px, randint(2) + 1, TRUE, FALSE);
+				acquirement(p_ptr->py, p_ptr->px, randint(2) + 1, TRUE);
 				break;
 			}
 
@@ -6772,7 +6772,7 @@ const char *activation_aux(object_type * o_ptr, bool_ doit, int item)
 	case ACT_ACQUIREMENT:
 		{
 			if (!doit) return "acquirement every 3000 turns";
-			acquirement(p_ptr->py, p_ptr->px, 1, FALSE, FALSE);
+			acquirement(p_ptr->py, p_ptr->px, 1, FALSE);
 
 			/* Timeout is set before return */
 

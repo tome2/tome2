@@ -1628,7 +1628,7 @@ void do_cmd_debug()
 		/* Good Objects */
 	case 'g':
 		if (command_arg <= 0) command_arg = 1;
-		acquirement(p_ptr->py, p_ptr->px, command_arg, FALSE, TRUE);
+		acquirement(p_ptr->py, p_ptr->px, command_arg, FALSE);
 		break;
 
 		/* Hitpoint rerating */
@@ -1754,7 +1754,7 @@ void do_cmd_debug()
 		/* Very Good Objects */
 	case 'v':
 		if (command_arg <= 0) command_arg = 1;
-		acquirement(p_ptr->py, p_ptr->px, command_arg, TRUE, TRUE);
+		acquirement(p_ptr->py, p_ptr->px, command_arg, TRUE);
 		break;
 
 		/* Wizard Light the Level */

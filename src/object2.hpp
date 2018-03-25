@@ -58,7 +58,7 @@ void place_object(int y, int x, bool_ good, bool_ great, int where);
 bool_ make_gold(object_type *j_ptr);
 void place_gold(int y, int x);
 s16b drop_near(object_type *o_ptr, int chance, int y, int x);
-void acquirement(int y1, int x1, int num, bool_ great, bool_ known);
+void acquirement(int y1, int x1, int num, bool_ great);
 void combine_pack();
 void reorder_pack();
 void random_artifact_resistance(object_type * o_ptr);

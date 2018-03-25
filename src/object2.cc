@@ -5287,7 +5287,7 @@ s16b drop_near(object_type *j_ptr, int chance, int y, int x)
 /*
  * Scatter some "great" objects near the player
  */
-void acquirement(int y1, int x1, int num, bool_ great, bool_ known)
+void acquirement(int y1, int x1, int num, bool_ great)
 {
 	auto const &d_info = game->edit_data.d_info;
 
@@ -5305,12 +5305,6 @@ void acquirement(int y1, int x1, int num, bool_ great, bool_ known)
 
 		/* Make a good (or great) object (if possible) */
 		if (!make_object(i_ptr, TRUE, great, d_info[dungeon_type].objs)) continue;
-
-		if (known)
-		{
-			object_aware(i_ptr);
-			object_known(i_ptr);
-		}
 
 		/* Drop the object */
 		drop_near(i_ptr, -1, y1, x1);
