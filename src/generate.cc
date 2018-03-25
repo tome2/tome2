@@ -2585,234 +2585,176 @@ static void build_type4(int by0, int bx0)
  */
 
 
-/*
- * Helper function for "monster nest (jelly)"
- */
-static bool_ vault_aux_jelly(int r_idx)
+static bool vault_aux_jelly(int r_idx)
 {
 	auto const &r_info = game->edit_data.r_info;
-
 	auto r_ptr = &r_info[r_idx];
 
 	/* Decline unique monsters */
-	if (r_ptr->flags & RF_UNIQUE) return (FALSE);
+	if (r_ptr->flags & RF_UNIQUE) return false;
 
 	/* Also decline evil jellies (like death molds and shoggoths) */
-	if (r_ptr->flags & RF_EVIL) return (FALSE);
+	if (r_ptr->flags & RF_EVIL) return false;
 
 	/* Require icky thing, jelly, mold, or mushroom */
-	if (!strchr("ijm,", r_ptr->d_char)) return (FALSE);
+	if (!strchr("ijm,", r_ptr->d_char)) return false;
 
 	/* Okay */
-	return (TRUE);
+	return true;
 }
 
-
-/*
- * Helper function for "monster nest (animal)"
- */
-static bool_ vault_aux_animal(int r_idx)
+static bool vault_aux_animal(int r_idx)
 {
 	auto const &r_info = game->edit_data.r_info;
-
 	auto r_ptr = &r_info[r_idx];
 
 	/* Decline unique monsters */
-	if (r_ptr->flags & RF_UNIQUE) return (FALSE);
+	if (r_ptr->flags & RF_UNIQUE) return false;
 
 	/* Require "animal" flag */
-	if (!(r_ptr->flags & RF_ANIMAL)) return (FALSE);
+	if (!(r_ptr->flags & RF_ANIMAL)) return false;
 
 	/* Okay */
-	return (TRUE);
+	return true;
 }
 
-
-/*
- * Helper function for "monster nest (undead)"
- */
-static bool_ vault_aux_undead(int r_idx)
+static bool vault_aux_undead(int r_idx)
 {
 	auto const &r_info = game->edit_data.r_info;
-
 	auto r_ptr = &r_info[r_idx];
 
 	/* Decline unique monsters */
-	if (r_ptr->flags & RF_UNIQUE) return (FALSE);
+	if (r_ptr->flags & RF_UNIQUE) return false;
 
 	/* Require Undead */
-	if (!(r_ptr->flags & RF_UNDEAD)) return (FALSE);
+	if (!(r_ptr->flags & RF_UNDEAD)) return false;
 
 	/* Okay */
-	return (TRUE);
+	return true;
 }
 
-
-/*
- * Helper function for "monster nest (chapel)"
- */
-static bool_ vault_aux_chapel(int r_idx)
+static bool vault_aux_chapel(int r_idx)
 {
 	auto const &r_info = game->edit_data.r_info;
-
 	auto r_ptr = &r_info[r_idx];
 
 	/* Decline unique monsters */
-	if (r_ptr->flags & RF_UNIQUE) return (FALSE);
+	if (r_ptr->flags & RF_UNIQUE) return false;
 
 	/* Require "priest" or Angel */
 	if (!((r_ptr->d_char == 'A') || strstr(r_ptr->name, "riest")))
 	{
-		return (FALSE);
+		return false;
 	}
 
 	/* Okay */
-	return (TRUE);
+	return true;
 }
 
-
-/*
- * Helper function for "monster nest (kennel)"
- */
-static bool_ vault_aux_kennel(int r_idx)
+static bool vault_aux_kennel(int r_idx)
 {
 	auto const &r_info = game->edit_data.r_info;
-
 	auto r_ptr = &r_info[r_idx];
 
 	/* Decline unique monsters */
-	if (r_ptr->flags & RF_UNIQUE) return (FALSE);
+	if (r_ptr->flags & RF_UNIQUE) return false;
 
 	/* Require a Zephyr Hound or a dog */
 	return ((r_ptr->d_char == 'Z') || (r_ptr->d_char == 'C'));
-
 }
 
-
-/*
- * Helper function for "monster nest (treasure)"
- */
-static bool_ vault_aux_treasure(int r_idx)
+static bool vault_aux_treasure(int r_idx)
 {
 	auto const &r_info = game->edit_data.r_info;
-
 	auto r_ptr = &r_info[r_idx];
 
 	/* Decline unique monsters */
-	if (r_ptr->flags & RF_UNIQUE) return (FALSE);
+	if (r_ptr->flags & RF_UNIQUE) return false;
 
 	/* Require "priest" or Angel */
 	if (!((r_ptr->d_char == '!') || (r_ptr->d_char == '|') ||
-	                (r_ptr->d_char == '$') || (r_ptr->d_char == '?') ||
-	                (r_ptr->d_char == '=')))
+		(r_ptr->d_char == '$') || (r_ptr->d_char == '?') ||
+		(r_ptr->d_char == '=')))
 	{
-		return (FALSE);
+		return false;
 	}
 
 	/* Okay */
-	return (TRUE);
+	return true;
 }
 
-
-/*
- * Helper function for "monster nest (clone)"
- */
-static bool_ vault_aux_clone(int r_idx)
+static bool vault_aux_clone(int r_idx)
 {
 	return (r_idx == template_race);
 }
 
-
-/*
- * Helper function for "monster nest (symbol clone)"
- */
-static bool_ vault_aux_symbol(int r_idx)
+static bool vault_aux_symbol(int r_idx)
 {
 	auto const &r_info = game->edit_data.r_info;
+	auto r_ptr = &r_info[r_idx];
 
-	return ((r_info[r_idx].d_char == (r_info[template_race].d_char))
-		&& !(r_info[r_idx].flags & RF_UNIQUE));
+	return ((r_ptr->d_char == (r_info[template_race].d_char))
+		&& !(r_ptr->flags & RF_UNIQUE));
 }
 
-
-/*
- * Helper function for "monster pit (orc)"
- */
-static bool_ vault_aux_orc(int r_idx)
+static bool vault_aux_orc(int r_idx)
 {
 	auto const &r_info = game->edit_data.r_info;
-
 	auto r_ptr = &r_info[r_idx];
 
 	/* Decline unique monsters */
-	if (r_ptr->flags & RF_UNIQUE) return (FALSE);
+	if (r_ptr->flags & RF_UNIQUE) return false;
 
 	/* Hack -- Require "o" monsters */
-	if (!strchr("o", r_ptr->d_char)) return (FALSE);
+	if (!strchr("o", r_ptr->d_char)) return false;
 
 	/* Okay */
-	return (TRUE);
+	return true;
 }
 
-
-
-/*
- * Helper function for "monster pit (troll)"
- */
-static bool_ vault_aux_troll(int r_idx)
+static bool vault_aux_troll(int r_idx)
 {
 	auto const &r_info = game->edit_data.r_info;
-
 	auto r_ptr = &r_info[r_idx];
 
 	/* Decline unique monsters */
-	if (r_ptr->flags & RF_UNIQUE) return (FALSE);
+	if (r_ptr->flags & RF_UNIQUE) return false;
 
 	/* Hack -- Require "T" monsters */
-	if (!strchr("T", r_ptr->d_char)) return (FALSE);
+	if (!strchr("T", r_ptr->d_char)) return false;
 
 	/* Okay */
-	return (TRUE);
+	return true;
 }
 
-
-/*
- * Helper function for "monster pit (giant)"
- */
-static bool_ vault_aux_giant(int r_idx)
+static bool vault_aux_giant(int r_idx)
 {
 	auto const &r_info = game->edit_data.r_info;
-
 	auto r_ptr = &r_info[r_idx];
 
 	/* Decline unique monsters */
-	if (r_ptr->flags & RF_UNIQUE) return (FALSE);
+	if (r_ptr->flags & RF_UNIQUE) return false;
 
 	/* Hack -- Require "P" monsters */
-	if (!strchr("P", r_ptr->d_char)) return (FALSE);
+	if (!strchr("P", r_ptr->d_char)) return false;
 
 	/* Okay */
-	return (TRUE);
+	return true;
 }
 
-
-/*
- * Helper function for "monster pit (demon)"
- */
-static bool_ vault_aux_demon(int r_idx)
+static bool vault_aux_demon(int r_idx)
 {
 	auto const &r_info = game->edit_data.r_info;
-
 	auto r_ptr = &r_info[r_idx];
 
 	/* Decline unique monsters */
-	if (r_ptr->flags & RF_UNIQUE) return (FALSE);
+	if (r_ptr->flags & RF_UNIQUE) return false;
 
 	/* Hack -- Require "U" monsters */
-	if (!strchr("U", r_ptr->d_char)) return (FALSE);
+	if (!strchr("U", r_ptr->d_char)) return false;
 
 	/* Okay */
-	return (TRUE);
+	return true;
 }
 
 
@@ -2848,7 +2790,7 @@ static void build_type5(int by0, int bx0)
 	int tmp, i;
 	const char *name;
 	bool_ empty = FALSE;
-	bool_ (*old_get_mon_num_hook)(int r_idx);
+	bool (*old_get_mon_num_hook)(int r_idx);
 	s16b what[64];
 
 	/* Try to allocate space for room.  If fails, exit */
@@ -3088,7 +3030,7 @@ static void build_type6(int by0, int bx0)
 	int i, j, y, x, y1, x1, y2, x2, xval, yval;
 	bool_ empty = FALSE;
 	const char *name;
-	bool_ (*old_get_mon_num_hook)(int r_idx);
+	bool (*old_get_mon_num_hook)(int r_idx);
 
 	/* Try to allocate space for room.  If fails, exit */
 	if (!room_alloc(25, 11, TRUE, by0, bx0, &xval, &yval)) return;
@@ -3252,22 +3194,22 @@ static void build_type6(int by0, int bx0)
 		}
 
 		/* Restrict monster selection */
-		get_mon_num_hook = [](int r_idx) -> bool_ {
+		get_mon_num_hook = [](int r_idx) -> bool {
 			auto const &r_info = game->edit_data.r_info;
 
 			auto r_ptr = &r_info[r_idx];
 
 			/* Decline unique monsters */
-			if (r_ptr->flags & RF_UNIQUE) return (FALSE);
+			if (r_ptr->flags & RF_UNIQUE) return false;
 
 			/* Hack -- Require "d" or "D" monsters */
-			if (!strchr("Dd", r_ptr->d_char)) return (FALSE);
+			if (!strchr("Dd", r_ptr->d_char)) return false;
 
 			/* Hack -- Require correct "breath attack" */
-			if ((r_ptr->spells & mask) != mask) return (FALSE);
+			if ((r_ptr->spells & mask) != mask) return false;
 
 			/* Okay */
-			return (TRUE);
+			return true;
 		};
 	}
 

@@ -2602,7 +2602,7 @@ static int place_monster_idx = 0;
 /*
  * Hack -- help pick an escort type
  */
-static bool_ place_monster_okay(int r_idx)
+static bool place_monster_okay(int r_idx)
 {
 	auto const &r_info = game->edit_data.r_info;
 
@@ -2610,22 +2610,22 @@ static bool_ place_monster_okay(int r_idx)
 	auto z_ptr = &r_info[r_idx];
 
 	/* Hack - Escorts have to have the same dungeon flag */
-	if (monster_dungeon(place_monster_idx) != monster_dungeon(r_idx)) return (FALSE);
+	if (monster_dungeon(place_monster_idx) != monster_dungeon(r_idx)) return false;
 
 	/* Require similar "race" */
-	if (z_ptr->d_char != r_ptr->d_char) return (FALSE);
+	if (z_ptr->d_char != r_ptr->d_char) return false;
 
 	/* Skip more advanced monsters */
-	if (z_ptr->level > r_ptr->level) return (FALSE);
+	if (z_ptr->level > r_ptr->level) return false;
 
 	/* Skip unique monsters */
-	if (z_ptr->flags & RF_UNIQUE) return (FALSE);
+	if (z_ptr->flags & RF_UNIQUE) return false;
 
 	/* Paranoia -- Skip identical monsters */
-	if (place_monster_idx == r_idx) return (FALSE);
+	if (place_monster_idx == r_idx) return false;
 
 	/* Okay */
-	return (TRUE);
+	return true;
 }
 
 
@@ -2653,7 +2653,7 @@ bool_ place_monster_aux(int y, int x, int r_idx, bool_ slp, bool_ grp, int statu
 
 	int i;
 	auto r_ptr = &r_info[r_idx];
-	bool_ (*old_get_mon_num_hook)(int r_idx);
+	bool (*old_get_mon_num_hook)(int r_idx);
 
 
 	/* Place one monster, or fail */
@@ -2906,188 +2906,163 @@ static int summon_specific_type = 0;
 /*
  * Hack -- help decide if a monster race is "okay" to summon
  */
-static bool_ summon_specific_okay(int r_idx)
+static bool summon_specific_okay(int r_idx)
 {
 	auto const &r_info = game->edit_data.r_info;
 
 	auto r_ptr = &r_info[r_idx];
 
-	bool_ okay = FALSE;
-
 	/* Hack - Only summon dungeon monsters */
-	if (!monster_dungeon(r_idx)) return (FALSE);
+	if (!monster_dungeon(r_idx)) return false;
 
 	/* Hack -- no specific type specified */
-	if (!summon_specific_type) return (TRUE);
+	if (!summon_specific_type) return true;
 
 	/* Check our requirements */
 	switch (summon_specific_type)
 	{
 	case SUMMON_ANT:
 		{
-			okay = ((r_ptr->d_char == 'a') &&
+			return ((r_ptr->d_char == 'a') &&
 			        !(r_ptr->flags & RF_UNIQUE));
-			break;
 		}
 
 	case SUMMON_SPIDER:
 		{
-			okay = ((r_ptr->d_char == 'S') &&
+			return ((r_ptr->d_char == 'S') &&
 			        !(r_ptr->flags & RF_UNIQUE));
-			break;
 		}
 
 	case SUMMON_HOUND:
 		{
-			okay = (((r_ptr->d_char == 'C') || (r_ptr->d_char == 'Z')) &&
+			return (((r_ptr->d_char == 'C') || (r_ptr->d_char == 'Z')) &&
 			        !(r_ptr->flags & RF_UNIQUE));
-			break;
 		}
 
 	case SUMMON_HYDRA:
 		{
-			okay = ((r_ptr->d_char == 'M') &&
+			return ((r_ptr->d_char == 'M') &&
 			        !(r_ptr->flags & RF_UNIQUE));
-			break;
 		}
 
 	case SUMMON_ANGEL:
 		{
-			okay = ((r_ptr->d_char == 'A') &&
+			return ((r_ptr->d_char == 'A') &&
 			        !(r_ptr->flags & RF_UNIQUE));
-			break;
 		}
 
 	case SUMMON_DEMON:
 		{
-			okay = ((r_ptr->flags & RF_DEMON) &&
+			return ((r_ptr->flags & RF_DEMON) &&
 			        !(r_ptr->flags & RF_UNIQUE));
-			break;
 		}
 
 	case SUMMON_UNDEAD:
 		{
-			okay = ((r_ptr->flags & RF_UNDEAD) &&
+			return ((r_ptr->flags & RF_UNDEAD) &&
 			        !(r_ptr->flags & RF_UNIQUE));
-			break;
 		}
 
 	case SUMMON_DRAGON:
 		{
-			okay = ((r_ptr->flags & RF_DRAGON) &&
+			return ((r_ptr->flags & RF_DRAGON) &&
 			        !(r_ptr->flags & RF_UNIQUE));
-			break;
 		}
 
 	case SUMMON_HI_UNDEAD:
 		{
-			okay = ((r_ptr->d_char == 'L') ||
+			return ((r_ptr->d_char == 'L') ||
 			        (r_ptr->d_char == 'V') ||
 			        (r_ptr->d_char == 'W'));
-			break;
 		}
 
 	case SUMMON_HI_DRAGON:
 		{
-			okay = (r_ptr->d_char == 'D');
-			break;
+			return (r_ptr->d_char == 'D');
 		}
 
 	case SUMMON_WRAITH:
 		{
-			okay = (r_ptr->d_char == 'W');
-			break;
+			return (r_ptr->d_char == 'W');
 		}
 
 	case SUMMON_GHOST:
 		{
-			okay = (r_ptr->d_char == 'G');
-			break;
+			return (r_ptr->d_char == 'G');
 		}
 
 	case SUMMON_UNIQUE:
 		{
-			okay = (r_ptr->flags & RF_UNIQUE) ? TRUE : FALSE;
-			break;
+			return bool(r_ptr->flags & RF_UNIQUE);
 		}
 
 	case SUMMON_BIZARRE1:
 		{
-			okay = ((r_ptr->d_char == 'm') &&
+			return ((r_ptr->d_char == 'm') &&
 			        !(r_ptr->flags & RF_UNIQUE));
-			break;
 		}
 	case SUMMON_BIZARRE2:
 		{
-			okay = ((r_ptr->d_char == 'b') &&
+			return ((r_ptr->d_char == 'b') &&
 			        !(r_ptr->flags & RF_UNIQUE));
-			break;
 		}
 	case SUMMON_BIZARRE3:
 		{
-			okay = ((r_ptr->d_char == 'Q') &&
+			return ((r_ptr->d_char == 'Q') &&
 			        !(r_ptr->flags & RF_UNIQUE));
-			break;
 		}
 
 	case SUMMON_BIZARRE4:
 		{
-			okay = ((r_ptr->d_char == 'v') &&
+			return ((r_ptr->d_char == 'v') &&
 			        !(r_ptr->flags & RF_UNIQUE));
-			break;
 		}
 
 	case SUMMON_BIZARRE5:
 		{
-			okay = ((r_ptr->d_char == '$') &&
+			return ((r_ptr->d_char == '$') &&
 			        !(r_ptr->flags & RF_UNIQUE));
-			break;
 		}
 
 	case SUMMON_BIZARRE6:
 		{
-			okay = (((r_ptr->d_char == '!') ||
+			return (((r_ptr->d_char == '!') ||
 			         (r_ptr->d_char == '?') ||
 			         (r_ptr->d_char == '=') ||
 			         (r_ptr->d_char == '$') ||
 			         (r_ptr->d_char == '|')) &&
 			        !(r_ptr->flags & RF_UNIQUE));
-			break;
 		}
 
 	case SUMMON_HI_DEMON:
 		{
-			okay = ((r_ptr->flags & RF_DEMON) &&
+			return ((r_ptr->flags & RF_DEMON) &&
 			        (r_ptr->d_char == 'U') &&
 			        !(r_ptr->flags & RF_UNIQUE));
-			break;
 		}
 
 
 	case SUMMON_KIN:
 		{
-			okay = ((r_ptr->d_char == summon_kin_type) &&
+			return ((r_ptr->d_char == summon_kin_type) &&
 			        !(r_ptr->flags & RF_UNIQUE));
-			break;
 		}
 
 	case SUMMON_DAWN:
 		{
-			okay = ((strstr(r_ptr->name, "the Dawn")) &&
+			return ((strstr(r_ptr->name, "the Dawn")) &&
 			        !(r_ptr->flags & RF_UNIQUE));
-			break;
 		}
 
 	case SUMMON_ANIMAL:
 		{
-			okay = ((r_ptr->flags & RF_ANIMAL) &&
+			return ((r_ptr->flags & RF_ANIMAL) &&
 			        !(r_ptr->flags & RF_UNIQUE));
-			break;
 		}
 
 	case SUMMON_ANIMAL_RANGER:
 		{
-			okay = ((r_ptr->flags & RF_ANIMAL) &&
+			return ((r_ptr->flags & RF_ANIMAL) &&
 			        (strchr("abcflqrwBCIJKMRS", r_ptr->d_char)) &&
 			        !(r_ptr->flags & RF_DRAGON) &&
 			        !(r_ptr->flags & RF_EVIL) &&
@@ -3095,102 +3070,87 @@ static bool_ summon_specific_okay(int r_idx)
 			        !(r_ptr->flags & RF_DEMON) &&
 				!r_ptr->spells &&
 			        !(r_ptr->flags & RF_UNIQUE));
-			break;
 		}
 
 	case SUMMON_HI_UNDEAD_NO_UNIQUES:
 		{
-			okay = (((r_ptr->d_char == 'L') ||
+			return (((r_ptr->d_char == 'L') ||
 			         (r_ptr->d_char == 'V') ||
 			         (r_ptr->d_char == 'W')) &&
 			        !(r_ptr->flags & RF_UNIQUE));
-			break;
 		}
 
 	case SUMMON_HI_DRAGON_NO_UNIQUES:
 		{
-			okay = ((r_ptr->d_char == 'D') &&
+			return ((r_ptr->d_char == 'D') &&
 			        !(r_ptr->flags & RF_UNIQUE));
-			break;
 		}
 
 	case SUMMON_NO_UNIQUES:
 		{
-			okay = (!(r_ptr->flags & RF_UNIQUE));
-			break;
+			return (!(r_ptr->flags & RF_UNIQUE));
 		}
 
 	case SUMMON_PHANTOM:
 		{
-			okay = ((strstr(r_ptr->name, "Phantom")) &&
+			return ((strstr(r_ptr->name, "Phantom")) &&
 			        !(r_ptr->flags & RF_UNIQUE));
-			break;
 		}
 
 	case SUMMON_ELEMENTAL:
 		{
-			okay = ((strstr(r_ptr->name, "lemental")) &&
+			return ((strstr(r_ptr->name, "lemental")) &&
 			        !(r_ptr->flags & RF_UNIQUE));
-			break;
 		}
 
 	case SUMMON_THUNDERLORD:
 		{
-			okay = (r_ptr->flags & RF_THUNDERLORD) ? TRUE : FALSE;
-			break;
+			return bool(r_ptr->flags & RF_THUNDERLORD);
 		}
 
 	case SUMMON_BLUE_HORROR:
 		{
-			okay = ((strstr(r_ptr->name, "lue horror")) &&
+			return ((strstr(r_ptr->name, "lue horror")) &&
 			        !(r_ptr->flags & RF_UNIQUE));
-			break;
 		}
 
 	case SUMMON_BUG:
 		{
-			okay = ((strstr(r_ptr->name, "Software bug")) &&
+			return ((strstr(r_ptr->name, "Software bug")) &&
 			        !(r_ptr->flags & RF_UNIQUE));
-			break;
 		}
 
 	case SUMMON_RNG:
 		{
-			okay = ((strstr(r_ptr->name, "Random Number Generator")) &&
+			return ((strstr(r_ptr->name, "Random Number Generator")) &&
 			        !(r_ptr->flags & RF_UNIQUE));
-			break;
 		}
 	case SUMMON_MINE:
 		{
-			okay = (r_ptr->flags & RF_NEVER_MOVE) ? TRUE : FALSE;
-			break;
+			return (r_ptr->flags & RF_NEVER_MOVE) ? TRUE : FALSE;
 		}
 
 	case SUMMON_HUMAN:
 		{
-			okay = ((r_ptr->d_char == 'p') &&
+			return ((r_ptr->d_char == 'p') &&
 			        !(r_ptr->flags & RF_UNIQUE));
-			break;
 		}
 
 	case SUMMON_SHADOWS:
 		{
-			okay = ((r_ptr->d_char == 'G') &&
+			return ((r_ptr->d_char == 'G') &&
 			        !(r_ptr->flags & RF_UNIQUE));
-			break;
 		}
 
 	case SUMMON_QUYLTHULG:
 		{
-			okay = ((r_ptr->d_char == 'Q') &&
+			return ((r_ptr->d_char == 'Q') &&
 			        !(r_ptr->flags & RF_UNIQUE));
-			break;
 		}
 
 	}
 
-	/* Result */
-	return (okay);
+	return false;
 }
 
 
@@ -3223,7 +3183,7 @@ bool_ summon_specific(int y1, int x1, int lev, int type)
 {
 	int i, x, y, r_idx;
 	bool_ Group_ok = TRUE;
-	bool_ (*old_get_mon_num_hook)(int r_idx);
+	bool (*old_get_mon_num_hook)(int r_idx);
 
 	/* Look for a location */
 	for (i = 0; i < 20; ++i)
@@ -3307,7 +3267,7 @@ bool_ summon_specific(int y1, int x1, int lev, int type)
 bool_ summon_specific_friendly(int y1, int x1, int lev, int type, bool_ Group_ok)
 {
 	int i, x, y, r_idx;
-	bool_ (*old_get_mon_num_hook)(int r_idx);
+	bool (*old_get_mon_num_hook)(int r_idx);
 
 	/* Look for a location */
 	for (i = 0; i < 20; ++i)
@@ -3483,21 +3443,16 @@ void monster_swap(int y1, int x1, int y2, int x2)
 /*
  * Hack -- help decide if a monster race is "okay" to summon
  */
-static bool_ mutate_monster_okay(int r_idx)
+static bool mutate_monster_okay(int r_idx)
 {
 	auto const &r_info = game->edit_data.r_info;
-
 	auto r_ptr = &r_info[r_idx];
 
-	bool_ okay = FALSE;
-
 	/* Hack - Only summon dungeon monsters */
-	if (!monster_dungeon(r_idx)) return (FALSE);
+	if (!monster_dungeon(r_idx)) return false;
 
-	okay = ((r_ptr->d_char == summon_kin_type) && !(r_ptr->flags & RF_UNIQUE)
+	return ((r_ptr->d_char == summon_kin_type) && !(r_ptr->flags & RF_UNIQUE)
 	        && (r_ptr->level >= dun_level));
-
-	return okay;
 }
 
 
@@ -3535,7 +3490,7 @@ bool_ multiply_monster(int m_idx, bool_ charm, bool_ clone)
 		/* It can mutate into a nastier monster */
 		if ((rand_int(100) < 3) && (!clone))
 		{
-			bool_ (*old_get_mon_num_hook)(int r_idx);
+			bool (*old_get_mon_num_hook)(int r_idx);
 
 			/* Backup the old hook */
 			old_get_mon_num_hook = get_mon_num_hook;

@@ -20,39 +20,38 @@
 
 #define bounty_quest_monster (cquest.data[0])
 
-static bool_ lua_mon_hook_bounty(int r_idx)
+static bool lua_mon_hook_bounty(int r_idx)
 {
 	auto const &r_info = game->edit_data.r_info;
-
 	auto r_ptr = &r_info[r_idx];
 
 	/* Reject uniques */
-	if (r_ptr->flags & RF_UNIQUE) return (FALSE);
+	if (r_ptr->flags & RF_UNIQUE) return false;
 
 	/* Reject those who cannot leave anything */
-	if (!(r_ptr->flags & RF_DROP_CORPSE)) return (FALSE);
+	if (!(r_ptr->flags & RF_DROP_CORPSE)) return false;
 
 	/* Accept only monsters that can be generated */
-	if (r_ptr->flags & RF_SPECIAL_GENE) return (FALSE);
-	if (r_ptr->flags & RF_NEVER_GENE) return (FALSE);
+	if (r_ptr->flags & RF_SPECIAL_GENE) return false;
+	if (r_ptr->flags & RF_NEVER_GENE) return false;
 
 	/* Reject pets */
-	if (r_ptr->flags & RF_PET) return (FALSE);
+	if (r_ptr->flags & RF_PET) return false;
 
 	/* Reject friendly creatures */
-	if (r_ptr->flags & RF_FRIENDLY) return (FALSE);
+	if (r_ptr->flags & RF_FRIENDLY) return false;
 
 	/* Accept only monsters that are not breeders */
-	if (r_ptr->spells & SF_MULTIPLY) return (FALSE);
+	if (r_ptr->spells & SF_MULTIPLY) return false;
 
 	/* Forbid joke monsters */
-	if (r_ptr->flags & RF_JOKEANGBAND) return (FALSE);
+	if (r_ptr->flags & RF_JOKEANGBAND) return false;
 
 	/* Accept only monsters that are not good */
-	if (r_ptr->flags & RF_GOOD) return (FALSE);
+	if (r_ptr->flags & RF_GOOD) return false;
 
 	/* The rest are acceptable */
-	return (TRUE);
+	return true;
 }
 
 static int get_new_bounty_monster(int lev)

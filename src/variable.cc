@@ -483,8 +483,8 @@ char *ANGBAND_DIR_XTRA;
 /*
  * Hack -- function hooks to restrict "get_mon_num_prep()" function
  */
-bool_ (*get_mon_num_hook)(int r_idx);
-bool_ (*get_mon_num2_hook)(int r_idx);
+bool (*get_mon_num_hook)(int r_idx);
+bool (*get_mon_num2_hook)(int r_idx);
 
 
 /*

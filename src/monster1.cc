@@ -1377,186 +1377,136 @@ void display_roff(int r_idx, int ego)
 }
 
 
-bool_ monster_quest(int r_idx)
+bool monster_quest(int r_idx)
 {
 	auto const &r_info = game->edit_data.r_info;
 
 	auto r_ptr = &r_info[r_idx];
 
 	/* Random quests are in the dungeon */
-	if (r_ptr->flags & RF_WILD_ONLY) return FALSE;
+	if (r_ptr->flags & RF_WILD_ONLY) return false;
 
 	/* No random quests for aquatic monsters */
-	if (r_ptr->flags & RF_AQUATIC) return FALSE;
+	if (r_ptr->flags & RF_AQUATIC) return false;
 
 	/* No random quests for multiplying monsters */
-	if (r_ptr->spells & SF_MULTIPLY) return FALSE;
+	if (r_ptr->spells & SF_MULTIPLY) return false;
 
-	return TRUE;
+	return true;
 }
 
 
-bool_ monster_dungeon(int r_idx)
+bool monster_dungeon(int r_idx)
 {
 	auto const &r_info = game->edit_data.r_info;
-
 	auto r_ptr = &r_info[r_idx];
 
-	if (!(r_ptr->flags & RF_WILD_ONLY))
-		return TRUE;
-	else
-		return FALSE;
+	return !(r_ptr->flags & RF_WILD_ONLY);
 }
 
-
-static bool_ monster_ocean(int r_idx)
+static bool monster_ocean(int r_idx)
 {
 	auto const &r_info = game->edit_data.r_info;
-
 	auto r_ptr = &r_info[r_idx];
 
-	if (r_ptr->flags & RF_WILD_OCEAN)
-		return TRUE;
-	else
-		return FALSE;
+	return bool(r_ptr->flags & RF_WILD_OCEAN);
 }
 
-
-static bool_ monster_shore(int r_idx)
+static bool monster_shore(int r_idx)
 {
 	auto const &r_info = game->edit_data.r_info;
-
 	auto r_ptr = &r_info[r_idx];
 
-	if (r_ptr->flags & RF_WILD_SHORE)
-		return TRUE;
-	else
-		return FALSE;
+	return bool(r_ptr->flags & RF_WILD_SHORE);
 }
 
-
-static bool_ monster_waste(int r_idx)
+static bool monster_waste(int r_idx)
 {
 	auto const &r_info = game->edit_data.r_info;
-
 	auto r_ptr = &r_info[r_idx];
 
-	if (r_ptr->flags & RF_WILD_WASTE)
-		return TRUE;
-	else
-		return FALSE;
+	return bool(r_ptr->flags & RF_WILD_WASTE);
 }
 
-
-static bool_ monster_town(int r_idx)
+static bool monster_town(int r_idx)
 {
 	auto const &r_info = game->edit_data.r_info;
-
 	auto r_ptr = &r_info[r_idx];
 
-	if (r_ptr->flags & RF_WILD_TOWN)
-		return TRUE;
-	else
-		return FALSE;
+	return bool(r_ptr->flags & RF_WILD_TOWN);
 }
 
-
-static bool_ monster_wood(int r_idx)
+static bool monster_wood(int r_idx)
 {
 	auto const &r_info = game->edit_data.r_info;
-
 	auto r_ptr = &r_info[r_idx];
 
-	if (r_ptr->flags & RF_WILD_WOOD)
-		return TRUE;
-	else
-		return FALSE;
+	return bool(r_ptr->flags & RF_WILD_WOOD);
 }
 
-
-static bool_ monster_volcano(int r_idx)
+static bool monster_volcano(int r_idx)
 {
 	auto const &r_info = game->edit_data.r_info;
-
 	auto r_ptr = &r_info[r_idx];
 
-	if (r_ptr->flags & RF_WILD_VOLCANO)
-		return TRUE;
-	else
-		return FALSE;
+	return bool(r_ptr->flags & RF_WILD_VOLCANO);
 }
 
-
-static bool_ monster_mountain(int r_idx)
+static bool monster_mountain(int r_idx)
 {
 	auto const &r_info = game->edit_data.r_info;
-
 	auto r_ptr = &r_info[r_idx];
 
-	if (r_ptr->flags & RF_WILD_MOUNTAIN)
-		return TRUE;
-	else
-		return FALSE;
+	return bool(r_ptr->flags & RF_WILD_MOUNTAIN);
 }
 
-
-static bool_ monster_grass(int r_idx)
+static bool monster_grass(int r_idx)
 {
 	auto const &r_info = game->edit_data.r_info;
-
 	auto r_ptr = &r_info[r_idx];
 
-	if (r_ptr->flags & RF_WILD_GRASS)
-		return TRUE;
-	else
-		return FALSE;
+	return bool(r_ptr->flags & RF_WILD_GRASS);
 }
 
-
-static bool_ monster_deep_water(int r_idx)
+static bool monster_deep_water(int r_idx)
 {
 	auto const &r_info = game->edit_data.r_info;
-
 	auto r_ptr = &r_info[r_idx];
 
-	if (!monster_dungeon(r_idx)) return FALSE;
+	if (!monster_dungeon(r_idx))
+	{
+		return false;
+	}
 
-	if (r_ptr->flags & RF_AQUATIC)
-		return TRUE;
-	else
-		return FALSE;
+	return bool(r_ptr->flags & RF_AQUATIC);
 }
 
-
-static bool_ monster_shallow_water(int r_idx)
+static bool monster_shallow_water(int r_idx)
 {
 	auto const &r_info = game->edit_data.r_info;
-
 	auto r_ptr = &r_info[r_idx];
 
-	if (!monster_dungeon(r_idx)) return FALSE;
+	if (!monster_dungeon(r_idx))
+	{
+		return false;
+	}
 
-	if (r_ptr->flags & RF_AURA_FIRE)
-		return FALSE;
-	else
-		return TRUE;
+	return !(r_ptr->flags & RF_AURA_FIRE);
 }
 
-
-static bool_ monster_lava(int r_idx)
+static bool monster_lava(int r_idx)
 {
 	auto const &r_info = game->edit_data.r_info;
-
 	auto r_ptr = &r_info[r_idx];
 
-	if (!monster_dungeon(r_idx)) return FALSE;
+	if (!monster_dungeon(r_idx))
+	{
+		return false;
+	}
 
-	if (((r_ptr->flags & RF_IM_FIRE) ||
-	                (r_ptr->flags & RF_CAN_FLY)) &&
-	                !(r_ptr->flags & RF_AURA_COLD))
-		return TRUE;
-	else
-		return FALSE;
+	return ((r_ptr->flags & RF_IM_FIRE) ||
+		(r_ptr->flags & RF_CAN_FLY)) &&
+		!(r_ptr->flags & RF_AURA_COLD);
 }
 
 
