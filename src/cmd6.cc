@@ -3346,7 +3346,7 @@ void do_cmd_read_scroll()
 
 		case SV_SCROLL_GENOCIDE:
 			{
-				genocide(TRUE);
+				genocide();
 
 				ident = TRUE;
 
@@ -3355,7 +3355,7 @@ void do_cmd_read_scroll()
 
 		case SV_SCROLL_MASS_GENOCIDE:
 			{
-				mass_genocide(TRUE);
+				mass_genocide();
 
 				ident = TRUE;
 
@@ -6111,7 +6111,7 @@ const char *activation_aux(object_type * o_ptr, bool_ doit, int item)
 		{
 			if (!doit) return "genocide every 500 turns";
 			msg_print("It glows deep blue...");
-			genocide(TRUE);
+			genocide();
 
 			o_ptr->timeout = 500;
 
@@ -6122,7 +6122,7 @@ const char *activation_aux(object_type * o_ptr, bool_ doit, int item)
 		{
 			if (!doit) return "mass genocide every 1000 turns";
 			msg_print("It lets out a long, shrill note...");
-			mass_genocide(TRUE);
+			mass_genocide();
 
 			o_ptr->timeout = 1000;
 

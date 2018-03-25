@@ -2849,7 +2849,7 @@ static bool get_genocide_race(cptr msg, char *typ)
 /*
  * Delete all non-unique/non-quest monsters of a given "type" from the level
  */
-bool_ genocide_aux(bool_ player_cast, char typ)
+static bool_ genocide_aux(char typ)
 {
 	int i;
 	bool_ result = FALSE;
@@ -2900,11 +2900,8 @@ bool_ genocide_aux(bool_ player_cast, char typ)
 		/* Delete the monster */
 		delete_monster_idx(i);
 
-		if (player_cast)
-		{
-			/* Keep track of damage */
-			dam += randint(4);
-		}
+		/* Keep track of damage */
+		dam += randint(4);
 
 		/* Handle */
 		handle_stuff();
@@ -2919,31 +2916,28 @@ bool_ genocide_aux(bool_ player_cast, char typ)
 		result = TRUE;
 	}
 
-	if (player_cast)
-	{
-		/* Take damage */
-		take_hit(dam, "the strain of casting Genocide");
+	/* Take damage */
+	take_hit(dam, "the strain of casting Genocide");
 
-		/* Visual feedback */
-		move_cursor_relative(p_ptr->py, p_ptr->px);
+	/* Visual feedback */
+	move_cursor_relative(p_ptr->py, p_ptr->px);
 
-		/* Redraw */
-		p_ptr->redraw |= (PR_FRAME);
+	/* Redraw */
+	p_ptr->redraw |= (PR_FRAME);
 
-		/* Window stuff */
-		p_ptr->window |= (PW_PLAYER);
+	/* Window stuff */
+	p_ptr->window |= (PW_PLAYER);
 
-		/* Handle */
-		handle_stuff();
+	/* Handle */
+	handle_stuff();
 
-		/* Fresh */
-		Term_fresh();
-	}
+	/* Fresh */
+	Term_fresh();
 
 	return (result);
 }
 
-bool_ genocide(bool_ player_cast)
+bool_ genocide()
 {
 	char typ;
 
@@ -2959,14 +2953,14 @@ bool_ genocide(bool_ player_cast)
 	/* Mega-Hack -- Get a monster symbol */
 	if (!get_genocide_race("Target a monster to select the race to genocide.", &typ)) return FALSE;
 
-	return (genocide_aux(player_cast, typ));
+	return (genocide_aux(typ));
 }
 
 
 /*
  * Delete all nearby (non-unique) monsters
  */
-bool_ mass_genocide(bool_ player_cast)
+bool_ mass_genocide()
 {
 	int i;
 	bool_ result = FALSE;
@@ -3024,11 +3018,8 @@ bool_ mass_genocide(bool_ player_cast)
 		/* Delete the monster */
 		delete_monster_idx(i);
 
-		if (player_cast)
-		{
-			/* Keep track of damage. */
-			dam += randint(3);
-		}
+		/* Keep track of damage. */
+		dam += randint(3);
 
 		/* Handle */
 		handle_stuff();
@@ -3043,26 +3034,23 @@ bool_ mass_genocide(bool_ player_cast)
 		result = TRUE;
 	}
 
-	if (player_cast)
-	{
-		/* Take damage */
-		take_hit(dam, "the strain of casting Mass Genocide");
+	/* Take damage */
+	take_hit(dam, "the strain of casting Mass Genocide");
 
-		/* Visual feedback */
-		move_cursor_relative(p_ptr->py, p_ptr->px);
+	/* Visual feedback */
+	move_cursor_relative(p_ptr->py, p_ptr->px);
 
-		/* Redraw */
-		p_ptr->redraw |= (PR_FRAME);
+	/* Redraw */
+	p_ptr->redraw |= (PR_FRAME);
 
-		/* Window stuff */
-		p_ptr->window |= (PW_PLAYER);
+	/* Window stuff */
+	p_ptr->window |= (PW_PLAYER);
 
-		/* Handle */
-		handle_stuff();
+	/* Handle */
+	handle_stuff();
 
-		/* Fresh */
-		Term_fresh();
-	}
+	/* Fresh */
+	Term_fresh();
 
 	return (result);
 }

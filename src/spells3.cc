@@ -2993,17 +2993,17 @@ casting_result udun_genocide()
 {
 	if (get_level_s(GENOCIDE, 50) < 10)
 	{
-		genocide(TRUE);
+		genocide();
 	}
 	else
 	{
 		if (get_check("Genocide all monsters near you? "))
 		{
-			mass_genocide(TRUE);
+			mass_genocide();
 		}
 		else
 		{
-			genocide(TRUE);
+			genocide();
 		}
 	}
 
