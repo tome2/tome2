@@ -3478,10 +3478,7 @@ errr init_e_info_txt(FILE *fp)
 
 			/* Point at the "info" */
 			e_ptr = &expand_to_fit_index(e_info, i);
-
-			/* Copy name */
-			assert(!e_ptr->name);
-			e_ptr->name = my_strdup(s);
+			e_ptr->name = s;
 
 			/* Next... */
 			continue;

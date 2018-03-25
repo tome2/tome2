@@ -1389,7 +1389,7 @@ static std::string object_desc_aux(object_type const *o_ptr, int pref, int mode)
 	/* The object "expects" a "number" */
 	if (starts_with(basenm, "&"))
 	{
-		cptr ego = NULL;
+		std::string ego;
 
 		/* Grab any ego-item name */
 		if (known && (o_ptr->name2 || o_ptr->name2b) && (o_ptr->tval != TV_ROD_MAIN))
@@ -1445,7 +1445,7 @@ static std::string object_desc_aux(object_type const *o_ptr, int pref, int mode)
 			t += "The ";
 		}
 
-		else if (ego != NULL)
+		else if (!ego.empty())
 		{
 			if (is_a_vowel(ego[0]))
 			{

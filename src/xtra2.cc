@@ -5015,7 +5015,10 @@ static bool_ test_object_wish(char *name, object_type *o_ptr, object_type *forge
 				auto e_ptr = &e_info[j];
 				bool_ ok = FALSE;
 
-				if (j && !e_ptr->name) continue;
+				if (j && e_ptr->name.empty())
+				{
+					continue;
+				}
 
 				/* Must have the correct fields */
 				if (j)
@@ -5043,7 +5046,10 @@ static bool_ test_object_wish(char *name, object_type *o_ptr, object_type *forge
 					auto eb_ptr = &e_info[jb];
 					bool_ ok = FALSE;
 
-					if (jb && !eb_ptr->name) continue;
+					if (jb && eb_ptr->name.empty())
+					{
+						continue;
+					}
 
 					if (j && jb && (e_ptr->before == eb_ptr->before)) continue;
 

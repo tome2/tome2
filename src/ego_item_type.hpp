@@ -5,6 +5,7 @@
 #include "object_flag_set.hpp"
 
 #include <array>
+#include <string>
 
 /*
  * Size of flag rarity tables
@@ -16,7 +17,7 @@ constexpr int FLAG_RARITY_MAX = 6;
  */
 struct ego_item_type
 {
-	const char *name = nullptr;              /* Name */
+	std::string name;                        /* Name */
 
 	bool_ before = FALSE;                    /* Before or after the object name ? */
 

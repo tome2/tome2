@@ -2355,7 +2355,10 @@ static bool_ make_ego_item(object_type *o_ptr, bool_ good)
 		bool_ ok = FALSE;
 
 		/* Skip "empty" items */
-		if (!e_ptr->name) continue;
+		if (e_ptr->name.empty())
+		{
+			continue;
+		}
 
 		/* Must have the correct fields */
 		for (size_t j = 0; j < 6; j++)

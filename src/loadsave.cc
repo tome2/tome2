@@ -1136,7 +1136,10 @@ static void do_item(object_type *o_ptr, ls_flag_t flag)
 		e_ptr = &e_info[o_ptr->name2];
 
 		/* Verify that ego-item */
-		if (!e_ptr->name) o_ptr->name2 = 0;
+		if (e_ptr->name.empty())
+		{
+			o_ptr->name2 = 0;
+		}
 	}
 
 
