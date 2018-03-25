@@ -2336,12 +2336,6 @@ bool_ recharge(int power)
 
 			/* Recharge the wand or staff. */
 			o_ptr->pval += recharge_amount;
-
-			if (!(flags & TR_RECHARGE))
-			{
-				/* Hack -- we no longer "know" the item */
-				o_ptr->identified = false;
-			}
 		}
 	}
 
