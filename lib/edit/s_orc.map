@@ -53,13 +53,8 @@ F:9:1:0:*75:*55
 # Random monster (upto 3 levels ood)
 F:-:1:0:*38
 
-# Random object (upto 7 levels ood)
-F:=:1:0:0:*42
-
-### Guaranteed Items
-
-# The stone of lore
-F:1:1:0:0:0:0:15
+# Random object (upto 25 levels ood)
+F:=:1:0:0:*60
 
 ### Level Design
 D:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
@@ -67,7 +62,7 @@ D:Xa.......................ccccccccc.......................aX
 D:X.lllllllllllllllllllllllllllllllllllllllllllllllllllllll.X
 D:X.l......................ccccccccc.....g.g..............l.X
 D:X.l.XXXXXXXXXXXXXXXXXXXXXXXXX.XXXXXXXXXXDXXXXXXXXXXXXXX.l.X
-D:X.l.Xa.......efX1Xfe.......aX.X.aaa.D.gX.XacbdddccjjjaX.l.X
+D:X.l.Xa.......efX=Xfe.......aX.X.aaa.D.gX.XacbdddccjjjaX.l.X
 D:X.l.D........efG.Gfe........D.D.bbb.XXXX.XcfbcbcbbjjeeX.l.X
 D:X.l.X........efX.Xfe........X.X.bbb.D.gX.XfbbgdcbdbjjjX.l.X
 D:X.l.XXXXXX...efG.Gfe...XXXXXX.X.bbb.XXXX.XebdcfbdccejjX.l.X

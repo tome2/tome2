@@ -332,7 +332,7 @@ static const char *activation_names[] =
 	"NENYA",                /*  40*/
 	"VILYA",                /*  41*/
 	"POWER",                /*  42*/
-	"STONE_LORE",           /*  43*/
+	"XXX43",
 	"RAZORBACK",            /*  44*/
 	"BLADETURNER",          /*  45*/
 	"MEDIATOR",             /*  46*/

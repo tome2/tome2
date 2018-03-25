@@ -5203,65 +5203,6 @@ const char *activation_aux(object_type * o_ptr, bool_ doit, int item)
 		}
 
 
-		/* The Stone of Lore is perilous, for the sake of game balance. */
-	case ACT_STONE_LORE:
-		{
-			if (!doit) return "perilous identify every turn";
-			msg_print("The stone reveals hidden mysteries...");
-			if (!ident_spell()) break;
-
-			if (p_ptr->has_ability(AB_PERFECT_CASTING))
-			{
-				/* Sufficient mana */
-				if (20 <= p_ptr->csp)
-				{
-					/* Use some mana */
-					p_ptr->csp -= 20;
-				}
-
-				/* Over-exert the player */
-				else
-				{
-					int oops = 20 - p_ptr->csp;
-
-					/* No mana left */
-					p_ptr->csp = 0;
-					p_ptr->csp_frac = 0;
-
-					/* Message */
-					msg_print("You are too weak to control the stone!");
-
-					/* Hack -- Bypass free action */
-					set_paralyzed(randint(5 * oops + 1));
-
-					/* Confusing. */
-					set_confused(p_ptr->confused +
-					                   randint(5 * oops + 1));
-				}
-
-				/* Redraw mana */
-				p_ptr->redraw |= (PR_FRAME);
-			}
-
-			take_hit(damroll(1, 12), "perilous secrets");
-
-			/* Confusing. */
-			if (rand_int(5) == 0)
-			{
-				set_confused(p_ptr->confused + randint(10));
-			}
-
-			/* Exercise a little care... */
-			if (rand_int(20) == 0)
-			{
-				take_hit(damroll(4, 10), "perilous secrets");
-			}
-
-			o_ptr->timeout = 1;
-
-			break;
-		}
-
 	case ACT_RAZORBACK:
 		{
 			if (!doit) return "star ball (150) every 1000 turns";

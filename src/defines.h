@@ -744,7 +744,6 @@
 #define ACT_NENYA               40
 #define ACT_VILYA               41
 #define ACT_POWER               42
-#define ACT_STONE_LORE          43
 #define ACT_RAZORBACK           44
 #define ACT_BLADETURNER         45
 #define ACT_MEDIATOR            46

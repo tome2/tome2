@@ -381,25 +381,6 @@ D:wields it. It is rumoured that it may even protect the wearer from
 D:the passing of time.
 
 
-# This artifact has a low artifact level to prevent it being worthless for
-# chars with poor magic skills.
-
-# The Stone of Lore
-
-N:15:of Lore
-I:39:106:0
-W:15:12:15:20000
-P:0:1d1:0:0:0
-F:ACTIVATE
-F:EASY_USE
-F:INSTA_ART
-F:LITE1
-F:SPECIAL_GENE
-a:STONE_LORE
-D:A great emerald that fills your mind with images of knowledge and dreadful 
-D:understanding as you stare into its depths.
-
-
 # The Multi-Hued Dragon Scale Mail 'Razorback'
 
 N:16:'Razorback'
