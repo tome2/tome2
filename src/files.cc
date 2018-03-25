@@ -4045,33 +4045,6 @@ static long total_points()
 	/* Death of a companion is BAD */
 	temp /= comp_death;
 
-	/* The known objects increase the score */
-	for (auto const &k_entry: k_info)
-	{
-		auto k_ptr = k_entry.second;
-
-		/* Hack -- skip artifacts */
-		if (k_ptr->flags & TR_INSTA_ART)
-		{
-			continue;
-		}
-
-		/* List known flavored objects */
-		if (k_ptr->flavor && k_ptr->aware)
-		{
-			object_type *i_ptr;
-			object_type object_type_body;
-
-			/* Get local object */
-			i_ptr = &object_type_body;
-
-			/* Create fake object */
-			object_prep(i_ptr, k_entry.first);
-
-			temp += object_value_real(i_ptr);
-		}
-	}
-
 	for (auto const &r_ref: r_info)
 	{
 		auto r_ptr = &r_ref;
