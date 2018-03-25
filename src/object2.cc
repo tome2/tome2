@@ -757,76 +757,6 @@ bool object_aware_p(object_type const *o_ptr)
 }
 
 
-/*
- * Return the "value" of an "unknown" item
- * Make a guess at the value of non-aware items
- */
-static s32b object_value_base(object_type const *o_ptr)
-{
-	auto const &r_info = game->edit_data.r_info;
-
-	/* Aware item -- use template cost */
-	if ((object_aware_p(o_ptr)) && (o_ptr->tval != TV_EGG))
-	{
-		return o_ptr->k_ptr->cost;
-	}
-
-	/* Analyze the type */
-	switch (o_ptr->tval)
-	{
-		/* Un-aware Food */
-	case TV_FOOD:
-		return (5L);
-
-		/* Un-aware Potions */
-	case TV_POTION2:
-		return (20L);
-
-		/* Un-aware Potions */
-	case TV_POTION:
-		return (20L);
-
-		/* Un-aware Scrolls */
-	case TV_SCROLL:
-		return (20L);
-
-		/* Un-aware Staffs */
-	case TV_STAFF:
-		return (70L);
-
-		/* Un-aware Wands */
-	case TV_WAND:
-		return (50L);
-
-		/* Un-aware Rods */
-	case TV_ROD:
-		return (90L);
-
-		/* Un-aware Rings */
-	case TV_RING:
-		return (45L);
-
-		/* Un-aware Amulets */
-	case TV_AMULET:
-		return (45L);
-
-		/* Eggs */
-	case TV_EGG:
-		{
-			auto r_ptr = &r_info[o_ptr->pval2];
-
-			/* Pay the monster level */
-			return (r_ptr->level * 100) + 100;
-
-			/* Done */
-			break;
-		}
-	}
-
-	/* Paranoia -- Oops */
-	return (0L);
-}
-
 /* Return the value of the flags the object has... */
 s32b flag_cost(object_type const *o_ptr, int plusses)
 {
@@ -1371,48 +1301,27 @@ s32b object_value_real(object_type const *o_ptr)
  * Return the price of an item including plusses (and charges)
  *
  * This function returns the "value" of the given item (qty one)
- *
- * Never notice "unknown" bonuses or properties, including "curses",
- * since that would give the player information he did not have.
- *
- * Note that discounted items stay discounted forever, even if
- * the discount is "forgotten" by the player via memory loss.
  */
 s32b object_value(object_type const *o_ptr)
 {
-	s32b value;
-
-
-	/* Unknown items -- acquire a base value */
-	if (object_known_p(o_ptr))
+	/* Cursed items -- worthless */
+	if (cursed_p(o_ptr))
 	{
-		/* Cursed items -- worthless */
-		if (cursed_p(o_ptr)) return (0L);
-
-		/* Real value (see above) */
-		value = object_value_real(o_ptr);
+		return (0L);
 	}
 
-	/* Known items -- acquire the actual value */
-	else
-	{
-		/* Cursed items */
-		if (cursed_p(o_ptr)) return (0L);
-
-		/* Base value (see above) */
-		value = object_value_base(o_ptr);
-	}
-
+	/* Real value */
+	s32b value = object_value_real(o_ptr);
 
 	/* Apply discount (if any) */
-	if (o_ptr->discount) value -= (value * o_ptr->discount / 100L);
-
+	if (o_ptr->discount)
+	{
+		value -= (value * o_ptr->discount / 100L);
+	}
 
 	/* Return the final value */
-	return (value);
+	return value;
 }
-
-
 
 
 
