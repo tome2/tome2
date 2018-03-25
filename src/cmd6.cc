@@ -2708,7 +2708,7 @@ void do_cmd_drink_fountain()
 /*
  * Curse the players armor
  */
-bool_ curse_armor()
+static bool_ curse_armor()
 {
 	/* Curse the body armor */
 	auto o_ptr = &p_ptr->inventory[INVEN_BODY];
@@ -2768,7 +2768,7 @@ bool_ curse_armor()
 /*
  * Curse the players weapon
  */
-bool_ curse_weapon()
+static bool_ curse_weapon()
 {
 	/* Curse the weapon */
 	auto o_ptr = &p_ptr->inventory[INVEN_WIELD];

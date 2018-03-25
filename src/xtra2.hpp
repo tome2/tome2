@@ -78,8 +78,6 @@ bool_ set_tim_esp(int v);
 bool_ tgp_pt(int *x, int * y);
 bool_ tgt_pt (int *x, int *y);
 void do_poly_self();
-bool_ curse_weapon();
-bool_ curse_armor();
 void make_wish();
 void create_between_gate(int dist, int y, int x);
 
