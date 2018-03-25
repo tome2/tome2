@@ -146,7 +146,7 @@
 #define MA_FULL_SLOW    0x0010
 
 /* Mindcraft */
-#define MAX_MINDCRAFT_POWERS  12
+#define MAX_MINDCRAFT_POWERS  11
 
 /* Necromancy */
 #define MAX_NECRO_POWERS  6

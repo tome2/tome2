@@ -609,15 +609,8 @@ void do_cmd_mindcraft()
 				break;
 			}
 
-			/* Psychometry */
-		case 7:
-			{
-				ident_spell();
-				break;
-			}
-
 			/* Mindwave */
-		case 8:
+		case 7:
 			{
 				msg_print("Mind-warping forces emanate from your brain!");
 				if (plev < 25)
@@ -634,7 +627,7 @@ void do_cmd_mindcraft()
 			}
 
 			/* Adrenaline */
-		case 9:
+		case 8:
 			{
 				set_afraid(0);
 				set_stun(0);
@@ -665,7 +658,7 @@ void do_cmd_mindcraft()
 			}
 
 			/* Psychic Drain */
-		case 10:
+		case 9:
 			{
 				if (!get_aim_dir(&dir)) return;
 
@@ -680,7 +673,7 @@ void do_cmd_mindcraft()
 			}
 
 			/* Telekinesis */
-		case 11:
+		case 10:
 			{
 				msg_print("A wave of pure physical force radiates out from your body!");
 				project(0, 3 + plev / 10, p_ptr->py, p_ptr->px,

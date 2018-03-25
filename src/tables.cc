@@ -1840,11 +1840,6 @@ magic_power mindcraft_powers[MAX_MINDCRAFT_POWERS] =
 		"Sets up physical/elemental shield."
 	},
 	{
-		15, 12, 60,
-		"Psychometry",
-		"Identifies objects."
-	},
-	{
 		/* Ball -> LOS */
 		18, 10, 45,
 		"Mind Wave",
