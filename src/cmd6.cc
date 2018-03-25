@@ -1719,11 +1719,8 @@ static object_filter_t const &item_tester_hook_quaffable()
 }
 
 
-static bool_ quaff_potion(int tval, int sval, int pval, int pval2)
+static void quaff_potion(int tval, int sval, int pval, int pval2)
 {
-	int ident = FALSE;
-
-
 	/* "Traditional" potions */
 	if (tval == TV_POTION)
 	{
@@ -1734,15 +1731,12 @@ static bool_ quaff_potion(int tval, int sval, int pval, int pval2)
 		case SV_POTION_SLIME_MOLD:
 			{
 				msg_print("You feel less thirsty.");
-				ident = TRUE;
-
 				break;
 			}
 
 		case SV_POTION_SLOWNESS:
 			{
-				if (set_slow(p_ptr->slow + randint(25) + 15)) ident = TRUE;
-
+				set_slow(p_ptr->slow + randint(25) + 15);
 				break;
 			}
 
@@ -1752,8 +1746,6 @@ static bool_ quaff_potion(int tval, int sval, int pval, int pval2)
 				set_food(PY_FOOD_STARVE - 1);
 				set_poisoned(0);
 				set_paralyzed(4);
-				ident = TRUE;
-
 				break;
 			}
 
@@ -1761,12 +1753,8 @@ static bool_ quaff_potion(int tval, int sval, int pval, int pval2)
 			{
 				if (!(p_ptr->resist_pois || p_ptr->oppose_pois))
 				{
-					if (set_poisoned(p_ptr->poisoned + rand_int(15) + 10))
-					{
-						ident = TRUE;
-					}
+					set_poisoned(p_ptr->poisoned + rand_int(15) + 10);
 				}
-
 				break;
 			}
 
@@ -1774,12 +1762,8 @@ static bool_ quaff_potion(int tval, int sval, int pval, int pval2)
 			{
 				if (!p_ptr->resist_blind)
 				{
-					if (set_blind(p_ptr->blind + rand_int(100) + 100))
-					{
-						ident = TRUE;
-					}
+					set_blind(p_ptr->blind + rand_int(100) + 100);
 				}
-
 				break;
 			}
 
@@ -1788,22 +1772,24 @@ static bool_ quaff_potion(int tval, int sval, int pval, int pval2)
 			{
 				if (!((p_ptr->resist_conf) || (p_ptr->resist_chaos)))
 				{
-					if (set_confused(p_ptr->confused + rand_int(20) + 15))
-					{
-						ident = TRUE;
-					}
+					set_confused(p_ptr->confused + rand_int(20) + 15);
+
 					if (randint(2) == 1)
 					{
-						if (set_image(p_ptr->image + rand_int(150) + 150))
-						{
-							ident = TRUE;
-						}
+						set_image(p_ptr->image + rand_int(150) + 150);
 					}
+
 					if (randint(13) == 1)
 					{
-						ident = TRUE;
-						if (randint(3) == 1) lose_all_info();
-						else wiz_dark();
+						if (randint(3) == 1)
+						{
+							lose_all_info();
+						}
+						else
+						{
+							wiz_dark();
+						}
+
 						teleport_player(100);
 						wiz_dark();
 						msg_print("You wake up elsewhere with a sore head...");
@@ -1818,10 +1804,7 @@ static bool_ quaff_potion(int tval, int sval, int pval, int pval2)
 			{
 				if (!p_ptr->free_act)
 				{
-					if (set_paralyzed(rand_int(4) + 4))
-					{
-						ident = TRUE;
-					}
+					set_paralyzed(rand_int(4) + 4);
 				}
 
 				break;
@@ -1833,7 +1816,6 @@ static bool_ quaff_potion(int tval, int sval, int pval, int pval2)
 				{
 					msg_print("You feel your memories fade.");
 					lose_exp(p_ptr->exp / 4);
-					ident = TRUE;
 				}
 
 				break;
@@ -1849,50 +1831,42 @@ static bool_ quaff_potion(int tval, int sval, int pval, int pval2)
 				dec_stat(A_STR, 25, TRUE);
 				dec_stat(A_CHR, 25, TRUE);
 				dec_stat(A_INT, 25, TRUE);
-				ident = TRUE;
-
 				break;
 			}
 
 		case SV_POTION_DEC_STR:
 			{
-				if (do_dec_stat(A_STR, STAT_DEC_NORMAL)) ident = TRUE;
-
+				do_dec_stat(A_STR, STAT_DEC_NORMAL);
 				break;
 			}
 
 		case SV_POTION_DEC_INT:
 			{
-				if (do_dec_stat(A_INT, STAT_DEC_NORMAL)) ident = TRUE;
-
+				do_dec_stat(A_INT, STAT_DEC_NORMAL);
 				break;
 			}
 
 		case SV_POTION_DEC_WIS:
 			{
-				if (do_dec_stat(A_WIS, STAT_DEC_NORMAL)) ident = TRUE;
-
+				do_dec_stat(A_WIS, STAT_DEC_NORMAL);
 				break;
 			}
 
 		case SV_POTION_DEC_DEX:
 			{
-				if (do_dec_stat(A_DEX, STAT_DEC_NORMAL)) ident = TRUE;
-
+				do_dec_stat(A_DEX, STAT_DEC_NORMAL);
 				break;
 			}
 
 		case SV_POTION_DEC_CON:
 			{
-				if (do_dec_stat(A_CON, STAT_DEC_NORMAL)) ident = TRUE;
-
+				do_dec_stat(A_CON, STAT_DEC_NORMAL);
 				break;
 			}
 
 		case SV_POTION_DEC_CHR:
 			{
-				if (do_dec_stat(A_CHR, STAT_DEC_NORMAL)) ident = TRUE;
-
+				do_dec_stat(A_CHR, STAT_DEC_NORMAL);
 				break;
 			}
 
@@ -1902,8 +1876,6 @@ static bool_ quaff_potion(int tval, int sval, int pval, int pval2)
 				take_hit(damroll(50, 20), "a potion of Detonation");
 				set_stun(p_ptr->stun + 75);
 				set_cut(p_ptr->cut + 5000);
-				ident = TRUE;
-
 				break;
 			}
 
@@ -1911,49 +1883,36 @@ static bool_ quaff_potion(int tval, int sval, int pval, int pval2)
 			{
 				msg_print("A feeling of Death flows through your body.");
 				take_hit(5000, "a potion of Death");
-				ident = TRUE;
-
 				break;
 			}
 
 		case SV_POTION_INFRAVISION:
 			{
-				if (set_tim_infra(p_ptr->tim_infra + 100 + randint(100)))
-				{
-					ident = TRUE;
-				}
-
+				set_tim_infra(p_ptr->tim_infra + 100 + randint(100));
 				break;
 			}
 
 		case SV_POTION_DETECT_INVIS:
 			{
-				if (set_tim_invis(p_ptr->tim_invis + 12 + randint(12)))
-				{
-					ident = TRUE;
-				}
-
+				set_tim_invis(p_ptr->tim_invis + 12 + randint(12));
 				break;
 			}
 
 		case SV_POTION_SLOW_POISON:
 			{
-				if (set_poisoned(p_ptr->poisoned / 2)) ident = TRUE;
-
+				set_poisoned(p_ptr->poisoned / 2);
 				break;
 			}
 
 		case SV_POTION_CURE_POISON:
 			{
-				if (set_poisoned(0)) ident = TRUE;
-
+				set_poisoned(0);
 				break;
 			}
 
 		case SV_POTION_BOLDNESS:
 			{
-				if (set_afraid(0)) ident = TRUE;
-
+				set_afraid(0);
 				break;
 			}
 
@@ -1961,7 +1920,7 @@ static bool_ quaff_potion(int tval, int sval, int pval, int pval2)
 			{
 				if (!p_ptr->fast)
 				{
-					if (set_fast(randint(25) + 15, 10)) ident = TRUE;
+					set_fast(randint(25) + 15, 10);
 				}
 				else
 				{
@@ -1973,94 +1932,79 @@ static bool_ quaff_potion(int tval, int sval, int pval, int pval2)
 
 		case SV_POTION_RESIST_HEAT:
 			{
-				if (set_oppose_fire(p_ptr->oppose_fire + randint(10) + 10))
-				{
-					ident = TRUE;
-				}
-
+				set_oppose_fire(p_ptr->oppose_fire + randint(10) + 10);
 				break;
 			}
 
 		case SV_POTION_RESIST_COLD:
 			{
-				if (set_oppose_cold(p_ptr->oppose_cold + randint(10) + 10))
-				{
-					ident = TRUE;
-				}
-
+				set_oppose_cold(p_ptr->oppose_cold + randint(10) + 10);
 				break;
 			}
 
 		case SV_POTION_HEROISM:
 			{
-				if (set_afraid(0)) ident = TRUE;
-				if (set_hero(p_ptr->hero + randint(25) + 25)) ident = TRUE;
-				if (hp_player(10)) ident = TRUE;
-
+				set_afraid(0);
+				set_hero(p_ptr->hero + randint(25) + 25);
+				hp_player(10);
 				break;
 			}
 
 		case SV_POTION_BESERK_STRENGTH:
 			{
-				if (set_afraid(0)) ident = TRUE;
-				if (set_shero(p_ptr->shero + randint(25) + 25)) ident = TRUE;
-				if (hp_player(30)) ident = TRUE;
-
+				set_afraid(0);
+				set_shero(p_ptr->shero + randint(25) + 25);
+				hp_player(30);
 				break;
 			}
 
 		case SV_POTION_CURE_LIGHT:
 			{
-				if (hp_player(damroll(2, 8))) ident = TRUE;
-				if (set_blind(0)) ident = TRUE;
-				if (set_cut(p_ptr->cut - 10)) ident = TRUE;
-
+				hp_player(damroll(2, 8));
+				set_blind(0);
+				set_cut(p_ptr->cut - 10);
 				break;
 			}
 
 		case SV_POTION_CURE_SERIOUS:
 			{
-				if (hp_player(damroll(4, 8))) ident = TRUE;
-				if (set_blind(0)) ident = TRUE;
-				if (set_confused(0)) ident = TRUE;
-				if (set_cut((p_ptr->cut / 2) - 50)) ident = TRUE;
-
+				hp_player(damroll(4, 8));
+				set_blind(0);
+				set_confused(0);
+				set_cut((p_ptr->cut / 2) - 50);
 				break;
 			}
 
 		case SV_POTION_CURE_CRITICAL:
 			{
-				if (hp_player(damroll(6, 8))) ident = TRUE;
-				if (set_blind(0)) ident = TRUE;
-				if (set_confused(0)) ident = TRUE;
-				if (set_poisoned(0)) ident = TRUE;
-				if (set_stun(0)) ident = TRUE;
-				if (set_cut(0)) ident = TRUE;
-
+				hp_player(damroll(6, 8));
+				set_blind(0);
+				set_confused(0);
+				set_poisoned(0);
+				set_stun(0);
+				set_cut(0);
 				break;
 			}
 
 		case SV_POTION_HEALING:
 			{
-				if (hp_player(300)) ident = TRUE;
-				if (set_blind(0)) ident = TRUE;
-				if (set_confused(0)) ident = TRUE;
-				if (set_poisoned(0)) ident = TRUE;
-				if (set_stun(0)) ident = TRUE;
-				if (set_cut(0)) ident = TRUE;
-
+				hp_player(300);
+				set_blind(0);
+				set_confused(0);
+				set_poisoned(0);
+				set_stun(0);
+				set_cut(0);
 				break;
 			}
 
 		case SV_POTION_STAR_HEALING:
 			{
-				if (hp_player(1200)) ident = TRUE;
-				if (set_blind(0)) ident = TRUE;
-				if (set_confused(0)) ident = TRUE;
-				if (set_poisoned(0)) ident = TRUE;
-				if (set_stun(0)) ident = TRUE;
-				if (set_cut(0)) ident = TRUE;
-
+				hp_player(1200);
+				set_blind(0);
+				set_confused(0);
+				set_poisoned(0);
+				set_stun(0);
+				set_cut(0);
 				break;
 			}
 
@@ -2086,8 +2030,6 @@ static bool_ quaff_potion(int tval, int sval, int pval, int pval2)
 					msg_print("The hold of the Black Breath on you is broken!");
 				}
 				p_ptr->black_breath = FALSE;
-				ident = TRUE;
-
 				break;
 			}
 
@@ -2100,7 +2042,6 @@ static bool_ quaff_potion(int tval, int sval, int pval, int pval2)
 					msg_print("Your feel your head clear.");
 					p_ptr->redraw |= (PR_FRAME);
 					p_ptr->window |= (PW_PLAYER);
-					ident = TRUE;
 				}
 
 				break;
@@ -2108,104 +2049,90 @@ static bool_ quaff_potion(int tval, int sval, int pval, int pval2)
 
 		case SV_POTION_RESTORE_EXP:
 			{
-				if (restore_level()) ident = TRUE;
-
+				restore_level();
 				break;
 			}
 
 		case SV_POTION_RES_STR:
 			{
-				if (do_res_stat(A_STR, TRUE)) ident = TRUE;
-
+				do_res_stat(A_STR, TRUE);
 				break;
 			}
 
 		case SV_POTION_RES_INT:
 			{
-				if (do_res_stat(A_INT, TRUE)) ident = TRUE;
-
+				do_res_stat(A_INT, TRUE);
 				break;
 			}
 
 		case SV_POTION_RES_WIS:
 			{
-				if (do_res_stat(A_WIS, TRUE)) ident = TRUE;
-
+				do_res_stat(A_WIS, TRUE);
 				break;
 			}
 
 		case SV_POTION_RES_DEX:
 			{
-				if (do_res_stat(A_DEX, TRUE)) ident = TRUE;
-
+				do_res_stat(A_DEX, TRUE);
 				break;
 			}
 
 		case SV_POTION_RES_CON:
 			{
-				if (do_res_stat(A_CON, TRUE)) ident = TRUE;
-
+				do_res_stat(A_CON, TRUE);
 				break;
 			}
 
 		case SV_POTION_RES_CHR:
 			{
-				if (do_res_stat(A_CHR, TRUE)) ident = TRUE;
-
+				do_res_stat(A_CHR, TRUE);
 				break;
 			}
 
 		case SV_POTION_INC_STR:
 			{
-				if (do_inc_stat(A_STR)) ident = TRUE;
-
+				do_inc_stat(A_STR);
 				break;
 			}
 
 		case SV_POTION_INC_INT:
 			{
-				if (do_inc_stat(A_INT)) ident = TRUE;
-
+				do_inc_stat(A_INT);
 				break;
 			}
 
 		case SV_POTION_INC_WIS:
 			{
-				if (do_inc_stat(A_WIS)) ident = TRUE;
-
+				do_inc_stat(A_WIS);
 				break;
 			}
 
 		case SV_POTION_INC_DEX:
 			{
-				if (do_inc_stat(A_DEX)) ident = TRUE;
-
+				do_inc_stat(A_DEX);
 				break;
 			}
 
 		case SV_POTION_INC_CON:
 			{
-				if (do_inc_stat(A_CON)) ident = TRUE;
-
+				do_inc_stat(A_CON);
 				break;
 			}
 
 		case SV_POTION_INC_CHR:
 			{
-				if (do_inc_stat(A_CHR)) ident = TRUE;
-
+				do_inc_stat(A_CHR);
 				break;
 			}
 
 		case SV_POTION_AUGMENTATION:
 			{
-				if (do_inc_stat(A_STR)) ident = TRUE;
-				if (do_inc_stat(A_INT)) ident = TRUE;
-				if (do_inc_stat(A_WIS)) ident = TRUE;
-				if (do_inc_stat(A_DEX)) ident = TRUE;
-				if (do_inc_stat(A_CON)) ident = TRUE;
-				if (do_inc_stat(A_CHR)) ident = TRUE;
-
+				do_inc_stat(A_STR);
+				do_inc_stat(A_INT);
+				do_inc_stat(A_WIS);
+				do_inc_stat(A_DEX);
+				do_inc_stat(A_CON);
+				do_inc_stat(A_CHR);
 				break;
 			}
 
@@ -2213,8 +2140,6 @@ static bool_ quaff_potion(int tval, int sval, int pval, int pval2)
 			{
 				msg_print("An image of your surroundings forms in your mind...");
 				wiz_lite();
-				ident = TRUE;
-
 				break;
 			}
 
@@ -2231,8 +2156,6 @@ static bool_ quaff_potion(int tval, int sval, int pval, int pval2)
 				detect_objects_gold(DEFAULT_RADIUS);
 				detect_objects_normal(DEFAULT_RADIUS);
 				identify_pack();
-				ident = TRUE;
-
 				break;
 			}
 
@@ -2242,9 +2165,7 @@ static bool_ quaff_potion(int tval, int sval, int pval, int pval2)
 				{
 					msg_print("You feel more experienced.");
 					gain_exp(100000L);
-					ident = TRUE;
 				}
-
 				break;
 			}
 
@@ -2255,47 +2176,38 @@ static bool_ quaff_potion(int tval, int sval, int pval, int pval2)
 				set_oppose_fire(p_ptr->oppose_fire + randint(20) + 20);
 				set_oppose_cold(p_ptr->oppose_cold + randint(20) + 20);
 				set_oppose_pois(p_ptr->oppose_pois + randint(20) + 20);
-				ident = TRUE;
-
 				break;
 			}
 
 		case SV_POTION_CURING:
 			{
-				if (hp_player(50)) ident = TRUE;
-				if (set_blind(0)) ident = TRUE;
-				if (set_poisoned(0)) ident = TRUE;
-				if (set_confused(0)) ident = TRUE;
-				if (set_stun(0)) ident = TRUE;
-				if (set_cut(0)) ident = TRUE;
-				if (set_image(0)) ident = TRUE;
-				if (heal_insanity(50)) ident = TRUE;
-
+				hp_player(50);
+				set_blind(0);
+				set_poisoned(0);
+				set_confused(0);
+				set_stun(0);
+				set_cut(0);
+				set_image(0);
+				heal_insanity(50);
 				break;
 			}
 
 		case SV_POTION_INVULNERABILITY:
 			{
 				set_invuln(p_ptr->invuln + randint(7) + 7);
-				ident = TRUE;
-
 				break;
 			}
 
 		case SV_POTION_NEW_LIFE:
 			{
 				do_cmd_rerate();
-				ident = TRUE;
-
 				break;
 			}
 
 		case SV_POTION_BLOOD:
 			{
 				msg_print("You feel the blood of life running through your veins!");
-				ident = TRUE;
 				p_ptr->allow_one_death++;
-
 				break;
 			}
 
@@ -2314,20 +2226,14 @@ static bool_ quaff_potion(int tval, int sval, int pval, int pval2)
 
 				msg_print("You feel the dark corruptions of Morgoth coming over you!");
 				gain_random_corruption();
-				ident = TRUE;
 				break;
 			}
 
 		case SV_POTION_INVIS:
 			{
 				int t = 30 + randint(30);
-
-				if (set_invis(p_ptr->tim_invis + t, 35))
-				{
-					ident = TRUE;
-				}
+				set_invis(p_ptr->tim_invis + t, 35);
 				set_tim_invis(p_ptr->tim_invis + t);
-
 				break;
 			}
 
@@ -2335,7 +2241,6 @@ static bool_ quaff_potion(int tval, int sval, int pval, int pval2)
 			{
 				p_ptr->skill_points += rand_range(4, 10 + luck( -4, 4));
 				cmsg_format(TERM_L_GREEN, "You can increase %d more skills.", p_ptr->skill_points);
-
 				break;
 			}
 
@@ -2364,8 +2269,6 @@ static bool_ quaff_potion(int tval, int sval, int pval, int pval2)
 
 					/* Recalculate bonuses */
 					p_ptr->update |= (PU_BONUS);
-
-					ident = TRUE;
 				}
 
 				break;
@@ -2373,29 +2276,25 @@ static bool_ quaff_potion(int tval, int sval, int pval, int pval2)
 
 		case SV_POTION2_CURE_LIGHT_SANITY:
 			{
-				if (heal_insanity(damroll(4, 8))) ident = TRUE;
-
+				heal_insanity(damroll(4, 8));
 				break;
 			}
 
 		case SV_POTION2_CURE_SERIOUS_SANITY:
 			{
-				if (heal_insanity(damroll(8, 8))) ident = TRUE;
-
+				heal_insanity(damroll(8, 8));
 				break;
 			}
 
 		case SV_POTION2_CURE_CRITICAL_SANITY:
 			{
-				if (heal_insanity(damroll(12, 8))) ident = TRUE;
-
+				heal_insanity(damroll(12, 8));
 				break;
 			}
 
 		case SV_POTION2_CURE_SANITY:
 			{
-				if (heal_insanity(damroll(10, 100))) ident = TRUE;
-
+				heal_insanity(damroll(10, 100));
 				break;
 			}
 
@@ -2405,8 +2304,6 @@ static bool_ quaff_potion(int tval, int sval, int pval, int pval2)
 			}
 		}
 	}
-
-	return (ident);
 }
 
 
@@ -2415,8 +2312,6 @@ static bool_ quaff_potion(int tval, int sval, int pval, int pval2)
  */
 void do_cmd_quaff_potion()
 {
-	int ident, lev;
-
 	/* Get an item */
 	int item;
 	if (!get_item(&item,
@@ -2432,45 +2327,28 @@ void do_cmd_quaff_potion()
 	/* Get the item */
 	object_type *o_ptr = get_object(item);
 
-
 	/* Take a turn */
 	energy_use = 100;
-
-	/* Not identified yet */
-	ident = FALSE;
-
-	/* Object level */
-	lev = o_ptr->k_ptr->level;
 
 	/* Demon Breath corruption can spoil potions. */
 	if (player_has_corruption(CORRUPT_DEMON_BREATH) && magik(9))
 	{
 		msg_print("Your demon breath spoils the potion!");
-		ident = FALSE;
 	}
 	else
 	{
 		/* Normal potion handling */
-		ident = quaff_potion(o_ptr->tval, o_ptr->sval, o_ptr->pval, o_ptr->pval2);
+		quaff_potion(o_ptr->tval, o_ptr->sval, o_ptr->pval, o_ptr->pval2);
 	}
 
 	/* Combine / Reorder the pack (later) */
 	p_ptr->notice |= (PN_COMBINE | PN_REORDER);
 
-	/* An identification was made */
-	if (ident && !object_aware_p(o_ptr))
-	{
-		object_aware(o_ptr);
-		gain_exp((lev + (p_ptr->lev >> 1)) / p_ptr->lev);
-	}
-
 	/* Window stuff */
 	p_ptr->window |= (PW_INVEN | PW_EQUIP | PW_PLAYER);
 
-
 	/* Potions can feed the player */
 	set_food(p_ptr->food + o_ptr->pval);
-
 
 	/* Destroy potion */
 	inc_stack_size(item, -1);
@@ -2572,8 +2450,6 @@ void do_cmd_drink_fountain()
 
 	cave_type *c_ptr = &cave[p_ptr->py][p_ptr->px];
 
-	bool_ ident;
-
 	int tval, sval, pval = 0;
 
 	char ch;
@@ -2624,7 +2500,7 @@ void do_cmd_drink_fountain()
 			break;
 		}
 
-		ident = quaff_potion(tval, sval, pval, 0);
+		quaff_potion(tval, sval, pval, 0);
 
 		c_ptr->special2--;
 
@@ -2633,7 +2509,7 @@ void do_cmd_drink_fountain()
 			cave_set_feat(p_ptr->py, p_ptr->px, FEAT_EMPTY_FOUNTAIN);
 		}
 
-		if (ident) c_ptr->info |= CAVE_IDNT;
+		c_ptr->info |= CAVE_IDNT;
 	}
 }
 
