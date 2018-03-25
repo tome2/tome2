@@ -34,6 +34,7 @@ void excise_object_idx(int o_idx);
 void delete_object_idx(int o_idx);
 void delete_object(int y, int x);
 void compact_objects(int size);
+void rescue_artifact(object_type *o_ptr);
 void wipe_o_list();
 s16b o_pop();
 errr get_obj_num_prep();

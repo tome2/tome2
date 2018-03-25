@@ -430,9 +430,6 @@ static cptr funny_comments[MAX_COMMENT] =
  */
 void delete_monster_idx(int i)
 {
-	auto &a_info = game->edit_data.a_info;
-	auto &random_artifacts = game->random_artifacts;
-
 	/* Get location */
 	monster_type *m_ptr = &m_list[i];
 	int y = m_ptr->fy;
@@ -490,23 +487,7 @@ void delete_monster_idx(int i)
 
 		if (options->preserve)
 		{
-			/* Hack -- Preserve unknown artifacts */
-			if (artifact_p(o_ptr) && !object_known_p(o_ptr))
-			{
-				/* Mega-Hack -- Preserve the artifact */
-				if (o_ptr->tval == TV_RANDART)
-				{
-					random_artifacts[o_ptr->sval].generated = FALSE;
-				}
-				else if (o_ptr->k_ptr->flags & TR_NORM_ART)
-				{
-					o_ptr->k_ptr->artifact = FALSE;
-				}
-				else
-				{
-					a_info[o_ptr->name1].cur_num = 0;
-				}
-			}
+			rescue_artifact(o_ptr);
 		}
 
 		/* Delete the object */

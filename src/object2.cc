@@ -365,6 +365,31 @@ void compact_objects(int size)
 
 
 
+/*
+ * Rescue artifacts from destruction if the "preserve" option is
+ * turned on.
+ */
+void rescue_artifact(object_type *o_ptr)
+{
+	auto &a_info = game->edit_data.a_info;
+
+	if (artifact_p(o_ptr) && !object_known_p(o_ptr))
+	{
+		/* Mega-Hack -- Preserve the artifact */
+		if (o_ptr->tval == TV_RANDART)
+		{
+			game->random_artifacts[o_ptr->sval].generated = FALSE;
+		}
+		else if (o_ptr->k_ptr->flags & TR_NORM_ART)
+		{
+			o_ptr->k_ptr->artifact = FALSE;
+		}
+		else
+		{
+			a_info[o_ptr->name1].cur_num = 0;
+		}
+	}
+}
 
 /*
  * Delete all the items when player leaves the level
@@ -379,8 +404,6 @@ void compact_objects(int size)
  */
 void wipe_o_list()
 {
-	auto &a_info = game->edit_data.a_info;
-
 	/* Delete the existing objects */
 	for (int i = 1; i < o_max; i++)
 	{
@@ -395,23 +418,7 @@ void wipe_o_list()
 		/* Mega-Hack -- preserve artifacts */
 		if (!character_dungeon || options->preserve)
 		{
-			/* Hack -- Preserve unknown artifacts */
-			if (artifact_p(o_ptr) && !object_known_p(o_ptr))
-			{
-				/* Mega-Hack -- Preserve the artifact */
-				if (o_ptr->tval == TV_RANDART)
-				{
-					game->random_artifacts[o_ptr->sval].generated = FALSE;
-				}
-				else if (o_ptr->k_ptr->flags & TR_NORM_ART)
-				{
-					o_ptr->k_ptr->artifact = FALSE;
-				}
-				else
-				{
-					a_info[o_ptr->name1].cur_num = 0;
-				}
-			}
+			rescue_artifact(o_ptr);
 		}
 
 		/* Monster */
