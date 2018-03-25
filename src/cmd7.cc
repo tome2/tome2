@@ -221,7 +221,7 @@ static void display_magic_powers(
  * when you run it. It's probably easy to fix but I haven't tried,
  * sorry.
  */
-static bool_ get_magic_power(int *sn, magic_power *powers, int max_powers,
+static bool get_magic_power(int *sn, magic_power *powers, int max_powers,
                      void (*power_info)(char *p, int power), int plev, int cast_stat)
 {
 	int i;
@@ -255,7 +255,7 @@ static bool_ get_magic_power(int *sn, magic_power *powers, int max_powers,
 		if (powers[*sn].min_lev <= plev)
 		{
 			/* Success */
-			return (TRUE);
+			return true;
 		}
 	}
 
@@ -328,7 +328,10 @@ static bool_ get_magic_power(int *sn, magic_power *powers, int max_powers,
 	character_icky = FALSE;
 
 	/* Abort if needed */
-	if (!flag) return (FALSE);
+	if (!flag)
+	{
+		return false;
+	}
 
 	/* Save the choice */
 	(*sn) = i;
@@ -337,7 +340,7 @@ static bool_ get_magic_power(int *sn, magic_power *powers, int max_powers,
 	repeat_push(*sn);
 
 	/* Success */
-	return (TRUE);
+	return true;
 }
 
 

@@ -475,11 +475,11 @@ casting_result convey_recall()
 		// Fetch item
 		if (get_level_s(RECALL, 50) >= 15)
 		{
-			fetch(5, 10 + get_level_s(RECALL, 150), FALSE);
+			fetch(5, 10 + get_level_s(RECALL, 150), false);
 		}
 		else
 		{
-			fetch(5, 10 + get_level_s(RECALL, 150), TRUE);
+			fetch(5, 10 + get_level_s(RECALL, 150), true);
 		}
 		return CAST;
 	}
@@ -1542,7 +1542,7 @@ const char *geomancy_vaporize_info()
 	return buf;
 }
 
-bool_ geomancy_vaporize_depends()
+bool geomancy_vaporize_depends()
 {
 	return get_skill(SKILL_AIR) >= 4;
 }
@@ -1571,7 +1571,7 @@ const char *geomancy_geolysis_info()
 	return buf;
 }
 
-bool_ geomancy_geolysis_depends()
+bool geomancy_geolysis_depends()
 {
 	return get_skill(SKILL_EARTH) >= 7;
 }
@@ -1601,7 +1601,7 @@ const char *geomancy_dripping_tread_info()
 	return buf;
 }
 
-bool_ geomancy_dripping_tread_depends()
+bool geomancy_dripping_tread_depends()
 {
 	return get_skill(SKILL_WATER) >= 10;
 }
@@ -1622,7 +1622,7 @@ casting_result geomancy_grow_barrier()
 	return CAST;
 }
 
-bool_ geomancy_grow_barrier_depends()
+bool geomancy_grow_barrier_depends()
 {
 	return get_skill(SKILL_EARTH) >= 12;
 }

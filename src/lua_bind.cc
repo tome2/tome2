@@ -99,7 +99,7 @@ static s32b get_level_school_1(spell_type *spell, s32b max, s32b min)
 {
 	// Delegate
 	s32b level;
-	bool_ na;
+	bool na;
 	get_level_school(spell, max, min, &level, &na);
 	// Note: It is tempting to add an assertion here for "na == FALSE" here,
 	// but there are cases where we haven't actually checked if the spell is

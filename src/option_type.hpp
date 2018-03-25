@@ -10,7 +10,7 @@ struct option_type
 	/**
 	 * Address of actual option variable.
 	 */
-	bool_ *o_var;
+	bool *o_var;
 
 	/**
 	 * Option page number.

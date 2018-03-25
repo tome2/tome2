@@ -20,7 +20,7 @@ struct ego_item_type
 {
 	std::string name;                        /* Name */
 
-	bool_ before = FALSE;                    /* Before or after the object name ? */
+	bool before = false;                    /* Before or after the object name ? */
 
 	byte tval[10] = { 0 };
 	byte min_sval[10] = { 0 };

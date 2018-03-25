@@ -27,6 +27,5 @@ void do_cmd_fire();
 void do_cmd_throw();
 void do_cmd_boomerang();
 void do_cmd_immovable_special();
-void fetch(int dir, int wgt, bool_ require_los);
 void do_cmd_sacrifice();
 void do_cmd_steal();

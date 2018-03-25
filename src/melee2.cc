@@ -6169,7 +6169,8 @@ static void process_monster(int m_idx, bool_ is_frien)
 				if ((o_ptr->tval == TV_CORPSE) && (r_ptr->flags & RF_POSSESSOR) &&
 						((o_ptr->sval == SV_CORPSE_CORPSE) || (o_ptr->sval == SV_CORPSE_SKELETON)))
 				{
-					if (ai_possessor(m_idx, this_o_idx)) return;
+					ai_possessor(m_idx, this_o_idx);
+					return;
 				}
 
 				/* Take or Kill objects on the floor */

@@ -91,29 +91,32 @@ static object_filter_t const &item_tester_hook_browsable()
 /*
  * Are we using a mage staff
  */
-bool_ is_magestaff()
+bool is_magestaff()
 {
-	int i;
-
-
-	i = 0;
+	int i = 0;
 
 	while (p_ptr->body_parts[i] == INVEN_WIELD)
 	{
 		object_type *o_ptr = &p_ptr->inventory[INVEN_WIELD + i];
 
 		/* Wielding a mage staff */
-		if ((o_ptr->k_ptr) && (o_ptr->tval == TV_MSTAFF)) return (TRUE);
+		if ((o_ptr->k_ptr) && (o_ptr->tval == TV_MSTAFF))
+		{
+			return true;
+		}
 
 		/* Next slot */
 		i++;
 
 		/* Paranoia */
-		if (i >= (INVEN_TOTAL - INVEN_WIELD)) break;
+		if (i >= (INVEN_TOTAL - INVEN_WIELD))
+		{
+			break;
+		}
 	}
 
 	/* Not wielding a mage staff */
-	return (FALSE);
+	return false;
 }
 
 
@@ -131,11 +134,9 @@ static int print_book(s16b sval, s32b spell_idx, object_type *obj)
 	for (auto spell_idx : school_book->spell_idxs)
 	{
 		byte color = TERM_L_DARK;
-		bool_ is_ok;
 		char label[8];
 
-		is_ok = is_ok_spell(spell_idx, obj->pval);
-		if (is_ok)
+		if (is_ok_spell(spell_idx, obj->pval))
 		{
 			color = (get_mana(spell_idx) > get_power(spell_idx)) ? TERM_ORANGE : TERM_L_GREEN;
 		}
@@ -450,7 +451,7 @@ void do_poly_self()
 /*
  * Fetch an item (teleport it right underneath the caster)
  */
-void fetch(int dir, int wgt, bool_ require_los)
+void fetch(int dir, int wgt, bool require_los)
 {
 	/* Check to see if an object is already there */
 	if (!cave[p_ptr->py][p_ptr->px].o_idxs.empty())
@@ -1867,26 +1868,26 @@ boost::optional<int> get_item_hook_find_spell(object_filter_t const &)
 /*
  * Is the spell castable?
  */
-bool_ is_ok_spell(s32b spell_idx, s32b pval)
+bool is_ok_spell(s32b spell_idx, s32b pval)
 {
 	spell_type *spell = spell_at(spell_idx);
 
 	// Calculate availability based on caster's skill level.
 	s32b level;
-	bool_ na;
+	bool na;
 	get_level_school(spell, 50, 0, &level, &na);
 	if (na || (level == 0))
 	{
-		return FALSE;
+		return false;
 	}
 	// Are we permitted to cast based on item pval? Only music
 	// spells have non-zero minimum PVAL.
 	if (pval < spell_type_minimum_pval(spell))
 	{
-		return FALSE;
+		return false;
 	}
 	// OK, we're permitted to cast it.
-	return TRUE;
+	return true;
 }
 
 
@@ -2032,16 +2033,11 @@ s32b get_school_spell(const char *do_what, s16b force_book)
 			}
 			else
 			{
-				bool_ ok;
-
 				/* Save the spell index */
 				spell = spell_x(sval, pval, i);
 
-				/* Do we need to do some pre test */
-				ok = is_ok_spell(spell, o_ptr->pval);
-
 				/* Require "okay" spells */
-				if (!ok)
+				if (!is_ok_spell(spell, o_ptr->pval))
 				{
 					bell();
 					msg_format("You may not %s that spell.", do_what);
@@ -2056,11 +2052,8 @@ s32b get_school_spell(const char *do_what, s16b force_book)
 	}
 	else
 	{
-		bool_ ok;
-
 		/* Require "okay" spells */
-		ok = is_ok_spell(hack_force_spell, hack_force_spell_pval);
-		if (ok)
+		if (is_ok_spell(hack_force_spell, hack_force_spell_pval))
 		{
 			flag = TRUE;
 			spell = hack_force_spell;

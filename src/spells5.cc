@@ -1331,8 +1331,8 @@ void school_spells_init()
 		spell_type_set_mana(spell, 30, 60);
 		spell_type_set_inertia(spell, 1, 5);
 		spell_type_set_difficulty(spell, 15, 40);
-		spell_type_set_castable_while_blind(spell, TRUE);
-		spell_type_set_castable_while_confused(spell, TRUE);
+		spell_type_set_castable_while_blind(spell, true);
+		spell_type_set_castable_while_confused(spell, true);
 		spell_type_init_mage(spell,
 				     RANDOM,
 				     SCHOOL_META,
@@ -1526,7 +1526,7 @@ void school_spells_init()
 		spell_type_describe(spell, "At level 17 it can be targeted");
 		spell_type_set_mana(spell, 2, 20);
 		spell_type_set_difficulty(spell, 1, 10);
-		spell_type_set_castable_while_blind(spell, TRUE);
+		spell_type_set_castable_while_blind(spell, true);
 		spell_type_init_mage(spell,
 				     NO_RANDOM,
 				     SCHOOL_GEOMANCY,
@@ -1551,7 +1551,7 @@ void school_spells_init()
 		spell_type_describe(spell, "At Fire level 15, fire become hellfire.");
 		spell_type_set_mana(spell, 3, 30);
 		spell_type_set_difficulty(spell, 3, 20);
-		spell_type_set_castable_while_blind(spell, TRUE);
+		spell_type_set_castable_while_blind(spell, true);
 		spell_type_init_mage(spell,
 				     NO_RANDOM,
 				     SCHOOL_GEOMANCY,
@@ -1566,7 +1566,7 @@ void school_spells_init()
 		spell_type_describe(spell, "Abyss squares cannot be channeled into a wave.");
 		spell_type_set_mana(spell, 15, 50);
 		spell_type_set_difficulty(spell, 15, 20);
-		spell_type_set_castable_while_blind(spell, TRUE);
+		spell_type_set_castable_while_blind(spell, true);
 		spell_type_init_mage(spell,
 				     NO_RANDOM,
 				     SCHOOL_GEOMANCY,
@@ -1579,7 +1579,7 @@ void school_spells_init()
 		spell_type_describe(spell, "Draws upon your immediate environs to form a cloud of damaging vapors");
 		spell_type_set_mana(spell, 3, 30);
 		spell_type_set_difficulty(spell, 4, 15);
-		spell_type_set_castable_while_blind(spell, TRUE);
+		spell_type_set_castable_while_blind(spell, true);
 		spell_type_init_geomancy(
 			spell,
 			geomancy_vaporize_info,
@@ -1593,7 +1593,7 @@ void school_spells_init()
 		spell_type_describe(spell, "leaving behind tailings of various different sorts of walls in the passage.");
 		spell_type_set_mana(spell, 15, 40);
 		spell_type_set_difficulty(spell, 7, 15);
-		spell_type_set_castable_while_blind(spell, TRUE);
+		spell_type_set_castable_while_blind(spell, true);
 		spell_type_init_geomancy(
 			spell,
 			geomancy_geolysis_info,
@@ -1606,7 +1606,7 @@ void school_spells_init()
 		spell_type_describe(spell, "Causes you to leave random elemental forms behind as you walk");
 		spell_type_set_mana(spell, 15, 25);
 		spell_type_set_difficulty(spell, 10, 15);
-		spell_type_set_castable_while_blind(spell, TRUE);
+		spell_type_set_castable_while_blind(spell, true);
 		spell_type_init_geomancy(
 			spell,
 			geomancy_dripping_tread_info,
@@ -1620,7 +1620,7 @@ void school_spells_init()
 		spell_type_describe(spell, "At level 20 it can be projected around another area.");
 		spell_type_set_mana(spell, 30, 40);
 		spell_type_set_difficulty(spell, 12, 15);
-		spell_type_set_castable_while_blind(spell, TRUE);
+		spell_type_set_castable_while_blind(spell, true);
 		spell_type_init_geomancy(
 			spell,
 			no_info,
@@ -1658,7 +1658,7 @@ void school_spells_init()
 				       SCHOOL_ERU,
 				       eru_see_the_music_info,
 				       eru_see_the_music);
-		spell_type_set_castable_while_blind(spell, TRUE);
+		spell_type_set_castable_while_blind(spell, true);
 	}
 
 	{
@@ -2129,7 +2129,7 @@ void school_spells_init()
 		spell_type_describe(spell, "Stops the current song, if any.");
 		spell_type_set_mana(spell, 0, 0);
 		spell_type_set_difficulty(spell, 1, -400);
-		spell_type_set_castable_while_blind(spell, TRUE);
+		spell_type_set_castable_while_blind(spell, true);
 		spell_type_init_music(spell,
 				      1,
 				      no_info,
@@ -2142,7 +2142,7 @@ void school_spells_init()
 		spell_type_describe(spell, "Consumes the amount of mana each turn.");
 		spell_type_set_mana(spell, 1, 10);
 		spell_type_set_difficulty(spell, 1, 20);
-		spell_type_set_castable_while_blind(spell, TRUE);
+		spell_type_set_castable_while_blind(spell, true);
 		spell_type_init_music_lasting(
 			spell,
 			1,
@@ -2157,7 +2157,7 @@ void school_spells_init()
 		spell_type_describe(spell, "Consumes the amount of mana each turn.");
 		spell_type_set_mana(spell, 2, 15);
 		spell_type_set_difficulty(spell, 5, 30);
-		spell_type_set_castable_while_blind(spell, TRUE);
+		spell_type_set_castable_while_blind(spell, true);
 		spell_type_init_music_lasting(
 			spell,
 			2,
@@ -2172,7 +2172,7 @@ void school_spells_init()
 		spell_type_describe(spell, "Consumes the amount of mana each turn.");
 		spell_type_set_mana(spell, 3, 25);
 		spell_type_set_difficulty(spell, 10, 45);
-		spell_type_set_castable_while_blind(spell, TRUE);
+		spell_type_set_castable_while_blind(spell, true);
 		spell_type_init_music_lasting(
 			spell,
 			4,
@@ -2187,7 +2187,7 @@ void school_spells_init()
 		spell_type_describe(spell, "Consumes the amount of mana each turn.");
 		spell_type_set_mana(spell, 1, 1);
 		spell_type_set_difficulty(spell, 1, 20);
-		spell_type_set_castable_while_blind(spell, TRUE);
+		spell_type_set_castable_while_blind(spell, true);
 		spell_type_init_music_lasting(
 			spell,
 			1,

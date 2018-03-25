@@ -20,4 +20,4 @@ void do_cmd_target();
 void do_cmd_look();
 void do_cmd_locate();
 void do_cmd_query_symbol();
-bool_ do_cmd_sense_grid_mana();
+void do_cmd_sense_grid_mana();

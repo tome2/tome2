@@ -82,7 +82,7 @@ void quest_bounty_init_hook()
 	// Initialized by building action
 }
 
-bool_ quest_bounty_drop_item()
+void quest_bounty_drop_item()
 {
 	char mdesc[512];
 	char msg[512];
@@ -102,29 +102,27 @@ bool_ quest_bounty_drop_item()
 		snprintf(msg, sizeof(msg), "You still must bring me back %s corpse.", mdesc);
 		msg_print(msg);
 	}
-	return FALSE;
 }
 
-bool_ quest_bounty_get_item()
+void quest_bounty_get_item()
 {
 	auto &s_info = game->s_info;
 
 	if (cquest.status != QUEST_STATUS_TAKEN)
 	{
 		msg_print("You do not have any bounty quest yet.");
-		return FALSE;
+		return;
 	}
 
 	// Get the corpse.
 	int item = -1;
-	bool_ ret =
-		get_item(&item,
-			 "What corpse to return?",
-			 "You have no corpse to return.",
-			 USE_INVEN,
-			 bounty_item_tester_hook);
-	if (!ret) {
-		return FALSE;
+	if (!get_item(&item,
+		"What corpse to return?",
+		"You have no corpse to return.",
+		 USE_INVEN,
+		bounty_item_tester_hook))
+	{
+		return;
 	}
 
 	// Take the corpse from the inventory
@@ -156,7 +154,6 @@ bool_ quest_bounty_get_item()
 	// Need to ask for new quest.
 	cquest.status = QUEST_STATUS_UNTAKEN;
 	bounty_quest_monster = 0;
-	return FALSE;
 }
 
 std::string quest_bounty_describe()

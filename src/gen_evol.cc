@@ -22,7 +22,7 @@
 /*
  * Generate a game of life level :) and make it evolve
  */
-void evolve_level(bool_ noise)
+void evolve_level(bool noise)
 {
 	auto const &f_info = game->edit_data.f_info;
 
@@ -152,9 +152,9 @@ bool_ level_generate_life()
 		}
 	}
 
-	evolve_level(FALSE);
-	evolve_level(FALSE);
-	evolve_level(FALSE);
+	evolve_level(false);
+	evolve_level(false);
+	evolve_level(false);
 
 	/* Determine the character location */
 	if (!new_player_spot(get_branch()))

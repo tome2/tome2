@@ -13,102 +13,102 @@ struct options {
 	//
 	// Option Set 1 -- User Interface
 	//
-	bool_ rogue_like_commands = FALSE;       /* Rogue-like commands */
-	bool_ quick_messages = TRUE;             /* Activate quick messages */
-	bool_ carry_query_flag = FALSE;          /* Prompt before picking things up */
-	bool_ use_old_target = FALSE;            /* Use old target by default */
-	bool_ always_pickup = FALSE;             /* Pick things up by default */
-	bool_ always_repeat = TRUE;              /* Repeat obvious commands */
-	bool_ ring_bell = FALSE;                 /* Ring the bell (on errors, etc) */
+	bool rogue_like_commands = false;       /* Rogue-like commands */
+	bool quick_messages = true;             /* Activate quick messages */
+	bool carry_query_flag = false;          /* Prompt before picking things up */
+	bool use_old_target = false;            /* Use old target by default */
+	bool always_pickup = false;             /* Pick things up by default */
+	bool always_repeat = true;              /* Repeat obvious commands */
+	bool ring_bell = false;                 /* Ring the bell (on errors, etc) */
 
 	//
 	// Option Set 2 -- Disturbance
 	//
-	bool_ find_ignore_stairs = FALSE;        /* Run past stairs */
-	bool_ find_ignore_doors = TRUE;          /* Run through open doors */
-	bool_ find_cut = FALSE;                  /* Run past known corners */
-	bool_ find_examine = TRUE;               /* Run into potential corners */
-	bool_ disturb_move = FALSE;              /* Disturb whenever any monster moves */
-	bool_ disturb_near = TRUE;               /* Disturb whenever viewable monster moves */
-	bool_ disturb_panel = TRUE;              /* Disturb whenever map panel changes */
-	bool_ disturb_state = TRUE;              /* Disturn whenever player state changes */
-	bool_ disturb_minor = TRUE;              /* Disturb whenever boring things happen */
-	bool_ disturb_other = FALSE;             /* Disturb whenever various things happen */
-	bool_ last_words = TRUE;                 /* Get last words upon dying */
-	bool_ wear_confirm = TRUE;               /* Confirm before putting on known cursed items */
-	bool_ confirm_stairs = FALSE;            /* Prompt before staircases... */
-	bool_ disturb_pets = FALSE;              /* Pets moving nearby disturb us */
+	bool find_ignore_stairs = false;        /* Run past stairs */
+	bool find_ignore_doors = true;          /* Run through open doors */
+	bool find_cut = false;                  /* Run past known corners */
+	bool find_examine = true;               /* Run into potential corners */
+	bool disturb_move = false;              /* Disturb whenever any monster moves */
+	bool disturb_near = true;               /* Disturb whenever viewable monster moves */
+	bool disturb_panel = true;              /* Disturb whenever map panel changes */
+	bool disturb_state = true;              /* Disturn whenever player state changes */
+	bool disturb_minor = true;              /* Disturb whenever boring things happen */
+	bool disturb_other = false;             /* Disturb whenever various things happen */
+	bool last_words = true;                 /* Get last words upon dying */
+	bool wear_confirm = true;               /* Confirm before putting on known cursed items */
+	bool confirm_stairs = false;            /* Prompt before staircases... */
+	bool disturb_pets = false;              /* Pets moving nearby disturb us */
 
 	//
 	// Option Set 3 -- Game-Play
 	//
-	bool_ auto_scum = TRUE;                  /* Auto-scum for good levels */
-	bool_ view_perma_grids = TRUE;           /* Map remembers all perma-lit grids */
-	bool_ view_torch_grids = FALSE;          /* Map remembers all torch-lit grids */
-	bool_ dungeon_align = TRUE;              /* Generate dungeons with aligned rooms */
-	bool_ dungeon_stair = TRUE;              /* Generate dungeons with connected stairs */
-	bool_ flow_by_sound = FALSE;             /* Monsters track new player location */
-	bool_ smart_learn = FALSE;               /* Monsters learn from their mistakes */
-	bool_ small_levels = TRUE;               /* Allow unusually small dungeon levels */
-	bool_ empty_levels = TRUE;               /* Allow empty 'arena' levels */
+	bool auto_scum = true;                  /* Auto-scum for good levels */
+	bool view_perma_grids = true;           /* Map remembers all perma-lit grids */
+	bool view_torch_grids = false;          /* Map remembers all torch-lit grids */
+	bool dungeon_align = true;              /* Generate dungeons with aligned rooms */
+	bool dungeon_stair = true;              /* Generate dungeons with connected stairs */
+	bool flow_by_sound = false;             /* Monsters track new player location */
+	bool smart_learn = false;               /* Monsters learn from their mistakes */
+	bool small_levels = true;               /* Allow unusually small dungeon levels */
+	bool empty_levels = true;               /* Allow empty 'arena' levels */
 
 	//
 	// Option Set 4 -- Efficiency
 	//
-	bool_ view_reduce_lite = FALSE;          /* Reduce lite-radius when running */
-	bool_ avoid_abort = FALSE;               /* Avoid checking for user abort */
-	bool_ avoid_shimmer = FALSE;             /* Avoid processing extra shimmering */
-	bool_ avoid_other = FALSE;               /* Avoid processing special colors */
-	bool_ flush_failure = TRUE;              /* Flush input on any failure */
-	bool_ flush_disturb = FALSE;             /* Flush input on disturbance */
-	bool_ flush_command = FALSE;             /* Flush input before every command */
-	bool_ fresh_before = TRUE;               /* Flush output before normal commands */
-	bool_ fresh_after = FALSE;               /* Flush output after normal commands */
-	bool_ fresh_message = FALSE;             /* Flush output after all messages */
-	bool_ hilite_player = FALSE;             /* Hilite the player with the cursor */
-	bool_ view_yellow_lite = FALSE;          /* Use special colors for torch-lit grids */
-	bool_ view_bright_lite = FALSE;          /* Use special colors for 'viewable' grids */
-	bool_ view_granite_lite = FALSE;         /* Use special colors for wall grids (slow) */
-	bool_ view_special_lite = FALSE;         /* Use special colors for floor grids (slow) */
-	bool_ center_player = FALSE;             /* Center view on player */
+	bool view_reduce_lite = false;          /* Reduce lite-radius when running */
+	bool avoid_abort = false;               /* Avoid checking for user abort */
+	bool avoid_shimmer = false;             /* Avoid processing extra shimmering */
+	bool avoid_other = false;               /* Avoid processing special colors */
+	bool flush_failure = true;              /* Flush input on any failure */
+	bool flush_disturb = false;             /* Flush input on disturbance */
+	bool flush_command = false;             /* Flush input before every command */
+	bool fresh_before = true;               /* Flush output before normal commands */
+	bool fresh_after = false;               /* Flush output after normal commands */
+	bool fresh_message = false;             /* Flush output after all messages */
+	bool hilite_player = false;             /* Hilite the player with the cursor */
+	bool view_yellow_lite = false;          /* Use special colors for torch-lit grids */
+	bool view_bright_lite = false;          /* Use special colors for 'viewable' grids */
+	bool view_granite_lite = false;         /* Use special colors for wall grids (slow) */
+	bool view_special_lite = false;         /* Use special colors for floor grids (slow) */
+	bool center_player = false;             /* Center view on player */
 
 	//
 	// Option Set 5 - ToME options
 	//
-	bool_ ingame_help = TRUE;                /* In-game contextual help? */
-	bool_ auto_more = FALSE;                 /* Auto more */
-	bool_ player_char_health = TRUE;         /* Display the player as a special symbol when in bad health ? */
-	bool_ linear_stats = TRUE;
+	bool ingame_help = true;                /* In-game contextual help? */
+	bool auto_more = false;                 /* Auto more */
+	bool player_char_health = true;         /* Display the player as a special symbol when in bad health ? */
+	bool linear_stats = true;
 
 	//
 	// Option Set 6 - Birth options
 	//
-	bool_ preserve = TRUE;                   /* Preserve artifacts */
-	bool_ autoroll = TRUE;                   /* Specify 'minimal' stats to roll */
-	bool_ point_based = FALSE;		 /* Generate character using a point system */
-	bool_ ironman_rooms = FALSE;		 /* Always generate very unusual rooms */
-	bool_ joke_monsters = FALSE;		 /* Allow 'joke' monsters */
-	bool_ always_small_level = FALSE;	 /* Force small levels */
-	bool_ fate_option = TRUE;		 /* Player can receive fates */
-	bool_ no_selling = FALSE;		 /* Player cannot sell items */
+	bool preserve = true;                   /* Preserve artifacts */
+	bool autoroll = true;                   /* Specify 'minimal' stats to roll */
+	bool point_based = false;		 /* Generate character using a point system */
+	bool ironman_rooms = false;		 /* Always generate very unusual rooms */
+	bool joke_monsters = false;		 /* Allow 'joke' monsters */
+	bool always_small_level = false;	 /* Force small levels */
+	bool fate_option = true;		 /* Player can receive fates */
+	bool no_selling = false;		 /* Player cannot sell items */
 
 	//
 	// Other options
 	//
 
-	bool_ cheat_peek = FALSE;                /* Peek into object creation */
-	bool_ cheat_hear = FALSE;                /* Peek into monster creation */
-	bool_ cheat_room = FALSE;                /* Peek into dungeon creation */
-	bool_ cheat_xtra = FALSE;                /* Peek into something else */
-	bool_ cheat_live = FALSE;                /* Allow player to avoid death */
+	bool cheat_peek = false;                /* Peek into object creation */
+	bool cheat_hear = false;                /* Peek into monster creation */
+	bool cheat_room = false;                /* Peek into dungeon creation */
+	bool cheat_xtra = false;                /* Peek into something else */
+	bool cheat_live = false;                /* Allow player to avoid death */
 
 	byte hitpoint_warn = 0;                  /* Hitpoint warning (0 to 9) */
 
 	byte delay_factor = 0;                   /* Delay factor (0 to 9) */
 
 	s16b autosave_freq = 100;                /* Autosave frequency */
-	bool_ autosave_t = FALSE;                /* Timed autosave */
-	bool_ autosave_l = FALSE;                /* Autosave before entering new levels */
+	bool autosave_t = false;                /* Timed autosave */
+	bool autosave_l = false;                /* Autosave before entering new levels */
 
 	/**
 	 * Option groups

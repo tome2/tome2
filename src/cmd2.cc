@@ -12,6 +12,7 @@
 #include "cave.hpp"
 #include "cave_type.hpp"
 #include "cmd1.hpp"
+#include "cmd5.hpp"
 #include "dungeon_info_type.hpp"
 #include "dungeon_flag.hpp"
 #include "feature_flag.hpp"

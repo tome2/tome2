@@ -1701,8 +1701,8 @@ void display_map(int *cy, int *cx)
 	auto const old_view_granite_lite = options->view_granite_lite;
 
 	/* Disable lighting effects */
-	options->view_special_lite = FALSE;
-	options->view_granite_lite = FALSE;
+	options->view_special_lite = false;
+	options->view_granite_lite = false;
 
 
 	/* Set up initial maps */

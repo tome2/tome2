@@ -1560,7 +1560,7 @@ void do_cmd_query_symbol()
 /*
  * Try to "sense" the grid's mana
  */
-bool_ do_cmd_sense_grid_mana()
+void do_cmd_sense_grid_mana()
 {
 	int chance, i;
 
@@ -1588,7 +1588,7 @@ bool_ do_cmd_sense_grid_mana()
 	{
 		flush_on_failure();
 		msg_print("You failed to sense the grid's mana.");
-		return FALSE;
+		return;
 	}
 
 	/* Try to give an "average" value */
@@ -1604,7 +1604,6 @@ bool_ do_cmd_sense_grid_mana()
 	{
 		msg_format("Average Area's mana: %d", (cave[p_ptr->py][p_ptr->px].mana / i) * i);
 	}
-	return TRUE;
 }
 
 

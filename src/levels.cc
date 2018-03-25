@@ -134,7 +134,7 @@ int get_flevel()
 /*
  * Return the extension of the savefile for the level
  */
-bool_ get_dungeon_save(char *buf)
+bool get_dungeon_save(char *buf)
 {
 	auto const &d_info = game->edit_data.d_info;
 
@@ -144,14 +144,13 @@ bool_ get_dungeon_save(char *buf)
 
 	/* Get and return the level */
 	start_line = -1;
-	if (get_command(file, 'S', buf)) return (TRUE);
-	else return FALSE;
+	return get_command(file, 'S', buf);
 }
 
 /*
  * Return the level generator
  */
-bool_ get_dungeon_generator(char *buf)
+bool get_dungeon_generator(char *buf)
 {
 	auto const &d_info = game->edit_data.d_info;
 
@@ -160,14 +159,13 @@ bool_ get_dungeon_generator(char *buf)
 
 	/* Get and return the level */
 	start_line = -1;
-	if (get_command(file, 'G', buf)) return (TRUE);
-	else return FALSE;
+	return get_command(file, 'G', buf);
 }
 
 /*
  * Return the special level
  */
-bool_ get_dungeon_special(char *buf)
+bool get_dungeon_special(char *buf)
 {
 	auto const &d_info = game->edit_data.d_info;
 
@@ -176,14 +174,13 @@ bool_ get_dungeon_special(char *buf)
 
 	/* Get and return the level */
 	start_line = -1;
-	if (get_command(file, 'U', buf)) return (TRUE);
-	else return FALSE;
+	return get_command(file, 'U', buf);
 }
 
 /*
  * Return the special level name
  */
-bool_ get_dungeon_name(char *buf)
+bool get_dungeon_name(char *buf)
 {
 	auto const &d_info = game->edit_data.d_info;
 
@@ -238,7 +235,7 @@ void get_level_flags()
 /*
  * Return the special level desc
  */
-bool_ get_level_desc(char *buf)
+bool get_level_desc(char *buf)
 {
 	auto const &d_info = game->edit_data.d_info;
 
@@ -247,6 +244,5 @@ bool_ get_level_desc(char *buf)
 
 	/* Get and return the level */
 	start_line = -1;
-	if (get_command(file, 'D', buf)) return (TRUE);
-	else return FALSE;
+	return get_command(file, 'D', buf);
 }

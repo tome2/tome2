@@ -1,7 +1,5 @@
 #pragma once
 
-#include "h-basic.h"
-
 /**
  * Powers, used by Mindcrafters and Necromancers
  */

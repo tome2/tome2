@@ -80,7 +80,7 @@ namespace {
 
 struct option_value {
 	std::string name;
-	bool_ value;
+	bool value;
 };
 
 } // namespace (anonymous)
@@ -281,7 +281,7 @@ static void do_std_string(std::string &s, ls_flag_t flag)
 static void do_option_value(option_value *option_value, ls_flag_t flag)
 {
 	do_std_string(option_value->name, flag);
-	do_bool(&option_value->value, flag);
+	do_std_bool(&option_value->value, flag);
 }
 
 
@@ -1698,15 +1698,15 @@ static void do_options(ls_flag_t flag)
 
 	/*** Cheating options ***/
 	do_bool(&wizard, flag);
-	do_bool(&options->cheat_peek, flag);
-	do_bool(&options->cheat_hear, flag);
-	do_bool(&options->cheat_room, flag);
-	do_bool(&options->cheat_xtra, flag);
-	do_bool(&options->cheat_live, flag);
+	do_std_bool(&options->cheat_peek, flag);
+	do_std_bool(&options->cheat_hear, flag);
+	do_std_bool(&options->cheat_room, flag);
+	do_std_bool(&options->cheat_xtra, flag);
+	do_std_bool(&options->cheat_live, flag);
 
 	/*** Autosave options */
-	do_bool(&options->autosave_l, flag);
-	do_bool(&options->autosave_t, flag);
+	do_std_bool(&options->autosave_l, flag);
+	do_std_bool(&options->autosave_t, flag);
 	do_s16b(&options->autosave_freq, flag);
 
 	// Standard options
@@ -1829,7 +1829,7 @@ static void do_options(ls_flag_t flag)
  * Handle player inventory. Note that the inventory is
  * "re-sorted" later by "dungeon()".
  */
-static bool_ do_inventory(ls_flag_t flag)
+static bool do_inventory(ls_flag_t flag)
 {
 	auto const &a_info = game->edit_data.a_info;
 
@@ -1865,7 +1865,7 @@ static bool_ do_inventory(ls_flag_t flag)
 			do_item(q_ptr, ls_flag_t::LOAD);
 
 			/* Hack -- verify item */
-			if (!q_ptr->k_ptr) return (FALSE);
+			if (!q_ptr->k_ptr) return false;
 
 			/* Wield equipment */
 			if (n >= INVEN_WIELD)
@@ -1890,7 +1890,7 @@ static bool_ do_inventory(ls_flag_t flag)
 				note("Too many items in the inventory!");
 
 				/* Fail */
-				return (FALSE);
+				return false;
 			}
 
 			/* Carry inventory */
@@ -1921,7 +1921,7 @@ static bool_ do_inventory(ls_flag_t flag)
 		do_u16b(&sent, ls_flag_t::SAVE);
 	}
 	/* Success */
-	return (TRUE);
+	return true;
 }
 
 

@@ -53,7 +53,7 @@ s32b SCHOOL_VARDA;
 s32b SCHOOL_WATER;
 s32b SCHOOL_YAVANNA;
 
-static bool_ uses_piety_to_cast(int s)
+static bool uses_piety_to_cast(int s)
 {
 	return spell_type_uses_piety_to_cast(spell_at(s));
 }
@@ -147,7 +147,7 @@ int spell_x(int sval, int spell_idx, int i)
 	}
 }
 
-bool_ school_book_contains_spell(int sval, s32b spell_idx)
+bool school_book_contains_spell(int sval, s32b spell_idx)
 {
 	random_book_setup(sval, spell_idx);
 	school_book *school_book = school_books_at(sval);
@@ -416,7 +416,7 @@ static std::string spell_school_name(spell_type *spell)
 int print_spell(const char *label_, byte color, int y, s32b s)
 {
 	s32b level;
-	bool_ na;
+	bool na;
 	spell_type *spell = spell_at(s);
 	const char *spell_info = spell_type_info(spell);
 	const char *label = (label_ == NULL) ? "" : label_;

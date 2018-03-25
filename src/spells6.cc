@@ -80,8 +80,8 @@ static school_type *school_new(s32b *school_idx, const char *name, s16b skill)
 static school_type *sorcery_school_new(s32b *school_idx, const char *name, s16b skill)
 {
 	school_type *school = school_new(school_idx, name, skill);
-	school->spell_power = TRUE;
-	school->sorcery = TRUE;
+	school->spell_power = true;
+	school->sorcery = true;
 	return school;
 }
 
@@ -98,7 +98,7 @@ static school_type *god_school_new(s32b *school_idx, byte god)
 	if (god_enabled(deity))
 	{
 		school = school_new(school_idx, deity->name, SKILL_PRAY);
-		school->spell_power = TRUE;
+		school->spell_power = true;
 		school->deity_idx = god;
 		school->deity = deity;
 		return school;
@@ -128,22 +128,20 @@ static int udun_bonus_levels()
 	return (p_ptr->lev * 2) / 3;
 }
 
-static bool_ geomancy_depends_satisfied()
+static bool geomancy_depends_satisfied()
 {
-	object_type *o_ptr = NULL;
-
 	/* Require at least one point in each school */
 	if ((get_skill(SKILL_FIRE) <= 0) ||
 	    (get_skill(SKILL_AIR) <= 0) ||
 	    (get_skill(SKILL_EARTH) <= 0) ||
 	    (get_skill(SKILL_WATER) <= 0))
 	{
-		return FALSE;
+		return false;
 	}
 
  	/* Require to wield a Mage Staff, as the spells requries the
 	 * caster to stomp the floor with it. */
-	o_ptr = get_object(INVEN_WIELD);
+	auto o_ptr = get_object(INVEN_WIELD);
 
 	return ((o_ptr != NULL) &&
 		(o_ptr->k_ptr) &&
@@ -243,7 +241,7 @@ static bool get_level_school_callback(struct get_level_school_callback_data *dat
 	return true;
 }
 
-void get_level_school(spell_type *spell, s32b max, s32b min, s32b *level, bool_ *na)
+void get_level_school(spell_type *spell, s32b max, s32b min, s32b *level, bool *na)
 {
 	assert(level != NULL);
 	assert(na != NULL);
@@ -252,7 +250,7 @@ void get_level_school(spell_type *spell, s32b max, s32b min, s32b *level, bool_ 
 	if (!spell_type_dependencies_satisfied(spell))
 	{
 		*level = min;
-		*na = TRUE;
+		*na = true;
 		return;
 	}
 
@@ -270,7 +268,7 @@ void get_level_school(spell_type *spell, s32b max, s32b min, s32b *level, bool_ 
 		if (!get_level_school_callback(&data, school_idx))
 		{
 			*level = min;
-			*na = TRUE;
+			*na = true;
 			return;
 		}
 	}
@@ -293,7 +291,7 @@ void get_level_school(spell_type *spell, s32b max, s32b min, s32b *level, bool_ 
 
 	/* Result */
 	*level = data.lvl;
-	*na = FALSE;
+	*na = false;
 }
 
 void schools_init()
@@ -333,7 +331,7 @@ void schools_init()
 
 	{
 		school_type *school = school_new(&SCHOOL_GEOMANCY, "Geomancy", SKILL_GEOMANCY);
-		school->spell_power = TRUE;
+		school->spell_power = true;
 		school->depends_satisfied = geomancy_depends_satisfied;
 	}
 

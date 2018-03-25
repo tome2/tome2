@@ -3563,7 +3563,7 @@ errr init_e_info_txt(FILE *fp)
 			/* Save the values */
 			/* e_ptr->slot = slot; */
 			e_ptr->rating = rating;
-			e_ptr->before = (pos == 'B') ? TRUE : FALSE;
+			e_ptr->before = (pos == 'B');
 
 			/* Next... */
 			continue;

@@ -51,7 +51,7 @@ static bool quest_ultra_good_move_hook(void *, void *in_, void *)
 		}
 
 		auto old_quick_messages = options->quick_messages;
-		options->quick_messages = FALSE;
+		options->quick_messages = false;
 
 		cmsg_print(TERM_L_BLUE, "You meet Galadriel.");
 		cmsg_print(TERM_YELLOW, "'I still cannot believe this is all over.'");

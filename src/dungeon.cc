@@ -1488,7 +1488,7 @@ static void process_world()
 		/* Dead player */
 		if (p_ptr->chp < 0)
 		{
-			bool_ old_quick = options->quick_messages;
+			bool old_quick = options->quick_messages;
 
 			/* Hack -- Note death */
 			if (!options->last_words)
@@ -1520,7 +1520,7 @@ static void process_world()
 			/* Note death */
 			death = TRUE;
 
-			options->quick_messages = FALSE;
+			options->quick_messages = false;
 			if (get_check("Make a last screenshot? "))
 			{
 				do_cmd_html_dump();
@@ -2788,7 +2788,7 @@ static void process_world()
 /*
  * Verify use of "wizard" mode
  */
-static bool_ enter_wizard_mode()
+static bool enter_wizard_mode()
 {
 	/* Ask first time, but not while loading a dead char with the -w option */
 	if (!noscore && !(p_ptr->chp < 0))
@@ -2801,7 +2801,7 @@ static bool_ enter_wizard_mode()
 		/* Verify request */
 		if (!get_check("Are you sure you want to enter wizard mode? "))
 		{
-			return (FALSE);
+			return false;
 		}
 
 		/* Mark savefile */
@@ -2809,14 +2809,14 @@ static bool_ enter_wizard_mode()
 	}
 
 	/* Success */
-	return (TRUE);
+	return true;
 }
 
 
 /*
  * Verify use of "debug" commands
  */
-static bool_ enter_debug_mode()
+static bool enter_debug_mode()
 {
 	/* Ask first time */
 	if (!noscore && !wizard)
@@ -2829,7 +2829,7 @@ static bool_ enter_debug_mode()
 		/* Verify request */
 		if (!get_check("Are you sure you want to use debug commands? "))
 		{
-			return (FALSE);
+			return false;
 		}
 
 		/* Mark savefile */
@@ -2837,7 +2837,7 @@ static bool_ enter_debug_mode()
 	}
 
 	/* Success */
-	return (TRUE);
+	return true;
 }
 
 
@@ -4529,7 +4529,10 @@ static void dungeon()
 		/* Make it pulsate and live !!!! */
 		if ((dungeon_flags & DF_EVOLVE) && dun_level)
 		{
-			if (!(turn % 10)) evolve_level(TRUE);
+			if (!(turn % 10))
+			{
+				evolve_level(true);
+			}
 		}
 
 		/* Notice stuff */
@@ -4770,8 +4773,8 @@ void play_game()
 	load_all_pref_files();
 
 	/* Set or clear "rogue_like_commands" if requested */
-	if (arg_force_original) options->rogue_like_commands = FALSE;
-	if (arg_force_roguelike) options->rogue_like_commands = TRUE;
+	if (arg_force_original) options->rogue_like_commands = false;
+	if (arg_force_roguelike) options->rogue_like_commands = true;
 
 	/* Initialize vault info */
 	if (init_v_info()) quit("Cannot initialize vaults");

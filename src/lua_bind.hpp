@@ -16,7 +16,7 @@ int get_mana(s32b s);
 s32b get_power(s32b s);
 s32b get_level(s32b s, s32b max);
 s32b get_level_s(int sp, int max);
-void get_level_school(struct spell_type *spell, s32b max, s32b min, s32b *level, bool_ *na);
+void get_level_school(struct spell_type *spell, s32b max, s32b min, s32b *level, bool *na);
 
 extern s32b get_level_max_stick;
 extern s32b get_level_use_stick;

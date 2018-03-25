@@ -46,7 +46,7 @@
 /**
  * Game started?
  */
-static bool_ game_started = FALSE;
+static bool game_started = false;
 
 /**
  * Struct for help triggered by a boolean condition
@@ -59,7 +59,7 @@ struct triggered_help_type
 	/* Hook type */
 	int hook_type;
 	/* Trigger function */
-	bool_ (*trigger_func)(void *in, void *out);
+	bool (*trigger_func)(void *in, void *out);
 	/* Description; NULL terminated */
 	const char *desc[DESC_MAX];
 };
@@ -304,88 +304,88 @@ context_help_type ability_table[] =
 /**
  * Trigger functions
  */
-static bool_ trigger_void_jumpgate(void *in, void *out) {
+static bool trigger_void_jumpgate(void *in, void *out) {
 	hook_move_in *p = (hook_move_in *) in;
 	return cave[p->y][p->x].feat == FEAT_BETWEEN;
 }
 
-static bool_ trigger_fountain(void *in, void *out) {
+static bool trigger_fountain(void *in, void *out) {
 	hook_move_in *p = (hook_move_in *) in;
 	return cave[p->y][p->x].feat == FEAT_FOUNTAIN;
 }
 
-static bool_ trigger_found_object(void *in, void *out) {
+static bool trigger_found_object(void *in, void *out) {
 	hook_move_in *p = (hook_move_in *) in;
 	return !cave[p->y][p->x].o_idxs.empty();
 }
 
-static bool_ trigger_found_altar(void *in, void *out) {
+static bool trigger_found_altar(void *in, void *out) {
 	hook_move_in *p = (hook_move_in *) in;
 	return ((cave[p->y][p->x].feat >= FEAT_ALTAR_HEAD) &&
 		(cave[p->y][p->x].feat <= FEAT_ALTAR_TAIL));
 }
 
-static bool_ trigger_found_stairs(void *in, void *out) {
+static bool trigger_found_stairs(void *in, void *out) {
 	hook_move_in *p = (hook_move_in *) in;
 	return (cave[p->y][p->x].feat == FEAT_MORE);
 }
 
-static bool_ trigger_get_rod(void *in, void *out) {
+static bool trigger_get_rod(void *in, void *out) {
 	hook_get_in *g = (hook_get_in *) in;
 	return (g->o_ptr->tval == TV_ROD_MAIN);
 }
 
-static bool_ trigger_get_rod_tip(void *in, void *out) {
+static bool trigger_get_rod_tip(void *in, void *out) {
 	hook_get_in *g = (hook_get_in *) in;
 	return (g->o_ptr->tval == TV_ROD);
 }
 
-static bool_ trigger_get_magic_device(void *in, void *out) {
+static bool trigger_get_magic_device(void *in, void *out) {
 	hook_get_in *g = (hook_get_in *) in;
 	return ((g->o_ptr->tval == TV_WAND) ||
 		(g->o_ptr->tval == TV_STAFF));
 }
 
-static bool_ trigger_end_turn_wilderness(void *in, void *out) {
+static bool trigger_end_turn_wilderness(void *in, void *out) {
 	return (((p_ptr->wilderness_x != 34) ||
 		 (p_ptr->wilderness_y != 21)) &&
 		(!p_ptr->astral));
 }
 
-static bool_ trigger_game_theme(void *in, void *out) {
+static bool trigger_game_theme(void *in, void *out) {
 	return (game_module_idx == MODULE_THEME);
 }
 
-static bool_ trigger_game_tome(void *in, void *out) {
+static bool trigger_game_tome(void *in, void *out) {
 	return (game_module_idx == MODULE_TOME);
 }
 
-static bool_ trigger_1st_level(void *in, void *out) {
+static bool trigger_1st_level(void *in, void *out) {
 	return (p_ptr->lev > 1);
 }
 
-static bool_ trigger_20th_level(void *in, void *out) {
+static bool trigger_20th_level(void *in, void *out) {
 	return (p_ptr->lev >= 20);
 }
 
-static bool_ trigger_identify_spell_item(void *in_, void *out) {
+static bool trigger_identify_spell_item(void *in_, void *out) {
 	hook_identify_in *in = (hook_identify_in *) in_;
 
 	auto const f = object_flags(in->o_ptr);
 	if (f & TR_SPELL_CONTAIN)
 	{
-		return TRUE;
+		return true;
 	}
 
-	return FALSE;
+	return false;
 }
 
-static bool_ trigger_melee_skills(void *in, void *out) {
+static bool trigger_melee_skills(void *in, void *out) {
 	return (game_started && (get_melee_skills() > 1));
 }
 
-static bool_ trigger_always(void *in, void *out) {
-	return TRUE;
+static bool trigger_always(void *in, void *out) {
+	return true;
 }
 
 /**
@@ -579,7 +579,7 @@ static bool triggered_help_hook(void *data, void *in, void *out)
 
 static bool hook_game_start(void *data, void *in, void *out)
 {
-	game_started = TRUE;
+	game_started = true;
 	return false;
 }
 
