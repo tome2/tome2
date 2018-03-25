@@ -4005,17 +4005,6 @@ void do_cmd_zap_rod()
 		{
 			detect_doors(DEFAULT_RADIUS);
 			detect_stairs(DEFAULT_RADIUS);
-
-			break;
-		}
-
-	case SV_ROD_IDENTIFY:
-		{
-			if (!ident_spell())
-			{
-				use_charge = FALSE;
-			}
-
 			break;
 		}
 

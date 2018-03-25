@@ -1235,7 +1235,6 @@
 /* The "sval" codes for TV_ROD(Rod Tips) */
 #define SV_ROD_NOTHING                   0
 #define SV_ROD_DETECT_DOOR               1
-#define SV_ROD_IDENTIFY                  2
 #define SV_ROD_RECALL                    3
 #define SV_ROD_ILLUMINATION              4
 #define SV_ROD_MAPPING                   5

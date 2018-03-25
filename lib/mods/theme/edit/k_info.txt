@@ -3394,18 +3394,6 @@ F:IGNORE_ELEC
 F:IGNORE_FIRE
 D:This rod grants you knowledge of your surroundings.
 
-N:372:Perception
-G:-:d
-I:66:2:20
-W:50:0:15:13000
-A:50/8:100/8
-P:0:1d1:0:0:0
-F:IGNORE_ACID
-F:IGNORE_COLD
-F:IGNORE_ELEC
-F:IGNORE_FIRE
-D:This rod makes you insightful, laying open the identity of your possessions.
-
 N:373:Curing
 G:-:d
 I:66:8:35
