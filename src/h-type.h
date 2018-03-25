@@ -73,11 +73,6 @@ typedef int errr;
 #undef huge
 #define huge huge_hack
 
-/* Note that "signed char" is not always "defined" */
-/* So always use "s16b" to hold small signed values */
-/* A signed byte of memory */
-/* typedef signed char syte; */
-
 /* Note that unsigned values can cause math problems */
 /* An unsigned byte of memory */
 typedef unsigned char byte;
@@ -92,10 +87,6 @@ typedef int sint;
 
 /* An unsigned, "standard" integer (often pre-defined) */
 typedef unsigned int uint;
-
-
-/* The largest possible signed integer (pre-defined) */
-/* typedef long long; */
 
 /* The largest possible unsigned integer */
 typedef unsigned long huge;
