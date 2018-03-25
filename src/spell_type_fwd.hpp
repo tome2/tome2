@@ -5,8 +5,7 @@
  */
 typedef enum {
 	NO_CAST,             /* Spell not cast; user aborted */
-	CAST_OBVIOUS,        /* Cast; caster discovers effect (devices) */
-	CAST_HIDDEN          /* Cast; caster does NOT discover effect (devices) */
+	CAST,                /* Spell was cast */
 } casting_result;
 
 /*

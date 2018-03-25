@@ -3837,7 +3837,7 @@ void unlite_room(int y1, int x1)
  * Hack -- call light around the player
  * Affect all monsters in the projection radius
  */
-bool_ lite_area(int dam, int rad)
+void lite_area(int dam, int rad)
 {
 	int flg = PROJECT_GRID | PROJECT_KILL;
 
@@ -3852,9 +3852,6 @@ bool_ lite_area(int dam, int rad)
 
 	/* Lite up the room */
 	lite_room(p_ptr->py, p_ptr->px);
-
-	/* Assume seen */
-	return (TRUE);
 }
 
 

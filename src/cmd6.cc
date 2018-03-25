@@ -3448,12 +3448,11 @@ void unset_stick_mode()
 static void activate_stick(object_type *o_ptr, bool_ *use_charge)
 {
 	spell_type *spell = spell_at(o_ptr->pval2);
-	casting_result ret;
 
 	assert(use_charge != NULL);
 
 	set_stick_mode(o_ptr);
-	ret = spell_type_produce_effect(spell);
+	auto ret = spell_type_produce_effect(spell);
 	unset_stick_mode();
 
 	switch (ret)
@@ -3461,10 +3460,7 @@ static void activate_stick(object_type *o_ptr, bool_ *use_charge)
 	case NO_CAST:
 		*use_charge = FALSE;
 		break;
-	case CAST_HIDDEN:
-		*use_charge = TRUE;
-		break;
-	case CAST_OBVIOUS:
+	case CAST:
 		*use_charge = TRUE;
 		break;
 	default:

@@ -54,7 +54,7 @@ void destroy_area(int y1, int x1, int r);
 void earthquake(int cy, int cx, int r);
 void lite_room(int y1, int x1);
 void unlite_room(int y1, int x1);
-bool_ lite_area(int dam, int rad);
+void lite_area(int dam, int rad);
 void unlite_area(int dam, int rad);
 bool_ fire_cloud(int typ, int dir, int dam, int rad, int time);
 bool_ fire_wave(int typ, int dir, int dam, int rad, int time, s32b eff);
