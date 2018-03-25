@@ -125,7 +125,6 @@ void init_file_paths(char *path)
 	free(ANGBAND_DIR);
 
 	/* Free the sub-paths */
-	free(ANGBAND_DIR_CORE);
 	free(ANGBAND_DIR_DNGN);
 	free(ANGBAND_DIR_DATA);
 	free(ANGBAND_DIR_EDIT);
@@ -171,10 +170,6 @@ void init_file_paths(char *path)
 
 
 	/*** Build the sub-directory names ***/
-
-	/* Build a path name */
-	strcpy(tail, "core");
-	ANGBAND_DIR_CORE = strdup(path);
 
 	/* Build a path name */
 	strcpy(tail, "dngn");

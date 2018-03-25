@@ -402,12 +402,6 @@ const char *ANGBAND_SYS = "xxx";
 char *ANGBAND_DIR;
 
 /*
- * Core lua system
- * These files are portable between platforms
- */
-char *ANGBAND_DIR_CORE;
-
-/*
  * Textual dungeon level definition files
  * These files are portable between platforms
  */

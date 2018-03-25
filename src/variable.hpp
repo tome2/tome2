@@ -143,7 +143,6 @@ extern const char *DEFAULT_FEAT_TUNNEL;
 extern const char *DEFAULT_FEAT_BLOCK;
 extern char *ANGBAND_DIR;
 extern char *ANGBAND_DIR_MODULES;
-extern char *ANGBAND_DIR_CORE;
 extern char *ANGBAND_DIR_DNGN;
 extern bool (*get_monster_hook)(monster_race const *);
 extern bool (*get_monster_aux_hook)(monster_race const *);
