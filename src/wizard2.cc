@@ -194,13 +194,6 @@ static void wiz_create_named_art()
 	/* Apply any random resistances/powers */
 	random_artifact_resistance(q_ptr);
 
-	/* Identify it fully */
-	object_aware(q_ptr);
-	object_known(q_ptr);
-
-	/* Mark the item as fully known */
-	q_ptr->ident |= (IDENT_MENTAL);
-
 	/* Drop the artifact from heaven */
 	drop_near(q_ptr, -1, p_ptr->py, p_ptr->px);
 
@@ -1591,11 +1584,6 @@ void do_cmd_debug()
 		cave[p_ptr->py][p_ptr->px].mana = command_arg;
 		break;
 
-		/* View item info */
-	case 'f':
-		identify_fully();
-		break;
-
 		/* Good Objects */
 	case 'g':
 		if (command_arg <= 0) command_arg = 1;
@@ -1608,11 +1596,6 @@ void do_cmd_debug()
 
 	case 'H':
 		do_cmd_summon_horde(); break;
-
-		/* Identify */
-	case 'i':
-		ident_spell();
-		break;
 
 		/* Go up or down in the dungeon */
 	case 'j':

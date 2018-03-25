@@ -17,10 +17,10 @@ will not be scored if you use debug commands.
  *****debug.txt*5[c  Create object]                        *****debug.txt*6[C  Create artifact]
  *****debug.txt*7[d  Detect all]                           *****debug.txt*8[D  Teleport to the wilderness]
  *****debug.txt*9[e  Edit character attributes]            *****debug.txt*10[E  Change grid's mana]
- *****debug.txt*11[f  *IDENTIFY*]                           *****debug.txt*12[F  Features]
+ f  (unused)                                                *****debug.txt*12[F  Features]
  *****debug.txt*13[g  Create good item]                     G  (unused)
  *****debug.txt*15[h  Change life rating]                   *****debug.txt*16[H  Hostile monster creation]
- *****debug.txt*17[i  Identify]                             I  (unused)
+ i  (unused)                                                I  (unused)
  *****debug.txt*19[j  Jump to other level]                  J  (unused)
  *****debug.txt*21[k  Check attributes]                     K  (unused)
  l  (unused)                                                L  (unused)
@@ -118,9 +118,6 @@ maximal legal value.
         Alter how much mana a grid has.
         Use the "Command count", aka 0, to specify the amount of mana
         that you want.
-~~~~~11
-[[[[[G*IDENTIFY* (f)]
-        Like a Scroll of *Identify*.
 ~~~~~12
 [[[[[GFeatures (F)]
         Use the "Command count", aka 0, to specify a number from
@@ -135,9 +132,6 @@ maximal legal value.
 ~~~~~16
 [[[[[GHostile monster creation (H)]
         Summons a Pack of Creatures of the same kind.
-~~~~~17
-[[[[[GIdentify (i)]
-        Like a Scroll of Identify.
 ~~~~~19
 [[[[[GJump to other level (j)]
         Jump to other dungeon level. This does not work in the
