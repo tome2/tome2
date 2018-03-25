@@ -90,12 +90,7 @@ D:#    ^^^^^^^^^^^^^^   ADDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD  .DDDD
 D:######################################################################################################################################################################################################
 
 
-############### Starting positions ###############
+############### Starting position ###############
 
-# Standard starting position for normal races
-?:[AND [EQU $LEAVING_QUEST 0] [NOT [EQU $RACE Vampire] ] ]
+?:[EQU $LEAVING_QUEST 0]
 P:33:131
-
-# Standard starting position for vampires (at the dungeon entrance)
-?:[AND [EQU $LEAVING_QUEST 0] [EQU $RACE Vampire] ]
-P:31:150
