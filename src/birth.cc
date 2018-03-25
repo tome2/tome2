@@ -796,12 +796,19 @@ static void player_outfit_object(int qty, int tval, int sval)
  */
 static void player_outfit_spellbook(cptr spell_name)
 {
-	object_type forge;
-	object_type *q_ptr = &forge;
-	object_prep(q_ptr, lookup_kind(TV_BOOK, 255));
-	q_ptr->pval = find_spell(spell_name);
-	q_ptr->ident |= IDENT_MENTAL | IDENT_KNOWN;
-	inven_carry(q_ptr, FALSE);
+	if (auto spell_idx = find_spell(spell_name))
+	{
+		object_type forge;
+		object_type *q_ptr = &forge;
+		object_prep(q_ptr, lookup_kind(TV_BOOK, 255));
+		q_ptr->pval = *spell_idx;
+		q_ptr->ident |= IDENT_MENTAL | IDENT_KNOWN;
+		inven_carry(q_ptr, FALSE);
+	}
+	else
+	{
+		quit_fmt("Couldn't find spell '%s'\n");
+	}
 }
 
 

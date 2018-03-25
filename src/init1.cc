@@ -2363,7 +2363,15 @@ errr init_k_info_txt(FILE *fp)
 				{
 					char *spl = strchr(buf + 2, '=') + 1;
 
-					pval2 = find_spell(spl);
+					if (auto spell_idx = find_spell(spl))
+					{
+						pval2 = *spell_idx;
+					}
+					else
+					{
+						msg_format("No spell '%s'.", spl);
+						return 1;
+					}
 				}
 			}
 

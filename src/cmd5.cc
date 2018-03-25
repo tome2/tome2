@@ -1821,11 +1821,12 @@ boost::optional<int> get_item_hook_find_spell(object_filter_t const &)
 		return boost::none;
 	}
 
-	int const spell = find_spell(buf);
-	if (spell == -1)
+	auto spell_idx = find_spell(buf);
+	if (!spell_idx)
 	{
 		return boost::none;
 	}
+	int const spell = *spell_idx;
 
 	for (int i = 0; i < INVEN_TOTAL; i++)
 	{

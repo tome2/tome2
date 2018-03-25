@@ -37,7 +37,7 @@ spell_type *spell_at(s32b index)
 	return school_spells[index];
 }
 
-int find_spell(cptr name)
+boost::optional<int> find_spell(cptr name)
 {
 	int i;
 
@@ -45,12 +45,11 @@ int find_spell(cptr name)
 	{
 		if (streq(spell_type_name(spell_at(i)), name))
 		{
-			return i;
+			return boost::make_optional(i);
 		}
 	}
 
-	/* Not found */
-	return -1;
+	return boost::none;
 }
 
 s16b get_random_spell(s16b random_type, int level)
