@@ -1010,6 +1010,59 @@ static bool create_townpeople_hook(monster_race const *r_ptr)
 }
 
 
+static void place_townspeople(int qy, int qx)
+{
+	bool (*old_get_monster_hook)(monster_race const *);
+	int y;
+	int x;
+
+	/* Backup the old hook */
+	old_get_monster_hook = get_monster_hook;
+
+	/* Require "okay" monsters */
+	get_monster_hook = create_townpeople_hook;
+
+	/* Prepare allocation table */
+	get_mon_num_prep();
+
+	for (x = qx; x < qx + SCREEN_WID; x++)
+	{
+		for (y = qy; y < qy + SCREEN_HGT; y++)
+		{
+			int m_idx, r_idx;
+
+			/* Only in town */
+			if (!in_bounds(y, x)) continue;
+			if (!(cave[y][x].info & CAVE_FREE)) continue;
+			if (!cave_empty_bold(y, x)) continue;
+
+			if (rand_int(100)) continue;
+
+			r_idx = get_mon_num(0);
+			m_allow_special[r_idx] = TRUE;
+			m_idx = place_monster_one(y, x, r_idx, 0, TRUE, MSTATUS_ENEMY);
+			m_allow_special[r_idx] = FALSE;
+
+			if (m_idx)
+			{
+				monster_type *m_ptr = &m_list[m_idx];
+				if (m_ptr->level < (dun_level / 2))
+				{
+					m_ptr->exp = monster_exp(m_ptr->level + (dun_level / 2) + randint(dun_level / 2));
+					monster_check_experience(m_idx, TRUE);
+				}
+			}
+		}
+	}
+
+	/* Reset restriction */
+	get_monster_hook = old_get_monster_hook;
+
+	/* Prepare allocation table */
+	get_mon_num_prep();
+}
+
+
 /*
  * Generate the "consistent" town features, and place the player
  *
@@ -1020,7 +1073,6 @@ static bool create_townpeople_hook(monster_race const *r_ptr)
 static void town_gen_hack(int qy, int qx)
 {
 	int y, x, floor;
-	bool (*old_get_monster_hook)(monster_race const *);
 
 	/* Do we use dungeon floor or normal one */
 	if (magik(TOWN_NORMAL_FLOOR)) floor = FEAT_FLOOR;
@@ -1061,57 +1113,13 @@ static void town_gen_hack(int qy, int qx)
 	/* Generates the town's borders */
 	if (magik(TOWN_NORMAL_FLOOR)) town_borders(qy, qx);
 
-
-	/* Some inhabitants(leveled .. hehe :) */
-
-	/* Backup the old hook */
-	old_get_monster_hook = get_monster_hook;
-
-	/* Require "okay" monsters */
-	get_monster_hook = create_townpeople_hook;
-
-	/* Prepare allocation table */
-	get_mon_num_prep();
-
-	for (x = qx; x < qx + SCREEN_WID; x++)
-		for (y = qy; y < qy + SCREEN_HGT; y++)
-		{
-			int m_idx, r_idx;
-
-			/* Only in town */
-			if (!in_bounds(y, x)) continue;
-			if (!(cave[y][x].info & CAVE_FREE)) continue;
-			if (!cave_empty_bold(y, x)) continue;
-
-			if (rand_int(100)) continue;
-
-			r_idx = get_mon_num(0);
-			m_allow_special[r_idx] = TRUE;
-			m_idx = place_monster_one(y, x, r_idx, 0, TRUE, MSTATUS_ENEMY);
-			m_allow_special[r_idx] = FALSE;
-
-			if (m_idx)
-			{
-				monster_type *m_ptr = &m_list[m_idx];
-				if (m_ptr->level < (dun_level / 2))
-				{
-					m_ptr->exp = monster_exp(m_ptr->level + (dun_level / 2) + randint(dun_level / 2));
-					monster_check_experience(m_idx, TRUE);
-				}
-			}
-		}
-
-	/* Reset restriction */
-	get_monster_hook = old_get_monster_hook;
-
-	/* Prepare allocation table */
-	get_mon_num_prep();
+	/* Generate inhabitants */
+	place_townspeople(qy, qx);
 }
 
 static void town_gen_circle(int qy, int qx)
 {
 	int y, x, cy, cx, rad, floor;
-	bool (*old_get_monster_hook)(monster_race const *);
 
 	/* Do we use dungeon floor or normal one */
 	if (magik(TOWN_NORMAL_FLOOR)) floor = FEAT_FLOOR;
@@ -1194,49 +1202,8 @@ static void town_gen_circle(int qy, int qx)
 		}
 	}
 
-	/* Some inhabitants(leveled .. hehe :) */
-
-	/* Backup the old hook */
-	old_get_monster_hook = get_monster_hook;
-
-	/* Require "okay" monsters */
-	get_monster_hook = create_townpeople_hook;
-
-	/* Prepare allocation table */
-	get_mon_num_prep();
-
-	for (x = qx; x < qx + SCREEN_WID; x++)
-		for (y = qy; y < qy + SCREEN_HGT; y++)
-		{
-			int m_idx, r_idx;
-
-			/* Only in town */
-			if (!in_bounds(y, x)) continue;
-			if (!(cave[y][x].info & CAVE_FREE)) continue;
-			if (!cave_empty_bold(y, x)) continue;
-
-			if (rand_int(100)) continue;
-
-			r_idx = get_mon_num(0);
-			m_allow_special[r_idx] = TRUE;
-			m_idx = place_monster_one(y, x, r_idx, 0, TRUE, MSTATUS_ENEMY);
-			m_allow_special[r_idx] = FALSE;
-			if (m_idx)
-			{
-				monster_type *m_ptr = &m_list[m_idx];
-				if (m_ptr->level < (dun_level / 2))
-				{
-					m_ptr->exp = monster_exp(m_ptr->level + (dun_level / 2) + randint(dun_level / 2));
-					monster_check_experience(m_idx, TRUE);
-				}
-			}
-		}
-
-	/* Reset restriction */
-	get_monster_hook = old_get_monster_hook;
-
-	/* Prepare allocation table */
-	get_mon_num_prep();
+	/* Generate inhabitants */
+	place_townspeople(qy, qx);
 }
 
 
