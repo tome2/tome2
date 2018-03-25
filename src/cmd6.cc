@@ -1411,12 +1411,6 @@ void do_cmd_eat_food()
 	/* Combine / Reorder the pack (later) */
 	p_ptr->notice |= (PN_COMBINE | PN_REORDER);
 
-	/* The player is now aware of the object */
-	if (!object_aware_p(o_ptr))
-	{
-		object_aware(o_ptr);
-	}
-
 	/* Window stuff */
 	p_ptr->window |= (PW_INVEN | PW_EQUIP | PW_PLAYER);
 
@@ -1618,7 +1612,6 @@ void do_cmd_cure_meat()
 	energy_use = 100;
 
 	cptr q = "You soak the meat.";
-	cptr s = "You soak the meat.";
 
 	switch (i_ptr->sval)
 	{
@@ -1680,14 +1673,7 @@ void do_cmd_cure_meat()
 	}
 
 	/* Message */
-	if (object_known_p(i_ptr))
-	{
-		msg_print(q);
-	}
-	else
-	{
-		msg_print(s);
-	}
+	msg_print(q);
 
 	/* The meat is already spoiling */
 	if (((o_ptr->sval == SV_CORPSE_MEAT) && (o_ptr->weight > o_ptr->pval)) ||
@@ -3255,12 +3241,6 @@ void do_cmd_read_scroll()
 	/* Combine / Reorder the pack (later) */
 	p_ptr->notice |= (PN_COMBINE | PN_REORDER);
 
-	/* An identification was made */
-	if (!object_aware_p(o_ptr))
-	{
-		object_aware(o_ptr);
-	}
-
 	/* Window stuff */
 	p_ptr->window |= (PW_INVEN | PW_EQUIP | PW_PLAYER);
 
@@ -3422,8 +3402,6 @@ void do_cmd_use_staff()
 	/* Window stuff */
 	p_ptr->window |= (PW_INVEN | PW_EQUIP | PW_PLAYER);
 
-	/* Identify */
-	object_aware(o_ptr);
 
 	/* Hack -- some uses are "free" */
 	if (!use_charge)
@@ -3573,9 +3551,6 @@ void do_cmd_aim_wand()
 
 	/* Combine / Reorder the pack (later) */
 	p_ptr->notice |= (PN_COMBINE | PN_REORDER);
-
-	/* Identify */
-	object_aware(o_ptr);
 
 	/* Hack -- some uses are "free" */
 	if (!use_charge)
@@ -3777,8 +3752,8 @@ void do_cmd_zap_rod()
 		}
 	}
 
-	/* Get a direction (unless KNOWN not to need it) */
-	if (!object_aware_p(o_ptr) || require_dir)
+	/* Get a direction */
+	if (require_dir)
 	{
 		/* Get a direction, allow cancel */
 		if (!get_aim_dir(&dir)) return;
@@ -4048,12 +4023,6 @@ void do_cmd_zap_rod()
 
 	/* Combine / Reorder the pack (later) */
 	p_ptr->notice |= (PN_COMBINE | PN_REORDER);
-
-	/* Identify */
-	if (!object_aware_p(o_ptr))
-	{
-		object_aware(o_ptr);
-	}
 
 	/* Window stuff */
 	p_ptr->window |= (PW_INVEN | PW_EQUIP | PW_PLAYER);
