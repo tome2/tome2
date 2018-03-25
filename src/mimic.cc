@@ -73,7 +73,7 @@ static void mouse_power()
 {
 	if (p_ptr->mimic_level >= 30)
 	{
-		p_ptr->powers[POWER_INVISIBILITY] = TRUE;
+		p_ptr->powers.insert(POWER_INVISIBILITY);
 	}
 }
 
@@ -175,7 +175,7 @@ static void spider_power()
 {
 	if (p_ptr->mimic_level >= 25)
 	{
-		p_ptr->powers[POWER_WEB] = TRUE;
+		p_ptr->powers.insert(POWER_WEB);
 	}
 }
 
@@ -205,7 +205,7 @@ static s32b ent_calc()
 
 static void ent_power()
 {
-	p_ptr->powers[PWR_GROW_TREE] = TRUE;
+	p_ptr->powers.insert(PWR_GROW_TREE);
 }
 
 static s32b vapour_calc()

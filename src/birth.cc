@@ -723,10 +723,7 @@ static void player_wipe()
 	p_ptr->allow_one_death = 0;
 
 	/* Wipe the power list */
-	for (std::size_t i = 0; i < POWER_MAX; i++)
-	{
-		p_ptr->powers_mod[i] = 0;
-	}
+	p_ptr->powers_mod.clear();
 
 	/* No companions killed */
 	p_ptr->companion_killed = 0;

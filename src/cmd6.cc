@@ -1294,7 +1294,7 @@ void do_cmd_eat_food()
 				/* 2% chance of getting the mold power */
 				if (magik(2))
 				{
-					p_ptr->powers_mod[PWR_GROW_MOLD] = TRUE;
+					p_ptr->powers_mod.insert(PWR_GROW_MOLD);
 					p_ptr->update |= PU_POWERS;
 				}
 

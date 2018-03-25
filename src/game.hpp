@@ -10,6 +10,8 @@
 #include "level_marker.hpp"
 #include "messages.hpp"
 #include "player_defs.hpp"
+#include "powers.hpp"
+#include "power_type.hpp"
 #include "random_artifact.hpp"
 #include "skill_type.hpp"
 #include "timer_type_fwd.hpp"
@@ -65,6 +67,14 @@ struct Game {
 	std::array<s16b, PY_MAX_LEVEL> player_hp { };
 
 	/**
+	 * Powers
+	 */
+	std::unordered_map<
+		int,
+		std::shared_ptr<power_type>>
+		powers;
+
+	/**
 	 * Message buffer.
 	 */
 	Messages messages { 2048 };
@@ -93,5 +103,10 @@ struct Game {
 	 * Generate a special level feeling?
 	 */
 	bool generate_special_feeling = false;
+
+	/**
+	 * Construct a default instance.
+	 */
+	explicit Game();
 
 };

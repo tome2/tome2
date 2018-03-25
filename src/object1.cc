@@ -818,20 +818,20 @@ object_flag_set object_flags(object_type const *o_ptr)
 }
 
 /* Return object granted power */
-int object_power(object_type *o_ptr)
+boost::optional<int> object_power(object_type *o_ptr)
 {
 	auto const &a_info = game->edit_data.a_info;
 	auto const &e_info = game->edit_data.e_info;
 
 	/* Base object */
-	int power = o_ptr->k_ptr->power;
+	auto power = o_ptr->k_ptr->power;
 
 	/* Ego-item */
 	if (o_ptr->name2)
 	{
 		auto e_ptr = &e_info[o_ptr->name2];
 
-		if (power == -1)
+		if (!power)
 		{
 			power = e_ptr->power;
 		}
@@ -840,7 +840,7 @@ int object_power(object_type *o_ptr)
 		{
 			auto e_ptr = &e_info[o_ptr->name2b];
 
-			if (power == -1)
+			if (!power)
 			{
 				power = e_ptr->power;
 			}
@@ -852,13 +852,13 @@ int object_power(object_type *o_ptr)
 	{
 		auto a_ptr = &a_info[o_ptr->name1];
 
-		if (power == -1)
+		if (!power)
 		{
 			power = a_ptr->power;
 		}
 	}
 
-	return (power);
+	return power;
 }
 
 
@@ -2542,10 +2542,10 @@ bool_ object_out_desc(object_type *o_ptr, FILE *fff, bool_ trim_down, bool_ wait
 				text_out(" if it is being worn. ");
 		}
 		/* Granted power */
-		if (object_power(o_ptr) != -1)
+		if (auto power_idx = object_power(o_ptr))
 		{
 			text_out("It grants you the power of ");
-			text_out(powers_type[object_power(o_ptr)].name);
+			text_out(game->powers.at(*power_idx)->name);
 			text_out(" if it is being worn.  ");
 		}
 

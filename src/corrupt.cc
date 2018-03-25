@@ -977,7 +977,7 @@ std::string dump_corruptions(bool color, bool header)
  * Get the power granted by a corruption. Returns -1
  * if the given corruption does not grant a power.
  */
-s16b get_corruption_power(int corruption_idx)
+boost::optional<int> get_corruption_power(int corruption_idx)
 {
 	corruption_type *c_ptr = NULL;
 
@@ -986,13 +986,13 @@ s16b get_corruption_power(int corruption_idx)
 
 	c_ptr = &corruptions[corruption_idx];
 
-	if ((c_ptr->power >= 0) && (c_ptr->power < POWER_MAX))
+	if (c_ptr->power >= 0)
 	{
 		return c_ptr->power;
 	}
 	else
 	{
 		assert(c_ptr->power == -1); /* Sanity check: Should always be the case. */
-		return -1;
+		return boost::none;
 	}
 }

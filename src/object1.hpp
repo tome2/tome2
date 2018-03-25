@@ -17,7 +17,7 @@ bool_ wield_set(s16b a_idx, s16b set_idx, bool_ silent);
 bool_ verify(cptr prompt, int item);
 void flavor_init();
 void reset_visuals();
-int object_power(object_type *o_ptr);
+boost::optional<int> object_power(object_type *o_ptr);
 extern bool_ object_flags_no_set;
 object_flag_set object_flags(object_type const *o_ptr);
 object_flag_set object_flags_known(object_type const *o_ptr);

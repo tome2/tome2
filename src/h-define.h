@@ -82,6 +82,7 @@
  */
 #define A2I(X)	((X) - 'a')
 #define I2A(X)	((X) + 'a')
+#define I2C(X)  (static_cast<char>(I2A(X)))
 #define D2I(X)	((X) - '0')
 #define I2D(X)	((X) + '0')
 #define KTRL(X)	((X) & 0x1F)

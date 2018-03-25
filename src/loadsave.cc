@@ -385,6 +385,50 @@ template<typename M, typename FK, typename FV> void do_fixed_map(ls_flag_t flag,
 	}
 }
 
+template<typename S, typename F> void do_unordered_set(ls_flag_t flag, S &set, F f)
+{
+	// Since our file format is currently quite inflexible, we'll
+	// have to prefix with the size of the set.
+	u32b n = set.size();
+	do_u32b(&n, flag);
+
+	if (flag == ls_flag_t::LOAD)
+	{
+		// Read each of the n entries.
+		for (std::size_t i = 0; i < n; i++)
+		{
+			// Read entry
+			typename S::key_type key;
+			f(&key, flag);
+
+			// Insert into set
+			set.insert(key);
+		}
+	}
+
+	if (flag == ls_flag_t::SAVE)
+	{
+		// We must copy out the entries because the 'f' function
+		// takes a non-const argument (for loading) and the fact
+		// that iterating through the set only allows us 'const'
+		// access to the keys. (We could cast away the const, but
+		// that might lead to accidental UB; here the worst case
+		// is that 'f' modifies the keys and has no effect on the
+		// original set.)
+		std::vector<typename S::key_type> keys;
+		std::copy(
+			std::cbegin(set),
+			std::cend(set),
+			std::back_inserter(keys));
+
+		// Write each of the n entries.
+		for (auto &key: keys)
+		{
+			f(&key, flag);
+		}
+	}
+}
+
 static void do_bytes(ls_flag_t flag, std::uint8_t *buf, std::size_t n)
 {
 	for (std::size_t i = 0; i < n; i++)
@@ -836,11 +880,45 @@ static bool_ do_extra(ls_flag_t flag)
 	do_bool(&p_ptr->astral, flag);
 
 	// Powers
-	do_array("powers", flag, p_ptr->powers_mod, POWER_MAX,
-		[](auto pwr, auto flag) -> void {
-			do_bool(pwr, flag);
+	do_unordered_set(
+		flag,
+		p_ptr->powers_mod,
+		[](auto *pwr_idx, auto flag) -> void {
+			// Key
+			s32b tmp;
+
+			if (flag == ls_flag_t::SAVE)
+			{
+				tmp = *pwr_idx;
+			}
+
+			do_s32b(&tmp, flag);
+
+			if (flag == ls_flag_t::LOAD)
+			{
+				*pwr_idx = tmp;
+			}
 		}
 	);
+
+	// Fix up any removed powers.
+	if (flag == ls_flag_t::LOAD)
+	{
+		for (auto it = std::begin(p_ptr->powers_mod);
+		     it != std::end(p_ptr->powers_mod); )
+		{
+			if (game->powers.count(*it))
+			{
+				// Exists, skip.
+				++it;
+			}
+			else
+			{
+				// Does not exist, delete.
+				it = p_ptr->powers_mod.erase(it);
+			}
+		}
+	}
 
 	/* The tactic */
 	do_char(&p_ptr->tactic, flag);

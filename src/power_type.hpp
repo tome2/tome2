@@ -1,19 +1,33 @@
 #pragma once
 
 #include "h-basic.h"
+#include "power_activation.hpp"
+
+#include <string>
 
 /**
- * Power descriptor. (Racial, class, mutation, artifacts, ...)
+ * Power descriptor.
  */
 struct power_type
 {
-	const char *name;              /* Name */
-	const char *desc_text;         /* Text describing power */
-	const char *gain_text;         /* Text displayed on gaining the power */
-	const char *lose_text;         /* Text displayed on losing the power */
+	std::string name;              /* Name */
+	std::string desc_text;         /* Text describing power */
+	std::string gain_text;         /* Text displayed on gaining the power */
+	std::string lose_text;         /* Text displayed on losing the power */
+	power_activation activation;
 
-	byte level;             /* Min level */
-	byte cost;              /* Mana/Life cost */
-	byte stat;              /* Stat used */
-	byte diff;              /* Difficulty */
+	power_type(
+		const char *name_,
+		const char *desc_text_,
+		const char *gain_text_,
+		const char *lose_text_,
+		power_activation const &activation_)
+		: name(name_)
+		, desc_text(desc_text_)
+		, gain_text(gain_text_)
+		, lose_text(lose_text_)
+		, activation(activation_)
+	{
+	}
+
 };

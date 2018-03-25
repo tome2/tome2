@@ -1367,10 +1367,9 @@ static void calc_powers_corruption()
 	{
 		if (player_has_corruption(i))
 		{
-			int p = get_corruption_power(i);
-			if (p >= 0)
+			if (auto p = get_corruption_power(i))
 			{
-				p_ptr->powers[p] = TRUE;
+				p_ptr->powers.insert(*p);
 			}
 		}
 	}
@@ -1383,18 +1382,15 @@ bool_ calc_powers_silent = FALSE;
 /* Add in powers */
 static void add_powers(std::vector<s16b> const &powers)
 {
-	for (auto const &p: powers)
+	for (auto power_idx: powers)
 	{
-		p_ptr->powers[p] = TRUE;
+		p_ptr->powers.insert(power_idx);
 	}
 }
 
 /* Calc the player powers */
 static void calc_powers()
 {
-	int i, p = 0;
-	bool_ old_powers[POWER_MAX];
-
 	/* Hack -- wait for creation */
 	if (!character_generated) return;
 
@@ -1402,17 +1398,23 @@ static void calc_powers()
 	if (character_xtra) return;
 
 	/* Save old powers */
-	for (i = 0; i < POWER_MAX; i++) old_powers[i] = p_ptr->powers[i];
+	std::vector<std::size_t> old_powers;
+	std::copy(
+		std::begin(p_ptr->powers),
+		std::end(p_ptr->powers),
+		std::back_inserter(old_powers));
+	std::sort(
+		std::begin(old_powers),
+		std::end(old_powers));
 
 	/* Get intrinsincs */
-	for (i = 0; i < POWER_MAX; i++) p_ptr->powers[i] = p_ptr->powers_mod[i];
-	for (; i < POWER_MAX; i++) p_ptr->powers[i] = 0;
+	p_ptr->powers = p_ptr->powers_mod;
 
 	/* Calculate powers granted by corruptions */
 	calc_powers_corruption();
 
 	/* Add objects powers */
-	for (i = INVEN_WIELD; i < INVEN_TOTAL; i++)
+	for (int i = INVEN_WIELD; i < INVEN_TOTAL; i++)
 	{
 		auto o_ptr = &p_ptr->inventory[i];
 
@@ -1421,10 +1423,9 @@ static void calc_powers()
 			continue;
 		}
 
-		p = object_power(o_ptr);
-		if (p != -1)
+		if (auto p = object_power(o_ptr))
 		{
-			p_ptr->powers[p] = TRUE;
+			p_ptr->powers.insert(*p);
 		}
 	}
 
@@ -1442,23 +1443,49 @@ static void calc_powers()
 
 	if (p_ptr->disembodied)
 	{
-		p = PWR_INCARNATE;
-		p_ptr->powers[p] = TRUE;
+		p_ptr->powers.insert(PWR_INCARNATE);
 	}
 
-	/* Now lets warn the player */
-	for (i = 0; i < POWER_MAX; i++)
-	{
-		s32b old = old_powers[i];
-		s32b new_ = p_ptr->powers[i];
+	// Notify player of lost/gained powers.
+	std::vector<int> new_powers;
+	std::copy(
+		std::begin(p_ptr->powers),
+		std::end(p_ptr->powers),
+		std::back_inserter(new_powers));
+	std::sort(
+		std::begin(new_powers),
+		std::end(new_powers));
 
-		if (new_ > old)
+	if (!calc_powers_silent)
+	{
+		// Show removed powers
 		{
-			if (!calc_powers_silent) cmsg_print(TERM_GREEN, powers_type[i].gain_text);
+			std::vector<int> removed_powers;
+			std::set_difference(
+				std::begin(old_powers), std::end(old_powers),
+				std::begin(new_powers), std::end(new_powers),
+				std::back_inserter(removed_powers)
+			);
+
+			for (auto power_idx: removed_powers)
+			{
+				cmsg_print(TERM_RED, game->powers.at(power_idx)->lose_text);
+			}
 		}
-		else if (new_ < old)
+
+		// Show added powers
 		{
-			if (!calc_powers_silent) cmsg_print(TERM_RED, powers_type[i].lose_text);
+			std::vector<int> added_powers;
+			std::set_difference(
+				std::begin(new_powers), std::end(new_powers),
+				std::begin(old_powers), std::end(old_powers),
+				std::back_inserter(added_powers)
+			);
+
+			for (auto power_idx: added_powers)
+			{
+				cmsg_print(TERM_GREEN, game->powers.at(power_idx)->gain_text);
+			}
 		}
 	}
 

@@ -49,6 +49,7 @@
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/algorithm/string/classification.hpp>
 #include <boost/algorithm/string/split.hpp>
+#include <boost/optional.hpp>
 
 using boost::algorithm::iequals;
 using boost::algorithm::ends_with;
@@ -871,6 +872,25 @@ static int read_ability(std::vector<player_race_ability_type> *abilities, char *
 }
 
 
+/**
+ * Find a power by its name
+ */
+static boost::optional<int> find_power_idx(const char *name)
+{
+	for (auto const &entry: game->powers)
+	{
+		auto power_ptr = entry.second;
+
+		if (iequals(power_ptr->name, name))
+		{
+			return entry.first;
+		}
+	}
+
+	return boost::none;
+}
+
+
 /*
  * Initialize the "player" arrays, by parsing an ascii "template" file
  */
@@ -1041,15 +1061,14 @@ errr init_player_info_txt(FILE *fp)
 			char const *s = buf + 4;
 
 			/* Find it in the list */
-			int i;
-			for (i = 0; i < POWER_MAX; i++)
+			if (auto power_idx = find_power_idx(s))
 			{
-				if (iequals(s, powers_type[i].name)) break;
+				rp_ptr->ps.powers.push_back(*power_idx);
 			}
-
-			if (i == POWER_MAX) return (6);
-
-			rp_ptr->ps.powers.push_back(i);
+			else
+			{
+				return 6;
+			}
 
 			/* Next... */
 			continue;
@@ -1268,15 +1287,14 @@ errr init_player_info_txt(FILE *fp)
 			char const *s = buf + 4;
 
 			/* Find it in the list */
-			int i;
-			for (i = 0; i < POWER_MAX; i++)
+			if (auto power_idx = find_power_idx(s))
 			{
-				if (iequals(s, powers_type[i].name)) break;
+				rmp_ptr->ps.powers.push_back(*power_idx);
 			}
-
-			if (i == POWER_MAX) return (6);
-
-			rmp_ptr->ps.powers.push_back(i);
+			else
+			{
+				return 6;
+			}
 
 			/* Next... */
 			continue;
@@ -1588,15 +1606,14 @@ errr init_player_info_txt(FILE *fp)
 			char const *s = buf + 4;
 
 			/* Find it in the list */
-			int i;
-			for (i = 0; i < POWER_MAX; i++)
+			if (auto power_idx = find_power_idx(s))
 			{
-				if (iequals(s, powers_type[i].name)) break;
+				c_ptr->ps.powers.push_back(*power_idx);
 			}
-
-			if (i == POWER_MAX) return (6);
-
-			c_ptr->ps.powers.push_back(i);
+			else
+			{
+				return 6;
+			}
 
 			/* Next... */
 			continue;
@@ -2424,20 +2441,18 @@ errr init_k_info_txt(FILE *fp)
 		/* Process 'Z' for "Granted power" */
 		if (buf[0] == 'Z')
 		{
-			int i;
-
 			/* Acquire the text */
 			s = buf + 2;
 
 			/* Find it in the list */
-			for (i = 0; i < POWER_MAX; i++)
+			if (auto power_idx = find_power_idx(s))
 			{
-				if (iequals(s, powers_type[i].name)) break;
+				k_ptr->power = *power_idx;
 			}
-
-			if (i == POWER_MAX) return (6);
-
-			k_ptr->power = i;
+			else
+			{
+				return 6;
+			}
 
 			/* Next... */
 			continue;
@@ -2624,9 +2639,6 @@ errr init_a_info_txt(FILE *fp)
 					TR_IGNORE_FIRE |
 					TR_IGNORE_COLD;
 
-			/* Needed hack */
-			a_ptr->power = -1;
-
 			/*Require activating artifacts to have a activation type */
 			if (a_ptr && (a_ptr->flags & TR_ACTIVATE) && !a_ptr->activate)
 			{
@@ -2726,20 +2738,18 @@ errr init_a_info_txt(FILE *fp)
 		/* Process 'Z' for "Granted power" */
 		if (buf[0] == 'Z')
 		{
-			int i;
-
 			/* Acquire the text */
 			s = buf + 2;
 
 			/* Find it in the list */
-			for (i = 0; i < POWER_MAX; i++)
+			if (auto power_idx = find_power_idx(s))
 			{
-				if (iequals(s, powers_type[i].name)) break;
+				a_ptr->power = *power_idx;
 			}
-
-			if (i == POWER_MAX) return (6);
-
-			a_ptr->power = i;
+			else
+			{
+				return 6;
+			}
 
 			/* Next... */
 			continue;
@@ -3600,20 +3610,18 @@ errr init_e_info_txt(FILE *fp)
 		/* Process 'Z' for "Granted power" */
 		if (buf[0] == 'Z')
 		{
-			int i;
-
 			/* Acquire the text */
 			s = buf + 2;
 
 			/* Find it in the list */
-			for (i = 0; i < POWER_MAX; i++)
+			if (auto power_idx = find_power_idx(s))
 			{
-				if (iequals(s, powers_type[i].name)) break;
+				e_ptr->power = *power_idx;
 			}
-
-			if (i == POWER_MAX) return (6);
-
-			e_ptr->power = i;
+			else
+			{
+				return 6;
+			}
 
 			/* Next... */
 			continue;
@@ -3914,19 +3922,14 @@ errr init_ra_info_txt(FILE *fp)
 			char const *s = buf + 2;
 
 			/* Find it in the list */
-			std::size_t i;
-			for (i = 0; i < POWER_MAX; i++)
+			if (auto power_idx = find_power_idx(s))
 			{
-				if (iequals(s, powers_type[i].name)) break;
+				ra_ptr->power = *power_idx;
 			}
-
-			/* Not present? Fail */
-			if (i == POWER_MAX)
+			else
 			{
-				return (6);
+				return 6;
 			}
-
-			ra_ptr->power = i;
 
 			/* Next... */
 			continue;

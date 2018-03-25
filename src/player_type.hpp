@@ -11,6 +11,7 @@
 #include "spellbinder.hpp"
 
 #include <array>
+#include <unordered_set>
 
 /*
  * Most of the "player" information goes here.
@@ -372,9 +373,9 @@ struct player_type
 	/* Astral */
 	bool_ astral = FALSE;                                   /* We started at the bottom ? */
 
-	/* Powers */
-	bool_ powers[POWER_MAX] = { FALSE };                    /* Actual powers */
-	bool_ powers_mod[POWER_MAX] = { FALSE };                /* Intrinsinc powers */
+	/* Powers; keys of Game::powers */
+	std::unordered_set<int> powers;                 /* Actual powers */
+	std::unordered_set<int> powers_mod;             /* Intrinsinc powers */
 
 	/* Acquired abilities; indexes into ab_info[] */
 	std::vector<u16b> abilities;
