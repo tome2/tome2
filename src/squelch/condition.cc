@@ -49,15 +49,6 @@ EnumStringMap<match_type> &match_mapping()
 	return *m;
 };
 
-EnumStringMap<identification_state> &identification_state_mapping()
-{
-	// TODO: This is quite ugly and leads to valgrind complaints
-	static auto m = new EnumStringMap<identification_state> {
-		{ identification_state::IDENTIFIED, "identified" },
-		{ identification_state::NOT_IDENTIFIED, "not identified" } };
-	return *m;
-}
-
 jsoncons::json Condition::to_json() const
 {
 	// Start with an object with only 'type' property
@@ -107,7 +98,6 @@ std::shared_ptr<Condition> Condition::parse_condition(jsoncons::json const &cond
 		{ match_type::TVAL, &TvalCondition::from_json },
 		{ match_type::SVAL, &SvalCondition::from_json },
 		{ match_type::STATUS, &StatusCondition::from_json },
-		{ match_type::STATE, &StateCondition::from_json },
 		{ match_type::RACE, &RaceCondition::from_json },
 		{ match_type::SUBRACE, &SubraceCondition::from_json },
 		{ match_type::CLASS, &ClassCondition::from_json },
@@ -824,56 +814,6 @@ void SkillCondition::to_json(jsoncons::json &j) const
 	j["name"] = s_descriptors[m_skill_idx].name;
 	j["min"] = m_min;
 	j["max"] = m_max;
-}
-
-bool StateCondition::is_match(object_type *o_ptr) const
-{
-	switch (m_state)
-	{
-	case identification_state::IDENTIFIED:
-		return object_known_p(o_ptr);
-	case identification_state::NOT_IDENTIFIED:
-		return !object_known_p(o_ptr);
-	}
-
-	assert(false);
-	return false;
-}
-
-std::shared_ptr<Condition> StateCondition::from_json(jsoncons::json const &j)
-{
-	cptr s = j.get("state").as<cptr>();
-
-	if (!s)
-	{
-		msg_print("Missing/invalid 'state' property");
-		return nullptr;
-	}
-
-	identification_state state;
-	if (!identification_state_mapping().parse(s, &state))
-	{
-		msg_format("Invalid 'state' property: %s", s);
-		return nullptr;
-	}
-
-	return std::make_shared<StateCondition>(state);
-}
-
-void StateCondition::write_tree(TreePrinter *p, Cursor *, uint8_t ecol, uint8_t bcol) const
-{
-	p->write(ecol, "Its ");
-	p->write(bcol, "state");
-	p->write(ecol, " is ");
-	p->write(ecol, "\"");
-	p->write(TERM_WHITE, identification_state_mapping().stringify(m_state));
-	p->write(ecol, "\"");
-	p->write(TERM_WHITE, "\n");
-}
-
-void StateCondition::to_json(jsoncons::json &j) const
-{
-	j["state"] = identification_state_mapping().stringify(m_state);
 }
 
 bool SymbolCondition::is_match(object_type *o_ptr) const

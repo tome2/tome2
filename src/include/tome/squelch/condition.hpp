@@ -31,18 +31,6 @@ enum class match_type {
 EnumStringMap<match_type> &match_mapping();
 
 /**
- * Identification states an object can have: identified or not
- * identified.
- */
-enum class identification_state {
-	IDENTIFIED, NOT_IDENTIFIED };
-
-/**
- * Biredectional map between identification_state values and strings.
- */
-EnumStringMap<identification_state> &identification_state_mapping();
-
-/**
  * Condition represents a tree of checks which
  * can be applied to objects, the player, etc.
  */
@@ -470,30 +458,6 @@ private:
 	uint16_t m_skill_idx;
 	uint16_t m_min;
 	uint16_t m_max;
-};
-
-/**
- * Check identification state
- */
-class StateCondition : public Condition
-{
-public:
-	StateCondition(identification_state state)
-		: Condition(match_type::STATE)
-		, m_state(state) {
-	}
-
-	bool is_match(object_type *) const override;
-
-	static std::shared_ptr<Condition> from_json(jsoncons::json const &);
-
-protected:
-	void write_tree(TreePrinter *, Cursor *, uint8_t, uint8_t) const override;
-
-	void to_json(jsoncons::json &) const override;
-
-private:
-	identification_state m_state;
 };
 
 /**
