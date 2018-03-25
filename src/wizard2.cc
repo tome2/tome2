@@ -57,7 +57,7 @@ static void wiz_inc_monster_level(int level)
 		m_ptr = &m_list[cave[jj][ii].m_idx];
 
 		m_ptr->exp = monster_exp(m_ptr->level + level);
-		monster_check_experience(cave[jj][ii].m_idx, FALSE);
+		monster_check_experience(cave[jj][ii].m_idx, false);
 	}
 }
 

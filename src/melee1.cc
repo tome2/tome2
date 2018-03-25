@@ -1215,7 +1215,9 @@ bool_ make_attack_normal(int m_idx, byte divis)
 	char ddesc[80];
 
 	bool_ blinked;
-	bool_ touched = FALSE, fear = FALSE, alive = TRUE;
+	bool_ touched = FALSE;
+	bool fear = false;
+	bool_ alive = TRUE;
 	bool_ explode = FALSE;
 
 	/* Not allowed to attack? */
@@ -2659,7 +2661,7 @@ bool_ make_attack_normal(int m_idx, byte divis)
 
 						/* Increase fear */
 						tmp = m_ptr->monfear + p_ptr->shield_power_opt;
-						fear = TRUE;
+						fear = true;
 
 						/* Set fear */
 						m_ptr->monfear = (tmp < 200) ? tmp : 200;

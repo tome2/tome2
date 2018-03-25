@@ -2639,7 +2639,7 @@ void do_cmd_fire()
 				/* Did we hit it (penalize range) */
 				if (test_hit_fire(chance - cur_dis, m_ptr->ac, m_ptr->ml))
 				{
-					bool_ fear = FALSE;
+					bool fear = false;
 
 					/* Assume a default death */
 					const char *note_dies = " dies.";
@@ -3049,7 +3049,7 @@ void do_cmd_throw()
 			/* Did we hit it (penalize range) */
 			if (test_hit_fire(chance - cur_dis, m_ptr->ac, m_ptr->ml))
 			{
-				bool_ fear = FALSE;
+				bool fear = false;
 
 				/* Assume a default death */
 				const char *note_dies = " dies.";
@@ -3373,7 +3373,7 @@ void do_cmd_boomerang()
 			/* Did we hit it (penalize range) */
 			if (test_hit_fire(chance - cur_dis, m_ptr->ac, m_ptr->ml))
 			{
-				bool_ fear = FALSE;
+				bool fear = false;
 
 				/* Assume a default death */
 				const char *note_dies = " dies.";

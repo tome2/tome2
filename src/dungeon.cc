@@ -4704,7 +4704,7 @@ void play_game()
 	if (!new_game)
 	{
 		/* Process the player name */
-		process_player_name(FALSE);
+		process_player_name(false);
 	}
 
 	/* Force "complex" RNG */

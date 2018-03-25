@@ -3648,7 +3648,7 @@ void process_player_base()
 	path_build(savefile, 1024, ANGBAND_DIR_SAVE, game->player_base.c_str());
 }
 
-void process_player_name(bool_ sf)
+void process_player_name(bool sf)
 {
 	/* Cannot be too long */
 	if (game->player_base.size() > 15)
@@ -3735,7 +3735,7 @@ void get_name()
 		}
 
 		/* Process the player name */
-		process_player_name(FALSE);
+		process_player_name(false);
 
 		/* All done */
 		break;

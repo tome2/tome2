@@ -3020,17 +3020,16 @@ void do_cmd_symbiotic()
 
 				if ((m_idx = place_monster_one(y, x, o_ptr->pval, 0, FALSE, MSTATUS_PET)) == 0) return;
 
-				/* TODO fix this hack hack hack hackity hack with ToME 3 flags */
 				/* Have to be careful here; releasing the symbiote into a
-                 * dungeon with leveled monsters will level the symbiote
-                 * before we can get hold of it. We'll be nice and use the
-                 * larger of the saved exp and the exp that the newly-generated
-                 * monster starts with. */
+				* dungeon with leveled monsters will level the symbiote
+				* before we can get hold of it. We'll be nice and use the
+				* larger of the saved exp and the exp that the newly-generated
+				* monster starts with. */
 				m_ptr = &m_list[m_idx];
 				if (m_ptr->exp < o_ptr->exp)
 				{
 					m_ptr->exp = o_ptr->exp;
-					monster_check_experience(m_idx, TRUE);
+					monster_check_experience(m_idx, true);
 					if (m_ptr->level != o_ptr->elevel)
 						cmsg_format(TERM_VIOLET, "ERROR: level-%d HYPNOS becomes level-%d symbiote", o_ptr->elevel, m_ptr->level);
 				}

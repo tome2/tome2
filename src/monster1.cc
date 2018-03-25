@@ -1518,44 +1518,35 @@ void reset_get_monster_hook()
 /*
  * Check if monster can cross terrain
  */
-bool_ monster_can_cross_terrain(byte feat, std::shared_ptr<monster_race> r_ptr)
+bool monster_can_cross_terrain(byte feat, std::shared_ptr<monster_race> r_ptr)
 {
 	/* Deep water */
 	if (feat == FEAT_DEEP_WATER)
 	{
-		if ((r_ptr->flags & RF_AQUATIC) ||
-		                (r_ptr->flags & RF_CAN_FLY) ||
-		                (r_ptr->flags & RF_CAN_SWIM))
-			return TRUE;
-		else
-			return FALSE;
+		return ((r_ptr->flags & RF_AQUATIC) ||
+			(r_ptr->flags & RF_CAN_FLY) ||
+			(r_ptr->flags & RF_CAN_SWIM));
 	}
 	/* Shallow water */
 	else if (feat == FEAT_SHAL_WATER)
 	{
-		if (r_ptr->flags & RF_AURA_FIRE)
-			return FALSE;
-		else
-			return TRUE;
+		return !(r_ptr->flags & RF_AURA_FIRE);
 	}
 	/* Aquatic monster */
 	else if ((r_ptr->flags & RF_AQUATIC) &&
 	                !(r_ptr->flags & RF_CAN_FLY))
 	{
-		return FALSE;
+		return false;
 	}
 	/* Lava */
 	else if ((feat == FEAT_SHAL_LAVA) ||
-	                (feat == FEAT_DEEP_LAVA))
+		(feat == FEAT_DEEP_LAVA))
 	{
-		if ((r_ptr->flags & RF_IM_FIRE) ||
-		                (r_ptr->flags & RF_CAN_FLY))
-			return TRUE;
-		else
-			return FALSE;
+		return ((r_ptr->flags & RF_IM_FIRE) ||
+				(r_ptr->flags & RF_CAN_FLY));
 	}
 
-	return TRUE;
+	return true;
 }
 
 

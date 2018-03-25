@@ -66,7 +66,7 @@ void gain_exp(s32b amount);
 void lose_exp(s32b amount);
 int get_coin_type(std::shared_ptr<monster_race const> r_ptr);
 void monster_death(int m_idx);
-bool_ mon_take_hit(int m_idx, int dam, bool_ *fear, const char *note);
+bool mon_take_hit(int m_idx, int dam, bool *fear, const char *note);
 bool_ change_panel(int dy, int dx);
 void verify_panel();
 bool_ target_okay();

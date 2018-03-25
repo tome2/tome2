@@ -30,4 +30,4 @@ char *get_line(const char* fname, const char *fdir, char *linbuf, int line);
 void race_legends();
 void show_highclass(int building);
 errr get_xtra_line(const char * file_name, monster_type *m_ptr, char * output);
-void process_player_name(bool_ sf);
+void process_player_name(bool sf);

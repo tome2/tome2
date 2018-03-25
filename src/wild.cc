@@ -1049,7 +1049,7 @@ static void place_townspeople(int qy, int qx)
 				if (m_ptr->level < (dun_level / 2))
 				{
 					m_ptr->exp = monster_exp(m_ptr->level + (dun_level / 2) + randint(dun_level / 2));
-					monster_check_experience(m_idx, TRUE);
+					monster_check_experience(m_idx, true);
 				}
 			}
 		}

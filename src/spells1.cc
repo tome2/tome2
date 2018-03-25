@@ -6654,13 +6654,10 @@ bool_ project_m(int who, int r, int y, int x, int dam, int typ)
 	/* If another monster did the damage, hurt the monster by hand */
 	if (who > 0)
 	{
-		bool_ fear = FALSE;
-
-		/* Dead monster */
-		if (mon_take_hit_mon(who, c_ptr->m_idx, dam, &fear, note_dies))
-		{}
-
-		/* Damaged monster */
+		if (mon_take_hit_mon(who, c_ptr->m_idx, dam, note_dies))
+		{
+			// No message, death message already handled
+		}
 		else
 		{
 			/* Give detailed messages if visible or destroyed */
@@ -6676,7 +6673,7 @@ bool_ project_m(int who, int r, int y, int x, int dam, int typ)
 	/* If the player did it, give him experience, check fear */
 	else if (hurt_monster(m_ptr))
 	{
-		bool_ fear = FALSE;
+		bool fear = false;
 
 		/* Hurt the monster, check for fear and death */
 		if (mon_take_hit(c_ptr->m_idx, dam, &fear, note_dies))

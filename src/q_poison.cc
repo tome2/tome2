@@ -133,7 +133,7 @@ static bool quest_poison_gen_hook(void *, void *, void *)
 					if (m_ptr->level < p_ptr->lev)
 					{
 						m_ptr->exp = monster_exp(m_ptr->level + randint(p_ptr->lev - m_ptr->level));
-						monster_check_experience(m_idx, TRUE);
+						monster_check_experience(m_idx, true);
 					}
 				}
 			}

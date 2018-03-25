@@ -237,7 +237,7 @@ usage:
 
 
 	/* Process the player name */
-	process_player_name(TRUE);
+	process_player_name(true);
 
 
 	/* Install "quit" hook */

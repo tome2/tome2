@@ -61,7 +61,7 @@
  * Based on mon_take_hit... all monster attacks on
  * other monsters should use
  */
-bool_ mon_take_hit_mon(int s_idx, int m_idx, int dam, bool_ *fear, const char *note)
+bool mon_take_hit_mon(int s_idx, int m_idx, int dam, const char *note)
 {
 	monster_type *m_ptr = &m_list[m_idx], *s_ptr = &m_list[s_idx];
 
@@ -92,7 +92,10 @@ bool_ mon_take_hit_mon(int s_idx, int m_idx, int dam, bool_ *fear, const char *n
 
 	/* Some monsters are immune to death */
 	auto const r_ptr = m_ptr->race();
-	if (r_ptr->flags & RF_NO_DEATH) return FALSE;
+	if (r_ptr->flags & RF_NO_DEATH)
+	{
+		return false;
+	}
 
 	/* Wake it up */
 	m_ptr->csleep = 0;
@@ -145,7 +148,7 @@ bool_ mon_take_hit_mon(int s_idx, int m_idx, int dam, bool_ *fear, const char *n
 			if (!dive) dive = 1;
 
 			/* Monster gains some xp */
-			monster_gain_exp(s_idx, dive, FALSE);
+			monster_gain_exp(s_idx, dive);
 
 			/* Monster lore skill allows gaining xp from pets */
 			if (get_skill(SKILL_LORE) && (s_ptr->status >= MSTATUS_PET))
@@ -193,24 +196,21 @@ bool_ mon_take_hit_mon(int s_idx, int m_idx, int dam, bool_ *fear, const char *n
 			/* Delete the monster */
 			delete_monster_idx(m_idx);
 
-			/* Not afraid */
-			(*fear) = FALSE;
-
 			/* Monster is dead */
-			return (TRUE);
+			return true;
 		}
 
 	}
 
 	/* Apply fear */
-	mon_handle_fear(m_ptr, dam, fear);
+	mon_handle_fear(m_ptr, dam, nullptr);
 
 	/* Not dead yet */
-	return (FALSE);
+	return false;
 }
 
 
-void mon_handle_fear(monster_type *m_ptr, int dam, bool_ *fear)
+void mon_handle_fear(monster_type *m_ptr, int dam, bool *fear)
 {
 	assert(m_ptr != NULL);
 
@@ -233,7 +233,10 @@ void mon_handle_fear(monster_type *m_ptr, int dam, bool_ *fear)
 			m_ptr->monfear = 0;
 
 			/* No more fear */
-			(*fear) = FALSE;
+			if (fear != nullptr)
+			{
+				(*fear) = false;
+			}
 		}
 	}
 
@@ -254,7 +257,10 @@ void mon_handle_fear(monster_type *m_ptr, int dam, bool_ *fear)
 		                ((dam >= m_ptr->hp) && (rand_int(100) < 80)))
 		{
 			/* Hack -- note fear */
-			(*fear) = TRUE;
+			if (fear != nullptr)
+			{
+				(*fear) = true;
+			}
 
 			/* XXX XXX XXX Hack -- Add some timed fear */
 			m_ptr->monfear = (randint(10) +
@@ -297,7 +303,7 @@ void mon_handle_fear(monster_type *m_ptr, int dam, bool_ *fear)
 /*
 * Internal probability routine
 */
-static bool_ int_outof(std::shared_ptr<monster_race> r_ptr, int prob)
+static bool int_outof(std::shared_ptr<monster_race> r_ptr, int prob)
 {
 	/* Non-Smart monsters are half as "smart" */
 	if (!(r_ptr->flags & RF_SMART)) prob = prob / 2;
@@ -1549,11 +1555,10 @@ static bool_ monst_spell_monst(int m_idx)
 				}
 				else
 				{
-					bool_ fear;
 					monster_msg("%^s is blasted by psionic energy.", t_name);
 					t_ptr->confused += rand_int(4) + 4;
 
-					mon_take_hit_mon(m_idx, t_idx, damroll(8, 8), &fear, " collapses, a mindless husk.");
+					mon_take_hit_mon(m_idx, t_idx, damroll(8, 8), " collapses, a mindless husk.");
 				}
 
 				wake_up = TRUE;
@@ -1586,7 +1591,6 @@ static bool_ monst_spell_monst(int m_idx)
 				}
 				else
 				{
-					bool_ fear;
 					if (see_t)
 					{
 						monster_msg("%^s is blasted by psionic energy.", t_name);
@@ -1594,7 +1598,7 @@ static bool_ monst_spell_monst(int m_idx)
 					t_ptr->confused += rand_int(4) + 4;
 					t_ptr->mspeed -= rand_int(4) + 4;
 					t_ptr->stunned += rand_int(4) + 4;
-					mon_take_hit_mon(m_idx, t_idx, damroll(12, 15), &fear, " collapses, a mindless husk.");
+					mon_take_hit_mon(m_idx, t_idx, damroll(12, 15), " collapses, a mindless husk.");
 				}
 				wake_up = TRUE;
 				break;
@@ -1613,8 +1617,7 @@ static bool_ monst_spell_monst(int m_idx)
 				}
 				else
 				{
-					bool_ fear;
-					mon_take_hit_mon(m_idx, t_idx, damroll(3, 8), &fear, " is destroyed.");
+					mon_take_hit_mon(m_idx, t_idx, damroll(3, 8), " is destroyed.");
 				}
 				wake_up = TRUE;
 				break;
@@ -1632,8 +1635,7 @@ static bool_ monst_spell_monst(int m_idx)
 				}
 				else
 				{
-					bool_ fear;
-					mon_take_hit_mon(m_idx, t_idx, damroll(8, 8), &fear, " is destroyed.");
+					mon_take_hit_mon(m_idx, t_idx, damroll(8, 8), " is destroyed.");
 				}
 				wake_up = TRUE;
 				break;
@@ -1651,8 +1653,7 @@ static bool_ monst_spell_monst(int m_idx)
 				}
 				else
 				{
-					bool_ fear;
-					mon_take_hit_mon(m_idx, t_idx, damroll(10, 15), &fear, " is destroyed.");
+					mon_take_hit_mon(m_idx, t_idx, damroll(10, 15), " is destroyed.");
 				}
 				wake_up = TRUE;
 				break;
@@ -1670,8 +1671,7 @@ static bool_ monst_spell_monst(int m_idx)
 				}
 				else
 				{
-					bool_ fear;
-					mon_take_hit_mon(m_idx, t_idx, damroll(15, 15), &fear, " is destroyed.");
+					mon_take_hit_mon(m_idx, t_idx, damroll(15, 15), " is destroyed.");
 				}
 				wake_up = TRUE;
 				break;
@@ -4669,7 +4669,6 @@ static bool_ monst_attack_monst(int m_idx, int t_idx)
 	bool_ blinked = FALSE;
 	bool_ touched = FALSE;
 	bool_ explode = FALSE;
-	bool_ fear = FALSE;
 	monster_type *t_ptr = &m_list[t_idx];
 	byte y_saver = t_ptr->fy;
 	byte x_saver = t_ptr->fx;
@@ -5161,7 +5160,7 @@ static bool_ monst_attack_monst(int m_idx, int t_idx)
 
 	if (explode)
 	{
-		mon_take_hit_mon(m_idx, m_idx, m_ptr->hp + 1, &fear, " explodes into tiny shreds.");
+		mon_take_hit_mon(m_idx, m_idx, m_ptr->hp + 1, " explodes into tiny shreds.");
 
 		blinked = FALSE;
 	}
@@ -5274,8 +5273,7 @@ static void process_monster(int m_idx, bool_ is_frien)
 		if (d > m_ptr->bleeding) d = m_ptr->bleeding;
 
 		/* Exit if the monster dies */
-		bool_ xxx = FALSE;
-		if (mon_take_hit(m_idx, d, &xxx, " bleeds to death.")) return;
+		if (mon_take_hit(m_idx, d, nullptr, " bleeds to death.")) return;
 
 		/* Hack -- Recover from bleeding */
 		if (m_ptr->bleeding > d)
@@ -5314,8 +5312,7 @@ static void process_monster(int m_idx, bool_ is_frien)
 		if (d < 1) d = 1;
 
 		/* Exit if the monster dies */
-		bool_ xxx = FALSE;
-		if (mon_take_hit(m_idx, d, &xxx, " dies of poison.")) return;
+		if (mon_take_hit(m_idx, d, nullptr, " dies of poison.")) return;
 
 		/* Hack -- Recover from bleeding */
 		if (m_ptr->poisoned > d)

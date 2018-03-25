@@ -207,7 +207,7 @@ static void save_prev_data()
 /*
  * Load the previous data
  */
-static void load_prev_data(bool_ save)
+static void load_prev_data(bool save)
 {
 	auto &previous_char = game->previous_char;
 	birther temp;
@@ -1280,11 +1280,9 @@ static int dump_gods(int sel, int *choice, int max)
 	return (max);
 }
 
+static bool do_quick_start = false;
 
-/* Ask questions */
-static bool_ do_quick_start = FALSE;
-
-static bool_ player_birth_aux_ask()
+static bool player_birth_aux_ask()
 {
 	auto &class_info = game->edit_data.class_info;
 	auto const &race_info = game->edit_data.race_info;
@@ -1345,12 +1343,12 @@ static bool_ player_birth_aux_ask()
 			else if (c == 'S') return (FALSE);
 			else if ((c == 'y') || (c == 'Y'))
 			{
-				do_quick_start = TRUE;
+				do_quick_start = true;
 				break;
 			}
 			else
 			{
-				do_quick_start = FALSE;
+				do_quick_start = false;
 				break;
 			}
 		}
@@ -1394,7 +1392,7 @@ static bool_ player_birth_aux_ask()
 
 				c = inkey();
 				if (c == 'Q') quit(NULL);
-				if (c == 'S') return (FALSE);
+				if (c == 'S') return false;
 				if (c == '*')
 				{
 					k = rand_int(race_info.size());
@@ -1522,7 +1520,7 @@ static bool_ player_birth_aux_ask()
 					put_str(buf, 17, 2);
 					c = inkey();
 					if (c == 'Q') quit(NULL);
-					if (c == 'S') return (FALSE);
+					if (c == 'S') return false;
 					if (c == '*')
 					{
 						// Which choices are legal?
@@ -1656,7 +1654,7 @@ static bool_ player_birth_aux_ask()
 				put_str(buf, 15, 2);
 				c = inkey();
 				if (c == 'Q') quit(NULL);
-				if (c == 'S') return (FALSE);
+				if (c == 'S') return false;
 				if (c == '*')
 				{
 					k = randint(n) - 1;
@@ -1734,7 +1732,7 @@ static bool_ player_birth_aux_ask()
 				put_str(buf, 15, 2);
 				c = inkey();
 				if (c == 'Q') quit(NULL);
-				if (c == 'S') return (FALSE);
+				if (c == 'S') return false;
 				if (c == '*')
 				{
 					k = randint(n) - 1;
@@ -1848,7 +1846,7 @@ static bool_ player_birth_aux_ask()
 				if (c == 'Q') quit(NULL);
 				if (c == 'S')
 				{
-					return (FALSE);
+					return false;
 				}
 				if (c == '*')
 				{
@@ -2062,7 +2060,7 @@ static bool_ player_birth_aux_ask()
 	quest_random_init_hook();
 
 	/* Ok */
-	return (TRUE);
+	return true;
 }
 
 
@@ -2091,7 +2089,7 @@ static const int birth_stat_costs[(18-10) + 1] =
  *
  * Taken from V 2.9.0
  */
-static bool_ player_birth_aux_point()
+static bool player_birth_aux_point()
 {
 	int i;
 
@@ -2201,7 +2199,7 @@ static bool_ player_birth_aux_point()
 		if (ch == 'Q') quit(NULL);
 
 		/* Start over */
-		if (ch == 'S') return (FALSE);
+		if (ch == 'S') return false;
 
 		/* Done */
 		if (ch == ESCAPE) break;
@@ -2233,19 +2231,17 @@ static bool_ player_birth_aux_point()
 
 
 	/* Done */
-	return (TRUE);
+	return true;
 }
 
 /*
  * Use the autoroller or not to generate a char
  */
-static bool_ player_birth_aux_auto()
+static bool player_birth_aux_auto()
 {
 	int i, j, m, v;
 
-	bool_ flag = FALSE;
-
-	bool_ prev = FALSE;
+	bool prev = false;
 
 	char c;
 
@@ -2359,7 +2355,7 @@ static bool_ player_birth_aux_auto()
 	}
 
 	/* Roll */
-	while (TRUE)
+	while (true)
 	{
 		/* Feedback */
 		if (options->autoroll)
@@ -2404,7 +2400,7 @@ static bool_ player_birth_aux_auto()
 		/* Auto-roll */
 		while (options->autoroll)
 		{
-			bool_ accept = TRUE;
+			bool accept = true;
 
 			/* Get a new character */
 			get_stats();
@@ -2427,7 +2423,7 @@ static bool_ player_birth_aux_auto()
 				/* This stat is not okay */
 				else
 				{
-					accept = FALSE;
+					accept = false;
 				}
 			}
 
@@ -2435,7 +2431,7 @@ static bool_ player_birth_aux_auto()
 			if (accept) break;
 
 			/* Take note every 25 rolls */
-			flag = (!(auto_round % AUTOROLLER_STEP));
+			bool flag = (!(auto_round % AUTOROLLER_STEP));
 
 			/* Update display occasionally */
 			if (flag || (auto_round < last_round + 100))
@@ -2499,7 +2495,7 @@ static bool_ player_birth_aux_auto()
 			if (c == 'Q') quit(NULL);
 
 			/* Start over */
-			if (c == 'S') return (FALSE);
+			if (c == 'S') return false;
 
 			/* Escape accepts the roll */
 			if (c == ESCAPE) break;
@@ -2510,7 +2506,7 @@ static bool_ player_birth_aux_auto()
 			/* Previous character */
 			if (prev && (c == 'p'))
 			{
-				load_prev_data(TRUE);
+				load_prev_data(true);
 				continue;
 			}
 
@@ -2532,13 +2528,13 @@ static bool_ player_birth_aux_auto()
 		save_prev_data();
 
 		/* Note that a previous roll exists */
-		prev = TRUE;
+		prev = true;
 	}
 
 	/* Clear prompt */
 	clear_from(23);
 
-	return (TRUE);
+	return true;
 }
 
 
@@ -2549,7 +2545,7 @@ static bool_ player_birth_aux_auto()
  * from continuously rolling up characters, which can be VERY
  * expensive CPU wise.  And it cuts down on player stupidity.
  */
-static bool_ player_birth_aux()
+static bool player_birth_aux()
 {
 	auto const &s_descriptors = game->edit_data.s_descriptors;
 	auto &s_info = game->s_info;
@@ -2557,7 +2553,10 @@ static bool_ player_birth_aux()
 	char c;
 
 	/* Ask */
-	if (!player_birth_aux_ask()) return (FALSE);
+	if (!player_birth_aux_ask())
+	{
+		return false;
+	}
 
 	for (std::size_t i = 1; i < s_descriptors.size(); i++)
 	{
@@ -2593,7 +2592,7 @@ static bool_ player_birth_aux()
 
 	if (do_quick_start)
 	{
-		load_prev_data(FALSE);
+		load_prev_data(false);
 
 		/* Roll for base hitpoints */
 		get_extra();
@@ -2636,10 +2635,16 @@ static bool_ player_birth_aux()
 		c = inkey();
 
 		/* Quit */
-		if (c == 'Q') quit(NULL);
+		if (c == 'Q')
+		{
+			quit(NULL);
+		}
 
 		/* Start over */
-		if (c == 'S') return (FALSE);
+		if (c == 'S')
+		{
+			return false;
+		}
 	}
 
 	/* Save this for the next character */
@@ -2647,7 +2652,7 @@ static bool_ player_birth_aux()
 	save_prev_data();
 
 	/* Accept */
-	return (TRUE);
+	return true;
 }
 
 
@@ -2750,7 +2755,7 @@ void player_birth()
 
 			while (TRUE)
 			{
-				bool_ ok = TRUE;
+				bool ok = true;
 
 				lev = rand_range(d_ptr->mindepth, d_ptr->maxdepth - 1);
 
@@ -2759,12 +2764,15 @@ void player_birth()
 				{
 					if (d_ptr->t_level[j] == lev)
 					{
-						ok = FALSE;
+						ok = false;
 					}
 				}
 
 				/* Ok found one */
-				if (ok) break;
+				if (ok)
+				{
+					break;
+				}
 			}
 			d_ptr->t_level[num] = lev;
 
@@ -2824,7 +2832,7 @@ void player_birth()
 static char savefile_module[46][80];
 static char savefile_names[46][30];
 static char savefile_desc[46][80];
-static bool_ savefile_alive[46];
+static bool savefile_alive[46];
 static int savefile_idx[46];
 
 /*
@@ -2895,8 +2903,7 @@ int load_savefile_names()
 			savefile_module[max][4] = '\0';
 		}
 
-		if (buf[i] == '0') savefile_alive[max] = FALSE;
-		else if (buf[i] == '1') savefile_alive[max] = TRUE;
+		savefile_alive[max] = (buf[i] == '1');
 
 		i++;
 		start = i;
@@ -2911,7 +2918,7 @@ int load_savefile_names()
 
 		/* Build platform-dependent savefile name */
 		game->player_base = savefile_names[max];
-		process_player_name(TRUE);
+		process_player_name(true);
 
 		/* Try to open the savefile */
 		fd = fd_open(savefile, O_RDONLY);
@@ -2928,7 +2935,7 @@ int load_savefile_names()
 
 	/* Restore the values of 'player_base' and 'savefile' */
 	game->player_base  = player_base_save;
-	process_player_name(TRUE);
+	process_player_name(true);
 
 	return (max);
 }
@@ -2970,7 +2977,7 @@ void save_savefile_names()
 	{
 		if (!strcmp(savefile_names[i], game->player_base.c_str())) continue;
 		fprintf(fff, "%s@%c%s@%s\n", savefile_module[i],
-		        (savefile_alive[i]) ? '1' : '0', savefile_names[i], savefile_desc[i]);
+			savefile_alive[i] ? '1' : '0', savefile_names[i], savefile_desc[i]);
 	}
 
 	my_fclose(fff);
@@ -3106,14 +3113,14 @@ savefile_try_again:
 
 			/* Build platform-dependent save file name */
 			game->player_base = savefile_names[savefile_idx[sel - 2]];
-			process_player_name(TRUE);
+			process_player_name(true);
 
 			/* Remove the savefile */
 			fd_kill(savefile);
 
 			/* Restore 'player_base' and 'savefile' */
 			game->player_base = player_base_save;
-			process_player_name(TRUE);
+			process_player_name(true);
 
 			/* Reload, gods I hate using goto .. */
 			goto savefile_try_again;
@@ -3134,7 +3141,7 @@ savefile_try_again:
 			if (!askfor_aux(&game->player_base, 15)) continue;
 
 			/* Process the player name */
-			process_player_name(TRUE);
+			process_player_name(true);
 
 			// If the savefile already exists, we do *NOT* want to
 			// create a new game, so we'll need to return FALSE for
@@ -3174,9 +3181,9 @@ savefile_try_again:
 			if (!askfor_aux(&game->player_base, 15)) continue;
 
 			/* Process the player name */
-			process_player_name(TRUE);
+			process_player_name(true);
 
-			return (FALSE);
+			return false;
 		}
 		else
 		{
@@ -3190,12 +3197,12 @@ savefile_try_again:
 			game->player_base = savefile_names[savefile_idx[x - 2]];
 
 			/* Process the player name */
-			process_player_name(TRUE);
+			process_player_name(true);
 
-			return (FALSE);
+			return false;
 		}
 	}
 
 	/* Shouldnt happen */
-	return (FALSE);
+	return false;
 }

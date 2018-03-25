@@ -62,16 +62,15 @@ s32b monster_exp(s16b level)
 	return (capped_level * capped_level * capped_level * 6);
 }
 
-/* Monster gain a few levels ? */
-void monster_check_experience(int m_idx, bool_ silent)
+void monster_check_experience(int m_idx, bool silent)
 {
 	auto const &r_info = game->edit_data.r_info;
 
 	monster_type *m_ptr = &m_list[m_idx];
 	auto r_ptr = &r_info[m_ptr->r_idx];
-	char m_name[80];
 
 	/* Get the name */
+	char m_name[80];
 	monster_desc(m_name, m_ptr, 0);
 
 	/* Gain levels while possible */
@@ -81,7 +80,10 @@ void monster_check_experience(int m_idx, bool_ silent)
 		/* Gain a level */
 		m_ptr->level++;
 
-		if (m_ptr->ml && (!silent)) cmsg_format(TERM_L_BLUE, "%^s gains a level.", m_name);
+		if (m_ptr->ml && (!silent))
+		{
+			cmsg_format(TERM_L_BLUE, "%^s gains a level.", m_name);
+		}
 
 		/* Gain hp */
 		if (magik(80))
@@ -109,15 +111,17 @@ void monster_check_experience(int m_idx, bool_ silent)
 		{
 			int i = rand_int(3), tries = 20;
 
-			while ((tries--) && !m_ptr->blow[i].d_dice) i = rand_int(3);
+			while ((tries--) && !m_ptr->blow[i].d_dice)
+			{
+				i = rand_int(3);
+			}
 
 			m_ptr->blow[i].d_dice++;
 		}
 	}
 }
 
-/* Monster gain some xp */
-void monster_gain_exp(int m_idx, u32b exp, bool_ silent)
+void monster_gain_exp(int m_idx, u32b exp)
 {
 	monster_type *m_ptr = &m_list[m_idx];
 
@@ -125,26 +129,26 @@ void monster_gain_exp(int m_idx, u32b exp, bool_ silent)
 	if (wizard)
 	{
 		char m_name[80];
-
-		/* Get the name */
 		monster_desc(m_name, m_ptr, 0);
-
-		if (!silent) msg_format("%^s gains %ld exp.", m_name, exp);
+		msg_format("%^s gains %ld exp.", m_name, exp);
 	}
 
-	monster_check_experience(m_idx, silent);
+	monster_check_experience(m_idx, false);
 }
 
 void monster_set_level(int m_idx, int level)
 {
 	monster_type *m_ptr = &m_list[m_idx];
 
-	if (level > 150) level = 150;
+	if (level > 150)
+	{
+		level = 150;
+	}
 
 	if (m_ptr->level < level)
 	{
 		m_ptr->exp = monster_exp(level);
-		monster_check_experience(m_idx, TRUE);
+		monster_check_experience(m_idx, true);
 	}
 }
 
@@ -172,39 +176,56 @@ s32b modify_aux(s32b a, s32b b, char mod)
 }
 
 /* Is this ego ok for this monster ? */
-bool_ mego_ok(monster_race const *r_ptr, int ego)
+bool mego_ok(monster_race const *r_ptr, int ego)
 {
 	const auto &re_info = game->edit_data.re_info;
 
 	auto re_ptr = &re_info[ego];
-	bool_ ok = FALSE;
+	bool ok = false;
 	int i;
 
 	/* needed flags */
-	if (re_ptr->flags && ((re_ptr->flags & r_ptr->flags) != re_ptr->flags)) return FALSE;
+	if (re_ptr->flags && ((re_ptr->flags & r_ptr->flags) != re_ptr->flags))
+	{
+		return false;
+	}
 
 	/* unwanted flags */
-	if (re_ptr->hflags && (re_ptr->hflags & r_ptr->flags)) return FALSE;
+	if (re_ptr->hflags && (re_ptr->hflags & r_ptr->flags))
+	{
+		return false;
+	}
 
 	/* Need good race -- IF races are specified */
 	if (re_ptr->r_char[0])
 	{
 		for (i = 0; i < 5; i++)
 		{
-			if (r_ptr->d_char == re_ptr->r_char[i]) ok = TRUE;
+			if (r_ptr->d_char == re_ptr->r_char[i])
+			{
+				ok = true;
+			}
 		}
-		if (!ok) return FALSE;
+
+		if (!ok)
+		{
+			return false;
+		}
 	}
+
 	if (re_ptr->nr_char[0])
 	{
 		for (i = 0; i < 5; i++)
 		{
-			if (r_ptr->d_char == re_ptr->nr_char[i]) return (FALSE);
+			if (r_ptr->d_char == re_ptr->nr_char[i])
+			{
+				return false;
+			}
 		}
 	}
 
-	/* Passed all tests ? */
-	return TRUE;
+	// Passed all tests
+	return true;
 }
 
 /* Choose an ego type */

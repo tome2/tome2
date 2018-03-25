@@ -2973,17 +2973,23 @@ void monster_death(int m_idx)
  * monster worth more than subsequent monsters.  This would also need
  * to induce changes in the monster recall code.
  */
-bool_ mon_take_hit(int m_idx, int dam, bool_ *fear, const char *note)
+bool mon_take_hit(int m_idx, int dam, bool *fear, const char *note)
 {
 	monster_type *m_ptr = &m_list[m_idx];
 	auto const r_idx = m_ptr->r_idx;
 	auto const r_ptr = m_ptr->race();
 
 	/* Redraw (later) if needed */
-	if (health_who == m_idx) p_ptr->redraw |= (PR_FRAME);
+	if (health_who == m_idx)
+	{
+		p_ptr->redraw |= (PR_FRAME);
+	}
 
-	/* Some mosnters are immune to death */
-	if (r_ptr->flags & RF_NO_DEATH) return FALSE;
+	/* Some monsters are immune to death */
+	if (r_ptr->flags & RF_NO_DEATH)
+	{
+		return false;
+	}
 
 	/* Wake it up */
 	m_ptr->csleep = 0;
@@ -3001,7 +3007,7 @@ bool_ mon_take_hit(int m_idx, int dam, bool_ *fear, const char *note)
 		{
 			ai_deincarnate(m_idx);
 
-			return FALSE;
+			return false;
 		}
 
 		/* Extract monster name */
@@ -3229,17 +3235,20 @@ bool_ mon_take_hit(int m_idx, int dam, bool_ *fear, const char *note)
 		delete_monster_idx(m_idx);
 
 		/* Not afraid */
-		(*fear) = FALSE;
+		if (fear != nullptr)
+		{
+			(*fear) = false;
+		}
 
 		/* Monster is dead */
-		return (TRUE);
+		return true;
 	}
 
 	/* Apply fear */
 	mon_handle_fear(m_ptr, dam, fear);
 
 	/* Not dead yet */
-	return (FALSE);
+	return false;
 }
 
 
