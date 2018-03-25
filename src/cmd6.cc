@@ -978,7 +978,7 @@ void do_cmd_eat_food()
 {
 	auto const &r_info = game->edit_data.r_info;
 
-	int ident, lev, fval = 0;
+	int fval = 0;
 
 	object_type *q_ptr, forge;
 
@@ -1002,18 +1002,12 @@ void do_cmd_eat_food()
 	/* Take a turn */
 	energy_use = 100;
 
-	/* Identity not known yet */
-	ident = FALSE;
-
-	/* Object level */
-	lev = o_ptr->k_ptr->level;
-
 	/* Scripted foods */
 	hook_eat_in in = { o_ptr };
 	hook_eat_out out = { FALSE };
 	if (process_hooks_new(HOOK_EAT, &in, &out))
 	{
-		ident = out.ident;
+		// Do nothing
 	}
 	/* (not quite) Normal foods */
 	else if (o_ptr->tval == TV_FOOD)
@@ -1025,7 +1019,6 @@ void do_cmd_eat_food()
 			{
 				p_ptr->hp_mod += 70;
 				msg_print("As you eat it you begin to feel your life flow getting stronger.");
-				ident = TRUE;
 				p_ptr->update |= (PU_HP);
 
 				break;
@@ -1035,10 +1028,7 @@ void do_cmd_eat_food()
 			{
 				if (!(p_ptr->resist_pois || p_ptr->oppose_pois))
 				{
-					if (set_poisoned(p_ptr->poisoned + rand_int(10) + 10))
-					{
-						ident = TRUE;
-					}
+					set_poisoned(p_ptr->poisoned + rand_int(10) + 10);
 				}
 
 				break;
@@ -1048,10 +1038,7 @@ void do_cmd_eat_food()
 			{
 				if (!p_ptr->resist_blind)
 				{
-					if (set_blind(p_ptr->blind + rand_int(200) + 200))
-					{
-						ident = TRUE;
-					}
+					set_blind(p_ptr->blind + rand_int(200) + 200);
 				}
 
 				break;
@@ -1061,10 +1048,7 @@ void do_cmd_eat_food()
 			{
 				if (!p_ptr->resist_fear)
 				{
-					if (set_afraid(p_ptr->afraid + rand_int(10) + 10))
-					{
-						ident = TRUE;
-					}
+					set_afraid(p_ptr->afraid + rand_int(10) + 10);
 				}
 
 				break;
@@ -1074,10 +1058,7 @@ void do_cmd_eat_food()
 			{
 				if (!p_ptr->resist_conf)
 				{
-					if (set_confused(p_ptr->confused + rand_int(10) + 10))
-					{
-						ident = TRUE;
-					}
+					set_confused(p_ptr->confused + rand_int(10) + 10);
 				}
 
 				break;
@@ -1087,10 +1068,7 @@ void do_cmd_eat_food()
 			{
 				if (!p_ptr->resist_chaos)
 				{
-					if (set_image(p_ptr->image + rand_int(250) + 250))
-					{
-						ident = TRUE;
-					}
+					set_image(p_ptr->image + rand_int(250) + 250);
 				}
 
 				break;
@@ -1100,10 +1078,7 @@ void do_cmd_eat_food()
 			{
 				if (!p_ptr->free_act)
 				{
-					if (set_paralyzed(rand_int(10) + 10))
-					{
-						ident = TRUE;
-					}
+					set_paralyzed(rand_int(10) + 10);
 				}
 
 				break;
@@ -1114,8 +1089,6 @@ void do_cmd_eat_food()
 				take_hit(damroll(6, 6), "poisonous food");
 				do_dec_stat(A_STR, STAT_DEC_NORMAL);
 
-				ident = TRUE;
-
 				break;
 			}
 
@@ -1123,8 +1096,6 @@ void do_cmd_eat_food()
 			{
 				take_hit(damroll(6, 6), "poisonous food");
 				do_dec_stat(A_CON, STAT_DEC_NORMAL);
-
-				ident = TRUE;
 
 				break;
 			}
@@ -1134,8 +1105,6 @@ void do_cmd_eat_food()
 				take_hit(damroll(8, 8), "poisonous food");
 				do_dec_stat(A_INT, STAT_DEC_NORMAL);
 
-				ident = TRUE;
-
 				break;
 			}
 
@@ -1143,8 +1112,6 @@ void do_cmd_eat_food()
 			{
 				take_hit(damroll(8, 8), "poisonous food");
 				do_dec_stat(A_WIS, STAT_DEC_NORMAL);
-
-				ident = TRUE;
 
 				break;
 			}
@@ -1154,8 +1121,6 @@ void do_cmd_eat_food()
 				take_hit(damroll(10, 10), "poisonous food");
 				do_dec_stat(A_CON, STAT_DEC_NORMAL);
 
-				ident = TRUE;
-
 				break;
 			}
 
@@ -1164,68 +1129,66 @@ void do_cmd_eat_food()
 				take_hit(damroll(10, 10), "poisonous food");
 				do_dec_stat(A_STR, STAT_DEC_NORMAL);
 
-				ident = TRUE;
-
 				break;
 			}
 
 		case SV_FOOD_CURE_POISON:
 			{
-				if (set_poisoned(0)) ident = TRUE;
+				set_poisoned(0);
 
 				break;
 			}
 
 		case SV_FOOD_CURE_BLINDNESS:
 			{
-				if (set_blind(0)) ident = TRUE;
+				set_blind(0);
 
 				break;
 			}
 
 		case SV_FOOD_CURE_PARANOIA:
 			{
-				if (set_afraid(0)) ident = TRUE;
+				set_afraid(0);
 
 				break;
 			}
 
 		case SV_FOOD_CURE_CONFUSION:
 			{
-				if (set_confused(0)) ident = TRUE;
+				set_confused(0);
 
 				break;
 			}
 
 		case SV_FOOD_CURE_SERIOUS:
 			{
-				if (hp_player(damroll(4, 8))) ident = TRUE;
+				hp_player(damroll(4, 8));
 
 				break;
 			}
 
 		case SV_FOOD_RESTORE_STR:
 			{
-				if (do_res_stat(A_STR, TRUE)) ident = TRUE;
+				do_res_stat(A_STR, TRUE);
 
 				break;
 			}
 
 		case SV_FOOD_RESTORE_CON:
 			{
-				if (do_res_stat(A_CON, TRUE)) ident = TRUE;
+				do_res_stat(A_CON, TRUE);
 
 				break;
 			}
 
 		case SV_FOOD_RESTORING:
 			{
-				if (do_res_stat(A_STR, TRUE)) ident = TRUE;
-				if (do_res_stat(A_INT, TRUE)) ident = TRUE;
-				if (do_res_stat(A_WIS, TRUE)) ident = TRUE;
-				if (do_res_stat(A_DEX, TRUE)) ident = TRUE;
-				if (do_res_stat(A_CON, TRUE)) ident = TRUE;
-				if (do_res_stat(A_CHR, TRUE)) ident = TRUE;
+				do_res_stat(A_STR, TRUE);
+				do_res_stat(A_INT, TRUE);
+				do_res_stat(A_WIS, TRUE);
+				do_res_stat(A_DEX, TRUE);
+				do_res_stat(A_CON, TRUE);
+				do_res_stat(A_CHR, TRUE);
 
 				break;
 			}
@@ -1269,9 +1232,6 @@ void do_cmd_eat_food()
 
 				msg_format("%s", rumour);
 				msg_print(NULL);
-
-				ident = TRUE;
-
 				break;
 			}
 
@@ -1281,9 +1241,6 @@ void do_cmd_eat_food()
 		case SV_FOOD_JERKY:
 			{
 				msg_print("That tastes good.");
-
-				ident = TRUE;
-
 				break;
 			}
 
@@ -1298,8 +1255,6 @@ void do_cmd_eat_food()
 					p_ptr->update |= PU_POWERS;
 				}
 
-				ident = TRUE;
-
 				break;
 			}
 
@@ -1310,8 +1265,6 @@ void do_cmd_eat_food()
 				hp_player(damroll(4, 8));
 				set_food(PY_FOOD_MAX - 1);
 
-				ident = TRUE;
-
 				break;
 			}
 
@@ -1320,7 +1273,6 @@ void do_cmd_eat_food()
 			{
 				msg_print("That tastes good.");
 
-				ident = TRUE;
 
 				q_ptr = &forge;
 				object_prep(q_ptr, lookup_kind(TV_BOTTLE, 1));
@@ -1345,8 +1297,6 @@ void do_cmd_eat_food()
 					msg_print("The hold of the Black Breath on you is broken!");
 					p_ptr->black_breath = FALSE;
 				}
-
-				ident = TRUE;
 
 				break;
 			}
@@ -1405,8 +1355,6 @@ void do_cmd_eat_food()
 				/* Corpses still have meat on them */
 				destroy = FALSE;
 
-				ident = TRUE;
-
 				break;
 			}
 
@@ -1421,8 +1369,6 @@ void do_cmd_eat_food()
 				/* Corpses still have meat on them */
 				destroy = FALSE;
 
-				ident = TRUE;
-
 				break;
 			}
 
@@ -1431,8 +1377,6 @@ void do_cmd_eat_food()
 				/* Just meat */
 				if (!o_ptr->timeout) msg_print("You quickly swallow the meat.");
 				else msg_print("That tastes good.");
-
-				ident = TRUE;
 
 				/* Those darn microorganisms */
 				if (!o_ptr->timeout && (o_ptr->weight > o_ptr->pval) &&
@@ -1475,10 +1419,9 @@ void do_cmd_eat_food()
 	object_tried(o_ptr);
 
 	/* The player is now aware of the object */
-	if (ident && !object_aware_p(o_ptr))
+	if (!object_aware_p(o_ptr))
 	{
 		object_aware(o_ptr);
-		gain_exp((lev + (p_ptr->lev >> 1)) / p_ptr->lev);
 	}
 
 	/* Window stuff */
