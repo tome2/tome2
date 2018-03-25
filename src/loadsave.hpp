@@ -2,5 +2,7 @@
 
 #include "h-basic.h"
 
-bool_ load_dungeon(char *ext);
+#include <string>
+
+bool load_dungeon(std::string const &ext);
 bool_ load_player();

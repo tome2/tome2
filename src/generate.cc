@@ -7938,14 +7938,13 @@ bool_ build_special_level()
 
 	auto const level = dun_level - d_info[dungeon_type].mindepth;
 
-	char buf[80];
-
-	if ((!get_dungeon_save(buf)) && !is_normal_level(level_markers[level][dungeon_type]))
+	if ((!get_dungeon_save_extension()) && !is_normal_level(level_markers[level][dungeon_type]))
 	{
 		return FALSE;
 	}
 
-	if (!get_dungeon_special(buf))
+	auto map_name = get_dungeon_map_name();
+	if (!map_name)
 	{
 		return FALSE;
 	}
@@ -7979,7 +7978,7 @@ bool_ build_special_level()
 	init_flags = INIT_CREATE_DUNGEON | INIT_POSITION;
 	int ystart = 2;
 	int xstart = 2;
-	process_dungeon_file(buf, &ystart, &xstart, cur_hgt, cur_wid, TRUE, TRUE);
+	process_dungeon_file(map_name->c_str(), &ystart, &xstart, cur_hgt, cur_wid, TRUE, TRUE);
 
 	game->level_markers[level][dungeon_type] = level_marker::REGENERATE;
 	game->generate_special_feeling = true;
@@ -8018,12 +8017,11 @@ static void wipe_special_level()
 	auto const level = dun_level - d_info[dungeon_type].mindepth;
 
 	/* No special level at this depth? */
-	char buf[80];
-	if ((!get_dungeon_save(buf)) && !is_normal_level(level_markers[level][dungeon_type]))
+	if ((!get_dungeon_save_extension()) && !is_normal_level(level_markers[level][dungeon_type]))
 	{
 		return;
 	}
-	if (!get_dungeon_special(buf))
+	if (!get_dungeon_map_name())
 	{
 		return;
 	}
@@ -8056,12 +8054,11 @@ static void finalise_special_level()
 	auto const level = dun_level - d_info[dungeon_type].mindepth;
 
 	/* No special level at this depth? */
-	char buf[80];
-	if ((!get_dungeon_save(buf)) && !is_normal_level(level_markers[level][dungeon_type]))
+	if ((!get_dungeon_save_extension()) && !is_normal_level(level_markers[level][dungeon_type]))
 	{
 		return;
 	}
-	if (!get_dungeon_special(buf))
+	if (!get_dungeon_map_name())
 	{
 		return;
 	}
@@ -8129,8 +8126,7 @@ void generate_cave()
 	auto d_ptr = &d_info[dungeon_type];
 	int tester_1, tester_2;
 	int y, x, num, i;
-	bool_ loaded = FALSE;
-	char buf[80];
+	bool loaded = false;
 	s16b town_level = 0;
 
 	/* The dungeon is not ready */
@@ -8166,7 +8162,7 @@ void generate_cave()
 	process_hooks_new(HOOK_GEN_LEVEL_BEGIN, NULL, NULL);
 
 	/* Try to load a saved level */
-	if (get_dungeon_save(buf))
+	if (auto ext = get_dungeon_save_extension())
 	{
 		/* No effects */
 		for (i = 0; i < MAX_EFFECTS; i++)
@@ -8187,16 +8183,16 @@ void generate_cave()
 			}
 		}
 
-		loaded = load_dungeon(buf);
+		loaded = load_dungeon(*ext);
 	}
 
 	/* No saved level -- generate new one */
 	if (!loaded)
 	{
 		auto const level = dun_level - d_info[dungeon_type].mindepth;
-		if (!get_dungeon_special(buf) || is_normal_level(level_markers[level][dungeon_type]))
+		if (!get_dungeon_map_name() || is_normal_level(level_markers[level][dungeon_type]))
 		{
-			get_level_flags();
+			dungeon_flags |= get_level_flags();
 		}
 
 		/* Generate */

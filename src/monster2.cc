@@ -1979,7 +1979,6 @@ s16b place_monster_one(int y, int x, int r_idx, int ego, bool_ slp, int status)
 	auto &alloc = game->alloc;
 
 	int i;
-	char dummy[5];
 	bool_ add_level = FALSE;
 	int min_level = 0, max_level = 0;
 
@@ -2479,7 +2478,7 @@ s16b place_monster_one(int y, int x, int r_idx, int ego, bool_ slp, int status)
 	}
 
 	/* Unique monsters on saved levels should be "marked" */
-	if ((r_ptr->flags & RF_UNIQUE) && get_dungeon_save(dummy))
+	if ((r_ptr->flags & RF_UNIQUE) && get_dungeon_save_extension())
 	{
 		r_ptr->on_saved = TRUE;
 	}

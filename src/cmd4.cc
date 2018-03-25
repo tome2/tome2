@@ -2748,17 +2748,11 @@ void do_cmd_feeling()
 		return;
 	}
 
-	/* No useful feeling in special levels */
-	if (dungeon_flags & DF_DESC)
+	/* Do we have a description override? */
+	if (auto description = get_level_description())
 	{
-		char buf[1024];
-
-		if (get_dungeon_save(buf) || game->generate_special_feeling)
-		{
-			if (!get_level_desc(buf)) msg_print("Someone forgot to describe this level!");
-			else msg_print(buf);
-			return;
-		}
+		msg_print(*description);
+		return;
 	}
 
 	/* No useful feeling in quests */

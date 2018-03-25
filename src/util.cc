@@ -1898,6 +1898,11 @@ void msg_print(const char *msg)
 	cmsg_print(TERM_WHITE, msg);
 }
 
+void msg_print(std::string const &msg)
+{
+	cmsg_print(TERM_WHITE, msg.c_str());
+}
+
 
 /*
  * Hack -- prevent "accidents" in "screen_save()" or "screen_load()"

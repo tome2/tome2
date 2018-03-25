@@ -104,7 +104,6 @@ static void module_reset_dir(const char *dir, const char *new_path)
 	char **d = 0;
 	char buf[1025];
 
-	if (!strcmp(dir, "dngn")) d = &ANGBAND_DIR_DNGN;
 	if (!strcmp(dir, "data")) d = &ANGBAND_DIR_DATA;
 	if (!strcmp(dir, "edit")) d = &ANGBAND_DIR_EDIT;
 	if (!strcmp(dir, "file")) d = &ANGBAND_DIR_FILE;
@@ -219,7 +218,6 @@ static void init_module(module_type *module_ptr)
 	const char *dir = module_ptr->meta.module_dir;
 	if (dir) {
 		module_reset_dir("data", dir);
-		module_reset_dir("dngn", dir);
 		module_reset_dir("edit", dir); 
 		module_reset_dir("file", dir);
 		module_reset_dir("help", dir);

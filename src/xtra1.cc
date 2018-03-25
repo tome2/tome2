@@ -549,9 +549,9 @@ static void prt_depth(int row, int col)
 	{
 		strcpy(depths, "             ");
 	}
-	else if (get_dungeon_name(depths))
+	else if (auto s = get_dungeon_name())
 	{
-		/* Empty */
+		strcpy(depths, s->c_str());
 	}
 	else if (dungeon_flags & DF_SPECIAL)
 	{

@@ -402,12 +402,6 @@ const char *ANGBAND_SYS = "xxx";
 char *ANGBAND_DIR;
 
 /*
- * Textual dungeon level definition files
- * These files are portable between platforms
- */
-char *ANGBAND_DIR_DNGN;
-
-/*
  * Binary image files for the "*_info" arrays (binary)
  * These files are not portable between platforms
  */

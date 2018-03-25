@@ -1584,23 +1584,27 @@ static bool_ do_dungeon(ls_flag_t flag, bool no_companions)
 /* Save the current persistent dungeon -SC- */
 void save_dungeon()
 {
-	char tmp[16];
-	char name[1024], buf[5];
+	if (!dun_level)
+	{
+		return;
+	}
 
-	/* Save only persistent dungeons */
-	if (!get_dungeon_save(buf) || (!dun_level)) return;
+	if (auto ext = get_dungeon_save_extension())
+	{
+		/* Construct filename */
+		auto tmp = fmt::format("{}.{}", game->player_base, *ext);
 
-	/* Construct filename */
-	sprintf(tmp, "%s.%s", game->player_base.c_str(), buf);
-	path_build(name, 1024, ANGBAND_DIR_SAVE, tmp);
+		char name[1024];
+		path_build(name, 1024, ANGBAND_DIR_SAVE, tmp.c_str());
 
-	/* Open the file */
-	fff = my_fopen(name, "wb");
+		/* Open the file */
+		fff = my_fopen(name, "wb");
 
-	/* Save the dungeon */
-	do_dungeon(ls_flag_t::SAVE, true);
+		/* Save the dungeon */
+		do_dungeon(ls_flag_t::SAVE, true);
 
-	my_fclose(fff);
+		my_fclose(fff);
+	}
 }
 
 
@@ -1967,16 +1971,15 @@ static void do_messages(ls_flag_t flag)
 }
 
 /* Returns TRUE if we successfully load the dungeon */
-bool_ load_dungeon(char *ext)
+bool load_dungeon(std::string const &ext)
 {
-	char tmp[16];
-	char name[1024];
 	byte old_dungeon_type = dungeon_type;
 	s16b old_dun = dun_level;
 
 	/* Construct name */
-	sprintf(tmp, "%s.%s", game->player_base.c_str(), ext);
-	path_build(name, 1024, ANGBAND_DIR_SAVE, tmp);
+	auto tmp = fmt::format("{}.{}", game->player_base, ext);
+	char name[1024];
+	path_build(name, 1024, ANGBAND_DIR_SAVE, tmp.c_str());
 
 	/* Open the file */
 	fff = my_fopen(name, "rb");
@@ -1987,7 +1990,7 @@ bool_ load_dungeon(char *ext)
 		dungeon_type = old_dungeon_type;
 
 		my_fclose(fff);
-		return (FALSE);
+		return false;
 	}
 
 	/* Read the dungeon */
@@ -1997,7 +2000,7 @@ bool_ load_dungeon(char *ext)
 		dungeon_type = old_dungeon_type;
 
 		my_fclose(fff);
-		return (FALSE);
+		return false;
 	}
 
 	dun_level = old_dun;
@@ -2005,7 +2008,7 @@ bool_ load_dungeon(char *ext)
 
 	/* Done */
 	my_fclose(fff);
-	return (TRUE);
+	return true;
 }
 
 /*

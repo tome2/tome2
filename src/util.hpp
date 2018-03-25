@@ -37,6 +37,7 @@ void display_message(int x, int y, int split, byte color, const char *t);
 void cmsg_print(byte color, const char *msg);
 void cmsg_print(byte color, std::string const &msg);
 void msg_print(const char *msg);
+void msg_print(std::string const &msg);
 void cmsg_format(byte color, const char *fmt, ...);
 void msg_format(const char *fmt, ...);
 void screen_save();

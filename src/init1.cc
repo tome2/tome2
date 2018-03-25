@@ -4760,6 +4760,44 @@ errr grab_one_dungeon_flag(dungeon_flag_set *flags, const char *str)
 
 
 /*
+ * Post-process "d_info" array.
+ */
+static void post_d_info()
+{
+	auto &d_info = game->edit_data.d_info;
+
+	for (std::size_t parent_d_idx = 0; parent_d_idx < d_info.size(); parent_d_idx++)
+	{
+		auto parent_d_ptr = &d_info[parent_d_idx];
+
+		if (parent_d_ptr->name.empty())
+		{
+			continue;
+		}
+
+		// Go through all the references to side dungeons
+		// and fill in back-references to "parent" dungeons.
+		for (auto &parent_depth_and_level_data: parent_d_ptr->level_data_by_depth)
+		{
+			auto parent_depth = std::get<0>(parent_depth_and_level_data);
+			auto &parent_level_data = std::get<1>(parent_depth_and_level_data);
+
+			// Do we have a branch-off point at this level?
+			if (parent_level_data.branch > 0)
+			{
+				// Look up target dungeon.
+				auto child_d_ptr = &d_info[parent_level_data.branch];
+				auto &child_level_data = child_d_ptr->level_data_by_depth[child_d_ptr->mindepth];
+
+				// Set up back-reference.
+				child_level_data.fbranch = parent_d_idx;
+				child_level_data.flevel = parent_depth - parent_d_ptr->mindepth;
+			}
+		}
+	}
+}
+
+/*
  * Initialize the "d_info" array, by parsing an ascii "template" file
  */
 errr init_d_info_txt(FILE *fp)
@@ -5208,9 +5246,63 @@ errr init_d_info_txt(FILE *fp)
 			continue;
 		}
 
+		/* Process '@' for level-dependent information */
+		if (buf[0] == '@')
+		{
+			/* Split into fields */
+			std::string buf_s(buf + 2);
+			std::vector<std::string> fields;
+			boost::algorithm::split(fields, buf_s, boost::is_any_of(":"));
+
+			// Get the depth; depths are relative to the first floor
+			// of the dungeon. This is consistent with the handling of
+			// the 'A' flag.
+			int const depth = std::stoi(fields[0]);
+			auto &level_data = d_ptr->level_data_by_depth[depth + d_ptr->mindepth];
+
+			// Parse into appropriate field.
+			if (fields[1] == "B")
+			{
+				level_data.branch = std::stoi(fields[2]);
+			}
+			else if (fields[1] == "F")
+			{
+				if (0 != grab_one_dungeon_flag(&level_data.flags, fields[2].c_str()))
+				{
+					return 5;
+				}
+			}
+			else if (fields[1] == "S")
+			{
+				level_data.save_extension = fields[2];
+			}
+			else if (fields[1] == "U")
+			{
+				level_data.map_name = fields[2];
+			}
+			else if (fields[1] == "N")
+			{
+				level_data.name = fields[2];
+			}
+			else if (fields[1] == "D")
+			{
+				level_data.description = fields[2];
+			}
+			else
+			{
+				return 1;
+			}
+
+			/* Next... */
+			continue;
+		}
+
 		/* Oops */
 		return (6);
 	}
+
+	/* Post-process */
+	post_d_info();
 
 	/* Success */
 	return (0);

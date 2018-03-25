@@ -56,6 +56,7 @@ F:NO_DESTROY
 F:NO_DOORS
 F:PRINCIPAL
 R:100:0
+@:14:B:10
 
 N:2:Mordor
 D:Mdr:a door to the Land of Mordor.
@@ -71,6 +72,7 @@ F:LAVA_RIVER
 F:NO_STREAMERS
 F:PRINCIPAL
 R:100:0
+@:31:B:5
 
 N:3:Angband
 D:Ang:an entrance to the Pits of Angband.
@@ -86,6 +88,33 @@ F:NO_EASY_MOVE
 F:NO_RECALL
 F:PRINCIPAL
 R:100:0
+@:3:N:Crypt
+@:3:U:s_crypt.map
+@:3:D:Looks like a forgotten crypt...
+@:3:F:NO_GENO
+@:3:F:NO_NEW_MONSTER
+@:3:F:SPECIAL
+@:3:F:NO_STAIR
+@:3:F:ASK_LEAVE
+@:3:F:NO_TELEPORT
+@:18:N:Dim Gates
+@:18:U:s_gates.map
+@:18:D:Visions of death fill your mind.
+@:18:F:NO_GENO
+@:18:F:NO_NEW_MONSTER
+@:18:F:SPECIAL
+@:18:F:NO_STAIR
+@:18:F:ASK_LEAVE
+@:18:F:NO_TELEPORT
+@:28:N:Nameless
+@:28:U:s_name.map
+@:28:D:You sense a powerful artifact here.
+@:28:F:NO_GENO
+@:28:F:NO_NEW_MONSTER
+@:28:F:SPECIAL
+@:28:F:NO_STAIR
+@:28:F:ASK_LEAVE
+@:28:F:NO_TELEPORT
 
 N:4:Barrow-Downs
 D:BDw:a way to the Barrow-Downs.
@@ -122,6 +151,15 @@ F:NO_STREAMERS
 F:NO_UP
 R:100:1
 M:IM_FIRE
+@:14:N:Mt Doom
+@:14:S:mdm
+@:14:U:s_doom.map
+@:14:D:You finally reach the top of Mount Doom, here must lie the Great Fire.
+@:14:F:NO_GENO
+@:14:F:NO_NEW_MONSTER
+@:14:F:SPECIAL
+@:14:F:NO_STAIR
+@:14:F:NO_TELEPORT
 
 # Nether Realm
 # Levels 666-696 (!!!)
@@ -273,6 +311,8 @@ M:DRAGON
 M:NONLIVING
 M:SPIRIT
 M:UNDEAD
+@:20:B:6
+@:22:F:NO_GENO
 
 # TEST dungeon
 N:12:Test
@@ -342,6 +382,15 @@ S:BR_CONF
 S:CONF
 S:FORGET
 S:MULTIPLY
+@:15:N:Machine
+@:15:U:s_factory.map
+@:15:D:The clatter of strange machinery surrounds you.
+@:15:F:NO_GENO
+@:15:F:NO_NEW_MONSTER
+@:15:F:SPECIAL
+@:15:F:NO_STAIR
+@:15:F:ASK_LEAVE
+@:15:F:NO_TELEPORT
 
 # The Maze
 # Levels 25-37
@@ -383,6 +432,15 @@ M:ORC
 M:R_CHAR_O
 M:R_CHAR_k
 M:R_CHAR_o
+@:11:N:Deathwatch
+@:11:U:s_death.map
+@:11:D:This level looks filled with evilness.
+@:11:F:NO_GENO
+@:11:F:NO_NEW_MONSTER
+@:11:F:SPECIAL
+@:11:F:NO_STAIR
+@:11:F:ASK_LEAVE
+@:11:F:NO_TELEPORT
 
 # Erebor
 # levels 60-72
@@ -460,6 +518,16 @@ M:TROLL
 R:20:3
 M:DEMON
 R:10:0
+@:5:N:Orc Town
+@:5:U:s_orc.map
+@:5:D:You hear orc warcries.
+@:5:F:NO_GENO
+@:5:F:NO_NEW_MONSTER
+@:5:F:SPECIAL
+@:5:F:NO_STAIR
+@:5:F:ASK_LEAVE
+@:5:F:NO_TELEPORT
+@:10:B:24
 
 # The tower of Dol Guldur
 # Levels 57-70
@@ -606,6 +674,15 @@ F:NO_STREAMERS
 F:WATER_RIVER
 R:100:1
 M:IM_COLD
+@:15:N:Galleon
+@:15:U:s_ship.map
+@:15:D:A ship of antique design lies jammed in the ice here.
+@:15:F:NO_GENO
+@:15:F:NO_NEW_MONSTER
+@:15:F:SPECIAL
+@:15:F:NO_STAIR
+@:15:F:ASK_LEAVE
+@:15:F:NO_TELEPORT
 
 # The Lost Temple of "..player.pgod.."
 # Generated in god quest.

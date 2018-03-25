@@ -4930,13 +4930,11 @@ void wipe_saved()
 
 		for (auto l = d_ptr->mindepth; l <= d_ptr->maxdepth; l++)
 		{
-			char buf[10];
-
 			dun_level = l;
 			dungeon_type = d;
-			if (get_dungeon_save(buf))
+			if (auto ext = get_dungeon_save_extension())
 			{
-				auto tmp = fmt::format("{}.{}", game->player_base, buf);
+				auto tmp = fmt::format("{}.{}", game->player_base, *ext);
 
 				char name[1024];
 				path_build(name, 1024, ANGBAND_DIR_SAVE, tmp.c_str());

@@ -1,233 +1,62 @@
-/*
- * Copyright (c) 1989 James E. Wilson, Robert A. Koeneke
- *
- * This software may be copied and distributed for educational, research, and
- * not for profit purposes provided that this copyright and statement are
- * included in all such copies.
- */
-
 #include "levels.hpp"
 
-#include "dungeon_info_type.hpp"
 #include "game.hpp"
-#include "init1.hpp"
-#include "util.hpp"
-#include "util.h"
-#include "variable.h"
 #include "variable.hpp"
 
-
-/*
- * Return the parameter of the given command in the given file
- */
-static int start_line = 0;
-static bool_ get_command(const char *file, char comm, char *param)
+static level_data const &current_level_data()
 {
-	char buf[1024];
-	int i = -1;
-	FILE *fp;
-	char *s;
+	static level_data *default_level_data = new level_data { };
 
-	/* Build the filename */
-	path_build(buf, 1024, ANGBAND_DIR_DNGN, file);
+	auto const &d_info = game->edit_data.d_info;
+	auto const &level_data_by_depth = d_info[dungeon_type].level_data_by_depth;
 
-	/* Open the file */
-	fp = my_fopen(buf, "r");
-
-	/* The file exists ? */
-	/* no ? then command not found */
-	if (!fp) return FALSE;
-
-	/* Parse to the end of the file or when the command is found */
-	while (0 == my_fgets(fp, buf, 1024))
+	auto const it = level_data_by_depth.find(dun_level);
+	if (it != level_data_by_depth.end())
 	{
-		/* Advance the line number */
-		i++;
-
-		/* Skip comments and blank lines */
-		if (!buf[0] || (buf[0] == '#')) continue;
-
-		/* Is it the command we are looking for ? */
-		if ((i > start_line) && (buf[0] == comm))
-		{
-			/* Acquire the text */
-			s = buf + 2;
-
-			start_line = i;
-
-			/* Get the parameter */
-			strcpy(param, s);
-
-			/* Close it */
-			my_fclose(fp);
-
-			return TRUE;
-		}
-
+		return it->second;
 	}
-
-	/* Close it */
-	my_fclose(fp);
-
-	/* Assume command not found */
-	return FALSE;
+	else
+	{
+		return *default_level_data;
+	}
 }
 
-
-/*
- * Return the dungeon branch starting form the current dungeon/level
- */
 int get_branch()
 {
-	auto const &d_info = game->edit_data.d_info;
-
-	char file[20], buf[5];
-
-	sprintf(file, "dun%d.%d", dungeon_type, dun_level - d_info[dungeon_type].mindepth);
-
-	/* Get and return the branch */
-	start_line = -1;
-	if (get_command(file, 'B', buf)) return (atoi(buf));
-
-	/* No branch ? return 0 */
-	else return 0;
+	return current_level_data().branch;
 }
 
-/*
- * Return the father dungeon branch
- */
 int get_fbranch()
 {
-	auto const &d_info = game->edit_data.d_info;
-
-	char file[20], buf[5];
-
-	sprintf(file, "dun%d.%d", dungeon_type, dun_level - d_info[dungeon_type].mindepth);
-
-	/* Get and return the branch */
-	start_line = -1;
-	if (get_command(file, 'A', buf)) return (atoi(buf));
-
-	/* No branch ? return 0 */
-	else return 0;
+	return current_level_data().fbranch;
 }
 
-/*
- * Return the father dungeon level
- */
 int get_flevel()
 {
-	auto const &d_info = game->edit_data.d_info;
-
-	char file[20], buf[5];
-
-	sprintf(file, "dun%d.%d", dungeon_type, dun_level - d_info[dungeon_type].mindepth);
-
-	/* Get and return the level */
-	start_line = -1;
-	if (get_command(file, 'L', buf)) return (atoi(buf));
-
-	/* No level ? return 0 */
-	else return 0;
+	return current_level_data().flevel;
 }
 
-/*
- * Return the extension of the savefile for the level
- */
-bool get_dungeon_save(char *buf)
+boost::optional<std::string> get_dungeon_save_extension()
 {
-	auto const &d_info = game->edit_data.d_info;
-
-	char file[20];
-
-	sprintf(file, "dun%d.%d", dungeon_type, dun_level - d_info[dungeon_type].mindepth);
-
-	/* Get and return the level */
-	start_line = -1;
-	return get_command(file, 'S', buf);
+	return current_level_data().save_extension;
 }
 
-/*
- * Return the special level
- */
-bool get_dungeon_special(char *buf)
+boost::optional<std::string> get_dungeon_map_name()
 {
-	auto const &d_info = game->edit_data.d_info;
-
-	char file[20];
-	sprintf(file, "dun%d.%d", dungeon_type, dun_level - d_info[dungeon_type].mindepth);
-
-	/* Get and return the level */
-	start_line = -1;
-	return get_command(file, 'U', buf);
+	return current_level_data().map_name;
 }
 
-/*
- * Return the special level name
- */
-bool get_dungeon_name(char *buf)
+boost::optional<std::string> get_dungeon_name()
 {
-	auto const &d_info = game->edit_data.d_info;
-
-	char file[20];
-	sprintf(file, "dun%d.%d", dungeon_type, dun_level - d_info[dungeon_type].mindepth);
-
-	/* Get and return the level */
-	start_line = -1;
-	if (get_command(file, 'N', buf)) return (TRUE);
-	else return FALSE;
+	return current_level_data().name;
 }
 
-/*
- * Return the special level name
- */
-void get_level_flags()
+dungeon_flag_set get_level_flags()
 {
-	auto const &d_info = game->edit_data.d_info;
-
-	char file[20];
-	char buf[1024], *s, *t;
-
-	sprintf(file, "dun%d.%d", dungeon_type, dun_level - d_info[dungeon_type].mindepth);
-
-	start_line = -1;
-
-	/* Parse until done */
-	while (get_command(file, 'F', buf))
-	{
-		/* Parse every entry textually */
-		for (s = buf; *s; )
-		{
-			/* Find the end of this entry */
-			for (t = s; *t && (*t != ' ') && (*t != '|'); ++t) /* loop */;
-
-			/* Nuke and skip any dividers */
-			if (*t)
-			{
-				*t++ = '\0';
-				while (*t == ' ' || *t == '|') t++;
-			}
-
-			/* Parse this entry */
-			if (0 != grab_one_dungeon_flag(&dungeon_flags, s)) return;
-
-			/* Start the next entry */
-			s = t;
-		}
-	}
+	return current_level_data().flags;
 }
 
-/*
- * Return the special level desc
- */
-bool get_level_desc(char *buf)
+boost::optional<std::string> get_level_description()
 {
-	auto const &d_info = game->edit_data.d_info;
-
-	char file[20];
-	sprintf(file, "dun%d.%d", dungeon_type, dun_level - d_info[dungeon_type].mindepth);
-
-	/* Get and return the level */
-	start_line = -1;
-	return get_command(file, 'D', buf);
+	return current_level_data().description;
 }
