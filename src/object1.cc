@@ -91,7 +91,6 @@ static bool item_tester_full;
 #define MAX_COLORS     66       /* Used with potions (min 62) */
 #define MAX_SHROOM     20       /* Used with mushrooms (min 20) */
 #define MAX_TITLES     55       /* Used with scrolls (min 55) */
-#define MAX_SYLLABLES 164       /* Used with scrolls (see below) */
 
 
 /*
@@ -290,42 +289,6 @@ static byte potion_col[MAX_COLORS] =
 };
 
 
-/*
- * Syllables for scrolls (must be 1-4 letters each)
- */
-
-static cptr syllables[MAX_SYLLABLES] =
-{
-	"a", "ab", "ag", "aks", "ala", "an", "ankh", "app",
-	"arg", "arze", "ash", "aus", "ban", "bar", "bat", "bek",
-	"bie", "bin", "bit", "bjor", "blu", "bot", "bu",
-	"byt", "comp", "con", "cos", "cre", "dalf", "dan",
-	"den", "der", "doe", "dok", "eep", "el", "eng", "er", "ere", "erk",
-	"esh", "evs", "fa", "fid", "flit", "for", "fri", "fu", "gan",
-	"gar", "glen", "gop", "gre", "ha", "he", "hyd", "i",
-	"ing", "ion", "ip", "ish", "it", "ite", "iv", "jo",
-	"kho", "kli", "klis", "la", "lech", "man", "mar",
-	"me", "mi", "mic", "mik", "mon", "mung", "mur", "nag", "nej",
-	"nelg", "nep", "ner", "nes", "nis", "nih", "nin", "o",
-	"od", "ood", "org", "orn", "ox", "oxy", "pay", "pet",
-	"ple", "plu", "po", "pot", "prok", "re", "rea", "rhov",
-	"ri", "ro", "rog", "rok", "rol", "sa", "san", "sat",
-	"see", "sef", "seh", "shu", "ski", "sna", "sne", "snik",
-	"sno", "so", "sol", "sri", "sta", "sun", "ta", "tab",
-	"tem", "ther", "ti", "tox", "trol", "tue", "turs", "u",
-	"ulk", "um", "un", "uni", "ur", "val", "viv", "vly",
-	"vom", "wah", "wed", "werg", "wex", "whon", "wun", "x",
-	"yerg", "yp", "zun", "tri", "blaa", "jah", "bul", "on",
-	"foo", "ju", "xuxu"
-};
-
-/*
- * Hold the titles of scrolls, 6 to 14 characters each
- * Also keep an array of scroll colors (always WHITE for now)
- */
-
-static char scroll_adj[MAX_TITLES][16];
-
 static byte scroll_col[MAX_TITLES];
 
 
@@ -522,67 +485,6 @@ void flavor_init()
 	/* Scrolls (random titles, always white) */
 	for (std::size_t i = 0; i < MAX_TITLES; i++)
 	{
-		/* Get a new title */
-		while (TRUE)
-		{
-			std::string buf;
-
-			/* Collect words until done */
-			while (1)
-			{
-				/* Choose one or two syllables */
-				int s = ((rand_int(100) < 30) ? 1 : 2);
-
-				/* Add a one or two syllable word */
-				std::string tmp;
-				for (int q = 0; q < s; q++)
-				{
-					tmp += syllables[rand_int(MAX_SYLLABLES)];
-				}
-
-				/* Stop before getting too long */
-				if (buf.size() + tmp.size() + 1 > 15)
-				{
-					break;
-				}
-
-				/* Add the word with separator */
-				if (buf.size() > 0)
-				{
-					buf += " ";
-				}
-				buf += tmp;
-			}
-
-			/* Save the title */
-			strcpy(scroll_adj[i], buf.c_str());
-
-			/* Assume okay */
-			bool_ okay = TRUE;
-
-			/* Check for "duplicate" scroll titles */
-			for (std::size_t j = 0; j < i; j++)
-			{
-				cptr hack1 = scroll_adj[j];
-				cptr hack2 = scroll_adj[i];
-
-				/* Compare first four characters */
-				if (*hack1++ != *hack2++) continue;
-				if (*hack1++ != *hack2++) continue;
-				if (*hack1++ != *hack2++) continue;
-				if (*hack1++ != *hack2++) continue;
-
-				/* Not okay */
-				okay = FALSE;
-
-				/* Stop looking */
-				break;
-			}
-
-			/* Break when done */
-			if (okay) break;
-		}
-
 		/* All scrolls are white */
 		scroll_col[i] = TERM_WHITE;
 	}
@@ -1200,13 +1102,9 @@ static std::string object_desc_aux(object_type const *o_ptr, int pref, int mode)
 
 	case TV_SCROLL:
 		{
-			/* Color the object */
-			modstr = scroll_adj[indexx];
 			if (aware) append_name = TRUE;
-			if (aware || o_ptr->ident & IDENT_STOREB)
-				basenm = "& Scroll~";
-			else
-				basenm = aware ? "& Scroll~ titled \"#\"" : "& Scroll~ titled \"#\"";
+
+			basenm = "& Scroll~";
 			break;
 		}
 
