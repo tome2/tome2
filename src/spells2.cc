@@ -646,7 +646,7 @@ bool_ restore_level()
 }
 
 
-bool_ alchemy() /* Turns an object into gold, gain some of its value in a shop */
+void alchemy()
 {
 	int item, amt = 1;
 	int old_number;
@@ -665,7 +665,7 @@ bool_ alchemy() /* Turns an object into gold, gain some of its value in a shop *
 		      (USE_INVEN | USE_FLOOR),
 		      object_filter::True()))
 	{
-		return (FALSE);
+		return;
 	}
 
 	/* Get the item */
@@ -678,7 +678,10 @@ bool_ alchemy() /* Turns an object into gold, gain some of its value in a shop *
 		amt = get_quantity(NULL, o_ptr->number);
 
 		/* Allow user abort */
-		if (amt <= 0) return FALSE;
+		if (amt <= 0)
+		{
+			return;
+		}
 	}
 
 
@@ -693,7 +696,10 @@ bool_ alchemy() /* Turns an object into gold, gain some of its value in a shop *
 	{
 		/* Make a verification */
 		sprintf(out_val, "Really turn %s to gold? ", o_name);
-		if (!get_check(out_val)) return FALSE;
+		if (!get_check(out_val))
+		{
+			return;
+		}
 	}
 
 	/* Artifacts cannot be destroyed */
@@ -703,7 +709,7 @@ bool_ alchemy() /* Turns an object into gold, gain some of its value in a shop *
 		msg_format("You fail to turn %s to gold!", o_name);
 
 		/* Done */
-		return FALSE;
+		return;
 	}
 
 	price = object_value_real(o_ptr);
@@ -730,8 +736,6 @@ bool_ alchemy() /* Turns an object into gold, gain some of its value in a shop *
 
 	/* Eliminate the item */
 	inc_stack_size(item, -amt);
-
-	return TRUE;
 }
 
 
@@ -2551,25 +2555,25 @@ void dispel_undead(int dam)
 /*
  * Dispel evil monsters
  */
-bool_ dispel_evil(int dam)
+void dispel_evil(int dam)
 {
-	return (project_hack(GF_DISP_EVIL, dam));
+	project_hack(GF_DISP_EVIL, dam);
 }
 
 /*
  * Dispel good monsters
  */
-bool_ dispel_good(int dam)
+void dispel_good(int dam)
 {
-	return (project_hack(GF_DISP_GOOD, dam));
+	project_hack(GF_DISP_GOOD, dam);
 }
 
 /*
  * Dispel all monsters
  */
-bool_ dispel_monsters(int dam)
+void dispel_monsters(int dam)
 {
-	return (project_hack(GF_DISP_ALL, dam));
+	project_hack(GF_DISP_ALL, dam);
 }
 
 
@@ -3753,7 +3757,7 @@ bool_ fire_ball(int typ, int dir, int dam, int rad)
  * Allow "target" mode to pass over monsters
  * Affect grids, objects, and monsters
  */
-bool_ fire_cloud(int typ, int dir, int dam, int rad, int time)
+void fire_cloud(int typ, int dir, int dam, int rad, int time)
 {
 	int tx, ty;
 
@@ -3773,7 +3777,7 @@ bool_ fire_cloud(int typ, int dir, int dam, int rad, int time)
 	project_time = time;
 
 	/* Analyze the "dir" and the "target".  Hurt items on floor. */
-	return (project(0, (rad > 16) ? 16 : rad, ty, tx, dam, typ, flg));
+	project(0, (rad > 16) ? 16 : rad, ty, tx, dam, typ, flg);
 }
 
 /*
@@ -3782,10 +3786,10 @@ bool_ fire_cloud(int typ, int dir, int dam, int rad, int time)
  * Allow "target" mode to pass over monsters
  * Affect grids, objects, and monsters
  */
-bool_ fire_wave(int typ, int dir, int dam, int rad, int time, s32b eff)
+void fire_wave(int typ, int dir, int dam, int rad, int time, s32b eff)
 {
 	project_time_effect = eff;
-	return (fire_cloud(typ, dir, dam, rad, time));
+	fire_cloud(typ, dir, dam, rad, time);
 }
 
 /*
@@ -3793,11 +3797,11 @@ bool_ fire_wave(int typ, int dir, int dam, int rad, int time, s32b eff)
  * Pass through monsters, as a "beam"
  * Affect monsters (not grids or objects)
  */
-bool_ fire_wall(int typ, int dir, int dam, int time)
+void fire_wall(int typ, int dir, int dam, int time)
 {
 	int flg = PROJECT_BEAM | PROJECT_KILL | PROJECT_STAY | PROJECT_GRID;
 	project_time = time;
-	return (project_hook(typ, dir, dam, flg));
+	project_hook(typ, dir, dam, flg);
 }
 
 
@@ -4024,10 +4028,9 @@ bool_ project_hook(int typ, int dir, int dam, int flg)
  * Stop if we hit a monster, as a "bolt"
  * Affect monsters (not grids or objects)
  */
-bool_ fire_bolt(int typ, int dir, int dam)
+void fire_bolt(int typ, int dir, int dam)
 {
-	int flg = PROJECT_STOP | PROJECT_KILL;
-	return (project_hook(typ, dir, dam, flg));
+	project_hook(typ, dir, dam, PROJECT_STOP | PROJECT_KILL);
 }
 
 
@@ -4036,25 +4039,24 @@ bool_ fire_bolt(int typ, int dir, int dam)
  * Pass through monsters, as a "beam"
  * Affect monsters (not grids or objects)
  */
-bool_ fire_beam(int typ, int dir, int dam)
+void fire_beam(int typ, int dir, int dam)
 {
-	int flg = PROJECT_BEAM | PROJECT_KILL;
-	return (project_hook(typ, dir, dam, flg));
+	project_hook(typ, dir, dam, PROJECT_BEAM | PROJECT_KILL);
 }
 
 
 /*
  * Cast a bolt spell, or rarely, a beam spell
  */
-bool_ fire_bolt_or_beam(int prob, int typ, int dir, int dam)
+void fire_bolt_or_beam(int prob, int typ, int dir, int dam)
 {
 	if (rand_int(100) < prob)
 	{
-		return (fire_beam(typ, dir, dam));
+		fire_beam(typ, dir, dam);
 	}
 	else
 	{
-		return (fire_bolt(typ, dir, dam));
+		fire_bolt(typ, dir, dam);
 	}
 }
 
@@ -4062,10 +4064,10 @@ bool_ fire_bolt_or_beam(int prob, int typ, int dir, int dam)
 /*
  * Some of the old functions
  */
-bool_ lite_line(int dir)
+void lite_line(int dir)
 {
 	int flg = PROJECT_BEAM | PROJECT_GRID | PROJECT_KILL;
-	return (project_hook(GF_LITE_WEAK, dir, damroll(6, 8), flg));
+	project_hook(GF_LITE_WEAK, dir, damroll(6, 8), flg);
 }
 
 
@@ -4076,68 +4078,63 @@ bool_ drain_life(int dir, int dam)
 }
 
 
-bool_ wall_to_mud(int dir)
+void wall_to_mud(int dir)
 {
-	int flg = PROJECT_BEAM | PROJECT_GRID | PROJECT_ITEM | PROJECT_KILL;
-	return (project_hook(GF_KILL_WALL, dir, 20 + randint(30), flg));
+	project_hook(GF_KILL_WALL, dir, 20 + randint(30),
+		PROJECT_BEAM | PROJECT_GRID | PROJECT_ITEM | PROJECT_KILL);
 }
 
 
-bool_ wizard_lock(int dir)
+void wizard_lock(int dir)
 {
-	int flg = PROJECT_BEAM | PROJECT_GRID | PROJECT_ITEM | PROJECT_KILL;
-	return (project_hook(GF_JAM_DOOR, dir, 20 + randint(30), flg));
+	project_hook(GF_JAM_DOOR, dir, 20 + randint(30),
+		PROJECT_BEAM | PROJECT_GRID | PROJECT_ITEM | PROJECT_KILL);
 }
 
-bool_ slow_monster(int dir)
+void slow_monster(int dir)
 {
-	int flg = PROJECT_STOP | PROJECT_KILL;
-	return (project_hook(GF_OLD_SLOW, dir, p_ptr->lev, flg));
-}
-
-
-bool_ sleep_monster(int dir)
-{
-	int flg = PROJECT_STOP | PROJECT_KILL;
-	return (project_hook(GF_OLD_SLEEP, dir, p_ptr->lev, flg));
+	project_hook(GF_OLD_SLOW, dir, p_ptr->lev, PROJECT_STOP | PROJECT_KILL);
 }
 
 
-bool_ confuse_monster(int dir, int plev)
+void sleep_monster(int dir)
 {
-	int flg = PROJECT_STOP | PROJECT_KILL;
-	return (project_hook(GF_OLD_CONF, dir, plev, flg));
+	project_hook(GF_OLD_SLEEP, dir, p_ptr->lev, PROJECT_STOP | PROJECT_KILL);
 }
 
 
-bool_ poly_monster(int dir)
+void confuse_monster(int dir, int plev)
 {
-	int flg = PROJECT_STOP | PROJECT_KILL;
-	return (project_hook(GF_OLD_POLY, dir, p_ptr->lev, flg));
+	project_hook(GF_OLD_CONF, dir, plev, PROJECT_STOP | PROJECT_KILL);
 }
 
 
-bool_ fear_monster(int dir, int plev)
+void poly_monster(int dir)
 {
-	int flg = PROJECT_STOP | PROJECT_KILL;
-	return (project_hook(GF_TURN_ALL, dir, plev, flg));
+	project_hook(GF_OLD_POLY, dir, p_ptr->lev, PROJECT_STOP | PROJECT_KILL);
 }
 
 
-bool_ teleport_monster(int dir)
+void fear_monster(int dir, int plev)
+{
+	project_hook(GF_TURN_ALL, dir, plev, PROJECT_STOP | PROJECT_KILL);
+}
+
+
+void teleport_monster(int dir)
 {
 	int flg = PROJECT_BEAM | PROJECT_KILL;
 
 	if (p_ptr->resist_continuum)
 	{
 		msg_print("The space-time continuum can't be disrupted.");
-		return FALSE;
+		return;
 	}
 
-	return (project_hook(GF_AWAY_ALL, dir, MAX_SIGHT * 5, flg));
+	project_hook(GF_AWAY_ALL, dir, MAX_SIGHT * 5, flg);
 }
 
-bool_ wall_stone(int y, int x)
+void wall_stone(int y, int x)
 {
 	auto const &f_info = game->edit_data.f_info;
 
@@ -4145,7 +4142,7 @@ bool_ wall_stone(int y, int x)
 	int flg = PROJECT_GRID | PROJECT_ITEM;
 	auto const featflags = f_info[c_ptr->feat].flags;
 
-	bool_ dummy = (project(0, 1, y, x, 0, GF_STONE_WALL, flg));
+	project(0, 1, y, x, 0, GF_STONE_WALL, flg);
 
 	if (!(featflags & FF_PERMANENT) && !(featflags & FF_WALL))
 		cave_set_feat(y, x, FEAT_FLOOR);
@@ -4161,21 +4158,18 @@ bool_ wall_stone(int y, int x)
 
 	/* Window stuff */
 	p_ptr->window |= (PW_OVERHEAD);
-
-	return dummy;
 }
 
 
-bool_ destroy_doors_touch()
+void destroy_doors_touch()
 {
-	int flg = PROJECT_GRID | PROJECT_ITEM | PROJECT_HIDE;
-	return (project(0, 1, p_ptr->py, p_ptr->px, 0, GF_KILL_DOOR, flg));
+	project(0, 1, p_ptr->py, p_ptr->px, 0, GF_KILL_DOOR,
+		PROJECT_GRID | PROJECT_ITEM | PROJECT_HIDE);
 }
 
-bool_ sleep_monsters_touch()
+void sleep_monsters_touch()
 {
-	int flg = PROJECT_KILL | PROJECT_HIDE;
-	return (project(0, 1, p_ptr->py, p_ptr->px, p_ptr->lev, GF_OLD_SLEEP, flg));
+	project(0, 1, p_ptr->py, p_ptr->px, p_ptr->lev, GF_OLD_SLEEP, PROJECT_KILL | PROJECT_HIDE);
 }
 
 
@@ -4510,88 +4504,54 @@ static void summon_dragon_riders()
 	}
 }
 
-
-
-/*
- * Confuse monsters
- */
-bool_ confuse_monsters(int dam)
+void confuse_monsters(int dam)
 {
-	return (project_hack(GF_OLD_CONF, dam));
+	project_hack(GF_OLD_CONF, dam);
 }
 
-
-/*
- * Charm monsters
- */
-bool_ charm_monsters(int dam)
+void charm_monsters(int dam)
 {
-	return (project_hack(GF_CHARM, dam));
+	project_hack(GF_CHARM, dam);
 }
 
-
-/*
- * Charm animals
- */
-bool_ charm_animals(int dam)
+void charm_animals(int dam)
 {
-	return (project_hack(GF_CONTROL_ANIMAL, dam));
+	project_hack(GF_CONTROL_ANIMAL, dam);
 }
 
-
-/*
- * Stun monsters
- */
-bool_ stun_monsters(int dam)
+void stun_monsters(int dam)
 {
-	return (project_hack(GF_STUN, dam));
+	project_hack(GF_STUN, dam);
 }
 
-
-/*
- * Mindblast monsters
- */
-bool_ mindblast_monsters(int dam)
+void mindblast_monsters(int dam)
 {
-	return (project_hack(GF_PSI, dam));
+	project_hack(GF_PSI, dam);
 }
 
-
-/*
- * Banish all monsters
- */
-bool_ banish_monsters(int dist)
+void banish_monsters(int dist)
 {
-	return (project_hack(GF_AWAY_ALL, dist));
+	project_hack(GF_AWAY_ALL, dist);
 }
 
-
-/*
- * Turn everyone
- */
-bool_ turn_monsters(int dam)
+void turn_monsters(int dam)
 {
-	return (project_hack(GF_TURN_ALL, dam));
+	project_hack(GF_TURN_ALL, dam);
 }
 
-
-bool_ charm_monster(int dir, int plev)
+void charm_monster(int dir, int plev)
 {
-	int flg = PROJECT_STOP | PROJECT_KILL;
-	return (project_hook(GF_CHARM, dir, plev, flg));
+	project_hook(GF_CHARM, dir, plev, PROJECT_STOP | PROJECT_KILL);
 }
 
-bool_ control_one_undead(int dir, int plev)
+void control_one_undead(int dir, int plev)
 {
-	int flg = PROJECT_STOP | PROJECT_KILL;
-	return (project_hook(GF_CONTROL_UNDEAD, dir, plev, flg));
+	project_hook(GF_CONTROL_UNDEAD, dir, plev, PROJECT_STOP | PROJECT_KILL);
 }
 
-
-bool_ charm_animal(int dir, int plev)
+void charm_animal(int dir, int plev)
 {
-	int flg = PROJECT_STOP | PROJECT_KILL;
-	return (project_hook(GF_CONTROL_ANIMAL, dir, plev, flg));
+	project_hook(GF_CONTROL_ANIMAL, dir, plev, PROJECT_STOP | PROJECT_KILL);
 }
 
 void change_wild_mode()
