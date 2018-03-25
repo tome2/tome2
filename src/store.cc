@@ -1410,9 +1410,6 @@ static void store_create()
 		/* The item is "known" */
 		object_known(q_ptr);
 
-		/* Mark it storebought */
-		q_ptr->ident |= IDENT_STOREB;
-
 		/* Prune the black market */
 		if (st_info[st_ptr->st_idx].flags & STF_ALL_ITEM)
 		{

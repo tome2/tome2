@@ -201,7 +201,7 @@ static bool quest_shroom_give_hook(void *, void *in_, void *)
 		object_aware(q_ptr);
 		object_known(q_ptr);
 		q_ptr->discount = 100;
-		q_ptr->ident |= IDENT_STOREB;
+
 		if (inven_carry_okay(q_ptr))
 		{
 			inven_carry(q_ptr, FALSE);

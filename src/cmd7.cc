@@ -2970,8 +2970,6 @@ void do_cmd_symbiotic()
 						object_aware(q_ptr);
 						object_known(q_ptr);
 
-						q_ptr->ident |= IDENT_STOREB;
-
 						drop_near(q_ptr, 0, y, x);
 
 						delete_monster(y, x);

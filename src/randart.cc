@@ -339,7 +339,7 @@ bool_ create_artifact(object_type *o_ptr, bool_ a_scroll, bool_ get_name)
 			/* Identify it fully */
 			object_aware(o_ptr);
 			object_known(o_ptr);
-			o_ptr->ident |= (IDENT_STOREB | IDENT_MENTAL);
+			o_ptr->ident |= IDENT_MENTAL;
 
 			strcpy(dummy_name, "");
 			object_out_desc(o_ptr, NULL, FALSE, TRUE);

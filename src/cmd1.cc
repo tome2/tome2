@@ -4333,7 +4333,6 @@ bool_ do_cmd_leave_body(bool_ drop_body)
 			o_ptr->weight = (r_ptr->weight + rand_int(r_ptr->weight) / 10) + 1;
 			object_aware(o_ptr);
 			object_known(o_ptr);
-			o_ptr->ident |= IDENT_STOREB;
 
 			/* Unique corpses are unique */
 			if (r_ptr->flags & RF_UNIQUE)
