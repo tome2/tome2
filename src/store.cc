@@ -1177,6 +1177,75 @@ static bool_ kind_is_storeok(int k_idx)
 	return (TRUE);
 }
 
+namespace { // anonymous
+
+struct is_artifact_p : public boost::static_visitor<bool> {
+
+	bool operator ()(store_item_filter_by_k_idx f) const
+	{
+		auto const &k_info = game->edit_data.k_info;
+		return bool(k_info[f.k_idx].flags & TR_NORM_ART);
+	}
+
+	bool operator ()(store_item_filter_by_tval) const
+	{
+		return false;
+	}
+};
+
+class choose_k_idx : public boost::static_visitor<int> {
+
+	int m_level;
+
+public:
+
+	explicit choose_k_idx(int level)
+		: m_level(level)
+	{
+	}
+
+	int operator ()(store_item_filter_by_k_idx f) const
+	{
+		return f.k_idx;
+	}
+
+	int operator ()(store_item_filter_by_tval f) const
+	{
+		auto const &st_info = game->edit_data.st_info;
+		auto &alloc = game->alloc;
+
+		/* No themes */
+		init_match_theme(obj_theme::no_theme());
+
+		/* Activate restriction */
+		get_obj_num_hook = kind_is_storeok;
+		store_tval = f.tval;
+
+		/* Do we forbid too shallow items ? */
+		if (st_info[st_ptr->st_idx].flags & STF_FORCE_LEVEL)
+		{
+			store_level = m_level;
+		}
+		else
+		{
+			store_level = 0;
+		}
+
+		/* Prepare allocation table */
+		get_obj_num_prep();
+
+		/* Get it! */
+		auto k_idx = get_obj_num(m_level);
+
+		/* Invalidate the cached allocation table */
+		alloc.kind_table_valid = false;
+
+		return k_idx;
+	}
+};
+
+} // namespace (anonymous)
+
 /*
  * Creates a random item and gives it to a store
  * This algorithm needs to be rethought.  A lot.
@@ -1193,12 +1262,12 @@ static void store_create()
 	auto const &k_info = game->edit_data.k_info;
 	auto &alloc = game->alloc;
 
-	int i = 0, tries, level = 0;
+	int k_idx = -1;
+	int level = 0;
 
 	object_type forge;
 	object_type *q_ptr = NULL;
 	bool_ obj_all_done = FALSE;
-
 
 	/* Paranoia -- no room left */
 	if (st_ptr->stock.size() >= st_ptr->stock_size)
@@ -1206,9 +1275,8 @@ static void store_create()
 		return;
 	}
 
-
 	/* Hack -- consider up to four items */
-	for (tries = 0; tries < 4; tries++)
+	for (int tries = 0; tries < 4; tries++)
 	{
 		obj_all_done = FALSE;
 
@@ -1262,14 +1330,15 @@ static void store_create()
 			/* Pick a level for object/magic */
 			level = return_level();
 
-			/* Random item (usually of given level) */
-			i = get_obj_num(level);
+			/* Choose a k_info index */
+			k_idx = get_obj_num(level);
+			if (k_idx <= 0)
+			{
+				continue;
+			}
 
 			/* Invalidate the cached allocation table */
 			alloc.kind_table_valid = false;
-
-			/* Handle failure */
-			if (!i) continue;
 
 		}
 
@@ -1277,13 +1346,15 @@ static void store_create()
 		else
 		{
 			/* Hack -- Pick an item to sell */
-			auto const &item = st_info[st_ptr->st_idx].items[rand_int(st_info[st_ptr->st_idx].items.size())];
-			i = item.kind;
+			auto const &item = *uniform_element(st_info[st_ptr->st_idx].items);
+			auto filter = item.filter;
 			auto chance = item.chance;
 
 			/* Don't allow k_info artifacts */
-			if ((i <= 10000) && (k_info[i].flags & TR_NORM_ART))
+			if (boost::apply_visitor(is_artifact_p(), filter))
+			{
 				continue;
+			}
 
 			/* Does it passes the rarity check ? */
 			if (!magik(chance)) continue;
@@ -1291,55 +1362,30 @@ static void store_create()
 			/* Hack -- fake level for apply_magic() */
 			level = return_level();
 
-			/* Hack -- i > 10000 means it's a tval and all svals are allowed */
-			if (i > 10000)
+			/* Choose the k_info index */
+			k_idx = boost::apply_visitor(choose_k_idx(level), filter);
+			if (k_idx <= 0)
 			{
-				/* No themes */
-				init_match_theme(obj_theme::no_theme());
-
-				/* Activate restriction */
-				get_obj_num_hook = kind_is_storeok;
-				store_tval = i - 10000;
-
-				/* Do we forbid too shallow items ? */
-				if (st_info[st_ptr->st_idx].flags & STF_FORCE_LEVEL)
-				{
-					store_level = level;
-				}
-				else
-				{
-					store_level = 0;
-				}
-
-				/* Prepare allocation table */
-				get_obj_num_prep();
-
-				/* Get it ! */
-				i = get_obj_num(level);
-
-				/* Invalidate the cached allocation table */
-				alloc.kind_table_valid = false;
+				continue;
 			}
-
-			if (!i) continue;
 		}
 
 		/* Only if not already done */
 		if (!obj_all_done)
 		{
 			/* Don't allow k_info artifacts */
-			if (k_info[i].flags & TR_NORM_ART)
+			if (k_info[k_idx].flags & TR_NORM_ART)
 				continue;
 
 			/* Don't allow artifacts */
-			if (k_info[i].flags & TR_INSTA_ART)
+			if (k_info[k_idx].flags & TR_INSTA_ART)
 				continue;
 
 			/* Get local object */
 			q_ptr = &forge;
 
 			/* Create a new object of the chosen kind */
-			object_prep(q_ptr, i);
+			object_prep(q_ptr, k_idx);
 
 			/* Apply some "low-level" magic (no artifacts) */
 			apply_magic(q_ptr, level, FALSE, FALSE, FALSE);

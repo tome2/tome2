@@ -5352,10 +5352,12 @@ errr init_st_info_txt(FILE *fp)
 			if (!*s) return (1);
 
 			/* Add to items array */
-			store_item item;
-			item.chance = atoi(buf + 2);
-			item.kind = test_item_name(s);
-			st_ptr->items.emplace_back(item);
+			auto chance = atoi(buf + 2);
+			int k_idx = test_item_name(s);
+			assert(k_idx >= 0);
+
+			st_ptr->items.emplace_back(
+				store_item::k_idx(k_idx, chance));
 
 			/* Next... */
 			continue;
@@ -5371,11 +5373,10 @@ errr init_st_info_txt(FILE *fp)
 			                &rar1, &tv1, &sv1)) return (1);
 
 			/* Add to the items array */
-			store_item item;
-			item.chance = rar1;
-			item.kind = (sv1 < 256)
-			        ? lookup_kind(tv1, sv1)
-			        : tv1 + 10000;    /* An SVAL of 256 means all possible items. */
+			store_item item = (sv1 < 256)
+				? store_item::k_idx(lookup_kind(tv1, sv1), rar1)
+				: store_item::tval(tv1, rar1);    /* An SVAL of 256 means all possible items. */
+
 			st_ptr->items.emplace_back(item);
 
 			/* Next... */
