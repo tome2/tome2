@@ -572,22 +572,6 @@ corruption_type corruptions[CORRUPTIONS_MAX] =
 		PWR_ILLUMINE,
 	},
 
-	{ /* 28 */
-		{ MODULE_THEME, -1 },
-		TERM_RED,
-		NULL /* no group */,
-		"Detect Curses",
-		"You can feel evil magics.",
-		"You can no longer feel evil magics.",
-		"  You can feel the danger of evil magic.\n"
-		"  It detects cursed items in the inventory\n"
-		"  Level=7, Cost=14, Stat=WIS, Difficulty=14",
-		{ -1 },
-		{ -1 },
-		NULL,
-		PWR_DET_CURSE,
-	},
-
 	{ /* 29 */
 		{ MODULE_THEME, -1 },
 		TERM_RED,

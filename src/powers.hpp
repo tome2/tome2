@@ -22,7 +22,6 @@ void do_cmd_power();
 #define PWR_SWAP_POS                   12
 #define PWR_SHRIEK                     13
 #define PWR_ILLUMINE                   14
-#define PWR_DET_CURSE                  15
 #define PWR_BERSERK                    16
 #define PWR_POLYMORPH                  17
 #define PWR_MIDAS_TCH                  18

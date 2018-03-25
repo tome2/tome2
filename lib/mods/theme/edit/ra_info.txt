@@ -1903,20 +1903,13 @@ C:0:0:0:0
 Z:magic map
 
 N:511
-X:30:1
-T:39:0:255
-W:20:1:24
-C:0:0:0:0
-Z:detect curses
-
-N:512
 X:25:1
 T:39:0:255
 W:20:1:17
 C:0:0:0:0
 Z:dazzle
 
-N:513
+N:512
 X:40:1
 T:39:0:255
 W:20:1:50
@@ -1924,7 +1917,7 @@ C:0:0:0:0
 Z:detect doors and traps
 
 # Magestaves can get % to life - Theme
-N:514
+N:513
 X:10:1
 T:6:0:255
 W:10:1:45
@@ -1932,7 +1925,7 @@ C:-40:-40:0:3
 F:LIFE
 
 # Magestaves, armour, lights and jewelry can get ability to store a spell - Theme
-N:515
+N:514
 X:10:1
 T:6:0:255
 T:30:0:255
@@ -1953,7 +1946,7 @@ F:SPELL_CONTAIN
 F:WIELD_CAST
 
 # High-level soft and hard armour and DSM can get nether immunity - Theme, adapted from FuryMod
-N:516
+N:515
 X:50:1
 T:36:11:255
 T:37:15:255
@@ -1963,7 +1956,7 @@ C:0:0:0:0
 F:IM_NETHER
 
 # Light weapons (no broken ones) can gain sentience - Theme, adapted from FuryMod
-N:517
+N:516
 X:20:1
 T:21:1:3
 T:22:2:4

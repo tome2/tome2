@@ -58,7 +58,6 @@ F:LITE3
 F:SEE_INVIS
 F:SPEED
 a:MAP_LIGHT
-Z:detect curses
 D:The shining Star of the West, a famed heirloom of Elendil's house.
 D:A white diamond set as a star in a silver fillet to be bound at the 
 D:forehead. 
@@ -4532,7 +4531,6 @@ F:SEE_INVIS
 F:WATER_BREATH
 F:WIS
 a:PALANTIR
-Z:detect curses
 D:This holy lamp once belonged to a seeress who warned Ar-Pharazon of 
 D:the dire fate Numenor would suffer for daring to break the ban against 
 D:mortals' entering the Blessed Realms alive.  The king had the seeress 

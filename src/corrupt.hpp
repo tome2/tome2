@@ -41,7 +41,6 @@ boost::optional<int> get_corruption_power(int corruption_idx);
 #define MUT1_SWAP_POS 25
 #define MUT1_SHRIEK 26
 #define MUT1_ILLUMINE 27
-#define MUT1_DET_CURSE 28
 #define MUT1_BERSERK 29
 #define MUT1_MIDAS_TCH 30
 #define MUT1_GROW_MOLD 31

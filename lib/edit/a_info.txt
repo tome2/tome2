@@ -57,7 +57,6 @@ F:LITE3
 F:SEE_INVIS
 F:SPEED
 a:MAP_LIGHT
-Z:detect curses
 D:The shining Star of the West, a famed heirloom of Elendil's house.
 
 

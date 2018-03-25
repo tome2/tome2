@@ -192,18 +192,6 @@ Game::Game()
 			),
 		},
 		{
-			PWR_DET_CURSE,
-			std::make_shared<power_type>(
-				"detect curses",
-				"You can feel the danger of evil magic.",
-				"You can feel evil magic.",
-				"You can no longer feel evil magic.",
-				power_activation {
-					7, 14, A_WIS, 14
-				}
-			),
-		},
-		{
 			PWR_BERSERK,
 			std::make_shared<power_type>(
 				"berserk",

@@ -809,32 +809,6 @@ static void power_activate(int power)
 		}
 		break;
 
-	case PWR_DET_CURSE:
-		{
-			int i;
-
-			for (i = 0; i < INVEN_TOTAL; i++)
-			{
-				object_type *o_ptr = &p_ptr->inventory[i];
-
-				if (!o_ptr->k_ptr)
-				{
-					continue;
-				}
-
-				if (!cursed_p(o_ptr))
-				{
-					continue;
-				}
-
-				if (!o_ptr->sense)
-				{
-					o_ptr->sense = SENSE_CURSED;
-				}
-			}
-		}
-		break;
-
 	case PWR_POLYMORPH:
 		{
 			do_poly_self();
