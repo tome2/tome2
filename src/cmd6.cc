@@ -1415,9 +1415,6 @@ void do_cmd_eat_food()
 	/* Combine / Reorder the pack (later) */
 	p_ptr->notice |= (PN_COMBINE | PN_REORDER);
 
-	/* We have tried it */
-	object_tried(o_ptr);
-
 	/* The player is now aware of the object */
 	if (!object_aware_p(o_ptr))
 	{
@@ -2464,9 +2461,6 @@ void do_cmd_quaff_potion()
 	/* Combine / Reorder the pack (later) */
 	p_ptr->notice |= (PN_COMBINE | PN_REORDER);
 
-	/* The item has been tried */
-	object_tried(o_ptr);
-
 	/* An identification was made */
 	if (ident && !object_aware_p(o_ptr))
 	{
@@ -3397,9 +3391,6 @@ void do_cmd_read_scroll()
 	/* Combine / Reorder the pack (later) */
 	p_ptr->notice |= (PN_COMBINE | PN_REORDER);
 
-	/* The item was tried */
-	object_tried(o_ptr);
-
 	/* An identification was made */
 	if (!object_aware_p(o_ptr))
 	{
@@ -3564,9 +3555,6 @@ void do_cmd_use_staff()
 	/* Combine / Reorder the pack (later) */
 	p_ptr->notice |= (PN_COMBINE | PN_REORDER);
 
-	/* Tried the item */
-	object_tried(o_ptr);
-
 	/* An identification was made */
 	/* Window stuff */
 	p_ptr->window |= (PW_INVEN | PW_EQUIP | PW_PLAYER);
@@ -3723,9 +3711,6 @@ void do_cmd_aim_wand()
 
 	/* Combine / Reorder the pack (later) */
 	p_ptr->notice |= (PN_COMBINE | PN_REORDER);
-
-	/* Mark it as tried */
-	object_tried(o_ptr);
 
 	/* Identify */
 	object_aware(o_ptr);
@@ -4212,9 +4197,6 @@ void do_cmd_zap_rod()
 
 	/* Combine / Reorder the pack (later) */
 	p_ptr->notice |= (PN_COMBINE | PN_REORDER);
-
-	/* Tried the object */
-	object_tried(o_ptr);
 
 	/* Identify */
 	if (!object_aware_p(o_ptr))

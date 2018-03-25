@@ -2096,7 +2096,6 @@ static bool do_object_lore(ls_flag_t flag)
 	do_fixed_map(flag, k_info, do_int,
 		[](std::shared_ptr<object_kind> k_ptr, auto flag) -> void {
 			do_bool(&k_ptr->aware, flag);
-			do_bool(&k_ptr->tried, flag);
 			do_bool(&k_ptr->artifact, flag);
 		}
 	);

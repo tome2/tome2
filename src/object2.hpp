@@ -42,8 +42,6 @@ void object_known(object_type *o_ptr);
 bool object_known_p(object_type const *o_ptr);
 void object_aware(object_type *o_ptr);
 bool object_aware_p(object_type const *o_ptr);
-void object_tried(object_type *o_ptr);
-bool object_tried_p(object_type const *o_ptr);
 s32b object_value(object_type const *o_ptr);
 s32b object_value_real(object_type const *o_ptr);
 bool_ object_similar(object_type const *o_ptr, object_type const *j_ptr);

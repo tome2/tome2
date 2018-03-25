@@ -2005,12 +2005,6 @@ static std::string object_desc_aux(object_type const *o_ptr, int pref, int mode)
 			inscrip.push_back("empty");
 		}
 
-		/* Note "tried" if the object has been tested unsuccessfully */
-		if (!aware && object_tried_p(o_ptr))
-		{
-			inscrip.push_back("tried");
-		}
-
 		/* Note the discount, if any */
 		if ((o_ptr->discount) && o_ptr->inscription.empty())
 		{

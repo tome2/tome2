@@ -767,25 +767,6 @@ bool object_aware_p(object_type const *o_ptr)
 
 
 /*
- * Something has been "sampled"
- */
-void object_tried(object_type *o_ptr)
-{
-	/* Mark it as tried (even if "aware") */
-	o_ptr->k_ptr->tried = TRUE;
-}
-
-
-/**
- * Has the given object been "tried"?
- */
-bool object_tried_p(object_type const *o_ptr)
-{
-	return o_ptr->k_ptr->tried;
-}
-
-
-/*
  * Return the "value" of an "unknown" item
  * Make a guess at the value of non-aware items
  */

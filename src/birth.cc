@@ -633,7 +633,6 @@ static void player_wipe()
 	for (auto &k_entry: k_info)
 	{
 		auto k_ptr = k_entry.second;
-		k_ptr->tried = FALSE;
 		k_ptr->aware = FALSE;
 		k_ptr->artifact = 0;
 	}

@@ -68,8 +68,6 @@ struct object_kind
 
 	bool_ aware = 0;                         /* The player is "aware" of the item's effects */
 
-	bool_ tried = 0;                         /* The player has "tried" one of the items */
-
 	bool_ allow_special = 0;
 
 	byte btval = 0;                          /* Become Object type */
