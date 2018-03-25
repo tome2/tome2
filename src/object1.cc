@@ -5586,6 +5586,10 @@ void object_pickup(int this_o_idx)
 	/* Access the item */
 	o_ptr = &o_list[this_o_idx];
 
+	/* Auto-identify */
+	object_aware(o_ptr);
+	object_known(o_ptr);
+
 	/* Describe the object */
 	object_desc(o_name, o_ptr, TRUE, 3);
 
@@ -5696,6 +5700,15 @@ static void sense_floor(cave_type const *c_ptr)
 			// lookups to function correctly.
 			floor_object_idxs.push_back(0 - this_o_idx);
 		}
+	}
+
+	// Do an ID sweep *before* squleching so that we don't
+	// have to walk over things twice to get them squelched.
+	for (auto const o_idx: floor_object_idxs)
+	{
+		object_type *o_ptr = get_object(o_idx);
+		object_aware(o_ptr);
+		object_known(o_ptr);
 	}
 
 	/* Sense floor tile */

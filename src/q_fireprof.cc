@@ -215,8 +215,8 @@ static bool_ fireproof()
 		}
 
 		/* id and notice it */
-		object_known(obj3);
 		object_aware(obj3);
+		object_known(obj3);
 
 		return TRUE;
 	}

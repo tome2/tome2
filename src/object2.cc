@@ -710,6 +710,7 @@ s16b get_obj_num(int level)
  */
 void object_known(object_type *o_ptr)
 {
+	auto previously_known = object_known_p(o_ptr);
 
 	/* No Sensing */
 	o_ptr->sense = SENSE_NONE;
@@ -722,6 +723,12 @@ void object_known(object_type *o_ptr)
 
 	/* Now we know about the item */
 	o_ptr->ident |= (IDENT_KNOWN);
+
+	/* If the status changed, then we invoke the hook */
+	if (!previously_known)
+	{
+		identify_hooks(o_ptr, IDENT_NORMAL);
+	}
 }
 
 

@@ -492,9 +492,6 @@ bool_ identify_pack()
 		/* Aware and Known */
 		object_aware(o_ptr);
 		object_known(o_ptr);
-
-		/* Process the appropriate hooks */
-		identify_hooks(o_ptr, IDENT_NORMAL);
 	}
 
 	p_ptr->notice |= (PN_COMBINE | PN_REORDER);
@@ -2235,9 +2232,6 @@ bool_ ident_spell()
 	/* Make note of found artifacts */
 	note_found_object(o_ptr);
 
-	/* Process the appropriate hooks */
-	identify_hooks(o_ptr, IDENT_NORMAL);
-
 	/* Something happened */
 	return (TRUE);
 }
@@ -2262,9 +2256,6 @@ bool_ ident_all()
 
 		/* Make note of found artifacts */
 		note_found_object(o_ptr);
-
-		/* Process the appropriate hooks */
-		identify_hooks(o_ptr, IDENT_NORMAL);
 	}
 
 	/* Something happened */
