@@ -70,16 +70,11 @@ const char     *demonology_discharge_minion_info();
 casting_result  demonology_control_demon();
 const char     *demonology_control_demon_info();
 
-extern s32b STARIDENTIFY;
-extern s32b IDENTIFY;
 extern s32b VISION;
 extern s32b SENSEHIDDEN;
 extern s32b REVEALWAYS;
 extern s32b SENSEMONSTERS;
 
-casting_result  divination_greater_identify();
-casting_result  divination_identify();
-const char     *divination_identify_info();
 casting_result  divination_vision();
 casting_result  divination_sense_hidden();
 const char     *divination_sense_hidden_info();

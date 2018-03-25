@@ -59,8 +59,6 @@ s32b DEMON_SUMMON;
 s32b DISCHARGE_MINION;
 s32b CONTROL_DEMON;
 
-s32b STARIDENTIFY;
-s32b IDENTIFY;
 s32b VISION;
 s32b SENSEHIDDEN;
 s32b REVEALWAYS;
@@ -860,44 +858,6 @@ const char *demonology_control_demon_info()
 		"power " FMTs32b,
 		(50 + get_level_s(CONTROL_DEMON, 250)));
 	return buf;
-}
-
-casting_result divination_greater_identify()
-{
-	identify_fully();
-	return CAST;
-}
-
-casting_result divination_identify()
-{
-	if (get_level_s(IDENTIFY, 50) >= 17)
-	{
-		identify_pack();
-		return CAST;
-	}
-	else if (ident_spell())
-	{
-		return CAST;
-	}
-	else
-	{
-		return NO_CAST;
-	}
-}
-
-const char *divination_identify_info()
-{
-	static char buf[128];
-
-	if (get_level_s(IDENTIFY, 50) >= 27)
-	{
-		sprintf(buf, "rad " FMTs32b, get_level_s(IDENTIFY, 3));
-		return buf;
-	}
-	else
-	{
-		return "";
-	}
 }
 
 casting_result divination_vision()

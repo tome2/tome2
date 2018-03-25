@@ -63,7 +63,6 @@ void initialize_bookable_spells()
 	push_spell(SENSEMONSTERS);
 	push_spell(SENSEHIDDEN);
 	push_spell(REVEALWAYS);
-	push_spell(IDENTIFY);
 	push_spell(VISION);
 	push_spell(MAGELOCK);
 	push_spell(SLOWMONSTER);

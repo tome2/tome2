@@ -1101,44 +1101,6 @@ void school_spells_init()
 	}
 
 	{
-		spell_type *spell = spell_new(&STARIDENTIFY, "Greater Identify");
-		spell_type_describe(spell, "Asks for an object and fully identify it, providing the full list of powers");
-		spell_type_describe(spell, "Cast at yourself it will reveal your powers");
-		spell_type_set_mana(spell, 30, 30);
-		spell_type_set_difficulty(spell, 35, 80);
-		spell_type_init_mage(spell,
-				     RANDOM,
-				     SCHOOL_DIVINATION,
-				     no_info,
-				     divination_greater_identify);
-	}
-
-	{
-		spell_type *spell = spell_new(&IDENTIFY, "Identify");
-		spell_type_describe(spell, "Asks for an object and identifies it");
-		spell_type_describe(spell, "At level 17 it identifies all objects in the inventory");
-		spell_type_describe(spell, "At level 27 it identifies all objects in the inventory and in a");
-		spell_type_describe(spell, "radius on the floor");
-		spell_type_set_mana(spell, 10, 50);
-		spell_type_set_difficulty(spell, 8, 40);
-		spell_type_init_mage(spell,
-				     RANDOM,
-				     SCHOOL_DIVINATION,
-				     divination_identify_info,
-				     divination_identify);
-
-		spell_type_set_device_charges(spell, "7+d10");
-
-		{
-			device_allocation *device_allocation = device_allocation_new(TV_STAFF);
-			device_allocation->rarity = 45;
-			range_init(&device_allocation->base_level, 1, 15);
-			range_init(&device_allocation->max_level, 15, 40);
-			spell_type_add_device_allocation(spell, device_allocation);
-		}
-	}
-
-	{
 		spell_type *spell = spell_new(&VISION, "Vision");
 		spell_type_describe(spell, "Detects the layout of the surrounding area");
 		spell_type_describe(spell, "At level 25 it maps and lights the whole level");

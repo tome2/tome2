@@ -224,9 +224,7 @@ void init_school_books()
 	push_spell(TOME_NATURE, GROWTREE);
 
 	/* Create the book of Knowledge */
-	push_spell(TOME_KNOWLEDGE, STARIDENTIFY);
 	push_spell(TOME_KNOWLEDGE, VISION);
-	push_spell(TOME_KNOWLEDGE, IDENTIFY);
 	push_spell(TOME_KNOWLEDGE, REVEALWAYS);
 	push_spell(TOME_KNOWLEDGE, SENSEHIDDEN);
 	push_spell(TOME_KNOWLEDGE, SENSEMONSTERS);
