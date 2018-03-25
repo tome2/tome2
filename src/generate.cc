@@ -7435,13 +7435,6 @@ static bool cave_gen()
 
 	dun_data dun_body;
 
-	char generator_name[100];
-
-	if (!get_dungeon_generator(generator_name))
-	{
-		strnfmt(generator_name, sizeof(generator_name)-1, "%s", d_ptr->generator.c_str());
-	}
-
 	/*
 	 * We generate a double dungeon. First we should halve the desired
 	 * width/height, generate the dungeon normally, then double it
@@ -7481,7 +7474,7 @@ static bool cave_gen()
 	/*
 	 * Call level generator
 	 */
-	auto &generator = game->level_generators.at(generator_name);
+	auto &generator = game->level_generators.at(d_ptr->generator);
 	if (!generator())
 	{
 		return false;

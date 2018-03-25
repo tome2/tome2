@@ -148,21 +148,6 @@ bool get_dungeon_save(char *buf)
 }
 
 /*
- * Return the level generator
- */
-bool get_dungeon_generator(char *buf)
-{
-	auto const &d_info = game->edit_data.d_info;
-
-	char file[20];
-	sprintf(file, "dun%d.%d", dungeon_type, dun_level - d_info[dungeon_type].mindepth);
-
-	/* Get and return the level */
-	start_line = -1;
-	return get_command(file, 'G', buf);
-}
-
-/*
  * Return the special level
  */
 bool get_dungeon_special(char *buf)

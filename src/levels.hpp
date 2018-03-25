@@ -2,7 +2,6 @@
 
 #include "h-basic.h"
 
-bool get_dungeon_generator(char *buf);
 bool get_level_desc(char *buf);
 void get_level_flags();
 bool get_dungeon_name(char *buf);
