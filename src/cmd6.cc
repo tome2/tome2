@@ -2651,7 +2651,7 @@ void do_cmd_drink_fountain()
 /*
  * Curse the players armor
  */
-static bool_ curse_armor()
+static void curse_armor()
 {
 	/* Curse the body armor */
 	auto o_ptr = &p_ptr->inventory[INVEN_BODY];
@@ -2659,7 +2659,7 @@ static bool_ curse_armor()
 	/* Nothing to curse */
 	if (!o_ptr->k_ptr)
 	{
-		return FALSE;
+		return;
 	}
 
 	/* Describe */
@@ -2703,15 +2703,13 @@ static bool_ curse_armor()
 		/* Window stuff */
 		p_ptr->window |= (PW_INVEN | PW_EQUIP | PW_PLAYER);
 	}
-
-	return (TRUE);
 }
 
 
 /*
  * Curse the players weapon
  */
-static bool_ curse_weapon()
+static void curse_weapon()
 {
 	/* Curse the weapon */
 	auto o_ptr = &p_ptr->inventory[INVEN_WIELD];
@@ -2719,7 +2717,7 @@ static bool_ curse_weapon()
 	/* Nothing to curse */
 	if (!o_ptr->k_ptr)
 	{
-		return (FALSE);
+		return;
 	}
 
 	/* Describe */
@@ -2764,9 +2762,6 @@ static bool_ curse_weapon()
 		/* Window stuff */
 		p_ptr->window |= (PW_INVEN | PW_EQUIP | PW_PLAYER);
 	}
-
-	/* Notice */
-	return (TRUE);
 }
 
 
@@ -2833,12 +2828,6 @@ void do_cmd_read_scroll()
 	/* Take a turn */
 	energy_use = 100;
 
-	/* Not identified yet */
-	int ident = FALSE;
-
-	/* Object level */
-	int lev = o_ptr->k_ptr->level;
-
 	/* Assume the scroll will get used up */
 	int used_up = TRUE;
 
@@ -2847,7 +2836,6 @@ void do_cmd_read_scroll()
 	{
 		msg_print("Your demon aura burns the scroll before you read it!");
 		used_up = TRUE;
-		ident = FALSE;
 	}
 
 	/* Scrolls */
@@ -2858,7 +2846,6 @@ void do_cmd_read_scroll()
 		{
 		case SV_SCROLL_MASS_RESURECTION:
 			{
-				ident = TRUE;
 				msg_print("You feel the souls of the dead coming back "
 				          "from the Halls of Mandos.");
 
@@ -2887,7 +2874,6 @@ void do_cmd_read_scroll()
 
 				do_cmd_leave_body(FALSE);
 
-				ident = TRUE;
 				used_up = TRUE;
 
 				break;
@@ -2906,7 +2892,6 @@ void do_cmd_read_scroll()
 					   d_info[p_ptr->recall_dungeon].name.c_str(),
 				           max_dlv[p_ptr->recall_dungeon]);
 
-				ident = TRUE;
 				used_up = TRUE;
 
 				break;
@@ -2932,7 +2917,6 @@ void do_cmd_read_scroll()
 					msg_print("The scroll disappears in a puff of smoke!");
 
 					fates[i].know = TRUE;
-					ident = TRUE;
 
 					break;
 				}
@@ -2946,7 +2930,8 @@ void do_cmd_read_scroll()
 				{
 					set_blind(p_ptr->blind + 3 + randint(5));
 				}
-				if (unlite_area(10, 3)) ident = TRUE;
+
+				unlite_area(10, 3);
 
 				break;
 			}
@@ -2956,22 +2941,18 @@ void do_cmd_read_scroll()
 				msg_print("There is a high-pitched humming noise.");
 				aggravate_monsters(1);
 
-				ident = TRUE;
-
 				break;
 			}
 
 		case SV_SCROLL_CURSE_ARMOR:
 			{
-				if (curse_armor()) ident = TRUE;
-
+				curse_armor();
 				break;
 			}
 
 		case SV_SCROLL_CURSE_WEAPON:
 			{
-				if (curse_weapon()) ident = TRUE;
-
+				curse_weapon();
 				break;
 			}
 
@@ -2979,22 +2960,14 @@ void do_cmd_read_scroll()
 			{
 				for (int k = 0; k < randint(3); k++)
 				{
-					if (summon_specific(p_ptr->py, p_ptr->px, dun_level, 0))
-					{
-						ident = TRUE;
-					}
+					summon_specific(p_ptr->py, p_ptr->px, dun_level, 0);
 				}
-
 				break;
 			}
 
 		case SV_SCROLL_SUMMON_MINE:
 			{
-				if (summon_specific_friendly(p_ptr->py, p_ptr->px, dun_level, SUMMON_MINE, FALSE))
-				{
-					ident = TRUE;
-				}
-
+				summon_specific_friendly(p_ptr->py, p_ptr->px, dun_level, SUMMON_MINE, FALSE);
 				break;
 			}
 
@@ -3002,39 +2975,26 @@ void do_cmd_read_scroll()
 			{
 				for (int k = 0; k < randint(3); k++)
 				{
-					if (summon_specific(p_ptr->py, p_ptr->px, dun_level, SUMMON_UNDEAD))
-					{
-						ident = TRUE;
-					}
+					summon_specific(p_ptr->py, p_ptr->px, dun_level, SUMMON_UNDEAD);
 				}
-
 				break;
 			}
 
 		case SV_SCROLL_PHASE_DOOR:
 			{
 				teleport_player(10);
-
-				ident = TRUE;
-
 				break;
 			}
 
 		case SV_SCROLL_TELEPORT:
 			{
 				teleport_player(100);
-
-				ident = TRUE;
-
 				break;
 			}
 
 		case SV_SCROLL_TELEPORT_LEVEL:
 			{
 				teleport_player_level();
-
-				ident = TRUE;
-
 				break;
 			}
 
@@ -3047,27 +3007,7 @@ void do_cmd_read_scroll()
 				else
 				{
 					recall_player(21, 15);
-
-					ident = TRUE;
 				}
-
-				break;
-			}
-
-		case SV_SCROLL_IDENTIFY:
-			{
-				ident = TRUE;
-
-				if (!ident_spell()) used_up = FALSE;
-
-				break;
-			}
-
-		case SV_SCROLL_STAR_IDENTIFY:
-			{
-				ident = TRUE;
-
-				if (!identify_fully()) used_up = FALSE;
 
 				break;
 			}
@@ -3077,9 +3017,7 @@ void do_cmd_read_scroll()
 				if (remove_curse())
 				{
 					msg_print("You feel as if someone is watching over you.");
-					ident = TRUE;
 				}
-
 				break;
 			}
 
@@ -3088,146 +3026,132 @@ void do_cmd_read_scroll()
 				if (remove_all_curse())
 				{
 					msg_print("You feel as if someone is watching over you.");
-					ident = TRUE;
 				}
-
 				break;
 			}
 
 		case SV_SCROLL_ENCHANT_ARMOR:
 			{
-				ident = TRUE;
-
-				if (!enchant_spell(0, 0, 1, 0)) used_up = FALSE;
-
+				if (!enchant_spell(0, 0, 1, 0))
+				{
+					used_up = FALSE;
+				}
 				break;
 			}
 
 		case SV_SCROLL_ENCHANT_WEAPON_TO_HIT:
 			{
-				if (!enchant_spell(1, 0, 0, 0)) used_up = FALSE;
-
-				ident = TRUE;
-
+				if (!enchant_spell(1, 0, 0, 0))
+				{
+					used_up = FALSE;
+				}
 				break;
 			}
 
 		case SV_SCROLL_ENCHANT_WEAPON_TO_DAM:
 			{
-				if (!enchant_spell(0, 1, 0, 0)) used_up = FALSE;
-
-				ident = TRUE;
-
+				if (!enchant_spell(0, 1, 0, 0))
+				{
+					used_up = FALSE;
+				}
 				break;
 			}
 
 		case SV_SCROLL_ENCHANT_WEAPON_PVAL:
 			{
-				if (!enchant_spell(0, 0, 0, 1)) used_up = FALSE;
-
-				ident = TRUE;
-
+				if (!enchant_spell(0, 0, 0, 1))
+				{
+					used_up = FALSE;
+				}
 				break;
 			}
 
 		case SV_SCROLL_STAR_ENCHANT_ARMOR:
 			{
-				if (!enchant_spell(0, 0, randint(3) + 2, 0)) used_up = FALSE;
-
-				ident = TRUE;
-
+				if (!enchant_spell(0, 0, randint(3) + 2, 0))
+				{
+					used_up = FALSE;
+				}
 				break;
 			}
 
 		case SV_SCROLL_STAR_ENCHANT_WEAPON:
 			{
-				if (!enchant_spell(randint(3), randint(3), 0, 0)) used_up = FALSE;
-
-				ident = TRUE;
-
+				if (!enchant_spell(randint(3), randint(3), 0, 0))
+				{
+					used_up = FALSE;
+				}
 				break;
 			}
 
 		case SV_SCROLL_RECHARGING:
 			{
-				if (!recharge(60)) used_up = FALSE;
-
-				ident = TRUE;
-
+				if (!recharge(60))
+				{
+					used_up = FALSE;
+				}
 				break;
 			}
 
 		case SV_SCROLL_LIGHT:
 			{
-				if (lite_area(damroll(2, 8), 2)) ident = TRUE;
-
+				lite_area(damroll(2, 8), 2);
 				break;
 			}
 
 		case SV_SCROLL_MAPPING:
 			{
 				map_area();
-
-				ident = TRUE;
-
 				break;
 			}
 
 		case SV_SCROLL_DETECT_GOLD:
 			{
-				if (detect_treasure(DEFAULT_RADIUS)) ident = TRUE;
-				if (detect_objects_gold(DEFAULT_RADIUS)) ident = TRUE;
-
+				detect_treasure(DEFAULT_RADIUS);
+				detect_objects_gold(DEFAULT_RADIUS);
 				break;
 			}
 
 		case SV_SCROLL_DETECT_ITEM:
 			{
-				if (detect_objects_normal(DEFAULT_RADIUS)) ident = TRUE;
-
+				detect_objects_normal(DEFAULT_RADIUS);
 				break;
 			}
 
 		case SV_SCROLL_DETECT_DOOR:
 			{
-				if (detect_doors(DEFAULT_RADIUS)) ident = TRUE;
-				if (detect_stairs(DEFAULT_RADIUS)) ident = TRUE;
-
+				detect_doors(DEFAULT_RADIUS);
+				detect_stairs(DEFAULT_RADIUS);
 				break;
 			}
 
 		case SV_SCROLL_DETECT_INVIS:
 			{
-				if (detect_monsters_invis(DEFAULT_RADIUS)) ident = TRUE;
-
+				detect_monsters_invis(DEFAULT_RADIUS);
 				break;
 			}
 
 		case SV_SCROLL_SATISFY_HUNGER:
 			{
-				if (set_food(PY_FOOD_MAX - 1)) ident = TRUE;
-
+				set_food(PY_FOOD_MAX - 1);
 				break;
 			}
 
 		case SV_SCROLL_BLESSING:
 			{
-				if (set_blessed(p_ptr->blessed + randint(12) + 6)) ident = TRUE;
-
+				set_blessed(p_ptr->blessed + randint(12) + 6);
 				break;
 			}
 
 		case SV_SCROLL_HOLY_CHANT:
 			{
-				if (set_blessed(p_ptr->blessed + randint(24) + 12)) ident = TRUE;
-
+				set_blessed(p_ptr->blessed + randint(24) + 12);
 				break;
 			}
 
 		case SV_SCROLL_HOLY_PRAYER:
 			{
-				if (set_blessed(p_ptr->blessed + randint(48) + 24)) ident = TRUE;
-
+				set_blessed(p_ptr->blessed + randint(48) + 24);
 				break;
 			}
 
@@ -3237,7 +3161,6 @@ void do_cmd_read_scroll()
 				{
 					msg_print("Your hands begin to glow.");
 					p_ptr->confusing = TRUE;
-					ident = TRUE;
 				}
 
 				break;
@@ -3245,21 +3168,13 @@ void do_cmd_read_scroll()
 
 		case SV_SCROLL_PROTECTION_FROM_EVIL:
 			{
-				int k = 3 * p_ptr->lev;
-				if (set_protevil(p_ptr->protevil + randint(25) + k))
-				{
-					ident = TRUE;
-				}
-
+				set_protevil(p_ptr->protevil + randint(25) + (3 * p_ptr->lev));
 				break;
 			}
 
 		case SV_SCROLL_RUNE_OF_PROTECTION:
 			{
 				warding_glyph();
-
-				ident = TRUE;
-
 				break;
 			}
 
@@ -3275,51 +3190,36 @@ void do_cmd_read_scroll()
 					msg_print("The dungeon trembles...");
 				}
 
-				ident = TRUE;
-
 				break;
 			}
 
 		case SV_SCROLL_DISPEL_UNDEAD:
 			{
-				if (dispel_undead(60)) ident = TRUE;
-
+				dispel_undead(60);
 				break;
 			}
 
 		case SV_SCROLL_GENOCIDE:
 			{
 				genocide();
-
-				ident = TRUE;
-
 				break;
 			}
 
 		case SV_SCROLL_MASS_GENOCIDE:
 			{
 				mass_genocide();
-
-				ident = TRUE;
-
 				break;
 			}
 
 		case SV_SCROLL_ACQUIREMENT:
 			{
 				acquirement(p_ptr->py, p_ptr->px, 1, TRUE, FALSE);
-
-				ident = TRUE;
-
 				break;
 			}
 
 		case SV_SCROLL_STAR_ACQUIREMENT:
 			{
 				acquirement(p_ptr->py, p_ptr->px, randint(2) + 1, TRUE, FALSE);
-
-				ident = TRUE;
-
 				break;
 			}
 
@@ -3339,8 +3239,6 @@ void do_cmd_read_scroll()
 					         "a Scroll of Fire");
 				}
 
-				ident = TRUE;
-
 				break;
 			}
 
@@ -3355,8 +3253,6 @@ void do_cmd_read_scroll()
 					take_hit(100 + randint(100), "a Scroll of Ice");
 				}
 
-				ident = TRUE;
-
 				break;
 			}
 
@@ -3368,8 +3264,6 @@ void do_cmd_read_scroll()
 				{
 					take_hit(111 + randint(111), "a Scroll of Chaos");
 				}
-
-				ident = TRUE;
 
 				break;
 			}
@@ -3420,16 +3314,15 @@ void do_cmd_read_scroll()
 
 				msg_print("The scroll disappears in a puff of smoke!");
 
-				ident = TRUE;
-
 				break;
 			}
 
 		case SV_SCROLL_ARTIFACT:
 			{
-				ident = TRUE;
-
-				if (!artifact_scroll()) used_up = FALSE;
+				if (!artifact_scroll())
+				{
+					used_up = FALSE;
+				}
 
 				break;
 			}
@@ -3508,10 +3401,9 @@ void do_cmd_read_scroll()
 	object_tried(o_ptr);
 
 	/* An identification was made */
-	if (ident && !object_aware_p(o_ptr))
+	if (!object_aware_p(o_ptr))
 	{
 		object_aware(o_ptr);
-		gain_exp((lev + (p_ptr->lev >> 1)) / p_ptr->lev);
 	}
 
 	/* Window stuff */

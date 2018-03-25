@@ -2727,9 +2727,9 @@ bool_ banish_evil(int dist)
 /*
  * Dispel undead monsters
  */
-bool_ dispel_undead(int dam)
+void dispel_undead(int dam)
 {
-	return (project_hack(GF_DISP_UNDEAD, dam));
+	project_hack(GF_DISP_UNDEAD, dam);
 }
 
 /*
@@ -2849,7 +2849,7 @@ static bool get_genocide_race(cptr msg, char *typ)
 /*
  * Delete all non-unique/non-quest monsters of a given "type" from the level
  */
-static bool_ genocide_aux(char typ)
+static void genocide_aux(char typ)
 {
 	int i;
 	bool_ result = FALSE;
@@ -2894,7 +2894,7 @@ static bool_ genocide_aux(char typ)
 				cmsg_format(TERM_L_BLUE, "The spell seems to produce an ... interesting effect on the %s.", buf);
 			}
 
-			return TRUE;
+			return;
 		}
 
 		/* Delete the monster */
@@ -2933,37 +2933,39 @@ static bool_ genocide_aux(char typ)
 
 	/* Fresh */
 	Term_fresh();
-
-	return (result);
 }
 
-bool_ genocide()
+void genocide()
 {
-	char typ;
-
-	if (dungeon_flags & DF_NO_GENO) return (FALSE);
+	if (dungeon_flags & DF_NO_GENO)
+	{
+		return;
+	}
 
 	/* Hack -- when you are fated to die, you cant cheat :) */
 	if (dungeon_type == DUNGEON_DEATH)
 	{
 		msg_print("A mysterious force stops the genocide.");
-		return FALSE;
+		return;
 	}
 
 	/* Mega-Hack -- Get a monster symbol */
-	if (!get_genocide_race("Target a monster to select the race to genocide.", &typ)) return FALSE;
+	char typ;
+	if (!get_genocide_race("Target a monster to select the race to genocide.", &typ))
+	{
+		return;
+	}
 
-	return (genocide_aux(typ));
+	genocide_aux(typ);
 }
 
 
 /*
  * Delete all nearby (non-unique) monsters
  */
-bool_ mass_genocide()
+void mass_genocide()
 {
 	int i;
-	bool_ result = FALSE;
 	auto const msec = options->delay_factor_ms();
 	int dam = 0;
 
@@ -2971,7 +2973,7 @@ bool_ mass_genocide()
 	if ((dungeon_flags & DF_NO_GENO) || (dungeon_type == DUNGEON_DEATH))
 	{
 		msg_print("A mysterious force stops the genocide.");
-		return FALSE;
+		return;
 	}
 
 	/* Delete the (nearby) monsters */
@@ -3012,7 +3014,7 @@ bool_ mass_genocide()
 				cmsg_format(TERM_L_BLUE, "The spell seems to produce an ... interesting effect on the %s.", buf);
 			}
 
-			return TRUE;
+			return;
 		}
 
 		/* Delete the monster */
@@ -3029,9 +3031,6 @@ bool_ mass_genocide()
 
 		/* Delay */
 		sleep_for(milliseconds(msec));
-
-		/* Note effect */
-		result = TRUE;
 	}
 
 	/* Take damage */
@@ -3051,8 +3050,6 @@ bool_ mass_genocide()
 
 	/* Fresh */
 	Term_fresh();
-
-	return (result);
 }
 
 
@@ -3891,7 +3888,7 @@ bool_ lite_area(int dam, int rad)
  * Hack -- call darkness around the player
  * Affect all monsters in the projection radius
  */
-bool_ unlite_area(int dam, int rad)
+void unlite_area(int dam, int rad)
 {
 	int flg = PROJECT_GRID | PROJECT_KILL;
 
@@ -3906,9 +3903,6 @@ bool_ unlite_area(int dam, int rad)
 
 	/* Lite up the room */
 	unlite_room(p_ptr->py, p_ptr->px);
-
-	/* Assume seen */
-	return (TRUE);
 }
 
 
