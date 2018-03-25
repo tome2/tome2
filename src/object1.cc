@@ -80,264 +80,149 @@ static void apply_flags_set(s16b a_idx, s16b set_idx, object_flag_set *f);
  */
 static bool item_tester_full;
 
-
 /*
- * Max sizes of the following arrays
- */
-#define MAX_ROCKS      62       /* Used with rings (min 58) */
-#define MAX_AMULETS    34       /* Used with amulets (min 30) */
-#define MAX_WOODS      35       /* Used with staffs (min 32) */
-#define MAX_METALS     39       /* Used with wands/rods (min 32/30) */
-#define MAX_COLORS     66       /* Used with potions (min 62) */
-#define MAX_SHROOM     20       /* Used with mushrooms (min 20) */
-#define MAX_TITLES     55       /* Used with scrolls (min 55) */
-
-
-/*
- * Rings (adjectives and colors)
+ * Color arrays
  */
 
-static cptr ring_adj[MAX_ROCKS] =
-{
-	"Alexandrite", "Amethyst", "Aquamarine", "Azurite", "Beryl",
-	"Bloodstone", "Calcite", "Carnelian", "Corundum", "Diamond",
-	"Emerald", "Fluorite", "Garnet", "Granite", "Jade",
-	"Jasper", "Lapis Lazuli", "Malachite", "Marble", "Moonstone",
-	"Onyx", "Opal", "Pearl", "Quartz", "Quartzite",
-	"Rhodonite", "Ruby", "Sapphire", "Tiger Eye", "Topaz",
-	"Turquoise", "Zircon", "Platinum", "Bronze", "Gold",
-	"Obsidian", "Silver", "Tortoise Shell", "Mithril", "Jet",
-	"Engagement", "Adamantite",
-	"Wire", "Dilithium", "Bone", "Wooden",
-	"Spikard", "Serpent", "Wedding", "Double",
-	"Plain", "Brass", "Scarab", "Shining",
-	"Rusty", "Transparent", "Copper", "Black Opal", "Nickel",
-	"Glass", "Fluorspar", "Agate",
+namespace { // anonymous
+
+struct object_colors_t {
+
+	std::vector<byte> rings {
+		TERM_GREEN, TERM_VIOLET, TERM_L_BLUE, TERM_L_BLUE, TERM_L_GREEN,
+		TERM_RED, TERM_WHITE, TERM_RED, TERM_SLATE, TERM_WHITE,
+		TERM_GREEN, TERM_L_GREEN, TERM_RED, TERM_L_DARK, TERM_L_GREEN,
+		TERM_UMBER, TERM_BLUE, TERM_GREEN, TERM_WHITE, TERM_L_WHITE,
+		TERM_L_RED, TERM_L_WHITE, TERM_WHITE, TERM_L_WHITE, TERM_L_WHITE,
+		TERM_L_RED, TERM_RED, TERM_BLUE, TERM_YELLOW, TERM_YELLOW,
+		TERM_L_BLUE, TERM_L_UMBER, TERM_WHITE, TERM_L_UMBER, TERM_YELLOW,
+		TERM_L_DARK, TERM_L_WHITE, TERM_GREEN, TERM_L_BLUE, TERM_L_DARK,
+		TERM_YELLOW, TERM_VIOLET,
+		TERM_UMBER, TERM_L_WHITE, TERM_WHITE, TERM_UMBER,
+		TERM_BLUE, TERM_GREEN, TERM_YELLOW, TERM_ORANGE,
+		TERM_YELLOW, TERM_ORANGE, TERM_L_GREEN, TERM_YELLOW,
+		TERM_RED, TERM_WHITE, TERM_UMBER, TERM_L_DARK, TERM_L_WHITE,
+		TERM_WHITE, TERM_BLUE, TERM_L_WHITE
+	};
+
+	std::vector<byte> amulets {
+		TERM_YELLOW, TERM_L_UMBER, TERM_WHITE, TERM_L_WHITE, TERM_WHITE,
+		TERM_L_DARK, TERM_WHITE, TERM_ORANGE, TERM_L_UMBER, TERM_SLATE,
+		TERM_GREEN, TERM_YELLOW, TERM_L_BLUE, TERM_L_BLUE, TERM_L_WHITE,
+		TERM_L_UMBER, TERM_VIOLET, TERM_L_BLUE, TERM_BLUE, TERM_L_WHITE,
+		TERM_UMBER, TERM_L_BLUE, TERM_SLATE, TERM_RED, TERM_L_GREEN,
+		TERM_WHITE, TERM_L_DARK, TERM_L_WHITE, TERM_WHITE, TERM_L_GREEN,
+		TERM_GREEN, TERM_VIOLET, TERM_L_WHITE, TERM_UMBER
+	};
+
+	std::vector<byte> staves {
+		TERM_L_UMBER, TERM_L_UMBER, TERM_L_UMBER, TERM_L_UMBER, TERM_L_UMBER,
+		TERM_L_UMBER, TERM_L_UMBER, TERM_L_UMBER, TERM_L_UMBER, TERM_L_UMBER,
+		TERM_L_UMBER, TERM_L_UMBER, TERM_UMBER, TERM_L_UMBER, TERM_UMBER,
+		TERM_L_UMBER, TERM_L_UMBER, TERM_L_UMBER, TERM_L_UMBER, TERM_RED,
+		TERM_RED, TERM_L_UMBER, TERM_L_UMBER, TERM_L_UMBER, TERM_UMBER,
+		TERM_GREEN, TERM_L_UMBER, TERM_L_UMBER, TERM_L_WHITE, TERM_UMBER,
+		TERM_YELLOW, TERM_SLATE, TERM_UMBER, TERM_L_WHITE, TERM_L_UMBER
+	};
+
+	std::vector<byte> wands {
+		TERM_L_BLUE, TERM_L_DARK, TERM_WHITE, TERM_UMBER, TERM_YELLOW,
+		TERM_SLATE, TERM_L_WHITE, TERM_L_WHITE, TERM_L_WHITE, TERM_RED,
+		TERM_L_WHITE, TERM_L_WHITE, TERM_L_WHITE, TERM_WHITE, TERM_WHITE,
+		TERM_L_WHITE, TERM_L_WHITE, TERM_L_BLUE, TERM_L_UMBER, TERM_YELLOW,
+		TERM_L_UMBER, TERM_L_WHITE, TERM_L_WHITE, TERM_L_WHITE, TERM_L_WHITE,
+		TERM_L_BLUE, TERM_L_BLUE, TERM_UMBER, TERM_L_UMBER, TERM_L_UMBER,
+		TERM_WHITE, TERM_SLATE, TERM_SLATE, TERM_WHITE, TERM_VIOLET,
+		TERM_L_RED, TERM_L_BLUE, TERM_BLUE, TERM_RED
+	};
+
+	std::vector<byte> rods = wands;
+
+	std::vector<byte> food {
+		TERM_BLUE, TERM_L_DARK, TERM_L_DARK, TERM_UMBER, TERM_BLUE,
+		TERM_GREEN, TERM_RED, TERM_YELLOW, TERM_L_WHITE, TERM_GREEN,
+		TERM_SLATE, TERM_L_BLUE, TERM_L_GREEN, TERM_VIOLET, TERM_RED,
+		TERM_SLATE, TERM_L_UMBER, TERM_WHITE, TERM_WHITE, TERM_UMBER
+	};
+
+	std::vector<byte> potions {
+		TERM_WHITE, TERM_L_UMBER, TERM_GREEN, TERM_MULTI,
+		TERM_L_BLUE, TERM_BLUE, TERM_BLUE, TERM_L_DARK, TERM_UMBER, TERM_UMBER,
+		TERM_L_WHITE, TERM_L_GREEN, TERM_WHITE, TERM_L_UMBER, TERM_RED, TERM_L_BLUE,
+		TERM_BLUE, TERM_GREEN, TERM_RED, TERM_YELLOW, TERM_GREEN,
+		TERM_GREEN, TERM_SLATE, TERM_SLATE, TERM_L_WHITE, TERM_VIOLET,
+		TERM_L_BLUE, TERM_L_GREEN, TERM_RED, TERM_BLUE, TERM_RED,
+		TERM_GREEN, TERM_VIOLET, TERM_L_WHITE, TERM_ORANGE, TERM_ORANGE,
+		TERM_L_RED, TERM_L_RED, TERM_VIOLET, TERM_VIOLET, TERM_VIOLET,
+		TERM_RED, TERM_RED, TERM_L_WHITE, TERM_L_DARK, TERM_ORANGE,
+		TERM_VIOLET, TERM_RED, TERM_WHITE, TERM_YELLOW, TERM_VIOLET,
+		TERM_L_RED, TERM_RED, TERM_L_RED, TERM_YELLOW, TERM_GREEN,
+		TERM_MULTI, TERM_RED, TERM_YELLOW, TERM_YELLOW,
+		TERM_L_UMBER, TERM_UMBER, TERM_L_DARK, TERM_RED, TERM_WHITE, TERM_L_BLUE
+	};
+
+	std::vector<byte> scrolls =
+		std::vector<byte>(55, TERM_WHITE); // All scrolls are white.
+
 };
 
-static byte ring_col[MAX_ROCKS] =
+object_colors_t const &object_colors_0()
 {
-	TERM_GREEN, TERM_VIOLET, TERM_L_BLUE, TERM_L_BLUE, TERM_L_GREEN,
-	TERM_RED, TERM_WHITE, TERM_RED, TERM_SLATE, TERM_WHITE,
-	TERM_GREEN, TERM_L_GREEN, TERM_RED, TERM_L_DARK, TERM_L_GREEN,
-	TERM_UMBER, TERM_BLUE, TERM_GREEN, TERM_WHITE, TERM_L_WHITE,
-	TERM_L_RED, TERM_L_WHITE, TERM_WHITE, TERM_L_WHITE, TERM_L_WHITE,
-	TERM_L_RED, TERM_RED, TERM_BLUE, TERM_YELLOW, TERM_YELLOW,
-	TERM_L_BLUE, TERM_L_UMBER, TERM_WHITE, TERM_L_UMBER, TERM_YELLOW,
-	TERM_L_DARK, TERM_L_WHITE, TERM_GREEN, TERM_L_BLUE, TERM_L_DARK,
-	TERM_YELLOW, TERM_VIOLET,
-	TERM_UMBER, TERM_L_WHITE, TERM_WHITE, TERM_UMBER,
-	TERM_BLUE, TERM_GREEN, TERM_YELLOW, TERM_ORANGE,
-	TERM_YELLOW, TERM_ORANGE, TERM_L_GREEN, TERM_YELLOW,
-	TERM_RED, TERM_WHITE, TERM_UMBER, TERM_L_DARK, TERM_L_WHITE,
-	TERM_WHITE, TERM_BLUE, TERM_L_WHITE
-};
+	object_colors_t const *instance = new object_colors_t();
+	return *instance;
+}
+
+} // namespace anonymous
 
 
-/*
- * Amulets (adjectives and colors)
- */
-
-static cptr amulet_adj[MAX_AMULETS] =
-{
-	"Amber", "Driftwood", "Coral", "Agate", "Ivory",
-	"Obsidian", "Bone", "Brass", "Bronze", "Pewter",
-	"Tortoise Shell", "Golden", "Azure", "Crystal", "Silver",
-	"Copper", "Amethyst", "Mithril", "Sapphire", "Dragon Tooth",
-	"Carved Oak", "Sea Shell", "Flint Stone", "Ruby", "Scarab",
-	"Origami Paper", "Meteoric Iron", "Platinum", "Glass", "Beryl",
-	"Malachite", "Adamantite", "Mother-of-pearl", "Runed"
-};
-
-static byte amulet_col[MAX_AMULETS] =
-{
-	TERM_YELLOW, TERM_L_UMBER, TERM_WHITE, TERM_L_WHITE, TERM_WHITE,
-	TERM_L_DARK, TERM_WHITE, TERM_ORANGE, TERM_L_UMBER, TERM_SLATE,
-	TERM_GREEN, TERM_YELLOW, TERM_L_BLUE, TERM_L_BLUE, TERM_L_WHITE,
-	TERM_L_UMBER, TERM_VIOLET, TERM_L_BLUE, TERM_BLUE, TERM_L_WHITE,
-	TERM_UMBER, TERM_L_BLUE, TERM_SLATE, TERM_RED, TERM_L_GREEN,
-	TERM_WHITE, TERM_L_DARK, TERM_L_WHITE, TERM_WHITE, TERM_L_GREEN,
-	TERM_GREEN, TERM_VIOLET, TERM_L_WHITE, TERM_UMBER
-};
-
-
-/*
- * Staffs (adjectives and colors)
- */
-
-static cptr staff_adj[MAX_WOODS] =
-{
-	"Aspen", "Balsa", "Banyan", "Birch", "Cedar",
-	"Cottonwood", "Cypress", "Dogwood", "Elm", "Eucalyptus",
-	"Hemlock", "Hickory", "Ironwood", "Locust", "Mahogany",
-	"Maple", "Mulberry", "Oak", "Pine", "Redwood",
-	"Rosewood", "Spruce", "Sycamore", "Teak", "Walnut",
-	"Mistletoe", "Hawthorn", "Bamboo", "Silver", "Runed",
-	"Golden", "Ashen", "Gnarled", "Ivory", "Willow"
-};
-
-static byte staff_col[MAX_WOODS] =
-{
-	TERM_L_UMBER, TERM_L_UMBER, TERM_L_UMBER, TERM_L_UMBER, TERM_L_UMBER,
-	TERM_L_UMBER, TERM_L_UMBER, TERM_L_UMBER, TERM_L_UMBER, TERM_L_UMBER,
-	TERM_L_UMBER, TERM_L_UMBER, TERM_UMBER, TERM_L_UMBER, TERM_UMBER,
-	TERM_L_UMBER, TERM_L_UMBER, TERM_L_UMBER, TERM_L_UMBER, TERM_RED,
-	TERM_RED, TERM_L_UMBER, TERM_L_UMBER, TERM_L_UMBER, TERM_UMBER,
-	TERM_GREEN, TERM_L_UMBER, TERM_L_UMBER, TERM_L_WHITE, TERM_UMBER,
-	TERM_YELLOW, TERM_SLATE, TERM_UMBER, TERM_L_WHITE, TERM_L_UMBER
-};
-
-
-/*
- * Wands (adjectives and colors)
- */
-
-static cptr wand_adj[MAX_METALS] =
-{
-	"Aluminium", "Cast Iron", "Chromium", "Copper", "Gold",
-	"Iron", "Magnesium", "Molybdenum", "Nickel", "Rusty",
-	"Silver", "Steel", "Tin", "Titanium", "Tungsten",
-	"Zirconium", "Zinc", "Aluminium-Plated", "Copper-Plated", "Gold-Plated",
-	"Nickel-Plated", "Silver-Plated", "Steel-Plated", "Tin-Plated", "Zinc-Plated",
-	"Mithril-Plated", "Mithril", "Runed", "Bronze", "Brass",
-	"Platinum", "Lead", "Lead-Plated", "Ivory" , "Adamantite",
-	"Uridium", "Long", "Short", "Hexagonal"
-};
-
-static byte wand_col[MAX_METALS] =
-{
-	TERM_L_BLUE, TERM_L_DARK, TERM_WHITE, TERM_UMBER, TERM_YELLOW,
-	TERM_SLATE, TERM_L_WHITE, TERM_L_WHITE, TERM_L_WHITE, TERM_RED,
-	TERM_L_WHITE, TERM_L_WHITE, TERM_L_WHITE, TERM_WHITE, TERM_WHITE,
-	TERM_L_WHITE, TERM_L_WHITE, TERM_L_BLUE, TERM_L_UMBER, TERM_YELLOW,
-	TERM_L_UMBER, TERM_L_WHITE, TERM_L_WHITE, TERM_L_WHITE, TERM_L_WHITE,
-	TERM_L_BLUE, TERM_L_BLUE, TERM_UMBER, TERM_L_UMBER, TERM_L_UMBER,
-	TERM_WHITE, TERM_SLATE, TERM_SLATE, TERM_WHITE, TERM_VIOLET,
-	TERM_L_RED, TERM_L_BLUE, TERM_BLUE, TERM_RED
-};
-
-
-/*
- * Rods (adjectives and colors).
- * Efficiency -- copied from wand arrays
- */
-
-static cptr rod_adj[MAX_METALS];
-
-static byte rod_col[MAX_METALS];
-
-
-/*
- * Mushrooms (adjectives and colors)
- */
-
-static cptr food_adj[MAX_SHROOM] =
-{
-	"Blue", "Black", "Black Spotted", "Brown", "Dark Blue",
-	"Dark Green", "Dark Red", "Yellow", "Furry", "Green",
-	"Grey", "Light Blue", "Light Green", "Violet", "Red",
-	"Slimy", "Tan", "White", "White Spotted", "Wrinkled",
-};
-
-static byte food_col[MAX_SHROOM] =
-{
-	TERM_BLUE, TERM_L_DARK, TERM_L_DARK, TERM_UMBER, TERM_BLUE,
-	TERM_GREEN, TERM_RED, TERM_YELLOW, TERM_L_WHITE, TERM_GREEN,
-	TERM_SLATE, TERM_L_BLUE, TERM_L_GREEN, TERM_VIOLET, TERM_RED,
-	TERM_SLATE, TERM_L_UMBER, TERM_WHITE, TERM_WHITE, TERM_UMBER
-};
-
-
-/*
- * Color adjectives and colors, for potions.
- * Hack -- The first four entries are hard-coded.
- * (water, apple juice, slime mold juice, something)
- */
-
-static cptr potion_adj[MAX_COLORS] =
-{
-	"Clear", "Light Brown", "Icky Green", "Strangely Phosphorescent",
-	"Azure", "Blue", "Blue Speckled", "Black", "Brown", "Brown Speckled",
-	"Bubbling", "Chartreuse", "Cloudy", "Copper Speckled", "Crimson", "Cyan",
-	"Dark Blue", "Dark Green", "Dark Red", "Gold Speckled", "Green",
-	"Green Speckled", "Grey", "Grey Speckled", "Hazy", "Indigo",
-	"Light Blue", "Light Green", "Magenta", "Metallic Blue", "Metallic Red",
-	"Metallic Green", "Metallic Purple", "Misty", "Orange", "Orange Speckled",
-	"Pink", "Pink Speckled", "Puce", "Purple", "Purple Speckled",
-	"Red", "Red Speckled", "Silver Speckled", "Smoky", "Tangerine",
-	"Violet", "Vermilion", "White", "Yellow", "Violet Speckled",
-	"Pungent", "Clotted Red", "Viscous Pink", "Oily Yellow", "Gloopy Green",
-	"Shimmering", "Coagulated Crimson", "Yellow Speckled", "Gold",
-	"Manly", "Stinking", "Oily Black", "Ichor", "Ivory White", "Sky Blue",
-};
-
-static byte potion_col[MAX_COLORS] =
-{
-	TERM_WHITE, TERM_L_UMBER, TERM_GREEN, TERM_MULTI,
-	TERM_L_BLUE, TERM_BLUE, TERM_BLUE, TERM_L_DARK, TERM_UMBER, TERM_UMBER,
-	TERM_L_WHITE, TERM_L_GREEN, TERM_WHITE, TERM_L_UMBER, TERM_RED, TERM_L_BLUE,
-	TERM_BLUE, TERM_GREEN, TERM_RED, TERM_YELLOW, TERM_GREEN,
-	TERM_GREEN, TERM_SLATE, TERM_SLATE, TERM_L_WHITE, TERM_VIOLET,
-	TERM_L_BLUE, TERM_L_GREEN, TERM_RED, TERM_BLUE, TERM_RED,
-	TERM_GREEN, TERM_VIOLET, TERM_L_WHITE, TERM_ORANGE, TERM_ORANGE,
-	TERM_L_RED, TERM_L_RED, TERM_VIOLET, TERM_VIOLET, TERM_VIOLET,
-	TERM_RED, TERM_RED, TERM_L_WHITE, TERM_L_DARK, TERM_ORANGE,
-	TERM_VIOLET, TERM_RED, TERM_WHITE, TERM_YELLOW, TERM_VIOLET,
-	TERM_L_RED, TERM_RED, TERM_L_RED, TERM_YELLOW, TERM_GREEN,
-	TERM_MULTI, TERM_RED, TERM_YELLOW, TERM_YELLOW,
-	TERM_L_UMBER, TERM_UMBER, TERM_L_DARK, TERM_RED, TERM_WHITE, TERM_L_BLUE
-};
-
-
-static byte scroll_col[MAX_TITLES];
-
-
-static byte object_flavor(std::shared_ptr<object_kind> k_ptr)
+static byte object_flavor(
+	object_colors_t const &object_colors,
+	std::shared_ptr<object_kind> k_ptr)
 {
 	/* Analyze the item */
 	switch (k_ptr->tval)
 	{
 	case TV_AMULET:
 		{
-			return (0x80 + amulet_col[k_ptr->sval]);
+			return 0x80 + object_colors.amulets.at(k_ptr->sval);
 		}
 
 	case TV_RING:
 		{
-			return (0x90 + ring_col[k_ptr->sval]);
+			return 0x90 + object_colors.rings.at(k_ptr->sval);
 		}
 
 	case TV_STAFF:
 		{
-			return (0xA0 + staff_col[k_ptr->sval]);
+			return 0xA0 + object_colors.staves.at(k_ptr->sval);
 		}
 
 	case TV_WAND:
 		{
-			return (0xB0 + wand_col[k_ptr->sval]);
+			return 0xB0 + object_colors.wands.at(k_ptr->sval);
 		}
 
 	case TV_ROD:
 		{
-			return (0xC0 + rod_col[k_ptr->sval]);
+			return 0xC0 + object_colors.rods.at(k_ptr->sval);
 		}
 
 	case TV_SCROLL:
 		{
-			return (0xD0 + scroll_col[k_ptr->sval]);
+			return 0xD0 + object_colors.scrolls.at(k_ptr->sval);
 		}
 
 	case TV_POTION:
 	case TV_POTION2:
 		{
-			return (0xE0 + potion_col[k_ptr->sval]);
+			return 0xE0 + object_colors.potions.at(k_ptr->sval);
 		}
 
 	case TV_FOOD:
 		{
 			if (k_ptr->sval < SV_FOOD_MIN_FOOD)
 			{
-				return (0xF0 + food_col[k_ptr->sval]);
+				return 0xF0 + object_colors.food.at(k_ptr->sval);
 			}
 
 			break;
@@ -409,24 +294,6 @@ static bool_ object_easy_know(std::shared_ptr<object_kind> k_ptr)
 }
 
 
-
-/**
- * Shuffle flavor arrays into a random permutation
- */
-template <std::size_t N>
-static void shuffle_flavors(cptr adj[], byte col[])
-{
-	// The classic Fisher-Yates shuffle
-	for (std::size_t i = N - 1; i > 0; i--)
-	{
-		int j = rand_int(i + 1);
-		std::swap(adj[i], adj[j]);
-		std::swap(col[i], col[j]);
-	}
-}
-
-
-
 /*
  * Prepare the "variable" part of the "k_info" array.
  *
@@ -465,29 +332,18 @@ void flavor_init()
 	/* Hack -- Induce consistant flavors */
 	set_quick_rng(seed_flavor());
 
-	/* Efficiency -- Rods/Wands share initial array */
-	for (std::size_t i = 0; i < MAX_METALS; i++)
-	{
-		rod_adj[i] = wand_adj[i];
-		rod_col[i] = wand_col[i];
-	}
-
+	/* Get a copy of the initial colors */
+	auto object_colors = object_colors_0();
 
 	/* Object flavors */
-	shuffle_flavors<MAX_ROCKS>(ring_adj, ring_col);
-	shuffle_flavors<MAX_AMULETS>(amulet_adj, amulet_col);
-	shuffle_flavors<MAX_WOODS>(staff_adj, staff_col);
-	shuffle_flavors<MAX_METALS>(wand_adj, wand_col);
-	shuffle_flavors<MAX_METALS>(rod_adj, rod_col);
-	shuffle_flavors<MAX_SHROOM>(food_adj, food_col);
-	shuffle_flavors<MAX_COLORS - 4>(potion_adj + 4, potion_col + 4);
-
-	/* Scrolls (random titles, always white) */
-	for (std::size_t i = 0; i < MAX_TITLES; i++)
-	{
-		/* All scrolls are white */
-		scroll_col[i] = TERM_WHITE;
-	}
+	shuffle(object_colors.rings);
+	shuffle(object_colors.amulets);
+	shuffle(object_colors.staves);
+	shuffle(object_colors.wands);
+	shuffle(object_colors.rods);
+	shuffle(object_colors.food);
+	shuffle(object_colors.scrolls);
+	shuffle(object_colors.potions);
 
 	/* Hack -- Use the "complex" RNG */
 	set_complex_rng();
@@ -498,7 +354,7 @@ void flavor_init()
 		auto const &k_ptr = k_entry.second;
 
 		/* Extract "flavor" (if any) */
-		k_ptr->flavor = object_flavor(k_ptr);
+		k_ptr->flavor = object_flavor(object_colors, k_ptr);
 
 		/* No flavor yields aware */
 		if ((!k_ptr->flavor) && (k_ptr->tval != TV_ROD_MAIN))
@@ -1013,14 +869,9 @@ static std::string object_desc_aux(object_type const *o_ptr, int pref, int mode)
 		/* Amulets (including a few "Specials") */
 	case TV_AMULET:
 		{
-			/* Color the object */
-			modstr = amulet_adj[indexx];
 			if (aware) append_name = TRUE;
 
-			if (aware || o_ptr->ident & IDENT_STOREB)
-				basenm = "& Amulet~";
-			else
-				basenm = aware ? "& # Amulet~" : "& # Amulet~";
+			basenm = "& Amulet~";
 
 			if (known && o_ptr->artifact_name.empty() && artifact_p(o_ptr))
 			{
@@ -1033,17 +884,15 @@ static std::string object_desc_aux(object_type const *o_ptr, int pref, int mode)
 		/* Rings (including a few "Specials") */
 	case TV_RING:
 		{
-			/* Color the object */
-			modstr = ring_adj[indexx];
 			if (aware) append_name = TRUE;
 
-			if (aware || o_ptr->ident & IDENT_STOREB)
-				basenm = "& Ring~";
-			else
-				basenm = aware ? "& # Ring~" : "& # Ring~";
+			basenm = "& Ring~";
 
 			/* Hack -- The One Ring */
-			if (!aware && (o_ptr->sval == SV_RING_POWER)) modstr = "Plain Gold";
+			if (!aware && (o_ptr->sval == SV_RING_POWER))
+			{
+				modstr = "Plain Gold";
+			}
 
 			if (known && o_ptr->artifact_name.empty() && artifact_p(o_ptr))
 			{
@@ -1055,42 +904,32 @@ static std::string object_desc_aux(object_type const *o_ptr, int pref, int mode)
 
 	case TV_STAFF:
 		{
-			/* Color the object */
-			modstr = staff_adj[o_ptr->pval2 % MAX_WOODS];
 			if (aware) append_name = TRUE;
-			if (aware || o_ptr->ident & IDENT_STOREB)
-				basenm = "& Staff~";
-			else
-				basenm = "& # Staff~";
+
+			basenm = "& Staff~";
 			break;
 		}
 
 	case TV_WAND:
 		{
-			/* Color the object */
-			modstr = wand_adj[o_ptr->pval2 % MAX_METALS];
 			if (aware) append_name = TRUE;
-			if (aware || o_ptr->ident & IDENT_STOREB)
-				basenm = "& Wand~";
-			else
-				basenm = "& # Wand~";
+
+			basenm = "& Wand~";
 			break;
 		}
 
 	case TV_ROD:
 		{
-			/* Color the object */
-			modstr = rod_adj[indexx];
 			if (aware) append_name = TRUE;
-			if (aware || o_ptr->ident & IDENT_STOREB)
-				basenm = "& Rod Tip~";
-			else
-				basenm = aware ? "& # Rod Tip~" : "& # Rod Tip~";
+
+			basenm = "& Rod Tip~";
+
 			if (o_ptr->sval == SV_ROD_HOME)
 			{
 				basenm = "& Great Rod Tip~ of Home Summoning";
 				hack_name = TRUE;
 			}
+
 			break;
 		}
 
@@ -1111,20 +950,16 @@ static std::string object_desc_aux(object_type const *o_ptr, int pref, int mode)
 	case TV_POTION:
 	case TV_POTION2:
 		{
-			/* Color the object */
 			if ((o_ptr->tval != TV_POTION2) || (o_ptr->sval != SV_POTION2_MIMIC) || (!aware))
 			{
-				modstr = potion_adj[indexx];
 				if (aware) append_name = TRUE;
 			}
 			else
 			{
 				modstr = get_mimic_name(o_ptr->pval2);
 			}
-			if (aware || o_ptr->ident & IDENT_STOREB)
-				basenm = "& Potion~";
-			else
-				basenm = aware ? "& # Potion~" : "& # Potion~";
+
+			basenm = "& Potion~";
 			break;
 		}
 
@@ -1133,13 +968,9 @@ static std::string object_desc_aux(object_type const *o_ptr, int pref, int mode)
 			/* Ordinary food is "boring" */
 			if (o_ptr->sval >= SV_FOOD_MIN_FOOD) break;
 
-			/* Color the object */
-			modstr = food_adj[indexx];
 			if (aware) append_name = TRUE;
-			if (aware || o_ptr->ident & IDENT_STOREB)
-				basenm = "& Mushroom~";
-			else
-				basenm = aware ? "& # Mushroom~" : "& # Mushroom~";
+
+			basenm = "& Mushroom~";
 			break;
 		}
 
