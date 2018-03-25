@@ -1069,7 +1069,7 @@ static void map_info_layer3(
 					object_fn(o_ptr);
 
 				/* Multi-hued attr */
-				if (!options->avoid_other && (o_ptr->k_ptr->flags & TR_ATTR_MULTI))
+				if (!options->avoid_other && o_ptr->k_ptr && (o_ptr->k_ptr->flags & TR_ATTR_MULTI))
 				{
 					*ap = get_shimmer_color();
 				}
