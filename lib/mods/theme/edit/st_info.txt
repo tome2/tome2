@@ -336,28 +336,6 @@ G:+:s
 W:0
 
 N:16:Beastmaster Shanty
-# Monstrous Compendium 1
-T:100:8:9
-# Monstrous Compendium 2
-T:100:8:10
-# Monstrous Compendium 3
-T:95:8:11
-# Monstrous Compendium 4
-T:90:8:12
-# Monstrous Compendium 5
-T:85:8:13
-# Monstrous Compendium 6
-T:80:8:14
-# Monstrous Compendium 7
-T:75:8:15
-# Monstrous Compendium 8
-T:70:8:16
-# Monstrous Compendium 9
-T:65:8:17
-# Monstrous Compendium 10
-T:60:8:18
-# Monstrous Compendium 11
-T:55:8:19
 A:0:2:21:22:3:0
 O:94:95:96:97
 G:+:g
