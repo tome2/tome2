@@ -143,7 +143,7 @@ void grow_grass(int rad)
 /*
  * Increase players hit points, notice effects
  */
-bool_ hp_player(int num)
+void hp_player(int num)
 {
 	bool_ dead = p_ptr->chp < 0;
 
@@ -191,13 +191,7 @@ bool_ hp_player(int num)
 		{
 			msg_print("You feel very good.");
 		}
-
-		/* Notice */
-		return (TRUE);
 	}
-
-	/* Ignore */
-	return (FALSE);
 }
 
 
@@ -277,7 +271,7 @@ static cptr desc_stat_neg[] =
 /*
  * Lose a "point"
  */
-bool_ do_dec_stat(int stat, int mode)
+void do_dec_stat(int stat, int mode)
 {
 	bool_ sust = FALSE;
 
@@ -310,9 +304,7 @@ bool_ do_dec_stat(int stat, int mode)
 		/* Message */
 		msg_format("You feel %s for a moment, but the feeling passes.",
 		           desc_stat_neg[stat]);
-
-		/* Notice effect */
-		return (TRUE);
+		return;
 	}
 
 	/* Attempt to reduce the stat */
@@ -320,13 +312,8 @@ bool_ do_dec_stat(int stat, int mode)
 	{
 		/* Message */
 		msg_format("You feel very %s.", desc_stat_neg[stat]);
-
-		/* Notice effect */
-		return (TRUE);
+		return;
 	}
-
-	/* Nothing obvious */
-	return (FALSE);
 }
 
 
@@ -4639,8 +4626,7 @@ void alter_reality()
 	p_ptr->leaving = TRUE;
 }
 
-/* Heal insanity. */
-bool_ heal_insanity(int val)
+void heal_insanity(int val)
 {
 	if (p_ptr->csane < p_ptr->msane)
 	{
@@ -4671,11 +4657,7 @@ bool_ heal_insanity(int val)
 		{
 			msg_print("You feel very good.");
 		}
-
-		return TRUE;
 	}
-
-	return FALSE;
 }
 
 /*
