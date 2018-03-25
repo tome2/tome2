@@ -34,7 +34,7 @@ in asking for his help without offending him!
 
 There is a special book called the "Holy Tome of Eru Iluvatar" which 
 contains instructions for the procedure for each of the prayers Eru will 
-grant. There are four prayers all told, which are:
+grant. There are three prayers all told, which are:
 1. [[[[[BSee the Music] (Level 1)
    Allows you to 'see' the Great Music from which the world originates, 
       allowing you to see unseen things, and can be cast while blind.
@@ -46,11 +46,7 @@ grant. There are four prayers all told, which are:
       allowing you to understand the meaning of things.
    At spell level 14 it allows you to identify all your pack.
    At spell level 30 it allows you to identify all items on the level.
-3. [[[[[BKnow the Music] (Level 30)
-   Allows you to understand the Great Music from which the world originates,
-      allowing you to know the full abilities of things.
-   At spell level 10 it allows you to *identify* all your pack.
-4. [[[[[BLay of Protection] (Level 35)
+3. [[[[[BLay of Protection] (Level 35)
    Creates a circle of safety around you.
    
 Each of these spells can be increased in level both by improving your Prayer

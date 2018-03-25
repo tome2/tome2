@@ -1676,19 +1676,6 @@ void school_spells_init()
 	}
 
 	{
-		spell_type *spell = spell_new(&ERU_UNDERSTAND, "Know the Music");
-		spell_type_describe(spell, "Allows you to understand the Great Music from which the world");
-		spell_type_describe(spell, "originates, allowing you to know the full abilities of things");
-		spell_type_describe(spell, "At level 10 it allows you to *identify* all your pack");
-		spell_type_set_mana(spell, 200, 600);
-		spell_type_set_difficulty(spell, 30, 50);
-		spell_type_init_priest(spell,
-				       SCHOOL_ERU,
-				       no_info,
-				       eru_know_the_music);
-	}
-
-	{
 		spell_type *spell = spell_new(&ERU_PROT, "Lay of Protection");
 		spell_type_describe(spell, "Creates a circle of safety around you");
 		spell_type_set_mana(spell, 400, 400);

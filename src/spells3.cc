@@ -72,7 +72,6 @@ s32b SHAKE;
 
 s32b ERU_SEE;
 s32b ERU_LISTEN;
-s32b ERU_UNDERSTAND;
 s32b ERU_PROT;
 
 s32b GLOBELIGHT;
@@ -1134,21 +1133,6 @@ casting_result eru_listen_to_the_music()
 	}
 
 	return CAST;
-}
-
-casting_result eru_know_the_music()
-{
-	if (get_level_s(ERU_UNDERSTAND, 50) >= 10)
-	{
-		identify_pack_fully();
-		return CAST;
-	}
-	else if (identify_fully())
-	{
-		return CAST;
-	}
-
-	return NO_CAST;
 }
 
 casting_result eru_lay_of_protection()

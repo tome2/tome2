@@ -100,13 +100,11 @@ const char     *earth_shake_info();
 
 extern s32b ERU_SEE;
 extern s32b ERU_LISTEN;
-extern s32b ERU_UNDERSTAND;
 extern s32b ERU_PROT;
 
 casting_result  eru_see_the_music();
 const char     *eru_see_the_music_info();
 casting_result  eru_listen_to_the_music();
-casting_result  eru_know_the_music();
 casting_result  eru_lay_of_protection();
 const char     *eru_lay_of_protection_info();
 

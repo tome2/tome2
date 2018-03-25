@@ -256,7 +256,6 @@ void init_school_books()
 
 	/* Create the book of eru */
 	push_spell(TOME_ERU, ERU_PROT);
-	push_spell(TOME_ERU, ERU_UNDERSTAND);
 	push_spell(TOME_ERU, ERU_LISTEN);
 	push_spell(TOME_ERU, ERU_SEE);
 
