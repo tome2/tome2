@@ -121,25 +121,6 @@ typedef unsigned long u32b;
 #endif
 
 
-/*** Pointers to all the basic types defined above ***/
-
-typedef real *real_ptr;
-typedef errr *errr_ptr;
-typedef char *char_ptr;
-typedef byte *byte_ptr;
-typedef bool_ *bool_ptr;
-typedef sint *sint_ptr;
-typedef uint *uint_ptr;
-typedef long *long_ptr;
-typedef huge *huge_ptr;
-typedef s16b *s16b_ptr;
-typedef u16b *u16b_ptr;
-typedef s32b *s32b_ptr;
-typedef u32b *u32b_ptr;
-typedef cptr *cptr_ptr;
-
-
-
 /*** Pointers to Functions with simple return types and any args ***/
 
 typedef void	(*func_void)();
