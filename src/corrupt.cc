@@ -172,7 +172,7 @@ corruption_type corruptions[CORRUPTIONS_MAX] =
 		"The presence of the Balrog seems to abandon you.",
 		"  Allows you to turn into a Balrog at will\n"
 		"  You need Balrog Wings, Balrog Aura and Balrog Strength to activate it",
-		{ CORRUPT_BALROG_AURA, CORRUPT_BALROG_WINGS, CORRUPT_BALROG_STRENGTH },
+		{ CORRUPT_BALROG_AURA, CORRUPT_BALROG_WINGS, CORRUPT_BALROG_STRENGTH, -1 },
 		{ -1 },
 		NULL,
 		PWR_BALROG,
@@ -236,7 +236,7 @@ corruption_type corruptions[CORRUPTIONS_MAX] =
 		"You lose your attunement to the demon realm.",
 		"  Provides access to the demon school skill and the use of demonic equipment\n"
 		"  You need Demon Spirit, Demon Hide and Demon Breath to activate it",
-		{ CORRUPT_DEMON_SPIRIT, CORRUPT_DEMON_HIDE,  CORRUPT_DEMON_BREATH },
+		{ CORRUPT_DEMON_SPIRIT, CORRUPT_DEMON_HIDE,  CORRUPT_DEMON_BREATH, -1 },
 		{ -1 },
 		NULL,
 		-1,
