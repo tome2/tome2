@@ -5150,14 +5150,6 @@ F:RES_FIRE
 D:This suit of thick impregnated cloth is worn by the riders of flying steeds,
 D:and protects them from extremes of temperatures.
 
-# The Stone of Lore -- see artifact list
-N:647:& Stone~
-G:~:g
-I:39:106:0
-W:15:0:15:20000
-F:INSTA_ART
-F:SPECIAL_GENE
-
 # Here are the boomerangs
 
 N:648:& Small Wooden Boomerang~
