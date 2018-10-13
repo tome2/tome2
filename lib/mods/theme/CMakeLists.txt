@@ -1,7 +1,6 @@
 INSTALL(DIRECTORY
   apex
   data
-  dngn
   edit
   file
   help

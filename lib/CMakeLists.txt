@@ -2,7 +2,6 @@ INSTALL(DIRECTORY
   apex
   cmov
   data
-  dngn
   edit
   file
   help
