@@ -29,8 +29,6 @@
 #  include <sys/time.h>
 # endif
 
-#  include <sys/timeb.h>
-
 #endif
 
 
