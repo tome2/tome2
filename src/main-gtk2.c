@@ -1111,7 +1111,9 @@ static void size_allocate_event_handler(
 
 		/* Resize if necessary */
 		if ((td->cols != old_cols) || (td->rows != old_rows))
-			(void)Term_resize(td->cols, td->rows);
+		{
+			Term_resize(td->cols, td->rows);
+		}
 
 		/* Redraw its content */
 		Term_redraw();

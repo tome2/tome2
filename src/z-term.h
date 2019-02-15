@@ -126,42 +126,42 @@ void Term_xtra(int n, int v);
 void Term_queue_char(int x, int y, byte a, char c);
 void Term_queue_chars(int x, int y, int n, byte a, const char *s);
 
-errr Term_fresh();
-errr Term_set_cursor(int v);
+void Term_fresh();
+void Term_set_cursor(int v);
 errr Term_gotoxy(int x, int y);
-errr Term_draw(int x, int y, byte a, char c);
-errr Term_addch(byte a, char c);
+void Term_draw(int x, int y, byte a, char c);
+void Term_addch(byte a, char c);
 errr Term_addstr(int n, byte a, const char *s);
-errr Term_putch(int x, int y, byte a, char c);
-errr Term_putstr(int x, int y, int n, byte a, const char *s);
-errr Term_erase(int x, int y, int n);
-errr Term_clear();
-errr Term_redraw();
-errr Term_redraw_section(int x1, int y1, int x2, int y2);
+void Term_putch(int x, int y, byte a, char c);
+void Term_putstr(int x, int y, int n, byte a, const char *s);
+void Term_erase(int x, int y, int n);
+void Term_clear();
+void Term_redraw();
+void Term_redraw_section(int x1, int y1, int x2, int y2);
 void Term_bell();
 
-errr Term_get_cursor(int *v);
-errr Term_get_size(int *w, int *h);
-errr Term_locate(int *x, int *y);
-errr Term_what(int x, int y, byte *a, char *c);
+void Term_get_cursor(int *v);
+void Term_get_size(int *w, int *h);
+void Term_locate(int *x, int *y);
+void Term_what(int x, int y, byte *a, char *c);
 
 void Term_save_cursor_flags();
 void Term_restore_cursor_flags();
 void Term_set_cursor_visible();
 
-errr Term_flush();
-errr Term_keypress(int k);
+void Term_flush();
+void Term_keypress(int k);
 errr Term_key_push(int k);
 errr Term_inkey(char *ch, bool_ wait, bool_ take);
 
-errr Term_save(void);
-term_win* Term_save_to(void);
-errr Term_load(void);
-errr Term_load_from(term_win *save);
+void Term_save();
+term_win* Term_save_to();
+void Term_load();
+void Term_load_from(term_win *save);
 
-errr Term_resize(int w, int h);
+void Term_resize(int w, int h);
 
-errr Term_activate(term *t);
+void Term_activate(term *t);
 
 void Term_mapped();
 void Term_unmapped();

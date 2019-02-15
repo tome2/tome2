@@ -1282,7 +1282,7 @@ static char inkey_aux()
 
 
 	/* Wait for a keypress */
-	(Term_inkey(&ch, TRUE, TRUE));
+	Term_inkey(&ch, TRUE, TRUE);
 
 
 	/* End "macro action" */

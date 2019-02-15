@@ -2408,7 +2408,7 @@ static void file_character_print_grid(FILE *fff, bool_ show_gaps, bool_ show_leg
 	{
 		for (x = 0; x < 40; x++)
 		{
-			(Term_what(x, y, &a, &c));
+			Term_what(x, y, &a, &c);
 			buf[x] = c;
 		}
 
@@ -2421,7 +2421,7 @@ static void file_character_print_grid(FILE *fff, bool_ show_gaps, bool_ show_leg
 	{
 		for (x = 40; x < 80; x++)
 		{
-			(Term_what(x, y, &a, &c));
+			Term_what(x, y, &a, &c);
 			buf[x - 40] = c;
 		}
 
@@ -2567,7 +2567,7 @@ errr file_character(const char *name)
 		for (x = 0; x < 79; x++)
 		{
 			/* Get the attr/char */
-			(Term_what(x, y, &a, &c));
+			Term_what(x, y, &a, &c);
 
 			/* Dump it */
 			buf[x] = c;
@@ -2590,7 +2590,7 @@ errr file_character(const char *name)
 		for (x = 0; x < 79; x++)
 		{
 			/* Get the attr/char */
-			(Term_what(x, y, &a, &c));
+			Term_what(x, y, &a, &c);
 
 			/* Dump it */
 			buf[x] = c;

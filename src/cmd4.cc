@@ -2881,7 +2881,7 @@ void do_cmd_load_screen()
 		for (x = 0; x < len; x++)
 		{
 			/* Get the attr/char */
-			(Term_what(x, y, &a, &c));
+			Term_what(x, y, &a, &c);
 
 			/* Look up the attr */
 			for (i = 0; i < 16; i++)
@@ -2957,7 +2957,7 @@ void do_cmd_save_screen()
 		for (x = 0; x < wid; x++)
 		{
 			/* Get the attr/char */
-			(Term_what(x, y, &a, &c));
+			Term_what(x, y, &a, &c);
 
 			/* Dump it */
 			buf[x] = c;
@@ -2981,7 +2981,7 @@ void do_cmd_save_screen()
 		for (x = 0; x < wid; x++)
 		{
 			/* Get the attr/char */
-			(Term_what(x, y, &a, &c));
+			Term_what(x, y, &a, &c);
 
 			/* Dump it */
 			buf[x] = hack[a & 0x0F];
