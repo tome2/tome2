@@ -849,7 +849,7 @@ static void process_world()
 	auto const &f_info = game->edit_data.f_info;
 	auto &timers = game->timers;
 
-	int x, y, i, j;
+	int x, y;
 
 	int regen_amount;
 	bool cave_no_regen = false;
@@ -1127,6 +1127,8 @@ static void process_world()
 	/* Take damage from cuts */
 	if ((p_ptr->cut) && !(p_ptr->invuln))
 	{
+		int i;
+
 		/* Mortal wound or Deep Gash */
 		if (p_ptr->cut > 200)
 		{
@@ -1173,7 +1175,7 @@ static void process_world()
 			}
 
 			/* Basic digestion rate based on speed */
-			i = extract_energy[speed_use] * 2;
+			int i = extract_energy[speed_use] * 2;
 
 			/* Regeneration takes more food */
 			if (p_ptr->regenerate) i += 30;
@@ -1224,7 +1226,7 @@ static void process_world()
 	if (p_ptr->food < PY_FOOD_STARVE)
 	{
 		/* Calculate damage */
-		i = (PY_FOOD_STARVE - p_ptr->food) / 10;
+		int i = (PY_FOOD_STARVE - p_ptr->food) / 10;
 
 		/* Take damage */
 		if (!(p_ptr->invuln)) take_hit(i, "starvation");
@@ -1434,7 +1436,7 @@ static void process_world()
 	/*** Timeout Various Things ***/
 
 	/* Handle temporary stat drains */
-	for (i = 0; i < 6; i++)
+	for (int i = 0; i < 6; i++)
 	{
 		if (p_ptr->stat_cnt[i] > 0)
 		{
@@ -1953,9 +1955,9 @@ static void process_world()
 		 * to process_player() [before resting code, with "every 10 game turn"
 		 * 'if'] may or may not fix the problem... -- pelpel to DG
 		 */
-		for (j = 0; j < cur_hgt - 1; j++)
+		for (int j = 0; j < cur_hgt - 1; j++)
 		{
-			for (i = 0; i < cur_wid - 1; i++)
+			for (int i = 0; i < cur_wid - 1; i++)
 			{
 				int e = cave[j][i].effect;
 
@@ -1990,7 +1992,7 @@ static void process_world()
 		}
 
 		/* Reduce & handle effects */
-		for (i = 0; i < MAX_EFFECTS; i++)
+		for (int i = 0; i < MAX_EFFECTS; i++)
 		{
 			/* Skip empty slots */
 			if (effects[i].time == 0) continue;
@@ -2168,7 +2170,7 @@ static void process_world()
 		bool be_silent = false;
 
 		/* check all equipment for the Black Breath flag. */
-		for (i = INVEN_WIELD; i < INVEN_TOTAL; i++)
+		for (int i = INVEN_WIELD; i < INVEN_TOTAL; i++)
 		{
 			o_ptr = &p_ptr->inventory[i];
 
@@ -2354,7 +2356,8 @@ static void process_world()
 	}
 
 	/* Process equipment */
-	for (j = 0, i = INVEN_WIELD; i < INVEN_TOTAL; i++)
+	bool changed = false;
+	for (int i = INVEN_WIELD; i < INVEN_TOTAL; i++)
 	{
 		/* Get the object */
 		o_ptr = &p_ptr->inventory[i];
@@ -2431,20 +2434,20 @@ static void process_world()
 			if (o_ptr->timeout == 0)
 			{
 				recharged_notice(o_ptr);
-				j++;
+				changed = true;
 			}
 		}
 	}
 
 	/* Notice changes */
-	if (j)
+	if (changed)
 	{
-		/* Window stuff */
-		p_ptr->window |= (PW_EQUIP);
+		p_ptr->window |= PW_EQUIP;
 	}
 
 	/* Recharge rods */
-	for (j = 0, i = 0; i < INVEN_TOTAL; i++)
+	changed = false;
+	for (int i = 0; i < INVEN_TOTAL; i++)
 	{
 		o_ptr = &p_ptr->inventory[i];
 
@@ -2478,7 +2481,7 @@ static void process_world()
 			o_ptr->timeout += (flags & TR_CHARGING) ? 2 : 1;
 
 			/* Always notice */
-			j++;
+			changed = true;
 
 			/* Notice changes, provide message if object is inscribed. */
 			if (o_ptr->timeout >= o_ptr->pval2)
@@ -2497,7 +2500,7 @@ static void process_world()
 			/* Notice changes */
 			if (o_ptr->timeout == 0)
 			{
-				j++;
+				changed = true;
 				recharged_notice(o_ptr);
 			}
 		}
@@ -2530,7 +2533,7 @@ static void process_world()
 				if (o_ptr->pval <= 0)
 				{
 					pack_decay(i);
-					j++;
+					changed = true;
 				}
 			}
 		}
@@ -2561,15 +2564,14 @@ static void process_world()
 					}
 
 					inc_stack_size(i, -1);
-
-					j++;
+					changed = true;
 				}
 			}
 		}
 	}
 
 	/* Notice changes */
-	if (j)
+	if (changed)
 	{
 		/* Combine pack */
 		p_ptr->notice |= (PN_COMBINE);
@@ -2581,7 +2583,7 @@ static void process_world()
 	/*** Process Objects ***/
 
 	/* Process objects */
-	for (i = 1; i < o_max; i++)
+	for (int i = 1; i < o_max; i++)
 	{
 		/* Access object */
 		o_ptr = &o_list[i];
