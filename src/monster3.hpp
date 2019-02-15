@@ -3,6 +3,8 @@
 #include "h-basic.h"
 #include "monster_type_fwd.hpp"
 
+#include <cstdio>
+
 void dump_companions(FILE *outfile);
 void do_cmd_companion();
 bool do_control_reconnect();

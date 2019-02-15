@@ -59,6 +59,7 @@
 
 #include <boost/algorithm/string/predicate.hpp>
 #include <cassert>
+#include <fcntl.h>
 #include <fmt/format.h>
 #include <type_traits>
 
@@ -672,11 +673,6 @@ static errr init_other()
 		g.insert({ "maze", level_generate_maze });
 		g.insert({ "life", level_generate_life });
 	}
-
-	/*** Pre-allocate space for the "format()" buffer ***/
-
-	/* Hack -- Just call the "format()" function */
-	format("%s (%s).", "Dark God <darkgod@t-o-m-e.net>", MAINTAINER);
 
 	/* Success */
 	return (0);

@@ -1,13 +1,11 @@
-/* File: z-form.c */
-
-/* Purpose: Low level text formatting -BEN- */
-
 #include "z-form.h"
 
 #include "z-util.h"
 #include "z-util.hpp"
 
-#include <stdlib.h>
+#include <cctype>
+#include <cstdlib>
+#include <cstdio>
 
 /*
  * Here is some information about the routines in this file.

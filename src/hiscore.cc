@@ -3,6 +3,7 @@
 #include "util.hpp"
 
 #include <cassert>
+#include <cstring>
 
 int highscore_seek(int highscore_fd, int i)
 {

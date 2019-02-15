@@ -41,6 +41,7 @@
 
 #include <boost/filesystem.hpp>
 #include <cassert>
+#include <fcntl.h>
 #include <fmt/format.h>
 #include <memory>
 

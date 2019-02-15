@@ -3,6 +3,7 @@
 #include "z-rand.hpp"
 
 #include <cassert>
+#include <cstring>
 
 void dice_init(dice_type *dice, long base, long num, long sides)
 {

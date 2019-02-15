@@ -68,44 +68,10 @@
 #define MONSTER_FLOW_DEPTH 32
 
 
-
-
-/*
- * OPTION: Set the "default" path to the angband "lib" directory.
- *
- * See "main.c" for usage, and note that this value is only used on
- * certain machines, primarily Unix machines.  If this value is used,
- * it will be over-ridden by the "ANGBAND_PATH" environment variable,
- * if that variable is defined and accessable.  The final slash is
- * optional, but it may eventually be required.
- *
- * Using the value "./lib/" below tells Angband that, by default,
- * the user will run "angband" from the same directory that contains
- * the "lib" directory.  This is a reasonable (but imperfect) default.
- *
- * If at all possible, you should change this value to refer to the
- * actual location of the "lib" folder, for example, "/tmp/angband/lib/"
- * or "/usr/games/lib/angband/", or "/pkg/angband/lib".
- *
- * Additional note -- if you are planning to use makefile.org, don't bother
- * setting this variable, as it is overridden by a value set near the top of
- * that file.
- */
-#ifndef DEFAULT_PATH
-# define DEFAULT_PATH "./lib/"
-#endif
-
-
 /*
  * Where to put the user's files.
  */
 #define PRIVATE_USER_PATH "~/.tome"
-
-
-/*
- * OPTION: Person to bother if something goes wrong.
- */
-#define MAINTAINER      "darkgod@t-o-m-e.net"
 
 
 /*

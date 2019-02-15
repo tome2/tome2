@@ -61,6 +61,7 @@
 #include <algorithm>
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/filesystem.hpp>
+#include <fcntl.h>
 #include <fmt/format.h>
 #include <numeric>
 #include <string>

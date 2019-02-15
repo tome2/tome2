@@ -43,7 +43,10 @@
 #include <boost/algorithm/string/predicate.hpp>
 #include <cassert>
 #include <chrono>
+#include <fcntl.h>
+#include <sys/stat.h>
 #include <thread>
+#include <unistd.h>
 
 using boost::algorithm::equals;
 using std::this_thread::sleep_for;

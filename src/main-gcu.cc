@@ -43,6 +43,7 @@
 #include "variable.h"
 #include "z-util.h"
 
+#include <fcntl.h>
 #include <boost/algorithm/string/predicate.hpp>
 #include <limits.h>
 

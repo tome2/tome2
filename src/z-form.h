@@ -2,6 +2,8 @@
 
 #include "h-basic.h"
 
+#include <cstdarg>
+
 #ifdef __cplusplus
 extern "C" {
 #endif

@@ -121,6 +121,8 @@
 using boost::algorithm::equals;
 using boost::algorithm::starts_with;
 
+#define FORCELOWER(A)  ((isupper((A))) ? tolower((A)) : (A))
+
 /*
  * This file is designed to be "included" by "main-x11.c" or "main-xaw.c",
  * which will have already "included" several relevant header files.

@@ -28,8 +28,14 @@
 
 #include <boost/algorithm/string/predicate.hpp>
 #include <chrono>
+#include <cstdio>
+#include <fcntl.h>
 #include <sstream>
 #include <thread>
+
+#ifdef SET_UID
+#include <pwd.h>
+#endif
 
 using boost::algorithm::iequals;
 using boost::algorithm::equals;
