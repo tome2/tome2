@@ -3186,8 +3186,6 @@ bool repeat_pull(int *what)
 
 void repeat_check()
 {
-	int what;
-
 	/* Ignore some commands */
 	if (command_cmd == ESCAPE) return;
 	if (command_cmd == ' ') return;
@@ -3201,6 +3199,7 @@ void repeat_check()
 		repeat__idx = 0;
 
 		/* Get the command */
+		int what;
 		if (repeat_pull(&what))
 		{
 			/* Save the command */
@@ -3215,10 +3214,8 @@ void repeat_check()
 		repeat__cnt = 0;
 		repeat__idx = 0;
 
-		what = command_cmd;
-
 		/* Save this command */
-		repeat_push(what);
+		repeat_push(command_cmd);
 	}
 }
 
