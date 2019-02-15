@@ -1,5 +1,7 @@
 #pragma once
 
+#include <array>
+
 #include "h-basic.h"
 
 /**
@@ -12,6 +14,6 @@ constexpr int HELP_MAX = 64;
  */
 struct help_info
 {
-	bool enabled = false;                  /* ingame help enabled */
-	bool activated[HELP_MAX] = { false };  /* help item #i activated? */
+	bool enabled = false;                     /* ingame help enabled */
+	std::array<bool, HELP_MAX> activated { }; /* help item #i activated? */
 };

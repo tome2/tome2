@@ -90,7 +90,7 @@ static void player_gain_vampire()
 
 	if (rmp_ptr->title == "Vampire")
 	{
-		rmp_ptr->place = FALSE;
+		rmp_ptr->place = false;
 	}
 	else
 	{

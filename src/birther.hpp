@@ -2,28 +2,27 @@
 
 #include "h-basic.h"
 
-#include <string>
-#include <vector>
+#include <array>
 
 /**
  * Player information during the birth process.
  */
 struct birther
 {
-	s16b race;
-	s16b rmod;
-	s16b pclass;
-	s16b spec;
+	s16b race = 0;
+	s16b rmod = 0;
+	s16b pclass = 0;
+	s16b spec = 0;
 
-	byte quests;
+	byte quests = 0;
 
-	byte god;
-	s32b grace;
+	byte god = 0;
+	s32b grace = 0;
 
-	s32b au;
+	s32b au = 0;
 
-	s16b stat[6];
-	s16b luck;
+	std::array<s16b, 6> stat { };
+	s16b luck = 0;
 
-	bool_ quick_ok;
+	bool quick_ok = false;
 };

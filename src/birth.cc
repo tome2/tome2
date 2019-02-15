@@ -2648,7 +2648,7 @@ static bool player_birth_aux()
 	}
 
 	/* Save this for the next character */
-	game->previous_char.quick_ok = TRUE;
+	game->previous_char.quick_ok = true;
 	save_prev_data();
 
 	/* Accept */

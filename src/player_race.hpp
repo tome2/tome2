@@ -30,7 +30,7 @@ struct player_race
 
 	byte infra = 0;                                         /* Infra-vision range */
 
-	u32b choice[2] { };                                     /* Legal class choices */
+	std::array<u32b, 2> choice { };                         /* Legal class choices */
 
 	byte body_parts[BODY_MAX] { };                          /* To help to decide what to use when body changing */
 

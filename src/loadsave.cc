@@ -480,7 +480,7 @@ static void do_quick_start(ls_flag_t flag, birther &previous_char)
 	}
 	do_s16b(&previous_char.luck, flag);
 
-	do_bool(&previous_char.quick_ok, flag);
+	do_std_bool(&previous_char.quick_ok, flag);
 }
 
 static void do_skill_modifier(skill_modifier *s, ls_flag_t flag)
@@ -515,7 +515,7 @@ static void do_subrace(ls_flag_t flag)
 	do_std_string(sr_ptr->title, flag);
 	do_std_string(sr_ptr->description, flag);
 
-	do_bool(&sr_ptr->place, flag);
+	do_std_bool(&sr_ptr->place, flag);
 
 	for (i = 0; i < 6; i++)
 	{
@@ -1664,11 +1664,6 @@ static void do_randomizer(ls_flag_t flag)
 	if (flag == ls_flag_t::LOAD)
 	{
 		set_complex_rng_state(state);
-	}
-
-	/* Accept */
-	if (flag == ls_flag_t::LOAD)
-	{
 		set_complex_rng();
 	}
 }

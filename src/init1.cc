@@ -638,7 +638,7 @@ static void strappend(char **s, const char *t)
  * Grab one race flag from a textual string
  */
 static bool_ unknown_shut_up = FALSE;
-static errr grab_one_class_flag(u32b *choice, const char *what)
+static errr grab_one_class_flag(std::array<u32b, 2> &choice, const char *what)
 {
 	auto const &class_info = game->edit_data.class_info;
 
@@ -659,7 +659,7 @@ static errr grab_one_class_flag(u32b *choice, const char *what)
 	return (1);
 }
 
-static errr grab_one_race_allow_flag(u32b *choice, const char *what)
+static errr grab_one_race_allow_flag(std::array<u32b, 2> &choice, const char *what)
 {
 	auto const &race_info = game->edit_data.race_info;
 
@@ -1208,14 +1208,7 @@ errr init_player_info_txt(FILE *fp)
 			char const *s = buf + 6;
 
 			/* Place */
-			if (buf[4] == 'A')
-			{
-				rmp_ptr->place = TRUE;
-			}
-			else
-			{
-				rmp_ptr->place = FALSE;
-			}
+			rmp_ptr->place = (buf[4] == 'A');
 
 			/* Description */
 			if (!rmp_ptr->description.empty())
@@ -1391,7 +1384,7 @@ errr init_player_info_txt(FILE *fp)
 		/* Process 'C' for "Class choice flags" (multiple lines) */
 		if ((buf[0] == 'S') && (buf[2] == 'C'))
 		{
-			u32b choice[2] = {0, 0};
+			std::array<u32b, 2> choice { };
 			if (0 != grab_one_class_flag(choice, buf + 6))
 			{
 				return (5);

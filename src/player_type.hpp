@@ -89,8 +89,8 @@ struct player_type
 
 	s16b max_plv = 0;                                       /* Max Player Level */
 
-	s16b stat_max[6] = { 0 };                               /* Current "maximal" stat values */
-	s16b stat_cur[6] = { 0 };                               /* Current "natural" stat values */
+	std::array<s16b, 6> stat_max { };                       /* Current "maximal" stat values */
+	std::array<s16b, 6> stat_cur { };                       /* Current "natural" stat values */
 
 	s16b luck_cur = 0;                                      /* Current "natural" luck value (range -30 <> 30) */
 	s16b luck_max = 0;                                      /* Current "maximal base" luck value (range -30 <> 30) */
@@ -203,13 +203,13 @@ struct player_type
 	u32b redraw = 0;                                        /* Normal Redraws (bit flags) */
 	u32b window = 0;                                        /* Window Redraws (bit flags) */
 
-	s16b stat_use[6] = { 0 };                               /* Current modified stats */
-	s16b stat_top[6] = { 0 };                               /* Maximal modified stats */
+	std::array<s16b, 6> stat_use { };                       /* Current modified stats */
+	std::array<s16b, 6> stat_top { };                       /* Maximal modified stats */
 
-	s16b stat_add[6] = { 0 };                               /* Modifiers to stat values */
-	s16b stat_ind[6] = { 0 };                               /* Indexes into stat tables */
-	s16b stat_cnt[6] = { 0 };                               /* Counter for temporary drains */
-	s16b stat_los[6] = { 0 };                               /* Amount of temporary drains */
+	std::array<s16b, 6> stat_add { };                       /* Modifiers to stat values */
+	std::array<s16b, 6> stat_ind { };                       /* Indexes into stat tables */
+	std::array<s16b, 6> stat_cnt { };                       /* Counter for temporary drains */
+	std::array<s16b, 6> stat_los { };                       /* Amount of temporary drains */
 
 	bool_ immune_acid = FALSE;                              /* Immunity to acid */
 	bool_ immune_elec = FALSE;                              /* Immunity to lightning */
