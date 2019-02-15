@@ -3085,7 +3085,7 @@ errr init_s_info_txt(FILE *fp)
 			expand_to_fit_index(s_info, i);
 
 			/* Copy name */
-			s_ptr->name = my_strdup(s);
+			s_ptr->name = s;
 
 			/* Next... */
 			continue;
