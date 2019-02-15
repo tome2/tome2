@@ -1,5 +1,4 @@
 #include "init2.hpp"
-#include "init2.h"
 
 #include "ability_type.hpp"
 #include "alloc_entry.hpp"

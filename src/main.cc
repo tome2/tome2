@@ -12,7 +12,7 @@
 #include "dungeon.hpp"
 #include "files.hpp"
 #include "game.hpp"
-#include "init2.h"
+#include "init2.hpp"
 #include "modules.hpp"
 #include "program_args.hpp"
 #include "util.h"
