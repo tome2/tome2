@@ -5,7 +5,10 @@
 #include "object_flag_set.hpp"
 
 #include <string>
+#include <string_view>
 #include <vector>
+
+std::string name_file_note(std::string_view);
 
 void html_screenshot(const char *name);
 void help_file_screenshot(const char *name);

@@ -68,6 +68,15 @@
 #include <memory>
 #include <unordered_set>
 
+std::string name_file_note(std::string_view sv)
+{
+	std::string buf;
+	buf.reserve(sv.size() + 4);
+	buf += sv;
+	buf += ".nte";
+	return buf;
+}
+
 /*
  * Extract the first few "tokens" from a buffer
  *
