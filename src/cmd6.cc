@@ -6645,7 +6645,7 @@ const char *activation_aux(object_type * o_ptr, bool_ doit, int item)
 				}
 			}
 
-			if (!get_aim_dir(&dir)) return (FALSE);
+			if (!get_aim_dir(&dir)) return nullptr;
 
 			msg_print("The light around you is absorbed... "
 			          "and released in a powerful bolt!");
