@@ -8751,7 +8751,6 @@ void generate_spell(int plev)
 
 	bool destruc_gen = false;
 	bool simple_gen = true;
-	bool ball_desc = false;
 
 	// Calculate power, dice, etc.
 	int const power = rand_int(5);
@@ -8793,7 +8792,6 @@ void generate_spell(int plev)
 		rspell.radius = dice / 3;
 		rspell.dam_dice = dice;
 		rspell.dam_sides = sides;
-		ball_desc = true;
 	}
 	else if (chance < 83)
 	{

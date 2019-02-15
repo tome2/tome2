@@ -570,7 +570,6 @@ s16b get_obj_num(int level)
 
 	std::size_t i, j;
 	int p;
-	int k_idx;
 	long value, total;
 
 
@@ -599,9 +598,6 @@ s16b get_obj_num(int level)
 
 		/* Default */
 		entry.prob3 = 0;
-
-		/* Access the index */
-		k_idx = entry.index;
 
 		/* Accept */
 		entry.prob3 = entry.prob2;

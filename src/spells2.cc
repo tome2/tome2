@@ -2673,7 +2673,6 @@ static bool get_genocide_race(const char *msg, char *typ)
 static void genocide_aux(char typ)
 {
 	int i;
-	bool_ result = FALSE;
 	auto const msec = options->delay_factor_ms();
 	int dam = 0;
 
@@ -2732,9 +2731,6 @@ static void genocide_aux(char typ)
 
 		/* Delay */
 		sleep_for(milliseconds(msec));
-
-		/* Take note */
-		result = TRUE;
 	}
 
 	/* Take damage */

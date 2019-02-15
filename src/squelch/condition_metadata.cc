@@ -307,6 +307,7 @@ static void display_desc(match_type match_type_)
 
 	case match_type::TVAL:
 		line("Check is true if object tval(from k_info.txt) is ok");
+		break;
 
 	case match_type::SVAL:
 		line("Check is true if object sval(from k_info.txt) is between");

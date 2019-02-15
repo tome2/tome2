@@ -1048,8 +1048,7 @@ static void incarnate_monster_attack(s16b m_idx, bool_ *mdeath,
 	}
 
 	/* Scan through all four blows */
-	for (ap_cnt = 0; ap_cnt < (p_ptr->num_blow > 4) ? 4 : p_ptr->num_blow;
-	                ap_cnt++)
+	for (ap_cnt = 0; ap_cnt < std::min<int>(p_ptr->num_blow, 4); ap_cnt++)
 	{
 		int power = 0;
 		int damage = 0;

@@ -2902,6 +2902,7 @@ static bool_ store_process_command()
 					}
 					display_inventory();
 				}
+				break;
 			}
 
 			/* Redraw */

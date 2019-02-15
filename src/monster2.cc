@@ -954,8 +954,6 @@ s16b get_mon_num(int level)
 	int r_idx;
 	long value, total;
 
-	int in_tome;
-
 	/* Boost the level */
 	if (level > 0)
 	{
@@ -983,9 +981,6 @@ s16b get_mon_num(int level)
 
 	/* Reset total */
 	total = 0L;
-
-	/* Check whether this is ToME or a module */
-	in_tome = strcmp(game_module, "ToME") == 0;
 
 	/* Process probabilities */
 	for (i = 0; i < alloc.race_table.size(); i++)

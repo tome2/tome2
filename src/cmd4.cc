@@ -1981,8 +1981,6 @@ void do_cmd_macros()
 		/* Enter a new action */
 		else if (i == '0')
 		{
-			char tmp[1024];
-
 			/* Prompt */
 			prt("Command: Enter a new action", 16, 0);
 
@@ -1990,7 +1988,7 @@ void do_cmd_macros()
 			Term_gotoxy(0, 22);
 
 			/* Hack -- limit the value */
-			tmp[80] = '\0';
+			buf[80] = '\0';
 
 			/* Get an encoded action */
 			if (!askfor_aux(buf, 80)) continue;
