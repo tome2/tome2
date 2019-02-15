@@ -330,11 +330,11 @@ void dump_skills(FILE *fff)
 
 		if (!has_child(i))
 		{
-			strcat(buf, format(" . %s", skill_name.c_str()));
+			strcat(buf, fmt::format(" . {}", skill_name).c_str());
 		}
 		else
 		{
-			strcat(buf, format(" - %s", skill_name.c_str()));
+			strcat(buf, fmt::format(" - %s", skill_name).c_str());
 		}
 
 		fprintf(fff, "%-49s%s%06.3f [%05.3f]",
@@ -362,11 +362,11 @@ static void print_skills(std::vector<skill_entry> const &table, int sel, int sta
 	Term_clear();
 	Term_get_size(&wid, &hgt);
 
-	c_prt(TERM_WHITE, format("%s Skills Screen", game_module), 0, 28);
+	c_prt(TERM_WHITE, fmt::format("{} Skills Screen", game_module), 0, 28);
 	keys = format("#BEnter#W to develop a branch, #Bup#W/#Bdown#W to move, #Bright#W/#Bleft#W to modify, #B?#W for help");
 	display_message(0, 1, strlen(keys), TERM_WHITE, keys);
 	c_prt((p_ptr->skill_points) ? TERM_L_BLUE : TERM_L_RED,
-	      format("Skill points left: %d", p_ptr->skill_points), 2, 0);
+	      fmt::format("Skill points left: {}", p_ptr->skill_points), 2, 0);
 	print_desc_aux(s_descriptors[table[sel].skill_idx].desc.c_str(), 3, 0);
 
 	for (j = start; j < start + (hgt - 7); j++)
@@ -413,17 +413,17 @@ static void print_skills(std::vector<skill_entry> const &table, int sel, int sta
 
 		if (!has_child(i))
 		{
-			c_prt(color, format("%c.%c%s", deb, end, name.c_str()),
+			c_prt(color, fmt::format("{}.{}{}", deb, end, name),
 			      j + 7 - start, table[j].indent_level * 4);
 		}
 		else if (skill.dev)
 		{
-			c_prt(color, format("%c-%c%s", deb, end, name.c_str()),
+			c_prt(color, fmt::format("{}-{}{}", deb, end, name),
 			      j + 7 - start, table[j].indent_level * 4);
 		}
 		else
 		{
-			c_prt(color, format("%c+%c%s", deb, end, name.c_str()),
+			c_prt(color, fmt::format("{}+{}{}", deb, end, name),
 			      j + 7 - start, table[j].indent_level * 4);
 		}
 
@@ -791,7 +791,7 @@ static void choose_melee()
 	{
 		if (melee_bool[i])
 		{
-			prt(format("%c) %s", I2A(z), melee_names[i]), z + 1, 0);
+			prt(fmt::format("{}) {}", I2A(z), melee_names[i]), z + 1, 0);
 			melee_num[z] = i;
 			z++;
 		}
@@ -895,7 +895,7 @@ static void print_skill_batch(const std::vector<std::tuple<std::string, int>> &p
 		j++;
 	}
 	prt("", 2 + j, 20);
-	prt(format("Select a skill (a-%c), @ to select by name, +/- to scroll:", I2A(j - 1)), 0, 0);
+	prt(fmt::format("Select a skill (a-{}), @ to select by name, +/- to scroll:", I2A(j - 1)), 0, 0);
 }
 
 static int do_cmd_activate_skill_aux()
@@ -1509,8 +1509,6 @@ void do_get_new_skill()
 			/* Ok we oppose, so be sure */
 			if (oppose)
 			{
-				const char *msg;
-
 				/*
 				 * Because this is SO critical a question, we must flush
 				 * input to prevent killing character off -- pelpel
@@ -1518,9 +1516,10 @@ void do_get_new_skill()
 				flush();
 
 				/* Prepare prompt */
-				msg = format("This skill is mutually exclusive with "
-				             "at least %s, continue?",
-					     s_descriptors[oppose_skill].name.c_str());
+				auto msg = fmt::format(
+					"This skill is mutually exclusive with "
+					"at least {}, continue?",
+					s_descriptors[oppose_skill].name);
 
 				/* The player rejected the choice; go back to prompt */
 				if (!get_check(msg))
@@ -1717,7 +1716,7 @@ static void print_abilities(const std::vector<std::size_t> &table, int sel, int 
 	keys = format("#Bup#W/#Bdown#W to move, #Bright#W to buy, #B?#W for help");
 	display_message(0, 1, strlen(keys), TERM_WHITE, keys);
 	c_prt((p_ptr->skill_points) ? TERM_L_BLUE : TERM_L_RED,
-	      format("Skill points left: %d", p_ptr->skill_points), 2, 0);
+	      fmt::format("Skill points left: {}", p_ptr->skill_points), 2, 0);
 
 	print_desc_aux(ab_info[table[sel]].desc.c_str(), 3, 0);
 

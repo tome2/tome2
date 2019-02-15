@@ -19,9 +19,10 @@
 #include "tables.hpp"
 #include "util.hpp"
 #include "variable.hpp"
-#include "z-form.h"
 #include "z-rand.hpp"
 #include "z-term.h"
+
+#include <fmt/format.h>
 
 #define cquest (quest[QUEST_POISON])
 
@@ -315,7 +316,7 @@ void quest_poison_init_hook()
 		cquest.data[0] = rand_int(4);
 		if (wizard)
 		{
-			messages.add(format("Wilderness poison %d, %d", wild_locs[cquest.data[0]][0], wild_locs[cquest.data[0]][1]), TERM_BLUE);
+			messages.add(fmt::format("Wilderness poison {}, {}", wild_locs[cquest.data[0]][0], wild_locs[cquest.data[0]][1]), TERM_BLUE);
 		}
 	}
 

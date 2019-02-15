@@ -59,7 +59,6 @@
 #include "wilderness_type_info.hpp"
 #include "wizard2.hpp"
 #include "xtra1.hpp"
-#include "z-form.h"
 #include "z-rand.hpp"
 
 #include <boost/algorithm/string/predicate.hpp>
@@ -4035,7 +4034,7 @@ static int target_set_aux(int y, int x, int mode, const char *info_)
 							screen_roff(m_ptr->r_idx, m_ptr->ego);
 
 							/* Hack -- Complete the prompt (again) */
-							Term_addstr( -1, TERM_WHITE, format("  [r,%s]", info.c_str()));
+							Term_addstr( -1, TERM_WHITE, fmt::format("  [r,{}]", info).c_str());
 
 							/* Command */
 							query = inkey();

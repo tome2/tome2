@@ -17,11 +17,11 @@
 #include "tables.hpp"
 #include "util.hpp"
 #include "variable.hpp"
-#include "z-form.h"
 #include "z-rand.hpp"
 #include "z-term.h"
 
 #include <cassert>
+#include <fmt/format.h>
 
 #define cquest (quest[QUEST_SHROOM])
 
@@ -327,7 +327,7 @@ void quest_shroom_init_hook()
 		cquest.data[1] = rand_range(7, 14);
 		if (wizard)
 		{
-			messages.add(format("Shrooms number %d", cquest.data[1]), TERM_BLUE);
+			messages.add(fmt::format("Shrooms number {}", cquest.data[1]), TERM_BLUE);
 		}
 	}
 

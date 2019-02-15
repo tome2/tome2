@@ -3485,7 +3485,7 @@ void do_cmd_boomerang()
 				/* Break the boomerang */
 				if ((!artifact_p(o_ptr)) && (rand_int(100) < j))
 				{
-					msg_print(format("Your %s is destroyed.", o_name));
+					msg_print(fmt::format("Your {} is destroyed.", o_name));
 					inc_stack_size_ex(INVEN_BOW, -1, OPTIMIZE, NO_DESCRIBE);
 				}
 			}
@@ -3844,7 +3844,7 @@ void do_cmd_sacrifice()
 				if (deity_info[agod].desc[i] != NULL)
 					msg_print(deity_info[agod].desc[i]);
 			}
-			if (get_check(format("Do you want to worship %s? ", deity_info[agod].name)))
+			if (get_check(fmt::format("Do you want to worship {}? ", deity_info[agod].name)))
 			{
 				follow_god(agod, FALSE);
 				p_ptr->grace = -200;
@@ -4011,18 +4011,15 @@ std::vector<s16b> show_monster_inven(int m_idx)
 		/* Clear the line */
 		prt("", i + 1, col ? col - 2 : col);
 
-		/* Prepare an index --(-- */
-		char tmp_val[80];
-		strnfmt(tmp_val, 80, "%c)", index_to_label(i));
-
-		/* Clear the line with the (possibly indented) index */
-		put_str(tmp_val, i + 1, col);
+		/* Display index */
+		put_str(fmt::format("{})", index_to_label(i)), i + 1, col);
 
 		/* Display the entry itself */
 		c_put_str(out_color[i], out_desc[i], i + 1, col + 3);
 
 		/* Display the weight if needed */
 		{
+			char tmp_val[80];
 			int wgt = o_ptr->weight * o_ptr->number;
 			strnfmt(tmp_val, 80, "%3d.%1d lb", wgt / 10, wgt % 10);
 			put_str(tmp_val, i + 1, 71);

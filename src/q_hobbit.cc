@@ -17,11 +17,11 @@
 #include "tables.hpp"
 #include "util.hpp"
 #include "variable.hpp"
-#include "z-form.h"
 #include "z-rand.hpp"
 #include "z-term.h"
 
 #include <cassert>
+#include <fmt/format.h>
 
 #define cquest (quest[QUEST_HOBBIT])
 
@@ -218,7 +218,7 @@ void quest_hobbit_init_hook()
 		cquest.data[1] = turn;
 		if (wizard)
 		{
-			messages.add(format("Hobbit level %d", cquest.data[0]), TERM_BLUE);
+			messages.add(fmt::format("Hobbit level {}", cquest.data[0]), TERM_BLUE);
 		}
 	}
 

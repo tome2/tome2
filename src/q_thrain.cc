@@ -20,11 +20,11 @@
 #include "tables.hpp"
 #include "util.hpp"
 #include "variable.hpp"
-#include "z-form.h"
 #include "z-rand.hpp"
 #include "z-term.h"
 
 #include <cassert>
+#include <fmt/format.h>
 
 #define cquest (quest[QUEST_THRAIN])
 
@@ -273,7 +273,7 @@ void quest_thrain_init_hook()
 		cquest.data[0] = rand_range(d_info[DUNGEON_DOL_GULDUR].mindepth + 1, d_info[DUNGEON_DOL_GULDUR].maxdepth - 1);
 		if (wizard)
 		{
-			messages.add(format("Thrain lvl %d", cquest.data[0]), TERM_BLUE);
+			messages.add(fmt::format("Thrain lvl {}", cquest.data[0]), TERM_BLUE);
 		}
 	}
 	if ((cquest.status >= QUEST_STATUS_TAKEN) && (cquest.status < QUEST_STATUS_FINISHED))

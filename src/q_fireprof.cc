@@ -16,7 +16,6 @@
 #include "tables.hpp"
 #include "util.hpp"
 #include "variable.hpp"
-#include "z-form.h"
 #include "z-rand.hpp"
 #include "z-term.h"
 
@@ -280,8 +279,8 @@ void quest_fireproof_building(bool_ *paid, bool_ *recreate)
 			/* take item */
 			inc_stack_size_ex(item_idx, -1, OPTIMIZE, NO_DESCRIBE);
 
-			msg_print(format("Great! Let me fireproof some of your items in thanks. I can do %d books, ", num_books));
-			msg_print(format("%d staves, or %d scrolls.", num_staff, num_scroll));
+			msg_print(fmt::format("Great! Let me fireproof some of your items in thanks. I can do {} books, ", num_books));
+			msg_print(fmt::format("{} staves, or {} scrolls.", num_staff, num_scroll));
 
 			/* how many items to proof? */
 			items = get_item_points_remaining();

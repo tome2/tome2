@@ -20,8 +20,9 @@
 #include "../skill_type.hpp"
 #include "../util.hpp"
 #include "../variable.hpp"
-#include "../z-form.h"
 #include "../z-term.h"
+
+#include <fmt/format.h>
 
 namespace squelch {
 
@@ -174,7 +175,7 @@ void TvalCondition::write_tree(TreePrinter *p, Cursor *, uint8_t ecol, uint8_t b
 	p->write(bcol, "tval");
 	p->write(ecol, " is ");
 	p->write(ecol, "\"");
-	p->write(TERM_WHITE, format("%d", (int) m_tval));
+	p->write(TERM_WHITE, fmt::format("{}", m_tval));
 	p->write(ecol, "\"");
 	p->write(TERM_WHITE, "\n");
 }
@@ -281,9 +282,9 @@ void SvalCondition::write_tree(TreePrinter *p, Cursor *, uint8_t ecol, uint8_t b
 	p->write(ecol, "Its ");
 	p->write(bcol, "sval");
 	p->write(ecol, " is from ");
-	p->write(TERM_WHITE, format("%d", m_min));
+	p->write(TERM_WHITE, fmt::format("{}", m_min));
 	p->write(ecol, " to ");
-	p->write(TERM_WHITE, format("%d", m_max));
+	p->write(TERM_WHITE, fmt::format("{}", m_max));
 	p->write(TERM_WHITE, "\n");
 }
 
@@ -696,9 +697,9 @@ void DiscountCondition::write_tree(TreePrinter *p, Cursor *, uint8_t ecol, uint8
 	p->write(ecol, "Its ");
 	p->write(bcol, "discount");
 	p->write(ecol, " is from ");
-	p->write(TERM_WHITE, format("%d", m_min));
+	p->write(TERM_WHITE, fmt::format("{}", m_min));
 	p->write(ecol, " to ");
-	p->write(TERM_WHITE, format("%d", m_max));
+	p->write(TERM_WHITE, fmt::format("{}", m_max));
 	p->write(TERM_WHITE, "\n");
 }
 
@@ -741,9 +742,9 @@ void LevelCondition::write_tree(TreePrinter *p, Cursor *, uint8_t ecol, uint8_t 
 	p->write(bcol, "level");
 	p->write(ecol, " is from ");
 
-	p->write(TERM_WHITE, format("%d", m_min));
+	p->write(TERM_WHITE, fmt::format("{}", m_min));
 	p->write(ecol, " to ");
-	p->write(TERM_WHITE, format("%d", m_max));
+	p->write(TERM_WHITE, fmt::format("{}", m_max));
 	p->write(TERM_WHITE, "\n");
 }
 
@@ -803,9 +804,9 @@ void SkillCondition::write_tree(TreePrinter *p, Cursor *, uint8_t ecol, uint8_t 
 	p->write(ecol, "Your skill in ");
 	p->write(bcol, s_descriptors[m_skill_idx].name);
 	p->write(ecol, " is from ");
-	p->write(TERM_WHITE, format("%d", (int) m_min));
+	p->write(TERM_WHITE, fmt::format("{}", m_min));
 	p->write(ecol, " to ");
-	p->write(TERM_WHITE, format("%d", (int) m_max));
+	p->write(TERM_WHITE, fmt::format("{}", m_max));
 	p->write(TERM_WHITE, "\n");
 }
 
@@ -848,14 +849,14 @@ void SymbolCondition::write_tree(TreePrinter *p, Cursor *, uint8_t ecol, uint8_t
 	p->write(bcol, "symbol");
 	p->write(ecol, " is ");
 	p->write(ecol, "\"");
-	p->write(TERM_WHITE, format("%c", m_symbol));
+	p->write(TERM_WHITE, fmt::format("{}", m_symbol));
 	p->write(ecol, "\"");
 	p->write(TERM_WHITE, "\n");
 }
 
 void SymbolCondition::to_json(jsoncons::json &j) const
 {
-	j["symbol"] = format("%c", m_symbol);
+	j["symbol"] = fmt::format("{}", m_symbol);
 }
 
 bool AbilityCondition::is_match(object_type *) const

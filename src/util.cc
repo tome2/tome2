@@ -2598,6 +2598,12 @@ bool_ get_check(const char *prompt)
 }
 
 
+bool_ get_check(std::string const &prompt)
+{
+	return get_check(prompt.c_str());
+}
+
+
 /*
 * Prompts for a keypress
 *

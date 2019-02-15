@@ -17,7 +17,6 @@
 #include "util.h"
 #include "variable.h"
 #include "variable.hpp"
-#include "z-form.h"
 #include "z-rand.hpp"
 
 #include <cassert>
@@ -209,7 +208,7 @@ static void library_quest_print_spells(int first, int current)
 	} else if (slots == 1) {
 		c_prt(TERM_L_BLUE, "The book can hold 1 more spell.", 2, 0);
 	} else {
-		c_prt(TERM_L_BLUE, format("The book can hold %d more spells.", slots), 2, 0);
+		c_prt(TERM_L_BLUE, fmt::format("The book can hold {} more spells.", slots), 2, 0);
 	}
 
 	row = 3;

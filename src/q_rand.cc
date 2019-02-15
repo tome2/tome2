@@ -30,7 +30,6 @@
 #include "tables.hpp"
 #include "util.hpp"
 #include "variable.hpp"
-#include "z-form.h"
 #include "z-rand.hpp"
 #include "z-term.h"
 
@@ -176,7 +175,7 @@ void initialize_random_quests(int n)
 		{
 			if (wizard)
 			{
-				messages.add(format("Could not find quest monster on lvl %d", rl), TERM_RED);
+				messages.add(fmt::format("Could not find quest monster on lvl {}", rl), TERM_RED);
 			}
 			q_ptr->type = 0;
 		}
@@ -191,7 +190,7 @@ void initialize_random_quests(int n)
 
 			if (wizard)
 			{
-				messages.add(format("Quest for %d on lvl %d", q_ptr->r_idx, rl), TERM_RED);
+				messages.add(fmt::format("Quest for {} on lvl {}", q_ptr->r_idx, rl), TERM_RED);
 			}
 		}
 
@@ -533,7 +532,7 @@ static bool quest_random_gen_hook(void *, void *in_, void *)
 	}
 
 	/* Pick a room size */
-	get_map_size(format("qrand%d.map", random_quests[dun_level].type), &ysize, &xsize);
+	get_map_size(fmt::format("qrand{}.map", random_quests[dun_level].type).c_str(), &ysize, &xsize);
 
 	/* Try to allocate space for room.  If fails, exit */
 	if (!room_alloc(xsize + 2, ysize + 2, FALSE, by0, bx0, &xval, &yval))
@@ -568,7 +567,7 @@ static bool quest_random_gen_hook(void *, void *in_, void *)
 	xstart = x1;
 	ystart = y1;
 	init_flags = INIT_CREATE_DUNGEON;
-	process_dungeon_file(format("qrand%d.map", random_quests[dun_level].type), &ystart, &xstart, cur_hgt, cur_wid, TRUE, TRUE);
+	process_dungeon_file(fmt::format("qrand{}.map", random_quests[dun_level].type).c_str(), &ystart, &xstart, cur_hgt, cur_wid, TRUE, TRUE);
 
 	for (x = x1; x < xstart; x++)
 	{

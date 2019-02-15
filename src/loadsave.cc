@@ -37,7 +37,6 @@
 #include "variable.h"
 #include "variable.hpp"
 #include "xtra2.hpp"
-#include "z-form.h"
 #include "z-rand.hpp"
 
 #include <boost/filesystem.hpp>
@@ -644,7 +643,7 @@ static bool_ do_extra(ls_flag_t flag)
 		{
 			if (tmp8u > d_info.size())
 			{
-				note(format("Too many dungeon types!", static_cast<int>(tmp8u)));
+				note(fmt::format("Too many dungeon types: {:d}", tmp8u).c_str());
 			}
 		}
 
@@ -654,7 +653,7 @@ static bool_ do_extra(ls_flag_t flag)
 		{
 			if (tmp16u > MAX_DUNGEON_DEPTH)
 			{
-				note(format("Too many (%d) max level by dungeon type!", static_cast<int>(tmp16u)));
+				note(fmt::format("Too many max level by dungeon type: {:d}", tmp16u).c_str());
 			}
 		}
 
@@ -1391,7 +1390,7 @@ static bool do_objects(ls_flag_t flag, bool no_companions)
 			/* Oops */
 			if (i != o_idx)
 			{
-				note(format("Object allocation error (%d <> %d)", i, o_idx));
+				note(fmt::format("Object allocation error ({} <> {})", i, o_idx).c_str());
 				return false;
 			}
 
@@ -1491,7 +1490,7 @@ static bool do_monsters(ls_flag_t flag, bool no_companions)
 			/* Oops */
 			if (i != m_idx)
 			{
-				note(format("Monster allocation error (%d <> %d)", i, m_idx));
+				note(fmt::format("Monster allocation error ({} <> {})", i, m_idx).c_str());
 				return false;
 			}
 

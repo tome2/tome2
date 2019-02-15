@@ -62,6 +62,7 @@ bool_ askfor_aux(char *buf, int len);
 bool_ askfor_aux_with_completion(char *buf, int len);
 bool_ get_string(const char *prompt, char *buf, int len);
 bool_ get_check(const char *prompt);
+bool_ get_check(std::string const &prompt);
 bool_ get_com(const char *prompt, char *command);
 s32b get_quantity(const char *prompt, s32b max);
 extern char request_command_ignore_keymaps[MAX_IGNORE_KEYMAPS];
