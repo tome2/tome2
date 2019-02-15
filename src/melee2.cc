@@ -1007,139 +1007,1277 @@ static bool monst_spell_monst(int m_idx)
 		return false;
 	}
 
+	int t_idx = m_ptr->target;
+
+	monster_type *t_ptr = &m_list[t_idx];
+	auto const tr_ptr = t_ptr->race();
+
+	/* Hack -- no fighting >100 squares from player */
+	if (t_ptr->cdis > MAX_RANGE)
 	{
-		int t_idx = m_ptr->target;
+		return false;
+	}
 
-		monster_type *t_ptr = &m_list[t_idx];
-		auto const tr_ptr = t_ptr->race();
+	/* Monster must be projectable */
+	if (!projectable(m_ptr->fy, m_ptr->fx, t_ptr->fy, t_ptr->fx))
+	{
+		return false;
+	}
 
-		/* Hack -- no fighting >100 squares from player */
-		if (t_ptr->cdis > MAX_RANGE)
-		{
-			return false;
-		}
+	/* OK -- we-ve got a target */
+	int const y = t_ptr->fy;
+	int const x = t_ptr->fx;
 
-		/* Monster must be projectable */
-		if (!projectable(m_ptr->fy, m_ptr->fx, t_ptr->fy, t_ptr->fx))
-		{
-			return false;
-		}
+	/* Extract the monster level */
+	const int rlev = ((m_ptr->level >= 1) ? m_ptr->level : 1);
 
-		/* OK -- we-ve got a target */
-		int const y = t_ptr->fy;
-		int const x = t_ptr->fx;
+	/* Which spells are allowed? */
+	monster_spell_flag_set allowed_spells = r_ptr->spells;
 
-		/* Extract the monster level */
-		const int rlev = ((m_ptr->level >= 1) ? m_ptr->level : 1);
-
-		/* Which spells are allowed? */
-		monster_spell_flag_set allowed_spells = r_ptr->spells;
-
-		/* Hack -- allow "desperate" spells */
-		if ((r_ptr->flags & RF_SMART) &&
-		                (m_ptr->hp < m_ptr->maxhp / 10) &&
-		                (rand_int(100) < 50))
-		{
-			/* Require intelligent spells */
-			allowed_spells &= SF_INT_MASK;
-
-			/* No spells left? */
-			if ((!allowed_spells) && (monst_spell_monst_spell == -1))
-			{
-				return false;
-			}
-		}
-
-		/* Extract spells */
-		auto spell = extract_spells(allowed_spells);
+	/* Hack -- allow "desperate" spells */
+	if ((r_ptr->flags & RF_SMART) &&
+			(m_ptr->hp < m_ptr->maxhp / 10) &&
+			(rand_int(100) < 50))
+	{
+		/* Require intelligent spells */
+		allowed_spells &= SF_INT_MASK;
 
 		/* No spells left? */
-		if (spell.empty())
+		if ((!allowed_spells) && (monst_spell_monst_spell == -1))
 		{
 			return false;
 		}
+	}
 
-		/* Stop if player is dead or gone */
-		if (!alive || death)
+	/* Extract spells */
+	auto spell = extract_spells(allowed_spells);
+
+	/* No spells left? */
+	if (spell.empty())
+	{
+		return false;
+	}
+
+	/* Stop if player is dead or gone */
+	if (!alive || death)
+	{
+		return false;
+	}
+
+	/* Handle "leaving" */
+	if (p_ptr->leaving)
+	{
+		return false;
+	}
+
+	/* Get the monster name (or "it") */
+	char m_name[80];
+	monster_desc(m_name, m_ptr, 0x00);
+
+	/* Get the monster possessive ("his"/"her"/"its") */
+	char m_poss[80];
+	monster_desc(m_poss, m_ptr, 0x22);
+
+	/* Get the target's name (or "it") */
+	char t_name[80];
+	monster_desc(t_name, t_ptr, 0x00);
+
+	/* Hack -- Get the "died from" name */
+	char ddesc[80];
+	monster_desc(ddesc, m_ptr, 0x88);
+
+	/* Choose a spell to cast */
+	auto thrown_spell = spell[rand_int(spell.size())];
+
+	/* Force a spell ? */
+	if (monst_spell_monst_spell > -1)
+	{
+		thrown_spell = spell[monst_spell_monst_spell];
+		monst_spell_monst_spell = -1;
+	}
+
+	auto const see_m = seen;
+	auto const see_t = !blind && t_ptr->ml;
+	auto const see_either = see_m || see_t;
+	auto const see_both = see_m && see_t;
+
+	/* Do a breath */
+	auto do_breath = [&](char const *element, int gf, s32b max, int divisor) -> void {
+		// Interrupt
+		disturb_on_other();
+		// Message
+		if (!see_either)
 		{
-			return false;
+			monster_msg("You hear breathing noise.");
+		}
+		else if (blind)
+		{
+			monster_msg("%^s breathes.", m_name);
+		}
+		else
+		{
+			monster_msg("%^s breathes %s at %s.", m_name, element, t_name);
+		}
+		// Breathe
+		monst_breath_monst(m_idx, y, x, gf, std::min(max, m_ptr->hp / divisor), 0);
+	};
+
+	/* Messages for summoning */
+	struct summon_messages {
+		char const *singular;
+		char const *plural;
+	};
+
+	/* Default message for summoning when player is blinded */
+	auto blind_msg_default = summon_messages {
+		"You hear something appear nearby.",
+		"You hear many things appear nearby."
+	};
+
+	/* Do a summoning spell */
+	auto do_summon = [&](char const *action, int n, int friendly_type, int hostile_type, summon_messages const &blind_msg) -> void {
+		// Interrupt
+		disturb_on_other();
+
+		// Message
+		if (blind || !see_m)
+		{
+			monster_msg("%^s mumbles.", m_name);
+		}
+		else
+		{
+			monster_msg("%^s magically %s", m_name, action);
 		}
 
-		/* Handle "leaving" */
-		if (p_ptr->leaving)
+		// Do the actual summoning
+		int count = 0;
+		for (int k = 0; k < n; k++)
 		{
-			return false;
-		}
-
-		/* Get the monster name (or "it") */
-		char m_name[80];
-		monster_desc(m_name, m_ptr, 0x00);
-
-		/* Get the monster possessive ("his"/"her"/"its") */
-		char m_poss[80];
-		monster_desc(m_poss, m_ptr, 0x22);
-
-		/* Get the target's name (or "it") */
-		char t_name[80];
-		monster_desc(t_name, t_ptr, 0x00);
-
-		/* Hack -- Get the "died from" name */
-		char ddesc[80];
-		monster_desc(ddesc, m_ptr, 0x88);
-
-		/* Choose a spell to cast */
-		auto thrown_spell = spell[rand_int(spell.size())];
-
-		/* Force a spell ? */
-		if (monst_spell_monst_spell > -1)
-		{
-			thrown_spell = spell[monst_spell_monst_spell];
-			monst_spell_monst_spell = -1;
-		}
-
-		auto const see_m = seen;
-		auto const see_t = !blind && t_ptr->ml;
-		auto const see_either = see_m || see_t;
-		auto const see_both = see_m && see_t;
-
-		/* Do a breath */
-		auto do_breath = [&](char const *element, int gf, s32b max, int divisor) -> void {
-			// Interrupt
-			disturb_on_other();
-			// Message
-			if (!see_either)
+			if (friendly)
 			{
-				monster_msg("You hear breathing noise.");
+				count += summon_specific_friendly(m_ptr->fy, m_ptr->fx, rlev, friendly_type, TRUE);
 			}
-			else if (blind)
+			else if (!friendly)
 			{
-				monster_msg("%^s breathes.", m_name);
+				count += summon_specific(m_ptr->fy, m_ptr->fx, rlev, hostile_type);
+			}
+		}
+		// Message for blinded characters
+		if (blind)
+		{
+			if (count == 1)
+			{
+				monster_msg(blind_msg.singular);
+			}
+			else if (count > 1)
+			{
+				monster_msg(blind_msg.plural);
+			}
+		}
+	};
+
+	/* There's no summoning friendly uniques or Nazgul */
+	auto spell_idx = thrown_spell->spell_idx;
+
+	if (friendly)
+	{
+		if ((thrown_spell->spell_idx == SF_S_UNIQUE_IDX) &&
+			(thrown_spell->spell_idx == SF_S_WRAITH_IDX))
+		{
+			// Summon high undead instead
+			spell_idx = SF_S_HI_UNDEAD_IDX;
+		}
+	}
+
+	/* Spell effect */
+	switch (spell_idx)
+	{
+	case SF_SHRIEK_IDX:
+		{
+			disturb_on_other();
+			if (!see_m) monster_msg("You hear a shriek.");
+			else monster_msg("%^s shrieks at %s.", m_name, t_name);
+			wake_up = true;
+			break;
+		}
+
+	case SF_MULTIPLY_IDX:
+		{
+			break;
+		}
+
+	case SF_ROCKET_IDX:
+		{
+			disturb_on_other();
+			if (!see_either) monster_msg("You hear an explosion!");
+			else if (blind) monster_msg("%^s shoots something.", m_name);
+			else monster_msg("%^s fires a rocket at %s.", m_name, t_name);
+			monst_breath_monst(m_idx, y, x, GF_ROCKET,
+					   ((m_ptr->hp / 4) > 800 ? 800 : (m_ptr->hp / 4)), 2);
+			break;
+		}
+
+	case SF_ARROW_1_IDX:
+		{
+			disturb_on_other();
+			if (!see_either) monster_msg("You hear a strange noise.");
+			else if (blind) monster_msg("%^s makes a strange noise.", m_name);
+			else monster_msg("%^s fires an arrow at %s.", m_name, t_name);
+			monst_bolt_monst(m_idx, y, x, GF_ARROW, damroll(1, 6));
+			break;
+		}
+
+	case SF_ARROW_2_IDX:
+		{
+			disturb_on_other();
+			if (!see_either) monster_msg("You hear a strange noise.");
+			else if (blind) monster_msg("%^s makes a strange noise.", m_name);
+			else monster_msg("%^s fires an arrow at %s.", m_name, t_name);
+			monst_bolt_monst(m_idx, y, x, GF_ARROW, damroll(3, 6));
+			break;
+		}
+
+	case SF_ARROW_3_IDX:
+		{
+			disturb_on_other();
+
+			if (!see_either) monster_msg("You hear a strange noise.");
+			else if (blind) monster_msg("%^s makes a strange noise.", m_name);
+			else monster_msg("%^s fires a missile at %s.", m_name, t_name);
+			monst_bolt_monst(m_idx, y, x, GF_ARROW, damroll(5, 6));
+			break;
+		}
+
+	case SF_ARROW_4_IDX:
+		{
+			if (!see_either) monster_msg("You hear a strange noise.");
+			else disturb_on_other();
+			if (blind) monster_msg("%^s makes a strange noise.", m_name);
+			else monster_msg("%^s fires a missile at %s.", m_name, t_name);
+			monst_bolt_monst(m_idx, y, x, GF_ARROW, damroll(7, 6));
+			break;
+		}
+
+	case SF_BR_ACID_IDX:
+		{
+			do_breath("acid", GF_ACID, 1600, 3);
+			break;
+		}
+
+	case SF_BR_ELEC_IDX:
+		{
+			do_breath("lightning", GF_ELEC, 1600, 3);
+			break;
+		}
+
+	case SF_BR_FIRE_IDX:
+		{
+			do_breath("fire", GF_FIRE, 1600, 3);
+			break;
+		}
+
+	case SF_BR_COLD_IDX:
+		{
+			do_breath("frost", GF_COLD, 1600, 3);
+			break;
+		}
+
+	case SF_BR_POIS_IDX:
+		{
+			do_breath("gas", GF_POIS, 800, 3);
+			break;
+		}
+
+	case SF_BR_NETH_IDX:
+		{
+			do_breath("nether", GF_NETHER, 550, 6);
+			break;
+		}
+
+	case SF_BR_LITE_IDX:
+		{
+			do_breath("light", GF_LITE, 400, 6);
+			break;
+		}
+
+	case SF_BR_DARK_IDX:
+		{
+			do_breath("darkness", GF_DARK, 400, 6);
+			break;
+		}
+
+	case SF_BR_CONF_IDX:
+		{
+			do_breath("confusion", GF_CONFUSION, 400, 6);
+			break;
+		}
+
+	case SF_BR_SOUN_IDX:
+		{
+			do_breath("sound", GF_SOUND, 400, 6);
+			break;
+		}
+
+	case SF_BR_CHAO_IDX:
+		{
+			do_breath("chaos", GF_CHAOS, 600, 6);
+			break;
+		}
+
+	case SF_BR_DISE_IDX:
+		{
+			do_breath("disenchantment", GF_DISENCHANT, 500, 6);
+			break;
+		}
+
+	case SF_BR_NEXU_IDX:
+		{
+			do_breath("nexus", GF_NEXUS, 250, 3);
+			break;
+		}
+
+	case SF_BR_TIME_IDX:
+		{
+			do_breath("time", GF_TIME, 150, 3);
+			break;
+		}
+
+	case SF_BR_INER_IDX:
+		{
+			do_breath("inertia", GF_INERTIA, 200, 6);
+			break;
+		}
+
+	case SF_BR_GRAV_IDX:
+		{
+			do_breath("gravity", GF_GRAVITY, 200, 3);
+			break;
+		}
+
+	case SF_BR_SHAR_IDX:
+		{
+			do_breath("shards", GF_SHARDS, 400, 6);
+			break;
+		}
+
+	case SF_BR_PLAS_IDX:
+		{
+			do_breath("plasma", GF_PLASMA, 150, 6);
+			break;
+		}
+
+	case SF_BR_WALL_IDX:
+		{
+			do_breath("force", GF_FORCE, 200, 6);
+			break;
+		}
+
+	case SF_BR_MANA_IDX:
+		{
+			do_breath("magical energy", GF_MANA, 250, 3);
+			break;
+		}
+
+	case SF_BA_NUKE_IDX:
+		{
+			disturb_on_other();
+			if (!see_either) monster_msg("You hear someone mumble.");
+			else if (blind) monster_msg("%^s mumbles.", m_name);
+			else monster_msg("%^s casts a ball of radiation at %s.", m_name, t_name);
+			monst_breath_monst(m_idx, y, x, GF_NUKE,
+					   (rlev + damroll(10, 6)), 2);
+			break;
+		}
+
+	case SF_BR_NUKE_IDX:
+		{
+			do_breath("toxic waste", GF_NUKE, 800, 3);
+			break;
+		}
+
+	case SF_BA_CHAO_IDX:
+		{
+			disturb_on_other();
+			if (!see_either) monster_msg("You hear someone mumble frighteningly.");
+			else if (blind) monster_msg("%^s mumbles frighteningly.", m_name);
+			else monster_msg("%^s invokes a raw Chaos upon %s.", m_name, t_name);
+			monst_breath_monst(m_idx, y, x, GF_CHAOS,
+					   (rlev * 2) + damroll(10, 10), 4);
+			break;
+		}
+
+	case SF_BR_DISI_IDX:
+		{
+			do_breath("disintegration", GF_DISINTEGRATE, 300, 3);
+			break;
+		}
+
+	case SF_BA_ACID_IDX:
+		{
+			disturb_on_other();
+			if (!see_either) monster_msg ("You hear someone mumble.");
+			else if (blind) monster_msg("%^s mumbles.", m_name);
+			else monster_msg("%^s casts an acid ball at %s.", m_name, t_name);
+			monst_breath_monst(m_idx, y, x, GF_ACID, randint(rlev * 3) + 15, 2);
+			break;
+		}
+
+	case SF_BA_ELEC_IDX:
+		{
+			disturb_on_other();
+			if (!see_either) monster_msg ("You hear someone mumble.");
+			else
+				if (blind) monster_msg("%^s mumbles.", m_name);
+				else monster_msg("%^s casts a lightning ball at %s.", m_name, t_name);
+			monst_breath_monst(m_idx, y, x, GF_ELEC, randint(rlev * 3 / 2) + 8, 2);
+			break;
+		}
+
+	case SF_BA_FIRE_IDX:
+		{
+			disturb_on_other();
+			if (!see_either) monster_msg ("You hear someone mumble.");
+			else
+				if (blind) monster_msg("%^s mumbles.", m_name);
+				else monster_msg("%^s casts a fire ball at %s.", m_name, t_name);
+			monst_breath_monst(m_idx, y, x, GF_FIRE, randint(rlev * 7 / 2) + 10, 2);
+			break;
+		}
+
+	case SF_BA_COLD_IDX:
+		{
+			disturb_on_other();
+			if (!see_either) monster_msg ("You hear someone mumble.");
+			else
+				if (blind) monster_msg("%^s mumbles.", m_name);
+				else monster_msg("%^s casts a frost ball at %s.", m_name, t_name);
+			monst_breath_monst(m_idx, y, x, GF_COLD, randint(rlev * 3 / 2) + 10, 2);
+			break;
+		}
+
+	case SF_BA_POIS_IDX:
+		{
+			disturb_on_other();
+			if (!see_either) monster_msg ("You hear someone mumble.");
+			else
+				if (blind) monster_msg("%^s mumbles.", m_name);
+				else monster_msg("%^s casts a stinking cloud at %s.", m_name, t_name);
+			monst_breath_monst(m_idx, y, x, GF_POIS, damroll(12, 2), 2);
+			break;
+		}
+
+	case SF_BA_NETH_IDX:
+		{
+			disturb_on_other();
+			if (!see_either) monster_msg ("You hear someone mumble.");
+			else
+				if (blind) monster_msg("%^s mumbles.", m_name);
+				else monster_msg("%^s casts a nether ball at %s.", m_name, t_name);
+			monst_breath_monst(m_idx, y, x, GF_NETHER, (50 + damroll(10, 10) + rlev), 2);
+			break;
+		}
+
+	case SF_BA_WATE_IDX:
+		{
+			disturb_on_other();
+			if (!see_either) monster_msg ("You hear someone mumble.");
+			else
+				if (blind) monster_msg("%^s mumbles.", m_name);
+				else monster_msg("%^s gestures fluidly at %s.", m_name, t_name);
+			monster_msg("%^s is engulfed in a whirlpool.", t_name);
+			monst_breath_monst(m_idx, y, x, GF_WATER, randint(rlev * 5 / 2) + 50, 4);
+			break;
+		}
+
+	case SF_BA_MANA_IDX:
+		{
+			disturb_on_other();
+			if (!see_either) monster_msg ("You hear someone mumble powerfully.");
+			else
+				if (blind) monster_msg("%^s mumbles powerfully.", m_name);
+				else monster_msg("%^s invokes a mana storm upon %s.", m_name, t_name);
+			monst_breath_monst(m_idx, y, x, GF_MANA, (rlev * 5) + damroll(10, 10), 4);
+			break;
+		}
+
+	case SF_BA_DARK_IDX:
+		{
+			disturb_on_other();
+			if (!see_either) monster_msg ("You hear someone mumble powerfully.");
+			else
+				if (blind) monster_msg("%^s mumbles powerfully.", m_name);
+				else monster_msg("%^s invokes a darkness storm upon %s.", m_name, t_name);
+			monst_breath_monst(m_idx, y, x, GF_DARK, (rlev * 5) + damroll(10, 10), 4);
+			break;
+		}
+
+	case SF_DRAIN_MANA_IDX:
+		{
+			/* Attack power */
+			int r1 = (randint(rlev) / 2) + 1;
+
+			if (see_m)
+			{
+				/* Basic message */
+				monster_msg("%^s draws psychic energy from %s.", m_name, t_name);
+			}
+
+			/* Heal the monster */
+			if (m_ptr->hp < m_ptr->maxhp)
+			{
+				if (!tr_ptr->spells)
+				{
+					if (see_both)
+						monster_msg("%^s is unaffected!", t_name);
+				}
+				else
+				{
+					/* Heal */
+					m_ptr->hp += (6 * r1);
+					if (m_ptr->hp > m_ptr->maxhp) m_ptr->hp = m_ptr->maxhp;
+
+					/* Redraw (later) if needed */
+					if (health_who == m_idx) p_ptr->redraw |= (PR_FRAME);
+
+					/* Special message */
+					if (seen)
+					{
+						monster_msg("%^s appears healthier.", m_name);
+					}
+				}
+			}
+
+			wake_up = true;
+			break;
+		}
+
+	case SF_MIND_BLAST_IDX:
+		{
+			disturb_on_other();
+
+			if (!seen)
+			{
+				/* */
 			}
 			else
 			{
-				monster_msg("%^s breathes %s at %s.", m_name, element, t_name);
+				monster_msg("%^s gazes intently at %s.", m_name, t_name);
 			}
-			// Breathe
-			monst_breath_monst(m_idx, y, x, gf, std::min(max, m_ptr->hp / divisor), 0);
-		};
 
-		/* Messages for summoning */
-		struct summon_messages {
-			char const *singular;
-			char const *plural;
-		};
+			/* Attempt a saving throw */
+			if ((tr_ptr->flags & RF_UNIQUE) ||
+					(tr_ptr->flags & RF_NO_CONF) ||
+					(t_ptr->level > randint((rlev - 10) < 1 ? 1 : (rlev - 10)) + 10))
+			{
+				/* No obvious effect */
+				if (see_t)
+				{
+					monster_msg("%^s is unaffected!", t_name);
+				}
+			}
+			else
+			{
+				monster_msg("%^s is blasted by psionic energy.", t_name);
+				t_ptr->confused += rand_int(4) + 4;
 
-		/* Default message for summoning when player is blinded */
-		auto blind_msg_default = summon_messages {
-		        "You hear something appear nearby.",
-		        "You hear many things appear nearby."
-	        };
+				mon_take_hit_mon(m_idx, t_idx, damroll(8, 8), " collapses, a mindless husk.");
+			}
 
-		/* Do a summoning spell */
-		auto do_summon = [&](char const *action, int n, int friendly_type, int hostile_type, summon_messages const &blind_msg) -> void {
-			// Interrupt
+			wake_up = true;
+			break;
+		}
+
+	case SF_BRAIN_SMASH_IDX:
+		{
+			disturb_on_other();
+			if (!seen)
+			{
+				/* */
+			}
+			else
+			{
+				monster_msg("%^s gazes intently at %s.", m_name, t_name);
+			}
+
+			/* Attempt a saving throw */
+			if ((tr_ptr->flags & RF_UNIQUE) ||
+					(tr_ptr->flags & RF_NO_CONF) ||
+					(t_ptr->level > randint((rlev - 10) < 1 ? 1 : (rlev - 10)) + 10))
+			{
+				/* No obvious effect */
+				if (see_t)
+				{
+					monster_msg("%^s is unaffected!", t_name);
+				}
+			}
+			else
+			{
+				if (see_t)
+				{
+					monster_msg("%^s is blasted by psionic energy.", t_name);
+				}
+				t_ptr->confused += rand_int(4) + 4;
+				t_ptr->mspeed -= rand_int(4) + 4;
+				t_ptr->stunned += rand_int(4) + 4;
+				mon_take_hit_mon(m_idx, t_idx, damroll(12, 15), " collapses, a mindless husk.");
+			}
+			wake_up = true;
+			break;
+		}
+
+	case SF_CAUSE_1_IDX:
+		{
+			disturb_on_other();
+			if (blind || !see_m) monster_msg("%^s mumbles.", m_name);
+			else monster_msg("%^s points at %s and curses.", m_name, t_name);
+			if (t_ptr->level > randint((rlev - 10) < 1 ? 1 : (rlev - 10)) + 10)
+			{
+
+				if (see_t) monster_msg("%^s resists!", t_name);
+			}
+			else
+			{
+				mon_take_hit_mon(m_idx, t_idx, damroll(3, 8), " is destroyed.");
+			}
+			wake_up = true;
+			break;
+		}
+
+	case SF_CAUSE_2_IDX:
+		{
+			disturb_on_other();
+			if (blind || !see_m) monster_msg("%^s mumbles.", m_name);
+			else monster_msg("%^s points at %s and curses horribly.", m_name, t_name);
+			if (t_ptr->level > randint((rlev - 10) < 1 ? 1 : (rlev - 10)) + 10)
+			{
+				if (see_t) monster_msg("%^s resists!", t_name);
+			}
+			else
+			{
+				mon_take_hit_mon(m_idx, t_idx, damroll(8, 8), " is destroyed.");
+			}
+			wake_up = true;
+			break;
+		}
+
+	case SF_CAUSE_3_IDX:
+		{
+			disturb_on_other();
+			if (blind || !see_m) monster_msg("%^s mumbles.", m_name);
+			else monster_msg("%^s points at %s, incanting terribly!", m_name, t_name);
+			if (t_ptr->level > randint((rlev - 10) < 1 ? 1 : (rlev - 10)) + 10)
+			{
+				if (see_t) monster_msg("%^s resists!", t_name);
+			}
+			else
+			{
+				mon_take_hit_mon(m_idx, t_idx, damroll(10, 15), " is destroyed.");
+			}
+			wake_up = true;
+			break;
+		}
+
+	case SF_CAUSE_4_IDX:
+		{
+			disturb_on_other();
+			if (blind || !see_m) monster_msg("%^s mumbles.", m_name);
+			else monster_msg("%^s points at %s, screaming the word 'DIE!'", m_name, t_name);
+			if (t_ptr->level > randint((rlev - 10) < 1 ? 1 : (rlev - 10)) + 10)
+			{
+				if (see_t) monster_msg("%^s resists!", t_name);
+			}
+			else
+			{
+				mon_take_hit_mon(m_idx, t_idx, damroll(15, 15), " is destroyed.");
+			}
+			wake_up = true;
+			break;
+		}
+
+	case SF_BO_ACID_IDX:
+		{
+			disturb_on_other();
+			if (blind || !see_m) monster_msg("%^s mumbles.", m_name);
+			else monster_msg("%^s casts an acid bolt at %s.", m_name, t_name);
+			monst_bolt_monst(m_idx, y, x, GF_ACID,
+					 damroll(7, 8) + (rlev / 3));
+			break;
+		}
+
+	case SF_BO_ELEC_IDX:
+		{
+			disturb_on_other();
+			if (blind || !see_m) monster_msg("%^s mumbles.", m_name);
+			else monster_msg("%^s casts a lightning bolt at %s.", m_name, t_name);
+			monst_bolt_monst(m_idx, y, x, GF_ELEC,
+					 damroll(4, 8) + (rlev / 3));
+			break;
+		}
+
+	case SF_BO_FIRE_IDX:
+		{
+			disturb_on_other();
+			if (blind || !see_m) monster_msg("%^s mumbles.", m_name);
+			else monster_msg("%^s casts a fire bolt at %s.", m_name, t_name);
+			monst_bolt_monst(m_idx, y, x, GF_FIRE,
+					 damroll(9, 8) + (rlev / 3));
+			break;
+		}
+
+	case SF_BO_COLD_IDX:
+		{
+			disturb_on_other();
+			if (blind || !see_m) monster_msg("%^s mumbles.", m_name);
+			else monster_msg("%^s casts a frost bolt at %s.", m_name, t_name);
+			monst_bolt_monst(m_idx, y, x, GF_COLD,
+					 damroll(6, 8) + (rlev / 3));
+			break;
+		}
+
+	case SF_BO_POIS_IDX:
+		{
+			/* XXX XXX XXX */
+			break;
+		}
+
+	case SF_BO_NETH_IDX:
+		{
+			disturb_on_other();
+			if (blind || !see_m) monster_msg("%^s mumbles.", m_name);
+			else monster_msg("%^s casts a nether bolt at %s.", m_name, t_name);
+			monst_bolt_monst(m_idx, y, x, GF_NETHER,
+					 30 + damroll(5, 5) + (rlev * 3) / 2);
+			break;
+		}
+
+	case SF_BO_WATE_IDX:
+		{
+			disturb_on_other();
+			if (blind || !see_m) monster_msg("%^s mumbles.", m_name);
+			else monster_msg("%^s casts a water bolt at %s.", m_name, t_name);
+			monst_bolt_monst(m_idx, y, x, GF_WATER,
+					 damroll(10, 10) + (rlev));
+			break;
+		}
+
+	case SF_BO_MANA_IDX:
+		{
+			disturb_on_other();
+			if (blind || !see_m) monster_msg("%^s mumbles.", m_name);
+			else monster_msg("%^s casts a mana bolt at %s.", m_name, t_name);
+			monst_bolt_monst(m_idx, y, x, GF_MANA,
+					 randint(rlev * 7 / 2) + 50);
+			break;
+		}
+
+	case SF_BO_PLAS_IDX:
+		{
+			disturb_on_other();
+			if (blind || !see_m) monster_msg("%^s mumbles.", m_name);
+			else monster_msg("%^s casts a plasma bolt at %s.", m_name, t_name);
+			monst_bolt_monst(m_idx, y, x, GF_PLASMA,
+					 10 + damroll(8, 7) + (rlev));
+			break;
+		}
+
+	case SF_BO_ICEE_IDX:
+		{
+			disturb_on_other();
+			if (blind || !see_m) monster_msg("%^s mumbles.", m_name);
+			else monster_msg("%^s casts an ice bolt at %s.", m_name, t_name);
+			monst_bolt_monst(m_idx, y, x, GF_ICE,
+					 damroll(6, 6) + (rlev));
+			break;
+		}
+
+	case SF_MISSILE_IDX:
+		{
+			disturb_on_other();
+			if (blind || !see_m) monster_msg("%^s mumbles.", m_name);
+			else monster_msg("%^s casts a magic missile at %s.", m_name, t_name);
+			monst_bolt_monst(m_idx, y, x, GF_MISSILE,
+					 damroll(2, 6) + (rlev / 3));
+			break;
+		}
+
+	case SF_SCARE_IDX:
+		{
+			disturb_on_other();
+			if (blind || !see_m) monster_msg("%^s mumbles, and you hear scary noises.", m_name);
+			else monster_msg("%^s casts a fearful illusion at %s.", m_name, t_name);
+			if (tr_ptr->flags & RF_NO_FEAR)
+			{
+				if (see_t) monster_msg("%^s refuses to be frightened.", t_name);
+			}
+			else if (t_ptr->level > randint((rlev - 10) < 1 ? 1 : (rlev - 10)) + 10)
+			{
+				if (see_t) monster_msg("%^s refuses to be frightened.", t_name);
+			}
+			else
+			{
+				if (!(t_ptr->monfear) && see_t) monster_msg("%^s flees in terror!", t_name);
+				t_ptr->monfear += rand_int(4) + 4;
+			}
+			wake_up = true;
+			break;
+		}
+
+	case SF_BLIND_IDX:
+		{
+			disturb_on_other();
+			if (blind || !see_m) monster_msg("%^s mumbles.", m_name);
+			else monster_msg("%^s casts a spell, burning %s%s eyes.", m_name, t_name,
+						 (equals(t_name, "it") ? "s" : "'s"));
+			if (tr_ptr->flags & RF_NO_CONF)  /* Simulate blindness with confusion */
+			{
+				if (see_t) monster_msg("%^s is unaffected.", t_name);
+			}
+			else if (t_ptr->level > randint((rlev - 10) < 1 ? 1 : (rlev - 10)) + 10)
+			{
+				if (see_t) monster_msg("%^s is unaffected.", t_name);
+			}
+			else
+			{
+				if (see_t) monster_msg("%^s is blinded!", t_name);
+				t_ptr->confused += 12 + (byte)rand_int(4);
+			}
+			wake_up = true;
+			break;
+
+		}
+
+	case SF_CONF_IDX:
+		{
+			disturb_on_other();
+			if (blind || !see_m) monster_msg("%^s mumbles, and you hear puzzling noises.", m_name);
+			else monster_msg("%^s creates a mesmerising illusion in front of %s.", m_name, t_name);
+			if (tr_ptr->flags & RF_NO_CONF)
+			{
+				if (see_t) monster_msg("%^s disbelieves the feeble spell.", t_name);
+			}
+			else if (t_ptr->level > randint((rlev - 10) < 1 ? 1 : (rlev - 10)) + 10)
+			{
+				if (see_t) monster_msg("%^s disbelieves the feeble spell.", t_name);
+			}
+			else
+			{
+				if (see_t) monster_msg("%^s seems confused.", t_name);
+				t_ptr->confused += 12 + (byte)rand_int(4);
+			}
+			wake_up = true;
+			break;
+		}
+
+	case SF_SLOW_IDX:
+		{
+			disturb_on_other();
+			if (!blind && see_either) monster_msg("%^s drains power from %s%s muscles.", m_name, t_name,
+								      (equals(t_name, "it") ? "s" : "'s"));
+			if (tr_ptr->flags & RF_UNIQUE)
+			{
+				if (see_t) monster_msg("%^s is unaffected.", t_name);
+			}
+			else if (t_ptr->level > randint((rlev - 10) < 1 ? 1 : (rlev - 10)) + 10)
+			{
+				if (see_t) monster_msg("%^s is unaffected.", t_name);
+			}
+			else
+			{
+				t_ptr->mspeed -= 10;
+				if (see_t) monster_msg("%^s starts moving slower.", t_name);
+			}
+			wake_up = true;
+			break;
+		}
+
+	case SF_HOLD_IDX:
+		{
+			disturb_on_other();
+			if (!blind && see_m) monster_msg("%^s stares intently at %s.", m_name, t_name);
+			if ((tr_ptr->flags & RF_UNIQUE) ||
+					(tr_ptr->flags & RF_NO_STUN))
+			{
+				if (see_t) monster_msg("%^s is unaffected.", t_name);
+			}
+			else if (t_ptr->level > randint((rlev - 10) < 1 ? 1 : (rlev - 10)) + 10)
+			{
+				if (see_t) monster_msg("%^s is unaffected.", t_name);
+			}
+			else
+			{
+				t_ptr->stunned += randint(4) + 4;
+				if (see_t) monster_msg("%^s is paralyzed!", t_name);
+			}
+			wake_up = true;
+			break;
+		}
+
+	case SF_HASTE_IDX:
+		{
+			disturb_on_other();
+			if (blind || !see_m)
+			{
+				monster_msg("%^s mumbles.", m_name);
+			}
+			else
+			{
+				monster_msg("%^s concentrates on %s body.", m_name, m_poss);
+			}
+
+			/* Allow quick speed increases to base+10 */
+			if (m_ptr->mspeed < m_ptr->speed + 10)
+			{
+				if (see_m) monster_msg("%^s starts moving faster.", m_name);
+				m_ptr->mspeed += 10;
+			}
+
+			/* Allow small speed increases to base+20 */
+			else if (m_ptr->mspeed < m_ptr->speed + 20)
+			{
+				if (see_m) monster_msg("%^s starts moving faster.", m_name);
+				m_ptr->mspeed += 2;
+			}
+
+			break;
+		}
+
+	case SF_HAND_DOOM_IDX:
+		{
+			disturb_on_other();
+			if (!see_m) monster_msg("You hear someone invoke the Hand of Doom!");
+			else if (!blind) monster_msg("%^s invokes the Hand of Doom on %s.", m_name, t_name);
+			else
+				monster_msg ("You hear someone invoke the Hand of Doom!");
+			if (tr_ptr->flags & RF_UNIQUE)
+			{
+				if (!blind && see_t) monster_msg("^%s is unaffected!", t_name);
+			}
+			else
+			{
+				if (((m_ptr->level) + randint(20)) >
+						((t_ptr->level) + 10 + randint(20)))
+				{
+					t_ptr->hp = t_ptr->hp
+						    - (((s32b) ((65 + randint(25)) * (t_ptr->hp))) / 100);
+					if (t_ptr->hp < 1) t_ptr->hp = 1;
+				}
+				else
+				{
+					if (see_t) monster_msg("%^s resists!", t_name);
+				}
+			}
+
+			wake_up = true;
+			break;
+		}
+
+	case SF_HEAL_IDX:
+		{
 			disturb_on_other();
 
+			/* Message */
+			if (blind || !see_m)
+			{
+				monster_msg("%^s mumbles.", m_name);
+			}
+			else
+			{
+				monster_msg("%^s concentrates on %s wounds.", m_name, m_poss);
+			}
+
+			/* Heal some */
+			m_ptr->hp += (rlev * 6);
+
+			/* Fully healed */
+			if (m_ptr->hp >= m_ptr->maxhp)
+			{
+				/* Fully healed */
+				m_ptr->hp = m_ptr->maxhp;
+
+				/* Message */
+				if (seen)
+				{
+					monster_msg("%^s looks completely healed!", m_name);
+				}
+				else
+				{
+					monster_msg("%^s sounds completely healed!", m_name);
+				}
+			}
+
+			/* Partially healed */
+			else
+			{
+				/* Message */
+				if (seen)
+				{
+					monster_msg("%^s looks healthier.", m_name);
+				}
+				else
+				{
+					monster_msg("%^s sounds healthier.", m_name);
+				}
+			}
+
+			/* Redraw (later) if needed */
+			if (health_who == m_idx) p_ptr->redraw |= (PR_FRAME);
+
+			/* Cancel fear */
+			if (m_ptr->monfear)
+			{
+				/* Cancel fear */
+				m_ptr->monfear = 0;
+
+				/* Message */
+				if (see_m) monster_msg("%^s recovers %s courage.", m_name, m_poss);
+			}
+
+			break;
+		}
+
+	case SF_BLINK_IDX:
+		{
+			disturb_on_other();
+			if (see_m) monster_msg("%^s blinks away.", m_name);
+			teleport_away(m_idx, 10);
+			break;
+		}
+
+	case SF_TPORT_IDX:
+		{
+			if (dungeon_flags & DF_NO_TELEPORT)
+			{
+				break;  /* No teleport on special levels */
+			}
+			else
+			{
+				disturb_on_other();
+				if (see_m) monster_msg("%^s teleports away.", m_name);
+				teleport_away(m_idx, MAX_SIGHT * 2 + 5);
+				break;
+			}
+		}
+
+	case SF_TELE_TO_IDX:
+		{
+			/* Not implemented */
+			break;
+		}
+
+	case SF_TELE_AWAY_IDX:
+		{
+			if (dungeon_flags & DF_NO_TELEPORT)
+			{
+				break;
+			}
+
+			bool_ resists_tele = FALSE;
+			disturb_on_other();
+			monster_msg("%^s teleports %s away.", m_name, t_name);
+
+			if (tr_ptr->flags & RF_RES_TELE)
+			{
+				if (tr_ptr->flags & RF_UNIQUE)
+				{
+					if (see_t)
+					{
+						monster_msg("%^s is unaffected!", t_name);
+					}
+					resists_tele = TRUE;
+				}
+				else if (t_ptr->level > randint(100))
+				{
+					if (see_t)
+					{
+						monster_msg("%^s resists!", t_name);
+					}
+					resists_tele = TRUE;
+				}
+			}
+
+			if (!resists_tele)
+			{
+				teleport_away(t_idx, MAX_SIGHT * 2 + 5);
+			}
+
+			break;
+		}
+
+	case SF_TELE_LEVEL_IDX:
+		{
+			/* Not implemented */
+			break;
+		}
+
+	case SF_DARKNESS_IDX:
+		{
+			disturb_on_other();
+			if (blind) monster_msg("%^s mumbles.", m_name);
+			else monster_msg("%^s gestures in shadow.", m_name);
+			if (seen)
+				monster_msg("%^s is surrounded by darkness.", t_name);
+			project(m_idx, 3, y, x, 0, GF_DARK_WEAK, PROJECT_GRID | PROJECT_KILL);
+			/* Lite up the room */
+			unlite_room(y, x);
+			break;
+		}
+
+	case SF_FORGET_IDX:
+		{
+			/* Not implemented */
+			break;
+		}
+
+	case SF_S_ANIMAL_IDX:
+		{
+			do_summon("summons an animal!", 1, SUMMON_ANIMAL, SUMMON_ANIMAL, blind_msg_default);
+			break;
+		}
+
+	case SF_S_ANIMALS_IDX:
+		{
+			do_summon("summons some animals!", 4, SUMMON_ANIMAL, SUMMON_ANIMAL, blind_msg_default);
+			break;
+		}
+
+	case SF_S_BUG_IDX:
+		{
+			do_summon("codes some software bugs.", 6, SUMMON_BUG, SUMMON_BUG, blind_msg_default);
+			break;
+		}
+
+	case SF_S_RNG_IDX:
+		{
+			do_summon("codes some RNGs.", 6, SUMMON_RNG, SUMMON_RNG, blind_msg_default);
+			break;
+		}
+
+	case SF_S_THUNDERLORD_IDX:
+		{
+			do_summon("summons a Thunderlord!", 1, SUMMON_THUNDERLORD, SUMMON_THUNDERLORD, blind_msg_default);
+			break;
+		}
+
+	case SF_S_KIN_IDX:
+		{
+			// Describe the summons
+			char action[256];
+			sprintf(action,
+				"summons %s %s.",
+				m_poss,
+				(r_ptr->flags & RF_UNIQUE ? "minions" : "kin"));
+			// Force the right type of "kin"
+			summon_kin_type = r_ptr->d_char;
+			// Summon
+			do_summon(action, 6, SUMMON_KIN, SUMMON_KIN, blind_msg_default);
+			break;
+		}
+
+	case SF_S_HI_DEMON_IDX:
+		{
+			do_summon("summons greater demons!", 8, SUMMON_HI_DEMON, SUMMON_HI_DEMON, blind_msg_default);
+			break;
+		}
+
+	case SF_S_MONSTER_IDX:
+		{
+			do_summon("summons help!", 1, SUMMON_NO_UNIQUES, 0, blind_msg_default);
+			break;
+		}
+
+	case SF_S_MONSTERS_IDX:
+		{
+			do_summon("summons monsters!", 8, SUMMON_NO_UNIQUES, 0, blind_msg_default);
+			break;
+		}
+
+	case SF_S_ANT_IDX:
+		{
+			do_summon("summons ants.", 6, SUMMON_ANT, SUMMON_ANT, blind_msg_default);
+			break;
+		}
+
+	case SF_S_SPIDER_IDX:
+		{
+			do_summon("summons spiders.", 6, SUMMON_SPIDER, SUMMON_SPIDER, blind_msg_default);
+			break;
+		}
+
+	case SF_S_HOUND_IDX:
+		{
+			do_summon("summons hounds.", 6, SUMMON_HOUND, SUMMON_HOUND, blind_msg_default);
+			break;
+		}
+
+	case SF_S_HYDRA_IDX:
+		{
+			do_summon("summons hydras.", 6, SUMMON_HYDRA, SUMMON_HYDRA, blind_msg_default);
+			break;
+		}
+
+	case SF_S_ANGEL_IDX:
+		{
+			do_summon("summons an angel!", 1, SUMMON_ANGEL, SUMMON_ANGEL, blind_msg_default);
+			break;
+		}
+
+	case SF_S_DEMON_IDX:
+		{
+			do_summon("summons a demon!", 1, SUMMON_DEMON, SUMMON_DEMON, blind_msg_default);
+			break;
+		}
+
+	case SF_S_UNDEAD_IDX:
+		{
+			do_summon("summons an undead adversary!", 1, SUMMON_UNDEAD, SUMMON_UNDEAD, blind_msg_default);
+			break;
+		}
+
+	case SF_S_DRAGON_IDX:
+		{
+			do_summon("summons a dragon!", 1, SUMMON_DRAGON, SUMMON_DRAGON, blind_msg_default);
+			break;
+		}
+
+	case SF_S_HI_UNDEAD_IDX:
+		{
+			summon_messages blind_msg {
+				"You hear a creepy thing appear nearby.",
+				"You hear many creepy things appear nearby."
+			};
+			do_summon("summons greater undead!", 8, SUMMON_HI_UNDEAD_NO_UNIQUES, SUMMON_HI_UNDEAD, blind_msg);
+			break;
+		}
+
+	case SF_S_HI_DRAGON_IDX:
+		{
+			summon_messages blind_msg {
+				"You hear many a powerful thing appear nearby.",
+				"You hear many powerful things appear nearby."
+			};
+			do_summon("summons ancient dragons!", 8, SUMMON_HI_DRAGON_NO_UNIQUES, SUMMON_HI_DRAGON, blind_msg);
+			break;
+		}
+
+	case SF_S_WRAITH_IDX:
+		{
+			// No summoning Nazgul; see the remapping code above the switch.
+			assert(!friendly);
+			// Summon
+			summon_messages blind_msg {
+				"You hear an immortal being appear nearby.",
+				"You hear immortal beings appear nearby."
+			};
+			do_summon("summons a wraith!", 8, 0 /* not used */, SUMMON_WRAITH, blind_msg);
+			break;
+		}
+
+	case SF_S_UNIQUE_IDX:
+		{
+			// No summoning uniques; see the remapping code above the switch.
+			assert(!friendly);
+			// Interrupt
+			disturb_on_other();
 			// Message
 			if (blind || !see_m)
 			{
@@ -1147,1188 +2285,41 @@ static bool monst_spell_monst(int m_idx)
 			}
 			else
 			{
-				monster_msg("%^s magically %s", m_name, action);
+				monster_msg("%^s magically summons special opponents!", m_name);
 			}
-
-			// Do the actual summoning
+			// Summon
 			int count = 0;
-			for (int k = 0; k < n; k++)
+			for (int k = 0; k < 8; k++)
 			{
-				if (friendly)
-				{
-					count += summon_specific_friendly(m_ptr->fy, m_ptr->fx, rlev, friendly_type, TRUE);
-				}
-				else if (!friendly)
-				{
-					count += summon_specific(m_ptr->fy, m_ptr->fx, rlev, hostile_type);
-				}
+				count += summon_specific(m_ptr->fy, m_ptr->fx, rlev, SUMMON_UNIQUE);
 			}
-			// Message for blinded characters
+			for (int k = 0; k < 8; k++)
+			{
+				count += summon_specific(m_ptr->fy, m_ptr->fx, rlev, SUMMON_HI_UNDEAD);
+			}
+			// Message
 			if (blind)
 			{
 				if (count == 1)
 				{
-					monster_msg(blind_msg.singular);
+					monster_msg("You hear a powerful thing appear nearby.");
 				}
 				else if (count > 1)
 				{
-					monster_msg(blind_msg.plural);
+					monster_msg("You hear many powerful things appear nearby.");
 				}
 			}
-		};
-
-		/* There's no summoning friendly uniques or Nazgul */
-		auto spell_idx = thrown_spell->spell_idx;
-
-		if (friendly)
-		{
-			if ((thrown_spell->spell_idx == SF_S_UNIQUE_IDX) &&
-			        (thrown_spell->spell_idx == SF_S_WRAITH_IDX))
-			{
-				// Summon high undead instead
-				spell_idx = SF_S_HI_UNDEAD_IDX;
-			}
+			break;
 		}
-
-		/* Spell effect */
-		switch (spell_idx)
-		{
-		case SF_SHRIEK_IDX:
-			{
-				disturb_on_other();
-				if (!see_m) monster_msg("You hear a shriek.");
-				else monster_msg("%^s shrieks at %s.", m_name, t_name);
-				wake_up = true;
-				break;
-			}
-
-		case SF_MULTIPLY_IDX:
-			{
-				break;
-			}
-
-		case SF_ROCKET_IDX:
-			{
-			        disturb_on_other();
-				if (!see_either) monster_msg("You hear an explosion!");
-				else if (blind) monster_msg("%^s shoots something.", m_name);
-				else monster_msg("%^s fires a rocket at %s.", m_name, t_name);
-				monst_breath_monst(m_idx, y, x, GF_ROCKET,
-				                   ((m_ptr->hp / 4) > 800 ? 800 : (m_ptr->hp / 4)), 2);
-				break;
-			}
-
-		case SF_ARROW_1_IDX:
-			{
-			        disturb_on_other();
-				if (!see_either) monster_msg("You hear a strange noise.");
-				else if (blind) monster_msg("%^s makes a strange noise.", m_name);
-				else monster_msg("%^s fires an arrow at %s.", m_name, t_name);
-				monst_bolt_monst(m_idx, y, x, GF_ARROW, damroll(1, 6));
-				break;
-			}
-
-		case SF_ARROW_2_IDX:
-			{
-			        disturb_on_other();
-				if (!see_either) monster_msg("You hear a strange noise.");
-				else if (blind) monster_msg("%^s makes a strange noise.", m_name);
-				else monster_msg("%^s fires an arrow at %s.", m_name, t_name);
-				monst_bolt_monst(m_idx, y, x, GF_ARROW, damroll(3, 6));
-				break;
-			}
-
-		case SF_ARROW_3_IDX:
-			{
-			        disturb_on_other();
-
-				if (!see_either) monster_msg("You hear a strange noise.");
-				else if (blind) monster_msg("%^s makes a strange noise.", m_name);
-				else monster_msg("%^s fires a missile at %s.", m_name, t_name);
-				monst_bolt_monst(m_idx, y, x, GF_ARROW, damroll(5, 6));
-				break;
-			}
-
-		case SF_ARROW_4_IDX:
-			{
-				if (!see_either) monster_msg("You hear a strange noise.");
-				else disturb_on_other();
-				if (blind) monster_msg("%^s makes a strange noise.", m_name);
-				else monster_msg("%^s fires a missile at %s.", m_name, t_name);
-				monst_bolt_monst(m_idx, y, x, GF_ARROW, damroll(7, 6));
-				break;
-			}
-
-		case SF_BR_ACID_IDX:
-			{
-			        do_breath("acid", GF_ACID, 1600, 3);
-				break;
-			}
-
-		case SF_BR_ELEC_IDX:
-			{
-			        do_breath("lightning", GF_ELEC, 1600, 3);
-				break;
-			}
-
-		case SF_BR_FIRE_IDX:
-			{
-			        do_breath("fire", GF_FIRE, 1600, 3);
-				break;
-			}
-
-		case SF_BR_COLD_IDX:
-			{
-			        do_breath("frost", GF_COLD, 1600, 3);
-				break;
-			}
-
-		case SF_BR_POIS_IDX:
-			{
-			        do_breath("gas", GF_POIS, 800, 3);
-				break;
-			}
-
-		case SF_BR_NETH_IDX:
-			{
-			        do_breath("nether", GF_NETHER, 550, 6);
-				break;
-			}
-
-		case SF_BR_LITE_IDX:
-			{
-			        do_breath("light", GF_LITE, 400, 6);
-				break;
-			}
-
-		case SF_BR_DARK_IDX:
-			{
-			        do_breath("darkness", GF_DARK, 400, 6);
-				break;
-			}
-
-		case SF_BR_CONF_IDX:
-			{
-			        do_breath("confusion", GF_CONFUSION, 400, 6);
-				break;
-			}
-
-		case SF_BR_SOUN_IDX:
-			{
-			        do_breath("sound", GF_SOUND, 400, 6);
-				break;
-			}
-
-		case SF_BR_CHAO_IDX:
-			{
-			        do_breath("chaos", GF_CHAOS, 600, 6);
-				break;
-			}
-
-		case SF_BR_DISE_IDX:
-			{
-			        do_breath("disenchantment", GF_DISENCHANT, 500, 6);
-				break;
-			}
-
-		case SF_BR_NEXU_IDX:
-			{
-			        do_breath("nexus", GF_NEXUS, 250, 3);
-				break;
-			}
-
-		case SF_BR_TIME_IDX:
-			{
-			        do_breath("time", GF_TIME, 150, 3);
-				break;
-			}
-
-		case SF_BR_INER_IDX:
-			{
-			        do_breath("inertia", GF_INERTIA, 200, 6);
-				break;
-			}
-
-		case SF_BR_GRAV_IDX:
-			{
-			        do_breath("gravity", GF_GRAVITY, 200, 3);
-				break;
-			}
-
-		case SF_BR_SHAR_IDX:
-			{
-			        do_breath("shards", GF_SHARDS, 400, 6);
-				break;
-			}
-
-		case SF_BR_PLAS_IDX:
-			{
-			        do_breath("plasma", GF_PLASMA, 150, 6);
-				break;
-			}
-
-		case SF_BR_WALL_IDX:
-			{
-			        do_breath("force", GF_FORCE, 200, 6);
-				break;
-			}
-
-		case SF_BR_MANA_IDX:
-			{
-			        do_breath("magical energy", GF_MANA, 250, 3);
-				break;
-			}
-
-		case SF_BA_NUKE_IDX:
-			{
-			        disturb_on_other();
-				if (!see_either) monster_msg("You hear someone mumble.");
-				else if (blind) monster_msg("%^s mumbles.", m_name);
-				else monster_msg("%^s casts a ball of radiation at %s.", m_name, t_name);
-				monst_breath_monst(m_idx, y, x, GF_NUKE,
-				                   (rlev + damroll(10, 6)), 2);
-				break;
-			}
-
-		case SF_BR_NUKE_IDX:
-			{
-			        do_breath("toxic waste", GF_NUKE, 800, 3);
-				break;
-			}
-
-		case SF_BA_CHAO_IDX:
-			{
-			        disturb_on_other();
-				if (!see_either) monster_msg("You hear someone mumble frighteningly.");
-				else if (blind) monster_msg("%^s mumbles frighteningly.", m_name);
-				else monster_msg("%^s invokes a raw Chaos upon %s.", m_name, t_name);
-				monst_breath_monst(m_idx, y, x, GF_CHAOS,
-				                   (rlev * 2) + damroll(10, 10), 4);
-				break;
-			}
-
-		case SF_BR_DISI_IDX:
-			{
-			        do_breath("disintegration", GF_DISINTEGRATE, 300, 3);
-				break;
-			}
-
-		case SF_BA_ACID_IDX:
-			{
-			        disturb_on_other();
-				if (!see_either) monster_msg ("You hear someone mumble.");
-				else if (blind) monster_msg("%^s mumbles.", m_name);
-				else monster_msg("%^s casts an acid ball at %s.", m_name, t_name);
-				monst_breath_monst(m_idx, y, x, GF_ACID, randint(rlev * 3) + 15, 2);
-				break;
-			}
-
-		case SF_BA_ELEC_IDX:
-			{
-			        disturb_on_other();
-				if (!see_either) monster_msg ("You hear someone mumble.");
-				else
-					if (blind) monster_msg("%^s mumbles.", m_name);
-					else monster_msg("%^s casts a lightning ball at %s.", m_name, t_name);
-				monst_breath_monst(m_idx, y, x, GF_ELEC, randint(rlev * 3 / 2) + 8, 2);
-				break;
-			}
-
-		case SF_BA_FIRE_IDX:
-			{
-			        disturb_on_other();
-				if (!see_either) monster_msg ("You hear someone mumble.");
-				else
-					if (blind) monster_msg("%^s mumbles.", m_name);
-					else monster_msg("%^s casts a fire ball at %s.", m_name, t_name);
-				monst_breath_monst(m_idx, y, x, GF_FIRE, randint(rlev * 7 / 2) + 10, 2);
-				break;
-			}
-
-		case SF_BA_COLD_IDX:
-			{
-			        disturb_on_other();
-				if (!see_either) monster_msg ("You hear someone mumble.");
-				else
-					if (blind) monster_msg("%^s mumbles.", m_name);
-					else monster_msg("%^s casts a frost ball at %s.", m_name, t_name);
-				monst_breath_monst(m_idx, y, x, GF_COLD, randint(rlev * 3 / 2) + 10, 2);
-				break;
-			}
-
-		case SF_BA_POIS_IDX:
-			{
-			        disturb_on_other();
-				if (!see_either) monster_msg ("You hear someone mumble.");
-				else
-					if (blind) monster_msg("%^s mumbles.", m_name);
-					else monster_msg("%^s casts a stinking cloud at %s.", m_name, t_name);
-				monst_breath_monst(m_idx, y, x, GF_POIS, damroll(12, 2), 2);
-				break;
-			}
-
-		case SF_BA_NETH_IDX:
-			{
-			        disturb_on_other();
-				if (!see_either) monster_msg ("You hear someone mumble.");
-				else
-					if (blind) monster_msg("%^s mumbles.", m_name);
-					else monster_msg("%^s casts a nether ball at %s.", m_name, t_name);
-				monst_breath_monst(m_idx, y, x, GF_NETHER, (50 + damroll(10, 10) + rlev), 2);
-				break;
-			}
-
-		case SF_BA_WATE_IDX:
-			{
-			        disturb_on_other();
-				if (!see_either) monster_msg ("You hear someone mumble.");
-				else
-					if (blind) monster_msg("%^s mumbles.", m_name);
-					else monster_msg("%^s gestures fluidly at %s.", m_name, t_name);
-				monster_msg("%^s is engulfed in a whirlpool.", t_name);
-				monst_breath_monst(m_idx, y, x, GF_WATER, randint(rlev * 5 / 2) + 50, 4);
-				break;
-			}
-
-		case SF_BA_MANA_IDX:
-			{
-			        disturb_on_other();
-				if (!see_either) monster_msg ("You hear someone mumble powerfully.");
-				else
-					if (blind) monster_msg("%^s mumbles powerfully.", m_name);
-					else monster_msg("%^s invokes a mana storm upon %s.", m_name, t_name);
-				monst_breath_monst(m_idx, y, x, GF_MANA, (rlev * 5) + damroll(10, 10), 4);
-				break;
-			}
-
-		case SF_BA_DARK_IDX:
-			{
-			        disturb_on_other();
-				if (!see_either) monster_msg ("You hear someone mumble powerfully.");
-				else
-					if (blind) monster_msg("%^s mumbles powerfully.", m_name);
-					else monster_msg("%^s invokes a darkness storm upon %s.", m_name, t_name);
-				monst_breath_monst(m_idx, y, x, GF_DARK, (rlev * 5) + damroll(10, 10), 4);
-				break;
-			}
-
-		case SF_DRAIN_MANA_IDX:
-			{
-				/* Attack power */
-				int r1 = (randint(rlev) / 2) + 1;
-
-				if (see_m)
-				{
-					/* Basic message */
-					monster_msg("%^s draws psychic energy from %s.", m_name, t_name);
-				}
-
-				/* Heal the monster */
-				if (m_ptr->hp < m_ptr->maxhp)
-				{
-					if (!tr_ptr->spells)
-					{
-						if (see_both)
-							monster_msg("%^s is unaffected!", t_name);
-					}
-					else
-					{
-						/* Heal */
-						m_ptr->hp += (6 * r1);
-						if (m_ptr->hp > m_ptr->maxhp) m_ptr->hp = m_ptr->maxhp;
-
-						/* Redraw (later) if needed */
-						if (health_who == m_idx) p_ptr->redraw |= (PR_FRAME);
-
-						/* Special message */
-						if (seen)
-						{
-							monster_msg("%^s appears healthier.", m_name);
-						}
-					}
-				}
-
-				wake_up = true;
-				break;
-			}
-
-		case SF_MIND_BLAST_IDX:
-			{
-				disturb_on_other();
-
-				if (!seen)
-				{
-					/* */
-				}
-				else
-				{
-					monster_msg("%^s gazes intently at %s.", m_name, t_name);
-				}
-
-				/* Attempt a saving throw */
-				if ((tr_ptr->flags & RF_UNIQUE) ||
-				                (tr_ptr->flags & RF_NO_CONF) ||
-				                (t_ptr->level > randint((rlev - 10) < 1 ? 1 : (rlev - 10)) + 10))
-				{
-					/* No obvious effect */
-					if (see_t)
-					{
-						monster_msg("%^s is unaffected!", t_name);
-					}
-				}
-				else
-				{
-					monster_msg("%^s is blasted by psionic energy.", t_name);
-					t_ptr->confused += rand_int(4) + 4;
-
-					mon_take_hit_mon(m_idx, t_idx, damroll(8, 8), " collapses, a mindless husk.");
-				}
-
-				wake_up = true;
-				break;
-			}
-
-		case SF_BRAIN_SMASH_IDX:
-			{
-				disturb_on_other();
-				if (!seen)
-				{
-					/* */
-				}
-				else
-				{
-					monster_msg("%^s gazes intently at %s.", m_name, t_name);
-				}
-
-				/* Attempt a saving throw */
-				if ((tr_ptr->flags & RF_UNIQUE) ||
-				                (tr_ptr->flags & RF_NO_CONF) ||
-				                (t_ptr->level > randint((rlev - 10) < 1 ? 1 : (rlev - 10)) + 10))
-				{
-					/* No obvious effect */
-					if (see_t)
-					{
-						monster_msg("%^s is unaffected!", t_name);
-					}
-				}
-				else
-				{
-					if (see_t)
-					{
-						monster_msg("%^s is blasted by psionic energy.", t_name);
-					}
-					t_ptr->confused += rand_int(4) + 4;
-					t_ptr->mspeed -= rand_int(4) + 4;
-					t_ptr->stunned += rand_int(4) + 4;
-					mon_take_hit_mon(m_idx, t_idx, damroll(12, 15), " collapses, a mindless husk.");
-				}
-				wake_up = true;
-				break;
-			}
-
-		case SF_CAUSE_1_IDX:
-			{
-				disturb_on_other();
-				if (blind || !see_m) monster_msg("%^s mumbles.", m_name);
-				else monster_msg("%^s points at %s and curses.", m_name, t_name);
-				if (t_ptr->level > randint((rlev - 10) < 1 ? 1 : (rlev - 10)) + 10)
-				{
-
-					if (see_t) monster_msg("%^s resists!", t_name);
-				}
-				else
-				{
-					mon_take_hit_mon(m_idx, t_idx, damroll(3, 8), " is destroyed.");
-				}
-				wake_up = true;
-				break;
-			}
-
-		case SF_CAUSE_2_IDX:
-			{
-				disturb_on_other();
-				if (blind || !see_m) monster_msg("%^s mumbles.", m_name);
-				else monster_msg("%^s points at %s and curses horribly.", m_name, t_name);
-				if (t_ptr->level > randint((rlev - 10) < 1 ? 1 : (rlev - 10)) + 10)
-				{
-					if (see_t) monster_msg("%^s resists!", t_name);
-				}
-				else
-				{
-					mon_take_hit_mon(m_idx, t_idx, damroll(8, 8), " is destroyed.");
-				}
-				wake_up = true;
-				break;
-			}
-
-		case SF_CAUSE_3_IDX:
-			{
-				disturb_on_other();
-				if (blind || !see_m) monster_msg("%^s mumbles.", m_name);
-				else monster_msg("%^s points at %s, incanting terribly!", m_name, t_name);
-				if (t_ptr->level > randint((rlev - 10) < 1 ? 1 : (rlev - 10)) + 10)
-				{
-					if (see_t) monster_msg("%^s resists!", t_name);
-				}
-				else
-				{
-					mon_take_hit_mon(m_idx, t_idx, damroll(10, 15), " is destroyed.");
-				}
-				wake_up = true;
-				break;
-			}
-
-		case SF_CAUSE_4_IDX:
-			{
-				disturb_on_other();
-				if (blind || !see_m) monster_msg("%^s mumbles.", m_name);
-				else monster_msg("%^s points at %s, screaming the word 'DIE!'", m_name, t_name);
-				if (t_ptr->level > randint((rlev - 10) < 1 ? 1 : (rlev - 10)) + 10)
-				{
-					if (see_t) monster_msg("%^s resists!", t_name);
-				}
-				else
-				{
-					mon_take_hit_mon(m_idx, t_idx, damroll(15, 15), " is destroyed.");
-				}
-				wake_up = true;
-				break;
-			}
-
-		case SF_BO_ACID_IDX:
-			{
-			        disturb_on_other();
-				if (blind || !see_m) monster_msg("%^s mumbles.", m_name);
-				else monster_msg("%^s casts an acid bolt at %s.", m_name, t_name);
-				monst_bolt_monst(m_idx, y, x, GF_ACID,
-				                 damroll(7, 8) + (rlev / 3));
-				break;
-			}
-
-		case SF_BO_ELEC_IDX:
-			{
-			        disturb_on_other();
-				if (blind || !see_m) monster_msg("%^s mumbles.", m_name);
-				else monster_msg("%^s casts a lightning bolt at %s.", m_name, t_name);
-				monst_bolt_monst(m_idx, y, x, GF_ELEC,
-				                 damroll(4, 8) + (rlev / 3));
-				break;
-			}
-
-		case SF_BO_FIRE_IDX:
-			{
-			        disturb_on_other();
-				if (blind || !see_m) monster_msg("%^s mumbles.", m_name);
-				else monster_msg("%^s casts a fire bolt at %s.", m_name, t_name);
-				monst_bolt_monst(m_idx, y, x, GF_FIRE,
-				                 damroll(9, 8) + (rlev / 3));
-				break;
-			}
-
-		case SF_BO_COLD_IDX:
-			{
-			        disturb_on_other();
-				if (blind || !see_m) monster_msg("%^s mumbles.", m_name);
-				else monster_msg("%^s casts a frost bolt at %s.", m_name, t_name);
-				monst_bolt_monst(m_idx, y, x, GF_COLD,
-				                 damroll(6, 8) + (rlev / 3));
-				break;
-			}
-
-		case SF_BO_POIS_IDX:
-			{
-				/* XXX XXX XXX */
-				break;
-			}
-
-		case SF_BO_NETH_IDX:
-			{
-			        disturb_on_other();
-				if (blind || !see_m) monster_msg("%^s mumbles.", m_name);
-				else monster_msg("%^s casts a nether bolt at %s.", m_name, t_name);
-				monst_bolt_monst(m_idx, y, x, GF_NETHER,
-				                 30 + damroll(5, 5) + (rlev * 3) / 2);
-				break;
-			}
-
-		case SF_BO_WATE_IDX:
-			{
-			        disturb_on_other();
-				if (blind || !see_m) monster_msg("%^s mumbles.", m_name);
-				else monster_msg("%^s casts a water bolt at %s.", m_name, t_name);
-				monst_bolt_monst(m_idx, y, x, GF_WATER,
-				                 damroll(10, 10) + (rlev));
-				break;
-			}
-
-		case SF_BO_MANA_IDX:
-			{
-			        disturb_on_other();
-				if (blind || !see_m) monster_msg("%^s mumbles.", m_name);
-				else monster_msg("%^s casts a mana bolt at %s.", m_name, t_name);
-				monst_bolt_monst(m_idx, y, x, GF_MANA,
-				                 randint(rlev * 7 / 2) + 50);
-				break;
-			}
-
-		case SF_BO_PLAS_IDX:
-			{
-			        disturb_on_other();
-				if (blind || !see_m) monster_msg("%^s mumbles.", m_name);
-				else monster_msg("%^s casts a plasma bolt at %s.", m_name, t_name);
-				monst_bolt_monst(m_idx, y, x, GF_PLASMA,
-				                 10 + damroll(8, 7) + (rlev));
-				break;
-			}
-
-		case SF_BO_ICEE_IDX:
-			{
-			        disturb_on_other();
-				if (blind || !see_m) monster_msg("%^s mumbles.", m_name);
-				else monster_msg("%^s casts an ice bolt at %s.", m_name, t_name);
-				monst_bolt_monst(m_idx, y, x, GF_ICE,
-				                 damroll(6, 6) + (rlev));
-				break;
-			}
-
-		case SF_MISSILE_IDX:
-			{
-			        disturb_on_other();
-				if (blind || !see_m) monster_msg("%^s mumbles.", m_name);
-				else monster_msg("%^s casts a magic missile at %s.", m_name, t_name);
-				monst_bolt_monst(m_idx, y, x, GF_MISSILE,
-				                 damroll(2, 6) + (rlev / 3));
-				break;
-			}
-
-		case SF_SCARE_IDX:
-			{
-				disturb_on_other();
-				if (blind || !see_m) monster_msg("%^s mumbles, and you hear scary noises.", m_name);
-				else monster_msg("%^s casts a fearful illusion at %s.", m_name, t_name);
-				if (tr_ptr->flags & RF_NO_FEAR)
-				{
-					if (see_t) monster_msg("%^s refuses to be frightened.", t_name);
-				}
-				else if (t_ptr->level > randint((rlev - 10) < 1 ? 1 : (rlev - 10)) + 10)
-				{
-					if (see_t) monster_msg("%^s refuses to be frightened.", t_name);
-				}
-				else
-				{
-					if (!(t_ptr->monfear) && see_t) monster_msg("%^s flees in terror!", t_name);
-					t_ptr->monfear += rand_int(4) + 4;
-				}
-				wake_up = true;
-				break;
-			}
-
-		case SF_BLIND_IDX:
-			{
-				disturb_on_other();
-				if (blind || !see_m) monster_msg("%^s mumbles.", m_name);
-				else monster_msg("%^s casts a spell, burning %s%s eyes.", m_name, t_name,
-							 (equals(t_name, "it") ? "s" : "'s"));
-				if (tr_ptr->flags & RF_NO_CONF)  /* Simulate blindness with confusion */
-				{
-					if (see_t) monster_msg("%^s is unaffected.", t_name);
-				}
-				else if (t_ptr->level > randint((rlev - 10) < 1 ? 1 : (rlev - 10)) + 10)
-				{
-					if (see_t) monster_msg("%^s is unaffected.", t_name);
-				}
-				else
-				{
-					if (see_t) monster_msg("%^s is blinded!", t_name);
-					t_ptr->confused += 12 + (byte)rand_int(4);
-				}
-				wake_up = true;
-				break;
-
-			}
-
-		case SF_CONF_IDX:
-			{
-				disturb_on_other();
-				if (blind || !see_m) monster_msg("%^s mumbles, and you hear puzzling noises.", m_name);
-				else monster_msg("%^s creates a mesmerising illusion in front of %s.", m_name, t_name);
-				if (tr_ptr->flags & RF_NO_CONF)
-				{
-					if (see_t) monster_msg("%^s disbelieves the feeble spell.", t_name);
-				}
-				else if (t_ptr->level > randint((rlev - 10) < 1 ? 1 : (rlev - 10)) + 10)
-				{
-					if (see_t) monster_msg("%^s disbelieves the feeble spell.", t_name);
-				}
-				else
-				{
-					if (see_t) monster_msg("%^s seems confused.", t_name);
-					t_ptr->confused += 12 + (byte)rand_int(4);
-				}
-				wake_up = true;
-				break;
-			}
-
-		case SF_SLOW_IDX:
-			{
-				disturb_on_other();
-				if (!blind && see_either) monster_msg("%^s drains power from %s%s muscles.", m_name, t_name,
-									      (equals(t_name, "it") ? "s" : "'s"));
-				if (tr_ptr->flags & RF_UNIQUE)
-				{
-					if (see_t) monster_msg("%^s is unaffected.", t_name);
-				}
-				else if (t_ptr->level > randint((rlev - 10) < 1 ? 1 : (rlev - 10)) + 10)
-				{
-					if (see_t) monster_msg("%^s is unaffected.", t_name);
-				}
-				else
-				{
-					t_ptr->mspeed -= 10;
-					if (see_t) monster_msg("%^s starts moving slower.", t_name);
-				}
-				wake_up = true;
-				break;
-			}
-
-		case SF_HOLD_IDX:
-			{
-				disturb_on_other();
-				if (!blind && see_m) monster_msg("%^s stares intently at %s.", m_name, t_name);
-				if ((tr_ptr->flags & RF_UNIQUE) ||
-				                (tr_ptr->flags & RF_NO_STUN))
-				{
-					if (see_t) monster_msg("%^s is unaffected.", t_name);
-				}
-				else if (t_ptr->level > randint((rlev - 10) < 1 ? 1 : (rlev - 10)) + 10)
-				{
-					if (see_t) monster_msg("%^s is unaffected.", t_name);
-				}
-				else
-				{
-					t_ptr->stunned += randint(4) + 4;
-					if (see_t) monster_msg("%^s is paralyzed!", t_name);
-				}
-				wake_up = true;
-				break;
-			}
-
-		case SF_HASTE_IDX:
-			{
-			        disturb_on_other();
-				if (blind || !see_m)
-				{
-					monster_msg("%^s mumbles.", m_name);
-				}
-				else
-				{
-					monster_msg("%^s concentrates on %s body.", m_name, m_poss);
-				}
-
-				/* Allow quick speed increases to base+10 */
-				if (m_ptr->mspeed < m_ptr->speed + 10)
-				{
-					if (see_m) monster_msg("%^s starts moving faster.", m_name);
-					m_ptr->mspeed += 10;
-				}
-
-				/* Allow small speed increases to base+20 */
-				else if (m_ptr->mspeed < m_ptr->speed + 20)
-				{
-					if (see_m) monster_msg("%^s starts moving faster.", m_name);
-					m_ptr->mspeed += 2;
-				}
-
-				break;
-			}
-
-		case SF_HAND_DOOM_IDX:
-			{
-				disturb_on_other();
-				if (!see_m) monster_msg("You hear someone invoke the Hand of Doom!");
-				else if (!blind) monster_msg("%^s invokes the Hand of Doom on %s.", m_name, t_name);
-				else
-					monster_msg ("You hear someone invoke the Hand of Doom!");
-				if (tr_ptr->flags & RF_UNIQUE)
-				{
-					if (!blind && see_t) monster_msg("^%s is unaffected!", t_name);
-				}
-				else
-				{
-					if (((m_ptr->level) + randint(20)) >
-					                ((t_ptr->level) + 10 + randint(20)))
-					{
-						t_ptr->hp = t_ptr->hp
-						            - (((s32b) ((65 + randint(25)) * (t_ptr->hp))) / 100);
-						if (t_ptr->hp < 1) t_ptr->hp = 1;
-					}
-					else
-					{
-						if (see_t) monster_msg("%^s resists!", t_name);
-					}
-				}
-
-				wake_up = true;
-				break;
-			}
-
-		case SF_HEAL_IDX:
-			{
-			        disturb_on_other();
-
-				/* Message */
-				if (blind || !see_m)
-				{
-					monster_msg("%^s mumbles.", m_name);
-				}
-				else
-				{
-					monster_msg("%^s concentrates on %s wounds.", m_name, m_poss);
-				}
-
-				/* Heal some */
-				m_ptr->hp += (rlev * 6);
-
-				/* Fully healed */
-				if (m_ptr->hp >= m_ptr->maxhp)
-				{
-					/* Fully healed */
-					m_ptr->hp = m_ptr->maxhp;
-
-					/* Message */
-					if (seen)
-					{
-						monster_msg("%^s looks completely healed!", m_name);
-					}
-					else
-					{
-						monster_msg("%^s sounds completely healed!", m_name);
-					}
-				}
-
-				/* Partially healed */
-				else
-				{
-					/* Message */
-					if (seen)
-					{
-						monster_msg("%^s looks healthier.", m_name);
-					}
-					else
-					{
-						monster_msg("%^s sounds healthier.", m_name);
-					}
-				}
-
-				/* Redraw (later) if needed */
-				if (health_who == m_idx) p_ptr->redraw |= (PR_FRAME);
-
-				/* Cancel fear */
-				if (m_ptr->monfear)
-				{
-					/* Cancel fear */
-					m_ptr->monfear = 0;
-
-					/* Message */
-					if (see_m) monster_msg("%^s recovers %s courage.", m_name, m_poss);
-				}
-
-				break;
-			}
-
-		case SF_BLINK_IDX:
-			{
-			        disturb_on_other();
-				if (see_m) monster_msg("%^s blinks away.", m_name);
-				teleport_away(m_idx, 10);
-				break;
-			}
-
-		case SF_TPORT_IDX:
-			{
-			        if (dungeon_flags & DF_NO_TELEPORT)
-				{
-					break;  /* No teleport on special levels */
-				}
-				else
-				{
-					disturb_on_other();
-					if (see_m) monster_msg("%^s teleports away.", m_name);
-					teleport_away(m_idx, MAX_SIGHT * 2 + 5);
-					break;
-				}
-			}
-
-		case SF_TELE_TO_IDX:
-			{
-				/* Not implemented */
-				break;
-			}
-
-		case SF_TELE_AWAY_IDX:
-			{
-			        if (dungeon_flags & DF_NO_TELEPORT)
-				{
-					break;
-				}
-
-				// Do it
-				{
-					bool_ resists_tele = FALSE;
-					disturb_on_other();
-					monster_msg("%^s teleports %s away.", m_name, t_name);
-
-
-					if (tr_ptr->flags & RF_RES_TELE)
-					{
-						if (tr_ptr->flags & RF_UNIQUE)
-						{
-							if (see_t)
-							{
-								monster_msg("%^s is unaffected!", t_name);
-							}
-							resists_tele = TRUE;
-						}
-						else if (t_ptr->level > randint(100))
-						{
-							if (see_t)
-							{
-								monster_msg("%^s resists!", t_name);
-							}
-							resists_tele = TRUE;
-						}
-					}
-
-					if (!resists_tele)
-					{
-						teleport_away(t_idx, MAX_SIGHT * 2 + 5);
-					}
-				}
-
-				break;
-			}
-
-		case SF_TELE_LEVEL_IDX:
-			{
-				/* Not implemented */
-				break;
-			}
-
-		case SF_DARKNESS_IDX:
-			{
-				disturb_on_other();
-				if (blind) monster_msg("%^s mumbles.", m_name);
-				else monster_msg("%^s gestures in shadow.", m_name);
-				if (seen)
-					monster_msg("%^s is surrounded by darkness.", t_name);
-				project(m_idx, 3, y, x, 0, GF_DARK_WEAK, PROJECT_GRID | PROJECT_KILL);
-				/* Lite up the room */
-				unlite_room(y, x);
-				break;
-			}
-
-		case SF_FORGET_IDX:
-			{
-				/* Not implemented */
-				break;
-			}
-
-		case SF_S_ANIMAL_IDX:
-		        {
-			        do_summon("summons an animal!", 1, SUMMON_ANIMAL, SUMMON_ANIMAL, blind_msg_default);
-				break;
-		        }
-
-		case SF_S_ANIMALS_IDX:
-		        {
-			        do_summon("summons some animals!", 4, SUMMON_ANIMAL, SUMMON_ANIMAL, blind_msg_default);
-				break;
-		        }
-
-		case SF_S_BUG_IDX:
-			{
-			        do_summon("codes some software bugs.", 6, SUMMON_BUG, SUMMON_BUG, blind_msg_default);
-				break;
-			}
-
-		case SF_S_RNG_IDX:
-			{
-			        do_summon("codes some RNGs.", 6, SUMMON_RNG, SUMMON_RNG, blind_msg_default);
-				break;
-			}
-
-		case SF_S_THUNDERLORD_IDX:
-			{
-			        do_summon("summons a Thunderlord!", 1, SUMMON_THUNDERLORD, SUMMON_THUNDERLORD, blind_msg_default);
-				break;
-			}
-
-		case SF_S_KIN_IDX:
-			{
-			        // Describe the summons
-			        char action[256];
-				sprintf(action,
-				        "summons %s %s.",
-				        m_poss,
-				        (r_ptr->flags & RF_UNIQUE ? "minions" : "kin"));
-				// Force the right type of "kin"
-			        summon_kin_type = r_ptr->d_char;
-				// Summon
-				do_summon(action, 6, SUMMON_KIN, SUMMON_KIN, blind_msg_default);
-				break;
-			}
-
-		case SF_S_HI_DEMON_IDX:
-			{
-			        do_summon("summons greater demons!", 8, SUMMON_HI_DEMON, SUMMON_HI_DEMON, blind_msg_default);
-				break;
-		        }
-
-		case SF_S_MONSTER_IDX:
-			{
-			        do_summon("summons help!", 1, SUMMON_NO_UNIQUES, 0, blind_msg_default);
-				break;
-			}
-
-		case SF_S_MONSTERS_IDX:
-			{
-			        do_summon("summons monsters!", 8, SUMMON_NO_UNIQUES, 0, blind_msg_default);
-				break;
-			}
-
-		case SF_S_ANT_IDX:
-			{
-			        do_summon("summons ants.", 6, SUMMON_ANT, SUMMON_ANT, blind_msg_default);
-				break;
-			}
-
-		case SF_S_SPIDER_IDX:
-			{
-			        do_summon("summons spiders.", 6, SUMMON_SPIDER, SUMMON_SPIDER, blind_msg_default);
-				break;
-			}
-
-		case SF_S_HOUND_IDX:
-			{
-			        do_summon("summons hounds.", 6, SUMMON_HOUND, SUMMON_HOUND, blind_msg_default);
-				break;
-			}
-
-		case SF_S_HYDRA_IDX:
-			{
-			        do_summon("summons hydras.", 6, SUMMON_HYDRA, SUMMON_HYDRA, blind_msg_default);
-				break;
-			}
-
-		case SF_S_ANGEL_IDX:
-			{
-			        do_summon("summons an angel!", 1, SUMMON_ANGEL, SUMMON_ANGEL, blind_msg_default);
-				break;
-			}
-
-		case SF_S_DEMON_IDX:
-			{
-			        do_summon("summons a demon!", 1, SUMMON_DEMON, SUMMON_DEMON, blind_msg_default);
-				break;
-			}
-
-		case SF_S_UNDEAD_IDX:
-			{
-			        do_summon("summons an undead adversary!", 1, SUMMON_UNDEAD, SUMMON_UNDEAD, blind_msg_default);
-				break;
-			}
-
-		case SF_S_DRAGON_IDX:
-			{
-			        do_summon("summons a dragon!", 1, SUMMON_DRAGON, SUMMON_DRAGON, blind_msg_default);
-				break;
-			}
-
-		case SF_S_HI_UNDEAD_IDX:
-			{
-			        summon_messages blind_msg {
-					"You hear a creepy thing appear nearby.",
-					"You hear many creepy things appear nearby."
-				};
-				do_summon("summons greater undead!", 8, SUMMON_HI_UNDEAD_NO_UNIQUES, SUMMON_HI_UNDEAD, blind_msg);
-				break;
-			}
-
-		case SF_S_HI_DRAGON_IDX:
-			{
-			        summon_messages blind_msg {
-					"You hear many a powerful thing appear nearby.",
-					"You hear many powerful things appear nearby."
-				};
-				do_summon("summons ancient dragons!", 8, SUMMON_HI_DRAGON_NO_UNIQUES, SUMMON_HI_DRAGON, blind_msg);
-				break;
-			}
-
-		case SF_S_WRAITH_IDX:
-			{
-			        // No summoning Nazgul; see the remapping code above the switch.
-			        assert(!friendly);
-				// Summon
-				summon_messages blind_msg {
-					"You hear an immortal being appear nearby.",
-					"You hear immortal beings appear nearby."
-				};
-				do_summon("summons a wraith!", 8, 0 /* not used */, SUMMON_WRAITH, blind_msg);
-				break;
-			}
-
-		case SF_S_UNIQUE_IDX:
-			{
-			        // No summoning uniques; see the remapping code above the switch.
-			        assert(!friendly);
-				// Interrupt
-				disturb_on_other();
-				// Message
-				if (blind || !see_m)
-				{
-					monster_msg("%^s mumbles.", m_name);
-				}
-				else
-				{
-					monster_msg("%^s magically summons special opponents!", m_name);
-				}
-				// Summon
-				int count = 0;
-				for (int k = 0; k < 8; k++)
-				{
-					count += summon_specific(m_ptr->fy, m_ptr->fx, rlev, SUMMON_UNIQUE);
-				}
-				for (int k = 0; k < 8; k++)
-				{
-					count += summon_specific(m_ptr->fy, m_ptr->fx, rlev, SUMMON_HI_UNDEAD);
-				}
-				// Message
-				if (blind)
-				{
-					if (count == 1)
-					{
-						monster_msg("You hear a powerful thing appear nearby.");
-					}
-					else if (count > 1)
-					{
-						monster_msg("You hear many powerful things appear nearby.");
-					}
-				}
-				break;
-			}
-		}
-
-		if (wake_up)
-		{
-			t_ptr->csleep = 0;
-		}
-
-		/* A spell was cast */
-		return true;
 	}
 
-	/* No enemy found */
-	return false;
+	if (wake_up)
+	{
+		t_ptr->csleep = 0;
+	}
+
+	/* A spell was cast */
+	return true;
 }
 
 
