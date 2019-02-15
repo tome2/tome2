@@ -1006,18 +1006,6 @@ void Term_fresh()
 		}
 	}
 
-	/* Cursor Update -- Erase old Cursor */
-	else
-	{
-		/* Cursor will be invisible */
-		if (scr->cu || !scr->cv)
-		{
-			/* Make the cursor invisible */
-			Term_xtra(TERM_XTRA_SHAPE, 0);
-		}
-	}
-
-
 	/* Something to update */
 	if (y1 <= y2)
 	{
@@ -1100,9 +1088,6 @@ void Term_fresh()
 		{
 			/* Put the cursor where it belongs */
 			do_curs_hook(scr->cx, scr->cy);
-
-			/* Make the cursor visible */
-			Term_xtra(TERM_XTRA_SHAPE, 1);
 		}
 	}
 

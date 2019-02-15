@@ -431,62 +431,6 @@ static void keymap_game_prepare(void)
 
 
 /*
- * Suspend/Resume
- */
-static void Term_xtra_gcu_alive(int v)
-{
-	int x, y;
-
-
-	/* Suspend */
-	if (!v)
-	{
-		/* Go to normal keymap mode */
-		keymap_norm();
-
-		/* Restore modes */
-		noraw();
-		echo();
-		nl();
-
-		/* Hack -- make sure the cursor is visible */
-		Term_xtra(TERM_XTRA_SHAPE, 1);
-
-		/* Flush the curses buffer */
-		(void)refresh();
-
-		/* Get current cursor position */
-		getyx(curscr, y, x);
-
-		/* Move the cursor to bottom right corner */
-		mvcur(y, x, LINES - 1, 0);
-
-		/* Exit curses */
-		endwin();
-
-		/* Flush the output */
-		(void)fflush(stdout);
-	}
-
-	/* Resume */
-	else
-	{
-		/* Refresh */
-		/* (void)touchwin(curscr); */
-		/* (void)wrefresh(curscr); */
-
-		/* Restore the settings */
-		raw();
-		noecho();
-		nonl();
-
-		/* Go to angband keymap mode */
-		keymap_game();
-	}
-}
-
-
-/*
  * Init the "curses" system
  */
 static void Term_init_gcu(void *data)
@@ -523,9 +467,6 @@ static void Term_nuke_gcu(void *data)
 
 	/* Count nuke's, handle last */
 	if (--active != 0) return;
-
-	/* Hack -- make sure the cursor is visible */
-	Term_xtra(TERM_XTRA_SHAPE, 1);
 
 #ifdef A_COLOR
 	/* Reset colors to defaults */
@@ -655,11 +596,6 @@ static void Term_xtra_gcu(void *data, int n, int v)
 		/* Flush the Curses buffer */
 	case TERM_XTRA_FRESH:
 		(void)wrefresh(td->win);
-		return;
-
-		/* Suspend/Resume curses */
-	case TERM_XTRA_ALIVE:
-		Term_xtra_gcu_alive(v);
 		return;
 
 		/* Process events */

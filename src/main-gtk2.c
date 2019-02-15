@@ -480,10 +480,6 @@ static void Term_xtra_gtk(void *term_data_ctx, int n, int v)
 			return;
 		}
 
-		/* Handle change in the "level" */
-	case TERM_XTRA_LEVEL:
-		return;
-
 		/* Clear the screen */
 	case TERM_XTRA_CLEAR:
 		Term_clear_gtk(td);

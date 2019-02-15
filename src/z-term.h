@@ -105,12 +105,10 @@ typedef void(resize_hook_t)();
 #define TERM_XTRA_EVENT	1	/* Process some pending events */
 #define TERM_XTRA_FLUSH 2	/* Flush all pending events */
 #define TERM_XTRA_CLEAR 3	/* Clear the entire window */
-#define TERM_XTRA_SHAPE 4	/* Set cursor shape (optional) */
 #define TERM_XTRA_FRESH 6	/* Flush all rows (optional) */
 #define TERM_XTRA_NOISE 7	/* Make a noise (optional) */
 #define TERM_XTRA_BORED 9	/* Handle stuff when bored (optional) */
 #define TERM_XTRA_REACT 10	/* React to global changes (optional) */
-#define TERM_XTRA_ALIVE 11	/* Change the "hard" level (optional) */
 #define TERM_XTRA_LEVEL 12	/* Change the "soft" level (optional) */
 #define TERM_XTRA_RENAME_MAIN_WIN 16 /* Rename the main game window */
 

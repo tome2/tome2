@@ -551,21 +551,6 @@ static void Term_xtra_sdl(void *data, int n, int v)
 			return;
 		}
 
-	case TERM_XTRA_SHAPE:
-		{
-			/*
-			 * Set the cursor visibility XXX XXX XXX
-			 *
-			 * This action should change the visibility of the cursor,
-			 * if possible, to the requested value (0=off, 1=on)
-			 *
-			 * This action is optional, but can improve both the
-			 * efficiency (and attractiveness) of the program.
-			 */
-
-			return;
-		}
-
 	case TERM_XTRA_FRESH:
 		{
 			/*
@@ -590,18 +575,6 @@ static void Term_xtra_sdl(void *data, int n, int v)
 			return;
 		}
 
-	case TERM_XTRA_NOISE:
-		{
-			/*
-			 * Make a noise XXX XXX XXX
-			 *
-			 * This action should produce a "beep" noise.
-			 *
-			 * This action is optional, but convenient.
-			 */
-			return;
-		}
-
 	case TERM_XTRA_BORED:
 		{
 			/* Perform event checking without blocking */
@@ -611,62 +584,6 @@ static void Term_xtra_sdl(void *data, int n, int v)
 			}
 			return;
 		}
-
-	case TERM_XTRA_REACT:
-		{
-			/*
-			 * React to global changes XXX XXX XXX
-			 *
-			 * For example, this action can be used to react to
-			 * changes in the global "color_table[256][4]" array.
-			 *
-			 * This action is optional, but can be very useful for
-			 * handling "color changes" and the "arg_sound" and/or
-			 * "arg_graphics" options.
-			 */
-			return;
-		}
-
-	case TERM_XTRA_ALIVE:
-		{
-			/*
-			 * Change the "hard" level XXX XXX XXX
-			 *
-			 * This action is used if the program changes "aliveness"
-			 * by being either "suspended" (v=0) or "resumed" (v=1)
-			 * This action is optional, unless the computer uses the
-			 * same "physical screen" for multiple programs, in which
-			 * case this action should clean up to let other programs
-			 * use the screen, or resume from such a cleaned up state.
-			 *
-			 * This action is currently only used by "main-gcu.c",
-			 * on UNIX machines, to allow proper "suspending".
-			 */
-
-			return;
-		}
-
-	case TERM_XTRA_LEVEL:
-		{
-			/*
-			 * Change the "soft" level XXX XXX XXX
-			 *
-			 * This action is used when the term window changes "activation"
-			 * either by becoming "inactive" (v=0) or "active" (v=1)
-			 *
-			 * This action can be used to do things like activate the proper
-			 * font / drawing mode for the newly active term window.  This
-			 * action should NOT change which window has the "focus", which
-			 * window is "raised", or anything like that.
-			 *
-			 * This action is optional if all the other things which depend
-			 * on what term is active handle activation themself, or if only
-			 * one "term_data" structure is supported by this file.
-			 */
-
-			return;
-		}
-
 	}
 }
 
