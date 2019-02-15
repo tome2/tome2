@@ -61,6 +61,7 @@ SET(SRCS_COMMON
   options.cc
   player_type.cc
   powers.cc
+  program_args.cc
   q_betwen.cc
   q_bounty.cc
   q_dragons.cc

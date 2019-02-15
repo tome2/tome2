@@ -14,6 +14,7 @@
 #include "game.hpp"
 #include "init2.h"
 #include "modules.hpp"
+#include "program_args.hpp"
 #include "util.h"
 #include "util.hpp"
 #include "variable.h"
@@ -132,6 +133,8 @@ int main_real(int argc, char *argv[], char const *platform_sys, int (*init_platf
 	/* Make sure save directory exists */
 	init_save_dir();
 
+	/* Program arguments */
+	program_args program_args;
 
 	/* Process the command line arguments */
 	bool args = true;
@@ -149,21 +152,21 @@ int main_real(int argc, char *argv[], char const *platform_sys, int (*init_platf
 		case 'W':
 		case 'w':
 			{
-				arg_wizard = TRUE;
+				program_args.wizard = true;
 				break;
 			}
 
 		case 'R':
 		case 'r':
 			{
-				arg_force_roguelike = TRUE;
+				program_args.force_key_set = 'r';
 				break;
 			}
 
 		case 'O':
 		case 'o':
 			{
-				arg_force_original = TRUE;
+				program_args.force_key_set = 'o';
 				break;
 			}
 
@@ -174,9 +177,7 @@ int main_real(int argc, char *argv[], char const *platform_sys, int (*init_platf
 				{
 					goto usage;
 				}
-
-				game->player_name = &argv[i][2];
-				no_begin_screen = true;
+				program_args.player_name = &argv[i][2];
 				break;
 			}
 
@@ -186,7 +187,7 @@ int main_real(int argc, char *argv[], char const *platform_sys, int (*init_platf
 				{
 					goto usage;
 				}
-				force_module = &argv[i][2];
+				program_args.module = &argv[i][2];
 				break;
 			}
 
@@ -243,6 +244,27 @@ usage:
 		argv[1] = NULL;
 	}
 
+	/* Process command line arguments */
+	arg_wizard = program_args.wizard;
+
+	if (auto it = program_args.force_key_set)
+	{
+		arg_force_roguelike = (*it == 'r');
+		arg_force_original = (*it == 'o');
+	}
+
+	/* If player name specified... */
+	if (!program_args.player_name.empty())
+	{
+		game->player_name = program_args.player_name;
+		no_begin_screen = true;
+	}
+
+	/* If module specified... */
+	if (program_args.module)
+	{
+		force_module = program_args.module;
+	}
 
 	/* Process the player name */
 	set_player_base(game->player_name);
