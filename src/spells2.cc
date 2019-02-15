@@ -891,8 +891,7 @@ void report_magics()
 	}
 
 	/* Save the screen */
-	character_icky = TRUE;
-	Term_save();
+	screen_save_no_flush();
 
 	/* Erase the screen */
 	for (k = 1; k < 24; k++) prt("", k, 13);
@@ -922,8 +921,7 @@ void report_magics()
 	inkey();
 
 	/* Restore the screen */
-	Term_load();
-	character_icky = FALSE;
+	screen_load_no_flush();
 }
 
 
@@ -4801,8 +4799,7 @@ static int reset_recall_aux()
 		}
 	}
 
-	character_icky = TRUE;
-	Term_save();
+	screen_save_no_flush();
 
 	while (true)
 	{
@@ -4818,8 +4815,7 @@ static int reset_recall_aux()
 		else if (which == '*' || which == '?' || which == ' ')
 		{
 			mode = (mode) ? FALSE : TRUE;
-			Term_load();
-			character_icky = FALSE;
+			screen_load_no_flush();
 		}
 
 		else if (which == '+')
@@ -4830,8 +4826,7 @@ static int reset_recall_aux()
 			{
 				start -= 20;
 			}
-			Term_load();
-			character_icky = FALSE;
+			screen_load_no_flush();
 		}
 
 		else if (which == '-')
@@ -4841,8 +4836,7 @@ static int reset_recall_aux()
 			{
 				start += 20;
 			}
-			Term_load();
-			character_icky = FALSE;
+			screen_load_no_flush();
 		}
 
 		else if (which == '@')
@@ -4900,8 +4894,7 @@ static int reset_recall_aux()
 		}
 	}
 
-	Term_load();
-	character_icky = FALSE;
+	screen_load_no_flush();
 
 	return ret;
 }

@@ -519,8 +519,7 @@ bool do_control_magic()
 				redraw = TRUE;
 
 				/* Save the screen */
-				character_icky = TRUE;
-				Term_save();
+				screen_save_no_flush();
 
 				prt ("", y++, x);
 
@@ -562,8 +561,7 @@ bool do_control_magic()
 				redraw = FALSE;
 
 				/* Restore the screen */
-				Term_load();
-				character_icky = FALSE;
+				screen_load_no_flush();
 			}
 
 			/* Redo asking */
@@ -623,8 +621,7 @@ bool do_control_magic()
 	/* Restore the screen */
 	if (redraw)
 	{
-		Term_load();
-		character_icky = FALSE;
+		screen_load_no_flush();
 	}
 
 	/* Take a turn */

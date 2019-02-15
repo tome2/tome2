@@ -2124,8 +2124,7 @@ bool_ object_out_desc(object_type *o_ptr, FILE *fff, bool_ trim_down, bool_ wait
 	else
 	{
 		/* Save the screen */
-		character_icky = TRUE;
-		Term_save();
+		screen_save_no_flush();
 
 		/* Set up stuff for text_out */
 		text_out_hook = text_out_to_screen;

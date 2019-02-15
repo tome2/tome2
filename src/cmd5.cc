@@ -170,8 +170,7 @@ static void browse_school_spell(int book, int spell_idx, object_type *o_ptr)
 		I2A(0), I2A(num - 1));
 
 	/* Save the screen */
-	character_icky = TRUE;
-	Term_save();
+	screen_save_no_flush();
 
 	/* Display a list of spells */
 	print_book(book, spell_idx, o_ptr);
@@ -208,8 +207,7 @@ static void browse_school_spell(int book, int spell_idx, object_type *o_ptr)
 
 
 	/* Restore the screen */
-	Term_load();
-	character_icky = FALSE;
+	screen_load_no_flush();
 
 	/* Show choices */
 	window_stuff();
@@ -667,8 +665,7 @@ static std::tuple<int, int> choose_monster_power(monster_race const *r_ptr, bool
 		label, (symbiosis ? "symbiote" : "body"));
 
 	/* Save the screen */
-	character_icky = TRUE;
-	Term_save();
+	screen_save_no_flush();
 
 	/* Get a spell from the user */
 	monster_power const *power = nullptr;
@@ -799,8 +796,7 @@ static std::tuple<int, int> choose_monster_power(monster_race const *r_ptr, bool
 	}
 
 	/* Restore the screen */
-	Term_load();
-	character_icky = FALSE;
+	screen_load_no_flush();
 
 	/* Abort if needed */
 	if (!flag || (power == nullptr))
@@ -1976,8 +1972,7 @@ s32b get_school_spell(const char *do_what, s16b force_book)
 	}
 
 	/* Save the screen */
-	character_icky = TRUE;
-	Term_save();
+	screen_save_no_flush();
 
 	/* Go */
 	if (hack_force_spell == -1)
@@ -1996,8 +1991,8 @@ s32b get_school_spell(const char *do_what, s16b force_book)
 			/* Restore and save screen; this prevents
 			   subprompt from leaving garbage when going
 			   around the loop multiple times. */
-			Term_load();
-			Term_save();
+			screen_load_no_flush();
+			screen_save_no_flush();
 
 			/* Display a list of spells */
 			where = print_book(sval, pval, o_ptr);
@@ -2069,9 +2064,7 @@ s32b get_school_spell(const char *do_what, s16b force_book)
 
 
 	/* Restore the screen */
-	Term_load();
-	character_icky = FALSE;
-
+	screen_load_no_flush();
 
 	/* Show choices */
 	window_stuff();

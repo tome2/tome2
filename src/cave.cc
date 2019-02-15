@@ -1868,11 +1868,8 @@ void do_cmd_view_map()
 	/* Retrive current screen size */
 	Term_get_size(&wid, &hgt);
 
-	/* Enter "icky" mode */
-	character_icky = TRUE;
-
 	/* Save the screen */
-	Term_save();
+	screen_save_no_flush();
 
 	/* Note */
 	prt("Please wait...", 0, 0);
@@ -1896,10 +1893,7 @@ void do_cmd_view_map()
 	inkey();
 
 	/* Restore the screen */
-	Term_load();
-
-	/* Leave "icky" mode */
-	character_icky = FALSE;
+	screen_load_no_flush();
 }
 
 

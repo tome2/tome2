@@ -60,8 +60,7 @@ void do_cmd_inven()
 	command_wrk = FALSE;
 
 	/* Save the screen */
-	character_icky = TRUE;
-	Term_save();
+	screen_save_no_flush();
 
 	/* Show the inventory */
 	show_inven_full();
@@ -83,9 +82,7 @@ void do_cmd_inven()
 	command_new = inkey();
 
 	/* Restore the screen */
-	Term_load();
-	character_icky = FALSE;
-
+	screen_load_no_flush();
 
 	/* Process "Escape" */
 	if (command_new == ESCAPE)
@@ -115,8 +112,7 @@ void do_cmd_equip()
 	command_wrk = TRUE;
 
 	/* Save the screen */
-	character_icky = TRUE;
-	Term_save();
+	screen_save_no_flush();
 
 	/* Display the equipment */
 	show_equip_full();
@@ -139,9 +135,7 @@ void do_cmd_equip()
 	command_new = inkey();
 
 	/* Restore the screen */
-	Term_load();
-	character_icky = FALSE;
-
+	screen_load_no_flush();
 
 	/* Process "Escape" */
 	if (command_new == ESCAPE)
@@ -1495,8 +1489,7 @@ void do_cmd_query_symbol()
 			if (recall)
 			{
 				/* Save the screen */
-				character_icky = TRUE;
-				Term_save();
+				screen_save_no_flush();
 
 				/* Recall on screen */
 				screen_roff(who[i], 0);
@@ -1512,8 +1505,7 @@ void do_cmd_query_symbol()
 			if (recall)
 			{
 				/* Restore */
-				Term_load();
-				character_icky = FALSE;
+				screen_load_no_flush();
 			}
 
 			/* Normal commands */
@@ -1769,20 +1761,14 @@ void do_cmd_cli_help()
 		}
 	}
 
-	/* Enter "icky" mode */
-	character_icky = TRUE;
-
 	/* Save the screen */
-	Term_save();
+	screen_save_no_flush();
 
 	/* Display the file contents */
 	show_string(w.c_str(), "Command line help");
 
 	/* Restore the screen */
-	Term_load();
-
-	/* Leave "icky" mode */
-	character_icky = FALSE;
+	screen_load_no_flush();
 }
 
 

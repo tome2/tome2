@@ -1933,6 +1933,14 @@ void screen_save()
 	character_icky++;
 }
 
+void screen_save_no_flush()
+{
+	/* Enter "icky" mode */
+	character_icky = TRUE;
+
+	/* Save the screen */
+	Term_save();
+}
 
 /*
  * Load the screen, and decrease the "icky" depth.
@@ -1949,6 +1957,15 @@ void screen_load()
 
 	/* Decrease "icky" depth */
 	character_icky--;
+}
+
+void screen_load_no_flush()
+{
+	/* Restore the screen */
+	Term_load();
+
+	/* Leave "icky" mode */
+	character_icky = FALSE;
 }
 
 
@@ -3487,17 +3504,15 @@ int ask_menu(const char *ask, const std::vector<std::string> &items)
 	char c;
 	int size = static_cast<int>(items.size()); // Convert to int to avoid warnings
 
-	/* Enter "icky" mode */
-	character_icky = TRUE;
-
 	/* Save the screen */
-	Term_save();
+	screen_save_no_flush();
 
 	while (TRUE)
 	{
 		/* Display list */
-		Term_load();
-		Term_save();
+		screen_load_no_flush();
+		screen_save_no_flush();
+
 		prt(ask, 0, 0);
 		for (i = start; (i < size) && (i < start + 20); i++)
 		{
@@ -3546,11 +3561,7 @@ int ask_menu(const char *ask, const std::vector<std::string> &items)
 		}
 	}
 
-	/* Load the screen */
-	Term_load();
-
-	/* Leave "icky" mode */
-	character_icky = FALSE;
+	screen_load_no_flush();
 
 	return ret;
 }

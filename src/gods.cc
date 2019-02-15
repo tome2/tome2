@@ -134,8 +134,7 @@ bool_ show_god_info()
 
 		msg_print(NULL);
 
-		character_icky = TRUE;
-		Term_save();
+		screen_save_no_flush();
 
 		text_out(format("You worship %s. ", d_ptr->name));
 		for (i = 0; (i < 10) && (!equals(d_ptr->desc[i], "")); i++)
@@ -144,8 +143,7 @@ bool_ show_god_info()
 
 		inkey();
 
-		Term_load();
-		character_icky = FALSE;
+		screen_load_no_flush();
 	}
 
 	return TRUE;

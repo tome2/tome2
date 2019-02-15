@@ -4025,8 +4025,7 @@ static int target_set_aux(int y, int x, int mode, const char *info_)
 						if (recall)
 						{
 							/* Save */
-							character_icky = TRUE;
-							Term_save();
+							screen_save_no_flush();
 
 							/* Recall on screen */
 							screen_roff(m_ptr->r_idx, m_ptr->ego);
@@ -4038,8 +4037,7 @@ static int target_set_aux(int y, int x, int mode, const char *info_)
 							query = inkey();
 
 							/* Restore */
-							Term_load();
-							character_icky = FALSE;
+							screen_load_no_flush();
 						}
 
 						/* Normal */

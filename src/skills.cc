@@ -779,8 +779,8 @@ static void choose_melee()
 	int i, j, z = 0;
 	int force_drop = FALSE, style_unchanged = FALSE;
 
-	character_icky = TRUE;
-	Term_save();
+	screen_save_no_flush();
+
 	Term_clear();
 
 	j = get_melee_skills();
@@ -843,8 +843,7 @@ static void choose_melee()
 	/* Redraw monster hitpoint */
 	p_ptr->redraw |= (PR_FRAME);
 
-	Term_load();
-	character_icky = FALSE;
+	screen_load_no_flush();
 
 	if (style_unchanged)
 	{
@@ -964,8 +963,7 @@ static int do_cmd_activate_skill_aux()
 		return -1;
 	}
 
-	character_icky = TRUE;
-	Term_save();
+	screen_save_no_flush();
 
 	while (true)
 	{
@@ -984,8 +982,7 @@ static int do_cmd_activate_skill_aux()
 			{
 				start -= 20;
 			}
-			Term_load();
-			character_icky = FALSE;
+			screen_load_no_flush();
 		}
 		else if (which == '-')
 		{
@@ -994,8 +991,7 @@ static int do_cmd_activate_skill_aux()
 			{
 				start += 20;
 			}
-			Term_load();
-			character_icky = FALSE;
+			screen_load_no_flush();
 		}
 		else if (which == '@')
 		{
@@ -1039,8 +1035,7 @@ static int do_cmd_activate_skill_aux()
 			break;
 		}
 	}
-	Term_load();
-	character_icky = FALSE;
+	screen_load_no_flush();
 
 	return ret;
 }

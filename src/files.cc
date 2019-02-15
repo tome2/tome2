@@ -4125,15 +4125,13 @@ static void show_info()
 		if (!out_val[0]) break;
 
 		/* Save screen */
-		character_icky = TRUE;
-		Term_save();
+		screen_save_no_flush();
 
 		/* Dump a character file */
 		file_character(out_val);
 
 		/* Load screen */
-		Term_load();
-		character_icky = FALSE;
+		screen_load_no_flush();
 	}
 
 

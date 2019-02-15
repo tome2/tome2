@@ -275,8 +275,7 @@ static bool get_magic_power(int *sn, magic_power *powers, int max_powers,
 	        p, I2A(0), I2A(num - 1), toupper(I2A(0)), toupper(I2A(num - 1)), p);
 
 	/* Save the screen */
-	character_icky = TRUE;
-	Term_save();
+	screen_save_no_flush();
 
 	/* Show the list */
 	display_magic_powers(powers, max_powers, power_info, plev, cast_stat, y, x);
@@ -307,11 +306,10 @@ static bool get_magic_power(int *sn, magic_power *powers, int max_powers,
 		if (info)
 		{
 			c_prt(TERM_L_BLUE, spell.desc, 1, 0);
+			inkey();
 
 			/* Restore the screen */
-			inkey();
-			Term_load();
-			character_icky = FALSE;
+			screen_load_no_flush();
 
 			/* Redisplay choices */
 			display_magic_powers(powers, max_powers, power_info, plev, cast_stat, y, x);
@@ -323,8 +321,7 @@ static bool get_magic_power(int *sn, magic_power *powers, int max_powers,
 	}
 
 	/* Restore the screen */
-	Term_load();
-	character_icky = FALSE;
+	screen_load_no_flush();
 
 	/* Abort if needed */
 	if (!flag)
@@ -1296,11 +1293,8 @@ static random_spell* select_spell_from_batch(std::size_t batch)
 	char which;
 	random_spell* ret = nullptr;
 
-	/* Enter "icky" mode */
-	character_icky = TRUE;
-
 	/* Save the screen */
-	Term_save();
+	screen_save_no_flush();
 
 	int const mut_max = (random_spells.size() < (batch + 1) * 10)
 	        ? random_spells.size() - batch * 10
@@ -1361,10 +1355,7 @@ static random_spell* select_spell_from_batch(std::size_t batch)
 	}
 
 	/* Restore the screen */
-	Term_load();
-
-	/* Leave "icky" mode */
-	character_icky = FALSE;
+	screen_load_no_flush();
 
 	/* Return selection */
 	return (ret);
@@ -1401,11 +1392,8 @@ static random_spell* select_spell()
 	/* How many spells in the last batch? */
 	int batch_max = (random_spells.size() - 1) / 10;
 
-	/* Enter "icky" mode */
-	character_icky = TRUE;
-
 	/* Save the screen */
-	Term_save();
+	screen_save_no_flush();
 
 	strnfmt(tmp, 160, "(a-%c) Select batch of powers: ", I2A(batch_max));
 
@@ -1417,10 +1405,7 @@ static random_spell* select_spell()
 
 		if (which == ESCAPE)
 		{
-			Term_load();
-
 			ret = NULL;
-
 			break;
 		}
 
@@ -1428,10 +1413,7 @@ static random_spell* select_spell()
 		{
 			if (batch_max == 0)
 			{
-				Term_load();
-
 				ret = select_spell_from_batch(0);
-
 				break;
 			}
 
@@ -1441,10 +1423,7 @@ static random_spell* select_spell()
 		which = tolower(which);
 		if (isalpha(which) && (A2I(which) <= batch_max))
 		{
-			Term_load();
-
 			ret = select_spell_from_batch(A2I(which));
-
 			break;
 		}
 		else
@@ -1453,8 +1432,8 @@ static random_spell* select_spell()
 		}
 	}
 
-	/* Leave "icky" mode */
-	character_icky = FALSE;
+	/* Restore screen */
+	screen_load_no_flush();
 
 	return (ret);
 }

@@ -143,11 +143,8 @@ void do_cmd_change_name()
 	char	tmp[160];
 
 
-	/* Enter "icky" mode */
-	character_icky = TRUE;
-
 	/* Save the screen */
-	Term_save();
+	screen_save_no_flush();
 
 	/* Forever */
 	while (true)
@@ -240,11 +237,7 @@ void do_cmd_change_name()
 	}
 
 	/* Restore the screen */
-	Term_load();
-
-	/* Leave "icky" mode */
-	character_icky = FALSE;
-
+	screen_load_no_flush();
 
 	/* Redraw everything */
 	p_ptr->redraw |= (PR_WIPE | PR_FRAME | PR_MAP);
@@ -303,11 +296,8 @@ void do_cmd_messages()
 	/* Start at leftmost edge */
 	u32b q = 0;
 
-	/* Enter "icky" mode */
-	character_icky = TRUE;
-
 	/* Save the screen */
-	Term_save();
+	screen_save_no_flush();
 
 	/* Process requests until done */
 	while (true)
@@ -486,10 +476,7 @@ void do_cmd_messages()
 	}
 
 	/* Restore the screen */
-	Term_load();
-
-	/* Leave "icky" mode */
-	character_icky = FALSE;
+	screen_load_no_flush();
 }
 
 // File-local
@@ -1657,13 +1644,8 @@ void do_cmd_macros()
 	/* Keymap mode */
 	int mode = get_keymap_mode();
 
-
-	/* Enter "icky" mode */
-	character_icky = TRUE;
-
 	/* Save screen */
-	Term_save();
-
+	screen_save_no_flush();
 
 	/* Process requests until done */
 	while (true)
@@ -2011,10 +1993,7 @@ void do_cmd_macros()
 	}
 
 	/* Load screen */
-	Term_load();
-
-	/* Leave "icky" mode */
-	character_icky = FALSE;
+	screen_load_no_flush();
 }
 
 
@@ -2029,12 +2008,8 @@ void do_cmd_visuals()
 
 	char buf[1024];
 
-	/* Enter "icky" mode */
-	character_icky = TRUE;
-
 	/* Save the screen */
-	Term_save();
-
+	screen_save_no_flush();
 
 	/* Interact until done */
 	while (true)
@@ -2443,10 +2418,7 @@ void do_cmd_visuals()
 
 
 	/* Restore the screen */
-	Term_load();
-
-	/* Leave "icky" mode */
-	character_icky = FALSE;
+	screen_load_no_flush();
 }
 
 
@@ -2461,13 +2433,8 @@ void do_cmd_colors()
 
 	char buf[1024];
 
-
-	/* Enter "icky" mode */
-	character_icky = TRUE;
-
 	/* Save the screen */
-	Term_save();
-
+	screen_save_no_flush();
 
 	/* Interact until done */
 	while (true)
@@ -2662,10 +2629,7 @@ void do_cmd_colors()
 
 
 	/* Restore the screen */
-	Term_load();
-
-	/* Leave "icky" mode */
-	character_icky = FALSE;
+	screen_load_no_flush();
 }
 
 
@@ -2825,11 +2789,8 @@ void do_cmd_load_screen()
 	/* Retrieve the current screen size */
 	Term_get_size(&wid, &hgt);
 
-	/* Enter "icky" mode */
-	character_icky = TRUE;
-
 	/* Save the screen */
-	Term_save();
+	screen_save_no_flush();
 
 	/* Clear the screen */
 	Term_clear();
@@ -2908,10 +2869,7 @@ void do_cmd_load_screen()
 
 
 	/* Restore the screen */
-	Term_load();
-
-	/* Leave "icky" mode */
-	character_icky = FALSE;
+	screen_load_no_flush();
 }
 
 
@@ -2945,12 +2903,8 @@ void do_cmd_save_screen()
 	/* Retrieve the current screen size */
 	Term_get_size(&wid, &hgt);
 
-	/* Enter "icky" mode */
-	character_icky = TRUE;
-
 	/* Save the screen */
-	Term_save();
-
+	screen_save_no_flush();
 
 	/* Dump the screen */
 	for (y = 0; y < hgt; y++)
@@ -3010,10 +2964,7 @@ void do_cmd_save_screen()
 
 
 	/* Restore the screen */
-	Term_load();
-
-	/* Leave "icky" mode */
-	character_icky = FALSE;
+	screen_load_no_flush();
 }
 
 
@@ -3735,12 +3686,8 @@ void do_cmd_knowledge()
 {
 	int i;
 
-
-	/* Enter "icky" mode */
-	character_icky = TRUE;
-
 	/* Save the screen */
-	Term_save();
+	screen_save_no_flush();
 
 	/* Interact until done */
 	while (true)
@@ -3868,10 +3815,7 @@ void do_cmd_knowledge()
 	}
 
 	/* Restore the screen */
-	Term_load();
-
-	/* Leave "icky" mode */
-	character_icky = FALSE;
+	screen_load_no_flush();
 }
 
 
@@ -3881,20 +3825,14 @@ void do_cmd_knowledge()
  */
 void do_cmd_checkquest()
 {
-	/* Enter "icky" mode */
-	character_icky = TRUE;
-
 	/* Save the screen */
-	Term_save();
+	screen_save_no_flush();
 
 	/* Quest info */
 	do_cmd_knowledge_quests();
 
 	/* Restore the screen */
-	Term_load();
-
-	/* Leave "icky" mode */
-	character_icky = FALSE;
+	screen_load_no_flush();
 }
 
 

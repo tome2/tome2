@@ -1137,8 +1137,7 @@ static boost::optional<int> select_power()
 		int start = 0;
 		int const max = power_idxs.size();
 		// Save
-		character_icky = TRUE;
-		Term_save();
+		screen_save_no_flush();
 		// Loop until we get a result.
 		boost::optional<int> result;
 		while (true)
@@ -1154,15 +1153,13 @@ static boost::optional<int> select_power()
 			{
 				start += 20;
 				if (start >= max) start -= 20;
-				Term_load();
-				character_icky = FALSE;
+				screen_load_no_flush();
 			}
 			else if (which == '-')
 			{
 				start -= 20;
 				if (start < 0) start += 20;
-				Term_load();
-				character_icky = FALSE;
+				screen_load_no_flush();
 			}
 			else
 			{
@@ -1183,8 +1180,7 @@ static boost::optional<int> select_power()
 			}
 		}
 
-		Term_load();
-		character_icky = FALSE;
+		screen_load_no_flush();
 
 		return result;
 	}
