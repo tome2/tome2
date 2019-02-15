@@ -200,12 +200,6 @@ object_type *tracked_object;
 
 
 /*
- * Buffer to hold the current savefile name
- */
-char savefile[1024];
-
-
-/*
  * Array of grids lit by player lite (see "cave.c")
  */
 s16b lite_n;

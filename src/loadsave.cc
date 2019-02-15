@@ -6,6 +6,7 @@
 #include "cave_type.hpp"
 #include "dungeon_info_type.hpp"
 #include "ego_item_type.hpp"
+#include "files.hpp"
 #include "game.hpp"
 #include "init1.hpp"
 #include "init2.hpp"
@@ -2518,7 +2519,7 @@ static errr rd_savefile()
 	errr err = 0;
 
 	/* The savefile is a binary file */
-	fff = my_fopen(savefile, "rb");
+	fff = my_fopen(name_file_save().c_str(), "rb");
 
 	/* Paranoia */
 	if (!fff) return ( -1);
@@ -2563,9 +2564,14 @@ bool_ load_player()
 	/* Paranoia */
 	death = FALSE;
 
+	/* Save file */
+	auto savefile = name_file_save();
 
 	/* Allow empty savefile name */
-	if (!savefile[0]) return (TRUE);
+	if (savefile.empty())
+	{
+		return (TRUE);
+	}
 
 
 	/* XXX XXX XXX Fix this */
@@ -2574,7 +2580,7 @@ bool_ load_player()
 	if (!boost::filesystem::exists(savefile))
 	{
 		/* Give a message */
-		msg_format("Savefile does not exist: %s", savefile);
+		msg_format("Savefile does not exist: %s", savefile.c_str());
 		msg_print(NULL);
 
 		/* Allow this */
@@ -2585,7 +2591,7 @@ bool_ load_player()
 	if (!err)
 	{
 		/* Open the savefile */
-		int fd = fd_open(savefile, O_RDONLY);
+		int fd = fd_open(savefile.c_str(), O_RDONLY);
 
 		/* No file */
 		if (fd < 0) err = -1;
@@ -2601,7 +2607,7 @@ bool_ load_player()
 	if (!err)
 	{
 		/* Open the file XXX XXX XXX XXX Should use Angband file interface */
-		fff = my_fopen(savefile, "rb");
+		fff = my_fopen(savefile.c_str(), "rb");
 
 		/* Read the first four bytes */
 		do_u32b(&vernum, ls_flag_t::LOAD);
@@ -2689,7 +2695,7 @@ bool_ load_player()
 /*
  * Medium level player saver
  */
-static bool_ save_player_aux(char *name)
+static bool_ save_player_aux(char const *name)
 {
 	bool_ ok = FALSE;
 	int fd = -1;
@@ -2741,35 +2747,32 @@ static bool_ save_player_aux(char *name)
 bool_ save_player()
 {
 	int result = FALSE;
-	char safe[1024];
+
+	auto savefile = name_file_save();
 
 	/* New savefile */
-	strcpy(safe, savefile);
-	strcat(safe, ".new");
+	auto safe = savefile + ".new";
 
 	/* Remove it */
-	fd_kill(safe);
+	fd_kill(safe.c_str());
 
 	/* Attempt to save the player */
-	if (save_player_aux(safe))
+	if (save_player_aux(safe.c_str()))
 	{
-		char temp[1024];
-
 		/* Old savefile */
-		strcpy(temp, savefile);
-		strcat(temp, ".old");
+		auto temp = savefile + ".old";
 
 		/* Remove it */
-		fd_kill(temp);
+		fd_kill(temp.c_str());
 
 		/* Preserve old savefile */
-		fd_move(savefile, temp);
+		fd_move(savefile.c_str(), temp.c_str());
 
 		/* Activate new savefile */
-		fd_move(safe, savefile);
+		fd_move(safe.c_str(), savefile.c_str());
 
 		/* Remove preserved savefile */
-		fd_kill(temp);
+		fd_kill(temp.c_str());
 
 		/* Hack -- Pretend the character was loaded */
 		character_loaded = true;

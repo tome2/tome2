@@ -2918,10 +2918,10 @@ int load_savefile_names()
 
 		/* Build platform-dependent savefile name */
 		game->player_base = savefile_names[max];
-		process_player_name(true);
+		process_player_name();
 
 		/* Try to open the savefile */
-		fd = fd_open(savefile, O_RDONLY);
+		fd = fd_open(name_file_save().c_str(), O_RDONLY);
 
 		/* Still existing ? */
 		if (fd >= 0)
@@ -2935,7 +2935,7 @@ int load_savefile_names()
 
 	/* Restore the values of 'player_base' and 'savefile' */
 	game->player_base  = player_base_save;
-	process_player_name(true);
+	process_player_name();
 
 	return (max);
 }
@@ -3113,14 +3113,14 @@ savefile_try_again:
 
 			/* Build platform-dependent save file name */
 			game->player_base = savefile_names[savefile_idx[sel - 2]];
-			process_player_name(true);
+			process_player_name();
 
 			/* Remove the savefile */
-			fd_kill(savefile);
+			fd_kill(name_file_save().c_str());
 
 			/* Restore 'player_base' and 'savefile' */
 			game->player_base = player_base_save;
-			process_player_name(true);
+			process_player_name();
 
 			/* Reload, gods I hate using goto .. */
 			goto savefile_try_again;
@@ -3141,12 +3141,12 @@ savefile_try_again:
 			if (!askfor_aux(&game->player_base, 15)) continue;
 
 			/* Process the player name */
-			process_player_name(true);
+			process_player_name();
 
 			// If the savefile already exists, we do *NOT* want to
 			// create a new game, so we'll need to return FALSE for
 			// that.
-			if (boost::filesystem::exists(savefile))
+			if (boost::filesystem::exists(name_file_save()))
 			{
 				// Show a message so user doesn't get confused.
 				msg_print(NULL);
@@ -3181,7 +3181,7 @@ savefile_try_again:
 			if (!askfor_aux(&game->player_base, 15)) continue;
 
 			/* Process the player name */
-			process_player_name(true);
+			process_player_name();
 
 			return false;
 		}
@@ -3197,7 +3197,7 @@ savefile_try_again:
 			game->player_base = savefile_names[savefile_idx[x - 2]];
 
 			/* Process the player name */
-			process_player_name(true);
+			process_player_name();
 
 			return false;
 		}

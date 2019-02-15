@@ -86,6 +86,20 @@ std::string name_file_pref(std::string_view sv)
 	return buf;
 }
 
+std::string name_file_save()
+{
+	return name_file_save(game->player_base);
+}
+
+std::string name_file_save(std::string_view sv)
+{
+	char buf[1024];
+	std::string s(sv);
+	path_build(buf, sizeof(buf), ANGBAND_DIR_SAVE, s.c_str());
+
+	return buf;
+}
+
 /*
  * Extract the first few "tokens" from a buffer
  *
@@ -3662,12 +3676,7 @@ void do_cmd_help()
 
 
 
-void process_player_base()
-{
-	path_build(savefile, 1024, ANGBAND_DIR_SAVE, game->player_base.c_str());
-}
-
-void process_player_name(bool sf)
+void process_player_name()
 {
 	/* Cannot be too long */
 	if (game->player_base.size() > 15)
@@ -3709,12 +3718,6 @@ void process_player_name(bool sf)
 	{
 		game->player_base = "PLAYER";
 	}
-
-	/* Change the savefile name */
-	if (sf)
-	{
-		process_player_base();
-	}
 }
 
 
@@ -3754,7 +3757,7 @@ void get_name()
 		}
 
 		/* Process the player name */
-		process_player_name(false);
+		process_player_name();
 
 		/* All done */
 		break;

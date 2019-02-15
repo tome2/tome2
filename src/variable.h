@@ -24,7 +24,6 @@ extern bool_ character_generated;
 extern bool_ character_icky;
 extern bool_ inkey_flag;
 extern bool_ msg_flag;
-extern char savefile[1024];
 
 #ifdef __cplusplus
 } // extern "C"

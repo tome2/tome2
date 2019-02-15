@@ -207,9 +207,6 @@ static void activate_module(int module_idx)
 		strnfmt(angband_term_name[0], 79, "T-Engine: %s", game_module);
 		Term_xtra(TERM_XTRA_RENAME_MAIN_WIN, 0);
 	}
-
-	/* Reprocess the player name, just in case */
-	process_player_base();
 }
 
 static void init_module(module_type *module_ptr)
