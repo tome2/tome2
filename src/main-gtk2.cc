@@ -567,8 +567,8 @@ static void term_data_set_geometry_hints(term_data *td)
 	/* Give the window a new set of resizing hints */
 	gtk_window_set_geometry_hints(GTK_WINDOW(td->window),
 	                              td->drawing_area, &geometry,
-	                              GDK_HINT_MIN_SIZE | GDK_HINT_MAX_SIZE
-	                              | GDK_HINT_BASE_SIZE | GDK_HINT_RESIZE_INC);
+				      GdkWindowHints(GDK_HINT_MIN_SIZE | GDK_HINT_MAX_SIZE
+				      | GDK_HINT_BASE_SIZE | GDK_HINT_RESIZE_INC));
 }
 
 
@@ -774,10 +774,22 @@ static void load_font(term_data *td, const char *fontname)
 		td->font = old;
 	}
 
+	/* Check that the font actually was loaded */
+	if (!td->font)
+	{
+		quit_fmt("Could not load font '%s'... quitting", fontname);
+	}
+
 	/* Calculate the size of the font XXX */
 	td->font_wid = gdk_char_width(td->font, '@');
 	td->font_hgt = td->font->ascent + td->font->descent;
 
+	// Fallback in case we can't calculate font width; it's not going to
+	// be pretty, but it should at least not fail catastrophically.
+	if (!td->font_wid)
+	{
+		td->font_wid = td->font_hgt;
+	}
 }
 
 
@@ -1063,7 +1075,7 @@ static void size_allocate_event_handler(
         GtkAllocation *allocation,
         gpointer user_data)
 {
-	term_data *td = user_data;
+	term_data *td = (term_data *) user_data;
 	term *old = Term;
 
 	/* Paranoia */
@@ -1123,7 +1135,7 @@ static gboolean expose_event_handler(
         GdkEventExpose *event,
         gpointer user_data)
 {
-	term_data *td = user_data;
+	term_data *td = (term_data *) user_data;
 
 	term *old = Term;
 
@@ -1245,6 +1257,76 @@ static term *term_data_init(term_data *td, int i)
 	return td->term_ptr;
 }
 
+/*
+ * Helper for menu declaration since we need a few casts in C++.
+ */
+namespace { // anonymous
+
+using menu_callback = void(gpointer user_data, guint user_action, GtkWidget *widget);
+
+constexpr auto make_menu_item(const char *path, const char *accel, menu_callback callback, guint action, const char *type)
+{
+	return GtkItemFactoryEntry {
+		(gchar *) path,
+		(gchar *) accel,
+		(GtkItemFactoryCallback) callback,
+		action,
+		(gchar *) type,
+		nullptr,
+	};
+}
+
+constexpr auto menu_branch(const char *path)
+{
+	return make_menu_item(
+		path,
+		nullptr,
+		nullptr,
+		0,
+		"<Branch>");
+}
+
+constexpr auto menu_terminal(const char *accel, guint terminal_number)
+{
+	return make_menu_item(
+		nullptr /* Filled in by setup_menu_paths() */,
+		accel,
+		term_event_handler,
+		terminal_number,
+		"<CheckItem>");
+}
+
+constexpr auto menu_font(guint terminal_number)
+{
+	return make_menu_item(
+		nullptr /* Filled in by setup_menu_paths() */,
+		nullptr,
+		change_font_event_handler,
+		terminal_number,
+		nullptr);
+}
+
+constexpr auto menu_action(const char *path, const char *accel, menu_callback callback)
+{
+	return make_menu_item(
+		path,
+		accel,
+		callback,
+		0,
+		nullptr);
+}
+
+constexpr auto menu_check_item(const char *path, const char *accel, menu_callback callback)
+{
+	return make_menu_item(
+		path,
+		accel,
+		callback,
+		0,
+		"<CheckItem>");
+}
+
+} // namespace (anonymous)
 
 /*
  * Neater menu code with GtkItemFactory.
@@ -1262,66 +1344,38 @@ static term *term_data_init(term_data *td, int i)
 static GtkItemFactoryEntry main_menu_items[] =
 {
 	/* "File" menu */
-	{ "/File", NULL,
-	  NULL, 0, "<Branch>", NULL
-	},
-	{ "/File/Save", "<mod1>S",
-	  save_event_handler, 0, NULL, NULL },
-	{ "/File/Quit", "<mod1>Q",
-	  quit_event_handler, 0, NULL, NULL },
+	menu_branch("/File"),
+	menu_action("/File/Save", "<mod1>S", save_event_handler),
+	menu_action("/File/Quit", "<mod1>Q", quit_event_handler),
 
 	/* "Terms" menu */
-	{ "/Terms", NULL,
-	  NULL, 0, "<Branch>", NULL },
-	/* XXX XXX XXX NULL's are replaced by the program */
-	{ NULL, "<mod1>0",
-	  term_event_handler, 0, "<CheckItem>", NULL },
-	{ NULL, "<mod1>1",
-	  term_event_handler, 1, "<CheckItem>", NULL },
-	{ NULL, "<mod1>2",
-	  term_event_handler, 2, "<CheckItem>", NULL },
-	{ NULL, "<mod1>3",
-	  term_event_handler, 3, "<CheckItem>", NULL },
-	{ NULL, "<mod1>4",
-	  term_event_handler, 4, "<CheckItem>", NULL },
-	{ NULL, "<mod1>5",
-	  term_event_handler, 5, "<CheckItem>", NULL },
-	{ NULL, "<mod1>6",
-	  term_event_handler, 6, "<CheckItem>", NULL },
-	{ NULL, "<mod1>7",
-	  term_event_handler, 7, "<CheckItem>", NULL },
+	menu_branch("/Terms"),
+	menu_terminal("<mod1>0", 0),
+	menu_terminal("<mod1>1", 1),
+	menu_terminal("<mod1>2", 2),
+	menu_terminal("<mod1>3", 3),
+	menu_terminal("<mod1>4", 4),
+	menu_terminal("<mod1>5", 5),
+	menu_terminal("<mod1>6", 6),
+	menu_terminal("<mod1>7", 7),
 
 	/* "Options" menu */
-	{ "/Options", NULL,
-	  NULL, 0, "<Branch>", NULL },
+	menu_branch("/Options"),
 
 	/* "Font" submenu */
-	{ "/Options/Font", NULL,
-	  NULL, 0, "<Branch>", NULL },
-	/* XXX XXX XXX Again, NULL's are filled by the program */
-	{ NULL, NULL,
-	  change_font_event_handler, 0, NULL, NULL },
-	{ NULL, NULL,
-	  change_font_event_handler, 1, NULL, NULL },
-	{ NULL, NULL,
-	  change_font_event_handler, 2, NULL, NULL },
-	{ NULL, NULL,
-	  change_font_event_handler, 3, NULL, NULL },
-	{ NULL, NULL,
-	  change_font_event_handler, 4, NULL, NULL },
-	{ NULL, NULL,
-	  change_font_event_handler, 5, NULL, NULL },
-	{ NULL, NULL,
-	  change_font_event_handler, 6, NULL, NULL },
-	{ NULL, NULL,
-	  change_font_event_handler, 7, NULL, NULL },
-
+	menu_branch("/Options/Font"),
+	menu_font(0),
+	menu_font(1),
+	menu_font(2),
+	menu_font(3),
+	menu_font(4),
+	menu_font(5),
+	menu_font(6),
+	menu_font(7),
 
 	/* "Misc" submenu */
-	{ "/Options/Misc", NULL,
-	  NULL, 0, "<Branch>", NULL },
-	{ "/Options/Misc/Backing store", NULL,
-	  change_backing_store_event_handler, 0, "<CheckItem>", NULL },
+	menu_branch("/Options/Misc"),
+	menu_check_item("/Options/Misc/Backing store", nullptr, change_backing_store_event_handler),
 };
 
 
