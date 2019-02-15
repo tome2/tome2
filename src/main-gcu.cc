@@ -45,7 +45,7 @@
 
 #include <fcntl.h>
 #include <boost/algorithm/string/predicate.hpp>
-#include <limits.h>
+#include <climits>
 
 using boost::algorithm::starts_with;
 

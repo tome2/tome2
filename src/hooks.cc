@@ -8,7 +8,7 @@
 #include "hooks.hpp"
 
 #include <algorithm>
-#include <assert.h>
+#include <cassert>
 #include <unordered_map>
 #include <vector>
 

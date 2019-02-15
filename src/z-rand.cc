@@ -4,7 +4,7 @@
 
 #include "z-rand.hpp"
 
-#include <assert.h>
+#include <cassert>
 #include <cstdint>
 #include <limits>
 #include <random>

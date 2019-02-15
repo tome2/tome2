@@ -51,7 +51,7 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include <dirent.h>
-#include <assert.h>
+#include <cassert>
 
 #include <boost/algorithm/string/predicate.hpp>
 

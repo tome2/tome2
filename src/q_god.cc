@@ -24,7 +24,7 @@
 #include "z-rand.hpp"
 #include "z-term.h"
 
-#include <assert.h>
+#include <cassert>
 #include <fmt/format.h>
 
 #define cquest (quest[QUEST_GOD])

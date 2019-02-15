@@ -113,7 +113,7 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include <dirent.h>
-#include <limits.h>
+#include <climits>
 
 #include <sys/time.h>
 #include <boost/algorithm/string/predicate.hpp>
