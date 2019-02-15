@@ -316,7 +316,7 @@ typedef struct _term_data term_data;
  */
 struct _term_data
 {
-	term t;
+	term *term_ptr;
 
 	const char *s;
 
@@ -1226,7 +1226,7 @@ static void term_change_font(term_data *td)
 static void term_data_redraw(term_data *td)
 {
 	/* Activate the term */
-	Term_activate(&td->t);
+	Term_activate(td->term_ptr);
 
 	/* Redraw the contents */
 	Term_redraw();
@@ -1308,11 +1308,15 @@ static void Term_xtra_win_react(void)
 
 		term_data *td = &data[i];
 
+		int wid;
+		int hgt;
+		term_get_size(td->term_ptr, &wid, &hgt);
+
 		/* Update resized windows */
-		if ((td->cols != td->t.wid) || (td->rows != td->t.hgt))
+		if ((td->cols != wid) || (td->rows != hgt))
 		{
 			/* Activate */
-			Term_activate(&td->t);
+			Term_activate(&td->term_ptr);
 
 			/* Hack -- Resize the term */
 			Term_resize(td->cols, td->rows);
@@ -1642,8 +1646,6 @@ static void Term_text_win(void *data, int x, int y, int n, byte a, const char *s
  */
 static void term_data_link(term_data *td)
 {
-	term *t = &td->t;
-
 	/* Hooks */
 	struct term_ui_hooks_t ui_hooks = {
 		NULL /* init */,
@@ -1654,9 +1656,9 @@ static void term_data_link(term_data *td)
 	};
 
 	/* Initialize the term */
-	term_init(t, td, td->cols, td->rows, td->keys);
-	term_init_soft_cursor(t);
-	term_init_ui_hooks(t, ui_hooks);
+	td->term_ptr = term_init(td, td->cols, td->rows, td->keys);
+	term_init_soft_cursor(td->term_ptr);
+	term_init_ui_hooks(td->term_ptr, ui_hooks);
 }
 
 
@@ -1788,7 +1790,7 @@ static void init_windows(void)
 		}
 
 		term_data_link(td);
-		angband_term[i] = &td->t;
+		angband_term[i] = td->term_ptr;
 
 		if (td->visible)
 		{
@@ -1815,7 +1817,7 @@ static void init_windows(void)
 	if (!td->w) quit("Failed to create Angband window");
 
 	term_data_link(td);
-	angband_term[0] = &td->t;
+	angband_term[0] = td->term_ptr;
 
 	/* Activate the main window */
 	SetActiveWindow(td->w);
@@ -2615,7 +2617,7 @@ LRESULT FAR PASCAL AngbandWndProc(HWND hWnd, UINT uMsg,
 						td->rows = rows;
 
 						/* Activate */
-						Term_activate(&td->t);
+						Term_activate(td->term_ptr);
 
 						/* Resize the term */
 						Term_resize(td->cols, td->rows);

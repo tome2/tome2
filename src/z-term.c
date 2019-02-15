@@ -1281,16 +1281,7 @@ errr Term_get_cursor(int *v)
  */
 errr Term_get_size(int *w, int *h)
 {
-	/* Access the cursor */
-	if (w)
-	{
-		(*w) = Term->wid;
-	}
-
-	if (h)
-	{
-		(*h) = Term->hgt;
-	}
+	term_get_size(Term, w, h);
 
 	/* Success */
 	return (0);
@@ -1903,13 +1894,13 @@ errr term_nuke(term *t)
  * By default, the cursor starts out "invisible"
  * By default, we "erase" using "black spaces"
  */
-errr term_init(term *t, void *data, int w, int h, int k)
+term *term_init(void *data, int w, int h, int k)
 {
 	int y;
 
 	/* Wipe it */
+	term *t = safe_calloc(1, sizeof(term));
 	memset(t, 0, sizeof(term));
-
 
 	/* Prepare the input queue */
 	t->key_head = t->key_tail = 0;
@@ -1963,7 +1954,7 @@ errr term_init(term *t, void *data, int w, int h, int k)
 	t->data = data;
 
 	/* Success */
-	return (0);
+	return t;
 }
 
 void term_init_icky_corner(term *t)
@@ -1988,4 +1979,17 @@ void term_init_ui_hooks(term *t, term_ui_hooks_t hooks)
 void term_set_resize_hook(term *t, resize_hook_t *hook)
 {
 	t->resize_hook = hook;
+}
+
+void term_get_size(term *t, int *w, int *h)
+{
+	if (w)
+	{
+		(*w) = t->wid;
+	}
+
+	if (h)
+	{
+		(*h) = t->hgt;
+	}
 }

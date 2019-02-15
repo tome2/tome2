@@ -1206,7 +1206,7 @@ typedef struct term_data term_data;
  */
 struct term_data
 {
-	term t;
+	term *term_ptr;
 
 	infofnt *fnt;
 
@@ -1395,7 +1395,7 @@ static errr CheckEvent(term_data *old_td, bool_ wait)
 
 
 	/* Hack -- activate the Term */
-	Term_activate(&td->t);
+	Term_activate(td->term_ptr);
 
 	/* Hack -- activate the window */
 	Infowin_set(iwin);
@@ -1423,7 +1423,7 @@ static errr CheckEvent(term_data *old_td, bool_ wait)
 	case KeyPress:
 		{
 			/* Hack -- use "old" term */
-			Term_activate(&old_td->t);
+			Term_activate(old_td->term_ptr);
 
 			/* Process the key */
 			react_keypress(&(xev->xkey));
@@ -1502,7 +1502,7 @@ static errr CheckEvent(term_data *old_td, bool_ wait)
 
 
 	/* Hack -- Activate the old term */
-	Term_activate(&old_td->t);
+	Term_activate(old_td->term_ptr);
 
 	/* Hack -- Activate the proper window */
 	Infowin_set(old_td->win);
@@ -1664,8 +1664,6 @@ static void Term_text_x11(void *data, int x, int y, int n, byte a, const char *s
  */
 static errr term_data_init(term_data *td, int i)
 {
-	term *t = &td->t;
-
 	const char *name = angband_term_name[i];
 
 	const char *font;
@@ -1902,12 +1900,12 @@ static errr term_data_init(term_data *td, int i)
 	};
 
 	/* Initialize the term */
-	term_init(t, td, cols, rows, num);
-	term_init_soft_cursor(t);
-	term_init_ui_hooks(t, ui_hooks);
+	td->term_ptr = term_init(td, cols, rows, num);
+	term_init_soft_cursor(td->term_ptr);
+	term_init_ui_hooks(td->term_ptr, ui_hooks);
 
 	/* Activate (important) */
-	Term_activate(t);
+	Term_activate(td->term_ptr);
 
 	/* Success */
 	return (0);
@@ -2016,7 +2014,7 @@ errr init_x11(int argc, char *argv[])
 	Infowin_raise();
 
 	/* Activate the "Angband" window screen */
-	Term_activate(&data[0].t);
+	Term_activate(data[0].term_ptr);
 
 
 

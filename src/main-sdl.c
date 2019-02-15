@@ -181,7 +181,7 @@ typedef struct _term_data term_data;
 /* A structure for each "term" */
 struct _term_data
 {
-	term t;					/* the term structure, defined in z-term.h */
+	term *term_ptr;					/* the term structure, defined in z-term.h */
 	const char *name;				/* name of this term sub-window */
 
 	unsigned int rows, cols;		/* row/column count */
@@ -1189,7 +1189,7 @@ void resizeTerminal(term_data *td, int width, int height)
 
 		/* Reactivate, since Term_resize seems to activate the
 		main window again...*/
-		Term_activate(&td->t);
+		Term_activate(td->term_ptr);
 		
 		/* It might not have resized completely to the new
 		size we wanted (some windows have size limits it seems,
@@ -1319,7 +1319,7 @@ int cycleTerminal(int current)
 	/* now do a little modulo cycle action and 
 	activate the next term! */
 	current %= arg_console_count;
-	Term_activate(&(data[current].t));
+	Term_activate(data[current].term_ptr);
 	
 	/* before redrawing, set the border color to purple to
 	indicate that this terminal is being manipulated*/
@@ -1381,7 +1381,7 @@ void redrawAllTerminals(void)
 	while (i--)
 	{
 		/* Activate this terminal */
-		Term_activate(&(data[i].t));
+		Term_activate(data[i].term_ptr);
 		
 		/* Make its border white since manipulation mode is over */
 		data[i].border_color = data[i].white;
@@ -1612,7 +1612,6 @@ void manipulationMode(void)
 
 static errr term_data_init(term_data *td, int i)
 {
-	term *t = &(td->t);
 	char env_var[80];
 	const char *val;
 
@@ -1726,12 +1725,12 @@ static errr term_data_init(term_data *td, int i)
 	};
 
 	/* Initialize the term */
-	term_init(t, td, cols, rows, 24);
-	term_init_soft_cursor(t);
-	term_init_ui_hooks(t, ui_hooks);
+	td->term_ptr = term_init(td, cols, rows, 24);
+	term_init_soft_cursor(td->term_ptr);
+	term_init_ui_hooks(td->term_ptr, ui_hooks);
 
 	/* Activate (important) */
-	Term_activate(t);
+	Term_activate(td->term_ptr);
 
 	/************* finish term_data intializing */
 	

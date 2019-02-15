@@ -80,7 +80,7 @@ typedef struct term_data term_data;
 
 struct term_data
 {
-	term t;
+	term *term_ptr;
 
 	GtkWidget *window;
 	GtkWidget *drawing_area;
@@ -1107,7 +1107,7 @@ static void size_allocate_event_handler(
 		        allocation->height);
 
 		/* And in the term package */
-		Term_activate(&td->t);
+		Term_activate(td->term_ptr);
 
 		/* Resize if necessary */
 		if ((td->cols != old_cols) || (td->rows != old_rows))
@@ -1168,7 +1168,7 @@ static gboolean expose_event_handler(
 	{
 
 		/* Activate the relevant term */
-		Term_activate(&td->t);
+		Term_activate(td->term_ptr);
 
 # ifdef NO_REDRAW_SECTION
 
@@ -1222,7 +1222,6 @@ static gboolean expose_event_handler(
  */
 static errr term_data_init(term_data *td, int i)
 {
-	term *t = &td->t;
 	char *p;
 
 	td->cols = 80;
@@ -1238,9 +1237,9 @@ static errr term_data_init(term_data *td, int i)
 	};
 
 	/* Initialize the term */
-	term_init(t, td, td->cols, td->rows, 1024);
-	term_init_soft_cursor(t);
-	term_init_ui_hooks(t, ui_hooks);
+	td->term_ptr = term_init(td, td->cols, td->rows, 1024);
+	term_init_soft_cursor(td->term_ptr);
+	term_init_ui_hooks(td->term_ptr, ui_hooks);
 
 	/* Store the name of the term */
 	assert(angband_term_name[i] != NULL);
@@ -1250,7 +1249,7 @@ static errr term_data_init(term_data *td, int i)
 	for (p = (char *)td->name; *p; p++) *p = tolower(*p);
 
 	/* Activate (important) */
-	Term_activate(t);
+	Term_activate(td->term_ptr);
 
 	/* Success */
 	return (0);
@@ -1931,7 +1930,7 @@ int init_gtk2(int argc, char **argv)
 	}
 
 	/* Activate the "Angband" window screen */
-	Term_activate(&data[0].t);
+	Term_activate(data[0].term_ptr);
 
 	/* Activate more hook */
 	plog_aux = hook_plog;

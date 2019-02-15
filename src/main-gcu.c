@@ -189,7 +189,7 @@ typedef struct term_data term_data;
 
 struct term_data
 {
-	term t;                  /* All term info */
+	term *term_ptr;             /* All term info */
 
 	WINDOW *win;             /* Pointer to the curses window */
 };
@@ -724,8 +724,6 @@ static void Term_text_gcu(void *data, int x, int y, int n, byte a, const char *s
  */
 static errr term_data_init_gcu(term_data *td, int rows, int cols, int y, int x)
 {
-	term *t = &td->t;
-
 	/* Create new window */
 	td->win = newwin(rows, cols, y, x);
 
@@ -746,12 +744,12 @@ static errr term_data_init_gcu(term_data *td, int rows, int cols, int y, int x)
 	};
 
 	/* Initialize the term */
-	term_init(t, td, cols, rows, 256);
-	term_init_icky_corner(t);
-	term_init_ui_hooks(t, ui_hooks);
+	td->term_ptr = term_init(td, cols, rows, 256);
+	term_init_icky_corner(td->term_ptr);
+	term_init_ui_hooks(td->term_ptr, ui_hooks);
 
 	/* Activate it */
-	Term_activate(t);
+	Term_activate(td->term_ptr);
 
 	/* Success */
 	return (0);
@@ -912,7 +910,7 @@ int init_gcu(int argc, char **argv)
 		term_data_init_gcu(&data[0], LINES, COLS, 0, 0);
 
 		/* Remember the term */
-		angband_term[0] = &data[0].t;
+		angband_term[0] = data[0].term_ptr;
 	}
 
 	/* No big screen -- create as many term windows as possible */
@@ -980,7 +978,7 @@ int init_gcu(int argc, char **argv)
 			term_data_init_gcu(&data[next_win], rows, cols, y, x);
 
 			/* Remember the term */
-			angband_term[next_win] = &data[next_win].t;
+			angband_term[next_win] = data[next_win].term_ptr;
 
 			/* One more window */
 			next_win++;
@@ -988,10 +986,10 @@ int init_gcu(int argc, char **argv)
 	}
 
 	/* Activate the "Angband" window screen */
-	Term_activate(&data[0].t);
+	Term_activate(data[0].term_ptr);
 
 	/* Remember the active screen */
-	term_screen = &data[0].t;
+	term_screen = data[0].term_ptr;
 
 	/* Success */
 	return (0);
