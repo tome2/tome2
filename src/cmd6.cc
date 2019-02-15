@@ -2414,8 +2414,6 @@ static void do_cmd_fill_bottle()
 	{
 		cave_set_feat(p_ptr->py, p_ptr->px, FEAT_EMPTY_FOUNTAIN);
 	}
-
-	return;
 }
 
 

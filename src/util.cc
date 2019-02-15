@@ -707,8 +707,7 @@ static void trigger_text_to_ascii(char **bufptr, const char **strptr)
 	*s++ = (char)13;
 
 	*bufptr = s;
-	*strptr = str;  /* where **strptr == ']' */
-	return;
+	*strptr = str;
 }
 
 
@@ -2287,9 +2286,6 @@ void text_out_to_file(byte a, const char *str)
 		/* Skip whitespace */
 		while (*s == ' ') s++;
 	}
-
-	/* We are done */
-	return;
 }
 
 

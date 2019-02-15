@@ -3752,8 +3752,6 @@ static void store_height(int x, int y, int x0, int y0, byte val,
 	/* Store the value in height-map format */
 	/* Meant to be temporary, hence no cave_set_feat */
 	cave[y + y0 - yhsize][x + x0 - xhsize].feat = val;
-
-	return;
 }
 
 

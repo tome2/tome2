@@ -6347,7 +6347,6 @@ void summon_maint(int m_idx)
 		/* Well, then I'll take my wages from you. */
 		p_ptr->maintain_sum += cost;
 	}
-	return;
 }
 
 

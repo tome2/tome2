@@ -43,9 +43,6 @@ void show_notes_file()
 
 	/* Invoke show_file */
 	show_file(p.c_str(), caption.c_str());
-
-	/* Done */
-	return;
 }
 
 /*
@@ -65,9 +62,6 @@ void output_note(const char *final_note)
 
 	/* Close the handle */
 	my_fclose(fff);
-
-	/* Done */
-	return;
 }
 
 

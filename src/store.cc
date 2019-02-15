@@ -2123,9 +2123,6 @@ void store_stole()
 		/* Kicked out for a LONG time */
 		st_ptr->store_open = turn + 500000 + randint(500000);
 	}
-
-	/* Not kicked out */
-	return;
 }
 
 /*
@@ -2433,9 +2430,6 @@ void store_purchase()
 			display_inventory();
 		}
 	}
-
-	/* Not kicked out */
-	return;
 }
 
 
@@ -2802,9 +2796,7 @@ void store_examine()
 		do_cmd_browse_aux(o_ptr);
 	}
 
-	return;
 }
-
 
 
 

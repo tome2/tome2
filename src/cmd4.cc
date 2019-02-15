@@ -2745,7 +2745,6 @@ void do_cmd_feeling()
 		else
 			msg_print(do_cmd_feeling_text[feeling]);
 	}
-	return;
 }
 
 
@@ -3673,9 +3672,6 @@ void do_cmd_knowledge_notes()
 {
 	/* Spawn */
 	show_notes_file();
-
-	/* Done */
-	return;
 }
 
 

@@ -5302,9 +5302,6 @@ static void corrupt_corrupted()
 	{
 		gain_random_corruption();
 	}
-
-	/* We are done. */
-	return;
 }
 
 /*

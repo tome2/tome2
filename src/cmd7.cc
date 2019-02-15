@@ -2615,9 +2615,6 @@ void summon_true(int r_idx, int item)
 		/* Eliminate the totem */
 		inc_stack_size(item, -1);
 	}
-
-	/* Done */
-	return;
 }
 
 
@@ -2797,8 +2794,6 @@ void use_ability_blade()
 	{
 		msg_format("You will usually dodge successfully a level %d monster.", dun_level);
 	}
-
-	return;
 }
 
 /*
