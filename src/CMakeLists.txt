@@ -4,6 +4,7 @@ INCLUDE_DIRECTORIES(SYSTEM ${CMAKE_CURRENT_SOURCE_DIR}/../vendor/bandit)
 INCLUDE_DIRECTORIES(SYSTEM ${CMAKE_CURRENT_SOURCE_DIR}/../vendor/fmt)
 INCLUDE_DIRECTORIES(SYSTEM ${CMAKE_CURRENT_SOURCE_DIR}/../vendor/pcg-cpp/include)
 INCLUDE_DIRECTORIES(SYSTEM ${CMAKE_CURRENT_SOURCE_DIR}/../vendor/jsoncons)
+INCLUDE_DIRECTORIES(SYSTEM ${CMAKE_CURRENT_SOURCE_DIR}/../vendor/CppQuickCheck/include)
 
 # Add subdirectories
 ADD_SUBDIRECTORY (squelch)
@@ -120,6 +121,9 @@ SET(SRCS_COMMON
 
 # Sources (TEST)
 SET(SRCS_TESTS
+  # CppQuickCheck
+  ${CMAKE_CURRENT_SOURCE_DIR}/../vendor/CppQuickCheck/src/Arbitrary.cpp
+  # Own code
   ../tests/get_level_device.cc
   ../tests/harness.cc
   ../tests/lua_get_level.cc
