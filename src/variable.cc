@@ -568,8 +568,7 @@ int cli_total = 0;
 /*
  * Automatizer enabled status
  */
-bool_ automatizer_enabled = FALSE;
-bool_ automatizer_create = FALSE;
+bool automatizer_enabled = false;
 
 /*
  * Location of the last teleportation thath affected the level

@@ -5083,7 +5083,7 @@ static bool_ get_item_floor(int *cp, const char *pmt, const char *str, int mode,
  */
 bool_ get_item(int *cp, const char *pmt, const char *str, int mode, object_filter_t const &filter, select_by_name_t const &select_by_name)
 {
-	automatizer_create = FALSE;
+	automatizer_create = false;
 	return get_item_floor(cp, pmt, str, mode, filter, select_by_name);
 }
 

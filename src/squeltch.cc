@@ -57,6 +57,8 @@ using squelch::StatusCondition;
 
 static squelch::Automatizer *automatizer = nullptr;
 
+bool automatizer_create = false;
+
 void squeltch_grid()
 {
 	if (!automatizer_enabled)
@@ -255,7 +257,7 @@ void do_cmd_automatizer()
 	{
 		if (msg_box_auto("Automatizer is currently disabled, enable it? (y/n)") == 'y')
 		{
-			automatizer_enabled = TRUE;
+			automatizer_enabled = true;
 		}
 		else
 			return;
@@ -362,7 +364,7 @@ void do_cmd_automatizer()
 			}
 			else if (c == 'k')
 			{
-				automatizer_enabled = FALSE;
+				automatizer_enabled = false;
 				break;
 			}
 			else if (c == '\t')

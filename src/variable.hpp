@@ -170,7 +170,7 @@ extern s16b schools_count;
 extern school_type schools[SCHOOLS_MAX];
 extern int project_time;
 extern s32b project_time_effect;
-extern bool_ automatizer_enabled;
+extern bool automatizer_enabled;
 extern s16b last_teleportation_y;
 extern s16b last_teleportation_x;
 extern const char *game_module;

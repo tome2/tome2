@@ -2411,7 +2411,7 @@ static bool_ do_savefile_aux(ls_flag_t flag)
 	do_randomizer(flag);
 
 	/* Automatizer state */
-	do_bool(&automatizer_enabled, flag);
+	do_std_bool(&automatizer_enabled, flag);
 
 	/* Then the options */
 	do_options(flag);
