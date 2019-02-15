@@ -124,6 +124,7 @@ SET(SRCS_TESTS
   # CppQuickCheck
   ${CMAKE_CURRENT_SOURCE_DIR}/../vendor/CppQuickCheck/src/Arbitrary.cpp
   # Own code
+  ../tests/arbitrary/boost_optional.cc
   ../tests/get_level_device.cc
   ../tests/harness.cc
   ../tests/lua_get_level.cc
