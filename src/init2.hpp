@@ -1,6 +1,6 @@
 #pragma once
 
-#include "h-basic.h"
+#include "h-basic.hpp"
 #include "program_args.hpp"
 
 void init_file_paths(char *path);

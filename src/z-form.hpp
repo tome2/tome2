@@ -1,12 +1,8 @@
 #pragma once
 
-#include "h-basic.h"
+#include "h-basic.hpp"
 
 #include <cstdarg>
-
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 /*
  * This file provides functions very similar to "sprintf()", but which
@@ -33,7 +29,3 @@ char *format(const char *fmt, ...);
 
 /* Vararg interface to "quit()", using "format()" */
 void quit_fmt(const char *fmt, ...);
-
-#ifdef __cplusplus
-} /* extern "C" */
-#endif

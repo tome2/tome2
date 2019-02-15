@@ -1,5 +1,3 @@
-/* File: z-term.h */
-
 /*
  * Copyright (c) 1997 Ben Harrison
  *
@@ -8,14 +6,9 @@
  * are included in all such copies.
  */
 
-#ifndef INCLUDED_Z_TERM_H
-#define INCLUDED_Z_TERM_H
+#pragma once
 
-#include "h-basic.h"
-
-#ifdef __cplusplus
-extern "C" {
-#endif
+#include "h-basic.hpp"
 
 typedef struct term_win term_win;
 
@@ -170,10 +163,3 @@ void term_init_soft_cursor(term *t);
 void term_init_ui_hooks(term *t, term_ui_hooks_t hooks);
 void term_set_resize_hook(term *t, resize_hook_t *hook);
 void term_get_size(term *t, int *w, int *h);
-
-#ifdef __cplusplus
-} /* extern "C" */
-#endif
-
-#endif
-

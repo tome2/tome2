@@ -1,6 +1,6 @@
 #pragma once
 
-#include "h-basic.h"
+#include "h-basic.hpp"
 
 bool_ new_player_spot(int branch);
 void add_level_generator(const char *name, bool_ (*generator)());

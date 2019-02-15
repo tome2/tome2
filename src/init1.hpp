@@ -1,6 +1,6 @@
 #pragma once
 
-#include "h-basic.h"
+#include "h-basic.hpp"
 #include "dungeon_flag_set.hpp"
 
 int color_char_to_attr(char c);

@@ -40,13 +40,11 @@
 #include "tables.hpp"
 #include "town_type.hpp"
 #include "util.hpp"
-#include "util.h"
-#include "variable.h"
 #include "variable.hpp"
 #include "wilderness_type_info.hpp"
-#include "z-form.h"
+#include "z-form.hpp"
 #include "z-rand.hpp"
-#include "z-util.h"
+#include "z-util.hpp"
 
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/algorithm/string/classification.hpp>

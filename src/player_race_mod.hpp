@@ -1,7 +1,7 @@
 #pragma once
 
 #include "body.hpp"
-#include "h-basic.h"
+#include "h-basic.hpp"
 #include "object_flag_set.hpp"
 #include "object_proto.hpp"
 #include "player_defs.hpp"

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "spell_type_fwd.hpp"
-#include "h-basic.h"
+#include "h-basic.hpp"
 #include "timer_type_fwd.hpp"
 
 extern s32b NOXIOUSCLOUD;

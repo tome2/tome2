@@ -13,7 +13,7 @@
 #include "../tables.hpp"
 #include "../util.hpp"
 #include "../variable.hpp"
-#include "../z-term.h"
+#include "../z-term.hpp"
 
 namespace squelch {
 

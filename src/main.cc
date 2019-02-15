@@ -6,22 +6,20 @@
  * are included in all such copies.
  */
 
-#include "main.h"
+#include "main.hpp"
 
 #include "birth.hpp"
-#include "config.h"
+#include "config.hpp"
 #include "dungeon.hpp"
 #include "files.hpp"
 #include "game.hpp"
 #include "init2.hpp"
 #include "modules.hpp"
 #include "program_args.hpp"
-#include "util.h"
 #include "util.hpp"
-#include "variable.h"
 #include "variable.hpp"
-#include "z-form.h"
-#include "z-util.h"
+#include "z-form.hpp"
+#include "z-util.hpp"
 
 #include <boost/algorithm/string/predicate.hpp>
 

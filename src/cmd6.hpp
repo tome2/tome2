@@ -1,6 +1,6 @@
 #pragma once
 
-#include "h-basic.h"
+#include "h-basic.hpp"
 #include "object_type_fwd.hpp"
 
 void set_stick_mode(object_type *o_ptr);

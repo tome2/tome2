@@ -4,7 +4,7 @@
 #include <vector>
 #include <string>
 #include <functional>
-#include "h-basic.h"
+#include "h-basic.hpp"
 #include "device_allocation_fwd.hpp"
 #include "range_fwd.hpp"
 

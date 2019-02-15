@@ -3,7 +3,6 @@
 /* Purpose: Angband utilities -BEN- */
 
 #include "util.hpp"
-#include "util.h"
 
 #include "cli_comm.hpp"
 #include "cmd3.hpp"
@@ -18,13 +17,11 @@
 #include "player_race.hpp"
 #include "player_race_mod.hpp"
 #include "player_type.hpp"
-#include "tables.h"
 #include "tables.hpp"
 #include "timer_type.hpp"
-#include "variable.h"
 #include "variable.hpp"
 #include "xtra1.hpp"
-#include "z-form.h"
+#include "z-form.hpp"
 
 #include <boost/algorithm/string/predicate.hpp>
 #include <chrono>

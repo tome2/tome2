@@ -1,6 +1,6 @@
 #pragma once
 
-#include "h-basic.h"
+#include "h-basic.hpp"
 
 /**
  * Object theme. Probability in percent for each class of

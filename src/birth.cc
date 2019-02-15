@@ -14,7 +14,6 @@
 #include "cmd5.hpp"
 #include "dungeon_flag.hpp"
 #include "dungeon_info_type.hpp"
-#include "files.h"
 #include "files.hpp"
 #include "game.hpp"
 #include "gods.hpp"
@@ -48,15 +47,13 @@
 #include "tables.hpp"
 #include "town_type.hpp"
 #include "util.hpp"
-#include "util.h"
-#include "variable.h"
 #include "variable.hpp"
 #include "wilderness_map.hpp"
 #include "xtra1.hpp"
 #include "xtra2.hpp"
-#include "z-form.h"
+#include "z-form.hpp"
 #include "z-rand.hpp"
-#include "z-util.h"
+#include "z-util.hpp"
 
 #include <algorithm>
 #include <boost/algorithm/string/predicate.hpp>

@@ -2,7 +2,7 @@
 
 #include <array>
 
-#include "h-basic.h"
+#include "h-basic.hpp"
 
 /**
  * Maximum number of help items.

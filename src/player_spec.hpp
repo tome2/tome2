@@ -1,6 +1,6 @@
 #pragma once
 
-#include "h-basic.h"
+#include "h-basic.hpp"
 #include "object_proto.hpp"
 #include "player_race_ability_type.hpp"
 #include "player_race_flag_set.hpp"

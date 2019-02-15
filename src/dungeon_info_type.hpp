@@ -1,7 +1,7 @@
 #pragma once
 
 #include "dungeon_flag_set.hpp"
-#include "h-basic.h"
+#include "h-basic.hpp"
 #include "level_data.hpp"
 #include "obj_theme.hpp"
 #include "rule_type.hpp"

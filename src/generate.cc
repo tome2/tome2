@@ -42,7 +42,7 @@
 #include "wild.hpp"
 #include "wilderness_map.hpp"
 #include "z-rand.hpp"
-#include "z-term.h"
+#include "z-term.hpp"
 
 #include <boost/algorithm/string/predicate.hpp>
 #include <cassert>

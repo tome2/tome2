@@ -38,10 +38,9 @@
  * Consider the use of "savetty()" and "resetty()".  XXX XXX XXX
  */
 
-#include "main.h"
-#include "util.h"
-#include "variable.h"
-#include "z-util.h"
+#include "main.hpp"
+#include "variable.hpp"
+#include "z-util.hpp"
 
 #include <fcntl.h>
 #include <boost/algorithm/string/predicate.hpp>

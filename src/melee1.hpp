@@ -1,6 +1,6 @@
 #pragma once
 
-#include "h-basic.h"
+#include "h-basic.hpp"
 
 int get_attack_power(int effect);
 bool_ carried_make_attack_normal(int r_idx);

@@ -30,13 +30,13 @@
  * and reorganised the file a bit.
  */
 
-#include "config.h"
-#include "files.h"
-#include "main.h"
-#include "util.h"
-#include "variable.h"
-#include "z-util.h"
-#include "z-form.h"
+#include "config.hpp"
+#include "files.hpp"
+#include "main.hpp"
+#include "util.hpp"
+#include "variable.hpp"
+#include "z-util.hpp"
+#include "z-form.hpp"
 
 
 /* Force ANSI standard */

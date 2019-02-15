@@ -1,6 +1,6 @@
 #pragma once
 
-#include "h-basic.h"
+#include "h-basic.hpp"
 #include "object_type_fwd.hpp"
 
 void build_prob(const char *learn);

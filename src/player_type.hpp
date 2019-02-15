@@ -1,8 +1,8 @@
 #pragma once
 
 #include "corrupt.hpp"
-#include "defines.h"
-#include "h-basic.h"
+#include "defines.hpp"
+#include "h-basic.hpp"
 #include "help_info.hpp"
 #include "inventory.hpp"
 #include "object_type.hpp"

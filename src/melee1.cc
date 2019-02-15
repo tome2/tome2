@@ -32,7 +32,7 @@
 #include "xtra1.hpp"
 #include "xtra2.hpp"
 #include "z-rand.hpp"
-#include "z-term.h"
+#include "z-term.hpp"
 
 #include <boost/algorithm/string/predicate.hpp>
 

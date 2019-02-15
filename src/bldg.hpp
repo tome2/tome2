@@ -1,6 +1,6 @@
 #pragma once
 
-#include "h-basic.h"
+#include "h-basic.hpp"
 #include "store_action_type_fwd.hpp"
 #include "store_type_fwd.hpp"
 

@@ -33,14 +33,12 @@
 #include "stats.hpp"
 #include "tables.hpp"
 #include "util.hpp"
-#include "util.h"
-#include "variable.h"
 #include "variable.hpp"
 #include "wilderness_map.hpp"
 #include "wilderness_type_info.hpp"
 #include "xtra1.hpp"
 #include "xtra2.hpp"
-#include "z-form.h"
+#include "z-form.hpp"
 #include "z-rand.hpp"
 
 /*

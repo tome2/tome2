@@ -7,7 +7,7 @@
 #include "effect_type.hpp"
 #include "game_edit_data.hpp"
 #include "grid.hpp"
-#include "h-basic.h"
+#include "h-basic.hpp"
 #include "level_marker.hpp"
 #include "messages.hpp"
 #include "player_defs.hpp"

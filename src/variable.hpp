@@ -3,7 +3,7 @@
 #include "alloc_entry_fwd.hpp"
 #include "birther.hpp"
 #include "cave_type_fwd.hpp"
-#include "defines.h"
+#include "defines.hpp"
 #include "deity_type.hpp"
 #include "dungeon_flag_set.hpp"
 #include "effect_type.hpp"
@@ -25,6 +25,7 @@
 #include "timer_type_fwd.hpp"
 #include "town_type_fwd.hpp"
 #include "seed.hpp"
+#include "z-term.hpp"
 
 extern int max_macrotrigger;
 extern char *macro_template;
@@ -185,3 +186,21 @@ extern s32b DUNGEON_ASTRAL_WILD_Y;
 extern deity_type deity_info[MAX_GODS];
 const char *get_version_string();
 extern struct options *options;
+extern const char *ANGBAND_SYS;
+extern char *ANGBAND_DIR_SAVE;
+extern char *ANGBAND_DIR_DATA;
+extern char *ANGBAND_DIR_EDIT;
+extern char *ANGBAND_DIR_FILE;
+extern char *ANGBAND_DIR_HELP;
+extern char *ANGBAND_DIR_INFO;
+extern char *ANGBAND_DIR_NOTE;
+extern char *ANGBAND_DIR_PREF;
+extern char *ANGBAND_DIR_USER;
+extern char *ANGBAND_DIR_XTRA;
+extern term *angband_term[ANGBAND_TERM_MAX];
+extern char angband_term_name[ANGBAND_TERM_MAX][80];
+extern byte angband_color_table[256][4];
+extern bool_ character_generated;
+extern bool_ character_icky;
+extern bool_ inkey_flag;
+extern bool_ msg_flag;

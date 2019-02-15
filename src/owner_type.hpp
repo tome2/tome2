@@ -3,7 +3,7 @@
 #include <array>
 #include <string>
 
-#include "h-basic.h"
+#include "h-basic.hpp"
 
 /*
  * Store owner descriptor.

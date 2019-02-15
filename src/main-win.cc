@@ -71,11 +71,11 @@
 #include "config.h"
 #include "defines.h"
 #include "files.h"
-#include "h-basic.h"
+#include "h-basic.hpp"
 #include "util.h"
 #include "variable.h"
 #include "z-form.h"
-#include "z-term.h"
+#include "z-term.hpp"
 #include "z-util.h"
 
 /*

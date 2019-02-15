@@ -52,8 +52,6 @@
 #include "store_info_type.hpp"
 #include "tables.hpp"
 #include "util.hpp"
-#include "util.h"
-#include "variable.h"
 #include "variable.hpp"
 #include "wilderness_map.hpp"
 #include "wilderness_type_info.hpp"

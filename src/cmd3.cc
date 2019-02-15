@@ -33,12 +33,10 @@
 #include "tables.hpp"
 #include "town_type.hpp"
 #include "util.hpp"
-#include "util.h"
-#include "variable.h"
 #include "variable.hpp"
 #include "xtra1.hpp"
 #include "xtra2.hpp"
-#include "z-form.h"
+#include "z-form.hpp"
 #include "z-rand.hpp"
 
 #include <algorithm>

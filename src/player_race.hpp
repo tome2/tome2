@@ -1,6 +1,6 @@
 #pragma once
 
-#include "h-basic.h"
+#include "h-basic.hpp"
 #include "body.hpp"
 #include "object_flag_set.hpp"
 #include "object_proto.hpp"

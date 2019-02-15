@@ -12,10 +12,9 @@
 #include "spells5.hpp"
 #include "spells6.hpp"
 #include "util.hpp"
-#include "util.h"
 #include "variable.hpp"
 #include "z-rand.hpp"
-#include "z-term.h"
+#include "z-term.hpp"
 
 #include <algorithm>
 #include <array>

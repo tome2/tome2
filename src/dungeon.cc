@@ -23,7 +23,6 @@
 #include "dungeon_info_type.hpp"
 #include "feature_flag.hpp"
 #include "feature_type.hpp"
-#include "files.h"
 #include "files.hpp"
 #include "game.hpp"
 #include "generate.hpp"
@@ -33,7 +32,6 @@
 #include "hooks.hpp"
 #include "init2.hpp"
 #include "levels.hpp"
-#include "loadsave.h"
 #include "loadsave.hpp"
 #include "lua_bind.hpp"
 #include "melee1.hpp"
@@ -69,8 +67,6 @@
 #include "tables.hpp"
 #include "timer_type.hpp"
 #include "util.hpp"
-#include "util.h"
-#include "variable.h"
 #include "variable.hpp"
 #include "wild.hpp"
 #include "wilderness_map.hpp"
@@ -79,7 +75,7 @@
 #include "xtra1.hpp"
 #include "xtra2.hpp"
 #include "z-rand.hpp"
-#include "z-util.h"
+#include "z-util.hpp"
 
 #include <boost/filesystem.hpp>
 #include <cassert>

@@ -18,7 +18,6 @@
 #include "player_type.hpp"
 #include "spells2.hpp"
 #include "util.hpp"
-#include "variable.h"
 #include "variable.hpp"
 #include "z-rand.hpp"
 

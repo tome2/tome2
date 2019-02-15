@@ -1,4 +1,4 @@
-#include "h-basic.h"
+#include "h-basic.hpp"
 
 s16b resolve_mimic_name(const char *name);
 s16b find_random_mimic_shape(byte level, bool_ limit);

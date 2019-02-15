@@ -5,7 +5,7 @@
 #include "tome/squelch/cursor.hpp"
 #include "tome/squelch/tree_printer.hpp"
 #include "util.hpp"
-#include "z-term.h"
+#include "z-term.hpp"
 
 namespace squelch {
 

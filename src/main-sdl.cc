@@ -23,11 +23,11 @@
  // in this Software without prior written authorization from the author(s).
  */
 
-#include "loadsave.h"
-#include "main.h"
-#include "util.h"
-#include "variable.h"
-#include "z-util.h"
+#include "loadsave.hpp"
+#include "main.hpp"
+#include "util.hpp"
+#include "variable.hpp"
+#include "z-util.hpp"
 
 #include <SDL.h>
 #include <SDL_image.h>

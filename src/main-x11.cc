@@ -92,14 +92,14 @@
  *
  */
 
-#include "config.h"
-#include "defines.h"
-#include "loadsave.h"
-#include "main.h"
-#include "util.h"
-#include "variable.h"
-#include "z-form.h"
-#include "z-util.h"
+#include "config.hpp"
+#include "defines.hpp"
+#include "loadsave.hpp"
+#include "main.hpp"
+#include "util.hpp"
+#include "variable.hpp"
+#include "z-form.hpp"
+#include "z-util.hpp"
 
 #ifndef __MAKEDEPEND__
 #include <X11/Xlib.h>

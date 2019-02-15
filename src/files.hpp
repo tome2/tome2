@@ -1,6 +1,6 @@
 #pragma once
 
-#include "h-basic.h"
+#include "h-basic.hpp"
 #include "monster_type_fwd.hpp"
 #include "object_flag_set.hpp"
 
@@ -40,3 +40,6 @@ void show_highclass(int building);
 errr get_xtra_line(const char * file_name, monster_type *m_ptr, char * output);
 std::string process_player_name(std::string const &);
 void set_player_base(std::string const &name);
+
+void do_cmd_save_game();
+void predict_score_gui(bool_ *initialized, bool_ *game_in_progress);

@@ -20,7 +20,7 @@
 #include "../skill_type.hpp"
 #include "../util.hpp"
 #include "../variable.hpp"
-#include "../z-term.h"
+#include "../z-term.hpp"
 
 #include <fmt/format.h>
 

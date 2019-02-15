@@ -1,6 +1,6 @@
 #pragma once
 
-#include "h-basic.h"
+#include "h-basic.hpp"
 
 void do_cmd_html_dump();
 void cli_add(const char *active, const char *trigger, const char *descr);

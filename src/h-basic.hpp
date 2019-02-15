@@ -1,9 +1,5 @@
 #pragma once
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 /*
  * Choose the hardware, operating system, and compiler.
  * Also, choose various "system level" compilation options.
@@ -177,7 +173,3 @@ typedef unsigned long u32b;
 #define I2D(X)	((X) + '0')
 #define KTRL(X)	((X) & 0x1F)
 #define ESCAPE	'\033'
-
-#ifdef __cplusplus
-} // extern "C"
-#endif

@@ -11,7 +11,7 @@
 #include "birth.hpp"
 #include "cave.hpp"
 #include "cave_type.hpp"
-#include "config.h"
+#include "config.hpp"
 #include "corrupt.hpp"
 #include "files.hpp"
 #include "hook_eat_in.hpp"
@@ -34,11 +34,9 @@
 #include "stats.hpp"
 #include "tables.hpp"
 #include "util.hpp"
-#include "util.h"
-#include "variable.h"
 #include "variable.hpp"
-#include "z-form.h"
-#include "z-util.h"
+#include "z-form.hpp"
+#include "z-util.hpp"
 
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/filesystem.hpp>

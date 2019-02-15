@@ -2,7 +2,7 @@
 
 #include "monster_power_fwd.hpp"
 
-#include "h-basic.h"
+#include "h-basic.hpp"
 
 /**
  * Monster powers that players can use via e.g. Symbiosis.

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "h-basic.h"
+#include "h-basic.hpp"
 #include "timer_type_fwd.hpp"
 
 #include <vector>
@@ -88,3 +88,9 @@ bool panel_contains(int y, int x);
 errr path_parse(char *buf, int max, const char *file);
 void pause_line(int row);
 std::string user_name();
+errr path_build(char *buf, int max, const char *path, const char *file);
+void bell();
+errr macro_add(const char *pat, const char *act);
+int macro_find_exact(const char *pat);
+char inkey();
+void prt(const char *str, int row, int col);

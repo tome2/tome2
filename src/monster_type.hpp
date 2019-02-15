@@ -1,6 +1,6 @@
 #pragma once
 
-#include "h-basic.h"
+#include "h-basic.hpp"
 #include "monster_blow.hpp"
 #include "monster_race_fwd.hpp"
 

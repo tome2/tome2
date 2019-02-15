@@ -1,6 +1,6 @@
 #pragma once
 
-#include "h-basic.h"
+#include "h-basic.hpp"
 
 void inc_piety(int god, s32b amt);
 void abandon_god(int god);

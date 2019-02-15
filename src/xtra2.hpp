@@ -1,6 +1,6 @@
 #pragma once
 
-#include "h-basic.h"
+#include "h-basic.hpp"
 #include "monster_race_fwd.hpp"
 #include "object_type_fwd.hpp"
 #include "player_race_mod_fwd.hpp"
@@ -80,8 +80,5 @@ bool_ tgt_pt (int *x, int *y);
 void do_poly_self();
 void make_wish();
 void create_between_gate(int dist, int y, int x);
-
-extern "C" {
-	void resize_map();
-	void resize_window();
-}
+void resize_map();
+void resize_window();

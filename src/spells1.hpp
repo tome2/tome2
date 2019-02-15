@@ -2,7 +2,7 @@
 
 #include <string>
 
-#include "h-basic.h"
+#include "h-basic.hpp"
 #include "random_spell_fwd.hpp"
 
 byte spell_color(int type);

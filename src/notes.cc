@@ -14,8 +14,6 @@
 #include "player_class.hpp"
 #include "player_type.hpp"
 #include "util.hpp"
-#include "util.h"
-#include "variable.h"
 #include "variable.hpp"
 
 #include <boost/filesystem/path.hpp>

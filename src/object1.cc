@@ -47,12 +47,10 @@
 #include "store_info_type.hpp"
 #include "tables.hpp"
 #include "util.hpp"
-#include "util.h"
-#include "variable.h"
 #include "variable.hpp"
 #include "wilderness_type_info.hpp"
 #include "xtra1.hpp"
-#include "z-form.h"
+#include "z-form.hpp"
 #include "z-rand.hpp"
 
 #include <boost/algorithm/string/join.hpp>

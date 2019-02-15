@@ -6,7 +6,7 @@
 #include "cave.hpp"
 #include "cave_type.hpp"
 #include "cli_comm.hpp"
-#include "config.h"
+#include "config.hpp"
 #include "dungeon_info_type.hpp"
 #include "ego_item_type.hpp"
 #include "files.hpp"
@@ -48,14 +48,12 @@
 #include "tome/make_array.hpp"
 #include "town_type.hpp"
 #include "util.hpp"
-#include "util.h"
-#include "variable.h"
 #include "variable.hpp"
 #include "vault_type.hpp"
 #include "wilderness_map.hpp"
 #include "wilderness_type_info.hpp"
-#include "z-form.h"
-#include "z-util.h"
+#include "z-form.hpp"
+#include "z-util.hpp"
 
 #include <boost/algorithm/string/predicate.hpp>
 #include <cassert>

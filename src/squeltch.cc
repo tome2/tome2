@@ -27,10 +27,8 @@
 #include "tome/squelch/object_status.hpp"
 #include "tome/squelch/automatizer.hpp"
 #include "util.hpp"
-#include "util.h"
-#include "variable.h"
 #include "variable.hpp"
-#include "z-form.h"
+#include "z-form.hpp"
 
 #include <algorithm>
 #include <deque>

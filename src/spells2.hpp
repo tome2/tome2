@@ -1,6 +1,6 @@
 #pragma once
 
-#include "h-basic.h"
+#include "h-basic.hpp"
 #include "monster_race_flag_set.hpp"
 #include "object_filter.hpp"
 #include "object_type_fwd.hpp"

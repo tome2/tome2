@@ -7,7 +7,6 @@
  */
 
 #include "tables.hpp"
-#include "tables.h"
 
 #include "modules.hpp"
 #include "monster_race_flag.hpp"
@@ -43,7 +42,7 @@
 #include "q_rand.hpp"
 #include "stats.hpp"
 #include "variable.hpp"
-#include "z-term.h"
+#include "z-term.hpp"
 
 
 

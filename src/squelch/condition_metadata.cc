@@ -7,8 +7,7 @@
 #include "lua_bind.hpp"
 #include "skills.hpp"
 #include "util.hpp"
-#include "util.h"
-#include "z-term.h"
+#include "z-term.hpp"
 
 namespace squelch {
 

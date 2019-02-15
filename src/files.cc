@@ -7,7 +7,6 @@
  */
 
 #include "files.hpp"
-#include "files.h"
 
 #include "cave.hpp"
 #include "cave_type.hpp"
@@ -21,7 +20,6 @@
 #include "hooks.hpp"
 #include "init1.hpp"
 #include "levels.hpp"
-#include "loadsave.h"
 #include "loadsave.hpp"
 #include "mimic.hpp"
 #include "monoid.hpp"
@@ -51,15 +49,13 @@
 #include "tables.hpp"
 #include "town_type.hpp"
 #include "util.hpp"
-#include "util.h"
-#include "variable.h"
 #include "variable.hpp"
 #include "wilderness_map.hpp"
 #include "wilderness_type_info.hpp"
 #include "xtra1.hpp"
-#include "z-form.h"
+#include "z-form.hpp"
 #include "z-rand.hpp"
-#include "z-util.h"
+#include "z-util.hpp"
 
 #include <boost/algorithm/string.hpp>
 #include <iostream>

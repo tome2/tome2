@@ -1,6 +1,6 @@
 #pragma once
 
-#include "h-basic.h"
+#include "h-basic.hpp"
 
 void macro_recorder_start();
 void macro_recorder_add(char c);

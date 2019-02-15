@@ -22,7 +22,7 @@
 #include "wilderness_map.hpp"
 #include "wilderness_type_info.hpp"
 #include "z-rand.hpp"
-#include "z-term.h"
+#include "z-term.hpp"
 
 #include <cassert>
 #include <fmt/format.h>

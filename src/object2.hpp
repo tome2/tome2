@@ -1,7 +1,7 @@
 #pragma once
 
 #include "ego_flag_set.hpp"
-#include "h-basic.h"
+#include "h-basic.hpp"
 #include "object_type_fwd.hpp"
 #include "obj_theme_fwd.hpp"
 

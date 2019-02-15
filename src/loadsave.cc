@@ -1,5 +1,4 @@
 #include "loadsave.hpp"
-#include "loadsave.h"
 
 #include "artifact_type.hpp"
 #include "birth.hpp"
@@ -32,9 +31,7 @@
 #include "timer_type.hpp"
 #include "town_type.hpp"
 #include "util.hpp"
-#include "util.h"
 #include "wilderness_map.hpp"
-#include "variable.h"
 #include "variable.hpp"
 #include "xtra2.hpp"
 #include "z-rand.hpp"

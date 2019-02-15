@@ -7,7 +7,6 @@
  */
 
 #include "variable.hpp"
-#include "variable.h"
 
 #include "cli_comm_fwd.hpp"
 #include "player_type.hpp"

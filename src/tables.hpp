@@ -4,7 +4,7 @@
 #include "between_exit.hpp"
 #include "body.hpp"
 #include "cli_comm_fwd.hpp"
-#include "defines.h"
+#include "defines.hpp"
 #include "flags_group.hpp"
 #include "gf_name_type.hpp"
 #include "inscription_info_type.hpp"
@@ -76,3 +76,4 @@ extern quest_type quest[MAX_Q_IDX];
 extern int max_body_part[BODY_MAX];
 extern gf_name_type gf_names[];
 extern module_type modules[MAX_MODULES];
+extern char hexsym[16];

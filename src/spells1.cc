@@ -43,13 +43,12 @@
 #include "stats.hpp"
 #include "tables.hpp"
 #include "util.hpp"
-#include "util.h"
 #include "variable.hpp"
 #include "wizard2.hpp"
 #include "xtra1.hpp"
 #include "xtra2.hpp"
 #include "z-rand.hpp"
-#include "z-term.h"
+#include "z-term.hpp"
 
 #include <boost/algorithm/string/predicate.hpp>
 #include <chrono>

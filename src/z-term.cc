@@ -8,7 +8,7 @@
 
 /* Purpose: a generic, efficient, terminal window package -BEN- */
 
-#include "z-term.h"
+#include "z-term.hpp"
 
 #include <cassert>
 #include <memory>

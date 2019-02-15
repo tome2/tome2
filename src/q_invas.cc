@@ -16,7 +16,7 @@
 #include "town_type.hpp"
 #include "util.hpp"
 #include "variable.hpp"
-#include "z-term.h"
+#include "z-term.hpp"
 
 #define cquest (quest[QUEST_INVASION])
 

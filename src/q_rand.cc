@@ -31,7 +31,7 @@
 #include "util.hpp"
 #include "variable.hpp"
 #include "z-rand.hpp"
-#include "z-term.h"
+#include "z-term.hpp"
 
 #include <cassert>
 #include <fmt/format.h>

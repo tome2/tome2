@@ -1,6 +1,6 @@
 #pragma once
 
-#include "h-basic.h"
+#include "h-basic.hpp"
 #include "monster_type_fwd.hpp"
 
 extern int monst_spell_monst_spell;
