@@ -11,7 +11,7 @@ INCLUDE(FindPkgConfig)
 #
 # C++ standard
 #
-SET(CMAKE_CXX_STANDARD 14)
+SET(CMAKE_CXX_STANDARD 17)
 
 #
 # Basic common compiler flags.
