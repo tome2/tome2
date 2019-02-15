@@ -672,7 +672,7 @@ void Term_queue_char(int x, int y, byte a, char c)
  * a valid location, so the first "n" characters of "s" can all be added
  * starting at (x,y) without causing any illegal operations.
  */
-void Term_queue_chars(int x, int y, int n, byte a, const char *s)
+static void Term_queue_chars(int x, int y, int n, byte a, const char *s)
 {
 	int x1 = -1, x2 = -1;
 
