@@ -48,6 +48,11 @@ struct term_ui_hooks_t {
 };
 
 /*
+ * Resize hook type
+ */
+typedef void(resize_hook_t)();
+
+/*
  * An actual "term" structure
  *
  *	- Extra "data" info (used by implementation)
@@ -144,7 +149,7 @@ struct term
 	curs_hook_t *curs_hook;
 	text_hook_t *text_hook;
 
-	void (*resize_hook)();
+	resize_hook_t *resize_hook;
 
 };
 
@@ -264,6 +269,7 @@ errr term_init(term *t, void *data, int w, int h, int k);
 void term_init_icky_corner(term *t);
 void term_init_soft_cursor(term *t);
 void term_init_ui_hooks(term *t, term_ui_hooks_t hooks);
+void term_set_resize_hook(term *t, resize_hook_t *hook);
 
 #ifdef __cplusplus
 } /* extern "C" */

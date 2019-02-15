@@ -1984,3 +1984,8 @@ void term_init_ui_hooks(term *t, term_ui_hooks_t hooks)
 	t->curs_hook = hooks.curs_hook;
 	t->text_hook = hooks.text_hook;
 }
+
+void term_set_resize_hook(term *t, resize_hook_t *hook)
+{
+	t->resize_hook = hook;
+}

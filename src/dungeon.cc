@@ -4723,13 +4723,12 @@ void play_game(program_args const &args)
 	Term_activate(angband_term[0]);
 
 	/* Initialise the resize hooks for all the terminals */
-	angband_term[0]->resize_hook = resize_map;
+	term_set_resize_hook(angband_term[0], resize_map);
 	for (i = 1; i < ANGBAND_TERM_MAX; i++)
 	{
 		if (angband_term[i])
 		{
-			/* Add redraw hook */
-			angband_term[i]->resize_hook = resize_window;
+			term_set_resize_hook(angband_term[i], resize_window);
 		}
 	}
 
