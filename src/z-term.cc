@@ -10,7 +10,8 @@
 
 #include "z-term.hpp"
 
-#include <boost/circular_buffer.hpp>
+#include "key_queue.hpp"
+
 #include <cassert>
 #include <memory>
 #include <vector>
@@ -359,87 +360,19 @@ public:
 };
 
 
-/*
- * Overflow signal
- */
-enum class push_result {
-	OK,
-	OVERFLOW,
-};
 
-
-static errr push_result_to_errr(push_result r)
+static errr push_result_to_errr(key_queue::push_result_t r)
 {
+	using pr = key_queue::push_result_t;
+
 	switch (r)
 	{
-	case push_result::OK:
+	case pr::OK:
 		return 0;
-	case push_result::OVERFLOW:
+	case pr::OVERFLOW:
 		return 1;
 	}
 }
-
-
-/*
- * Low-level key queue handling.
- */
-struct key_queue {
-
-private:
-	boost::circular_buffer<char> m_buffer;
-
-public:
-	explicit key_queue(std::size_t k)
-		: m_buffer(k)
-	{
-	}
-
-	void clear()
-	{
-		m_buffer.clear();
-	}
-
-	void push_back(char c)
-	{
-		if (m_buffer.full())
-		{
-			return; // Ignore
-		}
-
-		m_buffer.push_back(c);
-	}
-
-	push_result push_front(char k)
-	{
-		if (m_buffer.full())
-		{
-			return push_result::OVERFLOW;
-		}
-
-		m_buffer.push_front(k);
-		return push_result::OK;
-	}
-
-	char front() const
-	{
-		assert(!empty());
-		return m_buffer.front();
-	}
-
-	char pop_front()
-	{
-		assert(!empty());
-		auto ch = m_buffer.front();
-		m_buffer.pop_front();
-		return ch;
-	}
-
-	bool empty() const
-	{
-		return m_buffer.empty();
-	}
-
-};
 
 
 

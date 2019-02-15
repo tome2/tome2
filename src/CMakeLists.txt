@@ -39,6 +39,7 @@ SET(SRCS_COMMON
   init1.cc
   init2.cc
   joke.cc
+  key_queue.cc
   level_data.cc
   level_marker.cc
   levels.cc
