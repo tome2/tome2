@@ -1335,7 +1335,7 @@ static bool player_birth_aux_ask()
 	if (game->previous_char.quick_ok)
 	{
 		/* Choose */
-		while (1)
+		while (true)
 		{
 			put_str("Use same character as last time (y/n)? ", 20, 2);
 			c = inkey();
@@ -1384,7 +1384,7 @@ static bool player_birth_aux_ask()
 			n = dump_races(sel);
 
 			/* Choose */
-			while (1)
+			while (true)
 			{
 				strnfmt(buf, 200, "Choose a race (%c-%c), * for a random choice, = for options, 8/2/4/6 for movement: ",
 					I2A(0), I2A(race_info.size() - 1));
@@ -1513,7 +1513,7 @@ static bool player_birth_aux_ask()
 				n = dump_rmods(sel, racem, max_racem);
 
 				/* Choose */
-				while (1)
+				while (true)
 				{
 					strnfmt(buf, 200, "Choose a race modifier (%c-%c), * for a random choice, = for options: ",
 					        I2A(0), I2A(max_racem - 1));
@@ -1648,7 +1648,7 @@ static bool player_birth_aux_ask()
 			dump_classes(class_types, sel, restrictions);
 
 			/* Get a class */
-			while (1)
+			while (true)
 			{
 				strnfmt(buf, 200, "Choose a class (%c-%c), * for random, = for options, 8/2/4 for up/down/back: ", I2A(0), (n <= 25) ? I2A(n - 1) : I2D(n - 26-1));
 				put_str(buf, 15, 2);
@@ -1726,7 +1726,7 @@ static bool player_birth_aux_ask()
 			dump_specs(sel);
 
 			/* Get a class */
-			while (1)
+			while (true)
 			{
 				strnfmt(buf, 200, "Choose a class specialisation (%c-%c), * for random, = for options, 8/2/4/6 for up/down/left/right: ", I2A(0), (n <= 25) ? I2A(n - 1) : I2D(n - 26-1));
 				put_str(buf, 15, 2);
@@ -1835,7 +1835,7 @@ static bool player_birth_aux_ask()
 			n = dump_gods(sel, choice, max);
 
 			/* Choose */
-			while (1)
+			while (true)
 			{
 				strnfmt(buf, 200, "Choose a god (%c-%c), * for a random choice, "
 				        "= for options, 8/2/4/6 for movement: ",
@@ -2124,7 +2124,7 @@ static bool player_birth_aux_point()
 	p_ptr->luck_max = p_ptr->luck_base;
 
 	/* Interact */
-	while (1)
+	while (true)
 	{
 		/* Reset cost */
 		cost = 0;
@@ -2689,7 +2689,7 @@ void player_birth()
 	std::size_t rtown = TOWN_RANDOM;
 
 	/* Create a new character */
-	while (1)
+	while (true)
 	{
 		/* Wipe the player */
 		player_wipe();

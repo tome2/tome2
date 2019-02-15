@@ -3755,7 +3755,7 @@ void get_name()
 	prt("[Enter your player's name above, or hit ESCAPE]", 23, 2);
 
 	/* Ask until happy */
-	while (1)
+	while (true)
 	{
 		/* Go to the "name" field */
 		move_cursor(2, 9);
@@ -5227,7 +5227,7 @@ errr get_xtra_line(const char *file_name, monster_type *m_ptr, char *output)
 	mnum = m_ptr->r_idx;
 
 	/* Find matching N: line */
-	while (1)
+	while (true)
 	{
 		int n;
 
@@ -5249,7 +5249,7 @@ errr get_xtra_line(const char *file_name, monster_type *m_ptr, char *output)
 	}
 
 	/* Retrieve number of normal messages */
-	while (1)
+	while (true)
 	{
 		/* Read next line */
 		if (my_fgets(fp, buf, 90) != 0)

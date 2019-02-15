@@ -1017,7 +1017,7 @@ void do_cmd_locate()
 	x2 = x1 = panel_col_min;
 
 	/* Show panels until done */
-	while (1)
+	while (true)
 	{
 		/* Describe the location */
 		if ((y2 == y1) && (x2 == x1))
@@ -1476,7 +1476,7 @@ void do_cmd_query_symbol()
 	i = who.size() - 1;
 
 	/* Scan the monster memory */
-	while (1)
+	while (true)
 	{
 		/* Extract a race */
 		auto r_idx = who[i];
@@ -1494,7 +1494,7 @@ void do_cmd_query_symbol()
 		Term_addstr( -1, TERM_WHITE, " [(r)ecall, ESC]");
 
 		/* Interact */
-		while (1)
+		while (true)
 		{
 			/* Recall */
 			if (recall)

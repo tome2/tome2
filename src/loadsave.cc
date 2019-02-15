@@ -1844,7 +1844,7 @@ static bool do_inventory(ls_flag_t flag)
 		equip_cnt = 0;
 
 		/* Read until done */
-		while (1)
+		while (true)
 		{
 			u16b n;
 

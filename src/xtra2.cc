@@ -3934,7 +3934,7 @@ static int target_set_aux(int y, int x, int mode, const char *info_)
 
 
 	/* Repeat forever */
-	while (1)
+	while (true)
 	{
 		/* Paranoia */
 		query = ' ';
@@ -4022,7 +4022,7 @@ static int target_set_aux(int y, int x, int mode, const char *info_)
 					handle_stuff();
 
 					/* Interact */
-					while (1)
+					while (true)
 					{
 						/* Recall */
 						if (recall)

@@ -386,7 +386,7 @@ std::shared_ptr<Condition> new_condition_interactive()
 
 	// Choose
 	int begin = 0, sel = 0;
-	while (1)
+	while (true)
 	{
 		int wid, hgt;
 		Term_clear();

@@ -139,7 +139,7 @@ void build_prob(const char *learn)
 	int c_prev, c_cur, c_next;
 
 	/* Build raw frequencies */
-	while (1)
+	while (true)
 	{
 		c_prev = c_cur = S_WORD;
 
@@ -189,7 +189,7 @@ startover:
 	cp = word_buf;
 	c_prev = c_cur = S_WORD;
 
-	while (1)
+	while (true)
 	{
 getletter:
 		c_next = 0;

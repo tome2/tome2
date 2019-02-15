@@ -633,7 +633,7 @@ static void trigger_text_to_ascii(char **bufptr, const char **strptr)
 	str++;
 
 	/* Examine modifier keys */
-	while (1)
+	while (true)
 	{
 		for (i = 0; macro_modifier_chr[i]; i++)
 		{
@@ -1689,7 +1689,7 @@ static void msg_flush(int x)
 	Term_putstr(x, 0, -1, a, "-more-");
 
 	/* Get an acceptable keypress */
-	while (1)
+	while (true)
 	{
 		int cmd = inkey();
 		if (options->quick_messages) break;
@@ -2786,7 +2786,7 @@ void request_command(int shopping)
 
 
 	/* Get command */
-	while (1)
+	while (true)
 	{
 		/* Hack -- auto-commands */
 		if (command_new)
@@ -2839,7 +2839,7 @@ void request_command(int shopping)
 			prt("Count: ", 0, 0);
 
 			/* Get a command count */
-			while (1)
+			while (true)
 			{
 				/* Get a new keypress */
 				cmd = inkey();
@@ -3214,7 +3214,7 @@ static u32b get_number(u32b def, u32b max, int y, int x, char *cmd)
 	prt(format("%lu", def), y, x);
 
 	/* Get a command count */
-	while (1)
+	while (true)
 	{
 		/* Get a new keypress */
 		*cmd = inkey();

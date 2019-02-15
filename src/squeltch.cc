@@ -268,7 +268,7 @@ void do_cmd_automatizer()
 
 	automatizer->reset_view();
 
-	while (1)
+	while (true)
 	{
 		Term_clear();
 

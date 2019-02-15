@@ -3631,7 +3631,7 @@ void do_cmd_immovable_special()
 
 
 	/* Interact until done */
-	while (1)
+	while (true)
 	{
 		/* Clear screen */
 		Term_clear();

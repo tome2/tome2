@@ -359,7 +359,7 @@ void do_poly_self()
 		goalexpfact = 100 + 3 * rand_int(poly_power);
 
 		/* Roll until an appropriate selection is made */
-		while (1)
+		while (true)
 		{
 			new_race = rand_int(race_info.size());
 			expfact = race_info[new_race].ps.exp;
@@ -493,7 +493,7 @@ void fetch(int dir, int wgt, bool require_los)
 		int ty = p_ptr->py;  /* Where to drop the item */
 		int tx = p_ptr->px;
 
-		while (1)
+		while (true)
 		{
 			ty += ddy[dir];
 			tx += ddx[dir];

@@ -963,7 +963,7 @@ static int do_cmd_activate_skill_aux()
 	character_icky = TRUE;
 	Term_save();
 
-	while (1)
+	while (true)
 	{
 		print_skill_batch(p, start);
 		which = inkey();

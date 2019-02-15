@@ -148,7 +148,7 @@ void do_cmd_change_name()
 	Term_save();
 
 	/* Forever */
-	while (1)
+	while (true)
 	{
 		/* keep mode below 5 */
 		mode = (mode + 5) % 5;
@@ -308,7 +308,7 @@ void do_cmd_messages()
 	Term_save();
 
 	/* Process requests until done */
-	while (1)
+	while (true)
 	{
 		/* Clear screen */
 		Term_clear();
@@ -1142,7 +1142,7 @@ void do_cmd_options()
 	screen_save();
 
 	/* Interact */
-	while (1)
+	while (true)
 	{
 		/* Clear screen */
 		Term_clear();
@@ -1323,7 +1323,7 @@ void do_cmd_options()
 				prt("Command: Base Delay Factor", 21, 0);
 
 				/* Get a new value */
-				while (1)
+				while (true)
 				{
 					auto const msec = options->delay_factor_ms();
 
@@ -1358,7 +1358,7 @@ void do_cmd_options()
 				prt("Command: Hitpoint Warning", 18, 0);
 
 				/* Get a new value */
-				while (1)
+				while (true)
 				{
 					prt(fmt::format("Current hitpoint warning: {:d}0%",
 					           options->hitpoint_warn), 22, 0);
@@ -1664,7 +1664,7 @@ void do_cmd_macros()
 
 
 	/* Process requests until done */
-	while (1)
+	while (true)
 	{
 		char buf[1024];
 
@@ -2037,7 +2037,7 @@ void do_cmd_visuals()
 
 
 	/* Interact until done */
-	while (1)
+	while (true)
 	{
 		/* Clear screen */
 		Term_clear();
@@ -2254,7 +2254,7 @@ void do_cmd_visuals()
 			prt("Command: Change monster attr/chars", 15, 0);
 
 			/* Hack -- query until done */
-			while (1)
+			while (true)
 			{
 				auto r_ptr = &r_info[r];
 
@@ -2312,7 +2312,7 @@ void do_cmd_visuals()
 			prt("Command: Change object attr/chars", 15, 0);
 
 			/* Hack -- query until done */
-			while (1)
+			while (true)
 			{
 				auto k_ptr = k_info.at(k_info_keys[k_idx]);
 
@@ -2367,7 +2367,7 @@ void do_cmd_visuals()
 			prt("Command: Change feature attr/chars", 15, 0);
 
 			/* Hack -- query until done */
-			while (1)
+			while (true)
 			{
 				auto f_ptr = &f_info[f];
 
@@ -2467,7 +2467,7 @@ void do_cmd_colors()
 
 
 	/* Interact until done */
-	while (1)
+	while (true)
 	{
 		/* Clear screen */
 		Term_clear();
@@ -2585,7 +2585,7 @@ void do_cmd_colors()
 			prt("Command: Modify colors", 8, 0);
 
 			/* Hack -- query until done */
-			while (1)
+			while (true)
 			{
 				const char *name;
 
@@ -3739,7 +3739,7 @@ void do_cmd_knowledge()
 	Term_save();
 
 	/* Interact until done */
-	while (1)
+	while (true)
 	{
 		/* Clear screen */
 		Term_clear();

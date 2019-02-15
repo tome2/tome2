@@ -4800,7 +4800,7 @@ static int reset_recall_aux()
 	character_icky = TRUE;
 	Term_save();
 
-	while (1)
+	while (true)
 	{
 		print_dungeon_batch(dungeons, start, mode);
 		which = inkey();

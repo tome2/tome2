@@ -1142,7 +1142,7 @@ static boost::optional<int> select_power()
 		Term_save();
 		// Loop until we get a result.
 		boost::optional<int> result;
-		while (1)
+		while (true)
 		{
 			print_power_batch(power_idxs, start, max);
 			char which = inkey();

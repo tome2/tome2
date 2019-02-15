@@ -1310,7 +1310,7 @@ static random_spell* select_spell_from_batch(std::size_t batch)
 
 	prt(tmp, 0, 0);
 
-	while (1)
+	while (true)
 	{
 		/* Print power list */
 		print_spell_batch(batch, mut_max);
@@ -1410,7 +1410,7 @@ static random_spell* select_spell()
 
 	prt(tmp, 0, 0);
 
-	while (1)
+	while (true)
 	{
 		which = inkey();
 
@@ -2353,7 +2353,7 @@ s32b sroot(s32b n)
 
 	if (n < 2) return (n);
 
-	while (1)
+	while (true)
 	{
 		s32b err = (i - n / (i + 1)) / 2;
 

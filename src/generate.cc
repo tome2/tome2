@@ -1377,7 +1377,7 @@ static void build_streamer(int feat, int chance)
 			int d = DUN_STR_RNG;
 
 			/* Pick a nearby grid */
-			while (1)
+			while (true)
 			{
 				ty = rand_spread(y, d);
 				tx = rand_spread(x, d);
@@ -1464,7 +1464,7 @@ static void build_streamer2(int feat, int killwall)
 				int d = DUN_STR_WLW;
 
 				/* Pick a nearby grid */
-				while (1)
+				while (true)
 				{
 					ty = rand_spread(y, d);
 					tx = rand_spread(x, d);
@@ -2781,7 +2781,7 @@ static void build_type5(int by0, int bx0)
 
 	if ((tmp < 25) && (rand_int(2) != 0))
 	{
-		while (1)
+		while (true)
 		{
 			template_race = &*uniform_element(r_info);
 

@@ -177,7 +177,7 @@ void teleport_player_directed(int rad, int dir)
 		for (i = 0; i < 500; i++)
 		{
 			/* Pick a (possibly illegal) location */
-			while (1)
+			while (true)
 			{
 				if (y_major)
 				{
@@ -286,7 +286,7 @@ void teleport_away(int m_idx, int dis)
 		for (int i = 0; i < 500; i++)
 		{
 			/* Pick a (possibly illegal) location */
-			while (1)
+			while (true)
 			{
 				ny = rand_spread(oy, dis);
 				nx = rand_spread(ox, dis);
@@ -404,7 +404,7 @@ static void teleport_to_player(int m_idx)
 		for (int i = 0; i < 500; i++)
 		{
 			/* Pick a (possibly illegal) location */
-			while (1)
+			while (true)
 			{
 				ny = rand_spread(p_ptr->py, dis);
 				nx = rand_spread(p_ptr->px, dis);
@@ -530,7 +530,7 @@ void teleport_player(int dis)
 		for (i = 0; i < 500; i++)
 		{
 			/* Pick a (possibly illegal) location */
-			while (1)
+			while (true)
 			{
 				y = rand_spread(p_ptr->py, dis);
 				x = rand_spread(p_ptr->px, dis);
@@ -659,7 +659,7 @@ void get_pos_player(int dis, int *ny, int *nx)
 		for (i = 0; i < 500; i++)
 		{
 			/* Pick a (possibly illegal) location */
-			while (1)
+			while (true)
 			{
 				y = rand_spread(p_ptr->py, dis);
 				x = rand_spread(p_ptr->px, dis);
@@ -720,10 +720,10 @@ void teleport_monster_to(int m_idx, int ny, int nx)
 	}
 
 	/* Find a usable location */
-	while (1)
+	while (true)
 	{
 		/* Pick a nearby legal location */
-		while (1)
+		while (true)
 		{
 			y = rand_spread(ny, dis);
 			x = rand_spread(nx, dis);
@@ -797,10 +797,10 @@ void teleport_player_to(int ny, int nx)
 	if (p_ptr->tim_roots) return;
 
 	/* Find a usable location */
-	while (1)
+	while (true)
 	{
 		/* Pick a nearby legal location */
-		while (1)
+		while (true)
 		{
 			y = rand_spread(ny, dis);
 			x = rand_spread(nx, dis);
@@ -2601,7 +2601,7 @@ static std::vector<std::tuple<int, int>> project_path(unsigned int range, int y1
 		x = x1 + ddx[dir];
 
 		/* Create the projection path */
-		while (1)
+		while (true)
 		{
 			/* Save grid */
 			gp.push_back(std::make_tuple(y, x));
@@ -2687,7 +2687,7 @@ static std::vector<std::tuple<int, int>> project_path(unsigned int range, int y1
 		int k = 0;
 
 		/* Create the projection path */
-		while (1)
+		while (true)
 		{
 			/* Save grid */
 			gp.push_back(std::make_tuple(y, x));
@@ -2758,7 +2758,7 @@ static std::vector<std::tuple<int, int>> project_path(unsigned int range, int y1
 		int k = 0;
 
 		/* Create the projection path */
-		while (1)
+		while (true)
 		{
 			/* Save grid */
 			gp.push_back(std::make_tuple(y, x));
@@ -2820,7 +2820,7 @@ static std::vector<std::tuple<int, int>> project_path(unsigned int range, int y1
 		x = x1 + sx;
 
 		/* Create the projection path */
-		while (1)
+		while (true)
 		{
 			/* Save grid */
 			gp.push_back(std::make_tuple(y, x));
