@@ -4693,7 +4693,7 @@ void play_game()
 	if (!new_game)
 	{
 		/* Process the player name */
-		process_player_name();
+		set_player_base(game->player_name);
 	}
 
 	/* Force "complex" RNG */

@@ -3730,9 +3730,9 @@ std::string process_player_name(std::string const &name)
 
 
 
-void process_player_name()
+void set_player_base(std::string const &name)
 {
-	game->player_base = process_player_name(game->player_base);
+	game->player_base = process_player_name(name);
 }
 
 
@@ -3748,8 +3748,6 @@ void process_player_name()
  */
 void get_name()
 {
-	char tmp[32];
-
 	/* Clear last line */
 	clear_from(22);
 
@@ -3763,22 +3761,21 @@ void get_name()
 		move_cursor(2, 9);
 
 		/* Save the player name */
-		strcpy(tmp, game->player_name.c_str());
+		auto tmp = game->player_name;
 
 		/* Get an input, ignore "Escape" */
-		if (askfor_aux(tmp, 31))
+		if (askfor_aux(&tmp, 31))
 		{
 			game->player_name = tmp;
+			set_player_base(tmp);
 		}
-
-		/* Process the player name */
-		process_player_name();
 
 		/* All done */
 		break;
 	}
 
 	/* Pad the name (to clear junk) */
+	char tmp[32];
 	sprintf(tmp, "%-31.31s", game->player_name.c_str());
 
 	/* Re-Draw the name (in light blue) */

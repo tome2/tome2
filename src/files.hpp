@@ -39,4 +39,4 @@ void race_legends();
 void show_highclass(int building);
 errr get_xtra_line(const char * file_name, monster_type *m_ptr, char * output);
 std::string process_player_name(std::string const &);
-void process_player_name();
+void set_player_base(std::string const &name);

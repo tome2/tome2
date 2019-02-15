@@ -170,7 +170,6 @@ int main_real(int argc, char *argv[], char const *platform_sys, int (*init_platf
 			{
 				if (!argv[i][2]) goto usage;
 				game->player_name = &argv[i][2];
-				game->player_base = &argv[i][2];
 				no_begin_screen = true;
 				break;
 			}
@@ -237,7 +236,7 @@ usage:
 
 
 	/* Process the player name */
-	process_player_name();
+	set_player_base(game->player_name);
 
 
 	/* Install "quit" hook */

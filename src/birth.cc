@@ -3121,10 +3121,14 @@ savefile_try_again:
 			prt("Enter the name of the savefile that will hold this character: ", 23, 0);
 
 			/* Ask the user for a string */
-			if (!askfor_aux(&game->player_base, 15)) continue;
+			auto tmp = game->player_base;
+			if (!askfor_aux(&tmp, 15))
+			{
+				continue;
+			}
 
 			/* Process the player name */
-			process_player_name();
+			set_player_base(tmp);
 
 			// If the savefile already exists, we do *NOT* want to
 			// create a new game, so we'll need to return FALSE for
@@ -3161,10 +3165,14 @@ savefile_try_again:
 			prt("Enter the name of a savefile: ", 23, 0);
 
 			/* Ask the user for a string */
-			if (!askfor_aux(&game->player_base, 15)) continue;
+			auto tmp = game->player_base;
+			if (!askfor_aux(&tmp, 15))
+			{
+				continue;
+			}
 
 			/* Process the player name */
-			process_player_name();
+			set_player_base(tmp);
 
 			return false;
 		}
@@ -3177,10 +3185,8 @@ savefile_try_again:
 
 			if ((x < 2) || (x >= max)) continue;
 
-			game->player_base = savefile_names[savefile_idx[x - 2]];
-
 			/* Process the player name */
-			process_player_name();
+			set_player_base(savefile_names[savefile_idx[x - 2]]);
 
 			return false;
 		}
