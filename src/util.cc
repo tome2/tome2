@@ -27,6 +27,7 @@
 #include <chrono>
 #include <cstdio>
 #include <fcntl.h>
+#include <fmt/format.h>
 #include <sstream>
 #include <thread>
 
@@ -39,6 +40,116 @@ using boost::algorithm::equals;
 using boost::algorithm::starts_with;
 using std::this_thread::sleep_for;
 using std::chrono::milliseconds;
+
+
+enum class display_option_t {
+	IMMEDIATE,
+	DELAY,
+};
+
+/*
+ * Read a number at a specific location on the screen
+ *
+ * Allow numbers of any size and save the last keypress.
+ */
+static std::tuple<u32b, char> get_number(u32b def, u32b max, int y, int x, display_option_t display_option)
+{
+	auto display_number = [x, y](u32b i)
+	{
+		prt(fmt::format("{}", i), y, x);
+	};
+
+	/* Player has not typed anything yet */
+	bool no_keys = true;
+
+	/* Begin the input with default */
+	u32b res = def;
+
+	/* Display? */
+	switch (display_option)
+	{
+		case display_option_t::IMMEDIATE:
+			// Show current value immediately
+			display_number(res);
+			break;
+		case display_option_t::DELAY:
+			// Don't show
+			break;
+	}
+
+	/* Get a command count */
+	while (true)
+	{
+		/* Get a new keypress */
+		char key = inkey();
+
+		/* Simple editing (delete or backspace) */
+		if ((key == 0x7F) || (key == KTRL('H')))
+		{
+			/* Override the default */
+			no_keys = false;
+
+			/* Delete a digit */
+			res = res / 10;
+
+			display_number(res);
+		}
+
+		/* Actual numeric data */
+		else if (key >= '0' && key <= '9')
+		{
+			/* Override the default */
+			if (no_keys)
+			{
+				no_keys = false;
+				res = 0;
+			}
+
+			/* Don't overflow */
+			if (((u32b)(0 - 1) - D2I(key)) / 10 < res)
+			{
+				/* Warn */
+				bell();
+
+				/* Limit */
+				res = (max + 1 == 0) ? (u32b)(0 - 1) : max;
+			}
+
+			/* Stop count at maximum */
+			else if (res * 10 + D2I(key) > max)
+			{
+				/* Warn */
+				bell();
+
+				/* Limit */
+				res = max;
+			}
+
+			/* Increase count */
+			else
+			{
+				/* Incorporate that digit */
+				res = res * 10 + D2I(key);
+			}
+
+			/* Show current count */
+			display_number(res);
+		}
+
+		/* Escape cancels */
+		else if (key == ESCAPE)
+		{
+			return { 0, key };
+		}
+
+		/* Exit on "unusable" input */
+		else
+		{
+			return { res, key };
+		}
+	}
+}
+
 
 /*
 * Find a default user name from the system.
@@ -2857,58 +2968,9 @@ void request_command(int shopping)
 		{
 			int old_arg = command_arg;
 
-			/* Reset */
-			command_arg = 0;
-
-			/* Begin the input */
 			prt("Count: ", 0, 0);
-
-			/* Get a command count */
-			while (true)
-			{
-				/* Get a new keypress */
-				cmd = inkey();
-
-				/* Simple editing (delete or backspace) */
-				if ((cmd == 0x7F) || (cmd == KTRL('H')))
-				{
-					/* Delete a digit */
-					command_arg = command_arg / 10;
-
-					/* Show current count */
-					prt(format("Count: %d", command_arg), 0, 0);
-				}
-
-				/* Actual numeric data */
-				else if (cmd >= '0' && cmd <= '9')
-				{
-					/* Stop count at 9999 */
-					if (command_arg >= 1000)
-					{
-						/* Warn */
-						bell();
-
-						/* Limit */
-						command_arg = 9999;
-					}
-
-					/* Increase count */
-					else
-					{
-						/* Incorporate that digit */
-						command_arg = command_arg * 10 + D2I(cmd);
-					}
-
-					/* Show current count */
-					prt(format("Count: %d", command_arg), 0, 0);
-				}
-
-				/* Exit on "unusable" input */
-				else
-				{
-					break;
-				}
-			}
+			std::tie(command_arg, cmd) =
+				get_number(0, 9999, 0, 7, display_option_t::DELAY);
 
 			/* Hack -- Handle "zero" */
 			if (command_arg == 0)
@@ -2917,7 +2979,7 @@ void request_command(int shopping)
 				command_arg = 99;
 
 				/* Show current count */
-				prt(format("Count: %d", command_arg), 0, 0);
+				prt(fmt::format("Count: {}", command_arg), 0, 0);
 			}
 
 			/* Hack -- Handle "old_arg" */
@@ -2927,7 +2989,7 @@ void request_command(int shopping)
 				command_arg = old_arg;
 
 				/* Show current count */
-				prt(format("Count: %d", command_arg), 0, 0);
+				prt(fmt::format("Count: {}", command_arg), 0, 0);
 			}
 
 			/* Hack -- white-space means "enter command now" */
@@ -3222,108 +3284,11 @@ void repeat_check(s16b *command_ptr)
 	}
 }
 
-
-/*
- * Read a number at a specific location on the screen
- *
- * Allow numbers of any size and save the last keypress.
- */
-static u32b get_number(u32b def, u32b max, int y, int x, char *cmd)
-{
-	u32b res = def;
-
-	/* Player has not typed anything yet */
-	bool no_keys = true;
-
-	/* Begin the input with default */
-	prt(format("%lu", def), y, x);
-
-	/* Get a command count */
-	while (true)
-	{
-		/* Get a new keypress */
-		*cmd = inkey();
-
-		/* Simple editing (delete or backspace) */
-		if ((*cmd == 0x7F) || (*cmd == KTRL('H')))
-		{
-			/* Override the default */
-			no_keys = false;
-
-			/* Delete a digit */
-			res = res / 10;
-
-			prt(format("%lu", res), y, x);
-		}
-
-		/* Actual numeric data */
-		else if (*cmd >= '0' && *cmd <= '9')
-		{
-			/* Override the default */
-			if (no_keys)
-			{
-				no_keys = false;
-				res = 0;
-			}
-
-			/* Don't overflow */
-			if (((u32b)(0 - 1) - D2I(*cmd)) / 10 < res)
-			{
-				/* Warn */
-				bell();
-
-				/* Limit */
-				res = (max + 1 == 0) ? (u32b)(0 - 1) : max;
-			}
-
-			/* Stop count at maximum */
-			else if (res * 10 + D2I(*cmd) > max)
-			{
-				/* Warn */
-				bell();
-
-				/* Limit */
-				res = max;
-			}
-
-			/* Increase count */
-			else
-			{
-				/* Incorporate that digit */
-				res = res * 10 + D2I(*cmd);
-			}
-
-			/* Show current count */
-			prt(format("%lu", res), y, x);
-		}
-
-		/* Escape cancels */
-		else if (*cmd == ESCAPE)
-		{
-			res = 0;
-			break;
-		}
-
-		/* Exit on "unusable" input */
-		else
-		{
-			break;
-		}
-	}
-
-	return res;
-}
-
 /*
  * Allow the user to select multiple items without pressing '0'
  */
-void get_count(int number, int max)
+s16b get_count(int number, int max)
 {
-	char cmd;
-
-	/* Use the default */
-	command_arg = number;
-
 	/* Hack -- Optional flush */
 	if (options->flush_command)
 	{
@@ -3337,9 +3302,11 @@ void get_count(int number, int max)
 	prt("How many?", 0, 0);
 
 	/* Actually get a number */
-	command_arg = get_number(command_arg, max, 0, 10, &cmd);
+	auto [res, cmd] = get_number(number, max, 0, 10, display_option_t::IMMEDIATE);
 
 	prt("", 0, 0);
+
+	return res;
 }
 
 byte count_bits(u32b array)

@@ -1593,11 +1593,7 @@ void do_cmd_cure_meat()
 
 	if (i_ptr->number > 1)
 	{
-		/* Get a number */
-		get_count(1, i_ptr->number);
-
-		/* Save it */
-		num = command_arg;
+		num = get_count(1, i_ptr->number);
 	}
 	else
 	{
