@@ -60,13 +60,14 @@
 #include "z-rand.hpp"
 
 #include <boost/algorithm/string.hpp>
-#include <boost/filesystem.hpp>
 #include <iostream>
 #include <fmt/format.h>
 #include <fstream>
 #include <limits>
 #include <memory>
 #include <unordered_set>
+
+namespace fs = boost::filesystem;
 
 std::string name_file_note(std::string_view sv)
 {
@@ -98,6 +99,12 @@ std::string name_file_save(std::string_view sv)
 	path_build(buf, sizeof(buf), ANGBAND_DIR_SAVE, s.c_str());
 
 	return buf;
+}
+
+boost::filesystem::path name_file_dungeon_save(std::string const &ext)
+{
+	fs::path p(name_file_save());
+	return p.replace_extension(ext);
 }
 
 /*
@@ -3450,7 +3457,7 @@ static bool_ show_file_aux(const char *name, const char *what, int line)
 void show_string(const char *lines, const char *title, int line)
 {
 	// Temporary file
-	auto const file_name = boost::filesystem::unique_path().string();
+	auto const file_name = fs::unique_path().string();
 
 	// Open a new file
 	std::ofstream ofs(file_name);
@@ -4964,13 +4971,8 @@ void wipe_saved()
 			dungeon_type = d;
 			if (auto ext = get_dungeon_save_extension())
 			{
-				auto tmp = fmt::format("{}.{}", game->player_base, *ext);
-
-				char name[1024];
-				path_build(name, 1024, ANGBAND_DIR_SAVE, tmp.c_str());
-
 				/* Remove the dungeon save file */
-				fd_kill(name);
+				fd_kill(name_file_dungeon_save(*ext).c_str());
 			}
 		}
 	}

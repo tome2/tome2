@@ -44,6 +44,8 @@
 #include <fmt/format.h>
 #include <memory>
 
+namespace fs = boost::filesystem;
+
 static u32b vernum; /* Version flag */
 static FILE *fff; 	/* Local savefile ptr */
 
@@ -1592,14 +1594,8 @@ void save_dungeon()
 
 	if (auto ext = get_dungeon_save_extension())
 	{
-		/* Construct filename */
-		auto tmp = fmt::format("{}.{}", game->player_base, *ext);
-
-		char name[1024];
-		path_build(name, 1024, ANGBAND_DIR_SAVE, tmp.c_str());
-
 		/* Open the file */
-		fff = my_fopen(name, "wb");
+		fff = my_fopen(name_file_dungeon_save(*ext).c_str(), "wb");
 
 		/* Save the dungeon */
 		do_dungeon(ls_flag_t::SAVE, true);
@@ -1977,13 +1973,8 @@ bool load_dungeon(std::string const &ext)
 	byte old_dungeon_type = dungeon_type;
 	s16b old_dun = dun_level;
 
-	/* Construct name */
-	auto tmp = fmt::format("{}.{}", game->player_base, ext);
-	char name[1024];
-	path_build(name, 1024, ANGBAND_DIR_SAVE, tmp.c_str());
-
 	/* Open the file */
-	fff = my_fopen(name, "rb");
+	fff = my_fopen(name_file_dungeon_save(ext).c_str(), "rb");
 
 	if (fff == NULL)
 	{
@@ -2577,7 +2568,7 @@ bool_ load_player()
 	/* XXX XXX XXX Fix this */
 
 	/* Verify the existance of the savefile */
-	if (!boost::filesystem::exists(savefile))
+	if (!fs::exists(savefile))
 	{
 		/* Give a message */
 		msg_format("Savefile does not exist: %s", savefile.c_str());

@@ -4,6 +4,7 @@
 #include "monster_type_fwd.hpp"
 #include "object_flag_set.hpp"
 
+#include <boost/filesystem.hpp>
 #include <string>
 #include <string_view>
 #include <vector>
@@ -12,6 +13,8 @@ std::string name_file_note(std::string_view);
 std::string name_file_pref(std::string_view);
 std::string name_file_save();
 std::string name_file_save(std::string_view);
+
+boost::filesystem::path name_file_dungeon_save(std::string const &ext);
 
 void html_screenshot(const char *name);
 void help_file_screenshot(const char *name);
