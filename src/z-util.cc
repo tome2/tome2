@@ -1,34 +1,9 @@
 #include "z-util.h"
 
+#include <boost/algorithm/string/predicate.hpp>
 #include <cassert>
 
-/*
- * Determine if string "t" is equal to string "t"
- */
-bool_ streq(const char *a, const char *b)
-{
-	if ((a == nullptr) && (b == nullptr)) { return TRUE; }
-	if (a == nullptr) { return FALSE; }
-	if (b == nullptr) { return FALSE; }
-	return (!strcmp(a, b));
-}
-
-
-/*
- * Determine if string "t" is a suffix of string "s"
- */
-bool_ suffix(const char *s, const char *t)
-{
-	int tlen = strlen(t);
-	int slen = strlen(s);
-
-	/* Check for incompatible lengths */
-	if (tlen > slen) return (FALSE);
-
-	/* Compare "t" to the end of "s" */
-	return (!strcmp(s + slen - tlen, t));
-}
-
+using boost::algorithm::equals;
 
 /**
  * Captialize letter

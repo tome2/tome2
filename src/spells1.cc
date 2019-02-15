@@ -50,10 +50,12 @@
 #include "xtra2.hpp"
 #include "z-rand.hpp"
 
+#include <boost/algorithm/string/predicate.hpp>
 #include <chrono>
 #include <fmt/format.h>
 #include <thread>
 
+using boost::algorithm::starts_with;
 using std::this_thread::sleep_for;
 using std::chrono::milliseconds;
 
@@ -4562,7 +4564,7 @@ bool_ project_m(int who, int r, int y, int x, int dam, int typ)
 		{
 			if (seen) obvious = TRUE;
 			if ((r_ptr->d_char == 'E') &&
-					(prefix(r_ptr->name, "W") ||
+					(starts_with(r_ptr->name, "W") ||
 					 (strstr(r_ptr->name, "Unmaker"))))
 			{
 				note = " is immune.";
@@ -4582,7 +4584,7 @@ bool_ project_m(int who, int r, int y, int x, int dam, int typ)
 		{
 			if (seen) obvious = TRUE;
 			if ((r_ptr->d_char == 'E') &&
-					(prefix(r_ptr->name, "W") ||
+					(starts_with(r_ptr->name, "W") ||
 					 (strstr(r_ptr->name, "Unmaker"))))
 			{
 				note = " is immune.";

@@ -42,6 +42,7 @@
 #include "z-rand.hpp"
 
 #include <algorithm>
+#include <boost/algorithm/string/predicate.hpp>
 #include <cassert>
 #include <fmt/format.h>
 #include <memory>
@@ -49,6 +50,8 @@
 #include <string>
 #include <unordered_set>
 #include <vector>
+
+using boost::algorithm::equals;
 
 /*
  * Hack -- redraw the screen
@@ -3381,25 +3384,25 @@ static void plural_aux(char *name)
 	{
 		strcpy(&name[name_len - 1], "ies");
 	}
-	else if (name_len >= 4 && streq(&name[name_len - 4], "ouse"))
+	else if (name_len >= 4 && equals(&name[name_len - 4], "ouse"))
 	{
 		strcpy(&name[name_len - 4], "ice");
 	}
-	else if (name_len >= 6 && streq(&name[name_len - 6], "kelman"))
+	else if (name_len >= 6 && equals(&name[name_len - 6], "kelman"))
 	{
 		strcpy(&name[name_len - 6], "kelmen");
 	}
-	else if (name_len >= 2 && streq(&name[name_len - 2], "ex"))
+	else if (name_len >= 2 && equals(&name[name_len - 2], "ex"))
 	{
 		strcpy(&name[name_len - 2], "ices");
 	}
-	else if (name_len >= 3 && streq(&name[name_len - 3], "olf"))
+	else if (name_len >= 3 && equals(&name[name_len - 3], "olf"))
 	{
 		strcpy(&name[name_len - 3], "olves");
 	}
 
 	/* Now begins sane cases */
-	else if ((name_len >= 2 && streq(&name[name_len - 2], "ch")) || (name_len >= 1 && name[name_len - 1] == 's'))
+	else if ((name_len >= 2 && equals(&name[name_len - 2], "ch")) || (name_len >= 1 && name[name_len - 1] == 's'))
 	{
 		strcpy(&name[name_len], "es");
 	}

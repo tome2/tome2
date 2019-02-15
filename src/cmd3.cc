@@ -40,11 +40,14 @@
 #include "xtra2.hpp"
 #include "z-rand.hpp"
 
-#include <cassert>
 #include <algorithm>
+#include <boost/algorithm/string/predicate.hpp>
+#include <cassert>
 #include <fmt/format.h>
 #include <memory>
 #include <utility>
+
+using boost::algorithm::equals;
 
 /*
  * Display p_ptr->inventory
@@ -1740,7 +1743,7 @@ void do_cmd_cli()
 	/* Analyse the input */
 	for (cli_ptr = cli_info; cli_ptr->comm; cli_ptr++)
 	{
-		if (!strcmp(buff, cli_ptr->comm))
+		if (equals(buff, cli_ptr->comm))
 		{
 			/* Process the command without keymaps or macros. */
 			command_new = cli_ptr->key;

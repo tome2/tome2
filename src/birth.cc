@@ -57,10 +57,13 @@
 #include "z-rand.hpp"
 
 #include <algorithm>
+#include <boost/algorithm/string/predicate.hpp>
 #include <boost/filesystem.hpp>
 #include <fmt/format.h>
 #include <numeric>
 #include <string>
+
+using boost::algorithm::equals;
 
 /*
  * How often the autoroller will update the display and pause
@@ -827,51 +830,51 @@ static void player_outfit()
 	 */
 	if (game_module_idx == MODULE_TOME)
 	{
-		if (streq(class_name, "Ranger"))
+		if (equals(class_name, "Ranger"))
 		{
 			player_outfit_spellbook("Phase Door");
 		}
 	}
-	if (streq(class_name, "Geomancer"))
+	if (equals(class_name, "Geomancer"))
 	{
 		player_outfit_spellbook("Geyser");
 	}
-	if (streq(class_name, "Priest(Eru)"))
+	if (equals(class_name, "Priest(Eru)"))
 	{
 		player_outfit_spellbook("See the Music");
 	}
-	if (streq(class_name, "Priest(Manwe)"))
+	if (equals(class_name, "Priest(Manwe)"))
 	{
 		player_outfit_spellbook("Manwe's Blessing");
 	}
-	if (streq(class_name, "Druid"))
+	if (equals(class_name, "Druid"))
 	{
 		player_outfit_spellbook("Charm Animal");
 	}
-	if (streq(class_name, "Dark-Priest"))
+	if (equals(class_name, "Dark-Priest"))
 	{
 		player_outfit_spellbook("Curse");
 	}
-	if (streq(class_name, "Paladin"))
+	if (equals(class_name, "Paladin"))
 	{
 		player_outfit_spellbook("Divine Aim");
 	}
 	if (game_module_idx == MODULE_THEME)
 	{
 		/* Priests */
-		if (streq(class_name, "Stonewright"))
+		if (equals(class_name, "Stonewright"))
 		{
 			player_outfit_spellbook("Firebrand");
 		}
-		if (streq(class_name, "Priest(Varda)"))
+		if (equals(class_name, "Priest(Varda)"))
 		{
 			player_outfit_spellbook("Light of Valinor");
 		}
-		if (streq(class_name, "Priest(Ulmo)"))
+		if (equals(class_name, "Priest(Ulmo)"))
 		{
 			player_outfit_spellbook("Song of Belegaer");
 		}
-		if (streq(class_name, "Priest(Mandos)"))
+		if (equals(class_name, "Priest(Mandos)"))
 		{
 			player_outfit_spellbook("Tears of Luthien");
 		}
@@ -913,19 +916,19 @@ static void player_outfit()
 		}
 
 		/* Peace-mages */
-		if (streq(class_name, "Peace-mage"))
+		if (equals(class_name, "Peace-mage"))
 		{
 			player_outfit_spellbook("Phase Door");
 		}
 
 		/* Wainriders */
-		if (streq(class_name, "Wainrider"))
+		if (equals(class_name, "Wainrider"))
 		{
 			player_outfit_spellbook("Curse");
 		}
 	}
 
-	if (streq(class_name, "Mimic"))
+	if (equals(class_name, "Mimic"))
 	{
 		object_type forge;
 		object_type *q_ptr = &forge;
@@ -1264,10 +1267,17 @@ static int dump_gods(int sel, int *choice, int max)
 			{
 				/* Display the first four lines of the god description */
 				for (j = 0; j < 4; j++)
-					if (strcmp(g_ptr->desc[j], ""))
+				{
+					if (!equals(g_ptr->desc[j], ""))
+					{
 						print_desc_aux(g_ptr->desc[j], 12 + j, 1);
+					}
+				}
 			}
-			else print_desc("You can begin as an atheist and still convert to a god later.");
+			else
+			{
+				print_desc("You can begin as an atheist and still convert to a god later.");
+			}
 
 			c_put_str(TERM_L_BLUE, buf, 20 + (i / 4), 1 + 20 * (i % 4));
 		}
@@ -2966,7 +2976,11 @@ void save_savefile_names()
 
 	for (i = 0; i < max; i++)
 	{
-		if (!strcmp(savefile_names[i], game->player_base.c_str())) continue;
+		if (equals(savefile_names[i], game->player_base.c_str()))
+		{
+			continue;
+		}
+
 		fprintf(fff, "%s@%c%s@%s\n", savefile_module[i],
 			savefile_alive[i] ? '1' : '0', savefile_names[i], savefile_desc[i]);
 	}

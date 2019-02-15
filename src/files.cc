@@ -67,6 +67,10 @@
 #include <memory>
 #include <unordered_set>
 
+using boost::algorithm::equals;
+using boost::algorithm::trim_right;
+using boost::algorithm::starts_with;
+
 namespace fs = boost::filesystem;
 
 std::string name_file_note(std::string_view sv)
@@ -663,7 +667,7 @@ errr process_pref_file_aux(char *buf)
 	{
 		for (auto const &option: options->standard_options)
 		{
-			if (option.o_var && streq(option.o_text, buf + 2))
+			if (option.o_var && equals(option.o_text, buf + 2))
 			{
 				*option.o_var = FALSE;
 				return 0;
@@ -676,7 +680,7 @@ errr process_pref_file_aux(char *buf)
 	{
 		for (auto const &option: options->standard_options)
 		{
-			if (option.o_var && streq(option.o_text, buf + 2))
+			if (option.o_var && equals(option.o_text, buf + 2))
 			{
 				*option.o_var = TRUE;
 				return 0;
@@ -786,40 +790,40 @@ static const char *process_pref_file_expr(char **sp, char *fp)
 		}
 
 		/* Function: IOR */
-		else if (streq(t, "IOR"))
+		else if (equals(t, "IOR"))
 		{
 			v = "0";
 			while (*s && (f != b2))
 			{
 				t = process_pref_file_expr(&s, &f);
-				if (*t && !streq(t, "0")) v = "1";
+				if (*t && !equals(t, "0")) v = "1";
 			}
 		}
 
 		/* Function: AND */
-		else if (streq(t, "AND"))
+		else if (equals(t, "AND"))
 		{
 			v = "1";
 			while (*s && (f != b2))
 			{
 				t = process_pref_file_expr(&s, &f);
-				if (*t && streq(t, "0")) v = "0";
+				if (*t && equals(t, "0")) v = "0";
 			}
 		}
 
 		/* Function: NOT */
-		else if (streq(t, "NOT"))
+		else if (equals(t, "NOT"))
 		{
 			v = "1";
 			while (*s && (f != b2))
 			{
 				t = process_pref_file_expr(&s, &f);
-				if (*t && !streq(t, "0")) v = "0";
+				if (*t && !equals(t, "0")) v = "0";
 			}
 		}
 
 		/* Function: EQU */
-		else if (streq(t, "EQU"))
+		else if (equals(t, "EQU"))
 		{
 			v = "1";
 			if (*s && (f != b2))
@@ -830,12 +834,12 @@ static const char *process_pref_file_expr(char **sp, char *fp)
 			{
 				p = t;
 				t = process_pref_file_expr(&s, &f);
-				if (*t && !streq(p, t)) v = "0";
+				if (*t && !equals(p, t)) v = "0";
 			}
 		}
 
 		/* Function SKILL */
-		else if (streq(t, "SKILL"))
+		else if (equals(t, "SKILL"))
 		{
 			static char skill_val[4*sizeof(int) + 1];
 			s16b skill = -1;
@@ -881,7 +885,7 @@ static const char *process_pref_file_expr(char **sp, char *fp)
 		if (*b == '$')
 		{
 			/* System */
-			if (streq(b + 1, "SYS"))
+			if (equals(b + 1, "SYS"))
 			{
 				v = ANGBAND_SYS;
 			}
@@ -979,7 +983,7 @@ errr process_pref_file(std::string const &name)
 			v = process_pref_file_expr(&s, &f);
 
 			/* Set flag */
-			bypass = (streq(v, "0") ? TRUE : FALSE);
+			bypass = (equals(v, "0") ? TRUE : FALSE);
 
 			/* Continue */
 			continue;
@@ -2364,7 +2368,7 @@ std::string describe_player_location()
 	}
 
 	/* Strip trailing whitespace */
-	boost::trim_right(desc);
+	trim_right(desc);
 
 	return desc;
 }
@@ -2413,7 +2417,7 @@ static void file_character_print_grid(FILE *fff, bool_ show_gaps, bool_ show_leg
 		}
 
 		buf[x] = '\0';
-		if (strcmp(buf, blank_line) &&
+		if (!equals(buf, blank_line) &&
 		                (y == 3 || show_gaps || file_character_print_grid_check_row(buf)))
 			fprintf (fff, "        %s\n", buf);
 	}
@@ -2426,7 +2430,7 @@ static void file_character_print_grid(FILE *fff, bool_ show_gaps, bool_ show_leg
 		}
 
 		buf[x] = '\0';
-		if (strcmp(buf, blank_line) &&
+		if (!equals(buf, blank_line) &&
 		                (show_gaps || file_character_print_grid_check_row(buf)))
 			fprintf (fff, "        %s\n", buf);
 	}
@@ -2992,21 +2996,21 @@ static bool_ show_file_aux(const char *name, const char *what, int line)
 		if (my_fgets(fff, h_ptr->rbuf, 1024)) break;
 
 		/* Get a color */
-		if (prefix(h_ptr->rbuf, "#####"))
+		if (starts_with(h_ptr->rbuf, "#####"))
 		{
 			buf = &h_ptr->rbuf[6];
 		}
 		else buf = h_ptr->rbuf;
 
 		/* Get the link colors */
-		if (prefix(buf, "|||||"))
+		if (starts_with(buf, "|||||"))
 		{
 			link_color = color_char_to_attr(buf[5]);
 			link_color_sel = color_char_to_attr(buf[6]);
 		}
 
 		/* Tag ? */
-		if (prefix(buf, "~~~~~"))
+		if (starts_with(buf, "~~~~~"))
 		{
 			if (line < 0)
 			{
@@ -3030,7 +3034,7 @@ static bool_ show_file_aux(const char *name, const char *what, int line)
 		while (buf[x])
 		{
 			/* Hyperlink ? */
-			if (prefix(buf + x, "*****"))
+			if (starts_with(buf + x, "*****"))
 			{
 				int xx = x + 5, stmp, xdeb = x + 5, z;
 				char tmp[20];
@@ -3134,7 +3138,7 @@ static bool_ show_file_aux(const char *name, const char *what, int line)
 			if (my_fgets(fff, h_ptr->rbuf, 1024)) break;
 
 			/* Get a color */
-			if (prefix(h_ptr->rbuf, "#####"))
+			if (starts_with(h_ptr->rbuf, "#####"))
 			{
 				color = color_char_to_attr(h_ptr->rbuf[5]);
 				buf = &h_ptr->rbuf[6];
@@ -3145,10 +3149,10 @@ static bool_ show_file_aux(const char *name, const char *what, int line)
 			next++;
 
 			/* Skip link colors */
-			if (prefix(buf, "|||||")) continue;
+			if (starts_with(buf, "|||||")) continue;
 
 			/* Skip tags */
-			if (prefix(buf, "~~~~~"))
+			if (starts_with(buf, "~~~~~"))
 			{
 				i++;
 				continue;
@@ -3178,13 +3182,13 @@ static bool_ show_file_aux(const char *name, const char *what, int line)
 
 			/* Dump the line */
 			print_x = 0;
-			if (!prefix(buf, "&&&&&"))
+			if (!starts_with(buf, "&&&&&"))
 			{
 				x = 0;
 				while (buf[x])
 				{
 					/* Hyperlink ? */
-					if (prefix(buf + x, "*****"))
+					if (starts_with(buf + x, "*****"))
 					{
 						int xx = x + 5;
 
@@ -3213,7 +3217,7 @@ static bool_ show_file_aux(const char *name, const char *what, int line)
 						x = xx;
 					}
 					/* Color ? */
-					else if (prefix(buf + x, "[[[[["))
+					else if (starts_with(buf + x, "[[[[["))
 					{
 						int xx = x + 6;
 
@@ -3230,7 +3234,7 @@ static bool_ show_file_aux(const char *name, const char *what, int line)
 						x = xx;
 					}
 					/* Remove HTML ? */
-					else if (prefix(buf + x, "{{{{{"))
+					else if (starts_with(buf + x, "{{{{{"))
 					{
 						int xx = x + 6;
 

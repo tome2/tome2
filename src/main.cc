@@ -20,6 +20,10 @@
 #include "variable.h"
 #include "variable.hpp"
 
+#include <boost/algorithm/string/predicate.hpp>
+
+using boost::algorithm::equals;
+using boost::algorithm::ends_with;
 
 /*
  * A hook for "quit()".
@@ -103,7 +107,7 @@ static void init_file_paths_with_env()
 	strcpy(path, tail ? tail : DEFAULT_PATH);
 
 	/* Hack -- Add a path separator (only if needed) */
-	if (!suffix(path, PATH_SEP)) strcat(path, PATH_SEP);
+	if (!ends_with(path, PATH_SEP)) strcat(path, PATH_SEP);
 
 	/* Initialize */
 	init_file_paths(path);
@@ -198,7 +202,7 @@ int main_real(int argc, char *argv[], char const *platform_sys, int (*init_platf
 
 		case '-':
 			{
-				if (argv[i][2] == 'h' && !strcmp((argv[i] + 2), "help"))
+				if (argv[i][2] == 'h' && equals(argv[i] + 2, "help"))
 				{
 					goto usage;
 				}

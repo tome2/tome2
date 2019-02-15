@@ -9,7 +9,10 @@
 #include "xtra1.hpp"
 #include "z-rand.hpp"
 
+#include <boost/algorithm/string/predicate.hpp>
 #include <cassert>
+
+using boost::algorithm::equals;
 
 /**
  * Mimicry forms
@@ -623,7 +626,7 @@ s16b resolve_mimic_name(const char *name)
 	for (s16b i = 0; i < MIMIC_FORMS_MAX; i++)
 	{
 		auto const mf_ptr = get_mimic_form(i);
-		if (mimic_form_enabled(mf_ptr) && streq(mf_ptr->name, name))
+		if (mimic_form_enabled(mf_ptr) && equals(mf_ptr->name, name))
 		{
 			return i;
 		}

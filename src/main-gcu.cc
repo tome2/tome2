@@ -42,8 +42,10 @@
 #include "util.h"
 #include "variable.h"
 
-
+#include <boost/algorithm/string/predicate.hpp>
 #include <limits.h>
+
+using boost::algorithm::starts_with;
 
 /*
  * Hack -- play games with "bool" and "term"
@@ -722,7 +724,7 @@ int init_gcu(int argc, char **argv)
 	/* Parse args */
 	for (i = 1; i < argc; i++)
 	{
-		if (prefix(argv[i], "-b"))
+		if (starts_with(argv[i], "-b"))
 		{
 			use_big_screen = TRUE;
 			continue;

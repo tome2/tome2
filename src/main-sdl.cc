@@ -35,6 +35,10 @@
 #include <assert.h>
 #include <math.h>
 
+#include <boost/algorithm/string/predicate.hpp>
+
+using boost::algorithm::equals;
+
 /*************************************************
  GLOBAL SDL-ToME PROPERTIES
  *************************************************/
@@ -1777,7 +1781,7 @@ int init_sdl(int argc, char **argv)
 	{
 		/* Set the number of consoles to handle
 		(ie the number of windows) */
-		if (0 == strcmp(argv[i], "-n"))
+		if (equals(argv[i], "-n"))
 		{
 			if (++i == argc)
 			{
@@ -1794,7 +1798,7 @@ int init_sdl(int argc, char **argv)
 			}
 		}
 		/* Set the SDL window/screen width in pixels */
-		else if (0 == strcmp(argv[i], "-w"))
+		else if (equals(argv[i], "-w"))
 	 	{
 			if (++i == argc)
 			{
@@ -1805,7 +1809,7 @@ int init_sdl(int argc, char **argv)
 			arg_width = atoi(argv[i]);
 		}
 		/* Set the SDL window/screen height in pixels */
-		else if (0 == strcmp(argv[i], "-h"))
+		else if (equals(argv[i], "-h"))
 		{
 			if (++i == argc)
 			{
@@ -1817,7 +1821,7 @@ int init_sdl(int argc, char **argv)
 		}
 		/* Set the SDL window/screen color depth
 		(in bits per pixel -- only 8,16,32 are okay) */
-		else if (0 == strcmp(argv[i], "-bpp"))
+		else if (equals(argv[i], "-bpp"))
 		{
 			if (++i == argc)
 			{
@@ -1834,13 +1838,13 @@ int init_sdl(int argc, char **argv)
 			}
 		}
 		/* switch into full-screen at startup */
-		else if (0 == strcmp(argv[i], "-fs"))
+		else if (equals(argv[i], "-fs"))
 		{
 			DB("Full-screen enabled!");
 			arg_full_screen = TRUE;
 		}
 		/* change the font size */
-		else if (0 == strcmp(argv[i], "-s"))
+		else if (equals(argv[i], "-s"))
 		{
 			if (++i == argc)
 			{
@@ -1852,7 +1856,7 @@ int init_sdl(int argc, char **argv)
 			arg_font_size = atoi(argv[i]);
 		}
 		/* change the font to use */
-		else if (0 == strcmp(argv[i], "-f"))
+		else if (equals(argv[i], "-f"))
 		{
 			/* Can we please not be so MS Windows-specific?  One of the main goals
 			   of SDL in ToME was to be more portable.  These file name hacks are

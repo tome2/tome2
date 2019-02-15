@@ -43,9 +43,12 @@
 #include "wilderness_map.hpp"
 #include "z-rand.hpp"
 
+#include <boost/algorithm/string/predicate.hpp>
 #include <cassert>
 #include <memory>
 #include <vector>
+
+using boost::algorithm::equals;
 
 #define SAFE_MAX_ATTEMPTS 5000
 
@@ -6807,7 +6810,7 @@ bool level_generate_dungeon()
 		try_doors(y, x);
 	}
 
-	if (strcmp(game_module, "ToME") == 0)
+	if (equals(game_module, "ToME"))
 	{
 		/* Hack -- Add some magma streamers */
 		if ((dungeon_type == DUNGEON_MORDOR) || (dungeon_type == DUNGEON_ANGBAND))

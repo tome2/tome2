@@ -112,7 +112,10 @@
 #include <limits.h>
 
 #include <sys/time.h>
+#include <boost/algorithm/string/predicate.hpp>
 
+using boost::algorithm::equals;
+using boost::algorithm::starts_with;
 
 /*
  * This file is designed to be "included" by "main-x11.c" or "main-xaw.c",
@@ -856,7 +859,7 @@ static int Infoclr_Opcode(const char *str)
 	for (int i = 0; opcode_pairs[i*2]; ++i)
 	{
 		/* Is this the right oprname? */
-		if (streq(opcode_pairs[i*2], str))
+		if (equals(opcode_pairs[i*2], str))
 		{
 			/* Convert the second element in the pair into a Code */
 			return (atoi(opcode_pairs[i*2 + 1]));
@@ -1899,14 +1902,14 @@ errr init_x11(int argc, char *argv[])
 	/* Parse args */
 	for (i = 1; i < argc; i++)
 	{
-		if (prefix(argv[i], "-d"))
+		if (starts_with(argv[i], "-d"))
 		{
 			dpy_name = &argv[i][2];
 			continue;
 		}
 
 
-		if (prefix(argv[i], "-n"))
+		if (starts_with(argv[i], "-n"))
 		{
 			num_term = atoi(&argv[i][2]);
 			if (num_term > MAX_TERM_DATA) num_term = MAX_TERM_DATA;

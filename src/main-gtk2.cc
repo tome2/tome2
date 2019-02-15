@@ -50,6 +50,10 @@
 #include <dirent.h>
 #include <assert.h>
 
+#include <boost/algorithm/string/predicate.hpp>
+
+using boost::algorithm::starts_with;
+using boost::algorithm::equals;
 
 /*
  * Number of pixels inserted between the menu bar and the main screen
@@ -1397,7 +1401,7 @@ static void setup_menu_paths(void)
 		if (main_menu_items[i].path == NULL) continue;
 
 		/* Find a match */
-		if (streq(main_menu_items[i].path, "/Terms")) break;
+		if (equals(main_menu_items[i].path, "/Terms")) break;
 	}
 	g_assert(i < (nmenu_items - MAX_TERM_DATA));
 
@@ -1411,7 +1415,7 @@ static void setup_menu_paths(void)
 		if (main_menu_items[i].path == NULL) continue;
 
 		/* Find a match */
-		if (streq(main_menu_items[i].path, "/Options/Font")) break;
+		if (equals(main_menu_items[i].path, "/Options/Font")) break;
 	}
 	g_assert(i < (nmenu_items - MAX_TERM_DATA));
 
@@ -1452,7 +1456,7 @@ static void free_menu_paths(void)
 		if (main_menu_items[i].path == NULL) continue;
 
 		/* Find a match */
-		if (streq(main_menu_items[i].path, "/Terms")) break;
+		if (equals(main_menu_items[i].path, "/Terms")) break;
 	}
 	g_assert(i < (nmenu_items - MAX_TERM_DATA));
 
@@ -1466,7 +1470,7 @@ static void free_menu_paths(void)
 		if (main_menu_items[i].path == NULL) continue;
 
 		/* Find a match */
-		if (streq(main_menu_items[i].path, "/Options/Font")) break;
+		if (equals(main_menu_items[i].path, "/Options/Font")) break;
 	}
 	g_assert(i < (nmenu_items - MAX_TERM_DATA));
 
@@ -1924,7 +1928,7 @@ int init_gtk2(int argc, char **argv)
 	for (i = 1; i < argc; i++)
 	{
 		/* Number of terminals displayed at start up */
-		if (prefix(argv[i], "-n"))
+		if (starts_with(argv[i], "-n"))
 		{
 			num_term = atoi(&argv[i][2]);
 			if (num_term > MAX_TERM_DATA) num_term = MAX_TERM_DATA;
@@ -1933,7 +1937,7 @@ int init_gtk2(int argc, char **argv)
 		}
 
 		/* Disable use of pixmaps as backing store */
-		if (streq(argv[i], "-b"))
+		if (equals(argv[i], "-b"))
 		{
 			use_backing_store = FALSE;
 			continue;

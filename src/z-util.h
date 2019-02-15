@@ -10,12 +10,6 @@ extern "C" {
 extern void (*plog_aux)(const char *);
 extern void (*quit_aux)(const char *);
 
-/* Test equality, prefix, suffix */
-bool_ streq(const char *s, const char *t);
-bool_ prefix(const char *s, const char *t);
-bool_ suffix(const char *s, const char *t);
-
-
 /* Capitalize the first letter of string. Ignores whitespace at the start of string. */
 void capitalize(char *s);
 

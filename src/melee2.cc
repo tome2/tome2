@@ -49,7 +49,10 @@
 #include "xtra2.hpp"
 #include "z-rand.hpp"
 
+#include <boost/algorithm/string/predicate.hpp>
 #include <cassert>
+
+using boost::algorithm::equals;
 
 #define SPEAK_CHANCE 8
 #define GRINDNOISE 20
@@ -1814,7 +1817,7 @@ static bool_ monst_spell_monst(int m_idx)
 				disturb_on_other();
 				if (blind || !see_m) monster_msg("%^s mumbles.", m_name);
 				else monster_msg("%^s casts a spell, burning %s%s eyes.", m_name, t_name,
-					                 (!strcmp(t_name, "it") ? "s" : "'s"));
+							 (equals(t_name, "it") ? "s" : "'s"));
 				if (tr_ptr->flags & RF_NO_CONF)  /* Simulate blindness with confusion */
 				{
 					if (see_t) monster_msg("%^s is unaffected.", t_name);
@@ -1861,7 +1864,7 @@ static bool_ monst_spell_monst(int m_idx)
 				if (!direct) break;
 				disturb_on_other();
 				if (!blind && see_either) monster_msg("%^s drains power from %s%s muscles.", m_name, t_name,
-					                                      (!strcmp(t_name, "it") ? "s" : "'s"));
+									      (equals(t_name, "it") ? "s" : "'s"));
 				if (tr_ptr->flags & RF_UNIQUE)
 				{
 					if (see_t) monster_msg("%^s is unaffected.", t_name);

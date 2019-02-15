@@ -18,7 +18,10 @@
 #include "variable.hpp"
 #include "xtra2.hpp"
 
+#include <boost/algorithm/string/predicate.hpp>
 #include <cassert>
+
+using boost::algorithm::equals;
 
 /*
  * Add amt piety is god is god
@@ -136,7 +139,7 @@ bool_ show_god_info()
 		Term_save();
 
 		text_out(format("You worship %s. ", d_ptr->name));
-		for (i = 0; (i < 10) && (strcmp(d_ptr->desc[i], "")); i++)
+		for (i = 0; (i < 10) && (!equals(d_ptr->desc[i], "")); i++)
 			text_out(d_ptr->desc[i]);
 		text_out("\n");
 
@@ -203,7 +206,7 @@ int find_god(const char *name)
 		/* The name matches and god is "enabled" for the
 		   current module. */
 		if (god_enabled(&deity_info[i]) &&
-		    streq(deity_info[i].name, name))
+		    equals(deity_info[i].name, name))
 		{
 			return (i);
 		}

@@ -54,9 +54,12 @@
 #include "wilderness_map.hpp"
 #include "wilderness_type_info.hpp"
 
+#include <boost/algorithm/string/predicate.hpp>
 #include <cassert>
 #include <fmt/format.h>
 #include <type_traits>
+
+using boost::algorithm::equals;
 
 /*
  * This file is used to initialise various variables and arrays for the
@@ -147,7 +150,7 @@ void init_file_paths(char *path)
 	{
 		int seplen = strlen(PATH_SEP);
 
-		if (strcmp(path + pathlen - seplen, PATH_SEP) == 0)
+		if (equals(path + pathlen - seplen, PATH_SEP))
 		{
 			path[pathlen - seplen] = '\0';
 			ANGBAND_DIR = strdup(path);

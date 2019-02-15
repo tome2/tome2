@@ -74,6 +74,23 @@
 #include "util.h"
 #include "variable.h"
 
+
+/*
+ * Determine if string "t" is a suffix of string "s"
+ */
+static bool_ suffix(const char *s, const char *t)
+{
+	int tlen = strlen(t);
+	int slen = strlen(s);
+
+	/* Check for incompatible lengths */
+	if (tlen > slen) return (FALSE);
+
+	/* Compare "t" to the end of "s" */
+	return !strcmp(s + slen - tlen, t);
+}
+
+
 /*
  * Extract the "WIN32" flag from the compiler
  */
@@ -1091,7 +1108,7 @@ static errr term_force_font(term_data *td, const char *path)
 			/* Check "screen" */
 			if ((td != &data[i]) &&
 			                (data[i].font_file) &&
-			                (streq(data[i].font_file, td->font_file)))
+					(strcmp(data[i].font_file, td->font_file) == 0))
 			{
 				used = TRUE;
 			}

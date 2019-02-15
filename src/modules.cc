@@ -37,10 +37,12 @@
 #include "variable.h"
 #include "variable.hpp"
 
+#include <boost/algorithm/string/predicate.hpp>
 #include <cassert>
 #include <chrono>
 #include <thread>
 
+using boost::algorithm::equals;
 using std::this_thread::sleep_for;
 using std::chrono::milliseconds;
 
@@ -104,19 +106,17 @@ static void module_reset_dir(const char *dir, const char *new_path)
 	char **d = 0;
 	char buf[1025];
 
-	if (!strcmp(dir, "data")) d = &ANGBAND_DIR_DATA;
-	if (!strcmp(dir, "edit")) d = &ANGBAND_DIR_EDIT;
-	if (!strcmp(dir, "file")) d = &ANGBAND_DIR_FILE;
-	if (!strcmp(dir, "help")) d = &ANGBAND_DIR_HELP;
-	if (!strcmp(dir, "info")) d = &ANGBAND_DIR_INFO;
-	if (!strcmp(dir, "pref")) d = &ANGBAND_DIR_PREF;
-	if (!strcmp(dir, "xtra")) d = &ANGBAND_DIR_XTRA;
-	if (!strcmp(dir, "user")) d = &ANGBAND_DIR_USER;
-	if (!strcmp(dir, "note")) d = &ANGBAND_DIR_NOTE;
+	if (equals(dir, "data")) d = &ANGBAND_DIR_DATA;
+	if (equals(dir, "edit")) d = &ANGBAND_DIR_EDIT;
+	if (equals(dir, "file")) d = &ANGBAND_DIR_FILE;
+	if (equals(dir, "help")) d = &ANGBAND_DIR_HELP;
+	if (equals(dir, "info")) d = &ANGBAND_DIR_INFO;
+	if (equals(dir, "pref")) d = &ANGBAND_DIR_PREF;
+	if (equals(dir, "xtra")) d = &ANGBAND_DIR_XTRA;
+	if (equals(dir, "user")) d = &ANGBAND_DIR_USER;
+	if (equals(dir, "note")) d = &ANGBAND_DIR_NOTE;
 
-	if (
-	    !strcmp(dir, "user") ||
-	    !strcmp(dir, "note"))
+	if (equals(dir, "user") || equals(dir, "note"))
 	{
 		char user_path[1024];
 		/* copied from init_file_paths */
@@ -133,7 +133,7 @@ static void module_reset_dir(const char *dir, const char *new_path)
 			quit(format("Unable to create module dir %s\n", *d));
 		}
 	}
-	else if (!strcmp(dir, "save"))
+	else if (equals(dir, "save"))
 	{
 		module_reset_dir_aux(&ANGBAND_DIR_SAVE, new_path);
 	}
@@ -202,7 +202,7 @@ static void activate_module(int module_idx)
 	VERSION_PATCH = module_ptr->meta.version.patch;
 
 	/* Change window name if needed */
-	if (strcmp(game_module, "ToME"))
+	if (equals(game_module, "ToME"))
 	{
 		strnfmt(angband_term_name[0], 79, "T-Engine: %s", game_module);
 		Term_xtra(TERM_XTRA_RENAME_MAIN_WIN, 0);
@@ -237,7 +237,7 @@ int find_module(const char *name)
 
 	for (i=0; i<MAX_MODULES; i++)
 	{
-		if (streq(name, modules[i].meta.name))
+		if (equals(name, modules[i].meta.name))
 		{
 			return i;
 		}

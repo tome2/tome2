@@ -51,6 +51,10 @@
 #include "xtra2.hpp"
 #include "z-rand.hpp"
 
+#include <boost/algorithm/string/predicate.hpp>
+
+using boost::algorithm::equals;
+
 #define MAX_VAMPIRIC_DRAIN 100
 
 
@@ -4532,7 +4536,7 @@ void do_cmd_engrave()
 
 	for (i = 0; i < MAX_INSCRIPTIONS; i++)
 	{
-		if (!strcmp(inscription_info[i].text, buf))
+		if (equals(inscription_info[i].text, buf))
 		{
 			if (p_ptr->inscriptions[i])
 			{

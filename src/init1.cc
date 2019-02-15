@@ -51,8 +51,10 @@
 #include <boost/algorithm/string/split.hpp>
 #include <boost/optional.hpp>
 
+using boost::algorithm::equals;
 using boost::algorithm::iequals;
 using boost::algorithm::ends_with;
+using boost::algorithm::starts_with;
 
 
 /**
@@ -192,7 +194,7 @@ public:
 	bool match(const char *flag) {
 		for (unsigned int i = 0; i < N; i++)
 		{
-			if (streq(flag, m_flags[i]))
+			if (equals(flag, m_flags[i]))
 			{
 				*m_mask |= (1L << i);
 				return true;
@@ -686,7 +688,7 @@ static errr grab_one_race_allow_flag(std::array<u32b, 2> &choice, const char *wh
 static errr grab_one_skill_flag(skill_flag_set *flags, const char *what)
 {
 #define SKF(tier, index, name) \
-	if (streq(what, #name)) \
+	if (equals(what, #name)) \
 	{ \
 	        *flags |= BOOST_PP_CAT(SKF_,name); \
 	        return 0; \
@@ -706,7 +708,7 @@ static errr grab_one_skill_flag(skill_flag_set *flags, const char *what)
 static errr grab_one_player_race_flag(player_race_flag_set *flags, const char *what)
 {
 #define PR(tier, index, name) \
-	if (streq(what, #name)) \
+	if (equals(what, #name)) \
 	{ \
 	        *flags |= BOOST_PP_CAT(PR_,name); \
 	        return 0; \
@@ -744,7 +746,7 @@ static object_flag_set object_flag_set_from_string(const char *what)
 {
 	for (auto const flag_meta: object_flags_meta())
 	{
-		if (streq(what, flag_meta->e_name))
+		if (equals(what, flag_meta->e_name))
 		{
 			return flag_meta->flag_set;
 		};
@@ -1580,7 +1582,7 @@ errr init_player_info_txt(FILE *fp)
 		{
 			int i;
 
-			if (streq(buf + 4, "All Gods"))
+			if (equals(buf + 4, "All Gods"))
 				c_ptr->gods = 0xFFFFFFFF;
 			else
 			{
@@ -1748,7 +1750,7 @@ errr init_player_info_txt(FILE *fp)
 			{
 				int i;
 
-				if (streq(buf + 6, "All Gods"))
+				if (equals(buf + 6, "All Gods"))
 					s_ptr->gods = 0xFFFFFFFF;
 				else
 				{
@@ -1976,7 +1978,7 @@ errr init_v_info_txt(FILE *fp)
 static int grab_one_feature_flag(const char *what, feature_flag_set *flags)
 {
 #define FF(tier, index, name) \
-	if (streq(what, #name)) \
+	if (equals(what, #name)) \
 	{ \
 	        *flags |= BOOST_PP_CAT(FF_,name); \
 	        return 0; \
@@ -2193,12 +2195,17 @@ errr init_f_info_txt(FILE *fp)
 				j = 0;
 
 				while (d_info_dtypes[j].name != NULL)
-					if (strcmp(d_info_dtypes[j].name, tmp) == 0)
+				{
+					if (equals(d_info_dtypes[j].name, tmp))
 					{
 						f_ptr->d_type[i] = d_info_dtypes[j].feat;
 						break;
 					}
-					else j++;
+					else
+					{
+						j++;
+					}
+				}
 
 				if (d_info_dtypes[j].name == NULL) return (1);
 			}
@@ -3355,7 +3362,7 @@ errr init_ab_info_txt(FILE *fp)
 
 			for (stat = 0; stat < 6; stat++)
 			{
-				if (!strcmp(stat_names[stat], sec))
+				if (equals(stat_names[stat], sec))
 					break;
 			}
 
@@ -3382,7 +3389,7 @@ errr init_ab_info_txt(FILE *fp)
 static ego_flag_set lookup_ego_flag(const char *what)
 {
 #define ETR(tier, index, name) \
-	if (streq(what, #name)) \
+	if (equals(what, #name)) \
 	{ \
 	        return BOOST_PP_CAT(ETR_,name); \
         };
@@ -3970,7 +3977,7 @@ errr init_ra_info_txt(FILE *fp)
 static errr grab_monster_race_flag(monster_race_flag_set *flags, const char *what)
 {
 #define RF(tier, index, name) \
-	if (streq(what, #name)) \
+	if (equals(what, #name)) \
 	{ \
 		*flags |= BOOST_PP_CAT(RF_,name); \
 		return 0; \
@@ -3993,7 +4000,7 @@ static errr grab_one_monster_spell_flag(monster_spell_flag_set *flags, const cha
 {
 	for (auto const &monster_spell: monster_spells())
 	{
-		if (streq(what, monster_spell->name))
+		if (equals(what, monster_spell->name))
 		{
 			*flags |= monster_spell->flag_set;
 			return 0;
@@ -4253,7 +4260,7 @@ errr init_r_info_txt(FILE *fp)
 			/* Analyze the method */
 			for (n1 = 0; r_info_blow_method[n1]; n1++)
 			{
-				if (streq(s, r_info_blow_method[n1])) break;
+				if (equals(s, r_info_blow_method[n1])) break;
 			}
 
 			/* Invalid method */
@@ -4268,7 +4275,7 @@ errr init_r_info_txt(FILE *fp)
 			/* Analyze effect */
 			for (n2 = 0; r_info_blow_effect[n2]; n2++)
 			{
-				if (streq(s, r_info_blow_effect[n2])) break;
+				if (equals(s, r_info_blow_effect[n2])) break;
 			}
 
 			/* Invalid effect */
@@ -4522,7 +4529,7 @@ errr init_re_info_txt(FILE *fp)
 			/* Analyze the method */
 			for (n1 = 0; r_info_blow_method[n1]; n1++)
 			{
-				if (streq(s, r_info_blow_method[n1])) break;
+				if (equals(s, r_info_blow_method[n1])) break;
 			}
 
 			/* Invalid method */
@@ -4537,7 +4544,7 @@ errr init_re_info_txt(FILE *fp)
 			/* Analyze effect */
 			for (n2 = 0; r_info_blow_effect[n2]; n2++)
 			{
-				if (streq(s, r_info_blow_effect[n2])) break;
+				if (equals(s, r_info_blow_effect[n2])) break;
 			}
 
 			/* Invalid effect */
@@ -4641,7 +4648,7 @@ errr init_re_info_txt(FILE *fp)
 			char const *s = buf + 2;
 
 			/* XXX XXX XXX Hack -- Read no flags */
-			if (!strcmp(s, "MF_ALL"))
+			if (equals(s, "MF_ALL"))
 			{
 				re_ptr->nflags = ~monster_race_flag_set();
 			}
@@ -4702,7 +4709,7 @@ errr init_re_info_txt(FILE *fp)
 				}
 
 				/* XXX XXX XXX Hack -- Read no flags */
-				if (!strcmp(s, "MF_ALL"))
+				if (equals(s, "MF_ALL"))
 				{
 					/* No flags */
 					re_ptr->nspells = ~monster_spell_flag_set();
@@ -4740,7 +4747,7 @@ errr init_re_info_txt(FILE *fp)
 errr grab_one_dungeon_flag(dungeon_flag_set *flags, const char *str)
 {
 #define DF(tier, index, name) \
-	if (streq(str, #name)) { *flags |= DF_##name; return 0; }
+	if (equals(str, #name)) { *flags |= DF_##name; return 0; }
 #include "dungeon_flag_list.hpp"
 #undef DF
 
@@ -5075,7 +5082,7 @@ errr init_d_info_txt(FILE *fp)
 				j = 0;
 
 				while (d_info_dtypes[j].name != NULL)
-					if (strcmp(d_info_dtypes[j].name, tmp) == 0)
+					if (equals(d_info_dtypes[j].name, tmp))
 					{
 						d_ptr->d_type[i] = d_info_dtypes[j].feat;
 						break;
@@ -5335,7 +5342,7 @@ static errr grab_one_race_flag(owner_type *ow_ptr, int state, const char *what)
 static errr grab_one_store_flag(store_flag_set *flags, const char *what)
 {
 #define STF(tier, index, name) \
-	if (streq(what, #name)) { \
+	if (equals(what, #name)) { \
 	        *flags |= BOOST_PP_CAT(STF_,name); \
 	        return 0; \
         }
@@ -6186,7 +6193,7 @@ static errr process_dungeon_file_aux(char *buf, int *yval, int *xval, int xvalst
 					letter[index].special = 0;
 					for (i = 0; i < MAX_Q_IDX; i++)
 					{
-						if (!strcmp(&field[1], quest[i].name))
+						if (equals(&field[1], quest[i].name))
 						{
 							letter[index].special = i;
 							break;
@@ -6661,40 +6668,40 @@ static const char *process_dungeon_file_expr(char **sp, char *fp)
 		}
 
 		/* Function: IOR */
-		else if (streq(t, "IOR"))
+		else if (equals(t, "IOR"))
 		{
 			v = "0";
 			while (*s && (f != b2))
 			{
 				t = process_dungeon_file_expr(&s, &f);
-				if (*t && !streq(t, "0")) v = "1";
+				if (*t && !equals(t, "0")) v = "1";
 			}
 		}
 
 		/* Function: AND */
-		else if (streq(t, "AND"))
+		else if (equals(t, "AND"))
 		{
 			v = "1";
 			while (*s && (f != b2))
 			{
 				t = process_dungeon_file_expr(&s, &f);
-				if (*t && streq(t, "0")) v = "0";
+				if (*t && equals(t, "0")) v = "0";
 			}
 		}
 
 		/* Function: NOT */
-		else if (streq(t, "NOT"))
+		else if (equals(t, "NOT"))
 		{
 			v = "1";
 			while (*s && (f != b2))
 			{
 				t = process_dungeon_file_expr(&s, &f);
-				if (*t && streq(t, "1")) v = "0";
+				if (*t && equals(t, "1")) v = "0";
 			}
 		}
 
 		/* Function: EQU */
-		else if (streq(t, "EQU"))
+		else if (equals(t, "EQU"))
 		{
 			v = "1";
 			if (*s && (f != b2))
@@ -6705,7 +6712,7 @@ static const char *process_dungeon_file_expr(char **sp, char *fp)
 			{
 				p = t;
 				t = process_dungeon_file_expr(&s, &f);
-				if (*t && !streq(p, t)) v = "0";
+				if (*t && !equals(p, t)) v = "0";
 			}
 		}
 
@@ -6755,28 +6762,28 @@ static const char *process_dungeon_file_expr(char **sp, char *fp)
 		if (*b == '$')
 		{
 			/* Town */
-			if (streq(b + 1, "TOWN"))
+			if (equals(b + 1, "TOWN"))
 			{
 				strnfmt(pref_tmp_value, 8, "%d", p_ptr->town_num);
 				v = pref_tmp_value;
 			}
 
 			/* Town destroyed */
-			else if (prefix(b + 1, "TOWN_DESTROY"))
+			else if (starts_with(b + 1, "TOWN_DESTROY"))
 			{
 				strnfmt(pref_tmp_value, 8, "%d", town_info[atoi(b + 13)].destroyed);
 				v = pref_tmp_value;
 			}
 
 			/* Number of last quest */
-			else if (streq(b + 1, "LEAVING_QUEST"))
+			else if (equals(b + 1, "LEAVING_QUEST"))
 			{
 				strnfmt(pref_tmp_value, 8, "%d", leaving_quest);
 				v = pref_tmp_value;
 			}
 
 			/* DAYTIME status */
-			else if (prefix(b + 1, "DAYTIME"))
+			else if (starts_with(b + 1, "DAYTIME"))
 			{
 				if ((bst(HOUR, turn) >= 6) && (bst(HOUR, turn) < 18))
 					v = "1";
@@ -6785,7 +6792,7 @@ static const char *process_dungeon_file_expr(char **sp, char *fp)
 			}
 
 			/* Quest status */
-			else if (prefix(b + 1, "QUEST"))
+			else if (starts_with(b + 1, "QUEST"))
 			{
 				/* "QUEST" uses a special parameter to determine the number of the quest */
 				if (*(b + 6) != '"')
@@ -6804,7 +6811,7 @@ static const char *process_dungeon_file_expr(char **sp, char *fp)
 					strcpy(pref_tmp_value, "-1");
 					for (i = 0; i < MAX_Q_IDX; i++)
 					{
-						if (streq(c, quest[i].name))
+						if (equals(c, quest[i].name))
 						{
 							strnfmt(pref_tmp_value, 8, "%d", quest[i].status);
 							break;
@@ -6906,7 +6913,7 @@ errr process_dungeon_file(const char *name, int *yval, int *xval, int ymax, int 
 			v = process_dungeon_file_expr(&s, &f);
 
 			/* Set flag */
-			bypass = (streq(v, "0") ? TRUE : FALSE);
+			bypass = (equals(v, "0") ? TRUE : FALSE);
 
 			/* Continue */
 			continue;

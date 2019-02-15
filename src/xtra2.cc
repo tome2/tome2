@@ -66,9 +66,8 @@
 #include <fmt/format.h>
 #include <type_traits>
 
-
-
 using boost::algorithm::iequals;
+using boost::algorithm::starts_with;
 
 static void corrupt_corrupted();
 
@@ -5194,27 +5193,27 @@ void make_wish()
 	}
 
 	/* try monsters */
-	if (prefix(name, "enemy "))
+	if (starts_with(name, "enemy "))
 	{
 		mstatus = MSTATUS_ENEMY;
 		mname = name + 6;
 	}
-	else if (prefix(name, "neutral "))
+	else if (starts_with(name, "neutral "))
 	{
 		mstatus = MSTATUS_NEUTRAL;
 		mname = name + 8;
 	}
-	else if (prefix(name, "friendly "))
+	else if (starts_with(name, "friendly "))
 	{
 		mstatus = MSTATUS_FRIEND;
 		mname = name + 9;
 	}
-	else if (prefix(name, "pet "))
+	else if (starts_with(name, "pet "))
 	{
 		mstatus = MSTATUS_PET;
 		mname = name + 4;
 	}
-	else if (prefix(name, "companion "))
+	else if (starts_with(name, "companion "))
 	{
 		if (can_create_companion()) mstatus = MSTATUS_COMPANION;
 		else mstatus = MSTATUS_PET;

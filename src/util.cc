@@ -31,6 +31,8 @@
 #include <thread>
 
 using boost::algorithm::iequals;
+using boost::algorithm::equals;
+using boost::algorithm::starts_with;
 using std::this_thread::sleep_for;
 using std::chrono::milliseconds;
 
@@ -190,7 +192,7 @@ errr path_build(char *buf, int max, const char *path, const char *file)
 	}
 
 	/* Absolute file, on "normal" systems */
-	else if (prefix(file, PATH_SEP) && !streq(PATH_SEP, ""))
+	else if (starts_with(file, PATH_SEP) && !equals(PATH_SEP, ""))
 	{
 		/* Use the file itself */
 		strnfmt(buf, max, "%s", file);
@@ -1025,7 +1027,7 @@ int macro_find_exact(const char *pat)
 	for (i = 0; i < macro__num; ++i)
 	{
 		/* Skip macros which do not match the pattern */
-		if (!streq(macro__pat[i], pat)) continue;
+		if (!equals(macro__pat[i], pat)) continue;
 
 		/* Found one */
 		return (i);
@@ -1053,7 +1055,7 @@ static int macro_find_check(const char *pat)
 	for (i = 0; i < macro__num; ++i)
 	{
 		/* Skip macros which do not contain the pattern */
-		if (!prefix(macro__pat[i], pat)) continue;
+		if (!starts_with(macro__pat[i], pat)) continue;
 
 		/* Found one */
 		return (i);
@@ -1081,10 +1083,10 @@ static int macro_find_maybe(const char *pat)
 	for (i = 0; i < macro__num; ++i)
 	{
 		/* Skip macros which do not contain the pattern */
-		if (!prefix(macro__pat[i], pat)) continue;
+		if (!starts_with(macro__pat[i], pat)) continue;
 
 		/* Skip macros which exactly match the pattern XXX XXX */
-		if (streq(macro__pat[i], pat)) continue;
+		if (equals(macro__pat[i], pat)) continue;
 
 		/* Found one */
 		return (i);
@@ -1112,7 +1114,7 @@ static int macro_find_ready(const char *pat)
 	for (i = 0; i < macro__num; ++i)
 	{
 		/* Skip macros which are not contained by the pattern */
-		if (!prefix(pat, macro__pat[i])) continue;
+		if (!starts_with(pat, macro__pat[i])) continue;
 
 		/* Obtain the length of this macro */
 		t = strlen(macro__pat[i]);
@@ -3541,28 +3543,6 @@ int ask_menu(const char *ask, const std::vector<std::string> &items)
 	character_icky = FALSE;
 
 	return ret;
-}
-
-/*
- * Determine if string "t" is a prefix of string "s"
- */
-bool_ prefix(const char *s, const char *t)
-{
-	/* Paranoia */
-	if (!s || !t)
-	{
-		return FALSE;
-	}
-
-	/* Scan "t" */
-	while (*t)
-	{
-		/* Compare content and length */
-		if (*t++ != *s++) return (FALSE);
-	}
-
-	/* Matched, we have a prefix */
-	return (TRUE);
 }
 
 /*
