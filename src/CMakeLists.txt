@@ -113,7 +113,7 @@ SET(SRCS_COMMON
   seed.cc
   xtra1.cc
   xtra2.cc
-  z-form.c
+  z-form.cc
   z-rand.cc
   z-term.cc
   z-util.cc

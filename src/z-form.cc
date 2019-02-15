@@ -565,7 +565,7 @@ static char *vformat(const char *fmt, va_list vp)
 	if (!format_buf)
 	{
 		format_len = 1024;
-		format_buf = calloc(format_len, sizeof(char));
+		format_buf = (char *) calloc(format_len, sizeof(char));
 		if (format_buf == NULL)
 		{
 			abort(); // Nothing sensible we can do
@@ -589,7 +589,7 @@ static char *vformat(const char *fmt, va_list vp)
 		/* Grow the buffer */
 		free(format_buf);
 		format_len = format_len * 2;
-		format_buf = calloc(format_len, sizeof(char));
+		format_buf = (char *) calloc(format_len, sizeof(char));
 		if (format_buf == NULL)
 		{
 			abort(); // Nothing sensible we can do
