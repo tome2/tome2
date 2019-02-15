@@ -2843,12 +2843,15 @@ static store_action_type const *find_store_action(s16b command_cmd)
  * must disable some commands which are allowed in the dungeon
  * but not in the stores, to prevent chaos.
  */
-static bool store_process_command()
+static bool store_process_command(s16b *command_ptr)
 {
+	assert(command_ptr);
+	auto const &command_cmd = *command_ptr;
+
 	bool recreate = false;
 
 	/* Handle repeating the last command */
-	repeat_check(&command_cmd);
+	repeat_check(command_ptr);
 
 	auto ba_ptr = find_store_action(command_cmd);
 
@@ -3283,7 +3286,10 @@ void do_cmd_store()
 		request_command(true);
 
 		/* Process the command */
-		if (store_process_command()) recreate = true;
+		if (store_process_command(&command_cmd))
+		{
+			recreate = true;
+		}
 
 		/* Hack -- Character is still in "icky" mode */
 		character_icky = true;
@@ -3737,7 +3743,7 @@ void do_cmd_home_trump()
 		request_command(true);
 
 		/* Process the command */
-		store_process_command();
+		store_process_command(&command_cmd);
 
 		/* Hack -- Character is still in "icky" mode */
 		character_icky = true;
